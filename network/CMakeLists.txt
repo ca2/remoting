@@ -3,8 +3,29 @@ project(remoting_network)
 
 
 list(APPEND library_source
+   _.cpp
+   _.h
    framework.cpp
    framework.h
+   socket/sockdefs.h
+   socket/SocketAddressIPv4.cpp
+   socket/SocketAddressIPv4.h
+   socket/SocketException.cpp
+   socket/SocketException.h
+   socket/SocketIPv4.cpp
+   socket/SocketIPv4.h
+   socket/SocketStream.cpp
+   socket/SocketStream.h
+   socket/WindowsSocket.cpp
+   socket/WindowsSocket.h
+   RfbInputGate.cpp
+   RfbInputGate.h
+   RfbOutputGate.cpp
+   RfbOutputGate.h
+   TcpClientThread.cpp
+   TcpClientThread.h
+   TcpServer.cpp
+   TcpServer.h
 )
 
 
@@ -54,5 +75,5 @@ list(APPEND library_include_directories ${CMAKE_CURRENT_SOURCE_DIR})
 list(APPEND library_include_directories ${CMAKE_CURRENT_SOURCE_DIR}/..)
 list(APPEND library_include_directories ${CMAKE_CURRENT_SOURCE_DIR}/../..)
 
-#target_include_directories(${PROJECT_NAME} PRIVATE ${library_include_directories})
+target_include_directories(${PROJECT_NAME} PRIVATE ${library_include_directories})
 

@@ -3,8 +3,46 @@ project(remoting_gui)
 
 
 list(APPEND library_source
-   framework.cpp
-   framework.h
+   drawing/Bitmap.cpp
+   drawing/Bitmap.h
+   drawing/BitmapGraphics.cpp
+   drawing/BitmapGraphics.h
+   drawing/Brush.cpp
+   drawing/Brush.h
+   drawing/DeviceContext.cpp
+   drawing/DeviceContext.h
+   drawing/Graphics.cpp
+   drawing/Graphics.h
+   drawing/Icon.cpp
+   drawing/Icon.h
+   drawing/Pen.cpp
+   drawing/Pen.h
+   drawing/SolidBrush.cpp
+   drawing/SolidBrush.h
+   BalloonTip.cpp
+   BalloonTip.h
+   BaseDialog.cpp
+   BaseDialog.h
+   BaseWindow.cpp
+   BaseWindow.h
+   CheckBox.cpp
+   CheckBox.h
+   ComboBox.cpp
+   ComboBox.h
+   CommonControlsEx.cpp
+   CommonControlsEx.h
+   Control.cpp
+   Control.h
+   DibFrameBuffer.cpp
+   DibFrameBuffer.h
+   FilteredTextBox.cpp
+   FilteredTextBox.h
+   ImagedButton.cpp
+   ImagedButton.h
+   ListBox.cpp
+   ListBox.h
+   ListView.cpp
+   ListView.h
    Menu.cpp
    Menu.h
    MessageWindow.cpp
@@ -17,7 +55,6 @@ list(APPEND library_source
    PaintWindow.h
    ProgressBar.cpp
    ProgressBar.h
-   resource.h
    ScrollBar.cpp
    ScrollBar.h
    SpinControl.cpp
@@ -45,32 +82,11 @@ list(APPEND library_source
    WindowMessageHandler.h
    WindowProcHolder.cpp
    WindowProcHolder.h
-   ListView.h
-   ImagedButton.cpp
-   ListBox.cpp
-   ImagedButton.h
-   ListView.cpp
-   ListBox.h
-   FilteredTextBox.h
-   DibFrameBuffer.h
-   CommonControlsEx.cpp
-   DibFrameBuffer.cpp
-   CommonControlsEx.h
-   ComboBox.cpp
-   Control.h
-   Control.cpp
-   FilteredTextBox.cpp
-   ComboBox.h
-   CheckBox.h
-   CheckBox.cpp
-   BaseDialog.cpp
-   BalloonTip.h
-   BaseWindow.cpp
-   BaseWindow.h
-   BaseDialog.h
-   BalloonTip.cpp
-   _.h
    _.cpp
+   _.h
+   framework.cpp
+   framework.h
+   resource.h
 )
 
 

@@ -114,7 +114,9 @@ void BaseDialog::create()
     parentWindow = m_ctrlParent->getWindow();
   }
 
-  window = CreateDialogParam(GetModuleHandle(NULL), getResouceName(),
+   auto pszResourceName = getResouceName();
+
+  window = CreateDialogParam(GetModuleHandle(NULL), pszResourceName,
                              parentWindow, dialogProc, (LPARAM)this);
 
   m_isModal = false;

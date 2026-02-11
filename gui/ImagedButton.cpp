@@ -109,13 +109,13 @@ void ImagedButton::drawItem(LPDRAWITEMSTRUCT dis)
   TEXTMETRIC metric;
   GetTextMetrics(dc, &metric);
 
-  RECT imageRect;
+  RECT prectangleImage;
 
   calcRect(&itemRect, isPressed == TRUE, 0, metric.tmHeight,
-           m_iconWidth, m_iconHeight, &captionRect, &imageRect);
+           m_iconWidth, m_iconHeight, &captionRect, &prectangleImage);
 
   if (m_icon != NULL) {
-    drawIcon(&dc, &imageRect, isPressed == TRUE, isDisabled == TRUE);
+    drawIcon(&dc, &prectangleImage, isPressed == TRUE, isDisabled == TRUE);
   }
 
   if (!title.is_empty()) {
@@ -125,7 +125,7 @@ void ImagedButton::drawItem(LPDRAWITEMSTRUCT dis)
     }
 
     if (m_isUsingTheme) {
-      UnicodeStringStorage uniTitle(&title);
+      UnicodeStringStorage uniTitle(title);
 
       DWORD state = PBS_NORMAL;
 
@@ -189,39 +189,39 @@ void ImagedButton::setIcon(HICON *icon, int width, int height)
   m_iconHeight = height;
 }
 
-void ImagedButton::calcRect(RECT* buttonRect, bool isButtonPressed,
+void ImagedButton::calcRect(RECT* prectangleButton, bool isButtonPressed,
                             DWORD textWidth, DWORD textHeight,
                             DWORD imageWidth, DWORD imageHeight,
-                            RECT *textRect, RECT* imageRect)
+                            RECT *prectangleText, RECT* prectangleImage)
 {
-  CopyRect(imageRect, buttonRect);
-  CopyRect(textRect, buttonRect);
+  CopyRect(prectangleImage, prectangleButton);
+  CopyRect(prectangleText, prectangleButton);
 
   if (m_icon != NULL) {
-    long buttonWidth = buttonRect.right - buttonRect.left;
-    long buttonHeight = -buttonRect.top + buttonRect.bottom;
+    long buttonWidth = prectangleButton->right - prectangleButton->left;
+    long buttonHeight = -prectangleButton->top + prectangleButton->bottom;
 
     // Center image horizontally
-    imageRect.left += ((buttonWidth - (long)imageWidth) / 2);
+    prectangleImage->left += ((buttonWidth - (long)imageWidth) / 2);
     // Center image vertically
-    imageRect.top += (((buttonHeight) - (long)imageHeight) / 2) - textHeight;
+    prectangleImage->top += (((buttonHeight) - (long)imageHeight) / 2) - textHeight;
 
     DWORD margin = 10;
-    textRect.top += (textHeight + margin) * 2;
+    prectangleText->top += (textHeight + margin) * 2;
   }
 
   // If button is pressed then press image also
   if (isButtonPressed && !m_isUsingTheme) {
-    OffsetRect(imageRect, 1, 1);
+    OffsetRect(prectangleImage, 1, 1);
   }
 }
 
-void ImagedButton::drawIcon(HDC* dc, RECT* imageRect, bool isPressed, bool isDisabled)
+void ImagedButton::drawIcon(HDC* dc, RECT* prectangleImage, bool isPressed, bool isDisabled)
 {
   DrawState(*dc, NULL, NULL, (LPARAM)*m_icon, 0,
-            imageRect.left, imageRect.top,
-            (imageRect.right - imageRect.left),
-            (imageRect.bottom - imageRect.top), 
+            prectangleImage->left, prectangleImage->top,
+            (prectangleImage->right - prectangleImage->left),
+            (prectangleImage->bottom - prectangleImage->top), 
             (isDisabled ? DSS_DISABLED : DSS_NORMAL) | DST_ICON);
 } // End of drawIcon
 

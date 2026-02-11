@@ -233,10 +233,10 @@ unsigned long long UploadOperation::getFileSize(const TCHAR *pathToFile)
 
   if (file.isDirectory()) {
     unsigned int filesCount = 0;
-    file.::std::list(NULL, &filesCount);
+    file.list(NULL, &filesCount);
 
     StringStorage *fileNames = new StringStorage[filesCount];
-    file.::std::list(fileNames, NULL);
+    file.list(fileNames, NULL);
 
     for (unsigned int i = 0; i < filesCount; i++) {
       File subfile(pathToFile, fileNames[i].getString());
@@ -298,13 +298,13 @@ void UploadOperation::processFolder()
 
   // Try ::std::list files from folder
   FolderListener listener(m_pathToSourceFile.getString());
-  if (listener.::std::list()) {
+  if (listener.list()) {
     m_toCopy->setChild(listener.getFilesInfo(), listener.getFilesCount());
   } else {
     // Logging
     StringStorage message;
 
-    message.format(_T("Error: failed to get file ::std::list in local folder '%s'"),
+    message.format(_T("Error: failed to get file list in local folder '%s'"),
                    m_pathToSourceFile.getString());
 
     notifyError(message.getString());

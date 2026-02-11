@@ -46,9 +46,9 @@ public:
   virtual ~Bitmap();
 
   // Returns bitmap width.
-  int getWidth() const;
+  int width() const;
   // Returns bitmap height.
-  int getHeight() const;
+  int height() const;
 protected:
   HBITMAP m_bitmap;
 

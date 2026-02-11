@@ -21,16 +21,12 @@ list(APPEND library_source
    inffast.c
    infback.c
    gzlib.c
-   framework.h
-   framework.cpp
    deflate.h
    deflate.c
    crc32.h
    compress.c
    crc32.c
    adler32.c
-   _.h
-   _.cpp
 )
 
 
@@ -55,7 +51,7 @@ add_library(${PROJECT_NAME} STATIC ${library_source})
 
 #target_link_directories(${PROJECT_NAME} PRIVATE ${library_link_directories})
 
-target_precompile_headers(${PROJECT_NAME} PRIVATE framework.h)
+#target_precompile_headers(${PROJECT_NAME} PRIVATE framework.h)
 #target_precompile_headers(static_${PROJECT_NAME} PRIVATE framework.h)
 
 #set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)

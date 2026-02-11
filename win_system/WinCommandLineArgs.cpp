@@ -28,7 +28,8 @@
 
 WinCommandLineArgs::WinCommandLineArgs(const TCHAR *cmdLineInWinFormat)
 {
-  UnicodeStringStorage uniCmdLine(StringStorage(cmdLineInWinFormat));
+   StringStorage strstorage(cmdLineInWinFormat);
+  UnicodeStringStorage uniCmdLine(strstorage);
   size_t cmdLen = uniCmdLine.getLength();
   if (cmdLen > 0) {
     int nArgs;

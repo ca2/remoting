@@ -349,7 +349,7 @@ bool RegistryKey::tryOpenSubKey(HKEY key, const TCHAR *subkey, HKEY *openedKey, 
       if (sa != 0) {
         DWORD dwDisposition;
 
-        ret = RegCreateKeyEx(key, subkey, 0, _T(""), 0,
+        ret = RegCreateKeyEx(key, subkey, 0, (LPTSTR) _T(""), 0,
                              KEY_READ | KEY_WRITE,
                              sa, openedKey, &dwDisposition);
       } else {

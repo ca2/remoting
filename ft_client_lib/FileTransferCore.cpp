@@ -90,7 +90,7 @@ const OperationSupport &FileTransferCore::getSupportedOps()
 ::std::vector<FileInfo> *FileTransferCore::getListLocalFolder(const TCHAR *pathToFile)
 {
   FolderListener fl(pathToFile);
-  if (!fl.::std::list()) {
+  if (!fl.list()) {
     throw "FileTransferCore: listLocalFolder";
   }
   m_localFilesInfo.resize(fl.getFilesCount());

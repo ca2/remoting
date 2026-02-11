@@ -22,8 +22,7 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __LOCALMUTEX_H__
-#define __LOCALMUTEX_H__
+#pragma once
 
 #include "util/CommonHeader.h"
 
@@ -65,4 +64,4 @@ private:
   CRITICAL_SECTION m_criticalSection;
 };
 
-#endif // __LOCALMUTEX_H__
+

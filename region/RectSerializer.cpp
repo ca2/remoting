@@ -26,6 +26,8 @@
 #include <tchar.h>
 #include <stdio.h>
 #include "util/Exception.h"
+#include "acme/prototype/geometry2d/rectangle.h"
+
 
 void RectSerializer::toString(const ::int_rectangle &  rect, StringStorage *strOut)
 {
@@ -39,12 +41,12 @@ void RectSerializer::toString(const ::int_rectangle &  rect, StringStorage *strO
 {
   int width, height, x, y;
   TCHAR c;
-  if (_stscanf(strIn->getString(),
-               _T("%dx%d+%d+%d%c"), &width, &height, &x, &y, &c) != 4 ||
+  if (_stscanf(strIn.getString(),
+               (TCHAR *)_T("%dx%d+%d+%d%c"), &width, &height, &x, &y, &c) != 4 ||
       width < 0 || height < 0) {
     StringStorage errMess;
     errMess.format(_T("Invalid string format to convert it to a rectangle")
-                   _T(" (%s)."), strIn->getString());
+                   _T(" (%s)."), strIn.getString());
     throw Exception(errMess.getString());
   }
   return ::int_rectangle(x, y, x + width, y + height);

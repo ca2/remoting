@@ -24,6 +24,8 @@
 #include "framework.h"
 #include "WindowsDisplays.h"
 #include "thread/AutoLock.h"
+#include "acme/prototype/geometry2d/rectangle.h"
+
 
 WindowsDisplays::WindowsDisplays()
 {
@@ -39,10 +41,10 @@ BOOL CALLBACK WindowsDisplays::monitorEnumProc(HMONITOR hMonitor,
                                                LPARAM dwData)
 {
   WindowsDisplays *_this = (WindowsDisplays *)dwData;
-  ::int_rectangle rect(lprcMonitor.left - _this->m_xVirtualScreen,
-            lprcMonitor.top - _this->m_yVirtualScreen,
-            lprcMonitor.right - _this->m_xVirtualScreen,
-            lprcMonitor.bottom - _this->m_yVirtualScreen);
+  ::int_rectangle rect(lprcMonitor->left - _this->m_xVirtualScreen,
+            lprcMonitor->top - _this->m_yVirtualScreen,
+            lprcMonitor->right - _this->m_xVirtualScreen,
+            lprcMonitor->bottom - _this->m_yVirtualScreen);
   _this->m_displayRects.push_back(rect);
   return TRUE;
 }
@@ -64,15 +66,15 @@ void WindowsDisplays::update()
 }
 
 void WindowsDisplays::getDisplayCoordinates(unsigned char displayNumber,
-                                            ::int_rectangle *rect)
+                                            ::int_rectangle *prectangle)
 {
   AutoLock al(&m_displayRectsMutex);
   update();
   displayNumber--;
   if (displayNumber < m_displayRects.size()) {
-    *rect = m_displayRects[displayNumber];
+    *prectangle = m_displayRects[displayNumber];
   } else {
-    rect.clear();
+    ::null(*prectangle);
   }
 }
 

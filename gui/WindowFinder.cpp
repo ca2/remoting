@@ -44,7 +44,7 @@ BOOL CALLBACK WindowFinder::findWindowsByClassFunc(HWND hwnd, LPARAM lParam)
       if (nextWinName.getLength() > 0 && hwnd != 0) {
         for (classNameIter = windowsParam->classNames->begin();
              classNameIter != windowsParam->classNames->end(); classNameIter++) {
-          if (nextWinName.isEqualTo(&(*classNameIter))) {
+          if (nextWinName == *classNameIter) {
             windowsParam->hwndVector->push_back(hwnd);
           }
         }

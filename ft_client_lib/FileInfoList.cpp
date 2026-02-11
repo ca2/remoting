@@ -35,10 +35,10 @@ FileInfoList::FileInfoList(const FileInfo *filesInfo, size_t count)
 {
   setFileInfo(filesInfo[0]);
 
-  FileInfoList *::std::list = fromArray(filesInfo, count);
-  FileInfoList *second = ::std::list->getNext();
+  FileInfoList * plist = fromArray(filesInfo, count);
+  FileInfoList *second = plist->getNext();
 
-  ::std::list->m_next = NULL;
+  plist->m_next = NULL;
 
   if (second != NULL) {
     second->m_prev = this;
@@ -46,7 +46,7 @@ FileInfoList::FileInfoList(const FileInfo *filesInfo, size_t count)
 
   m_next = second;
 
-  delete ::std::list;
+  delete plist;
 }
 
 FileInfoList::~FileInfoList()

@@ -141,8 +141,8 @@ void DibSection::setupBMIStruct(BITMAPINFO *pBmi, const PixelFormat & pf, const 
   pBmi->bmiHeader.biPlanes = 1;
   pBmi->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
   pBmi->bmiHeader.biBitCount = pf.bitsPerPixel;
-  pBmi->bmiHeader.biWidth = dim->width;
-  pBmi->bmiHeader.biHeight = -dim->height;
+  pBmi->bmiHeader.biWidth = dim.cx;
+  pBmi->bmiHeader.biHeight = -dim.cy;
 }
 
 void DibSection::openDIBSection(const PixelFormat & pf, const ::int_size & dim, HWND compatibleWin)

@@ -107,7 +107,7 @@ bool LocalFilesDeleteOperation::deleteFile(File *file)
     unsigned int filesCount;
     StringStorage *files = NULL;
 
-    if (file->::std::list(NULL, &filesCount)) {
+    if (file->list(NULL, &filesCount)) {
       files = new StringStorage[filesCount];
       file->list(files, NULL);
 

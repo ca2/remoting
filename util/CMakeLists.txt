@@ -5,6 +5,25 @@ project(remoting_util)
 
 
 list(APPEND library_source
+   _.cpp
+   _.h
+   AnEventListener.h
+   AnsiStringStorage.cpp
+   AnsiStringStorage.h
+   BrokenHandleException.cpp
+   BrokenHandleException.h
+   CharDefs.h
+   Command.cpp
+   CommandLine.h
+   Command.h
+   CommandLineArgs.h
+   CommandLine.cpp
+   CommandLineFormatHelp.cpp
+   CommandLineFormatHelp.h
+   CommandLineArgs.cpp
+   CommonHeader.h
+   CommandLineFormatException.h
+   CommandLineFormatException.cpp
    ZLibBase.cpp
    ZLibBase.h
    ZlibException.cpp

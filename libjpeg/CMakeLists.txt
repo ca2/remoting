@@ -13,7 +13,6 @@ list(APPEND library_source
    jcarith.c
    jcapistd.c
    jcmarker.c
-   _.cpp
    jdapistd.c
    jcsample.c
    jdarith.c
@@ -22,7 +21,6 @@ list(APPEND library_source
    jdcoefct.c
    jaricom.c
    jcparam.c
-   _.h
    jcinit.c
    jcmaster.c
    jdatadst.c
@@ -84,7 +82,7 @@ add_library(${PROJECT_NAME} STATIC ${library_source})
 
 #target_link_directories(${PROJECT_NAME} PRIVATE ${library_link_directories})
 
-target_precompile_headers(${PROJECT_NAME} PRIVATE framework.h)
+#target_precompile_headers(${PROJECT_NAME} PRIVATE framework.h)
 #target_precompile_headers(static_${PROJECT_NAME} PRIVATE framework.h)
 
 #set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)

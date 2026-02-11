@@ -152,8 +152,8 @@ void AnsiStringStorage::appendString(const char *string)
 
 bool AnsiStringStorage::checkAnsiConversion(StringStorage &string)
 {
-  AnsiStringStorage ansi(&string);
+  AnsiStringStorage ansi(string);
   StringStorage check;
   ansi.toStringStorage(&check);
-  return string.isEqualTo(&check);
+  return string.isEqualTo(check);
 }

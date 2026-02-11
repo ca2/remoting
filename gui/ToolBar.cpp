@@ -190,7 +190,7 @@ int ToolBar::getButtonsWidth()
   return LOWORD(SendMessage(m_hWndToolbar, TB_GETBUTTONSIZE, 0, 0));
 }
 
-int ToolBar::getHeight()
+int ToolBar::height()
 {
   RECT r;
   GetWindowRect(m_hWndToolbar, &r);

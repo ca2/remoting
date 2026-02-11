@@ -51,7 +51,7 @@ PixelFormat Screen::getPixelFormat()
 
 ::int_size Screen::getDesktopDimension()
 {
-  return ::int_size(&m_virtDesktopRect);
+  return m_virtDesktopRect.size();
 }
 
 ::int_rectangle Screen::getDesktopRect()

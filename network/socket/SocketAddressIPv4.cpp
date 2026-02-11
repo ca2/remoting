@@ -152,7 +152,7 @@ SocketAddressIPv4 SocketAddressIPv4::resolve(const TCHAR *host, unsigned short m
   {
     AutoLock l(&s_resolveMutex);
 
-    AnsiStringStorage hostAnsi(&hostStorage);
+    AnsiStringStorage hostAnsi(hostStorage);
 
     hostent *hent = gethostbyname(hostAnsi.getString());
     if (hent == 0) {

@@ -34,17 +34,17 @@ Icon::Icon(HICON icon)
 {
 }
 
-Icon::Icon(Bitmap *bitmap)
+Icon::Icon(Bitmap *pbitmap)
 : m_hasOwnIcon(true), m_icon(NULL)
 {
-  Bitmap mask(bitmap.width(), bitmap.height());
-  fromBitmap(bitmap, &mask);
+  Bitmap mask(pbitmap->width(), pbitmap->height());
+  fromBitmap(pbitmap, &mask);
 }
 
-Icon::Icon(Bitmap *bitmap, Bitmap *mask)
+Icon::Icon(Bitmap *pbitmap, Bitmap *pbitmapMask)
 : m_hasOwnIcon(true), m_icon(NULL)
 {
-  fromBitmap(bitmap, mask);
+  fromBitmap(pbitmap, pbitmapMask);
 }
 
 Icon::Icon(DWORD icon)

@@ -36,10 +36,10 @@ RemoteFolderCreateOperation::RemoteFolderCreateOperation(LogWriter *logWriter,
                                                          const TCHAR *pathToTargetRoot)
 : FileTransferOperation(logWriter)
 {
-  FileInfoList *::std::list = new FileInfoList(file);
-  getRemotePath(::std::list, pathToTargetRoot, &m_pathToTargetFile);
-  // or delete ::std::list->getRoot(); ?
-  delete ::std::list;
+  FileInfoList *plist = new FileInfoList(file);
+  getRemotePath(plist, pathToTargetRoot, &m_pathToTargetFile);
+  // or delete plist->getRoot(); ?
+  delete plist;
 }
 
 RemoteFolderCreateOperation::~RemoteFolderCreateOperation()

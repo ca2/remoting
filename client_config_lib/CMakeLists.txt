@@ -5,6 +5,14 @@ project(remoting_client_config_lib)
 list(APPEND library_source
    framework.cpp
    framework.h
+   ViewerSettingsManager.h
+   ViewerConfig.cpp
+   ViewerConfig.h
+   ViewerSettingsManager.cpp
+   ConnectionConfigSM.h
+   ConnectionConfig.h
+   ConnectionConfig.cpp
+   ConnectionConfigSM.cpp
 )
 
 
@@ -54,5 +62,5 @@ list(APPEND library_include_directories ${CMAKE_CURRENT_SOURCE_DIR})
 list(APPEND library_include_directories ${CMAKE_CURRENT_SOURCE_DIR}/..)
 list(APPEND library_include_directories ${CMAKE_CURRENT_SOURCE_DIR}/../..)
 
-#target_include_directories(${PROJECT_NAME} PRIVATE ${library_include_directories})
+target_include_directories(${PROJECT_NAME} PRIVATE ${library_include_directories})
 

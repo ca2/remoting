@@ -61,10 +61,10 @@ bool WinClipboard::getString(StringStorage *str)
      if (hndData) {
         TCHAR *szData = (TCHAR *)GlobalLock(hndData); 
         StringStorage nativeClipboard = szData;
-        //str->setString(szData);
+        //str.setString(szData);
         GlobalUnlock(hndData); 
         CloseClipboard();
-        *str = removeCR(&nativeClipboard);
+        *str = removeCR(nativeClipboard);
         return true;
       }
     CloseClipboard();
@@ -102,10 +102,10 @@ bool WinClipboard::setString(const StringStorage & serverClipboard)
 
 StringStorage WinClipboard::addCR(const StringStorage & str)
 {
-  const TCHAR *beginString = str->getString();
-  const TCHAR *endString = beginString + str->getLength() + 1; // start + lenght + '\0'
+  const TCHAR *beginString = str.getString();
+  const TCHAR *endString = beginString + str.getLength() + 1; // start + lenght + '\0'
   ::std::vector<TCHAR> chars(beginString, endString);
-  ::std::vector<TCHAR> newChars(str->getLength() * 2 + 1);
+  ::std::vector<TCHAR> newChars(str.getLength() * 2 + 1);
   size_t countLF = 0;
   for (size_t i = 0; i < chars.size(); i++) {
     // if is first byte or previous byte not CR, then add CR
@@ -121,8 +121,8 @@ StringStorage WinClipboard::addCR(const StringStorage & str)
 
 StringStorage WinClipboard::removeCR(const StringStorage & str)
 {
-  const TCHAR *beginString = str->getString();
-  const TCHAR *endString = beginString + str->getLength() + 1; // start + lenght + '\0'
+  const TCHAR *beginString = str.getString();
+  const TCHAR *endString = beginString + str.getLength() + 1; // start + lenght + '\0'
   ::std::vector<TCHAR> chars(beginString, endString);
   ::std::vector<TCHAR> newChars;
   size_t countLF = 0;

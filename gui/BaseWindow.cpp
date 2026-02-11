@@ -24,6 +24,7 @@
 #include "framework.h"
 #include "util/CommonHeader.h"
 #include "BaseWindow.h"
+#include "acme/prototype/geometry2d/_function.h"
 
 BaseWindow::BaseWindow()
 : m_hWnd(0),
@@ -44,7 +45,7 @@ BaseWindow::~BaseWindow()
 
 void BaseWindow::setClass(const StringStorage & className)
 {
-  m_className = *className;
+  m_className = className;
 }
 
 bool BaseWindow::createWindow(const StringStorage & windowName, DWORD style, HWND hWndParent,
@@ -53,7 +54,7 @@ bool BaseWindow::createWindow(const StringStorage & windowName, DWORD style, HWN
   if (m_hWnd) {
     return false;
   }
-  m_windowName = *windowName;
+  m_windowName = windowName;
   m_hWnd = CreateWindow(m_className.getString(), 
                         m_windowName.getString(), 
                         style, 
@@ -294,17 +295,17 @@ HWND BaseWindow::getHWnd() const
 void BaseWindow::setWindowText(const StringStorage & text)
 {
   _ASSERT(m_hWnd != 0);
-  SetWindowText(m_hWnd, text->getString());
+  SetWindowText(m_hWnd, text.getString());
 }
 
 void BaseWindow::redraw(const RECT & rectArea)
 {
   _ASSERT(m_hWnd != 0);
 
-  if (rcArea == 0) {
+  if (::is_empty(rectArea)) {
      InvalidateRect(m_hWnd, NULL, TRUE);
   } else {
-     InvalidateRect(m_hWnd, rcArea, FALSE);
+     InvalidateRect(m_hWnd, &rectArea, FALSE);
   }
 }
 

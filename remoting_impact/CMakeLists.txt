@@ -2,77 +2,89 @@ cmake_minimum_required(VERSION 3.16)
 project(remoting_impact)
 
 
-
 list(APPEND executable_source
+   AboutDialog.cpp
+   AboutDialog.h
+   AuthenticationDialog.cpp
+   AuthenticationDialog.h
+   BuildTime.cpp
+   BuildTime.h
+   ConfigurationDialog.cpp
+   ConfigurationDialog.h
+   ConnectionData.cpp
+   ConnectionData.h
+   ConnectionListener.cpp
+   ConnectionListener.h
+   ControlTrayIcon.cpp
+   ControlTrayIcon.h
+   DesktopWindow.cpp
+   DesktopWindow.h
+   FileExistDialog.cpp
+   FileExistDialog.h
+   FileInfoListView.cpp
+   FileInfoListView.h
+   FileRenameDialog.cpp
+   FileRenameDialog.h
+   FileTransferMainDialog.cpp
+   FileTransferMainDialog.h
+   FsWarningDialog.cpp
+   FsWarningDialog.h
+   HelpDialog.cpp
+   HelpDialog.h
+   LoginDialog.cpp
+   LoginDialog.h
+   NamingDefs.cpp
+   NamingDefs.h
+   NewFolderDialog.cpp
+   NewFolderDialog.h
+   OptionsDialog.cpp
+   OptionsDialog.h
+   ResourceStrings.cpp
+   ResourceStrings.h
+   ScaleManager.cpp
+   ScaleManager.h
+   ViewerCmdLine.cpp
+   ViewerCmdLine.h
+   ViewerCollector.cpp
+   ViewerCollector.h
+   ViewerInstance.cpp
+   ViewerInstance.h
+   ViewerMenu.cpp
+   ViewerMenu.h
+   ViewerVncAuthHandler.cpp
+   ViewerVncAuthHandler.h
+   ViewerWindow.cpp
+   ViewerWindow.h
+   _.cpp
+   _.h
    framework.cpp
    framework.h
-   ViewerCollector.cpp
-   OptionsDialog.cpp
-   ConnectionListener.h
-   AuthenticationDialog.h
-   ScaleManager.h
-   DesktopWindow.cpp
-   FileRenameDialog.h
-   HelpDialog.cpp
-   LoginDialog.h
-   ConnectionListener.cpp
-   FileInfoListView.cpp
-   ViewerCmdLine.h
-   ViewerWindow.h
-   ViewerMenu.cpp
-   BuildTime.h
-   FileTransferMainDialog.h
-   DesktopWindow.h
-   FileTransferMainDialog.cpp
-   HelpDialog.h
-   AuthenticationDialog.cpp
-   ResourceStrings.h
-   AboutDialog.h
-   FsWarningDialog.h
-   NamingDefs.h
-   ScaleManager.cpp
-   ConfigurationDialog.cpp
-   BuildTime.cpp
    main.cpp
-   ConfigurationDialog.h
-   ViewerCollector.h
-   FileExistDialog.cpp
-   ViewerCmdLine.cpp
-   ControlTrayIcon.cpp
-   FileInfoListView.h
-   ViewerWindow.cpp
-   OptionsDialog.h
    remoting_impact.cpp
-   ConnectionData.h
-   FileRenameDialog.cpp
-   NamingDefs.cpp
-   ViewerInstance.h
-   FsWarningDialog.cpp
-   ConnectionData.cpp
-   NewFolderDialog.cpp
    remoting_impact.h
-   LoginDialog.cpp
-   ViewerMenu.h
-   ViewerVncAuthHandler.h
-   ResourceStrings.cpp
-   FileExistDialog.h
-   ViewerInstance.cpp
-   AboutDialog.cpp
-   ControlTrayIcon.h
-   ViewerVncAuthHandler.cpp
-   NewFolderDialog.h
-   _.h
-   _.cpp
+   remoting_impact.rc
 )
 
 
 list(APPEND executable_references
    acme
+   remoting_client_config_lib
+   remoting_config_lib
+   remoting_file_lib
+   remoting_ft_client_lib
+   remoting_ft_common
+   remoting_gui
+   remoting_io_lib
+   remoting_libjpeg
+   remoting_log_writer
    remoting_network
+   remoting_region
+   remoting_rfb
    remoting_thread
    remoting_util
    remoting_viewer_core
-   remoting_libjpeg
+   remoting_win_system
+   remoting_zlib
 )
 
 
@@ -103,7 +115,7 @@ if(${WIN32})
    target_compile_options(${PROJECT_NAME} PRIVATE "/bigobj")
    target_link_options(${PROJECT_NAME} PRIVATE "/DEFAULTLIB:msvcrt$<$<CONFIG:Debug>:d>")
    target_link_options(${PROJECT_NAME} PRIVATE "/SUBSYSTEM:WINDOWS")
-   target_link_libraries(${PROJECT_NAME} PRIVATE ${executable_references} ${global_library_references})
+   target_link_libraries(${PROJECT_NAME} PRIVATE Ws2_32 Version Comctl32 ${executable_references} ${global_library_references})
 
 elseif(${LINUX} OR ${__BSD__} OR ${ANDROID})
    target_compile_options(${PROJECT_NAME} PRIVATE $<$<COMPILE_LANGUAGE:CXX>:-fpermissive  ${EXTRA_CXX_TARGET_COMPILER_OPTIONS}>)
@@ -114,12 +126,24 @@ elseif(${LINUX} OR ${__BSD__} OR ${ANDROID})
 endif ()
 
 add_dependencies(${PROJECT_NAME} acme)
+add_dependencies(${PROJECT_NAME} remoting_client_config_lib)
+add_dependencies(${PROJECT_NAME} remoting_config_lib)
+add_dependencies(${PROJECT_NAME} remoting_file_lib)
+add_dependencies(${PROJECT_NAME} remoting_ft_client_lib)
+add_dependencies(${PROJECT_NAME} remoting_ft_common)
+add_dependencies(${PROJECT_NAME} remoting_gui)
+add_dependencies(${PROJECT_NAME} remoting_io_lib)
 add_dependencies(${PROJECT_NAME} remoting_libjpeg)
+add_dependencies(${PROJECT_NAME} remoting_log_writer)
 add_dependencies(${PROJECT_NAME} remoting_zlib)
 add_dependencies(${PROJECT_NAME} remoting_network)
+add_dependencies(${PROJECT_NAME} remoting_region)
+add_dependencies(${PROJECT_NAME} remoting_rfb)
 add_dependencies(${PROJECT_NAME} remoting_thread)
 add_dependencies(${PROJECT_NAME} remoting_util)
 add_dependencies(${PROJECT_NAME} remoting_viewer_core)
+add_dependencies(${PROJECT_NAME} remoting_win_system)
+add_dependencies(${PROJECT_NAME} remoting_zlib)
 
 
 list(APPEND executable_include_directories ${CMAKE_CURRENT_SOURCE_DIR})

@@ -27,7 +27,7 @@
 
 #include "util/CommonHeader.h"
 #include "rfb/PixelFormat.h"
-
+#include "acme/prototype/geometry2d/rectangle.h"
 
 
 // This class get info for a windows desktop.

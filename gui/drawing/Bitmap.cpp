@@ -55,7 +55,7 @@ Bitmap::~Bitmap()
   }
 }
 
-int Bitmap::getWidth() const
+int Bitmap::width() const
 {
   BITMAP bitmap;
   if (GetObject(m_bitmap, sizeof(BITMAP), &bitmap) == 0) {
@@ -64,7 +64,7 @@ int Bitmap::getWidth() const
   return bitmap.bmWidth;
 }
 
-int Bitmap::getHeight() const
+int Bitmap::height() const
 {
   BITMAP bitmap;
   if (GetObject(m_bitmap, sizeof(BITMAP), &bitmap) == 0) {

@@ -135,7 +135,7 @@ bool Environment::isItTheSamePathAsCurrent(unsigned int pId)
   pHandle.getProcessModulePath(&testedModulePath);
   getCurrentModulePath(&currModulePath);
 
-  return currModulePath.isEqualTo(&testedModulePath);
+  return currModulePath.isEqualTo(testedModulePath);
 }
 
 bool Environment::getCurrentModuleFolderPath(StringStorage *out)
@@ -147,7 +147,7 @@ bool Environment::getCurrentModuleFolderPath(StringStorage *out)
   size_t lastPos = out->findLast(_T('\\'));
 
   if (lastPos != (size_t)-1) {
-    out->getSubstring(out, 0, std::max(lastPos - 1, (size_t) 0));
+    out->getSubstring(out, 0, ::maximum(lastPos - 1, (size_t) 0));
   }
 
   return true;
