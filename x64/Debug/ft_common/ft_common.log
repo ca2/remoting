@@ -1,0 +1,8 @@
+﻿  application_build_helper_x64.exe --defer-prepare-folder C:\Users\camilo\code\main\source\remoting\ft_common\ x64 Debug
+  2026-02-10 15:31:55
+  FileInfo.cpp
+  FileTransferException.cpp
+  FolderListener.cpp
+  FTMessage.cpp
+  OperationNotSupportedException.cpp
+  WinFilePath.cpp

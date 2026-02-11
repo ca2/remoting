@@ -1,0 +1,4 @@
+﻿  application_build_helper_x64.exe --defer-prepare-folder C:\Users\camilo\code\main\source\remoting\win-event-log\ x64 Debug
+  2026-02-10 15:31:55
+  WinEventLog.cpp
+C:\Users\camilo\code\main\source\remoting\win-event-log\WinEventLog.cpp(27,10): error C1083: Cannot open include file: 'remoting_node_desktop/NamingDefs.h': No such file or directory

@@ -1,2 +1,2 @@
 cmake_minimum_required(VERSION 3.16)
-project(remoting_ft_common)
+project(remoting_gui)

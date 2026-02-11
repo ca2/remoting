@@ -1,0 +1,1429 @@
+﻿  application_build_helper_x64.exe --defer-prepare-folder C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ x64 Debug
+  2026-02-10 15:31:55
+  AboutDialog.cpp
+  ConnectCommand.cpp
+  ConnectStringParser.cpp
+  ControlApplication.cpp
+  ControlAuth.cpp
+  ControlAuthDialog.cpp
+  ControlAuthException.cpp
+  ControlCommand.cpp
+  ControlCommandLine.cpp
+  ControlGate.cpp
+  ControlMessage.cpp
+  ControlPipeName.cpp
+  ControlProxy.cpp
+  ControlTrayIcon.cpp
+  DisconnectAllCommand.cpp
+  MakeRfbConnectionCommand.cpp
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(50,55): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlGate.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(61,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlGate.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(63,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlGate.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(64,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlGate.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(65,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlGate.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(66,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlGate.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(68,25): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlGate.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(69,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlGate.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(70,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlGate.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(71,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlGate.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(73,47): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlGate.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(50,62): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlGate.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(60,57): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlGate.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(62,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlGate.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(63,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlGate.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(64,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlGate.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\AboutDialog.cpp(27,10): error C1083: Cannot open include file: 'remoting_node/resource.h': No such file or directory
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(65,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlGate.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(67,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlGate.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(68,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlGate.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(69,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlGate.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(70,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlGate.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(72,45): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlGate.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(77,30): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlGate.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\Channel.h(50,30): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlGate.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlAuthDialog.cpp(27,10): error C1083: Cannot open include file: 'remoting_node/resource.h': No such file or directory
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlGate.h(41,39): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlGate.cpp')
+  
+  NamedPipeTransport.cpp
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(50,62): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(60,57): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(62,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(63,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(64,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(65,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(67,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(68,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(69,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(70,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(72,45): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(77,30): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(50,55): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(61,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(63,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(64,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(65,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(66,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(68,25): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(69,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(70,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(71,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(73,47): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(50,62): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(60,57): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(62,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(63,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(64,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(65,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(67,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(68,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(69,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(70,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(72,45): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(77,30): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\Channel.h(50,30): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(50,55): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(61,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(63,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(64,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(65,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(66,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(68,25): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(69,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(70,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(71,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(73,47): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+  Notificator.cpp
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlGate.h(41,39): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\PortMappingContainer.h(78,56): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\PortMappingContainer.h(85,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\Channel.h(50,30): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlGate.h(41,39): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlMessage.h(82,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlMessage.h(89,25): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlMessage.h(95,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\PortMappingContainer.h(78,56): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\PortMappingContainer.h(85,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\util\CommandLine.h(32,14): warning C4091: 'typedef ': ignored on left of 'UseArgument' when no variable is declared
+  (compiling source file 'ControlCommandLine.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\Channel.h(50,30): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\Transport.h(65,30): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlCommandLine.h(64,52): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlCommandLine.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketAddressIPv4.h(54,37): error C4596: 'getPort': illegal qualified name in member declaration
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketAddressIPv4.h(56,82): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(62,62): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(68,53): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(73,22): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(79,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(91,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(102,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(109,30): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(120,61): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(130,57): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(148,80): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(149,81): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(152,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(153,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\NamedPipe.h(65,55): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\NamedPipe.h(74,62): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\PipeClient.h(37,83): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\security\SecurityIdentifier.h(71,38): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\security\SecurityIdentifier.h(76,23): error C4596: '{ctor}': illegal qualified name in member declaration
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\security\SecurityIdentifier.h(95,49): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\security\SecurityIdentifier.h(104,74): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\security\SecurityIdentifier.h(111,80): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\security\SecurityDescriptor.h(55,53): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\security\SecurityDescriptor.h(63,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\DynamicLibrary.h(43,47): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\PipeServer.h(56,51): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\PipeServer.h(70,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\PipeServer.h(76,22): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\PipeServer.h(88,33): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\TransportFactory.h(57,81): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\TransportFactory.h(71,78): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\TransportFactory.h(81,72): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\TransportFactory.h(91,72): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(50,55): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(61,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(63,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(64,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(65,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(66,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(68,25): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(69,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(70,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(71,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(73,47): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(50,62): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(60,57): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(62,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(63,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(64,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(65,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(67,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(68,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(69,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(70,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(72,45): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(77,30): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\PortMappingContainer.h(78,56): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\PortMappingContainer.h(85,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(50,55): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(61,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(63,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(64,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(65,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(66,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(68,25): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(69,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(70,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(71,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(73,47): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(50,62): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(60,57): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(62,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(63,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(64,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(65,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(67,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(68,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(69,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(70,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(72,45): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(77,30): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\Channel.h(50,30): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlGate.h(41,39): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+  OutgoingConnectionDialog.cpp
+C:\Users\camilo\code\main\source\remoting\server_config_lib\PortMappingContainer.h(78,56): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\PortMappingContainer.h(85,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+  ReloadConfigCommand.cpp
+  RemoteException.cpp
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(50,55): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(61,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(63,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(64,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(65,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(66,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(68,25): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(69,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(70,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(71,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(73,47): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(50,62): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(60,57): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(62,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(63,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(64,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(65,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(67,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(68,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(69,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(70,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(72,45): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(77,30): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\Channel.h(50,30): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlGate.h(41,39): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\PortMappingContainer.h(78,56): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\PortMappingContainer.h(85,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+  RfbClientInfo.cpp
+C:\Users\camilo\code\main\source\remoting\server_config_lib\ServerConfig.h(76,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\ServerConfig.h(84,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlMessage.h(82,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlMessage.h(89,25): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlMessage.h(95,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(73,39): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(81,61): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(89,35): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(96,37): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(103,33): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(112,80): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(148,52): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(156,52): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(162,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(170,57): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ConnectCommand.h(56,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ConnectCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\ServerConfig.h(76,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\ServerConfig.h(84,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\RegistrySecurityAttributes.h(48,38): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\util\ListenerContainer.h(56,25): error C3878: syntax error: unexpected token 'it' following 'expression'
+  SetPasswordsDialog.cpp
+  (compiling source file 'ControlApplication.cpp')
+      C:\Users\camilo\code\main\source\remoting\util\ListenerContainer.h(56,25):
+      the template instantiation context (the oldest one first) is
+          C:\Users\camilo\code\main\source\remoting\util\ListenerContainer.h(46,25):
+          while compiling class template 'ListenerContainer'
+  
+C:\Users\camilo\code\main\source\remoting\util\ListenerContainer.h(56,5): error C7510: 'iterator': use of dependent type name must be prefixed with 'typename'
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\util\ListenerContainer.h(79,25): error C3878: syntax error: unexpected token 'it' following 'expression'
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\util\ListenerContainer.h(79,5): error C7510: 'iterator': use of dependent type name must be prefixed with 'typename'
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(50,55): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(61,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(63,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(64,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(65,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(66,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(68,25): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(69,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(70,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(71,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(73,47): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(50,62): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(60,57): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(62,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(63,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(64,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(65,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(67,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(68,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(69,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(70,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(72,45): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(77,30): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\Channel.h(50,30): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(50,55): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(61,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(63,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(64,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(65,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(66,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(68,25): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(69,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(70,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(71,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(73,47): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(50,62): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(60,57): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(62,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(63,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(64,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(65,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(67,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(68,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(69,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(70,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(72,45): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(77,30): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\Channel.h(50,30): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlGate.h(41,39): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\PortMappingContainer.h(78,56): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\PortMappingContainer.h(85,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlGate.h(41,39): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\ServerConfig.h(76,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\ServerConfig.h(84,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\PortMappingContainer.h(78,56): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\PortMappingContainer.h(85,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlMessage.h(82,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlMessage.h(89,25): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlMessage.h(95,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(73,39): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(81,61): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(89,35): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(96,37): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(103,33): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(112,80): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(148,52): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(156,52): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(162,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(170,57): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlProxy.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\ServerConfig.h(76,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\ServerConfig.h(84,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlGate.h(41,39): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(50,55): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(61,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(63,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(64,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(65,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(66,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(68,25): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(69,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(70,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(71,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(73,47): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(50,62): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(60,57): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(62,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(63,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(64,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(65,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(67,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(68,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(69,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(70,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(72,45): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(77,30): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\PortMappingContainer.h(78,56): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\PortMappingContainer.h(85,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlAuth.h(42,11): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlAuth.h(47,24): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\security\SecurityIdentifier.h(71,38): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\security\SecurityIdentifier.h(76,23): error C4596: '{ctor}': illegal qualified name in member declaration
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\security\SecurityIdentifier.h(95,49): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\security\SecurityIdentifier.h(104,74): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\security\SecurityIdentifier.h(111,80): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\security\SecurityDescriptor.h(55,53): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\security\SecurityDescriptor.h(63,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\RegistrySecurityAttributes.h(48,38): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\util\ListenerContainer.h(56,25): error C3878: syntax error: unexpected token 'it' following 'expression'
+  (compiling source file 'ControlMessage.cpp')
+      C:\Users\camilo\code\main\source\remoting\util\ListenerContainer.h(56,25):
+      the template instantiation context (the oldest one first) is
+          C:\Users\camilo\code\main\source\remoting\util\ListenerContainer.h(46,25):
+          while compiling class template 'ListenerContainer'
+  
+C:\Users\camilo\code\main\source\remoting\util\ListenerContainer.h(56,5): error C7510: 'iterator': use of dependent type name must be prefixed with 'typename'
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\util\ListenerContainer.h(79,25): error C3878: syntax error: unexpected token 'it' following 'expression'
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\util\ListenerContainer.h(79,5): error C7510: 'iterator': use of dependent type name must be prefixed with 'typename'
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlMessage.h(82,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlMessage.h(89,25): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlMessage.h(95,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(73,39): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(81,61): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(89,35): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(96,37): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(103,33): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(112,80): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(148,52): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(156,52): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(162,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(170,57): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlApplication.h(109,55): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\util\VncPassCrypt.h(49,29): error C4596: 'getPlainPass': illegal qualified name in member declaration
+  (compiling source file 'ControlMessage.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlMessage.cpp(33,10): error C1083: Cannot open include file: 'remoting_node_desktop/NamingDefs.h': No such file or directory
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlPipeName.cpp(28,10): error C1083: Cannot open include file: 'remoting_node_desktop/NamingDefs.h': No such file or directory
+  ShareAppCommand.cpp
+C:\Users\camilo\code\main\source\remoting\server_config_lib\ServerConfig.h(76,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\ServerConfig.h(84,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlAuth.h(42,11): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlAuth.h(47,24): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\util\DesCrypt.h(69,15): warning C5033: 'register' is no longer a supported storage class
+  (compiling source file 'ControlAuth.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\util\DesCrypt.h(70,15): warning C5033: 'register' is no longer a supported storage class
+  (compiling source file 'ControlAuth.cpp')
+  
+  ShareDisplayCommand.cpp
+  ShareFullCommand.cpp
+C:\Users\camilo\code\main\source\remoting\server_config_lib\ServerConfig.h(76,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\ServerConfig.h(84,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlMessage.h(82,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlMessage.h(89,25): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlMessage.h(95,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(73,39): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(81,61): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(89,35): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(96,37): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(103,33): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(112,80): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(148,52): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(156,52): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(162,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(170,57): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\DisconnectAllCommand.h(56,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'DisconnectAllCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\ServerConfig.h(76,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\ServerConfig.h(84,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlMessage.h(82,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlMessage.h(89,25): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlMessage.h(95,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(73,39): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(81,61): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(89,35): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(96,37): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(103,33): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(112,80): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(148,52): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(156,52): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(162,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(170,57): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\MakeRfbConnectionCommand.h(60,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'MakeRfbConnectionCommand.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\DisconnectAllCommand.h(56,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\SharePrimaryCommand.h(38,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ShareWindowCommand.h(39,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ShareFullCommand.h(38,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ShareAppCommand.h(38,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlAuth.h(42,11): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlAuth.h(47,24): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ConnectCommand.h(56,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ShutdownCommand.h(56,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlApplication.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\util\VncPassCrypt.h(49,29): error C4596: 'getPlainPass': illegal qualified name in member declaration
+  (compiling source file 'ControlApplication.cpp')
+  
+  SharePrimaryCommand.cpp
+  ShareRectCommand.cpp
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlApplication.cpp(45,10): error C1083: Cannot open include file: 'remoting_node_desktop/NamingDefs.h': No such file or directory
+  ShareWindowCommand.cpp
+C:\Users\camilo\code\main\source\remoting\server_config_lib\ServerConfig.h(76,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\ServerConfig.h(84,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\security\SecurityIdentifier.h(71,38): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\security\SecurityIdentifier.h(76,23): error C4596: '{ctor}': illegal qualified name in member declaration
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\security\SecurityIdentifier.h(95,49): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\security\SecurityIdentifier.h(104,74): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\security\SecurityIdentifier.h(111,80): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\security\SecurityDescriptor.h(55,53): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\security\SecurityDescriptor.h(63,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\server_config_lib\RegistrySecurityAttributes.h(48,38): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\util\ListenerContainer.h(56,25): error C3878: syntax error: unexpected token 'it' following 'expression'
+  (compiling source file 'ControlTrayIcon.cpp')
+      C:\Users\camilo\code\main\source\remoting\util\ListenerContainer.h(56,25):
+      the template instantiation context (the oldest one first) is
+          C:\Users\camilo\code\main\source\remoting\util\ListenerContainer.h(46,25):
+          while compiling class template 'ListenerContainer'
+  
+C:\Users\camilo\code\main\source\remoting\util\ListenerContainer.h(56,5): error C7510: 'iterator': use of dependent type name must be prefixed with 'typename'
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\util\ListenerContainer.h(79,25): error C3878: syntax error: unexpected token 'it' following 'expression'
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\util\ListenerContainer.h(79,5): error C7510: 'iterator': use of dependent type name must be prefixed with 'typename'
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+  ShutdownCommand.cpp
+  SocketIPv4Transport.cpp
+C:\Users\camilo\code\main\source\remoting\io_lib\Channel.h(50,30): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlGate.h(41,39): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlMessage.h(82,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlMessage.h(89,25): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlMessage.h(95,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(73,39): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(81,61): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(89,35): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(96,37): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(103,33): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(112,80): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(148,52): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(156,52): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(162,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlProxy.h(170,57): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\Transport.h(65,30): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketAddressIPv4.h(54,37): error C4596: 'getPort': illegal qualified name in member declaration
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketAddressIPv4.h(56,82): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(62,62): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(68,53): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(73,22): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(79,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(91,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(102,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(109,30): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(120,61): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(130,57): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(148,80): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(149,81): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(152,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\socket\SocketIPv4.h(153,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\NamedPipe.h(65,55): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\NamedPipe.h(74,62): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\PipeClient.h(37,83): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\DynamicLibrary.h(43,47): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\PipeServer.h(56,51): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\PipeServer.h(70,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\PipeServer.h(76,22): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\win_system\PipeServer.h(88,33): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\TransportFactory.h(57,81): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\TransportFactory.h(71,78): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\TransportFactory.h(81,72): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\TransportFactory.h(91,72): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlApplication.h(109,55): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\UpdateRemoteConfigCommand.h(55,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\DisconnectAllCommand.h(56,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ShutdownCommand.h(56,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\MakeRfbConnectionCommand.h(60,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\UpdateLocalConfigCommand.h(52,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'ControlTrayIcon.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\remoting_control_desktop\ControlTrayIcon.cpp(40,10): error C1083: Cannot open include file: 'remoting_node/resource.h': No such file or directory
+  Transport.cpp

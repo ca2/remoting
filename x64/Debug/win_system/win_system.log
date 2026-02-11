@@ -1,0 +1,47 @@
+﻿  00:00:00 288 task 1> safe_create_file : CreateFileW failed \\?\C:\Users\camilo\code\main\source\app\_matter\main\sl-si\sl-si\err\user\authentication\not_licensed.xml 32 dwDesiredAccess=2147483648 dwShareMode=0 lpSecurityAttributes=0x0 dwCreationDisposition=3 dwFlagsAndAttributes=128 hTemplateFile=0x0 "The process cannot access the file because it is being used by another process.
+  
+  "
+  
+  
+  
+  
+        Error ---------------------------  ---   --   -    - 
+                                                          --- --  -    -
+                                                                        --  -
+        
+        estatus="failed status=-7ffff056..." sharingViolation
+        Create File has failed.path = "C:/Users/camilo/code/main/source/app/_matter/main/sl-si/sl-si/err/user/authentication/not_licensed.xml"
+        status = "sharingViolation"
+        status_code = (-2147479638)
+        os_error_message = "(Unknown error code type :1) (Error code :1)"
+        
+        
+        
+        Callstack ---------  ---   --   -    - 
+        
+        C:\Users\camilo\code\integration\console_build_tools\source\app\acme\operating_system\windows\callstack.cpp (129)                                                      : 16 : platform::node::get_call_stack_frames
+        C:\Users\camilo\code\integration\console_build_tools\source\app\acme\operating_system\windows\callstack.cpp (150)                                                      : 15 : platform::node::get_call_stack_trace
+        C:\Users\camilo\code\integration\console_build_tools\source\app\acme\exception\exception.cpp (74)                                                                      : 14 : exception::exception
+        C:\Users\camilo\code\integration\console_build_tools\source\app\acme\exception\exception.cpp (28)                                                                      : 13 : exception::exception
+        C:\Users\camilo\code\integration\console_build_tools\source\app\acme\filesystem\file\exception.cpp (88)                                                                : 12 : file::exception::exception
+        C:\Users\camilo\code\integration\console_build_tools\operating_system\operating_system-windows_common\acme_windows_common\file.cpp (215)                               : 11 : acme_windows_common::file::open
+        C:\Users\camilo\code\integration\console_build_tools\source\app\acme\filesystem\filesystem\file_system.cpp (181)                                                       : 10 : file_system::get_file
+        C:\Users\camilo\code\integration\console_build_tools\source\console_build_tools\application_build_helper\application_build_helper\zip_matter.cpp (288)                 : 09 : application_build_helper::application_build_helper::zip_matter
+        C:\Users\camilo\code\integration\console_build_tools\source\console_build_tools\application_build_helper\application_build_helper\prepare_application_matter.cpp (113) : 08 : application_build_helper::application_build_helper::_prepare_application_matter
+        C:\Users\camilo\code\integration\console_build_tools\source\console_build_tools\application_build_helper\application.cpp (616)                                         : 07 : application_build_helper::application::application_build_helper_main
+        C:\Users\camilo\code\integration\console_build_tools\source\console_build_tools\application_build_helper\application.cpp (150)                                         : 06 : application_build_helper::application::main
+        C:\Users\camilo\code\integration\console_build_tools\source\app\acme\platform\node.cpp (388)                                                                           : 05 : platform::node::node_implement_main
+        C:\Users\camilo\code\integration\console_build_tools\source\app\acme\platform\system.cpp (293)                                                                         : 04 : platform::system::application_main
+        C:\Users\camilo\code\integration\console_build_tools\source\app\acme\inline\implement_console.h (117)                                                                  : 03 : wmain
+        D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl (288)                                                                                              : 02 : __scrt_common_main_seh
+        (null) (0)                                                                                                                                                             : 01 : BaseThreadInitThunk
+        (null) (0)                                                                                                                                                             : 00 : RtlUserThreadStart
+        
+        
+        ------------------------------------------------------------------------
+  
+  
+  
+  
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(156,5): error MSB3073: The command "application_build_helper --defer-prepare-folder C:\Users\camilo\code\main\source\remoting\win_system\ x64 Debug
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(156,5): error MSB3073: :VCEnd" exited with code 2147479638.

@@ -1,0 +1,18 @@
+﻿  application_build_helper_x64.exe --defer-prepare-folder C:\Users\camilo\code\main\source\remoting\gui\ x64 Debug
+  2026-02-10 15:31:56
+  BalloonTip.cpp
+  BaseDialog.cpp
+  BaseWindow.cpp
+  DibFrameBuffer.cpp
+  CheckBox.cpp
+  ComboBox.cpp
+  CommonControlsEx.cpp
+  Control.cpp
+  FilteredTextBox.cpp
+  ImagedButton.cpp
+  ListBox.cpp
+  ListView.cpp
+  Menu.cpp
+  MessageWindow.cpp
+  NotifyIcon.cpp
+  NotifyIconWindow.cpp

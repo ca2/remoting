@@ -1,0 +1,2 @@
+app/main
+remoting/client_config_lib

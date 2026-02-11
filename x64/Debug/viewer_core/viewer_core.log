@@ -1,0 +1,76 @@
+﻿  application_build_helper_x64.exe --defer-prepare-folder C:\Users\camilo\code\main\source\remoting\viewer_core\ x64 Debug
+  2026-02-10 15:31:57
+  AuthHandler.cpp
+  CapabilitiesManager.cpp
+  CapsContainer.cpp
+  CoreEventsAdapter.cpp
+C:\Users\camilo\code\main\source\remoting\viewer_core\AuthHandler.cpp(75,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+C:\Users\camilo\code\main\source\remoting\viewer_core\CapabilitiesManager.cpp(34,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+C:\Users\camilo\code\main\source\remoting\viewer_core\CapsContainer.cpp(138,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+C:\Users\camilo\code\main\source\remoting\viewer_core\CoreEventsAdapter.cpp(70,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+  CursorPainter.cpp
+  DecoderOfRectangle.cpp
+  FbUpdateNotifier.cpp
+C:\Users\camilo\code\main\source\remoting\viewer_core\DecoderOfRectangle.cpp(69,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+  FileTransferCapability.cpp
+C:\Users\camilo\code\main\source\remoting\viewer_core\CursorPainter.cpp(149,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+C:\Users\camilo\code\main\source\remoting\viewer_core\FbUpdateNotifier.cpp(223,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+C:\Users\camilo\code\main\source\remoting\viewer_core\FileTransferCapability.cpp(225,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+  LastRectDecoder.cpp
+  PseudoDecoder.cpp
+  RawDecoder.cpp
+  RemoteViewerCore.cpp
+  RfbClientToServerMessage.cpp
+  RfbCutTextEventClientMessage.cpp
+  RfbFramebufferUpdateRequestClientMessage.cpp
+C:\Users\camilo\code\main\source\remoting\viewer_core\RfbFramebufferUpdateRequestClientMessage.cpp(49,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+C:\Users\camilo\code\main\source\remoting\viewer_core\RawDecoder.cpp(91,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+C:\Users\camilo\code\main\source\remoting\viewer_core\RemoteViewerCore.cpp(1523,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+  RfbKeyEventClientMessage.cpp
+  RfbPointerEventClientMessage.cpp
+C:\Users\camilo\code\main\source\remoting\viewer_core\PseudoDecoder.cpp(40,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+C:\Users\camilo\code\main\source\remoting\viewer_core\RfbKeyEventClientMessage.cpp(46,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+  RfbSetEncodingsClientMessage.cpp
+C:\Users\camilo\code\main\source\remoting\viewer_core\RfbSetEncodingsClientMessage.cpp(54,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+  RfbSetPixelFormatClientMessage.cpp
+C:\Users\camilo\code\main\source\remoting\viewer_core\RfbSetPixelFormatClientMessage.cpp(76,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+  TcpConnection.cpp
+C:\Users\camilo\code\main\source\remoting\viewer_core\TcpConnection.cpp(206,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+C:\Users\camilo\code\main\source\remoting\viewer_core\RfbCutTextEventClientMessage.cpp(68,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+C:\Users\camilo\code\main\source\remoting\viewer_core\RfbPointerEventClientMessage.cpp(48,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+  UpdateRequestSender.cpp
+  VncAuthentication.cpp
+C:\Users\camilo\code\main\source\remoting\viewer_core\UpdateRequestSender.cpp(142,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+C:\Users\camilo\code\main\source\remoting\viewer_core\VncAuthentication.cpp(58,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+  CompressionLevel.cpp
+C:\Users\camilo\code\main\source\remoting\viewer_core\CompressionLevel.cpp(56,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+  CopyRectDecoder.cpp
+C:\Users\camilo\code\main\source\remoting\viewer_core\CopyRectDecoder.cpp(53,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+  Decoder.cpp
+C:\Users\camilo\code\main\source\remoting\viewer_core\Decoder.cpp(91,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+C:\Users\camilo\code\main\source\remoting\viewer_core\LastRectDecoder.cpp(36,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+C:\Users\camilo\code\main\source\remoting\viewer_core\RfbClientToServerMessage.cpp(34,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+  DecoderStore.cpp
+  DesktopSizeDecoder.cpp
+C:\Users\camilo\code\main\source\remoting\viewer_core\DesktopSizeDecoder.cpp(36,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+C:\Users\camilo\code\main\source\remoting\viewer_core\DecoderStore.cpp(130,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+  HexTileDecoder.cpp
+  JpegDecompressor.cpp
+  JpegQualityLevel.cpp
+C:\Users\camilo\code\main\source\remoting\viewer_core\JpegDecompressor.cpp(147,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+C:\Users\camilo\code\main\source\remoting\viewer_core\JpegQualityLevel.cpp(56,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+  PointerPosDecoder.cpp
+  RichCursorDecoder.cpp
+  RreDecoder.cpp
+  TightDecoder.cpp
+C:\Users\camilo\code\main\source\remoting\viewer_core\PointerPosDecoder.cpp(36,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+C:\Users\camilo\code\main\source\remoting\viewer_core\RreDecoder.cpp(61,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+C:\Users\camilo\code\main\source\remoting\viewer_core\RichCursorDecoder.cpp(36,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+C:\Users\camilo\code\main\source\remoting\viewer_core\TightDecoder.cpp(477,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+  VncAuthenticationHandler.cpp
+  WatermarksController.cpp
+  ZrleDecoder.cpp
+C:\Users\camilo\code\main\source\remoting\viewer_core\VncAuthenticationHandler.cpp(55,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+C:\Users\camilo\code\main\source\remoting\viewer_core\ZrleDecoder.cpp(347,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+C:\Users\camilo\code\main\source\remoting\viewer_core\WatermarksController.cpp(151,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?
+C:\Users\camilo\code\main\source\remoting\viewer_core\HexTileDecoder.cpp(106,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "framework.h"' to your source?

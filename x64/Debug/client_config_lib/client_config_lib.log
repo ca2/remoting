@@ -1,0 +1,6 @@
+﻿  application_build_helper_x64.exe --defer-prepare-folder C:\Users\camilo\code\main\source\remoting\client_config_lib\ x64 Debug
+  2026-02-10 15:31:58
+  ConnectionConfig.cpp
+  ConnectionConfigSM.cpp
+  ViewerConfig.cpp
+  ViewerSettingsManager.cpp

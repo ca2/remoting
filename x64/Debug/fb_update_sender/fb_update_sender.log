@@ -1,0 +1,167 @@
+﻿  application_build_helper_x64.exe --defer-prepare-folder C:\Users\camilo\code\main\source\remoting\fb_update_sender\ x64 Debug
+  2026-02-10 15:31:55
+  CursorUpdates.cpp
+  UpdateSender.cpp
+  UpdSenderMsgDefs.cpp
+  ViewPort.cpp
+  ViewPortState.cpp
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(50,62): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(60,57): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(62,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(63,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(64,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(65,36): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(67,32): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(68,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(69,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(70,34): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(72,45): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(77,30): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\BufferedOutputStream.h(53,62): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\BufferedOutputStream.h(60,22): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\network\RfbOutputGate.h(60,30): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\Channel.h(50,30): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(50,55): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(61,50): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(63,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(64,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(65,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(66,29): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(68,25): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(69,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(70,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(71,27): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\io_lib\DataInputStream.h(73,47): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\rfb_sconn\Encoder.h(97,66): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\rfb_sconn\HextileEncoder.h(40,66): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\rfb_sconn\HextileEncoder.h(45,58): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\rfb_sconn\HextileEncoder.h(45,64): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\rfb_sconn\TightEncoder.h(54,66): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\rfb_sconn\TightEncoder.h(62,52): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\rfb_sconn\TightEncoder.h(62,58): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\rfb_sconn\TightEncoder.h(65,66): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\rfb_sconn\TightEncoder.h(71,53): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\rfb_sconn\TightEncoder.h(71,59): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\rfb_sconn\TightEncoder.h(77,56): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\rfb_sconn\TightEncoder.h(77,62): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\rfb_sconn\TightEncoder.h(83,58): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\rfb_sconn\TightEncoder.h(83,64): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\rfb_sconn\TightEncoder.h(88,57): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\rfb_sconn\TightEncoder.h(116,48): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\rfb_sconn\TightEncoder.h(116,54): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\rfb_sconn\TightEncoder.h(123,51): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\rfb_sconn\TightEncoder.h(123,57): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\rfb_sconn\TightEncoder.h(127,58): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\rfb_sconn\TightEncoder.h(131,48): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
+  (compiling source file 'UpdateSender.cpp')
+  
+C:\Users\camilo\code\main\source\remoting\fb_update_sender\ViewPort.cpp(68,39): error C2102: '&' requires l-value
+C:\Users\camilo\code\main\source\remoting\fb_update_sender\ViewPort.cpp(103,51): error C2102: '&' requires l-value
+C:\Users\camilo\code\main\source\remoting\fb_update_sender\UpdateSender.cpp(58,42): error C2102: '&' requires l-value
+C:\Users\camilo\code\main\source\remoting\fb_update_sender\UpdateSender.cpp(138,60): error C2102: '&' requires l-value
+C:\Users\camilo\code\main\source\remoting\fb_update_sender\UpdateSender.cpp(252,30): error C2102: '&' requires l-value
+C:\Users\camilo\code\main\source\remoting\fb_update_sender\UpdateSender.cpp(276,40): error C2102: '&' requires l-value
+C:\Users\camilo\code\main\source\remoting\fb_update_sender\UpdateSender.cpp(403,59): error C2102: '&' requires l-value
+C:\Users\camilo\code\main\source\remoting\fb_update_sender\UpdateSender.cpp(404,56): error C2102: '&' requires l-value
+C:\Users\camilo\code\main\source\remoting\fb_update_sender\UpdateSender.cpp(406,59): error C2102: '&' requires l-value
+C:\Users\camilo\code\main\source\remoting\fb_update_sender\UpdateSender.cpp(440,53): error C2102: '&' requires l-value
+C:\Users\camilo\code\main\source\remoting\fb_update_sender\UpdateSender.cpp(954,64): error C2102: '&' requires l-value
+C:\Users\camilo\code\main\source\remoting\fb_update_sender\UpdateSender.cpp(992,14): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\camilo\code\main\source\remoting\fb_update_sender\CursorUpdates.cpp(154,64): error C2102: '&' requires l-value
+C:\Users\camilo\code\main\source\remoting\fb_update_sender\CursorUpdates.cpp(153,62): error C2102: '&' requires l-value
+C:\Users\camilo\code\main\source\remoting\fb_update_sender\CursorUpdates.cpp(160,53): error C2102: '&' requires l-value
+C:\Users\camilo\code\main\source\remoting\fb_update_sender\CursorUpdates.cpp(228,54): error C2102: '&' requires l-value

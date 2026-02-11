@@ -1,0 +1,21 @@
+﻿  application_build_helper_x64.exe --defer-prepare-folder C:\Users\camilo\code\main\source\remoting\wsconfig_lib\ x64 Debug
+  2026-02-10 15:31:56
+  AdministrationConfigDialog.cpp
+  ChangePasswordDialog.cpp
+  CommonInputValidation.cpp
+  ConfigDialog.cpp
+  EditIpAccessRuleDialog.cpp
+  EditPortMappingDialog.cpp
+  IpAccessControlDialog.cpp
+  PasswordControl.cpp
+  PortMappingDialog.cpp
+  ServerConfigDialog.cpp
+  TvnLogFilename.cpp
+  UIDataAccess.cpp
+  VideoRegionsConfigDialog.cpp
+C:\Users\camilo\code\main\source\remoting\wsconfig_lib\ServerConfigDialog.cpp(25,10): error C1083: Cannot open include file: 'remoting_node/resource.h': No such file or directory
+C:\Users\camilo\code\main\source\remoting\wsconfig_lib\VideoRegionsConfigDialog.cpp(25,10): error C1083: Cannot open include file: 'remoting_node/resource.h': No such file or directory
+C:\Users\camilo\code\main\source\remoting\wsconfig_lib\IpAccessControlDialog.cpp(25,10): error C1083: Cannot open include file: 'remoting_node/resource.h': No such file or directory
+C:\Users\camilo\code\main\source\remoting\wsconfig_lib\EditPortMappingDialog.cpp(25,10): error C1083: Cannot open include file: 'remoting_node/resource.h': No such file or directory
+C:\Users\camilo\code\main\source\remoting\wsconfig_lib\EditIpAccessRuleDialog.cpp(25,10): error C1083: Cannot open include file: 'remoting_node/resource.h': No such file or directory
+C:\Users\camilo\code\main\source\remoting\wsconfig_lib\AdministrationConfigDialog.cpp(25,10): error C1083: Cannot open include file: 'remoting_node/resource.h': No such file or directory
