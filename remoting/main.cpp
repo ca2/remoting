@@ -33,6 +33,30 @@
 
 //int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE,
 //                       LPTSTR lpCmdLine, int nCmdShow)
+
+
+HMODULE GetModuleFromFunction(void* pFunc)
+{
+   HMODULE hModule = NULL;
+
+   GetModuleHandleEx(
+       GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS |
+       GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
+       (LPCTSTR)pFunc,
+       &hModule
+   );
+
+   return hModule;
+}
+
+HINSTANCE remoting_impact_hinstance()
+{
+
+   HINSTANCE hInstance = (HINSTANCE)GetModuleFromFunction(&remoting_impact_hinstance);
+
+   return hInstance;
+}
+
 int remoting_impact_main()
 {
 
@@ -55,7 +79,7 @@ int remoting_impact_main()
 
   ViewerConfig config(RegistryPaths::VIEWER_PATH);
   config.loadFromStorage(sm);
-HINSTANCE hInstance = (HINSTANCE)::system()->m_hinstanceThis;
+HINSTANCE hInstance = remoting_impact_hinstance();
   ConnectionConfig conConf;
   ConnectionData condata;
   bool isListening = false;

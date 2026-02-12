@@ -20,6 +20,7 @@ namespace remoting_remoting
    application::application()
    {
 
+      ::system()->m_bFinalizeIfNoSession = false;
    }
 
    application::~application()
@@ -31,7 +32,9 @@ namespace remoting_remoting
    void application::on_request(::request * prequest)
    {
 
-      if (prequest->m_ecommand == e_command_application_started)
+      auto ecommand = prequest->m_ecommand;
+
+      if (ecommand == e_command_application_start)
       {
 
          fork([this]()

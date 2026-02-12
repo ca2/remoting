@@ -29,6 +29,9 @@
 #include <commctrl.h>
 #include <crtdbg.h>
 
+
+HINSTANCE remoting_impact_hinstance();
+
 BaseDialog::BaseDialog()
 : m_ctrlParent(NULL), m_resourceName(0), m_resourceId(0), m_hicon(0)
 {
@@ -116,7 +119,10 @@ void BaseDialog::create()
 
    auto pszResourceName = getResouceName();
 
-  window = CreateDialogParam(GetModuleHandle(NULL), pszResourceName,
+   HINSTANCE hinstance = remoting_impact_hinstance();
+
+  //window = CreateDialogParam(GetModuleHandle(NULL), pszResourceName,
+   window = CreateDialogParam(hinstance, pszResourceName,
                              parentWindow, dialogProc, (LPARAM)this);
 
   m_isModal = false;

@@ -52,12 +52,15 @@ endif ()
 
 
 add_dependencies(${PROJECT_NAME} ${default_acme})
+add_dependencies(${PROJECT_NAME} ${default_acme_windowing})
+add_dependencies(${PROJECT_NAME} ${default_nano_graphics})
+
 #add_dependencies(${PROJECT_NAME} ${default_draw2d})
 #add_dependencies(${PROJECT_NAME} ${default_imaging})
 #add_dependencies(${PROJECT_NAME} ${default_node})
-#add_dependencies(${PROJECT_NAME} crypto_openssl)
-#add_dependencies(${PROJECT_NAME} folder_zip)
-#add_dependencies(${PROJECT_NAME} networking_bsd)
+add_dependencies(${PROJECT_NAME} crypto_openssl)
+add_dependencies(${PROJECT_NAME} folder_zip)
+add_dependencies(${PROJECT_NAME} networking_bsd)
 
 
 list(APPEND executable_include_directories ${CMAKE_CURRENT_SOURCE_DIR})
