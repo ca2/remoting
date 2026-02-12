@@ -1,8 +1,13 @@
 cmake_minimum_required(VERSION 3.16)
-project(remoting_impact)
+project(remoting_remoting)
 
 
-list(APPEND executable_source
+list(APPEND library_source
+
+   impact_toolbar.cpp
+   impact_toolbar.h
+   application.cpp
+   application.h
    AboutDialog.cpp
    AboutDialog.h
    AuthenticationDialog.cpp
@@ -66,7 +71,7 @@ list(APPEND executable_source
 )
 
 
-list(APPEND executable_references
+list(APPEND library_references
    acme
    remoting_client_config_lib
    remoting_config_lib
@@ -95,7 +100,7 @@ list(APPEND library_include_directories
 )
 
 
-add_executable(${PROJECT_NAME} ${executable_source})
+add_library(${PROJECT_NAME} SHARED ${library_source})
 
 
 
@@ -115,7 +120,7 @@ if(${WIN32})
    target_compile_options(${PROJECT_NAME} PRIVATE "/bigobj")
    target_link_options(${PROJECT_NAME} PRIVATE "/DEFAULTLIB:msvcrt$<$<CONFIG:Debug>:d>")
    target_link_options(${PROJECT_NAME} PRIVATE "/SUBSYSTEM:WINDOWS")
-   target_link_libraries(${PROJECT_NAME} PRIVATE Ws2_32 Version Comctl32 ${executable_references} ${global_library_references})
+   target_link_libraries(${PROJECT_NAME} PRIVATE Ws2_32 Version Comctl32 ${library_references} ${global_library_references})
 
 elseif(${LINUX} OR ${__BSD__} OR ${ANDROID})
    target_compile_options(${PROJECT_NAME} PRIVATE $<$<COMPILE_LANGUAGE:CXX>:-fpermissive  ${EXTRA_CXX_TARGET_COMPILER_OPTIONS}>)
@@ -152,3 +157,4 @@ list(APPEND executable_include_directories ${CMAKE_CURRENT_SOURCE_DIR}/../..)
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${executable_include_directories})
 
+add_subdirectory(__implement)

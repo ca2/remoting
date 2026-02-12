@@ -58,6 +58,7 @@ public:
   void lineTo(int x, int y);
 
   // Draws filled rect.
+   void fillRect(const ::int_rectangle & r, const Brush *brush);
   void fillRect(int l, int t, int r, int b, const Brush *brush);
   // Draws ellipse.
   void ellipse(int l, int t, int r, int b);

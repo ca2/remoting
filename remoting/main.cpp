@@ -29,16 +29,33 @@
 #include "ConnectionListener.h"
 #include "ViewerCmdLine.h"
 #include "util/ResourceLoader.h"
+#include "acme/platform/system.h"
 
-int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE,
-                       LPTSTR lpCmdLine, int nCmdShow)
+//int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE,
+//                       LPTSTR lpCmdLine, int nCmdShow)
+int remoting_impact_main()
 {
+
+   //new ::platform::system();
+
+   // if (__argv[1])
+   // {
+   //
+   //    if (::file_exists(__argv[1]))
+   //    {
+   //
+   //       ::file::path path = __argv[1];
+   //
+   //    }
+   //
+   // }
+
   ViewerSettingsManager::initInstance(RegistryPaths::VIEWER_PATH);
   SettingsManager *sm = ViewerSettingsManager::getInstance();
 
   ViewerConfig config(RegistryPaths::VIEWER_PATH);
   config.loadFromStorage(sm);
-
+HINSTANCE hInstance = (HINSTANCE)::system()->m_hinstanceThis;
   ConnectionConfig conConf;
   ConnectionData condata;
   bool isListening = false;

@@ -31,10 +31,10 @@ Brush::Brush()
 
 Brush::~Brush()
 {
-  release();
+  destroy();
 }
 
-void Brush::release()
+void Brush::destroy()
 {
   if (m_brush != 0) {
     DeleteObject(m_brush);

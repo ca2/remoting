@@ -37,11 +37,19 @@
 #include "gui/drawing/Graphics.h"
 #include "rfb/RfbKeySym.h"
 #include "viewer_core/RemoteViewerCore.h"
+namespace remoting
+{
+   class toolbar;
+   class style;
+} // namespace remoting_impact
 
 class DesktopWindow : public PaintWindow,
                       protected RfbKeySymListener
 {
 public:
+   ::pointer< ::remoting::toolbar > m_premotingtoolbar;
+   ::pointer< ::remoting::style > m_premotingstyle;
+
   DesktopWindow(LogWriter *logWriter, ConnectionConfig *conConf);
   virtual ~DesktopWindow();
 
@@ -84,6 +92,8 @@ public:
   void setWinKeyIgnore(bool winKeyIgnore) { m_rfbKeySym->setWinKeyIgnore(winKeyIgnore); }
 
 protected:
+public:
+
   //
   // Overrides RfbKeySymListener::onRfbKeySymEvent().
   //
@@ -158,12 +168,11 @@ protected:
 
   bool m_ctrlDown;
   bool m_altDown;
-
   RemoteViewerCore *m_viewerCore;
   ConnectionConfig *m_conConf;
   bool m_isBackgroundDirty;
 
-private:
+public:
   void doDraw(DeviceContext *dc);
   void scrollProcessing(int fbWidth, int fbHeight);
   void drawBackground(DeviceContext *dc, const RECT & rcMain, const RECT & rcImage);

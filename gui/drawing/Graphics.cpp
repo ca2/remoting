@@ -24,6 +24,8 @@
 #include "framework.h"
 #include "Graphics.h"
 
+#include "acme/prototype/geometry2d/rectangle.h"
+
 Graphics::Graphics(DeviceContext *dc)
 : m_dc(dc)
 {
@@ -70,6 +72,12 @@ void Graphics::lineTo(int x, int y)
   LineTo(m_dc->m_dc, x, y);
 }
 
+void Graphics::fillRect(const ::int_rectangle & r, const Brush *pbrush)
+{
+
+   fillRect(r.left, r.top, r.right, r.bottom, pbrush);
+
+}
 void Graphics::fillRect(int l, int t, int r, int b, const Brush *brush)
 {
   RECT rect;

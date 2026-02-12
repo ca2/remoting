@@ -24,6 +24,8 @@
 #include "framework.h"
 #include "DesktopWindow.h"
 #include "acme/operating_system/windows/geometry2d.h"
+#include "impact_toolbar.h"
+
 
 DesktopWindow::DesktopWindow(LogWriter *logWriter, ConnectionConfig *conConf)
 : m_logWriter(logWriter),
@@ -35,6 +37,7 @@ DesktopWindow::DesktopWindow(LogWriter *logWriter, ConnectionConfig *conConf)
   m_winResize(false),
   m_conConf(conConf),
   m_brush(RGB(0, 0, 0)),
+
   m_viewerCore(0),
   m_ctrlDown(false),
   m_altDown(false),
@@ -63,6 +66,10 @@ bool DesktopWindow::onCreate(LPCREATESTRUCT pcs)
 {
   m_sbar.setWindow(getHWnd());
   m_clipboard.setHWnd(getHWnd());
+   m_premotingstyle =øallocate ::remoting::style;
+   m_premotingtoolbar =øallocate ::remoting::toolbar;
+   m_premotingtoolbar->create_impact_toolbar(this, m_premotingstyle);
+   //m_pimpactoolbar->m_pdesktopwindow = this;
   return true;
 }
 
@@ -220,6 +227,16 @@ bool DesktopWindow::onMouse(unsigned char mouseButtons, unsigned short wheelSpee
     }
   }
 
+   if (m_premotingtoolbar)
+   {
+      if (m_premotingtoolbar->_000OnMouse(mouseButtons & MOUSE_LDOWN, position))
+      {
+
+         return true;
+
+      }
+   }
+
   // Translate coordinates from the Viewer Window to Desktop Window.
   POINTS mousePos = getViewerCoord(position.x, position.y);
   Point pos;
@@ -366,6 +383,14 @@ void DesktopWindow::doDraw(DeviceContext *dc)
   }
 
   drawImage(::windows::as_RECT(src), ::windows::as_RECT(dst));
+
+   if (m_premotingtoolbar)
+   {
+
+      Graphics graphics(dc);
+      m_premotingtoolbar->_000OnDraw(&graphics);
+
+   }
 }
 
 void DesktopWindow::applyScrollbarChanges(bool isChanged, bool isVert, bool isHorz, int wndWidth, int wndHeight)

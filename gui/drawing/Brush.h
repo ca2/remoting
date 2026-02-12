@@ -27,14 +27,15 @@
 
 #include "util/CommonHeader.h"
 
-class Brush
+class Brush :
+virtual public ::particle
 {
 public:
   Brush();
   virtual ~Brush();
 
 protected:
-  void release();
+  void destroy() override;
 
 protected:
   HBRUSH m_brush;

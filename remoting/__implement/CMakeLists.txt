@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(_app_app CXX)
+project(_remoting_remoting CXX)
 
 
 list(APPEND application_source main.cpp)
@@ -16,10 +16,7 @@ add_executable(${PROJECT_NAME} ${application_source})
 
 list(APPEND executable_references
    acme
-   apex
-   aqua
-   aura
-   app_app
+   remoting_remoting
    )
 
 
@@ -54,13 +51,13 @@ elseif (${LINUX} OR ${__BSD__} OR ${ANDROID})
 endif ()
 
 
-add_dependencies(${PROJECT_NAME} ${app_common_dependencies})
-add_dependencies(${PROJECT_NAME} ${default_draw2d})
-add_dependencies(${PROJECT_NAME} ${default_imaging})
-add_dependencies(${PROJECT_NAME} ${default_node})
-add_dependencies(${PROJECT_NAME} crypto_openssl)
-add_dependencies(${PROJECT_NAME} folder_zip)
-add_dependencies(${PROJECT_NAME} networking_bsd)
+add_dependencies(${PROJECT_NAME} ${default_acme})
+#add_dependencies(${PROJECT_NAME} ${default_draw2d})
+#add_dependencies(${PROJECT_NAME} ${default_imaging})
+#add_dependencies(${PROJECT_NAME} ${default_node})
+#add_dependencies(${PROJECT_NAME} crypto_openssl)
+#add_dependencies(${PROJECT_NAME} folder_zip)
+#add_dependencies(${PROJECT_NAME} networking_bsd)
 
 
 list(APPEND executable_include_directories ${CMAKE_CURRENT_SOURCE_DIR})

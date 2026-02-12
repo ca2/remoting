@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "FileInfoListView.h"
 #include "util/DateTime.h"
-#include "remoting_impact/resource.h"
+#include "remoting/resource.h"
 #include "util/ResourceLoader.h"
 #include <crtdbg.h>
 #include <stdio.h>
