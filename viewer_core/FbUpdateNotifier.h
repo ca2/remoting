@@ -90,6 +90,7 @@ protected:
 
   // This flag is true after set new cursor or update position.
   bool m_isCursorChange;
+   bool m_isGoodCursor;
 
 private:
   // Do not allow copying objects.

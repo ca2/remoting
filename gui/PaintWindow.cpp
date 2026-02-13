@@ -41,17 +41,20 @@ HDC PaintWindow::getHDCPaint()
   return m_hdc;
 }
 
-void PaintWindow::onPaint(DeviceContext *dc, PAINTSTRUCT *paintStruct) {
+//void PaintWindow::onPaint(DeviceContext *dc, PAINTSTRUCT *paintStruct)
+void PaintWindow::onPaint()
+{
 }
 
 bool PaintWindow::wndProc(UINT message, WPARAM wParam, LPARAM lParam)
 {
   if (message == WM_PAINT) {
-    m_hdc = BeginPaint(m_hWnd, &m_paintStruct);
+    m_hdc = BeginPaint(m_hwnd, &m_paintStruct);
     m_bIsDraw = true;
-    DeviceContext dc(this); 
-    onPaint(&dc, &m_paintStruct);
-    EndPaint(m_hWnd, &m_paintStruct);
+    //DeviceContext dc(this);
+    //onPaint(&dc, &m_paintStruct);
+     onPaint();
+    //EndPaint(m_hwnd, &m_paintStruct);
     m_bIsDraw = false;
     return true;
   }

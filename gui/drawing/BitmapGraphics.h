@@ -36,7 +36,7 @@ class BitmapGraphics : public Graphics
 public:
   // Creates BitmapGraphics object with bitmap complatible with specified dc and
   // with specified size.
-  BitmapGraphics(DeviceContext *complatibleDC, int width, int height);
+  BitmapGraphics(HDC hdc, int width, int height);
   // Destroys bitmap and graphics object.
   virtual ~BitmapGraphics();
 

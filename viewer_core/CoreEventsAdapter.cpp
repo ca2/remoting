@@ -42,6 +42,11 @@ void CoreEventsAdapter::onEstablished()
 {
 }
 
+void CoreEventsAdapter::onGoodCursor()
+{
+
+}
+
 void CoreEventsAdapter::onConnected(RfbOutputGate *output)
 {
 }

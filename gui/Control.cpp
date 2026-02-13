@@ -24,26 +24,93 @@
 #include "framework.h"
 #include "Control.h"
 
+namespace windows
+{
+
+   Window::Window()
+   {
+
+   }
+
+   Window::~Window()
+   {
+
+
+   }
+
+   void Window::setWindow(HWND hwnd)
+   {
+      // Save handle
+      m_hwnd = hwnd;
+      // Save pointer to default window proc
+      subclass_window();
+   }
+   // void Control::replaceWindowProc(WNDPROC wndProc)
+   // {
+   // }
+   LRESULT CALLBACK Window::s_window_procedure(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+   {
+      auto p = (Window *)GetWindowLongPtr(hWnd, GWLP_USERDATA);
+      LRESULT lresult = 0;
+      if ( p->window_procedure(lresult, message, wParam, lParam))
+      {
+
+         return lresult;
+      }
+      return ::CallWindowProc((WNDPROC)p->m_defWindowProc, hWnd, message, wParam, lParam);
+   }
+
+   HWND Window::get_hwnd() {
+
+      return m_hwnd;
+
+   }
+
+   void Window::subclass_window()
+   {
+      if (m_defWindowProc)
+         return;
+      m_defWindowProc = (WNDPROC)GetWindowLongPtr(m_hwnd, GWLP_WNDPROC);
+      SetWindowLongPtr(m_hwnd, GWLP_USERDATA, (LONG_PTR)(Window*)this);
+      SetWindowLongPtr(m_hwnd, GWLP_WNDPROC, (LONG_PTR)&Control::s_window_procedure);
+
+
+
+   }
+   void Window::post_message(UINT message, ::wparam wparam, ::lparam lparam)
+   {
+
+      ::PostMessage(m_hwnd, message, wparam.m_number, lparam.m_lparam);
+   }
+   void Window::unsubclass_window()
+   {
+      if (!m_defWindowProc)
+         return;
+
+      SetWindowLongPtr(m_hwnd, GWLP_USERDATA, (LONG_PTR)0);
+      SetWindowLongPtr(m_hwnd, GWLP_WNDPROC, (LONG_PTR)m_defWindowProc);
+      m_defWindowProc = nullptr;
+   }
+
+   bool Window::window_procedure(LRESULT & lresult, UINT message, ::wparam wparam, ::lparam lparam)
+   {
+
+      return false;
+   }
+}
+
 Control::Control()
-: m_hwnd(NULL)
+//: m_hwnd(NULL)
 {
 }
 
-Control::Control(HWND hwnd)
-: m_hwnd(hwnd)
-{
-}
+// Control::Control(HWND hwnd)
+// : m_hwnd(hwnd)
+// {
+// }
 
 Control::~Control()
 {
-}
-
-void Control::setWindow(HWND hwnd)
-{
-  // Save handle
-  m_hwnd = hwnd;
-  // Save pointer to default window proc
-  m_defWindowProc = (WNDPROC)GetWindowLongPtr(m_hwnd, GWLP_WNDPROC);
 }
 
 void Control::setEnabled(bool enabled)
@@ -100,7 +167,7 @@ bool Control::hasFocus()
 
 bool Control::setForeground()
 {
-  return SetForegroundWindow(getWindow()) != 0;
+  return SetForegroundWindow(get_hwnd()) != 0;
 }
 
 void Control::setVisible(bool visible)
@@ -135,10 +202,10 @@ VerticalAlignment Control::getTextVerticalAlignment()
   return Left;
 }
 
-HWND Control::getWindow()
-{
-  return m_hwnd;
-}
+// HWND Control::getWindow()
+// {
+//   return m_hwnd;
+// }
 
 void Control::setStyle(DWORD style)
 {
@@ -200,8 +267,3 @@ bool Control::isExStyleEnabled(DWORD styleFlag)
   return (flags & styleFlag) == styleFlag;
 }
 
-void Control::replaceWindowProc(WNDPROC wndProc)
-{
-  SetWindowLongPtr(m_hwnd, GWLP_USERDATA, (LONG_PTR)this);
-  SetWindowLongPtr(m_hwnd, GWLP_WNDPROC, (LONG_PTR)wndProc);
-}

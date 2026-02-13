@@ -1,12 +1,17 @@
 //{{NO_DEPENDENCIES}}
-// ���������� ����, ��������� � Microsoft Visual C++.
-// ������������ remoting_impact.rc
+// Microsoft Visual C++ generated include file.
+// Used by remoting_remoting.rc
 //
+#define IDC_MYICON                      2
 #define IDB_TOOLBAR                     101
 #define IDI_CNOCURSOR                   102
 #define IDI_CSMALLDOT                   103
+#define IDS_APP_TITLE                   103
+#define IDD_ABOUTBOX                    103
 #define IDI_APPICON                     104
+#define IDM_ABOUT                       104
 #define IDI_FILE_ICON                   105
+#define IDM_EXIT                        105
 #define IDI_FILEUP                      106
 #define IDI_ICON1                       107
 #define IDI_FOLDER_ICON                 108
@@ -24,6 +29,7 @@
 #define IDD_CMDLINE                     127
 #define IDS_CMDLINE_HELP                127
 #define IDS_FAILED_TO_OPEN_URL_FORMAT   128
+#define IDR_MAIN                        128
 #define IDD_CONFIGURATION               129
 #define IDS_TB_TOOLBAR                  129
 #define IDS_MBC_TVNVIEWER               130
@@ -76,6 +82,7 @@
 #define IDS_TB_CONFIGURATION            216
 #define IDD_FS_WARNING                  230
 #define IDD_DISPATCH_ID                 231
+#define IDD_CONNECTING                  232
 #define IDC_LABEL                       1001
 #define IDC_FILENAME_EDIT               1002
 #define IDC_FILENAME_LABEL              1004
@@ -98,6 +105,7 @@
 #define IDC_DOWNLOAD_BUTTON             1022
 #define IDC_REMOTE_CURRENT_FOLDER_EDIT  1023
 #define IDC_REMOTE_FILE_LIST            1024
+#define IDR_MATTER                      1024
 #define IDC_RENAME_REMOTE_BUTTON        1025
 #define IDC_MKDIR_REMOTE_BUTTON         1026
 #define IDC_REMOVE_REMOTE_BUTTON        1027
@@ -162,6 +170,10 @@
 #define IDC_CWARN_FS                    1088
 #define IDC_ID_EDIT                     1089
 #define IDC_LABEL_ID                    1090
+#define IDC_PROGRESS1                   1093
+#define IDC_HOST                        1094
+#define IDC_HOST2                       1095
+#define IDC_STATUS                      1095
 #define ID_CONN_OPTIONS                 40001
 #define ID_CONN_INFO                    40002
 #define ID_SHOW_TOOLBAR                 40004
@@ -169,22 +181,14 @@
 #define ID_REQ_SCR_REFRESH              40006
 #define ID_CTRL_ALT_DEL                 40007
 #define ID_TRANSF_FILES                 40008
-#define IDC_MYICON                      2
-#define IDS_APP_TITLE                   103
-#define IDD_ABOUTBOX                    103
-#define IDM_ABOUT                       104
-#define IDM_EXIT                        105
-#define IDR_MAIN                        128
-#define IDR_MATTER                      1024
-#define IDC_STATIC                      -1
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        232
+#define _APS_NEXT_RESOURCE_VALUE        233
 #define _APS_NEXT_COMMAND_VALUE         40010
-#define _APS_NEXT_CONTROL_VALUE         1093
+#define _APS_NEXT_CONTROL_VALUE         1095
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

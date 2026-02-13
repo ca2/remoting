@@ -167,7 +167,7 @@ void ImagedButton::setWindow(HWND hwnd)
 {
   Control::setWindow(hwnd);
   // Replace window event handler
-  replaceWindowProc(ImagedButton::wndProc);
+//  replaceWindowProc(ImagedButton::wndProc);
   // Add owner draw style to button
   Control::addStyle(BS_OWNERDRAW);
 
@@ -225,35 +225,36 @@ void ImagedButton::drawIcon(HDC* dc, RECT* prectangleImage, bool isPressed, bool
             (isDisabled ? DSS_DISABLED : DSS_NORMAL) | DST_ICON);
 } // End of drawIcon
 
-LRESULT CALLBACK ImagedButton::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+bool ImagedButton::window_procedure(LRESULT &lresul, UINT message, ::wparam wparam, ::lparam lparam)
 {
-  ImagedButton *_this = (ImagedButton *)GetWindowLongPtr(hWnd, GWLP_USERDATA);
+  //ImagedButton *_this = (ImagedButton *)GetWindowLongPtr(hWnd, GWLP_USERDATA);
 
   switch (message) {
   case WM_LBUTTONDBLCLK:
-    PostMessage(hWnd, WM_LBUTTONDOWN, wParam, lParam);
+    post_message(WM_LBUTTONDOWN, wparam, lparam);
   break;
   case WM_MOUSEMOVE:
-    if (!_this->m_mouseOver) {
-      _this->m_mouseOver = true;
+    if (!m_mouseOver) {
+      m_mouseOver = true;
 
       TRACKMOUSEEVENT evt;
 
       evt.cbSize = sizeof(evt);
       evt.dwFlags = TME_LEAVE;
       evt.dwHoverTime = HOVER_DEFAULT;
-      evt.hwndTrack = hWnd;
+      evt.hwndTrack = m_hwnd;
 
-      _this->invalidate();
+      invalidate();
 
       TrackMouseEvent(&evt);
     }
     break;
   case WM_MOUSELEAVE:
-    _this->m_mouseOver = false;
-    _this->invalidate();
+    m_mouseOver = false;
+    invalidate();
     break;
   } // switch
   // Any messages we don't process must be passed onto the original window function
-  return CallWindowProc((WNDPROC)_this->m_defWindowProc, hWnd, message, wParam, lParam);
+   return false;
+  //return CallWindowProc((WNDPROC)_this->m_defWindowProc, hWnd, message, wParam, lParam);
 }

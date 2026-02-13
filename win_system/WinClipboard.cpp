@@ -25,7 +25,7 @@
 #include "WinClipboard.h"
 
 WinClipboard::WinClipboard(HWND hwnd) 
-  : m_hndClipboard(0), m_hWnd(hwnd)
+  : m_hndClipboard(0), m_hwnd(hwnd)
 {
 }
 
@@ -39,8 +39,8 @@ WinClipboard::~WinClipboard()
 
 void WinClipboard::setHWnd(HWND hwnd)
 {
-  m_hWnd = hwnd;
-  SetClipboardViewer(m_hWnd);
+  m_hwnd = hwnd;
+  SetClipboardViewer(m_hwnd);
 }
 
 bool WinClipboard::getString(StringStorage *str)
@@ -55,7 +55,7 @@ bool WinClipboard::getString(StringStorage *str)
   if (uFormat == 0 || uFormat == -1) {
      return false;
   }
-  if (OpenClipboard(m_hWnd)) {
+  if (OpenClipboard(m_hwnd)) {
      HANDLE hndData = GetClipboardData(uFormat); 
 
      if (hndData) {
@@ -85,7 +85,7 @@ bool WinClipboard::setString(const StringStorage & serverClipboard)
   int strLength = static_cast<int>(nativeClipboard.getLength()) + 1;
   int dataSize = strLength * sizeof(TCHAR);
 
-  if (OpenClipboard(m_hWnd)) {
+  if (OpenClipboard(m_hwnd)) {
      if (m_hndClipboard) {
          EmptyClipboard();
          GlobalFree(m_hndClipboard);

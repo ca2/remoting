@@ -70,7 +70,8 @@ public:
   static const int WM_USER_DISCONNECT = WM_USER + 3;
   static const int WM_USER_AUTH_ERROR = WM_USER + 4;
   static const int WM_USER_FS_WARNING = WM_USER + 5;
-
+   static const int WM_USER_SWITCH_FULL_SCREEN_MODE = WM_USER + 1005;
+class ::time m_timeStart;
 protected:
   static const int TIMER_DESKTOP_STATE = 1;
   static const int TIMER_DESKTOP_STATE_DELAY = 50;
@@ -93,7 +94,7 @@ protected:
   bool onFocus(WPARAM wParam);
   bool onKillFocus(WPARAM wParam);
   bool onTimer(WPARAM idTimer);
-
+void onGoodCursor() override;
   void desktopStateUpdate();
   void commandCtrlAltDel();
   void commandCtrlEsc();

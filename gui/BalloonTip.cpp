@@ -42,7 +42,7 @@ BalloonTip::~BalloonTip()
 
 void BalloonTip::showTooltip(Control *control)
 {
-  MessageBox(control->getWindow(), m_text.getString(), m_title.getString(), MB_OK | MB_ICONWARNING);
+  MessageBox(control->get_hwnd(), m_text.getString(), m_title.getString(), MB_OK | MB_ICONWARNING);
 }
 
 void BalloonTip::setText(const TCHAR *text)

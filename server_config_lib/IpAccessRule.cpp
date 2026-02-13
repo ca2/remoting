@@ -147,8 +147,9 @@ void IpAccessRule::setLastIp(const TCHAR *lastIp)
 
 bool IpAccessRule::isEqualTo(IpAccessRule *other) const
 {
-  if ((other->m_firstIp.isEqualTo(&m_firstIp) == 0) &&
-      (other->m_lastIp.isEqualTo(&m_lastIp) == 0)) {
+  if (other->m_firstIp == m_firstIp &&
+      other->m_lastIp == m_lastIp)
+  {
     return true;
   }
   return false;

@@ -26,8 +26,10 @@
 #include "BaseWindow.h"
 #include "acme/prototype/geometry2d/_function.h"
 
+HINSTANCE remoting_impact_hinstance();
+
 BaseWindow::BaseWindow()
-: m_hWnd(0),
+: //m_hwnd(0),
   m_hicon(0),
   m_bWndCreated(false)
 {
@@ -35,8 +37,8 @@ BaseWindow::BaseWindow()
 
 BaseWindow::~BaseWindow()
 {
-  if (m_bWndCreated && m_hWnd) {
-    DestroyWindow(m_hWnd);
+  if (m_bWndCreated && m_hwnd) {
+    DestroyWindow(m_hwnd);
   }
   if (m_hicon) {
     DeleteObject(m_hicon);
@@ -51,22 +53,23 @@ void BaseWindow::setClass(const StringStorage & className)
 bool BaseWindow::createWindow(const StringStorage & windowName, DWORD style, HWND hWndParent,
                               int xPos, int yPos, int width, int height)
 {
-  if (m_hWnd) {
+  if (m_hwnd) {
     return false;
   }
   m_windowName = windowName;
-  m_hWnd = CreateWindow(m_className.getString(), 
+  m_hwnd = CreateWindow(m_className.getString(), 
                         m_windowName.getString(), 
                         style, 
                         xPos, yPos, 
                         width, height, 
                         hWndParent, 
                         0, 
-                        GetModuleHandle(0), 
+                        //GetModuleHandle(0),
+                        remoting_impact_hinstance(),
                         reinterpret_cast<LPVOID>(this));
-  m_bWndCreated = (m_hWnd == 0 ? false : true);
+  m_bWndCreated = (m_hwnd == 0 ? false : true);
   if (m_bWndCreated) {
-      SetWindowLongPtr(m_hWnd, 
+      SetWindowLongPtr(m_hwnd, 
                        GWLP_USERDATA, 
                        reinterpret_cast<LONG_PTR>(this));
   }
@@ -81,22 +84,22 @@ void BaseWindow::loadIcon(DWORD id)
   }
   if (IS_INTRESOURCE(id)) {
     m_hicon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(id));
-    SetClassLongPtr(m_hWnd, GCLP_HICON, reinterpret_cast<LONG_PTR>(m_hicon));
+    SetClassLongPtr(m_hwnd, GCLP_HICON, reinterpret_cast<LONG_PTR>(m_hicon));
   } else {
-    SetClassLongPtr(m_hWnd, GCLP_HICON, static_cast<LONG_PTR>(id));
+    SetClassLongPtr(m_hwnd, GCLP_HICON, static_cast<LONG_PTR>(id));
   }
 }
 
 void BaseWindow::enableWindow(bool bEnable)
 {
-  _ASSERT(m_hWnd != 0);
-  EnableWindow(m_hWnd, bEnable);
+  _ASSERT(m_hwnd != 0);
+  EnableWindow(m_hwnd, bEnable);
 }
 
 bool BaseWindow::destroyWindow()
 {
-  if (m_hWnd) {
-    DestroyWindow(m_hWnd);
+  if (m_hwnd) {
+    DestroyWindow(m_hwnd);
     return true;
   }
   return false;
@@ -104,100 +107,100 @@ bool BaseWindow::destroyWindow()
 
 void BaseWindow::show()
 {
-  _ASSERT(m_hWnd != 0);
-  ShowWindow(m_hWnd, SW_SHOW);
+  _ASSERT(m_hwnd != 0);
+  ShowWindow(m_hwnd, SW_SHOW);
 }
 
 void BaseWindow::hide()
 {
-  _ASSERT(m_hWnd != 0);
-  ShowWindow(m_hWnd, SW_HIDE);
+  _ASSERT(m_hwnd != 0);
+  ShowWindow(m_hwnd, SW_HIDE);
 }
 
 bool BaseWindow::setSize(int width, int height)
 {
-  _ASSERT(m_hWnd != 0);
-  return !!SetWindowPos(m_hWnd, 0, 0, 0, width, height, 
+  _ASSERT(m_hwnd != 0);
+  return !!SetWindowPos(m_hwnd, 0, 0, 0, width, height, 
                         SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
 }
 
 bool BaseWindow::setPosition(int xPos, int yPos)
 {
-  _ASSERT(m_hWnd != 0);
-  return !!SetWindowPos(m_hWnd, 0, xPos, yPos, 0, 0, 
+  _ASSERT(m_hwnd != 0);
+  return !!SetWindowPos(m_hwnd, 0, xPos, yPos, 0, 0, 
                         SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
 }
 
 void BaseWindow::setParent(HWND hwnd)
 {
-  _ASSERT(m_hWnd != 0);
-  SetParent(m_hWnd, hwnd);
+  _ASSERT(m_hwnd != 0);
+  SetParent(m_hwnd, hwnd);
 }
 
 void BaseWindow::setClassStyle(DWORD style)
 {
-  _ASSERT(m_hWnd != 0);
-  SetClassLong(m_hWnd, GCL_STYLE, style);
+  _ASSERT(m_hwnd != 0);
+  SetClassLong(m_hwnd, GCL_STYLE, style);
 }
 
 void BaseWindow::setClassCursor(HCURSOR hcursor)
 {
-  _ASSERT(m_hWnd != 0);
-  SetClassLongPtr(m_hWnd, GCLP_HCURSOR, reinterpret_cast<LONG_PTR>(hcursor));
+  _ASSERT(m_hwnd != 0);
+  SetClassLongPtr(m_hwnd, GCLP_HCURSOR, reinterpret_cast<LONG_PTR>(hcursor));
 }
 
 void BaseWindow::setClassBackground(HBRUSH hbrush)
 {
-  _ASSERT(m_hWnd != 0);
-  SetClassLongPtr(m_hWnd, GCLP_HBRBACKGROUND, reinterpret_cast<LONG_PTR>(hbrush));
+  _ASSERT(m_hwnd != 0);
+  SetClassLongPtr(m_hwnd, GCLP_HBRBACKGROUND, reinterpret_cast<LONG_PTR>(hbrush));
 }
 
 void BaseWindow::setClassMenu(LONG menu)
 {
-  _ASSERT(m_hWnd != 0);
-  SetClassLongPtr(m_hWnd, GCLP_MENUNAME, menu);
+  _ASSERT(m_hwnd != 0);
+  SetClassLongPtr(m_hwnd, GCLP_MENUNAME, menu);
 }
 
 LONG BaseWindow::getStyle()
 {
-  _ASSERT(m_hWnd != 0);
-  return GetWindowLong(m_hWnd, GWL_STYLE);
+  _ASSERT(m_hwnd != 0);
+  return GetWindowLong(m_hwnd, GWL_STYLE);
 }
 
 void BaseWindow::setStyle(DWORD style)
 {
-  _ASSERT(m_hWnd != 0);
-  SetWindowLong(m_hWnd, GWL_STYLE, style);
+  _ASSERT(m_hwnd != 0);
+  SetWindowLong(m_hwnd, GWL_STYLE, style);
 }
 
 LONG BaseWindow::getExStyle()
 {
-  _ASSERT(m_hWnd != 0);
-  return GetWindowLong(m_hWnd, GWL_EXSTYLE);
+  _ASSERT(m_hwnd != 0);
+  return GetWindowLong(m_hwnd, GWL_EXSTYLE);
 }
 
 void BaseWindow::setExStyle(DWORD exstyle)
 {
-  _ASSERT(m_hWnd != 0);
-  SetWindowLong(m_hWnd, GWL_EXSTYLE, exstyle);
+  _ASSERT(m_hwnd != 0);
+  SetWindowLong(m_hwnd, GWL_EXSTYLE, exstyle);
 }
 
 void BaseWindow::updateWindow()
 {
-  _ASSERT(m_hWnd != 0);
-  UpdateWindow(m_hWnd);
+  _ASSERT(m_hwnd != 0);
+  UpdateWindow(m_hwnd);
 }
 
 void BaseWindow::setTimer(UINT_PTR ident, UINT time)
 {
-  _ASSERT(m_hWnd != 0);
-  SetTimer(m_hWnd, ident, time, 0);
+  _ASSERT(m_hwnd != 0);
+  SetTimer(m_hwnd, ident, time, 0);
 }
 
 void BaseWindow::killTimer(UINT_PTR ident)
 {
-  _ASSERT(m_hWnd != 0);
-  KillTimer(m_hWnd, ident);
+  _ASSERT(m_hwnd != 0);
+  KillTimer(m_hwnd, ident);
 }
 
 bool BaseWindow::onCommand(WPARAM wParam, LPARAM lParam)
@@ -284,28 +287,28 @@ bool BaseWindow::wndProc(UINT message, WPARAM wParam, LPARAM lParam)
 
 void BaseWindow::setHWnd(HWND hwnd)
 {
-  m_hWnd = hwnd;
+  m_hwnd = hwnd;
 }
 
 HWND BaseWindow::getHWnd() const
 {
-  return m_hWnd;
+  return m_hwnd;
 }
 
 void BaseWindow::setWindowText(const StringStorage & text)
 {
-  _ASSERT(m_hWnd != 0);
-  SetWindowText(m_hWnd, text.getString());
+  _ASSERT(m_hwnd != 0);
+  SetWindowText(m_hwnd, text.getString());
 }
 
 void BaseWindow::redraw(const RECT & rectArea)
 {
-  _ASSERT(m_hWnd != 0);
+  _ASSERT(m_hwnd != 0);
 
   if (::is_empty(rectArea)) {
-     InvalidateRect(m_hWnd, NULL, TRUE);
+     InvalidateRect(m_hwnd, NULL, TRUE);
   } else {
-     InvalidateRect(m_hWnd, &rectArea, FALSE);
+     InvalidateRect(m_hwnd, &rectArea, FALSE);
   }
 }
 
@@ -316,28 +319,28 @@ bool BaseWindow::onMouse(unsigned char msg, unsigned short wspeed, POINT pt)
 
 void BaseWindow::setForegroundWindow()
 {
-  _ASSERT(m_hWnd != 0);
+  _ASSERT(m_hwnd != 0);
 
-  SetForegroundWindow(m_hWnd);
+  SetForegroundWindow(m_hwnd);
 }
 
 void BaseWindow::postMessage(UINT Msg, WPARAM wParam, LPARAM lParam)
 {
-  _ASSERT(m_hWnd != 0);
+  _ASSERT(m_hwnd != 0);
 
-  PostMessage(m_hWnd, Msg, wParam, lParam);
+  PostMessage(m_hwnd, Msg, wParam, lParam);
 }
 
 void BaseWindow::getClientRect(RECT *rc)
 {
-  _ASSERT(m_hWnd != 0 && rc);
+  _ASSERT(m_hwnd != 0 && rc);
 
-  GetClientRect(m_hWnd, rc);
+  GetClientRect(m_hwnd, rc);
 }
 
 void BaseWindow::getBorderSize(int *width, int *height)
 {
-  _ASSERT(m_hWnd != 0);
+  _ASSERT(m_hwnd != 0);
 
   *width = 2 * GetSystemMetrics(SM_CXSIZEFRAME);
   *height = GetSystemMetrics(SM_CYSIZE) +

@@ -22,8 +22,7 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _IMAGED_BUTTON_H_
-#define _IMAGED_BUTTON_H_
+#pragma once
 
 #include "Control.h"
 #include "ThemeLib.h"
@@ -36,7 +35,7 @@ class ImagedButton : public Control
 {
 public:
   ImagedButton();
-  ~ImagedButton();
+  ~ImagedButton() override;
 
   //
   // Draws this ownder-draw button.
@@ -49,7 +48,7 @@ public:
 
   void setIcon(HICON *icon, int width, int height);
 
-private:
+//private:
 
   //
   // Parameters:
@@ -83,8 +82,8 @@ protected:
 
   int m_iconWidth;
   int m_iconHeight;
-private:
-  static LRESULT CALLBACK wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+
+  bool window_procedure(LRESULT &lresult, UINT message, wparam wparam, lparam lparam) override;
 };
 
-#endif
+//#endif

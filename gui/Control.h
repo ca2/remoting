@@ -21,9 +21,9 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
-#ifndef __CONTROL_H_
-#define __CONTROL_H_
+#pragma once
+//#ifndef __CONTROL_H_
+//#define __CONTROL_H_
 
 #include "util/CommonHeader.h"
 #include "util/StringStorage.h"
@@ -39,18 +39,48 @@ enum VerticalAlignment
 // Base class to control windows control
 //
 
-class Control
+namespace windows
+{
+
+   class Window :
+   virtual public ::particle
+   {
+   public:
+
+      HWND m_hwnd = nullptr;
+      WNDPROC m_defWindowProc=nullptr;
+
+
+      Window();
+      ~Window() override;
+
+      virtual void setWindow(HWND hwnd);
+      virtual void post_message(UINT message, ::wparam wparam=0, ::lparam lparam=0);
+
+      static LRESULT CALLBACK s_window_procedure(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+      virtual bool window_procedure(LRESULT & lresult, UINT message, ::wparam wparam, ::lparam lparam);
+
+      virtual void subclass_window();
+      virtual void unsubclass_window();
+
+      virtual void set_parent(Window *pwindowParent);
+
+      virtual HWND get_hwnd();
+
+   };
+}
+
+class Control :
+virtual public ::windows::Window
 {
 public:
   Control();
-  Control(HWND hwnd);
-  virtual ~Control();
+  //Control(HWND hwnd);
+  ~Control() override;
 
   //
   // Sets HWND associated with this control
   //
-
-  void setWindow(HWND hwnd);
 
   //
   // Changes enable state of this control
@@ -124,14 +154,14 @@ public:
   // Gets HWND associated with this control
   //
 
-  HWND getWindow();
+
 
   void operator= (const HWND& window) 
   {
     setWindow(window);
   };
 
-protected:
+//protected:
 
   //
   // Sets windows style for this control
@@ -182,21 +212,24 @@ protected:
   // override default window behavour.
   //
 
-  void replaceWindowProc(WNDPROC wndProc);
-
-protected:
+  //void replaceWindowProc(WNDPROC wndProc);
+//    static LRESULT CALLBACK s_control_window_procedure(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+//    virtual bool control_window_procedure(LRESULT & lresult, UINT message, ::wparam wparam, ::lparam lparam);
+// virtual void subclass_control();
+//    virtual void unsubclass_control();
+//protected:
 
   //
   // Handle of window
   //
 
-  HWND m_hwnd;
+  //HWND m_hwnd= nullptr;
 
   //
   // Pointer to default window procedure
   //
 
-  WNDPROC m_defWindowProc;
+
 };
 
-#endif
+//#endif

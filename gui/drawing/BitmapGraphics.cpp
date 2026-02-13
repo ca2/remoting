@@ -24,17 +24,17 @@
 #include "framework.h"
 #include "BitmapGraphics.h"
 
-BitmapGraphics::BitmapGraphics(DeviceContext *complatibleDC, int width, int height)
-: Graphics(complatibleDC), m_isPainting(false)
+BitmapGraphics::BitmapGraphics(HDC hdc, int width, int height)
+: Graphics(hdc), m_isPainting(false)
 {
-  m_bitmap = new Bitmap(complatibleDC->m_dc, width, height);
-  m_dc = new DeviceContext(complatibleDC);
+  m_bitmap = new Bitmap(hdc, width, height);
+  //m_dc = new DeviceContext(hdc);
 }
 
 BitmapGraphics::~BitmapGraphics()
 {
   delete m_bitmap;
-  delete m_dc;
+  //delete m_dc;
 }
 
 Bitmap *BitmapGraphics::getBitmap()
@@ -47,7 +47,7 @@ void BitmapGraphics::beginPaint()
   _ASSERT(!m_isPainting);
 
   m_isPainting = true;
-  m_oldBitmap = m_dc->selectObject(m_bitmap->m_bitmap);
+  m_oldBitmap = ::SelectObject(m_hdc, m_bitmap->m_bitmap);
 }
 
 void BitmapGraphics::endPaint()
@@ -55,5 +55,5 @@ void BitmapGraphics::endPaint()
   _ASSERT(m_isPainting);
 
   m_isPainting = false;
-  m_dc->selectObject(m_oldBitmap);
+  ::SelectObject(m_hdc, m_oldBitmap);
 }

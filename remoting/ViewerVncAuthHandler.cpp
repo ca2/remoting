@@ -24,6 +24,46 @@
 #include "framework.h"
 #include "ViewerVncAuthHandler.h"
 #include "AuthenticationDialog.h"
+#include <windows.h>
+#include <wincrypt.h>
+
+#include "acme/filesystem/filesystem/directory_context.h"
+#include "acme/filesystem/filesystem/file_context.h"
+
+#pragma comment (lib, "Crypt32.lib")
+
+
+bool EncryptData(const ::string& input, ::memory & output)
+{
+   DATA_BLOB inBlob;
+   DATA_BLOB outBlob;
+
+   inBlob.pbData = (BYTE*)input.data();
+   inBlob.cbData = (DWORD)input.size();
+
+   if (!CryptProtectData(&inBlob, nullptr, nullptr, nullptr, nullptr, 0, &outBlob))
+      return false;
+
+   output.assign(outBlob.pbData, outBlob.cbData);
+   LocalFree(outBlob.pbData);
+   return true;
+}
+
+bool DecryptData(const memory & input, ::string& output)
+{
+   DATA_BLOB inBlob;
+   DATA_BLOB outBlob;
+
+   inBlob.pbData = (BYTE*)input.data();
+   inBlob.cbData = (DWORD)input.size();
+
+   if (!CryptUnprotectData(&inBlob, nullptr, nullptr, nullptr, nullptr, 0, &outBlob))
+      return false;
+
+   output.assign((char*)outBlob.pbData, outBlob.cbData);
+   LocalFree(outBlob.pbData);
+   return true;
+}
 
 ViewerVncAuthHandler::ViewerVncAuthHandler(ConnectionData *connectionData)
 : m_connectionData(connectionData)
@@ -34,6 +74,8 @@ ViewerVncAuthHandler::~ViewerVncAuthHandler()
 {
 }
 
+
+
 void ViewerVncAuthHandler::getPassword(StringStorage *passString)
 {
   // get password from ConnectionData or User Interface
@@ -41,11 +83,29 @@ void ViewerVncAuthHandler::getPassword(StringStorage *passString)
     AuthenticationDialog authDialog;
     StringStorage hostname = m_connectionData->getHost();
     authDialog.setHostName(hostname);
-    if (authDialog.showModal()) {
+     auto m = ::system()->file()->safe_get_memory(::system()->directory()->appdata()/::string(hostname.getString()));
+     if (m.has_data())
+     {
+        ::string str;
+        DecryptData(m, str);
+        m_connectionData->setPlainPassword(::wstring(str).c_str());
+     }
+else
+{
+   if (authDialog.showModal()) {
       m_connectionData->setPlainPassword(authDialog.getPassword());
-    } else {
+      memory m2;
+      ::string str(authDialog.getPassword().getString());
+      EncryptData(str, m2);
+      if (m2.has_data())
+      {
+
+         ::system()->file()->put_memory(::system()->directory()->appdata()/::string(hostname.getString()), m2);
+      }
+   } else {
       throw AuthCanceledException();
-    }
+   }
+}
   }
   *passString = m_connectionData->getPlainPassword();
 }

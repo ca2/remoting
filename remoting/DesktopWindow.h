@@ -47,12 +47,17 @@ class DesktopWindow : public PaintWindow,
                       protected RfbKeySymListener
 {
 public:
+   ::int_size m_sizeBuffer = {};
+   HDC m_hdcBuffer = nullptr;
+   HBITMAP m_hbitmapOld = nullptr;
+   HBITMAP m_hbitmapBuffer = nullptr;
    ::pointer< ::remoting::toolbar > m_premotingtoolbar;
    ::pointer< ::remoting::style > m_premotingstyle;
-
+   bool m_bShowCursor = false;
+class ::time m_timeStartDesktopWindow;
   DesktopWindow(LogWriter *logWriter, ConnectionConfig *conConf);
   virtual ~DesktopWindow();
-
+   virtual void _defer_update_double_buffering();
   void setClipboardData(const StringStorage & strText);
   void updateFramebuffer(const FrameBuffer * pframebuffer,
                          const ::int_rectangle &  dstRect);
@@ -103,7 +108,8 @@ public:
   // Inherited from BaseWindow.
   //
   bool onMessage(UINT message, WPARAM wParam, LPARAM lParam);
-  void onPaint(DeviceContext *dc, PAINTSTRUCT *paintStruct);
+  //void onPaint(DeviceContext *dc, PAINTSTRUCT *paintStruct);
+   void onPaint() override;
   bool onCreate(LPCREATESTRUCT pcs);
   bool onDrawClipboard();
   bool onEraseBackground(HDC hdc);
@@ -173,10 +179,11 @@ public:
   bool m_isBackgroundDirty;
 
 public:
-  void doDraw(DeviceContext *dc);
+  //void doDraw(DeviceContext *dc);
+   void doDraw(HDC hdc, const ::int_rectangle & rectangle);
   void scrollProcessing(int fbWidth, int fbHeight);
-  void drawBackground(DeviceContext *dc, const RECT & rcMain, const RECT & rcImage);
-  void drawImage(const RECT & src, const RECT & dst);
+  void drawBackground(HDC hdc, const RECT & rcMain, const RECT & rcImage);
+  void drawImage(HDC hdc, const RECT & src, const RECT & dst);
   void repaint(const ::int_rectangle &  repaintRect);
   void calcClientArea();
 };

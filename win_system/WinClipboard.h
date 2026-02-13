@@ -54,7 +54,7 @@ protected:
   StringStorage addCR(const StringStorage & str);
 
   HANDLE m_hndClipboard;
-  HWND m_hWnd;
+  HWND m_hwnd;
 };
 
 #endif

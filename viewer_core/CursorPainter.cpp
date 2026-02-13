@@ -67,12 +67,15 @@ void CursorPainter::setNewCursor(const Point *hotSpot,
   size_t pixelSize = m_fb->getBytesPerPixel();
   size_t cursorSize = width * height * pixelSize;
   // Server is allowed to specify zero as width and/or height of the cursor.
-  if (cursorSize != 0) {
-    m_logWriter->debug(_T("Set image of cursor..."));
-    memcpy(m_cursor.getPixels()->getBuffer(), &cursor->front(), cursorSize);
-    m_logWriter->debug(_T("Set bitmask of cursor..."));
-    m_cursor.assignMaskFromRfb(reinterpret_cast<const char *>(&bitmask->front()));
-  }
+   //if (0)
+   {
+      if (cursorSize != 0) {
+         m_logWriter->debug(_T("Set image of cursor..."));
+         memcpy(m_cursor.getPixels()->getBuffer(), &cursor->front(), cursorSize);
+         m_logWriter->debug(_T("Set bitmask of cursor..."));
+         m_cursor.assignMaskFromRfb(reinterpret_cast<const char *>(&bitmask->front()));
+      }
+   }
 }
 
 void CursorPainter::setIgnoreShapeUpdates(bool ignore)

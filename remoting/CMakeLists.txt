@@ -64,10 +64,10 @@ list(APPEND library_source
    _.h
    framework.cpp
    framework.h
-   main.cpp
+   application_main.cpp
    remoting_impact.cpp
    remoting_impact.h
-   remoting_impact.rc
+   remoting_remoting.rc
 )
 
 

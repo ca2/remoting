@@ -62,7 +62,7 @@ public:
   // New cut text (clipboard) contents has been received from the server.
   //
   virtual void onCutText(const StringStorage & cutText);
-
+virtual void onGoodCursor();
   //
   // Connection has been established.
   //

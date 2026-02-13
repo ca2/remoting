@@ -22,17 +22,17 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _BASE_WINDOW_H_
-#define _BASE_WINDOW_H_
+#pragma once
 
 #include "util/CommonHeader.h"
-
-class BaseWindow
+#include "remoting/gui/Control.h"
+class BaseWindow :
+virtual public ::windows::Window
 {
 public:
   BaseWindow();
 
-  virtual ~BaseWindow();
+  ~BaseWindow() override;
 
   // getWindow()
   // Get a handle of the window 
@@ -114,8 +114,8 @@ private:
   virtual bool onMessage(UINT message, WPARAM wParam, LPARAM lParam);
   virtual bool onMouse(unsigned char mouseButtons, unsigned short wheelSpeed, POINT position);
 
-protected:
-  HWND m_hWnd;
+//protected:
+  //HWND m_hwnd;
   StringStorage m_className;
   StringStorage m_windowName;
   HICON m_hicon;
@@ -123,4 +123,4 @@ protected:
   bool m_bWndCreated;
 };
 
-#endif
+//#endif

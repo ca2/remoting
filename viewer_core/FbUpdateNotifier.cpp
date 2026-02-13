@@ -35,6 +35,7 @@ FbUpdateNotifier::FbUpdateNotifier(FrameBuffer *fb, LocalMutex *fbLock, LogWrite
   m_cursorPainter(fb, logWriter),
   m_isNewSize(false),
   m_isCursorChange(false),
+m_isGoodCursor(false),
   m_adapter(0),
   m_watermarksController(wmController)
 {
@@ -84,6 +85,7 @@ void FbUpdateNotifier::execute()
     // Move updates to local variable with blocking notifier mutex "m_updateLock".
     bool isNewSize;
     bool isCursorChange;
+     bool isGoodCursor;
     Region update;
     {
       AutoLock al(&m_updateLock);
@@ -92,6 +94,8 @@ void FbUpdateNotifier::execute()
 
       isCursorChange = m_isCursorChange;
       m_isCursorChange = false;
+       isGoodCursor = m_isGoodCursor;
+       m_isGoodCursor = false;
 
       update = m_update;
       m_update.clear();
@@ -112,6 +116,16 @@ void FbUpdateNotifier::execute()
       }
     }
 
+
+     if (isGoodCursor)
+     {
+
+        if (m_adapter)
+        {
+           m_adapter->onGoodCursor();
+        }
+
+     }
     // Update position on cursor and send frame buffer update event to adapter
     // with blocking frame buffer mutex "m_fbLock".
     if (isCursorChange || !update.is_empty()) {
@@ -209,7 +223,9 @@ void FbUpdateNotifier::setNewCursor(const Point *hotSpot,
   }
   AutoLock al(&m_updateLock);
   m_isCursorChange = true;
+   m_isGoodCursor = true;
   m_eventUpdate.notify();
+
 }
 
 void FbUpdateNotifier::setIgnoreShapeUpdates(bool ignore)

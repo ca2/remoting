@@ -61,7 +61,9 @@ void FileInfoListView::setWindow(HWND hwnd)
 
   ListView_SetImageList(m_hwnd, m_smallImageList, LVSIL_SMALL);
 
-  Control::replaceWindowProc(FileInfoListView::s_newWndProc);
+   subclass_window();
+
+  //Control::replaceWindowProc(FileInfoListView::s_newWndProc);
 }
 
 void FileInfoListView::addItem(int index, FileInfo *fileInfo)
@@ -269,21 +271,22 @@ int FileInfoListView::compareItem(LPARAM lParam1,
   }
 }
 
-LRESULT CALLBACK FileInfoListView::s_newWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+bool FileInfoListView::window_procedure(LRESULT & lresult, UINT uMsg, ::wparam wparam, ::lparam lparam)
 {
-  FileInfoListView *_this = reinterpret_cast<FileInfoListView *>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
+  //FileInfoListView *_this = reinterpret_cast<FileInfoListView *>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
 
   switch (uMsg) {
   case WM_GETDLGCODE:
-    LRESULT lres = CallWindowProc(_this->m_defWindowProc, hwnd, uMsg, wParam, lParam);
+    lresult= CallWindowProc(m_defWindowProc, m_hwnd, uMsg, wparam.m_number, lparam.m_lparam);
     // We want WM_KEYDOWN message when enter is pressed
-    if (lParam &&
-        ((MSG *)lParam)->message == WM_KEYDOWN &&
-        ((MSG *)lParam)->wParam == VK_RETURN) {
-      lres = DLGC_WANTMESSAGE;
+    if (lparam.m_lparam &&
+        ((MSG *)lparam.m_lparam)->message == WM_KEYDOWN &&
+        ((MSG *)lparam.m_lparam)->wParam == VK_RETURN) {
+      lresult = DLGC_WANTMESSAGE;
     }
-    return lres;
+    return true;
   } // switch
 
-  return CallWindowProc(_this->m_defWindowProc, hwnd, uMsg, wParam, lParam);
+   return false;
+  //return CallWindowProc(m_defWindowProc, hwnd, uMsg, wParam, lParam);
 }

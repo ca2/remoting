@@ -27,7 +27,8 @@
 
 #include "util/CommonHeader.h"
 
-class Pen
+class Pen :
+virtual public ::particle
 {
 public:
   const static int SOLID_TYPE = PS_SOLID;

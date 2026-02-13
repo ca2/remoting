@@ -78,8 +78,8 @@ protected:
 
   HIMAGELIST m_smallImageList;
 
-private:
-  static LRESULT CALLBACK s_newWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+//private:
+  bool window_procedure(LRESULT & lresult, UINT message, ::wparam wparam, ::lparam lparam) override;
 
   static const int IMAGE_FOLDER_UP_INDEX = 0;
   static const int IMAGE_FOLDER_INDEX = 1;

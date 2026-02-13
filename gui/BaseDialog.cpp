@@ -33,17 +33,17 @@
 HINSTANCE remoting_impact_hinstance();
 
 BaseDialog::BaseDialog()
-: m_ctrlParent(NULL), m_resourceName(0), m_resourceId(0), m_hicon(0)
+: m_pwindowParent(NULL), m_resourceName(0), m_resourceId(0), m_hicon(0)
 {
 }
 
 BaseDialog::BaseDialog(DWORD resourceId)
-: m_ctrlParent(NULL), m_resourceName(0), m_resourceId(resourceId), m_hicon(0)
+: m_pwindowParent(NULL), m_resourceName(0), m_resourceId(resourceId), m_hicon(0)
 {
 }
 
 BaseDialog::BaseDialog(const TCHAR *resourceName)
-: m_ctrlParent(NULL), m_resourceName(0), m_resourceId(0), m_hicon(0)
+: m_pwindowParent(NULL), m_resourceName(0), m_resourceId(0), m_hicon(0)
 {
   setResourceName(resourceName);
 }
@@ -74,47 +74,47 @@ void BaseDialog::setResourceId(DWORD id)
 
 void BaseDialog::setDefaultPushButton(UINT buttonId)
 {
-  SendMessage(m_ctrlThis.getWindow(), DM_SETDEFID, buttonId, 0);
+  SendMessage(m_hwnd, DM_SETDEFID, buttonId, 0);
 }
 
-void BaseDialog::setParent(Control *ctrlParent)
+void BaseDialog::set_parent(::windows::Window *pwindowParent)
 {
-  m_ctrlParent = ctrlParent;
+  m_pwindowParent = pwindowParent;
 }
 
 int BaseDialog::show()
 {
-  if (m_ctrlThis.getWindow() == NULL) {
+  if (m_hwnd == NULL) {
     create();
   } else {
-    m_ctrlThis.setForeground();
+    setForeground();
   }
   return 0;
 }
 
 void BaseDialog::hide()
 {
-  m_ctrlThis.setVisible(false);
+  setVisible(false);
 }
 
 void BaseDialog::kill(int code)
 {
   // Destroy dialog
   if (!m_isModal) {
-    DestroyWindow(m_ctrlThis.getWindow());
+    DestroyWindow(m_hwnd);
   } else {
-    EndDialog(m_ctrlThis.getWindow(), code);
+    EndDialog(m_hwnd, code);
   }
   // We have no valid hwnd, so forse set hwnd to NULL
-  m_ctrlThis.setWindow(NULL);
+  setWindow(NULL);
 }
 
 void BaseDialog::create()
 {
   HWND window, parentWindow = NULL;
 
-  if (m_ctrlParent != NULL) {
-    parentWindow = m_ctrlParent->getWindow();
+  if (m_pwindowParent != NULL) {
+    parentWindow = m_pwindowParent->get_hwnd();
   }
 
    auto pszResourceName = getResouceName();
@@ -130,18 +130,21 @@ void BaseDialog::create()
   _ASSERT(window != NULL);
 }
 
+
+
 int BaseDialog::showModal()
 {
   int result = 0;
-  if (m_ctrlThis.getWindow() == NULL) {
+  if (m_hwnd == NULL) {
     m_isModal = true;
-    HWND parentWindow = (m_ctrlParent != NULL) ? m_ctrlParent->getWindow() : NULL;
-    result = (int)DialogBoxParam(GetModuleHandle(NULL),
+     HINSTANCE hinstance = remoting_impact_hinstance();
+    HWND parentWindow = (m_pwindowParent != NULL) ? m_pwindowParent->getWindow() : NULL;
+    result = (int)DialogBoxParam(hinstance,
                                  getResouceName(),
                                  parentWindow, dialogProc, (LPARAM)this);
   } else {
-    m_ctrlThis.setVisible(true);
-    m_ctrlThis.setForeground();
+    setVisible(true);
+    setForeground();
   }
 
   //
@@ -156,13 +159,13 @@ int BaseDialog::showModal()
 
 bool BaseDialog::isCreated()
 {
-  bool isInit = m_ctrlThis.getWindow() != 0;
+  bool isInit = m_hwnd != 0;
 
   if (!isInit) {
     return false;
   }
 
-  return !!IsWindow(m_ctrlThis.getWindow());
+  return !!IsWindow(m_hwnd);
 }
 
 BOOL BaseDialog::onDrawItem(WPARAM controlID, LPDRAWITEMSTRUCT dis)
@@ -183,7 +186,7 @@ INT_PTR CALLBACK BaseDialog::dialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPA
   if (uMsg == WM_INITDIALOG) {
     _this = (BaseDialog *)lParam;
     SetWindowLongPtr(hwnd, GWLP_USERDATA, (LONG_PTR)_this);
-    _this->m_ctrlThis.setWindow(hwnd);
+    _this->setWindow(hwnd);
     _this->updateIcon();
   } else {
     _this = (BaseDialog *)GetWindowLongPtr(hwnd, GWLP_USERDATA);
@@ -228,13 +231,13 @@ TCHAR *BaseDialog::getResouceName()
 
 void BaseDialog::setControlById(Control &control, DWORD id) 
 {
-  control = GetDlgItem(m_ctrlThis.getWindow(), id);
+  control = GetDlgItem(m_hwnd, id);
 }
 
 void BaseDialog::updateIcon()
 {
   if (m_hicon) {
-    SetClassLongPtr(m_ctrlThis.getWindow(), GCLP_HICON, (LONG_PTR)m_hicon);
+    SetClassLongPtr(m_hwnd, GCLP_HICON, (LONG_PTR)m_hicon);
   }
 }
 
@@ -248,7 +251,7 @@ void BaseDialog::loadIcon(DWORD id)
 
 bool BaseDialog::setForeground()
 {
-  return m_ctrlThis.setForeground();
+  return setForeground();
 }
 
 BOOL BaseDialog::onInitDialog()

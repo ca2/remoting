@@ -88,7 +88,7 @@ public:
   // Helper methods
   //
 
-  bool isEqualTo(IpAccessRule *other) const;
+  bool operator ==(const IpAccessRule & other) const;
 
   //
   // Determinates belong address to subnetwork which associated

@@ -29,12 +29,17 @@
 #include "region/Point.h"
 #include "util/CommonHeader.h"
 #include <list>
+#include "acme/prototype/geometry2d/rectangle.h"
 
 struct WinProp
 {
-  WinProp(HWND _hwnd, const ::int_rectangle & _prevRect) { hwnd = _hwnd; prevRect = _prevRect; }
-  HWND hwnd;
-  ::int_rectangle prevRect;
+   WinProp(HWND hwnd, const ::int_rectangle &rectangleOld)
+   {
+      m_hwnd = hwnd;
+      m_rectangleOld = rectangleOld;
+   }
+  HWND m_hwnd;
+  ::int_rectangle m_rectangleOld;
 };
 
 class CopyRectDetector

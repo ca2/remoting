@@ -22,23 +22,27 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _BASE_DIALOG_H_
-#define _BASE_DIALOG_H_
+#pragma once
+
 
 #include "Control.h"
 #include "util/StringStorage.h"
 
-class BaseDialog
+class BaseDialog :
+virtual public windows::Window
 {
 public:
-  BaseDialog();
-  BaseDialog(DWORD resourceId);
-  BaseDialog(const TCHAR *resourceName);
-  virtual ~BaseDialog();
-public:
 
+
+   BaseDialog();
+   BaseDialog(DWORD resourceId);
+   BaseDialog(const TCHAR *resourceName);
+   ~BaseDialog() override;
+//public:
+
+   void set_parent(::windows::Window *pwindowParam) override;
   // Method creates non modal window but not shows it
-  void create();
+   void create();
 
   //
   // Methods creates windows and show it in nonmodal/modal mode
@@ -55,13 +59,13 @@ public:
   // Method closes dialog
   virtual void kill(int code);
   // Method sets parent window
-  void setParent(Control *ctrlParent);
+
   // Set resource name for dialog
   void setResourceName(const TCHAR *resourceName);
   // Set resource id for dialog.
   void setResourceId(DWORD id);
   // Return
-  Control *getControl() { return &m_ctrlThis; }
+  //Control *getControl() { return &m_ctrlThis; }
   // Setup control by ID
   void setControlById(Control &control, DWORD id);
   // Icon manipulation 
@@ -71,14 +75,14 @@ public:
   // Puts this control foreground and activates it
   bool setForeground();
 
-protected:
+//protected:
   /**
    * Sets default push button for dialog.
    * @pararm buttonId new default push button id.
    */
   void setDefaultPushButton(UINT buttonId);
 
-protected:
+//protected:
 
   //
   // This methods must be overrided by child classes.
@@ -103,15 +107,15 @@ protected:
 
   static INT_PTR CALLBACK dialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
-private:
+//private:
   TCHAR *getResouceName();
 
-protected:
+//protected:
 
   TCHAR *m_resourceName;        // Name of dialog resource
   DWORD m_resourceId;            // Id of dialog resouce
-  Control m_ctrlThis;           // This dialog control
-  Control *m_ctrlParent;        // Parent dialog or NULL if no parent
+  //Control m_ctrlThis;           // This dialog control
+  ::windows::Window *m_pwindowParent;        // Parent dialog or NULL if no parent
 
   bool m_isModal;
   bool m_isCreated;
@@ -119,4 +123,4 @@ protected:
   HICON m_hicon;
 };
 
-#endif
+

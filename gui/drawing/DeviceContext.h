@@ -48,7 +48,7 @@ protected:
   // Selects an object into this device context.
   HGDIOBJ selectObject(HGDIOBJ object);
 
-protected:
+public:
   HDC m_dc;
   HWND m_wnd;
   bool m_hasOwnDC;

@@ -6,7 +6,7 @@
 
 
 #include "acme/platform/application.h"
-
+#include "remoting/remoting/ConnectingDialog.h"
 namespace remoting_remoting
 {
 
@@ -14,12 +14,15 @@ namespace remoting_remoting
    virtual public ::platform::application
    {
    public:
+      ConnectingDialog m_connectingdialog;
+
+      bool m_bOpenFile = false;
 
       __DECLARE_APPLICATION_RELEASE_TIME();
 
       application();
       ~application() override;
-
+      int remoting_impact_main(const ::file::path &path);
 
       void on_request(::request * prequest) override;
 

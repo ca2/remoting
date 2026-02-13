@@ -45,7 +45,7 @@ public:
   virtual void terminateDetection();
 
   virtual ::int_size getScreenDimension();
-  virtual bool grabFb(const ::int_rectangle &  rect = 0);
+  virtual bool grabFb(const ::int_rectangle &rect = {} );
   virtual FrameBuffer *getScreenBuffer();
   virtual bool getScreenPropertiesChanged();
   virtual bool getScreenSizeChanged();

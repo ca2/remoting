@@ -25,6 +25,8 @@
 #include "ToolBar.h"
 #include <CommCtrl.h>
 
+HINSTANCE remoting_impact_hinstance();
+
 ToolBar::ToolBar()
 {
   INITCOMMONCONTROLSEX initCtrlEx;
@@ -54,7 +56,7 @@ bool ToolBar::create(int _tbID, HWND _parentHwnd, DWORD dwStyle)
                                  0, 0, 0, 0,
                                  _parentHwnd,
                                  reinterpret_cast<HMENU>(_tbID),
-                                 GetModuleHandle(0),
+                                 remoting_impact_hinstance(),
                                  0);
   if (m_hWndToolbar) {
     // It's required for backward compatibility
@@ -75,7 +77,7 @@ void ToolBar::loadToolBarfromRes(DWORD id)
 {
   BITMAP bmp;
 
-  HBITMAP hbmp = LoadBitmap(GetModuleHandle(NULL),
+  HBITMAP hbmp = LoadBitmap(remoting_impact_hinstance(),
                             MAKEINTRESOURCE(id));
   GetObject(hbmp, sizeof(BITMAP), &bmp);
   m_width = bmp.bmWidth;
@@ -124,7 +126,7 @@ void ToolBar::attachToolBar(HWND hwnd)
      WS_VISIBLE | WS_CHILD | TBSTYLE_TOOLTIPS | WS_CLIPSIBLINGS | TBSTYLE_FLAT | WS_BORDER,
      m_id,
      static_cast<int>(tbuttons.size()),
-     GetModuleHandle(NULL),
+     remoting_impact_hinstance(),
      m_id,
      &tbuttons.front(),
      static_cast<int>(tbuttons.size()),
@@ -238,7 +240,7 @@ LRESULT ToolBar::addBitmap(int nButtons, UINT bitmapID)
 {
   TBADDBITMAP resBitmap;
 
-  resBitmap.hInst = GetModuleHandle(0);
+  resBitmap.hInst = remoting_impact_hinstance();
   resBitmap.nID = bitmapID;
   return SendMessage(m_hWndToolbar, TB_ADDBITMAP, nButtons, reinterpret_cast<LPARAM>(&resBitmap));
 }

@@ -32,6 +32,8 @@
 #include "remoting_impact.h"
 #include "ViewerWindow.h"
 
+#include "acme/platform/application.h"
+
 ViewerWindow::ViewerWindow(WindowsApplication *application,
                            ConnectionData *conData,
                            ConnectionConfig *conConf,
@@ -77,7 +79,7 @@ ViewerWindow::ViewerWindow(WindowsApplication *application,
                          WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_CHILD,
                          getHWnd());
 
-  SetTimer(m_hWnd, TIMER_DESKTOP_STATE, TIMER_DESKTOP_STATE_DELAY, (TIMERPROC)NULL);
+  SetTimer(m_hwnd, TIMER_DESKTOP_STATE, TIMER_DESKTOP_STATE_DELAY, (TIMERPROC)NULL);
 }
 
 ViewerWindow::~ViewerWindow()
@@ -108,7 +110,7 @@ void ViewerWindow::setRemoteViewerCore(RemoteViewerCore *pCore)
 
 bool ViewerWindow::onCreate(LPCREATESTRUCT lps)
 {
-  m_control.setWindow(m_hWnd);
+  m_control.setWindow(m_hwnd);
 
   setClassCursor(LoadCursor(NULL, IDC_ARROW));
   loadIcon(IDI_APPICON);
@@ -123,7 +125,7 @@ bool ViewerWindow::onCreate(LPCREATESTRUCT lps)
   m_menu.getSystemMenu(getHWnd());
   m_menu.loadMenu();
   applySettings();
-
+   m_timeStart.Now();
   ViewerConfig *config = ViewerConfig::getInstance();
   bool bShowToolbar = config->isToolbarShown();
   if (!bShowToolbar) {
@@ -263,11 +265,14 @@ bool ViewerWindow::onMessage(UINT message, WPARAM wParam, LPARAM lParam)
     m_stopped = true;
     return true;
   case WM_USER_STOP:
-    SendMessage(m_hWnd, WM_DESTROY, 0, 0);
+    SendMessage(m_hwnd, WM_DESTROY, 0, 0);
     return true;
   case WM_USER_FS_WARNING:
     return onFsWarning();
-  case WM_CLOSE:
+     case WM_USER_SWITCH_FULL_SCREEN_MODE:
+        switchFullScreenMode();
+        return true;
+     case WM_CLOSE:
     return onClose();
   case WM_DESTROY:
     return onDestroy();
@@ -353,8 +358,9 @@ void ViewerWindow::dialogConnectionOptions()
   dialog.setConnected();
   dialog.setConnectionConfig(m_conConf);
   // FIXME: Removed Control from this code and another
-  Control control = getHWnd();
-  dialog.setParent(&control);
+   //auto pcontrol = øcreate_new<Control>();
+   //pcontrol ->_setWindow(getHWnd());
+  dialog.setParent(this);
 
   if (dialog.showModal() == 1) {
     m_conConf->saveToStorage(&m_ccsm);
@@ -408,6 +414,12 @@ void ViewerWindow::dialogConfiguration()
   m_application->postMessage(remoting_impact::WM_USER_CONFIGURATION);
 }
 
+void ViewerWindow::onGoodCursor()
+{
+
+   m_dsktWnd.m_timeStartDesktopWindow.m_iSecond -= 120;
+
+}
 void ViewerWindow::desktopStateUpdate()
 {
   // Adjust window of viewer to size of remote desktop.
@@ -533,7 +545,7 @@ void ViewerWindow::commandSaveSession()
   OPENFILENAME ofn;
   ZeroMemory(&ofn, sizeof(ofn));
   ofn.lStructSize = sizeof(ofn);
-  ofn.hwndOwner = m_hWnd;
+  ofn.hwndOwner = m_hwnd;
   ofn.lpstrFilter = &filter.front();
   ofn.lpstrDefExt = _T("vnc");
   ofn.lpstrFile= fileName;
@@ -554,7 +566,7 @@ void ViewerWindow::commandSaveSession()
       sm.setUINT(_T("port"), m_conData->getPort());
 
       if (m_conData->isSetPassword()) {
-        int whetherToSavePass = MessageBox(m_hWnd,
+        int whetherToSavePass = MessageBox(m_hwnd,
           StringTable::getString(IDS_QUESTION_SAVE_PASSWORD),
           StringTable::getString(IDS_SECURITY_WARNING_CAPTION),
           MB_YESNO);
@@ -792,10 +804,10 @@ void ViewerWindow::applyScreenChanges(bool isFullScreen)
 void ViewerWindow::setSizeFullScreenWindow()
 {
   // Save position of window.
-  GetWindowPlacement(m_hWnd, &m_workArea);
+  GetWindowPlacement(m_hwnd, &m_workArea);
 
   // Get size of desktop.
-  HMONITOR hmon = MonitorFromWindow(m_hWnd, MONITOR_DEFAULTTONEAREST);
+  HMONITOR hmon = MonitorFromWindow(m_hwnd, MONITOR_DEFAULTTONEAREST);
   MONITORINFO mi;
   mi.cbSize = sizeof(mi);
 
@@ -815,7 +827,7 @@ void ViewerWindow::setSizeFullScreenWindow()
   setStyle((getStyle() | WS_MAXIMIZE) & ~(WS_CAPTION | WS_BORDER | WS_THICKFRAME  | WS_MAXIMIZEBOX));
   setExStyle(getExStyle() | WS_EX_TOPMOST);
 
-  SetWindowPos(m_hWnd, 0,
+  SetWindowPos(m_hwnd, 0,
                fullScreenRect.left, fullScreenRect.top,
                fullScreenRect.width(), fullScreenRect.height(),
                SWP_SHOWWINDOW);
@@ -885,7 +897,7 @@ void ViewerWindow::doUnFullScr()
   workArea = m_workArea.rcNormalPosition;
   if (m_rcNormal.height() == workArea.height() ||
       m_rcNormal.width() == workArea.width()) {
-    SetWindowPlacement(m_hWnd, &m_workArea);
+    SetWindowPlacement(m_hwnd, &m_workArea);
   } else {
     setStyle(getStyle() & ~WS_MAXIMIZE);
     setPosition(m_rcNormal.left, m_rcNormal.top);
@@ -923,12 +935,13 @@ bool ViewerWindow::onClose()
   }
   m_dsktWnd.destroyWindow();
   destroyWindow();
+   ::system()->m_papplicationMain->set_finish();
   return true;
 }
 
 bool ViewerWindow::onDestroy()
 {
-  KillTimer(m_hWnd, TIMER_DESKTOP_STATE);
+  KillTimer(m_hwnd, TIMER_DESKTOP_STATE);
   return true;
 }
 
@@ -1057,7 +1070,7 @@ void ViewerWindow::onBell()
   // Get work area.
   ::int_rectangle defaultRect;
 
-  HMONITOR hmon = MonitorFromWindow(m_hWnd, MONITOR_DEFAULTTONEAREST);
+  HMONITOR hmon = MonitorFromWindow(m_hwnd, MONITOR_DEFAULTTONEAREST);
   MONITORINFO mi;
   mi.cbSize = sizeof(mi);
 

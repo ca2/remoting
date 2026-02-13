@@ -40,6 +40,7 @@ namespace remoting
       ::pointer < SolidBrush > m_pbrushButtonBackground;
       ::pointer < SolidBrush > m_pbrushButtonBackgroundHover;
       ::pointer < SolidBrush > m_pbrushButtonPaint;
+      ::pointer < Pen > m_ppenPaint;
 
       style();
       ~style() override;
@@ -58,25 +59,38 @@ namespace remoting
       bool m_bPressed = false;
       enum_control m_econtrol;
       enum_id m_eid;
+      Gdiplus::Bitmap * m_pbitmapBuffer = nullptr;
+      Gdiplus::Graphics * m_pgraphicsBuffer = nullptr;
+
+
+      bool m_bNewRepaintRectangle;
+      ::int_rectangle m_rectangleRepaint;
 
       ::pointer_array < control > m_controlaChildren;
 
       control();
       ~control();
 
+      control * get_paint_window();
+      void add_repaint(const ::int_rectangle & rectangle);
+      void _add_repaint(const ::int_rectangle & rectangle);
+void defer_repaint();
+bool m_bDrag = false;
+      int m_xCursorDragStart = -1;
+      int m_xWindowDragStart = -1;
 
-
-
-      virtual bool _000OnMouse(bool bPress, POINT position);
-      virtual bool _001OnMouse(bool bPress, POINT position);
+      virtual bool _000OnMouse(bool bPress, POINT pointRoot, POINT pointClient);
+      virtual bool _001OnMouse(bool bPress, POINT pointRoot, POINT pointClient);
       virtual bool on_left_down(POINT position);
       virtual bool on_left_up(POINT position);
-      virtual void _000OnDraw(Graphics * pgraphics);
-      virtual void _001OnDraw(Graphics * pgraphics);
+      virtual void __000OnTopDraw(HDC hdc, const ::int_rectangle & rectangle);
+      virtual void __000OnDraw(GraphicsPlus * pgraphics, const ::int_rectangle & rectangle);
+      virtual void __001OnDraw(GraphicsPlus * pgraphics, const ::int_rectangle & rectangle);
       virtual bool on_button_click(enum_id eid);
 
       virtual ::int_rectangle get_client_rectangle();
       virtual ::int_rectangle get_window_rectangle();
+      virtual ::int_rectangle get_paint_rectangle();
 
    };
 
@@ -122,8 +136,9 @@ namespace remoting
       virtual void create_impact_toolbar(DesktopWindow * pdesktopwindow,  style * pstyle);
 
       //bool on_mouse(bool bPress, POINT position);
-      //void on_draw(DeviceContext *dc);
+      void __001OnDraw(GraphicsPlus *pgraphics, const ::int_rectangle & rectangle) override;
       bool on_button_click(enum_id eid) override;
+      bool _001OnMouse(bool bPress, POINT pointRoot, POINT pointClient) override;
    };
 
 
