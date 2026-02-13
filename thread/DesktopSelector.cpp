@@ -38,7 +38,7 @@ HDESK DesktopSelector::getInputDesktop()
                           GENERIC_WRITE);
 }
 
-HDESK DesktopSelector::getDesktop(const StringStorage & name)
+HDESK DesktopSelector::getDesktop(const ::string & name)
 {
   return OpenDesktop(name.getString(), 0, TRUE,
                      DESKTOP_CREATEMENU |
@@ -61,7 +61,7 @@ bool DesktopSelector::setDesktopToCurrentThread(HDESK newDesktop)
   return SetThreadDesktop(newDesktop) != 0;
 }
 
-bool DesktopSelector::selectDesktop(const StringStorage & name)
+bool DesktopSelector::selectDesktop(const ::string & name)
 {
   HDESK desktop;
   if (name.is_empty()) {
@@ -76,7 +76,7 @@ bool DesktopSelector::selectDesktop(const StringStorage & name)
   return result;
 }
 
-bool DesktopSelector::getDesktopName(HDESK desktop, StringStorage *desktopName)
+bool DesktopSelector::getDesktopName(HDESK desktop, ::string & desktopName)
 {
   desktopName->setString(_T(""));
 
@@ -99,7 +99,7 @@ bool DesktopSelector::getDesktopName(HDESK desktop, StringStorage *desktopName)
   return false;
 }
 
-bool DesktopSelector::getCurrentDesktopName(StringStorage *desktopName)
+bool DesktopSelector::getCurrentDesktopName(::string & desktopName)
 {
   HDESK inputDesktop = getInputDesktop();
   bool result = getDesktopName(inputDesktop, desktopName);
@@ -107,7 +107,7 @@ bool DesktopSelector::getCurrentDesktopName(StringStorage *desktopName)
   return result;
 }
 
-bool DesktopSelector::getThreadDesktopName(StringStorage *desktopName)
+bool DesktopSelector::getThreadDesktopName(::string & desktopName)
 {
   return getDesktopName(GetThreadDesktop(GetCurrentThreadId()), desktopName);
 }

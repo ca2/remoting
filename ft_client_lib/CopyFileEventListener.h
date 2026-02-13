@@ -78,7 +78,7 @@ protected:
 
   virtual int targetFileExists(FileInfo *sourceFileInfo,
                                FileInfo *targetFileInfo,
-                               const TCHAR *pathToTargetFile) = 0;
+                               const ::scoped_string & scopedstrpathToTargetFile) = 0;
 };
 
 #endif

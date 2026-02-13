@@ -115,12 +115,12 @@ void onGoodCursor() override;
   //
   void onBell();
   void onConnected(RfbOutputGate *output);
-  void onDisconnect(const StringStorage & message);
+  void onDisconnect(const ::string & message);
   void onAuthError(const AuthException *exception);
   void onError(const Exception *exception);
   void onFrameBufferUpdate(const FrameBuffer *fb, const ::int_rectangle &  rect);
   void onFrameBufferPropChange(const FrameBuffer *fb);
-  void onCutText(const StringStorage & cutText);
+  void onCutText(const ::string & cutText);
 
   int translateAccelToTB(int val);
   void applyScreenChanges(bool isFullScreen);
@@ -141,7 +141,7 @@ void onGoodCursor() override;
   FileTransferCapability *m_fileTransfer;
   FileTransferMainDialog *m_ftDialog;
   DesktopWindow m_dsktWnd;
-  StringStorage m_strToolTip;
+  ::string m_strToolTip;
   ToolBar m_toolbar;
   ViewerMenu m_menu;
   ConnectionData *m_conData;
@@ -150,7 +150,7 @@ void onGoodCursor() override;
   // This variable save Exception after call onError().
   Exception m_error;
   // This variable save disconnect-message after call onDisconnect().
-  StringStorage m_disconnectMessage;
+  ::string m_disconnectMessage;
 
   // Flag is set, if now viewer is in full screen mode
   bool m_isFullScr;
@@ -194,7 +194,7 @@ private:
   void switchFullScreenMode();
   void dialogConfiguration();
   void adjustWindowSize();
-  StringStorage formatWindowName() const;
+  ::string formatWindowName() const;
   void updateKeyState();
 
   // onHookProc function implementation of HookEventListener base abstract class.

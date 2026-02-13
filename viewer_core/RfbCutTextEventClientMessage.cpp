@@ -28,7 +28,7 @@
 
 #include "RfbCutTextEventClientMessage.h"
 
-RfbCutTextEventClientMessage::RfbCutTextEventClientMessage(const StringStorage & cutText)
+RfbCutTextEventClientMessage::RfbCutTextEventClientMessage(const ::string & cutText)
 : m_cutText(cutText)
 {
 }

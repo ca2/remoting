@@ -37,10 +37,10 @@ public:
   void setHWnd(HWND hwnd);
   
   // get string from windows clipboard
-  bool getString(StringStorage *str);
+  bool getString(::string & str);
 
   // update windows clipboard
-  bool setString(const StringStorage & str);
+  bool setString(const ::string & str);
 
 protected:
   static const TCHAR CR = _T('\r');
@@ -48,10 +48,10 @@ protected:
 
 protected:
   // function removed CR before LF
-  StringStorage removeCR(const StringStorage & str);
+  ::string removeCR(const ::string & str);
 
   // function replaced LF to CR+LF. If before LF already is CR, this not added second
-  StringStorage addCR(const StringStorage & str);
+  ::string addCR(const ::string & str);
 
   HANDLE m_hndClipboard;
   HWND m_hwnd;

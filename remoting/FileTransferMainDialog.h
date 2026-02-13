@@ -63,11 +63,11 @@ public:
   //
   int onFtTargetFileExists(FileInfo *sourceFileInfo,
                            FileInfo *targetFileInfo,
-                           const TCHAR *pathToTargetFile);
+                           const ::scoped_string & scopedstrpathToTargetFile);
   void setProgress(double progress);
 
-  void onFtOpError(const TCHAR *message);
-  void onFtOpInfo(const TCHAR *message);
+  void onFtOpError(const ::scoped_string & scopedstrmessage);
+  void onFtOpInfo(const ::scoped_string & scopedstrmessage);
   void onFtOpStarted();
   void onFtOpFinished(int state, int result);
 
@@ -148,7 +148,7 @@ protected:
   // Text notification methods
   //
 
-  void insertMessageIntoComboBox(const TCHAR *message);
+  void insertMessageIntoComboBox(const ::scoped_string & scopedstrmessage);
 
 private:
 
@@ -182,14 +182,14 @@ private:
   // to local file ::std::list view
   //
 
-  void tryListLocalFolder(const TCHAR *pathToFile);
+  void tryListLocalFolder(const ::scoped_string & scopedstrpathToFile);
 
   //
   // Sends file ::std::list request to server and shows result
   // in remote file ::std::list view
   //
 
-  void tryListRemoteFolder(const TCHAR *pathToFile);
+  void tryListRemoteFolder(const ::scoped_string & scopedstrpathToFile);
 
   //
   // Filenames helper methods
@@ -199,13 +199,13 @@ private:
   // FIXME: Make classes for getPathTo*** methods
   //
 
-  void getPathToCurrentLocalFolder(StringStorage *out);
-  void getPathToParentLocalFolder(StringStorage *out);
-  void getPathToSelectedLocalFile(StringStorage *out);
+  void getPathToCurrentLocalFolder(::string & out);
+  void getPathToParentLocalFolder(::string & out);
+  void getPathToSelectedLocalFile(::string & out);
 
-  void getPathToCurrentRemoteFolder(StringStorage *out);
-  void getPathToParentRemoteFolder(StringStorage *out);
-  void getPathToSelectedRemoteFile(StringStorage *out);
+  void getPathToCurrentRemoteFolder(::string & out);
+  void getPathToParentRemoteFolder(::string & out);
+  void getPathToSelectedRemoteFile(::string & out);
 
 protected:
   //
@@ -216,8 +216,8 @@ protected:
 
 
 
-  StringStorage m_lastSentFileListPath;
-  StringStorage m_lastReceivedFileListPath;
+  ::string m_lastSentFileListPath;
+  ::string m_lastReceivedFileListPath;
 
   //
   // Buttons

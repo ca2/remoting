@@ -30,7 +30,7 @@
 class WinDxException : public Exception
 {
 public:
-  WinDxException(const TCHAR *message, HRESULT errCode);
+  WinDxException(const ::scoped_string & scopedstrmessage, HRESULT errCode);
   virtual ~WinDxException();
 
   HRESULT getErrorCode() const;

@@ -44,7 +44,7 @@ public:
 
   // Returns process module path. Call the openProcess() function before.
   // @throws Exception on an error.
-  void getProcessModulePath(StringStorage *exePath);
+  void getProcessModulePath(::string & exePath);
 
 private:
   HANDLE m_hProcess;

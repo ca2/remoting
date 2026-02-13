@@ -73,7 +73,7 @@ void SecurityPipeServer::generateSecConnection(Channel *tempPublChan)
     }
 
     // Give to process exclusive pipe handles
-    StringStorage randomName;
+    ::string randomName;
     srand((unsigned)time(0));
     for (int i = 0; i < 20; i++) {
       randomName.appendChar('a' + rand() % ('z' - 'a'));

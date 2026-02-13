@@ -86,7 +86,7 @@ void UpdateHandlerServer::onRequest(unsigned char reqCode, BlockingGate *backGat
     serverInit(backGate);
     break;
   default:
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Unknown %d protocol code received from a pipe client"),
                    (int)reqCode);
     throw Exception(errMess.getString());

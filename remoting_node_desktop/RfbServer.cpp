@@ -25,7 +25,7 @@
 #include "RfbServer.h"
 #include "server_config_lib/Configurator.h"
 
-RfbServer::RfbServer(const TCHAR *bindHost, unsigned short bindPort,
+RfbServer::RfbServer(const ::scoped_string & scopedstrbindHost, unsigned short bindPort,
                      RfbClientManager *clientManager,
                      bool lockAddr,
                      LogWriter *log,
@@ -60,7 +60,7 @@ void RfbServer::onAcceptConnection(SocketIPv4 *socket)
     // Get incoming connection address and convert it to string.
     SocketAddressIPv4 peerAddr;
     socket->getPeerAddr(&peerAddr);
-    StringStorage peerIpString;
+    ::string peerIpString;
     peerAddr.toString(&peerIpString);
 
     m_log->message(_T("Incoming rfb connection from %s to port %u"), peerIpString.getString(), peerAddr.getPort());

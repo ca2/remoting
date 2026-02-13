@@ -120,7 +120,7 @@ bool ExtraRfbServers::startUp(bool asService, RfbClientManager *mgr)
   m_effectiveConf = newConf;
 
   if (newConf.acceptConnections) {
-    const TCHAR *bindHost =
+    const ::scoped_string & scopedstrbindHost =
       newConf.loopbackOnly ? _T("localhost") : _T("0.0.0.0");
 
     for (size_t i = 0; i < newConf.extraPorts.count(); i++) {

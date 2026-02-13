@@ -30,7 +30,7 @@
 class ReconnectException : public IOException
 {
 public:
-  ReconnectException(const TCHAR *message);
+  ReconnectException(const ::scoped_string & scopedstrmessage);
   virtual ~ReconnectException();
 };
 

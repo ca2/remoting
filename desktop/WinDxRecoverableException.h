@@ -30,7 +30,7 @@
 class WinDxRecoverableException : public WinDxException
 {
 public:
-  WinDxRecoverableException(const TCHAR *message, HRESULT errCode);
+  WinDxRecoverableException(const ::scoped_string & scopedstrmessage, HRESULT errCode);
   virtual ~WinDxRecoverableException();
 };
 

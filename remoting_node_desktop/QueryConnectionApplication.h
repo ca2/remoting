@@ -42,8 +42,8 @@ public:
    * @throws SystemException on fail.
    */
   QueryConnectionApplication(HINSTANCE hInstance,
-                             const TCHAR *windowClassName,
-                             const TCHAR *cmdLine);
+                             const ::scoped_string & scopedstrwindowClassName,
+                             const ::scoped_string & scopedstrcmdLine);
   /**
    * Deletes instance.
    */
@@ -65,11 +65,11 @@ public:
    * @return application exit code (0 means accept connection, 1 means reject connection).
    * @throws Exception on fail.
    */
-  static int execute(const TCHAR *peerAddr, bool acceptByDefault, DWORD timeOutSec)
+  static int execute(const ::scoped_string & scopedstrpeerAddr, bool acceptByDefault, DWORD timeOutSec)
 ;
 
 private:
-  StringStorage m_cmdLine;
+  ::string m_cmdLine;
 };
 
 #endif

@@ -128,21 +128,21 @@ void Control::setEnabled(bool enabled)
   invalidate();
 }
 
-void Control::setText(const TCHAR *text)
+void Control::setText(const ::scoped_string & scopedstrtext)
 {
   SetWindowText(m_hwnd, text);
 }
 
 void Control::setSignedInt(int value)
 {
-  StringStorage text;
+  ::string text;
   text.format(_T("%d"), value);
   setText(text.getString());
 }
 
 void Control::setUnsignedInt(unsigned int value)
 {
-  StringStorage text;
+  ::string text;
   text.format(_T("%u"), value);
   setText(text.getString());
 }
@@ -185,7 +185,7 @@ void Control::invalidate()
   InvalidateRect(m_hwnd, NULL, TRUE);
 }
 
-void Control::getText(StringStorage *storage)
+void Control::getText(::string & storage)
 {
   int length = (int)SendMessage(m_hwnd, WM_GETTEXTLENGTH, 0, 0);
   ::std::vector<TCHAR> buf(length + 1);

@@ -30,7 +30,7 @@
 #include "win_system/Workstation.h"
 #include "win_system/WTS.h"
 
-CurrentConsoleProcess::CurrentConsoleProcess(LogWriter *log, bool connectRdpSession, const TCHAR *path, const TCHAR *args)
+CurrentConsoleProcess::CurrentConsoleProcess(LogWriter *log, bool connectRdpSession, const ::scoped_string & scopedstrpath, const ::scoped_string & scopedstrArgs)
 : Process(path, args),
   m_log(log),
   m_connectRdpSession(connectRdpSession)
@@ -65,7 +65,7 @@ void CurrentConsoleProcess::start()
   try {
     HANDLE userToken = WTS::duplicateCurrentProcessUserToken(m_connectRdpSession, m_log);
 
-    StringStorage commandLine = getCommandLineString();
+    ::string commandLine = getCommandLineString();
 
     m_log->debug(_T("Try CreateProcessAsUser(%p, 0, %s, 0, 0, %d, NORMAL_PRIORITY_CLASS, 0, 0,")
                _T(" sti, pi)"),

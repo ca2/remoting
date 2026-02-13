@@ -291,7 +291,7 @@ SHORT InputInjector::searchVirtKey(WCHAR ch, HKL hklCurrent)
         return (SHORT)(ch - L'a' + L'A');
       }
     }
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Can't translate the %d character to the scan code"),
                    (unsigned int)ch);
     throw Exception(errMess.getString());
@@ -301,7 +301,7 @@ SHORT InputInjector::searchVirtKey(WCHAR ch, HKL hklCurrent)
                     _T(" only as unicode character"));
   }
   if (!isOneKeyEventChar(ch, vkKeyScanResult, hklCurrent)) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Can't get the %d character by one keyboard event"),
                    (unsigned int)ch);
     throw Exception(errMess.getString());

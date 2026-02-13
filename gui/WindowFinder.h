@@ -36,7 +36,7 @@ public:
 
   // Find first of windows that name contain the string.
   // It is not case sensitive.
-  static HWND findFirstWindowByName(const StringStorage windowName);
+  static HWND findFirstWindowByName(const ::string windowName);
 
 protected:
   static BOOL CALLBACK findWindowsByClassFunc(HWND hwnd, LPARAM lParam);

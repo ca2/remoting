@@ -51,7 +51,7 @@ public:
    *
    * @fixme stub.
    */
-  PipeServer(const TCHAR *name, unsigned int bufferSize,
+  PipeServer(const ::scoped_string & scopedstrName, unsigned int bufferSize,
              SecurityAttributes *secAttr = 0,
              DWORD milliseconds = INFINITE);
   /**
@@ -99,7 +99,7 @@ private:
   static pGetNamedPipeClientProcessId m_GetNamedPipeClientProcessId;
 
 private:
-  StringStorage m_pipeName;
+  ::string m_pipeName;
   WindowsEvent m_winEvent;
   DWORD m_milliseconds;
   SecurityAttributes *m_secAttr;

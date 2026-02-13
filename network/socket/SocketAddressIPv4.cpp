@@ -85,7 +85,7 @@ SocketAddressIPv4::SocketAddressIPv4(struct sockaddr_in addr)
   m_port = ntohs(addr.sin_port);
 };
 
-SocketAddressIPv4::SocketAddressIPv4(const TCHAR *host, unsigned short port)
+SocketAddressIPv4::SocketAddressIPv4(const ::scoped_string & scopedstrhost, unsigned short port)
 : m_wsaStartup(1, 2)
 {
   SocketAddressIPv4 sa = SocketAddressIPv4::resolve(host, port);
@@ -128,7 +128,7 @@ struct sockaddr_in SocketAddressIPv4::getSockAddr() const
   return saddr;
 }
 
-void SocketAddressIPv4::toString(StringStorage *address) const
+void SocketAddressIPv4::toString(::string & address) const
 {
   u_char b1 = m_addr.S_un.S_un_b.s_b4;
   u_char b2 = m_addr.S_un.S_un_b.s_b3;
@@ -143,11 +143,11 @@ unsigned short SocketAddressIPv4::getPort() const
   return m_port;
 }
 
-SocketAddressIPv4 SocketAddressIPv4::resolve(const TCHAR *host, unsigned short m_port)
+SocketAddressIPv4 SocketAddressIPv4::resolve(const ::scoped_string & scopedstrhost, unsigned short m_port)
 {
   SocketAddressIPv4 resolvedAddress;
 
-  StringStorage hostStorage(host);
+  ::string hostStorage(host);
 
   {
     AutoLock l(&s_resolveMutex);

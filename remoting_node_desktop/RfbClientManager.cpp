@@ -28,7 +28,7 @@
 #include "server_config_lib/Configurator.h"
 #include "util/MemUsage.h"
 
-RfbClientManager::RfbClientManager(const TCHAR *serverName,
+RfbClientManager::RfbClientManager(const ::scoped_string & scopedstrserverName,
                                    NewConnectionEvents *newConnectionEvents,
                                    LogWriter *log,
                                    DesktopFactory *desktopFactory)
@@ -57,7 +57,7 @@ void RfbClientManager::onClientTerminate()
 Desktop *RfbClientManager::onClientAuth(RfbClient *client)
 {
   // The client is now authenticated, so remove its IP from the ban ::std::list.
-  StringStorage ip;
+  ::string ip;
   client->getPeerHost(&ip);
   updateIpInBan(&ip, true);
 
@@ -122,7 +122,7 @@ Desktop *RfbClientManager::onClientAuth(RfbClient *client)
 
 bool RfbClientManager::onCheckForBan(RfbClient *client)
 {
-  StringStorage ip;
+  ::string ip;
   client->getPeerHost(&ip);
 
   return checkForBan(&ip);
@@ -130,7 +130,7 @@ bool RfbClientManager::onCheckForBan(RfbClient *client)
 
 void RfbClientManager::onAuthFailed(RfbClient *client)
 {
-  StringStorage ip;
+  ::string ip;
   client->getPeerHost(&ip);
 
   updateIpInBan(&ip, false);
@@ -163,7 +163,7 @@ void RfbClientManager::onCheckAccessControl(RfbClient *client)
   // Promt user to know what to do with incmoing connection.
 
   if (action == IpAccessRule::ACTION_TYPE_QUERY) {
-    StringStorage peerHost;
+    ::string peerHost;
 
     peerAddr.toString(&peerHost);
 
@@ -176,7 +176,7 @@ void RfbClientManager::onCheckAccessControl(RfbClient *client)
   }
 }
 
-void RfbClientManager::onClipboardUpdate(const StringStorage & newClipboard)
+void RfbClientManager::onClipboardUpdate(const ::string & newClipboard)
 {
   AutoLock al(&m_clientListLocker);
   for (ClientListIter iter = m_clientList.begin();
@@ -308,7 +308,7 @@ void RfbClientManager::validateClientList()
   }
 }
 
-bool RfbClientManager::checkForBan(const StringStorage & ip)
+bool RfbClientManager::checkForBan(const ::string & ip)
 {
   AutoLock al(&m_banListMutex);
 
@@ -330,7 +330,7 @@ bool RfbClientManager::checkForBan(const StringStorage & ip)
   }
 }
 
-void RfbClientManager::updateIpInBan(const StringStorage & ip, bool success)
+void RfbClientManager::updateIpInBan(const ::string & ip, bool success)
 {
   AutoLock al(&m_banListMutex);
 
@@ -355,15 +355,15 @@ void RfbClientManager::updateIpInBan(const StringStorage & ip, bool success)
   }
 }
 
-StringStorage RfbClientManager::getBanListString()
+::string RfbClientManager::getBanListString()
 {
-  StringStorage str;
+  ::string str;
   for (BanListIter it = m_banList.begin(); it != m_banList.end(); it++) {
-    StringStorage ip = (*it).first;
-    StringStorage s;
+    ::string ip = (*it).first;
+    ::string s;
     unsigned int count = (*it).second.count;
     DateTime lastTime = (*it).second.banLastTime;
-    StringStorage time;
+    ::string time;
     lastTime.toString(&time);
     s.format(_T("IP: %s, count: %d, last time: %s\n"), ip.getString(), count, time.getString());
     str.appendString(s.getString());
@@ -412,7 +412,7 @@ void RfbClientManager::getClientsInfo(RfbClientInfoList *::std::list)
   for (ClientListIter it = m_clientList.begin(); it != m_clientList.end(); it++) {
     RfbClient *each = *it;
     if (each->getClientState() == IN_NORMAL_PHASE) {
-      StringStorage peerHost;
+      ::string peerHost;
 
       each->getPeerHost(&peerHost);
 

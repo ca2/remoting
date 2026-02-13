@@ -30,7 +30,7 @@ const TCHAR KeySymTest::VALID_WORD_LETTERS[] = _T("zyxwvutsrqponmlkjihgfedcba")
                                                _T("ZYXWVUTSRQPONMLKJIHGFEDCBA")
                                                _T("01234567890");
 
-KeySymTest::KeySymTest(const TCHAR *fileFrom, const TCHAR *fileTo)
+KeySymTest::KeySymTest(const ::scoped_string & scopedstrfileFrom, const ::scoped_string & scopedstrfileTo)
 : m_fTo(0),
   m_fFrom(0),
   m_lineNumber(0),
@@ -42,13 +42,13 @@ KeySymTest::KeySymTest(const TCHAR *fileFrom, const TCHAR *fileTo)
   m_rfbKeySym = new RfbKeySym(this, &m_log);
   m_fFrom = _tfopen(m_fromFileName.getString(), _T("rt,ccs=UNICODE"));
   if (m_fFrom == 0) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Cannot open the %s file"), m_fromFileName.getString());
     throw Exception(errMess.getString());
   }
   m_fTo = _tfopen(m_toFileName.getString(), _T("wt,ccs=UNICODE"));
   if (m_fTo == 0) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Cannot open the %s file"), m_toFileName.getString());
     throw Exception(errMess.getString());
   }
@@ -63,21 +63,21 @@ KeySymTest::~KeySymTest()
 
 int KeySymTest::run()
 {
-  StringStorage line;
+  ::string line;
   while (readLine(&line)) {
     m_lineNumber++;
     size_t linePos = 0;
-    StringStorage comment;
+    ::string comment;
     removeComments(&line, &comment);
     // Split to words
-    StringStorage word1, word2;
+    ::string word1, word2;
     if (getWord(&line, &linePos, &word1) &&
         getWord(&line, &linePos, &word2)) {
       if (word1.isEqualTo(_T("kbdlayout"))) {
         // Try parse word2 as a hexadecimal value
         unsigned int hkbdLayout = 0;
         if (!StringParser::parseHex(word2.getString(), &hkbdLayout)) {
-          StringStorage errMess;
+          ::string errMess;
           errMess.format(_T("Wrong \"kbdlayout\" argument at %u line (%s)"),
                          m_lineNumber,
                          m_fromFileName.getString());
@@ -97,7 +97,7 @@ int KeySymTest::run()
           addKeyData = down ? 0 : 0x80000000;
           m_rfbKeySym->processKeyEvent(virtKey, addKeyData);
         } else {
-          StringStorage errMess;
+          ::string errMess;
           errMess.format(_T("Wrong value(s) at %u line (%s)"),
                          m_lineNumber,
                          m_fromFileName.getString());
@@ -114,7 +114,7 @@ int KeySymTest::run()
 void KeySymTest::changeKbdLayout(HKL hkl)
 {
   if (ActivateKeyboardLayout(hkl, 0) == 0) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Can't apply a keyboard layout requested at the %u line (%s)"),
                    m_lineNumber,
                    m_fromFileName.getString());
@@ -122,7 +122,7 @@ void KeySymTest::changeKbdLayout(HKL hkl)
   }
 }
 
-bool KeySymTest::readLine(StringStorage *line)
+bool KeySymTest::readLine(::string & line)
 {
   TCHAR buff[255];
   if (_fgetts(buff, sizeof(buff) / sizeof(TCHAR), m_fFrom) != 0) {
@@ -132,8 +132,8 @@ bool KeySymTest::readLine(StringStorage *line)
   return false;
 }
 
-void KeySymTest::removeComments(StringStorage *line,
-                                StringStorage *extractedComment)
+void KeySymTest::removeComments(::string & line,
+                                ::string & extractedComment)
 {
   extractedComment->setString(_T(""));
   // Find the "#" symbol
@@ -149,9 +149,9 @@ void KeySymTest::removeComments(StringStorage *line,
   line->truncate(line->getLength() - commentStartPos);
 }
 
-bool KeySymTest::getWord(const StringStorage & line,
+bool KeySymTest::getWord(const ::string & line,
                          size_t *pos,
-                         StringStorage *word)
+                         ::string & word)
 {
   if (*pos >= line->getLength()) {
     return false;

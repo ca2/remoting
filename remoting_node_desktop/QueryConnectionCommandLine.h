@@ -47,7 +47,7 @@ public:
   bool isTimeoutSpecified();
 
   // Stores ip address value into storage output parameter.
-  void getPeerAddress(StringStorage *storage);
+  void getPeerAddress(::string & storage);
   // Returns true if default action is accept.
   bool isDefaultActionAccept();
   // Returns timeout in seconds.

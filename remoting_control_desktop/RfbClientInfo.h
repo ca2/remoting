@@ -32,14 +32,14 @@
 class RfbClientInfo
 {
 public:
-  RfbClientInfo(unsigned int id, const TCHAR *peerAddr);
+  RfbClientInfo(unsigned int id, const ::scoped_string & scopedstrpeerAddr);
   virtual ~RfbClientInfo();
 
   // FIXME: Debug.
   // FIXME: These members must be protected.
 public:
   unsigned int m_id;
-  StringStorage m_peerAddr;
+  ::string m_peerAddr;
 };
 
 typedef ::std::list<RfbClientInfo> RfbClientInfoList;

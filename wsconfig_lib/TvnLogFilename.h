@@ -42,7 +42,7 @@ public:
    */
   static void queryLogFileDirectory(bool forService,
                                     bool shareToAll,
-                                    StringStorage *logFileDirectory);
+                                    ::string & logFileDirectory);
 private:
   /**
    * Deny instanizing of this class.

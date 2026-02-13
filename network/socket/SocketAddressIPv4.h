@@ -39,7 +39,7 @@ class SocketAddressIPv4
 public:
   SocketAddressIPv4();
   SocketAddressIPv4(struct sockaddr_in);
-  SocketAddressIPv4(const TCHAR *host, unsigned short port);
+  SocketAddressIPv4(const ::scoped_string & scopedstrhost, unsigned short port);
 
   SocketAddressIPv4(const SocketAddressIPv4 &socketAddressIPv4);
   SocketAddressIPv4 &operator=(const SocketAddressIPv4 &socketAddressIPv4);
@@ -48,12 +48,12 @@ public:
   struct sockaddr_in getSockAddr() const;
 
   // Converts socket address to it's string value (ip address as string).
-  void toString(StringStorage *address) const;
+  void toString(::string & address) const;
 
   // Returns socket port number 
   unsigned short getPort() const;
 
-  static SocketAddressIPv4 resolve(const TCHAR *host, unsigned short port);
+  static SocketAddressIPv4 resolve(const ::scoped_string & scopedstrhost, unsigned short port);
 
 protected:
   WsaStartup m_wsaStartup;

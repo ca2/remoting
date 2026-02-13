@@ -59,7 +59,7 @@ public:
    * @param port port to connect.
    * @throws SocketException on fail.
    */
-  void connect(const TCHAR *host, unsigned short port);
+  void connect(const ::scoped_string & scopedstrhost, unsigned short port);
   /**
    * Connects to remote host.
    * @param addr address to connect.
@@ -83,7 +83,7 @@ public:
    * @param bindPort port to bind.
    * @throws SocketException on fail.
    */
-  void bind(const TCHAR *bindHost, unsigned int bindPort);
+  void bind(const ::scoped_string & scopedstrbindHost, unsigned int bindPort);
   /**
    * Binds socket to socket address.
    * @throws SocketException on fail.

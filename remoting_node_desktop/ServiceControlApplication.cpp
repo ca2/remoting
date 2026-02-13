@@ -44,8 +44,8 @@
 #include "win_system/WinCommandLineArgs.h"
 
 ServiceControlApplication::ServiceControlApplication(HINSTANCE hInstance,
-                                                     const TCHAR *windowClassName,
-                                                     const TCHAR *commandLine)
+                                                     const ::scoped_string & scopedstrwindowClassName,
+                                                     const ::scoped_string & scopedstrcommandLine)
 : WindowsApplication(hInstance, windowClassName),
   m_commandLine(commandLine)
 {
@@ -122,10 +122,10 @@ int ServiceControlApplication::run()
 
 void ServiceControlApplication::runElevatedInstance() const
 {
-  StringStorage executablePath;
+  ::string executablePath;
   Environment::getCurrentModulePath(&executablePath);
 
-  StringStorage commandLine;
+  ::string commandLine;
   commandLine.format(_T("%s %s"), m_commandLine.getString(),
                      ServiceControlCommandLine::DONT_ELEVATE);
 
@@ -156,9 +156,9 @@ void ServiceControlApplication::executeCommand(const ServiceControlCommandLine *
 void ServiceControlApplication::setTvnControlStartEntry() const
 {
   // Prepare tvncontrol start command.
-  StringStorage executablePath;
+  ::string executablePath;
   Environment::getCurrentModulePath(&executablePath);
-  StringStorage pathToTvnControl;
+  ::string pathToTvnControl;
   pathToTvnControl.format(_T("\"%s\" %s %s"),
                           executablePath.getString(),
                           ControlCommandLine::CONTROL_SERVICE,
@@ -183,7 +183,7 @@ void ServiceControlApplication::removeTvnControlStartEntry() const
 void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmdLine,
                                             const SCMClientException *ex) const
 {
-  StringStorage errorMessage;
+  ::string errorMessage;
 
   switch (ex->getSCMErrorCode()) {
   case SCMClientException::ERROR_ALREADY_RUNNING:
@@ -208,7 +208,7 @@ void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmd
 void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmdLine,
                                             const SystemException *ex) const
 {
-  StringStorage errorMessage;
+  ::string errorMessage;
 
   switch (ex->getErrorCode()) {
   case ERROR_SERVICE_DOES_NOT_EXIST:
@@ -225,7 +225,7 @@ void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmd
 }
 
 void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmdLine,
-                                            const TCHAR *errorMessage) const
+                                            const ::scoped_string & scopedstrerrorMessage) const
 {
   UINT stringId = 0;
 
@@ -245,8 +245,8 @@ void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmd
   }
 
   if (!cmdLine->beSilent()) {
-    const TCHAR *caption = StringTable::getString(IDS_MBC_TVNSERVER);
-    StringStorage text;
+    const ::scoped_string & scopedstrcaption = StringTable::getString(IDS_MBC_TVNSERVER);
+    ::string text;
     text.format(StringTable::getString(stringId), errorMessage);
     MessageBox(NULL, text.getString(), caption, MB_OK | MB_ICONERROR);
   }
@@ -268,8 +268,8 @@ void ServiceControlApplication::reportSuccess(const ServiceControlCommandLine *c
   }
 
   if (!cmdLine->beSilent()) {
-    const TCHAR *caption = StringTable::getString(IDS_MBC_TVNSERVER);
-    const TCHAR *text = StringTable::getString(stringId);
+    const ::scoped_string & scopedstrcaption = StringTable::getString(IDS_MBC_TVNSERVER);
+    const ::scoped_string & scopedstrtext = StringTable::getString(stringId);
     MessageBox(NULL, text, caption, MB_OK | MB_ICONINFORMATION);
   }
 }

@@ -50,12 +50,13 @@ public:
 
   ~ProfileLogger();
   // returns cycles and times deltas from previouse checkpoint
-  ProcessorTimes checkPoint(const TCHAR *tag);
+  ProcessorTimes checkPoint(const ::scoped_string & scopedstrtag);
   ::std::vector<::std::vector<TCHAR>> dropStat();
 
 private:
   LocalMutex m_mapMut;
-  ::std::map<const TCHAR *, ::std::vector<ProcessorTimes>> m_checkPoints;
+  //::std::map<const ::scoped_string & scopedstr, ::std::vector<ProcessorTimes>> m_checkPoints;
+   ::string_map <::std::vector<ProcessorTimes> > m_checkPoints;
   ProcessorTimes m_last;
   double m_dropRate; // time interval in seconds to log statistics
   DateTime m_lastDrop;

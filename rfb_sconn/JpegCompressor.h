@@ -128,7 +128,7 @@ protected:
                     const PixelFormat & fmt, int numPixels);
 
 private:
-  METHODDEF(StringStorage) getMessage(j_common_ptr cinfo);
+  METHODDEF(::string) getMessage(j_common_ptr cinfo);
   METHODDEF(void) errorExit(j_common_ptr cinfo);
   METHODDEF(void) outputMessage(j_common_ptr cinfo);
 

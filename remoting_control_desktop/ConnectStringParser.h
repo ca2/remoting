@@ -33,7 +33,7 @@ public:
   ConnectStringParser();
   virtual ~ConnectStringParser();
 
-  static bool parse(const TCHAR *connectString, StringStorage *host = 0,
+  static bool parse(const ::scoped_string & scopedstrconnectString, ::string & host = 0,
                     unsigned short *port = 0);
 };
 

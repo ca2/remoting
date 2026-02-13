@@ -25,7 +25,7 @@
 #ifndef _PORT_MAPPING_H_
 #define _PORT_MAPPING_H_
 
-#include "util/StringStorage.h"
+//#include "util/::string.h"
 #include "PortMappingRect.h"
 
 class PortMapping
@@ -45,10 +45,10 @@ public:
   int getPort() const;
   PortMappingRect getRect() const;
 
-  void toString(StringStorage *string) const;
+  void toString(::string & string) const;
 
 public:
-  static bool parse(const TCHAR *str, PortMapping *mapping);
+  static bool parse(const ::scoped_string & scopedstrstr, PortMapping *mapping);
 
 protected:
   int m_port;

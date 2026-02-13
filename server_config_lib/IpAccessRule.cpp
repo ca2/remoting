@@ -36,7 +36,7 @@ IpAccessRule::~IpAccessRule()
 {
 }
 
-void IpAccessRule::toString(StringStorage *output) const
+void IpAccessRule::toString(::string & output) const
 {
   if (!m_lastIp.is_empty()) {
     output->format(_T("%s-%s:%d"), m_firstIp.getString(), m_lastIp.getString(),
@@ -46,7 +46,7 @@ void IpAccessRule::toString(StringStorage *output) const
   }
 }
 
-bool IpAccessRule::parse(const TCHAR *string, IpAccessRule *rule)
+bool IpAccessRule::parse(const ::scoped_string & scopedstrstring, IpAccessRule *rule)
 {
   if (!parseIpRange(string, rule)) {
     if (!parseIp(string, rule)) {
@@ -58,7 +58,7 @@ bool IpAccessRule::parse(const TCHAR *string, IpAccessRule *rule)
   return true;
 }
 
-bool IpAccessRule::parseIp(const TCHAR *string, IpAccessRule *rule)
+bool IpAccessRule::parseIp(const ::scoped_string & scopedstrstring, IpAccessRule *rule)
 {
   TCHAR firstIp[16];
   int action;
@@ -81,7 +81,7 @@ bool IpAccessRule::parseIp(const TCHAR *string, IpAccessRule *rule)
   return true;
 }
 
-bool IpAccessRule::parseIpRange(const TCHAR *string, IpAccessRule *rule)
+bool IpAccessRule::parseIpRange(const ::scoped_string & scopedstrstring, IpAccessRule *rule)
 {
   TCHAR firstIp[16];
   TCHAR lastIp[16];
@@ -106,7 +106,7 @@ bool IpAccessRule::parseIpRange(const TCHAR *string, IpAccessRule *rule)
   return true;
 }
 
-bool IpAccessRule::parseSubnet(const TCHAR *string, IpAccessRule *rule)
+bool IpAccessRule::parseSubnet(const ::scoped_string & scopedstrstring, IpAccessRule *rule)
 {
   TCHAR pattern[16];
   TCHAR subnet[16];
@@ -125,22 +125,22 @@ bool IpAccessRule::parseSubnet(const TCHAR *string, IpAccessRule *rule)
   return true;
 }
 
-void IpAccessRule::getFirstIp(StringStorage *firstIp) const
+void IpAccessRule::getFirstIp(::string & firstIp) const
 {
   *firstIp = m_firstIp;
 }
 
-void IpAccessRule::getLastIp(StringStorage *lastIp) const
+void IpAccessRule::getLastIp(::string & lastIp) const
 {
   *lastIp = m_lastIp;
 }
 
-void IpAccessRule::setFirstIp(const TCHAR *firstIp)
+void IpAccessRule::setFirstIp(const ::scoped_string & scopedstrfirstIp)
 {
   m_firstIp.setString(firstIp);
 }
 
-void IpAccessRule::setLastIp(const TCHAR *lastIp)
+void IpAccessRule::setLastIp(const ::scoped_string & scopedstrlastIp)
 {
   m_lastIp.setString(lastIp);
 }
@@ -182,10 +182,10 @@ bool IpAccessRule::isIncludingAddress(unsigned long ip) const
   return false;
 }
 
-bool IpAccessRule::isIpAddressStringValid(const TCHAR *string)
+bool IpAccessRule::isIpAddressStringValid(const ::scoped_string & scopedstrstring)
 {
-  StringStorage ipStorage(string);
-  StringStorage stringArray[4];
+  ::string ipStorage(string);
+  ::string stringArray[4];
   size_t arraySize = 4;
   if (!ipStorage.split(_T("."), &stringArray[0], &arraySize)) {
     return false;
@@ -217,7 +217,7 @@ int IpAccessRule::compareIp(unsigned long ip1, unsigned long ip2)
   return -1;
 }
 
-bool IpAccessRule::tryParseIPPart(const TCHAR *string)
+bool IpAccessRule::tryParseIPPart(const ::scoped_string & scopedstrstring)
 {
   size_t len = _tcslen(string);
   if (len < 1 || _tcsspn(string, _T("0123456789")) != len)
@@ -230,10 +230,10 @@ bool IpAccessRule::tryParseIPPart(const TCHAR *string)
   return true;
 }
 
-void IpAccessRule::getIpRange(const TCHAR *ip, const TCHAR *netmask,
-                              StringStorage *firstIp, StringStorage *lastIp) {
-  StringStorage ipStorage(ip);
-  StringStorage netmaskStorage(netmask);
+void IpAccessRule::getIpRange(const ::scoped_string & scopedstrip, const ::scoped_string & scopedstrNetmask,
+                              ::string & firstIp, ::string & lastIp) {
+  ::string ipStorage(ip);
+  ::string netmaskStorage(netmask);
 
   firstIp->setString(_T(""));
   lastIp->setString(_T(""));

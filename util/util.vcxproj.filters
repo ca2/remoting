@@ -56,7 +56,7 @@
     <ClCompile Include="StringParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StringStorage.cpp">
+    <ClCompile Include="::string.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="StringTable.cpp">
@@ -160,7 +160,7 @@
     <ClInclude Include="StringParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="StringStorage.h">
+    <ClInclude Include="::string.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="StringTable.h">

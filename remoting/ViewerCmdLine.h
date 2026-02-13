@@ -48,7 +48,7 @@ public:
 protected:
   void parseHostArg();
   bool parseHostOptions();
-  bool isPresent(const TCHAR *keyName);
+  bool isPresent(const ::scoped_string & scopedstrKeyName);
 
   static const TCHAR HELP[];
   static const TCHAR HELP_SHORT[];
@@ -94,12 +94,12 @@ protected:
   ViewerConfig *m_config;
   bool *m_isListening;
 
-  ::std::map<StringStorage, StringStorage> m_options;
+  ::std::map<::string, ::string> m_options;
 
 private:
   struct CmdLineOption
   {
-    const TCHAR *keyName;
+    const ::scoped_string & scopedstrKeyName;
   };
 
   bool processCmdLine(const CmdLineOption * cmdLines, 

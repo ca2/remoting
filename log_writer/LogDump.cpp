@@ -28,7 +28,7 @@ LogEntry::LogEntry(unsigned int processId,
                    unsigned int threadId,
                    const DateTime & dt,
                    int lineLevel,
-                   const TCHAR *message)
+                   const ::scoped_string & scopedstrmessage)
 : m_processId(processId),
   m_threadId(threadId),
   m_dt(dt),
@@ -88,7 +88,7 @@ void LogDump::updateLogHeaderLines(unsigned int processId,
                                    unsigned int threadId,
                                    const DateTime & dt,
                                    int level,
-                                   const TCHAR *message)
+                                   const ::scoped_string & scopedstrmessage)
 {
   if (logHeadEnabled()) {
     m_logHeaderLines.push_back(LogEntry(processId, threadId, dt, level, message));
@@ -99,7 +99,7 @@ void LogDump::updateLogDumpLines(unsigned int processId,
                                  unsigned int threadId,
                                  const DateTime & dt,
                                  int level,
-                                 const TCHAR *message)
+                                 const ::scoped_string & scopedstrmessage)
 {
   if (logDumpEnabled()) {
     m_logDumpLines.push_back(LogEntry(processId, threadId, dt, level, message));

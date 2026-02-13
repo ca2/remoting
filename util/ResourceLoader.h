@@ -52,14 +52,14 @@ public:
    * @param iconName icon name.
    * @return icon handle of 0 if cannot load icon.
    */
-  HICON loadStandartIcon(const TCHAR *iconName);
+  HICON loadStandartIcon(const ::scoped_string & scopedstriconName);
 
   /**
    * Loads icon from resources.
    * @param iconName icon name.
    * @return icon handle of 0 if cannot load icon.
    */
-  HICON loadIcon(const TCHAR *iconName);
+  HICON loadIcon(const ::scoped_string & scopedstriconName);
 
   /**
    * Loads string from resources.
@@ -67,7 +67,7 @@ public:
    * @param [out] string storage for string from resources.
    * @return true if string is loaded, false otherwise.
    */
-  bool loadString(UINT id, StringStorage *string);
+  bool loadString(UINT id, ::string & string);
 
   /**
    * Loads accelerator from resources.
@@ -81,7 +81,7 @@ public:
    * @param [in] id identifier of accelerator in resource file.
    * @return handle of cursor if it's loaded.
    */
-  HCURSOR loadStandardCursor(const TCHAR *id);
+  HCURSOR loadStandardCursor(const ::scoped_string & scopedstrid);
   /**
    * Loads cursor from resources.
    * @param [in] id identifier of accelerator in resource file.

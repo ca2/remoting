@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "StringFilter.h"
 
-bool StringFilter::isStringCorrect(const TCHAR *string)
+bool StringFilter::isStringCorrect(const ::scoped_string & scopedstrstring)
 {
   return true;
 }

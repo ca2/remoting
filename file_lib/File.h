@@ -22,8 +22,9 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _FILE_H_
-#define _FILE_H_
+//#ifndef _FILE_H_
+//#define _FILE_H_
+#pragma once
 
 #include "util/CommonHeader.h"
 #include "util/inttypes.h"
@@ -35,8 +36,8 @@ public:
   const static int MODE_READ  = 1;
   const static int MODE_WRITE = 2;
 
-  File(const TCHAR *pathname);
-  File(const TCHAR *parent, const TCHAR *child);
+  File(const ::file::path & path);
+  File(const ::scoped_string & scopedstrFolder, const ::scoped_string & scopedstrSon);
   ~File();
 
   //
@@ -75,14 +76,14 @@ public:
   (not full path to file, only filename).
   @param name out parameter for file name.
   */
-  void getName(StringStorage *name) const;
+  ::string getName() const;
 
   /**
   Returns extension of file denoted by this pathname (without "." character).
   @param ext out parameter for file extension.
   @remark if filename has no extension, then ext will contain empty string("").
   */
-  void getFileExtension(StringStorage *ext) const;
+  ::string getFileExtension() const;
 
   /**
   Tests whether the file denoted by this pathname is a normal file.
@@ -100,7 +101,7 @@ public:
   Returns full path to file or directory.
   @param pathname out parameter for path to file or directory.
   */
-  void getPath(StringStorage *pathname) const;
+  ::file::path getPath() const;
 
   /**
    * Returns the last modification time of file denoted by this pathname.
@@ -127,7 +128,7 @@ public:
   //        This MUST be fixed someday.
   //
 
-  bool list(StringStorage *fileList, unsigned int *filesCount) const;
+  void list(::string_array & stra) const;
 
   //
   // List the available filesystem roots to rootList array
@@ -140,7 +141,7 @@ public:
   //        This MUST be fixed someday.
   //
 
-  static bool listRoots(StringStorage *rootList, unsigned int *rootsCount);
+  static bool listRoots(::string_array & stra);
 
   //
   // Creates the directory named by this pathname
@@ -153,9 +154,9 @@ public:
   // Really this methods call move method.
   //
 
-  bool renameTo(const TCHAR *destPathName);
+  bool renameTo(const ::file::path & pathTarget);
   bool renameTo(File *dest);
-  static bool renameTo(const TCHAR *dest, const TCHAR *source);
+  static bool renameTo(const ::file::path & pathTarget, const ::file::path & pathSource);
 
   /**
    * Sets the last-modified time of the file or directory named by this pathname.
@@ -180,11 +181,12 @@ private:
   bool getFileInfo(WIN32_FIND_DATA *fileInfo) const;
   bool tryCreateFile(DWORD desiredAccess, DWORD creationDisposition) const;
 
-public:
+//public:
   static TCHAR s_separatorChar;
 
-protected:
-  StringStorage m_pathName;
+//protected:
+  //::string m_pathName;
+   ::file::path m_path;
 };
 
-#endif
+//#endif

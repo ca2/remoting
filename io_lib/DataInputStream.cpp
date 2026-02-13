@@ -126,7 +126,7 @@ long long DataInputStream::readInt64()
   return (long long)readUInt64();
 }
 
-void DataInputStream::readUTF8(StringStorage *storage)
+void DataInputStream::readUTF8(::string & storage)
 {
   unsigned int sizeInBytes = readUInt32();
   if (sizeInBytes > 0) {

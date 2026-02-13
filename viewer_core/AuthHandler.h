@@ -39,7 +39,7 @@
 class AuthException : public Exception
 {
 public:
-  AuthException(const TCHAR *message = _T("Error in authentication"));
+  AuthException(const ::scoped_string & scopedstrmessage = _T("Error in authentication"));
   virtual ~AuthException();
   int getAuthCode() const;
 
@@ -55,7 +55,7 @@ protected:
 class AuthUnknownException : public AuthException 
 {
 public:
-  AuthUnknownException(const TCHAR *message = _T("Error in authentification: ")
+  AuthUnknownException(const ::scoped_string & scopedstrmessage = _T("Error in authentification: ")
                                               _T("auth is canceled or isn't support"));
   virtual ~AuthUnknownException();
 };
@@ -66,7 +66,7 @@ public:
 class AuthCanceledException : public AuthException
 {
 public:
-  AuthCanceledException(const TCHAR *message = _T("Auth is canceled"));
+  AuthCanceledException(const ::scoped_string & scopedstrmessage = _T("Auth is canceled"));
   virtual ~AuthCanceledException();
 };
 

@@ -30,7 +30,7 @@ void IpAccessControl::serialize(DataOutputStream *output)
   unsigned int count = (unsigned int)size();
   output->writeUInt32(count);
 
-  StringStorage string;
+  ::string string;
 
   for (size_t i = 0; i < count; i++) {
     IpAccessRule *rule = at(i);
@@ -50,7 +50,7 @@ void IpAccessControl::deserialize(DataInputStream *input)
   size_t count = input->readUInt32();
   resize(count);
 
-  StringStorage string;
+  ::string string;
 
   for (iterator i = begin(); i != end(); ++i) {
     input->readUTF8(&string);

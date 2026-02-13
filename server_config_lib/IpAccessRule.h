@@ -25,7 +25,7 @@
 #ifndef _IP_ACCESS_RULE_H_
 #define _IP_ACCESS_RULE_H_
 
-#include "util/StringStorage.h"
+//#include "util/::string.h"
 
 //
 // Class contains information about
@@ -51,12 +51,12 @@ public:
   virtual ~IpAccessRule();
 public:
 
-  void toString(StringStorage *output) const;
+  void toString(::string & output) const;
 
-  static bool parse(const TCHAR *string, IpAccessRule *rule);
-  static bool parseIp(const TCHAR *string, IpAccessRule *rule);
-  static bool parseIpRange(const TCHAR *string, IpAccessRule *rule);
-  static bool parseSubnet(const TCHAR *string, IpAccessRule *rule);
+  static bool parse(const ::scoped_string & scopedstrstring, IpAccessRule *rule);
+  static bool parseIp(const ::scoped_string & scopedstrstring, IpAccessRule *rule);
+  static bool parseIpRange(const ::scoped_string & scopedstrstring, IpAccessRule *rule);
+  static bool parseSubnet(const ::scoped_string & scopedstrstring, IpAccessRule *rule);
 
   //
   // Method to access protected members
@@ -78,11 +78,11 @@ public:
   // Ip range
   //
 
-  void getFirstIp(StringStorage *firstIp) const;
-  void getLastIp(StringStorage *lastIp) const;
+  void getFirstIp(::string & firstIp) const;
+  void getLastIp(::string & lastIp) const;
 
-  void setFirstIp(const TCHAR *firstIp);
-  void setLastIp(const TCHAR *lastIp);
+  void setFirstIp(const ::scoped_string & scopedstrfirstIp);
+  void setLastIp(const ::scoped_string & scopedstrlastIp);
 
   //
   // Helper methods
@@ -96,7 +96,7 @@ public:
   //
 
   bool isIncludingAddress(unsigned long ip) const;
-  static bool isIpAddressStringValid(const TCHAR *string);
+  static bool isIpAddressStringValid(const ::scoped_string & scopedstrstring);
 
   //
   // Return values:
@@ -108,9 +108,9 @@ public:
   static int compareIp(unsigned long ip1, unsigned long ip2);
 
 protected:
-  static bool tryParseIPPart(const TCHAR *string);
-  static void getIpRange(const TCHAR *ip, const TCHAR *netmask,
-                         StringStorage *firstIp, StringStorage *lastIp);
+  static bool tryParseIPPart(const ::scoped_string & scopedstrstring);
+  static void getIpRange(const ::scoped_string & scopedstrip, const ::scoped_string & scopedstrNetmask,
+                         ::string & firstIp, ::string & lastIp);
 protected:
   ActionType m_action;
 
@@ -118,8 +118,8 @@ protected:
   // Ip range
   //
 
-  StringStorage m_firstIp;
-  StringStorage m_lastIp;
+  ::string m_firstIp;
+  ::string m_lastIp;
 };
 
 #endif

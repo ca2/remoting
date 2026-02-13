@@ -238,7 +238,7 @@ void ControlClient::onTerminate()
   try { m_transport->close(); } catch (...) { }
 }
 
-void ControlClient::sendError(const TCHAR *message)
+void ControlClient::sendError(const ::scoped_string & scopedstrmessage)
 {
   m_gate->writeUInt32(ControlProto::REPLY_ERROR);
   m_gate->writeUTF8(message);
@@ -305,14 +305,14 @@ void ControlClient::getServerInfoMsgRcvd()
   bool acceptFlag = false;
   bool serviceFlag = false;
 
-  StringStorage logPath;
-  StringStorage statusText;
+  ::string logPath;
+  ::string statusText;
 
   TvnServerInfo info;
 
   TvnServer::getInstance()->getServerInfo(&info);
 
-  StringStorage status;
+  ::string status;
   status.setString(info.m_statusText.getString());
 
   m_gate->writeUInt32(ControlProto::REPLY_OK);
@@ -354,7 +354,7 @@ void ControlClient::addClientMsgRcvd()
   // Read parameters.
   //
 
-  StringStorage connectString;
+  ::string connectString;
 
   m_gate->readUTF8(&connectString);
 
@@ -370,7 +370,7 @@ void ControlClient::addClientMsgRcvd()
     return;
   }
 
-  StringStorage host;
+  ::string host;
   AnsiStringStorage ansiHost(hp.getVncHost());
   ansiHost.toStringStorage(&host);
 
@@ -492,7 +492,7 @@ void ControlClient::shareDisplayIdMsgRcvd()
 
 void ControlClient::shareWindowIdMsgRcvd()
 {
-  StringStorage windowName;
+  ::string windowName;
   m_gate->readUTF8(&windowName);
 
   m_gate->writeUInt32(ControlProto::REPLY_OK);

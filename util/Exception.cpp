@@ -29,7 +29,7 @@ Exception::Exception()
   m_message.setString(_T(""));
 }
 
-Exception::Exception(const TCHAR *format, ...)
+Exception::Exception(const ::scoped_string & scopedstrformat, ...)
 {
   va_list vl;
 
@@ -42,7 +42,7 @@ Exception::~Exception()
 {
 }
 
-const TCHAR *Exception::getMessage() const
+const ::scoped_string & scopedstrException::getMessage() const
 {
   return m_message.getString();
 }

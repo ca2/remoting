@@ -80,18 +80,18 @@ size_t Pipe::writeByHandle(const void *buffer, size_t len, HANDLE pipeHandle)
           cbRet == 0) {
         result = cbRet;
       } else {
-        StringStorage errMess;
+        ::string errMess;
         Environment::getErrStr(_T("The Pipe's write function failed")
                                _T(" after GetOverlappedResult calling"),
                                &errMess);
         throw IOException(errMess.getString());
       }
     } else {
-      StringStorage errText;
+      ::string errText;
       errText.format(_T("The Pipe's write function failed after WriteFile calling")
                      _T("(pipe handle is %p, total write %llu, try to write %u)"),
                      pipeHandle, m_totalWrote, length);
-      StringStorage errMess;
+      ::string errMess;
       Environment::getErrStr(errText.getString(), &errMess);
       throw IOException(errMess.getString());
     }
@@ -140,19 +140,19 @@ size_t Pipe::readByHandle(void *buffer, size_t len, HANDLE pipeHandle)
           cbRet != 0) {
         result = cbRet;
       } else {
-        StringStorage errText;
+        ::string errText;
         errText.format(_T("The Pipe's read function failed after GetOverlappedResult calling (pipe handle is %p)"), pipeHandle);
-        StringStorage errMess;
+        ::string errMess;
         Environment::getErrStr(errText.getString(),
                                &errMess);
         throw IOException(errMess.getString());
       }
     } else {
-      StringStorage errText;
+      ::string errText;
       errText.format(_T("The Pipe's write function failed after ReadFile calling")
                      _T("(pipe handle is %p, total read %llu, try to read %u)"),
                      pipeHandle, m_totalRead, length);
-      StringStorage errMess;
+      ::string errMess;
       Environment::getErrStr(errText.getString(), &errMess);
       throw IOException(errMess.getString());
     }

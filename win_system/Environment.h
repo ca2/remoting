@@ -25,7 +25,7 @@
 #ifndef _ENVIRONMENT_H_
 #define _ENVIRONMENT_H_
 
-#include "util/StringStorage.h"
+//#include "util/::string.h"
 #include "log_writer/LogWriter.h"
 
 #include <winnt.h>
@@ -41,12 +41,12 @@ public:
 
   // Formates string from last system error code.
   // @return false on an error.
-  static void getErrStr(StringStorage *out);
+  static void getErrStr(::string & out);
 
   // Formates string from last system error code with specification before.
-  // @return StringStorage object that contain error describing with
+  // @return ::string object that contain error describing with
   // secificatioin.
-  static void getErrStr(const TCHAR *specification, StringStorage *out);
+  static void getErrStr(const ::scoped_string & scopedstrspecification, ::string & out);
 
   //
   // Sets path to special folder value to out argument.
@@ -59,10 +59,10 @@ public:
   // will be failed.
   //
 
-  static bool getSpecialFolderPath(int specialFolderId, StringStorage *out);
+  static bool getSpecialFolderPath(int specialFolderId, ::string & out);
 
   // Sets full path to current executing process file to out argument
-  static bool getCurrentModulePath(StringStorage *out);
+  static bool getCurrentModulePath(::string & out);
 
   // pId - the process id that be tested
   // return true if tested process has the same path as current process
@@ -72,14 +72,14 @@ public:
 
   // Sets full path to folder (without last directory separator character)
   // where current executing process file is located to out argument.
-  static bool getCurrentModuleFolderPath(StringStorage *out);
+  static bool getCurrentModuleFolderPath(::string & out);
 
   // Returns user name of the current desktop
-  static bool getCurrentUserName(StringStorage *out, LogWriter *log);
+  static bool getCurrentUserName(::string & out, LogWriter *log);
 
   // Fills "out" by computer name string.
   // Returns true if success.
-  static bool getComputerName(StringStorage *out);
+  static bool getComputerName(::string & out);
 
   // Returns true if run under a windows NT family
   static bool isWinNTFamily();

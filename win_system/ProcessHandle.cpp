@@ -43,7 +43,7 @@ void ProcessHandle::openProcess(DWORD dwDesiredAccess,
 {
   m_hProcess = OpenProcess(dwDesiredAccess, bInheritHandle, dwProcessId);
   if (m_hProcess == 0) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Can't open the %d process"), dwProcessId);
     throw SystemException(errMess.getString());
   }
@@ -54,7 +54,7 @@ HANDLE ProcessHandle::getHandle() const
   return m_hProcess;
 }
 
-void ProcessHandle::getProcessModulePath(StringStorage *exePath)
+void ProcessHandle::getProcessModulePath(::string & exePath)
 {
   // FIXME: Test under Windows7
   TCHAR path[MAX_PATH];

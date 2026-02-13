@@ -25,19 +25,19 @@
 #ifndef __UNICODESTRINGSTORAGE_H__
 #define __UNICODESTRINGSTORAGE_H__
 
-#include "StringStorage.h"
+//#include "::string.h"
 
 class UnicodeStringStorage
 {
 public:
   UnicodeStringStorage();
   UnicodeStringStorage(const WCHAR *string);
-  UnicodeStringStorage(const StringStorage & string);
+  UnicodeStringStorage(const ::string & string);
   UnicodeStringStorage(const UnicodeStringStorage &stringBuffer);
   ~UnicodeStringStorage();
 
-  void fromStringStorage(const StringStorage & src);
-  void toStringStorage(StringStorage *dst);
+  void fromStringStorage(const ::string & src);
+  void toStringStorage(::string & dst);
 
   // Fills internal buffer by the string.
   virtual void setString(const WCHAR *string);

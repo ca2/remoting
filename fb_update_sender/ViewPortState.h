@@ -29,7 +29,7 @@
 #include "acme/_operating_system.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 
-#include "util/StringStorage.h"
+//#include "util/::string.h"
 
 
 // This class stores a view port state.
@@ -64,7 +64,7 @@ public:
 
   // After calling this function the update() function will set the view
   // port rectangle by a window that own the windowName argument.
-  void setWindowName(const StringStorage & windowName);
+  void setWindowName(const ::string & windowName);
 
   // After calling this function the hwnd will be zeroid and state
   // will be changed to unresolved.
@@ -86,7 +86,7 @@ private:
   int m_mode;
   ::int_rectangle m_arbitraryRect;
   HWND m_hwnd;
-  StringStorage m_windowName;
+  ::string m_windowName;
   bool m_windowIsResolved;
   unsigned char m_displayNumber;
   unsigned int m_processId;

@@ -86,7 +86,7 @@ BOOL PortMappingDialog::onInitDialog()
   // Fill listbox.
   //
 
-  StringStorage mappingString;
+  ::string mappingString;
 
   for (size_t i = 0; i < m_extraPorts->count(); i++) {
     m_extraPorts->at(i)->toString(&mappingString);
@@ -116,7 +116,7 @@ void PortMappingDialog::onAddButtonClick()
 
   if (addDialog.showModal() == IDOK) {
     {
-      StringStorage mappingString;
+      ::string mappingString;
       newPM.toString(&mappingString);
       m_exPortsListBox.addString(mappingString.getString());
     }
@@ -143,7 +143,7 @@ void PortMappingDialog::onEditButtonClick()
   editDialog.setMapping(pPM);
 
   if (editDialog.showModal() == IDOK) {
-    StringStorage mappingString;
+    ::string mappingString;
     pPM->toString(&mappingString);
     m_exPortsListBox.setItemText(selectedIndex, mappingString.getString());
 

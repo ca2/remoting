@@ -30,7 +30,7 @@
 class ZLibException : public Exception
 {
 public:
-  ZLibException(const TCHAR *message);
+  ZLibException(const ::scoped_string & scopedstrmessage);
   ZLibException();
   virtual ~ZLibException();
 };

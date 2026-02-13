@@ -37,7 +37,7 @@ public:
 
   virtual int onFtTargetFileExists(FileInfo *sourceFileInfo,
                                    FileInfo *targetFileInfo,
-                                   const TCHAR *pathToTargetFile) = 0;
+                                   const ::scoped_string & scopedstrpathToTargetFile) = 0;
   // Progress is in interval [0.0, 1.0].
   virtual void setProgress(double progress) = 0;
 
@@ -45,13 +45,13 @@ public:
   // This function inform user about error.
   // This function must be is not blocking, otherwise it may happen deadlock.
   //
-  virtual void onFtOpError(const TCHAR *message) = 0;
+  virtual void onFtOpError(const ::scoped_string & scopedstrmessage) = 0;
 
   //
   // This function inform user additional information.
   // This function must be is not blocking, otherwise it may happen deadlock.
   //
-  virtual void onFtOpInfo(const TCHAR *message) = 0;
+  virtual void onFtOpInfo(const ::scoped_string & scopedstrmessage) = 0;
   virtual void onFtOpStarted() = 0;
   virtual void onFtOpFinished(int state, int result) = 0;
 

@@ -363,7 +363,7 @@
     <ClCompile Include="MemUsage.cpp" />
     <ClCompile Include="ResourceLoader.cpp" />
     <ClCompile Include="StringParser.cpp" />
-    <ClCompile Include="StringStorage.cpp" />
+    <ClCompile Include="::string.cpp" />
     <ClCompile Include="StringTable.cpp" />
     <ClCompile Include="Unicode.cpp" />
     <ClCompile Include="UnicodeStringStorage.cpp" />
@@ -398,7 +398,7 @@
     <ClInclude Include="ResourceLoader.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="StringParser.h" />
-    <ClInclude Include="StringStorage.h" />
+    <ClInclude Include="::string.h" />
     <ClInclude Include="StringTable.h" />
     <ClInclude Include="StringTemplate.h" />
     <ClInclude Include="StringVector.h" />

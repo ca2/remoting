@@ -37,10 +37,10 @@ public:
   virtual ~CommandLineArgs();
 
   // Copies internal argument ::std::vector to the out variable.
-  void getArgVector(::std::vector<StringStorage> *out) const;
+  void getArgVector(::std::vector<::string> *out) const;
 
 protected:
-  ::std::vector<StringStorage> m_args;
+  ::std::vector<::string> m_args;
 };
 
 #endif // __COMMANDLINEARGS_H__

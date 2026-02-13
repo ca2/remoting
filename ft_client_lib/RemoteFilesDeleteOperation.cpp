@@ -27,7 +27,7 @@
 RemoteFilesDeleteOperation::RemoteFilesDeleteOperation(LogWriter *logWriter,
                                                        const FileInfo *filesInfoToDelete,
                                                        size_t filesCount,
-                                                       const TCHAR *pathToTargetRoot)
+                                                       const ::scoped_string & scopedstrpathToTargetRoot)
 : FileTransferOperation(logWriter)
 {
   m_toDelete = new FileInfoList(filesInfoToDelete, filesCount);
@@ -36,7 +36,7 @@ RemoteFilesDeleteOperation::RemoteFilesDeleteOperation(LogWriter *logWriter,
 
 RemoteFilesDeleteOperation::RemoteFilesDeleteOperation(LogWriter *logWriter,
                                                        FileInfo fileInfoToDelete,
-                                                       const TCHAR *pathToTargetRoot)
+                                                       const ::scoped_string & scopedstrpathToTargetRoot)
 : FileTransferOperation(logWriter)
 {
   m_toDelete = new FileInfoList(fileInfoToDelete);
@@ -100,13 +100,13 @@ void RemoteFilesDeleteOperation::onLastRequestFailedReply(DataInputStream *input
   // Logging
   //
 
-  StringStorage errorMessage;
+  ::string errorMessage;
   m_replyBuffer->getLastErrorMessage(&errorMessage);
 
-  StringStorage remotePath;
+  ::string remotePath;
   getRemotePath(m_toDelete, m_pathToTargetRoot.getString(), &remotePath);
 
-  StringStorage message;
+  ::string message;
   message.format(_T("Error: %s ('%s')"), errorMessage.getString(),
                  remotePath.getString());
 
@@ -129,7 +129,7 @@ void RemoteFilesDeleteOperation::remove(bool removeIfFolder)
 
   FileInfo *fileInfo = m_toDelete->getFileInfo();
 
-  StringStorage remotePath;
+  ::string remotePath;
 
   getRemotePath(m_toDelete,
                 m_pathToTargetRoot.getString(),
@@ -141,7 +141,7 @@ void RemoteFilesDeleteOperation::remove(bool removeIfFolder)
 
   if (((fileInfo->isDirectory() && !removeIfFolder) ||
       (!fileInfo->isDirectory())) && (m_toDelete->getFirst()->getParent() == NULL)) {
-    StringStorage message;
+    ::string message;
 
     message.format(_T("Deleting remote '%s' %s"), remotePath.getString(),
                    fileInfo->isDirectory() ? _T("folder") : _T("file"));

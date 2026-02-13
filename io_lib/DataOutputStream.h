@@ -69,7 +69,7 @@ public:
   void writeInt32(int x);
   void writeInt64(long long x);
 
-  void writeUTF8(const TCHAR *string);
+  void writeUTF8(const ::scoped_string & scopedstrstring);
 
   /**
    * Flushes inner output stream.

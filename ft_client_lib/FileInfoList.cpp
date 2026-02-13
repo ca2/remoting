@@ -146,11 +146,11 @@ FileInfo *FileInfoList::getFileInfo()
   return &m_fileInfo;
 }
 
-void FileInfoList::getAbsolutePath(StringStorage *storage, TCHAR directorySeparator)
+void FileInfoList::getAbsolutePath(::string & storage, TCHAR directorySeparator)
 {
   FileInfoList *first = getFirst();
 
-  StringStorage parentAbsolutePath(_T(""));
+  ::string parentAbsolutePath(_T(""));
 
   //
   // if parent of first element of this leaf exists
@@ -168,7 +168,7 @@ void FileInfoList::getAbsolutePath(StringStorage *storage, TCHAR directorySepara
     } // if parent path have no directory separator in the end
   } // if first has parent
 
-  const TCHAR *fileName = m_fileInfo.getFileName();
+  const ::scoped_string & scopedstrfileName = m_fileInfo.getFileName();
 
   storage->setString(parentAbsolutePath.getString());
   storage->appendString(fileName);

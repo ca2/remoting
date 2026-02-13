@@ -36,7 +36,7 @@ MsiProperties::~MsiProperties()
 {
 }
 
-void MsiProperties::getValue(const TCHAR *name, StringStorage *out)
+void MsiProperties::getValue(const ::scoped_string & scopedstrName, ::string & out)
 {
   out->setString(_T(""));
   DWORD charCount = 0;
@@ -52,7 +52,7 @@ void MsiProperties::getValue(const TCHAR *name, StringStorage *out)
   }
 }
 
-void MsiProperties::setValue(const TCHAR *name, const StringStorage & value)
+void MsiProperties::setValue(const ::scoped_string & scopedstrName, const ::string & value)
 {
   UINT retVal = MsiSetProperty(m_handle, name, value->getString());
   if (retVal != ERROR_SUCCESS) {
@@ -60,37 +60,37 @@ void MsiProperties::setValue(const TCHAR *name, const StringStorage & value)
   }
 }
 
-void MsiProperties::getString(const TCHAR *name, StringStorage *out)
+void MsiProperties::getString(const ::scoped_string & scopedstrName, ::string & out)
 {
   try {
     getValue(name, out);
   } catch (...) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Cant't retrieve a string from the %s property"),
                    name);
     throw Exception(errMess.getString());
   }
 }
 
-void MsiProperties::setString(const TCHAR *name, const StringStorage & value)
+void MsiProperties::setString(const ::scoped_string & scopedstrName, const ::string & value)
 {
   try {
     setValue(name, value);
   } catch (...) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Cant't set a string to the %s property"),
                    name);
     throw Exception(errMess.getString());
   }
 }
 
-int MsiProperties::getInt32(const TCHAR *name)
+int MsiProperties::getInt32(const ::scoped_string & scopedstrName)
 {
-  StringStorage strValue;
+  ::string strValue;
   getValue(name, &strValue);
   int retValue = 0;
   if (!StringParser::parseInt(strValue.getString(), &retValue)) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Can't convert the %s string value to int of the")
                    _T(" %s property"), strValue.getString(), name);
     throw Exception(errMess.getString());
@@ -98,14 +98,14 @@ int MsiProperties::getInt32(const TCHAR *name)
   return retValue;
 }
 
-void MsiProperties::setInt32(const TCHAR *name, int value)
+void MsiProperties::setInt32(const ::scoped_string & scopedstrName, int value)
 {
   try {
-    StringStorage valueStr;
+    ::string valueStr;
     valueStr.format(_T("%d"), value);
     setValue(name, &valueStr);
   } catch (...) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Cant't set the (int)%d value to the %s property"),
                    value,
                    name);

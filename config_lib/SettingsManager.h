@@ -26,7 +26,7 @@
 #define _SETTINGS_MANAGER_
 
 #include "util/CommonHeader.h"
-#include "util/StringStorage.h"
+//#include "util/::string.h"
 
 class SettingsManager
 {
@@ -36,29 +36,29 @@ public:
 public:  
   virtual bool isOk() = 0;
 
-  virtual bool keyExist(const TCHAR *name) = 0;
-  virtual bool deleteKey(const TCHAR *name) = 0;
+  virtual bool keyExist(const ::scoped_string & scopedstrName) = 0;
+  virtual bool deleteKey(const ::scoped_string & scopedstrName) = 0;
 
-  virtual bool getString(const TCHAR *name, StringStorage *storage) = 0;
-  virtual bool setString(const TCHAR *name, const TCHAR *value) = 0;
+  virtual bool getString(const ::scoped_string & scopedstrName, ::string & storage) = 0;
+  virtual bool setString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrvalue) = 0;
 
-  virtual bool getLong(const TCHAR *name, long *value) = 0;
-  virtual bool setLong(const TCHAR *name, long value) = 0;
+  virtual bool getLong(const ::scoped_string & scopedstrName, long *value) = 0;
+  virtual bool setLong(const ::scoped_string & scopedstrName, long value) = 0;
 
-  virtual bool getBoolean(const TCHAR *name, bool *value) = 0;
-  virtual bool setBoolean(const TCHAR *name, bool value) = 0;
+  virtual bool getBoolean(const ::scoped_string & scopedstrName, bool *value) = 0;
+  virtual bool setBoolean(const ::scoped_string & scopedstrName, bool value) = 0;
 
-  virtual bool getUINT(const TCHAR *name, UINT *value) = 0;
-  virtual bool setUINT(const TCHAR *name, UINT value) = 0;
+  virtual bool getUINT(const ::scoped_string & scopedstrName, UINT *value) = 0;
+  virtual bool setUINT(const ::scoped_string & scopedstrName, UINT value) = 0;
 
-  virtual bool getInt(const TCHAR *name, int *value) = 0;
-  virtual bool setInt(const TCHAR *name, int value) = 0;
+  virtual bool getInt(const ::scoped_string & scopedstrName, int *value) = 0;
+  virtual bool setInt(const ::scoped_string & scopedstrName, int value) = 0;
 
-  virtual bool getByte(const TCHAR *name, char *value) = 0;
-  virtual bool setByte(const TCHAR *name, char value) = 0;
+  virtual bool getByte(const ::scoped_string & scopedstrName, char *value) = 0;
+  virtual bool setByte(const ::scoped_string & scopedstrName, char value) = 0;
 
-  virtual bool getBinaryData(const TCHAR *name, void *value, size_t *size) = 0;
-  virtual bool setBinaryData(const TCHAR *name, const void *value, size_t size) = 0;
+  virtual bool getBinaryData(const ::scoped_string & scopedstrName, void *value, size_t *size) = 0;
+  virtual bool setBinaryData(const ::scoped_string & scopedstrName, const void *value, size_t size) = 0;
 };
 
 #endif

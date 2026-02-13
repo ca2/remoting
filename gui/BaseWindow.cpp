@@ -45,12 +45,12 @@ BaseWindow::~BaseWindow()
   }
 }
 
-void BaseWindow::setClass(const StringStorage & className)
+void BaseWindow::setClass(const ::string & className)
 {
   m_className = className;
 }
 
-bool BaseWindow::createWindow(const StringStorage & windowName, DWORD style, HWND hWndParent,
+bool BaseWindow::createWindow(const ::string & windowName, DWORD style, HWND hWndParent,
                               int xPos, int yPos, int width, int height)
 {
   if (m_hwnd) {
@@ -295,7 +295,7 @@ HWND BaseWindow::getHWnd() const
   return m_hwnd;
 }
 
-void BaseWindow::setWindowText(const StringStorage & text)
+void BaseWindow::setWindowText(const ::string & text)
 {
   _ASSERT(m_hwnd != 0);
   SetWindowText(m_hwnd, text.getString());

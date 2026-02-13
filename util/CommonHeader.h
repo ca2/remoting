@@ -44,7 +44,7 @@
 #endif // WIN32
 
 
-#include "StringStorage.h"
+////#include "::string.h"
 #include "StringTable.h"
 
 #endif // __COMMONHEADER_H__

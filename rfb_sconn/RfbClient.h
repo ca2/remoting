@@ -73,8 +73,8 @@ public:
   ClientState getClientState();
 
   unsigned int getId() const;
-  void getPeerHost(StringStorage *address);
-  void getLocalIpAddress(StringStorage *address);
+  void getPeerHost(::string & address);
+  void getLocalIpAddress(::string & address);
   void getSocketAddr(SocketAddressIPv4 *addr) const;
 
   // Return true if connection has been initialised from the server to a client
@@ -92,7 +92,7 @@ public:
   bool clientIsReady() const { return m_updateSender->clientIsReady(); }
   void sendUpdate(const UpdateContainer *updateContainer,
                   const CursorShape *cursorShape);
-  void sendClipboard(const StringStorage & newClipboard);
+  void sendClipboard(const ::string & newClipboard);
 
 protected:
   virtual void execute();

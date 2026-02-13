@@ -26,15 +26,15 @@
 
 #include "win_system/Registry.h"
 
-ConnectionConfigSM::ConnectionConfigSM(const TCHAR registryPath[],
-                                       const TCHAR entryName[])
+ConnectionConfigSM::ConnectionConfigSM(const ::scoped_string & scopedstrRegistryPath,
+                     const ::scoped_string & scopedstrEntryName)
 : RegistrySettingsManager()
 {
-  StringStorage keyName;
-  keyName.format(_T("%s\\History\\%s"),
-                 registryPath,
-                 entryName);
-  setRegistryKey(Registry::getCurrentUserKey(), keyName.getString());
+  ::string strKeyName;
+  strKeyName.format("%s\\History\\%s",
+                 ::string(scopedstrRegistryPath).c_str(),
+                 ::string(scopedstrEntryName).c_str());
+  setRegistryKey(Registry::getCurrentUserKey(), strKeyName);
 }
 
 ConnectionConfigSM::~ConnectionConfigSM()

@@ -97,7 +97,7 @@ void ImagedButton::drawItem(LPDRAWITEMSTRUCT dis)
     } // if not pressed
   } // if not themed
 
-  StringStorage title;
+  ::string title;
   getText(&title);
 
   RECT captionRect = dis->rcItem;

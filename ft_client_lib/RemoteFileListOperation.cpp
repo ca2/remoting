@@ -25,7 +25,7 @@
 #include "RemoteFileListOperation.h"
 
 RemoteFileListOperation::RemoteFileListOperation(LogWriter *logWriter,
-                                                 const TCHAR *remotePath)
+                                                 const ::scoped_string & scopedstrremotePath)
 : FileTransferOperation(logWriter),
   m_isOk(false),
   m_isFinished(false)
@@ -60,7 +60,7 @@ void RemoteFileListOperation::onLastRequestFailedReply(DataInputStream *input)
   m_isFinished = true;
 
   // Logging
-  StringStorage message;
+  ::string message;
 
   message.format(_T("Error: failed to get file ::std::list in remote folder '%s'"),
                  m_remotePath.getString());

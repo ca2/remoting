@@ -74,10 +74,10 @@ void ReconnectingChannel::replaceChannel(Channel *newChannel)
   m_timer.notify();
 }
 
-Channel *ReconnectingChannel::getChannel(const TCHAR *funName)
+Channel *ReconnectingChannel::getChannel(const ::scoped_string & scopedstrfunName)
 {
   if (m_isClosed) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("The %s() function has failed:")
                    _T(" connection has already been closed."),
                    funName);
@@ -93,7 +93,7 @@ Channel *ReconnectingChannel::getChannel(const TCHAR *funName)
     }
     if (m_chanWasChanged) {
       m_chanWasChanged = false;
-      StringStorage errMess;
+      ::string errMess;
       errMess.format(_T("Transport was reconnected outside from")
                      _T(" the %s() function. The %s()")
                      _T(" function at this time will be aborted."),
@@ -142,7 +142,7 @@ size_t ReconnectingChannel::read(void *buffer, size_t len)
   return 0; // Call by an out caller again!
 }
 
-void ReconnectingChannel::waitForReconnect(const TCHAR *funName,
+void ReconnectingChannel::waitForReconnect(const ::scoped_string & scopedstrfunName,
                                          Channel *channel)
 {
   // Wait until transport has been initialized or time out elapsed.
@@ -155,7 +155,7 @@ void ReconnectingChannel::waitForReconnect(const TCHAR *funName,
                                    0);
     if (timeForWait == 0 || m_isClosed) { // Break this function with
                                           // critical error
-      StringStorage errMess;
+      ::string errMess;
       errMess.format(_T("The ReconnectingChannel::%s() function")
                      _T(" failed."), funName);
       throw IOException(errMess.getString());
@@ -170,7 +170,7 @@ void ReconnectingChannel::waitForReconnect(const TCHAR *funName,
   }
   m_log->info(_T("ReconnectingChannel was successfully reconnected."));
   if (channel != 0) { // If this is not the first initialization
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Transport was reconnected in the")
                    _T(" %s() function. The %s()")
                    _T(" function() at this time will be aborted"),

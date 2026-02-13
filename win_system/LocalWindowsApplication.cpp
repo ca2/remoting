@@ -28,7 +28,7 @@
 #include "thread/DesktopSelector.h"
 
 LocalWindowsApplication::LocalWindowsApplication(HINSTANCE hInstance,
-                                                 const TCHAR *windowClassName)
+                                                 const ::scoped_string & scopedstrwindowClassName)
  : WindowsApplication(hInstance, windowClassName)
 {
   HWINSTA winSta = 0;

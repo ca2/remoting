@@ -42,12 +42,12 @@ NewFolderDialog::~NewFolderDialog()
 {
 }
 
-void NewFolderDialog::setFileName(const TCHAR *filename)
+void NewFolderDialog::setFileName(const ::scoped_string & scopedstrfilename)
 {
   m_fileName.setString(filename);
 }
 
-void NewFolderDialog::getFileName(StringStorage *storage)
+void NewFolderDialog::getFileName(::string & storage)
 {
   *storage = m_fileName;
 }
@@ -84,7 +84,7 @@ BOOL NewFolderDialog::onDestroy()
 
 void NewFolderDialog::onOkButtonClick()
 {
-  StringStorage fileName;
+  ::string fileName;
 
   m_fileNameTextBox.getText(&fileName);
 

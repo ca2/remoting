@@ -31,7 +31,7 @@ class WinServiceEvents
 {
 public:
   virtual void onSuccServiceStart() = 0;
-  virtual void onFailedServiceStart(const StringStorage & reason) = 0;
+  virtual void onFailedServiceStart(const ::string & reason) = 0;
   virtual void onServiceStop() = 0;
   // This function enables fully functional this object usage,
   // before that all report will be ignored.

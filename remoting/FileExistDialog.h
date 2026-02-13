@@ -49,7 +49,7 @@ public:
   virtual int showModal();
 
   void setFilesInfo(FileInfo *existingFileInfo, FileInfo *newFileInfo,
-                    const TCHAR *pathToFileCaption);
+                    const ::scoped_string & scopedstrpathToFileCaption);
 
   void resetDialogResultValue();
 
@@ -83,7 +83,7 @@ private:
 protected:
   FileInfo *m_newFileInfo;
   FileInfo *m_existingFileInfo;
-  StringStorage m_pathToFileCaption;
+  ::string m_pathToFileCaption;
 
   //
   // Helper members

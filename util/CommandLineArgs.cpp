@@ -32,7 +32,7 @@ CommandLineArgs::~CommandLineArgs()
 {
 }
 
-void CommandLineArgs::getArgVector(::std::vector<StringStorage> *out) const
+void CommandLineArgs::getArgVector(::std::vector<::string> *out) const
 {
   *out = m_args;
 }

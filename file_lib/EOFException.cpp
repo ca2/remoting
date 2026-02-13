@@ -25,7 +25,7 @@
 #include "EOFException.h"
 
 EOFException::EOFException()
- : IOException(_T("End of file reached"))
+ : IOException("End of file reached")
 {
 }
 

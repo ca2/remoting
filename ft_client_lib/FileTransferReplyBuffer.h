@@ -43,7 +43,7 @@ public:
   FileTransferReplyBuffer(LogWriter *logWriter);
   virtual ~FileTransferReplyBuffer();
 
-  void getLastErrorMessage(StringStorage *storage);
+  void getLastErrorMessage(::string & storage);
 
   bool isCompressionSupported();
 
@@ -113,7 +113,7 @@ protected:
   FileInfo *m_filesInfo;
 
   // Last request message failed reply
-  StringStorage m_lastErrorMessage;
+  ::string m_lastErrorMessage;
 
   // Download data reply
   ::std::vector<unsigned char> m_downloadBuffer;

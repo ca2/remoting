@@ -40,16 +40,16 @@ public:
   void setOutput(RfbOutputGate *outputStream);
 
   void sendCompressionSupportRequest();
-  void sendFileListRequest(const TCHAR *fullPath, bool useCompression);
-  void sendDownloadRequest(const TCHAR *fullPathName, unsigned long long offset);
+  void sendFileListRequest(const ::scoped_string & scopedstrfullPath, bool useCompression);
+  void sendDownloadRequest(const ::scoped_string & scopedstrfullPathName, unsigned long long offset);
   void sendDownloadDataRequest(unsigned int size, bool useCompression);
-  void sendRmFileRequest(const TCHAR *fullPathName);
-  void sendMkDirRequest(const TCHAR *fullPathName);
-  void sendMvFileRequest(const TCHAR *oldFileName, const TCHAR *newFileName);
-  void sendUploadRequest(const TCHAR *fullPathName, bool overwrite, unsigned long long offset);
+  void sendRmFileRequest(const ::scoped_string & scopedstrfullPathName);
+  void sendMkDirRequest(const ::scoped_string & scopedstrfullPathName);
+  void sendMvFileRequest(const ::scoped_string & scopedstroldFileName, const ::scoped_string & scopedstrNewFileName);
+  void sendUploadRequest(const ::scoped_string & scopedstrfullPathName, bool overwrite, unsigned long long offset);
   void sendUploadDataRequest(const char *buffer, unsigned int size, bool useCompression);
   void sendUploadEndRequest(unsigned char fileFlags, unsigned long long modificationTime);
-  void sendFolderSizeRequest(const TCHAR *fullPath);
+  void sendFolderSizeRequest(const ::scoped_string & scopedstrfullPath);
 
 protected:
   LogWriter *m_logWriter;

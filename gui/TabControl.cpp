@@ -43,7 +43,7 @@ Tab *TabControl::getTab(int index)
   return m_tabContainer.at(index);
 }
 
-void TabControl::addTab(BaseDialog *dialog, const TCHAR *caption)
+void TabControl::addTab(BaseDialog *dialog, const ::scoped_string & scopedstrcaption)
 {
   Tab *tab = new Tab(dialog, caption);
   m_tabContainer.push_back(tab);

@@ -29,7 +29,7 @@
 #include "acme/prototype/geometry2d/rectangle.h"
 
 
-void RectSerializer::toString(const ::int_rectangle &  rect, StringStorage *strOut)
+void RectSerializer::toString(const ::int_rectangle &  rect, ::string & strOut)
 {
   strOut->format(_T("%dx%d+%d+%d"), rect.width(),
                                     rect.height(),
@@ -37,14 +37,14 @@ void RectSerializer::toString(const ::int_rectangle &  rect, StringStorage *strO
                                     rect.top);
 }
 
-::int_rectangle RectSerializer::toRect(const StringStorage & strIn)
+::int_rectangle RectSerializer::toRect(const ::string & strIn)
 {
   int width, height, x, y;
   TCHAR c;
   if (_stscanf(strIn.getString(),
                (TCHAR *)_T("%dx%d+%d+%d%c"), &width, &height, &x, &y, &c) != 4 ||
       width < 0 || height < 0) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Invalid string format to convert it to a rectangle")
                    _T(" (%s)."), strIn.getString());
     throw Exception(errMess.getString());

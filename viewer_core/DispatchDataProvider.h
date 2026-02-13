@@ -25,7 +25,7 @@
 #ifndef _DISPATCH_DATA_PROVIDER_H_
 #define _DISPATCH_DATA_PROVIDER_H_
 
-#include "util/StringStorage.h"
+//#include "util/::string.h"
 
 class DispatchDataProvider
 {
@@ -33,7 +33,7 @@ public:
   //
   // This function should return true if data is available, false otherwise.
   //
-  virtual bool getDispatchData(unsigned int *id, StringStorage *dispatcherName, StringStorage *keyword) = 0;
+  virtual bool getDispatchData(unsigned int *id, ::string & dispatcherName, ::string & keyword) = 0;
 };
 
 #endif

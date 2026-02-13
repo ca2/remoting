@@ -56,7 +56,7 @@ void QueryConnectionCommandLine::parse(const CommandLineArgs *commandLine)
     throw Exception(_T("-queryconnection flag is not specified"));
   }
 
-  StringStorage timeoutStr;
+  ::string timeoutStr;
 
   if (optionSpecified(TIMEOUT, &timeoutStr) &&
       !StringParser::parseInt(timeoutStr.getString(), (int *)&m_timeout)) {
@@ -69,7 +69,7 @@ bool QueryConnectionCommandLine::isTimeoutSpecified()
   return optionSpecified(TIMEOUT);
 }
 
-void QueryConnectionCommandLine::getPeerAddress(StringStorage *storage)
+void QueryConnectionCommandLine::getPeerAddress(::string & storage)
 {
   optionSpecified(PEER_ADDR, storage);
 }

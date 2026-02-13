@@ -284,8 +284,8 @@ public:
   bool getConnectToRdpFlag();
   void setConnectToRdpFlag(bool val);
 
-  void getLogFileDir(StringStorage *logFileDir);
-  void setLogFileDir(const TCHAR *logFileDir);
+  void getLogFileDir(::string & logFileDir);
+  void setLogFileDir(const ::scoped_string & scopedstrlogFileDir);
 
 protected:
 
@@ -419,7 +419,7 @@ protected:
   // Connect to existing RDP session or drop it.
   bool m_connectToRdp;
 
-  StringStorage m_logFilePath;
+  ::string m_logFilePath;
 private:
 
   //

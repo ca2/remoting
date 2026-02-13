@@ -32,7 +32,7 @@ WinDxgiSurface::WinDxgiSurface(ID3D11Texture2D *texture2D)
 {
   HRESULT hr = texture2D->QueryInterface(__uuidof(IDXGISurface), (void **)&m_dxgiSurface);
   if (FAILED(hr) || m_dxgiSurface == 0) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Can't create IDXGISurface from ID3D11Texture2D, error code = %l"), (long)hr);
     throw Exception(errMess.getString());
   }

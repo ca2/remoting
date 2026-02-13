@@ -35,7 +35,7 @@ CapsContainer::~CapsContainer()
 }
 
 void CapsContainer::add(unsigned int code, const char *vendor, const char *name,
-                        const StringStorage desc)
+                        const ::string desc)
 {
   // Fill in an RfbCapabilityInfo structure and pass it to the overloaded
   // function.
@@ -47,7 +47,7 @@ void CapsContainer::add(unsigned int code, const char *vendor, const char *name,
 }
 
 void CapsContainer::add(const RfbCapabilityInfo *capinfo,
-                        const StringStorage desc)
+                        const ::string desc)
 {
   AutoLock al(&m_mapLock);
 
@@ -74,10 +74,10 @@ bool CapsContainer::getInfo(unsigned int code, RfbCapabilityInfo *capinfo)
   return false;
 }
 
-StringStorage CapsContainer::getDescription(unsigned int code) const
+::string CapsContainer::getDescription(unsigned int code) const
 {
   AutoLock al(&m_mapLock);
-  return (isKnown(code)) ? descMap.find(code)->second : StringStorage();
+  return (isKnown(code)) ? descMap.find(code)->second : ::string();
 }
 
 bool CapsContainer::enable(const RfbCapabilityInfo *capinfo)

@@ -58,7 +58,7 @@ protected:
   /**
    * Opens url in default browser or shows error message on fail.
    */
-  void openUrl(const TCHAR *url);
+  void openUrl(const ::scoped_string & scopedstrurl);
 
 protected:
   /**

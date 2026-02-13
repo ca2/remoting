@@ -114,7 +114,7 @@ void LogConn::dispatch()
   DataInputStream input(m_logListenChannel);
   DataOutputStream output(m_logListenChannel);
   // Simple dispatcher (normal phase)
-  StringStorage logMess;
+  ::string logMess;
   while (!isTerminating()) {
     unsigned int processId = input.readUInt32();
     unsigned int threadId = input.readUInt32();
@@ -135,7 +135,7 @@ void LogConn::execute()
     // In success go to normal phase
     DataInputStream input(m_logListenChannel);
 
-    StringStorage fileName;
+    ::string fileName;
     input.readUTF8(&fileName);
     m_handle = m_extAuthListener->onLogConnAuth(this,
                                                 true,
@@ -150,7 +150,7 @@ void LogConn::execute()
 
     dispatch();
   } catch (Exception &e) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("The log connection has failed: %s"), e.getMessage());
     m_extLogListener->onAnErrorFromLogConn(errMess.getString());
   }

@@ -35,7 +35,7 @@
 class RemoteFileListOperation : public FileTransferOperation
 {
 public:
-  RemoteFileListOperation(LogWriter *logWriter, const TCHAR *remotePath);
+  RemoteFileListOperation(LogWriter *logWriter, const ::scoped_string & scopedstrremotePath);
   virtual ~RemoteFileListOperation();
 
   //
@@ -59,7 +59,7 @@ public:
   bool isOk();
 
 public:
-  StringStorage m_remotePath;
+  ::string m_remotePath;
 
   bool m_isFinished;
   bool m_isOk;

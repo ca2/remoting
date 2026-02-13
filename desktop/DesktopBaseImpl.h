@@ -49,8 +49,8 @@ public:
 
   // Puts a current desktop name from working session to the
   // desktopName argument and an user name to userMame.
-  virtual void getCurrentUserInfo(StringStorage *desktopName,
-                                  StringStorage *userName);
+  virtual void getCurrentUserInfo(::string & desktopName,
+                                  ::string & userName);
   // Puts the current frame buffer dimension and pixel format to
   // the dim and pf function arguments.
   virtual void getFrameBufferProperties(::int_size *dim, PixelFormat *pf);
@@ -60,13 +60,13 @@ public:
   virtual ::std::vector<::int_rectangle> getDisplaysCoords();
   virtual void getNormalizedRect(::int_rectangle *rect);
   virtual void getWindowCoords(HWND hwnd, ::int_rectangle *rect);
-  virtual HWND getWindowHandleByName(const StringStorage & windowName);
+  virtual HWND getWindowHandleByName(const ::string & windowName);
   virtual void getApplicationRegion(unsigned int procId, Region *region);
   virtual bool isApplicationInFocus(unsigned int procId);
 
   virtual void setKeyboardEvent(unsigned int keySym, bool down);
   virtual void setMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask);
-  virtual void setNewClipText(const StringStorage & newClipboard);
+  virtual void setNewClipText(const ::string & newClipboard);
 
 protected:
   // Calling when at least one update has been detected.
@@ -74,7 +74,7 @@ protected:
   // Implementation of the UpdateRequestListener interface.
   virtual void onUpdateRequest(const ::int_rectangle &  rectRequested, bool incremental);
   // Calling when a clipbard change detected.
-  virtual void onClipboardUpdate(const StringStorage & newClipboard);
+  virtual void onClipboardUpdate(const ::string & newClipboard);
   // Calling when a configuration has been reloaded.
   // Uses to update internal settings.
   virtual void onConfigReload(ServerConfig *serverConfig);
@@ -101,7 +101,7 @@ protected:
   UserInput *m_userInput;
 
   // Clipboard
-  StringStorage m_receivedClip;
+  ::string m_receivedClip;
   LocalMutex m_storedClipCritSec;
 
   // External listeners

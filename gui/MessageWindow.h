@@ -34,7 +34,7 @@ public:
   // messageHandler is an external message handler that replace the
   // wndProc() function on message processing. If
   // messageHandler == 0 the wndProc() function will be used.
-  MessageWindow(const HINSTANCE hinst, const TCHAR *windowClassName,
+  MessageWindow(const HINSTANCE hinst, const ::scoped_string & scopedstrwindowClassName,
                 WindowMessageHandler *messageHandler = 0);
   virtual ~MessageWindow(void);
 

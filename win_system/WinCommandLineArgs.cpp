@@ -26,9 +26,9 @@
 #include "util/Exception.h"
 #include "util/UnicodeStringStorage.h"
 
-WinCommandLineArgs::WinCommandLineArgs(const TCHAR *cmdLineInWinFormat)
+WinCommandLineArgs::WinCommandLineArgs(const ::scoped_string & scopedstrcmdLineInWinFormat)
 {
-   StringStorage strstorage(cmdLineInWinFormat);
+   ::string strstorage(cmdLineInWinFormat);
   UnicodeStringStorage uniCmdLine(strstorage);
   size_t cmdLen = uniCmdLine.getLength();
   if (cmdLen > 0) {
@@ -39,7 +39,7 @@ WinCommandLineArgs::WinCommandLineArgs(const TCHAR *cmdLineInWinFormat)
     }
     for(int i = 0; i < nArgs; i++) {
       UnicodeStringStorage uniArg(argList[i]);
-      StringStorage arg;
+      ::string arg;
       uniArg.toStringStorage(&arg);
       if (arg.getLength() > 0) {
         m_args.push_back(arg);

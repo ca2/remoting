@@ -116,14 +116,14 @@ StandardJpegCompressor::~StandardJpegCompressor()
   jpeg_destroy_compress(&m_jpeg.cinfo);
 }
 
-StringStorage StandardJpegCompressor::getMessage(j_common_ptr cinfo)
+::string StandardJpegCompressor::getMessage(j_common_ptr cinfo)
 {
   char buffer[JMSG_LENGTH_MAX];
   // Create the message
   (*cinfo->err->format_message) (cinfo, buffer);
 
   AnsiStringStorage errorAnsi(buffer);
-  StringStorage error;
+  ::string error;
   errorAnsi.toStringStorage(&error);
   return error;
 }
@@ -131,7 +131,7 @@ StringStorage StandardJpegCompressor::getMessage(j_common_ptr cinfo)
 void StandardJpegCompressor::errorExit(j_common_ptr cinfo)
 {
   (*cinfo->err->output_message) (cinfo);
-  StringStorage error = getMessage(cinfo);
+  ::string error = getMessage(cinfo);
   jpeg_destroy(cinfo);
   throw Exception(error.getString());
 }

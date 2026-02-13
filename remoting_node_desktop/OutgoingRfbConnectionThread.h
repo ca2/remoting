@@ -25,7 +25,7 @@
 #ifndef _OUTGOING_RFB_CONNECTION_THREAD_H_
 #define _OUTGOING_RFB_CONNECTION_THREAD_H_
 
-#include "util/StringStorage.h"
+//#include "util/::string.h"
 #include "thread/Thread.h"
 #include "RfbClientManager.h"
 #include "log_writer/LogWriter.h"
@@ -46,7 +46,7 @@ public:
   @param viewOnly flag that determinates mode for rfb connection.
   @param clientManager rfb client manager.
   */
-  OutgoingRfbConnectionThread(const TCHAR *connectHost, unsigned int connectPort,
+  OutgoingRfbConnectionThread(const ::scoped_string & scopedstrconnectHost, unsigned int connectPort,
                               bool viewOnly, RfbClientManager *clientManager, LogWriter *log);
   virtual ~OutgoingRfbConnectionThread();
 
@@ -54,7 +54,7 @@ protected:
   virtual void execute();
 
 private:
-  StringStorage m_connectHost;
+  ::string m_connectHost;
   unsigned int m_connectPort;
   bool m_viewOnly;
   RfbClientManager *m_clientManager;

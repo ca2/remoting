@@ -29,7 +29,7 @@ FileTransferException::FileTransferException()
 {
 }
 
-FileTransferException::FileTransferException(const TCHAR *message)
+FileTransferException::FileTransferException(const ::scoped_string & scopedstrmessage)
 : Exception(message)
 {
 }

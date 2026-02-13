@@ -76,7 +76,7 @@ RfbClient::~RfbClient()
 
 void RfbClient::disconnect()
 {
-  StringStorage peerStr;
+  ::string peerStr;
   getPeerHost(&peerStr);
   // Shutdown and close socket.
   try { m_socket->shutdown(SD_BOTH); } catch (...) { }
@@ -94,7 +94,7 @@ bool RfbClient::isOutgoing() const
   return m_isOutgoing;
 }
 
-void RfbClient::getPeerHost(StringStorage *host)
+void RfbClient::getPeerHost(::string & host)
 {
   SocketAddressIPv4 addr;
 
@@ -108,7 +108,7 @@ void RfbClient::getPeerHost(StringStorage *host)
   }
 }
 
-void RfbClient::getLocalIpAddress(StringStorage *address)
+void RfbClient::getLocalIpAddress(::string & address)
 {
   SocketAddressIPv4 addr;
 
@@ -171,9 +171,9 @@ void RfbClient::execute()
 {
   // Initialized by default message that will be logged on normal way
   // of disconnection.
-  StringStorage peerStr;
+  ::string peerStr;
   getPeerHost(&peerStr);
-  StringStorage sysLogMessage;
+  ::string sysLogMessage;
   sysLogMessage.format(_T("The client %s has disconnected"),
                        peerStr.getString());
 
@@ -309,7 +309,7 @@ void RfbClient::sendUpdate(const UpdateContainer *updateContainer,
   }
 }
 
-void RfbClient::sendClipboard(const StringStorage & newClipboard)
+void RfbClient::sendClipboard(const ::string & newClipboard)
 {
   m_clipboardExchange->sendClipboard(newClipboard);
 }

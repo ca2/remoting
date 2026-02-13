@@ -32,7 +32,7 @@ class LogConnAuthListener
 public:
   // @return a FileLogHandle value on success (may be zero) and zero on fail.
   virtual FileAccountHandle onLogConnAuth(LogConn *logConn, bool success,
-                                          const TCHAR *fileName) = 0;
+                                          const ::scoped_string & scopedstrfileName) = 0;
   virtual void onDisconnect(LogConn *logConn) = 0;
 };
 

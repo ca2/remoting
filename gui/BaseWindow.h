@@ -42,14 +42,14 @@ public:
   // createWindow()
   // Create window with windowName and setted style
   // other parameters can by changed
-  bool createWindow(const StringStorage & windowName, DWORD style, HWND hWndParent = 0,
+  bool createWindow(const ::string & windowName, DWORD style, HWND hWndParent = 0,
                     int xPos = CW_USEDEFAULT, int yPos = CW_USEDEFAULT,
                     int width = CW_USEDEFAULT, int height = CW_USEDEFAULT);
   bool destroyWindow();
 
   // setClass()
   // Set a class name only to the new window created by createWindow
-  void setClass(const StringStorage & className);
+  void setClass(const ::string & className);
 
   // basic window manipulation procedures
   void show();
@@ -58,7 +58,7 @@ public:
   void updateWindow();
   bool setSize(int width, int height);
   bool setPosition(int xPos, int yPos);
-  void setWindowText(const StringStorage & text);
+  void setWindowText(const ::string & text);
 
   // loadIcon()
   // Set the icon of application where id can be from resource or handle HICON
@@ -116,8 +116,8 @@ private:
 
 //protected:
   //HWND m_hwnd;
-  StringStorage m_className;
-  StringStorage m_windowName;
+  ::string m_className;
+  ::string m_windowName;
   HICON m_hicon;
 
   bool m_bWndCreated;

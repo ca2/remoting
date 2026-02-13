@@ -47,7 +47,7 @@ struct TvnServerInfo
   /**
    * TightVNC server status text.
    */
-  StringStorage m_statusText;
+  ::string m_statusText;
 };
 
 #endif

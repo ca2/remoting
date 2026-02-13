@@ -457,7 +457,7 @@ void FileTransferRequestHandler::md5Requested()
 
   File file(fullPathName.getString());
 
-  StringStorage path;
+  ::string path;
   file.getPath(&path);
   WinFileChannel fileInputStream(path.getString(), F_READ, FM_OPEN);
   fileInputStream.seek(offset);
@@ -855,12 +855,12 @@ void FileTransferRequestHandler::downloadDataRequested()
   m_output->flush();
 }
 
-void FileTransferRequestHandler::lastRequestFailed(StringStorage *storage)
+void FileTransferRequestHandler::lastRequestFailed(::string & storage)
 {
   lastRequestFailed(storage->getString());
 }
 
-void FileTransferRequestHandler::lastRequestFailed(const TCHAR *description)
+void FileTransferRequestHandler::lastRequestFailed(const ::scoped_string & scopedstrDescription)
 {
   m_log->error(_T("last request failed: \"%s\""), description);
 
@@ -874,7 +874,7 @@ void FileTransferRequestHandler::lastRequestFailed(const TCHAR *description)
   }
 }
 
-bool FileTransferRequestHandler::getDirectorySize(const TCHAR *pathname, unsigned long long *dirSize)
+bool FileTransferRequestHandler::getDirectorySize(const ::scoped_string & scopedstrpathname, unsigned long long *dirSize)
 {
   unsigned long long currentDirSize = 0;
   unsigned int filesCount = 0;
@@ -891,7 +891,7 @@ bool FileTransferRequestHandler::getDirectorySize(const TCHAR *pathname, unsigne
   }
 
   if (filesCount != 0) {
-    ::std::vector<StringStorage> fileNames(filesCount);
+    ::std::vector<::string> fileNames(filesCount);
 
     //
     // Get file names
@@ -904,7 +904,7 @@ bool FileTransferRequestHandler::getDirectorySize(const TCHAR *pathname, unsigne
       if (subfile.isDirectory()) {
 
         unsigned long long subDirSize = 0;
-        StringStorage subDirPath;
+        ::string subDirPath;
 
         subfile.getPath(&subDirPath);
 

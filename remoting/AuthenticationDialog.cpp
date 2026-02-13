@@ -39,7 +39,7 @@ BOOL AuthenticationDialog::onInitDialog()
   return FALSE;
 }
 
-void AuthenticationDialog::setHostName(const StringStorage & hostname)
+void AuthenticationDialog::setHostName(const ::string & hostname)
 {
   m_strHost = hostname;
 }
@@ -58,7 +58,7 @@ BOOL AuthenticationDialog::onCommand(UINT controlID, UINT notificationID)
   return FALSE;
 }
 
-const StringStorage & AuthenticationDialog::getPassword()
+const ::string & AuthenticationDialog::getPassword()
 {
   return m_strPassword;
 }

@@ -24,7 +24,7 @@
 
 #include "OutgoingRfbConnectionThread.h"
 
-OutgoingRfbConnectionThread::OutgoingRfbConnectionThread(const TCHAR *connectHost,
+OutgoingRfbConnectionThread::OutgoingRfbConnectionThread(const ::scoped_string & scopedstrconnectHost,
                                                          unsigned int connectPort,
                                                          bool viewOnly,
                                                          RfbClientManager *clientManager,

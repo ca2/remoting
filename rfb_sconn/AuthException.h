@@ -30,7 +30,7 @@
 class AuthException : public Exception
 {
 public:
-  AuthException(const TCHAR *message): Exception(message) {}
+  AuthException(const ::scoped_string & scopedstrmessage): Exception(message) {}
   virtual ~AuthException() {}
 };
 

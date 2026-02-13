@@ -28,8 +28,8 @@
 #include "thread/AutoLock.h"
 #include "file_lib/EOFException.h"
 
-FileAccount::FileAccount(const TCHAR *logDir,
-                         const TCHAR *fileName,
+FileAccount::FileAccount(const ::scoped_string & scopedstrlogDir,
+                         const ::scoped_string & scopedstrfileName,
                          unsigned char logLevel,
                          bool logHeadEnabled)
 : LogDump(logHeadEnabled, false),
@@ -54,7 +54,7 @@ FileAccount::~FileAccount()
   closeFile();
 }
 
-void FileAccount::init(const TCHAR *logDir, const TCHAR *fileName, unsigned char logLevel)
+void FileAccount::init(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrfileName, unsigned char logLevel)
 {
   m_fileName.setString(fileName);
 
@@ -64,7 +64,7 @@ void FileAccount::init(const TCHAR *logDir, const TCHAR *fileName, unsigned char
   terminateLogDumping();
 }
 
-void FileAccount::changeLogProps(const TCHAR *newLogDir,
+void FileAccount::changeLogProps(const ::scoped_string & scopedstrNewLogDir,
                                  unsigned char newLevel)
 {
   try {
@@ -73,12 +73,12 @@ void FileAccount::changeLogProps(const TCHAR *newLogDir,
   }
 }
 
-void FileAccount::getFileName(StringStorage *fileName)
+void FileAccount::getFileName(::string & fileName)
 {
   *fileName = m_fileName;
 }
 
-bool FileAccount::isTheOurFileName(const TCHAR *fileName)
+bool FileAccount::isTheOurFileName(const ::scoped_string & scopedstrfileName)
 {
   return m_fileName.isEqualTo(fileName);
 }
@@ -87,7 +87,7 @@ void FileAccount::print(unsigned int processId,
                         unsigned int threadId,
                         const DateTime & dt,
                         int level,
-                        const TCHAR *message)
+                        const ::scoped_string & scopedstrmessage)
 {
   AutoLock al(&m_logMut);
 
@@ -110,7 +110,7 @@ void FileAccount::flush(unsigned int processId,
                         unsigned int threadId,
                         const DateTime & dt,
                         int level,
-                        const TCHAR *message)
+                        const ::scoped_string & scopedstrmessage)
 {
   AutoLock al(&m_logMut);
 
@@ -119,7 +119,7 @@ void FileAccount::flush(unsigned int processId,
   }
 }
 
-void FileAccount::print(int level, const TCHAR *message)
+void FileAccount::print(int level, const ::scoped_string & scopedstrmessage)
 {
   unsigned int processId = GetCurrentProcessId();
   unsigned int threadId = GetCurrentThreadId();
@@ -131,11 +131,11 @@ void FileAccount::format(unsigned int processId,
                          unsigned int threadId,
                          const DateTime & dt,
                          int level,
-                         const TCHAR *message)
+                         const ::scoped_string & scopedstrmessage)
 {
   // FIXME: Remove windows dependence.
   // Format the timestamp.
-  StringStorage timeString(_T("[Temporary unavaliable]"));
+  ::string timeString(_T("[Temporary unavaliable]"));
   SYSTEMTIME st;
   dt.toUtcSystemTime(&st);
   unsigned char logBarrier;
@@ -158,7 +158,7 @@ void FileAccount::format(unsigned int processId,
   TCHAR sig = logLevelSignature[level & 0x0F];
 
   // Format the final string prefixed with all the service information.
-  StringStorage resultLine;
+  ::string resultLine;
   resultLine.format(_T("[%5d/%5d] %s %c %s"),
                     processId,
                     threadId,
@@ -180,7 +180,7 @@ void FileAccount::format(unsigned int processId,
   }
 }
 
-void FileAccount::setNewFile(unsigned char newLevel, const TCHAR *newDir)
+void FileAccount::setNewFile(unsigned char newLevel, const ::scoped_string & scopedstrNewDir)
 {
   AutoLock al(&m_logMut);
   bool levelChanged = newLevel != m_level;
@@ -191,13 +191,13 @@ void FileAccount::setNewFile(unsigned char newLevel, const TCHAR *newDir)
   }
 
   if (levelChanged && !m_asFirstOpen) {
-    StringStorage message;
+    ::string message;
     message.format(_T("Log verbosity level has been changed from %d to %d"),
                    (int)m_level, (int) newLevel);
     print(1, message.getString());
   }
   if (logDirChanged && !m_asFirstOpen) {
-    StringStorage message;
+    ::string message;
     message.format(_T("Log directory has been changed from \"%s\" to \"%s\""),
                    m_logDir.getString(), newDir);
     print(1, message.getString());
@@ -224,7 +224,7 @@ void FileAccount::setNewFile(unsigned char newLevel, const TCHAR *newDir)
     openFile(); // with backup creating if needed.
 
     if (levelChangedFromZero && !asFirstOpen) {
-      StringStorage message;
+      ::string message;
       message.format(_T("Log verbosity level has been changed from 0 to %d"),
                      (int)m_level, (int) newLevel);
       print(1, message.getString());
@@ -237,7 +237,7 @@ void FileAccount::openFile()
 {
   closeFile();
 
-  StringStorage fileName;
+  ::string fileName;
   fileName.format(_T("%s\\%s.log"), m_logDir.getString(),
                   m_fileName.getString());
   bool shareToRead = true;
@@ -295,7 +295,7 @@ void FileAccount::addUnicodeSignature()
 
 void FileAccount::createBackup(unsigned int backupLimit)
 {
-  StringStorage oldName, newName;
+  ::string oldName, newName;
   TCHAR fmt[] = _T("%s\\%s.%d.log");
   // Shift backup files
   for (int i = backupLimit - 1; i > 0; i--) {

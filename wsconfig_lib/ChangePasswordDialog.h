@@ -28,7 +28,7 @@
 #include "gui/BaseDialog.h"
 #include "gui/TextBox.h"
 #include "gui/BalloonTip.h"
-#include "util/StringStorage.h"
+//#include "util/::string.h"
 
 class ChangePasswordDialog : public BaseDialog
 {
@@ -45,7 +45,7 @@ public:
   Returns password (in plain text) specified by user.
   @return password string.
   */
-  const TCHAR *getPasswordInPlainText() const;
+  const ::scoped_string & scopedstrgetPasswordInPlainText() const;
 protected:
 
   //
@@ -72,7 +72,7 @@ protected:
   TextBox m_password1;
   TextBox m_password2;
   // Password
-  StringStorage m_passwordText;
+  ::string m_passwordText;
   // Tooltip
   BalloonTip m_passwordEmptyTooltip;
   BalloonTip m_passwordsNotMatchTooltip;

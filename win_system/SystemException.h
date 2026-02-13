@@ -52,14 +52,14 @@ public:
    * and error code set to GetLastError() value.
    * @param userMessage user message.
    */
-  SystemException(const TCHAR *userMessage);
+  SystemException(const ::scoped_string & scopedstruserMessage);
   /**
    * Creates exception with user message + formatted message from system
    * and specified error code.
    * @param userMessage user message.
    * @param errcode windows error code.
    */
-  SystemException(const TCHAR *userMessage, int errcode);
+  SystemException(const ::scoped_string & scopedstruserMessage, int errcode);
   /**
    * Destructor, does nothing.
    */
@@ -73,7 +73,7 @@ public:
    * Returns system error description.
    * @return system error description.
    */
-  const TCHAR *getSystemErrorDescription() const;
+  const ::scoped_string & scopedstrgetSystemErrorDescription() const;
 private:
   /**
    * Creates formatted message for exception.
@@ -81,12 +81,12 @@ private:
    * @param errcode windows error code.
    * @fixme document all special cases.
    */
-  void createMessage(const TCHAR *userMessage, int errcode);
+  void createMessage(const ::scoped_string & scopedstruserMessage, int errcode);
 private:
   /**
    * Description of error from OS.
    */
-  StringStorage m_systemMessage;
+  ::string m_systemMessage;
   /**
    * Windows error code.
    */

@@ -52,7 +52,7 @@ bool PipeImpersonatedThread::getImpersonationSuccess()
   return m_success;
 }
 
-void PipeImpersonatedThread::getFaultReason(StringStorage *faultReason)
+void PipeImpersonatedThread::getFaultReason(::string & faultReason)
 {
   *faultReason = m_faultReason;
 }

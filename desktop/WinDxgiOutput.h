@@ -47,7 +47,7 @@ public:
 
   DXGI_MODE_ROTATION getRotation() const;
 
-  void getDeviceName(StringStorage *out);
+  void getDeviceName(::string & out);
 
   HRESULT queryInterface(REFIID riid, void **ppvObject);
 

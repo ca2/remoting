@@ -26,7 +26,7 @@
 #include <vector>
 
 
-VersionInfo::VersionInfo(const TCHAR *pathToFile)
+VersionInfo::VersionInfo(const ::scoped_string & scopedstrpathToFile)
 {
   DWORD handle = 0;
   DWORD verInfoSize = GetFileVersionInfoSize(pathToFile, &handle);
@@ -79,7 +79,7 @@ VersionInfo::VersionInfo(const TCHAR *pathToFile)
   }
 }
 
-const TCHAR *VersionInfo::getProductVersionString() const
+const ::scoped_string & scopedstrVersionInfo::getProductVersionString() const
 {
   return m_productVersionString.getString();
 }

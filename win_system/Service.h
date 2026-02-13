@@ -26,7 +26,7 @@
 #define _SERVICE_H_
 
 #include "util/winhdr.h"
-#include "util/StringStorage.h"
+//#include "util/::string.h"
 #include "util/Exception.h"
 #include "thread/Thread.h"
 
@@ -44,7 +44,7 @@ public:
    * @remark pointer to global service (singleton) saves here.
    * @param name name of service.
    */
-  Service(const TCHAR *name);
+  Service(const ::scoped_string & scopedstrName);
 
   /**
    * Deletes service instance.
@@ -93,7 +93,7 @@ protected:
   /**
    * Service name for SCM.
    */
-  StringStorage m_name;
+  ::string m_name;
 
   /**
    * Current service status.

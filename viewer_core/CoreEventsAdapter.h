@@ -61,7 +61,7 @@ public:
   //
   // New cut text (clipboard) contents has been received from the server.
   //
-  virtual void onCutText(const StringStorage & cutText);
+  virtual void onCutText(const ::string & cutText);
 virtual void onGoodCursor();
   //
   // Connection has been established.
@@ -82,7 +82,7 @@ virtual void onGoodCursor();
   //
   // FIXME: now, onDisconnect not called after onError().
   // FIXME: change documentation or call onDisconnect() after onError().
-  virtual void onDisconnect(const StringStorage & message);
+  virtual void onDisconnect(const ::string & message);
 
   //
   // Authentication has been failed.

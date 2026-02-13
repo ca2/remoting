@@ -29,7 +29,7 @@ WinFilePath::WinFilePath()
 {
 }
 
-WinFilePath::WinFilePath(const TCHAR *string)
+WinFilePath::WinFilePath(const ::scoped_string & scopedstrstring)
 : m_parentPathIsRoot(false)
 {
   setString(string);
@@ -50,9 +50,9 @@ bool WinFilePath::parentPathIsRoot()
   return m_parentPathIsRoot;
 }
 
-void WinFilePath::setString(const TCHAR *string)
+void WinFilePath::setString(const ::scoped_string & scopedstrstring)
 {
-  StringStorage str(string);
+  ::string str(string);
   if (!str.is_empty()) {
     if (str.findLast('/') == 0) {
       m_parentPathIsRoot = true;
@@ -65,5 +65,5 @@ void WinFilePath::setString(const TCHAR *string)
       str.truncate(1);
     }
   }
-  StringStorage::setString(str.getString());
+  ::string::setString(str.getString());
 }

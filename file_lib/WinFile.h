@@ -63,14 +63,14 @@ enum FileMode
 class WinFile
 {
 public:
-  WinFile(const TCHAR *pathToFile, DesiredAccess dAcc, FileMode fMode,
+  WinFile(const ::scoped_string & scopedstrpathToFile, DesiredAccess dAcc, FileMode fMode,
           bool shareToRead = false);
   WinFile();
 
   virtual ~WinFile();
 
   // Call this function after this object creation by the default constructor.
-  void open(const TCHAR *pathToFile, DesiredAccess dAcc, FileMode fMode,
+  void open(const ::scoped_string & scopedstrpathToFile, DesiredAccess dAcc, FileMode fMode,
             bool shareToRead = false);
 
   // Closes handle to a file if handle is valid.
@@ -88,7 +88,7 @@ public:
   bool isValid();
 
   // Return valid path name to a file.
-  void getPathName(StringStorage *pathName);
+  void getPathName(::string & pathName);
 
   // Set file pointer to specified position starting from current
   // file pointer position. Can move forward and backward.
@@ -101,7 +101,7 @@ public:
 
 private:
   HANDLE m_hFile;
-  StringStorage m_pathToFile;
+  ::string m_pathToFile;
 };
 
 #endif // __WINFILE_H__

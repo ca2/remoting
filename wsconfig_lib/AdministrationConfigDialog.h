@@ -80,7 +80,7 @@ private:
   // Helper methods
   //
 
-  void getFolderName(const TCHAR *key, StringStorage *folder);
+  void getFolderName(const ::scoped_string & scopedstrKey, ::string & folder);
 
 protected:
   // Configuration

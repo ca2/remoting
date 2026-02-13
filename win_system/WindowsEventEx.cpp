@@ -26,7 +26,7 @@
 #include "util/Exception.h"
 #include <Aclapi.h>
 
-WindowsEventEx::WindowsEventEx(const TCHAR *name)
+WindowsEventEx::WindowsEventEx(const ::scoped_string & scopedstrName)
 : WindowsEvent(name)
 {
   bool needToInit = GetLastError() != ERROR_ALREADY_EXISTS;
@@ -45,7 +45,7 @@ void WindowsEventEx::setAccessToAll(HANDLE objHandle)
                                     0);
   if (errorCode != ERROR_SUCCESS &&
       errorCode != ERROR_NO_SECURITY_ON_OBJECT) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Cannot SetSecurityInfo with error = %d"), (int)errorCode);
     throw Exception(errMess.getString());
   }

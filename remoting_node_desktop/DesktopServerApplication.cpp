@@ -33,7 +33,7 @@
 #include "TimeAPI.h"
 
 DesktopServerApplication::DesktopServerApplication(HINSTANCE appInstance,
-                                                   const TCHAR *windowClassName,
+                                                   const ::scoped_string & scopedstrwindowClassName,
                                                    const CommandLineArgs *cmdArgs)
 : LocalWindowsApplication(appInstance, windowClassName),
   m_clToSrvChan(0),
@@ -69,7 +69,7 @@ DesktopServerApplication::DesktopServerApplication(HINSTANCE appInstance,
   try {
     // Transport initialization
     // Get pipe channel handles by the shared memory
-    StringStorage shMemName;
+    ::string shMemName;
     cmdLineParser.getSharedMemName(&shMemName);
     SharedMemory shMem(shMemName.getString(), 72);
     unsigned long long *mem = (unsigned long long *)shMem.getMemPointer();

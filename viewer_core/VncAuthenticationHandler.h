@@ -44,7 +44,7 @@ public:
   virtual void addAuthCapability(CapabilitiesManager *capabilitiesManager);
 
 protected:
-  virtual void getPassword(StringStorage *passString) = 0;
+  virtual void getPassword(::string & passString) = 0;
 };
 
 #endif

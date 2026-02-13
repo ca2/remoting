@@ -40,7 +40,7 @@ public:
    * Creates command.
    * @param serverControl proxy.
    */
-  ConnectCommand(ControlProxy *serverControl, const TCHAR *hostName);
+  ConnectCommand(ControlProxy *serverControl, const ::scoped_string & scopedstrhostName);
   /**
    * Destroys command.
    */
@@ -59,7 +59,7 @@ private:
    * Proxy to some of TightVNC server control methods.
    */
   ControlProxy *m_proxy;
-  StringStorage m_hostName;
+  ::string m_hostName;
 };
 
 #endif // __CONNECTCOMMAND_H__

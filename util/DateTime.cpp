@@ -98,7 +98,7 @@ void DateTime::toLocalSystemTime(LPSYSTEMTIME st) const
   FileTimeToSystemTime(&localFt, st);
 }
 
-void DateTime::toString(StringStorage *target) const
+void DateTime::toString(::string & target) const
 {
   SYSTEMTIME systemTime;
 

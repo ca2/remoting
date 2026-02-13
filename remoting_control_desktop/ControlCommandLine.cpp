@@ -109,13 +109,13 @@ void ControlCommandLine::parse(const CommandLineArgs *cmdArgs)
   }
 
   if (hasShareRect()) {
-    StringStorage strRect;
+    ::string strRect;
     optionSpecified(SHARE_RECT, &strRect);
     parseRectCoordinates(&strRect);
   }
 
   if (hasShareDisplay()) {
-    StringStorage strDisplayNumber;
+    ::string strDisplayNumber;
     optionSpecified(SHARE_DISPLAY, &strDisplayNumber);
     parseDisplayNumber(&strDisplayNumber);
   }
@@ -125,7 +125,7 @@ void ControlCommandLine::parse(const CommandLineArgs *cmdArgs)
   }
 
   if (hasShareApp()) {
-    StringStorage strAppProcId;
+    ::string strAppProcId;
     optionSpecified(SHARE_APP, &strAppProcId);
     parseProcessId(&strAppProcId);
   }
@@ -160,7 +160,7 @@ void ControlCommandLine::parse(const CommandLineArgs *cmdArgs)
   }
 }
 
-void ControlCommandLine::getPasswordFile(StringStorage *passwordFile) const
+void ControlCommandLine::getPasswordFile(::string & passwordFile) const
 {
   *passwordFile = m_passwordFile;
 }
@@ -185,7 +185,7 @@ bool ControlCommandLine::hasConnectFlag()
   return optionSpecified(CONNECT);
 }
 
-void ControlCommandLine::getConnectHostName(StringStorage *hostName) const
+void ControlCommandLine::getConnectHostName(::string & hostName) const
 {
   *hostName = m_connectHostName;
 }
@@ -270,7 +270,7 @@ unsigned char ControlCommandLine::getShareDisplayNumber()
   return m_displayNumber;
 }
 
-void ControlCommandLine::getShareWindowName(StringStorage *out)
+void ControlCommandLine::getShareWindowName(::string & out)
 {
   *out = m_windowHeaderName;
 }
@@ -290,12 +290,12 @@ bool ControlCommandLine::hasCheckServicePasswords()
   return optionSpecified(CHECK_SERVICE_PASSWORDS);
 }
 
-const TCHAR *ControlCommandLine::getPrimaryVncPassword() const
+const ::scoped_string & scopedstrControlCommandLine::getPrimaryVncPassword() const
 {
   return m_vncPassword.getString();
 }
 
-const TCHAR *ControlCommandLine::getControlPassword() const
+const ::scoped_string & scopedstrControlCommandLine::getControlPassword() const
 {
   return m_controlPassword.getString();
 }
@@ -308,27 +308,27 @@ bool ControlCommandLine::isCommandSpecified()
          hasShareRect() || hasShareFull() || hasShareApp();
 }
 
-void ControlCommandLine::parseRectCoordinates(const StringStorage & strCoord)
+void ControlCommandLine::parseRectCoordinates(const ::string & strCoord)
 {
   m_shareRect = RectSerializer::toRect(strCoord);
 }
 
-void ControlCommandLine::parseDisplayNumber(const StringStorage & strDispNumber)
+void ControlCommandLine::parseDisplayNumber(const ::string & strDispNumber)
 {
   if (!StringParser::parseByte(strDispNumber->getString(),
                                &m_displayNumber)) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Can't parse the %s argument to a display number"),
                    strDispNumber->getString());
     throw Exception(errMess.getString());
   }
 }
 
-void ControlCommandLine::parseProcessId(const StringStorage & str)
+void ControlCommandLine::parseProcessId(const ::string & str)
 {
   if (!StringParser::parseUInt(str->getString(),
                                &m_sharedAppProcessId)) {
-    StringStorage errMess;
+    ::string errMess;
     // FIXME: Here the next string must be placed to the resource.
     errMess.format(_T("Can't parse the %s argument to a process id"),
                    str->getString());

@@ -26,7 +26,7 @@
 #define _RECT_H_
 
 #include "util/CommonHeader.h"
-#include "util/StringStorage.h"
+//#include "util/::string.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 
 
@@ -38,16 +38,16 @@ public:
   virtual ~PortMappingRect();
 
   // Converts this rect to string value.
-  void toString(StringStorage *string) const;
+  void toString(::string & string) const;
 
   // Returns true if string can be parsed to rect object,
   // false otherwise.
-  static bool tryParse(const TCHAR *string);
+  static bool tryParse(const ::scoped_string & scopedstrstring);
 
   // Parsed string and sets parsed values to output rect.
   // Returns true if string is valid, false otherwise.
   // Remark: "out" parameter can be null.
-  static bool parse(const TCHAR *string, PortMappingRect *out);
+  static bool parse(const ::scoped_string & scopedstrstring, PortMappingRect *out);
 };
 
 #endif

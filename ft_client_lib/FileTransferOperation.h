@@ -107,27 +107,27 @@ protected:
   // Notify all listeners that was error during operation execution
   //
 
-  void notifyError(const TCHAR *message);
+  void notifyError(const ::scoped_string & scopedstrmessage);
 
   //
   // Notify all listeners with text message
   //
 
-  void notifyInformation(const TCHAR *message);
+  void notifyInformation(const ::scoped_string & scopedstrmessage);
 
   //
   // Sets absolute path to @currentFile, using @localFolder string as root folder
   // to @out parameter, '\' character used as separator for splitting directories.
   //
 
-  void getLocalPath(FileInfoList *currentFile, const TCHAR *localFolder, StringStorage *out);
+  void getLocalPath(FileInfoList *currentFile, const ::scoped_string & scopedstrlocalFolder, ::string & out);
 
   //
   // Sets absolute path to @currentFile, using @remoteFolder string as root folder
   // to @out parameter, '/' character used as separator for splitting directories.
   //
 
-  void getRemotePath(FileInfoList *currentFile, const TCHAR *remoteFolder, StringStorage *out);
+  void getRemotePath(FileInfoList *currentFile, const ::scoped_string & scopedstrremoteFolder, ::string & out);
 
 protected:
   LogWriter *m_logWriter;

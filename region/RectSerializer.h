@@ -32,10 +32,10 @@ class RectSerializer
 {
 public:
   // Converts to string value.
-  static void toString(const ::int_rectangle &  rect, StringStorage *strOut);
+  static void toString(const ::int_rectangle &  rect, ::string & strOut);
 
   // Converts to ::int_rectangle value.
-  static ::int_rectangle toRect(const StringStorage & strIn);
+  static ::int_rectangle toRect(const ::string & strIn);
 };
 
 #endif

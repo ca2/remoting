@@ -71,7 +71,7 @@ BOOL ConfigurationDialog::onCommand(UINT controlID, UINT notificationID)
 
 void ConfigurationDialog::onLogLevelChange()
 {
-  StringStorage text;
+  ::string text;
   int logLevel;
   m_verbLvl.getText(&text);
   StringParser::parseInt(text.getString(), &logLevel);
@@ -79,9 +79,9 @@ void ConfigurationDialog::onLogLevelChange()
     m_logging.setEnabled(true);
 
     // If log-file is exist, then enable button "Locate...", else disable him.
-    StringStorage logDir;
+    ::string logDir;
     ViewerConfig::getInstance()->getLogDir(&logDir);
-    StringStorage logFileName;
+    ::string logFileName;
     logFileName.format(_T("%s\\%s.log"),
                        logDir.getString(),
                        LogNames::VIEWER_LOG_FILE_STUB_NAME);
@@ -99,11 +99,11 @@ void ConfigurationDialog::onLogLevelChange()
 }
 void ConfigurationDialog::onOpenFolderButtonClick()
 {
-  StringStorage logDir;
+  ::string logDir;
   
   ViewerConfig::getInstance()->getLogDir(&logDir);
 
-  StringStorage command;
+  ::string command;
   command.format(_T("explorer /select,%s\\%s.log"),
                  logDir.getString(),
                  LogNames::VIEWER_LOG_FILE_STUB_NAME);
@@ -148,7 +148,7 @@ void ConfigurationDialog::updateControlValues()
 {
   ViewerConfig *config = ViewerConfig::getInstance();
 
-  StringStorage txt;
+  ::string txt;
 
   txt.format(_T("%d"), config->getListenPort());
   m_reverseConn.setText(txt.getString());
@@ -162,7 +162,7 @@ void ConfigurationDialog::updateControlValues()
   m_showToolBars.check(config->isToolbarShown());
   m_warnAtSwitching.check(config->isPromptOnFullscreenEnabled());
 
-  StringStorage logFileName;
+  ::string logFileName;
   logFileName.format(_T("%s\\%s.log"), config->getPathToLogFile(), LogNames::VIEWER_LOG_FILE_STUB_NAME);
   m_logging.setText(logFileName.getString());
 }
@@ -181,16 +181,16 @@ bool ConfigurationDialog::isInputValid()
   return true;
 }
 
-bool ConfigurationDialog::testNum(TextBox *tb, const TCHAR *tbName)
+bool ConfigurationDialog::testNum(TextBox *tb, const ::scoped_string & scopedstrtbName)
 {
-  StringStorage text;
+  ::string text;
   tb->getText(&text);
 
   if (StringParser::tryParseInt(text.getString())) {
     return true;
   }
 
-  StringStorage message;
+  ::string message;
   message.format(StringTable::getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC), tbName);
 
   MessageBox(m_ctrlThis.getWindow(), message.getString(),
@@ -209,7 +209,7 @@ void ConfigurationDialog::onOkPressed()
 
   ViewerConfig *config = ViewerConfig::getInstance();
 
-  StringStorage text;
+  ::string text;
   int intVal;
 
   m_reverseConn.getText(&text);

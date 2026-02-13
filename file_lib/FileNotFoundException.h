@@ -31,7 +31,7 @@ class FileNotFoundException : public IOException
 {
 public:
   FileNotFoundException();
-  FileNotFoundException(const TCHAR *message);
+  FileNotFoundException(const ::scoped_string & scopedstrmessage);
   virtual ~FileNotFoundException();
 };
 

@@ -26,7 +26,7 @@
 
 
 #include "Control.h"
-#include "util/StringStorage.h"
+//#include "util/::string.h"
 
 class BaseDialog :
 virtual public windows::Window
@@ -36,7 +36,7 @@ public:
 
    BaseDialog();
    BaseDialog(DWORD resourceId);
-   BaseDialog(const TCHAR *resourceName);
+   BaseDialog(const ::scoped_string & scopedstrresourceName);
    ~BaseDialog() override;
 //public:
 
@@ -61,7 +61,7 @@ public:
   // Method sets parent window
 
   // Set resource name for dialog
-  void setResourceName(const TCHAR *resourceName);
+  void setResourceName(const ::scoped_string & scopedstrresourceName);
   // Set resource id for dialog.
   void setResourceId(DWORD id);
   // Return

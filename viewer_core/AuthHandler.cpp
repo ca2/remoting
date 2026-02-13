@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "AuthHandler.h"
 
-AuthException::AuthException(const TCHAR *message)
+AuthException::AuthException(const ::scoped_string & scopedstrmessage)
 : Exception(message),
   m_authErrorCode(AUTH_ERROR)
 {
@@ -39,7 +39,7 @@ int AuthException::getAuthCode() const
   return m_authErrorCode;
 }
 
-AuthUnknownException::AuthUnknownException(const TCHAR *message)
+AuthUnknownException::AuthUnknownException(const ::scoped_string & scopedstrmessage)
 : AuthException(message)
 {
   m_authErrorCode = AUTH_UNKNOWN_TYPE;
@@ -49,7 +49,7 @@ AuthUnknownException::~AuthUnknownException()
 {
 }
 
-AuthCanceledException::AuthCanceledException(const TCHAR *message)
+AuthCanceledException::AuthCanceledException(const ::scoped_string & scopedstrmessage)
 : AuthException(message)
 {
   m_authErrorCode = AUTH_CANCELED;

@@ -35,13 +35,13 @@ class RemoteFileRenameOperation : public FileTransferOperation
 {
 public:
   RemoteFileRenameOperation(LogWriter *logWriter,
-                            const TCHAR *pathToSourceFile,
-                            const TCHAR *pathToTargetFile);
+                            const ::scoped_string & scopedstrpathToSourceFile,
+                            const ::scoped_string & scopedstrpathToTargetFile);
 
   RemoteFileRenameOperation(LogWriter *logWriter,
                             FileInfo sourceFileInfo,
                             FileInfo targetFileInfo,
-                            const TCHAR *pathToTargetRoot);
+                            const ::scoped_string & scopedstrpathToTargetRoot);
 
   virtual ~RemoteFileRenameOperation();
 
@@ -52,8 +52,8 @@ protected:
   virtual void onLastRequestFailedReply(DataInputStream *input);
 
 protected:
-  StringStorage m_pathToSourceFile;
-  StringStorage m_pathToTargetFile;
+  ::string m_pathToSourceFile;
+  ::string m_pathToTargetFile;
 };
 
 #endif

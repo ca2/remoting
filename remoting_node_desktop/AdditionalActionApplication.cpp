@@ -34,8 +34,8 @@ const TCHAR AdditionalActionApplication::LOCK_WORKSTATION_KEY[] = _T("-lockworks
 const TCHAR AdditionalActionApplication::LOGOUT_KEY[] = _T("-logout");
 
 AdditionalActionApplication::AdditionalActionApplication(HINSTANCE hInstance,
-                                                         const TCHAR *windowClassName,
-                                                         const TCHAR *commandLine)
+                                                         const ::scoped_string & scopedstrwindowClassName,
+                                                         const ::scoped_string & scopedstrcommandLine)
 : LocalWindowsApplication(hInstance, windowClassName),
   m_commandLine(commandLine)
 {

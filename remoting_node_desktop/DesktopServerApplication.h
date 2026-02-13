@@ -56,7 +56,7 @@ public:
    * @fixme make command line parsing in this class.
    */
   DesktopServerApplication(HINSTANCE appInstance,
-                           const TCHAR *windowClassName,
+                           const ::scoped_string & scopedstrwindowClassName,
                            const CommandLineArgs *cmdArgs);
 
   virtual ~DesktopServerApplication();

@@ -27,7 +27,7 @@
 #include "SecurityPipeClient.h"
 #include "util/DateTime.h"
 
-ClientLogger::ClientLogger(const TCHAR *publicPipeName, const TCHAR *logFileName)
+ClientLogger::ClientLogger(const ::scoped_string & scopedstrpublicPipeName, const ::scoped_string & scopedstrlogFileName)
 : LogDump(false, true),
   m_logSendingChan(0),
   m_levListenChan(0),
@@ -83,7 +83,7 @@ void ClientLogger::connect()
   } catch (Exception &e) {
     if (svcChan != 0) delete svcChan;
     freeResources();
-    StringStorage formattedException;
+    ::string formattedException;
     formattedException.format(_T("Can't connect to the log server: %s"),
                               e.getMessage());
     throw Exception(formattedException.getString());
@@ -107,7 +107,7 @@ void ClientLogger::connect()
   resume();
 }
 
-void ClientLogger::print(int logLevel, const TCHAR *line)
+void ClientLogger::print(int logLevel, const ::scoped_string & scopedstrline)
 {
   unsigned int processId = GetCurrentProcessId();
   unsigned int threadId = GetCurrentThreadId();
@@ -126,7 +126,7 @@ void ClientLogger::flush(unsigned int processId,
                          unsigned int threadId,
                          const DateTime & dt,
                          int level,
-                         const TCHAR *message)
+                         const ::scoped_string & scopedstrmessage)
 {
   AutoLock al(&m_logWritingMut);
 

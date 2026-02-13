@@ -25,7 +25,7 @@
 #ifndef _FILE_INFO_H_
 #define _FILE_INFO_H_
 
-#include "util/StringStorage.h"
+//#include "util/::string.h"
 #include "util/inttypes.h"
 #include "file_lib/File.h"
 
@@ -61,7 +61,7 @@ public:
   //
 
   FileInfo(unsigned long long size, unsigned long long modTime,
-           unsigned short flags, const TCHAR *fileName);
+           unsigned short flags, const ::scoped_string & scopedstrfileName);
 
   //
   // Creates FileInfo class with name, size, flags that will be
@@ -104,7 +104,7 @@ public:
   // Sets relative (from parent folder) file name
   //
 
-  void setFileName(const TCHAR *fileName);
+  void setFileName(const ::scoped_string & scopedstrfileName);
 
   //
   // Returns file last modified time (in secords, starts from unix epoch)
@@ -128,13 +128,13 @@ public:
   // Returns file name
   //
 
-  const TCHAR *getFileName() const;
+  const ::scoped_string & scopedstrgetFileName() const;
 
 protected:
   unsigned long long m_sizeInBytes;
   unsigned long long m_lastModified;
   unsigned short m_flags;
-  StringStorage m_fileName;
+  ::string m_fileName;
 };
 
 #endif

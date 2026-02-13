@@ -43,7 +43,7 @@ public:
    * @param viewOnly view only flag for outgoing connection.
    */
   MakeRfbConnectionCommand(ControlProxy *serverControl,
-                           const TCHAR *connectString,
+                           const ::scoped_string & scopedstrconnectString,
                            bool viewOnly);
   /**
    * Destroys command.
@@ -67,7 +67,7 @@ private:
   /**
    * Connection string.
    */
-  StringStorage m_connectString;
+  ::string m_connectString;
   /**
    * View only flag for outgoing connection.
    */

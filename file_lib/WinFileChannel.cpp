@@ -24,12 +24,12 @@
 #include "framework.h"
 #include "WinFileChannel.h"
 
-WinFileChannel::WinFileChannel(const TCHAR *pathName,
+WinFileChannel::WinFileChannel(const ::scoped_string & scopedstrPathName,
                                DesiredAccess dAcc,
                                FileMode fMode,
                                bool sharedToRead)
 {
-  m_winFile.open(pathName, dAcc, fMode, sharedToRead);
+  m_winFile.open(scopedstrPathName, dAcc, fMode, sharedToRead);
 }
 
 WinFileChannel::~WinFileChannel()

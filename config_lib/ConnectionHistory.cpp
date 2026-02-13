@@ -58,12 +58,12 @@ void ConnectionHistory::load()
 {
   releaseHosts();
 
-  StringStorage valueName;
-  StringStorage value;
+  ::string valueName;
+  ::string value;
 
   for (size_t i = 0; i < m_limit; i++) {
-    valueName.format(_T("%d"), i);
-    if (!m_key->getValueAsString(valueName.getString(), &value)) {
+    //valueName.format(_T("%d"), i);
+    if (!m_key->getValueAsString(::as_string(i), value)) {
       break;
     }
     m_hosts.push_back(value);
@@ -72,15 +72,15 @@ void ConnectionHistory::load()
 
 void ConnectionHistory::save()
 {
-  StringStorage valueName;
+  ::string valueName;
 
   size_t count = m_hosts.size();
 
   for (size_t i = 0; i < min(count, m_limit); i++) {
-    valueName.format(_T("%u"), i);
-    const TCHAR *value = m_hosts.at(i).getString();
+    //valueName.format(_T("%u"), i);
+    auto value = m_hosts.at(i);
 
-    m_key->setValueAsString(valueName.getString(), value);
+    m_key->setValueAsString(::as_string(i), value);
   }
 
   if (count > m_limit) {
@@ -90,8 +90,8 @@ void ConnectionHistory::save()
 
 void ConnectionHistory::truncate()
 {
-  StringStorage valueName;
-  StringStorage value;
+  ::string valueName;
+  ::string value;
 
   size_t i = (size_t)m_limit;
 
@@ -119,7 +119,7 @@ void ConnectionHistory::truncate()
 
 void ConnectionHistory::clear()
 {
-  StringStorage valueName;
+  ::string valueName;
 
   for (size_t i = 0; i < m_hosts.size(); i++) {
     valueName.format(_T("%u"), i);
@@ -131,11 +131,11 @@ void ConnectionHistory::clear()
   releaseHosts();
 }
 
-void ConnectionHistory::addHost(const TCHAR *host)
+void ConnectionHistory::addHost(const ::scoped_string & scopedstrhost)
 {
-  StringStorage hostS(host);
+  ::string hostS(host);
 
-  for (::std::vector<StringStorage>::iterator it = m_hosts.begin(); it != m_hosts.end(); it++) {
+  for (::std::vector<::string>::iterator it = m_hosts.begin(); it != m_hosts.end(); it++) {
     if (it->isEqualTo(hostS)) {
       m_hosts.erase(it);
       break;
@@ -150,7 +150,7 @@ size_t ConnectionHistory::getHostCount() const
   return m_hosts.size();
 }
 
-const TCHAR *ConnectionHistory::getHost(size_t i) const
+const ::scoped_string & scopedstrConnectionHistory::getHost(size_t i) const
 {
   return m_hosts.at(i).getString();
 }
@@ -160,11 +160,11 @@ void ConnectionHistory::releaseHosts()
   m_hosts.clear();
 }
 
-void ConnectionHistory::removeHost(const TCHAR *host)
+void ConnectionHistory::removeHost(const ::scoped_string & scopedstrhost)
 {
-  StringStorage hostS(host);
+  ::string hostS(host);
 
-  for (::std::vector<StringStorage>::iterator it = m_hosts.begin(); it != m_hosts.end(); it++) {
+  for (::std::vector<::string>::iterator it = m_hosts.begin(); it != m_hosts.end(); it++) {
     if (it->isEqualTo(hostS)) {
       m_hosts.erase(it);
       break;

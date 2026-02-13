@@ -41,7 +41,7 @@ BOOL ConnectingDialog::onInitDialog()
   return FALSE;
 }
 
-void ConnectingDialog::setHostName(const StringStorage &hostname) {
+void ConnectingDialog::setHostName(const ::string &hostname) {
   m_strHost = hostname;
 }
 
@@ -124,7 +124,7 @@ while (m_bRunning)
 //
 // };
 
-const StringStorage & ConnectingDialog::getPassword()
+const ::string & ConnectingDialog::getPassword()
 {
   return m_strPassword;
 }

@@ -54,8 +54,8 @@ public:
   // Adds new column to ::std::list view
   //
 
-  void addColumn(int index, const TCHAR *caption, int width, int fmt);
-  void addColumn(int index, const TCHAR *caption, int width);
+  void addColumn(int index, const ::scoped_string & scopedstrcaption, int width, int fmt);
+  void addColumn(int index, const ::scoped_string & scopedstrcaption, int width);
 
   //
   // Returns ::std::list view item structure with specified index
@@ -73,20 +73,20 @@ public:
   // Inserts new item to ::std::list view with specified index and caption
   //
 
-  void addItem(int index, const TCHAR *caption);
+  void addItem(int index, const ::scoped_string & scopedstrcaption);
 
   //
   // Inserts new item to ::std::list view with specified index, caption
   // and user data(tag)
   //
 
-  void addItem(int index, const TCHAR *caption, LPARAM tag);
+  void addItem(int index, const ::scoped_string & scopedstrcaption, LPARAM tag);
 
   //
   // Inserts new item to ::std::list view
   //
 
-  void addItem(int index, const TCHAR *caption, LPARAM tag, int imageIndex);
+  void addItem(int index, const ::scoped_string & scopedstrcaption, LPARAM tag, int imageIndex);
 
   //
   // Removes item with specified index from ::std::list view
@@ -104,7 +104,7 @@ public:
   // Changes text of ::std::list view item subitem
   //
 
-  void setSubItemText(int index, int subIndex, const TCHAR *caption);
+  void setSubItemText(int index, int subIndex, const ::scoped_string & scopedstrcaption);
 
   //
   // Changes user data (tag) of ::std::list view item with specified index

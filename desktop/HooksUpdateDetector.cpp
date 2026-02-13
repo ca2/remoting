@@ -79,12 +79,12 @@ void HooksUpdateDetector::start32Loader()
 #ifdef _WIN64
   m_log->debug(_T("Loading the screenhook library for 32bit system with hookldr.exe"));
   if (!isTerminating()) {
-    StringStorage path, folder;
+    ::string path, folder;
     Environment::getCurrentModuleFolderPath(&folder);
     path.format(_T("%s\\%s"), folder.getString(),
                 HookDefinitions::HOOK_LOADER_NAME);
     m_hookLoader32.setFilename(path.getString());
-    StringStorage hwndStr;
+    ::string hwndStr;
     hwndStr.format(_T("%I64u"), (DWORD64)m_targetWin->getHWND());
     m_hookLoader32.setArguments(hwndStr.getString());
     try {

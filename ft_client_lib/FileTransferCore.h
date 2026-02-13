@@ -63,28 +63,28 @@ public:
 
   const OperationSupport &getSupportedOps();
 
-  ::std::vector<FileInfo> *getListLocalFolder(const TCHAR *pathToFile);
+  ::std::vector<FileInfo> *getListLocalFolder(const ::scoped_string & scopedstrpathToFile);
   ::std::vector<FileInfo> *getListRemoteFolder();
 
   void downloadOperation(const FileInfo *filesToDownload,
                          size_t filesCount,
-                         const TCHAR *pathToTargetRoot,
-                         const TCHAR *pathToSourceRoot);
+                         const ::scoped_string & scopedstrpathToTargetRoot,
+                         const ::scoped_string & scopedstrpathToSourceRoot);
   void uploadOperation(const FileInfo *filesToDownload,
                        size_t filesCount,
-                       const TCHAR *pathToSourceRoot,
-                       const TCHAR *pathToTargetRoot);
+                       const ::scoped_string & scopedstrpathToSourceRoot,
+                       const ::scoped_string & scopedstrpathToTargetRoot);
   void localFilesDeleteOperation(const FileInfo *filesToDelete,
                                  unsigned int filesCount,
-                                 const TCHAR *pathToTargetRoot);
+                                 const ::scoped_string & scopedstrpathToTargetRoot);
   void remoteFilesDeleteOperation(const FileInfo *filesInfoToDelete,
                                   size_t filesCount,
-                                  const TCHAR *pathToTargetRoot);
-  void remoteFolderCreateOperation(FileInfo file, const TCHAR *pathToTargetRoot);
+                                  const ::scoped_string & scopedstrpathToTargetRoot);
+  void remoteFolderCreateOperation(FileInfo file, const ::scoped_string & scopedstrpathToTargetRoot);
   void remoteFileRenameOperation(FileInfo sourceFileInfo,
                                  FileInfo targetFileInfo,
-                                 const TCHAR *pathToTargetRoot);
-  void remoteFileListOperation(const TCHAR *pathToFile);
+                                 const ::scoped_string & scopedstrpathToTargetRoot);
+  void remoteFileListOperation(const ::scoped_string & scopedstrpathToFile);
 
   void terminateCurrentOperation();
 
@@ -106,7 +106,7 @@ protected:
 
   virtual int targetFileExists(FileInfo *sourceFileInfo,
                                FileInfo *targetFileInfo,
-                               const TCHAR *pathToTargetFile);
+                               const ::scoped_string & scopedstrpathToTargetFile);
 
   //
   // Inherited from OperationEventListener
@@ -114,9 +114,9 @@ protected:
 
   virtual void ftOpStarted(FileTransferOperation *sender);
   virtual void ftOpFinished(FileTransferOperation *sender);
-  virtual void ftOpErrorMessage(FileTransferOperation *sender, const TCHAR *message);
+  virtual void ftOpErrorMessage(FileTransferOperation *sender, const ::scoped_string & scopedstrmessage);
   virtual void ftOpInfoMessage(FileTransferOperation *sender,
-                               const TCHAR *message);
+                               const ::scoped_string & scopedstrmessage);
 
   //
   // Interface of log

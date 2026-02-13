@@ -43,7 +43,7 @@ public:
    * Creates WindowsApplication instance.
    * @param appInstance parameter that passed to WinMain.
    */
-  WindowsApplication(HINSTANCE appInstance, const TCHAR *windowClassName);
+  WindowsApplication(HINSTANCE appInstance, const ::scoped_string & scopedstrwindowClassName);
 
   /**
    * Destroys WindowsApplication instance.
@@ -84,7 +84,7 @@ public:
 
 protected:
   // Creates a window to receive messages.
-  virtual void createWindow(const TCHAR *className);
+  virtual void createWindow(const ::scoped_string & scopedstrclassName);
 
   // Fills the wndClass argument and registers new class name in the Windows.
   virtual void registerWindowClass(WNDCLASS *wndClass);
@@ -100,7 +100,7 @@ protected:
 
   HINSTANCE m_appInstance;
   HWND m_mainWindow;
-  StringStorage m_windowClassName;
+  ::string m_windowClassName;
 protected:
   /**
    * Helper method to process modeless dialog message for modal dialog.

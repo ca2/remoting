@@ -339,8 +339,8 @@ void GrabOptimizator::logStatistic()
   m_log->debug(_T("GrabOptimizator::m_wholeS : %d"),
              m_wholeS);
 
-  StringStorage value;
-  StringStorage statString;
+  ::string value;
+  ::string statString;
   for (::std::list<double>::iterator iter = m_wholeTElements.begin();
        iter != m_wholeTElements.end();
        iter++) {

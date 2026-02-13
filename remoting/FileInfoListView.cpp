@@ -68,7 +68,7 @@ void FileInfoListView::setWindow(HWND hwnd)
 
 void FileInfoListView::addItem(int index, FileInfo *fileInfo)
 {
-  const TCHAR *filename = fileInfo->getFileName();
+  const ::scoped_string & scopedstrfilename = fileInfo->getFileName();
 
   int imageIndex = IMAGE_FILE_INDEX;
 
@@ -80,8 +80,8 @@ void FileInfoListView::addItem(int index, FileInfo *fileInfo)
 
   ListView::addItem(index, filename, (LPARAM)fileInfo, imageIndex);
 
-  StringStorage sizeString(_T("<Folder>"));
-  StringStorage modTimeString(_T(""));
+  ::string sizeString(_T("<Folder>"));
+  ::string modTimeString(_T(""));
 
   if (!fileInfo->isDirectory()) {
     //

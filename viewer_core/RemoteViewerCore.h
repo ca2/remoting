@@ -120,7 +120,7 @@ public:
   //       If you use this component under Windows, you should call
   //       WindowsSocket::startup() prior to calling this constructor.
   //
-  RemoteViewerCore(const TCHAR *host, unsigned short port,
+  RemoteViewerCore(const ::scoped_string & scopedstrhost, unsigned short port,
                    CoreEventsAdapter *adapter,
                    Logger *logger = 0,
                    bool sharedFlag = true);
@@ -217,7 +217,7 @@ public:
   //       If you use this component under Windows, you should call
   //       WindowsSocket::startup() prior to calling function.
   //
-  void start(const TCHAR *host, unsigned short port,
+  void start(const ::scoped_string & scopedstrhost, unsigned short port,
              CoreEventsAdapter *adapter,
              bool sharedFlag = true);
 
@@ -273,7 +273,7 @@ public:
   // in a free format. If protocol version is not known yet, an empty string
   // is returned.
   //
-  StringStorage getProtocolString() const;
+  ::string getProtocolString() const;
 
   //
   // Informational function which returns the remote desktop name (as received
@@ -281,7 +281,7 @@ public:
   // (e.g. before entering the protocol phase where it will be sent), an empty
   // string is returned.
   //
-  StringStorage getRemoteDesktopName() const;
+  ::string getRemoteDesktopName() const;
 
   //
   // Set the specified pixel format. The viewer will request that pixel format
@@ -357,7 +357,7 @@ public:
   //
   // Send cut text (clipboard) to the server.
   //
-  void sendCutTextEvent(const StringStorage & cutText);
+  void sendCutTextEvent(const ::string & cutText);
 
   //
   // Set the preferred encoding type. Note that the server is not guaranteed
@@ -429,25 +429,25 @@ public:
                                  unsigned int code,
                                  const char *vendorSignature,
                                  const char *nameSignature,
-                                 const StringStorage description = _T(""));
+                                 const ::string description = _T(""));
 
   virtual void addServerMsgCapability(ServerMessageListener *listener,
                                       unsigned int code,
                                       const char *vendorSignature,
                                       const char *nameSignature,
-                                      const StringStorage description = _T(""));
+                                      const ::string description = _T(""));
 
   virtual void addClientMsgCapability(unsigned int code,
                                       const char *vendorSignature,
                                       const char *nameSignature,
-                                      const StringStorage description = _T(""));
+                                      const ::string description = _T(""));
 
   virtual void addEncodingCapability(Decoder *decoder,
                                      int priorityEncoding,
                                      unsigned int code,
                                      const char *vendorSignature,
                                      const char *nameSignature,
-                                     const StringStorage description = _T(""));
+                                     const ::string description = _T(""));
 
   virtual void getEnabledClientMsgCapabilities(::std::vector<unsigned int> *codes) const;
   virtual void getEnabledServerMsgCapabilities(::std::vector<unsigned int> *codes) const;
@@ -543,8 +543,8 @@ private:
   void authenticate();
   void clientAndServerInit();
   void readSecurityTypeList(::std::vector<unsigned int> *secTypes);
-  StringStorage getSecurityTypeName(unsigned int securityType) const;
-  StringStorage getAuthenticationTypeName(unsigned int authenticationType) const;
+  ::string getSecurityTypeName(unsigned int securityType) const;
+  ::string getAuthenticationTypeName(unsigned int authenticationType) const;
   int selectSecurityType(const ::std::vector<unsigned int> *secTypes,
                          const ::std::map<unsigned int, AuthHandler *> *authHandlers,
                          const bool isTightEnabled) const;
@@ -674,7 +674,7 @@ private:
   int m_minor;
   bool m_isTightEnabled;
   bool m_isTight;
-  StringStorage m_remoteDesktopName;
+  ::string m_remoteDesktopName;
   bool m_isUtf8ClipboardEnabled;
 
   bool m_forceFullUpdate;

@@ -41,7 +41,7 @@ public:
    * @throws SystemException if error occured.
    */
   LocalWindowsApplication(HINSTANCE hInstance,
-                          const TCHAR *windowClassName);
+                          const ::scoped_string & scopedstrwindowClassName);
   virtual ~LocalWindowsApplication();
 };
 

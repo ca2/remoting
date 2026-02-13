@@ -52,7 +52,7 @@ void Impersonator::impersonateAsUser(HANDLE token)
   }
   m_token = token;
 
-  StringStorage name = WTS::getTokenUserName(m_token);
+  ::string name = WTS::getTokenUserName(m_token);
   m_log->debug(_T("impersonate as user: %s"), name.getString());
 
   if ((!DuplicateToken(m_token, SecurityImpersonation, &m_dupToken))) {

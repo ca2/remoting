@@ -183,7 +183,7 @@ void Graphics::drawBitmap(const Bitmap *bitmap, int x, int y, int w, int h)
    ::DeleteDC(hdcMem);
 }
 
-void Graphics::drawText(const TCHAR *text, int cchText, RECT *rect, UINT format)
+void Graphics::drawText(const ::scoped_string & scopedstrtext, int cchText, RECT *rect, UINT format)
 {
   DrawText(m_hdc, text, cchText, rect, format);
 }
@@ -370,7 +370,7 @@ void GraphicsPlus::fill_solid_rectangle(const ::int_rectangle & rectangle, const
 //   memDC.selectObject(oldBitmap);
 // }
 
-// void GraphicsPlus::drawText(const TCHAR *text, int cchText, RECT *rect, UINT format)
+// void GraphicsPlus::drawText(const ::scoped_string & scopedstrtext, int cchText, RECT *rect, UINT format)
 // {
 //   DrawText(m_hdc, text, cchText, rect, format);
 // }

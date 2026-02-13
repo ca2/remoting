@@ -83,7 +83,7 @@ DWORD WTS::getRdpSessionId(LogWriter *log)
   if (m_WTSEnumerateSessions(WTS_CURRENT_SERVER_HANDLE, 0, 1, &sessionInfo, &count)) {
     for (DWORD i = 0; i < count; i++) {
       if (sessionInfo[i].State == WTSActive) {
-        StringStorage sessionName(sessionInfo[i].pWinStationName);
+        ::string sessionName(sessionInfo[i].pWinStationName);
         log->debug(_T("Enumerate Sessions, Id: %d, Name: %s"), sessionInfo[i].SessionId, sessionName.getString());
         sessionName.toLowerCase();
         if (sessionName.find(_T("rdp")) != 0) {
@@ -119,7 +119,7 @@ bool WTS::SessionIsRdpSession(DWORD sessionId, LogWriter *log)
     WTSWinStationName, &buffer, &byteCount) == 0) {
     return res;
   }
-  StringStorage sessionName((TCHAR *)buffer);
+  ::string sessionName((TCHAR *)buffer);
   sessionName.toLowerCase();
   if (sessionName.find(_T("rdp")) != 0) {
     res = true;
@@ -166,16 +166,16 @@ HANDLE WTS::sessionUserToken(DWORD sessionId, LogWriter* log)
 }
 
 
-StringStorage WTS::getCurrentUserName(LogWriter *log)
+::string WTS::getCurrentUserName(LogWriter *log)
 {
 
   DWORD sessionId = getActiveConsoleSessionId(log);
   return getUserName(sessionId, log);
 }
 
-StringStorage WTS::getUserName(DWORD sessionId, LogWriter* log)
+::string WTS::getUserName(DWORD sessionId, LogWriter* log)
 {
-  StringStorage userName;
+  ::string userName;
   if (m_WTSQuerySessionInformation == 0) {
     return userName;
   }
@@ -263,7 +263,7 @@ void WTS::duplicatePipeClientToken(HANDLE pipeHandle)
   impThread.resume();
   impThread.waitUntilImpersonated();
   if (!impThread.getImpersonationSuccess()) {
-    StringStorage faultReason, errMessage;
+    ::string faultReason, errMessage;
     impThread.getFaultReason(&faultReason);
     errMessage.format(_T("Can't impersonate thread by pipe handle: %s"),
                       faultReason.getString());
@@ -421,14 +421,14 @@ HANDLE WTS::duplicateUserImpersonationToken(HANDLE token, DWORD sessionId, LogWr
     sizeof(uiAccess)) == 0) {
     log->info(_T("Can't set UIAccess=1, ignore it"));
   }
-  StringStorage name = getTokenUserName(userToken);
+  ::string name = getTokenUserName(userToken);
   log->debug(_T("duplicate user token for user: %s, session ID: %d"), name.getString(), sessionId);
 
   return userToken;
 }
 
-StringStorage WTS::getTokenUserName(HANDLE token) {
-  StringStorage name;
+::string WTS::getTokenUserName(HANDLE token) {
+  ::string name;
   DWORD tokenSize = 0;
   GetTokenInformation(token, TokenUser, NULL, 0, &tokenSize);
 

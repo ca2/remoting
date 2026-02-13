@@ -27,8 +27,8 @@
 #include "util/ResourceLoader.h"
 #include "resource.h"
 
-remoting_impact::remoting_impact(HINSTANCE appInstance, const TCHAR *windowClassName,
-                     const TCHAR *viewerWindowClassName)
+remoting_impact::remoting_impact(HINSTANCE appInstance, const ::scoped_string & scopedstrwindowClassName,
+                     const ::scoped_string & scopedstrviewerWindowClassName)
 : WindowsApplication(appInstance, windowClassName),
   m_viewerWindowClassName(viewerWindowClassName),
   m_conListener(0),
@@ -133,7 +133,7 @@ void remoting_impact::addInstance(ViewerInstance *viewerInstance)
   m_instances.addInstance(viewerInstance);
 }
 
-void remoting_impact::runInstance(const StringStorage & hostName, const ConnectionConfig & config)
+void remoting_impact::runInstance(const ::string & hostName, const ConnectionConfig & config)
 {
   ConnectionData *pconnectiondata = new ConnectionData;
   pconnectiondata->setHost(hostName);
@@ -153,7 +153,7 @@ bool remoting_impact::isVisibleLoginDialog() const
   return !!m_loginDialog->getControl()->getWindow();
 }
 
-void remoting_impact::newConnection(const StringStorage & hostName, const ConnectionConfig & config)
+void remoting_impact::newConnection(const ::string & hostName, const ConnectionConfig & config)
 {
   ConnectionData *pconnectiondata = new ConnectionData;
   pconnectiondata->setHost(hostName);
@@ -174,7 +174,7 @@ void remoting_impact::showLoginDialog()
   addModelessDialog(m_loginDialog->getControl()->getWindow());
 }
 
-void remoting_impact::createWindow(const TCHAR *className)
+void remoting_impact::createWindow(const ::scoped_string & scopedstrclassName)
 {
   WindowsApplication::createWindow(className);
   SetWindowLongPtr(m_mainWindow, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));

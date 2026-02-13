@@ -31,7 +31,7 @@ class IOException : public Exception
 {
 public:
   IOException();
-  IOException(const TCHAR *message);
+  IOException(const ::scoped_string & scopedstrmessage);
   virtual ~IOException();
 };
 

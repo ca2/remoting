@@ -27,21 +27,21 @@
 
 #include "BaseDialog.h"
 #include "Control.h"
-#include "util/StringStorage.h"
+//#include "util/::string.h"
 
 class Tab
 {
 public:
   Tab();
-  Tab(BaseDialog *dialog, const TCHAR *caption);
+  Tab(BaseDialog *dialog, const ::scoped_string & scopedstrcaption);
 
   //
   // Access methods to protected members
   //
 
-  void setCaption(const TCHAR *caption) { m_caption.setString(caption); }
+  void setCaption(const ::scoped_string & scopedstrcaption) { m_caption.setString(caption); }
 
-  const TCHAR *getCaption() {
+  const ::scoped_string & scopedstrgetCaption() {
     return m_caption.getString();
   }
 
@@ -63,7 +63,7 @@ public:
 protected:
 
   BaseDialog *m_dialog;
-  StringStorage m_caption;
+  ::string m_caption;
 };
 
 #endif

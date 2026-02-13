@@ -40,7 +40,7 @@ public:
                      NamedPipe **clientPipe, bool clientInheritable);
 
 private:
-  void getUniqPipeName(StringStorage *result);
+  void getUniqPipeName(::string & result);
 
   LogWriter *m_log;
   unsigned int m_bufferSize;

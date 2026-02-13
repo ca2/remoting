@@ -14,7 +14,7 @@ ProfileLogger::~ProfileLogger()
 {
 }
 
-ProcessorTimes ProfileLogger::checkPoint(const TCHAR *description)
+ProcessorTimes ProfileLogger::checkPoint(const ::scoped_string & scopedstrDescription)
 {
   AutoLock al(&m_mapMut);
 
@@ -48,19 +48,19 @@ ProcessorTimes ProfileLogger::checkPoint(const TCHAR *description)
   return t;
 }
 
-typedef ::std::pair<ProcessorTimes, const TCHAR *> CHECKPPOINTPAIR;
-typedef ::std::pair<const TCHAR *, const TCHAR *> STRINGPAIR;
+typedef ::std::pair<ProcessorTimes, const ::scoped_string & scopedstr> CHECKPPOINTPAIR;
+typedef ::std::pair<const ::scoped_string & scopedstr, const ::scoped_string & scopedstr> STRINGPAIR;
 // helper function for std::sort
 bool pairCompare(const CHECKPPOINTPAIR& firstElem, const CHECKPPOINTPAIR& secondElem) {
   return firstElem.first.cycle < secondElem.first.cycle;
 }
 
-::std::vector<TCHAR> printVectorStats(const TCHAR *header, const TCHAR *tag1, const TCHAR *tag2, ::std::vector<double> v) {
+::std::vector<TCHAR> printVectorStats(const ::scoped_string & scopedstrheader, const ::scoped_string & scopedstrtag1, const ::scoped_string & scopedstrtag2, ::std::vector<double> v) {
   double min = *std::min_element(v.begin(), v.end());
   double max = *std::max_element(v.begin(), v.end());
   int num = v.size();
   double avg = std::accumulate(v.begin(), v.end(), 0.) / num;
-  const TCHAR *fmt = L"%s for %s - %s distance: avg: %f, min: %f, max: %f, executed %d times\n";
+  const ::scoped_string & scopedstrfmt = L"%s for %s - %s distance: avg: %f, min: %f, max: %f, executed %d times\n";
   int count = _sctprintf(fmt, header, tag1, tag2, avg, min, max, num);
   count++;
   ::std::vector<TCHAR> formattedString(count);
@@ -81,7 +81,7 @@ bool pairCompare(const CHECKPPOINTPAIR& firstElem, const CHECKPPOINTPAIR& second
   m_lastDrop = DateTime::now();
 
   ::std::vector<CHECKPPOINTPAIR> checkPointPairs;
-  ::std::map<const TCHAR *, ::std::vector<ProcessorTimes>>::iterator i;
+  ::std::map<const ::scoped_string & scopedstr, ::std::vector<ProcessorTimes>>::iterator i;
   // Build ::std::vector with times-description pairs and sort it by times order
   for (i = m_checkPoints.begin(); i != m_checkPoints.end(); i++) {
     ::std::vector<ProcessorTimes> times = (*i).second;
@@ -104,13 +104,13 @@ bool pairCompare(const CHECKPPOINTPAIR& firstElem, const CHECKPPOINTPAIR& second
   ::std::map<STRINGPAIR, ProcessorTimesDeltas> deltas;
   ::std::vector<CHECKPPOINTPAIR>::iterator p = checkPointPairs.begin();
   for (;;) {
-    const TCHAR *tag1 = (*p).second;
+    const ::scoped_string & scopedstrtag1 = (*p).second;
     ProcessorTimes pt1 = (*p).first;
     ++p;
     if (p == checkPointPairs.end())
       break;
     ProcessorTimes pt2 = (*p).first;
-    const TCHAR *tag2 = (*p).second;
+    const ::scoped_string & scopedstrtag2 = (*p).second;
     STRINGPAIR sp = STRINGPAIR(tag1, tag2);
     deltas[sp].deltac.push_back(double(pt2.cycle - pt1.cycle) / 1000000.);
     deltas[sp].deltap.push_back(pt2.process - pt1.process);
@@ -120,8 +120,8 @@ bool pairCompare(const CHECKPPOINTPAIR& firstElem, const CHECKPPOINTPAIR& second
   ::std::map<STRINGPAIR, ProcessorTimesDeltas>::iterator d;
   // print results
   for (d = deltas.begin(); d != deltas.end(); ++d) {
-    const TCHAR *tag1 = (*d).first.first;
-    const TCHAR *tag2 = (*d).first.second;
+    const ::scoped_string & scopedstrtag1 = (*d).first.first;
+    const ::scoped_string & scopedstrtag2 = (*d).first.second;
     ::std::vector<TCHAR> str = printVectorStats(L"CPU cycles", tag1, tag2, (*d).second.deltac);
     resultStrings.push_back(str);
     str = printVectorStats(L"Process times", tag1, tag2, (*d).second.deltap);

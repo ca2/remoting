@@ -40,14 +40,14 @@ public:
   /**
    * Returns control password specified by user (in plain text).
    */
-  const TCHAR *getPassword() const;
+  const ::scoped_string & scopedstrgetPassword() const;
 protected:
   virtual BOOL onInitDialog();
   virtual BOOL onNotify(UINT controlID, LPARAM data);
   virtual BOOL onCommand(UINT controlID, UINT notificationID);
   virtual BOOL onDestroy();
 private:
-  StringStorage m_password;
+  ::string m_password;
   TextBox m_passwordTextBox;
 };
 

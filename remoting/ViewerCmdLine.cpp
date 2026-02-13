@@ -81,7 +81,7 @@ bool ViewerCmdLine::processCmdLine(const CmdLineOption *cmdLines, size_t lenCmdL
     int countRecog = 0;
 
     for (size_t i = 0; i < lenCmdLineOption; i++) {
-       StringStorage strOut;
+       ::string strOut;
 
        for (size_t j = 0; j < m_wpcl.getOptionsCount(); j++) {
          m_wpcl.getOption(j , &strOut);
@@ -182,7 +182,7 @@ void ViewerCmdLine::onHelp()
 bool ViewerCmdLine::isHelpPresent()
 {
   for (size_t i = 0; i < m_wpcl.getArgumentsCount(); i++) {
-    StringStorage argument;
+    ::string argument;
     if (m_wpcl.getArgument(i, &argument)) {
       if (argument.isEqualTo(HELP_ARG))
         return true;
@@ -200,36 +200,36 @@ bool ViewerCmdLine::isHelpPresent()
   return false;
 }
 
-bool ViewerCmdLine::isPresent(const TCHAR *keyName)
+bool ViewerCmdLine::isPresent(const ::scoped_string & scopedstrKeyName)
 {
   return m_options.find(keyName) != m_options.end();
 }
 
 void ViewerCmdLine::parseOptionsFile()
 {
-  StringStorage pathToIniFile = m_options[OPTIONS_FILE];
+  ::string pathToIniFile = m_options[OPTIONS_FILE];
   if (pathToIniFile.findChar(_T('\\')) == -1) {
-    StringStorage newPathToIniFile;
+    ::string newPathToIniFile;
     newPathToIniFile.format(_T(".\\%s"), pathToIniFile.getString());
     pathToIniFile = newPathToIniFile;
   }
   IniFileSettingsManager sm(pathToIniFile.getString());
   sm.setApplicationName(_T("connection"));
 
-  StringStorage host;
+  ::string host;
   if (!sm.getString(_T("host"), &host)) {
     throw CommandLineFormatException(StringTable::getString(IDS_ERROR_PARSE_OPTIONS_FILE));
   }
-  StringStorage port;
+  ::string port;
   if (sm.getString(_T("port"), &port)) {
-    StringStorage hostString;
+    ::string hostString;
     hostString.format(_T("%s::%s"), host.getString(), port.getString());
     m_conData->setHost(hostString);
   } else {
     m_conData->setHost(host);
   }
 
-  StringStorage password;
+  ::string password;
   sm.getString(_T("password"), &password);
   if (!password.is_empty()) {
     m_conData->setCryptedPassword(password);
@@ -425,14 +425,14 @@ void ViewerCmdLine::parseCompressionLevel()
 
 void ViewerCmdLine::parseHostArg()
 {
-  StringStorage host;
+  ::string host;
   m_wpcl.getArgument(1, &host);
 
   if (host.findChar(_T(':')) != -1) {
     m_conData->setHost(host);
   } else {
    if (isPresent(PORT)) {
-     StringStorage hostPort;
+     ::string hostPort;
 
      hostPort.format(_T("%s::%s"), host.getString(),
                                   m_options[PORT].getString());
@@ -450,7 +450,7 @@ bool ViewerCmdLine::parseHostOptions()
     }
     return true;
   }
-  StringStorage strHost, strPort;
+  ::string strHost, strPort;
 
   if (!isPresent(PORT)) {
     strHost = m_options[HOST];

@@ -32,7 +32,7 @@
 class ListenLogServer : private Thread
 {
 public:
-  ListenLogServer(const TCHAR *publicPipeName,
+  ListenLogServer(const ::scoped_string & scopedstrpublicPipeName,
                   ConnectionListener *connListener);
   virtual ~ListenLogServer();
 

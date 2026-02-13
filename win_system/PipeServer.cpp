@@ -30,7 +30,7 @@ DynamicLibrary* PipeServer::m_kernel32Library = 0;
 pGetNamedPipeClientProcessId PipeServer::m_GetNamedPipeClientProcessId = 0;
 volatile bool PipeServer::m_initialized = false;
 
-PipeServer::PipeServer(const TCHAR *name, unsigned int bufferSize,
+PipeServer::PipeServer(const ::scoped_string & scopedstrName, unsigned int bufferSize,
                        SecurityAttributes *secAttr,
                        DWORD milliseconds)
 : m_milliseconds(milliseconds),
@@ -69,7 +69,7 @@ void PipeServer::createServerPipe()
                                  m_secAttr->getSecurityAttributes() : 0
                                  );
   if (m_serverPipe == INVALID_HANDLE_VALUE) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("CreateNamedPipe failed, error code = %d"), GetLastError());
     throw Exception(errMess.getString());
   }
@@ -89,7 +89,7 @@ NamedPipe *PipeServer::accept()
     // In success the overlapped ConnectNamedPipe() function must
     // return zero.
     int errCode = GetLastError();
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("ConnectNamedPipe failed, error code = %d"), errCode);
     throw Exception(errMess.getString());
   } else {
@@ -102,14 +102,14 @@ NamedPipe *PipeServer::accept()
       DWORD cbRet; // Fake
       if (!GetOverlappedResult(m_serverPipe, &overlapped, &cbRet, FALSE)) {
         int errCode = GetLastError();
-        StringStorage errMess;
+        ::string errMess;
         errMess.format(_T("GetOverlappedResult() failed after the ")
                        _T("ConnectNamedPipe() call, error code = %d"), errCode);
         throw Exception(errMess.getString());
       }
       break;
     default:
-      StringStorage errMess;
+      ::string errMess;
       errMess.format(_T("ConnectNamedPipe failed, error code = %d"), errCode);
       throw Exception(errMess.getString());
     }
@@ -134,7 +134,7 @@ void PipeServer::close()
       m_isConnected = false;
     } else {
       int errCode = GetLastError();
-      StringStorage errMess;
+      ::string errMess;
       errMess.format(_T("DisconnectNamedPipe failed, error code = %d"), errCode);
       throw Exception(errMess.getString());
     }

@@ -39,12 +39,12 @@ PortMappingRect::~PortMappingRect()
 {
 }
 
-void PortMappingRect::toString(StringStorage *string) const
+void PortMappingRect::toString(::string & string) const
 {
   string->format(_T("%dx%d+%d+%d"), right - left, bottom - top, left, top);
 }
 
-bool PortMappingRect::parse(const TCHAR *string, PortMappingRect *pout)
+bool PortMappingRect::parse(const ::scoped_string & scopedstrstring, PortMappingRect *pout)
 {
   int width, height, x, y;
   TCHAR c;
@@ -63,7 +63,7 @@ bool PortMappingRect::parse(const TCHAR *string, PortMappingRect *pout)
   return true;
 }
 
-bool PortMappingRect::tryParse(const TCHAR *string)
+bool PortMappingRect::tryParse(const ::scoped_string & scopedstrstring)
 {
   return parse(string, NULL);
 }

@@ -69,9 +69,9 @@ void WinEventLog::deRegisterEventSource()
 
 void WinEventLog::updateEventSourcesSubkey()
 {
-  StringStorage path;
+  ::string path;
   if (Environment::getCurrentModulePath(&path)) {
-    StringStorage entry(_T("SYSTEM\\CurrentControlSet\\")
+    ::string entry(_T("SYSTEM\\CurrentControlSet\\")
                         _T("services\\eventlog\\Application\\"));
     entry += LogNames::WIN_EVENT_PROVIDER_NAME;
     RegistryKey regKey(HKEY_LOCAL_MACHINE, entry.getString());
@@ -85,7 +85,7 @@ void WinEventLog::updateEventSourcesSubkey()
   }
 }
 
-void WinEventLog::reportInfo(unsigned int messageId, const TCHAR *fmt, ...)
+void WinEventLog::reportInfo(unsigned int messageId, const ::scoped_string & scopedstrfmt, ...)
 {
   va_list vl;
   va_start(vl, fmt);
@@ -93,7 +93,7 @@ void WinEventLog::reportInfo(unsigned int messageId, const TCHAR *fmt, ...)
   va_end(vl);
 }
 
-void WinEventLog::reportWarning(unsigned int messageId, const TCHAR *fmt, ...)
+void WinEventLog::reportWarning(unsigned int messageId, const ::scoped_string & scopedstrfmt, ...)
 {
   va_list vl;
   va_start(vl, fmt);
@@ -101,7 +101,7 @@ void WinEventLog::reportWarning(unsigned int messageId, const TCHAR *fmt, ...)
   va_end(vl);
 }
 
-void WinEventLog::reportError(unsigned int messageId, const TCHAR *fmt, ...)
+void WinEventLog::reportError(unsigned int messageId, const ::scoped_string & scopedstrfmt, ...)
 {
   va_list vl;
   va_start(vl, fmt);
@@ -114,7 +114,7 @@ void WinEventLog::reportError(unsigned int messageId, const TCHAR *fmt, ...)
 
 void WinEventLog::reportEvent(unsigned int messageId,
                             WORD eventType,
-                            const TCHAR *fmt,
+                            const ::scoped_string & scopedstrfmt,
                             va_list argList)
 {
   HANDLE hEventLog = getLogHandle();
@@ -139,7 +139,7 @@ void WinEventLog::reportEvent(unsigned int messageId,
                   (LPCTSTR *)&formattedString,
                   0 // data
                   ) == 0) {
-    StringStorage errStr;
+    ::string errStr;
     Environment::getErrStr(_T("Cannot report an event to the system log"),
                            &errStr);
     m_log->error(_T("%s"), errStr.getString());

@@ -63,9 +63,9 @@ protected:
   void readFrameBuffer(FrameBuffer *dstFb, const ::int_rectangle &  dstRect,
                        BlockingGate *gate);
 
-  virtual void sendNewClipboard(const StringStorage & newClipboard,
+  virtual void sendNewClipboard(const ::string & newClipboard,
                                 BlockingGate *gate);
-  virtual void readNewClipboard(StringStorage *newClipboard,
+  virtual void readNewClipboard(::string & newClipboard,
                                 BlockingGate *gate);
   virtual void sendNewPointerPos(const Point newPos, unsigned char keyFlag,
                                  BlockingGate *gate);
@@ -75,11 +75,11 @@ protected:
                             BlockingGate *gate);
   virtual void readKeyEvent(unsigned int *keySym, bool *down,
                             BlockingGate *gate);
-  virtual void sendUserInfo(const StringStorage & desktopName,
-                            const StringStorage & userName,
+  virtual void sendUserInfo(const ::string & desktopName,
+                            const ::string & userName,
                             BlockingGate *gate);
-  virtual void readUserInfo(StringStorage *desktopName,
-                            StringStorage *userName,
+  virtual void readUserInfo(::string & desktopName,
+                            ::string & userName,
                             BlockingGate *gate);
   virtual void sendConfigSettings(BlockingGate *gate);
   virtual void readConfigSettings(BlockingGate *gate);

@@ -43,7 +43,7 @@ public:
    * @param parameters execute parameters.
    * @throws SystemException on fail.
    */
-  static void runAsAdmin(const TCHAR *pathToFile, const TCHAR *parameters);
+  static void runAsAdmin(const ::scoped_string & scopedstrpathToFile, const ::scoped_string & scopedstrparameters);
 
   /**
    * Opens file with default action specified in Windows.
@@ -52,9 +52,9 @@ public:
    * @param workDirectory working directory.
    * @throws SystemException on fail.
    */
-  static void open(const TCHAR *file,
-                   const TCHAR *parameters,
-                   const TCHAR *workDirectory);
+  static void open(const ::scoped_string & scopedstrfile,
+                   const ::scoped_string & scopedstrparameters,
+                   const ::scoped_string & scopedstrworkDirectory);
 private:
   /**
    * Don't allow instanizing of class.

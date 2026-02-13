@@ -53,7 +53,7 @@ int FileExistDialog::showModal()
 }
 
 void FileExistDialog::setFilesInfo(FileInfo *existingFileInfo, FileInfo *newFileInfo,
-                                   const TCHAR *pathToFileCaption)
+                                   const ::scoped_string & scopedstrpathToFileCaption)
 {
   m_newFileInfo = newFileInfo;
   m_existingFileInfo = existingFileInfo;
@@ -174,7 +174,7 @@ void FileExistDialog::updateGui(FileInfo *fileInfo, Control *sizeLabel, Control 
 
   DateTime dateTime(fileInfo->lastModified());
 
-  StringStorage formatTimeString;
+  ::string formatTimeString;
   dateTime.toString(&formatTimeString);
 
   modTimeLabel->setText(formatTimeString.getString());

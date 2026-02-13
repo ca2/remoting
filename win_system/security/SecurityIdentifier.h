@@ -73,7 +73,7 @@ public:
    * Creates security identifier by a string.
    * @throws SystemException if copy failed.
    */
-  SecurityIdentifier(const TCHAR *sidString);
+  SecurityIdentifier(const ::scoped_string & scopedstrsidString);
 
   /**
    * Destructor.
@@ -92,7 +92,7 @@ public:
    * @param sidString string storage where result will be stored.
    * @throws SystemException if error occurs.
    */
-  void toString(StringStorage *sidString);
+  void toString(::string & sidString);
 
   /**
    * Returns SID of process owner.
@@ -108,7 +108,7 @@ public:
    * @return created SID.
    * @throws SystemException on fail.
    */
-  static SecurityIdentifier *createSidFromString(const TCHAR *sidString);
+  static SecurityIdentifier *createSidFromString(const ::scoped_string & scopedstrsidString);
 
   /**
    * Returns pointer to WinAPI SID structure.
@@ -122,7 +122,7 @@ private:
   SecurityIdentifier();
 
   // Returned pointer to a sid must be freed by the LocalFree() function calls
-  static void getSidByString(const TCHAR *sidString, PSID *sid);
+  static void getSidByString(const ::scoped_string & scopedstrsidString, PSID *sid);
 
 private:
   SID *m_sid;

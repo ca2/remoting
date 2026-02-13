@@ -87,7 +87,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
   // We really don't care about parsing result, we only need the first specified key.
 
-  StringStorage firstKey(_T(""));
+  ::string firstKey(_T(""));
 
 
   try {

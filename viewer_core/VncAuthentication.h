@@ -31,7 +31,7 @@ class VncAuthentication
 {
 public:
   static void vncAuthenticate(DataInputStream *input, DataOutputStream *output,
-                    const StringStorage & password);
+                    const ::string & password);
 
   // TODO: removed duplicate code: ServerConfig.h
   static const int VNC_PASSWORD_SIZE = 8;

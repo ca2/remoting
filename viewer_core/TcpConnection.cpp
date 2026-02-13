@@ -42,7 +42,7 @@ m_RfbGatesOwner(false)
   m_isEstablished = false;
 }
 
-void TcpConnection::bind(const TCHAR *host, unsigned short port)
+void TcpConnection::bind(const ::scoped_string & scopedstrhost, unsigned short port)
 {
   AutoLock al(&m_connectLock);
   if (m_wasBound) {
@@ -98,7 +98,7 @@ void TcpConnection::connect()
       if (!m_host.is_empty() && m_port != 0) {
         SocketAddressIPv4 ipAddress(m_host.getString(), m_port);
 
-        StringStorage ipAddressString;
+        ::string ipAddressString;
         ipAddress.toString(&ipAddressString);
         m_logWriter->detail(_T("Connecting to the host \"%s:%hd\" (%s:%hd)..."),
                             m_host.getString(), m_port,

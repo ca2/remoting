@@ -45,7 +45,7 @@ FileTransferReplyBuffer::~FileTransferReplyBuffer()
   }
 }
 
-void FileTransferReplyBuffer::getLastErrorMessage(StringStorage *storage)
+void FileTransferReplyBuffer::getLastErrorMessage(::string & storage)
 {
   *storage = m_lastErrorMessage;
 }
@@ -140,7 +140,7 @@ void FileTransferReplyBuffer::onFileListReply(DataInputStream *input)
       fileInfo->setLastModified(filesInfoReader.readUInt64());
       fileInfo->setFlags(filesInfoReader.readUInt16());
 
-      StringStorage t;
+      ::string t;
       filesInfoReader.readUTF8(&t);
 
       fileInfo->setFileName(t.getString());

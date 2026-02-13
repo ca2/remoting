@@ -25,7 +25,7 @@
 #include "ShareWindowCommand.h"
 
 ShareWindowCommand::ShareWindowCommand(ControlProxy *serverControl,
-                                       const StringStorage & shareWindowName)
+                                       const ::string & shareWindowName)
 : m_proxy(serverControl),
   m_shareWindowName(*shareWindowName)
 {

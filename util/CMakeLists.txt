@@ -40,8 +40,8 @@ list(APPEND library_source
    StringVector.h
    StringTable.h
    StringTable.cpp
-   StringStorage.h
-   StringStorage.cpp
+   #::string.h
+   #::string.cpp
    StringParser.h
    StringParser.cpp
    Singleton.h

@@ -37,7 +37,7 @@ UnicodeStringStorage::UnicodeStringStorage(const WCHAR *string)
   setString(string);
 }
 
-UnicodeStringStorage::UnicodeStringStorage(const StringStorage & string)
+UnicodeStringStorage::UnicodeStringStorage(const ::string & string)
 {
   fromStringStorage(string);
 }
@@ -82,7 +82,7 @@ bool UnicodeStringStorage::is_empty() const
   return getLength() == 0;
 }
 
-void UnicodeStringStorage::fromStringStorage(const StringStorage & src)
+void UnicodeStringStorage::fromStringStorage(const ::string & src)
 {
 #ifndef _UNICODE
   int constrCharCount = (int)(src->getLength() + 1);
@@ -98,7 +98,7 @@ void UnicodeStringStorage::fromStringStorage(const StringStorage & src)
 #endif
 }
 
-void UnicodeStringStorage::toStringStorage(StringStorage *dst)
+void UnicodeStringStorage::toStringStorage(::string & dst)
 {
   dst->setString(_T(""));
 #ifndef _UNICODE

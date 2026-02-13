@@ -43,22 +43,22 @@ public:
   size_t getOptionsCount();
 
   // returns the value of parameter by valName
-  bool findOptionValue(const StringStorage valName, StringStorage* strOut);
+  bool findOptionValue(const ::string valName, ::string &  strOut);
 
   // returns the argument value with index
-  bool getArgument(size_t index, StringStorage* strOut);
+  bool getArgument(size_t index, ::string &  strOut);
 
   // returns the option value with index
-  bool getOption(size_t index, StringStorage* strOut);
+  bool getOption(size_t index, ::string &  strOut);
 
 protected:
   WinCommandLineArgs *m_wcla;
 
-  ::std::vector<StringStorage> m_strParam;
-  ::std::vector<::std::pair<StringStorage, StringStorage>> m_strParams;
+  ::std::vector<::string> m_strParam;
+  ::std::vector<::std::pair<::string, ::string>> m_strParams;
 
 private:
-  void optionParser(StringStorage *out);
+  void optionParser(::string & out);
 
 };
 

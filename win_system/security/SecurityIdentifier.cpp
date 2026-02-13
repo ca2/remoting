@@ -39,7 +39,7 @@ SecurityIdentifier::SecurityIdentifier(SID *sid)
   }
 }
 
-SecurityIdentifier::SecurityIdentifier(const TCHAR *sidString)
+SecurityIdentifier::SecurityIdentifier(const ::scoped_string & scopedstrsidString)
 : m_sid(0)
 {
   getSidByString(sidString, (PSID *)&m_sid);
@@ -55,7 +55,7 @@ bool SecurityIdentifier::isValid()
   return IsValidSid(m_sid) == TRUE;
 }
 
-void SecurityIdentifier::toString(StringStorage *sidString)
+void SecurityIdentifier::toString(::string & sidString)
 {
   TCHAR *localAllocatedSidString;
 
@@ -92,7 +92,7 @@ SecurityIdentifier *SecurityIdentifier::getProcessOwner(HANDLE processHandle)
   }
 }
 
-SecurityIdentifier *SecurityIdentifier::createSidFromString(const TCHAR *sidString)
+SecurityIdentifier *SecurityIdentifier::createSidFromString(const ::scoped_string & scopedstrsidString)
 {
   return new SecurityIdentifier(sidString);
 }
@@ -102,7 +102,7 @@ SID *SecurityIdentifier::getSid() const
   return m_sid;
 }
 
-void SecurityIdentifier::getSidByString(const TCHAR *sidString, PSID *sid)
+void SecurityIdentifier::getSidByString(const ::scoped_string & scopedstrsidString, PSID *sid)
 {
   if (ConvertStringSidToSid(sidString, sid) == FALSE) {
     throw SystemException();

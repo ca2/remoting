@@ -73,7 +73,7 @@ public:
   Updates password value inside this control and updates dependent controls state.
   @param plainText plain text password.
   */
-  void setPassword(const TCHAR *plainText);
+  void setPassword(const ::scoped_string & scopedstrplainText);
 
   /**
   Updates password value inside this control.

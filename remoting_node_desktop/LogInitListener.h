@@ -28,8 +28,8 @@
 class LogInitListener
 {
 public:
-  virtual void onLogInit(const TCHAR *logDir, const TCHAR *fileName, unsigned char logLevel) = 0;
-  virtual void onChangeLogProps(const TCHAR *newLogDir, unsigned char newLevel) = 0;
+  virtual void onLogInit(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrfileName, unsigned char logLevel) = 0;
+  virtual void onChangeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel) = 0;
 };
 
 #endif // __LOGINITLISTENER_H__

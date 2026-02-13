@@ -44,8 +44,8 @@ public:
    * Creates new service control application.
    */
   ServiceControlApplication(HINSTANCE hInstance,
-                            const TCHAR *windowClassName,
-                            const TCHAR *commandLine);
+                            const ::scoped_string & scopedstrwindowClassName,
+                            const ::scoped_string & scopedstrcommandLine);
   /**
    * Destructor.
    */
@@ -111,7 +111,7 @@ private:
    *   in the command line.
    */
   void reportError(const ServiceControlCommandLine *cmdLine,
-                   const TCHAR *errorMessage) const;
+                   const ::scoped_string & scopedstrerrorMessage) const;
   /**
    * Report successful command execution.
    * @param cmdLine pointer to command line parser.
@@ -124,7 +124,7 @@ private:
   /**
    * Command line passed to the application constructor.
    */
-  StringStorage m_commandLine;
+  ::string m_commandLine;
 };
 
 #endif

@@ -26,9 +26,9 @@
 #include "win_system/SystemException.h"
 #include <Aclapi.h>
 
-GlobalMutex::GlobalMutex(const TCHAR *name, bool interSession, bool throwIfExist)
+GlobalMutex::GlobalMutex(const ::scoped_string & scopedstrName, bool interSession, bool throwIfExist)
 {
-  StringStorage mutexName;
+  ::string mutexName;
 
   mutexName.format(_T("%s\\%s"), interSession ? _T("Global") : _T("Local"), name);
 

@@ -124,7 +124,7 @@ public:
   // directorySeparator is char that used to split directories strings.
   //
 
-  void getAbsolutePath(StringStorage *storage, TCHAR directorySeparator);
+  void getAbsolutePath(::string & storage, TCHAR directorySeparator);
 
 protected:
 

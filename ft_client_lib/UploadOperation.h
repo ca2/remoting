@@ -69,14 +69,14 @@ public:
 
   UploadOperation(LogWriter *logWriter,
                   FileInfo fileToUpload,
-                  const TCHAR *pathToSourceRoot,
-                  const TCHAR *pathToTargetRoot);
+                  const ::scoped_string & scopedstrpathToSourceRoot,
+                  const ::scoped_string & scopedstrpathToTargetRoot);
 
   UploadOperation(LogWriter *logWriter,
                   const FileInfo *filesToUpload,
                   size_t filesCount,
-                  const TCHAR *pathToSourceRoot,
-                  const TCHAR *pathToTargetRoot);
+                  const ::scoped_string & scopedstrpathToSourceRoot,
+                  const ::scoped_string & scopedstrpathToTargetRoot);
 
   virtual ~UploadOperation();
 
@@ -102,7 +102,7 @@ public:
 private:
 
   unsigned long long getInputFilesSize();
-  unsigned long long getFileSize(const TCHAR *pathToFile);
+  unsigned long long getFileSize(const ::scoped_string & scopedstrpathToFile);
 
 protected:
 
@@ -167,7 +167,7 @@ protected:
   void initRemoteFiles(FileInfo *remoteFilesInfo, unsigned int count);
 
   // Helper method that creates message and notify listeners
-  void notifyFailedToUpload(const TCHAR *errorDescription);
+  void notifyFailedToUpload(const ::scoped_string & scopedstrerrorDescription);
 
   // Changed m_toCopy member and updates m_pathToSourceFile,
   // m_pathToTargetFile members

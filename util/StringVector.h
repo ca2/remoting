@@ -29,8 +29,8 @@
 
 
 
-#include "util/StringStorage.h"
+//#include "util/::string.h"
 
-typedef ::std::vector<StringStorage> StringVector;
+typedef ::std::vector<::string> StringVector;
 
 #endif

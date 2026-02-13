@@ -133,7 +133,7 @@ void ServerConfig::serialize(DataOutputStream *output)
   _ASSERT((unsigned int)m_videoRects.size() == m_videoRects.size());
   output->writeUInt32((unsigned int)m_videoRects.size());
   for (size_t i = 0; i < m_videoRects.size(); i++) {
-    StringStorage s;
+    ::string s;
     RectSerializer::toString(&(m_videoRects.at(i)),&s);
     output->writeUTF8(s.getString());
   }
@@ -197,7 +197,7 @@ void ServerConfig::deserialize(DataInputStream *input)
 
   m_videoClassNames.clear();
   size_t count = input->readUInt32();
-  StringStorage videoClass;
+  ::string videoClass;
   for (size_t i = 0; i < count; i++) {
     input->readUTF8(&videoClass);
     m_videoClassNames.push_back(videoClass);
@@ -208,7 +208,7 @@ void ServerConfig::deserialize(DataInputStream *input)
   m_idleTimeout = input->readUInt32();
   m_videoRects.clear();
   count = input->readUInt32();
-  StringStorage strVideoRect;
+  ::string strVideoRect;
   for (size_t i = 0; i < count; i++) {
     input->readUTF8(&strVideoRect);
     m_videoRects.push_back(RectSerializer::toRect(&strVideoRect));
@@ -253,14 +253,14 @@ void ServerConfig::setConnectToRdpFlag(bool val)
   m_connectToRdp = val;
 }
 
-void ServerConfig::getLogFileDir(StringStorage *logFilePath)
+void ServerConfig::getLogFileDir(::string & logFilePath)
 {
   AutoLock l(this);
 
   *logFilePath = m_logFilePath;
 }
 
-void ServerConfig::setLogFileDir(const TCHAR *logFilePath)
+void ServerConfig::setLogFileDir(const ::scoped_string & scopedstrlogFilePath)
 {
   AutoLock l(this);
 

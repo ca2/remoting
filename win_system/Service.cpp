@@ -93,7 +93,7 @@ bool Service::reportStatus(DWORD dwCurrentState, DWORD dwWin32ExitCode, DWORD dw
   return SetServiceStatus(m_statusHandle, &m_status) == TRUE;
 }
 
-Service::Service(const TCHAR *name)
+Service::Service(const ::scoped_string & scopedstrName)
 {
   _ASSERT(Service::g_service == NULL);
 

@@ -33,13 +33,13 @@ class ShareWindowCommand : public Command
 {
 public:
   ShareWindowCommand(ControlProxy *serverControl,
-                     const StringStorage & shareWindowName);
+                     const ::string & shareWindowName);
   virtual ~ShareWindowCommand();
 
   virtual void execute();
 private:
   ControlProxy *m_proxy;
-  StringStorage m_shareWindowName;
+  ::string m_shareWindowName;
 };
 
 #endif // _SHAREWINDOWCOMMAND_H_

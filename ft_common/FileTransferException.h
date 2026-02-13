@@ -31,7 +31,7 @@ class FileTransferException : public Exception
 {
 public:
   FileTransferException();
-  FileTransferException(const TCHAR *message);
+  FileTransferException(const ::scoped_string & scopedstrmessage);
   FileTransferException(const Exception *baseException);
   virtual ~FileTransferException();
 };

@@ -235,14 +235,14 @@ void Win8ScreenDriverImpl::onCursorShapeChanged()
   m_updateListener->onUpdate();
 }
 
-void Win8ScreenDriverImpl::onRecoverableError(const TCHAR *reason)
+void Win8ScreenDriverImpl::onRecoverableError(const ::scoped_string & scopedstrreason)
 {
   m_log->error(_T("Win8ScreenDriverImpl catch an recoverable error with reason: %s"), reason);
   m_hasRecoverableError = true;
   m_errorEvent.notify();
 }
 
-void Win8ScreenDriverImpl::onCriticalError(const TCHAR *reason)
+void Win8ScreenDriverImpl::onCriticalError(const ::scoped_string & scopedstrreason)
 {
   m_log->error(_T("Win8ScreenDriverImpl catch an critical error with reason: %s"), reason);
   m_hasCriticalError = true;

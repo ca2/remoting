@@ -61,7 +61,7 @@ void DesktopSrvDispatcher::execute()
       m_log->debug(_T("DesktopSrvDispatcher, code %d recieved"), code);
       ::std::map<unsigned char, ClientListener *>::iterator iter = m_handlers.find(code);
       if (iter == m_handlers.end()) {
-        StringStorage errMess;
+        ::string errMess;
         errMess.format(_T("Unhandled %d code has been ")
                        _T("received from a client"),
                        (int)code);

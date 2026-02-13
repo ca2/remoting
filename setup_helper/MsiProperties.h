@@ -35,15 +35,15 @@ public:
   MsiProperties(MSIHANDLE handle);
   ~MsiProperties();
 
-  int getInt32(const TCHAR *name);
-  void setInt32(const TCHAR *name, int value);
+  int getInt32(const ::scoped_string & scopedstrName);
+  void setInt32(const ::scoped_string & scopedstrName, int value);
 
-  void getString(const TCHAR *name, StringStorage *out);
-  void setString(const TCHAR *name, const StringStorage & value);
+  void getString(const ::scoped_string & scopedstrName, ::string & out);
+  void setString(const ::scoped_string & scopedstrName, const ::string & value);
 
 private:
-  void getValue(const TCHAR *name, StringStorage *out);
-  void setValue(const TCHAR *name, const StringStorage & value);
+  void getValue(const ::scoped_string & scopedstrName, ::string & out);
+  void setValue(const ::scoped_string & scopedstrName, const ::string & value);
 
   MSIHANDLE m_handle;
 };

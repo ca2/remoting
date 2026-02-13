@@ -88,7 +88,7 @@ void VideoRegionsConfigDialog::updateUI()
 {
   StringVector *videoClasses = m_config->getVideoClassNames();
   ::std::vector<::int_rectangle> *videoRects = m_config->getVideoRects();
-  StringStorage textAreaData;
+  ::string textAreaData;
   TCHAR endLine[3] = {13, 10, 0};
   {
     AutoLock al(m_config);
@@ -108,7 +108,7 @@ void VideoRegionsConfigDialog::updateUI()
     textAreaData.setString(_T(""));
     for (size_t i = 0; i < videoRects->size(); i++) {
       ::int_rectangle r = videoRects->at(i);
-      StringStorage s;
+      ::string s;
       RectSerializer::toString(&r, &s);
       textAreaData.appendString(s.getString());
       textAreaData.appendString(&endLine[0]);
@@ -137,14 +137,14 @@ void VideoRegionsConfigDialog::apply()
   // Split text from text area to string array
   //
   
-  StringStorage classNames;
+  ::string classNames;
   m_videoClasses.getText(&classNames);
   size_t count = 0;
   TCHAR delimiters[] = _T(" \n\r\t,;");
 
   classNames.split(delimiters, NULL, &count);
   if (count != 0) {
-    ::std::vector<StringStorage> chunks(count);
+    ::std::vector<::string> chunks(count);
     classNames.split(delimiters, &chunks.front(), &count);
 
     for (size_t i = 0; i < count; i++) {
@@ -154,13 +154,13 @@ void VideoRegionsConfigDialog::apply()
     }
   }
 
-  StringStorage videoRectsStringStorage;
+  ::string videoRectsStringStorage;
   m_videoRects.getText(&videoRectsStringStorage);
   count = 0;
 
   videoRectsStringStorage.split(delimiters, NULL, &count);
   if (count != 0) {
-    ::std::vector<StringStorage> chunks(count);
+    ::std::vector<::string> chunks(count);
     videoRectsStringStorage.split(delimiters, &chunks.front(), &count);
 
     for (size_t i = 0; i < count; i++) {
@@ -178,7 +178,7 @@ void VideoRegionsConfigDialog::apply()
   // TODO: Create parseUInt method
   //
 
-  StringStorage vriss;
+  ::string vriss;
 
   m_videoRecognitionInterval.getText(&vriss);
 

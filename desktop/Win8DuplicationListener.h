@@ -39,10 +39,10 @@ public:
   virtual void onCursorShapeChanged() = 0;
 
   // Calls when an error occurred which can be recover by object recreating.
-  virtual void onRecoverableError(const TCHAR *reason) = 0;
+  virtual void onRecoverableError(const ::scoped_string & scopedstrreason) = 0;
   // Calls when an error occurred which can't be recover by object recreating.
   // Must be selected other way to duplicate desktop.
-  virtual void onCriticalError(const TCHAR *reason) = 0;
+  virtual void onCriticalError(const ::scoped_string & scopedstrreason) = 0;
 };
 
 #endif // __WIN8DUPLICATIONLISTENER_H__

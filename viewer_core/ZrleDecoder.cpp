@@ -123,7 +123,7 @@ void ZrleDecoder::decode(RfbInputGate *input,
         readPlainRleTile(&unpackedDataStream, pixels, tileRect);
       } if (type == 129) {
         // invalid type
-        StringStorage error;
+        ::string error;
         error.format(_T("Bad data received from the server: Unused ZRLE subencoding type (%d)."), type);
         throw Exception(error.getString());
       } if (type >= 130 && type <= 255) {

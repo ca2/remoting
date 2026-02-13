@@ -68,8 +68,8 @@
 #include <algorithm>
 
 ControlApplication::ControlApplication(HINSTANCE hinst,
-                                       const TCHAR *windowClassName,
-                                       const TCHAR *commandLine)
+                                       const ::scoped_string & scopedstrwindowClassName,
+                                       const ::scoped_string & scopedstrcommandLine)
  : WindowsApplication(hinst, windowClassName),
    m_serverControl(0),
    m_gate(0),
@@ -167,8 +167,8 @@ int ControlApplication::run()
     connect(cmdLineParser.hasControlServiceFlag(), cmdLineParser.isSlave());
   } catch (Exception &) {
     if (!cmdLineParser.isSlave() && !cmdLineParser.hasCheckServicePasswords()) {
-      const TCHAR *msg = StringTable::getString(IDS_FAILED_TO_CONNECT_TO_CONTROL_SERVER);
-      const TCHAR *caption = StringTable::getString(IDS_MBC_TVNCONTROL);
+      const ::scoped_string & scopedstrmsg = StringTable::getString(IDS_FAILED_TO_CONNECT_TO_CONTROL_SERVER);
+      const ::scoped_string & scopedstrcaption = StringTable::getString(IDS_MBC_TVNCONTROL);
       MessageBox(0, msg, caption, MB_OK | MB_ICONERROR);
     }
     return 1;
@@ -178,7 +178,7 @@ int ControlApplication::run()
   if (cmdLineParser.isCommandSpecified()) {
     Command *command = 0;
 
-    StringStorage passwordFile;
+    ::string passwordFile;
     cmdLineParser.getPasswordFile(&passwordFile);
     m_serverControl->setPasswordProperties(passwordFile.getString(), true,
                                            cmdLineParser.hasControlServiceFlag());
@@ -188,7 +188,7 @@ int ControlApplication::run()
     } else if (cmdLineParser.hasReloadFlag()) {
       command = new ReloadConfigCommand(m_serverControl);
     } else if (cmdLineParser.hasConnectFlag()) {
-      StringStorage hostName;
+      ::string hostName;
       cmdLineParser.getConnectHostName(&hostName);
       command = new ConnectCommand(m_serverControl, hostName.getString());
     } else if (cmdLineParser.hasShutdownFlag()) {
@@ -199,7 +199,7 @@ int ControlApplication::run()
       unsigned char displayNumber = cmdLineParser.getShareDisplayNumber();
       command = new ShareDisplayCommand(m_serverControl, displayNumber);
     } else if (cmdLineParser.hasShareWindow()) {
-      StringStorage shareWindowName;
+      ::string shareWindowName;
       cmdLineParser.getShareWindowName(&shareWindowName);
       command = new ShareWindowCommand(m_serverControl, &shareWindowName);
     } else if (cmdLineParser.hasShareRect()) {
@@ -253,7 +253,7 @@ int ControlApplication::run()
 void ControlApplication::connect(bool controlService, bool slave)
 {
   // Determine the name of pipe to connect to.
-  StringStorage pipeName;
+  ::string pipeName;
   ControlPipeName::createPipeName(controlService, &pipeName, &m_log);
 
   int numTriesRemaining = slave ? 10 : 1;
@@ -276,9 +276,9 @@ void ControlApplication::connect(bool controlService, bool slave)
   m_serverControl = new ControlProxy(m_gate);
 }
 
-void ControlApplication::notifyServerSideException(const TCHAR *reason)
+void ControlApplication::notifyServerSideException(const ::scoped_string & scopedstrreason)
 {
-  StringStorage message;
+  ::string message;
 
   message.format(StringTable::getString(IDS_CONTROL_SERVER_RAISE_EXCEPTION), reason);
 
@@ -362,9 +362,9 @@ int ControlApplication::runConfigurator(bool configService, bool isRunAsRequeste
       return 0;
     }
     // Path to remoting_node binary.
-    StringStorage pathToBinary;
+    ::string pathToBinary;
     // Command line for child process.
-    StringStorage childCommandLine;
+    ::string childCommandLine;
 
     // Get path to remoting_node binary.
     Environment::getCurrentModulePath(&pathToBinary);
@@ -396,10 +396,10 @@ int ControlApplication::runConfigurator(bool configService, bool isRunAsRequeste
   return confDialog.showModal();
 }
 
-void ControlApplication::getCryptedPassword(unsigned char cryptedPass[8], const TCHAR *plainTextPassString)
+void ControlApplication::getCryptedPassword(unsigned char cryptedPass[8], const ::scoped_string & scopedstrplainTextPassString)
 {
   // Get a copy of the password truncated at 8 characters.
-  StringStorage plainTextPass(plainTextPassString);
+  ::string plainTextPass(plainTextPassString);
   plainTextPass.getSubstring(&plainTextPass, 0, 7);
   // Convert from TCHAR[] to char[].
   // FIXME: Check exception catching.
@@ -428,9 +428,9 @@ int ControlApplication::checkServicePasswords(bool isRunAsRequested)
       return 1;
     }
     // Path to remoting_node binary.
-    StringStorage pathToBinary;
+    ::string pathToBinary;
     // Command line for child process.
-    StringStorage childCommandLine;
+    ::string childCommandLine;
 
     // Get path to remoting_node binary.
     Environment::getCurrentModulePath(&pathToBinary);
@@ -472,7 +472,7 @@ void ControlApplication::checkServicePasswords()
     // Note: The state !useRfbAuth && !dontUseRfbAuth is valid and means "do not change
     // the auth settings".
     if (useRfbAuth) {
-      StringStorage pass;
+      ::string pass;
       dialog.getRfbPass(&pass);
       getCryptedPassword(cryptedPass, pass.getString());
       config->setPrimaryPassword(cryptedPass);
@@ -485,7 +485,7 @@ void ControlApplication::checkServicePasswords()
     bool useAdmAuth = dialog.getUseAdmPass();
     bool dontUseAdmAuth = dialog.getAdmPassForClear();
     if (useAdmAuth) {
-      StringStorage pass;
+      ::string pass;
       dialog.getAdmPass(&pass);
       getCryptedPassword(cryptedPass, pass.getString());
       config->setControlPassword(cryptedPass);
@@ -501,14 +501,14 @@ void ControlApplication::checkServicePasswords()
 
 void ControlApplication::reloadConfig()
 {
-  StringStorage pathToBinary;
+  ::string pathToBinary;
   try {
     // Get path to remoting_node binary.
     Environment::getCurrentModulePath(&pathToBinary);
     Process processToReloadConfig(pathToBinary.getString(), _T("-controlservice -reload"));
     processToReloadConfig.start();
   } catch (Exception &e) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(StringTable::getString(IDS_FAILED_TO_RELOAD_SERVICE_ON_CHECK_PASS), e.getMessage());
     MessageBox(0,
       errMess.getString(),

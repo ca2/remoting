@@ -25,7 +25,7 @@
 #ifndef __DESKTOP_H__
 #define __DESKTOP_H__
 
-#include "util/StringStorage.h"
+//#include "util/::string.h"
 
 #include "region/Region.h"
 #include "rfb/PixelFormat.h"
@@ -41,8 +41,8 @@ public:
 
   // Puts a current desktop name from working session to the
   // desktopName argument and an user name to userMame.
-  virtual void getCurrentUserInfo(StringStorage *desktopName,
-                                  StringStorage *userName) = 0;
+  virtual void getCurrentUserInfo(::string & desktopName,
+                                  ::string & userName) = 0;
   // Puts the current frame buffer dimension and pixel format to
   // the dim and pf function arguments.
   virtual void getFrameBufferProperties(::int_size *dim, PixelFormat *pf) = 0;
@@ -54,14 +54,14 @@ public:
                                       unsigned char dispNumber) = 0;
   virtual ::std::vector<::int_rectangle> getDisplaysCoords() = 0;
   virtual void getWindowCoords(HWND hwnd, ::int_rectangle *rect) = 0;
-  virtual HWND getWindowHandleByName(const StringStorage & windowName) = 0;
+  virtual HWND getWindowHandleByName(const ::string & windowName) = 0;
 
   virtual void getApplicationRegion(unsigned int procId, Region *region) = 0;
   virtual bool isApplicationInFocus(unsigned int procId) = 0;
 
   virtual void setKeyboardEvent(unsigned int keySym, bool down) = 0;
   virtual void setMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask) = 0;
-  virtual void setNewClipText(const StringStorage & newClipboard) = 0;
+  virtual void setNewClipText(const ::string & newClipboard) = 0;
 
   // Updates external frame buffer pixels only for the region from view port
   // located at the place in a central frame buffer.

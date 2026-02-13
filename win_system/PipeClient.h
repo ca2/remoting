@@ -34,7 +34,7 @@
 class PipeClient
 {
 public:
-  static NamedPipe *connect(const TCHAR *name, unsigned int maxPortionSize);
+  static NamedPipe *connect(const ::scoped_string & scopedstrName, unsigned int maxPortionSize);
 
 private:
   PipeClient();

@@ -171,7 +171,7 @@ int Menu::findMenuItem(UINT uID)
   return -1;
 }
 
-bool Menu::appendMenu(StringStorage strVal, UINT uID)
+bool Menu::appendMenu(::string strVal, UINT uID)
 {
   return appendMenu(MF_STRING, uID, strVal.getString());
 }
@@ -181,12 +181,12 @@ bool Menu::appendSeparator()
   return appendMenu(MF_MENUBREAK, 0, 0);
 }
 
-bool Menu::appendSubMenu(StringStorage strVal, Menu *pMenu)
+bool Menu::appendSubMenu(::string strVal, Menu *pMenu)
 {
   return appendMenu(MF_POPUP, (UINT_PTR)pMenu->getMenu(), strVal.getString());
 }
 
-bool Menu::insertMenuItem(UINT uItem, StringStorage strVal, UINT uID)
+bool Menu::insertMenuItem(UINT uItem, ::string strVal, UINT uID)
 {
   MENUITEMINFO mii;
 
@@ -199,7 +199,7 @@ bool Menu::insertMenuItem(UINT uItem, StringStorage strVal, UINT uID)
   return insertMenuItem(uItem, TRUE, (LPMENUITEMINFO)&mii);
 }
 
-bool Menu::insertCheckMenuItem(UINT uItem, StringStorage strVal, UINT uID)
+bool Menu::insertCheckMenuItem(UINT uItem, ::string strVal, UINT uID)
 {
   MENUITEMINFO mii;
 
@@ -235,7 +235,7 @@ bool Menu::insertSeparator(UINT uItem)
   return insertMenuItem(uItem, TRUE, (LPMENUITEMINFO)&mii);
 }
 
-bool Menu::insertSubMenu(UINT uItem, StringStorage strVal, Menu *pMenu)
+bool Menu::insertSubMenu(UINT uItem, ::string strVal, Menu *pMenu)
 {
   MENUITEMINFO mii;
 

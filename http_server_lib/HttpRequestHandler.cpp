@@ -35,7 +35,7 @@
 HttpRequestHandler::HttpRequestHandler(DataInputStream *dataInput,
                                        DataOutputStream *dataOutput,
                                        LogWriter *log,
-                                       const TCHAR *peerHost)
+                                       const ::scoped_string & scopedstrpeerHost)
 : m_dataInput(dataInput), m_dataOutput(dataOutput),
   m_peerHost(peerHost),
   m_log(log)
@@ -54,7 +54,7 @@ void HttpRequestHandler::processRequest()
   httpRequest.readHeader();
 
   AnsiStringStorage ansiRequest(httpRequest.getRequest());
-  StringStorage request;
+  ::string request;
   ansiRequest.toStringStorage(&request);
 
   if (!httpRequest.parseHeader()) {
@@ -116,7 +116,7 @@ void HttpRequestHandler::processRequest()
     } else {
       AnsiStringStorage page;
 
-      StringStorage computerName(DefaultNames::DEFAULT_COMPUTER_NAME);
+      ::string computerName(DefaultNames::DEFAULT_COMPUTER_NAME);
 
       Environment::getComputerName(&computerName);
 

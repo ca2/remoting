@@ -25,14 +25,14 @@
 #ifndef __ANSISTRINGSTORAGE_H__
 #define __ANSISTRINGSTORAGE_H__
 
-#include "StringStorage.h"
+//#include "::string.h"
 
 class AnsiStringStorage
 {
 public:
   AnsiStringStorage();
   AnsiStringStorage(const char *string);
-  AnsiStringStorage(const StringStorage & string);
+  AnsiStringStorage(const ::string & string);
   AnsiStringStorage(const AnsiStringStorage &stringBuffer);
   ~AnsiStringStorage();
 
@@ -52,14 +52,14 @@ public:
   // @return true if string is empty.
   bool is_empty() const;
 
-  void fromStringStorage(const StringStorage & src);
-  void toStringStorage(StringStorage *dst) const;
+  void fromStringStorage(const ::string & src);
+  void toStringStorage(::string & dst) const;
 
   void format(const char *format, ...);
 
   void appendString(const char *string);
 
-  static bool checkAnsiConversion(StringStorage &string);
+  static bool checkAnsiConversion(::string &string);
 
 private:
   typedef ::std::vector<char> BufferType;

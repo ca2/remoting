@@ -58,12 +58,12 @@ void AboutDialog::onVisitSiteButtonClick()
   openUrl(StringTable::getString(IDS_URL_PRODUCT_FSA));
 }
 
-void AboutDialog::openUrl(const TCHAR *url)
+void AboutDialog::openUrl(const ::scoped_string & scopedstrurl)
 {
   try {
     Shell::open(url, 0, 0);
   } catch (SystemException &sysEx) {
-    StringStorage message;
+    ::string message;
 
     message.format(StringTable::getString(IDS_FAILED_TO_OPEN_URL_FORMAT), sysEx.getMessage());
 
@@ -77,9 +77,9 @@ void AboutDialog::openUrl(const TCHAR *url)
 BOOL AboutDialog::onInitDialog()
 {
   // Update product version string.
-  StringStorage versionString(_T("unknown"));
+  ::string versionString(_T("unknown"));
   try {
-    StringStorage binaryPath;
+    ::string binaryPath;
     Environment::getCurrentModulePath(&binaryPath);
     VersionInfo productInfo(binaryPath.getString());
     versionString.setString(productInfo.getProductVersionString());
@@ -91,7 +91,7 @@ BOOL AboutDialog::onInitDialog()
   }
 
   // Format product version and build time for displaying on the dialog.
-  StringStorage versionText;
+  ::string versionText;
   versionText.format(StringTable::getString(IDS_PRODUCT_VERSION_FORMAT),
                      versionString.getString(),
                      BuildTime::DATE);

@@ -30,14 +30,14 @@
 class RfbCutTextEventClientMessage : public RfbClientToServerMessage
 {
 public:
-  RfbCutTextEventClientMessage(const StringStorage & cutText);
+  RfbCutTextEventClientMessage(const ::string & cutText);
   ~RfbCutTextEventClientMessage();
 
   void send(RfbOutputGate *output);
   void sendUtf8(RfbOutputGate *output);
 
 private:
-  StringStorage m_cutText;
+  ::string m_cutText;
 };
 
 #endif

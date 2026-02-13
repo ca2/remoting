@@ -36,14 +36,14 @@ bool CommandLine::parse(const CommandLineFormat *format,
                         int formatSize,
                         const CommandLineArgs *cmdArgs)
 {
-  ::std::vector<StringStorage> argContainer;
-  ::std::vector<StringStorage>::iterator argIter;
+  ::std::vector<::string> argContainer;
+  ::std::vector<::string>::iterator argIter;
   cmdArgs->getArgVector(&argContainer);
 
   bool result = true;
   for (argIter = argContainer.begin(); argIter != argContainer.end() && result;
        argIter++) {
-    StringStorage *key = &(*argIter);
+    ::string & key = &(*argIter);
     if (!removeKeyPrefix(key)) {
       result = false;
       break;
@@ -74,7 +74,7 @@ bool CommandLine::parse(const CommandLineFormat *format,
   return result;
 }
 
-bool CommandLine::optionSpecified(const TCHAR *key, StringStorage *arg) const
+bool CommandLine::optionSpecified(const ::scoped_string & scopedstrKey, ::string & arg) const
 {
   bool found = false;
   ::std::vector<KeyContainer>::const_iterator iter;
@@ -90,7 +90,7 @@ bool CommandLine::optionSpecified(const TCHAR *key, StringStorage *arg) const
   return found;
 }
 
-bool CommandLine::getOption(int index, StringStorage *key, StringStorage *arg) const
+bool CommandLine::getOption(int index, ::string & key, ::string & arg) const
 {
   if (index < 0 || (size_t)index >= m_foundKeys.size()) {
     return false;
@@ -107,12 +107,12 @@ bool CommandLine::getOption(int index, StringStorage *key, StringStorage *arg) c
   return true;
 }
 
-bool CommandLine::matchKey(const TCHAR *keyTemplate, StringStorage *key)
+bool CommandLine::matchKey(const ::scoped_string & scopedstrKeyTemplate, ::string & key)
 {
   return key->isEqualTo(++keyTemplate);
 }
 
-bool CommandLine::removeKeyPrefix(StringStorage *key)
+bool CommandLine::removeKeyPrefix(::string & key)
 {
   try {
     key->remove(0, 1);

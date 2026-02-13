@@ -37,7 +37,7 @@ LogWriter::~LogWriter()
   delete m_profiler;
 }
 
-void LogWriter::interror(const TCHAR *fmt, ...)
+void LogWriter::interror(const ::scoped_string & scopedstrfmt, ...)
 {
   int level = LOG_INTERR;
   if (m_logger != 0 && m_logger->acceptsLevel(level)) {
@@ -48,7 +48,7 @@ void LogWriter::interror(const TCHAR *fmt, ...)
   }
 }
 
-void LogWriter::error(const TCHAR *fmt, ...)
+void LogWriter::error(const ::scoped_string & scopedstrfmt, ...)
 {
   int level = LOG_ERR;
   if (m_logger != 0 && m_logger->acceptsLevel(level)) {
@@ -59,7 +59,7 @@ void LogWriter::error(const TCHAR *fmt, ...)
   }
 }
 
-void LogWriter::warning(const TCHAR *fmt, ...)
+void LogWriter::warning(const ::scoped_string & scopedstrfmt, ...)
 {
   int level = LOG_WARN;
   if (m_logger != 0 && m_logger->acceptsLevel(level)) {
@@ -70,7 +70,7 @@ void LogWriter::warning(const TCHAR *fmt, ...)
   }
 }
 
-void LogWriter::message(const TCHAR *fmt, ...)
+void LogWriter::message(const ::scoped_string & scopedstrfmt, ...)
 {
   int level = LOG_MSG;
   if (m_logger != 0 && m_logger->acceptsLevel(level)) {
@@ -81,7 +81,7 @@ void LogWriter::message(const TCHAR *fmt, ...)
   }
 }
 
-void LogWriter::info(const TCHAR *fmt, ...)
+void LogWriter::info(const ::scoped_string & scopedstrfmt, ...)
 {
   int level = LOG_INFO;
   if (m_logger != 0 && m_logger->acceptsLevel(level)) {
@@ -92,7 +92,7 @@ void LogWriter::info(const TCHAR *fmt, ...)
   }
 }
 
-void LogWriter::detail(const TCHAR *fmt, ...)
+void LogWriter::detail(const ::scoped_string & scopedstrfmt, ...)
 {
   int level = LOG_DETAIL;
   if (m_logger != 0 && m_logger->acceptsLevel(level)) {
@@ -103,7 +103,7 @@ void LogWriter::detail(const TCHAR *fmt, ...)
   }
 }
 
-void LogWriter::debug(const TCHAR *fmt, ...)
+void LogWriter::debug(const ::scoped_string & scopedstrfmt, ...)
 {
   int level = LOG_DEBUG;
   if (m_logger != 0 && m_logger->acceptsLevel(level)) {
@@ -119,7 +119,7 @@ bool LogWriter::isDebug()
   return (m_logger != 0 && m_logger->acceptsLevel(LOG_DEBUG));
 }
 
-ProcessorTimes LogWriter::checkPoint(const TCHAR * tag)
+ProcessorTimes LogWriter::checkPoint(const ::scoped_string & scopedstrtag)
 {
   return m_profiler->checkPoint(tag);
 }
@@ -127,7 +127,7 @@ ProcessorTimes LogWriter::checkPoint(const TCHAR * tag)
 #pragma warning(push)
 #pragma warning(disable:4996)
 
-void LogWriter::vprintLog(int logLevel, const TCHAR *fmt, va_list argList)
+void LogWriter::vprintLog(int logLevel, const ::scoped_string & scopedstrfmt, va_list argList)
 {
   if (m_logger != 0) {
     // Format the original string.

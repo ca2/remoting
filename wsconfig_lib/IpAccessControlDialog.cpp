@@ -169,7 +169,7 @@ void IpAccessControlDialog::updateUI()
 void IpAccessControlDialog::apply()
 {
   // Query timeout string storage
-  StringStorage qtStringStorage;
+  ::string qtStringStorage;
   m_queryTimeout.getText(&qtStringStorage);
 
   int timeout = 0;
@@ -369,7 +369,7 @@ void IpAccessControlDialog::onAllowOnlyLoopbackConnectionsClick()
 
 void IpAccessControlDialog::onIpCheckUpdate()
 {
-  StringStorage ipStorage;
+  ::string ipStorage;
   m_ip.getText(&ipStorage);
 
    // Check if ip address is valid.
@@ -403,7 +403,7 @@ void IpAccessControlDialog::onIpCheckUpdate()
     }
   }
 
-  StringStorage actionDescription;
+  ::string actionDescription;
   actionDescription.setString(StringTable::getString(IDS_ACTION_UNDEF_HINT));
   switch (action) {
   case IpAccessRule::ACTION_TYPE_ALLOW:
@@ -484,8 +484,8 @@ void IpAccessControlDialog::onListViewSelChangeDblClick()
 
 void IpAccessControlDialog::setListViewItemText(int index, IpAccessRule *control)
 {
-  StringStorage firstIp;
-  StringStorage lastIp;
+  ::string firstIp;
+  ::string lastIp;
 
   control->getFirstIp(&firstIp);
   control->getLastIp(&lastIp);

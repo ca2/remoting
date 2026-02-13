@@ -38,13 +38,13 @@ public:
   static HDESK getInputDesktop();
 
   // This funtion gets a handle to a named desktop by the name.
-  // @param: name - pointer to a StringStorage object that contain a valid
+  // @param: name - pointer to a ::string object that contain a valid
   // desktop name such as "Winlogon".
   // @return if success the function returns a handle to the desktop
   // that receives user inputs. On fail the function returns zero.
   // @remark After use the returned handle must be called the
   // DesktopSelector::closeDesktop() function.
-  static HDESK getDesktop(const StringStorage & name);
+  static HDESK getDesktop(const ::string & name);
 
   // This function closes a handle to a desktop.
   // @param hdesk is a handle to a desktop that will be closed.
@@ -58,34 +58,34 @@ public:
 
   // This function select a desktop that assigned by name or not to a current
   // thread from that it was called.
-  // @param: name - pointer to a StringStorage object that contain a valid
+  // @param: name - pointer to a ::string object that contain a valid
   // desktop name such as "Winlogon" that will be assigned to the thread. If
   // name is null the input desktop will be assigned.
   // @return If success the function return true else false.
-  static bool selectDesktop(const StringStorage & name = 0);
+  static bool selectDesktop(const ::string & name = 0);
 
-  // @param desktopName - is a pointer to a StringStorage object that will be
+  // @param desktopName - is a pointer to a ::string object that will be
   // used to store the desktop name. If function has failed then the desktopName
   // object will not change. If the function succeeds, the name of a current
   // input desktop stores in the desktopName object.
   // @return If success the function return true else false.
-  static bool getCurrentDesktopName(StringStorage *desktopName);
+  static bool getCurrentDesktopName(::string & desktopName);
 
-  // @param desktopName - is a pointer to a StringStorage object that will be
+  // @param desktopName - is a pointer to a ::string object that will be
   // used to store the desktop name. If function has failed then the desktopName
   // object will not change. If the function succeeds, the desktop name of the
   // current thread stores in the desktopName object.
   // @return If success the function return true else false.
-  static bool getThreadDesktopName(StringStorage *desktopName);
+  static bool getThreadDesktopName(::string & desktopName);
 
 private:
   // This function gets desktop name by a handle to a desktop.
-  // @param desktopName - is a pointer to a StringStorage object that will be
+  // @param desktopName - is a pointer to a ::string object that will be
   // used to store the desktop name. If function has failed then the desktopName
   // object will not change. If the function succeeds, the desktop name
   // stores in the desktopName object.
   // @return If success the function return true else false.
-  static bool getDesktopName(HDESK desktop, StringStorage *desktopName);
+  static bool getDesktopName(HDESK desktop, ::string & desktopName);
 };
 
 #endif //__DESKTOPSELECTOR_H__

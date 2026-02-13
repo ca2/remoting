@@ -244,10 +244,10 @@ void ServerConfigDialog::updateUI()
 
 void ServerConfigDialog::apply()
 {
-  StringStorage rfbPortText;
-  StringStorage httpPortText;
+  ::string rfbPortText;
+  ::string httpPortText;
   // Polling interval string storage
-  StringStorage pollingIntervalText;
+  ::string pollingIntervalText;
 
   m_rfbPort.getText(&rfbPortText);
   m_httpPort.getText(&httpPortText);
@@ -294,7 +294,7 @@ void ServerConfigDialog::apply()
   }
 
   // Local input priority timeout string storage
-  StringStorage liptStringStorage;
+  ::string liptStringStorage;
   m_localInputPriorityTimeout.getText(&liptStringStorage);
   int timeout = 0;
 

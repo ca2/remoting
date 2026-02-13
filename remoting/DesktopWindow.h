@@ -58,7 +58,7 @@ class ::time m_timeStartDesktopWindow;
   DesktopWindow(LogWriter *logWriter, ConnectionConfig *conConf);
   virtual ~DesktopWindow();
    virtual void _defer_update_double_buffering();
-  void setClipboardData(const StringStorage & strText);
+  void setClipboardData(const ::string & strText);
   void updateFramebuffer(const FrameBuffer * pframebuffer,
                          const ::int_rectangle &  dstRect);
   // this function must be called if size of image was changed
@@ -131,7 +131,7 @@ public:
   // in this function and logged.
   void sendKeyboardEvent(bool downFlag, unsigned int key);
   void sendPointerEvent(unsigned char buttonMask, const Point *position);
-  void sendCutTextEvent(const StringStorage & cutText);
+  void sendCutTextEvent(const ::string & cutText);
 
   LogWriter *m_logWriter;
 
@@ -169,7 +169,7 @@ public:
 
   // clipboard
   WinClipboard m_clipboard;
-  StringStorage m_strClipboard;
+  ::string m_strClipboard;
   HWND m_hwndNextViewer;
 
   bool m_ctrlDown;

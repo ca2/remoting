@@ -25,12 +25,12 @@
 #include "WindowsEvent.h"
 #include "util/Exception.h"
 
-WindowsEvent::WindowsEvent(const TCHAR *name)
+WindowsEvent::WindowsEvent(const ::scoped_string & scopedstrName)
 {
   m_hEvent = CreateEvent(0, FALSE, FALSE, name);
   if (m_hEvent == 0) {
     int errCode = GetLastError();
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Cannot create windows event with error = %d"), errCode);
     throw Exception(errMess.getString());
   }

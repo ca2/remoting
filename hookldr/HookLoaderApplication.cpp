@@ -28,8 +28,8 @@
 #include "desktop/HookInstaller.h"
 
 HookLoaderApplication::HookLoaderApplication(HINSTANCE appInstance,
-                                             const TCHAR *windowClassName,
-                                             const TCHAR *commandLine)
+                                             const ::scoped_string & scopedstrwindowClassName,
+                                             const ::scoped_string & scopedstrcommandLine)
 : WindowsApplication(appInstance, windowClassName),
   m_commandLine(commandLine)
 {

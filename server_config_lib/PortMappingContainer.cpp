@@ -122,7 +122,7 @@ void PortMappingContainer::serialize(DataOutputStream *output) const
   _ASSERT((unsigned int)count() == count());
   output->writeUInt32((unsigned int)count());
 
-  StringStorage string;
+  ::string string;
 
   for (size_t i = 0; i < count(); i++) {
     at(i)->toString(&string);
@@ -137,7 +137,7 @@ void PortMappingContainer::deserialize(DataInputStream *input)
 
   size_t cnt = input->readUInt32();
 
-  StringStorage string;
+  ::string string;
 
   PortMapping record;
 

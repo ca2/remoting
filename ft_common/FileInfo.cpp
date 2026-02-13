@@ -30,7 +30,7 @@ FileInfo::FileInfo()
 }
 
 FileInfo::FileInfo(unsigned long long size, unsigned long long modTime,
-                   unsigned short flags, const TCHAR *fileName)
+                   unsigned short flags, const ::scoped_string & scopedstrfileName)
 : m_sizeInBytes(size), m_lastModified(modTime), m_flags(flags)
 {
   m_fileName.setString(fileName);
@@ -78,7 +78,7 @@ void FileInfo::setFlags(unsigned short flags)
   m_flags = flags;
 }
 
-void FileInfo::setFileName(const TCHAR *fileName)
+void FileInfo::setFileName(const ::scoped_string & scopedstrfileName)
 {
   m_fileName.setString(fileName);
 }
@@ -98,7 +98,7 @@ unsigned short FileInfo::getFlags() const
   return m_flags;
 }
 
-const TCHAR *FileInfo::getFileName() const
+const ::scoped_string & scopedstrFileInfo::getFileName() const
 {
   return m_fileName.getString();
 }

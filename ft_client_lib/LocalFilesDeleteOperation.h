@@ -35,7 +35,7 @@ public:
   LocalFilesDeleteOperation(LogWriter *logWriter,
                             const FileInfo *filesToDelete,
                             unsigned int filesCount,
-                            const TCHAR *pathToTargetRoot);
+                            const ::scoped_string & scopedstrpathToTargetRoot);
   virtual ~LocalFilesDeleteOperation();
 
   virtual void start();
@@ -48,7 +48,7 @@ private:
   bool deleteFile(File *file);
 
 protected:
-  StringStorage m_pathToTargetRoot;
+  ::string m_pathToTargetRoot;
   ::std::vector<FileInfo> m_filesToDelete;
   unsigned int m_filesCount;
 };

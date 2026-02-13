@@ -47,7 +47,7 @@ Environment::~Environment()
 {
 }
 
-void Environment::getErrStr(StringStorage *out)
+void Environment::getErrStr(::string & out)
 {
   DWORD errCode = GetLastError();
   TCHAR buffer[1024];
@@ -64,14 +64,14 @@ void Environment::getErrStr(StringStorage *out)
   }
 }
 
-void Environment::getErrStr(const TCHAR *specification, StringStorage *out)
+void Environment::getErrStr(const ::scoped_string & scopedstrspecification, ::string & out)
 {
-  StringStorage sysErrText;
+  ::string sysErrText;
   getErrStr(&sysErrText);
   out->format(_T("%s (%s)"), specification, sysErrText.getString());
 }
 
-bool Environment::getSpecialFolderPath(int specialFolderId, StringStorage *out)
+bool Environment::getSpecialFolderPath(int specialFolderId, ::string & out)
 {
   _ASSERT(out != NULL);
 
@@ -100,7 +100,7 @@ bool Environment::getSpecialFolderPath(int specialFolderId, StringStorage *out)
   return returnVal;
 }
 
-bool Environment::getCurrentModulePath(StringStorage *out)
+bool Environment::getCurrentModulePath(::string & out)
 {
   ::std::vector<TCHAR> buffer;
   DWORD size = MAX_PATH;
@@ -127,7 +127,7 @@ bool Environment::getCurrentModulePath(StringStorage *out)
 
 bool Environment::isItTheSamePathAsCurrent(unsigned int pId)
 {
-  StringStorage currModulePath, testedModulePath;
+  ::string currModulePath, testedModulePath;
   ProcessHandle pHandle;
 
   pHandle.openProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ,
@@ -138,7 +138,7 @@ bool Environment::isItTheSamePathAsCurrent(unsigned int pId)
   return currModulePath.isEqualTo(testedModulePath);
 }
 
-bool Environment::getCurrentModuleFolderPath(StringStorage *out)
+bool Environment::getCurrentModuleFolderPath(::string & out)
 {
   if (!getCurrentModulePath(out)) {
     return false;
@@ -153,13 +153,13 @@ bool Environment::getCurrentModuleFolderPath(StringStorage *out)
   return true;
 }
 
-bool Environment::getCurrentUserName(StringStorage *out, LogWriter *log)
+bool Environment::getCurrentUserName(::string & out, LogWriter *log)
 {
   *out = WTS::getCurrentUserName(log);
   return !out->is_empty();
 }
 
-bool Environment::getComputerName(StringStorage *out)
+bool Environment::getComputerName(::string & out)
 {
   TCHAR compName[MAX_COMPUTERNAME_LENGTH + 1];
   DWORD length = MAX_COMPUTERNAME_LENGTH + 1;
@@ -261,7 +261,7 @@ bool Environment::isAeroOn(LogWriter *log)
     BOOL result = FALSE;
     HRESULT dwmIsEnabledResult = dwmIsEnabled(&result);
     if (dwmIsEnabledResult != S_OK) {
-      StringStorage errMess;
+      ::string errMess;
       errMess.format(_T("The DwmIsCompositionEnabled() error code is %d"),
                      (int)dwmIsEnabledResult);
       throw Exception(_T(""));

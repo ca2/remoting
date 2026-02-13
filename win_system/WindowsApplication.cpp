@@ -32,7 +32,7 @@ LocalMutex WindowsApplication::m_MDLMutex;
 ::std::list<HWND> WindowsApplication::m_modelessDialogList;
 
 WindowsApplication::WindowsApplication(HINSTANCE appInstance,
-                                       const TCHAR *windowClassName)
+                                       const ::scoped_string & scopedstrwindowClassName)
 : m_appInstance(appInstance),
   m_mainWindow(0),
   m_windowClassName(windowClassName)
@@ -72,7 +72,7 @@ int WindowsApplication::processMessages()
   return (int)msg.wParam;
 }
 
-void WindowsApplication::createWindow(const TCHAR *className)
+void WindowsApplication::createWindow(const ::scoped_string & scopedstrclassName)
 {
   m_mainWindow = CreateWindow(className,
                               0, 0,

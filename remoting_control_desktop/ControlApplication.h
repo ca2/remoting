@@ -66,8 +66,8 @@ public:
    * @throws Exception if initialization of needed subsystems has failed.
    */
   ControlApplication(HINSTANCE hinst,
-                     const TCHAR *windowClassName,
-                     const TCHAR *commandLine);
+                     const ::scoped_string & scopedstrwindowClassName,
+                     const ::scoped_string & scopedstrcommandLine);
   /**
    * Destructor of control application.
    */
@@ -83,7 +83,7 @@ public:
    * Inherited from Notificator abstract class
    * @see Notification class for details.
    */
-  virtual void notifyServerSideException(const TCHAR *reason);
+  virtual void notifyServerSideException(const ::scoped_string & scopedstrreason);
   /**
    * Inherited from Notificator abstract class
    * @see Notification class for details.
@@ -149,7 +149,7 @@ private:
    * Converts plain text password to crypted password.
    * @fixme move in to remoting_node application as additional application.
    */
-  static void getCryptedPassword(unsigned char cryptedPass[8], const TCHAR *plainTextPass);
+  static void getCryptedPassword(unsigned char cryptedPass[8], const ::scoped_string & scopedstrplainTextPass);
 
   // Auxiliary function to the same name function. It does real work.
   void checkServicePasswords();
@@ -184,7 +184,7 @@ protected:
   /**
    * Application command line.
    */
-  StringStorage m_commandLine;
+  ::string m_commandLine;
   /**
    * If application is in slave mode.
    */

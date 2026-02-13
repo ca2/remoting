@@ -26,7 +26,7 @@
 #include "util/Exception.h"
 #include <Aclapi.h>
 
-SharedMemory::SharedMemory(const TCHAR *name, size_t size)
+SharedMemory::SharedMemory(const ::scoped_string & scopedstrName, size_t size)
 : m_hToMap(0),
   m_memory(0)
 {
@@ -59,7 +59,7 @@ void SharedMemory::freeRes()
   }
 }
 
-bool SharedMemory::createFile(const TCHAR *name, size_t size)
+bool SharedMemory::createFile(const ::scoped_string & scopedstrName, size_t size)
 {
   DWORD lowSize = size & 0xffffffff;
   DWORD highSize = (DWORD64)size >> 32 & 0xffffffff;
@@ -72,7 +72,7 @@ bool SharedMemory::createFile(const TCHAR *name, size_t size)
                                name);                 // name of ::std::map object
   if (m_hToMap == NULL) {
     int errCode = GetLastError();
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Cannot create file mapping with error = %d"), errCode);
     throw Exception(errMess.getString());
   }
@@ -96,7 +96,7 @@ void SharedMemory::mapViewOfFile()
                            0);             // default: ::std::map entire file
   if (m_memory == NULL) {
     int errCode = GetLastError();
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Cannot ::std::map view of file with error = %d"), errCode);
     throw Exception(errMess.getString());
   }
@@ -111,7 +111,7 @@ void SharedMemory::setAllAccess(HANDLE objHandle)
                                     0, // Pointer to DACL (0 = access to all)
                                     0);
   if (errorCode != ERROR_SUCCESS) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Cannot SetSecurityInfo with error = %d"), (int)errorCode);
     throw Exception(errMess.getString());
   }

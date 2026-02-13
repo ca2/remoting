@@ -79,9 +79,9 @@ void FileTransferOperation::notifyFinish()
   }
 }
 
-void FileTransferOperation::notifyError(const TCHAR *message)
+void FileTransferOperation::notifyError(const ::scoped_string & scopedstrmessage)
 {
-  m_logWriter->message(_T("%s\n"), message);
+  m_logWriter->message(_T("%s\n"), ::string(scopedstrmessage).c_str());
 
   AutoLock al(&m_listeners);
 
@@ -92,7 +92,7 @@ void FileTransferOperation::notifyError(const TCHAR *message)
   }
 }
 
-void FileTransferOperation::notifyInformation(const TCHAR *message)
+void FileTransferOperation::notifyInformation(const ::scoped_string & scopedstrmessage)
 {
   m_logWriter->message(_T("%s\n"), message);
 
@@ -106,10 +106,10 @@ void FileTransferOperation::notifyInformation(const TCHAR *message)
 }
 
 void FileTransferOperation::getLocalPath(FileInfoList *currentFile,
-                                         const TCHAR *localFolder,
-                                         StringStorage *out)
+                                         const ::scoped_string & scopedstrlocalFolder,
+                                         ::string & out)
 {
-  StringStorage pathNoRoot;
+  ::string pathNoRoot;
   currentFile->getAbsolutePath(&pathNoRoot, _T('\\'));
   out->setString(localFolder);
   if (!out->endsWith(_T('\\')) && !pathNoRoot.beginsWith(_T('\\'))) {
@@ -119,10 +119,10 @@ void FileTransferOperation::getLocalPath(FileInfoList *currentFile,
 }
 
 void FileTransferOperation::getRemotePath(FileInfoList *currentFile,
-                                          const TCHAR *remoteFolder,
-                                          StringStorage *out)
+                                          const ::scoped_string & scopedstrremoteFolder,
+                                          ::string & out)
 {
-  StringStorage pathNoRoot;
+  ::string pathNoRoot;
   currentFile->getAbsolutePath(&pathNoRoot, _T('/'));
 
   out->setString(remoteFolder);

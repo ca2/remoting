@@ -99,7 +99,7 @@ void RfbInitializer::initVersion()
     } else {
       m_output->writeUInt8(0);
     }
-    AnsiStringStorage reason(&StringStorage(e.getMessage()));
+    AnsiStringStorage reason(&::string(e.getMessage()));
     unsigned int reasonLen = (unsigned int)reason.getLength();
     _ASSERT(reasonLen == reason.getLength());
 
@@ -213,9 +213,9 @@ void RfbInitializer::doVncAuth()
   // At this time we are sure that the client was typed an incorectly password.
   m_extAuthListener->onAuthFailed(m_client);
 
-  StringStorage clientAddressStorage;
+  ::string clientAddressStorage;
   m_client->getPeerHost(&clientAddressStorage);
-  StringStorage errMess;
+  ::string errMess;
   errMess.format(_T("Authentication failed from %s"), clientAddressStorage.getString());
 
   throw AuthException(errMess.getString());
@@ -261,7 +261,7 @@ void RfbInitializer::initAuthenticate()
     // FIXME: The authentication result must be sent in protocols 3.3 and 3.7
     //        as well, unless the authentication was set to AuthDefs::NONE.
     if (m_minorVerNum >= 8) {
-      AnsiStringStorage reason(&StringStorage(e.getMessage()));
+      AnsiStringStorage reason(&::string(e.getMessage()));
       unsigned int reasonLen = (unsigned int)reason.getLength();
       _ASSERT(reasonLen == reason.getLength());
 
@@ -301,7 +301,7 @@ void RfbInitializer::sendServerInit(const ::int_size & dim,
 
 void RfbInitializer::sendDesktopName()
 {
-  StringStorage deskName;
+  ::string deskName;
   if (!Environment::getComputerName(&deskName)) {
     deskName.setString(DefaultNames::DEFAULT_COMPUTER_NAME);
   }

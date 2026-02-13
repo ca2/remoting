@@ -32,7 +32,7 @@ WinFile::WinFile()
 {
 }
 
-WinFile::WinFile(const TCHAR *pathToFile,
+WinFile::WinFile(const ::scoped_string & scopedstrpathToFile,
                  DesiredAccess dAcc,
                  FileMode fMode,
                  bool shareToRead)
@@ -46,7 +46,7 @@ WinFile::~WinFile()
   close();
 }
 
-void WinFile::open(const TCHAR *pathToFile,
+void WinFile::open(const ::scoped_string & scopedstrpathToFile,
                    DesiredAccess dAcc,
                    FileMode fMode,
                    bool shareToRead)
@@ -133,7 +133,7 @@ bool WinFile::isValid()
   return m_hFile != INVALID_HANDLE_VALUE;
 }
 
-void WinFile::getPathName(StringStorage *pathName)
+void WinFile::getPathName(::string & pathName)
 {
   *pathName = m_pathToFile;
 }
@@ -174,7 +174,7 @@ size_t WinFile::read(void *buff, size_t count)
     if (error == ERROR_HANDLE_EOF) {
       throw EOFException();
     } else {
-      StringStorage errText;
+      ::string errText;
       Environment::getErrStr(&errText);
       throw IOException(errText.getString());
     }
@@ -195,7 +195,7 @@ size_t WinFile::write(const void *buff, size_t count)
   }
   DWORD result = 0;
   if (WriteFile(m_hFile, buff, count32, &result, 0) == 0) {
-    StringStorage errText;
+    ::string errText;
     Environment::getErrStr(&errText);
     throw IOException(errText.getString());
   }

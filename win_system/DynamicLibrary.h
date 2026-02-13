@@ -40,13 +40,13 @@ public:
   @param filename path to library file.
   @throws Exception on error.
   */
-  DynamicLibrary(const TCHAR *filename);
+  DynamicLibrary(const ::scoped_string & scopedstrfilename);
   DynamicLibrary();
   virtual ~DynamicLibrary();
 
   // Use the init() function after default constructor calling to load
   // a library before the getProcAddress() function calling.
-  void init(const TCHAR *filename);
+  void init(const ::scoped_string & scopedstrfilename);
 
   /**
   Gets procedure address.

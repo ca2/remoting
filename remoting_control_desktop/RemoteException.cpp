@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "RemoteException.h"
 
-RemoteException::RemoteException(const TCHAR *reason)
+RemoteException::RemoteException(const ::scoped_string & scopedstrreason)
 : Exception(reason)
 {
 }

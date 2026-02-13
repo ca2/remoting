@@ -58,8 +58,8 @@ public:
    * @throws SystemException on fail(inherited from superclass).
    */
   AdditionalActionApplication(HINSTANCE hInstance,
-                              const TCHAR *windowClassName,
-                              const TCHAR *commandLine);
+                              const ::scoped_string & scopedstrwindowClassName,
+                              const ::scoped_string & scopedstrcommandLine);
   /**
    * Destructor.
    */
@@ -75,7 +75,7 @@ private:
   /**
    * Application command line arguments.
    */
-  StringStorage m_commandLine;
+  ::string m_commandLine;
 };
 
 #endif

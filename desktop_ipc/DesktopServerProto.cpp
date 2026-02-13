@@ -37,7 +37,7 @@ DesktopServerProto::~DesktopServerProto()
 
 void DesktopServerProto::checkPixelFormat(const PixelFormat & pf)
 {
-  StringStorage errMess;
+  ::string errMess;
   if (pf.bitsPerPixel != 16 && pf.bitsPerPixel != 32) {
     errMess.format(_T("Wrong value of bits per pixel (%d)"),
                    (int)pf.bitsPerPixel);
@@ -52,7 +52,7 @@ void DesktopServerProto::checkPixelFormat(const PixelFormat & pf)
 
 void DesktopServerProto::checkRectangle(const ::int_rectangle &  rect)
 {
-  StringStorage errMess;
+  ::string errMess;
   if (abs(rect.left)   > 32000 ||
       abs(rect.top)    > 32000 ||
       abs(rect.right)  > 32000 ||
@@ -68,7 +68,7 @@ void DesktopServerProto::checkRectangle(const ::int_rectangle &  rect)
 
 void DesktopServerProto::checkDimension(const ::int_size & dim)
 {
-  StringStorage errMess;
+  ::string errMess;
   if (abs(dim->width)  > 64000 ||
       abs(dim->height) > 64000) {
     errMess.format(_T("Wrong dimension (%dx%d)"), dim->width,
@@ -213,13 +213,13 @@ void DesktopServerProto::readFrameBuffer(FrameBuffer *dstFb,
   dstFb->copyFrom(dstRect, &fb, 0, 0);
 }
 
-void DesktopServerProto::sendNewClipboard(const StringStorage & newClipboard,
+void DesktopServerProto::sendNewClipboard(const ::string & newClipboard,
                                           BlockingGate *gate)
 {
   gate->writeUTF8(newClipboard->getString());
 }
 
-void DesktopServerProto::readNewClipboard(StringStorage *newClipboard,
+void DesktopServerProto::readNewClipboard(::string & newClipboard,
                                           BlockingGate *gate)
 {
   gate->readUTF8(newClipboard);
@@ -259,16 +259,16 @@ void DesktopServerProto::readKeyEvent(unsigned int *keySym, bool *down,
   *down = gate->readUInt8() != 0;
 }
 
-void DesktopServerProto::sendUserInfo(const StringStorage & desktopName,
-                                      const StringStorage & userName,
+void DesktopServerProto::sendUserInfo(const ::string & desktopName,
+                                      const ::string & userName,
                                       BlockingGate *gate)
 {
   gate->writeUTF8(desktopName->getString());
   gate->writeUTF8(userName->getString());
 }
 
-void DesktopServerProto::readUserInfo(StringStorage *desktopName,
-                                      StringStorage *userName,
+void DesktopServerProto::readUserInfo(::string & desktopName,
+                                      ::string & userName,
                                       BlockingGate *gate)
 {
   gate->readUTF8(desktopName);
@@ -307,7 +307,7 @@ void DesktopServerProto::sendConfigSettings(BlockingGate *gate)
   size_t size = Rects->size();
   gate->writeUInt32((unsigned int)size);
   for (size_t i = 0; i < size; i++) {
-    StringStorage s;
+    ::string s;
     RectSerializer::toString(&(Rects->at(i)), &s);
     gate->writeUTF8(s.getString());
   }
@@ -338,7 +338,7 @@ void DesktopServerProto::readConfigSettings(BlockingGate *gate)
   AutoLock al(srvConf);
   size_t stringCount = gate->readUInt32();
 
-  StringStorage tmpString;
+  ::string tmpString;
   for (size_t i = 0; i < stringCount; i++) {
     gate->readUTF8(&tmpString);
     srvConf->getVideoClassNames()->push_back(tmpString);

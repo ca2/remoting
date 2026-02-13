@@ -40,7 +40,7 @@ ControlProxy::~ControlProxy()
   releaseMessage();
 }
 
-void ControlProxy::setPasswordProperties(const TCHAR *passwordFile,
+void ControlProxy::setPasswordProperties(const ::scoped_string & scopedstrpasswordFile,
                                          bool getPassFromConfigEnabled,
                                          bool forService)
 {
@@ -95,7 +95,7 @@ void ControlProxy::getClientsList(::std::list<RfbClientInfo *> *clients)
   unsigned int count = m_gate->readUInt32();
 
   for (unsigned int i = 0; i < count; i++) {
-    StringStorage peerAddr;
+    ::string peerAddr;
 
     unsigned int id = m_gate->readUInt32();
 
@@ -107,7 +107,7 @@ void ControlProxy::getClientsList(::std::list<RfbClientInfo *> *clients)
   }
 }
 
-void ControlProxy::makeOutgoingConnection(const TCHAR *connectString, bool viewOnly)
+void ControlProxy::makeOutgoingConnection(const ::scoped_string & scopedstrconnectString, bool viewOnly)
 {
   AutoLock l(m_gate);
 
@@ -119,9 +119,9 @@ void ControlProxy::makeOutgoingConnection(const TCHAR *connectString, bool viewO
   msg->send();
 }
 
-void ControlProxy::makeTcpDispatcherConnection(const TCHAR *connectString,
-                                               const TCHAR *dispatcherName,
-                                               const TCHAR *keyword,
+void ControlProxy::makeTcpDispatcherConnection(const ::scoped_string & scopedstrconnectString,
+                                               const ::scoped_string & scopedstrDispatcherName,
+                                               const ::scoped_string & scopedstrKeyword,
                                                unsigned int connectionId)
 {
   AutoLock l(m_gate);
@@ -164,7 +164,7 @@ void ControlProxy::shareRect(const ::int_rectangle &  shareRect)
   msg->send();
 }
 
-void ControlProxy::shareWindow(const StringStorage & shareWindowName)
+void ControlProxy::shareWindow(const ::string & shareWindowName)
 {
   AutoLock l(m_gate);
   ControlMessage *msg = createMessage(ControlProto::SHARE_WINDOW_MSG_ID);

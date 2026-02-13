@@ -45,7 +45,7 @@ class ControlException : public Exception
 {
 public:
   ControlException(const Exception *parent) : Exception(parent->getMessage()) { }
-  ControlException(const TCHAR *message) : Exception(message) { }
+  ControlException(const ::scoped_string & scopedstrmessage) : Exception(message) { }
   virtual ~ControlException() { };
 };
 
@@ -98,7 +98,7 @@ private:
    * @param message description of error.
    * @throws IOException on io error.
    */
-  void sendError(const TCHAR *message);
+  void sendError(const ::scoped_string & scopedstrmessage);
 
   /**
    * Called when auth message recieved.
@@ -224,7 +224,7 @@ private:
   // A connection identifier will be used by a viewer to connect to
   // the server across a tcp dispatcher.
   unsigned int m_tcpDispId;
-  StringStorage m_gotDispatcherName;
+  ::string m_gotDispatcherName;
   LocalMutex m_tcpDispValuesMutex;
 
   ThreadCollector m_outgoingConnectionThreadCollector;

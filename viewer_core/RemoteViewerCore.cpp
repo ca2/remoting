@@ -73,7 +73,7 @@ RemoteViewerCore::RemoteViewerCore(Logger *logger)
   init();
 }
 
-RemoteViewerCore::RemoteViewerCore(const TCHAR *host, unsigned short port,
+RemoteViewerCore::RemoteViewerCore(const ::scoped_string & scopedstrhost, unsigned short port,
                                    CoreEventsAdapter *adapter,
                                    Logger *logger,
                                    bool sharedFlag)
@@ -210,7 +210,7 @@ void RemoteViewerCore::start(CoreEventsAdapter *adapter,
   m_logWriter.debug(_T("Remote viewer core is started"));
 }
 
-void RemoteViewerCore::start(const TCHAR *host,
+void RemoteViewerCore::start(const ::scoped_string & scopedstrhost,
                              unsigned short port,
                              CoreEventsAdapter *adapter,
                              bool sharedFlag)
@@ -427,7 +427,7 @@ void RemoteViewerCore::sendPointerEvent(unsigned char buttonMask,
                     static_cast<int>(buttonMask), position->x, position->y);
 }
 
-void RemoteViewerCore::sendCutTextEvent(const StringStorage & cutText)
+void RemoteViewerCore::sendCutTextEvent(const ::string & cutText)
 {
   // If core isn't connected, then m_output may be isn't initialized.
   // Exit from function, if it is.
@@ -631,9 +631,9 @@ void RemoteViewerCore::authenticate()
         throw AuthException(_T("Authentication failure"));
       }
       // if version 3.8 then try read reasonAuth.
-      StringStorage reasonAuth;
+      ::string reasonAuth;
       m_input->readUTF8(&reasonAuth);
-      StringStorage errorMessage = _T("Authentication reason: ");
+      ::string errorMessage = _T("Authentication reason: ");
       errorMessage.appendString(reasonAuth.getString());
       m_logWriter.message(_T("%s"), errorMessage.getString());
       throw AuthException(errorMessage.getString());
@@ -659,11 +659,11 @@ int RemoteViewerCore::negotiateSecurityType()
   }
 
   // log information about security ::std::list
-  StringStorage secTypeString;
+  ::string secTypeString;
   for (::std::vector<unsigned int>::iterator i = secTypes.begin(); i != secTypes.end(); i++) {
     if(i != secTypes.begin())
       secTypeString.appendString(_T(", "));
-    StringStorage nameType;
+    ::string nameType;
     nameType.format(_T("%s (%d)"), getSecurityTypeName(*i).getString(), *i);
     secTypeString.appendString(nameType.getString());
   }
@@ -709,7 +709,7 @@ void RemoteViewerCore::readSecurityTypeList(::std::vector<unsigned int> *secType
   }
 }
 
-StringStorage RemoteViewerCore::getSecurityTypeName(unsigned int securityType) const
+::string RemoteViewerCore::getSecurityTypeName(unsigned int securityType) const
 {
   switch (securityType) {
   case SecurityDefs::NONE:
@@ -722,7 +722,7 @@ StringStorage RemoteViewerCore::getSecurityTypeName(unsigned int securityType) c
   return _T("Unknown type");
 }
 
-StringStorage RemoteViewerCore::getAuthenticationTypeName(unsigned int authenticationType) const
+::string RemoteViewerCore::getAuthenticationTypeName(unsigned int authenticationType) const
 {
   switch (authenticationType) {
   case AuthDefs::NONE:
@@ -836,7 +836,7 @@ void RemoteViewerCore::setFbProperties(const ::int_size & fbDimension,
 #endif
 
   const PixelFormat &pxFormat = fbPixelFormat;
-  StringStorage pxString;
+  ::string pxString;
   pxString.format(_T("[bits-per-pixel: %d, depth: %d, big-endian-flag: %d, ")
                   _T("true-color-flag: is set, ") // true color always is set
                   _T("red-max: %d, green-max: %d, blue-max: %d, ")
@@ -852,7 +852,7 @@ void RemoteViewerCore::setFbProperties(const ::int_size & fbDimension,
 
   if (!m_frameBuffer.setProperties(fbDimension, fbPixelFormat) ||
       !m_rectangleFb.setProperties(fbDimension, fbPixelFormat)) {
-    StringStorage error;
+    ::string error;
     error.format(_T("Failed to set property frame buffer. ")
                  _T("::int_size: (%d, %d), Pixel format: %s"),
                  fbDimension.cx, fbDimension.cy,
@@ -866,14 +866,14 @@ void RemoteViewerCore::setFbProperties(const ::int_size & fbDimension,
   m_logWriter.debug(_T("Frame buffer properties set"));
 }
 
-StringStorage RemoteViewerCore::getProtocolString() const
+::string RemoteViewerCore::getProtocolString() const
 {
-  StringStorage protocolString;
+  ::string protocolString;
   protocolString.format(_T("RFB %03d.%03d\n"), m_major, m_minor);
   return protocolString;
 }
 
-StringStorage RemoteViewerCore::getRemoteDesktopName() const
+::string RemoteViewerCore::getRemoteDesktopName() const
 {
   return m_remoteDesktopName;
 }
@@ -970,7 +970,7 @@ void RemoteViewerCore::execute()
         }
       }
     }
-    StringStorage message(_T("Remote viewer's core thread terminated"));
+    ::string message(_T("Remote viewer's core thread terminated"));
     try {
       m_adapter->onDisconnect(message);
     } catch (const Exception &ex) {
@@ -990,7 +990,7 @@ void RemoteViewerCore::execute()
     }
   } catch (const IOException &ex) {
     try {
-      StringStorage disconnectMessage(ex.getMessage());
+      ::string disconnectMessage(ex.getMessage());
       m_adapter->onDisconnect(disconnectMessage);
     } catch (const Exception &ex) {
       m_logWriter.error(_T("Error in CoreEventsAdapter::onDisconnect(): %s"), ex.getMessage());
@@ -1005,7 +1005,7 @@ void RemoteViewerCore::execute()
       m_logWriter.error(_T("Unknown error in CoreEventsAdapter::onError()"));
     }
   } catch (...) {
-    StringStorage error;
+    ::string error;
     error.format(_T("RemoteViewerCore. Unknown exception"));
     m_logWriter.message(_T("%s"), error.getString());
     Exception ex(error.getString());
@@ -1095,7 +1095,7 @@ bool RemoteViewerCore::receiveFbUpdateRectangle()
 
       m_logWriter.debug(_T("Decoded"));
     } else { // decoder is 0
-      StringStorage errorString;
+      ::string errorString;
       errorString.format(_T("Decoder \"%d\" isn't exist"), encodingType);
       m_logWriter.error(_T("%s"), errorString.getString());
       throw Exception(errorString.getString());
@@ -1156,7 +1156,7 @@ void RemoteViewerCore::processPseudoEncoding(const ::int_rectangle &  rect,
     break;
 
   default:
-    StringStorage errorString;
+    ::string errorString;
     errorString.format(_T("Pseudo encoding %d is not supported"), encodingType);
     m_logWriter.error(_T("%s"), errorString.getString());
     throw Exception(errorString.getString());
@@ -1205,7 +1205,7 @@ void RemoteViewerCore::receiveServerCutText()
   ::std::vector<char> buffer(length + 1);
   m_input->readFully(&buffer.front(), length);
   buffer[length] = '\0';
-  StringStorage cutText;
+  ::string cutText;
   AnsiStringStorage cutTextAnsi(&buffer.front());
   cutTextAnsi.toStringStorage(&cutText);
 
@@ -1225,7 +1225,7 @@ void RemoteViewerCore::receiveServerCutTextUtf8()
   ::std::vector<char> buffer(length + 1);
   m_input->readFully(&buffer.front(), length);
   buffer[length] = '\0';
-  StringStorage cutText;
+  ::string cutText;
   Utf8StringStorage cutTextUtf8(&buffer);
   cutTextUtf8.toStringStorage(&cutText);
 
@@ -1279,9 +1279,9 @@ void RemoteViewerCore::handshake()
   if (!isRfbProtocolString(serverProtocol) || 
       m_major < 3 ||
       (m_major == 3 && m_minor < 3)) {
-    StringStorage error;
+    ::string error;
     AnsiStringStorage protocolAnsi(serverProtocol);
-    StringStorage protocol;
+    ::string protocol;
     protocolAnsi.toStringStorage(&protocol);
     error.format(_T("Unsupported protocol: %s"), protocol.getString());
     m_logWriter.error(_T("%s"), error.getString());
@@ -1412,14 +1412,14 @@ RfbCapabilityInfo RemoteViewerCore::readCapability()
   memcpy(vendorSignature, cap.vendorSignature, RfbCapabilityInfo::vendorSigSize);
   vendorSignature[RfbCapabilityInfo::vendorSigSize] = 0;
   AnsiStringStorage vendorSignatureAnsiString(vendorSignature);
-  StringStorage vendorSignatureString;
+  ::string vendorSignatureString;
   vendorSignatureAnsiString.toStringStorage(&vendorSignatureString);
 
   char nameSignature[RfbCapabilityInfo::nameSigSize + 1];
   memcpy(nameSignature, cap.nameSignature, RfbCapabilityInfo::nameSigSize);
   nameSignature[RfbCapabilityInfo::nameSigSize] = 0;
   AnsiStringStorage nameSignatureAnsiString(nameSignature);
-  StringStorage nameSignatureString;
+  ::string nameSignatureString;
   nameSignatureAnsiString.toStringStorage(&nameSignatureString);
 
   m_logWriter.detail(_T("code: %d, vendor: %s, signature: %s"),
@@ -1433,7 +1433,7 @@ void RemoteViewerCore::addAuthCapability(AuthHandler *authHandler,
                                          unsigned int code,
                                          const char *vendorSignature,
                                          const char *nameSignature,
-                                         const StringStorage description)
+                                         const ::string description)
 {
   m_authCaps.add(code, vendorSignature, nameSignature, description);
   registerAuthHandler(code, authHandler);
@@ -1443,7 +1443,7 @@ void RemoteViewerCore::addServerMsgCapability(ServerMessageListener *listener,
                                               unsigned int code,
                                               const char *vendorSignature,
                                               const char *nameSignature,
-                                              const StringStorage description)
+                                              const ::string description)
 {
   m_serverMsgCaps.add(code, vendorSignature, nameSignature, description);
   registerMessageListener(code, listener);
@@ -1452,7 +1452,7 @@ void RemoteViewerCore::addServerMsgCapability(ServerMessageListener *listener,
 void RemoteViewerCore::addClientMsgCapability(unsigned int code,
                                               const char *vendorSignature,
                                               const char *nameSignature,
-                                              const StringStorage description)
+                                              const ::string description)
 {
   m_clientMsgCaps.add(code, vendorSignature, nameSignature, description);
 }
@@ -1462,7 +1462,7 @@ void RemoteViewerCore::addEncodingCapability(Decoder *decoder,
                                              unsigned int code,
                                              const char *vendorSignature,
                                              const char *nameSignature,
-                                             const StringStorage description)
+                                             const ::string description)
 {
   m_encodingCaps.add(code, vendorSignature, nameSignature, description);
   registerDecoderHandler(code, decoder, priorityEncoding);

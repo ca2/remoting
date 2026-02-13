@@ -89,7 +89,7 @@ public:
    * @remark: if host is already in connection history,
      then it's just moves it up to first position.
    */
-  void addHost(const TCHAR *host);
+  void addHost(const ::scoped_string & scopedstrhost);
 
   /**
    * Return hosts count.
@@ -102,17 +102,17 @@ public:
    * @param i index of history entry.
    * @return host string.
    */
-  const TCHAR *getHost(size_t i) const;
+  const ::scoped_string & scopedstrgetHost(size_t i) const;
 
 protected:
   void releaseHosts();
-  void removeHost(const TCHAR *host);
+  void removeHost(const ::scoped_string & scopedstrhost);
 
 protected:
   /**
    * Array of history enries.
    */
-  ::std::vector<StringStorage> m_hosts;
+  ::std::vector<::string> m_hosts;
 
   /**
    * Maximum count of history entries.

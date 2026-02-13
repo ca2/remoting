@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "StringStorage.h"
+//#include "::string.h"
 #include "CommonHeader.h"
 #include "Exception.h"
 #include <stdio.h>
@@ -31,26 +31,26 @@
 
 #include <algorithm>
 
-StringStorage::StringStorage()
+::string::::string()
 {
   setString(_T(""));
 }
 
-StringStorage::StringStorage(const TCHAR *string)
+::string::::string(const ::scoped_string & scopedstrstring)
 {
   setString(string);
 }
 
-StringStorage::StringStorage(const StringStorage &stringBuffer)
+::string::::string(const ::string &stringBuffer)
 {
   *this = stringBuffer;
 }
 
-StringStorage::~StringStorage()
+::string::~::string()
 {
 }
 
-void StringStorage::setString(const TCHAR *string)
+void ::string::setString(const ::scoped_string & scopedstrstring)
 {
   if (string == 0) {
     string = _T("");
@@ -61,7 +61,7 @@ void StringStorage::setString(const TCHAR *string)
   memcpy(&m_buffer.front(), string, getSize());
 }
 
-void StringStorage::resizeBuffer(size_t newSize)
+void ::string::resizeBuffer(size_t newSize)
 {
   m_buffer.resize(newSize);
 
@@ -70,33 +70,33 @@ void StringStorage::resizeBuffer(size_t newSize)
 #endif
 }
 
-const TCHAR *StringStorage::getString() const
+const ::scoped_string & scopedstr::string::getString() const
 {
   return &m_buffer.front();
 }
 
-size_t StringStorage::getLength() const
+size_t ::string::getLength() const
 {
   return m_buffer.size() - 1;
 }
 
-size_t StringStorage::getSize() const
+size_t ::string::getSize() const
 {
   return m_buffer.size() * sizeof(TCHAR);
 }
 
-bool StringStorage::is_empty() const
+bool ::string::is_empty() const
 {
   return getLength() == 0;
 }
 
 
-bool StringStorage::has_character() const
+bool ::string::has_character() const
 {
    return !is_empty();
 }
 
-bool StringStorage::endsWith(TCHAR postfix) const
+bool ::string::endsWith(TCHAR postfix) const
 {
   if (is_empty()) {
     return false;
@@ -105,7 +105,7 @@ bool StringStorage::endsWith(TCHAR postfix) const
   return (lastCharacter == postfix);
 }
 
-bool StringStorage::beginsWith(TCHAR prefix) const
+bool ::string::beginsWith(TCHAR prefix) const
 {
   if (is_empty()) {
     return false;
@@ -114,7 +114,7 @@ bool StringStorage::beginsWith(TCHAR prefix) const
   return (firstCharacter == prefix);
 }
 
-void StringStorage::getSubstring(StringStorage *substr,
+void ::string::getSubstring(::string & substr,
                                  size_t startIndex,
                                  size_t endIndex) const
 {
@@ -136,12 +136,12 @@ void StringStorage::getSubstring(StringStorage *substr,
   substr->setString(buffer);
 }
 
-void StringStorage::appendString(const TCHAR *string)
+void ::string::appendString(const ::scoped_string & scopedstrstring)
 {
   if (string == 0) {
     return;
   }
-  StringStorage src(string);
+  ::string src(string);
 
   BufferType::iterator to = m_buffer.begin() + getLength();
   BufferType::iterator fromFirst = src.m_buffer.begin();
@@ -150,26 +150,26 @@ void StringStorage::appendString(const TCHAR *string)
   m_buffer.insert(to, fromFirst, fromLast);
 }
 
-void StringStorage::appendChar(TCHAR c)
+void ::string::appendChar(TCHAR c)
 {
   TCHAR string[2] = {c, _T('\0') };
 
   appendString(string);
 }
 
-void StringStorage::quoteSelf()
+void ::string::quoteSelf()
 {
-  StringStorage quotedString;
+  ::string quotedString;
   quotedString.format(_T("\"%s\""), getString());
   setString(quotedString.getString());
 }
 
-bool StringStorage::isEqualTo(const StringStorage & other) const
+bool ::string::isEqualTo(const ::string & other) const
 {
   return isEqualTo(other.getString());
 }
 
-bool StringStorage::isEqualTo(const TCHAR *other) const
+bool ::string::isEqualTo(const ::scoped_string & scopedstrother) const
 {
   if (other == 0 && getString() == 0) {
     return true;
@@ -183,7 +183,7 @@ bool StringStorage::isEqualTo(const TCHAR *other) const
   return _tcscmp(getString(), other) == 0;
 }
 
-bool StringStorage::split(const TCHAR *delimiters, StringStorage *stringArray, size_t *arrayLength) const
+bool ::string::split(const ::scoped_string & scopedstrDelimiters, ::string & stringArray, size_t *arrayLength) const
 {
   // Special case for empty string.
   if (this->getLength() == 0) {
@@ -191,14 +191,14 @@ bool StringStorage::split(const TCHAR *delimiters, StringStorage *stringArray, s
     return true;
   }
 
-  StringStorage copy(this->getString());
+  ::string copy(this->getString());
 
   size_t chunksCount = 0;
 
   size_t index = 0;
 
   do {
-    StringStorage chunk(_T(""));
+    ::string chunk(_T(""));
 
     index = copy.findOneOf(delimiters);
 
@@ -245,7 +245,7 @@ bool StringStorage::split(const TCHAR *delimiters, StringStorage *stringArray, s
   return true;
 }
 
-size_t StringStorage::findChar(const TCHAR c)
+size_t ::string::findChar(const TCHAR c)
 {
   size_t length = getLength();
   for (size_t i = 0; i < length; i++) {
@@ -256,7 +256,7 @@ size_t StringStorage::findChar(const TCHAR c)
   return (size_t)-1;
 }
 
-size_t StringStorage::findLast(const TCHAR c)
+size_t ::string::findLast(const TCHAR c)
 {
   for (size_t i = getLength() - 1; i + 1 != 0; i--) {
     if (m_buffer[i] == c) {
@@ -266,7 +266,7 @@ size_t StringStorage::findLast(const TCHAR c)
   return (size_t)-1;
 }
 
-void StringStorage::removeChars(const TCHAR badCharacters[], size_t count)
+void ::string::removeChars(const TCHAR badCharacters[], size_t count)
 {
   size_t j = 0;
   size_t length = getLength();
@@ -289,12 +289,12 @@ void StringStorage::removeChars(const TCHAR badCharacters[], size_t count)
   m_buffer.resize(j + 1);
 }
 
-void StringStorage::remove(size_t startIndex, size_t count)
+void ::string::remove(size_t startIndex, size_t count)
 {
   bool isFailed = startIndex + count > getLength();
   _ASSERT(!isFailed);
   if (isFailed) {
-    throw Exception(_T("An incorrect StringStorage::remove() usage"));
+    throw Exception(_T("An incorrect ::string::remove() usage"));
   }
   BufferType newBuffer = m_buffer;
 
@@ -303,20 +303,20 @@ void StringStorage::remove(size_t startIndex, size_t count)
   setString(&newBuffer.front());
 }
 
-void StringStorage::truncate(size_t count)
+void ::string::truncate(size_t count)
 {
   count = ::minimum(getLength(), count);
 
   remove(getLength() - count, count);
 }
 
-TCHAR *StringStorage::find(const TCHAR *substr)
+TCHAR *::string::find(const ::scoped_string & scopedstrsubstr)
 {
   return _tcsstr(&m_buffer.front(), substr);
 }
 
 // FIXME: Use C functions.
-size_t StringStorage::findOneOf(const TCHAR *string)
+size_t ::string::findOneOf(const ::scoped_string & scopedstrstring)
 {
   size_t length = getLength();
   size_t argLength = _tcslen(string);
@@ -330,7 +330,7 @@ size_t StringStorage::findOneOf(const TCHAR *string)
   return (size_t)-1;
 }
 
-void StringStorage::toLowerCase()
+void ::string::toLowerCase()
 {
   size_t length = getLength();
   for (size_t i = 0; i < length; i++) {
@@ -340,12 +340,12 @@ void StringStorage::toLowerCase()
   }
 }
 
-void StringStorage::toUpperCase()
+void ::string::toUpperCase()
 {
   _tcsupr_s(&m_buffer.front(), getLength() + 1);
 }
 
-void StringStorage::format(const TCHAR *format, ...)
+void ::string::format(const ::scoped_string & scopedstrformat, ...)
 {
   va_list vl;
 
@@ -360,27 +360,27 @@ void StringStorage::format(const TCHAR *format, ...)
   va_end(vl);
 }
 
-void StringStorage::operator= (const StringStorage &other)
+void ::string::operator= (const ::string &other)
 {
   setString(other.getString());
 }
 
-bool StringStorage::operator == (const StringStorage &str) const
+bool ::string::operator == (const ::string &str) const
 {
   return isEqualTo(str);
 }
 
-bool StringStorage::operator < (const StringStorage &str) const
+bool ::string::operator < (const ::string &str) const
 {
   return _tcscmp(getString(), str.getString()) < 0;
 }
 
-void StringStorage::operator += (const TCHAR* str) 
+void ::string::operator += (const ::scoped_string & scopedstrstr) 
 {
   appendString(str);
 }
 
-void StringStorage::replaceChar(TCHAR oldChar, TCHAR newChar)
+void ::string::replaceChar(TCHAR oldChar, TCHAR newChar)
 {
   size_t length = getLength();
   for (size_t i = 0; i < length; i++) {

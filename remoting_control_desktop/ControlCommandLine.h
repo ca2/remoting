@@ -63,12 +63,12 @@ public:
 
   void parse(const CommandLineArgs *cmdArgs);
 
-  void getPasswordFile(StringStorage *passwordFile) const;
+  void getPasswordFile(::string & passwordFile) const;
   bool hasPasswordFile();
   bool hasReloadFlag();
   bool hasKillAllFlag();
   bool hasConnectFlag();
-  void getConnectHostName(StringStorage *hostName) const;
+  void getConnectHostName(::string & hostName) const;
   bool hasShutdownFlag();
   bool hasSetVncPasswordFlag();
   bool hasSetControlPasswordFlag();
@@ -87,30 +87,30 @@ public:
   bool hasShareFull();
   bool hasShareApp();
   unsigned char getShareDisplayNumber();
-  void getShareWindowName(StringStorage *out);
+  void getShareWindowName(::string & out);
   ::int_rectangle getShareRect();
   unsigned int getSharedAppProcessId();
 
-  const TCHAR *getPrimaryVncPassword() const;
-  const TCHAR *getControlPassword() const;
+  const ::scoped_string & scopedstrgetPrimaryVncPassword() const;
+  const ::scoped_string & scopedstrgetControlPassword() const;
 
   bool isCommandSpecified();
 
 private:
-  void parseRectCoordinates(const StringStorage & strCoord);
-  void parseDisplayNumber(const StringStorage & strDispNumber);
-  void parseProcessId(const StringStorage & str);
+  void parseRectCoordinates(const ::string & strCoord);
+  void parseDisplayNumber(const ::string & strDispNumber);
+  void parseProcessId(const ::string & str);
 
-  StringStorage m_vncPassword;
-  StringStorage m_controlPassword;
+  ::string m_vncPassword;
+  ::string m_controlPassword;
 
-  StringStorage m_connectHostName;
-  StringStorage m_dispatcherSpec;
-  StringStorage m_passwordFile;
+  ::string m_connectHostName;
+  ::string m_dispatcherSpec;
+  ::string m_passwordFile;
 
   ::int_rectangle m_shareRect;
   unsigned char m_displayNumber;
-  StringStorage m_windowHeaderName;
+  ::string m_windowHeaderName;
   unsigned int m_sharedAppProcessId;
 };
 

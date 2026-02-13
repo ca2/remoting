@@ -33,16 +33,16 @@
 // FIXME: Duplicate macro, see ConnectionConfig.cpp file
 #define TEST_FAIL(C,R) if (!C) { R = false; }
 
-ViewerConfig::ViewerConfig(const TCHAR registryPath[])
+ViewerConfig::ViewerConfig(const ::scoped_string & scopedstrRegistryPath)
 : m_logLevel(0), m_listenPort(5500), m_historyLimit(32),
   m_showToolbar(true), m_promptOnFullscreen(true),
   m_conHistory(&m_conHistoryKey, m_historyLimit),
   m_logger(0)
 {
-  StringStorage registryKey;
-  registryKey.format(_T("%s\\History"), registryPath);
+  ::string registryKey;
+  registryKey.format("%s\\History",::string(scopedstrRegistryPath).c_str());
   m_conHistoryKey.open(Registry::getCurrentUserKey(),
-                       registryKey.getString(),
+                       registryKey,
                        true);
 }
 
@@ -126,7 +126,7 @@ void ViewerConfig::setLogLevel(int logLevel)
 
   m_logLevel = logLevel;
   if (m_logger != 0) {
-    m_logger->changeLogProps(m_pathToLogFile.getString(), m_logLevel);
+    m_logger->changeLogProps(m_pathToLogFile, m_logLevel);
   }
 }
 
@@ -136,18 +136,18 @@ int ViewerConfig::getLogLevel() const
   return m_logLevel;
 }
 
-void ViewerConfig::getLogDir(StringStorage *logDir) const
+::string ViewerConfig::getLogDir() const
 {
   AutoLock l(&m_cs);
-  *logDir = m_pathToLogFile;
+  return m_pathToLogFile;
 }
 
-void ViewerConfig::setLogDir(StringStorage &logDir) 
+void ViewerConfig::setLogDir(::string &logDir) 
 {
   AutoLock l(&m_cs);
   m_pathToLogFile = logDir;
   if (m_logger != 0) {
-    m_logger->changeLogProps(m_pathToLogFile.getString(), m_logLevel);
+    m_logger->changeLogProps(m_pathToLogFile, m_logLevel);
   }
 }
 
@@ -196,10 +196,10 @@ bool ViewerConfig::isPromptOnFullscreenEnabled() const
   return m_promptOnFullscreen;
 }
 
-const TCHAR *ViewerConfig::getPathToLogFile() const
+::string ViewerConfig::getPathToLogFile() const
 {
   AutoLock l(&m_cs);
-  return m_pathToLogFile.getString();
+  return m_pathToLogFile;
 }
 
 ConnectionHistory *ViewerConfig::getConnectionHistory()
@@ -208,23 +208,23 @@ ConnectionHistory *ViewerConfig::getConnectionHistory()
   return &m_conHistory;
 }
 
-Logger *ViewerConfig::initLog(const TCHAR logDir[], const TCHAR logName[], bool useSpecialFolder)
+Logger *ViewerConfig::initLog(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrLogName, bool useSpecialFolder)
 {
-  m_logName = logName;
-  StringStorage logFileFolderPath;
-  StringStorage appDataPath;
+  m_logName = scopedstrLogName;
+  ::string logFileFolderPath;
+  ::string appDataPath;
 
   // After that logFilePath variable will contain path to folder
   // where remoting_impact.log must be located
-  if (Environment::getSpecialFolderPath(Environment::APPLICATION_DATA_SPECIAL_FOLDER, &appDataPath) && useSpecialFolder) {
-    logFileFolderPath.format(_T("%s\\%s"), appDataPath.getString(), logDir);
+  if (Environment::getSpecialFolderPath(Environment::APPLICATION_DATA_SPECIAL_FOLDER, appDataPath) && useSpecialFolder) {
+    logFileFolderPath.format("%s\\%s", appDataPath.c_str(), ::string(scopedstrLogDir).c_str());
   } else {
-    logFileFolderPath.format(_T("%s"), logDir);
+    logFileFolderPath.format("%s", ::string(scopedstrLogDir).c_str());
   }
 
   // Create TightVNC folder
   {
-    File folder(logFileFolderPath.getString());
+    File folder(logFileFolderPath);
     folder.mkdir();
   }
 
@@ -235,7 +235,7 @@ Logger *ViewerConfig::initLog(const TCHAR logDir[], const TCHAR logName[], bool 
   if (m_logger != 0) {
     delete m_logger;
   }
-  m_logger = new FileLogger(m_pathToLogFile.getString(), logName, m_logLevel, false);
+  m_logger = new FileLogger(m_pathToLogFile, scopedstrLogName, m_logLevel, false);
   return m_logger;
 }
 

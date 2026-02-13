@@ -70,7 +70,7 @@ void UipiControl::allowMessage(UINT message, HWND hwnd)
                 _T("successfully found."));
       if (setFilter(message, MSGFLT_ADD) != TRUE) {
         DWORD errCode = GetLastError();
-        StringStorage errMess;
+        ::string errMess;
         errMess.format(_T("Can't allow to receive the %d windows message by ")
                        _T("the ChangeWindowMessageFilter() function."));
         throw SystemException(errMess.getString(), errCode);
@@ -83,7 +83,7 @@ void UipiControl::allowMessage(UINT message, HWND hwnd)
                 _T("successfully found."));
       if (setFilterEx(hwnd, message, MSGFLT_ADD, 0) != TRUE) {
         DWORD errCode = GetLastError();
-        StringStorage errMess;
+        ::string errMess;
         errMess.format(_T("Can't allow to receive the %d windows message by ")
                        _T("the ChangeWindowMessageFilterEx() function."));
         throw SystemException(errMess.getString(), errCode);

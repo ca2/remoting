@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "BrokenHandleException.h"
 
-BrokenHandleException::BrokenHandleException(const TCHAR *message)
+BrokenHandleException::BrokenHandleException(const ::scoped_string & scopedstrmessage)
 : Exception(message)
 {
 }

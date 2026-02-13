@@ -32,12 +32,12 @@ ListBox::~ListBox()
 {
 }
 
-void ListBox::addString(const TCHAR *str)
+void ListBox::addString(const ::scoped_string & scopedstrstr)
 {
   addString(str, 0);
 }
 
-void ListBox::addString(const TCHAR *str, void *tag)
+void ListBox::addString(const ::scoped_string & scopedstrstr, void *tag)
 {
   LRESULT lresult = SendMessage(m_hwnd, LB_ADDSTRING, 0, (LPARAM)str);
   int i = (int)lresult;
@@ -62,7 +62,7 @@ void ListBox::setTopIndex(int index)
   SendMessage(m_hwnd, LB_SETTOPINDEX, index, NULL);
 }
 
-void ListBox::getItemText(int index, StringStorage *storage)
+void ListBox::getItemText(int index, ::string & storage)
 {
   size_t length = SendMessage(m_hwnd, LB_GETTEXTLEN, index, NULL);
   _ASSERT(length <= 65536);
@@ -71,7 +71,7 @@ void ListBox::getItemText(int index, StringStorage *storage)
   storage->setString(&buffer.front());
 }
 
-void ListBox::setItemText(int index, const TCHAR *str)
+void ListBox::setItemText(int index, const ::scoped_string & scopedstrstr)
 {
   int si = getSelectedIndex();
   int top = getTopIndex();
@@ -87,7 +87,7 @@ void ListBox::setItemText(int index, const TCHAR *str)
   setTopIndex(top);
 }
 
-void ListBox::appendString(const TCHAR *str, LPARAM data)
+void ListBox::appendString(const ::scoped_string & scopedstrstr, LPARAM data)
 {
   LRESULT lresult = SendMessage(m_hwnd, LB_ADDSTRING, 0, (LPARAM)str);
   int index = (int)lresult;
@@ -95,12 +95,12 @@ void ListBox::appendString(const TCHAR *str, LPARAM data)
   setItemData(index, data);
 }
 
-void ListBox::insertString(int index, const TCHAR *str)
+void ListBox::insertString(int index, const ::scoped_string & scopedstrstr)
 {
   SendMessage(m_hwnd, LB_INSERTSTRING, index, (LPARAM)str);
 }
 
-void ListBox::insertString(int index, const TCHAR *str, LPARAM data)
+void ListBox::insertString(int index, const ::scoped_string & scopedstrstr, LPARAM data)
 {
   LRESULT lresult = SendMessage(m_hwnd, LB_INSERTSTRING, index, (LPARAM)str);
   int i = (int)lresult;

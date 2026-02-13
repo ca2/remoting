@@ -43,7 +43,7 @@ void WinClipboard::setHWnd(HWND hwnd)
   SetClipboardViewer(m_hwnd);
 }
 
-bool WinClipboard::getString(StringStorage *str)
+bool WinClipboard::getString(::string & str)
 {
   UINT strType = CF_UNICODETEXT;
 
@@ -60,7 +60,7 @@ bool WinClipboard::getString(StringStorage *str)
 
      if (hndData) {
         TCHAR *szData = (TCHAR *)GlobalLock(hndData); 
-        StringStorage nativeClipboard = szData;
+        ::string nativeClipboard = szData;
         //str.setString(szData);
         GlobalUnlock(hndData); 
         CloseClipboard();
@@ -73,9 +73,9 @@ bool WinClipboard::getString(StringStorage *str)
   return false;
 }
 
-bool WinClipboard::setString(const StringStorage & serverClipboard)
+bool WinClipboard::setString(const ::string & serverClipboard)
 {
-  StringStorage nativeClipboard = addCR(serverClipboard);
+  ::string nativeClipboard = addCR(serverClipboard);
 
   int dataType = CF_UNICODETEXT;
 
@@ -100,10 +100,10 @@ bool WinClipboard::setString(const StringStorage & serverClipboard)
   return false;
 }
 
-StringStorage WinClipboard::addCR(const StringStorage & str)
+::string WinClipboard::addCR(const ::string & str)
 {
-  const TCHAR *beginString = str.getString();
-  const TCHAR *endString = beginString + str.getLength() + 1; // start + lenght + '\0'
+  const ::scoped_string & scopedstrbeginString = str.getString();
+  const ::scoped_string & scopedstrendString = beginString + str.getLength() + 1; // start + lenght + '\0'
   ::std::vector<TCHAR> chars(beginString, endString);
   ::std::vector<TCHAR> newChars(str.getLength() * 2 + 1);
   size_t countLF = 0;
@@ -116,13 +116,13 @@ StringStorage WinClipboard::addCR(const StringStorage & str)
     newChars[i + countLF] = chars[i];
   }
   newChars.resize(chars.size() + countLF);
-  return StringStorage(&newChars.front());
+  return ::string(&newChars.front());
 }
 
-StringStorage WinClipboard::removeCR(const StringStorage & str)
+::string WinClipboard::removeCR(const ::string & str)
 {
-  const TCHAR *beginString = str.getString();
-  const TCHAR *endString = beginString + str.getLength() + 1; // start + lenght + '\0'
+  const ::scoped_string & scopedstrbeginString = str.getString();
+  const ::scoped_string & scopedstrendString = beginString + str.getLength() + 1; // start + lenght + '\0'
   ::std::vector<TCHAR> chars(beginString, endString);
   ::std::vector<TCHAR> newChars;
   size_t countLF = 0;
@@ -131,5 +131,5 @@ StringStorage WinClipboard::removeCR(const StringStorage & str)
       newChars.push_back(chars[i]);
     }
   }
-  return StringStorage(&newChars.front());
+  return ::string(&newChars.front());
 }

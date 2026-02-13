@@ -48,7 +48,7 @@ int CompressionLevel::levelToEncoding(int compressionLevel)
   case 8: return PseudoEncDefs::COMPR_LEVEL_8;
   case 9: return PseudoEncDefs::COMPR_LEVEL_9;
   default:
-    StringStorage error;
+    ::string error;
     error.format(_T("Compression level \"%d\" is not valid"), compressionLevel);
     throw Exception(error.getString());
   }

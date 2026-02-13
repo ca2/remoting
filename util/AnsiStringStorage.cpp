@@ -37,7 +37,7 @@ AnsiStringStorage::AnsiStringStorage(const char *string)
   setString(string);
 }
 
-AnsiStringStorage::AnsiStringStorage(const StringStorage & string)
+AnsiStringStorage::AnsiStringStorage(const ::string & string)
 {
   fromStringStorage(string);
 }
@@ -81,7 +81,7 @@ bool AnsiStringStorage::is_empty() const
   return getLength() == 0;
 }
 
-void AnsiStringStorage::fromStringStorage(const StringStorage & src)
+void AnsiStringStorage::fromStringStorage(const ::string & src)
 {
 #ifndef _UNICODE
   setString(src.getString());
@@ -101,7 +101,7 @@ void AnsiStringStorage::fromStringStorage(const StringStorage & src)
 #endif
 }
 
-void AnsiStringStorage::toStringStorage(StringStorage *dst) const
+void AnsiStringStorage::toStringStorage(::string & dst) const
 {
 #ifndef _UNICODE
   dst->setString(getString());
@@ -114,7 +114,7 @@ void AnsiStringStorage::toStringStorage(StringStorage *dst) const
                                    &unicodeBuffer.front(),
                                    symbolCount);
   if (result == 0) {
-    throw Exception(_T("Cannot convert from Ansi to StringStorage"));
+    throw Exception(_T("Cannot convert from Ansi to ::string"));
   }
 
   dst->setString(&unicodeBuffer.front());
@@ -150,10 +150,10 @@ void AnsiStringStorage::appendString(const char *string)
   m_buffer.insert(to, fromFirst, fromLast);
 }
 
-bool AnsiStringStorage::checkAnsiConversion(StringStorage &string)
+bool AnsiStringStorage::checkAnsiConversion(::string &string)
 {
   AnsiStringStorage ansi(string);
-  StringStorage check;
+  ::string check;
   ansi.toStringStorage(&check);
   return string.isEqualTo(check);
 }

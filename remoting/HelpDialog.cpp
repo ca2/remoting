@@ -35,7 +35,7 @@ BOOL HelpDialog::onInitDialog()
 {
   setControlById(m_shelp, IDC_SHELP);
 
-  StringStorage helpString;
+  ::string helpString;
   ResourceLoader *rLoader = ResourceLoader::getInstance();
   rLoader->loadString(IDS_CMDLINE_HELP, &helpString);
   m_shelp.setText(helpString.getString());

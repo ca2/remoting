@@ -101,9 +101,9 @@ void ConnectionData::unsetDispatchId()
   m_isSetDispatchId = false;
 }
 
-void ConnectionData::setHost(const StringStorage & host)
+void ConnectionData::setHost(const ::string & host)
 {
-  StringStorage chompedString = host;
+  ::string chompedString = host;
   TCHAR spaceChar[] = _T(" \t\n\r");
   chompedString.removeChars(spaceChar, sizeof(spaceChar)/sizeof(TCHAR));
 
@@ -113,12 +113,12 @@ void ConnectionData::setHost(const StringStorage & host)
   m_isEmpty = false;
 }
 
-StringStorage ConnectionData::getCryptedPassword() const
+::string ConnectionData::getCryptedPassword() const
 {
   return m_defaultPassword;
 }
 
-void ConnectionData::setCryptedPassword(const StringStorage & hidePassword)
+void ConnectionData::setCryptedPassword(const ::string & hidePassword)
 {
   if (hidePassword == 0) {
     m_isSetPassword = false;
@@ -128,7 +128,7 @@ void ConnectionData::setCryptedPassword(const StringStorage & hidePassword)
   }
 }
 
-StringStorage ConnectionData::getPlainPassword() const
+::string ConnectionData::getPlainPassword() const
 {
   // Transform password from hex-string to raw data.
   AnsiStringStorage ansiHidePassword(m_defaultPassword);
@@ -146,12 +146,12 @@ StringStorage ConnectionData::getPlainPassword() const
   VncPassCrypt::getPlainPass(plainPassword, encPassword);
 
   AnsiStringStorage ansiPlainPassword(reinterpret_cast<char *>(plainPassword));
-  StringStorage password;
+  ::string password;
   ansiPlainPassword.toStringStorage(&password);
   return password;
 }
 
-void ConnectionData::setPlainPassword(const StringStorage & password)
+void ConnectionData::setPlainPassword(const ::string & password)
 {
   AnsiStringStorage ansiPlainPassword(password);
   unsigned char plainPassword[VncAuthentication::VNC_PASSWORD_SIZE];
@@ -176,15 +176,15 @@ void ConnectionData::setPlainPassword(const StringStorage & password)
   m_isSetPassword = true;
 }
 
-StringStorage ConnectionData::getHost() const
+::string ConnectionData::getHost() const
 {
-  StringStorage host;
+  ::string host;
   AnsiStringStorage hostAnsi(m_hostPath.get());
   hostAnsi.toStringStorage(&host);
   return host;
 }
 
-void ConnectionData::getReducedHost(StringStorage *strHost) const
+void ConnectionData::getReducedHost(::string & strHost) const
 {
   AnsiStringStorage ansiStr(m_hostPath.getVncHost());
   ansiStr.toStringStorage(strHost);

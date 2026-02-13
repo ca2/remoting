@@ -37,18 +37,18 @@ public:
   virtual ~SasUserInput();
 
   virtual void sendInit(BlockingGate *gate);
-  virtual void setNewClipboard(const StringStorage & newClipboard);
+  virtual void setNewClipboard(const ::string & newClipboard);
   virtual void setMouseEvent(const Point newPos, unsigned char keyFlag);
   virtual void setKeyboardEvent(unsigned int keySym, bool down);
-  virtual void getCurrentUserInfo(StringStorage *desktopName,
-                                  StringStorage *userName);
+  virtual void getCurrentUserInfo(::string & desktopName,
+                                  ::string & userName);
   virtual void getPrimaryDisplayCoords(::int_rectangle *rect);
   virtual void getDisplayNumberCoords(::int_rectangle *rect,
                                       unsigned char dispNumber);
   virtual ::std::vector<::int_rectangle> getDisplaysCoords();
   virtual void getNormalizedRect(::int_rectangle *rect);
   virtual void getWindowCoords(HWND hwnd, ::int_rectangle *rect);
-  virtual HWND getWindowHandleByName(const StringStorage & windowName);
+  virtual HWND getWindowHandleByName(const ::string & windowName);
   virtual void getApplicationRegion(unsigned int procId, Region *region);
   virtual bool isApplicationInFocus(unsigned int procId);
 

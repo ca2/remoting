@@ -42,14 +42,14 @@ public:
   // before that all report will be ignored.
   void enable();
 
-  void reportInfo(unsigned int messageId, const TCHAR *fmt, ...);
-  void reportWarning(unsigned int messageId, const TCHAR *fmt, ...);
-  void reportError(unsigned int messageId, const TCHAR *fmt, ...);
+  void reportInfo(unsigned int messageId, const ::scoped_string & scopedstrfmt, ...);
+  void reportWarning(unsigned int messageId, const ::scoped_string & scopedstrfmt, ...);
+  void reportError(unsigned int messageId, const ::scoped_string & scopedstrfmt, ...);
 
 private:
   void reportEvent(unsigned int messageId,
                    WORD eventType,
-                   const TCHAR *fmt,
+                   const ::scoped_string & scopedstrfmt,
                    va_list argList);
 
   void registerEventSource();

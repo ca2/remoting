@@ -74,7 +74,7 @@ public:
   // Draws bitmap.
   void drawBitmap(const Bitmap *bitmap, int x, int y, int w, int h);
   // Draws text.
-  void drawText(const TCHAR *text, int cchText, RECT *rect, UINT format);
+  void drawText(const ::scoped_string & scopedstrtext, int cchText, RECT *rect, UINT format);
 
 //protected:
   //DeviceContext *m_dc;
@@ -126,7 +126,7 @@ public:
    // Draws bitmap.
    //void drawBitmap(const Bitmap *bitmap, int x, int y, int w, int h);
    // Draws text.
-   //void drawText(const TCHAR *text, int cchText, RECT *rect, UINT format);
+   //void drawText(const ::scoped_string & scopedstrtext, int cchText, RECT *rect, UINT format);
 
    //protected:
    Gdiplus::Graphics * m_pgraphics;

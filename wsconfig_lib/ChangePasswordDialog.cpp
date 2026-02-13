@@ -49,7 +49,7 @@ ChangePasswordDialog::~ChangePasswordDialog()
 {
 }
 
-const TCHAR *ChangePasswordDialog::getPasswordInPlainText() const
+const ::scoped_string & scopedstrChangePasswordDialog::getPasswordInPlainText() const
 {
   return m_passwordText.getString();
 }
@@ -82,8 +82,8 @@ BOOL ChangePasswordDialog::onCommand(UINT cID, UINT nID)
 
 void ChangePasswordDialog::onOkButtonClick()
 {
-  StringStorage password1;
-  StringStorage password2;
+  ::string password1;
+  ::string password2;
   m_password1.getText(&password1);
   m_password2.getText(&password2);
 

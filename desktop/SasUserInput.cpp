@@ -53,7 +53,7 @@ void SasUserInput::setMouseEvent(const Point newPos, unsigned char keyFlag)
   m_client->setMouseEvent(newPos, keyFlag);
 }
 
-void SasUserInput::setNewClipboard(const StringStorage & newClipboard)
+void SasUserInput::setNewClipboard(const ::string & newClipboard)
 {
   m_client->setNewClipboard(newClipboard);
 }
@@ -88,8 +88,8 @@ void SasUserInput::setKeyboardEvent(unsigned int keySym, bool down)
   m_client->setKeyboardEvent(keySym, down);
 }
 
-void SasUserInput::getCurrentUserInfo(StringStorage *desktopName,
-                                         StringStorage *userName)
+void SasUserInput::getCurrentUserInfo(::string & desktopName,
+                                         ::string & userName)
 {
   m_client->getCurrentUserInfo(desktopName, userName);
 }
@@ -120,7 +120,7 @@ void SasUserInput::getWindowCoords(HWND hwnd, ::int_rectangle *rect)
   m_client->getWindowCoords(hwnd, rect);
 }
 
-HWND SasUserInput::getWindowHandleByName(const StringStorage & windowName)
+HWND SasUserInput::getWindowHandleByName(const ::string & windowName)
 {
   return m_client->getWindowHandleByName(windowName);
 }

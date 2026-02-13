@@ -48,7 +48,7 @@ int JpegQualityLevel::qualityToEncoding(int qualityLevel)
   case 8: return PseudoEncDefs::QUALITY_LEVEL_8;
   case 9: return PseudoEncDefs::QUALITY_LEVEL_9;
   default:
-    StringStorage error;
+    ::string error;
     error.format(_T("Quality of jpeg \"%d\" is not valid"), qualityLevel);
     throw Exception(error.getString());
   }

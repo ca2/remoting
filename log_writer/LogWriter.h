@@ -41,33 +41,33 @@ public:
 
   // Write most important log messages such as code internal errors
   // (what shouldn't have happened but it did).
-  void interror(const TCHAR *fmt, ...);
+  void interror(const ::scoped_string & scopedstrfmt, ...);
 
   // Write other important log messages that do not give continue work normally, such
   // as connection errors and other.
-  void error(const TCHAR *fmt, ...);
+  void error(const ::scoped_string & scopedstrfmt, ...);
 
   // Write logs with the warning level that less that error level.
-  void warning(const TCHAR *fmt, ...);
+  void warning(const ::scoped_string & scopedstrfmt, ...);
 
   // Write logs with neutral log levels.
-  void message(const TCHAR *fmt, ...);
+  void message(const ::scoped_string & scopedstrfmt, ...);
 
   // Write logs with info level which less than the neutral "message" level.
-  void info(const TCHAR *fmt, ...);
+  void info(const ::scoped_string & scopedstrfmt, ...);
 
   // Write logs with detailed level when need to get more details.
-  void detail(const TCHAR *fmt, ...);
+  void detail(const ::scoped_string & scopedstrfmt, ...);
 
   // Write logs only for debug purposes, it most of detailed logs. Should to be used
   // to write log messages which helps to track work of a code as detailed as possible.
-  void debug(const TCHAR *fmt, ...);
+  void debug(const ::scoped_string & scopedstrfmt, ...);
 
   // Returnd true if debug loglevel enabled.
   bool isDebug();
 
   // Add profiler checkpoint
-  ProcessorTimes checkPoint(const TCHAR *tag);
+  ProcessorTimes checkPoint(const ::scoped_string & scopedstrtag);
 
 protected:
   static const int LOG_INTERR = 0;
@@ -79,7 +79,7 @@ protected:
   static const int LOG_DEBUG = 9;
 
 private:
-  void vprintLog(int logLevel, const TCHAR *fmt, va_list argList);
+  void vprintLog(int logLevel, const ::scoped_string & scopedstrfmt, va_list argList);
 
   Logger *m_logger;
   ProfileLogger *m_profiler;

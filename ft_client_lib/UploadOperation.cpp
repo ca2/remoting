@@ -30,8 +30,8 @@
 
 UploadOperation::UploadOperation(LogWriter *logWriter,
                                  FileInfo fileToUpload,
-                                 const TCHAR *pathToSourceRoot,
-                                 const TCHAR *pathToTargetRoot)
+                                 const ::scoped_string & scopedstrpathToSourceRoot,
+                                 const ::scoped_string & scopedstrpathToTargetRoot)
 : CopyOperation(logWriter),
   m_file(0), m_fis(0), m_gotoChild(false), m_gotoParent(false), m_firstUpload(true),
   m_remoteFilesInfo(0), m_remoteFilesCount(0), m_bufferSize(20000)
@@ -47,8 +47,8 @@ UploadOperation::UploadOperation(LogWriter *logWriter,
 
 UploadOperation::UploadOperation(LogWriter *logWriter,
                                  const FileInfo *filesToUpload, size_t filesCount,
-                                 const TCHAR *pathToSourceRoot,
-                                 const TCHAR *pathToTargetRoot)
+                                 const ::scoped_string & scopedstrpathToSourceRoot,
+                                 const ::scoped_string & scopedstrpathToTargetRoot)
 : CopyOperation(logWriter),
   m_file(0), m_fis(0), m_gotoChild(false), m_gotoParent(false), m_firstUpload(true),
   m_remoteFilesInfo(0), m_remoteFilesCount(0), m_bufferSize(20000)
@@ -141,7 +141,7 @@ void UploadOperation::onMkdirReply(DataInputStream *input)
 
 void UploadOperation::onLastRequestFailedReply(DataInputStream *input)
 {
-  StringStorage errDesc;
+  ::string errDesc;
 
   m_replyBuffer->getLastErrorMessage(&errDesc);
 
@@ -208,8 +208,8 @@ unsigned long long UploadOperation::getInputFilesSize()
 
   FileInfoList *fil = m_toCopy;
   while (fil != NULL) {
-    StringStorage pathNoRoot;
-    StringStorage pathToFile;
+    ::string pathNoRoot;
+    ::string pathToFile;
 
     fil->getAbsolutePath(&pathNoRoot, _T('\\'));
 
@@ -225,7 +225,7 @@ unsigned long long UploadOperation::getInputFilesSize()
   return totalFilesSize;
 }
 
-unsigned long long UploadOperation::getFileSize(const TCHAR *pathToFile)
+unsigned long long UploadOperation::getFileSize(const ::scoped_string & scopedstrpathToFile)
 {
   unsigned long long fileSize = 0;
 
@@ -235,13 +235,13 @@ unsigned long long UploadOperation::getFileSize(const TCHAR *pathToFile)
     unsigned int filesCount = 0;
     file.list(NULL, &filesCount);
 
-    StringStorage *fileNames = new StringStorage[filesCount];
+    ::string & fileNames = new ::string[filesCount];
     file.list(fileNames, NULL);
 
     for (unsigned int i = 0; i < filesCount; i++) {
       File subfile(pathToFile, fileNames[i].getString());
 
-      StringStorage pathToSubFile;
+      ::string pathToSubFile;
       subfile.getPath(&pathToSubFile);
 
       fileSize += getFileSize(pathToSubFile.getString());
@@ -272,7 +272,7 @@ void UploadOperation::startUpload()
 
   // Logging
   if (m_toCopy->getFirst()->getParent() == NULL) {
-    StringStorage message;
+    ::string message;
 
     message.format(_T("Uploading '%s' %s"), m_pathToSourceFile.getString(),
                    fileInfo->isDirectory() ? _T("folder") : _T("file"));
@@ -294,7 +294,7 @@ void UploadOperation::startUpload()
 
 void UploadOperation::processFolder()
 {
-  StringStorage message;
+  ::string message;
 
   // Try ::std::list files from folder
   FolderListener listener(m_pathToSourceFile.getString());
@@ -302,7 +302,7 @@ void UploadOperation::processFolder()
     m_toCopy->setChild(listener.getFilesInfo(), listener.getFilesCount());
   } else {
     // Logging
-    StringStorage message;
+    ::string message;
 
     message.format(_T("Error: failed to get file list in local folder '%s'"),
                    m_pathToSourceFile.getString());
@@ -335,8 +335,8 @@ void UploadOperation::processFile()
     FileInfo *localFileInfo = m_toCopy->getFileInfo();
     FileInfo *remoteFileInfo = &m_remoteFilesInfo[i];
 
-    const TCHAR *remoteFileName = remoteFileInfo->getFileName();
-    const TCHAR *localFileName = localFileInfo->getFileName();
+    const ::scoped_string & scopedstrremoteFileName = remoteFileInfo->getFileName();
+    const ::scoped_string & scopedstrlocalFileName = localFileInfo->getFileName();
 
     // File collision, show file exist dialog
     if (_tcscmp(localFileName, remoteFileName) == 0) {
@@ -373,7 +373,7 @@ void UploadOperation::processFile()
   // Trying to open file for reading
   m_file = new File(m_pathToSourceFile.getString());
   try {
-    StringStorage path;
+    ::string path;
     m_file->getPath(&path);
     m_fis = new WinFileChannel(path.getString(), F_READ, FM_OPEN);
     // Try to seek
@@ -494,7 +494,7 @@ void UploadOperation::gotoNext(bool fake)
       if (fake) {
         m_gotoParent = true;
 
-        StringStorage pathToRemoteFolder(m_pathToTargetRoot.getString());
+        ::string pathToRemoteFolder(m_pathToTargetRoot.getString());
 
         FileInfoList *parentOfCurrent = m_toCopy->getFirst()->getParent();
         FileInfoList *parentOfParent = NULL;
@@ -541,9 +541,9 @@ void UploadOperation::initRemoteFiles(FileInfo *remoteFilesInfo, unsigned int co
   }
 }
 
-void UploadOperation::notifyFailedToUpload(const TCHAR *errorDescription)
+void UploadOperation::notifyFailedToUpload(const ::scoped_string & scopedstrerrorDescription)
 {
-  StringStorage message;
+  ::string message;
 
   message.format(_T("Error: failed to upload '%s' %s (%s)"),
                  m_pathToSourceFile.getString(),

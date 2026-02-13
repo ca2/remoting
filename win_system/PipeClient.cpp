@@ -29,9 +29,9 @@ PipeClient::PipeClient()
 {
 }
 
-NamedPipe *PipeClient::connect(const TCHAR *name, unsigned int maxPortionSize)
+NamedPipe *PipeClient::connect(const ::scoped_string & scopedstrName, unsigned int maxPortionSize)
 {
-  StringStorage pipeName;
+  ::string pipeName;
   pipeName.format(_T("\\\\.\\pipe\\%s"), name);
 
   HANDLE hPipe;
@@ -46,7 +46,7 @@ NamedPipe *PipeClient::connect(const TCHAR *name, unsigned int maxPortionSize)
 
   if (hPipe == INVALID_HANDLE_VALUE) {
     int errCode = GetLastError();
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Connect to pipe server failed, error code = %d"), errCode);
     throw Exception(errMess.getString());
   }
@@ -58,7 +58,7 @@ NamedPipe *PipeClient::connect(const TCHAR *name, unsigned int maxPortionSize)
                                NULL)      // don't set maximum time
                                ) {
     int errCode = GetLastError();
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("SetNamedPipeHandleState failed, error code = %d"), errCode);
     throw Exception(errMess.getString());
   }

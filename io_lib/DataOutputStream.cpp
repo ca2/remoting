@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "DataOutputStream.h"
-#include "util/StringStorage.h"
+//#include "util/::string.h"
 #include "util/Utf8StringStorage.h"
 #include <vector>
 
@@ -118,11 +118,11 @@ void DataOutputStream::writeInt64(long long x)
   writeUInt64((unsigned long long)x);
 }
 
-void DataOutputStream::writeUTF8(const TCHAR *string)
+void DataOutputStream::writeUTF8(const ::scoped_string & scopedstrstring)
 {
   size_t sizeInBytes = 0;
 
-  ::StringStorage strstg{string};
+  ::::string strstg{string};
 
   // to UTF8 string convertion
   ::Utf8StringStorage utf8str{strstg};

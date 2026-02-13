@@ -40,7 +40,7 @@ public:
    * @param path full path to file.
    * @param args arguments for application.
    */
-  Process(const TCHAR *path = _T(""), const TCHAR *args = _T(""));
+  Process(const ::scoped_string & scopedstrpath = _T(""), const ::scoped_string & scopedstrArgs = _T(""));
 
   /**
    * Destroys Process instance.
@@ -52,13 +52,13 @@ public:
    * Sets executable filename for process.
    * @param path.
    */
-  void setFilename(const TCHAR *path);
+  void setFilename(const ::scoped_string & scopedstrpath);
 
   /**
    * Sets arguments for process.
    * @param args.
    */
-  void setArguments(const TCHAR *args);
+  void setArguments(const ::scoped_string & scopedstrArgs);
 
   // Sets standard in/out/error handles for the child process.
   void setStandardIoHandles(HANDLE stdIn, HANDLE stdOut, HANDLE stdErr);
@@ -105,7 +105,7 @@ protected:
    * Returns command line string for process execution.
    * Used to avoid code duplicates.
    */
-  StringStorage getCommandLineString();
+  ::string getCommandLineString();
 
   // Fills the STARTUPINFO structure.
   // Before to use the STARTUPINFO structure in this class a function
@@ -117,8 +117,8 @@ protected:
    */
   void cleanup();
 
-  StringStorage m_path;
-  StringStorage m_args;
+  ::string m_path;
+  ::string m_args;
 
   HANDLE m_hProcess;
   HANDLE m_hThread;

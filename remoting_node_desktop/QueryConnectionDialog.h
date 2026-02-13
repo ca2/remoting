@@ -37,7 +37,7 @@ public:
   static const int REJECT_CHOISE = 0x1;
 
 public:
-  QueryConnectionDialog(const TCHAR *peerAddress, bool acceptByDefault,
+  QueryConnectionDialog(const ::scoped_string & scopedstrpeerAddress, bool acceptByDefault,
                         DWORD timeOutInSec);
   virtual ~QueryConnectionDialog();
 
@@ -62,7 +62,7 @@ protected:
   void updateTimeoutLabel();
 
 protected:
-  StringStorage m_peerAddress;
+  ::string m_peerAddress;
   bool m_acceptByDefault;
   DWORD m_timeout;
 

@@ -55,7 +55,7 @@ void TvnService::onStart()
     m_tvnServer->addListener(this);
     m_winServiceEvents->onSuccServiceStart();
   } catch (Exception &e) {
-    m_winServiceEvents->onFailedServiceStart(&StringStorage(e.getMessage()));
+    m_winServiceEvents->onFailedServiceStart(&::string(e.getMessage()));
   }
 }
 
@@ -81,7 +81,7 @@ void TvnService::onTvnServerShutdown()
 
 void TvnService::install()
 {
-  StringStorage binPath;
+  ::string binPath;
 
   TvnService::getBinPath(&binPath);
 
@@ -122,9 +122,9 @@ void TvnService::stop(bool waitCompletion)
   scManager.stopService(ServiceNames::SERVICE_NAME, waitCompletion);
 }
 
-bool TvnService::getBinPath(StringStorage *binPath)
+bool TvnService::getBinPath(::string & binPath)
 {
-  StringStorage pathToServiceBinary;
+  ::string pathToServiceBinary;
 
   // Get executable folder first.
   if (!Environment::getCurrentModulePath(&pathToServiceBinary)) {
@@ -139,7 +139,7 @@ bool TvnService::getBinPath(StringStorage *binPath)
   return true;
 }
 
-void TvnService::onLogInit(const TCHAR *logDir, const TCHAR *fileName,
+void TvnService::onLogInit(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrfileName,
                            unsigned char logLevel)
 {
   size_t headerLineCount = m_clientLogger.getLogDumpSize();
@@ -147,7 +147,7 @@ void TvnService::onLogInit(const TCHAR *logDir, const TCHAR *fileName,
   m_clientLogger.connect();
 }
 
-void TvnService::onChangeLogProps(const TCHAR *newLogDir, unsigned char newLevel)
+void TvnService::onChangeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel)
 {
   m_logServer.changeLogProps(newLogDir, newLevel);
 }

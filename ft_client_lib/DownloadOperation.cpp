@@ -27,8 +27,8 @@
 DownloadOperation::DownloadOperation(LogWriter *logWriter,
                                      const FileInfo *filesToDownload,
                                      size_t filesCount,
-                                     const TCHAR *pathToTargetRoot,
-                                     const TCHAR *pathToSourceRoot)
+                                     const ::scoped_string & scopedstrpathToTargetRoot,
+                                     const ::scoped_string & scopedstrpathToSourceRoot)
 : CopyOperation(logWriter),
   m_file(0),
   m_fos(0),
@@ -116,7 +116,7 @@ void DownloadOperation::onDownloadReply(DataInputStream *input)
   }
 
   try {
-    StringStorage path;
+    ::string path;
     m_file->getPath(&path);
     m_fos = new WinFileChannel(path.getString(), F_WRITE, FM_OPEN);
     // Seek to initial file position to continue writting
@@ -222,7 +222,7 @@ void DownloadOperation::onLastRequestFailedReply(DataInputStream *input)
     decFoldersToCalcSizeCount();
   } else {
     // Logging
-    StringStorage message;
+    ::string message;
 
     m_replyBuffer->getLastErrorMessage(&message);
 
@@ -250,7 +250,7 @@ void DownloadOperation::startDownload()
 
   // Logging
   if (m_toCopy->getFirst()->getParent() == NULL) {
-    StringStorage message;
+    ::string message;
 
     message.format(_T("Downloading '%s' %s"), m_pathToTargetFile.getString(),
                    fileInfo->isDirectory() ? _T("folder") : _T("file"));
@@ -318,7 +318,7 @@ void DownloadOperation::processFolder()
   } else {
     if (!local.mkdir()) {
       // Logging
-      StringStorage message;
+      ::string message;
 
       message.format(_T("Error: failed to create local folder '%s'"),
                      m_pathToTargetFile.getString());
@@ -377,8 +377,8 @@ void DownloadOperation::tryCalcInputFilesSize()
 
   while (fil != NULL) {
     if (fil->getFileInfo()->isDirectory()) {
-      StringStorage pathNoRoot;
-      StringStorage pathToFile;
+      ::string pathNoRoot;
+      ::string pathToFile;
 
       fil->getAbsolutePath(&pathNoRoot, _T('/'));
 
@@ -420,9 +420,9 @@ void DownloadOperation::decFoldersToCalcSizeCount()
   }
 }
 
-void DownloadOperation::notifyFailedToDownload(const TCHAR *errorDescription)
+void DownloadOperation::notifyFailedToDownload(const ::scoped_string & scopedstrerrorDescription)
 {
-  StringStorage message;
+  ::string message;
 
   message.format(_T("Error: failed to download '%s' (%s)"),
                  m_pathToSourceFile.getString(),

@@ -44,9 +44,9 @@ public:
   bool isVisible() const;
 
   void setIcon(Icon *icon);
-  void setText(const TCHAR *text);
+  void setText(const ::scoped_string & scopedstrtext);
 
-  void showBalloon(const TCHAR *message, const TCHAR *caption, DWORD timeoutMillis);
+  void showBalloon(const ::scoped_string & scopedstrmessage, const ::scoped_string & scopedstrcaption, DWORD timeoutMillis);
 
   void show();
   void hide();

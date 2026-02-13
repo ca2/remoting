@@ -311,7 +311,7 @@ bool ConfigDialog::validateInput()
 
 void ConfigDialog::updateCaption()
 {
-  StringStorage caption;
+  ::string caption;
 
   caption.format(StringTable::getString(IDS_SERVER_CONFIG_CAPTION_FORMAT),
                  StringTable::getString(m_isConfiguringService ? IDS_SERVICE : IDS_SERVER),

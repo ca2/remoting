@@ -70,7 +70,7 @@ public:
    * @return true if key is specified, false otherwise.
    * @remark must be called only after call of parse method.
    */
-  bool keySpecified(const TCHAR *key) const;
+  bool keySpecified(const ::scoped_string & scopedstrKey) const;
 
   bool installationRequested() const;
   bool removalRequested() const;

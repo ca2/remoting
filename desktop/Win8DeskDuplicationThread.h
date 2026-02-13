@@ -55,8 +55,8 @@ public:
 private:
   virtual void execute();
   virtual void onTerminate();
-  void setCriticalError(const TCHAR *reason);
-  void setRecoverableError(const TCHAR *reason);
+  void setCriticalError(const ::scoped_string & scopedstrreason);
+  void setRecoverableError(const ::scoped_string & scopedstrreason);
 
   void processMoveRects(size_t moveCount, size_t out);
   void processDirtyRects(size_t dirtyCount,

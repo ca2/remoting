@@ -70,7 +70,7 @@ void FileTransferCore::dataChunkCopied(unsigned long long totalBytesCopied, unsi
 
 int FileTransferCore::targetFileExists(FileInfo *sourceFileInfo,
                                        FileInfo *targetFileInfo,
-                                       const TCHAR *pathToTargetFile)
+                                       const ::scoped_string & scopedstrpathToTargetFile)
 {
   return m_ftInterface->onFtTargetFileExists(sourceFileInfo,
                                              targetFileInfo,
@@ -87,7 +87,7 @@ const OperationSupport &FileTransferCore::getSupportedOps()
   return m_supportedOps;
 }
 
-::std::vector<FileInfo> *FileTransferCore::getListLocalFolder(const TCHAR *pathToFile)
+::std::vector<FileInfo> *FileTransferCore::getListLocalFolder(const ::scoped_string & scopedstrpathToFile)
 {
   FolderListener fl(pathToFile);
   if (!fl.list()) {
@@ -172,13 +172,13 @@ void FileTransferCore::ftOpFinished(FileTransferOperation *sender)
 } // void
 
 void FileTransferCore::ftOpErrorMessage(FileTransferOperation *sender,
-                                        const TCHAR *message)
+                                        const ::scoped_string & scopedstrmessage)
 {
   m_ftInterface->onFtOpError(message);
 }
 
 void FileTransferCore::ftOpInfoMessage(FileTransferOperation *sender,
-                                       const TCHAR *message)
+                                       const ::scoped_string & scopedstrmessage)
 {
   m_ftInterface->onFtOpInfo(message);
 }
@@ -213,8 +213,8 @@ void FileTransferCore::executeOperation(FileTransferOperation *newOperation)
 
 void FileTransferCore::downloadOperation(const FileInfo *filesToDownload,
                                          size_t filesCount,
-                                         const TCHAR *pathToTargetRoot,
-                                         const TCHAR *pathToSourceRoot)
+                                         const ::scoped_string & scopedstrpathToTargetRoot,
+                                         const ::scoped_string & scopedstrpathToSourceRoot)
 {
   m_state = DOWNLOAD_STATE;
 
@@ -229,8 +229,8 @@ void FileTransferCore::downloadOperation(const FileInfo *filesToDownload,
 
 void FileTransferCore::uploadOperation(const FileInfo *filesToDownload,
                                        size_t filesCount,
-                                       const TCHAR *pathToSourceRoot,
-                                       const TCHAR *pathToTargetRoot)
+                                       const ::scoped_string & scopedstrpathToSourceRoot,
+                                       const ::scoped_string & scopedstrpathToTargetRoot)
 {
   m_state = UPLOAD_STATE;
 
@@ -245,7 +245,7 @@ void FileTransferCore::uploadOperation(const FileInfo *filesToDownload,
 
 void FileTransferCore::localFilesDeleteOperation(const FileInfo *filesToDelete,
                                                  unsigned int filesCount,
-                                                 const TCHAR *pathToTargetRoot)
+                                                 const ::scoped_string & scopedstrpathToTargetRoot)
 {
   m_state = LOCAL_REMOVE_STATE;
   executeOperation(new LocalFilesDeleteOperation(m_logWriter,
@@ -255,7 +255,7 @@ void FileTransferCore::localFilesDeleteOperation(const FileInfo *filesToDelete,
 
 void FileTransferCore::remoteFilesDeleteOperation(const FileInfo *filesInfoToDelete,
                                                  size_t filesCount,
-                                                 const TCHAR *pathToTargetRoot)
+                                                 const ::scoped_string & scopedstrpathToTargetRoot)
 {
   m_state = REMOVE_STATE;
   executeOperation(new RemoteFilesDeleteOperation(m_logWriter,
@@ -263,7 +263,7 @@ void FileTransferCore::remoteFilesDeleteOperation(const FileInfo *filesInfoToDel
                                                   pathToTargetRoot));
 }
 
-void FileTransferCore::remoteFolderCreateOperation(FileInfo file, const TCHAR *pathToTargetRoot)
+void FileTransferCore::remoteFolderCreateOperation(FileInfo file, const ::scoped_string & scopedstrpathToTargetRoot)
 {
     m_state = MKDIR_STATE;
 
@@ -273,7 +273,7 @@ void FileTransferCore::remoteFolderCreateOperation(FileInfo file, const TCHAR *p
 }
 void FileTransferCore::remoteFileRenameOperation(FileInfo sourceFileInfo,
                                                  FileInfo targetFileInfo,
-                                                 const TCHAR *pathToTargetRoot)
+                                                 const ::scoped_string & scopedstrpathToTargetRoot)
 {
   m_state = RENAME_STATE;
 
@@ -283,7 +283,7 @@ void FileTransferCore::remoteFileRenameOperation(FileInfo sourceFileInfo,
                                                  pathToTargetRoot));
 }
 
-void FileTransferCore::remoteFileListOperation(const TCHAR *pathToFile)
+void FileTransferCore::remoteFileListOperation(const ::scoped_string & scopedstrpathToFile)
 {
   m_state = FILE_LIST_STATE;
   executeOperation(new RemoteFileListOperation(m_logWriter, pathToFile));

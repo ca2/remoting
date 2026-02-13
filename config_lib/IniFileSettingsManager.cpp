@@ -27,15 +27,15 @@
 #include <crtdbg.h>
 #include <vector>
 
-IniFileSettingsManager::IniFileSettingsManager(const TCHAR *pathToFile, const TCHAR *appName)
+IniFileSettingsManager::IniFileSettingsManager(const ::file::path & path, const ::scoped_string & scopedstrAppName)
 {
-  m_pathToFile.setString(pathToFile);
-  m_appName.setString(appName);
+  m_path = path;
+  m_appName = scopedstrAppName;
 }
 
-IniFileSettingsManager::IniFileSettingsManager(const TCHAR *pathToFile)
+IniFileSettingsManager::IniFileSettingsManager(const ::file::path & path)
 {
-  m_pathToFile.setString(pathToFile);
+  m_path = path;
 }
 
 IniFileSettingsManager::IniFileSettingsManager()
@@ -46,14 +46,14 @@ IniFileSettingsManager::~IniFileSettingsManager()
 {
 }
 
-void IniFileSettingsManager::setApplicationName(const TCHAR *appName)
+void IniFileSettingsManager::setApplicationName(const ::scoped_string & scopedstrAppName)
 {
-  m_appName.setString(appName);
+  m_appName = scopedstrAppName;
 }
 
-void IniFileSettingsManager::setPathToFile(const TCHAR *pathToFile)
+void IniFileSettingsManager::setPathToFile(const ::scoped_string & scopedstrPathToFile)
 {
-  m_pathToFile.setString(pathToFile);
+  m_pathToFile = scopedstrPathToFile;
 }
 
 bool IniFileSettingsManager::isOk()
@@ -61,7 +61,7 @@ bool IniFileSettingsManager::isOk()
   return !m_pathToFile.is_empty();
 }
 
-bool IniFileSettingsManager::keyExist(const TCHAR *name)
+bool IniFileSettingsManager::keyExist(const ::scoped_string & scopedstrName)
 {
   //
   // To determinate key exists or not, place some non-standart default text
@@ -69,94 +69,94 @@ bool IniFileSettingsManager::keyExist(const TCHAR *name)
   // to default, then key does not exists.
   //
 
-  StringStorage value;
+  ::string value;
 
   // FIXME: Use random generated string instead of static text
-  const TCHAR * defaultValue = _T("_Ini_File_Key_Does_Not_Exist_Test");
+  ::string strDefaultValue = _T("_Ini_File_Key_Does_Not_Exist_Test");
 
-  getPrivateProfileString(name, &value, defaultValue);
+  getPrivateProfileString(scopedstrName, value, strDefaultValue);
 
-  if (value.isEqualTo(defaultValue)) {
+  if (value == strDefaultValue) {
     return false;
   }
   return true;
 }
 
-bool IniFileSettingsManager::deleteKey(const TCHAR *name)
+bool IniFileSettingsManager::deleteKey(const ::scoped_string & scopedstrName)
 {
-  return WritePrivateProfileString(m_appName.getString(), name,
-                                   NULL, m_pathToFile.getString()) == TRUE;
+  return WritePrivateProfileString(::wstring(m_appName), ::wstring(scopedstrName),
+                                   NULL, m_path.windows_path()) == TRUE;
 }
 
-bool IniFileSettingsManager::getString(const TCHAR *name, StringStorage *storage)
+bool IniFileSettingsManager::getString(const ::scoped_string & scopedstrName, ::string & strStorage)
 {
-  if (!keyExist(name)) {
+  if (!keyExist(scopedstrName)) {
     return false;
   }
-  getPrivateProfileString(name, storage, NULL);
+  getPrivateProfileString(scopedstrName, strStorage, NULL);
   return true;
 }
 
-bool IniFileSettingsManager::setString(const TCHAR *name, const TCHAR *value)
+bool IniFileSettingsManager::setString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrValue)
 {
-  if (value == NULL) {
+  if (scopedstrValue.is_empty()) {
     return false;
   }
-  return WritePrivateProfileString(m_appName.getString(), name,
-                                   value, m_pathToFile.getString()) == TRUE;
+  return WritePrivateProfileString(::wstring(m_appName), ::wstring(scopedstrName),
+                                   ::wstring(scopedstrValue), m_path.windows_path()) == TRUE;
 }
 
 // FIXME: Stub
-bool IniFileSettingsManager::getLong(const TCHAR *name, long *value)
+bool IniFileSettingsManager::getLong(const ::scoped_string & scopedstrName, long *value)
 {
   _ASSERT(FALSE);
   return false;
 }
 
 // FIXME: Stub
-bool IniFileSettingsManager::setLong(const TCHAR *name, long value)
+bool IniFileSettingsManager::setLong(const ::scoped_string & scopedstrName, long value)
 {
   _ASSERT(FALSE);
   return false;
 }
 
-bool IniFileSettingsManager::getBoolean(const TCHAR *name, bool *value)
+bool IniFileSettingsManager::getBoolean(const ::scoped_string & scopedstrName, bool *value)
 {
   int intVal;
-  if (!getInt(name, &intVal)) {
+  if (!getInt(scopedstrName, &intVal)) {
     return false;
   }
   *value = intVal == 1;
   return true;
 }
 
-bool IniFileSettingsManager::setBoolean(const TCHAR *name, bool value)
+bool IniFileSettingsManager::setBoolean(const ::scoped_string & scopedstrName, bool value)
 {
-  return setInt(name, value ? 1 : 0);
+  return setInt(scopedstrName, value ? 1 : 0);
 }
 
-bool IniFileSettingsManager::getUINT(const TCHAR *name, UINT *value)
+bool IniFileSettingsManager::getUINT(const ::scoped_string & scopedstrName, UINT *value)
 {
-  return getIntAndCastTo<UINT>(name, value);
+  return getIntAndCastTo<UINT>(scopedstrName, value);
 }
 
-bool IniFileSettingsManager::setUINT(const TCHAR *name, UINT value)
+bool IniFileSettingsManager::setUINT(const ::scoped_string & scopedstrName, UINT value)
 {
-  StringStorage stringVal;
+  ::string stringVal;
   stringVal.format(_T("%u"), value);
 
-  return setString(name, stringVal.getString());
+  return setString(scopedstrName, stringVal);
 }
 
-bool IniFileSettingsManager::getInt(const TCHAR *name, int *value)
+bool IniFileSettingsManager::getInt(const ::scoped_string & scopedstrName, int *value)
 {
   // We really cannot determinate result of GetPrivateProfileInt,
   // so use this trick, if returning value is defVal, than key does not
   // exists and method must return false.
   // FIXME: This trick will not work in some cases
   UINT defVal = 0xABCDEF;
-  UINT ret = GetPrivateProfileInt(m_appName.getString(), name, defVal,
-                                  m_pathToFile.getString());
+  UINT ret = GetPrivateProfileInt(::wstring(m_appName), ::wstring(scopedstrName), defVal,
+                                  m_path.windows_path());
   if (ret == defVal) {
     return false;
   }
@@ -166,41 +166,41 @@ bool IniFileSettingsManager::getInt(const TCHAR *name, int *value)
   return true;
 }
 
-bool IniFileSettingsManager::setInt(const TCHAR *name, int value)
+bool IniFileSettingsManager::setInt(const ::scoped_string & scopedstrName, int value)
 {
-  StringStorage stringVal;
+  ::string stringVal;
   stringVal.format(_T("%d"), value);
 
   return setString(name, stringVal.getString());
 }
 
-bool IniFileSettingsManager::getByte(const TCHAR *name, char *value)
+bool IniFileSettingsManager::getByte(const ::scoped_string & scopedstrName, char *value)
 {
   return getIntAndCastTo<char>(name, value);
 }
 
-bool IniFileSettingsManager::setByte(const TCHAR *name, char value)
+bool IniFileSettingsManager::setByte(const ::scoped_string & scopedstrName, char value)
 {
   return setInt(name, value);
 }
 
 // FIXME: Stub
-bool IniFileSettingsManager::getBinaryData(const TCHAR *name, void *value, size_t *size)
+bool IniFileSettingsManager::getBinaryData(const ::scoped_string & scopedstrName, void *value, size_t *size)
 {
   _ASSERT(FALSE);
   return false;
 }
 
 // FIXME: Stub
-bool IniFileSettingsManager::setBinaryData(const TCHAR *name, const void *value, size_t size)
+bool IniFileSettingsManager::setBinaryData(const ::scoped_string & scopedstrName, const void *value, size_t size)
 {
   _ASSERT(FALSE);
   return false;
 }
 
-void IniFileSettingsManager::getPrivateProfileString(const TCHAR *name,
-                                                     StringStorage *value,
-                                                     const TCHAR *defaultValue)
+void IniFileSettingsManager::getPrivateProfileString(const ::scoped_string & scopedstrName,
+                                                     ::string & value,
+                                                     const ::scoped_string & scopedstrDefaultValue)
 {
   ::std::vector<TCHAR> buffer;
   DWORD bufferSize = 1024;

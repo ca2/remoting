@@ -38,7 +38,7 @@ class ClientLogger : public Logger, private Thread, public LogDump
 {
 public:
   // @param logFileName - is a file name for log without extension.
-  ClientLogger(const TCHAR *publicPipeName, const TCHAR *logFileName);
+  ClientLogger(const ::scoped_string & scopedstrpublicPipeName, const ::scoped_string & scopedstrlogFileName);
   virtual ~ClientLogger();
 
   // The connect() function try connect to a log server. The function
@@ -50,7 +50,7 @@ public:
   void connect();
 
   // Sends log line to the log server.
-  virtual void print(int logLevel, const TCHAR *line);
+  virtual void print(int logLevel, const ::scoped_string & scopedstrline);
 
   virtual bool acceptsLevel(int logLevel);
 
@@ -60,7 +60,7 @@ private:
                      unsigned int threadId,
                      const DateTime & dt,
                      int level,
-                     const TCHAR *message);
+                     const ::scoped_string & scopedstrmessage);
 
   void freeResources();
 
@@ -79,8 +79,8 @@ private:
   int m_logBarrier;
   LocalMutex m_logBarMut;
 
-  StringStorage m_logFileName;
-  StringStorage m_publicPipeName;
+  ::string m_logFileName;
+  ::string m_publicPipeName;
 };
 
 #endif // __CLIENTLOGGER_H__

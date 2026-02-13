@@ -28,7 +28,7 @@
 
 #include "win_system/SecurityAttributes.h"
 
-Transport *TransportFactory::createSocketClientTransport(const TCHAR *connectHost,
+Transport *TransportFactory::createSocketClientTransport(const ::scoped_string & scopedstrconnectHost,
                                                          unsigned int connectPort)
 {
   SocketIPv4 *socket = new SocketIPv4();
@@ -43,7 +43,7 @@ Transport *TransportFactory::createSocketClientTransport(const TCHAR *connectHos
   return new SocketIPv4Transport(socket);
 }
 
-Transport *TransportFactory::createSocketServerTransport(const TCHAR *bindHost,
+Transport *TransportFactory::createSocketServerTransport(const ::scoped_string & scopedstrbindHost,
                                                          unsigned int bindPort)
 {
   SocketIPv4 *socket = new SocketIPv4();
@@ -59,12 +59,12 @@ Transport *TransportFactory::createSocketServerTransport(const TCHAR *bindHost,
   return new SocketIPv4Transport(socket);
 }
 
-Transport *TransportFactory::createPipeClientTransport(const TCHAR *name)
+Transport *TransportFactory::createPipeClientTransport(const ::scoped_string & scopedstrName)
 {
   return new NamedPipeTransport(PipeClient::connect(name, 0));
 }
 
-Transport *TransportFactory::createPipeServerTransport(const TCHAR *name)
+Transport *TransportFactory::createPipeServerTransport(const ::scoped_string & scopedstrName)
 {
   // FIXME: Memory leak.
   SecurityAttributes *pipeSecurity = new SecurityAttributes();

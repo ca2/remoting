@@ -31,14 +31,14 @@
 class StringParser
 {
 public:
-  static bool tryParseInt(const TCHAR *str);
-  static bool parseInt(const TCHAR *str, int *out);
+  static bool tryParseInt(const ::scoped_string & scopedstrstr);
+  static bool parseInt(const ::scoped_string & scopedstrstr, int *out);
   // FIXME: it returns true on values that greater then 0xFFFFFFFF.
-  static bool parseUInt(const TCHAR *str, unsigned int *out);
-  static bool parseUInt64(const TCHAR *str, unsigned long long *out);
-  static bool parseHex(const TCHAR *str, unsigned int *out);
-  static bool parseByte(const TCHAR *str, unsigned char *out);
-  static bool parseByteHex(const TCHAR *str, unsigned char *out);
+  static bool parseUInt(const ::scoped_string & scopedstrstr, unsigned int *out);
+  static bool parseUInt64(const ::scoped_string & scopedstrstr, unsigned long long *out);
+  static bool parseHex(const ::scoped_string & scopedstrstr, unsigned int *out);
+  static bool parseByte(const ::scoped_string & scopedstrstr, unsigned char *out);
+  static bool parseByteHex(const ::scoped_string & scopedstrstr, unsigned char *out);
 };
 
 #endif

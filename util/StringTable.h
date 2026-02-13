@@ -22,12 +22,13 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _STRING_TABLE_H_
-#define _STRING_TABLE_H_
+//#ifndef _STRING_TABLE_H_
+//#define _STRING_TABLE_H_
+#pragma once
 
-#include "StringStorage.h"
+////#include "::string.h"
 
-#include <map>
+//#include <map>
 
 
 
@@ -46,12 +47,13 @@ public:
    * (or assertion check will fail), cause this method used it.
    * @fixme stub.
    */
-  static const TCHAR *getString(UINT id);
+  static ::string getString(::iptr i);
 
 private:
   StringTable();
 
-  static ::std::map<UINT, StringStorage> _cache;
+  //static ::std::map<UINT, ::string> _cache;
+   static ::iptr_map<::string> s_mapString;
 };
 
-#endif
+//#endif

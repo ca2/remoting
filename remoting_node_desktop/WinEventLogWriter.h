@@ -44,16 +44,16 @@ public:
   virtual void enable();
 
   // The NewConnectionEvents implementations.
-  virtual void onSuccAuth(const StringStorage & ip);
-  virtual void onAuthFailed(const StringStorage & ip);
-  virtual void onDisconnect(const StringStorage & message);
+  virtual void onSuccAuth(const ::string & ip);
+  virtual void onAuthFailed(const ::string & ip);
+  virtual void onDisconnect(const ::string & message);
 
   // The ApplicationCrashEvents implementations.
-  virtual void onCrash(const StringStorage & dumpPath);
+  virtual void onCrash(const ::string & dumpPath);
 
   // The WinServiceEvents implementations.
   virtual void onSuccServiceStart();
-  virtual void onFailedServiceStart(const StringStorage & reason);
+  virtual void onFailedServiceStart(const ::string & reason);
   virtual void onServiceStop();
 
 private:

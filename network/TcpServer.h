@@ -48,7 +48,7 @@ public:
    * @param lockAddr determinates if need to lock adress to other processes cannot reuse it.
    * @throws Exception if fail to create tcp server.
    */
-  TcpServer(const TCHAR *bindHost,
+  TcpServer(const ::scoped_string & scopedstrbindHost,
             unsigned short bindPort,
             bool autoStart = false,
             bool lockAddr = false);
@@ -61,7 +61,7 @@ public:
   /**
    * Returns bind host.
    */
-  const TCHAR *getBindHost() const;
+  const ::scoped_string & scopedstrgetBindHost() const;
 
   /**
    * Returns bind port.
@@ -94,7 +94,7 @@ private:
   /**
    * Host to bind.
    */
-  StringStorage m_bindHost;
+  ::string m_bindHost;
   /**
    * Port to bind.
    */

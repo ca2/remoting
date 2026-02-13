@@ -84,7 +84,7 @@ void ViewPortState::setWindowHandle(HWND hwnd)
   m_windowIsResolved = true;
 }
 
-void ViewPortState::setWindowName(const StringStorage & windowName)
+void ViewPortState::setWindowName(const ::string & windowName)
 {
   m_mode = WINDOW_RECT;
   m_windowName = *windowName;

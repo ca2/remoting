@@ -69,7 +69,7 @@ void RfbDispatcher::execute()
       }
       ::std::map<unsigned int, RfbDispatcherListener *>::iterator iter = m_handlers.find(code);
       if (iter == m_handlers.end()) {
-        StringStorage errMess;
+        ::string errMess;
         errMess.format(_T("unhandled %d code has been received from a client"),
                        (int)code);
         throw Exception(errMess.getString());

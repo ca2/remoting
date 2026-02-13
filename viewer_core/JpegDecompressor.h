@@ -45,7 +45,7 @@
 #endif
 
 
-#include "util/StringStorage.h"
+//#include "util/::string.h"
 
 
 class JpegDecompressor
@@ -83,7 +83,7 @@ private:
   void cleanup();
 
 private:
-  METHODDEF(StringStorage) getMessage(j_common_ptr cinfo);
+  METHODDEF(::string) getMessage(j_common_ptr cinfo);
   METHODDEF(void) errorExit(j_common_ptr cinfo);
   METHODDEF(void) outputMessage(j_common_ptr cinfo);
 

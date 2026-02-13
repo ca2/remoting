@@ -54,7 +54,7 @@ SetPasswordsDialog::~SetPasswordsDialog()
 {
 }
 
-void SetPasswordsDialog::getRfbPass(StringStorage *pass)
+void SetPasswordsDialog::getRfbPass(::string & pass)
 {
   *pass = m_rfbPass;
 }
@@ -79,7 +79,7 @@ bool SetPasswordsDialog::getAdmPassForClear()
   return !m_protectControlInterface && !m_dontChangeAdmAuth;
 }
 
-void SetPasswordsDialog::getAdmPass(StringStorage *pass)
+void SetPasswordsDialog::getAdmPass(::string & pass)
 {
   *pass = m_admPass;
 }
@@ -152,10 +152,10 @@ BOOL SetPasswordsDialog::onDestroy()
 
 void SetPasswordsDialog::onOkButtonClick()
 {
-  StringStorage rfbPass1;
-  StringStorage rfbPass2;
-  StringStorage admPass1;
-  StringStorage admPass2;
+  ::string rfbPass1;
+  ::string rfbPass2;
+  ::string admPass1;
+  ::string admPass2;
 
   m_rfbPassEdit1.getText(&rfbPass1);
   m_rfbPassEdit2.getText(&rfbPass2);

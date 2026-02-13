@@ -34,7 +34,7 @@ public:
   ~ClipboardListener();
 
   // Interface function
-  virtual void onClipboardUpdate(const StringStorage & newClipboard) = 0;
+  virtual void onClipboardUpdate(const ::string & newClipboard) = 0;
 };
 
 #endif // __CLIPBOARDLISTENER_H__

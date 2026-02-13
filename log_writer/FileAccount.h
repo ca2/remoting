@@ -46,7 +46,7 @@ public:
   // immediately the accumulation will be happening parallelly to writing to the file.
   // If the storeHeader() function will be forgotten the accumulation will be stopped
   // at a maximum log header value automatically.
-  FileAccount(const TCHAR *logDir, const TCHAR *fileName, unsigned char logLevel, bool logHeadEnabled);
+  FileAccount(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrfileName, unsigned char logLevel, bool logHeadEnabled);
 
   // This constructor is a constructor with postponed initialization.
   // This constructor can be used when the log parameters are still unknown.
@@ -63,7 +63,7 @@ public:
   // Between the constructor and this function calling all log lines stores in
   // the dump. The init() function flushes the dump to the log file and disables
   // further dumping.
-  void init(const TCHAR *logDir, const TCHAR *fileName, unsigned char logLevel);
+  void init(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrfileName, unsigned char logLevel);
 
   // Allows change log directory and/or logLevel.
   // If log level changes from zero at first time the function will make
@@ -72,14 +72,14 @@ public:
   // If log directory has been changed the function will do like as level
   // changes from zero at first time but in new directory. If level changes to
   // zero the function closes the log file.
-  void changeLogProps(const TCHAR *newLogDir, unsigned char newLevel);
+  void changeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel);
 
   // Puts the clear file name to the *fileName argument.
-  void getFileName(StringStorage *fileName);
+  void getFileName(::string & fileName);
 
   // Tests the fileName argument with our clear file name if they
   // are equal the function returns true else false.
-  bool isTheOurFileName(const TCHAR *fileName);
+  bool isTheOurFileName(const ::scoped_string & scopedstrfileName);
 
   // Stores a log message to the log file if level is less or equal than
   // the log verbosity level.
@@ -87,7 +87,7 @@ public:
                      unsigned int threadId,
                      const DateTime & dt,
                      int level,
-                     const TCHAR *message);
+                     const ::scoped_string & scopedstrmessage);
 
   virtual bool acceptsLevel(int logLevel);
 
@@ -96,14 +96,14 @@ protected:
                      unsigned int threadId,
                      const DateTime & dt,
                      int level,
-                     const TCHAR *message);
+                     const ::scoped_string & scopedstrmessage);
 
 private:
   // Changes or creates or closes file depending on a new level and
   // log directory. If no changes detected then function return without
   // doing.
   // @throw Exception on an error.
-  void setNewFile(unsigned char newLevel, const TCHAR *newDir);
+  void setNewFile(unsigned char newLevel, const ::scoped_string & scopedstrNewDir);
 
   // Opens a log file if backup supported or replaces/created if not.
   // If directory after twice changes is the same and level > 0 then
@@ -125,17 +125,17 @@ private:
               unsigned int threadId,
               const DateTime & dt,
               int level,
-              const TCHAR *message);
+              const ::scoped_string & scopedstrmessage);
 
   // Prints self message the same log file (if it's possible)
-  void print(int level, const TCHAR *message);
+  void print(int level, const ::scoped_string & scopedstrmessage);
 
   bool printsLine(int level);
 
   void updateLogDirPath();
 
-  StringStorage m_logDir;
-  StringStorage m_fileName;
+  ::string m_logDir;
+  ::string m_fileName;
   unsigned char m_level;
   bool m_asFirstOpen;
   WinFile *m_file;

@@ -61,8 +61,8 @@ void EditPortMappingDialog::onOkButtonClick()
   PortMappingRect rect;
   int port;
 
-  StringStorage portStringStorage;
-  StringStorage rectStringStorage;
+  ::string portStringStorage;
+  ::string rectStringStorage;
 
   m_geometryTextBox.getText(&rectStringStorage);
   m_portTextBox.getText(&portStringStorage);
@@ -85,8 +85,8 @@ void EditPortMappingDialog::initControls()
 
 bool EditPortMappingDialog::isUserDataValid()
 {
-  StringStorage rectStringStorage;
-  StringStorage portStringStorage;
+  ::string rectStringStorage;
+  ::string portStringStorage;
 
   m_geometryTextBox.getText(&rectStringStorage);
   m_portTextBox.getText(&portStringStorage);
@@ -137,8 +137,8 @@ BOOL EditPortMappingDialog::onInitDialog()
     m_portTextBox.setText(_T("5901"));
     m_geometryTextBox.setText(_T("640x480+0+0"));
   } else if (m_dialogType == Edit) {
-    StringStorage portString;
-    StringStorage rectString;
+    ::string portString;
+    ::string rectString;
 
     portString.format(_T("%d"), m_mapping->getPort());
     m_mapping->getRect().toString(&rectString);

@@ -30,7 +30,7 @@
 class WindowsEvent
 {
 public:
-  WindowsEvent(const TCHAR *name = 0);
+  WindowsEvent(const ::scoped_string & scopedstrName = 0);
   virtual ~WindowsEvent();
 
   void notify();

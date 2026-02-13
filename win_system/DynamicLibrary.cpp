@@ -26,7 +26,7 @@
 
 #include <crtdbg.h>
 
-DynamicLibrary::DynamicLibrary(const TCHAR *filename)
+DynamicLibrary::DynamicLibrary(const ::scoped_string & scopedstrfilename)
 : m_module(0)
 {
   init(filename);
@@ -44,12 +44,12 @@ DynamicLibrary::~DynamicLibrary()
   }
 }
 
-void DynamicLibrary::init(const TCHAR *filename)
+void DynamicLibrary::init(const ::scoped_string & scopedstrfilename)
 {
   m_module = LoadLibrary(filename);
 
   if (m_module == 0) {
-    StringStorage errMsg;
+    ::string errMsg;
 
     errMsg.format(_T("%s library not found"), filename);
 

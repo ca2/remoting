@@ -111,7 +111,7 @@ void ViewerInstance::start()
     m_viewerCore.start(m_socket,
                        &m_viewerWnd, m_conConf.getSharedFlag());
   } else {
-    StringStorage strHost;
+    ::string strHost;
     m_condata.getReducedHost(&strHost);
     unsigned short portVal = m_condata.getPort();
     m_viewerCore.start(strHost.getString(), portVal,

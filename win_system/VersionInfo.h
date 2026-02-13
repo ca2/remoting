@@ -39,19 +39,19 @@ public:
    * @param pathToFile path to executable file to get version info from.
    * @throws SystemException on fail.
    */
-  VersionInfo(const TCHAR *pathToFile);
+  VersionInfo(const ::scoped_string & scopedstrpathToFile);
 
   /**
    * Returns product version info string.
    * @return product version info string.
    */
-  const TCHAR *getProductVersionString() const;
+  const ::scoped_string & scopedstrgetProductVersionString() const;
 
 private:
   /**
    * Product version as string.
    */
-  StringStorage m_productVersionString;
+  ::string m_productVersionString;
 };
 
 #endif

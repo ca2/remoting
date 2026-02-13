@@ -33,7 +33,7 @@ class WinFileChannel : public FileChannel
 public:
   // Creates a channel with opens or creates a file with desired access.
   // See WinFile for detail.
-  WinFileChannel(const TCHAR *pathName, DesiredAccess dAcc, FileMode fMode,
+  WinFileChannel(const ::scoped_string & scopedstrpathName, DesiredAccess dAcc, FileMode fMode,
                  bool sharedToRead = true);
   ~WinFileChannel();
 

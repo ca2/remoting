@@ -27,7 +27,7 @@
 
 #pragma warning(disable:4290)
 
-#include "StringStorage.h"
+//#include "::string.h"
 
 /**
  * Common Exception class.
@@ -43,7 +43,7 @@ public:
    * Creates exception with specified description.
    * @param format description string in printf-like notation.
    */
-  Exception(const TCHAR *format, ...);
+  Exception(const ::scoped_string & scopedstrformat, ...);
   /**
    * Destructor.
    */
@@ -52,10 +52,10 @@ public:
   /**
    * Returns description of exception.
    */
-  const TCHAR *getMessage() const;
+  ::string getMessage() const;
 
-protected:
-  StringStorage m_message;
+//protected:
+  ::string m_message;
 };
 
 #endif

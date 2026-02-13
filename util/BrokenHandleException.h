@@ -31,7 +31,7 @@
 class BrokenHandleException : public Exception
 {
 public:
-  BrokenHandleException(const TCHAR *message);
+  BrokenHandleException(const ::scoped_string & scopedstrmessage);
   ~BrokenHandleException();
 };
 

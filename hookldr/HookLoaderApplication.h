@@ -33,8 +33,8 @@ class HookLoaderApplication : public WindowsApplication,
 {
 public:
   HookLoaderApplication(HINSTANCE appInstance,
-                        const TCHAR *windowClassName,
-                        const TCHAR *commandLine);
+                        const ::scoped_string & scopedstrwindowClassName,
+                        const ::scoped_string & scopedstrcommandLine);
   virtual ~HookLoaderApplication();
 
 private:
@@ -47,7 +47,7 @@ private:
                                             WPARAM wparam,
                                             LPARAM lparam);
 
-  StringStorage m_commandLine;
+  ::string m_commandLine;
 
   ParentWatcher *m_parentWatcher;
 };

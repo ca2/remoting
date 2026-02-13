@@ -45,18 +45,18 @@ bool ResourceStrings::isValid(int res)
   return false;
 }
 
-StringStorage ResourceStrings::getStrRes(int strRes) 
+::string ResourceStrings::getStrRes(int strRes) 
 {
   ResourceLoader *rLoader = ResourceLoader::getInstance();
 
-  StringStorage str;
+  ::string str;
   rLoader->loadString(strRes, &str);
   return str.getString();
 }
 
-StringStorage ResourceStrings::getStrPureRes(int strRes) 
+::string ResourceStrings::getStrPureRes(int strRes) 
 {
-  StringStorage strTemp = getStrRes(strRes);
+  ::string strTemp = getStrRes(strRes);
   size_t index = strTemp.findChar(_T('\t'));
   if (index != -1) {
     index /= sizeof(TCHAR);

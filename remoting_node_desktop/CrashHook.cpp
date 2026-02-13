@@ -66,7 +66,7 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
   MINIDUMPWRITEDUMP miniDumpWriteDump = 0;
   try {
     // Try load the library from this exe mofule folder
-    StringStorage libName, moduleFolder;
+    ::string libName, moduleFolder;
     Environment::getCurrentModuleFolderPath(&moduleFolder);
     libName.format(_T("%s\\DbgHelp.dll"), moduleFolder.getString());
 
@@ -87,7 +87,7 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
     return retValue;
   }
 
-  StringStorage specFolder, dumpPath;
+  ::string specFolder, dumpPath;
   if (!Environment::getSpecialFolderPath(
          Environment::APPLICATION_DATA_SPECIAL_FOLDER, &specFolder)) {
     return retValue;
@@ -147,7 +147,7 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
       throw Exception(_T("Cannot create the crash dump file"));
     }
     if (guiEnabled) {
-      StringStorage succMess;
+      ::string succMess;
       succMess.format(_T("The debug information has been successfully")
                       _T(" saved to the %s file"), dumpPath.getString());
       MessageBox(0, succMess.getString(), ProductNames::PRODUCT_NAME, MB_OK);

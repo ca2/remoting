@@ -26,7 +26,7 @@
 
 WinProcessCommandLine::WinProcessCommandLine() 
 {
-  ::std::vector<StringStorage> out;
+  ::std::vector<::string> out;
 
   m_wcla = new WinCommandLineArgs(GetCommandLine());
   m_wcla->getArgVector(&out);
@@ -39,9 +39,9 @@ WinProcessCommandLine::WinProcessCommandLine()
   }
 }
 
-void WinProcessCommandLine::optionParser(StringStorage *out)
+void WinProcessCommandLine::optionParser(::string & out)
 {
-  ::std::pair<StringStorage, StringStorage> strPair;
+  ::std::pair<::string, ::string> strPair;
   
   out->remove(0, 1); 
   size_t ipos = out->findChar(_T('='));
@@ -49,7 +49,7 @@ void WinProcessCommandLine::optionParser(StringStorage *out)
     strPair.first = *out;
     strPair.second = _T("");
   } else {
-    StringStorage strTemp = *out;
+    ::string strTemp = *out;
     strTemp.remove(0, ipos+1);
     strPair.second = strTemp;
     strTemp = *out;
@@ -70,7 +70,7 @@ size_t WinProcessCommandLine::getOptionsCount()
   return m_strParams.size();
 }
 
-bool WinProcessCommandLine::findOptionValue(const StringStorage valName, StringStorage* strOut)
+bool WinProcessCommandLine::findOptionValue(const ::string valName, ::string &  strOut)
 {
   for (size_t i = 0; i < getOptionsCount(); i++) {
     if (m_strParams[i].first == valName) {
@@ -82,7 +82,7 @@ bool WinProcessCommandLine::findOptionValue(const StringStorage valName, StringS
   return false;
 }
 
-bool WinProcessCommandLine::getArgument(size_t index, StringStorage* strOut)
+bool WinProcessCommandLine::getArgument(size_t index, ::string &  strOut)
 {
   if (index < getArgumentsCount()) {
     *strOut = m_strParam[index];
@@ -92,7 +92,7 @@ bool WinProcessCommandLine::getArgument(size_t index, StringStorage* strOut)
   return false;
 }
 
-bool WinProcessCommandLine::getOption(size_t index, StringStorage* strOut)
+bool WinProcessCommandLine::getOption(size_t index, ::string &  strOut)
 {
   if (index < getOptionsCount()) {
     *strOut = m_strParams[index].first;

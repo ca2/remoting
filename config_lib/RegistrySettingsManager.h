@@ -25,7 +25,7 @@
 #ifndef _REGISTRY_SETTINGS_MANAGER_
 #define _REGISTRY_SETTINGS_MANAGER_
 
-#include "util/StringStorage.h"
+////#include "util/::string.h"
 #include "win_system/RegistryKey.h"
 
 #include "SettingsManager.h"
@@ -34,44 +34,44 @@ class RegistrySettingsManager : public SettingsManager
 {
 public:
   RegistrySettingsManager();
-  RegistrySettingsManager(HKEY rootKey, const TCHAR *entry, SECURITY_ATTRIBUTES *sa = 0);
+  RegistrySettingsManager(HKEY rootKey, const ::scoped_string & scopedstrentry, SECURITY_ATTRIBUTES *sa = 0);
   virtual ~RegistrySettingsManager();
 
 public:
 
-  void setRegistryKey(HKEY rootKey, const TCHAR *entry, SECURITY_ATTRIBUTES *sa = 0);
+  void setRegistryKey(HKEY rootKey, const ::scoped_string & scopedstrentry, SECURITY_ATTRIBUTES *sa = 0);
 
   virtual bool isOk();
 
-  virtual bool keyExist(const TCHAR *name);
-  virtual bool deleteKey(const TCHAR *name);
+  virtual bool keyExist(const ::scoped_string & scopedstrName);
+  virtual bool deleteKey(const ::scoped_string & scopedstrName);
 
-  virtual bool getString(const TCHAR *name, StringStorage *value);
-  virtual bool setString(const TCHAR *name, const TCHAR *value);
+  virtual bool getString(const ::scoped_string & scopedstrName, ::string & value);
+  virtual bool setString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrvalue);
 
-  virtual bool getLong(const TCHAR *name, long *value);
-  virtual bool setLong(const TCHAR *name, long value);
+  virtual bool getLong(const ::scoped_string & scopedstrName, long *value);
+  virtual bool setLong(const ::scoped_string & scopedstrName, long value);
 
-  virtual bool getBoolean(const TCHAR *name, bool *value);
-  virtual bool setBoolean(const TCHAR *name, bool value);
+  virtual bool getBoolean(const ::scoped_string & scopedstrName, bool *value);
+  virtual bool setBoolean(const ::scoped_string & scopedstrName, bool value);
 
-  virtual bool getUINT(const TCHAR *name, UINT *value);
-  virtual bool setUINT(const TCHAR *name, UINT value);
+  virtual bool getUINT(const ::scoped_string & scopedstrName, UINT *value);
+  virtual bool setUINT(const ::scoped_string & scopedstrName, UINT value);
 
-  virtual bool getInt(const TCHAR *name, int *value);
-  virtual bool setInt(const TCHAR *name, int value);
+  virtual bool getInt(const ::scoped_string & scopedstrName, int *value);
+  virtual bool setInt(const ::scoped_string & scopedstrName, int value);
 
-  virtual bool getByte(const TCHAR *name, char *value);
-  virtual bool setByte(const TCHAR *name, char value);
+  virtual bool getByte(const ::scoped_string & scopedstrName, char *value);
+  virtual bool setByte(const ::scoped_string & scopedstrName, char value);
 
-  virtual bool getBinaryData(const TCHAR *name, void *value, size_t *size);
-  virtual bool setBinaryData(const TCHAR *name, const void *value, size_t size);
+  virtual bool getBinaryData(const ::scoped_string & scopedstrName, void *value, size_t *size);
+  virtual bool setBinaryData(const ::scoped_string & scopedstrName, const void *value, size_t size);
 
-protected:
+//protected:
   RegistryKey *m_key;
 
-  void extractKeyName(const TCHAR *key, StringStorage *folder);
-  void extractValueName(const TCHAR *key, StringStorage *keyName);
+  virtual ::string key_path(const ::scoped_string & scopedstrKey);
+  virtual ::string key_name(const ::scoped_string & scopedstrKey);
 };
 
 #endif

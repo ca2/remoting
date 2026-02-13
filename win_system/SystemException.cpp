@@ -38,13 +38,13 @@ SystemException::SystemException(int errcode)
   createMessage(0, m_errcode);
 }
 
-SystemException::SystemException(const TCHAR *userMessage)
+SystemException::SystemException(const ::scoped_string & scopedstruserMessage)
 : Exception(), m_errcode(GetLastError())
 {
   createMessage(userMessage, m_errcode);
 }
 
-SystemException::SystemException(const TCHAR *userMessage, int errcode)
+SystemException::SystemException(const ::scoped_string & scopedstruserMessage, int errcode)
 : Exception(), m_errcode(errcode)
 {
   createMessage(userMessage, m_errcode);
@@ -59,12 +59,12 @@ int SystemException::getErrorCode() const
   return m_errcode;
 }
 
-const TCHAR *SystemException::getSystemErrorDescription() const
+const ::scoped_string & scopedstrSystemException::getSystemErrorDescription() const
 {
   return m_systemMessage.getString();
 }
 
-void SystemException::createMessage(const TCHAR *userMessage, int errcode)
+void SystemException::createMessage(const ::scoped_string & scopedstruserMessage, int errcode)
 {
   if (userMessage == 0 && errcode == ERROR_SUCCESS) {
     userMessage = _T("Thrown a system exception but the program")
@@ -88,7 +88,7 @@ void SystemException::createMessage(const TCHAR *userMessage, int errcode)
      formatMessageOk = false;
   }
 
-  StringStorage windowsErrorDescription(buffer);
+  ::string windowsErrorDescription(buffer);
 
   // Remove bad characters.
 

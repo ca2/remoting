@@ -23,7 +23,7 @@
 //
 #pragma once
 
-class StringStorage;
+class ::string;
 
 #include <vector>
 
@@ -39,7 +39,7 @@ private:
 public:
   Utf8StringStorage();
   Utf8StringStorage(const ::std::vector<char> *utf8Buffer);
-  Utf8StringStorage(const StringStorage & string);
+  Utf8StringStorage(const ::string & string);
   Utf8StringStorage(const Utf8StringStorage &string);
   ~Utf8StringStorage();
 
@@ -53,8 +53,8 @@ public:
   memsize getSize() const;
   // Returns length of string (in characters, not including terminating null character).
   memsize getLength() const;
-  void fromStringStorage(const StringStorage & src);
-  void toStringStorage(StringStorage *dst);
+  void fromStringStorage(const ::string & src);
+  void toStringStorage(::string & dst);
 
 };
 

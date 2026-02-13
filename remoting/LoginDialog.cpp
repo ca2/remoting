@@ -55,7 +55,7 @@ BOOL LoginDialog::onInitDialog()
 
 void LoginDialog::enableConnect()
 {
-  StringStorage str;
+  ::string str;
   int iSelected = m_server.getSelectedItemIndex();
   if (iSelected == -1) {
     m_server.getText(&str);
@@ -69,7 +69,7 @@ void LoginDialog::updateHistory()
 {
   ConnectionHistory *conHistory;
 
-  StringStorage currentServer;
+  ::string currentServer;
   m_server.getText(&currentServer);
   m_server.removeAllItems();
   conHistory = ViewerConfig::getInstance()->getConnectionHistory();
@@ -82,7 +82,7 @@ void LoginDialog::updateHistory()
     if (currentServer.is_empty()) {
       m_server.setSelectedItem(0);
     }
-    StringStorage server;
+    ::string server;
     m_server.getText(&server);
     ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
                             server.getString());
@@ -119,7 +119,7 @@ BOOL LoginDialog::onOptions()
   dialog.setConnectionConfig(&m_connectionConfig);
   dialog.setParent(getControl());
   if (dialog.showModal() == 1) {
-    StringStorage server;
+    ::string server;
     m_server.getText(&server);
     if (server.is_empty()) {
       ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
@@ -136,13 +136,13 @@ void LoginDialog::onOrder()
   openUrl(StringTable::getString(IDS_URL_LICENSING_FVC));
 }
 
-void LoginDialog::openUrl(const TCHAR *url)
+void LoginDialog::openUrl(const ::scoped_string & scopedstrurl)
 {
   // TODO: removed duplicated code (see AboutDialog.h)
   try {
     Shell::open(url, 0, 0);
   } catch (const SystemException &sysEx) {
-    StringStorage message;
+    ::string message;
 
     message.format(StringTable::getString(IDS_FAILED_TO_OPEN_URL_FORMAT), sysEx.getMessage());
 
@@ -194,7 +194,7 @@ BOOL LoginDialog::onCommand(UINT controlID, UINT notificationID)
         if (selectedItemIndex < 0) {
           return FALSE;
         }
-        StringStorage server;
+        ::string server;
         m_server.getItemText(selectedItemIndex, &server);
         ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
                                 server.getString());
@@ -244,7 +244,7 @@ BOOL LoginDialog::onCommand(UINT controlID, UINT notificationID)
   return TRUE;
 }
 
-StringStorage LoginDialog::getServerHost()
+::string LoginDialog::getServerHost()
 {
   return m_serverHost;
 }

@@ -56,10 +56,10 @@ UINT __stdcall AllowSas(MSIHANDLE hInstall)
 }
 
 // FIXME: Code duplication: see the ControlApplication class.
-void getCryptedPassword(unsigned char cryptedPass[8], const StringStorage & plainPass)
+void getCryptedPassword(unsigned char cryptedPass[8], const ::string & plainPass)
 {
   // Get a copy of the password truncated at 8 characters.
-  StringStorage copyOfPlainPass;
+  ::string copyOfPlainPass;
   plainPass->getSubstring(&copyOfPlainPass, 0, 7);
   // Convert from TCHAR[] to char[].
   // FIXME: Check exception catching.
@@ -75,12 +75,12 @@ void getCryptedPassword(unsigned char cryptedPass[8], const StringStorage & plai
 }
 
 void writePasswordToRegistry(MSIHANDLE hInstall,
-                             const TCHAR *registryPath,
-                             const TCHAR *entryName)
+                             const ::scoped_string & scopedstrregistryPath,
+                             const ::scoped_string & scopedstrentryName)
 {
   MsiProperties msiProp(hInstall);
   try {
-    StringStorage plainPass;
+    ::string plainPass;
     msiProp.getString(_T("CustomActionData"), &plainPass);
 
     unsigned char cryptedPass[8];
@@ -97,7 +97,7 @@ void writePasswordToRegistry(MSIHANDLE hInstall,
     }
 
   } catch (Exception &e) {
-    AnsiStringStorage ansiStr(&StringStorage(e.getMessage()));
+    AnsiStringStorage ansiStr(&::string(e.getMessage()));
     //WcaLog(LOGMSG_STANDARD, ansiStr.getString());
   }
 }

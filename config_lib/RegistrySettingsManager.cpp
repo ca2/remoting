@@ -31,10 +31,10 @@ RegistrySettingsManager::RegistrySettingsManager()
 {
 }
 
-RegistrySettingsManager::RegistrySettingsManager(HKEY rootKey, const TCHAR *entry, SECURITY_ATTRIBUTES *sa)
+RegistrySettingsManager::RegistrySettingsManager(HKEY rootKey, const ::scoped_string & scopedstrEntry, SECURITY_ATTRIBUTES *sa)
 : m_key(0)
 {
-  setRegistryKey(rootKey, entry, sa);
+  setRegistryKey(rootKey, scopedstrEntry, sa);
 }
 
 RegistrySettingsManager::~RegistrySettingsManager()
@@ -44,13 +44,13 @@ RegistrySettingsManager::~RegistrySettingsManager()
   }
 }
 
-void RegistrySettingsManager::setRegistryKey(HKEY rootKey, const TCHAR *entry, SECURITY_ATTRIBUTES *sa)
+void RegistrySettingsManager::setRegistryKey(HKEY rootKey, const ::scoped_string & scopedstrEntry, SECURITY_ATTRIBUTES *sa)
 {
   if (m_key != 0) {
     delete m_key;
   }
 
-  m_key = new RegistryKey(rootKey, entry, true, sa);
+  m_key = new RegistryKey(rootKey, scopedstrEntry, true, sa);
 }
 
 bool RegistrySettingsManager::isOk()
@@ -58,42 +58,44 @@ bool RegistrySettingsManager::isOk()
   return (m_key != NULL) && (m_key->isOpened());
 }
 
-void RegistrySettingsManager::extractKeyName(const TCHAR *key, StringStorage *folder)
+::string RegistrySettingsManager::key_path(const ::scoped_string & scopedstrKey)
 {
-  ::std::vector<TCHAR> folderString(_tcslen(key) + 1);
-  memcpy(&folderString.front(), key, folderString.size() * sizeof(TCHAR));
-  TCHAR *token = _tcsrchr(&folderString.front(), _T('\\'));
-  if (token != NULL) {
-    *token = _T('\0');
-    folder->setString(&folderString.front());
-  } else {
-    folder->setString(_T(""));
-  }
+   return scopedstrKey.rear_prefix('\\');
+  // ::std::vector<TCHAR> folderString(scopedstrKey.length() + 1);
+  // memcpy(&folderString.front(), key, folderString.size() * sizeof(TCHAR));
+  // TCHAR *token = _tcsrchr(&folderString.front(), _T('\\'));
+  // if (token != NULL) {
+  //   *token = _T('\0');
+  //   folder->setString(&folderString.front());
+  // } else {
+  //   folder->setString(_T(""));
+  // }
 }
 
-void RegistrySettingsManager::extractValueName(const TCHAR *key, StringStorage *keyName)
+::string RegistrySettingsManager::key_name(const ::scoped_string & scopedstrKey)
 {
-  ::std::vector<TCHAR> nameString(_tcslen(key) + 1);
-  memcpy(&nameString.front(), key, nameString.size() * sizeof(TCHAR));
-  TCHAR *token = _tcsrchr(&nameString.front(), _T('\\'));
-  if (token != NULL) {
-    keyName->setString(++token);
-  } else {
-    keyName->setString((TCHAR *)key);
-  }
+   return scopedstrKey.rear_word('\\');
+  // ::std::vector<TCHAR> nameString(_tcslen(key) + 1);
+  // memcpy(&nameString.front(), key, nameString.size() * sizeof(TCHAR));
+  // TCHAR *token = _tcsrchr(&nameString.front(), _T('\\'));
+  // if (token != NULL) {
+  //   keyName->setString(++token);
+  // } else {
+  //   keyName->setString((TCHAR *)key);
+  // }
 }
 
-bool RegistrySettingsManager::keyExist(const TCHAR *name)
+bool RegistrySettingsManager::keyExist(const ::scoped_string & scopedstrName)
 {
   if (!isOk()) return false;
   RegistryKey subKey(m_key, name, false);
   return subKey.isOpened();
 }
 
-bool RegistrySettingsManager::deleteKey(const TCHAR *name)
+bool RegistrySettingsManager::deleteKey(const ::scoped_string & scopedstrName)
 {
-  StringStorage keyName;
-  StringStorage valueName;
+  ::string keyName;
+  ::string valueName;
 
   extractKeyName(name, &keyName);
   extractValueName(name, &valueName);
@@ -106,10 +108,10 @@ bool RegistrySettingsManager::deleteKey(const TCHAR *name)
   return deleteAsSubKey || deleteAsValue;
 }
 
-bool RegistrySettingsManager::getString(const TCHAR *name, StringStorage *value)
+bool RegistrySettingsManager::getString(const ::scoped_string & scopedstrName, ::string & value)
 {
-  StringStorage keyName;
-  StringStorage valueName;
+  ::string keyName;
+  ::string valueName;
 
   extractKeyName(name, &keyName);
   extractValueName(name, &valueName);
@@ -119,10 +121,10 @@ bool RegistrySettingsManager::getString(const TCHAR *name, StringStorage *value)
   return subKey.getValueAsString(valueName.getString(), value);
 }
 
-bool RegistrySettingsManager::setString(const TCHAR *name, const TCHAR *value)
+bool RegistrySettingsManager::setString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrvalue)
 {
-  StringStorage keyName;
-  StringStorage valueName;
+  ::string keyName;
+  ::string valueName;
 
   extractKeyName(name, &keyName);
   extractValueName(name, &valueName);
@@ -132,10 +134,10 @@ bool RegistrySettingsManager::setString(const TCHAR *name, const TCHAR *value)
   return subKey.setValueAsString(name, value);
 }
 
-bool RegistrySettingsManager::getLong(const TCHAR *name, long *value)
+bool RegistrySettingsManager::getLong(const ::scoped_string & scopedstrName, long *value)
 {
-  StringStorage keyName;
-  StringStorage valueName;
+  ::string keyName;
+  ::string valueName;
 
   extractKeyName(name, &keyName);
   extractValueName(name, &valueName);
@@ -145,10 +147,10 @@ bool RegistrySettingsManager::getLong(const TCHAR *name, long *value)
   return subKey.getValueAsInt64(valueName.getString(), value);
 }
 
-bool RegistrySettingsManager::setLong(const TCHAR *name, long value)
+bool RegistrySettingsManager::setLong(const ::scoped_string & scopedstrName, long value)
 {
-  StringStorage keyName;
-  StringStorage valueName;
+  ::string keyName;
+  ::string valueName;
 
   extractKeyName(name, &keyName);
   extractValueName(name, &valueName);
@@ -158,7 +160,7 @@ bool RegistrySettingsManager::setLong(const TCHAR *name, long value)
   return subKey.setValueAsInt64(name, value);
 }
 
-bool RegistrySettingsManager::getBoolean(const TCHAR *name, bool *value)
+bool RegistrySettingsManager::getBoolean(const ::scoped_string & scopedstrName, bool *value)
 {
   int intVal = 0;
   if (!getInt(name, &intVal)) {
@@ -168,25 +170,25 @@ bool RegistrySettingsManager::getBoolean(const TCHAR *name, bool *value)
   return true;
 }
 
-bool RegistrySettingsManager::setBoolean(const TCHAR *name, bool value)
+bool RegistrySettingsManager::setBoolean(const ::scoped_string & scopedstrName, bool value)
 {
   return setInt(name, value ? 1 : 0);
 }
 
-bool RegistrySettingsManager::getUINT(const TCHAR *name, UINT *value)
+bool RegistrySettingsManager::getUINT(const ::scoped_string & scopedstrName, UINT *value)
 {
   return getInt(name, (int *)value);
 }
 
-bool RegistrySettingsManager::setUINT(const TCHAR *name, UINT value)
+bool RegistrySettingsManager::setUINT(const ::scoped_string & scopedstrName, UINT value)
 {
   return setInt(name, (int)value);
 }
 
-bool RegistrySettingsManager::getInt(const TCHAR *name, int *value)
+bool RegistrySettingsManager::getInt(const ::scoped_string & scopedstrName, int *value)
 {
-  StringStorage keyName;
-  StringStorage valueName;
+  ::string keyName;
+  ::string valueName;
 
   extractKeyName(name, &keyName);
   extractValueName(name, &valueName);
@@ -196,10 +198,10 @@ bool RegistrySettingsManager::getInt(const TCHAR *name, int *value)
   return subKey.getValueAsInt32(valueName.getString(), value);
 }
 
-bool RegistrySettingsManager::setInt(const TCHAR *name, int value)
+bool RegistrySettingsManager::setInt(const ::scoped_string & scopedstrName, int value)
 {
-  StringStorage keyName;
-  StringStorage valueName;
+  ::string keyName;
+  ::string valueName;
 
   extractKeyName(name, &keyName);
   extractValueName(name, &valueName);
@@ -209,7 +211,7 @@ bool RegistrySettingsManager::setInt(const TCHAR *name, int value)
   return subKey.setValueAsInt32(name, value);
 }
 
-bool RegistrySettingsManager::getByte(const TCHAR *name, char *value)
+bool RegistrySettingsManager::getByte(const ::scoped_string & scopedstrName, char *value)
 {
   int intVal = 0;
   if (!getInt(name, &intVal)) {
@@ -219,15 +221,15 @@ bool RegistrySettingsManager::getByte(const TCHAR *name, char *value)
   return true;
 }
 
-bool RegistrySettingsManager::setByte(const TCHAR *name, char value)
+bool RegistrySettingsManager::setByte(const ::scoped_string & scopedstrName, char value)
 {
   return setInt(name, (int)value);
 }
 
-bool RegistrySettingsManager::getBinaryData(const TCHAR *name, void *value, size_t *size)
+bool RegistrySettingsManager::getBinaryData(const ::scoped_string & scopedstrName, void *value, size_t *size)
 {
-  StringStorage keyName;
-  StringStorage valueName;
+  ::string keyName;
+  ::string valueName;
 
   extractKeyName(name, &keyName);
   extractValueName(name, &valueName);
@@ -237,10 +239,10 @@ bool RegistrySettingsManager::getBinaryData(const TCHAR *name, void *value, size
   return subKey.getValueAsBinary(name, value, size);
 }
 
-bool RegistrySettingsManager::setBinaryData(const TCHAR *name, const void *value, size_t size)
+bool RegistrySettingsManager::setBinaryData(const ::scoped_string & scopedstrName, const void *value, size_t size)
 {
-  StringStorage keyName;
-  StringStorage valueName;
+  ::string keyName;
+  ::string valueName;
 
   extractKeyName(name, &keyName);
   extractValueName(name, &valueName);

@@ -64,7 +64,7 @@ void AnonymousPipeFactory::generatePipes(AnonymousPipe **firstSide,
     throw;
   }
 
-  const TCHAR *errMess = _T("Cannot disable inheritance for anonymous pipe");
+  const ::scoped_string & scopedstrerrMess = _T("Cannot disable inheritance for anonymous pipe");
   if (!firstSideIsInheritable) {
     if (SetHandleInformation(hFirstSideWrite, HANDLE_FLAG_INHERIT, 0) == 0) {
       SystemException(errMess);

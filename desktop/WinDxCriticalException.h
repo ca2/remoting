@@ -30,7 +30,7 @@
 class WinDxCriticalException : public WinDxException
 {
 public:
-  WinDxCriticalException(const TCHAR *message, HRESULT errCode);
+  WinDxCriticalException(const ::scoped_string & scopedstrmessage, HRESULT errCode);
   virtual ~WinDxCriticalException();
 };
 

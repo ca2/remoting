@@ -177,7 +177,7 @@ void TightDecoder::processJpeg(RfbInputGate *input,
         drawJpegBytes(frameBuffer, &pixels, dstRect);
       }
     } catch (const Exception &ex) {
-      StringStorage error;
+      ::string error;
       error.format(_T("Error in tight-decoder, subencoding \"jpeg\": %s"), 
                    ex.getMessage());
       m_logWriter->error(error.getString());

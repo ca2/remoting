@@ -34,15 +34,15 @@ ConnectStringParser::~ConnectStringParser()
 {
 }
 
-bool ConnectStringParser::parse(const TCHAR *connectString,
-                                StringStorage *connectHost,
+bool ConnectStringParser::parse(const ::scoped_string & scopedstrconnectString,
+                                ::string & connectHost,
                                 unsigned short *connectPort)
 {
-  StringStorage connStrStorage(connectString);
+  ::string connStrStorage(connectString);
 
   size_t len = 2;
 
-  StringStorage splitted[2];
+  ::string splitted[2];
 
   if (!connStrStorage.split(_T(":"), splitted, &len)) {
     return false;

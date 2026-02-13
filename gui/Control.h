@@ -26,7 +26,7 @@
 //#define __CONTROL_H_
 
 #include "util/CommonHeader.h"
-#include "util/StringStorage.h"
+//#include "util/::string.h"
 
 enum VerticalAlignment
 {
@@ -67,6 +67,50 @@ namespace windows
 
       virtual HWND get_hwnd();
 
+      //
+      // Sets input focus to this control
+      //
+
+      virtual void set_focus();
+
+      //
+      // Return true if window has input focus
+      //
+
+      virtual bool has_focus();
+
+      //
+      // Puts this control foreground and activates it
+      //
+
+      virtual bool set_foreground();
+
+      //
+      // Changes visible state of this control
+      //
+
+      virtual void set_visible(bool bVisible);
+
+      //
+      // Checks if this control is active (not disabled)
+      //
+
+      virtual bool is_enabled();
+
+      //
+      // Invalidates control
+      //
+
+      virtual void invalidate();
+
+      //
+      // Gets text associated with window
+      //
+
+      //virtual void getText(::string & storage);
+      virtual ::string get_text();
+
+
    };
 }
 
@@ -92,7 +136,7 @@ public:
   // Sets text associated with window
   //
 
-  virtual void setText(const TCHAR *text);
+  virtual void setText(const ::scoped_string & scopedstrtext);
   virtual void setSignedInt(int value);
   virtual void setUnsignedInt(unsigned int value);
 
@@ -102,47 +146,6 @@ public:
 
   void setTextVerticalAlignment(VerticalAlignment align);
 
-  //
-  // Sets input focus to this control
-  //
-
-  void setFocus();
-
-  //
-  // Return true if window has input focus
-  //
-
-  bool hasFocus();
-
-  //
-  // Puts this control foreground and activates it
-  //
-
-  bool setForeground();
-
-  //
-  // Changes visible state of this control
-  //
-
-  void setVisible(bool visible);
-
-  //
-  // Checks if this control is active (not disabled)
-  //
-
-  virtual bool isEnabled();
-
-  //
-  // Invalidates control
-  //
-
-  void invalidate();
-
-  //
-  // Gets text associated with window
-  //
-
-  virtual void getText(StringStorage *storage);
 
   //
   // Returns text vertical alignment

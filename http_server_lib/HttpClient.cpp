@@ -61,7 +61,7 @@ void HttpClient::execute()
 
     m_socket->getPeerAddr(&peerAddress);
 
-    StringStorage peerHost;
+    ::string peerHost;
 
     peerAddress.toString(&peerHost);
 

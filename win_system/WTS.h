@@ -121,8 +121,8 @@ public:
   // rdp.
   static void duplicatePipeClientToken(HANDLE pipeHandle);
 
-  static StringStorage getUserName(DWORD sessionId, LogWriter *log);
-  static StringStorage getCurrentUserName(LogWriter* log);
+  static ::string getUserName(DWORD sessionId, LogWriter *log);
+  static ::string getCurrentUserName(LogWriter* log);
 
   static bool sessionIsLocked(DWORD sessionId, LogWriter* log);
 
@@ -134,7 +134,7 @@ public:
    * Returns user name for given access token.
    * @param token access or impersonation token.
    */
-  static StringStorage getTokenUserName(HANDLE token);
+  static ::string getTokenUserName(HANDLE token);
 
 private:
   /**

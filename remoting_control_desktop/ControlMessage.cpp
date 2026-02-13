@@ -38,7 +38,7 @@
 #include <crtdbg.h>
 
 ControlMessage::ControlMessage(unsigned int messageId, ControlGate *gate,
-                               const TCHAR *passwordFile,
+                               const ::scoped_string & scopedstrpasswordFile,
                                bool getPassFromConfigEnabled,
                                bool forService)
 : DataOutputStream(0), m_messageId(messageId), m_gate(gate),
@@ -78,7 +78,7 @@ void ControlMessage::checkRetCode()
   switch (messageId) {
   case ControlProto::REPLY_ERROR:
     {
-      StringStorage message;
+      ::string message;
       m_gate->readUTF8(&message);
       throw RemoteException(message.getString());
     }
@@ -121,7 +121,7 @@ void ControlMessage::authFromFile()
     }
   }
   AnsiStringStorage ansiPwd(ansiBuff);
-  StringStorage password;
+  ::string password;
   ansiPwd.toStringStorage(&password);
   ControlAuth auth(m_gate, password.getString());
   send();
@@ -142,7 +142,7 @@ void ControlMessage::authFromRegistry()
     VncPassCrypt::getPlainPass(plainPassword, hidePassword);
 
     AnsiStringStorage plainAnsiString((char *)plainPassword);
-    StringStorage password;
+    ::string password;
     plainAnsiString.toStringStorage(&password);
     // Clear ansi plain password from memory.
     memset(plainPassword, 0, sizeof(plainPassword));

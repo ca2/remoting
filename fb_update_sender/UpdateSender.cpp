@@ -120,7 +120,7 @@ void UpdateSender::onRequest(unsigned int reqCode, RfbInputGate *input)
     readVideoFreeze(input);
     break;
   default:
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Unknown %d protocol code received"), (int)reqCode);
     throw Exception(errMess.getString());
     break;

@@ -31,11 +31,11 @@
 #include "util/DesCrypt.h"
 #include <algorithm>
 
-ControlAuth::ControlAuth(ControlGate *gate, const TCHAR *password)
+ControlAuth::ControlAuth(ControlGate *gate, const ::scoped_string & scopedstrpassword)
 : m_gate(gate)
 {
   // Prepare data for authentication.
-  StringStorage truncatedPass(password);
+  ::string truncatedPass(password);
   truncatedPass.getSubstring(&truncatedPass, 0, ServerConfig::VNC_PASSWORD_SIZE - 1);
 
   AnsiStringStorage passwordAnsi(&truncatedPass);
@@ -57,7 +57,7 @@ ControlAuth::ControlAuth(ControlGate *gate, const TCHAR *password)
   switch (result) {
   case ControlProto::REPLY_ERROR:
     {
-      StringStorage authFailReason;
+      ::string authFailReason;
 
       m_gate->readUTF8(&authFailReason);
 

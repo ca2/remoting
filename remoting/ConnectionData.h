@@ -25,7 +25,7 @@
 #ifndef _CONNECTION_DATA_
 #define _CONNECTION_DATA_
 
-#include "util/StringStorage.h"
+//#include "util/::string.h"
 #include "rfb/HostPath.h"
 
 class ConnectionData
@@ -37,13 +37,13 @@ public:
   //
   // This methods is setter and getter of hostname or ::std::pair of hostname and port.
   //
-  void setHost(const StringStorage & host);
-  StringStorage getHost() const;
+  void setHost(const ::string & host);
+  ::string getHost() const;
 
   //
   // This method return hostname without port.
   //
-  void getReducedHost(StringStorage *strHost) const;
+  void getReducedHost(::string & strHost) const;
 
   //
   // This method return port.
@@ -58,10 +58,10 @@ public:
   //
   // This methods is setter and getters of password.
   //
-  StringStorage getPlainPassword() const;
-  StringStorage getCryptedPassword() const;
-  void setPlainPassword(const StringStorage & password);
-  void setCryptedPassword(const StringStorage & password);
+  ::string getPlainPassword() const;
+  ::string getCryptedPassword() const;
+  void setPlainPassword(const ::string & password);
+  void setCryptedPassword(const ::string & password);
   bool isSetPassword() const;
   void resetPassword();
 
@@ -86,7 +86,7 @@ protected:
   bool m_isIncoming;
 
   // Saved password is crypted.
-  StringStorage m_defaultPassword;
+  ::string m_defaultPassword;
 
   bool m_isSetDispatchId;
   unsigned int m_dispatchId;

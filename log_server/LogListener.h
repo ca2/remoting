@@ -36,8 +36,8 @@ public:
                      unsigned int threadId,
                      const DateTime & dt,
                      int level,
-                     const TCHAR *message) = 0;
-  virtual void onAnErrorFromLogConn(const TCHAR *message) = 0;
+                     const ::scoped_string & scopedstrmessage) = 0;
+  virtual void onAnErrorFromLogConn(const ::scoped_string & scopedstrmessage) = 0;
 };
 
 #endif // __LOGLISTENER_H__

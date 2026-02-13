@@ -44,7 +44,7 @@ void EmulatedAnonymousPipeFactory::generatePipes(NamedPipe **serverPipe, bool se
   SecurityAttributes secAttr;
   secAttr.setInheritable();
 
-  StringStorage randomName;
+  ::string randomName;
   getUniqPipeName(&randomName);
   PipeServer pipeServer(randomName.getString(), m_bufferSize, 0, 1000);
   *clientPipe = PipeClient::connect(randomName.getString(), m_bufferSize);
@@ -53,7 +53,7 @@ void EmulatedAnonymousPipeFactory::generatePipes(NamedPipe **serverPipe, bool se
   HANDLE hThisSideWrite = (*serverPipe)->getHandle();
   HANDLE hOtherSideRead = (*clientPipe)->getHandle();
 
-  const TCHAR *errMess = _T("Cannot disable inheritance for named pipe");
+  const ::scoped_string & scopedstrerrMess = _T("Cannot disable inheritance for named pipe");
   if (!serverInheritable) {
     if (SetHandleInformation(hThisSideWrite, HANDLE_FLAG_INHERIT, 0) == 0) {
       SystemException(errMess);
@@ -66,7 +66,7 @@ void EmulatedAnonymousPipeFactory::generatePipes(NamedPipe **serverPipe, bool se
   }
 }
 
-void EmulatedAnonymousPipeFactory::getUniqPipeName(StringStorage *result)
+void EmulatedAnonymousPipeFactory::getUniqPipeName(::string & result)
 {
   srand((unsigned)time(0));
   for (int i = 0; i < 20; i++) {

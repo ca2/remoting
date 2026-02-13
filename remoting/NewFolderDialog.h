@@ -36,8 +36,8 @@ public:
   NewFolderDialog(Control *parent);
   ~NewFolderDialog();
 
-  void setFileName(const TCHAR *filename);
-  void getFileName(StringStorage *storage);
+  void setFileName(const ::scoped_string & scopedstrfilename);
+  void getFileName(::string & storage);
 
 protected:
 
@@ -70,7 +70,7 @@ protected:
   Control m_label;
   TextBox m_fileNameTextBox;
 
-  StringStorage m_fileName;
+  ::string m_fileName;
 };
 
 #endif

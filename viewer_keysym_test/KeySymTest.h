@@ -30,7 +30,7 @@
 class KeySymTest : public RfbKeySymListener
 {
 public:
-  KeySymTest(const TCHAR *fileFrom, const TCHAR *fileTo);
+  KeySymTest(const ::scoped_string & scopedstrfileFrom, const ::scoped_string & scopedstrfileTo);
   virtual ~KeySymTest();
 
   int run();
@@ -41,20 +41,20 @@ private:
   static const TCHAR VALID_WORD_LETTERS[];
 
   // Removes comment from the line. Comments must start with the "#" symbol.
-  void removeComments(StringStorage *line, StringStorage *extractedComment);
+  void removeComments(::string & line, ::string & extractedComment);
 
-  bool readLine(StringStorage *line);
+  bool readLine(::string & line);
 
   // pos in - position to start search a word, out - position to start search
   // for next word.
   // Returns true if word has been found.
-  bool getWord(const StringStorage & line, size_t *pos, StringStorage *word);
+  bool getWord(const ::string & line, size_t *pos, ::string & word);
 
   void changeKbdLayout(HKL hkl);
 
   RfbKeySym *m_rfbKeySym;
-  StringStorage m_fromFileName;
-  StringStorage m_toFileName;
+  ::string m_fromFileName;
+  ::string m_toFileName;
   FILE *m_fFrom;
   FILE *m_fTo;
   size_t m_lineNumber;

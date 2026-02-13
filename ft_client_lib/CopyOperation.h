@@ -48,16 +48,16 @@ protected:
   FileInfoList *m_toCopy;
 
   // Path to root folder where files that should be copied is located
-  StringStorage m_pathToSourceRoot;
+  ::string m_pathToSourceRoot;
   // Path to target root folder where copied files will be located
   // after coping
-  StringStorage m_pathToTargetRoot;
+  ::string m_pathToTargetRoot;
 
   // Path to source file that we currently coping
-  StringStorage m_pathToSourceFile;
+  ::string m_pathToSourceFile;
   // Path to target file in that we currently coping
   // source file
-  StringStorage m_pathToTargetFile;
+  ::string m_pathToTargetFile;
 
   // Listener of copy operation events
   CopyFileEventListener *m_copyListener;

@@ -58,7 +58,7 @@ void UpdateHandlerClient::onRequest(unsigned char reqCode, BlockingGate *backGat
     m_externalUpdateListener->onUpdate();
     break;
   default:
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Unknown %d protocol code received from a pipe ")
                    _T("update detector"), (int)reqCode);
     throw Exception(errMess.getString());

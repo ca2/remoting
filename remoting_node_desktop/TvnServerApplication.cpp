@@ -38,8 +38,8 @@
 #include "win_system/RegistryKey.h"
 
 TvnServerApplication::TvnServerApplication(HINSTANCE hInstance,
-                                           const TCHAR *windowClassName,
-                                           const TCHAR *commandLine,
+                                           const ::scoped_string & scopedstrwindowClassName,
+                                           const ::scoped_string & scopedstrcommandLine,
                                            NewConnectionEvents *newConnectionEvents)
 : WindowsApplication(hInstance, windowClassName),
   m_fileLogger(true),
@@ -113,7 +113,7 @@ int TvnServerApplication::run()
     return exitCode;
   } catch (Exception &e) {
     // FIXME: Move string to resource
-    StringStorage message;
+    ::string message;
     message.format(_T("Couldn't run the server: %s"), e.getMessage());
     MessageBox(0,
                message.getString(),
@@ -127,14 +127,14 @@ void TvnServerApplication::onTvnServerShutdown()
   WindowsApplication::shutdown();
 }
 
-void TvnServerApplication::onLogInit(const TCHAR *logDir, const TCHAR *fileName,
+void TvnServerApplication::onLogInit(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrfileName,
                                      unsigned char logLevel)
 {
   m_fileLogger.init(logDir, fileName, logLevel);
   m_fileLogger.storeHeader();
 }
 
-void TvnServerApplication::onChangeLogProps(const TCHAR *newLogDir, unsigned char newLevel)
+void TvnServerApplication::onChangeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel)
 {
   m_fileLogger.changeLogProps(newLogDir, newLevel);
 }

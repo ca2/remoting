@@ -62,7 +62,7 @@ public:
   // should check logLevel and decide either to accept or to decline the log
   // message.
   //
-  virtual void print(int logLevel, const TCHAR *line) = 0;
+  virtual void print(int logLevel, const ::scoped_string & scopedstrline) = 0;
 
   //
   // Implementations of this abstract function should return true if they ready

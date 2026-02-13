@@ -53,7 +53,7 @@ public:
    *
    * @throws SocketException on socket error.
    */
-  static Transport *createSocketClientTransport(const TCHAR *connectHost,
+  static Transport *createSocketClientTransport(const ::scoped_string & scopedstrconnectHost,
                                                 unsigned int connectPort);
   /**
    * Creates server transport that uses bound socket.
@@ -67,7 +67,7 @@ public:
    *
    * @throws SocketException on socket error.
    */
-  static Transport *createSocketServerTransport(const TCHAR *bindHost,
+  static Transport *createSocketServerTransport(const ::scoped_string & scopedstrbindHost,
                                                 unsigned int bindPort);
 
   /**
@@ -78,7 +78,7 @@ public:
    *
    * @throws Exception on socket error.
    */
-  static Transport *createPipeClientTransport(const TCHAR *name);
+  static Transport *createPipeClientTransport(const ::scoped_string & scopedstrName);
 
   /**
    * Creates server transport that uses named pipe.
@@ -88,7 +88,7 @@ public:
    *
    * @throws Exception on socket error.
    */
-  static Transport *createPipeServerTransport(const TCHAR *name);
+  static Transport *createPipeServerTransport(const ::scoped_string & scopedstrName);
 
 private:
   /**

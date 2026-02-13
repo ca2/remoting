@@ -36,7 +36,7 @@ ControlAuthDialog::~ControlAuthDialog()
 {
 }
 
-const TCHAR *ControlAuthDialog::getPassword() const
+const ::scoped_string & scopedstrControlAuthDialog::getPassword() const
 {
   return m_password.getString();
 }

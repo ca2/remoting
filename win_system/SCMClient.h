@@ -98,14 +98,14 @@ public:
    * @param dependencies [optional] service dependencies.
    * @throws SystemException on fail.
    */
-  void installService(const TCHAR *name, const TCHAR *nameToDisplay,
-                      const TCHAR *binPath, const TCHAR *dependencies = _T(""));
+  void installService(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrNameToDisplay,
+                      const ::scoped_string & scopedstrbinPath, const ::scoped_string & scopedstrDependencies = _T(""));
   /**
    * Unregisters existing service from services.
    * @param name name of service to unregister.
    * @throws SystemException on fail.
    */
-  void removeService(const TCHAR *name);
+  void removeService(const ::scoped_string & scopedstrName);
   /**
    * Starts existing service.
    * @param name name of service to start.
@@ -113,7 +113,7 @@ public:
    *   SERVICE_RUNNING.
    * @throws SystemException, SCMClientException on fail.
    */
-  void startService(const TCHAR *name, bool waitCompletion = false)
+  void startService(const ::scoped_string & scopedstrName, bool waitCompletion = false)
 ;
   /**
    * Stops running service execution.
@@ -122,7 +122,7 @@ public:
    *   SERVICE_STOPPED.
    * @throws SystemException, SCMClientException on fail.
    */
-  void stopService(const TCHAR *name, bool waitCompletion = false)
+  void stopService(const ::scoped_string & scopedstrName, bool waitCompletion = false)
 ;
 
 private:

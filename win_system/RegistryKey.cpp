@@ -25,13 +25,13 @@
 #include "RegistryKey.h"
 #include <vector>
 
-RegistryKey::RegistryKey(HKEY rootKey, const TCHAR *entry,
+RegistryKey::RegistryKey(HKEY rootKey, const ::scoped_string & scopedstrentry,
                          bool createIfNotExists, SECURITY_ATTRIBUTES *sa)
 {
   initialize(rootKey, entry, createIfNotExists, sa);
 }
 
-RegistryKey::RegistryKey(RegistryKey *rootKey, const TCHAR *entry,
+RegistryKey::RegistryKey(RegistryKey *rootKey, const ::scoped_string & scopedstrentry,
                          bool createIfNotExists, SECURITY_ATTRIBUTES *sa)
 {
   initialize(rootKey->m_key, entry, createIfNotExists, sa);
@@ -53,7 +53,7 @@ RegistryKey::~RegistryKey()
 }
 
 void RegistryKey::open(HKEY rootKey,
-                       const TCHAR *entry,
+                       const ::scoped_string & scopedstrentry,
                        bool createIfNotExists,
                        SECURITY_ATTRIBUTES *sa)
 {
@@ -61,7 +61,7 @@ void RegistryKey::open(HKEY rootKey,
 }
 
 void RegistryKey::open(RegistryKey *rootKey,
-                       const TCHAR *entry,
+                       const ::scoped_string & scopedstrentry,
                        bool createIfNotExists,
                        SECURITY_ATTRIBUTES *sa)
 {
@@ -73,7 +73,7 @@ HKEY RegistryKey::getHKEY() const
   return m_key;
 }
 
-bool RegistryKey::createSubKey(const TCHAR *subkey)
+bool RegistryKey::createSubKey(const ::scoped_string & scopedstrsubkey)
 {
   if (!isOpened()) {
     return false;
@@ -83,7 +83,7 @@ bool RegistryKey::createSubKey(const TCHAR *subkey)
   return regKey.isOpened();
 }
 
-bool RegistryKey::deleteSubKey(const TCHAR *subkey)
+bool RegistryKey::deleteSubKey(const ::scoped_string & scopedstrsubkey)
 {
   if (!isOpened()) {
     return false;
@@ -92,7 +92,7 @@ bool RegistryKey::deleteSubKey(const TCHAR *subkey)
   return RegDeleteKey(m_key, subkey) == ERROR_SUCCESS;
 }
 
-bool RegistryKey::deleteSubKeyTree(const TCHAR *subkey)
+bool RegistryKey::deleteSubKeyTree(const ::scoped_string & scopedstrsubkey)
 {
   if (!isOpened()) {
     return false;
@@ -104,14 +104,14 @@ bool RegistryKey::deleteSubKeyTree(const TCHAR *subkey)
   RegistryKey key(this, subkey);
 
   size_t subkeys2Count = 0;
-  StringStorage *subkeys2Names = 0;
+  ::string & subkeys2Names = 0;
 
   //
   // Delete subkeys of subkey
   //
 
   if (key.getSubKeyNames(NULL, &subkeys2Count) && subkeys2Count != 0) {
-    ::std::vector<StringStorage> subkeys2Names(subkeys2Count);
+    ::std::vector<::string> subkeys2Names(subkeys2Count);
 
     key.getSubKeyNames(&subkeys2Names[0], NULL);
 
@@ -133,7 +133,7 @@ bool RegistryKey::deleteSubKeyTree(const TCHAR *subkey)
   return retVal;
 }
 
-bool RegistryKey::deleteValue(const TCHAR *name)
+bool RegistryKey::deleteValue(const ::scoped_string & scopedstrName)
 {
   if (!isOpened()) {
     return false;
@@ -142,7 +142,7 @@ bool RegistryKey::deleteValue(const TCHAR *name)
   return RegDeleteValue(m_key, name) == ERROR_SUCCESS;
 }
 
-bool RegistryKey::setValueAsInt32(const TCHAR *name, int value)
+bool RegistryKey::setValueAsInt32(const ::scoped_string & scopedstrName, int value)
 {
   if (!isOpened()) {
     return false;
@@ -151,7 +151,7 @@ bool RegistryKey::setValueAsInt32(const TCHAR *name, int value)
   return RegSetValueEx(m_key, name, 0, REG_DWORD, (BYTE *)&value, sizeof(value)) == ERROR_SUCCESS;
 }
 
-bool RegistryKey::setValueAsInt64(const TCHAR *name, long value)
+bool RegistryKey::setValueAsInt64(const ::scoped_string & scopedstrName, long value)
 {
   if (!isOpened()) {
     return false;
@@ -160,7 +160,7 @@ bool RegistryKey::setValueAsInt64(const TCHAR *name, long value)
   return RegSetValueEx(m_key, name, 0, REG_QWORD, (BYTE *)&value, sizeof(value)) == ERROR_SUCCESS;
 }
 
-bool RegistryKey::setValueAsString(const TCHAR *name, const TCHAR *value)
+bool RegistryKey::setValueAsString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrvalue)
 {
   if (!isOpened()) {
     return false;
@@ -172,7 +172,7 @@ bool RegistryKey::setValueAsString(const TCHAR *name, const TCHAR *value)
   return RegSetValueEx(m_key, name, 0, REG_SZ, (BYTE *)value, size) == ERROR_SUCCESS;
 }
 
-bool RegistryKey::setValueAsBinary(const TCHAR *name, const void *value, size_t sizeInBytes)
+bool RegistryKey::setValueAsBinary(const ::scoped_string & scopedstrName, const void *value, size_t sizeInBytes)
 {
   if (!isOpened()) {
     return false;
@@ -183,7 +183,7 @@ bool RegistryKey::setValueAsBinary(const TCHAR *name, const void *value, size_t 
   return RegSetValueEx(m_key, name, 0, REG_BINARY, (BYTE *)value, size) == ERROR_SUCCESS;
 }
 
-bool RegistryKey::getValueAsInt32(const TCHAR *name, int *out)
+bool RegistryKey::getValueAsInt32(const ::scoped_string & scopedstrName, int *out)
 {
   if (!isOpened()) {
     return false;
@@ -195,7 +195,7 @@ bool RegistryKey::getValueAsInt32(const TCHAR *name, int *out)
   return RegQueryValueEx(m_key, name, 0, &type, (BYTE *)out, &size) == ERROR_SUCCESS;
 }
 
-bool RegistryKey::getValueAsInt64(const TCHAR *name, long *out)
+bool RegistryKey::getValueAsInt64(const ::scoped_string & scopedstrName, long *out)
 {
   if (!isOpened()) {
     return false;
@@ -207,7 +207,7 @@ bool RegistryKey::getValueAsInt64(const TCHAR *name, long *out)
   return RegQueryValueEx(m_key, name, 0, &type, (BYTE *)out, &size) == ERROR_SUCCESS;
 }
 
-bool RegistryKey::getValueAsString(const TCHAR *name, StringStorage *out)
+bool RegistryKey::getValueAsString(const ::scoped_string & scopedstrName, ::string & out)
 {
   if (!isOpened()) {
     return false;
@@ -216,13 +216,13 @@ bool RegistryKey::getValueAsString(const TCHAR *name, StringStorage *out)
   DWORD type = REG_SZ;
   DWORD size;
 
-  if (RegQueryValueEx(m_key, name, 0, &type, NULL, &size) != ERROR_SUCCESS) {
+  if (RegQueryValueEx(m_key, ::wstring(scopedstrName), 0, &type, NULL, &size) != ERROR_SUCCESS) {
     return false;
   }
 
   ::std::vector<TCHAR> buffer(size + 1);
 
-  if (RegQueryValueEx(m_key, name, 0, &type, (BYTE *)&buffer[0], &size) != ERROR_SUCCESS) {
+  if (RegQueryValueEx(m_key, ::wstring(scopedstrName), 0, &type, (BYTE *)&buffer[0], &size) != ERROR_SUCCESS) {
     return false;
   }
 
@@ -235,7 +235,7 @@ bool RegistryKey::getValueAsString(const TCHAR *name, StringStorage *out)
   return true;
 }
 
-bool RegistryKey::getValueAsBinary(const TCHAR *name, void *value, size_t *sizeInBytes)
+bool RegistryKey::getValueAsBinary(const ::scoped_string & scopedstrName, void *value, size_t *sizeInBytes)
 {
   if (!isOpened()) {
     return false;
@@ -251,7 +251,7 @@ bool RegistryKey::getValueAsBinary(const TCHAR *name, void *value, size_t *sizeI
   return true;
 }
 
-bool RegistryKey::getSubKeyNames(StringStorage *subKeyNames, size_t *count)
+bool RegistryKey::getSubKeyNames(::string & subKeyNames, size_t *count)
 {
   if (!isOpened()) {
     return false;
@@ -261,7 +261,7 @@ bool RegistryKey::getSubKeyNames(StringStorage *subKeyNames, size_t *count)
   DWORD i = 0;
 
   while (true) {
-    StringStorage keyName;
+    ::string keyName;
 
     ret = enumKey(i, &keyName);
 
@@ -299,7 +299,7 @@ void RegistryKey::close()
   }
 }
 
-void RegistryKey::initialize(HKEY rootKey, const TCHAR *entry, bool createIfNotExists, SECURITY_ATTRIBUTES *sa)
+void RegistryKey::initialize(HKEY rootKey, const ::scoped_string & scopedstrentry, bool createIfNotExists, SECURITY_ATTRIBUTES *sa)
 {
   m_rootKey = rootKey;
   m_key = 0;
@@ -313,7 +313,7 @@ void RegistryKey::initialize(HKEY rootKey, const TCHAR *entry, bool createIfNotE
   tryOpenSubKey(m_rootKey, m_entry.getString(), &m_key, createIfNotExists, sa);
 }
 
-DWORD RegistryKey::enumKey(DWORD i, StringStorage *name)
+DWORD RegistryKey::enumKey(DWORD i, ::string & name)
 {
   DWORD length = 1024;
   DWORD increaseStep = 1024;
@@ -340,7 +340,7 @@ DWORD RegistryKey::enumKey(DWORD i, StringStorage *name)
   return ret;
 }
 
-bool RegistryKey::tryOpenSubKey(HKEY key, const TCHAR *subkey, HKEY *openedKey, bool createIfNotExists, SECURITY_ATTRIBUTES *sa)
+bool RegistryKey::tryOpenSubKey(HKEY key, const ::scoped_string & scopedstrsubkey, HKEY *openedKey, bool createIfNotExists, SECURITY_ATTRIBUTES *sa)
 {
   if (RegOpenKey(key, subkey, openedKey) != ERROR_SUCCESS) {
     if (createIfNotExists) {

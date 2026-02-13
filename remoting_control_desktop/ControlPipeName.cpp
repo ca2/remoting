@@ -29,7 +29,7 @@
 
 #include "win_system/WTS.h"
 
-void ControlPipeName::createPipeName(bool forService, StringStorage *pipeName, LogWriter *log)
+void ControlPipeName::createPipeName(bool forService, ::string & pipeName, LogWriter *log)
 {
   if (forService) {
     pipeName->setString(

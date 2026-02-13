@@ -25,7 +25,7 @@
 #include "Process.h"
 #include "SystemException.h"
 
-Process::Process(const TCHAR *path, const TCHAR *args)
+Process::Process(const ::scoped_string & scopedstrpath, const ::scoped_string & scopedstrArgs)
 : m_hProcess(0),
   m_hThread(0),
   m_handlesIsInherited(false),
@@ -49,12 +49,12 @@ Process::~Process()
   }
 }
 
-void Process::setFilename(const TCHAR *path)
+void Process::setFilename(const ::scoped_string & scopedstrpath)
 {
   m_path.setString(path);
 }
 
-void Process::setArguments(const TCHAR *args)
+void Process::setArguments(const ::scoped_string & scopedstrArgs)
 {
   m_args.setString(args);
 }
@@ -91,7 +91,7 @@ void Process::start()
   getStartupInfo(&sti);
   PROCESS_INFORMATION pi;
 
-  StringStorage commandLine = getCommandLineString();
+  ::string commandLine = getCommandLineString();
 
   _ASSERT(!commandLine.is_empty());
   if (CreateProcess(NULL, (LPTSTR) commandLine.getString(),
@@ -139,9 +139,9 @@ HANDLE Process::getProcessHandle()
   return m_hProcess;
 }
 
-StringStorage Process::getCommandLineString()
+::string Process::getCommandLineString()
 {
-  StringStorage result;
+  ::string result;
 
   if (m_args.is_empty()) {
     return m_path;

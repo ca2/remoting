@@ -36,7 +36,7 @@ typedef enum UseArgument {
 
 struct CommandLineFormat
 {
-  const TCHAR *keyName;
+  const ::scoped_string & scopedstrKeyName;
   UseArgument useArg;
 };
 
@@ -64,7 +64,7 @@ public:
    * @param arg output value for argument of key (optional).
    * @return true if option has been found, false otherwise.
    */
-  bool optionSpecified(const TCHAR *key, StringStorage *arg = 0) const;
+  bool optionSpecified(const ::scoped_string & scopedstrKey, ::string & arg = 0) const;
 
   /**
    * Gets option with the specified index.
@@ -73,11 +73,11 @@ public:
    * @param arg output value for argument of key (optional).
    * @return true if option at the specified index exists, false otherwise.
    */
-  bool getOption(int index, StringStorage *key, StringStorage *arg = 0) const;
+  bool getOption(int index, ::string & key, ::string & arg = 0) const;
 
 protected:
-  bool matchKey(const TCHAR *keyTemplate, StringStorage *key);
-  bool removeKeyPrefix(StringStorage *key);
+  bool matchKey(const ::scoped_string & scopedstrKeyTemplate, ::string & key);
+  bool removeKeyPrefix(::string & key);
 
   ::std::vector<KeyContainer> m_foundKeys;
 };

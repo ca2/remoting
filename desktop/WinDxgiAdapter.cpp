@@ -49,7 +49,7 @@ void WinDxgiAdapter::getDxgiOutput(UINT iOutput, IDXGIOutput **iDxgiOutput)
 {
   HRESULT hr = m_dxgiAdapter->EnumOutputs(iOutput, iDxgiOutput);
   if (hr == DXGI_ERROR_NOT_FOUND) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("IDXGIOutput not found for iOutput = %u"), iOutput);
     throw WinDxRecoverableException(errMess.getString(), hr);
   } else if (FAILED(hr)) {

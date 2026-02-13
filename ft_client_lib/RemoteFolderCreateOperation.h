@@ -34,10 +34,10 @@
 class RemoteFolderCreateOperation : public FileTransferOperation
 {
 public:
-  RemoteFolderCreateOperation(LogWriter *logWriter, const TCHAR *pathToTargetFile);
+  RemoteFolderCreateOperation(LogWriter *logWriter, const ::scoped_string & scopedstrpathToTargetFile);
   RemoteFolderCreateOperation(LogWriter *logWriter,
                               FileInfo file,
-                              const TCHAR *pathToTargetRoot);
+                              const ::scoped_string & scopedstrpathToTargetRoot);
   virtual ~RemoteFolderCreateOperation();
 
   virtual void start();
@@ -47,7 +47,7 @@ protected:
   virtual void onLastRequestFailedReply(DataInputStream *input);
 
 protected:
-  StringStorage m_pathToTargetFile;
+  ::string m_pathToTargetFile;
 };
 
 #endif

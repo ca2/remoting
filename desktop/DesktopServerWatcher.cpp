@@ -42,11 +42,11 @@ DesktopServerWatcher::DesktopServerWatcher(ReconnectionListener *recListener, Lo
   m_log(log)
 {
   // Desktop server folder.
-  StringStorage currentModulePath;
+  ::string currentModulePath;
   Environment::getCurrentModulePath(&currentModulePath);
 
   // Path to desktop server application.
-  StringStorage path;
+  ::string path;
   // FIXME: To think: is quotes needed?
   path.format(_T("\"%s\""), currentModulePath.getString());
 
@@ -75,7 +75,7 @@ void DesktopServerWatcher::execute()
 
   while (!isTerminating()) {
     try {
-      StringStorage shMemName(_T("Global\\"));
+      ::string shMemName(_T("Global\\"));
       srand((unsigned)time(0));
       for (int i = 0; i < 20; i++) {
         shMemName.appendChar('a' + rand() % ('z' - 'a'));
@@ -95,11 +95,11 @@ void DesktopServerWatcher::execute()
                                 &otherSidePipeChanFrom, false);
 
       // TightVNC server log directory.
-      StringStorage logDir;
+      ::string logDir;
       Configurator::getInstance()->getServerConfig()->getLogFileDir(&logDir);
 
       // Arguments that must be passed to desktop server application.
-      StringStorage args;
+      ::string args;
       args.format(_T("-desktopserver -logdir \"%s\" -loglevel %d -shmemname %s"),
                   logDir.getString(),
                   Configurator::getInstance()->getServerConfig()->getLogLevel(),
@@ -203,7 +203,7 @@ void DesktopServerWatcher::doXPTrick()
     }
 
     // Get path to remoting_node binary.
-    StringStorage pathToBinary;
+    ::string pathToBinary;
     Environment::getCurrentModulePath(&pathToBinary);
 
      // Start current console process that will lock workstation (not using Xp Trick).

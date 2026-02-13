@@ -62,7 +62,7 @@ SocketIPv4::~SocketIPv4()
   }
 }
 
-void SocketIPv4::connect(const TCHAR *host, unsigned short port)
+void SocketIPv4::connect(const ::scoped_string & scopedstrhost, unsigned short port)
 {
   SocketAddressIPv4 address(host, port);
 
@@ -109,7 +109,7 @@ void SocketIPv4::shutdown(int how)
   }
 }
 
-void SocketIPv4::bind(const TCHAR *bindHost, unsigned int bindPort)
+void SocketIPv4::bind(const ::scoped_string & scopedstrbindHost, unsigned int bindPort)
 {
   SocketAddressIPv4 address(bindHost, bindPort);
 

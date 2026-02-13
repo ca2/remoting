@@ -44,13 +44,13 @@ public:
   virtual void sendInit(BlockingGate *gate) {}
 
   // Client to server user inputs
-  virtual void setNewClipboard(const StringStorage & newClipboard) = 0;
+  virtual void setNewClipboard(const ::string & newClipboard) = 0;
   // By the keyFlag argument will be set the mouse button state as described in
   // the rfb protocol.
   virtual void setMouseEvent(const Point newPos, unsigned char keyFlag) = 0;
   virtual void setKeyboardEvent(unsigned int keySym, bool down) = 0;
-  virtual void getCurrentUserInfo(StringStorage *desktopName,
-                                  StringStorage *userName) = 0;
+  virtual void getCurrentUserInfo(::string & desktopName,
+                                  ::string & userName) = 0;
 
   virtual void getPrimaryDisplayCoords(::int_rectangle *rect) = 0;
   virtual void getDisplayNumberCoords(::int_rectangle *rect,
@@ -59,7 +59,7 @@ public:
   virtual void getNormalizedRect(::int_rectangle *rect) = 0;
 
   virtual void getWindowCoords(HWND hwnd, ::int_rectangle *rect) = 0;
-  virtual HWND getWindowHandleByName(const StringStorage & windowName) = 0;
+  virtual HWND getWindowHandleByName(const ::string & windowName) = 0;
 
   virtual void getApplicationRegion(unsigned int procId, Region *region) = 0;
   virtual bool isApplicationInFocus(unsigned int procId) = 0;

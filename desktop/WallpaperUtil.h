@@ -49,7 +49,7 @@ private:
   void restoreWallpaper();
 
   LogWriter *m_log;
-  StringStorage m_wallparerPath;
+  ::string m_wallparerPath;
   bool m_wasDisabled;
 };
 

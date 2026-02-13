@@ -26,7 +26,7 @@
 
 #include <stdio.h>
 
-bool StringParser::parseInt(const TCHAR *str, int *out)
+bool StringParser::parseInt(const ::scoped_string & scopedstrstr, int *out)
 {
   int value = 0;
   TCHAR c;
@@ -40,7 +40,7 @@ bool StringParser::parseInt(const TCHAR *str, int *out)
   return true;
 }
 
-bool StringParser::parseUInt(const TCHAR *str, unsigned int *out)
+bool StringParser::parseUInt(const ::scoped_string & scopedstrstr, unsigned int *out)
 {
   // Check the minus sign manually because _tcstoul does not fail on it.
   if (str != 0 && str[0] == _T('-')) {
@@ -66,7 +66,7 @@ bool StringParser::parseUInt(const TCHAR *str, unsigned int *out)
   return true;
 }
 
-bool StringParser::parseUInt64(const TCHAR *str, unsigned long long *out)
+bool StringParser::parseUInt64(const ::scoped_string & scopedstrstr, unsigned long long *out)
 {
   unsigned long long value = 0;
   TCHAR c;
@@ -80,12 +80,12 @@ bool StringParser::parseUInt64(const TCHAR *str, unsigned long long *out)
   return true;
 }
 
-bool StringParser::tryParseInt(const TCHAR *str)
+bool StringParser::tryParseInt(const ::scoped_string & scopedstrstr)
 {
   return parseInt(str, NULL);
 }
 
-bool StringParser::parseHex(const TCHAR *str, unsigned int *out)
+bool StringParser::parseHex(const ::scoped_string & scopedstrstr, unsigned int *out)
 {
   TCHAR c;
   unsigned int val;
@@ -98,7 +98,7 @@ bool StringParser::parseHex(const TCHAR *str, unsigned int *out)
   return true;
 }
 
-bool StringParser::parseByteHex(const TCHAR *str, unsigned char *out)
+bool StringParser::parseByteHex(const ::scoped_string & scopedstrstr, unsigned char *out)
 {
   TCHAR c;
   int val = 0;
@@ -111,7 +111,7 @@ bool StringParser::parseByteHex(const TCHAR *str, unsigned char *out)
   return true;
 }
 
-bool StringParser::parseByte(const TCHAR *str, unsigned char *out)
+bool StringParser::parseByte(const ::scoped_string & scopedstrstr, unsigned char *out)
 {
   TCHAR c;
   int val = 0;

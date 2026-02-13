@@ -127,16 +127,16 @@ void Win8DeskDuplication::execute()
     }
     // FIXME: remove it all, catch exceptions in Win8ScreenDriverImpl
   } catch (WinDxRecoverableException &e) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Win8DeskDuplication:: Catched WinDxRecoverableException: %s, (%x)"), e.getMessage(), (int)e.getErrorCode());
     setRecoverableError(errMess.getString());
   } catch (WinDxCriticalException &e) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Win8DeskDuplication:: Catched WinDxCriticalException: %s, (%x)"), e.getMessage(), (int)e.getErrorCode());
     setRecoverableError(errMess.getString()); //?????????
     setCriticalError(errMess.getString());
   } catch (Exception &e) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Win8DeskDuplication:: Catched Exception: %s") , e.getMessage());
     setRecoverableError(errMess.getString());
   }
@@ -146,13 +146,13 @@ void Win8DeskDuplication::onTerminate()
 {
 }
 
-void Win8DeskDuplication::setCriticalError(const TCHAR *reason)
+void Win8DeskDuplication::setCriticalError(const ::scoped_string & scopedstrreason)
 {
   m_hasCriticalError = true;
   m_duplListener->onCriticalError(reason);
 }
 
-void Win8DeskDuplication::setRecoverableError(const TCHAR *reason)
+void Win8DeskDuplication::setRecoverableError(const ::scoped_string & scopedstrreason)
 {
   m_hasRecoverableError = true;
   m_duplListener->onRecoverableError(reason);
@@ -210,7 +210,7 @@ void Win8DeskDuplication::processDirtyRects(size_t dirtyCount,
       dirtyRect = dirtyRect.intersection(&stageRect);
       /* Disabled the followed throwing because it realy may happen and better is to see any picture
       // instead of a black screen.
-      StringStorage errMess;
+      ::string errMess;
       errMess.format(_T("During processDirtyRects has been got a rect (%d, %d, %dx%d) which outside")
                      _T(" from the stage rect (%d, %d, %dx%d)"),
                      rect.left, rect.top, rect.width(), rect.height(),

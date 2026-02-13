@@ -28,7 +28,7 @@
 #include "TextBox.h"
 #include "BalloonTip.h"
 #include "StringFilter.h"
-#include "util/StringStorage.h"
+//#include "util/::string.h"
 
 class FilteredTextBox : public TextBox
 {
@@ -44,14 +44,14 @@ public:
   LRESULT makeCheck();
 
 protected:
-  virtual bool isStringValid(const TCHAR *string);
+  virtual bool isStringValid(const ::scoped_string & scopedstrstring);
   virtual LRESULT onKeyDown(WPARAM code, LPARAM params);
 
   static LRESULT CALLBACK windowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 protected:
   LONG_PTR m_oldWindowProc;
-  StringStorage m_text;
+  ::string m_text;
   BalloonTip *m_tip;
   StringFilter *m_filter;
 };

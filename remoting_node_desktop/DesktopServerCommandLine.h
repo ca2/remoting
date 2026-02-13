@@ -52,7 +52,7 @@ public:
    * @param [out] logDir output parameter for log directory.
    * @remark if parse method wasn't before this will return 0 as log dir.
    */
-  void getLogDir(StringStorage *logDir);
+  void getLogDir(::string & logDir);
 
   /**
    * Returns specified log level.
@@ -63,7 +63,7 @@ public:
   /**
    * Puts specified shared memory name into output parameter.
    */
-  void getSharedMemName(StringStorage *shMemName);
+  void getSharedMemName(::string & shMemName);
 
 public:
   const static TCHAR DESKTOP_SERVER_KEY[];

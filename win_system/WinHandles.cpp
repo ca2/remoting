@@ -42,7 +42,7 @@ HANDLE WinHandles::assignHandleFor(HANDLE hSource, HANDLE hTargetProc,
   }
   if (DuplicateHandle(hSrcProc, hSource, hTargetProc, &hDest, 0, FALSE,
                       options) == 0) {
-    StringStorage errText;
+    ::string errText;
     Environment::getErrStr(&errText);
     throw Exception(errText.getString());
   }
@@ -50,7 +50,7 @@ HANDLE WinHandles::assignHandleFor(HANDLE hSource, HANDLE hTargetProc,
   if (keepCloseRight) {
     if (DuplicateHandle(hTargetProc, hDest, 0, 0, 0, FALSE,
                         DUPLICATE_CLOSE_SOURCE) == 0) {
-      StringStorage errText;
+      ::string errText;
       Environment::getErrStr(&errText);
       throw Exception(errText.getString());
     }

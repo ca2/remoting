@@ -46,7 +46,7 @@ public:
   // Internal dispatcher
   virtual void onRequest(unsigned char reqCode, BlockingGate *backGate);
 
-  virtual void onClipboardUpdate(const StringStorage & newClipboard);
+  virtual void onClipboardUpdate(const ::string & newClipboard);
 
 protected:
   virtual void applyNewPointerPos(BlockingGate *backGate);

@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "RfbClientInfo.h"
 
-RfbClientInfo::RfbClientInfo(unsigned int id, const TCHAR *peerAddr)
+RfbClientInfo::RfbClientInfo(unsigned int id, const ::scoped_string & scopedstrpeerAddr)
 : m_id(id), m_peerAddr(peerAddr)
 {
 }

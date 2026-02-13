@@ -176,7 +176,7 @@ void OptionsDialog::updateControlValues()
 
     int percent = (n * 100) / d;
 
-    StringStorage text;
+    ::string text;
     text.format(_T("%d"), percent);
 
     m_scale.setText(text.getString());
@@ -190,7 +190,7 @@ void OptionsDialog::updateControlValues()
     m_ncursor.check(enableCursorUpdate && ignoreCursorUpdate);
   }
 
-  StringStorage labelText;
+  ::string labelText;
   {
     const int DEFAULT_COMPRESSION_LEVEL = 6;
     int level = DEFAULT_COMPRESSION_LEVEL;
@@ -308,14 +308,14 @@ void OptionsDialog::onPreferredEncodingSelectionChange()
 
 void OptionsDialog::onCustomCompressionLevelScroll()
 {
-  StringStorage labelText;
+  ::string labelText;
   labelText.format(_T("%ld"), m_tcompLvl.getPos());
   m_quality.setText(labelText.getString());
 }
 
 void OptionsDialog::onJpegCompressionLevelScroll()
 {
-  StringStorage labelText;
+  ::string labelText;
   labelText.format(_T("%ld"), m_tjpeg.getPos());
   m_quality2.setText(labelText.getString());
 }
@@ -336,7 +336,7 @@ void OptionsDialog::onMessageReceived(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 void OptionsDialog::onScaleKillFocus()
 {
-  StringStorage scaleText;
+  ::string scaleText;
   m_scale.getText(&scaleText);
 
   int scale;
@@ -361,7 +361,7 @@ void OptionsDialog::onScaleKillFocus()
 bool OptionsDialog::isInputValid()
 {
   int scaleInt;
-  StringStorage scaleText;
+  ::string scaleText;
 
   m_scale.getText(&scaleText);
 
@@ -370,7 +370,7 @@ bool OptionsDialog::isInputValid()
   }
 
   if (!StringParser::parseInt(scaleText.getString(), &scaleInt)) {
-    StringStorage error;
+    ::string error;
     error.format(StringTable::getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC),
                  StringTable::getString(IDS_OPTIONS_SCALE));
     MessageBox(m_ctrlThis.getWindow(),
@@ -381,7 +381,7 @@ bool OptionsDialog::isInputValid()
   }
 
   if (scaleInt < 0) {
-    StringStorage error;
+    ::string error;
     error.format(StringTable::getString(IDS_ERROR_VALUE_FIELD_ONLY_POSITIVE_NUMERIC),
                  StringTable::getString(IDS_OPTIONS_SCALE));
     MessageBox(m_ctrlThis.getWindow(),
@@ -437,7 +437,7 @@ void OptionsDialog::apply()
   m_conConfig->swapMouse(m_swapmouse.isChecked());
   m_conConfig->setSharedFlag(m_sharedses.isChecked());
 
-  StringStorage scaleText;
+  ::string scaleText;
 
   m_scale.getText(&scaleText);
 

@@ -30,7 +30,7 @@
 class WindowsEventEx : public WindowsEvent
 {
 public:
-  WindowsEventEx(const TCHAR *name = 0);
+  WindowsEventEx(const ::scoped_string & scopedstrName = 0);
 
 protected:
   void setAccessToAll(HANDLE objHandle);

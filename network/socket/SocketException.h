@@ -41,7 +41,7 @@ public:
   SocketException(int error);
   // Creates socket exception object with specified message.
   // Error number is sets to zero.
-  SocketException(const TCHAR *message);
+  SocketException(const ::scoped_string & scopedstrmessage);
   // Destructor.
   virtual ~SocketException();
 

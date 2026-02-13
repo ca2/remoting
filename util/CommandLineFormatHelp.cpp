@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "CommandLineFormatHelp.h"
 
-CommandLineFormatHelp::CommandLineFormatHelp(const TCHAR *message)
+CommandLineFormatHelp::CommandLineFormatHelp(const ::scoped_string & scopedstrmessage)
  : Exception(message)
 {
 }

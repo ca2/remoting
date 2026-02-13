@@ -34,7 +34,7 @@ void CoreEventsAdapter::onBell()
 {
 }
 
-void CoreEventsAdapter::onCutText(const StringStorage & cutText)
+void CoreEventsAdapter::onCutText(const ::string & cutText)
 {
 }
 
@@ -51,7 +51,7 @@ void CoreEventsAdapter::onConnected(RfbOutputGate *output)
 {
 }
 
-void CoreEventsAdapter::onDisconnect(const StringStorage & message)
+void CoreEventsAdapter::onDisconnect(const ::string & message)
 {
 }
 

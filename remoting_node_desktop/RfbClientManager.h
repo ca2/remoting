@@ -54,7 +54,7 @@ struct BanProp
   unsigned int count;
   DateTime banLastTime;
 };
-typedef ::std::map<StringStorage, BanProp> BanList;
+typedef ::std::map<::string, BanProp> BanList;
 typedef BanList::iterator BanListIter;
 
 //
@@ -71,7 +71,7 @@ class RfbClientManager: public ClientTerminationListener,
 {
 public:
   // FIXME: parameter is not used.
-  RfbClientManager(const TCHAR *serverName,
+  RfbClientManager(const ::scoped_string & scopedstrserverName,
                    NewConnectionEvents *newConnectionEvents,
                    LogWriter *log,
                    DesktopFactory *desktopFactory);
@@ -96,7 +96,7 @@ public:
 
   // returns ::std::list of bans.
   BanList getBanList() { AutoLock al(&m_banListMutex); return m_banList; };
-  StringStorage getBanListString();
+  ::string getBanListString();
 
 protected:
   // Listen functions
@@ -106,7 +106,7 @@ protected:
   // This function only adds the client to the ban ::std::list.
   virtual void onAuthFailed(RfbClient *client);
   virtual void onCheckAccessControl(RfbClient *client);
-  virtual void onClipboardUpdate(const StringStorage & newClipboard);
+  virtual void onClipboardUpdate(const ::string & newClipboard);
   virtual void onSendUpdate(const UpdateContainer *updateContainer,
                             const CursorShape *cursorShape);
   virtual bool isReadyToSend();
@@ -122,11 +122,11 @@ private:
 
   // Checks the ip to ban.
   // Returns true if client is banned.
-  bool checkForBan(const StringStorage & ip);
+  bool checkForBan(const ::string & ip);
   // If the success param is true the belonged ip entry will be removed
   // from the ban ::std::list. Else the ip will be added to the ban or will be
   // increased it count.
-  void updateIpInBan(const StringStorage & ip, bool success);
+  void updateIpInBan(const ::string & ip, bool success);
 
   ClientList m_nonAuthClientList;
   ClientList m_clientList;

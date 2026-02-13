@@ -145,7 +145,7 @@ void AdministrationConfigDialog::updateUI()
 
   ConfigDialog *configDialog = (ConfigDialog *)m_parentDialog;
 
-  StringStorage logPath;
+  ::string logPath;
 
   m_config->getLogFileDir(&logPath);
 
@@ -157,7 +157,7 @@ void AdministrationConfigDialog::updateUI()
 
   m_logPathTB.setText(logPath.getString());
 
-  StringStorage folder;
+  ::string folder;
   getFolderName(logPath.getString(), &folder);
 
   File folderFile(folder.getString());
@@ -222,7 +222,7 @@ void AdministrationConfigDialog::updateUI()
 
 void AdministrationConfigDialog::apply()
 {
-  StringStorage logLevelStringStorage;
+  ::string logLevelStringStorage;
   m_logLevel.getText(&logLevelStringStorage);
 
   int logLevel = 0;
@@ -329,11 +329,11 @@ void AdministrationConfigDialog::onShareRadioButtonClick(int number)
 
 void AdministrationConfigDialog::onOpenFolderButtonClick()
 {
-  StringStorage logDir;
+  ::string logDir;
 
   m_config->getLogFileDir(&logDir);
 
-  StringStorage command;
+  ::string command;
 
   command.format(_T("explorer /select,%s\\%s.log"), logDir.getString(),
                  LogNames::SERVER_LOG_FILE_STUB_NAME);
@@ -401,7 +401,7 @@ void AdministrationConfigDialog::onLogLevelUpdate()
 // FIXME: Dublicating code (see RegistrySettingsManager::getFolderName method)
 //
 
-void AdministrationConfigDialog::getFolderName(const TCHAR *key, StringStorage *folder)
+void AdministrationConfigDialog::getFolderName(const ::scoped_string & scopedstrKey, ::string & folder)
 {
   ::std::vector<TCHAR> folderString(_tcslen(key) + 1);
   memcpy(&folderString.front(), key, folderString.size() * sizeof(TCHAR));

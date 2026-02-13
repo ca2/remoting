@@ -49,7 +49,7 @@ public:
                                  unsigned int code,
                                  const char *vendorSignature,
                                  const char *nameSignature,
-                                 const StringStorage description = _T("")) = 0;
+                                 const ::string description = _T("")) = 0;
 
   //
   // This function add capability and handler, to process server-to-client messages.
@@ -58,7 +58,7 @@ public:
                                       unsigned int code,
                                       const char *vendorSignature,
                                       const char *nameSignature,
-                                      const StringStorage description = _T("")) = 0;
+                                      const ::string description = _T("")) = 0;
 
   //
   // This function add capability, to process client-to-server messages.
@@ -66,7 +66,7 @@ public:
   virtual void addClientMsgCapability(unsigned int code,
                                       const char *vendorSignature,
                                       const char *nameSignature,
-                                      const StringStorage description = _T("")) = 0;
+                                      const ::string description = _T("")) = 0;
 
   //
   // This function add encoding capability and decoder handler.
@@ -78,7 +78,7 @@ public:
                                      unsigned int code,
                                      const char *vendorSignature,
                                      const char *nameSignature,
-                                     const StringStorage description = _T("")) = 0;
+                                     const ::string description = _T("")) = 0;
 
   //
   // This function return ::std::vector of enabled capabilities "client-to-server message".

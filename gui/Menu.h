@@ -45,14 +45,14 @@ public:
   void termMenu();
   
   int getMenuItemCount();
-  bool appendMenu(StringStorage strVal, UINT uID); 
+  bool appendMenu(::string strVal, UINT uID); 
   bool appendSeparator();
-  bool appendSubMenu(StringStorage strVal, Menu *pMenu);
+  bool appendSubMenu(::string strVal, Menu *pMenu);
 
-  bool insertMenuItem(UINT uItem, StringStorage strVal, UINT uID);
-  bool insertCheckMenuItem(UINT uItem, StringStorage strVal, UINT uID);
+  bool insertMenuItem(UINT uItem, ::string strVal, UINT uID);
+  bool insertCheckMenuItem(UINT uItem, ::string strVal, UINT uID);
   bool insertSeparator(UINT uItem);
-  bool insertSubMenu(UINT uItem, StringStorage strVal, Menu *pMenu);
+  bool insertSubMenu(UINT uItem, ::string strVal, Menu *pMenu);
 
   bool enableMenuItem(UINT uID, UINT uEnable);
   bool checkedMenuItem(UINT uID, bool bEnable);

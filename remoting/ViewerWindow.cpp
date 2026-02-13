@@ -67,9 +67,9 @@ ViewerWindow::ViewerWindow(WindowsApplication *application,
   m_standardScale.push_back(200);
   m_standardScale.push_back(400);
 
-  StringStorage windowClass = WindowNames::TVN_WINDOW_CLASS_NAME;
-  StringStorage titleName = WindowNames::TVN_WINDOW_TITLE_NAME;
-  StringStorage subTitleName = WindowNames::TVN_SUB_WINDOW_TITLE_NAME;
+  ::string windowClass = WindowNames::TVN_WINDOW_CLASS_NAME;
+  ::string titleName = WindowNames::TVN_WINDOW_TITLE_NAME;
+  ::string subTitleName = WindowNames::TVN_SUB_WINDOW_TITLE_NAME;
 
   setClass(windowClass);
   createWindow(titleName, WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS);
@@ -370,7 +370,7 @@ void ViewerWindow::dialogConnectionOptions()
 
 void ViewerWindow::dialogConnectionInfo() 
 {
-  StringStorage host = m_conData->getHost();
+  ::string host = m_conData->getHost();
   ::std::vector<TCHAR> kbdName;
   kbdName.resize(KL_NAMELENGTH);
   memset(&kbdName[0], 0, sizeof(TCHAR) * KL_NAMELENGTH);
@@ -383,7 +383,7 @@ void ViewerWindow::dialogConnectionInfo()
   ::int_rectangle geometry;
   int pixelSize = 0;
   m_dsktWnd.getServerGeometry(&geometry, &pixelSize);
-  StringStorage str;
+  ::string str;
   str.format(StringTable::getString(IDS_CONNECTION_INFO_FORMAT),
              host.getString(),
              m_viewerCore->getRemoteDesktopName().getString(),
@@ -524,8 +524,8 @@ void ViewerWindow::commandSaveSession()
 {
   TCHAR fileName[MAX_PATH] = _T("");
 
-  StringStorage filterVncFiles(StringTable::getString(IDS_SAVE_SESSION_FILTER_VNC_FILES));
-  StringStorage filterAllFiles(StringTable::getString(IDS_SAVE_SESSION_FILTER_ALL_FILES));
+  ::string filterVncFiles(StringTable::getString(IDS_SAVE_SESSION_FILTER_VNC_FILES));
+  ::string filterAllFiles(StringTable::getString(IDS_SAVE_SESSION_FILTER_ALL_FILES));
   TCHAR vncMask[] = _T("*.vnc");
   TCHAR allMask[] = _T("*.*");
 
@@ -560,7 +560,7 @@ void ViewerWindow::commandSaveSession()
       IniFileSettingsManager sm(fileName);
       sm.setApplicationName(_T("connection"));
 
-      StringStorage host;
+      ::string host;
       m_conData->getReducedHost(&host);
       sm.setString(_T("host"), host.getString());
       sm.setUINT(_T("port"), m_conData->getPort());
@@ -571,7 +571,7 @@ void ViewerWindow::commandSaveSession()
           StringTable::getString(IDS_SECURITY_WARNING_CAPTION),
           MB_YESNO);
         if (whetherToSavePass == IDYES) {
-          StringStorage password = m_conData->getCryptedPassword();
+          ::string password = m_conData->getCryptedPassword();
           sm.setString(_T("password"), password.getString());
         }
       }
@@ -983,7 +983,7 @@ void ViewerWindow::showWindow()
 {
   show();
 
-  StringStorage windowName = formatWindowName();
+  ::string windowName = formatWindowName();
   setWindowText(windowName);
   m_dsktWnd.setWindowText(windowName);
 
@@ -1005,7 +1005,7 @@ bool ViewerWindow::onAuthError(WPARAM wParam)
 {
   // If authentication is canceled, then do quiet exit, else show error-message.
   if (wParam != AuthException::AUTH_CANCELED) {
-    StringStorage error = m_error.getMessage();
+    ::string error = m_error.getMessage();
     int result = MessageBox(0,
                             error.getString(),
                             formatWindowName().getString(),
@@ -1030,7 +1030,7 @@ bool ViewerWindow::onAuthError(WPARAM wParam)
 
 bool ViewerWindow::onError()
 {
-  StringStorage error;
+  ::string error;
   error.format(_T("Error in %s: %s"), ProductNames::VIEWER_PRODUCT_NAME, m_error.getMessage());
   MessageBox(getHWnd(),
              error.getString(),
@@ -1133,7 +1133,7 @@ void ViewerWindow::onConnected(RfbOutputGate *output)
   applySettings();
 }
 
-void ViewerWindow::onDisconnect(const StringStorage & message)
+void ViewerWindow::onDisconnect(const ::string & message)
 {
   m_logWriter.info(_T("onDisconnect: %s"), message.getString());
   m_disconnectMessage = message;
@@ -1167,7 +1167,7 @@ void ViewerWindow::onFrameBufferPropChange(const FrameBuffer *fb)
   m_dsktWnd.setNewFramebuffer(fb);
 }
 
-void ViewerWindow::onCutText(const StringStorage & cutText)
+void ViewerWindow::onCutText(const ::string & cutText)
 {
   m_dsktWnd.setClipboardData(cutText);
 }
@@ -1232,13 +1232,13 @@ void ViewerWindow::updateKeyState()
   }
 }
 
-StringStorage ViewerWindow::formatWindowName() const
+::string ViewerWindow::formatWindowName() const
 {
-  StringStorage desktopName = m_viewerCore->getRemoteDesktopName();
+  ::string desktopName = m_viewerCore->getRemoteDesktopName();
   if (desktopName.is_empty() && !m_conData->getHost().is_empty()) {
     desktopName = m_conData->getHost();
   }
-  StringStorage windowName;
+  ::string windowName;
   if (!desktopName.is_empty()) {
     windowName.format(_T("%s - %s"), desktopName.getString(), ProductNames::VIEWER_PRODUCT_NAME);
   } else {

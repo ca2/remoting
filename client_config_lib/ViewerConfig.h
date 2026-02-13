@@ -25,7 +25,7 @@
 #ifndef _VIEWER_CONFIG_H_
 #define _VIEWER_CONFIG_H_
 
-#include "util/StringStorage.h"
+////#include "util/::string.h"
 #include "util/Singleton.h"
 #include "config_lib/ConnectionHistory.h"
 #include "log_writer/FileLogger.h"
@@ -41,7 +41,7 @@
 class ViewerConfig : public Singleton<ViewerConfig>
 {
 public:
-  ViewerConfig(const TCHAR registryPath[]);
+  ViewerConfig(const ::scoped_string & scopedstrRegistryPath);
   ~ViewerConfig();
 
   // Deserializes client configuration from settings storage.
@@ -65,13 +65,13 @@ public:
   int getLogLevel() const;
 
   // Puts log directory to the logDir argument.
-  void getLogDir(StringStorage *logDir) const;
+  ::string getLogDir() const;
   // Changes log directory 
-  void setLogDir(StringStorage &logDir);
+  void setLogDir(::string &logDir);
 
   // Creates path to log file and place value to m_pathToLogFile member
   // creates logger and return pointer to him
-  Logger *initLog(const TCHAR logDir[], const TCHAR logName[], bool useSpecialFolder = true);
+  Logger *initLog(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrLogName, bool useSpecialFolder = true);
 
   // function return pointer to logger
   Logger *getLogger();
@@ -93,12 +93,12 @@ public:
 
   // Returns path to log file if file is avaliable to write,
   // returns NULL otherwise
-  const TCHAR *getPathToLogFile() const;
+  ::string getPathToLogFile() const;
 
   // Returns connection history
   ConnectionHistory *getConnectionHistory();
 
-protected:
+//protected:
   // TCP port for accepting incoming connection
   // when client runs in daemon mode
   int m_listenPort;
@@ -112,13 +112,13 @@ protected:
   // become fullscreen
   bool m_promptOnFullscreen;
   // Log file
-  StringStorage m_pathToLogFile;
-  StringStorage m_logName;
+  ::string m_pathToLogFile;
+  ::string m_logName;
   FileLogger *m_logger;
   // Connection history
   RegistryKey m_conHistoryKey; // Used by m_conHistory
   ConnectionHistory m_conHistory;
-private:
+//private:
   // Critical section for synchronization
   mutable LocalMutex m_cs;
 };

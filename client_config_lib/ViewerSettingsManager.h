@@ -30,10 +30,10 @@
 class ViewerSettingsManager : public RegistrySettingsManager
 {
 public:
-  ViewerSettingsManager(const TCHAR registryName[]);
+  ViewerSettingsManager(const ::scoped_string & scopedstrRegistryName);
   virtual ~ViewerSettingsManager();
 
-  static void initInstance(const TCHAR registryName[]);
+  static void initInstance(const ::scoped_string & scopedstrRegistryName);
 
   static SettingsManager *getInstance();
 

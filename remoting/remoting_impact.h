@@ -47,8 +47,8 @@ class remoting_impact : public WindowsApplication
 {
 public:
   remoting_impact(HINSTANCE appInstance,
-            const TCHAR *windowClassName,
-            const TCHAR *viewerWindowClassName);
+            const ::scoped_string & scopedstrwindowClassName,
+            const ::scoped_string & scopedstrviewerWindowClassName);
   virtual ~remoting_impact();
 
   //
@@ -72,11 +72,11 @@ public:
   //
   void showConfiguration();
 
-  // newConnection(...) and startListening(...) always do copy of params (StringStorage,
+  // newConnection(...) and startListening(...) always do copy of params (::string,
   // ConnectionData and ConnectionConfig). After call this function can free memory
   // with hostName, connectionData, connectionConfig
   void newListeningConnection();
-  void newConnection(const StringStorage & hostName, const ConnectionConfig & connectionConfig);
+  void newConnection(const ::string & hostName, const ConnectionConfig & connectionConfig);
   void newConnection(const ConnectionData & conData, const ConnectionConfig &
      connectionConfig);
   void startListening(int listeningPort);
@@ -85,7 +85,7 @@ public:
   // Inherited from WindowsApplication
   void registerWindowClass(WNDCLASS *wndClass);
   static LRESULT CALLBACK wndProc(HWND hWnd, UINT msg, WPARAM wparam, LPARAM lparam);
-  virtual void createWindow(const TCHAR *className);
+  virtual void createWindow(const ::scoped_string & scopedstrclassName);
   int processMessages();
 
 public:
@@ -122,7 +122,7 @@ protected:
   static LRESULT CALLBACK wndProcViewer(HWND hWnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
   void runInstance(ConnectionData & sonData, const ConnectionConfig & config);
-  void runInstance(const StringStorage & hostName, const ConnectionConfig & config);
+  void runInstance(const ::string & hostName, const ConnectionConfig & config);
 
   // This method return true, if login dialog is visible.
   bool isVisibleLoginDialog() const;
@@ -132,7 +132,7 @@ protected:
   ViewerCollector m_instances;
 
   // class name of viewer-window
-  StringStorage m_viewerWindowClassName;
+  ::string m_viewerWindowClassName;
 
   HACCEL m_hAccelTable;
 

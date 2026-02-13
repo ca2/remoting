@@ -60,7 +60,7 @@ void FileTransferMainDialog::setProgress(double progress)
 
 int FileTransferMainDialog::onFtTargetFileExists(FileInfo *sourceFileInfo,
                                                  FileInfo *targetFileInfo,
-                                                 const TCHAR *pathToTargetFile)
+                                                 const ::scoped_string & scopedstrpathToTargetFile)
 {
   m_fileExistDialog.setFilesInfo(targetFileInfo,
                                  sourceFileInfo,
@@ -252,7 +252,7 @@ void FileTransferMainDialog::onCancelOperationButtonClick()
 {
   if (!m_ftCore->isNothingState()) {
   // Logging
-    StringStorage message(_T("Operation have been canceled by user"));
+    ::string message(_T("Operation have been canceled by user"));
     insertMessageIntoComboBox(message.getString());
 
     // Terminate current operation
@@ -278,12 +278,12 @@ void FileTransferMainDialog::onRenameRemoteButtonClick()
   renameDialog.setFileName(fileInfo->getFileName());
 
   if (renameDialog.showModal() == IDOK) {
-    StringStorage remoteFolder;
+    ::string remoteFolder;
     getPathToCurrentRemoteFolder(&remoteFolder);
 
-    StringStorage oldName(fileInfo->getFileName());
+    ::string oldName(fileInfo->getFileName());
 
-    StringStorage newName;
+    ::string newName;
     renameDialog.getFileName(&newName);
 
     m_ftCore->remoteFileRenameOperation(FileInfo(0, 0, FileInfo::DIRECTORY, oldName.getString()),
@@ -296,10 +296,10 @@ void FileTransferMainDialog::onMkDirRemoteButtonClick()
 {
   NewFolderDialog folderDialog(&m_ctrlThis);
   if (folderDialog.showModal() == IDOK) {
-    StringStorage remoteFolder;
+    ::string remoteFolder;
     m_remoteCurFolderTextBox.getText(&remoteFolder);
 
-    StringStorage fileName;
+    ::string fileName;
     folderDialog.getFileName(&fileName);
 
 
@@ -339,7 +339,7 @@ void FileTransferMainDialog::onRemoveRemoteButtonClick()
     return ;
   }
 
-  StringStorage remoteFolder;
+  ::string remoteFolder;
   m_remoteCurFolderTextBox.getText(&remoteFolder);
 
   m_ftCore->remoteFilesDeleteOperation(filesInfo, siCount,
@@ -368,17 +368,17 @@ void FileTransferMainDialog::onRenameLocalButtonClick()
   renameDialog.setFileName(fileInfo->getFileName());
 
   if (renameDialog.showModal() == IDOK) {
-    StringStorage localFolder;
+    ::string localFolder;
     getPathToCurrentLocalFolder(&localFolder);
 
-    StringStorage oldName;
-    StringStorage newName;
+    ::string oldName;
+    ::string newName;
 
     oldName.setString(fileInfo->getFileName());
     renameDialog.getFileName(&newName);
 
-    StringStorage pathToOldFile(localFolder.getString());
-    StringStorage pathToNewFile(localFolder.getString());
+    ::string pathToOldFile(localFolder.getString());
+    ::string pathToNewFile(localFolder.getString());
 
     if (!localFolder.endsWith('\\')) {
       pathToOldFile.appendString(_T("\\"));
@@ -392,7 +392,7 @@ void FileTransferMainDialog::onRenameLocalButtonClick()
     // Logging
     //
 
-    StringStorage message;
+    ::string message;
 
     message.format(_T("Renaming local file '%s' to '%s'"),
                    pathToOldFile.getString(), pathToNewFile.getString());
@@ -415,7 +415,7 @@ void FileTransferMainDialog::onRenameLocalButtonClick()
 
 void FileTransferMainDialog::onMkDirLocalButtonClick()
 {
-  StringStorage pathToFile;
+  ::string pathToFile;
 
   getPathToCurrentLocalFolder(&pathToFile);
 
@@ -429,7 +429,7 @@ void FileTransferMainDialog::onMkDirLocalButtonClick()
   NewFolderDialog folderDialog(&m_ctrlThis);
 
   if (folderDialog.showModal() == IDOK) {
-    StringStorage fileName;
+    ::string fileName;
     folderDialog.getFileName(&fileName);
 
     if (!pathToFile.endsWith(_T('\\'))) {
@@ -438,7 +438,7 @@ void FileTransferMainDialog::onMkDirLocalButtonClick()
     pathToFile.appendString(fileName.getString());
 
     // Logging
-    StringStorage message;
+    ::string message;
 
     message.format(_T("Creating local folder '%s'"), pathToFile.getString());
 
@@ -488,7 +488,7 @@ void FileTransferMainDialog::onRemoveLocalButtonClick()
     return ;
   }
 
-  StringStorage localFolder;
+  ::string localFolder;
   getPathToCurrentLocalFolder(&localFolder);
 
   m_ftCore->localFilesDeleteOperation(filesInfo, siCount,
@@ -532,10 +532,10 @@ void FileTransferMainDialog::onUploadButtonClick()
     return ;
   }
 
-  StringStorage localFolder;
+  ::string localFolder;
   getPathToCurrentLocalFolder(&localFolder);
 
-  StringStorage remoteFolder;
+  ::string remoteFolder;
   getPathToCurrentRemoteFolder(&remoteFolder);
 
 
@@ -577,10 +577,10 @@ void FileTransferMainDialog::onDownloadButtonClick()
     return ;
   }
 
-  StringStorage remoteFolder;
+  ::string remoteFolder;
   getPathToCurrentRemoteFolder(&remoteFolder);
 
-  StringStorage localFolder;
+  ::string localFolder;
   getPathToCurrentLocalFolder(&localFolder);
 
   m_fileExistDialog.resetDialogResultValue();
@@ -595,14 +595,14 @@ void FileTransferMainDialog::onDownloadButtonClick()
 
 void FileTransferMainDialog::moveUpLocalFolder()
 {
-  StringStorage pathToFile;
+  ::string pathToFile;
   getPathToParentLocalFolder(&pathToFile);
   tryListLocalFolder(pathToFile.getString());
 }
 
 void FileTransferMainDialog::moveUpRemoteFolder()
 {
-  StringStorage parent;
+  ::string parent;
   getPathToParentRemoteFolder(&parent);
   tryListRemoteFolder(parent.getString());
 }
@@ -626,7 +626,7 @@ void FileTransferMainDialog::onRemoteListViewDoubleClick()
   if (si == -1) {
     return ;
   }
-  StringStorage pathToFile;
+  ::string pathToFile;
   getPathToSelectedRemoteFile(&pathToFile);
   tryListRemoteFolder(pathToFile.getString());
 }
@@ -653,7 +653,7 @@ void FileTransferMainDialog::onLocalListViewDoubleClick()
     return ;
   }
 
-  StringStorage pathToFile;
+  ::string pathToFile;
   getPathToSelectedLocalFile(&pathToFile);
   tryListLocalFolder(pathToFile.getString());
 }
@@ -710,7 +710,7 @@ void FileTransferMainDialog::checkLocalListViewSelection()
   }
 }
 
-void FileTransferMainDialog::insertMessageIntoComboBox(const TCHAR *message)
+void FileTransferMainDialog::insertMessageIntoComboBox(const ::scoped_string & scopedstrmessage)
 {
   m_logComboBox.insertItem(0, message);
   m_logComboBox.setSelectedItem(0);
@@ -731,7 +731,7 @@ void FileTransferMainDialog::enableControls(bool enabled)
   m_refreshRemoteButton.setEnabled(enabled);
 
   if (enabled) {
-    StringStorage curLocalPath;
+    ::string curLocalPath;
 
     getPathToCurrentLocalFolder(&curLocalPath);
 
@@ -803,12 +803,12 @@ void FileTransferMainDialog::raise(Exception &ex)
 
 void FileTransferMainDialog::refreshLocalFileList()
 {
-  StringStorage pathToFile;
+  ::string pathToFile;
   getPathToCurrentLocalFolder(&pathToFile);
   tryListLocalFolder(pathToFile.getString());
 }
 
-void FileTransferMainDialog::tryListLocalFolder(const TCHAR *pathToFile)
+void FileTransferMainDialog::tryListLocalFolder(const ::scoped_string & scopedstrpathToFile)
 {
   try {
     ::std::vector <FileInfo> *localFileList = m_ftCore->getListLocalFolder(pathToFile);
@@ -834,7 +834,7 @@ void FileTransferMainDialog::tryListLocalFolder(const TCHAR *pathToFile)
     m_mkDirLocalButton.setEnabled(!isRoot);
 
   } catch (...) {
-    StringStorage message;
+    ::string message;
 
     message.format(_T("Error: failed to get file ::std::list in local folder '%s'"),
                    pathToFile);
@@ -846,23 +846,23 @@ void FileTransferMainDialog::tryListLocalFolder(const TCHAR *pathToFile)
 
 void FileTransferMainDialog::refreshRemoteFileList()
 {
-  StringStorage currentFolder;
+  ::string currentFolder;
   m_remoteCurFolderTextBox.getText(&currentFolder);
   tryListRemoteFolder(currentFolder.getString());
 }
 
-void FileTransferMainDialog::tryListRemoteFolder(const TCHAR *pathToFile)
+void FileTransferMainDialog::tryListRemoteFolder(const ::scoped_string & scopedstrpathToFile)
 {
   m_lastSentFileListPath.setString(pathToFile);
   m_ftCore->remoteFileListOperation(pathToFile);
 }
 
-void FileTransferMainDialog::getPathToCurrentLocalFolder(StringStorage *out)
+void FileTransferMainDialog::getPathToCurrentLocalFolder(::string & out)
 {
   m_localCurFolderTextBox.getText(out);
 }
 
-void FileTransferMainDialog::getPathToParentLocalFolder(StringStorage *out)
+void FileTransferMainDialog::getPathToParentLocalFolder(::string & out)
 {
   getPathToCurrentLocalFolder(out);
   size_t ld = out->findLast(_T('\\'));
@@ -877,25 +877,25 @@ void FileTransferMainDialog::getPathToParentLocalFolder(StringStorage *out)
   }
 }
 
-void FileTransferMainDialog::getPathToSelectedLocalFile(StringStorage *out)
+void FileTransferMainDialog::getPathToSelectedLocalFile(::string & out)
 {
-  StringStorage *pathToFile = out;
+  ::string & pathToFile = out;
   getPathToCurrentLocalFolder(pathToFile);
 
   if (!pathToFile->is_empty() && !pathToFile->endsWith(_T('\\'))) {
     pathToFile->appendString(_T("\\"));
   }
 
-  const TCHAR *filename = m_localFileListView.getSelectedFileInfo()->getFileName();
+  const ::scoped_string & scopedstrfilename = m_localFileListView.getSelectedFileInfo()->getFileName();
   pathToFile->appendString(filename);
 }
 
-void FileTransferMainDialog::getPathToCurrentRemoteFolder(StringStorage *out)
+void FileTransferMainDialog::getPathToCurrentRemoteFolder(::string & out)
 {
   m_remoteCurFolderTextBox.getText(out);
 }
 
-void FileTransferMainDialog::getPathToParentRemoteFolder(StringStorage *out)
+void FileTransferMainDialog::getPathToParentRemoteFolder(::string & out)
 {
   getPathToCurrentRemoteFolder(out);
   size_t ld = out->findLast(_T('/'));
@@ -910,16 +910,16 @@ void FileTransferMainDialog::getPathToParentRemoteFolder(StringStorage *out)
   }
 }
 
-void FileTransferMainDialog::getPathToSelectedRemoteFile(StringStorage *out)
+void FileTransferMainDialog::getPathToSelectedRemoteFile(::string & out)
 {
-  StringStorage *pathToFile = out;
+  ::string & pathToFile = out;
   getPathToCurrentRemoteFolder(pathToFile);
 
   if (!pathToFile->endsWith(_T('/'))) {
     pathToFile->appendString(_T("/"));
   }
 
-  const TCHAR *filename = m_remoteFileListView.getSelectedFileInfo()->getFileName();
+  const ::scoped_string & scopedstrfilename = m_remoteFileListView.getSelectedFileInfo()->getFileName();
   pathToFile->appendString(filename);
 }
 
@@ -943,12 +943,12 @@ void FileTransferMainDialog::setNothingState()
   }
 }
 
-void FileTransferMainDialog::onFtOpError(const TCHAR *message)
+void FileTransferMainDialog::onFtOpError(const ::scoped_string & scopedstrmessage)
 {
   insertMessageIntoComboBox(message);
 }
 
-void FileTransferMainDialog::onFtOpInfo(const TCHAR *message)
+void FileTransferMainDialog::onFtOpInfo(const ::scoped_string & scopedstrmessage)
 {
   insertMessageIntoComboBox(message);
 }

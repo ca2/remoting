@@ -406,7 +406,7 @@ bool DesktopWindow::onDrawClipboard()
    {
       return false;
    }
-   StringStorage clipboardString;
+   ::string clipboardString;
    if (m_clipboard.getString(&clipboardString))
    {
 
@@ -422,7 +422,7 @@ bool DesktopWindow::onDrawClipboard()
    return true;
 }
 
-void DesktopWindow::setClipboardData(const StringStorage &strText)
+void DesktopWindow::setClipboardData(const ::string &strText)
 {
    if (m_conConf->isClipboardEnabled())
    {
@@ -863,7 +863,7 @@ void DesktopWindow::sendPointerEvent(unsigned char buttonMask, const Point *posi
    }
 }
 
-void DesktopWindow::sendCutTextEvent(const StringStorage &cutText)
+void DesktopWindow::sendCutTextEvent(const ::string &cutText)
 {
    if (!m_conConf->isClipboardEnabled())
    {

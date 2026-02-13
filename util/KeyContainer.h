@@ -32,9 +32,9 @@ class KeyContainer
 public:
   KeyContainer();
 
-  StringStorage key;
+  ::string key;
   bool isArgument;
-  StringStorage argument;
+  ::string argument;
 };
 
 #endif // __KEYCONTAINER_H__

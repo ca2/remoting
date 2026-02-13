@@ -81,7 +81,7 @@ TvnServer::TvnServer(bool runsInServiceContext,
   m_srvConfig = Configurator::getInstance()->getServerConfig();
 
   try {
-    StringStorage logDir;
+    ::string logDir;
     m_srvConfig->getLogFileDir(&logDir);
     unsigned char logLevel = m_srvConfig->getLogLevel();
     // FIXME: Use correct log name.
@@ -170,7 +170,7 @@ void TvnServer::onConfigReload(ServerConfig *serverConfig)
     bool changeMainRfbPort = m_rfbServer != 0 &&
       (m_srvConfig->getRfbPort() != (int)m_rfbServer->getBindPort());
 
-    const TCHAR *bindHost =
+    const ::scoped_string & scopedstrbindHost =
       m_srvConfig->isOnlyLoopbackConnectionsAllowed() ? _T("localhost") : _T("0.0.0.0");
     bool changeBindHost =  m_rfbServer != 0 &&
       _tcscmp(m_rfbServer->getBindHost(), bindHost) != 0;
@@ -212,7 +212,7 @@ void TvnServer::getServerInfo(TvnServerInfo *info)
     rfbServerListening = m_rfbServer != 0;
   }
 
-  StringStorage statusString;
+  ::string statusString;
 
   // Vnc authentication enabled.
   bool vncAuthEnabled = m_srvConfig->isUsingAuthentication();
@@ -286,7 +286,7 @@ void TvnServer::afterLastClientDisconnect()
   // Disconnect action must be executed in process on interactive user session to take effect.
   // Now, choose application keys for specified action.
 
-  StringStorage keys;
+  ::string keys;
 
   switch (action) {
   case ServerConfig::DA_LOCK_WORKSTATION:
@@ -302,7 +302,7 @@ void TvnServer::afterLastClientDisconnect()
   Process *process;
 
   // Choose how to start process.
-  StringStorage thisModulePath;
+  ::string thisModulePath;
   Environment::getCurrentModulePath(&thisModulePath);
   thisModulePath.quoteSelf();
   if (isRunningAsService()) {
@@ -352,7 +352,7 @@ void TvnServer::restartControlServer()
   m_log.message(_T("Starting control server"));
 
   try {
-    StringStorage pipeName;
+    ::string pipeName;
     ControlPipeName::createPipeName(isRunningAsService(), &pipeName, &m_log);
 
     // FIXME: Memory leak
@@ -378,7 +378,7 @@ void TvnServer::restartMainRfbServer()
     return;
   }
 
-  const TCHAR *bindHost = m_srvConfig->isOnlyLoopbackConnectionsAllowed() ? _T("localhost") : _T("0.0.0.0");
+  const ::scoped_string & scopedstrbindHost = m_srvConfig->isOnlyLoopbackConnectionsAllowed() ? _T("localhost") : _T("0.0.0.0");
   unsigned short bindPort = m_srvConfig->getRfbPort();
 
   m_log.message(_T("Starting main RFB server"));
@@ -437,7 +437,7 @@ void TvnServer::stopMainRfbServer()
 
 void TvnServer::changeLogProps()
 {
-  StringStorage logDir;
+  ::string logDir;
   unsigned char logLevel;
   {
     AutoLock al(&m_mutex);

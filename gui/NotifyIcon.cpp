@@ -87,7 +87,7 @@ void NotifyIcon::setIcon(Icon *icon)
   m_icon = icon;
 }
 
-void NotifyIcon::setText(const TCHAR *text)
+void NotifyIcon::setText(const ::scoped_string & scopedstrtext)
 {
   m_nid.uFlags = NIF_TIP;
 
@@ -98,7 +98,7 @@ void NotifyIcon::setText(const TCHAR *text)
 }
 
 void
-NotifyIcon::showBalloon(const TCHAR *message, const TCHAR *caption,
+NotifyIcon::showBalloon(const ::scoped_string & scopedstrmessage, const ::scoped_string & scopedstrcaption,
                       DWORD timeoutMillis)
 {
   m_nid.uFlags = NIF_INFO;

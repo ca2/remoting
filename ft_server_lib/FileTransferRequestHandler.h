@@ -111,14 +111,14 @@ protected:
   // Method sends "Last request failed" message with error description.
   //
 
-  void lastRequestFailed(StringStorage *storage);
-  void lastRequestFailed(const TCHAR *description);
+  void lastRequestFailed(::string & storage);
+  void lastRequestFailed(const ::scoped_string & scopedstrDescription);
 
   //
   // Helper methods
   //
 
-  bool getDirectorySize(const TCHAR *pathname, unsigned long long *dirSize);
+  bool getDirectorySize(const ::scoped_string & scopedstrpathname, unsigned long long *dirSize);
 
 protected:
   /**

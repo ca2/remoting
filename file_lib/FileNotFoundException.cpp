@@ -29,8 +29,8 @@ FileNotFoundException::FileNotFoundException()
 {
 }
 
-FileNotFoundException::FileNotFoundException(const TCHAR *message)
- : IOException(message)
+FileNotFoundException::FileNotFoundException(const ::scoped_string & scopedstrMessage)
+ : IOException(scopedstrMessage)
 {
 }
 

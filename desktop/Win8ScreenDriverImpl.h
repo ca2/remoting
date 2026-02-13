@@ -69,8 +69,8 @@ private:
   virtual void onCopyRect(const ::int_rectangle &  dstRect, int srcX, int srcY);
   virtual void onCursorPositionChanged(int x, int y);
   virtual void onCursorShapeChanged();
-  virtual void onRecoverableError(const TCHAR *reason);
-  virtual void onCriticalError(const TCHAR *reason);
+  virtual void onRecoverableError(const ::scoped_string & scopedstrreason);
+  virtual void onCriticalError(const ::scoped_string & scopedstrreason);
 
   void initDxgi();
 

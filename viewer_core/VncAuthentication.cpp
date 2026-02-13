@@ -31,12 +31,12 @@
 
 void VncAuthentication::vncAuthenticate(DataInputStream *input,
                                         DataOutputStream *output,
-                                        const StringStorage & password)
+                                        const ::string & password)
 {
   // TODO: removed duplicate code: ControlAuth.cpp
 
   // Prepare data for authentication.
-  StringStorage truncatedPass;
+  ::string truncatedPass;
   password.getSubstring(&truncatedPass, 0, VNC_PASSWORD_SIZE - 1);
 
   AnsiStringStorage passwordAnsi(truncatedPass);

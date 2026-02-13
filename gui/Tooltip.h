@@ -40,11 +40,11 @@ public:
 
   virtual void showTooltip(Control *control) = 0;
 
-  virtual void setText(const TCHAR *text) = 0;
-  virtual void setTitle(const TCHAR *caption) = 0;
+  virtual void setText(const ::scoped_string & scopedstrtext) = 0;
+  virtual void setTitle(const ::scoped_string & scopedstrcaption) = 0;
 
-  virtual void getText(StringStorage *text) const = 0;
-  virtual void getTitle(StringStorage *title) const = 0;
+  virtual void getText(::string & text) const = 0;
+  virtual void getTitle(::string & title) const = 0;
 
   virtual void setIconType(int iconType) = 0;
   virtual int getIconType() const = 0;

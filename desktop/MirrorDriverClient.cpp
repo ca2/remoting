@@ -161,7 +161,7 @@ void MirrorDriverClient::extractDeviceInfo(TCHAR *driverName)
   while (result = EnumDisplayDevices(0, m_deviceNumber, &m_deviceInfo, 0)) {
     m_log->debug(_T("Found: %s"), m_deviceInfo.DeviceString);
     m_log->debug(_T("RegKey: %s"), m_deviceInfo.DeviceKey);
-    StringStorage deviceString(m_deviceInfo.DeviceString);
+    ::string deviceString(m_deviceInfo.DeviceString);
     if (deviceString.isEqualTo(driverName)) {
       m_log->info(_T("%s is found"), driverName);
       break;
@@ -169,7 +169,7 @@ void MirrorDriverClient::extractDeviceInfo(TCHAR *driverName)
     m_deviceNumber++;
   }
   if (!result) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Can't find %s!"), driverName);
     throw Exception(errMess.getString());
   }
@@ -177,12 +177,12 @@ void MirrorDriverClient::extractDeviceInfo(TCHAR *driverName)
 
 void MirrorDriverClient::openDeviceRegKey(TCHAR *miniportName)
 {
-  StringStorage deviceKey(m_deviceInfo.DeviceKey);
+  ::string deviceKey(m_deviceInfo.DeviceKey);
   deviceKey.toUpperCase();
   TCHAR *substrPos = deviceKey.find(_T("\\DEVICE"));
-  StringStorage subKey(_T("DEVICE0"));
+  ::string subKey(_T("DEVICE0"));
   if (substrPos != 0) {
-    StringStorage str(substrPos);
+    ::string str(substrPos);
     if (str.getLength() >= 8) {
       str.getSubstring(&subKey, 1, 7);
     }
@@ -298,7 +298,7 @@ void MirrorDriverClient::commitDisplayChanges(DEVMODE *pdm)
   if (pdm) {
     LONG code = ChangeDisplaySettingsEx(m_deviceInfo.DeviceName, pdm, 0, CDS_UPDATEREGISTRY, 0);
     if (code < 0) {
-      StringStorage errMess;
+      ::string errMess;
       errMess.format(_T("1st ChangeDisplaySettingsEx() failed with code %d"),
                      (int)code);
       throw Exception(errMess.getString());
@@ -306,7 +306,7 @@ void MirrorDriverClient::commitDisplayChanges(DEVMODE *pdm)
     m_log->info(_T("CommitDisplayChanges(2): \"%s\""), m_deviceInfo.DeviceName);
     code = ChangeDisplaySettingsEx(m_deviceInfo.DeviceName, pdm, 0, 0, 0);
     if (code < 0) {
-      StringStorage errMess;
+      ::string errMess;
       errMess.format(_T("2nd ChangeDisplaySettingsEx() failed with code %d"),
                      (int)code);
       throw Exception(errMess.getString());
@@ -314,7 +314,7 @@ void MirrorDriverClient::commitDisplayChanges(DEVMODE *pdm)
   } else {
     LONG code = ChangeDisplaySettingsEx(m_deviceInfo.DeviceName, 0, 0, 0, 0);
     if (code < 0) {
-      StringStorage errMess;
+      ::string errMess;
       errMess.format(_T("ChangeDisplaySettingsEx() failed with code %d"),
                      (int)code);
       throw Exception(errMess.getString());
@@ -369,7 +369,7 @@ void MirrorDriverClient::connect()
     GETCHANGESBUF buf = {0};
     int res = ExtEscape(m_driverDC, dmf_esc_usm_pipe_map, 0, 0, sizeof(buf), (LPSTR)&buf);
     if (res <= 0) {
-      StringStorage errMess;
+      ::string errMess;
       errMess.format(_T("Can't set a connection for the mirror driver: ")
                      _T("ExtEscape() failed with %d"),
                      res);

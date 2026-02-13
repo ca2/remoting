@@ -25,16 +25,16 @@
 #include "StringTable.h"
 #include "ResourceLoader.h"
 
-::std::map<UINT, StringStorage> StringTable::_cache;
+::std::map<UINT, ::string> StringTable::_cache;
 
 StringTable::StringTable()
 {
 }
 
-const TCHAR *StringTable::getString(UINT id)
+const ::scoped_string & scopedstrStringTable::getString(UINT id)
 {
   if (_cache.find(id) == _cache.end()) {
-    StringStorage string;
+    ::string string;
     if (ResourceLoader::getInstance()->loadString(id, &string)) {
       _cache[id] = string;
     } else {

@@ -63,7 +63,7 @@ void FilteredTextBox::setStringFilter(StringFilter *filter)
 
 LRESULT FilteredTextBox::makeCheck()
 {
-  StringStorage updatedText;
+  ::string updatedText;
   TextBox::getText(&updatedText);
   if (isStringValid(updatedText.getString())) {
     m_text = updatedText;
@@ -82,7 +82,7 @@ LRESULT FilteredTextBox::makeCheck()
   return 0;
 }
 
-bool FilteredTextBox::isStringValid(const TCHAR *string)
+bool FilteredTextBox::isStringValid(const ::scoped_string & scopedstrstring)
 {
   if (m_filter != NULL) {
     return m_filter->isStringCorrect(string);

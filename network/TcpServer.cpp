@@ -26,7 +26,7 @@
 
 #include "network/socket/SocketAddressIPv4.h"
 
-TcpServer::TcpServer(const TCHAR *bindHost, unsigned short bindPort,
+TcpServer::TcpServer(const ::scoped_string & scopedstrbindHost, unsigned short bindPort,
                      bool autoStart,
                      bool lockAddr)
 : m_bindHost(bindHost), m_bindPort(bindPort)
@@ -56,7 +56,7 @@ TcpServer::~TcpServer()
   }
 }
 
-const TCHAR *TcpServer::getBindHost() const
+const ::scoped_string & scopedstrTcpServer::getBindHost() const
 {
   return m_bindHost.getString();
 }

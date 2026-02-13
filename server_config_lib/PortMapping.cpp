@@ -79,7 +79,7 @@ PortMappingRect PortMapping::getRect() const
   return m_rect;
 }
 
-void PortMapping::toString(StringStorage *string) const
+void PortMapping::toString(::string & string) const
 {
   //
   // Format:   [port]:[rect.toString()]
@@ -87,18 +87,18 @@ void PortMapping::toString(StringStorage *string) const
   // without square brackets.
   //
 
-  StringStorage rectString;
+  ::string rectString;
   m_rect.toString(&rectString);
 
   string->format(_T("%d:%s"), m_port, rectString.getString());
 }
 
-bool PortMapping::parse(const TCHAR *str, PortMapping *mapping)
+bool PortMapping::parse(const ::scoped_string & scopedstrstr, PortMapping *mapping)
 {
   int port;
   TCHAR c;
   PortMappingRect rect;
-  const TCHAR *rectString = _tcschr(str, _T(':')) + 1;
+  const ::scoped_string & scopedstrrectString = _tcschr(str, _T(':')) + 1;
   if (rectString == NULL) {
     return false;
   }

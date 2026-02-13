@@ -43,7 +43,7 @@ public:
    * @param lockAddr determinates if server must set exclusive address.
    * @throws Exception on fail.
    */
-  HttpServer(const TCHAR *bindHost,
+  HttpServer(const ::scoped_string & scopedstrbindHost,
              unsigned short bindPort,
              bool lockAddr,
              LogWriter *log);

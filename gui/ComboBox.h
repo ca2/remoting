@@ -35,16 +35,16 @@ public:
   ~ComboBox();
 
   // Adds new item to the end of combo box items ::std::list.
-  int addItem(const TCHAR *text);
+  int addItem(const ::scoped_string & scopedstrtext);
 
   // Adds new item to the end of combo box items ::std::list.
-  int addItem(const TCHAR *text, void *tag);
+  int addItem(const ::scoped_string & scopedstrtext, void *tag);
 
   // Inserts new item to the specified position
-  void insertItem(int index, const TCHAR *text);
+  void insertItem(int index, const ::scoped_string & scopedstrtext);
 
   // Inserts new item to the specified position
-  void insertItem(int index, const TCHAR *text, void *tag);
+  void insertItem(int index, const ::scoped_string & scopedstrtext, void *tag);
 
   // Returns count of combo box items
   int getItemsCount() const;
@@ -56,7 +56,7 @@ public:
   void *getItemData(int index) const;
 
   // Sets text associated with combo box item with specified index
-  virtual void getItemText(int index, StringStorage *storage) const;
+  virtual void getItemText(int index, ::string & storage) const;
 
   // Returns current selected item index
   int getSelectedItemIndex();

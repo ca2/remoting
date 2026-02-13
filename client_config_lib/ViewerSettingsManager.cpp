@@ -29,23 +29,23 @@
 
 SettingsManager *ViewerSettingsManager::s_instance = 0;
 
-ViewerSettingsManager::ViewerSettingsManager(const TCHAR registryName[])
+ViewerSettingsManager::ViewerSettingsManager(const ::scoped_string & scopedstrRegistryName)
 : RegistrySettingsManager()
 {
-  StringStorage keyName;
-  keyName.format(_T("%s\\Settings\\"), registryName);
-  setRegistryKey(Registry::getCurrentUserKey(), keyName.getString());
+  ::string keyName;
+  keyName.format("%s\\Settings\\", ::string(scopedstrRegistryName).c_str());
+  setRegistryKey(Registry::getCurrentUserKey(), keyName.c_str());
 }
 
 ViewerSettingsManager::~ViewerSettingsManager()
 {
 }
 
-void ViewerSettingsManager::initInstance(const TCHAR registryName[])
+void ViewerSettingsManager::initInstance(const ::scoped_string & scopedstrRegistryName)
 {
   if (s_instance != 0)
     delete s_instance;
-  s_instance = new ViewerSettingsManager(registryName);
+  s_instance = new ViewerSettingsManager(scopedstrRegistryName);
 }
 
 SettingsManager *ViewerSettingsManager::getInstance()

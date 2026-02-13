@@ -30,7 +30,7 @@
 class CommandLineFormatHelp : public Exception
 {
 public:
-  CommandLineFormatHelp(const TCHAR *message = _T("Need help dialog"));
+  CommandLineFormatHelp(const ::scoped_string & scopedstrmessage = _T("Need help dialog"));
   virtual ~CommandLineFormatHelp();
 };
 

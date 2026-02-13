@@ -48,7 +48,7 @@ public:
   ~LoginDialog();
 
   // this function returns the host
-  StringStorage getServerHost();
+  ::string getServerHost();
   void setConConf(ConnectionConfig *conConf);
   // set listening mode
   void setListening(bool isListening);
@@ -71,7 +71,7 @@ protected:
   Control m_ok;
   ConnectionConfig m_connectionConfig;
   ComboBox m_server;
-  StringStorage m_serverHost;
+  ::string m_serverHost;
   remoting_impact *m_viewer;
 
 private:
@@ -81,7 +81,7 @@ private:
   void onConfiguration();
   BOOL onOptions();
   void onOrder();
-  void openUrl(const TCHAR *url);
+  void openUrl(const ::scoped_string & scopedstrurl);
   void onListening();
   void onAbout();
 };

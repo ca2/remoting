@@ -37,8 +37,8 @@
 #include "remoting_node_desktop/NamingDefs.h"
 
 QueryConnectionApplication::QueryConnectionApplication(HINSTANCE hInstance,
-                                                       const TCHAR *windowClassName,
-                                                       const TCHAR *cmdLine)
+                                                       const ::scoped_string & scopedstrwindowClassName,
+                                                       const ::scoped_string & scopedstrcmdLine)
 : LocalWindowsApplication(hInstance, windowClassName),
   m_cmdLine(cmdLine)
 {
@@ -60,7 +60,7 @@ int QueryConnectionApplication::run()
     return 0;
   }
 
-  StringStorage peerAddress;
+  ::string peerAddress;
 
   parser.getPeerAddress(&peerAddress);
 
@@ -73,12 +73,12 @@ int QueryConnectionApplication::run()
   return dialog.showModal();
 }
 
-int QueryConnectionApplication::execute(const TCHAR *peerAddr, bool acceptByDefault, DWORD timeOutSec)
+int QueryConnectionApplication::execute(const ::scoped_string & scopedstrpeerAddr, bool acceptByDefault, DWORD timeOutSec)
 {
    // Prepare command for execution.
 
-  StringStorage curModulePath;
-  StringStorage command;
+  ::string curModulePath;
+  ::string command;
 
   Environment::getCurrentModulePath(&curModulePath);
 

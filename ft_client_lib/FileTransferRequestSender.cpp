@@ -51,7 +51,7 @@ void FileTransferRequestSender::sendCompressionSupportRequest()
   m_output->flush();
 }
 
-void FileTransferRequestSender::sendFileListRequest(const TCHAR *fullPath,
+void FileTransferRequestSender::sendFileListRequest(const ::scoped_string & scopedstrfullPath,
                                                     bool useCompression)
 {
   AutoLock al(m_output);
@@ -71,7 +71,7 @@ void FileTransferRequestSender::sendFileListRequest(const TCHAR *fullPath,
   m_output->flush();
 }
 
-void FileTransferRequestSender::sendDownloadRequest(const TCHAR *fullPathName,
+void FileTransferRequestSender::sendDownloadRequest(const ::scoped_string & scopedstrfullPathName,
                                                     unsigned long long offset)
 {
   AutoLock al(m_output);
@@ -106,7 +106,7 @@ void FileTransferRequestSender::sendDownloadDataRequest(unsigned int size,
   m_output->flush();
 }
 
-void FileTransferRequestSender::sendRmFileRequest(const TCHAR *fullPathName)
+void FileTransferRequestSender::sendRmFileRequest(const ::scoped_string & scopedstrfullPathName)
 {
   AutoLock al(m_output);
 
@@ -118,7 +118,7 @@ void FileTransferRequestSender::sendRmFileRequest(const TCHAR *fullPathName)
   m_output->flush();
 }
 
-void FileTransferRequestSender::sendMkDirRequest(const TCHAR *fullPathName)
+void FileTransferRequestSender::sendMkDirRequest(const ::scoped_string & scopedstrfullPathName)
 {
   AutoLock al(m_output);
 
@@ -130,8 +130,8 @@ void FileTransferRequestSender::sendMkDirRequest(const TCHAR *fullPathName)
   m_output->flush();
 }
 
-void FileTransferRequestSender::sendMvFileRequest(const TCHAR *oldFileName,
-                                                  const TCHAR *newFileName)
+void FileTransferRequestSender::sendMvFileRequest(const ::scoped_string & scopedstroldFileName,
+                                                  const ::scoped_string & scopedstrNewFileName)
 {
   AutoLock al(m_output);
 
@@ -147,7 +147,7 @@ void FileTransferRequestSender::sendMvFileRequest(const TCHAR *oldFileName,
   m_output->flush();
 }
 
-void FileTransferRequestSender::sendUploadRequest(const TCHAR *fullPathName,
+void FileTransferRequestSender::sendUploadRequest(const ::scoped_string & scopedstrfullPathName,
                                                   bool overwrite,
                                                   unsigned long long offset)
 {
@@ -222,7 +222,7 @@ void FileTransferRequestSender::sendUploadEndRequest(unsigned char fileFlags,
   m_output->flush();
 }
 
-void FileTransferRequestSender::sendFolderSizeRequest(const TCHAR *fullPath)
+void FileTransferRequestSender::sendFolderSizeRequest(const ::scoped_string & scopedstrfullPath)
 {
   AutoLock al(m_output);
 

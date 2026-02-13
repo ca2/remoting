@@ -49,7 +49,7 @@ public:
    * Gets connection string, specified by user.
    * @return connection string.
    */
-  const TCHAR *getConnectString() const;
+  const ::scoped_string & scopedstrgetConnectString() const;
 
   /**
    * Gets view only flag, specified by user.
@@ -72,7 +72,7 @@ protected:
   /**
    * Member to hold connection string after dialog is destroyed.
    */
-  StringStorage m_connectString;
+  ::string m_connectString;
   /**
    * Like m_connectString, but for view only flag.
    */

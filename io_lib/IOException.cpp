@@ -29,7 +29,7 @@ IOException::IOException()
 {
 }
 
-IOException::IOException(const TCHAR *message)
+IOException::IOException(const ::scoped_string & scopedstrmessage)
 : Exception(message)
 {
 }

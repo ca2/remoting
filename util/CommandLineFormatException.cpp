@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "CommandLineFormatException.h"
 
-CommandLineFormatException::CommandLineFormatException(const TCHAR *message)
+CommandLineFormatException::CommandLineFormatException(const ::scoped_string & scopedstrmessage)
  : Exception(message)
 {
 }

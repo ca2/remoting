@@ -47,11 +47,11 @@ public:
   RemoteFilesDeleteOperation(LogWriter *logWriter,
                              const FileInfo *filesInfoToDelete,
                              size_t filesCount,
-                             const TCHAR *pathToTargetRoot);
+                             const ::scoped_string & scopedstrpathToTargetRoot);
 
   RemoteFilesDeleteOperation(LogWriter *logWriter,
                              FileInfo fileInfoToDelete,
-                             const TCHAR *pathToTargetRoot);
+                             const ::scoped_string & scopedstrpathToTargetRoot);
 
   virtual ~RemoteFilesDeleteOperation();
 
@@ -82,7 +82,7 @@ protected:
   //
 
   FileInfoList *m_toDelete;
-  StringStorage m_pathToTargetRoot;
+  ::string m_pathToTargetRoot;
 };
 
 #endif

@@ -27,7 +27,7 @@
 
 #include "inttypes.h"
 #include "winhdr.h"
-#include "StringStorage.h"
+//#include "::string.h"
 
 /**
  * DateTime class.
@@ -86,7 +86,7 @@ public:
    * Converts this DateTime to string.
    * @param [out] out output parameter.
    */
-  void toString(StringStorage *out) const;
+  void toString(::string & out) const;
 
   /**
    * Returns current local time.

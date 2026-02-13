@@ -25,7 +25,7 @@
 #include "FolderListener.h"
 #include <vector>
 
-FolderListener::FolderListener(const TCHAR *folderPath)
+FolderListener::FolderListener(const ::scoped_string & scopedstrfolderPath)
 : m_filesInfo(NULL), m_filesCount(0)
 {
   m_folderPath.setString(folderPath);
@@ -50,7 +50,7 @@ unsigned int FolderListener::getFilesCount() const
 
 bool FolderListener::list()
 {
-  StringStorage *fileNameList = NULL;
+  ::string & fileNameList = NULL;
   m_filesCount = 0;
   bool listResult = true;
 
@@ -65,7 +65,7 @@ bool FolderListener::list()
     return false;
   }
 
-  fileNameList = new StringStorage[m_filesCount];
+  fileNameList = new ::string[m_filesCount];
 
   if (m_filesInfo != NULL) {
     delete[] m_filesInfo;
@@ -83,8 +83,8 @@ bool FolderListener::list()
 
   for (unsigned int i = 0; i < m_filesCount; i++) {
 
-    const TCHAR *fileName = fileNameList[i].getString();
-    const TCHAR *folderName = m_folderPath.getString();
+    const ::scoped_string & scopedstrfileName = fileNameList[i].getString();
+    const ::scoped_string & scopedstrfolderName = m_folderPath.getString();
 
     File file(folderName, fileName);
     FileInfo fileInfo(&file);

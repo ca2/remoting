@@ -26,7 +26,7 @@
 #include <vector>
 
 #include "thread/LocalMutex.h"
-#include "util/StringStorage.h"
+//#include "util/::string.h"
 
 #ifndef _CAPS_CONTAINER_H_
 #define _CAPS_CONTAINER_H_
@@ -60,9 +60,9 @@ public:
   // two functions to perform this task. These functions overwrite capability
   // records with the same code.
   //
-  void add(const RfbCapabilityInfo *capinfo, const StringStorage desc = _T(""));
+  void add(const RfbCapabilityInfo *capinfo, const ::string desc = _T(""));
   void add(unsigned int code, const char *vendor, const char *name,
-           StringStorage desc = _T(""));
+           ::string desc = _T(""));
 
   //
   // Check if a capability with the specified code was added earlier.
@@ -81,7 +81,7 @@ public:
   // either if the code is not known, or if there is no description for this
   // capability.
   //
-  StringStorage getDescription(unsigned int code) const;
+  ::string getDescription(unsigned int code) const;
 
   //
   // Mark the specified capability as "enabled". This function checks "vendor"
@@ -121,7 +121,7 @@ private:
   bool isKnown(unsigned int code) const;
 
   ::std::map<unsigned int, RfbCapabilityInfo> infoMap;
-  ::std::map<unsigned int, StringStorage> descMap;
+  ::std::map<unsigned int, ::string> descMap;
   ::std::map<unsigned int, bool> enableMap;
 
   // List of enabled caps.

@@ -245,7 +245,7 @@ void ControlTrayIcon::onShutdownServerMenuItemClick()
       serverInfo = m_lastKnownServerInfo;
     }
 
-    StringStorage userMessage;
+    ::string userMessage;
 
     UINT stringId = serverInfo.m_serviceFlag ? IDS_TVNSERVER_SERVICE : IDS_TVNSERVER_APP;
 

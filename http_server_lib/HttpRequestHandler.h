@@ -33,7 +33,7 @@ class HttpRequestHandler
 {
 public:
   HttpRequestHandler(DataInputStream *dataInput, DataOutputStream *dataOutput, LogWriter *log,
-                     const TCHAR *peerHost = 0);
+                     const ::scoped_string & scopedstrpeerHost = 0);
   virtual ~HttpRequestHandler();
 
   // Reads HTTP request from input and sends responce to output.
@@ -42,7 +42,7 @@ public:
 protected:
   DataInputStream *m_dataInput;
   DataOutputStream *m_dataOutput;
-  StringStorage m_peerHost;
+  ::string m_peerHost;
 
   LogWriter *m_log;
 };

@@ -26,7 +26,7 @@
 #define _LIST_BOX_H_
 
 #include "Control.h"
-#include "util/StringStorage.h"
+//#include "util/::string.h"
 
 class ListBox : public Control
 {
@@ -34,13 +34,13 @@ public:
   ListBox();
   ~ListBox();
 public:
-  void addString(const TCHAR *str);
-  void addString(const TCHAR *str, void *tag);
-  void getItemText(int index, StringStorage *storage);
-  void setItemText(int index, const TCHAR *str);
-  void insertString(int index, const TCHAR *str);
-  void insertString(int index, const TCHAR *str, LPARAM data);
-  void appendString(const TCHAR *str, LPARAM data);
+  void addString(const ::scoped_string & scopedstrstr);
+  void addString(const ::scoped_string & scopedstrstr, void *tag);
+  void getItemText(int index, ::string & storage);
+  void setItemText(int index, const ::scoped_string & scopedstrstr);
+  void insertString(int index, const ::scoped_string & scopedstrstr);
+  void insertString(int index, const ::scoped_string & scopedstrstr, LPARAM data);
+  void appendString(const ::scoped_string & scopedstrstr, LPARAM data);
   void setItemData(int index, LPARAM data);
   void removeString(int index);
   int getSelectedIndex();

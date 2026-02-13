@@ -36,17 +36,17 @@ ResourceLoader::~ResourceLoader()
 {
 }
 
-HICON ResourceLoader::loadStandartIcon(const TCHAR *iconName)
+HICON ResourceLoader::loadStandartIcon(const ::scoped_string & scopedstriconName)
 {
   return LoadIcon(NULL, iconName);
 }
 
-HICON ResourceLoader::loadIcon(const TCHAR *iconName)
+HICON ResourceLoader::loadIcon(const ::scoped_string & scopedstriconName)
 {
   return LoadIcon(m_appInstance, iconName);
 }
 
-bool ResourceLoader::loadString(UINT id, StringStorage *string)
+bool ResourceLoader::loadString(UINT id, ::string & string)
 {
   _ASSERT(string != 0);
   string->setString(_T("(Undef)"));
@@ -98,7 +98,7 @@ HACCEL ResourceLoader::loadAccelerator(UINT id)
                           MAKEINTRESOURCE(id)); 
 }
 
-HCURSOR ResourceLoader::loadStandardCursor(const TCHAR *id)
+HCURSOR ResourceLoader::loadStandardCursor(const ::scoped_string & scopedstrid)
 {
   return LoadCursor(0, id);
 }

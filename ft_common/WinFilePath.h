@@ -25,13 +25,13 @@
 #ifndef _WIN_FILE_PATH_H_
 #define _WIN_FILE_PATH_H_
 
-#include "util/StringStorage.h"
+//#include "util/::string.h"
 
-class WinFilePath : public StringStorage
+class WinFilePath : public ::string
 {
 public:
   WinFilePath();
-  WinFilePath(const TCHAR *string);
+  WinFilePath(const ::scoped_string & scopedstrstring);
   WinFilePath(const WinFilePath &stringBuffer);
 
   ~WinFilePath();
@@ -46,12 +46,12 @@ public:
   //
   // Override parent method
   //
-  virtual void setString(const TCHAR *string);
+  virtual void setString(const ::scoped_string & scopedstrstring);
 
-  void operator = (const StringStorage &other);
+  void operator = (const ::string &other);
 
-  bool operator == (const StringStorage &str) const;
-  bool operator < (const StringStorage &str) const;
+  bool operator == (const ::string &str) const;
+  bool operator < (const ::string &str) const;
 
 private:
   bool m_parentPathIsRoot;

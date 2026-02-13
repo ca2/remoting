@@ -51,7 +51,7 @@ void FileTransferSecurity::beginMessageProcessing()
     return;
   } 
   try {
-    StringStorage userName, desktopName;
+    ::string userName, desktopName;
 
     if (m_desktop != NULL) {
       m_desktop->getCurrentUserInfo(&desktopName, &userName);

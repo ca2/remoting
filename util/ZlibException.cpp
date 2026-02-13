@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ZLibException.h"
 
-ZLibException::ZLibException(const TCHAR *message)
+ZLibException::ZLibException(const ::scoped_string & scopedstrmessage)
  : Exception(message)
 {
 }

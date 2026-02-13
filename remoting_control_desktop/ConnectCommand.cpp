@@ -25,7 +25,7 @@
 #include "ConnectCommand.h"
 
 ConnectCommand::ConnectCommand(ControlProxy *serverControl,
-                               const TCHAR *hostName)
+                               const ::scoped_string & scopedstrhostName)
 : m_proxy(serverControl),
   m_hostName(hostName)
 {

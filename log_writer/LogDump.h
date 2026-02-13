@@ -33,13 +33,13 @@ struct LogEntry
            unsigned int threadId,
            const DateTime & dt,
            int lineLevel,
-           const TCHAR *message);
+           const ::scoped_string & scopedstrmessage);
 
   unsigned int m_processId;
   unsigned int m_threadId;
   DateTime m_dt;
   int m_lineLevel;
-  StringStorage m_message;
+  ::string m_message;
 };
 
 // This class is not thread safed.
@@ -54,7 +54,7 @@ public:
                      unsigned int threadId,
                      const DateTime & dt,
                      int level,
-                     const TCHAR *message) = 0;
+                     const ::scoped_string & scopedstrmessage) = 0;
 
   // Stores all printed lines as a log header and stops it accumulation.
   void storeHeader();
@@ -69,7 +69,7 @@ protected:
                             unsigned int threadId,
                             const DateTime & dt,
                             int level,
-                            const TCHAR *message);
+                            const ::scoped_string & scopedstrmessage);
 
   // This function checks that writing to the log dump is not stopped and
   // then store the log line information.
@@ -78,7 +78,7 @@ protected:
                           unsigned int threadId,
                           const DateTime & dt,
                           int level,
-                          const TCHAR *message);
+                          const ::scoped_string & scopedstrmessage);
 
   // Terminaties to write log lines to the memory buffer and clear the buffer.
   void terminateLogDumping();

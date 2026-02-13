@@ -60,7 +60,7 @@ public:
   // *passwordFile parameter then getPassFromConfigEnabled. Call this function
   // to determine this parameters. If this function has not been called then
   // on server auth request will be used a dialog box.
-  void setPasswordProperties(const TCHAR *passwordFile,
+  void setPasswordProperties(const ::scoped_string & scopedstrpasswordFile,
                              bool getPassFromConfigEnabled,
                              bool forService);
 
@@ -109,15 +109,15 @@ public:
    * @throws RemoteException on error on server.
    * @throws IOException on io error.
    */
-  void makeOutgoingConnection(const TCHAR *connectString, bool viewOnly);
+  void makeOutgoingConnection(const ::scoped_string & scopedstrconnectString, bool viewOnly);
 
   /**
    * Initialized connection to a TcpDispatcher.
    * @param connectString connect string in host[:(port|diplay)] format.
    */
-  void makeTcpDispatcherConnection(const TCHAR *connectString,
-                                   const TCHAR *dispatcherName,
-                                   const TCHAR *keyword,
+  void makeTcpDispatcherConnection(const ::scoped_string & scopedstrconnectString,
+                                   const ::scoped_string & scopedstrDispatcherName,
+                                   const ::scoped_string & scopedstrKeyword,
                                    unsigned int connectionId);
 
   // Share only primary display for all clients.
@@ -128,7 +128,7 @@ public:
 
   // Share a rect that constrained by a window form.
   // shareWindowName - is a part of the window header name.
-  void shareWindow(const StringStorage & shareWindowName);
+  void shareWindow(const ::string & shareWindowName);
 
   // Share only a rect.
   void shareRect(const ::int_rectangle &  shareRect);
@@ -192,7 +192,7 @@ private:
    */
   void releaseMessage();
 
-  StringStorage m_passwordFile;
+  ::string m_passwordFile;
   bool m_getPassFromConfigEnabled;
   bool m_forService;
 };

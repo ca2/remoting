@@ -42,8 +42,8 @@ DesktopBaseImpl::~DesktopBaseImpl()
 {
 }
 
-void DesktopBaseImpl::getCurrentUserInfo(StringStorage *desktopName,
-                                    StringStorage *userName)
+void DesktopBaseImpl::getCurrentUserInfo(::string & desktopName,
+                                    ::string & userName)
 {
   _ASSERT(m_userInput != 0);
   _ASSERT(m_extDeskTermListener != 0);
@@ -140,7 +140,7 @@ void DesktopBaseImpl::getWindowCoords(HWND hwnd, ::int_rectangle *rect)
   }
 }
 
-HWND DesktopBaseImpl::getWindowHandleByName(const StringStorage & windowName)
+HWND DesktopBaseImpl::getWindowHandleByName(const ::string & windowName)
 {
   _ASSERT(m_userInput != 0);
   _ASSERT(m_extDeskTermListener != 0);
@@ -223,7 +223,7 @@ void DesktopBaseImpl::setMouseEvent(unsigned short x, unsigned short y, unsigned
   }
 }
 
-void DesktopBaseImpl::setNewClipText(const StringStorage & newClipboard)
+void DesktopBaseImpl::setNewClipText(const ::string & newClipboard)
 {
   _ASSERT(m_userInput != 0);
   _ASSERT(m_extDeskTermListener != 0);
@@ -296,7 +296,7 @@ void DesktopBaseImpl::onUpdateRequest(const ::int_rectangle &  rectRequested, bo
   m_newUpdateEvent.notify();
 }
 
-void DesktopBaseImpl::onClipboardUpdate(const StringStorage & newClipboard)
+void DesktopBaseImpl::onClipboardUpdate(const ::string & newClipboard)
 {
   _ASSERT(m_extClipListener != 0);
 

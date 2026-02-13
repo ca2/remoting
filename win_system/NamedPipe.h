@@ -82,7 +82,7 @@ private:
 
   HANDLE m_hPipe;
   LocalMutex m_hPipeMutex;
-  StringStorage m_pipeName;
+  ::string m_pipeName;
 
   WindowsEvent m_readEvent;
   WindowsEvent m_writeEvent;

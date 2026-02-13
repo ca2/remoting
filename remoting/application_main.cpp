@@ -114,7 +114,7 @@ int application::remoting_impact_main( const ::file::path & path)
    //   cmd.parse();
    // }
    // catch (const CommandLineFormatException &exception) {
-   //   StringStorage strError(exception.getMessage());
+   //   ::string strError(exception.getMessage());
    //   MessageBox(0,
    //     strError.getString(),
    //     ProductNames::VIEWER_PRODUCT_NAME,

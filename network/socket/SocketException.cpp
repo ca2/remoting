@@ -36,7 +36,7 @@ SocketException::SocketException(int error)
   setErrno(error);
 }
 
-SocketException::SocketException(const TCHAR *message)
+SocketException::SocketException(const ::scoped_string & scopedstrmessage)
 : Exception(message), m_errno(0)
 {
 }

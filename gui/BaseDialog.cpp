@@ -42,7 +42,7 @@ BaseDialog::BaseDialog(DWORD resourceId)
 {
 }
 
-BaseDialog::BaseDialog(const TCHAR *resourceName)
+BaseDialog::BaseDialog(const ::scoped_string & scopedstrresourceName)
 : m_pwindowParent(NULL), m_resourceName(0), m_resourceId(0), m_hicon(0)
 {
   setResourceName(resourceName);
@@ -58,7 +58,7 @@ BaseDialog::~BaseDialog()
   }
 }
 
-void BaseDialog::setResourceName(const TCHAR *resourceName)
+void BaseDialog::setResourceName(const ::scoped_string & scopedstrresourceName)
 {
   if (m_resourceName != 0) {
     free(m_resourceName);

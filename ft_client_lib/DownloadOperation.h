@@ -51,8 +51,8 @@ public:
 
   DownloadOperation(LogWriter *logWriter,
                     const FileInfo *filesToDownload, size_t filesCount,
-                    const TCHAR *pathToTargetRoot,
-                    const TCHAR *pathToSourceRoot);
+                    const ::scoped_string & scopedstrpathToTargetRoot,
+                    const ::scoped_string & scopedstrpathToSourceRoot);
 
   virtual ~DownloadOperation();
 
@@ -102,7 +102,7 @@ private:
   void decFoldersToCalcSizeCount();
 
   // Helper method that creates message string and notifies listeners
-  void notifyFailedToDownload(const TCHAR *errorDescription);
+  void notifyFailedToDownload(const ::scoped_string & scopedstrerrorDescription);
 
   // Sets current m_toCopy member value and updates
   // m_pathToSourceFile, m_pathToTargetFile members

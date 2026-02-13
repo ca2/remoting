@@ -76,7 +76,7 @@ void Screen::getBMI(BMI *bmi, HDC dc)
   HBITMAP hbm;
   hbm = (HBITMAP)GetCurrentObject(bitmapDC, OBJ_BITMAP);
   if (GetDIBits(bitmapDC, hbm, 0, 0, NULL, (LPBITMAPINFO)bmi, DIB_RGB_COLORS) == 0) {
-    StringStorage errMess;
+    ::string errMess;
     Environment::getErrStr(_T("Can't get a DIBits"), &errMess);
     DeleteObject(hbm);
     DeleteDC(bitmapDC);
@@ -86,7 +86,7 @@ void Screen::getBMI(BMI *bmi, HDC dc)
   // The color table is filled only if it is used BI_BITFIELDS
   if (bmi->bmiHeader.biCompression == BI_BITFIELDS) {
     if (GetDIBits(bitmapDC, hbm, 0, 0, NULL, (LPBITMAPINFO)bmi, DIB_RGB_COLORS) == 0) {
-      StringStorage errMess;
+      ::string errMess;
       Environment::getErrStr(_T("Can't get a DIBits"), &errMess);
       DeleteObject(hbm);
       DeleteDC(bitmapDC);

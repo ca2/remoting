@@ -79,7 +79,7 @@ bool WinDxgiOutput::isAttachedtoDesktop()
   return ::int_rectangle(&m_description.DesktopCoordinates);
 }
 
-void WinDxgiOutput::getDeviceName(StringStorage *out)
+void WinDxgiOutput::getDeviceName(::string & out)
 {
   UnicodeStringStorage uniString(m_description.DeviceName);
   uniString.toStringStorage(out);

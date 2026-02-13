@@ -49,13 +49,13 @@ public:
   bool getUseRfbPass();
   // Returns true if no rfb authentication is needed.
   bool getRfbPassForClear();
-  void getRfbPass(StringStorage *pass);
+  void getRfbPass(::string & pass);
 
   // Returns true if the checkbox has been checked
   bool getUseAdmPass();
   // Returns true if no admin authentication is needed.
   bool getAdmPassForClear();
-  void getAdmPass(StringStorage *pass);
+  void getAdmPass(::string & pass);
 
 protected:
   void initControls();
@@ -76,7 +76,7 @@ protected:
   // Enables and disables the edit controls by the current state.
   void updateEditControls();
 
-  BOOL checkAnsiConversion(StringStorage &plainTextInUTF16);
+  BOOL checkAnsiConversion(::string &plainTextInUTF16);
 
 
   CheckBox m_dontChangeRfbAuthSettingsRadio;
@@ -98,11 +98,11 @@ protected:
 
   bool m_dontChangeRfbAuth;
   bool m_useRfbAuth;
-  StringStorage m_rfbPass;
+  ::string m_rfbPass;
 
   bool m_dontChangeAdmAuth;
   bool m_protectControlInterface;
-  StringStorage m_admPass;
+  ::string m_admPass;
 };
 
 #endif // _SETPASSWORDSDIALOG_H_

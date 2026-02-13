@@ -67,7 +67,7 @@ public:
    * *password parameter is presented.
    */
   ControlMessage(unsigned int messageId, ControlGate *gate,
-                 const TCHAR *passwordFile = 0,
+                 const ::scoped_string & scopedstrpasswordFile = 0,
                  bool getPassFromConfigEnabled = false,
                  bool forService = false);
   /**
@@ -114,7 +114,7 @@ private:
    */
   unsigned int m_messageId;
 
-  StringStorage m_passwordFile;
+  ::string m_passwordFile;
   bool m_getPassFromConfigEnabled;
   bool m_forService;
 };

@@ -25,8 +25,8 @@
 #include "RemoteFileRenameOperation.h"
 
 RemoteFileRenameOperation::RemoteFileRenameOperation(LogWriter *logWriter,
-                                                     const TCHAR *pathToSourceFile,
-                                                     const TCHAR *pathToTargetFile)
+                                                     const ::scoped_string & scopedstrpathToSourceFile,
+                                                     const ::scoped_string & scopedstrpathToTargetFile)
 : FileTransferOperation(logWriter)
 {
   m_pathToSourceFile.setString(pathToSourceFile);
@@ -36,7 +36,7 @@ RemoteFileRenameOperation::RemoteFileRenameOperation(LogWriter *logWriter,
 RemoteFileRenameOperation::RemoteFileRenameOperation(LogWriter *logWriter,
                                                      FileInfo sourceFileInfo,
                                                      FileInfo targetFileInfo,
-                                                     const TCHAR *pathToTargetRoot)
+                                                     const ::scoped_string & scopedstrpathToTargetRoot)
 : FileTransferOperation(logWriter)
 {
   FileInfoList srcList(sourceFileInfo);
@@ -53,7 +53,7 @@ RemoteFileRenameOperation::~RemoteFileRenameOperation()
 void RemoteFileRenameOperation::start()
 {
   // Logging
-  StringStorage message;
+  ::string message;
 
   message.format(_T("Renaming remote file '%s' to '%s'"),
                  m_pathToSourceFile.getString(),
@@ -78,7 +78,7 @@ void RemoteFileRenameOperation::onMvReply(DataInputStream *input)
 void RemoteFileRenameOperation::onLastRequestFailedReply(DataInputStream *input)
 {
   // Logging
-  StringStorage message;
+  ::string message;
 
   message.format(_T("Error: failed to rename remote '%s' file"),
                  m_pathToSourceFile.getString());

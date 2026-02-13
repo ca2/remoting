@@ -132,9 +132,9 @@ void WindowsUserInput::setMouseEvent(const Point newPos, unsigned char keyFlag)
   DWORD error = GetLastError();
 }
 
-void WindowsUserInput::setNewClipboard(const StringStorage & newClipboard)
+void WindowsUserInput::setNewClipboard(const ::string & newClipboard)
 {
-  // FIXME: use StringStorage instead TCHAR * in writeToClipBoard arg
+  // FIXME: use ::string instead TCHAR * in writeToClipBoard arg
   m_clipboard->writeToClipBoard(newClipboard->getString());
 }
 
@@ -153,7 +153,7 @@ void WindowsUserInput::setKeyboardEvent(unsigned int keySym, bool down)
     } else if (m_keyMap.keySymToUnicodeChar(keySym, &ch)) {
       m_inputInjector.injectCharEvent(ch, release);
     } else {
-      StringStorage message;
+      ::string message;
       message.format(_T("Unknown %d keysym"), keySym);
       throw Exception(message.getString());
     }
@@ -162,12 +162,12 @@ void WindowsUserInput::setKeyboardEvent(unsigned int keySym, bool down)
   }
 }
 
-void WindowsUserInput::getCurrentUserInfo(StringStorage *desktopName,
-                                          StringStorage *userName)
+void WindowsUserInput::getCurrentUserInfo(::string & desktopName,
+                                          ::string & userName)
 {
   if (!DesktopSelector::getCurrentDesktopName(desktopName) &&
 	  !Environment::getCurrentUserName(userName, m_log)) {
-        StringStorage errMess;
+        ::string errMess;
         Environment::getErrStr(_T("Can't get current user info"), &errMess);
 		throw Exception(errMess.getString());
   }
@@ -214,13 +214,13 @@ void WindowsUserInput::getWindowCoords(HWND hwnd, ::int_rectangle *rect)
     rect.move(-GetSystemMetrics(SM_XVIRTUALSCREEN),
                -GetSystemMetrics(SM_YVIRTUALSCREEN));
   } else {
-    StringStorage errMess;
+    ::string errMess;
     Environment::getErrStr(_T("Can't get window coordinates"), &errMess);
     throw BrokenHandleException(errMess.getString());
   }
 }
 
-HWND WindowsUserInput::getWindowHandleByName(const StringStorage & windowName)
+HWND WindowsUserInput::getWindowHandleByName(const ::string & windowName)
 {
   return WindowFinder::findFirstWindowByName(*windowName);
 }

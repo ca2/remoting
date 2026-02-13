@@ -42,9 +42,9 @@ WindowsClipboard::~WindowsClipboard()
   wait();
 }
 
-bool WindowsClipboard::writeToClipBoard(const TCHAR *text)
+bool WindowsClipboard::writeToClipBoard(const ::scoped_string & scopedstrtext)
 {
-  StringStorage clipboard;
+  ::string clipboard;
   convertFromRfbFormat(text, &clipboard);
   if (OpenClipboard(m_hwnd)) {
     EmptyClipboard();
@@ -80,7 +80,7 @@ bool WindowsClipboard::writeToClipBoard(const TCHAR *text)
   return false;
 }
 
-void WindowsClipboard::readFromClipBoard(StringStorage *clipDest) const
+void WindowsClipboard::readFromClipBoard(::string & clipDest) const
 {
 // NOTE: In non-Unicode version, conversion correctness may depend on current
 //       input language. We should always use Unicode in all programs.
@@ -97,7 +97,7 @@ void WindowsClipboard::readFromClipBoard(StringStorage *clipDest) const
 
   HANDLE hglb = GetClipboardData(CF_TCTEXT);
   if (hglb != NULL) {
-    const TCHAR *lpstr = (const TCHAR *)GlobalLock(hglb);
+    const ::scoped_string & scopedstrlpstr = (const ::scoped_string & scopedstr)GlobalLock(hglb);
     if (lpstr != 0) {
       clipDest->setString(lpstr);
       GlobalUnlock(hglb);
@@ -131,7 +131,7 @@ bool WindowsClipboard::wndProc(UINT message, WPARAM wParam, LPARAM lParam)
 
   case WM_DRAWCLIPBOARD:  // clipboard contents changed.
     {
-      StringStorage winClip, rfbClip;
+      ::string winClip, rfbClip;
       readFromClipBoard(&winClip);
       convertToRfbFormat(&winClip, &rfbClip);
 
@@ -174,10 +174,10 @@ void WindowsClipboard::execute()
   destroyWindow();
 }
 
-void WindowsClipboard::convertToRfbFormat(const StringStorage & source,
-                                          StringStorage *dest)
+void WindowsClipboard::convertToRfbFormat(const ::string & source,
+                                          ::string & dest)
 {
-  const TCHAR *srcText = source->getString();
+  const ::scoped_string & scopedstrsrcText = source->getString();
   size_t length = source->getLength();
   TCHAR *rfbText = new TCHAR[length + 1];
 
@@ -193,8 +193,8 @@ void WindowsClipboard::convertToRfbFormat(const StringStorage & source,
   delete[] rfbText;
 }
 
-void WindowsClipboard::convertFromRfbFormat(const TCHAR *source,
-                                            StringStorage *dest)
+void WindowsClipboard::convertFromRfbFormat(const ::scoped_string & scopedstrsource,
+                                            ::string & dest)
 {
   // Count of 'LF' symbols.
   size_t lfCount = 0;

@@ -126,13 +126,13 @@ protected:
    * @return true on success, false on error.
    * @remark creates path with all needed keys for starting service.
    */
-  static bool getBinPath(StringStorage *binPath);
+  static bool getBinPath(::string & binPath);
 
   // This is a callback function that calls when the log can be initialized.
-  virtual void onLogInit(const TCHAR *logDir, const TCHAR *fileName, unsigned char logLevel);
+  virtual void onLogInit(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrfileName, unsigned char logLevel);
 
   // This is a callback function that calls when log properties have changed.
-  virtual void onChangeLogProps(const TCHAR *newLogDir, unsigned char newLevel);
+  virtual void onChangeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel);
 
 protected:
   /**

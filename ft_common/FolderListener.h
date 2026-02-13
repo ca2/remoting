@@ -47,7 +47,7 @@
 class FolderListener
 {
 public:
-  FolderListener(const TCHAR *folderPath);
+  FolderListener(const ::scoped_string & scopedstrfolderPath);
   ~FolderListener();
 
   const FileInfo *getFilesInfo() const;
@@ -56,7 +56,7 @@ public:
   bool list();
 
 protected:
-  StringStorage m_folderPath;
+  ::string m_folderPath;
   FileInfo *m_filesInfo;
   unsigned int m_filesCount;
 };

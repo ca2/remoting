@@ -91,7 +91,7 @@ WinD3D11Device::WinD3D11Device(LogWriter *log)
     }
   }
   if (FAILED(hr)) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("D3D11CreateDevice function was failed with code error = (%dl)"), (long)hr);
     m_log->debug(_T("D3D11CreateDevice function was failed with code error = (%dl)"), (long)hr);
     throw Exception(errMess.getString());

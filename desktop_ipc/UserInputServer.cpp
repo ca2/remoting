@@ -58,7 +58,7 @@ UserInputServer::~UserInputServer()
   delete m_userInput;
 }
 
-void UserInputServer::onClipboardUpdate(const StringStorage & newClipboard)
+void UserInputServer::onClipboardUpdate(const ::string & newClipboard)
 {
   AutoLock al(m_forwGate);
   try {
@@ -118,7 +118,7 @@ void UserInputServer::onRequest(unsigned char reqCode, BlockingGate *backGate)
     serverInit(backGate);
     break;
   default:
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Unknown %d protocol code received")
                    _T(" from a UserInputClient"), reqCode);
     throw Exception(errMess.getString());
@@ -142,7 +142,7 @@ void UserInputServer::applyNewPointerPos(BlockingGate *backGate)
 
 void UserInputServer::applyNewClipboard(BlockingGate *backGate)
 {
-  StringStorage newClipboard;
+  ::string newClipboard;
   readNewClipboard(&newClipboard, backGate);
   m_userInput->setNewClipboard(&newClipboard);
 }
@@ -157,7 +157,7 @@ void UserInputServer::applyKeyEvent(BlockingGate *backGate)
 
 void UserInputServer::ansUserInfo(BlockingGate *backGate)
 {
-  StringStorage desktopName, userName;
+  ::string desktopName, userName;
 
   m_userInput->getCurrentUserInfo(&desktopName, &userName);
   sendUserInfo(&desktopName, &userName, backGate);
@@ -187,7 +187,7 @@ void UserInputServer::ansWindowCoords(BlockingGate *backGate)
 
 void UserInputServer::ansWindowHandle(BlockingGate *backGate)
 {
-  StringStorage windowName;
+  ::string windowName;
   backGate->readUTF8(&windowName);
   HWND hwnd = m_userInput->getWindowHandleByName(&windowName);
   backGate->writeUInt64((unsigned long long)hwnd);

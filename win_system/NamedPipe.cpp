@@ -51,7 +51,7 @@ void NamedPipe::close()
   if (m_asServer) {
     if (DisconnectNamedPipe(m_hPipe) == 0) {
       DWORD errCode = GetLastError();
-      StringStorage errMess;
+      ::string errMess;
       errMess.format(_T("DisconnectNamedPipe failed, error code = %u"), errCode);
       throw Exception(errMess.getString());
     }

@@ -70,7 +70,7 @@ void ServiceControlCommandLine::parse(const CommandLineArgs *cmdArgs)
   }
 }
 
-bool ServiceControlCommandLine::keySpecified(const TCHAR *key) const
+bool ServiceControlCommandLine::keySpecified(const ::scoped_string & scopedstrKey) const
 {
   return optionSpecified(key);
 }

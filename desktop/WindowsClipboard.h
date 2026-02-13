@@ -38,9 +38,9 @@ public:
   virtual ~WindowsClipboard(void);
 
   // This function replaces clipboard content by the text
-  virtual bool writeToClipBoard(const TCHAR *text);
+  virtual bool writeToClipBoard(const ::scoped_string & scopedstrtext);
 
-  virtual void readFromClipBoard(StringStorage *clipDest) const;
+  virtual void readFromClipBoard(::string & clipDest) const;
 
 protected:
   virtual bool wndProc(UINT message, WPARAM wParam, LPARAM lParam);
@@ -48,8 +48,8 @@ protected:
   virtual void execute();
   virtual void onTerminate();
 
-  void convertToRfbFormat(const StringStorage & source, StringStorage *dest);
-  void convertFromRfbFormat(const TCHAR *source, StringStorage *dest);
+  void convertToRfbFormat(const ::string & source, ::string & dest);
+  void convertFromRfbFormat(const ::scoped_string & scopedstrsource, ::string & dest);
 
   HWND m_hwndNextViewer;
 

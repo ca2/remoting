@@ -32,7 +32,7 @@ WinAutoMapDxgiSurface::WinAutoMapDxgiSurface(WinDxgiSurface *surface, UINT mapFl
 {
   HRESULT hr = m_surface->getSurface()->Map(&m_mappedRect, mapFlags);
   if (FAILED(hr)) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Can't IDXGISurface->Map, error code = %l"), (long)hr);
     throw Exception(errMess.getString());
   }

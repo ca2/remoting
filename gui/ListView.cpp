@@ -31,7 +31,7 @@ ListView::ListView() :
   m_compareItem = 0;
 }
 
-void ListView::addColumn(int index, const TCHAR *caption, int width, int fmt)
+void ListView::addColumn(int index, const ::scoped_string & scopedstrcaption, int width, int fmt)
 {
   //
   // Create LV_COLUMN struct
@@ -50,7 +50,7 @@ void ListView::addColumn(int index, const TCHAR *caption, int width, int fmt)
   ListView_InsertColumn(m_hwnd, index, &lvColumn);
 }
 
-void ListView::addColumn(int index, const TCHAR *caption, int width)
+void ListView::addColumn(int index, const ::scoped_string & scopedstrcaption, int width)
 {
   addColumn(index, caption, width, LVCFMT_LEFT);
 }
@@ -92,12 +92,12 @@ ListViewItem ListView::getItem(int index)
   return item;
 }
 
-void ListView::addItem(int index, const TCHAR *caption)
+void ListView::addItem(int index, const ::scoped_string & scopedstrcaption)
 {
   addItem(index, caption, NULL);
 }
 
-void ListView::addItem(int index, const TCHAR *caption, LPARAM tag)
+void ListView::addItem(int index, const ::scoped_string & scopedstrcaption, LPARAM tag)
 {
   //
   // Prepare LVITEM structure
@@ -117,7 +117,7 @@ void ListView::addItem(int index, const TCHAR *caption, LPARAM tag)
   ListView_InsertItem(m_hwnd, &lvI);
 }
 
-void ListView::addItem(int index, const TCHAR *caption, LPARAM tag, int imageIndex)
+void ListView::addItem(int index, const ::scoped_string & scopedstrcaption, LPARAM tag, int imageIndex)
 {
   //
   // Prepare LVITEM structure
@@ -148,7 +148,7 @@ void ListView::clear()
   ListView_DeleteAllItems(m_hwnd);
 }
 
-void ListView::setSubItemText(int index, int subIndex, const TCHAR *caption)
+void ListView::setSubItemText(int index, int subIndex, const ::scoped_string & scopedstrcaption)
 {
   //
   // Prepare LVITEM structure

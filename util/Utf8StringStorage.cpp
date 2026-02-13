@@ -32,7 +32,7 @@ Utf8StringStorage::Utf8StringStorage()
 {
 
 
-  fromStringStorage(StringStorage(_T("")));
+  fromStringStorage(::string(_T("")));
 }
 
 Utf8StringStorage::Utf8StringStorage(const ::std::vector<char> *utf8Buffer)
@@ -40,7 +40,7 @@ Utf8StringStorage::Utf8StringStorage(const ::std::vector<char> *utf8Buffer)
   setString(utf8Buffer);
 }
 
-Utf8StringStorage::Utf8StringStorage(const StringStorage & string)
+Utf8StringStorage::Utf8StringStorage(const ::string & string)
 {
   fromStringStorage(string);
 }
@@ -74,7 +74,7 @@ memsize Utf8StringStorage::getLength() const
   return m_buffer.size() - 1;
 }
 
-void Utf8StringStorage::fromStringStorage(const StringStorage & src)
+void Utf8StringStorage::fromStringStorage(const ::string & src)
 {
 #ifndef _UNICODE
   // 1) From ANSI to UNICODE
@@ -103,7 +103,7 @@ void Utf8StringStorage::fromStringStorage(const StringStorage & src)
                       &m_buffer.front(), dstRequiredSize, 0, 0);
 }
 
-void Utf8StringStorage::toStringStorage(StringStorage *dst)
+void Utf8StringStorage::toStringStorage(::string & dst)
 {
   // 1) From UTF8 to UNICODE
   int constrSize = (int)getSize();
@@ -120,7 +120,7 @@ void Utf8StringStorage::toStringStorage(StringStorage *dst)
   // may be without it.
   uniBuff[dstReqSizeInSym] = L'\0';
 
-  // 2) From UNICODE to StringStorage
+  // 2) From UNICODE to ::string
   UnicodeStringStorage uniString(&uniBuff.front());
   uniString.toStringStorage(dst);
 }

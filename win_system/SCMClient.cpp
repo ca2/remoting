@@ -63,8 +63,8 @@ SCMClient::~SCMClient()
   }
 }
 
-void SCMClient::installService(const TCHAR *name, const TCHAR *nameToDisplay,
-                               const TCHAR *binPath, const TCHAR *dependencies)
+void SCMClient::installService(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrNameToDisplay,
+                               const ::scoped_string & scopedstrbinPath, const ::scoped_string & scopedstrDependencies)
 {
   SC_HANDLE serviceHandle = CreateService(
     m_managerHandle,              // SCManager database
@@ -104,7 +104,7 @@ void SCMClient::installService(const TCHAR *name, const TCHAR *nameToDisplay,
   CloseServiceHandle(serviceHandle);
 }
 
-void SCMClient::removeService(const TCHAR *name)
+void SCMClient::removeService(const ::scoped_string & scopedstrName)
 {
   try { stopService(name); } catch (...) { }
 
@@ -139,7 +139,7 @@ void SCMClient::removeService(const TCHAR *name)
   }
 }
 
-void SCMClient::startService(const TCHAR *name, bool waitCompletion)
+void SCMClient::startService(const ::scoped_string & scopedstrName, bool waitCompletion)
 {
   // FIXME: Wrap SC_HANDLE into a class with a call to CloseServiceHandle()
   //        in the destructor.
@@ -179,7 +179,7 @@ void SCMClient::startService(const TCHAR *name, bool waitCompletion)
   CloseServiceHandle(serviceHandle);
 }
 
-void SCMClient::stopService(const TCHAR *name, bool waitCompletion)
+void SCMClient::stopService(const ::scoped_string & scopedstrName, bool waitCompletion)
 {
   SC_HANDLE serviceHandle = OpenService(m_managerHandle, name, SERVICE_STOP | SERVICE_QUERY_STATUS);
   if (serviceHandle == NULL) {

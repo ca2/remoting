@@ -34,7 +34,7 @@ bool UIDataAccess::queryValueAsInt(TextBox *textBox, int *value)
 {
   _ASSERT(textBox != 0);
 
-  StringStorage textBoxText;
+  ::string textBoxText;
 
   textBox->getText(&textBoxText);
 
@@ -45,7 +45,7 @@ bool UIDataAccess::queryValueAsUInt(TextBox *textBox, unsigned int *value)
 {
   _ASSERT(textBox != 0);
 
-  StringStorage textBoxText;
+  ::string textBoxText;
 
   textBox->getText(&textBoxText);
 

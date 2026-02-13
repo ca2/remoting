@@ -55,14 +55,14 @@ private:
   // ReconnectException text.
   // @throw ReconnectException on reconnect detection.
   // @throw IOException on other errors.
-  Channel *getChannel(const TCHAR *funName);
+  Channel *getChannel(const ::scoped_string & scopedstrfunName);
 
   // @param funName - is a function name that will be placed to the
   // ReconnectException text.
   // @param channel - currently using transport.
   // @throw ReconnectException on reconnect detection.
   // @throw IOException on other errors.
-  void waitForReconnect(const TCHAR *funName, Channel *channel);
+  void waitForReconnect(const ::scoped_string & scopedstrfunName, Channel *channel);
 
   bool m_isClosed;
 

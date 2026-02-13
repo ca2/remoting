@@ -76,12 +76,12 @@ ViewerVncAuthHandler::~ViewerVncAuthHandler()
 
 
 
-void ViewerVncAuthHandler::getPassword(StringStorage *passString)
+void ViewerVncAuthHandler::getPassword(::string & passString)
 {
   // get password from ConnectionData or User Interface
   if (!m_connectionData->isSetPassword()) {
     AuthenticationDialog authDialog;
-    StringStorage hostname = m_connectionData->getHost();
+    ::string hostname = m_connectionData->getHost();
     authDialog.setHostName(hostname);
      auto m = ::system()->file()->safe_get_memory(::system()->directory()->appdata()/::string(hostname.getString()));
      if (m.has_data())

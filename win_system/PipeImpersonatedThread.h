@@ -36,7 +36,7 @@ public:
 
   void waitUntilImpersonated();
   bool getImpersonationSuccess();
-  void getFaultReason(StringStorage *faultReason);
+  void getFaultReason(::string & faultReason);
 
 private:
   virtual void execute();
@@ -44,7 +44,7 @@ private:
 
   HANDLE m_pipeHandle;
   bool m_success;
-  StringStorage m_faultReason;
+  ::string m_faultReason;
   WindowsEvent m_impersonationReadyEvent;
   WindowsEvent m_threadSleeper;
 };

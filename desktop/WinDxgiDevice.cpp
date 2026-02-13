@@ -32,7 +32,7 @@ WinDxgiDevice::WinDxgiDevice(WinD3D11Device *winD3D11Device)
 {
   HRESULT hr = winD3D11Device->deviceQueryInterface(__uuidof(IDXGIDevice), reinterpret_cast<void**>(&m_dxgiDevice));
   if (FAILED(hr)) {
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Can't QueryInterface for IDXGIDevice (%l)"), (long)hr);
     throw Exception(errMess.getString());
   }

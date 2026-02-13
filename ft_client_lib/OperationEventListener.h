@@ -50,14 +50,14 @@ public:
   // not ::std::list files from catalog, cannot open file, cannot create folder etc)
   //
 
-  virtual void ftOpErrorMessage(FileTransferOperation *sender, const TCHAR *message);
+  virtual void ftOpErrorMessage(FileTransferOperation *sender, const ::scoped_string & scopedstrmessage);
 
   //
   // Must be called by file transfer operation when need to do some text output
   // to user (or console, or log)
   //
 
-  virtual void ftOpInfoMessage(FileTransferOperation *sender, const TCHAR *message);
+  virtual void ftOpInfoMessage(FileTransferOperation *sender, const ::scoped_string & scopedstrmessage);
 };
 
 #endif

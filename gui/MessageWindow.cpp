@@ -27,7 +27,7 @@
 #define DEFAULT_WINDOW_CLASS_NAME "WindowClass"
 
 MessageWindow::MessageWindow(const HINSTANCE hinst,
-                             const TCHAR *windowClassName,
+                             const ::scoped_string & scopedstrwindowClassName,
                              WindowMessageHandler *messageHandler)
 : m_hwnd(0),
   m_hinst(hinst),

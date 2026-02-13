@@ -25,7 +25,7 @@
 #include "LogServer.h"
 #include "thread/AutoLock.h"
 
-LogServer::LogServer(const TCHAR *publicPipeName)
+LogServer::LogServer(const ::scoped_string & scopedstrpublicPipeName)
 : m_listenLogServer(0),
   m_publicPipeName(publicPipeName),
   m_logLevel(0),
@@ -59,7 +59,7 @@ LogServer::~LogServer()
   }
 }
 
-void LogServer::start(const TCHAR *logDir,
+void LogServer::start(const ::scoped_string & scopedstrlogDir,
                       unsigned char logLevel, size_t headerLineCount)
 {
   m_headerLineCount = headerLineCount;
@@ -68,7 +68,7 @@ void LogServer::start(const TCHAR *logDir,
   m_listenLogServer = new ListenLogServer(m_publicPipeName.getString(), this);
 }
 
-void LogServer::changeLogProps(const TCHAR *newLogDir, unsigned char newLevel)
+void LogServer::changeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel)
 {
   AutoLock al(&m_logPropsMutex);
   m_logLevel = newLevel;
@@ -106,7 +106,7 @@ void LogServer::onNewConnection(Channel *channel)
 }
 
 FileAccountHandle LogServer::onLogConnAuth(LogConn *logConn, bool success,
-                                           const TCHAR *fileName)
+                                           const ::scoped_string & scopedstrfileName)
 {
   // All connections gives to ThreadCollector
   m_threadCollector.addThread(logConn);
@@ -159,7 +159,7 @@ void LogServer::onLog(FileAccountHandle handle,
                       unsigned int threadId,
                       const DateTime & dt,
                       int level,
-                      const TCHAR *message)
+                      const ::scoped_string & scopedstrmessage)
 {
   AutoLock al(&m_logPropsMutex);
   FAccountListIter iter = m_fileAccountList.find(handle);
@@ -174,11 +174,11 @@ void LogServer::onLog(FileAccountHandle handle,
   }
 }
 
-void LogServer::onAnErrorFromLogConn(const TCHAR *message)
+void LogServer::onAnErrorFromLogConn(const ::scoped_string & scopedstrmessage)
 {
 }
 
-FileAccountHandle LogServer::addConnection(const TCHAR *fileName)
+FileAccountHandle LogServer::addConnection(const ::scoped_string & scopedstrfileName)
 {
   AutoLock al(&m_logPropsMutex);
   for (FAccountListIter iter = m_fileAccountList.begin();

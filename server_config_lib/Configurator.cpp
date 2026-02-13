@@ -199,8 +199,8 @@ bool Configurator::savePortMappingContainer(SettingsManager *sm)
   PortMappingContainer *portMappings = m_serverConfig.getPortMappingContainer();
 
   size_t count = portMappings->count();
-  StringStorage portMappingsString;
-  StringStorage portMappingString;
+  ::string portMappingsString;
+  ::string portMappingString;
 
   //
   // Create string to serialize
@@ -233,7 +233,7 @@ bool Configurator::loadPortMappingContainer(SettingsManager *sm,
 
   portMapping->removeAll();
 
-  StringStorage extraPorts;
+  ::string extraPorts;
 
   if (!sm->getString(_T("ExtraPorts"), &extraPorts)) {
     return false;
@@ -243,7 +243,7 @@ bool Configurator::loadPortMappingContainer(SettingsManager *sm,
 
   extraPorts.split(_T(","), NULL, &count);
   if (count != 0) {
-    ::std::vector<StringStorage> chunks(count);
+    ::std::vector<::string> chunks(count);
     extraPorts.split(_T(","), &chunks.front(), &count);
 
     PortMapping mapping;
@@ -353,7 +353,7 @@ bool Configurator::saveVideoRegionConfig(SettingsManager *sm)
 {
   bool saveResult = true;
 
-  StringStorage buffer;
+  ::string buffer;
   StringVector *videoClasses = m_serverConfig.getVideoClassNames();
   size_t size = videoClasses->size();
  ::std::vector<::int_rectangle> *videoRects = m_serverConfig.getVideoRects();
@@ -373,7 +373,7 @@ bool Configurator::saveVideoRegionConfig(SettingsManager *sm)
   size = videoRects->size();
   buffer.setString(_T(""));
   for (size_t i = 0; i < size; i++) {
-    StringStorage s;
+    ::string s;
     RectSerializer::toString(&(videoRects->at(i)),&s);
     buffer.appendString(s.getString());
     if (i != size - 1) {
@@ -406,7 +406,7 @@ bool Configurator::loadVideoRegionConfig(SettingsManager *sm, ServerConfig *conf
   // Try to load.
   //
 
-  StringStorage storage;
+  ::string storage;
 
   if (!sm->getString(_T("VideoClasses"), &storage)) {
     loadResult = false;
@@ -420,7 +420,7 @@ bool Configurator::loadVideoRegionConfig(SettingsManager *sm, ServerConfig *conf
 
   storage.split(_T("\n\t ,;"), NULL, &count);
   if (count != 0) {
-    ::std::vector<StringStorage> chunks(count);
+    ::std::vector<::string> chunks(count);
     storage.split(_T("\n\t ,;"), &chunks.front(), &count);
 
     for (size_t i = 0; i < count; i++) {
@@ -455,7 +455,7 @@ bool Configurator::loadVideoRegionConfig(SettingsManager *sm, ServerConfig *conf
 
   storage.split(_T("\n\t ,;"), NULL, &count);
   if (count != 0) {
-    ::std::vector<StringStorage> chunks(count);
+    ::std::vector<::string> chunks(count);
     storage.split(_T("\n\t ,;"), &chunks.front(), &count);
 
     for (size_t i = 0; i < count; i++) {
@@ -478,9 +478,9 @@ bool Configurator::saveIpAccessControlContainer(SettingsManager *storage)
   // 1 rule can contain 34 character max
   size_t maxStringBufferLength = 34 * 2 * rulesCount;
   // Buffer that we need to write to storage
-  StringStorage buffer(_T(""));
+  ::string buffer(_T(""));
   // Variable to save temporary result from toString method
-  StringStorage ruleString;
+  ::string ruleString;
 
   // Generate rules string
   for (size_t i = 0; i < rulesCount; i++) {
@@ -505,7 +505,7 @@ Configurator::loadIpAccessControlContainer(SettingsManager *sm, IpAccessControl 
   bool wasError = false;
   rules->clear();
 
-  StringStorage storage;
+  ::string storage;
   if (!sm->getString(_T("IpAccessControl"), &storage)) {
     return false;
   } else {
@@ -848,7 +848,7 @@ bool Configurator::loadServerConfig(SettingsManager *sm, ServerConfig *config)
 
 void Configurator::updateLogDirPath()
 {
-  StringStorage pathToLogDirectory;
+  ::string pathToLogDirectory;
   TvnLogFilename::queryLogFileDirectory(m_isConfiguringService,
     m_serverConfig.isSaveLogToAllUsersPathFlagEnabled(),
     &pathToLogDirectory);

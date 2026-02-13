@@ -30,7 +30,7 @@
 class ApplicationCrashEvents
 {
 public:
-  virtual void onCrash(const StringStorage & dumpPath) = 0;
+  virtual void onCrash(const ::string & dumpPath) = 0;
 };
 
 #endif // __APPLICATIONCRASHEVENTS_H__

@@ -70,7 +70,7 @@ protected:
 private:
   void updateControlValues();
   bool isInputValid();
-  bool testNum(TextBox *tb, const TCHAR *tbName);
+  bool testNum(TextBox *tb, const ::scoped_string & scopedstrtbName);
   void onOkPressed();
 };
 

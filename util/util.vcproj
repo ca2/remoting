@@ -653,7 +653,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\StringStorage.cpp"
+				RelativePath=".\::string.cpp"
 				>
 			</File>
 			<File
@@ -795,7 +795,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\StringStorage.h"
+				RelativePath=".\::string.h"
 				>
 			</File>
 			<File

@@ -73,8 +73,8 @@ BOOL EditIpAccessRuleDialog::onInitDialog()
   }
 
   if (m_isOpenedForEdit) {
-    StringStorage firstIp;
-    StringStorage lastIp;
+    ::string firstIp;
+    ::string lastIp;
 
     m_data->getFirstIp(&firstIp);
     m_data->getLastIp(&lastIp);
@@ -128,8 +128,8 @@ void EditIpAccessRuleDialog::onOkButtonClick()
       m_data->setAction(IpAccessRule::ACTION_TYPE_QUERY);
     }
 
-    StringStorage firstIp;
-    StringStorage lastIp;
+    ::string firstIp;
+    ::string lastIp;
 
     m_firstIp.getText(&firstIp);
     m_lastIp.getText(&lastIp);
@@ -172,8 +172,8 @@ void EditIpAccessRuleDialog::initControls()
 
 bool EditIpAccessRuleDialog::validateInput()
 {
-  StringStorage firstIp;
-  StringStorage lastIp;
+  ::string firstIp;
+  ::string lastIp;
 
   m_firstIp.getText(&firstIp);
   m_lastIp.getText(&lastIp);

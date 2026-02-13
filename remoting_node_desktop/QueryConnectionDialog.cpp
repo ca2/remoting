@@ -26,7 +26,7 @@
 
 #include "remoting_node/resource.h"
 
-QueryConnectionDialog::QueryConnectionDialog(const TCHAR *peerAddress,
+QueryConnectionDialog::QueryConnectionDialog(const ::scoped_string & scopedstrpeerAddress,
                                              bool acceptByDefault,
                                              DWORD timeOutInSec)
 : m_acceptByDefault(acceptByDefault), m_timeout(timeOutInSec)
@@ -130,7 +130,7 @@ void QueryConnectionDialog::onTimer()
 
 void QueryConnectionDialog::updateTimeoutLabel()
 {
-  StringStorage labelText;
+  ::string labelText;
 
   if (m_acceptByDefault) {
     labelText.format(StringTable::getString(IDS_AUTO_ACCEPT_CONNECTION_FORMAT), m_timeout);

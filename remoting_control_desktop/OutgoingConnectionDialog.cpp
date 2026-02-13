@@ -44,7 +44,7 @@ OutgoingConnectionDialog::~OutgoingConnectionDialog()
 {
 }
 
-const TCHAR *OutgoingConnectionDialog::getConnectString() const
+const ::scoped_string & scopedstrOutgoingConnectionDialog::getConnectString() const
 {
   return m_connectString.getString();
 }

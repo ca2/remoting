@@ -25,7 +25,7 @@
 #include "RemoteFolderCreateOperation.h"
 
 RemoteFolderCreateOperation::RemoteFolderCreateOperation(LogWriter *logWriter,
-                                                         const TCHAR *pathToTargetFile)
+                                                         const ::scoped_string & scopedstrpathToTargetFile)
 : FileTransferOperation(logWriter)
 {
   m_pathToTargetFile.setString(pathToTargetFile);
@@ -33,7 +33,7 @@ RemoteFolderCreateOperation::RemoteFolderCreateOperation(LogWriter *logWriter,
 
 RemoteFolderCreateOperation::RemoteFolderCreateOperation(LogWriter *logWriter,
                                                          FileInfo file,
-                                                         const TCHAR *pathToTargetRoot)
+                                                         const ::scoped_string & scopedstrpathToTargetRoot)
 : FileTransferOperation(logWriter)
 {
   FileInfoList *plist = new FileInfoList(file);
@@ -49,7 +49,7 @@ RemoteFolderCreateOperation::~RemoteFolderCreateOperation()
 void RemoteFolderCreateOperation::start()
 {
   // Logging
-  StringStorage message;
+  ::string message;
 
   message.format(_T("Creating remote folder '%s'"),
                  m_pathToTargetFile.getString());
@@ -72,7 +72,7 @@ void RemoteFolderCreateOperation::onMkdirReply(DataInputStream *input)
 void RemoteFolderCreateOperation::onLastRequestFailedReply(DataInputStream *input)
 {
   // Logging
-  StringStorage message;
+  ::string message;
 
   message.format(_T("Error: failed to create remote folder '%s'"),
                  m_pathToTargetFile.getString());

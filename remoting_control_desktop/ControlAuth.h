@@ -38,7 +38,7 @@ public:
   /**
    * Doesn't lock gate.
    */
-  ControlAuth(ControlGate *gate, const TCHAR *password)
+  ControlAuth(ControlGate *gate, const ::scoped_string & scopedstrpassword)
 ;
 
   virtual ~ControlAuth();

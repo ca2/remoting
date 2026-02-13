@@ -75,7 +75,7 @@ void ClipboardExchange::onRequest(unsigned int reqCode, RfbInputGate *input)
     m_isUtf8ClipboardEnabled = true;
     break;
   default:
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Unknown %d protocol code received"), (int)reqCode);
     throw Exception(errMess.getString());
     break;
@@ -93,7 +93,7 @@ void ClipboardExchange::onRequestWorker(bool utf8flag, RfbInputGate *input)
     return;
   }
 
-  StringStorage clipText;
+  ::string clipText;
   if (utf8flag) {
     m_log->debug(_T("UTF8 ClientCutText, payload length %d"), length);
     Utf8StringStorage utfText(&charBuff);
@@ -108,7 +108,7 @@ void ClipboardExchange::onRequestWorker(bool utf8flag, RfbInputGate *input)
   m_desktop->setNewClipText(&clipText);
 }
 
-void ClipboardExchange::sendClipboard(const StringStorage & newClipboard)
+void ClipboardExchange::sendClipboard(const ::string & newClipboard)
 {
   AutoLock al(&m_storedClipMut);
   m_storedClip = *newClipboard;

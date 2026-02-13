@@ -46,13 +46,13 @@ void UserInputClient::onRequest(unsigned char reqCode, BlockingGate *backGate)
   switch (reqCode) {
   case CLIPBOARD_CHANGED:
     {
-      StringStorage newClipboard;
+      ::string newClipboard;
       readNewClipboard(&newClipboard, backGate);
       m_clipboardListener->onClipboardUpdate(&newClipboard);
     }
     break;
   default:
-    StringStorage errMess;
+    ::string errMess;
     errMess.format(_T("Unknown %d protocol code received from a pipe ")
                    _T("UserInputServer"), (int)reqCode);
     throw Exception(errMess.getString());
@@ -79,7 +79,7 @@ void UserInputClient::setMouseEvent(const Point newPos, unsigned char keyFlag)
   }
 }
 
-void UserInputClient::setNewClipboard(const StringStorage & newClipboard)
+void UserInputClient::setNewClipboard(const ::string & newClipboard)
 {
   AutoLock al(m_forwGate);
   try {
@@ -101,8 +101,8 @@ void UserInputClient::setKeyboardEvent(unsigned int keySym, bool down)
   }
 }
 
-void UserInputClient::getCurrentUserInfo(StringStorage *desktopName,
-                                         StringStorage *userName)
+void UserInputClient::getCurrentUserInfo(::string & desktopName,
+                                         ::string & userName)
 {
   AutoLock al(m_forwGate);
   try {
@@ -200,7 +200,7 @@ void UserInputClient::getWindowCoords(HWND hwnd, ::int_rectangle *rect)
       } else {
         // Receive error discription (do not generate it here).
         // This made to avoid code duplication.
-        StringStorage errMess;
+        ::string errMess;
         m_forwGate->readUTF8(&errMess);
         throw BrokenHandleException(errMess.getString());
       }
@@ -210,7 +210,7 @@ void UserInputClient::getWindowCoords(HWND hwnd, ::int_rectangle *rect)
   } while (!success);
 }
 
-HWND UserInputClient::getWindowHandleByName(const StringStorage & windowName)
+HWND UserInputClient::getWindowHandleByName(const ::string & windowName)
 {
   AutoLock al(m_forwGate);
   bool success = false;

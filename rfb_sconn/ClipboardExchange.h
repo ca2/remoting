@@ -38,7 +38,7 @@ public:
                     RfbOutputGate *output, bool viewOnly, LogWriter *log);
   virtual ~ClipboardExchange();
 
-  void sendClipboard(const StringStorage & newClipboard);
+  void sendClipboard(const ::string & newClipboard);
 
 protected:
   // Listen function
@@ -56,7 +56,7 @@ private:
 
   WindowsEvent m_newClipWaiter;
 
-  StringStorage m_storedClip;
+  ::string m_storedClip;
   bool m_hasNewClip;
   LocalMutex m_storedClipMut;
 

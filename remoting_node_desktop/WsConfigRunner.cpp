@@ -47,11 +47,11 @@ void WsConfigRunner::execute()
 
   try {
      // Prepare path to executable.
-    StringStorage pathToBin;
+    ::string pathToBin;
     Environment::getCurrentModulePath(&pathToBin);
     pathToBin.quoteSelf();
     // Prepare arguments.
-    StringStorage args;
+    ::string args;
     args.format(_T("%s %s"),
       m_serviceMode ? ControlCommandLine::CONTROL_SERVICE :
                       ControlCommandLine::CONTROL_APPLICATION,

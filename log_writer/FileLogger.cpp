@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "FileLogger.h"
 
-FileLogger::FileLogger(const TCHAR *logDir, const TCHAR *fileName,
+FileLogger::FileLogger(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrfileName,
                        unsigned char logLevel, bool logHeadEnabled)
 : m_fileAccount(logDir, fileName, logLevel, logHeadEnabled)
 {
@@ -39,7 +39,7 @@ FileLogger::~FileLogger()
 {
 }
 
-void FileLogger::init(const TCHAR *logDir, const TCHAR *fileName, unsigned char logLevel)
+void FileLogger::init(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrfileName, unsigned char logLevel)
 {
   m_fileAccount.init(logDir, fileName, logLevel);
 }
@@ -49,7 +49,7 @@ void FileLogger::storeHeader()
   m_fileAccount.storeHeader();
 }
 
-void FileLogger::print(int logLevel, const TCHAR *line)
+void FileLogger::print(int logLevel, const ::scoped_string & scopedstrline)
 {
   try {
     unsigned int processId = GetCurrentProcessId();
@@ -66,7 +66,7 @@ bool FileLogger::acceptsLevel(int logLevel)
   return m_fileAccount.acceptsLevel(logLevel);
 }
 
-void FileLogger::changeLogProps(const TCHAR *newLogDir, unsigned char newLevel)
+void FileLogger::changeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel)
 {
   m_fileAccount.changeLogProps(newLogDir, newLevel);
 }

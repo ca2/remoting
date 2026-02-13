@@ -39,7 +39,7 @@ public:
   TcpConnection(LogWriter *logWriter);
   virtual ~TcpConnection();
 
-  void bind(const TCHAR *host, unsigned short port);
+  void bind(const ::scoped_string & scopedstrhost, unsigned short port);
   void bind(SocketIPv4 *socket);
   void bind(RfbInputGate *input, RfbOutputGate *output);
 
@@ -49,7 +49,7 @@ public:
   RfbInputGate *getInput() const;
   RfbOutputGate *getOutput() const;
 private:
-  StringStorage m_host;
+  ::string m_host;
   unsigned short m_port;
   SocketIPv4 *m_socket;
   bool m_socketOwner;

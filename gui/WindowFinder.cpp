@@ -39,7 +39,7 @@ BOOL CALLBACK WindowFinder::findWindowsByClassFunc(HWND hwnd, LPARAM lParam)
     const size_t maxTcharCount = 256;
     TCHAR winName[maxTcharCount];
     if (GetClassName(hwnd, winName, maxTcharCount) != 0) {
-      StringStorage nextWinName(winName);
+      ::string nextWinName(winName);
 
       if (nextWinName.getLength() > 0 && hwnd != 0) {
         for (classNameIter = windowsParam->classNames->begin();
@@ -76,12 +76,12 @@ BOOL CALLBACK WindowFinder::findWindowsByNameFunc(HWND hwnd, LPARAM lParam)
     const size_t maxTcharCount = 256;
     TCHAR nameChars[maxTcharCount];
     if (GetWindowText(hwnd, nameChars, maxTcharCount) != 0) {
-      StringStorage winName(nameChars);
+      ::string winName(nameChars);
       winName.toLowerCase();
 
       if (winName.getLength() > 0 && hwnd != 0) {
         WindowsParam *winParams = (WindowsParam *)lParam;
-        StringStorage *substr = &(*(winParams->classNames)).front();
+        ::string & substr = &(*(winParams->classNames)).front();
         if (_tcsstr(winName.getString(), substr->getString()) != 0) {
           (*(winParams->hwndVector)).push_back(hwnd);
           return FALSE;
@@ -92,7 +92,7 @@ BOOL CALLBACK WindowFinder::findWindowsByNameFunc(HWND hwnd, LPARAM lParam)
   return TRUE;
 }
 
-HWND WindowFinder::findFirstWindowByName(const StringStorage windowName)
+HWND WindowFinder::findFirstWindowByName(const ::string windowName)
 {
   ::std::vector<HWND> hwndVector;
   StringVector winNameVector;

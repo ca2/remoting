@@ -30,7 +30,7 @@
 class ControlAuthException : public RemoteException
 {
 public:
-  ControlAuthException(const TCHAR *reason, bool silent = false);
+  ControlAuthException(const ::scoped_string & scopedstrreason, bool silent = false);
   virtual ~ControlAuthException();
 
   bool isSilent() const;

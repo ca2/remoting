@@ -30,7 +30,7 @@ Tab::Tab()
   m_caption.setString(_T(""));
 }
 
-Tab::Tab(BaseDialog *dialog, const TCHAR *caption)
+Tab::Tab(BaseDialog *dialog, const ::scoped_string & scopedstrcaption)
 : m_dialog(dialog)
 {
   m_caption.setString(caption);
