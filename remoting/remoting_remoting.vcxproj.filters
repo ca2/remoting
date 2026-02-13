@@ -45,7 +45,7 @@
     <ClCompile Include="LoginDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="application_main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="NamingDefs.cpp">
@@ -100,6 +100,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="framework.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectingDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -191,6 +197,12 @@
     <ClInclude Include="TvnViewer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ConnectingDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\appicon.ico">
@@ -225,7 +237,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="remoting_impact.rc">
+    <ResourceCompile Include="remoting_remoting.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>

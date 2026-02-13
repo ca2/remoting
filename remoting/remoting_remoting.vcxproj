@@ -36,9 +36,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{082F71AD-CDF6-44DE-84F7-9D2D16784B23}</ProjectGuid>
-    <RootNamespace>tvnviewer</RootNamespace>
+    <RootNamespace>remoting</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>remote_impact</ProjectName>
+    <ProjectName>remoting_remoting</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -306,9 +306,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AboutDialog.cpp" />
+    <ClCompile Include="application.cpp" />
     <ClCompile Include="AuthenticationDialog.cpp" />
     <ClCompile Include="BuildTime.cpp" />
     <ClCompile Include="ConfigurationDialog.cpp" />
+    <ClCompile Include="ConnectingDialog.cpp" />
     <ClCompile Include="ConnectionData.cpp" />
     <ClCompile Include="ConnectionListener.cpp" />
     <ClCompile Include="ControlTrayIcon.cpp" />
@@ -330,7 +332,7 @@
     <ClCompile Include="FsWarningDialog.cpp" />
     <ClCompile Include="HelpDialog.cpp" />
     <ClCompile Include="LoginDialog.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="application_main.cpp" />
     <ClCompile Include="NamingDefs.cpp" />
     <ClCompile Include="NewFolderDialog.cpp" />
     <ClCompile Include="OptionsDialog.cpp" />
@@ -346,9 +348,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AboutDialog.h" />
+    <ClInclude Include="application.h" />
     <ClInclude Include="AuthenticationDialog.h" />
     <ClInclude Include="BuildTime.h" />
     <ClInclude Include="ConfigurationDialog.h" />
+    <ClInclude Include="ConnectingDialog.h" />
     <ClInclude Include="ConnectionData.h" />
     <ClInclude Include="ConnectionListener.h" />
     <ClInclude Include="ControlTrayIcon.h" />
@@ -441,7 +445,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="remoting_impact.rc" />
+    <ResourceCompile Include="remoting_remoting.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
