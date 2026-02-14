@@ -74,7 +74,7 @@ void SpinControl::autoAccelerationHandler(LPNMUPDOWN message)
   // Get buddy textbox value
   ::string storage;
   m_buddy->getText(&storage);
-  if (!StringParser::parseInt(storage.getString(), &currentValue)) {
+  if (!StringParser::parseInt(storage, &currentValue)) {
     return;
   }
 
@@ -112,8 +112,8 @@ void SpinControl::enableAutoAcceleration(bool enabled)
   m_isAutoAccelerationEnabled = enabled;
 }
 
-void SpinControl::setAutoAccelerationParams(const ::std::vector<int> *limitters,
-                                            const ::std::vector<int> *deltas,
+void SpinControl::setAutoAccelerationParams(const ::array_base<int> *limitters,
+                                            const ::array_base<int> *deltas,
                                             int maxDelta)
 {
   m_limitters = *limitters;

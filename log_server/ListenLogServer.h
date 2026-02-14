@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __LISTENLOGSERVER_H__
-#define __LISTENLOGSERVER_H__
+#pragma once
+
 
 #include "thread/Thread.h"
 #include "win_system/PipeServer.h"
@@ -32,7 +32,7 @@
 class ListenLogServer : private Thread
 {
 public:
-  ListenLogServer(const ::scoped_string & scopedstrpublicPipeName,
+  ListenLogServer(const ::scoped_string & scopedstrPublicPipeName,
                   ConnectionListener *connListener);
   virtual ~ListenLogServer();
 
@@ -46,4 +46,4 @@ private:
   WindowsEvent m_timer;
 };
 
-#endif // __LISTENLOGSERVER_H__
+//// __LISTENLOGSERVER_H__

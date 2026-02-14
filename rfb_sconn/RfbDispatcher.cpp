@@ -67,12 +67,12 @@ void RfbDispatcher::execute()
         code += m_gate->readUInt8() << 8;
         code += m_gate->readUInt8();
       }
-      ::std::map<unsigned int, RfbDispatcherListener *>::iterator iter = m_handlers.find(code);
+      ::map<unsigned int, RfbDispatcherListener *>::iterator iter = m_handlers.find(code);
       if (iter == m_handlers.end()) {
         ::string errMess;
-        errMess.format(_T("unhandled %d code has been received from a client"),
+        errMess.formatf("unhandled {} code has been received from a client",
                        (int)code);
-        throw Exception(errMess.getString());
+        throw ::remoting::Exception(errMess);
       }
       (*iter).second->onRequest(code, m_gate);
     }

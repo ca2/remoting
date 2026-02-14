@@ -37,7 +37,7 @@ public:
   //
   // This methods is setter and getter of hostname or ::std::pair of hostname and port.
   //
-  void setHost(const ::string & host);
+  void setHost(const ::scoped_string & host);
   ::string getHost() const;
 
   //
@@ -60,8 +60,8 @@ public:
   //
   ::string getPlainPassword() const;
   ::string getCryptedPassword() const;
-  void setPlainPassword(const ::string & password);
-  void setCryptedPassword(const ::string & password);
+  void setPlainPassword(const ::scoped_string & password);
+  void setCryptedPassword(const ::scoped_string & password);
   bool isSetPassword() const;
   void resetPassword();
 
@@ -93,4 +93,4 @@ protected:
 };
 
 
-#endif
+

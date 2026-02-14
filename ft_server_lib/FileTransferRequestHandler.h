@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _FILE_TRANSFER_REQUEST_HANDLER_H_
-#define _FILE_TRANSFER_REQUEST_HANDLER_H_
+#pragma once
+
 
 #include "util/inttypes.h"
 #include "network/RfbInputGate.h"
@@ -118,7 +118,7 @@ protected:
   // Helper methods
   //
 
-  bool getDirectorySize(const ::scoped_string & scopedstrpathname, unsigned long long *dirSize);
+  bool getDirectorySize(const ::scoped_string & scopedstrPathname, unsigned long long *dirSize);
 
 protected:
   /**
@@ -170,4 +170,4 @@ protected:
   LogWriter *m_log;
 };
 
-#endif
+

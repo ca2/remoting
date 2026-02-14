@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _FILE_TRANSFER_REPLY_BUFFER_H_
-#define _FILE_TRANSFER_REPLY_BUFFER_H_
+#pragma once
+
 
 #include "FileTransferEventHandler.h"
 
@@ -51,7 +51,7 @@ public:
   FileInfo *getFilesInfo();
 
   unsigned int getDownloadBufferSize();
-  ::std::vector<unsigned char> getDownloadBuffer();
+  ::array_base<unsigned char> getDownloadBuffer();
 
   unsigned char getDownloadFileFlags();
   unsigned long long getDownloadLastModified();
@@ -83,7 +83,7 @@ public:
 
 private:
 
-  ::std::vector<unsigned char> readCompressedDataBlock(DataInputStream *input,
+  ::array_base<unsigned char> readCompressedDataBlock(DataInputStream *input,
                                         unsigned int compressedSize,
                                         unsigned int uncompressedSize,
                                         unsigned char compressionLevel)
@@ -108,7 +108,7 @@ protected:
   // Compression support reply
   bool m_isCompressionSupported;
 
-  // File ::std::list reply
+  // File ::list reply
   unsigned int m_filesInfoCount;
   FileInfo *m_filesInfo;
 
@@ -116,7 +116,7 @@ protected:
   ::string m_lastErrorMessage;
 
   // Download data reply
-  ::std::vector<unsigned char> m_downloadBuffer;
+  ::array_base<unsigned char> m_downloadBuffer;
   unsigned int m_downloadBufferSize;
 
   // Download end reply
@@ -127,4 +127,4 @@ protected:
   unsigned long long m_dirSize;
 };
 
-#endif
+

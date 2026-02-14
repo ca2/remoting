@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CURRENT_CONSOLE_PROCESS_H_
-#define _CURRENT_CONSOLE_PROCESS_H_
+#pragma once
+
 
 #include "win_system/Process.h"
 #include "log_writer/LogWriter.h"
@@ -51,7 +51,7 @@ public:
    *
    * See description of Process constructor.
    */
-  CurrentConsoleProcess(LogWriter *log, bool connectRdpSession, const ::scoped_string & scopedstrpath = 0, const ::scoped_string & scopedstrArgs = 0);
+  CurrentConsoleProcess(LogWriter *log, bool connectRdpSession, const ::scoped_string & scopedstrPath = 0, const ::scoped_string & scopedstrArgs = 0);
   /**
    * Destoys instance of class.
    */
@@ -72,4 +72,4 @@ private:
   bool m_connectRdpSession;
 };
 
-#endif
+

@@ -25,7 +25,7 @@
 #include "ConnectCommand.h"
 
 ConnectCommand::ConnectCommand(ControlProxy *serverControl,
-                               const ::scoped_string & scopedstrhostName)
+                               const ::scoped_string & scopedstrHostName)
 : m_proxy(serverControl),
   m_hostName(hostName)
 {
@@ -37,5 +37,5 @@ ConnectCommand::~ConnectCommand()
 
 void ConnectCommand::execute()
 {
-  m_proxy->makeOutgoingConnection(m_hostName.getString(), false);
+  m_proxy->makeOutgoingConnection(m_hostName, false);
 }

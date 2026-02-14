@@ -33,7 +33,7 @@ WinDxgiAdapter::WinDxgiAdapter(WinDxgiDevice *winDxgiDevice)
 {
   HRESULT hr = winDxgiDevice->getParent(__uuidof(IDXGIAdapter), reinterpret_cast<void**>(&m_dxgiAdapter));
   if (FAILED(hr)) {
-    throw WinDxCriticalException(_T("Can't GetParent for IDXGIAdapter"), hr);
+    throw WinDxCriticalException("Can't GetParent for IDXGIAdapter", hr);
   }
 }
 
@@ -50,9 +50,9 @@ void WinDxgiAdapter::getDxgiOutput(UINT iOutput, IDXGIOutput **iDxgiOutput)
   HRESULT hr = m_dxgiAdapter->EnumOutputs(iOutput, iDxgiOutput);
   if (hr == DXGI_ERROR_NOT_FOUND) {
     ::string errMess;
-    errMess.format(_T("IDXGIOutput not found for iOutput = %u"), iOutput);
-    throw WinDxRecoverableException(errMess.getString(), hr);
+    errMess.formatf("IDXGIOutput not found for iOutput = %u", iOutput);
+    throw WinDxRecoverableException(errMess, hr);
   } else if (FAILED(hr)) {
-    throw WinDxCriticalException(_T("Can't IDXGIAdapter::EnumOutputs()"), hr);
+    throw WinDxCriticalException("Can't IDXGIAdapter::EnumOutputs()", hr);
   }
 }

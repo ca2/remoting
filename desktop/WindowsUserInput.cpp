@@ -47,7 +47,7 @@ WindowsUserInput::~WindowsUserInput(void)
 // FIXME: refactor this horror.
 void WindowsUserInput::setMouseEvent(const Point newPos, unsigned char keyFlag)
 {
-	m_log->debug(_T("setMouseEvent (%d,%d):%d"), newPos.x, newPos.x, keyFlag);
+	m_log->debug("setMouseEvent ({},{}):{}", newPos.x, newPos.x, keyFlag);
   if (GetSystemMetrics(SM_SWAPBUTTON))
   {
     // read values of first and third bytes..
@@ -132,7 +132,7 @@ void WindowsUserInput::setMouseEvent(const Point newPos, unsigned char keyFlag)
   DWORD error = GetLastError();
 }
 
-void WindowsUserInput::setNewClipboard(const ::string & newClipboard)
+void WindowsUserInput::setNewClipboard(const ::scoped_string & newClipboard)
 {
   // FIXME: use ::string instead TCHAR * in writeToClipBoard arg
   m_clipboard->writeToClipBoard(newClipboard->getString());
@@ -141,7 +141,7 @@ void WindowsUserInput::setNewClipboard(const ::string & newClipboard)
 void WindowsUserInput::setKeyboardEvent(unsigned int keySym, bool down)
 {
   try {
-    m_log->info(_T("Received the %#4.4x keysym, down = %d"), keySym, (int)down);
+    m_log->information("Received the %#4.4x keysym, down = {}", keySym, (int)down);
     // Generate single key event.
     BYTE vkCode;
     WCHAR ch;
@@ -154,11 +154,11 @@ void WindowsUserInput::setKeyboardEvent(unsigned int keySym, bool down)
       m_inputInjector.injectCharEvent(ch, release);
     } else {
       ::string message;
-      message.format(_T("Unknown %d keysym"), keySym);
-      throw Exception(message.getString());
+      message.formatf("Unknown {} keysym", keySym);
+      throw ::remoting::Exception(message);
     }
-  } catch (Exception &someEx) {
-    m_log->error(_T("Exception while processing key event: %s"), someEx.getMessage());
+  } catch (::remoting::Exception &someEx) {
+    m_log->error("::remoting::Exception while processing key event: {}", someEx.getMessage());
   }
 }
 
@@ -168,8 +168,8 @@ void WindowsUserInput::getCurrentUserInfo(::string & desktopName,
   if (!DesktopSelector::getCurrentDesktopName(desktopName) &&
 	  !Environment::getCurrentUserName(userName, m_log)) {
         ::string errMess;
-        Environment::getErrStr(_T("Can't get current user info"), &errMess);
-		throw Exception(errMess.getString());
+        Environment::getErrStr("Can't get current user info", &errMess);
+		throw ::remoting::Exception(errMess);
   }
 }
 
@@ -189,7 +189,7 @@ void WindowsUserInput::getDisplayNumberCoords(::int_rectangle *rect,
   m_winDisplays.getDisplayCoordinates(dispNumber, rect);
 }
 
-::std::vector<::int_rectangle> WindowsUserInput::getDisplaysCoords()
+::array_base<::int_rectangle> WindowsUserInput::getDisplaysCoords()
 {
   return m_winDisplays.getDisplaysCoords();
 }
@@ -215,12 +215,12 @@ void WindowsUserInput::getWindowCoords(HWND hwnd, ::int_rectangle *rect)
                -GetSystemMetrics(SM_YVIRTUALSCREEN));
   } else {
     ::string errMess;
-    Environment::getErrStr(_T("Can't get window coordinates"), &errMess);
-    throw BrokenHandleException(errMess.getString());
+    Environment::getErrStr("Can't get window coordinates", &errMess);
+    throw BrokenHandleException(errMess);
   }
 }
 
-HWND WindowsUserInput::getWindowHandleByName(const ::string & windowName)
+HWND WindowsUserInput::getWindowHandleByName(const ::scoped_string & windowName)
 {
   return WindowFinder::findFirstWindowByName(*windowName);
 }

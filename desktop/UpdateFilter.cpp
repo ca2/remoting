@@ -45,13 +45,13 @@ UpdateFilter::~UpdateFilter()
 
 void UpdateFilter::filter(UpdateContainer *updateContainer)
 {
-  m_log->debug(_T("UpdateFilter::filter()"));
+  m_log->debug("UpdateFilter::filter()");
   AutoLock al(m_fbMutex);
 
   FrameBuffer *screenFrameBuffer = m_screenDriver->getScreenBuffer();
 
   // Checking for buffers equal
-  m_log->debug(_T("UpdateFilter::filter : Checking for buffers equal"));
+  m_log->debug("UpdateFilter::filter : Checking for buffers equal");
   if (!screenFrameBuffer->isEqualTo(m_frameBuffer)) {
     return;
   }
@@ -60,11 +60,11 @@ void UpdateFilter::filter(UpdateContainer *updateContainer)
   toCheck.add(&updateContainer->copiedRegion);
   toCheck.add(&updateContainer->videoRegion);
 
-  ::std::vector<::int_rectangle> rects;
-  ::std::vector<::int_rectangle>::iterator iRect;
+  ::array_base<::int_rectangle> rects;
+  ::array_base<::int_rectangle>::iterator iRect;
 
   // Reproduce CopyRect operations in m_frameBuffer.
-  m_log->debug(_T("UpdateFilter::filter : Reproduce CopyRect operations in m_frameBuffer"));
+  m_log->debug("UpdateFilter::filter : Reproduce CopyRect operations in m_frameBuffer");
   updateContainer->copiedRegion.getRectVector(&rects);
   Point *src = &updateContainer->copySrc;
   for (iRect = rects.begin(); iRect < rects.end(); iRect++) {
@@ -74,14 +74,14 @@ void UpdateFilter::filter(UpdateContainer *updateContainer)
 
   toCheck.getRectVector(&rects);
   // Grabbing
-  m_log->debug(_T("grabbing region, %d rectangles"), (int)rects.size());
-  ProcessorTimes pt1 = m_log->checkPoint(_T("grabbing region"));
+  m_log->debug("grabbing region, {} rectangles", (int)rects.size());
+  ProcessorTimes pt1 = m_log->checkPoint("grabbing region");
   try {
     m_grabOptimizator.grab(&toCheck, m_screenDriver);
   } catch (...) {
     return;
   }
-  ProcessorTimes pt2 = m_log->checkPoint(_T("end of grabbing region"));
+  ProcessorTimes pt2 = m_log->checkPoint("end of grabbing region");
 
   toCheck.getRectVector(&rects);
   double area = 0.0;
@@ -90,16 +90,16 @@ void UpdateFilter::filter(UpdateContainer *updateContainer)
   }
   area /= 1000000.0; // in millions of pixels
   double dt = pt2.wall.getTime(); // in milliseconds
-  m_log->debug(_T("Before grabbing region %f processor Mcycles, %f process time, %f kernel time, %f wall clock time "), 
+  m_log->debug("Before grabbing region %f processor Mcycles, %f process time, %f kernel time, %f wall clock time ", 
     pt1.cycle / 1000000., pt1.process, pt1.kernel, pt1.wall.getTime());
-  m_log->debug(_T("After grabbing region Mpoint grabbed: %f for %f processor Mcycles. %f ms"), 
+  m_log->debug("After grabbing region Mpoint grabbed: %f for %f processor Mcycles. %f ms", 
     area, pt2.cycle/1000000., dt);
-  m_log->debug(_T("After grabbing region %f process time, %f kernel time, %f wall clock time"), pt2.process, pt2.kernel, dt);
+  m_log->debug("After grabbing region %f process time, %f kernel time, %f wall clock time", pt2.process, pt2.kernel, dt);
 
-  m_log->debug(_T("end of grabbing region"));
+  m_log->debug("end of grabbing region");
 
   // Filtering
-  pt1 = m_log->checkPoint(_T("filtering changed"));
+  pt1 = m_log->checkPoint("filtering changed");
   updateContainer->changedRegion.clear();
   ::int_rectangle *rect;
   for (iRect = rects.begin(); iRect < rects.end(); iRect++) {
@@ -113,13 +113,13 @@ void UpdateFilter::filter(UpdateContainer *updateContainer)
     rect = &(*iRect);
     m_frameBuffer->copyFrom(rect, screenFrameBuffer, rect.left, rect.top);
   }
-  pt2 = m_log->checkPoint(_T("after filtering changed"));
+  pt2 = m_log->checkPoint("after filtering changed");
   dt = pt2.wall.getTime(); // in milliseconds
-  m_log->debug(_T("Before filtering changed %f processor Mcycles, %f process time, %f kernel time, %f wall clock time "),
+  m_log->debug("Before filtering changed %f processor Mcycles, %f process time, %f kernel time, %f wall clock time ",
     pt1.cycle / 1000000., pt1.process, pt1.kernel, pt1.wall.getTime());
-  m_log->debug(_T("After filtering changed Mpoint filtered: %f for %f processor Mcycles. %f ms"),
+  m_log->debug("After filtering changed Mpoint filtered: %f for %f processor Mcycles. %f ms",
     area, pt2.cycle / 1000000., dt);
-  m_log->debug(_T("After filtering changed %f process time, %f kernel time, %f wall clock time"), pt2.process, pt2.kernel, dt);
+  m_log->debug("After filtering changed %f process time, %f kernel time, %f wall clock time", pt2.process, pt2.kernel, dt);
 }
 
 void UpdateFilter::getChangedRegion(Region *rgn, const ::int_rectangle &  rect)

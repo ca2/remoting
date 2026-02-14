@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _DESKTOP_WINDOW_H_
-#define _DESKTOP_WINDOW_H_
+#pragma once
+
 
 #include "win_system/WinClipboard.h"
 #include "gui/DibFrameBuffer.h"
@@ -58,7 +58,7 @@ class ::time m_timeStartDesktopWindow;
   DesktopWindow(LogWriter *logWriter, ConnectionConfig *conConf);
   virtual ~DesktopWindow();
    virtual void _defer_update_double_buffering();
-  void setClipboardData(const ::string & strText);
+  void setClipboardData(const ::scoped_string & strText);
   void updateFramebuffer(const FrameBuffer * pframebuffer,
                          const ::int_rectangle &  dstRect);
   // this function must be called if size of image was changed
@@ -127,11 +127,11 @@ public:
   void applyScrollbarChanges(bool isChanged, bool isVert, bool isHorz, int wndWidth, int wndHeight);
 
   // This function check pointer to viewer core and send event.
-  // If into viewer core throwing exception Exception, then it catching
+  // If into viewer core throwing exception ::remoting::Exception, then it catching
   // in this function and logged.
   void sendKeyboardEvent(bool downFlag, unsigned int key);
   void sendPointerEvent(unsigned char buttonMask, const Point *position);
-  void sendCutTextEvent(const ::string & cutText);
+  void sendCutTextEvent(const ::scoped_string & cutText);
 
   LogWriter *m_logWriter;
 
@@ -188,4 +188,4 @@ public:
   void calcClientArea();
 };
 
-#endif
+

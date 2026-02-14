@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _PSEUDO_DECODER_H_
-#define _PSEUDO_DECODER_H_
+#pragma once
+
 
 #include "Decoder.h"
 
@@ -36,4 +36,4 @@ public:
   virtual bool isPseudo() const;
 };
 
-#endif
+

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __LOCKABLE_H__
-#define __LOCKABLE_H__
+#pragma once
+
 
 /**
  * Synchronized (thread-safe) object that can be locked and unlocked.
@@ -44,4 +44,4 @@ public:
   virtual void unlock() = 0;
 };
 
-#endif // __LOCKABLE_H__
+//// __LOCKABLE_H__

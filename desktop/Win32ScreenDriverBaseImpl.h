@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WIN32SCREENDRIVERBASEIMPL_H__
-#define __WIN32SCREENDRIVERBASEIMPL_H__
+#pragma once
+
 
 #include "ScreenDriver.h"
 #include "WinVideoRegionUpdaterImpl.h"
@@ -67,4 +67,4 @@ private:
   CopyRectDetector m_copyRectDetector;
 };
 
-#endif // __WIN32SCREENDRIVERBASEIMPL_H__
+//// __WIN32SCREENDRIVERBASEIMPL_H__

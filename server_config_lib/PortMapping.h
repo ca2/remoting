@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _PORT_MAPPING_H_
-#define _PORT_MAPPING_H_
+#pragma once
+
 
 //#include "util/::string.h"
 #include "PortMappingRect.h"
@@ -48,7 +48,7 @@ public:
   void toString(::string & string) const;
 
 public:
-  static bool parse(const ::scoped_string & scopedstrstr, PortMapping *mapping);
+  static bool parse(const ::scoped_string & scopedstrStr, PortMapping *mapping);
 
 protected:
   int m_port;
@@ -56,4 +56,4 @@ protected:
   PortMappingRect m_rect;
 };
 
-#endif
+

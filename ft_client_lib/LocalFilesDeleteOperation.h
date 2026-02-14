@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _LOCAL_FILES_DELETE_OPERATION_H_
-#define _LOCAL_FILES_DELETE_OPERATION_H_
+#pragma once
+
 
 #include "FileTransferOperation.h"
 #include "thread/Thread.h"
@@ -35,7 +35,7 @@ public:
   LocalFilesDeleteOperation(LogWriter *logWriter,
                             const FileInfo *filesToDelete,
                             unsigned int filesCount,
-                            const ::scoped_string & scopedstrpathToTargetRoot);
+                            const ::file::path & pathToTargetRoot);
   virtual ~LocalFilesDeleteOperation();
 
   virtual void start();
@@ -49,8 +49,8 @@ private:
 
 protected:
   ::string m_pathToTargetRoot;
-  ::std::vector<FileInfo> m_filesToDelete;
+  ::array_base<FileInfo> m_filesToDelete;
   unsigned int m_filesCount;
 };
 
-#endif
+

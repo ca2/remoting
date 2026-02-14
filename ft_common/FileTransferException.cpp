@@ -25,17 +25,16 @@
 #include "FileTransferException.h"
 
 FileTransferException::FileTransferException()
-: Exception()
 {
 }
 
-FileTransferException::FileTransferException(const ::scoped_string & scopedstrmessage)
-: Exception(message)
+FileTransferException::FileTransferException(const ::scoped_string & scopedstrMessage)
+: Exception(scopedstrMessage)
 {
 }
 
-FileTransferException::FileTransferException(const Exception *baseException)
-: Exception(baseException->getMessage())
+FileTransferException::FileTransferException(const ::remoting::Exception *baseException)
+: Exception(baseException->get_message())
 {
 }
 

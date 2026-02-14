@@ -38,7 +38,7 @@ BOOL HelpDialog::onInitDialog()
   ::string helpString;
   ResourceLoader *rLoader = ResourceLoader::getInstance();
   rLoader->loadString(IDS_CMDLINE_HELP, &helpString);
-  m_shelp.setText(helpString.getString());
+  m_shelp.setText(helpString);
   return TRUE;
 }
 

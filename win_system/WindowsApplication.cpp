@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "WindowsApplication.h"
 
 #include "util/CommonHeader.h"
@@ -29,7 +30,7 @@
 
 LocalMutex WindowsApplication::m_MDLMutex;
 
-::std::list<HWND> WindowsApplication::m_modelessDialogList;
+::list<HWND> WindowsApplication::m_modelessDialogList;
 
 WindowsApplication::WindowsApplication(HINSTANCE appInstance,
                                        const ::scoped_string & scopedstrwindowClassName)
@@ -89,7 +90,7 @@ void WindowsApplication::registerWindowClass(WNDCLASS *wndClass)
   // Set default values. Derived classes can redefine this fields
   wndClass->lpfnWndProc = wndProc;
   wndClass->hInstance = m_appInstance;
-  wndClass->lpszClassName = m_windowClassName.getString();
+  wndClass->lpszClassName = m_windowClassName;
 
   RegisterClass(wndClass);
 }
@@ -108,7 +109,7 @@ void WindowsApplication::addModelessDialog(HWND dialogWindow)
 {
   AutoLock l(&m_MDLMutex);
 
-  m_modelessDialogList.push_back(dialogWindow);
+  m_modelessDialogList.add(dialogWindow);
 }
 
 void WindowsApplication::removeModelessDialog(HWND dialogWindow)
@@ -121,7 +122,7 @@ void WindowsApplication::removeModelessDialog(HWND dialogWindow)
 bool WindowsApplication::processDialogMessage(MSG *msg)
 {
   AutoLock l(&m_MDLMutex);
-  for (::std::list<HWND>::iterator iter = m_modelessDialogList.begin();
+  for (::list<HWND>::iterator iter = m_modelessDialogList.begin();
        iter != m_modelessDialogList.end(); iter++) {
     if (IsDialogMessage(*iter, msg)) {
       return true;

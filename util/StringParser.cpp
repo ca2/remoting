@@ -26,11 +26,11 @@
 
 #include <stdio.h>
 
-bool StringParser::parseInt(const ::scoped_string & scopedstrstr, int *out)
+bool StringParser::parseInt(const ::scoped_string & scopedstrStr, int *out)
 {
   int value = 0;
   TCHAR c;
-  if(_stscanf(str, _T("%d%c"), &value, &c) != 1) {
+  if(_stscanf(str, "{}%c", &value, &c) != 1) {
     return false;
   }
   if (out != NULL) {
@@ -40,7 +40,7 @@ bool StringParser::parseInt(const ::scoped_string & scopedstrstr, int *out)
   return true;
 }
 
-bool StringParser::parseUInt(const ::scoped_string & scopedstrstr, unsigned int *out)
+bool StringParser::parseUInt(const ::scoped_string & scopedstrStr, unsigned int *out)
 {
   // Check the minus sign manually because _tcstoul does not fail on it.
   if (str != 0 && str[0] == _T('-')) {
@@ -66,11 +66,11 @@ bool StringParser::parseUInt(const ::scoped_string & scopedstrstr, unsigned int 
   return true;
 }
 
-bool StringParser::parseUInt64(const ::scoped_string & scopedstrstr, unsigned long long *out)
+bool StringParser::parseUInt64(const ::scoped_string & scopedstrStr, unsigned long long *out)
 {
   unsigned long long value = 0;
   TCHAR c;
-  if(_stscanf(str, _T("%llu%c"), &value, &c) != 1) {
+  if(_stscanf(str, "%llu%c", &value, &c) != 1) {
     return false;
   }
   if (out != NULL) {
@@ -80,16 +80,16 @@ bool StringParser::parseUInt64(const ::scoped_string & scopedstrstr, unsigned lo
   return true;
 }
 
-bool StringParser::tryParseInt(const ::scoped_string & scopedstrstr)
+bool StringParser::tryParseInt(const ::scoped_string & scopedstrStr)
 {
   return parseInt(str, NULL);
 }
 
-bool StringParser::parseHex(const ::scoped_string & scopedstrstr, unsigned int *out)
+bool StringParser::parseHex(const ::scoped_string & scopedstrStr, unsigned int *out)
 {
   TCHAR c;
   unsigned int val;
-  if (_stscanf(str, _T("%x%c"), &val, &c) != 1) {
+  if (_stscanf(str, "%x%c", &val, &c) != 1) {
     return false;
   }
   if (out != NULL) {
@@ -98,11 +98,11 @@ bool StringParser::parseHex(const ::scoped_string & scopedstrstr, unsigned int *
   return true;
 }
 
-bool StringParser::parseByteHex(const ::scoped_string & scopedstrstr, unsigned char *out)
+bool StringParser::parseByteHex(const ::scoped_string & scopedstrStr, unsigned char *out)
 {
   TCHAR c;
   int val = 0;
-  if (_stscanf(str, _T("%x%c"), &val, &c) != 1) {
+  if (_stscanf(str, "%x%c", &val, &c) != 1) {
     return false;
   }
   if (out != NULL) {
@@ -111,11 +111,11 @@ bool StringParser::parseByteHex(const ::scoped_string & scopedstrstr, unsigned c
   return true;
 }
 
-bool StringParser::parseByte(const ::scoped_string & scopedstrstr, unsigned char *out)
+bool StringParser::parseByte(const ::scoped_string & scopedstrStr, unsigned char *out)
 {
   TCHAR c;
   int val = 0;
-  if (_stscanf(str, _T("%d%c"), &val, &c) != 1) {
+  if (_stscanf(str, "{}%c", &val, &c) != 1) {
     return false;
   }
   if (out != NULL) {

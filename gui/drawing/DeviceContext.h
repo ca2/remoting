@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _DEVICE_CONTEXT_H_
-#define _DEVICE_CONTEXT_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "gui/PaintWindow.h"
@@ -57,4 +57,4 @@ public:
   friend class BitmapGraphics;
 };
 
-#endif
+

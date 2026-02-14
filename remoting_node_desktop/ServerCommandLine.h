@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __SERVERCOMMANDLINE_H__
-#define __SERVERCOMMANDLINE_H__
+#pragma once
+
 
 #include "util/CommandLine.h"
 
@@ -50,4 +50,4 @@ public:
   bool showHelp();
 };
 
-#endif // __SERVERCOMMANDLINE_H__
+//// __SERVERCOMMANDLINE_H__

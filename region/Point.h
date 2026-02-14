@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __POINT_H__
-#define __POINT_H__
+#pragma once
+
 
 struct Point
 {
@@ -40,4 +40,4 @@ struct Point
   int y;
 };
 
-#endif // __POINT_H__
+//// __POINT_H__

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _SECURITY_DESCRIPTOR_H_
-#define _SECURITY_DESCRIPTOR_H_
+#pragma once
+
 
 #include "util/winhdr.h"
 #include "win_system/SystemException.h"
@@ -36,15 +36,15 @@ class SecurityDescriptor {
 public:
   /**
    * Creates new security descriptor.
-   * @remark created security descriptor have no system access control ::std::list (SACL),
-   * no discretionary access control ::std::list (DACL), no owner, no primary group,
+   * @remark created security descriptor have no system access control ::list (SACL),
+   * no discretionary access control ::list (DACL), no owner, no primary group,
    * and all control flags set to FALSE (NULL). Thus, except for its revision level, it is empty
    */
   SecurityDescriptor();
   virtual ~SecurityDescriptor();
 
   /**
-   * Sets rules ::std::list for security descriptor.
+   * Sets rules ::list for security descriptor.
    * It creates dalc from specified rules and link created dalc with security
    * descriptor using setUserDacl method.
    * @param count count of rules in rules array.
@@ -55,9 +55,9 @@ public:
                       EXPLICIT_ACCESS *rules);
 
   /**
-   * Sets information in a discretionary access control ::std::list (DACL).
+   * Sets information in a discretionary access control ::list (DACL).
    * Built-in DACL value in acl param cannot be passed.
-   * @param acl access control ::std::list.
+   * @param acl access control ::list.
    * @throws SystemException on fail.
    */
   void setUserDacl(ACL *acl);
@@ -81,4 +81,4 @@ private:
   SECURITY_DESCRIPTOR m_sd;
 };
 
-#endif
+

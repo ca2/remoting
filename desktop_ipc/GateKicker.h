@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __GATEKICKER_H__
-#define __GATEKICKER_H__
+#pragma once
+
 
 #include "BlockingGate.h"
 #include "thread/Thread.h"
@@ -43,4 +43,4 @@ private:
   WindowsEvent m_sleeper;
 };
 
-#endif // __GATEKICKER_H__
+//// __GATEKICKER_H__

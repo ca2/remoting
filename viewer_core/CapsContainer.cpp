@@ -94,7 +94,7 @@ bool CapsContainer::enable(const RfbCapabilityInfo *capinfo)
   }
 
   enableMap[capinfo->code] = true;
-  m_plist.push_back(capinfo->code);
+  m_plist.add(capinfo->code);
   return true;
 }
 
@@ -116,7 +116,7 @@ unsigned int CapsContainer::getByOrder(size_t idx)
   return (idx < m_plist.size()) ? m_plist[idx] : 0;
 }
 
-void CapsContainer::getEnabledCapabilities(::std::vector<unsigned int> &codes) const
+void CapsContainer::getEnabledCapabilities(::array_base<unsigned int> &codes) const
 {
   AutoLock al(&m_mapLock);
   codes = m_plist;

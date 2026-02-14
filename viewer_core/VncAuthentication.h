@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _VNC_AUTHENTICATION_H_
-#define _VNC_AUTHENTICATION_H_
+#pragma once
+
 
 #include "AuthHandler.h"
 
@@ -31,10 +31,10 @@ class VncAuthentication
 {
 public:
   static void vncAuthenticate(DataInputStream *input, DataOutputStream *output,
-                    const ::string & password);
+                    const ::scoped_string & password);
 
   // TODO: removed duplicate code: ServerConfig.h
   static const int VNC_PASSWORD_SIZE = 8;
 };
 
-#endif
+

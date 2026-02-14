@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _DECODER_OF_RECTANGLE_H_
-#define _DECODER_OF_RECTANGLE_H_
+#pragma once
+
 
 #include "Decoder.h"
 
@@ -81,4 +81,4 @@ protected:
                       const ::int_rectangle &  rect);
 };
 
-#endif
+

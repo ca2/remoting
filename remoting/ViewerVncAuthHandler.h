@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __VIEWERVNCAUTHHANDLER_H__
-#define __VIEWERVNCAUTHHANDLER_H__
+#pragma once
+
 
 #include "viewer_core/VncAuthenticationHandler.h"
 #include "ConnectionData.h"
@@ -40,4 +40,4 @@ private:
   ConnectionData *m_connectionData;
 };
 
-#endif // __VIEWERVNCAUTHHANDLER_H__
+//// __VIEWERVNCAUTHHANDLER_H__

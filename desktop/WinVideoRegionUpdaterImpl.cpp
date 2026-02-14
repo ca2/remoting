@@ -70,7 +70,7 @@ Region WinVideoRegionUpdaterImpl::getVideoRegion()
   return m_vidRegion;
 }
 
-void WinVideoRegionUpdaterImpl::getClassNamesAndRectsFromConfig(StringVector &classNames, ::std::vector<::int_rectangle> &rects)
+void WinVideoRegionUpdaterImpl::getClassNamesAndRectsFromConfig(StringVector &classNames, ::array_base<::int_rectangle> &rects)
 {
   ServerConfig *srvConf = Configurator::getInstance()->getServerConfig();
   AutoLock al(srvConf);
@@ -81,15 +81,15 @@ void WinVideoRegionUpdaterImpl::getClassNamesAndRectsFromConfig(StringVector &cl
 void WinVideoRegionUpdaterImpl::updateVideoRegion()
 {
   StringVector classNames;
-  ::std::vector<::int_rectangle> rects;
+  ::array_base<::int_rectangle> rects;
   getClassNamesAndRectsFromConfig(classNames, rects);
   Region tmpRegion;
-  m_log->debug(L"WinVideoRegionUpdaterImpl: ClassNames %d, Rects %d", classNames.size(), m_vidRegion.getCount());
+  m_log->debug(L"WinVideoRegionUpdaterImpl: ClassNames {}, Rects {}", classNames.size(), m_vidRegion.getCount());
   if (!classNames.empty()) {
     DateTime startTime = DateTime::now();
     tmpRegion.add(getRectsByClass(classNames));
     unsigned int millis = (DateTime::now() - startTime).getTime();
-    m_log->debug(L"WinVideoRegionUpdaterImpl::getRectsByClass call took %d ms", millis);
+    m_log->debug(L"WinVideoRegionUpdaterImpl::getRectsByClass call took {} ms", millis);
   }
   if (!rects.empty()) {
     tmpRegion.add(getRectsByCoords(rects));
@@ -104,12 +104,12 @@ void WinVideoRegionUpdaterImpl::updateVideoRegion()
 
 Region WinVideoRegionUpdaterImpl::getRectsByClass(StringVector classNames)
 {
-  ::std::vector<HWND> hwndVector;
-  ::std::vector<HWND>::iterator hwndIter;
+  ::array_base<HWND> hwndVector;
+  ::array_base<HWND>::iterator hwndIter;
   Region vidRegion;
 
   for (int i = 0; i < classNames.size(); ++i) {
-    m_log->debug(L"WinVideoRegionUpdaterImpl: getRectsByClass : classname: %s ", classNames[i].getString());
+    m_log->debug(L"WinVideoRegionUpdaterImpl: getRectsByClass : classname: {} ", classNames[i]);
   }
   hwndVector = WindowFinder::findWindowsByClass(classNames);
 
@@ -134,9 +134,9 @@ Region WinVideoRegionUpdaterImpl::getRectsByClass(StringVector classNames)
   return vidRegion;
 }
 
-Region WinVideoRegionUpdaterImpl::getRectsByCoords(::std::vector<::int_rectangle> &rects)
+Region WinVideoRegionUpdaterImpl::getRectsByCoords(::array_base<::int_rectangle> &rects)
 {
-  ::std::vector<::int_rectangle>::iterator rIter;
+  ::array_base<::int_rectangle>::iterator rIter;
   ::int_rectangle videoRect;
   Region vidRegion;
   for (rIter = rects.begin(); rIter != rects.end(); rIter++) {

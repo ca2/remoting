@@ -136,15 +136,15 @@ void Control::setText(const ::scoped_string & scopedstrtext)
 void Control::setSignedInt(int value)
 {
   ::string text;
-  text.format(_T("%d"), value);
-  setText(text.getString());
+  text.formatf("{}", value);
+  setText(text);
 }
 
 void Control::setUnsignedInt(unsigned int value)
 {
   ::string text;
-  text.format(_T("%u"), value);
-  setText(text.getString());
+  text.formatf("%u", value);
+  setText(text);
 }
 
 //
@@ -188,9 +188,9 @@ void Control::invalidate()
 void Control::getText(::string & storage)
 {
   int length = (int)SendMessage(m_hwnd, WM_GETTEXTLENGTH, 0, 0);
-  ::std::vector<TCHAR> buf(length + 1);
+  ::array_base<TCHAR> buf(length + 1);
   GetWindowText(m_hwnd, &buf.front(), length + 1);
-  storage->setString(&buf.front());
+  storage-= &buf.front();
 }
 
 //

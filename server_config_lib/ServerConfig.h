@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _SERVER_CONFIG_H_
-#define _SERVER_CONFIG_H_
+#pragma once
+
 
 #include "util/StringVector.h"
 #include "util/Exception.h"
@@ -34,7 +34,7 @@
 #include "IpAccessRule.h"
 #include "io_lib/DataInputStream.h"
 #include "io_lib/DataOutputStream.h"
-#include "io_lib/IOException.h"
+#include "io_lib/io_exception.h"
 #include "region/RectSerializer.h"
 
 #include <shlobj.h>
@@ -70,7 +70,7 @@ public:
   /**
    * Serializes server config to output stream as byte stream.
    * Thread-safe method.
-   * @throws Exception on io error.
+   * @throws ::remoting::Exception on io error.
    * @fixme stub.
    */
   void serialize(DataOutputStream *output);
@@ -78,7 +78,7 @@ public:
   /**
    * Deserializes server config from input stream.
    * Thread-safe method.
-   * @throws Exception on io error.
+   * @throws ::remoting::Exception on io error.
    * @fixme stub.
    */
   void deserialize(DataInputStream *input);
@@ -260,7 +260,7 @@ public:
   // to lock and unlock server configuration.
   StringVector *getVideoClassNames();
   
-  ::std::vector<::int_rectangle> *getVideoRects();
+  ::array_base<::int_rectangle> *getVideoRects();
 
   //
   // Other
@@ -400,7 +400,7 @@ protected:
   // Defined by window class name
   StringVector m_videoClassNames;
   // Defined by rectangle coords in "dXxdY+X0+Y0" format, as in -sharerect command line option
-  ::std::vector<::int_rectangle> m_videoRects;
+  ::array_base<::int_rectangle> m_videoRects;
   
   //
   // Other
@@ -437,4 +437,4 @@ private:
   LocalMutex m_objectCS;
 };
 
-#endif
+

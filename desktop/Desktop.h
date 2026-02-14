@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __DESKTOP_H__
-#define __DESKTOP_H__
+#pragma once
+
 
 //#include "util/::string.h"
 
@@ -31,7 +31,7 @@
 #include "rfb/PixelFormat.h"
 #include "rfb/FrameBuffer.h"
 #include "fb_update_sender/UpdateRequestListener.h"
-#include <vector>
+//#include <vector>
 
 // This class is a public interface to a desktop.
 class Desktop : public UpdateRequestListener
@@ -52,16 +52,16 @@ public:
   virtual void getNormalizedRect(::int_rectangle *rect) = 0;
   virtual void getDisplayNumberCoords(::int_rectangle *rect,
                                       unsigned char dispNumber) = 0;
-  virtual ::std::vector<::int_rectangle> getDisplaysCoords() = 0;
+  virtual ::array_base<::int_rectangle> getDisplaysCoords() = 0;
   virtual void getWindowCoords(HWND hwnd, ::int_rectangle *rect) = 0;
-  virtual HWND getWindowHandleByName(const ::string & windowName) = 0;
+  virtual HWND getWindowHandleByName(const ::scoped_string & windowName) = 0;
 
   virtual void getApplicationRegion(unsigned int procId, Region *region) = 0;
   virtual bool isApplicationInFocus(unsigned int procId) = 0;
 
   virtual void setKeyboardEvent(unsigned int keySym, bool down) = 0;
   virtual void setMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask) = 0;
-  virtual void setNewClipText(const ::string & newClipboard) = 0;
+  virtual void setNewClipText(const ::scoped_string & newClipboard) = 0;
 
   // Updates external frame buffer pixels only for the region from view port
   // located at the place in a central frame buffer.
@@ -70,4 +70,4 @@ public:
                                          const ::int_rectangle &  viewPort) = 0;
 };
 
-#endif // __DESKTOP_H__
+//// __DESKTOP_H__

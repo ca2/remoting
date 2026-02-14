@@ -43,13 +43,13 @@ typedef HRESULT (WINAPI *D3D11CreateDeviceFunType)(
 WinD3D11Device::WinD3D11Device(LogWriter *log)
 : m_device(0),
   m_context(0),
-  m_d3d11Lib(_T("d3d11.dll")),
+  m_d3d11Lib("d3d11.dll"),
   m_log(log)
 {
   D3D11CreateDeviceFunType d3d11CreateDevice;
   d3d11CreateDevice = (D3D11CreateDeviceFunType)m_d3d11Lib.getProcAddress("D3D11CreateDevice");
   if (d3d11CreateDevice == 0) {
-    throw Exception(_T("Unable to load the D3D11CreateDevice() function"));
+    throw ::remoting::Exception("Unable to load the D3D11CreateDevice() function");
   }
 
   // Driver types supported
@@ -74,7 +74,7 @@ WinD3D11Device::WinD3D11Device(LogWriter *log)
   // Create device
   HRESULT hr;
   for (UINT iDriverType = 0; iDriverType < driverTypeCount; ++iDriverType) {
-    m_log->debug(_T("Creating of (%u) driverType device"), iDriverType);
+    m_log->debug("Creating of (%u) driverType device", iDriverType);
     hr = d3d11CreateDevice(0,
                            driverTypes[iDriverType],
                            0,
@@ -86,15 +86,15 @@ WinD3D11Device::WinD3D11Device(LogWriter *log)
                            &featureLevel,
                            &m_context);
     if (SUCCEEDED(hr)) {
-      m_log->debug(_T("Creating of %u driverType device is successfull, supported D3D_FEATURE_LEVEL is %u"), iDriverType, featureLevel);
+      m_log->debug("Creating of %u driverType device is successfull, supported D3D_FEATURE_LEVEL is %u", iDriverType, featureLevel);
       break;
     }
   }
   if (FAILED(hr)) {
     ::string errMess;
-    errMess.format(_T("D3D11CreateDevice function was failed with code error = (%dl)"), (long)hr);
-    m_log->debug(_T("D3D11CreateDevice function was failed with code error = (%dl)"), (long)hr);
-    throw Exception(errMess.getString());
+    errMess.formatf("D3D11CreateDevice function was failed with code error = (%dl)", (long)hr);
+    m_log->debug("D3D11CreateDevice function was failed with code error = (%dl)", (long)hr);
+    throw ::remoting::Exception(errMess);
   }
 }
 
@@ -105,12 +105,12 @@ WinD3D11Device::WinD3D11Device(const WinD3D11Device &src)
 
 WinD3D11Device::~WinD3D11Device()
 {
-  m_log->debug(_T("Release ID3D11Device"));
+  m_log->debug("Release ID3D11Device");
   if (m_device != 0) {
     m_device->Release();
     m_device = 0;
   }
-  m_log->debug(_T("Release ID3D11DeviceContext"));
+  m_log->debug("Release ID3D11DeviceContext");
   if (m_context != 0) {
     m_context->Release();
     m_context = 0;

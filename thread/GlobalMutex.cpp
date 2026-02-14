@@ -30,9 +30,9 @@ GlobalMutex::GlobalMutex(const ::scoped_string & scopedstrName, bool interSessio
 {
   ::string mutexName;
 
-  mutexName.format(_T("%s\\%s"), interSession ? _T("Global") : _T("Local"), name);
+  mutexName.formatf("{}\\{}"), interSession ? "Global" : _T("Local", name);
 
-  m_mutex = CreateMutex(0, FALSE, mutexName.getString());
+  m_mutex = CreateMutex(0, FALSE, mutexName);
 
   if (m_mutex == 0) {
     throw SystemException();

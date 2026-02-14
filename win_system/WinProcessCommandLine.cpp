@@ -22,17 +22,18 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "WinProcessCommandLine.h"
 
 WinProcessCommandLine::WinProcessCommandLine() 
 {
-  ::std::vector<::string> out;
+  ::string_array out;
 
   m_wcla = new WinCommandLineArgs(GetCommandLine());
   m_wcla->getArgVector(&out);
   for (size_t i = 0; i < out.size(); i++) {
-    if (out[i].getString()[0] != _T('-')) {
-      m_strParam.push_back(out[i]);
+    if (out[i][0] != _T('-')) {
+      m_strParam.add(out[i]);
     } else {
       optionParser(&out[i]);
     }
@@ -47,7 +48,7 @@ void WinProcessCommandLine::optionParser(::string & out)
   size_t ipos = out->findChar(_T('='));
   if (ipos == -1) {
     strPair.first = *out;
-    strPair.second = _T("");
+    strPair.second = "";
   } else {
     ::string strTemp = *out;
     strTemp.remove(0, ipos+1);
@@ -57,7 +58,7 @@ void WinProcessCommandLine::optionParser(::string & out)
     strPair.first = strTemp;
   }
   strPair.first.toLowerCase();
-  m_strParams.push_back(strPair);
+  m_strParams.add(strPair);
 }
 
 size_t WinProcessCommandLine::getArgumentsCount()

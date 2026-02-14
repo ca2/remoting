@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _DISPATCH_DATA_PROVIDER_H_
-#define _DISPATCH_DATA_PROVIDER_H_
+#pragma once
+
 
 //#include "util/::string.h"
 
@@ -36,4 +36,4 @@ public:
   virtual bool getDispatchData(unsigned int *id, ::string & dispatcherName, ::string & keyword) = 0;
 };
 
-#endif
+

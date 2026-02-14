@@ -46,7 +46,7 @@ OutgoingConnectionDialog::~OutgoingConnectionDialog()
 
 const ::scoped_string & scopedstrOutgoingConnectionDialog::getConnectString() const
 {
-  return m_connectString.getString();
+  return m_connectString;
 }
 
 bool OutgoingConnectionDialog::isViewOnly() const
@@ -113,7 +113,7 @@ void OutgoingConnectionDialog::onOkButtonClick()
 
   // Modify connection history.
 
-  m_connHistory.addHost(m_connectString.getString());
+  m_connHistory.addHost(m_connectString);
   m_connHistory.save();
   m_connHistory.truncate();
 

@@ -22,16 +22,16 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RECONNECTEXCEPTION_H__
-#define __RECONNECTEXCEPTION_H__
+#pragma once
 
-#include "io_lib/IOException.h"
 
-class ReconnectException : public IOException
+#include "io_lib/io_exception.h"
+
+class ReconnectException : public ::io_exception
 {
 public:
-  ReconnectException(const ::scoped_string & scopedstrmessage);
+  ReconnectException(const ::scoped_string & scopedstrMessage);
   virtual ~ReconnectException();
 };
 
-#endif // __RECONNECTEXCEPTION_H__
+//// __RECONNECTEXCEPTION_H__

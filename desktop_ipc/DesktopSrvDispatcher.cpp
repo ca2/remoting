@@ -56,29 +56,29 @@ void DesktopSrvDispatcher::execute()
 {
   while (!isTerminating()) {
     try {
-      m_log->debug(_T("DesktopSrvDispatcher reading code"));
+      m_log->debug("DesktopSrvDispatcher reading code");
       unsigned char code = m_gate->readUInt8();
-      m_log->debug(_T("DesktopSrvDispatcher, code %d recieved"), code);
-      ::std::map<unsigned char, ClientListener *>::iterator iter = m_handlers.find(code);
+      m_log->debug("DesktopSrvDispatcher, code {} recieved", code);
+      ::map<unsigned char, ClientListener *>::iterator iter = m_handlers.find(code);
       if (iter == m_handlers.end()) {
         ::string errMess;
-        errMess.format(_T("Unhandled %d code has been ")
-                       _T("received from a client"),
+        errMess.formatf("Unhandled {} code has been "
+                       "received from a client",
                        (int)code);
-        throw Exception(errMess.getString());
+        throw ::remoting::Exception(errMess);
       }
       (*iter).second->onRequest(code, m_gate);
     } catch (ReconnectException &) {
-      m_log->message(_T("The DesktopServerApplication dispatcher has been reconnected"));
-    } catch (Exception &e) {
-      m_log->error(_T("The DesktopServerApplication dispatcher has ")
-                 _T("failed with error: %s"), e.getMessage());
+      m_log->message("The DesktopServerApplication dispatcher has been reconnected");
+    } catch (::remoting::Exception &e) {
+      m_log->error("The DesktopServerApplication dispatcher has "
+                 "failed with error: {}", e.getMessage());
       notifyOnError();
       terminate();
     }
     Thread::yield();
   }
-  m_log->message(_T("The DesktopServerApplication dispatcher has been stopped"));
+  m_log->message("The DesktopServerApplication dispatcher has been stopped");
 }
 
 void DesktopSrvDispatcher::registerNewHandle(unsigned char code, ClientListener *listener)

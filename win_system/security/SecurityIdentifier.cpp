@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "SecurityIdentifier.h"
 
 #include <Sddl.h>
@@ -39,7 +40,7 @@ SecurityIdentifier::SecurityIdentifier(SID *sid)
   }
 }
 
-SecurityIdentifier::SecurityIdentifier(const ::scoped_string & scopedstrsidString)
+SecurityIdentifier::SecurityIdentifier(const ::scoped_string & scopedstrSidString)
 : m_sid(0)
 {
   getSidByString(sidString, (PSID *)&m_sid);
@@ -63,7 +64,7 @@ void SecurityIdentifier::toString(::string & sidString)
     throw SystemException();
   }
 
-  sidString->setString(localAllocatedSidString);
+  sidString-= localAllocatedSidString;
 
   LocalFree(localAllocatedSidString);
 }
@@ -92,7 +93,7 @@ SecurityIdentifier *SecurityIdentifier::getProcessOwner(HANDLE processHandle)
   }
 }
 
-SecurityIdentifier *SecurityIdentifier::createSidFromString(const ::scoped_string & scopedstrsidString)
+SecurityIdentifier *SecurityIdentifier::createSidFromString(const ::scoped_string & scopedstrSidString)
 {
   return new SecurityIdentifier(sidString);
 }
@@ -102,7 +103,7 @@ SID *SecurityIdentifier::getSid() const
   return m_sid;
 }
 
-void SecurityIdentifier::getSidByString(const ::scoped_string & scopedstrsidString, PSID *sid)
+void SecurityIdentifier::getSidByString(const ::scoped_string & scopedstrSidString, PSID *sid)
 {
   if (ConvertStringSidToSid(sidString, sid) == FALSE) {
     throw SystemException();

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __ANONYMOUSPIPE_H__
-#define __ANONYMOUSPIPE_H__
+#pragma once
+
 
 #include "io_lib/Channel.h"
 #include "Pipe.h"
@@ -46,7 +46,7 @@ public:
   /**
    * Closes transport.
    *
-   * @throws Exception on fail.
+   * @throws ::remoting::Exception on fail.
    */
   void close();
 
@@ -55,7 +55,7 @@ public:
    * Implemented from Channel interface.
    * @param buffer buffer to receive data.
    * @param len count of bytes to read.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    */
   virtual size_t read(void *buffer, size_t len);
 
@@ -64,7 +64,7 @@ public:
    * Implemented from Channel interface.
    * @param buffer buffer with data to write.
    * @param len count of bytes to write.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    */
   virtual size_t write(const void *buffer, size_t len);
 
@@ -83,7 +83,7 @@ public:
   // assigned for another process then set neededToClose flag to false.
   // If keepCloseRight is true then source process keeps the right to close
   // the new handles.
-  // @throw Exception on a fail.
+  // @throw ::remoting::Exception on a fail.
   void assignHandlesFor(HANDLE hTargetProc, bool neededToClose,
                         bool keepCloseRight = false);
 
@@ -104,4 +104,4 @@ private:
   LogWriter *m_log;
 };
 
-#endif // __ANONYMOUSPIPE_H__
+//// __ANONYMOUSPIPE_H__

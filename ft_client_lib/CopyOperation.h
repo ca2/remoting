@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _COPY_OPERATION_H_
-#define _COPY_OPERATION_H_
+#pragma once
+
 
 #include "FileTransferOperation.h"
 #include "CopyFileEventListener.h"
@@ -68,4 +68,4 @@ protected:
   unsigned long long m_totalBytesCopied;
 };
 
-#endif
+

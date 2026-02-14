@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __PROCESSMANAGER_H__
-#define __PROCESSMANAGER_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -40,7 +40,7 @@ public:
    * @param path full path to file.
    * @param args arguments for application.
    */
-  Process(const ::scoped_string & scopedstrpath = _T(""), const ::scoped_string & scopedstrArgs = _T(""));
+   Process(const ::file::path &path = {}, const ::scoped_string &scopedstrArgs = {});
 
   /**
    * Destroys Process instance.
@@ -52,7 +52,7 @@ public:
    * Sets executable filename for process.
    * @param path.
    */
-  void setFilename(const ::scoped_string & scopedstrpath);
+  void setFilename(const ::scoped_string & scopedstrPath);
 
   /**
    * Sets arguments for process.
@@ -133,4 +133,4 @@ protected:
   bool m_handlesIsInherited;
 };
 
-#endif // __PROCESSMANAGER_H__
+//// __PROCESSMANAGER_H__

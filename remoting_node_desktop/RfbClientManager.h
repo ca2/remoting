@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RFBCLIENTMANAGER_H__
-#define __RFBCLIENTMANAGER_H__
+#pragma once
+
 
 #include "util/ListenerContainer.h"
 #include "rfb_sconn/RfbClient.h"
@@ -46,15 +46,15 @@
 #include "remoting_control_desktop/RfbClientInfo.h"
 #include "NewConnectionEvents.h"
 
-typedef ::std::list<RfbClient *> ClientList;
-typedef ::std::list<RfbClient *>::iterator ClientListIter;
+typedef ::list<RfbClient *> ClientList;
+typedef ::list<RfbClient *>::iterator ClientListIter;
 
 struct BanProp
 {
   unsigned int count;
   DateTime banLastTime;
 };
-typedef ::std::map<::string, BanProp> BanList;
+typedef ::map<::string, BanProp> BanList;
 typedef BanList::iterator BanListIter;
 
 //
@@ -71,15 +71,15 @@ class RfbClientManager: public ClientTerminationListener,
 {
 public:
   // FIXME: parameter is not used.
-  RfbClientManager(const ::scoped_string & scopedstrserverName,
+  RfbClientManager(const ::scoped_string & scopedstrServerName,
                    NewConnectionEvents *newConnectionEvents,
                    LogWriter *log,
                    DesktopFactory *desktopFactory);
   virtual ~RfbClientManager();
 
-  // Adds rfb clients info to specified rfb client info ::std::list.
+  // Adds rfb clients info to specified rfb client info ::list.
   // FIXME: This method needed only for control server.
-  void getClientsInfo(RfbClientInfoList *::std::list);
+  void getClientsInfo(RfbClientInfoList *::list);
 
   // Disconnects all connected clients.
   virtual void disconnectAllClients();
@@ -94,7 +94,7 @@ public:
   void addNewConnection(SocketIPv4 *socket, ViewPortState *constViewPort,
                         bool viewOnly, bool isOutgoing);
 
-  // returns ::std::list of bans.
+  // returns ::list of bans.
   BanList getBanList() { AutoLock al(&m_banListMutex); return m_banList; };
   ::string getBanListString();
 
@@ -103,10 +103,10 @@ protected:
   virtual void onClientTerminate();
   virtual Desktop *onClientAuth(RfbClient *client);
   virtual bool onCheckForBan(RfbClient *client);
-  // This function only adds the client to the ban ::std::list.
+  // This function only adds the client to the ban ::list.
   virtual void onAuthFailed(RfbClient *client);
   virtual void onCheckAccessControl(RfbClient *client);
-  virtual void onClipboardUpdate(const ::string & newClipboard);
+  virtual void onClipboardUpdate(const ::scoped_string & newClipboard);
   virtual void onSendUpdate(const UpdateContainer *updateContainer,
                             const CursorShape *cursorShape);
   virtual bool isReadyToSend();
@@ -122,11 +122,11 @@ private:
 
   // Checks the ip to ban.
   // Returns true if client is banned.
-  bool checkForBan(const ::string & ip);
+  bool checkForBan(const ::scoped_string & ip);
   // If the success param is true the belonged ip entry will be removed
-  // from the ban ::std::list. Else the ip will be added to the ban or will be
+  // from the ban ::list. Else the ip will be added to the ban or will be
   // increased it count.
-  void updateIpInBan(const ::string & ip, bool success);
+  void updateIpInBan(const ::scoped_string & ip, bool success);
 
   ClientList m_nonAuthClientList;
   ClientList m_clientList;
@@ -156,4 +156,4 @@ private:
   LogWriter *m_log;
 };
 
-#endif // __RFBCLIENTMANAGER_H__
+//// __RFBCLIENTMANAGER_H__

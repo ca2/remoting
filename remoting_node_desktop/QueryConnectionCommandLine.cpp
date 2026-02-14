@@ -26,10 +26,10 @@
 
 #include "util/StringParser.h"
 
-const TCHAR QueryConnectionCommandLine::QUERY_CONNECTION[] = _T("-queryconnection");
-const TCHAR QueryConnectionCommandLine::PEER_ADDR[] = _T("-peer");
-const TCHAR QueryConnectionCommandLine::TIMEOUT[] = _T("-timeout");
-const TCHAR QueryConnectionCommandLine::ACCEPT[] = _T("-accept");
+const TCHAR QueryConnectionCommandLine::QUERY_CONNECTION[] = "-queryconnection";
+const TCHAR QueryConnectionCommandLine::PEER_ADDR[] = "-peer";
+const TCHAR QueryConnectionCommandLine::TIMEOUT[] = "-timeout";
+const TCHAR QueryConnectionCommandLine::ACCEPT[] = "-accept";
 
 QueryConnectionCommandLine::QueryConnectionCommandLine()
 {
@@ -49,18 +49,18 @@ void QueryConnectionCommandLine::parse(const CommandLineArgs *commandLine)
   };
 
   if (!CommandLine::parse(format, sizeof(format) / sizeof(CommandLineFormat), commandLine)) {
-    throw Exception(_T("Wrong command line format"));
+    throw ::remoting::Exception("Wrong command line format");
   }
 
   if (!optionSpecified(QUERY_CONNECTION)) {
-    throw Exception(_T("-queryconnection flag is not specified"));
+    throw ::remoting::Exception("-queryconnection flag is not specified");
   }
 
   ::string timeoutStr;
 
   if (optionSpecified(TIMEOUT, &timeoutStr) &&
-      !StringParser::parseInt(timeoutStr.getString(), (int *)&m_timeout)) {
-    throw Exception(_T("Invalid timeout"));
+      !StringParser::parseInt(timeoutStr, (int *)&m_timeout)) {
+    throw ::remoting::Exception("Invalid timeout");
   }
 }
 

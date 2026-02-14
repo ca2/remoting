@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __UPDATEHANDLER_H__
-#define __UPDATEHANDLER_H__
+#pragma once
+
 
 #include "UpdateContainer.h"
 #include "UpdateKeeper.h"
@@ -122,4 +122,4 @@ protected:
   CursorShape m_cursorShape;
 };
 
-#endif // __UPDATEHANDLER_H__
+//// __UPDATEHANDLER_H__

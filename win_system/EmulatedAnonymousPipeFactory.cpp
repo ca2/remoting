@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "EmulatedAnonymousPipeFactory.h"
 #include "win_system/SecurityAttributes.h"
 #include "win_system/PipeServer.h"
@@ -46,14 +47,14 @@ void EmulatedAnonymousPipeFactory::generatePipes(NamedPipe **serverPipe, bool se
 
   ::string randomName;
   getUniqPipeName(&randomName);
-  PipeServer pipeServer(randomName.getString(), m_bufferSize, 0, 1000);
-  *clientPipe = PipeClient::connect(randomName.getString(), m_bufferSize);
+  PipeServer pipeServer(randomName, m_bufferSize, 0, 1000);
+  *clientPipe = PipeClient::connect(randomName, m_bufferSize);
   *serverPipe = pipeServer.accept();
 
   HANDLE hThisSideWrite = (*serverPipe)->getHandle();
   HANDLE hOtherSideRead = (*clientPipe)->getHandle();
 
-  const ::scoped_string & scopedstrerrMess = _T("Cannot disable inheritance for named pipe");
+  const ::scoped_string & scopedstrerrMess = "Cannot disable inheritance for named pipe";
   if (!serverInheritable) {
     if (SetHandleInformation(hThisSideWrite, HANDLE_FLAG_INHERIT, 0) == 0) {
       SystemException(errMess);

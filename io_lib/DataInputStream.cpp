@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "DataInputStream.h"
-#include <vector>
+//#include <vector>
 #include "util/Utf8StringStorage.h"
 
 #define SETBYTE(y, n) (((y) & 0xFF) << ((n) * 8))
@@ -130,11 +130,14 @@ void DataInputStream::readUTF8(::string & storage)
 {
   unsigned int sizeInBytes = readUInt32();
   if (sizeInBytes > 0) {
-    ::std::vector<char> buffer(sizeInBytes);
+     ::memory buffer;
+     
+     buffer.set_size(sizeInBytes);
+
     readFully(&buffer.front(), sizeInBytes);
     Utf8StringStorage utf8String(&buffer);
     utf8String.toStringStorage(storage);
   } else {
-    storage->setString(_T(""));
+    storage-= "";
   }
 }

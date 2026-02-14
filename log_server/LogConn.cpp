@@ -124,7 +124,7 @@ void LogConn::dispatch()
     input.readUTF8(&logMess);
 
     m_extLogListener->onLog(m_handle, processId, threadId, dt,
-                            level, logMess.getString());
+                            level, logMess);
   }
 }
 
@@ -139,7 +139,7 @@ void LogConn::execute()
     input.readUTF8(&fileName);
     m_handle = m_extAuthListener->onLogConnAuth(this,
                                                 true,
-                                                fileName.getString());
+                                                fileName);
 
     m_logLevelSender.startSender(m_levelSendChannel);
     // Send first log level value
@@ -149,10 +149,10 @@ void LogConn::execute()
     }
 
     dispatch();
-  } catch (Exception &e) {
+  } catch (::remoting::Exception &e) {
     ::string errMess;
-    errMess.format(_T("The log connection has failed: %s"), e.getMessage());
-    m_extLogListener->onAnErrorFromLogConn(errMess.getString());
+    errMess.formatf("The log connection has failed: {}", e.getMessage());
+    m_extLogListener->onAnErrorFromLogConn(errMess);
   }
   m_extAuthListener->onDisconnect(this);
 }

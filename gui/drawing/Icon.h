@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _ICON_H_
-#define _ICON_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -49,4 +49,4 @@ protected:
   bool m_hasOwnIcon;
 };
 
-#endif
+

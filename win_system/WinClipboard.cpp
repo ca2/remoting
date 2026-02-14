@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "WinClipboard.h"
 
 WinClipboard::WinClipboard(HWND hwnd) 
@@ -61,7 +62,7 @@ bool WinClipboard::getString(::string & str)
      if (hndData) {
         TCHAR *szData = (TCHAR *)GlobalLock(hndData); 
         ::string nativeClipboard = szData;
-        //str.setString(szData);
+        //str= szData;
         GlobalUnlock(hndData); 
         CloseClipboard();
         *str = removeCR(nativeClipboard);
@@ -73,7 +74,7 @@ bool WinClipboard::getString(::string & str)
   return false;
 }
 
-bool WinClipboard::setString(const ::string & serverClipboard)
+bool WinClipboard::setString(const ::scoped_string & serverClipboard)
 {
   ::string nativeClipboard = addCR(serverClipboard);
 
@@ -91,7 +92,7 @@ bool WinClipboard::setString(const ::string & serverClipboard)
          GlobalFree(m_hndClipboard);
       }
       m_hndClipboard = GlobalAlloc(GMEM_MOVEABLE, dataSize);
-      CopyMemory(GlobalLock(m_hndClipboard), nativeClipboard.getString(), dataSize);
+      CopyMemory(GlobalLock(m_hndClipboard), nativeClipboard, dataSize);
       GlobalUnlock(m_hndClipboard);
       SetClipboardData(dataType, m_hndClipboard);
       CloseClipboard();
@@ -100,12 +101,12 @@ bool WinClipboard::setString(const ::string & serverClipboard)
   return false;
 }
 
-::string WinClipboard::addCR(const ::string & str)
+::string WinClipboard::addCR(const ::scoped_string & str)
 {
-  const ::scoped_string & scopedstrbeginString = str.getString();
+  const ::scoped_string & scopedstrbeginString = str;
   const ::scoped_string & scopedstrendString = beginString + str.getLength() + 1; // start + lenght + '\0'
-  ::std::vector<TCHAR> chars(beginString, endString);
-  ::std::vector<TCHAR> newChars(str.getLength() * 2 + 1);
+  ::array_base<TCHAR> chars(beginString, endString);
+  ::array_base<TCHAR> newChars(str.getLength() * 2 + 1);
   size_t countLF = 0;
   for (size_t i = 0; i < chars.size(); i++) {
     // if is first byte or previous byte not CR, then add CR
@@ -119,16 +120,16 @@ bool WinClipboard::setString(const ::string & serverClipboard)
   return ::string(&newChars.front());
 }
 
-::string WinClipboard::removeCR(const ::string & str)
+::string WinClipboard::removeCR(const ::scoped_string & str)
 {
-  const ::scoped_string & scopedstrbeginString = str.getString();
+  const ::scoped_string & scopedstrbeginString = str;
   const ::scoped_string & scopedstrendString = beginString + str.getLength() + 1; // start + lenght + '\0'
-  ::std::vector<TCHAR> chars(beginString, endString);
-  ::std::vector<TCHAR> newChars;
+  ::array_base<TCHAR> chars(beginString, endString);
+  ::array_base<TCHAR> newChars;
   size_t countLF = 0;
   for (size_t i = 0; i < chars.size(); i++) {
     if (chars[i] != CR || i + 1 == chars.size() || chars[i+1] != LF) {
-      newChars.push_back(chars[i]);
+      newChars.add(chars[i]);
     }
   }
   return ::string(&newChars.front());

@@ -52,12 +52,12 @@ EchoExtensionRequestHandler::EchoExtensionRequestHandler(RfbCodeRegistrator *reg
 
   registrator->regCode(ClientMsgDefs::ECHO_REQUEST, this);
 
-  m_log->message(_T("Echo extension request handler created"));
+  m_log->message("Echo extension request handler created");
 }
 
 EchoExtensionRequestHandler::~EchoExtensionRequestHandler()
 {
-  m_log->message(_T("Echo extension request handler deleted"));
+  m_log->message("Echo extension request handler deleted");
 }
 
 void EchoExtensionRequestHandler::onRequest(unsigned int reqCode, RfbInputGate *backGate)
@@ -67,7 +67,7 @@ void EchoExtensionRequestHandler::onRequest(unsigned int reqCode, RfbInputGate *
   try {
     if (reqCode == ClientMsgDefs::ECHO_REQUEST) {
       unsigned int number = m_input->readUInt32();
-      m_log->debug(_T("got echo request with number %d"), number);
+      m_log->debug("got echo request with number {}", number);
       {
         AutoLock l(m_output);
 
@@ -76,8 +76,8 @@ void EchoExtensionRequestHandler::onRequest(unsigned int reqCode, RfbInputGate *
         m_output->flush();
       }
     }   
-  } catch (Exception &someEx) {
-    m_log->error(_T("Echo extension request failed: \"%s\""), someEx.getMessage());
+  } catch (::remoting::Exception &someEx) {
+    m_log->error("Echo extension request failed: \"{}\"", someEx.getMessage());
   } // try / catch.
 
   m_input = NULL;

@@ -25,25 +25,25 @@
 #include "RemoteFileRenameOperation.h"
 
 RemoteFileRenameOperation::RemoteFileRenameOperation(LogWriter *logWriter,
-                                                     const ::scoped_string & scopedstrpathToSourceFile,
-                                                     const ::scoped_string & scopedstrpathToTargetFile)
+                                                     const ::scoped_string & scopedstrPathToSourceFile,
+                                                     const ::scoped_string & scopedstrPathToTargetFile)
 : FileTransferOperation(logWriter)
 {
-  m_pathToSourceFile.setString(pathToSourceFile);
-  m_pathToTargetFile.setString(pathToTargetFile);
+  m_pathToSourceFile= scopedstrPathToSourceFile;
+  m_pathToTargetFile= scopedstrPathToTargetFile;
 }
 
 RemoteFileRenameOperation::RemoteFileRenameOperation(LogWriter *logWriter,
                                                      FileInfo sourceFileInfo,
                                                      FileInfo targetFileInfo,
-                                                     const ::scoped_string & scopedstrpathToTargetRoot)
+                                                     const ::scoped_string & scopedstrPathToTargetRoot)
 : FileTransferOperation(logWriter)
 {
   FileInfoList srcList(sourceFileInfo);
   FileInfoList dstList(targetFileInfo);
 
-  getRemotePath(&srcList, pathToTargetRoot, &m_pathToSourceFile);
-  getRemotePath(&dstList, pathToTargetRoot, &m_pathToTargetFile);
+  getRemotePath(&srcList, scopedstrPathToTargetRoot, m_pathToSourceFile);
+  getRemotePath(&dstList, scopedstrPathToTargetRoot, m_pathToTargetFile);
 }
 
 RemoteFileRenameOperation::~RemoteFileRenameOperation()
@@ -55,18 +55,18 @@ void RemoteFileRenameOperation::start()
   // Logging
   ::string message;
 
-  message.format(_T("Renaming remote file '%s' to '%s'"),
-                 m_pathToSourceFile.getString(),
-                 m_pathToTargetFile.getString());
+  message.formatf("Renaming remote file '{}' to '{}'",
+                 m_pathToSourceFile,
+                 m_pathToTargetFile);
 
-  notifyInformation(message.getString());
+  notifyInformation(message);
 
   // Notify all that operation have started
   notifyStart();
 
   // Send request to server
-  m_sender->sendMvFileRequest(m_pathToSourceFile.getString(),
-                              m_pathToTargetFile.getString());
+  m_sender->sendMvFileRequest(m_pathToSourceFile,
+                              m_pathToTargetFile);
 }
 
 void RemoteFileRenameOperation::onMvReply(DataInputStream *input)
@@ -80,10 +80,10 @@ void RemoteFileRenameOperation::onLastRequestFailedReply(DataInputStream *input)
   // Logging
   ::string message;
 
-  message.format(_T("Error: failed to rename remote '%s' file"),
-                 m_pathToSourceFile.getString());
+  message.formatf("Error: failed to rename remote '{}' file",
+                 m_pathToSourceFile);
 
-  notifyInformation(message.getString());
+  notifyInformation(message);
 
   // Notify listeners that operation has finished
   notifyFinish();

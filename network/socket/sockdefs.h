@@ -23,10 +23,10 @@
 //
 
 #ifndef	SOCKDEFS_H
-#define SOCKDEFS_H
+//#define SOCKDEFS_H
 
 #include "util/CommonHeader.h"
 
 #define socklen_t int
 
-#endif
+

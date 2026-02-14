@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __GATEKICKHANDLER_H__
-#define __GATEKICKHANDLER_H__
+#pragma once
+
 
 #include "DesktopSrvDispatcher.h"
 
@@ -36,4 +36,4 @@ protected:
   virtual void onRequest(unsigned char reqCode, BlockingGate *backGate);
 };
 
-#endif // __GATEKICKHANDLER_H__
+//// __GATEKICKHANDLER_H__

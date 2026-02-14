@@ -22,10 +22,10 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RFBCLIENT_H__
-#define __RFBCLIENT_H__
+#pragma once
 
-#include <list>
+
+//#include <list>
 #include "network/socket/SocketIPv4.h"
 #include "win_system/WindowsEvent.h"
 #include "thread/Thread.h"
@@ -92,7 +92,7 @@ public:
   bool clientIsReady() const { return m_updateSender->clientIsReady(); }
   void sendUpdate(const UpdateContainer *updateContainer,
                   const CursorShape *cursorShape);
-  void sendClipboard(const ::string & newClipboard);
+  void sendClipboard(const ::scoped_string & newClipboard);
 
 protected:
   virtual void execute();
@@ -100,7 +100,7 @@ protected:
 
 private:
   // Calling this function makes the client manager enter (and leave) the
-  // mutex associated with the client ::std::list, so it will have to wait until
+  // mutex associated with the client ::list, so it will have to wait until
   // other threads stop working with our object (such operations should be
   // protected with the same mutex as well). If we call this function to
   // change the state to IN_PENDING_TO_REMOVE or IN_READY_TO_REMOVE, we can
@@ -155,4 +155,4 @@ private:
   int m_idleTimeout;
 };
 
-#endif // __RFBCLIENT_H__
+//// __RFBCLIENT_H__

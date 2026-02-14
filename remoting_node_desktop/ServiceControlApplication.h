@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _SERVICE_CONTROL_APPLICATION_H_
-#define _SERVICE_CONTROL_APPLICATION_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -127,4 +127,4 @@ private:
   ::string m_commandLine;
 };
 
-#endif
+

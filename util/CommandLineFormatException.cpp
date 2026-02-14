@@ -24,8 +24,8 @@
 #include "framework.h"
 #include "CommandLineFormatException.h"
 
-CommandLineFormatException::CommandLineFormatException(const ::scoped_string & scopedstrmessage)
- : Exception(message)
+CommandLineFormatException::CommandLineFormatException(const ::scoped_string & scopedstrMessage) :
+    ::remoting::Exception(scopedstrMessage)
 {
 }
 

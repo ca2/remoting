@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _REMOTE_FOLDER_CREATE_OPERAION_H_
-#define _REMOTE_FOLDER_CREATE_OPERAION_H_
+#pragma once
+
 
 #include "FileTransferOperation.h"
 
@@ -34,10 +34,10 @@
 class RemoteFolderCreateOperation : public FileTransferOperation
 {
 public:
-  RemoteFolderCreateOperation(LogWriter *logWriter, const ::scoped_string & scopedstrpathToTargetFile);
+  RemoteFolderCreateOperation(LogWriter *logWriter, const ::scoped_string & scopedstrPathToTargetFile);
   RemoteFolderCreateOperation(LogWriter *logWriter,
                               FileInfo file,
-                              const ::scoped_string & scopedstrpathToTargetRoot);
+                              const ::scoped_string & scopedstrPathToTargetRoot);
   virtual ~RemoteFolderCreateOperation();
 
   virtual void start();
@@ -50,4 +50,4 @@ protected:
   ::string m_pathToTargetFile;
 };
 
-#endif
+

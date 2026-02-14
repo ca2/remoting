@@ -22,12 +22,12 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _MACRO_COMMAND_H_
-#define _MACRO_COMMAND_H_
+#pragma once
+
 
 #include "Command.h"
 
-#include <list>
+//#include <list>
 
 /**
  * Command that executes sequence of commands.
@@ -36,7 +36,7 @@ class MacroCommand : public Command
 {
 public:
   /**
-   * Creates macro command with empty command ::std::list.
+   * Creates macro command with empty command ::list.
    */
   MacroCommand();
   /**
@@ -50,7 +50,7 @@ public:
   virtual void execute();
 
   /**
-   * Adds command to the end of ::std::list of commands to execute.
+   * Adds command to the end of ::list of commands to execute.
    */
   void addCommand(Command *command);
 
@@ -58,7 +58,7 @@ private:
   /**
    * List of commands to execute.
    */
-  ::std::list<Command *> m_commandList;
+  ::list<Command *> m_commandList;
 };
 
-#endif
+

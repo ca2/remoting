@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _VNC_AUTHENTICATION_HANDLER_H_
-#define _VNC_AUTHENTICATION_HANDLER_H_
+#pragma once
+
 
 #include "viewer_core/AuthHandler.h"
 
@@ -47,4 +47,4 @@ protected:
   virtual void getPassword(::string & passString) = 0;
 };
 
-#endif
+

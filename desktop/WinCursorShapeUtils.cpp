@@ -128,7 +128,7 @@ void WinCursorShapeUtils::inverse(char *bits, int count)
   }
 }
 
-void WinCursorShapeUtils::trimBuffer(::std::vector<char> *buffer, DXGI_OUTDUPL_POINTER_SHAPE_INFO *shapeInfo)
+void WinCursorShapeUtils::trimBuffer(::array_base<char> *buffer, DXGI_OUTDUPL_POINTER_SHAPE_INFO *shapeInfo)
 {
   UINT newPitch;
   UINT oldPitch = shapeInfo->Pitch;
@@ -152,7 +152,7 @@ void WinCursorShapeUtils::trimBuffer(::std::vector<char> *buffer, DXGI_OUTDUPL_P
   shapeInfo->Pitch = newPitch;
 }
 
-void WinCursorShapeUtils::trimTransparent(::std::vector<char> *buffer, DXGI_OUTDUPL_POINTER_SHAPE_INFO  *shapeInfo)
+void WinCursorShapeUtils::trimTransparent(::array_base<char> *buffer, DXGI_OUTDUPL_POINTER_SHAPE_INFO  *shapeInfo)
 {
   UINT pitch = shapeInfo->Pitch;
   UINT height = getCursorHeight(*shapeInfo);

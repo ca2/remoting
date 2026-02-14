@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _TVN_SERVER_APPLICATION_H_
-#define _TVN_SERVER_APPLICATION_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "util/winhdr.h"
@@ -81,7 +81,7 @@ public:
 
 private:
   // This is a callback function that calls when the log can be initialized.
-  virtual void onLogInit(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrfileName, unsigned char logLevel);
+  virtual void onLogInit(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrFileName, unsigned char logLevel);
 
   // This is a callback function that calls when log properties have changed.
   virtual void onChangeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel);
@@ -104,4 +104,4 @@ private:
   NewConnectionEvents *m_newConnectionEvents;
 };
 
-#endif
+

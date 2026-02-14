@@ -58,7 +58,7 @@ TcpServer::~TcpServer()
 
 const ::scoped_string & scopedstrTcpServer::getBindHost() const
 {
-  return m_bindHost.getString();
+  return m_bindHost;
 }
 
 unsigned short TcpServer::getBindPort() const

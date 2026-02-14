@@ -87,34 +87,34 @@ bool VideoRegionsConfigDialog::validateInput()
 void VideoRegionsConfigDialog::updateUI()
 {
   StringVector *videoClasses = m_config->getVideoClassNames();
-  ::std::vector<::int_rectangle> *videoRects = m_config->getVideoRects();
+  ::array_base<::int_rectangle> *videoRects = m_config->getVideoRects();
   ::string textAreaData;
   TCHAR endLine[3] = {13, 10, 0};
   {
     AutoLock al(m_config);
-    textAreaData.setString(_T(""));
+    textAreaData= "";
     for (size_t i = 0; i < videoClasses->size(); i++) {
-      textAreaData.appendString(videoClasses->at(i).getString());
+      textAreaData.appendString(videoClasses->at(i));
       textAreaData.appendString(&endLine[0]);
     }
     TCHAR buffer[32];
     _ltot(m_config->getVideoRecognitionInterval(), &buffer[0], 10);
     m_videoRecognitionInterval.setText(buffer);
   }
-  m_videoClasses.setText(textAreaData.getString());
+  m_videoClasses.setText(textAreaData);
 
   {
     AutoLock al(m_config);
-    textAreaData.setString(_T(""));
+    textAreaData= "";
     for (size_t i = 0; i < videoRects->size(); i++) {
       ::int_rectangle r = videoRects->at(i);
       ::string s;
       RectSerializer::toString(&r, &s);
-      textAreaData.appendString(s.getString());
+      textAreaData.appendString(s);
       textAreaData.appendString(&endLine[0]);
     }
   }
-  m_videoRects.setText(textAreaData.getString());
+  m_videoRects.setText(textAreaData);
 }
 
 void VideoRegionsConfigDialog::apply()
@@ -130,7 +130,7 @@ void VideoRegionsConfigDialog::apply()
 
   StringVector *videoClasses = m_config->getVideoClassNames();
   videoClasses->clear();
-  ::std::vector<::int_rectangle> *videoRects = m_config->getVideoRects();
+  ::array_base<::int_rectangle> *videoRects = m_config->getVideoRects();
   videoRects->clear();
 
   //
@@ -140,16 +140,16 @@ void VideoRegionsConfigDialog::apply()
   ::string classNames;
   m_videoClasses.getText(&classNames);
   size_t count = 0;
-  TCHAR delimiters[] = _T(" \n\r\t,;");
+  TCHAR delimiters[] = " \n\r\t,;";
 
   classNames.split(delimiters, NULL, &count);
   if (count != 0) {
-    ::std::vector<::string> chunks(count);
+    ::string_array chunks(count);
     classNames.split(delimiters, &chunks.front(), &count);
 
     for (size_t i = 0; i < count; i++) {
       if (!chunks[i].is_empty()) {
-          videoClasses->push_back(chunks[i].getString());
+          videoClasses->add(chunks[i]);
       }
     }
   }
@@ -160,13 +160,13 @@ void VideoRegionsConfigDialog::apply()
 
   videoRectsStringStorage.split(delimiters, NULL, &count);
   if (count != 0) {
-    ::std::vector<::string> chunks(count);
+    ::string_array chunks(count);
     videoRectsStringStorage.split(delimiters, &chunks.front(), &count);
 
     for (size_t i = 0; i < count; i++) {
       if (!chunks[i].is_empty()) {
         try {
-          videoRects->push_back(RectSerializer::toRect(&chunks[i]));
+          videoRects->add(RectSerializer::toRect(&chunks[i]));
         } catch (...) {
           // Ignore wrong formatted strings
         }
@@ -183,7 +183,7 @@ void VideoRegionsConfigDialog::apply()
   m_videoRecognitionInterval.getText(&vriss);
 
   int interval;
-  StringParser::parseInt(vriss.getString(), &interval);
+  StringParser::parseInt(vriss, &interval);
   m_config->setVideoRecognitionInterval((unsigned int)interval);
 }
 
@@ -198,9 +198,9 @@ void VideoRegionsConfigDialog::initControls()
   int limitersTmp[] = {50, 200};
   int deltasTmp[] = {5, 10};
 
-  ::std::vector<int> limitters(limitersTmp, limitersTmp + sizeof(limitersTmp) /
+  ::array_base<int> limitters(limitersTmp, limitersTmp + sizeof(limitersTmp) /
                                                         sizeof(int));
-  ::std::vector<int> deltas(deltasTmp, deltasTmp + sizeof(deltasTmp) /
+  ::array_base<int> deltas(deltasTmp, deltasTmp + sizeof(deltasTmp) /
                                                  sizeof(int));
 
   m_videoRecognitionIntervalSpin.setBuddy(&m_videoRecognitionInterval);

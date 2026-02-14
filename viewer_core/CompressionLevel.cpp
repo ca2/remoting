@@ -49,7 +49,7 @@ int CompressionLevel::levelToEncoding(int compressionLevel)
   case 9: return PseudoEncDefs::COMPR_LEVEL_9;
   default:
     ::string error;
-    error.format(_T("Compression level \"%d\" is not valid"), compressionLevel);
-    throw Exception(error.getString());
+    error.formatf("Compression level \"{}\" is not valid", compressionLevel);
+    throw ::remoting::Exception(error);
   }
 }

@@ -81,7 +81,7 @@ bool MirrorScreenDriver::grab(const ::int_rectangle &  rect)
   AutoLock al(m_fbMutex);
 
   if (m_mirrorClient == 0) {
-    throw Exception(_T("Mirror driver client didn't initilized."));
+    throw ::remoting::Exception("Mirror driver client didn't initilized.");
   }
 
   ::int_rectangle fbRect = m_frameBuffer.getDimension();
@@ -118,7 +118,7 @@ bool MirrorScreenDriver::getPropertiesChanged()
   if (m_mirrorClient != 0) {
     return m_mirrorClient->getPropertiesChanged();
   } else {
-    throw Exception(_T("Mirror driver client didn't initilized."));
+    throw ::remoting::Exception("Mirror driver client didn't initilized.");
   }
 }
 
@@ -128,7 +128,7 @@ bool MirrorScreenDriver::getScreenSizeChanged()
   if (m_mirrorClient != 0) {
     return m_mirrorClient->getScreenSizeChanged();
   } else {
-    throw Exception(_T("Mirror driver client didn't initilized."));
+    throw ::remoting::Exception("Mirror driver client didn't initilized.");
   }
 }
 

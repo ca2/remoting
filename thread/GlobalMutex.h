@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __GLOBALMUTEX_H__
-#define __GLOBALMUTEX_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "util/Exception.h"
@@ -44,7 +44,7 @@ public:
    * @param interSession if set, then mutex can be accessed from separate sessions, if not,
    * then every session will create it's own mutex.
    * @remark if name is 0, then mutex will be unnamed.
-   * @throws Exception when cannot create mutex or when throwIfExist flag is set
+   * @throws ::remoting::Exception when cannot create mutex or when throwIfExist flag is set
    * and mutex already exist.
    */
   GlobalMutex(const ::scoped_string & scopedstrName = 0, bool interSession = false, bool throwIfExist = false);
@@ -70,4 +70,4 @@ private:
   HANDLE m_mutex;
 };
 
-#endif // __GLOBALMUTEX_H__
+//// __GLOBALMUTEX_H__

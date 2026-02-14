@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __MSIPROPERTIES_H__
-#define __MSIPROPERTIES_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include <strsafe.h>
@@ -39,13 +39,13 @@ public:
   void setInt32(const ::scoped_string & scopedstrName, int value);
 
   void getString(const ::scoped_string & scopedstrName, ::string & out);
-  void setString(const ::scoped_string & scopedstrName, const ::string & value);
+  void= const ::scoped_string & scopedstrName, const ::scoped_string & value;
 
 private:
   void getValue(const ::scoped_string & scopedstrName, ::string & out);
-  void setValue(const ::scoped_string & scopedstrName, const ::string & value);
+  void setValue(const ::scoped_string & scopedstrName, const ::scoped_string & value);
 
   MSIHANDLE m_handle;
 };
 
-#endif // __MSIPROPERTIES_H__
+//// __MSIPROPERTIES_H__

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _HTTP_REQUEST_HANDLER_H_
-#define _HTTP_REQUEST_HANDLER_H_
+#pragma once
+
 
 #include "io_lib/DataInputStream.h"
 #include "io_lib/DataOutputStream.h"
@@ -33,7 +33,7 @@ class HttpRequestHandler
 {
 public:
   HttpRequestHandler(DataInputStream *dataInput, DataOutputStream *dataOutput, LogWriter *log,
-                     const ::scoped_string & scopedstrpeerHost = 0);
+                     const ::scoped_string & scopedstrPeerHost = 0);
   virtual ~HttpRequestHandler();
 
   // Reads HTTP request from input and sends responce to output.
@@ -47,4 +47,4 @@ protected:
   LogWriter *m_log;
 };
 
-#endif
+

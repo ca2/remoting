@@ -31,12 +31,12 @@ HttpServer::HttpServer(const ::scoped_string & scopedstrbindHost, unsigned short
 : TcpServer(bindHost, bindPort, true, lockAddr),
   m_log(log)
 {
-  m_log->message(_T("Http server started"));
+  m_log->message("Http server started");
 }
 
 HttpServer::~HttpServer()
 {
-  m_log->message(_T("Http server stopped"));
+  m_log->message("Http server stopped");
 }
 
 void HttpServer::onAcceptConnection(SocketIPv4 *socket)

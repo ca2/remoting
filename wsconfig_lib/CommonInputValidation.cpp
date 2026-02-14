@@ -57,7 +57,7 @@ bool CommonInputValidation::validatePort(TextBox *textBox)
   return validationOk;
 }
 
-bool CommonInputValidation::validateUINT(TextBox *textBox, const ::scoped_string & scopedstrmessageText)
+bool CommonInputValidation::validateUINT(TextBox *textBox, const ::scoped_string & scopedstrMessageText)
 {
   bool validationOk = true;
 
@@ -74,7 +74,7 @@ bool CommonInputValidation::validateUINT(TextBox *textBox, const ::scoped_string
   return validationOk;
 }
 
-void CommonInputValidation::notifyValidationError(TextBox *textBox, const ::scoped_string & scopedstrmessageText)
+void CommonInputValidation::notifyValidationError(TextBox *textBox, const ::scoped_string & scopedstrMessageText)
 {
   BalloonTip invalidInputTip;
 

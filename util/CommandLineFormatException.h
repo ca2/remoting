@@ -22,16 +22,16 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _COMMAND_LINE_FORMAT_EXCEPTION_H_
-#define _COMMAND_LINE_FORMAT_EXCEPTION_H_
+#pragma once
+
 
 #include "util/Exception.h"
 
-class CommandLineFormatException : public Exception
+class CommandLineFormatException : public ::remoting::Exception
 {
 public:
-  CommandLineFormatException(const ::scoped_string & scopedstrmessage = _T("Invalid command line format."));
+  CommandLineFormatException(const ::scoped_string & scopedstrMessage = "Invalid command line format.");
   virtual ~CommandLineFormatException();
 };
 
-#endif
+

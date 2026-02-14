@@ -71,7 +71,7 @@ DesktopServerApplication::DesktopServerApplication(HINSTANCE appInstance,
     // Get pipe channel handles by the shared memory
     ::string shMemName;
     cmdLineParser.getSharedMemName(&shMemName);
-    SharedMemory shMem(shMemName.getString(), 72);
+    SharedMemory shMem(shMemName, 72);
     unsigned long long *mem = (unsigned long long *)shMem.getMemPointer();
 
     DateTime startTime = DateTime::now();
@@ -83,7 +83,7 @@ DesktopServerApplication::DesktopServerApplication(HINSTANCE appInstance,
                                            startTime).getTime(),
                                      0);
       if (timeForWait == 0) {
-        throw Exception(_T("The desktop server time out expired"));
+        throw ::remoting::Exception("The desktop server time out expired");
       }
       m_sleepInterval.waitForEvent(10);
     }
@@ -95,13 +95,13 @@ DesktopServerApplication::DesktopServerApplication(HINSTANCE appInstance,
     writePipeHandle = (HANDLE)mem[2];
     maxPortionSize = (unsigned int)mem[3];
     m_clToSrvChan = new AnonymousPipe(readPipeHandle, writePipeHandle, maxPortionSize, &m_log);
-    m_log.info(_T("Client->server readPipeHandle = %p, writePipeHandle = %p"), readPipeHandle, writePipeHandle);
+    m_log.info("Client->server readPipeHandle = %p, writePipeHandle = %p", readPipeHandle, writePipeHandle);
 
     readPipeHandle = (HANDLE)mem[4];
     writePipeHandle = (HANDLE)mem[5];
     maxPortionSize = (unsigned int)mem[6];
     m_srvToClChan = new AnonymousPipe(readPipeHandle, writePipeHandle, maxPortionSize, &m_log);
-    m_log.info(_T("Server->client readPipeHandle = %p, writePipeHandle = %p"), readPipeHandle, writePipeHandle);
+    m_log.info("Server->client readPipeHandle = %p, writePipeHandle = %p", readPipeHandle, writePipeHandle);
 
     m_clToSrvGate = new BlockingGate(m_clToSrvChan);
     m_srvToClGate = new BlockingGate(m_srvToClChan);
@@ -119,8 +119,8 @@ DesktopServerApplication::DesktopServerApplication(HINSTANCE appInstance,
 
     // Spy for the session change.
     m_sessionChangesWatcher = new SessionChangesWatcher(this, &m_log);
-  } catch (Exception &e) {
-    m_log.error(_T("Desktop server application failed with error: %s"),e.getMessage());
+  } catch (::remoting::Exception &e) {
+    m_log.error("Desktop server application failed with error: {}",e.getMessage());
     freeResources();
     throw;
   }
@@ -128,23 +128,23 @@ DesktopServerApplication::DesktopServerApplication(HINSTANCE appInstance,
 
 DesktopServerApplication::~DesktopServerApplication()
 {
-  m_log.info(_T("The Desktop server application destructor has been called"));
+  m_log.info("The Desktop server application destructor has been called");
   freeResources();
-  m_log.info(_T("Desktop server application has been terminated"));
+  m_log.info("Desktop server application has been terminated");
 }
 
 void DesktopServerApplication::freeResources()
 {
   try {
     if (m_clToSrvChan) m_clToSrvChan->close();
-  } catch (Exception &e) {
-    m_log.error(_T("Cannot close client->server channel: %s"),
+  } catch (::remoting::Exception &e) {
+    m_log.error("Cannot close client->server channel: {}",
                e.getMessage());
   }
   try {
     if (m_srvToClChan) m_srvToClChan->close();
-  } catch (Exception &e) {
-    m_log.error(_T("Cannot close server->client channel: %s"),
+  } catch (::remoting::Exception &e) {
+    m_log.error("Cannot close server->client channel: {}",
                e.getMessage());
   }
 
@@ -167,8 +167,8 @@ void DesktopServerApplication::freeResources()
 
 void DesktopServerApplication::onAnObjectEvent()
 {
-  m_log.error(_T("An error has been occurred in the desktop server.")
-             _T(" Application will be closed."));
+  m_log.error("An error has been occurred in the desktop server."
+             " Application will be closed.");
   WindowsApplication::shutdown();
 }
 
@@ -182,10 +182,10 @@ int DesktopServerApplication::run()
     WallpaperUtil wp(&m_log);
 
     int retCode = WindowsApplication::run();
-    m_log.info(_T("Desktop server terminated with return code = %d"), retCode);
+    m_log.info("Desktop server terminated with return code = {}", retCode);
     return retCode;
-  } catch (Exception &e) {
-    m_log.error(_T("Desktop server has been terminated with error: %s"),
+  } catch (::remoting::Exception &e) {
+    m_log.error("Desktop server has been terminated with error: {}",
                e.getMessage());
     return 0;
   }

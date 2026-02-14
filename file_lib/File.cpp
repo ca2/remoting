@@ -93,7 +93,7 @@ bool File::exists() const
 {
    return m_path.name();
   // if (m_path.length() == 0) {
-  //   //name->setString(_T(""));
+  //   //name-= "";
   //   return {};
   // }
   //
@@ -119,7 +119,7 @@ bool File::exists() const
   // size_t pointPos = fileName.findLast(_T('.'));
   //
   // if (pointPos == (size_t)-1) {
-  //   ext->setString(_T(""));
+  //   ext-= "";
   // } else {
   //   fileName.getSubstring(ext, pointPos + 1, fileName.getLength() - 1);
   // }
@@ -180,7 +180,7 @@ void File::list(::string_array & stra) const
 {
 
    auto pathPattern = m_path/"*";
-  //folderPath.appendString(_T("\\*"));
+  //folderPath.appendString("\\*");
 
   //unsigned int index = 0;
 
@@ -209,13 +209,13 @@ void File::list(::string_array & stra) const
     // Skip "fake" file names
     //
 
-    if (_tcscmp(findFileData.cFileName, _T(".")) == 0 ||
-        _tcscmp(findFileData.cFileName, _T("..")) == 0) {
+    if (wcscmp(findFileData.cFileName, L".") == 0 ||
+        wcscmp(findFileData.cFileName, L"..") == 0) {
       continue;
     }
 
     //if (fileList != NULL) {
-      //fileList[index].setString(findFileData.cFileName);
+      //fileList[index]= findFileData.cFileName;
     //}
      stra.add(findFileData.cFileName);
 
@@ -255,13 +255,13 @@ bool File::listRoots(::string_array & stra)
     }
 
     //if (rootList != NULL) {
-      //rootList[count].setString(drive);
+      //rootList[count]= drive;
     //}
      stra.add(drive);
 
     free(drive);
 
-    i += _tcscspn(&drivesList[i], _T("\0")) + 1;
+    i += wcscspn(&drivesList[i], L"\0") + 1;
     //count++;
   } // while
 
@@ -296,11 +296,12 @@ bool File::renameTo(File *dest)
   return true;
 }
 
-bool File::renameTo(const ::scoped_string & scopedstrDest, const ::scoped_string & scopedstrsource)
+bool File::renameTo(const ::file::path & pathTarget, const ::file::path & pathSource)
 {
   // Try delete the destination file. Any error will be ignored.
-  DeleteFile(scopedstrDest);
-  if (MoveFile(source, dest) == 0) {
+  DeleteFile(pathTarget.windows_path());
+  if (MoveFile(pathSource.windows_path(), pathTarget.windows_path()) == 0)
+   {
     return false;
   }
   return true;
@@ -310,7 +311,7 @@ bool File::setLastModified(long long time)
 {
   _ASSERT(time >= 0);
 
-  HANDLE hfile = CreateFile(m_path.getString(),
+  HANDLE hfile = CreateFile(m_path.windows_path(),
                             GENERIC_READ | GENERIC_WRITE,
                             0,
                             NULL,
@@ -362,7 +363,7 @@ bool File::getFileInfo(WIN32_FIND_DATA *fileInfo) const
 
   UINT savedErrorMode = SetErrorMode(SEM_FAILCRITICALERRORS);
 
-  fileHandle = FindFirstFile(m_path.getString(), fileInfo);
+  fileHandle = FindFirstFile(m_path.windows_path(), fileInfo);
 
   // Restore error mode
   SetErrorMode(savedErrorMode);
@@ -377,7 +378,7 @@ bool File::getFileInfo(WIN32_FIND_DATA *fileInfo) const
 
 bool File::tryCreateFile(DWORD desiredAccess, DWORD creationDisposition) const
 {
-  HANDLE hfile = CreateFile(m_path.getString(),
+  HANDLE hfile = CreateFile(m_path.windows_path(),
                             desiredAccess,
                             FILE_SHARE_READ,
                             NULL,

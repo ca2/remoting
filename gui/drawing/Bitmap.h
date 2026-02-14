@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __BITMAP_H__
-#define __BITMAP_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -57,4 +57,4 @@ protected:
   friend class BitmapGraphics;
 };
 
-#endif
+

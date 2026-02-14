@@ -37,7 +37,7 @@ WinDxgiAcquiredFrame::WinDxgiAcquiredFrame(WinDxgiOutputDuplication *outDupl, UI
   if (hr == DXGI_ERROR_WAIT_TIMEOUT) {
     m_wasTimeOut = true;
   } else if (FAILED(hr)) {
-    throw WinDxRecoverableException(_T("Can't AcquireNextFrame()"), hr);
+    throw WinDxRecoverableException("Can't AcquireNextFrame()", hr);
   }
 }
 

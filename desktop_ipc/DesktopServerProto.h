@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __DESKTOPSERVERPROTO_H__
-#define __DESKTOPSERVERPROTO_H__
+#pragma once
+
 
 #include "util/inttypes.h"
 #include "rfb/FrameBuffer.h"
@@ -63,7 +63,7 @@ protected:
   void readFrameBuffer(FrameBuffer *dstFb, const ::int_rectangle &  dstRect,
                        BlockingGate *gate);
 
-  virtual void sendNewClipboard(const ::string & newClipboard,
+  virtual void sendNewClipboard(const ::scoped_string & newClipboard,
                                 BlockingGate *gate);
   virtual void readNewClipboard(::string & newClipboard,
                                 BlockingGate *gate);
@@ -75,8 +75,8 @@ protected:
                             BlockingGate *gate);
   virtual void readKeyEvent(unsigned int *keySym, bool *down,
                             BlockingGate *gate);
-  virtual void sendUserInfo(const ::string & desktopName,
-                            const ::string & userName,
+  virtual void sendUserInfo(const ::scoped_string & desktopName,
+                            const ::scoped_string & userName,
                             BlockingGate *gate);
   virtual void readUserInfo(::string & desktopName,
                             ::string & userName,
@@ -118,4 +118,4 @@ private:
   void checkDimension(const ::int_size & dim);
 };
 
-#endif // __DESKTOPSERVERPROTO_H__
+//// __DESKTOPSERVERPROTO_H__

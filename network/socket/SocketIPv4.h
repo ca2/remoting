@@ -22,8 +22,9 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef SOCKET_IPV4_H
-#define SOCKET_IPV4_H
+//#ifndef SOCKET_IPV4_H
+#pragma once
+//#define SOCKET_IPV4_H
 
 #include "sockdefs.h"
 
@@ -32,7 +33,7 @@
 #include "SocketException.h"
 
 #include "io_lib/Channel.h"
-#include "io_lib/IOException.h"
+#include "io_lib/io_exception.h"
 #include "win_system/WsaStartup.h"
 #include "thread/LocalMutex.h"
 
@@ -59,7 +60,7 @@ public:
    * @param port port to connect.
    * @throws SocketException on fail.
    */
-  void connect(const ::scoped_string & scopedstrhost, unsigned short port);
+  void connect(const ::scoped_string & scopedstrHost, unsigned short port);
   /**
    * Connects to remote host.
    * @param addr address to connect.
@@ -115,7 +116,7 @@ public:
    * @param size bytes to send.
    * @param [optional] flags socket flags.
    * @return count to sent bytes.
-   * @throw IOException on error.
+   * @throw ::io_exception on error.
    */
   int send(const char *data, int size, int flags = 0);
   /**
@@ -125,7 +126,7 @@ public:
    * @param size count of bytes to read from socket.
    * @param flags recv flags.
    * @return count of read bytes.
-   * @throws IOException on fail.
+   * @throws ::io_exception on fail.
    */
   int recv(char *buffer, int size, int flags = 0);
 
@@ -183,4 +184,4 @@ protected:
   bool m_isBound;
 };
 
-#endif
+

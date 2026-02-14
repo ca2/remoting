@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __DESKTOPSRVDISPATCHER_H__
-#define __DESKTOPSRVDISPATCHER_H__
+#pragma once
+
 
 #include "thread/GuiThread.h"
 #include "BlockingGate.h"
@@ -31,7 +31,7 @@
 #include "util/AnEventListener.h"
 #include "win_system/WindowsEvent.h"
 #include "log_writer/LogWriter.h"
-#include <map>
+//#include <map>
 
 class DesktopSrvDispatcher: public GuiThread
 {
@@ -50,11 +50,11 @@ protected:
 
   BlockingGate *m_gate;
 
-  ::std::map<unsigned char, ClientListener *> m_handlers;
+  ::map<unsigned char, ClientListener *> m_handlers;
 
   AnEventListener *m_extErrorListener;
 
   LogWriter *m_log;
 };
 
-#endif // __DESKTOPSRVDISPATCHER_H__
+//// __DESKTOPSRVDISPATCHER_H__

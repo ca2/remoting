@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINCOMMANDLINEARGS_H__
-#define __WINCOMMANDLINEARGS_H__
+#pragma once
+
 
 #include "util/CommandLineArgs.h"
 
@@ -34,4 +34,4 @@ public:
   virtual ~WinCommandLineArgs();
 };
 
-#endif // __WINCOMMANDLINEARGS_H__
+//// __WINCOMMANDLINEARGS_H__

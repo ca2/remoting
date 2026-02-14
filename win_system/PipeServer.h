@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __PIPESERVER_H__
-#define __PIPESERVER_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -107,4 +107,4 @@ private:
   unsigned int m_bufferSize;
 };
 
-#endif // __PIPESERVER_H__
+//// __PIPESERVER_H__

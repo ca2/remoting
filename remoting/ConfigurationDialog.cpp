@@ -74,7 +74,7 @@ void ConfigurationDialog::onLogLevelChange()
   ::string text;
   int logLevel;
   m_verbLvl.getText(&text);
-  StringParser::parseInt(text.getString(), &logLevel);
+  StringParser::parseInt(text, &logLevel);
   if (logLevel != 0) {
     m_logging.setEnabled(true);
 
@@ -82,11 +82,11 @@ void ConfigurationDialog::onLogLevelChange()
     ::string logDir;
     ViewerConfig::getInstance()->getLogDir(&logDir);
     ::string logFileName;
-    logFileName.format(_T("%s\\%s.log"),
-                       logDir.getString(),
+    logFileName.formatf("{}\\{}.log",
+                       logDir,
                        LogNames::VIEWER_LOG_FILE_STUB_NAME);
 
-    File logFile(logFileName.getString());
+    File logFile(logFileName);
     if (logFile.exists()) {
       m_openLogDir.setEnabled(true);
     } else {
@@ -104,11 +104,11 @@ void ConfigurationDialog::onOpenFolderButtonClick()
   ViewerConfig::getInstance()->getLogDir(&logDir);
 
   ::string command;
-  command.format(_T("explorer /select,%s\\%s.log"),
-                 logDir.getString(),
+  command.formatf("explorer /select,{}\\{}.log",
+                 logDir,
                  LogNames::VIEWER_LOG_FILE_STUB_NAME);
 
-  Process explorer(command.getString());
+  Process explorer(command);
 
   try {
     explorer.start();
@@ -150,21 +150,21 @@ void ConfigurationDialog::updateControlValues()
 
   ::string txt;
 
-  txt.format(_T("%d"), config->getListenPort());
-  m_reverseConn.setText(txt.getString());
+  txt.formatf("{}", config->getListenPort());
+  m_reverseConn.setText(txt);
 
-  txt.format(_T("%d"), config->getLogLevel());
-  m_verbLvl.setText(txt.getString());
+  txt.formatf("{}", config->getLogLevel());
+  m_verbLvl.setText(txt);
 
-  txt.format(_T("%d"), config->getHistoryLimit());
-  m_numberConn.setText(txt.getString());
+  txt.formatf("{}", config->getHistoryLimit());
+  m_numberConn.setText(txt);
 
   m_showToolBars.check(config->isToolbarShown());
   m_warnAtSwitching.check(config->isPromptOnFullscreenEnabled());
 
   ::string logFileName;
-  logFileName.format(_T("%s\\%s.log"), config->getPathToLogFile(), LogNames::VIEWER_LOG_FILE_STUB_NAME);
-  m_logging.setText(logFileName.getString());
+  logFileName.formatf("{}\\{}.log", config->getPathToLogFile(), LogNames::VIEWER_LOG_FILE_STUB_NAME);
+  m_logging.setText(logFileName);
 }
 
 bool ConfigurationDialog::isInputValid()
@@ -186,14 +186,14 @@ bool ConfigurationDialog::testNum(TextBox *tb, const ::scoped_string & scopedstr
   ::string text;
   tb->getText(&text);
 
-  if (StringParser::tryParseInt(text.getString())) {
+  if (StringParser::tryParseInt(text)) {
     return true;
   }
 
   ::string message;
   message.format(StringTable::getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC), tbName);
 
-  MessageBox(m_ctrlThis.getWindow(), message.getString(),
+  MessageBox(m_ctrlThis.getWindow(), message,
              StringTable::getString(IDS_CONFIGURATION_CAPTION), MB_OK | MB_ICONWARNING);
 
   tb->setFocus();
@@ -213,16 +213,16 @@ void ConfigurationDialog::onOkPressed()
   int intVal;
 
   m_reverseConn.getText(&text);
-  StringParser::parseInt(text.getString(), &intVal);
+  StringParser::parseInt(text, &intVal);
   config->setListenPort(intVal);
 
   m_verbLvl.getText(&text);
-  StringParser::parseInt(text.getString(), &intVal);
+  StringParser::parseInt(text, &intVal);
   config->setLogLevel(intVal);
 
   int oldLimit = config->getHistoryLimit();
   m_numberConn.getText(&text);
-  StringParser::parseInt(text.getString(), &intVal);
+  StringParser::parseInt(text, &intVal);
   config->setHistoryLimit(intVal);
 
   if (config->getHistoryLimit() < oldLimit) {

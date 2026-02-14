@@ -22,12 +22,12 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _FILE_TRANSFER_REQUEST_SENDER_H_
-#define _FILE_TRANSFER_REQUEST_SENDER_H_
+#pragma once
+
 
 #include "util/inttypes.h"
 #include "network/RfbOutputGate.h"
-#include "io_lib/IOException.h"
+#include "io_lib/io_exception.h"
 
 #include "log_writer/LogWriter.h"
 
@@ -40,20 +40,20 @@ public:
   void setOutput(RfbOutputGate *outputStream);
 
   void sendCompressionSupportRequest();
-  void sendFileListRequest(const ::scoped_string & scopedstrfullPath, bool useCompression);
-  void sendDownloadRequest(const ::scoped_string & scopedstrfullPathName, unsigned long long offset);
+  void sendFileListRequest(const ::scoped_string & scopedstrFullPath, bool useCompression);
+  void sendDownloadRequest(const ::scoped_string & scopedstrFullPathName, unsigned long long offset);
   void sendDownloadDataRequest(unsigned int size, bool useCompression);
-  void sendRmFileRequest(const ::scoped_string & scopedstrfullPathName);
-  void sendMkDirRequest(const ::scoped_string & scopedstrfullPathName);
+  void sendRmFileRequest(const ::scoped_string & scopedstrFullPathName);
+  void sendMkDirRequest(const ::scoped_string & scopedstrFullPathName);
   void sendMvFileRequest(const ::scoped_string & scopedstroldFileName, const ::scoped_string & scopedstrNewFileName);
-  void sendUploadRequest(const ::scoped_string & scopedstrfullPathName, bool overwrite, unsigned long long offset);
+  void sendUploadRequest(const ::scoped_string & scopedstrFullPathName, bool overwrite, unsigned long long offset);
   void sendUploadDataRequest(const char *buffer, unsigned int size, bool useCompression);
   void sendUploadEndRequest(unsigned char fileFlags, unsigned long long modificationTime);
-  void sendFolderSizeRequest(const ::scoped_string & scopedstrfullPath);
+  void sendFolderSizeRequest(const ::scoped_string & scopedstrFullPath);
 
 protected:
   LogWriter *m_logWriter;
   RfbOutputGate *m_output;
 };
 
-#endif
+

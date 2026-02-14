@@ -22,17 +22,17 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _FILE_NOT_FOUND_EXCEPTION_H_
-#define _FILE_NOT_FOUND_EXCEPTION_H_
+#pragma once
 
-#include "io_lib/IOException.h"
 
-class FileNotFoundException : public IOException
+#include "io_lib/io_exception.h"
+
+class FileNotFoundException : public ::io_exception
 {
 public:
   FileNotFoundException();
-  FileNotFoundException(const ::scoped_string & scopedstrmessage);
+  FileNotFoundException(const ::scoped_string & scopedstrMessage);
   virtual ~FileNotFoundException();
 };
 
-#endif
+

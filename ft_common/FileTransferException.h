@@ -22,18 +22,18 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _FILE_TRANSFER_EXCEPTION_H_
-#define _FILE_TRANSFER_EXCEPTION_H_
+#pragma once
+
 
 #include "util/Exception.h"
 
-class FileTransferException : public Exception
+class FileTransferException : public ::remoting::Exception
 {
 public:
   FileTransferException();
-  FileTransferException(const ::scoped_string & scopedstrmessage);
-  FileTransferException(const Exception *baseException);
+  FileTransferException(const ::scoped_string & scopedstrMessage);
+  FileTransferException(const ::remoting::Exception *baseException);
   virtual ~FileTransferException();
 };
 
-#endif
+//

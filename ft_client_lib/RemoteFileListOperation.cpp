@@ -30,7 +30,7 @@ RemoteFileListOperation::RemoteFileListOperation(LogWriter *logWriter,
   m_isOk(false),
   m_isFinished(false)
 {
-  m_remotePath.setString(remotePath);
+  m_remotePath= remotePath;
 }
 
 RemoteFileListOperation::~RemoteFileListOperation()
@@ -42,7 +42,7 @@ void RemoteFileListOperation::start()
   m_isOk = false;
   m_isFinished = false;
 
-  m_sender->sendFileListRequest(m_remotePath.getString(),
+  m_sender->sendFileListRequest(m_remotePath,
                                 m_replyBuffer->isCompressionSupported());
   notifyStart();
 }
@@ -62,10 +62,10 @@ void RemoteFileListOperation::onLastRequestFailedReply(DataInputStream *input)
   // Logging
   ::string message;
 
-  message.format(_T("Error: failed to get file ::std::list in remote folder '%s'"),
-                 m_remotePath.getString());
+  message.formatf("Error: failed to get file ::list in remote folder '{}'",
+                 m_remotePath);
 
-  notifyError(message.getString());
+  notifyError(message);
 
   // Notity listeners that operation has finished
   notifyFinish();

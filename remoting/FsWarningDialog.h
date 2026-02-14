@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _FS_WARNING_DIALOG_H_
-#define _FS_WARNING_DIALOG_H_
+#pragma once
+
 
 #include "gui/BaseDialog.h"
 #include "gui/CheckBox.h"
@@ -42,4 +42,4 @@ protected:
   CheckBox m_fsWarning;
 };
 
-#endif
+

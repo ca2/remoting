@@ -49,7 +49,7 @@ HICON ResourceLoader::loadIcon(const ::scoped_string & scopedstriconName)
 bool ResourceLoader::loadString(UINT id, ::string & string)
 {
   _ASSERT(string != 0);
-  string->setString(_T("(Undef)"));
+  string-= "(Undef)";
 
   //
   // Format of string table:
@@ -77,7 +77,7 @@ bool ResourceLoader::loadString(UINT id, ::string & string)
 
     unsigned short strLen = static_cast<unsigned short>(lpStr[0]);
 
-    ::std::vector<WCHAR> strBuff;
+    ::array_base<WCHAR> strBuff;
     strBuff.resize(strLen + 1);
     memcpy(&strBuff.front(), lpStr + 1, strLen * sizeof(WCHAR));
     strBuff[strLen] = L'\0';
@@ -86,7 +86,7 @@ bool ResourceLoader::loadString(UINT id, ::string & string)
     FreeResource(hGlobal);
 
     UnicodeStringStorage unicodeString;
-    unicodeString.setString(&strBuff.front());
+    unicodeString= &strBuff.front();
     unicodeString.toStringStorage(string);
   }
   return true;

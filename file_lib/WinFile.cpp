@@ -23,22 +23,24 @@
 //
 #include "framework.h"
 #include "WinFile.h"
+#include "acme/operating_system/windows_common/_string.h"
 #include "win_system/SystemException.h"
 #include "win_system/Environment.h"
 #include "EOFException.h"
+
 
 WinFile::WinFile()
 : m_hFile(INVALID_HANDLE_VALUE)
 {
 }
 
-WinFile::WinFile(const ::scoped_string & scopedstrpathToFile,
+WinFile::WinFile(const ::file::path & path,
                  DesiredAccess dAcc,
                  FileMode fMode,
                  bool shareToRead)
 : m_hFile(INVALID_HANDLE_VALUE)
 {
-  open(pathToFile, dAcc, fMode, shareToRead);
+  open(path, dAcc, fMode, shareToRead);
 }
 
 WinFile::~WinFile()
@@ -46,12 +48,12 @@ WinFile::~WinFile()
   close();
 }
 
-void WinFile::open(const ::scoped_string & scopedstrpathToFile,
+void WinFile::open(const ::file::path & path,
                    DesiredAccess dAcc,
                    FileMode fMode,
                    bool shareToRead)
 {
-  m_pathToFile.setString(pathToFile);
+  m_path= path;
 
   DWORD desiredAccess = 0;
   switch (dAcc) {
@@ -98,7 +100,7 @@ void WinFile::open(const ::scoped_string & scopedstrpathToFile,
     shareMode |= FILE_SHARE_READ;
   }
 
-  m_hFile = CreateFile(m_pathToFile.getString(),
+  m_hFile = CreateFile(m_path.windows_path(),
                        desiredAccess,
                        shareMode,
                        0,
@@ -133,9 +135,9 @@ bool WinFile::isValid()
   return m_hFile != INVALID_HANDLE_VALUE;
 }
 
-void WinFile::getPathName(::string & pathName)
+::file::path WinFile::getPathName()
 {
-  *pathName = m_pathToFile;
+  return m_path;
 }
 
 void WinFile::seek(long long n)
@@ -143,21 +145,21 @@ void WinFile::seek(long long n)
   LARGE_INTEGER fileSize;
   GetFileSizeEx(m_hFile, &fileSize);
   if (fileSize.QuadPart < n) {
-    throw Exception(_T("Specified file pointer position is more than file length"));
+    throw ::remoting::Exception("Specified file pointer position is more than file length");
   }
 
   LARGE_INTEGER li;
   li.QuadPart = n;
   li.LowPart = SetFilePointer(m_hFile, li.LowPart, &li.HighPart, FILE_CURRENT);
   if (li.LowPart == INVALID_SET_FILE_POINTER && GetLastError() != NO_ERROR) {
-    throw SystemException(_T("Cannot set file pointer to specified position"));
+    throw SystemException("Cannot set file pointer to specified position");
   }
 }
 
 void WinFile::flush()
 {
   if (!FlushFileBuffers(m_hFile)) {
-    throw SystemException(_T("Cannot flush file"));
+    throw SystemException("Cannot flush file");
   }
 }
 
@@ -166,17 +168,16 @@ size_t WinFile::read(void *buff, size_t count)
   DWORD count32 = (DWORD)count;
   _ASSERT(count == count32);
   if (count != count32) {
-    throw IOException(_T("Requested size to read is too big"));
+    throw ::io_exception(error_io, "Requested size to read is too big");
   }
   DWORD result = 0;
   if (ReadFile(m_hFile, buff, count32, &result, 0) == 0) {
-    DWORD error = GetLastError();
-    if (error == ERROR_HANDLE_EOF) {
+    DWORD dwLastError = ::windows::last_error();
+    if (dwLastError == ERROR_HANDLE_EOF) {
       throw EOFException();
     } else {
-      ::string errText;
-      Environment::getErrStr(&errText);
-      throw IOException(errText.getString());
+       ::string errText = ::windows::last_error_message(dwLastError);
+      throw ::io_exception(error_io, errText);
     }
   }
   if (result == 0) {
@@ -191,13 +192,13 @@ size_t WinFile::write(const void *buff, size_t count)
   DWORD count32 = (DWORD)count;
   _ASSERT(count == count32);
   if (count != count32) {
-    throw IOException(_T("Requested size to write is too big"));
+    throw ::io_exception(error_io, "Requested size to write is too big");
   }
   DWORD result = 0;
   if (WriteFile(m_hFile, buff, count32, &result, 0) == 0) {
-    ::string errText;
-    Environment::getErrStr(&errText);
-    throw IOException(errText.getString());
+    ::string errText = ::windows::last_error_message(::windows::last_error());
+    ;//Environment::getErrStr(&errText);
+    throw ::io_exception(error_io, errText);
   }
   return result;
 }

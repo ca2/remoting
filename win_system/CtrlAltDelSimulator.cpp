@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "CtrlAltDelSimulator.h"
 #include "thread/DesktopSelector.h"
 
@@ -39,8 +40,8 @@ CtrlAltDelSimulator::~CtrlAltDelSimulator()
 void CtrlAltDelSimulator::execute()
 {
   // Switch thread desktop to "Winlogon".
-  if (DesktopSelector::selectDesktop(::string(_T("Winlogon")))) {
-    HWND hwndCtrlAltDel = FindWindow(_T("SAS window class"), _T("SAS window"));
+  if (DesktopSelector::selectDesktop(::string("Winlogon"))) {
+    HWND hwndCtrlAltDel = FindWindow("SAS window class"), _T("SAS window");
     if (hwndCtrlAltDel == NULL) {
       hwndCtrlAltDel = HWND_BROADCAST;
     }

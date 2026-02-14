@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINAUTOMAPDXGISURFACE_H__
-#define __WINAUTOMAPDXGISURFACE_H__
+#pragma once
+
 
 
 
@@ -48,4 +48,4 @@ private:
   DXGI_MAPPED_RECT m_mappedRect;
 };
 
-#endif // __WINAUTOMAPDXGISURFACE_H__
+//// __WINAUTOMAPDXGISURFACE_H__

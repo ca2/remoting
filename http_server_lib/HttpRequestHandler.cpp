@@ -35,7 +35,7 @@
 HttpRequestHandler::HttpRequestHandler(DataInputStream *dataInput,
                                        DataOutputStream *dataOutput,
                                        LogWriter *log,
-                                       const ::scoped_string & scopedstrpeerHost)
+                                       const ::scoped_string & scopedstrPeerHost)
 : m_dataInput(dataInput), m_dataOutput(dataOutput),
   m_peerHost(peerHost),
   m_log(log)
@@ -58,14 +58,14 @@ void HttpRequestHandler::processRequest()
   ansiRequest.toStringStorage(&request);
 
   if (!httpRequest.parseHeader()) {
-    m_log->warning(_T("invalid http request from %s"), m_peerHost.getString());
+    m_log->warning("invalid http request from {}", m_peerHost);
     return ;
   }
 
   request.replaceChar(_T('\n'), _T(' '));
   request.replaceChar(_T('\t'), _T(' '));
 
-  m_log->message(_T("\"%s\" from %s"), request.getString(), m_peerHost.getString());
+  m_log->message("\"{}\" from {}", request, m_peerHost);
 
   HttpReply reply(m_dataOutput);
 
@@ -123,10 +123,10 @@ void HttpRequestHandler::processRequest()
       AnsiStringStorage computerNameANSI(&computerName);
 
       page.format(HttpStrings::HTTP_INDEX_PAGE_FORMAT,
-                  computerNameANSI.getString(),
+                  computerNameANSI,
                   Configurator::getInstance()->getServerConfig()->getRfbPort(),
-                  paramsString.getString());
-      m_dataOutput->writeFully(page.getString(), page.getLength());
+                  paramsString);
+      m_dataOutput->writeFully(page, page.getLength());
     } // if applet arguments is valid.
 
     pageFound = true;

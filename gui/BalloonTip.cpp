@@ -32,8 +32,8 @@ BalloonTip::BalloonTip(const ::scoped_string & scopedstrtext, const ::scoped_str
 
 BalloonTip::BalloonTip()
 {
-  setText(_T(""));
-  setTitle(_T(""));
+  setText("");
+  setTitle("");
 }
 
 BalloonTip::~BalloonTip()
@@ -42,27 +42,27 @@ BalloonTip::~BalloonTip()
 
 void BalloonTip::showTooltip(Control *control)
 {
-  MessageBox(control->get_hwnd(), m_text.getString(), m_title.getString(), MB_OK | MB_ICONWARNING);
+  MessageBox(control->get_hwnd(), m_text, m_title, MB_OK | MB_ICONWARNING);
 }
 
 void BalloonTip::setText(const ::scoped_string & scopedstrtext)
 {
-  m_text.setString(text);
+  m_text= text;
 }
 
 void BalloonTip::setTitle(const ::scoped_string & scopedstrtitle)
 {
-  m_title.setString(title);
+  m_title= title;
 }
 
 void BalloonTip::getText(::string & text) const
 {
-  text->setString(m_text.getString());
+  text-= m_text;
 }
 
 void BalloonTip::getTitle(::string & title) const
 {
-  title->setString(m_title.getString());
+  title-= m_title;
 }
 
 void BalloonTip::setIconType(int iconType)

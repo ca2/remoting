@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __CLIPBOARDLISTENER_H__
-#define __CLIPBOARDLISTENER_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -34,7 +34,7 @@ public:
   ~ClipboardListener();
 
   // Interface function
-  virtual void onClipboardUpdate(const ::string & newClipboard) = 0;
+  virtual void onClipboardUpdate(const ::scoped_string & newClipboard) = 0;
 };
 
-#endif // __CLIPBOARDLISTENER_H__
+//// __CLIPBOARDLISTENER_H__

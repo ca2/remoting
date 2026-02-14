@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "NamedPipe.h"
 #include "util/Exception.h"
 #include <crtdbg.h>
@@ -52,8 +53,8 @@ void NamedPipe::close()
     if (DisconnectNamedPipe(m_hPipe) == 0) {
       DWORD errCode = GetLastError();
       ::string errMess;
-      errMess.format(_T("DisconnectNamedPipe failed, error code = %u"), errCode);
-      throw Exception(errMess.getString());
+      errMess.formatf("DisconnectNamedPipe failed, error code = %u", errCode);
+      throw ::remoting::Exception(errMess);
     }
   }
 
@@ -84,6 +85,6 @@ HANDLE NamedPipe::getHandle() const
 void NamedPipe::checkPipeHandle()
 {
   if (m_hPipe == INVALID_HANDLE_VALUE) {
-    throw IOException(_T("Invalid pipe handle"));
+    throw ::io_exception(error_io, "Invalid pipe handle"));
   }
 }

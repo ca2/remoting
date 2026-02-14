@@ -35,7 +35,7 @@ FileTransferMessageProcessor::~FileTransferMessageProcessor()
 
 void FileTransferMessageProcessor::processRfbMessage(DataInputStream *input,
                                                      unsigned int rfbMessage)
-     throw (IOException, ZLibException,
+     throw (::io_exception, ZLibException,
             OperationNotSupportedException,
             OperationNotPermittedException)
 {

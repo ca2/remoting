@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __FRAMEBUFFER_H__
-#define __FRAMEBUFFER_H__
+#pragma once
+
 
 //
 #include "rfb/PixelFormat.h"
@@ -149,4 +149,4 @@ protected:
 };
 
 
-#endif // __FRAMEBUFFER_H__
+//// __FRAMEBUFFER_H__

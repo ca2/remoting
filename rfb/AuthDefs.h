@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RFB_AUTH_DEFS_H_INCLUDED__
-#define __RFB_AUTH_DEFS_H_INCLUDED__
+#pragma onceINCLUDED__
+INCLUDED__
 
 #include "util/inttypes.h"
 
@@ -49,9 +49,9 @@ public:
   static const char *const SIG_EXTERNAL;
 
   // Return TightVNC authentication method corresponding to a VNC-style
-  // security type. Returns 0 if the specified security type does not ::std::map
+  // security type. Returns 0 if the specified security type does not ::map
   // to any valid authentication type supported in TightVNC.
   static unsigned int convertFromSecurityType(unsigned int securityType);
 };
 
-#endif // __RFB_AUTH_DEFS_H_INCLUDED__
+//// __RFB_AUTH_DEFS_H_INCLUDED__

@@ -40,9 +40,9 @@ WallpaperUtil::~WallpaperUtil()
   if (m_wasDisabled) {
     try {
       restoreWallpaper();
-      m_log->info(_T("Wallpaper was successfully restored"));
+      m_log->information("Wallpaper was successfully restored");
     }
-    catch (Exception &e) {
+    catch (::remoting::Exception &e) {
       m_log->error(e.getMessage());
     }
   }
@@ -60,15 +60,15 @@ void WallpaperUtil::updateWallpaper()
     if (srvConf->isRemovingDesktopWallpaperEnabled()) {
       disableWallpaper();
       m_wasDisabled = true;
-      m_log->info(_T("Wallpaper was successfully disabled"));
+      m_log->information("Wallpaper was successfully disabled");
     } else {
       if (m_wasDisabled) {
         restoreWallpaper();
-        m_log->info(_T("Wallpaper was successfully restored"));
+        m_log->information("Wallpaper was successfully restored");
         m_wasDisabled = false;
       }
     }
-  } catch (Exception &e) {
+  } catch (::remoting::Exception &e) {
     m_log->error(e.getMessage());
   }
 }
@@ -76,7 +76,7 @@ void WallpaperUtil::updateWallpaper()
 void WallpaperUtil::restoreWallpaper()
 {
   // FIXME: Remove log from here. Log only from caller.
-  m_log->info(_T("Try to restore wallpaper"));
+  m_log->information("Try to restore wallpaper");
   Impersonator imp(m_log);
   AutoImpersonator ai(&imp, m_log);
   int result;
@@ -85,27 +85,27 @@ void WallpaperUtil::restoreWallpaper()
     result = SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, 0, 0);
   }
   else {
-    result = SystemParametersInfo(SPI_SETDESKWALLPAPER, m_wallparerPath.getSize(), (void *)m_wallparerPath.getString(), 0);
+    result = SystemParametersInfo(SPI_SETDESKWALLPAPER, m_wallparerPath.getSize(), (void *)m_wallparerPath, 0);
   }
 
   if (result == 0) {
-    throw SystemException(_T("Cannot restore desktop wallpaper"));
+    throw SystemException("Cannot restore desktop wallpaper");
   }
 }
 
 void WallpaperUtil::disableWallpaper()
 {
-  m_log->info(_T("Try to disable wallpaper"));
+  m_log->information("Try to disable wallpaper");
   Impersonator imp(m_log);
   AutoImpersonator ai(&imp, m_log);
-  TCHAR path[MAX_PATH] = _T("");
+  TCHAR path[MAX_PATH] = "";
 
   if (SystemParametersInfo(SPI_GETDESKWALLPAPER, MAX_PATH, path, 0) == 0) {
     path[0] = '\0';
   }
 
-  if (SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, _T(""), 0) == 0) {
-    throw SystemException(_T("Cannot disable desktop wallpaper"));
+  if (SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, "", 0) == 0) {
+    throw SystemException("Cannot disable desktop wallpaper");
   }
   m_wallparerPath = ::string(path);
 }

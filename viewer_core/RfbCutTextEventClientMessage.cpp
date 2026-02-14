@@ -28,7 +28,7 @@
 
 #include "RfbCutTextEventClientMessage.h"
 
-RfbCutTextEventClientMessage::RfbCutTextEventClientMessage(const ::string & cutText)
+RfbCutTextEventClientMessage::RfbCutTextEventClientMessage(const ::scoped_string & cutText)
 : m_cutText(cutText)
 {
 }
@@ -49,7 +49,7 @@ void RfbCutTextEventClientMessage::send(RfbOutputGate *output)
   output->writeUInt8(0);
   output->writeUInt8(0);
   output->writeUInt32(length);
-  output->writeFully(cutTextAnsi.getString(), length);
+  output->writeFully(cutTextAnsi, length);
   output->flush();
 }
 
@@ -62,6 +62,6 @@ void RfbCutTextEventClientMessage::sendUtf8(RfbOutputGate *output)
   AutoLock al(output);
   output->writeUInt32(ClientMsgDefs::CLIENT_CUT_TEXT_UTF8);
   output->writeUInt32(length);
-  output->writeFully(cutTextUtf.getString(), length);
+  output->writeFully(cutTextUtf, length);
   output->flush();
 }

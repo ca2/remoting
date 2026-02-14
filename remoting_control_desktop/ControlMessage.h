@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CONTROL_MESSAGE_H_
-#define _CONTROL_MESSAGE_H_
+#pragma once
+
 
 #include "io_lib/DataOutputStream.h"
 #include "io_lib/ByteArrayOutputStream.h"
@@ -67,7 +67,7 @@ public:
    * *password parameter is presented.
    */
   ControlMessage(unsigned int messageId, ControlGate *gate,
-                 const ::scoped_string & scopedstrpasswordFile = 0,
+                 const ::scoped_string & scopedstrPasswordFile = 0,
                  bool getPassFromConfigEnabled = false,
                  bool forService = false);
   /**
@@ -77,20 +77,20 @@ public:
 
   /**
    * Sends control message and checks server answer (exceptions).
-   * @throws IOException on io error, RemoteException on auth or server error.
+   * @throws ::io_exception on io error, RemoteException on auth or server error.
    */
   virtual void send();
 
 private:
   /**
    * Writes control message to control gate.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    */
   void sendData();
 
   /**
    * Checks control message ret code.
-   * @throws IOException on io error, RemoteException if there error during executing remote command (method).
+   * @throws ::io_exception on io error, RemoteException if there error during executing remote command (method).
    */
   void checkRetCode();
 
@@ -119,4 +119,4 @@ private:
   bool m_forService;
 };
 
-#endif
+

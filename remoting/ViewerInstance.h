@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __VIEWER_INSTANCE_H__
-#define __VIEWER_INSTANCE_H__
+#pragma once
+
 
 #include "ViewerWindow.h"
 #include "network/socket/SocketIPv4.h"
@@ -66,4 +66,4 @@ protected:
   SocketIPv4 *m_socket;
 };
 
-#endif
+

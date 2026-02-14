@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _UI_DATA_ACCESS_H_
-#define _UI_DATA_ACCESS_H_
+#pragma once
+
 
 #include "gui/TextBox.h"
 
@@ -55,4 +55,4 @@ private:
   UIDataAccess();
 };
 
-#endif
+

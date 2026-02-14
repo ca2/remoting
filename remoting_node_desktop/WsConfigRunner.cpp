@@ -52,15 +52,15 @@ void WsConfigRunner::execute()
     pathToBin.quoteSelf();
     // Prepare arguments.
     ::string args;
-    args.format(_T("%s %s"),
+    args.formatf("{} {}",
       m_serviceMode ? ControlCommandLine::CONTROL_SERVICE :
                       ControlCommandLine::CONTROL_APPLICATION,
       ControlCommandLine::SLAVE_MODE);
     // Start process.
-    process = new Process(pathToBin.getString(), args.getString());
+    process = new Process(pathToBin, args);
     process->start();
-  } catch (Exception &e) {
-    m_log.error(_T("Cannot start the WsControl process (%s)"), e.getMessage());
+  } catch (::remoting::Exception &e) {
+    m_log.error("Cannot start the WsControl process ({})", e.getMessage());
   }
 
   if (process != 0) {

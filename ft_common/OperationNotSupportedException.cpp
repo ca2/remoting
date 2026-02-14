@@ -25,7 +25,7 @@
 #include "OperationNotSupportedException.h"
 
 OperationNotSupportedException::OperationNotSupportedException()
-: Exception(_T("Operation not supported"))
+: Exception("Operation not supported")
 {
 }
 

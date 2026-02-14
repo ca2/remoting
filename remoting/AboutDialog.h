@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _ABOUT_DIALOG_H_
-#define _ABOUT_DIALOG_H_
+#pragma once
+
 
 #include "gui/BaseDialog.h"
 
@@ -83,4 +83,4 @@ protected:
   virtual BOOL onDestroy();
 };
 
-#endif
+

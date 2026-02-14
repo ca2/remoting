@@ -72,22 +72,22 @@ void Inflater::inflate()
   int r = ::inflate(&m_zlibStream, Z_SYNC_FLUSH);
 
   if (r == Z_STREAM_END) {
-    throw ZLibException(_T("ZLib stream end"));
+    throw ZLibException("ZLib stream end");
   }
   if (r == Z_NEED_DICT) {
-    throw ZLibException(_T("ZLib need dictionary"));
+    throw ZLibException("ZLib need dictionary");
   }
   if (r == Z_STREAM_ERROR) {
-    throw ZLibException(_T("ZLib stream error"));
+    throw ZLibException("ZLib stream error");
   }
   if (r == Z_MEM_ERROR) {
-    throw ZLibException(_T("ZLib memory error"));
+    throw ZLibException("ZLib memory error");
   }
   if (r == Z_DATA_ERROR) {
-    throw ZLibException(_T("Zlib data error"));
+    throw ZLibException("Zlib data error");
   }
   if (m_zlibStream.avail_in != 0) {
-    throw ZLibException(_T("Not enough buffer size for data decompression"));
+    throw ZLibException("Not enough buffer size for data decompression");
   }
 
   m_outputSize = m_zlibStream.total_out - prevTotalOut;

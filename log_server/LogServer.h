@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __LOGSERVER_H__
-#define __LOGSERVER_H__
+#pragma once
+
 
 #include "ListenLogServer.h"
 #include "LogConn.h"
@@ -32,25 +32,25 @@
 #include "LogConnAuthListener.h"
 #include "thread/ThreadCollector.h"
 #include "LogListener.h"
-#include <list>
-#include <map>
+//#include <list>
+//#include <map>
 
-typedef ::std::list<LogConn *> ConnList;
-typedef ::std::list<LogConn *>::iterator ConnListIter;
-typedef ::std::map<FileAccountHandle, FileAccount *> FileAccountList;
-typedef ::std::map<FileAccountHandle, FileAccount *>::iterator FAccountListIter;
+typedef ::list<LogConn *> ConnList;
+typedef ::list<LogConn *>::iterator ConnListIter;
+typedef ::map<FileAccountHandle, FileAccount *> FileAccountList;
+typedef ::map<FileAccountHandle, FileAccount *>::iterator FAccountListIter;
 
 class LogServer : private ConnectionListener, private LogConnAuthListener,
                   private LogListener, private Singleton<LogServer>
 {
 public:
-  LogServer(const ::scoped_string & scopedstrpublicPipeName);
+  LogServer(const ::scoped_string & scopedstrPublicPipeName);
   virtual ~LogServer();
 
   // The start() function allows to server accept connections. The function
   // was separated from the constructor to allow initialize the configuration
   // before.
-  // @throw Exception on an error.
+  // @throw ::remoting::Exception on an error.
   void start(const ::scoped_string & scopedstrlogDir,
              unsigned char logLevel, size_t headerLineCount);
 
@@ -59,17 +59,17 @@ public:
 private:
   virtual void onNewConnection(Channel *channel);
   virtual FileAccountHandle  onLogConnAuth(LogConn *logConn, bool success,
-                                           const ::scoped_string & scopedstrfileName);
+                                           const ::scoped_string & scopedstrFileName);
   virtual void onDisconnect(LogConn *logConn);
   virtual void onLog(FileAccountHandle handle,
                      unsigned int processId,
                      unsigned int threadId,
                      const DateTime & dt,
                      int level,
-                     const ::scoped_string & scopedstrmessage);
-  virtual void onAnErrorFromLogConn(const ::scoped_string & scopedstrmessage);
+                     const ::scoped_string & scopedstrMessage);
+  virtual void onAnErrorFromLogConn(const ::scoped_string & scopedstrMessage);
 
-  FileAccountHandle addConnection(const ::scoped_string & scopedstrfileName);
+  FileAccountHandle addConnection(const ::scoped_string & scopedstrFileName);
 
   // Stores all printed lines as a log header and stops it accumulation.
   void storeHeader();
@@ -91,4 +91,4 @@ private:
   size_t m_totalLogLines;
 };
 
-#endif // __LOGSERVER_H__
+//// __LOGSERVER_H__

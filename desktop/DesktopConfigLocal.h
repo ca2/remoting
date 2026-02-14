@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __DESKTOPCONFIGLOCAL_H__
-#define __DESKTOPCONFIGLOCAL_H__
+#pragma once
+
 
 #include "InputBlocker.h"
 #include "log_writer/LogWriter.h"
@@ -44,4 +44,4 @@ private:
   InputBlocker *m_inputBlocker;
 };
 
-#endif // __DESKTOPCONFIGLOCAL_H__
+//// __DESKTOPCONFIGLOCAL_H__

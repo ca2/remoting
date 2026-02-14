@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __VIEWPORT_H__
-#define __VIEWPORT_H__
+#pragma once
+
 
 #include "ViewPortState.h"
 #include "rfb/FrameBuffer.h"
@@ -96,4 +96,4 @@ private:
   LogWriter *m_log;
 };
 
-#endif // __VIEWPORT_H__
+//// __VIEWPORT_H__

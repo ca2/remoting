@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RFB_HOST_PATH_H_INCLUDED__
-#define __RFB_HOST_PATH_H_INCLUDED__
+#pragma onceINCLUDED__
+INCLUDED__
 
 // FIXME: Convert to TCHAR.
 
@@ -90,4 +90,4 @@ private:
   int m_defaultPort;
 };
 
-#endif // __RFB_HOST_PATH_H_INCLUDED__
+//// __RFB_HOST_PATH_H_INCLUDED__

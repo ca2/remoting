@@ -133,7 +133,7 @@ void HttpRequest::readLine(char endLnChar, char *buffer, size_t maxSize)
   while (readTotal < maxSize) {
     try {
       m_dataInput->readFully(&c, 1);
-    } catch (IOException &ioEx) {
+    } catch (::io_exception &ioEx) {
       throw ioEx;
     } // try / catch.
 

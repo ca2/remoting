@@ -173,7 +173,7 @@ int Menu::findMenuItem(UINT uID)
 
 bool Menu::appendMenu(::string strVal, UINT uID)
 {
-  return appendMenu(MF_STRING, uID, strVal.getString());
+  return appendMenu(MF_STRING, uID, strVal);
 }
 
 bool Menu::appendSeparator()
@@ -183,7 +183,7 @@ bool Menu::appendSeparator()
 
 bool Menu::appendSubMenu(::string strVal, Menu *pMenu)
 {
-  return appendMenu(MF_POPUP, (UINT_PTR)pMenu->getMenu(), strVal.getString());
+  return appendMenu(MF_POPUP, (UINT_PTR)pMenu->getMenu(), strVal);
 }
 
 bool Menu::insertMenuItem(UINT uItem, ::string strVal, UINT uID)
@@ -193,7 +193,7 @@ bool Menu::insertMenuItem(UINT uItem, ::string strVal, UINT uID)
   ZeroMemory(&mii, sizeof(MENUITEMINFO));
   mii.cbSize = sizeof(MENUITEMINFO);
   mii.fMask = MIIM_STRING | MIIM_ID;
-  mii.dwTypeData = (LPTSTR)strVal.getString();
+  mii.dwTypeData = (LPTSTR)strVal;
   mii.fState = MFS_DEFAULT; 
   mii.wID = uID;
   return insertMenuItem(uItem, TRUE, (LPMENUITEMINFO)&mii);
@@ -206,7 +206,7 @@ bool Menu::insertCheckMenuItem(UINT uItem, ::string strVal, UINT uID)
   ZeroMemory(&mii, sizeof(MENUITEMINFO));
   mii.cbSize = sizeof(MENUITEMINFO);
   mii.fMask = MIIM_STRING | MIIM_ID | MIIM_STATE;
-  mii.dwTypeData = (LPTSTR)strVal.getString();
+  mii.dwTypeData = (LPTSTR)strVal;
   mii.fState = MFS_UNCHECKED; 
   mii.wID = uID;
   return insertMenuItem(uItem, TRUE, (LPMENUITEMINFO)&mii);

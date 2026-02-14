@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _FILE_TRANSFER_EVENT_HANDLER_H_
-#define _FILE_TRANSFER_EVENT_HANDLER_H_
+#pragma once
+
 
 //
 // Abstract class with abstract methods that must be
@@ -61,4 +61,4 @@ public:
   virtual void onLastRequestFailedReply(DataInputStream *input) = 0;
 };
 
-#endif
+

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __CONSOLEPOLLER_H__
-#define __CONSOLEPOLLER_H__
+#pragma once
+
 
 #include "UpdateDetector.h"
 #include "ScreenGrabber.h"
@@ -57,4 +57,4 @@ private:
   LogWriter *m_log;
 };
 
-#endif // __CONSOLEPOLLER_H__
+//// __CONSOLEPOLLER_H__

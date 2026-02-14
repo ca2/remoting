@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _RFB_POINTER_EVENT_CLIENT_MESSAGE_H_
-#define _RFB_POINTER_EVENT_CLIENT_MESSAGE_H_
+#pragma once
+
 
 #include "region/Point.h"
 
@@ -43,4 +43,4 @@ private:
   unsigned short m_yPos;
 };
 
-#endif
+

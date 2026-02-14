@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __SESSIONCHANGESWATCHER_H__
-#define __SESSIONCHANGESWATCHER_H__
+#pragma once
+
 
 #include "thread/GuiThread.h"
 #include "util/AnEventListener.h"
@@ -44,4 +44,4 @@ protected:
   LogWriter *m_log;
 };
 
-#endif // __SESSIONCHANGESWATCHER_H__
+//// __SESSIONCHANGESWATCHER_H__

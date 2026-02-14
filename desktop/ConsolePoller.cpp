@@ -53,7 +53,7 @@ void ConsolePoller::onTerminate()
 
 void ConsolePoller::execute()
 {
-  m_log->info(_T("console poller thread id = %d"), getThreadId());
+  m_log->information("console poller thread id = {}", getThreadId());
 
   ::int_rectangle scanRect;
   Region region;
@@ -99,12 +99,12 @@ void ConsolePoller::execute()
   ::int_rectangle rect;
   HWND hwnd = GetForegroundWindow();
 
-  const TCHAR consoleClassName[] = _T("ConsoleWindowClass");
+  const TCHAR consoleClassName[] = "ConsoleWindowClass";
 
   const size_t nameLength = sizeof(consoleClassName) / sizeof(TCHAR) + 1;
   TCHAR className[nameLength];
   GetClassName(hwnd, className, nameLength);
-  if (_tcscmp(consoleClassName, className) == 0) {
+  if (wcscmp(consoleClassName, className) == 0) {
     RECT winRect;
     GetWindowRect(hwnd, &winRect);
     rect.fromWindowsRect(&winRect);

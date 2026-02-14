@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINDXGIACQUIREDFRAME_H__
-#define __WINDXGIACQUIREDFRAME_H__
+#pragma once
+
 
 #include "WinDxgiOutputDuplication.h"
 
@@ -49,4 +49,4 @@ private:
   bool m_wasTimeOut;
 };
 
-#endif // __WINDXGIACQUIREDFRAME_H__
+//// __WINDXGIACQUIREDFRAME_H__

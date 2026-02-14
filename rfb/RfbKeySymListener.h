@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RFBKEYSYMLISTENER_H__
-#define __RFBKEYSYMLISTENER_H__
+#pragma once
+
 
 class RfbKeySymListener
 {
@@ -31,4 +31,4 @@ public:
   virtual void onRfbKeySymEvent(unsigned int rfbKeySym, bool down) = 0;
 };
 
-#endif // __RFBKEYSYMLISTENER_H__
+//// __RFBKEYSYMLISTENER_H__

@@ -22,19 +22,19 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _ZOMBIE_KILLER_H_
-#define _ZOMBIE_KILLER_H_
+#pragma once
+
 
 #include "Thread.h"
 #include "LocalMutex.h"
 
 #include "util/Singleton.h"
 
-#include <list>
+//#include <list>
 
 
 
-typedef ::std::list<Thread *> ThreadList;
+typedef ::list<Thread *> ThreadList;
 
 /**
  * Collector of "zombie" threads.
@@ -55,13 +55,13 @@ public:
   virtual ~ZombieKiller();
 
   /**
-   * Adds thread to zombie ::std::list.
+   * Adds thread to zombie ::list.
    */
   void addZombie(Thread *zombie);
 
   /**
    * Forces terminates all threads, waits until they dies and than
-   * delete them from memory and thread ::std::list.
+   * delete them from memory and thread ::list.
    */
   void killAllZombies();
 
@@ -72,13 +72,13 @@ protected:
   virtual void execute();
 
   /**
-   * Deletes all dead zombie threads from memory and removes them from zombies ::std::list.
+   * Deletes all dead zombie threads from memory and removes them from zombies ::list.
    */
   void deleteDeadZombies();
 
 protected:
   /**
-   * Thread ::std::vector.
+   * Thread ::array_base.
    */
   ThreadList m_zombies;
 
@@ -88,4 +88,4 @@ protected:
   LocalMutex m_lockObj;
 };
 
-#endif
+

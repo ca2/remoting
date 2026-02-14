@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _RFB_OUTPUT_GATE_H_
-#define _RFB_OUTPUT_GATE_H_
+#pragma once
+
 
 #include "io_lib/DataOutputStream.h"
 #include "io_lib/BufferedOutputStream.h"
@@ -55,7 +55,7 @@ public:
 
   /**
    * Flushes inner buffer to real output stream.
-   * @throws IOException on error.
+   * @throws ::io_exception on error.
    */
   virtual void flush();
 
@@ -66,4 +66,4 @@ private:
   BufferedOutputStream *m_tunnel;
 };
 
-#endif
+

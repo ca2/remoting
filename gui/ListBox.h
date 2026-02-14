@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _LIST_BOX_H_
-#define _LIST_BOX_H_
+#pragma once
+
 
 #include "Control.h"
 //#include "util/::string.h"
@@ -34,13 +34,13 @@ public:
   ListBox();
   ~ListBox();
 public:
-  void addString(const ::scoped_string & scopedstrstr);
-  void addString(const ::scoped_string & scopedstrstr, void *tag);
+  void addString(const ::scoped_string & scopedstrStr);
+  void addString(const ::scoped_string & scopedstrStr, void *tag);
   void getItemText(int index, ::string & storage);
-  void setItemText(int index, const ::scoped_string & scopedstrstr);
-  void insertString(int index, const ::scoped_string & scopedstrstr);
-  void insertString(int index, const ::scoped_string & scopedstrstr, LPARAM data);
-  void appendString(const ::scoped_string & scopedstrstr, LPARAM data);
+  void setItemText(int index, const ::scoped_string & scopedstrStr);
+  void insertString(int index, const ::scoped_string & scopedstrStr);
+  void insertString(int index, const ::scoped_string & scopedstrStr, LPARAM data);
+  void appendString(const ::scoped_string & scopedstrStr, LPARAM data);
   void setItemData(int index, LPARAM data);
   void removeString(int index);
   int getSelectedIndex();
@@ -52,4 +52,4 @@ public:
   void clear();
 };
 
-#endif
+

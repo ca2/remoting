@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _MENU_H_
-#define _MENU_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include <crtdbg.h>
@@ -78,4 +78,4 @@ protected:
   bool m_bCreated;
 };
 
-#endif
+

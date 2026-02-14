@@ -32,7 +32,7 @@ public:
   ProcessHandle();
   virtual ~ProcessHandle();
 
-  // @throws Exception on an error.
+  // @throws ::remoting::Exception on an error.
   void openProcess(DWORD dwDesiredAccess,
                    BOOL bInheritHandle,
                    DWORD dwProcessId);
@@ -43,7 +43,7 @@ public:
   HANDLE getHandle() const;
 
   // Returns process module path. Call the openProcess() function before.
-  // @throws Exception on an error.
+  // @throws ::remoting::Exception on an error.
   void getProcessModulePath(::string & exePath);
 
 private:

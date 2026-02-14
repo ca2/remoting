@@ -73,7 +73,7 @@ RemoteViewerCore::RemoteViewerCore(Logger *logger)
   init();
 }
 
-RemoteViewerCore::RemoteViewerCore(const ::scoped_string & scopedstrhost, unsigned short port,
+RemoteViewerCore::RemoteViewerCore(const ::scoped_string & scopedstrHost, unsigned short port,
                                    CoreEventsAdapter *adapter,
                                    Logger *logger,
                                    bool sharedFlag)
@@ -155,12 +155,12 @@ void RemoteViewerCore::init()
   addClientMsgCapability(ClientMsgDefs::CLIENT_CUT_TEXT_UTF8,
     VendorDefs::TIGHTVNC,
     Utf8CutTextDefs::CLIENT_CUT_TEXT_UTF8_SIG, 
-    _T("UTF-8 clipboard"));
+    "UTF-8 clipboard");
 
   addClientMsgCapability(ClientMsgDefs::ENABLE_CUT_TEXT_UTF8,
     VendorDefs::TIGHTVNC,
     Utf8CutTextDefs::ENABLE_CUT_TEXT_UTF8_SIG,
-    _T("enable UTF-8 clipboard"));
+    "enable UTF-8 clipboard");
 }
 
 RemoteViewerCore::~RemoteViewerCore()
@@ -184,10 +184,10 @@ RemoteViewerCore::~RemoteViewerCore()
 void RemoteViewerCore::start(CoreEventsAdapter *adapter,
                              bool sharedFlag)
 {
-  m_logWriter.detail(_T("Starting remote viewer core..."));
+  m_logWriter.detail("Starting remote viewer core...");
 
   if (adapter == 0) {
-    throw Exception(_T("Remote viewer core is not started: adapter is 0"));
+    throw ::remoting::Exception("Remote viewer core is not started: adapter is 0");
   }
 
   // Set flag "wasStarted".
@@ -195,7 +195,7 @@ void RemoteViewerCore::start(CoreEventsAdapter *adapter,
   {
     AutoLock al(&m_startLock);
     if (m_wasStarted) {
-      throw Exception(_T("Remote viewer core is already started"));
+      throw ::remoting::Exception("Remote viewer core is already started");
     }
     m_wasStarted = true;
   }
@@ -207,10 +207,10 @@ void RemoteViewerCore::start(CoreEventsAdapter *adapter,
 
   // Start thread.
   resume();
-  m_logWriter.debug(_T("Remote viewer core is started"));
+  m_logWriter.debug("Remote viewer core is started");
 }
 
-void RemoteViewerCore::start(const ::scoped_string & scopedstrhost,
+void RemoteViewerCore::start(const ::scoped_string & scopedstrHost,
                              unsigned short port,
                              CoreEventsAdapter *adapter,
                              bool sharedFlag)
@@ -271,7 +271,7 @@ void RemoteViewerCore::waitTermination()
 
 void RemoteViewerCore::setPixelFormat(const PixelFormat & pixelFormat)
 {
-  m_logWriter.detail(_T("Pixel format will changed"));
+  m_logWriter.detail("Pixel format will changed");
   AutoLock al(&m_pixelFormatLock);
   m_isNewPixelFormat = true;
   m_viewerPixelFormat = pixelFormat;
@@ -291,7 +291,7 @@ void RemoteViewerCore::enableDispatching(DispatchDataProvider *src)
 bool RemoteViewerCore::updatePixelFormat()
 {
   PixelFormat pxFormat;
-  m_logWriter.debug(_T("Check pixel format change..."));
+  m_logWriter.debug("Check pixel format change...");
   {
     AutoLock al(&m_pixelFormatLock);
     if (!m_isNewPixelFormat)
@@ -302,7 +302,7 @@ bool RemoteViewerCore::updatePixelFormat()
 
   int bitsPerPixel = m_viewerPixelFormat.bitsPerPixel;
   if (bitsPerPixel != 8 && bitsPerPixel != 16 && bitsPerPixel != 32) {
-    throw Exception(_T("Only 8, 16 or 32 bits per pixel supported!"));
+    throw ::remoting::Exception("Only 8, 16 or 32 bits per pixel supported!");
   }
 
   {
@@ -324,7 +324,7 @@ bool RemoteViewerCore::updatePixelFormat()
 
 void RemoteViewerCore::refreshFrameBuffer()
 {
-  m_logWriter.detail(_T("Frame buffer will refreshed"));
+  m_logWriter.detail("Frame buffer will refreshed");
   AutoLock al(&m_refreshingLock);
   m_isRefreshing = true;
 }
@@ -375,16 +375,16 @@ void RemoteViewerCore::sendFbUpdateRequest(bool incremental)
 	}
 
 	if (isIncremental) {
-	  m_logWriter.debug(_T("Sending frame buffer incremental update request [%dx%d]..."),
+	  m_logWriter.debug("Sending frame buffer incremental update request [%dx{}]...",
 	                    updateRect.width(), updateRect.height());
 	} else {
-	  m_logWriter.debug(_T("Sending frame buffer full update request [%dx%d]..."),
+	  m_logWriter.debug("Sending frame buffer full update request [%dx{}]...",
 	                    updateRect.width(), updateRect.height());
   }
 
 	RfbFramebufferUpdateRequestClientMessage fbUpdReq(isIncremental, updateRect);
 	fbUpdReq.send(m_output);
-	m_logWriter.debug(_T("Frame buffer update request is sent"));
+	m_logWriter.debug("Frame buffer update request is sent");
   }
   else
   {
@@ -400,10 +400,10 @@ void RemoteViewerCore::sendKeyboardEvent(bool downFlag, unsigned int key)
     return;
   }
 
-  m_logWriter.detail(_T("Sending key event: %d, %d..."), downFlag, key);
+  m_logWriter.detail("Sending key event: {}, {}...", downFlag, key);
   RfbKeyEventClientMessage keyMessage(downFlag, key);
   keyMessage.send(m_output);
-  m_logWriter.debug(_T("Key event: %d, %d is sent"), downFlag, key);
+  m_logWriter.debug("Key event: {}, {} is sent", downFlag, key);
 }
 
 void RemoteViewerCore::sendPointerEvent(unsigned char buttonMask,
@@ -415,7 +415,7 @@ void RemoteViewerCore::sendPointerEvent(unsigned char buttonMask,
     return;
   }
 
-  m_logWriter.detail(_T("Sending pointer event 0x%X, (%d, %d)..."),
+  m_logWriter.detail("Sending pointer event 0x%X, ({}, {})...",
                      static_cast<int>(buttonMask), position->x, position->y);
   // send position to server
   RfbPointerEventClientMessage pointerMessage(buttonMask, position);
@@ -423,11 +423,11 @@ void RemoteViewerCore::sendPointerEvent(unsigned char buttonMask,
   // update position
   m_fbUpdateNotifier.updatePointerPos(position);
 
-  m_logWriter.debug(_T("Pointer event: 0x%X, (%d, %d) is sent"),
+  m_logWriter.debug("Pointer event: 0x%X, ({}, {}) is sent",
                     static_cast<int>(buttonMask), position->x, position->y);
 }
 
-void RemoteViewerCore::sendCutTextEvent(const ::string & cutText)
+void RemoteViewerCore::sendCutTextEvent(const ::scoped_string & cutText)
 {
   // If core isn't connected, then m_output may be isn't initialized.
   // Exit from function, if it is.
@@ -438,14 +438,14 @@ void RemoteViewerCore::sendCutTextEvent(const ::string & cutText)
 
   RfbCutTextEventClientMessage cutTextMessage(cutText);
   if (m_isUtf8ClipboardEnabled) {
-    m_logWriter.detail(_T("Sending UTF-8 clipboard cut text: \"%s\"..."), cutText.getString());
+    m_logWriter.detail("Sending UTF-8 clipboard cut text: \"{}\"...", cutText);
     cutTextMessage.sendUtf8(m_output);
   }
   else {
-    m_logWriter.detail(_T("Sending clipboard cut text: \"%s\"..."), cutText.getString());
+    m_logWriter.detail("Sending clipboard cut text: \"{}\"...", cutText);
     cutTextMessage.send(m_output);
   }
-  m_logWriter.debug(_T("Clipboard cut text: \"%s\" is sent"), cutText.getString());
+  m_logWriter.debug("Clipboard cut text: \"{}\" is sent", cutText);
 }
 
 void RemoteViewerCore::setPreferredEncoding(int encodingType)
@@ -464,13 +464,13 @@ void RemoteViewerCore::allowUtf8Clipboard()
 {
   m_isUtf8ClipboardEnabled = m_clientMsgCaps.isEnabled(ClientMsgDefs::CLIENT_CUT_TEXT_UTF8);
   if (m_isUtf8ClipboardEnabled) {
-    m_logWriter.debug(_T("Server supports Utf8 Clipboard recieving."));
+    m_logWriter.debug("Server supports Utf8 Clipboard recieving.");
   }
   else {
-    m_logWriter.debug(_T("Server does not support Utf8 Clipboard recieving, ClientCutTextUtf8 messages disabled."));
+    m_logWriter.debug("Server does not support Utf8 Clipboard recieving, ClientCutTextUtf8 messages disabled.");
   }
   if (m_clientMsgCaps.isEnabled(ClientMsgDefs::ENABLE_CUT_TEXT_UTF8)) {
-    m_logWriter.debug(_T("Sending EnableCutTextUtf8 message."));
+    m_logWriter.debug("Sending EnableCutTextUtf8 message.");
     AutoLock al(m_output);
     m_output->writeUInt32(ClientMsgDefs::ENABLE_CUT_TEXT_UTF8);
     m_output->flush();
@@ -547,7 +547,7 @@ void RemoteViewerCore::stopUpdating(bool isStopped)
     m_isFreeze = isStopped;
   }
   if (!isStopped) {
-    m_logWriter.detail(_T("Sending of frame buffer update request..."));
+    m_logWriter.detail("Sending of frame buffer update request...");
     sendFbUpdateRequest(!m_forceFullUpdate);
   }
 }
@@ -561,7 +561,7 @@ PixelFormat RemoteViewerCore::readPixelFormat()
   // now, supported only true color
   int trueColour = m_input->readUInt8();
   if (trueColour == false) {
-    m_logWriter.error(_T("Not supported palette. Flag \"True colour\" is not set."));
+    m_logWriter.error("Not supported palette. Flag \"True colour\" is not set.");
   }
   pixelFormat.redMax = m_input->readUInt16();
   pixelFormat.greenMax = m_input->readUInt16();
@@ -583,35 +583,35 @@ void RemoteViewerCore::connectToHost()
 
   m_updateRequestSender.setOutput(m_output);
 
-  m_logWriter.detail(_T("Connection is established"));
+  m_logWriter.detail("Connection is established");
   try {
     m_adapter->onEstablished();
-  } catch (const Exception &ex) {
-    m_logWriter.error(_T("Error in CoreEventsAdapter::onEstablished(): %s"), ex.getMessage());
+  } catch (const ::remoting::Exception &ex) {
+    m_logWriter.error("Error in CoreEventsAdapter::onEstablished(): {}", ex.getMessage());
   } catch (...) {
-    m_logWriter.error(_T("Unknown error in CoreEventsAdapter::onEstablished()"));
+    m_logWriter.error("Unknown error in CoreEventsAdapter::onEstablished()");
   }
 }
 
 void RemoteViewerCore::authenticate()
 {
-  m_logWriter.detail(_T("Negotiating security type..."));
+  m_logWriter.detail("Negotiating security type...");
   int authenticationType = negotiateSecurityType();
-  m_logWriter.info(_T("Authentication type accepted: %s (%d)"),
-                   getAuthenticationTypeName(authenticationType).getString(),
+  m_logWriter.info("Authentication type accepted: {} ({})",
+                   getAuthenticationTypeName(authenticationType),
                    authenticationType);
 
   if (authenticationType != 0) {
-    m_logWriter.detail(_T("Authentication..."));
+    m_logWriter.detail("Authentication...");
     if (m_authHandlers.find(authenticationType) != m_authHandlers.end()) {
       m_authHandlers[authenticationType]->authenticate(m_input, m_output);
     } else {
       // Security type is added automatic, but not by user.
       if (authenticationType != SecurityDefs::NONE) {
-        m_logWriter.error(_T("Isn't exist authentication handler for selected security type %d"),
+        m_logWriter.error("Isn't exist authentication handler for selected security type {}",
                           authenticationType);
-        throw AuthException(_T("Isn't exist authentication handler ")
-                            _T("for selected type of authentication"));
+        throw AuthException("Isn't exist authentication handler "
+                            "for selected type of authentication");
       }
     }
   }
@@ -621,22 +621,22 @@ void RemoteViewerCore::authenticate()
     unsigned int authResult = 0;
     if (authenticationType) {
       authResult = m_input->readUInt32();
-      m_logWriter.detail(_T("Auth result is %d"), authResult);
+      m_logWriter.detail("Auth result is {}", authResult);
     }
     static const unsigned int AUTH_RESULT_OK = 0;
     if (!authenticationType || authResult != AUTH_RESULT_OK) {
       // if version 3.3 or 3.7 then server connection closed
-      m_logWriter.message(_T("Authentication failure"));
+      m_logWriter.message("Authentication failure");
       if (m_minor < 8) {
-        throw AuthException(_T("Authentication failure"));
+        throw AuthException("Authentication failure");
       }
       // if version 3.8 then try read reasonAuth.
       ::string reasonAuth;
       m_input->readUTF8(&reasonAuth);
-      ::string errorMessage = _T("Authentication reason: ");
-      errorMessage.appendString(reasonAuth.getString());
-      m_logWriter.message(_T("%s"), errorMessage.getString());
-      throw AuthException(errorMessage.getString());
+      ::string errorMessage = "Authentication reason: ";
+      errorMessage.appendString(reasonAuth);
+      m_logWriter.message("{}", errorMessage);
+      throw AuthException(errorMessage);
     }
   }
 }
@@ -648,34 +648,34 @@ void RemoteViewerCore::enableTightSecurityType(bool enabled)
 
 int RemoteViewerCore::negotiateSecurityType()
 {
-  m_logWriter.detail(_T("Reading ::std::list of security types..."));
-  // read ::std::list of security types
-  ::std::vector<unsigned int> secTypes;
+  m_logWriter.detail("Reading ::list of security types...");
+  // read ::list of security types
+  ::array_base<unsigned int> secTypes;
   readSecurityTypeList(&secTypes);
-  m_logWriter.debug(_T("List of security type is read"));
+  m_logWriter.debug("List of security type is read");
   if (secTypes.size() == 0) {
-    m_logWriter.warning(_T("Error in negotiate about of security: only security type is 0"));
+    m_logWriter.warning("Error in negotiate about of security: only security type is 0");
     return 0;
   }
 
-  // log information about security ::std::list
+  // log information about security ::list
   ::string secTypeString;
-  for (::std::vector<unsigned int>::iterator i = secTypes.begin(); i != secTypes.end(); i++) {
+  for (::array_base<unsigned int>::iterator i = secTypes.begin(); i != secTypes.end(); i++) {
     if(i != secTypes.begin())
-      secTypeString.appendString(_T(", "));
+      secTypeString.appendString(", ");
     ::string nameType;
-    nameType.format(_T("%s (%d)"), getSecurityTypeName(*i).getString(), *i);
-    secTypeString.appendString(nameType.getString());
+    nameType.formatf("{} ({})", getSecurityTypeName(*i), *i);
+    secTypeString.appendString(nameType);
   }
-  m_logWriter.detail(_T("Security Types received (%d): %s"),
-                   secTypes.size(), secTypeString.getString()); 
+  m_logWriter.detail("Security Types received ({}): {}",
+                   secTypes.size(), secTypeString); 
 
   // select type security
-  m_logWriter.debug(_T("Selecting auth-handler"));
+  m_logWriter.debug("Selecting auth-handler");
   int typeSelected = selectSecurityType(&secTypes, &m_authHandlers, m_isTightEnabled);
-  m_logWriter.info(_T("Security type is selected: %d"), typeSelected);
+  m_logWriter.info("Security type is selected: {}", typeSelected);
   if (typeSelected == SecurityDefs::TIGHT) {
-    m_logWriter.info(_T("Tight capabilities is enable"));
+    m_logWriter.info("Tight capabilities is enable");
     m_isTight = true;
 
     m_output->writeUInt8(typeSelected);
@@ -693,17 +693,17 @@ int RemoteViewerCore::negotiateSecurityType()
   return typeSelected;
 }
 
-void RemoteViewerCore::readSecurityTypeList(::std::vector<unsigned int> *secTypes)
+void RemoteViewerCore::readSecurityTypeList(::array_base<unsigned int> *secTypes)
 {
   if (m_minor < 7) {
     unsigned int type = m_input->readUInt32();
     if (type != 0)
-      secTypes->push_back(type);
+      secTypes->add(type);
   } else { // m_minor >= 7
     int secTypesNumber = m_input->readUInt8();
     if (secTypesNumber != 0) {
       secTypes->resize(secTypesNumber);
-      for (::std::vector<unsigned int>::iterator i = secTypes->begin(); i != secTypes->end(); i++)
+      for (::array_base<unsigned int>::iterator i = secTypes->begin(); i != secTypes->end(); i++)
         *i = m_input->readUInt8();
     }
   }
@@ -713,32 +713,32 @@ void RemoteViewerCore::readSecurityTypeList(::std::vector<unsigned int> *secType
 {
   switch (securityType) {
   case SecurityDefs::NONE:
-    return _T("None");
+    return "None";
   case SecurityDefs::VNC:
-    return _T("VNC");
+    return "VNC";
   case SecurityDefs::TIGHT:
-    return _T("Tight");
+    return "Tight";
   }
-  return _T("Unknown type");
+  return "Unknown type";
 }
 
 ::string RemoteViewerCore::getAuthenticationTypeName(unsigned int authenticationType) const
 {
   switch (authenticationType) {
   case AuthDefs::NONE:
-    return _T("None");
+    return "None";
   case AuthDefs::VNC:
-    return _T("VNC");
+    return "VNC";
   }
-  return _T("Unknown type");
+  return "Unknown type";
 }
 
-int RemoteViewerCore::selectSecurityType(const ::std::vector<unsigned int> *secTypes,
-                                         const ::std::map<unsigned int, AuthHandler *> *authHandlers,
+int RemoteViewerCore::selectSecurityType(const ::array_base<unsigned int> *secTypes,
+                                         const ::map<unsigned int, AuthHandler *> *authHandlers,
 										 const bool isTightEnabled) const
 {
   // Typedef const iterator.
-  typedef ::std::vector<unsigned int>::const_iterator SecTypesIterator;
+  typedef ::array_base<unsigned int>::const_iterator SecTypesIterator;
 
   if (isTightEnabled) {
     // If server supports security type "Tight", select it.
@@ -758,14 +758,14 @@ int RemoteViewerCore::selectSecurityType(const ::std::vector<unsigned int> *secT
       return *i;
   }
 
-  throw Exception(_T("No security types supported. ")
-                  _T("Server sent security types, ")
-                  _T("but we do not support any of them."));
+  throw ::remoting::Exception("No security types supported. "
+                  "Server sent security types, "
+                  "but we do not support any of them.");
 }
 
 void RemoteViewerCore::initTunnelling()
 {
-  m_logWriter.detail(_T("Initialization of tight-tunneling..."));
+  m_logWriter.detail("Initialization of tight-tunneling...");
   unsigned int tunnelCount = m_input->readUInt32();
   if (tunnelCount > 0) {
     bool hasNoTunnel = false;
@@ -774,7 +774,7 @@ void RemoteViewerCore::initTunnelling()
       if (cap.code == TunnelDefs::NOTUNNEL) {
         hasNoTunnel = true;
       }
-      // Special case for VNC server of Siemense PLC . It supports NOTUNNEL while there is no it in the ::std::list.
+      // Special case for VNC server of Siemense PLC . It supports NOTUNNEL while there is no it in the ::list.
 	  if (cap.isEqual("SICR", "SCHANNEL")) {
         hasNoTunnel = true;
       }
@@ -783,48 +783,48 @@ void RemoteViewerCore::initTunnelling()
       m_output->writeUInt32(TunnelDefs::NOTUNNEL);
       m_output->flush();
     } else {
-      m_logWriter.error(_T("Viewer support only default tunneling tight-authentication"));
-      throw Exception(_T("Viewer support only default tunneling tight-authentication"));
+      m_logWriter.error("Viewer support only default tunneling tight-authentication");
+      throw ::remoting::Exception("Viewer support only default tunneling tight-authentication");
     }
   }
-  m_logWriter.debug(_T("Tunneling is init"));
+  m_logWriter.debug("Tunneling is init");
 }
 
 int RemoteViewerCore::initAuthentication()
 {
-  m_logWriter.detail(_T("Initialization of tight-authentication..."));
+  m_logWriter.detail("Initialization of tight-authentication...");
   unsigned int authTypesNumber = m_input->readUInt32();
 
-  m_logWriter.info(_T("Number of auth-types is %d"), authTypesNumber);
+  m_logWriter.info("Number of auth-types is {}", authTypesNumber);
   if (authTypesNumber == 0) {
     return AuthDefs::NONE;
   }
 
-  m_logWriter.detail(_T("Reading authentication capability..."));
+  m_logWriter.detail("Reading authentication capability...");
   for (unsigned int i = 0; i < authTypesNumber; i++) {
     RfbCapabilityInfo cap = readCapability();
     m_authCaps.enable(&cap);
   }
   size_t numEnabled = m_authCaps.numEnabled();
-  ::std::vector<unsigned int> authTypes(numEnabled);
+  ::array_base<unsigned int> authTypes(numEnabled);
   for (size_t i = 0; i < numEnabled; ++i) {
     authTypes[i] = m_authCaps.getByOrder(i);
   }
 
-  m_logWriter.debug(_T("Authentication capability is read"));
+  m_logWriter.debug("Authentication capability is read");
 
-  m_logWriter.debug(_T("Select authentication capability"));
+  m_logWriter.debug("Select authentication capability");
   if (numEnabled == 0) {
-    throw Exception(_T("No security types supported. ")
-                    _T("Server sent security types, but we do not support any of their."));
+    throw ::remoting::Exception("No security types supported. "
+                    "Server sent security types, but we do not support any of their.");
   }
   int typeSelected = authTypes[0];
-  m_logWriter.detail(_T("Selected type of authentication: %d"), typeSelected);
+  m_logWriter.detail("Selected type of authentication: {}", typeSelected);
 
   m_output->writeUInt32(typeSelected);
   m_output->flush();
 
-  m_logWriter.debug(_T("Tight authentication is init"));
+  m_logWriter.debug("Tight authentication is init");
   return typeSelected;
 }
 
@@ -837,39 +837,39 @@ void RemoteViewerCore::setFbProperties(const ::int_size & fbDimension,
 
   const PixelFormat &pxFormat = fbPixelFormat;
   ::string pxString;
-  pxString.format(_T("[bits-per-pixel: %d, depth: %d, big-endian-flag: %d, ")
-                  _T("true-color-flag: is set, ") // true color always is set
-                  _T("red-max: %d, green-max: %d, blue-max: %d, ")
-                  _T("red-shift: %d, green-shift: %d, blue-shift: %d]"),
+  pxString.formatf("[bits-per-pixel: {}, depth: {}, big-endian-flag: {}, "
+                  "true-color-flag: is set, " // true color always is set
+                  "red-max: {}, green-max: {}, blue-max: {}, "
+                  "red-shift: {}, green-shift: {}, blue-shift: {}]",
                   pxFormat.bitsPerPixel, pxFormat.colorDepth, pxFormat.bigEndian,
                   pxFormat.redMax, pxFormat.greenMax, pxFormat.blueMax,
                   pxFormat.redShift, pxFormat.greenShift, pxFormat.blueShift);
 
-  m_logWriter.detail(_T("Setting frame buffer properties..."));
-  m_logWriter.info(_T("Frame buffer dimension: (%d, %d)"),
+  m_logWriter.detail("Setting frame buffer properties...");
+  m_logWriter.info("Frame buffer dimension: ({}, {})",
                    fbDimension.cx, fbDimension.cy);
-  m_logWriter.info(_T("Frame buffer pixel format: %s"), pxString.getString());
+  m_logWriter.info("Frame buffer pixel format: {}", pxString);
 
   if (!m_frameBuffer.setProperties(fbDimension, fbPixelFormat) ||
       !m_rectangleFb.setProperties(fbDimension, fbPixelFormat)) {
     ::string error;
-    error.format(_T("Failed to set property frame buffer. ")
-                 _T("::int_size: (%d, %d), Pixel format: %s"),
+    error.formatf("Failed to set property frame buffer. "
+                 "::int_size: ({}, {}), Pixel format: {}",
                  fbDimension.cx, fbDimension.cy,
-                 pxString.getString());
-    throw Exception(error.getString());
+                 pxString);
+    throw ::remoting::Exception(error);
   }
   m_rectangleFb.setColor(0, 0, 0);
   m_frameBuffer.setColor(0, 0, 0);
   refreshFrameBuffer();
   m_fbUpdateNotifier.onPropertiesFb();
-  m_logWriter.debug(_T("Frame buffer properties set"));
+  m_logWriter.debug("Frame buffer properties set");
 }
 
 ::string RemoteViewerCore::getProtocolString() const
 {
   ::string protocolString;
-  protocolString.format(_T("RFB %03d.%03d\n"), m_major, m_minor);
+  protocolString.formatf("RFB %03d.%03d\n", m_major, m_minor);
   return protocolString;
 }
 
@@ -883,31 +883,31 @@ void RemoteViewerCore::execute()
   try {
     // connect to host and create RfbInputGate/RfbOutputGate
     // if already connected, then function do nothing
-    m_logWriter.info(_T("Protocol stage is \"Connection establishing\"."));
+    m_logWriter.info("Protocol stage is \"Connection establishing\".");
     connectToHost();
 
     // get server version and set client version
-    m_logWriter.info(_T("Protocol stage is \"Handshake\"."));
+    m_logWriter.info("Protocol stage is \"Handshake\".");
     handshake();
 
     // negotiaty about security type and authenticate
-    m_logWriter.info(_T("Protocol stage is \"Authentication\"."));
+    m_logWriter.info("Protocol stage is \"Authentication\".");
     authenticate();
 
     // set shared flag, get server dimension, pixel format and hostname
     // send client pixel format and set him.
-    m_logWriter.info(_T("Protocol stage is \"Initialization\"."));
+    m_logWriter.info("Protocol stage is \"Initialization\".");
     clientAndServerInit();
 
     // is connected
-    m_logWriter.info(_T("Protocol stage is \"Is connected\"."));
+    m_logWriter.info("Protocol stage is \"Is connected\".");
 
     try {
       m_adapter->onConnected(m_output);
-    } catch (const Exception &ex) {
-      m_logWriter.error(_T("Error in CoreEventsAdapter::onConnected(): %s"), ex.getMessage());
+    } catch (const ::remoting::Exception &ex) {
+      m_logWriter.error("Error in CoreEventsAdapter::onConnected(): {}", ex.getMessage());
     } catch (...) {
-      m_logWriter.error(_T("Unknown error in CoreEventsAdapter::onConnected()"));
+      m_logWriter.error("Unknown error in CoreEventsAdapter::onConnected()");
     }
 
     {
@@ -916,14 +916,14 @@ void RemoteViewerCore::execute()
     }
 
     // send supporting encoding
-    m_logWriter.info(_T("Protocol stage is \"Encoding select\"."));
+    m_logWriter.info("Protocol stage is \"Encoding select\".");
     sendEncodings();
 
     // send ENABLE_CUT_TEXT_UTF8 if server has the capability
     allowUtf8Clipboard();
 
     // send request of frame buffer update
-    m_logWriter.info(_T("Protocol stage is \"Working phase\"."));
+    m_logWriter.info("Protocol stage is \"Working phase\".");
     sendFbUpdateRequest(false);
 
     // received server messages
@@ -932,87 +932,87 @@ void RemoteViewerCore::execute()
 
       switch (msgType) {
       case ServerMsgDefs::FB_UPDATE:
-        m_logWriter.detail(_T("Received message: FB_UPDATE"));
+        m_logWriter.detail("Received message: FB_UPDATE");
         receiveFbUpdate();
         break;
 
       case ServerMsgDefs::SET_COLOR_MAP_ENTRIES:
-        m_logWriter.detail(_T("Received message: SET_COLOR_MAP_ENTRIES"));
+        m_logWriter.detail("Received message: SET_COLOR_MAP_ENTRIES");
         receiveSetColorMapEntries();
         break;
 
       case ServerMsgDefs::BELL:
-        m_logWriter.detail(_T("Received message: BELL"));
+        m_logWriter.detail("Received message: BELL");
         receiveBell();
         break;
 
       case ServerMsgDefs::SERVER_CUT_TEXT:
-        m_logWriter.detail(_T("Received message: SERVER_CUT_TEXT"));
+        m_logWriter.detail("Received message: SERVER_CUT_TEXT");
         receiveServerCutText();
         break;
       case ServerMsgDefs::SERVER_CUT_TEXT_UTF8:
-        m_logWriter.detail(_T("Received message: SERVER_CUT_TEXT_UTF8"));
+        m_logWriter.detail("Received message: SERVER_CUT_TEXT_UTF8");
         receiveServerCutTextUtf8();
         break;
 
       default:
         if (m_serverMsgHandlers.find(msgType) != m_serverMsgHandlers.end()) {
-          m_logWriter.detail(_T("Received message (%d) transmit to capability handler"), msgType);
+          m_logWriter.detail("Received message ({}) transmit to capability handler", msgType);
           try {
             m_serverMsgHandlers[msgType]->onServerMessage(msgType, m_input);
-          } catch (const Exception &ex) {
-            m_logWriter.error(_T("Error in onServerMessage(): %s"), ex.getMessage());
+          } catch (const ::remoting::Exception &ex) {
+            m_logWriter.error("Error in onServerMessage(): {}", ex.getMessage());
           } catch (...) {
-            m_logWriter.error(_T("Unknown error in onServerMessage()"));
+            m_logWriter.error("Unknown error in onServerMessage()");
           }
         } else {
-          m_logWriter.error(_T("Server to client message: %d is not supported"), msgType);
+          m_logWriter.error("Server to client message: {} is not supported", msgType);
         }
       }
     }
-    ::string message(_T("Remote viewer's core thread terminated"));
+    ::string message("Remote viewer's core thread terminated");
     try {
       m_adapter->onDisconnect(message);
-    } catch (const Exception &ex) {
-      m_logWriter.error(_T("Error in CoreEventsAdapter::onDisconnect(): %s"), ex.getMessage());
+    } catch (const ::remoting::Exception &ex) {
+      m_logWriter.error("Error in CoreEventsAdapter::onDisconnect(): {}", ex.getMessage());
     } catch (...) {
-      m_logWriter.error(_T("Unknown error in CoreEventsAdapter::onDisconnect()"));
+      m_logWriter.error("Unknown error in CoreEventsAdapter::onDisconnect()");
     }
 
   } catch (const AuthException &ex) {
-    m_logWriter.message(_T("RemoteVewerCore. Auth exception: %s"), ex.getMessage());
+    m_logWriter.message("RemoteVewerCore. Auth exception: {}", ex.getMessage());
     try {
       m_adapter->onAuthError(&ex);
-    } catch (const Exception &ex) {
-      m_logWriter.error(_T("Error in CoreEventsAdapter::onAuthError(): %s"), ex.getMessage());
+    } catch (const ::remoting::Exception &ex) {
+      m_logWriter.error("Error in CoreEventsAdapter::onAuthError(): {}", ex.getMessage());
     } catch (...) {
-      m_logWriter.error(_T("Unknown error in CoreEventsAdapter::onAuthError()"));
+      m_logWriter.error("Unknown error in CoreEventsAdapter::onAuthError()");
     }
-  } catch (const IOException &ex) {
+  } catch (const ::io_exception &ex) {
     try {
       ::string disconnectMessage(ex.getMessage());
       m_adapter->onDisconnect(disconnectMessage);
-    } catch (const Exception &ex) {
-      m_logWriter.error(_T("Error in CoreEventsAdapter::onDisconnect(): %s"), ex.getMessage());
+    } catch (const ::remoting::Exception &ex) {
+      m_logWriter.error("Error in CoreEventsAdapter::onDisconnect(): {}", ex.getMessage());
     } catch (...) {
-      m_logWriter.error(_T("Unknown error in CoreEventsAdapter::onDisconnect()"));
+      m_logWriter.error("Unknown error in CoreEventsAdapter::onDisconnect()");
     }
-  } catch (const Exception &ex) {
-    m_logWriter.message(_T("RemoteViewerCore. Exception: %s"), ex.getMessage());
+  } catch (const ::remoting::Exception &ex) {
+    m_logWriter.message("RemoteViewerCore. ::remoting::Exception: {}", ex.getMessage());
     try {
       m_adapter->onError(&ex);
     } catch (...) {
-      m_logWriter.error(_T("Unknown error in CoreEventsAdapter::onError()"));
+      m_logWriter.error("Unknown error in CoreEventsAdapter::onError()");
     }
   } catch (...) {
     ::string error;
-    error.format(_T("RemoteViewerCore. Unknown exception"));
-    m_logWriter.message(_T("%s"), error.getString());
-    Exception ex(error.getString());
+    error.formatf("RemoteViewerCore. Unknown exception");
+    m_logWriter.message("{}", error);
+    ::remoting::Exception ex(error);
     try {
       m_adapter->onError(&ex);
     } catch (...) {
-      m_logWriter.error(_T("Unknown error in CoreEventsAdapter::onError()"));
+      m_logWriter.error("Unknown error in CoreEventsAdapter::onError()");
     }
   }
 }
@@ -1043,11 +1043,11 @@ void RemoteViewerCore::receiveFbUpdate()
   m_input->readUInt8();
 
   unsigned short numberOfRectangles = m_input->readUInt16();
-  m_logWriter.debug(_T("number of rectangles: %d"), numberOfRectangles);
+  m_logWriter.debug("number of rectangles: {}", numberOfRectangles);
 
   bool isLastRect = false;
   for (int rectangle = 0; rectangle < numberOfRectangles && !isLastRect; rectangle++) {
-    m_logWriter.debug(_T("Receiving rectangle #%d..."), rectangle);
+    m_logWriter.debug("Receiving rectangle #{}...", rectangle);
     isLastRect = receiveFbUpdateRectangle();
   }
 
@@ -1060,7 +1060,7 @@ void RemoteViewerCore::receiveFbUpdate()
     if (m_isFreeze)
       return;
   }
-  m_logWriter.detail(_T("Sending of frame buffer update request..."));
+  m_logWriter.detail("Sending of frame buffer update request...");
   sendFbUpdateRequest(!m_forceFullUpdate);
 }
 
@@ -1074,34 +1074,34 @@ bool RemoteViewerCore::receiveFbUpdateRectangle()
 
   int encodingType = m_input->readInt32();
 
-  m_logWriter.debug(_T("Rectangle: (%d, %d), (%d, %d). Type is %d"), 
+  m_logWriter.debug("Rectangle: ({}, {}), ({}, {}). Type is {}", 
                     rect.left, rect.top, rect.right, rect.bottom, encodingType);
 
   if (encodingType == PseudoEncDefs::LAST_RECT)
     return true;
   if (!Decoder::isPseudo(encodingType)) {
     if (::int_rectangle(m_frameBuffer.getDimension()).intersection(rect) != rect) {
-      throw Exception(_T("Error in protocol: incorrect size of rectangle"));
+      throw ::remoting::Exception("Error in protocol: incorrect size of rectangle");
     }
 
     Decoder *decoder = m_decoderStore.getDecoder(encodingType);
     if (decoder != 0) {
-      m_logWriter.debug(_T("Decoding..."));
+      m_logWriter.debug("Decoding...");
 
       DecoderOfRectangle *rectangleDecoder = dynamic_cast<DecoderOfRectangle *>(decoder);
       rectangleDecoder->process(m_input,
                                 &m_frameBuffer, &m_rectangleFb, rect, &m_fbLock,
                                 &m_fbUpdateNotifier);
 
-      m_logWriter.debug(_T("Decoded"));
+      m_logWriter.debug("Decoded");
     } else { // decoder is 0
       ::string errorString;
-      errorString.format(_T("Decoder \"%d\" isn't exist"), encodingType);
-      m_logWriter.error(_T("%s"), errorString.getString());
-      throw Exception(errorString.getString());
+      errorString.formatf("Decoder \"{}\" isn't exist", encodingType);
+      m_logWriter.error("{}", errorString);
+      throw ::remoting::Exception(errorString);
     } 
   } else { // it's pseudo encoding
-    m_logWriter.debug(_T("It's pseudo encoding"));
+    m_logWriter.debug("It's pseudo encoding");
     processPseudoEncoding(rect, encodingType);
   }
   return false;
@@ -1112,7 +1112,7 @@ void RemoteViewerCore::processPseudoEncoding(const ::int_rectangle &  rect,
 {
   switch (encodingType) {
   case PseudoEncDefs::DESKTOP_SIZE:
-    m_logWriter.info(_T("Changed size of desktop"));
+    m_logWriter.info("Changed size of desktop");
     {
       AutoLock al(&m_fbLock);
       setFbProperties(rect.size(), m_frameBuffer.getPixelFormat());
@@ -1121,14 +1121,14 @@ void RemoteViewerCore::processPseudoEncoding(const ::int_rectangle &  rect,
     
   case PseudoEncDefs::RICH_CURSOR:
     {
-      m_logWriter.detail(_T("New rich cursor"));
+      m_logWriter.detail("New rich cursor");
 
       unsigned short width = rect.width();
       unsigned short height = rect.height();
       unsigned char bytesPerPixel = m_frameBuffer.getBytesPerPixel();
 
-      ::std::vector<unsigned char> cursor;
-      ::std::vector<unsigned char> bitmask;
+      ::array_base<unsigned char> cursor;
+      ::array_base<unsigned char> bitmask;
 
       size_t cursorLen = width * height * bytesPerPixel;
       if (cursorLen != 0) {
@@ -1141,7 +1141,7 @@ void RemoteViewerCore::processPseudoEncoding(const ::int_rectangle &  rect,
       }
       Point hotSpot(rect.left, rect.top);
 
-      m_logWriter.debug(_T("Setting new rich cursor..."));
+      m_logWriter.debug("Setting new rich cursor...");
       m_fbUpdateNotifier.setNewCursor(&hotSpot, width, height,
                                       &cursor, &bitmask);
     }
@@ -1149,7 +1149,7 @@ void RemoteViewerCore::processPseudoEncoding(const ::int_rectangle &  rect,
 
   case PseudoEncDefs::POINTER_POS:
     {
-      m_logWriter.detail(_T("Updating pointer position: [%d, %d]"), rect.left, rect.top);
+      m_logWriter.detail("Updating pointer position: [{}, {}]", rect.left, rect.top);
       Point position(rect.left, rect.top);
       m_fbUpdateNotifier.updatePointerPos(&position);
     }
@@ -1157,9 +1157,9 @@ void RemoteViewerCore::processPseudoEncoding(const ::int_rectangle &  rect,
 
   default:
     ::string errorString;
-    errorString.format(_T("Pseudo encoding %d is not supported"), encodingType);
-    m_logWriter.error(_T("%s"), errorString.getString());
-    throw Exception(errorString.getString());
+    errorString.formatf("Pseudo encoding {} is not supported", encodingType);
+    m_logWriter.error("{}", errorString);
+    throw ::remoting::Exception(errorString);
   }
 }
 
@@ -1183,13 +1183,13 @@ void RemoteViewerCore::receiveBell()
 {
   // message is already readed. Message type: 2
 
-  m_logWriter.info(_T("Bell!"));
+  m_logWriter.info("Bell!");
   try {
     m_adapter->onBell();
-  } catch (const Exception &ex) {
-    m_logWriter.error(_T("Error in CoreEventsAdapter::onBell(): %s"), ex.getMessage());
+  } catch (const ::remoting::Exception &ex) {
+    m_logWriter.error("Error in CoreEventsAdapter::onBell(): {}", ex.getMessage());
   } catch (...) {
-    m_logWriter.error(_T("Unknown error in CoreEventsAdapter::onBell()"));
+    m_logWriter.error("Unknown error in CoreEventsAdapter::onBell()");
   }
 }
 
@@ -1202,42 +1202,42 @@ void RemoteViewerCore::receiveServerCutText()
   m_input->readUInt8();
 
   unsigned int length = m_input->readUInt32();
-  ::std::vector<char> buffer(length + 1);
+  ::array_base<char> buffer(length + 1);
   m_input->readFully(&buffer.front(), length);
   buffer[length] = '\0';
   ::string cutText;
   AnsiStringStorage cutTextAnsi(&buffer.front());
   cutTextAnsi.toStringStorage(&cutText);
 
-  m_logWriter.debug(_T("Cut text: %s"), cutText.getString());
+  m_logWriter.debug("Cut text: {}", cutText);
   try {
     m_adapter->onCutText(cutText);
-  } catch (const Exception &ex) {
-    m_logWriter.error(_T("Error in CoreEventsAdapter::onCutText(): %s"), ex.getMessage());
+  } catch (const ::remoting::Exception &ex) {
+    m_logWriter.error("Error in CoreEventsAdapter::onCutText(): {}", ex.getMessage());
   } catch (...) {
-    m_logWriter.error(_T("Unknown error in CoreEventsAdapter::onCutText()"));
+    m_logWriter.error("Unknown error in CoreEventsAdapter::onCutText()");
   }
 }
 
 void RemoteViewerCore::receiveServerCutTextUtf8()
 {
   unsigned int length = m_input->readUInt32();
-  ::std::vector<char> buffer(length + 1);
+  ::array_base<char> buffer(length + 1);
   m_input->readFully(&buffer.front(), length);
   buffer[length] = '\0';
   ::string cutText;
   Utf8StringStorage cutTextUtf8(&buffer);
   cutTextUtf8.toStringStorage(&cutText);
 
-  m_logWriter.debug(_T("Cut text: %s"), cutText.getString());
+  m_logWriter.debug("Cut text: {}", cutText);
   try {
     m_adapter->onCutText(cutText);
   }
-  catch (const Exception &ex) {
-    m_logWriter.error(_T("Error in CoreEventsAdapter::onCutText(): %s"), ex.getMessage());
+  catch (const ::remoting::Exception &ex) {
+    m_logWriter.error("Error in CoreEventsAdapter::onCutText(): {}", ex.getMessage());
   }
   catch (...) {
-    m_logWriter.error(_T("Unknown error in CoreEventsAdapter::onCutText()"));
+    m_logWriter.error("Unknown error in CoreEventsAdapter::onCutText()");
   }
 }
 
@@ -1275,7 +1275,7 @@ void RemoteViewerCore::handshake()
   m_minor = strtol(&serverProtocol[8], 0, 10);
   m_isTight = false;
 
-  m_logWriter.info(_T("Server sent protocol version: %s"), getProtocolString().getString());
+  m_logWriter.info("Server sent protocol version: {}", getProtocolString());
   if (!isRfbProtocolString(serverProtocol) || 
       m_major < 3 ||
       (m_major == 3 && m_minor < 3)) {
@@ -1283,16 +1283,16 @@ void RemoteViewerCore::handshake()
     AnsiStringStorage protocolAnsi(serverProtocol);
     ::string protocol;
     protocolAnsi.toStringStorage(&protocol);
-    error.format(_T("Unsupported protocol: %s"), protocol.getString());
-    m_logWriter.error(_T("%s"), error.getString());
-    throw Exception(error.getString());
+    error.formatf("Unsupported protocol: {}", protocol);
+    m_logWriter.error("{}", error);
+    throw ::remoting::Exception(error);
   }
 
   // if version is 4.0 or later, then set version 3.8.
   if (m_major > 3) {
     m_major = 3;
     m_minor = 8;
-  } else { // else set version from ::std::list 3.3, 3.7, 3.8.
+  } else { // else set version from ::list 3.3, 3.7, 3.8.
     // select minor version:
     if (m_minor < 7) {
       m_minor = 3;
@@ -1302,11 +1302,11 @@ void RemoteViewerCore::handshake()
     }
   }
 
-  m_logWriter.info(_T("Send to server protocol version: %s"), getProtocolString().getString());
+  m_logWriter.info("Send to server protocol version: {}", getProtocolString());
 
   AnsiStringStorage clientProtocolAnsi;
   clientProtocolAnsi.fromStringStorage(getProtocolString());
-  m_output->writeFully(clientProtocolAnsi.getString(), 12);
+  m_output->writeFully(clientProtocolAnsi, 12);
   m_output->flush();
 }
 
@@ -1324,13 +1324,13 @@ void RemoteViewerCore::handshake()
 void RemoteViewerCore::clientAndServerInit()
 {
   if (m_sharedFlag) {
-    m_logWriter.info(_T("Setting share flag in on..."));
+    m_logWriter.info("Setting share flag in on...");
   } else {
-    m_logWriter.info(_T("Setting share flag is off..."));
+    m_logWriter.info("Setting share flag is off...");
   }
   m_output->writeUInt8(m_sharedFlag);
   m_output->flush();
-  m_logWriter.debug(_T("Shared flag is set"));
+  m_logWriter.debug("Shared flag is set");
 
   unsigned short width = m_input->readUInt16();
   unsigned short height = m_input->readUInt16();
@@ -1343,16 +1343,16 @@ void RemoteViewerCore::clientAndServerInit()
   }
 
   unsigned int sizeInBytes = m_input->readUInt32();
-  ::std::vector<char> buffer(sizeInBytes + 1);
+  ::array_base<char> buffer(sizeInBytes + 1);
   m_input->read(&buffer.front(), sizeInBytes);
   buffer[sizeInBytes] = '\0';
   AnsiStringStorage ansiStr;
-  ansiStr.setString(&buffer[0]);
+  ansiStr= &buffer[0];
   ansiStr.toStringStorage(&m_remoteDesktopName);
-  m_logWriter.info(_T("Server remote name: %s"), m_remoteDesktopName.getString());
+  m_logWriter.info("Server remote name: {}", m_remoteDesktopName);
 
   if (m_isTight) {
-    m_logWriter.detail(_T("Reading tight capabilities"));
+    m_logWriter.detail("Reading tight capabilities");
     readCapabilities();
   }
 }
@@ -1374,19 +1374,19 @@ void RemoteViewerCore::readCapabilities()
   int nEncodingTypes = m_input->readUInt16();
   m_input->readUInt16(); //padding
 
-  m_logWriter.detail(_T("Server message types (capability):"));
+  m_logWriter.detail("Server message types (capability):");
   while (nServerMessageTypes--) {
     RfbCapabilityInfo cap = readCapability();
     m_serverMsgCaps.enable(&cap);
   }
 
-  m_logWriter.detail(_T("Client message types (capability):"));
+  m_logWriter.detail("Client message types (capability):");
   while (nClientMessageTypes--) {
     RfbCapabilityInfo cap = readCapability();
     m_clientMsgCaps.enable(&cap);
   }
 
-  m_logWriter.detail(_T("Encodings (capability):"));
+  m_logWriter.detail("Encodings (capability):");
   while (nEncodingTypes--) {
     RfbCapabilityInfo cap = readCapability();
     m_encodingCaps.enable(&cap);
@@ -1422,8 +1422,8 @@ RfbCapabilityInfo RemoteViewerCore::readCapability()
   ::string nameSignatureString;
   nameSignatureAnsiString.toStringStorage(&nameSignatureString);
 
-  m_logWriter.detail(_T("code: %d, vendor: %s, signature: %s"),
-                     cap.code, vendorSignatureString.getString(), nameSignatureString.getString());
+  m_logWriter.detail("code: {}, vendor: {}, signature: {}",
+                     cap.code, vendorSignatureString, nameSignatureString);
 
   // return capability info
   return cap;
@@ -1468,17 +1468,17 @@ void RemoteViewerCore::addEncodingCapability(Decoder *decoder,
   registerDecoderHandler(code, decoder, priorityEncoding);
 }
 
-void RemoteViewerCore::getEnabledClientMsgCapabilities(::std::vector<unsigned int> *codes) const
+void RemoteViewerCore::getEnabledClientMsgCapabilities(::array_base<unsigned int> *codes) const
 {
   m_clientMsgCaps.getEnabledCapabilities(*codes);
 }
 
-void RemoteViewerCore::getEnabledServerMsgCapabilities(::std::vector<unsigned int> *codes) const
+void RemoteViewerCore::getEnabledServerMsgCapabilities(::array_base<unsigned int> *codes) const
 {
   m_serverMsgCaps.getEnabledCapabilities(*codes);
 }
 
-void RemoteViewerCore::getEnabledEncodingCapabilities(::std::vector<unsigned int> *codes) const
+void RemoteViewerCore::getEnabledEncodingCapabilities(::array_base<unsigned int> *codes) const
 {
   m_encodingCaps.getEnabledCapabilities(*codes);
 }
@@ -1511,7 +1511,7 @@ void RemoteViewerCore::sendEncodings()
   encodingsMessage.send(m_output);
 }
 
-::std::vector<::int_rectangle> RemoteViewerCore::getDesktops()
+::array_base<::int_rectangle> RemoteViewerCore::getDesktops()
 {
   return m_desktops;
 }

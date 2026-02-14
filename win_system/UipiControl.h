@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __UIPICONTROL_H__
-#define __UIPICONTROL_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "log_writer/LogWriter.h"
@@ -40,11 +40,11 @@ public:
   // running at Windows Vista and later.
   // @param hwnd - handle to a window that will be to receive the allowed
   // message (ignored at Windows Vista or older).
-  // @throws Exception on a fail (Only for Vista and later).
+  // @throws ::remoting::Exception on a fail (Only for Vista and later).
   void allowMessage(UINT message, HWND hwnd);
 
 private:
   LogWriter *m_log;
 };
 
-#endif // __UIPICONTROL_H__
+//// __UIPICONTROL_H__

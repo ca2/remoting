@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __SECURITYPIPESERVER_H__
-#define __SECURITYPIPESERVER_H__
+#pragma once
+
 
 #include "io_lib/Channel.h"
 #include "TimerListener.h"
@@ -35,7 +35,7 @@ class SecurityPipeServer : private TimerListener
 public:
   // @param tempPublChan is a channel object connected to a client that
   // requires the security pipe channel.
-  // @throw Exception on an error.
+  // @throw ::remoting::Exception on an error.
   // After successful creating this object take the security channel by
   // the getChannel() function to own.
   SecurityPipeServer(Channel *tempPublChan, unsigned int bufferSize);
@@ -55,4 +55,4 @@ private:
   unsigned int m_bufferSize;
 };
 
-#endif // __SECURITYPIPESERVER_H__
+//// __SECURITYPIPESERVER_H__

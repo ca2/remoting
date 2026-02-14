@@ -22,16 +22,16 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _OPERATION_NOT_SUPPORTED_EXCEPTION_H_
-#define _OPERATION_NOT_SUPPORTED_EXCEPTION_H_
+#pragma once
+
 
 #include "util/Exception.h"
 
-class OperationNotSupportedException : public Exception
+class OperationNotSupportedException : public ::remoting::Exception
 {
 public:
   OperationNotSupportedException();
   virtual ~OperationNotSupportedException();
 };
 
-#endif
+

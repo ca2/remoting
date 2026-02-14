@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WALLPAPERUTIL_H__
-#define __WALLPAPERUTIL_H__
+#pragma once
+
 
 #include "server_config_lib/ConfigReloadListener.h"
 #include "log_writer/LogWriter.h"
@@ -53,4 +53,4 @@ private:
   bool m_wasDisabled;
 };
 
-#endif // __WALLPAPERUTIL_H__
+//// __WALLPAPERUTIL_H__

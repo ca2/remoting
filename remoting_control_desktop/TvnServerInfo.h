@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _TVNSERVER_INFO_H_
-#define _TVNSERVER_INFO_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -50,4 +50,4 @@ struct TvnServerInfo
   ::string m_statusText;
 };
 
-#endif
+

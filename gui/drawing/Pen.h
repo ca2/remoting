@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _PEN_H_
-#define _PEN_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -45,4 +45,4 @@ protected:
   friend class Graphics;
 };
 
-#endif
+

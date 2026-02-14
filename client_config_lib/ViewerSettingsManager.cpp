@@ -33,7 +33,7 @@ ViewerSettingsManager::ViewerSettingsManager(const ::scoped_string & scopedstrRe
 : RegistrySettingsManager()
 {
   ::string keyName;
-  keyName.format("%s\\Settings\\", ::string(scopedstrRegistryName).c_str());
+  keyName.format("{}\\Settings\\", ::string(scopedstrRegistryName).c_str());
   setRegistryKey(Registry::getCurrentUserKey(), keyName.c_str());
 }
 
@@ -51,7 +51,7 @@ void ViewerSettingsManager::initInstance(const ::scoped_string & scopedstrRegist
 SettingsManager *ViewerSettingsManager::getInstance()
 {
   if (s_instance == 0) {
-    throw Exception(_T("Instance of viewer settings manager is 0"));
+    throw ::remoting::Exception("Instance of viewer settings manager is 0");
   }
   return s_instance;
 }

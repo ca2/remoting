@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _TAB_H_
-#define _TAB_H_
+#pragma once
+
 
 #include "BaseDialog.h"
 #include "Control.h"
@@ -39,10 +39,10 @@ public:
   // Access methods to protected members
   //
 
-  void setCaption(const ::scoped_string & scopedstrcaption) { m_caption.setString(caption); }
+  void setCaption(const ::scoped_string & scopedstrcaption) { m_caption= caption; }
 
   const ::scoped_string & scopedstrgetCaption() {
-    return m_caption.getString();
+    return m_caption;
   }
 
   void setDialog(BaseDialog *dialog) { m_dialog = dialog; }
@@ -66,4 +66,4 @@ protected:
   ::string m_caption;
 };
 
-#endif
+

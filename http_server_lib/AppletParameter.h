@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _APPLET_PARAMETER_H_
-#define _APPLET_PARAMETER_H_
+#pragma once
+
 
 #include "util/AnsiStringStorage.h"
 
@@ -34,7 +34,7 @@ public:
   virtual ~AppletParameter();
 
   // Returns formatted string for HTML output or NULL is arguments is not valid.
-  // Remark: string format is "<PARAM NAME="%s" VALUE="%s">".
+  // Remark: string format is "<PARAM NAME="{}" VALUE="{}">".
   const char *getFormattedString() const;
 
   // Returns true if applet parameter is valid, false otherwise.
@@ -50,4 +50,4 @@ protected:
   bool m_isValid;
 };
 
-#endif
+

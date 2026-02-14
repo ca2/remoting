@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WIND3D11DEVICE_H__
-#define __WIND3D11DEVICE_H__
+#pragma once
+
 
 
 #include "win_system/DynamicLibrary.h"
@@ -65,4 +65,4 @@ private:
   LogWriter *m_log;
 };
 
-#endif // __WIND3D11DEVICE_H__
+//// __WIND3D11DEVICE_H__

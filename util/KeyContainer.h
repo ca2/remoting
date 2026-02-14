@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __KEYCONTAINER_H__
-#define __KEYCONTAINER_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -37,4 +37,4 @@ public:
   ::string argument;
 };
 
-#endif // __KEYCONTAINER_H__
+//// __KEYCONTAINER_H__

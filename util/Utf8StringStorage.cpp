@@ -32,15 +32,15 @@ Utf8StringStorage::Utf8StringStorage()
 {
 
 
-  fromStringStorage(::string(_T("")));
+  fromStringStorage(::string(""));
 }
 
-Utf8StringStorage::Utf8StringStorage(const ::std::vector<char> *utf8Buffer)
+Utf8StringStorage::Utf8StringStorage(const ::array_base<char> *utf8Buffer)
 {
-  setString(utf8Buffer);
+ = utf8Buffer;
 }
 
-Utf8StringStorage::Utf8StringStorage(const ::string & string)
+Utf8StringStorage::Utf8StringStorage(const ::scoped_string & string)
 {
   fromStringStorage(string);
 }
@@ -54,7 +54,7 @@ Utf8StringStorage::~Utf8StringStorage()
 {
 }
 
-void Utf8StringStorage::setString(const ::std::vector<char> *utf8Buffer)
+void Utf8StringStorage::setString(const ::array_base<char> *utf8Buffer)
 {
   m_buffer = *utf8Buffer;
 }
@@ -74,16 +74,16 @@ memsize Utf8StringStorage::getLength() const
   return m_buffer.size() - 1;
 }
 
-void Utf8StringStorage::fromStringStorage(const ::string & src)
+void Utf8StringStorage::fromStringStorage(const ::scoped_string & src)
 {
 #ifndef _UNICODE
   // 1) From ANSI to UNICODE
   UnicodeStringStorage uniSrc(src);
-  const WCHAR *uniString = uniSrc.getString();
+  const WCHAR *uniString = uniSrc;
   size_t uniLength = uniSrc.getLength();
 
 #else
-  const WCHAR *uniString = src.getString();
+  const WCHAR *uniString = src;
   size_t uniLength = src.getLength();
 #endif
   int constrSrcSize = (int)uniLength + 1;
@@ -95,7 +95,7 @@ void Utf8StringStorage::fromStringStorage(const ::string & src)
                                             0, 0);
 
   if (dstRequiredSize == 0) {
-    throw Exception(_T("Cannot convert a string to the UTF8 format"));
+    throw ::remoting::Exception("Cannot convert a string to the UTF8 format");
   }
 
   m_buffer.resize(dstRequiredSize);
@@ -111,9 +111,9 @@ void Utf8StringStorage::toStringStorage(::string & dst)
   int dstReqSizeInSym = MultiByteToWideChar(CP_UTF8, 0, &m_buffer.front(),
                                             constrSize, 0, 0);
   if (dstReqSizeInSym == 0) {
-    throw Exception(_T("Cannot convert a string from the UTF8 format"));
+    throw ::remoting::Exception("Cannot convert a string from the UTF8 format");
   }
-  ::std::vector<WCHAR> uniBuff(dstReqSizeInSym + 1);
+  ::array_base<WCHAR> uniBuff(dstReqSizeInSym + 1);
   MultiByteToWideChar(CP_UTF8, 0, &m_buffer.front(),
                       constrSize, &uniBuff.front(), dstReqSizeInSym);
   // Add termination symbol to the unicode buffer because the source string

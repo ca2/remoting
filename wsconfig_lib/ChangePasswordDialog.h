@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CHANGE_PASSWORD_DIALOG_H_
-#define _CHANGE_PASSWORD_DIALOG_H_
+#pragma once
+
 
 #include "gui/BaseDialog.h"
 #include "gui/TextBox.h"
@@ -82,4 +82,4 @@ protected:
   bool m_allowEmptyPassword;
 };
 
-#endif
+

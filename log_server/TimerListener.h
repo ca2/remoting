@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __TIMERLISTENER_H__
-#define __TIMERLISTENER_H__
+#pragma once
+
 
 class TimerListener
 {
@@ -31,4 +31,4 @@ public:
   virtual void onTimeTimer() = 0;
 };
 
-#endif // __TIMERLISTENER_H__
+//// __TIMERLISTENER_H__

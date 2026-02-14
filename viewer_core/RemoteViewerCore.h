@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _REMOTE_VIEWER_CORE_H_
-#define _REMOTE_VIEWER_CORE_H_
+#pragma once
+
 
 #include "log_writer/LogWriter.h"
 #include "network/RfbInputGate.h"
@@ -44,7 +44,7 @@
 #include "TcpConnection.h"
 #include "WatermarksController.h"
 
-#include <map>
+//#include <map>
 #include "UpdateRequestSender.h"
 
 //
@@ -120,7 +120,7 @@ public:
   //       If you use this component under Windows, you should call
   //       WindowsSocket::startup() prior to calling this constructor.
   //
-  RemoteViewerCore(const ::scoped_string & scopedstrhost, unsigned short port,
+  RemoteViewerCore(const ::scoped_string & scopedstrHost, unsigned short port,
                    CoreEventsAdapter *adapter,
                    Logger *logger = 0,
                    bool sharedFlag = true);
@@ -217,7 +217,7 @@ public:
   //       If you use this component under Windows, you should call
   //       WindowsSocket::startup() prior to calling function.
   //
-  void start(const ::scoped_string & scopedstrhost, unsigned short port,
+  void start(const ::scoped_string & scopedstrHost, unsigned short port,
              CoreEventsAdapter *adapter,
              bool sharedFlag = true);
 
@@ -357,7 +357,7 @@ public:
   //
   // Send cut text (clipboard) to the server.
   //
-  void sendCutTextEvent(const ::string & cutText);
+  void sendCutTextEvent(const ::scoped_string & cutText);
 
   //
   // Set the preferred encoding type. Note that the server is not guaranteed
@@ -429,32 +429,32 @@ public:
                                  unsigned int code,
                                  const char *vendorSignature,
                                  const char *nameSignature,
-                                 const ::string description = _T(""));
+                                 const ::string description = "");
 
   virtual void addServerMsgCapability(ServerMessageListener *listener,
                                       unsigned int code,
                                       const char *vendorSignature,
                                       const char *nameSignature,
-                                      const ::string description = _T(""));
+                                      const ::string description = "");
 
   virtual void addClientMsgCapability(unsigned int code,
                                       const char *vendorSignature,
                                       const char *nameSignature,
-                                      const ::string description = _T(""));
+                                      const ::string description = "");
 
   virtual void addEncodingCapability(Decoder *decoder,
                                      int priorityEncoding,
                                      unsigned int code,
                                      const char *vendorSignature,
                                      const char *nameSignature,
-                                     const ::string description = _T(""));
+                                     const ::string description = "");
 
-  virtual void getEnabledClientMsgCapabilities(::std::vector<unsigned int> *codes) const;
-  virtual void getEnabledServerMsgCapabilities(::std::vector<unsigned int> *codes) const;
-  virtual void getEnabledEncodingCapabilities(::std::vector<unsigned int> *codes) const;
+  virtual void getEnabledClientMsgCapabilities(::array_base<unsigned int> *codes) const;
+  virtual void getEnabledServerMsgCapabilities(::array_base<unsigned int> *codes) const;
+  virtual void getEnabledEncodingCapabilities(::array_base<unsigned int> *codes) const;
 
-  // returns ::std::list of server displays offsets and dimensions
-  ::std::vector<::int_rectangle> getDesktops();
+  // returns ::list of server displays offsets and dimensions
+  ::array_base<::int_rectangle> getDesktops();
   ::int_size getDesktopSize();
 
 private:
@@ -542,11 +542,11 @@ private:
   int negotiateSecurityType();
   void authenticate();
   void clientAndServerInit();
-  void readSecurityTypeList(::std::vector<unsigned int> *secTypes);
+  void readSecurityTypeList(::array_base<unsigned int> *secTypes);
   ::string getSecurityTypeName(unsigned int securityType) const;
   ::string getAuthenticationTypeName(unsigned int authenticationType) const;
-  int selectSecurityType(const ::std::vector<unsigned int> *secTypes,
-                         const ::std::map<unsigned int, AuthHandler *> *authHandlers,
+  int selectSecurityType(const ::array_base<unsigned int> *secTypes,
+                         const ::map<unsigned int, AuthHandler *> *authHandlers,
                          const bool isTightEnabled) const;
   void initTunnelling();
   int initAuthentication();
@@ -578,17 +578,17 @@ private:
   bool updatePixelFormat();
 
   //
-  // This method add ::std::pair <code, handler> to ::std::map m_authHandler.
+  // This method add ::std::pair <code, handler> to ::map m_authHandler.
   //
   void registerAuthHandler(const unsigned int code, AuthHandler *handler);
 
   //
-  // This method add ::std::pair <code, listener> to ::std::map m_serverMsgHandlers.
+  // This method add ::std::pair <code, listener> to ::map m_serverMsgHandlers.
   //
   void registerMessageListener(const unsigned int code, ServerMessageListener *listener);
 
   //
-  // This method add ::std::pair <code, decoder> to ::std::map m_decoderHandlers.
+  // This method add ::std::pair <code, decoder> to ::map m_decoderHandlers.
   //
   void registerDecoderHandler(const unsigned int code, Decoder *decoder, int priority);
 
@@ -617,15 +617,15 @@ private:
   FbUpdateNotifier m_fbUpdateNotifier;
 
   CapsContainer m_authCaps;
-  ::std::map<unsigned int, AuthHandler *> m_authHandlers;
+  ::map<unsigned int, AuthHandler *> m_authHandlers;
 
   CapsContainer m_clientMsgCaps;
   CapsContainer m_serverMsgCaps;
-  ::std::map<unsigned int, ServerMessageListener *> m_serverMsgHandlers;
+  ::map<unsigned int, ServerMessageListener *> m_serverMsgHandlers;
 
   CapsContainer m_encodingCaps;
-  ::std::map<unsigned int, Decoder *> m_decoderHandlers;
-  ::std::map<unsigned int, int> m_decoderPriority;
+  ::map<unsigned int, Decoder *> m_decoderHandlers;
+  ::map<unsigned int, int> m_decoderPriority;
 
   // This flag is set after call start().
   mutable LocalMutex m_startLock;
@@ -644,8 +644,8 @@ private:
   LocalMutex m_fbLock;
   FrameBuffer m_frameBuffer;
 
-  // ::std::list of server dispalys
-  ::std::vector<::int_rectangle> m_desktops;
+  // ::list of server dispalys
+  ::array_base<::int_rectangle> m_desktops;
   ::int_size m_desktopSize;
 
   // Decoder work with this framebuffer. It is not actual frame buffer,
@@ -689,4 +689,4 @@ private:
   RemoteViewerCore &operator=(const RemoteViewerCore &);
 };
 
-#endif
+

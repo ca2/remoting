@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _DESKTOP_SERVER_COMMAND_LINE_H_
-#define _DESKTOP_SERVER_COMMAND_LINE_H_
+#pragma once
+
 
 #include "util/CommandLine.h"
 #include "util/Exception.h"
@@ -43,7 +43,7 @@ public:
   /**
    * Parses command line.
    * @param cmdLine command line to parse.
-   * @throws Exception on fail.
+   * @throws ::remoting::Exception on fail.
    */
   virtual void parse(const CommandLineArgs *cmdArgs);
 
@@ -74,4 +74,4 @@ private:
   const static TCHAR SHARED_MEMORY_NAME_KEY[];
 };
 
-#endif
+

@@ -44,9 +44,9 @@ DWORD WINAPI Thread::threadProc(LPVOID pThread)
   try {
     _this->initByDerived();
     _this->execute();
-  } catch (Exception &) {
-    /*Log::error(_T("Abnormal thread termination.")
-               _T(" ThreadId = %u, message = \"%s\" \n"),
+  } catch (::remoting::Exception &) {
+    /*Log::error("Abnormal thread termination."
+               " ThreadId = %u, message = \"{}\" \n",
                (unsigned int)_this->m_threadID, e.getMessage());
 
     */

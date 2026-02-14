@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __UPDATEHANDLERIMPL_H__
-#define __UPDATEHANDLERIMPL_H__
+#pragma once
+
 
 #include "UpdateHandler.h"
 #include "ScreenDriver.h"
@@ -70,4 +70,4 @@ private:
   bool m_fullUpdateRequested;
 };
 
-#endif // __UPDATEHANDLERIMPL_H__
+//// __UPDATEHANDLERIMPL_H__

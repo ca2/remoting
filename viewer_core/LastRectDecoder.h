@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _LAST_RECT_DECODER_H_
-#define _LAST_RECT_DECODER_H_
+#pragma once
+
 
 #include "PseudoDecoder.h"
 
@@ -34,4 +34,4 @@ public:
   virtual ~LastRectDecoder();
 };
 
-#endif
+

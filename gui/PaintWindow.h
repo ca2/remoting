@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _PAINT_WINDOW_H_
-#define _PAINT_WINDOW_H_
+#pragma once
+
 
 #include "BaseWindow.h"
 #include "drawing/DeviceContext.h"
@@ -52,4 +52,4 @@ protected:
 
 };
 
-#endif
+

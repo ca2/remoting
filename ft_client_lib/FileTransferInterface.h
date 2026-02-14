@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _FILE_TRANSFER_INTERFACE_H_
-#define _FILE_TRANSFER_INTERFACE_H_
+#pragma once
+
 
 #include "FileTransferCore.h"
 
@@ -37,7 +37,7 @@ public:
 
   virtual int onFtTargetFileExists(FileInfo *sourceFileInfo,
                                    FileInfo *targetFileInfo,
-                                   const ::scoped_string & scopedstrpathToTargetFile) = 0;
+                                   const ::scoped_string & scopedstrPathToTargetFile) = 0;
   // Progress is in interval [0.0, 1.0].
   virtual void setProgress(double progress) = 0;
 
@@ -45,13 +45,13 @@ public:
   // This function inform user about error.
   // This function must be is not blocking, otherwise it may happen deadlock.
   //
-  virtual void onFtOpError(const ::scoped_string & scopedstrmessage) = 0;
+  virtual void onFtOpError(const ::scoped_string & scopedstrMessage) = 0;
 
   //
   // This function inform user additional information.
   // This function must be is not blocking, otherwise it may happen deadlock.
   //
-  virtual void onFtOpInfo(const ::scoped_string & scopedstrmessage) = 0;
+  virtual void onFtOpInfo(const ::scoped_string & scopedstrMessage) = 0;
   virtual void onFtOpStarted() = 0;
   virtual void onFtOpFinished(int state, int result) = 0;
 
@@ -61,21 +61,21 @@ public:
   virtual void setNothingState() = 0;
 
   //
-  // Called if local file ::std::list is updated
+  // Called if local file ::list is updated
   //
   virtual void onRefreshLocalFileList() = 0;
 
-  // Called if remote file ::std::list is updated
+  // Called if remote file ::list is updated
   virtual void onRefreshRemoteFileList() = 0;
 
   //
   // Shows error message and throws exception
   //
 
-  virtual void raise(Exception &ex) = 0;
+  virtual void raise(::remoting::Exception &ex) = 0;
 
 protected:
   FileTransferCore *m_ftCore;
 };
 
-#endif
+

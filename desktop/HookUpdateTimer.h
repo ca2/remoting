@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __HOOKUPDATETIMER_H__
-#define __HOOKUPDATETIMER_H__
+#pragma once
+
 
 #include "thread/Thread.h"
 #include "UpdateListener.h"
@@ -54,4 +54,4 @@ protected:
   UpdateListener *m_updateListener;
 };
 
-#endif // __HOOKUPDATETIMER_H__
+//// __HOOKUPDATETIMER_H__

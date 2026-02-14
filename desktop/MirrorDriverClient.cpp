@@ -29,8 +29,8 @@
 #include "remoting_node_desktop/NamingDefs.h"
 
 const TCHAR MirrorDriverClient::MINIPORT_REGISTRY_PATH[] =
-  _T("SYSTEM\\CurrentControlSet\\Hardware Profiles\\")
-  _T("Current\\System\\CurrentControlSet\\Services");
+  "SYSTEM\\CurrentControlSet\\Hardware Profiles\\"
+  "Current\\System\\CurrentControlSet\\Services";
 
 MirrorDriverClient::MirrorDriverClient(LogWriter *log)
 : m_isDriverOpened(false),
@@ -57,9 +57,9 @@ MirrorDriverClient::MirrorDriverClient(LogWriter *log)
   m_initListener.waitForEvent();
   if (m_propertyChangeListenerWindow.getHWND() == 0) {
     dispose();
-    throw Exception(_T("Can't create a client for a mirror driver because")
-                    _T(" can't create a message window to listen changing")
-                    _T(" screen properties."));
+    throw ::remoting::Exception("Can't create a client for a mirror driver because"
+                    " can't create a message window to listen changing"
+                    " screen properties.");
   }
 }
 
@@ -70,9 +70,9 @@ MirrorDriverClient::~MirrorDriverClient()
     wait();
 
     dispose();
-  } catch (Exception &e) {
-    m_log->error(_T("An error occured during the")
-               _T(" mirror driver deinitialization: %s"), e.getMessage());
+  } catch (::remoting::Exception &e) {
+    m_log->error("An error occured during the"
+               " mirror driver deinitialization: {}", e.getMessage());
   }
 }
 
@@ -122,18 +122,18 @@ bool MirrorDriverClient::getScreenSizeChanged()
 bool MirrorDriverClient::applyNewProperties()
 {
   try {
-    m_log->debug(_T("Disposing the mirror driver to apply new properties"));
+    m_log->debug("Disposing the mirror driver to apply new properties");
     dispose();
 
     m_isDisplayChanged = false;
 
-    m_log->debug(_T("Try load new mirror driver to apply new properties"));
+    m_log->debug("Try load new mirror driver to apply new properties");
     open();
     load();
     connect();
-  } catch (Exception &e) {
-    m_log->error(_T("Can't apply new screen properties for the mirror driver:")
-               _T(" %s"), e.getMessage());
+  } catch (::remoting::Exception &e) {
+    m_log->error("Can't apply new screen properties for the mirror driver:"
+               " {}", e.getMessage());
     return false;
   }
   return true;
@@ -143,8 +143,8 @@ void MirrorDriverClient::open()
 {
   _ASSERT(!m_isDriverOpened);
 
-  extractDeviceInfo(_T("Mirage Driver"));
-  openDeviceRegKey(_T("dfmirage"));
+  extractDeviceInfo("Mirage Driver");
+  openDeviceRegKey("dfmirage");
 
   m_isDriverOpened = true;
 }
@@ -154,24 +154,24 @@ void MirrorDriverClient::extractDeviceInfo(TCHAR *driverName)
   memset(&m_deviceInfo, 0, sizeof(m_deviceInfo));
   m_deviceInfo.cb = sizeof(m_deviceInfo);
 
-  m_log->info(_T("Searching for %s ..."), driverName);
+  m_log->information("Searching for {} ...", driverName);
 
   m_deviceNumber = 0;
   BOOL result;
   while (result = EnumDisplayDevices(0, m_deviceNumber, &m_deviceInfo, 0)) {
-    m_log->debug(_T("Found: %s"), m_deviceInfo.DeviceString);
-    m_log->debug(_T("RegKey: %s"), m_deviceInfo.DeviceKey);
+    m_log->debug("Found: {}", m_deviceInfo.DeviceString);
+    m_log->debug("RegKey: {}", m_deviceInfo.DeviceKey);
     ::string deviceString(m_deviceInfo.DeviceString);
     if (deviceString.isEqualTo(driverName)) {
-      m_log->info(_T("%s is found"), driverName);
+      m_log->information("{} is found", driverName);
       break;
     }
     m_deviceNumber++;
   }
   if (!result) {
     ::string errMess;
-    errMess.format(_T("Can't find %s!"), driverName);
-    throw Exception(errMess.getString());
+    errMess.formatf("Can't find {}!", driverName);
+    throw ::remoting::Exception(errMess);
   }
 }
 
@@ -179,8 +179,8 @@ void MirrorDriverClient::openDeviceRegKey(TCHAR *miniportName)
 {
   ::string deviceKey(m_deviceInfo.DeviceKey);
   deviceKey.toUpperCase();
-  TCHAR *substrPos = deviceKey.find(_T("\\DEVICE"));
-  ::string subKey(_T("DEVICE0"));
+  TCHAR *substrPos = deviceKey.find("\\DEVICE");
+  ::string subKey("DEVICE0");
   if (substrPos != 0) {
     ::string str(substrPos);
     if (str.getLength() >= 8) {
@@ -188,17 +188,17 @@ void MirrorDriverClient::openDeviceRegKey(TCHAR *miniportName)
     }
   }
 
-  m_log->debug(_T("Opening registry key %s\\%s\\%s"),
+  m_log->debug("Opening registry key {}\\{}\\{}",
              MINIPORT_REGISTRY_PATH,
              miniportName,
-             subKey.getString());
+             subKey);
 
   RegistryKey regKeyServices(HKEY_LOCAL_MACHINE, MINIPORT_REGISTRY_PATH, true);
   RegistryKey regKeyDriver(&regKeyServices, miniportName, true);
-  m_regkeyDevice.open(&regKeyDriver, subKey.getString(), true);
+  m_regkeyDevice.open(&regKeyDriver, subKey, true);
   if (!regKeyServices.isOpened() || !regKeyDriver.isOpened() ||
       !m_regkeyDevice.isOpened()) {
-    throw Exception(_T("Can't open registry for the mirror driver"));
+    throw ::remoting::Exception("Can't open registry for the mirror driver");
   }
 }
 
@@ -212,7 +212,7 @@ void MirrorDriverClient::load()
 {
   _ASSERT(m_isDriverOpened);
   if (!m_isDriverLoaded) {
-    m_log->info(_T("Loading mirror driver..."));
+    m_log->information("Loading mirror driver...");
 
     initScreenPropertiesByCurrent();
 
@@ -238,15 +238,15 @@ void MirrorDriverClient::load()
     commitDisplayChanges(&m_deviceMode);
 
     // Win 2000 version:
-    // m_driverDC = CreateDC(_T("DISPLAY"), m_deviceInfo.DeviceName, NULL, NULL);
+    // m_driverDC = CreateDC("DISPLAY", m_deviceInfo.DeviceName, NULL, NULL);
     m_driverDC = CreateDC(m_deviceInfo.DeviceName, 0, 0, 0);
     if (!m_driverDC) {
-      throw Exception(_T("Can't create device context on mirror driver"));
+      throw ::remoting::Exception("Can't create device context on mirror driver");
     }
-    m_log->info(_T("Device context is created"));
+    m_log->information("Device context is created");
 
     m_isDriverLoaded = true;
-    m_log->info(_T("Mirror driver is now loaded"));
+    m_log->information("Mirror driver is now loaded");
   }
 }
 
@@ -272,9 +272,9 @@ void MirrorDriverClient::initScreenPropertiesByCurrent()
 
 void MirrorDriverClient::setAttachToDesktop(bool value)
 {
-  if (!m_regkeyDevice.setValueAsInt32(_T("Attach.ToDesktop"),
+  if (!m_regkeyDevice.setValueAsInt32("Attach.ToDesktop",
       (int)value)) {
-    throw Exception(_T("Can't set the Attach.ToDesktop."));
+    throw ::remoting::Exception("Can't set the Attach.ToDesktop.");
   }
   m_isDriverAttached = value;
 }
@@ -294,33 +294,33 @@ void MirrorDriverClient::commitDisplayChanges(DEVMODE *pdm)
   // ChangeDisplaySettingsEx(m_deviceInfo.DeviceName, pdm, NULL,
   //                         CDS_UPDATEREGISTRY, NULL)
   // And the 2000 does not work with DEVMODE that has the set DM_POSITION bit.
-  m_log->info(_T("commitDisplayChanges(1): \"%s\""), m_deviceInfo.DeviceName);
+  m_log->information("commitDisplayChanges(1): \"{}\"", m_deviceInfo.DeviceName);
   if (pdm) {
     LONG code = ChangeDisplaySettingsEx(m_deviceInfo.DeviceName, pdm, 0, CDS_UPDATEREGISTRY, 0);
     if (code < 0) {
       ::string errMess;
-      errMess.format(_T("1st ChangeDisplaySettingsEx() failed with code %d"),
+      errMess.formatf("1st ChangeDisplaySettingsEx() failed with code {}",
                      (int)code);
-      throw Exception(errMess.getString());
+      throw ::remoting::Exception(errMess);
     }
-    m_log->info(_T("CommitDisplayChanges(2): \"%s\""), m_deviceInfo.DeviceName);
+    m_log->information("CommitDisplayChanges(2): \"{}\"", m_deviceInfo.DeviceName);
     code = ChangeDisplaySettingsEx(m_deviceInfo.DeviceName, pdm, 0, 0, 0);
     if (code < 0) {
       ::string errMess;
-      errMess.format(_T("2nd ChangeDisplaySettingsEx() failed with code %d"),
+      errMess.formatf("2nd ChangeDisplaySettingsEx() failed with code {}",
                      (int)code);
-      throw Exception(errMess.getString());
+      throw ::remoting::Exception(errMess);
     }
   } else {
     LONG code = ChangeDisplaySettingsEx(m_deviceInfo.DeviceName, 0, 0, 0, 0);
     if (code < 0) {
       ::string errMess;
-      errMess.format(_T("ChangeDisplaySettingsEx() failed with code %d"),
+      errMess.formatf("ChangeDisplaySettingsEx() failed with code {}",
                      (int)code);
-      throw Exception(errMess.getString());
+      throw ::remoting::Exception(errMess);
     }
   }
-  m_log->info(_T("ChangeDisplaySettingsEx() was successfull"));
+  m_log->information("ChangeDisplaySettingsEx() was successfull");
 }
 
 void MirrorDriverClient::unload()
@@ -328,11 +328,11 @@ void MirrorDriverClient::unload()
   if (m_driverDC != 0) {
     DeleteDC(m_driverDC);
     m_driverDC = 0;
-    m_log->info(_T("The mirror driver device context released"));
+    m_log->information("The mirror driver device context released");
   }
 
   if (m_isDriverAttached) {
-    m_log->info(_T("Unloading mirror driver..."));
+    m_log->information("Unloading mirror driver...");
 
     setAttachToDesktop(false);
 
@@ -348,9 +348,9 @@ void MirrorDriverClient::unload()
 
     try {
       commitDisplayChanges(pdm);
-      m_log->info(_T("Mirror driver is unloaded"));
-    } catch (Exception &e) {
-      m_log->warning(_T("Failed to unload the mirror driver: %s"),
+      m_log->information("Mirror driver is unloaded");
+    } catch (::remoting::Exception &e) {
+      m_log->warning("Failed to unload the mirror driver: {}",
                    e.getMessage());
     }
   }
@@ -364,16 +364,16 @@ void MirrorDriverClient::unload()
 
 void MirrorDriverClient::connect()
 {
-  m_log->info(_T("Try to connect to the mirror driver."));
+  m_log->information("Try to connect to the mirror driver.");
   if (!m_isDriverConnected) {
     GETCHANGESBUF buf = {0};
     int res = ExtEscape(m_driverDC, dmf_esc_usm_pipe_map, 0, 0, sizeof(buf), (LPSTR)&buf);
     if (res <= 0) {
       ::string errMess;
-      errMess.format(_T("Can't set a connection for the mirror driver: ")
-                     _T("ExtEscape() failed with %d"),
+      errMess.formatf("Can't set a connection for the mirror driver: "
+                     "ExtEscape() failed with {}",
                      res);
-      throw Exception(errMess.getString());
+      throw ::remoting::Exception(errMess);
     }
 
     m_changesBuffer = buf.buffer;
@@ -385,7 +385,7 @@ void MirrorDriverClient::connect()
 
 void MirrorDriverClient::disconnect()
 {
-  m_log->info(_T("Try to disconnect the mirror driver."));
+  m_log->information("Try to disconnect the mirror driver.");
   if (m_isDriverConnected) {
     GETCHANGESBUF buf;
     buf.buffer = m_changesBuffer;
@@ -393,7 +393,7 @@ void MirrorDriverClient::disconnect()
 
     int res = ExtEscape(m_driverDC, dmf_esc_usm_pipe_unmap, sizeof(buf), (LPSTR)&buf, 0, 0);
     if (res <= 0) {
-      m_log->error(_T("Can't unmap buffer: error code = %d"), res);
+      m_log->error("Can't unmap buffer: error code = {}", res);
     }
     m_isDriverConnected = false;
   }
@@ -405,7 +405,7 @@ bool MirrorDriverClient::processMessage(UINT message,
 {
   if (message == WM_DISPLAYCHANGE) {
     m_isDisplayChanged = true;
-    m_log->debug(_T("Display changing detecting"));
+    m_log->debug("Display changing detecting");
   }
   return true;
 }
@@ -419,7 +419,7 @@ void MirrorDriverClient::execute()
 {
   if (!isTerminating()) {
     m_propertyChangeListenerWindow.createWindow(this);
-    m_log->info(_T("Mirror driver client window has been created (hwnd = %d)"),
+    m_log->information("Mirror driver client window has been created (hwnd = {})",
               (int)m_propertyChangeListenerWindow.getHWND());
   }
 
@@ -436,7 +436,7 @@ void MirrorDriverClient::execute()
       }
     } else {
       if (WaitMessage() == 0) {
-        m_log->error(_T("Mirror driver client thread has failed"));
+        m_log->error("Mirror driver client thread has failed");
         terminate();
       }
     }

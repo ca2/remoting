@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _TCP_CLIENT_THREAD_H_
-#define _TCP_CLIENT_THREAD_H_
+#pragma once
+
 
 #include "thread/Thread.h"
 
@@ -65,4 +65,4 @@ protected:
   SocketIPv4 *m_socket;
 };
 
-#endif
+

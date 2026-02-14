@@ -24,7 +24,7 @@
 // #pragma once
 //
 // #include "winhdr.h"
-// #include <vector>
+// //#include <vector>
 //
 // /**
 // String class.
@@ -41,7 +41,7 @@
 //    // This simplify to read the buffer string
 // #ifdef _DEBUG
 //    TCHAR *m_readableString;
-// #endif
+// 
 //
 // public:
 //   /**
@@ -54,12 +54,12 @@
 //   copied to buffer of this string storage.
 //   @param string string to copy.
 //   */
-//   ::string(const ::scoped_string & scopedstrstring);
+//   ::string(const ::scoped_string & scopedstrString);
 //
 //   /**
 //   Copy constructor.
 //   */
-//   ::string(const ::string &stringBuffer);
+//   ::string(const ::scoped_string &stringBuffer);
 //
 //   /**
 //   Class destructor.
@@ -67,7 +67,7 @@
 //   virtual ~::string();
 //
 //   // Fills internal buffer by the string.
-//   virtual void setString(const ::scoped_string & scopedstrstring);
+//   virtual void= const ::scoped_string & scopedstrString;
 //
 //   // Returns pointer to the first symbol.
 //   const ::scoped_string & scopedstrgetString() const;
@@ -111,7 +111,7 @@
 //    * Adds string to the end of this string.
 //    * @param string string to be added.
 //    */
-//   void appendString(const ::scoped_string & scopedstrstring);
+//   void appendString(const ::scoped_string & scopedstrString);
 //
 //   /**
 //    * Adds char to the end of this string.
@@ -137,7 +137,7 @@
 //    * Checks if string contained by this storage equals to string in other storage.
 //    * @remark see overload of isEqualTo method.
 //    */
-//   bool isEqualTo(const ::string & other) const;
+//   bool isEqualTo(const ::scoped_string & other) const;
 //
 //   //
 //   // Splits this string into getSubstring and stores output getSubstring to string array,
@@ -160,7 +160,7 @@
 //   // internall string or
 //   // zero otherwise.
 //   //
-//   TCHAR *find(const ::scoped_string & scopedstrsubstr);
+//   TCHAR *find(const ::scoped_string & scopedstrSubstr);
 //
 //   //
 //   // Returns first position of character in string if found,
@@ -173,7 +173,7 @@
 //   // Returns first position of any character that string argument have.
 //   //
 //
-//   size_t findOneOf(const ::scoped_string & scopedstrstring);
+//   size_t findOneOf(const ::scoped_string & scopedstrString);
 //
 //   /**
 //    * Finds last position of specified character in this string.
@@ -190,7 +190,7 @@
 //   void removeChars(const TCHAR badCharacters[], size_t count);
 //
 //   // Removes count characters from the specified start index.
-//   // Throws Exception if startIndex + count > length in the release
+//   // Throws ::remoting::Exception if startIndex + count > length in the release
 //   // configuration and throws an ASSERTION FAILED message in the debug
 //   // configuration.
 //   void remove(size_t startIndex, size_t count);
@@ -216,17 +216,17 @@
 //   // Create string notated by this container using format string, and arguments.
 //   //
 //
-//   void format(const ::scoped_string & scopedstrformat, ...);
+//   void format(const ::scoped_string & scopedstrFormat, ...);
 //
 //   //
 //   // Overload operator = for container copying
 //   //
 //
-//   void operator = (const ::string &other);
+//   void operator = (const ::scoped_string &other);
 //
-//   bool operator == (const ::string &str) const;
-//   bool operator < (const ::string &str) const;
-//   void operator += (const ::scoped_string & scopedstrstr);
+//   bool operator == (const ::scoped_string &str) const;
+//   bool operator < (const ::scoped_string &str) const;
+//   void operator += (const ::scoped_string & scopedstrStr);
 //
 //   //
 //   // Replaces one character with other this string.

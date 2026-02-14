@@ -44,7 +44,7 @@ void ListView::addColumn(int index, const ::scoped_string & scopedstrcaption, in
   lvColumn.pszText = (TCHAR *)caption;
 
   //
-  // Add column to ::std::list view
+  // Add column to ::list view
   //
 
   ListView_InsertColumn(m_hwnd, index, &lvColumn);
@@ -59,13 +59,13 @@ ListViewItem ListView::getItem(int index)
 {
   // Output structure
   ListViewItem item;
-  // Windows ::std::list view item concept
+  // Windows ::list view item concept
   LVITEM lvI;
   // Buffer for text data
   TCHAR textBuffer[256];
 
   //
-  // Retrieve text and tag from ::std::list view item (zero subitem)
+  // Retrieve text and tag from ::list view item (zero subitem)
   //
 
   lvI.mask = LVIF_TEXT | LVIF_PARAM;
@@ -83,7 +83,7 @@ ListViewItem ListView::getItem(int index)
   ListView_GetItem(m_hwnd, &lvI);
 
   //
-  // Copying data to our ::std::list view item structure
+  // Copying data to our ::list view item structure
   //
 
   item.index = lvI.iItem;
@@ -287,7 +287,7 @@ void ListView::sort(int columnIndex, PFNLVCOMPARE compareItem)
       Header_SetItem(hHeader, m_sortColumnIndex, &hdrItem);
     }
   }
-  // Sort ::std::list of item.
+  // Sort ::list of item.
   sort();
 }
 

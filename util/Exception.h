@@ -21,41 +21,49 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
+#pragma once
 
-#ifndef _EXCEPTION_H_
-#define _EXCEPTION_H_
 
 #pragma warning(disable:4290)
 
-//#include "::string.h"
 
-/**
- * Common Exception class.
- */
-class Exception
+namespace remoting
 {
-public:
-  /**
-   * Creates exception with empty description.
-   */
-  Exception();
-  /**
-   * Creates exception with specified description.
-   * @param format description string in printf-like notation.
-   */
-  Exception(const ::scoped_string & scopedstrformat, ...);
-  /**
-   * Destructor.
-   */
-  virtual ~Exception();
 
-  /**
-   * Returns description of exception.
-   */
-  ::string getMessage() const;
+   // #include "::string.h"
 
-//protected:
-  ::string m_message;
-};
+   /**
+    * Common ::remoting::Exception class.
+    */
+   class Exception : virtual public ::exception
 
-#endif
+   {
+   public:
+      /**
+       * Creates exception with empty description.
+       */
+      Exception();
+      /**
+       * Creates exception with specified description.
+       * @param format description string in printf-like notation.
+       */
+      Exception(const ::scoped_string &scopedstrFormat, ...);
+      /**
+       * Destructor.
+       */
+      ~Exception() override;
+
+      /**
+       * Returns description of exception.
+       */
+      //::string getMessage() const;
+
+      // protected:
+      //::string m_message;
+   };
+
+
+} // namespace remoting 
+
+
+

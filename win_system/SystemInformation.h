@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __SYSTEM_INFORMATION_H__
-#define __SYSTEM_INFORMATION_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -50,4 +50,4 @@ public:
   int getMonitorCount();
 };
 
-#endif
+

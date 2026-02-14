@@ -22,12 +22,12 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _DATA_OUTPUT_STREAM_H_
-#define _DATA_OUTPUT_STREAM_H_
+#pragma once
+
 
 #include "util/inttypes.h"
 #include "OutputStream.h"
-#include "IOException.h"
+#include "io_lib/io_exception.h"
 
 /**
  * Data output stream (decorator pattern).
@@ -53,7 +53,7 @@ public:
    * Writes exacly specified count of bytes to stream.
    * @param buffer source buffer.
    * @param len count of bytes to write.
-   * @throws IOException on error.
+   * @throws ::io_exception on error.
    * @fixme really it can throw any kind of exception (depends on implementation
    * of output stream passed to costructor of DataOutputStream).
    */
@@ -69,7 +69,7 @@ public:
   void writeInt32(int x);
   void writeInt64(long long x);
 
-  void writeUTF8(const ::scoped_string & scopedstrstring);
+  void writeUTF8(const ::scoped_string & scopedstrString);
 
   /**
    * Flushes inner output stream.
@@ -79,4 +79,4 @@ protected:
   OutputStream *m_outStream;
 };
 
-#endif
+

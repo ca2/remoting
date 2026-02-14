@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WSCONFIGRUNNER_H__
-#define __WSCONFIGRUNNER_H__
+#pragma once
+
 
 #include "thread/Thread.h"
 #include "log_writer/LogWriter.h"
@@ -45,4 +45,4 @@ private:
   LogWriter m_log;
 };
 
-#endif // __WSCONFIGRUNNER_H__
+//// __WSCONFIGRUNNER_H__

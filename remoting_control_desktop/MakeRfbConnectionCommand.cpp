@@ -37,5 +37,5 @@ MakeRfbConnectionCommand::~MakeRfbConnectionCommand()
 
 void MakeRfbConnectionCommand::execute()
 {
-  m_proxy->makeOutgoingConnection(m_connectString.getString(), m_viewOnly);
+  m_proxy->makeOutgoingConnection(m_connectString, m_viewOnly);
 }

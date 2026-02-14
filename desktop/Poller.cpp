@@ -55,7 +55,7 @@ void Poller::onTerminate()
 
 void Poller::execute()
 {
-  m_log->info(_T("poller thread id = %d"), getThreadId());
+  m_log->information("poller thread id = {}", getThreadId());
 
   FrameBuffer *screenFrameBuffer;
 
@@ -76,9 +76,9 @@ void Poller::execute()
       if (!screenFrameBuffer->isEqualTo(m_backupFrameBuffer)) {
         m_updateKeeper->setScreenSizeChanged();
       } else {
-        m_log->info(_T("grabbing screen for polling"));
+        m_log->information("grabbing screen for polling");
         m_screenGrabber->grab();
-        m_log->info(_T("end of grabbing screen for polling"));
+        m_log->information("end of grabbing screen for polling");
 
         // Polling
         int pollingWidth = m_pollingRect.width();

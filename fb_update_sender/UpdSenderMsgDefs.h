@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __UPDSENDERMSGDEFS_H__
-#define __UPDSENDERMSGDEFS_H__
+#pragma once
+
 
 #include "util/inttypes.h"
 
@@ -34,4 +34,4 @@ public:
   const static char RFB_VIDEO_FREEZE_SIG[];
 };
 
-#endif // __UPDSENDERMSGDEFS_H__
+//// __UPDSENDERMSGDEFS_H__

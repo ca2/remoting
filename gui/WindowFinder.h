@@ -22,17 +22,17 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINDOWFINDER_H__
-#define __WINDOWFINDER_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
-#include <vector>
+//#include <vector>
 #include "util/StringVector.h"
 
 class WindowFinder
 {
 public:
-  static ::std::vector<HWND> findWindowsByClass(StringVector classNames);
+  static ::array_base<HWND> findWindowsByClass(StringVector classNames);
 
   // Find first of windows that name contain the string.
   // It is not case sensitive.
@@ -43,4 +43,4 @@ protected:
   static BOOL CALLBACK findWindowsByNameFunc(HWND hwnd, LPARAM lParam);
 };
 
-#endif // __WINDOWFINDER_H__
+//// __WINDOWFINDER_H__

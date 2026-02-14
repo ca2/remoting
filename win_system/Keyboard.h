@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _KEYBOARD_H_
-#define _KEYBOARD_H_
+#pragma once
+
 
 #include "util/winhdr.h"
 
@@ -58,4 +58,4 @@ public:
 
 };
 
-#endif
+

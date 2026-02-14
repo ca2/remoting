@@ -117,7 +117,7 @@ void DateTime::toString(::string & target) const
     // TODO: Process this error.
   }
 
-  target->setString(dateString);
+  target-= dateString;
   target->appendChar(_T(' '));
 
   const size_t timeStringMaxLength = 255;

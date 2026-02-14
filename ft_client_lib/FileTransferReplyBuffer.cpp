@@ -35,7 +35,7 @@ FileTransferReplyBuffer::FileTransferReplyBuffer(LogWriter *logWriter)
   m_downloadFileFlags(0), m_downloadLastModified(0),
   m_dirSize(0)
 {
-  m_lastErrorMessage.setString(_T(""));
+  m_lastErrorMessage= "";
 }
 
 FileTransferReplyBuffer::~FileTransferReplyBuffer()
@@ -85,7 +85,7 @@ unsigned long long FileTransferReplyBuffer::getDirSize()
   return m_dirSize;
 }
 
-::std::vector<unsigned char> FileTransferReplyBuffer::getDownloadBuffer()
+::array_base<unsigned char> FileTransferReplyBuffer::getDownloadBuffer()
 {
   return m_downloadBuffer;
 }
@@ -94,8 +94,8 @@ void FileTransferReplyBuffer::onCompressionSupportReply(DataInputStream *input)
 {
   m_isCompressionSupported = (input->readUInt8() == 1);
 
-  m_logWriter->info(_T("Received compression support reply: %s\n"),
-                    m_isCompressionSupported ? _T("supported") : _T("not supported"));
+  m_logWriter->information("Received compression support reply: {}\n",
+                    m_isCompressionSupported ? "supported") : _T("not supported");
 }
 
 void FileTransferReplyBuffer::onFileListReply(DataInputStream *input)
@@ -104,7 +104,7 @@ void FileTransferReplyBuffer::onFileListReply(DataInputStream *input)
   unsigned int compressedSize = 0;
   unsigned int uncompressedSize = 0;
 
-  ::std::vector<unsigned char> buffer;
+  ::array_base<unsigned char> buffer;
 
   {
     compressionLevel = input->readUInt8();
@@ -143,16 +143,16 @@ void FileTransferReplyBuffer::onFileListReply(DataInputStream *input)
       ::string t;
       filesInfoReader.readUTF8(&t);
 
-      fileInfo->setFileName(t.getString());
+      fileInfo->setFileName(t);
     } // for all newly created file's info
 
-    m_logWriter->info(_T("Received file ::std::list reply: \n")
-                      _T("\t files count = %d\n")
-                      _T("\t use compression = %d\n"),
+    m_logWriter->information("Received file ::list reply: \n"
+                      "\t files count = {}\n"
+                      "\t use compression = {}\n",
                       m_filesInfoCount, compressionLevel);
   } else {
-    m_logWriter->info(_T("Received file ::std::list reply is not read: ")
-                      _T("compressed buffer is empty"));
+    m_logWriter->information("Received file ::list reply is not read: "
+                      "compressed buffer is empty");
   }
 }
 
@@ -163,22 +163,22 @@ void FileTransferReplyBuffer::onMd5DataReply(DataInputStream *input)
 
 void FileTransferReplyBuffer::onUploadReply(DataInputStream *input)
 {
-  m_logWriter->info(_T("Received upload reply\n"));
+  m_logWriter->information("Received upload reply\n");
 }
 
 void FileTransferReplyBuffer::onUploadDataReply(DataInputStream *input)
 {
-  m_logWriter->info(_T("Received upload data reply\n"));
+  m_logWriter->information("Received upload data reply\n");
 }
 
 void FileTransferReplyBuffer::onUploadEndReply(DataInputStream *input)
 {
-  m_logWriter->info(_T("Received upload end reply\n"));
+  m_logWriter->information("Received upload end reply\n");
 }
 
 void FileTransferReplyBuffer::onDownloadReply(DataInputStream *input)
 {
-  m_logWriter->info(_T("Received download reply\n"));
+  m_logWriter->information("Received download reply\n");
 }
 
 void FileTransferReplyBuffer::onDownloadDataReply(DataInputStream *input)
@@ -190,10 +190,10 @@ void FileTransferReplyBuffer::onDownloadDataReply(DataInputStream *input)
   m_downloadBuffer = readCompressedDataBlock(input, coBufferSize, uncoBufferSize, coLevel);
   m_downloadBufferSize = uncoBufferSize;
 
-  m_logWriter->info(_T("Received download data reply:\n")
-                    _T("\tcompressed size: %d\n")
-                    _T("\tuncompressed size: %d\n")
-                    _T("\tuse compression: %d\n"),
+  m_logWriter->information("Received download data reply:\n"
+                    "\tcompressed size: {}\n"
+                    "\tuncompressed size: {}\n"
+                    "\tuse compression: {}\n",
                     coBufferSize, uncoBufferSize, coLevel);
 }
 
@@ -202,44 +202,44 @@ void FileTransferReplyBuffer::onDownloadEndReply(DataInputStream *input)
   m_downloadFileFlags = input->readUInt8();
   m_downloadLastModified = input->readUInt64();
 
-  m_logWriter->info(_T("Received download end reply:\n")
-                    _T("\tfile flags: %d\n")
-                    _T("\tmodification time: %ld\n"),
+  m_logWriter->information("Received download end reply:\n"
+                    "\tfile flags: {}\n"
+                    "\tmodification time: {}\n",
                     m_downloadFileFlags, m_downloadLastModified);
 }
 
 void FileTransferReplyBuffer::onMkdirReply(DataInputStream *input)
 {
-  m_logWriter->info(_T("Received mkdir reply\n"));
+  m_logWriter->information("Received mkdir reply\n");
 }
 
 void FileTransferReplyBuffer::onRmReply(DataInputStream *input)
 {
-  m_logWriter->info(_T("Received rm reply\n"));
+  m_logWriter->information("Received rm reply\n");
 }
 
 void FileTransferReplyBuffer::onMvReply(DataInputStream *input)
 {
-  m_logWriter->info(_T("Received rename reply\n"));
+  m_logWriter->information("Received rename reply\n");
 }
 
 void FileTransferReplyBuffer::onDirSizeReply(DataInputStream *input)
 {
   m_dirSize = input->readUInt64();
 
-  m_logWriter->info(_T("Received dirsize reply\n"));
+  m_logWriter->information("Received dirsize reply\n");
 }
 
 void FileTransferReplyBuffer::onLastRequestFailedReply(DataInputStream *input)
 {
   input->readUTF8(&m_lastErrorMessage);
 
-  m_logWriter->info(_T("Received last request failed reply:\n")
-                    _T("\terror message: %s\n"),
-                    m_lastErrorMessage.getString());
+  m_logWriter->information("Received last request failed reply:\n"
+                    "\terror message: {}\n",
+                    m_lastErrorMessage);
 }
 
-::std::vector<unsigned char> FileTransferReplyBuffer::readCompressedDataBlock(DataInputStream *input,
+::array_base<unsigned char> FileTransferReplyBuffer::readCompressedDataBlock(DataInputStream *input,
                                                                unsigned int compressedSize,
                                                                unsigned int uncompressedSize,
                                                                unsigned char compressionLevel)
@@ -252,7 +252,7 @@ void FileTransferReplyBuffer::onLastRequestFailedReply(DataInputStream *input)
   unsigned int coSize = compressedSize;
   unsigned int uncoSize = uncompressedSize;
 
-  ::std::vector<unsigned char> coBuffer(coSize);
+  ::array_base<unsigned char> coBuffer(coSize);
 
   //
   // Read compressed data
@@ -268,7 +268,7 @@ void FileTransferReplyBuffer::onLastRequestFailedReply(DataInputStream *input)
     return coBuffer;
   }
 
-  ::std::vector<unsigned char> uncoBuffer(uncoSize);
+  ::array_base<unsigned char> uncoBuffer(uncoSize);
 
   m_inflater.setUnpackedSize(uncoSize);
   // FIXME: type conversion in C-style

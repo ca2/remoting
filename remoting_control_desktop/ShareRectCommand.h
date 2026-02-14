@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _SHARERECTCOMMAND_H_
-#define _SHARERECTCOMMAND_H_
+#pragma once
+
 
 #include "util/Command.h"
 #include "ControlProxy.h"
@@ -41,4 +41,4 @@ private:
   const ::int_rectangle m_shareRect;
 };
 
-#endif // _SHARERECTCOMMAND_H_
+//// _SHARERECTCOMMAND_H_

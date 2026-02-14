@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINDOW_H__
-#define __WINDOW_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "WindowMessageHandler.h"
@@ -62,4 +62,4 @@ private:
                                         LPARAM lParam);
 };
 
-#endif // __WINDOW_H__
+//// __WINDOW_H__

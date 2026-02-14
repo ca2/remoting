@@ -37,7 +37,7 @@ WinDxgiOutput::WinDxgiOutput(WinDxgiAdapter *dxgiAdapter, UINT iOutput)
   memset(&m_description, 0, sizeof(m_description));
   HRESULT hr = m_dxgiOutput->GetDesc(&m_description);
   if (FAILED(hr)) {
-    throw WinDxCriticalException(_T("Can't get output description"), hr);
+    throw WinDxCriticalException("Can't get output description", hr);
   }
 }
 

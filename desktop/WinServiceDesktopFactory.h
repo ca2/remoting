@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINSERVICEDESKTOPFACTORY_H__
-#define __WINSERVICEDESKTOPFACTORY_H__
+#pragma once
+
 
 #include "DesktopFactory.h"
 
@@ -39,4 +39,4 @@ public:
                                           LogWriter *log);
 };
 
-#endif // __WINSERVICEDESKTOPFACTORY_H__
+//// __WINSERVICEDESKTOPFACTORY_H__

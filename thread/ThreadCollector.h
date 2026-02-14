@@ -22,17 +22,17 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __THREADCOLLECTOR_H__
-#define __THREADCOLLECTOR_H__
+#pragma once
+
 
 #include "Thread.h"
 #include "LocalMutex.h"
 #include "win_system/WindowsEvent.h"
-#include <list>
+//#include <list>
 
 
 
-typedef ::std::list<Thread *> ThreadList;
+typedef ::list<Thread *> ThreadList;
 
 // Collector threads.
 // ThreadCollector has it's own thread which deletes in infinity loop not
@@ -43,11 +43,11 @@ public:
   ThreadCollector();
   virtual ~ThreadCollector();
 
-  // Adds thread to a self ::std::list.
+  // Adds thread to a self ::list.
   virtual void addThread(Thread *thread);
 
   // Forces terminates all threads, waits until they dies and than
-  // delete them from memory and thread ::std::list.
+  // delete them from memory and thread ::list.
   void destroyAllThreads();
 
   const size_t Size();
@@ -55,7 +55,7 @@ public:
 protected:
   virtual void execute();
 
-  // Deletes all dead threads from memory and removes them from self ::std::list.
+  // Deletes all dead threads from memory and removes them from self ::list.
   void deleteDeadThreads();
 
 protected:
@@ -65,4 +65,4 @@ protected:
   WindowsEvent m_timer;
 };
 
-#endif // __THREADCOLLECTOR_H__
+//// __THREADCOLLECTOR_H__

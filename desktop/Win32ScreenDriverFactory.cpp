@@ -45,31 +45,31 @@ createScreenDriver(UpdateKeeper *updateKeeper,
 {
   // Try to use Win8 duplication API firstly because it's in preference to other methods.
   if (isD3DAllowed()) {
-    log->info(_T("D3D driver usage is allowed, try to start it..."));
+    log->information("D3D driver usage is allowed, try to start it...");
     try {
       return new Win8ScreenDriver(updateKeeper, updateListener, fbLocalMutex, log);
-    } catch (Exception &e) {
-      log->error(_T("The Win8 duplication api can't be used: %s"),
+    } catch (::remoting::Exception &e) {
+      log->error("The Win8 duplication api can't be used: {}",
                  e.getMessage());
     }
   }
   else {
-    log->info(_T("D3D driver usage is disallowed"));
+    log->information("D3D driver usage is disallowed");
   }
 
   if (isMirrorDriverAllowed()) {
-    log->info(_T("Mirror driver usage is allowed, try to start it..."));
+    log->information("Mirror driver usage is allowed, try to start it...");
     try {
       return createMirrorScreenDriver(updateKeeper, updateListener,
                                       fbLocalMutex, log);
-    } catch (Exception &e) {
-      log->error(_T("The mirror driver factory has failed: %s"),
+    } catch (::remoting::Exception &e) {
+      log->error("The mirror driver factory has failed: {}",
                  e.getMessage());
     }
   } else {
-    log->info(_T("Mirror driver usage is disallowed"));
+    log->information("Mirror driver usage is disallowed");
   }
-  log->info(_T("Using the standart screen driver"));
+  log->information("Using the standart screen driver");
   return createStandardScreenDriver(updateKeeper,
                                     updateListener,
                                     fb,

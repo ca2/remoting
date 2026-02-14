@@ -116,7 +116,7 @@ int application::remoting_impact_main( const ::file::path & path)
    // catch (const CommandLineFormatException &exception) {
    //   ::string strError(exception.getMessage());
    //   MessageBox(0,
-   //     strError.getString(),
+   //     strError,
    //     ProductNames::VIEWER_PRODUCT_NAME,
    //     MB_OK | MB_ICONERROR);
    //   return 0;
@@ -129,9 +129,9 @@ int application::remoting_impact_main( const ::file::path & path)
    LogWriter logWriter(config.getLogger());
 
 
-   logWriter.debug(_T("main()"));
-   logWriter.debug(_T("loading settings from storage completed"));
-   logWriter.debug(_T("Log initialization completed"));
+   logWriter.debug("main()");
+   logWriter.debug("loading settings from storage completed");
+   logWriter.debug("Log initialization completed");
 
    int result = 0;
    try {
@@ -147,7 +147,7 @@ int application::remoting_impact_main( const ::file::path & path)
          tvnViewer.showLoginDialog();
       }
       result = tvnViewer.run();
-   } catch (const Exception &ex) {
+   } catch (const ::remoting::Exception &ex) {
       MessageBox(0,
                  StringTable::getString(IDS_UNKNOWN_ERROR_IN_VIEWER),
                  ProductNames::VIEWER_PRODUCT_NAME,

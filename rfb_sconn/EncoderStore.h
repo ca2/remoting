@@ -22,10 +22,10 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RFB_ENCODER_STORE_H_INCLUDED__
-#define __RFB_ENCODER_STORE_H_INCLUDED__
+#pragma onceINCLUDED__
+INCLUDED__
 
-#include <map>
+//#include <map>
 
 #include "Encoder.h"
 #include "JpegEncoder.h"
@@ -75,7 +75,7 @@ protected:
   static bool encodingSupported(int encType);
 
   // Allocates the specified encoder (using new) and returns the pointer.
-  // If the encoding type is unknown, throws an Exception.
+  // If the encoding type is unknown, throws an ::remoting::Exception.
   Encoder *allocateEncoder(int encType) const;
 
 protected:
@@ -83,7 +83,7 @@ protected:
   // allocated objects derived from Encoder. Encoders are allocated by the
   // selectEncoder() function. Allocated encoders will not be deleted until
   // EncoderStore destruction.
-  ::std::map<int, Encoder *> m_map;
+  ::map<int, Encoder *> m_map;
 
   // Current encoder (preferred encoder). Initialized with a null pointer,
   // should point to the encoder selected by the most recent selectEncoder()
@@ -108,4 +108,4 @@ private:
   EncoderStore &operator=(const EncoderStore &other);
 };
 
-#endif // __RFB_ENCODER_STORE_H_INCLUDED__
+//// __RFB_ENCODER_STORE_H_INCLUDED__

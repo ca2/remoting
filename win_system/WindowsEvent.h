@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINDOWSEVENT_H__
-#define __WINDOWSEVENT_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -42,4 +42,4 @@ protected:
   HANDLE m_hEvent;
 };
 
-#endif // __WINDOWSEVENT_H__
+//// __WINDOWSEVENT_H__

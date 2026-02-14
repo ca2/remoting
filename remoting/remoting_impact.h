@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _TVN_VIEWER_H_
-#define _TVN_VIEWER_H_
+#pragma once
+
 
 #include "AboutDialog.h"
 #include "ConfigurationDialog.h"
@@ -37,7 +37,7 @@
 #include "log_writer/LogWriter.h"
 #include "thread/AutoLock.h"
 
-#include <map>
+//#include <map>
 
 class ViewerCollector;
 class ControlTrayIcon;
@@ -76,7 +76,7 @@ public:
   // ConnectionData and ConnectionConfig). After call this function can free memory
   // with hostName, connectionData, connectionConfig
   void newListeningConnection();
-  void newConnection(const ::string & hostName, const ConnectionConfig & connectionConfig);
+  void newConnection(const ::scoped_string & hostName, const ConnectionConfig & connectionConfig);
   void newConnection(const ConnectionData & conData, const ConnectionConfig &
      connectionConfig);
   void startListening(int listeningPort);
@@ -122,7 +122,7 @@ protected:
   static LRESULT CALLBACK wndProcViewer(HWND hWnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
   void runInstance(ConnectionData & sonData, const ConnectionConfig & config);
-  void runInstance(const ::string & hostName, const ConnectionConfig & config);
+  void runInstance(const ::scoped_string & hostName, const ConnectionConfig & config);
 
   // This method return true, if login dialog is visible.
   bool isVisibleLoginDialog() const;
@@ -154,4 +154,4 @@ private:
   WNDCLASS m_viewerWndClass;
 };
 
-#endif
+

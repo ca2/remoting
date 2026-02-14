@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _NEW_FOLDER_DIALOG_H_
-#define _NEW_FOLDER_DIALOG_H_
+#pragma once
+
 
 #include "gui/BaseDialog.h"
 #include "gui/Control.h"
@@ -36,7 +36,7 @@ public:
   NewFolderDialog(Control *parent);
   ~NewFolderDialog();
 
-  void setFileName(const ::scoped_string & scopedstrfilename);
+  void setFileName(const ::scoped_string & scopedstrFilename);
   void getFileName(::string & storage);
 
 protected:
@@ -70,7 +70,7 @@ protected:
   Control m_label;
   TextBox m_fileNameTextBox;
 
-  ::string m_fileName;
+  ::string m_strFileName;
 };
 
-#endif
+

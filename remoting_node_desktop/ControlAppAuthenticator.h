@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __CONTROLAPPAUTHENTICATOR_H__
-#define __CONTROLAPPAUTHENTICATOR_H__
+#pragma once
+
 
 #include "AuthTracker.h"
 #include "win_system/WindowsEvent.h"
@@ -67,4 +67,4 @@ private:
   bool m_isBreaked;
 };
 
-#endif // __CONTROLAPPAUTHENTICATOR_H__
+//// __CONTROLAPPAUTHENTICATOR_H__

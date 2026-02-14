@@ -53,7 +53,7 @@ bool WindowsClipboard::writeToClipBoard(const ::scoped_string & scopedstrtext)
     HGLOBAL hglb = GlobalAlloc(GMEM_MOVEABLE, clipSize);
     if (hglb) {
       TCHAR *buff = (TCHAR *)GlobalLock(hglb);
-      memcpy(buff, clipboard.getString(), clipSize);
+      memcpy(buff, clipboard, clipSize);
       GlobalUnlock(hglb);
 
 #ifdef _UNICODE
@@ -90,7 +90,7 @@ void WindowsClipboard::readFromClipBoard(::string & clipDest) const
   const UINT CF_TCTEXT = CF_TEXT;
 #endif
 
-  clipDest->setString(_T(""));
+  clipDest-= "";
   if (!IsClipboardFormatAvailable(CF_TCTEXT) || !OpenClipboard(m_hwnd)) {
     return;
   }
@@ -99,7 +99,7 @@ void WindowsClipboard::readFromClipBoard(::string & clipDest) const
   if (hglb != NULL) {
     const ::scoped_string & scopedstrlpstr = (const ::scoped_string & scopedstr)GlobalLock(hglb);
     if (lpstr != 0) {
-      clipDest->setString(lpstr);
+      clipDest-= lpstr;
       GlobalUnlock(hglb);
     }
   }
@@ -156,7 +156,7 @@ void WindowsClipboard::onTerminate()
 
 void WindowsClipboard::execute()
 {
-  m_log->info(_T("clipboard thread id = %d"), getThreadId());
+  m_log->information("clipboard thread id = {}", getThreadId());
 
   if (!createWindow()) {
     return;
@@ -174,10 +174,10 @@ void WindowsClipboard::execute()
   destroyWindow();
 }
 
-void WindowsClipboard::convertToRfbFormat(const ::string & source,
+void WindowsClipboard::convertToRfbFormat(const ::scoped_string & source,
                                           ::string & dest)
 {
-  const ::scoped_string & scopedstrsrcText = source->getString();
+  const ::scoped_string & scopedstrSrcText = source->getString();
   size_t length = source->getLength();
   TCHAR *rfbText = new TCHAR[length + 1];
 
@@ -189,11 +189,11 @@ void WindowsClipboard::convertToRfbFormat(const ::string & source,
     }
   }
   rfbText[j] = 0;
-  dest->setString(rfbText);
+  dest-= rfbText;
   delete[] rfbText;
 }
 
-void WindowsClipboard::convertFromRfbFormat(const ::scoped_string & scopedstrsource,
+void WindowsClipboard::convertFromRfbFormat(const ::scoped_string & scopedstrSource,
                                             ::string & dest)
 {
   // Count of 'LF' symbols.
@@ -218,6 +218,6 @@ void WindowsClipboard::convertFromRfbFormat(const ::scoped_string & scopedstrsou
   }
   destText[j] = 0;
 
-  dest->setString(destText);
+  dest-= destText;
   delete[] destText;
 }

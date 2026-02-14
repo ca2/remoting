@@ -47,67 +47,67 @@ DesktopClientImpl::DesktopClientImpl(ClipboardListener *extClipListener,
   m_gateKicker(0),
   m_log(log)
 {
-  m_log->info(_T("Creating DesktopClientImpl"));
+  m_log->information("Creating DesktopClientImpl");
 
   try {
-    m_log->debug(_T("DesktopClientImpl: Try to initialize DesktopServerWatcher"));
+    m_log->debug("DesktopClientImpl: Try to initialize DesktopServerWatcher");
     m_deskServWatcher = new DesktopServerWatcher(this, m_log);
 
     // Transport initialization
-    m_log->debug(_T("DesktopClientImpl: Initializing ReconnectingChannel(s)..."));
+    m_log->debug("DesktopClientImpl: Initializing ReconnectingChannel(s)...");
     m_clToSrvChan = new ReconnectingChannel(60000, m_log);
     m_srvToClChan = new ReconnectingChannel(60000, m_log);
 
     // At this point the all DesktopServerWatcher's callback resources is initialized.
-    m_log->debug(_T("DesktopClientImpl: Resuming DesktopServerWatcher"));
+    m_log->debug("DesktopClientImpl: Resuming DesktopServerWatcher");
     m_deskServWatcher->resume();
 
-    m_log->debug(_T("DesktopClientImpl: Creating BlockingGate wrappers for the ReconnectingChannel(s)"));
+    m_log->debug("DesktopClientImpl: Creating BlockingGate wrappers for the ReconnectingChannel(s)");
     m_clToSrvGate = new BlockingGate(m_clToSrvChan);
     m_srvToClGate = new BlockingGate(m_srvToClChan);
 
-    m_log->debug(_T("DesktopClientImpl: Initializing DesktopSrvDispatcher"));
+    m_log->debug("DesktopClientImpl: Initializing DesktopSrvDispatcher");
     m_dispatcher = new DesktopSrvDispatcher(m_srvToClGate, this, m_log);
 
-    m_log->debug(_T("DesktopClientImpl: Initializing UpdateHandlerClient..."));
+    m_log->debug("DesktopClientImpl: Initializing UpdateHandlerClient...");
     m_updateHandler = new UpdateHandlerClient(m_clToSrvGate, m_dispatcher,
                                               this, m_log);
 
-    m_log->debug(_T("DesktopClientImpl: Initializing UserInputClient..."));
+    m_log->debug("DesktopClientImpl: Initializing UserInputClient...");
     UserInputClient *userInputClient =
       new UserInputClient(m_clToSrvGate, m_dispatcher, this);
     m_userInputClient = userInputClient;
-    m_log->debug(_T("DesktopClientImpl: Initializing SasUserInput..."));
+    m_log->debug("DesktopClientImpl: Initializing SasUserInput...");
     m_userInput = new SasUserInput(userInputClient, m_log);
 
-    m_log->debug(_T("DesktopClientImpl: Initializing DesktopConfigClient..."));
+    m_log->debug("DesktopClientImpl: Initializing DesktopConfigClient...");
     m_deskConf = new DesktopConfigClient(m_clToSrvGate);
-    m_log->debug(_T("DesktopClientImpl: Initializing GateKicker..."));
+    m_log->debug("DesktopClientImpl: Initializing GateKicker...");
     m_gateKicker = new GateKicker(m_clToSrvGate);
     // Start dispatcher after handler registrations
-    m_log->debug(_T("DesktopClientImpl: Resuming DesktopSrvDispatcher"));
+    m_log->debug("DesktopClientImpl: Resuming DesktopSrvDispatcher");
     m_dispatcher->resume();
-    m_log->debug(_T("DesktopClientImpl: Calling onConfigReload(0)"));
+    m_log->debug("DesktopClientImpl: Calling onConfigReload(0)");
     onConfigReload(0);
 
-    m_log->debug(_T("DesktopClientImpl: Registering as a listener in the Configurator"));
+    m_log->debug("DesktopClientImpl: Registering as a listener in the Configurator");
     Configurator::getInstance()->addListener(this);
-  } catch (Exception &ex) {
-    m_log->error(_T("Exception during DesktopClientImpl creaion: %s"), ex.getMessage());
+  } catch (::remoting::Exception &ex) {
+    m_log->error("::remoting::Exception during DesktopClientImpl creaion: {}", ex.getMessage());
     freeResource();
     throw;
   }
-  m_log->debug(_T("DesktopClientImpl: Resuming self thread"));
+  m_log->debug("DesktopClientImpl: Resuming self thread");
   resume();
 }
 
 DesktopClientImpl::~DesktopClientImpl()
 {
-  m_log->info(_T("Deleting DesktopClientImpl"));
+  m_log->information("Deleting DesktopClientImpl");
   terminate();
   wait();
   freeResource();
-  m_log->info(_T("DesktopClientImpl deleted"));
+  m_log->information("DesktopClientImpl deleted");
 }
 
 void DesktopClientImpl::freeResource()
@@ -137,14 +137,14 @@ void DesktopClientImpl::closeDesktopServerTransport()
 {
   try {
     if (m_clToSrvChan) m_clToSrvChan->close();
-  } catch (Exception &e) {
-    m_log->error(_T("Cannot close client->server channel from Windesktop: %s"),
+  } catch (::remoting::Exception &e) {
+    m_log->error("Cannot close client->server channel from Windesktop: {}",
                e.getMessage());
   }
   try {
     if (m_srvToClChan) m_srvToClChan->close();
-  } catch (Exception &e) {
-    m_log->error(_T("Cannot close server->client channel from Windesktop: %s"),
+  } catch (::remoting::Exception &e) {
+    m_log->error("Cannot close server->client channel from Windesktop: {}",
                e.getMessage());
   }
 }
@@ -152,7 +152,7 @@ void DesktopClientImpl::closeDesktopServerTransport()
 void DesktopClientImpl::onAnObjectEvent()
 {
   m_extDeskTermListener->onAbnormalDesktopTerminate();
-  m_log->error(_T("Forced closing of pipe conections"));
+  m_log->error("Forced closing of pipe conections");
   closeDesktopServerTransport();
 }
 
@@ -160,18 +160,18 @@ void DesktopClientImpl::onReconnect(Channel *newChannelTo, Channel *newChannelFr
 {
   BlockingGate gate(newChannelTo);
   if (m_deskConf) {
-    m_log->info(_T("try update remote configuration from the ")
-              _T("DesktopClientImpl::onReconnect() function"));
+    m_log->information("try update remote configuration from the "
+              "DesktopClientImpl::onReconnect() function");
     m_deskConf->updateByNewSettings(&gate);
   }
   if (m_updateHandler) {
-    m_log->info(_T("try update remote UpdateHandler from the ")
-              _T("DesktopClientImpl::onReconnect() function"));
+    m_log->information("try update remote UpdateHandler from the "
+              "DesktopClientImpl::onReconnect() function");
     m_updateHandler->sendInit(&gate);
   }
   if (m_userInput) {
-    m_log->info(_T("try update remote UserInput from the ")
-              _T("DesktopClientImpl::onReconnect() function"));
+    m_log->information("try update remote UserInput from the "
+              "DesktopClientImpl::onReconnect() function");
     m_userInput->sendInit(&gate);
   }
 
@@ -186,7 +186,7 @@ void DesktopClientImpl::onTerminate()
 
 void DesktopClientImpl::execute()
 {
-  m_log->info(_T("DesktopClientImpl thread started"));
+  m_log->information("DesktopClientImpl thread started");
 
   while (!isTerminating()) {
     m_newUpdateEvent.waitForEvent();
@@ -195,7 +195,7 @@ void DesktopClientImpl::execute()
     }
   }
 
-  m_log->info(_T("DesktopClientImpl thread stopped"));
+  m_log->information("DesktopClientImpl thread stopped");
 }
 
 bool DesktopClientImpl::isRemoteInputTempBlocked()
@@ -205,6 +205,6 @@ bool DesktopClientImpl::isRemoteInputTempBlocked()
 
 void DesktopClientImpl::applyNewConfiguration()
 {
-  m_log->info(_T("reload DesktopClientImpl configuration"));
+  m_log->information("reload DesktopClientImpl configuration");
   m_deskConf->updateByNewSettings(m_clToSrvGate);
 }

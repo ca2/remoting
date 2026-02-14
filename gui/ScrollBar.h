@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _SCROLL_BAR_H_
-#define _SCROLL_BAR_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -72,4 +72,4 @@ protected:
   bool m_isVHorz;
 };
 
-#endif
+

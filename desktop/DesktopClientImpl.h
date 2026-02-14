@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __DESKTOPCLIENTIMPL_H__
-#define __DESKTOPCLIENTIMPL_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "DesktopServerWatcher.h"
@@ -84,4 +84,4 @@ private:
   LogWriter *m_log;
 };
 
-#endif // __DESKTOPCLIENTIMPL_H__
+//// __DESKTOPCLIENTIMPL_H__

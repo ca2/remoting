@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RELOADCONFIGCOMMAND_H__
-#define __RELOADCONFIGCOMMAND_H__
+#pragma once
+
 
 #include "util/Command.h"
 
@@ -42,4 +42,4 @@ private:
   ControlProxy* m_proxy;
 };
 
-#endif // __RELOADCONFIGCOMMAND_H__
+//// __RELOADCONFIGCOMMAND_H__

@@ -50,14 +50,14 @@ void CursorPainter::updatePointerPos(const Point *position)
 
 void CursorPainter::setNewCursor(const Point *hotSpot,
                                  unsigned short width, unsigned short height,
-                                 const ::std::vector<unsigned char> *cursor,
-                                 const ::std::vector<unsigned char> *bitmask)
+                                 const ::array_base<unsigned char> *cursor,
+                                 const ::array_base<unsigned char> *bitmask)
 {
   AutoLock al(&m_lock);
-  m_logWriter->debug(_T("Cursor hot-spot is (%d, %d)"), hotSpot->x, hotSpot->y);
+  m_logWriter->debug("Cursor hot-spot is ({}, {})", hotSpot->x, hotSpot->y);
   m_cursor.setHotSpot(hotSpot->x, hotSpot->y);
 
-  m_logWriter->debug(_T("Cursor size is (%d, %d)"), width, height);
+  m_logWriter->debug("Cursor size is ({}, {})", width, height);
   ::int_size cursorDimension(width, height);
   PixelFormat pixelFormat = m_fb->getPixelFormat();
 
@@ -70,9 +70,9 @@ void CursorPainter::setNewCursor(const Point *hotSpot,
    //if (0)
    {
       if (cursorSize != 0) {
-         m_logWriter->debug(_T("Set image of cursor..."));
+         m_logWriter->debug("Set image of cursor...");
          memcpy(m_cursor.getPixels()->getBuffer(), &cursor->front(), cursorSize);
-         m_logWriter->debug(_T("Set bitmask of cursor..."));
+         m_logWriter->debug("Set bitmask of cursor...");
          m_cursor.assignMaskFromRfb(reinterpret_cast<const char *>(&bitmask->front()));
       }
    }
@@ -80,7 +80,7 @@ void CursorPainter::setNewCursor(const Point *hotSpot,
 
 void CursorPainter::setIgnoreShapeUpdates(bool ignore)
 {
-  m_logWriter->debug(_T("Set flag of ignor by cursor update is '%d'"), ignore);
+  m_logWriter->debug("Set flag of ignor by cursor update is '{}'", ignore);
 
   AutoLock al(&m_lock);
   m_ignoreShapeUpdates = ignore;
@@ -101,13 +101,13 @@ void CursorPainter::setIgnoreShapeUpdates(bool ignore)
 
   erase.offset(corner.x, corner.y);
 
-  m_logWriter->info(_T("Cursor rect: (%d, %d), (%d, %d)"), erase.left, erase.top, erase.right, erase.bottom);
+  m_logWriter->information("Cursor rect: ({}, {}), ({}, {})", erase.left, erase.top, erase.right, erase.bottom);
 
   if (erase.area() == 0) {
     return ::int_rectangle();
   }
 
-  m_logWriter->debug(_T("Erasing cursor..."));
+  m_logWriter->debug("Erasing cursor...");
   m_fb->copyFrom(erase, &m_cursorOverlay, 0, 0);
 
   return erase;
@@ -120,13 +120,13 @@ void CursorPainter::setIgnoreShapeUpdates(bool ignore)
   m_lastPosition = m_pointerPosition;
 
   if (m_isExist) {
-    m_logWriter->error(_T("Error in CursorPainter: painting double copy of cursor."));
+    m_logWriter->error("Error in CursorPainter: painting double copy of cursor.");
     _ASSERT(true);
   }
 
   if (!m_ignoreShapeUpdates && m_cursorIsMoveable && m_cursor.getDimension().area() != 0) {
 
-    m_logWriter->debug(_T("Painting cursor..."));
+    m_logWriter->debug("Painting cursor...");
 
     Point corner = getUpperLeftPoint(&m_lastPosition);
 

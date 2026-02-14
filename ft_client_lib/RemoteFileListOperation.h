@@ -22,13 +22,13 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _REMOTE_FILE_LIST_OPERATION_H_
-#define _REMOTE_FILE_LIST_OPERATION_H_
+#pragma once
+
 
 #include "FileTransferOperation.h"
 
 //
-// File operation that used for receiving file ::std::list
+// File operation that used for receiving file ::list
 // from remote file system.
 //
 
@@ -65,4 +65,4 @@ public:
   bool m_isOk;
 };
 
-#endif
+

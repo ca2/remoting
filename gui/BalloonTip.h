@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _BALLOON_TIP_H_
-#define _BALLOON_TIP_H_
+#pragma once
+
 
 #include "Tooltip.h"
 #include "util/CommonHeader.h"
@@ -55,4 +55,4 @@ protected:
   ::string m_title;
 };
 
-#endif
+

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _NOTIFICATOR_H_
-#define _NOTIFICATOR_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -37,4 +37,4 @@ public:
   virtual void notifyConnectionLost() = 0;
 };
 
-#endif
+

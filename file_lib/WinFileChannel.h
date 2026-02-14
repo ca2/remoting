@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINFILECHANNEL_H__
-#define __WINFILECHANNEL_H__
+#pragma once
+
 
 #include "FileChannel.h"
 #include "WinFile.h"
@@ -33,7 +33,7 @@ class WinFileChannel : public FileChannel
 public:
   // Creates a channel with opens or creates a file with desired access.
   // See WinFile for detail.
-  WinFileChannel(const ::scoped_string & scopedstrpathName, DesiredAccess dAcc, FileMode fMode,
+  WinFileChannel(const ::scoped_string & scopedstrPathName, DesiredAccess dAcc, FileMode fMode,
                  bool sharedToRead = true);
   ~WinFileChannel();
 
@@ -54,4 +54,4 @@ private:
   WinFile m_winFile;
 };
 
-#endif // __WINFILECHANNEL_H__
+//// __WINFILECHANNEL_H__

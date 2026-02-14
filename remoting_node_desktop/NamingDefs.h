@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _PUBLIC_NAMES_H_
-#define _PUBLIC_NAMES_H_
+#pragma once
+
 
 // This file contains all public names.
 #include "util/CommonHeader.h"
@@ -111,4 +111,4 @@ public:
   static const char HTTP_MSG_BADPARAMS[];
 };
 
-#endif // _PUBLIC_NAMES_H_
+//// _PUBLIC_NAMES_H_

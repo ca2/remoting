@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "FileLogger.h"
 
-FileLogger::FileLogger(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrfileName,
+FileLogger::FileLogger(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrFileName,
                        unsigned char logLevel, bool logHeadEnabled)
 : m_fileAccount(logDir, fileName, logLevel, logHeadEnabled)
 {
@@ -39,7 +39,7 @@ FileLogger::~FileLogger()
 {
 }
 
-void FileLogger::init(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrfileName, unsigned char logLevel)
+void FileLogger::init(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrFileName, unsigned char logLevel)
 {
   m_fileAccount.init(logDir, fileName, logLevel);
 }

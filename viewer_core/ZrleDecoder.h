@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _ZRLE_DECODER_H_
-#define _ZRLE_DECODER_H_
+#pragma once
+
 
 #include "DecoderOfRectangle.h"
 
@@ -37,7 +37,7 @@ public:
   virtual ~ZrleDecoder();
 
 protected:
-  typedef ::std::vector<unsigned int> Palette;
+  typedef ::array_base<unsigned int> Palette;
 
 protected:
   virtual void decode(RfbInputGate *input,
@@ -56,31 +56,31 @@ protected:
                    Palette *palette);
 
   void readRawTile(DataInputStream *input,
-                   ::std::vector<char> &pixels,
+                   ::array_base<char> &pixels,
                    const ::int_rectangle &  tileRect);
 
   void readSolidTile(DataInputStream *input,
-                     ::std::vector<char> &pixels,
+                     ::array_base<char> &pixels,
                      const ::int_rectangle &  tileRect);
 
   void readPackedPaletteTile(DataInputStream *input,
-                             ::std::vector<char> &pixels,
+                             ::array_base<char> &pixels,
                              const ::int_rectangle &  tileRect,
                              const int type);
 
   void readPlainRleTile(DataInputStream *input,
-                        ::std::vector<char> &pixels,
+                        ::array_base<char> &pixels,
                         const ::int_rectangle &  tileRect);
 
   void readPaletteRleTile(DataInputStream *input,
-                          ::std::vector<char> &pixels,
+                          ::array_base<char> &pixels,
                           const ::int_rectangle &  tileRect,
                           const int type);
 
 
   void drawTile(FrameBuffer *fb,
                 const ::int_rectangle &  tileRect,
-                const ::std::vector<char> *pixels);
+                const ::array_base<char> *pixels);
 
   Inflater m_inflater;
   size_t m_bytesPerPixel;
@@ -106,4 +106,4 @@ private:
   static size_t getMaxSizeOfRectangle(const ::int_rectangle &  dstRect);
 };
 
-#endif
+

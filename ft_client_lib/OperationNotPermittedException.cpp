@@ -25,7 +25,7 @@
 #include "OperationNotPermittedException.h"
 
 OperationNotPermittedException::OperationNotPermittedException()
- : Exception("Current message is not permitted by current file transfer operation")
+ : ::remoting::Exception("Current message is not permitted by current file transfer operation")
 {
 }
 

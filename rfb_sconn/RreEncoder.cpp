@@ -40,7 +40,7 @@ int RreEncoder::getCode() const
 }
 
 void RreEncoder::splitRectangle(const ::int_rectangle &  rect,
-                                ::std::vector<::int_rectangle> *rectList,
+                                ::array_base<::int_rectangle> *rectList,
                                 const FrameBuffer *serverFb,
                                 const EncodeOptions *options)
 {
@@ -48,7 +48,7 @@ void RreEncoder::splitRectangle(const ::int_rectangle &  rect,
     for (int x0 = rect.left; x0 < rect.right; x0 += RECT_SIZE) {
       int x1 = min(x0 + RECT_SIZE, rect.right);
       int y1 = min(y0 + RECT_SIZE, rect.bottom);
-      rectList->push_back(::int_rectangle(x0, y0, x1, y1));
+      rectList->add(::int_rectangle(x0, y0, x1, y1));
     }
   }
 }
@@ -89,7 +89,7 @@ void RreEncoder::rreEncode(const ::int_rectangle &  r,
   // Clear the cache with m_rects.
   m_rects.resize(0);
 
-  ::std::vector<PIXEL_T> subrectPixelValue;
+  ::array_base<PIXEL_T> subrectPixelValue;
 
   // Find lines with the same pixel values.
   for (int i = r.top; i < r.bottom; i++) {
@@ -98,10 +98,10 @@ void RreEncoder::rreEncode(const ::int_rectangle &  r,
         if (subrectPixelValue.empty() ||
             (buffer[i * fbWidth + j] & mask) != (buffer[i * fbWidth + j - 1] & mask) ||
             m_rects.back().top != (i - r.top)) {
-          subrectPixelValue.push_back(buffer[i * fbWidth + j] & mask);
+          subrectPixelValue.add(buffer[i * fbWidth + j] & mask);
           ::int_rectangle rect(0, 0, 1, 1);
           rect.set_top_left(j - r.left, i - r.top);
-          m_rects.push_back(rect);
+          m_rects.add(rect);
         } else {
           ++m_rects.back().right;
         }

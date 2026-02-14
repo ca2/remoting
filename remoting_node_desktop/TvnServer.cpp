@@ -70,7 +70,7 @@ TvnServer::TvnServer(bool runsInServiceContext,
   m_contextSwitchResolution(1),
   m_extraRfbServers(&m_log)
 {
-  m_log.message(_T("%s Build on %s"),
+  m_log.message("{} Build on {}",
                  ProductNames::SERVER_PRODUCT_NAME,
                  BuildTime::DATE);
 
@@ -85,7 +85,7 @@ TvnServer::TvnServer(bool runsInServiceContext,
     m_srvConfig->getLogFileDir(&logDir);
     unsigned char logLevel = m_srvConfig->getLogLevel();
     // FIXME: Use correct log name.
-    m_logInitListener->onLogInit(logDir.getString(), LogNames::SERVER_LOG_FILE_STUB_NAME, logLevel);
+    m_logInitListener->onLogInit(logDir, LogNames::SERVER_LOG_FILE_STUB_NAME, logLevel);
 
   } catch (...) {
     // A log error must not be a reason that stop the server.
@@ -93,12 +93,12 @@ TvnServer::TvnServer(bool runsInServiceContext,
 
   // Initialize windows sockets.
 
-  m_log.info(_T("Initialize WinSock"));
+  m_log.info("Initialize WinSock");
 
   try {
     WindowsSocket::startup(2, 1);
-  } catch (Exception &ex) {
-    m_log.interror(_T("%s"), ex.getMessage());
+  } catch (::remoting::Exception &ex) {
+    m_log.interror("{}", ex.getMessage());
   }
 
   DesktopFactory *desktopFactory = 0;
@@ -147,12 +147,12 @@ TvnServer::~TvnServer()
 
   delete m_rfbClientManager;
 
-  m_log.info(_T("Shutdown WinSock"));
+  m_log.info("Shutdown WinSock");
 
   try {
     WindowsSocket::cleanup();
-  } catch (Exception &ex) {
-    m_log.error(_T("%s"), ex.getMessage());
+  } catch (::remoting::Exception &ex) {
+    m_log.error("{}", ex.getMessage());
   }
 }
 
@@ -171,9 +171,9 @@ void TvnServer::onConfigReload(ServerConfig *serverConfig)
       (m_srvConfig->getRfbPort() != (int)m_rfbServer->getBindPort());
 
     const ::scoped_string & scopedstrbindHost =
-      m_srvConfig->isOnlyLoopbackConnectionsAllowed() ? _T("localhost") : _T("0.0.0.0");
+      m_srvConfig->isOnlyLoopbackConnectionsAllowed() ? "localhost") : _T("0.0.0.0";
     bool changeBindHost =  m_rfbServer != 0 &&
-      _tcscmp(m_rfbServer->getBindHost(), bindHost) != 0;
+      wcscmp(m_rfbServer->getBindHost(), bindHost) != 0;
 
     if (toggleMainRfbServer ||
         changeMainRfbPort ||
@@ -241,9 +241,9 @@ void TvnServer::getServerInfo(TvnServerInfo *info)
 
   UINT stringId = m_runAsService ? IDS_TVNSERVER_SERVICE : IDS_TVNSERVER_APP;
 
-  info->m_statusText.format(_T("%s - %s"),
+  info->m_statusText.formatf("{} - {}",
                             StringTable::getString(stringId),
-                            statusString.getString());
+                            statusString);
   info->m_acceptFlag = rfbServerListening && !vncPasswordsError;
   info->m_serviceFlag = m_runAsService;
 }
@@ -268,17 +268,17 @@ bool TvnServer::isRunningAsService() const
 void TvnServer::afterFirstClientConnect()
 {
   if (timeBeginPeriod(m_contextSwitchResolution) == TIMERR_NOERROR) {
-    m_log.message(_T("Set context switch resolution: %d ms"), m_contextSwitchResolution);
+    m_log.message("Set context switch resolution: {} ms", m_contextSwitchResolution);
   }
   else {
-    m_log.message(_T("Can't change context switch resolution to: %d ms"), m_contextSwitchResolution);
+    m_log.message("Can't change context switch resolution to: {} ms", m_contextSwitchResolution);
   }
 
 }
 
 void TvnServer::afterLastClientDisconnect()
 {
-  m_log.message(_T("Restore context switch resolution"));
+  m_log.message("Restore context switch resolution");
   timeEndPeriod(m_contextSwitchResolution);
 
   ServerConfig::DisconnectAction action = m_srvConfig->getDisconnectAction();
@@ -290,10 +290,10 @@ void TvnServer::afterLastClientDisconnect()
 
   switch (action) {
   case ServerConfig::DA_LOCK_WORKSTATION:
-    keys.format(_T("%s"), AdditionalActionApplication::LOCK_WORKSTATION_KEY);
+    keys.formatf("{}", AdditionalActionApplication::LOCK_WORKSTATION_KEY);
     break;
   case ServerConfig::DA_LOGOUT_WORKSTATION:
-    keys.format(_T("%s"), AdditionalActionApplication::LOGOUT_KEY);
+    keys.formatf("{}", AdditionalActionApplication::LOGOUT_KEY);
     break;
   default:
     return;
@@ -307,18 +307,18 @@ void TvnServer::afterLastClientDisconnect()
   thisModulePath.quoteSelf();
   if (isRunningAsService()) {
     bool connectToRdp = m_srvConfig->getConnectToRdpFlag();
-    process = new CurrentConsoleProcess(&m_log, connectToRdp, thisModulePath.getString(),
-                                        keys.getString());
+    process = new CurrentConsoleProcess(&m_log, connectToRdp, thisModulePath,
+                                        keys);
   } else {
-    process = new Process(thisModulePath.getString(), keys.getString());
+    process = new Process(thisModulePath, keys);
   }
 
-  m_log.message(_T("Execute disconnect action in separate process"));
+  m_log.message("Execute disconnect action in separate process");
 
   try {
     process->start();
   } catch (SystemException &ex) {
-    m_log.error(_T("Failed to start application: \"%s\""), ex.getMessage());
+    m_log.error("Failed to start application: \"{}\"", ex.getMessage());
   }
 
   delete process;
@@ -331,13 +331,13 @@ void TvnServer::restartHttpServer()
   stopHttpServer();
 
   if (m_srvConfig->isAcceptingHttpConnections()) {
-    m_log.message(_T("Starting HTTP server"));
+    m_log.message("Starting HTTP server");
     try {
       // FIXME: HTTP server should bind to localhost if only loopback
       //        connections are allowed.
-      m_httpServer = new HttpServer(_T("0.0.0.0"), m_srvConfig->getHttpPort(), m_runAsService, &m_log);
-    } catch (Exception &ex) {
-      m_log.error(_T("Failed to start HTTP server: \"%s\""), ex.getMessage());
+      m_httpServer = new HttpServer("0.0.0.0", m_srvConfig->getHttpPort(), m_runAsService, &m_log);
+    } catch (::remoting::Exception &ex) {
+      m_log.error("Failed to start HTTP server: \"{}\"", ex.getMessage());
     }
   }
 }
@@ -349,7 +349,7 @@ void TvnServer::restartControlServer()
 
   stopControlServer();
 
-  m_log.message(_T("Starting control server"));
+  m_log.message("Starting control server");
 
   try {
     ::string pipeName;
@@ -361,10 +361,10 @@ void TvnServer::restartControlServer()
     pipeSecurity->shareToAllUsers();
 
     const unsigned int maxControlServerPipeBufferSize = 0x10000;
-    PipeServer *pipeServer = new PipeServer(pipeName.getString(), maxControlServerPipeBufferSize, pipeSecurity);
+    PipeServer *pipeServer = new PipeServer(pipeName, maxControlServerPipeBufferSize, pipeSecurity);
     m_controlServer = new ControlServer(pipeServer , m_rfbClientManager, &m_log);
-  } catch (Exception &ex) {
-    m_log.error(_T("Failed to start control server: \"%s\""), ex.getMessage());
+  } catch (::remoting::Exception &ex) {
+    m_log.error("Failed to start control server: \"{}\"", ex.getMessage());
   }
 }
 
@@ -378,21 +378,21 @@ void TvnServer::restartMainRfbServer()
     return;
   }
 
-  const ::scoped_string & scopedstrbindHost = m_srvConfig->isOnlyLoopbackConnectionsAllowed() ? _T("localhost") : _T("0.0.0.0");
+  const ::scoped_string & scopedstrbindHost = m_srvConfig->isOnlyLoopbackConnectionsAllowed() ? "localhost") : _T("0.0.0.0";
   unsigned short bindPort = m_srvConfig->getRfbPort();
 
-  m_log.message(_T("Starting main RFB server"));
+  m_log.message("Starting main RFB server");
 
   try {
     m_rfbServer = new RfbServer(bindHost, bindPort, m_rfbClientManager, m_runAsService, &m_log);
-  } catch (Exception &ex) {
-    m_log.error(_T("Failed to start main RFB server: \"%s\""), ex.getMessage());
+  } catch (::remoting::Exception &ex) {
+    m_log.error("Failed to start main RFB server: \"{}\"", ex.getMessage());
   }
 }
 
 void TvnServer::stopHttpServer()
 {
-  m_log.message(_T("Stopping HTTP server"));
+  m_log.message("Stopping HTTP server");
 
   HttpServer *httpServer = 0;
   {
@@ -407,7 +407,7 @@ void TvnServer::stopHttpServer()
 
 void TvnServer::stopControlServer()
 {
-  m_log.message(_T("Stopping control server"));
+  m_log.message("Stopping control server");
 
   ControlServer *controlServer = 0;
   {
@@ -422,7 +422,7 @@ void TvnServer::stopControlServer()
 
 void TvnServer::stopMainRfbServer()
 {
-  m_log.message(_T("Stopping main RFB server"));
+  m_log.message("Stopping main RFB server");
 
   RfbServer *rfbServer = 0;
   {
@@ -444,5 +444,5 @@ void TvnServer::changeLogProps()
     m_srvConfig->getLogFileDir(&logDir);
     logLevel = m_srvConfig->getLogLevel();
   }
-  m_logInitListener->onChangeLogProps(logDir.getString(), logLevel);
+  m_logInitListener->onChangeLogProps(logDir, logLevel);
 }

@@ -15,7 +15,7 @@ list(APPEND library_source
    OutputStream.cpp
    ByteArrayInputStream.h
    Channel.h
-   IOException.h
+   io_exception.h
    DataOutputStream.cpp
    BufferedInputStream.cpp
    DataCopy.h
@@ -30,7 +30,7 @@ list(APPEND library_source
    DataInputStream.h
    BufferedOutputStream.cpp
    BufferedInputStream.h
-   IOException.cpp
+   io_exception.cpp
    ByteArrayInputStream.cpp
 )
 

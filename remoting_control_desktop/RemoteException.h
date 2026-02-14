@@ -22,23 +22,23 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _REMOTE_EXCEPTION_H_
-#define _REMOTE_EXCEPTION_H_
+#pragma once
+
 
 #include "util/Exception.h"
 
 /**
- * Exception on remote side class.
+ * ::remoting::Exception on remote side class.
  *
- * Exception of such type can be raised only when execution of remote method (when
+ * ::remoting::Exception of such type can be raised only when execution of remote method (when
  * using remote proxy objects for example) throws some kind of exception and this exception
  * has been sended to client side.
  */
-class RemoteException : public Exception
+class RemoteException : public ::remoting::Exception
 {
 public:
   RemoteException(const ::scoped_string & scopedstrreason);
   virtual ~RemoteException();
 };
 
-#endif
+

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _WIN_CLIPBOARD_H_
-#define _WIN_CLIPBOARD_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -40,7 +40,7 @@ public:
   bool getString(::string & str);
 
   // update windows clipboard
-  bool setString(const ::string & str);
+  bool= const ::scoped_string & str;
 
 protected:
   static const TCHAR CR = _T('\r');
@@ -48,13 +48,13 @@ protected:
 
 protected:
   // function removed CR before LF
-  ::string removeCR(const ::string & str);
+  ::string removeCR(const ::scoped_string & str);
 
   // function replaced LF to CR+LF. If before LF already is CR, this not added second
-  ::string addCR(const ::string & str);
+  ::string addCR(const ::scoped_string & str);
 
   HANDLE m_hndClipboard;
   HWND m_hwnd;
 };
 
-#endif
+

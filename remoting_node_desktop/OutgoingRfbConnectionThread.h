@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _OUTGOING_RFB_CONNECTION_THREAD_H_
-#define _OUTGOING_RFB_CONNECTION_THREAD_H_
+#pragma once
+
 
 //#include "util/::string.h"
 #include "thread/Thread.h"
@@ -61,4 +61,4 @@ private:
   LogWriter *m_log;
 };
 
-#endif
+

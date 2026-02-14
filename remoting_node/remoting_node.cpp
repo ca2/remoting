@@ -87,7 +87,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
   // We really don't care about parsing result, we only need the first specified key.
 
-  ::string firstKey(_T(""));
+  ::string firstKey("");
 
 
   try {
@@ -104,7 +104,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     try {
       crashHook.setHklmRoot();
       tvnService.run();
-    } catch (Exception &) {
+    } catch (::remoting::Exception &) {
       return 1;
     }
     return 0;
@@ -121,7 +121,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
         WindowNames::WINDOW_CLASS_NAME,
         lpCmdLine);
       return tvnControl.run();
-    } catch (Exception &fatalException) {
+    } catch (::remoting::Exception &fatalException) {
       MessageBox(0,
         fatalException.getMessage(),
         StringTable::getString(IDS_MBC_TVNCONTROL),

@@ -22,10 +22,10 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __TVNSERVERAPP_EXTRA_RFB_SERVERS_H__
-#define __TVNSERVERAPP_EXTRA_RFB_SERVERS_H__
+#pragma once
 
-#include <list>
+
+//#include <list>
 #include "RfbServer.h"
 #include "server_config_lib/PortMappingContainer.h"
 
@@ -53,13 +53,13 @@ public:
   // servers (see startUp() for more details).
   bool reload(bool asService, RfbClientManager *mgr);
 
-  // Stop all extra RFB servers, clear the ::std::list.
+  // Stop all extra RFB servers, clear the ::list.
   void shutDown();
 
 protected:
   // Construct and start RFB servers as specified in the Extra Ports
   // configuration. If some servers fail to start, this function does not add
-  // it to the internally maintained ::std::list of RFB servers.
+  // it to the internally maintained ::list of RFB servers.
   // Returns true if all the servers have been started sucessfully, false if
   // at least one failed.
   bool startUp(bool asService, RfbClientManager *mgr);
@@ -68,7 +68,7 @@ protected:
   static void getConfiguration(Conf *out);
 
 protected:
-  ::std::list<RfbServer *> m_servers;
+  ::list<RfbServer *> m_servers;
   Conf m_effectiveConf;
 
 private:
@@ -79,4 +79,4 @@ private:
   LogWriter *m_log;
 };
 
-#endif // __TVNSERVERAPP_EXTRA_RFB_SERVERS_H__
+//// __TVNSERVERAPP_EXTRA_RFB_SERVERS_H__

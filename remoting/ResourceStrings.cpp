@@ -51,7 +51,7 @@ bool ResourceStrings::isValid(int res)
 
   ::string str;
   rLoader->loadString(strRes, &str);
-  return str.getString();
+  return str;
 }
 
 ::string ResourceStrings::getStrPureRes(int strRes) 
@@ -62,6 +62,6 @@ bool ResourceStrings::isValid(int res)
     index /= sizeof(TCHAR);
     strTemp.truncate(1+index);
   }
-  strTemp.removeChars(_T("&"), 1);
+  strTemp.removeChars("&", 1);
   return strTemp;
 }

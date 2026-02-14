@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _IP_ACCESS_RULE_H_
-#define _IP_ACCESS_RULE_H_
+#pragma once
+
 
 //#include "util/::string.h"
 
@@ -53,10 +53,10 @@ public:
 
   void toString(::string & output) const;
 
-  static bool parse(const ::scoped_string & scopedstrstring, IpAccessRule *rule);
-  static bool parseIp(const ::scoped_string & scopedstrstring, IpAccessRule *rule);
-  static bool parseIpRange(const ::scoped_string & scopedstrstring, IpAccessRule *rule);
-  static bool parseSubnet(const ::scoped_string & scopedstrstring, IpAccessRule *rule);
+  static bool parse(const ::scoped_string & scopedstrString, IpAccessRule *rule);
+  static bool parseIp(const ::scoped_string & scopedstrString, IpAccessRule *rule);
+  static bool parseIpRange(const ::scoped_string & scopedstrString, IpAccessRule *rule);
+  static bool parseSubnet(const ::scoped_string & scopedstrString, IpAccessRule *rule);
 
   //
   // Method to access protected members
@@ -81,7 +81,7 @@ public:
   void getFirstIp(::string & firstIp) const;
   void getLastIp(::string & lastIp) const;
 
-  void setFirstIp(const ::scoped_string & scopedstrfirstIp);
+  void setFirstIp(const ::scoped_string & scopedstrFirstIp);
   void setLastIp(const ::scoped_string & scopedstrlastIp);
 
   //
@@ -96,7 +96,7 @@ public:
   //
 
   bool isIncludingAddress(unsigned long ip) const;
-  static bool isIpAddressStringValid(const ::scoped_string & scopedstrstring);
+  static bool isIpAddressStringValid(const ::scoped_string & scopedstrString);
 
   //
   // Return values:
@@ -108,7 +108,7 @@ public:
   static int compareIp(unsigned long ip1, unsigned long ip2);
 
 protected:
-  static bool tryParseIPPart(const ::scoped_string & scopedstrstring);
+  static bool tryParseIPPart(const ::scoped_string & scopedstrString);
   static void getIpRange(const ::scoped_string & scopedstrip, const ::scoped_string & scopedstrNetmask,
                          ::string & firstIp, ::string & lastIp);
 protected:
@@ -122,4 +122,4 @@ protected:
   ::string m_lastIp;
 };
 
-#endif
+

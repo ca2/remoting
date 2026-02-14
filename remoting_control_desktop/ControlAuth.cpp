@@ -31,7 +31,7 @@
 #include "util/DesCrypt.h"
 #include <algorithm>
 
-ControlAuth::ControlAuth(ControlGate *gate, const ::scoped_string & scopedstrpassword)
+ControlAuth::ControlAuth(ControlGate *gate, const ::scoped_string & scopedstrPassword)
 : m_gate(gate)
 {
   // Prepare data for authentication.
@@ -41,7 +41,7 @@ ControlAuth::ControlAuth(ControlGate *gate, const ::scoped_string & scopedstrpas
   AnsiStringStorage passwordAnsi(&truncatedPass);
 
   memset(m_password, 0, sizeof(m_password));
-  memcpy(m_password, passwordAnsi.getString(),
+  memcpy(m_password, passwordAnsi,
          ::minimum(passwordAnsi.getLength(), sizeof(m_password)));
 
   // FIXME: Why it's commented out?
@@ -61,13 +61,13 @@ ControlAuth::ControlAuth(ControlGate *gate, const ::scoped_string & scopedstrpas
 
       m_gate->readUTF8(&authFailReason);
 
-      throw ControlAuthException(authFailReason.getString());
+      throw ControlAuthException(authFailReason);
     }
     break;
   case ControlProto::REPLY_OK:
     break;
   default:
-    throw Exception(_T("Server return unknown auth result"));
+    throw ::remoting::Exception("Server return unknown auth result");
     break;
   }
 }

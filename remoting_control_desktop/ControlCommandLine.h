@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CONTROL_COMMAND_LINE_H_
-#define _CONTROL_COMMAND_LINE_H_
+#pragma once
+
 
 #include "util/CommandLine.h"
 #include "util/CommandLineFormatException.h"
@@ -97,9 +97,9 @@ public:
   bool isCommandSpecified();
 
 private:
-  void parseRectCoordinates(const ::string & strCoord);
-  void parseDisplayNumber(const ::string & strDispNumber);
-  void parseProcessId(const ::string & str);
+  void parseRectCoordinates(const ::scoped_string & strCoord);
+  void parseDisplayNumber(const ::scoped_string & strDispNumber);
+  void parseProcessId(const ::scoped_string & str);
 
   ::string m_vncPassword;
   ::string m_controlPassword;
@@ -114,4 +114,4 @@ private:
   unsigned int m_sharedAppProcessId;
 };
 
-#endif
+

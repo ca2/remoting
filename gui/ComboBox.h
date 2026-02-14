@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _COMBOBOX_H_
-#define _COMBOBOX_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "Control.h"
@@ -34,10 +34,10 @@ public:
   ComboBox();
   ~ComboBox();
 
-  // Adds new item to the end of combo box items ::std::list.
+  // Adds new item to the end of combo box items ::list.
   int addItem(const ::scoped_string & scopedstrtext);
 
-  // Adds new item to the end of combo box items ::std::list.
+  // Adds new item to the end of combo box items ::list.
   int addItem(const ::scoped_string & scopedstrtext, void *tag);
 
   // Inserts new item to the specified position
@@ -71,4 +71,4 @@ public:
   void removeAllItems();
 };
 
-#endif
+

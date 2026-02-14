@@ -74,14 +74,14 @@ void ReconnectingChannel::replaceChannel(Channel *newChannel)
   m_timer.notify();
 }
 
-Channel *ReconnectingChannel::getChannel(const ::scoped_string & scopedstrfunName)
+Channel *ReconnectingChannel::getChannel(const ::scoped_string & scopedstrFunName)
 {
   if (m_isClosed) {
     ::string errMess;
-    errMess.format(_T("The %s() function has failed:")
-                   _T(" connection has already been closed."),
+    errMess.formatf("The {}() function has failed:"
+                   " connection has already been closed.",
                    funName);
-    throw IOException(errMess.getString());
+    throw ::io_exception(errMess);
   }
   Channel *channel;
   {
@@ -94,12 +94,12 @@ Channel *ReconnectingChannel::getChannel(const ::scoped_string & scopedstrfunNam
     if (m_chanWasChanged) {
       m_chanWasChanged = false;
       ::string errMess;
-      errMess.format(_T("Transport was reconnected outside from")
-                     _T(" the %s() function. The %s()")
-                     _T(" function at this time will be aborted."),
+      errMess.formatf("Transport was reconnected outside from"
+                     " the {}() function. The {}()"
+                     " function at this time will be aborted.",
                      funName,
                      funName);
-      throw ReconnectException(errMess.getString());
+      throw ReconnectException(errMess);
     }
     channel = m_channel;
   }
@@ -108,17 +108,17 @@ Channel *ReconnectingChannel::getChannel(const ::scoped_string & scopedstrfunNam
 
 size_t ReconnectingChannel::write(const void *buffer, size_t len)
 {
-  Channel *channel = getChannel(_T("write"));
+  Channel *channel = getChannel("write");
 
   try {
     if (channel == 0) {
-      throw Exception(_T("write() function stopped because transport")
-                      _T(" has not been initialized yet."));
+      throw ::remoting::Exception("write() function stopped because transport"
+                      " has not been initialized yet.");
     }
     return channel->write(buffer, len);
-  } catch (Exception &e) {
+  } catch (::remoting::Exception &e) {
     m_log->error(e.getMessage());
-    waitForReconnect(_T("write"), channel);
+    waitForReconnect("write", channel);
   }
 
   return 0; // Call by an out caller again!
@@ -126,23 +126,23 @@ size_t ReconnectingChannel::write(const void *buffer, size_t len)
 
 size_t ReconnectingChannel::read(void *buffer, size_t len)
 {
-  Channel *channel = getChannel(_T("read"));
+  Channel *channel = getChannel("read");
 
   try {
     if (channel == 0) {
-      throw Exception(_T("read() function stopped because transport")
-                      _T(" has not been initialized yet."));
+      throw ::remoting::Exception("read() function stopped because transport"
+                      " has not been initialized yet.");
     }
     return channel->read(buffer, len);
-  } catch (Exception &e) {
+  } catch (::remoting::Exception &e) {
     m_log->error(e.getMessage());
-    waitForReconnect(_T("read"), channel);
+    waitForReconnect("read", channel);
   }
 
   return 0; // Call by an out caller again!
 }
 
-void ReconnectingChannel::waitForReconnect(const ::scoped_string & scopedstrfunName,
+void ReconnectingChannel::waitForReconnect(const ::scoped_string & scopedstrFunName,
                                          Channel *channel)
 {
   // Wait until transport has been initialized or time out elapsed.
@@ -156,9 +156,9 @@ void ReconnectingChannel::waitForReconnect(const ::scoped_string & scopedstrfunN
     if (timeForWait == 0 || m_isClosed) { // Break this function with
                                           // critical error
       ::string errMess;
-      errMess.format(_T("The ReconnectingChannel::%s() function")
-                     _T(" failed."), funName);
-      throw IOException(errMess.getString());
+      errMess.formatf("The ReconnectingChannel::{}() function"
+                     " failed.", funName);
+      throw ::io_exception(errMess);
     }
     m_timer.waitForEvent(timeForWait);
     AutoLock al(&m_chanMut);
@@ -168,13 +168,13 @@ void ReconnectingChannel::waitForReconnect(const ::scoped_string & scopedstrfunN
       success = true;
     }
   }
-  m_log->info(_T("ReconnectingChannel was successfully reconnected."));
+  m_log->information("ReconnectingChannel was successfully reconnected.");
   if (channel != 0) { // If this is not the first initialization
     ::string errMess;
-    errMess.format(_T("Transport was reconnected in the")
-                   _T(" %s() function. The %s()")
-                   _T(" function() at this time will be aborted"),
+    errMess.formatf("Transport was reconnected in the"
+                   " {}() function. The {}()"
+                   " function() at this time will be aborted",
                    funName, funName);
-    throw ReconnectException(errMess.getString());
+    throw ReconnectException(errMess);
   }
 }

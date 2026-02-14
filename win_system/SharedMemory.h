@@ -22,15 +22,15 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __SHAREDMEMORY_H__
-#define __SHAREDMEMORY_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
 class SharedMemory
 {
 public:
-  // @throw Exception
+  // @throw ::remoting::Exception
   SharedMemory(const ::scoped_string & scopedstrName, size_t size);
   virtual ~SharedMemory();
 
@@ -48,4 +48,4 @@ protected:
   void *m_memory;
 };
 
-#endif // __SHAREDMEMORY_H__
+//// __SHAREDMEMORY_H__

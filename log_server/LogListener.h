@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __LOGLISTENER_H__
-#define __LOGLISTENER_H__
+#pragma once
+
 
 #include "FileLogDefs.h"
 #include "util/DateTime.h"
@@ -36,8 +36,8 @@ public:
                      unsigned int threadId,
                      const DateTime & dt,
                      int level,
-                     const ::scoped_string & scopedstrmessage) = 0;
-  virtual void onAnErrorFromLogConn(const ::scoped_string & scopedstrmessage) = 0;
+                     const ::scoped_string & scopedstrMessage) = 0;
+  virtual void onAnErrorFromLogConn(const ::scoped_string & scopedstrMessage) = 0;
 };
 
-#endif // __LOGLISTENER_H__
+//// __LOGLISTENER_H__

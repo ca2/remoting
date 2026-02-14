@@ -46,8 +46,8 @@ void WinEventLog::enable()
   deRegisterEventSource();
   try {
     updateEventSourcesSubkey();
-  } catch (Exception &e) {
-    m_log->error(_T("Cannot update event sources registry subkey: %s"),
+  } catch (::remoting::Exception &e) {
+    m_log->error("Cannot update event sources registry subkey: {}",
                e.getMessage());
   }
   registerEventSource();
@@ -71,21 +71,21 @@ void WinEventLog::updateEventSourcesSubkey()
 {
   ::string path;
   if (Environment::getCurrentModulePath(&path)) {
-    ::string entry(_T("SYSTEM\\CurrentControlSet\\")
-                        _T("services\\eventlog\\Application\\"));
+    ::string entry("SYSTEM\\CurrentControlSet\\"
+                        "services\\eventlog\\Application\\");
     entry += LogNames::WIN_EVENT_PROVIDER_NAME;
-    RegistryKey regKey(HKEY_LOCAL_MACHINE, entry.getString());
-    regKey.setValueAsInt32(_T("CategoryCount"), 0);
-    regKey.setValueAsString(_T("CategoryMessageFile"), path.getString());
-    regKey.setValueAsString(_T("EventMessageFile"), path.getString());
-    regKey.setValueAsString(_T("ParameterMessageFile"), path.getString());
-    regKey.setValueAsInt32(_T("TypesSupported"),
+    RegistryKey regKey(HKEY_LOCAL_MACHINE, entry);
+    regKey.setValueAsInt32("CategoryCount", 0);
+    regKey.setValueAsString("CategoryMessageFile", path);
+    regKey.setValueAsString("EventMessageFile", path);
+    regKey.setValueAsString("ParameterMessageFile", path);
+    regKey.setValueAsInt32("TypesSupported",
                            EVENTLOG_ERROR_TYPE | EVENTLOG_INFORMATION_TYPE |
                            EVENTLOG_WARNING_TYPE);
   }
 }
 
-void WinEventLog::reportInfo(unsigned int messageId, const ::scoped_string & scopedstrfmt, ...)
+void WinEventLog::reportInfo(unsigned int messageId, const ::scoped_string & scopedstrFmt, ...)
 {
   va_list vl;
   va_start(vl, fmt);
@@ -93,7 +93,7 @@ void WinEventLog::reportInfo(unsigned int messageId, const ::scoped_string & sco
   va_end(vl);
 }
 
-void WinEventLog::reportWarning(unsigned int messageId, const ::scoped_string & scopedstrfmt, ...)
+void WinEventLog::reportWarning(unsigned int messageId, const ::scoped_string & scopedstrFmt, ...)
 {
   va_list vl;
   va_start(vl, fmt);
@@ -101,7 +101,7 @@ void WinEventLog::reportWarning(unsigned int messageId, const ::scoped_string & 
   va_end(vl);
 }
 
-void WinEventLog::reportError(unsigned int messageId, const ::scoped_string & scopedstrfmt, ...)
+void WinEventLog::reportError(unsigned int messageId, const ::scoped_string & scopedstrFmt, ...)
 {
   va_list vl;
   va_start(vl, fmt);
@@ -114,7 +114,7 @@ void WinEventLog::reportError(unsigned int messageId, const ::scoped_string & sc
 
 void WinEventLog::reportEvent(unsigned int messageId,
                             WORD eventType,
-                            const ::scoped_string & scopedstrfmt,
+                            const ::scoped_string & scopedstrFmt,
                             va_list argList)
 {
   HANDLE hEventLog = getLogHandle();
@@ -125,7 +125,7 @@ void WinEventLog::reportEvent(unsigned int messageId,
   // Format the original string.
   int count = _vsctprintf(fmt, argList);
   _ASSERT(count >= 0);
-  ::std::vector<TCHAR> formattedStringBuff(count + 1);
+  ::array_base<TCHAR> formattedStringBuff(count + 1);
   TCHAR *formattedString = &formattedStringBuff.front();
   _vstprintf(formattedString, fmt, argList);
 
@@ -140,9 +140,9 @@ void WinEventLog::reportEvent(unsigned int messageId,
                   0 // data
                   ) == 0) {
     ::string errStr;
-    Environment::getErrStr(_T("Cannot report an event to the system log"),
+    Environment::getErrStr("Cannot report an event to the system log",
                            &errStr);
-    m_log->error(_T("%s"), errStr.getString());
+    m_log->error("{}", errStr);
   }
 }
 

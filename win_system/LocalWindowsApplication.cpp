@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "LocalWindowsApplication.h"
 
 #include "util/winhdr.h"
@@ -33,7 +34,7 @@ LocalWindowsApplication::LocalWindowsApplication(HINSTANCE hInstance,
 {
   HWINSTA winSta = 0;
 
-  winSta = OpenWindowStation(_T("WinSta0"), TRUE, GENERIC_ALL);
+  winSta = OpenWindowStation("WinSta0", TRUE, GENERIC_ALL);
 
   if (winSta== 0) {
     throw SystemException();

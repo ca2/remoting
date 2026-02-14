@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __ANEVENTLISTENER_H__
-#define __ANEVENTLISTENER_H__
+#pragma once
+
 
 class AnEventListener
 {
@@ -34,4 +34,4 @@ public:
   virtual void onAnObjectEvent() = 0;
 };
 
-#endif // __ANEVENTLISTENER_H__
+//// __ANEVENTLISTENER_H__

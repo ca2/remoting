@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "UipiControl.h"
 #include "Environment.h"
 #include "DynamicLibrary.h"
@@ -50,10 +51,10 @@ UipiControl::~UipiControl()
 
 void UipiControl::allowMessage(UINT message, HWND hwnd)
 {
-  m_log->info(_T("Try allow to receive the %u windows message"));
+  m_log->information("Try allow to receive the %u windows message");
   if (Environment::isVistaOrLater()) {
-    DynamicLibrary user32lib(_T("user32.dll"));
-    m_log->info(_T("user32.dll successfully loaded."));
+    DynamicLibrary user32lib("user32.dll");
+    m_log->information("user32.dll successfully loaded.");
     SetFilterEx setFilterEx;
     // FIXME: Test this on Windows7.
     // Try to load the ChangeWindowMessageFilterEx() function.
@@ -63,35 +64,35 @@ void UipiControl::allowMessage(UINT message, HWND hwnd)
       SetFilter setFilter;
       setFilter = (SetFilter)user32lib.getProcAddress("ChangeWindowMessageFilter");
       if (setFilter == 0) {
-        throw Exception(_T("Can't load the ChangeWindowMessageFilterEx() or ")
-                        _T("ChangeWindowMessageFilter() functions."));
+        throw ::remoting::Exception("Can't load the ChangeWindowMessageFilterEx() or "
+                        "ChangeWindowMessageFilter() functions.");
       }
-      m_log->info(_T("The ChangeWindowMessageFilter() function ")
-                _T("successfully found."));
+      m_log->information("The ChangeWindowMessageFilter() function "
+                "successfully found.");
       if (setFilter(message, MSGFLT_ADD) != TRUE) {
         DWORD errCode = GetLastError();
         ::string errMess;
-        errMess.format(_T("Can't allow to receive the %d windows message by ")
-                       _T("the ChangeWindowMessageFilter() function."));
-        throw SystemException(errMess.getString(), errCode);
+        errMess.formatf("Can't allow to receive the {} windows message by "
+                       "the ChangeWindowMessageFilter() function.");
+        throw SystemException(errMess, errCode);
       }
-      m_log->info(_T("The ChangeWindowMessageFilter() function ")
-                _T("successfully executed."));
+      m_log->information("The ChangeWindowMessageFilter() function "
+                "successfully executed.");
     } else {
       // FIXME: Can't to check for Windows7.
-      m_log->info(_T("The ChangeWindowMessageFilterEx() function ")
-                _T("successfully found."));
+      m_log->information("The ChangeWindowMessageFilterEx() function "
+                "successfully found.");
       if (setFilterEx(hwnd, message, MSGFLT_ADD, 0) != TRUE) {
         DWORD errCode = GetLastError();
         ::string errMess;
-        errMess.format(_T("Can't allow to receive the %d windows message by ")
-                       _T("the ChangeWindowMessageFilterEx() function."));
-        throw SystemException(errMess.getString(), errCode);
+        errMess.formatf("Can't allow to receive the {} windows message by "
+                       "the ChangeWindowMessageFilterEx() function.");
+        throw SystemException(errMess, errCode);
       }
-      m_log->info(_T("The ChangeWindowMessageFilterEx() function ")
-                _T("successfully executed."));
+      m_log->information("The ChangeWindowMessageFilterEx() function "
+                "successfully executed.");
     }
   } else {
-    m_log->info(_T("The allowMessage() function call is ignored."));
+    m_log->information("The allowMessage() function call is ignored.");
   }
 }

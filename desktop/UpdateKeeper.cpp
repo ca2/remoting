@@ -167,8 +167,8 @@ void UpdateKeeper::addUpdateContainer(const UpdateContainer *updateContainer)
 
   // FIXME: Use addCopyRegion instead of addCopyRect
   // Add copied region
-  ::std::vector<::int_rectangle> rects;
-  ::std::vector<::int_rectangle>::iterator iRect;
+  ::array_base<::int_rectangle> rects;
+  ::array_base<::int_rectangle>::iterator iRect;
   updateContainer->copiedRegion.getRectVector(&rects);
   size_t numRects = rects.size();
   if (numRects > 0) {

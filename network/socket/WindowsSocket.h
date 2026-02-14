@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _WINSOCK_CLASS_H_
-#define _WINSOCK_CLASS_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "util/Exception.h"
@@ -48,4 +48,4 @@ protected:
   static bool m_isStarted;
 };
 
-#endif
+

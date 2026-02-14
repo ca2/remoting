@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RFB_JPEG_ENCODER_H_INCLUDED__
-#define __RFB_JPEG_ENCODER_H_INCLUDED__
+#pragma onceINCLUDED__
+INCLUDED__
 
 #include "TightEncoder.h"
 
@@ -41,7 +41,7 @@ public:
   // JpegEncoder implements its own splitRectangle() which just makes sure all
   // rectangles are no wider than 2048 pixels.
   virtual void splitRectangle(const ::int_rectangle &  rect,
-                              ::std::vector<::int_rectangle> *rectList,
+                              ::array_base<::int_rectangle> *rectList,
                               const FrameBuffer *serverFb,
                               const EncodeOptions *options);
 
@@ -57,4 +57,4 @@ protected:
   TightEncoder *m_tightEncoder;
 };
 
-#endif // __RFB_JPEG_ENCODER_H_INCLUDED__
+//// __RFB_JPEG_ENCODER_H_INCLUDED__

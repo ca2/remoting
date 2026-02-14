@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _VIEWER_CONFIG_H_
-#define _VIEWER_CONFIG_H_
+#pragma once
+
 
 ////#include "util/::string.h"
 #include "util/Singleton.h"
@@ -123,4 +123,4 @@ public:
   mutable LocalMutex m_cs;
 };
 
-#endif
+

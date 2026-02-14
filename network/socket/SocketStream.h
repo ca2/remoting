@@ -22,8 +22,9 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef SOCKET_STREAM_H
-#define SOCKET_STREAM_H
+//#ifndef SOCKET_STREAM_H
+#pragma once
+//#define SOCKET_STREAM_H
 
 #include "io_lib/Channel.h"
 
@@ -31,7 +32,7 @@
 #include "../socket/SocketIPv4.h"
 #include "../socket/SocketAddressIPv4.h"
 
-#include "io_lib/IOException.h"
+#include "io_lib/io_exception.h"
 
 class SocketStream : public Channel
 {
@@ -48,7 +49,7 @@ public:
   virtual size_t write(const void *, size_t);
 
   // Closes connection and break all blocked operation.
-  // @throw Exception on error.
+  // @throw ::remoting::Exception on error.
   virtual void close();
 
   virtual size_t available();
@@ -59,4 +60,4 @@ protected:
   friend class SocketIPv4;
 };
 
-#endif
+

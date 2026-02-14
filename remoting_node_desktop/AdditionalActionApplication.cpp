@@ -30,8 +30,8 @@
 #include "win_system/Workstation.h"
 #include "win_system/WinCommandLineArgs.h"
 
-const TCHAR AdditionalActionApplication::LOCK_WORKSTATION_KEY[] = _T("-lockworkstation");
-const TCHAR AdditionalActionApplication::LOGOUT_KEY[] = _T("-logout");
+const TCHAR AdditionalActionApplication::LOCK_WORKSTATION_KEY[] = "-lockworkstation";
+const TCHAR AdditionalActionApplication::LOGOUT_KEY[] = "-logout";
 
 AdditionalActionApplication::AdditionalActionApplication(HINSTANCE hInstance,
                                                          const ::scoped_string & scopedstrwindowClassName,
@@ -56,7 +56,7 @@ int AdditionalActionApplication::run()
 
   try {
 
-    WinCommandLineArgs cmdArgs(m_commandLine.getString());
+    WinCommandLineArgs cmdArgs(m_commandLine);
     if (!args.parse(format,
                     sizeof(format) / sizeof(CommandLineFormat),
                     &cmdArgs)) {

@@ -22,11 +22,11 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _ZLIB_BASE_H_
-#define _ZLIB_BASE_H_
+#pragma once
+
 
 #include "zlib/zlib.h"
-#include <vector>
+//#include <vector>
 
 class ZLibBase
 {
@@ -43,11 +43,11 @@ protected:
   const char *m_input;
   size_t m_inputSize;
 
-  ::std::vector<char> m_output;
+  ::array_base<char> m_output;
 
   // Type of m_outputSize must be match with type m_zlibStream.total_out,
   // otherwise may overflow long and value of m_outputSize will be too big.
   unsigned long m_outputSize;
 };
 
-#endif
+

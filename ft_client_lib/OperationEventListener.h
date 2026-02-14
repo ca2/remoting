@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _OPERATION_EVENT_LISTENER_H_
-#define _OPERATION_EVENT_LISTENER_H_
+#pragma once
+
 
 #include "FileTransferOperation.h"
 
@@ -47,18 +47,18 @@ public:
 
   //
   // Must be called by file transfer operation when some error occured(
-  // not ::std::list files from catalog, cannot open file, cannot create folder etc)
+  // not ::list files from catalog, cannot open file, cannot create folder etc)
   //
 
-  virtual void ftOpErrorMessage(FileTransferOperation *sender, const ::scoped_string & scopedstrmessage);
+  virtual void ftOpErrorMessage(FileTransferOperation *sender, const ::scoped_string & scopedstrMessage);
 
   //
   // Must be called by file transfer operation when need to do some text output
   // to user (or console, or log)
   //
 
-  virtual void ftOpInfoMessage(FileTransferOperation *sender, const ::scoped_string & scopedstrmessage);
+  virtual void ftOpInfoMessage(FileTransferOperation *sender, const ::scoped_string & scopedstrMessage);
 };
 
-#endif
+
 

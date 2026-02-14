@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINDXGIOUTPUT_H__
-#define __WINDXGIOUTPUT_H__
+#pragma once
+
 
 
 
@@ -58,4 +58,4 @@ private:
   DXGI_OUTPUT_DESC m_description;
 };
 
-#endif // __WINDXGIOUTPUT_H__
+//// __WINDXGIOUTPUT_H__

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _FB_UDPATE_NOTIFIER_H_
-#define _FB_UPDATE_NOTIFIER_H_
+#pragma once
+
 
 #include "log_writer/LogWriter.h"
 #include "rfb/FrameBuffer.h"
@@ -53,8 +53,8 @@ public:
   void updatePointerPos(const Point *position);
   void setNewCursor(const Point *hotSpot,
                     unsigned short width, unsigned short height,
-                    const ::std::vector<unsigned char> *cursor, 
-                    const ::std::vector<unsigned char> *bitmask);
+                    const ::array_base<unsigned char> *cursor, 
+                    const ::array_base<unsigned char> *bitmask);
 
   void setIgnoreShapeUpdates(bool ignore);
 protected:
@@ -98,4 +98,4 @@ private:
   FbUpdateNotifier &operator=(const FbUpdateNotifier &);
 };
 
-#endif
+

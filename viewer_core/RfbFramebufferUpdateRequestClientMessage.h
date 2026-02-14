@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _RFB_FRAMEBUFFER_UPDATE_REQUEST_CLIENT_MESSAGE_H_
-#define _RFB_FRAMEBUFFER_UPDATE_REQUEST_CLIENT_MESSAGE_H_
+#pragma once
+
 
 
 #include "RfbClientToServerMessage.h"
@@ -44,4 +44,4 @@ private:
   ::int_rectangle m_rect;
 };
 
-#endif
+

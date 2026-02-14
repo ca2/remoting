@@ -68,8 +68,8 @@ void SecurityPipeServer::generateSecConnection(Channel *tempPublChan)
     // Check the id. If it is "right" process then generate
     // transport handles specially for it.
     if (!Environment::isItTheSamePathAsCurrent(procId)) {
-      throw Exception(_T("The process that has requested connection")
-                      _T(" to the log server has not access right"));
+      throw ::remoting::Exception("The process that has requested connection"
+                      " to the log server has not access right");
     }
 
     // Give to process exclusive pipe handles
@@ -78,8 +78,8 @@ void SecurityPipeServer::generateSecConnection(Channel *tempPublChan)
     for (int i = 0; i < 20; i++) {
       randomName.appendChar('a' + rand() % ('z' - 'a'));
     }
-    PipeServer pipeServer(randomName.getString(), m_bufferSize, 0, 1000);
-    otherSideChannel = PipeClient::connect(randomName.getString(), m_bufferSize);
+    PipeServer pipeServer(randomName, m_bufferSize, 0, 1000);
+    otherSideChannel = PipeClient::connect(randomName, m_bufferSize);
     m_secChannel = pipeServer.accept();
 
     HANDLE otherSideHandle = otherSideChannel->getHandle();
@@ -104,6 +104,6 @@ void SecurityPipeServer::makeSure()
   unsigned int timeOut = 10000; // milliseconds
   ConnectionTimer connTimer(this, timeOut);
   // If no byte received during time out interval connTimer has break
-  // read operation and the make sure throws an Exception.
+  // read operation and the make sure throws an ::remoting::Exception.
   inputGate.readInt8();
 }

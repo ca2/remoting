@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _RFB_SET_PIXEL_FORMAT_CLIENT_MESSAGE_H_
-#define _RFB_SET_PIXEL_FORMAT_CLIENT_MESSAGE_H_
+#pragma once
+
 
 #include "rfb/PixelFormat.h"
 #include "RfbClientToServerMessage.h"
@@ -40,4 +40,4 @@ protected:
   PixelFormat m_pixelFormat;
 };
 
-#endif 
+

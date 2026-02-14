@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _EDIT_PORT_MAPPING_DIALOG_H_
-#define _EDIT_PORT_MAPPING_DIALOG_H_
+#pragma once
+
 
 #include "gui/BaseDialog.h"
 #include "gui/TextBox.h"
@@ -66,4 +66,4 @@ protected:
   PortMapping *m_mapping;
 };
 
-#endif
+

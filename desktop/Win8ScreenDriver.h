@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WIN8SCREENDRIVER_H__
-#define __WIN8SCREENDRIVER_H__
+#pragma once
+
 
 // FIXME: Remove this detectors when will be ready win8 detectors.
 #include "CursorPositionDetector.h"
@@ -86,4 +86,4 @@ private:
   bool m_detectionEnabled;
 };
 
-#endif // __WIN8SCREENDRIVER_H__
+//// __WIN8SCREENDRIVER_H__

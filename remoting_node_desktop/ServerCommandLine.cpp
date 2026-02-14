@@ -36,19 +36,19 @@ ServerCommandLine::~ServerCommandLine()
 bool ServerCommandLine::parse(const CommandLineArgs *cmdArgs)
 {
   CommandLineFormat format[] = {
-    { _T("-help"), NO_ARG },
-    { _T("-h"), NO_ARG },
-    { _T("-?"), NO_ARG },
-    { _T("/help"), NO_ARG },
-    { _T("/h"), NO_ARG },
-    { _T("/?"), NO_ARG },
-    { _T("-run"), NO_ARG }
+    { "-help", NO_ARG },
+    { "-h", NO_ARG },
+    { "-?", NO_ARG },
+    { "/help", NO_ARG },
+    { "/h", NO_ARG },
+    { "/?", NO_ARG },
+    { "-run", NO_ARG }
   };
 
   if (!CommandLine::parse(format, sizeof(format) / sizeof(CommandLineFormat), cmdArgs)) {
     return false;
   }
-  if (showHelp() && optionSpecified(_T("-run"))) {
+  if (showHelp() && optionSpecified("-run")) {
     return false;
   }
 
@@ -57,7 +57,7 @@ bool ServerCommandLine::parse(const CommandLineArgs *cmdArgs)
 
 bool ServerCommandLine::showHelp()
 {
-  return optionSpecified(_T("-help")) || optionSpecified(_T("-h")) ||
-         optionSpecified(_T("-?")) || optionSpecified(_T("/help")) ||
-         optionSpecified(_T("/h")) || optionSpecified(_T("/?"));
+  return optionSpecified("-help")) || optionSpecified(_T("-h") ||
+         optionSpecified("-?")) || optionSpecified(_T("/help") ||
+         optionSpecified("/h")) || optionSpecified(_T("/?");
 }

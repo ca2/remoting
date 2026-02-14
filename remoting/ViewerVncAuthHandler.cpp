@@ -83,7 +83,7 @@ void ViewerVncAuthHandler::getPassword(::string & passString)
     AuthenticationDialog authDialog;
     ::string hostname = m_connectionData->getHost();
     authDialog.setHostName(hostname);
-     auto m = ::system()->file()->safe_get_memory(::system()->directory()->appdata()/::string(hostname.getString()));
+     auto m = ::system()->file()->safe_get_memory(::system()->directory()->appdata()/::string(hostname));
      if (m.has_data())
      {
         ::string str;
@@ -95,12 +95,12 @@ else
    if (authDialog.showModal()) {
       m_connectionData->setPlainPassword(authDialog.getPassword());
       memory m2;
-      ::string str(authDialog.getPassword().getString());
+      ::string str(authDialog.getPassword());
       EncryptData(str, m2);
       if (m2.has_data())
       {
 
-         ::system()->file()->put_memory(::system()->directory()->appdata()/::string(hostname.getString()), m2);
+         ::system()->file()->put_memory(::system()->directory()->appdata()/::string(hostname), m2);
       }
    } else {
       throw AuthCanceledException();

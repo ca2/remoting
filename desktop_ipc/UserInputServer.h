@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __USERINPUTSERVER_H__
-#define __USERINPUTSERVER_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "DesktopServerProto.h"
@@ -46,7 +46,7 @@ public:
   // Internal dispatcher
   virtual void onRequest(unsigned char reqCode, BlockingGate *backGate);
 
-  virtual void onClipboardUpdate(const ::string & newClipboard);
+  virtual void onClipboardUpdate(const ::scoped_string & newClipboard);
 
 protected:
   virtual void applyNewPointerPos(BlockingGate *backGate);
@@ -71,4 +71,4 @@ protected:
   LogWriter *m_log;
 };
 
-#endif // __USERINPUTSERVER_H__
+//// __USERINPUTSERVER_H__

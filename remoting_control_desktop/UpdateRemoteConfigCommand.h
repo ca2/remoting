@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _UPDATE_REMOTE_CONFIG_COMMAND_H_
-#define _UPDATE_REMOTE_CONFIG_COMMAND_H_
+#pragma once
+
 
 #include "util/Command.h"
 
@@ -50,7 +50,7 @@ public:
   /**
    * Inherited from Command interface.
    *
-   * @throws IOException on io error, RemoteException on server side error.
+   * @throws ::io_exception on io error, RemoteException on server side error.
    */
   virtual void execute();
 
@@ -61,4 +61,4 @@ protected:
   ControlProxy *m_serverControl;
 };
 
-#endif
+

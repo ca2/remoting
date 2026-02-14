@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RFB_HEXTILE_ENCODER_H_INCLUDED__
-#define __RFB_HEXTILE_ENCODER_H_INCLUDED__
+#pragma onceINCLUDED__
+INCLUDED__
 
 #include "Encoder.h"
 
@@ -45,4 +45,4 @@ private:
                          const FrameBuffer *frameBuffer);
 };
 
-#endif // __RFB_HEXTILE_ENCODER_H_INCLUDED__
+//// __RFB_HEXTILE_ENCODER_H_INCLUDED__

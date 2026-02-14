@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _FILE_TRANSFER_MAIN_DIALOG_H_
-#define _FILE_TRANSFER_MAIN_DIALOG_H_
+#pragma once
+
 
 #include "gui/BaseDialog.h"
 #include "gui/Control.h"
@@ -34,14 +34,14 @@
 
 #include "ft_common/FileInfo.h"
 
-#include "io_lib/IOException.h"
+#include "io_lib/io_exception.h"
 
 #include "FileInfoListView.h"
 #include "FileExistDialog.h"
 #include "thread/Thread.h"
 #include "ft_client_lib/FileTransferInterface.h"
 
-#include <vector>
+//#include <vector>
 
 
 
@@ -63,11 +63,11 @@ public:
   //
   int onFtTargetFileExists(FileInfo *sourceFileInfo,
                            FileInfo *targetFileInfo,
-                           const ::scoped_string & scopedstrpathToTargetFile);
+                           const ::scoped_string & scopedstrPathToTargetFile);
   void setProgress(double progress);
 
-  void onFtOpError(const ::scoped_string & scopedstrmessage);
-  void onFtOpInfo(const ::scoped_string & scopedstrmessage);
+  void onFtOpError(const ::scoped_string & scopedstrMessage);
+  void onFtOpInfo(const ::scoped_string & scopedstrMessage);
   void onFtOpStarted();
   void onFtOpFinished(int state, int result);
 
@@ -77,18 +77,18 @@ public:
   void setNothingState();
 
   //
-  // Called if local file ::std::list is updated
+  // Called if local file ::list is updated
   //
   void onRefreshLocalFileList();
 
-  // Called if remote file ::std::list is updated
+  // Called if remote file ::list is updated
   void onRefreshRemoteFileList();
 
   //
   // Shows error message and throws exception
   //
 
-  void raise(Exception &ex);
+  void raise(::remoting::Exception &ex);
 
 protected:
 
@@ -138,7 +138,7 @@ protected:
 
   //
   // Enables or disables rename and delete buttons
-  // depending of file ::std::list views selected items count.
+  // depending of file ::list views selected items count.
   //
 
   void checkRemoteListViewSelection();
@@ -148,12 +148,12 @@ protected:
   // Text notification methods
   //
 
-  void insertMessageIntoComboBox(const ::scoped_string & scopedstrmessage);
+  void insertMessageIntoComboBox(const ::scoped_string & scopedstrMessage);
 
 private:
 
   //
-  // Enables or disables all controls from m_controlsToBlock ::std::list
+  // Enables or disables all controls from m_controlsToBlock ::list
   //
 
   void enableControls(bool enabled);
@@ -166,30 +166,30 @@ private:
 
 
   //
-  // Refreshes local file ::std::list
+  // Refreshes local file ::list
   //
 
   void refreshLocalFileList();
 
   //
-  // Refreshes remote file ::std::list
+  // Refreshes remote file ::list
   //
 
   void refreshRemoteFileList();
 
   //
-  // Displays file ::std::list of pathToFile folder of local machine
-  // to local file ::std::list view
+  // Displays file ::list of pathToFile folder of local machine
+  // to local file ::list view
   //
 
-  void tryListLocalFolder(const ::scoped_string & scopedstrpathToFile);
+  void tryListLocalFolder(const ::scoped_string & scopedstrPathToFile);
 
   //
-  // Sends file ::std::list request to server and shows result
-  // in remote file ::std::list view
+  // Sends file ::list request to server and shows result
+  // in remote file ::list view
   //
 
-  void tryListRemoteFolder(const ::scoped_string & scopedstrpathToFile);
+  void tryListRemoteFolder(const ::scoped_string & scopedstrPathToFile);
 
   //
   // Filenames helper methods
@@ -281,4 +281,4 @@ private:
   static const UINT WM_OPERATION_FINISHED = WM_USER + 2;
 };
 
-#endif
+

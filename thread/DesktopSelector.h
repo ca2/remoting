@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __DESKTOPSELECTOR_H__
-#define __DESKTOPSELECTOR_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -44,7 +44,7 @@ public:
   // that receives user inputs. On fail the function returns zero.
   // @remark After use the returned handle must be called the
   // DesktopSelector::closeDesktop() function.
-  static HDESK getDesktop(const ::string & name);
+  static HDESK getDesktop(const ::scoped_string & name);
 
   // This function closes a handle to a desktop.
   // @param hdesk is a handle to a desktop that will be closed.
@@ -62,7 +62,7 @@ public:
   // desktop name such as "Winlogon" that will be assigned to the thread. If
   // name is null the input desktop will be assigned.
   // @return If success the function return true else false.
-  static bool selectDesktop(const ::string & name = 0);
+  static bool selectDesktop(const ::scoped_string & name = 0);
 
   // @param desktopName - is a pointer to a ::string object that will be
   // used to store the desktop name. If function has failed then the desktopName
@@ -88,4 +88,4 @@ private:
   static bool getDesktopName(HDESK desktop, ::string & desktopName);
 };
 
-#endif //__DESKTOPSELECTOR_H__
+////__DESKTOPSELECTOR_H__

@@ -37,12 +37,12 @@ WinDxgiOutputDuplication::WinDxgiOutputDuplication(WinDxgiOutput1 *dxgiOutput, W
   if (FAILED(hr)) {
     if (hr == DXGI_ERROR_NOT_CURRENTLY_AVAILABLE) {
       throw WinDxRecoverableException(
-        _T("Can't DuplicateOutput() because resource doesn't available at the time"), hr);
+        "Can't DuplicateOutput() because resource doesn't available at the time", hr);
     } else if (hr == E_ACCESSDENIED) {
         throw WinDxRecoverableException(
-          _T("Can't DuplicateOutput() because of access denied error"), hr);
+          "Can't DuplicateOutput() because of access denied error", hr);
     } else {
-      throw WinDxCriticalException(_T("Can't DuplicateOutput()"), hr);
+      throw WinDxCriticalException("Can't DuplicateOutput()", hr);
     }
   }
 }
@@ -80,7 +80,7 @@ IDXGIOutputDuplication *WinDxgiOutputDuplication::getDxgiOutputDuplication()
   return m_outDupl;
 }
 
-size_t WinDxgiOutputDuplication::getFrameMoveRects(::std::vector<DXGI_OUTDUPL_MOVE_RECT> *moveRects)
+size_t WinDxgiOutputDuplication::getFrameMoveRects(::array_base<DXGI_OUTDUPL_MOVE_RECT> *moveRects)
 {
   // Get move rect buffer size.
   char stub;
@@ -90,7 +90,7 @@ size_t WinDxgiOutputDuplication::getFrameMoveRects(::std::vector<DXGI_OUTDUPL_MO
   if (!FAILED(hr)) {
     return 0;
   } else if (hr != DXGI_ERROR_MORE_DATA) {
-    throw WinDxException(_T("Can't get buffer size to get move rects"), hr);
+    throw WinDxException("Can't get buffer size to get move rects", hr);
   }
 
   size_t elementSize = sizeof((*moveRects)[0]);
@@ -103,12 +103,12 @@ size_t WinDxgiOutputDuplication::getFrameMoveRects(::std::vector<DXGI_OUTDUPL_MO
   // Get move rectangles.
   hr = m_outDupl->GetFrameMoveRects(bufSize, &moveRects->front(), &bufSize);
   if (FAILED(hr)) {
-    throw WinDxException(_T("Can't get move rects"), hr);
+    throw WinDxException("Can't get move rects", hr);
   }
   return bufSize / elementSize;
 }
 
-size_t WinDxgiOutputDuplication::getFrameDirtyRects(::std::vector<RECT> *dirtyRects)
+size_t WinDxgiOutputDuplication::getFrameDirtyRects(::array_base<RECT> *dirtyRects)
 {
   // Get dirty rect buffer size.
   char stub;
@@ -118,7 +118,7 @@ size_t WinDxgiOutputDuplication::getFrameDirtyRects(::std::vector<RECT> *dirtyRe
   if (!FAILED(hr)) {
     return 0;
   } else if (hr != DXGI_ERROR_MORE_DATA) {
-    throw WinDxException(_T("Can't get buffer size to get dirty rects"), hr);
+    throw WinDxException("Can't get buffer size to get dirty rects", hr);
   }
 
   size_t elementSize = sizeof((*dirtyRects)[0]);
@@ -131,14 +131,14 @@ size_t WinDxgiOutputDuplication::getFrameDirtyRects(::std::vector<RECT> *dirtyRe
   // Get dirty rectangles.
   hr = m_outDupl->GetFrameDirtyRects(bufSize, &dirtyRects->front(), &bufSize);
   if (FAILED(hr)) {
-    throw WinDxException(_T("Can't get dirty rects"), hr);
+    throw WinDxException("Can't get dirty rects", hr);
   }
   return bufSize / elementSize;
 }
 
 void WinDxgiOutputDuplication::getFrameCursorShape(CursorShape *cursorShape, UINT pointerShapeBufferSize, LogWriter *log)
 {
-  //log->debug(_T("%d"), pointerShapeBufferSize);
+  //log->debug("{}", pointerShapeBufferSize);
   // This function can calculate required buffer size by self but the size is already known.
   if (pointerShapeBufferSize == 0) {
 	  cursorShape->resetToEmpty();
@@ -146,18 +146,18 @@ void WinDxgiOutputDuplication::getFrameCursorShape(CursorShape *cursorShape, UIN
   }
   HRESULT hr;
   UINT reqSize = 0;
-  ::std::vector<char> buffer(pointerShapeBufferSize);
+  ::array_base<char> buffer(pointerShapeBufferSize);
   DXGI_OUTDUPL_POINTER_SHAPE_INFO shapeInfo;
   hr = m_outDupl->GetFramePointerShape((UINT)buffer.size(), &buffer.front(), &reqSize, &shapeInfo);
-  log->debug(_T("CursorShapeInfo: pounter info buffer size: %d, required: %d"), pointerShapeBufferSize, reqSize);
+  log->debug("CursorShapeInfo: pounter info buffer size: {}, required: {}", pointerShapeBufferSize, reqSize);
   if (FAILED(hr)) {
-    throw WinDxException(_T("Can't get frame cursor shape with GetFramePointerShape() calling"), hr);
+    throw WinDxException("Can't get frame cursor shape with GetFramePointerShape() calling", hr);
   }
 
-  log->debug(_T("CursorShapeInfo: Type: %d"), shapeInfo.Type);
-  log->debug(_T("CursorShapeInfo: Width: %d, Height: %d"), shapeInfo.Width, shapeInfo.Height);
-  log->debug(_T("CursorShapeInfo: shapeInfo.HotSpot.x: %d, , shapeInfo.HotSpot.y: %d"), shapeInfo.HotSpot.x, shapeInfo.HotSpot.y);
-  log->debug(_T("CursorShapeInfo: Pitch: %d"), shapeInfo.Pitch);
+  log->debug("CursorShapeInfo: Type: {}", shapeInfo.Type);
+  log->debug("CursorShapeInfo: Width: {}, Height: {}", shapeInfo.Width, shapeInfo.Height);
+  log->debug("CursorShapeInfo: shapeInfo.HotSpot.x: {}, , shapeInfo.HotSpot.y: {}", shapeInfo.HotSpot.x, shapeInfo.HotSpot.y);
+  log->debug("CursorShapeInfo: Pitch: {}", shapeInfo.Pitch);
 
   buffer.resize(reqSize);
 
@@ -178,8 +178,8 @@ void WinDxgiOutputDuplication::getFrameCursorShape(CursorShape *cursorShape, UIN
   if (shapeInfo.Pitch > pitch) {
     WinCursorShapeUtils::trimBuffer(&buffer, &shapeInfo);
     pitch = shapeInfo.Pitch;
-    log->debug(_T("Trimmed CursorShapeInfo: Width: %d, Height: %d"), shapeInfo.Width, shapeInfo.Height);
-    log->debug(_T("Trimmed CursorShapeInfo: Pitch: %d"), shapeInfo.Pitch);
+    log->debug("Trimmed CursorShapeInfo: Width: {}, Height: {}", shapeInfo.Width, shapeInfo.Height);
+    log->debug("Trimmed CursorShapeInfo: Pitch: {}", shapeInfo.Pitch);
   } 
 
   if (shapeInfo.Type == DXGI_OUTDUPL_POINTER_SHAPE_TYPE_MONOCHROME) {
@@ -203,11 +203,11 @@ void WinDxgiOutputDuplication::getFrameCursorShape(CursorShape *cursorShape, UIN
   // Check buffer size.
   size_t shapeSize = newCursorShape.getPixelsSize();
   if (shapeSize > buffer.size()) {
-    throw Exception(_T("Invalid buffer size for color cursor."));
+    throw ::remoting::Exception("Invalid buffer size for color cursor.");
   }
   memcpy(newCursorShape.getPixels()->getBuffer(), &buffer.front(), shapeSize);
   int maskPitch = ((dim.cx + 15) / 16 ) * 2;
-  ::std::vector<char> mask(maskPitch * dim.cy, 0x00);
+  ::array_base<char> mask(maskPitch * dim.cy, 0x00);
   bool maskedColor = shapeInfo.Type == DXGI_OUTDUPL_POINTER_SHAPE_TYPE_MASKED_COLOR;
   WinCursorShapeUtils::winColorShapeToRfb<unsigned int>(newCursorShape.getPixels(), &mask.front(), maskPitch);
   WinCursorShapeUtils::fixAlphaChannel(newCursorShape.getPixels(), &mask.front(), maskedColor, maskPitch);

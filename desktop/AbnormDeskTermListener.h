@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __ABNORMDESKTERMLISTENER_H__
-#define __ABNORMDESKTERMLISTENER_H__
+#pragma once
+
 
 class AbnormDeskTermListener
 {
@@ -32,4 +32,4 @@ public:
   virtual void onAbnormalDesktopTerminate() = 0;
 };
 
-#endif // __ABNORMDESKTERMLISTENER_H__
+//// __ABNORMDESKTERMLISTENER_H__

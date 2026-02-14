@@ -90,10 +90,10 @@ void PortMapping::toString(::string & string) const
   ::string rectString;
   m_rect.toString(&rectString);
 
-  string->format(_T("%d:%s"), m_port, rectString.getString());
+  string->format("{}:{}", m_port, rectString);
 }
 
-bool PortMapping::parse(const ::scoped_string & scopedstrstr, PortMapping *mapping)
+bool PortMapping::parse(const ::scoped_string & scopedstrStr, PortMapping *mapping)
 {
   int port;
   TCHAR c;
@@ -102,7 +102,7 @@ bool PortMapping::parse(const ::scoped_string & scopedstrstr, PortMapping *mappi
   if (rectString == NULL) {
     return false;
   }
-  if ((_stscanf(str, _T("%d%c"), &port, &c) != 2) || (c != _T(':'))) {
+  if ((_stscanf(str, "{}%c", &port, &c) != 2) || (c != _T(':'))) {
     return false;
   }
   if (port < 0) {

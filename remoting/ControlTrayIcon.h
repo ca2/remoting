@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CONTROL_TRAY_ICON_H_
-#define _CONTROL_TRAY_ICON_H_
+#pragma once
+
 
 #include "gui/NotifyIcon.h"
 #include "gui/Menu.h"
@@ -94,4 +94,4 @@ private:
   void onLeftButtonDown();
 };
 
-#endif
+

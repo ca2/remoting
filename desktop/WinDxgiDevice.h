@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINDXGIDEVICE_H__
-#define __WINDXGIDEVICE_H__
+#pragma once
+
 
 #include "WinD3D11Device.h"
 
@@ -43,4 +43,4 @@ private:
   IDXGIDevice *m_dxgiDevice;
 };
 
-#endif // __WINDXGIDEVICE_H__
+//// __WINDXGIDEVICE_H__

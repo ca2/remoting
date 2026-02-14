@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __FILELOGGER_H__
-#define __FILELOGGER_H__
+#pragma once
+
 
 #include "FileAccount.h"
 #include "log_writer/Logger.h"
@@ -42,7 +42,7 @@ public:
   // immediately the accumulation will be happening parallelly to writing to the file.
   // If the storeHeader() function will be forgotten the accumulation will be stopped
   // at a maximum log header value automatically.
-  FileLogger(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrfileName, unsigned char logLevel, bool logHeadEnabled);
+  FileLogger(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrFileName, unsigned char logLevel, bool logHeadEnabled);
 
   // This constructor is a constructor with postponed initialization.
   // This constructor can be used when the log parameters are still unknown.
@@ -59,7 +59,7 @@ public:
   // Between the constructor and this function calling all log lines stores in
   // the dump. The init() function flushes the dump to the log file and disables
   // further dumping.
-  void init(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrfileName, unsigned char logLevel);
+  void init(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrFileName, unsigned char logLevel);
 
   // Stopping the log header accumulation and enabling log header writing.
   void storeHeader();
@@ -77,4 +77,4 @@ private:
   FileAccount m_fileAccount;
 };
 
-#endif // __FILELOGGER_H__
+//// __FILELOGGER_H__

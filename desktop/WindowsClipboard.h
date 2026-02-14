@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINDOWSCLIPBOARD_H__
-#define __WINDOWSCLIPBOARD_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "gui/MessageWindow.h"
@@ -48,8 +48,8 @@ protected:
   virtual void execute();
   virtual void onTerminate();
 
-  void convertToRfbFormat(const ::string & source, ::string & dest);
-  void convertFromRfbFormat(const ::scoped_string & scopedstrsource, ::string & dest);
+  void convertToRfbFormat(const ::scoped_string & source, ::string & dest);
+  void convertFromRfbFormat(const ::scoped_string & scopedstrSource, ::string & dest);
 
   HWND m_hwndNextViewer;
 
@@ -60,4 +60,4 @@ protected:
   static const HINSTANCE m_hinst;
 };
 
-#endif // __WINDOWSCLIPBOARD_H__
+//// __WINDOWSCLIPBOARD_H__

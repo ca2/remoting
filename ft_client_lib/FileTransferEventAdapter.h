@@ -22,14 +22,14 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _FILE_TRANSFER_EVENT_ADAPTER_H_
-#define _FILE_TRANSFER_EVENT_ADAPTER_H_
+#pragma once
+
 
 #include "util/inttypes.h"
 #include "FileTransferEventHandler.h"
 #include "OperationNotPermittedException.h"
 
-#include <vector>
+//#include <vector>
 
 
 
@@ -67,4 +67,4 @@ public:
   virtual void onLastRequestFailedReply(DataInputStream *input);
 };
 
-#endif
+

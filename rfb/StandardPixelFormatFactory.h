@@ -46,4 +46,4 @@ public:
   static PixelFormat create3bppPixelFormat();
 };
 
-#endif
+

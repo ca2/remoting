@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __COMMANDLINE_H__
-#define __COMMANDLINE_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "CommandLineArgs.h"
@@ -79,7 +79,7 @@ protected:
   bool matchKey(const ::scoped_string & scopedstrKeyTemplate, ::string & key);
   bool removeKeyPrefix(::string & key);
 
-  ::std::vector<KeyContainer> m_foundKeys;
+  ::array_base<KeyContainer> m_foundKeys;
 };
 
-#endif // __COMMANDLINE_H__
+//// __COMMANDLINE_H__

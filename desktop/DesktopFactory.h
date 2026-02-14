@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __DESKTOPFACTORY_H__
-#define __DESKTOPFACTORY_H__
+#pragma once
+
 
 #include "ClipboardListener.h"
 #include "UpdateSendingListener.h"
@@ -40,4 +40,4 @@ public:
                                           LogWriter *log) = 0;
 };
 
-#endif // __DESKTOPFACTORY_H__
+//// __DESKTOPFACTORY_H__

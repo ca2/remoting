@@ -22,8 +22,9 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef SOCKET_ADDRESS_IPV4_H
-#define SOCKET_ADDRESS_IPV4_H
+//#ifndef SOCKET_ADDRESS_IPV4_H
+#pragma once
+//#define SOCKET_ADDRESS_IPV4_H
 
 #include "util/CommonHeader.h"
 #include "thread/LocalMutex.h"
@@ -39,7 +40,7 @@ class SocketAddressIPv4
 public:
   SocketAddressIPv4();
   SocketAddressIPv4(struct sockaddr_in);
-  SocketAddressIPv4(const ::scoped_string & scopedstrhost, unsigned short port);
+  SocketAddressIPv4(const ::scoped_string & scopedstrHost, unsigned short port);
 
   SocketAddressIPv4(const SocketAddressIPv4 &socketAddressIPv4);
   SocketAddressIPv4 &operator=(const SocketAddressIPv4 &socketAddressIPv4);
@@ -53,7 +54,7 @@ public:
   // Returns socket port number 
   unsigned short getPort() const;
 
-  static SocketAddressIPv4 resolve(const ::scoped_string & scopedstrhost, unsigned short port);
+  static SocketAddressIPv4 resolve(const ::scoped_string & scopedstrHost, unsigned short port);
 
 protected:
   WsaStartup m_wsaStartup;
@@ -63,4 +64,4 @@ protected:
   static LocalMutex s_resolveMutex;
 };
 
-#endif
+

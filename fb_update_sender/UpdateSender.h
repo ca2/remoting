@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __UPDATESENDER_H__
-#define __UPDATESENDER_H__
+#pragma once
+
 
 #include "thread/AutoLock.h"
 #include "thread/Thread.h"
@@ -139,7 +139,7 @@ protected:
   bool updateViewPort(::int_rectangle *outNewViewPort, bool *shareApp, Region *prevShareAppRegion,
                       Region *newShareAppRegion);
 
-  // The sendPalette() function sends pallete after a set color ::std::map request
+  // The sendPalette() function sends pallete after a set color ::map request
   // by a client.
   void sendPalette(PixelFormat *pf);
 
@@ -159,24 +159,24 @@ protected:
   void sendCursorShapeUpdate(const PixelFormat & fmt,
                              const CursorShape *cursorShape);
   void sendCursorPosUpdate();
-  void sendCopyRect(const ::std::vector<::int_rectangle> *rects, const Point *source);
+  void sendCopyRect(const ::array_base<::int_rectangle> *rects, const Point *source);
 
-  // Encode and send a ::std::list of rectangles via the specified encoder.
+  // Encode and send a ::list of rectangles via the specified encoder.
   void sendRectangles(Encoder *encoder,
-                      const ::std::vector<::int_rectangle> *rects,
+                      const ::array_base<::int_rectangle> *rects,
                       const FrameBuffer *frameBuffer,
                       const EncodeOptions *encodeOptions);
 
   // This function paints black region in framebuffer.
   void paintBlack(FrameBuffer *frameBuffer, const Region *blackRegion);
 
-  // This function is used to split a region into a ::std::list of rectangles,
+  // This function is used to split a region into a ::list of rectangles,
   // where actual splitting is performed by the specified encoder object.
   // We do not use m_encoder because this function may be used for the video
   // encoder as well.
   void splitRegion(Encoder *encoder,
                    const Region *region,
-                   ::std::vector<::int_rectangle> *rects,
+                   ::array_base<::int_rectangle> *rects,
                    const FrameBuffer *frameBuffer,
                    const EncodeOptions *encodeOptions);
 
@@ -184,7 +184,7 @@ protected:
   // and removes this part form source reg
   Region takePartFromRegion(Region *reg, int area);
   // calculate total area of rects in pixels
-  int calcAreas(::std::vector<::int_rectangle> rects);
+  int calcAreas(::array_base<::int_rectangle> rects);
 
   LogWriter *m_log;
 
@@ -237,8 +237,8 @@ protected:
   PixelFormat m_newPixelFormat;
   LocalMutex m_newPixelFormatLocker;
 
-  // This flag indicates that color ::std::map entries requested. If this flag is true
-  // then before send the updates updateSender must to send the color ::std::map
+  // This flag indicates that color ::map entries requested. If this flag is true
+  // then before send the updates updateSender must to send the color ::map
   // entries
   bool m_setColorMapEntr;
 
@@ -269,4 +269,4 @@ protected:
   int m_id;
 };
 
-#endif // __UPDATESENDER_H__
+//// __UPDATESENDER_H__

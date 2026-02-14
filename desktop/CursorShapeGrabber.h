@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __CURSORSHAPEGRABBER_H__
-#define __CURSORSHAPEGRABBER_H__
+#pragma once
+
 
 #include "rfb/CursorShape.h"
 
@@ -45,4 +45,4 @@ protected:
   CursorShape m_cursorShape;
 };
 
-#endif // __CURSORSHAPEGRABBER_H__
+//// __CURSORSHAPEGRABBER_H__

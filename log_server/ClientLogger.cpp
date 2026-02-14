@@ -27,7 +27,7 @@
 #include "SecurityPipeClient.h"
 #include "util/DateTime.h"
 
-ClientLogger::ClientLogger(const ::scoped_string & scopedstrpublicPipeName, const ::scoped_string & scopedstrlogFileName)
+ClientLogger::ClientLogger(const ::scoped_string & scopedstrPublicPipeName, const ::scoped_string & scopedstrlogFileName)
 : LogDump(false, true),
   m_logSendingChan(0),
   m_levListenChan(0),
@@ -61,7 +61,7 @@ void ClientLogger::connect()
   NamedPipe *svcChan = 0;
   try {
     // Try connect to log server
-    svcChan = PipeClient::connect(m_publicPipeName.getString(), 0);
+    svcChan = PipeClient::connect(m_publicPipeName, 0);
     // Try get security channel from the server.
     // Pass zero as maxPortionSize under the assumption that the pipe buffer is always greater
     // than max log line length is always.
@@ -73,20 +73,20 @@ void ClientLogger::connect()
     SecurityPipeClient secLevelPipeClient(svcChan, 0);
     m_levListenChan = secLevelPipeClient.getChannel();
 
-    m_logOutput->writeUTF8(m_logFileName.getString());
+    m_logOutput->writeUTF8(m_logFileName);
 
     // Get log level by the m_levListenChan channel.
     DataInputStream m_levInput(m_levListenChan);
 
     unsigned char logLevel = m_levInput.readUInt8();
     setLogBarrier(logLevel);
-  } catch (Exception &e) {
+  } catch (::remoting::Exception &e) {
     if (svcChan != 0) delete svcChan;
     freeResources();
     ::string formattedException;
-    formattedException.format(_T("Can't connect to the log server: %s"),
+    formattedException.formatf("Can't connect to the log server: {}",
                               e.getMessage());
-    throw Exception(formattedException.getString());
+    throw ::remoting::Exception(formattedException);
   }
   if (svcChan != 0) delete svcChan;
 
@@ -126,7 +126,7 @@ void ClientLogger::flush(unsigned int processId,
                          unsigned int threadId,
                          const DateTime & dt,
                          int level,
-                         const ::scoped_string & scopedstrmessage)
+                         const ::scoped_string & scopedstrMessage)
 {
   AutoLock al(&m_logWritingMut);
 

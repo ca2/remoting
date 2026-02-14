@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __HOOKLOADERAPPLICATION_H__
-#define __HOOKLOADERAPPLICATION_H__
+#pragma once
+
 
 #include "win_system/LocalWindowsApplication.h"
 #include "ParentWatcher.h"
@@ -52,4 +52,4 @@ private:
   ParentWatcher *m_parentWatcher;
 };
 
-#endif // __HOOKLOADERAPPLICATION_H__
+//// __HOOKLOADERAPPLICATION_H__

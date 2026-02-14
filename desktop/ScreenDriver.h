@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __SCREENDRIVER_H__
-#define __SCREENDRIVER_H__
+#pragma once
+
 
 
 #include "region/Region.h"
@@ -96,4 +96,4 @@ public:
   virtual Region getVideoRegion() = 0;
 };
 
-#endif // __SCREENDRIVER_H__
+//// __SCREENDRIVER_H__

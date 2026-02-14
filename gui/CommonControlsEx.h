@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _COMMON_CONTROLS_EX_H_
-#define _COMMON_CONTROLS_EX_H_
+#pragma once
+
 
 #include "util/Exception.h"
 
@@ -36,4 +36,4 @@ public:
   static void init();
 };
 
-#endif
+

@@ -42,7 +42,7 @@ NotifyIconWindow::NotifyIconWindow()
   wc.hCursor = NULL;
   wc.hbrBackground = NULL;
   wc.lpszMenuName = NULL;
-  wc.lpszClassName = _T("NotifyIconWindowClass");
+  wc.lpszClassName = "NotifyIconWindowClass";
 
   ATOM atom = RegisterClass(&wc);
 
@@ -51,7 +51,7 @@ NotifyIconWindow::NotifyIconWindow()
   //
 
   m_window = CreateWindow((LPCTSTR)atom,
-                          (LPCTSTR)_T("NotifyIconWindowTitle"),
+                          (LPCTSTR)"NotifyIconWindowTitle",
                           WS_OVERLAPPED,
                           CW_USEDEFAULT, CW_USEDEFAULT,
                           CW_USEDEFAULT, CW_USEDEFAULT,

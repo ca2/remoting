@@ -1,8 +1,9 @@
-#ifndef BUFFEREDINPUTSTREAM_H
-#define BUFFEREDINPUTSTREAM_H
+//#ifndef BUFFEREDINPUTSTREAM_H
+#pragma once
+//#define BUFFEREDINPUTSTREAM_H
 
 #include "DataInputStream.h"
-#include <vector>
+//#include <vector>
 
 class BufferedInputStream : public InputStream
 {
@@ -23,11 +24,11 @@ protected:
 
   DataInputStream *m_input;
 
-  ::std::vector<char> m_buffer;
+  ::array_base<char> m_buffer;
 
   size_t m_have;
   size_t m_pos;
 
 };
 
-#endif // BUFFEREDINPUTSTREAM_H
+//// BUFFEREDINPUTSTREAM_H

@@ -30,7 +30,7 @@
 #include "win_system/SCMClient.h"
 #include "win_system/Environment.h"
 
-const TCHAR TvnService::SERVICE_COMMAND_LINE_KEY[] = _T("-service");
+const TCHAR TvnService::SERVICE_COMMAND_LINE_KEY[] = "-service";
 
 TvnService::TvnService(WinServiceEvents *winServiceEvents,
                        NewConnectionEvents *newConnectionEvents)
@@ -54,7 +54,7 @@ void TvnService::onStart()
     m_tvnServer = new TvnServer(true, m_newConnectionEvents, this, &m_clientLogger);
     m_tvnServer->addListener(this);
     m_winServiceEvents->onSuccServiceStart();
-  } catch (Exception &e) {
+  } catch (::remoting::Exception &e) {
     m_winServiceEvents->onFailedServiceStart(&::string(e.getMessage()));
   }
 }
@@ -89,7 +89,7 @@ void TvnService::install()
 
   scManager.installService(ServiceNames::SERVICE_NAME,
                            ServiceNames::SERVICE_NAME_TO_DISPLAY,
-                           binPath.getString(), _T(""));
+                           binPath, "");
 }
 
 void TvnService::remove()
@@ -132,14 +132,14 @@ bool TvnService::getBinPath(::string & binPath)
   }
 
   // Create formatted binary path.
-  binPath->format(_T("\"%s\" %s"),
-                  pathToServiceBinary.getString(),
+  binPath->format("\"{}\" {}",
+                  pathToServiceBinary,
                   SERVICE_COMMAND_LINE_KEY);
 
   return true;
 }
 
-void TvnService::onLogInit(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrfileName,
+void TvnService::onLogInit(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrFileName,
                            unsigned char logLevel)
 {
   size_t headerLineCount = m_clientLogger.getLogDumpSize();

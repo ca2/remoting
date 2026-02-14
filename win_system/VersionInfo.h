@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _VERSION_INFO_H_
-#define _VERSION_INFO_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "SystemException.h"
@@ -39,7 +39,7 @@ public:
    * @param pathToFile path to executable file to get version info from.
    * @throws SystemException on fail.
    */
-  VersionInfo(const ::scoped_string & scopedstrpathToFile);
+  VersionInfo(const ::scoped_string & scopedstrPathToFile);
 
   /**
    * Returns product version info string.
@@ -54,4 +54,4 @@ private:
   ::string m_productVersionString;
 };
 
-#endif
+

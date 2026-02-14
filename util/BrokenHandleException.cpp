@@ -24,8 +24,8 @@
 #include "framework.h"
 #include "BrokenHandleException.h"
 
-BrokenHandleException::BrokenHandleException(const ::scoped_string & scopedstrmessage)
-: Exception(message)
+BrokenHandleException::BrokenHandleException(const ::scoped_string & scopedstrMessage)
+: ::remoting::Exception(scopedstrMessage)
 {
 }
 

@@ -62,11 +62,11 @@ void ConnectionHistory::load()
   ::string value;
 
   for (size_t i = 0; i < m_limit; i++) {
-    //valueName.format(_T("%d"), i);
+    //valueName.formatf("{}", i);
     if (!m_key->getValueAsString(::as_string(i), value)) {
       break;
     }
-    m_hosts.push_back(value);
+    m_hosts.add(value);
   }
 }
 
@@ -77,7 +77,7 @@ void ConnectionHistory::save()
   size_t count = m_hosts.size();
 
   for (size_t i = 0; i < min(count, m_limit); i++) {
-    //valueName.format(_T("%u"), i);
+    //valueName.formatf("%u", i);
     auto value = m_hosts.at(i);
 
     m_key->setValueAsString(::as_string(i), value);
@@ -91,12 +91,12 @@ void ConnectionHistory::save()
 void ConnectionHistory::truncate()
 {
   ::string valueName;
-  ::string value;
+  ::string strValue;
 
   size_t i = (size_t)m_limit;
 
   while (true) {
-    valueName.format(_T("%u"), i);
+    valueName.formatf("%u", i);
 
     if (i >= getHostCount()) {
       return ;
@@ -104,12 +104,12 @@ void ConnectionHistory::truncate()
 
     removeHost(getHost(i));
 
-    if (!m_key->getValueAsString(valueName.getString(), &value)) {
+    if (!m_key->getValueAsString(valueName, strValue)) {
       break;
     }
 
-    m_key->deleteSubKey(value.getString());
-    m_key->deleteValue(valueName.getString());
+    m_key->deleteSubKey(strValue);
+    m_key->deleteValue(valueName);
 
     i++;
   }
@@ -122,27 +122,29 @@ void ConnectionHistory::clear()
   ::string valueName;
 
   for (size_t i = 0; i < m_hosts.size(); i++) {
-    valueName.format(_T("%u"), i);
+    valueName.formatf("%u", i);
 
-    m_key->deleteSubKey(m_hosts.at(i).getString());
-    m_key->deleteValue(valueName.getString());
+    m_key->deleteSubKey(m_hosts.at(i));
+    m_key->deleteValue(valueName);
   }
 
   releaseHosts();
 }
 
-void ConnectionHistory::addHost(const ::scoped_string & scopedstrhost)
+void ConnectionHistory::addHost(const ::scoped_string & scopedstrHost)
 {
-  ::string hostS(host);
 
-  for (::std::vector<::string>::iterator it = m_hosts.begin(); it != m_hosts.end(); it++) {
-    if (it->isEqualTo(hostS)) {
-      m_hosts.erase(it);
-      break;
-    }
-  }
-
-  m_hosts.insert(m_hosts.begin(), hostS);
+   m_hosts.add_unique(scopedstrHost);
+  // ::string hostS(host);
+  //
+  // for (::string_array::iterator it = m_hosts.begin(); it != m_hosts.end(); it++) {
+  //   if (it->isEqualTo(hostS)) {
+  //     m_hosts.erase(it);
+  //     break;
+  //   }
+  // }
+  //
+  // m_hosts.insert(m_hosts.begin(), hostS);
 }
 
 size_t ConnectionHistory::getHostCount() const
@@ -150,9 +152,9 @@ size_t ConnectionHistory::getHostCount() const
   return m_hosts.size();
 }
 
-const ::scoped_string & scopedstrConnectionHistory::getHost(size_t i) const
+::string ConnectionHistory::getHost(size_t i) const
 {
-  return m_hosts.at(i).getString();
+  return m_hosts.at(i);
 }
 
 void ConnectionHistory::releaseHosts()
@@ -160,14 +162,17 @@ void ConnectionHistory::releaseHosts()
   m_hosts.clear();
 }
 
-void ConnectionHistory::removeHost(const ::scoped_string & scopedstrhost)
+void ConnectionHistory::removeHost(const ::scoped_string & scopedstrHost)
 {
-  ::string hostS(host);
 
-  for (::std::vector<::string>::iterator it = m_hosts.begin(); it != m_hosts.end(); it++) {
-    if (it->isEqualTo(hostS)) {
-      m_hosts.erase(it);
-      break;
-    }
-  }
+   m_hosts.erase(scopedstrHost);
+
+  // ::string hostS(scopedstrHost);
+  //
+  // for (::string_array::iterator it = m_hosts.begin(); it != m_hosts.end(); it++) {
+  //   if (*it == hostS) {
+  //     m_hosts.erase(it);
+  //     break;
+  //   }
+  // }
 }

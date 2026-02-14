@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __UPDATELISTENER_H__
-#define __UPDATELISTENER_H__
+#pragma once
+
 
 #include "thread/LocalMutex.h"
 
@@ -37,4 +37,4 @@ public:
   virtual void onUpdate() = 0;
 };
 
-#endif // __UPDATELISTENER_H__
+//// __UPDATELISTENER_H__

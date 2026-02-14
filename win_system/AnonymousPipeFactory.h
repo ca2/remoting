@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __ANONYMOUSPIPEFACTORY_H__
-#define __ANONYMOUSPIPEFACTORY_H__
+#pragma once
+
 
 #include "AnonymousPipe.h"
 #include "log_writer/LogWriter.h"
@@ -44,7 +44,7 @@ public:
   // firstSide pipe handles by child('s) processes.
   // @param If secondSideIsInheritable is true then allows to inherit the
   // secondSide pipe handles by child('s) processes.
-  // @throw Exception if an error occured.
+  // @throw ::remoting::Exception if an error occured.
   // After use the firstSide and secondSide object the caller must
   // destroy it by delete operator.
   void generatePipes(AnonymousPipe **firstSide,
@@ -57,4 +57,4 @@ private:
   unsigned int m_bufferSize;
 };
 
-#endif // __ANONYMOUSPIPEFACTORY_H__
+//// __ANONYMOUSPIPEFACTORY_H__

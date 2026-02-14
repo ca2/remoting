@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __PARENTEVENTSLISTENER_H__
-#define __PARENTEVENTSLISTENER_H__
+#pragma once
+
 
 class ParentEventsListener
 {
@@ -31,4 +31,4 @@ public:
   virtual void onParentTerminate() = 0;
 };
 
-#endif // __PARENTEVENTSLISTENER_H__
+//// __PARENTEVENTSLISTENER_H__

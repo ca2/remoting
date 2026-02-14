@@ -22,12 +22,12 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINDOWSDISPLAYS_H__
-#define __WINDOWSDISPLAYS_H__
+#pragma once
+
 
 
 #include "util/DateTime.h"
-#include <vector>
+//#include <vector>
 #include "thread/LocalMutex.h"
 
 class WindowsDisplays
@@ -39,10 +39,10 @@ public:
   // If a display does not exist now the function return an empty rectangle.
   void getDisplayCoordinates(unsigned char displayNumber, ::int_rectangle *rect);
 
-  ::std::vector<::int_rectangle> getDisplaysCoords();
+  ::array_base<::int_rectangle> getDisplaysCoords();
 
-  // Returns a ::std::vector that contain dispalys coordinates at the current time.
-  ::std::vector<::int_rectangle> getDisplays();
+  // Returns a ::array_base that contain dispalys coordinates at the current time.
+  ::array_base<::int_rectangle> getDisplays();
 
 private:
   // Updates internal information to a current state.
@@ -59,11 +59,11 @@ private:
   int m_xVirtualScreen;
   int m_yVirtualScreen;
 
-  ::std::vector<::int_rectangle> m_displayRects;
+  ::array_base<::int_rectangle> m_displayRects;
   LocalMutex m_displayRectsMutex;
   
   static const unsigned int UPDATE_INTERVAL = 3000;
   DateTime m_latestUpdateTime;
 };
 
-#endif // __WINDOWSDISPLAYS_H__
+//// __WINDOWSDISPLAYS_H__

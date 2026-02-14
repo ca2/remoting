@@ -32,7 +32,7 @@ WinD3D11Texture2D::WinD3D11Texture2D(ID3D11Device *device, const D3D11_TEXTURE2D
 {
   HRESULT hr = device->CreateTexture2D(deskTexture, 0, &m_dxgiTexture);
   if (FAILED(hr) || m_dxgiTexture == 0) {
-    throw WinDxRecoverableException(_T("Can't CreateTexture2D()"), hr);
+    throw WinDxRecoverableException("Can't CreateTexture2D()", hr);
   }
 }
 
@@ -41,7 +41,7 @@ WinD3D11Texture2D::WinD3D11Texture2D(IDXGIResource *dxgiResource)
 {
   HRESULT hr = dxgiResource->QueryInterface(__uuidof(ID3D11Texture2D), reinterpret_cast<void **>(&m_dxgiTexture));
   if (FAILED(hr) || m_dxgiTexture == 0) {
-    throw WinDxRecoverableException(_T("Can't QueryInterface() to create ID3D11Texture2D"), hr);
+    throw WinDxRecoverableException("Can't QueryInterface() to create ID3D11Texture2D", hr);
   }
 }
 

@@ -107,7 +107,7 @@ FileTransferRequestHandler::FileTransferRequestHandler(RfbCodeRegistrator *regis
     registrator->regCode(rfbMessagesToProcess[i], this);
   }
 
-  m_log->message(_T("File transfer request handler created"));
+  m_log->message("File transfer request handler created");
 }
 
 FileTransferRequestHandler::~FileTransferRequestHandler()
@@ -127,7 +127,7 @@ FileTransferRequestHandler::~FileTransferRequestHandler()
     delete m_uploadFile;
   }
 
-  m_log->message(_T("File transfer request handler deleted"));
+  m_log->message("File transfer request handler deleted");
 }
 
 void FileTransferRequestHandler::onRequest(unsigned int reqCode, RfbInputGate *backGate)
@@ -175,7 +175,7 @@ void FileTransferRequestHandler::onRequest(unsigned int reqCode, RfbInputGate *b
       md5Requested();
       break;
     } // switch.
-  } catch (Exception &someEx) {
+  } catch (::remoting::Exception &someEx) {
     lastRequestFailed(someEx.getMessage());
   } // try / catch.
 
@@ -191,7 +191,7 @@ bool FileTransferRequestHandler::isFileTransferEnabled()
 
 void FileTransferRequestHandler::compressionSupportRequested()
 {
-  m_log->message(_T("%s"), _T("compression support requested"));
+  m_log->message("{}"), _T("compression support requested");
 
   //
   // Can be 0 - compression not supported by server
@@ -200,7 +200,7 @@ void FileTransferRequestHandler::compressionSupportRequested()
 
   unsigned char compressionSupport = 1;
 
-  m_log->debug(_T("sending compression support reply: %s"), (compressionSupport == 1) ? _T("supported") : _T("not supported"));
+  m_log->debug("sending compression support reply: {}"), (compressionSupport == 1) ? _T("supported") : _T("not supported");
 
   {
     AutoLock l(m_output);
@@ -227,8 +227,8 @@ void FileTransferRequestHandler::fileListRequested()
     m_input->readUTF8(&fullPathName);
   }
 
-  m_log->message(_T("File ::std::list of folder '%s' requested"),
-               fullPathName.getString());
+  m_log->message("File ::list of folder '{}' requested",
+               fullPathName);
 
   checkAccess();
 
@@ -240,12 +240,12 @@ void FileTransferRequestHandler::fileListRequested()
   const FileInfo *files = NULL;
 
   //
-  // Get file ::std::list from specified folder
+  // Get file ::list from specified folder
   //
 
-  FolderListener folderListener(fullPathName.getString());
+  FolderListener folderListener(fullPathName);
 
-  if (!folderListener.::std::list()) {
+  if (!folderListener.::list()) {
     throw SystemException();
   }
 
@@ -314,18 +314,18 @@ void FileTransferRequestHandler::mkDirRequested()
     m_input->readUTF8(&folderPath);
   } // end of reading block.
 
-  m_log->message(_T("mkdir \"%s\" command requested"), folderPath.getString());
+  m_log->message("mkdir \"{}\" command requested", folderPath);
 
   checkAccess();
 
   if (folderPath.parentPathIsRoot()) {
-    throw FileTransferException(_T("Cannot create folder in root folder"));
+    throw FileTransferException("Cannot create folder in root folder");
   }
 
-  File folder(folderPath.getString());
+  File folder(folderPath);
 
   if (folder.exists()) {
-    throw FileTransferException(_T("Directory already exists"));
+    throw FileTransferException("Directory already exists");
   }
 
   if (!folder.mkdir()) {
@@ -349,11 +349,11 @@ void FileTransferRequestHandler::rmFileRequested()
     m_input->readUTF8(&fullPathName);
   } // end of reading block.
 
-  m_log->message(_T("rm \"%s\" command requested"), fullPathName.getString());
+  m_log->message("rm \"{}\" command requested", fullPathName);
 
   checkAccess();
 
-  File file(fullPathName.getString());
+  File file(fullPathName);
 
   if (!file.exists()) {
     throw SystemException();
@@ -382,12 +382,12 @@ void FileTransferRequestHandler::mvFileRequested()
     m_input->readUTF8(&newFileName);
   } // end of reading block.
 
-  m_log->message(_T("move \"%s\" \"%s\" command requested"), oldFileName.getString(), newFileName.getString());
+  m_log->message("move \"{}\" \"{}\" command requested", oldFileName, newFileName);
 
   checkAccess();
 
-  File srcFile(oldFileName.getString());
-  File dstFile(newFileName.getString());
+  File srcFile(oldFileName);
+  File dstFile(newFileName);
 
   if (!srcFile.renameTo(&dstFile)) {
     throw SystemException();
@@ -410,14 +410,14 @@ void FileTransferRequestHandler::dirSizeRequested()
     m_input->readUTF8(&fullPathName);
   } // end of reading block.
 
-  m_log->message(_T("Size of folder '%s\' requested"),
-               fullPathName.getString());
+  m_log->message("Size of folder '{}\' requested",
+               fullPathName);
 
   checkAccess();
 
   unsigned long long directorySize = 0;
 
-  if (!getDirectorySize(fullPathName.getString(), &directorySize)) {
+  if (!getDirectorySize(fullPathName, &directorySize)) {
     throw SystemException();
   }
 
@@ -445,7 +445,7 @@ void FileTransferRequestHandler::md5Requested()
     dataLen = m_input->readUInt64();
   } // end of reading block.
 
-  m_log->message(_T("md5 \"%s\" %d %d command requested"), fullPathName.getString(), offset, dataLen);
+  m_log->message("md5 \"{}\" {} {} command requested", fullPathName, offset, dataLen);
 
   checkAccess();
 
@@ -455,11 +455,11 @@ void FileTransferRequestHandler::md5Requested()
 
   MD5 md5calculator;
 
-  File file(fullPathName.getString());
+  File file(fullPathName);
 
   ::string path;
   file.getPath(&path);
-  WinFileChannel fileInputStream(path.getString(), F_READ, FM_OPEN);
+  WinFileChannel fileInputStream(path, F_READ, FM_OPEN);
   fileInputStream.seek(offset);
 
   //
@@ -475,7 +475,7 @@ void FileTransferRequestHandler::md5Requested()
     bytesToRead = (DWORD)dataLen;
   }
 
-  ::std::vector<unsigned char> buffer(bytesToRead);
+  ::array_base<unsigned char> buffer(bytesToRead);
 
   while (bytesToReadTotal > 0) {
     bytesRead = fileInputStream.read(&buffer.front(), bytesToRead);
@@ -517,7 +517,7 @@ void FileTransferRequestHandler::uploadStartRequested()
     initialOffset = m_input->readUInt64();
   }
 
-  m_log->message(_T("upload \"%s\" %d %d command requested"), fullPathName.getString(), uploadFlags, initialOffset);
+  m_log->message("upload \"{}\" {} {} command requested", fullPathName, uploadFlags, initialOffset);
 
   checkAccess();
 
@@ -535,10 +535,10 @@ void FileTransferRequestHandler::uploadStartRequested()
   }
 
   if (fullPathName.parentPathIsRoot()) {
-    throw FileTransferException(_T("Cannot upload file to root folder"));
+    throw FileTransferException("Cannot upload file to root folder");
   }
 
-  m_uploadFile = new File(fullPathName.getString());
+  m_uploadFile = new File(fullPathName);
 
   //
   // Trying to create file or overwrite existing
@@ -551,7 +551,7 @@ void FileTransferRequestHandler::uploadStartRequested()
   //
   // Trying to open file and seek to initial file position
   //
-  m_fileOutputStream = new WinFileChannel(fullPathName.getString(),
+  m_fileOutputStream = new WinFileChannel(fullPathName,
                                           F_WRITE,
                                           FM_OPEN);
   m_fileOutputStream->seek(initialOffset);
@@ -582,17 +582,17 @@ void FileTransferRequestHandler::uploadDataRequested()
   compressionLevel = m_input->readUInt8();
   compressedSize = m_input->readUInt32();
   uncompressedSize = m_input->readUInt32();
-  ::std::vector<char> buffer(compressedSize);
+  ::array_base<char> buffer(compressedSize);
   if (compressedSize != 0) {
     m_input->readFully(&buffer.front(), compressedSize);
   }
 
-  m_log->info(_T("upload data (cs = %d, us = %d) requested"), compressedSize, uncompressedSize);
+  m_log->information("upload data (cs = {}, us = {}) requested", compressedSize, uncompressedSize);
 
   checkAccess();
 
   if (m_uploadFile == NULL) {
-    throw FileTransferException(_T("No active upload at the moment"));
+    throw FileTransferException("No active upload at the moment");
   }
 
   if (compressedSize != 0) {
@@ -629,7 +629,7 @@ void FileTransferRequestHandler::uploadEndRequested()
     modificationTime = m_input->readUInt64();
   } // end of reading block.
 
-  m_log->message(_T("%s"), _T("end of upload requested\n"));
+  m_log->message("{}"), _T("end of upload requested\n");
 
   checkAccess();
 
@@ -639,7 +639,7 @@ void FileTransferRequestHandler::uploadEndRequested()
   //
 
   if (m_uploadFile == NULL) {
-    throw FileTransferException(_T("No active upload at the moment"));
+    throw FileTransferException("No active upload at the moment");
   }
 
   //
@@ -655,7 +655,7 @@ void FileTransferRequestHandler::uploadEndRequested()
   //
 
   if (!m_uploadFile->setLastModified(modificationTime)) {
-    throw FileTransferException(_T("Cannot change last write file time"));
+    throw FileTransferException("Cannot change last write file time");
   } // if cannot set modification time
 
   //
@@ -700,7 +700,7 @@ void FileTransferRequestHandler::downloadStartRequested()
     initialOffset = m_input->readUInt64();
   } // end of reading block.
 
-  m_log->message(_T("download of \"%s\" file (offset = %d) requested"), fullPathName.getString(), initialOffset);
+  m_log->message("download of \"{}\" file (offset = {}) requested", fullPathName, initialOffset);
 
   checkAccess();
 
@@ -717,7 +717,7 @@ void FileTransferRequestHandler::downloadStartRequested()
     m_downloadFile = 0;
   }
 
-  m_downloadFile = new File(fullPathName.getString());
+  m_downloadFile = new File(fullPathName);
 
 
   //
@@ -725,7 +725,7 @@ void FileTransferRequestHandler::downloadStartRequested()
   // file position.
   //
 
-  m_fileInputStream = new WinFileChannel(fullPathName.getString(), F_READ,
+  m_fileInputStream = new WinFileChannel(fullPathName, F_READ,
                                          FM_OPEN);
   m_fileInputStream->seek(initialOffset);
 
@@ -756,7 +756,7 @@ void FileTransferRequestHandler::downloadDataRequested()
     dataSize = m_input->readUInt32();
   } // end of reading block.
 
-  m_log->info(_T("download %d bytes (comp flag = %d) requested"), dataSize, requestedCompressionLevel);
+  m_log->information("download {} bytes (comp flag = {}) requested", dataSize, requestedCompressionLevel);
 
   checkAccess();
 
@@ -774,10 +774,10 @@ void FileTransferRequestHandler::downloadDataRequested()
   //
 
   if (m_downloadFile == NULL) {
-    throw FileTransferException(_T("No active download at the moment"));
+    throw FileTransferException("No active download at the moment");
   }
 
-  ::std::vector<char> buffer(dataSize);
+  ::array_base<char> buffer(dataSize);
 
   DWORD read = 0;
 
@@ -807,7 +807,7 @@ void FileTransferRequestHandler::downloadDataRequested()
       m_output->flush();
     } // rfb io handle block
 
-    m_log->message(_T("%s"), _T("downloading has finished\n"));
+    m_log->message("{}"), _T("downloading has finished\n");
 
     delete m_fileInputStream;
     delete m_downloadFile;
@@ -817,7 +817,7 @@ void FileTransferRequestHandler::downloadDataRequested()
 
     return ;
 
-  } catch (IOException &ioEx) {
+  } catch (::io_exception &ioEx) {
     throw FileTransferException(&ioEx);
   } // try / catch
 
@@ -862,7 +862,7 @@ void FileTransferRequestHandler::lastRequestFailed(::string & storage)
 
 void FileTransferRequestHandler::lastRequestFailed(const ::scoped_string & scopedstrDescription)
 {
-  m_log->error(_T("last request failed: \"%s\""), description);
+  m_log->error("last request failed: \"{}\"", description);
 
   {
     AutoLock l(m_output);
@@ -874,7 +874,7 @@ void FileTransferRequestHandler::lastRequestFailed(const ::scoped_string & scope
   }
 }
 
-bool FileTransferRequestHandler::getDirectorySize(const ::scoped_string & scopedstrpathname, unsigned long long *dirSize)
+bool FileTransferRequestHandler::getDirectorySize(const ::scoped_string & scopedstrPathname, unsigned long long *dirSize)
 {
   unsigned long long currentDirSize = 0;
   unsigned int filesCount = 0;
@@ -886,21 +886,21 @@ bool FileTransferRequestHandler::getDirectorySize(const ::scoped_string & scoped
   // Get files count
   //
 
-  if (!folder.::std::list(NULL, &filesCount)) {
+  if (!folder.::list(NULL, &filesCount)) {
     return false;
   }
 
   if (filesCount != 0) {
-    ::std::vector<::string> fileNames(filesCount);
+    ::string_array fileNames(filesCount);
 
     //
     // Get file names
     //
 
-    folder.::std::list(&fileNames.front(), NULL);
+    folder.::list(&fileNames.front(), NULL);
 
     for (unsigned int i = 0; i < filesCount; i++) {
-      File subfile(pathname, fileNames[i].getString());
+      File subfile(pathname, fileNames[i]);
       if (subfile.isDirectory()) {
 
         unsigned long long subDirSize = 0;
@@ -908,13 +908,13 @@ bool FileTransferRequestHandler::getDirectorySize(const ::scoped_string & scoped
 
         subfile.getPath(&subDirPath);
 
-        if (getDirectorySize(subDirPath.getString(), &subDirSize)) {
+        if (getDirectorySize(subDirPath, &subDirSize)) {
           currentDirSize += subDirSize;
         }  // if it got sub directory size
       } else {
         currentDirSize += subfile.length();
       } // if subfile is normal file
-    } // for every subfile in file ::std::list
+    } // for every subfile in file ::list
   }
   *dirSize = currentDirSize;
 
@@ -925,10 +925,10 @@ void FileTransferRequestHandler::checkAccess()
 {
   try {
     if (!isFileTransferEnabled()) {
-      throw Exception(_T("File transfers is disabled"));
+      throw ::remoting::Exception("File transfers is disabled");
     }
     m_security->throwIfAccessDenied();
-  } catch (Exception &someEx) {
+  } catch (::remoting::Exception &someEx) {
     throw SystemException(someEx.getMessage());
   } // try / catch.
 }

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _TVNSERVER_HELP_H_
-#define _TVNSERVER_HELP_H_
+#pragma once
+
 
 /**
  * remoting_node.exe help class.
@@ -39,4 +39,4 @@ private:
   TvnServerHelp();
 };
 
-#endif
+

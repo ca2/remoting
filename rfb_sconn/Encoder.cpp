@@ -40,11 +40,11 @@ int Encoder::getCode() const
 }
 
 void Encoder::splitRectangle(const ::int_rectangle &  rect,
-                             ::std::vector<::int_rectangle> *rectList,
+                             ::array_base<::int_rectangle> *rectList,
                              const FrameBuffer *serverFb,
                              const EncodeOptions *options)
 {
-  rectList->push_back(rect);
+  rectList->add(rect);
 }
 
 void Encoder::sendRectangle(const ::int_rectangle &  rect,

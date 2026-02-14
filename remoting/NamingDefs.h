@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _NAMING_DEFS_H_
-#define _NAMING_DEFS_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -62,4 +62,4 @@ public:
   static const TCHAR TVN_SUB_WINDOW_TITLE_NAME[];
 };
 
-#endif
+

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CURSOR_POS_DECODER_H_
-#define _CURSOR_POS_DECODER_H_
+#pragma once
+
 
 #include "PseudoDecoder.h"
 
@@ -34,4 +34,4 @@ public:
   virtual ~PointerPosDecoder();
 };
 
-#endif
+

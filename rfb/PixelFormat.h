@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __PIXELFORMAT_H__
-#define __PIXELFORMAT_H__
+#pragma once
+
 
 struct PixelFormat
 {
@@ -47,4 +47,4 @@ struct PixelFormat
   bool bigEndian;
 };
 
-#endif // __PIXELFORMAT_H__
+//// __PIXELFORMAT_H__

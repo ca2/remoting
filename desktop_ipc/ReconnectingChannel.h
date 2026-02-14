@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RECONNECTINGCHANNEL_H__
-#define __RECONNECTINGCHANNEL_H__
+#pragma once
+
 
 #include "io_lib/Channel.h"
 #include "thread/LocalMutex.h"
@@ -45,7 +45,7 @@ public:
   void replaceChannel(Channel *newChannel);
 
   // Closes connection and break all blocked operation.
-  // @throw Exception on error.
+  // @throw ::remoting::Exception on error.
   virtual void close();
 
   virtual size_t available() { return 0; };
@@ -54,15 +54,15 @@ private:
   // @param funName - is a function name that will be placed to the
   // ReconnectException text.
   // @throw ReconnectException on reconnect detection.
-  // @throw IOException on other errors.
-  Channel *getChannel(const ::scoped_string & scopedstrfunName);
+  // @throw ::io_exception on other errors.
+  Channel *getChannel(const ::scoped_string & scopedstrFunName);
 
   // @param funName - is a function name that will be placed to the
   // ReconnectException text.
   // @param channel - currently using transport.
   // @throw ReconnectException on reconnect detection.
-  // @throw IOException on other errors.
-  void waitForReconnect(const ::scoped_string & scopedstrfunName, Channel *channel);
+  // @throw ::io_exception on other errors.
+  void waitForReconnect(const ::scoped_string & scopedstrFunName, Channel *channel);
 
   bool m_isClosed;
 
@@ -77,4 +77,4 @@ private:
   LogWriter *m_log;
 };
 
-#endif // __RECONNECTINGCHANNEL_H__
+//// __RECONNECTINGCHANNEL_H__

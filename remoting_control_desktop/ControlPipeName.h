@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CONTROL_PIPE_NAME_H_
-#define _CONTROL_PIPE_NAME_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "log_writer/LogWriter.h"
@@ -48,4 +48,4 @@ private:
   ControlPipeName() { };
 };
 
-#endif
+

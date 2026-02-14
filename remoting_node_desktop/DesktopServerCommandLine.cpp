@@ -26,10 +26,10 @@
 
 #include "util/StringParser.h"
 
-const TCHAR DesktopServerCommandLine::DESKTOP_SERVER_KEY[] = _T("-desktopserver");
-const TCHAR DesktopServerCommandLine::LOG_DIR_KEY[] = _T("-logdir");
-const TCHAR DesktopServerCommandLine::LOG_LEVEL_KEY[] = _T("-loglevel");
-const TCHAR DesktopServerCommandLine::SHARED_MEMORY_NAME_KEY[] = _T("-shmemname");
+const TCHAR DesktopServerCommandLine::DESKTOP_SERVER_KEY[] = "-desktopserver";
+const TCHAR DesktopServerCommandLine::LOG_DIR_KEY[] = "-logdir";
+const TCHAR DesktopServerCommandLine::LOG_LEVEL_KEY[] = "-loglevel";
+const TCHAR DesktopServerCommandLine::SHARED_MEMORY_NAME_KEY[] = "-shmemname";
 
 DesktopServerCommandLine::DesktopServerCommandLine()
 {
@@ -52,7 +52,7 @@ void DesktopServerCommandLine::parse(const CommandLineArgs *cmdArgs)
       !optionSpecified(DESKTOP_SERVER_KEY) || !optionSpecified(LOG_DIR_KEY) ||
       !optionSpecified(LOG_LEVEL_KEY) ||
       !optionSpecified(SHARED_MEMORY_NAME_KEY)) {
-    throw Exception(_T("Command line is invalid"));
+    throw ::remoting::Exception("Command line is invalid");
   }
 }
 
@@ -61,7 +61,7 @@ void DesktopServerCommandLine::getLogDir(::string & logDir)
   if (!optionSpecified(LOG_DIR_KEY, logDir)) {
     _ASSERT(FALSE);
 
-    logDir->setString(0);
+    logDir-= 0;
   }
 }
 
@@ -75,7 +75,7 @@ int DesktopServerCommandLine::getLogLevel()
 
   int ret;
 
-  if (!StringParser::parseInt(logLevelKeyArg.getString(), &ret)) {
+  if (!StringParser::parseInt(logLevelKeyArg, &ret)) {
     _ASSERT(FALSE);
   }
 
@@ -87,6 +87,6 @@ void DesktopServerCommandLine::getSharedMemName(::string & shMemName)
   if (!optionSpecified(SHARED_MEMORY_NAME_KEY, shMemName)) {
     _ASSERT(FALSE);
 
-    shMemName->setString(0);
+    shMemName-= 0;
   }
 }

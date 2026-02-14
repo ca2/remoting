@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "PipeClient.h"
 #include "util/Exception.h"
 
@@ -32,10 +33,10 @@ PipeClient::PipeClient()
 NamedPipe *PipeClient::connect(const ::scoped_string & scopedstrName, unsigned int maxPortionSize)
 {
   ::string pipeName;
-  pipeName.format(_T("\\\\.\\pipe\\%s"), name);
+  pipeName.formatf("\\\\.\\pipe\\{}", ::string(scopedstrName).c_str());
 
   HANDLE hPipe;
-  hPipe = CreateFile(pipeName.getString(),  // pipe name
+  hPipe = CreateFile(::wstring(pipeName),  // pipe name
                      GENERIC_READ |         // read and write access
                      GENERIC_WRITE,
                      0,                     // no sharing
@@ -47,8 +48,8 @@ NamedPipe *PipeClient::connect(const ::scoped_string & scopedstrName, unsigned i
   if (hPipe == INVALID_HANDLE_VALUE) {
     int errCode = GetLastError();
     ::string errMess;
-    errMess.format(_T("Connect to pipe server failed, error code = %d"), errCode);
-    throw Exception(errMess.getString());
+    errMess.formatf("Connect to pipe server failed, error code = {}", errCode);
+    throw ::remoting::Exception(errMess);
   }
 
   DWORD dwMode = PIPE_READMODE_BYTE;
@@ -59,8 +60,8 @@ NamedPipe *PipeClient::connect(const ::scoped_string & scopedstrName, unsigned i
                                ) {
     int errCode = GetLastError();
     ::string errMess;
-    errMess.format(_T("SetNamedPipeHandleState failed, error code = %d"), errCode);
-    throw Exception(errMess.getString());
+    errMess.formatf("SetNamedPipeHandleState failed, error code = {}", errCode);
+    throw ::remoting::Exception(errMess);
   }
 
   return new NamedPipe(hPipe, maxPortionSize, false);

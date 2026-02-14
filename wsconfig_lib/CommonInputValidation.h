@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _COMMON_INPUT_VALIDATION_H_
-#define _COMMON_INPUT_VALIDATION_H_
+#pragma once
+
 
 #include "gui/TextBox.h"
 
@@ -50,7 +50,7 @@ public:
    * @note that if validation fails, then it shows error notification
    * using notifyValidationError() method.
    */
-  static bool validateUINT(TextBox *textBox, const ::scoped_string & scopedstrmessageText);
+  static bool validateUINT(TextBox *textBox, const ::scoped_string & scopedstrMessageText);
   /**
    * Shows validation error message (message box or balloon tip, depends on realization)
    * and sets focus to control.
@@ -60,7 +60,7 @@ public:
    * BaloonTip interface.
    * @fixme don't use BaloonTip in this case, use direct message box.
    */
-  static void notifyValidationError(TextBox *textBox, const ::scoped_string & scopedstrmessageText);
+  static void notifyValidationError(TextBox *textBox, const ::scoped_string & scopedstrMessageText);
 private:
   /**
    * Don't allow creating instances of this class.
@@ -68,4 +68,4 @@ private:
   CommonInputValidation();
 };
 
-#endif
+

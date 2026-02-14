@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RFB_SERVER_H__
-#define __RFB_SERVER_H__
+#pragma once
+
 
 #include "RfbClientManager.h"
 #include "thread/Thread.h"
@@ -46,7 +46,7 @@ public:
    * @param viewPort [optional] view port shared by this server.
    * @param lockAddr determinates if serever must set exclusive address usage.
    * if not set, then view port is full screen.
-   * @throws Exception when failed to create tcp server.
+   * @throws ::remoting::Exception when failed to create tcp server.
    */
   RfbServer(const ::scoped_string & scopedstrbindHost, unsigned short bindPort,
             RfbClientManager *clientManager,
@@ -82,4 +82,4 @@ private:
   LogWriter *m_log;
 };
 
-#endif // __LISTENTCPSOCKET_H__
+//// __LISTENTCPSOCKET_H__

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __LOGCONN_H__
-#define __LOGCONN_H__
+#pragma once
+
 
 #include "io_lib/Channel.h"
 #include "thread/Thread.h"
@@ -68,4 +68,4 @@ private:
   LogLevelSender m_logLevelSender;
 };
 
-#endif // __LOGCONN_H__
+//// __LOGCONN_H__

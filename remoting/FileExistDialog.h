@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _FILE_EXIST_DIALOG_H_
-#define _FILE_EXIST_DIALOG_H_
+#pragma once
+
 
 #include "gui/BaseDialog.h"
 #include "gui/Control.h"
@@ -49,7 +49,7 @@ public:
   virtual int showModal();
 
   void setFilesInfo(FileInfo *existingFileInfo, FileInfo *newFileInfo,
-                    const ::scoped_string & scopedstrpathToFileCaption);
+                    const ::scoped_string & scopedstrPathToFileCaption);
 
   void resetDialogResultValue();
 
@@ -108,4 +108,4 @@ protected:
   bool m_canAppend;
 };
 
-#endif
+

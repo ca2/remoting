@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "WindowsEventEx.h"
 #include "util/Exception.h"
 #include <Aclapi.h>
@@ -46,7 +47,7 @@ void WindowsEventEx::setAccessToAll(HANDLE objHandle)
   if (errorCode != ERROR_SUCCESS &&
       errorCode != ERROR_NO_SECURITY_ON_OBJECT) {
     ::string errMess;
-    errMess.format(_T("Cannot SetSecurityInfo with error = %d"), (int)errorCode);
-    throw Exception(errMess.getString());
+    errMess.formatf("Cannot SetSecurityInfo with error = {}", (int)errorCode);
+    throw ::remoting::Exception(errMess);
   }
 }

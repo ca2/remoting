@@ -33,13 +33,13 @@ AuthenticationDialog::AuthenticationDialog()
 BOOL AuthenticationDialog::onInitDialog() 
 {
   setControlById(m_hostname, IDC_EHOST);
-  m_hostname.setText(m_strHost.getString());
+  m_hostname.setText(m_strHost);
   setControlById(m_password, IDC_EPASSW);
   m_password.setFocus();
   return FALSE;
 }
 
-void AuthenticationDialog::setHostName(const ::string & hostname)
+void AuthenticationDialog::setHostName(const ::scoped_string & hostname)
 {
   m_strHost = hostname;
 }
@@ -58,7 +58,7 @@ BOOL AuthenticationDialog::onCommand(UINT controlID, UINT notificationID)
   return FALSE;
 }
 
-const ::string & AuthenticationDialog::getPassword()
+const ::scoped_string & AuthenticationDialog::getPassword()
 {
   return m_strPassword;
 }

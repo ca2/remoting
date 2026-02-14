@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _ADDITIONAL_ACTION_APPLICATION_H_
-#define _ADDITIONAL_ACTION_APPLICATION_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -78,4 +78,4 @@ private:
   ::string m_commandLine;
 };
 
-#endif
+

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _EDIT_IP_ACCESS_RULE_DIALOG_H_
-#define _EDIT_IP_ACCESS_RULE_DIALOG_H_
+#pragma once
+
 
 #include "gui/BaseDialog.h"
 #include "gui/TextBox.h"
@@ -85,4 +85,4 @@ protected:
   BalloonTip m_lastIpLessThanFirstBT;
 };
 
-#endif
+

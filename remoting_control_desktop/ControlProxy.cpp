@@ -40,11 +40,11 @@ ControlProxy::~ControlProxy()
   releaseMessage();
 }
 
-void ControlProxy::setPasswordProperties(const ::scoped_string & scopedstrpasswordFile,
+void ControlProxy::setPasswordProperties(const ::scoped_string & scopedstrPasswordFile,
                                          bool getPassFromConfigEnabled,
                                          bool forService)
 {
-  m_passwordFile.setString(passwordFile);
+  m_passwordFile= passwordFile;
   m_getPassFromConfigEnabled = getPassFromConfigEnabled;
   m_forService = forService;
 }
@@ -86,7 +86,7 @@ void ControlProxy::shutdownTightVnc()
   createMessage(ControlProto::SHUTDOWN_SERVER_MSG_ID)->send();
 }
 
-void ControlProxy::getClientsList(::std::list<RfbClientInfo *> *clients)
+void ControlProxy::getClientsList(::list<RfbClientInfo *> *clients)
 {
   AutoLock l(m_gate);
 
@@ -101,9 +101,9 @@ void ControlProxy::getClientsList(::std::list<RfbClientInfo *> *clients)
 
     m_gate->readUTF8(&peerAddr);
 
-    RfbClientInfo *clientInfo = new RfbClientInfo(id, peerAddr.getString());
+    RfbClientInfo *clientInfo = new RfbClientInfo(id, peerAddr);
 
-    clients->push_back(clientInfo);
+    clients->add(clientInfo);
   }
 }
 
@@ -164,7 +164,7 @@ void ControlProxy::shareRect(const ::int_rectangle &  shareRect)
   msg->send();
 }
 
-void ControlProxy::shareWindow(const ::string & shareWindowName)
+void ControlProxy::shareWindow(const ::scoped_string & shareWindowName)
 {
   AutoLock l(m_gate);
   ControlMessage *msg = createMessage(ControlProto::SHARE_WINDOW_MSG_ID);
@@ -231,7 +231,7 @@ ControlMessage *ControlProxy::createMessage(DWORD messageId)
 {
   releaseMessage();
 
-  m_message = new ControlMessage(messageId, m_gate, m_passwordFile.getString(),
+  m_message = new ControlMessage(messageId, m_gate, m_passwordFile,
                                  m_getPassFromConfigEnabled, m_forService);
 
   return m_message;

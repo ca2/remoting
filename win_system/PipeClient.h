@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __PIPECLIENT_H__
-#define __PIPECLIENT_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "NamedPipe.h"
@@ -42,4 +42,4 @@ private:
   unsigned int m_maxPortionSize;
 };
 
-#endif // __PIPECLIENT_H__
+//// __PIPECLIENT_H__

@@ -30,14 +30,14 @@
 
 UploadOperation::UploadOperation(LogWriter *logWriter,
                                  FileInfo fileToUpload,
-                                 const ::scoped_string & scopedstrpathToSourceRoot,
-                                 const ::scoped_string & scopedstrpathToTargetRoot)
+                                 const ::scoped_string & scopedstrPathToSourceRoot,
+                                 const ::scoped_string & scopedstrPathToTargetRoot)
 : CopyOperation(logWriter),
   m_file(0), m_fis(0), m_gotoChild(false), m_gotoParent(false), m_firstUpload(true),
   m_remoteFilesInfo(0), m_remoteFilesCount(0), m_bufferSize(20000)
 {
-  m_pathToSourceRoot.setString(pathToSourceRoot);
-  m_pathToTargetRoot.setString(pathToTargetRoot);
+  m_pathToSourceRoot= pathToSourceRoot;
+  m_pathToTargetRoot= pathToTargetRoot;
 
   m_toCopy = new FileInfoList(fileToUpload);
 
@@ -47,14 +47,14 @@ UploadOperation::UploadOperation(LogWriter *logWriter,
 
 UploadOperation::UploadOperation(LogWriter *logWriter,
                                  const FileInfo *filesToUpload, size_t filesCount,
-                                 const ::scoped_string & scopedstrpathToSourceRoot,
-                                 const ::scoped_string & scopedstrpathToTargetRoot)
+                                 const ::scoped_string & scopedstrPathToSourceRoot,
+                                 const ::scoped_string & scopedstrPathToTargetRoot)
 : CopyOperation(logWriter),
   m_file(0), m_fis(0), m_gotoChild(false), m_gotoParent(false), m_firstUpload(true),
   m_remoteFilesInfo(0), m_remoteFilesCount(0), m_bufferSize(20000)
 {
-  m_pathToSourceRoot.setString(pathToSourceRoot);
-  m_pathToTargetRoot.setString(pathToTargetRoot);
+  m_pathToSourceRoot= pathToSourceRoot;
+  m_pathToTargetRoot= pathToTargetRoot;
 
   m_toCopy = new FileInfoList(filesToUpload, filesCount);
 
@@ -68,7 +68,7 @@ UploadOperation::~UploadOperation()
     delete m_toCopy->getRoot();
   }
   if (m_fis != NULL) {
-    try { m_fis->close(); } catch (IOException) { }
+    try { m_fis->close(); } catch (::io_exception) { }
     delete m_fis;
   }
   if (m_file != NULL) {
@@ -94,13 +94,13 @@ void UploadOperation::start()
   m_totalBytesCopied = 0;
 
   //
-  // Send file ::std::list request to know filelist of remote destination directory.
+  // Send file ::list request to know filelist of remote destination directory.
   // Real file upload will start when reply for this request will be received
   //
 
   m_firstUpload = true;
 
-  m_sender->sendFileListRequest(m_pathToTargetRoot.getString(),
+  m_sender->sendFileListRequest(m_pathToTargetRoot,
                                 m_replyBuffer->isCompressionSupported());
 }
 
@@ -129,13 +129,13 @@ void UploadOperation::onUploadEndReply(DataInputStream *input)
   delete m_file;
   m_file = NULL;
 
-  // Upload next file in the ::std::list
+  // Upload next file in the ::list
   gotoNext();
 }
 
 void UploadOperation::onMkdirReply(DataInputStream *input)
 {
-  // Upload next file in the ::std::list
+  // Upload next file in the ::list
   gotoNext();
 }
 
@@ -145,10 +145,10 @@ void UploadOperation::onLastRequestFailedReply(DataInputStream *input)
 
   m_replyBuffer->getLastErrorMessage(&errDesc);
 
-  notifyFailedToUpload(errDesc.getString());
+  notifyFailedToUpload(errDesc);
 
   //
-  // If this LRF message comes to file ::std::list request, then
+  // If this LRF message comes to file ::list request, then
   // don't need to upload next file, we must execute "special message handler".
   //
 
@@ -213,11 +213,11 @@ unsigned long long UploadOperation::getInputFilesSize()
 
     fil->getAbsolutePath(&pathNoRoot, _T('\\'));
 
-    pathToFile.setString(m_pathToSourceRoot.getString());
-    pathToFile.appendString(_T("\\"));
-    pathToFile.appendString(pathNoRoot.getString());
+    pathToFile= m_pathToSourceRoot;
+    pathToFile.appendString("\\");
+    pathToFile.appendString(pathNoRoot);
 
-    totalFilesSize += getFileSize(pathToFile.getString());
+    totalFilesSize += getFileSize(pathToFile);
 
     fil = fil->getNext();
   }
@@ -225,7 +225,7 @@ unsigned long long UploadOperation::getInputFilesSize()
   return totalFilesSize;
 }
 
-unsigned long long UploadOperation::getFileSize(const ::scoped_string & scopedstrpathToFile)
+unsigned long long UploadOperation::getFileSize(const ::scoped_string & scopedstrPathToFile)
 {
   unsigned long long fileSize = 0;
 
@@ -239,12 +239,12 @@ unsigned long long UploadOperation::getFileSize(const ::scoped_string & scopedst
     file.list(fileNames, NULL);
 
     for (unsigned int i = 0; i < filesCount; i++) {
-      File subfile(pathToFile, fileNames[i].getString());
+      File subfile(pathToFile, fileNames[i]);
 
       ::string pathToSubFile;
       subfile.getPath(&pathToSubFile);
 
-      fileSize += getFileSize(pathToSubFile.getString());
+      fileSize += getFileSize(pathToSubFile);
     }
 
     delete[] fileNames;
@@ -274,10 +274,10 @@ void UploadOperation::startUpload()
   if (m_toCopy->getFirst()->getParent() == NULL) {
     ::string message;
 
-    message.format(_T("Uploading '%s' %s"), m_pathToSourceFile.getString(),
-                   fileInfo->isDirectory() ? _T("folder") : _T("file"));
+    message.formatf("Uploading '{}' {}", m_pathToSourceFile,
+                   fileInfo->isDirectory() ? "folder") : _T("file");
 
-    notifyInformation(message.getString());
+    notifyInformation(message);
   } // logging
 
   if (fileInfo->isDirectory()) {
@@ -296,22 +296,22 @@ void UploadOperation::processFolder()
 {
   ::string message;
 
-  // Try ::std::list files from folder
-  FolderListener listener(m_pathToSourceFile.getString());
+  // Try ::list files from folder
+  FolderListener listener(m_pathToSourceFile);
   if (listener.list()) {
     m_toCopy->setChild(listener.getFilesInfo(), listener.getFilesCount());
   } else {
     // Logging
     ::string message;
 
-    message.format(_T("Error: failed to get file list in local folder '%s'"),
-                   m_pathToSourceFile.getString());
+    message.formatf("Error: failed to get file list in local folder '{}'",
+                   m_pathToSourceFile);
 
-    notifyError(message.getString());
+    notifyError(message);
   }
 
   // Send request to create folder
-  m_sender->sendMkDirRequest(m_pathToTargetFile.getString());
+  m_sender->sendMkDirRequest(m_pathToTargetFile);
 }
 
 void UploadOperation::processFile()
@@ -339,7 +339,7 @@ void UploadOperation::processFile()
     const ::scoped_string & scopedstrlocalFileName = localFileInfo->getFileName();
 
     // File collision, show file exist dialog
-    if (_tcscmp(localFileName, remoteFileName) == 0) {
+    if (wcscmp(localFileName, remoteFileName) == 0) {
 
       //
       // Copy listener must decide what to do with this situation
@@ -347,7 +347,7 @@ void UploadOperation::processFile()
 
       int action = m_copyListener->targetFileExists(localFileInfo,
                                                     remoteFileInfo,
-                                                    m_pathToTargetFile.getString());
+                                                    m_pathToTargetFile);
 
       switch (action) {
       case CopyFileEventListener::TFE_OVERWRITE:
@@ -371,15 +371,15 @@ void UploadOperation::processFile()
   } // for all files in remote files
 
   // Trying to open file for reading
-  m_file = new File(m_pathToSourceFile.getString());
+  m_file = new File(m_pathToSourceFile);
   try {
     ::string path;
     m_file->getPath(&path);
-    m_fis = new WinFileChannel(path.getString(), F_READ, FM_OPEN);
+    m_fis = new WinFileChannel(path, F_READ, FM_OPEN);
     // Try to seek
     m_fis->seek((long long)initialFileOffset);
 
-  } catch (Exception &ioEx) {
+  } catch (::remoting::Exception &ioEx) {
     notifyFailedToUpload(ioEx.getMessage());
     gotoNext();
     return ;
@@ -387,7 +387,7 @@ void UploadOperation::processFile()
 
   bool overwrite = (initialFileOffset == 0);
 
-  m_sender->sendUploadRequest(m_pathToTargetFile.getString(), overwrite,
+  m_sender->sendUploadRequest(m_pathToTargetFile, overwrite,
                               initialFileOffset);
 } // void
 
@@ -409,7 +409,7 @@ void UploadOperation::sendFileDataChunk()
   }
   m_lastRequestTime = DateTime::now();
 
-  ::std::vector<char> buffer(m_bufferSize);
+  ::array_base<char> buffer(m_bufferSize);
   unsigned int read = 0;
   try {
     size_t portion = m_fis->read(&buffer.front(), m_bufferSize);
@@ -427,12 +427,12 @@ void UploadOperation::sendFileDataChunk()
 
     try {
       lastModified = m_file->lastModified();
-    } catch (IOException) { } // try / catch
+    } catch (::io_exception) { } // try / catch
 
     m_sender->sendUploadEndRequest(0, lastModified);
     return ;
 
-  } catch (IOException &ioEx) {
+  } catch (::io_exception &ioEx) {
     notifyFailedToUpload(ioEx.getMessage());
     gotoNext();
     return ;
@@ -447,7 +447,7 @@ void UploadOperation::sendFileDataChunk()
       m_copyListener->dataChunkCopied(m_totalBytesCopied,
                                       m_totalBytesToCopy);
     }
-  } catch (IOException &ioEx) {
+  } catch (::io_exception &ioEx) {
     throw ioEx;
   } // try / catch
 }
@@ -469,11 +469,11 @@ void UploadOperation::gotoNext(bool fake)
     if (fake) {
       m_gotoChild = true;
 
-      m_sender->sendFileListRequest(m_pathToTargetFile.getString(),
+      m_sender->sendFileListRequest(m_pathToTargetFile,
                                     m_replyBuffer->isCompressionSupported());
       return ;
     } else {
-      // If it has child, we must upload child file ::std::list first
+      // If it has child, we must upload child file ::list first
       changeFileToUpload(current->getChild());
       startUpload();
     }
@@ -494,7 +494,7 @@ void UploadOperation::gotoNext(bool fake)
       if (fake) {
         m_gotoParent = true;
 
-        ::string pathToRemoteFolder(m_pathToTargetRoot.getString());
+        ::string pathToRemoteFolder(m_pathToTargetRoot);
 
         FileInfoList *parentOfCurrent = m_toCopy->getFirst()->getParent();
         FileInfoList *parentOfParent = NULL;
@@ -504,10 +504,10 @@ void UploadOperation::gotoNext(bool fake)
         }
 
         if (parentOfParent != NULL) {
-          getRemotePath(parentOfParent, m_pathToTargetRoot.getString(), &pathToRemoteFolder);
+          getRemotePath(parentOfParent, m_pathToTargetRoot, &pathToRemoteFolder);
         }
 
-        m_sender->sendFileListRequest(pathToRemoteFolder.getString(),
+        m_sender->sendFileListRequest(pathToRemoteFolder,
                                       m_replyBuffer->isCompressionSupported());
         return ;
       } else {
@@ -545,18 +545,18 @@ void UploadOperation::notifyFailedToUpload(const ::scoped_string & scopedstrerro
 {
   ::string message;
 
-  message.format(_T("Error: failed to upload '%s' %s (%s)"),
-                 m_pathToSourceFile.getString(),
-                 m_toCopy->getFileInfo()->isDirectory() ? _T("folder") : _T("file"),
+  message.formatf("Error: failed to upload '{}' {} ({})",
+                 m_pathToSourceFile,
+                 m_toCopy->getFileInfo()->isDirectory() ? "folder") : _T("file",
                  errorDescription);
 
-  notifyError(message.getString());
+  notifyError(message);
 }
 
 void UploadOperation::changeFileToUpload(FileInfoList *toUpload)
 {
   m_toCopy = toUpload;
 
-  getLocalPath(m_toCopy, m_pathToSourceRoot.getString(), &m_pathToSourceFile);
-  getRemotePath(m_toCopy, m_pathToTargetRoot.getString(), &m_pathToTargetFile);
+  getLocalPath(m_toCopy, m_pathToSourceRoot, &m_pathToSourceFile);
+  getRemotePath(m_toCopy, m_pathToTargetRoot, &m_pathToTargetFile);
 }

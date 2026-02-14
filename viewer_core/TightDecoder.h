@@ -22,10 +22,10 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _TIGHT_DECODER_H_
-#define _TIGHT_DECODER_H_
+#pragma once
 
-#include <vector>
+
+//#include <vector>
 
 #include "util/Inflater.h"
 
@@ -48,7 +48,7 @@ private:
   void resetDecoders(unsigned char compControl);
   unsigned int readTightPixel(RfbInputGate *input, int bytesPerCPixel);
   int readCompactSize(RfbInputGate *input);
-  ::std::vector<unsigned int> readPalette(RfbInputGate *input,
+  ::array_base<unsigned int> readPalette(RfbInputGate *input,
                           int paletteSize,
                           int bytesPerCPixel);
   void processJpeg(RfbInputGate *input,
@@ -59,39 +59,39 @@ private:
                          const ::int_rectangle &  dstRect,
                          unsigned char compControl);
   void readTightData(RfbInputGate *input,
-                     ::std::vector<unsigned char> &buffer,
+                     ::array_base<unsigned char> &buffer,
                      size_t expectedLength,
                      const int decoderId);
   void readCompressedData(RfbInputGate *input,
-                          ::std::vector<unsigned char> &buffer,
+                          ::array_base<unsigned char> &buffer,
                           size_t expectedLength,
                           const int decoderId);
   void drawPalette(FrameBuffer *fb,
-                   const ::std::vector<unsigned int> &palette,
-                   const ::std::vector<unsigned char> &pixels,
+                   const ::array_base<unsigned int> &palette,
+                   const ::array_base<unsigned char> &pixels,
                    const ::int_rectangle &  dstRect);
   void drawGradient(FrameBuffer *fb,
-                    const ::std::vector<unsigned char> &pixels,
+                    const ::array_base<unsigned char> &pixels,
                     const ::int_rectangle &  dstRect);
   void drawTightBytes(FrameBuffer *fb,
-                     const ::std::vector<unsigned char> *pixels,
+                     const ::array_base<unsigned char> *pixels,
                      const ::int_rectangle &  dstRect);
   void drawJpegBytes(FrameBuffer *fb,
-                     const ::std::vector<unsigned char> *pixels,
+                     const ::array_base<unsigned char> *pixels,
                      const ::int_rectangle &  dstRect);
 
   unsigned int getRawTightColor(const PixelFormat & pxFormat,
-                          const ::std::vector<unsigned char> &pixels,
+                          const ::array_base<unsigned char> &pixels,
                           size_t offset);
   void fillRawComponents(const PixelFormat & pxFormat,
                          unsigned char components[],
-                         const ::std::vector<unsigned char> &pixels,
+                         const ::array_base<unsigned char> &pixels,
                          size_t pixelOffset);
 
   unsigned int transformPixelToTight(unsigned int color);
-  ::std::vector<unsigned char> transformArray(const ::std::vector<unsigned char> &buffer);
+  ::array_base<unsigned char> transformArray(const ::array_base<unsigned char> &buffer);
 
-  ::std::vector<Inflater *> m_inflater;
+  ::array_base<Inflater *> m_inflater;
   JpegDecompressor m_jpeg;
 
   bool m_isCPixel;
@@ -113,4 +113,4 @@ private:
   static const int MIN_SIZE_TO_COMPRESS = 12;
 };
 
-#endif
+

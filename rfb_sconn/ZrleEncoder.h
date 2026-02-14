@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RFB_ZRLE_ENCODER_H_INCLUDED__
-#define __RFB_ZRLE_ENCODER_H_INCLUDED__
+#pragma onceINCLUDED__
+INCLUDED__
 
 #include "Encoder.h"
 #include "TightPalette.h"
@@ -39,7 +39,7 @@ public:
   virtual int getCode() const;
 
   virtual void splitRectangle(const ::int_rectangle &  rect,
-                              ::std::vector<::int_rectangle> *rectList,
+                              ::array_base<::int_rectangle> *rectList,
                               const FrameBuffer *serverFb,
                               const EncodeOptions *options);
   
@@ -78,14 +78,14 @@ private:
 
   // Write data from runLength (used in palette Rle encoding).
   void pushRunLengthPaletteRle(int runLength,
-                                 ::std::vector<unsigned char> *paletteRleData);
+                                 ::array_base<unsigned char> *paletteRleData);
 
   // Write pixel to the plainRleTile.
   template <class PIXEL_T>
     void writePixelToPlainRleTile(const PIXEL_T px,
                                   PIXEL_T *previousPx);
 
-  // Fill palette (m_pal), create m_plainRleTile ::std::vector and calculate size of data in palette RLE tile.
+  // Fill palette (m_pal), create m_plainRleTile ::array_base and calculate size of data in palette RLE tile.
   template <class PIXEL_T>
     void fillPalette(const ::int_rectangle &  tileRect,
                      const FrameBuffer *fb);
@@ -102,7 +102,7 @@ private:
                    unsigned char *dst);
 
   // Vector for storing all tiles for the future zlib compression.
-  ::std::vector<unsigned char> m_rgbData;
+  ::array_base<unsigned char> m_rgbData;
   // Size of m_rgbData before writing information in it.
   size_t m_oldSize;
 
@@ -133,8 +133,8 @@ private:
   size_t m_paletteTileSize;
   size_t m_paletteRleTileSize;
 
-  // ::std::vector for storing plain RLE tile data
-  ::std::vector<unsigned char> m_plainRleTile;
+  // ::array_base for storing plain RLE tile data
+  ::array_base<unsigned char> m_plainRleTile;
 
 private:
   // Tile size in ZRLE encoding by default.
@@ -153,4 +153,4 @@ private:
   static const unsigned char MAX_NUMBER_OF_COLORS_IN_PALETTE = 127;
 };
 
-#endif // __RFB_ZRLE_ENCODER_H_INCLUDED__
+//// __RFB_ZRLE_ENCODER_H_INCLUDED__

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 #pragma once
-//#ifndef __CONTROL_H_
-//#define __CONTROL_H_
+//#pragma once
+//
 
 #include "util/CommonHeader.h"
 //#include "util/::string.h"
@@ -235,4 +235,4 @@ public:
 
 };
 
-//#endif
+//

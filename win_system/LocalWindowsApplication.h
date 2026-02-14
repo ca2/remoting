@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _WINSTA0_WINDOWS_APPLICATION_H_
-#define _WINSTA0_WINDOWS_APPLICATION_H_
+#pragma once
+
 
 #include "WindowsApplication.h"
 #include "SystemException.h"
@@ -45,4 +45,4 @@ public:
   virtual ~LocalWindowsApplication();
 };
 
-#endif
+

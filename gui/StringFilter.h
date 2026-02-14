@@ -22,15 +22,15 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _STRING_FILTER_H_
-#define _STRING_FILTER_H_
+#pragma once
+
 
 #include <tchar.h>
 
 class StringFilter
 {
 public:
-  virtual bool isStringCorrect(const ::scoped_string & scopedstrstring);
+  virtual bool isStringCorrect(const ::scoped_string & scopedstrString);
 };
 
-#endif
+

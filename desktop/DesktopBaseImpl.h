@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __DESKTOPBASEIMPL_H__
-#define __DESKTOPBASEIMPL_H__
+#pragma once
+
 
 #include "Desktop.h"
 #include "UpdateHandler.h"
@@ -57,16 +57,16 @@ public:
   virtual void getPrimaryDesktopCoords(::int_rectangle *rect);
   virtual void getDisplayNumberCoords(::int_rectangle *rect,
                                       unsigned char dispNumber);
-  virtual ::std::vector<::int_rectangle> getDisplaysCoords();
+  virtual ::array_base<::int_rectangle> getDisplaysCoords();
   virtual void getNormalizedRect(::int_rectangle *rect);
   virtual void getWindowCoords(HWND hwnd, ::int_rectangle *rect);
-  virtual HWND getWindowHandleByName(const ::string & windowName);
+  virtual HWND getWindowHandleByName(const ::scoped_string & windowName);
   virtual void getApplicationRegion(unsigned int procId, Region *region);
   virtual bool isApplicationInFocus(unsigned int procId);
 
   virtual void setKeyboardEvent(unsigned int keySym, bool down);
   virtual void setMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask);
-  virtual void setNewClipText(const ::string & newClipboard);
+  virtual void setNewClipText(const ::scoped_string & newClipboard);
 
 protected:
   // Calling when at least one update has been detected.
@@ -74,7 +74,7 @@ protected:
   // Implementation of the UpdateRequestListener interface.
   virtual void onUpdateRequest(const ::int_rectangle &  rectRequested, bool incremental);
   // Calling when a clipbard change detected.
-  virtual void onClipboardUpdate(const ::string & newClipboard);
+  virtual void onClipboardUpdate(const ::scoped_string & newClipboard);
   // Calling when a configuration has been reloaded.
   // Uses to update internal settings.
   virtual void onConfigReload(ServerConfig *serverConfig);
@@ -112,4 +112,4 @@ protected:
   LogWriter *m_log;
 };
 
-#endif // __DESKTOPBASEIMPL_H__
+//// __DESKTOPBASEIMPL_H__

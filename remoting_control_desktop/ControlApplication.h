@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CONTROL_APPLICATION_H_
-#define _CONTROL_APPLICATION_H_
+#pragma once
+
 
 #include "Transport.h"
 #include "TransportFactory.h"
@@ -63,7 +63,7 @@ public:
   /**
    * Initializes all subsystems needed for wscontrol application and creates
    * ControlApplication instance.
-   * @throws Exception if initialization of needed subsystems has failed.
+   * @throws ::remoting::Exception if initialization of needed subsystems has failed.
    */
   ControlApplication(HINSTANCE hinst,
                      const ::scoped_string & scopedstrwindowClassName,
@@ -104,7 +104,7 @@ protected:
    * @param slave true if -slave option was specified in the command line,
    *   false otherwise. This flag affects error handling on connection
    *   failures (together with the connectService flag).
-   * @throws Exception on errors.
+   * @throws ::remoting::Exception on errors.
    */
   void connect(bool controlService, bool slave);
 
@@ -149,7 +149,7 @@ private:
    * Converts plain text password to crypted password.
    * @fixme move in to remoting_node application as additional application.
    */
-  static void getCryptedPassword(unsigned char cryptedPass[8], const ::scoped_string & scopedstrplainTextPass);
+  static void getCryptedPassword(unsigned char cryptedPass[8], const ::scoped_string & scopedstrPlainTextPass);
 
   // Auxiliary function to the same name function. It does real work.
   void checkServicePasswords();
@@ -196,4 +196,4 @@ protected:
   friend class ControlTrayIcon;
 };
 
-#endif
+

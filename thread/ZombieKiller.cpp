@@ -52,7 +52,7 @@ void ZombieKiller::addZombie(Thread *zombie)
 {
   AutoLock l(&m_lockObj);
 
-  m_zombies.push_back(zombie);
+  m_zombies.add(zombie);
 }
 
 void ZombieKiller::deleteDeadZombies()

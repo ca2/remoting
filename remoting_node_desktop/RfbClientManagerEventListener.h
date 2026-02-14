@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _RFB_CLIENT_MANAGER_LISTENER_H_
-#define _RFB_CLIENT_MANAGER_LISTENER_H_
+#pragma once
+
 
 /**
  * Listener of RfbClientManager object events.
@@ -46,4 +46,4 @@ public:
   virtual void afterLastClientDisconnect() = 0;
 };
 
-#endif
+

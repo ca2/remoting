@@ -36,7 +36,7 @@ enum
 	DMF_ESCAPE_BASE_3	= DMF_ESCAPE_BASE_3_VB, 
 };
 
-#endif
+
 
 // Define the IOCTL function code
 typedef enum
@@ -104,7 +104,7 @@ struct	CHANGES_RECORD
 	POINT	point;
 	ULONG	color;		// number used in cache array
 	ULONG	refcolor;	// slot used to pass bitmap data
-#endif
+
 };
 // sizeof (CHANGES_RECORD) = 52, 8-aligned: 56
 
@@ -274,4 +274,4 @@ struct	Esc_dmf_pointer_shape_get_OUT
 
 //};	// namespace df_mirage_drv
 
-#endif	DF_MIRAGE__DISP_ESCAPES
+DF_MIRAGE__DISP_ESCAPES

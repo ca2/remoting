@@ -22,15 +22,15 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINEVENTLOG_H__
-#define __WINEVENTLOG_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
-#include <vector>
+//#include <vector>
 #include "thread/LocalMutex.h"
 #include "log_writer/LogWriter.h"
 
-typedef ::std::vector<TCHAR *> StringContainer;
+typedef ::array_base<TCHAR *> StringContainer;
 
 class WinEventLog
 {
@@ -42,14 +42,14 @@ public:
   // before that all report will be ignored.
   void enable();
 
-  void reportInfo(unsigned int messageId, const ::scoped_string & scopedstrfmt, ...);
-  void reportWarning(unsigned int messageId, const ::scoped_string & scopedstrfmt, ...);
-  void reportError(unsigned int messageId, const ::scoped_string & scopedstrfmt, ...);
+  void reportInfo(unsigned int messageId, const ::scoped_string & scopedstrFmt, ...);
+  void reportWarning(unsigned int messageId, const ::scoped_string & scopedstrFmt, ...);
+  void reportError(unsigned int messageId, const ::scoped_string & scopedstrFmt, ...);
 
 private:
   void reportEvent(unsigned int messageId,
                    WORD eventType,
-                   const ::scoped_string & scopedstrfmt,
+                   const ::scoped_string & scopedstrFmt,
                    va_list argList);
 
   void registerEventSource();
@@ -65,4 +65,4 @@ private:
   LogWriter *m_log;
 };
 
-#endif // __WINEVENTLOG_H__
+//// __WINEVENTLOG_H__

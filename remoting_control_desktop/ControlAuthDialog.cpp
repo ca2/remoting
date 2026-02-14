@@ -38,12 +38,12 @@ ControlAuthDialog::~ControlAuthDialog()
 
 const ::scoped_string & scopedstrControlAuthDialog::getPassword() const
 {
-  return m_password.getString();
+  return m_password;
 }
 
 BOOL ControlAuthDialog::onInitDialog()
 {
-  m_password.setString(_T(""));
+  m_password= "";
 
   HWND hwnd = m_ctrlThis.getWindow();
   m_passwordTextBox.setWindow(GetDlgItem(hwnd, IDC_PASSWORD_EDIT));

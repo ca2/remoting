@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _JPEG_QUALITY_LEVEL_H_
-#define _JPEG_QUALITY_LEVEL_H_
+#pragma once
+
 
 #include "PseudoDecoder.h"
 
@@ -40,4 +40,4 @@ public:
   static const int JPEG_QUALITY_LEVEL_MAX = 9;
 };
 
-#endif
+

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _SETPASSWORDSDIALOG_H_
-#define _SETPASSWORDSDIALOG_H_
+#pragma once
+
 
 #include "util/winhdr.h"
 
@@ -105,4 +105,4 @@ protected:
   ::string m_admPass;
 };
 
-#endif // _SETPASSWORDSDIALOG_H_
+//// _SETPASSWORDSDIALOG_H_

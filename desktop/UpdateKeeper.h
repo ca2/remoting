@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __UPDATEKEEPER_H__
-#define __UPDATEKEEPER_H__
+#pragma once
+
 
 #include "thread/LocalMutex.h"
 #include "region/Region.h"
@@ -85,4 +85,4 @@ private:
   LocalMutex m_updContLocMut;
 };
 
-#endif // __UPDATEKEEPER_H__
+//// __UPDATEKEEPER_H__

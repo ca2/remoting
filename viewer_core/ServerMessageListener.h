@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _SERVER_MESSAGE_LISTENER_H_
-#define _SERVER_MESSAGE_LISTENER_H_
+#pragma once
+
 
 #include "io_lib/DataInputStream.h"
 
@@ -40,4 +40,4 @@ public:
   virtual void onServerMessage(unsigned int msgCode, DataInputStream *input) = 0;
 };
 
-#endif
+

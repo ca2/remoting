@@ -22,17 +22,17 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __BROKENHANDLEEXCEPTION_H__
-#define __BROKENHANDLEEXCEPTION_H__
+#pragma once
 
-#include "Exception.h"
 
-// This Exception for situationw when a handle has been broken (e.g. handle of a closed window)
-class BrokenHandleException : public Exception
+#include "util/Exception.h"
+
+// This ::remoting::Exception for situationw when a handle has been broken (e.g. handle of a closed window)
+class BrokenHandleException : public ::remoting::Exception
 {
 public:
-  BrokenHandleException(const ::scoped_string & scopedstrmessage);
+  BrokenHandleException(const ::scoped_string & scopedstrMessage);
   ~BrokenHandleException();
 };
 
-#endif // __BROKENHANDLEEXCEPTION_H__
+//// __BROKENHANDLEEXCEPTION_H__

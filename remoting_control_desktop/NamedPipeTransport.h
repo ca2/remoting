@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _NAMED_PIPE_TRANSPORT_H_
-#define _NAMED_PIPE_TRANSPORT_H_
+#pragma once
+
 
 #include "Transport.h"
 
@@ -57,7 +57,7 @@ public:
   /**
    * Accepts new connection.
    * @return transport for accepted connection.
-   * @throws Exception on fail.
+   * @throws ::remoting::Exception on fail.
    */
   virtual Transport *accept();
 
@@ -77,4 +77,4 @@ private:
   PipeServer *m_pipeServer;
 };
 
-#endif
+

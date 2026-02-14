@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RFB_TIGHT_ENCODER_H_INCLUDED__
-#define __RFB_TIGHT_ENCODER_H_INCLUDED__
+#pragma onceINCLUDED__
+INCLUDED__
 
 // FIXME: Use some object-oriented wrapper instead of the pure zlib.
 #include "zlib/zlib.h"
@@ -45,7 +45,7 @@ public:
   // Splits big rectangles according to the configuration setings (m_conf)
   // corresponding to the compression level set in EncodeOptions.
   virtual void splitRectangle(const ::int_rectangle &  rect,
-                              ::std::vector<::int_rectangle> *rectList,
+                              ::array_base<::int_rectangle> *rectList,
                               const FrameBuffer *serverFb,
                               const EncodeOptions *options);
 
@@ -110,14 +110,14 @@ protected:
   // Encode a two-color rectangle using m_pal as a palette, produce a bitmap
   // where one pixel is represented by one bit. Each line is padded with
   // zeroes to the byte boundary.
-  // FIXME: Do not use DataOutputStream, do not throw IOException.
+  // FIXME: Do not use DataOutputStream, do not throw ::io_exception.
   template <class PIXEL_T>
     void encodeMonoRect(const ::int_rectangle &  rect, const FrameBuffer *fb,
                         DataOutputStream *out);
 
   // Encode a rectangle using m_pal as a palette, produce a pixmap where one
   // pixel is represented by one byte which is its index in the palette.
-  // FIXME: Do not use DataOutputStream, do not throw IOException.
+  // FIXME: Do not use DataOutputStream, do not throw ::io_exception.
   template <class PIXEL_T>
     void encodeIndexedRect(const ::int_rectangle &  rect, const FrameBuffer *fb,
                            DataOutputStream *out);
@@ -185,4 +185,4 @@ protected:
   StandardJpegCompressor m_compressor;
 };
 
-#endif // __RFB_TIGHT_ENCODER_H_INCLUDED__
+//// __RFB_TIGHT_ENCODER_H_INCLUDED__

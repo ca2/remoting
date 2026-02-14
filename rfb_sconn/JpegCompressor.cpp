@@ -133,7 +133,7 @@ void StandardJpegCompressor::errorExit(j_common_ptr cinfo)
   (*cinfo->err->output_message) (cinfo);
   ::string error = getMessage(cinfo);
   jpeg_destroy(cinfo);
-  throw Exception(error.getString());
+  throw ::remoting::Exception(error);
 }
 
 void StandardJpegCompressor::outputMessage(j_common_ptr cinfo)

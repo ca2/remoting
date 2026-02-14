@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CONNECTION_CONFIG_H_
-#define _CONNECTION_CONFIG_H_
+#pragma once
+
 
 #include "config_lib/SettingsManager.h"
 
@@ -241,4 +241,4 @@ protected:
   mutable LocalMutex m_cs;
 };
 
-#endif
+

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __CONFIGSERVER_H__
-#define __CONFIGSERVER_H__
+#pragma once
+
 
 #include "DesktopSrvDispatcher.h"
 #include "DesktopServerProto.h"
@@ -45,4 +45,4 @@ protected:
   DesktopConfigLocal m_deskConf;
 };
 
-#endif // __CONFIGSERVER_H__
+//// __CONFIGSERVER_H__

@@ -27,20 +27,20 @@
 RemoteFilesDeleteOperation::RemoteFilesDeleteOperation(LogWriter *logWriter,
                                                        const FileInfo *filesInfoToDelete,
                                                        size_t filesCount,
-                                                       const ::scoped_string & scopedstrpathToTargetRoot)
+                                                       const ::scoped_string & scopedstrPathToTargetRoot)
 : FileTransferOperation(logWriter)
 {
   m_toDelete = new FileInfoList(filesInfoToDelete, filesCount);
-  m_pathToTargetRoot.setString(pathToTargetRoot);
+  m_pathToTargetRoot= pathToTargetRoot;
 }
 
 RemoteFilesDeleteOperation::RemoteFilesDeleteOperation(LogWriter *logWriter,
                                                        FileInfo fileInfoToDelete,
-                                                       const ::scoped_string & scopedstrpathToTargetRoot)
+                                                       const ::scoped_string & scopedstrPathToTargetRoot)
 : FileTransferOperation(logWriter)
 {
   m_toDelete = new FileInfoList(fileInfoToDelete);
-  m_pathToTargetRoot.setString(pathToTargetRoot);
+  m_pathToTargetRoot= pathToTargetRoot;
 }
 
 RemoteFilesDeleteOperation::~RemoteFilesDeleteOperation()
@@ -55,7 +55,7 @@ void RemoteFilesDeleteOperation::start()
   // Notify listeners that operation have started
   notifyStart();
 
-  // Remove first file in the ::std::list
+  // Remove first file in the ::list
   remove(false);
 }
 
@@ -65,14 +65,14 @@ void RemoteFilesDeleteOperation::onFileListReply(DataInputStream *input)
 
   //
   // Current file is directory so, we can remove it only
-  // if it contain no files, and add these files to ::std::list
+  // if it contain no files, and add these files to ::list
   // and first remove them otherwise.
   //
 
-  // Set child file ::std::list to current folder
+  // Set child file ::list to current folder
   m_toDelete->setChild(m_replyBuffer->getFilesInfo(),
                        m_replyBuffer->getFilesInfoCount());
-  // Get child file ::std::list
+  // Get child file ::list
   FileInfoList *child = m_toDelete->getChild();
 
   //
@@ -104,13 +104,13 @@ void RemoteFilesDeleteOperation::onLastRequestFailedReply(DataInputStream *input
   m_replyBuffer->getLastErrorMessage(&errorMessage);
 
   ::string remotePath;
-  getRemotePath(m_toDelete, m_pathToTargetRoot.getString(), &remotePath);
+  getRemotePath(m_toDelete, m_pathToTargetRoot, &remotePath);
 
   ::string message;
-  message.format(_T("Error: %s ('%s')"), errorMessage.getString(),
-                 remotePath.getString());
+  message.formatf("Error: {} ('{}')", errorMessage,
+                 remotePath);
 
-  notifyError(message.getString());
+  notifyError(message);
 
   // Delete next file
   gotoNext();
@@ -132,7 +132,7 @@ void RemoteFilesDeleteOperation::remove(bool removeIfFolder)
   ::string remotePath;
 
   getRemotePath(m_toDelete,
-                m_pathToTargetRoot.getString(),
+                m_pathToTargetRoot,
                 &remotePath);
 
   //
@@ -143,10 +143,10 @@ void RemoteFilesDeleteOperation::remove(bool removeIfFolder)
       (!fileInfo->isDirectory())) && (m_toDelete->getFirst()->getParent() == NULL)) {
     ::string message;
 
-    message.format(_T("Deleting remote '%s' %s"), remotePath.getString(),
-                   fileInfo->isDirectory() ? _T("folder") : _T("file"));
+    message.formatf("Deleting remote '{}' {}", remotePath,
+                   fileInfo->isDirectory() ? "folder") : _T("file");
 
-    notifyInformation(message.getString());
+    notifyInformation(message);
   }
 
   //
@@ -156,7 +156,7 @@ void RemoteFilesDeleteOperation::remove(bool removeIfFolder)
 
   if (!fileInfo->isDirectory() || removeIfFolder) {
     // Send request to server
-    m_sender->sendRmFileRequest(remotePath.getString());
+    m_sender->sendRmFileRequest(remotePath);
 
     //
     // If file is folder and we have order to forced removal
@@ -168,9 +168,9 @@ void RemoteFilesDeleteOperation::remove(bool removeIfFolder)
       m_toDelete->setChild(NULL, 0);
     }
   } else {
-    // Send file ::std::list request cause we must remove subfolders and files from
+    // Send file ::list request cause we must remove subfolders and files from
     // folder before we can delete it
-    m_sender->sendFileListRequest(remotePath.getString(), m_replyBuffer->isCompressionSupported());
+    m_sender->sendFileListRequest(remotePath, m_replyBuffer->isCompressionSupported());
   }
 }
 
@@ -183,7 +183,7 @@ void RemoteFilesDeleteOperation::gotoNext()
   bool hasParent = current->getFirst()->getParent() != NULL;
 
   if (hasChild) {
-    // If it has child, we must remove child file ::std::list first
+    // If it has child, we must remove child file ::list first
     m_toDelete = current->getChild();
     remove(false);
   } else if (hasNext) {

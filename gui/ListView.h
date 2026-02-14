@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __LISTVIEW_H_
-#define __LISTVIEW_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include <commctrl.h>
@@ -51,111 +51,111 @@ public:
   ListView();
 
   //
-  // Adds new column to ::std::list view
+  // Adds new column to ::list view
   //
 
   void addColumn(int index, const ::scoped_string & scopedstrcaption, int width, int fmt);
   void addColumn(int index, const ::scoped_string & scopedstrcaption, int width);
 
   //
-  // Returns ::std::list view item structure with specified index
+  // Returns ::list view item structure with specified index
   //
 
   ListViewItem getItem(int index);
 
   //
-  // Returns ::std::list view items count
+  // Returns ::list view items count
   //
 
   int getCount() { return ListView_GetItemCount(m_hwnd); }
 
   //
-  // Inserts new item to ::std::list view with specified index and caption
+  // Inserts new item to ::list view with specified index and caption
   //
 
   void addItem(int index, const ::scoped_string & scopedstrcaption);
 
   //
-  // Inserts new item to ::std::list view with specified index, caption
+  // Inserts new item to ::list view with specified index, caption
   // and user data(tag)
   //
 
   void addItem(int index, const ::scoped_string & scopedstrcaption, LPARAM tag);
 
   //
-  // Inserts new item to ::std::list view
+  // Inserts new item to ::list view
   //
 
   void addItem(int index, const ::scoped_string & scopedstrcaption, LPARAM tag, int imageIndex);
 
   //
-  // Removes item with specified index from ::std::list view
+  // Removes item with specified index from ::list view
   //
 
   void removeItem(int i);
 
   //
-  // Removes all ::std::list view items from ::std::list view
+  // Removes all ::list view items from ::list view
   //
 
   void clear();
 
   //
-  // Changes text of ::std::list view item subitem
+  // Changes text of ::list view item subitem
   //
 
   void setSubItemText(int index, int subIndex, const ::scoped_string & scopedstrcaption);
 
   //
-  // Changes user data (tag) of ::std::list view item with specified index
+  // Changes user data (tag) of ::list view item with specified index
   //
 
   void setItemData(int index, LPARAM tag);
 
   //
-  // Returns user data of ::std::list view item with specified index
+  // Returns user data of ::list view item with specified index
   //
 
   LPARAM getItemData(int index);
 
   //
-  // Returns first selected ::std::list view item 
+  // Returns first selected ::list view item 
   //
 
   ListViewItem getSelectedItem();
 
   //
-  // Returns index of first selected ::std::list view item
+  // Returns index of first selected ::list view item
   //
 
   int getSelectedIndex();
 
   //
-  // Selectes ::std::list view item with specified index
+  // Selectes ::list view item with specified index
   //
 
   void selectItem(int index);
 
   //
-  // Changes full row select style of ::std::list view
+  // Changes full row select style of ::list view
   //
 
   void setFullRowSelectStyle(bool fullRowSelect);
 
   //
-  // Enabled or disables multi selection on ::std::list view
+  // Enabled or disables multi selection on ::list view
   //
 
   void allowMultiSelection(bool allow);
 
   //
-  // Returns count of selected items in ::std::list view
+  // Returns count of selected items in ::list view
   //
 
   unsigned int getSelectedItemsCount();
 
   //
-  // Sets selected ::std::list view index to output indexes array
+  // Sets selected ::list view index to output indexes array
   //
 
   void getSelectedItemsIndexes(int *indexes);
@@ -169,19 +169,19 @@ protected:
   void removeExStyle(DWORD style);
 
   //
-  // This method sort ::std::list of item by column "columnIndex".
+  // This method sort ::list of item by column "columnIndex".
   // For comparing elements using function compareItem().
   //
   // Pointer to compareItem() must be not 0.
-  // After add or changing elements, ::std::list may be not sorted.
+  // After add or changing elements, ::list may be not sorted.
   //
   // For example, you need to call this method, if user changed parameters of sorting.
   //
   void sort(int columnIndex, PFNLVCOMPARE compareItem);
 
   //
-  // This method sort ::std::list of item by column m_sortColumIndex.
-  // After add and removing elements, ::std::list may be not sorted.
+  // This method sort ::list of item by column m_sortColumIndex.
+  // After add and removing elements, ::list may be not sorted.
   // For example, you need to call this method after add new element.
   //
   void sort();
@@ -191,7 +191,7 @@ private:
   bool m_sortAscending;
 
   //
-  // Is ::std::list view not sorted, then m_sortClumnIndex is negative,
+  // Is ::list view not sorted, then m_sortClumnIndex is negative,
   // else him contained index of column.
   //
   int m_sortColumnIndex;
@@ -202,4 +202,4 @@ private:
   PFNLVCOMPARE m_compareItem;
 };
 
-#endif
+

@@ -138,7 +138,7 @@ BOOL ConfigDialog::onInitDialog()
 
   initControls();
 
-  m_tabControl.addTab(NULL, _T("Temp"));
+  m_tabControl.addTab(NULL, "Temp");
 
   m_serverConfigDialog.setParent(&m_ctrlThis);
   m_serverConfigDialog.setParentDialog(this);
@@ -315,7 +315,7 @@ void ConfigDialog::updateCaption()
 
   caption.format(StringTable::getString(IDS_SERVER_CONFIG_CAPTION_FORMAT),
                  StringTable::getString(m_isConfiguringService ? IDS_SERVICE : IDS_SERVER),
-                 m_reloadConfigCommand == 0 ? StringTable::getString(IDS_OFFLINE_MODE) : _T(""));
+                 m_reloadConfigCommand == 0 ? StringTable::getString(IDS_OFFLINE_MODE) : "");
 
-  m_ctrlThis.setText(caption.getString());
+  m_ctrlThis.setText(caption);
 }

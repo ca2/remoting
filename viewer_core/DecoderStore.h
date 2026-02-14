@@ -22,11 +22,11 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _DECODER_STORE_H_
-#define _DECODER_STORE_H_
+#pragma once
 
-#include <map>
-#include <vector>
+
+//#include <map>
+//#include <vector>
 
 #include "Decoder.h"
 
@@ -39,7 +39,7 @@ public:
   ~DecoderStore();
 
   Decoder *getDecoder(int decoderId);
-  ::std::vector<int> getDecoderIds();
+  ::array_base<int> getDecoderIds();
   
   // return true, if adding is complete
   // return false, if decoder already exist
@@ -54,9 +54,9 @@ public:
 private:
   LogWriter *m_logWriter;
 
-  ::std::map<int, ::std::pair<int, Decoder*> > m_decoders;
+  ::map<int, ::std::pair<int, Decoder*> > m_decoders;
   int m_preferredEncoding;
   bool m_allowCopyRect;
 };
 
-#endif
+

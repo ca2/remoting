@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RFBCODEREGISTRATOR_H__
-#define __RFBCODEREGISTRATOR_H__
+#pragma once
+
 
 #include "RfbDispatcher.h"
 #include "CapContainer.h"
@@ -52,4 +52,4 @@ private:
   CapContainer *m_encCaps;
 };
 
-#endif // __RFBCODEREGISTRATOR_H__
+//// __RFBCODEREGISTRATOR_H__

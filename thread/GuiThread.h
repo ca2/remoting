@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __GUITHREAD_H__
-#define __GUITHREAD_H__
+#pragma once
+
 
 #include "Thread.h"
 
@@ -42,4 +42,4 @@ private:
   HDESK m_hDesk;
 };
 
-#endif // __GUITHREAD_H__
+//// __GUITHREAD_H__

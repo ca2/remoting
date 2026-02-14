@@ -69,10 +69,10 @@ void HttpClient::execute()
     // Call request handler.
     //
 
-    HttpRequestHandler httpRequestHandler(m_dIS, m_dOS, m_log, peerHost.getString());
+    HttpRequestHandler httpRequestHandler(m_dIS, m_dOS, m_log, peerHost);
 
     httpRequestHandler.processRequest();
-  } catch (IOException &) { } // try / catch.
+  } catch (::io_exception &) { } // try / catch.
 
   try {
     m_socket->shutdown(SD_BOTH);

@@ -49,7 +49,7 @@ int TightEncoder::getCode() const
 }
 
 void TightEncoder::splitRectangle(const ::int_rectangle &  rect,
-                                  ::std::vector<::int_rectangle> *rectList,
+                                  ::array_base<::int_rectangle> *rectList,
                                   const FrameBuffer *serverFb,
                                   const EncodeOptions *options)
 {
@@ -59,7 +59,7 @@ void TightEncoder::splitRectangle(const ::int_rectangle &  rect,
   // Handle a special case -- don't ever split a rectangle while its area does
   // not exceed 1/4 of maximum allowed area and width does not exceed 2048.
   if (rectWidth <= 2048 && rect.area() <= maxSize / 4) {
-    rectList->push_back(rect);
+    rectList->add(rect);
     return;
   }
 
@@ -74,7 +74,7 @@ void TightEncoder::splitRectangle(const ::int_rectangle &  rect,
     int y1 = min(y0 + maxHeight, rect.bottom);
     for (int x0 = rect.left; x0 < rect.right; x0 += maxWidth) {
       int x1 = min(x0 + maxWidth, rect.right);
-      rectList->push_back(::int_rectangle(x0, y0, x1, y1));
+      rectList->add(::int_rectangle(x0, y0, x1, y1));
     }
   }
 }
@@ -257,7 +257,7 @@ void TightEncoder::sendFullColorRect(const ::int_rectangle &  rect,
   // Prepare output buffer.
   int dataLen = rect.area() * sizeof(PIXEL_T);
   // FIXME: Use char[] instead?
-  ::std::vector<unsigned char> rgbData(dataLen);
+  ::array_base<unsigned char> rgbData(dataLen);
 
   // Get pixels from the frame buffer.
   copyPixels<PIXEL_T>(rect, fb, &rgbData.front());
@@ -485,7 +485,7 @@ void TightEncoder::sendCompressed(const char *data, size_t dataLen,
     int err = deflateInit2(pz, zlibLevel, Z_DEFLATED, MAX_WBITS,
                            MAX_MEM_LEVEL, Z_DEFAULT_STRATEGY);
     if (err != Z_OK) {
-      throw IOException(_T("Zlib stream initialization failed in Tight encoder"));
+      throw ::io_exception(error_io, "Zlib stream initialization failed in Tight encoder"));
     }
 
     m_zsActive[streamId] = true;
@@ -495,7 +495,7 @@ void TightEncoder::sendCompressed(const char *data, size_t dataLen,
   // Prepare buffers.
   size_t compressedBufferSize = dataLen + dataLen / 100 + 16;
 
-  ::std::vector<char> charBuff(compressedBufferSize);
+  ::array_base<char> charBuff(compressedBufferSize);
   char *compressedData = &charBuff.front();
 
   _ASSERT((unsigned int)dataLen == dataLen);
@@ -509,7 +509,7 @@ void TightEncoder::sendCompressed(const char *data, size_t dataLen,
   if (zlibLevel != m_zsLevel[streamId]) {
     int err = deflateParams(pz, zlibLevel, Z_DEFAULT_STRATEGY);
     if (err != Z_OK) {
-      throw IOException(_T("Error configuring Zlib stream in Tight encoder"));
+      throw ::io_exception(error_io, "Error configuring Zlib stream in Tight encoder"));
     }
     m_zsLevel[streamId] = zlibLevel;
   }
@@ -517,7 +517,7 @@ void TightEncoder::sendCompressed(const char *data, size_t dataLen,
   // Actual compression.
   int err = deflate(pz, Z_SYNC_FLUSH);
   if (err != Z_OK || pz->avail_in != 0 || pz->avail_out == 0) {
-      throw IOException(_T("Zlib compression failed in Tight encoder"));
+      throw ::io_exception(error_io, "Zlib compression failed in Tight encoder"));
   }
 
   try {

@@ -39,11 +39,11 @@ void TvnLogFilename::queryLogFileDirectory(bool forService,
 {
   int specialFolderId = (shareToAll) ? Environment::COMMON_APPLICATION_DATA_SPECIAL_FOLDER : Environment::APPLICATION_DATA_SPECIAL_FOLDER;
 
-  ::string specialFolder(_T(""));
+  ::string specialFolder("");
 
   Environment::getSpecialFolderPath(specialFolderId, &specialFolder);
 
-  logFileDirectory->format(_T("%s\\%s"),
-                           specialFolder.getString(),
+  logFileDirectory->format("{}\\{}",
+                           specialFolder,
                            LogNames::LOG_DIR_NAME);
 }

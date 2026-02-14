@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RECT_H__
-#define __RECT_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -171,9 +171,9 @@ public:
   inline bool is_empty() const { return getWidth() <= 0 || getHeight() <= 0; }
   inline int area() const { return is_empty() ? 0 : getWidth() * getHeight(); }
 
-  static int totalArea(::std::vector<::int_rectangle> &v) {
+  static int totalArea(::array_base<::int_rectangle> &v) {
     int area = 0;
-    for (::std::vector<::int_rectangle>::iterator i = v.begin(); i < v.end(); i++)
+    for (::array_base<::int_rectangle>::iterator i = v.begin(); i < v.end(); i++)
       area += i.area();
     return area;
   }
@@ -193,4 +193,4 @@ public:
   }
 };
 
-#endif // __RECT_H__
+//// __RECT_H__

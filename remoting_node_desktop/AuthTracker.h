@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __AUTHTRACKER_H__
-#define __AUTHTRACKER_H__
+#pragma once
+
 
 #include "thread/LocalMutex.h"
 #include "util/DateTime.h"
@@ -55,4 +55,4 @@ private:
   LocalMutex m_countMutex;
 };
 
-#endif // __AUTHTRACKER_H__
+//// __AUTHTRACKER_H__

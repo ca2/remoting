@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __APPLICATIONDESKTOPFACTORY_H__
-#define __APPLICATIONDESKTOPFACTORY_H__
+#pragma once
+
 
 #include "DesktopFactory.h"
 
@@ -39,4 +39,4 @@ public:
                                           LogWriter *log);
 };
 
-#endif // __APPLICATIONDESKTOPFACTORY_H__
+//// __APPLICATIONDESKTOPFACTORY_H__

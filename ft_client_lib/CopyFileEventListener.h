@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _COPY_FILE_EVENT_LISTENER_H_
-#define _COPY_FILE_EVENT_LISTENER_H_
+#pragma once
+
 
 #include "util/inttypes.h"
 #include "ft_common/FileInfo.h"
@@ -78,7 +78,7 @@ protected:
 
   virtual int targetFileExists(FileInfo *sourceFileInfo,
                                FileInfo *targetFileInfo,
-                               const ::scoped_string & scopedstrpathToTargetFile) = 0;
+                               const ::scoped_string & scopedstrPathToTargetFile) = 0;
 };
 
-#endif
+

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINCUSTOMD3D11TEXTURE2D_H__
-#define __WINCUSTOMD3D11TEXTURE2D_H__
+#pragma once
+
 
 #include "WinD3D11Texture2D.h"
 
@@ -64,4 +64,4 @@ private:
   WinD3D11Texture2D m_textureWrapper;
 };
 
-#endif // __WINCUSTOMD3D11TEXTURE2D_H__
+//// __WINCUSTOMD3D11TEXTURE2D_H__

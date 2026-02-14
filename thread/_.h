@@ -2,14 +2,14 @@
 #pragma once
 
 
-
 #include "acme/_.h"
 
 
-#if defined(_client_config_lib)
-#define CLASS_DECL_CLIENT_CONFIG_LIB  CLASS_DECL_EXPORT
+#if defined(_remoting_gui_project)
+#define CLASS_DECL_REMOTING_GUI  CLASS_DECL_EXPORT
 #else
-#define CLASS_DECL_CLIENT_CONFIG_LIB  CLASS_DECL_IMPORT
+#define CLASS_DECL_REMOTING_GUI  CLASS_DECL_IMPORT
 #endif
+
 
 

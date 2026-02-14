@@ -28,14 +28,14 @@
 LocalFilesDeleteOperation::LocalFilesDeleteOperation(LogWriter *logWriter,
                                                      const FileInfo *filesToDelete,
                                                      unsigned int filesCount,
-                                                     const ::scoped_string & scopedstrpathToTargetRoot)
+                                                     const ::scoped_string & pathToTargetRoot)
 : FileTransferOperation(logWriter)
 {
   m_filesToDelete.resize(filesCount);
   for (unsigned int i = 0; i < filesCount; i++) {
     m_filesToDelete[i] = filesToDelete[i];
   }
-  m_pathToTargetRoot.setString(pathToTargetRoot);
+  m_pathToTargetRoot= pathToTargetRoot;
 }
 
 LocalFilesDeleteOperation::~LocalFilesDeleteOperation()
@@ -67,11 +67,11 @@ void LocalFilesDeleteOperation::execute()
     // Create path to file from root folder and filename
     ::string pathToTargetFile(m_pathToTargetRoot);
     if (!pathToTargetFile.endsWith(_T('\\'))) {
-      pathToTargetFile.appendString(_T("\\"));
+      pathToTargetFile.appendString("\\");
     }
     pathToTargetFile.appendString(m_filesToDelete[i].getFileName());
 
-    File file(pathToTargetFile.getString());
+    File file(pathToTargetFile);
 
     //
     // Logging
@@ -79,14 +79,14 @@ void LocalFilesDeleteOperation::execute()
 
     ::string message;
 
-    message.format(_T("Deleting local '%s' %s"), pathToTargetFile.getString(),
-                   file.isDirectory() ? _T("folder") : _T("file"));
+    message.formatf("Deleting local '{}' {}", pathToTargetFile,
+                   file.isDirectory() ? "folder") : _T("file");
 
-    notifyInformation(message.getString());
+    notifyInformation(message);
 
     // Delete file
     deleteFile(&file);
-  } // for all files in file ::std::list
+  } // for all files in file ::list
 
   // Notify listeners that operation have ended
   notifyFinish();
@@ -118,12 +118,12 @@ bool LocalFilesDeleteOperation::deleteFile(File *file)
         }
 
         // Create path to subfile
-        ::string pathToTargetSubFile(pathToTargetFile.getString());
+        ::string pathToTargetSubFile(pathToTargetFile);
 
-        pathToTargetSubFile.appendString(_T("\\"));
-        pathToTargetSubFile.appendString(files[i].getString());
+        pathToTargetSubFile.appendString("\\");
+        pathToTargetSubFile.appendString(files[i]);
 
-        File subFile(pathToTargetSubFile.getString());
+        File subFile(pathToTargetSubFile);
         // Delete file
         deleteFile(&subFile);
       } // for all subfiles
@@ -132,10 +132,10 @@ bool LocalFilesDeleteOperation::deleteFile(File *file)
     } else {
       ::string message;
 
-      message.format(_T("Error: failed to get file ::std::list in local folder '%s'"),
-                     pathToTargetFile.getString());
+      message.formatf("Error: failed to get file ::list in local folder '{}'",
+                     pathToTargetFile);
 
-      notifyError(message.getString());
+      notifyError(message);
     }
   } // if file to delete is directory
 
@@ -144,11 +144,11 @@ bool LocalFilesDeleteOperation::deleteFile(File *file)
   if (!returnVal) {
     ::string message;
 
-    message.format(_T("Error: failed to remove local '%s' %s"),
-                   pathToTargetFile.getString(),
-                   file->isDirectory() ? _T("folder") : _T("file"));
+    message.formatf("Error: failed to remove local '{}' {}",
+                   pathToTargetFile,
+                   file->isDirectory() ? "folder") : _T("file");
 
-    notifyError(message.getString());
+    notifyError(message);
   } // if failed to remove
 
   return returnVal;

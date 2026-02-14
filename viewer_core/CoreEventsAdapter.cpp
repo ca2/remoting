@@ -34,7 +34,7 @@ void CoreEventsAdapter::onBell()
 {
 }
 
-void CoreEventsAdapter::onCutText(const ::string & cutText)
+void CoreEventsAdapter::onCutText(const ::scoped_string & cutText)
 {
 }
 
@@ -51,7 +51,7 @@ void CoreEventsAdapter::onConnected(RfbOutputGate *output)
 {
 }
 
-void CoreEventsAdapter::onDisconnect(const ::string & message)
+void CoreEventsAdapter::onDisconnect(const ::scoped_string & message)
 {
 }
 
@@ -60,7 +60,7 @@ void CoreEventsAdapter::onAuthError(const AuthException *exception)
   onError(exception);
 }
 
-void CoreEventsAdapter::onError(const Exception *exception)
+void CoreEventsAdapter::onError(const ::remoting::Exception *exception)
 {
 }
 

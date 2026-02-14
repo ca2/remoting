@@ -105,14 +105,14 @@ void FbUpdateNotifier::execute()
     // with blocking frame buffer mutex "m_fbLock".
     if (isNewSize) {
       noUpdates = false;
-      m_logWriter->debug(_T("FbUpdateNotifier (event): new size of frame buffer"));
+      m_logWriter->debug("FbUpdateNotifier (event): new size of frame buffer");
       try {
         AutoLock al(m_fbLock);
         m_adapter->onFrameBufferPropChange(m_frameBuffer);
         // FIXME: it's bad code. Must work without one next line, but not it.
         m_adapter->onFrameBufferUpdate(m_frameBuffer, m_frameBuffer->getDimension());
       } catch (...) {
-        m_logWriter->error(_T("FbUpdateNotifier (event): error in set new size"));
+        m_logWriter->error("FbUpdateNotifier (event): error in set new size");
       }
     }
 
@@ -148,16 +148,16 @@ void FbUpdateNotifier::execute()
 	  }
 #endif
 
-      ::std::vector<::int_rectangle> updateList;
+      ::array_base<::int_rectangle> updateList;
       update.getRectVector(&updateList);
-      m_logWriter->detail(_T("FbUpdateNotifier (event): %u updates"), updateList.size());
+      m_logWriter->detail("FbUpdateNotifier (event): %u updates", updateList.size());
 
       try {
-        for (::std::vector<::int_rectangle>::iterator i = updateList.begin(); i != updateList.end(); ++i) {
+        for (::array_base<::int_rectangle>::iterator i = updateList.begin(); i != updateList.end(); ++i) {
 			m_adapter->onFrameBufferUpdate(m_frameBuffer, *i);
         }
       } catch (...) {
-        m_logWriter->error(_T("FbUpdateNotifier (event): error in update"));
+        m_logWriter->error("FbUpdateNotifier (event): error in update");
       }
       
 
@@ -189,7 +189,7 @@ void FbUpdateNotifier::onUpdate(const ::int_rectangle &  update)
     m_update.addRect(update);
   }
   m_eventUpdate.notify();
-  m_logWriter->debug(_T("FbUpdateNotifier: added rectangle"));
+  m_logWriter->debug("FbUpdateNotifier: added rectangle");
 }
 
 void FbUpdateNotifier::onPropertiesFb()
@@ -200,7 +200,7 @@ void FbUpdateNotifier::onPropertiesFb()
     m_isNewSize = true;
   }
   m_eventUpdate.notify();
-  m_logWriter->debug(_T("FbUpdateNotifier: new size of frame buffer"));
+  m_logWriter->debug("FbUpdateNotifier: new size of frame buffer");
 }
 
 void FbUpdateNotifier::updatePointerPos(const Point *position)
@@ -214,8 +214,8 @@ void FbUpdateNotifier::updatePointerPos(const Point *position)
 
 void FbUpdateNotifier::setNewCursor(const Point *hotSpot,
                                     unsigned short width, unsigned short height,
-                                    const ::std::vector<unsigned char> *cursor, 
-                                    const ::std::vector<unsigned char> *bitmask)
+                                    const ::array_base<unsigned char> *cursor, 
+                                    const ::array_base<unsigned char> *bitmask)
 {
   {
     AutoLock al(m_fbLock);

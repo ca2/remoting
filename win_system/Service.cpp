@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "Service.h"
 
 #include "win_system/SystemException.h"
@@ -34,7 +35,7 @@ Service *Service::g_service = 0;
 
 void WINAPI Service::ServiceMain(DWORD dwArgc, LPTSTR *lpszArgv)
 {
-  g_service->m_statusHandle = RegisterServiceCtrlHandler(g_service->m_name.getString(),
+  g_service->m_statusHandle = RegisterServiceCtrlHandler(g_service->m_name,
                                                          &Service::ServiceControlHandler);
 
   if (!g_service->m_statusHandle) {
@@ -46,7 +47,7 @@ void WINAPI Service::ServiceMain(DWORD dwArgc, LPTSTR *lpszArgv)
 
   try {
     g_service->onStart();
-  } catch (Exception &) {
+  } catch (::remoting::Exception &) {
     g_service->reportStatus(SERVICE_STOPPED, NO_ERROR, 0);
     // TODO: Report to SCManager about critical error.
   }
@@ -55,7 +56,7 @@ void WINAPI Service::ServiceMain(DWORD dwArgc, LPTSTR *lpszArgv)
 
   try {
     g_service->main();
-  } catch (Exception &) {
+  } catch (::remoting::Exception &) {
     g_service->reportStatus(SERVICE_STOPPED, NO_ERROR, 0);
     // TODO: Report to SCManager about critical error.
   }
@@ -99,7 +100,7 @@ Service::Service(const ::scoped_string & scopedstrName)
 
   Service::g_service = this;
 
-  m_name.setString(name);
+  m_name= name;
 }
 
 Service::~Service()
@@ -111,7 +112,7 @@ void Service::run()
 {
   TCHAR name[1024];
 
-  _tcscpy_s(name, 1024, m_name.getString());
+  _tcscpy_s(name, 1024, m_name);
 
   SERVICE_TABLE_ENTRY dispatchTable[] =  {{name, (LPSERVICE_MAIN_FUNCTION)ServiceMain }, { NULL, NULL }};
 

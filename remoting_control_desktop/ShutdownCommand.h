@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _SHUTDOWN_COMMAND_H_
-#define _SHUTDOWN_COMMAND_H_
+#pragma once
+
 
 #include "util/Command.h"
 
@@ -51,7 +51,7 @@ public:
    *
    * Inhrited from Command abstract class.
    *
-   * @throws IOException on io error, RemoteException on server side error.
+   * @throws ::io_exception on io error, RemoteException on server side error.
    */
   virtual void execute();
 private:
@@ -61,4 +61,4 @@ private:
   ControlProxy *m_proxy;
 };
 
-#endif
+

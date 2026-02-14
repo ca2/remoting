@@ -22,12 +22,12 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _DATA_INPUT_STREAM_H_
-#define _DATA_INPUT_STREAM_H_
+#pragma once
+
 
 #include "util/inttypes.h"
 #include "InputStream.h"
-#include "IOException.h"
+#include "io_lib/io_exception.h"
 
 /**
  * Data input stream class (decorator pattern).
@@ -55,7 +55,7 @@ public:
    * Reads exactly specified count of bytes from input stream.
    * @param buffer [out] target buffer to receive data.
    * @param len count of bytes to read.
-   * @throws IOException on error.
+   * @throws ::io_exception on error.
    * @fixme really it can throw any kind of exception.
    */
   void readFully(void *buffer, size_t len);
@@ -76,4 +76,4 @@ protected:
   InputStream *m_inputStream;
 };
 
-#endif
+

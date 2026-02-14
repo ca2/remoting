@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CONTROL_CLIENT_H_
-#define _CONTROL_CLIENT_H_
+#pragma once
+
 
 #include "RfbClientManager.h"
 
@@ -41,11 +41,11 @@
  * Solves problem with catching errors that occured when processing
  * control client message (not IO errors).
  */
-class ControlException : public Exception
+class ControlException : public ::remoting::Exception
 {
 public:
-  ControlException(const Exception *parent) : Exception(parent->getMessage()) { }
-  ControlException(const ::scoped_string & scopedstrmessage) : Exception(message) { }
+  ControlException(const ::remoting::Exception *parent) : ::remoting::Exception(parent->getMessage()) { }
+  ControlException(const ::scoped_string & scopedstrMessage) : ::remoting::Exception(message) { }
   virtual ~ControlException() { };
 };
 
@@ -96,13 +96,13 @@ private:
   /**
    * Sends error (server exception message) to client side.
    * @param message description of error.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    */
-  void sendError(const ::scoped_string & scopedstrmessage);
+  void sendError(const ::scoped_string & scopedstrMessage);
 
   /**
    * Called when auth message recieved.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    */
   void authMsgRcdv();
 
@@ -111,59 +111,59 @@ private:
    */
 
   /**
-   * Called when get client ::std::list message recieved.
-   * @throws IOException on io error.
+   * Called when get client ::list message recieved.
+   * @throws ::io_exception on io error.
    */
   void getClientsListMsgRcvd();
   /**
    * Called when get server info message reciveved.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    */
   void getServerInfoMsgRcvd();
   /**
    * Called when reload configuration message recieved.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    * @deprecated.
    */
   void reloadConfigMsgRcvd();
   /**
    * Called when disconnect all clients message recieved.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    */
   void disconnectAllMsgRcvd();
   /**
    * Called when shutdown message recieved.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    */
   void shutdownMsgRcvd();
   /**
    * Called when add new client message recieved.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    */
   void addClientMsgRcvd();
   /**
    * Called when Connect to a tcp dispatcher message recieved.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    */
   void connectToTcpDispatcher();
   /**
    * Called when set server config message recieved.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    */
   void setServerConfigMsgRcvd();
   /**
    * Called when get server config message recieved.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    */
   void getServerConfigMsgRcvd();
   /**
    * Called when "get show tray icon flag" message recieved.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    */
   void getShowTrayIconFlagMsgRcvd();
   /**
    * Called when "update tvncontrol process id" message recieved.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    */
   void updateTvnControlProcessIdMsgRcvd();
   /**
@@ -238,4 +238,4 @@ private:
   static const unsigned int WITHOUT_AUTH[];
 };
 
-#endif
+

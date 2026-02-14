@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _LOGGER_H_
-#define _LOGGER_H_
+#pragma once
+
 
 #include "util/CharDefs.h"
 
@@ -72,4 +72,4 @@ public:
   virtual bool acceptsLevel(int logLevel) = 0;
 };
 
-#endif // _LOGGER_H_
+//// _LOGGER_H_

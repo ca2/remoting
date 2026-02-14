@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __SENDERCONTROLINFORMATIONINTERFACE_H__
-#define __SENDERCONTROLINFORMATIONINTERFACE_H__
+#pragma once
+
 
 // Provide necessary information to send a update.
 class SenderControlInformationInterface
@@ -32,4 +32,4 @@ public:
   virtual void onGetViewPort(::int_rectangle *viewRect, bool *shareApp, Region *shareAppRegion) = 0;
 };
 
-#endif // __SENDERCONTROLINFORMATIONINTERFACE_H__
+//// __SENDERCONTROLINFORMATIONINTERFACE_H__

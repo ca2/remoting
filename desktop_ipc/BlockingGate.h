@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _BLOCKING_GATE_H_
-#define _BLOCKING_GATE_H_
+#pragma once
+
 
 #include "thread/LocalMutex.h"
 #include "io_lib/Channel.h"
@@ -38,4 +38,4 @@ public:
   virtual ~BlockingGate();
 };
 
-#endif // _BLOCKING_GATE_H_
+//// _BLOCKING_GATE_H_

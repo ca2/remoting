@@ -56,9 +56,9 @@ BOOL CopyRectDetector::checkWindowMovements(HWND hwnd)
 {
   ::int_rectangle currRect;
   if (IsWindowVisible(hwnd) && getWinRect(hwnd, &currRect)) {
-    // Store window properties in the new ::std::list
+    // Store window properties in the new ::list
     WinProp newWinProp(hwnd, &currRect);
-    m_newWinProps.push_back(newWinProp);
+    m_newWinProps.add(newWinProp);
 
     ::int_rectangle prevRect;
     if (findPrevWinProps(hwnd, &prevRect)) {
@@ -90,7 +90,7 @@ bool CopyRectDetector::getWinRect(HWND hwnd, ::int_rectangle *winRect)
 
 bool CopyRectDetector::findPrevWinProps(HWND hwnd, ::int_rectangle *rect)
 {
-  ::std::list<WinProp>::iterator winPropsIter;
+  ::list<WinProp>::iterator winPropsIter;
   WinProp *winProp;
   for (winPropsIter = m_lastWinProps.begin(); winPropsIter != m_lastWinProps.end();
        winPropsIter++) {

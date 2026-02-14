@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "WsaStartup.h"
 #include "util/Exception.h"
 
@@ -29,7 +30,7 @@ WsaStartup::WsaStartup(BYTE minorVer, BYTE majorVer)
 {
   WSAData wsaData;
   if (WSAStartup(MAKEWORD(majorVer, minorVer), &wsaData) != 0) {
-    throw Exception(_T("Failed to initialize WsaStartup."));
+    throw ::remoting::Exception("Failed to initialize WsaStartup.");
   }
 }
 

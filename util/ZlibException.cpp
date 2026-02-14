@@ -24,13 +24,13 @@
 #include "framework.h"
 #include "ZLibException.h"
 
-ZLibException::ZLibException(const ::scoped_string & scopedstrmessage)
- : Exception(message)
+ZLibException::ZLibException(const ::scoped_string & scopedstrMessage)
+ : ::remoting::Exception(message)
 {
 }
 
 ZLibException::ZLibException()
-: Exception()
+: ::remoting::Exception()
 {
 }
 

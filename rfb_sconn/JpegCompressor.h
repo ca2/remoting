@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RFB_JPEG_COMPRESSOR_H_INCLUDED__
-#define __RFB_JPEG_COMPRESSOR_H_INCLUDED__
+#pragma onceINCLUDED__
+INCLUDED__
 
 #include <stdio.h>
 
@@ -41,7 +41,7 @@
 #include "libjpeg-turbo/jpeglib.h"
 #else
 #include "libjpeg/jpeglib.h"
-#endif
+
 
 //
 // An abstract interface for performing JPEG compression.
@@ -140,4 +140,4 @@ private:
   TC_JPEG_COMPRESSOR m_jpeg;
 };
 
-#endif // __RFB_JPEG_COMPRESSOR_H_INCLUDED__
+//// __RFB_JPEG_COMPRESSOR_H_INCLUDED__

@@ -33,12 +33,12 @@
 #include "Win8DeskDuplicationThread.h"
 
 Win8DeskDuplication::Win8DeskDuplication(FrameBuffer *targetFb,
-                                                     ::std::vector<::int_rectangle> &targetRect,
+                                                     ::array_base<::int_rectangle> &targetRect,
                                                      Win8CursorShape *targetCurShape,
                                                      LONGLONG *cursorTimeStamp,
                                                      LocalMutex *cursorMutex,
                                                      Win8DuplicationListener *duplListener,
-                                                     ::std::vector<WinDxgiOutput> &dxgiOutput,
+                                                     ::array_base<WinDxgiOutput> &dxgiOutput,
                                                      LogWriter *log)
 : m_targetFb(targetFb),
   m_targetRects(targetRect),
@@ -51,23 +51,23 @@ Win8DeskDuplication::Win8DeskDuplication(FrameBuffer *targetFb,
   m_hasRecoverableError(false),
   m_log(log)
 {
-  m_log->debug(_T("Creating Win8DeskDuplication for %d outputs"), dxgiOutput.size());
+  m_log->debug("Creating Win8DeskDuplication for {} outputs", dxgiOutput.size());
   for (size_t i = 0; i < dxgiOutput.size(); i++) {
-    m_dxgiOutput1.push_back(&dxgiOutput[i]);
-    m_outDupl.push_back(WinDxgiOutputDuplication(&m_dxgiOutput1[i], &m_device));
-    m_rotations.push_back(dxgiOutput[i].getRotation());
-    m_stageTextures2D.push_back(WinCustomD3D11Texture2D(m_device.getDevice(),
+    m_dxgiOutput1.add(&dxgiOutput[i]);
+    m_outDupl.add(WinDxgiOutputDuplication(&m_dxgiOutput1[i], &m_device));
+    m_rotations.add(dxgiOutput[i].getRotation());
+    m_stageTextures2D.add(WinCustomD3D11Texture2D(m_device.getDevice(),
       (UINT)targetRect[i].width(),
       (UINT)targetRect[i].height(),
       m_rotations[i]));
   }
-  m_log->debug(_T("Win8DeskDuplication created"));
+  m_log->debug("Win8DeskDuplication created");
   resume();
 }
 
 Win8DeskDuplication::~Win8DeskDuplication()
 {
-  m_log->debug(_T("deleting Win8DeskDuplication"));
+  m_log->debug("deleting Win8DeskDuplication");
   terminate();
   wait();
 }
@@ -81,8 +81,8 @@ void Win8DeskDuplication::execute()
 {
   const int ACQUIRE_TIMEOUT = 20;
   try {
-    ::std::vector<int> timeouts;
-    ::std::vector<DateTime> begins;
+    ::array_base<int> timeouts;
+    ::array_base<DateTime> begins;
     timeouts.resize(m_outDupl.size());
     begins.resize(m_outDupl.size());
     while (!isTerminating() && isValid()) {
@@ -92,7 +92,7 @@ void Win8DeskDuplication::execute()
           WinDxgiAcquiredFrame acquiredFrame(&m_outDupl[i], ACQUIRE_TIMEOUT);
 		      if (acquiredFrame.wasTimeOut()) {
 			      timeouts[i]++;
-			      m_log->debug(_T("Timeout on acquire frame for output: %d"), i);
+			      m_log->debug("Timeout on acquire frame for output: {}", i);
 			      Thread::yield();
 			      continue;
           }
@@ -100,7 +100,7 @@ void Win8DeskDuplication::execute()
             DXGI_OUTDUPL_FRAME_INFO *info = acquiredFrame.getFrameInfo();
             int accum_frames = info->AccumulatedFrames;
             double dt = (double)(DateTime::now() - begins[i]).getTime(); // in milliseconds
-            m_log->debug(_T("Acquire frame for output: %d for %f ms, accumulated %d frames"), i, dt + ACQUIRE_TIMEOUT * timeouts[i], accum_frames);
+            m_log->debug("Acquire frame for output: {} for %f ms, accumulated {} frames", i, dt + ACQUIRE_TIMEOUT * timeouts[i], accum_frames);
             timeouts[i] = 0;
             WinD3D11Texture2D acquiredDesktopImage(acquiredFrame.getDxgiResource());
 
@@ -118,7 +118,7 @@ void Win8DeskDuplication::execute()
               processCursor(info, i);
             }
             catch (WinDxException &e) {
-              m_log->debug(_T("Error on cursor processing: %s, (%x)"), e.getMessage(), (int)e.getErrorCode());
+              m_log->debug("Error on cursor processing: {}, (%x)", e.getMessage(), (int)e.getErrorCode());
             } // Cursor
           }
         }
@@ -128,17 +128,17 @@ void Win8DeskDuplication::execute()
     // FIXME: remove it all, catch exceptions in Win8ScreenDriverImpl
   } catch (WinDxRecoverableException &e) {
     ::string errMess;
-    errMess.format(_T("Win8DeskDuplication:: Catched WinDxRecoverableException: %s, (%x)"), e.getMessage(), (int)e.getErrorCode());
-    setRecoverableError(errMess.getString());
+    errMess.formatf("Win8DeskDuplication:: Catched WinDxRecoverableException: {}, (%x)", e.getMessage(), (int)e.getErrorCode());
+    setRecoverableError(errMess);
   } catch (WinDxCriticalException &e) {
     ::string errMess;
-    errMess.format(_T("Win8DeskDuplication:: Catched WinDxCriticalException: %s, (%x)"), e.getMessage(), (int)e.getErrorCode());
-    setRecoverableError(errMess.getString()); //?????????
-    setCriticalError(errMess.getString());
-  } catch (Exception &e) {
+    errMess.formatf("Win8DeskDuplication:: Catched WinDxCriticalException: {}, (%x)", e.getMessage(), (int)e.getErrorCode());
+    setRecoverableError(errMess); //?????????
+    setCriticalError(errMess);
+  } catch (::remoting::Exception &e) {
     ::string errMess;
-    errMess.format(_T("Win8DeskDuplication:: Catched Exception: %s") , e.getMessage());
-    setRecoverableError(errMess.getString());
+    errMess.formatf("Win8DeskDuplication:: Catched ::remoting::Exception: {}" , e.getMessage());
+    setRecoverableError(errMess);
   }
 }
 
@@ -211,11 +211,11 @@ void Win8DeskDuplication::processDirtyRects(size_t dirtyCount,
       /* Disabled the followed throwing because it realy may happen and better is to see any picture
       // instead of a black screen.
       ::string errMess;
-      errMess.format(_T("During processDirtyRects has been got a rect (%d, %d, %dx%d) which outside")
-                     _T(" from the stage rect (%d, %d, %dx%d)"),
+      errMess.formatf("During processDirtyRects has been got a rect ({}, {}, %dx{}) which outside"
+                     " from the stage rect ({}, {}, %dx{})",
                      rect.left, rect.top, rect.width(), rect.height(),
                      stageRect.left, stageRect.top, stageRect.width(), stageRect.height());
-      throw Exception(errMess.getString());
+      throw ::remoting::Exception(errMess);
       */
     }
     ID3D11Texture2D *texture = m_stageTextures2D[out].getTexture();
@@ -229,7 +229,7 @@ void Win8DeskDuplication::processDirtyRects(size_t dirtyCount,
     rotateRectInsideStage(&dstRect, &stageDim, rotation);
     // Translate the rect to the frame buffer coordinates.
     dstRect.move(m_targetRects[out].left, m_targetRects[out].top);
-    m_log->debug(_T("Destination dirty rect = %d, %d, %dx%d"), dstRect.left, dstRect.top, dstRect.width(), dstRect.height());
+    m_log->debug("Destination dirty rect = {}, {}, %dx{}", dstRect.left, dstRect.top, dstRect.width(), dstRect.height());
 
     stageDim.cx = static_cast<int> (autoMapSurface.getStride() / 4);
     m_auxiliaryFrameBuffer.setPropertiesWithoutResize(&stageDim, &m_targetFb->getPixelFormat());
@@ -312,7 +312,7 @@ void Win8DeskDuplication::processCursor(const DXGI_OUTDUPL_FRAME_INFO *info, siz
     bool newVisibility = pointerPos.Visible != FALSE;
     bool visibleChanged = m_targetCurShape->getIsVisible() != newVisibility;
     if (visibleChanged) {
-	  m_log->debug(newVisibility ? _T("Cursor became visible") : _T("Cursor became not visible"));
+	  m_log->debug(newVisibility ? "Cursor became visible") : _T("Cursor became not visible");
       m_targetCurShape->setVisibility(newVisibility, out);
       m_duplListener->onCursorShapeChanged();
     }
@@ -320,13 +320,13 @@ void Win8DeskDuplication::processCursor(const DXGI_OUTDUPL_FRAME_INFO *info, siz
     //
     bool shapeChanged = info->PointerShapeBufferSize != 0;
     if (shapeChanged) {
-	    m_log->debug(_T("Cursor shape chagned"));
+	    m_log->debug("Cursor shape chagned");
 	    m_outDupl[out].getFrameCursorShape(m_targetCurShape->getCursorShapeForWriting(), info->PointerShapeBufferSize, m_log);
       m_duplListener->onCursorShapeChanged();
     }
 
     if (pointerPos.Visible) {
-  	  m_log->debug(_T("Cursor position chagned"));
+  	  m_log->debug("Cursor position chagned");
       Point hotPoint = m_targetCurShape->getCursorShape()->getHotSpot();
       ::int_rectangle targetRect = m_targetRects[out];
       m_duplListener->onCursorPositionChanged(pointerPos.Position.x + targetRect.left + hotPoint.x,

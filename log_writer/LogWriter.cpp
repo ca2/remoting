@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "LogWriter.h"
 #include <cstdarg>
-#include <vector>
+//#include <vector>
 
 LogWriter::LogWriter(Logger *logger)
 : m_logger(logger)
@@ -37,7 +37,7 @@ LogWriter::~LogWriter()
   delete m_profiler;
 }
 
-void LogWriter::interror(const ::scoped_string & scopedstrfmt, ...)
+void LogWriter::interror(const ::scoped_string & scopedstrFmt, ...)
 {
   int level = LOG_INTERR;
   if (m_logger != 0 && m_logger->acceptsLevel(level)) {
@@ -48,7 +48,7 @@ void LogWriter::interror(const ::scoped_string & scopedstrfmt, ...)
   }
 }
 
-void LogWriter::error(const ::scoped_string & scopedstrfmt, ...)
+void LogWriter::error(const ::scoped_string & scopedstrFmt, ...)
 {
   int level = LOG_ERR;
   if (m_logger != 0 && m_logger->acceptsLevel(level)) {
@@ -59,7 +59,7 @@ void LogWriter::error(const ::scoped_string & scopedstrfmt, ...)
   }
 }
 
-void LogWriter::warning(const ::scoped_string & scopedstrfmt, ...)
+void LogWriter::warning(const ::scoped_string & scopedstrFmt, ...)
 {
   int level = LOG_WARN;
   if (m_logger != 0 && m_logger->acceptsLevel(level)) {
@@ -70,7 +70,7 @@ void LogWriter::warning(const ::scoped_string & scopedstrfmt, ...)
   }
 }
 
-void LogWriter::message(const ::scoped_string & scopedstrfmt, ...)
+void LogWriter::message(const ::scoped_string & scopedstrFmt, ...)
 {
   int level = LOG_MSG;
   if (m_logger != 0 && m_logger->acceptsLevel(level)) {
@@ -81,7 +81,7 @@ void LogWriter::message(const ::scoped_string & scopedstrfmt, ...)
   }
 }
 
-void LogWriter::info(const ::scoped_string & scopedstrfmt, ...)
+void LogWriter::info(const ::scoped_string & scopedstrFmt, ...)
 {
   int level = LOG_INFO;
   if (m_logger != 0 && m_logger->acceptsLevel(level)) {
@@ -92,7 +92,7 @@ void LogWriter::info(const ::scoped_string & scopedstrfmt, ...)
   }
 }
 
-void LogWriter::detail(const ::scoped_string & scopedstrfmt, ...)
+void LogWriter::detail(const ::scoped_string & scopedstrFmt, ...)
 {
   int level = LOG_DETAIL;
   if (m_logger != 0 && m_logger->acceptsLevel(level)) {
@@ -103,7 +103,7 @@ void LogWriter::detail(const ::scoped_string & scopedstrfmt, ...)
   }
 }
 
-void LogWriter::debug(const ::scoped_string & scopedstrfmt, ...)
+void LogWriter::debug(const ::scoped_string & scopedstrFmt, ...)
 {
   int level = LOG_DEBUG;
   if (m_logger != 0 && m_logger->acceptsLevel(level)) {
@@ -127,17 +127,17 @@ ProcessorTimes LogWriter::checkPoint(const ::scoped_string & scopedstrtag)
 #pragma warning(push)
 #pragma warning(disable:4996)
 
-void LogWriter::vprintLog(int logLevel, const ::scoped_string & scopedstrfmt, va_list argList)
+void LogWriter::vprintLog(int logLevel, const ::scoped_string & scopedstrFmt, va_list argList)
 {
   if (m_logger != 0) {
     // Format the original string.
     int count = _vsctprintf(fmt, argList);
-    ::std::vector<TCHAR> formattedString(count + 1);
+    ::array_base<TCHAR> formattedString(count + 1);
     _vstprintf(&formattedString.front(), fmt, argList);
 
     m_logger->print(logLevel, &formattedString.front());
 // #if DROP_TIME_STAT // test code
-    ::std::vector<::std::vector<TCHAR>> resultStrings = m_profiler->dropStat();
+    ::array_base<::array_base<TCHAR>> resultStrings = m_profiler->dropStat();
     for (size_t i = 0; i < resultStrings.size(); i++) {
       formattedString = resultStrings[i];
       if (formattedString.size() != 0)

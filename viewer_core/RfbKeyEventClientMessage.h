@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _RFB_KEY_EVENT_CLIENT_MESSAGE_H_
-#define _RFB_KEY_EVENT_CLIENT_MESSAGE_H_
+#pragma once
+
 
 #include "RfbClientToServerMessage.h"
 
@@ -40,4 +40,4 @@ private:
   bool m_downFlag;
 };
 
-#endif
+

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _OUTGOING_CONNECTION_DIALOG_H_
-#define _OUTGOING_CONNECTION_DIALOG_H_
+#pragma once
+
 
 #include "util/winhdr.h"
 
@@ -97,4 +97,4 @@ protected:
   CheckBox m_viewOnlyCB;
 };
 
-#endif
+

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _WIN_STATION_LIBRARY_H_
-#define _WIN_STATION_LIBRARY_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -47,4 +47,4 @@ protected:
   pWinStationConnectW m_winStationConnectW;
 };
 
-#endif
+

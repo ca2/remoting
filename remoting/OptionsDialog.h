@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _OPTIONS_DIALOG_H_
-#define _OPTIONS_DIALOG_H_
+#pragma once
+
 
 #include "client_config_lib/ViewerConfig.h"
 #include "client_config_lib/ConnectionConfig.h"
@@ -95,4 +95,4 @@ private:
 
 };
 
-#endif
+

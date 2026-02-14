@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "DesktopSelector.h"
-#include <vector>
+//#include <vector>
 
 HDESK DesktopSelector::getInputDesktop()
 {
@@ -38,9 +38,9 @@ HDESK DesktopSelector::getInputDesktop()
                           GENERIC_WRITE);
 }
 
-HDESK DesktopSelector::getDesktop(const ::string & name)
+HDESK DesktopSelector::getDesktop(const ::scoped_string & name)
 {
-  return OpenDesktop(name.getString(), 0, TRUE,
+  return OpenDesktop(name, 0, TRUE,
                      DESKTOP_CREATEMENU |
                      DESKTOP_CREATEWINDOW |
                      DESKTOP_ENUMERATE |
@@ -61,7 +61,7 @@ bool DesktopSelector::setDesktopToCurrentThread(HDESK newDesktop)
   return SetThreadDesktop(newDesktop) != 0;
 }
 
-bool DesktopSelector::selectDesktop(const ::string & name)
+bool DesktopSelector::selectDesktop(const ::scoped_string & name)
 {
   HDESK desktop;
   if (name.is_empty()) {
@@ -78,21 +78,21 @@ bool DesktopSelector::selectDesktop(const ::string & name)
 
 bool DesktopSelector::getDesktopName(HDESK desktop, ::string & desktopName)
 {
-  desktopName->setString(_T(""));
+  desktopName-= "";
 
   DWORD nameLength = 0;
   // Do not check returned value because the function will return FALSE always.
   GetUserObjectInformation(desktop, UOI_NAME, 0, 0, &nameLength);
 
   if (nameLength != 0) {
-    ::std::vector<TCHAR> name(nameLength);
+    ::array_base<TCHAR> name(nameLength);
     bool result = !!GetUserObjectInformation(desktop,
                                              UOI_NAME,
                                              &name[0],
                                              nameLength,
                                              0);
     if (result) {
-      desktopName->setString(&name[0]);
+      desktopName-= &name[0];
       return true;
     }
   }

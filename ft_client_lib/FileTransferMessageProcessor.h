@@ -22,10 +22,10 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _FILE_TRANSFER_MESSAGE_PROCESSOR_H_
-#define _FILE_TRANSFER_MESSAGE_PROCESSOR_H_
+#pragma once
 
-#include "io_lib/IOException.h"
+
+#include "io_lib/io_exception.h"
 #include "io_lib/DataInputStream.h"
 
 #include "util/inttypes.h"
@@ -44,9 +44,9 @@ public:
   ~FileTransferMessageProcessor();
 
   void processRfbMessage(DataInputStream *input, unsigned int rfbMessage)
-       throw (IOException, ZLibException,
+       throw (::io_exception, ZLibException,
               OperationNotSupportedException,
               OperationNotPermittedException);
 };
 
-#endif
+

@@ -150,17 +150,17 @@ void AdministrationConfigDialog::updateUI()
   m_config->getLogFileDir(&logPath);
 
   if (logPath.is_empty()) {
-    logPath.setString(StringTable::getString(IDS_LOGPATH_UNAVALIABLE));
+    logPath= StringTable::getString(IDS_LOGPATH_UNAVALIABLE);
     m_openLogPathButton.setEnabled(false);
     m_logPathTB.setEnabled(false);
   }
 
-  m_logPathTB.setText(logPath.getString());
+  m_logPathTB.setText(logPath);
 
   ::string folder;
-  getFolderName(logPath.getString(), &folder);
+  getFolderName(logPath, &folder);
 
-  File folderFile(folder.getString());
+  File folderFile(folder);
 
   if (folderFile.canRead()) {
     m_openLogPathButton.setEnabled(true);
@@ -227,7 +227,7 @@ void AdministrationConfigDialog::apply()
 
   int logLevel = 0;
 
-  StringParser::parseInt(logLevelStringStorage.getString(), &logLevel);
+  StringParser::parseInt(logLevelStringStorage, &logLevel);
 
   m_config->setLogLevel(logLevel);
 
@@ -335,10 +335,10 @@ void AdministrationConfigDialog::onOpenFolderButtonClick()
 
   ::string command;
 
-  command.format(_T("explorer /select,%s\\%s.log"), logDir.getString(),
+  command.formatf("explorer /select,{}\\{}.log", logDir,
                  LogNames::SERVER_LOG_FILE_STUB_NAME);
 
-  Process explorer(command.getString());
+  Process explorer(command);
 
   try {
     explorer.start();
@@ -403,13 +403,13 @@ void AdministrationConfigDialog::onLogLevelUpdate()
 
 void AdministrationConfigDialog::getFolderName(const ::scoped_string & scopedstrKey, ::string & folder)
 {
-  ::std::vector<TCHAR> folderString(_tcslen(key) + 1);
+  ::array_base<TCHAR> folderString(_tcslen(key) + 1);
   memcpy(&folderString.front(), key, folderString.size() * sizeof(TCHAR));
   TCHAR *token = _tcsrchr(&folderString.front(), _T('\\'));
   if (token != NULL) {
     *token = _T('\0');
-    folder->setString(&folderString.front());
+    folder-= &folderString.front();
   } else {
-    folder->setString(_T(""));
+    folder-= "";
   }
 }

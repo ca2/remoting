@@ -61,7 +61,7 @@ void FileTransferOperation::notifyStart()
 {
   AutoLock al(&m_listeners);
 
-  ::std::vector<OperationEventListener *>::iterator it;
+  ::array_base<OperationEventListener *>::iterator it;
   for (it = m_listeners.begin(); it != m_listeners.end(); it++) {
     OperationEventListener *l = *it;
     l->ftOpStarted(this);
@@ -72,33 +72,33 @@ void FileTransferOperation::notifyFinish()
 {
   AutoLock al(&m_listeners);
 
-  ::std::vector<OperationEventListener *>::iterator it;
+  ::array_base<OperationEventListener *>::iterator it;
   for (it = m_listeners.begin(); it != m_listeners.end(); it++) {
     OperationEventListener *l = *it;
     l->ftOpFinished(this);
   }
 }
 
-void FileTransferOperation::notifyError(const ::scoped_string & scopedstrmessage)
+void FileTransferOperation::notifyError(const ::scoped_string & scopedstrMessage)
 {
-  m_logWriter->message(_T("%s\n"), ::string(scopedstrmessage).c_str());
+  m_logWriter->message("{}\n", ::string(scopedstrMessage).c_str());
 
   AutoLock al(&m_listeners);
 
-  ::std::vector<OperationEventListener *>::iterator it;
+  ::array_base<OperationEventListener *>::iterator it;
   for (it = m_listeners.begin(); it != m_listeners.end(); it++) {
     OperationEventListener *l = *it;
     l->ftOpErrorMessage(this, message);
   }
 }
 
-void FileTransferOperation::notifyInformation(const ::scoped_string & scopedstrmessage)
+void FileTransferOperation::notifyInformation(const ::scoped_string & scopedstrMessage)
 {
-  m_logWriter->message(_T("%s\n"), message);
+  m_logWriter->message("{}\n", message);
 
   AutoLock al(&m_listeners);
 
-  ::std::vector<OperationEventListener *>::iterator it;
+  ::array_base<OperationEventListener *>::iterator it;
   for (it = m_listeners.begin(); it != m_listeners.end(); it++) {
     OperationEventListener *l = *it;
     l->ftOpInfoMessage(this, message);
@@ -111,11 +111,11 @@ void FileTransferOperation::getLocalPath(FileInfoList *currentFile,
 {
   ::string pathNoRoot;
   currentFile->getAbsolutePath(&pathNoRoot, _T('\\'));
-  out->setString(localFolder);
+  out-= localFolder;
   if (!out->endsWith(_T('\\')) && !pathNoRoot.beginsWith(_T('\\'))) {
-    out->appendString(_T("\\"));
+    out->appendString("\\");
   }
-  out->appendString(pathNoRoot.getString());
+  out->appendString(pathNoRoot);
 }
 
 void FileTransferOperation::getRemotePath(FileInfoList *currentFile,
@@ -125,9 +125,9 @@ void FileTransferOperation::getRemotePath(FileInfoList *currentFile,
   ::string pathNoRoot;
   currentFile->getAbsolutePath(&pathNoRoot, _T('/'));
 
-  out->setString(remoteFolder);
+  out-= remoteFolder;
   if (!out->endsWith(_T('/')) && !pathNoRoot.beginsWith(_T('/'))) {
-    out->appendString(_T("/"));
+    out->appendString("/");
   }
-  out->appendString(pathNoRoot.getString());
+  out->appendString(pathNoRoot);
 }

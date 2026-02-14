@@ -22,14 +22,15 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef SOCKET_EXCEPTION_H
-#define SOCKET_EXCEPTION_H
+//#ifndef SOCKET_EXCEPTION_H
+#pragma once
+//#define SOCKET_EXCEPTION_H
 
 #include "util/Exception.h"
 
 #include "sockdefs.h"
 
-class SocketException : public Exception
+class SocketException : public ::remoting::Exception
 {
 public:
   // Creates socket exception object with error value eq to current value
@@ -41,7 +42,7 @@ public:
   SocketException(int error);
   // Creates socket exception object with specified message.
   // Error number is sets to zero.
-  SocketException(const ::scoped_string & scopedstrmessage);
+  SocketException(const ::scoped_string & scopedstrMessage);
   // Destructor.
   virtual ~SocketException();
 
@@ -56,4 +57,4 @@ protected:
   int m_errno;
 };
 
-#endif
+

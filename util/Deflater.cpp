@@ -62,11 +62,11 @@ void Deflater::deflate()
   m_zlibStream.avail_out = (unsigned int)avaliableOutput;
 
   if (::deflate(&m_zlibStream, Z_SYNC_FLUSH) != Z_OK) {
-    throw ZLibException(_T("Deflate method return error"));
+    throw ZLibException("Deflate method return error");
   }
 
   if (m_zlibStream.avail_in != 0) {
-    throw ZLibException(_T("Not enough buffer size for data compression"));
+    throw ZLibException("Not enough buffer size for data compression");
   }
  
   m_outputSize = m_zlibStream.total_out - prevTotalOut;

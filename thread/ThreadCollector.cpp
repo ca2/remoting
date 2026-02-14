@@ -52,7 +52,7 @@ void ThreadCollector::execute()
 void ThreadCollector::addThread(Thread *thread)
 {
   AutoLock l(&m_lockObj);
-  m_threads.push_back(thread);
+  m_threads.add(thread);
 }
 
 void ThreadCollector::deleteDeadThreads()

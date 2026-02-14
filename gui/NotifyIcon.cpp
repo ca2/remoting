@@ -98,7 +98,7 @@ void NotifyIcon::setText(const ::scoped_string & scopedstrtext)
 }
 
 void
-NotifyIcon::showBalloon(const ::scoped_string & scopedstrmessage, const ::scoped_string & scopedstrcaption,
+NotifyIcon::showBalloon(const ::scoped_string & scopedstrMessage, const ::scoped_string & scopedstrcaption,
                       DWORD timeoutMillis)
 {
   m_nid.uFlags = NIF_INFO;

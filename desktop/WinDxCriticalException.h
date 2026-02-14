@@ -22,16 +22,16 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINDXCRITICALEXCEPTION_H__
-#define __WINDXCRITICALEXCEPTION_H__
+#pragma once
+
 
 #include "WinDxException.h"
 
 class WinDxCriticalException : public WinDxException
 {
 public:
-  WinDxCriticalException(const ::scoped_string & scopedstrmessage, HRESULT errCode);
+  WinDxCriticalException(const ::scoped_string & scopedstrMessage, HRESULT errCode);
   virtual ~WinDxCriticalException();
 };
 
-#endif // __WINDXCRITICALEXCEPTION_H__
+//// __WINDXCRITICALEXCEPTION_H__

@@ -42,7 +42,7 @@ void CapContainer::addCap(unsigned int code, const char *vendorSignature,
   cap.code = code;
   memcpy(cap.vendorSignature, vendorSignature, 4);
   memcpy(cap.nameSignature, nameSignature, 8);
-  m_caps.push_back(cap);
+  m_caps.add(cap);
 }
 
 unsigned int CapContainer::getCapCount() const

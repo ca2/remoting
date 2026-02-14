@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _BUILD_TIME_H_
-#define _BUILD_TIME_H_
+#pragma once
+
 
 #include <tchar.h>
 
@@ -44,4 +44,4 @@ private:
   BuildTime() { };
 };
 
-#endif
+

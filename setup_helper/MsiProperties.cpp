@@ -25,7 +25,7 @@
 #include "MsiProperties.h"
 #include "util/Exception.h"
 #include "util/StringParser.h"
-#include <vector>
+//#include <vector>
 
 MsiProperties::MsiProperties(MSIHANDLE handle)
 : m_handle(handle)
@@ -38,25 +38,25 @@ MsiProperties::~MsiProperties()
 
 void MsiProperties::getValue(const ::scoped_string & scopedstrName, ::string & out)
 {
-  out->setString(_T(""));
+  out-= "";
   DWORD charCount = 0;
-  UINT retVal = MsiGetProperty(m_handle, name, _T(""), &charCount);
+  UINT retVal = MsiGetProperty(m_handle, name, "", &charCount);
   if (retVal == ERROR_MORE_DATA) {
     charCount++;
-    ::std::vector<TCHAR> value(charCount);
+    ::array_base<TCHAR> value(charCount);
     retVal = MsiGetProperty(m_handle, name, &value.front(), &charCount);
     if (retVal != ERROR_SUCCESS) {
-      throw Exception();
+      throw ::remoting::Exception();
     }
-    out->setString(&value.front());
+    out-= &value.front();
   }
 }
 
-void MsiProperties::setValue(const ::scoped_string & scopedstrName, const ::string & value)
+void MsiProperties::setValue(const ::scoped_string & scopedstrName, const ::scoped_string & value)
 {
   UINT retVal = MsiSetProperty(m_handle, name, value->getString());
   if (retVal != ERROR_SUCCESS) {
-    throw Exception();
+    throw ::remoting::Exception();
   }
 }
 
@@ -66,21 +66,21 @@ void MsiProperties::getString(const ::scoped_string & scopedstrName, ::string & 
     getValue(name, out);
   } catch (...) {
     ::string errMess;
-    errMess.format(_T("Cant't retrieve a string from the %s property"),
+    errMess.formatf("Cant't retrieve a string from the {} property",
                    name);
-    throw Exception(errMess.getString());
+    throw ::remoting::Exception(errMess);
   }
 }
 
-void MsiProperties::setString(const ::scoped_string & scopedstrName, const ::string & value)
+void MsiProperties::setString(const ::scoped_string & scopedstrName, const ::scoped_string & value)
 {
   try {
     setValue(name, value);
   } catch (...) {
     ::string errMess;
-    errMess.format(_T("Cant't set a string to the %s property"),
+    errMess.formatf("Cant't set a string to the {} property",
                    name);
-    throw Exception(errMess.getString());
+    throw ::remoting::Exception(errMess);
   }
 }
 
@@ -89,11 +89,11 @@ int MsiProperties::getInt32(const ::scoped_string & scopedstrName)
   ::string strValue;
   getValue(name, &strValue);
   int retValue = 0;
-  if (!StringParser::parseInt(strValue.getString(), &retValue)) {
+  if (!StringParser::parseInt(strValue, &retValue)) {
     ::string errMess;
-    errMess.format(_T("Can't convert the %s string value to int of the")
-                   _T(" %s property"), strValue.getString(), name);
-    throw Exception(errMess.getString());
+    errMess.formatf("Can't convert the {} string value to int of the"
+                   " {} property", strValue, name);
+    throw ::remoting::Exception(errMess);
   }
   return retValue;
 }
@@ -102,13 +102,13 @@ void MsiProperties::setInt32(const ::scoped_string & scopedstrName, int value)
 {
   try {
     ::string valueStr;
-    valueStr.format(_T("%d"), value);
+    valueStr.formatf("{}", value);
     setValue(name, &valueStr);
   } catch (...) {
     ::string errMess;
-    errMess.format(_T("Cant't set the (int)%d value to the %s property"),
+    errMess.formatf("Cant't set the (int){} value to the {} property",
                    value,
                    name);
-    throw Exception(errMess.getString());
+    throw ::remoting::Exception(errMess);
   }
 }

@@ -26,7 +26,7 @@
 
 #include "io_lib/ByteArrayInputStream.h"
 
-#include <vector>
+//#include <vector>
 #include <algorithm>
 
 ZrleDecoder::ZrleDecoder(LogWriter *logWriter)
@@ -48,14 +48,14 @@ void ZrleDecoder::decode(RfbInputGate *input,
 
   size_t unpackedDataSize = m_inflater.getOutputSize();
   if (unpackedDataSize == 0) {
-    m_logWriter->debug(_T("Empty unpacked data in ZRLE decoder"));
+    m_logWriter->debug("Empty unpacked data in ZRLE decoder");
     if (dstRect.area() != 0) {
-      throw Exception(_T("Bad data received from the server: Empty unpacked data in ZRLE decoder."));
+      throw ::remoting::Exception("Bad data received from the server: Empty unpacked data in ZRLE decoder.");
     }
     return;
   }
 
-  ::std::vector<unsigned char> unpackedData;
+  ::array_base<unsigned char> unpackedData;
   unpackedData.resize(unpackedDataSize);
   unpackedData.assign(m_inflater.getOutput(), m_inflater.getOutput() + unpackedDataSize);
   ByteArrayInputStream unpackedByteArrayStream(reinterpret_cast<char *>(&unpackedData.front()),
@@ -98,11 +98,11 @@ void ZrleDecoder::decode(RfbInputGate *input,
       //        it was enough to check once in the beginning of the function. I do not change that
       //        just to make sure I do not break anything. (-- const)
       if (::int_rectangle(frameBuffer->getDimension()).intersection(tileRect) != tileRect) {
-        throw Exception(_T("Incorrect size of ZRLE tile."));
+        throw ::remoting::Exception("Incorrect size of ZRLE tile.");
       }
       size_t tileLength = tileRect.area();
       size_t tileBytesLength = tileLength * m_bytesPerPixel;
-      ::std::vector<char> pixels;
+      ::array_base<char> pixels;
       pixels.resize(tileBytesLength);
 
       int type = readType(&unpackedDataStream);
@@ -124,8 +124,8 @@ void ZrleDecoder::decode(RfbInputGate *input,
       } if (type == 129) {
         // invalid type
         ::string error;
-        error.format(_T("Bad data received from the server: Unused ZRLE subencoding type (%d)."), type);
-        throw Exception(error.getString());
+        error.formatf("Bad data received from the server: Unused ZRLE subencoding type ({}).", type);
+        throw ::remoting::Exception(error);
       } if (type >= 130 && type <= 255) {
         // palette rle
         readPaletteRleTile(&unpackedDataStream, pixels, tileRect, type);
@@ -139,7 +139,7 @@ void ZrleDecoder::decode(RfbInputGate *input,
 void ZrleDecoder::readAndInflate(RfbInputGate *input, size_t maximalUnpackedSize)
 {
   unsigned int length = input->readUInt32();
-  ::std::vector<char> zlibData;
+  ::array_base<char> zlibData;
   zlibData.resize(length);
   if (length == 0) {
     zlibData.resize(1);
@@ -188,7 +188,7 @@ void ZrleDecoder::readPalette(DataInputStream *input,
 }
 
 void ZrleDecoder::readRawTile(DataInputStream *input,
-                              ::std::vector<char> &pixels,
+                              ::array_base<char> &pixels,
                               const ::int_rectangle &  tileRect)
 {
   size_t tileBytesLength = tileRect.area() * m_bytesPerPixel;
@@ -196,7 +196,7 @@ void ZrleDecoder::readRawTile(DataInputStream *input,
 }
 
 void ZrleDecoder::readSolidTile(DataInputStream *input,
-                                ::std::vector<char> &pixels,
+                                ::array_base<char> &pixels,
                                 const ::int_rectangle &  tileRect)
 {
   size_t tileLength = tileRect.area();
@@ -213,7 +213,7 @@ void ZrleDecoder::readSolidTile(DataInputStream *input,
 }
 
 void ZrleDecoder::readPackedPaletteTile(DataInputStream *input,
-                                        ::std::vector<char> &pixels,
+                                        ::array_base<char> &pixels,
                                         const ::int_rectangle &  tileRect,
                                         const int type)
 {
@@ -267,7 +267,7 @@ void ZrleDecoder::readPackedPaletteTile(DataInputStream *input,
 }
 
 void ZrleDecoder::readPlainRleTile(DataInputStream *input,
-                                   ::std::vector<char> &pixels,
+                                   ::array_base<char> &pixels,
                                    const ::int_rectangle &  tileRect)
 {
   size_t tileLength = tileRect.area();
@@ -277,7 +277,7 @@ void ZrleDecoder::readPlainRleTile(DataInputStream *input,
 
     size_t runLength = readRunLength(input);
     if (indexByte + runLength * m_bytesPerPixel > pixels.size()) {
-      throw Exception(_T("Bad data received from the server: ZRLE run length is too long in plain RLE tile."));
+      throw ::remoting::Exception("Bad data received from the server: ZRLE run length is too long in plain RLE tile.");
     }
 
     for (size_t i = 0; i < runLength; i++) {
@@ -288,7 +288,7 @@ void ZrleDecoder::readPlainRleTile(DataInputStream *input,
 }
 
 void ZrleDecoder::readPaletteRleTile(DataInputStream *input,
-                                     ::std::vector<char> &pixels,
+                                     ::array_base<char> &pixels,
                                      const ::int_rectangle &  tileRect,
                                      const int type)
 {
@@ -306,7 +306,7 @@ void ZrleDecoder::readPaletteRleTile(DataInputStream *input,
       color -= 128;
       runLength = readRunLength(input);
       if (indexPixel + runLength > tileLength) {
-        throw Exception(_T("Bad data received from the server: ZRLE run length is too long in palette RLE tile."));
+        throw ::remoting::Exception("Bad data received from the server: ZRLE run length is too long in palette RLE tile.");
       }
     }
     
@@ -321,7 +321,7 @@ void ZrleDecoder::readPaletteRleTile(DataInputStream *input,
 
 void ZrleDecoder::drawTile(FrameBuffer *fb,
                            const ::int_rectangle &  tileRect,
-                           const ::std::vector<char> *pixels)
+                           const ::array_base<char> *pixels)
 {
   int width = tileRect.width();
   size_t fbBytesPerPixel = m_bytesPerPixel;

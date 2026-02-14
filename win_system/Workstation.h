@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _WORKSTATION_H_
-#define _WORKSTATION_H_
+#pragma once
+
 
 #include "util/winhdr.h"
 
@@ -48,4 +48,4 @@ public:
   static void logOff();
 };
 
-#endif
+

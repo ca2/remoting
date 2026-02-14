@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _FT_SECURITY_H_
-#define _FT_SECURITY_H_
+#pragma once
+
 
 #include "util/Exception.h"
 #include "util/Singleton.h"
@@ -58,4 +58,4 @@ protected:
   LogWriter *m_log;
 };
 
-#endif
+

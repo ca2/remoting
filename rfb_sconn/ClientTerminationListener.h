@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __CLIENTTERMINATIONLISTENER_H__
-#define __CLIENTTERMINATIONLISTENER_H__
+#pragma once
+
 
 class ClientTerminationListener
 {
@@ -33,4 +33,4 @@ public:
   virtual void onClientTerminate() = 0;
 };
 
-#endif // __CLIENTTERMINATIONLISTENER_H__
+//// __CLIENTTERMINATIONLISTENER_H__

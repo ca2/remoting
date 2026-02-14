@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _HTTP_SERVER_H_
-#define _HTTP_SERVER_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "network/TcpServer.h"
@@ -41,7 +41,7 @@ public:
    * @param bindHost host to bind.
    * @param bindPort port bind.
    * @param lockAddr determinates if server must set exclusive address.
-   * @throws Exception on fail.
+   * @throws ::remoting::Exception on fail.
    */
   HttpServer(const ::scoped_string & scopedstrbindHost,
              unsigned short bindPort,
@@ -63,4 +63,4 @@ private:
   LogWriter *m_log;
 };
 
-#endif
+

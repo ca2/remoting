@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __PIPEIMPERSONATEDTHREAD_H__
-#define __PIPEIMPERSONATEDTHREAD_H__
+#pragma once
+
 
 #include "thread/Thread.h"
 #include "WindowsEvent.h"
@@ -49,4 +49,4 @@ private:
   WindowsEvent m_threadSleeper;
 };
 
-#endif // __PIPEIMPERSONATEDTHREAD_H__
+//// __PIPEIMPERSONATEDTHREAD_H__

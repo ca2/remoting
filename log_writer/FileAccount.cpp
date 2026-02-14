@@ -29,11 +29,11 @@
 #include "file_lib/EOFException.h"
 
 FileAccount::FileAccount(const ::scoped_string & scopedstrlogDir,
-                         const ::scoped_string & scopedstrfileName,
+                         const ::scoped_string & scopedstrFileName,
                          unsigned char logLevel,
                          bool logHeadEnabled)
 : LogDump(logHeadEnabled, false),
-  m_fileName(fileName),
+  m_strFileName(fileName),
   m_level(0), // Real initialization must be in the setNewFile() function
   m_asFirstOpen(true),
   m_file(0)
@@ -54,9 +54,9 @@ FileAccount::~FileAccount()
   closeFile();
 }
 
-void FileAccount::init(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrfileName, unsigned char logLevel)
+void FileAccount::init(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrFileName, unsigned char logLevel)
 {
-  m_fileName.setString(fileName);
+  m_strFileName= fileName;
 
   AutoLock al(&m_logMut);
   setNewFile(logLevel, logDir);
@@ -75,19 +75,19 @@ void FileAccount::changeLogProps(const ::scoped_string & scopedstrNewLogDir,
 
 void FileAccount::getFileName(::string & fileName)
 {
-  *fileName = m_fileName;
+  *fileName = m_strFileName;
 }
 
-bool FileAccount::isTheOurFileName(const ::scoped_string & scopedstrfileName)
+bool FileAccount::isTheOurFileName(const ::scoped_string & scopedstrFileName)
 {
-  return m_fileName.isEqualTo(fileName);
+  return m_strFileName.isEqualTo(fileName);
 }
 
 void FileAccount::print(unsigned int processId,
                         unsigned int threadId,
                         const DateTime & dt,
                         int level,
-                        const ::scoped_string & scopedstrmessage)
+                        const ::scoped_string & scopedstrMessage)
 {
   AutoLock al(&m_logMut);
 
@@ -110,7 +110,7 @@ void FileAccount::flush(unsigned int processId,
                         unsigned int threadId,
                         const DateTime & dt,
                         int level,
-                        const ::scoped_string & scopedstrmessage)
+                        const ::scoped_string & scopedstrMessage)
 {
   AutoLock al(&m_logMut);
 
@@ -119,7 +119,7 @@ void FileAccount::flush(unsigned int processId,
   }
 }
 
-void FileAccount::print(int level, const ::scoped_string & scopedstrmessage)
+void FileAccount::print(int level, const ::scoped_string & scopedstrMessage)
 {
   unsigned int processId = GetCurrentProcessId();
   unsigned int threadId = GetCurrentThreadId();
@@ -131,11 +131,11 @@ void FileAccount::format(unsigned int processId,
                          unsigned int threadId,
                          const DateTime & dt,
                          int level,
-                         const ::scoped_string & scopedstrmessage)
+                         const ::scoped_string & scopedstrMessage)
 {
   // FIXME: Remove windows dependence.
   // Format the timestamp.
-  ::string timeString(_T("[Temporary unavaliable]"));
+  ::string timeString("[Temporary unavaliable]");
   SYSTEMTIME st;
   dt.toUtcSystemTime(&st);
   unsigned char logBarrier;
@@ -144,25 +144,25 @@ void FileAccount::format(unsigned int processId,
     logBarrier = m_level;
   }
   if (logBarrier < 9) {
-    timeString.format(_T("%.4d-%.2d-%.2d %.2d:%.2d:%.2d"),
+    timeString.formatf("%.4d-%.2d-%.2d %.2d:%.2d:%.2d",
                       st.wYear, st.wMonth, st.wDay,
                       st.wHour, st.wMinute, st.wSecond);
   } else {
-    timeString.format(_T("%.4d-%.2d-%.2d %.2d:%.2d:%.2d:%.3d"),
+    timeString.formatf("%.4d-%.2d-%.2d %.2d:%.2d:%.2d:%.3d",
                       st.wYear, st.wMonth, st.wDay,
                       st.wHour, st.wMinute, st.wSecond, st.wMilliseconds);
   }
 
   // Choose a symbol denoting the log level.
-  const TCHAR logLevelSignature[] = _T("@!*+-:    xxxxxx");
+  const TCHAR logLevelSignature[] = "@!*+-:    xxxxxx";
   TCHAR sig = logLevelSignature[level & 0x0F];
 
   // Format the final string prefixed with all the service information.
   ::string resultLine;
-  resultLine.format(_T("[%5d/%5d] %s %c %s"),
+  resultLine.formatf("[%5d/%5d] {} %c {}",
                     processId,
                     threadId,
-                    timeString.getString(),
+                    timeString,
                     sig,
                     message);
   const TCHAR badCharacters[] = { 13, 10, 0 };
@@ -172,7 +172,7 @@ void FileAccount::format(unsigned int processId,
 
   // Writing string without null-termination symbol.
   if (m_file != 0) {
-    m_file->write(resultLine.getString(), resultLine.getSize() - sizeof(TCHAR));
+    m_file->write(resultLine, resultLine.getSize() - sizeof(TCHAR));
     m_file->write(endLine, sizeof(endLine));
     if (logBarrier > 9) {
       m_file->flush();
@@ -192,19 +192,19 @@ void FileAccount::setNewFile(unsigned char newLevel, const ::scoped_string & sco
 
   if (levelChanged && !m_asFirstOpen) {
     ::string message;
-    message.format(_T("Log verbosity level has been changed from %d to %d"),
+    message.formatf("Log verbosity level has been changed from {} to {}",
                    (int)m_level, (int) newLevel);
-    print(1, message.getString());
+    print(1, message);
   }
   if (logDirChanged && !m_asFirstOpen) {
     ::string message;
-    message.format(_T("Log directory has been changed from \"%s\" to \"%s\""),
-                   m_logDir.getString(), newDir);
-    print(1, message.getString());
+    message.formatf("Log directory has been changed from \"{}\" to \"{}\"",
+                   m_logDir, newDir);
+    print(1, message);
   }
 
   m_level = newLevel;
-  m_logDir.setString(newDir);
+  m_logDir= newDir;
 
   if (m_level == 0) {
     closeFile();
@@ -225,9 +225,9 @@ void FileAccount::setNewFile(unsigned char newLevel, const ::scoped_string & sco
 
     if (levelChangedFromZero && !asFirstOpen) {
       ::string message;
-      message.format(_T("Log verbosity level has been changed from 0 to %d"),
+      message.formatf("Log verbosity level has been changed from 0 to {}",
                      (int)m_level, (int) newLevel);
-      print(1, message.getString());
+      print(1, message);
     }
     return;
   }
@@ -238,8 +238,8 @@ void FileAccount::openFile()
   closeFile();
 
   ::string fileName;
-  fileName.format(_T("%s\\%s.log"), m_logDir.getString(),
-                  m_fileName.getString());
+  fileName.formatf("{}\\{}.log", m_logDir,
+                  m_strFileName);
   bool shareToRead = true;
   bool asFirstOpen = m_asFirstOpen;
   if (asFirstOpen) {
@@ -248,10 +248,10 @@ void FileAccount::openFile()
     // Create backup files
     createBackup(5);
     // Creating file
-    m_file = new WinFile(fileName.getString(), F_READ_WRITE, FM_CREATE,
+    m_file = new WinFile(fileName, F_READ_WRITE, FM_CREATE,
                          shareToRead);
   } else {
-    m_file = new WinFile(fileName.getString(), F_READ_WRITE, FM_APPEND,
+    m_file = new WinFile(fileName, F_READ_WRITE, FM_APPEND,
                          shareToRead);
   }
 
@@ -296,23 +296,23 @@ void FileAccount::addUnicodeSignature()
 void FileAccount::createBackup(unsigned int backupLimit)
 {
   ::string oldName, newName;
-  TCHAR fmt[] = _T("%s\\%s.%d.log");
+  TCHAR fmt[] = "{}\\{}.{}.log";
   // Shift backup files
   for (int i = backupLimit - 1; i > 0; i--) {
     // Generate valid backup names
-    oldName.format(fmt, m_logDir.getString(), m_fileName.getString(), i);
-    newName.format(fmt, m_logDir.getString(), m_fileName.getString(), i + 1);
-    File::renameTo(newName.getString(), oldName.getString());
+    oldName.format(fmt, m_logDir, m_strFileName, i);
+    newName.format(fmt, m_logDir, m_strFileName, i + 1);
+    File::renameTo(newName, oldName);
   }
   // Copy log file to backup
-  oldName.format(_T("%s\\%s.log"), m_logDir.getString(), m_fileName.getString());
-  newName.format(fmt, m_logDir.getString(), m_fileName.getString(), 1);
-  File::renameTo(newName.getString(), oldName.getString());
+  oldName.formatf("{}\\{}.log", m_logDir, m_strFileName);
+  newName.format(fmt, m_logDir, m_strFileName, 1);
+  File::renameTo(newName, oldName);
 }
 
 void FileAccount::updateLogDirPath()
 {
   // Creating log directory if it is still no exists.
-  File logDirectory(m_logDir.getString());
+  File logDirectory(m_logDir);
   logDirectory.mkdir();
 }

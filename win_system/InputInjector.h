@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _INPUT_INJECTOR_H_
-#define _INPUT_INJECTOR_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "log_writer/LogWriter.h"
@@ -103,11 +103,11 @@ private:
   bool isAscii(WCHAR ch);
 
   // Returns current kbd layout of an active window.
-  // Throws Exception on an error.
+  // Throws ::remoting::Exception on an error.
   HKL getCurrentKbdLayout();
 
   // Searches virtual code in available keyboard layouts and returns the code
-  // if found. If virtual code has not been found throws an Exception.
+  // if found. If virtual code has not been found throws an ::remoting::Exception.
   // Puts current kbd layout to the *hklCurrent argument (if no throwing).
   SHORT searchVirtKey(WCHAR ch, HKL hklCurrent);
 
@@ -126,4 +126,4 @@ private:
   LogWriter *m_log;
 };
 
-#endif
+

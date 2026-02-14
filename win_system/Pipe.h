@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __PIPE_H__
-#define __PIPE_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "WindowsEvent.h"
@@ -65,4 +65,4 @@ private:
   unsigned int m_maxPortionSize;
 };
 
-#endif // __PIPE_H__
+//// __PIPE_H__

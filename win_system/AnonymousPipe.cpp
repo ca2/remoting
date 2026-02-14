@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "AnonymousPipe.h"
 #include "win_system/Environment.h"
 #include "thread/AutoLock.h"
@@ -39,9 +40,9 @@ AnonymousPipe::~AnonymousPipe()
 {
   try {
     close();
-  } catch (Exception &e) {
-    m_log->error(_T("The close() function failed at AnonymousPipe destructor: %s"),
-               e.getMessage());
+  } catch (::exception & e) {
+    m_log->error("The close() function failed at AnonymousPipe destructor: {}",
+               e.get_message());
   }
 }
 
@@ -54,29 +55,29 @@ void AnonymousPipe::close()
   ::string wrErrText, rdErrText;
   if (m_hWrite != INVALID_HANDLE_VALUE && m_neededToClose) {
     if (CloseHandle(m_hWrite) == 0) {
-      Environment::getErrStr(_T("Cannot close anonymous pipe write handle."),
+      Environment::getErrStr("Cannot close anonymous pipe write handle.",
                              &wrErrText);
       wrSuc = false;
     }
-    m_log->debug(_T("Closed m_hWrite(%p) AnonymousPipe handle"),
+    m_log->debug("Closed m_hWrite(%p) AnonymousPipe handle",
                m_hWrite);
   }
   m_hWrite = INVALID_HANDLE_VALUE;
   if (m_hRead != INVALID_HANDLE_VALUE && m_neededToClose) {
     if (CloseHandle(m_hRead) == 0) {
-      Environment::getErrStr(_T("Cannot close anonymous pipe read handle."),
+      Environment::getErrStr("Cannot close anonymous pipe read handle.",
                              &wrErrText);
       rdSuc = false;
     }
-    m_log->debug(_T("Closed m_hRead(%p) AnonymousPipe handle"),
+    m_log->debug("Closed m_hRead(%p) AnonymousPipe handle",
                m_hRead);
   }
   m_hRead = INVALID_HANDLE_VALUE;
   if (!wrSuc || !rdSuc) {
     ::string errMess;
-    errMess.format(_T("AnonymousPipe::close() funciton has failed (%s %s)"),
-                   wrErrText.getString(), rdErrText.getString());
-    throw Exception(errMess.getString());
+    errMess.formatf("AnonymousPipe::close() funciton has failed ({} {})",
+                   wrErrText, rdErrText);
+    throw ::remoting::Exception(errMess);
   }
 }
 
@@ -85,7 +86,7 @@ size_t AnonymousPipe::read(void *buffer, size_t len)
   try {
     return readByHandle(buffer, len, m_hRead);
   } catch (...) {
-    m_log->error(_T("AnonymousPipe::read() failed (m_hRead = %p)"),
+    m_log->error("AnonymousPipe::read() failed (m_hRead = %p)",
                m_hRead);
     throw;
   }
@@ -96,7 +97,7 @@ size_t AnonymousPipe::write(const void *buffer, size_t len)
   try {
     return writeByHandle(buffer, len, m_hWrite);
   } catch (...) {
-    m_log->error(_T("AnonymousPipe::write() failed (m_hWrite = %p)"),
+    m_log->error("AnonymousPipe::write() failed (m_hWrite = %p)",
                m_hWrite);
     throw;
   }
@@ -105,7 +106,7 @@ size_t AnonymousPipe::write(const void *buffer, size_t len)
 void AnonymousPipe::checkPipeHandle(HANDLE handle)
 {
   if (handle == INVALID_HANDLE_VALUE) {
-    throw IOException(_T("Invalid pipe handle"));
+    throw ::io_exception(error_io, "Invalid pipe handle"));
   }
 }
 
@@ -127,19 +128,19 @@ void AnonymousPipe::assignHandlesFor(HANDLE hTargetProc, bool neededToClose,
   if (DuplicateHandle(hSrcProc, m_hWrite, hTargetProc, &hWrite, 0, FALSE,
                       DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS) == 0) {
     ::string errText;
-    Environment::getErrStr(_T("Cannot dupplicate write")
-                           _T(" handle for the anonymous pipe"),
+    Environment::getErrStr("Cannot dupplicate write"
+                           " handle for the anonymous pipe",
                            &errText);
-    throw Exception(errText.getString());
+    throw ::remoting::Exception(errText);
   }
   m_hWrite = hWrite;
   if (DuplicateHandle(hSrcProc, m_hRead, hTargetProc, &hRead, 0, FALSE,
                       DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS) == 0) {
     ::string errText;
-    Environment::getErrStr(_T("Cannot dupplicate read")
-                           _T(" handle for the anonymous pipe"),
+    Environment::getErrStr("Cannot dupplicate read"
+                           " handle for the anonymous pipe",
                            &errText);
-    throw Exception(errText.getString());
+    throw ::remoting::Exception(errText);
   }
   m_hRead = hRead;
   // Try keep of the close rights.
@@ -147,18 +148,18 @@ void AnonymousPipe::assignHandlesFor(HANDLE hTargetProc, bool neededToClose,
     if (DuplicateHandle(hTargetProc, m_hWrite, 0, 0, 0, FALSE,
                         DUPLICATE_CLOSE_SOURCE) == 0) {
       ::string errText;
-      Environment::getErrStr(_T("Cannot keep the right to close of the write")
-                             _T(" handle of the anonymous pipe"),
+      Environment::getErrStr("Cannot keep the right to close of the write"
+                             " handle of the anonymous pipe",
                              &errText);
-      throw Exception(errText.getString());
+      throw ::remoting::Exception(errText);
     }
     if (DuplicateHandle(hTargetProc, m_hRead, 0, 0, 0, FALSE,
                         DUPLICATE_CLOSE_SOURCE) == 0) {
       ::string errText;
-      Environment::getErrStr(_T("Cannot keep the right to close of the read")
-                             _T(" handle of the anonymous pipe"),
+      Environment::getErrStr("Cannot keep the right to close of the read"
+                             " handle of the anonymous pipe",
                              &errText);
-      throw Exception(errText.getString());
+      throw ::remoting::Exception(errText);
     }
     // Now the current process can close the handles.
   }

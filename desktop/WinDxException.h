@@ -22,15 +22,15 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINDXEXCEPTION_H__
-#define __WINDXEXCEPTION_H__
+#pragma once
+
 
 #include "util/Exception.h"
 
-class WinDxException : public Exception
+class WinDxException : public ::remoting::Exception
 {
 public:
-  WinDxException(const ::scoped_string & scopedstrmessage, HRESULT errCode);
+  WinDxException(const ::scoped_string & scopedstrMessage, HRESULT errCode);
   virtual ~WinDxException();
 
   HRESULT getErrorCode() const;
@@ -39,4 +39,4 @@ private:
   HRESULT m_errCode;
 };
 
-#endif // __WINDXEXCEPTION_H__
+//// __WINDXEXCEPTION_H__

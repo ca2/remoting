@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _RFB_INPUT_GATE_H_
-#define _RFB_INPUT_GATE_H_
+#pragma once
+
 
 #include "io_lib/Channel.h"
 
@@ -37,4 +37,4 @@ public:
   virtual ~RfbInputGate();
 };
 
-#endif
+

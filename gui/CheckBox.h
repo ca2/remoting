@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __CHECKBOX_H_
-#define __CHECKBOX_H_
+#pragma once
+
 
 #include "Control.h"
 
@@ -34,4 +34,4 @@ public:
   void check(bool checked);
 };
 
-#endif
+

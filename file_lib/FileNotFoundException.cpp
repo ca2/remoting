@@ -25,12 +25,12 @@
 #include "FileNotFoundException.h"
 
 FileNotFoundException::FileNotFoundException()
- : IOException()
+ : ::io_exception()
 {
 }
 
 FileNotFoundException::FileNotFoundException(const ::scoped_string & scopedstrMessage)
- : IOException(scopedstrMessage)
+ : ::io_exception(error_io, scopedstrMessage)
 {
 }
 

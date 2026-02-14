@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINEVENTLOGWRITER_H__
-#define __WINEVENTLOGWRITER_H__
+#pragma once
+
 
 #include "NewConnectionEvents.h"
 #include "win-event-log/WinEventLog.h"
@@ -44,20 +44,20 @@ public:
   virtual void enable();
 
   // The NewConnectionEvents implementations.
-  virtual void onSuccAuth(const ::string & ip);
-  virtual void onAuthFailed(const ::string & ip);
-  virtual void onDisconnect(const ::string & message);
+  virtual void onSuccAuth(const ::scoped_string & ip);
+  virtual void onAuthFailed(const ::scoped_string & ip);
+  virtual void onDisconnect(const ::scoped_string & message);
 
   // The ApplicationCrashEvents implementations.
-  virtual void onCrash(const ::string & dumpPath);
+  virtual void onCrash(const ::scoped_string & dumpPath);
 
   // The WinServiceEvents implementations.
   virtual void onSuccServiceStart();
-  virtual void onFailedServiceStart(const ::string & reason);
+  virtual void onFailedServiceStart(const ::scoped_string & reason);
   virtual void onServiceStop();
 
 private:
   WinEventLog m_sysLog;
 };
 
-#endif // __WINEVENTLOGWRITER_H__
+//// __WINEVENTLOGWRITER_H__

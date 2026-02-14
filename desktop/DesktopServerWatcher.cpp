@@ -48,11 +48,11 @@ DesktopServerWatcher::DesktopServerWatcher(ReconnectionListener *recListener, Lo
   // Path to desktop server application.
   ::string path;
   // FIXME: To think: is quotes needed?
-  path.format(_T("\"%s\""), currentModulePath.getString());
+  path.formatf("\"{}\"", currentModulePath);
 
   try {
     bool connectRdpSession = Configurator::getInstance()->getServerConfig()->getConnectToRdpFlag();
-    m_process = new CurrentConsoleProcess(m_log, connectRdpSession, path.getString());
+    m_process = new CurrentConsoleProcess(m_log, connectRdpSession, path);
   } catch (...) {
     if (m_process) delete m_process;
     throw;
@@ -75,12 +75,12 @@ void DesktopServerWatcher::execute()
 
   while (!isTerminating()) {
     try {
-      ::string shMemName(_T("Global\\"));
+      ::string shMemName("Global\\");
       srand((unsigned)time(0));
       for (int i = 0; i < 20; i++) {
         shMemName.appendChar('a' + rand() % ('z' - 'a'));
       }
-      SharedMemory sharedMemory(shMemName.getString(), 72);
+      SharedMemory sharedMemory(shMemName, 72);
       unsigned long long *mem = (unsigned long long *)sharedMemory.getMemPointer();
 
       // Sets memory ready flag to false.
@@ -100,16 +100,16 @@ void DesktopServerWatcher::execute()
 
       // Arguments that must be passed to desktop server application.
       ::string args;
-      args.format(_T("-desktopserver -logdir \"%s\" -loglevel %d -shmemname %s"),
-                  logDir.getString(),
+      args.formatf("-desktopserver -logdir \"{}\" -loglevel {} -shmemname {}",
+                  logDir,
                   Configurator::getInstance()->getServerConfig()->getLogLevel(),
-                  shMemName.getString());
+                  shMemName);
 
-      m_process->setArguments(args.getString());
+      m_process->setArguments(args);
       start();
 
       // Prepare other side pipe handles for other side
-      m_log->debug(_T("DesktopServerWatcher::execute(): assigning handles"));
+      m_log->debug("DesktopServerWatcher::execute(): assigning handles");
       otherSidePipeChanTo->assignHandlesFor(m_process->getProcessHandle(), false);
       otherSidePipeChanFrom->assignHandlesFor(m_process->getProcessHandle(), false);
 
@@ -126,25 +126,25 @@ void DesktopServerWatcher::execute()
 
       // Destroying other side objects
       delete otherSidePipeChanTo;
-      m_log->debug(_T("DesktopServerWatcher::execute(): Destroyed otherSidePipeChanTo"));
+      m_log->debug("DesktopServerWatcher::execute(): Destroyed otherSidePipeChanTo");
       otherSidePipeChanTo = 0;
       delete otherSidePipeChanFrom;
-      m_log->debug(_T("DesktopServerWatcher::execute(): Destroyed otherSidePipeChanFrom"));
+      m_log->debug("DesktopServerWatcher::execute(): Destroyed otherSidePipeChanFrom");
       otherSidePipeChanFrom = 0;
 
-      m_log->debug(_T("DesktopServerWatcher::execute(): Try to call onReconnect()"));
+      m_log->debug("DesktopServerWatcher::execute(): Try to call onReconnect()");
       m_recListener->onReconnect(ownSidePipeChanTo, ownSidePipeChanFrom);
 
       m_process->waitForExit();
 
-    } catch (Exception &e) {
+    } catch (::remoting::Exception &e) {
       // A potentional memory leak. 
       // A potential crash. The channels can be used (see onReconnect()) after these destroyings.
       if (ownSidePipeChanTo) delete ownSidePipeChanTo;
       if (otherSidePipeChanTo) delete otherSidePipeChanTo;
       if (ownSidePipeChanFrom) delete ownSidePipeChanFrom;
       if (otherSidePipeChanFrom) delete otherSidePipeChanFrom;
-      m_log->error(_T("DesktopServerWatcher has failed with error: %s"), e.getMessage());
+      m_log->error("DesktopServerWatcher has failed with error: {}", e.getMessage());
       Sleep(1000);
     }
   }
@@ -189,7 +189,7 @@ void DesktopServerWatcher::start()
 
 void DesktopServerWatcher::doXPTrick()
 {
-  m_log->info(_T("Trying to do WindowsXP trick to start process on separate session"));
+  m_log->information("Trying to do WindowsXP trick to start process on separate session");
 
   try {
     WinStaLibrary winSta;
@@ -199,7 +199,7 @@ void DesktopServerWatcher::doXPTrick()
 
     if (winSta.WinStationConnectW(NULL, 0, WTS::getActiveConsoleSessionId(m_log),
       password, 0) == FALSE) {
-      throw SystemException(_T("Failed to call WinStationConnectW"));
+      throw SystemException("Failed to call WinStationConnectW");
     }
 
     // Get path to remoting_node binary.
@@ -207,8 +207,8 @@ void DesktopServerWatcher::doXPTrick()
     Environment::getCurrentModulePath(&pathToBinary);
 
      // Start current console process that will lock workstation (not using Xp Trick).
-    CurrentConsoleProcess lockWorkstation(m_log, false, pathToBinary.getString(),
-      _T("-lockworkstation"));
+    CurrentConsoleProcess lockWorkstation(m_log, false, pathToBinary,
+      "-lockworkstation");
     lockWorkstation.start();
     lockWorkstation.waitForExit();
 

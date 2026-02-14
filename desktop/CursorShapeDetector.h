@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __CURSORHAPEDETECTOR_H__
-#define __CURSORHAPEDETECTOR_H__
+#pragma once
+
 
 #include "UpdateKeeper.h"
 #include "CursorShapeGrabber.h"
@@ -52,4 +52,4 @@ protected:
   LogWriter *m_log;
 };
 
-#endif // __CURSORHAPEDETECTOR_H__
+//// __CURSORHAPEDETECTOR_H__

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CURSOR_PAINTER_H_
-#define _CURSOR_PAINTER_H_
+#pragma once
+
 
 #include "log_writer/LogWriter.h"
 #include "rfb/CursorShape.h"
@@ -44,8 +44,8 @@ public:
   void updatePointerPos(const Point *position);
   void setNewCursor(const Point *hotSpot,
                     unsigned short width, unsigned short height,
-                    const ::std::vector<unsigned char> *cursor, 
-                    const ::std::vector<unsigned char> *bitmask);
+                    const ::array_base<unsigned char> *cursor, 
+                    const ::array_base<unsigned char> *bitmask);
 private:
   // This function is thread-save.
   Point getUpperLeftPoint(const Point *position) const;
@@ -80,4 +80,4 @@ private:
   CursorPainter &operator=(const CursorPainter &);
 };
 
-#endif
+

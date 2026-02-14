@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _OPERATION_NOT_PERMITTED_EXECEPTIONH_H_
-#define _OPERATION_NOT_PERMITTED_EXECEPTIONH_H_
+#pragma once
+
 
 #include "util/Exception.h"
 
@@ -38,11 +38,11 @@
 // something that can't be received in current client state.
 //
 
-class OperationNotPermittedException : public Exception
+class OperationNotPermittedException : public ::remoting::Exception
 {
 public:
   OperationNotPermittedException();
   virtual ~OperationNotPermittedException();
 };
 
-#endif
+

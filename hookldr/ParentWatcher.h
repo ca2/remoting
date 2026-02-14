@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __PARENTWATCHER_H__
-#define __PARENTWATCHER_H__
+#pragma once
+
 
 #include "win_system/ParentProcess.h"
 #include "ParentEventsListener.h"
@@ -47,4 +47,4 @@ private:
   WindowsEvent m_timer;
 };
 
-#endif // __PARENTWATCHER_H__
+//// __PARENTWATCHER_H__

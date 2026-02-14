@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _SINGLETON_H_
-#define _SINGLETON_H_
+#pragma once
+
 
 #include "CommonHeader.h"
 
@@ -80,4 +80,4 @@ private:
 template<class T> LocalMutex Singleton<T>::m_instanceMutex;
 template<class T> void *Singleton<T>::s_instance = 0;
 
-#endif
+

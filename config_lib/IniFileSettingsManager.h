@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _INI_FILE_SETTINGS_MANAGER_H_
-#define _INI_FILE_SETTINGS_MANAGER_H_
+#pragma once
+
 
 #include "SettingsManager.h"
 
@@ -57,7 +57,7 @@ public:
 
   virtual bool getString(const ::scoped_string & scopedstrName, ::string & storage);
   // Remark: returns value if value is NULL.
-  virtual bool setString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrvalue);
+  virtual bool setString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrPayload);
 
   virtual bool getLong(const ::scoped_string & scopedstrName, long *value);
   virtual bool setLong(const ::scoped_string & scopedstrName, long value);
@@ -109,4 +109,4 @@ private:
 
 };
 
-#endif
+

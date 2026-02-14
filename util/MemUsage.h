@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __MEMUSAGE_H__
-#define __MEMUSAGE_H__
+#pragma once
+
 
 class MemUsage
 {
@@ -31,5 +31,5 @@ public:
   static size_t getCurrentMemUsage();
 };
 
-#endif __MEMUSAGE_H__
+//__MEMUSAGE_H__
 

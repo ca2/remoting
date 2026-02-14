@@ -53,13 +53,13 @@ void EncodeOptions::reset()
   m_enableDesktopConfiguration = false;
 }
 
-void EncodeOptions::setEncodings(::std::vector<int> * plista)
+void EncodeOptions::setEncodings(::array_base<int> * plista)
 {
   reset();
   bool encoderWasSet = false;
 
   size_t numCodes = plista->size();
-  ::std::vector<int>::const_iterator i;
+  ::array_base<int>::const_iterator i;
   for (i = plista->begin(); i != plista->end(); i++) {
     int code = *i;
     if (!encoderWasSet && normalEncoding(code)) {

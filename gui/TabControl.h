@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _TAB_CONTROL_H_
-#define _TAB_CONTROL_H_
+#pragma once
+
 
 #include "Control.h"
 #include "Tab.h"
@@ -65,4 +65,4 @@ protected:
   TabContainer m_tabContainer;
 };
 
-#endif
+

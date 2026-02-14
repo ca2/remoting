@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RFB_RRE_ENCODER_H_INCLUDED__
-#define __RFB_RRE_ENCODER_H_INCLUDED__
+#pragma onceINCLUDED__
+INCLUDED__
 
 #include "Encoder.h"
 #include "region/Region.h"
@@ -37,7 +37,7 @@ public:
   virtual int getCode() const;
 
   virtual void splitRectangle(const ::int_rectangle &  rect,
-                              ::std::vector<::int_rectangle> *rectList,
+                              ::array_base<::int_rectangle> *rectList,
                               const FrameBuffer *serverFb,
                               const EncodeOptions *options);
 
@@ -51,7 +51,7 @@ private:
                    const FrameBuffer *frameBuffer);
 
   // Coordinates of subrectangles.
-  ::std::vector<::int_rectangle> m_rects;
+  ::array_base<::int_rectangle> m_rects;
   
   // All rectangles are devided (in splitRectangle() function)
   // into new rectangles with maximum size == 64.
@@ -59,4 +59,4 @@ private:
   static const int RECT_SIZE = 64;
 };
 
-#endif // __RFB_RRE_ENCODER_H_INCLUDED__
+//// __RFB_RRE_ENCODER_H_INCLUDED__

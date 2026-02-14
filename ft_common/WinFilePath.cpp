@@ -23,47 +23,47 @@
 //
 #include "framework.h"
 #include "WinFilePath.h"
-
-WinFilePath::WinFilePath()
-: m_parentPathIsRoot(false)
-{
-}
-
-WinFilePath::WinFilePath(const ::scoped_string & scopedstrstring)
-: m_parentPathIsRoot(false)
-{
-  setString(string);
-}
-
-WinFilePath::WinFilePath(const WinFilePath &stringBuffer)
-: m_parentPathIsRoot(false)
-{
-  setString(stringBuffer.getString());
-}
-
-WinFilePath::~WinFilePath()
-{
-}
-
-bool WinFilePath::parentPathIsRoot()
-{
-  return m_parentPathIsRoot;
-}
-
-void WinFilePath::setString(const ::scoped_string & scopedstrstring)
-{
-  ::string str(string);
-  if (!str.is_empty()) {
-    if (str.findLast('/') == 0) {
-      m_parentPathIsRoot = true;
-    }
-    str.replaceChar(_T('/'), _T('\\'));
-    if (str.beginsWith(_T('\\'))) {
-      str.remove(0, 1);
-    }
-    if (str.endsWith(_T('\\'))) {
-      str.truncate(1);
-    }
-  }
-  ::string::setString(str.getString());
-}
+//
+// WinFilePath::WinFilePath()
+// : m_parentPathIsRoot(false)
+// {
+// }
+//
+// WinFilePath::WinFilePath(const ::scoped_string & scopedstrString)
+// : m_parentPathIsRoot(false)
+// {
+//  = string;
+// }
+//
+// WinFilePath::WinFilePath(const WinFilePath &stringBuffer)
+// : m_parentPathIsRoot(false)
+// {
+//  = stringBuffer;
+// }
+//
+// WinFilePath::~WinFilePath()
+// {
+// }
+//
+// bool WinFilePath::parentPathIsRoot()
+// {
+//   return m_parentPathIsRoot;
+// }
+//
+// void WinFilePath::setString(const ::scoped_string & scopedstrString)
+// {
+//   ::string str(string);
+//   if (!str.is_empty()) {
+//     if (str.findLast('/') == 0) {
+//       m_parentPathIsRoot = true;
+//     }
+//     str.replaceChar(_T('/'), _T('\\'));
+//     if (str.beginsWith(_T('\\'))) {
+//       str.remove(0, 1);
+//     }
+//     if (str.endsWith(_T('\\'))) {
+//       str.truncate(1);
+//     }
+//   }
+//   ::string:= str;
+// }

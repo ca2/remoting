@@ -68,7 +68,7 @@ void AboutDialog::openUrl(const ::scoped_string & scopedstrurl)
     message.format(StringTable::getString(IDS_FAILED_TO_OPEN_URL_FORMAT), sysEx.getMessage());
 
     MessageBox(m_ctrlThis.getWindow(),
-      message.getString(),
+      message,
       StringTable::getString(IDS_MBC_TVNCONTROL),
       MB_OK|MB_ICONEXCLAMATION);
   }
@@ -77,12 +77,12 @@ void AboutDialog::openUrl(const ::scoped_string & scopedstrurl)
 BOOL AboutDialog::onInitDialog()
 {
   // Update product version string.
-  ::string versionString(_T("unknown"));
+  ::string versionString("unknown");
   try {
     ::string binaryPath;
     Environment::getCurrentModulePath(&binaryPath);
-    VersionInfo productInfo(binaryPath.getString());
-    versionString.setString(productInfo.getProductVersionString());
+    VersionInfo productInfo(binaryPath);
+    versionString= productInfo.getProductVersionString();
   } catch (SystemException &ex) {
     MessageBox(m_ctrlThis.getWindow(),
                ex.getMessage(),
@@ -93,13 +93,13 @@ BOOL AboutDialog::onInitDialog()
   // Format product version and build time for displaying on the dialog.
   ::string versionText;
   versionText.format(StringTable::getString(IDS_PRODUCT_VERSION_FORMAT),
-                     versionString.getString(),
+                     versionString,
                      BuildTime::DATE);
 
   // Show version info on the dialog.
   Control versionLabel;
   versionLabel.setWindow(GetDlgItem(m_ctrlThis.getWindow(), IDC_STATIC_VERSION));
-  versionLabel.setText(versionText.getString());
+  versionLabel.setText(versionText);
 
   // Show licensing info and/or special build info.
   Control licensingLabel;

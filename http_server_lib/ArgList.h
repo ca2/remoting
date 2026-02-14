@@ -22,10 +22,10 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _HTTP_ARGUMENT_LIST_H_
-#define _HTTP_ARGUMENT_LIST_H_
+#pragma once
 
-#include <map>
+
+//#include <map>
 #include <string>
 
 
@@ -53,7 +53,7 @@ protected:
   void htmlDecode(char *value) const;
 
 protected:
-  ::std::map<string, char *> m_args;
+  ::map<string, char *> m_args;
 };
 
-#endif
+

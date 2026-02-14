@@ -38,7 +38,7 @@
 #include <crtdbg.h>
 
 ControlMessage::ControlMessage(unsigned int messageId, ControlGate *gate,
-                               const ::scoped_string & scopedstrpasswordFile,
+                               const ::scoped_string & scopedstrPasswordFile,
                                bool getPassFromConfigEnabled,
                                bool forService)
 : DataOutputStream(0), m_messageId(messageId), m_gate(gate),
@@ -80,7 +80,7 @@ void ControlMessage::checkRetCode()
     {
       ::string message;
       m_gate->readUTF8(&message);
-      throw RemoteException(message.getString());
+      throw RemoteException(message);
     }
     break;
   case ControlProto::REPLY_AUTH_NEEDED:
@@ -106,13 +106,13 @@ void ControlMessage::checkRetCode()
     break;
   default:
     _ASSERT(FALSE);
-    throw RemoteException(_T("Unknown ret code."));
+    throw RemoteException("Unknown ret code.");
   }
 }
 
 void ControlMessage::authFromFile()
 {
-  WinFile file(m_passwordFile.getString(), F_READ, FM_OPEN);
+  WinFile file(m_passwordFile, F_READ, FM_OPEN);
   char ansiBuff[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
   file.read(ansiBuff, 8);
   for (int i = 0; i < 8; i++) {
@@ -123,7 +123,7 @@ void ControlMessage::authFromFile()
   AnsiStringStorage ansiPwd(ansiBuff);
   ::string password;
   ansiPwd.toStringStorage(&password);
-  ControlAuth auth(m_gate, password.getString());
+  ControlAuth auth(m_gate, password);
   send();
 }
 
@@ -136,7 +136,7 @@ void ControlMessage::authFromRegistry()
   unsigned char plainPassword[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
   size_t passSize = sizeof(hidePassword);
 
-  if (sm.getBinaryData(_T("ControlPassword"),
+  if (sm.getBinaryData("ControlPassword",
                        hidePassword,
                        &passSize)) {
     VncPassCrypt::getPlainPass(plainPassword, hidePassword);
@@ -146,7 +146,7 @@ void ControlMessage::authFromRegistry()
     plainAnsiString.toStringStorage(&password);
     // Clear ansi plain password from memory.
     memset(plainPassword, 0, sizeof(plainPassword));
-    ControlAuth auth(m_gate, password.getString());
+    ControlAuth auth(m_gate, password);
 
     send();
   } else {

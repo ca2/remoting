@@ -28,7 +28,7 @@ LogEntry::LogEntry(unsigned int processId,
                    unsigned int threadId,
                    const DateTime & dt,
                    int lineLevel,
-                   const ::scoped_string & scopedstrmessage)
+                   const ::scoped_string & scopedstrMessage)
 : m_processId(processId),
   m_threadId(threadId),
   m_dt(dt),
@@ -70,7 +70,7 @@ void LogDump::writeLogHeader()
     for (size_t i = 0; i < m_logHeaderLines.size(); i++) {
       flush(m_logHeaderLines[i].m_processId, m_logHeaderLines[i].m_threadId,
             m_logHeaderLines[i].m_dt, m_logHeaderLines[i].m_lineLevel,
-            m_logHeaderLines[i].m_message.getString());
+            m_logHeaderLines[i].m_message);
     }
   }
 }
@@ -80,7 +80,7 @@ void LogDump::writeLogDump()
   for (size_t i = 0; i < m_logDumpLines.size(); i++) {
     flush(m_logDumpLines[i].m_processId, m_logDumpLines[i].m_threadId,
           m_logDumpLines[i].m_dt, m_logDumpLines[i].m_lineLevel,
-          m_logDumpLines[i].m_message.getString());
+          m_logDumpLines[i].m_message);
   }
 }
 
@@ -88,10 +88,10 @@ void LogDump::updateLogHeaderLines(unsigned int processId,
                                    unsigned int threadId,
                                    const DateTime & dt,
                                    int level,
-                                   const ::scoped_string & scopedstrmessage)
+                                   const ::scoped_string & scopedstrMessage)
 {
   if (logHeadEnabled()) {
-    m_logHeaderLines.push_back(LogEntry(processId, threadId, dt, level, message));
+    m_logHeaderLines.add(LogEntry(processId, threadId, dt, level, message));
   }
 }
 
@@ -99,10 +99,10 @@ void LogDump::updateLogDumpLines(unsigned int processId,
                                  unsigned int threadId,
                                  const DateTime & dt,
                                  int level,
-                                 const ::scoped_string & scopedstrmessage)
+                                 const ::scoped_string & scopedstrMessage)
 {
   if (logDumpEnabled()) {
-    m_logDumpLines.push_back(LogEntry(processId, threadId, dt, level, message));
+    m_logDumpLines.add(LogEntry(processId, threadId, dt, level, message));
   }
 }
 

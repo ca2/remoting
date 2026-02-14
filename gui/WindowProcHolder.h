@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _WINDOW_PROC_HOLDER_H_
-#define _WINDOW_PROC_HOLDER_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -41,4 +41,4 @@ protected:
   friend class NotifyIconWindow;
 };
 
-#endif
+

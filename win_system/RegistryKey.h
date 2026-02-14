@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _REGISTRY_KEY_H_
-#define _REGISTRY_KEY_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -66,11 +66,11 @@ public:
   // 2) subkey didn't exists, and subkey was succerfully created
   //    by method call.
   //
-  bool createSubKey(const ::scoped_string & scopedstrsubkey);
+  bool createSubKey(const ::scoped_string & scopedstrSubkey);
   // Deletes subkey from this registry entry.
-  bool deleteSubKey(const ::scoped_string & scopedstrsubkey);
+  bool deleteSubKey(const ::scoped_string & scopedstrSubkey);
   // Deletes subkey tree from this registry entry
-  bool deleteSubKeyTree(const ::scoped_string & scopedstrsubkey);
+  bool deleteSubKeyTree(const ::scoped_string & scopedstrSubkey);
   // Deletes value from this registry entry.
   bool deleteValue(const ::scoped_string & scopedstrName);
 
@@ -80,7 +80,7 @@ public:
 
   bool setValueAsInt32(const ::scoped_string & scopedstrName, int value);
   bool setValueAsInt64(const ::scoped_string & scopedstrName, long value);
-  bool setValueAsString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrvalue);
+  bool setValueAsString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrPayload);
   bool setValueAsBinary(const ::scoped_string & scopedstrName, const void *value,
                         size_t sizeInBytes);
 
@@ -94,7 +94,7 @@ public:
   bool getValueAsBinary(const ::scoped_string & scopedstrName, void *value, size_t *sizeInBytes);
 
   //
-  // Sets subkey names ::std::list to subKeyNames array.
+  // Sets subkey names ::list to subKeyNames array.
   // Remark: if subKeyNames is NULL then count of subkeys
   // is sets to count output var.
   //
@@ -133,7 +133,7 @@ private:
    * @param [in, opt] sa security attributes.
    * @return true if operation successfull executed, false otherwise.
    */
-  static bool tryOpenSubKey(HKEY key, const ::scoped_string & scopedstrsubkey,
+  static bool tryOpenSubKey(HKEY key, const ::scoped_string & scopedstrSubkey,
                             HKEY *openedKey, bool createIfNotExists,
                             SECURITY_ATTRIBUTES *sa);
 
@@ -148,4 +148,4 @@ protected:
   friend class Registry;
 };
 
-#endif
+

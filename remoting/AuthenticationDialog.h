@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _AUTHENTICATION_DIALOG_H_
-#define _AUTHENTICATION_DIALOG_H_
+#pragma once
+
 
 #include "gui/BaseDialog.h"
 #include "gui/TextBox.h"
@@ -35,10 +35,10 @@ public:
   AuthenticationDialog();
 
   // this function returns the password entered by user
-  const ::string & getPassword();
+  const ::scoped_string & getPassword();
 
   // this function returns sets the name of host in dialog
-  void setHostName(const ::string & hostname);
+  void setHostName(const ::scoped_string & hostname);
 
 protected:
   BOOL onCommand(UINT controlID, UINT notificationID);
@@ -50,4 +50,4 @@ protected:
   ::string m_strHost;
 };
 
-#endif
+

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _ENVIRONMENT_H_
-#define _ENVIRONMENT_H_
+#pragma once
+
 
 //#include "util/::string.h"
 #include "log_writer/LogWriter.h"
@@ -46,7 +46,7 @@ public:
   // Formates string from last system error code with specification before.
   // @return ::string object that contain error describing with
   // secificatioin.
-  static void getErrStr(const ::scoped_string & scopedstrspecification, ::string & out);
+  static void getErrStr(const ::scoped_string & scopedstrSpecification, ::string & out);
 
   //
   // Sets path to special folder value to out argument.
@@ -67,7 +67,7 @@ public:
   // pId - the process id that be tested
   // return true if tested process has the same path as current process
   // else return false
-  // throw Exception an error.
+  // throw ::remoting::Exception an error.
   static bool isItTheSamePathAsCurrent(unsigned int pId);
 
   // Sets full path to folder (without last directory separator character)
@@ -109,4 +109,4 @@ private:
   static OSVERSIONINFO m_osVerInfo;
 };
 
-#endif
+

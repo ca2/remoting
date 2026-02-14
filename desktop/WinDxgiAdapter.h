@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINDXGIADAPTER_H__
-#define __WINDXGIADAPTER_H__
+#pragma once
+
 
 #include "WinDxgiDevice.h"
 
@@ -45,4 +45,4 @@ private:
   IDXGIAdapter *m_dxgiAdapter;
 };
 
-#endif // __WINDXGIADAPTER_H__
+//// __WINDXGIADAPTER_H__

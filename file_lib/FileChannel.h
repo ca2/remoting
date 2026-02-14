@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __FILECHANNEL_H__
-#define __FILECHANNEL_H__
+#pragma once
+
 
 #include "io_lib/Channel.h"
 
@@ -35,4 +35,4 @@ public:
   virtual void seek(long long n) = 0;
 };
 
-#endif // __FILECHANNEL_H__
+//// __FILECHANNEL_H__

@@ -22,17 +22,17 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _LISTENER_CONTAINER_H_
-#define _LISTENER_CONTAINER_H_
+#pragma once
 
-#include <vector>
+
+//#include <vector>
 
 #include "thread/LocalMutex.h"
 #include "thread/AutoLock.h"
 
 
 
-template<class T> class SafeVector : public ::std::vector<T>,
+template<class T> class SafeVector : public ::array_base<T>,
                                      public LocalMutex {
 public:
   virtual ~SafeVector() { };
@@ -47,20 +47,20 @@ template<class T> class ListenerContainer {
 public:
 
   //
-  // Adds listener to class listeners ::std::list
+  // Adds listener to class listeners ::list
   //
 
   void addListener(T listener) {
     AutoLock l(&m_listeners);
 
-    typename ::std::vector<T>::iterator it;
+    typename ::array_base<T>::iterator it;
     for (it = m_listeners.begin(); it != m_listeners.end(); it++) {
       T current = *it;
       if (current == listener) {
         return ;
       } // if found
     } // for all listeners
-    m_listeners.push_back(listener);
+    m_listeners.add(listener);
   } // void
 
   void removeAllListeners() {
@@ -70,13 +70,13 @@ public:
   }
 
   //
-  // Removes listener from class listeners ::std::list
+  // Removes listener from class listeners ::list
   //
 
   void removeListener(T listener) {
     AutoLock l(&m_listeners);
 
-    typename ::std::vector<T>::iterator it;
+    typename ::array_base<T>::iterator it;
     for (it = m_listeners.begin(); it != m_listeners.end(); it++) {
       T current = *it;
       if (current == listener) {
@@ -90,4 +90,4 @@ protected:
   SafeVector<T> m_listeners;
 };
 
-#endif
+

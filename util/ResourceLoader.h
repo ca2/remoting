@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _RESOURCE_LOADER_H_
-#define _RESOURCE_LOADER_H_
+#pragma once
+
 
 #include "winhdr.h"
 
@@ -96,4 +96,4 @@ protected:
   HINSTANCE m_appInstance;
 };
 
-#endif
+

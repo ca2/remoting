@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINTIMEMILLIS_H__
-#define __WINTIMEMILLIS_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -48,4 +48,4 @@ protected:
   SYSTEMTIME m_time;
 };
 
-#endif // __WINTIMEMILLIS_H__
+//// __WINTIMEMILLIS_H__

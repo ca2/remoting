@@ -46,7 +46,7 @@ Tab *TabControl::getTab(int index)
 void TabControl::addTab(BaseDialog *dialog, const ::scoped_string & scopedstrcaption)
 {
   Tab *tab = new Tab(dialog, caption);
-  m_tabContainer.push_back(tab);
+  m_tabContainer.add(tab);
   TCITEM tcitem = {0};
   tcitem.mask = TCIF_TEXT;
   TCHAR fixedCaption[255];

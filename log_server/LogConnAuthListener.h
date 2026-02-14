@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __LOGCONNAUTHLISTENER_H__
-#define __LOGCONNAUTHLISTENER_H__
+#pragma once
+
 
 #include "LogConn.h"
 
@@ -32,8 +32,8 @@ class LogConnAuthListener
 public:
   // @return a FileLogHandle value on success (may be zero) and zero on fail.
   virtual FileAccountHandle onLogConnAuth(LogConn *logConn, bool success,
-                                          const ::scoped_string & scopedstrfileName) = 0;
+                                          const ::scoped_string & scopedstrFileName) = 0;
   virtual void onDisconnect(LogConn *logConn) = 0;
 };
 
-#endif // __LOGCONNAUTHLISTENER_H__
+//// __LOGCONNAUTHLISTENER_H__

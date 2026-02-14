@@ -22,13 +22,13 @@
 //-------------------------------------------------------------------------
 //
 
-//#ifndef _STRING_TABLE_H_
-//#define _STRING_TABLE_H_
+//#pragma once
+//
 #pragma once
 
 ////#include "::string.h"
 
-//#include <map>
+////#include <map>
 
 
 
@@ -49,11 +49,11 @@ public:
    */
   static ::string getString(::iptr i);
 
-private:
+//private:
   StringTable();
 
-  //static ::std::map<UINT, ::string> _cache;
+  //static ::map<UINT, ::string> _cache;
    static ::iptr_map<::string> s_mapString;
 };
 
-//#endif
+//

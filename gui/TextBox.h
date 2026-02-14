@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __TEXTBOX_H_
-#define __TEXTBOX_H_
+#pragma once
+
 
 #include "Control.h"
 #include "Tooltip.h"
@@ -68,4 +68,4 @@ public:
   void showBalloonTip(Tooltip *tip);
 };
 
-#endif
+

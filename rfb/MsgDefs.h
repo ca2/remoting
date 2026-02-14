@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RFB_MSG_DEFS_H_INCLUDED__
-#define __RFB_MSG_DEFS_H_INCLUDED__
+#pragma onceINCLUDED__
+INCLUDED__
 
 #include "util/inttypes.h"
 
@@ -66,4 +66,4 @@ public:
   static const char *const ECHO_REQUEST_SIG;
   static const char *const ECHO_RESPONSE_SIG;
 };
-#endif // __RFB_MSG_DEFS_H_INCLUDED__
+//// __RFB_MSG_DEFS_H_INCLUDED__

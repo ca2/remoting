@@ -114,7 +114,7 @@ void ViewerInstance::start()
     ::string strHost;
     m_condata.getReducedHost(&strHost);
     unsigned short portVal = m_condata.getPort();
-    m_viewerCore.start(strHost.getString(), portVal,
+    m_viewerCore.start(strHost, portVal,
                        &m_viewerWnd, m_conConf.getSharedFlag());
   }
 }

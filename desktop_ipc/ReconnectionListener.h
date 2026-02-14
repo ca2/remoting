@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RECONNECTIONLISTENER_H__
-#define __RECONNECTIONLISTENER_H__
+#pragma once
+
 
 #include "io_lib/Channel.h"
 
@@ -36,4 +36,4 @@ public:
   virtual void onReconnect(Channel *newChannelTo, Channel *newChannelFrom) = 0;
 };
 
-#endif // __RECONNECTIONLISTENER_H__
+//// __RECONNECTIONLISTENER_H__

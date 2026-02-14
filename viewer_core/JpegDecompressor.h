@@ -22,12 +22,12 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _JPEG_DECOMPRESSOR_H_
-#define _JPEG_DECOMPRESSOR_H_
+#pragma once
+
 
 #include <cstdio>
 
-#include <vector>
+//#include <vector>
 
 // More help of jpeg-lib in /usr/share/doc/jpeg-8c-r1/example.c.bz2
 
@@ -42,7 +42,7 @@
 #include "libjpeg-turbo/jpeglib.h"
 #else
 #include "libjpeg/jpeglib.h"
-#endif
+
 
 
 //#include "util/::string.h"
@@ -62,9 +62,9 @@ public:
    * format is an array of bytes where each pixel is represented by three bytes
    * for red, green and blue components, in that order.
    */
-  void decompress(::std::vector<unsigned char> &buffer,
+  void decompress(::array_base<unsigned char> &buffer,
                   size_t jpegBufLen,
-                  ::std::vector<unsigned char> &pixels,
+                  ::array_base<unsigned char> &pixels,
                   const ::int_rectangle &  dstRect);
 
 private:
@@ -95,4 +95,4 @@ private:
   TD_JPEG_DECOMPRESSOR m_jpeg;
 };
 
-#endif
+

@@ -22,15 +22,15 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _STRING_VECTOR_H_
-#define _STRING_VECTOR_H_
+#pragma once
 
-#include <vector>
+
+//#include <vector>
 
 
 
 //#include "util/::string.h"
 
-typedef ::std::vector<::string> StringVector;
+typedef ::string_array StringVector;
 
-#endif
+

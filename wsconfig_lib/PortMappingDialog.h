@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _PORT_MAPPING_DIALOG_H_
-#define _PORT_MAPPING_DIALOG_H_
+#pragma once
+
 
 #include "gui/BaseDialog.h"
 #include "gui/Control.h"
@@ -73,4 +73,4 @@ protected:
   BaseDialog *m_parent;
 };
 
-#endif
+

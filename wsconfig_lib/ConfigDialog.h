@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CONFIG_DIALOG_H_
-#define _CONFIG_DIALOG_H_
+#pragma once
+
 
 #include "config_lib/SettingsManager.h"
 #include "config_lib/RegistrySettingsManager.h"
@@ -98,4 +98,4 @@ protected:
   int m_lastSelectedTabIndex;
 };
 
-#endif
+

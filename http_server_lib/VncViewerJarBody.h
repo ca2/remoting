@@ -1,5 +1,5 @@
-#ifndef __JAVA_VIEWER_BODY_H_INCLUDED__
-#define __JAVA_VIEWER_BODY_H_INCLUDED__
+#pragma onceINCLUDED__
+INCLUDED__
 
 const unsigned char VNC_VIEWER_JAR_BODY[] = {
  80,  75,   3,   4,  20,   0,   8,   8,   8,   0,  88, 147,  47,  73,   0,   0, 
@@ -21896,4 +21896,4 @@ const unsigned char VNC_VIEWER_JAR_BODY[] = {
  93,   0,   0,  61, 250,   4,   0,   0,   0
 };
 
-#endif // __JAVA_VIEWER_BODY_H_INCLUDED__
+//// __JAVA_VIEWER_BODY_H_INCLUDED__

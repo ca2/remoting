@@ -35,8 +35,8 @@
 #include <algorithm>
 //#include <wcautil.h>
 
-const TCHAR SAS_REG_ENTRY[] = _T("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System");
-const TCHAR SAS_REG_KEY[] = _T("SoftwareSASGeneration");
+const TCHAR SAS_REG_ENTRY[] = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System";
+const TCHAR SAS_REG_KEY[] = "SoftwareSASGeneration";
 
 void allowSas()
 {
@@ -56,7 +56,7 @@ UINT __stdcall AllowSas(MSIHANDLE hInstall)
 }
 
 // FIXME: Code duplication: see the ControlApplication class.
-void getCryptedPassword(unsigned char cryptedPass[8], const ::string & plainPass)
+void getCryptedPassword(unsigned char cryptedPass[8], const ::scoped_string & plainPass)
 {
   // Get a copy of the password truncated at 8 characters.
   ::string copyOfPlainPass;
@@ -68,7 +68,7 @@ void getCryptedPassword(unsigned char cryptedPass[8], const ::string & plainPass
   // Convert to a byte array.
   unsigned char byteArray[8] = {0, 0, 0, 0, 0, 0, 0, 0};
   size_t len = ::minimum(ansiPass.getLength(), (size_t)8);
-  memcpy(byteArray, ansiPass.getString(), len);
+  memcpy(byteArray, ansiPass, len);
 
   // Encrypt with a fixed key.
   VncPassCrypt::getEncryptedPass(cryptedPass, byteArray);
@@ -81,7 +81,7 @@ void writePasswordToRegistry(MSIHANDLE hInstall,
   MsiProperties msiProp(hInstall);
   try {
     ::string plainPass;
-    msiProp.getString(_T("CustomActionData"), &plainPass);
+    msiProp.getString("CustomActionData", &plainPass);
 
     unsigned char cryptedPass[8];
     getCryptedPassword(cryptedPass, &plainPass);
@@ -93,12 +93,12 @@ void writePasswordToRegistry(MSIHANDLE hInstall,
     RegistrySettingsManager sm(rootKey, registryPath, sa);
 
     if (!sm.setBinaryData(entryName, &cryptedPass[0], 8)) {
-      throw Exception(_T("Can't write to the registry."));
+      throw ::remoting::Exception("Can't write to the registry.");
     }
 
-  } catch (Exception &e) {
+  } catch (::remoting::Exception &e) {
     AnsiStringStorage ansiStr(&::string(e.getMessage()));
-    //WcaLog(LOGMSG_STANDARD, ansiStr.getString());
+    //WcaLog(LOGMSG_STANDARD, ansiStr);
   }
 }
 
@@ -107,7 +107,7 @@ UINT __stdcall SetRfbPassword(MSIHANDLE hInstall)
 {
   try {
     writePasswordToRegistry(hInstall,
-                            RegistryPaths::SERVER_PATH, _T("Password"));
+                            RegistryPaths::SERVER_PATH, "Password");
   } catch (...) {
     return ERROR_INSTALL_FAILURE;
   }
@@ -118,7 +118,7 @@ UINT __stdcall SetViewOnlyPassword(MSIHANDLE hInstall)
 {
   try {
     writePasswordToRegistry(hInstall,
-                            RegistryPaths::SERVER_PATH, _T("PasswordViewOnly"));
+                            RegistryPaths::SERVER_PATH, "PasswordViewOnly");
   } catch (...) {
     return ERROR_INSTALL_FAILURE;
   }
@@ -129,7 +129,7 @@ UINT __stdcall SetControlPassword(MSIHANDLE hInstall)
 {
   try {
     writePasswordToRegistry(hInstall,
-                            RegistryPaths::SERVER_PATH, _T("ControlPassword"));
+                            RegistryPaths::SERVER_PATH, "ControlPassword");
   } catch (...) {
     return ERROR_INSTALL_FAILURE;
   }

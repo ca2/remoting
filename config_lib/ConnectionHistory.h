@@ -22,12 +22,12 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CONNECTION_HISTORY_H_
-#define _CONNECTION_HISTORY_H_
+#pragma once
+
 
 #include "win_system/RegistryKey.h"
 
-#include <vector>
+//#include <vector>
 
 
 
@@ -89,7 +89,7 @@ public:
    * @remark: if host is already in connection history,
      then it's just moves it up to first position.
    */
-  void addHost(const ::scoped_string & scopedstrhost);
+  void addHost(const ::scoped_string & scopedstrHost);
 
   /**
    * Return hosts count.
@@ -102,17 +102,17 @@ public:
    * @param i index of history entry.
    * @return host string.
    */
-  const ::scoped_string & scopedstrgetHost(size_t i) const;
+  ::string getHost(size_t i) const;
 
 protected:
   void releaseHosts();
-  void removeHost(const ::scoped_string & scopedstrhost);
+  void removeHost(const ::scoped_string & scopedstrHost);
 
 protected:
   /**
    * Array of history enries.
    */
-  ::std::vector<::string> m_hosts;
+  ::string_array m_hosts;
 
   /**
    * Maximum count of history entries.
@@ -125,4 +125,4 @@ protected:
   RegistryKey *m_key;
 };
 
-#endif
+

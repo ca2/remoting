@@ -22,13 +22,13 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINDOWSAPPLICATION_H__
-#define __WINDOWSAPPLICATION_H__
+#pragma once
+
 
 #include "util/winhdr.h"
 #include "thread/LocalMutex.h"
 
-#include <list>
+//#include <list>
 
 
 
@@ -70,14 +70,14 @@ public:
   virtual void postMessage(UINT message, WPARAM wParam = 0, LPARAM lParam = 0);
 
   /**
-   * Adds modeless dialog to application modeless dialog ::std::list to
+   * Adds modeless dialog to application modeless dialog ::list to
    * enable switching between controls by pressing tab button.
    * @param dialogWindow HWND of modeless dialog.
    */
   static void addModelessDialog(HWND dialogWindow);
 
   /**
-   * Removes dialog from application modeless dialog ::std::list.
+   * Removes dialog from application modeless dialog ::list.
    * @param dialogWindow HWND of modeless dialog.
    */
   static void removeModelessDialog(HWND dialogWindow);
@@ -109,8 +109,8 @@ protected:
    */
   static bool processDialogMessage(MSG *msg);
 private:
-  static LocalMutex m_MDLMutex; // Modeless dialog ::std::list mutex.
-  static ::std::list<HWND> m_modelessDialogList;
+  static LocalMutex m_MDLMutex; // Modeless dialog ::list mutex.
+  static ::list<HWND> m_modelessDialogList;
 };
 
-#endif // __WINDOWSAPPLICATION_H__
+//// __WINDOWSAPPLICATION_H__

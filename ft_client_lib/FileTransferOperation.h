@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _FILE_TRANSFER_OPERATION_H_
-#define _FILE_TRANSFER_OPERATION_H_
+#pragma once
+
 
 #include "FileTransferEventAdapter.h"
 #include "OperationNotPermittedException.h"
@@ -107,13 +107,13 @@ protected:
   // Notify all listeners that was error during operation execution
   //
 
-  void notifyError(const ::scoped_string & scopedstrmessage);
+  void notifyError(const ::scoped_string & scopedstrMessage);
 
   //
   // Notify all listeners with text message
   //
 
-  void notifyInformation(const ::scoped_string & scopedstrmessage);
+  void notifyInformation(const ::scoped_string & scopedstrMessage);
 
   //
   // Sets absolute path to @currentFile, using @localFolder string as root folder
@@ -138,4 +138,4 @@ protected:
   bool m_isTerminating;
 };
 
-#endif
+

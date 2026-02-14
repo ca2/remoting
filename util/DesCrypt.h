@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __DESCRYPT_H__
-#define __DESCRYPT_H__
+#pragma once
+
 
 #include "util/inttypes.h"
 
@@ -73,4 +73,4 @@ private:
   unsigned long m_knL[32];
 };
 
-#endif // __DESCRYPT_H__
+//// __DESCRYPT_H__

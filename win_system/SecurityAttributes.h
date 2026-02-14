@@ -22,14 +22,14 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __SECURITYATTRIBUTES_H__
-#define __SECURITYATTRIBUTES_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
 #include "security/SecurityIdentifier.h"
 #include "security/SecurityDescriptor.h"
-#include <vector>
+//#include <vector>
 
 class SecurityAttributes
 {
@@ -63,4 +63,4 @@ private:
   SecurityDescriptor m_sd;
 };
 
-#endif // __SECURITYATTRIBUTES_H__
+//// __SECURITYATTRIBUTES_H__

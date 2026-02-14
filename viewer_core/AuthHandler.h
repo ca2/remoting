@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _AUTH_HANDLER_H_
-#define _AUTH_HANDLER_H_
+#pragma once
+
 
 #include "io_lib/DataInputStream.h"
 #include "io_lib/DataOutputStream.h"
@@ -36,10 +36,10 @@
 // This exception is raised when connection is valid, but it's invalid
 // from authentication client-logic, or authentication is failure.
 //
-class AuthException : public Exception
+class AuthException : public ::remoting::Exception
 {
 public:
-  AuthException(const ::scoped_string & scopedstrmessage = _T("Error in authentication"));
+  AuthException(const ::scoped_string & scopedstrMessage = "Error in authentication");
   virtual ~AuthException();
   int getAuthCode() const;
 
@@ -55,8 +55,8 @@ protected:
 class AuthUnknownException : public AuthException 
 {
 public:
-  AuthUnknownException(const ::scoped_string & scopedstrmessage = _T("Error in authentification: ")
-                                              _T("auth is canceled or isn't support"));
+  AuthUnknownException(const ::scoped_string & scopedstrMessage = "Error in authentification: "
+                                              "auth is canceled or isn't support");
   virtual ~AuthUnknownException();
 };
 
@@ -66,7 +66,7 @@ public:
 class AuthCanceledException : public AuthException
 {
 public:
-  AuthCanceledException(const ::scoped_string & scopedstrmessage = _T("Auth is canceled"));
+  AuthCanceledException(const ::scoped_string & scopedstrMessage = "Auth is canceled");
   virtual ~AuthCanceledException();
 };
 
@@ -97,4 +97,4 @@ private:
   int m_id;
 };
 
-#endif
+

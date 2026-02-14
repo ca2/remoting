@@ -37,7 +37,7 @@ void IpAccessControl::serialize(DataOutputStream *output)
 
     rule->toString(&string);
 
-    output->writeUTF8(string.getString());
+    output->writeUTF8(string);
   }
 }
 
@@ -56,12 +56,12 @@ void IpAccessControl::deserialize(DataInputStream *input)
     input->readUTF8(&string);
 
     // Here is would be good to use unique_ptr, but
-    // unique_ptr is not compatible with ::std::vector.
+    // unique_ptr is not compatible with ::array_base.
     // FIXME: no corresponding delete. use by value?
     IpAccessRule *rule = new IpAccessRule();
     try {
-      if (!IpAccessRule::parse(string.getString(), rule)) {
-        throw Exception(_T("Parsing of ip access rule is failed."));
+      if (!IpAccessRule::parse(string, rule)) {
+        throw ::remoting::Exception("Parsing of ip access rule is failed.");
       }
     } catch (...) {
       delete rule;

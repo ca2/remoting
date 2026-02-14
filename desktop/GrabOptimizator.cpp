@@ -46,7 +46,7 @@ bool GrabOptimizator::grab(const Region *grabRegion, ScreenDriver *grabber)
   // Vgrab - is a grab velocity,
   // N - is number of rectangles to grab,
   // g - overhead time costs adding on each grabbed rectangle.
-  ::std::vector<::int_rectangle> rects;
+  ::array_base<::int_rectangle> rects;
   grabRegion->getRectVector(&rects);
   ::int_rectangle boundsRect = grabRegion->getBounds();
   int boundsRectS = boundsRect.area();
@@ -75,23 +75,23 @@ bool GrabOptimizator::grab(const Region *grabRegion, ScreenDriver *grabber)
 
     if (boundsRectT <= estimatedFragTime) {
       __int64 realBoundsRectTime = grabOneRect(&boundsRect, grabber);
-      m_log->debug(_T("Bounds rectangle grab has been preferred:")
-                 _T(" bounds rectangle time = %d,")
-                 _T(" estimated fragment time = %d,")
-                 _T(" estimated bounds rect time = %d"),
+      m_log->debug("Bounds rectangle grab has been preferred:"
+                 " bounds rectangle time = {},"
+                 " estimated fragment time = {},"
+                 " estimated bounds rect time = {}",
                  (int)realBoundsRectTime, (int)estimatedFragTime,
                  (int)boundsRectT);
       // TEST:
-      //m_log->debug(_T("Test: fragment grab time = %d"),
+      //m_log->debug("Test: fragment grab time = {}",
       //           (int)grabFragments(&rects, grabber));
     } else {
       __int64 realFragTime = grabFragments(&rects, grabber);
-      m_log->debug(_T("Fragment grab has been preferred:")
-                 _T(" fragment time = %d, estimated fragment time = %d,")
-                 _T(" estimated bounds rect time = %d"),
+      m_log->debug("Fragment grab has been preferred:"
+                 " fragment time = {}, estimated fragment time = {},"
+                 " estimated bounds rect time = {}",
                  (int)realFragTime, (int)estimatedFragTime, (int)boundsRectT);
       // TEST:
-      //m_log->debug(_T("Test: bounds rectangle time = %d"),
+      //m_log->debug("Test: bounds rectangle time = {}",
       //           (int)grabOneRect(&boundsRect, grabber));
     }
   } else {
@@ -154,19 +154,19 @@ bool GrabOptimizator::getGCompleted()
 void GrabOptimizator::refreshStatistic(ScreenDriver *grabber)
 {
   if (m_timer.isElapsed() && getOptimizationAvailable(grabber)) {
-    m_log->debug(_T("The log statistics before refreshing:"));
+    m_log->debug("The log statistics before refreshing:");
     logStatistic();
 
     removeFirstWholeTElement();
     removeFirstElementsFromFragmentStats();
 
     m_timer.reset();
-    m_log->debug(_T("The log statistics after refreshing:"));
+    m_log->debug("The log statistics after refreshing:");
     logStatistic();
   }
 }
 
-int GrabOptimizator::getArea(const ::std::vector<::int_rectangle> *rects)
+int GrabOptimizator::getArea(const ::array_base<::int_rectangle> *rects)
 {
   int result = 0;
   for (size_t i = 0; i < rects->size(); i++) {
@@ -175,7 +175,7 @@ int GrabOptimizator::getArea(const ::std::vector<::int_rectangle> *rects)
   return result;
 }
 
-bool GrabOptimizator::isAlikeToWhole(const ::std::vector<::int_rectangle> *rects)
+bool GrabOptimizator::isAlikeToWhole(const ::array_base<::int_rectangle> *rects)
 {
   int area = getArea(rects);
   if (area < 1) {
@@ -193,7 +193,7 @@ bool GrabOptimizator::isEnoughForWholeStats(const ::int_rectangle &  rect)
   return m_wholeS / rect.area() <= 9; // area >= 10%
 }
 
-bool GrabOptimizator::isAlikeToFragments(const ::std::vector<::int_rectangle> *rects)
+bool GrabOptimizator::isAlikeToFragments(const ::array_base<::int_rectangle> *rects)
 {
   return rects->size() >= 10;
 }
@@ -205,7 +205,7 @@ __int64 GrabOptimizator::grabWhole(ScreenDriver *grabber)
   bool timerResult1 = QueryPerformanceCounter(&timeBegin) != 0;
 
   if (!grabber->grabFb()) {
-    throw Exception(_T("Grabber failed. Is it not ready?"));
+    throw ::remoting::Exception("Grabber failed. Is it not ready?");
   }
 
   bool timerResult2 = QueryPerformanceCounter(&timeEnd) != 0;
@@ -227,7 +227,7 @@ __int64 GrabOptimizator::grabOneRect(const ::int_rectangle &  rect,
   bool timerResult1 = QueryPerformanceCounter(&timeBegin) != 0;
 
   if (!grabber->grabFb(rect)) {
-    throw Exception(_T("Grabber failed. Is it not ready?"));
+    throw ::remoting::Exception("Grabber failed. Is it not ready?");
   }
 
   bool timerResult2 = QueryPerformanceCounter(&timeEnd) != 0;
@@ -248,7 +248,7 @@ __int64 GrabOptimizator::grabOneRect(const ::int_rectangle &  rect,
 
 void GrabOptimizator::addWholeTElement(double wholeT)
 {
-  m_wholeTElements.push_back(wholeT);
+  m_wholeTElements.add(wholeT);
   m_wholeTSum += wholeT;
   m_timer.reset();
 
@@ -265,23 +265,23 @@ void GrabOptimizator::removeObsoleteWholeTElements()
 
 void GrabOptimizator::removeFirstWholeTElement()
 {
-  ::std::list<double>::iterator iter = m_wholeTElements.begin();
+  ::list<double>::iterator iter = m_wholeTElements.begin();
   double wholeT = *iter;
   m_wholeTSum -= wholeT;
   m_wholeTElements.erase(iter);
 }
 
-__int64 GrabOptimizator::grabFragments(const ::std::vector<::int_rectangle> *rects,
+__int64 GrabOptimizator::grabFragments(const ::array_base<::int_rectangle> *rects,
                                        ScreenDriver *grabber)
 {
   // FIXME: WARNING!!! The microsoft API usage!!!
   LARGE_INTEGER timeBegin, timeEnd;
   bool timerResult1 = QueryPerformanceCounter(&timeBegin) != 0;
 
-  ::std::vector<::int_rectangle>::const_iterator iRect;
+  ::array_base<::int_rectangle>::const_iterator iRect;
   for (iRect = rects->begin(); iRect < rects->end(); iRect++) {
     if (!grabber->grabFb(&(*iRect))) {
-      throw Exception(_T("Grabber failed. Is it not ready?"));
+      throw ::remoting::Exception("Grabber failed. Is it not ready?");
     }
   }
 
@@ -311,7 +311,7 @@ __int64 GrabOptimizator::grabFragments(const ::std::vector<::int_rectangle> *rec
 
 void GrabOptimizator::addFragmentStats(double g)
 {
-  m_gElements.push_back(g);
+  m_gElements.add(g);
   m_gSum += g;
   m_timer.reset();
 
@@ -328,7 +328,7 @@ void GrabOptimizator::removeObsoleteFragmentStats()
 
 void GrabOptimizator::removeFirstElementsFromFragmentStats()
 {
-  ::std::list<double>::iterator iterG = m_gElements.begin();
+  ::list<double>::iterator iterG = m_gElements.begin();
   double g = *iterG;
   m_gSum -= g;
   m_gElements.erase(iterG);
@@ -336,39 +336,39 @@ void GrabOptimizator::removeFirstElementsFromFragmentStats()
 
 void GrabOptimizator::logStatistic()
 {
-  m_log->debug(_T("GrabOptimizator::m_wholeS : %d"),
+  m_log->debug("GrabOptimizator::m_wholeS : {}",
              m_wholeS);
 
   ::string value;
   ::string statString;
-  for (::std::list<double>::iterator iter = m_wholeTElements.begin();
+  for (::list<double>::iterator iter = m_wholeTElements.begin();
        iter != m_wholeTElements.end();
        iter++) {
-    value.format(_T(" %.2f;"), *iter);
-    statString.appendString(value.getString());
+    value.formatf(" %.2f;", *iter);
+    statString.appendString(value);
   }
   double avgWholeT = m_wholeTElements.size() != 0 ?
                      m_wholeTSum / m_wholeTElements.size() : 0;
-  m_log->debug(_T("GrabOptimizator::m_wholeT average: %.2f;")
-             _T(" GrabOptimizator::m_wholeTSum: %.2f;")
-             _T(" GrabOptimizator::m_wholeTElements: %s"),
+  m_log->debug("GrabOptimizator::m_wholeT average: %.2f;"
+             " GrabOptimizator::m_wholeTSum: %.2f;"
+             " GrabOptimizator::m_wholeTElements: {}",
              avgWholeT,
              m_wholeTSum,
-             statString.getString());
+             statString);
 
-  statString.setString(_T(""));
-  for (::std::list<double>::iterator iter = m_gElements.begin();
+  statString= "";
+  for (::list<double>::iterator iter = m_gElements.begin();
        iter != m_gElements.end();
        iter++) {
-    value.format(_T(" %.2f;"), *iter);
-    statString.appendString(value.getString());
+    value.formatf(" %.2f;", *iter);
+    statString.appendString(value);
   }
   double avgG = m_gElements.size() != 0 ?
                 m_gSum / m_gElements.size() : 0;
-  m_log->debug(_T("GrabOptimizator::m_g average: %.2f;")
-             _T(" GrabOptimizator::m_gSum: %.2f;")
-             _T(" GrabOptimizator::m_gElements: %s;"),
+  m_log->debug("GrabOptimizator::m_g average: %.2f;"
+             " GrabOptimizator::m_gSum: %.2f;"
+             " GrabOptimizator::m_gElements: {};",
              avgG,
              m_gSum,
-             statString.getString());
+             statString);
 }

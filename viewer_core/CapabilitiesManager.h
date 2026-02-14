@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CAPABILITIES_MANAGER_H_
-#define _CAPABILITIES_MANAGER_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "util/inttypes.h"
@@ -49,7 +49,7 @@ public:
                                  unsigned int code,
                                  const char *vendorSignature,
                                  const char *nameSignature,
-                                 const ::string description = _T("")) = 0;
+                                 const ::string description = "") = 0;
 
   //
   // This function add capability and handler, to process server-to-client messages.
@@ -58,7 +58,7 @@ public:
                                       unsigned int code,
                                       const char *vendorSignature,
                                       const char *nameSignature,
-                                      const ::string description = _T("")) = 0;
+                                      const ::string description = "") = 0;
 
   //
   // This function add capability, to process client-to-server messages.
@@ -66,7 +66,7 @@ public:
   virtual void addClientMsgCapability(unsigned int code,
                                       const char *vendorSignature,
                                       const char *nameSignature,
-                                      const ::string description = _T("")) = 0;
+                                      const ::string description = "") = 0;
 
   //
   // This function add encoding capability and decoder handler.
@@ -78,22 +78,22 @@ public:
                                      unsigned int code,
                                      const char *vendorSignature,
                                      const char *nameSignature,
-                                     const ::string description = _T("")) = 0;
+                                     const ::string description = "") = 0;
 
   //
-  // This function return ::std::vector of enabled capabilities "client-to-server message".
+  // This function return ::array_base of enabled capabilities "client-to-server message".
   //
-  virtual void getEnabledClientMsgCapabilities(::std::vector<unsigned int> *codes) const = 0;
+  virtual void getEnabledClientMsgCapabilities(::array_base<unsigned int> *codes) const = 0;
 
   //
-  // This function return ::std::vector of enabled capabilities "server-to-client message".
+  // This function return ::array_base of enabled capabilities "server-to-client message".
   //
-  virtual void getEnabledServerMsgCapabilities(::std::vector<unsigned int> *codes) const = 0;
+  virtual void getEnabledServerMsgCapabilities(::array_base<unsigned int> *codes) const = 0;
 
   //
-  // This function return ::std::vector of enabled capabilities "encoding".
+  // This function return ::array_base of enabled capabilities "encoding".
   //
-  virtual void getEnabledEncodingCapabilities(::std::vector<unsigned int> *codes) const = 0;
+  virtual void getEnabledEncodingCapabilities(::array_base<unsigned int> *codes) const = 0;
 };
 
-#endif
+

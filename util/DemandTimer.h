@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __DEMANDTIMER_H__
-#define __DEMANDTIMER_H__
+#pragma once
+
 
 #include "DateTime.h"
 
@@ -46,4 +46,4 @@ private:
   DateTime m_startTime;
 };
 
-#endif // __DEMANDTIMER_H__
+//// __DEMANDTIMER_H__

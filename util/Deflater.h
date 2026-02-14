@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _DEFLATER_H_
-#define _DEFLATER_H_
+#pragma once
+
 
 #include "ZLibBase.h"
 #include "ZLibException.h"
@@ -39,4 +39,4 @@ protected:
   z_stream m_zlibStream;
 };
 
-#endif
+

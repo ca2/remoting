@@ -22,19 +22,19 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _OPERATION_SUPPORT_H_
-#define _OPERATION_SUPPORT_H_
+#pragma once
+
 
 #include "util/inttypes.h"
 
-#include <vector>
+//#include <vector>
 
 class OperationSupport
 {
 public:
   OperationSupport();
-  OperationSupport(const ::std::vector<unsigned int> &clientCodes,
-                   const ::std::vector<unsigned int> &serverCodes);
+  OperationSupport(const ::array_base<unsigned int> &clientCodes,
+                   const ::array_base<unsigned int> &serverCodes);
   virtual ~OperationSupport();
 
   bool isFileListSupported() const;
@@ -48,7 +48,7 @@ public:
   bool isDirSizeSupported() const;
 
 protected:
-  static bool isSupport(const ::std::vector<unsigned int> &codes, unsigned int code);
+  static bool isSupport(const ::array_base<unsigned int> &codes, unsigned int code);
 
   bool m_isFileListSupported;
   bool m_isUploadSupported;
@@ -61,4 +61,4 @@ protected:
   bool m_isDirSizeSupported;
 };
 
-#endif
+

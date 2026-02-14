@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _SECURITY_IDENTIFIER_H_
-#define _SECURITY_IDENTIFIER_H_
+#pragma once
+
 
 #include "util/winhdr.h"
 #include "win_system/SystemException.h"
@@ -44,7 +44,7 @@ enum Authority {
    * Specifies the Creator SID authority.
    * It defines the Creator Owner, Creator Group, and Creator Owner Server
    * well-known-SIDs.
-   * These SIDs are used as placeholders in an access control ::std::list (ACL) and are replaced by the user,
+   * These SIDs are used as placeholders in an access control ::list (ACL) and are replaced by the user,
    * group, and machine SIDs of the security principal.
    */
   Creator,
@@ -73,7 +73,7 @@ public:
    * Creates security identifier by a string.
    * @throws SystemException if copy failed.
    */
-  SecurityIdentifier(const ::scoped_string & scopedstrsidString);
+  SecurityIdentifier(const ::scoped_string & scopedstrSidString);
 
   /**
    * Destructor.
@@ -108,7 +108,7 @@ public:
    * @return created SID.
    * @throws SystemException on fail.
    */
-  static SecurityIdentifier *createSidFromString(const ::scoped_string & scopedstrsidString);
+  static SecurityIdentifier *createSidFromString(const ::scoped_string & scopedstrSidString);
 
   /**
    * Returns pointer to WinAPI SID structure.
@@ -122,10 +122,10 @@ private:
   SecurityIdentifier();
 
   // Returned pointer to a sid must be freed by the LocalFree() function calls
-  static void getSidByString(const ::scoped_string & scopedstrsidString, PSID *sid);
+  static void getSidByString(const ::scoped_string & scopedstrSidString, PSID *sid);
 
 private:
   SID *m_sid;
 };
 
-#endif
+

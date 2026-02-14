@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _VIEWER_WINDOW_H_
-#define _VIEWER_WINDOW_H_
+#pragma once
+
 
 #include "ConnectionData.h"
 #include "DesktopWindow.h"
@@ -115,12 +115,12 @@ void onGoodCursor() override;
   //
   void onBell();
   void onConnected(RfbOutputGate *output);
-  void onDisconnect(const ::string & message);
+  void onDisconnect(const ::scoped_string & message);
   void onAuthError(const AuthException *exception);
-  void onError(const Exception *exception);
+  void onError(const ::remoting::Exception *exception);
   void onFrameBufferUpdate(const FrameBuffer *fb, const ::int_rectangle &  rect);
   void onFrameBufferPropChange(const FrameBuffer *fb);
-  void onCutText(const ::string & cutText);
+  void onCutText(const ::scoped_string & cutText);
 
   int translateAccelToTB(int val);
   void applyScreenChanges(bool isFullScreen);
@@ -147,8 +147,8 @@ void onGoodCursor() override;
   ConnectionData *m_conData;
   SystemInformation m_sysinf;
 
-  // This variable save Exception after call onError().
-  Exception m_error;
+  // This variable save ::remoting::Exception after call onError().
+  ::remoting::Exception m_error;
   // This variable save disconnect-message after call onDisconnect().
   ::string m_disconnectMessage;
 
@@ -177,7 +177,7 @@ void onGoodCursor() override;
   // Destructor of ViewerWindow may be called, if this flag is true.
   bool m_stopped;
 private:
-  ::std::vector<int> m_standardScale;
+  ::array_base<int> m_standardScale;
   void changeCursor(int type);
   void applySettings();
   void setSizeFullScreenWindow();
@@ -203,4 +203,4 @@ private:
   bool m_hooksEnabledFirstTime;
 };
 
-#endif
+

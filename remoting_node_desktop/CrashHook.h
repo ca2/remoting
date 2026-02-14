@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __CRASHHOOK_H__
-#define __CRASHHOOK_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "util/Singleton.h"
@@ -53,4 +53,4 @@ private:
   static ApplicationCrashEvents *m_notifier;
 };
 
-#endif // __CrashHook_H__
+//// __CrashHook_H__

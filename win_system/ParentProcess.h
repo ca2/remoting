@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __PARENTPROCESS_H__
-#define __PARENTPROCESS_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include <Tlhelp32.h>
@@ -51,4 +51,4 @@ private:
 
 };
 
-#endif // __PARENTPROCESS_H__
+//// __PARENTPROCESS_H__

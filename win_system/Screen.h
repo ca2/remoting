@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __SCREEN_H__
-#define __SCREEN_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "rfb/PixelFormat.h"
@@ -90,4 +90,4 @@ private:
   ::int_rectangle m_virtDesktopRect;
 };
 
-#endif // __SCREEN_H__
+//// __SCREEN_H__

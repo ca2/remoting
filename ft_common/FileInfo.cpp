@@ -30,10 +30,10 @@ FileInfo::FileInfo()
 }
 
 FileInfo::FileInfo(unsigned long long size, unsigned long long modTime,
-                   unsigned short flags, const ::scoped_string & scopedstrfileName)
+                   unsigned short flags, const ::scoped_string & scopedstrFileName)
 : m_sizeInBytes(size), m_lastModified(modTime), m_flags(flags)
 {
-  m_fileName.setString(fileName);
+  m_strFileName= scopedstrFileName;
 }
 
 //
@@ -50,7 +50,7 @@ FileInfo::FileInfo(const File *file)
     m_sizeInBytes = 0;
     m_lastModified = 0;
   }
-  file->getName(&m_fileName);
+  file->getName(&m_strFileName);
 }
 
 bool FileInfo::isDirectory() const
@@ -78,9 +78,9 @@ void FileInfo::setFlags(unsigned short flags)
   m_flags = flags;
 }
 
-void FileInfo::setFileName(const ::scoped_string & scopedstrfileName)
+void FileInfo::setFileName(const ::scoped_string & scopedstrFileName)
 {
-  m_fileName.setString(fileName);
+  m_strFileName= fileName;
 }
 
 unsigned long long FileInfo::lastModified() const
@@ -100,5 +100,5 @@ unsigned short FileInfo::getFlags() const
 
 const ::scoped_string & scopedstrFileInfo::getFileName() const
 {
-  return m_fileName.getString();
+  return m_strFileName;
 }

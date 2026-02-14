@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "SecurityAttributes.h"
 
 SecurityAttributes::SecurityAttributes()
@@ -42,7 +43,7 @@ void SecurityAttributes::setDefaultAttributes()
 
 void SecurityAttributes::shareToAllUsers()
 {
-  SecurityIdentifier localUsers(_T("S-1-1-0"));
+  SecurityIdentifier localUsers("S-1-1-0");
 
   EXPLICIT_ACCESS explisitAccess;
   ZeroMemory(&explisitAccess, sizeof(EXPLICIT_ACCESS));

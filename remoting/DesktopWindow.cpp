@@ -413,21 +413,21 @@ bool DesktopWindow::onDrawClipboard()
       // if string in clipboard got from server, then don't send him too
       if (clipboardString == m_strClipboard)
       {
-         m_strClipboard = _T("");
+         m_strClipboard = "";
          return true;
       }
-      m_strClipboard = _T("");
+      m_strClipboard = "";
       sendCutTextEvent(clipboardString);
    }
    return true;
 }
 
-void DesktopWindow::setClipboardData(const ::string &strText)
+void DesktopWindow::setClipboardData(const ::scoped_string &strText)
 {
    if (m_conConf->isClipboardEnabled())
    {
-      m_clipboard.setString(strText);
-      m_strClipboard.setString(strText.getString());
+      m_clipboard= strText;
+      m_strClipboard= strText;
    }
 }
 
@@ -652,9 +652,9 @@ void DesktopWindow::updateFramebuffer(const FrameBuffer *pframebuffer, const ::i
 
    if (!m_framebuffer.copyFrom(dstRect, pframebuffer, dstRect.left, dstRect.top))
    {
-      m_logWriter->error(_T("Possible invalide region. (%d, %d), (%d, %d)"), dstRect.left, dstRect.top, dstRect.right,
+      m_logWriter->error("Possible invalide region. ({}, {}), ({}, {})", dstRect.left, dstRect.top, dstRect.right,
                          dstRect.bottom);
-      m_logWriter->interror(_T("Error in updateFramebuffer (ViewerWindow)"));
+      m_logWriter->interror("Error in updateFramebuffer (ViewerWindow)");
    }
    repaint(dstRect);
 }
@@ -666,7 +666,7 @@ void DesktopWindow::setNewFramebuffer(const FrameBuffer *pframebuffer)
 
    bool isBackgroundDirty = dimension.cx < olddimension.cx || dimension.cy < olddimension.cy;
 
-   m_logWriter->detail(_T("Desktop size: %d, %d"), dimension.cx, dimension.cy);
+   m_logWriter->detail("Desktop size: {}, {}", dimension.cx, dimension.cy);
    {
       // FIXME: Nested locks should not be used.
       AutoLock al(&m_bufferLock);
@@ -833,9 +833,9 @@ void DesktopWindow::sendKeyboardEvent(bool downFlag, unsigned int key)
    {
       m_viewerCore->sendKeyboardEvent(downFlag, key);
    }
-   catch (const Exception &exception)
+   catch (const ::remoting::Exception &exception)
    {
-      m_logWriter->detail(_T("Error in DesktopWindow::sendKeyboardEvent(): %s"), exception.getMessage());
+      m_logWriter->detail("Error in DesktopWindow::sendKeyboardEvent(): {}", exception.getMessage());
    }
 }
 
@@ -857,13 +857,13 @@ void DesktopWindow::sendPointerEvent(unsigned char buttonMask, const Point *posi
    {
       m_viewerCore->sendPointerEvent(buttonMask, position);
    }
-   catch (const Exception &exception)
+   catch (const ::remoting::Exception &exception)
    {
-      m_logWriter->detail(_T("Error in DesktopWindow::sendPointerEvent(): %s"), exception.getMessage());
+      m_logWriter->detail("Error in DesktopWindow::sendPointerEvent(): {}", exception.getMessage());
    }
 }
 
-void DesktopWindow::sendCutTextEvent(const ::string &cutText)
+void DesktopWindow::sendCutTextEvent(const ::scoped_string &cutText)
 {
    if (!m_conConf->isClipboardEnabled())
    {
@@ -881,8 +881,8 @@ void DesktopWindow::sendCutTextEvent(const ::string &cutText)
    {
       m_viewerCore->sendCutTextEvent(cutText);
    }
-   catch (const Exception &exception)
+   catch (const ::remoting::Exception &exception)
    {
-      m_logWriter->detail(_T("Error in DesktopWindow::sendCutTextEvent(): %s"), exception.getMessage());
+      m_logWriter->detail("Error in DesktopWindow::sendCutTextEvent(): {}", exception.getMessage());
    }
 }

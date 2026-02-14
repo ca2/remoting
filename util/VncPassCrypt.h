@@ -22,11 +22,11 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __VNCPASSCRYPT_H__
-#define __VNCPASSCRYPT_H__
+#pragma once
+
 
 #include "util/inttypes.h"
-#include <vector>
+//#include <vector>
 
 class VncPassCrypt
 {
@@ -56,9 +56,9 @@ public:
 
 private:
   static const unsigned char m_key[];
-  // The ::std::vector uses to protect a password from containing in the stack
+  // The ::array_base uses to protect a password from containing in the stack
   // because the stack available for a public on a bug.
-  ::std::vector<unsigned char> m_plainPassword;
+  ::array_base<unsigned char> m_plainPassword;
 };
 
-#endif // __VNCPASSCRYPT_H__
+//// __VNCPASSCRYPT_H__

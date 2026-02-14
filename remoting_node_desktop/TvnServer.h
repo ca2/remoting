@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _TVN_SERVER_H_
-#define _TVN_SERVER_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -210,4 +210,4 @@ protected:
   UINT m_contextSwitchResolution; // in ms
 };
 
-#endif
+

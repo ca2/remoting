@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __BLOCKINGINPUTGATE_H__
-#define __BLOCKINGINPUTGATE_H__
+#pragma once
+
 
 #include "io_lib/DataInputStream.h"
 #include "thread/LocalMutex.h"
@@ -35,4 +35,4 @@ public:
   virtual ~BlockingInputGate();
 };
 
-#endif // __BLOCKINGINPUTGATE_H__
+//// __BLOCKINGINPUTGATE_H__

@@ -27,13 +27,13 @@
 Tab::Tab()
 : m_dialog(NULL)
 {
-  m_caption.setString(_T(""));
+  m_caption= "";
 }
 
 Tab::Tab(BaseDialog *dialog, const ::scoped_string & scopedstrcaption)
 : m_dialog(dialog)
 {
-  m_caption.setString(caption);
+  m_caption= caption;
 }
 
 void Tab::setVisible(bool visible)

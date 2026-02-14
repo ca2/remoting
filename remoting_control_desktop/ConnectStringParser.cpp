@@ -44,7 +44,7 @@ bool ConnectStringParser::parse(const ::scoped_string & scopedstrconnectString,
 
   ::string splitted[2];
 
-  if (!connStrStorage.split(_T(":"), splitted, &len)) {
+  if (!connStrStorage.split(":", splitted, &len)) {
     return false;
   }
 
@@ -54,7 +54,7 @@ bool ConnectStringParser::parse(const ::scoped_string & scopedstrconnectString,
 
   int port = 0;
 
-  if (!StringParser::parseInt(splitted[1].getString(), &port)) {
+  if (!StringParser::parseInt(splitted[1], &port)) {
     return false;
   }
 
@@ -63,7 +63,7 @@ bool ConnectStringParser::parse(const ::scoped_string & scopedstrconnectString,
   }
 
   if (connectHost != 0) {
-    connectHost->setString(splitted[0].getString());
+    connectHost-= splitted[0];
   }
 
   if (connectPort != 0) {

@@ -22,8 +22,9 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _ADMINISTRATION_CONFIG_DIALOG_H
-#define _ADMINISTRATION_CONFIG_DIALOG_H
+//#ifndef _ADMINISTRATION_CONFIG_DIALOG_H
+#pragma once
+//#define _ADMINISTRATION_CONFIG_DIALOG_H
 
 #include "gui/BaseDialog.h"
 #include "gui/CheckBox.h"
@@ -104,4 +105,4 @@ protected:
   friend class ConfigDialog;
 };
 
-#endif
+

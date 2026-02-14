@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _SOCKET_IPV4_TRANSPORT_H_
-#define _SOCKET_IPV4_TRANSPORT_H_
+#pragma once
+
 
 #include "Transport.h"
 
@@ -72,4 +72,4 @@ private:
   Channel *m_stream;
 };
 
-#endif
+

@@ -22,14 +22,14 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __LOGINITLISTENER_H__
-#define __LOGINITLISTENER_H__
+#pragma once
+
 
 class LogInitListener
 {
 public:
-  virtual void onLogInit(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrfileName, unsigned char logLevel) = 0;
+  virtual void onLogInit(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrFileName, unsigned char logLevel) = 0;
   virtual void onChangeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel) = 0;
 };
 
-#endif // __LOGINITLISTENER_H__
+//// __LOGINITLISTENER_H__

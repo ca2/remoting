@@ -22,14 +22,14 @@
 //-------------------------------------------------------------------------
 //
 
-#include <map>
-#include <vector>
+//#include <map>
+//#include <vector>
 
 #include "thread/LocalMutex.h"
 //#include "util/::string.h"
 
-#ifndef _CAPS_CONTAINER_H_
-#define _CAPS_CONTAINER_H_
+#pragma once
+
 
 class RfbCapabilityInfo {
 public:
@@ -60,9 +60,9 @@ public:
   // two functions to perform this task. These functions overwrite capability
   // records with the same code.
   //
-  void add(const RfbCapabilityInfo *capinfo, const ::string desc = _T(""));
+  void add(const RfbCapabilityInfo *capinfo, const ::string desc = "");
   void add(unsigned int code, const char *vendor, const char *name,
-           ::string desc = _T(""));
+           ::string desc = "");
 
   //
   // Check if a capability with the specified code was added earlier.
@@ -108,9 +108,9 @@ public:
   unsigned int getByOrder(size_t idx);
 
   //
-  // This method return ::std::list of enabled capabilities.
+  // This method return ::list of enabled capabilities.
   //
-  void getEnabledCapabilities(::std::vector<unsigned int> &codes) const;
+  void getEnabledCapabilities(::array_base<unsigned int> &codes) const;
 
 
 private:
@@ -120,14 +120,14 @@ private:
   //
   bool isKnown(unsigned int code) const;
 
-  ::std::map<unsigned int, RfbCapabilityInfo> infoMap;
-  ::std::map<unsigned int, ::string> descMap;
-  ::std::map<unsigned int, bool> enableMap;
+  ::map<unsigned int, RfbCapabilityInfo> infoMap;
+  ::map<unsigned int, ::string> descMap;
+  ::map<unsigned int, bool> enableMap;
 
   // List of enabled caps.
-  ::std::vector<unsigned int> m_plist;
+  ::array_base<unsigned int> m_plist;
 
   mutable LocalMutex m_mapLock;
 };
 
-#endif
+

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _RFB_CLIENT_TO_SERVER_MESSAGE_H_
-#define _RFB_CLIENT_TO_SERVER_MESSAGE_H_
+#pragma once
+
 
 #include "rfb/MsgDefs.h"
 #include "network/RfbOutputGate.h"
@@ -38,4 +38,4 @@ public:
   virtual void send(RfbOutputGate *output) = 0;
 };
 
-#endif
+

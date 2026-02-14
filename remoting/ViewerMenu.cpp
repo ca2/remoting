@@ -38,7 +38,7 @@ void ViewerMenu::menuItem(int id)
   ::string helpString;
   ResourceLoader *rLoader = ResourceLoader::getInstance();
   rLoader->loadString(id, &helpString);
-  insertMenuItem(m_startIndex, helpString.getString(), id);
+  insertMenuItem(m_startIndex, helpString, id);
   m_startIndex++;
 }
 

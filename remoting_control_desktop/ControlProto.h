@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CONTROL_PROTO_H_
-#define _CONTROL_PROTO_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -66,7 +66,7 @@ public:
   static const unsigned int REPLY_AUTH_NEEDED = 0x2;
 
   /**
-   * Get ::std::list of clients of rfb server.
+   * Get ::list of clients of rfb server.
    *
    * Request body: [empty].
    * Reply body:
@@ -198,4 +198,4 @@ public:
   static const unsigned int SHARE_APP_MSG_ID = 0x25;
 };
 
-#endif
+

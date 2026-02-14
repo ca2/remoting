@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _COMMAND_H_
-#define _COMMAND_H_
+#pragma once
+
 
 class Command
 {
@@ -34,4 +34,4 @@ public:
   virtual void execute() = 0;
 };
 
-#endif
+

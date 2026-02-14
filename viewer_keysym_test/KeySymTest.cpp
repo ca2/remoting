@@ -26,11 +26,11 @@
 #include "util/Exception.h"
 #include "util/StringParser.h"
 
-const TCHAR KeySymTest::VALID_WORD_LETTERS[] = _T("zyxwvutsrqponmlkjihgfedcba")
-                                               _T("ZYXWVUTSRQPONMLKJIHGFEDCBA")
-                                               _T("01234567890");
+const TCHAR KeySymTest::VALID_WORD_LETTERS[] = "zyxwvutsrqponmlkjihgfedcba"
+                                               "ZYXWVUTSRQPONMLKJIHGFEDCBA"
+                                               "01234567890";
 
-KeySymTest::KeySymTest(const ::scoped_string & scopedstrfileFrom, const ::scoped_string & scopedstrfileTo)
+KeySymTest::KeySymTest(const ::scoped_string & scopedstrFileFrom, const ::scoped_string & scopedstrFileTo)
 : m_fTo(0),
   m_fFrom(0),
   m_lineNumber(0),
@@ -40,17 +40,17 @@ KeySymTest::KeySymTest(const ::scoped_string & scopedstrfileFrom, const ::scoped
   m_log(0)
 {
   m_rfbKeySym = new RfbKeySym(this, &m_log);
-  m_fFrom = _tfopen(m_fromFileName.getString(), _T("rt,ccs=UNICODE"));
+  m_fFrom = _tfopen(m_fromFileName, "rt,ccs=UNICODE");
   if (m_fFrom == 0) {
     ::string errMess;
-    errMess.format(_T("Cannot open the %s file"), m_fromFileName.getString());
-    throw Exception(errMess.getString());
+    errMess.formatf("Cannot open the {} file", m_fromFileName);
+    throw ::remoting::Exception(errMess);
   }
-  m_fTo = _tfopen(m_toFileName.getString(), _T("wt,ccs=UNICODE"));
+  m_fTo = _tfopen(m_toFileName, "wt,ccs=UNICODE");
   if (m_fTo == 0) {
     ::string errMess;
-    errMess.format(_T("Cannot open the %s file"), m_toFileName.getString());
-    throw Exception(errMess.getString());
+    errMess.formatf("Cannot open the {} file", m_toFileName);
+    throw ::remoting::Exception(errMess);
   }
 }
 
@@ -73,23 +73,23 @@ int KeySymTest::run()
     ::string word1, word2;
     if (getWord(&line, &linePos, &word1) &&
         getWord(&line, &linePos, &word2)) {
-      if (word1.isEqualTo(_T("kbdlayout"))) {
+      if (word1.isEqualTo("kbdlayout")) {
         // Try parse word2 as a hexadecimal value
         unsigned int hkbdLayout = 0;
-        if (!StringParser::parseHex(word2.getString(), &hkbdLayout)) {
+        if (!StringParser::parseHex(word2, &hkbdLayout)) {
           ::string errMess;
-          errMess.format(_T("Wrong \"kbdlayout\" argument at %u line (%s)"),
+          errMess.formatf("Wrong \"kbdlayout\" argument at %u line ({})",
                          m_lineNumber,
-                         m_fromFileName.getString());
-          throw Exception(errMess.getString());
+                         m_fromFileName);
+          throw ::remoting::Exception(errMess);
         }
         changeKbdLayout((HKL)hkbdLayout);
         Sleep(500);
       } else {
         unsigned int virtKeyInt, downInt;
-        bool validWord = StringParser::parseUInt(word1.getString(), &virtKeyInt);
+        bool validWord = StringParser::parseUInt(word1, &virtKeyInt);
         validWord = validWord &&
-                    StringParser::parseUInt(word2.getString(), &downInt);
+                    StringParser::parseUInt(word2, &downInt);
         if (validWord && (downInt == 0 || downInt == 1)) {
           unsigned char virtKey = virtKeyInt & 255;
           bool down = downInt != 0;
@@ -98,14 +98,14 @@ int KeySymTest::run()
           m_rfbKeySym->processKeyEvent(virtKey, addKeyData);
         } else {
           ::string errMess;
-          errMess.format(_T("Wrong value(s) at %u line (%s)"),
+          errMess.formatf("Wrong value(s) at %u line ({})",
                          m_lineNumber,
-                         m_fromFileName.getString());
-          throw Exception(errMess.getString());
+                         m_fromFileName);
+          throw ::remoting::Exception(errMess);
         }
       }
     }
-    _ftprintf(m_fTo, _T("%s\n"), comment.getString());
+    _ftprintf(m_fTo, "{}\n", comment);
     m_isNextEventInSeries = false;
   }
   return 0;
@@ -115,10 +115,10 @@ void KeySymTest::changeKbdLayout(HKL hkl)
 {
   if (ActivateKeyboardLayout(hkl, 0) == 0) {
     ::string errMess;
-    errMess.format(_T("Can't apply a keyboard layout requested at the %u line (%s)"),
+    errMess.formatf("Can't apply a keyboard layout requested at the %u line ({})",
                    m_lineNumber,
-                   m_fromFileName.getString());
-    throw Exception(errMess.getString());
+                   m_fromFileName);
+    throw ::remoting::Exception(errMess);
   }
 }
 
@@ -126,7 +126,7 @@ bool KeySymTest::readLine(::string & line)
 {
   TCHAR buff[255];
   if (_fgetts(buff, sizeof(buff) / sizeof(TCHAR), m_fFrom) != 0) {
-    line->setString(buff);
+    line-= buff;
     return true;
   }
   return false;
@@ -135,13 +135,13 @@ bool KeySymTest::readLine(::string & line)
 void KeySymTest::removeComments(::string & line,
                                 ::string & extractedComment)
 {
-  extractedComment->setString(_T(""));
+  extractedComment-= "";
   // Find the "#" symbol
-  size_t commentStartPos = _tcscspn(line->getString(), _T("#"));
+  size_t commentStartPos = wcscspn(line->getString(), "#");
   if (commentStartPos >= line->getLength()) {
     return; // No comments found
   }
-  extractedComment->setString(line->getString() + commentStartPos);
+  extractedComment-= line->getString() + commentStartPos;
   // Reject the '\n' symbols from extractedComment
   if (extractedComment->endsWith('\n')) {
     extractedComment->truncate(1);
@@ -149,14 +149,14 @@ void KeySymTest::removeComments(::string & line,
   line->truncate(line->getLength() - commentStartPos);
 }
 
-bool KeySymTest::getWord(const ::string & line,
+bool KeySymTest::getWord(const ::scoped_string & line,
                          size_t *pos,
                          ::string & word)
 {
   if (*pos >= line->getLength()) {
     return false;
   }
-  size_t wordStartPos = _tcscspn(line->getString() + *pos, VALID_WORD_LETTERS);
+  size_t wordStartPos = wcscspn(line->getString() + *pos, VALID_WORD_LETTERS);
   wordStartPos += *pos;
   size_t wordEndPos = _tcsspn(line->getString() + wordStartPos,
                               VALID_WORD_LETTERS);
@@ -172,8 +172,8 @@ void KeySymTest::onRfbKeySymEvent(unsigned int rfbKeySym, bool down)
 {
   // Separating next event from previous by new line.
   if (m_isNextEventInSeries) {
-    _ftprintf(m_fTo, _T("\n"));
+    _ftprintf(m_fTo, "\n");
   }
-  _ftprintf(m_fTo, _T("%d %#4.4x           "), int(down), (unsigned int)rfbKeySym);
+  _ftprintf(m_fTo, "{} %#4.4x           ", int(down), (unsigned int)rfbKeySym);
   m_isNextEventInSeries = true;
 }

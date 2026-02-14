@@ -24,24 +24,24 @@
 #include "framework.h"
 //#include "::string.h"
 #include "CommonHeader.h"
-#include "Exception.h"
+#include "util/Exception.h"
 #include <stdio.h>
 
 #include <crtdbg.h>
 
 #include <algorithm>
 
-::string::::string()
+::string::string()
 {
-  setString(_T(""));
+ = "";
 }
 
-::string::::string(const ::scoped_string & scopedstrstring)
+::string::string(const ::scoped_string & scopedstrString)
 {
-  setString(string);
+ = string;
 }
 
-::string::::string(const ::string &stringBuffer)
+::string::string(const ::scoped_string &stringBuffer)
 {
   *this = stringBuffer;
 }
@@ -50,10 +50,10 @@
 {
 }
 
-void ::string::setString(const ::scoped_string & scopedstrstring)
+void ::string::setString(const ::scoped_string & scopedstrString)
 {
   if (string == 0) {
-    string = _T("");
+    string = "";
   }
 
   size_t length = _tcslen(string);
@@ -133,10 +133,10 @@ void ::string::getSubstring(::string & substr,
   memcpy(buffer, &m_buffer[startIndex], length * sizeof(TCHAR));
   buffer[length] = '\0';
 
-  substr->setString(buffer);
+  substr-= buffer;
 }
 
-void ::string::appendString(const ::scoped_string & scopedstrstring)
+void ::string::appendString(const ::scoped_string & scopedstrString)
 {
   if (string == 0) {
     return;
@@ -160,13 +160,13 @@ void ::string::appendChar(TCHAR c)
 void ::string::quoteSelf()
 {
   ::string quotedString;
-  quotedString.format(_T("\"%s\""), getString());
-  setString(quotedString.getString());
+  quotedString.formatf("\"{}\"", getString());
+ = quotedString;
 }
 
-bool ::string::isEqualTo(const ::string & other) const
+bool ::string::isEqualTo(const ::scoped_string & other) const
 {
-  return isEqualTo(other.getString());
+  return isEqualTo(other);
 }
 
 bool ::string::isEqualTo(const ::scoped_string & scopedstrother) const
@@ -180,7 +180,7 @@ bool ::string::isEqualTo(const ::scoped_string & scopedstrother) const
   if (getString() == 0 && other != 0) {
     return false;
   }
-  return _tcscmp(getString(), other) == 0;
+  return wcscmp(getString(), other) == 0;
 }
 
 bool ::string::split(const ::scoped_string & scopedstrDelimiters, ::string & stringArray, size_t *arrayLength) const
@@ -198,7 +198,7 @@ bool ::string::split(const ::scoped_string & scopedstrDelimiters, ::string & str
   size_t index = 0;
 
   do {
-    ::string chunk(_T(""));
+    ::string chunk("");
 
     index = copy.findOneOf(delimiters);
 
@@ -218,7 +218,7 @@ bool ::string::split(const ::scoped_string & scopedstrDelimiters, ::string & str
         return false;
       }
       if (stringArray != 0) {
-        stringArray->setString(getString());
+        stringArray-= getString();
       }
       return true;
     }
@@ -294,13 +294,13 @@ void ::string::remove(size_t startIndex, size_t count)
   bool isFailed = startIndex + count > getLength();
   _ASSERT(!isFailed);
   if (isFailed) {
-    throw Exception(_T("An incorrect ::string::remove() usage"));
+    throw ::remoting::Exception("An incorrect ::string::remove() usage");
   }
   BufferType newBuffer = m_buffer;
 
   size_t copyCount = getSize() - (startIndex + count) * sizeof(TCHAR);
   memcpy(&newBuffer[startIndex], &newBuffer[startIndex + count], copyCount);
-  setString(&newBuffer.front());
+ = &newBuffer.front();
 }
 
 void ::string::truncate(size_t count)
@@ -310,13 +310,13 @@ void ::string::truncate(size_t count)
   remove(getLength() - count, count);
 }
 
-TCHAR *::string::find(const ::scoped_string & scopedstrsubstr)
+TCHAR *::string::find(const ::scoped_string & scopedstrSubstr)
 {
   return _tcsstr(&m_buffer.front(), substr);
 }
 
 // FIXME: Use C functions.
-size_t ::string::findOneOf(const ::scoped_string & scopedstrstring)
+size_t ::string::findOneOf(const ::scoped_string & scopedstrString)
 {
   size_t length = getLength();
   size_t argLength = _tcslen(string);
@@ -345,7 +345,7 @@ void ::string::toUpperCase()
   _tcsupr_s(&m_buffer.front(), getLength() + 1);
 }
 
-void ::string::format(const ::scoped_string & scopedstrformat, ...)
+void ::string::format(const ::scoped_string & scopedstrFormat, ...)
 {
   va_list vl;
 
@@ -360,22 +360,22 @@ void ::string::format(const ::scoped_string & scopedstrformat, ...)
   va_end(vl);
 }
 
-void ::string::operator= (const ::string &other)
+void ::string::operator= (const ::scoped_string &other)
 {
-  setString(other.getString());
+ = other;
 }
 
-bool ::string::operator == (const ::string &str) const
+bool ::string::operator == (const ::scoped_string &str) const
 {
   return isEqualTo(str);
 }
 
-bool ::string::operator < (const ::string &str) const
+bool ::string::operator < (const ::scoped_string &str) const
 {
-  return _tcscmp(getString(), str.getString()) < 0;
+  return wcscmp(getString(), str) < 0;
 }
 
-void ::string::operator += (const ::scoped_string & scopedstrstr) 
+void ::string::operator += (const ::scoped_string & scopedstrStr) 
 {
   appendString(str);
 }

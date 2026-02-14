@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _TCP_CONNECTION_H_
-#define _TCP_CONNECTION_H_
+#pragma once
+
 
 #include "log_writer/LogWriter.h"
 #include "network/RfbInputGate.h"
@@ -39,7 +39,7 @@ public:
   TcpConnection(LogWriter *logWriter);
   virtual ~TcpConnection();
 
-  void bind(const ::scoped_string & scopedstrhost, unsigned short port);
+  void bind(const ::scoped_string & scopedstrHost, unsigned short port);
   void bind(SocketIPv4 *socket);
   void bind(RfbInputGate *input, RfbOutputGate *output);
 
@@ -68,4 +68,4 @@ private:
   mutable LocalMutex m_connectLock;
 };
 
-#endif
+

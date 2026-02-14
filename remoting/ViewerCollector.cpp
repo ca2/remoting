@@ -38,7 +38,7 @@ ViewerCollector::~ViewerCollector()
 void ViewerCollector::addInstance(ViewerInstance *viewerInstance)
 {
   AutoLock l(&m_lockObj);
-  m_instances.push_back(viewerInstance);
+  m_instances.add(viewerInstance);
 }
 
 void ViewerCollector::deleteDeadInstances()

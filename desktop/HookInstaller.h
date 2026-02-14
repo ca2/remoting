@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __HOOKINSTALLER_H__
-#define __HOOKINSTALLER_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "win_system/DynamicLibrary.h"
@@ -51,4 +51,4 @@ private:
   FARPROC m_pUnSetHook;
 };
 
-#endif // __HOOKINSTALLER_H__
+//// __HOOKINSTALLER_H__

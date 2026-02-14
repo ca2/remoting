@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _NOTIFY_ICON_WINDOW_H_
-#define _NOTIFY_ICON_WINDOW_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -46,4 +46,4 @@ protected:
   friend class NotifyIcon;
 };
 
-#endif
+

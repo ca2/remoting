@@ -54,7 +54,7 @@ void UpdateRequestSender::setOutput(RfbOutputGate* output)
 
 	// Start thread.
 	resume();
-	m_logWriter->debug(_T("UpdateRequestServer is started"));
+	m_logWriter->debug("UpdateRequestServer is started");
 }
 
 void UpdateRequestSender::execute()
@@ -74,13 +74,13 @@ void UpdateRequestSender::execute()
 			Thread::sleep(timeout);
 		}
 	}
-	catch(const Exception &ex)
+	catch(const ::remoting::Exception &ex)
 	{
-		m_logWriter->message(_T("UpdateRequestSender. Exception: %s"), ex.getMessage());
+		m_logWriter->message("UpdateRequestSender. ::remoting::Exception: {}", ex.getMessage());
 	}
 	catch(...)
 	{
-		m_logWriter->error(_T("UpdateRequestSender. Unknow error has occured."));
+		m_logWriter->error("UpdateRequestSender. Unknow error has occured.");
 	}
 }
 
@@ -101,18 +101,18 @@ void UpdateRequestSender::sendFbUpdateRequest()
 
 	if (isIncremental)
 	{
-		m_logWriter->debug(_T("Sending frame buffer incremental update request [%dx%d]..."),
+		m_logWriter->debug("Sending frame buffer incremental update request [%dx{}]...",
                       updateRect.width(), updateRect.height());
 	}
 	else
 	{
-		m_logWriter->debug(_T("Sending frame buffer full update request [%dx%d]..."),
+		m_logWriter->debug("Sending frame buffer full update request [%dx{}]...",
                       updateRect.width(), updateRect.height());
 	}
 
 	RfbFramebufferUpdateRequestClientMessage fbUpdReq(isIncremental, updateRect);
 	fbUpdReq.send(m_output);
-	m_logWriter->debug(_T("Frame buffer update request is sent"));
+	m_logWriter->debug("Frame buffer update request is sent");
 }
 
 bool UpdateRequestSender::isUpdated()

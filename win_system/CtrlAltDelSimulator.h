@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __CTRLALTDELSIMULATOR_H__
-#define __CTRLALTDELSIMULATOR_H__
+#pragma once
+
 
 #include "thread/Thread.h"
 
@@ -37,4 +37,4 @@ protected:
   virtual void execute();
 };
 
-#endif // __CTRLALTDELSIMULATOR_H__
+//// __CTRLALTDELSIMULATOR_H__

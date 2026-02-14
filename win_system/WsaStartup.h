@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WSASTARTUP_H__
-#define __WSASTARTUP_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -37,4 +37,4 @@ public:
 private:
 };
 
-#endif // __WSASTARTUP_H__
+//// __WSASTARTUP_H__

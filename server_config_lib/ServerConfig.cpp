@@ -124,7 +124,7 @@ void ServerConfig::serialize(DataOutputStream *output)
   
   output->writeUInt32((unsigned int)m_videoClassNames.size());
   for (size_t i = 0; i < m_videoClassNames.size(); i++) {
-    output->writeUTF8(m_videoClassNames.at(i).getString());
+    output->writeUTF8(m_videoClassNames.at(i));
   }
 
   output->writeUInt32(m_videoRecognitionInterval);
@@ -135,7 +135,7 @@ void ServerConfig::serialize(DataOutputStream *output)
   for (size_t i = 0; i < m_videoRects.size(); i++) {
     ::string s;
     RectSerializer::toString(&(m_videoRects.at(i)),&s);
-    output->writeUTF8(s.getString());
+    output->writeUTF8(s);
   }
 	
   output->writeInt8(m_grabTransparentWindows ? 1 : 0);
@@ -146,7 +146,7 @@ void ServerConfig::serialize(DataOutputStream *output)
   output->writeInt8(m_hasControlPassword ? 1 : 0);
   output->writeInt8(m_showTrayIcon ? 1 : 0);
 
-  output->writeUTF8(m_logFilePath.getString());
+  output->writeUTF8(m_logFilePath);
 }
 
 void ServerConfig::deserialize(DataInputStream *input)
@@ -200,7 +200,7 @@ void ServerConfig::deserialize(DataInputStream *input)
   ::string videoClass;
   for (size_t i = 0; i < count; i++) {
     input->readUTF8(&videoClass);
-    m_videoClassNames.push_back(videoClass);
+    m_videoClassNames.add(videoClass);
   }
 
   m_videoRecognitionInterval = input->readUInt32();
@@ -211,7 +211,7 @@ void ServerConfig::deserialize(DataInputStream *input)
   ::string strVideoRect;
   for (size_t i = 0; i < count; i++) {
     input->readUTF8(&strVideoRect);
-    m_videoRects.push_back(RectSerializer::toRect(&strVideoRect));
+    m_videoRects.add(RectSerializer::toRect(&strVideoRect));
   }
 
   m_grabTransparentWindows = input->readInt8() == 1;
@@ -264,7 +264,7 @@ void ServerConfig::setLogFileDir(const ::scoped_string & scopedstrlogFilePath)
 {
   AutoLock l(this);
 
-  m_logFilePath.setString(logFilePath);
+  m_logFilePath= logFilePath;
 }
 
 IpAccessRule::ActionType ServerConfig::getActionByAddress(unsigned long ip)
@@ -754,7 +754,7 @@ void ServerConfig::setVideoRecognitionInterval(unsigned int interval)
   m_videoRecognitionInterval = interval;
 }
 
-::std::vector<::int_rectangle> *ServerConfig::getVideoRects()
+::array_base<::int_rectangle> *ServerConfig::getVideoRects()
 {
   return &m_videoRects;
 }

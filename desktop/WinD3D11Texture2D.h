@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WIND3D11TEXTURE2D_H__
-#define __WIND3D11TEXTURE2D_H__
+#pragma once
+
 
 #include <d3d11.h>
 #include <DXGI1_2.h>
@@ -45,4 +45,4 @@ private:
   ID3D11Texture2D *m_dxgiTexture;
 };
 
-#endif // __WIND3D11TEXTURE2D_H__
+//// __WIND3D11TEXTURE2D_H__

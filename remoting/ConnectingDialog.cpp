@@ -35,13 +35,13 @@ ConnectingDialog::ConnectingDialog()
 BOOL ConnectingDialog::onInitDialog()
 {
   setControlById(m_hostname, IDC_EHOST);
-  m_hostname.setText(m_strHost.getString());
+  m_hostname.setText(m_strHost);
   setControlById(m_password, IDC_EPASSW);
   m_password.setFocus();
   return FALSE;
 }
 
-void ConnectingDialog::setHostName(const ::string &hostname) {
+void ConnectingDialog::setHostName(const ::scoped_string &hostname) {
   m_strHost = hostname;
 }
 
@@ -124,7 +124,7 @@ while (m_bRunning)
 //
 // };
 
-const ::string & ConnectingDialog::getPassword()
+const ::scoped_string & ConnectingDialog::getPassword()
 {
   return m_strPassword;
 }

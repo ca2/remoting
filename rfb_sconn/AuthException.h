@@ -22,16 +22,16 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __AUTHEXCEPTION_H__
-#define __AUTHEXCEPTION_H__
+#pragma once
+
 
 #include "util/exception.h"
 
-class AuthException : public Exception
+class AuthException : public ::remoting::Exception
 {
 public:
-  AuthException(const ::scoped_string & scopedstrmessage): Exception(message) {}
+  AuthException(const ::scoped_string & scopedstrMessage): ::remoting::Exception(message) {}
   virtual ~AuthException() {}
 };
 
-#endif // __AUTHEXCEPTION_H__
+//// __AUTHEXCEPTION_H__

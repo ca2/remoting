@@ -22,15 +22,15 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __AUTOIMPERSONATOR_H__
-#define __AUTOIMPERSONATOR_H__
+#pragma once
+
 
 #include "Impersonator.h"
 #include "log_writer/LogWriter.h"
 
 // This class automaticly impesonates at the constructor and
 // revertes at the destructor.
-// This class doesn't throw Exception.
+// This class doesn't throw ::remoting::Exception.
 class AutoImpersonator
 {
 public:
@@ -41,4 +41,4 @@ private:
   LogWriter *m_log;
 };
 
-#endif // __AUTOIMPERSONATOR_H__
+//// __AUTOIMPERSONATOR_H__

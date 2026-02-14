@@ -77,7 +77,7 @@ void LoginDialog::updateHistory()
   for (size_t i = 0; i < conHistory->getHostCount(); i++) {
     m_server.insertItem(static_cast<int>(i), conHistory->getHost(i));
   }
-  m_server.setText(currentServer.getString());
+  m_server.setText(currentServer);
   if (m_server.getItemsCount()) {
     if (currentServer.is_empty()) {
       m_server.setSelectedItem(0);
@@ -85,7 +85,7 @@ void LoginDialog::updateHistory()
     ::string server;
     m_server.getText(&server);
     ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
-                            server.getString());
+                            server);
     m_connectionConfig.loadFromStorage(&ccsm);
   }
 }
@@ -97,11 +97,11 @@ void LoginDialog::onConnect()
   m_server.getText(&m_serverHost);
 
   conHistory->load();
-  conHistory->addHost(m_serverHost.getString());
+  conHistory->addHost(m_serverHost);
   conHistory->save();
 
   if (!m_serverHost.is_empty()) {
-    ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH, m_serverHost.getString());
+    ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH, m_serverHost);
     m_connectionConfig.saveToStorage(&ccsm);
   }
 
@@ -123,7 +123,7 @@ BOOL LoginDialog::onOptions()
     m_server.getText(&server);
     if (server.is_empty()) {
       ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
-                              server.getString());
+                              server);
       m_connectionConfig.saveToStorage(&ccsm);
     }
     return FALSE;
@@ -147,7 +147,7 @@ void LoginDialog::openUrl(const ::scoped_string & scopedstrurl)
     message.format(StringTable::getString(IDS_FAILED_TO_OPEN_URL_FORMAT), sysEx.getMessage());
 
     MessageBox(m_ctrlThis.getWindow(),
-               message.getString(),
+               message,
                StringTable::getString(IDS_MBC_TVNVIEWER),
                MB_OK | MB_ICONEXCLAMATION);
   }
@@ -166,7 +166,7 @@ void LoginDialog::setListening(bool isListening)
 void LoginDialog::onListening()
 {
   ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
-                          _T(".listen"));
+                          ".listen");
   m_connectionConfig.loadFromStorage(&ccsm);
 
   m_listening.setEnabled(false);
@@ -187,7 +187,7 @@ BOOL LoginDialog::onCommand(UINT controlID, UINT notificationID)
       updateHistory();
       break;
 
-    // select item in ComboBox with ::std::list of history
+    // select item in ComboBox with ::list of history
     case CBN_SELENDOK:
       {
         int selectedItemIndex = m_server.getSelectedItemIndex();
@@ -197,7 +197,7 @@ BOOL LoginDialog::onCommand(UINT controlID, UINT notificationID)
         ::string server;
         m_server.getItemText(selectedItemIndex, &server);
         ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
-                                server.getString());
+                                server);
         m_connectionConfig.loadFromStorage(&ccsm);
         break;
       }

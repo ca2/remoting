@@ -27,7 +27,7 @@
 #define IDS_URL_LICENSING_FVA           125
 #define IDS_URL_PRODUCT_FVA             126
 #define IDD_CMDLINE                     127
-#define IDS_CMDLINE_HELP                127
+//#define IDS_CMDLINE_HELP                127
 #define IDS_FAILED_TO_OPEN_URL_FORMAT   128
 #define IDR_MAIN                        128
 #define IDD_CONFIGURATION               129
@@ -54,7 +54,7 @@
 #define IDS_UNKNOWN_ERROR_IN_VIEWER     143
 #define IDS_CONFIGURATION_LISTEN_PORT   144
 #define IDS_CONFIGURATION_LOG_LEVEL     145
-#define IDS_CONFIGURATION_HISTORY_LIMIT 146
+//#define IDS_CONFIGURATION_HISTORY_LIMIT 146
 #define IDS_OPTIONS_SCALE               147
 #define IDS_CONFIGURATION_CAPTION       148
 #define IDS_OPTIONS_CAPTION             149
@@ -171,8 +171,8 @@
 #define IDC_ID_EDIT                     1089
 #define IDC_LABEL_ID                    1090
 #define IDC_PROGRESS1                   1093
-#define IDC_HOST                        1094
-#define IDC_HOST2                       1095
+//#define IDC_HOST                        1094
+//#define IDC_HOST2                       1095
 #define IDC_STATUS                      1095
 #define ID_CONN_OPTIONS                 40001
 #define ID_CONN_INFO                    40002
@@ -190,5 +190,5 @@
 #define _APS_NEXT_COMMAND_VALUE         40010
 #define _APS_NEXT_CONTROL_VALUE         1095
 #define _APS_NEXT_SYMED_VALUE           101
-#endif
-#endif
+
+

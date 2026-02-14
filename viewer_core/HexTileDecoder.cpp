@@ -56,7 +56,7 @@ void HexTileDecoder::decode(RfbInputGate *input,
                     ::minimum(y + TILE_SIZE, dstRect.bottom));
 
       if (::int_rectangle(pframebuffer->getDimension()).intersection(tileRect) != tileRect)
-        throw Exception(_T("Error in protocol: incorrect size of tile in hextile-decoder"));
+        throw ::remoting::Exception("Error in protocol: incorrect size of tile in hextile-decoder");
 
       unsigned char flags = input->readUInt8();
       // If tile-coding is RAW.
@@ -97,7 +97,7 @@ void HexTileDecoder::decode(RfbInputGate *input,
           }
         } else { // exist subrect
           if (!backgroundAccepted)
-            throw Exception(_T("Server error in HexTile encoding: background color not accepted"));
+            throw ::remoting::Exception("Server error in HexTile encoding: background color not accepted");
         }
       } // it tile is not RAW
     } // for each tiles in line

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINSERVICEEVENTS_H__
-#define __WINSERVICEEVENTS_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -31,11 +31,11 @@ class WinServiceEvents
 {
 public:
   virtual void onSuccServiceStart() = 0;
-  virtual void onFailedServiceStart(const ::string & reason) = 0;
+  virtual void onFailedServiceStart(const ::scoped_string & reason) = 0;
   virtual void onServiceStop() = 0;
   // This function enables fully functional this object usage,
   // before that all report will be ignored.
   virtual void enable() = 0;
 };
 
-#endif // __WINSERVICEEVENTS_H__
+//// __WINSERVICEEVENTS_H__

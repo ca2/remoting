@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "WinHandles.h"
 #include "Environment.h"
 #include "util/Exception.h"
@@ -44,7 +45,7 @@ HANDLE WinHandles::assignHandleFor(HANDLE hSource, HANDLE hTargetProc,
                       options) == 0) {
     ::string errText;
     Environment::getErrStr(&errText);
-    throw Exception(errText.getString());
+    throw ::remoting::Exception(errText);
   }
   // Try keep of the close rights.
   if (keepCloseRight) {
@@ -52,7 +53,7 @@ HANDLE WinHandles::assignHandleFor(HANDLE hSource, HANDLE hTargetProc,
                         DUPLICATE_CLOSE_SOURCE) == 0) {
       ::string errText;
       Environment::getErrStr(&errText);
-      throw Exception(errText.getString());
+      throw ::remoting::Exception(errText);
     }
   }
   return hDest;
@@ -65,7 +66,7 @@ HANDLE WinHandles::assignHandleFor(HANDLE hSource,
 {
   HANDLE processHandle = OpenProcess(PROCESS_DUP_HANDLE, FALSE, procId);
   if (processHandle == 0) {
-    throw Exception(_T("Couldn't open process to assign a handle"));
+    throw ::remoting::Exception("Couldn't open process to assign a handle");
   }
   HANDLE dstHandle;
   try {

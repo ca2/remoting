@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __CLIENTINPUTHANDLER_H__
-#define __CLIENTINPUTHANDLER_H__
+#pragma once
+
 
 #include "RfbDispatcherListener.h"
 #include "RfbCodeRegistrator.h"
@@ -47,4 +47,4 @@ protected:
   bool m_viewOnly;
 };
 
-#endif // __CLIENTINPUTHANDLER_H__
+//// __CLIENTINPUTHANDLER_H__

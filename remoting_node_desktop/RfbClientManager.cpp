@@ -28,7 +28,7 @@
 #include "server_config_lib/Configurator.h"
 #include "util/MemUsage.h"
 
-RfbClientManager::RfbClientManager(const ::scoped_string & scopedstrserverName,
+RfbClientManager::RfbClientManager(const ::scoped_string & scopedstrServerName,
                                    NewConnectionEvents *newConnectionEvents,
                                    LogWriter *log,
                                    DesktopFactory *desktopFactory)
@@ -38,15 +38,15 @@ RfbClientManager::RfbClientManager(const ::scoped_string & scopedstrserverName,
   m_log(log),
   m_desktopFactory(desktopFactory)
 {
-  m_log->info(_T("Starting rfb client manager"));
+  m_log->information("Starting rfb client manager");
 }
 
 RfbClientManager::~RfbClientManager()
 {
-  m_log->info(_T("~RfbClientManager() has been called"));
+  m_log->information("~RfbClientManager() has been called");
   disconnectAllClients();
   waitUntilAllClientAreBeenDestroyed();
-  m_log->info(_T("~RfbClientManager() has been completed"));
+  m_log->information("~RfbClientManager() has been completed");
 }
 
 void RfbClientManager::onClientTerminate()
@@ -56,7 +56,7 @@ void RfbClientManager::onClientTerminate()
 
 Desktop *RfbClientManager::onClientAuth(RfbClient *client)
 {
-  // The client is now authenticated, so remove its IP from the ban ::std::list.
+  // The client is now authenticated, so remove its IP from the ban ::list.
   ::string ip;
   client->getPeerHost(&ip);
   updateIpInBan(&ip, true);
@@ -89,13 +89,13 @@ Desktop *RfbClientManager::onClientAuth(RfbClient *client)
     } else {
       // Existing
       if (!m_clientList.empty()) {
-        throw Exception(_T("Cannot disconnect existing clients and therefore")
-                        _T(" the client will be disconected")); // Disconnect this client
+        throw ::remoting::Exception("Cannot disconnect existing clients and therefore"
+                        " the client will be disconected"); // Disconnect this client
       }
     }
   }
 
-  // Removing the client from the non-authorized clients ::std::list.
+  // Removing the client from the non-authorized clients ::list.
   for (ClientListIter iter = m_nonAuthClientList.begin();
        iter != m_nonAuthClientList.end(); iter++) {
     RfbClient *clientOfList = *iter;
@@ -105,8 +105,8 @@ Desktop *RfbClientManager::onClientAuth(RfbClient *client)
     }
   }
 
-  // Adding to the authorized ::std::list.
-  m_clientList.push_back(client);
+  // Adding to the authorized ::list.
+  m_clientList.add(client);
 
   if (m_desktop == 0 && !m_clientList.empty()) {
     // Create WinDesktop and notify listeners that the first client has been
@@ -145,7 +145,7 @@ void RfbClientManager::onCheckAccessControl(RfbClient *client)
   try {
     client->getSocketAddr(&peerAddr);
   } catch (...) {
-    throw AuthException(_T("Failed to get IP address of the RFB client"));
+    throw AuthException("Failed to get IP address of the RFB client");
   }
 
   struct sockaddr_in addr_in = peerAddr.getSockAddr();
@@ -167,16 +167,16 @@ void RfbClientManager::onCheckAccessControl(RfbClient *client)
 
     peerAddr.toString(&peerHost);
 
-    int queryRetVal = QueryConnectionApplication::execute(peerHost.getString(),
+    int queryRetVal = QueryConnectionApplication::execute(peerHost,
                                                           config->isDefaultActionAccept(),
                                                           config->getQueryTimeout());
     if (queryRetVal == 1) {
-      throw AuthException(_T("Connection has been rejected"));
+      throw AuthException("Connection has been rejected");
     }
   }
 }
 
-void RfbClientManager::onClipboardUpdate(const ::string & newClipboard)
+void RfbClientManager::onClipboardUpdate(const ::scoped_string & newClipboard)
 {
   AutoLock al(&m_clientListLocker);
   for (ClientListIter iter = m_clientList.begin();
@@ -214,7 +214,7 @@ bool RfbClientManager::isReadyToSend()
 
 void RfbClientManager::onAbnormalDesktopTerminate()
 {
-  m_log->error(_T("onAbnormalDesktopTerminate() called"));
+  m_log->error("onAbnormalDesktopTerminate() called");
   disconnectAllClients();
 }
 
@@ -263,7 +263,7 @@ void RfbClientManager::validateClientList()
   {
     AutoLock al(&m_clientListLocker);
     // If clients are in the IN_READY_TO_REMOVE phase, remove them from the
-    // non-authorized clients ::std::list.
+    // non-authorized clients ::list.
     ClientListIter iter = m_nonAuthClientList.begin();
     while (iter != m_nonAuthClientList.end()) {
       RfbClient *client = *iter;
@@ -276,7 +276,7 @@ void RfbClientManager::validateClientList()
       }
     }
     // If clients are in the IN_READY_TO_REMOVE phase, remove them from the
-    // authorized clients ::std::list.
+    // authorized clients ::list.
     iter = m_clientList.begin();
     while (iter != m_clientList.end()) {
       RfbClient *client = *iter;
@@ -308,7 +308,7 @@ void RfbClientManager::validateClientList()
   }
 }
 
-bool RfbClientManager::checkForBan(const ::string & ip)
+bool RfbClientManager::checkForBan(const ::scoped_string & ip)
 {
   AutoLock al(&m_banListMutex);
 
@@ -330,7 +330,7 @@ bool RfbClientManager::checkForBan(const ::string & ip)
   }
 }
 
-void RfbClientManager::updateIpInBan(const ::string & ip, bool success)
+void RfbClientManager::updateIpInBan(const ::scoped_string & ip, bool success)
 {
   AutoLock al(&m_banListMutex);
 
@@ -346,7 +346,7 @@ void RfbClientManager::updateIpInBan(const ::string & ip, bool success)
       (*it).second.count += 1;
       (*it).second.banLastTime = DateTime::now();
     } else {
-      // Add new element to ban ::std::list with ban count == 0
+      // Add new element to ban ::list with ban count == 0
       BanProp banProp;
       banProp.banLastTime = DateTime::now();
       banProp.count = 0;
@@ -365,8 +365,8 @@ void RfbClientManager::updateIpInBan(const ::string & ip, bool success)
     DateTime lastTime = (*it).second.banLastTime;
     ::string time;
     lastTime.toString(&time);
-    s.format(_T("IP: %s, count: %d, last time: %s\n"), ip.getString(), count, time.getString());
-    str.appendString(s.getString());
+    s.formatf("IP: {}, count: {}, last time: {}\n", ip, count, time);
+    str.appendString(s);
   }
   return str;
 }
@@ -380,21 +380,21 @@ void RfbClientManager::addNewConnection(SocketIPv4 *socket,
   ServerConfig *config = Configurator::getInstance()->getServerConfig();
   int timeout = 1000 * config->getIdleTimeout();
 
-  m_log->error(_T("Set socket idle timeout, %d ms"), timeout);
+  m_log->error("Set socket idle timeout, {} ms", timeout);
 
   try { 
     socket->setSocketOptions(SOL_SOCKET, SO_RCVTIMEO, (char*)&timeout, sizeof(timeout));
     socket->setSocketOptions(SOL_SOCKET, SO_SNDTIMEO, (char*)&timeout, sizeof(timeout));
   } catch ( SocketException ){
-    m_log->error(_T("Can't set socket timeout, error: %d"), WSAGetLastError());
+    m_log->error("Can't set socket timeout, error: {}", WSAGetLastError());
   }
 
   _ASSERT(constViewPort != 0);
 
-  m_log->error(_T("Client #%d connected"), m_nextClientId);
-  m_log->debug(_T("new client, process memory usage: %d "), MemUsage::getCurrentMemUsage());
+  m_log->error("Client #{} connected", m_nextClientId);
+  m_log->debug("new client, process memory usage: {} ", MemUsage::getCurrentMemUsage());
 
-  m_nonAuthClientList.push_back(new RfbClient(m_newConnectionEvents,
+  m_nonAuthClientList.add(new RfbClient(m_newConnectionEvents,
                                               socket, this, this, viewOnly,
                                               isOutgoing,
                                               m_nextClientId,
@@ -405,7 +405,7 @@ void RfbClientManager::addNewConnection(SocketIPv4 *socket,
   m_nextClientId++;
 }
 
-void RfbClientManager::getClientsInfo(RfbClientInfoList *::std::list)
+void RfbClientManager::getClientsInfo(RfbClientInfoList *::list)
 {
   AutoLock al(&m_clientListLocker);
 
@@ -416,7 +416,7 @@ void RfbClientManager::getClientsInfo(RfbClientInfoList *::std::list)
 
       each->getPeerHost(&peerHost);
 
-      ::std::list->push_back(RfbClientInfo(each->getId(), peerHost.getString()));
+      ::list->add(RfbClientInfo(each->getId(), peerHost));
     }
   }
 }

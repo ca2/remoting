@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _FILE_RENAME_DIALOG_H_
-#define _FILE_RENAME_DIALOG_H_
+#pragma once
+
 
 #include "NewFolderDialog.h"
 
@@ -39,4 +39,4 @@ protected:
   virtual BOOL onInitDialog();
 };
 
-#endif
+

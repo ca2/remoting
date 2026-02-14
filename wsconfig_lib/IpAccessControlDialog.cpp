@@ -147,7 +147,7 @@ void IpAccessControlDialog::updateUI()
   m_list.clear();
   for (size_t i = 0; i < m_container->size(); i++) {
     IpAccessRule *ip = m_container->at(i);
-    m_list.addItem(m_list.getCount(), _T(""), (LPARAM)ip);
+    m_list.addItem(m_list.getCount(), "", (LPARAM)ip);
     _ASSERT((int)i == i);
     setListViewItemText((int)i, ip);
   }
@@ -173,7 +173,7 @@ void IpAccessControlDialog::apply()
   m_queryTimeout.getText(&qtStringStorage);
 
   int timeout = 0;
-  StringParser::parseInt(qtStringStorage.getString(), &timeout);
+  StringParser::parseInt(qtStringStorage, &timeout);
 
   AutoLock al(m_config);
 
@@ -190,7 +190,7 @@ void IpAccessControlDialog::apply()
   ipRules->clear();
   for (int i = 0; i < m_list.getCount(); i++) {
     IpAccessRule *rule = (IpAccessRule *)m_list.getItemData(i);
-    ipRules->push_back(rule);
+    ipRules->add(rule);
   }
 }
 
@@ -230,8 +230,8 @@ void IpAccessControlDialog::onAddButtonClick()
   m_editDialog.setIpAccessControl(ip);
   m_editDialog.setEditFlag(false);
   if (m_editDialog.showModal() == IDOK) {
-    m_container->push_back(ip);
-    m_list.addItem(m_list.getCount(), _T(""), (LPARAM)ip);
+    m_container->add(ip);
+    m_list.addItem(m_list.getCount(), "", (LPARAM)ip);
     setListViewItemText(m_list.getCount() - 1, ip);
     updateButtonsState();
     onIpCheckUpdate();
@@ -374,7 +374,7 @@ void IpAccessControlDialog::onIpCheckUpdate()
 
    // Check if ip address is valid.
 
-  if (!IpAccessRule::isIpAddressStringValid(ipStorage.getString())) {
+  if (!IpAccessRule::isIpAddressStringValid(ipStorage)) {
     if (ipStorage.is_empty()) {
       m_ipCheckResult.setText(StringTable::getString(IDS_ENTER_IP_HINT));
     } else {
@@ -388,7 +388,7 @@ void IpAccessControlDialog::onIpCheckUpdate()
   //
 
   AnsiStringStorage ansiIpStorage(&ipStorage);
-  unsigned int addr = inet_addr(ansiIpStorage.getString());
+  unsigned int addr = inet_addr(ansiIpStorage);
 
   IpAccessRule::ActionType action = IpAccessRule::ACTION_TYPE_ALLOW;
   int rulesCount = 0;
@@ -404,20 +404,20 @@ void IpAccessControlDialog::onIpCheckUpdate()
   }
 
   ::string actionDescription;
-  actionDescription.setString(StringTable::getString(IDS_ACTION_UNDEF_HINT));
+  actionDescription= StringTable::getString(IDS_ACTION_UNDEF_HINT);
   switch (action) {
   case IpAccessRule::ACTION_TYPE_ALLOW:
-    actionDescription.setString(StringTable::getString(IDS_ACTION_ACCEPT_HINT));
+    actionDescription= StringTable::getString(IDS_ACTION_ACCEPT_HINT);
     break;
   case IpAccessRule::ACTION_TYPE_DENY:
-    actionDescription.setString(StringTable::getString(IDS_ACTION_REJECT_HINT));
+    actionDescription= StringTable::getString(IDS_ACTION_REJECT_HINT);
     break;
   case IpAccessRule::ACTION_TYPE_QUERY:
-    actionDescription.setString(StringTable::getString(IDS_ACTION_QUERY_HINT));
+    actionDescription= StringTable::getString(IDS_ACTION_QUERY_HINT);
     break;
   }
 
-  m_ipCheckResult.setText(actionDescription.getString());
+  m_ipCheckResult.setText(actionDescription);
 }
 
 void IpAccessControlDialog::onQueryTimeoutUpdate()
@@ -490,8 +490,8 @@ void IpAccessControlDialog::setListViewItemText(int index, IpAccessRule *control
   control->getFirstIp(&firstIp);
   control->getLastIp(&lastIp);
 
-  m_list.setSubItemText(index, 0, firstIp.getString());
-  m_list.setSubItemText(index, 1, lastIp.getString());
+  m_list.setSubItemText(index, 0, firstIp);
+  m_list.setSubItemText(index, 1, lastIp);
   switch (control->getAction()) {
   case IpAccessRule::ACTION_TYPE_ALLOW:
     m_list.setSubItemText(index, 2, StringTable::getString(IDS_ACTION_ACCEPT));

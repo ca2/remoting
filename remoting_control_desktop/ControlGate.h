@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CONTROL_GATE_H_
-#define _CONTROL_GATE_H_
+#pragma once
+
 
 #include "io_lib/DataInputStream.h"
 #include "io_lib/DataOutputStream.h"
@@ -41,4 +41,4 @@ public:
   void skipBytes(unsigned int length);
 };
 
-#endif
+

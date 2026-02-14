@@ -41,12 +41,12 @@ void OperationEventListener::ftOpFinished(FileTransferOperation *sender)
 }
 
 void OperationEventListener::ftOpErrorMessage(FileTransferOperation *sender,
-                                              const ::scoped_string & scopedstrmessage)
+                                              const ::scoped_string & scopedstrMessage)
 {
 }
 
 void
 OperationEventListener::ftOpInfoMessage(FileTransferOperation *sender,
-                                        const ::scoped_string & scopedstrmessage)
+                                        const ::scoped_string & scopedstrMessage)
 {
 }

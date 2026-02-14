@@ -32,7 +32,7 @@
 FileInfoListView::FileInfoListView()
 : m_smallImageList(0)
 {
-  // By default, file ::std::list is sorted by file name.
+  // By default, file ::list is sorted by file name.
   sort(0);
 }
 
@@ -44,16 +44,16 @@ FileInfoListView::~FileInfoListView()
 }
 
 //
-// Saves hwnd and automaticly adds columns to ::std::list view
+// Saves hwnd and automaticly adds columns to ::list view
 //
 
 void FileInfoListView::setWindow(HWND hwnd)
 {
   ListView::setWindow(hwnd);
 
-  ListView::addColumn(0, _T("Name"), 135);
-  ListView::addColumn(1, _T("Size"), 80, LVCFMT_RIGHT);
-  ListView::addColumn(2, _T("Modified"), 115);
+  ListView::addColumn(0, "Name", 135);
+  ListView::addColumn(1, "Size", 80, LVCFMT_RIGHT);
+  ListView::addColumn(2, "Modified", 115);
 
   setFullRowSelectStyle(true);
 
@@ -68,11 +68,11 @@ void FileInfoListView::setWindow(HWND hwnd)
 
 void FileInfoListView::addItem(int index, FileInfo *fileInfo)
 {
-  const ::scoped_string & scopedstrfilename = fileInfo->getFileName();
+  const ::scoped_string & scopedstrFilename = fileInfo->getFileName();
 
   int imageIndex = IMAGE_FILE_INDEX;
 
-  if (_tcscmp(fileInfo->getFileName(), _T("..")) == 0) {
+  if (wcscmp(fileInfo->getFileName(), "..") == 0) {
     imageIndex = IMAGE_FOLDER_UP_INDEX;
   } else if (fileInfo->isDirectory()) {
     imageIndex = IMAGE_FOLDER_INDEX;
@@ -80,8 +80,8 @@ void FileInfoListView::addItem(int index, FileInfo *fileInfo)
 
   ListView::addItem(index, filename, (LPARAM)fileInfo, imageIndex);
 
-  ::string sizeString(_T("<Folder>"));
-  ::string modTimeString(_T(""));
+  ::string sizeString("<Folder>");
+  ::string modTimeString("");
 
   if (!fileInfo->isDirectory()) {
     //
@@ -91,11 +91,11 @@ void FileInfoListView::addItem(int index, FileInfo *fileInfo)
     unsigned long long fileSize = fileInfo->getSize();
 
     if (fileSize <= 1024) {
-      sizeString.format(_T("%ld B"), fileSize);
+      sizeString.formatf("{} B", fileSize);
     } else if ((fileSize > 1024) && (fileSize <= 1024 * 1024)) {
-      sizeString.format(_T("%4.2f KB"), static_cast<double>(fileSize) / 1024.0);
+      sizeString.formatf("%4.2f KB", static_cast<double>(fileSize) / 1024.0);
     } else if (fileSize > 1024 * 1024) {
-      sizeString.format(_T("%4.2f MB"), static_cast<double>(fileSize) / (1024.0 * 1024));
+      sizeString.formatf("%4.2f MB", static_cast<double>(fileSize) / (1024.0 * 1024));
     }
 
     //
@@ -107,8 +107,8 @@ void FileInfoListView::addItem(int index, FileInfo *fileInfo)
     dateTime.toString(&modTimeString);
   }
 
-  ListView::setSubItemText(index, 1, sizeString.getString());
-  ListView::setSubItemText(index, 2, modTimeString.getString());
+  ListView::setSubItemText(index, 1, sizeString);
+  ListView::setSubItemText(index, 2, modTimeString);
 }
 
 void FileInfoListView::addRange(FileInfo **filesInfo, size_t count)
@@ -201,12 +201,12 @@ int FileInfoListView::compareItem(LPARAM lParam1,
   FileInfo *firstItem = reinterpret_cast<FileInfo *>(lParam1);
   FileInfo *secondItem = reinterpret_cast<FileInfo *>(lParam2);
 
-  // Fake directory ".." should be into top ::std::list.
-  if (_tcscmp(firstItem->getFileName(), _T("..")) == 0) {
+  // Fake directory ".." should be into top ::list.
+  if (wcscmp(firstItem->getFileName(), "..") == 0) {
     return -1;
   }
 
-  if (_tcscmp(secondItem->getFileName(), _T("..")) == 0) {
+  if (wcscmp(secondItem->getFileName(), "..") == 0) {
     return 1;
   }
 

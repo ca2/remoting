@@ -97,7 +97,7 @@ bool WindowsCursorShapeGrabber::grabPixels(const PixelFormat & pixelFormat)
 
   m_cursorShape.setProperties(&::int_size(width, height), pixelFormat);
 
-  ::std::vector<char> maskBuff(widthBytes * bmMask.bmHeight);
+  ::array_base<char> maskBuff(widthBytes * bmMask.bmHeight);
   if (maskBuff.empty()) {
     DeleteObject(iconInfo.hbmMask);
     if (isColorShape) {

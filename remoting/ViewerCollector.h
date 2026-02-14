@@ -22,14 +22,14 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _VIEWER_COLLECTOR_H_
-#define _VIEWER_COLLECTOR_H_
+#pragma once
+
 
 #include "thread/LocalMutex.h"
-#include <list>
+//#include <list>
 #include "ViewerInstance.h"
 
-typedef ::std::list<ViewerInstance *> InstanceList;
+typedef ::list<ViewerInstance *> InstanceList;
 
 // Collector instances.
 class ViewerCollector
@@ -38,11 +38,11 @@ public:
   ViewerCollector();
   virtual ~ViewerCollector();
 
-  // Adds instance to a self ::std::list.
+  // Adds instance to a self ::list.
   void addInstance(ViewerInstance *instance);
 
   // Forces terminates all instances, waits until they dies and than
-  // delete them from memory and thread ::std::list.
+  // delete them from memory and thread ::list.
   void destroyAllInstances();
 
   // This function decrease counter of connection, requires reconnect.
@@ -51,7 +51,7 @@ public:
   // Return true, if and only if m_instances is empty()
   bool empty() const;
 
-  // Deletes all stopped instances from memory and removes them from self ::std::list.
+  // Deletes all stopped instances from memory and removes them from self ::list.
   void deleteDeadInstances();
 
 protected:
@@ -63,4 +63,4 @@ protected:
   int m_countToReconnect;
 };
 
-#endif
+

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __INPUTBLOCKER_H__
-#define __INPUTBLOCKER_H__
+#pragma once
+
 
 #include "util/DateTime.h"
 
@@ -47,4 +47,4 @@ public:
   virtual bool isRemoteInputAllowed() = 0;
 };
 
-#endif // __INPUTBLOCKER_H__
+//// __INPUTBLOCKER_H__

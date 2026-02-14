@@ -22,12 +22,12 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RFB_PIXEL_CONVERTER_H_INCLUDED__
-#define __RFB_PIXEL_CONVERTER_H_INCLUDED__
+#pragma onceINCLUDED__
+INCLUDED__
 
 #include "FrameBuffer.h"
 #include "region/Point.h"
-#include <vector>
+//#include <vector>
 
 class PixelConverter
 {
@@ -83,10 +83,10 @@ protected:
   };
 
   ConvertMode m_convertMode;
-  ::std::vector<unsigned int> m_hexBitsTable;
-  ::std::vector<unsigned int> m_redTable;
-  ::std::vector<unsigned int> m_grnTable;
-  ::std::vector<unsigned int> m_bluTable;
+  ::array_base<unsigned int> m_hexBitsTable;
+  ::array_base<unsigned int> m_redTable;
+  ::array_base<unsigned int> m_grnTable;
+  ::array_base<unsigned int> m_bluTable;
 
   PixelFormat m_srcFormat;
   PixelFormat m_dstFormat;
@@ -96,4 +96,4 @@ protected:
   FrameBuffer *m_dstFrameBuffer;
 };
 
-#endif // __RFB_PIXEL_CONVERTER_H_INCLUDED__
+//// __RFB_PIXEL_CONVERTER_H_INCLUDED__

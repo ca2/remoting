@@ -29,14 +29,14 @@
 int _tmain(int argc, TCHAR *argv[])
 {
   if (argc != 3) {
-    _ftprintf(stderr, _T("Not enough parameters\n"));
+    _ftprintf(stderr, "Not enough parameters\n");
     return 1;
   }
   try {
     KeySymTest keySymTest(argv[1], argv[2]);
     keySymTest.run();
-  } catch (Exception &e) {
-    _ftprintf(stderr, _T("Error: %s\n"), e.getMessage());
+  } catch (::remoting::Exception &e) {
+    _ftprintf(stderr, "Error: {}\n", e.getMessage());
     return 1;
   }
   return 0;

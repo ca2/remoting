@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _RFB_SET_ENCODINGS_CLIENT_MESSAGE_H_
-#define _RFB_SET_ENCODINGS_CLIENT_MESSAGE_H_
+#pragma once
+
 
 #include "RfbClientToServerMessage.h"
 #include "rfb/EncodingDefs.h"
@@ -31,13 +31,13 @@
 class RfbSetEncodingsClientMessage : public RfbClientToServerMessage
 {
 public:
-  RfbSetEncodingsClientMessage(const ::std::vector<int> & encodings);
+  RfbSetEncodingsClientMessage(const ::array_base<int> & encodings);
   ~RfbSetEncodingsClientMessage();
 
   void send(RfbOutputGate *output);
 
 private:
-  ::std::vector<int> m_encodings;
+  ::array_base<int> m_encodings;
 };
 
-#endif
+

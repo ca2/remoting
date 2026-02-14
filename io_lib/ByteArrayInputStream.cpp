@@ -23,8 +23,9 @@
 //
 #include "framework.h"
 #include "ByteArrayInputStream.h"
-
+#include "acme/exception/io.h"
 #include <algorithm>
+
 
 ByteArrayInputStream::ByteArrayInputStream(const char *buffer, size_t bufferSize)
 : m_buffer(buffer), m_bufferSize(bufferSize), m_left(bufferSize)
@@ -38,11 +39,11 @@ ByteArrayInputStream::~ByteArrayInputStream()
 size_t ByteArrayInputStream::read(void *buffer, size_t len)
 {
   if (m_left == 0) {
-    throw IOException(_T("End of stream reached"));
+    throw ::io_exception(error_io, "End of stream reached");
   }
 
   if (len < 0) {
-    throw IOException(_T("Negative data length value"));
+    throw ::io_exception(error_io, "Negative data length value");
   }
 
   char *out = (char *)buffer;

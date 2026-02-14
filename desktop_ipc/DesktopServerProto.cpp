@@ -39,14 +39,14 @@ void DesktopServerProto::checkPixelFormat(const PixelFormat & pf)
 {
   ::string errMess;
   if (pf.bitsPerPixel != 16 && pf.bitsPerPixel != 32) {
-    errMess.format(_T("Wrong value of bits per pixel (%d)"),
+    errMess.formatf("Wrong value of bits per pixel ({})",
                    (int)pf.bitsPerPixel);
-    throw Exception(errMess.getString());
+    throw ::remoting::Exception(errMess);
   }
   if (pf.colorDepth > pf.bitsPerPixel) {
-    errMess.format(_T("Wrong value (color depth (%d) > bits per pixel (%d))"),
+    errMess.formatf("Wrong value (color depth ({}) > bits per pixel ({}))",
                    (int)pf.colorDepth, (int)pf.bitsPerPixel);
-    throw Exception(errMess.getString());
+    throw ::remoting::Exception(errMess);
   }
 }
 
@@ -58,11 +58,11 @@ void DesktopServerProto::checkRectangle(const ::int_rectangle &  rect)
       abs(rect.right)  > 32000 ||
       abs(rect.bottom) > 32000 ||
       !rect.isValid()) {
-    errMess.format(_T("Wrong rectangle (%d, %d, %d, %d)"), rect.left,
+    errMess.formatf("Wrong rectangle ({}, {}, {}, {})", rect.left,
                                                            rect.top,
                                                            rect.right,
                                                            rect.bottom);
-    throw Exception(errMess.getString());
+    throw ::remoting::Exception(errMess);
   }
 }
 
@@ -71,9 +71,9 @@ void DesktopServerProto::checkDimension(const ::int_size & dim)
   ::string errMess;
   if (abs(dim->width)  > 64000 ||
       abs(dim->height) > 64000) {
-    errMess.format(_T("Wrong dimension (%dx%d)"), dim->width,
+    errMess.formatf("Wrong dimension (%dx{})", dim->width,
                                                   dim->height);
-    throw Exception(errMess.getString());
+    throw ::remoting::Exception(errMess);
   }
 }
 
@@ -158,8 +158,8 @@ void DesktopServerProto::sendRect(const ::int_rectangle &  rect,
 
 void DesktopServerProto::sendRegion(const Region *region, BlockingGate *gate)
 {
-  ::std::vector<::int_rectangle> rects;
-  ::std::vector<::int_rectangle>::iterator iRect;
+  ::array_base<::int_rectangle> rects;
+  ::array_base<::int_rectangle>::iterator iRect;
   region->getRectVector(&rects);
 
   unsigned int numRects = (unsigned int)rects.size();
@@ -213,7 +213,7 @@ void DesktopServerProto::readFrameBuffer(FrameBuffer *dstFb,
   dstFb->copyFrom(dstRect, &fb, 0, 0);
 }
 
-void DesktopServerProto::sendNewClipboard(const ::string & newClipboard,
+void DesktopServerProto::sendNewClipboard(const ::scoped_string & newClipboard,
                                           BlockingGate *gate)
 {
   gate->writeUTF8(newClipboard->getString());
@@ -259,8 +259,8 @@ void DesktopServerProto::readKeyEvent(unsigned int *keySym, bool *down,
   *down = gate->readUInt8() != 0;
 }
 
-void DesktopServerProto::sendUserInfo(const ::string & desktopName,
-                                      const ::string & userName,
+void DesktopServerProto::sendUserInfo(const ::scoped_string & desktopName,
+                                      const ::scoped_string & userName,
                                       BlockingGate *gate)
 {
   gate->writeUTF8(desktopName->getString());
@@ -300,16 +300,16 @@ void DesktopServerProto::sendConfigSettings(BlockingGate *gate)
   size_t stringCount = wndClassNames->size();
   gate->writeUInt32((unsigned int)stringCount);
   for (; iter < wndClassNames->end(); iter++) {
-    gate->writeUTF8((*iter).getString());
+    gate->writeUTF8((*iter));
   }
   // Send video rects
-  ::std::vector<::int_rectangle> *Rects = srvConf->getVideoRects();
+  ::array_base<::int_rectangle> *Rects = srvConf->getVideoRects();
   size_t size = Rects->size();
   gate->writeUInt32((unsigned int)size);
   for (size_t i = 0; i < size; i++) {
     ::string s;
     RectSerializer::toString(&(Rects->at(i)), &s);
-    gate->writeUTF8(s.getString());
+    gate->writeUTF8(s);
   }
   // Send video recognition interval
   gate->writeUInt32(srvConf->getVideoRecognitionInterval());
@@ -341,15 +341,15 @@ void DesktopServerProto::readConfigSettings(BlockingGate *gate)
   ::string tmpString;
   for (size_t i = 0; i < stringCount; i++) {
     gate->readUTF8(&tmpString);
-    srvConf->getVideoClassNames()->push_back(tmpString);
+    srvConf->getVideoClassNames()->add(tmpString);
   }
   // Receive video rects
   stringCount = gate->readUInt32();
 
-  tmpString.setString(_T(""));
+  tmpString= "";
   for (size_t i = 0; i < stringCount; i++) {
     gate->readUTF8(&tmpString);
-    srvConf->getVideoRects()->push_back(RectSerializer::toRect(&tmpString));
+    srvConf->getVideoRects()->add(RectSerializer::toRect(&tmpString));
   }
 
   // Receive video recognition interval

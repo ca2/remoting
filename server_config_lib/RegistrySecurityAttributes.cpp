@@ -67,8 +67,8 @@ void RegistrySecurityAttributes::fillExplicitAccess(EXPLICIT_ACCESS *rules,
 void RegistrySecurityAttributes::fillExplicitAccesses(EXPLICIT_ACCESS serviceRules[2],
                                                       EXPLICIT_ACCESS applicationRules[2])
 {
-  m_admins = SecurityIdentifier::createSidFromString(_T("S-1-5-32-544"));
-  m_serviceOwner = SecurityIdentifier::createSidFromString(_T("S-1-5-18"));
+  m_admins = SecurityIdentifier::createSidFromString("S-1-5-32-544");
+  m_serviceOwner = SecurityIdentifier::createSidFromString("S-1-5-18");
   m_applicationOwner = SecurityIdentifier::getProcessOwner(GetCurrentProcess());
 
   _ASSERT(m_admins->isValid());

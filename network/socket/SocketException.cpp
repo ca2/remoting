@@ -25,19 +25,19 @@
 #include "SocketException.h"
 
 SocketException::SocketException()
-: Exception()
+: ::remoting::Exception()
 {
   setErrno(WSAGetLastError());
 }
 
 SocketException::SocketException(int error)
-: Exception()
+: ::remoting::Exception()
 {
   setErrno(error);
 }
 
-SocketException::SocketException(const ::scoped_string & scopedstrmessage)
-: Exception(message), m_errno(0)
+SocketException::SocketException(const ::scoped_string & scopedstrMessage)
+: ::remoting::Exception(message), m_errno(0)
 {
 }
 
@@ -57,5 +57,5 @@ void SocketException::setErrno(int error)
                 (LPTSTR)&buffer[0],
                 sizeof(buffer), NULL);
 
-  m_message.setString(&buffer[0]);
+  m_message= &buffer[0];
 }

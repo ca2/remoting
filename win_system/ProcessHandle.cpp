@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "ProcessHandle.h"
 #include "win_system/SystemException.h"
 
@@ -44,8 +45,8 @@ void ProcessHandle::openProcess(DWORD dwDesiredAccess,
   m_hProcess = OpenProcess(dwDesiredAccess, bInheritHandle, dwProcessId);
   if (m_hProcess == 0) {
     ::string errMess;
-    errMess.format(_T("Can't open the %d process"), dwProcessId);
-    throw SystemException(errMess.getString());
+    errMess.formatf("Can't open the {} process", dwProcessId);
+    throw SystemException(errMess);
   }
 }
 
@@ -61,7 +62,7 @@ void ProcessHandle::getProcessModulePath(::string & exePath)
   DWORD result = GetModuleFileNameEx(m_hProcess, 0, path,
                                      sizeof(path) / sizeof(TCHAR));
   if (result == 0) {
-    throw SystemException(_T("Can't get process module path"));
+    throw SystemException("Can't get process module path");
   }
-  exePath->setString(path);
+  exePath-= path;
 }

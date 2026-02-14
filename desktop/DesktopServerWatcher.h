@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __DESKTOPSERVERWATCHER_H__
-#define __DESKTOPSERVERWATCHER_H__
+#pragma once
+
 
 #include "thread/Thread.h"
 #include "win_system/Process.h"
@@ -61,4 +61,4 @@ protected:
   LogWriter *m_log;
 };
 
-#endif // __DESKTOPSERVERWATCHER_H__
+//// __DESKTOPSERVERWATCHER_H__

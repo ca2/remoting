@@ -22,10 +22,10 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _IP_ACCESS_CONTROL_H_
-#define _IP_ACCESS_CONTROL_H_
+#pragma once
 
-#include <vector>
+
+//#include <vector>
 
 #include "IpAccessRule.h"
 
@@ -36,11 +36,11 @@
 
 
 
-class IpAccessControl : public ::std::vector<IpAccessRule *>
+class IpAccessControl : public ::array_base<IpAccessRule *>
 {
 public:
   void serialize(DataOutputStream *output);
   void deserialize(DataInputStream *input);
 };
 
-#endif
+

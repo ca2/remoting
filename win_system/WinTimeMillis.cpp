@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "WinTimeMillis.h"
 
 WinTimeMillis::WinTimeMillis(void)

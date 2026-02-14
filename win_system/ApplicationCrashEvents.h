@@ -22,15 +22,15 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __APPLICATIONCRASHEVENTS_H__
-#define __APPLICATIONCRASHEVENTS_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
 class ApplicationCrashEvents
 {
 public:
-  virtual void onCrash(const ::string & dumpPath) = 0;
+  virtual void onCrash(const ::scoped_string & dumpPath) = 0;
 };
 
-#endif // __APPLICATIONCRASHEVENTS_H__
+//// __APPLICATIONCRASHEVENTS_H__

@@ -255,13 +255,13 @@ void ServerConfigDialog::apply()
 
   int intVal = 0;
 
-  StringParser::parseInt(rfbPortText.getString(), &intVal);
+  StringParser::parseInt(rfbPortText, &intVal);
   m_config->setRfbPort(intVal);
   
-  StringParser::parseInt(httpPortText.getString(), &intVal);
+  StringParser::parseInt(httpPortText, &intVal);
   m_config->setHttpPort(intVal);
 
-  StringParser::parseInt(pollingIntervalText.getString(), &intVal);
+  StringParser::parseInt(pollingIntervalText, &intVal);
   m_config->setPollingInterval(intVal);
 
   m_config->enableFileTransfers(m_enableFileTransfers.isChecked());
@@ -299,7 +299,7 @@ void ServerConfigDialog::apply()
   int timeout = 0;
 
   m_config->setLocalInputPriority(m_localInputPriority.isChecked());
-  if (StringParser::parseInt(liptStringStorage.getString(), &timeout)) {
+  if (StringParser::parseInt(liptStringStorage, &timeout)) {
     timeout = max(0, timeout);
     m_config->setLocalInputPriorityTimeout((unsigned int)timeout);
   }
@@ -347,9 +347,9 @@ void ServerConfigDialog::initControls()
   int limitersTmp[] = {50, 200};
   int deltasTmp[] = {5, 10};
 
-  ::std::vector<int> limitters(limitersTmp, limitersTmp + sizeof(limitersTmp) /
+  ::array_base<int> limitters(limitersTmp, limitersTmp + sizeof(limitersTmp) /
                                                         sizeof(int));
-  ::std::vector<int> deltas(deltasTmp, deltasTmp + sizeof(deltasTmp) /
+  ::array_base<int> deltas(deltasTmp, deltasTmp + sizeof(deltasTmp) /
                                                  sizeof(int));
 
   m_pollingIntervalSpin.setBuddy(&m_pollingInterval);

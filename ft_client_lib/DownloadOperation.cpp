@@ -27,16 +27,16 @@
 DownloadOperation::DownloadOperation(LogWriter *logWriter,
                                      const FileInfo *filesToDownload,
                                      size_t filesCount,
-                                     const ::scoped_string & scopedstrpathToTargetRoot,
-                                     const ::scoped_string & scopedstrpathToSourceRoot)
+                                     const ::scoped_string & scopedstrPathToTargetRoot,
+                                     const ::scoped_string & scopedstrPathToSourceRoot)
 : CopyOperation(logWriter),
   m_file(0),
   m_fos(0),
   m_fileOffset(0),
   m_bufferSize(20000)
 {
-  m_pathToSourceRoot.setString(pathToSourceRoot);
-  m_pathToTargetRoot.setString(pathToTargetRoot);
+  m_pathToSourceRoot = pathToSourceRoot;
+  m_pathToTargetRoot = pathToTargetRoot;
 
   m_toCopy = new FileInfoList(filesToDownload, filesCount);
 
@@ -49,7 +49,7 @@ DownloadOperation::~DownloadOperation()
     delete m_toCopy->getRoot();
   }
   if (m_fos != NULL) {
-    try { m_fos->close(); } catch (IOException) { }
+    try { m_fos->close(); } catch (::io_exception) { }
     delete m_fos;
   }
   if (m_file != NULL) {
@@ -109,7 +109,7 @@ void DownloadOperation::onDownloadReply(DataInputStream *input)
   // Try to create file on local file system and open it for writting
   //
 
-  m_file = new File(m_pathToTargetFile.getString());
+  m_file = new File(m_pathToTargetFile);
 
   if (m_fileOffset == 0) {
     m_file->truncate();
@@ -118,11 +118,11 @@ void DownloadOperation::onDownloadReply(DataInputStream *input)
   try {
     ::string path;
     m_file->getPath(&path);
-    m_fos = new WinFileChannel(path.getString(), F_WRITE, FM_OPEN);
+    m_fos = new WinFileChannel(path, F_WRITE, FM_OPEN);
     // Seek to initial file position to continue writting
     m_fos->seek((long long)m_fileOffset);
     m_totalBytesCopied += m_fileOffset;
-  } catch (Exception &ioEx) {
+  } catch (::remoting::Exception &ioEx) {
     notifyFailedToDownload(ioEx.getMessage());
     gotoNext();
     return;
@@ -152,7 +152,7 @@ void DownloadOperation::onDownloadDataReply(DataInputStream *input)
       dos.writeFully(&m_replyBuffer->getDownloadBuffer().front(),
                      m_replyBuffer->getDownloadBufferSize());
     }
-  } catch (IOException &ioEx) {
+  } catch (::io_exception &ioEx) {
     notifyFailedToDownload(ioEx.getMessage());
     gotoNext();
     return ;
@@ -202,7 +202,7 @@ void DownloadOperation::onDownloadEndReply(DataInputStream *input)
   try {
     m_file->setLastModified(m_replyBuffer->getDownloadLastModified());
   } catch (...) {
-    notifyFailedToDownload(_T("Cannot set modification time"));
+    notifyFailedToDownload("Cannot set modification time");
   }
 
   delete m_file;
@@ -226,7 +226,7 @@ void DownloadOperation::onLastRequestFailedReply(DataInputStream *input)
 
     m_replyBuffer->getLastErrorMessage(&message);
 
-    notifyFailedToDownload(message.getString());
+    notifyFailedToDownload(message);
 
     // Download next file
     gotoNext();
@@ -252,10 +252,10 @@ void DownloadOperation::startDownload()
   if (m_toCopy->getFirst()->getParent() == NULL) {
     ::string message;
 
-    message.format(_T("Downloading '%s' %s"), m_pathToTargetFile.getString(),
-                   fileInfo->isDirectory() ? _T("folder") : _T("file"));
+    message.formatf("Downloading '{}' {}", m_pathToTargetFile,
+                   fileInfo->isDirectory() ? "folder") : _T("file");
 
-    notifyInformation(message.getString());
+    notifyInformation(message);
   } // logging
 
   if (fileInfo->isDirectory()) {
@@ -274,7 +274,7 @@ void DownloadOperation::processFile()
 {
   m_fileOffset = 0;
 
-  File targetFile(m_pathToTargetFile.getString());
+  File targetFile(m_pathToTargetFile);
 
   if (targetFile.exists()) {
     FileInfo *sourceFileInfo = m_toCopy->getFileInfo();
@@ -286,7 +286,7 @@ void DownloadOperation::processFile()
 
     int action = m_copyListener->targetFileExists(sourceFileInfo,
                                                   &targetFileInfo,
-                                                  m_pathToTargetFile.getString());
+                                                  m_pathToTargetFile);
     switch (action) {
     case CopyFileEventListener::TFE_OVERWRITE:
       break;
@@ -308,22 +308,22 @@ void DownloadOperation::processFile()
   } // if target file exists
 
   // Send request that we want to download file
-  m_sender->sendDownloadRequest(m_pathToSourceFile.getString(), m_fileOffset);
+  m_sender->sendDownloadRequest(m_pathToSourceFile, m_fileOffset);
 }
 
 void DownloadOperation::processFolder()
 {
-  File local(m_pathToTargetFile.getString());
+  File local(m_pathToTargetFile);
   if (local.exists() && local.isDirectory()) {
   } else {
     if (!local.mkdir()) {
       // Logging
       ::string message;
 
-      message.format(_T("Error: failed to create local folder '%s'"),
-                     m_pathToTargetFile.getString());
+      message.formatf("Error: failed to create local folder '{}'",
+                     m_pathToTargetFile);
 
-      notifyError(message.getString());
+      notifyError(message);
 
       // Download next file
       gotoNext();
@@ -331,7 +331,7 @@ void DownloadOperation::processFolder()
     }
   }
 
-  m_sender->sendFileListRequest(m_pathToSourceFile.getString(),
+  m_sender->sendFileListRequest(m_pathToSourceFile,
                                 m_replyBuffer->isCompressionSupported());
 }
 
@@ -344,7 +344,7 @@ void DownloadOperation::gotoNext()
   bool hasParent = current->getFirst()->getParent() != NULL;
 
   if (hasChild) {
-    // If it has child, we must download child file ::std::list first
+    // If it has child, we must download child file ::list first
     changeFileToDownload(current->getChild());
     startDownload();
   } else if (hasNext) {
@@ -382,14 +382,14 @@ void DownloadOperation::tryCalcInputFilesSize()
 
       fil->getAbsolutePath(&pathNoRoot, _T('/'));
 
-      pathToFile.setString(m_pathToSourceRoot.getString());
+      pathToFile= m_pathToSourceRoot;
       if (!pathToFile.endsWith(_T('/'))) {
-        pathToFile.appendString(_T("/"));
+        pathToFile.appendString("/");
       }
-      pathToFile.appendString(pathNoRoot.getString());
+      pathToFile.appendString(pathNoRoot);
 
       m_foldersToCalcSizeLeft++;
-      m_sender->sendFolderSizeRequest(pathToFile.getString());
+      m_sender->sendFolderSizeRequest(pathToFile);
     } else {
       m_totalBytesToCopy += fil->getFileInfo()->getSize();
     }
@@ -424,17 +424,17 @@ void DownloadOperation::notifyFailedToDownload(const ::scoped_string & scopedstr
 {
   ::string message;
 
-  message.format(_T("Error: failed to download '%s' (%s)"),
-                 m_pathToSourceFile.getString(),
+  message.formatf("Error: failed to download '{}' ({})",
+                 m_pathToSourceFile,
                  errorDescription);
 
-  notifyError(message.getString());
+  notifyError(message);
 }
 
 void DownloadOperation::changeFileToDownload(FileInfoList *toDownload)
 {
   m_toCopy = toDownload;
 
-  getRemotePath(m_toCopy, m_pathToSourceRoot.getString(), &m_pathToSourceFile);
-  getLocalPath(m_toCopy, m_pathToTargetRoot.getString(), &m_pathToTargetFile);
+  getRemotePath(m_toCopy, m_pathToSourceRoot, &m_pathToSourceFile);
+  getLocalPath(m_toCopy, m_pathToTargetRoot, &m_pathToTargetFile);
 }

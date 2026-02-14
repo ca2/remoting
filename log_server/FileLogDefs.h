@@ -22,9 +22,9 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __FILE_LOG_DEFS_H__
-#define __FILE_LOG_DEFS_H__
+#pragma once
+
 
 typedef size_t FileAccountHandle;
 
-#endif // __FILE_LOG_DEFS_H__
+//// __FILE_LOG_DEFS_H__

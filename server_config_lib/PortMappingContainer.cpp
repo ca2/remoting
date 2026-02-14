@@ -46,7 +46,7 @@ PortMappingContainer::operator=(const PortMappingContainer &other)
 
 void PortMappingContainer::pushBack(PortMapping element)
 {
-  m_vector.push_back(element);
+  m_vector.add(element);
 }
 
 size_t PortMappingContainer::find(PortMapping searchElement) const
@@ -75,7 +75,7 @@ size_t PortMappingContainer::findByPort(int port) const
 void PortMappingContainer::remove(size_t index)
 {
   size_t i = 0;
-  for (::std::vector<PortMapping>::iterator it = m_vector.begin();
+  for (::array_base<PortMapping>::iterator it = m_vector.begin();
        it != m_vector.end(); it++) {
     if (i == index) {
       m_vector.erase(it);
@@ -127,7 +127,7 @@ void PortMappingContainer::serialize(DataOutputStream *output) const
   for (size_t i = 0; i < count(); i++) {
     at(i)->toString(&string);
 
-    output->writeUTF8(string.getString());
+    output->writeUTF8(string);
   }
 }
 
@@ -145,8 +145,8 @@ void PortMappingContainer::deserialize(DataInputStream *input)
 
     input->readUTF8(&string);
 
-    if (!PortMapping::parse(string.getString(), &record)) {
-      throw Exception(_T("Invalid port mapping string"));
+    if (!PortMapping::parse(string, &record)) {
+      throw ::remoting::Exception("Invalid port mapping string");
     }
 
     pushBack(record);

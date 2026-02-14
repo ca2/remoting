@@ -22,8 +22,7 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _REGISTRY_SETTINGS_MANAGER_
-#define _REGISTRY_SETTINGS_MANAGER_
+#pragma once
 
 ////#include "util/::string.h"
 #include "win_system/RegistryKey.h"
@@ -47,7 +46,7 @@ public:
   virtual bool deleteKey(const ::scoped_string & scopedstrName);
 
   virtual bool getString(const ::scoped_string & scopedstrName, ::string & value);
-  virtual bool setString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrvalue);
+  virtual bool setString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrPayload);
 
   virtual bool getLong(const ::scoped_string & scopedstrName, long *value);
   virtual bool setLong(const ::scoped_string & scopedstrName, long value);
@@ -74,4 +73,4 @@ public:
   virtual ::string key_name(const ::scoped_string & scopedstrKey);
 };
 
-#endif
+

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _MULTI_THREAD_TCP_SERVER_H_
-#define _MULTI_THREAD_TCP_SERVER_H_
+#pragma once
+
 
 #include "thread/Thread.h"
 #include "util/Exception.h"
@@ -46,7 +46,7 @@ public:
    * @param bool autoStart if true, then server starts listening for incoming connections
    * in it's own thread, if false, then you must call protected start() method later from subclass.
    * @param lockAddr determinates if need to lock adress to other processes cannot reuse it.
-   * @throws Exception if fail to create tcp server.
+   * @throws ::remoting::Exception if fail to create tcp server.
    */
   TcpServer(const ::scoped_string & scopedstrbindHost,
             unsigned short bindPort,
@@ -101,4 +101,4 @@ private:
   unsigned short m_bindPort;
 };
 
-#endif
+

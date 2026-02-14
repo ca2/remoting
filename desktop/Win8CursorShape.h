@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WIN8CURSORSHAPE_H__
-#define __WIN8CURSORSHAPE_H__
+#pragma once
+
 
 #include "rfb/CursorShape.h"
 
@@ -52,4 +52,4 @@ private:
   CursorShape m_cursorShape;
 };
 
-#endif // __WIN8CURSORSHAPE_H__
+//// __WIN8CURSORSHAPE_H__

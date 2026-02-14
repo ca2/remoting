@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __SCREENDRIVERFACTORY_H__
-#define __SCREENDRIVERFACTORY_H__
+#pragma once
+
 
 #include "ScreenDriver.h"
 #include "UpdateKeeper.h"
@@ -41,4 +41,4 @@ public:
 private:
 };
 
-#endif // __SCREENDRIVERFACTORY_H__
+//// __SCREENDRIVERFACTORY_H__

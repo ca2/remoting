@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __UPDATEDETECTOR_H__
-#define __UPDATEDETECTOR_H__
+#pragma once
+
 
 #include "UpdateKeeper.h"
 #include "thread/GuiThread.h"
@@ -52,4 +52,4 @@ protected:
   UpdateListener *m_updateListener;
 };
 
-#endif // __UPDATEDETECTOR_H__
+//// __UPDATEDETECTOR_H__

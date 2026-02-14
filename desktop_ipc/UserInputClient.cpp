@@ -53,9 +53,9 @@ void UserInputClient::onRequest(unsigned char reqCode, BlockingGate *backGate)
     break;
   default:
     ::string errMess;
-    errMess.format(_T("Unknown %d protocol code received from a pipe ")
-                   _T("UserInputServer"), (int)reqCode);
-    throw Exception(errMess.getString());
+    errMess.formatf("Unknown {} protocol code received from a pipe "
+                   "UserInputServer", (int)reqCode);
+    throw ::remoting::Exception(errMess);
     break;
   }
 }
@@ -79,7 +79,7 @@ void UserInputClient::setMouseEvent(const Point newPos, unsigned char keyFlag)
   }
 }
 
-void UserInputClient::setNewClipboard(const ::string & newClipboard)
+void UserInputClient::setNewClipboard(const ::scoped_string & newClipboard)
 {
   AutoLock al(m_forwGate);
   try {
@@ -145,9 +145,9 @@ void UserInputClient::getDisplayNumberCoords(::int_rectangle *rect,
   } while (!success);
 }
 
-::std::vector<::int_rectangle> UserInputClient::getDisplaysCoords()
+::array_base<::int_rectangle> UserInputClient::getDisplaysCoords()
 {
-  ::std::vector<::int_rectangle> res;
+  ::array_base<::int_rectangle> res;
   AutoLock al(m_forwGate);
   bool success = false;
   unsigned char number;
@@ -159,7 +159,7 @@ void UserInputClient::getDisplayNumberCoords(::int_rectangle *rect,
       number = m_forwGate->readUInt8();
       for (size_t i = 0; i < number; i++) {
         ::int_rectangle rect = readRect(m_forwGate);
-        res.push_back(rect);
+        res.add(rect);
       }
       success = true;
     }
@@ -202,7 +202,7 @@ void UserInputClient::getWindowCoords(HWND hwnd, ::int_rectangle *rect)
         // This made to avoid code duplication.
         ::string errMess;
         m_forwGate->readUTF8(&errMess);
-        throw BrokenHandleException(errMess.getString());
+        throw BrokenHandleException(errMess);
       }
       success = true;
     } catch (ReconnectException &) {
@@ -210,7 +210,7 @@ void UserInputClient::getWindowCoords(HWND hwnd, ::int_rectangle *rect)
   } while (!success);
 }
 
-HWND UserInputClient::getWindowHandleByName(const ::string & windowName)
+HWND UserInputClient::getWindowHandleByName(const ::scoped_string & windowName)
 {
   AutoLock al(m_forwGate);
   bool success = false;

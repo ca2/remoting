@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RFBKEYSYM_H__
-#define __RFBKEYSYM_H__
+#pragma once
+
 
 #include "RfbKeySymListener.h"
 #include "util/Keymap.h"
@@ -113,4 +113,4 @@ private:
   bool m_winKeyIgnore;
 };
 
-#endif // __RFBKEYSYM_H__
+//// __RFBKEYSYM_H__

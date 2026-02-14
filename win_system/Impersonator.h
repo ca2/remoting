@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _IMPERSONATOR_H_
-#define _IMPERSONATOR_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 //#include "util/::string.h"
@@ -71,4 +71,4 @@ protected:
   LogWriter *m_log;
 };
 
-#endif
+

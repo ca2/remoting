@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _VIEWER_CMD_LINE_H_
-#define _VIEWER_CMD_LINE_H_
+#pragma once
+
 
 #include "win_system/WinProcessCommandLine.h"
 #include "client_config_lib/ViewerConfig.h"
@@ -94,7 +94,7 @@ protected:
   ViewerConfig *m_config;
   bool *m_isListening;
 
-  ::std::map<::string, ::string> m_options;
+  ::map<::string, ::string> m_options;
 
 private:
   struct CmdLineOption
@@ -126,4 +126,4 @@ private:
   void parseLogPath();
 };
 
-#endif
+

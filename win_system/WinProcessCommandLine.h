@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WIN_PROCESS_COMMAND_LINE_H__
-#define __WIN_PROCESS_COMMAND_LINE_H__
+#pragma once
+
 
 #include "WinCommandLineArgs.h"
 
@@ -54,12 +54,12 @@ public:
 protected:
   WinCommandLineArgs *m_wcla;
 
-  ::std::vector<::string> m_strParam;
-  ::std::vector<::std::pair<::string, ::string>> m_strParams;
+  ::string_array m_strParam;
+  ::array_base<::std::pair<::string, ::string>> m_strParams;
 
 private:
   void optionParser(::string & out);
 
 };
 
-#endif
+

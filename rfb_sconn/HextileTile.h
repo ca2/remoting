@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RFB_HEXTILE_TILE_H_INCLUDED__
-#define __RFB_HEXTILE_TILE_H_INCLUDED__
+#pragma onceINCLUDED__
+INCLUDED__
 
 #include "TightPalette.h"
 #include "util/inttypes.h"
@@ -265,4 +265,4 @@ template<class PIXEL_T> void HextileTile<PIXEL_T>::encode(unsigned char *dst) co
   _ASSERT(dst - numSubrectsPtr == m_size);
 }
 
-#endif // __RFB_HEXTILE_TILE_H_INCLUDED__
+//// __RFB_HEXTILE_TILE_H_INCLUDED__

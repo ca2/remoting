@@ -22,10 +22,10 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __CAPCONTAINER_H__
-#define __CAPCONTAINER_H__
+#pragma once
 
-#include <vector>
+
+//#include <vector>
 #include "util/inttypes.h"
 #include "io_lib/DataOutputStream.h"
 
@@ -37,8 +37,8 @@ struct Cap
   char nameSignature[8];
 };
 
-typedef ::std::vector<Cap> CapVector;
-typedef ::std::vector<Cap>::const_iterator CapVectorConstIter;
+typedef ::array_base<Cap> CapVector;
+typedef ::array_base<Cap>::const_iterator CapVectorConstIter;
 
 class CapContainer
 {
@@ -58,4 +58,4 @@ private:
   CapVector m_caps;
 };
 
-#endif // __CAPCONTAINER_H__
+//// __CAPCONTAINER_H__

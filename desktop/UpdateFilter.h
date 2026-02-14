@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __UPDATEFILTER_H__
-#define __UPDATEFILTER_H__
+#pragma once
+
 
 #include "WindowsScreenGrabber.h"
 #include "ScreenDriver.h"
@@ -62,4 +62,4 @@ private:
   LogWriter *m_log;
 };
 
-#endif // __UPDATEFILTER_H__
+//// __UPDATEFILTER_H__

@@ -22,16 +22,16 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINDXRECOVERABLEEXCEPTION_H__
-#define __WINDXRECOVERABLEEXCEPTION_H__
+#pragma once
+
 
 #include "WinDxException.h"
 
 class WinDxRecoverableException : public WinDxException
 {
 public:
-  WinDxRecoverableException(const ::scoped_string & scopedstrmessage, HRESULT errCode);
+  WinDxRecoverableException(const ::scoped_string & scopedstrMessage, HRESULT errCode);
   virtual ~WinDxRecoverableException();
 };
 
-#endif // __WINDXRECOVERABLEEXCEPTION_H__
+//// __WINDXRECOVERABLEEXCEPTION_H__

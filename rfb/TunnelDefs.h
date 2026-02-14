@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __TUNNELDEFS_H__
-#define __TUNNELDEFS_H__
+#pragma once
+
 
 #include "util/inttypes.h"
 
@@ -35,4 +35,4 @@ public:
 private:
 };
 
-#endif // __TUNNELDEFS_H__
+//// __TUNNELDEFS_H__

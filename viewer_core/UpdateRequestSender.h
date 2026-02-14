@@ -49,5 +49,5 @@ private:
 	LocalMutex m_outputLock;
 };
 
-#endif //_UPDATE_REQUEST_SENDER_
+//_UPDATE_REQUEST_SENDER_
 

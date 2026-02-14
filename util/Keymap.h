@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _KEYMAP_H_
-#define _KEYMAP_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -73,4 +73,4 @@ public:
   bool unicodeCharToKeySym(WCHAR ch, unsigned int *keySym);
 };
 
-#endif
+

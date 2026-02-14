@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CONTROL_PROXY_H_
-#define _CONTROL_PROXY_H_
+#pragma once
+
 
 #include "remoting_control_desktop/ControlGate.h"
 #include "remoting_control_desktop/RfbClientInfo.h"
@@ -34,7 +34,7 @@
 #include "ControlMessage.h"
 #include "RemoteException.h"
 
-#include <list>
+//#include <list>
 
 
 
@@ -60,7 +60,7 @@ public:
   // *passwordFile parameter then getPassFromConfigEnabled. Call this function
   // to determine this parameters. If this function has not been called then
   // on server auth request will be used a dialog box.
-  void setPasswordProperties(const ::scoped_string & scopedstrpasswordFile,
+  void setPasswordProperties(const ::scoped_string & scopedstrPasswordFile,
                              bool getPassFromConfigEnabled,
                              bool forService);
 
@@ -68,22 +68,22 @@ public:
    * Returns rfb server info status.
    * @return rfb server info status.
    * @throws RemoteException on error on server.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    */
   TvnServerInfo getServerInfo();
 
   /**
-   * Gets rfb client ::std::list.
+   * Gets rfb client ::list.
    * @param clients [out] output parameters to retrieve info of clients.
    * @throws RemoteException on error on server.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    */
-  void getClientsList(::std::list<RfbClientInfo *> *clients);
+  void getClientsList(::list<RfbClientInfo *> *clients);
 
   /**
    * Reloads rfb server configuration.
    * @throws RemoteException on error on server.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    * @deprecated.
    */
   void reloadServerConfig();
@@ -91,14 +91,14 @@ public:
   /**
    * Disconnects all existing rfb clients from server.
    * @throws RemoteException on error on server.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    */
   void disconnectAllClients();
 
   /**
    * Shutdowns TightVNC server.
    * @throws RemoteException on error on server.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    */
   void shutdownTightVnc();
 
@@ -107,7 +107,7 @@ public:
    * @param connectString connect string in host[:(port|diplay)] format.
    * @param viewOnly if rfb connection must be in view only mode.
    * @throws RemoteException on error on server.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    */
   void makeOutgoingConnection(const ::scoped_string & scopedstrconnectString, bool viewOnly);
 
@@ -128,7 +128,7 @@ public:
 
   // Share a rect that constrained by a window form.
   // shareWindowName - is a part of the window header name.
-  void shareWindow(const ::string & shareWindowName);
+  void shareWindow(const ::scoped_string & shareWindowName);
 
   // Share only a rect.
   void shareRect(const ::int_rectangle &  shareRect);
@@ -143,7 +143,7 @@ public:
    * Sends new configuration to server.
    * @param config new server configuration.
    * @throws RemoteException on error on server.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    */
   void setServerConfig(ServerConfig *config);
 
@@ -151,13 +151,13 @@ public:
    * Gets current configuration from server.
    * @param config [out] output parameter where configuration will be stored.
    * @throws RemoteException on error on server.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    */
   void getServerConfig(ServerConfig *config);
 
   /**
    * Checks if TvnControl must show icon in tray.
-   * @throws IOException on io error, RemoteException on error on server side.
+   * @throws ::io_exception on io error, RemoteException on error on server side.
    */
   bool getShowTrayIconFlag();
 
@@ -165,7 +165,7 @@ public:
    * Updates TvnControl application process id on server side.
    * @param processId tvncontrol application process id.
    * @throws RemoteException on error on server.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    */
   void updateTvnControlProcessId(DWORD processId);
 
@@ -197,4 +197,4 @@ private:
   bool m_forService;
 };
 
-#endif
+

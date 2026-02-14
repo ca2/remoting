@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __NAMEDPIPE_H__
-#define __NAMEDPIPE_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "WindowsEvent.h"
@@ -51,7 +51,7 @@ public:
   /**
    * Closes transport.
    *
-   * @throws Exception on fail.
+   * @throws ::remoting::Exception on fail.
    */
   void close();
 
@@ -60,7 +60,7 @@ public:
    * Implemented from Channel interface.
    * @param buffer buffer to receive data.
    * @param len count of bytes to read.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    */
   virtual size_t read(void *buffer, size_t len);
 
@@ -69,7 +69,7 @@ public:
    * Implemented from Channel interface.
    * @param buffer buffer with data to write.
    * @param len count of bytes to write.
-   * @throws IOException on io error.
+   * @throws ::io_exception on io error.
    */
   virtual size_t write(const void *buffer, size_t len);
 
@@ -89,4 +89,4 @@ private:
   bool m_asServer;
 };
 
-#endif // __NAMEDPIPE_H__
+//// __NAMEDPIPE_H__

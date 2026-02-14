@@ -36,7 +36,7 @@ Win8ScreenDriver::Win8ScreenDriver(UpdateKeeper *updateKeeper,
   m_updateListener(updateListener),
   m_detectionEnabled(false)
 {
-  m_log->debug(_T("Win8ScreenDriver creating new Win8ScreenDriverImpl"));
+  m_log->debug("Win8ScreenDriver creating new Win8ScreenDriverImpl");
   AutoLock al(&m_drvImplMutex);
   m_drvImpl = new Win8ScreenDriverImpl(m_log, m_updateKeeper, m_fbLocalMutex, m_updateListener);
 }
@@ -100,18 +100,18 @@ bool Win8ScreenDriver::getScreenSizeChanged()
 bool Win8ScreenDriver::applyNewScreenProperties()
 {
   try {
-    m_log->debug(_T("Applying new screen properties, deleting old Win8ScreenDriverImpl"));
+    m_log->debug("Applying new screen properties, deleting old Win8ScreenDriverImpl");
     AutoLock al(&m_drvImplMutex);
     if (m_drvImpl != 0) {
       delete m_drvImpl;
       m_drvImpl = 0;
     }
-    m_log->debug(_T("Applying new screen properties, creating new Win8ScreenDriverImpl"));
+    m_log->debug("Applying new screen properties, creating new Win8ScreenDriverImpl");
     Win8ScreenDriverImpl *drvImpl =
       new Win8ScreenDriverImpl(m_log, m_updateKeeper, m_fbLocalMutex, m_updateListener, m_detectionEnabled);
     m_drvImpl = drvImpl;
-  } catch (Exception &e) {
-    m_log->error(_T("Can't apply new screen properties: %s"), e.getMessage());
+  } catch (::remoting::Exception &e) {
+    m_log->error("Can't apply new screen properties: {}", e.getMessage());
     return false;
   }
   return true;

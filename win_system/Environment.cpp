@@ -21,8 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-#include "framework.h"
-#include "Environment.h"
+#include "framework.h"#include "Environment.h"
 #include "CtrlAltDelSimulator.h"
 
 #include <shlobj.h>
@@ -32,7 +31,7 @@
 #include "win_system/ProcessHandle.h"
 #include "Shell.h"
 #include "DynamicLibrary.h"
-#include <vector>
+//#include <vector>
 #include <algorithm>
 
 OSVERSIONINFO Environment::m_osVerInfo = { 0 };
@@ -58,17 +57,17 @@ void Environment::getErrStr(::string & out)
                     MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US),
                     (LPTSTR)&buffer[0],
                     sizeof(buffer), NULL) == 0) {
-    out->format(_T("<<Cannot get text error describing>> (%u)"), errCode);
+    out->format("<<Cannot get text error describing>> (%u)", errCode);
   } else {
-    out->format(_T("%s (%u)"), buffer, errCode);
+    out->format("{} (%u)", buffer, errCode);
   }
 }
 
-void Environment::getErrStr(const ::scoped_string & scopedstrspecification, ::string & out)
+void Environment::getErrStr(const ::scoped_string & scopedstrSpecification, ::string & out)
 {
   ::string sysErrText;
   getErrStr(&sysErrText);
-  out->format(_T("%s (%s)"), specification, sysErrText.getString());
+  out->format("{} ({})", specification, sysErrText);
 }
 
 bool Environment::getSpecialFolderPath(int specialFolderId, ::string & out)
@@ -93,7 +92,7 @@ bool Environment::getSpecialFolderPath(int specialFolderId, ::string & out)
 
   TCHAR path[MAX_PATH + 1];
   if (SHGetSpecialFolderPath(NULL, &path[0], csidl, TRUE) == TRUE) {
-    out->setString(&path[0]);
+    out-= &path[0];
     returnVal = true;
   }
 
@@ -102,7 +101,7 @@ bool Environment::getSpecialFolderPath(int specialFolderId, ::string & out)
 
 bool Environment::getCurrentModulePath(::string & out)
 {
-  ::std::vector<TCHAR> buffer;
+  ::array_base<TCHAR> buffer;
   DWORD size = MAX_PATH;
 
   while (true) {
@@ -120,7 +119,7 @@ bool Environment::getCurrentModulePath(::string & out)
     }
   } // while
 
-  out->setString(&buffer[0]);
+  out-= &buffer[0];
 
   return true;
 } // void
@@ -166,7 +165,7 @@ bool Environment::getComputerName(::string & out)
   if (GetComputerName(compName, &length) == 0) {
     return false;
   }
-  out->setString(compName);
+  out-= compName;
   out->toLowerCase();
   return true;
 }
@@ -222,7 +221,7 @@ bool Environment::isWin7()
 void Environment::simulateCtrlAltDel(LogWriter *log)
 {
   // FIXME: Do not use log here.
-  log->info(_T("Requested Ctrl+Alt+Del simulation"));
+  log->information("Requested Ctrl+Alt+Del simulation");
 
   // Are we running on Windows NT OS family?
   if (!isVistaOrLater() && isWinNTFamily()) {
@@ -234,17 +233,17 @@ void Environment::simulateCtrlAltDel(LogWriter *log)
 void Environment::simulateCtrlAltDelUnderVista(LogWriter *log)
 {
   // FIXME: Do not use log here.
-  log->info(_T("Requested Ctrl+Alt+Del simulation under Vista or later"));
+  log->information("Requested Ctrl+Alt+Del simulation under Vista or later");
 
   try {
-    DynamicLibrary sasLib(_T("sas.dll"));
+    DynamicLibrary sasLib("sas.dll");
     SendSas sendSas = (SendSas)sasLib.getProcAddress("SendSAS");
     if (sendSas == 0) {
-      throw Exception(_T("The SendSAS function has not been found"));
+      throw ::remoting::Exception("The SendSAS function has not been found");
     }
     sendSas(FALSE); // Try only under service
-  } catch (Exception &e) {
-    log->error(_T("The simulateCtrlAltDelUnderVista() function failed: %s"),
+  } catch (::remoting::Exception &e) {
+    log->error("The simulateCtrlAltDelUnderVista() function failed: {}",
                e.getMessage());
   }
 }
@@ -252,23 +251,23 @@ void Environment::simulateCtrlAltDelUnderVista(LogWriter *log)
 bool Environment::isAeroOn(LogWriter *log)
 {
   try {
-    DynamicLibrary dwmLib(_T("Dwmapi.dll"));
+    DynamicLibrary dwmLib("Dwmapi.dll");
     DwmIsCompositionEnabled dwmIsEnabled =
       (DwmIsCompositionEnabled)dwmLib.getProcAddress("DwmIsCompositionEnabled");
     if (dwmIsEnabled == 0) {
-      throw Exception(_T("The DwmIsCompositionEnabled() has not been found in the Dwmapi.dll"));
+      throw ::remoting::Exception("The DwmIsCompositionEnabled() has not been found in the Dwmapi.dll");
     }
     BOOL result = FALSE;
     HRESULT dwmIsEnabledResult = dwmIsEnabled(&result);
     if (dwmIsEnabledResult != S_OK) {
       ::string errMess;
-      errMess.format(_T("The DwmIsCompositionEnabled() error code is %d"),
+      errMess.formatf("The DwmIsCompositionEnabled() error code is {}",
                      (int)dwmIsEnabledResult);
-      throw Exception(_T(""));
+      throw ::remoting::Exception("");
     }
     return result != FALSE;
-  } catch (Exception &e) {
-    log->error(_T("The DwmIsCompositionEnabled() function failed: %s"),
+  } catch (::remoting::Exception &e) {
+    log->error("The DwmIsCompositionEnabled() function failed: {}",
                e.getMessage());
     throw;
   }

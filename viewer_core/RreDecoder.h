@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _RRE_DECODER_H_
-#define _RRE_DECODER_H_
+#pragma once
+
 
 #include "DecoderOfRectangle.h"
 
@@ -39,4 +39,4 @@ protected:
                       const ::int_rectangle &  dstRect);
 };
 
-#endif
+

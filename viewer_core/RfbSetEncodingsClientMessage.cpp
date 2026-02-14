@@ -25,7 +25,7 @@
 #include "RfbSetEncodingsClientMessage.h"
 #include "DecoderStore.h"
 
-RfbSetEncodingsClientMessage::RfbSetEncodingsClientMessage(const ::std::vector<int> & encodings)
+RfbSetEncodingsClientMessage::RfbSetEncodingsClientMessage(const ::array_base<int> & encodings)
 {
   m_encodings = encodings;
 }
@@ -43,7 +43,7 @@ void RfbSetEncodingsClientMessage::send(RfbOutputGate *output)
   // output count of encoding and out code of all encodings
   output->writeUInt16(static_cast<unsigned short>(m_encodings.size()));
 
-  for (::std::vector<int>::iterator i = m_encodings.begin();
+  for (::array_base<int>::iterator i = m_encodings.begin();
        i != m_encodings.end();
        i++) {
     output->writeInt32(*i);

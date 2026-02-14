@@ -25,12 +25,12 @@
 //
 // TightPalette class is a container for ordered color values. Colors
 // are keys in a hash where values are frequency counts. Also, there
-// is a ::std::list where colors are always sorted by these counts (more
+// is a ::list where colors are always sorted by these counts (more
 // frequent first).
 //
 
-#ifndef __RFB_TIGHTPALETTE_H_INCLUDED__
-#define __RFB_TIGHTPALETTE_H_INCLUDED__
+#pragma onceINCLUDED__
+INCLUDED__
 
 #include <string.h>
 #include "util/inttypes.h"
@@ -127,4 +127,4 @@ protected:
 
 };
 
-#endif // __RFB_TIGHTPALETTE_H_INCLUDED__
+//// __RFB_TIGHTPALETTE_H_INCLUDED__

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __UNICODESTRINGSTORAGE_H__
-#define __UNICODESTRINGSTORAGE_H__
+#pragma once
+
 
 //#include "::string.h"
 
@@ -32,15 +32,15 @@ class UnicodeStringStorage
 public:
   UnicodeStringStorage();
   UnicodeStringStorage(const WCHAR *string);
-  UnicodeStringStorage(const ::string & string);
+  UnicodeStringStorage(const ::scoped_string & string);
   UnicodeStringStorage(const UnicodeStringStorage &stringBuffer);
   ~UnicodeStringStorage();
 
-  void fromStringStorage(const ::string & src);
+  void fromStringStorage(const ::scoped_string & src);
   void toStringStorage(::string & dst);
 
   // Fills internal buffer by the string.
-  virtual void setString(const WCHAR *string);
+  virtual void= const WCHAR *string;
 
   // Returns pointer to the first symbol.
   const WCHAR *getString() const;
@@ -56,8 +56,8 @@ public:
   bool is_empty() const;
 
 private:
-  typedef ::std::vector<WCHAR> BufferType;
+  typedef ::array_base<WCHAR> BufferType;
   BufferType m_buffer;
 };
 
-#endif // __UNICODESTRINGSTORAGE_H__
+//// __UNICODESTRINGSTORAGE_H__

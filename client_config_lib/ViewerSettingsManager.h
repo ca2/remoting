@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _VIEWER_SETTINGS_MANAGER_H_
-#define _VIEWER_SETTINGS_MANAGER_H_
+#pragma once
+
 
 #include "config_lib/RegistrySettingsManager.h"
 
@@ -41,4 +41,4 @@ protected:
   static SettingsManager *s_instance;
 };
 
-#endif
+

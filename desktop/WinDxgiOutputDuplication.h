@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINDXGIOUTPUTDUPLICATION_H__
-#define __WINDXGIOUTPUTDUPLICATION_H__
+#pragma once
+
 
 #include "WinDxgiOutput1.h"
 #include "rfb/CursorShape.h"
@@ -47,13 +47,13 @@ public:
 
   // Throws WinDxException on an error.
   // Returns count of got "move" rects.
-  // Also, the function resize the moveRects ::std::vector if it's needed.
-  size_t getFrameMoveRects(::std::vector<DXGI_OUTDUPL_MOVE_RECT> *moveRects);
+  // Also, the function resize the moveRects ::array_base if it's needed.
+  size_t getFrameMoveRects(::array_base<DXGI_OUTDUPL_MOVE_RECT> *moveRects);
 
   // Throws WinDxException on an error.
   // Returns count of got "dirty" rects.
-  // Also, the function resize the dirtyRects ::std::vector if it's needed.
-  size_t getFrameDirtyRects(::std::vector<RECT> *dirtyRects);
+  // Also, the function resize the dirtyRects ::array_base if it's needed.
+  size_t getFrameDirtyRects(::array_base<RECT> *dirtyRects);
 
   // Throws WinDxException on an error.
   // Modifies cursorShape with new data.
@@ -65,4 +65,4 @@ private:
   IDXGIOutputDuplication *m_outDupl;
 };
 
-#endif // __WINDXGIOUTPUTDUPLICATION_H__
+//// __WINDXGIOUTPUTDUPLICATION_H__

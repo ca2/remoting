@@ -30,8 +30,8 @@ documentation and/or software.
 
 */
 
-#ifndef _MD5_H_
-#define _MD5_H_
+#pragma once
+
 
 #include "util/inttypes.h"
 
@@ -89,4 +89,4 @@ private:
   unsigned char m_digest[16];
 };
 
-#endif
+

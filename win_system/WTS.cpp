@@ -21,8 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-#include "framework.h"
-#include "WTS.h"
+#include "framework.h"#include "WTS.h"
 
 #include "SystemException.h"
 #include "thread/AutoLock.h"
@@ -59,7 +58,7 @@ DWORD WTS::getActiveConsoleSessionId(LogWriter *log)
   }
   id = m_WTSGetActiveConsoleSessionId();
 
-  log->debug(_T("Active console session Id: %d"), id);
+  log->debug("Active console session Id: {}", id);
 
   return id;
 }
@@ -84,11 +83,11 @@ DWORD WTS::getRdpSessionId(LogWriter *log)
     for (DWORD i = 0; i < count; i++) {
       if (sessionInfo[i].State == WTSActive) {
         ::string sessionName(sessionInfo[i].pWinStationName);
-        log->debug(_T("Enumerate Sessions, Id: %d, Name: %s"), sessionInfo[i].SessionId, sessionName.getString());
+        log->debug("Enumerate Sessions, Id: {}, Name: {}", sessionInfo[i].SessionId, sessionName);
         sessionName.toLowerCase();
-        if (sessionName.find(_T("rdp")) != 0) {
+        if (sessionName.find("rdp") != 0) {
           sessionId = (DWORD)sessionInfo[i].SessionId;
-          log->debug(_T("RDP Session selected, Id: %d"), sessionId);
+          log->debug("RDP Session selected, Id: {}", sessionId);
         }
       }
     }
@@ -121,7 +120,7 @@ bool WTS::SessionIsRdpSession(DWORD sessionId, LogWriter *log)
   }
   ::string sessionName((TCHAR *)buffer);
   sessionName.toLowerCase();
-  if (sessionName.find(_T("rdp")) != 0) {
+  if (sessionName.find("rdp") != 0) {
     res = true;
   }
   wtsFreeMemory(buffer);
@@ -150,16 +149,16 @@ HANDLE WTS::sessionUserToken(DWORD sessionId, LogWriter* log)
 
   if (m_WTSQueryUserToken != 0) {
     if (!m_WTSQueryUserToken(sessionId, &token)) {
-      throw SystemException(_T("WTSQueryUserToken error:"));
+      throw SystemException("WTSQueryUserToken error:");
     }
   }
   else {
     if (m_userProcessToken == INVALID_HANDLE_VALUE) {
-      throw SystemException(_T("No console user process id specified"));
+      throw SystemException("No console user process id specified");
     }
     if (!DuplicateTokenEx(m_userProcessToken, 0, NULL, SecurityImpersonation,
       TokenPrimary, &token)) {
-      throw SystemException(_T("Could not duplicate token"));
+      throw SystemException("Could not duplicate token");
     }
   }
   return token;
@@ -184,7 +183,7 @@ HANDLE WTS::sessionUserToken(DWORD sessionId, LogWriter* log)
   DWORD byteCount;
   if (m_WTSQuerySessionInformation(WTS_CURRENT_SERVER_HANDLE, sessionId,
     WTSUserName, &buffer, &byteCount) != 0) {
-    userName.setString((TCHAR*)buffer);
+    userName= (TCHAR*)buffer;
     wtsFreeMemory(buffer);
   }
   return userName;
@@ -265,29 +264,29 @@ void WTS::duplicatePipeClientToken(HANDLE pipeHandle)
   if (!impThread.getImpersonationSuccess()) {
     ::string faultReason, errMessage;
     impThread.getFaultReason(&faultReason);
-    errMessage.format(_T("Can't impersonate thread by pipe handle: %s"),
-                      faultReason.getString());
-    throw Exception(errMessage.getString());
+    errMessage.formatf("Can't impersonate thread by pipe handle: {}",
+                      faultReason);
+    throw ::remoting::Exception(errMessage);
   }
 
   HANDLE threadHandle = OpenThread(THREAD_QUERY_INFORMATION, FALSE,
                                    impThread.getThreadId());
   if (threadHandle == 0) {
-    throw SystemException(_T("Can't open thread to duplicate")
-                          _T(" impersonate token"));
+    throw SystemException("Can't open thread to duplicate"
+                          " impersonate token");
   }
   try {
     HANDLE userThreadToken;
     if (OpenThreadToken(threadHandle, TOKEN_ALL_ACCESS, TRUE, &userThreadToken) == 0) {
-      throw SystemException(_T("Can't open process token to duplicate")
-                            _T(" impersonate token"));
+      throw SystemException("Can't open process token to duplicate"
+                            " impersonate token");
     }
     try {
       HANDLE userThreadDuplicatedToken;
       if (DuplicateTokenEx(userThreadToken, 0, 0, SecurityImpersonation,
                            TokenPrimary, &userThreadDuplicatedToken) == 0) {
-        throw SystemException(_T("Can't duplicate token from impersonated")
-                              _T(" to a named pipe client token"));
+        throw SystemException("Can't duplicate token from impersonated"
+                              " to a named pipe client token");
       }
       if (m_userProcessToken != INVALID_HANDLE_VALUE) {
         CloseHandle(m_userProcessToken);
@@ -310,13 +309,13 @@ void WTS::initialize(LogWriter *log)
   _ASSERT(!m_initialized);
 
   try {
-    m_kernel32Library = new DynamicLibrary(_T("Kernel32.dll"));
+    m_kernel32Library = new DynamicLibrary("Kernel32.dll");
     m_WTSGetActiveConsoleSessionId = (pWTSGetActiveConsoleSessionId)m_kernel32Library->getProcAddress("WTSGetActiveConsoleSessionId");
-  } catch (Exception &e) {
-    log->error(_T("Can't load the Kernel32.dll library: %s"), e.getMessage());
+  } catch (::remoting::Exception &e) {
+    log->error("Can't load the Kernel32.dll library: {}", e.getMessage());
   }
   try {
-    m_wtsapi32Library = new DynamicLibrary(_T("Wtsapi32.dll"));
+    m_wtsapi32Library = new DynamicLibrary("Wtsapi32.dll");
     m_WTSQueryUserToken = (pWTSQueryUserToken)m_wtsapi32Library->getProcAddress("WTSQueryUserToken");
 #ifdef UNICODE
     m_WTSQuerySessionInformation = (pWTSQuerySessionInformation)m_wtsapi32Library->getProcAddress("WTSQuerySessionInformationW");
@@ -326,8 +325,8 @@ void WTS::initialize(LogWriter *log)
     m_WTSEnumerateSessions = (pWTSEnumerateSessions)m_wtsapi32Library->getProcAddress("WTSEnumerateSessionsA");
 #endif
     m_WTSFreeMemory = (pWTSFreeMemory)m_wtsapi32Library->getProcAddress("WTSFreeMemory");
-  } catch (Exception &e) {
-    log->error(_T("Can't load the Wtsapi32.dll library: %s"), e.getMessage());
+  } catch (::remoting::Exception &e) {
+    log->error("Can't load the Wtsapi32.dll library: {}", e.getMessage());
   }
 
   m_initialized = true;
@@ -337,7 +336,7 @@ HANDLE currentProcessUserToken(LogWriter* log)
 {
   HANDLE token = NULL;
   HANDLE procHandle = GetCurrentProcess();
-  log->debug(_T("Try OpenProcessToken(%p, , )"), (void*)procHandle);
+  log->debug("Try OpenProcessToken(%p, , )", (void*)procHandle);
   if (OpenProcessToken(procHandle, TOKEN_DUPLICATE, &token) == 0) {
     throw SystemException();
   }
@@ -360,17 +359,17 @@ HANDLE WTS::duplicateCurrentProcessUserToken(bool rdpEnabled, LogWriter* log)
   }
   activeSession = getActiveConsoleSessionId(log);
 
-  log->debug(_T("rdpSession user name: %s"), getUserName(rdpSession, log).getString());
-  log->debug(_T("activeSession user name: %s"), getUserName(activeSession, log).getString());
+  log->debug("rdpSession user name: {}", getUserName(rdpSession, log));
+  log->debug("activeSession user name: {}", getUserName(activeSession, log));
 
   if (rdp) {
     sessionId = rdpSession;
-    log->info(_T("Connect as RDP user at %d session"), sessionId);
+    log->information("Connect as RDP user at {} session", sessionId);
   } else {
     sessionId = getActiveConsoleSessionId(log);
-    log->info(_T("Connect as current user at %d session"), sessionId);
+    log->information("Connect as current user at {} session", sessionId);
   }
-  log->debug(_T("Session user name: %s"), getUserName(sessionId, log).getString());
+  log->debug("Session user name: {}", getUserName(sessionId, log));
 
   HANDLE token;
 
@@ -390,7 +389,7 @@ HANDLE WTS::duplicateUserImpersonationToken(HANDLE token, DWORD sessionId, LogWr
 {
   HANDLE userToken;
 
-  log->debug(_T("Try DuplicateTokenEx(%p, , , , , )"), (void*)token);
+  log->debug("Try DuplicateTokenEx(%p, , , , , )", (void*)token);
   if (DuplicateTokenEx(token,
     MAXIMUM_ALLOWED,
     0,
@@ -400,7 +399,7 @@ HANDLE WTS::duplicateUserImpersonationToken(HANDLE token, DWORD sessionId, LogWr
     throw SystemException();
   }
 
-  log->debug(_T("Try SetTokenInformation(%p, , , )"), (void*)userToken);
+  log->debug("Try SetTokenInformation(%p, , , )", (void*)userToken);
   if (SetTokenInformation(userToken,
     (TOKEN_INFORMATION_CLASS)TokenSessionId,
     &sessionId,
@@ -413,16 +412,16 @@ HANDLE WTS::duplicateUserImpersonationToken(HANDLE token, DWORD sessionId, LogWr
   // and run from "Program Files/"
 
   DWORD uiAccess = 1; // Nonzero enables UI control
-  log->debug(_T("Try SetTokenInformation(%p, , , ) with UIAccess=1"), (void*)userToken);
+  log->debug("Try SetTokenInformation(%p, , , ) with UIAccess=1", (void*)userToken);
 
   if (SetTokenInformation(userToken,
     (TOKEN_INFORMATION_CLASS)TokenUIAccess,
     &uiAccess,
     sizeof(uiAccess)) == 0) {
-    log->info(_T("Can't set UIAccess=1, ignore it"));
+    log->information("Can't set UIAccess=1, ignore it");
   }
   ::string name = getTokenUserName(userToken);
-  log->debug(_T("duplicate user token for user: %s, session ID: %d"), name.getString(), sessionId);
+  log->debug("duplicate user token for user: {}, session ID: {}", name, sessionId);
 
   return userToken;
 }
@@ -448,7 +447,7 @@ HANDLE WTS::duplicateUserImpersonationToken(HANDLE token, DWORD sessionId, LogWr
   TCHAR* domain = new TCHAR[domainSize + 1];
   LookupAccountSid(NULL, pSID, user, &userSize, domain, &domainSize, &sidName); 
   user[userSize] = _T('\0');
-  name.setString(user);
+  name= user;
   delete[] data;
   delete[] domain;
   delete[] user;

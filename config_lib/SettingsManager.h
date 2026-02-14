@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _SETTINGS_MANAGER_
-#define _SETTINGS_MANAGER_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 //#include "util/::string.h"
@@ -40,7 +40,7 @@ public:
   virtual bool deleteKey(const ::scoped_string & scopedstrName) = 0;
 
   virtual bool getString(const ::scoped_string & scopedstrName, ::string & storage) = 0;
-  virtual bool setString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrvalue) = 0;
+  virtual bool setString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrPayload) = 0;
 
   virtual bool getLong(const ::scoped_string & scopedstrName, long *value) = 0;
   virtual bool setLong(const ::scoped_string & scopedstrName, long value) = 0;
@@ -61,4 +61,4 @@ public:
   virtual bool setBinaryData(const ::scoped_string & scopedstrName, const void *value, size_t size) = 0;
 };
 
-#endif
+

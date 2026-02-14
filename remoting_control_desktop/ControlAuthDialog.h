@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CONTROL_AUTH_DIALOG_H_
-#define _CONTROL_AUTH_DIALOG_H_
+#pragma once
+
 
 #include "gui/BaseDialog.h"
 #include "gui/TextBox.h"
@@ -51,4 +51,4 @@ private:
   TextBox m_passwordTextBox;
 };
 
-#endif
+

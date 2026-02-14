@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _UNICODE_H_
-#define _UNICODE_H_
+#pragma once
+
 
 class Unicode
 {
@@ -36,4 +36,4 @@ public:
   static bool isEnabled();
 };
 
-#endif
+

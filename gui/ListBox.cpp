@@ -32,12 +32,12 @@ ListBox::~ListBox()
 {
 }
 
-void ListBox::addString(const ::scoped_string & scopedstrstr)
+void ListBox::addString(const ::scoped_string & scopedstrStr)
 {
   addString(str, 0);
 }
 
-void ListBox::addString(const ::scoped_string & scopedstrstr, void *tag)
+void ListBox::addString(const ::scoped_string & scopedstrStr, void *tag)
 {
   LRESULT lresult = SendMessage(m_hwnd, LB_ADDSTRING, 0, (LPARAM)str);
   int i = (int)lresult;
@@ -66,12 +66,12 @@ void ListBox::getItemText(int index, ::string & storage)
 {
   size_t length = SendMessage(m_hwnd, LB_GETTEXTLEN, index, NULL);
   _ASSERT(length <= 65536);
-  ::std::vector<TCHAR> buffer(length + 1);
+  ::array_base<TCHAR> buffer(length + 1);
   SendMessage(m_hwnd, LB_GETTEXT, index, (LPARAM)&buffer.front());
-  storage->setString(&buffer.front());
+  storage-= &buffer.front();
 }
 
-void ListBox::setItemText(int index, const ::scoped_string & scopedstrstr)
+void ListBox::setItemText(int index, const ::scoped_string & scopedstrStr)
 {
   int si = getSelectedIndex();
   int top = getTopIndex();
@@ -87,7 +87,7 @@ void ListBox::setItemText(int index, const ::scoped_string & scopedstrstr)
   setTopIndex(top);
 }
 
-void ListBox::appendString(const ::scoped_string & scopedstrstr, LPARAM data)
+void ListBox::appendString(const ::scoped_string & scopedstrStr, LPARAM data)
 {
   LRESULT lresult = SendMessage(m_hwnd, LB_ADDSTRING, 0, (LPARAM)str);
   int index = (int)lresult;
@@ -95,12 +95,12 @@ void ListBox::appendString(const ::scoped_string & scopedstrstr, LPARAM data)
   setItemData(index, data);
 }
 
-void ListBox::insertString(int index, const ::scoped_string & scopedstrstr)
+void ListBox::insertString(int index, const ::scoped_string & scopedstrStr)
 {
   SendMessage(m_hwnd, LB_INSERTSTRING, index, (LPARAM)str);
 }
 
-void ListBox::insertString(int index, const ::scoped_string & scopedstrstr, LPARAM data)
+void ListBox::insertString(int index, const ::scoped_string & scopedstrStr, LPARAM data)
 {
   LRESULT lresult = SendMessage(m_hwnd, LB_INSERTSTRING, index, (LPARAM)str);
   int i = (int)lresult;

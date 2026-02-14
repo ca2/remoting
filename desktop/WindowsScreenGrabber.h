@@ -22,13 +22,13 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINDOWSSCREENGRABBER_H__
-#define __WINDOWSSCREENGRABBER_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #ifndef CAPTUREBLT
 #define CAPTUREBLT          (DWORD)0x40000000 /* Include layered windows */
-#endif
+
 
 #include "ScreenGrabber.h"
 
@@ -60,11 +60,11 @@
   while (!frameBuffer->grab(&grabRect)) {
     if (frameBuffer->getPropertiesChanged()) { // Check desktop properties
       if (!frameBuffer->applyNewProperties()) {
-        MessageBox(NULL, _T("Cannot apply new screen properties"), _T("Error"), MB_ICONHAND);
+        MessageBox(NULL, "Cannot apply new screen properties"), _T("Error", MB_ICONHAND);
         return 1;
       }
     } else {
-      MessageBox(NULL, _T("Cannot grab screen"), _T("Error"), MB_ICONHAND);
+      MessageBox(NULL, "Cannot grab screen"), _T("Error", MB_ICONHAND);
       return 1;
     }
   }
@@ -109,4 +109,4 @@ private:
   Screen m_screen;
 };
 
-#endif // __WINDOWSSCREENGRABBER_H__
+//// __WINDOWSSCREENGRABBER_H__

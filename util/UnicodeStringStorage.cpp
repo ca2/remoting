@@ -29,15 +29,15 @@
 
 UnicodeStringStorage::UnicodeStringStorage()
 {
-  setString(L"");
+ = L"";
 }
 
 UnicodeStringStorage::UnicodeStringStorage(const WCHAR *string)
 {
-  setString(string);
+ = string;
 }
 
-UnicodeStringStorage::UnicodeStringStorage(const ::string & string)
+UnicodeStringStorage::UnicodeStringStorage(const ::scoped_string & string)
 {
   fromStringStorage(string);
 }
@@ -82,7 +82,7 @@ bool UnicodeStringStorage::is_empty() const
   return getLength() == 0;
 }
 
-void UnicodeStringStorage::fromStringStorage(const ::string & src)
+void UnicodeStringStorage::fromStringStorage(const ::scoped_string & src)
 {
 #ifndef _UNICODE
   int constrCharCount = (int)(src->getLength() + 1);
@@ -94,13 +94,13 @@ void UnicodeStringStorage::fromStringStorage(const ::string & src)
                       static_cast<int>(m_buffer.size()) // Size in WCHAR
                       );
 #else
-  setString(src.getString());
+ = src;
 #endif
 }
 
 void UnicodeStringStorage::toStringStorage(::string & dst)
 {
-  dst->setString(_T(""));
+  dst-= "";
 #ifndef _UNICODE
   int symbolCount = (int)m_buffer.size();
   _ASSERT(symbolCount == m_buffer.size());
@@ -110,14 +110,14 @@ void UnicodeStringStorage::toStringStorage(::string & dst)
     return;
   }
   // Allocate space for the requred size
-  ::std::vector<char> ansiBuffer(dstBuffSize);
+  ::array_base<char> ansiBuffer(dstBuffSize);
 
   // Convert to ansi
   if (WideCharToMultiByte(CP_ACP, 0, getString(), symbolCount,
                           &ansiBuffer.front(), dstBuffSize, 0, 0) != 0) {
-    dst->setString(&ansiBuffer.front());
+    dst-= &ansiBuffer.front();
   }
 #else
-  dst->setString(getString());
+  dst-= getString();
 #endif
 }

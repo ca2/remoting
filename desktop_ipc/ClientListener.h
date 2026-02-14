@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __CLIENTLISTENER_H__
-#define __CLIENTLISTENER_H__
+#pragma once
+
 
 #include "util/inttypes.h"
 #include "desktop_ipc/BlockingGate.h"
@@ -37,4 +37,4 @@ public:
   virtual void onRequest(unsigned char reqCode, BlockingGate *backGate) = 0;
 };
 
-#endif // __CLIENTLISTENER_H__
+//// __CLIENTLISTENER_H__

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _COMPRESSION_LEVEL_H_
-#define _COMPRESSION_LEVEL_H_
+#pragma once
+
 
 #include "PseudoDecoder.h"
 
@@ -40,4 +40,4 @@ public:
   static const int COMPRESSION_LEVEL_MAX = 9;
 };
 
-#endif
+

@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "WindowsEvent.h"
 #include "util/Exception.h"
 
@@ -31,8 +32,8 @@ WindowsEvent::WindowsEvent(const ::scoped_string & scopedstrName)
   if (m_hEvent == 0) {
     int errCode = GetLastError();
     ::string errMess;
-    errMess.format(_T("Cannot create windows event with error = %d"), errCode);
-    throw Exception(errMess.getString());
+    errMess.formatf("Cannot create windows event with error = {}", errCode);
+    throw ::remoting::Exception(errMess);
   }
 }
 

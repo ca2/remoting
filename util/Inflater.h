@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _INFLATER_H_
-#define _INFLATER_H_
+#pragma once
+
 
 #include "ZLibBase.h"
 #include "ZLibException.h"
@@ -52,4 +52,4 @@ protected:
   size_t m_unpackedSize;
 };
 
-#endif
+

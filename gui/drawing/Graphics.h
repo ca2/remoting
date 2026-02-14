@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _GRAPHICS_H_
-#define _GRAPHICS_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -135,4 +135,4 @@ public:
    int m_yLast = -1;
 };
 
-#endif
+

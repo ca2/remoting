@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _TOOL_BAR_H_
-#define _TOOL_BAR_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -73,12 +73,12 @@ public:
        DWORD dwStyle = WS_CHILD | WS_VISIBLE | TBSTYLE_FLAT);
 
   // addBitmap() adds one or more images from resources to
-  // the ::std::list of button images available for a toolbar.
+  // the ::list of button images available for a toolbar.
   // Returns the index of the first new image if successful,
   // or -1 otherwise.
   LRESULT addBitmap(int nButtons, UINT bitmapID);
 
-  // addSystemBitmap() adds the system-defined button bitmaps to the ::std::list
+  // addSystemBitmap() adds the system-defined button bitmaps to the ::list
   // of the toolbar button specifying by stdBitmapID. Returns the index of 
   // the first new image if successful, or -1 otherwise.
   LRESULT addSystemBitmap(UINT stdBitmapID);
@@ -142,7 +142,7 @@ private:
   int m_width, m_height;
   HWND m_hWndToolbar;
 
-  ::std::map<int, int> m_autoButtons;
+  ::map<int, int> m_autoButtons;
 };
 
-#endif
+

@@ -70,10 +70,10 @@ void TightDecoder::decode(RfbInputGate *input,
   int bytesPerCPixel = fb->getBytesPerPixel();
 
   if (compressionType > MAX_SUBENCODING) {
-    throw Exception(_T("Sub-encoding in Tight-encoder are not valid"));
+    throw ::remoting::Exception("Sub-encoding in Tight-encoder are not valid");
   }
    if (::int_rectangle(fb->getDimension()).intersection(dstRect)!= dstRect)
-    throw Exception(_T("Error in protocol: incorrect size of rectangle (tight-decoder)"));
+    throw ::remoting::Exception("Error in protocol: incorrect size of rectangle (tight-decoder)");
 
   if (compressionType == FILL_TYPE) {
     unsigned int color = readTightPixel(input, bytesPerCPixel);
@@ -93,9 +93,9 @@ unsigned int TightDecoder::transformPixelToTight(unsigned int color)
   return result;
 }
 
-::std::vector<unsigned char> TightDecoder::transformArray(const ::std::vector<unsigned char> &buffer)
+::array_base<unsigned char> TightDecoder::transformArray(const ::array_base<unsigned char> &buffer)
 {
-  ::std::vector<unsigned char> result(buffer.size() * 4 / 3);
+  ::array_base<unsigned char> result(buffer.size() * 4 / 3);
   for (size_t bi = 0, ri = 0; bi < buffer.size(); bi += 3, ri += 4) {
     result[ri] = buffer[bi + 2];
     result[ri + 1] = buffer[bi + 1];
@@ -159,13 +159,13 @@ void TightDecoder::processJpeg(RfbInputGate *input,
 {
   unsigned int jpegBufLen = readCompactSize(input);
   if (jpegBufLen == 0)
-    throw Exception(_T("Error in protocol: empty byffer of jpeg (tight-decoder)"));
-  ::std::vector<unsigned char> buffer;
+    throw ::remoting::Exception("Error in protocol: empty byffer of jpeg (tight-decoder)");
+  ::array_base<unsigned char> buffer;
   buffer.resize(jpegBufLen);
   input->readFully(&buffer.front(), jpegBufLen);
 
   if (dstRect.area() != 0) {
-    ::std::vector<unsigned char> pixels;
+    ::array_base<unsigned char> pixels;
     pixels.resize(dstRect.area() * JpegDecompressor::BYTES_PER_PIXEL);
 
     try {
@@ -176,11 +176,11 @@ void TightDecoder::processJpeg(RfbInputGate *input,
       } else {
         drawJpegBytes(frameBuffer, &pixels, dstRect);
       }
-    } catch (const Exception &ex) {
+    } catch (const ::remoting::Exception &ex) {
       ::string error;
-      error.format(_T("Error in tight-decoder, subencoding \"jpeg\": %s"), 
+      error..formatf("Error in tight-decoder, subencoding \"jpeg\": {}", 
                    ex.getMessage());
-      m_logWriter->error(error.getString());
+      m_logWriter->error(error);
     }
   }
 }
@@ -202,7 +202,7 @@ void TightDecoder::processBasicTypes(RfbInputGate *input,
     lengthCurrentBpp = dstRect.area() * 3;
   }
 
-  ::std::vector<unsigned char> buffer;
+  ::array_base<unsigned char> buffer;
 
   switch (filterId) {
   case COPY_FILTER:
@@ -218,7 +218,7 @@ void TightDecoder::processBasicTypes(RfbInputGate *input,
   case PALETTE_FILTER:
     {
       int paletteSize = input->readUInt8() + 1;
-      ::std::vector<unsigned int> palette = readPalette(input, paletteSize, bytesPerCPixel);
+      ::array_base<unsigned int> palette = readPalette(input, paletteSize, bytesPerCPixel);
       size_t dataLength = dstRect.area();
       if (paletteSize == 2) {
         dataLength = (dstRect.width() + 7) / 8 * dstRect.height();
@@ -238,11 +238,11 @@ void TightDecoder::processBasicTypes(RfbInputGate *input,
   }
 }
 
-::std::vector<unsigned int> TightDecoder::readPalette(RfbInputGate *input,
+::array_base<unsigned int> TightDecoder::readPalette(RfbInputGate *input,
                                       int paletteSize,
                                       int bytesPerCPixel)
 {
-  ::std::vector<unsigned int> palette(paletteSize);
+  ::array_base<unsigned int> palette(paletteSize);
   for (int i = 0; i < paletteSize; i++) {
     palette[i] = readTightPixel(input, bytesPerCPixel);
   }
@@ -250,7 +250,7 @@ void TightDecoder::processBasicTypes(RfbInputGate *input,
 }
 
 void TightDecoder::readTightData(RfbInputGate *input,
-                                 ::std::vector<unsigned char> &buffer,
+                                 ::array_base<unsigned char> &buffer,
                                  size_t expectedLength,
                                  const int decoderId)
 {
@@ -265,13 +265,13 @@ void TightDecoder::readTightData(RfbInputGate *input,
 }
 
 void TightDecoder::readCompressedData(RfbInputGate *input,
-                                      ::std::vector<unsigned char> &buffer,
+                                      ::array_base<unsigned char> &buffer,
                                       size_t expectedLength,
                                       const int decoderId)
 {
   size_t rawDataLength = readCompactSize(input);
 
-  ::std::vector<char> compressed(rawDataLength);
+  ::array_base<char> compressed(rawDataLength);
 
   // read compressed (raw) data behind space allocated for decompressed data
   if (rawDataLength != 0) {
@@ -288,14 +288,14 @@ void TightDecoder::readCompressedData(RfbInputGate *input,
     buffer.assign(output, output + size);
   } else {
     _ASSERT(rawDataLength != 0);
-    m_logWriter->debug(_T("Tight decoder: Length of Raw compressed data is 0"));
+    m_logWriter->debug("Tight decoder: Length of Raw compressed data is 0");
     buffer.resize(0);
   }
 }
 
 void TightDecoder::drawPalette(FrameBuffer *fb,
-                               const ::std::vector<unsigned int> &palette,
-                               const ::std::vector<unsigned char> &pixels,
+                               const ::array_base<unsigned int> &palette,
+                               const ::array_base<unsigned char> &pixels,
                                const ::int_rectangle &  dstRect)
 {
   // TODO: removed duplicate code (draw Tight bytes)
@@ -328,14 +328,14 @@ void TightDecoder::drawPalette(FrameBuffer *fb,
       if (pixels[i] < palette.size()) {
         memcpy(pixelPtr, &palette[pixels[i]], bytesPerPixel);
       } else {
-        m_logWriter->error(_T("Tight decoder: Invalid index in palette."));
+        m_logWriter->error("Tight decoder: Invalid index in palette.");
       }
     }
   }
 }
 
 void TightDecoder::drawTightBytes(FrameBuffer *fb,
-                                  const ::std::vector<unsigned char> *pixels,
+                                  const ::array_base<unsigned char> *pixels,
                                   const ::int_rectangle &  dstRect)
 {
   // TODO: removed duplicate code (zrle)
@@ -355,7 +355,7 @@ void TightDecoder::drawTightBytes(FrameBuffer *fb,
 }
 
 void TightDecoder::drawJpegBytes(FrameBuffer *fb,
-                                 const ::std::vector<unsigned char> *pixels,
+                                 const ::array_base<unsigned char> *pixels,
                                  const ::int_rectangle &  dstRect)
 {
   // TODO: removed duplicate code (draw tight bytes)
@@ -400,13 +400,13 @@ void TightDecoder::drawJpegBytes(FrameBuffer *fb,
  */
 
 void TightDecoder::drawGradient(FrameBuffer *fb,
-                                const ::std::vector<unsigned char> &pixels,
+                                const ::array_base<unsigned char> &pixels,
                                 const ::int_rectangle &  dstRect)
 {
-  typedef ::std::vector<unsigned short> RowType;
+  typedef ::array_base<unsigned short> RowType;
   size_t opRowLength = dstRect.width() * 3 + 3;
 
-  ::std::vector<RowType> opRows(2);
+  ::array_base<RowType> opRows(2);
   opRows[0].resize(opRowLength);
   opRows[1].resize(opRowLength);
 
@@ -450,7 +450,7 @@ void TightDecoder::drawGradient(FrameBuffer *fb,
 }
 
 unsigned int TightDecoder::getRawTightColor(const PixelFormat & pxFormat,
-                                      const ::std::vector<unsigned char> &pixels,
+                                      const ::array_base<unsigned char> &pixels,
                                       const size_t offset)
 {
   if (m_isCPixel) {
@@ -465,7 +465,7 @@ unsigned int TightDecoder::getRawTightColor(const PixelFormat & pxFormat,
 
 void TightDecoder::fillRawComponents(const PixelFormat & pxFormat,
                                      unsigned char components[],
-                                     const ::std::vector<unsigned char> &pixels,
+                                     const ::array_base<unsigned char> &pixels,
                                      const size_t pixelOffset)
 {
   int rawColor = getRawTightColor(pxFormat, pixels, pixelOffset);

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _UPDATE_LOCAL_CONFIG_COMMAND_H_
-#define _UPDATE_LOCAL_CONFIG_COMMAND_H_
+#pragma once
+
 
 #include "util/Command.h"
 
@@ -47,11 +47,11 @@ public:
   virtual ~UpdateLocalConfigCommand();
   /**
    * Executes command.
-   * @throws IOException, RemoteException.
+   * @throws ::io_exception, RemoteException.
    */
   virtual void execute();
 private:
   ControlProxy* m_proxy;
 };
 
-#endif
+

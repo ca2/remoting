@@ -36,7 +36,7 @@ remoting_impact::remoting_impact(HINSTANCE appInstance, const ::scoped_string & 
   m_logWriter(ViewerConfig::getInstance()->getLogger()),
   m_isListening(false)
 {
-  m_logWriter.info(_T("Init WinSock 2.1"));
+  m_logWriter.info("Init WinSock 2.1");
   WindowsSocket::startup(2, 1);
   registerViewerWindowClass();
 
@@ -52,7 +52,7 @@ remoting_impact::remoting_impact(HINSTANCE appInstance, const ::scoped_string & 
 
 remoting_impact::~remoting_impact()
 {
-  m_logWriter.info(_T("Viewer collector: destroy all instances"));
+  m_logWriter.info("Viewer collector: destroy all instances");
   m_instances.destroyAllInstances();
 
   delete m_loginDialog;
@@ -60,7 +60,7 @@ remoting_impact::~remoting_impact()
 
   unregisterViewerWindowClass();
 
-  m_logWriter.info(_T("Shutdown WinSock"));
+  m_logWriter.info("Shutdown WinSock");
   WindowsSocket::cleanup();
 }
 
@@ -68,12 +68,12 @@ void remoting_impact::startListeningServer(const int listeningPort)
 {
   try {
     if (m_conListener != 0) {
-      throw Exception(_T("Listening Server already started"));
+      throw ::remoting::Exception("Listening Server already started");
     }
     m_conListener = new ConnectionListener(this, listeningPort);
-  } catch (const Exception &ex) {
+  } catch (const ::remoting::Exception &ex) {
     m_isListening = false;
-    m_logWriter.error(_T("Error in start listening: %s"), ex.getMessage());
+    m_logWriter.error("Error in start listening: {}", ex.getMessage());
     MessageBox(0,
                StringTable::getString(IDS_ERROR_START_LISTENING),
                ProductNames::VIEWER_PRODUCT_NAME,
@@ -87,8 +87,8 @@ void remoting_impact::stopListeningServer()
     if (m_conListener != 0) {
       delete m_conListener;
     }
-  } catch (const Exception &ex) {
-    m_logWriter.error(_T("Error of delete m_conListener: %s"), ex.getMessage());
+  } catch (const ::remoting::Exception &ex) {
+    m_logWriter.error("Error of delete m_conListener: {}", ex.getMessage());
   }
   m_conListener = 0;
 }
@@ -133,7 +133,7 @@ void remoting_impact::addInstance(ViewerInstance *viewerInstance)
   m_instances.addInstance(viewerInstance);
 }
 
-void remoting_impact::runInstance(const ::string & hostName, const ConnectionConfig & config)
+void remoting_impact::runInstance(const ::scoped_string & hostName, const ConnectionConfig & config)
 {
   ConnectionData *pconnectiondata = new ConnectionData;
   pconnectiondata->setHost(hostName);
@@ -153,7 +153,7 @@ bool remoting_impact::isVisibleLoginDialog() const
   return !!m_loginDialog->getControl()->getWindow();
 }
 
-void remoting_impact::newConnection(const ::string & hostName, const ConnectionConfig & config)
+void remoting_impact::newConnection(const ::scoped_string & hostName, const ConnectionConfig & config)
 {
   ConnectionData *pconnectiondata = new ConnectionData;
   pconnectiondata->setHost(hostName);
@@ -188,7 +188,7 @@ void remoting_impact::registerWindowClass(WNDCLASS *wndClass)
 
   wndClass->lpfnWndProc = wndProc;
   wndClass->hInstance = m_appInstance;
-  wndClass->lpszClassName = m_windowClassName.getString();
+  wndClass->lpszClassName = m_windowClassName;
 
   RegisterClass(wndClass);
 }
@@ -199,7 +199,7 @@ void remoting_impact::registerViewerWindowClass()
 
   m_viewerWndClass.lpfnWndProc   = wndProcViewer;
   m_viewerWndClass.hInstance     = m_appInstance;
-  m_viewerWndClass.lpszClassName = m_viewerWindowClassName.getString();
+  m_viewerWndClass.lpszClassName = m_viewerWindowClassName;
   m_viewerWndClass.style         = CS_HREDRAW | CS_VREDRAW;
   m_viewerWndClass.hbrBackground = GetSysColorBrush(COLOR_WINDOW);
 
@@ -235,7 +235,7 @@ LRESULT CALLBACK remoting_impact::wndProcViewer(HWND hWnd, UINT message, WPARAM 
 void remoting_impact::showListeningOptions()
 {
   ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
-                          _T(".listen"));
+                          ".listen");
   ConnectionConfig conConfig;
   conConfig.loadFromStorage(&ccsm);
 
@@ -287,7 +287,7 @@ void remoting_impact::newListeningConnection()
   connectionData.setIncoming(true);
 
   ConnectionConfig connectionConfig;
-  ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH, _T(".listen"));
+  ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH, ".listen");
   connectionConfig.loadFromStorage(&ccsm);
 
   if (m_conListener != 0) {

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _SHAREPRIMARYCOMMAND_H_
-#define _SHAREPRIMARYCOMMAND_H_
+#pragma once
+
 
 #include "util/Command.h"
 
@@ -40,4 +40,4 @@ private:
   ControlProxy *m_proxy;
 };
 
-#endif // _SHAREPRIMARYCOMMAND_H_
+//// _SHAREPRIMARYCOMMAND_H_

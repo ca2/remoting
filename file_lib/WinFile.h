@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINFILE_H__
-#define __WINFILE_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -45,10 +45,10 @@ enum FileMode
   // the file, a function succeeds.
   FM_CREATE,
   // Creates a new file, only if it does not already exist.
-  // If the specified file exists, a function fails with an Exception.
+  // If the specified file exists, a function fails with an ::remoting::Exception.
   FM_CREATE_NEW,
   // Opens a file, only if it exists.
-  // If the specified file does not exist, a function fails with an Exception.
+  // If the specified file does not exist, a function fails with an ::remoting::Exception.
   FM_OPEN,
   // Opens a file, always.
   // If the specified file does not exist and is a valid path to a writable
@@ -63,14 +63,14 @@ enum FileMode
 class WinFile
 {
 public:
-  WinFile(const ::scoped_string & scopedstrpathToFile, DesiredAccess dAcc, FileMode fMode,
+  WinFile(const ::file::path & path, DesiredAccess dAcc, FileMode fMode,
           bool shareToRead = false);
   WinFile();
 
   virtual ~WinFile();
 
   // Call this function after this object creation by the default constructor.
-  void open(const ::scoped_string & scopedstrpathToFile, DesiredAccess dAcc, FileMode fMode,
+  void open(const ::file::path & path, DesiredAccess dAcc, FileMode fMode,
             bool shareToRead = false);
 
   // Closes handle to a file if handle is valid.
@@ -88,7 +88,7 @@ public:
   bool isValid();
 
   // Return valid path name to a file.
-  void getPathName(::string & pathName);
+  ::file::path getPathName();
 
   // Set file pointer to specified position starting from current
   // file pointer position. Can move forward and backward.
@@ -99,9 +99,7 @@ public:
 
   virtual size_t available();
 
-private:
   HANDLE m_hFile;
-  ::string m_pathToFile;
+  ::file::path m_path;
 };
 
-#endif // __WINFILE_H__

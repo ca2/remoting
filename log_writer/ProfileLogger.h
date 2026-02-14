@@ -22,12 +22,12 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __PROFILELOGGER_H__
-#define __PROFILELOGGER_H__
+#pragma once
+
 
 #include "util/DateTime.h"
-#include <vector>
-#include <map>
+//#include <vector>
+//#include <map>
 #include "thread/LocalMutex.h"
 
 
@@ -51,16 +51,16 @@ public:
   ~ProfileLogger();
   // returns cycles and times deltas from previouse checkpoint
   ProcessorTimes checkPoint(const ::scoped_string & scopedstrtag);
-  ::std::vector<::std::vector<TCHAR>> dropStat();
+  ::array_base<::array_base<TCHAR>> dropStat();
 
 private:
   LocalMutex m_mapMut;
-  //::std::map<const ::scoped_string & scopedstr, ::std::vector<ProcessorTimes>> m_checkPoints;
-   ::string_map <::std::vector<ProcessorTimes> > m_checkPoints;
+  //::map<const ::scoped_string & scopedstr, ::array_base<ProcessorTimes>> m_checkPoints;
+   ::string_map <::array_base<ProcessorTimes> > m_checkPoints;
   ProcessorTimes m_last;
   double m_dropRate; // time interval in seconds to log statistics
   DateTime m_lastDrop;
 
 };
 
-#endif // __PROFILELOGGER_H__
+//// __PROFILELOGGER_H__

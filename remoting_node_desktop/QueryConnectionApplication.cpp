@@ -53,9 +53,9 @@ int QueryConnectionApplication::run()
   QueryConnectionCommandLine parser;
 
   try {
-    WinCommandLineArgs cmdArgs(m_cmdLine.getString());
+    WinCommandLineArgs cmdArgs(m_cmdLine);
     parser.parse(&cmdArgs);
-  } catch (Exception &) {
+  } catch (::remoting::Exception &) {
     TvnServerHelp::showUsage();
     return 0;
   }
@@ -66,14 +66,14 @@ int QueryConnectionApplication::run()
 
   DWORD queryTimeout = parser.isTimeoutSpecified() ? parser.getTimeout() : 30;
 
-  QueryConnectionDialog dialog(peerAddress.getString(),
+  QueryConnectionDialog dialog(peerAddress,
                                parser.isDefaultActionAccept(),
                                queryTimeout);
 
   return dialog.showModal();
 }
 
-int QueryConnectionApplication::execute(const ::scoped_string & scopedstrpeerAddr, bool acceptByDefault, DWORD timeOutSec)
+int QueryConnectionApplication::execute(const ::scoped_string & scopedstrPeerAddr, bool acceptByDefault, DWORD timeOutSec)
 {
    // Prepare command for execution.
 
@@ -82,12 +82,12 @@ int QueryConnectionApplication::execute(const ::scoped_string & scopedstrpeerAdd
 
   Environment::getCurrentModulePath(&curModulePath);
 
-  command.format(_T("%s %s %s %s %s %s %d"),
-                 curModulePath.getString(),
+  command.formatf("{} {} {} {} {} {} {}",
+                 curModulePath,
                  QueryConnectionCommandLine::QUERY_CONNECTION,
                  QueryConnectionCommandLine::PEER_ADDR,
                  peerAddr,
-                 acceptByDefault ? QueryConnectionCommandLine::ACCEPT : _T(""),
+                 acceptByDefault ? QueryConnectionCommandLine::ACCEPT : "",
                  QueryConnectionCommandLine::TIMEOUT,
                  timeOutSec);
 
@@ -100,16 +100,16 @@ int QueryConnectionApplication::execute(const ::scoped_string & scopedstrpeerAdd
   // Run command in separate process.
   Configurator* conf = Configurator::getInstance();
   if (conf->getServiceFlag()) {
-    process = new CurrentConsoleProcess(&log, conf->getServerConfig()->getConnectToRdpFlag(), command.getString());
+    process = new CurrentConsoleProcess(&log, conf->getServerConfig()->getConnectToRdpFlag(), command);
   } else {
-    process = new Process(command.getString());
+    process = new Process(command);
   }
 
   try {
     process->start();
     process->waitForExit();
     retCode = process->getExitCode();
-  } catch (Exception &ex) {
+  } catch (::remoting::Exception &ex) {
     log.error(ex.getMessage());
   }
 

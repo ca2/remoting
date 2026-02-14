@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __UPDATECONTAINER_H__
-#define __UPDATECONTAINER_H__
+#pragma once
+
 
 #include "region/Region.h"
 #include "region/Point.h"
@@ -50,4 +50,4 @@ public:
   bool is_empty() const;
 };
 
-#endif // __UPDATECONTAINER_H__
+//// __UPDATECONTAINER_H__

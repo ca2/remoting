@@ -48,7 +48,7 @@ ControlTrayIcon::ControlTrayIcon(remoting_impact *viewerApplication)
 
   setWindowProcHolder(this);
 
-  WM_USER_TASKBAR = RegisterWindowMessage(_T("TaskbarCreated"));
+  WM_USER_TASKBAR = RegisterWindowMessage("TaskbarCreated");
 }
 
 ControlTrayIcon::~ControlTrayIcon()

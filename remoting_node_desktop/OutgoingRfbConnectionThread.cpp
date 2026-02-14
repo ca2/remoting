@@ -45,10 +45,10 @@ void OutgoingRfbConnectionThread::execute()
   SocketIPv4 *socket = new SocketIPv4();
 
   try {
-    socket->connect(m_connectHost.getString(), m_connectPort);
-  } catch (Exception &someEx) {
-    m_log->error(_T("Failed to connect to %s:%d with reason: '%s'"),
-               m_connectHost.getString(), m_connectPort, someEx.getMessage());
+    socket->connect(m_connectHost, m_connectPort);
+  } catch (::remoting::Exception &someEx) {
+    m_log->error("Failed to connect to {}:{} with reason: '{}'",
+               m_connectHost, m_connectPort, someEx.getMessage());
     delete socket;
     return ;
   }

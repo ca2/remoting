@@ -22,11 +22,11 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __COMMANDLINEARGS_H__
-#define __COMMANDLINEARGS_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
-#include <vector>
+//#include <vector>
 
 // This class produce initial parse of a command line.
 // Each word or expression will be saved at self index.
@@ -36,11 +36,11 @@ public:
   CommandLineArgs();
   virtual ~CommandLineArgs();
 
-  // Copies internal argument ::std::vector to the out variable.
-  void getArgVector(::std::vector<::string> *out) const;
+  // Copies internal argument ::array_base to the out variable.
+  void getArgVector(::string_array *out) const;
 
 protected:
-  ::std::vector<::string> m_args;
+  ::string_array m_args;
 };
 
-#endif // __COMMANDLINEARGS_H__
+//// __COMMANDLINEARGS_H__

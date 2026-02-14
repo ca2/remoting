@@ -75,9 +75,9 @@ void *ComboBox::getItemData(int index) const
 void ComboBox::getItemText(int index, ::string & storage) const
 {
   size_t length = ComboBox_GetLBTextLen(m_hwnd, index);
-  ::std::vector<TCHAR> buf(length + 1);
+  ::array_base<TCHAR> buf(length + 1);
   ComboBox_GetLBText(m_hwnd, index, &buf.front());
-  storage->setString(&buf.front());
+  storage-= &buf.front();
 }
 
 int ComboBox::getSelectedItemIndex()

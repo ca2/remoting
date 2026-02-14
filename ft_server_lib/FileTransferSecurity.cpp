@@ -60,12 +60,12 @@ void FileTransferSecurity::beginMessageProcessing()
     desktopName.toLowerCase();
 
     // FIXME: Why we compare desktop name? why only default desktop?
-    if (!desktopName.isEqualTo(_T("default"))) {
-      throw Exception(_T("Desktop is not default desktop."));
+    if (!desktopName.isEqualTo("default")) {
+      throw ::remoting::Exception("Desktop is not default desktop.");
     }
 
     if (sessionIsLocked(rdpEnabled)) {
-      throw Exception(_T("Desktop is locked."));
+      throw ::remoting::Exception("Desktop is locked.");
     }
 
     if (rdpEnabled && (WTS::getRdpSessionId(m_log) != 0)) {
@@ -78,8 +78,8 @@ void FileTransferSecurity::beginMessageProcessing()
 
 
     m_hasAccess = true;
-  } catch (Exception &e) {
-    m_log->error(_T("Access denied to the file transfer: %s"),
+  } catch (::remoting::Exception &e) {
+    m_log->error("Access denied to the file transfer: {}",
                  e.getMessage());
     m_hasAccess = false;
   } // try / catch.
@@ -88,9 +88,9 @@ void FileTransferSecurity::beginMessageProcessing()
 void FileTransferSecurity::throwIfAccessDenied()
 {
   if (!m_hasAccess) {
-    throw Exception(_T("Access denied."));
+    throw ::remoting::Exception("Access denied.");
   } else if (!Configurator::getInstance()->getServerConfig()->isFileTransfersEnabled()) {
-    throw Exception(_T("File transfers are disabled on server side."));
+    throw ::remoting::Exception("File transfers are disabled on server side.");
   }
 }
 

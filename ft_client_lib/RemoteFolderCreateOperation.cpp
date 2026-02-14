@@ -25,15 +25,15 @@
 #include "RemoteFolderCreateOperation.h"
 
 RemoteFolderCreateOperation::RemoteFolderCreateOperation(LogWriter *logWriter,
-                                                         const ::scoped_string & scopedstrpathToTargetFile)
+                                                         const ::scoped_string & scopedstrPathToTargetFile)
 : FileTransferOperation(logWriter)
 {
-  m_pathToTargetFile.setString(pathToTargetFile);
+  m_pathToTargetFile= pathToTargetFile;
 }
 
 RemoteFolderCreateOperation::RemoteFolderCreateOperation(LogWriter *logWriter,
                                                          FileInfo file,
-                                                         const ::scoped_string & scopedstrpathToTargetRoot)
+                                                         const ::scoped_string & scopedstrPathToTargetRoot)
 : FileTransferOperation(logWriter)
 {
   FileInfoList *plist = new FileInfoList(file);
@@ -51,16 +51,16 @@ void RemoteFolderCreateOperation::start()
   // Logging
   ::string message;
 
-  message.format(_T("Creating remote folder '%s'"),
-                 m_pathToTargetFile.getString());
+  message.formatf("Creating remote folder '{}'",
+                 m_pathToTargetFile);
 
-  notifyInformation(message.getString());
+  notifyInformation(message);
 
   // Nofity all that operation have started
   notifyStart();
 
   // Send mkdir request to server
-  m_sender->sendMkDirRequest(m_pathToTargetFile.getString());
+  m_sender->sendMkDirRequest(m_pathToTargetFile);
 }
 
 void RemoteFolderCreateOperation::onMkdirReply(DataInputStream *input)
@@ -74,10 +74,10 @@ void RemoteFolderCreateOperation::onLastRequestFailedReply(DataInputStream *inpu
   // Logging
   ::string message;
 
-  message.format(_T("Error: failed to create remote folder '%s'"),
-                 m_pathToTargetFile.getString());
+  message.formatf("Error: failed to create remote folder '{}'",
+                 m_pathToTargetFile);
 
-  notifyError(message.getString());
+  notifyError(message);
 
   // Notify all that operation have ended
   notifyFinish();

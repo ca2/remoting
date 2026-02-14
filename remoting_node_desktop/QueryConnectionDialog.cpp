@@ -26,12 +26,12 @@
 
 #include "remoting_node/resource.h"
 
-QueryConnectionDialog::QueryConnectionDialog(const ::scoped_string & scopedstrpeerAddress,
+QueryConnectionDialog::QueryConnectionDialog(const ::scoped_string & scopedstrPeerAddress,
                                              bool acceptByDefault,
                                              DWORD timeOutInSec)
 : m_acceptByDefault(acceptByDefault), m_timeout(timeOutInSec)
 {
-  m_peerAddress.setString(peerAddress);
+  m_peerAddress= peerAddress;
 
   setResourceId(IDD_QUERY_RFB_CONNECTION);
 }
@@ -44,7 +44,7 @@ BOOL QueryConnectionDialog::onInitDialog()
 {
   initControls();
 
-  m_peerAddressLabel.setText(m_peerAddress.getString());
+  m_peerAddressLabel.setText(m_peerAddress);
 
   if (m_acceptByDefault) {
     m_acceptButton.setFocus();
@@ -138,5 +138,5 @@ void QueryConnectionDialog::updateTimeoutLabel()
     labelText.format(StringTable::getString(IDS_AUTO_REJECT_CONNECTION_FORMAT), m_timeout);
   }
 
-  m_timeoutLabel.setText(labelText.getString());
+  m_timeoutLabel.setText(labelText);
 }

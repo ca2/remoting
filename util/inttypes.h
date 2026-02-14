@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __INTTYPES_H__
-#define __INTTYPES_H__
+#pragma once
+
 
 
 // Defines unsigned types
@@ -38,4 +38,4 @@
 //typedef signed int          int;
 //typedef signed long long    long long;
 //
-#endif // __INTTYPES_H__
+//// __INTTYPES_H__

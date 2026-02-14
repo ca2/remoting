@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __UPDATEHANDLERSERVER_H__
-#define __UPDATEHANDLERSERVER_H__
+#pragma once
+
 
 #include "DesktopServerProto.h"
 #include "desktop/UpdateHandlerImpl.h"
@@ -65,4 +65,4 @@ protected:
   LogWriter *m_log;
 };
 
-#endif // __UPDATEHANDLERSERVER_H__
+//// __UPDATEHANDLERSERVER_H__

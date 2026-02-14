@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-//#ifndef _FILE_H_
-//#define _FILE_H_
+//#pragma once
+//
 #pragma once
 
 #include "util/CommonHeader.h"
@@ -123,8 +123,8 @@ public:
   // If fileList is NULL than sets files count value to filesCount
   //
   // FIXME: Current implementation forces to perform two calls, first to
-  //        determine the ::std::list size, then to fill in the ::std::list itself.
-  //        However, the ::std::list size can be changed between these calls!
+  //        determine the ::list size, then to fill in the ::list itself.
+  //        However, the ::list size can be changed between these calls!
   //        This MUST be fixed someday.
   //
 
@@ -133,11 +133,11 @@ public:
   //
   // List the available filesystem roots to rootList array
   //
-  // If rootList is NULL that sets root ::std::list size to rootsCount
+  // If rootList is NULL that sets root ::list size to rootsCount
   //
   // FIXME: Current implementation forces to perform two calls, first to
-  //        determine the ::std::list size, then to fill in the ::std::list itself.
-  //        However, the ::std::list size can be changed between these calls!
+  //        determine the ::list size, then to fill in the ::list itself.
+  //        However, the ::list size can be changed between these calls!
   //        This MUST be fixed someday.
   //
 
@@ -189,4 +189,4 @@ private:
    ::file::path m_path;
 };
 
-//#endif
+//

@@ -65,8 +65,8 @@ void ClientInputHandler::onRequest(unsigned int reqCode, RfbInputGate *input)
     break;
   default:
     ::string errMess;
-    errMess.format(_T("Unknown %d protocol code received"), (int)reqCode);
-    throw Exception(errMess.getString());
+    errMess.formatf("Unknown {} protocol code received", (int)reqCode);
+    throw ::remoting::Exception(errMess);
     break;
   }
 }

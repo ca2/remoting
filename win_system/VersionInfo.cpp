@@ -22,11 +22,12 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "VersionInfo.h"
-#include <vector>
+//#include <vector>
 
 
-VersionInfo::VersionInfo(const ::scoped_string & scopedstrpathToFile)
+VersionInfo::VersionInfo(const ::scoped_string & scopedstrPathToFile)
 {
   DWORD handle = 0;
   DWORD verInfoSize = GetFileVersionInfoSize(pathToFile, &handle);
@@ -35,7 +36,7 @@ VersionInfo::VersionInfo(const ::scoped_string & scopedstrpathToFile)
     throw SystemException();
   }
 
-  ::std::vector<char> charBuff(verInfoSize);
+  ::array_base<char> charBuff(verInfoSize);
   char *verInfo = &charBuff.front();
 
   if (GetFileVersionInfo(pathToFile, handle, verInfoSize, verInfo) == 0) {
@@ -46,7 +47,7 @@ VersionInfo::VersionInfo(const ::scoped_string & scopedstrpathToFile)
 
   VS_FIXEDFILEINFO *fixedInfo = 0;
 
-  if (VerQueryValue(verInfo, _T("\\"), (void **)&fixedInfo, &fixedInfoSize) == 0) {
+  if (VerQueryValue(verInfo, "\\", (void **)&fixedInfo, &fixedInfoSize) == 0) {
     throw SystemException();
   }
 
@@ -58,9 +59,9 @@ VersionInfo::VersionInfo(const ::scoped_string & scopedstrpathToFile)
   // Convert special numbers used for beta versions (third number > 100).
   // 2.0.105.0 should be considered a beta version and convert to 2.1beta5,
   // 1.99.101 converts to 2.0beta1, 1.99.101.23 converts to 2.0beta1.23 etc.
-  TCHAR *secondDelimiter = (TCHAR *)  _T(".");
+  TCHAR *secondDelimiter = (TCHAR *)  ".";
   if (c > 100) {
-    secondDelimiter = (TCHAR *) _T("beta");
+    secondDelimiter = (TCHAR *) "beta";
     c -= 100;
     if (++b >= 100) {
       b = 0;
@@ -69,17 +70,17 @@ VersionInfo::VersionInfo(const ::scoped_string & scopedstrpathToFile)
   }
 
   if (c == 0 && d == 0) {
-    m_productVersionString.format(_T("%d.%d"), (int)a, (int)b);
+    m_productVersionString.formatf("{}.{}", (int)a, (int)b);
   } else if (d == 0) {
-    m_productVersionString.format(_T("%d.%d%s%d"), (int)a, (int)b,
+    m_productVersionString.formatf("{}.{}{}{}", (int)a, (int)b,
                                   secondDelimiter, (int)c);
   } else {
-    m_productVersionString.format(_T("%d.%d%s%d.%d"), (int)a, (int)b,
+    m_productVersionString.formatf("{}.{}{}{}.{}", (int)a, (int)b,
                                   secondDelimiter, (int)c, (int)d);
   }
 }
 
 const ::scoped_string & scopedstrVersionInfo::getProductVersionString() const
 {
-  return m_productVersionString.getString();
+  return m_productVersionString;
 }

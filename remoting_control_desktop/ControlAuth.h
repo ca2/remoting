@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CONTROL_AUTH_H_
-#define _CONTROL_AUTH_H_
+#pragma once
+
 
 #include "remoting_control_desktop/ControlGate.h"
 #include "remoting_control_desktop/ControlAuthException.h"
@@ -38,7 +38,7 @@ public:
   /**
    * Doesn't lock gate.
    */
-  ControlAuth(ControlGate *gate, const ::scoped_string & scopedstrpassword)
+  ControlAuth(ControlGate *gate, const ::scoped_string & scopedstrPassword)
 ;
 
   virtual ~ControlAuth();
@@ -52,4 +52,4 @@ protected:
   unsigned char m_password[ServerConfig::VNC_PASSWORD_SIZE];
 };
 
-#endif
+

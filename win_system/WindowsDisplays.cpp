@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "WindowsDisplays.h"
 #include "thread/AutoLock.h"
 #include "acme/prototype/geometry2d/rectangle.h"
@@ -45,7 +46,7 @@ BOOL CALLBACK WindowsDisplays::monitorEnumProc(HMONITOR hMonitor,
             lprcMonitor->top - _this->m_yVirtualScreen,
             lprcMonitor->right - _this->m_xVirtualScreen,
             lprcMonitor->bottom - _this->m_yVirtualScreen);
-  _this->m_displayRects.push_back(rect);
+  _this->m_displayRects.add(rect);
   return TRUE;
 }
 
@@ -78,7 +79,7 @@ void WindowsDisplays::getDisplayCoordinates(unsigned char displayNumber,
   }
 }
 
-::std::vector<::int_rectangle> WindowsDisplays::getDisplaysCoords()
+::array_base<::int_rectangle> WindowsDisplays::getDisplaysCoords()
 {
   AutoLock al(&m_displayRectsMutex);
   update();
@@ -94,7 +95,7 @@ bool WindowsDisplays::isAlreadyUpdated()
   }
 }
 
-::std::vector<::int_rectangle> WindowsDisplays::getDisplays()
+::array_base<::int_rectangle> WindowsDisplays::getDisplays()
 {
   update();
   return m_displayRects;

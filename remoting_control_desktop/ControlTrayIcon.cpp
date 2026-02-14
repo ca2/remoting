@@ -79,7 +79,7 @@ ControlTrayIcon::ControlTrayIcon(ControlProxy *serverControl,
   // Update status.
   syncStatusWithServer();
 
-  WM_USER_TASKBAR = RegisterWindowMessage(_T("TaskbarCreated"));
+  WM_USER_TASKBAR = RegisterWindowMessage("TaskbarCreated");
 }
 
 ControlTrayIcon::~ControlTrayIcon()
@@ -255,7 +255,7 @@ void ControlTrayIcon::onShutdownServerMenuItemClick()
 
     if (MessageBox(
       getWindow(),
-      userMessage.getString(),
+      userMessage,
       StringTable::getString(IDS_MBC_TVNCONTROL),
       MB_YESNO | MB_ICONQUESTION) == IDNO) {
         return;
@@ -304,7 +304,7 @@ void ControlTrayIcon::syncStatusWithServer()
   try {
      // Get TightVNC server info.
     TvnServerInfo info = m_serverControl->getServerInfo();
-    ::std::list<RfbClientInfo *> clients;
+    ::list<RfbClientInfo *> clients;
     m_serverControl->getClientsList(&clients);
 
     // Change icon status.
@@ -316,10 +316,10 @@ void ControlTrayIcon::syncStatusWithServer()
       setIcon(m_iconDisabled);
     }
 
-    setText(info.m_statusText.getString());
+    setText(info.m_statusText);
 
     // Cleanup.
-    for (::std::list<RfbClientInfo *>::iterator it = clients.begin(); it != clients.end(); it++) {
+    for (::list<RfbClientInfo *>::iterator it = clients.begin(); it != clients.end(); it++) {
       delete *it;
     }
 
@@ -328,9 +328,9 @@ void ControlTrayIcon::syncStatusWithServer()
 
       m_lastKnownServerInfo = info;
     }
-  } catch (IOException &) {
+  } catch (::io_exception &) {
     setNotConnectedState();
-  } catch (Exception &) {
+  } catch (::remoting::Exception &) {
     _ASSERT(FALSE);
   } // try / catch.
 }

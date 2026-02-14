@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _RECT_H_
-#define _RECT_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 //#include "util/::string.h"
@@ -42,12 +42,12 @@ public:
 
   // Returns true if string can be parsed to rect object,
   // false otherwise.
-  static bool tryParse(const ::scoped_string & scopedstrstring);
+  static bool tryParse(const ::scoped_string & scopedstrString);
 
   // Parsed string and sets parsed values to output rect.
   // Returns true if string is valid, false otherwise.
   // Remark: "out" parameter can be null.
-  static bool parse(const ::scoped_string & scopedstrstring, PortMappingRect *out);
+  static bool parse(const ::scoped_string & scopedstrString, PortMappingRect *out);
 };
 
-#endif
+

@@ -91,7 +91,7 @@ BOOL PortMappingDialog::onInitDialog()
   for (size_t i = 0; i < m_extraPorts->count(); i++) {
     m_extraPorts->at(i)->toString(&mappingString);
     _ASSERT((int)i == i);
-    m_exPortsListBox.insertString((int)i, mappingString.getString());
+    m_exPortsListBox.insertString((int)i, mappingString);
   }
 
   return TRUE;
@@ -118,7 +118,7 @@ void PortMappingDialog::onAddButtonClick()
     {
       ::string mappingString;
       newPM.toString(&mappingString);
-      m_exPortsListBox.addString(mappingString.getString());
+      m_exPortsListBox.addString(mappingString);
     }
 
     m_extraPorts->pushBack(newPM);
@@ -145,7 +145,7 @@ void PortMappingDialog::onEditButtonClick()
   if (editDialog.showModal() == IDOK) {
     ::string mappingString;
     pPM->toString(&mappingString);
-    m_exPortsListBox.setItemText(selectedIndex, mappingString.getString());
+    m_exPortsListBox.setItemText(selectedIndex, mappingString);
 
     ((ConfigDialog *)m_parent)->updateApplyButtonState();
   }

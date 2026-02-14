@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ReconnectException.h"
 
-ReconnectException::ReconnectException(const ::scoped_string & scopedstrmessage)
+ReconnectException::ReconnectException(const ::scoped_string & scopedstrMessage)
 {
 }
 

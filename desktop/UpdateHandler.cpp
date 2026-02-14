@@ -61,8 +61,8 @@ bool UpdateHandler::updateExternalFrameBuffer(FrameBuffer *dstFb, FrameBuffer *s
     return false;
   }
 
-  ::std::vector<::int_rectangle> rects;
-  ::std::vector<::int_rectangle>::iterator iRect;
+  ::array_base<::int_rectangle> rects;
+  ::array_base<::int_rectangle>::iterator iRect;
   region->getRectVector(&rects);
 
   for (iRect = rects.begin(); iRect < rects.end(); iRect++) {

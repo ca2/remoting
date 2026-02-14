@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _HEX_TILE_DECODER_H_
-#define _HEX_TILE_DECODER_H_
+#pragma once
+
 
 #include "DecoderOfRectangle.h"
 
@@ -41,4 +41,4 @@ private:
   static const int TILE_SIZE = 16;
 };
 
-#endif
+

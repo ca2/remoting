@@ -76,8 +76,8 @@ void ClipboardExchange::onRequest(unsigned int reqCode, RfbInputGate *input)
     break;
   default:
     ::string errMess;
-    errMess.format(_T("Unknown %d protocol code received"), (int)reqCode);
-    throw Exception(errMess.getString());
+    errMess.formatf("Unknown {} protocol code received", (int)reqCode);
+    throw ::remoting::Exception(errMess);
     break;
   }
 }
@@ -85,7 +85,7 @@ void ClipboardExchange::onRequestWorker(bool utf8flag, RfbInputGate *input)
 {
   unsigned int length = input->readUInt32();
 
-  ::std::vector<char> charBuff(length + 1);
+  ::array_base<char> charBuff(length + 1);
 
   input->readFully(&charBuff.front(), length);
   charBuff[length] = '\0';
@@ -95,20 +95,20 @@ void ClipboardExchange::onRequestWorker(bool utf8flag, RfbInputGate *input)
 
   ::string clipText;
   if (utf8flag) {
-    m_log->debug(_T("UTF8 ClientCutText, payload length %d"), length);
+    m_log->debug("UTF8 ClientCutText, payload length {}", length);
     Utf8StringStorage utfText(&charBuff);
     utfText.toStringStorage(&clipText);
   }
   else
   {
-    m_log->debug(_T("ClientCutText, payload length %d"), length);
+    m_log->debug("ClientCutText, payload length {}", length);
     AnsiStringStorage ansiText(&charBuff.front());
     ansiText.toStringStorage(&clipText);
   }
   m_desktop->setNewClipText(&clipText);
 }
 
-void ClipboardExchange::sendClipboard(const ::string & newClipboard)
+void ClipboardExchange::sendClipboard(const ::scoped_string & newClipboard)
 {
   AutoLock al(&m_storedClipMut);
   m_storedClip = *newClipboard;
@@ -140,9 +140,9 @@ void ClipboardExchange::execute()
             charBuff.fromStringStorage(&m_storedClip);
             m_hasNewClip = false;
           }
-          data = charBuff.getString();
+          data = charBuff;
           length = charBuff.getLength();
-		      m_log->debug(_T("Sending Utf8 Clipboard, payload length %d"), length);
+		      m_log->debug("Sending Utf8 Clipboard, payload length {}", length);
           m_output->writeUInt32((unsigned int)length);
           m_output->writeFully(data, length);
         }
@@ -156,16 +156,16 @@ void ClipboardExchange::execute()
             charBuff.fromStringStorage(&m_storedClip);
             m_hasNewClip = false;
           }
-          data = charBuff.getString();
+          data = charBuff;
           length = charBuff.getLength();
-		      m_log->debug(_T("Sending Clipboard, payload length %d"), length);
+		      m_log->debug("Sending Clipboard, payload length {}", length);
           m_output->writeUInt32((unsigned int)length);
           m_output->writeFully(data, length);
         }
         m_output->flush();
-      } catch (Exception &e) {
-        m_log->error(_T("The clipboard thread force to terminate because")
-                   _T(" it caught the error: %s"), e.getMessage());
+      } catch (::remoting::Exception &e) {
+        m_log->error("The clipboard thread force to terminate because"
+                   " it caught the error: {}", e.getMessage());
         terminate();
       }
     }

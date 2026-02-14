@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _SERVER_CONFIG_DIALOG_H_
-#define _SERVER_CONFIG_DIALOG_H_
+#pragma once
+
 
 #include "gui/BaseDialog.h"
 #include "gui/TextBox.h"
@@ -144,4 +144,4 @@ protected:
   PasswordControl *m_vpControl;
 };
 
-#endif
+

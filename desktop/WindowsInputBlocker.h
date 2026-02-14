@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINDOWSINPUTBLOCKER_H__
-#define __WINDOWSINPUTBLOCKER_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "thread/GuiThread.h"
@@ -97,4 +97,4 @@ protected:
   LogWriter *m_log;
 };
 
-#endif // __WINDOWSINPUTBLOCKER_H__
+//// __WINDOWSINPUTBLOCKER_H__

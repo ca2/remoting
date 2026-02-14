@@ -135,7 +135,7 @@ bool Region::equals(const Region *other) const
 }
 
 // FIXME: Optimize, make BoxRec and ::int_rectangle identical to get rid of conversions.
-void Region::getRectVector(::std::vector<::int_rectangle> *dst) const
+void Region::getRectVector(::array_base<::int_rectangle> *dst) const
 {
   dst->clear();
 
@@ -144,12 +144,12 @@ void Region::getRectVector(::std::vector<::int_rectangle> *dst) const
   dst->reserve((size_t)numRects);
   for (long i = 0; i < numRects; i++) {
     ::int_rectangle rect(boxPtr[i].x1, boxPtr[i].y1, boxPtr[i].x2, boxPtr[i].y2);
-    dst->push_back(rect);
+    dst->add(rect);
   }
 }
 
 // FIXME: Optimize, make BoxRec and ::int_rectangle identical to get rid of conversions.
-void Region::getRectList(::std::list<::int_rectangle> *dst) const
+void Region::getRectList(::list<::int_rectangle> *dst) const
 {
   dst->clear();
 
@@ -157,7 +157,7 @@ void Region::getRectList(::std::list<::int_rectangle> *dst) const
   long numRects = REGION_NUM_RECTS(&m_reg);
   for (long i = 0; i < numRects; i++) {
     ::int_rectangle rect(boxPtr[i].x1, boxPtr[i].y1, boxPtr[i].x2, boxPtr[i].y2);
-    dst->push_back(rect);
+    dst->add(rect);
   }
 }
 

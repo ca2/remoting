@@ -25,12 +25,12 @@
 #pragma once
 
 #include "rfb/RfbKeySym.h"
-#include <vector>
+//#include <vector>
 
 class KeySymTest : public RfbKeySymListener
 {
 public:
-  KeySymTest(const ::scoped_string & scopedstrfileFrom, const ::scoped_string & scopedstrfileTo);
+  KeySymTest(const ::scoped_string & scopedstrFileFrom, const ::scoped_string & scopedstrFileTo);
   virtual ~KeySymTest();
 
   int run();
@@ -48,7 +48,7 @@ private:
   // pos in - position to start search a word, out - position to start search
   // for next word.
   // Returns true if word has been found.
-  bool getWord(const ::string & line, size_t *pos, ::string & word);
+  bool getWord(const ::scoped_string & line, size_t *pos, ::string & word);
 
   void changeKbdLayout(HKL hkl);
 

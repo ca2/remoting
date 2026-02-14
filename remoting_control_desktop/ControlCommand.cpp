@@ -29,7 +29,7 @@
 #include "util/CommonHeader.h"
 #include "util/Exception.h"
 
-#include "io_lib/IOException.h"
+#include "io_lib/io_exception.h"
 
 ControlCommand::ControlCommand(Command *command, Notificator *notificator)
 : m_command(command), m_notificator(notificator), m_successfull(false)
@@ -50,7 +50,7 @@ void ControlCommand::execute()
     try {
       try {
         m_command->execute();
-      } catch (IOException &) {
+      } catch (::io_exception &) {
         if (m_notificator != 0) {
           m_notificator->notifyConnectionLost();
         }
@@ -65,7 +65,7 @@ void ControlCommand::execute()
           m_notificator->notifyServerSideException(someEx.getMessage());
         }
         throw;
-      } catch (Exception &) {
+      } catch (::remoting::Exception &) {
         _ASSERT(FALSE);
         throw;
       }

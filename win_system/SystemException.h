@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _SYSTEM_EXCEPTION_H_
-#define _SYSTEM_EXCEPTION_H_
+#pragma once
+
 
 #include "util/Exception.h"
 
@@ -33,7 +33,7 @@
  * Solves problem with generating formatted message strings width describes
  * user code-space where error occured and windows specific information about WinAPI error.
  */
-class SystemException : public Exception
+class SystemException : public ::remoting::Exception
 {
 public:
   /**
@@ -93,4 +93,4 @@ private:
   int m_errcode;
 };
 
-#endif
+

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __SCREENGRABBER_H__
-#define __SCREENGRABBER_H__
+#pragma once
+
 
 
 
@@ -54,11 +54,11 @@
   while (!frameBuffer->grab(&grabRect)) {
     if (frameBuffer->getPropertiesChanged()) { // Check desktop properties
       if (!frameBuffer->applyNewProperties()) {
-        MessageBox(NULL, _T("Cannot apply new screen properties"), _T("Error"), MB_ICONHAND);
+        MessageBox(NULL, "Cannot apply new screen properties"), _T("Error", MB_ICONHAND);
         return 1;
       }
     } else {
-      MessageBox(NULL, _T("Cannot grab screen"), _T("Error"), MB_ICONHAND);
+      MessageBox(NULL, "Cannot grab screen"), _T("Error", MB_ICONHAND);
       return 1;
     }
   }
@@ -111,4 +111,4 @@ protected:
   FrameBuffer m_workFrameBuffer;
 };
 
-#endif // __SCREENGRABBER_H__
+//// __SCREENGRABBER_H__

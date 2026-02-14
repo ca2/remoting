@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _DOWNLOAD_OPERATION_H_
-#define _DOWNLOAD_OPERATION_H_
+#pragma once
+
 
 #include "ft_common/FileInfo.h"
 #include "file_lib/WinFileChannel.h"
@@ -51,8 +51,8 @@ public:
 
   DownloadOperation(LogWriter *logWriter,
                     const FileInfo *filesToDownload, size_t filesCount,
-                    const ::scoped_string & scopedstrpathToTargetRoot,
-                    const ::scoped_string & scopedstrpathToSourceRoot);
+                    const ::scoped_string & scopedstrPathToTargetRoot,
+                    const ::scoped_string & scopedstrPathToSourceRoot);
 
   virtual ~DownloadOperation();
 
@@ -127,4 +127,4 @@ protected:
 
 };
 
-#endif
+

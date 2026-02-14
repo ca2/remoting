@@ -43,12 +43,12 @@ void DibFrameBuffer::setTargetDC(HDC targetDC)
 
 bool DibFrameBuffer::assignProperties(const FrameBuffer *srcFrameBuffer)
 {
-  throw Exception(_T("Wrong: You shouln't use the DibFrameBuffer::assignProperties() function."));
+  throw ::remoting::Exception("Wrong: You shouln't use the DibFrameBuffer::assignProperties() function.");
 }
 
 bool DibFrameBuffer::clone(const FrameBuffer *srcFrameBuffer)
 {
-  throw Exception(_T("Wrong: You shouln't use the DibFrameBuffer::clone() function."));
+  throw ::remoting::Exception("Wrong: You shouln't use the DibFrameBuffer::clone() function.");
 }
 
 void DibFrameBuffer::setColor(unsigned char reg, unsigned char green, unsigned char blue)
@@ -96,27 +96,27 @@ bool DibFrameBuffer::cmpFrom(const ::int_rectangle &  dstRect, const FrameBuffer
 
 bool DibFrameBuffer::setDimension(const ::int_size & newDim)
 {
-  throw Exception(_T("Wrong: You shouln't use the DibFrameBuffer::clone() function."));
+  throw ::remoting::Exception("Wrong: You shouln't use the DibFrameBuffer::clone() function.");
 }
 
 bool DibFrameBuffer::setDimension(const ::int_rectangle &  rect)
 {
-  throw Exception(_T("Wrong: You shouln't use the DibFrameBuffer::clone() function."));
+  throw ::remoting::Exception("Wrong: You shouln't use the DibFrameBuffer::clone() function.");
 }
 
 void DibFrameBuffer::setEmptyDimension(const ::int_rectangle &  dimByRect)
 {
-  throw Exception(_T("This function is deprecated"));
+  throw ::remoting::Exception("This function is deprecated");
 }
 
 void DibFrameBuffer::setEmptyPixelFmt(const PixelFormat & pf)
 {
-  throw Exception(_T("This function is deprecated"));
+  throw ::remoting::Exception("This function is deprecated");
 }
 
 void DibFrameBuffer::setPropertiesWithoutResize(const ::int_size & newDim, const PixelFormat & pf)
 {
-  throw Exception(_T("Wrong: You shouln't use the DibFrameBuffer::setPropertiesWithoutResize() function."));
+  throw ::remoting::Exception("Wrong: You shouln't use the DibFrameBuffer::setPropertiesWithoutResize() function.");
 }
 
 inline ::int_size DibFrameBuffer::getDimension() const
@@ -126,7 +126,7 @@ inline ::int_size DibFrameBuffer::getDimension() const
 
 bool DibFrameBuffer::setPixelFormat(const PixelFormat & pixelFormat)
 {
-  throw Exception(_T("Wrong: You shouln't use the DibFrameBuffer::setPixelFormat() function."));
+  throw ::remoting::Exception("Wrong: You shouln't use the DibFrameBuffer::setPixelFormat() function.");
 }
 
 inline PixelFormat DibFrameBuffer::getPixelFormat() const
@@ -136,12 +136,12 @@ inline PixelFormat DibFrameBuffer::getPixelFormat() const
 
 bool DibFrameBuffer::setProperties(const ::int_size & newDim, const PixelFormat & pixelFormat)
 {
-  throw Exception(_T("Wrong: You shouln't use this variant of the DibFrameBuffer::setProperties() function."));
+  throw ::remoting::Exception("Wrong: You shouln't use this variant of the DibFrameBuffer::setProperties() function.");
 }
 
 bool DibFrameBuffer::setProperties(const ::int_rectangle &  dimByRect, const PixelFormat & pixelFormat)
 {
-  throw Exception(_T("Wrong: You shouln't use this variant of the DibFrameBuffer::setProperties() function."));
+  throw ::remoting::Exception("Wrong: You shouln't use this variant of the DibFrameBuffer::setProperties() function.");
 }
 
 unsigned char DibFrameBuffer::getBitsPerPixel() const
@@ -156,7 +156,7 @@ unsigned char DibFrameBuffer::getBytesPerPixel() const
 
 void DibFrameBuffer::setBuffer(void *newBuffer)
 {
-  throw Exception(_T("Wrong: You shouln't use the DibFrameBuffer::setBuffer() function."));
+  throw ::remoting::Exception("Wrong: You shouln't use the DibFrameBuffer::setBuffer() function.");
 }
 
 inline void *DibFrameBuffer::getBuffer() const
@@ -233,6 +233,6 @@ void DibFrameBuffer::releaseDibSection()
 void DibFrameBuffer::checkDibValid()
 {
   if (m_dibSection == 0) {
-    throw Exception(_T("Can't set target DC because it is not initialized a DIB section yet"));
+    throw ::remoting::Exception("Can't set target DC because it is not initialized a DIB section yet");
   }
 }

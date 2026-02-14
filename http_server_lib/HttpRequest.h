@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _HTTP_REQUEST_H_
-#define _HTTP_REQUEST_H_
+#pragma once
+
 
 #include "io_lib/DataInputStream.h"
 
@@ -73,8 +73,8 @@ protected:
   char m_filename[REQUEST_BUFFER_SIZE];
   // Arguments string.
   char m_args[REQUEST_BUFFER_SIZE];
-  // Arguments ::std::list.
+  // Arguments ::list.
   ArgList *m_argList;
 };
 
-#endif
+

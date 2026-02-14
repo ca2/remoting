@@ -24,25 +24,40 @@
 #include "framework.h"
 #include "util/Exception.h"
 
-Exception::Exception()
-{
-  m_message.setString(_T(""));
-}
 
-Exception::Exception(const ::scoped_string & scopedstrformat, ...)
+namespace remoting
 {
-  va_list vl;
 
-  va_start(vl, format);
-  m_message.format(format, vl);
-  va_end(vl);
-}
 
-Exception::~Exception()
-{
-}
+   Exception::Exception() :
+      ::exception(error_remoting)
+   {
 
-const ::scoped_string & scopedstrException::getMessage() const
-{
-  return m_message.getString();
-}
+      // m_message= "";
+
+   }
+
+
+   Exception::Exception(const ::scoped_string &scopedstrFormat, ...) : 
+      ::exception(error_remoting)
+   {
+      
+      va_list vl;
+
+      va_start(vl, scopedstrFormat);
+
+      m_strMessage.format_arguments(scopedstrFormat, vl);
+
+      va_end(vl);
+
+   }
+
+   ::remoting::Exception::~::remoting::Exception() {}
+
+   ///::string ::remoting::Exception::getMessage() const { return m_message; }
+
+
+} // namespace remoting
+ 
+
+

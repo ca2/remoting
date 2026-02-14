@@ -613,7 +613,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Exception.cpp"
+				RelativePath=".\::remoting::Exception.cpp"
 				>
 			</File>
 			<File
@@ -743,7 +743,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Exception.h"
+				RelativePath=".\::remoting::Exception.h"
 				>
 			</File>
 			<File

@@ -35,7 +35,7 @@ void ControlPipeName::createPipeName(bool forService, ::string & pipeName, LogWr
     pipeName->setString(
       ServerApplicationNames::FOR_SERVICE_CONTROL_APP_PIPE_NAME);
   } else {
-    pipeName->format(_T("%s_On_Session_%d"),
+    pipeName->format("%s_On_Session_{}",
       ServerApplicationNames::FOR_APP_CONTROL_APP_SERVICE_PIPE_NAME,
       WTS::getActiveConsoleSessionId(log));
   }

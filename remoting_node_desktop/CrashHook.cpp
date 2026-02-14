@@ -68,15 +68,15 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
     // Try load the library from this exe mofule folder
     ::string libName, moduleFolder;
     Environment::getCurrentModuleFolderPath(&moduleFolder);
-    libName.format(_T("%s\\DbgHelp.dll"), moduleFolder.getString());
+    libName.formatf("{}\\DbgHelp.dll", moduleFolder);
 
-    dbgLib.init(libName.getString());
+    dbgLib.init(libName);
     miniDumpWriteDump = (MINIDUMPWRITEDUMP)
                           dbgLib.getProcAddress("MiniDumpWriteDump");
   } catch (...) {
     try {
       // Try load the library by default path
-      dbgLib.init(_T("DbgHelp.dll"));
+      dbgLib.init("DbgHelp.dll");
       miniDumpWriteDump = (MINIDUMPWRITEDUMP)
                             dbgLib.getProcAddress("MiniDumpWriteDump");
     } catch (...) {
@@ -92,12 +92,12 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
          Environment::APPLICATION_DATA_SPECIAL_FOLDER, &specFolder)) {
     return retValue;
   }
-  dumpPath.format(_T("%s\\%s\\crash.dmp"), specFolder.getString(),
+  dumpPath.formatf("{}\\{}\\crash.dmp", specFolder,
                                            ProductNames::PRODUCT_NAME);
 
   if (guiEnabled && MessageBox(0,
-                               _T("Apllication crashing. Do you")
-                               _T(" want save debug information?"),
+                               "Apllication crashing. Do you"
+                               " want save debug information?",
                                ProductNames::PRODUCT_NAME,
                                MB_YESNO)
                                != IDYES)
@@ -114,12 +114,12 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
         root = m_rootHkey;
       }
       RegistryKey regKey(root, RegistryPaths::SERVER_PATH);
-      regKey.setValueAsString(_T("CrashDumpPath"), dumpPath.getString());
-    } catch (Exception &) {
+      regKey.setValueAsString("CrashDumpPath", dumpPath);
+    } catch (::remoting::Exception &) {
     }
 
     // FIXME: use the "file_lib" project from the trunk hive.
-    hFile = ::CreateFile(dumpPath.getString(),
+    hFile = ::CreateFile(dumpPath,
                          GENERIC_WRITE,
                          FILE_SHARE_WRITE,
                          0,
@@ -127,7 +127,7 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
                          FILE_ATTRIBUTE_NORMAL,
                          0);
     if (hFile == INVALID_HANDLE_VALUE) {
-      throw Exception(_T("Cannot create file to save a debug information"));
+      throw ::remoting::Exception("Cannot create file to save a debug information");
     }
 
     _MINIDUMP_EXCEPTION_INFORMATION exInfo;
@@ -144,18 +144,18 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
                                     0,
                                     0);
     if (result == 0) {
-      throw Exception(_T("Cannot create the crash dump file"));
+      throw ::remoting::Exception("Cannot create the crash dump file");
     }
     if (guiEnabled) {
       ::string succMess;
-      succMess.format(_T("The debug information has been successfully")
-                      _T(" saved to the %s file"), dumpPath.getString());
-      MessageBox(0, succMess.getString(), ProductNames::PRODUCT_NAME, MB_OK);
+      succMess.formatf("The debug information has been successfully"
+                      " saved to the {} file", dumpPath);
+      MessageBox(0, succMess, ProductNames::PRODUCT_NAME, MB_OK);
     }
     m_notifier->onCrash(&dumpPath);
 
     retValue = EXCEPTION_EXECUTE_HANDLER;
-  } catch (Exception &e) {
+  } catch (::remoting::Exception &e) {
     if (guiEnabled) {
       MessageBox(NULL, e.getMessage(), ProductNames::PRODUCT_NAME, MB_OK);
     }

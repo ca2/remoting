@@ -41,8 +41,8 @@ OperationSupport::OperationSupport()
   m_isDownloadSupported = false;
 }
 
-OperationSupport::OperationSupport(const ::std::vector<unsigned int> &clientCodes,
-                                   const ::std::vector<unsigned int> &serverCodes)
+OperationSupport::OperationSupport(const ::array_base<unsigned int> &clientCodes,
+                                   const ::array_base<unsigned int> &serverCodes)
 {
   m_isFileListSupported = isSupport(clientCodes, FTMessage::FILE_LIST_REQUEST) &&
                           isSupport(serverCodes, FTMessage::FILE_LIST_REPLY);
@@ -131,7 +131,7 @@ bool OperationSupport::isDirSizeSupported() const
   return m_isDirSizeSupported;
 }
 
-bool OperationSupport::isSupport(const ::std::vector<unsigned int> &codes, unsigned int code)
+bool OperationSupport::isSupport(const ::array_base<unsigned int> &codes, unsigned int code)
 {
   return std::find(codes.begin(), codes.end(), code) != codes.end();
 }

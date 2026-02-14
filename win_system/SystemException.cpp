@@ -22,30 +22,31 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "SystemException.h"
 
 #include <crtdbg.h>
 
 SystemException::SystemException()
-: Exception(), m_errcode(GetLastError())
+: ::remoting::Exception(), m_errcode(GetLastError())
 {
   createMessage(0, m_errcode);
 }
 
 SystemException::SystemException(int errcode)
-: Exception(), m_errcode(errcode)
+: ::remoting::Exception(), m_errcode(errcode)
 {
   createMessage(0, m_errcode);
 }
 
 SystemException::SystemException(const ::scoped_string & scopedstruserMessage)
-: Exception(), m_errcode(GetLastError())
+: ::remoting::Exception(), m_errcode(GetLastError())
 {
   createMessage(userMessage, m_errcode);
 }
 
 SystemException::SystemException(const ::scoped_string & scopedstruserMessage, int errcode)
-: Exception(), m_errcode(errcode)
+: ::remoting::Exception(), m_errcode(errcode)
 {
   createMessage(userMessage, m_errcode);
 }
@@ -61,14 +62,14 @@ int SystemException::getErrorCode() const
 
 const ::scoped_string & scopedstrSystemException::getSystemErrorDescription() const
 {
-  return m_systemMessage.getString();
+  return m_systemMessage;
 }
 
 void SystemException::createMessage(const ::scoped_string & scopedstruserMessage, int errcode)
 {
   if (userMessage == 0 && errcode == ERROR_SUCCESS) {
-    userMessage = _T("Thrown a system exception but the program")
-                  _T(" cannot identify the corresponding system error.");
+    userMessage = "Thrown a system exception but the program"
+                  " cannot identify the corresponding system error.";
   }
 
   // Get description of windows specific error.
@@ -103,11 +104,11 @@ void SystemException::createMessage(const ::scoped_string & scopedstruserMessage
   // Create system error part of message.
 
   if (formatMessageOk) {
-    m_systemMessage.format(_T("%s (error code %d)"),
-      windowsErrorDescription.getString(),
+    m_systemMessage.formatf("{} (error code {})",
+      windowsErrorDescription,
       errcode);
   } else {
-    m_systemMessage.format(_T("Error code %d"), errcode);
+    m_systemMessage.formatf("Error code {}", errcode);
   }
 
   // Use user message if specified.
@@ -116,9 +117,9 @@ void SystemException::createMessage(const ::scoped_string & scopedstruserMessage
     if (userMessage == 0) {
       m_message = m_systemMessage;
     } else {
-      m_message.format(_T("%s (system error: %s)"),
+      m_message.formatf("{} (system error: {})",
         userMessage,
-        m_systemMessage.getString());
+        m_systemMessage);
     }
   } else {
     m_message = userMessage;

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _SERVICE_CONTROL_COMMAND_LINE_H_
-#define _SERVICE_CONTROL_COMMAND_LINE_H_
+#pragma once
+
 
 #include "util/CommandLine.h"
 #include "util/Exception.h"
@@ -60,7 +60,7 @@ public:
   /**
    * Parses command line.
    * @param commandLine command line string to parse.
-   * @throws Exception on parse error.
+   * @throws ::remoting::Exception on parse error.
    */
   void parse(const CommandLineArgs *cmdArgs);
 
@@ -82,4 +82,4 @@ public:
   bool dontElevate() const;
 };
 
-#endif
+

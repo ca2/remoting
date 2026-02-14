@@ -31,30 +31,30 @@
 
 #include "ConnectStringParser.h"
 
-const TCHAR ControlCommandLine::SET_CONTROL_PASSWORD[] = _T("-setservicecontrolpass");
-const TCHAR ControlCommandLine::SET_PRIMARY_VNC_PASSWORD[] = _T("-setservicevncpass");
-const TCHAR ControlCommandLine::CHECK_SERVICE_PASSWORDS[] = _T("-checkservicepasswords");
+const TCHAR ControlCommandLine::SET_CONTROL_PASSWORD[] = "-setservicecontrolpass";
+const TCHAR ControlCommandLine::SET_PRIMARY_VNC_PASSWORD[] = "-setservicevncpass";
+const TCHAR ControlCommandLine::CHECK_SERVICE_PASSWORDS[] = "-checkservicepasswords";
 
-const TCHAR ControlCommandLine::CONTROL_SERVICE[] = _T("-controlservice");
-const TCHAR ControlCommandLine::CONTROL_APPLICATION[] = _T("-controlapp");
-const TCHAR ControlCommandLine::PASSWORD_FILE[] = _T("-passfile");
-const TCHAR ControlCommandLine::CONFIG_RELOAD[]  = _T("-reload");
-const TCHAR ControlCommandLine::DISCONNECT_ALL[] = _T("-disconnectall");
-const TCHAR ControlCommandLine::CONNECT[] = _T("-connect");
-const TCHAR ControlCommandLine::SHUTDOWN[] = _T("-shutdown");
-const TCHAR ControlCommandLine::SHARE_PRIMARY[] = _T("-shareprimary");
-const TCHAR ControlCommandLine::SHARE_RECT[] = _T("-sharerect");
-const TCHAR ControlCommandLine::SHARE_DISPLAY[] = _T("-sharedisplay");
-const TCHAR ControlCommandLine::SHARE_WINDOW[] = _T("-sharewindow");
-const TCHAR ControlCommandLine::SHARE_FULL[] = _T("-sharefull");
-const TCHAR ControlCommandLine::SHARE_APP[] = _T("-shareapp");
+const TCHAR ControlCommandLine::CONTROL_SERVICE[] = "-controlservice";
+const TCHAR ControlCommandLine::CONTROL_APPLICATION[] = "-controlapp";
+const TCHAR ControlCommandLine::PASSWORD_FILE[] = "-passfile";
+const TCHAR ControlCommandLine::CONFIG_RELOAD[]  = "-reload";
+const TCHAR ControlCommandLine::DISCONNECT_ALL[] = "-disconnectall";
+const TCHAR ControlCommandLine::CONNECT[] = "-connect";
+const TCHAR ControlCommandLine::SHUTDOWN[] = "-shutdown";
+const TCHAR ControlCommandLine::SHARE_PRIMARY[] = "-shareprimary";
+const TCHAR ControlCommandLine::SHARE_RECT[] = "-sharerect";
+const TCHAR ControlCommandLine::SHARE_DISPLAY[] = "-sharedisplay";
+const TCHAR ControlCommandLine::SHARE_WINDOW[] = "-sharewindow";
+const TCHAR ControlCommandLine::SHARE_FULL[] = "-sharefull";
+const TCHAR ControlCommandLine::SHARE_APP[] = "-shareapp";
 
-const TCHAR ControlCommandLine::CONFIG_APPLICATION[] = _T("-configapp");
-const TCHAR ControlCommandLine::CONFIG_SERVICE[] = _T("-configservice");
+const TCHAR ControlCommandLine::CONFIG_APPLICATION[] = "-configapp";
+const TCHAR ControlCommandLine::CONFIG_SERVICE[] = "-configservice";
 
-const TCHAR ControlCommandLine::SLAVE_MODE[] = _T("-slave");
+const TCHAR ControlCommandLine::SLAVE_MODE[] = "-slave";
 
-const TCHAR ControlCommandLine::DONT_ELEVATE[] = _T("-dontelevate");
+const TCHAR ControlCommandLine::DONT_ELEVATE[] = "-dontelevate";
 
 ControlCommandLine::ControlCommandLine()
 : m_displayNumber(0),
@@ -292,12 +292,12 @@ bool ControlCommandLine::hasCheckServicePasswords()
 
 const ::scoped_string & scopedstrControlCommandLine::getPrimaryVncPassword() const
 {
-  return m_vncPassword.getString();
+  return m_vncPassword;
 }
 
 const ::scoped_string & scopedstrControlCommandLine::getControlPassword() const
 {
-  return m_controlPassword.getString();
+  return m_controlPassword;
 }
 
 bool ControlCommandLine::isCommandSpecified()
@@ -308,30 +308,30 @@ bool ControlCommandLine::isCommandSpecified()
          hasShareRect() || hasShareFull() || hasShareApp();
 }
 
-void ControlCommandLine::parseRectCoordinates(const ::string & strCoord)
+void ControlCommandLine::parseRectCoordinates(const ::scoped_string & strCoord)
 {
   m_shareRect = RectSerializer::toRect(strCoord);
 }
 
-void ControlCommandLine::parseDisplayNumber(const ::string & strDispNumber)
+void ControlCommandLine::parseDisplayNumber(const ::scoped_string & strDispNumber)
 {
   if (!StringParser::parseByte(strDispNumber->getString(),
                                &m_displayNumber)) {
     ::string errMess;
-    errMess.format(_T("Can't parse the %s argument to a display number"),
+    errMess.formatf("Can't parse the {} argument to a display number",
                    strDispNumber->getString());
-    throw Exception(errMess.getString());
+    throw ::remoting::Exception(errMess);
   }
 }
 
-void ControlCommandLine::parseProcessId(const ::string & str)
+void ControlCommandLine::parseProcessId(const ::scoped_string & str)
 {
   if (!StringParser::parseUInt(str->getString(),
                                &m_sharedAppProcessId)) {
     ::string errMess;
     // FIXME: Here the next string must be placed to the resource.
-    errMess.format(_T("Can't parse the %s argument to a process id"),
+    errMess.formatf("Can't parse the {} argument to a process id",
                    str->getString());
-    throw Exception(errMess.getString());
+    throw ::remoting::Exception(errMess);
   }
 }

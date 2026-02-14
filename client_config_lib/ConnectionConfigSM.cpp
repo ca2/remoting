@@ -31,7 +31,7 @@ ConnectionConfigSM::ConnectionConfigSM(const ::scoped_string & scopedstrRegistry
 : RegistrySettingsManager()
 {
   ::string strKeyName;
-  strKeyName.format("%s\\History\\%s",
+  strKeyName.format("{}\\History\\{}",
                  ::string(scopedstrRegistryPath).c_str(),
                  ::string(scopedstrEntryName).c_str());
   setRegistryKey(Registry::getCurrentUserKey(), strKeyName);

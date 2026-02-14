@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _QUERY_CONNECTION_COMMAND_LINE_H_
-#define _QUERY_CONNECTION_COMMAND_LINE_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "util/CommandLine.h"
@@ -57,4 +57,4 @@ protected:
   DWORD m_timeout;
 };
 
-#endif
+

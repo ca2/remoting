@@ -22,11 +22,11 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _HTTP_REPLY_H_
-#define _HTTP_REPLY_H_
+#pragma once
+
 
 #include "io_lib/DataOutputStream.h"
-#include "io_lib/IOException.h"
+#include "io_lib/io_exception.h"
 
 class HttpReply
 {
@@ -41,4 +41,4 @@ protected:
   DataOutputStream *m_dataOutput;
 };
 
-#endif
+

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _STRING_PARSER_H_
-#define _STRING_PARSER_H_
+#pragma once
+
 
 #include "inttypes.h"
 #include "CommonHeader.h"
@@ -31,14 +31,14 @@
 class StringParser
 {
 public:
-  static bool tryParseInt(const ::scoped_string & scopedstrstr);
-  static bool parseInt(const ::scoped_string & scopedstrstr, int *out);
+  static bool tryParseInt(const ::scoped_string & scopedstrStr);
+  static bool parseInt(const ::scoped_string & scopedstrStr, int *out);
   // FIXME: it returns true on values that greater then 0xFFFFFFFF.
-  static bool parseUInt(const ::scoped_string & scopedstrstr, unsigned int *out);
-  static bool parseUInt64(const ::scoped_string & scopedstrstr, unsigned long long *out);
-  static bool parseHex(const ::scoped_string & scopedstrstr, unsigned int *out);
-  static bool parseByte(const ::scoped_string & scopedstrstr, unsigned char *out);
-  static bool parseByteHex(const ::scoped_string & scopedstrstr, unsigned char *out);
+  static bool parseUInt(const ::scoped_string & scopedstrStr, unsigned int *out);
+  static bool parseUInt64(const ::scoped_string & scopedstrStr, unsigned long long *out);
+  static bool parseHex(const ::scoped_string & scopedstrStr, unsigned int *out);
+  static bool parseByte(const ::scoped_string & scopedstrStr, unsigned char *out);
+  static bool parseByteHex(const ::scoped_string & scopedstrStr, unsigned char *out);
 };
 
-#endif
+

@@ -21,17 +21,22 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
+#pragma once
 
-#ifndef _EOF_EXCEPTION_H_
-#define _EOF_EXCEPTION_H_
 
-#include "io_lib/IOException.h"
+#include "io_lib/io_exception.h"
 
-class EOFException : public IOException
+
+class EOFException : public ::io_exception
 {
 public:
-  EOFException();
-  virtual ~EOFException();
+  
+   
+   EOFException();
+   ~EOFException() override;
+
+
 };
 
-#endif
+
+

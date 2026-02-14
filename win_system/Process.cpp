@@ -22,10 +22,11 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "Process.h"
 #include "SystemException.h"
 
-Process::Process(const ::scoped_string & scopedstrpath, const ::scoped_string & scopedstrArgs)
+Process::Process(const ::file::path & path, const ::scoped_string & scopedstrArgs)
 : m_hProcess(0),
   m_hThread(0),
   m_handlesIsInherited(false),
@@ -49,14 +50,14 @@ Process::~Process()
   }
 }
 
-void Process::setFilename(const ::scoped_string & scopedstrpath)
+void Process::setFilename(const ::scoped_string & scopedstrPath)
 {
-  m_path.setString(path);
+  m_path= path;
 }
 
 void Process::setArguments(const ::scoped_string & scopedstrArgs)
 {
-  m_args.setString(args);
+  m_args= args;
 }
 
 void Process::setStandardIoHandles(HANDLE stdIn, HANDLE stdOut, HANDLE stdErr)
@@ -94,7 +95,7 @@ void Process::start()
   ::string commandLine = getCommandLineString();
 
   _ASSERT(!commandLine.is_empty());
-  if (CreateProcess(NULL, (LPTSTR) commandLine.getString(),
+  if (CreateProcess(NULL, (LPTSTR) commandLine,
                     NULL, NULL, m_handlesIsInherited, NULL, NULL, NULL,
                     &sti, &pi) == 0) {
     throw SystemException();
@@ -147,7 +148,7 @@ HANDLE Process::getProcessHandle()
     return m_path;
   }
 
-  result.format(_T("%s %s"), m_path.getString(), m_args.getString());
+  result.formatf("{} {}", m_path, m_args);
 
   return result;
 }

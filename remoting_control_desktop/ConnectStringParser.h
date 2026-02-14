@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CONNECT_STRING_PARSER_H_
-#define _CONNECT_STRING_PARSER_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -37,4 +37,4 @@ public:
                     unsigned short *port = 0);
 };
 
-#endif
+

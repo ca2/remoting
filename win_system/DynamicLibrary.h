@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _LIBRARY_H_
-#define _LIBRARY_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -38,15 +38,15 @@ public:
   /**
   Load dynamic library with specified filename.
   @param filename path to library file.
-  @throws Exception on error.
+  @throws ::remoting::Exception on error.
   */
-  DynamicLibrary(const ::scoped_string & scopedstrfilename);
+  DynamicLibrary(const ::scoped_string & scopedstrFilename);
   DynamicLibrary();
   virtual ~DynamicLibrary();
 
   // Use the init() function after default constructor calling to load
   // a library before the getProcAddress() function calling.
-  void init(const ::scoped_string & scopedstrfilename);
+  void init(const ::scoped_string & scopedstrFilename);
 
   /**
   Gets procedure address.
@@ -59,4 +59,4 @@ protected:
   HMODULE m_module;
 };
 
-#endif
+

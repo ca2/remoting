@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __HOOKSUPDATEDETECTOR_H__
-#define __HOOKSUPDATEDETECTOR_H__
+#pragma once
+
 
 #include "UpdateDetector.h"
 #include "win_system/WindowsEvent.h"
@@ -62,4 +62,4 @@ private:
   LogWriter *m_log;
 };
 
-#endif // __HOOKSUPDATEDETECTOR_H__
+//// __HOOKSUPDATEDETECTOR_H__

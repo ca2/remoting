@@ -37,10 +37,10 @@ DecoderStore::DecoderStore(LogWriter *logWriter)
 DecoderStore::~DecoderStore()
 {
   try {
-    for (::std::map<int, ::std::pair<int, Decoder *> >::iterator i = m_decoders.begin();
+    for (::map<int, ::std::pair<int, Decoder *> >::iterator i = m_decoders.begin();
          i != m_decoders.end();
          i++) {
-      m_logWriter->detail(_T("Decoder '%d' destroyed"), i->second.second->getCode());
+      m_logWriter->detail("Decoder '{}' destroyed", i->second.second->getCode());
       try {
         delete i->second.second;
       } catch (...) {
@@ -58,40 +58,40 @@ Decoder *DecoderStore::getDecoder(int decoderId)
     return 0;
 }
 
-::std::vector<int> DecoderStore::getDecoderIds()
+::array_base<int> DecoderStore::getDecoderIds()
 {
-  // this method returned ::std::list of decoders, sorted by priority.
+  // this method returned ::list of decoders, sorted by priority.
   // in first position is preffered encoding.
-  ::std::vector<::std::pair<int, int> > decoders;
+  ::array_base<::std::pair<int, int> > decoders;
 
-  for (::std::map<int, ::std::pair <int, Decoder *> >::iterator i = m_decoders.begin();
+  for (::map<int, ::std::pair <int, Decoder *> >::iterator i = m_decoders.begin();
        i != m_decoders.end();
        i++) {
     // preferred encoding is skipping
     if (i->first != m_preferredEncoding) {
       // copy rect is allowed?
       if (i->first != EncodingDefs::COPYRECT || m_allowCopyRect)
-        decoders.push_back(::std::make_pair(i->second.first, i->first));
+        decoders.add(::std::make_pair(i->second.first, i->first));
     }
   }
   ::std::sort(decoders.begin(), decoders.end(), ::std::greater<::std::pair<int,int> >());
-  ::std::vector<int> sortedDecoders;
-  ::std::map<int, ::std::pair<int, Decoder *> >::iterator priorityEnc = m_decoders.find(m_preferredEncoding);
+  ::array_base<int> sortedDecoders;
+  ::map<int, ::std::pair<int, Decoder *> >::iterator priorityEnc = m_decoders.find(m_preferredEncoding);
   if (priorityEnc != m_decoders.end())
-    sortedDecoders.push_back(priorityEnc->first);
-  for (::std::vector<::std::pair<int, int> >::iterator i = decoders.begin();
+    sortedDecoders.add(priorityEnc->first);
+  for (::array_base<::std::pair<int, int> >::iterator i = decoders.begin();
        i != decoders.end();
        i++) {
-    sortedDecoders.push_back(i->second);
+    sortedDecoders.add(i->second);
   }
   if (sortedDecoders.empty())
-    sortedDecoders.push_back(EncodingDefs::RAW);
+    sortedDecoders.add(EncodingDefs::RAW);
   return sortedDecoders;
 }
 
 bool DecoderStore::addDecoder(Decoder *decoder, int priority)
 {
-  m_logWriter->detail(_T("Decoder %d added"), decoder->getCode());
+  m_logWriter->detail("Decoder {} added", decoder->getCode());
   if (m_decoders.count(decoder->getCode()) == 0) {
     m_decoders[decoder->getCode()] = ::std::make_pair(priority, decoder);
     return true;
@@ -103,7 +103,7 @@ bool DecoderStore::addDecoder(Decoder *decoder, int priority)
 bool DecoderStore::removeDecoder(int decoderId)
 {
   if (m_decoders.count(decoderId)) {
-    m_logWriter->detail(_T("Decoder '%d' destroyed (removed from ::std::list)"),
+    m_logWriter->detail("Decoder '{}' destroyed (removed from ::list)",
                         m_decoders[decoderId].second->getCode());
     delete m_decoders[decoderId].second;
     m_decoders.erase(decoderId);
@@ -114,16 +114,16 @@ bool DecoderStore::removeDecoder(int decoderId)
 
 void DecoderStore::setPreferredEncoding(int encodingType)
 {
-  m_logWriter->detail(_T("Decoder store: preferred encoding is \"%d\"."), encodingType);
+  m_logWriter->detail("Decoder store: preferred encoding is \"{}\".", encodingType);
   m_preferredEncoding = encodingType;
 }
 
 void DecoderStore::allowCopyRect(bool allow)
 {
   if (allow) {
-    m_logWriter->detail(_T("Decoder store: enable Copy ::int_rectangle"));
+    m_logWriter->detail("Decoder store: enable Copy ::int_rectangle");
   } else {
-    m_logWriter->detail(_T("Decoder store: disable Copy ::int_rectangle"));
+    m_logWriter->detail("Decoder store: disable Copy ::int_rectangle");
   }
   m_allowCopyRect = allow;
 }

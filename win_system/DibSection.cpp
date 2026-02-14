@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "DibSection.h"
 #include "win_system/SystemException.h"
 
@@ -88,7 +89,7 @@ void DibSection::blitToDibSection(const ::int_rectangle &  rect, DWORD flags)
   if (BitBlt(m_memDC, rect.left, rect.top, rect.width(), rect.height(),
              m_targetDC, rect.left + m_srcOffsetX,
              rect.top + m_srcOffsetY, flags) == 0) {
-    throw Exception(_T("Can't blit to DIB section."));
+    throw ::remoting::Exception("Can't blit to DIB section.");
   }
 }
 
@@ -97,7 +98,7 @@ void DibSection::blitFromDibSection(const ::int_rectangle &  rect, DWORD flags)
   if (BitBlt(m_targetDC, rect.left + m_srcOffsetX, rect.top + m_srcOffsetY,
              rect.width(), rect.height(),
              m_memDC, rect.left, rect.top, flags) == 0) {
-    throw Exception(_T("Can't blit from DIB section."));
+    throw ::remoting::Exception("Can't blit from DIB section.");
   }
 }
 
@@ -108,7 +109,7 @@ void DibSection::stretchFromDibSection(const ::int_rectangle &  srcRect,const ::
                  srcRect.width(), srcRect.height(),
                  m_memDC, dstRect.left, dstRect.top, dstRect.width(), dstRect.height(),
                  flags) == 0) {
-    throw Exception(_T("Can't strech blit from DIB section."));
+    throw ::remoting::Exception("Can't strech blit from DIB section.");
   }
 }
 
@@ -150,7 +151,7 @@ void DibSection::openDIBSection(const PixelFormat & pf, const ::int_size & dim, 
   m_targetDC = GetDC(compatibleWin);
   m_isOwnTargetDC = true;
   if (m_targetDC == 0) {
-    throw SystemException(_T("Can't get DC to create a DIB section"));
+    throw SystemException("Can't get DC to create a DIB section");
   }
   if (compatibleWin == 0) {
     // In this special case is needed to store offset of the desktop, because coordinates
@@ -174,12 +175,12 @@ void DibSection::openDIBSection(const PixelFormat & pf, const ::int_size & dim, 
 
   m_memDC = CreateCompatibleDC(m_targetDC);
   if (m_memDC == NULL) {
-    throw SystemException(_T("Can't create a compatible DC to open a dib section"));
+    throw SystemException("Can't create a compatible DC to open a dib section");
   }
 
   m_hbmDIB = CreateDIBSection(m_memDC, (BITMAPINFO *)pBmi, DIB_RGB_COLORS, &m_buffer, NULL, NULL);
   if (m_hbmDIB == 0) {
-    throw SystemException(_T("Can't create a dib section"));
+    throw SystemException("Can't create a dib section");
   }
 
   m_hbmOld = (HBITMAP)SelectObject(m_memDC, m_hbmDIB);

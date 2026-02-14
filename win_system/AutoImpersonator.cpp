@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "AutoImpersonator.h"
 
 AutoImpersonator::AutoImpersonator(Impersonator *imp, LogWriter *log)
@@ -30,7 +31,7 @@ AutoImpersonator::AutoImpersonator(Impersonator *imp, LogWriter *log)
 {
   try {
     m_imp->impersonateAsLoggedUser();
-  } catch (Exception &e) {
+  } catch (::remoting::Exception &e) {
     m_log->error(e.getMessage());
   }
 }
@@ -39,7 +40,7 @@ AutoImpersonator::~AutoImpersonator()
 {
   try {
     m_imp->revertToSelf();
-  } catch (Exception &e) {
+  } catch (::remoting::Exception &e) {
     m_log->error(e.getMessage());
   }
 }

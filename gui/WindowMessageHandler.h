@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINDOWMESSAGEHANDLER_H__
-#define __WINDOWMESSAGEHANDLER_H__
+#pragma once
+
 
 class WindowMessageHandler
 {
@@ -32,4 +32,4 @@ public:
   virtual bool processMessage(UINT message, WPARAM wParam, LPARAM lParam) = 0;
 };
 
-#endif // __WINDOWMESSAGEHANDLER_H__
+//// __WINDOWMESSAGEHANDLER_H__

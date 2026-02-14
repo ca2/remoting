@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _WTS_H_
-#define _WTS_H_
+#pragma once
+
 
 #include "util/winhdr.h"
 #include "thread/LocalMutex.h"
@@ -65,7 +65,7 @@ typedef BOOL(WINAPI *pWTSEnumerateSessionsW)(
 #else
 #define pWTSQuerySessionInformation pWTSQuerySessionInformationA
 #define pWTSEnumerateSessions pWTSEnumerateSessionsA
-#endif
+
 
 
 /**
@@ -176,4 +176,4 @@ private:
   static LocalMutex m_mutex;
 };
 
-#endif
+

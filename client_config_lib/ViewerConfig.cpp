@@ -40,7 +40,7 @@ ViewerConfig::ViewerConfig(const ::scoped_string & scopedstrRegistryPath)
   m_logger(0)
 {
   ::string registryKey;
-  registryKey.format("%s\\History",::string(scopedstrRegistryPath).c_str());
+  registryKey.format("{}\\History",::string(scopedstrRegistryPath).c_str());
   m_conHistoryKey.open(Registry::getCurrentUserKey(),
                        registryKey,
                        true);
@@ -60,10 +60,10 @@ bool ViewerConfig::loadFromStorage(SettingsManager *storage)
 {
   bool loadAllOk = true;
 
-  TEST_FAIL(storage->getInt(_T("LogLevel"), &m_logLevel), loadAllOk);
+  TEST_FAIL(storage->getInt("LogLevel", &m_logLevel), loadAllOk);
   setLogLevel(m_logLevel);
-  TEST_FAIL(storage->getInt(_T("ListenPort"), &m_listenPort), loadAllOk);
-  TEST_FAIL(storage->getInt(_T("HistoryLimit"), &m_historyLimit), loadAllOk);
+  TEST_FAIL(storage->getInt("ListenPort", &m_listenPort), loadAllOk);
+  TEST_FAIL(storage->getInt("HistoryLimit", &m_historyLimit), loadAllOk);
   setHistoryLimit(m_historyLimit);
   //
   // FIXME: Why registry entry has "NoToolbar" name but
@@ -71,9 +71,9 @@ bool ViewerConfig::loadFromStorage(SettingsManager *storage)
   // toolbar become visible.
   //
 
-  TEST_FAIL(storage->getBoolean(_T("NoToolbar"), &m_showToolbar), loadAllOk);
+  TEST_FAIL(storage->getBoolean("NoToolbar", &m_showToolbar), loadAllOk);
 
-  if (storage->getBoolean(_T("SkipFullScreenPrompt"), &m_promptOnFullscreen)) {
+  if (storage->getBoolean("SkipFullScreenPrompt", &m_promptOnFullscreen)) {
     m_promptOnFullscreen = !m_promptOnFullscreen;
   } else {
     loadAllOk = false;
@@ -86,11 +86,11 @@ bool ViewerConfig::saveToStorage(SettingsManager *storage) const
 {
   bool saveAllOk = true;
 
-  TEST_FAIL(storage->setInt(_T("LogLevel"),  m_logLevel), saveAllOk);
-  TEST_FAIL(storage->setInt(_T("ListenPort"), m_listenPort), saveAllOk);
-  TEST_FAIL(storage->setInt(_T("HistoryLimit"), m_historyLimit), saveAllOk);
-  TEST_FAIL(storage->setBoolean(_T("NoToolbar"), m_showToolbar), saveAllOk);
-  TEST_FAIL(storage->setBoolean(_T("SkipFullScreenPrompt"), !m_promptOnFullscreen), saveAllOk);
+  TEST_FAIL(storage->setInt("LogLevel",  m_logLevel), saveAllOk);
+  TEST_FAIL(storage->setInt("ListenPort", m_listenPort), saveAllOk);
+  TEST_FAIL(storage->setInt("HistoryLimit", m_historyLimit), saveAllOk);
+  TEST_FAIL(storage->setBoolean("NoToolbar", m_showToolbar), saveAllOk);
+  TEST_FAIL(storage->setBoolean("SkipFullScreenPrompt", !m_promptOnFullscreen), saveAllOk);
 
   return saveAllOk;
 }
@@ -217,9 +217,9 @@ Logger *ViewerConfig::initLog(const ::scoped_string & scopedstrLogDir, const ::s
   // After that logFilePath variable will contain path to folder
   // where remoting_impact.log must be located
   if (Environment::getSpecialFolderPath(Environment::APPLICATION_DATA_SPECIAL_FOLDER, appDataPath) && useSpecialFolder) {
-    logFileFolderPath.format("%s\\%s", appDataPath.c_str(), ::string(scopedstrLogDir).c_str());
+    logFileFolderPath.format("{}\\{}", appDataPath.c_str(), ::string(scopedstrLogDir).c_str());
   } else {
-    logFileFolderPath.format("%s", ::string(scopedstrLogDir).c_str());
+    logFileFolderPath.format("{}", ::string(scopedstrLogDir).c_str());
   }
 
   // Create TightVNC folder

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __CONNECTIONLISTENER_H__
-#define __CONNECTIONLISTENER_H__
+#pragma once
+
 
 #include "io_lib/Channel.h"
 
@@ -33,4 +33,4 @@ public:
   virtual void onNewConnection(Channel *channel) = 0;
 };
 
-#endif // __CONNECTIONLISTENER_H__
+//// __CONNECTIONLISTENER_H__

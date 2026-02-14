@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __USERINPUT_H__
-#define __USERINPUT_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "region/Point.h"
@@ -44,7 +44,7 @@ public:
   virtual void sendInit(BlockingGate *gate) {}
 
   // Client to server user inputs
-  virtual void setNewClipboard(const ::string & newClipboard) = 0;
+  virtual void setNewClipboard(const ::scoped_string & newClipboard) = 0;
   // By the keyFlag argument will be set the mouse button state as described in
   // the rfb protocol.
   virtual void setMouseEvent(const Point newPos, unsigned char keyFlag) = 0;
@@ -55,15 +55,15 @@ public:
   virtual void getPrimaryDisplayCoords(::int_rectangle *rect) = 0;
   virtual void getDisplayNumberCoords(::int_rectangle *rect,
                                       unsigned char dispNumber) = 0;
-  virtual ::std::vector<::int_rectangle> getDisplaysCoords() = 0;
+  virtual ::array_base<::int_rectangle> getDisplaysCoords() = 0;
   virtual void getNormalizedRect(::int_rectangle *rect) = 0;
 
   virtual void getWindowCoords(HWND hwnd, ::int_rectangle *rect) = 0;
-  virtual HWND getWindowHandleByName(const ::string & windowName) = 0;
+  virtual HWND getWindowHandleByName(const ::scoped_string & windowName) = 0;
 
   virtual void getApplicationRegion(unsigned int procId, Region *region) = 0;
   virtual bool isApplicationInFocus(unsigned int procId) = 0;
 
 };
 
-#endif // __USERINPUT_H__
+//// __USERINPUT_H__

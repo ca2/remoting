@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __CONNECTCOMMAND_H__
-#define __CONNECTCOMMAND_H__
+#pragma once
+
 
 #include "util/Command.h"
 
@@ -40,7 +40,7 @@ public:
    * Creates command.
    * @param serverControl proxy.
    */
-  ConnectCommand(ControlProxy *serverControl, const ::scoped_string & scopedstrhostName);
+  ConnectCommand(ControlProxy *serverControl, const ::scoped_string & scopedstrHostName);
   /**
    * Destroys command.
    */
@@ -51,7 +51,7 @@ public:
    *
    * Inhrited from Command abstract class.
    *
-   * @throws IOException on io error, RemoteException on server side error.
+   * @throws ::io_exception on io error, RemoteException on server side error.
    */
   virtual void execute();
 private:
@@ -62,4 +62,4 @@ private:
   ::string m_hostName;
 };
 
-#endif // __CONNECTCOMMAND_H__
+//// __CONNECTCOMMAND_H__

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINCURSOR_H__
-#define __WINCURSOR_H__
+#pragma once
+
 
 #include "region/Point.h"
 #include "util/CommonHeader.h"
@@ -37,4 +37,4 @@ public:
   Point getCursorPos() const;
 };
 
-#endif // __WINCURSOR_H__
+//// __WINCURSOR_H__

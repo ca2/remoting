@@ -24,14 +24,14 @@
 
 #include "ServiceControlCommandLine.h"
 
-const TCHAR ServiceControlCommandLine::INSTALL_SERVICE[]   = _T("-install");
-const TCHAR ServiceControlCommandLine::REMOVE_SERVICE[]    = _T("-remove");
-const TCHAR ServiceControlCommandLine::REINSTALL_SERVICE[] = _T("-reinstall");
-const TCHAR ServiceControlCommandLine::START_SERVICE[]     = _T("-start");
-const TCHAR ServiceControlCommandLine::STOP_SERVICE[]      = _T("-stop");
+const TCHAR ServiceControlCommandLine::INSTALL_SERVICE[]   = "-install";
+const TCHAR ServiceControlCommandLine::REMOVE_SERVICE[]    = "-remove";
+const TCHAR ServiceControlCommandLine::REINSTALL_SERVICE[] = "-reinstall";
+const TCHAR ServiceControlCommandLine::START_SERVICE[]     = "-start";
+const TCHAR ServiceControlCommandLine::STOP_SERVICE[]      = "-stop";
 
-const TCHAR ServiceControlCommandLine::DONT_ELEVATE[]            = _T("-dontelevate");
-const TCHAR ServiceControlCommandLine::SILENT[]            = _T("-silent");
+const TCHAR ServiceControlCommandLine::DONT_ELEVATE[]            = "-dontelevate";
+const TCHAR ServiceControlCommandLine::SILENT[]            = "-silent";
 
 ServiceControlCommandLine::ServiceControlCommandLine()
 {
@@ -56,17 +56,17 @@ void ServiceControlCommandLine::parse(const CommandLineArgs *cmdArgs)
   if (!CommandLine::parse(format,
                           sizeof(format) / sizeof(CommandLineFormat),
                           cmdArgs)) {
-    throw Exception(_T("invalid command line"));
+    throw ::remoting::Exception("invalid command line");
   } // if cannot parse it.
 
   // Check additional rules.
 
   if (keySpecified(SILENT)) {
     if (m_foundKeys.size() != (dontElevate() ? 3 : 2)) {
-      throw Exception(_T("-silent key can be used only when one command specified"));
+      throw ::remoting::Exception("-silent key can be used only when one command specified");
     }
   } else if (m_foundKeys.size() != (dontElevate() ? 2 : 1)) {
-    throw Exception(_T("only one service command can be specified"));
+    throw ::remoting::Exception("only one service command can be specified");
   }
 }
 

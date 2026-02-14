@@ -22,17 +22,17 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _ZLIB_EXCEPTION_H_
-#define _ZLIB_EXCEPTION_H_
+#pragma once
+
 
 #include "util/Exception.h"
 
-class ZLibException : public Exception
+class ZLibException : public ::remoting::Exception
 {
 public:
-  ZLibException(const ::scoped_string & scopedstrmessage);
+  ZLibException(const ::scoped_string & scopedstrMessage);
   ZLibException();
   virtual ~ZLibException();
 };
 
-#endif
+

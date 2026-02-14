@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __LOGLEVELSENDER_H__
-#define __LOGLEVELSENDER_H__
+#pragma once
+
 
 #include "thread/Thread.h"
 #include "win_system/WindowsEvent.h"
@@ -54,4 +54,4 @@ private:
   LocalMutex m_updateMutex;
 };
 
-#endif // __LOGLEVELSENDER_H__
+//// __LOGLEVELSENDER_H__

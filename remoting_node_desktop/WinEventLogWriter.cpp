@@ -39,46 +39,46 @@ void WinEventLogWriter::enable()
   m_sysLog.enable();
 }
 
-void WinEventLogWriter::onSuccAuth(const ::string & ip)
+void WinEventLogWriter::onSuccAuth(const ::scoped_string & ip)
 {
   m_sysLog.reportInfo(MSG_INFO_MESSAGE,
-                      _T("Authentication passed by %s"),
+                      "Authentication passed by {}",
                       ip->getString());
 }
 
-void WinEventLogWriter::onAuthFailed(const ::string & ip)
+void WinEventLogWriter::onAuthFailed(const ::scoped_string & ip)
 {
   m_sysLog.reportWarning(MSG_WARNING_MESSAGE,
-                         _T("Authentication failed from %s"),
+                         "Authentication failed from {}",
                          ip->getString());
 }
 
-void WinEventLogWriter::onDisconnect(const ::string & message)
+void WinEventLogWriter::onDisconnect(const ::scoped_string & message)
 {
-  m_sysLog.reportInfo(MSG_INFO_MESSAGE, _T("%s"), message->getString());
+  m_sysLog.reportInfo(MSG_INFO_MESSAGE, "{}", message->getString());
 }
 
-void WinEventLogWriter::onCrash(const ::string & dumpPath)
+void WinEventLogWriter::onCrash(const ::scoped_string & dumpPath)
 {
   m_sysLog.reportError(MSG_ERROR_MESSAGE,
-                       _T("Application crashed. Debug information has been saved to %s"),
+                       "Application crashed. Debug information has been saved to {}",
                        dumpPath->getString());
 }
 
 void WinEventLogWriter::onSuccServiceStart()
 {
   m_sysLog.reportInfo(MSG_INFO_MESSAGE,
-                      _T("Service has been started successfully"));
+                      "Service has been started successfully");
 }
 
-void WinEventLogWriter::onFailedServiceStart(const ::string & reason)
+void WinEventLogWriter::onFailedServiceStart(const ::scoped_string & reason)
 {
   m_sysLog.reportError(MSG_ERROR_MESSAGE,
-                       _T("Service has been terminated for the following reason: %s"),
+                       "Service has been terminated for the following reason: {}",
                        reason->getString());
 }
 
 void WinEventLogWriter::onServiceStop()
 {
-  m_sysLog.reportInfo(MSG_INFO_MESSAGE, _T("Service has been stopped"));
+  m_sysLog.reportInfo(MSG_INFO_MESSAGE, "Service has been stopped");
 }

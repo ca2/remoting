@@ -22,13 +22,13 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __DIBSECTION_H__
-#define __DIBSECTION_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #ifndef CAPTUREBLT
 #define CAPTUREBLT          (DWORD)0x40000000 /* Include layered windows */
-#endif
+
 #include "win_system/Screen.h"
 
 // This clas is a primitive wrapper to a DIB section.
@@ -104,4 +104,4 @@ private:
   Screen m_screen;
 };
 
-#endif // __DIBSECTION_H__
+//// __DIBSECTION_H__

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WIN8DUPLICATIONLISTENER_H__
-#define __WIN8DUPLICATIONLISTENER_H__
+#pragma once
+
 
 #include "region/Region.h"
 
@@ -45,4 +45,4 @@ public:
   virtual void onCriticalError(const ::scoped_string & scopedstrreason) = 0;
 };
 
-#endif // __WIN8DUPLICATIONLISTENER_H__
+//// __WIN8DUPLICATIONLISTENER_H__

@@ -22,8 +22,9 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _REMOTE_FILE_RENAME_OPERATION_H_
-#define _REMOTE_FILE_RENAME_OPERATION_H_
+//#pragma once
+//
+#pragma once
 
 #include "FileTransferOperation.h"
 
@@ -35,25 +36,25 @@ class RemoteFileRenameOperation : public FileTransferOperation
 {
 public:
   RemoteFileRenameOperation(LogWriter *logWriter,
-                            const ::scoped_string & scopedstrpathToSourceFile,
-                            const ::scoped_string & scopedstrpathToTargetFile);
+                            const ::scoped_string & scopedstrPathToSourceFile,
+                            const ::scoped_string & scopedstrPathToTargetFile);
 
   RemoteFileRenameOperation(LogWriter *logWriter,
                             FileInfo sourceFileInfo,
                             FileInfo targetFileInfo,
-                            const ::scoped_string & scopedstrpathToTargetRoot);
+                            const ::scoped_string & scopedstrPathToTargetRoot);
 
   virtual ~RemoteFileRenameOperation();
 
   virtual void start();
 
-protected:
+//protected:
   virtual void onMvReply(DataInputStream *input);
   virtual void onLastRequestFailedReply(DataInputStream *input);
 
-protected:
-  ::string m_pathToSourceFile;
-  ::string m_pathToTargetFile;
+
+  ::file::path m_pathToSourceFile;
+  ::file::path m_pathToTargetFile;
 };
 
-#endif
+//

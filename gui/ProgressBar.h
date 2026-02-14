@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _PROGRESS_BAR_H_
-#define _PROGRESS_BAR_H_
+#pragma once
+
 
 #include "Control.h"
 
@@ -37,4 +37,4 @@ public:
   void setPos(WORD pos);
 };
 
-#endif
+

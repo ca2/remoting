@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "SharedMemory.h"
 #include "util/Exception.h"
 #include <Aclapi.h>
@@ -69,12 +70,12 @@ bool SharedMemory::createFile(const ::scoped_string & scopedstrName, size_t size
                                PAGE_READWRITE,        // read/write access
                                highSize,              // size: high 32-bits
                                lowSize,               // size: low 32-bits
-                               name);                 // name of ::std::map object
+                               name);                 // name of ::map object
   if (m_hToMap == NULL) {
     int errCode = GetLastError();
     ::string errMess;
-    errMess.format(_T("Cannot create file mapping with error = %d"), errCode);
-    throw Exception(errMess.getString());
+    errMess.formatf("Cannot create file mapping with error = {}", errCode);
+    throw ::remoting::Exception(errMess);
   }
   // The first process to attach initializes memory
   bool needToInit = GetLastError() != ERROR_ALREADY_EXISTS;
@@ -89,16 +90,16 @@ bool SharedMemory::createFile(const ::scoped_string & scopedstrName, size_t size
 void SharedMemory::mapViewOfFile()
 {
   // Get a pointer to the file-mapped shared memory
-  m_memory = MapViewOfFile(m_hToMap,       // object to ::std::map view of
+  m_memory = MapViewOfFile(m_hToMap,       // object to ::map view of
                            FILE_MAP_WRITE, // read/write access
-                           0,              // high offset:  ::std::map from
+                           0,              // high offset:  ::map from
                            0,              // low offset:   beginning
-                           0);             // default: ::std::map entire file
+                           0);             // default: ::map entire file
   if (m_memory == NULL) {
     int errCode = GetLastError();
     ::string errMess;
-    errMess.format(_T("Cannot ::std::map view of file with error = %d"), errCode);
-    throw Exception(errMess.getString());
+    errMess.formatf("Cannot ::map view of file with error = {}", errCode);
+    throw ::remoting::Exception(errMess);
   }
 }
 
@@ -112,8 +113,8 @@ void SharedMemory::setAllAccess(HANDLE objHandle)
                                     0);
   if (errorCode != ERROR_SUCCESS) {
     ::string errMess;
-    errMess.format(_T("Cannot SetSecurityInfo with error = %d"), (int)errorCode);
-    throw Exception(errMess.getString());
+    errMess.formatf("Cannot SetSecurityInfo with error = {}", (int)errorCode);
+    throw ::remoting::Exception(errMess);
   }
 }
 

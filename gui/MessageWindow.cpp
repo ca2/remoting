@@ -62,7 +62,7 @@ bool MessageWindow::createWindow(WindowMessageHandler *messageHandler)
     return false;
   }
 
-  m_hwnd = ::CreateWindow(m_windowClassName, _T("MessageWindow"),
+  m_hwnd = ::CreateWindow(m_windowClassName, "MessageWindow",
                           WS_OVERLAPPEDWINDOW, 0, 0, 1, 1,
                           0, NULL, m_hinst, this);
 

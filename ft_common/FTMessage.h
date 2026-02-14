@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _FT_MESSAGE_TYPE_H_
-#define _FT_MESSAGE_TYPE_H_
+#pragma once
+
 
 #include "util/inttypes.h"
 
@@ -68,7 +68,7 @@
  * Folders are stored without last slash (sample: path to disk C on win is "/C:",
  * to /etc/ on unix is "/etc").
  *
- * @remark on windows OS "/" path contains disk ::std::list, on unix "/" means real unix root folder.
+ * @remark on windows OS "/" path contains disk ::list, on unix "/" means real unix root folder.
  *
  * -----------------------------------------------------------------------------
  *
@@ -134,11 +134,11 @@ public:
   const static char FILE_LIST_REQUEST_SIG[];
   const static char FILE_LIST_REPLY_SIG[];
   /**
-   * Get file ::std::list of specified folder on remote computer.
+   * Get file ::list of specified folder on remote computer.
    *
    * @body:
    *  unsigned char compressionLevel preffered compression level.
-   *  StringUTF8 pathToFolder absolute path to folder, file ::std::list of that needs to get.
+   *  StringUTF8 pathToFolder absolute path to folder, file ::list of that needs to get.
    *
    * @reply FILE_LIST_REPLY on success, LAST_REQUEST_FAILED_REPLY on fail.
    *
@@ -235,4 +235,4 @@ public:
   const static char LAST_REQUEST_FAILED_REPLY_SIG[];
 };
 
-#endif
+

@@ -117,16 +117,16 @@ BOOL OptionsDialog::onInitDialog()
   setControlById(m_arrow, IDC_RARROW);
   setControlById(m_nlocal, IDC_RNLOCAL);
 
-  m_useEnc.addItem(_T("Raw"), reinterpret_cast<void *>(EncodingDefs::RAW));
-  m_useEnc.addItem(_T("Hextile"), reinterpret_cast<void *>(EncodingDefs::HEXTILE));
-  m_useEnc.addItem(_T("Tight"), reinterpret_cast<void *>(EncodingDefs::TIGHT));
-  m_useEnc.addItem(_T("RRE"), reinterpret_cast<void *>(EncodingDefs::RRE));
-  m_useEnc.addItem(_T("ZRLE"), reinterpret_cast<void *>(EncodingDefs::ZRLE));
+  m_useEnc.addItem("Raw", reinterpret_cast<void *>(EncodingDefs::RAW));
+  m_useEnc.addItem("Hextile", reinterpret_cast<void *>(EncodingDefs::HEXTILE));
+  m_useEnc.addItem("Tight", reinterpret_cast<void *>(EncodingDefs::TIGHT));
+  m_useEnc.addItem("RRE", reinterpret_cast<void *>(EncodingDefs::RRE));
+  m_useEnc.addItem("ZRLE", reinterpret_cast<void *>(EncodingDefs::ZRLE));
 
 
   // FIXME: replaced literals to named constants
-  TCHAR scaleComboText[8][20] = {_T("25"), _T("50"), _T("75"), _T("90"),
-                                 _T("100"), _T("125"), _T("150"), _T("Auto")};
+  TCHAR scaleComboText[8][20] = {"25"), _T("50"), _T("75"), _T("90",
+                                 "100"), _T("125"), _T("150"), _T("Auto"};
   for (int i = 0; i < sizeof(scaleComboText)/sizeof(scaleComboText[0]); i++) {
       m_scale.addItem(static_cast<TCHAR FAR *>(scaleComboText[i]));
   }
@@ -147,7 +147,7 @@ void OptionsDialog::updateControlValues()
       break;
     } // if found
 
-    // set default value, if preferred encoding not in ::std::list
+    // set default value, if preferred encoding not in ::list
     if (enc == EncodingDefs::HEXTILE)
       m_useEnc.setSelectedItem(i);
   } // for i
@@ -177,9 +177,9 @@ void OptionsDialog::updateControlValues()
     int percent = (n * 100) / d;
 
     ::string text;
-    text.format(_T("%d"), percent);
+    text.formatf("{}", percent);
 
-    m_scale.setText(text.getString());
+    m_scale.setText(text);
   }
 
   {
@@ -197,8 +197,8 @@ void OptionsDialog::updateControlValues()
     if (m_conConfig->isCustomCompressionEnabled())
       level = m_conConfig->getCustomCompressionLevel();
     m_tcompLvl.setPos(level);
-    labelText.format(_T("%d"), level);
-    m_quality.setText(labelText.getString());
+    labelText.formatf("{}", level);
+    m_quality.setText(labelText);
   }
 
   {
@@ -207,8 +207,8 @@ void OptionsDialog::updateControlValues()
     if (m_conConfig->isJpegCompressionEnabled())
       level = m_conConfig->getJpegCompressionLevel();
     m_tjpeg.setPos(level);
-    labelText.format(_T("%d"), level);
-    m_quality2.setText(labelText.getString());
+    labelText.formatf("{}", level);
+    m_quality2.setText(labelText);
   }
 
   switch (m_conConfig->getLocalCursorShape()) {
@@ -309,15 +309,15 @@ void OptionsDialog::onPreferredEncodingSelectionChange()
 void OptionsDialog::onCustomCompressionLevelScroll()
 {
   ::string labelText;
-  labelText.format(_T("%ld"), m_tcompLvl.getPos());
-  m_quality.setText(labelText.getString());
+  labelText.formatf("{}", m_tcompLvl.getPos());
+  m_quality.setText(labelText);
 }
 
 void OptionsDialog::onJpegCompressionLevelScroll()
 {
   ::string labelText;
-  labelText.format(_T("%ld"), m_tjpeg.getPos());
-  m_quality2.setText(labelText.getString());
+  labelText.formatf("{}", m_tjpeg.getPos());
+  m_quality2.setText(labelText);
 }
 
 void OptionsDialog::onMessageReceived(UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -341,8 +341,8 @@ void OptionsDialog::onScaleKillFocus()
 
   int scale;
 
-  if (!StringParser::parseInt(scaleText.getString(), &scale)) {
-    if (scaleText.isEqualTo(_T("Auto"))) {
+  if (!StringParser::parseInt(scaleText, &scale)) {
+    if (scaleText.isEqualTo("Auto")) {
       return ;
     }
     scale = 100;
@@ -354,8 +354,8 @@ void OptionsDialog::onScaleKillFocus()
     scale = 400;
   }
 
-  scaleText.format(_T("%d"), scale);
-  m_scale.setText(scaleText.getString());
+  scaleText.formatf("{}", scale);
+  m_scale.setText(scaleText);
 }
 
 bool OptionsDialog::isInputValid()
@@ -365,16 +365,16 @@ bool OptionsDialog::isInputValid()
 
   m_scale.getText(&scaleText);
 
-  if (scaleText.isEqualTo(_T("Auto"))) {
+  if (scaleText.isEqualTo("Auto")) {
     return true;
   }
 
-  if (!StringParser::parseInt(scaleText.getString(), &scaleInt)) {
+  if (!StringParser::parseInt(scaleText, &scaleInt)) {
     ::string error;
     error.format(StringTable::getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC),
                  StringTable::getString(IDS_OPTIONS_SCALE));
     MessageBox(m_ctrlThis.getWindow(),
-               error.getString(),
+               error,
                StringTable::getString(IDS_OPTIONS_CAPTION),
                MB_OK | MB_ICONWARNING);
     return false;
@@ -385,7 +385,7 @@ bool OptionsDialog::isInputValid()
     error.format(StringTable::getString(IDS_ERROR_VALUE_FIELD_ONLY_POSITIVE_NUMERIC),
                  StringTable::getString(IDS_OPTIONS_SCALE));
     MessageBox(m_ctrlThis.getWindow(),
-               error.getString(),
+               error,
                StringTable::getString(IDS_OPTIONS_CAPTION),
                MB_OK | MB_ICONWARNING);
     return false;
@@ -443,7 +443,7 @@ void OptionsDialog::apply()
 
   int scaleInt = 0;
 
-  if (StringParser::parseInt(scaleText.getString(), &scaleInt)) {
+  if (StringParser::parseInt(scaleText, &scaleInt)) {
     m_conConfig->setScale(scaleInt, 100);
     m_conConfig->fitWindow(false);
   } else {

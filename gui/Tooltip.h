@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _TOOLTIP_H_
-#define _TOOLTIP_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "Control.h"
@@ -50,4 +50,4 @@ public:
   virtual int getIconType() const = 0;
 };
 
-#endif
+

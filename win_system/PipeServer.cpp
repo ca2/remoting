@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "PipeServer.h"
 #include "util/Exception.h"
 #include "Environment.h"
@@ -42,7 +43,7 @@ PipeServer::PipeServer(const ::scoped_string & scopedstrName, unsigned int buffe
     initialize();
   }
 
-  m_pipeName.format(_T("\\\\.\\pipe\\%s"), name);
+  m_pipeName.formatf("\\\\.\\pipe\\{}", name);
 
   createServerPipe();
 }
@@ -58,7 +59,7 @@ void PipeServer::createServerPipe()
   if (Environment::isVistaOrLater()) {
     pipeMode |= PIPE_REJECT_REMOTE_CLIENTS;     // local only
   }
-  m_serverPipe = CreateNamedPipe(m_pipeName.getString(),   // pipe name
+  m_serverPipe = CreateNamedPipe(m_pipeName,   // pipe name
                                  openMode,
                                  pipeMode,
                                  PIPE_UNLIMITED_INSTANCES, // max. instances
@@ -70,8 +71,8 @@ void PipeServer::createServerPipe()
                                  );
   if (m_serverPipe == INVALID_HANDLE_VALUE) {
     ::string errMess;
-    errMess.format(_T("CreateNamedPipe failed, error code = %d"), GetLastError());
-    throw Exception(errMess.getString());
+    errMess.formatf("CreateNamedPipe failed, error code = {}", GetLastError());
+    throw ::remoting::Exception(errMess);
   }
 }
 
@@ -90,8 +91,8 @@ NamedPipe *PipeServer::accept()
     // return zero.
     int errCode = GetLastError();
     ::string errMess;
-    errMess.format(_T("ConnectNamedPipe failed, error code = %d"), errCode);
-    throw Exception(errMess.getString());
+    errMess.formatf("ConnectNamedPipe failed, error code = {}", errCode);
+    throw ::remoting::Exception(errMess);
   } else {
     int errCode = GetLastError();
     switch(errCode) {
@@ -103,20 +104,20 @@ NamedPipe *PipeServer::accept()
       if (!GetOverlappedResult(m_serverPipe, &overlapped, &cbRet, FALSE)) {
         int errCode = GetLastError();
         ::string errMess;
-        errMess.format(_T("GetOverlappedResult() failed after the ")
-                       _T("ConnectNamedPipe() call, error code = %d"), errCode);
-        throw Exception(errMess.getString());
+        errMess.formatf("GetOverlappedResult() failed after the "
+                       "ConnectNamedPipe() call, error code = {}", errCode);
+        throw ::remoting::Exception(errMess);
       }
       break;
     default:
       ::string errMess;
-      errMess.format(_T("ConnectNamedPipe failed, error code = %d"), errCode);
-      throw Exception(errMess.getString());
+      errMess.formatf("ConnectNamedPipe failed, error code = {}", errCode);
+      throw ::remoting::Exception(errMess);
     }
   }
 
   if (!checkOtherSideBinaryName(m_serverPipe)) {
-    throw Exception(_T("Pipe client process filename differs from current process"));
+    throw ::remoting::Exception("Pipe client process filename differs from current process");
   }
 
   // delete is inside ~NamedPipeTransport()
@@ -135,8 +136,8 @@ void PipeServer::close()
     } else {
       int errCode = GetLastError();
       ::string errMess;
-      errMess.format(_T("DisconnectNamedPipe failed, error code = %d"), errCode);
-      throw Exception(errMess.getString());
+      errMess.formatf("DisconnectNamedPipe failed, error code = {}", errCode);
+      throw ::remoting::Exception(errMess);
     }
   }*/
   m_winEvent.notify();
@@ -161,7 +162,7 @@ void PipeServer::initialize()
     return;
   }
   try {
-    m_kernel32Library = new DynamicLibrary(_T("Kernel32.dll"));
+    m_kernel32Library = new DynamicLibrary("Kernel32.dll");
     m_GetNamedPipeClientProcessId = (pGetNamedPipeClientProcessId)m_kernel32Library->getProcAddress("GetNamedPipeClientProcessId");
   }
   catch (...) {

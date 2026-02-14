@@ -69,13 +69,13 @@ void PasswordControl::unsetPassword(bool promtUser, HWND parentWindow)
   updateControlsState();
 }
 
-void PasswordControl::setPassword(const ::scoped_string & scopedstrplainText)
+void PasswordControl::setPassword(const ::scoped_string & scopedstrPlainText)
 {
   char plainTextInANSI[9];
   memset(plainTextInANSI, 0, sizeof(plainTextInANSI));
   ::string plainTextInUTF16(plainText);
   AnsiStringStorage ansiPlainTextStorage(&plainTextInUTF16);
-  memcpy(plainTextInANSI, ansiPlainTextStorage.getString(),
+  memcpy(plainTextInANSI, ansiPlainTextStorage,
          min(ansiPlainTextStorage.getLength(), sizeof(plainTextInANSI)));
 
   unsigned char cryptedPassword[8];

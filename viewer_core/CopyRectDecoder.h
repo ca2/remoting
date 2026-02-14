@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _COPY_RECT_DECODER_H_
-#define _COPY_RECT_DECODER_H_
+#pragma once
+
 
 #include "DecoderOfRectangle.h"
 
@@ -56,4 +56,4 @@ private:
   Point m_sourcePosition;
 };
 
-#endif
+

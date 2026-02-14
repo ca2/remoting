@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _REMOTE_FILES_DELETE_OPERATION_H_
-#define _REMOTE_FILES_DELETE_OPERATION_H_
+#pragma once
+
 
 #include "FileTransferOperation.h"
 #include "FileInfoList.h"
@@ -47,11 +47,11 @@ public:
   RemoteFilesDeleteOperation(LogWriter *logWriter,
                              const FileInfo *filesInfoToDelete,
                              size_t filesCount,
-                             const ::scoped_string & scopedstrpathToTargetRoot);
+                             const ::scoped_string & scopedstrPathToTargetRoot);
 
   RemoteFilesDeleteOperation(LogWriter *logWriter,
                              FileInfo fileInfoToDelete,
-                             const ::scoped_string & scopedstrpathToTargetRoot);
+                             const ::scoped_string & scopedstrPathToTargetRoot);
 
   virtual ~RemoteFilesDeleteOperation();
 
@@ -78,11 +78,11 @@ private:
 protected:
 
   //
-  // Current file ::std::list to delete
+  // Current file ::list to delete
   //
 
   FileInfoList *m_toDelete;
   ::string m_pathToTargetRoot;
 };
 
-#endif
+

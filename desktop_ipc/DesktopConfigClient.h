@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __DESKTOPCONFIGCLIENT_H__
-#define __DESKTOPCONFIGCLIENT_H__
+#pragma once
+
 
 #include "desktop_ipc/DesktopServerProto.h"
 #include "DesktopSrvDispatcher.h"
@@ -42,4 +42,4 @@ private:
   DateTime m_lastInputTime;
 };
 
-#endif // __DESKTOPCONFIGCLIENT_H__
+//// __DESKTOPCONFIGCLIENT_H__

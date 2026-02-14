@@ -44,7 +44,7 @@ ThemeLib::~ThemeLib()
 
 bool ThemeLib::initialize()
 {
-  s_lib = LoadLibrary(_T("UXTHEME.DLL"));
+  s_lib = LoadLibrary("UXTHEME.DLL");
   if (s_lib) {
 
     s_OpenThemeData = (PFNOPENTHEMEDATA)GetProcAddress(s_lib, "OpenThemeData");

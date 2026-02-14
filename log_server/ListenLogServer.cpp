@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ListenLogServer.h"
 
-ListenLogServer::ListenLogServer(const ::scoped_string & scopedstrpublicPipeName,
+ListenLogServer::ListenLogServer(const ::scoped_string & scopedstrPublicPipeName,
                                  ConnectionListener *connListener)
 : m_connListener(connListener)
 {

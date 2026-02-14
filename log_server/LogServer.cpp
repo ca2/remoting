@@ -25,7 +25,7 @@
 #include "LogServer.h"
 #include "thread/AutoLock.h"
 
-LogServer::LogServer(const ::scoped_string & scopedstrpublicPipeName)
+LogServer::LogServer(const ::scoped_string & scopedstrPublicPipeName)
 : m_listenLogServer(0),
   m_publicPipeName(publicPipeName),
   m_logLevel(0),
@@ -63,16 +63,16 @@ void LogServer::start(const ::scoped_string & scopedstrlogDir,
                       unsigned char logLevel, size_t headerLineCount)
 {
   m_headerLineCount = headerLineCount;
-  m_logDir.setString(logDir);
+  m_logDir= logDir;
   m_logLevel = logLevel;
-  m_listenLogServer = new ListenLogServer(m_publicPipeName.getString(), this);
+  m_listenLogServer = new ListenLogServer(m_publicPipeName, this);
 }
 
 void LogServer::changeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel)
 {
   AutoLock al(&m_logPropsMutex);
   m_logLevel = newLevel;
-  m_logDir.setString(newLogDir);
+  m_logDir= newLogDir;
 
   // Update this to the existing accounts.
   for (FAccountListIter iter = m_fileAccountList.begin();
@@ -102,11 +102,11 @@ void LogServer::storeHeader()
 void LogServer::onNewConnection(Channel *channel)
 {
   AutoLock al(&m_logPropsMutex);
-  m_notAuthConnList.push_back(new LogConn(channel, this, this, m_logLevel));
+  m_notAuthConnList.add(new LogConn(channel, this, this, m_logLevel));
 }
 
 FileAccountHandle LogServer::onLogConnAuth(LogConn *logConn, bool success,
-                                           const ::scoped_string & scopedstrfileName)
+                                           const ::scoped_string & scopedstrFileName)
 {
   // All connections gives to ThreadCollector
   m_threadCollector.addThread(logConn);
@@ -125,7 +125,7 @@ FileAccountHandle LogServer::onLogConnAuth(LogConn *logConn, bool success,
   // Adding this connection to m_connList if success authentication
   if (success) {
     AutoLock al(&m_logPropsMutex);
-    m_connList.push_back(logConn);
+    m_connList.add(logConn);
     return addConnection(fileName);
   } // Else ZombieKiller will destroy logConn.
   return 0;
@@ -159,12 +159,12 @@ void LogServer::onLog(FileAccountHandle handle,
                       unsigned int threadId,
                       const DateTime & dt,
                       int level,
-                      const ::scoped_string & scopedstrmessage)
+                      const ::scoped_string & scopedstrMessage)
 {
   AutoLock al(&m_logPropsMutex);
   FAccountListIter iter = m_fileAccountList.find(handle);
   if (iter == m_fileAccountList.end()) {
-    throw Exception(_T("Unhandled log message"));
+    throw ::remoting::Exception("Unhandled log message");
   }
   (*iter).second->print(processId, threadId, dt, level, message);
 
@@ -174,11 +174,11 @@ void LogServer::onLog(FileAccountHandle handle,
   }
 }
 
-void LogServer::onAnErrorFromLogConn(const ::scoped_string & scopedstrmessage)
+void LogServer::onAnErrorFromLogConn(const ::scoped_string & scopedstrMessage)
 {
 }
 
-FileAccountHandle LogServer::addConnection(const ::scoped_string & scopedstrfileName)
+FileAccountHandle LogServer::addConnection(const ::scoped_string & scopedstrFileName)
 {
   AutoLock al(&m_logPropsMutex);
   for (FAccountListIter iter = m_fileAccountList.begin();
@@ -189,7 +189,7 @@ FileAccountHandle LogServer::addConnection(const ::scoped_string & scopedstrfile
   }
   size_t count = m_fileAccountList.size();
   bool logHeadEnabled = count == 0;
-  m_fileAccountList[count] = new FileAccount(m_logDir.getString(),
+  m_fileAccountList[count] = new FileAccount(m_logDir,
                                              fileName, m_logLevel,
                                              logHeadEnabled);
   return count;

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _RESOURCE_STRINGS_H_
-#define _RESOURCE_STRINGS_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "resource.h"
@@ -45,4 +45,4 @@ protected:
 };
 
 
-#endif
+

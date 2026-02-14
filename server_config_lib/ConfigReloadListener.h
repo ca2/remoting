@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CONFIG_RELOAD_LISTENER_H_
-#define _CONFIG_RELOAD_LISTENER_H_
+#pragma once
+
 
 #include "ServerConfig.h"
 
@@ -36,4 +36,4 @@ public:
   virtual void onConfigReload(ServerConfig *serverConfig) = 0;
 };
 
-#endif
+

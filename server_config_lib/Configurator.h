@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CONFIGURATOR_H_
-#define _CONFIGURATOR_H_
+#pragma once
+
 
 #include "config_lib/SettingsManager.h"
 
@@ -132,4 +132,4 @@ protected:
   static LocalMutex m_instanceMutex;
 };
 
-#endif
+

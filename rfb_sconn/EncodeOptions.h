@@ -22,10 +22,10 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RFB_ENCODE_OPTIONS_H_INCLUDED__
-#define __RFB_ENCODE_OPTIONS_H_INCLUDED__
+#pragma onceINCLUDED__
+INCLUDED__
 
-#include <vector>
+//#include <vector>
 
 class EncodeOptions
 {
@@ -37,15 +37,15 @@ public:
   // send SetEncodings message.
   void reset();
 
-  // Process the ::std::list of encodings requested by the RFB client.
-  void setEncodings(::std::vector<int> * plista);
+  // Process the ::list of encodings requested by the RFB client.
+  void setEncodings(::array_base<int> * plista);
 
   // Return preferred encoding as previously set with setEncodings().
-  // Preferred encoding is the first "normal" encoding from the ::std::list passed
+  // Preferred encoding is the first "normal" encoding from the ::list passed
   // to setEncodings(). If setEncodings() has not been called after object
   // construction or the most recent reset() call, then Raw will be considered
   // the preferred encoding so this function will return EncodingDefs::RAW.
-  // Similarly, if there was no suitable encoding in the ::std::list passed in the
+  // Similarly, if there was no suitable encoding in the ::list passed in the
   // most recent setEncodings() call, EncodingDefs::RAW will be returned.
   int getPreferredEncoding() const;
 
@@ -95,7 +95,7 @@ protected:
 
   int m_preferredEncoding;
 
-  // FIXME: Use something like ::std::map instead of individual variables.
+  // FIXME: Use something like ::map instead of individual variables.
   bool m_enableRRE;
   bool m_enableHextile;
   bool m_enableZrle;
@@ -111,4 +111,4 @@ protected:
   bool m_enableDesktopConfiguration;
 };
 
-#endif // __RFB_ENCODE_OPTIONS_H_INCLUDED__
+//// __RFB_ENCODE_OPTIONS_H_INCLUDED__

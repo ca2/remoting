@@ -22,11 +22,12 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "DynamicLibrary.h"
 
 #include <crtdbg.h>
 
-DynamicLibrary::DynamicLibrary(const ::scoped_string & scopedstrfilename)
+DynamicLibrary::DynamicLibrary(const ::scoped_string & scopedstrFilename)
 : m_module(0)
 {
   init(filename);
@@ -44,16 +45,16 @@ DynamicLibrary::~DynamicLibrary()
   }
 }
 
-void DynamicLibrary::init(const ::scoped_string & scopedstrfilename)
+void DynamicLibrary::init(const ::scoped_string & scopedstrFilename)
 {
   m_module = LoadLibrary(filename);
 
   if (m_module == 0) {
     ::string errMsg;
 
-    errMsg.format(_T("%s library not found"), filename);
+    errMsg.formatf("{} library not found", filename);
 
-    throw Exception(errMsg.getString());
+    throw ::remoting::Exception(errMsg);
   }
 }
 

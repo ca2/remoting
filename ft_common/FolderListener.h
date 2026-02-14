@@ -22,8 +22,7 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _FOLDER_LISTENER_H_
-#define _FOLDER_LISTENER_H_
+#pragma once
 
 #include "util/inttypes.h"
 #include "ft_common/FileInfo.h"
@@ -36,18 +35,18 @@
 // file transfer protocol if server supportes compression.
 //
 // If specified folder name is empty it will return system roots,
-// file ::std::list from specified catalog otherwise.
+// file ::list from specified catalog otherwise.
 //
 // Class usage:
 //
-// First, create instance, call ::std::list() method,
+// First, create instance, call ::list() method,
 // after that get needed information through get methods
 //
 
 class FolderListener
 {
 public:
-  FolderListener(const ::scoped_string & scopedstrfolderPath);
+  FolderListener(const ::scoped_string & scopedstrFolderPath);
   ~FolderListener();
 
   const FileInfo *getFilesInfo() const;
@@ -55,10 +54,10 @@ public:
 
   bool list();
 
-protected:
-  ::string m_folderPath;
+
+  ::file::path m_pathFolder;
   FileInfo *m_filesInfo;
   unsigned int m_filesCount;
 };
 
-#endif
+

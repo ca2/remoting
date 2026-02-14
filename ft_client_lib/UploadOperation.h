@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _UPLOAD_OPERATION_H_
-#define _UPLOAD_OPERATION_H_
+#pragma once
+
 
 #include "file_lib/File.h"
 #include "file_lib/WinFileChannel.h"
@@ -35,11 +35,11 @@
 // File transfer operation class for uploading files (and file trees).
 //
 //
-// Remark: Class uses difficult trick to get remote directory file ::std::list
+// Remark: Class uses difficult trick to get remote directory file ::list
 // (to check file collisions, when we trying to upload some file,
 // but it's already exist on remote machine). 
 //
-// So, we need to send file ::std::list request every time before step one folder down
+// So, we need to send file ::list request every time before step one folder down
 // or up (as you know, all this features realized in 'gotoNext' method) and when reply
 // for this request (FLR) is received, we must execute old piece of code from
 // 'gotoNext' method to really step one folder down or up.
@@ -69,14 +69,14 @@ public:
 
   UploadOperation(LogWriter *logWriter,
                   FileInfo fileToUpload,
-                  const ::scoped_string & scopedstrpathToSourceRoot,
-                  const ::scoped_string & scopedstrpathToTargetRoot);
+                  const ::scoped_string & scopedstrPathToSourceRoot,
+                  const ::scoped_string & scopedstrPathToTargetRoot);
 
   UploadOperation(LogWriter *logWriter,
                   const FileInfo *filesToUpload,
                   size_t filesCount,
-                  const ::scoped_string & scopedstrpathToSourceRoot,
-                  const ::scoped_string & scopedstrpathToTargetRoot);
+                  const ::scoped_string & scopedstrPathToSourceRoot,
+                  const ::scoped_string & scopedstrPathToTargetRoot);
 
   virtual ~UploadOperation();
 
@@ -102,7 +102,7 @@ public:
 private:
 
   unsigned long long getInputFilesSize();
-  unsigned long long getFileSize(const ::scoped_string & scopedstrpathToFile);
+  unsigned long long getFileSize(const ::scoped_string & scopedstrPathToFile);
 
 protected:
 
@@ -110,7 +110,7 @@ protected:
   void killOp();
 
   //
-  // Special ft message handler for "Last request failed" and "File ::std::list request".
+  // Special ft message handler for "Last request failed" and "File ::list request".
   //
 
   bool specialHandler();
@@ -122,8 +122,8 @@ protected:
   void startUpload();
 
   //
-  // Lists folder from local file system and set this ::std::list as child to current
-  // file ::std::list (m_toCopy), after than it tryies to create folder on remote
+  // Lists folder from local file system and set this ::list as child to current
+  // file ::list (m_toCopy), after than it tryies to create folder on remote
   // file system.
   //
 
@@ -142,11 +142,11 @@ protected:
   void gotoNext();
 
   //
-  // Choose next file to upload from m_toCopy ::std::list to m_toCopy ::std::list.
+  // Choose next file to upload from m_toCopy ::list to m_toCopy ::list.
   //
-  // Remark: Also made some magic things with m_toCopy ::std::list to avoid "infinity" loops.
+  // Remark: Also made some magic things with m_toCopy ::list to avoid "infinity" loops.
   // Remark: if fake is true (it's true by default) method does not change current file
-  // to child or parent, and sets 'Get file ::std::list trick' flags and sends file ::std::list request.
+  // to child or parent, and sets 'Get file ::list trick' flags and sends file ::list request.
   //
 
   void gotoNext(bool fake);
@@ -179,13 +179,13 @@ protected:
   // File input stream associated with m_file
   WinFileChannel *m_fis;
 
-  // File ::std::list of remote directory where we uploading
+  // File ::list of remote directory where we uploading
   // current file now
   FileInfo *m_remoteFilesInfo;
   unsigned int m_remoteFilesCount;
 
   //
-  // Helper members of 'Remote file ::std::list trick'
+  // Helper members of 'Remote file ::list trick'
   //
 
   bool m_gotoChild;
@@ -198,4 +198,4 @@ protected:
 
 };
 
-#endif
+

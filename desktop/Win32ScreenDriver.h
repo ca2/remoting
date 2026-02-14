@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WIN32SCREENDRIVER_H__
-#define __WIN32SCREENDRIVER_H__
+#pragma once
+
 
 #include "Win32ScreenDriverBaseImpl.h"
 #include "Poller.h"
@@ -62,4 +62,4 @@ private:
   HooksUpdateDetector m_hooks;
 };
 
-#endif // __WIN32SCREENDRIVER_H__
+//// __WIN32SCREENDRIVER_H__

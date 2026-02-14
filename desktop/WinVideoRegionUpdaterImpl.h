@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINVIDEOREGIONUPDATERIMPL_H__
-#define __WINVIDEOREGIONUPDATERIMPL_H__
+#pragma once
+
 
 #include "util/DateTime.h"
 #include "region/Region.h"
@@ -45,10 +45,10 @@ protected:
 private:
   virtual Region getVideoRegion();
   void updateVideoRegion();
-  void getClassNamesAndRectsFromConfig(StringVector &classNames, ::std::vector<::int_rectangle> &rects);
+  void getClassNamesAndRectsFromConfig(StringVector &classNames, ::array_base<::int_rectangle> &rects);
   unsigned int WinVideoRegionUpdaterImpl::getInterval();
   Region getRectsByClass(StringVector classNames);
-  Region getRectsByCoords(::std::vector<::int_rectangle> &rects);
+  Region getRectsByCoords(::array_base<::int_rectangle> &rects);
 
   DateTime m_lastVidUpdTime;
   Region m_vidRegion;
@@ -57,4 +57,4 @@ private:
   WindowsEvent m_sleeper;
 };
 
-#endif // __WINVIDEOREGIONUPDATERIMPL_H__
+//// __WINVIDEOREGIONUPDATERIMPL_H__

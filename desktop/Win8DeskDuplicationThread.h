@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WIN8DESKDUPLICATIONTHREAD_H__
-#define __WIN8DESKDUPLICATIONTHREAD_H__
+#pragma once
+
 
 #include "rfb/FrameBuffer.h"
 #include "Win8CursorShape.h"
@@ -41,12 +41,12 @@ public:
   // The WinDxgiOutput *dxgiOutput passed object can be destroyed right after the constructor calling.
   // The WinD3D11Device *device passed object can be destroyed right after the constructor calling.
   Win8DeskDuplication(FrameBuffer *targetFb,
-                            ::std::vector<::int_rectangle> &targetRect,
+                            ::array_base<::int_rectangle> &targetRect,
                             Win8CursorShape *targetCurShape,
                             LONGLONG *cursorTimeStamp,
                             LocalMutex *cursorMutex,
                             Win8DuplicationListener *duplListener,
-                            ::std::vector<WinDxgiOutput> &dxgiOutput,
+                            ::array_base<WinDxgiOutput> &dxgiOutput,
                             LogWriter *log);
   virtual ~Win8DeskDuplication();
 
@@ -70,18 +70,18 @@ private:
 
   FrameBuffer *m_targetFb;
 
-  ::std::vector<::int_rectangle> m_targetRects;
+  ::array_base<::int_rectangle> m_targetRects;
   Win8CursorShape *m_targetCurShape;
   LONGLONG *m_cursorTimeStamp;
   LocalMutex *m_cursorMutex;
 
-  ::std::vector<DXGI_MODE_ROTATION> m_rotations;
+  ::array_base<DXGI_MODE_ROTATION> m_rotations;
 
   Win8DuplicationListener *m_duplListener;
 
   WinD3D11Device m_device;
-  ::std::vector<WinDxgiOutput1> m_dxgiOutput1;
-  ::std::vector<WinDxgiOutputDuplication> m_outDupl;
+  ::array_base<WinDxgiOutput1> m_dxgiOutput1;
+  ::array_base<WinDxgiOutputDuplication> m_outDupl;
 
   // The duplication interface can't be used
   bool m_hasCriticalError;
@@ -90,13 +90,13 @@ private:
 
 
   // Use this variables as class fields to avoid frequency memory allocations.
-  ::std::vector<RECT> m_dirtyRects;
-  ::std::vector<DXGI_OUTDUPL_MOVE_RECT> m_moveRects;
+  ::array_base<RECT> m_dirtyRects;
+  ::array_base<DXGI_OUTDUPL_MOVE_RECT> m_moveRects;
 
-  ::std::vector<WinCustomD3D11Texture2D> m_stageTextures2D;
+  ::array_base<WinCustomD3D11Texture2D> m_stageTextures2D;
   FrameBuffer m_auxiliaryFrameBuffer;
 
   LogWriter *m_log;
 };
 
-#endif // __WIN8DESKDUPLICATIONTHREAD_H__
+//// __WIN8DESKDUPLICATIONTHREAD_H__

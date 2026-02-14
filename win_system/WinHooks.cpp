@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "WinHooks.h"
 #include "win_system/SystemException.h"
 
@@ -59,7 +60,7 @@ void WinHooks::registerKeyboardHook(HookEventListener *hookEventListener)
   HINSTANCE hinst = GetModuleHandle(0);
   s_hooks = SetWindowsHookEx(WH_KEYBOARD_LL, lowLevelKeyboardHook, hinst, 0);
   if (s_hooks == NULL) {
-    throw SystemException(_T("Unnable to set hooks"));
+    throw SystemException("Unnable to set hooks");
   }
 }
 

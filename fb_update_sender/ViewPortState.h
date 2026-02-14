@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __VIEWPORTSTATE_H__
-#define __VIEWPORTSTATE_H__
+#pragma once
+
 
 
 #include "acme/_operating_system.h"
@@ -64,7 +64,7 @@ public:
 
   // After calling this function the update() function will set the view
   // port rectangle by a window that own the windowName argument.
-  void setWindowName(const ::string & windowName);
+  void setWindowName(const ::scoped_string & windowName);
 
   // After calling this function the hwnd will be zeroid and state
   // will be changed to unresolved.
@@ -94,4 +94,4 @@ private:
   friend class ViewPort;
 };
 
-#endif // __VIEWPORTSTATE_H__
+//// __VIEWPORTSTATE_H__

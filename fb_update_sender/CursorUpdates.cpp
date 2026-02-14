@@ -69,7 +69,7 @@ void CursorUpdates::update(const EncodeOptions *encodeOptions,
 
   if (!richEnabled && !posEnabled) {
     // Draw the shape on the frame buffer.
-	m_log->debug(_T("Draw the shape of cursor on the frame buffer."));
+	m_log->debug("Draw the shape of cursor on the frame buffer.");
     drawCursor(updCont, fb);
   }
 
@@ -88,14 +88,14 @@ void CursorUpdates::update(const EncodeOptions *encodeOptions,
       if (methodWasChanged) {
         m_isDrawCursorMethod = false;
         // Restore background under the cursor shape
-		m_log->debug(_T("Restore background under the cursor shape"));
+		m_log->debug("Restore background under the cursor shape");
 		restoreFrameBuffer(fb);
         ::int_rectangle backgroundRect = getBackgroundRect();
         updCont->changedRegion.addRect(backgroundRect);
       }
     }
     if (m_isDrawCursorMethod) {
-  	  m_log->debug(_T("Draw the shape of cursor on the frame buffer (DrawCursorMethod)"));
+  	  m_log->debug("Draw the shape of cursor on the frame buffer (DrawCursorMethod)");
       drawCursor(updCont, fb);
       updCont->cursorShapeChanged = methodWasChanged;
     } else {
@@ -105,21 +105,21 @@ void CursorUpdates::update(const EncodeOptions *encodeOptions,
   }
 
   if (!richEnabled || !posEnabled) {
-    m_log->debug(_T("Clearing cursorPosChanged")
-               _T(" (RichCursor or PointerPos are not requested)"));
+    m_log->debug("Clearing cursorPosChanged"
+               " (RichCursor or PointerPos are not requested)");
     updCont->cursorPosChanged = false;
   } else if (fullRegReq) {
-    m_log->debug(_T("Raising cursorPosChanged (full region requested)"));
+    m_log->debug("Raising cursorPosChanged (full region requested)");
     // ignore cursor position changing blocking on full request
     checkCursorPos(updCont, viewPort, true);
     updCont->cursorPosChanged = true;
   }
   if (!richEnabled) {
-    m_log->debug(_T("Clearing cursorShapeChanged (RichCursor disabled)"));
+    m_log->debug("Clearing cursorShapeChanged (RichCursor disabled)");
     updCont->cursorShapeChanged = false;
   } else if (fullRegReq) {
-    m_log->debug(_T("Raising cursorShapeChanged (RichCursor enabled")
-               _T(" and full region requested)"));
+    m_log->debug("Raising cursorShapeChanged (RichCursor enabled"
+               " and full region requested)");
     updCont->cursorShapeChanged = true;
   }
   if (updCont->cursorShapeChanged) {
@@ -194,7 +194,7 @@ bool CursorUpdates::checkCursorPos(UpdateContainer *updCont,
     m_cursorPos.x = cursorPos.x;
     m_cursorPos.y = cursorPos.y;
   }
-  m_log->debug(_T("CursorUpdates::checkCursorPos cursor position (%d,%d), changed:%d"),
+  m_log->debug("CursorUpdates::checkCursorPos cursor position ({},{}), changed:{}",
     m_cursorPos.x, m_cursorPos.y, positionChanged);
   return positionChanged;
 }

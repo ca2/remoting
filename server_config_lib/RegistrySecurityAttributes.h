@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _REGISTRY_SECURITY_ATTRIBUTES_H_
-#define _REGISTRY_SECURITY_ATTRIBUTES_H_
+#pragma once
+
 
 #include "util/winhdr.h"
 
@@ -79,4 +79,4 @@ private:
   SECURITY_ATTRIBUTES m_applicationSA;
 };
 
-#endif
+

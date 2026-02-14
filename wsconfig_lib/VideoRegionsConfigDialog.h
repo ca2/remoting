@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _VIDEO_REGIONS_CONFIG_DIALOG_H_
-#define _VIDEO_REGIONS_CONFIG_DIALOG_H_
+#pragma once
+
 
 #include "server_config_lib/Configurator.h"
 
@@ -77,4 +77,4 @@ protected:
   BaseDialog *m_parentDialog;
 };
 
-#endif
+

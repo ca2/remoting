@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _DATE_TIME_H_
-#define _DATE_TIME_H_
+#pragma once
+
 
 #include "inttypes.h"
 #include "winhdr.h"
@@ -97,4 +97,4 @@ protected:
   unsigned long long m_timeValue;
 };
 
-#endif
+

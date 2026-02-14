@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __COMMONHEADER_H__
-#define __COMMONHEADER_H__
+#pragma once
+
 
 //
 // Disable warning C4290 cause
@@ -34,17 +34,18 @@
 // "Visual C++ departs from the ANSI Standard in its implementation
 // of exception specifications" (c) MSDN.
 //
-// For more info read topic "Exception Specifications" on MSDN.
+// For more info read topic "::remoting::Exception Specifications" on MSDN.
 //
 
 #ifdef WIN32
 #include "winhdr.h"
+#endif
 // LIBJPEG_TURBO was disbled only for SDK.
 //#define LIBJPEG_TURBO
-#endif // WIN32
+// WIN32
 
 
 ////#include "::string.h"
 #include "StringTable.h"
 
-#endif // __COMMONHEADER_H__
+//// __COMMONHEADER_H__

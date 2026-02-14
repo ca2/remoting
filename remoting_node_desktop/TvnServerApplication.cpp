@@ -60,9 +60,9 @@ int TvnServerApplication::run()
 
   try {
     ServerCommandLine parser;
-    WinCommandLineArgs cmdArgs(m_commandLine.getString());
+    WinCommandLineArgs cmdArgs(m_commandLine);
     if (!parser.parse(&cmdArgs) || parser.showHelp()) {
-      throw Exception(_T("Wrong command line argument"));
+      throw ::remoting::Exception("Wrong command line argument");
     }
   } catch (...) {
     TvnServerHelp::showUsage();
@@ -90,11 +90,11 @@ int TvnServerApplication::run()
   // $AccessRule = new-object System.Security.AccessControl.RegistryAccessRule("Users", "ReadKey", "None", "None", "Allow")
   // $ACL.SetAccessRule($AccessRule)
   // $ACL | Set-Acl HKLM:\SOFTWARE\TightVNC\Server\ServiceOnly
-  RegistryKey key(HKEY_LOCAL_MACHINE, _T("SOFTWARE\\TightVNC\\Server\\ServiceOnly"), false);
+  RegistryKey key(HKEY_LOCAL_MACHINE, "SOFTWARE\\TightVNC\\Server\\ServiceOnly", false);
   if (key.isOpened()) {
     MessageBox(0,
-      _T("Couldn't run the server in Application mode"),
-      _T("Server error"), MB_OK | MB_ICONEXCLAMATION);
+      "Couldn't run the server in Application mode",
+      "Server error", MB_OK | MB_ICONEXCLAMATION);
     return 1;
   }
 
@@ -111,13 +111,13 @@ int TvnServerApplication::run()
     delete m_tvnServer;
     delete appInstanceMutex;
     return exitCode;
-  } catch (Exception &e) {
+  } catch (::remoting::Exception &e) {
     // FIXME: Move string to resource
     ::string message;
-    message.format(_T("Couldn't run the server: %s"), e.getMessage());
+    message.formatf("Couldn't run the server: {}", e.getMessage());
     MessageBox(0,
-               message.getString(),
-               _T("Server error"), MB_OK | MB_ICONEXCLAMATION);
+               message,
+               "Server error", MB_OK | MB_ICONEXCLAMATION);
     return 1;
   }
 }
@@ -127,7 +127,7 @@ void TvnServerApplication::onTvnServerShutdown()
   WindowsApplication::shutdown();
 }
 
-void TvnServerApplication::onLogInit(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrfileName,
+void TvnServerApplication::onLogInit(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrFileName,
                                      unsigned char logLevel)
 {
   m_fileLogger.init(logDir, fileName, logLevel);

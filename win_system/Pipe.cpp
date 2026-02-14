@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "Pipe.h"
 #include "util/Exception.h"
 #include <crtdbg.h>
@@ -81,24 +82,24 @@ size_t Pipe::writeByHandle(const void *buffer, size_t len, HANDLE pipeHandle)
         result = cbRet;
       } else {
         ::string errMess;
-        Environment::getErrStr(_T("The Pipe's write function failed")
-                               _T(" after GetOverlappedResult calling"),
+        Environment::getErrStr("The Pipe's write function failed"
+                               " after GetOverlappedResult calling",
                                &errMess);
-        throw IOException(errMess.getString());
+        throw ::io_exception(errMess);
       }
     } else {
       ::string errText;
-      errText.format(_T("The Pipe's write function failed after WriteFile calling")
-                     _T("(pipe handle is %p, total write %llu, try to write %u)"),
+      errText.formatf("The Pipe's write function failed after WriteFile calling"
+                     "(pipe handle is %p, total write %llu, try to write %u)",
                      pipeHandle, m_totalWrote, length);
       ::string errMess;
-      Environment::getErrStr(errText.getString(), &errMess);
-      throw IOException(errMess.getString());
+      Environment::getErrStr(errText, &errMess);
+      throw ::io_exception(errMess);
     }
   } // else operation already successful has been completed
 
   if (result == 0) {
-    throw IOException(_T("Unknown pipe error"));
+    throw ::io_exception(error_io, "Unknown pipe error"));
   }
 
   m_totalWrote += result;
@@ -141,25 +142,25 @@ size_t Pipe::readByHandle(void *buffer, size_t len, HANDLE pipeHandle)
         result = cbRet;
       } else {
         ::string errText;
-        errText.format(_T("The Pipe's read function failed after GetOverlappedResult calling (pipe handle is %p)"), pipeHandle);
+        errText.formatf("The Pipe's read function failed after GetOverlappedResult calling (pipe handle is %p)", pipeHandle);
         ::string errMess;
-        Environment::getErrStr(errText.getString(),
+        Environment::getErrStr(errText,
                                &errMess);
-        throw IOException(errMess.getString());
+        throw ::io_exception(errMess);
       }
     } else {
       ::string errText;
-      errText.format(_T("The Pipe's write function failed after ReadFile calling")
-                     _T("(pipe handle is %p, total read %llu, try to read %u)"),
+      errText.formatf("The Pipe's write function failed after ReadFile calling"
+                     "(pipe handle is %p, total read %llu, try to read %u)",
                      pipeHandle, m_totalRead, length);
       ::string errMess;
-      Environment::getErrStr(errText.getString(), &errMess);
-      throw IOException(errMess.getString());
+      Environment::getErrStr(errText, &errMess);
+      throw ::io_exception(errMess);
     }
   } // else operation already successful has been completed
 
   if (result == 0) {
-    throw IOException(_T("Unknown pipe error"));
+    throw ::io_exception(error_io, "Unknown pipe error"));
   }
   m_totalRead += result;
   return result;
@@ -168,6 +169,6 @@ size_t Pipe::readByHandle(void *buffer, size_t len, HANDLE pipeHandle)
 void Pipe::checkPipeHandle(HANDLE pipeHandle)
 {
   if (pipeHandle == INVALID_HANDLE_VALUE) {
-    throw IOException(_T("Invalid pipe handle"));
+    throw ::io_exception(error_io, "Invalid pipe handle"));
   }
 }

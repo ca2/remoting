@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _ECHO_EXTENSION_REQUEST_HANDLER_H_
-#define _ECHO_EXTENSION_REQUEST_HANDLER_H_
+#pragma once
+
 
 #include "util/inttypes.h"
 #include "network/RfbInputGate.h"
@@ -76,4 +76,4 @@ protected:
   LogWriter *m_log;
 };
 
-#endif //_ECHO_EXTENSION_REQUEST_HANDLER_H_
+////_ECHO_EXTENSION_REQUEST_HANDLER_H_

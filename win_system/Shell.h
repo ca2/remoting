@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _SHELL_H_
-#define _SHELL_H_
+#pragma once
+
 
 #include "util/winhdr.h"
 
@@ -43,7 +43,7 @@ public:
    * @param parameters execute parameters.
    * @throws SystemException on fail.
    */
-  static void runAsAdmin(const ::scoped_string & scopedstrpathToFile, const ::scoped_string & scopedstrparameters);
+  static void runAsAdmin(const ::scoped_string & scopedstrPathToFile, const ::scoped_string & scopedstrParameters);
 
   /**
    * Opens file with default action specified in Windows.
@@ -52,8 +52,8 @@ public:
    * @param workDirectory working directory.
    * @throws SystemException on fail.
    */
-  static void open(const ::scoped_string & scopedstrfile,
-                   const ::scoped_string & scopedstrparameters,
+  static void open(const ::scoped_string & scopedstrFile,
+                   const ::scoped_string & scopedstrParameters,
                    const ::scoped_string & scopedstrworkDirectory);
 private:
   /**
@@ -62,4 +62,4 @@ private:
   Shell();
 };
 
-#endif
+

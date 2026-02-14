@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _DESKTOP_SIZE_DECODER_H_
-#define _DESKTOP_SIZE_DECODER_H_
+#pragma once
+
 
 #include "PseudoDecoder.h"
 
@@ -34,4 +34,4 @@ public:
   virtual ~DesktopSizeDecoder();
 };
 
-#endif
+

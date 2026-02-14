@@ -22,13 +22,13 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __COPYRECTDETECTOR_H__
-#define __COPYRECTDETECTOR_H__
+#pragma once
+
 
 
 #include "region/Point.h"
 #include "util/CommonHeader.h"
-#include <list>
+//#include <list>
 #include "acme/prototype/geometry2d/rectangle.h"
 
 struct WinProp
@@ -63,8 +63,8 @@ protected:
   ::int_rectangle m_copyRect;
   Point m_source;
 
-  ::std::list<WinProp> m_lastWinProps;
-  ::std::list<WinProp> m_newWinProps;
+  ::list<WinProp> m_lastWinProps;
+  ::list<WinProp> m_newWinProps;
 };
 
-#endif // __COPYRECTDETECTOR_H__
+//// __COPYRECTDETECTOR_H__

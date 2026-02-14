@@ -22,12 +22,12 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CORE_EVENTS_ADAPTER_H_
-#define _CORE_EVENTS_ADAPTER_H_
+#pragma once
+
 
 #include "io_lib/DataInputStream.h"
 #include "io_lib/DataOutputStream.h"
-#include "io_lib/IOException.h"
+#include "io_lib/io_exception.h"
 #include "network/RfbOutputGate.h"
 #include "rfb/FrameBuffer.h"
 
@@ -61,7 +61,7 @@ public:
   //
   // New cut text (clipboard) contents has been received from the server.
   //
-  virtual void onCutText(const ::string & cutText);
+  virtual void onCutText(const ::scoped_string & cutText);
 virtual void onGoodCursor();
   //
   // Connection has been established.
@@ -82,7 +82,7 @@ virtual void onGoodCursor();
   //
   // FIXME: now, onDisconnect not called after onError().
   // FIXME: change documentation or call onDisconnect() after onError().
-  virtual void onDisconnect(const ::string & message);
+  virtual void onDisconnect(const ::scoped_string & message);
 
   //
   // Authentication has been failed.
@@ -93,7 +93,7 @@ virtual void onGoodCursor();
   //
   // Error has been occured.
   //
-  virtual void onError(const Exception *exception);
+  virtual void onError(const ::remoting::Exception *exception);
 
   // this event after update of frame buffer "fb" in rectangle "update".
   // guaranteed correct of frame buffer's area in rectangle "update".
@@ -114,4 +114,4 @@ virtual void onGoodCursor();
   virtual void onFrameBufferPropChange(const FrameBuffer *fb);
 };
 
-#endif
+

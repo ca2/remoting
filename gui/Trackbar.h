@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _TRACKBAR_H_
-#define _TRACKBAR_H_
+#pragma once
+
 
 #include "Control.h"
 
@@ -43,4 +43,4 @@ public:
   long getPos();
 };
 
-#endif
+

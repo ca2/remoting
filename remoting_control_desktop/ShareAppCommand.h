@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _SHAREAPPCOMMAND_H_
-#define _SHAREAPPCOMMAND_H_
+#pragma once
+
 
 #include "util/Command.h"
 
@@ -41,4 +41,4 @@ private:
   unsigned int m_procId;
 };
 
-#endif // _SHAREAPPCOMMAND_H_
+//// _SHAREAPPCOMMAND_H_

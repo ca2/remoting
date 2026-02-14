@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _PORT_MAPPING_CONTAINER_H_
-#define _PORT_MAPPING_CONTAINER_H_
+#pragma once
+
 
 #include "PortMapping.h"
 
@@ -32,7 +32,7 @@
 #include "io_lib/DataInputStream.h"
 #include "io_lib/DataOutputStream.h"
 
-#include <vector>
+//#include <vector>
 
 //
 // Container for port mappings.
@@ -73,14 +73,14 @@ public:
   /**
    * Serializes port all mappings in container as byte stream.
    * @param output output stream for serializing.
-   * @throws Exception on error.
+   * @throws ::remoting::Exception on error.
    */
   void serialize(DataOutputStream *output) const;
 
   /**
    * Deserializes port mapping container from input stream.
    * @param input source input stream.
-   * @throws Exception on error.
+   * @throws ::remoting::Exception on error.
    */
   void deserialize(DataInputStream *input);
 
@@ -92,7 +92,7 @@ public:
   PortMapping *at(size_t index);
 
 private:
-  ::std::vector<PortMapping> m_vector;
+  ::array_base<PortMapping> m_vector;
 };
 
-#endif
+

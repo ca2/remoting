@@ -36,8 +36,8 @@ bool CommandLine::parse(const CommandLineFormat *format,
                         int formatSize,
                         const CommandLineArgs *cmdArgs)
 {
-  ::std::vector<::string> argContainer;
-  ::std::vector<::string>::iterator argIter;
+  ::string_array argContainer;
+  ::string_array::iterator argIter;
   cmdArgs->getArgVector(&argContainer);
 
   bool result = true;
@@ -63,10 +63,10 @@ bool CommandLine::parse(const CommandLineFormat *format,
             return false;
           }
           keyContainer.isArgument = true;
-          keyContainer.argument.setString((*argIter).getString());
+          keyContainer.argument= (*argIter);
         }
-        keyContainer.key.setString(format[i].keyName);
-        m_foundKeys.push_back(keyContainer);
+        keyContainer.key= format[i].keyName;
+        m_foundKeys.add(keyContainer);
       }
     }
   }
@@ -77,13 +77,13 @@ bool CommandLine::parse(const CommandLineFormat *format,
 bool CommandLine::optionSpecified(const ::scoped_string & scopedstrKey, ::string & arg) const
 {
   bool found = false;
-  ::std::vector<KeyContainer>::const_iterator iter;
+  ::array_base<KeyContainer>::const_iterator iter;
   for (iter = m_foundKeys.begin(); iter != m_foundKeys.end(); iter++) {
     const KeyContainer *foundKey = &(*iter);
-    if (_tcscmp(foundKey->key.getString(), key) == 0) {
+    if (wcscmp(foundKey->key, key) == 0) {
       found = true;
       if (foundKey->isArgument && arg != 0) {
-        arg->setString(foundKey->argument.getString());
+        arg-= foundKey->argument;
       }
     }
   }
@@ -98,10 +98,10 @@ bool CommandLine::getOption(int index, ::string & key, ::string & arg) const
 
   const KeyContainer *foundKey = &m_foundKeys[(size_t)index];
 
-  key->setString(foundKey->key.getString());
+  key-= foundKey->key;
 
   if (foundKey->isArgument && arg != 0) {
-    arg->setString(foundKey->argument.getString());
+    arg-= foundKey->argument;
   }
 
   return true;

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _VIEWER_MENU_H_
-#define _VIEWER_MENU_H_
+#pragma once
+
 
 #include "gui/Menu.h"
 
@@ -49,4 +49,4 @@ private:
   void findStartIndex();
 };
 
-#endif
+

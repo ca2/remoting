@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __MIRRORDRIVERCLIENT_H__
-#define __MIRRORDRIVERCLIENT_H__
+#pragma once
+
 
 #include "UpdateKeeper.h"
 #include "UpdateListener.h"
@@ -114,4 +114,4 @@ private:
   LogWriter *m_log;
 };
 
-#endif // __MIRRORDRIVERCLIENT_H__
+//// __MIRRORDRIVERCLIENT_H__

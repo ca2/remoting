@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __DESKTOP_SERVER_APPLICATION_H__
-#define __DESKTOP_SERVER_APPLICATION_H__
+#pragma once
+
 
 #include "win_system/WindowsApplication.h"
 #include "util/AnEventListener.h"
@@ -52,7 +52,7 @@ public:
   /**
    * Initializes desktop server.
    * @param appInstance HINSTANCE of application.
-   * @throws Exception (or SystemException) on fail.
+   * @throws ::remoting::Exception (or SystemException) on fail.
    * @fixme make command line parsing in this class.
    */
   DesktopServerApplication(HINSTANCE appInstance,
@@ -96,4 +96,4 @@ private:
   UINT m_contextSwitchResolution; // in ms
 };
 
-#endif // __DESKTOPSERVER_H__
+//// __DESKTOPSERVER_H__

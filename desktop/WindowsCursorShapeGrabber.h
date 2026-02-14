@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINDOWSMOUSEGRABBER_H__
-#define __WINDOWSMOUSEGRABBER_H__
+#pragma once
+
 
 #include "CursorShapeGrabber.h"
 #include "util/CommonHeader.h"
@@ -48,4 +48,4 @@ private:
   Screen m_screen;
 };
 
-#endif // __WINDOWSMOUSEGRABBER_H__
+//// __WINDOWSMOUSEGRABBER_H__

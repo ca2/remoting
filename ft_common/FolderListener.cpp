@@ -23,12 +23,12 @@
 //
 #include "framework.h"
 #include "FolderListener.h"
-#include <vector>
+//#include <vector>
 
-FolderListener::FolderListener(const ::scoped_string & scopedstrfolderPath)
+FolderListener::FolderListener(const ::scoped_string & scopedstrFolderPath)
 : m_filesInfo(NULL), m_filesCount(0)
 {
-  m_folderPath.setString(folderPath);
+  m_pathFolder= folderPath;
 }
 
 FolderListener::~FolderListener()
@@ -54,8 +54,8 @@ bool FolderListener::list()
   m_filesCount = 0;
   bool listResult = true;
 
-  if (!m_folderPath.is_empty()) {
-    File folder(m_folderPath.getString());
+  if (!m_pathFolder.is_empty()) {
+    File folder(m_pathFolder);
     listResult = folder.list(NULL, &m_filesCount);
   } else {
     File::listRoots(NULL, &m_filesCount);
@@ -74,8 +74,8 @@ bool FolderListener::list()
 
   m_filesInfo = new FileInfo[m_filesCount];
 
-  if (!m_folderPath.is_empty()) {
-    File folder(m_folderPath.getString());
+  if (!m_pathFolder.is_empty()) {
+    File folder(m_pathFolder);
     folder.list(fileNameList, NULL);
   } else {
     File::listRoots(fileNameList, NULL);
@@ -83,8 +83,8 @@ bool FolderListener::list()
 
   for (unsigned int i = 0; i < m_filesCount; i++) {
 
-    const ::scoped_string & scopedstrfileName = fileNameList[i].getString();
-    const ::scoped_string & scopedstrfolderName = m_folderPath.getString();
+    const ::scoped_string & scopedstrFileName = fileNameList[i];
+    const ::scoped_string & scopedstrFolderName = m_pathFolder;
 
     File file(folderName, fileName);
     FileInfo fileInfo(&file);
@@ -95,7 +95,7 @@ bool FolderListener::list()
     // All files in root folder is directories
     //
 
-    if (m_folderPath.is_empty()) {
+    if (m_pathFolder.is_empty()) {
       m_filesInfo[i].setFlags(FileInfo::DIRECTORY);
       m_filesInfo[i].setSize(0);
       m_filesInfo[i].setLastModified(0);

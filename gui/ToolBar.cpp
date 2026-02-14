@@ -94,7 +94,7 @@ void ToolBar::setButtonsRange(DWORD id)
 
 void ToolBar::attachToolBar(HWND hwnd)
 {
-  ::std::vector<TBBUTTON> tbuttons;
+  ::array_base<TBBUTTON> tbuttons;
 
   for (int i=0; i < m_numberTB; i++) {
     TBBUTTON tbutton;
@@ -106,11 +106,11 @@ void ToolBar::attachToolBar(HWND hwnd)
       switch(m_autoButtons[i]) {
         case TB_Style_sep:
           tbutton.fsStyle = TBSTYLE_SEP;
-          tbuttons.push_back(tbutton);
+          tbuttons.add(tbutton);
           break;
         case TB_Style_gap:
           tbutton.iBitmap = I_IMAGENONE;
-          tbuttons.push_back(tbutton);
+          tbuttons.add(tbutton);
           break;
       }
     }
@@ -118,7 +118,7 @@ void ToolBar::attachToolBar(HWND hwnd)
     tbutton.idCommand = m_initialStr == 0 ? 0 : m_initialStr + i;
     tbutton.fsState   = TBSTATE_ENABLED;
     tbutton.fsStyle   = TBSTYLE_BUTTON;
-    tbuttons.push_back(tbutton);
+    tbuttons.add(tbutton);
   }
   m_autoButtons.clear();
 

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __MIRRORSCREENDRIVER_H__
-#define __MIRRORSCREENDRIVER_H__
+#pragma once
+
 
 #include "MirrorDriverClient.h"
 #include "win_system/RegistryKey.h"
@@ -76,4 +76,4 @@ private:
   LogWriter *m_log;
 };
 
-#endif // __MIRRORSCREENDRIVER_H__
+//// __MIRRORSCREENDRIVER_H__

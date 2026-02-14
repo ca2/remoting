@@ -22,8 +22,7 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RFB_ENCODING_DEFS_H_INCLUDED__
-#define __RFB_ENCODING_DEFS_H_INCLUDED__
+#pragma once
 
 //
 // Codes for encoding types
@@ -94,4 +93,4 @@ public:
   static const char* const SIG_DESKTOP_CONFIGURATION;
 };
 
-#endif // __RFB_ENCODING_DEFS_H_INCLUDED__
+//// __RFB_ENCODING_DEFS_H_INCLUDED__

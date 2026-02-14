@@ -45,13 +45,13 @@ void FileTransferRequestSender::sendCompressionSupportRequest()
 {
   AutoLock al(m_output);
 
-  m_logWriter->info(_T("%s\n"), _T("Sending compresion support request"));
+  m_logWriter->information("{}", "Sending compresion support request");
 
   m_output->writeUInt32(FTMessage::COMPRESSION_SUPPORT_REQUEST);
   m_output->flush();
 }
 
-void FileTransferRequestSender::sendFileListRequest(const ::scoped_string & scopedstrfullPath,
+void FileTransferRequestSender::sendFileListRequest(const ::scoped_string & scopedstrFullPath,
                                                     bool useCompression)
 {
   AutoLock al(m_output);
@@ -59,30 +59,30 @@ void FileTransferRequestSender::sendFileListRequest(const ::scoped_string & scop
   unsigned int messageId = FTMessage::FILE_LIST_REQUEST;
   unsigned char compressionLevel = useCompression ? (unsigned char)1 : (unsigned char)0;
 
-  m_logWriter->info(_T("Sending file ::std::list request with parameters:\n")
-                    _T("\tpath = %s\n")
-                    _T("\tuse compression = %d\n"),
-                    fullPath,
+  m_logWriter->information("Sending file ::list request with parameters:\n"
+                    "\tpath = {}\n"
+                    "\tuse compression = {}\n",
+                    scopedstrFullPath,
                     useCompression ? 1 : 0);
 
   m_output->writeUInt32(messageId);
   m_output->writeUInt8(compressionLevel);
-  m_output->writeUTF8(fullPath);
+  m_output->writeUTF8(scopedstrFullPath);
   m_output->flush();
 }
 
-void FileTransferRequestSender::sendDownloadRequest(const ::scoped_string & scopedstrfullPathName,
+void FileTransferRequestSender::sendDownloadRequest(const ::scoped_string & scopedstrFullPathName,
                                                     unsigned long long offset)
 {
   AutoLock al(m_output);
 
-  m_logWriter->info(_T("Sending download request with parameters:\n")
-                    _T("\tpath = %s\n")
-                    _T("\toffset = %ld\n"),
-                    fullPathName, offset);
+  m_logWriter->information("Sending download request with parameters:\n"
+                    "\tpath = {}\n"
+                    "\toffset = {}\n",
+                    scopedstrFullPathName, offset);
 
   m_output->writeUInt32(FTMessage::DOWNLOAD_START_REQUEST);
-  m_output->writeUTF8(fullPathName);
+  m_output->writeUTF8(scopedstrFullPathName);
   m_output->writeUInt64(offset);
   m_output->flush();
 }
@@ -94,9 +94,9 @@ void FileTransferRequestSender::sendDownloadDataRequest(unsigned int size,
 
   unsigned char compressionLevel = useCompression ? (unsigned char)1 : (unsigned char)0;
 
-  m_logWriter->info(_T("Sending download data request with parameters:\n")
-                    _T("\tsize = %d\n")
-                    _T("\tuse compression = %d\n"),
+  m_logWriter->information("Sending download data request with parameters:\n"
+                    "\tsize = {}\n"
+                    "\tuse compression = {}\n",
                     size,
                     compressionLevel);
 
@@ -106,27 +106,27 @@ void FileTransferRequestSender::sendDownloadDataRequest(unsigned int size,
   m_output->flush();
 }
 
-void FileTransferRequestSender::sendRmFileRequest(const ::scoped_string & scopedstrfullPathName)
+void FileTransferRequestSender::sendRmFileRequest(const ::scoped_string & scopedstrFullPathName)
 {
   AutoLock al(m_output);
 
-  m_logWriter->info(_T("Sending rm file request with parameters:\n\tpath = %s\n"),
-                    fullPathName);
+  m_logWriter->information("Sending rm file request with parameters:\n\tpath = {}\n",
+                    ::string(scopedstrFullPathName).c_str());
 
   m_output->writeUInt32(FTMessage::REMOVE_REQUEST);
-  m_output->writeUTF8(fullPathName);
+  m_output->writeUTF8(scopedstrFullPathName);
   m_output->flush();
 }
 
-void FileTransferRequestSender::sendMkDirRequest(const ::scoped_string & scopedstrfullPathName)
+void FileTransferRequestSender::sendMkDirRequest(const ::scoped_string & scopedstrFullPathName)
 {
   AutoLock al(m_output);
 
-  m_logWriter->info(_T("Sending mkdir request with parameters:\n\tpath = %s\n"),
-                    fullPathName);
+  m_logWriter->information("Sending mkdir request with parameters:\n\tpath = {}\n",
+                    ::string(scopedstrFullPathName).c_str());
 
   m_output->writeUInt32(FTMessage::MKDIR_REQUEST);
-  m_output->writeUTF8(fullPathName);
+  m_output->writeUTF8(scopedstrFullPathName);
   m_output->flush();
 }
 
@@ -135,19 +135,19 @@ void FileTransferRequestSender::sendMvFileRequest(const ::scoped_string & scoped
 {
   AutoLock al(m_output);
 
-  m_logWriter->info(_T("Sending rename file request with parameters:\n")
-                    _T("\t old path = %s\n")
-                    _T("\t new path = %s\n"),
-                    oldFileName,
-                    newFileName);
+  m_logWriter->information("Sending rename file request with parameters:\n"
+                    "\t old path = {}\n"
+                    "\t new path = {}\n",
+                    scopedstroldFileName,
+                    scopedstrNewFileName);
 
   m_output->writeUInt32(FTMessage::RENAME_REQUEST);
-  m_output->writeUTF8(oldFileName);
-  m_output->writeUTF8(newFileName);
+  m_output->writeUTF8(scopedstroldFileName);
+  m_output->writeUTF8(scopedstrNewFileName);
   m_output->flush();
 }
 
-void FileTransferRequestSender::sendUploadRequest(const ::scoped_string & scopedstrfullPathName,
+void FileTransferRequestSender::sendUploadRequest(const ::scoped_string & scopedstrFullPathName,
                                                   bool overwrite,
                                                   unsigned long long offset)
 {
@@ -158,16 +158,16 @@ void FileTransferRequestSender::sendUploadRequest(const ::scoped_string & scoped
     flags = 0x1;
   }
 
-  m_logWriter->info(_T("Sending upload request with parameters:\n")
-                    _T("\tpath = %s\n")
-                    _T("\toverwrite flag = %d\n")
-                    _T("\toffset = %ld\n"),
-                    fullPathName,
+  m_logWriter->information("Sending upload request with parameters:\n"
+                    "\tpath = {}\n"
+                    "\toverwrite flag = {}\n"
+                    "\toffset = {}\n",
+                    scopedstrFullPathName,
                     overwrite ? 1 : 0,
                     offset);
 
   m_output->writeUInt32(FTMessage::UPLOAD_START_REQUEST);
-  m_output->writeUTF8(fullPathName);
+  m_output->writeUTF8(scopedstrFullPathName);
   m_output->writeUInt8(flags);
   m_output->writeUInt64(offset);
   m_output->flush();
@@ -187,14 +187,14 @@ void FileTransferRequestSender::sendUploadDataRequest(const char *buffer,
   //
 
   if (useCompression) {
-    throw IOException(_T("Compression is not supported yet."));
+    throw ::io_exception(error_io, "Compression is not supported yet."));
   }
 
   unsigned char compressionLevel = useCompression ? (short)1 : (short)0;
 
-  m_logWriter->info(_T("Sending upload data request with parameters:\n")
-                    _T("\tsize = %d\n")
-                    _T("\tuse compression = %d\n"),
+  m_logWriter->information("Sending upload data request with parameters:\n"
+                    "\tsize = {}\n"
+                    "\tuse compression = {}\n",
                     size,
                     compressionLevel);
 
@@ -210,9 +210,9 @@ void FileTransferRequestSender::sendUploadEndRequest(unsigned char fileFlags,
 {
   AutoLock al(m_output);
 
-  m_logWriter->info(_T("Sending upload end request with parameters:\n")
-                    _T("\tflags = %d\n")
-                    _T("\tmodification time = %ld\n"),
+  m_logWriter->information("Sending upload end request with parameters:\n"
+                    "\tflags = {}\n"
+                    "\tmodification time = {}\n",
                     fileFlags,
                     modificationTime);
 
@@ -222,14 +222,14 @@ void FileTransferRequestSender::sendUploadEndRequest(unsigned char fileFlags,
   m_output->flush();
 }
 
-void FileTransferRequestSender::sendFolderSizeRequest(const ::scoped_string & scopedstrfullPath)
+void FileTransferRequestSender::sendFolderSizeRequest(const ::scoped_string & scopedstrFullPath)
 {
   AutoLock al(m_output);
 
-  m_logWriter->info(_T("Sending get folder size request with parameters:\n\tpath = %d\n"),
-                    fullPath);
+  m_logWriter->information("Sending get folder size request with parameters:\n\tpath = {}\n",
+                    scopedstrFullPath);
 
   m_output->writeUInt32(FTMessage::DIRSIZE_REQUEST);
-  m_output->writeUTF8(fullPath);
+  m_output->writeUTF8(scopedstrFullPath);
   m_output->flush();
 }

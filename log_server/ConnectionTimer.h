@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __CONNECTIONTIMER_H__
-#define __CONNECTIONTIMER_H__
+#pragma once
+
 
 #include "thread/Thread.h"
 #include "win_system/WindowsEvent.h"
@@ -48,4 +48,4 @@ private:
   bool m_signalEnabled;
 };
 
-#endif // __CONNECTIONTIMER_H__
+//// __CONNECTIONTIMER_H__

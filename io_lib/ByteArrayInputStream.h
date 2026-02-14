@@ -22,11 +22,11 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _BYTE_ARRAY_INPUT_STREAM_H_
-#define _BYTE_ARRAY_INPUT_STREAM_H_
+#pragma once
+
 
 #include "InputStream.h"
-#include "IOException.h"
+#include "io_lib/io_exception.h"
 
 /**
  * Input stream for reading data from memory.
@@ -46,7 +46,7 @@ public:
    * Reads data from memory.
    * @param buffer target buffer to write data.
    * @param len count of bytes to write.
-   * @throws IOException when no data left in memory buffer.
+   * @throws ::io_exception when no data left in memory buffer.
    */
   virtual size_t read(void *buffer, size_t len);
 
@@ -58,4 +58,4 @@ protected:
   size_t m_left;
 };
 
-#endif
+

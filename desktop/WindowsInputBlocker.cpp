@@ -48,8 +48,8 @@ WindowsInputBlocker::WindowsInputBlocker(LogWriter *log)
   {
     AutoLock al(&m_instanceMutex);
     if (m_instance != 0) {
-      throw Exception(_T("The only one instance of")
-                      _T("WindowsInputBlocker is allowed"));
+      throw ::remoting::Exception("The only one instance of"
+                      "WindowsInputBlocker is allowed");
     }
     m_instance = this;
   }
@@ -252,7 +252,7 @@ void WindowsInputBlocker::onTerminate()
 
 void WindowsInputBlocker::execute()
 {
-  m_log->info(_T("input blocker thread id = %d"), getThreadId());
+  m_log->information("input blocker thread id = {}", getThreadId());
 
   MSG msg;
   try {
@@ -260,7 +260,7 @@ void WindowsInputBlocker::execute()
       if (m_isKeyboardBlocking && m_hKeyboardHook == 0) {
         // FIXME: write error handler
         bool res = setKeyboardFilterHook(true);
-		m_log->info(_T("setKeyboardFilterHook result = %d"), res);
+		m_log->information("setKeyboardFilterHook result = {}", res);
       }
       if (!m_isKeyboardBlocking && m_hKeyboardHook != 0) {
         // FIXME: write error handler
@@ -270,7 +270,7 @@ void WindowsInputBlocker::execute()
       if (m_isMouseBlocking && m_hMouseHook == 0) {
         // FIXME: write error handler
         bool res = setMouseFilterHook(true);
-		m_log->info(_T("setMouseFilterHook result = %d"), res);
+		m_log->information("setMouseFilterHook result = {}", res);
       }
       if (!m_isMouseBlocking && m_hMouseHook != 0) {
         // FIXME: write error handler
@@ -280,7 +280,7 @@ void WindowsInputBlocker::execute()
       if (m_isSoftKeyboardBlocking && m_hSoftKeyboardHook == 0) {
         // FIXME: write error handler
         bool res = setSoftKeyboardFilterHook(true);
-		m_log->info(_T("setSoftKeyboardFilterHook result = %b"), res);
+		m_log->information("setSoftKeyboardFilterHook result = %b", res);
       }
       if (!m_isSoftKeyboardBlocking && m_hSoftKeyboardHook != 0) {
         // FIXME: write error handler
@@ -290,7 +290,7 @@ void WindowsInputBlocker::execute()
       if (m_isSoftMouseBlocking && m_hSoftMouseHook == 0) {
         // FIXME: write error handler
         bool res = setSoftMouseFilterHook(true);
-		m_log->info(_T("setSoftMouseFilterHook result = %b"), res);
+		m_log->information("setSoftMouseFilterHook result = %b", res);
       }
       if (!m_isSoftMouseBlocking && m_hSoftMouseHook != 0) {
         // FIXME: write error handler
@@ -309,8 +309,8 @@ void WindowsInputBlocker::execute()
         DispatchMessage(&msg);
       }
     }
-  } catch (Exception &e) {
-    m_log->error(_T("The WindowsInputBlocker thread failed with error: %s"),
+  } catch (::remoting::Exception &e) {
+    m_log->error("The WindowsInputBlocker thread failed with error: {}",
                e.getMessage());
   }
 

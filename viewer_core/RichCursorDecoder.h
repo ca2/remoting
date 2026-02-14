@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _RICH_CURSOR_DECODER_H_
-#define _RICH_CURSOR_DECODER_H_
+#pragma once
+
 
 #include "PseudoDecoder.h"
 
@@ -34,4 +34,4 @@ public:
   virtual ~RichCursorDecoder();
 };
 
-#endif
+

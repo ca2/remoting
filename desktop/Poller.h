@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __POLLER_H__
-#define __POLLER_H__
+#pragma once
+
 
 #include "UpdateDetector.h"
 #include "ScreenGrabber.h"
@@ -60,4 +60,4 @@ private:
   LogWriter *m_log;
 };
 
-#endif // __POLLER_H__
+//// __POLLER_H__

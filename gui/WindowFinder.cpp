@@ -26,7 +26,7 @@
 
 struct WindowsParam
 {
-  ::std::vector<HWND> *hwndVector;
+  ::array_base<HWND> *hwndVector;
   StringVector *classNames;
 };
 
@@ -45,7 +45,7 @@ BOOL CALLBACK WindowFinder::findWindowsByClassFunc(HWND hwnd, LPARAM lParam)
         for (classNameIter = windowsParam->classNames->begin();
              classNameIter != windowsParam->classNames->end(); classNameIter++) {
           if (nextWinName == *classNameIter) {
-            windowsParam->hwndVector->push_back(hwnd);
+            windowsParam->hwndVector->add(hwnd);
           }
         }
       }
@@ -57,9 +57,9 @@ BOOL CALLBACK WindowFinder::findWindowsByClassFunc(HWND hwnd, LPARAM lParam)
   return TRUE;
 }
 
-::std::vector<HWND> WindowFinder::findWindowsByClass(StringVector classNames)
+::array_base<HWND> WindowFinder::findWindowsByClass(StringVector classNames)
 {
-  ::std::vector<HWND> hwndVector;
+  ::array_base<HWND> hwndVector;
   if (classNames.empty()) {
     return hwndVector;
   }
@@ -82,8 +82,8 @@ BOOL CALLBACK WindowFinder::findWindowsByNameFunc(HWND hwnd, LPARAM lParam)
       if (winName.getLength() > 0 && hwnd != 0) {
         WindowsParam *winParams = (WindowsParam *)lParam;
         ::string & substr = &(*(winParams->classNames)).front();
-        if (_tcsstr(winName.getString(), substr->getString()) != 0) {
-          (*(winParams->hwndVector)).push_back(hwnd);
+        if (_tcsstr(winName, substr->getString()) != 0) {
+          (*(winParams->hwndVector)).add(hwnd);
           return FALSE;
         }
       }
@@ -94,9 +94,9 @@ BOOL CALLBACK WindowFinder::findWindowsByNameFunc(HWND hwnd, LPARAM lParam)
 
 HWND WindowFinder::findFirstWindowByName(const ::string windowName)
 {
-  ::std::vector<HWND> hwndVector;
+  ::array_base<HWND> hwndVector;
   StringVector winNameVector;
-  winNameVector.push_back(windowName);
+  winNameVector.add(windowName);
   winNameVector[0].toLowerCase();
   WindowsParam winParams = { &hwndVector, &winNameVector };
 

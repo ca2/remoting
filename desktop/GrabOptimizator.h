@@ -22,15 +22,15 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __GRABOPTIMIZATOR_H__
-#define __GRABOPTIMIZATOR_H__
+#pragma once
+
 
 #include "ScreenDriver.h"
 #include "region/Region.h"
 #include "util/DemandTimer.h"
 #include "log_writer/LogWriter.h"
-#include <vector>
-#include <list>
+//#include <vector>
+//#include <list>
 
 // This class provides the screen grabbing by an optimal way.
 // The class determines an optimal way by oneself dynamically.
@@ -58,15 +58,15 @@ private:
   // Removes a part of the statistic to made it available to a refresh.
   void refreshStatistic(ScreenDriver *grabber);
 
-  // Returns absolute sum area of rectangle ::std::vector.
-  int getArea(const ::std::vector<::int_rectangle> *rects);
+  // Returns absolute sum area of rectangle ::array_base.
+  int getArea(const ::array_base<::int_rectangle> *rects);
 
   // If the grab region is alike to whole desktop the function return true.
-  bool isAlikeToWhole(const ::std::vector<::int_rectangle> *rects);
+  bool isAlikeToWhole(const ::array_base<::int_rectangle> *rects);
   bool isEnoughForWholeStats(const ::int_rectangle &  rect);
   // If the grab region is alike to separate fragments the function
   // return true.
-  bool isAlikeToFragments(const ::std::vector<::int_rectangle> *rects);
+  bool isAlikeToFragments(const ::array_base<::int_rectangle> *rects);
 
   // This functions store to the log all statistic data.
   void logStatistic();
@@ -76,7 +76,7 @@ private:
 
   __int64 grabWhole(ScreenDriver *grabber);
   __int64 grabOneRect(const ::int_rectangle &  rect, ScreenDriver *grabber);
-  __int64 grabFragments(const ::std::vector<::int_rectangle> *rects, ScreenDriver *grabber);
+  __int64 grabFragments(const ::array_base<::int_rectangle> *rects, ScreenDriver *grabber);
 
   void addWholeTElement(double wholeT);
   void removeObsoleteWholeTElements();
@@ -87,10 +87,10 @@ private:
   void removeFirstElementsFromFragmentStats();
 
   int m_wholeS;
-  ::std::list<double> m_wholeTElements;
+  ::list<double> m_wholeTElements;
   double m_wholeTSum;
 
-  ::std::list<double> m_gElements;
+  ::list<double> m_gElements;
   double m_gSum;
 
   DemandTimer m_timer;
@@ -98,4 +98,4 @@ private:
   LogWriter *m_log;
 };
 
-#endif // __GRABOPTIMIZATOR_H__
+//// __GRABOPTIMIZATOR_H__

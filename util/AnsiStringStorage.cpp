@@ -29,15 +29,15 @@
 
 AnsiStringStorage::AnsiStringStorage()
 {
-  setString("");
+ = "";
 }
 
 AnsiStringStorage::AnsiStringStorage(const char *string)
 {
-  setString(string);
+ = string;
 }
 
-AnsiStringStorage::AnsiStringStorage(const ::string & string)
+AnsiStringStorage::AnsiStringStorage(const ::scoped_string & string)
 {
   fromStringStorage(string);
 }
@@ -81,13 +81,13 @@ bool AnsiStringStorage::is_empty() const
   return getLength() == 0;
 }
 
-void AnsiStringStorage::fromStringStorage(const ::string & src)
+void AnsiStringStorage::fromStringStorage(const ::scoped_string & src)
 {
 #ifndef _UNICODE
-  setString(src.getString());
+ = src;
 #else
   // WideCharToMultiByte returns result length including terminating null character	
-  int symbolCount = WideCharToMultiByte(CP_ACP, 0, src.getString(), -1, 
+  int symbolCount = WideCharToMultiByte(CP_ACP, 0, src, -1, 
                                         NULL, 0, NULL, NULL);
 
   // Allocate space for the requred size
@@ -96,7 +96,7 @@ void AnsiStringStorage::fromStringStorage(const ::string & src)
   // Convert to ansi
   int constrSize = (int)m_buffer.size();
   _ASSERT(constrSize == m_buffer.size());
-  WideCharToMultiByte(CP_ACP, 0, src.getString(), -1,
+  WideCharToMultiByte(CP_ACP, 0, src, -1,
                       &m_buffer.front(), symbolCount, NULL, NULL);
 #endif
 }
@@ -104,20 +104,20 @@ void AnsiStringStorage::fromStringStorage(const ::string & src)
 void AnsiStringStorage::toStringStorage(::string & dst) const
 {
 #ifndef _UNICODE
-  dst->setString(getString());
+  dst-= getString();
 #else
   int symbolCount = (int)getSize();
   _ASSERT(symbolCount == getSize());
-  ::std::vector<WCHAR> unicodeBuffer(symbolCount);
+  ::array_base<WCHAR> unicodeBuffer(symbolCount);
   int result = MultiByteToWideChar(CP_ACP, 0, &m_buffer.front(),
                                    symbolCount,
                                    &unicodeBuffer.front(),
                                    symbolCount);
   if (result == 0) {
-    throw Exception(_T("Cannot convert from Ansi to ::string"));
+    throw ::remoting::Exception("Cannot convert from Ansi to ::string");
   }
 
-  dst->setString(&unicodeBuffer.front());
+  dst-= &unicodeBuffer.front();
 #endif
 }
 

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _FILTERED_TEXT_BOX_H_
-#define _FILTERED_TEXT_BOX_H_
+#pragma once
+
 
 #include "TextBox.h"
 #include "BalloonTip.h"
@@ -44,7 +44,7 @@ public:
   LRESULT makeCheck();
 
 protected:
-  virtual bool isStringValid(const ::scoped_string & scopedstrstring);
+  virtual bool isStringValid(const ::scoped_string & scopedstrString);
   virtual LRESULT onKeyDown(WPARAM code, LPARAM params);
 
   static LRESULT CALLBACK windowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -56,4 +56,4 @@ protected:
   StringFilter *m_filter;
 };
 
-#endif
+

@@ -24,7 +24,7 @@
 #include "framework.h"
 #include <stdlib.h>
 #include <string.h>
-#include <vector>
+//#include <vector>
 
 #include "sockdefs.h"
 #include "SocketAddressIPv4.h"
@@ -55,7 +55,7 @@ void getLocalIPAddrString(char *buffer, int buflen)
   char digtxt[5];
   for (int i = 0; ph->h_addr_list[i]; i++) {
     for (int j = 0; j < ph->h_length; j++) {
-      sprintf(digtxt, "%d.", (unsigned char) ph->h_addr_list[i][j]);
+      sprintf(digtxt, "{}.", (unsigned char) ph->h_addr_list[i][j]);
       strncat(buffer, digtxt, (buflen-1)-strlen(buffer));
     }
   buffer[strlen(buffer)-1] = '\0';
@@ -78,14 +78,14 @@ SocketAddressIPv4::SocketAddressIPv4(struct sockaddr_in addr)
   m_port = 0;
 
   if (addr.sin_family != AF_INET) {
-    throw SocketException(_T("The specified m_addr is not AF_INET family m_addr!"));
+    throw SocketException("The specified m_addr is not AF_INET family m_addr!");
   }
 
   m_addr.s_addr = ntohl(addr.sin_addr.s_addr);
   m_port = ntohs(addr.sin_port);
 };
 
-SocketAddressIPv4::SocketAddressIPv4(const ::scoped_string & scopedstrhost, unsigned short port)
+SocketAddressIPv4::SocketAddressIPv4(const ::scoped_string & scopedstrHost, unsigned short port)
 : m_wsaStartup(1, 2)
 {
   SocketAddressIPv4 sa = SocketAddressIPv4::resolve(host, port);
@@ -135,7 +135,7 @@ void SocketAddressIPv4::toString(::string & address) const
   u_char b3 = m_addr.S_un.S_un_b.s_b2;
   u_char b4 = m_addr.S_un.S_un_b.s_b1;
 
-  address->format(_T("%d.%d.%d.%d"), b1, b2, b3, b4);
+  address->format("{}.{}.{}.{}", b1, b2, b3, b4);
 }
 
 unsigned short SocketAddressIPv4::getPort() const
@@ -143,7 +143,7 @@ unsigned short SocketAddressIPv4::getPort() const
   return m_port;
 }
 
-SocketAddressIPv4 SocketAddressIPv4::resolve(const ::scoped_string & scopedstrhost, unsigned short m_port)
+SocketAddressIPv4 SocketAddressIPv4::resolve(const ::scoped_string & scopedstrHost, unsigned short m_port)
 {
   SocketAddressIPv4 resolvedAddress;
 
@@ -154,7 +154,7 @@ SocketAddressIPv4 SocketAddressIPv4::resolve(const ::scoped_string & scopedstrho
 
     AnsiStringStorage hostAnsi(hostStorage);
 
-    hostent *hent = gethostbyname(hostAnsi.getString());
+    hostent *hent = gethostbyname(hostAnsi);
     if (hent == 0) {
       throw SocketException();
     }

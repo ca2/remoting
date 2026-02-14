@@ -40,14 +40,14 @@ int JpegEncoder::getCode() const
 }
 
 void JpegEncoder::splitRectangle(const ::int_rectangle &  rect,
-                                 ::std::vector<::int_rectangle> *rectList,
+                                 ::array_base<::int_rectangle> *rectList,
                                  const FrameBuffer *serverFb,
                                  const EncodeOptions *options)
 {
   int maxWidth = 2048;
   for (int x0 = rect.left; x0 < rect.right; x0 += maxWidth) {
     int x1 = (x0 + maxWidth <= rect.right) ? x0 + maxWidth : rect.right;
-    rectList->push_back(::int_rectangle(x0, rect.top, x1, rect.bottom));
+    rectList->add(::int_rectangle(x0, rect.top, x1, rect.bottom));
   }
 }
 

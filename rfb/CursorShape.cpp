@@ -45,7 +45,7 @@ void CursorShape::assignMaskFromRfb(const char *srcMask)
     int height = m_pixels.getDimension().cy;
     size_t rfbWidthInBytes = getMaskWidthInBytes();
     size_t maskLen = height * rfbWidthInBytes;
-    memcpy(&m_mask.front(), srcMask, maskLen);
+    memcpy(m_mask.data(), srcMask, maskLen);
   }
 }
 

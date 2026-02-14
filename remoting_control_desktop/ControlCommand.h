@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CONTROL_COMMAND_H_
-#define _CONTROL_COMMAND_H_
+#pragma once
+
 
 #include "util/Command.h"
 
@@ -75,4 +75,4 @@ protected:
   bool m_successfull;
 };
 
-#endif
+

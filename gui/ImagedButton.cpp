@@ -134,7 +134,7 @@ void ImagedButton::drawItem(LPDRAWITEMSTRUCT dis)
       }
 
       ThemeLib::DrawThemeText(m_theme, dc, BP_PUSHBUTTON, state,
-                              uniTitle.getString(), (int)uniTitle.getLength(),
+                              uniTitle, (int)uniTitle.getLength(),
                               DT_CENTER | DT_VCENTER | DT_SINGLELINE,
                               0, &captionRect);
     } else {
@@ -143,14 +143,14 @@ void ImagedButton::drawItem(LPDRAWITEMSTRUCT dis)
       if (isDisabled) {
         OffsetRect(&captionRect, 1, 1);
         SetTextColor(dc, ::GetSysColor(COLOR_3DHILIGHT));
-        DrawText(dc, title.getString(), -1, &captionRect, DT_WORDBREAK | DT_CENTER);
+        DrawText(dc, title, -1, &captionRect, DT_WORDBREAK | DT_CENTER);
         OffsetRect(&captionRect, -1, -1);
         SetTextColor(dc, ::GetSysColor(COLOR_3DSHADOW));
-        DrawText(dc, title.getString(), -1, &captionRect, DT_WORDBREAK | DT_CENTER);
+        DrawText(dc, title, -1, &captionRect, DT_WORDBREAK | DT_CENTER);
       } else {
         SetTextColor(dc, ::GetSysColor(COLOR_BTNTEXT));
         SetBkColor(dc, ::GetSysColor(COLOR_BTNFACE));
-        DrawText(dc, title.getString(), -1, &captionRect, DT_WORDBREAK | DT_CENTER);
+        DrawText(dc, title, -1, &captionRect, DT_WORDBREAK | DT_CENTER);
       } // if not disabled
     } // if not themed
   } // if has title

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __THREAD_H__
-#define __THREAD_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "LocalMutex.h"
@@ -161,4 +161,4 @@ private:
   volatile bool m_terminated;
 };
 
-#endif // __THREAD_H__
+//// __THREAD_H__

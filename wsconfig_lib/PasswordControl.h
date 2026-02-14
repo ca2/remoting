@@ -22,11 +22,11 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _PASSWORD_CONTROL_H_
-#define _PASSWORD_CONTROL_H_
+#pragma once
+
 
 #include "gui/Control.h"
-#include <vector>
+//#include <vector>
 
 /**
 Helper class that needed for managing one VNC-style password (set, change, unset password).
@@ -73,7 +73,7 @@ public:
   Updates password value inside this control and updates dependent controls state.
   @param plainText plain text password.
   */
-  void setPassword(const ::scoped_string & scopedstrplainText);
+  void setPassword(const ::scoped_string & scopedstrPlainText);
 
   /**
   Updates password value inside this control.
@@ -104,10 +104,10 @@ protected:
   Control *m_changeButton;
   Control *m_unsetButton;
 
-  ::std::vector<char> m_cryptedPassword;
+  ::array_base<char> m_cryptedPassword;
 
   bool m_enabled;
   State m_state;
 };
 
-#endif
+

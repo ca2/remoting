@@ -67,8 +67,8 @@ void EditPortMappingDialog::onOkButtonClick()
   m_geometryTextBox.getText(&rectStringStorage);
   m_portTextBox.getText(&portStringStorage);
 
-  PortMappingRect::parse(rectStringStorage.getString(), &rect);
-  StringParser::parseInt(portStringStorage.getString(), &port);
+  PortMappingRect::parse(rectStringStorage, &rect);
+  StringParser::parseInt(portStringStorage, &port);
 
   m_mapping->setPort(port);
   m_mapping->setRect(rect);
@@ -91,7 +91,7 @@ bool EditPortMappingDialog::isUserDataValid()
   m_geometryTextBox.getText(&rectStringStorage);
   m_portTextBox.getText(&portStringStorage);
 
-  if (!PortMappingRect::tryParse(rectStringStorage.getString())) {
+  if (!PortMappingRect::tryParse(rectStringStorage)) {
     MessageBox(m_ctrlThis.getWindow(),
                StringTable::getString(IDS_INVALID_PORT_MAPPING_STRING),
                StringTable::getString(IDS_CAPTION_BAD_INPUT),
@@ -102,7 +102,7 @@ bool EditPortMappingDialog::isUserDataValid()
 
   int port;
 
-  StringParser::parseInt(portStringStorage.getString(), &port);
+  StringParser::parseInt(portStringStorage, &port);
 
   if ((port < 1) || (port > 65535)) {
     MessageBox(m_ctrlThis.getWindow(),
@@ -134,17 +134,17 @@ BOOL EditPortMappingDialog::onInitDialog()
   initControls();
 
   if (m_dialogType == Add) {
-    m_portTextBox.setText(_T("5901"));
-    m_geometryTextBox.setText(_T("640x480+0+0"));
+    m_portTextBox.setText("5901");
+    m_geometryTextBox.setText("640x480+0+0");
   } else if (m_dialogType == Edit) {
     ::string portString;
     ::string rectString;
 
-    portString.format(_T("%d"), m_mapping->getPort());
+    portString.formatf("{}", m_mapping->getPort());
     m_mapping->getRect().toString(&rectString);
 
-    m_portTextBox.setText(portString.getString());
-    m_geometryTextBox.setText(rectString.getString());
+    m_portTextBox.setText(portString);
+    m_geometryTextBox.setText(rectString);
   }
 
   return TRUE;

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _QUERY_CONNECTION_APPLICATION_H_
-#define _QUERY_CONNECTION_APPLICATION_H_
+#pragma once
+
 
 #include "win_system/LocalWindowsApplication.h"
 
@@ -63,13 +63,13 @@ public:
    * @param acceptByDefault if set, then default action in query dialog will be "Accept".
    * @param timeOutSec query dialog timeout(in seconds).
    * @return application exit code (0 means accept connection, 1 means reject connection).
-   * @throws Exception on fail.
+   * @throws ::remoting::Exception on fail.
    */
-  static int execute(const ::scoped_string & scopedstrpeerAddr, bool acceptByDefault, DWORD timeOutSec)
+  static int execute(const ::scoped_string & scopedstrPeerAddr, bool acceptByDefault, DWORD timeOutSec)
 ;
 
 private:
   ::string m_cmdLine;
 };
 
-#endif
+

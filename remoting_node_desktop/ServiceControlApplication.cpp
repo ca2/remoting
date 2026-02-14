@@ -66,9 +66,9 @@ int ServiceControlApplication::run()
   // FIXME: Make this a member variable, parse in a separate function.
   ServiceControlCommandLine cmdLine;
   try {
-    WinCommandLineArgs cmdArgs(m_commandLine.getString());
+    WinCommandLineArgs cmdArgs(m_commandLine);
     cmdLine.parse(&cmdArgs);
-  } catch (Exception &) {
+  } catch (::remoting::Exception &) {
     TvnServerHelp::showUsage();
     return RET_ERR;
   }
@@ -99,7 +99,7 @@ int ServiceControlApplication::run()
       reportError(&cmdLine, &scmEx);
     } catch (SystemException &servEx) {
       reportError(&cmdLine, &servEx);
-    } catch (Exception &ex) {
+    } catch (::remoting::Exception &ex) {
       _ASSERT(FALSE);
       reportError(&cmdLine, ex.getMessage());
     }
@@ -126,10 +126,10 @@ void ServiceControlApplication::runElevatedInstance() const
   Environment::getCurrentModulePath(&executablePath);
 
   ::string commandLine;
-  commandLine.format(_T("%s %s"), m_commandLine.getString(),
+  commandLine.formatf("{} {}", m_commandLine,
                      ServiceControlCommandLine::DONT_ELEVATE);
 
-  Shell::runAsAdmin(executablePath.getString(), commandLine.getString());
+  Shell::runAsAdmin(executablePath, commandLine);
 }
 
 void ServiceControlApplication::executeCommand(const ServiceControlCommandLine *cmdLine) const
@@ -159,23 +159,23 @@ void ServiceControlApplication::setTvnControlStartEntry() const
   ::string executablePath;
   Environment::getCurrentModulePath(&executablePath);
   ::string pathToTvnControl;
-  pathToTvnControl.format(_T("\"%s\" %s %s"),
-                          executablePath.getString(),
+  pathToTvnControl.formatf("\"{}\" {} {}",
+                          executablePath,
                           ControlCommandLine::CONTROL_SERVICE,
                           ControlCommandLine::SLAVE_MODE);
 
   // Write registry entry.
   RegistryKey runKey(Registry::getCurrentLocalMachineKey(),
-                     _T("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"),
+                     "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
                      false);
   runKey.setValueAsString(ServiceNames::TVNCONTROL_START_REGISTRY_ENTRY_NAME,
-                          pathToTvnControl.getString());
+                          pathToTvnControl);
 }
 
 void ServiceControlApplication::removeTvnControlStartEntry() const
 {
   RegistryKey runKey(Registry::getCurrentLocalMachineKey(),
-                     _T("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"),
+                     "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
                      false);
   runKey.deleteValue(ServiceNames::TVNCONTROL_START_REGISTRY_ENTRY_NAME);
 }
@@ -187,22 +187,22 @@ void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmd
 
   switch (ex->getSCMErrorCode()) {
   case SCMClientException::ERROR_ALREADY_RUNNING:
-    errorMessage.setString(StringTable::getString(IDS_SERVICE_ALREADY_RUNNING));
+    errorMessage= StringTable::getString(IDS_SERVICE_ALREADY_RUNNING);
     break;
   case SCMClientException::ERROR_ALREADY_STOPPED:
-    errorMessage.setString(StringTable::getString(IDS_SERVICE_ALREADY_STOPPED));
+    errorMessage= StringTable::getString(IDS_SERVICE_ALREADY_STOPPED);
     break;
   case SCMClientException::ERROR_START_TIMEOUT:
-    errorMessage.setString(StringTable::getString(IDS_SERVICE_START_TIMEOUT));
+    errorMessage= StringTable::getString(IDS_SERVICE_START_TIMEOUT);
     break;
   case SCMClientException::ERROR_STOP_TIMEOUT:
-    errorMessage.setString(StringTable::getString(IDS_SERVICE_STOP_TIMEOUT));
+    errorMessage= StringTable::getString(IDS_SERVICE_STOP_TIMEOUT);
     break;
   default:
-    errorMessage.setString(ex->getMessage());
+    errorMessage= ex->getMessage();
   }
 
-  reportError(cmdLine, errorMessage.getString());
+  reportError(cmdLine, errorMessage);
 }
 
 void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmdLine,
@@ -212,16 +212,16 @@ void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmd
 
   switch (ex->getErrorCode()) {
   case ERROR_SERVICE_DOES_NOT_EXIST:
-    errorMessage.setString(StringTable::getString(IDS_1060_ERROR_DESCRIPTION));
+    errorMessage= StringTable::getString(IDS_1060_ERROR_DESCRIPTION);
     break;
   case ERROR_SERVICE_EXISTS:
-    errorMessage.setString(StringTable::getString(IDS_1073_ERROR_DESCRIPTION));
+    errorMessage= StringTable::getString(IDS_1073_ERROR_DESCRIPTION);
     break;
   default:
-    errorMessage.setString(ex->getMessage());
+    errorMessage= ex->getMessage();
   }
 
-  reportError(cmdLine, errorMessage.getString());
+  reportError(cmdLine, errorMessage);
 }
 
 void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmdLine,
@@ -248,7 +248,7 @@ void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmd
     const ::scoped_string & scopedstrcaption = StringTable::getString(IDS_MBC_TVNSERVER);
     ::string text;
     text.format(StringTable::getString(stringId), errorMessage);
-    MessageBox(NULL, text.getString(), caption, MB_OK | MB_ICONERROR);
+    MessageBox(NULL, text, caption, MB_OK | MB_ICONERROR);
   }
 }
 

@@ -54,11 +54,11 @@ UserInputServer::UserInputServer(BlockingGate *forwGate,
 
 UserInputServer::~UserInputServer()
 {
-  m_log->debug(_T("The UserInputServer destructor has been called"));
+  m_log->debug("The UserInputServer destructor has been called");
   delete m_userInput;
 }
 
-void UserInputServer::onClipboardUpdate(const ::string & newClipboard)
+void UserInputServer::onClipboardUpdate(const ::scoped_string & newClipboard)
 {
   AutoLock al(m_forwGate);
   try {
@@ -67,9 +67,9 @@ void UserInputServer::onClipboardUpdate(const ::string & newClipboard)
       m_forwGate->writeUInt8(CLIPBOARD_CHANGED);
       sendNewClipboard(newClipboard, m_forwGate);
     }
-  } catch (Exception &e) {
-    m_log->error(_T("An error has been occurred while sending a")
-               _T(" CLIPBOARD_CHANGED message from UserInputServer: %s"),
+  } catch (::remoting::Exception &e) {
+    m_log->error("An error has been occurred while sending a"
+               " CLIPBOARD_CHANGED message from UserInputServer: {}",
                e.getMessage());
     m_extTerminationListener->onAnObjectEvent();
   }
@@ -119,9 +119,9 @@ void UserInputServer::onRequest(unsigned char reqCode, BlockingGate *backGate)
     break;
   default:
     ::string errMess;
-    errMess.format(_T("Unknown %d protocol code received")
-                   _T(" from a UserInputClient"), reqCode);
-    throw Exception(errMess.getString());
+    errMess.formatf("Unknown {} protocol code received"
+                   " from a UserInputClient", reqCode);
+    throw ::remoting::Exception(errMess);
     break;
   }
 }
@@ -203,7 +203,7 @@ void UserInputServer::ansDisplayNumberCoords(BlockingGate *backGate)
 
 void UserInputServer::ansDisplaysCoords(BlockingGate *backGate)
 {
-  ::std::vector<::int_rectangle> rects = m_userInput->getDisplaysCoords();
+  ::array_base<::int_rectangle> rects = m_userInput->getDisplaysCoords();
   size_t number = rects.size();
   if (number > 255) {
     number = 255;

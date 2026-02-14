@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "RegistrySettingsManager.h"
 #include "util/StringParser.h"
-#include <vector>
+//#include <vector>
 
 RegistrySettingsManager::RegistrySettingsManager()
 : m_key(0)
@@ -61,193 +61,196 @@ bool RegistrySettingsManager::isOk()
 ::string RegistrySettingsManager::key_path(const ::scoped_string & scopedstrKey)
 {
    return scopedstrKey.rear_prefix('\\');
-  // ::std::vector<TCHAR> folderString(scopedstrKey.length() + 1);
+  // ::array_base<TCHAR> folderString(scopedstrKey.length() + 1);
   // memcpy(&folderString.front(), key, folderString.size() * sizeof(TCHAR));
   // TCHAR *token = _tcsrchr(&folderString.front(), _T('\\'));
   // if (token != NULL) {
   //   *token = _T('\0');
-  //   folder->setString(&folderString.front());
+  //   folder-= &folderString.front();
   // } else {
-  //   folder->setString(_T(""));
+  //   folder-= "";
   // }
 }
 
 ::string RegistrySettingsManager::key_name(const ::scoped_string & scopedstrKey)
 {
    return scopedstrKey.rear_word('\\');
-  // ::std::vector<TCHAR> nameString(_tcslen(key) + 1);
+  // ::array_base<TCHAR> nameString(_tcslen(key) + 1);
   // memcpy(&nameString.front(), key, nameString.size() * sizeof(TCHAR));
   // TCHAR *token = _tcsrchr(&nameString.front(), _T('\\'));
   // if (token != NULL) {
-  //   keyName->setString(++token);
+  //   keyName-= ++token;
   // } else {
-  //   keyName->setString((TCHAR *)key);
+  //   keyName-= (TCHAR *)key;
   // }
 }
 
 bool RegistrySettingsManager::keyExist(const ::scoped_string & scopedstrName)
 {
   if (!isOk()) return false;
-  RegistryKey subKey(m_key, name, false);
+  RegistryKey subKey(m_key, scopedstrName, false);
   return subKey.isOpened();
 }
 
-bool RegistrySettingsManager::deleteKey(const ::scoped_string & scopedstrName)
+bool RegistrySettingsManager::deleteKey(const ::scoped_string & scopedstrFullPath)
 {
-  ::string keyName;
-  ::string valueName;
+  ::string path;
+  ::string name;
 
-  extractKeyName(name, &keyName);
-  extractValueName(name, &valueName);
+  path = key_path(scopedstrFullPath);
+  name = key_name(scopedstrFullPath);
 
-  RegistryKey subKey(m_key, keyName.getString(), false);
+  RegistryKey subKey(m_key, path, false);
 
-  bool deleteAsSubKey = m_key->deleteSubKeyTree(valueName.getString());
-  bool deleteAsValue = subKey.deleteValue(valueName.getString());
+  bool deleteAsSubKey = m_key->deleteSubKeyTree(name);
+  bool deleteAsValue = subKey.deleteValue(name);
 
   return deleteAsSubKey || deleteAsValue;
 }
 
-bool RegistrySettingsManager::getString(const ::scoped_string & scopedstrName, ::string & value)
+bool RegistrySettingsManager::getString(const ::scoped_string & scopedstrFullPath, ::string & value)
 {
-  ::string keyName;
-  ::string valueName;
+   ::string path;
+   ::string name;
 
-  extractKeyName(name, &keyName);
-  extractValueName(name, &valueName);
+   path = key_path(scopedstrFullPath);
+   name = key_name(scopedstrFullPath);
 
-  RegistryKey subKey(m_key, keyName.getString(), false);
+  RegistryKey subKey(m_key, path, false);
 
-  return subKey.getValueAsString(valueName.getString(), value);
+  return subKey.getValueAsString(name, value);
 }
 
-bool RegistrySettingsManager::setString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrvalue)
+bool RegistrySettingsManager::setString(const ::scoped_string & scopedstrFullPath, const ::scoped_string & scopedstrPayload)
 {
-  ::string keyName;
-  ::string valueName;
 
-  extractKeyName(name, &keyName);
-  extractValueName(name, &valueName);
+   ::string path;
+   ::string name;
 
-  RegistryKey subKey(m_key, keyName.getString(), false);
+   path = key_path(scopedstrFullPath);
+   name = key_name(scopedstrFullPath);
 
-  return subKey.setValueAsString(name, value);
+  RegistryKey subKey(m_key, path, false);
+
+  return subKey.setValueAsString(name, name);
 }
 
-bool RegistrySettingsManager::getLong(const ::scoped_string & scopedstrName, long *value)
+bool RegistrySettingsManager::getLong(const ::scoped_string & scopedstrFullPath, long *value)
 {
-  ::string keyName;
-  ::string valueName;
+   ::string path;
+   ::string name;
 
-  extractKeyName(name, &keyName);
-  extractValueName(name, &valueName);
+   path = key_path(scopedstrFullPath);
+   name = key_name(scopedstrFullPath);
 
-  RegistryKey subKey(m_key, keyName.getString(), false);
 
-  return subKey.getValueAsInt64(valueName.getString(), value);
+  RegistryKey subKey(m_key, path, false);
+
+  return subKey.getValueAsInt64(name, value);
 }
 
-bool RegistrySettingsManager::setLong(const ::scoped_string & scopedstrName, long value)
+bool RegistrySettingsManager::setLong(const ::scoped_string & scopedstrFullPath, long value)
 {
-  ::string keyName;
-  ::string valueName;
+   ::string path;
+   ::string name;
 
-  extractKeyName(name, &keyName);
-  extractValueName(name, &valueName);
+   path = key_path(scopedstrFullPath);
+   name = key_name(scopedstrFullPath);
 
-  RegistryKey subKey(m_key, keyName.getString(), false);
+  RegistryKey subKey(m_key, path, false);
 
   return subKey.setValueAsInt64(name, value);
 }
 
-bool RegistrySettingsManager::getBoolean(const ::scoped_string & scopedstrName, bool *value)
+bool RegistrySettingsManager::getBoolean(const ::scoped_string & scopedstrFullPath, bool *value)
 {
   int intVal = 0;
-  if (!getInt(name, &intVal)) {
+  if (!getInt(scopedstrFullPath, &intVal)) {
     return false;
   }
   *value = intVal == 1;
   return true;
 }
 
-bool RegistrySettingsManager::setBoolean(const ::scoped_string & scopedstrName, bool value)
+bool RegistrySettingsManager::setBoolean(const ::scoped_string & scopedstrFullPath, bool value)
 {
-  return setInt(name, value ? 1 : 0);
+  return setInt(scopedstrFullPath, value ? 1 : 0);
 }
 
-bool RegistrySettingsManager::getUINT(const ::scoped_string & scopedstrName, UINT *value)
+bool RegistrySettingsManager::getUINT(const ::scoped_string & scopedstrFullPath, UINT *value)
 {
-  return getInt(name, (int *)value);
+  return getInt(scopedstrFullPath, (int *)value);
 }
 
-bool RegistrySettingsManager::setUINT(const ::scoped_string & scopedstrName, UINT value)
+bool RegistrySettingsManager::setUINT(const ::scoped_string & scopedstrFullPath, UINT value)
 {
-  return setInt(name, (int)value);
+  return setInt(scopedstrFullPath, (int)value);
 }
 
-bool RegistrySettingsManager::getInt(const ::scoped_string & scopedstrName, int *value)
+bool RegistrySettingsManager::getInt(const ::scoped_string & scopedstrFullPath, int *value)
 {
-  ::string keyName;
-  ::string valueName;
+   ::string path;
+   ::string name;
 
-  extractKeyName(name, &keyName);
-  extractValueName(name, &valueName);
+   path = key_path(scopedstrFullPath);
+   name = key_name(scopedstrFullPath);
 
-  RegistryKey subKey(m_key, keyName.getString(), false);
 
-  return subKey.getValueAsInt32(valueName.getString(), value);
+  RegistryKey subKey(m_key, path, false);
+
+  return subKey.getValueAsInt32(name, value);
 }
 
-bool RegistrySettingsManager::setInt(const ::scoped_string & scopedstrName, int value)
+bool RegistrySettingsManager::setInt(const ::scoped_string & scopedstrFullPath, int value)
 {
-  ::string keyName;
-  ::string valueName;
+   ::string path;
+   ::string name;
 
-  extractKeyName(name, &keyName);
-  extractValueName(name, &valueName);
+   path = key_path(scopedstrFullPath);
+   name = key_name(scopedstrFullPath);
 
-  RegistryKey subKey(m_key, keyName.getString(), false);
+  RegistryKey subKey(m_key, path, false);
 
   return subKey.setValueAsInt32(name, value);
 }
 
-bool RegistrySettingsManager::getByte(const ::scoped_string & scopedstrName, char *value)
+bool RegistrySettingsManager::getByte(const ::scoped_string & scopedstrFullPath, char *value)
 {
   int intVal = 0;
-  if (!getInt(name, &intVal)) {
+  if (!getInt(scopedstrFullPath, &intVal)) {
     return false;
   }
   *value = (char)intVal;
   return true;
 }
 
-bool RegistrySettingsManager::setByte(const ::scoped_string & scopedstrName, char value)
+bool RegistrySettingsManager::setByte(const ::scoped_string & scopedstrFullPath, char value)
 {
-  return setInt(name, (int)value);
+  return setInt(scopedstrFullPath, (int)value);
 }
 
-bool RegistrySettingsManager::getBinaryData(const ::scoped_string & scopedstrName, void *value, size_t *size)
+bool RegistrySettingsManager::getBinaryData(const ::scoped_string & scopedstrFullPath, void *value, size_t *size)
 {
-  ::string keyName;
-  ::string valueName;
+   ::string path;
+   ::string name;
 
-  extractKeyName(name, &keyName);
-  extractValueName(name, &valueName);
+   path = key_path(scopedstrFullPath);
+   name = key_name(scopedstrFullPath);
 
-  RegistryKey subKey(m_key, keyName.getString(), false);
+  RegistryKey subKey(m_key, path, false);
 
   return subKey.getValueAsBinary(name, value, size);
 }
 
-bool RegistrySettingsManager::setBinaryData(const ::scoped_string & scopedstrName, const void *value, size_t size)
+bool RegistrySettingsManager::setBinaryData(const ::scoped_string & scopedstrFullPath, const void *value, size_t size)
 {
-  ::string keyName;
-  ::string valueName;
+   ::string path;
+   ::string name;
 
-  extractKeyName(name, &keyName);
-  extractValueName(name, &valueName);
+   path = key_path(scopedstrFullPath);
+   name = key_name(scopedstrFullPath);
 
-  RegistryKey subKey(m_key, keyName.getString(), false);
+  RegistryKey subKey(m_key, path, false);
 
   return subKey.setValueAsBinary(name, value, size);
 }

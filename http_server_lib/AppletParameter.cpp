@@ -37,7 +37,7 @@ AppletParameter::AppletParameter(const char *name, const char *value)
   m_isValid = isStringValid(name) && isStringValid(value);
 
   if (isValid()) {
-    char format[] = "<PARAM NAME=\"%s\" VALUE=\"%s\" >\n";
+    char format[] = "<PARAM NAME=\"{}\" VALUE=\"{}\" >\n";
     m_formattedString.format(format, name, value);
   }
 }
@@ -48,7 +48,7 @@ AppletParameter::~AppletParameter()
 
 const char *AppletParameter::getFormattedString() const
 {
-  return m_formattedString.getString();
+  return m_formattedString;
 }
 
 bool AppletParameter::isValid() const

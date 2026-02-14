@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _HELP_DIALOG_H_
-#define _HELP_DIALOG_H_
+#pragma once
+
 
 #include "gui/BaseDialog.h"
 #include "gui/TextBox.h"
@@ -41,4 +41,4 @@ protected:
 
 };
 
-#endif
+

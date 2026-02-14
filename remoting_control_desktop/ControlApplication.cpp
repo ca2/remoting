@@ -79,7 +79,7 @@ ControlApplication::ControlApplication(HINSTANCE hinst,
    m_configurator(false),
    m_log(0)
 {
-  m_commandLine.setString(commandLine);
+  m_commandLine= commandLine;
 
   CommonControlsEx::init();
 
@@ -109,7 +109,7 @@ int ControlApplication::run()
 
   // Check command line for valid.
   try {
-    WinCommandLineArgs cmdArgs(m_commandLine.getString());
+    WinCommandLineArgs cmdArgs(m_commandLine);
     cmdLineParser.parse(&cmdArgs);
   } catch (CommandLineFormatException &) {
     TvnServerHelp::showUsage();
@@ -165,9 +165,9 @@ int ControlApplication::run()
   // Connect to server.
   try {
     connect(cmdLineParser.hasControlServiceFlag(), cmdLineParser.isSlave());
-  } catch (Exception &) {
+  } catch (::remoting::Exception &) {
     if (!cmdLineParser.isSlave() && !cmdLineParser.hasCheckServicePasswords()) {
-      const ::scoped_string & scopedstrmsg = StringTable::getString(IDS_FAILED_TO_CONNECT_TO_CONTROL_SERVER);
+      const ::scoped_string & scopedstrMsg = StringTable::getString(IDS_FAILED_TO_CONNECT_TO_CONTROL_SERVER);
       const ::scoped_string & scopedstrcaption = StringTable::getString(IDS_MBC_TVNCONTROL);
       MessageBox(0, msg, caption, MB_OK | MB_ICONERROR);
     }
@@ -180,7 +180,7 @@ int ControlApplication::run()
 
     ::string passwordFile;
     cmdLineParser.getPasswordFile(&passwordFile);
-    m_serverControl->setPasswordProperties(passwordFile.getString(), true,
+    m_serverControl->setPasswordProperties(passwordFile, true,
                                            cmdLineParser.hasControlServiceFlag());
 
     if (cmdLineParser.hasKillAllFlag()) {
@@ -190,7 +190,7 @@ int ControlApplication::run()
     } else if (cmdLineParser.hasConnectFlag()) {
       ::string hostName;
       cmdLineParser.getConnectHostName(&hostName);
-      command = new ConnectCommand(m_serverControl, hostName.getString());
+      command = new ConnectCommand(m_serverControl, hostName);
     } else if (cmdLineParser.hasShutdownFlag()) {
       command = new ShutdownCommand(m_serverControl);
     } else if (cmdLineParser.hasSharePrimaryFlag()) {
@@ -232,10 +232,10 @@ int ControlApplication::run()
         } catch (RemoteException &remEx) {
           notifyServerSideException(remEx.getMessage());
         }
-      } catch (IOException &) {
+      } catch (::io_exception &) {
         notifyConnectionLost();
         return 1;
-      } catch (Exception &) {
+      } catch (::remoting::Exception &) {
         _ASSERT(FALSE);
       }
     }
@@ -261,9 +261,9 @@ void ControlApplication::connect(bool controlService, bool slave)
 
   while (numTriesRemaining-- > 0) {
     try {
-      m_transport = TransportFactory::createPipeClientTransport(pipeName.getString());
+      m_transport = TransportFactory::createPipeClientTransport(pipeName);
       break;
-    } catch (Exception &) {
+    } catch (::remoting::Exception &) {
       if (numTriesRemaining <= 0) {
         throw;
       }
@@ -282,7 +282,7 @@ void ControlApplication::notifyServerSideException(const ::scoped_string & scope
 
   message.format(StringTable::getString(IDS_CONTROL_SERVER_RAISE_EXCEPTION), reason);
 
-  MessageBox(0, message.getString(), StringTable::getString(IDS_MBC_TVNSERVER), MB_OK | MB_ICONERROR);
+  MessageBox(0, message, StringTable::getString(IDS_MBC_TVNSERVER), MB_OK | MB_ICONERROR);
 }
 
 void ControlApplication::notifyConnectionLost()
@@ -369,11 +369,11 @@ int ControlApplication::runConfigurator(bool configService, bool isRunAsRequeste
     // Get path to remoting_node binary.
     Environment::getCurrentModulePath(&pathToBinary);
     // Set -dontelevate flag to tvncontrol know that admin rights already requested.
-    childCommandLine.format(_T("%s -dontelevate"), m_commandLine.getString());
+    childCommandLine.formatf("{} -dontelevate", m_commandLine);
 
     // Start child.
     try {
-      Shell::runAsAdmin(pathToBinary.getString(), childCommandLine.getString());
+      Shell::runAsAdmin(pathToBinary, childCommandLine);
     } catch (SystemException &sysEx) {
       if (sysEx.getErrorCode() != ERROR_CANCELLED) {
         MessageBox(0,
@@ -396,7 +396,7 @@ int ControlApplication::runConfigurator(bool configService, bool isRunAsRequeste
   return confDialog.showModal();
 }
 
-void ControlApplication::getCryptedPassword(unsigned char cryptedPass[8], const ::scoped_string & scopedstrplainTextPassString)
+void ControlApplication::getCryptedPassword(unsigned char cryptedPass[8], const ::scoped_string & scopedstrPlainTextPassString)
 {
   // Get a copy of the password truncated at 8 characters.
   ::string plainTextPass(plainTextPassString);
@@ -408,7 +408,7 @@ void ControlApplication::getCryptedPassword(unsigned char cryptedPass[8], const 
   // Convert to a byte array.
   unsigned char byteArray[8] = {0, 0, 0, 0, 0, 0, 0, 0};
   size_t len = ::minimum(ansiPass.getLength(), (size_t)8);
-  memcpy(byteArray, ansiPass.getString(), len);
+  memcpy(byteArray, ansiPass, len);
 
   // Encrypt with a fixed key.
   VncPassCrypt::getEncryptedPass(cryptedPass, byteArray);
@@ -435,11 +435,11 @@ int ControlApplication::checkServicePasswords(bool isRunAsRequested)
     // Get path to remoting_node binary.
     Environment::getCurrentModulePath(&pathToBinary);
     // Set -dontelevate flag to tvncontrol know that admin rights already requested.
-    childCommandLine.format(_T("%s -dontelevate"), m_commandLine.getString());
+    childCommandLine.formatf("{} -dontelevate", m_commandLine);
 
     // Start child.
     try {
-      Shell::runAsAdmin(pathToBinary.getString(), childCommandLine.getString());
+      Shell::runAsAdmin(pathToBinary, childCommandLine);
       return 0;
     } catch (SystemException &sysEx) {
       if (sysEx.getErrorCode() != ERROR_CANCELLED) {
@@ -474,7 +474,7 @@ void ControlApplication::checkServicePasswords()
     if (useRfbAuth) {
       ::string pass;
       dialog.getRfbPass(&pass);
-      getCryptedPassword(cryptedPass, pass.getString());
+      getCryptedPassword(cryptedPass, pass);
       config->setPrimaryPassword(cryptedPass);
       config->useAuthentication(true);
     } else if (dontUseRfbAuth) {
@@ -487,7 +487,7 @@ void ControlApplication::checkServicePasswords()
     if (useAdmAuth) {
       ::string pass;
       dialog.getAdmPass(&pass);
-      getCryptedPassword(cryptedPass, pass.getString());
+      getCryptedPassword(cryptedPass, pass);
       config->setControlPassword(cryptedPass);
       config->useControlAuth(true);
     } else if (dontUseAdmAuth) {
@@ -505,13 +505,13 @@ void ControlApplication::reloadConfig()
   try {
     // Get path to remoting_node binary.
     Environment::getCurrentModulePath(&pathToBinary);
-    Process processToReloadConfig(pathToBinary.getString(), _T("-controlservice -reload"));
+    Process processToReloadConfig(pathToBinary, "-controlservice -reload");
     processToReloadConfig.start();
-  } catch (Exception &e) {
+  } catch (::remoting::Exception &e) {
     ::string errMess;
     errMess.format(StringTable::getString(IDS_FAILED_TO_RELOAD_SERVICE_ON_CHECK_PASS), e.getMessage());
     MessageBox(0,
-      errMess.getString(),
+      errMess,
       StringTable::getString(IDS_MBC_TVNCONTROL),
       MB_OK | MB_ICONERROR);
   }

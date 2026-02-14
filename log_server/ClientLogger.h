@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __CLIENTLOGGER_H__
-#define __CLIENTLOGGER_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "io_lib/Channel.h"
@@ -38,7 +38,7 @@ class ClientLogger : public Logger, private Thread, public LogDump
 {
 public:
   // @param logFileName - is a file name for log without extension.
-  ClientLogger(const ::scoped_string & scopedstrpublicPipeName, const ::scoped_string & scopedstrlogFileName);
+  ClientLogger(const ::scoped_string & scopedstrPublicPipeName, const ::scoped_string & scopedstrlogFileName);
   virtual ~ClientLogger();
 
   // The connect() function try connect to a log server. The function
@@ -46,7 +46,7 @@ public:
   // it's ready (If objects (server and client) will be automated then
   // no guarantees that configuration for service will be valid at them
   // constructors).
-  // @throw Exception on an error.
+  // @throw ::remoting::Exception on an error.
   void connect();
 
   // Sends log line to the log server.
@@ -60,7 +60,7 @@ private:
                      unsigned int threadId,
                      const DateTime & dt,
                      int level,
-                     const ::scoped_string & scopedstrmessage);
+                     const ::scoped_string & scopedstrMessage);
 
   void freeResources();
 
@@ -83,4 +83,4 @@ private:
   ::string m_publicPipeName;
 };
 
-#endif // __CLIENTLOGGER_H__
+//// __CLIENTLOGGER_H__

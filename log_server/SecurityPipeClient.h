@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __SECURITYPIPECLIENT_H__
-#define __SECURITYPIPECLIENT_H__
+#pragma once
+
 
 #include "io_lib/Channel.h"
 
@@ -36,7 +36,7 @@ public:
   // we receive the security pipe channel.
   // After successful creating this object take the security channel by
   // the getChannel() function to own.
-  // @throw Exception on an error, the security channel at this case will be
+  // @throw ::remoting::Exception on an error, the security channel at this case will be
   // destroyed.
   SecurityPipeClient(Channel *tempPublChan, unsigned int maxPortionSize);
   virtual ~SecurityPipeClient();
@@ -49,4 +49,4 @@ private:
   Channel *m_secChannel;
 };
 
-#endif // __SECURITYPIPECLIENT_H__
+//// __SECURITYPIPECLIENT_H__

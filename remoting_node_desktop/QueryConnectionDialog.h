@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _QUERY_CONNECTION_DIALOG_H_
-#define _QUERY_CONNECTION_DIALOG_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -37,7 +37,7 @@ public:
   static const int REJECT_CHOISE = 0x1;
 
 public:
-  QueryConnectionDialog(const ::scoped_string & scopedstrpeerAddress, bool acceptByDefault,
+  QueryConnectionDialog(const ::scoped_string & scopedstrPeerAddress, bool acceptByDefault,
                         DWORD timeOutInSec);
   virtual ~QueryConnectionDialog();
 
@@ -72,4 +72,4 @@ protected:
   Control m_rejectButton;
 };
 
-#endif
+

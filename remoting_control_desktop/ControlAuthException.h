@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CONTROL_AUTH_EXCEPTION_H_
-#define _CONTROL_AUTH_EXCEPTION_H_
+#pragma once
+
 
 #include "RemoteException.h"
 
@@ -38,4 +38,4 @@ private:
   bool m_isSilent;
 };
 
-#endif
+

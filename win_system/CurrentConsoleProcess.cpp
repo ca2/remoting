@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "CurrentConsoleProcess.h"
 
 #include "win_system/WinStaLibrary.h"
@@ -30,7 +31,7 @@
 #include "win_system/Workstation.h"
 #include "win_system/WTS.h"
 
-CurrentConsoleProcess::CurrentConsoleProcess(LogWriter *log, bool connectRdpSession, const ::scoped_string & scopedstrpath, const ::scoped_string & scopedstrArgs)
+CurrentConsoleProcess::CurrentConsoleProcess(LogWriter *log, bool connectRdpSession, const ::scoped_string & scopedstrPath, const ::scoped_string & scopedstrArgs)
 : Process(path, args),
   m_log(log),
   m_connectRdpSession(connectRdpSession)
@@ -45,17 +46,17 @@ void CurrentConsoleProcess::start()
 {
   cleanup();
 
-  m_log->info(_T("Try to start \"%s %s\" process"),
-    m_path.getString(),
-    m_args.getString());
+  m_log->information("Try to start \"{} {}\" process",
+    m_path,
+    m_args);
 
   DWORD uiAccess  = 1; // Nonzero enables UI control
   PROCESS_INFORMATION pi;
   STARTUPINFO sti;
   getStartupInfo(&sti);
 
-  m_log->debug(_T("sti: cb = %d, hStdError = %p, hStdInput = %p,")
-             _T(" hStdOutput = %p, dwFlags = %u"),
+  m_log->debug("sti: cb = {}, hStdError = %p, hStdInput = %p,"
+             " hStdOutput = %p, dwFlags = %u",
              (unsigned int)sti.cb,
              (void *)sti.hStdError,
              (void *)sti.hStdInput,
@@ -67,22 +68,22 @@ void CurrentConsoleProcess::start()
 
     ::string commandLine = getCommandLineString();
 
-    m_log->debug(_T("Try CreateProcessAsUser(%p, 0, %s, 0, 0, %d, NORMAL_PRIORITY_CLASS, 0, 0,")
-               _T(" sti, pi)"),
-               (void *)userToken, commandLine.getString(),
+    m_log->debug("Try CreateProcessAsUser(%p, 0, {}, 0, 0, {}, NORMAL_PRIORITY_CLASS, 0, 0,"
+               " sti, pi)",
+               (void *)userToken, commandLine,
                (int)m_handlesIsInherited);
-    if (CreateProcessAsUser(userToken, 0, (LPTSTR) commandLine.getString(),
+    if (CreateProcessAsUser(userToken, 0, (LPTSTR) commandLine,
       0, 0, m_handlesIsInherited, NORMAL_PRIORITY_CLASS, 0, 0, &sti,
       &pi) == 0) {
         throw SystemException();
     }
-    m_log->info(_T("Created \"%s\" process"), commandLine.getString());
+    m_log->information("Created \"{}\" process", commandLine);
     //
     // FIXME: Leak.
     //
     CloseHandle(userToken);
   } catch (SystemException &sysEx) {
-    m_log->error(_T("Failed to start process with %d error"), sysEx.getErrorCode());
+    m_log->error("Failed to start process with {} error", sysEx.getErrorCode());
     throw;
   }
 

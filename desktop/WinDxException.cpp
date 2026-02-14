@@ -24,8 +24,8 @@
 #include "framework.h"
 #include "WinDxException.h"
 
-WinDxException::WinDxException(const ::scoped_string & scopedstrmessage, HRESULT errCode)
-: Exception(message),
+WinDxException::WinDxException(const ::scoped_string & scopedstrMessage, HRESULT errCode)
+: ::remoting::Exception(message),
   m_errCode(errCode)
 {
 }

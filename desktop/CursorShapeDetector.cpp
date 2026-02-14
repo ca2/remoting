@@ -51,7 +51,7 @@ void CursorShapeDetector::onTerminate()
 
 void CursorShapeDetector::execute()
 {
-  m_log->info(_T("mouse shape detector thread id = %d"), getThreadId());
+  m_log->information("mouse shape detector thread id = {}", getThreadId());
 
   while (!isTerminating()) {
     bool isCursorShapeChanged;

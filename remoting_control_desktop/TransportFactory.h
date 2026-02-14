@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _TRANSPORT_FACTORY_H_
-#define _TRANSPORT_FACTORY_H_
+#pragma once
+
 
 #include "Transport.h"
 
@@ -76,7 +76,7 @@ public:
    * @param name name of pipe.
    * @return created transport.
    *
-   * @throws Exception on socket error.
+   * @throws ::remoting::Exception on socket error.
    */
   static Transport *createPipeClientTransport(const ::scoped_string & scopedstrName);
 
@@ -86,7 +86,7 @@ public:
    * @param name name of pipe.
    * @return created transport.
    *
-   * @throws Exception on socket error.
+   * @throws ::remoting::Exception on socket error.
    */
   static Transport *createPipeServerTransport(const ::scoped_string & scopedstrName);
 
@@ -97,4 +97,4 @@ private:
   TransportFactory() { };
 };
 
-#endif
+

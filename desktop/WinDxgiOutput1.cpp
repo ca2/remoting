@@ -33,7 +33,7 @@ WinDxgiOutput1::WinDxgiOutput1(WinDxgiOutput *dxgiOutput)
 {
   HRESULT hr = dxgiOutput->queryInterface(__uuidof(m_dxgiOutput1), reinterpret_cast<void**>(&m_dxgiOutput1));
   if (FAILED(hr)) {
-    throw WinDxCriticalException(_T("Can't get IDXGIOutput1"), hr);
+    throw WinDxCriticalException("Can't get IDXGIOutput1", hr);
   }
 }
 

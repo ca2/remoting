@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __AUTOLOCK_H__
-#define __AUTOLOCK_H__
+#pragma once
+
 
 #include "Lockable.h"
 
@@ -37,4 +37,4 @@ protected:
   Lockable *m_locker;
 };
 
-#endif // __AUTOLOCK_H__
+//// __AUTOLOCK_H__

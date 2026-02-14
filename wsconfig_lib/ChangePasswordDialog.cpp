@@ -51,7 +51,7 @@ ChangePasswordDialog::~ChangePasswordDialog()
 
 const ::scoped_string & scopedstrChangePasswordDialog::getPasswordInPlainText() const
 {
-  return m_passwordText.getString();
+  return m_passwordText;
 }
 
 BOOL ChangePasswordDialog::onInitDialog()
@@ -104,7 +104,7 @@ void ChangePasswordDialog::onOkButtonClick()
     return;
   }
 
-  m_passwordText.setString(password1.getString());
+  m_passwordText= password1;
 
   kill(IDOK);
 }

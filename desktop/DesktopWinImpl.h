@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __DESKTOPWINIMPL_H__
-#define __DESKTOPWINIMPL_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 #include "DesktopConfigLocal.h"
@@ -64,4 +64,4 @@ private:
   LogWriter *m_log;
 };
 
-#endif // __DESKTOPWINIMPL_H__
+//// __DESKTOPWINIMPL_H__

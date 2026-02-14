@@ -22,14 +22,14 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RFBDISPATCHER_H__
-#define __RFBDISPATCHER_H__
+#pragma once
+
 
 #include "thread/Thread.h"
 #include "RfbDispatcherListener.h"
 #include "util/AnEventListener.h"
 #include "win_system/WindowsEvent.h"
-#include <map>
+//#include <map>
 
 class RfbDispatcher : public Thread
 {
@@ -49,10 +49,10 @@ protected:
 
   RfbInputGate *m_gate;
 
-  ::std::map<unsigned int, RfbDispatcherListener *> m_handlers;
+  ::map<unsigned int, RfbDispatcherListener *> m_handlers;
 
   AnEventListener *m_extTerminationListener;
   WindowsEvent *m_terminationEvent;
 };
 
-#endif // __RFBDISPATCHER_H__
+//// __RFBDISPATCHER_H__

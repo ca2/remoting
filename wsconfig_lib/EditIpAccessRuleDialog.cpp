@@ -79,8 +79,8 @@ BOOL EditIpAccessRuleDialog::onInitDialog()
     m_data->getFirstIp(&firstIp);
     m_data->getLastIp(&lastIp);
 
-    m_firstIp.setText(firstIp.getString());
-    m_lastIp.setText(lastIp.getString());
+    m_firstIp.setText(firstIp);
+    m_lastIp.setText(lastIp);
 
     m_ctrlThis.setText(StringTable::getString(IDS_EDIT_IP_ACCESS_RULE_DIALOG_CAPTION));
   } else {
@@ -134,8 +134,8 @@ void EditIpAccessRuleDialog::onOkButtonClick()
     m_firstIp.getText(&firstIp);
     m_lastIp.getText(&lastIp);
 
-    m_data->setFirstIp(firstIp.getString());
-    m_data->setLastIp(lastIp.getString());
+    m_data->setFirstIp(firstIp);
+    m_data->setLastIp(lastIp);
 
   } // if
   kill(IDOK);
@@ -178,7 +178,7 @@ bool EditIpAccessRuleDialog::validateInput()
   m_firstIp.getText(&firstIp);
   m_lastIp.getText(&lastIp);
 
-  if (!IpAccessRule::isIpAddressStringValid(firstIp.getString())) {
+  if (!IpAccessRule::isIpAddressStringValid(firstIp)) {
     m_firstIp.setFocus();
     m_firstIp.showBalloonTip(&m_warningBalloonTip);
     return false;
@@ -188,7 +188,7 @@ bool EditIpAccessRuleDialog::validateInput()
     return true;
   }
 
-  if (!IpAccessRule::isIpAddressStringValid(lastIp.getString())) {
+  if (!IpAccessRule::isIpAddressStringValid(lastIp)) {
     m_lastIp.setFocus();
     m_lastIp.showBalloonTip(&m_warningBalloonTip);
     return false;
@@ -197,8 +197,8 @@ bool EditIpAccessRuleDialog::validateInput()
   AnsiStringStorage firstIpAnsi(&firstIp);
   AnsiStringStorage lastIpAnsi(&lastIp);
 
-  unsigned long firstIpAddr = inet_addr(firstIpAnsi.getString());
-  unsigned long lastIpAddr = inet_addr(lastIpAnsi.getString());
+  unsigned long firstIpAddr = inet_addr(firstIpAnsi);
+  unsigned long lastIpAddr = inet_addr(lastIpAnsi);
 
   if (IpAccessRule::compareIp(firstIpAddr, lastIpAddr) == 1) {
     m_lastIp.setFocus();

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _MAKE_RFB_CONNECTION_COMMAND_H_
-#define _MAKE_RFB_CONNECTION_COMMAND_H_
+#pragma once
+
 
 #include "util/Command.h"
 
@@ -55,7 +55,7 @@ public:
    *
    * Inhrited from Command abstract class.
    *
-   * @throws IOException on io error, Exception on server side error.
+   * @throws ::io_exception on io error, ::remoting::Exception on server side error.
    */
   virtual void execute();
 
@@ -74,4 +74,4 @@ private:
   bool m_viewOnly;
 };
 
-#endif
+

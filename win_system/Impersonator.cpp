@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "Impersonator.h"
 
 #include <crtdbg.h>
@@ -53,13 +54,13 @@ void Impersonator::impersonateAsUser(HANDLE token)
   m_token = token;
 
   ::string name = WTS::getTokenUserName(m_token);
-  m_log->debug(_T("impersonate as user: %s"), name.getString());
+  m_log->debug("impersonate as user: {}", name);
 
   if ((!DuplicateToken(m_token, SecurityImpersonation, &m_dupToken))) {
-    throw SystemException(_T("could not DuplicateToken"));
+    throw SystemException("could not DuplicateToken");
   }
   if (!ImpersonateLoggedOnUser(m_dupToken)) {
-    throw SystemException(_T("could not ImpersonateLoggedOnUser"));
+    throw SystemException("could not ImpersonateLoggedOnUser");
   }
 
 }
@@ -85,7 +86,7 @@ void Impersonator::revertToSelf()
   m_token = INVALID_HANDLE_VALUE;
 
   if (!RevertToSelf()) {
-    throw SystemException(_T("could not RevertToSelf"));
+    throw SystemException("could not RevertToSelf");
   }
 }
 

@@ -27,7 +27,7 @@
 #include "rfb/VendorDefs.h"
 #include "rfb/EncodingDefs.h"
 #include "rfb/MsgDefs.h"
-#include <vector>
+//#include <vector>
 #include <algorithm>
 #include "util/inttypes.h"
 #include "util/Exception.h"
@@ -121,8 +121,8 @@ void UpdateSender::onRequest(unsigned int reqCode, RfbInputGate *input)
     break;
   default:
     ::string errMess;
-    errMess.format(_T("Unknown %d protocol code received"), (int)reqCode);
-    throw Exception(errMess.getString());
+    errMess.formatf("Unknown {} protocol code received", (int)reqCode);
+    throw ::remoting::Exception(errMess);
     break;
   }
 }
@@ -142,7 +142,7 @@ void UpdateSender::init(const ::int_size & viewPortDimension,
 void UpdateSender::newUpdates(const UpdateContainer *updateContainer,
                               const CursorShape *cursorShape)
 {
-  m_log->debug(_T("New updates passed to client #%d"), m_id);
+  m_log->debug("New updates passed to client #{}", m_id);
   addUpdateContainer(updateContainer);
 
   m_cursorUpdates.updateCursorShape(cursorShape);
@@ -151,7 +151,7 @@ void UpdateSender::newUpdates(const UpdateContainer *updateContainer,
     m_busy = true;
     m_newUpdatesEvent.notify();
   }
-  m_log->debug(_T("Client #%d is waking up"), m_id);
+  m_log->debug("Client #{} is waking up", m_id);
 }
 
 void UpdateSender::addUpdateContainer(const UpdateContainer *updateContainer)
@@ -217,7 +217,7 @@ void UpdateSender::sendNewFBSize(::int_size *dim, bool extended)
     sendRectHeader(r, PseudoEncDefs::DESKTOP_SIZE);
   }
   else {
-    ::std::vector<::int_rectangle> screens = m_desktop->getDisplaysCoords();
+    ::array_base<::int_rectangle> screens = m_desktop->getDisplaysCoords();
     if (screens.size() > 255) {
       screens.resize(255);
     }
@@ -252,7 +252,7 @@ void UpdateSender::sendFbInClientDim(const EncodeOptions *encodeOptions,
 
   ::int_rectangle rectangleForRegion(dim);
   Region region(rectangleForRegion);
-  ::std::vector<::int_rectangle> rects;
+  ::array_base<::int_rectangle> rects;
   splitRegion(m_enbox.getEncoder(), &region, &rects, &blankFrameBuffer, encodeOptions);
 
   // Header
@@ -290,13 +290,13 @@ void UpdateSender::sendCursorShapeUpdate(const PixelFormat & fmt,
 void UpdateSender::sendCursorPosUpdate()
 {
   Point pos = m_cursorUpdates.getCurPos();
-  m_log->debug(_T("Sending cursor position update: (%d,%d)"), pos.x, pos.y);
+  m_log->debug("Sending cursor position update: ({},{})", pos.x, pos.y);
   sendRectHeader(pos.x, pos.y, 0, 0, PseudoEncDefs::POINTER_POS);
 }
 
-void UpdateSender::sendCopyRect(const ::std::vector<::int_rectangle> *rects, const Point *source)
+void UpdateSender::sendCopyRect(const ::array_base<::int_rectangle> *rects, const Point *source)
 {
-  ::std::vector<::int_rectangle>::const_iterator iRect;
+  ::array_base<::int_rectangle>::const_iterator iRect;
 
   for (iRect = rects->begin(); iRect != rects->end(); iRect++) {
     const ::int_rectangle &  rect = *iRect;
@@ -325,9 +325,9 @@ void UpdateSender::sendPalette(PixelFormat *pf)
 
 void UpdateSender::sendUpdate()
 {
-  m_log->debug(_T("Entered to the sendUpdate() function"));
+  m_log->debug("Entered to the sendUpdate() function");
 
-//  m_log->checkPoint(_T("1 sendUpdate() begins"));
+//  m_log->checkPoint("1 sendUpdate() begins");
 
   // Check requested regions and immediately return if the client did not
   // request anything.
@@ -337,15 +337,15 @@ void UpdateSender::sendUpdate()
   if (!extractReqRegions(&requestedIncrReg, &requestedFullReg,
                          &incrUpdIsReq, &fullUpdIsReq,
                          &reqTimePoint)) {
-    m_log->debug(_T("No request, exiting from the sendUpdate()"));
+    m_log->debug("No request, exiting from the sendUpdate()");
     return;
   }
-  m_log->debug(_T("Time between request and a point after extractReqRegions (in milliseconds): %u"),
+  m_log->debug("Time between request and a point after extractReqRegions (in milliseconds): %u",
     (unsigned int)(DateTime::now() - reqTimePoint).getTime());
-  m_log->debug(_T("A request has been made, continuing"));
-  m_log->debug(_T("The incremental region has %d rectangles"),
+  m_log->debug("A request has been made, continuing");
+  m_log->debug("The incremental region has {} rectangles",
              (int)requestedIncrReg.getCount());
-  m_log->debug(_T("The full region has %d rectangles"),
+  m_log->debug("The full region has {} rectangles",
              (int)requestedFullReg.getCount());
 
   UpdateContainer updCont;
@@ -432,22 +432,22 @@ void UpdateSender::sendUpdate()
   if (updCont.screenSizeChanged || (!requestedFullReg.is_empty() &&
                                     !encodeOptions.desktopSizeEnabled() && 
                                     !encodeOptions.desktopConfigurationEnabled())) {
-    m_log->debug(_T("Screen size changed or full region requested"));
+    m_log->debug("Screen size changed or full region requested");
     if (encodeOptions.desktopSizeEnabled() || encodeOptions.desktopConfigurationEnabled()) {
-      m_log->debug(_T("Desktop resize is enabled, sending NewFBSize %dx%d"),
+      m_log->debug("Desktop resize is enabled, sending NewFBSize %dx{}",
                  lastViewPortDim.cx, lastViewPortDim.cy);
       sendNewFBSize(&lastViewPortDim, encodeOptions.desktopConfigurationEnabled());
     } else {
-      m_log->debug(_T("Desktop resize is disabled, sending blank screen"));
+      m_log->debug("Desktop resize is disabled, sending blank screen");
       sendFbInClientDim(&encodeOptions, frameBuffer, &clientDim,
                         &frameBuffer->getPixelFormat());
     }
     // FIXME: "Dazzle" does not seem like a good word here.
-    m_log->debug(_T("Dazzle changed region"));
+    m_log->debug("Dazzle changed region");
     m_updateKeeper->dazzleChangedReg();
 	  m_updateKeeper->setCursorPosChanged();
   } else {
-    m_log->debug(_T("Processing normal updates"));
+    m_log->debug("Processing normal updates");
     CursorShape cursorShape;
     m_cursorUpdates.update(&encodeOptions,
                            &updCont,
@@ -459,7 +459,7 @@ void UpdateSender::sendUpdate()
                            &cursorShape);
 
     if (!encodeOptions.copyRectEnabled() || getVideoFrozen()) {
-      m_log->debug(_T("CopyRect is disabled, converting to normal updates"));
+      m_log->debug("CopyRect is disabled, converting to normal updates");
       updCont.changedRegion.add(&updCont.copiedRegion);
       updCont.copiedRegion.clear();
     }
@@ -528,45 +528,45 @@ void UpdateSender::sendUpdate()
     // At this point, we've got final regions in changedRegion and videoRegion.
     //
 
-    // Convert changedRegion to the final ::std::list of rectangles.
-    m_log->debug(_T("Number of normal rectangles before splitting: %d"),
+    // Convert changedRegion to the final ::list of rectangles.
+    m_log->debug("Number of normal rectangles before splitting: {}",
                changedRegion.getCount());
-    ::std::vector<::int_rectangle> normalRects;
+    ::array_base<::int_rectangle> normalRects;
     splitRegion(m_enbox.getEncoder(), &changedRegion, &normalRects,
                 frameBuffer, &encodeOptions);
 
-    // Convert losslessRegion to the final ::std::list of rectangles.
-    ::std::vector<::int_rectangle> losslessRects;
+    // Convert losslessRegion to the final ::list of rectangles.
+    ::array_base<::int_rectangle> losslessRects;
     if (losslessEnabled && !losslessRegion.is_empty()) {
-      m_log->debug(_T("Number of lossless rectangles before splitting: %d"),
+      m_log->debug("Number of lossless rectangles before splitting: {}",
         losslessRegion.getCount());
       splitRegion(m_enbox.getEncoder(), &losslessRegion, &losslessRects,
         frameBuffer, &losslessEncodeOptions);
     }
     // Do the same for the videoRegion.
-    ::std::vector<::int_rectangle> videoRects;
+    ::array_base<::int_rectangle> videoRects;
     if (!videoRegion.is_empty()) {
-      m_log->debug(_T("Video region is not empty"));
+      m_log->debug("Video region is not empty");
       m_enbox.validateJpegEncoder(); // make sure JpegEncoder is allocated
       splitRegion(m_enbox.getJpegEncoder(), &videoRegion, &videoRects,
                   frameBuffer, &encodeOptions);
     }
 
-    // Get the final ::std::list of CopyRect rectangles.
-    ::std::vector<::int_rectangle> copyRects;
+    // Get the final ::list of CopyRect rectangles.
+    ::array_base<::int_rectangle> copyRects;
     updCont.copiedRegion.getRectVector(&copyRects);
 
-    m_log->debug(_T("Number of normal rectangles: %d"), normalRects.size());
-    m_log->debug(_T("Number of lossless rectangles: %d"), losslessRects.size());
-    m_log->debug(_T("Number of video rectangles: %d"), videoRects.size());
-    m_log->debug(_T("Number of CopyRect rectangles: %d"), copyRects.size());
+    m_log->debug("Number of normal rectangles: {}", normalRects.size());
+    m_log->debug("Number of lossless rectangles: {}", losslessRects.size());
+    m_log->debug("Number of video rectangles: {}", videoRects.size());
+    m_log->debug("Number of CopyRect rectangles: {}", copyRects.size());
 
     // calculate regions areas
     if (m_log->isDebug()) {
-      m_log->debug(_T("Area of normal rectangles: %d"), calcAreas(normalRects));
-      m_log->debug(_T("Area of lossless rectangles: %d"), calcAreas(losslessRects));
-      m_log->debug(_T("Area of video rectangles: %d"), calcAreas(videoRects));
-      m_log->debug(_T("Area of CopyRect rectangles: %d"), calcAreas(copyRects));
+      m_log->debug("Area of normal rectangles: {}", calcAreas(normalRects));
+      m_log->debug("Area of lossless rectangles: {}", calcAreas(losslessRects));
+      m_log->debug("Area of video rectangles: {}", calcAreas(videoRects));
+      m_log->debug("Area of CopyRect rectangles: {}", calcAreas(copyRects));
     }
 
     // Calculate the total number of rectangles and pseudo-rectangles.
@@ -575,20 +575,20 @@ void UpdateSender::sendUpdate()
 
     if (updCont.cursorPosChanged) {
       numTotalRects++;
-      m_log->debug(_T("Adding a pseudo-rectangle for cursor position update"));
+      m_log->debug("Adding a pseudo-rectangle for cursor position update");
     }
     if (updCont.cursorShapeChanged) {
       numTotalRects++;
-      m_log->debug(_T("Adding a pseudo-rectangle for cursor shape update"));
+      m_log->debug("Adding a pseudo-rectangle for cursor shape update");
     }
-    m_log->detail(_T("Total number of rectangles and pseudo-rectangles: %d"),
+    m_log->detail("Total number of rectangles and pseudo-rectangles: {}",
                numTotalRects);
 
     // FIXME: Handle this better, e.g. send first 65534 rectangles.
     _ASSERT(numTotalRects <= 65534);
 
     if (numTotalRects != 0) {
-      m_log->debug(_T("Sending FramebufferUpdate message header"));
+      m_log->debug("Sending FramebufferUpdate message header");
       m_output->writeUInt8(ServerMsgDefs::FB_UPDATE); // message type
       m_output->writeUInt8(0); // padding
       m_output->writeUInt16((unsigned short)numTotalRects);
@@ -597,39 +597,39 @@ void UpdateSender::sendUpdate()
         sendCursorPosUpdate();
       }
       if (updCont.cursorShapeChanged) {
-        m_log->debug(_T("Sending cursor shape update"));
+        m_log->debug("Sending cursor shape update");
         sendCursorShapeUpdate(&clientPixelFormat,
                               &cursorShape);
       }
       if (copyRects.size() > 0) {
-        m_log->debug(_T("Sending CopyRect rectangles"));
+        m_log->debug("Sending CopyRect rectangles");
         sendCopyRect(&copyRects, &updCont.copySrc);
       }
 
-      m_log->debug(_T("Time between request and a point before send and coding (in milliseconds): %u"),
+      m_log->debug("Time between request and a point before send and coding (in milliseconds): %u",
                  (unsigned int)(DateTime::now() - reqTimePoint).getTime());
-      m_log->debug(_T("Sending video rectangles"));
+      m_log->debug("Sending video rectangles");
       sendRectangles(m_enbox.getJpegEncoder(), &videoRects, frameBuffer, &encodeOptions);
-      m_log->debug(_T("Sending normal rectangles"));
+      m_log->debug("Sending normal rectangles");
       double area = ::int_rectangle::totalArea(normalRects) / 1000000.; //in millions of pixels
-      ProcessorTimes pt1 = m_log->checkPoint(_T("Before Sending normal rectangles"));
+      ProcessorTimes pt1 = m_log->checkPoint("Before Sending normal rectangles");
 
       sendRectangles(m_enbox.getEncoder(), &normalRects, frameBuffer, &encodeOptions);
 
       sendRectangles(m_enbox.getEncoder(), &losslessRects, frameBuffer, &losslessEncodeOptions);
 
-      ProcessorTimes pt2 = m_log->checkPoint(_T("After Sending normal rectangles"));
-      m_log->debug(_T("Before Sending normal rectangles %f processor Mcycles, %f process time, %f kernel time, %f wall clock time"), 
+      ProcessorTimes pt2 = m_log->checkPoint("After Sending normal rectangles");
+      m_log->debug("Before Sending normal rectangles %f processor Mcycles, %f process time, %f kernel time, %f wall clock time", 
         pt1.cycle / 1000000., pt1.process, pt1.kernel, (double)(pt1.wall.getTime()));
       double dt = (double)(pt2.wall.getTime());
-      m_log->debug(_T("After Sending normal rectangles Mpoint encoded and send: %f for %f processor Mcycles"), 
+      m_log->debug("After Sending normal rectangles Mpoint encoded and send: %f for %f processor Mcycles", 
         area, pt2.cycle/1000000.);
-      m_log->debug(_T("After Sending normal rectangles %f process time, %f kernel time, %f wall clock time"), pt2.process, pt2.kernel, dt);
+      m_log->debug("After Sending normal rectangles %f process time, %f kernel time, %f wall clock time", pt2.process, pt2.kernel, dt);
 
-      m_log->info(_T("Time between request and answer is (in milliseconds): %u"),
+      m_log->information("Time between request and answer is (in milliseconds): %u",
                  (unsigned int)(DateTime::now() - reqTimePoint).getTime());
     } else {
-      m_log->debug(_T("Nothing to send, restoring requested regions"));
+      m_log->debug("Nothing to send, restoring requested regions");
       AutoLock al(&m_reqRectLocMut);
       m_requestedFullReg.add(&requestedFullReg);
       m_requestedIncrReg.add(&requestedIncrReg);
@@ -640,15 +640,15 @@ void UpdateSender::sendUpdate()
 
   }
 
-  m_log->debug(_T("Flushing output"));
-//  m_log->checkPoint(_T("4 before flush"));
+  m_log->debug("Flushing output");
+//  m_log->checkPoint("4 before flush");
   m_output->flush();
-//  m_log->checkPoint(_T("5 sendUpdate() end"));
+//  m_log->checkPoint("5 sendUpdate() end");
 }
 
 void UpdateSender::paintBlack(FrameBuffer *frameBuffer, const Region *blackRegion)
 {
-  ::std::vector<::int_rectangle> blackRects;
+  ::array_base<::int_rectangle> blackRects;
   blackRegion->getRectVector(&blackRects);
   for (size_t i = 0; i < blackRects.size(); i++) {
     frameBuffer->fillRect(&blackRects[i], 0);
@@ -657,24 +657,24 @@ void UpdateSender::paintBlack(FrameBuffer *frameBuffer, const Region *blackRegio
 
 void UpdateSender::splitRegion(Encoder *encoder,
                                const Region *region,
-                               ::std::vector<::int_rectangle> *rects,
+                               ::array_base<::int_rectangle> *rects,
                                const FrameBuffer *frameBuffer,
                                const EncodeOptions *encodeOptions)
 {
-  ::std::vector<::int_rectangle> baseRects;
+  ::array_base<::int_rectangle> baseRects;
   region->getRectVector(&baseRects);
-  ::std::vector<::int_rectangle>::iterator i;
+  ::array_base<::int_rectangle>::iterator i;
   for (i = baseRects.begin(); i != baseRects.end(); i++) {
     encoder->splitRectangle(&*i, rects, frameBuffer, encodeOptions);
   }
 }
 
 void UpdateSender::sendRectangles(Encoder *encoder,
-                                  const ::std::vector<::int_rectangle> *rects,
+                                  const ::array_base<::int_rectangle> *rects,
                                   const FrameBuffer *frameBuffer,
                                   const EncodeOptions *encodeOptions)
 {
-  ::std::vector<::int_rectangle>::const_iterator i;
+  ::array_base<::int_rectangle>::const_iterator i;
   for (i = rects->begin(); i != rects->end(); i++) {
     sendRectHeader(&*i, encoder->getCode());
     encoder->sendRectangle(&*i, frameBuffer, encodeOptions);
@@ -683,7 +683,7 @@ void UpdateSender::sendRectangles(Encoder *encoder,
 
 void UpdateSender::execute()
 {
-  m_log->info(_T("Starting update sender thread for client #%d"), m_id);
+  m_log->information("Starting update sender thread for client #{}", m_id);
 
   while(!isTerminating()) {
     m_newUpdatesEvent.waitForEvent();
@@ -691,19 +691,19 @@ void UpdateSender::execute()
       AutoLock al(&m_reqRectLocMut);
       m_busy = true;
     }
-    m_log->debug(_T("Update sender thread of client #%d is awake"), m_id);
+    m_log->debug("Update sender thread of client #{} is awake", m_id);
     if (!isTerminating()) {
       try {
-        m_log->debug(_T("UpdateSender::Trying to call the sendUpdate() function"));
+        m_log->debug("UpdateSender::Trying to call the sendUpdate() function");
         sendUpdate();
-        m_log->debug(_T("The sendUpdate() function has finished"));
+        m_log->debug("The sendUpdate() function has finished");
         {
           AutoLock al(&m_reqRectLocMut);
           m_busy = false;
         }
-      } catch(Exception &e) {
-        m_log->interror(_T("The update sender thread caught an error and will")
-                   _T(" be terminated: %s"), e.getMessage());
+      } catch(::remoting::Exception &e) {
+        m_log->interror("The update sender thread caught an error and will"
+                   " be terminated: {}", e.getMessage());
         Thread::terminate();
       }
     }
@@ -735,8 +735,8 @@ void UpdateSender::readUpdateRequest(RfbInputGate *io)
     combinedReqRegions.add(&m_requestedFullReg);
   }
 
-  m_log->info(_T("update requested (%d, %d, %dx%d, incremental = %d)")
-              _T(" by client (client #%d)"),
+  m_log->information("update requested ({}, {}, %dx{}, incremental = {})"
+              " by client (client #{})",
               reqRect.left, reqRect.top,
               reqRect.width(), reqRect.height(), (int)incremental,
               m_id);
@@ -748,7 +748,7 @@ void UpdateSender::readUpdateRequest(RfbInputGate *io)
     // We should initiaite send update to avoid it skipping on no updates from a desktop
     // FIXME: Code duplication, see the newUpdates() function.
     m_newUpdatesEvent.notify();
-    m_log->debug(_T("Client #%d is waking up"), m_id);
+    m_log->debug("Client #{} is waking up", m_id);
   }
 
   m_updReqListener->onUpdateRequest(&reqRect, incremental);
@@ -766,14 +766,14 @@ void UpdateSender::readSetPixelFormat(RfbInputGate *io)
   if (bpp == 8 || bpp == 16 || bpp == 32) {
     pf.bitsPerPixel = bpp;
   } else {
-    throw Exception(_T("Only 8, 16 or 32 bits per pixel supported!"));
+    throw ::remoting::Exception("Only 8, 16 or 32 bits per pixel supported!");
   }
   pf.colorDepth = io->readUInt8();
   pf.bigEndian = io->readUInt8() != 0;
   bool setColorMapEntr = io->readUInt8() == 0;
   if (setColorMapEntr && bpp != 8) {
-    throw Exception(_T("Only 8 bits per pixel supported with set color ::std::map ")
-                    _T("entries request."));
+    throw ::remoting::Exception("Only 8 bits per pixel supported with set color ::map "
+                    "entries request.");
   }
   pf.redMax = io->readUInt16();
   pf.greenMax = io->readUInt16();
@@ -811,15 +811,15 @@ void UpdateSender::readSetEncodings(RfbInputGate *io)
   io->readUInt8(); // padding
   int numCodes = io->readUInt16();
 
-  ::std::vector<int> ::std::list;
-  ::std::list.reserve(numCodes);
+  ::array_base<int> ::list;
+  ::list.reserve(numCodes);
   for (int i = 0; i < numCodes; i++) {
     int code = (int)io->readUInt32();
-    ::std::list.push_back(code);
+    ::list.add(code);
   }
 
   AutoLock lock(&m_newEncodeOptionsLocker);
-  m_newEncodeOptions.setEncodings(&::std::list);
+  m_newEncodeOptions.setEncodings(&::list);
 }
 
 void UpdateSender::setVideoFrozen(bool value)
@@ -989,7 +989,7 @@ bool UpdateSender::updateViewPort(::int_rectangle *outNewViewPort, bool *shareAp
 Region UpdateSender::takePartFromRegion(Region *reg, int area)
 {
   Region out;
-  ::std::vector<::int_rectangle> rects;
+  ::array_base<::int_rectangle> rects;
   reg->getRectVector(&rects);
   // process region rects form last one, I hope it can reduce allocation number for region structure
   for (int i = rects.size() - 1; i >= 0 && area > 0; i-- ) {
@@ -1007,7 +1007,7 @@ Region UpdateSender::takePartFromRegion(Region *reg, int area)
   return out;
 }
 
-int UpdateSender::calcAreas(::std::vector<::int_rectangle> rects)
+int UpdateSender::calcAreas(::array_base<::int_rectangle> rects)
 {
   int sum = 0;
   for (size_t i = 0; i < rects.size(); i++) {

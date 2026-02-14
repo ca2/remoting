@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _BYTE_ARRAY_OUTPUT_STREAM_H_
-#define _BYTE_ARRAY_OUTPUT_STREAM_H_
+#pragma once
+
 
 #include "OutputStream.h"
 
@@ -77,4 +77,4 @@ protected:
   size_t m_max;
 };
 
-#endif
+

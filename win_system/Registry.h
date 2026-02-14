@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _REGISTRY_H_
-#define _REGISTRY_H_
+#pragma once
+
 
 #include "RegistryKey.h"
 
@@ -45,4 +45,4 @@ private:
   ~Registry();
 };
 
-#endif
+

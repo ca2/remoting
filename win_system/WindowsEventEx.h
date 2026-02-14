@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINDOWSEVENTEX_H__
-#define __WINDOWSEVENTEX_H__
+#pragma once
+
 
 #include "WindowsEvent.h"
 
@@ -36,4 +36,4 @@ protected:
   void setAccessToAll(HANDLE objHandle);
 };
 
-#endif // __WINDOWSEVENT_H__
+//// __WINDOWSEVENT_H__

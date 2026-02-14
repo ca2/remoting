@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __UPDATESENDINGLISTENER_H__
-#define __UPDATESENDINGLISTENER_H__
+#pragma once
+
 
 #include "rfb/CursorShape.h"
 #include "rfb/FrameBuffer.h"
@@ -38,4 +38,4 @@ public:
   virtual bool isReadyToSend() = 0;
 };
 
-#endif // __UPDATESENDINGLISTENER_H__
+//// __UPDATESENDINGLISTENER_H__

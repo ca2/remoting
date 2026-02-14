@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _SOLID_BRUSH_H_
-#define _SOLID_BRUSH_H_
+#pragma once
+
 
 #include "Brush.h"
 
@@ -34,4 +34,4 @@ public:
   virtual ~SolidBrush();
 };
 
-#endif
+

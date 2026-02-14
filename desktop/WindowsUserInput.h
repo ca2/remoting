@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINDOWSUSERINPUT_H__
-#define __WINDOWSUSERINPUT_H__
+#pragma once
+
 
 #include "UserInput.h"
 #include "WindowsClipboard.h"
@@ -40,7 +40,7 @@ public:
                    LogWriter *log);
   virtual ~WindowsUserInput(void);
 
-  virtual void setNewClipboard(const ::string & newClipboard);
+  virtual void setNewClipboard(const ::scoped_string & newClipboard);
   virtual void setMouseEvent(const Point newPos, unsigned char keyFlag);
   virtual void setKeyboardEvent(unsigned int keySym, bool down);
 
@@ -48,11 +48,11 @@ public:
                                   ::string & userName);
   virtual void getDisplayNumberCoords(::int_rectangle *rect,
                                       unsigned char dispNumber);
-  virtual ::std::vector<::int_rectangle> WindowsUserInput::getDisplaysCoords();
+  virtual ::array_base<::int_rectangle> WindowsUserInput::getDisplaysCoords();
   virtual void getNormalizedRect(::int_rectangle *rect);
   virtual void getPrimaryDisplayCoords(::int_rectangle *rect);
   virtual void getWindowCoords(HWND hwnd, ::int_rectangle *rect);
-  virtual HWND getWindowHandleByName(const ::string & windowName);
+  virtual HWND getWindowHandleByName(const ::scoped_string & windowName);
   virtual void getApplicationRegion(unsigned int procId, Region *region);
   virtual bool isApplicationInFocus(unsigned int procId);
 
@@ -72,4 +72,4 @@ protected:
   LogWriter *m_log;
 };
 
-#endif // __WINDOWSUSERINPUT_H__
+//// __WINDOWSUSERINPUT_H__

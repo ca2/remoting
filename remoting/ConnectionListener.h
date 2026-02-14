@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __CONNECTION_LISTENER_H__
-#define __CONNECTION_LISTENER_H__
+#pragma once
+
 
 #include "ViewerInstance.h"
 #include "network/TcpServer.h"
@@ -49,8 +49,8 @@ protected:
   void onAcceptConnection(SocketIPv4 *socket);
 
   WindowsApplication *m_application;
-  ::std::list<SocketIPv4 *> m_connections;
+  ::list<SocketIPv4 *> m_connections;
   LocalMutex m_connectionsLock;
 };
 
-#endif
+

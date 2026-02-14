@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _THEME_LIB_H_
-#define _THEME_LIB_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -96,4 +96,4 @@ private:
   static PFNGETTHEMEBACKGROUNDCONTENTRECT s_GetThemeBackgroundContentRect;
 };
 
-#endif
+

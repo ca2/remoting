@@ -22,12 +22,13 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "SCMClient.h"
 
 #include "thread/Thread.h"
 
 SCMClientException::SCMClientException(int scmErrCode)
-: SystemException(_T("[Exception description is not avaliable]"))
+: SystemException("[::remoting::Exception description is not avaliable]")
 {
   switch (scmErrCode) {
   case ERROR_ALREADY_STOPPED:

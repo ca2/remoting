@@ -22,17 +22,17 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __CURSORSHAPE_H__
-#define __CURSORSHAPE_H__
+#pragma once
+
 
 #include "FrameBuffer.h"
 #include "region/Point.h"
-#include <vector>
+//#include <vector>
 
 class CursorShape
 {
 public:
-  CursorShape(): m_mask(0) {}
+  CursorShape(){}
   ~CursorShape();
 
   bool clone(const CursorShape *srcCursorShape);
@@ -48,7 +48,7 @@ public:
 
   const FrameBuffer *getPixels() const { return &m_pixels; }
   int getPixelsSize() const { return m_pixels.getBufferSize(); }
-  const char *getMask() const { return m_mask.empty() ? 0 : &m_mask.front(); }
+  const char *getMask() const { return m_mask.empty() ? 0 : m_mask.data(); }
   void assignMaskFromRfb(const char *srcMask);
   void assignMaskFromWindows(const char *srcMask);
   int getMaskSize() const;
@@ -65,8 +65,8 @@ private:
   bool resizeBuffer();
 
   FrameBuffer m_pixels;
-  ::std::vector<char> m_mask;
+  ::array_base<char> m_mask;
   Point m_hotSpot;
 };
 
-#endif // __CURSORSHAPE_H__
+//// __CURSORSHAPE_H__

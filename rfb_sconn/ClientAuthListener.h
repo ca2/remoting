@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __CLIENTAUTHLISTENER_H__
-#define __CLIENTAUTHLISTENER_H__
+#pragma once
+
 
 #include "desktop/Desktop.h"
 #include "rfb_sconn/RfbClient.h"
@@ -46,4 +46,4 @@ public:
   virtual void onCheckAccessControl(RfbClient *client) = 0;
 };
 
-#endif // __CLIENTAUTHLISTENER_H__
+//// __CLIENTAUTHLISTENER_H__

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _DECODER_H_
-#define _DECODER_H_
+#pragma once
+
 
 #include "log_writer/LogWriter.h"
 #include "network/RfbInputGate.h"
@@ -60,4 +60,4 @@ protected:
   int m_encoding;
 };
 
-#endif
+

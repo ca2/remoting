@@ -26,43 +26,43 @@
 #include "config_lib/IniFileSettingsManager.h"
 #include "win_system/SystemException.h"
 
-const TCHAR ViewerCmdLine::HELP[] = _T("help");
-const TCHAR ViewerCmdLine::HELP_SHORT[] = _T("h");
-const TCHAR ViewerCmdLine::HELP_ARG[] = _T("/help");
-const TCHAR ViewerCmdLine::HELP_ARG_SHORT[] = _T("/h");
-const TCHAR ViewerCmdLine::HELP_ARG_QUESTION[] = _T("/?");
+const TCHAR ViewerCmdLine::HELP[] = "help";
+const TCHAR ViewerCmdLine::HELP_SHORT[] = "h";
+const TCHAR ViewerCmdLine::HELP_ARG[] = "/help";
+const TCHAR ViewerCmdLine::HELP_ARG_SHORT[] = "/h";
+const TCHAR ViewerCmdLine::HELP_ARG_QUESTION[] = "/?";
 
-const TCHAR ViewerCmdLine::OPTIONS_FILE[] = _T("optionsfile");
-const TCHAR ViewerCmdLine::LISTEN[] = _T("listen");
-const TCHAR ViewerCmdLine::HOST[] = _T("host");
-const TCHAR ViewerCmdLine::PORT[] = _T("port");
-const TCHAR ViewerCmdLine::PASSWORD[] = _T("password");
-const TCHAR ViewerCmdLine::SHOW_CONTROLS[] = _T("showcontrols");
-const TCHAR ViewerCmdLine::VIEW_ONLY[] = _T("viewonly");
-const TCHAR ViewerCmdLine::USE_CLIPBOARD[] = _T("useclipboard");
-const TCHAR ViewerCmdLine::SCALE[] = _T("scale");
-const TCHAR ViewerCmdLine::FULL_SCREEN[] = _T("fullscreen");
-const TCHAR ViewerCmdLine::WARN_FULL_SCREEN[] = _T("warnfullscr");
-const TCHAR ViewerCmdLine::ENCODING[] = _T("encoding");
-const TCHAR ViewerCmdLine::COPY_RECT[] = _T("copyrect");
-const TCHAR ViewerCmdLine::MOUSE_CURSOR[] = _T("mousecursor");
-const TCHAR ViewerCmdLine::MOUSE_LOCAL[] = _T("mouselocal");
-const TCHAR ViewerCmdLine::MOUSE_SWAP[] = _T("mouseswap");
-const TCHAR ViewerCmdLine::JPEG_IMAGE_QUALITY[] = _T("jpegimagequality");
-const TCHAR ViewerCmdLine::COMPRESSION_LEVEL[] = _T("compressionlevel");
-const TCHAR ViewerCmdLine::LOG_PATH[] = _T("logpath");
+const TCHAR ViewerCmdLine::OPTIONS_FILE[] = "optionsfile";
+const TCHAR ViewerCmdLine::LISTEN[] = "listen";
+const TCHAR ViewerCmdLine::HOST[] = "host";
+const TCHAR ViewerCmdLine::PORT[] = "port";
+const TCHAR ViewerCmdLine::PASSWORD[] = "password";
+const TCHAR ViewerCmdLine::SHOW_CONTROLS[] = "showcontrols";
+const TCHAR ViewerCmdLine::VIEW_ONLY[] = "viewonly";
+const TCHAR ViewerCmdLine::USE_CLIPBOARD[] = "useclipboard";
+const TCHAR ViewerCmdLine::SCALE[] = "scale";
+const TCHAR ViewerCmdLine::FULL_SCREEN[] = "fullscreen";
+const TCHAR ViewerCmdLine::WARN_FULL_SCREEN[] = "warnfullscr";
+const TCHAR ViewerCmdLine::ENCODING[] = "encoding";
+const TCHAR ViewerCmdLine::COPY_RECT[] = "copyrect";
+const TCHAR ViewerCmdLine::MOUSE_CURSOR[] = "mousecursor";
+const TCHAR ViewerCmdLine::MOUSE_LOCAL[] = "mouselocal";
+const TCHAR ViewerCmdLine::MOUSE_SWAP[] = "mouseswap";
+const TCHAR ViewerCmdLine::JPEG_IMAGE_QUALITY[] = "jpegimagequality";
+const TCHAR ViewerCmdLine::COMPRESSION_LEVEL[] = "compressionlevel";
+const TCHAR ViewerCmdLine::LOG_PATH[] = "logpath";
 
 
-const TCHAR ViewerCmdLine::YES[] = _T("yes");
-const TCHAR ViewerCmdLine::NO[] = _T("no");
-const TCHAR ViewerCmdLine::AUTO[] = _T("auto");
-const TCHAR ViewerCmdLine::LOCAL[] = _T("local");
-const TCHAR ViewerCmdLine::SMALLDOT[] = _T("smalldot");
-const TCHAR ViewerCmdLine::NORMAL[] = _T("normal");
-const TCHAR ViewerCmdLine::HEXTILE[] = _T("hextile");
-const TCHAR ViewerCmdLine::TIGHT[] = _T("tight");
-const TCHAR ViewerCmdLine::RRE[] = _T("rre");
-const TCHAR ViewerCmdLine::ZRLE[] = _T("zrle");
+const TCHAR ViewerCmdLine::YES[] = "yes";
+const TCHAR ViewerCmdLine::NO[] = "no";
+const TCHAR ViewerCmdLine::AUTO[] = "auto";
+const TCHAR ViewerCmdLine::LOCAL[] = "local";
+const TCHAR ViewerCmdLine::SMALLDOT[] = "smalldot";
+const TCHAR ViewerCmdLine::NORMAL[] = "normal";
+const TCHAR ViewerCmdLine::HEXTILE[] = "hextile";
+const TCHAR ViewerCmdLine::TIGHT[] = "tight";
+const TCHAR ViewerCmdLine::RRE[] = "rre";
+const TCHAR ViewerCmdLine::ZRLE[] = "zrle";
 
 ViewerCmdLine::ViewerCmdLine(ConnectionData *conData,
                              ConnectionConfig *conConf,
@@ -210,34 +210,34 @@ void ViewerCmdLine::parseOptionsFile()
   ::string pathToIniFile = m_options[OPTIONS_FILE];
   if (pathToIniFile.findChar(_T('\\')) == -1) {
     ::string newPathToIniFile;
-    newPathToIniFile.format(_T(".\\%s"), pathToIniFile.getString());
+    newPathToIniFile.formatf(".\\{}", pathToIniFile);
     pathToIniFile = newPathToIniFile;
   }
-  IniFileSettingsManager sm(pathToIniFile.getString());
-  sm.setApplicationName(_T("connection"));
+  IniFileSettingsManager sm(pathToIniFile);
+  sm.setApplicationName("connection");
 
   ::string host;
-  if (!sm.getString(_T("host"), &host)) {
+  if (!sm.getString("host", &host)) {
     throw CommandLineFormatException(StringTable::getString(IDS_ERROR_PARSE_OPTIONS_FILE));
   }
   ::string port;
-  if (sm.getString(_T("port"), &port)) {
+  if (sm.getString("port", &port)) {
     ::string hostString;
-    hostString.format(_T("%s::%s"), host.getString(), port.getString());
+    hostString.formatf("{}::{}", host, port);
     m_conData->setHost(hostString);
   } else {
     m_conData->setHost(host);
   }
 
   ::string password;
-  sm.getString(_T("password"), &password);
+  sm.getString("password", &password);
   if (!password.is_empty()) {
     m_conData->setCryptedPassword(password);
   } else {
     parsePassword();
   }
   
-  sm.setApplicationName(_T("options"));
+  sm.setApplicationName("options");
   m_conConf->loadFromStorage(&sm);
 }
 
@@ -309,7 +309,7 @@ void ViewerCmdLine::parseScale()
     if (m_options[SCALE] == AUTO) {
       m_conConf->fitWindow(true);
     } else {
-      int scale = _ttoi(m_options[SCALE].getString());
+      int scale = _ttoi(m_options[SCALE]);
 
       if (scale < 1) {
         scale = 1;
@@ -410,7 +410,7 @@ void ViewerCmdLine::parseViewOnly()
 void ViewerCmdLine::parseJpegImageQuality()
 {
   if (isPresent(JPEG_IMAGE_QUALITY)) {
-    int iJpegQuality = _ttoi(m_options[JPEG_IMAGE_QUALITY].getString());
+    int iJpegQuality = _ttoi(m_options[JPEG_IMAGE_QUALITY]);
     m_conConf->setJpegCompressionLevel(iJpegQuality);
   }
 }
@@ -418,7 +418,7 @@ void ViewerCmdLine::parseJpegImageQuality()
 void ViewerCmdLine::parseCompressionLevel()
 {
   if (isPresent(COMPRESSION_LEVEL)) {
-    int iCompLvl = _ttoi(m_options[COMPRESSION_LEVEL].getString());
+    int iCompLvl = _ttoi(m_options[COMPRESSION_LEVEL]);
     m_conConf->setCustomCompressionLevel(iCompLvl);
   }
 }
@@ -434,8 +434,8 @@ void ViewerCmdLine::parseHostArg()
    if (isPresent(PORT)) {
      ::string hostPort;
 
-     hostPort.format(_T("%s::%s"), host.getString(),
-                                  m_options[PORT].getString());
+     hostPort.formatf("{}::{}", host,
+                                  m_options[PORT]);
      m_conData->setHost(hostPort);
    }
    m_conData->setHost(host);
@@ -455,8 +455,8 @@ bool ViewerCmdLine::parseHostOptions()
   if (!isPresent(PORT)) {
     strHost = m_options[HOST];
   } else {
-    strHost.format(_T("%s::%s"), m_options[HOST].getString(),
-                                m_options[PORT].getString());
+    strHost.formatf("{}::{}", m_options[HOST],
+                                m_options[PORT]);
   }
   m_conData->setHost(strHost);
   return true;

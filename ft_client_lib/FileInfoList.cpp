@@ -52,7 +52,7 @@ FileInfoList::FileInfoList(const FileInfo *filesInfo, size_t count)
 FileInfoList::~FileInfoList()
 {
   //
-  // This class is owner of child and next ::std::list elements
+  // This class is owner of child and next ::list elements
   // so in destructor it must free allocated memory.
   //
 
@@ -106,13 +106,13 @@ FileInfoList *FileInfoList::getParent()
 
 FileInfoList *FileInfoList::getRoot()
 {
-  // In our ::std::list only first element of leaf can has parent
+  // In our ::list only first element of leaf can has parent
   FileInfoList *first = getFirst();
   // first have no parent, so first is root
   if (first->getParent() == NULL) {
     return first;
   }
-  // continue searching root ::std::list
+  // continue searching root ::list
   return first->getParent()->getRoot();
 }
 
@@ -146,11 +146,12 @@ FileInfo *FileInfoList::getFileInfo()
   return &m_fileInfo;
 }
 
-void FileInfoList::getAbsolutePath(::string & storage, TCHAR directorySeparator)
+
+::file::path FileInfoList::getAbsolutePath()
 {
   FileInfoList *first = getFirst();
 
-  ::string parentAbsolutePath(_T(""));
+  ::file::path pathParentAbsolute;
 
   //
   // if parent of first element of this leaf exists
@@ -160,18 +161,18 @@ void FileInfoList::getAbsolutePath(::string & storage, TCHAR directorySeparator)
 
   bool firstHasParent = (first != NULL) && (first->getParent() != NULL);
 
-  if (firstHasParent) {
+  if (firstHasParent)
+     {
     FileInfoList *firstParent = first->getParent();
-    firstParent->getAbsolutePath(&parentAbsolutePath, directorySeparator);
-    if (!parentAbsolutePath.endsWith(directorySeparator)) {
-      parentAbsolutePath.appendChar(directorySeparator);
-    } // if parent path have no directory separator in the end
+    pathParentAbsolute = firstParent->getAbsolutePath();
   } // if first has parent
 
-  const ::scoped_string & scopedstrfileName = m_fileInfo.getFileName();
+  auto strName = m_fileInfo.getFileName();
 
-  storage->setString(parentAbsolutePath.getString());
-  storage->appendString(fileName);
+   auto path = pathParentAbsolute / strName;
+
+   return path;
+
 }
 
 FileInfoList *FileInfoList::fromArray(const FileInfo *filesInfo, size_t count)

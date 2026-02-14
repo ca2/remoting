@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _SERVICE_H_
-#define _SERVICE_H_
+#pragma once
+
 
 #include "util/winhdr.h"
 //#include "util/::string.h"
@@ -115,4 +115,4 @@ protected:
   static Service *g_service;
 };
 
-#endif
+

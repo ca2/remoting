@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __CURSORPOSITIONDETECTOR_H__
-#define __CURSORPOSITIONDETECTOR_H__
+#pragma once
+
 
 #include "UpdateDetector.h"
 #include "win_system/WindowsEvent.h"
@@ -52,4 +52,4 @@ private:
   LogWriter *m_log;
 };
 
-#endif // __CURSORPOSITIONDETECTOR_H__
+//// __CURSORPOSITIONDETECTOR_H__

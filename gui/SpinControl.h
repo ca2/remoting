@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _SPIN_CONTROL_H_
-#define _SPIN_CONTROL_H_
+#pragma once
+
 
 #include "Control.h"
 #include <commctrl.h>
@@ -49,8 +49,8 @@ public:
 
   void autoAccelerationHandler(LPNMUPDOWN message);
   void enableAutoAcceleration(bool enabled);
-  void setAutoAccelerationParams(const ::std::vector<int> *limitters,
-                                 const ::std::vector<int> *deltas,
+  void setAutoAccelerationParams(const ::array_base<int> *limitters,
+                                 const ::array_base<int> *deltas,
                                  int maxDelta);
 protected:
   Control *m_buddy;
@@ -60,9 +60,9 @@ protected:
   //
 
   bool m_isAutoAccelerationEnabled;
-  ::std::vector<int> m_limitters;
-  ::std::vector<int> m_deltas;
+  ::array_base<int> m_limitters;
+  ::array_base<int> m_deltas;
   int m_maxDelta;
 };
 
-#endif
+

@@ -84,7 +84,7 @@ void RawDecoder::decode(RfbInputGate *input,
   size_t bytesPerLine = bytesPerPixel * rect.width();
 
   if (::int_rectangle(frameBuffer->getDimension()).intersection(rect) != rect)
-    throw Exception(_T("Error in protocol: incorrect size of rectangle"));
+    throw ::remoting::Exception("Error in protocol: incorrect size of rectangle");
   for (int y = rect.top; y < rect.bottom; y++)
     input->readFully(frameBuffer->getBufferPtr(rect.left, y), bytesPerLine);
 }

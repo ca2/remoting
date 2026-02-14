@@ -101,15 +101,15 @@ void ConnectionData::unsetDispatchId()
   m_isSetDispatchId = false;
 }
 
-void ConnectionData::setHost(const ::string & host)
+void ConnectionData::setHost(const ::scoped_string & host)
 {
   ::string chompedString = host;
-  TCHAR spaceChar[] = _T(" \t\n\r");
+  TCHAR spaceChar[] = " \t\n\r";
   chompedString.removeChars(spaceChar, sizeof(spaceChar)/sizeof(TCHAR));
 
   AnsiStringStorage ansiStr(chompedString);
 
-  m_hostPath.set(ansiStr.getString());
+  m_hostPath.set(ansiStr);
   m_isEmpty = false;
 }
 
@@ -118,7 +118,7 @@ void ConnectionData::setHost(const ::string & host)
   return m_defaultPassword;
 }
 
-void ConnectionData::setCryptedPassword(const ::string & hidePassword)
+void ConnectionData::setCryptedPassword(const ::scoped_string & hidePassword)
 {
   if (hidePassword == 0) {
     m_isSetPassword = false;
@@ -135,8 +135,8 @@ void ConnectionData::setCryptedPassword(const ::string & hidePassword)
   unsigned char encPassword[VncAuthentication::VNC_PASSWORD_SIZE];
   for (size_t i = 0; i < VncAuthentication::VNC_PASSWORD_SIZE; ++i) {
     std::stringstream passwordStream;
-    passwordStream << ansiHidePassword.getString()[i * 2]
-                   << ansiHidePassword.getString()[i * 2 + 1];
+    passwordStream << ansiHidePassword[i * 2]
+                   << ansiHidePassword[i * 2 + 1];
     int ordOfSymbol = 0;
     passwordStream >> std::hex >> ordOfSymbol;
     encPassword[i] = static_cast<unsigned char>(ordOfSymbol);
@@ -151,14 +151,14 @@ void ConnectionData::setCryptedPassword(const ::string & hidePassword)
   return password;
 }
 
-void ConnectionData::setPlainPassword(const ::string & password)
+void ConnectionData::setPlainPassword(const ::scoped_string & password)
 {
   AnsiStringStorage ansiPlainPassword(password);
   unsigned char plainPassword[VncAuthentication::VNC_PASSWORD_SIZE];
   unsigned char encryptedPassword[VncAuthentication::VNC_PASSWORD_SIZE];
   memset(plainPassword, 0, VncAuthentication::VNC_PASSWORD_SIZE);
   memcpy(plainPassword,
-         ansiPlainPassword.getString(),
+         ansiPlainPassword,
          min(VncAuthentication::VNC_PASSWORD_SIZE, ansiPlainPassword.getSize()));
   VncPassCrypt::getEncryptedPass(encryptedPassword, plainPassword);
   unsigned char hidePasswordChars[VncAuthentication::VNC_PASSWORD_SIZE * 2 + 1];

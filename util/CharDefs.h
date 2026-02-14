@@ -24,4 +24,4 @@
 
 #ifdef WIN32
 #include <Tchar.h>
-#endif // WIN32
+#endif

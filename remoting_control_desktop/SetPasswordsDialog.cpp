@@ -179,7 +179,7 @@ void SetPasswordsDialog::onOkButtonClick()
       m_rfbPassEdit1.setFocus();
       return;
     }
-    m_rfbPass.setString(rfbPass1.getString());
+    m_rfbPass= rfbPass1;
   }
   if (m_protectControlInterface) {
     if (admPass1.is_empty()) {
@@ -198,7 +198,7 @@ void SetPasswordsDialog::onOkButtonClick()
       return;
     }
 
-    m_admPass.setString(admPass1.getString());
+    m_admPass= admPass1;
   }
   kill(IDOK);
 }

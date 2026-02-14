@@ -22,17 +22,17 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _RFB_CLIENT_INFO_H_
-#define _RFB_CLIENT_INFO_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
-#include <list>
+//#include <list>
 
 class RfbClientInfo
 {
 public:
-  RfbClientInfo(unsigned int id, const ::scoped_string & scopedstrpeerAddr);
+  RfbClientInfo(unsigned int id, const ::scoped_string & scopedstrPeerAddr);
   virtual ~RfbClientInfo();
 
   // FIXME: Debug.
@@ -42,6 +42,6 @@ public:
   ::string m_peerAddr;
 };
 
-typedef ::std::list<RfbClientInfo> RfbClientInfoList;
+typedef ::list<RfbClientInfo> RfbClientInfoList;
 
-#endif
+

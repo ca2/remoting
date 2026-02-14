@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _FILE_TRANSFER_CAPABILITY_H_
-#define _FILE_TRANSFER_CAPABILITY_H_
+#pragma once
+
 
 #include "ft_client_lib/FileTransferRequestSender.h"
 #include "ft_client_lib/FileTransferReplyBuffer.h"
@@ -75,4 +75,4 @@ protected:
   FileTransferCore m_ftCore;
 };
 
-#endif
+

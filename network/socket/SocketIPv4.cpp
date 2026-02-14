@@ -62,7 +62,7 @@ SocketIPv4::~SocketIPv4()
   }
 }
 
-void SocketIPv4::connect(const ::scoped_string & scopedstrhost, unsigned short port)
+void SocketIPv4::connect(const ::scoped_string & scopedstrHost, unsigned short port)
 {
   SocketAddressIPv4 address(host, port);
 
@@ -241,7 +241,7 @@ int SocketIPv4::send(const char *data, int size, int flags)
   result = ::send(m_socket, data, size, flags);
 
   if (result == -1) {
-    throw IOException(_T("Failed to send data to socket."));
+    throw ::io_exception(error_io, "Failed to send data to socket."));
   }
   
   return result;
@@ -255,12 +255,12 @@ int SocketIPv4::recv(char *buffer, int size, int flags)
 
   // Connection has been gracefully closed.
   if (result == 0) {
-    throw IOException(_T("Connection has been gracefully closed"));
+    throw ::io_exception(error_io, "Connection has been gracefully closed"));
   }
 
   // SocketIPv4 error.
   if (result == SOCKET_ERROR) {
-    throw IOException(_T("Failed to recv data from socket."));
+    throw ::io_exception(error_io, "Failed to recv data from socket."));
   }
 
   return result;

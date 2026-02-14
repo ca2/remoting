@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINDXGIOUTPUT1_H__
-#define __WINDXGIOUTPUT1_H__
+#pragma once
+
 
 
 
@@ -51,4 +51,4 @@ private:
   IDXGIOutput1 *m_dxgiOutput1;
 };
 
-#endif // __WINDXGIOUTPUT1_H__
+//// __WINDXGIOUTPUT1_H__

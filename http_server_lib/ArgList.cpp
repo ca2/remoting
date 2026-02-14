@@ -25,7 +25,7 @@
 #include "ArgList.h"
 
 #include "util/CommonHeader.h"
-#include <vector>
+//#include <vector>
 
 ArgList::ArgList(const char *argString)
 {
@@ -33,9 +33,9 @@ ArgList::ArgList(const char *argString)
 
   const char *src = argString;
 
-  ::std::vector<char> pairBuff(len + 1);
+  ::array_base<char> pairBuff(len + 1);
   char *::std::pair = &pairBuff.front();
-  ::std::vector<char> leftBuff(len + 1);
+  ::array_base<char> leftBuff(len + 1);
   char *left = &leftBuff.front();
 
   while (true) {
@@ -47,7 +47,7 @@ ArgList::ArgList(const char *argString)
 
     size_t pairLen = strlen(::std::pair);
 
-    ::std::vector<char> keyBuff(pairLen + 1);
+    ::array_base<char> keyBuff(pairLen + 1);
     char *key = &keyBuff.front();
     char *val = new char[pairLen + 1];
 
@@ -64,7 +64,7 @@ ArgList::ArgList(const char *argString)
 
 ArgList::~ArgList()
 {
-  for (::std::map<string, char *>::iterator it = m_args.begin(); it != m_args.end(); it++) {
+  for (::map<string, char *>::iterator it = m_args.begin(); it != m_args.end(); it++) {
     delete it->second;
   }
   m_args.clear();
@@ -81,7 +81,7 @@ const char *ArgList::getKey(size_t index)
     return NULL;
   }
 
-  ::std::map<string, char *>::iterator it = m_args.begin();
+  ::map<string, char *>::iterator it = m_args.begin();
 
   for (size_t i = 0; i < index; i++) {
     it++;

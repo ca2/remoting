@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __DUMMYSCREENDRIVER_H__
-#define __DUMMYSCREENDRIVER_H__
+#pragma once
+
 #include "ScreenDriver.h"
 #include "log_writer/LogWriter.h"
 #include "UpdateKeeper.h"
@@ -72,4 +72,4 @@ private:
 
 };
 
-#endif // __DUMMYSCREENDRIVER_H__
+//// __DUMMYSCREENDRIVER_H__

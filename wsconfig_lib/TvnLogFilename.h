@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _TVNLOGFILENAME_H_
-#define _TVNLOGFILENAME_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -50,4 +50,4 @@ private:
   TvnLogFilename();
 };
 
-#endif
+

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __CURSORUPDATES_H__
-#define __CURSORUPDATES_H__
+#pragma once
+
 
 #include "rfb_sconn/EncodeOptions.h"
 #include "rfb/CursorShape.h"
@@ -101,4 +101,4 @@ private:
   LogWriter *m_log;
 };
 
-#endif // __CURSORUPDATES_H__
+//// __CURSORUPDATES_H__

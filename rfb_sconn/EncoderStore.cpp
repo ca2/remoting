@@ -44,7 +44,7 @@ EncoderStore::~EncoderStore()
     delete m_jpegEncoder;
   }
   // Remove all allocated encoders referenced in m_map.
-  ::std::map<int, Encoder *>::iterator it;
+  ::map<int, Encoder *>::iterator it;
   for (it = m_map.begin(); it != m_map.end(); it++) {
     delete it->second;
   }
@@ -82,7 +82,7 @@ Encoder *EncoderStore::validateEncoder(int encType)
     encType = EncodingDefs::RAW;
   }
   // If that encoder is already allocated, return a pointer to it.
-  ::std::map<int, Encoder *>::iterator it = m_map.find(encType);
+  ::map<int, Encoder *>::iterator it = m_map.find(encType);
   if (it != m_map.end()) {
     return it->second;
   }
@@ -125,6 +125,6 @@ Encoder *EncoderStore::allocateEncoder(int encType) const
   case EncodingDefs::RAW:
     return new Encoder(m_pixelConverter, m_output);
   default:
-    throw Exception(_T("Cannot create encoder of the specified type"));
+    throw ::remoting::Exception("Cannot create encoder of the specified type");
   }
 }

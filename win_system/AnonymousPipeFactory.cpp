@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "AnonymousPipeFactory.h"
 #include "win_system/SecurityAttributes.h"
 
@@ -50,11 +51,11 @@ void AnonymousPipeFactory::generatePipes(AnonymousPipe **firstSide,
   try {
     if (CreatePipe(&hFirstSideRead, &hSecondSideWrite,
                    secAttr.getSecurityAttributes(), m_bufferSize) == 0) {
-      SystemException(_T("Cannot create anonymous pipe"));
+      SystemException("Cannot create anonymous pipe");
     }
     if (CreatePipe(&hSecondSideRead, &hFirstSideWrite,
                    secAttr.getSecurityAttributes(), m_bufferSize) == 0) {
-      SystemException(_T("Cannot create anonymous pipe"));
+      SystemException("Cannot create anonymous pipe");
     }
   } catch (...) {
     CloseHandle(hFirstSideWrite);
@@ -64,7 +65,7 @@ void AnonymousPipeFactory::generatePipes(AnonymousPipe **firstSide,
     throw;
   }
 
-  const ::scoped_string & scopedstrerrMess = _T("Cannot disable inheritance for anonymous pipe");
+  const ::scoped_string & scopedstrerrMess = "Cannot disable inheritance for anonymous pipe";
   if (!firstSideIsInheritable) {
     if (SetHandleInformation(hFirstSideWrite, HANDLE_FLAG_INHERIT, 0) == 0) {
       SystemException(errMess);

@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __CLIENTINPUTEVENTLISTENER_H__
-#define __CLIENTINPUTEVENTLISTENER_H__
+#pragma once
+
 
 #include "util/inttypes.h"
 
@@ -34,4 +34,4 @@ public:
   virtual void onMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask) = 0;
 };
 
-#endif // __CLIENTINPUTEVENTLISTENER_H__
+//// __CLIENTINPUTEVENTLISTENER_H__

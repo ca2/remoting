@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WIN32MIRRORSCREENDRIVER_H__
-#define __WIN32MIRRORSCREENDRIVER_H__
+#pragma once
+
 
 #include "MirrorScreenDriver.h"
 #include "Win32ScreenDriverBaseImpl.h"
@@ -57,4 +57,4 @@ private:
   MirrorScreenDriver m_mirrorDriver;
 };
 
-#endif // __WIN32MIRRORSCREENDRIVER_H__
+//// __WIN32MIRRORSCREENDRIVER_H__

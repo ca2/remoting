@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __EMULATEDANONYMOUSPIPEFACTORY_H__
-#define __EMULATEDANONYMOUSPIPEFACTORY_H__
+#pragma once
+
 
 #include "NamedPipe.h"
 #include "log_writer/LogWriter.h"
@@ -46,4 +46,4 @@ private:
   unsigned int m_bufferSize;
 };
 
-#endif // __EMULATEDANONYMOUSPIPEFACTORY_H__
+//// __EMULATEDANONYMOUSPIPEFACTORY_H__

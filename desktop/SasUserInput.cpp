@@ -53,7 +53,7 @@ void SasUserInput::setMouseEvent(const Point newPos, unsigned char keyFlag)
   m_client->setMouseEvent(newPos, keyFlag);
 }
 
-void SasUserInput::setNewClipboard(const ::string & newClipboard)
+void SasUserInput::setNewClipboard(const ::scoped_string & newClipboard)
 {
   m_client->setNewClipboard(newClipboard);
 }
@@ -99,7 +99,7 @@ void SasUserInput::getPrimaryDisplayCoords(::int_rectangle *rect)
   m_client->getPrimaryDisplayCoords(rect);
 }
 
-::std::vector<::int_rectangle> SasUserInput::getDisplaysCoords()
+::array_base<::int_rectangle> SasUserInput::getDisplaysCoords()
 {
   return m_client->getDisplaysCoords();
 }
@@ -120,7 +120,7 @@ void SasUserInput::getWindowCoords(HWND hwnd, ::int_rectangle *rect)
   m_client->getWindowCoords(hwnd, rect);
 }
 
-HWND SasUserInput::getWindowHandleByName(const ::string & windowName)
+HWND SasUserInput::getWindowHandleByName(const ::scoped_string & windowName)
 {
   return m_client->getWindowHandleByName(windowName);
 }

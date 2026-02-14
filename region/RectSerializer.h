@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _RECTSERIALIZER_H_
-#define _RECTSERIALIZER_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 //#include "::int_rectangle.h"
@@ -35,7 +35,7 @@ public:
   static void toString(const ::int_rectangle &  rect, ::string & strOut);
 
   // Converts to ::int_rectangle value.
-  static ::int_rectangle toRect(const ::string & strIn);
+  static ::int_rectangle toRect(const ::scoped_string & strIn);
 };
 
-#endif
+

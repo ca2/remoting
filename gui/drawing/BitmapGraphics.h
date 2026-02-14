@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _BITMAP_GRAPHICS_H_
-#define _BITMAP_GRAPHICS_H_
+#pragma once
+
 
 #include "Graphics.h"
 #include "Bitmap.h"
@@ -52,4 +52,4 @@ protected:
   HGDIOBJ m_oldBitmap;
 };
 
-#endif
+

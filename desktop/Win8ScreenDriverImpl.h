@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WIN8SCREENDRIVERIMPL_H__
-#define __WIN8SCREENDRIVERIMPL_H__
+#pragma once
+
 
 #include "log_writer/LogWriter.h"
 #include "thread/GuiThread.h"
@@ -104,4 +104,4 @@ private:
   bool m_detectionEnabled;
 };
 
-#endif // __WIN8SCREENDRIVERIMPL_H__
+//// __WIN8SCREENDRIVERIMPL_H__

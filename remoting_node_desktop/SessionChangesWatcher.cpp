@@ -56,11 +56,11 @@ void SessionChangesWatcher::execute()
     bool desktopInfoIsAvailable = DesktopSelector::getCurrentDesktopName(&currDeskName);
     bool desktopChanged = !currDeskName.isEqualTo(&prevDeskName);
     if (sessionChanged || desktopChanged || !desktopInfoIsAvailable) {
-      m_log->debug(_T("Session or desktop has been changed.")
-                   _T(" The process session = %u, current session = %u")
-                   _T(" The process desktop = %s, current desktop = %s"),
+      m_log->debug("Session or desktop has been changed."
+                   " The process session = %u, current session = %u"
+                   " The process desktop = {}, current desktop = {}",
                    (unsigned int)prevSession, (unsigned int)currSessionId,
-                   prevDeskName.getString(), currDeskName.getString());
+                   prevDeskName, currDeskName);
       prevSession = currSessionId;
       prevDeskName = currDeskName;
       m_extSessionChangesListener->onAnObjectEvent();

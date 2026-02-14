@@ -47,11 +47,11 @@ int ZrleEncoder::getCode() const
 }
 
 void ZrleEncoder::splitRectangle(const ::int_rectangle &  rect,
-                                 ::std::vector<::int_rectangle> *rectList,
+                                 ::array_base<::int_rectangle> *rectList,
                                  const FrameBuffer *serverFb,
                                  const EncodeOptions *options)
 {
-  rectList->push_back(rect);
+  rectList->add(rect);
 }
 
 void ZrleEncoder::sendRectangle(const ::int_rectangle &  rect,
@@ -97,7 +97,7 @@ void ZrleEncoder::sendRectangle(const ::int_rectangle &  rect,
  
   // Reserve data once for potentional transmitting of whole frame buffer
   // in raw encoding with CPIXELs.
-  // If ::std::vector will be small it will be resized automatically.
+  // If ::array_base will be small it will be resized automatically.
   m_rgbData.reserve(rect.area() * 3);
   
   m_fbWidth = clientFb->getDimension().cx;
@@ -131,7 +131,7 @@ void ZrleEncoder::sendRect(const ::int_rectangle &  rect,
 
       tileRect.right = min(rect.right, tileRect.left + TILE_SIZE);
 
-      // Clear sizes and ::std::vector with plain RLE tile.
+      // Clear sizes and ::array_base with plain RLE tile.
       m_rawTileSize = 0;
       m_paletteTileSize = 0;
       m_paletteRleTileSize = 0;
@@ -308,13 +308,13 @@ void ZrleEncoder::writePackedPaletteTile(const ::int_rectangle &  tileRect,
 }
 
 void ZrleEncoder::pushRunLengthPaletteRle(int runLength,
-                                          ::std::vector<unsigned char> *paletteRleData)
+                                          ::array_base<unsigned char> *paletteRleData)
 {
   do {
     if (runLength > 255) {
-      paletteRleData->push_back(255); 
+      paletteRleData->add(255); 
     } else {
-      paletteRleData->push_back(runLength);
+      paletteRleData->add(runLength);
     }
     runLength -= 255;
   } while (runLength >= 0);
@@ -325,7 +325,7 @@ void ZrleEncoder::writePaletteRleTile(const ::int_rectangle &  tileRect,
                                       const FrameBuffer *fb)
 {
   int numColors = m_pal.getNumColors();
-  ::std::vector<unsigned char> paletteRleData;
+  ::array_base<unsigned char> paletteRleData;
   paletteRleData.resize(1 + numColors * m_bytesPerPixel);
 
   // Write type of subencoding.
@@ -347,7 +347,7 @@ void ZrleEncoder::writePaletteRleTile(const ::int_rectangle &  tileRect,
   unsigned char indexOfColor = m_pal.getIndex(px);
 
   // Processing of the first pixel.
-  paletteRleData.push_back(indexOfColor);
+  paletteRleData.add(indexOfColor);
   unsigned char previousIndexOfColor = indexOfColor;
   
   int runLength = 0;
@@ -365,7 +365,7 @@ void ZrleEncoder::writePaletteRleTile(const ::int_rectangle &  tileRect,
         pushRunLengthPaletteRle(runLength, &paletteRleData);
         runLength = 0;
       }
-      paletteRleData.push_back(indexOfColor);
+      paletteRleData.add(indexOfColor);
       previousIndexOfColor = indexOfColor;
     } else {
       runLength++;
@@ -385,9 +385,9 @@ void ZrleEncoder::pushRunLengthRle(int runLength)
 {
   do {
     if (runLength > 255) {
-      m_plainRleTile.push_back(255);
+      m_plainRleTile.add(255);
     } else {
-      m_plainRleTile.push_back(runLength);
+      m_plainRleTile.add(runLength);
     }
     // Increase the size of palette RLE tile.
     m_paletteRleTileSize++;
@@ -432,10 +432,10 @@ void ZrleEncoder::fillPalette(const ::int_rectangle &  tileRect,
   PIXEL_T oldPixel = px;
   int palLength = 1;
   
-  // Fill RLE tile ::std::vector.
+  // Fill RLE tile ::array_base.
   px &= mask;
   // Write type of subencoding.
-  m_plainRleTile.push_back(128);
+  m_plainRleTile.add(128);
 
   // Calculate size of palette RLE tile.
   m_paletteRleTileSize = 1;
@@ -462,7 +462,7 @@ void ZrleEncoder::fillPalette(const ::int_rectangle &  tileRect,
       palLength++;
     }
     
-    // Fill RLE tile ::std::vector.
+    // Fill RLE tile ::array_base.
     px &= mask;
     if (px != previousPx) {
       pushRunLengthRle(runLength);

@@ -25,7 +25,7 @@
 #include "RemoteException.h"
 
 RemoteException::RemoteException(const ::scoped_string & scopedstrreason)
-: Exception(reason)
+: ::remoting::Exception(reason)
 {
 }
 

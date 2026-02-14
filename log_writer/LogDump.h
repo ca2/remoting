@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __LOGDUMP_H__
-#define __LOGDUMP_H__
+#pragma once
+
 
 #include "util/DateTime.h"
 
@@ -33,7 +33,7 @@ struct LogEntry
            unsigned int threadId,
            const DateTime & dt,
            int lineLevel,
-           const ::scoped_string & scopedstrmessage);
+           const ::scoped_string & scopedstrMessage);
 
   unsigned int m_processId;
   unsigned int m_threadId;
@@ -54,7 +54,7 @@ public:
                      unsigned int threadId,
                      const DateTime & dt,
                      int level,
-                     const ::scoped_string & scopedstrmessage) = 0;
+                     const ::scoped_string & scopedstrMessage) = 0;
 
   // Stores all printed lines as a log header and stops it accumulation.
   void storeHeader();
@@ -69,7 +69,7 @@ protected:
                             unsigned int threadId,
                             const DateTime & dt,
                             int level,
-                            const ::scoped_string & scopedstrmessage);
+                            const ::scoped_string & scopedstrMessage);
 
   // This function checks that writing to the log dump is not stopped and
   // then store the log line information.
@@ -78,7 +78,7 @@ protected:
                           unsigned int threadId,
                           const DateTime & dt,
                           int level,
-                          const ::scoped_string & scopedstrmessage);
+                          const ::scoped_string & scopedstrMessage);
 
   // Terminaties to write log lines to the memory buffer and clear the buffer.
   void terminateLogDumping();
@@ -99,11 +99,11 @@ protected:
 private:
   static const size_t MAX_LOG_HEADER_SIZE = 16;
   bool m_logHeaderStopped;
-  ::std::vector<LogEntry> m_logHeaderLines;
+  ::array_base<LogEntry> m_logHeaderLines;
 
   static const size_t MAX_LOG_DUMP_SIZE = 1024;
   bool m_logDumpStopped;
-  ::std::vector<LogEntry> m_logDumpLines;
+  ::array_base<LogEntry> m_logDumpLines;
 };
 
-#endif // __LOGDUMP_H__
+//// __LOGDUMP_H__

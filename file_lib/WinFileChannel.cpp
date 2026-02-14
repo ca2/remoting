@@ -56,8 +56,8 @@ void WinFileChannel::seek(long long n)
 {
   try {
     m_winFile.seek(n);
-  } catch (Exception &e) {
-    throw IOException(e.getMessage());
+  } catch (::remoting::Exception &e) {
+    throw ::io_exception(error_io, e.get_message());
   }
 }
 

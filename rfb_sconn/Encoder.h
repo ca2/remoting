@@ -22,13 +22,13 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RFB_ENCODER_H_INCLUDED__
-#define __RFB_ENCODER_H_INCLUDED__
+#pragma onceINCLUDED__
+INCLUDED__
 
-#include <vector>
+//#include <vector>
 
 #include "rfb/FrameBuffer.h"
-#include "io_lib/IOException.h"
+#include "io_lib/io_exception.h"
 #include "network/RfbOutputGate.h"
 #include "rfb/EncodingDefs.h"
 #include "EncodeOptions.h"
@@ -65,7 +65,7 @@ public:
 
   // splitRectangle() is used to let the encoder split one big rectangle to a
   // number of smaller ones for efficient encoding or for satisfying the
-  // limitations on maximum rectangle width and height. The resulting ::std::list of
+  // limitations on maximum rectangle width and height. The resulting ::list of
   // rectangles is added to the end of the provided `rectList'.
   //
   // The default implementation of this function provided by the base Encoder
@@ -74,7 +74,7 @@ public:
   // it should implement its own splitRectangle() function.
   //
   // UpdateSender calls splitRectangle() for each rectangle of the update
-  // region, then calls sendRectangle() for the same ::std::list of rectangles.
+  // region, then calls sendRectangle() for the same ::list of rectangles.
   //
   // The arguments of splitRectangle() are similar to those of
   // sendRectangle(). It's guaranteed that options and serverFb will point to
@@ -83,7 +83,7 @@ public:
   // splitRectangle() and sendRectangle() calls. splitRectangles() may change
   // the state of PixelConverter that's why it cannot be declared const.
   virtual void splitRectangle(const ::int_rectangle &  rect,
-                              ::std::vector<::int_rectangle> *rectList,
+                              ::array_base<::int_rectangle> *rectList,
                               const FrameBuffer *serverFb,
                               const EncodeOptions *options);
 
@@ -116,4 +116,4 @@ private:
   Encoder &operator=(const Encoder &other);
 };
 
-#endif // __RFB_ENCODER_H_INCLUDED__
+//// __RFB_ENCODER_H_INCLUDED__

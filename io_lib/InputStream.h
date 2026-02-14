@@ -22,10 +22,11 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _INPUT_STREAM_H_
-#define _INPUT_STREAM_H_
+#pragma once
 
-#include "IOException.h"
+
+#include "io_lib/io_exception.h"
+
 
 /**
  * Input stream interface (abstract class).
@@ -47,4 +48,3 @@ public:
   virtual size_t available() = 0;
 };
 
-#endif

@@ -25,7 +25,7 @@
 #include "DataOutputStream.h"
 //#include "util/::string.h"
 #include "util/Utf8StringStorage.h"
-#include <vector>
+//#include <vector>
 
 #define GETBYTE(x, n) (((x) >> ((n) * 8)) & 0xFF)
 
@@ -118,11 +118,11 @@ void DataOutputStream::writeInt64(long long x)
   writeUInt64((unsigned long long)x);
 }
 
-void DataOutputStream::writeUTF8(const ::scoped_string & scopedstrstring)
+void DataOutputStream::writeUTF8(const ::scoped_string & scopedstrString)
 {
   size_t sizeInBytes = 0;
 
-  ::::string strstg{string};
+  ::string strstg{string};
 
   // to UTF8 string convertion
   ::Utf8StringStorage utf8str{strstg};
@@ -132,7 +132,7 @@ void DataOutputStream::writeUTF8(const ::scoped_string & scopedstrstring)
      unsigned int sizeInBytes = (unsigned int)utf8str.getSize();
      _ASSERT(sizeInBytes == utf8str.getSize());
     writeUInt32(sizeInBytes);
-     writeFully(utf8str.getString(), sizeInBytes);
+     writeFully(utf8str, sizeInBytes);
   } catch (...) {
     throw;
   }

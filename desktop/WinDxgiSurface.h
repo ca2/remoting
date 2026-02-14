@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINDXGISURFACE_H__
-#define __WINDXGISURFACE_H__
+#pragma once
+
 
 #include <d3d11.h>
 #include <DXGI1_2.h>
@@ -41,4 +41,4 @@ private:
   IDXGISurface *m_dxgiSurface;
 };
 
-#endif // __WINDXGISURFACE_H__
+//// __WINDXGISURFACE_H__

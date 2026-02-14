@@ -70,7 +70,7 @@ void FileTransferCore::dataChunkCopied(unsigned long long totalBytesCopied, unsi
 
 int FileTransferCore::targetFileExists(FileInfo *sourceFileInfo,
                                        FileInfo *targetFileInfo,
-                                       const ::scoped_string & scopedstrpathToTargetFile)
+                                       const ::scoped_string & scopedstrPathToTargetFile)
 {
   return m_ftInterface->onFtTargetFileExists(sourceFileInfo,
                                              targetFileInfo,
@@ -87,7 +87,7 @@ const OperationSupport &FileTransferCore::getSupportedOps()
   return m_supportedOps;
 }
 
-::std::vector<FileInfo> *FileTransferCore::getListLocalFolder(const ::scoped_string & scopedstrpathToFile)
+::array_base<FileInfo> *FileTransferCore::getListLocalFolder(const ::scoped_string & scopedstrPathToFile)
 {
   FolderListener fl(pathToFile);
   if (!fl.list()) {
@@ -99,13 +99,13 @@ const OperationSupport &FileTransferCore::getSupportedOps()
   return &m_localFilesInfo;
 }
 
-::std::vector<FileInfo> *FileTransferCore::getListRemoteFolder()
+::array_base<FileInfo> *FileTransferCore::getListRemoteFolder()
 {
   return &m_remoteFilesInfo;
 }
 
-void FileTransferCore::updateSupportedOperations(const ::std::vector<unsigned int> *clientCaps,
-                                                 const ::std::vector<unsigned int> *serverCaps)
+void FileTransferCore::updateSupportedOperations(const ::array_base<unsigned int> *clientCaps,
+                                                 const ::array_base<unsigned int> *serverCaps)
 {
   m_supportedOps = OperationSupport(*clientCaps, *serverCaps);
 }
@@ -118,8 +118,8 @@ void FileTransferCore::ftOpStarted(FileTransferOperation *sender)
 void FileTransferCore::ftOpFinished(FileTransferOperation *sender)
 {
   //
-  // If operation that sends to us this notification is remote file ::std::list operation
-  // than we need to copy received file ::std::list to class members.
+  // If operation that sends to us this notification is remote file ::list operation
+  // than we need to copy received file ::list to class members.
   //
 
   if (m_state == FILE_LIST_STATE) {
@@ -136,23 +136,23 @@ void FileTransferCore::ftOpFinished(FileTransferOperation *sender)
       for (unsigned int i = 0; i < numberFiles; i++) {
         m_remoteFilesInfo[i] = m_replyBuffer->getFilesInfo()[i];
       } // for all files in reply
-    } // if no error during file ::std::list operation
+    } // if no error during file ::list operation
 
     // Notify dialog than operation is finished
     int result = fileListOp->isOk() ? 1 : 0;
     m_ftInterface->onFtOpFinished(m_state, result);
     return ;
-  } // if last executed operation was file ::std::list opearation
+  } // if last executed operation was file ::list opearation
 
   //
   // Remark: we must post this notification message to this dialog to avoid deadlock.
   // This deadlock reason described above:
   //
   // Some ft operations like upload, remote file delete, remote file rename operations
-  // after operation finished must refresh remote file ::std::list, but we can do that only
+  // after operation finished must refresh remote file ::list, but we can do that only
   // with using remote RemoteFileListOperation.
   // Before RemoteFileListOperation can start execution, old operation must be removed
-  // from ft message processor listeners ::std::list, but it's locked by ft message processor
+  // from ft message processor listeners ::list, but it's locked by ft message processor
   // and call of remove method also tries to lock operation.
   //
   // And as result: deadlock.
@@ -160,7 +160,7 @@ void FileTransferCore::ftOpFinished(FileTransferOperation *sender)
   // In short:
   // ft message processor lock operation
   // locked operation call this dialog as ft events listener with op finished notification
-  // this dialog calls ft message processor to remove operation from listeners ::std::list
+  // this dialog calls ft message processor to remove operation from listeners ::list
   // when ft message processor tries to remove operation it locks operation first.
   //
   // And as result: deadlock.
@@ -172,13 +172,13 @@ void FileTransferCore::ftOpFinished(FileTransferOperation *sender)
 } // void
 
 void FileTransferCore::ftOpErrorMessage(FileTransferOperation *sender,
-                                        const ::scoped_string & scopedstrmessage)
+                                        const ::scoped_string & scopedstrMessage)
 {
   m_ftInterface->onFtOpError(message);
 }
 
 void FileTransferCore::ftOpInfoMessage(FileTransferOperation *sender,
-                                       const ::scoped_string & scopedstrmessage)
+                                       const ::scoped_string & scopedstrMessage)
 {
   m_ftInterface->onFtOpInfo(message);
 }
@@ -206,15 +206,15 @@ void FileTransferCore::executeOperation(FileTransferOperation *newOperation)
 
   try {
     m_currentOperation->start();
-  } catch (IOException &ioEx) {
+  } catch (::io_exception &ioEx) {
     m_ftInterface->raise(ioEx);
   } // try / catch
 }
 
 void FileTransferCore::downloadOperation(const FileInfo *filesToDownload,
                                          size_t filesCount,
-                                         const ::scoped_string & scopedstrpathToTargetRoot,
-                                         const ::scoped_string & scopedstrpathToSourceRoot)
+                                         const ::scoped_string & scopedstrPathToTargetRoot,
+                                         const ::scoped_string & scopedstrPathToSourceRoot)
 {
   m_state = DOWNLOAD_STATE;
 
@@ -229,8 +229,8 @@ void FileTransferCore::downloadOperation(const FileInfo *filesToDownload,
 
 void FileTransferCore::uploadOperation(const FileInfo *filesToDownload,
                                        size_t filesCount,
-                                       const ::scoped_string & scopedstrpathToSourceRoot,
-                                       const ::scoped_string & scopedstrpathToTargetRoot)
+                                       const ::scoped_string & scopedstrPathToSourceRoot,
+                                       const ::scoped_string & scopedstrPathToTargetRoot)
 {
   m_state = UPLOAD_STATE;
 
@@ -245,7 +245,7 @@ void FileTransferCore::uploadOperation(const FileInfo *filesToDownload,
 
 void FileTransferCore::localFilesDeleteOperation(const FileInfo *filesToDelete,
                                                  unsigned int filesCount,
-                                                 const ::scoped_string & scopedstrpathToTargetRoot)
+                                                 const ::scoped_string & scopedstrPathToTargetRoot)
 {
   m_state = LOCAL_REMOVE_STATE;
   executeOperation(new LocalFilesDeleteOperation(m_logWriter,
@@ -255,7 +255,7 @@ void FileTransferCore::localFilesDeleteOperation(const FileInfo *filesToDelete,
 
 void FileTransferCore::remoteFilesDeleteOperation(const FileInfo *filesInfoToDelete,
                                                  size_t filesCount,
-                                                 const ::scoped_string & scopedstrpathToTargetRoot)
+                                                 const ::scoped_string & scopedstrPathToTargetRoot)
 {
   m_state = REMOVE_STATE;
   executeOperation(new RemoteFilesDeleteOperation(m_logWriter,
@@ -263,7 +263,7 @@ void FileTransferCore::remoteFilesDeleteOperation(const FileInfo *filesInfoToDel
                                                   pathToTargetRoot));
 }
 
-void FileTransferCore::remoteFolderCreateOperation(FileInfo file, const ::scoped_string & scopedstrpathToTargetRoot)
+void FileTransferCore::remoteFolderCreateOperation(FileInfo file, const ::scoped_string & scopedstrPathToTargetRoot)
 {
     m_state = MKDIR_STATE;
 
@@ -273,7 +273,7 @@ void FileTransferCore::remoteFolderCreateOperation(FileInfo file, const ::scoped
 }
 void FileTransferCore::remoteFileRenameOperation(FileInfo sourceFileInfo,
                                                  FileInfo targetFileInfo,
-                                                 const ::scoped_string & scopedstrpathToTargetRoot)
+                                                 const ::scoped_string & scopedstrPathToTargetRoot)
 {
   m_state = RENAME_STATE;
 
@@ -283,7 +283,7 @@ void FileTransferCore::remoteFileRenameOperation(FileInfo sourceFileInfo,
                                                  pathToTargetRoot));
 }
 
-void FileTransferCore::remoteFileListOperation(const ::scoped_string & scopedstrpathToFile)
+void FileTransferCore::remoteFileListOperation(const ::scoped_string & scopedstrPathToFile)
 {
   m_state = FILE_LIST_STATE;
   executeOperation(new RemoteFileListOperation(m_logWriter, pathToFile));

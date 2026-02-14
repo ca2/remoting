@@ -22,20 +22,16 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WINHDR_H__
-#define __WINHDR_H__
+#pragma once
 
-#ifdef WINVER
-#undef WINVER
-#endif
 
+#ifndef WINVER
 #define WINVER 0x0501
-
-#ifdef _WIN32_WINNT
-#undef _WIN32_WINNT
 #endif
 
+#ifndef _WIN32_WINNT
 #define _WIN32_WINNT 0x0501
+#endif
 
 #include <winsock2.h>
 #include <ws2tcpip.h>
@@ -52,4 +48,3 @@
 #pragma warning(pop)
 #include <ShellAPI.h>
 
-#endif // __WINHDR_H__

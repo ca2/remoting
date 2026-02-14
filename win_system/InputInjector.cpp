@@ -22,10 +22,11 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "InputInjector.h"
 #include "Keyboard.h"
 #include "win_system/Environment.h"
-#include <vector>
+//#include <vector>
 
 #include <crtdbg.h>
 
@@ -44,8 +45,8 @@ InputInjector::InputInjector(bool ctrlAltDelEnabled, LogWriter *log)
   try {
     resetModifiers();
   }
-  catch (Exception &e) {
-    m_log->error(_T("InputInjector: error occurred while reseting modifiers: %s"),
+  catch (::remoting::Exception &e) {
+    m_log->error("InputInjector: error occurred while reseting modifiers: {}",
       e.getMessage());
   }
 }
@@ -70,17 +71,17 @@ void InputInjector::injectKeyRelease(BYTE vkCode)
 
 void InputInjector::injectKeyEvent(BYTE vkCode, bool release, bool extended)
 {
-  m_log->debug(_T("Prepare to inject the key event:")
-             _T(" vkCode = %d, release = %d, extended = %d"),
+  m_log->debug("Prepare to inject the key event:"
+             " vkCode = {}, release = {}, extended = {}",
              (int)vkCode,
              (int)release,
              (int)extended);
-  m_log->debug(_T("The modifier states before:")
-             _T(" m_controlIsPressed = %d;")
-             _T(" m_menuIsPressed = %d;")
-             _T(" m_deleteIsPressed = %d;")
-             _T(" m_shiftIsPressed = %d;")
-             _T(" m_winIsPressed = %d;"),
+  m_log->debug("The modifier states before:"
+             " m_controlIsPressed = {};"
+             " m_menuIsPressed = {};"
+             " m_deleteIsPressed = {};"
+             " m_shiftIsPressed = {};"
+             " m_winIsPressed = {};",
              (int)m_controlIsPressed,
              (int)m_menuIsPressed,
              (int)m_deleteIsPressed,
@@ -102,12 +103,12 @@ void InputInjector::injectKeyEvent(BYTE vkCode, bool release, bool extended)
   if (vkCode == VK_LWIN || vkCode == VK_RWIN) {
     m_winIsPressed = !release;
   }
-  m_log->debug(_T("The modifier states after:")
-             _T(" m_controlIsPressed = %d;")
-             _T(" m_menuIsPressed = %d;")
-             _T(" m_deleteIsPressed = %d;")
-             _T(" m_shiftIsPressed = %d;")
-             _T(" m_winIsPressed = %d;"),
+  m_log->debug("The modifier states after:"
+             " m_controlIsPressed = {};"
+             " m_menuIsPressed = {};"
+             " m_deleteIsPressed = {};"
+             " m_shiftIsPressed = {};"
+             " m_winIsPressed = {};",
              (int)m_controlIsPressed,
              (int)m_menuIsPressed,
              (int)m_deleteIsPressed,
@@ -117,7 +118,7 @@ void InputInjector::injectKeyEvent(BYTE vkCode, bool release, bool extended)
   if (m_controlIsPressed && m_menuIsPressed && m_deleteIsPressed &&
       !m_winIsPressed && !m_shiftIsPressed) {
     if (m_ctrlAltDelEnabled) {
-      m_log->debug(_T("Try simulate the Ctrl+Alt+Del combination"));
+      m_log->debug("Try simulate the Ctrl+Alt+Del combination");
       if (Environment::isVistaOrLater()) {
         Environment::simulateCtrlAltDelUnderVista(m_log);
       }
@@ -125,7 +126,7 @@ void InputInjector::injectKeyEvent(BYTE vkCode, bool release, bool extended)
         Environment::simulateCtrlAltDel(m_log);
       }
     } else {
-      m_log->debug(_T("The Ctrl+Alt+Del combination is disabled. Ignore the Del key pressing"));
+      m_log->debug("The Ctrl+Alt+Del combination is disabled. Ignore the Del key pressing");
     }
   } else {
     INPUT keyEvent = {0};
@@ -145,11 +146,11 @@ void InputInjector::injectKeyEvent(BYTE vkCode, bool release, bool extended)
     if (SendInput(1, &keyEvent, sizeof(keyEvent)) == 0) {
       DWORD errCode = GetLastError();
       if (errCode != ERROR_SUCCESS) {
-        throw SystemException(_T("SendInput() function failed:"), errCode);
+        throw SystemException("SendInput() function failed:", errCode);
       } else {
         // Under Vista or later the SendInput() function doesn't return error
         // code if inputs blocked by UIPI.
-        throw Exception(_T("SendInput() function failed"));
+        throw ::remoting::Exception("SendInput() function failed");
       }
     }
   }
@@ -157,7 +158,7 @@ void InputInjector::injectKeyEvent(BYTE vkCode, bool release, bool extended)
 
 void InputInjector::injectCharEvent(WCHAR ch, bool release)
 {
-  m_log->debug(_T("Try insert a char event: char = %d, release = %d"),
+  m_log->debug("Try insert a char event: char = {}, release = {}",
              (int)ch, (int)release);
 
   bool ctrlOrAltPressed = m_controlIsPressed || m_menuIsPressed;
@@ -165,15 +166,15 @@ void InputInjector::injectCharEvent(WCHAR ch, bool release)
   HKL hklCurrent = (HKL)0x04090409;
   try {
     hklCurrent = getCurrentKbdLayout();
-    m_log->debug(_T("Current keyboard layout = %x"), (int)hklCurrent);
+    m_log->debug("Current keyboard layout = %x", (int)hklCurrent);
     vkKeyScanResult = searchVirtKey(ch, hklCurrent);
-    m_log->debug(_T("The virtual code scan result = %d"), (int)vkKeyScanResult);
+    m_log->debug("The virtual code scan result = {}", (int)vkKeyScanResult);
   } catch (...) {
-    m_log->detail(_T("Can't insert the char by simulating a key press event,")
-              _T(" therefore try insert it as an unicode symbol"));
+    m_log->detail("Can't insert the char by simulating a key press event,"
+              " therefore try insert it as an unicode symbol");
     if (ctrlOrAltPressed) {
-      m_log->warning(_T("Can't insert the char by an unicode symbol because")
-                   _T(" a modifier is pressed"));
+      m_log->warning("Can't insert the char by an unicode symbol because"
+                   " a modifier is pressed");
       throw;
     }
     INPUT keyEvent = {0};
@@ -219,19 +220,19 @@ void InputInjector::injectCharEvent(WCHAR ch, bool release)
                         !release;
   if ((ctrlPressNeeded || altPressNeeded) &&
       (m_controlIsPressed || m_menuIsPressed)) {
-    m_log->error(_T("Received a control combination that we doesn't know how it can be made"));
+    m_log->error("Received a control combination that we doesn't know how it can be made");
     return;
   }
 
-  m_log->debug(_T("Variable states before generate key events to get the char:")
-             _T(" controlSym = %d;")
-             _T(" resistantToCaps = %d;")
-             _T(" invariantToShift = %d;")
-             _T(" shiftedKey = %d;")
-             _T(" shiftPressNeeded = %d;")
-             _T(" shiftUpNeeded = %d;")
-             _T(" ctrlPressNeeded = %d;")
-             _T(" altPressNeeded = %d;"),
+  m_log->debug("Variable states before generate key events to get the char:"
+             " controlSym = {};"
+             " resistantToCaps = {};"
+             " invariantToShift = {};"
+             " shiftedKey = {};"
+             " shiftPressNeeded = {};"
+             " shiftUpNeeded = {};"
+             " ctrlPressNeeded = {};"
+             " altPressNeeded = {};",
              (int)controlSym,
              (int)resistantToCaps,
              (int)invariantToShift,
@@ -292,19 +293,19 @@ SHORT InputInjector::searchVirtKey(WCHAR ch, HKL hklCurrent)
       }
     }
     ::string errMess;
-    errMess.format(_T("Can't translate the %d character to the scan code"),
+    errMess.formatf("Can't translate the {} character to the scan code",
                    (unsigned int)ch);
-    throw Exception(errMess.getString());
+    throw ::remoting::Exception(errMess);
   }
   if (isDeadKey(vkKeyScanResult, hklCurrent)) {
-    throw Exception(_T("Special dead symbol must be inserted")
-                    _T(" only as unicode character"));
+    throw ::remoting::Exception("Special dead symbol must be inserted"
+                    " only as unicode character");
   }
   if (!isOneKeyEventChar(ch, vkKeyScanResult, hklCurrent)) {
     ::string errMess;
-    errMess.format(_T("Can't get the %d character by one keyboard event"),
+    errMess.formatf("Can't get the {} character by one keyboard event",
                    (unsigned int)ch);
-    throw Exception(errMess.getString());
+    throw ::remoting::Exception(errMess);
   }
   // Special trick to get round a problem when printing the ^6 characters
   // instead of estimated 6.
@@ -318,35 +319,35 @@ SHORT InputInjector::searchVirtKey(WCHAR ch, HKL hklCurrent)
     const unsigned short POLISH2 = MAKELANGID(LANG_POLISH, SUBLANG_POLISH_POLAND);
 
     if ((layout == POLISH1 || layout == POLISH2) && ch == _T('`')) {
-      throw Exception(_T("Special case for the '`' character on the POLISH")
-        _T(" keyboard, it will be inserted as")
-        _T(" an unicode"));
+      throw ::remoting::Exception("Special case for the '`' character on the POLISH"
+        " keyboard, it will be inserted as"
+        " an unicode");
     }
 
     if (layout == 0xf001 && ch == _T('6')) {
-      throw Exception(_T("Special case for the '6' character on the USA")
-                      _T(" international keyboard, it will be inserted as")
-                      _T(" an unicode"));
+      throw ::remoting::Exception("Special case for the '6' character on the USA"
+                      " international keyboard, it will be inserted as"
+                      " an unicode");
     }
     if (layout == BRAZILIAN && ch == _T('6')) {
-      throw Exception(_T("Special case for the '6' character on the brazilian")
-        _T(" keyboard, it will be inserted as")
-        _T(" an unicode"));
+      throw ::remoting::Exception("Special case for the '6' character on the brazilian"
+        " keyboard, it will be inserted as"
+        " an unicode");
     }
     if (layout == NORWEGIAN && ch == _T('\\')) {
-      throw Exception(_T("Special case for the '\\' character on the norwegian")
-                      _T(" keyboard, it will be inserted as")
-                      _T(" an unicode"));
+      throw ::remoting::Exception("Special case for the '\\' character on the norwegian"
+                      " keyboard, it will be inserted as"
+                      " an unicode");
     }
     if (layout == TURKISH && ch == _T('3')) {
-      throw Exception(_T("Special case for the '3' character on the turkish-Q")
-        _T(" keyboard, it will be inserted as")
-        _T(" an unicode"));
+      throw ::remoting::Exception("Special case for the '3' character on the turkish-Q"
+        " keyboard, it will be inserted as"
+        " an unicode");
     }
     if (layout == GREEK && ch == 0x03c2) {
-      throw Exception(_T("Special case for the 'w' character on the greek")
-        _T(" keyboard, it will be inserted as")
-        _T(" an unicode"));
+      throw ::remoting::Exception("Special case for the 'w' character on the greek"
+        " keyboard, it will be inserted as"
+        " an unicode");
     }
   }
   return vkKeyScanResult;
@@ -414,8 +415,8 @@ HKL InputInjector::getCurrentKbdLayout()
   // Determine current owning thread.
   HWND hwnd = GetForegroundWindow();
   if (hwnd == 0) {
-    throw Exception(_T("Can't insert key event because")
-                    _T(" a window is losing activation"));
+    throw ::remoting::Exception("Can't insert key event because"
+                    " a window is losing activation");
   }
   DWORD threadId = GetWindowThreadProcessId(hwnd, 0);
   return GetKeyboardLayout(threadId);

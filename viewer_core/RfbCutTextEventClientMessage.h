@@ -22,15 +22,15 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _RFB_CUT_TEXT_EVENT_CLIENT_MESSAGE_H_
-#define _RFB_CUT_TEXT_EVENT_CLIENT_MESSAGE_H_
+#pragma once
+
 
 #include "RfbClientToServerMessage.h"
 
 class RfbCutTextEventClientMessage : public RfbClientToServerMessage
 {
 public:
-  RfbCutTextEventClientMessage(const ::string & cutText);
+  RfbCutTextEventClientMessage(const ::scoped_string & cutText);
   ~RfbCutTextEventClientMessage();
 
   void send(RfbOutputGate *output);
@@ -40,4 +40,4 @@ private:
   ::string m_cutText;
 };
 
-#endif
+

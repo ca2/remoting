@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _WATERMARKS_CONTROLLER_H_
-#define _WATERMARKS_CONTROLLER_H_
+#pragma once
+
 
 
 
@@ -68,6 +68,6 @@ private:
 	int m_width;
 };
 
-#endif _WATERMARKS_CONTROLLER_H_
+//_WATERMARKS_CONTROLLER_H_
 
 

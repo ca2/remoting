@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CONNECTION_CONFIG_SETTINGS_MANAGER_H_
-#define _CONNECTION_CONFIG_SETTINGS_MANAGER_H_
+#pragma once
+
 
 #include "config_lib/RegistrySettingsManager.h"
 
@@ -35,4 +35,4 @@ public:
   virtual ~ConnectionConfigSM();
 };
 
-#endif
+

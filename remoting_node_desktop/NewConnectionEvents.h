@@ -22,17 +22,17 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __NEWCONNECTIONEVENTS_H__
-#define __NEWCONNECTIONEVENTS_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
 class NewConnectionEvents
 {
 public:
-  virtual void onSuccAuth(const ::string & ip) = 0;
-  virtual void onAuthFailed(const ::string & ip) = 0;
-  virtual void onDisconnect(const ::string & message) = 0;
+  virtual void onSuccAuth(const ::scoped_string & ip) = 0;
+  virtual void onAuthFailed(const ::scoped_string & ip) = 0;
+  virtual void onDisconnect(const ::scoped_string & message) = 0;
 };
 
-#endif // __NEWCONNECTIONEVENTS_H__
+//// __NEWCONNECTIONEVENTS_H__

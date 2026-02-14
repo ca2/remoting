@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RFBDISPATCHERLISTENER_H__
-#define __RFBDISPATCHERLISTENER_H__
+#pragma once
+
 
 #include "network/RfbInputGate.h"
 
@@ -34,4 +34,4 @@ public:
   virtual void onRequest(unsigned int reqCode, RfbInputGate *input) = 0;
 };
 
-#endif // __RFBDISPATCHERLISTENER_H__
+//// __RFBDISPATCHERLISTENER_H__

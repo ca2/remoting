@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _NOTIFY_ICON_H_
-#define _NOTIFY_ICON_H_
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -46,7 +46,7 @@ public:
   void setIcon(Icon *icon);
   void setText(const ::scoped_string & scopedstrtext);
 
-  void showBalloon(const ::scoped_string & scopedstrmessage, const ::scoped_string & scopedstrcaption, DWORD timeoutMillis);
+  void showBalloon(const ::scoped_string & scopedstrMessage, const ::scoped_string & scopedstrcaption, DWORD timeoutMillis);
 
   void show();
   void hide();
@@ -57,4 +57,4 @@ protected:
   bool m_visible;
 };
 
-#endif
+

@@ -21,25 +21,28 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-#include "framework.h"
 #include "StringTable.h"
 #include "ResourceLoader.h"
+#include "framework.h"
 
-::std::map<UINT, ::string> StringTable::_cache;
+::iptr_map<::string> StringTable::s_mapString;
 
-StringTable::StringTable()
+StringTable::StringTable() {}
+
+::string StringTable::getString(UINT id)
 {
-}
 
-const ::scoped_string & scopedstrStringTable::getString(UINT id)
-{
-  if (_cache.find(id) == _cache.end()) {
-    ::string string;
-    if (ResourceLoader::getInstance()->loadString(id, &string)) {
-      _cache[id] = string;
-    } else {
-      return _T("Requested string from StringTable cannot be received");
-    }
-  }
-  return (*_cache.find(id)).second.getString();
+   ::string str;
+
+   auto p = s_mapString.find(id);
+
+   if (!p)
+   {
+         if (!ResourceLoader::getInstance()->loadString(id, p->element2()))
+         {
+         p->element2() = "Requested string from StringTable cannot be received";
+         }
+   }
+
+   return p->element2();
 }

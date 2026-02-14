@@ -88,7 +88,7 @@ SOFTWARE.
 #undef assert
 #ifdef DEBUG
 #define assert(expr) {if (!(expr)) \
-		FatalError("Assertion failed file %s, line %d: expr\n", \
+		FatalError("Assertion failed file {}, line {}: expr\n", \
 			__FILE__, __LINE__); }
 #else
 #define assert(expr)
@@ -110,7 +110,7 @@ SOFTWARE.
  * band has the same top y coordinate (y1), and each has the same bottom y
  * coordinate (y2).  Thus all rectangles in a band differ only in their left
  * and right side (x1 and x2).  Bands are implicit in the array of rectangles:
- * there is no separate ::std::list of band start pointers.
+ * there is no separate ::list of band start pointers.
  *
  * The y-x band representation does not minimize rectangles.  In particular,
  * if a rectangle vertically crosses a band (the rectangle has scanlines in 
@@ -233,11 +233,11 @@ miPrintRegion(rgn)
     num = REGION_NUM_RECTS(rgn);
     size = REGION_SIZE(rgn);
     rects = REGION_RECTS(rgn);
-    ErrorF("num: %d size: %d\n", num, size);
-    ErrorF("extents: %d %d %d %d\n",
+    ErrorF("num: {} size: {}\n", num, size);
+    ErrorF("extents: {} {} {} {}\n",
 	   rgn->extents.x1, rgn->extents.y1, rgn->extents.x2, rgn->extents.y2);
     for (i = 0; i < num; i++)
-      ErrorF("%d %d %d %d \n",
+      ErrorF("{} {} {} {} \n",
 	     rects[i].x1, rects[i].y1, rects[i].x2, rects[i].y2);
     ErrorF("\n");
     return(num);
@@ -850,7 +850,7 @@ miRegionOp(
      *
      * We only need to worry about banding and coalescing for the very first
      * band left.  After that, we can just group all remaining boxes,
-     * regardless of how many bands, into one final append to the ::std::list.
+     * regardless of how many bands, into one final append to the ::list.
      */
 
     if ((r1 != r1End) && appendNon1) {
@@ -1001,7 +1001,7 @@ miIntersectO (
 
 	/*
 	 * Advance the pointer(s) with the leftmost right side, since the next
-	 * rectangle on that ::std::list may still overlap the other region's
+	 * rectangle on that ::list may still overlap the other region's
 	 * current rectangle.
 	 */
 	if (r1->x2 == x2) {
@@ -1985,7 +1985,7 @@ miInverse(newReg, reg1, invRect)
  *   This routine takes a pointer to a region and a pointer to a box
  *   and determines if the box is outside/inside/partly inside the region.
  *
- *   The idea is to travel through the ::std::list of rectangles trying to cover the
+ *   The idea is to travel through the ::list of rectangles trying to cover the
  *   passed box with them. Anytime a piece of the rectangle isn't covered
  *   by a band of rectangles, partOut is set TRUE. Any time a rectangle in
  *   the region covers part of the box, partIn is set TRUE. The process ends
@@ -2400,7 +2400,7 @@ static void QuickSortSpans(
 }
 
 /*
-    Clip a ::std::list of scanlines to a region.  The caller has allocated the
+    Clip a ::list of scanlines to a region.  The caller has allocated the
     space.  FSorted is non-zero if the scanline origins are in ascending
     order.
     returns the number of new, clipped scanlines.

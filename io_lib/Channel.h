@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CHANNEL_H_
-#define _CHANNEL_H_
+#pragma once
+
 
 #include "util/Exception.h"
 
@@ -44,10 +44,10 @@ public:
 
   /**
    * Closes channel and break all blocking operation that executed at the moment of close() call.
-   * @throw Exception on error.
-   * @fixme why Exception, but not IOException?
+   * @throw ::remoting::Exception on error.
+   * @fixme why ::remoting::Exception, but not ::io_exception?
    */
   virtual void close()= 0;
 };
 
-#endif
+

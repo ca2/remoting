@@ -22,13 +22,14 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "WinStaLibrary.h"
 
 WinStaLibrary::WinStaLibrary()
 : m_winStaDll(NULL), m_winStationConnectW(NULL)
 {
   try {
-    m_winStaDll = new DynamicLibrary(_T("winsta.dll"));
+    m_winStaDll = new DynamicLibrary("winsta.dll");
 
     m_winStationConnectW = (pWinStationConnectW)m_winStaDll->getProcAddress("WinStationConnectW");
   } catch (...) {

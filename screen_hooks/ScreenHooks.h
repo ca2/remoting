@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __SCREENHOOKS_H__
-#define __SCREENHOOKS_H__
+#pragma once
+
 
 #include "util/CommonHeader.h"
 
@@ -33,4 +33,4 @@ extern "C"
   __declspec(dllexport) bool unsetHook();
 }
 
-#endif // __SCREENHOOKS_H__
+//// __SCREENHOOKS_H__

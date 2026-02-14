@@ -22,10 +22,10 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _OUTPUT_STREAM_H_
-#define _OUTPUT_STREAM_H_
+#pragma once
 
-#include "IOException.h"
+
+#include "io_lib/io_exception.h"
 
 /**
  * Output stream interface (abstract class).
@@ -53,4 +53,3 @@ public:
   virtual void flush();
 };
 
-#endif

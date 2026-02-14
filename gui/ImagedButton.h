@@ -86,4 +86,4 @@ protected:
   bool window_procedure(LRESULT &lresult, UINT message, wparam wparam, lparam lparam) override;
 };
 
-//#endif
+//

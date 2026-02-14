@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _RAW_DECODER_H_
-#define _RAW_DECODER_H_
+#pragma once
+
 
 #include "DecoderOfRectangle.h"
 
@@ -52,4 +52,4 @@ private:
   static const size_t AREA_OF_ONE_PART = 1024 * 64;
 };
 
-#endif
+

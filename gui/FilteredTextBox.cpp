@@ -27,7 +27,7 @@
 FilteredTextBox::FilteredTextBox()
 : m_oldWindowProc(NULL), m_tip(NULL)
 {
-  m_text.setString(_T(""));
+  m_text= "";
 }
 
 FilteredTextBox::~FilteredTextBox()
@@ -47,7 +47,7 @@ void FilteredTextBox::setWindow(HWND hwnd)
 
 void FilteredTextBox::setText(TCHAR *text)
 {
-  m_text.setString(text);
+  m_text= text;
   TextBox::setText(text);
 }
 
@@ -65,12 +65,12 @@ LRESULT FilteredTextBox::makeCheck()
 {
   ::string updatedText;
   TextBox::getText(&updatedText);
-  if (isStringValid(updatedText.getString())) {
+  if (isStringValid(updatedText)) {
     m_text = updatedText;
   } else {
     if (m_tip != NULL) {
       showBalloonTip(m_tip);
-      TextBox::setText(m_text.getString());
+      TextBox::setText(m_text);
       TextBox::selectText(m_text.getLength(), m_text.getLength());
     } else {
       //
@@ -82,7 +82,7 @@ LRESULT FilteredTextBox::makeCheck()
   return 0;
 }
 
-bool FilteredTextBox::isStringValid(const ::scoped_string & scopedstrstring)
+bool FilteredTextBox::isStringValid(const ::scoped_string & scopedstrString)
 {
   if (m_filter != NULL) {
     return m_filter->isStringCorrect(string);

@@ -22,16 +22,16 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _COMMAND_LINE_FORMAT_HELP_H_
-#define _COMMAND_LINE_FORMAT_HELP_H_
+#pragma once
+
 
 #include "util/Exception.h"
 
-class CommandLineFormatHelp : public Exception
+class CommandLineFormatHelp : public ::remoting::Exception
 {
 public:
-  CommandLineFormatHelp(const ::scoped_string & scopedstrmessage = _T("Need help dialog"));
+  CommandLineFormatHelp(const ::scoped_string & scopedstrMessage = "Need help dialog");
   virtual ~CommandLineFormatHelp();
 };
 
-#endif
+

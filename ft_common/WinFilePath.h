@@ -22,39 +22,39 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _WIN_FILE_PATH_H_
-#define _WIN_FILE_PATH_H_
-
-//#include "util/::string.h"
-
-class WinFilePath : public ::string
-{
-public:
-  WinFilePath();
-  WinFilePath(const ::scoped_string & scopedstrstring);
-  WinFilePath(const WinFilePath &stringBuffer);
-
-  ~WinFilePath();
-
-  //
-  // Helper method
-  // FIXME: May we we don't need this method
-  //
-
-  bool parentPathIsRoot();
-
-  //
-  // Override parent method
-  //
-  virtual void setString(const ::scoped_string & scopedstrstring);
-
-  void operator = (const ::string &other);
-
-  bool operator == (const ::string &str) const;
-  bool operator < (const ::string &str) const;
-
-private:
-  bool m_parentPathIsRoot;
-};
-
-#endif
+// #pragma once
+// 
+//
+// //#include "util/::string.h"
+//
+// class WinFilePath : public ::string
+// {
+// public:
+//   WinFilePath();
+//   WinFilePath(const ::scoped_string & scopedstrString);
+//   WinFilePath(const WinFilePath &stringBuffer);
+//
+//   ~WinFilePath();
+//
+//   //
+//   // Helper method
+//   // FIXME: May we we don't need this method
+//   //
+//
+//   bool parentPathIsRoot();
+//
+//   //
+//   // Override parent method
+//   //
+//   virtual void setString(const ::scoped_string & scopedstrString);
+//
+//   void operator = (const ::scoped_string &other);
+//
+//   bool operator == (const ::scoped_string &str) const;
+//   bool operator < (const ::scoped_string &str) const;
+//
+// private:
+//   bool m_parentPathIsRoot;
+// };
+//
+// 

@@ -28,34 +28,34 @@
 NewFolderDialog::NewFolderDialog()
 {
   setResourceId(ftclient_createFolderDialog);
-  m_fileName.setString(_T(""));
+  m_strFileName= "";
 }
 
 NewFolderDialog::NewFolderDialog(Control *parent)
 {
   setResourceId(ftclient_createFolderDialog);
   setParent(parent);
-  m_fileName.setString(_T(""));
+  m_strFileName= "";
 }
 
 NewFolderDialog::~NewFolderDialog()
 {
 }
 
-void NewFolderDialog::setFileName(const ::scoped_string & scopedstrfilename)
+void NewFolderDialog::setFileName(const ::scoped_string & scopedstrFilename)
 {
-  m_fileName.setString(filename);
+  m_strFileName= filename;
 }
 
 void NewFolderDialog::getFileName(::string & storage)
 {
-  *storage = m_fileName;
+  *storage = m_strFileName;
 }
 
 BOOL NewFolderDialog::onInitDialog()
 {
   initControls();
-  m_fileNameTextBox.setText(m_fileName.getString());
+  m_fileNameTextBox.setText(m_strFileName);
   return TRUE;
 }
 
@@ -88,16 +88,16 @@ void NewFolderDialog::onOkButtonClick()
 
   m_fileNameTextBox.getText(&fileName);
 
-  if (fileName.is_empty() || (fileName.findOneOf(_T("\\/")) != -1)) {
+  if (fileName.is_empty() || (fileName.findOneOf("\\/") != -1)) {
     MessageBox(m_ctrlThis.getWindow(),
-               _T("File name cannot be empty and cannot contain '/' or '\\' characters."),
-               _T("Incorrect File Name"),
+               "File name cannot be empty and cannot contain '/' or '\\' characters.",
+               "Incorrect File Name",
                MB_OK | MB_ICONWARNING);
     m_fileNameTextBox.setFocus();
     return ;
   }
 
-  m_fileName = fileName;
+  m_strFileName = fileName;
 
   kill(IDOK);
 }

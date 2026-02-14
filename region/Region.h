@@ -22,11 +22,11 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __REGION_REGION_H_INCLUDED__
-#define __REGION_REGION_H_INCLUDED__
+#pragma onceINCLUDED__
+INCLUDED__
 
-#include <vector>
-#include <list>
+//#include <vector>
+//#include <list>
 
 //#include "::int_rectangle.h"
 
@@ -36,11 +36,11 @@ extern "C" {
 
 /**
  * A Region is an area which can be represented by a set of rectangles with
- * integer coordinates. It maintains the ::std::list of rectangles such way that
+ * integer coordinates. It maintains the ::list of rectangles such way that
  * individual rectangles never overlap. When a rectangle is added to a Region,
  * only its non-overlapping part will be actually added. Note that adding a
  * rectangle will not necessarily increment the number of rectangles by one.
- * On such addition, the underlying ::std::list of rectangles may change dramatically
+ * On such addition, the underlying ::list of rectangles may change dramatically
  * and its length may increase, decrease or remain the same.
  */
 class Region {
@@ -134,17 +134,17 @@ public:
   bool equals(const Region *other) const;
 
   /**
-   * Get the ::std::vector of rectangles that constitute this region.
-   * @param dst pointer to an ::std::vector where the ::std::list of rectangles will be
-   *            saved to. The previous contents of the ::std::vector will be cleared.
+   * Get the ::array_base of rectangles that constitute this region.
+   * @param dst pointer to an ::array_base where the ::list of rectangles will be
+   *            saved to. The previous contents of the ::array_base will be cleared.
    */
-  void getRectVector(::std::vector<::int_rectangle> *dst) const;
+  void getRectVector(::array_base<::int_rectangle> *dst) const;
   /**
-   * Get the ::std::list of rectangles that constitute this region.
-   * @param dst pointer to an ::std::list where the ::std::list of rectangles will be
-   *            saved to. The previous contents of the ::std::list will be cleared.
+   * Get the ::list of rectangles that constitute this region.
+   * @param dst pointer to an ::list where the ::list of rectangles will be
+   *            saved to. The previous contents of the ::list will be cleared.
    */
-  void getRectList(::std::list<::int_rectangle> *dst) const;
+  void getRectList(::list<::int_rectangle> *dst) const;
 
   // Returns count of rectangles in the region.
   size_t getCount() const;
@@ -158,4 +158,4 @@ private:
   RegionRec m_reg;
 };
 
-#endif // __REGION_REGION_H_INCLUDED__
+//// __REGION_REGION_H_INCLUDED__

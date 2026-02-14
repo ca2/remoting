@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _SHAREWINDOWCOMMAND_H_
-#define _SHAREWINDOWCOMMAND_H_
+#pragma once
+
 
 #include "util/Command.h"
 
@@ -33,7 +33,7 @@ class ShareWindowCommand : public Command
 {
 public:
   ShareWindowCommand(ControlProxy *serverControl,
-                     const ::string & shareWindowName);
+                     const ::scoped_string & shareWindowName);
   virtual ~ShareWindowCommand();
 
   virtual void execute();
@@ -42,4 +42,4 @@ private:
   ::string m_shareWindowName;
 };
 
-#endif // _SHAREWINDOWCOMMAND_H_
+//// _SHAREWINDOWCOMMAND_H_

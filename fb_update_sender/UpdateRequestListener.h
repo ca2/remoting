@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __UPDATEREQUESTLISTENER_H__
-#define __UPDATEREQUESTLISTENER_H__
+#pragma once
+
 
 
 
@@ -36,4 +36,4 @@ public:
                                bool incremental) = 0;
 };
 
-#endif // __UPDATEREQUESTLISTENER_H__
+//// __UPDATEREQUESTLISTENER_H__

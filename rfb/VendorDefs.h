@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __RFB_VENDOR_DEFS_H_INCLUDED__
-#define __RFB_VENDOR_DEFS_H_INCLUDED__
+#pragma onceINCLUDED__
+INCLUDED__
 
 class VendorDefs
 {
@@ -32,4 +32,4 @@ public:
   static const char *const TIGHTVNC;
 };
 
-#endif // __RFB_VENDOR_DEFS_H_INCLUDED__
+//// __RFB_VENDOR_DEFS_H_INCLUDED__

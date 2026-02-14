@@ -59,9 +59,9 @@ void UpdateHandlerClient::onRequest(unsigned char reqCode, BlockingGate *backGat
     break;
   default:
     ::string errMess;
-    errMess.format(_T("Unknown %d protocol code received from a pipe ")
-                   _T("update detector"), (int)reqCode);
-    throw Exception(errMess.getString());
+    errMess..formatf("Unknown {} protocol code received from a pipe "
+                   "update detector", (int)reqCode);
+    throw ::remoting::Exception(errMess);
     break;
   }
 }
@@ -74,15 +74,15 @@ void UpdateHandlerClient::extract(UpdateContainer *updateContainer)
 
   UpdateContainer updCont;
   try {
-    m_log->debug(_T("UpdateHandlerClient: send EXTRACT_REQ"));
+    m_log->debug("UpdateHandlerClient: send EXTRACT_REQ");
     m_forwGate->writeUInt8(EXTRACT_REQ); // query for extract
 
     // Get screen size changed
-    m_log->debug(_T("UpdateHandlerClient: Get screen size changed"));
+    m_log->debug("UpdateHandlerClient: Get screen size changed");
     updCont.screenSizeChanged = m_forwGate->readUInt8() != 0;
 
     if (updCont.screenSizeChanged) {
-      m_log->info(_T("UpdateHandlerClient: screen size changed"));
+      m_log->information("UpdateHandlerClient: screen size changed");
       // Store old screen properties
       PixelFormat oldPf = m_backupFrameBuffer.getPixelFormat();
       ::int_size oldDim = m_backupFrameBuffer.getDimension();
@@ -91,10 +91,10 @@ void UpdateHandlerClient::extract(UpdateContainer *updateContainer)
       readPixelFormat(&newPf, m_forwGate);
       ::int_size newDim = readDimension(m_forwGate);;
       if (!newPf.isEqualTo(&oldPf) || !newDim.isEqualTo(&oldDim)) {
-        m_log->info(_T("UpdateHandlerClient: new screen size: %dx%d"), newDim.cx,
+        m_log->information("UpdateHandlerClient: new screen size: %dx{}", newDim.cx,
                                                                      newDim.cy);
-        m_log->info(_T("UpdateHandlerClient: new pixel format: ")
-                  _T("%d, %d, %d, %d, %d, %d, %d, %d"),
+        m_log->information("UpdateHandlerClient: new pixel format: "
+                  "{}, {}, {}, {}, {}, {}, {}, {}",
                                 (int)newPf.bigEndian,
                                 (int)newPf.bitsPerPixel,
                                 (int)newPf.redMax,
@@ -112,11 +112,11 @@ void UpdateHandlerClient::extract(UpdateContainer *updateContainer)
     }
 
     // Get video region
-    m_log->debug(_T("UpdateHandlerClient: Get video region"));
+    m_log->debug("UpdateHandlerClient: Get video region");
     readRegion(&updCont.videoRegion, m_forwGate);
     // Get changed region
     unsigned int countChangedRect = m_forwGate->readUInt32();
-    m_log->info(_T("UpdateHandlerClient: count changed rectangles = %u"), countChangedRect);
+    m_log->information("UpdateHandlerClient: count changed rectangles = %u", countChangedRect);
     for (unsigned int i = 0; i < countChangedRect; i++) {
       ::int_rectangle r = readRect(m_forwGate);
       updCont.changedRegion.addRect(&r);
@@ -126,7 +126,7 @@ void UpdateHandlerClient::extract(UpdateContainer *updateContainer)
     // Get "copyrect"
     unsigned char hasCopyRect = m_forwGate->readUInt8();
     if (hasCopyRect) {
-      m_log->info(_T("UpdateHandlerClient: has \"CopyRect\""));
+      m_log->information("UpdateHandlerClient: has \"CopyRect\"");
       updCont.copySrc = readPoint(m_forwGate);
       ::int_rectangle r = readRect(m_forwGate);
       updCont.copiedRegion.addRect(&r);
@@ -136,14 +136,14 @@ void UpdateHandlerClient::extract(UpdateContainer *updateContainer)
     // Get cursor position if it has been changed.
     updCont.cursorPosChanged = m_forwGate->readUInt8() != 0;
     if (updCont.cursorPosChanged) {
-      m_log->info(_T("UpdateHandlerClient: cursor pos changed"));
+      m_log->information("UpdateHandlerClient: cursor pos changed");
     }
     updCont.cursorPos = readPoint(m_forwGate);
 
     // Get cursor shape if it has been changed.
     updCont.cursorShapeChanged = m_forwGate->readUInt8() != 0;
     if (updCont.cursorShapeChanged) {
-      m_log->info(_T("UpdateHandlerClient: cursor shape changed"));
+      m_log->information("UpdateHandlerClient: cursor shape changed");
       PixelFormat newPf = m_backupFrameBuffer.getPixelFormat();
       ::int_size newDim = readDimension(m_forwGate);
       Point newHotSpot = readPoint(m_forwGate);
@@ -162,7 +162,7 @@ void UpdateHandlerClient::extract(UpdateContainer *updateContainer)
     }
 
   } catch (ReconnectException &) {
-    m_log->info(_T("UpdateHandlerClient: ReconnectException catching in the extract function"));
+    m_log->information("UpdateHandlerClient: ReconnectException catching in the extract function");
   }
   *updateContainer = updCont;
 }

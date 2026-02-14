@@ -31,7 +31,7 @@
 
 void VncAuthentication::vncAuthenticate(DataInputStream *input,
                                         DataOutputStream *output,
-                                        const ::string & password)
+                                        const ::scoped_string & password)
 {
   // TODO: removed duplicate code: ControlAuth.cpp
 
@@ -43,7 +43,7 @@ void VncAuthentication::vncAuthenticate(DataInputStream *input,
 
   unsigned char m_password[VNC_PASSWORD_SIZE];
   memset(m_password, 0, sizeof(m_password));
-  memcpy(m_password, passwordAnsi.getString(),
+  memcpy(m_password, passwordAnsi,
          ::minimum(passwordAnsi.getLength(), sizeof(m_password)));
 
   unsigned char challenge[16];

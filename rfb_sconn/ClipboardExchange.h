@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __CLIPBOARDEXCHANGE_H__
-#define __CLIPBOARDEXCHANGE_H__
+#pragma once
+
 
 #include "RfbDispatcherListener.h"
 #include "RfbCodeRegistrator.h"
@@ -38,7 +38,7 @@ public:
                     RfbOutputGate *output, bool viewOnly, LogWriter *log);
   virtual ~ClipboardExchange();
 
-  void sendClipboard(const ::string & newClipboard);
+  void sendClipboard(const ::scoped_string & newClipboard);
 
 protected:
   // Listen function
@@ -63,4 +63,4 @@ private:
   LogWriter *m_log;
 };
 
-#endif // __CLIPBOARDEXCHANGE_H__
+//// __CLIPBOARDEXCHANGE_H__

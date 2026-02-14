@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __UPDATEHANDLERCLIENT_H__
-#define __UPDATEHANDLERCLIENT_H__
+#pragma once
+
 
 #include "desktop/UpdateHandler.h"
 #include "DesktopServerProto.h"
@@ -55,4 +55,4 @@ protected:
   LogWriter *m_log;
 };
 
-#endif // __UPDATEHANDLERCLIENT_H__
+//// __UPDATEHANDLERCLIENT_H__

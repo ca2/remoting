@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _SHAREDISPLAYCOMMAND_H_
-#define _SHAREDISPLAYCOMMAND_H_
+#pragma once
+
 
 #include "util/Command.h"
 #include "ControlProxy.h"
@@ -41,4 +41,4 @@ private:
   unsigned char m_displayNumber;
 };
 
-#endif // _SHAREDISPLAYCOMMAND_H_
+//// _SHAREDISPLAYCOMMAND_H_

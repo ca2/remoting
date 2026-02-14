@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _IP_ACCESS_CONTROL_DIALOG_H_
-#define _IP_ACCESS_CONTROL_DIALOG_H_
+#pragma once
+
 
 #include "gui/BaseDialog.h"
 #include "gui/ListView.h"
@@ -112,4 +112,4 @@ private:
   BaseDialog *m_parentDialog;
 };
 
-#endif
+

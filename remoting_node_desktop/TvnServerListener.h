@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _TVN_SERVER_LISTENER_H_
-#define _TVN_SERVER_LISTENER_H_
+#pragma once
+
 
 /**
  * Listener of TightVNC server (TvnServer class) events.
@@ -42,4 +42,4 @@ public:
   virtual void onTvnServerShutdown() = 0;
 };
 
-#endif
+

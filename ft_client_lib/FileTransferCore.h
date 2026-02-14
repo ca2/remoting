@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _FILE_TRANSFER_CORE_H_
-#define _FILE_TRANSFER_CORE_H_
+#pragma once
+
 
 #include "ft_common/FileInfo.h"
 #include "log_writer/LogWriter.h"
@@ -63,28 +63,28 @@ public:
 
   const OperationSupport &getSupportedOps();
 
-  ::std::vector<FileInfo> *getListLocalFolder(const ::scoped_string & scopedstrpathToFile);
-  ::std::vector<FileInfo> *getListRemoteFolder();
+  ::array_base<FileInfo> *getListLocalFolder(const ::scoped_string & scopedstrPathToFile);
+  ::array_base<FileInfo> *getListRemoteFolder();
 
   void downloadOperation(const FileInfo *filesToDownload,
                          size_t filesCount,
-                         const ::scoped_string & scopedstrpathToTargetRoot,
-                         const ::scoped_string & scopedstrpathToSourceRoot);
+                         const ::scoped_string & scopedstrPathToTargetRoot,
+                         const ::scoped_string & scopedstrPathToSourceRoot);
   void uploadOperation(const FileInfo *filesToDownload,
                        size_t filesCount,
-                       const ::scoped_string & scopedstrpathToSourceRoot,
-                       const ::scoped_string & scopedstrpathToTargetRoot);
+                       const ::scoped_string & scopedstrPathToSourceRoot,
+                       const ::scoped_string & scopedstrPathToTargetRoot);
   void localFilesDeleteOperation(const FileInfo *filesToDelete,
                                  unsigned int filesCount,
-                                 const ::scoped_string & scopedstrpathToTargetRoot);
+                                 const ::scoped_string & scopedstrPathToTargetRoot);
   void remoteFilesDeleteOperation(const FileInfo *filesInfoToDelete,
                                   size_t filesCount,
-                                  const ::scoped_string & scopedstrpathToTargetRoot);
-  void remoteFolderCreateOperation(FileInfo file, const ::scoped_string & scopedstrpathToTargetRoot);
+                                  const ::scoped_string & scopedstrPathToTargetRoot);
+  void remoteFolderCreateOperation(FileInfo file, const ::scoped_string & scopedstrPathToTargetRoot);
   void remoteFileRenameOperation(FileInfo sourceFileInfo,
                                  FileInfo targetFileInfo,
-                                 const ::scoped_string & scopedstrpathToTargetRoot);
-  void remoteFileListOperation(const ::scoped_string & scopedstrpathToFile);
+                                 const ::scoped_string & scopedstrPathToTargetRoot);
+  void remoteFileListOperation(const ::scoped_string & scopedstrPathToFile);
 
   void terminateCurrentOperation();
 
@@ -94,8 +94,8 @@ public:
   void onUpdateState(int state, int result);
 
   // FIXME: Debug.
-  void updateSupportedOperations(const ::std::vector<unsigned int> *clientCaps,
-                                 const ::std::vector<unsigned int> *serverCaps);
+  void updateSupportedOperations(const ::array_base<unsigned int> *clientCaps,
+                                 const ::array_base<unsigned int> *serverCaps);
 
 protected:
   //
@@ -106,7 +106,7 @@ protected:
 
   virtual int targetFileExists(FileInfo *sourceFileInfo,
                                FileInfo *targetFileInfo,
-                               const ::scoped_string & scopedstrpathToTargetFile);
+                               const ::scoped_string & scopedstrPathToTargetFile);
 
   //
   // Inherited from OperationEventListener
@@ -114,9 +114,9 @@ protected:
 
   virtual void ftOpStarted(FileTransferOperation *sender);
   virtual void ftOpFinished(FileTransferOperation *sender);
-  virtual void ftOpErrorMessage(FileTransferOperation *sender, const ::scoped_string & scopedstrmessage);
+  virtual void ftOpErrorMessage(FileTransferOperation *sender, const ::scoped_string & scopedstrMessage);
   virtual void ftOpInfoMessage(FileTransferOperation *sender,
-                               const ::scoped_string & scopedstrmessage);
+                               const ::scoped_string & scopedstrMessage);
 
   //
   // Interface of log
@@ -144,7 +144,7 @@ protected:
   // This member needs for executing file transfer operations,
   // after operation is created, but before it has started it needs
   // to be added to these listeners, after it has finished work needs
-  // to remove operation from listeners ::std::list.
+  // to remove operation from listeners ::list.
   //
 
   ListenerContainer<FileTransferEventHandler *> *m_fileTransferListeners;
@@ -162,16 +162,16 @@ protected:
   OperationSupport m_supportedOps;
 
   //
-  // File ::std::list request variables
+  // File ::list request variables
   //
 
-  ::std::vector <FileInfo> m_remoteFilesInfo;
+  ::array_base <FileInfo> m_remoteFilesInfo;
 
   //
-  // Local file ::std::list variables
+  // Local file ::list variables
   //
 
-  ::std::vector <FileInfo> m_localFilesInfo;
+  ::array_base <FileInfo> m_localFilesInfo;
 
   //
   // file transfer interface
@@ -203,4 +203,4 @@ protected:
 
 };
 
-#endif
+

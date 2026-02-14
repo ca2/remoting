@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _FILE_INFO_LIST_VIEW_H_
-#define _FILE_INFO_LIST_VIEW_H_
+#pragma once
+
 
 #include "gui/ListView.h"
 #include "ft_common/FileInfo.h"
@@ -43,13 +43,13 @@ public:
   void addItem(int index, FileInfo *fileInfo);
 
   //
-  // Adds files info array to the end of ::std::list view
+  // Adds files info array to the end of ::list view
   //
 
   void addRange(FileInfo **filesInfo, size_t count);
 
   //
-  // Returns file info notated by first selected ::std::list view item
+  // Returns file info notated by first selected ::list view item
   //
 
   FileInfo *getSelectedFileInfo();
@@ -58,7 +58,7 @@ public:
 protected:
 
   //
-  // Loads file ::std::list view icons from application resources
+  // Loads file ::list view icons from application resources
   //
 
   void loadImages();
@@ -86,4 +86,4 @@ protected:
   static const int IMAGE_FILE_INDEX = 2;
 };
 
-#endif
+

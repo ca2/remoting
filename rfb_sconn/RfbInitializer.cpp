@@ -93,7 +93,7 @@ void RfbInitializer::initVersion()
     checkForLoopback();
     // Checking for a ban before auth and then after.
     checkForBan();
-  } catch (Exception &e) {
+  } catch (::remoting::Exception &e) {
     if (m_minorVerNum == 3) {
       m_output->writeUInt32(0);
     } else {
@@ -104,7 +104,7 @@ void RfbInitializer::initVersion()
     _ASSERT(reasonLen == reason.getLength());
 
     m_output->writeUInt32(reasonLen);
-    m_output->writeFully(reason.getString(), reasonLen);
+    m_output->writeFully(reason, reasonLen);
 
     throw;
   }
@@ -120,10 +120,10 @@ void RfbInitializer::checkForLoopback()
 
   ServerConfig *srvConf = Configurator::getInstance()->getServerConfig();
   if (isLoopback && !srvConf->isLoopbackConnectionsAllowed()) {
-    throw Exception(_T("Sorry, loopback connections are not enabled"));
+    throw ::remoting::Exception("Sorry, loopback connections are not enabled");
   }
   if (srvConf->isOnlyLoopbackConnectionsAllowed() && !isLoopback) {
-    throw Exception(_T("Your connection has been rejected"));
+    throw ::remoting::Exception("Your connection has been rejected");
   }
 }
 
@@ -142,7 +142,7 @@ void RfbInitializer::doTightAuth()
     // Read the security type selected by the client.
     unsigned int clientAuthValue = m_input->readUInt32();
     if (!authInfo.includes(clientAuthValue)) {
-      throw Exception(_T(""));
+      throw ::remoting::Exception("");
     }
     doAuth(clientAuthValue);
   } else {
@@ -158,7 +158,7 @@ void RfbInitializer::doAuth(unsigned int authType)
   } else if (authType == AuthDefs::NONE) {
     doAuthNone();
   } else {
-    throw Exception(_T(""));
+    throw ::remoting::Exception("");
   }
   // Perform additional work via a listener.
   m_extAuthListener->onCheckAccessControl(m_client);
@@ -188,7 +188,7 @@ void RfbInitializer::doVncAuth()
   bool hasRdly = srvConf->hasReadOnlyPassword();
 
   if (!hasPrim && !hasRdly) {
-    throw AuthException(_T("Server is not configured properly"));
+    throw AuthException("Server is not configured properly");
   }
 
   if (hasPrim) {
@@ -216,9 +216,9 @@ void RfbInitializer::doVncAuth()
   ::string clientAddressStorage;
   m_client->getPeerHost(&clientAddressStorage);
   ::string errMess;
-  errMess.format(_T("Authentication failed from %s"), clientAddressStorage.getString());
+  errMess.formatf("Authentication failed from {}", clientAddressStorage);
 
-  throw AuthException(errMess.getString());
+  throw AuthException(errMess);
 }
 
 void RfbInitializer::doAuthNone()
@@ -236,7 +236,7 @@ void RfbInitializer::initAuthenticate()
     }
     // Here the protocol varies between versions 3.3 and 3.7+.
     if (m_minorVerNum >= 7) {
-      // Send a ::std::list with two security types -- VNC-compatible security type
+      // Send a ::list with two security types -- VNC-compatible security type
       // and a special code allowing to enable TightVNC protocol extensions.
       m_output->writeUInt8(2);
       m_output->writeUInt8(primSecType);
@@ -248,7 +248,7 @@ void RfbInitializer::initAuthenticate()
         doTightAuth();
       } else {
         if (clientSecType != primSecType) {
-          throw Exception(_T("Security types do not match"));
+          throw ::remoting::Exception("Security types do not match");
         }
         doAuth(AuthDefs::convertFromSecurityType(clientSecType));
       }
@@ -267,7 +267,7 @@ void RfbInitializer::initAuthenticate()
 
       m_output->writeUInt32(1); // FIXME: Use a named constant instead of 1.
       m_output->writeUInt32(reasonLen);
-      m_output->writeFully(reason.getString(), reasonLen);
+      m_output->writeFully(reason, reasonLen);
     }
     throw;
   }
@@ -303,7 +303,7 @@ void RfbInitializer::sendDesktopName()
 {
   ::string deskName;
   if (!Environment::getComputerName(&deskName)) {
-    deskName.setString(DefaultNames::DEFAULT_COMPUTER_NAME);
+    deskName= DefaultNames::DEFAULT_COMPUTER_NAME;
   }
 
   AnsiStringStorage ansiName(&deskName);
@@ -311,7 +311,7 @@ void RfbInitializer::sendDesktopName()
   _ASSERT(dnLen == ansiName.getLength());
 
   m_output->writeUInt32(dnLen);
-  m_output->writeFully(ansiName.getString(), dnLen);
+  m_output->writeFully(ansiName, dnLen);
 }
 
 void RfbInitializer::sendInteractionCaps(const CapContainer *srvToClCaps,
@@ -335,13 +335,13 @@ unsigned int RfbInitializer::getProtocolMinorVersion(const char str[12])
        str[7] != '.' ||
        !isdigit(str[8]) || !isdigit(str[9]) || !isdigit(str[10]) ||
        str[11] != '\n' ) {
-    throw Exception(_T("Invalid format of the RFB version message"));
+    throw ::remoting::Exception("Invalid format of the RFB version message");
   }
 
   unsigned int majorVersion =
     (str[4] - '0') * 100 + (str[5] - '0') * 10 + (str[6] - '0');
   if (majorVersion != 3) {
-    throw Exception(_T("Unsupported RFB protocol version requested"));
+    throw ::remoting::Exception("Unsupported RFB protocol version requested");
   }
 
   unsigned int minorVersion =
@@ -352,6 +352,6 @@ unsigned int RfbInitializer::getProtocolMinorVersion(const char str[12])
 void RfbInitializer::checkForBan()
 {
   if (m_extAuthListener->onCheckForBan(m_client)) {
-    throw AuthException(_T("Your connection has been rejected"));
+    throw AuthException("Your connection has been rejected");
   }
 }

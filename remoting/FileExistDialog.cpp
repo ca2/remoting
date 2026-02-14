@@ -53,12 +53,12 @@ int FileExistDialog::showModal()
 }
 
 void FileExistDialog::setFilesInfo(FileInfo *existingFileInfo, FileInfo *newFileInfo,
-                                   const ::scoped_string & scopedstrpathToFileCaption)
+                                   const ::scoped_string & scopedstrPathToFileCaption)
 {
   m_newFileInfo = newFileInfo;
   m_existingFileInfo = existingFileInfo;
 
-  m_pathToFileCaption.setString(pathToFileCaption);
+  m_pathToFileCaption= pathToFileCaption;
 
   _ASSERT(m_newFileInfo != NULL);
   _ASSERT(m_existingFileInfo != NULL);
@@ -90,7 +90,7 @@ BOOL FileExistDialog::onInitDialog()
 
   m_appendButton.setEnabled(m_canAppend);
 
-  m_fileNameLabel.setText(m_pathToFileCaption.getString());
+  m_fileNameLabel.setText(m_pathToFileCaption);
 
   return TRUE;
 }
@@ -169,7 +169,7 @@ void FileExistDialog::onCancelButtonClick()
 void FileExistDialog::updateGui(FileInfo *fileInfo, Control *sizeLabel, Control *modTimeLabel)
 {
   TCHAR buffer[255];
-  _stprintf_s(&buffer[0], 255, _T("%lld bytes"), fileInfo->getSize());
+  _stprintf_s(&buffer[0], 255, "%lld bytes", fileInfo->getSize());
   sizeLabel->setText(&buffer[0]);
 
   DateTime dateTime(fileInfo->lastModified());
@@ -177,7 +177,7 @@ void FileExistDialog::updateGui(FileInfo *fileInfo, Control *sizeLabel, Control 
   ::string formatTimeString;
   dateTime.toString(&formatTimeString);
 
-  modTimeLabel->setText(formatTimeString.getString());
+  modTimeLabel->setText(formatTimeString);
 }
 
 void FileExistDialog::initControls()

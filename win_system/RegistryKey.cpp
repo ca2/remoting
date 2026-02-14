@@ -22,8 +22,9 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "RegistryKey.h"
-#include <vector>
+//#include <vector>
 
 RegistryKey::RegistryKey(HKEY rootKey, const ::scoped_string & scopedstrentry,
                          bool createIfNotExists, SECURITY_ATTRIBUTES *sa)
@@ -40,7 +41,7 @@ RegistryKey::RegistryKey(RegistryKey *rootKey, const ::scoped_string & scopedstr
 RegistryKey::RegistryKey(HKEY rootKey)
 : m_key(rootKey), m_rootKey(rootKey)
 {
-  m_entry.setString(_T(""));
+  m_entry= "";
 }
 
 RegistryKey::RegistryKey()
@@ -73,7 +74,7 @@ HKEY RegistryKey::getHKEY() const
   return m_key;
 }
 
-bool RegistryKey::createSubKey(const ::scoped_string & scopedstrsubkey)
+bool RegistryKey::createSubKey(const ::scoped_string & scopedstrSubkey)
 {
   if (!isOpened()) {
     return false;
@@ -83,7 +84,7 @@ bool RegistryKey::createSubKey(const ::scoped_string & scopedstrsubkey)
   return regKey.isOpened();
 }
 
-bool RegistryKey::deleteSubKey(const ::scoped_string & scopedstrsubkey)
+bool RegistryKey::deleteSubKey(const ::scoped_string & scopedstrSubkey)
 {
   if (!isOpened()) {
     return false;
@@ -92,7 +93,7 @@ bool RegistryKey::deleteSubKey(const ::scoped_string & scopedstrsubkey)
   return RegDeleteKey(m_key, subkey) == ERROR_SUCCESS;
 }
 
-bool RegistryKey::deleteSubKeyTree(const ::scoped_string & scopedstrsubkey)
+bool RegistryKey::deleteSubKeyTree(const ::scoped_string & scopedstrSubkey)
 {
   if (!isOpened()) {
     return false;
@@ -111,13 +112,13 @@ bool RegistryKey::deleteSubKeyTree(const ::scoped_string & scopedstrsubkey)
   //
 
   if (key.getSubKeyNames(NULL, &subkeys2Count) && subkeys2Count != 0) {
-    ::std::vector<::string> subkeys2Names(subkeys2Count);
+    ::string_array subkeys2Names(subkeys2Count);
 
     key.getSubKeyNames(&subkeys2Names[0], NULL);
 
     // Enumerate subkeys
     for (size_t i = 0; i < subkeys2Count; i++) {
-      if (!key.deleteSubKeyTree(subkeys2Names[i].getString())) {
+      if (!key.deleteSubKeyTree(subkeys2Names[i])) {
         retVal = false;
       }
     }
@@ -160,7 +161,7 @@ bool RegistryKey::setValueAsInt64(const ::scoped_string & scopedstrName, long va
   return RegSetValueEx(m_key, name, 0, REG_QWORD, (BYTE *)&value, sizeof(value)) == ERROR_SUCCESS;
 }
 
-bool RegistryKey::setValueAsString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrvalue)
+bool RegistryKey::setValueAsString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrPayload)
 {
   if (!isOpened()) {
     return false;
@@ -220,7 +221,7 @@ bool RegistryKey::getValueAsString(const ::scoped_string & scopedstrName, ::stri
     return false;
   }
 
-  ::std::vector<TCHAR> buffer(size + 1);
+  ::array_base<TCHAR> buffer(size + 1);
 
   if (RegQueryValueEx(m_key, ::wstring(scopedstrName), 0, &type, (BYTE *)&buffer[0], &size) != ERROR_SUCCESS) {
     return false;
@@ -230,7 +231,7 @@ bool RegistryKey::getValueAsString(const ::scoped_string & scopedstrName, ::stri
     buffer[size] = _T('\0');
   }
 
-  out->setString(&buffer[0]);
+  out-= &buffer[0];
 
   return true;
 }
@@ -267,7 +268,7 @@ bool RegistryKey::getSubKeyNames(::string & subKeyNames, size_t *count)
 
     if (ret == ERROR_SUCCESS) {
       if (subKeyNames != NULL) {
-        subKeyNames[i].setString(keyName.getString());
+        subKeyNames[i]= keyName;
       }
       i++;
     } else if (ret == ERROR_NO_MORE_ITEMS) {
@@ -304,13 +305,13 @@ void RegistryKey::initialize(HKEY rootKey, const ::scoped_string & scopedstrentr
   m_rootKey = rootKey;
   m_key = 0;
 
-  m_entry.setString(entry);
+  m_entry= entry;
 
   if (!m_entry.is_empty() && !m_entry.endsWith(_T('\\'))) {
-    m_entry.appendString(_T("\\"));
+    m_entry.appendString("\\");
   }
 
-  tryOpenSubKey(m_rootKey, m_entry.getString(), &m_key, createIfNotExists, sa);
+  tryOpenSubKey(m_rootKey, m_entry, &m_key, createIfNotExists, sa);
 }
 
 DWORD RegistryKey::enumKey(DWORD i, ::string & name)
@@ -318,7 +319,7 @@ DWORD RegistryKey::enumKey(DWORD i, ::string & name)
   DWORD length = 1024;
   DWORD increaseStep = 1024;
 
-  ::std::vector<TCHAR> buffer;
+  ::array_base<TCHAR> buffer;
 
   DWORD ret;
 
@@ -328,7 +329,7 @@ DWORD RegistryKey::enumKey(DWORD i, ::string & name)
     ret = RegEnumKey(m_key, i, &buffer[0], length);
 
     if (ret == ERROR_SUCCESS) {
-      name->setString(&buffer[0]);
+      name-= &buffer[0];
       break;
     } else if (ret == ERROR_MORE_DATA) {
       length += increaseStep;
@@ -340,7 +341,7 @@ DWORD RegistryKey::enumKey(DWORD i, ::string & name)
   return ret;
 }
 
-bool RegistryKey::tryOpenSubKey(HKEY key, const ::scoped_string & scopedstrsubkey, HKEY *openedKey, bool createIfNotExists, SECURITY_ATTRIBUTES *sa)
+bool RegistryKey::tryOpenSubKey(HKEY key, const ::scoped_string & scopedstrSubkey, HKEY *openedKey, bool createIfNotExists, SECURITY_ATTRIBUTES *sa)
 {
   if (RegOpenKey(key, subkey, openedKey) != ERROR_SUCCESS) {
     if (createIfNotExists) {
@@ -349,7 +350,7 @@ bool RegistryKey::tryOpenSubKey(HKEY key, const ::scoped_string & scopedstrsubke
       if (sa != 0) {
         DWORD dwDisposition;
 
-        ret = RegCreateKeyEx(key, subkey, 0, (LPTSTR) _T(""), 0,
+        ret = RegCreateKeyEx(key, subkey, 0, (LPTSTR) "", 0,
                              KEY_READ | KEY_WRITE,
                              sa, openedKey, &dwDisposition);
       } else {

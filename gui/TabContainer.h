@@ -22,14 +22,14 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _TAB_CONTAINER_H_
-#define _TAB_CONTAINER_H_
+#pragma once
+
 
 #include "Tab.h"
-#include <vector>
+//#include <vector>
 
 
 
-typedef ::std::vector<Tab *> TabContainer;
+typedef ::array_base<Tab *> TabContainer;
 
-#endif
+

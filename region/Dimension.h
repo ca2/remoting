@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-//#ifndef __DIMENSION_H__
-//#define __DIMENSION_H__
+//#pragma once
+//_
 //
 //#include "::int_rectangle.h"
 //
@@ -89,4 +89,4 @@
 //  int height;
 //};
 //
-//#endif // __DIMENSION_H__
+////// __DIMENSION_H__

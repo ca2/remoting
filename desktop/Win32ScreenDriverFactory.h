@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef __WIN32SCREENDRIVERFACTORY_H__
-#define __WIN32SCREENDRIVERFACTORY_H__
+#pragma once
+
 
 #include "ScreenDriverFactory.h"
 #include "server_config_lib/ServerConfig.h"
@@ -58,4 +58,4 @@ private:
   ServerConfig *m_srvConf;
 };
 
-#endif // __WIN32SCREENDRIVERFACTORY_H__
+//// __WIN32SCREENDRIVERFACTORY_H__

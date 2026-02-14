@@ -22,13 +22,14 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _FILE_INFO_LIST_H_
-#define _FILE_INFO_LIST_H_
+#pragma once
+//#pragma once
+//
 
 #include "ft_common/FileInfo.h"
 
 //
-// 2D two-side linked ::std::list class with FileInfo data inside
+// 2D two-side linked ::list class with FileInfo data inside
 // specified for using in recursive file transfer client operations
 // like recursive files removal, coping files trees etc.
 //
@@ -36,7 +37,7 @@
 // Remark: class is owner of it m_next and m_child lists,
 // it must care about memory allocated for it.
 //
-// Class allocates memory for m_next ::std::list and m_child ::std::list
+// Class allocates memory for m_next ::list and m_child ::list
 // by own hands and frees memory when it's needed.
 //
 
@@ -45,13 +46,13 @@ class FileInfoList
 public:
 
   //
-  // Creates empty 2d two-side linked ::std::list with fileInfo data inside
+  // Creates empty 2d two-side linked ::list with fileInfo data inside
   //
 
   FileInfoList(FileInfo fileInfo);
 
   //
-  // Creates 1d two-side linked ::std::list with data from filesInfo array
+  // Creates 1d two-side linked ::list with data from filesInfo array
   //
 
   FileInfoList(const FileInfo *filesInfo, size_t count);
@@ -63,68 +64,70 @@ public:
   ~FileInfoList();
 
   //
-  // Creates new file info ::std::list from filesInfo array and set it to child
-  // of this ::std::list (also it creates backward "child to parent" relationship).
+  // Creates new file info ::list from filesInfo array and set it to child
+  // of this ::list (also it creates backward "child to parent" relationship).
   //
 
   void setChild(const FileInfo *filesInfo, size_t count);
 
   //
-  // Returns child of this ::std::list or 0 if no child
+  // Returns child of this ::list or 0 if no child
   //
 
   FileInfoList *getChild();
 
   //
-  // Returns parent of this ::std::list or 0 if no parent
+  // Returns parent of this ::list or 0 if no parent
   //
 
   FileInfoList *getParent();
 
   //
-  // Returns top root (beggining of all ::std::list tree), cannot be 0, always valid ::std::list pointer
+  // Returns top root (beggining of all ::list tree), cannot be 0, always valid ::list pointer
   //
 
   FileInfoList *getRoot();
 
   //
-  // Returns top first (begging of this leaf) element in this ::std::list
+  // Returns top first (begging of this leaf) element in this ::list
   //
 
   FileInfoList *getFirst();
 
   //
-  // Returns next ::std::list element or 0 if no next ::std::list
+  // Returns next ::list element or 0 if no next ::list
   //
 
   FileInfoList *getNext();
 
   //
-  // Returns previous ::std::list element or 0 if no such ::std::list
+  // Returns previous ::list element or 0 if no such ::list
   //
 
   FileInfoList *getPrev();
 
   //
-  // Sets file info hold by this ::std::list
+  // Sets file info hold by this ::list
   //
 
   void setFileInfo(FileInfo fileInfo);
 
   //
-  // Returns file info hold by this ::std::list
+  // Returns file info hold by this ::list
   //
 
   FileInfo *getFileInfo();
 
   //
   // Sets absolute filename (calculated by parent files) associated
-  // with hold file info in this ::std::list to storage variable.
+  // with hold file info in this ::list to storage variable.
   //
   // directorySeparator is char that used to split directories strings.
   //
 
-  void getAbsolutePath(::string & storage, TCHAR directorySeparator);
+  //void getAbsolutePath(::string & storage, TCHAR directorySeparator);
+
+   ::file::path getAbsolutePath();
 
 protected:
 
@@ -144,4 +147,4 @@ protected:
   FileInfo m_fileInfo;
 };
 
-#endif
+//

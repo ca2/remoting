@@ -42,11 +42,11 @@ m_RfbGatesOwner(false)
   m_isEstablished = false;
 }
 
-void TcpConnection::bind(const ::scoped_string & scopedstrhost, unsigned short port)
+void TcpConnection::bind(const ::scoped_string & scopedstrHost, unsigned short port)
 {
   AutoLock al(&m_connectLock);
   if (m_wasBound) {
-    throw Exception(_T("Tcp-connection already bound"));
+    throw ::remoting::Exception("Tcp-connection already bound");
   }
   m_host = host;
   m_port = port;
@@ -60,9 +60,9 @@ void TcpConnection::bind(SocketIPv4 *socket)
 {
   AutoLock al(&m_connectLock);
   if (m_wasBound) {
-    throw Exception(_T("Tcp-connection already bound"));
+    throw ::remoting::Exception("Tcp-connection already bound");
   }
-  m_host = _T("");
+  m_host = "";
   m_port = 0;
   m_socket = socket;
   m_input = 0;
@@ -74,9 +74,9 @@ void TcpConnection::bind(RfbInputGate *input, RfbOutputGate *output)
 {
   AutoLock al(&m_connectLock);
   if (m_wasBound) {
-    throw Exception(_T("Tcp-connection already bound"));
+    throw ::remoting::Exception("Tcp-connection already bound");
   }
-  m_host = _T("");
+  m_host = "";
   m_port = 0;
   m_socket = 0;
   m_input = input;
@@ -96,24 +96,24 @@ void TcpConnection::connect()
     // need create to socket
     if (m_socket == 0) {
       if (!m_host.is_empty() && m_port != 0) {
-        SocketAddressIPv4 ipAddress(m_host.getString(), m_port);
+        SocketAddressIPv4 ipAddress(m_host, m_port);
 
         ::string ipAddressString;
         ipAddress.toString(&ipAddressString);
-        m_logWriter->detail(_T("Connecting to the host \"%s:%hd\" (%s:%hd)..."),
-                            m_host.getString(), m_port,
-                            ipAddressString.getString(), m_port);
+        m_logWriter->detail("Connecting to the host \"{}:%hd\" ({}:%hd)...",
+                            m_host, m_port,
+                            ipAddressString, m_port);
 
         m_socket = new SocketIPv4;
         m_socketOwner = true;
         m_socket->connect(ipAddress);
         m_socket->enableNaggleAlgorithm(false);
       } else {
-        throw Exception(_T("Connection parameters (host, port, socket, gates) is empty."));
+        throw ::remoting::Exception("Connection parameters (host, port, socket, gates) is empty.");
       }
     }
 
-    m_logWriter->detail(_T("Initialization of socket stream and input/output gates..."));
+    m_logWriter->detail("Initialization of socket stream and input/output gates...");
     m_socketStream = new SocketStream(m_socket);
     m_bufInput = new BufferedInputStream(m_socketStream);
     m_input = new RfbInputGate(m_bufInput);
@@ -142,7 +142,7 @@ RfbInputGate *TcpConnection::getInput() const
   {
     AutoLock al(&m_connectLock);
     if (!m_isEstablished) {
-      throw Exception(_T("Connecting has not been established"));
+      throw ::remoting::Exception("Connecting has not been established");
     }
   }
   return m_input;
@@ -153,7 +153,7 @@ RfbOutputGate *TcpConnection::getOutput() const
   {
     AutoLock al(&m_connectLock);
     if (!m_isEstablished) {
-      throw Exception(_T("Connection has not been established"));
+      throw ::remoting::Exception("Connection has not been established");
     }
   }
   return m_output;
