@@ -29,7 +29,8 @@
 #include "thread/LocalMutex.h"
 #include "DynamicLibrary.h"
 #include "SystemException.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
+#include <WtsApi32.h>
 
 typedef DWORD (WINAPI *pWTSGetActiveConsoleSessionId)(void);
 typedef BOOL (WINAPI *pWTSQueryUserToken)(ULONG SessionId, PHANDLE phToken);
@@ -65,7 +66,7 @@ typedef BOOL(WINAPI *pWTSEnumerateSessionsW)(
 #else
 #define pWTSQuerySessionInformation pWTSQuerySessionInformationA
 #define pWTSEnumerateSessions pWTSEnumerateSessionsA
-
+#endif
 
 
 /**

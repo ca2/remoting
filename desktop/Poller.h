@@ -30,7 +30,7 @@
 #include "rfb/FrameBuffer.h"
 
 #include "win_system/WindowsEvent.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 #define DEFAULT_SLEEP_TIME 1000
 

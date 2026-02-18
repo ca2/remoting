@@ -47,7 +47,7 @@
 #include "remoting_control_desktop/ControlCommandLine.h"
 #include "remoting_node_desktop/TvnServerHelp.h"
 
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 #include "win_system/Shell.h"
 #include "win_system/Process.h"
 #include "win_system/WinCommandLineArgs.h"
@@ -62,14 +62,14 @@
 #include "remoting_node/resource.h"
 
 #include "wsconfig_lib/ConfigDialog.h"
-#include "util/AnsiStringStorage.h"
+//#include "util/::string.h"
 #include "remoting_node_desktop/NamingDefs.h"
 #include "SetPasswordsDialog.h"
 #include <algorithm>
 
 ControlApplication::ControlApplication(HINSTANCE hinst,
                                        const ::scoped_string & scopedstrwindowClassName,
-                                       const ::scoped_string & scopedstrcommandLine)
+                                       const ::scoped_string & scopedstrCommandLine)
  : WindowsApplication(hinst, windowClassName),
    m_serverControl(0),
    m_gate(0),
@@ -168,8 +168,8 @@ int ControlApplication::run()
   } catch (::remoting::Exception &) {
     if (!cmdLineParser.isSlave() && !cmdLineParser.hasCheckServicePasswords()) {
       const ::scoped_string & scopedstrMsg = StringTable::getString(IDS_FAILED_TO_CONNECT_TO_CONTROL_SERVER);
-      const ::scoped_string & scopedstrcaption = StringTable::getString(IDS_MBC_TVNCONTROL);
-      MessageBox(0, msg, caption, MB_OK | MB_ICONERROR);
+      const ::scoped_string & scopedstrCaption = StringTable::getString(IDS_MBC_TVNCONTROL);
+      ::remoting::message_box(0, msg, caption, MB_OK | MB_ICONERROR);
     }
     return 1;
   }
@@ -225,12 +225,12 @@ int ControlApplication::run()
         try {
           showIcon = m_serverControl->getShowTrayIconFlag();
         } catch (RemoteException &remEx) {
-          notifyServerSideException(remEx.getMessage());
+          notifyServerSideException(remEx.get_message());
         }
         try {
           m_serverControl->updateTvnControlProcessId(GetCurrentProcessId());
         } catch (RemoteException &remEx) {
-          notifyServerSideException(remEx.getMessage());
+          notifyServerSideException(remEx.get_message());
         }
       } catch (::io_exception &) {
         notifyConnectionLost();
@@ -276,18 +276,18 @@ void ControlApplication::connect(bool controlService, bool slave)
   m_serverControl = new ControlProxy(m_gate);
 }
 
-void ControlApplication::notifyServerSideException(const ::scoped_string & scopedstrreason)
+void ControlApplication::notifyServerSideException(const ::scoped_string & scopedstrReason)
 {
-  ::string message;
+  ::string scopedstrMessage;
 
-  message.format(StringTable::getString(IDS_CONTROL_SERVER_RAISE_EXCEPTION), reason);
+  scopedstrMessage.format(StringTable::getString(IDS_CONTROL_SERVER_RAISE_EXCEPTION), reason);
 
-  MessageBox(0, message, StringTable::getString(IDS_MBC_TVNSERVER), MB_OK | MB_ICONERROR);
+  ::remoting::message_box(0, scopedstrMessage, StringTable::getString(IDS_MBC_TVNSERVER), MB_OK | MB_ICONERROR);
 }
 
 void ControlApplication::notifyConnectionLost()
 {
-  MessageBox(0,
+  ::remoting::message_box(0,
              StringTable::getString(IDS_CONTROL_CONNECTION_LOST),
              StringTable::getString(IDS_MBC_TVNCONTROL),
              MB_OK | MB_ICONEXCLAMATION);
@@ -353,9 +353,9 @@ int ControlApplication::runConfigurator(bool configService, bool isRunAsRequeste
   // admin access rights.
   if (configService && (IsUserAnAdmin() == FALSE)) {
     // If admin rights already requested and application still don't have them,
-    // then show error message and exit.
+    // then show error scopedstrMessage and exit.
     if (isRunAsRequested) {
-      MessageBox(0,
+      ::remoting::message_box(0,
         StringTable::getString(IDS_ADMIN_RIGHTS_NEEDED),
         StringTable::getString(IDS_MBC_TVNCONTROL),
         MB_OK | MB_ICONERROR);
@@ -376,8 +376,8 @@ int ControlApplication::runConfigurator(bool configService, bool isRunAsRequeste
       Shell::runAsAdmin(pathToBinary, childCommandLine);
     } catch (SystemException &sysEx) {
       if (sysEx.getErrorCode() != ERROR_CANCELLED) {
-        MessageBox(0,
-          sysEx.getMessage(),
+        ::remoting::message_box(0,
+          sysEx.get_message(),
           StringTable::getString(IDS_MBC_TVNCONTROL),
           MB_OK | MB_ICONERROR);
       }
@@ -403,11 +403,11 @@ void ControlApplication::getCryptedPassword(unsigned char cryptedPass[8], const 
   plainTextPass.getSubstring(&plainTextPass, 0, 7);
   // Convert from TCHAR[] to char[].
   // FIXME: Check exception catching.
-  AnsiStringStorage ansiPass(&plainTextPass);
+  ::string ansiPass(&plainTextPass);
 
   // Convert to a byte array.
   unsigned char byteArray[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-  size_t len = ::minimum(ansiPass.getLength(), (size_t)8);
+  size_t len = ::minimum(ansiPass.length(), (size_t)8);
   memcpy(byteArray, ansiPass, len);
 
   // Encrypt with a fixed key.
@@ -419,9 +419,9 @@ int ControlApplication::checkServicePasswords(bool isRunAsRequested)
   // FIXME: code duplication.
   if (IsUserAnAdmin() == FALSE) {
     // If admin rights already requested and application still don't have them,
-    // then show error message and exit.
+    // then show error scopedstrMessage and exit.
     if (isRunAsRequested) {
-      MessageBox(0,
+      ::remoting::message_box(0,
         StringTable::getString(IDS_ADMIN_RIGHTS_NEEDED),
         StringTable::getString(IDS_MBC_TVNCONTROL),
         MB_OK | MB_ICONERROR);
@@ -443,8 +443,8 @@ int ControlApplication::checkServicePasswords(bool isRunAsRequested)
       return 0;
     } catch (SystemException &sysEx) {
       if (sysEx.getErrorCode() != ERROR_CANCELLED) {
-        MessageBox(0,
-          sysEx.getMessage(),
+        ::remoting::message_box(0,
+          sysEx.get_message(),
           StringTable::getString(IDS_MBC_TVNCONTROL),
           MB_OK | MB_ICONERROR);
       }
@@ -507,10 +507,10 @@ void ControlApplication::reloadConfig()
     Environment::getCurrentModulePath(&pathToBinary);
     Process processToReloadConfig(pathToBinary, "-controlservice -reload");
     processToReloadConfig.start();
-  } catch (::remoting::Exception &e) {
+  } catch (::exception &e) {
     ::string errMess;
-    errMess.format(StringTable::getString(IDS_FAILED_TO_RELOAD_SERVICE_ON_CHECK_PASS), e.getMessage());
-    MessageBox(0,
+    errMess.format(StringTable::getString(IDS_FAILED_TO_RELOAD_SERVICE_ON_CHECK_PASS), e.get_message());
+    ::remoting::message_box(0,
       errMess,
       StringTable::getString(IDS_MBC_TVNCONTROL),
       MB_OK | MB_ICONERROR);

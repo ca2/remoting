@@ -37,7 +37,7 @@
 class RemoteException : public ::remoting::Exception
 {
 public:
-  RemoteException(const ::scoped_string & scopedstrreason);
+  RemoteException(const ::scoped_string & scopedstrReason);
   virtual ~RemoteException();
 };
 

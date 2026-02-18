@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "region/Point.h"
 #include "desktop_ipc/BlockingGate.h"
 

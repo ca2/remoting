@@ -25,102 +25,103 @@
 #pragma once
 
 
-////#include "util/::string.h"
+////////#include "util/::string.h"
 #include "util/Singleton.h"
 #include "config_lib/ConnectionHistory.h"
-#include "log_writer/FileLogger.h"
+//#include "log_writer/FileLogWriter.h"
 #include "thread/LocalMutex.h"
 #include "thread/AutoLock.h"
 
 #include "ConnectionConfig.h"
 
-//
-// Contains base set of viewer configuration options.
-//
-
-class ViewerConfig : public Singleton<ViewerConfig>
+namespace remoting
 {
-public:
-  ViewerConfig(const ::scoped_string & scopedstrRegistryPath);
-  ~ViewerConfig();
+   //
+   // Contains base set of viewer configuration options.
+   //
 
-  // Deserializes client configuration from settings storage.
-  // Returns true if was no errors during deserialization,
-  // false, otherwise.
-  bool loadFromStorage(SettingsManager *storage);
+   class ViewerConfig : public Singleton<ViewerConfig>
+   {
+   public:
+      ViewerConfig(const ::scoped_string & scopedstrRegistryPath);
+      ~ViewerConfig();
 
-  // Serializes client configuration from settings storage.
-  // Returns true if was no errors during serialization,
-  // false, otherwise.
-  bool saveToStorage(SettingsManager *storage) const;
+      // Deserializes client configuration from settings storage.
+      // Returns true if was no errors during deserialization,
+      // false, otherwise.
+      bool loadFromStorage(SettingsManager *storage);
 
-  // Sets port for incoming connection when client runs in daemoon mode
-  void setListenPort(int listenPort);
-  // Returns listen port value
-  int getListenPort() const;
+      // Serializes client configuration from settings storage.
+      // Returns true if was no errors during serialization,
+      // false, otherwise.
+      bool saveToStorage(SettingsManager *storage) const;
 
-  // Changes log level in 0 - 9 range
-  void setLogLevel(int logLevel);
-  // Returns log level
-  int getLogLevel() const;
+      // Sets port for incoming connection when client runs in daemoon mode
+      void setListenPort(int listenPort);
+      // Returns listen port value
+      int getListenPort() const;
 
-  // Puts log directory to the logDir argument.
-  ::string getLogDir() const;
-  // Changes log directory 
-  void setLogDir(::string &logDir);
+      // Changes log level in 0 - 9 range
+      void setLogLevel(enum_trace_level etracelevel);
+      // Returns log level
+      enum_trace_level getLogLevel() const;
 
-  // Creates path to log file and place value to m_pathToLogFile member
-  // creates logger and return pointer to him
-  Logger *initLog(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrLogName, bool useSpecialFolder = true);
+      // Puts log directory to the logDir argument.
+      ::file::path getLogDir() const;
+      // Changes log directory
+      void setLogDir(const ::file::path &path);
 
-  // function return pointer to logger
-  Logger *getLogger();
+      // Creates path to log file and place value to m_pathToLogFile member
+      // creates LogWriter and return pointer to him
+      LogWriter *initLog(const ::file::path &path, const ::scoped_string & scopedstrLogName, bool useSpecialFolder = true);
 
-  // Sets number of connections to remember
-  void setHistoryLimit(int historyLimit);
-  // Returns number of connections to remember
-  int getHistoryLimit() const;
+      // function return pointer to LogWriter
+      LogWriter *getLogWriter();
 
-  // Sets "show toolbar" flag
-  void showToolbar(bool show);
-  // Returns "show toolbar" flag
-  bool isToolbarShown() const;
+      // Sets number of connections to remember
+      void setHistoryLimit(int historyLimit);
+      // Returns number of connections to remember
+      int getHistoryLimit() const;
 
-  // Sets "prompt on fullscreen flag"
-  void promptOnFullscreen(bool promt);
-  // Returns "prompt on fullscreen flag"
-  bool isPromptOnFullscreenEnabled() const;
+      // Sets "show toolbar" flag
+      void showToolbar(bool show);
+      // Returns "show toolbar" flag
+      bool isToolbarShown() const;
 
-  // Returns path to log file if file is avaliable to write,
-  // returns NULL otherwise
-  ::string getPathToLogFile() const;
+      // Sets "prompt on fullscreen flag"
+      void promptOnFullscreen(bool promt);
+      // Returns "prompt on fullscreen flag"
+      bool isPromptOnFullscreenEnabled() const;
 
-  // Returns connection history
-  ConnectionHistory *getConnectionHistory();
+      // Returns path to log file if file is avaliable to write,
+      // returns NULL otherwise
+      ::string getPathToLogFile() const;
 
-//protected:
-  // TCP port for accepting incoming connection
-  // when client runs in daemon mode
-  int m_listenPort;
-  // Current level of logging
-  int m_logLevel;
-  // Number of connections to remember
-  int m_historyLimit;
-  // If set then toolbar is shown, otherwise not shown
-  bool m_showToolbar;
-  // If set then app must show promt dialog when viewer window
-  // become fullscreen
-  bool m_promptOnFullscreen;
-  // Log file
-  ::string m_pathToLogFile;
-  ::string m_logName;
-  FileLogger *m_logger;
-  // Connection history
-  RegistryKey m_conHistoryKey; // Used by m_conHistory
-  ConnectionHistory m_conHistory;
-//private:
-  // Critical section for synchronization
-  mutable LocalMutex m_cs;
-};
+      // Returns connection history
+      ConnectionHistory *getConnectionHistory();
 
-
+      //protected:
+      // TCP port for accepting incoming connection
+      // when client runs in daemon mode
+      int m_listenPort;
+      // Current level of logging
+      enum_trace_level m_etracelevel;
+      // Number of connections to remember
+      int m_historyLimit;
+      // If set then toolbar is shown, otherwise not shown
+      bool m_showToolbar;
+      // If set then app must show promt dialog when viewer window
+      // become fullscreen
+      bool m_promptOnFullscreen;
+      // Log file
+      ::string m_pathToLogFile;
+      ::string m_logName;
+      //FileLogWriter *m_LogWriter;
+      // Connection history
+      RegistryKey m_conHistoryKey; // Used by m_conHistory
+      ConnectionHistory m_conHistory;
+      //private:
+      // Critical section for synchronization
+      mutable LocalMutex m_cs;
+   };
+} // namespace remoting

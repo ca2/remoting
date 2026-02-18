@@ -17,10 +17,10 @@ list(APPEND library_source
    CtrlAltDelSimulator.cpp
    EmulatedAnonymousPipeFactory.h
    DibSection.h
-   Environment.h
+   #Environment.h
    DibSection.cpp
    EmulatedAnonymousPipeFactory.cpp
-   Environment.cpp
+   #Environment.cpp
    DynamicLibrary.h
    CurrentConsoleProcess.cpp
    DynamicLibrary.cpp
@@ -121,7 +121,10 @@ list(APPEND library_include_directories
 )
 
 
-add_library(${PROJECT_NAME} STATIC ${library_source})
+add_library(${PROJECT_NAME} STATIC ${library_source}
+   ../common/_.h
+   ../common/remoting.cpp
+   ../common/remoting.h)
 
 
 

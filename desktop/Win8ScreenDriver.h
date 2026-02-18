@@ -34,7 +34,7 @@
 #include "WinVideoRegionUpdaterImpl.h"
 #include "UpdateKeeper.h"
 #include "UpdateListener.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 #include "Win8ScreenDriverImpl.h"
 #include "CopyRectDetector.h"
 

@@ -43,11 +43,14 @@ public:
 // for adding, removing listeners.
 //
 
-template<class T> class ListenerContainer {
+template<class T> class ListenerContainer :
+virtual public ::particle
+
+{
 public:
 
   //
-  // Adds listener to class listeners ::list
+  // Adds listener to class listeners ::list_base
   //
 
   void addListener(T listener) {
@@ -70,7 +73,7 @@ public:
   }
 
   //
-  // Removes listener from class listeners ::list
+  // Removes listener from class listeners ::list_base
   //
 
   void removeListener(T listener) {

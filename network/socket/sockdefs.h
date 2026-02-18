@@ -21,11 +21,13 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
+//
+// #ifndef	SOCKDEFS_H
+// //#define SOCKDEFS_H
+#pragma once
 
-#ifndef	SOCKDEFS_H
-//#define SOCKDEFS_H
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 #define socklen_t int
 

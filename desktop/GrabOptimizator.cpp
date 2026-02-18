@@ -265,7 +265,7 @@ void GrabOptimizator::removeObsoleteWholeTElements()
 
 void GrabOptimizator::removeFirstWholeTElement()
 {
-  ::list<double>::iterator iter = m_wholeTElements.begin();
+  ::list_base<double>::iterator iter = m_wholeTElements.begin();
   double wholeT = *iter;
   m_wholeTSum -= wholeT;
   m_wholeTElements.erase(iter);
@@ -328,7 +328,7 @@ void GrabOptimizator::removeObsoleteFragmentStats()
 
 void GrabOptimizator::removeFirstElementsFromFragmentStats()
 {
-  ::list<double>::iterator iterG = m_gElements.begin();
+  ::list_base<double>::iterator iterG = m_gElements.begin();
   double g = *iterG;
   m_gSum -= g;
   m_gElements.erase(iterG);
@@ -341,7 +341,7 @@ void GrabOptimizator::logStatistic()
 
   ::string value;
   ::string statString;
-  for (::list<double>::iterator iter = m_wholeTElements.begin();
+  for (::list_base<double>::iterator iter = m_wholeTElements.begin();
        iter != m_wholeTElements.end();
        iter++) {
     value.formatf(" %.2f;", *iter);
@@ -357,7 +357,7 @@ void GrabOptimizator::logStatistic()
              statString);
 
   statString= "";
-  for (::list<double>::iterator iter = m_gElements.begin();
+  for (::list_base<double>::iterator iter = m_gElements.begin();
        iter != m_gElements.end();
        iter++) {
     value.formatf(" %.2f;", *iter);

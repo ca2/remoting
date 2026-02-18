@@ -26,20 +26,20 @@
 
 
 #include "gui/BaseDialog.h"
-#include "gui/Control.h"
+//#include "gui/::remoting::Window.h"
 #include "gui/TextBox.h"
 
 class NewFolderDialog : public BaseDialog
 {
 public:
   NewFolderDialog();
-  NewFolderDialog(Control *parent);
+  NewFolderDialog(::remoting::Window *parent);
   ~NewFolderDialog();
 
   void setFileName(const ::scoped_string & scopedstrFilename);
-  void getFileName(::string & storage);
+  ::string getFileName();
 
-protected:
+//protected:
 
   //
   // Inherited from BaseDialog
@@ -57,17 +57,17 @@ protected:
   void onOkButtonClick();
   void onCancelButtonClick();
 
-private:
+//private:
 
   void initControls();
 
-protected:
+//protected:
 
   //
   // Controls
   //
 
-  Control m_label;
+  ::remoting::Window m_label;
   TextBox m_fileNameTextBox;
 
   ::string m_strFileName;

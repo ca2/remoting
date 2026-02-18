@@ -43,7 +43,7 @@ public:
    * @param parameters execute parameters.
    * @throws SystemException on fail.
    */
-  static void runAsAdmin(const ::scoped_string & scopedstrPathToFile, const ::scoped_string & scopedstrParameters);
+  static void runAsAdmin(const ::file::path & pathToFile, const ::scoped_string & scopedstrParameters);
 
   /**
    * Opens file with default action specified in Windows.

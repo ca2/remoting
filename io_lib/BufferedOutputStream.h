@@ -50,7 +50,7 @@ public:
    * @throw ::io_exception on error.
    * @fixme really it can throw any kind of exception.
    */
-  virtual size_t write(const void *buffer, size_t len);
+  virtual void write(const void *buffer, memsize len);
 
   /**
    * Writes content of inner buffer to real output stream.
@@ -59,7 +59,7 @@ public:
    */
   void flush();
 
-protected:
+//protected:
   DataOutputStream *m_output;
 
   char m_buffer[100000];

@@ -28,7 +28,7 @@
 #include "io_lib/DataOutputStream.h"
 #include "io_lib/ByteArrayOutputStream.h"
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 #include "RemoteException.h"
 #include "ControlGate.h"
@@ -36,14 +36,14 @@
 /**
  * Class for sending single control request to control server.
  *
- * Solves problem of calculating control message body size (@see ControlProto for details).
+ * Solves problem of calculating control scopedstrMessage body size (@see ControlProto for details).
  * and client auth dialog (if server requires auth for request, this class will show auth dialog).
  *
- * You can use this class only for sending ONE control message.
+ * You can use this class only for sending ONE control scopedstrMessage.
  *
  * @usage
  *   1) Create instance of ControlMessage.
- *   2) Write message body (you don't need to write message id).
+ *   2) Write scopedstrMessage body (you don't need to write scopedstrMessage id).
  *   3) Call send().
  *   4) Destroy instance created in step 1.
  *   5) Read body of reply using control gate (not using this class).
@@ -57,8 +57,8 @@ class ControlMessage : public DataOutputStream
 {
 public:
   /**
-   * Creates new control message.
-   * @param messageId control message id described in ControlProto.
+   * Creates new control scopedstrMessage.
+   * @param messageId control scopedstrMessage id described in ControlProto.
    * @param gate control gate.
    * @param *password. If this param != 0 then it will be uses on auth needed
    * instead of the dialog box.
@@ -71,25 +71,25 @@ public:
                  bool getPassFromConfigEnabled = false,
                  bool forService = false);
   /**
-   * Destroys control message without sending it.
+   * Destroys control scopedstrMessage without sending it.
    */
   virtual ~ControlMessage();
 
   /**
-   * Sends control message and checks server answer (exceptions).
+   * Sends control scopedstrMessage and checks server answer (exceptions).
    * @throws ::io_exception on io error, RemoteException on auth or server error.
    */
   virtual void send();
 
 private:
   /**
-   * Writes control message to control gate.
+   * Writes control scopedstrMessage to control gate.
    * @throws ::io_exception on io error.
    */
   void sendData();
 
   /**
-   * Checks control message ret code.
+   * Checks control scopedstrMessage ret code.
    * @throws ::io_exception on io error, RemoteException if there error during executing remote command (method).
    */
   void checkRetCode();
@@ -102,7 +102,7 @@ private:
 
 private:
   /**
-   * Control gate.
+   * ::remoting::Window gate.
    */
   ControlGate *m_gate;
   /**
@@ -110,7 +110,7 @@ private:
    */
   ByteArrayOutputStream *m_tunnel;
   /**
-   * Control message id.
+   * ::remoting::Window scopedstrMessage id.
    */
   unsigned int m_messageId;
 

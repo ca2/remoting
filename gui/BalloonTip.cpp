@@ -23,11 +23,13 @@
 //
 #include "framework.h"
 #include "BalloonTip.h"
+#include "remoting/common/remoting.h"
 
-BalloonTip::BalloonTip(const ::scoped_string & scopedstrtext, const ::scoped_string & scopedstrcaption)
+
+BalloonTip::BalloonTip(const ::scoped_string & scopedstrText, const ::scoped_string & scopedstrCaption)
 {
-  setText(text);
-  setTitle(caption);
+  setText(scopedstrText);
+  setTitle(scopedstrCaption);
 }
 
 BalloonTip::BalloonTip()
@@ -40,29 +42,29 @@ BalloonTip::~BalloonTip()
 {
 }
 
-void BalloonTip::showTooltip(Control *control)
+void BalloonTip::showTooltip(::remoting::Window *control)
 {
-  MessageBox(control->get_hwnd(), m_text, m_title, MB_OK | MB_ICONWARNING);
+  ::remoting::message_box(control->get_hwnd(),::wstring(m_text), ::wstring(m_title), MB_OK | MB_ICONWARNING);
 }
 
-void BalloonTip::setText(const ::scoped_string & scopedstrtext)
+void BalloonTip::setText(const ::scoped_string & scopedstrText)
 {
-  m_text= text;
+  m_text= scopedstrText;
 }
 
-void BalloonTip::setTitle(const ::scoped_string & scopedstrtitle)
+void BalloonTip::setTitle(const ::scoped_string & scopedstrTitle)
 {
-  m_title= title;
+  m_title= scopedstrTitle;
 }
 
-void BalloonTip::getText(::string & text) const
+void BalloonTip::get_text(::string & text) const
 {
-  text-= m_text;
+  text = m_text;
 }
 
 void BalloonTip::getTitle(::string & title) const
 {
-  title-= m_title;
+  title = m_title;
 }
 
 void BalloonTip::setIconType(int iconType)

@@ -82,13 +82,13 @@ void Win8DeskDuplication::execute()
   const int ACQUIRE_TIMEOUT = 20;
   try {
     ::array_base<int> timeouts;
-    ::array_base<DateTime> begins;
+    ::array_base<::earth::time> begins;
     timeouts.resize(m_outDupl.size());
     begins.resize(m_outDupl.size());
     while (!isTerminating() && isValid()) {
       for (size_t i = 0; i < m_outDupl.size(); i++) {
         {
-          begins[i] = DateTime::now();
+          begins[i] = ::earth::time::now();
           WinDxgiAcquiredFrame acquiredFrame(&m_outDupl[i], ACQUIRE_TIMEOUT);
 		      if (acquiredFrame.wasTimeOut()) {
 			      timeouts[i]++;
@@ -99,7 +99,7 @@ void Win8DeskDuplication::execute()
           else {
             DXGI_OUTDUPL_FRAME_INFO *info = acquiredFrame.getFrameInfo();
             int accum_frames = info->AccumulatedFrames;
-            double dt = (double)(DateTime::now() - begins[i]).getTime(); // in milliseconds
+            double dt = (double)(::earth::time::now() - begins[i]).getTime(); // in milliseconds
             m_log->debug("Acquire frame for output: {} for %f ms, accumulated {} frames", i, dt + ACQUIRE_TIMEOUT * timeouts[i], accum_frames);
             timeouts[i] = 0;
             WinD3D11Texture2D acquiredDesktopImage(acquiredFrame.getDxgiResource());
@@ -118,7 +118,7 @@ void Win8DeskDuplication::execute()
               processCursor(info, i);
             }
             catch (WinDxException &e) {
-              m_log->debug("Error on cursor processing: {}, (%x)", e.getMessage(), (int)e.getErrorCode());
+              m_log->debug("Error on cursor processing: {}, (%x)", e.get_message(), (int)e.getErrorCode());
             } // Cursor
           }
         }
@@ -128,16 +128,16 @@ void Win8DeskDuplication::execute()
     // FIXME: remove it all, catch exceptions in Win8ScreenDriverImpl
   } catch (WinDxRecoverableException &e) {
     ::string errMess;
-    errMess.formatf("Win8DeskDuplication:: Catched WinDxRecoverableException: {}, (%x)", e.getMessage(), (int)e.getErrorCode());
+    errMess.formatf("Win8DeskDuplication:: Catched WinDxRecoverableException: {}, (%x)", e.get_message(), (int)e.getErrorCode());
     setRecoverableError(errMess);
   } catch (WinDxCriticalException &e) {
     ::string errMess;
-    errMess.formatf("Win8DeskDuplication:: Catched WinDxCriticalException: {}, (%x)", e.getMessage(), (int)e.getErrorCode());
+    errMess.formatf("Win8DeskDuplication:: Catched WinDxCriticalException: {}, (%x)", e.get_message(), (int)e.getErrorCode());
     setRecoverableError(errMess); //?????????
     setCriticalError(errMess);
-  } catch (::remoting::Exception &e) {
+  } catch (::exception &e) {
     ::string errMess;
-    errMess.formatf("Win8DeskDuplication:: Catched ::remoting::Exception: {}" , e.getMessage());
+    errMess.formatf("Win8DeskDuplication:: Catched ::remoting::Exception: {}" , e.get_message());
     setRecoverableError(errMess);
   }
 }
@@ -146,13 +146,13 @@ void Win8DeskDuplication::onTerminate()
 {
 }
 
-void Win8DeskDuplication::setCriticalError(const ::scoped_string & scopedstrreason)
+void Win8DeskDuplication::setCriticalError(const ::scoped_string & scopedstrReason)
 {
   m_hasCriticalError = true;
   m_duplListener->onCriticalError(reason);
 }
 
-void Win8DeskDuplication::setRecoverableError(const ::scoped_string & scopedstrreason)
+void Win8DeskDuplication::setRecoverableError(const ::scoped_string & scopedstrReason)
 {
   m_hasRecoverableError = true;
   m_duplListener->onRecoverableError(reason);

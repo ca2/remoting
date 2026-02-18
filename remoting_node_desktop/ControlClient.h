@@ -32,20 +32,20 @@
 #include "remoting_control_desktop/Transport.h"
 #include "ControlAppAuthenticator.h"
 #include "thread/ThreadCollector.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 
 /**
  * ControlClient exception sclass.
  *
  * Solves problem with catching errors that occured when processing
- * control client message (not IO errors).
+ * control client scopedstrMessage (not IO errors).
  */
 class ControlException : public ::remoting::Exception
 {
 public:
-  ControlException(const ::remoting::Exception *parent) : ::remoting::Exception(parent->getMessage()) { }
-  ControlException(const ::scoped_string & scopedstrMessage) : ::remoting::Exception(message) { }
+  ControlException(const ::remoting::Exception *parent) : ::remoting::Exception(parent->get_message()) { }
+  ControlException(const ::scoped_string & scopedstrMessage) : ::remoting::Exception(scopedstrMessage) { }
   virtual ~ControlException() { };
 };
 
@@ -81,7 +81,7 @@ protected:
    * Inherited from Thread class.
    * Processed control client connection, consists of following phases:
    *   Auth phase (send auth type and try auth client).
-   *   Control message processing loop.
+   *   ::remoting::Window scopedstrMessage processing loop.
    */
   virtual void execute();
 
@@ -94,14 +94,14 @@ protected:
 
 private:
   /**
-   * Sends error (server exception message) to client side.
-   * @param message description of error.
+   * Sends error (server exception scopedstrMessage) to client side.
+   * @param scopedstrMessage description of error.
    * @throws ::io_exception on io error.
    */
   void sendError(const ::scoped_string & scopedstrMessage);
 
   /**
-   * Called when auth message recieved.
+   * Called when auth scopedstrMessage recieved.
    * @throws ::io_exception on io error.
    */
   void authMsgRcdv();
@@ -111,83 +111,83 @@ private:
    */
 
   /**
-   * Called when get client ::list message recieved.
+   * Called when get client ::list_base scopedstrMessage recieved.
    * @throws ::io_exception on io error.
    */
   void getClientsListMsgRcvd();
   /**
-   * Called when get server info message reciveved.
+   * Called when get server info scopedstrMessage reciveved.
    * @throws ::io_exception on io error.
    */
   void getServerInfoMsgRcvd();
   /**
-   * Called when reload configuration message recieved.
+   * Called when reload configuration scopedstrMessage recieved.
    * @throws ::io_exception on io error.
    * @deprecated.
    */
   void reloadConfigMsgRcvd();
   /**
-   * Called when disconnect all clients message recieved.
+   * Called when disconnect all clients scopedstrMessage recieved.
    * @throws ::io_exception on io error.
    */
   void disconnectAllMsgRcvd();
   /**
-   * Called when shutdown message recieved.
+   * Called when shutdown scopedstrMessage recieved.
    * @throws ::io_exception on io error.
    */
   void shutdownMsgRcvd();
   /**
-   * Called when add new client message recieved.
+   * Called when add new client scopedstrMessage recieved.
    * @throws ::io_exception on io error.
    */
   void addClientMsgRcvd();
   /**
-   * Called when Connect to a tcp dispatcher message recieved.
+   * Called when Connect to a tcp dispatcher scopedstrMessage recieved.
    * @throws ::io_exception on io error.
    */
   void connectToTcpDispatcher();
   /**
-   * Called when set server config message recieved.
+   * Called when set server config scopedstrMessage recieved.
    * @throws ::io_exception on io error.
    */
   void setServerConfigMsgRcvd();
   /**
-   * Called when get server config message recieved.
+   * Called when get server config scopedstrMessage recieved.
    * @throws ::io_exception on io error.
    */
   void getServerConfigMsgRcvd();
   /**
-   * Called when "get show tray icon flag" message recieved.
+   * Called when "get show tray icon flag" scopedstrMessage recieved.
    * @throws ::io_exception on io error.
    */
   void getShowTrayIconFlagMsgRcvd();
   /**
-   * Called when "update tvncontrol process id" message recieved.
+   * Called when "update tvncontrol process id" scopedstrMessage recieved.
    * @throws ::io_exception on io error.
    */
   void updateTvnControlProcessIdMsgRcvd();
   /**
-   * Calling when "share primary id" message recieved.
+   * Calling when "share primary id" scopedstrMessage recieved.
    */
   void sharePrimaryIdMsgRcvd();
   /**
-   * Calling when "share display id" message recieved.
+   * Calling when "share display id" scopedstrMessage recieved.
    */
   void shareDisplayIdMsgRcvd();
   /**
-   * Calling when "share window id" message recieved.
+   * Calling when "share window id" scopedstrMessage recieved.
    */
   void shareWindowIdMsgRcvd();
   /**
-   * Calling when "share rect id" message recieved.
+   * Calling when "share rect id" scopedstrMessage recieved.
    */
   void shareRectIdMsgRcvd();
   /**
-   * Calling when "share full id" message recieved.
+   * Calling when "share full id" scopedstrMessage recieved.
    */
   void shareFullIdMsgRcvd();
   /**
-   * Calling when "share app id" message recieved.
+   * Calling when "share app id" scopedstrMessage recieved.
    */
   void shareAppIdMsgRcvd();
 

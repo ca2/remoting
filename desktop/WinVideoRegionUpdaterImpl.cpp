@@ -70,7 +70,7 @@ Region WinVideoRegionUpdaterImpl::getVideoRegion()
   return m_vidRegion;
 }
 
-void WinVideoRegionUpdaterImpl::getClassNamesAndRectsFromConfig(StringVector &classNames, ::array_base<::int_rectangle> &rects)
+void WinVideoRegionUpdaterImpl::getClassNamesAndRectsFromConfig(::string_array &classNames, ::array_base<::int_rectangle> &rects)
 {
   ServerConfig *srvConf = Configurator::getInstance()->getServerConfig();
   AutoLock al(srvConf);
@@ -80,15 +80,15 @@ void WinVideoRegionUpdaterImpl::getClassNamesAndRectsFromConfig(StringVector &cl
 
 void WinVideoRegionUpdaterImpl::updateVideoRegion()
 {
-  StringVector classNames;
+  ::string_array classNames;
   ::array_base<::int_rectangle> rects;
   getClassNamesAndRectsFromConfig(classNames, rects);
   Region tmpRegion;
   m_log->debug(L"WinVideoRegionUpdaterImpl: ClassNames {}, Rects {}", classNames.size(), m_vidRegion.getCount());
   if (!classNames.empty()) {
-    DateTime startTime = DateTime::now();
+    ::earth::time startTime = ::earth::time::now();
     tmpRegion.add(getRectsByClass(classNames));
-    unsigned int millis = (DateTime::now() - startTime).getTime();
+    unsigned int millis = (::earth::time::now() - startTime).getTime();
     m_log->debug(L"WinVideoRegionUpdaterImpl::getRectsByClass call took {} ms", millis);
   }
   if (!rects.empty()) {
@@ -102,7 +102,7 @@ void WinVideoRegionUpdaterImpl::updateVideoRegion()
   m_log->debug(L"WinVideoRegionUpdaterImpl: exit updateVideoRegion()");
 }
 
-Region WinVideoRegionUpdaterImpl::getRectsByClass(StringVector classNames)
+Region WinVideoRegionUpdaterImpl::getRectsByClass(::string_array classNames)
 {
   ::array_base<HWND> hwndVector;
   ::array_base<HWND>::iterator hwndIter;

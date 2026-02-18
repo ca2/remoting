@@ -13,12 +13,12 @@
  *
  * When the chroma components are to be upsampled by simple replication
  * (ie, box filtering), we can save some work in color conversion by
- * calculating all the output pixels corresponding to a ::std::pair of chroma
+ * calculating all the output pixels corresponding to a ::pair of chroma
  * samples at one time.  In the conversion equations
  *	R = Y           + K1 * Cr
  *	G = Y + K2 * Cb + K3 * Cr
  *	B = Y + K4 * Cb
- * only the Y term varies among the group of pixels corresponding to a ::std::pair
+ * only the Y term varies among the group of pixels corresponding to a ::pair
  * of chroma samples, so the rest of the terms can be calculated just once.
  * At typical sampling ratios, this eliminates half or three-quarters of the
  * multiplications needed for color conversion.
@@ -171,7 +171,7 @@ start_pass_merged_upsample (j_decompress_ptr cinfo)
 
 
 /*
- * Control routine to do upsampling (and color conversion).
+ * ::remoting::Window routine to do upsampling (and color conversion).
  *
  * The control routine just handles the row buffering considerations.
  */
@@ -281,7 +281,7 @@ h2v1_merged_upsample (j_decompress_ptr cinfo,
   inptr1 = input_buf[1][in_row_group_ctr];
   inptr2 = input_buf[2][in_row_group_ctr];
   outptr = output_buf[0];
-  /* Loop for each ::std::pair of output pixels */
+  /* Loop for each ::pair of output pixels */
   for (col = cinfo->output_width >> 1; col > 0; col--) {
     /* Do the chroma part of the calculation */
     cb = GETJSAMPLE(*inptr1++);

@@ -25,200 +25,209 @@
 
 #include "FileTransferCapability.h"
 
-#include "ft_client_lib/FileTransferRequestSender.h"
-#include "ft_client_lib/FileTransferReplyBuffer.h"
-#include "ft_client_lib/FileTransferMessageProcessor.h"
-#include "ft_client_lib/FileTransferCore.h"
+#include "remoting/ftp_client/FileTransferRequestSender.h"
+#include "remoting/ftp_client/FileTransferReplyBuffer.h"
+#include "remoting/ftp_client/FileTransferMessageProcessor.h"
+#include "remoting/ftp_client/FileTransferCore.h"
 
-#include "ft_common/FTMessage.h"
+#include "remoting/ftp_common/FTMessage.h"
 #include "rfb/VendorDefs.h"
 
-FileTransferCapability::FileTransferCapability(Logger *logger)
-: m_logWriter(logger),
-  m_ftReplyBuffer(&m_logWriter),
-  m_ftRequestSender(&m_logWriter),
-  m_ftCore(&m_logWriter,
-           &m_ftRequestSender,
-           &m_ftReplyBuffer,
-           &m_ftMessageProcessor)
+
+namespace remoting
 {
-  m_ftMessageProcessor.addListener(&m_ftReplyBuffer);
-}
 
-FileTransferCapability::~FileTransferCapability()
-{
-}
+   namespace ftp
+   {
 
-bool FileTransferCapability::isEnabled()
-{
-  return m_ftCore.getSupportedOps().isFileListSupported();
-}
+      FileTransferCapability::FileTransferCapability(LogWriter *LogWriter)
+      : m_logWriter(LogWriter),
+        m_ftReplyBuffer(m_logWriter),
+        m_ftRequestSender(m_logWriter),
+        m_ftCore(m_logWriter,
+                 &m_ftRequestSender,
+                 &m_ftReplyBuffer,
+                 &m_ftMessageProcessor)
+      {
+         m_ftMessageProcessor.addListener(&m_ftReplyBuffer);
+      }
 
-void FileTransferCapability::setOutput(RfbOutputGate *output)
-{
-  m_ftRequestSender.setOutput(output);
-}
+      FileTransferCapability::~FileTransferCapability()
+      {
+      }
 
-FileTransferCore *FileTransferCapability::getCore()
-{
-  return &m_ftCore;
-}
+      bool FileTransferCapability::isEnabled()
+      {
+         return m_ftCore.getSupportedOps().isFileListSupported();
+      }
 
-void FileTransferCapability::setInterface(FileTransferInterface *ftInterface)
-{
-  m_ftCore.setInterface(ftInterface);
-}
+      void FileTransferCapability::setOutput(RfbOutputGate *output)
+      {
+         m_ftRequestSender.setOutput(output);
+      }
 
-void FileTransferCapability::onServerMessage(unsigned int code, DataInputStream *input)
-{
-  m_ftMessageProcessor.processRfbMessage(input, code);
-}
+      FileTransferCore *FileTransferCapability::getCore()
+      {
+         return &m_ftCore;
+      }
 
-void FileTransferCapability::addCapabilities(CapabilitiesManager *capabilities)
-{
-  // Client-to-Server messages:
-  capabilities->addClientMsgCapability(FTMessage::COMPRESSION_SUPPORT_REQUEST,
-                                  VendorDefs::TIGHTVNC,
-                                  FTMessage::COMPRESSION_SUPPORT_REQUEST_SIG,
-                                  "Compression support");
+      void FileTransferCapability::setInterface(FileTransferInterface *ftInterface)
+      {
+         m_ftCore.setInterface(ftInterface);
+      }
 
-  capabilities->addClientMsgCapability(FTMessage::FILE_LIST_REQUEST,
-                                  VendorDefs::TIGHTVNC,
-                                  FTMessage::FILE_LIST_REQUEST_SIG,
-                                  "File ::list request");
+      void FileTransferCapability::onServerMessage(unsigned int code, DataInputStream * pinput)
+      {
+         m_ftMessageProcessor.processRfbMessage(pinput, code);
+      }
 
-  capabilities->addClientMsgCapability(FTMessage::MD5_REQUEST,
-                                  VendorDefs::TIGHTVNC,
-                                  FTMessage::MD5_REQUEST_SIG,
-                                  "File md5 sum request");
+      void FileTransferCapability::addCapabilities(CapabilitiesManager *capabilities)
+      {
+         // Client-to-Server messages:
+         capabilities->addClientMsgCapability(FTMessage::COMPRESSION_SUPPORT_REQUEST,
+                                         VendorDefs::TIGHTVNC,
+                                         FTMessage::COMPRESSION_SUPPORT_REQUEST_SIG,
+                                         "Compression support");
 
-  capabilities->addClientMsgCapability(FTMessage::DIRSIZE_REQUEST,
-                                  VendorDefs::TIGHTVNC,
-                                  FTMessage::DIRSIZE_REQUEST_SIG,
-                                  "Directory size request");
+         capabilities->addClientMsgCapability(FTMessage::FILE_LIST_REQUEST,
+                                         VendorDefs::TIGHTVNC,
+                                         FTMessage::FILE_LIST_REQUEST_SIG,
+                                         "::file::item ::list_base request");
 
-  capabilities->addClientMsgCapability(FTMessage::RENAME_REQUEST,
-                                  VendorDefs::TIGHTVNC,
-                                  FTMessage::RENAME_REQUEST_SIG,
-                                  "File move request");
+         capabilities->addClientMsgCapability(FTMessage::MD5_REQUEST,
+                                         VendorDefs::TIGHTVNC,
+                                         FTMessage::MD5_REQUEST_SIG,
+                                         "::file::item md5 sum request");
 
-  capabilities->addClientMsgCapability(FTMessage::MKDIR_REQUEST,
-                                  VendorDefs::TIGHTVNC,
-                                  FTMessage::MKDIR_REQUEST_SIG,
-                                  "Directory create request");
+         capabilities->addClientMsgCapability(FTMessage::DIRSIZE_REQUEST,
+                                         VendorDefs::TIGHTVNC,
+                                         FTMessage::DIRSIZE_REQUEST_SIG,
+                                         "Directory size request");
 
-  capabilities->addClientMsgCapability(FTMessage::REMOVE_REQUEST,
-                                  VendorDefs::TIGHTVNC,
-                                  FTMessage::REMOVE_REQUEST_SIG,
-                                  "File remove request");
+         capabilities->addClientMsgCapability(FTMessage::RENAME_REQUEST,
+                                         VendorDefs::TIGHTVNC,
+                                         FTMessage::RENAME_REQUEST_SIG,
+                                         "::file::item move request");
 
-  capabilities->addClientMsgCapability(FTMessage::DOWNLOAD_START_REQUEST,
-                                  VendorDefs::TIGHTVNC,
-                                  FTMessage::DOWNLOAD_START_REQUEST_SIG,
-                                  "File download start request");
+         capabilities->addClientMsgCapability(FTMessage::MKDIR_REQUEST,
+                                         VendorDefs::TIGHTVNC,
+                                         FTMessage::MKDIR_REQUEST_SIG,
+                                         "Directory create request");
 
-  capabilities->addClientMsgCapability(FTMessage::DOWNLOAD_DATA_REQUEST,
-                                  VendorDefs::TIGHTVNC,
-                                  FTMessage::DOWNLOAD_DATA_REQUEST_SIG,
-                                  "File download data request");
+         capabilities->addClientMsgCapability(FTMessage::REMOVE_REQUEST,
+                                         VendorDefs::TIGHTVNC,
+                                         FTMessage::REMOVE_REQUEST_SIG,
+                                         "::file::item remove request");
 
-  capabilities->addClientMsgCapability(FTMessage::UPLOAD_START_REQUEST,
-                                  VendorDefs::TIGHTVNC,
-                                  FTMessage::UPLOAD_START_REQUEST_SIG,
-                                  "File upload start request");
+         capabilities->addClientMsgCapability(FTMessage::DOWNLOAD_START_REQUEST,
+                                         VendorDefs::TIGHTVNC,
+                                         FTMessage::DOWNLOAD_START_REQUEST_SIG,
+                                         "::file::item download start request");
 
-  capabilities->addClientMsgCapability(FTMessage::UPLOAD_DATA_REQUEST,
-                                  VendorDefs::TIGHTVNC,
-                                  FTMessage::UPLOAD_DATA_REQUEST_SIG,
-                                  "File upload data request");
+         capabilities->addClientMsgCapability(FTMessage::DOWNLOAD_DATA_REQUEST,
+                                         VendorDefs::TIGHTVNC,
+                                         FTMessage::DOWNLOAD_DATA_REQUEST_SIG,
+                                         "::file::item download data request");
 
-  capabilities->addClientMsgCapability(FTMessage::UPLOAD_END_REQUEST,
-                                  VendorDefs::TIGHTVNC,
-                                  FTMessage::UPLOAD_END_REQUEST_SIG,
-                                  "File upload end request");
+         capabilities->addClientMsgCapability(FTMessage::UPLOAD_START_REQUEST,
+                                         VendorDefs::TIGHTVNC,
+                                         FTMessage::UPLOAD_START_REQUEST_SIG,
+                                         "::file::item upload start request");
 
-  // Server-to-Client messages:
-  capabilities->addServerMsgCapability(this,
-                                  FTMessage::COMPRESSION_SUPPORT_REPLY,
-                                  VendorDefs::TIGHTVNC,
-                                  FTMessage::COMPRESSION_SUPPORT_REPLY_SIG,
-                                  "Compression support");
+         capabilities->addClientMsgCapability(FTMessage::UPLOAD_DATA_REQUEST,
+                                         VendorDefs::TIGHTVNC,
+                                         FTMessage::UPLOAD_DATA_REQUEST_SIG,
+                                         "::file::item upload data request");
 
-  capabilities->addServerMsgCapability(this,
-                                  FTMessage::FILE_LIST_REPLY,
-                                  VendorDefs::TIGHTVNC,
-                                  FTMessage::FILE_LIST_REPLY_SIG,
-                                  "File ::list reply");
+         capabilities->addClientMsgCapability(FTMessage::UPLOAD_END_REQUEST,
+                                         VendorDefs::TIGHTVNC,
+                                         FTMessage::UPLOAD_END_REQUEST_SIG,
+                                         "::file::item upload end request");
 
-  capabilities->addServerMsgCapability(this,
-                                  FTMessage::LAST_REQUEST_FAILED_REPLY,
-                                  VendorDefs::TIGHTVNC,
-                                  FTMessage::LAST_REQUEST_FAILED_REPLY_SIG,
-                                  "Last request failed");
+         // Server-to-Client messages:
+         capabilities->addServerMsgCapability(this,
+                                         FTMessage::COMPRESSION_SUPPORT_REPLY,
+                                         VendorDefs::TIGHTVNC,
+                                         FTMessage::COMPRESSION_SUPPORT_REPLY_SIG,
+                                         "Compression support");
 
-  capabilities->addServerMsgCapability(this,
-                                  FTMessage::MD5_REPLY,
-                                  VendorDefs::TIGHTVNC,
-                                  FTMessage::MD5_REPLY_SIG,
-                                  "File md5 sum reply");
+         capabilities->addServerMsgCapability(this,
+                                         FTMessage::FILE_LIST_REPLY,
+                                         VendorDefs::TIGHTVNC,
+                                         FTMessage::FILE_LIST_REPLY_SIG,
+                                         "::file::item ::list_base reply");
 
-  capabilities->addServerMsgCapability(this,
-                                  FTMessage::DIRSIZE_REPLY,
-                                  VendorDefs::TIGHTVNC,
-                                  FTMessage::DIRSIZE_REPLY_SIG,
-                                  "Directory size reply");
+         capabilities->addServerMsgCapability(this,
+                                         FTMessage::LAST_REQUEST_FAILED_REPLY,
+                                         VendorDefs::TIGHTVNC,
+                                         FTMessage::LAST_REQUEST_FAILED_REPLY_SIG,
+                                         "Last request failed");
 
-  capabilities->addServerMsgCapability(this,
-                                  FTMessage::RENAME_REPLY,
-                                  VendorDefs::TIGHTVNC,
-                                  FTMessage::RENAME_REPLY_SIG,
-                                  "File move reply");
+         capabilities->addServerMsgCapability(this,
+                                         FTMessage::MD5_REPLY,
+                                         VendorDefs::TIGHTVNC,
+                                         FTMessage::MD5_REPLY_SIG,
+                                         "::file::item md5 sum reply");
 
-  capabilities->addServerMsgCapability(this,
-                                  FTMessage::MKDIR_REPLY,
-                                  VendorDefs::TIGHTVNC,
-                                  FTMessage::MKDIR_REPLY_SIG,
-                                  "Directory create reply");
+         capabilities->addServerMsgCapability(this,
+                                         FTMessage::DIRSIZE_REPLY,
+                                         VendorDefs::TIGHTVNC,
+                                         FTMessage::DIRSIZE_REPLY_SIG,
+                                         "Directory size reply");
 
-  capabilities->addServerMsgCapability(this,
-                                  FTMessage::REMOVE_REPLY,
-                                  VendorDefs::TIGHTVNC,
-                                  FTMessage::REMOVE_REPLY_SIG,
-                                 "File remove reply");
+         capabilities->addServerMsgCapability(this,
+                                         FTMessage::RENAME_REPLY,
+                                         VendorDefs::TIGHTVNC,
+                                         FTMessage::RENAME_REPLY_SIG,
+                                         "::file::item move reply");
 
-  capabilities->addServerMsgCapability(this,
-                                  FTMessage::DOWNLOAD_START_REPLY,
-                                 VendorDefs::TIGHTVNC,
-                                 FTMessage::DOWNLOAD_START_REPLY_SIG,
-                                 "File download start reply");
+         capabilities->addServerMsgCapability(this,
+                                         FTMessage::MKDIR_REPLY,
+                                         VendorDefs::TIGHTVNC,
+                                         FTMessage::MKDIR_REPLY_SIG,
+                                         "Directory create reply");
 
-  capabilities->addServerMsgCapability(this,
-                                  FTMessage::DOWNLOAD_DATA_REPLY,
-                                  VendorDefs::TIGHTVNC,
-                                  FTMessage::DOWNLOAD_DATA_REPLY_SIG,
-                                  "File download data reply");
+         capabilities->addServerMsgCapability(this,
+                                         FTMessage::REMOVE_REPLY,
+                                         VendorDefs::TIGHTVNC,
+                                         FTMessage::REMOVE_REPLY_SIG,
+                                        "::file::item remove reply");
 
-  capabilities->addServerMsgCapability(this,
-                                  FTMessage::DOWNLOAD_END_REPLY,
-                                  VendorDefs::TIGHTVNC,
-                                  FTMessage::DOWNLOAD_END_REPLY_SIG,
-                                  "File download end reply");
+         capabilities->addServerMsgCapability(this,
+                                         FTMessage::DOWNLOAD_START_REPLY,
+                                        VendorDefs::TIGHTVNC,
+                                        FTMessage::DOWNLOAD_START_REPLY_SIG,
+                                        "::file::item download start reply");
 
-  capabilities->addServerMsgCapability(this,
-                                  FTMessage::UPLOAD_START_REPLY,
-                                  VendorDefs::TIGHTVNC,
-                                  FTMessage::UPLOAD_START_REPLY_SIG,
-                                  "File upload start reply");
+         capabilities->addServerMsgCapability(this,
+                                         FTMessage::DOWNLOAD_DATA_REPLY,
+                                         VendorDefs::TIGHTVNC,
+                                         FTMessage::DOWNLOAD_DATA_REPLY_SIG,
+                                         "::file::item download data reply");
 
-  capabilities->addServerMsgCapability(this,
-                                  FTMessage::UPLOAD_DATA_REPLY,
-                                  VendorDefs::TIGHTVNC,
-                                  FTMessage::UPLOAD_DATA_REPLY_SIG,
-                                  "File upload data reply");
+         capabilities->addServerMsgCapability(this,
+                                         FTMessage::DOWNLOAD_END_REPLY,
+                                         VendorDefs::TIGHTVNC,
+                                         FTMessage::DOWNLOAD_END_REPLY_SIG,
+                                         "::file::item download end reply");
 
-  capabilities->addServerMsgCapability(this,
-                                  FTMessage::UPLOAD_END_REPLY,
-                                  VendorDefs::TIGHTVNC,
-                                  FTMessage::UPLOAD_END_REPLY_SIG,
-                                  "File upload end reply");
+         capabilities->addServerMsgCapability(this,
+                                         FTMessage::UPLOAD_START_REPLY,
+                                         VendorDefs::TIGHTVNC,
+                                         FTMessage::UPLOAD_START_REPLY_SIG,
+                                         "::file::item upload start reply");
+
+         capabilities->addServerMsgCapability(this,
+                                         FTMessage::UPLOAD_DATA_REPLY,
+                                         VendorDefs::TIGHTVNC,
+                                         FTMessage::UPLOAD_DATA_REPLY_SIG,
+                                         "::file::item upload data reply");
+
+         capabilities->addServerMsgCapability(this,
+                                         FTMessage::UPLOAD_END_REPLY,
+                                         VendorDefs::TIGHTVNC,
+                                         FTMessage::UPLOAD_END_REPLY_SIG,
+                                         "::file::item upload end reply");
+      }
+   }
 }

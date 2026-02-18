@@ -34,7 +34,7 @@
 #include "ViewerCollector.h"
 #include "win_system/WindowsApplication.h"
 
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 #include "thread/AutoLock.h"
 
 //#include <map>
@@ -85,34 +85,34 @@ public:
   // Inherited from WindowsApplication
   void registerWindowClass(WNDCLASS *wndClass);
   static LRESULT CALLBACK wndProc(HWND hWnd, UINT msg, WPARAM wparam, LPARAM lparam);
-  virtual void createWindow(const ::scoped_string & scopedstrclassName);
+  virtual void createWindow(const ::scoped_string & scopedstrClassName);
   int processMessages();
 
-public:
-  // this message must sended after accepted new listening-connection
+//public:
+  // this scopedstrMessage must sended after accepted new listening-connection
   static const int WM_USER_NEW_LISTENING = WM_USER + 1;
 
-  // this message need send if you need show login dialog
+  // this scopedstrMessage need send if you need show login dialog
   static const int WM_USER_SHOW_LOGIN_DIALOG = WM_USER + 2;
 
-  // this message need send if you need show configuration dialog
+  // this scopedstrMessage need send if you need show configuration dialog
   static const int WM_USER_CONFIGURATION = WM_USER + 3;
 
-  // this message need send if you need show about dialog
+  // this scopedstrMessage need send if you need show about dialog
   static const int WM_USER_ABOUT = WM_USER + 4;
 
-  // This message need send if you need reconnect to host.
+  // This scopedstrMessage need send if you need reconnect to host.
   // LPARAM contained pointer to ConnectionData.
   static const int WM_USER_RECONNECT = WM_USER + 5;
 
-  // This message need send if config is changed.
+  // This scopedstrMessage need send if config is changed.
   static const int WM_USER_CONFIGURATION_RELOAD = WM_USER + 6;
 
   // This timer is used for deleting dead instances of viewer.
   static const int TIMER_DELETE_DEAD_INSTANCE = 1;
   static const int TIMER_DELETE_DEAD_INSTANCE_DELAY = 50;
 
-protected:
+//protected:
   void startListeningServer(const int listeningPort);
   void stopListeningServer();
   void restartListeningServer();
@@ -132,16 +132,16 @@ protected:
   ViewerCollector m_instances;
 
   // class name of viewer-window
-  ::string m_viewerWindowClassName;
+  ::wstring m_viewerWindowClassName;
 
   HACCEL m_hAccelTable;
 
-private:
+//private:
   void addInstance(ViewerInstance *viewerInstance);
 
   bool m_isListening;
   
-  LogWriter m_logWriter;
+  LogWriter * m_logWriter;
 
   AboutDialog m_aboutDialog;
   ConfigurationDialog m_configurationDialog;

@@ -26,47 +26,47 @@
 #include "config_lib/IniFileSettingsManager.h"
 #include "win_system/SystemException.h"
 
-const TCHAR ViewerCmdLine::HELP[] = "help";
-const TCHAR ViewerCmdLine::HELP_SHORT[] = "h";
-const TCHAR ViewerCmdLine::HELP_ARG[] = "/help";
-const TCHAR ViewerCmdLine::HELP_ARG_SHORT[] = "/h";
-const TCHAR ViewerCmdLine::HELP_ARG_QUESTION[] = "/?";
+const char ViewerCmdLine::HELP[] = "help";
+const char ViewerCmdLine::HELP_SHORT[] = "h";
+const char ViewerCmdLine::HELP_ARG[] = "/help";
+const char ViewerCmdLine::HELP_ARG_SHORT[] = "/h";
+const char ViewerCmdLine::HELP_ARG_QUESTION[] = "/?";
 
-const TCHAR ViewerCmdLine::OPTIONS_FILE[] = "optionsfile";
-const TCHAR ViewerCmdLine::LISTEN[] = "listen";
-const TCHAR ViewerCmdLine::HOST[] = "host";
-const TCHAR ViewerCmdLine::PORT[] = "port";
-const TCHAR ViewerCmdLine::PASSWORD[] = "password";
-const TCHAR ViewerCmdLine::SHOW_CONTROLS[] = "showcontrols";
-const TCHAR ViewerCmdLine::VIEW_ONLY[] = "viewonly";
-const TCHAR ViewerCmdLine::USE_CLIPBOARD[] = "useclipboard";
-const TCHAR ViewerCmdLine::SCALE[] = "scale";
-const TCHAR ViewerCmdLine::FULL_SCREEN[] = "fullscreen";
-const TCHAR ViewerCmdLine::WARN_FULL_SCREEN[] = "warnfullscr";
-const TCHAR ViewerCmdLine::ENCODING[] = "encoding";
-const TCHAR ViewerCmdLine::COPY_RECT[] = "copyrect";
-const TCHAR ViewerCmdLine::MOUSE_CURSOR[] = "mousecursor";
-const TCHAR ViewerCmdLine::MOUSE_LOCAL[] = "mouselocal";
-const TCHAR ViewerCmdLine::MOUSE_SWAP[] = "mouseswap";
-const TCHAR ViewerCmdLine::JPEG_IMAGE_QUALITY[] = "jpegimagequality";
-const TCHAR ViewerCmdLine::COMPRESSION_LEVEL[] = "compressionlevel";
-const TCHAR ViewerCmdLine::LOG_PATH[] = "logpath";
+const char ViewerCmdLine::OPTIONS_FILE[] = "optionsfile";
+const char ViewerCmdLine::LISTEN[] = "listen";
+const char ViewerCmdLine::HOST[] = "host";
+const char ViewerCmdLine::PORT[] = "port";
+const char ViewerCmdLine::PASSWORD[] = "password";
+const char ViewerCmdLine::SHOW_CONTROLS[] = "showcontrols";
+const char ViewerCmdLine::VIEW_ONLY[] = "viewonly";
+const char ViewerCmdLine::USE_CLIPBOARD[] = "useclipboard";
+const char ViewerCmdLine::SCALE[] = "scale";
+const char ViewerCmdLine::FULL_SCREEN[] = "fullscreen";
+const char ViewerCmdLine::WARN_FULL_SCREEN[] = "warnfullscr";
+const char ViewerCmdLine::ENCODING[] = "encoding";
+const char ViewerCmdLine::COPY_RECT[] = "copyrect";
+const char ViewerCmdLine::MOUSE_CURSOR[] = "mousecursor";
+const char ViewerCmdLine::MOUSE_LOCAL[] = "mouselocal";
+const char ViewerCmdLine::MOUSE_SWAP[] = "mouseswap";
+const char ViewerCmdLine::JPEG_IMAGE_QUALITY[] = "jpegimagequality";
+const char ViewerCmdLine::COMPRESSION_LEVEL[] = "compressionlevel";
+const char ViewerCmdLine::LOG_PATH[] = "logpath";
 
 
-const TCHAR ViewerCmdLine::YES[] = "yes";
-const TCHAR ViewerCmdLine::NO[] = "no";
-const TCHAR ViewerCmdLine::AUTO[] = "auto";
-const TCHAR ViewerCmdLine::LOCAL[] = "local";
-const TCHAR ViewerCmdLine::SMALLDOT[] = "smalldot";
-const TCHAR ViewerCmdLine::NORMAL[] = "normal";
-const TCHAR ViewerCmdLine::HEXTILE[] = "hextile";
-const TCHAR ViewerCmdLine::TIGHT[] = "tight";
-const TCHAR ViewerCmdLine::RRE[] = "rre";
-const TCHAR ViewerCmdLine::ZRLE[] = "zrle";
+const char ViewerCmdLine::YES[] = "yes";
+const char ViewerCmdLine::NO[] = "no";
+const char ViewerCmdLine::AUTO[] = "auto";
+const char ViewerCmdLine::LOCAL[] = "local";
+const char ViewerCmdLine::SMALLDOT[] = "smalldot";
+const char ViewerCmdLine::NORMAL[] = "normal";
+const char ViewerCmdLine::HEXTILE[] = "hextile";
+const char ViewerCmdLine::TIGHT[] = "tight";
+const char ViewerCmdLine::RRE[] = "rre";
+const char ViewerCmdLine::ZRLE[] = "zrle";
 
 ViewerCmdLine::ViewerCmdLine(ConnectionData *conData,
                              ConnectionConfig *conConf,
-                             ViewerConfig *config,
+                             ::remoting::ViewerConfig *config,
                              bool *isListening)
 : m_conData(conData),
   m_conConf(conConf),
@@ -84,13 +84,13 @@ bool ViewerCmdLine::processCmdLine(const CmdLineOption *cmdLines, size_t lenCmdL
        ::string strOut;
 
        for (size_t j = 0; j < m_wpcl.getOptionsCount(); j++) {
-         m_wpcl.getOption(j , &strOut);
+         m_wpcl.getOption(j , strOut);
 
          if (strOut == cmdLines[i].keyName) {
            countRecog++;
          }
        }
-       if (m_wpcl.findOptionValue(cmdLines[i].keyName, &strOut)) {
+       if (m_wpcl.findOptionValue(cmdLines[i].keyName, strOut)) {
          m_options[cmdLines[i].keyName] = strOut; 
        }
     }
@@ -183,12 +183,12 @@ bool ViewerCmdLine::isHelpPresent()
 {
   for (size_t i = 0; i < m_wpcl.getArgumentsCount(); i++) {
     ::string argument;
-    if (m_wpcl.getArgument(i, &argument)) {
-      if (argument.isEqualTo(HELP_ARG))
+    if (m_wpcl.getArgument(i, argument)) {
+      if (argument == HELP_ARG)
         return true;
-      if (argument.isEqualTo(HELP_ARG_SHORT))
+      if (argument == HELP_ARG_SHORT)
         return true;
-      if (argument.isEqualTo(HELP_ARG_QUESTION))
+      if (argument == HELP_ARG_QUESTION)
         return true;
     }
   }
@@ -202,35 +202,35 @@ bool ViewerCmdLine::isHelpPresent()
 
 bool ViewerCmdLine::isPresent(const ::scoped_string & scopedstrKeyName)
 {
-  return m_options.find(keyName) != m_options.end();
+  return m_options.find(scopedstrKeyName) != m_options.end();
 }
 
 void ViewerCmdLine::parseOptionsFile()
 {
   ::string pathToIniFile = m_options[OPTIONS_FILE];
-  if (pathToIniFile.findChar(_T('\\')) == -1) {
+  if (::not_found(pathToIniFile.find_first_character('\\'))) {
     ::string newPathToIniFile;
-    newPathToIniFile.formatf(".\\{}", pathToIniFile);
+    newPathToIniFile.format(".\\{}", pathToIniFile);
     pathToIniFile = newPathToIniFile;
   }
   IniFileSettingsManager sm(pathToIniFile);
   sm.setApplicationName("connection");
 
   ::string host;
-  if (!sm.getString("host", &host)) {
+  if (!sm.getString("host", host)) {
     throw CommandLineFormatException(StringTable::getString(IDS_ERROR_PARSE_OPTIONS_FILE));
   }
   ::string port;
-  if (sm.getString("port", &port)) {
+  if (sm.getString("port", port)) {
     ::string hostString;
-    hostString.formatf("{}::{}", host, port);
+    hostString.format("{}::{}", host, port);
     m_conData->setHost(hostString);
   } else {
     m_conData->setHost(host);
   }
 
   ::string password;
-  sm.getString("password", &password);
+  sm.getString("password", password);
   if (!password.is_empty()) {
     m_conData->setCryptedPassword(password);
   } else {
@@ -309,7 +309,7 @@ void ViewerCmdLine::parseScale()
     if (m_options[SCALE] == AUTO) {
       m_conConf->fitWindow(true);
     } else {
-      int scale = _ttoi(m_options[SCALE]);
+      int scale = atoi(m_options[SCALE]);
 
       if (scale < 1) {
         scale = 1;
@@ -410,7 +410,7 @@ void ViewerCmdLine::parseViewOnly()
 void ViewerCmdLine::parseJpegImageQuality()
 {
   if (isPresent(JPEG_IMAGE_QUALITY)) {
-    int iJpegQuality = _ttoi(m_options[JPEG_IMAGE_QUALITY]);
+    int iJpegQuality = atoi(m_options[JPEG_IMAGE_QUALITY]);
     m_conConf->setJpegCompressionLevel(iJpegQuality);
   }
 }
@@ -418,7 +418,7 @@ void ViewerCmdLine::parseJpegImageQuality()
 void ViewerCmdLine::parseCompressionLevel()
 {
   if (isPresent(COMPRESSION_LEVEL)) {
-    int iCompLvl = _ttoi(m_options[COMPRESSION_LEVEL]);
+    int iCompLvl = atoi(m_options[COMPRESSION_LEVEL]);
     m_conConf->setCustomCompressionLevel(iCompLvl);
   }
 }
@@ -426,15 +426,15 @@ void ViewerCmdLine::parseCompressionLevel()
 void ViewerCmdLine::parseHostArg()
 {
   ::string host;
-  m_wpcl.getArgument(1, &host);
+  m_wpcl.getArgument(1, host);
 
-  if (host.findChar(_T(':')) != -1) {
+  if (::not_found(host.find_first_character(':'))) {
     m_conData->setHost(host);
   } else {
    if (isPresent(PORT)) {
      ::string hostPort;
 
-     hostPort.formatf("{}::{}", host,
+     hostPort.format("{}::{}", host,
                                   m_options[PORT]);
      m_conData->setHost(hostPort);
    }
@@ -475,6 +475,8 @@ bool ViewerCmdLine::parseHost()
 void ViewerCmdLine::parseLogPath()
 {
   if (isPresent(LOG_PATH)) {
-    m_config->setLogDir(m_options[LOG_PATH]);
+
+     throw todo;
+    //m_config->setLogDir(m_options[LOG_PATH]);
   }
 }

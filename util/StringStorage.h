@@ -70,10 +70,10 @@
 //   virtual void= const ::scoped_string & scopedstrString;
 //
 //   // Returns pointer to the first symbol.
-//   const ::scoped_string & scopedstrgetString() const;
+//   ::string getString() const;
 //
 //     // Returns length of string (in characters, not including terminating null character).
-//   size_t getLength() const;
+//   size_t length() const;
 //
 //   // Returns size of string in bytes, including terminating null character.
 //   size_t getSize() const;
@@ -191,7 +191,7 @@
 //
 //   // Removes count characters from the specified start index.
 //   // Throws ::remoting::Exception if startIndex + count > length in the release
-//   // configuration and throws an ASSERTION FAILED message in the debug
+//   // configuration and throws an ASSERTION FAILED scopedstrMessage in the debug
 //   // configuration.
 //   void remove(size_t startIndex, size_t count);
 //
@@ -205,7 +205,7 @@
 //   // Converts string notated by this container to lower case
 //   //
 //
-//   void toLowerCase();
+//   void make_lower();
 //
 //   //
 //   // Converts string notated by this container to upper case

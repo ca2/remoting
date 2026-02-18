@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 //#include <list>
 
@@ -42,6 +42,6 @@ public:
   ::string m_peerAddr;
 };
 
-typedef ::list<RfbClientInfo> RfbClientInfoList;
+typedef ::list_base<RfbClientInfo> RfbClientInfoList;
 
 

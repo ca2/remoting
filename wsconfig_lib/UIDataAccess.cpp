@@ -36,7 +36,7 @@ bool UIDataAccess::queryValueAsInt(TextBox *textBox, int *value)
 
   ::string textBoxText;
 
-  textBox->getText(&textBoxText);
+  textBox->get_text(&textBoxText);
 
   return StringParser::parseInt(textBoxText, value);
 }
@@ -47,7 +47,7 @@ bool UIDataAccess::queryValueAsUInt(TextBox *textBox, unsigned int *value)
 
   ::string textBoxText;
 
-  textBox->getText(&textBoxText);
+  textBox->get_text(&textBoxText);
 
   return StringParser::parseUInt(textBoxText, value);
 }

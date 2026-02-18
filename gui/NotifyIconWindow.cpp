@@ -42,7 +42,7 @@ NotifyIconWindow::NotifyIconWindow()
   wc.hCursor = NULL;
   wc.hbrBackground = NULL;
   wc.lpszMenuName = NULL;
-  wc.lpszClassName = "NotifyIconWindowClass";
+  wc.lpszClassName = L"NotifyIconWindowClass";
 
   ATOM atom = RegisterClass(&wc);
 
@@ -67,7 +67,7 @@ NotifyIconWindow::~NotifyIconWindow()
   //DestroyWindow(m_window);
 }
 
-HWND NotifyIconWindow::getWindow()
+HWND NotifyIconWindow::get_hwnd()
 {
   return m_window;
 }

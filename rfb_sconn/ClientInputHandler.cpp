@@ -45,9 +45,9 @@ void ClientInputHandler::onRequest(unsigned int reqCode, RfbInputGate *input)
   switch (reqCode) {
   case ClientMsgDefs::KEYBOARD_EVENT:
     {
-      bool down = input->readUInt8() != 0;
-      input->readUInt16(); // Pad
-      unsigned int keyCode = input->readUInt32();
+      bool down = pinput->readUInt8() != 0;
+      pinput->readUInt16(); // Pad
+      unsigned int keyCode = pinput->readUInt32();
       if (!m_viewOnly) {
         m_extEventListener->onKeyboardEvent(keyCode, down);
       }
@@ -55,9 +55,9 @@ void ClientInputHandler::onRequest(unsigned int reqCode, RfbInputGate *input)
     break;
   case ClientMsgDefs::POINTER_EVENT:
     {
-      unsigned char buttonMask = input->readUInt8();
-      unsigned short x = input->readUInt16();
-      unsigned short y = input->readUInt16();
+      unsigned char buttonMask = pinput->readUInt8();
+      unsigned short x = pinput->readUInt16();
+      unsigned short y = pinput->readUInt16();
       if (!m_viewOnly) {
         m_extEventListener->onMouseEvent(x, y, buttonMask);
       }

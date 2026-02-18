@@ -39,11 +39,11 @@ public:
   const char *getOutput() const;
   unsigned long getOutputSize() const;
 
-protected:
+//protected:
   const char *m_input;
   size_t m_inputSize;
 
-  ::array_base<char> m_output;
+  ::memory m_output;
 
   // Type of m_outputSize must be match with type m_zlibStream.total_out,
   // otherwise may overflow long and value of m_outputSize will be too big.

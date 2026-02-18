@@ -64,7 +64,7 @@ void ConfigServer::reloadSettings(BlockingGate *backGate)
 
 void ConfigServer::answerOnSoftInputEnablingReq(BlockingGate *backGate)
 {
-  m_deskConf.correctLastTime(DateTime(backGate->readUInt64()));
+  m_deskConf.correctLastTime(::earth::time(backGate->readUInt64()));
 
   bool allowed = m_deskConf.isRemoteInputAllowed();
   backGate->writeUInt8(allowed);

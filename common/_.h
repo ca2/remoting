@@ -1,8 +1,14 @@
 //
-// Created by camilo on 2026-02-14.
+// Created by camilo on 2026-02-14 23:03 <3ThomasBorregaardSørensen!!
 //
+#pragma once
 
-#ifndef MAIN___H
-#define MAIN___H
 
-#endif //MAIN___H
+#include "acme/_.h"
+
+
+using LogWriter = ::particle;
+
+
+
+

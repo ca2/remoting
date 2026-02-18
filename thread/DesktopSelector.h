@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 class DesktopSelector
 {
@@ -69,23 +69,24 @@ public:
   // object will not change. If the function succeeds, the name of a current
   // input desktop stores in the desktopName object.
   // @return If success the function return true else false.
-  static bool getCurrentDesktopName(::string & desktopName);
+  static ::string getCurrentDesktopName();
 
   // @param desktopName - is a pointer to a ::string object that will be
   // used to store the desktop name. If function has failed then the desktopName
   // object will not change. If the function succeeds, the desktop name of the
   // current thread stores in the desktopName object.
   // @return If success the function return true else false.
-  static bool getThreadDesktopName(::string & desktopName);
+  static ::string getThreadDesktopName();
 
-private:
+//private:
   // This function gets desktop name by a handle to a desktop.
   // @param desktopName - is a pointer to a ::string object that will be
   // used to store the desktop name. If function has failed then the desktopName
   // object will not change. If the function succeeds, the desktop name
   // stores in the desktopName object.
   // @return If success the function return true else false.
-  static bool getDesktopName(HDESK desktop, ::string & desktopName);
+  //static bool getDesktopName(HDESK desktop, ::string & desktopName);
+   static ::string getDesktopName(HDESK desktop);
 };
 
 ////__DESKTOPSELECTOR_H__

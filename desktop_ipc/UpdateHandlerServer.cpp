@@ -53,10 +53,10 @@ void UpdateHandlerServer::onUpdate()
   AutoLock al(m_forwGate);
   try {
     m_forwGate->writeUInt8(UPDATE_DETECTED);
-  } catch (::remoting::Exception &e) {
+  } catch (::exception &e) {
     m_log->error("An error has been occurred while sending the"
-                 " UPDATE_DETECTED message from UpdateHandlerServer: {}",
-               e.getMessage());
+                 " UPDATE_DETECTED scopedstrMessage from UpdateHandlerServer: {}",
+               e.get_message());
     m_extTerminationListener->onAnObjectEvent();
   }
 }

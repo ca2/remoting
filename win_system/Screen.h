@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "rfb/PixelFormat.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 

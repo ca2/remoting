@@ -25,36 +25,39 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "gui/PaintWindow.h"
 
-class DeviceContext
+namespace remoting
 {
-public:
-  // Create device context linked to window DC.
-  DeviceContext(HWND window);
-  // Create device context complatible with other DC.
-  DeviceContext(DeviceContext* compatibleDevice);
-  // Destroys device context.
-  virtual ~DeviceContext();
+   class DeviceContext
+   {
+   public:
+      // Create device context linked to window DC.
+      DeviceContext(HWND window);
+      // Create device context complatible with other DC.
+      DeviceContext(DeviceContext* compatibleDevice);
+      // Destroys device context.
+      virtual ~DeviceContext();
 
-private:
-  // Initialize class from PaintWindow
-  DeviceContext(class PaintWindow * pntWnd);
+   private:
+      // Initialize class from PaintWindow
+      DeviceContext(class PaintWindow * pntWnd);
 
-  friend class PaintWindow;
+      friend class PaintWindow;
 
-protected:
-  // Selects an object into this device context.
-  HGDIOBJ selectObject(HGDIOBJ object);
+   protected:
+      // Selects an object into this device context.
+      HGDIOBJ selectObject(HGDIOBJ object);
 
-public:
-  HDC m_dc;
-  HWND m_wnd;
-  bool m_hasOwnDC;
+   public:
+      HDC m_dc;
+      HWND m_wnd;
+      bool m_hasOwnDC;
 
-  friend class Graphics;
-  friend class BitmapGraphics;
-};
+      friend class Graphics;
+      friend class BitmapGraphics;
+   };
+}
 
 

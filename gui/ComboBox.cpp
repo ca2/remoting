@@ -34,26 +34,26 @@ ComboBox::~ComboBox()
 {
 }
 
-int ComboBox::addItem(const ::scoped_string & scopedstrtext)
+int ComboBox::addItem(const ::scoped_string & scopedstrText)
 {
-  return ComboBox_AddString(m_hwnd, text);
+  return ComboBox_AddString(m_hwnd, ::wstring(scopedstrText).c_str());
 }
 
-int ComboBox::addItem(const ::scoped_string & scopedstrtext, void *tag)
+int ComboBox::addItem(const ::scoped_string & scopedstrText, void *tag)
 {
-  int index = addItem(text);
+  int index = addItem(scopedstrText);
   setItemData(index, tag);
   return index;
 }
 
-void ComboBox::insertItem(int index, const ::scoped_string & scopedstrtext)
+void ComboBox::insertItem(int index, const ::scoped_string & scopedstrText)
 {
-  ComboBox_InsertString(m_hwnd, index, text);
+  ComboBox_InsertString(m_hwnd, index, ::wstring(scopedstrText).c_str());
 }
 
-void ComboBox::insertItem(int index, const ::scoped_string & scopedstrtext, void *tag)
+void ComboBox::insertItem(int index, const ::scoped_string & scopedstrText, void *tag)
 {
-  insertItem(index, text);
+  insertItem(index, scopedstrText);
   setItemData(index, tag);
 }
 
@@ -72,12 +72,16 @@ void *ComboBox::getItemData(int index) const
   return (void *)ComboBox_GetItemData(m_hwnd, index);
 }
 
-void ComboBox::getItemText(int index, ::string & storage) const
+::string ComboBox::getItemText(int index) const
 {
   size_t length = ComboBox_GetLBTextLen(m_hwnd, index);
-  ::array_base<TCHAR> buf(length + 1);
-  ComboBox_GetLBText(m_hwnd, index, &buf.front());
-  storage-= &buf.front();
+  ::string str;
+
+   auto p = str.get_buffer(length + 1);
+  ComboBox_GetLBText(m_hwnd, index, p);
+   str.release_buffer();
+  //str = buf.data();]
+   return str;
 }
 
 int ComboBox::getSelectedItemIndex()

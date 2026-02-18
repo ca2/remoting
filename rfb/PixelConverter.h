@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#pragma onceINCLUDED__
-INCLUDED__
+#pragma once
+
 
 #include "FrameBuffer.h"
 #include "region/Point.h"

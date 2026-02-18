@@ -47,32 +47,32 @@ protected:
 
   void readAndInflate(RfbInputGate *input, size_t maximalUnpackedSize);
 
-  int readType(DataInputStream *input);
+  int readType(DataInputStream * pinput);
 
-  size_t readRunLength(DataInputStream *input);
+  size_t readRunLength(DataInputStream * pinput);
 
-  void readPalette(DataInputStream *input,
+  void readPalette(DataInputStream * pinput,
                    const int paletteSize,
                    Palette *palette);
 
-  void readRawTile(DataInputStream *input,
+  void readRawTile(DataInputStream * pinput,
                    ::array_base<char> &pixels,
                    const ::int_rectangle &  tileRect);
 
-  void readSolidTile(DataInputStream *input,
+  void readSolidTile(DataInputStream * pinput,
                      ::array_base<char> &pixels,
                      const ::int_rectangle &  tileRect);
 
-  void readPackedPaletteTile(DataInputStream *input,
+  void readPackedPaletteTile(DataInputStream * pinput,
                              ::array_base<char> &pixels,
                              const ::int_rectangle &  tileRect,
                              const int type);
 
-  void readPlainRleTile(DataInputStream *input,
+  void readPlainRleTile(DataInputStream * pinput,
                         ::array_base<char> &pixels,
                         const ::int_rectangle &  tileRect);
 
-  void readPaletteRleTile(DataInputStream *input,
+  void readPaletteRleTile(DataInputStream * pinput,
                           ::array_base<char> &pixels,
                           const ::int_rectangle &  tileRect,
                           const int type);

@@ -23,8 +23,8 @@
 //
 #include "framework.h"
 #include "CommonControlsEx.h"
+#include "remoting/util/CommonHeader.h"
 
-#include "util/CommonHeader.h"
 
 CommonControlsEx::CommonControlsEx()
 {

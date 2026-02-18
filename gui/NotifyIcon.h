@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 #include "NotifyIconWindow.h"
 
@@ -33,28 +33,29 @@
 
 #include <shellapi.h>
 
-// FIXME: Add documentation to class.
-class NotifyIcon : public NotifyIconWindow
+namespace remoting
 {
-public:
-  NotifyIcon(bool showAfterCreation = true);
-  virtual ~NotifyIcon();
+   // FIXME: Add documentation to class.
+   class NotifyIcon : public NotifyIconWindow
+   {
+   public:
+      NotifyIcon(bool showAfterCreation = true);
+      virtual ~NotifyIcon();
 
-  const Icon *getIcon() const;
-  bool isVisible() const;
+      const Icon *getIcon() const;
+      bool isVisible() const;
 
-  void setIcon(Icon *icon);
-  void setText(const ::scoped_string & scopedstrtext);
+      void setIcon(Icon *icon);
+      void setText(const ::scoped_string & scopedstrText);
 
-  void showBalloon(const ::scoped_string & scopedstrMessage, const ::scoped_string & scopedstrcaption, DWORD timeoutMillis);
+      void showBalloon(const ::scoped_string & scopedstrMessage, const ::scoped_string & scopedstrCaption, DWORD timeoutMillis);
 
-  void show();
-  void hide();
+      void show();
+      void hide();
 
-protected:
-  NOTIFYICONDATA m_nid;
-  Icon *m_icon;
-  bool m_visible;
-};
-
-
+   protected:
+      NOTIFYICONDATA m_nid;
+      Icon *m_icon;
+      bool m_visible;
+   };
+}

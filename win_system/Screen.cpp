@@ -25,7 +25,7 @@
 #include "acme/_operating_system.h"
 #include "Screen.h"
 #include "util/Exception.h"
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 
 Screen::Screen()
 {
@@ -78,7 +78,7 @@ void Screen::getBMI(BMI *bmi, HDC dc)
   hbm = (HBITMAP)GetCurrentObject(bitmapDC, OBJ_BITMAP);
   if (GetDIBits(bitmapDC, hbm, 0, 0, NULL, (LPBITMAPINFO)bmi, DIB_RGB_COLORS) == 0) {
     ::string errMess;
-    Environment::getErrStr("Can't get a DIBits", &errMess);
+    errMess = ::windows::last_error_message("Can't get a DIBits", ::windows::last_error());
     DeleteObject(hbm);
     DeleteDC(bitmapDC);
     throw ::remoting::Exception(errMess);
@@ -88,7 +88,7 @@ void Screen::getBMI(BMI *bmi, HDC dc)
   if (bmi->bmiHeader.biCompression == BI_BITFIELDS) {
     if (GetDIBits(bitmapDC, hbm, 0, 0, NULL, (LPBITMAPINFO)bmi, DIB_RGB_COLORS) == 0) {
       ::string errMess;
-      Environment::getErrStr("Can't get a DIBits", &errMess);
+      errMess = ::windows::last_error_message("Can't get a DIBits",::windows::last_error());
       DeleteObject(hbm);
       DeleteDC(bitmapDC);
       throw ::remoting::Exception(errMess);

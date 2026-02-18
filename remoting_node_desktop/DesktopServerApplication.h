@@ -36,8 +36,8 @@
 #include "desktop_ipc/GateKickHandler.h"
 #include "SessionChangesWatcher.h"
 #include "win_system/LocalWindowsApplication.h"
-#include "log-server/ClientLogger.h"
-#include "log_writer/LogWriter.h"
+#include "log-server/ClientLogWriter.h"
+//#include "log_writer/LogWriter.h"
 #include "server_config_lib/ConfigReloadListener.h"
 #include "util/CommandLineArgs.h"
 
@@ -74,7 +74,7 @@ private:
   void freeResources();
 
   Configurator m_configurator;
-  ClientLogger m_clientLogger;
+  ClientLogWriter m_clientLogWriter;
   LogWriter m_log;
 
   // Transport

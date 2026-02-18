@@ -38,14 +38,14 @@
 
 #include "win_system/Registry.h"
 #include "win_system/RegistryKey.h"
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 #include "win_system/Shell.h"
 #include "win_system/SCMClient.h"
 #include "win_system/WinCommandLineArgs.h"
 
 ServiceControlApplication::ServiceControlApplication(HINSTANCE hInstance,
                                                      const ::scoped_string & scopedstrwindowClassName,
-                                                     const ::scoped_string & scopedstrcommandLine)
+                                                     const ::scoped_string & scopedstrCommandLine)
 : WindowsApplication(hInstance, windowClassName),
   m_commandLine(commandLine)
 {
@@ -87,7 +87,7 @@ int ServiceControlApplication::run()
       success = true;
     } catch (SystemException &sysEx) {
       if (sysEx.getErrorCode() != ERROR_CANCELLED) {
-        reportError(&cmdLine, sysEx.getMessage());
+        reportError(&cmdLine, sysEx.get_message());
       }
     }
   } else {
@@ -101,7 +101,7 @@ int ServiceControlApplication::run()
       reportError(&cmdLine, &servEx);
     } catch (::remoting::Exception &ex) {
       _ASSERT(FALSE);
-      reportError(&cmdLine, ex.getMessage());
+      reportError(&cmdLine, ex.get_message());
     }
   }
 
@@ -199,7 +199,7 @@ void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmd
     errorMessage= StringTable::getString(IDS_SERVICE_STOP_TIMEOUT);
     break;
   default:
-    errorMessage= ex->getMessage();
+    errorMessage= ex->get_message();
   }
 
   reportError(cmdLine, errorMessage);
@@ -218,14 +218,14 @@ void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmd
     errorMessage= StringTable::getString(IDS_1073_ERROR_DESCRIPTION);
     break;
   default:
-    errorMessage= ex->getMessage();
+    errorMessage= ex->get_message();
   }
 
   reportError(cmdLine, errorMessage);
 }
 
 void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmdLine,
-                                            const ::scoped_string & scopedstrerrorMessage) const
+                                            const ::scoped_string & scopedstrErrorMessage) const
 {
   UINT stringId = 0;
 
@@ -245,10 +245,10 @@ void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmd
   }
 
   if (!cmdLine->beSilent()) {
-    const ::scoped_string & scopedstrcaption = StringTable::getString(IDS_MBC_TVNSERVER);
+    const ::scoped_string & scopedstrCaption = StringTable::getString(IDS_MBC_TVNSERVER);
     ::string text;
     text.format(StringTable::getString(stringId), errorMessage);
-    MessageBox(NULL, text, caption, MB_OK | MB_ICONERROR);
+    ::remoting::message_box(NULL, text, caption, MB_OK | MB_ICONERROR);
   }
 }
 
@@ -268,8 +268,8 @@ void ServiceControlApplication::reportSuccess(const ServiceControlCommandLine *c
   }
 
   if (!cmdLine->beSilent()) {
-    const ::scoped_string & scopedstrcaption = StringTable::getString(IDS_MBC_TVNSERVER);
-    const ::scoped_string & scopedstrtext = StringTable::getString(stringId);
-    MessageBox(NULL, text, caption, MB_OK | MB_ICONINFORMATION);
+    const ::scoped_string & scopedstrCaption = StringTable::getString(IDS_MBC_TVNSERVER);
+    const ::scoped_string & scopedstrText = StringTable::getString(stringId);
+    ::remoting::message_box(NULL, text, caption, MB_OK | MB_ICONINFORMATION);
   }
 }

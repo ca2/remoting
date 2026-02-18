@@ -64,8 +64,8 @@ void EditPortMappingDialog::onOkButtonClick()
   ::string portStringStorage;
   ::string rectStringStorage;
 
-  m_geometryTextBox.getText(&rectStringStorage);
-  m_portTextBox.getText(&portStringStorage);
+  m_geometryTextBox.get_text(&rectStringStorage);
+  m_portTextBox.get_text(&portStringStorage);
 
   PortMappingRect::parse(rectStringStorage, &rect);
   StringParser::parseInt(portStringStorage, &port);
@@ -78,7 +78,7 @@ void EditPortMappingDialog::onOkButtonClick()
 
 void EditPortMappingDialog::initControls()
 {
-  HWND dialogHwnd = m_ctrlThis.getWindow();
+  HWND dialogHwnd = m_ctrlThis.get_hwnd();
   m_geometryTextBox.setWindow(GetDlgItem(dialogHwnd, IDC_GEOMETRY_EDIT));
   m_portTextBox.setWindow(GetDlgItem(dialogHwnd, IDC_PORT_EDIT));
 }
@@ -88,15 +88,15 @@ bool EditPortMappingDialog::isUserDataValid()
   ::string rectStringStorage;
   ::string portStringStorage;
 
-  m_geometryTextBox.getText(&rectStringStorage);
-  m_portTextBox.getText(&portStringStorage);
+  m_geometryTextBox.get_text(&rectStringStorage);
+  m_portTextBox.get_text(&portStringStorage);
 
   if (!PortMappingRect::tryParse(rectStringStorage)) {
-    MessageBox(m_ctrlThis.getWindow(),
+    ::remoting::message_box(m_ctrlThis.get_hwnd(),
                StringTable::getString(IDS_INVALID_PORT_MAPPING_STRING),
                StringTable::getString(IDS_CAPTION_BAD_INPUT),
                MB_OK | MB_ICONWARNING);
-    m_geometryTextBox.setFocus();
+    m_geometryTextBox.set_focus();
     return false;
   }
 
@@ -105,11 +105,11 @@ bool EditPortMappingDialog::isUserDataValid()
   StringParser::parseInt(portStringStorage, &port);
 
   if ((port < 1) || (port > 65535)) {
-    MessageBox(m_ctrlThis.getWindow(),
+    ::remoting::message_box(m_ctrlThis.get_hwnd(),
                StringTable::getString(IDS_PORT_RANGE_ERROR),
                StringTable::getString(IDS_CAPTION_BAD_INPUT),
                MB_OK | MB_ICONWARNING);
-    m_portTextBox.setFocus();
+    m_portTextBox.set_focus();
     return false;
   }
 
@@ -118,11 +118,11 @@ bool EditPortMappingDialog::isUserDataValid()
   size_t index = extraPorts->findByPort(port);
 
   if ((index != (size_t)-1) && (extraPorts->at(index) != m_mapping)) {
-    MessageBox(m_ctrlThis.getWindow(),
+    ::remoting::message_box(m_ctrlThis.get_hwnd(),
                StringTable::getString(IDS_PORT_ALREADY_IN_USE),
                StringTable::getString(IDS_CAPTION_BAD_INPUT),
                MB_OK | MB_ICONWARNING);
-    m_portTextBox.setFocus();
+    m_portTextBox.set_focus();
     return false;
   }
 

@@ -23,10 +23,11 @@
 //
 #include "framework.h"
 #include "FileExistDialog.h"
-#include "util/DateTime.h"
+//#include "util/::earth::time.h"
 #include "resource.h"
 #include <crtdbg.h>
 #include <stdio.h>
+#include "acme/prototype/datetime/datetime.h"
 
 FileExistDialog::FileExistDialog()
 : m_controlsInitialized(false), 
@@ -52,13 +53,13 @@ int FileExistDialog::showModal()
   return BaseDialog::showModal();
 }
 
-void FileExistDialog::setFilesInfo(FileInfo *existingFileInfo, FileInfo *newFileInfo,
+void FileExistDialog::setFilesInfo(::remoting::ftp::FileInfo *existingFileInfo, ::remoting::ftp::FileInfo *newFileInfo,
                                    const ::scoped_string & scopedstrPathToFileCaption)
 {
   m_newFileInfo = newFileInfo;
   m_existingFileInfo = existingFileInfo;
 
-  m_pathToFileCaption= pathToFileCaption;
+  m_pathToFileCaption= scopedstrPathToFileCaption;
 
   _ASSERT(m_newFileInfo != NULL);
   _ASSERT(m_existingFileInfo != NULL);
@@ -67,8 +68,8 @@ void FileExistDialog::setFilesInfo(FileInfo *existingFileInfo, FileInfo *newFile
 
   if (m_controlsInitialized) {
     updateGui(newFileInfo, &m_newSizeLabel, &m_newModTimeLabel);
-    m_fileNameLabel.setText(pathToFileCaption);
-    m_appendButton.setEnabled(m_canAppend);
+    m_fileNameLabel.setText(scopedstrPathToFileCaption);
+    m_appendButton.enable_window(m_canAppend);
   }
 }
 
@@ -88,7 +89,7 @@ BOOL FileExistDialog::onInitDialog()
   updateGui(m_newFileInfo, &m_newSizeLabel, &m_newModTimeLabel);
   updateGui(m_existingFileInfo, &m_existingSizeLabel, &m_existingModTimeLabel);
 
-  m_appendButton.setEnabled(m_canAppend);
+  m_appendButton.enable_window(m_canAppend);
 
   m_fileNameLabel.setText(m_pathToFileCaption);
 
@@ -132,29 +133,29 @@ BOOL FileExistDialog::onDestroy()
 
 void FileExistDialog::onOverwriteButtonClick()
 {
-  kill(OVERWRITE_RESULT);
+  close_dialog(OVERWRITE_RESULT);
 }
 
 void FileExistDialog::onOverwriteAllButtonClick()
 {
-  kill(OVERWRITE_RESULT);
+  close_dialog(OVERWRITE_RESULT);
   m_overwriteAll = true;
 }
 
 void FileExistDialog::onSkipButtonClick()
 {
-  kill(SKIP_RESULT);
+  close_dialog(SKIP_RESULT);
 }
 
 void FileExistDialog::onSkipAllButtonClick()
 {
-  kill(SKIP_RESULT);
+  close_dialog(SKIP_RESULT);
   m_skipAll = true;
 }
 
 void FileExistDialog::onAppendButtonClick()
 {
-  kill(APPEND_RESULT);
+  close_dialog(APPEND_RESULT);
 }
 
 //
@@ -163,26 +164,26 @@ void FileExistDialog::onAppendButtonClick()
 
 void FileExistDialog::onCancelButtonClick()
 {
-  kill(CANCEL_RESULT);
+  close_dialog(CANCEL_RESULT);
 }
 
-void FileExistDialog::updateGui(FileInfo *fileInfo, Control *sizeLabel, Control *modTimeLabel)
+void FileExistDialog::updateGui(::remoting::ftp::FileInfo *fileInfo, ::remoting::Window *sizeLabel, ::remoting::Window *modTimeLabel)
 {
   TCHAR buffer[255];
-  _stprintf_s(&buffer[0], 255, "%lld bytes", fileInfo->getSize());
+  _stprintf_s(&buffer[0], 255, L"%lld bytes", fileInfo->getSize());
   sizeLabel->setText(&buffer[0]);
 
-  DateTime dateTime(fileInfo->lastModified());
+  ::earth::time dateTime(::posix_time(::posix_time_t{}, fileInfo->lastModified()));
 
   ::string formatTimeString;
-  dateTime.toString(&formatTimeString);
+  formatTimeString = datetime()->date_time_text(dateTime);
 
   modTimeLabel->setText(formatTimeString);
 }
 
 void FileExistDialog::initControls()
 {
-  HWND hwnd = m_ctrlThis.getWindow();
+  HWND hwnd = m_hwnd;
 
   m_fileNameLabel.setWindow(GetDlgItem(hwnd, IDC_FILENAME_LABEL));
   m_newSizeLabel.setWindow(GetDlgItem(hwnd, IDC_SIZE1_LABEL));

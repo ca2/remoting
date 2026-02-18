@@ -25,10 +25,12 @@
 #include "AboutDialog.h"
 #include "win_system/Shell.h"
 #include "win_system/VersionInfo.h"
-#include "win_system/Environment.h"
-#include "gui/Control.h"
+//#include "win_system/Environment.h"
+//#include "gui/::remoting::Window.h"
 #include "BuildTime.h"
 #include "resource.h"
+#include "acme/filesystem/filesystem/file_context.h"
+#include "remoting/common/remoting.h"
 
 AboutDialog::AboutDialog()
 : BaseDialog(IDD_ABOUT_DIALOG)
@@ -41,7 +43,7 @@ AboutDialog::~AboutDialog()
 
 void AboutDialog::onCloseButtonClick()
 {
-  kill(IDCANCEL);
+  close_dialog(IDCANCEL);
 }
 
 void AboutDialog::onOrderSupportButtonClock()
@@ -54,18 +56,18 @@ void AboutDialog::onVisitSiteButtonClick()
   openUrl(StringTable::getString(IDS_URL_PRODUCT_FVA));
 }
 
-void AboutDialog::openUrl(const ::scoped_string & scopedstrurl)
+void AboutDialog::openUrl(const ::scoped_string & scopedstrUrl)
 {
   try {
-    Shell::open(url, 0, 0);
+    Shell::open(scopedstrUrl, 0, 0);
   } catch (SystemException &sysEx) {
-    ::string message;
+    ::string strMessage;
 
-    message.format(StringTable::getString(IDS_FAILED_TO_OPEN_URL_FORMAT), sysEx.getMessage());
+    strMessage.formatf(StringTable::getString(IDS_FAILED_TO_OPEN_URL_FORMAT).c_str(), sysEx.get_message());
 
-    MessageBox(m_ctrlThis.getWindow(),
-               message,
-               StringTable::getString(IDS_MBC_TVNVIEWER),
+    ::remoting::message_box(m_hwnd,
+               wstring(strMessage),
+               wstring(StringTable::getString(IDS_MBC_TVNVIEWER)),
                MB_OK | MB_ICONEXCLAMATION);
   }
 }
@@ -76,30 +78,30 @@ BOOL AboutDialog::onInitDialog()
   ::string versionString("unknown");
   try {
     ::string binaryPath;
-    Environment::getCurrentModulePath(&binaryPath);
+binaryPath = ::system()->file()->module();
     VersionInfo productInfo(binaryPath);
     versionString= productInfo.getProductVersionString();
   } catch (SystemException &ex) {
-    MessageBox(m_ctrlThis.getWindow(),
-               ex.getMessage(),
-               StringTable::getString(IDS_MBC_TVNVIEWER),
+    ::remoting::message_box(m_hwnd,
+               ::wstring(ex.get_message()),
+               ::wstring(StringTable::getString(IDS_MBC_TVNVIEWER)),
                MB_OK | MB_ICONEXCLAMATION);
   }
 
   // Format product version and build time for displaying on the dialog.
   ::string versionText;
-  versionText.format(StringTable::getString(IDS_PRODUCT_VERSION_FORMAT),
-                     versionString,
+  versionText.formatf(StringTable::getString(IDS_PRODUCT_VERSION_FORMAT).c_str(),
+                     ::string(versionString).c_str(),
                      BuildTime::DATE);
 
   // Show version info on the dialog.
-  Control versionLabel;
-  versionLabel.setWindow(GetDlgItem(m_ctrlThis.getWindow(), IDC_STATIC_VERSION));
+  ::remoting::Window versionLabel;
+  versionLabel.setWindow(GetDlgItem(m_hwnd, IDC_STATIC_VERSION));
   versionLabel.setText(versionText);
 
   // Show licensing info and/or special build info.
-  Control licensingLabel;
-  licensingLabel.setWindow(GetDlgItem(m_ctrlThis.getWindow(), IDC_STATIC_LICENSING));
+  ::remoting::Window licensingLabel;
+  licensingLabel.setWindow(GetDlgItem(m_hwnd, IDC_STATIC_LICENSING));
   licensingLabel.setText(StringTable::getString(IDS_LICENSING_INFO));
 
   return FALSE;

@@ -28,9 +28,9 @@
 #include "rfb_sconn/EncodeOptions.h"
 #include "rfb/CursorShape.h"
 #include "desktop/UpdateContainer.h"
-#include "util/DateTime.h"
+//#include "util/::earth::time.h"
 #include "thread/LocalMutex.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 class CursorUpdates
 {
@@ -88,7 +88,7 @@ private:
 
   // Current state
   Point m_cursorPos;
-  DateTime m_blockCurPosTime;
+  ::earth::time m_blockCurPosTime;
   CursorShape m_cursorShape;
   FrameBuffer m_shapeBackground;
   Point m_backgroundPos;

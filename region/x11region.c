@@ -110,7 +110,7 @@ SOFTWARE.
  * band has the same top y coordinate (y1), and each has the same bottom y
  * coordinate (y2).  Thus all rectangles in a band differ only in their left
  * and right side (x1 and x2).  Bands are implicit in the array of rectangles:
- * there is no separate ::list of band start pointers.
+ * there is no separate ::list_base of band start pointers.
  *
  * The y-x band representation does not minimize rectangles.  In particular,
  * if a rectangle vertically crosses a band (the rectangle has scanlines in 
@@ -850,7 +850,7 @@ miRegionOp(
      *
      * We only need to worry about banding and coalescing for the very first
      * band left.  After that, we can just group all remaining boxes,
-     * regardless of how many bands, into one final append to the ::list.
+     * regardless of how many bands, into one final append to the ::list_base.
      */
 
     if ((r1 != r1End) && appendNon1) {
@@ -1001,7 +1001,7 @@ miIntersectO (
 
 	/*
 	 * Advance the pointer(s) with the leftmost right side, since the next
-	 * rectangle on that ::list may still overlap the other region's
+	 * rectangle on that ::list_base may still overlap the other region's
 	 * current rectangle.
 	 */
 	if (r1->x2 == x2) {
@@ -1985,7 +1985,7 @@ miInverse(newReg, reg1, invRect)
  *   This routine takes a pointer to a region and a pointer to a box
  *   and determines if the box is outside/inside/partly inside the region.
  *
- *   The idea is to travel through the ::list of rectangles trying to cover the
+ *   The idea is to travel through the ::list_base of rectangles trying to cover the
  *   passed box with them. Anytime a piece of the rectangle isn't covered
  *   by a band of rectangles, partOut is set TRUE. Any time a rectangle in
  *   the region covers part of the box, partIn is set TRUE. The process ends
@@ -2400,7 +2400,7 @@ static void QuickSortSpans(
 }
 
 /*
-    Clip a ::list of scanlines to a region.  The caller has allocated the
+    Clip a ::list_base of scanlines to a region.  The caller has allocated the
     space.  FSorted is non-zero if the scanline origins are in ascending
     order.
     returns the number of new, clipped scanlines.

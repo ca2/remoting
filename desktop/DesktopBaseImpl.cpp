@@ -50,8 +50,8 @@ void DesktopBaseImpl::getCurrentUserInfo(::string & desktopName,
   m_log->information("get current user information");
   try {
     m_userInput->getCurrentUserInfo(desktopName, userName);
-  } catch (::remoting::Exception &e) {
-	m_log->error("::remoting::Exception in DesktopBaseImpl::getCurrentUserInfo: {}", e.getMessage());
+  } catch (::exception &e) {
+	m_log->error("::remoting::Exception in DesktopBaseImpl::getCurrentUserInfo: {}", e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
 }
@@ -63,8 +63,8 @@ void DesktopBaseImpl::getFrameBufferProperties(::int_size *dim, PixelFormat *pf)
   m_log->debug("get frame buffer properties");
   try {
     m_updateHandler->getFrameBufferProp(dim, pf);
-  } catch (::remoting::Exception &e) {
-	m_log->error("::remoting::Exception in DesktopBaseImpl::getFrameBufferProperties: {}", e.getMessage());
+  } catch (::exception &e) {
+	m_log->error("::remoting::Exception in DesktopBaseImpl::getFrameBufferProperties: {}", e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
 }
@@ -76,8 +76,8 @@ void DesktopBaseImpl::getPrimaryDesktopCoords(::int_rectangle *rect)
   m_log->information("get primary desktop coordinates");
   try {
     m_userInput->getPrimaryDisplayCoords(rect);
-  } catch (::remoting::Exception &e) {
-	m_log->error("::remoting::Exception in DesktopBaseImpl::getPrimaryDesktopCoords: {}", e.getMessage());
+  } catch (::exception &e) {
+	m_log->error("::remoting::Exception in DesktopBaseImpl::getPrimaryDesktopCoords: {}", e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
 }
@@ -90,8 +90,8 @@ void DesktopBaseImpl::getDisplayNumberCoords(::int_rectangle *rect,
   m_log->information("get the %u display coordinates", (unsigned int) dispNumber);
   try {
     m_userInput->getDisplayNumberCoords(rect, dispNumber);
-  } catch (::remoting::Exception &e) {
-  	m_log->error("::remoting::Exception in DesktopBaseImpl::getDisplayNumberCoords: {}", e.getMessage());
+  } catch (::exception &e) {
+  	m_log->error("::remoting::Exception in DesktopBaseImpl::getDisplayNumberCoords: {}", e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
 }
@@ -104,8 +104,8 @@ void DesktopBaseImpl::getDisplayNumberCoords(::int_rectangle *rect,
   try {
     return m_userInput->getDisplaysCoords();
   }
-  catch (::remoting::Exception &e) {
-    m_log->error("::remoting::Exception in DesktopBaseImpl::getDisplayCoords: {}", e.getMessage());
+  catch (::exception &e) {
+    m_log->error("::remoting::Exception in DesktopBaseImpl::getDisplayCoords: {}", e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
   return ::array_base<::int_rectangle>();
@@ -119,8 +119,8 @@ void DesktopBaseImpl::getNormalizedRect(::int_rectangle *rect)
   m_log->information("normilize a rect to frame buffer coordinates");
   try {
     m_userInput->getNormalizedRect(rect);
-  } catch (::remoting::Exception &e) {
-	m_log->error("::remoting::Exception in DesktopBaseImpl::getNormalizedRect: {}", e.getMessage());
+  } catch (::exception &e) {
+	m_log->error("::remoting::Exception in DesktopBaseImpl::getNormalizedRect: {}", e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
 }
@@ -134,8 +134,8 @@ void DesktopBaseImpl::getWindowCoords(HWND hwnd, ::int_rectangle *rect)
     m_userInput->getWindowCoords(hwnd, rect);
   } catch (BrokenHandleException &) {
     throw;
-  } catch (::remoting::Exception &e) {
-	m_log->error("::remoting::Exception in DesktopBaseImpl::getWindowCoords: {}", e.getMessage());
+  } catch (::exception &e) {
+	m_log->error("::remoting::Exception in DesktopBaseImpl::getWindowCoords: {}", e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
 }
@@ -147,8 +147,8 @@ HWND DesktopBaseImpl::getWindowHandleByName(const ::scoped_string & windowName)
   m_log->information("get a window handle by a window name");
   try {
     return m_userInput->getWindowHandleByName(windowName);
-  } catch (::remoting::Exception &e) {
-	m_log->error("::remoting::Exception in DesktopBaseImpl::getWindowHandleByName: {}", e.getMessage());
+  } catch (::exception &e) {
+	m_log->error("::remoting::Exception in DesktopBaseImpl::getWindowHandleByName: {}", e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
   return 0;
@@ -161,8 +161,8 @@ void DesktopBaseImpl::getApplicationRegion(unsigned int procId, Region *region)
   m_log->information("get application region");
   try {
     m_userInput->getApplicationRegion(procId, region);
-  } catch (::remoting::Exception &e) {
-	m_log->error("::remoting::Exception in DesktopBaseImpl::getApplicationRegion: {}", e.getMessage());
+  } catch (::exception &e) {
+	m_log->error("::remoting::Exception in DesktopBaseImpl::getApplicationRegion: {}", e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
 }
@@ -174,8 +174,8 @@ bool DesktopBaseImpl::isApplicationInFocus(unsigned int procId)
   m_log->information("checking if application is in focus");
   try {
     return m_userInput->isApplicationInFocus(procId);
-  } catch (::remoting::Exception &e) {
-	m_log->error("::remoting::Exception in DesktopBaseImpl::isApplicationInFocus {}", e.getMessage());
+  } catch (::exception &e) {
+	m_log->error("::remoting::Exception in DesktopBaseImpl::isApplicationInFocus {}", e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
   return false;
@@ -200,8 +200,8 @@ void DesktopBaseImpl::setKeyboardEvent(unsigned int keySym, bool down)
     if (isRemoteInputAllowed()) {
       m_userInput->setKeyboardEvent(keySym, down);
     }
-  } catch (::remoting::Exception &e) {
-    m_log->error("setKeyboardEvent() crashed: {}", e.getMessage());
+  } catch (::exception &e) {
+    m_log->error("setKeyboardEvent() crashed: {}", e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
 }
@@ -217,8 +217,8 @@ void DesktopBaseImpl::setMouseEvent(unsigned short x, unsigned short y, unsigned
     if (isRemoteInputAllowed()) {
       m_userInput->setMouseEvent(point, buttonMask);
     }
-  } catch (::remoting::Exception &e) {
-	m_log->error("::remoting::Exception in DesktopBaseImpl::setMouseEvent {}", e.getMessage());
+  } catch (::exception &e) {
+	m_log->error("::remoting::Exception in DesktopBaseImpl::setMouseEvent {}", e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
 }
@@ -228,7 +228,7 @@ void DesktopBaseImpl::setNewClipText(const ::scoped_string & newClipboard)
   _ASSERT(m_userInput != 0);
   _ASSERT(m_extDeskTermListener != 0);
 
-  m_log->debug("set new clipboard text, length: {}", newClipboard->getLength());
+  m_log->debug("set new clipboard text, length: {}", newClipboard->length());
 
   {
     AutoLock al(&m_storedClipCritSec);
@@ -236,8 +236,8 @@ void DesktopBaseImpl::setNewClipText(const ::scoped_string & newClipboard)
   }
   try {
     m_userInput->setNewClipboard(newClipboard);
-  } catch (::remoting::Exception &e) {
-	  m_log->error("::remoting::Exception in DesktopBaseImpl::setNewClipText {}", e.getMessage());
+  } catch (::exception &e) {
+	  m_log->error("::remoting::Exception in DesktopBaseImpl::setNewClipText {}", e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
 }
@@ -249,21 +249,21 @@ void DesktopBaseImpl::sendUpdate()
   _ASSERT(m_extUpdSendingListener != 0);
 
   if (!m_extUpdSendingListener->isReadyToSend()) {
-    m_log->detail("nobody is ready for updates");
+    m_log->debug("nobody is ready for updates");
     return;
   }
   UpdateContainer updCont;
   try {
     if (!m_fullReqRegion.is_empty()) {
-      m_log->detail("set full update request to UpdateHandler");
+      m_log->debug("set full update request to UpdateHandler");
       m_updateHandler->setFullUpdateRequested(&m_fullReqRegion);
     }
 
-    m_log->detail("extracting updates from UpdateHandler");
+    m_log->debug("extracting updates from UpdateHandler");
     m_updateHandler->extract(&updCont);
-  } catch (::remoting::Exception &e) {
+  } catch (::exception &e) {
     m_log->information("WinDesktop::sendUpdate() failed with error:{}",
-               e.getMessage());
+               e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
 
@@ -281,7 +281,7 @@ void DesktopBaseImpl::sendUpdate()
 
 void DesktopBaseImpl::onUpdate()
 {
-  m_log->detail("update detected");
+  m_log->debug("update detected");
   m_newUpdateEvent.notify();
 }
 
@@ -300,7 +300,7 @@ void DesktopBaseImpl::onClipboardUpdate(const ::scoped_string & newClipboard)
 {
   _ASSERT(m_extClipListener != 0);
 
-  m_log->detail("clipboard update detected, length: {}", newClipboard->getLength());
+  m_log->debug("clipboard update detected, length: {}", newClipboard->length());
   bool isEqual;
   {
     AutoLock al(&m_storedClipCritSec);

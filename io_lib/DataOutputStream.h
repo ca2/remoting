@@ -33,21 +33,22 @@
  * Data output stream (decorator pattern).
  * Adds feature to write typezied data to output stream.
  */
-class DataOutputStream : public OutputStream
+class DataOutputStream : public ::file::file
 {
 public:
   /**
    * Creates new data output stream.
    * @param outputStream real output stream.
    */
-  DataOutputStream(OutputStream *outputStream);
+  DataOutputStream(::file::writable *outputStream);
   virtual ~DataOutputStream();
 
   /**
    * Inherited from superclass.
    * @remark just delegates call to real output stream.
    */
-  virtual size_t write(const void *buffer, size_t len);
+  //virtual size_t write(const void *buffer, size_t len);
+   virtual void write(const void *buffer, size_t len);
 
   /**
    * Writes exacly specified count of bytes to stream.
@@ -57,7 +58,7 @@ public:
    * @fixme really it can throw any kind of exception (depends on implementation
    * of output stream passed to costructor of DataOutputStream).
    */
-  void writeFully(const void *buffer, size_t len);
+  ///void writeFully(const void *buffer, size_t len);
 
   void writeUInt8(unsigned char x);
   void writeUInt16(unsigned short x);
@@ -75,8 +76,8 @@ public:
    * Flushes inner output stream.
    */
   virtual void flush();
-protected:
-  OutputStream *m_outStream;
+//protected:
+  ::file::writable *m_outStream;
 };
 
 

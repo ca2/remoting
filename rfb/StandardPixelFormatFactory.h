@@ -22,8 +22,7 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _STANDARD_PIXEL_FORMAT_FACTORY_
-#define _STANDARD_PIXEL_FORMAT_FACTORY_
+#pragma once
 
 #include "rfb/PixelFormat.h"
 

@@ -26,8 +26,8 @@
 
 
 #include "gui/BaseDialog.h"
-#include "gui/Control.h"
-#include "ft_common/FileInfo.h"
+//#include "gui/::remoting::Window.h"
+#include "remoting/ftp_common/FileInfo.h"
 
 class FileExistDialog : public BaseDialog
 {
@@ -48,7 +48,7 @@ public:
   // Override BaseDialog method
   virtual int showModal();
 
-  void setFilesInfo(FileInfo *existingFileInfo, FileInfo *newFileInfo,
+  void setFilesInfo(::remoting::ftp::FileInfo *existingFileInfo, ::remoting::ftp::FileInfo *newFileInfo,
                     const ::scoped_string & scopedstrPathToFileCaption);
 
   void resetDialogResultValue();
@@ -75,14 +75,14 @@ protected:
   void onAppendButtonClick();
   void onCancelButtonClick();
 
-private:
+//private:
 
-  void updateGui(FileInfo *fileInfo, Control *sizeLabel, Control *modTimeLabel);
+  void updateGui(::remoting::ftp::FileInfo *fileInfo, ::remoting::Window *sizeLabel, ::remoting::Window *modTimeLabel);
   void initControls();
 
-protected:
-  FileInfo *m_newFileInfo;
-  FileInfo *m_existingFileInfo;
+//protected:
+  ::remoting::ftp::FileInfo *m_newFileInfo;
+ ::remoting::ftp:: FileInfo *m_existingFileInfo;
   ::string m_pathToFileCaption;
 
   //
@@ -97,13 +97,13 @@ protected:
   // User controls
   //
 
-  Control m_fileNameLabel;
-  Control m_newSizeLabel;
-  Control m_newModTimeLabel;
-  Control m_existingSizeLabel;
-  Control m_existingModTimeLabel;
+  ::remoting::Window m_fileNameLabel;
+  ::remoting::Window m_newSizeLabel;
+  ::remoting::Window m_newModTimeLabel;
+  ::remoting::Window m_existingSizeLabel;
+  ::remoting::Window m_existingModTimeLabel;
 
-  Control m_appendButton;
+  ::remoting::Window m_appendButton;
 
   bool m_canAppend;
 };

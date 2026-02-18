@@ -25,13 +25,15 @@
 #include "acme/_operating_system.h"
 #include "WinCommandLineArgs.h"
 #include "util/Exception.h"
-#include "util/UnicodeStringStorage.h"
 
-WinCommandLineArgs::WinCommandLineArgs(const ::scoped_string & scopedstrcmdLineInWinFormat)
+#include <shellapi.h>
+
+
+WinCommandLineArgs::WinCommandLineArgs(const ::scoped_string & scopedstrCmdLineInWinFormat)
 {
-   ::string strstorage(cmdLineInWinFormat);
-  UnicodeStringStorage uniCmdLine(strstorage);
-  size_t cmdLen = uniCmdLine.getLength();
+   ::string strstorage(scopedstrCmdLineInWinFormat);
+  ::wstring uniCmdLine(strstorage);
+  size_t cmdLen = uniCmdLine.length();
   if (cmdLen > 0) {
     int nArgs;
     LPWSTR *argList = CommandLineToArgvW(uniCmdLine, &nArgs);
@@ -39,10 +41,10 @@ WinCommandLineArgs::WinCommandLineArgs(const ::scoped_string & scopedstrcmdLineI
       throw ::remoting::Exception("Invalid command line");
     }
     for(int i = 0; i < nArgs; i++) {
-      UnicodeStringStorage uniArg(argList[i]);
+      ::wstring uniArg(argList[i]);
       ::string arg;
-      uniArg.toStringStorage(&arg);
-      if (arg.getLength() > 0) {
+      arg = uniArg;
+      if (arg.length() > 0) {
         m_args.add(arg);
       }
     }

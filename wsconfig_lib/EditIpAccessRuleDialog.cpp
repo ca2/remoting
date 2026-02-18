@@ -25,7 +25,7 @@
 #include "remoting_node/resource.h"
 #include "EditIpAccessRuleDialog.h"
 #include "util/StringParser.h"
-#include "util/AnsiStringStorage.h"
+//#include "util/::string.h"
 
 EditIpAccessRuleDialog::EditIpAccessRuleDialog()
 : BaseDialog(IDD_EDIT_IP_ACESS_CONTROL), m_data(NULL), m_isOpenedForEdit(false)
@@ -131,8 +131,8 @@ void EditIpAccessRuleDialog::onOkButtonClick()
     ::string firstIp;
     ::string lastIp;
 
-    m_firstIp.getText(&firstIp);
-    m_lastIp.getText(&lastIp);
+    m_firstIp.get_text(&firstIp);
+    m_lastIp.get_text(&lastIp);
 
     m_data->setFirstIp(firstIp);
     m_data->setLastIp(lastIp);
@@ -160,7 +160,7 @@ void EditIpAccessRuleDialog::onAccessTypeRadioClick(int num)
 
 void EditIpAccessRuleDialog::initControls()
 {
-  HWND hwnd = m_ctrlThis.getWindow();
+  HWND hwnd = m_ctrlThis.get_hwnd();
 
   m_firstIp.setWindow(GetDlgItem(hwnd, IDC_FIRST_IP));
   m_lastIp.setWindow(GetDlgItem(hwnd, IDC_LAST_IP));
@@ -175,11 +175,11 @@ bool EditIpAccessRuleDialog::validateInput()
   ::string firstIp;
   ::string lastIp;
 
-  m_firstIp.getText(&firstIp);
-  m_lastIp.getText(&lastIp);
+  m_firstIp.get_text(&firstIp);
+  m_lastIp.get_text(&lastIp);
 
   if (!IpAccessRule::isIpAddressStringValid(firstIp)) {
-    m_firstIp.setFocus();
+    m_firstIp.set_focus();
     m_firstIp.showBalloonTip(&m_warningBalloonTip);
     return false;
   } // if
@@ -189,19 +189,19 @@ bool EditIpAccessRuleDialog::validateInput()
   }
 
   if (!IpAccessRule::isIpAddressStringValid(lastIp)) {
-    m_lastIp.setFocus();
+    m_lastIp.set_focus();
     m_lastIp.showBalloonTip(&m_warningBalloonTip);
     return false;
   } // if
 
-  AnsiStringStorage firstIpAnsi(&firstIp);
-  AnsiStringStorage lastIpAnsi(&lastIp);
+  ::string firstIpAnsi(&firstIp);
+  ::string lastIpAnsi(&lastIp);
 
   unsigned long firstIpAddr = inet_addr(firstIpAnsi);
   unsigned long lastIpAddr = inet_addr(lastIpAnsi);
 
   if (IpAccessRule::compareIp(firstIpAddr, lastIpAddr) == 1) {
-    m_lastIp.setFocus();
+    m_lastIp.set_focus();
     m_lastIp.showBalloonTip(&m_lastIpLessThanFirstBT);
     return false;
   }

@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "util/Singleton.h"
 #include "thread/LocalMutex.h"
 #include "win_system/ApplicationCrashEvents.h"

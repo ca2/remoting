@@ -138,7 +138,7 @@ void KeySymTest::removeComments(::string & line,
   extractedComment-= "";
   // Find the "#" symbol
   size_t commentStartPos = wcscspn(line->getString(), "#");
-  if (commentStartPos >= line->getLength()) {
+  if (commentStartPos >= line->length()) {
     return; // No comments found
   }
   extractedComment-= line->getString() + commentStartPos;
@@ -146,14 +146,14 @@ void KeySymTest::removeComments(::string & line,
   if (extractedComment->endsWith('\n')) {
     extractedComment->truncate(1);
   }
-  line->truncate(line->getLength() - commentStartPos);
+  line->truncate(line->length() - commentStartPos);
 }
 
 bool KeySymTest::getWord(const ::scoped_string & line,
                          size_t *pos,
                          ::string & word)
 {
-  if (*pos >= line->getLength()) {
+  if (*pos >= line->length()) {
     return false;
   }
   size_t wordStartPos = wcscspn(line->getString() + *pos, VALID_WORD_LETTERS);

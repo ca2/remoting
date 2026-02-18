@@ -61,7 +61,7 @@ void WindowsDisplays::update()
     HDC hdc = GetDC(0);
     EnumDisplayMonitors(hdc, 0, monitorEnumProc, (LPARAM)this);
     
-    m_latestUpdateTime = DateTime::now();
+    m_latestUpdateTime.Now();
     ReleaseDC(0, hdc);
   }
 }
@@ -88,7 +88,7 @@ void WindowsDisplays::getDisplayCoordinates(unsigned char displayNumber,
 
 bool WindowsDisplays::isAlreadyUpdated()
 {
-  if ((DateTime::now() - m_latestUpdateTime).getTime() > UPDATE_INTERVAL) {
+  if (m_latestUpdateTime.elapsed().m_iSecond > UPDATE_INTERVAL) {
     return false;
   } else {
     return true;

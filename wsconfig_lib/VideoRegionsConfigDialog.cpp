@@ -54,9 +54,9 @@ BOOL VideoRegionsConfigDialog::onInitDialog()
 BOOL VideoRegionsConfigDialog::onNotify(UINT controlID, LPARAM data)
 {
   if (controlID == IDC_VIDEO_RECOGNITION_INTERVAL_SPIN) {
-    LPNMUPDOWN message = (LPNMUPDOWN)data;
-    if (message->hdr.code == UDN_DELTAPOS) {
-      onRecognitionIntervalSpinChangePos(message);
+    LPNMUPDOWN scopedstrMessage = (LPNMUPDOWN)data;
+    if (scopedstrMessage->hdr.code == UDN_DELTAPOS) {
+      onRecognitionIntervalSpinChangePos(scopedstrMessage);
     }
   }
   return TRUE;
@@ -86,7 +86,7 @@ bool VideoRegionsConfigDialog::validateInput()
 
 void VideoRegionsConfigDialog::updateUI()
 {
-  StringVector *videoClasses = m_config->getVideoClassNames();
+  ::string_array *videoClasses = m_config->getVideoClassNames();
   ::array_base<::int_rectangle> *videoRects = m_config->getVideoRects();
   ::string textAreaData;
   TCHAR endLine[3] = {13, 10, 0};
@@ -128,7 +128,7 @@ void VideoRegionsConfigDialog::apply()
   // Clear old video classes names container
   //
 
-  StringVector *videoClasses = m_config->getVideoClassNames();
+  ::string_array *videoClasses = m_config->getVideoClassNames();
   videoClasses->clear();
   ::array_base<::int_rectangle> *videoRects = m_config->getVideoRects();
   videoRects->clear();
@@ -138,7 +138,7 @@ void VideoRegionsConfigDialog::apply()
   //
   
   ::string classNames;
-  m_videoClasses.getText(&classNames);
+  m_videoClasses.get_text(&classNames);
   size_t count = 0;
   TCHAR delimiters[] = " \n\r\t,;";
 
@@ -155,7 +155,7 @@ void VideoRegionsConfigDialog::apply()
   }
 
   ::string videoRectsStringStorage;
-  m_videoRects.getText(&videoRectsStringStorage);
+  m_videoRects.get_text(&videoRectsStringStorage);
   count = 0;
 
   videoRectsStringStorage.split(delimiters, NULL, &count);
@@ -180,7 +180,7 @@ void VideoRegionsConfigDialog::apply()
 
   ::string vriss;
 
-  m_videoRecognitionInterval.getText(&vriss);
+  m_videoRecognitionInterval.get_text(&vriss);
 
   int interval;
   StringParser::parseInt(vriss, &interval);
@@ -189,7 +189,7 @@ void VideoRegionsConfigDialog::apply()
 
 void VideoRegionsConfigDialog::initControls()
 {
-  HWND hwnd = m_ctrlThis.getWindow();
+  HWND hwnd = m_ctrlThis.get_hwnd();
   m_videoClasses.setWindow(GetDlgItem(hwnd, IDC_VIDEO_CLASS_NAMES));
   m_videoRects.setWindow(GetDlgItem(hwnd, IDC_VIDEO_RECTS));
   m_videoRecognitionInterval.setWindow(GetDlgItem(hwnd, IDC_VIDEO_RECOGNITION_INTERVAL));
@@ -210,9 +210,9 @@ void VideoRegionsConfigDialog::initControls()
   m_videoRecognitionIntervalSpin.enableAutoAcceleration(true);
 }
 
-void VideoRegionsConfigDialog::onRecognitionIntervalSpinChangePos(LPNMUPDOWN message)
+void VideoRegionsConfigDialog::onRecognitionIntervalSpinChangePos(LPNMUPDOWN scopedstrMessage)
 {
-  m_videoRecognitionIntervalSpin.autoAccelerationHandler(message);
+  m_videoRecognitionIntervalSpin.autoAccelerationHandler(scopedstrMessage);
 }
 
 void VideoRegionsConfigDialog::onRecognitionIntervalUpdate()

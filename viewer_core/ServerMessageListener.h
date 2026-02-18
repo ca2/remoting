@@ -34,10 +34,10 @@ public:
   virtual ~ServerMessageListener() {};
 
   //
-  // This method is called, if received server message with code "msgCode".
+  // This method is called, if received server scopedstrMessage with code "msgCode".
   // Use "input" outside onRequest() is prohibited.
   //
-  virtual void onServerMessage(unsigned int msgCode, DataInputStream *input) = 0;
+  virtual void onServerMessage(unsigned int msgCode, DataInputStream * pinput) = 0;
 };
 
 

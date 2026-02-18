@@ -30,11 +30,11 @@
 
 LocalWindowsApplication::LocalWindowsApplication(HINSTANCE hInstance,
                                                  const ::scoped_string & scopedstrwindowClassName)
- : WindowsApplication(hInstance, windowClassName)
+ : WindowsApplication(hInstance, scopedstrwindowClassName)
 {
   HWINSTA winSta = 0;
 
-  winSta = OpenWindowStation("WinSta0", TRUE, GENERIC_ALL);
+  winSta = OpenWindowStation(L"WinSta0", TRUE, GENERIC_ALL);
 
   if (winSta== 0) {
     throw SystemException();

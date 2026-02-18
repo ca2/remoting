@@ -26,44 +26,45 @@
 
 
 #include "BaseDialog.h"
-#include "Control.h"
-//#include "util/::string.h"
+#include "remoting/gui/Window.h"
+//////#include "util/::string.h"
 
-class Tab
+class Tab :
+virtual public ::remoting::Window
 {
 public:
   Tab();
-  Tab(BaseDialog *dialog, const ::scoped_string & scopedstrcaption);
+  Tab(BaseDialog *dialog, const ::scoped_string & scopedstrCaption);
 
   //
   // Access methods to protected members
   //
 
-  void setCaption(const ::scoped_string & scopedstrcaption) { m_caption= caption; }
+  void setCaption(const ::scoped_string & scopedstrCaption) { m_strCaption= scopedstrCaption; }
 
-  const ::scoped_string & scopedstrgetCaption() {
-    return m_caption;
+  ::string get_caption() {
+    return m_strCaption;
   }
 
-  void setDialog(BaseDialog *dialog) { m_dialog = dialog; }
-  BaseDialog *getDialog() { return m_dialog; }
+  void setDialog(BaseDialog *dialog) { m_pdialog = dialog; }
+  BaseDialog *getDialog() { return m_pdialog; }
 
   //
   // Method return true if tab has dialog
   //
 
-  bool isOk() { return m_dialog != NULL; }
+  bool isOk() { return m_pdialog != NULL; }
 
   //
   // Changes visible state of dialog donates by this tab
   //
 
-  void setVisible(bool visible);
+  void set_visible(bool visible);
 
-protected:
+//protected:
 
-  BaseDialog *m_dialog;
-  ::string m_caption;
+  BaseDialog *m_pdialog;
+  ::string m_strCaption;
 };
 
 

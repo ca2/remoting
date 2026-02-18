@@ -65,7 +65,7 @@ bool WinClipboard::getString(::string & str)
         //str= szData;
         GlobalUnlock(hndData); 
         CloseClipboard();
-        *str = removeCR(nativeClipboard);
+        str = removeCR(nativeClipboard);
         return true;
       }
     CloseClipboard();
@@ -83,7 +83,7 @@ bool WinClipboard::setString(const ::scoped_string & serverClipboard)
   if (sizeof(TCHAR) == 1) {
      dataType = CF_TEXT;
   }
-  int strLength = static_cast<int>(nativeClipboard.getLength()) + 1;
+  int strLength = static_cast<int>(nativeClipboard.length()) + 1;
   int dataSize = strLength * sizeof(TCHAR);
 
   if (OpenClipboard(m_hwnd)) {
@@ -101,36 +101,45 @@ bool WinClipboard::setString(const ::scoped_string & serverClipboard)
   return false;
 }
 
-::string WinClipboard::addCR(const ::scoped_string & str)
+::string WinClipboard::addCR(const ::scoped_string & scopedstr)
 {
-  const ::scoped_string & scopedstrbeginString = str;
-  const ::scoped_string & scopedstrendString = beginString + str.getLength() + 1; // start + lenght + '\0'
-  ::array_base<TCHAR> chars(beginString, endString);
-  ::array_base<TCHAR> newChars(str.getLength() * 2 + 1);
-  size_t countLF = 0;
-  for (size_t i = 0; i < chars.size(); i++) {
-    // if is first byte or previous byte not CR, then add CR
-    if ((i == 0 || chars[i-1] != CR) && chars[i] == LF) {
-      newChars[i + countLF] = CR;
-      ++countLF;
-    }
-    newChars[i + countLF] = chars[i];
-  }
-  newChars.resize(chars.size() + countLF);
-  return ::string(&newChars.front());
+
+   ::string chars(scopedstr);
+   ::string newChars;
+   size_t countLF = 0;
+   auto p = newChars.get_buffer(chars.length() * 2 + 1);
+   for (size_t i = 0; i < chars.size(); i++)
+   {
+      // if is first byte or previous byte not CR, then add CR
+      if ((i == 0 || chars[i-1] != CR) && chars[i] == LF)
+      {
+         p[i + countLF] = CR;
+         ++countLF;
+      }
+      p[i + countLF] = chars[i];
+   }
+   newChars.release_buffer(chars.size() + countLF);
+
+   return newChars;
+
 }
 
-::string WinClipboard::removeCR(const ::scoped_string & str)
+::string WinClipboard::removeCR(const ::scoped_string & scopedstr)
 {
-  const ::scoped_string & scopedstrbeginString = str;
-  const ::scoped_string & scopedstrendString = beginString + str.getLength() + 1; // start + lenght + '\0'
-  ::array_base<TCHAR> chars(beginString, endString);
-  ::array_base<TCHAR> newChars;
-  size_t countLF = 0;
-  for (size_t i = 0; i < chars.size(); i++) {
-    if (chars[i] != CR || i + 1 == chars.size() || chars[i+1] != LF) {
-      newChars.add(chars[i]);
-    }
-  }
-  return ::string(&newChars.front());
+   ::string chars(scopedstr);
+   ::string newChars;
+   size_t countLF = 0;
+   auto p = newChars.get_buffer(chars.length() + 1);
+   size_t j = 0;
+   for (size_t i = 0; i < chars.size(); i++)
+   {
+      if (chars[i] != CR || i + 1 == chars.size() || chars[i+1] != LF)
+      {
+         p[j] = chars[i];
+         j++;
+      }
+   }
+   newChars.release_buffer(j);
+   return newChars;
+
 }

@@ -79,7 +79,7 @@ start_pass_upsample (j_decompress_ptr cinfo)
 
 
 /*
- * Control routine to do upsampling (and color conversion).
+ * ::remoting::Window routine to do upsampling (and color conversion).
  *
  * In this version we upsample each component independently.
  * We upsample one row group into the conversion buffer, then apply

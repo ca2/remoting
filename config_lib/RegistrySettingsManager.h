@@ -24,7 +24,7 @@
 
 #pragma once
 
-////#include "util/::string.h"
+////////#include "util/::string.h"
 #include "win_system/RegistryKey.h"
 
 #include "SettingsManager.h"
@@ -33,12 +33,12 @@ class RegistrySettingsManager : public SettingsManager
 {
 public:
   RegistrySettingsManager();
-  RegistrySettingsManager(HKEY rootKey, const ::scoped_string & scopedstrentry, SECURITY_ATTRIBUTES *sa = 0);
+  RegistrySettingsManager(HKEY rootKey, const ::scoped_string & scopedstrEntry, SECURITY_ATTRIBUTES *sa = 0);
   virtual ~RegistrySettingsManager();
 
 public:
 
-  void setRegistryKey(HKEY rootKey, const ::scoped_string & scopedstrentry, SECURITY_ATTRIBUTES *sa = 0);
+  void setRegistryKey(HKEY rootKey, const ::scoped_string & scopedstrEntry, SECURITY_ATTRIBUTES *sa = 0);
 
   virtual bool isOk();
 

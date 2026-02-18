@@ -24,36 +24,40 @@
 #include "framework.h"
 #include "BitmapGraphics.h"
 
-BitmapGraphics::BitmapGraphics(HDC hdc, int width, int height)
-: Graphics(hdc), m_isPainting(false)
+
+namespace remoting
 {
-  m_bitmap = new Bitmap(hdc, width, height);
-  //m_dc = new DeviceContext(hdc);
-}
+   BitmapGraphics::BitmapGraphics(HDC hdc, int width, int height)
+   : Graphics(hdc), m_isPainting(false)
+   {
+      m_bitmap = new Bitmap(hdc, width, height);
+      //m_dc = new DeviceContext(hdc);
+   }
 
-BitmapGraphics::~BitmapGraphics()
-{
-  delete m_bitmap;
-  //delete m_dc;
-}
+   BitmapGraphics::~BitmapGraphics()
+   {
+      delete m_bitmap;
+      //delete m_dc;
+   }
 
-Bitmap *BitmapGraphics::getBitmap()
-{
-  return m_bitmap;
-}
+   Bitmap *BitmapGraphics::getBitmap()
+   {
+      return m_bitmap;
+   }
 
-void BitmapGraphics::beginPaint()
-{
-  _ASSERT(!m_isPainting);
+   void BitmapGraphics::beginPaint()
+   {
+      _ASSERT(!m_isPainting);
 
-  m_isPainting = true;
-  m_oldBitmap = ::SelectObject(m_hdc, m_bitmap->m_bitmap);
-}
+      m_isPainting = true;
+      m_oldBitmap = ::SelectObject(m_hdc, m_bitmap->m_bitmap);
+   }
 
-void BitmapGraphics::endPaint()
-{
-  _ASSERT(m_isPainting);
+   void BitmapGraphics::endPaint()
+   {
+      _ASSERT(m_isPainting);
 
-  m_isPainting = false;
-  ::SelectObject(m_hdc, m_oldBitmap);
+      m_isPainting = false;
+      ::SelectObject(m_hdc, m_oldBitmap);
+   }
 }

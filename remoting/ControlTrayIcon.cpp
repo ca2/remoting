@@ -48,7 +48,7 @@ ControlTrayIcon::ControlTrayIcon(remoting_impact *viewerApplication)
 
   setWindowProcHolder(this);
 
-  WM_USER_TASKBAR = RegisterWindowMessage("TaskbarCreated");
+  WM_USER_TASKBAR = RegisterWindowMessage(L"TaskbarCreated");
 }
 
 ControlTrayIcon::~ControlTrayIcon()
@@ -106,7 +106,7 @@ void ControlTrayIcon::onRightButtonUp()
     pos.x = pos.y = 0;
   }
 
-  HWND notifyWnd = getWindow();
+  HWND notifyWnd = get_hwnd();
   SetForegroundWindow(notifyWnd);
 
   int action = TrackPopupMenu(m_menu.getMenu(),

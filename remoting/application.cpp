@@ -5,6 +5,7 @@
 #include "application.h"
 #include "acme/handler/request.h"
 #include "acme/platform/system.h"
+#include "remoting/common/remoting.h"
 
 //#include "main_window.h"
 
@@ -19,6 +20,8 @@ namespace remoting_remoting
 
    application::application()
    {
+
+      ::remoting::defer_initialize_remoting();
 
       ::system()->m_bFinalizeIfNoSession = false;
 

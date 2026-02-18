@@ -28,7 +28,7 @@
 #include <Aclapi.h>
 
 WindowsEventEx::WindowsEventEx(const ::scoped_string & scopedstrName)
-: WindowsEvent(name)
+: WindowsEvent(scopedstrName)
 {
   bool needToInit = GetLastError() != ERROR_ALREADY_EXISTS;
   if (needToInit) {

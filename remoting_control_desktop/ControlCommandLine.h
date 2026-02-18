@@ -91,8 +91,8 @@ public:
   ::int_rectangle getShareRect();
   unsigned int getSharedAppProcessId();
 
-  const ::scoped_string & scopedstrgetPrimaryVncPassword() const;
-  const ::scoped_string & scopedstrgetControlPassword() const;
+  ::string getPrimaryVncPassword() const;
+  ::string getControlPassword() const;
 
   bool isCommandSpecified();
 

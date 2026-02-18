@@ -32,7 +32,7 @@ SharedMemory::SharedMemory(const ::scoped_string & scopedstrName, size_t size)
   m_memory(0)
 {
   try {
-    bool needToInit = createFile(name, size);
+    bool needToInit = createFile(scopedstrName, size);
     mapViewOfFile();
     if (needToInit) {
       memset(m_memory, 0, size);
@@ -70,7 +70,7 @@ bool SharedMemory::createFile(const ::scoped_string & scopedstrName, size_t size
                                PAGE_READWRITE,        // read/write access
                                highSize,              // size: high 32-bits
                                lowSize,               // size: low 32-bits
-                               name);                 // name of ::map object
+                               ::wstring(scopedstrName));                 // name of ::map object
   if (m_hToMap == NULL) {
     int errCode = GetLastError();
     ::string errMess;

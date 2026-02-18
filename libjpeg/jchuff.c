@@ -1263,13 +1263,13 @@ jpeg_gen_optimal_table (j_compress_ptr cinfo, JHUFF_TBL * htbl, long freq[])
   /* Including the pseudo-symbol 256 in the Huffman procedure guarantees
    * that no real symbol is given code-value of all ones, because 256
    * will be placed last in the largest codeword category.
-   * In the symbol ::std::list build procedure this element serves as sentinel
+   * In the symbol ::std::list_base build procedure this element serves as sentinel
    * for the zero run loop.
    */
 
 #ifndef DONT_USE_FANCY_HUFF_OPT
 
-  /* Build ::std::list of symbols sorted in order of descending frequency */
+  /* Build ::std::list_base of symbols sorted in order of descending frequency */
   /* This approach has several benefits (thank to John Korejwa for the idea):
    *     1.
    * If a codelength category is split during the length limiting procedure
@@ -1282,18 +1282,18 @@ jpeg_gen_optimal_table (j_compress_ptr cinfo, JHUFF_TBL * htbl, long freq[])
    * assigning symbols to leaves of the Huffman tree in order of decreasing
    * frequency, with no secondary sort based on codelengths.
    *     3.
-   * The symbol ::std::list can be built independently from the assignment of code
+   * The symbol ::std::list_base can be built independently from the assignment of code
    * lengths by the Huffman procedure below.
-   * Note: The symbol ::std::list build procedure must be performed first, because
+   * Note: The symbol ::std::list_base build procedure must be performed first, because
    * the Huffman procedure assigning the codelengths clobbers the frequency
    * counts!
    */
 
-  /* Here we use the others array as a linked ::std::list of nonzero frequencies
-   * to be sorted.  Already sorted elements are removed from the ::std::list.
+  /* Here we use the others array as a linked ::std::list_base of nonzero frequencies
+   * to be sorted.  Already sorted elements are removed from the ::std::list_base.
    */
 
-  /* Building ::std::list */
+  /* Building ::std::list_base */
 
   /* This item does not correspond to a valid symbol frequency and is used
    * as starting index.
@@ -1308,9 +1308,9 @@ jpeg_gen_optimal_table (j_compress_ptr cinfo, JHUFF_TBL * htbl, long freq[])
     others[j] = i;		/* this symbol value */
     j = i;			/* previous symbol value */
   }
-  others[j] = -1;		/* mark end of ::std::list */
+  others[j] = -1;		/* mark end of ::std::list_base */
 
-  /* Sorting ::std::list */
+  /* Sorting ::std::list_base */
 
   p = htbl->huffval;
   while ((c1 = others[256]) >= 0) {
@@ -1325,7 +1325,7 @@ jpeg_gen_optimal_table (j_compress_ptr cinfo, JHUFF_TBL * htbl, long freq[])
       }
       c1 = c2;
     }
-    others[j] = others[i];	/* remove this symbol i from ::std::list */
+    others[j] = others[i];	/* remove this symbol i from ::std::list_base */
     *p++ = (unsigned char) i;
   }
 
@@ -1404,8 +1404,8 @@ jpeg_gen_optimal_table (j_compress_ptr cinfo, JHUFF_TBL * htbl, long freq[])
    * Huffman procedure assigned any such lengths, we must adjust the coding.
    * Here is what the JPEG spec says about how this next bit works:
    * Since symbols are paired for the longest Huffman code, the symbols are
-   * removed from this length category two at a time.  The prefix for the ::std::pair
-   * (which is one bit shorter) is allocated to one of the ::std::pair; then,
+   * removed from this length category two at a time.  The prefix for the ::pair
+   * (which is one bit shorter) is allocated to one of the ::pair; then,
    * skipping the BITS entry for that prefix length, a code word from the next
    * shortest nonzero BITS entry is converted into a prefix for two code words
    * one bit longer.
@@ -1437,7 +1437,7 @@ jpeg_gen_optimal_table (j_compress_ptr cinfo, JHUFF_TBL * htbl, long freq[])
 
 #ifdef DONT_USE_FANCY_HUFF_OPT
 
-  /* Return a ::std::list of the symbols sorted by code length */
+  /* Return a ::std::list_base of the symbols sorted by code length */
   /* Note: Due to the codelength changes made above, it can happen
    * that more frequent symbols are assigned longer codewords.
    */

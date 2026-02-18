@@ -24,13 +24,13 @@
 
 #include "WsConfigRunner.h"
 #include "win_system/CurrentConsoleProcess.h"
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 #include "server_config_lib/Configurator.h"
 #include "remoting_control_desktop/ControlCommandLine.h"
 
-WsConfigRunner::WsConfigRunner(Logger *logger, bool serviceMode)
+WsConfigRunner::WsConfigRunner(LogWriter *LogWriter, bool serviceMode)
 : m_serviceMode(serviceMode),
-  m_log(logger)
+  m_log(LogWriter)
 {
   resume();
 }
@@ -59,8 +59,8 @@ void WsConfigRunner::execute()
     // Start process.
     process = new Process(pathToBin, args);
     process->start();
-  } catch (::remoting::Exception &e) {
-    m_log.error("Cannot start the WsControl process ({})", e.getMessage());
+  } catch (::exception &e) {
+    m_log.error("Cannot start the WsControl process ({})", e.get_message());
   }
 
   if (process != 0) {

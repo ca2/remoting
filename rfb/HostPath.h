@@ -22,8 +22,7 @@
 //-------------------------------------------------------------------------
 //
 
-#pragma onceINCLUDED__
-INCLUDED__
+#pragma once
 
 // FIXME: Convert to TCHAR.
 

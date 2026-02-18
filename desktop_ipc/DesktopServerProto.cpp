@@ -295,8 +295,8 @@ void DesktopServerProto::sendConfigSettings(BlockingGate *gate)
 
   // Send video class names
   AutoLock al(srvConf);
-  StringVector *wndClassNames = srvConf->getVideoClassNames();
-  StringVector::iterator iter = wndClassNames->begin();
+  ::string_array *wndClassNames = srvConf->getVideoClassNames();
+  ::string_array::iterator iter = wndClassNames->begin();
   size_t stringCount = wndClassNames->size();
   gate->writeUInt32((unsigned int)stringCount);
   for (; iter < wndClassNames->end(); iter++) {

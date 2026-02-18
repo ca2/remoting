@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ControlAuthException.h"
 
-ControlAuthException::ControlAuthException(const ::scoped_string & scopedstrreason, bool isSilent)
+ControlAuthException::ControlAuthException(const ::scoped_string & scopedstrReason, bool isSilent)
  : RemoteException(reason), m_isSilent(isSilent)
 {
 }

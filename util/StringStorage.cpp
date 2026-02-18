@@ -75,7 +75,7 @@ const ::scoped_string & scopedstr::string::getString() const
   return &m_buffer.front();
 }
 
-size_t ::string::getLength() const
+size_t ::string::length() const
 {
   return m_buffer.size() - 1;
 }
@@ -87,7 +87,7 @@ size_t ::string::getSize() const
 
 bool ::string::is_empty() const
 {
-  return getLength() == 0;
+  return length() == 0;
 }
 
 
@@ -101,7 +101,7 @@ bool ::string::endsWith(TCHAR postfix) const
   if (is_empty()) {
     return false;
   }
-  TCHAR lastCharacter = m_buffer[getLength() - 1];
+  TCHAR lastCharacter = m_buffer[length() - 1];
   return (lastCharacter == postfix);
 }
 
@@ -119,14 +119,14 @@ void ::string::getSubstring(::string & substr,
                                  size_t endIndex) const
 {
   endIndex++; // to simplify calculations
-  startIndex = ::minimum(startIndex, getLength());
-  endIndex = ::minimum(endIndex, getLength());
+  startIndex = ::minimum(startIndex, length());
+  endIndex = ::minimum(endIndex, length());
   if (endIndex < startIndex) {
     endIndex = startIndex;
   }
 
   size_t length = endIndex - startIndex;
-  _ASSERT(length <= getLength());
+  _ASSERT(length <= length());
 
   ::std::vector<TCHAR> autoBuffer(length + 1);
   TCHAR *buffer = &autoBuffer.front();
@@ -143,9 +143,9 @@ void ::string::appendString(const ::scoped_string & scopedstrString)
   }
   ::string src(string);
 
-  BufferType::iterator to = m_buffer.begin() + getLength();
+  BufferType::iterator to = m_buffer.begin() + length();
   BufferType::iterator fromFirst = src.m_buffer.begin();
-  BufferType::iterator fromLast = src.m_buffer.begin() + src.getLength();
+  BufferType::iterator fromLast = src.m_buffer.begin() + src.length();
 
   m_buffer.insert(to, fromFirst, fromLast);
 }
@@ -186,7 +186,7 @@ bool ::string::isEqualTo(const ::scoped_string & scopedstrother) const
 bool ::string::split(const ::scoped_string & scopedstrDelimiters, ::string & stringArray, size_t *arrayLength) const
 {
   // Special case for empty string.
-  if (this->getLength() == 0) {
+  if (this->length() == 0) {
     *arrayLength = 0;
     return true;
   }
@@ -229,7 +229,7 @@ bool ::string::split(const ::scoped_string & scopedstrDelimiters, ::string & str
       copy.getSubstring(&chunk, 0, index - 1);
     }
 
-    copy.getSubstring(&copy, index + 1, copy.getLength() - 1);
+    copy.getSubstring(&copy, index + 1, copy.length() - 1);
 
     if ((stringArray != NULL) && (chunksCount >= *arrayLength)) {
       return false;
@@ -247,7 +247,7 @@ bool ::string::split(const ::scoped_string & scopedstrDelimiters, ::string & str
 
 size_t ::string::findChar(const TCHAR c)
 {
-  size_t length = getLength();
+  size_t length = length();
   for (size_t i = 0; i < length; i++) {
     if (m_buffer[i] == c) {
       return i;
@@ -258,7 +258,7 @@ size_t ::string::findChar(const TCHAR c)
 
 size_t ::string::findLast(const TCHAR c)
 {
-  for (size_t i = getLength() - 1; i + 1 != 0; i--) {
+  for (size_t i = length() - 1; i + 1 != 0; i--) {
     if (m_buffer[i] == c) {
       return i;
     }
@@ -269,7 +269,7 @@ size_t ::string::findLast(const TCHAR c)
 void ::string::removeChars(const TCHAR badCharacters[], size_t count)
 {
   size_t j = 0;
-  size_t length = getLength();
+  size_t length = length();
 
   for (size_t i = 0; i < length; i++) {
     TCHAR each = m_buffer[i];
@@ -291,7 +291,7 @@ void ::string::removeChars(const TCHAR badCharacters[], size_t count)
 
 void ::string::remove(size_t startIndex, size_t count)
 {
-  bool isFailed = startIndex + count > getLength();
+  bool isFailed = startIndex + count > length();
   _ASSERT(!isFailed);
   if (isFailed) {
     throw ::remoting::Exception("An incorrect ::string::remove() usage");
@@ -305,9 +305,9 @@ void ::string::remove(size_t startIndex, size_t count)
 
 void ::string::truncate(size_t count)
 {
-  count = ::minimum(getLength(), count);
+  count = ::minimum(length(), count);
 
-  remove(getLength() - count, count);
+  remove(length() - count, count);
 }
 
 TCHAR *::string::find(const ::scoped_string & scopedstrSubstr)
@@ -318,7 +318,7 @@ TCHAR *::string::find(const ::scoped_string & scopedstrSubstr)
 // FIXME: Use C functions.
 size_t ::string::findOneOf(const ::scoped_string & scopedstrString)
 {
-  size_t length = getLength();
+  size_t length = length();
   size_t argLength = _tcslen(string);
   for (size_t i = 0; i < length; i++) {
     for (size_t j = 0; j < argLength; j++) {
@@ -330,9 +330,9 @@ size_t ::string::findOneOf(const ::scoped_string & scopedstrString)
   return (size_t)-1;
 }
 
-void ::string::toLowerCase()
+void ::string::make_lower()
 {
-  size_t length = getLength();
+  size_t length = length();
   for (size_t i = 0; i < length; i++) {
     if (_istalpha(m_buffer[i]) != 0) {
       m_buffer[i] = _totlower(m_buffer[i]);
@@ -342,7 +342,7 @@ void ::string::toLowerCase()
 
 void ::string::toUpperCase()
 {
-  _tcsupr_s(&m_buffer.front(), getLength() + 1);
+  _tcsupr_s(&m_buffer.front(), length() + 1);
 }
 
 void ::string::format(const ::scoped_string & scopedstrFormat, ...)
@@ -382,7 +382,7 @@ void ::string::operator += (const ::scoped_string & scopedstrStr)
 
 void ::string::replaceChar(TCHAR oldChar, TCHAR newChar)
 {
-  size_t length = getLength();
+  size_t length = length();
   for (size_t i = 0; i < length; i++) {
     if (m_buffer[i] == oldChar) {
       m_buffer[i] = newChar;

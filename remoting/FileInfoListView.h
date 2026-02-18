@@ -26,7 +26,7 @@
 
 
 #include "gui/ListView.h"
-#include "ft_common/FileInfo.h"
+#include "remoting/ftp_common/FileInfo.h"
 
 class FileInfoListView : public ListView
 {
@@ -40,25 +40,26 @@ public:
   // Adds new item to FileInfoListView
   //
 
-  void addItem(int index, FileInfo *fileInfo);
+  void addItem(int index, ::remoting::ftp::FileInfo *fileInfo);
 
   //
-  // Adds files info array to the end of ::list view
+  // Adds files info array to the end of ::list_base view
   //
 
-  void addRange(FileInfo **filesInfo, size_t count);
+  //void addRange(::remoting::ftp::FileInfo **filesInfo, size_t count);
+   void addRange(const ::pointer_array < ::remoting::ftp::FileInfo > & fileinfoa);
 
   //
-  // Returns file info notated by first selected ::list view item
+  // Returns file info notated by first selected ::list_base view item
   //
 
-  FileInfo *getSelectedFileInfo();
+  ::pointer < ::remoting::ftp::FileInfo >getSelectedFileInfo();
 
   void sort(int columnIndex);
-protected:
+//protected:
 
   //
-  // Loads file ::list view icons from application resources
+  // Loads file ::list_base view icons from application resources
   //
 
   void loadImages();
@@ -79,7 +80,7 @@ protected:
   HIMAGELIST m_smallImageList;
 
 //private:
-  bool window_procedure(LRESULT & lresult, UINT message, ::wparam wparam, ::lparam lparam) override;
+  bool window_procedure(LRESULT & lresult, UINT scopedstrMessage, ::wparam wparam, ::lparam lparam) override;
 
   static const int IMAGE_FOLDER_UP_INDEX = 0;
   static const int IMAGE_FOLDER_INDEX = 1;

@@ -25,10 +25,10 @@
 #pragma once
 
 
-//#include "util/::string.h"
+//////#include "util/::string.h"
 #include "thread/Thread.h"
 #include "RfbClientManager.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 /**
 Thread that makes attempt to connect to listening rfb client in separate thread.
@@ -46,7 +46,7 @@ public:
   @param viewOnly flag that determinates mode for rfb connection.
   @param clientManager rfb client manager.
   */
-  OutgoingRfbConnectionThread(const ::scoped_string & scopedstrconnectHost, unsigned int connectPort,
+  OutgoingRfbConnectionThread(const ::scoped_string & scopedstrConnectHost, unsigned int connectPort,
                               bool viewOnly, RfbClientManager *clientManager, LogWriter *log);
   virtual ~OutgoingRfbConnectionThread();
 

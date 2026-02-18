@@ -6,8 +6,8 @@
  * This file is part of the Independent JPEG Group's software.
  * For conditions of distribution and use, see the accompanying README file.
  *
- * This file defines the error and message codes for the JPEG library.
- * Edit this file to add new codes, or to translate the message strings to
+ * This file defines the error and scopedstrMessage codes for the JPEG library.
+ * Edit this file to add new codes, or to translate the scopedstrMessage strings to
  * some other language.
  * A set of error-reporting macros are defined too.  Some applications using
  * the JPEG library may wish to include this file to get the error codes
@@ -15,13 +15,13 @@
  */
 
 /*
- * To define the enum ::std::list of message codes, include this file without
- * defining macro JMESSAGE.  To create a message string table, include it
+ * To define the enum ::std::list_base of scopedstrMessage codes, include this file without
+ * defining macro JMESSAGE.  To create a scopedstrMessage string table, include it
  * again with a suitable JMESSAGE definition (see jerror.c for an example).
  */
 #ifndef JMESSAGE
 #ifndef JERROR_H
-/* First time through, define the enum ::std::list */
+/* First time through, define the enum ::std::list_base */
 #define JMAKE_ENUM_LIST
 #else
 /* Repeated inclusions of this file are no-ops unless JMESSAGE is defined */
@@ -37,9 +37,9 @@ typedef enum {
 
 #endif /* JMAKE_ENUM_LIST */
 
-JMESSAGE(JMSG_NOMESSAGE, "Bogus message code %d") /* Must be first entry! */
+JMESSAGE(JMSG_NOMESSAGE, "Bogus scopedstrMessage code %d") /* Must be first entry! */
 
-/* For maintenance convenience, ::std::list is alphabetical by message code name */
+/* For maintenance convenience, ::std::list_base is alphabetical by scopedstrMessage code name */
 JMESSAGE(JERR_BAD_ALIGN_TYPE, "ALIGN_TYPE is wrong, please fix")
 JMESSAGE(JERR_BAD_ALLOC_CHUNK, "MAX_ALLOC_CHUNK is wrong, please fix")
 JMESSAGE(JERR_BAD_BUFFER_MODE, "Bogus buffer control mode")
@@ -202,10 +202,10 @@ JMESSAGE(JWRN_TOO_MUCH_DATA, "Application transferred too many scanlines")
 #ifndef JERROR_H
 #define JERROR_H
 
-/* Macros to simplify using the error and trace message stuff */
+/* Macros to simplify using the error and trace scopedstrMessage stuff */
 /* The first parameter is either type of cinfo pointer */
 
-/* Fatal errors (print message and exit) */
+/* Fatal errors (print scopedstrMessage and exit) */
 #define ERREXIT(cinfo,code)  \
   ((cinfo)->err->msg_code = (code), \
    (*(cinfo)->err->error_exit) ((j_common_ptr) (cinfo)))

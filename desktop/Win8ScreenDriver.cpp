@@ -110,8 +110,8 @@ bool Win8ScreenDriver::applyNewScreenProperties()
     Win8ScreenDriverImpl *drvImpl =
       new Win8ScreenDriverImpl(m_log, m_updateKeeper, m_fbLocalMutex, m_updateListener, m_detectionEnabled);
     m_drvImpl = drvImpl;
-  } catch (::remoting::Exception &e) {
-    m_log->error("Can't apply new screen properties: {}", e.getMessage());
+  } catch (::exception &e) {
+    m_log->error("Can't apply new screen properties: {}", e.get_message());
     return false;
   }
   return true;

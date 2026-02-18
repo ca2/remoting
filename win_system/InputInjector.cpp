@@ -25,7 +25,7 @@
 #include "acme/_operating_system.h"
 #include "InputInjector.h"
 #include "Keyboard.h"
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 //#include <vector>
 
 #include <crtdbg.h>
@@ -45,9 +45,9 @@ InputInjector::InputInjector(bool ctrlAltDelEnabled, LogWriter *log)
   try {
     resetModifiers();
   }
-  catch (::remoting::Exception &e) {
+  catch (::exception &e) {
     m_log->error("InputInjector: error occurred while reseting modifiers: {}",
-      e.getMessage());
+      e.get_message());
   }
 }
 
@@ -119,12 +119,13 @@ void InputInjector::injectKeyEvent(BYTE vkCode, bool release, bool extended)
       !m_winIsPressed && !m_shiftIsPressed) {
     if (m_ctrlAltDelEnabled) {
       m_log->debug("Try simulate the Ctrl+Alt+Del combination");
-      if (Environment::isVistaOrLater()) {
-        Environment::simulateCtrlAltDelUnderVista(m_log);
-      }
-      else {
-        Environment::simulateCtrlAltDel(m_log);
-      }
+       throw todo;
+      // if (node()->_windows_isVistaOrLater()) {
+      //   Environment::simulateCtrlAltDelUnderVista(m_log);
+      // }
+      // else {
+      //   Environment::simulateCtrlAltDel(m_log);
+      // }
     } else {
       m_log->debug("The Ctrl+Alt+Del combination is disabled. Ignore the Del key pressing");
     }
@@ -166,11 +167,11 @@ void InputInjector::injectCharEvent(WCHAR ch, bool release)
   HKL hklCurrent = (HKL)0x04090409;
   try {
     hklCurrent = getCurrentKbdLayout();
-    m_log->debug("Current keyboard layout = %x", (int)hklCurrent);
+    m_log->debug("Current keyboard layout = {:#08x}", (int)hklCurrent);
     vkKeyScanResult = searchVirtKey(ch, hklCurrent);
     m_log->debug("The virtual code scan result = {}", (int)vkKeyScanResult);
   } catch (...) {
-    m_log->detail("Can't insert the char by simulating a key press event,"
+    m_log->debug("Can't insert the char by simulating a key press event,"
               " therefore try insert it as an unicode symbol");
     if (ctrlOrAltPressed) {
       m_log->warning("Can't insert the char by an unicode symbol because"

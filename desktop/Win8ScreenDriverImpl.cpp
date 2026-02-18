@@ -124,8 +124,8 @@ void Win8ScreenDriverImpl::initDxgi()
       }
     }
   } catch (WinDxRecoverableException &) {
-    m_log->debug("Reached the end of dxgi output ::list with iOutput = %u", iOutput);
-    // End of output ::list.
+    m_log->debug("Reached the end of dxgi output ::list_base with iOutput = %u", iOutput);
+    // End of output ::list_base.
   }
   m_log->debug("We have {} dxgi output(s) connected", dxgiOutputArray.size());
 
@@ -168,16 +168,16 @@ void Win8ScreenDriverImpl::execute()
     initDxgi();
   }
   catch (WinDxRecoverableException &e) {
-    m_log->error("Win8ScreenDriverImpl:: Catched WinDxRecoverableException: {}, (%x)", e.getMessage(), (int)e.getErrorCode());
+    m_log->error("Win8ScreenDriverImpl:: Catched WinDxRecoverableException: {}, (%x)", e.get_message(), (int)e.getErrorCode());
     m_hasRecoverableError = true;
   }
   catch (WinDxCriticalException &e) {
-    m_log->error("Win8ScreenDriverImpl:: Catched WinDxCriticalException: {}, (%x)", e.getMessage(), (int)e.getErrorCode());
+    m_log->error("Win8ScreenDriverImpl:: Catched WinDxCriticalException: {}, (%x)", e.get_message(), (int)e.getErrorCode());
     m_hasCriticalError = true;
   }
-  catch (::remoting::Exception &e) {
+  catch (::exception &e) {
     m_log->error("Catched ::remoting::Exception in the Win8ScreenDriverImpl::execute() function: {}."
-       " The exception will consider as critical", e.getMessage());
+       " The exception will consider as critical", e.get_message());
     m_hasCriticalError = true;
   }
   m_initEvent.notify();
@@ -235,14 +235,14 @@ void Win8ScreenDriverImpl::onCursorShapeChanged()
   m_updateListener->onUpdate();
 }
 
-void Win8ScreenDriverImpl::onRecoverableError(const ::scoped_string & scopedstrreason)
+void Win8ScreenDriverImpl::onRecoverableError(const ::scoped_string & scopedstrReason)
 {
   m_log->error("Win8ScreenDriverImpl catch an recoverable error with reason: {}", reason);
   m_hasRecoverableError = true;
   m_errorEvent.notify();
 }
 
-void Win8ScreenDriverImpl::onCriticalError(const ::scoped_string & scopedstrreason)
+void Win8ScreenDriverImpl::onCriticalError(const ::scoped_string & scopedstrReason)
 {
   m_log->error("Win8ScreenDriverImpl catch an critical error with reason: {}", reason);
   m_hasCriticalError = true;

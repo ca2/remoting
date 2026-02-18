@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "util/winhdr.h"
 #include "util/CommandLine.h"
 #include "win_system/WinCommandLineArgs.h"
@@ -123,7 +123,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
       return tvnControl.run();
     } catch (::remoting::Exception &fatalException) {
       MessageBox(0,
-        fatalException.getMessage(),
+        fatalException.get_message(),
         StringTable::getString(IDS_MBC_TVNCONTROL),
         MB_OK | MB_ICONERROR);
       return 1;

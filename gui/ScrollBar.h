@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 // ScrollBar class
 // This class doesn't create any window, it only show/hide that is already

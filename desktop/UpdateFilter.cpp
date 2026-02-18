@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "UpdateFilter.h"
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 static const int BLOCK_SIZE = 32;
 

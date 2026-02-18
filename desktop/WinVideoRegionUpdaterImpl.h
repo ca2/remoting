@@ -25,12 +25,12 @@
 #pragma once
 
 
-#include "util/DateTime.h"
+//#include "util/::earth::time.h"
 #include "region/Region.h"
-#include "util/StringVector.h"
+//#include "util/::string_array.h"
 #include "ScreenDriver.h"
 #include "thread/LocalMutex.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 #include "thread/Thread.h"
 #include "win_system/WindowsEvent.h"
 
@@ -45,12 +45,12 @@ protected:
 private:
   virtual Region getVideoRegion();
   void updateVideoRegion();
-  void getClassNamesAndRectsFromConfig(StringVector &classNames, ::array_base<::int_rectangle> &rects);
+  void getClassNamesAndRectsFromConfig(::string_array &classNames, ::array_base<::int_rectangle> &rects);
   unsigned int WinVideoRegionUpdaterImpl::getInterval();
-  Region getRectsByClass(StringVector classNames);
+  Region getRectsByClass(::string_array classNames);
   Region getRectsByCoords(::array_base<::int_rectangle> &rects);
 
-  DateTime m_lastVidUpdTime;
+  ::earth::time m_lastVidUpdTime;
   Region m_vidRegion;
   LocalMutex m_regionMutex;
   LogWriter *m_log;

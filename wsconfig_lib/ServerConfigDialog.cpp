@@ -58,9 +58,9 @@ BOOL ServerConfigDialog::onInitDialog()
 BOOL ServerConfigDialog::onNotify(UINT controlID, LPARAM data)
 {
   if (controlID == IDC_POLLING_INTERVAL_SPIN) {
-    LPNMUPDOWN message = (LPNMUPDOWN)data;
-    if (message->hdr.code == UDN_DELTAPOS) {
-      onPollingIntervalSpinChangePos(message);
+    LPNMUPDOWN scopedstrMessage = (LPNMUPDOWN)data;
+    if (scopedstrMessage->hdr.code == UDN_DELTAPOS) {
+      onPollingIntervalSpinChangePos(scopedstrMessage);
     }
   }
   return TRUE;
@@ -197,7 +197,7 @@ bool ServerConfigDialog::validateInput()
   if (m_acceptRfbConnections.isChecked() &&
       m_useAuthentication.isChecked() &&
       !passwordSpecified) {
-    MessageBox(m_ctrlThis.getWindow(),
+    ::remoting::message_box(m_ctrlThis.get_hwnd(),
                StringTable::getString(IDS_SET_PASSWORD_NOTIFICATION),
                StringTable::getString(IDS_CAPTION_BAD_INPUT),
                MB_ICONSTOP | MB_OK);
@@ -228,7 +228,7 @@ void ServerConfigDialog::updateUI()
   m_blockRemoteInput.check(m_config->isBlockingRemoteInput());
   m_localInputPriority.check(m_config->isLocalInputPriorityEnabled());
   if (m_config->isLocalInputPriorityEnabled()) {
-    m_localInputPriorityTimeout.setEnabled(true);
+    m_localInputPriorityTimeout.enable_window(true);
   }
   m_localInputPriorityTimeout.setUnsignedInt(m_config->getLocalInputPriorityTimeout());
 
@@ -249,9 +249,9 @@ void ServerConfigDialog::apply()
   // Polling interval string storage
   ::string pollingIntervalText;
 
-  m_rfbPort.getText(&rfbPortText);
-  m_httpPort.getText(&httpPortText);
-  m_pollingInterval.getText(&pollingIntervalText);
+  m_rfbPort.get_text(&rfbPortText);
+  m_httpPort.get_text(&httpPortText);
+  m_pollingInterval.get_text(&pollingIntervalText);
 
   int intVal = 0;
 
@@ -295,7 +295,7 @@ void ServerConfigDialog::apply()
 
   // Local input priority timeout string storage
   ::string liptStringStorage;
-  m_localInputPriorityTimeout.getText(&liptStringStorage);
+  m_localInputPriorityTimeout.get_text(&liptStringStorage);
   int timeout = 0;
 
   m_config->setLocalInputPriority(m_localInputPriority.isChecked());
@@ -314,7 +314,7 @@ void ServerConfigDialog::apply()
 
 void ServerConfigDialog::initControls()
 {
-  HWND hwnd = m_ctrlThis.getWindow();
+  HWND hwnd = m_ctrlThis.get_hwnd();
   m_rfbPort.setWindow(GetDlgItem(hwnd, IDC_RFB_PORT));
   m_httpPort.setWindow(GetDlgItem(hwnd, IDC_HTTP_PORT));
   m_pollingInterval.setWindow(GetDlgItem(hwnd, IDC_POLLING_INTERVAL));
@@ -379,25 +379,25 @@ void ServerConfigDialog::initControls()
 void ServerConfigDialog::updateControlDependencies()
 {
   if (m_acceptRfbConnections.isChecked()) {
-    m_rfbPort.setEnabled(true);
-    m_acceptHttpConnections.setEnabled(true);
-    m_useAuthentication.setEnabled(true);
+    m_rfbPort.enable_window(true);
+    m_acceptHttpConnections.enable_window(true);
+    m_useAuthentication.enable_window(true);
   } else {
-    m_rfbPort.setEnabled(false);
-    m_acceptHttpConnections.setEnabled(false);
-    m_useAuthentication.setEnabled(false);
+    m_rfbPort.enable_window(false);
+    m_acceptHttpConnections.enable_window(false);
+    m_useAuthentication.enable_window(false);
   }
 
   if ((m_acceptHttpConnections.isChecked()) && (m_acceptHttpConnections.isEnabled())) {
-    m_httpPort.setEnabled(true);
+    m_httpPort.enable_window(true);
   } else {
-    m_httpPort.setEnabled(false);
+    m_httpPort.enable_window(false);
   }
 
   bool passwordsAreEnabled = ((m_useAuthentication.isChecked()) && (m_useAuthentication.isEnabled()));
 
-  m_ppControl->setEnabled(passwordsAreEnabled);
-  m_vpControl->setEnabled(passwordsAreEnabled);
+  m_ppControl->enable_window(passwordsAreEnabled);
+  m_vpControl->enable_window(passwordsAreEnabled);
 
   m_rfbPortSpin.invalidate();
   m_httpPortSpin.invalidate();
@@ -461,21 +461,21 @@ void ServerConfigDialog::onReadOnlyPasswordChange()
 
 void ServerConfigDialog::onUnsetPrimaryPasswordClick()
 {
-  m_ppControl->unsetPassword(true, m_ctrlThis.getWindow());
+  m_ppControl->unsetPassword(true, m_ctrlThis.get_hwnd());
 
   ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
 }
 
 void ServerConfigDialog::onUnsetReadOnlyPasswordClick()
 {
-  m_vpControl->unsetPassword(true, m_ctrlThis.getWindow());
+  m_vpControl->unsetPassword(true, m_ctrlThis.get_hwnd());
 
   ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
 }
 
-void ServerConfigDialog::onPollingIntervalSpinChangePos(LPNMUPDOWN message)
+void ServerConfigDialog::onPollingIntervalSpinChangePos(LPNMUPDOWN scopedstrMessage)
 {
-  m_pollingIntervalSpin.autoAccelerationHandler(message);
+  m_pollingIntervalSpin.autoAccelerationHandler(scopedstrMessage);
 }
 
 void ServerConfigDialog::onRfbPortUpdate()
@@ -545,15 +545,15 @@ void ServerConfigDialog::updateCheckboxesState()
 {
   if (m_blockLocalInput.isChecked() || m_blockRemoteInput.isChecked()) {
     m_localInputPriority.check(false);
-    m_localInputPriority.setEnabled(false);
+    m_localInputPriority.enable_window(false);
   } else {
-    m_localInputPriority.setEnabled(true);
+    m_localInputPriority.enable_window(true);
   }
 
   if (m_localInputPriority.isChecked() && m_localInputPriority.isEnabled()) {
-    m_localInputPriorityTimeout.setEnabled(true);
+    m_localInputPriorityTimeout.enable_window(true);
   } else {
-    m_localInputPriorityTimeout.setEnabled(false);
+    m_localInputPriorityTimeout.enable_window(false);
   }
   m_inactivityTimeoutSpin.invalidate();
 }

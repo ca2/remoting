@@ -29,7 +29,7 @@
 #include "gui/TextBox.h"
 
 /**
- * Control authentication dialog.
+ * ::remoting::Window authentication dialog.
  */
 class ControlAuthDialog : public BaseDialog
 {
@@ -40,7 +40,7 @@ public:
   /**
    * Returns control password specified by user (in plain text).
    */
-  const ::scoped_string & scopedstrgetPassword() const;
+  ::string getPassword() const;
 protected:
   virtual BOOL onInitDialog();
   virtual BOOL onNotify(UINT controlID, LPARAM data);

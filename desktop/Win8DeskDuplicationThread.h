@@ -30,7 +30,7 @@
 #include "thread/LocalMutex.h"
 #include "thread/GuiThread.h"
 #include "Win8DuplicationListener.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 #include "WinCustomD3D11Texture2D.h"
 #include "WinDxgiOutputDuplication.h"
@@ -55,8 +55,8 @@ public:
 private:
   virtual void execute();
   virtual void onTerminate();
-  void setCriticalError(const ::scoped_string & scopedstrreason);
-  void setRecoverableError(const ::scoped_string & scopedstrreason);
+  void setCriticalError(const ::scoped_string & scopedstrReason);
+  void setRecoverableError(const ::scoped_string & scopedstrReason);
 
   void processMoveRects(size_t moveCount, size_t out);
   void processDirtyRects(size_t dirtyCount,

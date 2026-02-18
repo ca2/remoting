@@ -98,7 +98,7 @@ bool PortMapping::parse(const ::scoped_string & scopedstrStr, PortMapping *mappi
   int port;
   TCHAR c;
   PortMappingRect rect;
-  const ::scoped_string & scopedstrrectString = _tcschr(str, _T(':')) + 1;
+  const ::scoped_string & scopedstrRectString = _tcschr(str, _T(':')) + 1;
   if (rectString == NULL) {
     return false;
   }

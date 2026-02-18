@@ -24,18 +24,18 @@
 #include "framework.h"
 #include "NamingDefs.h"
 
-const TCHAR ProductNames::PRODUCT_NAME[] = "TightVNC";
-const TCHAR ProductNames::VIEWER_PRODUCT_NAME[] = "TightVNC Viewer";
+const char ProductNames::PRODUCT_NAME[] = "TightVNC";
+const char ProductNames::VIEWER_PRODUCT_NAME[] = "TightVNC Viewer";
 
-const TCHAR LogNames::VIEWER_LOG_FILE_STUB_NAME[] = "remoting_impact";
-const TCHAR LogNames::LOG_DIR_NAME[] = "TightVNC";
+const char LogNames::VIEWER_LOG_FILE_STUB_NAME[] = "remoting_impact";
+const char LogNames::LOG_DIR_NAME[] = "TightVNC";
 
-const TCHAR RegistryPaths::VIEWER_PATH[] = "Software\\TightVNC\\Viewer";
+const char RegistryPaths::VIEWER_PATH[] = "Software\\TightVNC\\Viewer";
 
-const TCHAR ApplicationNames::WINDOW_CLASS_NAME[] = 
+const char ApplicationNames::WINDOW_CLASS_NAME[] = 
   "TvnApplicationClass";
 
-const TCHAR WindowNames::TVN_WINDOW_CLASS_NAME[] = "TvnWindowClass";
-const TCHAR WindowNames::TVN_WINDOW_TITLE_NAME[] = "TightVNC Viewer";
-const TCHAR WindowNames::TVN_SUB_WINDOW_TITLE_NAME[] = "Viewer";
+const char WindowNames::TVN_WINDOW_CLASS_NAME[] = "TvnWindowClass";
+const char WindowNames::TVN_WINDOW_TITLE_NAME[] = "TightVNC Viewer";
+const char WindowNames::TVN_SUB_WINDOW_TITLE_NAME[] = "Viewer";
 

@@ -39,7 +39,7 @@ public:
    * @return true if validation ok, false if validation failed.
    * @note that if validation fails, then it shows error notification
    * using notifyValidationError() method with text from resources.
-   * @note that message text id defined in method code.
+   * @note that scopedstrMessage text id defined in method code.
    */
   static bool validatePort(TextBox *textBox);
   /**
@@ -52,13 +52,13 @@ public:
    */
   static bool validateUINT(TextBox *textBox, const ::scoped_string & scopedstrMessageText);
   /**
-   * Shows validation error message (message box or balloon tip, depends on realization)
+   * Shows validation error scopedstrMessage (scopedstrMessage box or balloon tip, depends on realization)
    * and sets focus to control.
    * @param textBox text box in that validation failed.
-   * @param messageText message describing error reason.
-   * @remark current realization supports only message boxes through
+   * @param messageText scopedstrMessage describing error reason.
+   * @remark current realization supports only scopedstrMessage boxes through
    * BaloonTip interface.
-   * @fixme don't use BaloonTip in this case, use direct message box.
+   * @fixme don't use BaloonTip in this case, use direct scopedstrMessage box.
    */
   static void notifyValidationError(TextBox *textBox, const ::scoped_string & scopedstrMessageText);
 private:

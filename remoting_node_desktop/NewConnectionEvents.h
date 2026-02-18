@@ -25,14 +25,14 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 class NewConnectionEvents
 {
 public:
   virtual void onSuccAuth(const ::scoped_string & ip) = 0;
   virtual void onAuthFailed(const ::scoped_string & ip) = 0;
-  virtual void onDisconnect(const ::scoped_string & message) = 0;
+  virtual void onDisconnect(const ::scoped_string & scopedstrMessage) = 0;
 };
 
 //// __NEWCONNECTIONEVENTS_H__

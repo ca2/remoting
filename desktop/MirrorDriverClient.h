@@ -34,7 +34,7 @@
 #include "gui/MessageWindow.h"
 #include "thread/GuiThread.h"
 #include "win_system/WindowsEvent.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 class MirrorDriverClient : private GuiThread, private WindowMessageHandler
 {
@@ -72,7 +72,7 @@ private:
   };
 
 private:
-  virtual bool processMessage(UINT message, WPARAM wParam, LPARAM lParam);
+  virtual bool processMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam);
 
   virtual void execute();
   virtual void onTerminate();

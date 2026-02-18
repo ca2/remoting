@@ -34,14 +34,14 @@ ControlServer::ControlServer(PipeServer *pipeServer,
   m_rfbClientManager(rfbClientManager),
   m_log(log)
 {
-  m_log->message("{}"), _T("Control server started");
+  m_log->debug("{}"), _T("::remoting::Window server started");
 
   resume();
 }
 
 ControlServer::~ControlServer()
 {
-  m_log->message("Destroying control server transport");
+  m_log->debug("Destroying control server transport");
 
   terminate();
   wait();
@@ -49,7 +49,7 @@ ControlServer::~ControlServer()
   try {
     m_pipeServer->close();
   } catch (::remoting::Exception &ex) {
-    m_log->error("Failed to destroy control server transport with '{}' reason", ex.getMessage());
+    m_log->error("Failed to destroy control server transport with '{}' reason", ex.get_message());
   }
 
   delete m_pipeServer;
@@ -57,7 +57,7 @@ ControlServer::~ControlServer()
   // Unblock all client if it has been blocked by authenticator
   m_authenticator.breakAndDisableAuthentications();
 
-  m_log->message("{}"), _T("Control server stopped");
+  m_log->debug("{}"), _T("::remoting::Window server stopped");
 }
 
 void ControlServer::execute()
@@ -78,7 +78,7 @@ void ControlServer::execute()
       m_threadCollector.addThread(clientThread);
     }
   } catch (::remoting::Exception &ex) {
-    m_log->error("::remoting::Exception on control server thread: {}", ex.getMessage());
+    m_log->error("::remoting::Exception on control server thread: {}", ex.get_message());
   }
 }
 

@@ -25,7 +25,7 @@
 //
 // TightPalette class is a container for ordered color values. Colors
 // are keys in a hash where values are frequency counts. Also, there
-// is a ::list where colors are always sorted by these counts (more
+// is a ::list_base where colors are always sorted by these counts (more
 // frequent first).
 //
 

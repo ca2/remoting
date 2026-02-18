@@ -29,7 +29,7 @@
 #include "config_lib/RegistrySettingsManager.h"
 
 #include "gui/BaseDialog.h"
-#include "gui/Control.h"
+#include "gui/::remoting::Window.h"
 #include "gui/ListBox.h"
 #include "gui/TabControl.h"
 
@@ -80,7 +80,7 @@ private:
   void updateCaption();
 protected:
   // Controls
-  Control m_ctrlApplyButton;
+  ::remoting::Window m_ctrlApplyButton;
   TabControl m_tabControl;
   // Settings
   Configurator *m_config;

@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ConfigDialog.h"
 #include "remoting_node/resource.h"
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 ConfigDialog::ConfigDialog(bool forService, ControlCommand *reloadConfigCommand)
 : BaseDialog(IDD_CONFIG),
@@ -57,7 +57,7 @@ ConfigDialog::~ConfigDialog()
 // FIXME: Unimplemented
 void ConfigDialog::updateApplyButtonState()
 {
-  m_ctrlApplyButton.setEnabled(true);
+  m_ctrlApplyButton.enable_window(true);
 }
 
 void ConfigDialog::setConfigReloadCommand(ControlCommand *command)
@@ -81,7 +81,7 @@ bool ConfigDialog::isConfiguringService()
 
 void ConfigDialog::initControls()
 {
-  HWND dialogHwnd = m_ctrlThis.getWindow();
+  HWND dialogHwnd = m_ctrlThis.get_hwnd();
 
   m_ctrlApplyButton.setWindow(GetDlgItem(dialogHwnd, IDC_APPLY));
   m_tabControl.setWindow(GetDlgItem(dialogHwnd, IDC_CONFIG_TAB));
@@ -175,10 +175,10 @@ BOOL ConfigDialog::onInitDialog()
   m_tabControl.removeTab(0);
 
   m_tabControl.showTab(m_lastSelectedTabIndex);
-  m_tabControl.setFocus();
+  m_tabControl.set_focus();
 
-  m_ctrlApplyButton.setEnabled(false);
-  m_ctrlThis.setForeground();
+  m_ctrlApplyButton.enable_window(false);
+  m_ctrlThis.set_foreground_window();
 
   return FALSE;
 }
@@ -226,20 +226,20 @@ void ConfigDialog::onApplyButtonClick()
     if (m_reloadConfigCommand->executionResultOk()) {
       m_administrationConfigDialog.updateUI();
       m_ipAccessControlDialog.updateUI();
-      m_ctrlApplyButton.setEnabled(false);
+      m_ctrlApplyButton.enable_window(false);
     }
     return;
   } 
   // We're working in offline mode and we need to save config
   if (!m_config->save()) {
-    MessageBox(m_ctrlThis.getWindow(),
+    ::remoting::message_box(m_ctrlThis.get_hwnd(),
                StringTable::getString(IDS_CANNOT_SAVE_CONFIG),
                StringTable::getString(IDS_MBC_ERROR),
                MB_OK | MB_ICONERROR);
     return;
   } 
-  m_ctrlApplyButton.setEnabled(false);
-  MessageBox(m_ctrlThis.getWindow(),
+  m_ctrlApplyButton.enable_window(false);
+  ::remoting::message_box(m_ctrlThis.get_hwnd(),
     StringTable::getString(IDS_OFFLINE_CONFIG_SAVE_NOTIFICATION),
     StringTable::getString(IDS_MBC_TVNCONTROL),
     MB_OK | MB_ICONINFORMATION);
@@ -249,14 +249,14 @@ void ConfigDialog::onTabChange()
 {
   int currentTabIndex = m_tabControl.getSelectedTabIndex();
   Tab *tab = m_tabControl.getTab(currentTabIndex);
-  tab->setVisible(true);
+  tab->set_visible(true);
 }
 
 void ConfigDialog::onTabChanging()
 {
   int currentTabIndex = m_tabControl.getSelectedTabIndex();
   Tab *tab = m_tabControl.getTab(currentTabIndex);
-  tab->setVisible(false);
+  tab->set_visible(false);
 }
 
 void ConfigDialog::moveDialogToTabControl(BaseDialog *dialog)
@@ -271,13 +271,13 @@ void ConfigDialog::moveDialogToTabControl(BaseDialog *dialog)
   last.x = rect.right;
   last.y = rect.bottom;
 
-  HWND hwndFrom = m_tabControl.getWindow();
-  HWND hwndTo = dialog->getControl()->getWindow();
+  HWND hwndFrom = m_tabControl.get_hwnd();
+  HWND hwndTo = dialog->get_hwnd();
 
   MapWindowPoints(hwndFrom, hwndTo, &first, 1);
   MapWindowPoints(hwndFrom, hwndTo, &last, 1);
 
-  MoveWindow(dialog->getControl()->getWindow(),
+  MoveWindow(dialog->get_hwnd(),
              first.x, first.y, last.x - first.x, last.y - first.y, TRUE);
 }
 

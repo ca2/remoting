@@ -54,12 +54,12 @@ bool DesktopConfigLocal::isRemoteInputAllowed()
   return m_inputBlocker->isRemoteInputAllowed();
 }
 
-DateTime DesktopConfigLocal::getLastInputTime() const
+::earth::time DesktopConfigLocal::getLastInputTime() const
 {
   return m_inputBlocker->getLastInputTime();
 }
 
-void DesktopConfigLocal::correctLastTime(DateTime newTime)
+void DesktopConfigLocal::correctLastTime(::earth::time newTime)
 {
   m_inputBlocker->correctLastTime(newTime);
 }

@@ -30,7 +30,7 @@
 #include "SocketAddressIPv4.h"
 #include "SocketAddressIPv4.h"
 #include "SocketException.h"
-#include "util/AnsiStringStorage.h"
+//#include "util/::string.h"
 
 #include "thread/AutoLock.h"
 
@@ -88,7 +88,7 @@ SocketAddressIPv4::SocketAddressIPv4(struct sockaddr_in addr)
 SocketAddressIPv4::SocketAddressIPv4(const ::scoped_string & scopedstrHost, unsigned short port)
 : m_wsaStartup(1, 2)
 {
-  SocketAddressIPv4 sa = SocketAddressIPv4::resolve(host, port);
+  SocketAddressIPv4 sa = SocketAddressIPv4::resolve(scopedstrHost, port);
 
   this->m_addr = sa.m_addr;
   this->m_port = sa.m_port;
@@ -128,14 +128,14 @@ struct sockaddr_in SocketAddressIPv4::getSockAddr() const
   return saddr;
 }
 
-void SocketAddressIPv4::toString(::string & address) const
+::string  SocketAddressIPv4::toString() const
 {
   u_char b1 = m_addr.S_un.S_un_b.s_b4;
   u_char b2 = m_addr.S_un.S_un_b.s_b3;
   u_char b3 = m_addr.S_un.S_un_b.s_b2;
   u_char b4 = m_addr.S_un.S_un_b.s_b1;
 
-  address->format("{}.{}.{}.{}", b1, b2, b3, b4);
+  return ::format("{}.{}.{}.{}", b1, b2, b3, b4);
 }
 
 unsigned short SocketAddressIPv4::getPort() const
@@ -147,12 +147,12 @@ SocketAddressIPv4 SocketAddressIPv4::resolve(const ::scoped_string & scopedstrHo
 {
   SocketAddressIPv4 resolvedAddress;
 
-  ::string hostStorage(host);
+  ::string hostStorage(scopedstrHost);
 
   {
     AutoLock l(&s_resolveMutex);
 
-    AnsiStringStorage hostAnsi(hostStorage);
+    ::string hostAnsi(hostStorage);
 
     hostent *hent = gethostbyname(hostAnsi);
     if (hent == 0) {

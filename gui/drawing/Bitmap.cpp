@@ -24,51 +24,55 @@
 #include "framework.h"
 #include "Bitmap.h"
 
-Bitmap::Bitmap(int width, int height)
-: m_bitmap(NULL)
-{
-  // Prepare buffer
-  int bpp = 32;
-  size_t size = width * height * (bpp / 8);
-  ::array_base<unsigned char> bits(size);
-  if (width != 0 && height != 0) {
-    memset(&bits.front(), 0, size);
-    // Create bitmap handle
-    m_bitmap = CreateBitmap(width, height, 1, bpp, &bits.front());
-  }
-}
 
-Bitmap::Bitmap(HDC dc, int width, int height)
+namespace remoting
 {
-  m_bitmap = CreateCompatibleBitmap(dc, width, height);
-}
+   Bitmap::Bitmap(int width, int height)
+   : m_bitmap(NULL)
+   {
+      // Prepare buffer
+      int bpp = 32;
+      size_t size = width * height * (bpp / 8);
+      ::array_base<unsigned char> bits(size);
+      if (width != 0 && height != 0) {
+         memset(bits.data(), 0, size);
+         // Create bitmap handle
+         m_bitmap = CreateBitmap(width, height, 1, bpp, bits.data());
+      }
+   }
 
-Bitmap::Bitmap(HBITMAP bitmap)
-: m_bitmap(bitmap)
-{
-}
+   Bitmap::Bitmap(HDC dc, int width, int height)
+   {
+      m_bitmap = CreateCompatibleBitmap(dc, width, height);
+   }
 
-Bitmap::~Bitmap()
-{
-  if (m_bitmap != NULL) {
-    DeleteObject(m_bitmap);
-  }
-}
+   Bitmap::Bitmap(HBITMAP bitmap)
+   : m_bitmap(bitmap)
+   {
+   }
 
-int Bitmap::width() const
-{
-  BITMAP bitmap;
-  if (GetObject(m_bitmap, sizeof(BITMAP), &bitmap) == 0) {
-    return 0;
-  }
-  return bitmap.bmWidth;
-}
+   Bitmap::~Bitmap()
+   {
+      if (m_bitmap != NULL) {
+         DeleteObject(m_bitmap);
+      }
+   }
 
-int Bitmap::height() const
-{
-  BITMAP bitmap;
-  if (GetObject(m_bitmap, sizeof(BITMAP), &bitmap) == 0) {
-    return 0;
-  }
-  return bitmap.bmHeight;
+   int Bitmap::width() const
+   {
+      BITMAP bitmap;
+      if (GetObject(m_bitmap, sizeof(BITMAP), &bitmap) == 0) {
+         return 0;
+      }
+      return bitmap.bmWidth;
+   }
+
+   int Bitmap::height() const
+   {
+      BITMAP bitmap;
+      if (GetObject(m_bitmap, sizeof(BITMAP), &bitmap) == 0) {
+         return 0;
+      }
+      return bitmap.bmHeight;
+   }
 }

@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "SystemException.h"
 
 /**
@@ -39,13 +39,13 @@ public:
    * @param pathToFile path to executable file to get version info from.
    * @throws SystemException on fail.
    */
-  VersionInfo(const ::scoped_string & scopedstrPathToFile);
+  VersionInfo(const ::file::path & pathToFile);
 
   /**
    * Returns product version info string.
    * @return product version info string.
    */
-  const ::scoped_string & scopedstrgetProductVersionString() const;
+  ::string getProductVersionString() const;
 
 private:
   /**

@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "util/Exception.h"
 
 #include "SystemException.h"
@@ -93,13 +93,13 @@ public:
   /**
    * Registers new service in system.
    * @param name name of service.
-   * @param nameToDisplay name to display in services ::list.
+   * @param nameToDisplay name to display in services ::list_base.
    * @param binPath full path to service binary.
    * @param dependencies [optional] service dependencies.
    * @throws SystemException on fail.
    */
   void installService(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrNameToDisplay,
-                      const ::scoped_string & scopedstrbinPath, const ::scoped_string & scopedstrDependencies = "");
+                      const ::scoped_string & scopedstrBinPath, const ::scoped_string & scopedstrDependencies = "");
   /**
    * Unregisters existing service from services.
    * @param name name of service to unregister.

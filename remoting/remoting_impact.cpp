@@ -26,17 +26,19 @@
 #include "network/socket/WindowsSocket.h"
 #include "util/ResourceLoader.h"
 #include "resource.h"
+#include "remoting/common/remoting.h"
+
 
 remoting_impact::remoting_impact(HINSTANCE appInstance, const ::scoped_string & scopedstrwindowClassName,
                      const ::scoped_string & scopedstrviewerWindowClassName)
-: WindowsApplication(appInstance, windowClassName),
-  m_viewerWindowClassName(viewerWindowClassName),
+: WindowsApplication(appInstance, scopedstrwindowClassName),
+  m_viewerWindowClassName(scopedstrviewerWindowClassName),
   m_conListener(0),
   m_hAccelTable(0),
-  m_logWriter(ViewerConfig::getInstance()->getLogger()),
+  m_logWriter(::remoting::ViewerConfig::getInstance()->getLogWriter()),
   m_isListening(false)
 {
-  m_logWriter.info("Init WinSock 2.1");
+  m_logWriter->information("Init WinSock 2.1");
   WindowsSocket::startup(2, 1);
   registerViewerWindowClass();
 
@@ -52,7 +54,7 @@ remoting_impact::remoting_impact(HINSTANCE appInstance, const ::scoped_string & 
 
 remoting_impact::~remoting_impact()
 {
-  m_logWriter.info("Viewer collector: destroy all instances");
+  m_logWriter->information("Viewer collector: destroy all instances");
   m_instances.destroyAllInstances();
 
   delete m_loginDialog;
@@ -60,7 +62,7 @@ remoting_impact::~remoting_impact()
 
   unregisterViewerWindowClass();
 
-  m_logWriter.info("Shutdown WinSock");
+  m_logWriter->information("Shutdown WinSock");
   WindowsSocket::cleanup();
 }
 
@@ -73,8 +75,8 @@ void remoting_impact::startListeningServer(const int listeningPort)
     m_conListener = new ConnectionListener(this, listeningPort);
   } catch (const ::remoting::Exception &ex) {
     m_isListening = false;
-    m_logWriter.error("Error in start listening: {}", ex.getMessage());
-    MessageBox(0,
+    m_logWriter->error("Error in start listening: {}", ex.get_message());
+    ::remoting::message_box(0,
                StringTable::getString(IDS_ERROR_START_LISTENING),
                ProductNames::VIEWER_PRODUCT_NAME,
                MB_OK | MB_ICONERROR);
@@ -88,7 +90,7 @@ void remoting_impact::stopListeningServer()
       delete m_conListener;
     }
   } catch (const ::remoting::Exception &ex) {
-    m_logWriter.error("Error of delete m_conListener: {}", ex.getMessage());
+    m_logWriter->error("Error of delete m_conListener: {}", ex.get_message());
   }
   m_conListener = 0;
 }
@@ -96,7 +98,7 @@ void remoting_impact::stopListeningServer()
 void remoting_impact::restartListeningServer()
 {
   if (m_isListening) {
-    unsigned short newListenPort = ViewerConfig::getInstance()->getListenPort();
+    unsigned short newListenPort = ::remoting::ViewerConfig::getInstance()->getListenPort();
     if (m_conListener->getBindPort() != newListenPort) {
       stopListeningServer();
       // FIXME: remove this parameter.
@@ -150,7 +152,7 @@ void remoting_impact::runInstance(ConnectionData & conData, const ConnectionConf
 
 bool remoting_impact::isVisibleLoginDialog() const
 {
-  return !!m_loginDialog->getControl()->getWindow();
+  return !!m_loginDialog->get_hwnd();
 }
 
 void remoting_impact::newConnection(const ::scoped_string & hostName, const ConnectionConfig & config)
@@ -171,12 +173,12 @@ void remoting_impact::showLoginDialog()
   m_loginDialog->setListening(m_isListening);
   m_loginDialog->loadIcon(IDI_APPICON);
   m_loginDialog->show();
-  addModelessDialog(m_loginDialog->getControl()->getWindow());
+  addModelessDialog(m_loginDialog->get_hwnd());
 }
 
-void remoting_impact::createWindow(const ::scoped_string & scopedstrclassName)
+void remoting_impact::createWindow(const ::scoped_string & scopedstrClassName)
 {
-  WindowsApplication::createWindow(className);
+  WindowsApplication::createWindow(scopedstrClassName);
   SetWindowLongPtr(m_mainWindow, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
 
   SetTimer(m_mainWindow, TIMER_DELETE_DEAD_INSTANCE, TIMER_DELETE_DEAD_INSTANCE_DELAY, (TIMERPROC)NULL);
@@ -188,7 +190,7 @@ void remoting_impact::registerWindowClass(WNDCLASS *wndClass)
 
   wndClass->lpfnWndProc = wndProc;
   wndClass->hInstance = m_appInstance;
-  wndClass->lpszClassName = m_windowClassName;
+  wndClass->lpszClassName = m_wstrWindowClassName;
 
   RegisterClass(wndClass);
 }
@@ -211,11 +213,11 @@ void remoting_impact::unregisterViewerWindowClass()
   UnregisterClass(m_viewerWndClass.lpszClassName, GetModuleHandle(0));
 }
 
-LRESULT CALLBACK remoting_impact::wndProcViewer(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK remoting_impact::wndProcViewer(HWND hWnd, UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
 {
   BaseWindow *_this = 0;
 
-  if (message == WM_CREATE) {
+  if (scopedstrMessage == WM_CREATE) {
     CREATESTRUCT * createStruct = reinterpret_cast<CREATESTRUCT *>(lParam);
     BaseWindow *newBaseWindow = reinterpret_cast<BaseWindow *>(createStruct->lpCreateParams);
     SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(_this));
@@ -225,11 +227,11 @@ LRESULT CALLBACK remoting_impact::wndProcViewer(HWND hWnd, UINT message, WPARAM 
     _this = reinterpret_cast<BaseWindow *>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
   }
   if (_this != 0) {
-    if (_this->wndProc(message, wParam, lParam)) {
+    if (_this->wndProc(scopedstrMessage, wParam, lParam)) {
       return 0;
     }
   }
-  return DefWindowProc(hWnd, message, wParam, lParam);
+  return DefWindowProc(hWnd, scopedstrMessage, wParam, lParam);
 }
 
 void remoting_impact::showListeningOptions()
@@ -249,13 +251,13 @@ void remoting_impact::showListeningOptions()
 void remoting_impact::showConfiguration()
 {
   m_configurationDialog.show();
-  addModelessDialog(m_configurationDialog.getControl()->getWindow());
+  addModelessDialog(m_configurationDialog.get_hwnd());
 }
 
 void remoting_impact::showAboutViewer()
 {
   m_aboutDialog.show();
-  addModelessDialog(m_aboutDialog.getControl()->getWindow());
+  addModelessDialog(m_aboutDialog.get_hwnd());
 }
 
 int remoting_impact::processMessages()

@@ -30,36 +30,36 @@
 /**
  * Windows exception.
  *
- * Solves problem with generating formatted message strings width describes
+ * Solves problem with generating formatted scopedstrMessage strings width describes
  * user code-space where error occured and windows specific information about WinAPI error.
  */
 class SystemException : public ::remoting::Exception
 {
 public:
   /**
-   * Creates exception with formatted message from system
+   * Creates exception with formatted scopedstrMessage from system
    * and error code which equals to GetLastError() value.
    */
   SystemException();
   /**
-   * Creates exception with formatted message from system
+   * Creates exception with formatted scopedstrMessage from system
    * and error code.
    * @param errcode windows error code.
    */
   SystemException(int errcode);
   /**
-   * Creates exception with user message + formatted message from system
+   * Creates exception with user scopedstrMessage + formatted scopedstrMessage from system
    * and error code set to GetLastError() value.
-   * @param userMessage user message.
+   * @param userMessage user scopedstrMessage.
    */
-  SystemException(const ::scoped_string & scopedstruserMessage);
+  SystemException(const ::scoped_string & scopedstrUserMessage);
   /**
-   * Creates exception with user message + formatted message from system
+   * Creates exception with user scopedstrMessage + formatted scopedstrMessage from system
    * and specified error code.
-   * @param userMessage user message.
+   * @param userMessage user scopedstrMessage.
    * @param errcode windows error code.
    */
-  SystemException(const ::scoped_string & scopedstruserMessage, int errcode);
+  SystemException(const ::scoped_string & scopedstrUserMessage, int errcode);
   /**
    * Destructor, does nothing.
    */
@@ -73,15 +73,15 @@ public:
    * Returns system error description.
    * @return system error description.
    */
-  const ::scoped_string & scopedstrgetSystemErrorDescription() const;
+  ::string getSystemErrorDescription() const;
 private:
   /**
-   * Creates formatted message for exception.
+   * Creates formatted scopedstrMessage for exception.
    * @param userMessage user description about exception reason.
    * @param errcode windows error code.
    * @fixme document all special cases.
    */
-  void createMessage(const ::scoped_string & scopedstruserMessage, int errcode);
+  void createMessage(const ::scoped_string & scopedstrUserMessage, int errcode);
 private:
   /**
    * Description of error from OS.

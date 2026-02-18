@@ -29,7 +29,7 @@
 //#include <list>
 #include "ViewerInstance.h"
 
-typedef ::list<ViewerInstance *> InstanceList;
+typedef ::list_base<ViewerInstance *> InstanceList;
 
 // Collector instances.
 class ViewerCollector
@@ -38,11 +38,11 @@ public:
   ViewerCollector();
   virtual ~ViewerCollector();
 
-  // Adds instance to a self ::list.
+  // Adds instance to a self ::list_base.
   void addInstance(ViewerInstance *instance);
 
   // Forces terminates all instances, waits until they dies and than
-  // delete them from memory and thread ::list.
+  // delete them from memory and thread ::list_base.
   void destroyAllInstances();
 
   // This function decrease counter of connection, requires reconnect.
@@ -51,7 +51,7 @@ public:
   // Return true, if and only if m_instances is empty()
   bool empty() const;
 
-  // Deletes all stopped instances from memory and removes them from self ::list.
+  // Deletes all stopped instances from memory and removes them from self ::list_base.
   void deleteDeadInstances();
 
 protected:

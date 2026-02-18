@@ -23,14 +23,14 @@
 //
 #include "framework.h"
 #include "DataOutputStream.h"
-//#include "util/::string.h"
-#include "util/Utf8StringStorage.h"
+//////#include "util/::string.h"
+////#include "util/::string.h"
 //#include <vector>
 
 #define GETBYTE(x, n) (((x) >> ((n) * 8)) & 0xFF)
 
-DataOutputStream::DataOutputStream(OutputStream *outputStream)
-: m_outStream(outputStream)
+DataOutputStream::DataOutputStream(::file::writable * pfilewritable)
+: m_outStream(pfilewritable)
 {
 }
 
@@ -38,26 +38,26 @@ DataOutputStream::~DataOutputStream()
 {
 }
 
-size_t DataOutputStream::write(const void *buffer, size_t len)
+void DataOutputStream::write(const void *buffer, size_t len)
 {
-  return m_outStream->write(buffer, len);
+  m_outStream->write(buffer, len);
 }
 
-void DataOutputStream::writeFully(const void *buffer, size_t len)
-{
-  char *typedBuffer = (char *)buffer;
-  size_t totalWritten = 0;
-  size_t left = len;
-  while (totalWritten < len) {
-    size_t written = m_outStream->write(typedBuffer + totalWritten, left);
-    left -= written;
-    totalWritten += written;
-  }
-}
+// void DataOutputStream::writeFully(const void *buffer, size_t len)
+// {
+//   char *typedBuffer = (char *)buffer;
+//   size_t totalWritten = 0;
+//   size_t left = len;
+//   while (totalWritten < len) {
+//     size_t written = m_outStream->write(typedBuffer + totalWritten, left);
+//     left -= written;
+//     totalWritten += written;
+//   }
+// }
 
 void DataOutputStream::writeUInt8(unsigned char x)
 {
-  writeFully((char *)&x, 1);
+  write((char *)&x, 1);
 };
 
 void DataOutputStream::writeUInt16(unsigned short data)
@@ -67,7 +67,7 @@ void DataOutputStream::writeUInt16(unsigned short data)
   buf[0] = GETBYTE(data, 1);
   buf[1] = GETBYTE(data, 0);
 
-  writeFully((char *)buf, sizeof(buf));
+  write((char *)buf, sizeof(buf));
 }
 
 void DataOutputStream::writeUInt32(unsigned int data)
@@ -79,7 +79,7 @@ void DataOutputStream::writeUInt32(unsigned int data)
   buf[2] = GETBYTE(data, 1);
   buf[3] = GETBYTE(data, 0);
 
-  writeFully((char *)buf, sizeof(buf));
+  write((char *)buf, sizeof(buf));
 }
 
 void DataOutputStream::writeUInt64(unsigned long long data)
@@ -95,7 +95,7 @@ void DataOutputStream::writeUInt64(unsigned long long data)
   buf[6] = GETBYTE(data, 1);
   buf[7] = GETBYTE(data, 0);
 
-  writeFully((char *)buf, sizeof(buf));
+  write((char *)buf, sizeof(buf));
 }
 
 void DataOutputStream::writeInt8(char x)
@@ -122,17 +122,17 @@ void DataOutputStream::writeUTF8(const ::scoped_string & scopedstrString)
 {
   size_t sizeInBytes = 0;
 
-  ::string strstg{string};
+  ::string strstg(scopedstrString);
 
   // to UTF8 string convertion
-  ::Utf8StringStorage utf8str{strstg};
+  ::string utf8str{strstg};
 
   // FIXME: Why try/catch() is used?
   try {
-     unsigned int sizeInBytes = (unsigned int)utf8str.getSize();
-     _ASSERT(sizeInBytes == utf8str.getSize());
+     unsigned int sizeInBytes = (unsigned int)utf8str.length();
+     _ASSERT(sizeInBytes == utf8str.length());
     writeUInt32(sizeInBytes);
-     writeFully(utf8str, sizeInBytes);
+     write(utf8str, sizeInBytes);
   } catch (...) {
     throw;
   }

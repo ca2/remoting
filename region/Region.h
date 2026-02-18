@@ -22,9 +22,7 @@
 //-------------------------------------------------------------------------
 //
 
-#pragma onceINCLUDED__
-INCLUDED__
-
+#pragma once
 //#include <vector>
 //#include <list>
 
@@ -36,11 +34,11 @@ extern "C" {
 
 /**
  * A Region is an area which can be represented by a set of rectangles with
- * integer coordinates. It maintains the ::list of rectangles such way that
+ * integer coordinates. It maintains the ::list_base of rectangles such way that
  * individual rectangles never overlap. When a rectangle is added to a Region,
  * only its non-overlapping part will be actually added. Note that adding a
  * rectangle will not necessarily increment the number of rectangles by one.
- * On such addition, the underlying ::list of rectangles may change dramatically
+ * On such addition, the underlying ::list_base of rectangles may change dramatically
  * and its length may increase, decrease or remain the same.
  */
 class Region {
@@ -135,16 +133,16 @@ public:
 
   /**
    * Get the ::array_base of rectangles that constitute this region.
-   * @param dst pointer to an ::array_base where the ::list of rectangles will be
+   * @param dst pointer to an ::array_base where the ::list_base of rectangles will be
    *            saved to. The previous contents of the ::array_base will be cleared.
    */
   void getRectVector(::array_base<::int_rectangle> *dst) const;
   /**
-   * Get the ::list of rectangles that constitute this region.
-   * @param dst pointer to an ::list where the ::list of rectangles will be
-   *            saved to. The previous contents of the ::list will be cleared.
+   * Get the ::list_base of rectangles that constitute this region.
+   * @param dst pointer to an ::list_base where the ::list_base of rectangles will be
+   *            saved to. The previous contents of the ::list_base will be cleared.
    */
-  void getRectList(::list<::int_rectangle> *dst) const;
+  ::int_rectangle_array_base getRects() const;
 
   // Returns count of rectangles in the region.
   size_t getCount() const;

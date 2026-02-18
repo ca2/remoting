@@ -44,8 +44,8 @@ public:
 
   // Returns process module path. Call the openProcess() function before.
   // @throws ::remoting::Exception on an error.
-  void getProcessModulePath(::string & exePath);
+  ::string getProcessModulePath();
 
-private:
+//private:
   HANDLE m_hProcess;
 };

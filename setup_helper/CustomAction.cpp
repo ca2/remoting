@@ -24,7 +24,7 @@
 
 #include "win_system/RegistryKey.h"
 #include "MsiProperties.h"
-#include "util/AnsiStringStorage.h"
+//#include "util/::string.h"
 #include "util/VncPassCrypt.h"
 #include "server_config_lib/Configurator.h"
 #include "config_lib/RegistrySettingsManager.h"
@@ -63,11 +63,11 @@ void getCryptedPassword(unsigned char cryptedPass[8], const ::scoped_string & pl
   plainPass->getSubstring(&copyOfPlainPass, 0, 7);
   // Convert from TCHAR[] to char[].
   // FIXME: Check exception catching.
-  AnsiStringStorage ansiPass(&copyOfPlainPass);
+  ::string ansiPass(&copyOfPlainPass);
 
   // Convert to a byte array.
   unsigned char byteArray[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-  size_t len = ::minimum(ansiPass.getLength(), (size_t)8);
+  size_t len = ::minimum(ansiPass.length(), (size_t)8);
   memcpy(byteArray, ansiPass, len);
 
   // Encrypt with a fixed key.
@@ -75,8 +75,8 @@ void getCryptedPassword(unsigned char cryptedPass[8], const ::scoped_string & pl
 }
 
 void writePasswordToRegistry(MSIHANDLE hInstall,
-                             const ::scoped_string & scopedstrregistryPath,
-                             const ::scoped_string & scopedstrentryName)
+                             const ::scoped_string & scopedstrRegistryPath,
+                             const ::scoped_string & scopedstrEntryName)
 {
   MsiProperties msiProp(hInstall);
   try {
@@ -96,8 +96,8 @@ void writePasswordToRegistry(MSIHANDLE hInstall,
       throw ::remoting::Exception("Can't write to the registry.");
     }
 
-  } catch (::remoting::Exception &e) {
-    AnsiStringStorage ansiStr(&::string(e.getMessage()));
+  } catch (::exception &e) {
+    ::string ansiStr(&::string(e.get_message()));
     //WcaLog(LOGMSG_STANDARD, ansiStr);
   }
 }

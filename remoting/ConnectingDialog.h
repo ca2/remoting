@@ -43,8 +43,8 @@ public:
    double m_dStart = 0.0;
    double m_dEnd = 0.0;
    double m_d;
-   class ::time & m_time;
-
+   class ::time m_time;
+bool m_bRunning = false;
 
    progress_bar_animation();
    ~progress_bar_animation();
@@ -74,7 +74,7 @@ public:
   BOOL onCommand(UINT controlID, UINT notificationID);
   BOOL onInitDialog();
 
-  ::pointer < ProgressBar > m_pprogressbar;
+  ::pointer < progress_bar_animation > m_panimation;
   ::pointer < TextBox > m_ptextboxHost;
   ::pointer < TextBox > m_ptextboxStatus;
   ::string  m_strHost;

@@ -38,10 +38,10 @@
 #include "rfb_sconn/JpegEncoder.h"
 #include "rfb_sconn/EncoderStore.h"
 #include "rfb_sconn/RfbCodeRegistrator.h"
-#include "util/DateTime.h"
+//#include "util/::earth::time.h"
 #include "CursorUpdates.h"
 #include "SenderControlInformationInterface.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 class UpdateSender : public Thread, public RfbDispatcherListener
 {
@@ -56,7 +56,7 @@ public:
                int id, Desktop *desktop, LogWriter *log);
   virtual ~UpdateSender();
 
-  // The sendServerInit() function sends first rfb init message to a client
+  // The sendServerInit() function sends first rfb init scopedstrMessage to a client
   // FIXME: The comment does not seem to be relevant.
   void init(const ::int_size & viewPortDimension, const PixelFormat & pf);
 
@@ -82,7 +82,7 @@ public:
 protected:
   // Listener function which implements RfbDispatcherListener. It will be
   // called on receiving client messages if we registered as a handler for
-  // corresponding RFB message types.
+  // corresponding RFB scopedstrMessage types.
   virtual void onRequest(unsigned int reqCode, RfbInputGate *input);
 
   // Handlers for individual RFB client messages. Called by onRequest().
@@ -120,7 +120,7 @@ protected:
                          Region *fullReqReg,
                          bool *incrUpdIsReq,
                          bool *fullUpdIsReq,
-                         DateTime *reqTimePoint);
+                         ::earth::time *reqTimePoint);
   void extractUpdates(UpdateContainer *updCont);
   void cropUpdContForReqRegions(UpdateContainer *updCont,
                                 const Region *incrReqReg,
@@ -161,7 +161,7 @@ protected:
   void sendCursorPosUpdate();
   void sendCopyRect(const ::array_base<::int_rectangle> *rects, const Point *source);
 
-  // Encode and send a ::list of rectangles via the specified encoder.
+  // Encode and send a ::list_base of rectangles via the specified encoder.
   void sendRectangles(Encoder *encoder,
                       const ::array_base<::int_rectangle> *rects,
                       const FrameBuffer *frameBuffer,
@@ -170,7 +170,7 @@ protected:
   // This function paints black region in framebuffer.
   void paintBlack(FrameBuffer *frameBuffer, const Region *blackRegion);
 
-  // This function is used to split a region into a ::list of rectangles,
+  // This function is used to split a region into a ::list_base of rectangles,
   // where actual splitting is performed by the specified encoder object.
   // We do not use m_encoder because this function may be used for the video
   // encoder as well.
@@ -197,7 +197,7 @@ protected:
   bool m_fullUpdIsReq;
   bool m_busy;
   // Property for perfomance measurements. It uses with the regions mutex.
-  DateTime m_requestTimePoint;
+  ::earth::time m_requestTimePoint;
   LocalMutex m_reqRectLocMut;
 
   SenderControlInformationInterface *m_senderControlInformation;
@@ -218,7 +218,7 @@ protected:
   CursorUpdates m_cursorUpdates;
 
   // EncodeOptions class maintain the configuration of encoders and
-  // pseudo-encoders read from the SetEncodings client message.
+  // pseudo-encoders read from the SetEncodings client scopedstrMessage.
   // m_newEncodeOptions may be changed at any time but all change and read
   // operations must be synchronized with m_newEncodeOptionsLocker.
   // In the beginning of each framebuffer update, m_newEncodeOptions will be

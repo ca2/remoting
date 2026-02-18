@@ -25,7 +25,10 @@
 #pragma once
 
 
+#include "remoting/util/CommonHeader.h"
 #include "util/Exception.h"
+#include <commctrl.h>
+
 
 class CommonControlsEx
 {

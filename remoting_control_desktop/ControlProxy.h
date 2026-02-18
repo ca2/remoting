@@ -73,12 +73,12 @@ public:
   TvnServerInfo getServerInfo();
 
   /**
-   * Gets rfb client ::list.
+   * Gets rfb client ::list_base.
    * @param clients [out] output parameters to retrieve info of clients.
    * @throws RemoteException on error on server.
    * @throws ::io_exception on io error.
    */
-  void getClientsList(::list<RfbClientInfo *> *clients);
+  void getClientsList(::list_base<RfbClientInfo *> *clients);
 
   /**
    * Reloads rfb server configuration.
@@ -109,13 +109,13 @@ public:
    * @throws RemoteException on error on server.
    * @throws ::io_exception on io error.
    */
-  void makeOutgoingConnection(const ::scoped_string & scopedstrconnectString, bool viewOnly);
+  void makeOutgoingConnection(const ::scoped_string & scopedstrConnectString, bool viewOnly);
 
   /**
    * Initialized connection to a TcpDispatcher.
    * @param connectString connect string in host[:(port|diplay)] format.
    */
-  void makeTcpDispatcherConnection(const ::scoped_string & scopedstrconnectString,
+  void makeTcpDispatcherConnection(const ::scoped_string & scopedstrConnectString,
                                    const ::scoped_string & scopedstrDispatcherName,
                                    const ::scoped_string & scopedstrKeyword,
                                    unsigned int connectionId);
@@ -171,8 +171,8 @@ public:
 
 protected:
   /**
-   * Returns control message to write.
-   * @param messageId control message id.
+   * Returns control scopedstrMessage to write.
+   * @param messageId control scopedstrMessage id.
    */
   ControlMessage *createMessage(DWORD messageId);
 
@@ -182,12 +182,12 @@ protected:
    */
   ControlGate *m_gate;
   /**
-   * Current control message.
+   * Current control scopedstrMessage.
    */
   ControlMessage *m_message;
 private:
   /**
-   * Deletes control message created by createMessage() method
+   * Deletes control scopedstrMessage created by createMessage() method
    * if it's exists.
    */
   void releaseMessage();

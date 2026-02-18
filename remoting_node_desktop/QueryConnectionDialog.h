@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 #include "gui/BaseDialog.h"
-#include "gui/Control.h"
+#include "gui/::remoting::Window.h"
 
 class QueryConnectionDialog : public BaseDialog
 {
@@ -66,10 +66,10 @@ protected:
   bool m_acceptByDefault;
   DWORD m_timeout;
 
-  Control m_peerAddressLabel;
-  Control m_timeoutLabel;
-  Control m_acceptButton;
-  Control m_rejectButton;
+  ::remoting::Window m_peerAddressLabel;
+  ::remoting::Window m_timeoutLabel;
+  ::remoting::Window m_acceptButton;
+  ::remoting::Window m_rejectButton;
 };
 
 

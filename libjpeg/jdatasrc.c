@@ -71,10 +71,10 @@ init_mem_source (j_decompress_ptr cinfo)
  *
  * There is no such thing as an EOF return.  If the end of the file has been
  * reached, the routine has a choice of ERREXIT() or inserting fake data into
- * the buffer.  In most cases, generating a warning message and inserting a
+ * the buffer.  In most cases, generating a warning scopedstrMessage and inserting a
  * fake EOI marker is the best course of action --- this will allow the
  * decompressor to output however much of the image is there.  However,
- * the resulting error message is misleading if the real problem is an empty
+ * the resulting error scopedstrMessage is misleading if the real problem is an empty
  * input file, so we handle that case specially.
  *
  * In applications that need to be able to suspend compression due to input

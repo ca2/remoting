@@ -26,7 +26,7 @@
 
 
 #include "win_system/Process.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 /**
  * Enables you to start and stop processes in interactive console session.

@@ -29,16 +29,16 @@
 
 StringTable::StringTable() {}
 
-::string StringTable::getString(UINT id)
+::string StringTable::getString(::iptr i)
 {
 
    ::string str;
 
-   auto p = s_mapString.find(id);
+   auto p = s_mapString.find(i);
 
    if (!p)
    {
-         if (!ResourceLoader::getInstance()->loadString(id, p->element2()))
+         if (!ResourceLoader::getInstance()->loadString(i, p->element2()))
          {
          p->element2() = "Requested string from StringTable cannot be received";
          }

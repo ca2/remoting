@@ -27,16 +27,16 @@
 
 #include "thread/ZombieKiller.h"
 
-HttpServer::HttpServer(const ::scoped_string & scopedstrbindHost, unsigned short bindPort, bool lockAddr, LogWriter *log)
+HttpServer::HttpServer(const ::scoped_string & scopedstrBindHost, unsigned short bindPort, bool lockAddr, LogWriter *log)
 : TcpServer(bindHost, bindPort, true, lockAddr),
   m_log(log)
 {
-  m_log->message("Http server started");
+  m_log->debug("Http server started");
 }
 
 HttpServer::~HttpServer()
 {
-  m_log->message("Http server stopped");
+  m_log->debug("Http server stopped");
 }
 
 void HttpServer::onAcceptConnection(SocketIPv4 *socket)

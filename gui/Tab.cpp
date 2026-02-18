@@ -25,20 +25,20 @@
 #include "Tab.h"
 
 Tab::Tab()
-: m_dialog(NULL)
+: m_pdialog(NULL)
 {
-  m_caption= "";
+  m_strCaption= "";
 }
 
-Tab::Tab(BaseDialog *dialog, const ::scoped_string & scopedstrcaption)
-: m_dialog(dialog)
+Tab::Tab(BaseDialog *dialog, const ::scoped_string & scopedstrCaption)
+: m_pdialog(dialog)
 {
-  m_caption= caption;
+  m_strCaption= scopedstrCaption;
 }
 
-void Tab::setVisible(bool visible)
+void Tab::set_visible(bool visible)
 {
-  if (m_dialog != NULL) {
-    m_dialog->getControl()->setVisible(visible);
+  if (m_pdialog != NULL) {
+    m_pdialog->set_visible(visible);
   }
 }

@@ -28,7 +28,7 @@
 #include "TextBox.h"
 #include "BalloonTip.h"
 #include "StringFilter.h"
-//#include "util/::string.h"
+//////#include "util/::string.h"
 
 class FilteredTextBox : public TextBox
 {
@@ -36,7 +36,7 @@ public:
   FilteredTextBox();
   ~FilteredTextBox();
 
-  // Override Control::setWindow method
+  // Override ::remoting::Window::setWindow method
   void setWindow(HWND hwnd);
   void setText(TCHAR *text);
   void setErrorBalloonTip(BalloonTip *tip);

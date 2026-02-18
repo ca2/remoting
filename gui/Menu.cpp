@@ -89,11 +89,11 @@ int Menu::getMenuItemCount()
   return GetMenuItemCount(m_menu);
 }
 
-bool Menu::appendMenu(UINT uFlags, UINT_PTR uIDNewItem, LPCTSTR lpNewItem)
+bool Menu::appendMenu(UINT uFlags, UINT_PTR uIDNewItem, const ::scoped_string & scopedstrNewItem)
 {
   _ASSERT(m_menu != 0);
 
-  return !!AppendMenu(m_menu, uFlags, uIDNewItem, lpNewItem);
+  return !!AppendMenu(m_menu, uFlags, uIDNewItem, ::wstring(scopedstrNewItem).c_str());
 }
 
 bool Menu::insertMenuItem(UINT uItem, BOOL fByPosition, LPCMENUITEMINFO lpmii)
@@ -171,9 +171,9 @@ int Menu::findMenuItem(UINT uID)
   return -1;
 }
 
-bool Menu::appendMenu(::string strVal, UINT uID)
+bool Menu::appendMenu(const ::scoped_string & scopedstrData, UINT uID)
 {
-  return appendMenu(MF_STRING, uID, strVal);
+  return appendMenu(MF_STRING, uID, scopedstrData);
 }
 
 bool Menu::appendSeparator()
@@ -181,32 +181,34 @@ bool Menu::appendSeparator()
   return appendMenu(MF_MENUBREAK, 0, 0);
 }
 
-bool Menu::appendSubMenu(::string strVal, Menu *pMenu)
+bool Menu::appendSubMenu(const ::scoped_string & scopedstrData, Menu *pMenu)
 {
-  return appendMenu(MF_POPUP, (UINT_PTR)pMenu->getMenu(), strVal);
+  return appendMenu(MF_POPUP, (UINT_PTR)pMenu->getMenu(), scopedstrData);
 }
 
-bool Menu::insertMenuItem(UINT uItem, ::string strVal, UINT uID)
+bool Menu::insertMenuItem(UINT uItem, const ::scoped_string & scopedstrData, UINT uID)
 {
   MENUITEMINFO mii;
+
+   ::wstring wstrData(scopedstrData);
 
   ZeroMemory(&mii, sizeof(MENUITEMINFO));
   mii.cbSize = sizeof(MENUITEMINFO);
   mii.fMask = MIIM_STRING | MIIM_ID;
-  mii.dwTypeData = (LPTSTR)strVal;
+  mii.dwTypeData = (LPTSTR)wstrData.c_str();
   mii.fState = MFS_DEFAULT; 
   mii.wID = uID;
   return insertMenuItem(uItem, TRUE, (LPMENUITEMINFO)&mii);
 }
 
-bool Menu::insertCheckMenuItem(UINT uItem, ::string strVal, UINT uID)
+bool Menu::insertCheckMenuItem(UINT uItem, const ::scoped_string & scopedstrData, UINT uID)
 {
   MENUITEMINFO mii;
-
+::wstring wstrData(scopedstrData);
   ZeroMemory(&mii, sizeof(MENUITEMINFO));
   mii.cbSize = sizeof(MENUITEMINFO);
   mii.fMask = MIIM_STRING | MIIM_ID | MIIM_STATE;
-  mii.dwTypeData = (LPTSTR)strVal;
+  mii.dwTypeData = (LPTSTR)wstrData.c_str();
   mii.fState = MFS_UNCHECKED; 
   mii.wID = uID;
   return insertMenuItem(uItem, TRUE, (LPMENUITEMINFO)&mii);
@@ -235,7 +237,7 @@ bool Menu::insertSeparator(UINT uItem)
   return insertMenuItem(uItem, TRUE, (LPMENUITEMINFO)&mii);
 }
 
-bool Menu::insertSubMenu(UINT uItem, ::string strVal, Menu *pMenu)
+bool Menu::insertSubMenu(UINT uItem, const ::scoped_string & scopedstrData, Menu *pMenu)
 {
   MENUITEMINFO mii;
 

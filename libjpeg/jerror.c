@@ -6,12 +6,12 @@
  * This file is part of the Independent JPEG Group's software.
  * For conditions of distribution and use, see the accompanying README file.
  *
- * This file contains simple error-reporting and trace-message routines.
+ * This file contains simple error-reporting and trace-scopedstrMessage routines.
  * These are suitable for Unix-like systems and others where writing to
  * stderr is the right thing to do.  Many applications will want to replace
  * some or all of these routines.
  *
- * If you define USE_WINDOWS_MESSAGEBOX in jconfig.h or in the makefile,
+ * If you define USE_WINDOWS_::remoting::message_box in jconfig.h or in the makefile,
  * you get a Windows-specific hack to display error messages in a dialog box.
  * It ain't much, but it beats dropping error messages into the bit bucket,
  * which is what happens to output to stderr under most Windows C compilers.
@@ -19,7 +19,7 @@
  * These routines are used by both the compression and decompression code.
  */
 
-#ifdef USE_WINDOWS_MESSAGEBOX
+#ifdef USE_WINDOWS_::remoting::message_box
 #include <windows.h>
 #endif
 
@@ -35,10 +35,10 @@
 
 
 /*
- * Create the message string table.
- * We do this from the master message ::std::list in jerror.h by re-reading
+ * Create the scopedstrMessage string table.
+ * We do this from the master scopedstrMessage ::std::list_base in jerror.h by re-reading
  * jerror.h with a suitable definition for macro JMESSAGE.
- * The message table is made an external symbol just in case any applications
+ * The scopedstrMessage table is made an external symbol just in case any applications
  * want to refer to it directly.
  */
 
@@ -60,8 +60,8 @@ const char * const jpeg_std_message_table[] = {
  * Applications may override this if they want to get control back after
  * an error.  Typically one would longjmp somewhere instead of exiting.
  * The setjmp buffer can be made a private field within an expanded error
- * handler object.  Note that the info needed to generate an error message
- * is stored in the error object, so you can generate the message now or
+ * handler object.  Note that the info needed to generate an error scopedstrMessage
+ * is stored in the error object, so you can generate the scopedstrMessage now or
  * later, at your convenience.
  * You should make sure that the JPEG object is cleaned up (with jpeg_abort
  * or jpeg_destroy) at some point.
@@ -70,7 +70,7 @@ const char * const jpeg_std_message_table[] = {
 METHODDEF(noreturn_t)
 error_exit (j_common_ptr cinfo)
 {
-  /* Always display the message */
+  /* Always display the scopedstrMessage */
   (*cinfo->err->output_message) (cinfo);
 
   /* Let the memory manager delete any temp files before we die */
@@ -81,7 +81,7 @@ error_exit (j_common_ptr cinfo)
 
 
 /*
- * Actual output of an error or trace message.
+ * Actual output of an error or trace scopedstrMessage.
  * Applications may override this method to send JPEG messages somewhere
  * other than stderr.
  *
@@ -100,12 +100,12 @@ output_message (j_common_ptr cinfo)
 {
   char buffer[JMSG_LENGTH_MAX];
 
-  /* Create the message */
+  /* Create the scopedstrMessage */
   (*cinfo->err->format_message) (cinfo, buffer);
 
-#ifdef USE_WINDOWS_MESSAGEBOX
-  /* Display it in a message dialog box */
-  MessageBox(GetActiveWindow(), buffer, "JPEG Library Error",
+#ifdef USE_WINDOWS_::remoting::message_box
+  /* Display it in a scopedstrMessage dialog box */
+  ::remoting::message_box(GetActiveWindow(), buffer, "JPEG Library Error",
 	     MB_OK | MB_ICONERROR);
 #else
   /* Send it to stderr, adding a newline */
@@ -115,7 +115,7 @@ output_message (j_common_ptr cinfo)
 
 
 /*
- * Decide whether to emit a trace or warning message.
+ * Decide whether to emit a trace or warning scopedstrMessage.
  * msg_level is one of:
  *   -1: recoverable corrupt-data warning, may want to abort.
  *    0: important advisory messages (always display to user).
@@ -131,7 +131,7 @@ emit_message (j_common_ptr cinfo, int msg_level)
   struct jpeg_error_mgr * err = cinfo->err;
 
   if (msg_level < 0) {
-    /* It's a warning message.  Since corrupt files may generate many warnings,
+    /* It's a warning scopedstrMessage.  Since corrupt files may generate many warnings,
      * the policy implemented here is to show only the first warning,
      * unless trace_level >= 3.
      */
@@ -140,7 +140,7 @@ emit_message (j_common_ptr cinfo, int msg_level)
     /* Always count warnings in num_warnings. */
     err->num_warnings++;
   } else {
-    /* It's a trace message.  Show it if trace_level >= msg_level. */
+    /* It's a trace scopedstrMessage.  Show it if trace_level >= msg_level. */
     if (err->trace_level >= msg_level)
       (*err->output_message) (cinfo);
   }
@@ -148,8 +148,8 @@ emit_message (j_common_ptr cinfo, int msg_level)
 
 
 /*
- * Format a message string for the most recent JPEG error or message.
- * The message is stored into buffer, which should be at least JMSG_LENGTH_MAX
+ * Format a scopedstrMessage string for the most recent JPEG error or scopedstrMessage.
+ * The scopedstrMessage is stored into buffer, which should be at least JMSG_LENGTH_MAX
  * characters.  Note that no '\n' character is added to the string.
  * Few applications should need to override this method.
  */
@@ -164,7 +164,7 @@ format_message (j_common_ptr cinfo, char * buffer)
   char ch;
   boolean isstring;
 
-  /* Look up message string in proper table */
+  /* Look up scopedstrMessage string in proper table */
   if (msg_code > 0 && msg_code <= err->last_jpeg_message) {
     msgtext = err->jpeg_message_table[msg_code];
   } else if (err->addon_message_table != NULL &&
@@ -173,13 +173,13 @@ format_message (j_common_ptr cinfo, char * buffer)
     msgtext = err->addon_message_table[msg_code - err->first_addon_message];
   }
 
-  /* Defend against bogus message number */
+  /* Defend against bogus scopedstrMessage number */
   if (msgtext == NULL) {
     err->msg_parm.i[0] = msg_code;
     msgtext = err->jpeg_message_table[0];
   }
 
-  /* Check for string parameter, as indicated by %s in the message text */
+  /* Check for string parameter, as indicated by %s in the scopedstrMessage text */
   isstring = FALSE;
   msgptr = msgtext;
   while ((ch = *msgptr++) != '\0') {
@@ -189,7 +189,7 @@ format_message (j_common_ptr cinfo, char * buffer)
     }
   }
 
-  /* Format the message into the passed buffer */
+  /* Format the scopedstrMessage into the passed buffer */
   if (isstring)
     sprintf(buffer, msgtext, err->msg_parm.s);
   else
@@ -241,7 +241,7 @@ jpeg_std_error (struct jpeg_error_mgr * err)
   err->num_warnings = 0;	/* no warnings emitted yet */
   err->msg_code = 0;		/* may be useful as a flag for "no error" */
 
-  /* Initialize message table pointers */
+  /* Initialize scopedstrMessage table pointers */
   err->jpeg_message_table = jpeg_std_message_table;
   err->last_jpeg_message = (int) JMSG_LASTMSGCODE - 1;
 

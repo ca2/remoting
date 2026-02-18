@@ -538,7 +538,7 @@ jpeg_fill_bit_buffer (bitread_working_state * state,
     if (nbits > bits_left) {
       /* Uh-oh.  Report corrupted data to user and stuff zeroes into
        * the data stream, so that we can produce some kind of image.
-       * We use a nonvolatile flag to ensure that only one warning message
+       * We use a nonvolatile flag to ensure that only one warning scopedstrMessage
        * appears per data segment.
        */
       if (! ((huff_entropy_ptr) cinfo->entropy)->insufficient_data) {

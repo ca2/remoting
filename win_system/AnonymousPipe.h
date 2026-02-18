@@ -27,11 +27,11 @@
 
 #include "io_lib/Channel.h"
 #include "Pipe.h"
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 #include "WindowsEvent.h"
 #include "thread/LocalMutex.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 class AnonymousPipe : public Channel, public Pipe
 {
@@ -66,7 +66,7 @@ public:
    * @param len count of bytes to write.
    * @throws ::io_exception on io error.
    */
-  virtual size_t write(const void *buffer, size_t len);
+  virtual void write(const void *buffer, memsize len);
 
   virtual size_t available() { return 0; };
 

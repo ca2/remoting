@@ -46,7 +46,7 @@ public:
 
   virtual size_t read(void *, size_t);
 
-  virtual size_t write(const void *, size_t);
+  virtual void write(const void *, memsize);
 
   // Closes connection and break all blocked operation.
   // @throw ::remoting::Exception on error.

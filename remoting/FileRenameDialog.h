@@ -31,7 +31,7 @@ class FileRenameDialog : public NewFolderDialog
 {
 public:
   FileRenameDialog();
-  FileRenameDialog(Control *parent);
+  FileRenameDialog(::remoting::Window *parent);
   ~FileRenameDialog();
 
 protected:

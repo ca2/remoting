@@ -25,7 +25,7 @@
 #pragma once
 
 #include "ScreenDriver.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 #include "UpdateKeeper.h"
 #include "UpdateListener.h"
 #include "thread/Thread.h"

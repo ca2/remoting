@@ -81,7 +81,7 @@ class ::time m_timeStartDesktopWindow;
   void setCtrlState(const bool ctrlState);
   // This function set state key "Alt", but not send data to server.
   void setAltState(const bool altState);
-  // This function return true, if key "Control" is pressed.
+  // This function return true, if key "::remoting::Window" is pressed.
   bool getCtrlState() const;
   // This function return true, if key "Alt" is pressed.
   bool getAltState() const;
@@ -107,7 +107,7 @@ public:
   //
   // Inherited from BaseWindow.
   //
-  bool onMessage(UINT message, WPARAM wParam, LPARAM lParam);
+  bool onMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam);
   //void onPaint(DeviceContext *dc, PAINTSTRUCT *paintStruct);
    void onPaint() override;
   bool onCreate(LPCREATESTRUCT pcs);
@@ -158,7 +158,7 @@ public:
   ::int_rectangle m_clientArea;
   int m_fbWidth;
   int m_fbHeight;
-  SolidBrush m_brush;
+  ::remoting::SolidBrush m_brush;
 
   // frame buffer
   LocalMutex m_bufferLock;

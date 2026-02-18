@@ -32,7 +32,7 @@
 #include "io_lib/Channel.h"
 #include "io_lib/DataInputStream.h"
 #include "io_lib/DataOutputStream.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 class HttpClient : public TcpClientThread
 {

@@ -27,7 +27,7 @@
 
 #include "thread/AutoLock.h"
 
-const TCHAR ConnectionListener::DEFAULT_HOST[] = "0.0.0.0";
+const char ConnectionListener::DEFAULT_HOST[] = "0.0.0.0";
 
 ConnectionListener::ConnectionListener(WindowsApplication *application,
                                        unsigned short port)

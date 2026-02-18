@@ -28,7 +28,7 @@ FileRenameDialog::FileRenameDialog()
 {
 }
 
-FileRenameDialog::FileRenameDialog(Control *parent)
+FileRenameDialog::FileRenameDialog(::remoting::Window *parent)
 {
   NewFolderDialog::NewFolderDialog(parent);
 }
@@ -42,7 +42,7 @@ BOOL FileRenameDialog::onInitDialog()
   NewFolderDialog::onInitDialog();
 
   m_label.setText("New file name:");
-  m_ctrlThis.setText("Rename file");
+  setText("Rename file");
 
   return TRUE;
 }

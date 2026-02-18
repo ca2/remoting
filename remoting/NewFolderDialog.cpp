@@ -24,6 +24,7 @@
 #include "framework.h"
 #include "NewFolderDialog.h"
 #include "resource.h"
+#include "remoting/common/remoting.h"
 
 NewFolderDialog::NewFolderDialog()
 {
@@ -31,10 +32,10 @@ NewFolderDialog::NewFolderDialog()
   m_strFileName= "";
 }
 
-NewFolderDialog::NewFolderDialog(Control *parent)
+NewFolderDialog::NewFolderDialog(::remoting::Window *parent)
 {
   setResourceId(ftclient_createFolderDialog);
-  setParent(parent);
+  set_parent(parent);
   m_strFileName= "";
 }
 
@@ -44,12 +45,12 @@ NewFolderDialog::~NewFolderDialog()
 
 void NewFolderDialog::setFileName(const ::scoped_string & scopedstrFilename)
 {
-  m_strFileName= filename;
+  m_strFileName= scopedstrFilename;
 }
 
-void NewFolderDialog::getFileName(::string & storage)
+::string NewFolderDialog::getFileName()
 {
-  *storage = m_strFileName;
+  return m_strFileName;
 }
 
 BOOL NewFolderDialog::onInitDialog()
@@ -86,30 +87,31 @@ void NewFolderDialog::onOkButtonClick()
 {
   ::string fileName;
 
-  m_fileNameTextBox.getText(&fileName);
+  fileName = m_fileNameTextBox.get_text();
 
-  if (fileName.is_empty() || (fileName.findOneOf("\\/") != -1)) {
-    MessageBox(m_ctrlThis.getWindow(),
-               "File name cannot be empty and cannot contain '/' or '\\' characters.",
-               "Incorrect File Name",
+  if (fileName.is_empty() || fileName.contains_any_character_in("\\/"))
+     {
+    ::remoting::message_box(m_hwnd,
+               L"::file::item name cannot be empty and cannot contain '/' or '\\' characters.",
+               L"Incorrect ::file::item Name",
                MB_OK | MB_ICONWARNING);
-    m_fileNameTextBox.setFocus();
+    m_fileNameTextBox.set_focus();
     return ;
   }
 
   m_strFileName = fileName;
 
-  kill(IDOK);
+  close_dialog(IDOK);
 }
 
 void NewFolderDialog::onCancelButtonClick()
 {
-  kill(IDCANCEL);
+  close_dialog(IDCANCEL);
 }
 
 void NewFolderDialog::initControls()
 {
-  HWND hwnd = m_ctrlThis.getWindow();
+  HWND hwnd = m_hwnd;
 
   m_label.setWindow(GetDlgItem(hwnd, IDC_LABEL));
   m_fileNameTextBox.setWindow(GetDlgItem(hwnd, IDC_FILENAME_EDIT));

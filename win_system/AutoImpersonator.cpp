@@ -31,8 +31,8 @@ AutoImpersonator::AutoImpersonator(Impersonator *imp, LogWriter *log)
 {
   try {
     m_imp->impersonateAsLoggedUser();
-  } catch (::remoting::Exception &e) {
-    m_log->error(e.getMessage());
+  } catch (::exception &e) {
+    m_log->error(e.get_message());
   }
 }
 
@@ -40,7 +40,7 @@ AutoImpersonator::~AutoImpersonator()
 {
   try {
     m_imp->revertToSelf();
-  } catch (::remoting::Exception &e) {
-    m_log->error(e.getMessage());
+  } catch (::exception &e) {
+    m_log->error(e.get_message());
   }
 }

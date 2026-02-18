@@ -41,7 +41,7 @@ void ZLibBase::setInput(const char *input, size_t size)
 
 const char *ZLibBase::getOutput() const
 {
-  return &m_output.front();
+  return (const char *) m_output.data();
 }
 
 unsigned long ZLibBase::getOutputSize() const

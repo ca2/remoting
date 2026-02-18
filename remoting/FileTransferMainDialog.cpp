@@ -24,17 +24,19 @@
 #include "framework.h"
 #include "FileTransferMainDialog.h"
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "util/winhdr.h"
 #include "NewFolderDialog.h"
 #include "FileRenameDialog.h"
 
-#include "file_lib/File.h"
+//#include "file_lib/::file::item.h"
 
 #include "resource.h"
 #include <stdio.h>
+#include "remoting/common/remoting.h"
 
-FileTransferMainDialog::FileTransferMainDialog(FileTransferCore *core)
+
+FileTransferMainDialog::FileTransferMainDialog(::remoting::ftp::FileTransferCore *core)
 : FileTransferInterface(core)
 {
   setResourceId(ftclient_mainDialog);
@@ -42,7 +44,7 @@ FileTransferMainDialog::FileTransferMainDialog(FileTransferCore *core)
   m_lastSentFileListPath= "";
   m_lastReceivedFileListPath= "";
 
-  m_fakeMoveUpFolder = new FileInfo(0, 0, FileInfo::DIRECTORY, "..");
+  m_fakeMoveUpFolder = new ::remoting::ftp::FileInfo(0, 0, ::remoting::ftp::FileInfo::DIRECTORY, "..");
 }
 
 FileTransferMainDialog::~FileTransferMainDialog()
@@ -58,9 +60,9 @@ void FileTransferMainDialog::setProgress(double progress)
   m_copyProgressBar.setPos(pc);
 }
 
-int FileTransferMainDialog::onFtTargetFileExists(FileInfo *sourceFileInfo,
-                                                 FileInfo *targetFileInfo,
-                                                 const ::scoped_string & scopedstrPathToTargetFile)
+int FileTransferMainDialog::onFtTargetFileExists(::remoting::ftp::FileInfo *sourceFileInfo,
+                                                 ::remoting::ftp::FileInfo *targetFileInfo,
+                                                 const ::file::path & pathToTargetFile)
 {
   m_fileExistDialog.setFilesInfo(targetFileInfo,
                                  sourceFileInfo,
@@ -69,15 +71,15 @@ int FileTransferMainDialog::onFtTargetFileExists(FileInfo *sourceFileInfo,
   int reasonOfDialog = m_fileExistDialog.showModal();
   switch (reasonOfDialog) {
   case FileExistDialog::SKIP_RESULT:
-    return CopyFileEventListener::TFE_SKIP;
+    return ::remoting::ftp::CopyFileEventListener::TFE_SKIP;
   case FileExistDialog::APPEND_RESULT:
-    return CopyFileEventListener::TFE_APPEND;
+    return ::remoting::ftp::CopyFileEventListener::TFE_APPEND;
   case FileExistDialog::CANCEL_RESULT:
     onCancelOperationButtonClick();
-    return CopyFileEventListener::TFE_CANCEL;
+    return ::remoting::ftp::CopyFileEventListener::TFE_CANCEL;
   } // switch
 
-  return CopyFileEventListener::TFE_OVERWRITE;
+  return ::remoting::ftp::CopyFileEventListener::TFE_OVERWRITE;
 }
 
 BOOL FileTransferMainDialog::onInitDialog()
@@ -117,7 +119,7 @@ BOOL FileTransferMainDialog::onNotify(UINT controlID, LPARAM data)
 
     //
     // FIXME: Not better way to call this method at every notification
-    // for ::list view control, but windows have no notification for ::list view
+    // for ::list_base view control, but windows have no notification for ::list_base view
     // selection changed event. So for now, i didn't found better solution.
     //
 
@@ -144,7 +146,7 @@ BOOL FileTransferMainDialog::onNotify(UINT controlID, LPARAM data)
 
     //
     // FIXME: Not better way to call this method at every notification
-    // for ::list view control, but windows have no notification for ::list view
+    // for ::list_base view control, but windows have no notification for ::list_base view
     // selection changed event. So for now, i didn't found better solution.
     //
 
@@ -217,7 +219,7 @@ void FileTransferMainDialog::onMessageReceived(UINT uMsg, WPARAM wParam, LPARAM 
       enableControls(true);
       break;
     } else { // If window is closing we can it only if operation finished
-      kill(0);
+      close_dialog(0);
       return;
     } 
   } // switch
@@ -227,12 +229,12 @@ bool FileTransferMainDialog::tryClose()
 {
   if (m_ftCore->isNothingState()) {
     // No operation is executing - close dialog
-    kill(IDCANCEL);
+    close_dialog(IDCANCEL);
     return true;
   }
-  if (MessageBox(m_ctrlThis.getWindow(),
+  if (::remoting::message_box(m_hwnd,
                  "Do you want to close file transfers and terminate current operation?",
-                 "TightVNC File Transfers",
+                 "TightVNC ::file::item Transfers",
                  MB_YESNO | MB_ICONQUESTION) == IDYES) {
     // Set flag
     m_isClosing = true;
@@ -252,59 +254,59 @@ void FileTransferMainDialog::onCancelOperationButtonClick()
 {
   if (!m_ftCore->isNothingState()) {
   // Logging
-    ::string message("Operation have been canceled by user");
-    insertMessageIntoComboBox(message);
+    ::string scopedstrMessage("Operation have been canceled by user");
+    insertMessageIntoComboBox(scopedstrMessage);
 
     // Terminate current operation
     m_ftCore->terminateCurrentOperation();
     // Disable "Cancel" button while waiting for a moment
     // when operation will finishe execution.
-    m_cancelButton.setEnabled(false);
+    m_cancelButton.enable_window(false);
   }
 }
 
 void FileTransferMainDialog::onRenameRemoteButtonClick()
 {
-  FileInfo *fileInfo = m_remoteFileListView.getSelectedFileInfo();
+  ::remoting::ftp::FileInfo *fileInfo = m_remoteFileListView.getSelectedFileInfo();
 
   if (fileInfo == NULL) {
-    MessageBox(m_ctrlThis.getWindow(),
-               "No file selected.",
-               "Rename File", MB_OK | MB_ICONWARNING);
+    ::remoting::message_box(m_hwnd,
+               L"No file selected.",
+               L"Rename ::file::item", MB_OK | MB_ICONWARNING);
     return ;
   }
 
-  FileRenameDialog renameDialog(&m_ctrlThis);
+  FileRenameDialog renameDialog(this);
   renameDialog.setFileName(fileInfo->getFileName());
 
   if (renameDialog.showModal() == IDOK) {
-    ::string remoteFolder;
-    getPathToCurrentRemoteFolder(&remoteFolder);
+    //::string remoteFolder;
+    auto remoteFolder  = getPathToCurrentRemoteFolder();
 
     ::string oldName(fileInfo->getFileName());
 
     ::string newName;
-    renameDialog.getFileName(&newName);
+    newName = renameDialog.getFileName();
 
-    m_ftCore->remoteFileRenameOperation(FileInfo(0, 0, FileInfo::DIRECTORY, oldName),
-                                        FileInfo(0, 0, FileInfo::DIRECTORY, newName),
+    m_ftCore->remoteFileRenameOperation(::remoting::ftp::FileInfo(0, 0, ::remoting::ftp::FileInfo::DIRECTORY, oldName),
+                                        ::remoting::ftp::FileInfo(0, 0, ::remoting::ftp::FileInfo::DIRECTORY, newName),
                                         remoteFolder);
   }
 }
 
 void FileTransferMainDialog::onMkDirRemoteButtonClick()
 {
-  NewFolderDialog folderDialog(&m_ctrlThis);
+  NewFolderDialog folderDialog(this);
   if (folderDialog.showModal() == IDOK) {
     ::string remoteFolder;
-    m_remoteCurFolderTextBox.getText(&remoteFolder);
+    remoteFolder = m_remoteCurFolderTextBox.get_text();
 
-    ::string fileName;
-    folderDialog.getFileName(&fileName);
+    //::string fileName;
+    auto fileName = folderDialog.getFileName();
 
 
-    m_ftCore->remoteFolderCreateOperation(FileInfo(0, 0,
-                                                   FileInfo::DIRECTORY,
+    m_ftCore->remoteFolderCreateOperation(::remoting::ftp::FileInfo(0, 0,
+                                                  ::remoting::ftp:: FileInfo::DIRECTORY,
                                                    fileName),
                                           remoteFolder);
   }
@@ -315,37 +317,39 @@ void FileTransferMainDialog::onRemoveRemoteButtonClick()
   unsigned int siCount = m_remoteFileListView.getSelectedItemsCount();
 
   if (siCount == 0) {
-    MessageBox(m_ctrlThis.getWindow(),
-               "No files selected.",
-               "Delete Files", MB_OK | MB_ICONWARNING);
+    ::remoting::message_box(m_hwnd,
+               L"No files selected.",
+               L"Delete Files", MB_OK | MB_ICONWARNING);
     return ;
   }
 
-  int *indexes = new int[siCount];
-  FileInfo *filesInfo = new FileInfo[siCount];
+  //int *indexes = new int[siCount];
+  //::remoting::ftp::FileInfo *filesInfo = new ::remoting::ftp::FileInfo[siCount];
 
-  m_remoteFileListView.getSelectedItemsIndexes(indexes);
-  for (unsigned int i = 0; i < siCount; i++) {
-    FileInfo *fileInfo = reinterpret_cast<FileInfo *>(m_remoteFileListView.getItemData(indexes[i]));
-    filesInfo[i] = *fileInfo;
+   ::pointer_array< ::remoting::ftp::FileInfo> fileinfoa;
+
+  auto indexes = m_remoteFileListView.getSelectedItemsIndexes();
+  for (unsigned int i = 0; i < indexes.size(); i++) {
+    ::remoting::ftp::FileInfo * pfileinfo = reinterpret_cast<::remoting::ftp::FileInfo *>(m_remoteFileListView.getItemData(indexes[i]));
+    fileinfoa.add(pfileinfo);
   }
 
-  if (MessageBox(m_ctrlThis.getWindow(),
-                 "Do you wish to delete the selected files?",
-                 "Delete Files",
+  if (::remoting::message_box(m_hwnd,
+                 L"Do you wish to delete the selected files?",
+                 L"Delete Files",
                  MB_YESNO | MB_ICONQUESTION) != IDYES) {
-    delete[] indexes;
-    delete[] filesInfo;
+    //delete[] indexes;
+    //delete[] filesInfo;
     return ;
   }
 
-  ::string remoteFolder;
-  m_remoteCurFolderTextBox.getText(&remoteFolder);
+  //::string remoteFolder;
+  auto remoteFolder = m_remoteCurFolderTextBox.get_text();
 
-  m_ftCore->remoteFilesDeleteOperation(filesInfo, siCount,
+  m_ftCore->remoteFilesDeleteOperation(fileinfoa,
                                        remoteFolder);
-  delete[] indexes;
-  delete[] filesInfo;
+  //delete[] indexes;
+  //delete[] filesInfo;
 }
 
 void FileTransferMainDialog::onRefreshRemoteButtonClick()
@@ -355,59 +359,62 @@ void FileTransferMainDialog::onRefreshRemoteButtonClick()
 
 void FileTransferMainDialog::onRenameLocalButtonClick()
 {
-  FileInfo *fileInfo = m_localFileListView.getSelectedFileInfo();
+  ::remoting::ftp::FileInfo *fileInfo = m_localFileListView.getSelectedFileInfo();
 
   if (fileInfo == NULL) {
-    MessageBox(m_ctrlThis.getWindow(),
-               "No file selected.",
-               "Rename File", MB_OK | MB_ICONWARNING);
+    ::remoting::message_box(m_hwnd,
+               L"No file selected.",
+               L"Rename ::file::item", MB_OK | MB_ICONWARNING);
     return ;
   }
 
-  FileRenameDialog renameDialog(&m_ctrlThis);
+  FileRenameDialog renameDialog(this);
   renameDialog.setFileName(fileInfo->getFileName());
 
   if (renameDialog.showModal() == IDOK) {
-    ::string localFolder;
-    getPathToCurrentLocalFolder(&localFolder);
+    //::string localFolder;
+    auto localFolder = getPathToCurrentLocalFolder();
 
-    ::string oldName;
-    ::string newName;
+    //::string oldName;
+    //::string newName;
 
-    oldName= fileInfo->getFileName();
-    renameDialog.getFileName(&newName);
+    auto oldName = fileInfo->getFileName();
+    auto newName = renameDialog.getFileName();
 
-    ::string pathToOldFile(localFolder);
-    ::string pathToNewFile(localFolder);
+    ::file::path pathToOldFile(localFolder);
+    ::file::path pathToNewFile(localFolder);
 
-    if (!localFolder.endsWith('\\')) {
-      pathToOldFile.appendString("\\");
-      pathToNewFile.appendString("\\");
-    }
+    //if (!localFolder.ends('\\')) {
+//      pathToOldFile.appendString("\\");
+  //    pathToNewFile.appendString("\\");
+//    }
 
-    pathToOldFile.appendString(oldName);
-    pathToNewFile.appendString(newName);
+    pathToOldFile /= oldName;
+    pathToNewFile /= newName;
 
     //
     // Logging
     //
 
-    ::string message;
+    ::string scopedstrMessage;
 
-    message.formatf("Renaming local file '{}' to '{}'",
+    scopedstrMessage.format("Renaming local file '{}' to '{}'",
                    pathToOldFile, pathToNewFile);
 
-    insertMessageIntoComboBox(message);
+    insertMessageIntoComboBox(scopedstrMessage);
 
-     // Rename local file
-    File oldFile(pathToOldFile);
 
-    if (!oldFile.renameTo(pathToNewFile)) {
-      message.formatf("Error: failed to rename local '{}' file",
-                     pathToOldFile);
+     throw ::todo;
 
-      insertMessageIntoComboBox(message);
-    }
+    //  // Rename local file
+    // ::file::item oldFile(pathToOldFile);
+    //
+    // if (!oldFile.renameTo(pathToNewFile)) {
+    //   scopedstrMessage.formatf("Error: failed to rename local '{}' file",
+    //                  pathToOldFile);
+    //
+    //   insertMessageIntoComboBox(scopedstrMessage);
+    // }
 
     refreshLocalFileList();
   } // if dialog result is ok
@@ -415,87 +422,91 @@ void FileTransferMainDialog::onRenameLocalButtonClick()
 
 void FileTransferMainDialog::onMkDirLocalButtonClick()
 {
-  ::string pathToFile;
+  //::file::path pathToFile;
 
-  getPathToCurrentLocalFolder(&pathToFile);
+  auto pathToFile = getPathToCurrentLocalFolder();
 
   // Not allow user to create folders in our "fake" root folder
   if (pathToFile.is_empty()) {
-    MessageBox(m_ctrlThis.getWindow(),
-               "It's not allowed to create new folder here.",
-               "New Folder", MB_OK | MB_ICONWARNING);
+    ::remoting::message_box(m_hwnd,
+               L"It's not allowed to create new folder here.",
+               L"New Folder", MB_OK | MB_ICONWARNING);
   }
 
-  NewFolderDialog folderDialog(&m_ctrlThis);
+  NewFolderDialog folderDialog(this);
 
   if (folderDialog.showModal() == IDOK) {
-    ::string fileName;
-    folderDialog.getFileName(&fileName);
+    //::string fileName;
+    auto fileName = folderDialog.getFileName();
 
-    if (!pathToFile.endsWith(_T('\\'))) {
-      pathToFile.appendString("\\");
-    }
-    pathToFile.appendString(fileName);
+    //if (!pathToFile.ends(_T('\\'))) {
+      //pathToFile.appendString("\\");
+    //}
+    pathToFile /= fileName;
 
     // Logging
-    ::string message;
+    ::string scopedstrMessage;
 
-    message.formatf("Creating local folder '{}'", pathToFile);
+    scopedstrMessage.format("Creating local folder '{}'", pathToFile);
 
-    insertMessageIntoComboBox(message);
+    insertMessageIntoComboBox(scopedstrMessage);
 
-    // File system object
-    File file(pathToFile);
 
-    // Failed to create local folder
-    if (pathToFile.is_empty() || !file.mkdir()) {
-      message.formatf("Error: failed to create local folder '{}'",
-                     pathToFile);
+     throw todo;
 
-      insertMessageIntoComboBox(message);
+    // // ::file::item system object
+    // ::file::item file(pathToFile);
+    //
+    // // Failed to create local folder
+    // if (pathToFile.is_empty() || !file.mkdir()) {
+    //   scopedstrMessage.formatf("Error: failed to create local folder '{}'",
+    //                  pathToFile);
+
+      insertMessageIntoComboBox(scopedstrMessage);
     }
 
     refreshLocalFileList();
   } // if dialog result is ok
-} // void
+//} // void
 
 void FileTransferMainDialog::onRemoveLocalButtonClick()
 {
   unsigned int siCount = m_localFileListView.getSelectedItemsCount();
 
   if (siCount == 0) {
-    MessageBox(m_ctrlThis.getWindow(),
-               "No files selected.",
-               "Delete Files", MB_OK | MB_ICONWARNING);
+    ::remoting::message_box(m_hwnd,
+               L"No files selected.",
+               L"Delete Files", MB_OK | MB_ICONWARNING);
     return ;
   }
 
-  int *indexes = new int[siCount];
-  FileInfo *filesInfo = new FileInfo[siCount];
+  //int *indexes = new int[siCount];
+  //::remoting::ftp::FileInfo *filesInfo = new ::remoting::ftp::FileInfo[siCount];
+   ::pointer_array<::remoting::ftp::FileInfo> fileinfoa;
 
-  m_localFileListView.getSelectedItemsIndexes(indexes);
-  for (unsigned int i = 0; i < siCount; i++) {
-    FileInfo *fileInfo = reinterpret_cast<FileInfo *>(m_localFileListView.getItemData(indexes[i]));
-    filesInfo[i] = *fileInfo;
+  auto indexes = m_localFileListView.getSelectedItemsIndexes();
+  for (unsigned int i = 0; i < indexes.size(); i++) {
+    ::remoting::ftp::FileInfo *fileInfo = reinterpret_cast<::remoting::ftp::FileInfo *>(m_localFileListView.getItemData(indexes[i]));
+    fileinfoa.add(fileInfo);
   }
 
-  if (MessageBox(m_ctrlThis.getWindow(),
-                 "Do you wish to delete the selected files?",
-                 "Delete Files",
+  if (::remoting::message_box(m_hwnd,
+                 L"Do you wish to delete the selected files?",
+                 L"Delete Files",
                  MB_YESNO | MB_ICONQUESTION) != IDYES) {
-    delete[] indexes;
-    delete[] filesInfo;
+    //delete[] indexes;
+    //delete[] filesInfo;
     return ;
   }
 
-  ::string localFolder;
-  getPathToCurrentLocalFolder(&localFolder);
+  //::file::path localFolder;
+  auto localFolder = getPathToCurrentLocalFolder();
 
-  m_ftCore->localFilesDeleteOperation(filesInfo, siCount,
+  m_ftCore->localFilesDeleteOperation(fileinfoa,
                                       localFolder);
 
-  delete[] indexes;
-  delete[] filesInfo;
+  //delete[] indexes;
+  //delete[] filesInfo;
 }
 
 void FileTransferMainDialog::onRefreshLocalButtonClick()
@@ -505,111 +516,117 @@ void FileTransferMainDialog::onRefreshLocalButtonClick()
 
 void FileTransferMainDialog::onUploadButtonClick()
 {
-  unsigned int siCount = m_localFileListView.getSelectedItemsCount();
+  //unsigned int siCount = m_localFileListView.getSelectedItemsCount();
+   ::pointer_array<::remoting::ftp::FileInfo> fileinfoa;
 
-  if (siCount == 0) {
-    MessageBox(m_ctrlThis.getWindow(),
-               "No files selected.",
-               "Upload Files", MB_OK | MB_ICONWARNING);
+   auto indexes = m_localFileListView.getSelectedItemsIndexes();
+
+  if (indexes.is_empty()) {
+    ::remoting::message_box(m_hwnd,
+               L"No files selected.",
+               L"Upload Files", MB_OK | MB_ICONWARNING);
     return ;
   }
 
-  int *indexes = new int[siCount];
-  FileInfo *filesInfo = new FileInfo[siCount];
+  ///int *indexes = new int[siCount];
+  //FileInfo *filesInfo = new FileInfo[siCount];
 
-  m_localFileListView.getSelectedItemsIndexes(indexes);
-  for (unsigned int i = 0; i < siCount; i++) {
-    FileInfo *fileInfo = reinterpret_cast<FileInfo *>(m_localFileListView.getItemData(indexes[i]));
-    filesInfo[i] = *fileInfo;
+  for (unsigned int i = 0; i < indexes.size(); i++) {
+    ::remoting::ftp::FileInfo *fileInfo = reinterpret_cast<::remoting::ftp::FileInfo *>(m_localFileListView.getItemData(indexes[i]));
+    fileinfoa.add(fileInfo);
   }
 
-  if (MessageBox(m_ctrlThis.getWindow(),
-                 "Do you wish to upload the selected files?",
-                 "Upload Files",
+  if (::remoting::message_box(m_hwnd,
+                 L"Do you wish to upload the selected files?",
+                 L"Upload Files",
                  MB_YESNO | MB_ICONQUESTION) != IDYES) {
-    delete[] indexes;
-    delete[] filesInfo;
+    //delete[] indexes;
+    //delete[] filesInfo;
     return ;
   }
 
-  ::string localFolder;
-  getPathToCurrentLocalFolder(&localFolder);
+  //::string localFolder;
+  auto localFolder = getPathToCurrentLocalFolder();
 
-  ::string remoteFolder;
-  getPathToCurrentRemoteFolder(&remoteFolder);
+  //::string remoteFolder;
+  auto remoteFolder = getPathToCurrentRemoteFolder();
 
 
   m_fileExistDialog.resetDialogResultValue();
 
-  m_ftCore->uploadOperation(filesInfo, siCount,
+  m_ftCore->uploadOperation(fileinfoa,
                             localFolder,
                             remoteFolder);
-  delete[] indexes;
-  delete[] filesInfo;
+  //delete[] indexes;
+  //delete[] filesInfo;
 }
 
 void FileTransferMainDialog::onDownloadButtonClick()
 {
-  unsigned int siCount = m_remoteFileListView.getSelectedItemsCount();
+//   ::pointer_array<::remoting::ftp::FileInfo> fileinfoa;
 
-  if (siCount == 0) {
-    MessageBox(m_ctrlThis.getWindow(),
-               "No files selected.",
-               "Download Files", MB_OK | MB_ICONWARNING);
+   auto indexes = m_remoteFileListView.getSelectedItemsIndexes();
+
+   if (indexes.is_empty()) {
+      ::remoting::message_box(m_hwnd,
+L"No files selected.",
+               L"Download Files", MB_OK | MB_ICONWARNING);
     return ;
   }
 
-  int *indexes = new int[siCount];
-  FileInfo *filesInfo = new FileInfo[siCount];
+  //int *indexes = new int[siCount];
+  //FileInfo *filesInfo = new FileInfo[siCount];
 
-  m_remoteFileListView.getSelectedItemsIndexes(indexes);
-  for (unsigned int i = 0; i < siCount; i++) {
-    FileInfo *fileInfo = reinterpret_cast<FileInfo *>(m_remoteFileListView.getItemData(indexes[i]));
-    filesInfo[i] = *fileInfo;
+   ::pointer_array<::remoting::ftp::FileInfo> fileinfoa;
+
+  //m_remoteFileListView.getSelectedItemsIndexes(indexes);
+  for (unsigned int i = 0; i < indexes.size(); i++) {
+    auto fileInfo = reinterpret_cast<::remoting::ftp::FileInfo *>(m_remoteFileListView.getItemData(indexes[i]));
+    fileinfoa.add(fileInfo);
   }
 
-  if (MessageBox(m_ctrlThis.getWindow(),
-                 "Do you wish to download the selected files?",
-                 "Download Files",
+  if (::remoting::message_box(m_hwnd,
+                 L"Do you wish to download the selected files?",
+                 L"Download Files",
                  MB_YESNO | MB_ICONQUESTION) != IDYES) {
-    delete[] indexes;
-    delete[] filesInfo;
+    //delete[] indexes;
+    //delete[] filesInfo;
     return ;
   }
 
-  ::string remoteFolder;
-  getPathToCurrentRemoteFolder(&remoteFolder);
+  //::string remoteFolder;
+  auto remoteFolder = getPathToCurrentRemoteFolder();
 
-  ::string localFolder;
-  getPathToCurrentLocalFolder(&localFolder);
+  //::string localFolder;
+  auto localFolder = getPathToCurrentLocalFolder();
 
   m_fileExistDialog.resetDialogResultValue();
 
-  m_ftCore->downloadOperation(filesInfo, siCount,
+  m_ftCore->downloadOperation(fileinfoa,
                               localFolder,
                               remoteFolder);
 
-  delete[] indexes;
-  delete[] filesInfo;
+  //delete[] indexes;
+  //delete[] filesInfo;
 }
 
 void FileTransferMainDialog::moveUpLocalFolder()
 {
-  ::string pathToFile;
-  getPathToParentLocalFolder(&pathToFile);
+  //::file::path pathToFile;
+  auto pathToFile = getPathToParentLocalFolder();
   tryListLocalFolder(pathToFile);
 }
 
 void FileTransferMainDialog::moveUpRemoteFolder()
 {
-  ::string parent;
-  getPathToParentRemoteFolder(&parent);
+  //::file::path parent;
+  auto parent = getPathToParentRemoteFolder();
   tryListRemoteFolder(parent);
 }
 
 void FileTransferMainDialog::onRemoteListViewDoubleClick()
 {
-  FileInfo *selFileInfo = m_remoteFileListView.getSelectedFileInfo();
+  ::remoting::ftp::FileInfo *selFileInfo = m_remoteFileListView.getSelectedFileInfo();
   if (selFileInfo == 0)
     return;
 
@@ -619,22 +636,23 @@ void FileTransferMainDialog::onRemoteListViewDoubleClick()
   int si = m_remoteFileListView.getSelectedIndex();
 
   // Fake ".." folder - move one folder up
-  if ((si == 0) && (selFileInfo != 0) && (wcscmp(selFileInfo->getFileName(), "..")) == 0) {
+  if ((si == 0) && (selFileInfo != 0) && selFileInfo->getFileName() ==  "..")
+     {
     moveUpRemoteFolder();
     return ;
   }
   if (si == -1) {
     return ;
   }
-  ::string pathToFile;
-  getPathToSelectedRemoteFile(&pathToFile);
+  //::string pathToFile;
+  auto pathToFile = getPathToSelectedRemoteFile();
   tryListRemoteFolder(pathToFile);
 }
 
 void FileTransferMainDialog::onLocalListViewDoubleClick()
 {
   // FIXME: removed duplicate code (see onRemoteListViewDoubleClick)
-  FileInfo *selFileInfo = m_localFileListView.getSelectedFileInfo();
+  ::remoting::ftp::FileInfo *selFileInfo = m_localFileListView.getSelectedFileInfo();
 
   if (selFileInfo == 0)
     return;
@@ -645,7 +663,7 @@ void FileTransferMainDialog::onLocalListViewDoubleClick()
   int si = m_localFileListView.getSelectedIndex();
 
   // Fake ".." folder - move one folder up
-  if ((si == 0) && (selFileInfo != 0) && (wcscmp(selFileInfo->getFileName(), "..")) == 0) {
+  if ((si == 0) && (selFileInfo != 0) && selFileInfo->getFileName() == "..") {
     moveUpLocalFolder();
     return ;
   }
@@ -653,8 +671,8 @@ void FileTransferMainDialog::onLocalListViewDoubleClick()
     return ;
   }
 
-  ::string pathToFile;
-  getPathToSelectedLocalFile(&pathToFile);
+  //::string pathToFile;
+  auto pathToFile = getPathToSelectedLocalFile();
   tryListLocalFolder(pathToFile);
 }
 
@@ -695,8 +713,8 @@ void FileTransferMainDialog::checkRemoteListViewSelection()
 
     bool enabled = m_remoteFileListView.getSelectedItemsCount() > 0;
 
-    m_renameRemoteButton.setEnabled(enabled && m_ftCore->getSupportedOps().isRenameSupported());
-    m_removeRemoteButton.setEnabled(enabled && m_ftCore->getSupportedOps().isRemoveSupported());
+    m_renameRemoteButton.enable_window(enabled && m_ftCore->getSupportedOps().isRenameSupported());
+    m_removeRemoteButton.enable_window(enabled && m_ftCore->getSupportedOps().isRemoveSupported());
   }
 }
 
@@ -705,65 +723,65 @@ void FileTransferMainDialog::checkLocalListViewSelection()
   if (m_ftCore->isNothingState()) {
     bool enabled = m_localFileListView.getSelectedItemsCount() > 0;
 
-    m_renameLocalButton.setEnabled(enabled);
-    m_removeLocalButton.setEnabled(enabled);
+    m_renameLocalButton.enable_window(enabled);
+    m_removeLocalButton.enable_window(enabled);
   }
 }
 
 void FileTransferMainDialog::insertMessageIntoComboBox(const ::scoped_string & scopedstrMessage)
 {
-  m_logComboBox.insertItem(0, message);
+  m_logComboBox.insertItem(0, scopedstrMessage);
   m_logComboBox.setSelectedItem(0);
 }
 
 void FileTransferMainDialog::enableControls(bool enabled)
 {
-  m_mkDirRemoteButton.setEnabled(enabled && m_ftCore->getSupportedOps().isMkDirSupported());
+  m_mkDirRemoteButton.enable_window(enabled && m_ftCore->getSupportedOps().isMkDirSupported());
 
   if (m_remoteFileListView.getSelectedItemsCount() > 0 && enabled) {
-    m_renameRemoteButton.setEnabled(true && m_ftCore->getSupportedOps().isRenameSupported());
-    m_removeRemoteButton.setEnabled(true && m_ftCore->getSupportedOps().isRemoveSupported());
+    m_renameRemoteButton.enable_window(true && m_ftCore->getSupportedOps().isRenameSupported());
+    m_removeRemoteButton.enable_window(true && m_ftCore->getSupportedOps().isRemoveSupported());
   } else {
-    m_renameRemoteButton.setEnabled(enabled && m_ftCore->getSupportedOps().isRenameSupported());
-    m_removeRemoteButton.setEnabled(enabled && m_ftCore->getSupportedOps().isRemoveSupported());
+    m_renameRemoteButton.enable_window(enabled && m_ftCore->getSupportedOps().isRenameSupported());
+    m_removeRemoteButton.enable_window(enabled && m_ftCore->getSupportedOps().isRemoveSupported());
   }
 
-  m_refreshRemoteButton.setEnabled(enabled);
+  m_refreshRemoteButton.enable_window(enabled);
 
   if (enabled) {
-    ::string curLocalPath;
+    //::string curLocalPath;
 
-    getPathToCurrentLocalFolder(&curLocalPath);
+    auto curLocalPath = getPathToCurrentLocalFolder();
 
     if (!curLocalPath.is_empty()) {
-      m_mkDirLocalButton.setEnabled(true);
+      m_mkDirLocalButton.enable_window(true);
     }
   } else {
-    m_mkDirLocalButton.setEnabled(enabled);
+    m_mkDirLocalButton.enable_window(enabled);
   }
 
   if (m_localFileListView.getSelectedItemsCount() > 0 && enabled) {
-    m_renameLocalButton.setEnabled(true);
-    m_removeLocalButton.setEnabled(true);
+    m_renameLocalButton.enable_window(true);
+    m_removeLocalButton.enable_window(true);
   } else {
-    m_renameLocalButton.setEnabled(enabled);
-    m_removeLocalButton.setEnabled(enabled);
+    m_renameLocalButton.enable_window(enabled);
+    m_removeLocalButton.enable_window(enabled);
   }
 
-  m_refreshLocalButton.setEnabled(enabled);
+  m_refreshLocalButton.enable_window(enabled);
 
-  m_uploadButton.setEnabled(enabled && m_ftCore->getSupportedOps().isUploadSupported());
-  m_downloadButton.setEnabled(enabled && m_ftCore->getSupportedOps().isDownloadSupported());
+  m_uploadButton.enable_window(enabled && m_ftCore->getSupportedOps().isUploadSupported());
+  m_downloadButton.enable_window(enabled && m_ftCore->getSupportedOps().isDownloadSupported());
 
-  m_localFileListView.setEnabled(enabled);
-  m_remoteFileListView.setEnabled(enabled);
+  m_localFileListView.enable_window(enabled);
+  m_remoteFileListView.enable_window(enabled);
 
-  m_cancelButton.setEnabled(!enabled);
+  m_cancelButton.enable_window(!enabled);
 }
 
 void FileTransferMainDialog::initControls()
 {
-  HWND hwnd = m_ctrlThis.getWindow();
+  HWND hwnd = m_hwnd;
 
   m_renameRemoteButton.setWindow(GetDlgItem(hwnd, IDC_RENAME_REMOTE_BUTTON));
   m_mkDirRemoteButton.setWindow(GetDlgItem(hwnd, IDC_MKDIR_REMOTE_BUTTON));
@@ -791,38 +809,40 @@ void FileTransferMainDialog::initControls()
   m_localFileListView.setWindow(GetDlgItem(hwnd, IDC_LOCAL_FILE_LIST));
   m_remoteFileListView.setWindow(GetDlgItem(hwnd, IDC_REMOTE_FILE_LIST));
 
-  m_fileExistDialog.setParent(&m_ctrlThis);
+  m_fileExistDialog.set_parent(this);
 }
 
-void FileTransferMainDialog::raise(::remoting::Exception &ex)
+void FileTransferMainDialog::raise(::exception &ex)
 {
-  MessageBox(m_ctrlThis.getWindow(), ex.getMessage(),
-             "::remoting::Exception", MB_OK | MB_ICONERROR);
+  ::remoting::message_box(m_hwnd, ::wstring(ex.get_message()),
+             L"Exception", MB_OK | MB_ICONERROR);
   throw ex;
 }
 
 void FileTransferMainDialog::refreshLocalFileList()
 {
-  ::string pathToFile;
-  getPathToCurrentLocalFolder(&pathToFile);
+  //::string pathToFile;
+  auto pathToFile = getPathToCurrentLocalFolder();
   tryListLocalFolder(pathToFile);
 }
 
-void FileTransferMainDialog::tryListLocalFolder(const ::scoped_string & scopedstrPathToFile)
+void FileTransferMainDialog::tryListLocalFolder(const ::file::path & pathToFile)
 {
   try {
-    ::array_base <FileInfo> *localFileList = m_ftCore->getListLocalFolder(pathToFile);
+    //::array_base <::remoting::ftp::FileInfo> *localFileList = m_ftCore->getListLocalFolder(pathToFile);
+
+     auto localFileList = m_ftCore->getListLocalFolder(pathToFile);
 
 
-    // Add to ::list view
+    // Add to ::list_base view
     m_localFileListView.clear();
-    if (!localFileList->empty()) {
-      FileInfo *fileInfo = &localFileList->front();
-      m_localFileListView.addRange(&fileInfo,
-                                   localFileList->size());
+    if (localFileList.has_element())
+    {
+      //::remoting::ftp::FileInfo *fileInfo = localFileList->data();
+      m_localFileListView.addRange(localFileList);
     }
 
-    bool isRoot = (wcscmp(pathToFile, "") == 0);
+    bool isRoot = pathToFile.is_empty();
 
     // Add ".." folder and if not root
     if (!isRoot) {
@@ -831,15 +851,15 @@ void FileTransferMainDialog::tryListLocalFolder(const ::scoped_string & scopedst
     // Set label text
     m_localCurFolderTextBox.setText(pathToFile);
     // Enable or disable mkdir button depending on isRoot flag
-    m_mkDirLocalButton.setEnabled(!isRoot);
+    m_mkDirLocalButton.enable_window(!isRoot);
 
   } catch (...) {
-    ::string message;
+    ::string scopedstrMessage;
 
-    message.formatf("Error: failed to get file ::list in local folder '{}'",
-                   pathToFile);
+    scopedstrMessage.format("Error: failed to get file ::list_base in local folder '{}'",
+                   pathToFile   );
 
-    insertMessageIntoComboBox(message);
+    insertMessageIntoComboBox(scopedstrMessage);
     return;
   }
 }
@@ -847,80 +867,107 @@ void FileTransferMainDialog::tryListLocalFolder(const ::scoped_string & scopedst
 void FileTransferMainDialog::refreshRemoteFileList()
 {
   ::string currentFolder;
-  m_remoteCurFolderTextBox.getText(&currentFolder);
+  currentFolder = m_remoteCurFolderTextBox.get_text();
   tryListRemoteFolder(currentFolder);
 }
 
-void FileTransferMainDialog::tryListRemoteFolder(const ::scoped_string & scopedstrPathToFile)
+void FileTransferMainDialog::tryListRemoteFolder(const ::file::path & pathToFile)
 {
   m_lastSentFileListPath= pathToFile;
   m_ftCore->remoteFileListOperation(pathToFile);
 }
 
-void FileTransferMainDialog::getPathToCurrentLocalFolder(::string & out)
+::file::path FileTransferMainDialog::getPathToCurrentLocalFolder()
 {
-  m_localCurFolderTextBox.getText(out);
+  return m_localCurFolderTextBox.get_text();
 }
 
-void FileTransferMainDialog::getPathToParentLocalFolder(::string & out)
+::file::path FileTransferMainDialog::getPathToParentLocalFolder()
 {
-  getPathToCurrentLocalFolder(out);
-  size_t ld = out->findLast(_T('\\'));
-  if (ld != (size_t)-1) {
-    out->getSubstring(out, 0, ld);  
-  } else {
-    out-= "";
-    return;
-  }
-  if (out->endsWith('\\') && (out->getLength() > 2)) {
-    out->getSubstring(out, 0, out->getLength() - 2);
-  }
+  auto out = getPathToCurrentLocalFolder();
+//   size_t ld = out.findLast(_T('\\'));
+//   if (ld != (size_t)-1) {
+//     out.getSubstring(out, 0, ld);
+//   } else {
+//     out= "";
+//     return out;
+//   }
+//   //if (out->endsWith('\\') && (out->length() > 2)) {
+// //    out->getSubstring(out, 0, out->length() - 2);
+//   //}
+
+   out -=1;
+   return out;
 }
 
-void FileTransferMainDialog::getPathToSelectedLocalFile(::string & out)
+::file::path FileTransferMainDialog::getPathToSelectedLocalFile()
 {
-  ::string & pathToFile = out;
-  getPathToCurrentLocalFolder(pathToFile);
+  //::string & pathToFile = out;
+  auto pathToFile = getPathToCurrentLocalFolder();
 
-  if (!pathToFile->is_empty() && !pathToFile->endsWith(_T('\\'))) {
-    pathToFile->appendString("\\");
-  }
+//  if (!pathToFile->is_empty() && !pathToFile->endsWith(_T('\\'))) {
+  //  pathToFile->appendString("\\");
+  //}
 
-  const ::scoped_string & scopedstrFilename = m_localFileListView.getSelectedFileInfo()->getFileName();
-  pathToFile->appendString(filename);
+  auto strFilename = m_localFileListView.getSelectedFileInfo()->getFileName();
+  //pathToFile->appendString(filename);
+
+   pathToFile /= strFilename;
+
+   return pathToFile;
+
 }
 
-void FileTransferMainDialog::getPathToCurrentRemoteFolder(::string & out)
+
+::file::path FileTransferMainDialog::getPathToCurrentRemoteFolder()
 {
-  m_remoteCurFolderTextBox.getText(out);
+
+   return m_remoteCurFolderTextBox.get_text();
+
 }
 
-void FileTransferMainDialog::getPathToParentRemoteFolder(::string & out)
+
+::file::path FileTransferMainDialog::getPathToParentRemoteFolder()
 {
-  getPathToCurrentRemoteFolder(out);
-  size_t ld = out->findLast(_T('/'));
-  if (ld != (size_t)-1) {
-    out->getSubstring(out, 0, ld);  
-  } else {
-    out-= "/";
-    return ;
-  }
-  if (out->endsWith('/') && (out->getLength() > 2)) {
-    out->getSubstring(out, 0, out->getLength() - 2);
-  }
+  auto out = getPathToCurrentRemoteFolder();
+  // size_t ld = out->findLast(_T('/'));
+  // if (ld != (size_t)-1) {
+  //   out->getSubstring(out, 0, ld);
+  // } else {
+  //   out-= "/";
+  //   return ;
+  // }
+  // if (out->endsWith('/') && (out->length() > 2)) {
+  //   out->getSubstring(out, 0, out->length() - 2);
+  // }
+
+   out -=1;
+
+   return out;
+
+
+
 }
 
-void FileTransferMainDialog::getPathToSelectedRemoteFile(::string & out)
+
+::file::path FileTransferMainDialog::getPathToSelectedRemoteFile()
 {
-  ::string & pathToFile = out;
-  getPathToCurrentRemoteFolder(pathToFile);
+  //::string & pathToFile = out;
+  auto pathToFile = getPathToCurrentRemoteFolder();
 
-  if (!pathToFile->endsWith(_T('/'))) {
-    pathToFile->appendString("/");
-  }
+  // if (!pathToFile->endsWith(_T('/'))) {
+  //   pathToFile->appendString("/");
+  // }
 
-  const ::scoped_string & scopedstrFilename = m_remoteFileListView.getSelectedFileInfo()->getFileName();
-  pathToFile->appendString(filename);
+  //const ::scoped_string & scopedstrFilename = m_remoteFileListView.getSelectedFileInfo()->getFileName();
+   auto strFilename = m_remoteFileListView.getSelectedFileInfo()->getFileName();
+  //pathToFile->appendString(filename);
+
+   pathToFile /= strFilename;
+
+
+   return pathToFile;
+
 }
 
 void FileTransferMainDialog::setNothingState()
@@ -929,13 +976,13 @@ void FileTransferMainDialog::setNothingState()
   m_remoteCurFolderTextBox.setText(m_lastReceivedFileListPath);
 
   m_remoteFileListView.clear();
-  ::array_base<FileInfo> *fileRemoteList = m_ftCore->getListRemoteFolder();
-  if (!fileRemoteList->empty()) {
-    FileInfo *filesInfo = &fileRemoteList->front();
-    m_remoteFileListView.addRange(&filesInfo, fileRemoteList->size());
+  auto fileRemoteList = m_ftCore->getListRemoteFolder();
+  if (fileRemoteList.has_element()) {
+    //::remoting::ftp::FileInfo *filesInfo = fileRemoteList->data();
+    m_remoteFileListView.addRange(fileRemoteList);
   }
 
-  bool isRoot = m_lastSentFileListPath.isEqualTo("/");
+  bool isRoot = m_lastSentFileListPath == "/";
 
   // Add fake ".." folder if not root
   if (!isRoot) {
@@ -945,12 +992,12 @@ void FileTransferMainDialog::setNothingState()
 
 void FileTransferMainDialog::onFtOpError(const ::scoped_string & scopedstrMessage)
 {
-  insertMessageIntoComboBox(message);
+  insertMessageIntoComboBox(scopedstrMessage);
 }
 
 void FileTransferMainDialog::onFtOpInfo(const ::scoped_string & scopedstrMessage)
 {
-  insertMessageIntoComboBox(message);
+  insertMessageIntoComboBox(scopedstrMessage);
 }
 
 void FileTransferMainDialog::onFtOpStarted()
@@ -960,7 +1007,7 @@ void FileTransferMainDialog::onFtOpStarted()
 
 void FileTransferMainDialog::onFtOpFinished(int state, int result)
 {
-  PostMessage(m_ctrlThis.getWindow(), WM_OPERATION_FINISHED, state, result);
+  PostMessage(m_hwnd, WM_OPERATION_FINISHED, state, result);
 }
 
 void FileTransferMainDialog::onRefreshLocalFileList()

@@ -29,6 +29,8 @@
 #include "win_system/PipeClient.h"
 #include <time.h>
 
+
+
 EmulatedAnonymousPipeFactory::EmulatedAnonymousPipeFactory(unsigned int bufferSize, LogWriter *log)
 : m_bufferSize(bufferSize),
   m_log(log)
@@ -46,7 +48,7 @@ void EmulatedAnonymousPipeFactory::generatePipes(NamedPipe **serverPipe, bool se
   secAttr.setInheritable();
 
   ::string randomName;
-  getUniqPipeName(&randomName);
+  randomName = getUniqPipeName();
   PipeServer pipeServer(randomName, m_bufferSize, 0, 1000);
   *clientPipe = PipeClient::connect(randomName, m_bufferSize);
   *serverPipe = pipeServer.accept();
@@ -54,7 +56,7 @@ void EmulatedAnonymousPipeFactory::generatePipes(NamedPipe **serverPipe, bool se
   HANDLE hThisSideWrite = (*serverPipe)->getHandle();
   HANDLE hOtherSideRead = (*clientPipe)->getHandle();
 
-  const ::scoped_string & scopedstrerrMess = "Cannot disable inheritance for named pipe";
+  const ::scoped_string & scopedstrErrMess = "Cannot disable inheritance for named pipe";
   if (!serverInheritable) {
     if (SetHandleInformation(hThisSideWrite, HANDLE_FLAG_INHERIT, 0) == 0) {
       SystemException(errMess);
@@ -67,10 +69,12 @@ void EmulatedAnonymousPipeFactory::generatePipes(NamedPipe **serverPipe, bool se
   }
 }
 
-void EmulatedAnonymousPipeFactory::getUniqPipeName(::string & result)
+::string EmulatedAnonymousPipeFactory::getUniqPipeName()
 {
-  srand((unsigned)time(0));
+   ::string result;
+  srand((unsigned)::time(0));
   for (int i = 0; i < 20; i++) {
-    result->appendChar('a' + rand() % ('z' - 'a'));
+    result += (char) ('a' + rand() % ('z' - 'a'));
   }
+   return result;
 }

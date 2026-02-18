@@ -49,7 +49,7 @@ public:
    * Gets connection string, specified by user.
    * @return connection string.
    */
-  const ::scoped_string & scopedstrgetConnectString() const;
+  ::string getConnectString() const;
 
   /**
    * Gets view only flag, specified by user.

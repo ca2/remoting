@@ -78,7 +78,7 @@ private:
   void onUnsetReadOnlyPasswordClick();
   void onShowTrayIconCheckBoxClick();
   void onConnectToRdpCheckBoxClick();
-  void onPollingIntervalSpinChangePos(LPNMUPDOWN message);
+  void onPollingIntervalSpinChangePos(LPNMUPDOWN scopedstrMessage);
   void onRfbPortUpdate();
   void onHttpPortUpdate();
   void onUrlParamsClick();
@@ -113,10 +113,10 @@ protected:
   CheckBox m_acceptHttpConnections;
   CheckBox m_showTrayIcon;
   CheckBox m_connectToRdp;
-  Control m_primaryPassword;
-  Control m_readOnlyPassword;
-  Control m_unsetPrimaryPassword;
-  Control m_unsetReadOnlyPassword;
+  ::remoting::Window m_primaryPassword;
+  ::remoting::Window m_readOnlyPassword;
+  ::remoting::Window m_unsetPrimaryPassword;
+  ::remoting::Window m_unsetReadOnlyPassword;
   CheckBox m_useAuthentication;
   SpinControl m_rfbPortSpin;
   SpinControl m_httpPortSpin;

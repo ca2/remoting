@@ -28,9 +28,9 @@
 
 #include "win_system/Shell.h"
 #include "win_system/VersionInfo.h"
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 
-#include "gui/Control.h"
+#include "gui/::remoting::Window.h"
 
 #include "remoting_node/BuildTime.h"
 
@@ -58,17 +58,17 @@ void AboutDialog::onVisitSiteButtonClick()
   openUrl(StringTable::getString(IDS_URL_PRODUCT_FSA));
 }
 
-void AboutDialog::openUrl(const ::scoped_string & scopedstrurl)
+void AboutDialog::openUrl(const ::scoped_string & scopedstrUrl)
 {
   try {
     Shell::open(url, 0, 0);
   } catch (SystemException &sysEx) {
-    ::string message;
+    ::string scopedstrMessage;
 
-    message.format(StringTable::getString(IDS_FAILED_TO_OPEN_URL_FORMAT), sysEx.getMessage());
+    scopedstrMessage.format(StringTable::getString(IDS_FAILED_TO_OPEN_URL_FORMAT), sysEx.get_message());
 
-    MessageBox(m_ctrlThis.getWindow(),
-      message,
+    ::remoting::message_box(m_ctrlThis.get_hwnd(),
+      scopedstrMessage,
       StringTable::getString(IDS_MBC_TVNCONTROL),
       MB_OK|MB_ICONEXCLAMATION);
   }
@@ -84,8 +84,8 @@ BOOL AboutDialog::onInitDialog()
     VersionInfo productInfo(binaryPath);
     versionString= productInfo.getProductVersionString();
   } catch (SystemException &ex) {
-    MessageBox(m_ctrlThis.getWindow(),
-               ex.getMessage(),
+    ::remoting::message_box(m_ctrlThis.get_hwnd(),
+               ex.get_message(),
                StringTable::getString(IDS_MBC_TVNCONTROL),
                MB_OK | MB_ICONEXCLAMATION);
   }
@@ -97,13 +97,13 @@ BOOL AboutDialog::onInitDialog()
                      BuildTime::DATE);
 
   // Show version info on the dialog.
-  Control versionLabel;
-  versionLabel.setWindow(GetDlgItem(m_ctrlThis.getWindow(), IDC_STATIC_VERSION));
+  ::remoting::Window versionLabel;
+  versionLabel.setWindow(GetDlgItem(m_ctrlThis.get_hwnd(), IDC_STATIC_VERSION));
   versionLabel.setText(versionText);
 
   // Show licensing info and/or special build info.
-  Control licensingLabel;
-  licensingLabel.setWindow(GetDlgItem(m_ctrlThis.getWindow(), IDC_STATIC_LICENSING));
+  ::remoting::Window licensingLabel;
+  licensingLabel.setWindow(GetDlgItem(m_ctrlThis.get_hwnd(), IDC_STATIC_LICENSING));
   licensingLabel.setText(StringTable::getString(IDS_LICENSING_INFO));
 
   return FALSE;

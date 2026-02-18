@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 #include "thread/GuiThread.h"
 #include "thread/ThreadCollector.h"
 #include "win_system/WindowsEvent.h"
@@ -69,8 +69,8 @@ private:
   virtual void onCopyRect(const ::int_rectangle &  dstRect, int srcX, int srcY);
   virtual void onCursorPositionChanged(int x, int y);
   virtual void onCursorShapeChanged();
-  virtual void onRecoverableError(const ::scoped_string & scopedstrreason);
-  virtual void onCriticalError(const ::scoped_string & scopedstrreason);
+  virtual void onRecoverableError(const ::scoped_string & scopedstrReason);
+  virtual void onCriticalError(const ::scoped_string & scopedstrReason);
 
   void initDxgi();
 

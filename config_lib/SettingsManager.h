@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
-//#include "util/::string.h"
+#include "remoting/util/CommonHeader.h"
+//////#include "util/::string.h"
 
 class SettingsManager
 {

@@ -23,10 +23,10 @@
 //
 #include "framework.h"
 #include "WinEventLog.h"
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "remoting_node_desktop/NamingDefs.h"
 #include "util/Exception.h"
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 #include "win_system/RegistryKey.h"
 #include "thread/AutoLock.h"
 
@@ -46,9 +46,9 @@ void WinEventLog::enable()
   deRegisterEventSource();
   try {
     updateEventSourcesSubkey();
-  } catch (::remoting::Exception &e) {
+  } catch (::exception &e) {
     m_log->error("Cannot update event sources registry subkey: {}",
-               e.getMessage());
+               e.get_message());
   }
   registerEventSource();
 }

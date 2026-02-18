@@ -41,7 +41,28 @@
 // it means that this realization of singleton does not support "lazy" initialization.
 //
 
-template<class T> class Singleton {
+class system_particle :
+virtual public ::particle
+{
+public:
+
+   system_particle()
+   {
+
+      initialize(::system());
+   }
+   ~system_particle() override
+   {
+      // devil work here when things are about to end
+   }
+
+
+
+};
+
+template<class T> class Singleton :
+virtual public ::system_particle
+{
 public:
   Singleton() {
     AutoLock l(&m_instanceMutex);

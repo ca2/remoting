@@ -327,7 +327,7 @@ int ZEXPORT deflateInit2_(strm, level, method, windowBits, memLevel, strategy,
      * Analysis: The longest fixed codes are a length code of 8 bits plus 5
      * extra bits, for lengths 131 to 257. The longest fixed distance codes are
      * 5 bits plus 13 extra bits, for distances 16385 to 32768. The longest
-     * possible fixed-codes length/distance ::std::pair is then 31 bits total.
+     * possible fixed-codes length/distance ::pair is then 31 bits total.
      *
      * sym_buf starts one-fourth of the way into pending_buf. So there are
      * three bytes in sym_buf for every four bytes in pending_buf. Each symbol

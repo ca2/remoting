@@ -25,7 +25,7 @@
 #pragma once
 
 
-//#include "util/::string.h"
+//////#include "util/::string.h"
 
 //
 // Class contains information about
@@ -82,7 +82,7 @@ public:
   void getLastIp(::string & lastIp) const;
 
   void setFirstIp(const ::scoped_string & scopedstrFirstIp);
-  void setLastIp(const ::scoped_string & scopedstrlastIp);
+  void setLastIp(const ::scoped_string & scopedstrLastIp);
 
   //
   // Helper methods

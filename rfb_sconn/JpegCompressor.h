@@ -27,7 +27,7 @@ INCLUDED__
 
 #include <stdio.h>
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "rfb/PixelFormat.h"
 
 // For Windows platforms only.
@@ -128,7 +128,7 @@ protected:
                     const PixelFormat & fmt, int numPixels);
 
 private:
-  METHODDEF(::string) getMessage(j_common_ptr cinfo);
+  METHODDEF(::string) get_message(j_common_ptr cinfo);
   METHODDEF(void) errorExit(j_common_ptr cinfo);
   METHODDEF(void) outputMessage(j_common_ptr cinfo);
 

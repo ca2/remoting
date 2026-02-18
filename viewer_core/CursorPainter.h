@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 #include "rfb/CursorShape.h"
 #include "thread/LocalMutex.h"
 

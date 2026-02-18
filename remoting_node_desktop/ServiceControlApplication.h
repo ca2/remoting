@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 #include "win_system/WindowsApplication.h"
 #include "win_system/SCMClient.h"
@@ -45,7 +45,7 @@ public:
    */
   ServiceControlApplication(HINSTANCE hInstance,
                             const ::scoped_string & scopedstrwindowClassName,
-                            const ::scoped_string & scopedstrcommandLine);
+                            const ::scoped_string & scopedstrCommandLine);
   /**
    * Destructor.
    */
@@ -89,7 +89,7 @@ private:
    * Report an error using error description from a SCMClientException object.
    * @param cmdLine pointer to command line parser.
    * @param ex pointer to an SCMClientException object describing the error.
-   * @remark does not show up a message box if the -silent flag was specified
+   * @remark does not show up a scopedstrMessage box if the -silent flag was specified
    *   in the command line.
    */
   void reportError(const ServiceControlCommandLine *cmdLine,
@@ -98,7 +98,7 @@ private:
    * Report an error using error description from a SystemException object.
    * @param cmdLine pointer to command line parser.
    * @param ex pointer to a SystemException object describing the error.
-   * @remark does not show up a message box if the -silent flag was specified
+   * @remark does not show up a scopedstrMessage box if the -silent flag was specified
    *   in the command line.
    */
   void reportError(const ServiceControlCommandLine *cmdLine,
@@ -107,15 +107,15 @@ private:
    * Report an error using error description specified as a string.
    * @param cmdLine pointer to command line parser.
    * @param errorMessage error description.
-   * @remark does not show up a message box if the -silent flag was specified
+   * @remark does not show up a scopedstrMessage box if the -silent flag was specified
    *   in the command line.
    */
   void reportError(const ServiceControlCommandLine *cmdLine,
-                   const ::scoped_string & scopedstrerrorMessage) const;
+                   const ::scoped_string & scopedstrErrorMessage) const;
   /**
    * Report successful command execution.
    * @param cmdLine pointer to command line parser.
-   * @remark does not show up a message box if the -silent flag was specified
+   * @remark does not show up a scopedstrMessage box if the -silent flag was specified
    *   in the command line.
    */
   void reportSuccess(const ServiceControlCommandLine *cmdLine) const;

@@ -317,7 +317,7 @@ compress_output (j_compress_ptr cinfo, JSAMPIMAGE input_buf)
        yoffset++) {
     for (MCU_col_num = coef->MCU_ctr; MCU_col_num <= last_MCU_col;
 	 MCU_col_num++) {
-      /* Construct ::std::list of pointers to DCT blocks belonging to this MCU */
+      /* Construct ::std::list_base of pointers to DCT blocks belonging to this MCU */
       blkn = 0;			/* index of current DCT block within MCU */
       for (ci = 0; ci < cinfo->comps_in_scan; ci++) {
 	compptr = cinfo->cur_comp_info[ci];

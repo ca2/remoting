@@ -42,15 +42,15 @@ BOOL FsWarningDialog::onInitDialog()
 BOOL FsWarningDialog::onCommand(UINT controlID, UINT notificationID)
 {
   if (controlID == IDOK) {
-    ViewerConfig *config = ViewerConfig::getInstance();
+    ::remoting::ViewerConfig *config = ::remoting::ViewerConfig::getInstance();
     bool promt = !m_fsWarning.isChecked();
     config->promptOnFullscreen(promt);
     config->saveToStorage(ViewerSettingsManager::getInstance());
-    kill(1);
+    close_dialog(1);
     return TRUE;
   }
   if (controlID == IDCANCEL) {
-    kill(0);
+    close_dialog(0);
     return TRUE;
   }
   return FALSE;

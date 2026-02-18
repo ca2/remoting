@@ -1,5 +1,4 @@
-#pragma onceINCLUDED_
-INCLUDED_
+#pragma once
 
 const unsigned char WATERMARK_BMP_BODY[] = {
 #ifdef _DEMO_VERSION_
@@ -630,7 +629,7 @@ const unsigned char WATERMARK_BMP_BODY[] = {
 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
 #else
 0
-//_DEMO_VERSION_
+#endif
 };
 
 //// _WATERMARK_BMP_H_INCLUDED_

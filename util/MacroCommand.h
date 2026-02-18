@@ -26,6 +26,7 @@
 
 
 #include "Command.h"
+#include "acme/prototype/collection/list.h"
 
 //#include <list>
 
@@ -36,7 +37,7 @@ class MacroCommand : public Command
 {
 public:
   /**
-   * Creates macro command with empty command ::list.
+   * Creates macro command with empty command ::list_base.
    */
   MacroCommand();
   /**
@@ -50,7 +51,7 @@ public:
   virtual void execute();
 
   /**
-   * Adds command to the end of ::list of commands to execute.
+   * Adds command to the end of ::list_base of commands to execute.
    */
   void addCommand(Command *command);
 
@@ -58,7 +59,7 @@ private:
   /**
    * List of commands to execute.
    */
-  ::list<Command *> m_commandList;
+  ::list_base<Command *> m_commandList;
 };
 
 

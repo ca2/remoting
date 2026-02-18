@@ -43,7 +43,7 @@ void PortMappingDialog::setParentDialog(BaseDialog *dialog)
 
 void PortMappingDialog::initControls()
 {
-  HWND dialogHwnd = m_ctrlThis.getWindow();
+  HWND dialogHwnd = m_ctrlThis.get_hwnd();
 
   m_exPortsListBox.setWindow(GetDlgItem(dialogHwnd, IDC_MAPPINGS));
   m_editButton.setWindow(GetDlgItem(dialogHwnd, IDC_EDIT_PORT));
@@ -101,8 +101,8 @@ void PortMappingDialog::onExPortsListBoxSelChange()
 {
   int selectedIndex = m_exPortsListBox.getSelectedIndex();
 
-  m_editButton.setEnabled(selectedIndex >= 0);
-  m_removeButton.setEnabled(selectedIndex >= 0);
+  m_editButton.enable_window(selectedIndex >= 0);
+  m_removeButton.enable_window(selectedIndex >= 0);
 }
 
 void PortMappingDialog::onAddButtonClick()
@@ -177,8 +177,8 @@ void PortMappingDialog::onRemoveButtonClick()
       m_exPortsListBox.setSelectedIndex(selectedIndex + 1);
     }
   } else {
-    m_removeButton.setEnabled(false);
-    m_editButton.setEnabled(false);
+    m_removeButton.enable_window(false);
+    m_editButton.enable_window(false);
   }
 }
 

@@ -53,13 +53,13 @@ public:
   // servers (see startUp() for more details).
   bool reload(bool asService, RfbClientManager *mgr);
 
-  // Stop all extra RFB servers, clear the ::list.
+  // Stop all extra RFB servers, clear the ::list_base.
   void shutDown();
 
 protected:
   // Construct and start RFB servers as specified in the Extra Ports
   // configuration. If some servers fail to start, this function does not add
-  // it to the internally maintained ::list of RFB servers.
+  // it to the internally maintained ::list_base of RFB servers.
   // Returns true if all the servers have been started sucessfully, false if
   // at least one failed.
   bool startUp(bool asService, RfbClientManager *mgr);
@@ -68,7 +68,7 @@ protected:
   static void getConfiguration(Conf *out);
 
 protected:
-  ::list<RfbServer *> m_servers;
+  ::list_base<RfbServer *> m_servers;
   Conf m_effectiveConf;
 
 private:

@@ -26,15 +26,19 @@
 
 #include <crtdbg.h>
 
-Pen::Pen(int type, int width, COLORREF color)
-: m_pen(NULL)
-{
-  m_pen = CreatePen(type, width, color);
 
-  _ASSERT(m_pen != NULL);
-}
-
-Pen::~Pen()
+namespace remoting
 {
-  DeleteObject(m_pen);
+   Pen::Pen(int type, int width, COLORREF color)
+   : m_pen(NULL)
+   {
+      m_pen = CreatePen(type, width, color);
+
+      _ASSERT(m_pen != NULL);
+   }
+
+   Pen::~Pen()
+   {
+      DeleteObject(m_pen);
+   }
 }

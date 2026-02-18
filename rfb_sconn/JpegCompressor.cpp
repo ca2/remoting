@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "JpegCompressor.h"
 
-#include "util/AnsiStringStorage.h"
+//#include "util/::string.h"
 #include "util/Exception.h"
 
 const int StandardJpegCompressor::ALLOC_CHUNK_SIZE = 65536;
@@ -116,13 +116,13 @@ StandardJpegCompressor::~StandardJpegCompressor()
   jpeg_destroy_compress(&m_jpeg.cinfo);
 }
 
-::string StandardJpegCompressor::getMessage(j_common_ptr cinfo)
+::string StandardJpegCompressor::get_message(j_common_ptr cinfo)
 {
   char buffer[JMSG_LENGTH_MAX];
-  // Create the message
+  // Create the scopedstrMessage
   (*cinfo->err->format_message) (cinfo, buffer);
 
-  AnsiStringStorage errorAnsi(buffer);
+  ::string errorAnsi(buffer);
   ::string error;
   errorAnsi.toStringStorage(&error);
   return error;
@@ -131,7 +131,7 @@ StandardJpegCompressor::~StandardJpegCompressor()
 void StandardJpegCompressor::errorExit(j_common_ptr cinfo)
 {
   (*cinfo->err->output_message) (cinfo);
-  ::string error = getMessage(cinfo);
+  ::string error = get_message(cinfo);
   jpeg_destroy(cinfo);
   throw ::remoting::Exception(error);
 }

@@ -29,7 +29,7 @@
 #include "CursorShapeGrabber.h"
 #include "UpdateDetector.h"
 #include "win_system/WindowsEvent.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 class CursorShapeDetector : public UpdateDetector
 {

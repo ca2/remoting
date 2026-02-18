@@ -26,7 +26,7 @@
 #include "NamedPipe.h"
 #include "util/Exception.h"
 #include <crtdbg.h>
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 #include "thread/AutoLock.h"
 
 #define MAX_PORTION_SIZE 512 * 1024
@@ -67,9 +67,10 @@ void NamedPipe::close()
   m_writeEvent.notify();
 }
 
-size_t NamedPipe::write(const void *buffer, size_t len)
+void NamedPipe::write(const void *buffer, memsize len)
 {
-  return writeByHandle(buffer, len, m_hPipe);
+  //return writeByHandle(buffer, len, m_hPipe);
+   writeByHandle(buffer, len, m_hPipe);
 }
 
 size_t NamedPipe::read(void *buffer, size_t len)
@@ -85,6 +86,6 @@ HANDLE NamedPipe::getHandle() const
 void NamedPipe::checkPipeHandle()
 {
   if (m_hPipe == INVALID_HANDLE_VALUE) {
-    throw ::io_exception(error_io, "Invalid pipe handle"));
+    throw ::io_exception(error_io, "Invalid pipe handle");
   }
 }

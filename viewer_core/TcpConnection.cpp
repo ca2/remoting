@@ -48,7 +48,7 @@ void TcpConnection::bind(const ::scoped_string & scopedstrHost, unsigned short p
   if (m_wasBound) {
     throw ::remoting::Exception("Tcp-connection already bound");
   }
-  m_host = host;
+  m_host = scopedstrHost;
   m_port = port;
   m_socket = 0;
   m_input = 0;
@@ -99,8 +99,8 @@ void TcpConnection::connect()
         SocketAddressIPv4 ipAddress(m_host, m_port);
 
         ::string ipAddressString;
-        ipAddress.toString(&ipAddressString);
-        m_logWriter->detail("Connecting to the host \"{}:%hd\" ({}:%hd)...",
+        ipAddressString = ipAddress.toString();
+        m_logWriter->debug("Connecting to the host \"{}:{}\" ({}:{})...",
                             m_host, m_port,
                             ipAddressString, m_port);
 
@@ -113,7 +113,7 @@ void TcpConnection::connect()
       }
     }
 
-    m_logWriter->detail("Initialization of socket stream and input/output gates...");
+    m_logWriter->debug("Initialization of socket stream and input/output gates...");
     m_socketStream = new SocketStream(m_socket);
     m_bufInput = new BufferedInputStream(m_socketStream);
     m_input = new RfbInputGate(m_bufInput);

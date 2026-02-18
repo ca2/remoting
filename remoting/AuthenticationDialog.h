@@ -35,7 +35,7 @@ public:
   AuthenticationDialog();
 
   // this function returns the password entered by user
-  const ::scoped_string & getPassword();
+  ::string getPassword();
 
   // this function returns sets the name of host in dialog
   void setHostName(const ::scoped_string & hostname);

@@ -241,7 +241,7 @@ jpeg_write_m_byte (j_compress_ptr cinfo, int val)
  * Alternate compression function: just write an abbreviated table file.
  * Before calling this, all parameters and a data destination must be set up.
  *
- * To produce a ::std::pair of files containing abbreviated tables and abbreviated
+ * To produce a ::pair of files containing abbreviated tables and abbreviated
  * image data, one would proceed as follows:
  *
  *		initialize JPEG object

@@ -25,6 +25,7 @@
 #include "HelpDialog.h"
 
 #include "util/ResourceLoader.h"
+#include "remoting/remoting/resource.h"
 
 HelpDialog::HelpDialog() 
 : BaseDialog(IDD_CMDLINE)
@@ -37,7 +38,7 @@ BOOL HelpDialog::onInitDialog()
 
   ::string helpString;
   ResourceLoader *rLoader = ResourceLoader::getInstance();
-  rLoader->loadString(IDS_CMDLINE_HELP, &helpString);
+  rLoader->loadString(IDS_CMDLINE_HELP, helpString);
   m_shelp.setText(helpString);
   return TRUE;
 }
@@ -45,11 +46,11 @@ BOOL HelpDialog::onInitDialog()
 BOOL HelpDialog::onCommand(UINT controlID, UINT notificationID)
 {
   if (controlID == IDOK) {
-    kill(1);
+    close_dialog(1);
     return TRUE;
   }
   if (controlID == IDCANCEL) {
-    kill(0);
+    close_dialog(0);
     return TRUE;
   }
   return FALSE;

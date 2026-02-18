@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "acme/_operating_system.h"
 #include "AnonymousPipe.h"
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 #include "thread/AutoLock.h"
 
 AnonymousPipe::AnonymousPipe(HANDLE hWrite, HANDLE hRead, unsigned int maxPortionSize, LogWriter *log)
@@ -55,8 +55,7 @@ void AnonymousPipe::close()
   ::string wrErrText, rdErrText;
   if (m_hWrite != INVALID_HANDLE_VALUE && m_neededToClose) {
     if (CloseHandle(m_hWrite) == 0) {
-      Environment::getErrStr("Cannot close anonymous pipe write handle.",
-                             &wrErrText);
+      wrErrText = ::windows::last_error_message("Cannot close anonymous pipe write handle.", ::windows::last_error());
       wrSuc = false;
     }
     m_log->debug("Closed m_hWrite(%p) AnonymousPipe handle",
@@ -65,8 +64,7 @@ void AnonymousPipe::close()
   m_hWrite = INVALID_HANDLE_VALUE;
   if (m_hRead != INVALID_HANDLE_VALUE && m_neededToClose) {
     if (CloseHandle(m_hRead) == 0) {
-      Environment::getErrStr("Cannot close anonymous pipe read handle.",
-                             &wrErrText);
+      wrErrText = ::windows::last_error_message("Cannot close anonymous pipe read handle.", ::windows::last_error());
       rdSuc = false;
     }
     m_log->debug("Closed m_hRead(%p) AnonymousPipe handle",
@@ -92,10 +90,10 @@ size_t AnonymousPipe::read(void *buffer, size_t len)
   }
 }
 
-size_t AnonymousPipe::write(const void *buffer, size_t len)
+void AnonymousPipe::write(const void *buffer, memsize len)
 {
   try {
-    return writeByHandle(buffer, len, m_hWrite);
+    writeByHandle(buffer, len, m_hWrite);
   } catch (...) {
     m_log->error("AnonymousPipe::write() failed (m_hWrite = %p)",
                m_hWrite);
@@ -106,7 +104,7 @@ size_t AnonymousPipe::write(const void *buffer, size_t len)
 void AnonymousPipe::checkPipeHandle(HANDLE handle)
 {
   if (handle == INVALID_HANDLE_VALUE) {
-    throw ::io_exception(error_io, "Invalid pipe handle"));
+    throw ::io_exception(error_io, "Invalid pipe handle");
   }
 }
 
@@ -128,18 +126,18 @@ void AnonymousPipe::assignHandlesFor(HANDLE hTargetProc, bool neededToClose,
   if (DuplicateHandle(hSrcProc, m_hWrite, hTargetProc, &hWrite, 0, FALSE,
                       DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS) == 0) {
     ::string errText;
-    Environment::getErrStr("Cannot dupplicate write"
-                           " handle for the anonymous pipe",
-                           &errText);
+    errText = windows::last_error_message("Cannot dupplicate write"
+                           " handle for the anonymous pipe", ::windows::last_error());
+
     throw ::remoting::Exception(errText);
   }
   m_hWrite = hWrite;
   if (DuplicateHandle(hSrcProc, m_hRead, hTargetProc, &hRead, 0, FALSE,
                       DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS) == 0) {
     ::string errText;
-    Environment::getErrStr("Cannot dupplicate read"
+    errText = windows::last_error_message("Cannot dupplicate read"
                            " handle for the anonymous pipe",
-                           &errText);
+                           ::windows::last_error());
     throw ::remoting::Exception(errText);
   }
   m_hRead = hRead;
@@ -148,17 +146,17 @@ void AnonymousPipe::assignHandlesFor(HANDLE hTargetProc, bool neededToClose,
     if (DuplicateHandle(hTargetProc, m_hWrite, 0, 0, 0, FALSE,
                         DUPLICATE_CLOSE_SOURCE) == 0) {
       ::string errText;
-      Environment::getErrStr("Cannot keep the right to close of the write"
+      errText = ::windows::last_error_message("Cannot keep the right to close of the write"
                              " handle of the anonymous pipe",
-                             &errText);
+                             ::windows::last_error());
       throw ::remoting::Exception(errText);
     }
     if (DuplicateHandle(hTargetProc, m_hRead, 0, 0, 0, FALSE,
                         DUPLICATE_CLOSE_SOURCE) == 0) {
       ::string errText;
-      Environment::getErrStr("Cannot keep the right to close of the read"
+      errText = ::windows::last_error_message("Cannot keep the right to close of the read"
                              " handle of the anonymous pipe",
-                             &errText);
+                             ::windows::last_error());
       throw ::remoting::Exception(errText);
     }
     // Now the current process can close the handles.

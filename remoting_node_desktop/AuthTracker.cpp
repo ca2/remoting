@@ -46,7 +46,7 @@ unsigned long long AuthTracker::checkBan()
     AutoLock al(&m_countMutex);
     if (m_failureCount >= m_failureMaxCount) {
       banTime = max(0, m_failureTimeInterval -
-                       (DateTime::now() - m_firstFailureTime).getTime());
+                       (::earth::time::now() - m_firstFailureTime).getTime());
     }
   }
   return banTime;
@@ -56,7 +56,7 @@ void AuthTracker::notifyAbAuthFailed()
 {
   AutoLock al(&m_countMutex);
   if (m_failureCount == 0) {
-    m_firstFailureTime = DateTime::now();
+    m_firstFailureTime = ::earth::time::now();
   }
   m_failureCount++;
 }
@@ -64,7 +64,7 @@ void AuthTracker::notifyAbAuthFailed()
 void AuthTracker::refresh()
 {
   AutoLock al(&m_countMutex);
-  if ((DateTime::now() - m_firstFailureTime).getTime() >= m_failureTimeInterval) {
+  if ((::earth::time::now() - m_firstFailureTime).getTime() >= m_failureTimeInterval) {
     m_failureCount = 0;
   }
 }

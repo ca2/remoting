@@ -28,8 +28,8 @@
 class WindowMessageHandler
 {
 public:
-  // This function must return true if a message has been processed.
-  virtual bool processMessage(UINT message, WPARAM wParam, LPARAM lParam) = 0;
+  // This function must return true if a scopedstrMessage has been processed.
+  virtual bool processMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam) = 0;
 };
 
 //// __WINDOWMESSAGEHANDLER_H__

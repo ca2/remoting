@@ -42,7 +42,7 @@ void FilteredTextBox::setWindow(HWND hwnd)
   } else {
     m_oldWindowProc = NULL;
   }
-  Control::setWindow(hwnd);
+  ::remoting::Window::setWindow(hwnd);
 }
 
 void FilteredTextBox::setText(TCHAR *text)
@@ -64,14 +64,14 @@ void FilteredTextBox::setStringFilter(StringFilter *filter)
 LRESULT FilteredTextBox::makeCheck()
 {
   ::string updatedText;
-  TextBox::getText(&updatedText);
+  updatedText = TextBox::get_text();
   if (isStringValid(updatedText)) {
     m_text = updatedText;
   } else {
     if (m_tip != NULL) {
       showBalloonTip(m_tip);
       TextBox::setText(m_text);
-      TextBox::selectText(m_text.getLength(), m_text.getLength());
+      TextBox::selectText(m_text.length(), m_text.length());
     } else {
       //
       // TODO: Play annoying sound this
@@ -85,13 +85,13 @@ LRESULT FilteredTextBox::makeCheck()
 bool FilteredTextBox::isStringValid(const ::scoped_string & scopedstrString)
 {
   if (m_filter != NULL) {
-    return m_filter->isStringCorrect(string);
+    return m_filter->isStringCorrect(scopedstrString);
   }
   return true;
 }
 
 //
-// Return values: 0 - if window process this message
+// Return values: 0 - if window process this scopedstrMessage
 //      other value - otherwise
 //
 

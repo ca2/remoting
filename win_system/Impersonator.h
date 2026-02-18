@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
-//#include "util/::string.h"
-#include "log_writer/LogWriter.h"
+#include "remoting/util/CommonHeader.h"
+//////#include "util/::string.h"
+//#include "log_writer/LogWriter.h"
 
 #include "SystemException.h"
 

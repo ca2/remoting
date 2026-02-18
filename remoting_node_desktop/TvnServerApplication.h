@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "util/winhdr.h"
 
 #include "win_system/WindowsApplication.h"
@@ -33,7 +33,7 @@
 #include "TvnServer.h"
 #include "TvnServerListener.h"
 #include "WsConfigRunner.h"
-#include "log_writer/FileLogger.h"
+//#include "log_writer/FileLogWriter.h"
 #include "LogInitListener.h"
 
 /**
@@ -52,7 +52,7 @@ public:
    */
   TvnServerApplication(HINSTANCE hInstance,
                        const ::scoped_string & scopedstrwindowClassName,
-                       const ::scoped_string & scopedstrcommandLine,
+                       const ::scoped_string & scopedstrCommandLine,
                        NewConnectionEvents *newConnectionEvents);
   /**
    * Deletes TightVNC server application instance.
@@ -65,7 +65,7 @@ public:
    * Makes several things:
    *   1) Starts TigthVNC server.
    *   2) Starts TvnControl application.
-   *   3) Enters main windows message loop.
+   *   3) Enters main windows scopedstrMessage loop.
    *   4) Stops TigthVNC server.
    *
    * @return application exit code.
@@ -81,12 +81,12 @@ public:
 
 private:
   // This is a callback function that calls when the log can be initialized.
-  virtual void onLogInit(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrFileName, unsigned char logLevel);
+  virtual void onLogInit(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrFileName, unsigned char logLevel);
 
   // This is a callback function that calls when log properties have changed.
   virtual void onChangeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel);
 
-  FileLogger m_fileLogger;
+  FileLogWriter m_fileLogWriter;
 
   /**
    * Command line string.

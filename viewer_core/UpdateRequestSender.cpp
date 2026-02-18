@@ -74,9 +74,9 @@ void UpdateRequestSender::execute()
 			Thread::sleep(timeout);
 		}
 	}
-	catch(const ::remoting::Exception &ex)
+	catch(const ::exception &ex)
 	{
-		m_logWriter->message("UpdateRequestSender. ::remoting::Exception: {}", ex.getMessage());
+		m_logWriter->debug("UpdateRequestSender. ::remoting::Exception: {}", ex.get_message());
 	}
 	catch(...)
 	{

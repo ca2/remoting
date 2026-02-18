@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "RfbKeySym.h"
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 #define XK_MISCELLANY
 #include "rfb/keysymdef.h"
@@ -104,7 +104,7 @@ void RfbKeySym::processKeyEvent(unsigned short virtKey,
       rfbSym);
     sendKeySymEvent(rfbSym, down);
   } else {
-    std::wstring chars;
+    ::wstring chars;
     bool needReleaseModifiers = vkCodeToString(virtKey, down, &chars);
     if (ctrlPressed && altPressed && needReleaseModifiers) {
       m_log->debug("Release the ctrl and alt"
@@ -194,7 +194,7 @@ bool RfbKeySym::TryTranslateNotPrintableToUnicode(unsigned short virtKey, HKL cu
   else {
     outBuff[0] = 0;
   }
-  m_log->debug("ToUnicodeEx() without ctrl and alt return {} wchars : %S", count, outBuff);
+  m_log->debug("ToUnicodeEx() without ctrl and alt return {} wchars : {}", count, ::wstring(outBuff));
 
   if (count == 1) { // other case will be ignored
     *unicodeChar = outBuff[0];
@@ -203,7 +203,7 @@ bool RfbKeySym::TryTranslateNotPrintableToUnicode(unsigned short virtKey, HKL cu
   return false;
 }
 
-bool RfbKeySym::vkCodeToString(unsigned short virtKey, bool down, std::wstring *res) 
+bool RfbKeySym::vkCodeToString(unsigned short virtKey, bool down, ::wstring *res) 
 {
   bool needReleaseModifiers = false;
   WCHAR outBuff[20];
@@ -238,12 +238,12 @@ bool RfbKeySym::vkCodeToString(unsigned short virtKey, bool down, std::wstring *
         outBuff[0] = 0;
       }
       //ToUnicodeEx can return without null termination
-      m_log->debug("ToUnicodeEx() function called second. Returned: {}. Output buff: %S", count, outBuff);
-      res->erase();
+      m_log->debug("ToUnicodeEx() function called second. Returned: {}. Output buff: {}", count, ::wstring(outBuff));
+      res->clear();
       return false;
     } else if (!m_allowProcessCharEvent) {
       m_log->debug("Disable second calling ToUnicodeEx()");
-      res->erase();
+      res->clear();
       return false;
     }
   }
@@ -257,7 +257,7 @@ bool RfbKeySym::vkCodeToString(unsigned short virtKey, bool down, std::wstring *
   } else {
     outBuff[0] = 0;
   }
-  m_log->debug("ToUnicodeEx() returned {}, output buff : %S", count, outBuff);
+  m_log->debug("ToUnicodeEx() returned {}, output buff : {}", count, ::wstring(outBuff));
 
   if (count == 1 && !m_allowProcessCharEvent) {
     res->add(GettingCharFromCtrlSymbol(outBuff[0]));
@@ -317,7 +317,7 @@ void RfbKeySym::processFocusRestoration()
 {
   m_log->information("Process focus restoration in the RfbKeySym class");
 
-  // Send a modifier key state based on physical keyboard state, not thread key message queue.
+  // Send a modifier key state based on physical keyboard state, not thread key scopedstrMessage queue.
   unsigned char keys[9] = {VK_CONTROL, VK_RCONTROL, VK_LCONTROL,
                            VK_MENU, VK_RMENU, VK_LMENU, 
                            VK_SHIFT, VK_RSHIFT, VK_LSHIFT};

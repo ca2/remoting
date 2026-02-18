@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 #include "wsconfig_lib/TvnLogFilename.h"
 #include "config_lib/RegistrySettingsManager.h"
 
@@ -354,7 +354,7 @@ bool Configurator::saveVideoRegionConfig(SettingsManager *sm)
   bool saveResult = true;
 
   ::string buffer;
-  StringVector *videoClasses = m_serverConfig.getVideoClassNames();
+  ::string_array *videoClasses = m_serverConfig.getVideoClassNames();
   size_t size = videoClasses->size();
  ::array_base<::int_rectangle> *videoRects = m_serverConfig.getVideoRects();
 
@@ -390,7 +390,7 @@ bool Configurator::loadVideoRegionConfig(SettingsManager *sm, ServerConfig *conf
 {
   bool loadResult = true;
 
-  StringVector *videoClasses = m_serverConfig.getVideoClassNames();
+  ::string_array *videoClasses = m_serverConfig.getVideoClassNames();
   ::array_base<::int_rectangle> *videoRects = m_serverConfig.getVideoRects();
 
   // Lock configuration
@@ -509,7 +509,7 @@ Configurator::loadIpAccessControlContainer(SettingsManager *sm, IpAccessControl 
   if (!sm->getString("IpAccessControl", &storage)) {
     return false;
   } else {
-    size_t maxBufSize = storage.getLength() + 1;
+    size_t maxBufSize = storage.length() + 1;
     ::array_base<TCHAR> ipacStringBuffer(maxBufSize + 1);
     _tcscpy_s(&ipacStringBuffer.front(), maxBufSize, storage);
     TCHAR *pch = _tcstok(&ipacStringBuffer[0], ",");

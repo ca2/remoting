@@ -38,9 +38,9 @@ HDESK DesktopSelector::getInputDesktop()
                           GENERIC_WRITE);
 }
 
-HDESK DesktopSelector::getDesktop(const ::scoped_string & name)
+HDESK DesktopSelector::getDesktop(const ::scoped_string & scopedstrName)
 {
-  return OpenDesktop(name, 0, TRUE,
+  return OpenDesktop(::wstring(scopedstrName), 0, TRUE,
                      DESKTOP_CREATEMENU |
                      DESKTOP_CREATEWINDOW |
                      DESKTOP_ENUMERATE |
@@ -76,9 +76,10 @@ bool DesktopSelector::selectDesktop(const ::scoped_string & name)
   return result;
 }
 
-bool DesktopSelector::getDesktopName(HDESK desktop, ::string & desktopName)
+
+::string DesktopSelector::getDesktopName(HDESK desktop)
 {
-  desktopName-= "";
+//  desktopName-= "";
 
   DWORD nameLength = 0;
   // Do not check returned value because the function will return FALSE always.
@@ -92,22 +93,23 @@ bool DesktopSelector::getDesktopName(HDESK desktop, ::string & desktopName)
                                              nameLength,
                                              0);
     if (result) {
-      desktopName-= &name[0];
-      return true;
+      return name.data();
+      //return true;
     }
   }
-  return false;
+   throw ::exception(error_io);
+  //return false;
 }
 
-bool DesktopSelector::getCurrentDesktopName(::string & desktopName)
+::string DesktopSelector::getCurrentDesktopName()
 {
   HDESK inputDesktop = getInputDesktop();
-  bool result = getDesktopName(inputDesktop, desktopName);
+  auto str = getDesktopName(inputDesktop);
   closeDesktop(inputDesktop);
-  return result;
+  return str;
 }
 
-bool DesktopSelector::getThreadDesktopName(::string & desktopName)
+::string DesktopSelector::getThreadDesktopName()
 {
-  return getDesktopName(GetThreadDesktop(GetCurrentThreadId()), desktopName);
+  return getDesktopName(GetThreadDesktop(GetCurrentThreadId()));
 }

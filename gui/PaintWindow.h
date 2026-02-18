@@ -37,14 +37,14 @@ public:
 private:
   HDC getHDCPaint();
 
-  friend class DeviceContext;
+  friend class ::remoting::DeviceContext;
 
 protected:
   //virtual void onPaint(DeviceContext *dc, PAINTSTRUCT *paintStruct);
    //virtual void onPaint(DeviceContext *dc, PAINTSTRUCT *paintStruct);
    virtual void onPaint();
 
-  bool wndProc(UINT message, WPARAM wParam, LPARAM lParam);
+  bool wndProc(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam);
 
   bool m_bIsDraw;
   PAINTSTRUCT m_paintStruct;

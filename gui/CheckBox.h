@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "Control.h"
+#include "remoting/gui/Window.h"
 
-class CheckBox : public Control
+class CheckBox : public ::remoting::Window
 {
 public:
   bool isChecked();

@@ -23,16 +23,19 @@
 //
 #include "framework.h"
 #include "FileInfoListView.h"
-#include "util/DateTime.h"
+//#include "util/::earth::time.h"
 #include "remoting/resource.h"
 #include "util/ResourceLoader.h"
 #include <crtdbg.h>
 #include <stdio.h>
 
+#include "acme/prototype/datetime/datetime.h"
+
+
 FileInfoListView::FileInfoListView()
 : m_smallImageList(0)
 {
-  // By default, file ::list is sorted by file name.
+  // By default, file ::list_base is sorted by file name.
   sort(0);
 }
 
@@ -44,7 +47,7 @@ FileInfoListView::~FileInfoListView()
 }
 
 //
-// Saves hwnd and automaticly adds columns to ::list view
+// Saves hwnd and automaticly adds columns to ::list_base view
 //
 
 void FileInfoListView::setWindow(HWND hwnd)
@@ -63,22 +66,22 @@ void FileInfoListView::setWindow(HWND hwnd)
 
    subclass_window();
 
-  //Control::replaceWindowProc(FileInfoListView::s_newWndProc);
+  //::remoting::Window::replaceWindowProc(FileInfoListView::s_newWndProc);
 }
 
-void FileInfoListView::addItem(int index, FileInfo *fileInfo)
+void FileInfoListView::addItem(int index, ::remoting::ftp::FileInfo *fileInfo)
 {
-  const ::scoped_string & scopedstrFilename = fileInfo->getFileName();
+  auto strFilename = fileInfo->getFileName();
 
   int imageIndex = IMAGE_FILE_INDEX;
 
-  if (wcscmp(fileInfo->getFileName(), "..") == 0) {
+  if (wcscmp(wstring(fileInfo->getFileName()), L".") == 0) {
     imageIndex = IMAGE_FOLDER_UP_INDEX;
   } else if (fileInfo->isDirectory()) {
     imageIndex = IMAGE_FOLDER_INDEX;
   }
 
-  ListView::addItem(index, filename, (LPARAM)fileInfo, imageIndex);
+  ListView::addItem(index, strFilename, (LPARAM)fileInfo, imageIndex);
 
   ::string sizeString("<Folder>");
   ::string modTimeString("");
@@ -102,47 +105,51 @@ void FileInfoListView::addItem(int index, FileInfo *fileInfo)
     // Prepare modification time string
     //
 
-    DateTime dateTime(fileInfo->lastModified());
+    ::earth::time dateTime(::posix_time(::posix_time_t{}, fileInfo->lastModified()));
 
-    dateTime.toString(&modTimeString);
+    modTimeString = datetime()->date_time_text(dateTime);
   }
 
   ListView::setSubItemText(index, 1, sizeString);
   ListView::setSubItemText(index, 2, modTimeString);
 }
 
-void FileInfoListView::addRange(FileInfo **filesInfo, size_t count)
+//void FileInfoListView::addRange(::remoting::ftp::FileInfo **filesInfo, size_t count)
+void FileInfoListView::addRange(const ::pointer_array < ::remoting::ftp::FileInfo > & fileinfoa)
 {
-  int index = max(0, (getCount() - 1));
-  size_t i = 0;
-  FileInfo *arr = *filesInfo;
+  //int index = maximum(0, (getCount() - 1));
+   auto i = maximum(0, getCount() - 1);
+  //size_t i = 0;
+  //::remoting::ftp::FileInfo *arr = *filesInfo;
 
   // Add folders first
-  for (i = 0; i < count; i++) {
-    FileInfo *fi = &arr[i];
-    if (fi->isDirectory()) {
-      addItem(index++, fi);
+  for (auto & pinfo : fileinfoa) {
+    //::remoting::ftp::FileInfo *fi = &arr[i];
+    if (pinfo->isDirectory()) {
+      addItem(i++, pinfo);
     } // if directory
   } // for all files info
 
   // Add files
-  for (i = 0; i < count; i++) {
-    FileInfo *fi = &arr[i];
-    if (!fi->isDirectory()) {
-      addItem(index++, fi);
+   for (auto & pinfo : fileinfoa) {
+    //::remoting::ftp::FileInfo *fi = &arr[i];
+    if (!pinfo->isDirectory()) {
+      addItem(i++, pinfo);
     } // if not directory
   } // for all files info
 
   ListView::sort();
 } // void
 
-FileInfo *FileInfoListView::getSelectedFileInfo()
+::pointer<::remoting::ftp::FileInfo > FileInfoListView::getSelectedFileInfo()
 {
   int si = getSelectedIndex();
   if (si == -1) {
-    return NULL;
+    return {};
   }
-  return reinterpret_cast<FileInfo *>(getSelectedItem().tag);
+   auto pparticle = (::particle *) (void*) (::uptr)getSelectedItem().tag;
+   ::cast < ::remoting::ftp::FileInfo> pfileinfo = pparticle;
+  return pfileinfo;
 }
 
 void FileInfoListView::loadImages()
@@ -198,15 +205,15 @@ int FileInfoListView::compareItem(LPARAM lParam1,
   // check ascending order
   bool sortAscending = lParamSort > 0;
 
-  FileInfo *firstItem = reinterpret_cast<FileInfo *>(lParam1);
-  FileInfo *secondItem = reinterpret_cast<FileInfo *>(lParam2);
+  ::remoting::ftp::FileInfo *firstItem = reinterpret_cast<::remoting::ftp::FileInfo *>(lParam1);
+  ::remoting::ftp::FileInfo *secondItem = reinterpret_cast<::remoting::ftp::FileInfo *>(lParam2);
 
-  // Fake directory ".." should be into top ::list.
-  if (wcscmp(firstItem->getFileName(), "..") == 0) {
+  // Fake directory ".." should be into top ::list_base.
+  if (wcscmp(::wstring(firstItem->getFileName()), L"..") == 0) {
     return -1;
   }
 
-  if (wcscmp(secondItem->getFileName(), "..") == 0) {
+  if (wcscmp(::wstring(secondItem->getFileName()), L"..") == 0) {
     return 1;
   }
 
@@ -220,11 +227,11 @@ int FileInfoListView::compareItem(LPARAM lParam1,
   
   // change lParam1 and lParam2 with each other if order is descending
   if (sortAscending) {
-    firstItem = reinterpret_cast<FileInfo *>(lParam1);
-    secondItem = reinterpret_cast<FileInfo *>(lParam2);
+    firstItem = reinterpret_cast<::remoting::ftp::FileInfo *>(lParam1);
+    secondItem = reinterpret_cast<::remoting::ftp::FileInfo *>(lParam2);
   } else {
-    firstItem = reinterpret_cast<FileInfo *>(lParam2);
-    secondItem = reinterpret_cast<FileInfo *>(lParam1);
+    firstItem = reinterpret_cast<::remoting::ftp::FileInfo *>(lParam2);
+    secondItem = reinterpret_cast<::remoting::ftp::FileInfo *>(lParam1);
   }
 
   if (lParamSort < 0) {
@@ -238,7 +245,7 @@ int FileInfoListView::compareItem(LPARAM lParam1,
   switch (lParamSort) {
   // It's column "FileName".
   case 0:
-    return _tcsicmp(firstItem->getFileName(), secondItem->getFileName());
+    return _tcsicmp(::wstring(firstItem->getFileName()), wstring(secondItem->getFileName()));
 
   // It's column "FileSize".
   case 1:
@@ -278,7 +285,7 @@ bool FileInfoListView::window_procedure(LRESULT & lresult, UINT uMsg, ::wparam w
   switch (uMsg) {
   case WM_GETDLGCODE:
     lresult= CallWindowProc(m_defWindowProc, m_hwnd, uMsg, wparam.m_number, lparam.m_lparam);
-    // We want WM_KEYDOWN message when enter is pressed
+    // We want WM_KEYDOWN scopedstrMessage when enter is pressed
     if (lparam.m_lparam &&
         ((MSG *)lparam.m_lparam)->message == WM_KEYDOWN &&
         ((MSG *)lparam.m_lparam)->wParam == VK_RETURN) {

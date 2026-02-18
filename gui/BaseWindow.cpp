@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "BaseWindow.h"
 #include "acme/prototype/geometry2d/_function.h"
 
@@ -57,8 +57,8 @@ bool BaseWindow::createWindow(const ::scoped_string & windowName, DWORD style, H
     return false;
   }
   m_windowName = windowName;
-  m_hwnd = CreateWindow(m_className, 
-                        m_windowName, 
+  m_hwnd = CreateWindow(::wstring(m_className),
+                        ::wstring(m_windowName),
                         style, 
                         xPos, yPos, 
                         width, height, 
@@ -161,25 +161,25 @@ void BaseWindow::setClassMenu(LONG menu)
   SetClassLongPtr(m_hwnd, GCLP_MENUNAME, menu);
 }
 
-LONG BaseWindow::getStyle()
+LONG BaseWindow::get_style()
 {
   _ASSERT(m_hwnd != 0);
   return GetWindowLong(m_hwnd, GWL_STYLE);
 }
 
-void BaseWindow::setStyle(DWORD style)
+void BaseWindow::set_style(DWORD style)
 {
   _ASSERT(m_hwnd != 0);
   SetWindowLong(m_hwnd, GWL_STYLE, style);
 }
 
-LONG BaseWindow::getExStyle()
+LONG BaseWindow::get_ex_style()
 {
   _ASSERT(m_hwnd != 0);
   return GetWindowLong(m_hwnd, GWL_EXSTYLE);
 }
 
-void BaseWindow::setExStyle(DWORD exstyle)
+void BaseWindow::set_ex_style(DWORD exstyle)
 {
   _ASSERT(m_hwnd != 0);
   SetWindowLong(m_hwnd, GWL_EXSTYLE, exstyle);
@@ -218,14 +218,14 @@ bool BaseWindow::onSysCommand(WPARAM wParam, LPARAM lParam)
   return false;
 }
 
-bool BaseWindow::onMessage(UINT message, WPARAM wParam, LPARAM lParam)
+bool BaseWindow::onMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
 {
   return false;
 }
 
-bool BaseWindow::wndProc(UINT message, WPARAM wParam, LPARAM lParam)
+bool BaseWindow::wndProc(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
 {
-  switch (message) {
+  switch (scopedstrMessage) {
     case WM_COMMAND:
       return onCommand(wParam, lParam);
     case WM_NOTIFY:
@@ -254,7 +254,7 @@ bool BaseWindow::wndProc(UINT message, WPARAM wParam, LPARAM lParam)
       point.y = points.y;
 
       unsigned short wheelSpeed = 0; 
-      if (message == WM_MOUSEWHEEL) {
+      if (scopedstrMessage == WM_MOUSEWHEEL) {
         // Get speed wheel and set mouse button.
         signed short wheelSignedSpeed = static_cast<signed short>(HIWORD(wParam));
         if (wheelSignedSpeed < 0) {
@@ -271,7 +271,7 @@ bool BaseWindow::wndProc(UINT message, WPARAM wParam, LPARAM lParam)
           wheelSpeed = 1;
         }
 
-        // If windows-message is WHEEL, then need to translate screen coordinate to client.
+        // If windows-scopedstrMessage is WHEEL, then need to translate screen coordinate to client.
         if (!ScreenToClient(getHWnd(), &point)) {
           point.x = -1;
           point.y = -1;
@@ -282,7 +282,7 @@ bool BaseWindow::wndProc(UINT message, WPARAM wParam, LPARAM lParam)
       return onMouse(mouseButtons, static_cast<unsigned short>(wheelSpeed), point);
     }
   }
-  return onMessage(message, wParam, lParam);
+  return onMessage(scopedstrMessage, wParam, lParam);
 }
 
 void BaseWindow::setHWnd(HWND hwnd)
@@ -295,10 +295,10 @@ HWND BaseWindow::getHWnd() const
   return m_hwnd;
 }
 
-void BaseWindow::setWindowText(const ::scoped_string & text)
+void BaseWindow::setWindowText(const ::scoped_string & scopedstrText)
 {
   _ASSERT(m_hwnd != 0);
-  SetWindowText(m_hwnd, text);
+  SetWindowText(m_hwnd, ::wstring(scopedstrText).c_str());
 }
 
 void BaseWindow::redraw(const RECT & rectArea)

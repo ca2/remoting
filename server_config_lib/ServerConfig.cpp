@@ -24,9 +24,9 @@
 #include "framework.h"
 #include "ServerConfig.h"
 
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 
-#include "file_lib/File.h"
+#include "file_lib/::file::item.h"
 #include "io_lib/DataCopy.h"
 
 ServerConfig::ServerConfig()
@@ -149,80 +149,80 @@ void ServerConfig::serialize(DataOutputStream *output)
   output->writeUTF8(m_logFilePath);
 }
 
-void ServerConfig::deserialize(DataInputStream *input)
+void ServerConfig::deserialize(DataInputStream * pinput)
 {
   AutoLock l(this);
 
-  m_rfbPort = input->readInt32();
-  m_httpPort = input->readInt32();
+  m_rfbPort = pinput->readInt32();
+  m_httpPort = pinput->readInt32();
 
-  m_enableFileTransfers = input->readInt8() == 1;
-  m_removeWallpaper = input->readInt8() == 1;
-  m_D3DAllowed = input->readInt8() != 0;
-  m_mirrorDriverAllowed = input->readInt8() != 0;
-  m_disconnectAction = (ServerConfig::DisconnectAction)input->readInt32();
-  m_acceptRfbConnections = input->readInt8() == 1;
-  m_acceptHttpConnections = input->readInt8() == 1;
+  m_enableFileTransfers = pinput->readInt8() == 1;
+  m_removeWallpaper = pinput->readInt8() == 1;
+  m_D3DAllowed = pinput->readInt8() != 0;
+  m_mirrorDriverAllowed = pinput->readInt8() != 0;
+  m_disconnectAction = (ServerConfig::DisconnectAction)pinput->readInt32();
+  m_acceptRfbConnections = pinput->readInt8() == 1;
+  m_acceptHttpConnections = pinput->readInt8() == 1;
 
-  m_hasPrimaryPassword = input->readInt8() == 1;
-  input->readFully(m_primaryPassword, VNC_PASSWORD_SIZE);
-  m_hasReadOnlyPassword = input->readInt8() == 1;
-  input->readFully(m_readonlyPassword, VNC_PASSWORD_SIZE);
-  m_hasControlPassword = input->readInt8() == 1;
-  input->readFully(m_controlPassword, VNC_PASSWORD_SIZE);
-  m_useAuthentication = input->readInt8() == 1;
+  m_hasPrimaryPassword = pinput->readInt8() == 1;
+  pinput->readFully(m_primaryPassword, VNC_PASSWORD_SIZE);
+  m_hasReadOnlyPassword = pinput->readInt8() == 1;
+  pinput->readFully(m_readonlyPassword, VNC_PASSWORD_SIZE);
+  m_hasControlPassword = pinput->readInt8() == 1;
+  pinput->readFully(m_controlPassword, VNC_PASSWORD_SIZE);
+  m_useAuthentication = pinput->readInt8() == 1;
 
-  m_onlyLoopbackConnections = input->readInt8() == 1;
-  m_enableAppletParamInUrl = input->readInt8() == 1;
-  m_logLevel = input->readInt32();
-  m_useControlAuth = input->readInt8() == 1;
-  m_controlAuthAlwaysChecking = input->readInt8() != 0;
-  m_alwaysShared = input->readInt8() == 1;
-  m_neverShared = input->readInt8() == 1;
-  m_disconnectClients = input->readInt8() == 1;
-  m_pollingInterval = input->readUInt32();
-  m_blockRemoteInput = input->readInt8() == 1;
-  m_blockLocalInput = input->readInt8() == 1;
-  m_localInputPriority = input->readInt8() == 1;
-  m_localInputPriorityTimeout = input->readUInt32();
-  m_defaultActionAccept = input->readInt8() == 1;
-  m_queryTimeout = input->readUInt32();
-  m_connectToRdp = input->readInt8() == 1;
+  m_onlyLoopbackConnections = pinput->readInt8() == 1;
+  m_enableAppletParamInUrl = pinput->readInt8() == 1;
+  m_logLevel = pinput->readInt32();
+  m_useControlAuth = pinput->readInt8() == 1;
+  m_controlAuthAlwaysChecking = pinput->readInt8() != 0;
+  m_alwaysShared = pinput->readInt8() == 1;
+  m_neverShared = pinput->readInt8() == 1;
+  m_disconnectClients = pinput->readInt8() == 1;
+  m_pollingInterval = pinput->readUInt32();
+  m_blockRemoteInput = pinput->readInt8() == 1;
+  m_blockLocalInput = pinput->readInt8() == 1;
+  m_localInputPriority = pinput->readInt8() == 1;
+  m_localInputPriorityTimeout = pinput->readUInt32();
+  m_defaultActionAccept = pinput->readInt8() == 1;
+  m_queryTimeout = pinput->readUInt32();
+  m_connectToRdp = pinput->readInt8() == 1;
 
   m_portMappings.deserialize(input);
 
   m_accessControlContainer.deserialize(input);
 
-  m_allowLoopbackConnections = input->readInt8() == 1;
+  m_allowLoopbackConnections = pinput->readInt8() == 1;
 
   m_videoClassNames.clear();
-  size_t count = input->readUInt32();
+  size_t count = pinput->readUInt32();
   ::string videoClass;
   for (size_t i = 0; i < count; i++) {
-    input->readUTF8(&videoClass);
+    pinput->readUTF8(&videoClass);
     m_videoClassNames.add(videoClass);
   }
 
-  m_videoRecognitionInterval = input->readUInt32();
+  m_videoRecognitionInterval = pinput->readUInt32();
 
-  m_idleTimeout = input->readUInt32();
+  m_idleTimeout = pinput->readUInt32();
   m_videoRects.clear();
-  count = input->readUInt32();
+  count = pinput->readUInt32();
   ::string strVideoRect;
   for (size_t i = 0; i < count; i++) {
-    input->readUTF8(&strVideoRect);
+    pinput->readUTF8(&strVideoRect);
     m_videoRects.add(RectSerializer::toRect(&strVideoRect));
   }
 
-  m_grabTransparentWindows = input->readInt8() == 1;
+  m_grabTransparentWindows = pinput->readInt8() == 1;
 
-  m_saveLogToAllUsersPath = input->readInt8() == 1;
-  m_hasPrimaryPassword = input->readInt8() == 1;
-  m_hasReadOnlyPassword = input->readInt8() == 1;
-  m_hasControlPassword = input->readInt8() == 1;
-  m_showTrayIcon = input->readInt8() == 1;
+  m_saveLogToAllUsersPath = pinput->readInt8() == 1;
+  m_hasPrimaryPassword = pinput->readInt8() == 1;
+  m_hasReadOnlyPassword = pinput->readInt8() == 1;
+  m_hasControlPassword = pinput->readInt8() == 1;
+  m_showTrayIcon = pinput->readInt8() == 1;
 
-  input->readUTF8(&m_logFilePath);
+  pinput->readUTF8(&m_logFilePath);
 }
 
 bool ServerConfig::getShowTrayIconFlag()
@@ -260,7 +260,7 @@ void ServerConfig::getLogFileDir(::string & logFilePath)
   *logFilePath = m_logFilePath;
 }
 
-void ServerConfig::setLogFileDir(const ::scoped_string & scopedstrlogFilePath)
+void ServerConfig::setLogFileDir(const ::scoped_string & scopedstrLogFilePath)
 {
   AutoLock l(this);
 
@@ -736,7 +736,7 @@ bool ServerConfig::isLoopbackConnectionsAllowed()
   return m_allowLoopbackConnections;
 }
 
-StringVector *ServerConfig::getVideoClassNames()
+::string_array *ServerConfig::getVideoClassNames()
 {
   return &m_videoClassNames;
 }

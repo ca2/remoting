@@ -43,7 +43,7 @@ public:
    */
   QueryConnectionApplication(HINSTANCE hInstance,
                              const ::scoped_string & scopedstrwindowClassName,
-                             const ::scoped_string & scopedstrcmdLine);
+                             const ::scoped_string & scopedstrCmdLine);
   /**
    * Deletes instance.
    */

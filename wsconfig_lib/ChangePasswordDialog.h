@@ -28,7 +28,7 @@
 #include "gui/BaseDialog.h"
 #include "gui/TextBox.h"
 #include "gui/BalloonTip.h"
-//#include "util/::string.h"
+//////#include "util/::string.h"
 
 class ChangePasswordDialog : public BaseDialog
 {
@@ -38,14 +38,14 @@ public:
   @param parent - parent dialog, optional (can be null).
   @param isNewPassword - flag determinates caption of dialog.
   */
-  ChangePasswordDialog(Control *parent, bool isNewPassword);
+  ChangePasswordDialog(::remoting::Window *parent, bool isNewPassword);
   virtual ~ChangePasswordDialog();
 
   /**
   Returns password (in plain text) specified by user.
   @return password string.
   */
-  const ::scoped_string & scopedstrgetPasswordInPlainText() const;
+  ::string getPasswordInPlainText() const;
 protected:
 
   //

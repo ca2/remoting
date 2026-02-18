@@ -27,10 +27,10 @@
 #include "CommonInputValidation.h"
 #include "UIDataAccess.h"
 #include "ConfigDialog.h"
-#include "file_lib/File.h"
+#include "file_lib/::file::item.h"
 #include "server_config_lib/ServerConfig.h"
 #include "server_config_lib/Configurator.h"
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "util/StringParser.h"
 #include "wsconfig_lib/ChangePasswordDialog.h"
 #include "util/StringTable.h"
@@ -126,7 +126,7 @@ bool AdministrationConfigDialog::validateInput()
 
   // FIXME: Code duplicate (see ServerConfigDialog class).
   if (!passwordSpecified && m_useControlAuth.isChecked()) {
-    MessageBox(m_ctrlThis.getWindow(),
+    ::remoting::message_box(m_ctrlThis.get_hwnd(),
                StringTable::getString(IDS_SET_CONTROL_PASSWORD_NOTIFICATION),
                StringTable::getString(IDS_CAPTION_BAD_INPUT), MB_ICONSTOP | MB_OK);
     return false;
@@ -141,7 +141,7 @@ void AdministrationConfigDialog::updateUI()
 
   m_useControlAuth.check(m_config->isControlAuthEnabled());
   m_repeatControlAuth.check(m_config->getControlAuthAlwaysChecking());
-  m_repeatControlAuth.setEnabled(m_useControlAuth.isChecked());
+  m_repeatControlAuth.enable_window(m_useControlAuth.isChecked());
 
   ConfigDialog *configDialog = (ConfigDialog *)m_parentDialog;
 
@@ -151,8 +151,8 @@ void AdministrationConfigDialog::updateUI()
 
   if (logPath.is_empty()) {
     logPath= StringTable::getString(IDS_LOGPATH_UNAVALIABLE);
-    m_openLogPathButton.setEnabled(false);
-    m_logPathTB.setEnabled(false);
+    m_openLogPathButton.enable_window(false);
+    m_logPathTB.enable_window(false);
   }
 
   m_logPathTB.setText(logPath);
@@ -160,12 +160,12 @@ void AdministrationConfigDialog::updateUI()
   ::string folder;
   getFolderName(logPath, &folder);
 
-  File folderFile(folder);
+  ::file::item folderFile(folder);
 
   if (folderFile.canRead()) {
-    m_openLogPathButton.setEnabled(true);
+    m_openLogPathButton.enable_window(true);
   } else {
-    m_openLogPathButton.setEnabled(false);
+    m_openLogPathButton.enable_window(false);
   }
 
   for (int i = 0; i < 5; i++) {
@@ -217,13 +217,13 @@ void AdministrationConfigDialog::updateUI()
     m_cpControl->setCryptedPassword((char *)cryptedPassword);
   }
 
-  m_cpControl->setEnabled(m_config->isControlAuthEnabled());
+  m_cpControl->enable_window(m_config->isControlAuthEnabled());
 }
 
 void AdministrationConfigDialog::apply()
 {
   ::string logLevelStringStorage;
-  m_logLevel.getText(&logLevelStringStorage);
+  m_logLevel.get_text(&logLevelStringStorage);
 
   int logLevel = 0;
 
@@ -283,7 +283,7 @@ void AdministrationConfigDialog::apply()
 
 void AdministrationConfigDialog::initControls()
 {
-  HWND hwnd = m_ctrlThis.getWindow();
+  HWND hwnd = m_ctrlThis.get_hwnd();
   m_logLevel.setWindow(GetDlgItem(hwnd, IDC_LOG_LEVEL));
   m_logPathTB.setWindow(GetDlgItem(hwnd, IDC_LOG_FILEPATH_EDIT));
 
@@ -367,8 +367,8 @@ void AdministrationConfigDialog::onLogForAllUsersClick()
 
 void AdministrationConfigDialog::onUseControlAuthClick()
 {
-  m_cpControl->setEnabled(m_useControlAuth.isChecked());
-  m_repeatControlAuth.setEnabled(m_useControlAuth.isChecked());
+  m_cpControl->enable_window(m_useControlAuth.isChecked());
+  m_repeatControlAuth.enable_window(m_useControlAuth.isChecked());
 
   ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
 }
@@ -387,7 +387,7 @@ void AdministrationConfigDialog::onChangeControlPasswordClick()
 
 void AdministrationConfigDialog::onUnsetControlPasswordClick()
 {
-  m_cpControl->unsetPassword(true, m_ctrlThis.getWindow());
+  m_cpControl->unsetPassword(true, m_ctrlThis.get_hwnd());
 
   ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
 }

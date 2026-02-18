@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "IpAccessRule.h"
-#include "util/AnsiStringStorage.h"
+//#include "util/::string.h"
 
 IpAccessRule::IpAccessRule()
 : m_action(ACTION_TYPE_DENY)
@@ -140,7 +140,7 @@ void IpAccessRule::setFirstIp(const ::scoped_string & scopedstrFirstIp)
   m_firstIp= firstIp;
 }
 
-void IpAccessRule::setLastIp(const ::scoped_string & scopedstrlastIp)
+void IpAccessRule::setLastIp(const ::scoped_string & scopedstrLastIp)
 {
   m_lastIp= lastIp;
 }
@@ -161,8 +161,8 @@ bool IpAccessRule::isEqualTo(IpAccessRule *other) const
 
 bool IpAccessRule::isIncludingAddress(unsigned long ip) const
 {
-  AnsiStringStorage firstIpAnsi(&m_firstIp);
-  AnsiStringStorage lastIpAnsi(&m_lastIp);
+  ::string firstIpAnsi(&m_firstIp);
+  ::string lastIpAnsi(&m_lastIp);
 
   unsigned long firstIp = inet_addr(firstIpAnsi);
   unsigned long lastIp  = firstIp;
@@ -238,8 +238,8 @@ void IpAccessRule::getIpRange(const ::scoped_string & scopedstrip, const ::scope
   firstIp-= "";
   lastIp-= "";
 
-  AnsiStringStorage ipAnsi(&ipStorage);
-  AnsiStringStorage netmaskAnsi(&netmaskStorage);
+  ::string ipAnsi(&ipStorage);
+  ::string netmaskAnsi(&netmaskStorage);
 
   unsigned long ipAddr = inet_addr(ipAnsi);
   unsigned long netmaskAddr = inet_addr(netmaskAnsi);
@@ -249,10 +249,10 @@ void IpAccessRule::getIpRange(const ::scoped_string & scopedstrip, const ::scope
   in_addr addr = {0};
 
   memcpy(&addr, &subnetAddr, sizeof(unsigned long));
-  AnsiStringStorage subnetworkAnsi(inet_ntoa(addr));
+  ::string subnetworkAnsi(inet_ntoa(addr));
   subnetworkAnsi.toStringStorage(firstIp);
 
   memcpy(&addr, &broadcastAddr, sizeof(unsigned long));
-  AnsiStringStorage broadcastAnsi(inet_ntoa(addr));
+  ::string broadcastAnsi(inet_ntoa(addr));
   broadcastAnsi.toStringStorage(lastIp);
 }

@@ -55,7 +55,7 @@ HANDLE ProcessHandle::getHandle() const
   return m_hProcess;
 }
 
-void ProcessHandle::getProcessModulePath(::string & exePath)
+::string ProcessHandle::getProcessModulePath()
 {
   // FIXME: Test under Windows7
   TCHAR path[MAX_PATH];
@@ -64,5 +64,5 @@ void ProcessHandle::getProcessModulePath(::string & exePath)
   if (result == 0) {
     throw SystemException("Can't get process module path");
   }
-  exePath-= path;
+  return path;
 }

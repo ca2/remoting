@@ -24,120 +24,138 @@
 #include "framework.h"
 #include "DataInputStream.h"
 //#include <vector>
-#include "util/Utf8StringStorage.h"
+////#include "util/::string.h"
 
 #define SETBYTE(y, n) (((y) & 0xFF) << ((n) * 8))
 
-DataInputStream::DataInputStream(InputStream *inputStream)
-: m_inputStream(inputStream)
+
+DataInputStream::DataInputStream(InputStream* inputStream)
+   : m_inputStream(inputStream)
 {
 }
+
 
 DataInputStream::~DataInputStream()
 {
 }
 
+
 size_t DataInputStream::available()
 {
-  return m_inputStream->available();
+   return m_inputStream->available();
 }
 
-size_t DataInputStream::read(void *buffer, size_t len)
+
+size_t DataInputStream::read(void* buffer, size_t len)
 {
-  return m_inputStream->read(buffer, len);
+   return m_inputStream->read(buffer, len);
 }
 
-void DataInputStream::readFully(void *buffer, size_t len)
+
+void DataInputStream::readFully(void* buffer, size_t len)
 {
-  char *typedBuffer = (char *)buffer;
-  size_t totalRead = 0;
-  size_t left = len;
-  while (totalRead < len) {
-    size_t read = m_inputStream->read(typedBuffer + totalRead, left);
-    left -= read;
-    totalRead += read;
-  }
+   char* typedBuffer = (char *)buffer;
+   size_t totalRead = 0;
+   size_t left = len;
+   while (totalRead < len)
+   {
+      size_t read = m_inputStream->read(typedBuffer + totalRead, left);
+      left -= read;
+      totalRead += read;
+   }
 }
+
 
 unsigned char DataInputStream::readUInt8()
 {
-  unsigned char x;
-  readFully(&x, 1);
-  return x;
+   unsigned char x;
+   readFully(&x, 1);
+   return x;
 }
+
 
 unsigned short DataInputStream::readUInt16()
 {
-  unsigned short x = 0;
-  unsigned char buf[2];
-  readFully(&buf[0], 2);
-  x += SETBYTE(buf[0], 1);
-  x += SETBYTE(buf[1], 0);
-  return x;
+   unsigned short x = 0;
+   unsigned char buf[2];
+   readFully(&buf[0], 2);
+   x += SETBYTE(buf[0], 1);
+   x += SETBYTE(buf[1], 0);
+   return x;
 }
+
 
 unsigned int DataInputStream::readUInt32()
 {
-  unsigned int x = 0;
-  unsigned char buf[4];
-  readFully(&buf[0], 4);
-  x += SETBYTE(buf[0], 3);
-  x += SETBYTE(buf[1], 2);
-  x += SETBYTE(buf[2], 1);
-  x += SETBYTE(buf[3], 0);
-  return x;
+   unsigned int x = 0;
+   unsigned char buf[4];
+   readFully(&buf[0], 4);
+   x += SETBYTE(buf[0], 3);
+   x += SETBYTE(buf[1], 2);
+   x += SETBYTE(buf[2], 1);
+   x += SETBYTE(buf[3], 0);
+   return x;
 }
+
 
 unsigned long long DataInputStream::readUInt64()
 {
-  unsigned long long x = 0;
-  unsigned char buf[8];
-  readFully(&buf[0], 8);
-  x += (unsigned long long)buf[0] << (7 * 8);
-  x += (unsigned long long)buf[1] << (6 * 8);
-  x += (unsigned long long)buf[2] << (5 * 8);
-  x += (unsigned long long)buf[3] << (4 * 8);
-  x += (unsigned long long)buf[4] << (3 * 8);
-  x += (unsigned long long)buf[5] << (2 * 8);
-  x += (unsigned long long)buf[6] << (1 * 8);
-  x += (unsigned long long)buf[7] << (0 * 8);
-  return x;
+   unsigned long long x = 0;
+   unsigned char buf[8];
+   readFully(&buf[0], 8);
+   x += (unsigned long long)buf[0] << (7 * 8);
+   x += (unsigned long long)buf[1] << (6 * 8);
+   x += (unsigned long long)buf[2] << (5 * 8);
+   x += (unsigned long long)buf[3] << (4 * 8);
+   x += (unsigned long long)buf[4] << (3 * 8);
+   x += (unsigned long long)buf[5] << (2 * 8);
+   x += (unsigned long long)buf[6] << (1 * 8);
+   x += (unsigned long long)buf[7] << (0 * 8);
+   return x;
 }
+
 
 char DataInputStream::readInt8()
 {
-  char x;
-  readFully(&x, 1);
-  return x;
+   char x;
+   readFully(&x, 1);
+   return x;
 }
+
 
 short DataInputStream::readInt16()
 {
-  return (short)readUInt16();
+   return (short)readUInt16();
 }
+
 
 int DataInputStream::readInt32()
 {
-  return (int)readUInt32();
+   return (int)readUInt32();
 }
+
 
 long long DataInputStream::readInt64()
 {
-  return (long long)readUInt64();
+   return (long long)readUInt64();
 }
 
-void DataInputStream::readUTF8(::string & storage)
+
+::string DataInputStream::read_utf8_string()
 {
-  unsigned int sizeInBytes = readUInt32();
-  if (sizeInBytes > 0) {
-     ::memory buffer;
-     
-     buffer.set_size(sizeInBytes);
+   //::string strStorage;
+   unsigned int sizeInBytes = readUInt32();
+   if (sizeInBytes <= 0)
+   {
+      return {};
+   }
+   ::memory buffer;
 
-    readFully(&buffer.front(), sizeInBytes);
-    Utf8StringStorage utf8String(&buffer);
-    utf8String.toStringStorage(storage);
-  } else {
-    storage-= "";
-  }
+   buffer.set_size(sizeInBytes);
+
+   readFully(buffer.data(), sizeInBytes);
+   ::string utf8String(&buffer);
+   return utf8String;
+
 }
+

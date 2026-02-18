@@ -25,18 +25,18 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 /**
- * Control protocol constants.
+ * ::remoting::Window protocol constants.
  *
  * @section Client requests.
  * Client to server control messages are request-reply oriented and have format
  * descripbed above:
  *
  * unsigned int command code.
- * unsigned int message body size (in bytes).
- * unsigned int[] message body (byte array with length that equals to message body size).
+ * unsigned int scopedstrMessage body size (in bytes).
+ * unsigned int[] scopedstrMessage body (byte array with length that equals to scopedstrMessage body size).
  *
  * @section Server replies.
  * Server to client messages (eq replies to client requests) have following format:
@@ -66,7 +66,7 @@ public:
   static const unsigned int REPLY_AUTH_NEEDED = 0x2;
 
   /**
-   * Get ::list of clients of rfb server.
+   * Get ::list_base of clients of rfb server.
    *
    * Request body: [empty].
    * Reply body:
@@ -152,8 +152,8 @@ public:
    */
 
   /**
-   * Special message to make to authorize client using VNC-style auth.
-   * After server recieves this message VNC-style auth must be done.
+   * Special scopedstrMessage to make to authorize client using VNC-style auth.
+   * After server recieves this scopedstrMessage VNC-style auth must be done.
    */
   static const unsigned int AUTH_MSG_ID = 0x13;
 

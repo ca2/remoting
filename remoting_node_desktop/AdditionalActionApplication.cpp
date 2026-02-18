@@ -35,7 +35,7 @@ const TCHAR AdditionalActionApplication::LOGOUT_KEY[] = "-logout";
 
 AdditionalActionApplication::AdditionalActionApplication(HINSTANCE hInstance,
                                                          const ::scoped_string & scopedstrwindowClassName,
-                                                         const ::scoped_string & scopedstrcommandLine)
+                                                         const ::scoped_string & scopedstrCommandLine)
 : LocalWindowsApplication(hInstance, windowClassName),
   m_commandLine(commandLine)
 {

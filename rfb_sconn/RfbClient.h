@@ -32,7 +32,7 @@
 #include "network/RfbOutputGate.h"
 #include "desktop/Desktop.h"
 #include "fb_update_sender/UpdateSender.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 #include "RfbDispatcher.h"
 #include "ClipboardExchange.h"
@@ -100,7 +100,7 @@ protected:
 
 private:
   // Calling this function makes the client manager enter (and leave) the
-  // mutex associated with the client ::list, so it will have to wait until
+  // mutex associated with the client ::list_base, so it will have to wait until
   // other threads stop working with our object (such operations should be
   // protected with the same mutex as well). If we call this function to
   // change the state to IN_PENDING_TO_REMOVE or IN_READY_TO_REMOVE, we can

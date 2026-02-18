@@ -26,7 +26,7 @@
 
 
 #include "server_config_lib/ConfigReloadListener.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 class WallpaperUtil : protected ConfigReloadListener
 {

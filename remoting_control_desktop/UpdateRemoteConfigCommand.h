@@ -56,7 +56,7 @@ public:
 
 protected:
   /**
-   * Control proxy on client side.
+   * ::remoting::Window proxy on client side.
    */
   ControlProxy *m_serverControl;
 };

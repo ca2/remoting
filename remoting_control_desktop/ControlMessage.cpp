@@ -29,9 +29,9 @@
 #include "server_config_lib/Configurator.h"
 #include "config_lib/RegistrySettingsManager.h"
 #include "util/VncPassCrypt.h"
-#include "util/AnsiStringStorage.h"
+//#include "util/::string.h"
 #include "remoting_node_desktop/NamingDefs.h"
-#include "file_lib/WinFile.h"
+//#include "file_lib/WinFile.h"
 
 #include "remoting_node/resource.h"
 
@@ -78,13 +78,13 @@ void ControlMessage::checkRetCode()
   switch (messageId) {
   case ControlProto::REPLY_ERROR:
     {
-      ::string message;
-      m_gate->readUTF8(&message);
-      throw RemoteException(message);
+      ::string scopedstrMessage;
+      m_gate->readUTF8(&scopedstrMessage);
+      throw RemoteException(scopedstrMessage);
     }
     break;
   case ControlProto::REPLY_AUTH_NEEDED:
-    if (m_passwordFile.getLength() != 0) {
+    if (m_passwordFile.length() != 0) {
       authFromFile();
     } else if (m_getPassFromConfigEnabled) {
       authFromRegistry();
@@ -120,7 +120,7 @@ void ControlMessage::authFromFile()
       ansiBuff[i] = '\0';
     }
   }
-  AnsiStringStorage ansiPwd(ansiBuff);
+  ::string ansiPwd(ansiBuff);
   ::string password;
   ansiPwd.toStringStorage(&password);
   ControlAuth auth(m_gate, password);
@@ -141,7 +141,7 @@ void ControlMessage::authFromRegistry()
                        &passSize)) {
     VncPassCrypt::getPlainPass(plainPassword, hidePassword);
 
-    AnsiStringStorage plainAnsiString((char *)plainPassword);
+    ::string plainAnsiString((char *)plainPassword);
     ::string password;
     plainAnsiString.toStringStorage(&password);
     // Clear ansi plain password from memory.

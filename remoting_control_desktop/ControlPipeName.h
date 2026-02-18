@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
-#include "log_writer/LogWriter.h"
+#include "remoting/util/CommonHeader.h"
+//#include "log_writer/LogWriter.h"
 
 /**
  * Used to create pipe name for control transport.

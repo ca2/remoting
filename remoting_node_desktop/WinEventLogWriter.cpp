@@ -53,9 +53,9 @@ void WinEventLogWriter::onAuthFailed(const ::scoped_string & ip)
                          ip->getString());
 }
 
-void WinEventLogWriter::onDisconnect(const ::scoped_string & message)
+void WinEventLogWriter::onDisconnect(const ::scoped_string & scopedstrMessage)
 {
-  m_sysLog.reportInfo(MSG_INFO_MESSAGE, "{}", message->getString());
+  m_sysLog.reportInfo(MSG_INFO_MESSAGE, "{}", scopedstrMessage->getString());
 }
 
 void WinEventLogWriter::onCrash(const ::scoped_string & dumpPath)

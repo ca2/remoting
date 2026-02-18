@@ -26,7 +26,7 @@
 
 
 #include "NamedPipe.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 // The EmulatedAnonymousPipeFactory class generates a chanel based on named pipe.
 // This is similar to anonymous pipe generation.
@@ -39,8 +39,8 @@ public:
   void generatePipes(NamedPipe **serverPipe, bool serverInheritable,
                      NamedPipe **clientPipe, bool clientInheritable);
 
-private:
-  void getUniqPipeName(::string & result);
+//private:
+  ::string getUniqPipeName();
 
   LogWriter *m_log;
   unsigned int m_bufferSize;

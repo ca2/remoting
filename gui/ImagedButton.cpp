@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "ImagedButton.h"
-#include "util/UnicodeStringStorage.h"
+
 #include <crtdbg.h>
 
 ImagedButton::ImagedButton()
@@ -97,8 +97,8 @@ void ImagedButton::drawItem(LPDRAWITEMSTRUCT dis)
     } // if not pressed
   } // if not themed
 
-  ::string title;
-  getText(&title);
+  ::string title = get_text();
+  //get_text(&title);
 
   RECT captionRect = dis->rcItem;
 
@@ -125,7 +125,7 @@ void ImagedButton::drawItem(LPDRAWITEMSTRUCT dis)
     }
 
     if (m_isUsingTheme) {
-      UnicodeStringStorage uniTitle(title);
+      ::wstring uniTitle(title);
 
       DWORD state = PBS_NORMAL;
 
@@ -134,7 +134,7 @@ void ImagedButton::drawItem(LPDRAWITEMSTRUCT dis)
       }
 
       ThemeLib::DrawThemeText(m_theme, dc, BP_PUSHBUTTON, state,
-                              uniTitle, (int)uniTitle.getLength(),
+                              uniTitle, (int)uniTitle.length(),
                               DT_CENTER | DT_VCENTER | DT_SINGLELINE,
                               0, &captionRect);
     } else {
@@ -143,14 +143,14 @@ void ImagedButton::drawItem(LPDRAWITEMSTRUCT dis)
       if (isDisabled) {
         OffsetRect(&captionRect, 1, 1);
         SetTextColor(dc, ::GetSysColor(COLOR_3DHILIGHT));
-        DrawText(dc, title, -1, &captionRect, DT_WORDBREAK | DT_CENTER);
+        DrawText(dc, wstring(title), -1, &captionRect, DT_WORDBREAK | DT_CENTER);
         OffsetRect(&captionRect, -1, -1);
         SetTextColor(dc, ::GetSysColor(COLOR_3DSHADOW));
-        DrawText(dc, title, -1, &captionRect, DT_WORDBREAK | DT_CENTER);
+        DrawText(dc, wstring(title), -1, &captionRect, DT_WORDBREAK | DT_CENTER);
       } else {
         SetTextColor(dc, ::GetSysColor(COLOR_BTNTEXT));
         SetBkColor(dc, ::GetSysColor(COLOR_BTNFACE));
-        DrawText(dc, title, -1, &captionRect, DT_WORDBREAK | DT_CENTER);
+        DrawText(dc, wstring(title), -1, &captionRect, DT_WORDBREAK | DT_CENTER);
       } // if not disabled
     } // if not themed
   } // if has title
@@ -165,11 +165,11 @@ void ImagedButton::drawItem(LPDRAWITEMSTRUCT dis)
 
 void ImagedButton::setWindow(HWND hwnd)
 {
-  Control::setWindow(hwnd);
+  ::remoting::Window::setWindow(hwnd);
   // Replace window event handler
 //  replaceWindowProc(ImagedButton::wndProc);
   // Add owner draw style to button
-  Control::addStyle(BS_OWNERDRAW);
+  ::remoting::Window::add_style(BS_OWNERDRAW);
 
   if (ThemeLib::isLoaded())  {
     if (m_theme) {
@@ -225,11 +225,11 @@ void ImagedButton::drawIcon(HDC* dc, RECT* prectangleImage, bool isPressed, bool
             (isDisabled ? DSS_DISABLED : DSS_NORMAL) | DST_ICON);
 } // End of drawIcon
 
-bool ImagedButton::window_procedure(LRESULT &lresul, UINT message, ::wparam wparam, ::lparam lparam)
+bool ImagedButton::window_procedure(LRESULT &lresul, UINT scopedstrMessage, ::wparam wparam, ::lparam lparam)
 {
   //ImagedButton *_this = (ImagedButton *)GetWindowLongPtr(hWnd, GWLP_USERDATA);
 
-  switch (message) {
+  switch (scopedstrMessage) {
   case WM_LBUTTONDBLCLK:
     post_message(WM_LBUTTONDOWN, wparam, lparam);
   break;
@@ -256,5 +256,5 @@ bool ImagedButton::window_procedure(LRESULT &lresul, UINT message, ::wparam wpar
   } // switch
   // Any messages we don't process must be passed onto the original window function
    return false;
-  //return CallWindowProc((WNDPROC)_this->m_defWindowProc, hWnd, message, wParam, lParam);
+  //return CallWindowProc((WNDPROC)_this->m_defWindowProc, hWnd, scopedstrMessage, wParam, lParam);
 }

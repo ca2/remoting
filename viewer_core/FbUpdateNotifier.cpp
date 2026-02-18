@@ -150,7 +150,7 @@ void FbUpdateNotifier::execute()
 
       ::array_base<::int_rectangle> updateList;
       update.getRectVector(&updateList);
-      m_logWriter->detail("FbUpdateNotifier (event): %u updates", updateList.size());
+      m_logWriter->debug("FbUpdateNotifier (event): {} updates", updateList.size());
 
       try {
         for (::array_base<::int_rectangle>::iterator i = updateList.begin(); i != updateList.end(); ++i) {

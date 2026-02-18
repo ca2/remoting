@@ -35,7 +35,7 @@ BOOL AuthenticationDialog::onInitDialog()
   setControlById(m_hostname, IDC_EHOST);
   m_hostname.setText(m_strHost);
   setControlById(m_password, IDC_EPASSW);
-  m_password.setFocus();
+  m_password.set_focus();
   return FALSE;
 }
 
@@ -47,18 +47,18 @@ void AuthenticationDialog::setHostName(const ::scoped_string & hostname)
 BOOL AuthenticationDialog::onCommand(UINT controlID, UINT notificationID)
 {
   if (controlID == IDOK) {
-    m_password.getText(&m_strPassword);
-    kill(1);
+    m_strPassword = m_password.get_text();
+    close_dialog(1);
     return TRUE;
   }
   if (controlID == IDCANCEL) {
-    kill(0);
+    close_dialog(0);
     return TRUE;
   }
   return FALSE;
 }
 
-const ::scoped_string & AuthenticationDialog::getPassword()
+string AuthenticationDialog::getPassword()
 {
   return m_strPassword;
 }

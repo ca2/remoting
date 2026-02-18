@@ -208,7 +208,7 @@ void UpdateSender::sendRectHeader(unsigned short x, unsigned short y, unsigned s
 void UpdateSender::sendNewFBSize(::int_size *dim, bool extended)
 {
   // Header
-  m_output->writeUInt8(ServerMsgDefs::FB_UPDATE); // message type
+  m_output->writeUInt8(ServerMsgDefs::FB_UPDATE); // scopedstrMessage type
   m_output->writeUInt8(0); // padding
   m_output->writeUInt16(1); // one rectangle
 
@@ -256,7 +256,7 @@ void UpdateSender::sendFbInClientDim(const EncodeOptions *encodeOptions,
   splitRegion(m_enbox.getEncoder(), &region, &rects, &blankFrameBuffer, encodeOptions);
 
   // Header
-  m_output->writeUInt8(0); // message type
+  m_output->writeUInt8(0); // scopedstrMessage type
   m_output->writeUInt8(0); // padding
   unsigned short numRects = (unsigned short)rects.size();
   _ASSERT(numRects == rects.size());
@@ -333,7 +333,7 @@ void UpdateSender::sendUpdate()
   // request anything.
   Region requestedFullReg, requestedIncrReg;
   bool incrUpdIsReq, fullUpdIsReq;
-  DateTime reqTimePoint;
+  ::earth::time reqTimePoint;
   if (!extractReqRegions(&requestedIncrReg, &requestedFullReg,
                          &incrUpdIsReq, &fullUpdIsReq,
                          &reqTimePoint)) {
@@ -341,7 +341,7 @@ void UpdateSender::sendUpdate()
     return;
   }
   m_log->debug("Time between request and a point after extractReqRegions (in milliseconds): %u",
-    (unsigned int)(DateTime::now() - reqTimePoint).getTime());
+    (unsigned int)(::earth::time::now() - reqTimePoint).getTime());
   m_log->debug("A request has been made, continuing");
   m_log->debug("The incremental region has {} rectangles",
              (int)requestedIncrReg.getCount());
@@ -528,14 +528,14 @@ void UpdateSender::sendUpdate()
     // At this point, we've got final regions in changedRegion and videoRegion.
     //
 
-    // Convert changedRegion to the final ::list of rectangles.
+    // Convert changedRegion to the final ::list_base of rectangles.
     m_log->debug("Number of normal rectangles before splitting: {}",
                changedRegion.getCount());
     ::array_base<::int_rectangle> normalRects;
     splitRegion(m_enbox.getEncoder(), &changedRegion, &normalRects,
                 frameBuffer, &encodeOptions);
 
-    // Convert losslessRegion to the final ::list of rectangles.
+    // Convert losslessRegion to the final ::list_base of rectangles.
     ::array_base<::int_rectangle> losslessRects;
     if (losslessEnabled && !losslessRegion.is_empty()) {
       m_log->debug("Number of lossless rectangles before splitting: {}",
@@ -552,7 +552,7 @@ void UpdateSender::sendUpdate()
                   frameBuffer, &encodeOptions);
     }
 
-    // Get the final ::list of CopyRect rectangles.
+    // Get the final ::list_base of CopyRect rectangles.
     ::array_base<::int_rectangle> copyRects;
     updCont.copiedRegion.getRectVector(&copyRects);
 
@@ -581,15 +581,15 @@ void UpdateSender::sendUpdate()
       numTotalRects++;
       m_log->debug("Adding a pseudo-rectangle for cursor shape update");
     }
-    m_log->detail("Total number of rectangles and pseudo-rectangles: {}",
+    m_log->debug("Total number of rectangles and pseudo-rectangles: {}",
                numTotalRects);
 
     // FIXME: Handle this better, e.g. send first 65534 rectangles.
     _ASSERT(numTotalRects <= 65534);
 
     if (numTotalRects != 0) {
-      m_log->debug("Sending FramebufferUpdate message header");
-      m_output->writeUInt8(ServerMsgDefs::FB_UPDATE); // message type
+      m_log->debug("Sending FramebufferUpdate scopedstrMessage header");
+      m_output->writeUInt8(ServerMsgDefs::FB_UPDATE); // scopedstrMessage type
       m_output->writeUInt8(0); // padding
       m_output->writeUInt16((unsigned short)numTotalRects);
 
@@ -607,7 +607,7 @@ void UpdateSender::sendUpdate()
       }
 
       m_log->debug("Time between request and a point before send and coding (in milliseconds): %u",
-                 (unsigned int)(DateTime::now() - reqTimePoint).getTime());
+                 (unsigned int)(::earth::time::now() - reqTimePoint).getTime());
       m_log->debug("Sending video rectangles");
       sendRectangles(m_enbox.getJpegEncoder(), &videoRects, frameBuffer, &encodeOptions);
       m_log->debug("Sending normal rectangles");
@@ -627,7 +627,7 @@ void UpdateSender::sendUpdate()
       m_log->debug("After Sending normal rectangles %f process time, %f kernel time, %f wall clock time", pt2.process, pt2.kernel, dt);
 
       m_log->information("Time between request and answer is (in milliseconds): %u",
-                 (unsigned int)(DateTime::now() - reqTimePoint).getTime());
+                 (unsigned int)(::earth::time::now() - reqTimePoint).getTime());
     } else {
       m_log->debug("Nothing to send, restoring requested regions");
       AutoLock al(&m_reqRectLocMut);
@@ -701,9 +701,9 @@ void UpdateSender::execute()
           AutoLock al(&m_reqRectLocMut);
           m_busy = false;
         }
-      } catch(::remoting::Exception &e) {
+      } catch(::exception &e) {
         m_log->interror("The update sender thread caught an error and will"
-                   " be terminated: {}", e.getMessage());
+                   " be terminated: {}", e.get_message());
         Thread::terminate();
       }
     }
@@ -712,7 +712,7 @@ void UpdateSender::execute()
 
 void UpdateSender::readUpdateRequest(RfbInputGate *io)
 {
-  // Read the rest of the message:
+  // Read the rest of the scopedstrMessage:
   bool incremental = io->readUInt8() != 0;
   ::int_rectangle reqRect;
   reqRect.left = io->readUInt16();
@@ -730,7 +730,7 @@ void UpdateSender::readUpdateRequest(RfbInputGate *io)
       m_requestedFullReg.addRect(&reqRect);
       m_fullUpdIsReq = true;
     }
-    m_requestTimePoint = DateTime::now();
+    m_requestTimePoint = ::earth::time::now();
     combinedReqRegions.add(&m_requestedIncrReg);
     combinedReqRegions.add(&m_requestedFullReg);
   }
@@ -811,15 +811,15 @@ void UpdateSender::readSetEncodings(RfbInputGate *io)
   io->readUInt8(); // padding
   int numCodes = io->readUInt16();
 
-  ::array_base<int> ::list;
-  ::list.reserve(numCodes);
+  ::array_base<int> ::list_base;
+  ::list_base.reserve(numCodes);
   for (int i = 0; i < numCodes; i++) {
     int code = (int)io->readUInt32();
-    ::list.add(code);
+    ::list_base.add(code);
   }
 
   AutoLock lock(&m_newEncodeOptionsLocker);
-  m_newEncodeOptions.setEncodings(&::list);
+  m_newEncodeOptions.setEncodings(&::list_base);
 }
 
 void UpdateSender::setVideoFrozen(bool value)
@@ -843,7 +843,7 @@ bool UpdateSender::extractReqRegions(Region *incrReqReg,
                                      Region *fullReqReg,
                                      bool *incrUpdIsReq,
                                      bool *fullUpdIsReq,
-                                     DateTime *reqTimePoint)
+                                     ::earth::time *reqTimePoint)
 {
   AutoLock al(&m_reqRectLocMut);
 
@@ -919,13 +919,13 @@ void UpdateSender::inscribeCopiedRegionToReqRegion(UpdateContainer *updCont,
 void UpdateSender::selectEncoder(EncodeOptions *encodeOptions)
 {
   // Make new encode options take effect. They might have been changed on
-  // receiving SetEncodings client message.
+  // receiving SetEncodings client scopedstrMessage.
   {
     AutoLock lock(&m_newEncodeOptionsLocker);
     *encodeOptions = m_newEncodeOptions;
   }
   // Make sure the encoder object corresponds to the preferred encoding
-  // requested in the most recent SetEncodings client message.
+  // requested in the most recent SetEncodings client scopedstrMessage.
   m_enbox.selectEncoder(encodeOptions->getPreferredEncoding());
 }
 

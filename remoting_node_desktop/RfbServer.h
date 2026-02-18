@@ -48,7 +48,7 @@ public:
    * if not set, then view port is full screen.
    * @throws ::remoting::Exception when failed to create tcp server.
    */
-  RfbServer(const ::scoped_string & scopedstrbindHost, unsigned short bindPort,
+  RfbServer(const ::scoped_string & scopedstrBindHost, unsigned short bindPort,
             RfbClientManager *clientManager,
             bool lockAddr,
             LogWriter *log,

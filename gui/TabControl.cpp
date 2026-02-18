@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "TabControl.h"
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include <commctrl.h>
 
 TabControl::TabControl()
@@ -43,16 +43,16 @@ Tab *TabControl::getTab(int index)
   return m_tabContainer.at(index);
 }
 
-void TabControl::addTab(BaseDialog *dialog, const ::scoped_string & scopedstrcaption)
+void TabControl::addTab(BaseDialog *dialog, const ::scoped_string & scopedstrCaption)
 {
-  Tab *tab = new Tab(dialog, caption);
+  Tab *tab = new Tab(dialog, scopedstrCaption);
   m_tabContainer.add(tab);
   TCITEM tcitem = {0};
   tcitem.mask = TCIF_TEXT;
   TCHAR fixedCaption[255];
-  _tcscpy(&fixedCaption[0], tab->getCaption());
+  _tcscpy(&fixedCaption[0], ::wstring(tab->get_caption()));
   tcitem.pszText = fixedCaption;
-  if (TabCtrl_InsertItem(getWindow(), m_tabContainer.size() - 1, &tcitem) == FALSE) {
+  if (TabCtrl_InsertItem(get_hwnd(), m_tabContainer.size() - 1, &tcitem) == FALSE) {
     //
     // Handle error
     // ...
@@ -64,10 +64,10 @@ void TabControl::showTab(int index)
 {
   int selectedIndex = getSelectedTabIndex();
   if (selectedIndex >= 0) {
-    getTab(selectedIndex)->setVisible(false);
+    getTab(selectedIndex)->set_visible(false);
   }
   TabCtrl_SetCurSel(m_hwnd, index);
-  getTab(index)->setVisible(true);
+  getTab(index)->set_visible(true);
 }
 
 void TabControl::showTab(const BaseDialog *dialog)
@@ -88,7 +88,7 @@ void TabControl::deleteAllTabs()
     delete tab;
   }
   m_tabContainer.clear();
-  TabCtrl_DeleteAllItems(getWindow());
+  TabCtrl_DeleteAllItems(get_hwnd());
 }
 
 void TabControl::removeTab(int index)
@@ -107,7 +107,7 @@ void TabControl::removeTab(int index)
 
 int TabControl::getSelectedTabIndex()
 {
-  int page = TabCtrl_GetCurSel(getWindow());
+  int page = TabCtrl_GetCurSel(get_hwnd());
   return page;
 }
 

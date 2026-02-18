@@ -26,7 +26,7 @@
 #include "Pipe.h"
 #include "util/Exception.h"
 #include <crtdbg.h>
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 #include "thread/AutoLock.h"
 
 Pipe::Pipe(unsigned int maxPortionSize)
@@ -62,8 +62,8 @@ size_t Pipe::writeByHandle(const void *buffer, size_t len, HANDLE pipeHandle)
     AutoLock al(&m_hPipeMutex);
     checkPipeHandle(pipeHandle);
     success = WriteFile(pipeHandle, // pipe handle
-                        buffer,    // message
-                        length,  // message length
+                        buffer,    // scopedstrMessage
+                        length,  // scopedstrMessage length
                         &result, // bytes written
                         &overlapped)    // overlapped
                         != 0;
@@ -82,24 +82,24 @@ size_t Pipe::writeByHandle(const void *buffer, size_t len, HANDLE pipeHandle)
         result = cbRet;
       } else {
         ::string errMess;
-        Environment::getErrStr("The Pipe's write function failed"
+        errMess = ::windows::last_error_message("The Pipe's write function failed"
                                " after GetOverlappedResult calling",
-                               &errMess);
-        throw ::io_exception(errMess);
+                               ::windows::last_error());
+        throw ::io_exception(error_io, errMess);
       }
     } else {
       ::string errText;
-      errText.formatf("The Pipe's write function failed after WriteFile calling"
-                     "(pipe handle is %p, total write %llu, try to write %u)",
+      errText.format("The Pipe's write function failed after WriteFile calling"
+                     "(pipe handle is {}, total write {}, try to write {})",
                      pipeHandle, m_totalWrote, length);
       ::string errMess;
-      Environment::getErrStr(errText, &errMess);
-      throw ::io_exception(errMess);
+      errMess = ::windows::last_error_message(errText, ::windows::last_error());
+      throw ::io_exception(error_io,errMess);
     }
   } // else operation already successful has been completed
 
   if (result == 0) {
-    throw ::io_exception(error_io, "Unknown pipe error"));
+    throw ::io_exception(error_io, "Unknown pipe error");
   }
 
   m_totalWrote += result;
@@ -123,8 +123,8 @@ size_t Pipe::readByHandle(void *buffer, size_t len, HANDLE pipeHandle)
     AutoLock al(&m_hPipeMutex);
     checkPipeHandle(pipeHandle);
     success = ReadFile(pipeHandle,         // pipe handle
-                       buffer,            // message
-                       length,          // message length
+                       buffer,            // scopedstrMessage
+                       length,          // scopedstrMessage length
                        &result,         // bytes read
                        &overlapped)   // overlapped
                        != 0;
@@ -143,24 +143,24 @@ size_t Pipe::readByHandle(void *buffer, size_t len, HANDLE pipeHandle)
       } else {
         ::string errText;
         errText.formatf("The Pipe's read function failed after GetOverlappedResult calling (pipe handle is %p)", pipeHandle);
-        ::string errMess;
-        Environment::getErrStr(errText,
-                               &errMess);
-        throw ::io_exception(errMess);
+         ::string errMess;
+         errMess = ::windows::last_error_message(errText, ::windows::last_error());
+         throw ::io_exception(error_io,errMess);
+
       }
     } else {
       ::string errText;
       errText.formatf("The Pipe's write function failed after ReadFile calling"
                      "(pipe handle is %p, total read %llu, try to read %u)",
                      pipeHandle, m_totalRead, length);
-      ::string errMess;
-      Environment::getErrStr(errText, &errMess);
-      throw ::io_exception(errMess);
+       ::string errMess;
+       errMess = ::windows::last_error_message(errText, ::windows::last_error());
+       throw ::io_exception(error_io,errMess);
     }
   } // else operation already successful has been completed
 
   if (result == 0) {
-    throw ::io_exception(error_io, "Unknown pipe error"));
+    throw ::io_exception(error_io, "Unknown pipe error");
   }
   m_totalRead += result;
   return result;
@@ -169,6 +169,6 @@ size_t Pipe::readByHandle(void *buffer, size_t len, HANDLE pipeHandle)
 void Pipe::checkPipeHandle(HANDLE pipeHandle)
 {
   if (pipeHandle == INVALID_HANDLE_VALUE) {
-    throw ::io_exception(error_io, "Invalid pipe handle"));
+    throw ::io_exception(error_io, "Invalid pipe handle");
   }
 }

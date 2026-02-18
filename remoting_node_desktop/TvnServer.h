@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 #include "desktop/WinServiceDesktopFactory.h"
 #include "desktop/ApplicationDesktopFactory.h"
@@ -39,7 +39,7 @@
 
 #include "thread/ZombieKiller.h"
 #include "thread/LocalMutex.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 #include "util/Singleton.h"
 #include "util/ListenerContainer.h"
 #include "NewConnectionEvents.h"
@@ -56,7 +56,7 @@
  *   3) Log singleton.
  *   4) Rfb servers (main rfb server and extra servers).
  *   5) Http server.
- *   6) Control server.
+ *   6) ::remoting::Window server.
  *   7) Other features:
      1) Do action when last client disconnects.
  */
@@ -85,7 +85,7 @@ public:
   TvnServer(bool runsInServiceContext,
             NewConnectionEvents *newConnectionEvents,
             LogInitListener *logInitListener,
-            Logger *logger);
+            LogWriter *LogWriter);
   /**
    * Stops and destroys TightVNC server.
    * @remark don't generate shutdown signal(like shutdown() method does) for listeners.
@@ -182,7 +182,7 @@ protected:
    */
   RfbClientManager *m_rfbClientManager;
   /**
-   * Control server.
+   * ::remoting::Window server.
    */
   ControlServer *m_controlServer;
   /**

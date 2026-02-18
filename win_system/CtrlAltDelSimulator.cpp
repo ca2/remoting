@@ -41,7 +41,7 @@ void CtrlAltDelSimulator::execute()
 {
   // Switch thread desktop to "Winlogon".
   if (DesktopSelector::selectDesktop(::string("Winlogon"))) {
-    HWND hwndCtrlAltDel = FindWindow("SAS window class"), _T("SAS window");
+    HWND hwndCtrlAltDel = FindWindow(L"SAS window class", L"SAS window");
     if (hwndCtrlAltDel == NULL) {
       hwndCtrlAltDel = HWND_BROADCAST;
     }

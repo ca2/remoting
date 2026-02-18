@@ -28,9 +28,9 @@
 #include "server_config_lib/ServerConfig.h"
 
 #include "util/VncPassCrypt.h"
-#include "util/AnsiStringStorage.h"
+//#include "util/::string.h"
 
-ChangePasswordDialog::ChangePasswordDialog(Control *parent, bool isNewPassword)
+ChangePasswordDialog::ChangePasswordDialog(::remoting::Window *parent, bool isNewPassword)
 : BaseDialog(IDD_CHANGE_PASSWORD), m_allowEmptyPassword(false), m_newPassword(isNewPassword)
 {
   setParent(parent);
@@ -84,23 +84,23 @@ void ChangePasswordDialog::onOkButtonClick()
 {
   ::string password1;
   ::string password2;
-  m_password1.getText(&password1);
-  m_password2.getText(&password2);
+  m_password1.get_text(&password1);
+  m_password2.get_text(&password2);
 
   if (password1.is_empty() && !m_allowEmptyPassword) {
     m_password1.showBalloonTip(&m_passwordEmptyTooltip);
-    m_password1.setFocus();
+    m_password1.set_focus();
     return ;
   }
   if (!password1.isEqualTo(&password2)) {
     m_password2.showBalloonTip(&m_passwordsNotMatchTooltip);
-    m_password2.setFocus();
+    m_password2.set_focus();
     return ;
   }
 
-  if (!AnsiStringStorage::checkAnsiConversion(password1)) {
+  if (!::string::checkAnsiConversion(password1)) {
     m_password1.showBalloonTip(&m_passwordWeakTooltip);
-    m_password1.setFocus();
+    m_password1.set_focus();
     return;
   }
 
@@ -116,7 +116,7 @@ void ChangePasswordDialog::onCancelButtonClick()
 
 void ChangePasswordDialog::initControls()
 {
-  HWND hwnd = m_ctrlThis.getWindow();
+  HWND hwnd = m_ctrlThis.get_hwnd();
   m_password1.setWindow(GetDlgItem(hwnd, IDC_PASSWORD));
   m_password2.setWindow(GetDlgItem(hwnd, IDC_PASSWORD2));
 

@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "gui/Control.h"
+#include "gui/::remoting::Window.h"
 //#include <vector>
 
 /**
@@ -49,14 +49,14 @@ public:
    * @param changeButton change password button.
    * @param unsetButton unset password button.
    */
-  PasswordControl(Control *changeButton, Control *unsetButton);
+  PasswordControl(::remoting::Window *changeButton, ::remoting::Window *unsetButton);
   virtual ~PasswordControl();
 
   /**
   Enables or disables depending controls.
   @param enabled flag that to enable or disable controls.
   */
-  void setEnabled(bool enabled);
+  void enable_window(bool enabled);
 
   void setHadPassword(bool had) { 
     m_state = had? OldPassword : NoPassword; 
@@ -65,7 +65,7 @@ public:
   /**
    * Unsets password and updates dependent controls state.
    * @param promtUser determinates if need to promt user.
-   * @param parentWindow hwnd of window to dialog message box (promt).
+   * @param parentWindow hwnd of window to dialog scopedstrMessage box (promt).
    */
   void unsetPassword(bool promtUser, HWND parentWindow);
 
@@ -94,15 +94,15 @@ public:
   @param parent control of parent dialog (optional, can be null).
   @return false if user cancels dialog, true otherwise.
   */
-  bool showChangePasswordModalDialog(Control *parent);
+  bool showChangePasswordModalDialog(::remoting::Window *parent);
 
 private:
   void updateControlsState();
   void releaseCryptedPassword();
 
 protected:
-  Control *m_changeButton;
-  Control *m_unsetButton;
+  ::remoting::Window *m_changeButton;
+  ::remoting::Window *m_unsetButton;
 
   ::array_base<char> m_cryptedPassword;
 

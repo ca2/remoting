@@ -30,7 +30,7 @@
 class WinCommandLineArgs : public CommandLineArgs
 {
 public:
-  WinCommandLineArgs(const ::scoped_string & scopedstrcmdLineInWinFormat);
+  WinCommandLineArgs(const ::scoped_string & scopedstrCmdLineInWinFormat);
   virtual ~WinCommandLineArgs();
 };
 

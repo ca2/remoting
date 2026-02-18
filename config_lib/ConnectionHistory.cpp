@@ -76,7 +76,7 @@ void ConnectionHistory::save()
 
   size_t count = m_hosts.size();
 
-  for (size_t i = 0; i < min(count, m_limit); i++) {
+  for (size_t i = 0; i < minimum(count, m_limit); i++) {
     //valueName.formatf("%u", i);
     auto value = m_hosts.at(i);
 

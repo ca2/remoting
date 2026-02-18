@@ -63,7 +63,7 @@ private:
   void initControls();
 
   //
-  // Control event handlers
+  // ::remoting::Window event handlers
   //
 
   void onAddButtonClick();
@@ -96,18 +96,18 @@ private:
   EditIpAccessRuleDialog m_editDialog;
   // Controls
   ListView m_list;
-  Control m_addButton;
-  Control m_editButton;
-  Control m_removeButton;
-  Control m_moveUpButton;
-  Control m_moveDownButton;
+  ::remoting::Window m_addButton;
+  ::remoting::Window m_editButton;
+  ::remoting::Window m_removeButton;
+  ::remoting::Window m_moveUpButton;
+  ::remoting::Window m_moveDownButton;
   CheckBox m_defaultActionAccept;
   CheckBox m_defaultActionRefuse;
   CheckBox m_allowLoopbackConnections;
   CheckBox m_onlyLoopbackConnections;
   TextBox m_queryTimeout;
   TextBox m_ip;
-  Control m_ipCheckResult;
+  ::remoting::Window m_ipCheckResult;
   SpinControl m_queryTimeoutSpin;
   BaseDialog *m_parentDialog;
 };

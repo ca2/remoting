@@ -30,7 +30,7 @@
 #include "desktop_ipc/UserInputClient.h"
 #include "SasUserInput.h"
 #include "WindowsUserInput.h"
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 #include "win_system/WindowsDisplays.h"
 
 DesktopWinImpl::DesktopWinImpl(ClipboardListener *extClipListener,
@@ -58,7 +58,7 @@ DesktopWinImpl::DesktopWinImpl(ClipboardListener *extClipListener,
 
     Configurator::getInstance()->addListener(this);
   } catch (::remoting::Exception &ex) {
-    m_log->error("exception during DesktopWinImpl creaion: {}", ex.getMessage());
+    m_log->error("exception during DesktopWinImpl creaion: {}", ex.get_message());
     freeResource();
     throw;
   }
@@ -124,8 +124,8 @@ void DesktopWinImpl::logDesktopInfo()
     } else {
       m_log->debug("The Aero is Off");
     }
-  } catch (::remoting::Exception &e) {
-    m_log->error("Can't get information for the Aero: {}", e.getMessage());
+  } catch (::exception &e) {
+    m_log->error("Can't get information for the Aero: {}", e.get_message());
   }
 
   // Log all display coordinates

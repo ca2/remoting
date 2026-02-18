@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 // Class that startup at constructor and cleanup at destructor Windows Sockets subsystem.
 class WsaStartup

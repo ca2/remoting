@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/AnsiStringStorage.h"
+//#include "util/::string.h"
 
 class AppletParameter
 {
@@ -45,7 +45,7 @@ protected:
   bool isStringValid(const char *str) const;
 
 protected:
-  AnsiStringStorage m_formattedString;
+  ::string m_formattedString;
 
   bool m_isValid;
 };

@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "util/inttypes.h"
 
 class AuthHandler;
@@ -81,12 +81,12 @@ public:
                                      const ::string description = "") = 0;
 
   //
-  // This function return ::array_base of enabled capabilities "client-to-server message".
+  // This function return ::array_base of enabled capabilities "client-to-server scopedstrMessage".
   //
   virtual void getEnabledClientMsgCapabilities(::array_base<unsigned int> *codes) const = 0;
 
   //
-  // This function return ::array_base of enabled capabilities "server-to-client message".
+  // This function return ::array_base of enabled capabilities "server-to-client scopedstrMessage".
   //
   virtual void getEnabledServerMsgCapabilities(::array_base<unsigned int> *codes) const = 0;
 

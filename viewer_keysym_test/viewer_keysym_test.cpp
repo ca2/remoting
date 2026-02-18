@@ -35,8 +35,8 @@ int _tmain(int argc, TCHAR *argv[])
   try {
     KeySymTest keySymTest(argv[1], argv[2]);
     keySymTest.run();
-  } catch (::remoting::Exception &e) {
-    _ftprintf(stderr, "Error: {}\n", e.getMessage());
+  } catch (::exception &e) {
+    _ftprintf(stderr, "Error: {}\n", e.get_message());
     return 1;
   }
   return 0;

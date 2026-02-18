@@ -252,7 +252,7 @@ prescan_quantize (j_decompress_ptr cinfo, JSAMPARRAY input_buf,
 /*
  * Next we have the really interesting routines: selection of a colormap
  * given the completed histogram.
- * These routines work with a ::std::list of "boxes", each representing a rectangular
+ * These routines work with a ::std::list_base of "boxes", each representing a rectangular
  * subset of the input color space (to histogram precision).
  */
 
@@ -544,7 +544,7 @@ select_colors (j_decompress_ptr cinfo, int desired_colors)
   int numboxes;
   int i;
 
-  /* Allocate workspace for box ::std::list */
+  /* Allocate workspace for box ::std::list_base */
   boxlist = (boxptr) (*cinfo->mem->alloc_small)
     ((j_common_ptr) cinfo, JPOOL_IMAGE, desired_colors * SIZEOF(box));
   /* Initialize one box containing whole space */
@@ -557,7 +557,7 @@ select_colors (j_decompress_ptr cinfo, int desired_colors)
   boxlist[0].c2max = MAXJSAMPLE >> C2_SHIFT;
   /* Shrink it to actually-used volume and set its statistics */
   update_box(cinfo, & boxlist[0]);
-  /* Perform median-cut to produce final box ::std::list */
+  /* Perform median-cut to produce final box ::std::list_base */
   numboxes = median_cut(cinfo, boxlist, numboxes, desired_colors);
   /* Compute the representative color for each box, fill colormap */
   for (i = 0; i < numboxes; i++)
@@ -776,7 +776,7 @@ LOCAL(void)
 find_best_colors (j_decompress_ptr cinfo, int minc0, int minc1, int minc2,
 		  int numcolors, JSAMPLE colorlist[], JSAMPLE bestcolor[])
 /* Find the closest colormap entry for each cell in the update box,
- * given the ::std::list of candidate colors prepared by find_nearby_colors.
+ * given the ::std::list_base of candidate colors prepared by find_nearby_colors.
  * Return the indexes of the closest entries in the bestcolor[] array.
  * This routine uses Thomas' incremental distance calculation method to
  * find the distance from a colormap entry to successive cells in the box.

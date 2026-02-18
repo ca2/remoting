@@ -26,7 +26,7 @@
 
 
 
-#include "util/DateTime.h"
+//#include "util/::earth::time.h"
 //#include <vector>
 #include "thread/LocalMutex.h"
 
@@ -63,7 +63,7 @@ private:
   LocalMutex m_displayRectsMutex;
   
   static const unsigned int UPDATE_INTERVAL = 3000;
-  DateTime m_latestUpdateTime;
+  class ::time m_latestUpdateTime;
 };
 
 //// __WINDOWSDISPLAYS_H__

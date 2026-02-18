@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "MirrorDriverClient.h"
 #include "util/Exception.h"
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 // FIXME: Why the class should depence from the remoting_node_desktop project?
 #include "remoting_node_desktop/NamingDefs.h"
 
@@ -58,7 +58,7 @@ MirrorDriverClient::MirrorDriverClient(LogWriter *log)
   if (m_propertyChangeListenerWindow.getHWND() == 0) {
     dispose();
     throw ::remoting::Exception("Can't create a client for a mirror driver because"
-                    " can't create a message window to listen changing"
+                    " can't create a scopedstrMessage window to listen changing"
                     " screen properties.");
   }
 }
@@ -70,9 +70,9 @@ MirrorDriverClient::~MirrorDriverClient()
     wait();
 
     dispose();
-  } catch (::remoting::Exception &e) {
+  } catch (::exception &e) {
     m_log->error("An error occured during the"
-               " mirror driver deinitialization: {}", e.getMessage());
+               " mirror driver deinitialization: {}", e.get_message());
   }
 }
 
@@ -131,9 +131,9 @@ bool MirrorDriverClient::applyNewProperties()
     open();
     load();
     connect();
-  } catch (::remoting::Exception &e) {
+  } catch (::exception &e) {
     m_log->error("Can't apply new screen properties for the mirror driver:"
-               " {}", e.getMessage());
+               " {}", e.get_message());
     return false;
   }
   return true;
@@ -183,7 +183,7 @@ void MirrorDriverClient::openDeviceRegKey(TCHAR *miniportName)
   ::string subKey("DEVICE0");
   if (substrPos != 0) {
     ::string str(substrPos);
-    if (str.getLength() >= 8) {
+    if (str.length() >= 8) {
       str.getSubstring(&subKey, 1, 7);
     }
   }
@@ -349,9 +349,9 @@ void MirrorDriverClient::unload()
     try {
       commitDisplayChanges(pdm);
       m_log->information("Mirror driver is unloaded");
-    } catch (::remoting::Exception &e) {
+    } catch (::exception &e) {
       m_log->warning("Failed to unload the mirror driver: {}",
-                   e.getMessage());
+                   e.get_message());
     }
   }
 
@@ -399,11 +399,11 @@ void MirrorDriverClient::disconnect()
   }
 }
 
-bool MirrorDriverClient::processMessage(UINT message,
+bool MirrorDriverClient::processMessage(UINT scopedstrMessage,
                                         WPARAM wParam,
                                         LPARAM lParam)
 {
-  if (message == WM_DISPLAYCHANGE) {
+  if (scopedstrMessage == WM_DISPLAYCHANGE) {
     m_isDisplayChanged = true;
     m_log->debug("Display changing detecting");
   }
@@ -429,7 +429,7 @@ void MirrorDriverClient::execute()
   while (!isTerminating()) {
     if (PeekMessage(&msg, m_propertyChangeListenerWindow.getHWND(),
                     0, 0, PM_REMOVE) != 0) {
-      if (msg.message == WM_DISPLAYCHANGE) {
+      if (msg.scopedstrMessage == WM_DISPLAYCHANGE) {
         m_isDisplayChanged = true;
       } else {
         DispatchMessage(&msg);

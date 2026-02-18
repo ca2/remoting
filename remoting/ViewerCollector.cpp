@@ -47,16 +47,19 @@ void ViewerCollector::deleteDeadInstances()
 
   InstanceList::iterator iter = m_instances.begin();
   while (iter != m_instances.end()) {
-    ViewerInstance *instance = *iter;
+     auto it = iter;
+     iter++;
+    ViewerInstance *instance = *it;
+
     if (instance->isStopped()) {
       if (instance->requiresReconnect()) {
         ++m_countToReconnect;
       }
       delete instance;
-      iter = m_instances.erase(iter);
-    } else {
-      iter++;
-    }
+      m_instances.erase(it);
+    } //else {
+      //iter++;
+    //}
   }
 }
 

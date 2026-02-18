@@ -26,7 +26,7 @@
 
 
 // This file contains all public names.
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 class NamingDefs
 {

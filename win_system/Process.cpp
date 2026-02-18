@@ -36,7 +36,7 @@ Process::Process(const ::file::path & path, const ::scoped_string & scopedstrArg
   m_stdErr(0)
 {
   setFilename(path);
-  setArguments(args);
+  setArguments(scopedstrArgs);
 
   m_hStopWait = CreateEvent(0, FALSE, FALSE, 0);
 }
@@ -52,12 +52,12 @@ Process::~Process()
 
 void Process::setFilename(const ::scoped_string & scopedstrPath)
 {
-  m_path= path;
+  m_path= scopedstrPath;
 }
 
 void Process::setArguments(const ::scoped_string & scopedstrArgs)
 {
-  m_args= args;
+  m_args= scopedstrArgs;
 }
 
 void Process::setStandardIoHandles(HANDLE stdIn, HANDLE stdOut, HANDLE stdErr)
@@ -95,7 +95,7 @@ void Process::start()
   ::string commandLine = getCommandLineString();
 
   _ASSERT(!commandLine.is_empty());
-  if (CreateProcess(NULL, (LPTSTR) commandLine,
+  if (CreateProcess(NULL, (LPTSTR) ::wstring(commandLine).c_str(),
                     NULL, NULL, m_handlesIsInherited, NULL, NULL, NULL,
                     &sti, &pi) == 0) {
     throw SystemException();

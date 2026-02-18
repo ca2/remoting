@@ -45,7 +45,7 @@ jpeg_abort (j_common_ptr cinfo)
   /* Reset overall state for possible reuse of object */
   if (cinfo->is_decompressor) {
     cinfo->global_state = DSTATE_START;
-    /* Try to keep application from accessing now-deleted marker ::std::list.
+    /* Try to keep application from accessing now-deleted marker ::std::list_base.
      * A bit kludgy to do it here, but this is the most central place.
      */
     ((j_decompress_ptr) cinfo)->marker_list = NULL;

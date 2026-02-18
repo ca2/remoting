@@ -82,7 +82,7 @@ public:
    * @param input source input stream.
    * @throws ::remoting::Exception on error.
    */
-  void deserialize(DataInputStream *input);
+  void deserialize(DataInputStream * pinput);
 
   // Returns a read-only pointer to the element with specifed index
   // or 0 if not found.

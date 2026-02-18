@@ -26,9 +26,9 @@
 
 
 #include "AnonymousPipe.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
-// The AnonymousPipeFactory class generates the ::std::pair of the AnonymousPipe
+// The AnonymousPipeFactory class generates the ::pair of the AnonymousPipe
 // objects that connected to each other.
 class AnonymousPipeFactory
 {
@@ -36,7 +36,7 @@ public:
   AnonymousPipeFactory(unsigned int bufferSize, LogWriter *log);
   virtual ~AnonymousPipeFactory();
 
-  // This function generates the ::std::pair of the AnonymousPipe
+  // This function generates the ::pair of the AnonymousPipe
   // objects that connected to each other.
   // @param the fistSide and the secondSide is a pointer to an AnonymousPipe
   // pointers that receive new the AnonymousPipe objects.

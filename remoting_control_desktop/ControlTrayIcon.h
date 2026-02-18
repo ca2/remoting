@@ -101,7 +101,7 @@ protected:
   void onLeftButtonDown();
 
   /**
-   * Tray icon popup menu items message handlers.
+   * Tray icon popup menu items scopedstrMessage handlers.
    */
   void onConfigurationMenuItemClick();
   void onDisconnectAllClientsMenuItemClick();

@@ -26,12 +26,12 @@
 
 #include "network/socket/SocketAddressIPv4.h"
 
-TcpServer::TcpServer(const ::scoped_string & scopedstrbindHost, unsigned short bindPort,
+TcpServer::TcpServer(const ::scoped_string & scopedstrBindHost, unsigned short bindPort,
                      bool autoStart,
                      bool lockAddr)
-: m_bindHost(bindHost), m_bindPort(bindPort)
+: m_bindHost(scopedstrBindHost), m_bindPort(bindPort)
 {
-  SocketAddressIPv4 bindAddr = SocketAddressIPv4::resolve(bindHost, bindPort);
+  SocketAddressIPv4 bindAddr = SocketAddressIPv4::resolve(scopedstrBindHost, bindPort);
 
   if (lockAddr) {
     m_listenSocket.setExclusiveAddrUse();
@@ -56,7 +56,7 @@ TcpServer::~TcpServer()
   }
 }
 
-const ::scoped_string & scopedstrTcpServer::getBindHost() const
+::string TcpServer::getBindHost() const
 {
   return m_bindHost;
 }

@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 class WinClipboard
 {
@@ -40,13 +40,13 @@ public:
   bool getString(::string & str);
 
   // update windows clipboard
-  bool= const ::scoped_string & str;
+  bool setString(const ::scoped_string & str);
 
-protected:
-  static const TCHAR CR = _T('\r');
-  static const TCHAR LF = _T('\n');
+//protected:
+  static const char CR = '\r';
+  static const char LF = '\n';
 
-protected:
+//protected:
   // function removed CR before LF
   ::string removeCR(const ::scoped_string & str);
 

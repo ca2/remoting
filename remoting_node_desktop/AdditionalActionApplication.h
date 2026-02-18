@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 #include "win_system/LocalWindowsApplication.h"
 
@@ -59,7 +59,7 @@ public:
    */
   AdditionalActionApplication(HINSTANCE hInstance,
                               const ::scoped_string & scopedstrwindowClassName,
-                              const ::scoped_string & scopedstrcommandLine);
+                              const ::scoped_string & scopedstrCommandLine);
   /**
    * Destructor.
    */

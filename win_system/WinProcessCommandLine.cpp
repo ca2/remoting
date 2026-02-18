@@ -35,29 +35,25 @@ WinProcessCommandLine::WinProcessCommandLine()
     if (out[i][0] != _T('-')) {
       m_strParam.add(out[i]);
     } else {
-      optionParser(&out[i]);
+      optionParser(out[i]);
     }
   }
 }
 
 void WinProcessCommandLine::optionParser(::string & out)
 {
-  ::std::pair<::string, ::string> strPair;
+  ::pair<::string, ::string> strPair;
   
-  out->remove(0, 1); 
-  size_t ipos = out->findChar(_T('='));
-  if (ipos == -1) {
-    strPair.first = *out;
-    strPair.second = "";
+  out.erase((character_count)0, (character_count)1);
+  auto ipos = out.find_first_character('=');
+  if (::is_null(ipos)) {
+    strPair.m_element1 = *out;
+    strPair.m_element2= "";
   } else {
-    ::string strTemp = *out;
-    strTemp.remove(0, ipos+1);
-    strPair.second = strTemp;
-    strTemp = *out;
-    strTemp.remove(ipos, strTemp.getLength()-ipos);
-    strPair.first = strTemp;
+      strPair.m_element1 = out.substr(0, ipos);
+      strPair.m_element2 = out.substr(ipos + 1);
   }
-  strPair.first.toLowerCase();
+  strPair.m_element1.make_lower();
   m_strParams.add(strPair);
 }
 
@@ -74,8 +70,8 @@ size_t WinProcessCommandLine::getOptionsCount()
 bool WinProcessCommandLine::findOptionValue(const ::string valName, ::string &  strOut)
 {
   for (size_t i = 0; i < getOptionsCount(); i++) {
-    if (m_strParams[i].first == valName) {
-      *strOut = m_strParams[i].second;
+    if (m_strParams[i].m_element2 == valName) {
+      strOut = m_strParams[i].m_element2;
 
       return true;
     }
@@ -86,7 +82,7 @@ bool WinProcessCommandLine::findOptionValue(const ::string valName, ::string &  
 bool WinProcessCommandLine::getArgument(size_t index, ::string &  strOut)
 {
   if (index < getArgumentsCount()) {
-    *strOut = m_strParam[index];
+    strOut = m_strParam[index];
 
     return true;
   }
@@ -96,7 +92,7 @@ bool WinProcessCommandLine::getArgument(size_t index, ::string &  strOut)
 bool WinProcessCommandLine::getOption(size_t index, ::string &  strOut)
 {
   if (index < getOptionsCount()) {
-    *strOut = m_strParams[index].first;
+    strOut = m_strParams[index].m_element1;
 
     return true;
   }

@@ -40,7 +40,7 @@ class IpAccessControl : public ::array_base<IpAccessRule *>
 {
 public:
   void serialize(DataOutputStream *output);
-  void deserialize(DataInputStream *input);
+  void deserialize(DataInputStream * pinput);
 };
 
 

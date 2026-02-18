@@ -61,10 +61,10 @@ protected:
   void initControls();
 
   //
-  // Control event handlers
+  // ::remoting::Window event handlers
   //
 
-  void onRecognitionIntervalSpinChangePos(LPNMUPDOWN message);
+  void onRecognitionIntervalSpinChangePos(LPNMUPDOWN scopedstrMessage);
   void onRecognitionIntervalUpdate();
   void onVideoRegionsUpdate();
 

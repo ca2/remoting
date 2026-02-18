@@ -25,26 +25,29 @@
 #pragma once
 
 
-#ifndef WINVER
-#define WINVER 0x0501
-#endif
+#include "acme/_operating_system.h"
 
-#ifndef _WIN32_WINNT
-#define _WIN32_WINNT 0x0501
-#endif
 
-#include <winsock2.h>
-#include <ws2tcpip.h>
-#include <wspiapi.h>
-#include <windows.h>
-#include <psapi.h>
-#include <Wtsapi32.h>
-#include <tchar.h>
-#include <commctrl.h>
-// hide annoying warning c:\program files(x86)\windows kits\8.1\include\um\dbghelp.h(1544) : warning C4091 : 'typedef ' : ignored on left of '' when no variable is declared
-#pragma warning(push)
-#pragma warning(disable:4091)
-#include <Dbghelp.h>
-#pragma warning(pop)
-#include <ShellAPI.h>
+//#ifndef WINVER
+//#define WINVER 0x0501
+//#endif
 
+//#ifndef _WIN32_WINNT
+//#define _WIN32_WINNT 0x0501
+//#endif
+
+// #include <winsock2.h>
+// #include <ws2tcpip.h>
+// #include <wspiapi.h>
+// #include <windows.h>
+// #include <psapi.h>
+// #include <Wtsapi32.h>
+// #include <tchar.h>
+// #include <commctrl.h>
+// // hide annoying warning c:\program files(x86)\windows kits\8.1\include\um\dbghelp.h(1544) : warning C4091 : 'typedef ' : ignored on left of '' when no variable is declared
+// #pragma warning(push)
+// #pragma warning(disable:4091)
+// #include <Dbghelp.h>
+// #pragma warning(pop)
+// #include <ShellAPI.h>
+//

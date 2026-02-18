@@ -22,12 +22,12 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "remoting_node_desktop/NamingDefs.h"
 #include "HooksUpdateDetector.h"
 
 #include "win_system/UipiControl.h"
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 
 HooksUpdateDetector::HooksUpdateDetector(UpdateKeeper *updateKeeper,
                                          UpdateListener *updateListener, LogWriter *log)
@@ -44,9 +44,9 @@ HooksUpdateDetector::HooksUpdateDetector(UpdateKeeper *updateKeeper,
 #endif
   try {
     m_hookInstaller = new HookInstaller();
-  } catch (::remoting::Exception &e) {
+  } catch (::exception &e) {
     Thread::terminate();
-    m_log->error("Failed to load the hook library: {}", e.getMessage());
+    m_log->error("Failed to load the hook library: {}", e.get_message());
   }
   HINSTANCE hinst = GetModuleHandle(0);
   m_targetWin = new MessageWindow(hinst,
@@ -89,8 +89,8 @@ void HooksUpdateDetector::start32Loader()
     m_hookLoader32.setArguments(hwndStr);
     try {
       m_hookLoader32.start();
-    } catch (::remoting::Exception &e) {
-      m_log->error("Can't run the 32-bit hook loader: {}", e.getMessage());
+    } catch (::exception &e) {
+      m_log->error("Can't run the 32-bit hook loader: {}", e.get_message());
     }
   }
 #endif
@@ -99,16 +99,16 @@ void HooksUpdateDetector::start32Loader()
 void HooksUpdateDetector::terminate32Loader()
 {
   if (m_hookLoader32.getProcessHandle() != 0) {
-    // Send broadcast message to close the 32 bit hook loader.
+    // Send broadcast scopedstrMessage to close the 32 bit hook loader.
     broadcastMessage(HookDefinitions::LOADER_CLOSE_CODE);
   }
 }
 
-void HooksUpdateDetector::broadcastMessage(UINT message)
+void HooksUpdateDetector::broadcastMessage(UINT scopedstrMessage)
 {
   HWND hwndFound = FindWindowEx(HWND_MESSAGE, 0, 0, 0);
   while(hwndFound) {
-    PostMessage(hwndFound, message, 0, 0);
+    PostMessage(hwndFound, scopedstrMessage, 0, 0);
     hwndFound = GetNextWindow(hwndFound, GW_HWNDNEXT);
   }
 }
@@ -127,9 +127,9 @@ void HooksUpdateDetector::execute()
     UipiControl uipiControl(m_log);
     uipiControl.allowMessage(HookDefinitions::SPEC_IPC_CODE,
                              m_targetWin->getHWND());
-  } catch (::remoting::Exception &e) {
+  } catch (::exception &e) {
     terminate();
-    m_log->error(e.getMessage());
+    m_log->error(e.get_message());
   }
 
   bool hookInstalled = false;
@@ -137,15 +137,15 @@ void HooksUpdateDetector::execute()
     try {
       m_hookInstaller->install(m_targetWin->getHWND());
       hookInstalled = true;
-    } catch (::remoting::Exception &e) {
+    } catch (::exception &e) {
       m_log->error("Hooks installing failed, wait for the next trying: {}",
-                 e.getMessage());
+                 e.get_message());
       m_initWaiter.waitForEvent(5000);
       try {
         m_hookInstaller->uninstall();
-      } catch (::remoting::Exception &e) {
+      } catch (::exception &e) {
         m_log->error("Hooks uninstalling failed: {}",
-                   e.getMessage());
+                   e.get_message());
       }
     }
   }
@@ -159,7 +159,7 @@ void HooksUpdateDetector::execute()
   MSG msg;
   while (!isTerminating()) {
     if (PeekMessage(&msg, m_targetWin->getHWND(), 0, 0, PM_REMOVE) != 0) {
-      if (msg.message == HookDefinitions::SPEC_IPC_CODE) {
+      if (msg.scopedstrMessage == HookDefinitions::SPEC_IPC_CODE) {
         ::int_rectangle rect((short)(msg.wParam >> 16), (short)(msg.wParam & 0xffff),
                   (short)(msg.lParam >> 16), (short)(msg.lParam & 0xffff));
          if (rect.has_area())
@@ -184,8 +184,8 @@ void HooksUpdateDetector::execute()
       m_hookInstaller->uninstall();
     }
     terminate32Loader();
-  } catch (::remoting::Exception &e) {
-    m_log->error("{}", e.getMessage());
+  } catch (::exception &e) {
+    m_log->error("{}", e.get_message());
   }
   m_log->information("Hooks update detector has been terminated.");
 }

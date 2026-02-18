@@ -25,18 +25,18 @@
 #include "acme/_operating_system.h"
 #include "WindowsApplication.h"
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "thread/AutoLock.h"
 
 LocalMutex WindowsApplication::m_MDLMutex;
 
-::list<HWND> WindowsApplication::m_modelessDialogList;
+::comparable_list_base<HWND> WindowsApplication::m_modelessDialogList;
 
 WindowsApplication::WindowsApplication(HINSTANCE appInstance,
                                        const ::scoped_string & scopedstrwindowClassName)
 : m_appInstance(appInstance),
   m_mainWindow(0),
-  m_windowClassName(windowClassName)
+  m_wstrWindowClassName(scopedstrwindowClassName)
 {
 }
 
@@ -73,9 +73,9 @@ int WindowsApplication::processMessages()
   return (int)msg.wParam;
 }
 
-void WindowsApplication::createWindow(const ::scoped_string & scopedstrclassName)
+void WindowsApplication::createWindow(const ::scoped_string & scopedstrClassName)
 {
-  m_mainWindow = CreateWindow(className,
+  m_mainWindow = CreateWindow(::wstring(scopedstrClassName),
                               0, 0,
                               0, 0, 0, 0,
                               HWND_MESSAGE, 0,
@@ -90,7 +90,7 @@ void WindowsApplication::registerWindowClass(WNDCLASS *wndClass)
   // Set default values. Derived classes can redefine this fields
   wndClass->lpfnWndProc = wndProc;
   wndClass->hInstance = m_appInstance;
-  wndClass->lpszClassName = m_windowClassName;
+  wndClass->lpszClassName = m_wstrWindowClassName;
 
   RegisterClass(wndClass);
 }
@@ -100,9 +100,9 @@ void WindowsApplication::shutdown()
   PostMessage(m_mainWindow, WM_CLOSE, 0, 0);
 }
 
-void WindowsApplication::postMessage(UINT message, WPARAM wParam, LPARAM lParam)
+void WindowsApplication::postMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
 {
-  PostMessage(m_mainWindow, message, wParam, lParam);
+  PostMessage(m_mainWindow, scopedstrMessage, wParam, lParam);
 }
 
 void WindowsApplication::addModelessDialog(HWND dialogWindow)
@@ -116,13 +116,13 @@ void WindowsApplication::removeModelessDialog(HWND dialogWindow)
 {
   AutoLock l(&m_MDLMutex);
 
-  m_modelessDialogList.remove(dialogWindow);
+  m_modelessDialogList.erase(dialogWindow);
 }
 
 bool WindowsApplication::processDialogMessage(MSG *msg)
 {
   AutoLock l(&m_MDLMutex);
-  for (::list<HWND>::iterator iter = m_modelessDialogList.begin();
+  for (::list_base<HWND>::iterator iter = m_modelessDialogList.begin();
        iter != m_modelessDialogList.end(); iter++) {
     if (IsDialogMessage(*iter, msg)) {
       return true;

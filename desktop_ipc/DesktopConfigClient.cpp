@@ -50,7 +50,7 @@ bool DesktopConfigClient::isRemoteInputAllowed()
     m_forwGate->writeUInt8(SOFT_INPUT_ENABLING_REQ);
     m_forwGate->writeUInt64(m_lastInputTime.getTime());
     result = m_forwGate->readUInt8() != 0;
-    m_lastInputTime = DateTime(m_forwGate->readUInt64());
+    m_lastInputTime = ::earth::time(m_forwGate->readUInt64());
   } catch (ReconnectException &) {
   }
   return result;

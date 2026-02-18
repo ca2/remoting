@@ -25,8 +25,8 @@
 #pragma once
 
 
+#include "remoting/util/CommonHeader.h"
 #include "Tooltip.h"
-#include "util/CommonHeader.h"
 #include <commctrl.h>
 
 /**
@@ -35,16 +35,16 @@
 class BalloonTip : public Tooltip
 {
 public:
-  BalloonTip(const ::scoped_string & scopedstrtext, const ::scoped_string & scopedstrcaption);
+  BalloonTip(const ::scoped_string & scopedstrText, const ::scoped_string & scopedstrCaption);
   BalloonTip();
   virtual ~BalloonTip();
 
-  void showTooltip(Control *control);
+  void showTooltip(::remoting::Window *control);
 
-  void setText(const ::scoped_string & scopedstrtext);
-  void setTitle(const ::scoped_string & scopedstrcaption);
+  void setText(const ::scoped_string & scopedstrText);
+  void setTitle(const ::scoped_string & scopedstrCaption);
 
-  void getText(::string & text) const;
+  void get_text(::string & text) const;
   void getTitle(::string & title) const;
 
   void setIconType(int iconType);

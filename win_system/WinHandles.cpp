@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "acme/_operating_system.h"
 #include "WinHandles.h"
-#include "Environment.h"
+//#include "Environment.h"
 #include "util/Exception.h"
 
 WinHandles::WinHandles()
@@ -44,7 +44,7 @@ HANDLE WinHandles::assignHandleFor(HANDLE hSource, HANDLE hTargetProc,
   if (DuplicateHandle(hSrcProc, hSource, hTargetProc, &hDest, 0, FALSE,
                       options) == 0) {
     ::string errText;
-    Environment::getErrStr(&errText);
+    errText = windows::last_error_message(windows::last_error());
     throw ::remoting::Exception(errText);
   }
   // Try keep of the close rights.
@@ -52,7 +52,7 @@ HANDLE WinHandles::assignHandleFor(HANDLE hSource, HANDLE hTargetProc,
     if (DuplicateHandle(hTargetProc, hDest, 0, 0, 0, FALSE,
                         DUPLICATE_CLOSE_SOURCE) == 0) {
       ::string errText;
-      Environment::getErrStr(&errText);
+       errText = windows::last_error_message(windows::last_error());
       throw ::remoting::Exception(errText);
     }
   }

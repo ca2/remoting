@@ -36,7 +36,7 @@ class ViewerCmdLine {
 public:
   ViewerCmdLine(ConnectionData *conData,
                 ConnectionConfig *conConf,
-                ViewerConfig *config,
+                ::remoting::ViewerConfig *config,
                 bool *isListening);
 
   // this function parse the command line
@@ -50,48 +50,48 @@ protected:
   bool parseHostOptions();
   bool isPresent(const ::scoped_string & scopedstrKeyName);
 
-  static const TCHAR HELP[];
-  static const TCHAR HELP_SHORT[];
-  static const TCHAR HELP_ARG[];
-  static const TCHAR HELP_ARG_SHORT[];
-  static const TCHAR HELP_ARG_QUESTION[];
-  static const TCHAR OPTIONS_FILE[];
-  static const TCHAR LISTEN[];
-  static const TCHAR HOST[];
-  static const TCHAR PORT[];
-  static const TCHAR PASSWORD[];
-  static const TCHAR DISPATCH_ID[];
-  static const TCHAR SHOW_CONTROLS[];
-  static const TCHAR VIEW_ONLY[];
-  static const TCHAR USE_CLIPBOARD[];
-  static const TCHAR SCALE[];
-  static const TCHAR FULL_SCREEN[];
-  static const TCHAR WARN_FULL_SCREEN[];
-  static const TCHAR ENCODING[];
-  static const TCHAR COPY_RECT[];
-  static const TCHAR MOUSE_CURSOR[];
-  static const TCHAR MOUSE_LOCAL[];
-  static const TCHAR MOUSE_SWAP[];
-  static const TCHAR JPEG_IMAGE_QUALITY[];
-  static const TCHAR COMPRESSION_LEVEL[];
-  static const TCHAR LOG_PATH[];
+  static const char HELP[];
+  static const char HELP_SHORT[];
+  static const char HELP_ARG[];
+  static const char HELP_ARG_SHORT[];
+  static const char HELP_ARG_QUESTION[];
+  static const char OPTIONS_FILE[];
+  static const char LISTEN[];
+  static const char HOST[];
+  static const char PORT[];
+  static const char PASSWORD[];
+  static const char DISPATCH_ID[];
+  static const char SHOW_CONTROLS[];
+  static const char VIEW_ONLY[];
+  static const char USE_CLIPBOARD[];
+  static const char SCALE[];
+  static const char FULL_SCREEN[];
+  static const char WARN_FULL_SCREEN[];
+  static const char ENCODING[];
+  static const char COPY_RECT[];
+  static const char MOUSE_CURSOR[];
+  static const char MOUSE_LOCAL[];
+  static const char MOUSE_SWAP[];
+  static const char JPEG_IMAGE_QUALITY[];
+  static const char COMPRESSION_LEVEL[];
+  static const char LOG_PATH[];
 
 
-  static const TCHAR YES[];
-  static const TCHAR NO[];
-  static const TCHAR AUTO[];
-  static const TCHAR LOCAL[];
-  static const TCHAR SMALLDOT[];
-  static const TCHAR NORMAL[];
-  static const TCHAR HEXTILE[];
-  static const TCHAR TIGHT[];
-  static const TCHAR RRE[];
-  static const TCHAR ZRLE[];
+  static const char YES[];
+  static const char NO[];
+  static const char AUTO[];
+  static const char LOCAL[];
+  static const char SMALLDOT[];
+  static const char NORMAL[];
+  static const char HEXTILE[];
+  static const char TIGHT[];
+  static const char RRE[];
+  static const char ZRLE[];
 
   WinProcessCommandLine m_wpcl;
   ConnectionData *m_conData;
   ConnectionConfig *m_conConf;
-  ViewerConfig *m_config;
+  ::remoting::ViewerConfig *m_config;
   bool *m_isListening;
 
   ::map<::string, ::string> m_options;
@@ -99,7 +99,7 @@ protected:
 private:
   struct CmdLineOption
   {
-    const ::scoped_string & scopedstrKeyName;
+    const_char_pointer keyName;
   };
 
   bool processCmdLine(const CmdLineOption * cmdLines, 

@@ -93,7 +93,7 @@ DesktopClientImpl::DesktopClientImpl(ClipboardListener *extClipListener,
     m_log->debug("DesktopClientImpl: Registering as a listener in the Configurator");
     Configurator::getInstance()->addListener(this);
   } catch (::remoting::Exception &ex) {
-    m_log->error("::remoting::Exception during DesktopClientImpl creaion: {}", ex.getMessage());
+    m_log->error("::remoting::Exception during DesktopClientImpl creaion: {}", ex.get_message());
     freeResource();
     throw;
   }
@@ -137,15 +137,15 @@ void DesktopClientImpl::closeDesktopServerTransport()
 {
   try {
     if (m_clToSrvChan) m_clToSrvChan->close();
-  } catch (::remoting::Exception &e) {
+  } catch (::exception &e) {
     m_log->error("Cannot close client->server channel from Windesktop: {}",
-               e.getMessage());
+               e.get_message());
   }
   try {
     if (m_srvToClChan) m_srvToClChan->close();
-  } catch (::remoting::Exception &e) {
+  } catch (::exception &e) {
     m_log->error("Cannot close server->client channel from Windesktop: {}",
-               e.getMessage());
+               e.get_message());
   }
 }
 

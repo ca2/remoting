@@ -77,7 +77,7 @@ bool CapsContainer::getInfo(unsigned int code, RfbCapabilityInfo *capinfo)
 ::string CapsContainer::getDescription(unsigned int code) const
 {
   AutoLock al(&m_mapLock);
-  return (isKnown(code)) ? descMap.find(code)->second : ::string();
+  return (isKnown(code)) ? descMap.find(code)->element2() : ::string();
 }
 
 bool CapsContainer::enable(const RfbCapabilityInfo *capinfo)
@@ -101,7 +101,7 @@ bool CapsContainer::enable(const RfbCapabilityInfo *capinfo)
 bool CapsContainer::isEnabled(unsigned int code) const
 {
   AutoLock al(&m_mapLock);
-  return (isKnown(code)) ? enableMap.find(code)->second : false;
+  return (isKnown(code)) ? enableMap.find(code)->element2() : false;
 }
 
 size_t CapsContainer::numEnabled() const

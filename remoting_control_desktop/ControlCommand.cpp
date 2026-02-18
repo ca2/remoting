@@ -26,7 +26,7 @@
 #include "RemoteException.h"
 #include "ControlAuthException.h"
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "util/Exception.h"
 
 #include "io_lib/io_exception.h"
@@ -57,12 +57,12 @@ void ControlCommand::execute()
         throw;
       } catch (ControlAuthException &authEx) {
         if ((m_notificator != 0) && !authEx.isSilent()) {
-          m_notificator->notifyServerSideException(authEx.getMessage());
+          m_notificator->notifyServerSideException(authEx.get_message());
         }
         throw;
       } catch (RemoteException &someEx) {
         if (m_notificator != 0) {
-          m_notificator->notifyServerSideException(someEx.getMessage());
+          m_notificator->notifyServerSideException(someEx.get_message());
         }
         throw;
       } catch (::remoting::Exception &) {

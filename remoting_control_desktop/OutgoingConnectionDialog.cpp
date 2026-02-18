@@ -56,7 +56,7 @@ bool OutgoingConnectionDialog::isViewOnly() const
 
 void OutgoingConnectionDialog::initControls()
 {
-  HWND window = m_ctrlThis.getWindow();
+  HWND window = m_ctrlThis.get_hwnd();
 
   m_connectStringCB.setWindow(GetDlgItem(window, IDC_HOSTNAME_COMBO));
   m_viewOnlyCB.setWindow(GetDlgItem(window, IDC_VIEW_ONLY_CHECKBOX));
@@ -77,7 +77,7 @@ BOOL OutgoingConnectionDialog::onInitDialog()
   }
 
   m_connectStringCB.setSelectedItem(0);
-  m_connectStringCB.setFocus();
+  m_connectStringCB.set_focus();
 
   return FALSE;
 }
@@ -107,7 +107,7 @@ BOOL OutgoingConnectionDialog::onDestroy()
 
 void OutgoingConnectionDialog::onOkButtonClick()
 {
-  m_connectStringCB.getText(&m_connectString);
+  m_connectStringCB.get_text(&m_connectString);
 
   m_isViewOnly = m_viewOnlyCB.isChecked();
 
@@ -115,7 +115,7 @@ void OutgoingConnectionDialog::onOkButtonClick()
 
   m_connHistory.addHost(m_connectString);
   m_connHistory.save();
-  m_connHistory.truncate();
+  m_connHistory.rear_truncate();
 
   kill(IDOK);
 }

@@ -25,7 +25,7 @@
 #include "WinDxCriticalException.h"
 
 WinDxCriticalException::WinDxCriticalException(const ::scoped_string & scopedstrMessage, HRESULT errCode)
-: WinDxException(message, errCode)
+: WinDxException(scopedstrMessage, errCode)
 {
 }
 

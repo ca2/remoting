@@ -34,18 +34,18 @@ public:
   virtual ~EncodeOptions();
 
   // Reset all encoding-related options to defaults as if the client did not
-  // send SetEncodings message.
+  // send SetEncodings scopedstrMessage.
   void reset();
 
-  // Process the ::list of encodings requested by the RFB client.
+  // Process the ::list_base of encodings requested by the RFB client.
   void setEncodings(::array_base<int> * plista);
 
   // Return preferred encoding as previously set with setEncodings().
-  // Preferred encoding is the first "normal" encoding from the ::list passed
+  // Preferred encoding is the first "normal" encoding from the ::list_base passed
   // to setEncodings(). If setEncodings() has not been called after object
   // construction or the most recent reset() call, then Raw will be considered
   // the preferred encoding so this function will return EncodingDefs::RAW.
-  // Similarly, if there was no suitable encoding in the ::list passed in the
+  // Similarly, if there was no suitable encoding in the ::list_base passed in the
   // most recent setEncodings() call, EncodingDefs::RAW will be returned.
   int getPreferredEncoding() const;
 

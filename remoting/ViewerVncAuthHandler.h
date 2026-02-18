@@ -34,8 +34,8 @@ public:
   ViewerVncAuthHandler(ConnectionData *connectionData);
   virtual ~ViewerVncAuthHandler();
 
-private:
-  virtual void getPassword(::string & passString);
+//private:
+  virtual ::string getPassword();
 
   ConnectionData *m_connectionData;
 };

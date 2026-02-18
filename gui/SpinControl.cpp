@@ -36,9 +36,9 @@ SpinControl::~SpinControl()
 {
 }
 
-void SpinControl::setBuddy(Control *buddyControl)
+void SpinControl::setBuddy(::remoting::Window *buddyControl)
 {
-  SendMessage(m_hwnd, UDM_SETBUDDY, (WPARAM)buddyControl->getWindow(), NULL);
+  SendMessage(m_hwnd, UDM_SETBUDDY, (WPARAM)buddyControl->get_hwnd(), NULL);
   m_buddy = buddyControl;
 }
 
@@ -61,7 +61,7 @@ void SpinControl::setAccel(UINT nSec, UINT nInc)
   SendMessage(m_hwnd, UDM_SETACCEL, 1, (LPARAM)&accel);
 }
 
-void SpinControl::autoAccelerationHandler(LPNMUPDOWN message)
+void SpinControl::autoAccelerationHandler(LPNMUPDOWN scopedstrMessage)
 {
   if (m_limitters.size() == 0 ||
       m_buddy == NULL || !m_isAutoAccelerationEnabled) {
@@ -73,14 +73,14 @@ void SpinControl::autoAccelerationHandler(LPNMUPDOWN message)
 
   // Get buddy textbox value
   ::string storage;
-  m_buddy->getText(&storage);
+  storage = m_buddy->get_text();
   if (!StringParser::parseInt(storage, &currentValue)) {
     return;
   }
 
-  size_t size = min(m_limitters.size(), m_deltas.size());
+  size_t size = minimum(m_limitters.size(), m_deltas.size());
 
-  if (message->iDelta < 0) {
+  if (scopedstrMessage->iDelta < 0) {
     for (size_t i = 0; i < size; i++) {
       if (currentValue <= m_limitters[i]) {
         delta = m_deltas[i];
@@ -90,7 +90,7 @@ void SpinControl::autoAccelerationHandler(LPNMUPDOWN message)
     delta = -delta;
   } // if
 
-  if (message->iDelta > 0) {
+  if (scopedstrMessage->iDelta > 0) {
     for (size_t i = 0; i < size; i++) {
       if (currentValue < m_limitters[i]) {
         delta = m_deltas[i];
@@ -104,7 +104,7 @@ void SpinControl::autoAccelerationHandler(LPNMUPDOWN message)
     delta -= mod;
   }
 
-  message->iDelta = delta;
+  scopedstrMessage->iDelta = delta;
 }
 
 void SpinControl::enableAutoAcceleration(bool enabled)

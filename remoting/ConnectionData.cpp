@@ -26,7 +26,7 @@
 #include <sstream>
 
 #include "ConnectionData.h"
-#include "util/AnsiStringStorage.h"
+//#include "util/::string.h"
 #include "util/VncPassCrypt.h"
 #include "viewer_core/VncAuthentication.h"
 
@@ -104,10 +104,10 @@ void ConnectionData::unsetDispatchId()
 void ConnectionData::setHost(const ::scoped_string & host)
 {
   ::string chompedString = host;
-  TCHAR spaceChar[] = " \t\n\r";
-  chompedString.removeChars(spaceChar, sizeof(spaceChar)/sizeof(TCHAR));
+  //TCHAR spaceChar[] = ;
+  chompedString.erase_any_character_in(" \t\n\r");
 
-  AnsiStringStorage ansiStr(chompedString);
+  ::string ansiStr(chompedString);
 
   m_hostPath.set(ansiStr);
   m_isEmpty = false;
@@ -131,7 +131,7 @@ void ConnectionData::setCryptedPassword(const ::scoped_string & hidePassword)
 ::string ConnectionData::getPlainPassword() const
 {
   // Transform password from hex-string to raw data.
-  AnsiStringStorage ansiHidePassword(m_defaultPassword);
+  ::string ansiHidePassword(m_defaultPassword);
   unsigned char encPassword[VncAuthentication::VNC_PASSWORD_SIZE];
   for (size_t i = 0; i < VncAuthentication::VNC_PASSWORD_SIZE; ++i) {
     std::stringstream passwordStream;
@@ -145,21 +145,21 @@ void ConnectionData::setCryptedPassword(const ::scoped_string & hidePassword)
   unsigned char plainPassword[VncAuthentication::VNC_PASSWORD_SIZE];
   VncPassCrypt::getPlainPass(plainPassword, encPassword);
 
-  AnsiStringStorage ansiPlainPassword(reinterpret_cast<char *>(plainPassword));
+  ::string ansiPlainPassword(reinterpret_cast<char *>(plainPassword));
   ::string password;
-  ansiPlainPassword.toStringStorage(&password);
+  password = ansiPlainPassword;
   return password;
 }
 
 void ConnectionData::setPlainPassword(const ::scoped_string & password)
 {
-  AnsiStringStorage ansiPlainPassword(password);
+  ::string ansiPlainPassword(password);
   unsigned char plainPassword[VncAuthentication::VNC_PASSWORD_SIZE];
   unsigned char encryptedPassword[VncAuthentication::VNC_PASSWORD_SIZE];
   memset(plainPassword, 0, VncAuthentication::VNC_PASSWORD_SIZE);
   memcpy(plainPassword,
          ansiPlainPassword,
-         min(VncAuthentication::VNC_PASSWORD_SIZE, ansiPlainPassword.getSize()));
+         minimum(VncAuthentication::VNC_PASSWORD_SIZE, ansiPlainPassword.length()));
   VncPassCrypt::getEncryptedPass(encryptedPassword, plainPassword);
   unsigned char hidePasswordChars[VncAuthentication::VNC_PASSWORD_SIZE * 2 + 1];
   hidePasswordChars[VncAuthentication::VNC_PASSWORD_SIZE * 2] = 0;
@@ -169,25 +169,25 @@ void ConnectionData::setPlainPassword(const ::scoped_string & password)
     passwordStream << std::hex << std::setw(2) << std::setfill('0') << ordOfSymbol;
     passwordStream >> hidePasswordChars[i * 2] >> hidePasswordChars[i * 2 + 1];
   }
-  AnsiStringStorage ansiHidePassword(reinterpret_cast<char *>(hidePasswordChars));
+  ::string ansiHidePassword(reinterpret_cast<char *>(hidePasswordChars));
 
   // save password
-  ansiHidePassword.toStringStorage(&m_defaultPassword);
+  m_defaultPassword = ansiHidePassword;
   m_isSetPassword = true;
 }
 
 ::string ConnectionData::getHost() const
 {
   ::string host;
-  AnsiStringStorage hostAnsi(m_hostPath.get());
-  hostAnsi.toStringStorage(&host);
+  ::string hostAnsi(m_hostPath.get());
+  host = hostAnsi;
   return host;
 }
 
-void ConnectionData::getReducedHost(::string & strHost) const
+::string ConnectionData::getReducedHost() const
 {
-  AnsiStringStorage ansiStr(m_hostPath.getVncHost());
-  ansiStr.toStringStorage(strHost);
+  ::string ansiStr(m_hostPath.getVncHost());
+  return ansiStr;
 }
 
 int ConnectionData::getPort() const

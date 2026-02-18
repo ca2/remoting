@@ -24,20 +24,23 @@
 #include "framework.h"
 #include "Brush.h"
 
-Brush::Brush()
-: m_brush(0)
+namespace remoting
 {
-}
+   Brush::Brush()
+   : m_brush(0)
+   {
+   }
 
-Brush::~Brush()
-{
-  destroy();
-}
+   Brush::~Brush()
+   {
+      destroy();
+   }
 
-void Brush::destroy()
-{
-  if (m_brush != 0) {
-    DeleteObject(m_brush);
-    m_brush = 0;
-  }
+   void Brush::destroy()
+   {
+      if (m_brush != 0) {
+         DeleteObject(m_brush);
+         m_brush = 0;
+      }
+   }
 }

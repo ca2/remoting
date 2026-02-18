@@ -22,18 +22,18 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "io_lib/io_exception.h"
-
-::io_exception::::io_exception()
-: ::remoting::Exception()
-{
-}
-
-::io_exception::::io_exception(const ::scoped_string & scopedstrMessage)
-: ::remoting::Exception(message)
-{
-}
-
-::io_exception::~::io_exception()
-{
-}
+// #include "io_lib/io_exception.h"
+//
+// io_exception::io_exception()
+// : ::remoting::Exception()
+// {
+// }
+//
+// io_exception::io_exception(const ::scoped_string & scopedstrMessage)
+// : ::remoting::Exception(scopedstrMessage)
+// {
+// }
+//
+// io_exception::~io_exception()
+// {
+// }

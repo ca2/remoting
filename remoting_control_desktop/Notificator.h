@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 // FIXME: Document this class.
 class Notificator
@@ -33,7 +33,7 @@ class Notificator
 public:
   virtual ~Notificator();
 
-  virtual void notifyServerSideException(const ::scoped_string & scopedstrreason) = 0;
+  virtual void notifyServerSideException(const ::scoped_string & scopedstrReason) = 0;
   virtual void notifyConnectionLost() = 0;
 };
 

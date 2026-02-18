@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/StringVector.h"
+//#include "util/::string_array.h"
 #include "util/Exception.h"
 #include "PortMappingContainer.h"
 #include "IpAccessControl.h"
@@ -81,7 +81,7 @@ public:
    * @throws ::remoting::Exception on io error.
    * @fixme stub.
    */
-  void deserialize(DataInputStream *input);
+  void deserialize(DataInputStream * pinput);
 
   //
   // Inherited from Lockable abstract class.
@@ -258,7 +258,7 @@ public:
   // FIXME: Deprecated?
   // Remark: not-thread safe method, use lock / unlock methods of this class
   // to lock and unlock server configuration.
-  StringVector *getVideoClassNames();
+  ::string_array *getVideoClassNames();
   
   ::array_base<::int_rectangle> *getVideoRects();
 
@@ -285,7 +285,7 @@ public:
   void setConnectToRdpFlag(bool val);
 
   void getLogFileDir(::string & logFileDir);
-  void setLogFileDir(const ::scoped_string & scopedstrlogFileDir);
+  void setLogFileDir(const ::scoped_string & scopedstrLogFileDir);
 
 protected:
 
@@ -398,7 +398,7 @@ protected:
   //
   
   // Defined by window class name
-  StringVector m_videoClassNames;
+  ::string_array m_videoClassNames;
   // Defined by rectangle coords in "dXxdY+X0+Y0" format, as in -sharerect command line option
   ::array_base<::int_rectangle> m_videoRects;
   

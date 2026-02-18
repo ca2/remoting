@@ -39,16 +39,16 @@ SystemException::SystemException(int errcode)
   createMessage(0, m_errcode);
 }
 
-SystemException::SystemException(const ::scoped_string & scopedstruserMessage)
+SystemException::SystemException(const ::scoped_string & scopedstrUserMessage)
 : ::remoting::Exception(), m_errcode(GetLastError())
 {
-  createMessage(userMessage, m_errcode);
+  createMessage(scopedstrUserMessage, m_errcode);
 }
 
-SystemException::SystemException(const ::scoped_string & scopedstruserMessage, int errcode)
+SystemException::SystemException(const ::scoped_string & scopedstrUserMessage, int errcode)
 : ::remoting::Exception(), m_errcode(errcode)
 {
-  createMessage(userMessage, m_errcode);
+  createMessage(scopedstrUserMessage, m_errcode);
 }
 
 SystemException::~SystemException()
@@ -60,15 +60,17 @@ int SystemException::getErrorCode() const
   return m_errcode;
 }
 
-const ::scoped_string & scopedstrSystemException::getSystemErrorDescription() const
+::string SystemException::getSystemErrorDescription() const
 {
   return m_systemMessage;
 }
 
-void SystemException::createMessage(const ::scoped_string & scopedstruserMessage, int errcode)
+void SystemException::createMessage(const ::scoped_string & scopedstrUserMessage, int errcode)
 {
-  if (userMessage == 0 && errcode == ERROR_SUCCESS) {
-    userMessage = "Thrown a system exception but the program"
+
+   ::string strMessage(scopedstrUserMessage);
+  if (scopedstrUserMessage.is_empty()  && errcode == ERROR_SUCCESS) {
+    strMessage = "Thrown a system exception but the program"
                   " cannot identify the corresponding system error.";
   }
 
@@ -93,36 +95,36 @@ void SystemException::createMessage(const ::scoped_string & scopedstruserMessage
 
   // Remove bad characters.
 
-  const TCHAR badCharacters[] = { 10, 13, _T('\n'), _T('\t') };
+  const TCHAR badCharacters[] = { 10, 13, '\n', '\t', '\0' };
 
-  windowsErrorDescription.removeChars(badCharacters, sizeof(badCharacters) / sizeof(TCHAR));
+  windowsErrorDescription.erase_any_character_in(badCharacters);
 
-  if (windowsErrorDescription.endsWith(_T('.'))) {
-    windowsErrorDescription.truncate(1);
+  if (windowsErrorDescription.ends(".")) {
+    windowsErrorDescription.rear_truncate(1);
   }
 
-  // Create system error part of message.
+  // Create system error part of scopedstrMessage.
 
   if (formatMessageOk) {
-    m_systemMessage.formatf("{} (error code {})",
+    m_systemMessage.format("{} (error code {})",
       windowsErrorDescription,
       errcode);
   } else {
-    m_systemMessage.formatf("Error code {}", errcode);
+    m_systemMessage.format("Error code {}", errcode);
   }
 
-  // Use user message if specified.
+  // Use user scopedstrMessage if specified.
 
   if (errcode != 0) {
-    if (userMessage == 0) {
-      m_message = m_systemMessage;
+    if (scopedstrUserMessage.is_empty()) {
+      m_strMessage = m_systemMessage;
     } else {
-      m_message.formatf("{} (system error: {})",
-        userMessage,
+      m_strMessage.format("{} (system error: {})",
+        scopedstrUserMessage,
         m_systemMessage);
     }
   } else {
-    m_message = userMessage;
-    m_systemMessage = userMessage;
+    m_strMessage = scopedstrUserMessage;
+    m_systemMessage = scopedstrUserMessage;
   }
 }

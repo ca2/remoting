@@ -73,7 +73,7 @@ protected:
   char m_filename[REQUEST_BUFFER_SIZE];
   // Arguments string.
   char m_args[REQUEST_BUFFER_SIZE];
-  // Arguments ::list.
+  // Arguments ::list_base.
   ArgList *m_argList;
 };
 

@@ -23,7 +23,7 @@
 //
 
 #include "ScreenHooks.h"
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "remoting_node_desktop/NamingDefs.h"
 #include "region/Point.h"
 #include "region/Region.h"
@@ -32,7 +32,7 @@
 LRESULT CALLBACK callWndRetProc(int nCode, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK getMsgProc(int code, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK sysMsgProc(int code, WPARAM wParam, LPARAM lParam);
-void processMessage(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
+void processMessage(HWND hwnd, UINT scopedstrMessage, WPARAM wParam, LPARAM lParam);
 void sendRect(const ::int_rectangle &  rect);
 void sendClientRect(HWND hwnd);
 void sendNClientRegion(HWND hwnd);
@@ -99,7 +99,7 @@ LRESULT CALLBACK callWndRetProc(int nCode, WPARAM wParam, LPARAM lParam)
 {
   if (nCode == HC_ACTION) {
     CWPRETSTRUCT *cpwS = (CWPRETSTRUCT *)lParam;
-    processMessage(cpwS->hwnd, cpwS->message, cpwS->wParam, cpwS->lParam);
+    processMessage(cpwS->hwnd, cpwS->scopedstrMessage, cpwS->wParam, cpwS->lParam);
   }
   return CallNextHookEx(g_callWndProcH, nCode, wParam, lParam);
 }
@@ -108,7 +108,7 @@ LRESULT CALLBACK getMsgProc(int code, WPARAM wParam, LPARAM lParam)
 {
   if (code == MSGF_DIALOGBOX || code == MSGF_MENU || code == MSGF_SCROLLBAR) {
     MSG *msg = (MSG *)lParam;
-    processMessage(msg->hwnd, msg->message, msg->wParam, msg->lParam);
+    processMessage(msg->hwnd, msg->scopedstrMessage, msg->wParam, msg->lParam);
   }
   return CallNextHookEx(g_getMessageH, code, wParam, lParam);
 }
@@ -117,14 +117,14 @@ LRESULT CALLBACK sysMsgProc(int code, WPARAM wParam, LPARAM lParam)
 {
   if (code == MSGF_DIALOGBOX || code == MSGF_MENU || code == MSGF_SCROLLBAR) {
     MSG *msg = (MSG *)lParam;
-    processMessage(msg->hwnd, msg->message, msg->wParam, msg->lParam);
+    processMessage(msg->hwnd, msg->scopedstrMessage, msg->wParam, msg->lParam);
   }
   return CallNextHookEx(g_sysMessageH, code, wParam, lParam);
 }
 
-void processMessage(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+void processMessage(HWND hwnd, UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
 {
-  switch (message) {
+  switch (scopedstrMessage) {
   case WM_PAINT:
     //FIXME: Process a region that folowing with WM_PAINT.
   case WM_CTLCOLOREDIT:

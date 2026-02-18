@@ -203,13 +203,13 @@ void CursorUpdates::blockCursorPosSending()
 {
   AutoLock al(&m_curPosLocMut);
   // Block cursor pos sending to a time interval.
-  m_blockCurPosTime = DateTime::now();
+  m_blockCurPosTime = ::earth::time::now();
 }
 
 bool CursorUpdates::isCursorPosBlocked()
 {
   AutoLock al(&m_curPosLocMut);
-  if ((DateTime::now() - m_blockCurPosTime).getTime() > 1000) {
+  if ((::earth::time::now() - m_blockCurPosTime).getTime() > 1000) {
     return false; // Unblocked
   } else {
     return true; // Blocked

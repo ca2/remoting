@@ -27,19 +27,19 @@
 //#include <vector>
 
 
-VersionInfo::VersionInfo(const ::scoped_string & scopedstrPathToFile)
+VersionInfo::VersionInfo(const ::file::path & pathToFile)
 {
   DWORD handle = 0;
-  DWORD verInfoSize = GetFileVersionInfoSize(pathToFile, &handle);
+  DWORD verInfoSize = GetFileVersionInfoSize(pathToFile.windows_path(), &handle);
 
   if (verInfoSize == 0) {
     throw SystemException();
   }
 
   ::array_base<char> charBuff(verInfoSize);
-  char *verInfo = &charBuff.front();
+  char *verInfo = charBuff.data();
 
-  if (GetFileVersionInfo(pathToFile, handle, verInfoSize, verInfo) == 0) {
+  if (GetFileVersionInfo(pathToFile.windows_path(), handle, verInfoSize, verInfo) == 0) {
     throw SystemException();
   }
 
@@ -47,7 +47,7 @@ VersionInfo::VersionInfo(const ::scoped_string & scopedstrPathToFile)
 
   VS_FIXEDFILEINFO *fixedInfo = 0;
 
-  if (VerQueryValue(verInfo, "\\", (void **)&fixedInfo, &fixedInfoSize) == 0) {
+  if (VerQueryValue(verInfo, L"\\", (void **)&fixedInfo, &fixedInfoSize) == 0) {
     throw SystemException();
   }
 
@@ -80,7 +80,7 @@ VersionInfo::VersionInfo(const ::scoped_string & scopedstrPathToFile)
   }
 }
 
-const ::scoped_string & scopedstrVersionInfo::getProductVersionString() const
+::string VersionInfo::getProductVersionString() const
 {
   return m_productVersionString;
 }

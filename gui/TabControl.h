@@ -25,13 +25,13 @@
 #pragma once
 
 
-#include "Control.h"
+#include "remoting/gui/Window.h"
 #include "Tab.h"
 #include "TabContainer.h"
 
 
 
-class TabControl : public Control
+class TabControl : public ::remoting::Window
 {
 public:
   TabControl();
@@ -43,7 +43,7 @@ public:
 
   TabContainer &getTabs() { return m_tabContainer; }
   Tab *getTab(int index);
-  void addTab(BaseDialog *dialog, const ::scoped_string & scopedstrcaption);
+  void addTab(BaseDialog *dialog, const ::scoped_string & scopedstrCaption);
   void showTab(int index);
   void showTab(const BaseDialog *dialog);
   void deleteAllTabs();

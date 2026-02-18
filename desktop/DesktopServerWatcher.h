@@ -27,7 +27,7 @@
 
 #include "thread/Thread.h"
 #include "win_system/Process.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 #include "desktop_ipc/ReconnectionListener.h"
 
 /**

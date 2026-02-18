@@ -38,23 +38,26 @@ namespace remoting
    }
 
 
-   Exception::Exception(const ::scoped_string &scopedstrFormat, ...) : 
+   Exception::Exception(const_char_pointer pszFormat, ...) :
       ::exception(error_remoting)
    {
       
       va_list vl;
 
-      va_start(vl, scopedstrFormat);
+      va_start(vl, pszFormat);
 
-      m_strMessage.format_arguments(scopedstrFormat, vl);
+      m_strMessage.formatf_arguments(pszFormat, vl);
 
       va_end(vl);
 
    }
 
-   ::remoting::Exception::~::remoting::Exception() {}
+   Exception::~Exception()
+   {
 
-   ///::string ::remoting::Exception::getMessage() const { return m_message; }
+   }
+
+   ///::string ::remoting::Exception::get_message() const { return m_message; }
 
 
 } // namespace remoting

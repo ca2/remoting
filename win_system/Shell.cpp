@@ -24,23 +24,28 @@
 #include "framework.h"
 #include "acme/_operating_system.h"
 #include "Shell.h"
+#include <shellapi.h>
+
 
 Shell::Shell()
 {
 }
 
-void Shell::runAsAdmin(const ::scoped_string & scopedstrPathToFile, const ::scoped_string & scopedstrParameters)
+void Shell::runAsAdmin(const ::file::path & pathToFile, const ::scoped_string & scopedstrParameters)
 {
   SHELLEXECUTEINFO sei;
 
   ZeroMemory(&sei, sizeof(sei));
 
+   ::wstring wstrPath(pathToFile.windows_path());
+   ::wstring wstrArgs(scopedstrParameters);
+
   sei.cbSize = sizeof(SHELLEXECUTEINFOW);
   sei.hwnd = 0;
   sei.fMask = SEE_MASK_FLAG_NO_UI | SEE_MASK_NOCLOSEPROCESS;
-  sei.lpVerb = "runas";
-  sei.lpFile = pathToFile;
-  sei.lpParameters = parameters;
+  sei.lpVerb = L"runas";
+  sei.lpFile = wstrPath;
+  sei.lpParameters = wstrArgs;
   sei.nShow = SW_SHOWNORMAL;
 
   if (ShellExecuteEx(&sei) == FALSE) {
@@ -54,7 +59,7 @@ void Shell::runAsAdmin(const ::scoped_string & scopedstrPathToFile, const ::scop
 
 void Shell::open(const ::scoped_string & scopedstrFile, const ::scoped_string & scopedstrParameters, const ::scoped_string & scopedstrworkDirectory)
 {
-  int ret = (int)ShellExecute(0, "open", file, parameters, workDirectory, SW_SHOW);
+  int ret = (int)ShellExecute(0, L"open", ::wstring(scopedstrFile), ::wstring(scopedstrParameters), ::wstring(scopedstrworkDirectory), SW_SHOW);
 
   if (ret <= 32) {
     throw SystemException(ret);

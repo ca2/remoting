@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "DesktopServerWatcher.h"
 #include "desktop_ipc/DesktopConfigClient.h"
 #include "desktop_ipc/ReconnectingChannel.h"
@@ -33,7 +33,7 @@
 #include "desktop_ipc/GateKicker.h"
 #include "desktop_ipc/DesktopSrvDispatcher.h"
 #include "DesktopBaseImpl.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 //Interfaces
 #include "util/AnEventListener.h"

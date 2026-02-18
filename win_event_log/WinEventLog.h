@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 //#include <vector>
 #include "thread/LocalMutex.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 typedef ::array_base<TCHAR *> StringContainer;
 

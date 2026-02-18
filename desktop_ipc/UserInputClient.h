@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "desktop/UserInput.h"
 #include "desktop/ClipboardListener.h"
 #include "util/inttypes.h"

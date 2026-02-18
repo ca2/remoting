@@ -25,76 +25,76 @@
 #pragma once
 
 
-#include "inttypes.h"
-#include "winhdr.h"
-//#include "::string.h"
-
-/**
- * DateTime class.
- */
-class DateTime
-{
-public:
-  /**
-   * Creates empty DateTime.
-   */
-  DateTime();
-
-  DateTime(const DateTime &dt);
-
-  /**
-   * Creates DateTime object with specified time value.
-   * @param timeValue count of milliseconds from unix epoch.
-   */
-  DateTime(unsigned long long timeValue);
-
-  /**
-   * Creates DateTime object from windows FILETIME structure.
-   * @param ft time as FILETIME structure.
-   */
-  DateTime(FILETIME ft);
-
-  /**
-   * Returns time in milliseconds from unix epoch.
-   */
-  unsigned long long getTime() const;
-
-  DateTime operator- (const DateTime &d2);
-  DateTime operator+ (const DateTime &d2);
-
-  /**
-   * Converts this DateTime to FILETIME structure.
-   * @param [out] ft output parameter.
-   */
-  void toFileTime(LPFILETIME ft) const;
-
-  /**
-   * Converts this DateTime to SYSTEMTIME structure in UTC format.
-   * @param [out] st output parameter.
-   */
-  // FIXME: Rename this method because the now() function already
-  // returns in the local time and to convert after that this function
-  // must be used but time do not converting to UTC in this case.
-  void toUtcSystemTime(LPSYSTEMTIME st) const;
-
-  /**
-   * Converts this DateTime to SYSTEMTIME structure in local format.
-   * @param [out] st output parameter.
-   */
-  void toLocalSystemTime(LPSYSTEMTIME st) const;
-  /**
-   * Converts this DateTime to string.
-   * @param [out] out output parameter.
-   */
-  void toString(::string & out) const;
-
-  /**
-   * Returns current local time.
-   */
-  static DateTime now();
-
-protected:
-  unsigned long long m_timeValue;
-};
-
-
+// #include "inttypes.h"
+// #include "winhdr.h"
+// //#include "::string.h"
+//
+// /**
+//  * ::earth::time class.
+//  */
+// class ::earth::time
+// {
+// public:
+//   /**
+//    * Creates empty ::earth::time.
+//    */
+//   ::earth::time();
+//
+//   ::earth::time(const ::earth::time &dt);
+//
+//   /**
+//    * Creates ::earth::time object with specified time value.
+//    * @param timeValue count of milliseconds from unix epoch.
+//    */
+//   ::earth::time(unsigned long long timeValue);
+//
+//   /**
+//    * Creates ::earth::time object from windows FILETIME structure.
+//    * @param ft time as FILETIME structure.
+//    */
+//   ::earth::time(FILETIME ft);
+//
+//   /**
+//    * Returns time in milliseconds from unix epoch.
+//    */
+//   unsigned long long getTime() const;
+//
+//   ::earth::time operator- (const ::earth::time &d2);
+//   ::earth::time operator+ (const ::earth::time &d2);
+//
+//   /**
+//    * Converts this ::earth::time to FILETIME structure.
+//    * @param [out] ft output parameter.
+//    */
+//   void toFileTime(LPFILETIME ft) const;
+//
+//   /**
+//    * Converts this ::earth::time to SYSTEMTIME structure in UTC format.
+//    * @param [out] st output parameter.
+//    */
+//   // FIXME: Rename this method because the now() function already
+//   // returns in the local time and to convert after that this function
+//   // must be used but time do not converting to UTC in this case.
+//   void toUtcSystemTime(LPSYSTEMTIME st) const;
+//
+//   /**
+//    * Converts this ::earth::time to SYSTEMTIME structure in local format.
+//    * @param [out] st output parameter.
+//    */
+//   void toLocalSystemTime(LPSYSTEMTIME st) const;
+//   /**
+//    * Converts this ::earth::time to string.
+//    * @param [out] out output parameter.
+//    */
+//   void toString(::string & out) const;
+//
+//   /**
+//    * Returns current local time.
+//    */
+//   static ::earth::time now();
+//
+// protected:
+//   unsigned long long m_timeValue;
+// };
+//
+//

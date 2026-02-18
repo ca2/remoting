@@ -28,7 +28,7 @@
 #include "desktop/UpdateHandler.h"
 #include "DesktopServerProto.h"
 #include "DesktopSrvDispatcher.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 class UpdateHandlerClient : public UpdateHandler, public DesktopServerProto,
                             public ClientListener

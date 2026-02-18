@@ -71,13 +71,13 @@ ExtraRfbServers::~ExtraRfbServers()
 
 bool ExtraRfbServers::reload(bool asService, RfbClientManager *mgr)
 {
-  m_log->detail("Considering to reload extra RFB servers");
+  m_log->debug("Considering to reload extra RFB servers");
 
   Conf newConf;
   getConfiguration(&newConf);
   bool noConfigChanges = newConf.equals(&m_effectiveConf);
   bool enoughServers = (newConf.extraPorts.count() == m_servers.size());
-  m_log->detail("Same Extra Ports configuration = {}, enough servers = {}",
+  m_log->debug("Same Extra Ports configuration = {}, enough servers = {}",
               (int)noConfigChanges, (int)enoughServers);
 
   if (noConfigChanges && enoughServers) {
@@ -87,28 +87,28 @@ bool ExtraRfbServers::reload(bool asService, RfbClientManager *mgr)
   // Either configuration was actually changed, or our number of actually
   // running servers does not match the configuration. In either case,
   // restart the servers.
-  m_log->message("Need to reconfigure extra RFB servers");
+  m_log->debug("Need to reconfigure extra RFB servers");
   shutDown();
   return startUp(asService, mgr);
 }
 
 void ExtraRfbServers::shutDown()
 {
-  m_log->detail("Requested to shut down extra RFB servers");
+  m_log->debug("Requested to shut down extra RFB servers");
 
-  ::list<RfbServer *>::const_iterator i;
+  ::list_base<RfbServer *>::const_iterator i;
   for (i = m_servers.begin(); i != m_servers.end(); i++) {
     int port = (*i)->getBindPort();
-    m_log->detail("Stopping extra RFB server at port {}", port);
+    m_log->debug("Stopping extra RFB server at port {}", port);
     delete *i;
-    m_log->message("Stopped extra RFB server at port {}", port);
+    m_log->debug("Stopped extra RFB server at port {}", port);
   }
   m_servers.clear();
 }
 
 bool ExtraRfbServers::startUp(bool asService, RfbClientManager *mgr)
 {
-  m_log->detail("Requested to start up extra RFB servers");
+  m_log->debug("Requested to start up extra RFB servers");
 
   if (!m_servers.empty()) {
     m_log->interror("Extra RFB servers active, will have to stop them");
@@ -120,7 +120,7 @@ bool ExtraRfbServers::startUp(bool asService, RfbClientManager *mgr)
   m_effectiveConf = newConf;
 
   if (newConf.acceptConnections) {
-    const ::scoped_string & scopedstrbindHost =
+    const ::scoped_string & scopedstrBindHost =
       newConf.loopbackOnly ? "localhost") : _T("0.0.0.0";
 
     for (size_t i = 0; i < newConf.extraPorts.count(); i++) {
@@ -128,15 +128,15 @@ bool ExtraRfbServers::startUp(bool asService, RfbClientManager *mgr)
       PortMappingRect rect = pm;
       int port = pm.getPort();
 
-      m_log->detail("Starting extra RFB server at port {}", port);
+      m_log->debug("Starting extra RFB server at port {}", port);
 
       try {
         RfbServer *s = new RfbServer(bindHost, port, mgr, asService, m_log, &rect);
         m_servers.add(s);
-        m_log->message("Started extra RFB server at port {}", port);
+        m_log->debug("Started extra RFB server at port {}", port);
       } catch (::remoting::Exception &ex) {
         m_log->error("Failed to start extra RFB server: \"{}\"",
-                   ex.getMessage());
+                   ex.get_message());
       }
     }
   }

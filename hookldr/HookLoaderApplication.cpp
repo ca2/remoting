@@ -29,7 +29,7 @@
 
 HookLoaderApplication::HookLoaderApplication(HINSTANCE appInstance,
                                              const ::scoped_string & scopedstrwindowClassName,
-                                             const ::scoped_string & scopedstrcommandLine)
+                                             const ::scoped_string & scopedstrCommandLine)
 : WindowsApplication(appInstance, windowClassName),
   m_commandLine(commandLine)
 {

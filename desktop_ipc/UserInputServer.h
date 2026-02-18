@@ -25,13 +25,13 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "DesktopServerProto.h"
 #include "ClientListener.h"
 #include "desktop/WindowsUserInput.h"
 #include "win_system/WindowsEvent.h"
 #include "DesktopSrvDispatcher.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 class UserInputServer: public DesktopServerProto, public ClientListener,
                        public ClipboardListener

@@ -47,7 +47,7 @@ namespace remoting
        * Creates exception with specified description.
        * @param format description string in printf-like notation.
        */
-      Exception(const ::scoped_string &scopedstrFormat, ...);
+      Exception(const_char_pointer pszFormat, ...);
       /**
        * Destructor.
        */
@@ -56,7 +56,7 @@ namespace remoting
       /**
        * Returns description of exception.
        */
-      //::string getMessage() const;
+      //::string get_message() const;
 
       // protected:
       //::string m_message;

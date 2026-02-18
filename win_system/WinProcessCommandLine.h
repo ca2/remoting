@@ -51,13 +51,13 @@ public:
   // returns the option value with index
   bool getOption(size_t index, ::string &  strOut);
 
-protected:
+//protected:
   WinCommandLineArgs *m_wcla;
 
   ::string_array m_strParam;
-  ::array_base<::std::pair<::string, ::string>> m_strParams;
+  ::array_base<::pair<::string, ::string>> m_strParams;
 
-private:
+//private:
   void optionParser(::string & out);
 
 };

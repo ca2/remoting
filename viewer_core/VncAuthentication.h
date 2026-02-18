@@ -30,7 +30,7 @@
 class VncAuthentication
 {
 public:
-  static void vncAuthenticate(DataInputStream *input, DataOutputStream *output,
+  static void vncAuthenticate(DataInputStream * pinput, DataOutputStream *output,
                     const ::scoped_string & password);
 
   // TODO: removed duplicate code: ServerConfig.h

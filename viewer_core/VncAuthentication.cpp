@@ -24,12 +24,12 @@
 #include "framework.h"
 #include "VncAuthentication.h"
 
-#include "util/AnsiStringStorage.h"
+//#include "util/::string.h"
 #include "util/DesCrypt.h"
 
 #include <algorithm>
 
-void VncAuthentication::vncAuthenticate(DataInputStream *input,
+void VncAuthentication::vncAuthenticate(DataInputStream * pinput,
                                         DataOutputStream *output,
                                         const ::scoped_string & password)
 {
@@ -37,21 +37,21 @@ void VncAuthentication::vncAuthenticate(DataInputStream *input,
 
   // Prepare data for authentication.
   ::string truncatedPass;
-  password.getSubstring(&truncatedPass, 0, VNC_PASSWORD_SIZE - 1);
+  truncatedPass = password.substr( 0, VNC_PASSWORD_SIZE - 1);
 
-  AnsiStringStorage passwordAnsi(truncatedPass);
+  ::string passwordAnsi(truncatedPass);
 
   unsigned char m_password[VNC_PASSWORD_SIZE];
   memset(m_password, 0, sizeof(m_password));
   memcpy(m_password, passwordAnsi,
-         ::minimum(passwordAnsi.getLength(), sizeof(m_password)));
+         ::minimum(passwordAnsi.length(), sizeof(m_password)));
 
   unsigned char challenge[16];
   unsigned char response[16];
 
-  input->readFully(challenge, sizeof(challenge));
+  pinput->readFully(challenge, sizeof(challenge));
   DesCrypt desCrypt;
   desCrypt.encrypt(response, challenge, sizeof(challenge), m_password);
-  output->writeFully(response, sizeof(response));
+  output->write(response, sizeof(response));
   output->flush();
 }

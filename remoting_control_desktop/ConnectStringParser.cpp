@@ -34,7 +34,7 @@ ConnectStringParser::~ConnectStringParser()
 {
 }
 
-bool ConnectStringParser::parse(const ::scoped_string & scopedstrconnectString,
+bool ConnectStringParser::parse(const ::scoped_string & scopedstrConnectString,
                                 ::string & connectHost,
                                 unsigned short *connectPort)
 {

@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "DesCrypt.h"
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 /* The following array is reversed for VNC compatibility,
    by Constantin Kaplinsky */

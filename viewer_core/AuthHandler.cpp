@@ -25,7 +25,7 @@
 #include "AuthHandler.h"
 
 AuthException::AuthException(const ::scoped_string & scopedstrMessage)
-: ::remoting::Exception(message),
+: ::remoting::Exception(scopedstrMessage),
   m_authErrorCode(AUTH_ERROR)
 {
 }
@@ -40,7 +40,7 @@ int AuthException::getAuthCode() const
 }
 
 AuthUnknownException::AuthUnknownException(const ::scoped_string & scopedstrMessage)
-: AuthException(message)
+: AuthException(scopedstrMessage)
 {
   m_authErrorCode = AUTH_UNKNOWN_TYPE;
 }
@@ -50,7 +50,7 @@ AuthUnknownException::~AuthUnknownException()
 }
 
 AuthCanceledException::AuthCanceledException(const ::scoped_string & scopedstrMessage)
-: AuthException(message)
+: AuthException(scopedstrMessage)
 {
   m_authErrorCode = AUTH_CANCELED;
 }

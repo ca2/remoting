@@ -131,11 +131,11 @@ void PortMappingContainer::serialize(DataOutputStream *output) const
   }
 }
 
-void PortMappingContainer::deserialize(DataInputStream *input)
+void PortMappingContainer::deserialize(DataInputStream * pinput)
 {
   removeAll();
 
-  size_t cnt = input->readUInt32();
+  size_t cnt = pinput->readUInt32();
 
   ::string string;
 
@@ -143,7 +143,7 @@ void PortMappingContainer::deserialize(DataInputStream *input)
 
   for (size_t i = 0; i < cnt; i++) {
 
-    input->readUTF8(&string);
+    pinput->readUTF8(&string);
 
     if (!PortMapping::parse(string, &record)) {
       throw ::remoting::Exception("Invalid port mapping string");

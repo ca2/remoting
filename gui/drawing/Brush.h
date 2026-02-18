@@ -25,22 +25,26 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
-class Brush :
-virtual public ::particle
+
+namespace remoting
 {
-public:
-  Brush();
-  virtual ~Brush();
+   class Brush :
+   virtual public ::particle
+   {
+   public:
+      Brush();
+      virtual ~Brush();
 
-protected:
-  void destroy() override;
+   protected:
+      void destroy() override;
 
-protected:
-  HBRUSH m_brush;
+   protected:
+      HBRUSH m_brush;
 
-  friend class Graphics;
-};
+      friend class Graphics;
+   };
+}
 
 

@@ -32,7 +32,7 @@ HHOOK WindowsInputBlocker::m_hSoftKeyboardHook = 0;
 HHOOK WindowsInputBlocker::m_hMouseHook = 0;
 HHOOK WindowsInputBlocker::m_hSoftMouseHook = 0;
 
-DateTime WindowsInputBlocker::m_lastInputTime;
+::earth::time WindowsInputBlocker::m_lastInputTime;
 unsigned int WindowsInputBlocker::m_timeInterval = INFINITE;
 LocalMutex WindowsInputBlocker::m_lastInputTimeMutex;
 
@@ -63,23 +63,23 @@ WindowsInputBlocker::~WindowsInputBlocker()
   m_instance = 0;
 }
 
-DateTime WindowsInputBlocker::getLastInputTime() const
+::earth::time WindowsInputBlocker::getLastInputTime() const
 {
   AutoLock al(&m_lastInputTimeMutex);
   return m_lastInputTime;
 }
 
-void WindowsInputBlocker::correctLastTime(DateTime newTime)
+void WindowsInputBlocker::correctLastTime(::earth::time newTime)
 {
   AutoLock al(&m_lastInputTimeMutex);
   if (newTime.getTime() > m_lastInputTime.getTime()) {
-    newTime = DateTime(newTime.getTime());
+    newTime = ::earth::time(newTime.getTime());
   }
 }
 
 bool WindowsInputBlocker::isRemoteInputAllowed()
 {
-  if ((DateTime::now() - m_lastInputTime).getTime() < m_timeInterval
+  if ((::earth::time::now() - m_lastInputTime).getTime() < m_timeInterval
       && (m_hSoftKeyboardHook != 0 || m_hSoftMouseHook != 0)) {
     return false;
   }
@@ -227,7 +227,7 @@ LRESULT CALLBACK WindowsInputBlocker::lowLevelSoftKeyboardFilterProc(int nCode, 
     KBDLLHOOKSTRUCT *hookStruct = (KBDLLHOOKSTRUCT *)lParam;
     // If this a hardware event then update software blocking time.
     if (!(hookStruct->flags & LLKHF_INJECTED)) {
-      m_lastInputTime = DateTime::now();
+      m_lastInputTime = ::earth::time::now();
     }
   }
   return CallNextHookEx(m_hSoftKeyboardHook, nCode, wParam, lParam);
@@ -239,7 +239,7 @@ LRESULT CALLBACK WindowsInputBlocker::lowLevelSoftMouseFilterProc(int nCode, WPA
     MSLLHOOKSTRUCT *hookStruct = (MSLLHOOKSTRUCT *)lParam;
     // If this a hardware event then update software blocking time.
     if (!(hookStruct->flags & LLMHF_INJECTED)) {
-      m_lastInputTime = DateTime::now();
+      m_lastInputTime = ::earth::time::now();
     }
   }
   return CallNextHookEx(m_hSoftMouseHook, nCode, wParam, lParam);
@@ -302,16 +302,16 @@ void WindowsInputBlocker::execute()
           break;
         }
 
-      } else if (msg.message == WM_QUIT) {
+      } else if (msg.scopedstrMessage == WM_QUIT) {
         break;
 
       } else {
         DispatchMessage(&msg);
       }
     }
-  } catch (::remoting::Exception &e) {
+  } catch (::exception &e) {
     m_log->error("The WindowsInputBlocker thread failed with error: {}",
-               e.getMessage());
+               e.get_message());
   }
 
   // Free system resources

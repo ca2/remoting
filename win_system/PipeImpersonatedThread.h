@@ -36,7 +36,7 @@ public:
 
   void waitUntilImpersonated();
   bool getImpersonationSuccess();
-  void getFaultReason(::string & faultReason);
+  ::string getFaultReason();
 
 private:
   virtual void execute();

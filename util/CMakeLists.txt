@@ -8,16 +8,16 @@ list(APPEND library_source
    _.cpp
    _.h
    AnEventListener.h
-   AnsiStringStorage.cpp
-   AnsiStringStorage.h
+#   AnsiStringStorage.cpp
+#   AnsiStringStorage.h
    BrokenHandleException.cpp
    BrokenHandleException.h
    CharDefs.h
    Command.cpp
-   CommandLine.h
+   #CommandLine.h
    Command.h
    CommandLineArgs.h
-   CommandLine.cpp
+   #CommandLine.cpp
    CommandLineFormatHelp.cpp
    CommandLineFormatHelp.h
    CommandLineArgs.cpp
@@ -31,10 +31,10 @@ list(APPEND library_source
    winhdr.h
    VncPassCrypt.h
    VncPassCrypt.cpp
-   Utf8StringStorage.h
-   Utf8StringStorage.cpp
-   UnicodeStringStorage.h
-   UnicodeStringStorage.cpp
+#   Utf8StringStorage.h
+#   Utf8StringStorage.cpp
+#   UnicodeStringStorage.h
+#   UnicodeStringStorage.cpp
    Unicode.h
    Unicode.cpp
    StringVector.h

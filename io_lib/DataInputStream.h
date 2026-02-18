@@ -70,7 +70,7 @@ public:
   int readInt32();
   long long readInt64();
 
-  void readUTF8(::string & storage);
+  ::string read_utf8_string();
 
 protected:
   InputStream *m_inputStream;

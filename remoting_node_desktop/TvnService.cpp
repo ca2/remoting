@@ -28,7 +28,7 @@
 #include "remoting_node_desktop/NamingDefs.h"
 
 #include "win_system/SCMClient.h"
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 
 const TCHAR TvnService::SERVICE_COMMAND_LINE_KEY[] = "-service";
 
@@ -38,7 +38,7 @@ TvnService::TvnService(WinServiceEvents *winServiceEvents,
   m_winServiceEvents(winServiceEvents),
   m_newConnectionEvents(newConnectionEvents),
   m_logServer(LogNames::LOG_PIPE_PUBLIC_NAME),
-  m_clientLogger(LogNames::LOG_PIPE_PUBLIC_NAME, LogNames::SERVER_LOG_FILE_STUB_NAME)
+  m_clientLogWriter(LogNames::LOG_PIPE_PUBLIC_NAME, LogNames::SERVER_LOG_FILE_STUB_NAME)
 {
 }
 
@@ -50,12 +50,12 @@ void TvnService::onStart()
 {
   try {
     m_winServiceEvents->enable();
-    // FIXME: Use real logger instead of zero.
-    m_tvnServer = new TvnServer(true, m_newConnectionEvents, this, &m_clientLogger);
+    // FIXME: Use real LogWriter instead of zero.
+    m_tvnServer = new TvnServer(true, m_newConnectionEvents, this, &m_clientLogWriter);
     m_tvnServer->addListener(this);
     m_winServiceEvents->onSuccServiceStart();
-  } catch (::remoting::Exception &e) {
-    m_winServiceEvents->onFailedServiceStart(&::string(e.getMessage()));
+  } catch (::exception &e) {
+    m_winServiceEvents->onFailedServiceStart(&::string(e.get_message()));
   }
 }
 
@@ -139,12 +139,12 @@ bool TvnService::getBinPath(::string & binPath)
   return true;
 }
 
-void TvnService::onLogInit(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrFileName,
+void TvnService::onLogInit(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrFileName,
                            unsigned char logLevel)
 {
-  size_t headerLineCount = m_clientLogger.getLogDumpSize();
+  size_t headerLineCount = m_clientLogWriter.getLogDumpSize();
   m_logServer.start(logDir, logLevel, headerLineCount);
-  m_clientLogger.connect();
+  m_clientLogWriter.connect();
 }
 
 void TvnService::onChangeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel)

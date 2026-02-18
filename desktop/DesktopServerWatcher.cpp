@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "DesktopServerWatcher.h"
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 #include "util/Exception.h"
 #include "server_config_lib/Configurator.h"
 #include "win_system/CurrentConsoleProcess.h"
@@ -137,14 +137,14 @@ void DesktopServerWatcher::execute()
 
       m_process->waitForExit();
 
-    } catch (::remoting::Exception &e) {
+    } catch (::exception &e) {
       // A potentional memory leak. 
       // A potential crash. The channels can be used (see onReconnect()) after these destroyings.
       if (ownSidePipeChanTo) delete ownSidePipeChanTo;
       if (otherSidePipeChanTo) delete otherSidePipeChanTo;
       if (ownSidePipeChanFrom) delete ownSidePipeChanFrom;
       if (otherSidePipeChanFrom) delete otherSidePipeChanFrom;
-      m_log->error("DesktopServerWatcher has failed with error: {}", e.getMessage());
+      m_log->error("DesktopServerWatcher has failed with error: {}", e.get_message());
       Sleep(1000);
     }
   }
@@ -220,7 +220,7 @@ void DesktopServerWatcher::doXPTrick()
       throw SystemException(exitCode);
     }
   } catch (SystemException &ex) {
-    m_log->error(ex.getMessage());
+    m_log->error(ex.get_message());
     throw;
   }
 }

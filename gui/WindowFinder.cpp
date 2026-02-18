@@ -27,21 +27,21 @@
 struct WindowsParam
 {
   ::array_base<HWND> *hwndVector;
-  StringVector *classNames;
+  ::string_array *classNames;
 };
 
 BOOL CALLBACK WindowFinder::findWindowsByClassFunc(HWND hwnd, LPARAM lParam)
 {
   if (IsWindowVisible(hwnd) != 0) {
     WindowsParam *windowsParam = (WindowsParam *)lParam;
-    StringVector::iterator classNameIter;
+    ::string_array::iterator classNameIter;
 
     const size_t maxTcharCount = 256;
     TCHAR winName[maxTcharCount];
     if (GetClassName(hwnd, winName, maxTcharCount) != 0) {
       ::string nextWinName(winName);
 
-      if (nextWinName.getLength() > 0 && hwnd != 0) {
+      if (nextWinName.length() > 0 && hwnd != 0) {
         for (classNameIter = windowsParam->classNames->begin();
              classNameIter != windowsParam->classNames->end(); classNameIter++) {
           if (nextWinName == *classNameIter) {
@@ -57,7 +57,7 @@ BOOL CALLBACK WindowFinder::findWindowsByClassFunc(HWND hwnd, LPARAM lParam)
   return TRUE;
 }
 
-::array_base<HWND> WindowFinder::findWindowsByClass(StringVector classNames)
+::array_base<HWND> WindowFinder::findWindowsByClass(::string_array classNames)
 {
   ::array_base<HWND> hwndVector;
   if (classNames.empty()) {
@@ -77,13 +77,13 @@ BOOL CALLBACK WindowFinder::findWindowsByNameFunc(HWND hwnd, LPARAM lParam)
     TCHAR nameChars[maxTcharCount];
     if (GetWindowText(hwnd, nameChars, maxTcharCount) != 0) {
       ::string winName(nameChars);
-      winName.toLowerCase();
+      winName.make_lower();
 
-      if (winName.getLength() > 0 && hwnd != 0) {
+      if (winName.length() > 0 && hwnd != 0) {
         WindowsParam *winParams = (WindowsParam *)lParam;
-        ::string & substr = &(*(winParams->classNames)).front();
-        if (_tcsstr(winName, substr->getString()) != 0) {
-          (*(winParams->hwndVector)).add(hwnd);
+        auto & substr = winParams->classNames->first();
+        if (substr == winName) {
+          winParams->hwndVector->add(hwnd);
           return FALSE;
         }
       }
@@ -95,9 +95,9 @@ BOOL CALLBACK WindowFinder::findWindowsByNameFunc(HWND hwnd, LPARAM lParam)
 HWND WindowFinder::findFirstWindowByName(const ::string windowName)
 {
   ::array_base<HWND> hwndVector;
-  StringVector winNameVector;
+  ::string_array winNameVector;
   winNameVector.add(windowName);
-  winNameVector[0].toLowerCase();
+  winNameVector[0].make_lower();
   WindowsParam winParams = { &hwndVector, &winNameVector };
 
   EnumWindows(findWindowsByNameFunc, (LPARAM)&winParams);

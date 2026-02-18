@@ -39,10 +39,10 @@
 
 TvnServerApplication::TvnServerApplication(HINSTANCE hInstance,
                                            const ::scoped_string & scopedstrwindowClassName,
-                                           const ::scoped_string & scopedstrcommandLine,
+                                           const ::scoped_string & scopedstrCommandLine,
                                            NewConnectionEvents *newConnectionEvents)
 : WindowsApplication(hInstance, windowClassName),
-  m_fileLogger(true),
+  m_fileLogWriter(true),
   m_tvnServer(0),
   m_commandLine(commandLine),
   m_newConnectionEvents(newConnectionEvents)
@@ -77,7 +77,7 @@ int TvnServerApplication::run()
     appInstanceMutex = new GlobalMutex(
       ServerApplicationNames::SERVER_INSTANCE_MUTEX_NAME, false, true);
   } catch (...) {
-    MessageBox(0,
+    ::remoting::message_box(0,
                StringTable::getString(IDS_SERVER_ALREADY_RUNNING),
                StringTable::getString(IDS_MBC_TVNSERVER), MB_OK | MB_ICONEXCLAMATION);
     return 1;
@@ -92,7 +92,7 @@ int TvnServerApplication::run()
   // $ACL | Set-Acl HKLM:\SOFTWARE\TightVNC\Server\ServiceOnly
   RegistryKey key(HKEY_LOCAL_MACHINE, "SOFTWARE\\TightVNC\\Server\\ServiceOnly", false);
   if (key.isOpened()) {
-    MessageBox(0,
+    ::remoting::message_box(0,
       "Couldn't run the server in Application mode",
       "Server error", MB_OK | MB_ICONEXCLAMATION);
     return 1;
@@ -100,9 +100,9 @@ int TvnServerApplication::run()
 
   // Start TightVNC server and TightVNC control application.
   try {
-    m_tvnServer = new TvnServer(false, m_newConnectionEvents, this, &m_fileLogger);
+    m_tvnServer = new TvnServer(false, m_newConnectionEvents, this, &m_fileLogWriter);
     m_tvnServer->addListener(this);
-    m_tvnControlRunner = new WsConfigRunner(&m_fileLogger);
+    m_tvnControlRunner = new WsConfigRunner(&m_fileLogWriter);
 
     int exitCode = WindowsApplication::run();
 
@@ -111,12 +111,12 @@ int TvnServerApplication::run()
     delete m_tvnServer;
     delete appInstanceMutex;
     return exitCode;
-  } catch (::remoting::Exception &e) {
+  } catch (::exception &e) {
     // FIXME: Move string to resource
-    ::string message;
-    message.formatf("Couldn't run the server: {}", e.getMessage());
-    MessageBox(0,
-               message,
+    ::string scopedstrMessage;
+    scopedstrMessage.formatf("Couldn't run the server: {}", e.get_message());
+    ::remoting::message_box(0,
+               scopedstrMessage,
                "Server error", MB_OK | MB_ICONEXCLAMATION);
     return 1;
   }
@@ -127,14 +127,14 @@ void TvnServerApplication::onTvnServerShutdown()
   WindowsApplication::shutdown();
 }
 
-void TvnServerApplication::onLogInit(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrFileName,
+void TvnServerApplication::onLogInit(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrFileName,
                                      unsigned char logLevel)
 {
-  m_fileLogger.init(logDir, fileName, logLevel);
-  m_fileLogger.storeHeader();
+  m_fileLogWriter.init(logDir, fileName, logLevel);
+  m_fileLogWriter.storeHeader();
 }
 
 void TvnServerApplication::onChangeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel)
 {
-  m_fileLogger.changeLogProps(newLogDir, newLevel);
+  m_fileLogWriter.changeLogProps(newLogDir, newLevel);
 }

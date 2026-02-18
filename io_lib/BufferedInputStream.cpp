@@ -52,7 +52,7 @@ size_t BufferedInputStream::read(void *buffer, size_t len) {
   try {
     m_have = m_input->read(&m_buffer[0], m_buffer.size());
   }
-  catch (::remoting::Exception &e) { 
+  catch (::exception &e) { 
     if (m_buffer.size() == MAX_BUFFER_SIZE) {
       throw e;
     }

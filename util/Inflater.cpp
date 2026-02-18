@@ -61,12 +61,12 @@ void Inflater::inflate()
   constrainedValue = (unsigned int)m_inputSize;
   _ASSERT(m_inputSize == constrainedValue);
 
-  m_output.resize(avaliableOutput);
+  m_output.set_size(avaliableOutput);
 
   m_zlibStream.next_in = (Bytef *)m_input;
   m_zlibStream.avail_in = (unsigned int)m_inputSize;
 
-  m_zlibStream.next_out = (Bytef *)&m_output.front();
+  m_zlibStream.next_out = (Bytef *)m_output.data();
   m_zlibStream.avail_out = (unsigned int)avaliableOutput;
 
   int r = ::inflate(&m_zlibStream, Z_SYNC_FLUSH);

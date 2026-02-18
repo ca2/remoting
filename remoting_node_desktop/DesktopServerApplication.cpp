@@ -27,7 +27,7 @@
 #include "util/ResourceLoader.h"
 #include "desktop/WallpaperUtil.h"
 #include "win_system/WTS.h"
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 #include "win_system/SharedMemory.h"
 #include "remoting_node_desktop/NamingDefs.h"
 #include "TimeAPI.h"
@@ -47,13 +47,13 @@ DesktopServerApplication::DesktopServerApplication(HINSTANCE appInstance,
   m_gateKickHandler(0),
   m_sessionChangesWatcher(0),
   m_configurator(true),
-  m_clientLogger(LogNames::LOG_PIPE_PUBLIC_NAME,
+  m_clientLogWriter(LogNames::LOG_PIPE_PUBLIC_NAME,
                 LogNames::SERVER_LOG_FILE_STUB_NAME),
   m_contextSwitchResolution(1),
-  m_log(&m_clientLogger)
+  m_log(&m_clientLogWriter)
 {
   try {
-    m_clientLogger.connect();
+    m_clientLogWriter.connect();
   } catch (...) {
   }
 
@@ -74,12 +74,12 @@ DesktopServerApplication::DesktopServerApplication(HINSTANCE appInstance,
     SharedMemory shMem(shMemName, 72);
     unsigned long long *mem = (unsigned long long *)shMem.getMemPointer();
 
-    DateTime startTime = DateTime::now();
+    ::earth::time startTime = ::earth::time::now();
 
     WindowsEvent m_sleepInterval;
     while (mem[0] == 0) {
       unsigned int timeForWait = max((int)10000 - 
-                                     (int)(DateTime::now() -
+                                     (int)(::earth::time::now() -
                                            startTime).getTime(),
                                      0);
       if (timeForWait == 0) {
@@ -119,8 +119,8 @@ DesktopServerApplication::DesktopServerApplication(HINSTANCE appInstance,
 
     // Spy for the session change.
     m_sessionChangesWatcher = new SessionChangesWatcher(this, &m_log);
-  } catch (::remoting::Exception &e) {
-    m_log.error("Desktop server application failed with error: {}",e.getMessage());
+  } catch (::exception &e) {
+    m_log.error("Desktop server application failed with error: {}",e.get_message());
     freeResources();
     throw;
   }
@@ -137,15 +137,15 @@ void DesktopServerApplication::freeResources()
 {
   try {
     if (m_clToSrvChan) m_clToSrvChan->close();
-  } catch (::remoting::Exception &e) {
+  } catch (::exception &e) {
     m_log.error("Cannot close client->server channel: {}",
-               e.getMessage());
+               e.get_message());
   }
   try {
     if (m_srvToClChan) m_srvToClChan->close();
-  } catch (::remoting::Exception &e) {
+  } catch (::exception &e) {
     m_log.error("Cannot close server->client channel: {}",
-               e.getMessage());
+               e.get_message());
   }
 
   if (m_sessionChangesWatcher) delete m_sessionChangesWatcher;
@@ -184,9 +184,9 @@ int DesktopServerApplication::run()
     int retCode = WindowsApplication::run();
     m_log.info("Desktop server terminated with return code = {}", retCode);
     return retCode;
-  } catch (::remoting::Exception &e) {
+  } catch (::exception &e) {
     m_log.error("Desktop server has been terminated with error: {}",
-               e.getMessage());
+               e.get_message());
     return 0;
   }
 }

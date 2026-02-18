@@ -32,7 +32,7 @@
 class ConnectionListener : protected TcpServer
 {
 public:
-  static const TCHAR DEFAULT_HOST[];
+  static const char DEFAULT_HOST[];
   static const unsigned short DEFAULT_PORT = 5500;
 
   // HWND mainWindow is handle of main window of program.
@@ -49,7 +49,7 @@ protected:
   void onAcceptConnection(SocketIPv4 *socket);
 
   WindowsApplication *m_application;
-  ::list<SocketIPv4 *> m_connections;
+  ::list_base<SocketIPv4 *> m_connections;
   LocalMutex m_connectionsLock;
 };
 

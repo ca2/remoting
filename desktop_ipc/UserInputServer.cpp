@@ -63,14 +63,14 @@ void UserInputServer::onClipboardUpdate(const ::scoped_string & newClipboard)
   AutoLock al(m_forwGate);
   try {
     // Send clipboard data
-    if (newClipboard->getLength() != 0) {
+    if (newClipboard->length() != 0) {
       m_forwGate->writeUInt8(CLIPBOARD_CHANGED);
       sendNewClipboard(newClipboard, m_forwGate);
     }
-  } catch (::remoting::Exception &e) {
+  } catch (::exception &e) {
     m_log->error("An error has been occurred while sending a"
-               " CLIPBOARD_CHANGED message from UserInputServer: {}",
-               e.getMessage());
+               " CLIPBOARD_CHANGED scopedstrMessage from UserInputServer: {}",
+               e.get_message());
     m_extTerminationListener->onAnObjectEvent();
   }
 }
@@ -181,7 +181,7 @@ void UserInputServer::ansWindowCoords(BlockingGate *backGate)
     sendRect(rect, backGate);
   } catch (BrokenHandleException &e) {
     backGate->writeUInt8(1);
-    backGate->writeUTF8(e.getMessage());
+    backGate->writeUTF8(e.get_message());
   }
 }
 

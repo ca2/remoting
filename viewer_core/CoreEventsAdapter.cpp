@@ -51,7 +51,7 @@ void CoreEventsAdapter::onConnected(RfbOutputGate *output)
 {
 }
 
-void CoreEventsAdapter::onDisconnect(const ::scoped_string & message)
+void CoreEventsAdapter::onDisconnect(const ::scoped_string & scopedstrMessage)
 {
 }
 

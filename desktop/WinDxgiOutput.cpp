@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "WinDxCriticalException.h"
 #include "WinDxRecoverableException.h"
-#include "util/UnicodeStringStorage.h"
+
 
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "WinDxgiOutput.h"
@@ -81,7 +81,7 @@ bool WinDxgiOutput::isAttachedtoDesktop()
 
 void WinDxgiOutput::getDeviceName(::string & out)
 {
-  UnicodeStringStorage uniString(m_description.DeviceName);
+  ::wstring uniString(m_description.DeviceName);
   uniString.toStringStorage(out);
 }
 

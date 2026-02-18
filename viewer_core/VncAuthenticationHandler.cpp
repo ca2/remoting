@@ -39,13 +39,13 @@ VncAuthenticationHandler::~VncAuthenticationHandler()
 }
 
 
-void VncAuthenticationHandler::authenticate(DataInputStream *input,
+void VncAuthenticationHandler::authenticate(DataInputStream * pinput,
                                             DataOutputStream *output)
 {
   ::string password;
-  getPassword(&password);
+  password = getPassword();
 
-  VncAuthentication::vncAuthenticate(input, output, password);
+  VncAuthentication::vncAuthenticate(pinput, output, password);
 }
 
 void VncAuthenticationHandler::addAuthCapability(CapabilitiesManager *capManager)

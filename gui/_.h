@@ -3,7 +3,7 @@
 
 
 
-#include "acme/_.h"
+#include "remoting/common/_.h"
 
 
 #if defined(_remoting_gui)
@@ -12,6 +12,15 @@
 #define CLASS_DECL_REMOTING_GUI  CLASS_DECL_IMPORT
 #endif
 
+
+
+namespace remoting
+{
+
+   class DeviceContext;
+
+
+}
 
 
 

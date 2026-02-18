@@ -22,10 +22,11 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _CONNECTION_DATA_
-#define _CONNECTION_DATA_
+//#ifndef _CONNECTION_DATA_
+//#define _CONNECTION_DATA_
+#pragma once
 
-//#include "util/::string.h"
+//////#include "util/::string.h"
 #include "rfb/HostPath.h"
 
 class ConnectionData
@@ -35,7 +36,7 @@ public:
   ConnectionData(const ConnectionData &connectionData);
 
   //
-  // This methods is setter and getter of hostname or ::std::pair of hostname and port.
+  // This methods is setter and getter of hostname or ::pair of hostname and port.
   //
   void setHost(const ::scoped_string & host);
   ::string getHost() const;
@@ -43,7 +44,7 @@ public:
   //
   // This method return hostname without port.
   //
-  void getReducedHost(::string & strHost) const;
+  ::string getReducedHost() const;
 
   //
   // This method return port.

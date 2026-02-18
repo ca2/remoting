@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "WallpaperUtil.h"
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 #include "server_config_lib/Configurator.h"
 #include "win_system/AutoImpersonator.h"
 
@@ -42,8 +42,8 @@ WallpaperUtil::~WallpaperUtil()
       restoreWallpaper();
       m_log->information("Wallpaper was successfully restored");
     }
-    catch (::remoting::Exception &e) {
-      m_log->error(e.getMessage());
+    catch (::exception &e) {
+      m_log->error(e.get_message());
     }
   }
 }
@@ -68,8 +68,8 @@ void WallpaperUtil::updateWallpaper()
         m_wasDisabled = false;
       }
     }
-  } catch (::remoting::Exception &e) {
-    m_log->error(e.getMessage());
+  } catch (::exception &e) {
+    m_log->error(e.get_message());
   }
 }
 
@@ -81,7 +81,7 @@ void WallpaperUtil::restoreWallpaper()
   AutoImpersonator ai(&imp, m_log);
   int result;
 
-  if (m_wallparerPath.getLength() == 0) {
+  if (m_wallparerPath.length() == 0) {
     result = SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, 0, 0);
   }
   else {

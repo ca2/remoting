@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "gui/MessageWindow.h"
 #include "ClipboardListener.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 #include "thread/GuiThread.h"
 
 class WindowsClipboard : protected MessageWindow, GuiThread
@@ -38,12 +38,12 @@ public:
   virtual ~WindowsClipboard(void);
 
   // This function replaces clipboard content by the text
-  virtual bool writeToClipBoard(const ::scoped_string & scopedstrtext);
+  virtual bool writeToClipBoard(const ::scoped_string & scopedstrText);
 
   virtual void readFromClipBoard(::string & clipDest) const;
 
 protected:
-  virtual bool wndProc(UINT message, WPARAM wParam, LPARAM lParam);
+  virtual bool wndProc(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam);
 
   virtual void execute();
   virtual void onTerminate();

@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "ReconnectingChannel.h"
-#include "util/DateTime.h"
+//#include "util/::earth::time.h"
 #include "desktop_ipc/ReconnectException.h"
 #include "thread/AutoLock.h"
 
@@ -116,8 +116,8 @@ size_t ReconnectingChannel::write(const void *buffer, size_t len)
                       " has not been initialized yet.");
     }
     return channel->write(buffer, len);
-  } catch (::remoting::Exception &e) {
-    m_log->error(e.getMessage());
+  } catch (::exception &e) {
+    m_log->error(e.get_message());
     waitForReconnect("write", channel);
   }
 
@@ -134,8 +134,8 @@ size_t ReconnectingChannel::read(void *buffer, size_t len)
                       " has not been initialized yet.");
     }
     return channel->read(buffer, len);
-  } catch (::remoting::Exception &e) {
-    m_log->error(e.getMessage());
+  } catch (::exception &e) {
+    m_log->error(e.get_message());
     waitForReconnect("read", channel);
   }
 
@@ -146,11 +146,11 @@ void ReconnectingChannel::waitForReconnect(const ::scoped_string & scopedstrFunN
                                          Channel *channel)
 {
   // Wait until transport has been initialized or time out elapsed.
-  DateTime startTime = DateTime::now();
+  ::earth::time startTime = ::earth::time::now();
   bool success = false;
   while (!success) {
     unsigned int timeForWait = max((int)m_timeOut - 
-                                   (int)(DateTime::now() -
+                                   (int)(::earth::time::now() -
                                          startTime).getTime(),
                                    0);
     if (timeForWait == 0 || m_isClosed) { // Break this function with

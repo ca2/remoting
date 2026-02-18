@@ -56,7 +56,7 @@ void RfbClientManager::onClientTerminate()
 
 Desktop *RfbClientManager::onClientAuth(RfbClient *client)
 {
-  // The client is now authenticated, so remove its IP from the ban ::list.
+  // The client is now authenticated, so remove its IP from the ban ::list_base.
   ::string ip;
   client->getPeerHost(&ip);
   updateIpInBan(&ip, true);
@@ -95,7 +95,7 @@ Desktop *RfbClientManager::onClientAuth(RfbClient *client)
     }
   }
 
-  // Removing the client from the non-authorized clients ::list.
+  // Removing the client from the non-authorized clients ::list_base.
   for (ClientListIter iter = m_nonAuthClientList.begin();
        iter != m_nonAuthClientList.end(); iter++) {
     RfbClient *clientOfList = *iter;
@@ -105,7 +105,7 @@ Desktop *RfbClientManager::onClientAuth(RfbClient *client)
     }
   }
 
-  // Adding to the authorized ::list.
+  // Adding to the authorized ::list_base.
   m_clientList.add(client);
 
   if (m_desktop == 0 && !m_clientList.empty()) {
@@ -263,7 +263,7 @@ void RfbClientManager::validateClientList()
   {
     AutoLock al(&m_clientListLocker);
     // If clients are in the IN_READY_TO_REMOVE phase, remove them from the
-    // non-authorized clients ::list.
+    // non-authorized clients ::list_base.
     ClientListIter iter = m_nonAuthClientList.begin();
     while (iter != m_nonAuthClientList.end()) {
       RfbClient *client = *iter;
@@ -276,7 +276,7 @@ void RfbClientManager::validateClientList()
       }
     }
     // If clients are in the IN_READY_TO_REMOVE phase, remove them from the
-    // authorized clients ::list.
+    // authorized clients ::list_base.
     iter = m_clientList.begin();
     while (iter != m_clientList.end()) {
       RfbClient *client = *iter;
@@ -315,8 +315,8 @@ bool RfbClientManager::checkForBan(const ::scoped_string & ip)
   BanListIter it = m_banList.find(*ip);
   if (it != m_banList.end()) {
     unsigned int count = (*it).second.count;
-    DateTime lastTime = (*it).second.banLastTime;
-    DateTime now = DateTime::now();
+    ::earth::time lastTime = (*it).second.banLastTime;
+    ::earth::time now = ::earth::time::now();
     if (count > 13) count = 13; 
     // about 1 hour max login rate after 14 unsuccessful logins
     // wait about 1 minute after 8 unsuccessful logins
@@ -344,11 +344,11 @@ void RfbClientManager::updateIpInBan(const ::scoped_string & ip, bool success)
     if (it != m_banList.end()) {
       // Increase ban count
       (*it).second.count += 1;
-      (*it).second.banLastTime = DateTime::now();
+      (*it).second.banLastTime = ::earth::time::now();
     } else {
-      // Add new element to ban ::list with ban count == 0
+      // Add new element to ban ::list_base with ban count == 0
       BanProp banProp;
-      banProp.banLastTime = DateTime::now();
+      banProp.banLastTime = ::earth::time::now();
       banProp.count = 0;
       m_banList[*ip] = banProp;
     }
@@ -362,7 +362,7 @@ void RfbClientManager::updateIpInBan(const ::scoped_string & ip, bool success)
     ::string ip = (*it).first;
     ::string s;
     unsigned int count = (*it).second.count;
-    DateTime lastTime = (*it).second.banLastTime;
+    ::earth::time lastTime = (*it).second.banLastTime;
     ::string time;
     lastTime.toString(&time);
     s.formatf("IP: {}, count: {}, last time: {}\n", ip, count, time);
@@ -405,7 +405,7 @@ void RfbClientManager::addNewConnection(SocketIPv4 *socket,
   m_nextClientId++;
 }
 
-void RfbClientManager::getClientsInfo(RfbClientInfoList *::list)
+void RfbClientManager::getClientsInfo(RfbClientInfoList *::list_base)
 {
   AutoLock al(&m_clientListLocker);
 
@@ -416,7 +416,7 @@ void RfbClientManager::getClientsInfo(RfbClientInfoList *::list)
 
       each->getPeerHost(&peerHost);
 
-      ::list->add(RfbClientInfo(each->getId(), peerHost));
+      ::list_base->add(RfbClientInfo(each->getId(), peerHost));
     }
   }
 }

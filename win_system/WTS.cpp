@@ -21,12 +21,13 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-#include "framework.h"#include "WTS.h"
-
+#include "framework.h"
+#include "WTS.h"
 #include "SystemException.h"
 #include "thread/AutoLock.h"
-#include "Environment.h"
+//#include "Environment.h"
 #include "PipeImpersonatedThread.h"
+#include "acme/platform/node.h"
 #include <crtdbg.h>
 
 
@@ -84,7 +85,7 @@ DWORD WTS::getRdpSessionId(LogWriter *log)
       if (sessionInfo[i].State == WTSActive) {
         ::string sessionName(sessionInfo[i].pWinStationName);
         log->debug("Enumerate Sessions, Id: {}, Name: {}", sessionInfo[i].SessionId, sessionName);
-        sessionName.toLowerCase();
+        sessionName.make_lower();
         if (sessionName.find("rdp") != 0) {
           sessionId = (DWORD)sessionInfo[i].SessionId;
           log->debug("RDP Session selected, Id: {}", sessionId);
@@ -119,7 +120,7 @@ bool WTS::SessionIsRdpSession(DWORD sessionId, LogWriter *log)
     return res;
   }
   ::string sessionName((TCHAR *)buffer);
-  sessionName.toLowerCase();
+  sessionName.make_lower();
   if (sessionName.find("rdp") != 0) {
     res = true;
   }
@@ -213,7 +214,7 @@ bool WTS::sessionIsLocked(DWORD sessionId, LogWriter* log)
   LONG locked = info.SessionFlags;
   wtsFreeMemory(buffer);
   // reverse for Windows Server 2008 R2 and Windows 7
-  if (Environment::isWin7()) {
+  if (::system()->node()->_windows_isWin7()) {
     if (locked == WTS_SESSIONSTATE_UNLOCK) {
       return true;
     } 
@@ -263,8 +264,8 @@ void WTS::duplicatePipeClientToken(HANDLE pipeHandle)
   impThread.waitUntilImpersonated();
   if (!impThread.getImpersonationSuccess()) {
     ::string faultReason, errMessage;
-    impThread.getFaultReason(&faultReason);
-    errMessage.formatf("Can't impersonate thread by pipe handle: {}",
+    faultReason = impThread.getFaultReason();
+    errMessage.format("Can't impersonate thread by pipe handle: {}",
                       faultReason);
     throw ::remoting::Exception(errMessage);
   }
@@ -311,8 +312,8 @@ void WTS::initialize(LogWriter *log)
   try {
     m_kernel32Library = new DynamicLibrary("Kernel32.dll");
     m_WTSGetActiveConsoleSessionId = (pWTSGetActiveConsoleSessionId)m_kernel32Library->getProcAddress("WTSGetActiveConsoleSessionId");
-  } catch (::remoting::Exception &e) {
-    log->error("Can't load the Kernel32.dll library: {}", e.getMessage());
+  } catch (::exception &e) {
+    log->error("Can't load the Kernel32.dll library: {}", e.get_message());
   }
   try {
     m_wtsapi32Library = new DynamicLibrary("Wtsapi32.dll");
@@ -325,8 +326,8 @@ void WTS::initialize(LogWriter *log)
     m_WTSEnumerateSessions = (pWTSEnumerateSessions)m_wtsapi32Library->getProcAddress("WTSEnumerateSessionsA");
 #endif
     m_WTSFreeMemory = (pWTSFreeMemory)m_wtsapi32Library->getProcAddress("WTSFreeMemory");
-  } catch (::remoting::Exception &e) {
-    log->error("Can't load the Wtsapi32.dll library: {}", e.getMessage());
+  } catch (::exception &e) {
+    log->error("Can't load the Wtsapi32.dll library: {}", e.get_message());
   }
 
   m_initialized = true;

@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "acme/_operating_system.h"
 #include "PipeImpersonatedThread.h"
-#include "Environment.h"
+//#include "Environment.h"
 
 PipeImpersonatedThread::PipeImpersonatedThread(HANDLE pipeHandle)
 : m_pipeHandle(pipeHandle),
@@ -53,9 +53,9 @@ bool PipeImpersonatedThread::getImpersonationSuccess()
   return m_success;
 }
 
-void PipeImpersonatedThread::getFaultReason(::string & faultReason)
+::string PipeImpersonatedThread::getFaultReason()
 {
-  *faultReason = m_faultReason;
+  return m_faultReason;
 }
 
 void PipeImpersonatedThread::execute()
@@ -63,7 +63,7 @@ void PipeImpersonatedThread::execute()
   m_success = ImpersonateNamedPipeClient(m_pipeHandle) != 0;
   if (!m_success) {
     // Store fault reason
-    Environment::getErrStr(&m_faultReason);
+    m_faultReason = ::windows::last_error_message(::windows::last_error());
   }
   m_impersonationReadyEvent.notify();
 

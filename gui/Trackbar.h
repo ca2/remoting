@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "Control.h"
+#include "remoting/gui/Window.h"
 
-class Trackbar : public Control
+class Trackbar : public ::remoting::Window
 {
 public:
   Trackbar();

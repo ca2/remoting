@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "util/AnsiStringStorage.h"
-#include "util/Utf8StringStorage.h"
+//#include "util/::string.h"
+////#include "util/::string.h"
 
 
 #include "RfbCutTextEventClientMessage.h"
@@ -39,9 +39,9 @@ RfbCutTextEventClientMessage::~RfbCutTextEventClientMessage()
 
 void RfbCutTextEventClientMessage::send(RfbOutputGate *output)
 {
-  AnsiStringStorage cutTextAnsi;
-  cutTextAnsi.fromStringStorage(m_cutText);
-  unsigned int length = static_cast<unsigned int>(cutTextAnsi.getLength());
+  ::string cutTextAnsi;
+  cutTextAnsi = m_cutText;
+  unsigned int length = static_cast<unsigned int>(cutTextAnsi.length());
 
   AutoLock al(output);
   output->writeUInt8(ClientMsgDefs::CLIENT_CUT_TEXT);
@@ -49,19 +49,19 @@ void RfbCutTextEventClientMessage::send(RfbOutputGate *output)
   output->writeUInt8(0);
   output->writeUInt8(0);
   output->writeUInt32(length);
-  output->writeFully(cutTextAnsi, length);
+  output->write(cutTextAnsi, length);
   output->flush();
 }
 
 void RfbCutTextEventClientMessage::sendUtf8(RfbOutputGate *output)
 {
-  Utf8StringStorage cutTextUtf;
-  cutTextUtf.fromStringStorage(m_cutText);
-  unsigned int length = static_cast<unsigned int>(cutTextUtf.getLength());
+  ::string cutTextUtf;
+  cutTextUtf = m_cutText;
+  unsigned int length = static_cast<unsigned int>(cutTextUtf.length());
 
   AutoLock al(output);
   output->writeUInt32(ClientMsgDefs::CLIENT_CUT_TEXT_UTF8);
   output->writeUInt32(length);
-  output->writeFully(cutTextUtf, length);
+  output->write(cutTextUtf, length);
   output->flush();
 }

@@ -1076,7 +1076,7 @@ local void compress_block(s, ltree, dtree)
                 dist -= (unsigned)base_dist[code];
                 send_bits(s, dist, extra);   /* send the extra distance bits */
             }
-        } /* literal or match ::std::pair ? */
+        } /* literal or match ::pair ? */
 
         /* Check that the overlay between pending_buf and sym_buf is ok: */
         Assert(s->pending < s->lit_bufsize + sx, "pendingBuf overflow");
@@ -1090,12 +1090,12 @@ local void compress_block(s, ltree, dtree)
  * Check if the data type is TEXT or BINARY, using the following algorithm:
  * - TEXT if the two conditions below are satisfied:
  *    a) There are no non-portable control characters belonging to the
- *       "block ::std::list" (0..6, 14..25, 28..31).
+ *       "block ::std::list_base" (0..6, 14..25, 28..31).
  *    b) There is at least one printable character belonging to the
- *       "allow ::std::list" (9 {TAB}, 10 {LF}, 13 {CR}, 32..255).
+ *       "allow ::std::list_base" (9 {TAB}, 10 {LF}, 13 {CR}, 32..255).
  * - BINARY otherwise.
  * - The following partially-portable control characters form a
- *   "gray ::std::list" that is ignored in this detection algorithm:
+ *   "gray ::std::list_base" that is ignored in this detection algorithm:
  *   (7 {BEL}, 8 {BS}, 11 {VT}, 12 {FF}, 26 {SUB}, 27 {ESC}).
  * IN assertion: the fields Freq of dyn_ltree are set.
  */

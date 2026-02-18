@@ -26,7 +26,7 @@
 
 
 #include "Impersonator.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 // This class automaticly impesonates at the constructor and
 // revertes at the destructor.

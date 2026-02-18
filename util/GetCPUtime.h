@@ -22,8 +22,9 @@
 //-------------------------------------------------------------------------
 //
 
+//#ifndef _GETCPUTIME_H_
+//#define _GETCPUTIME_H_
 #pragma once
-
 
 // returns current process time of work in seconds
 double getCPUTime();
@@ -46,11 +47,11 @@ inline unsigned long long rdtsc() {
   }
 #else
   return 0;
-
+#endif
 #else
   #error "Unsupported compiler"
-
+#endif
   return ((unsigned long long)hi << 32) | lo;
 }
 
-//_GETCPUTIME_H_
+//#endif _GETCPUTIME_H_

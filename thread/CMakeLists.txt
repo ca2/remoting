@@ -23,8 +23,8 @@ list(APPEND library_source
    Thread.cpp
    ThreadCollector.h
    ThreadCollector.cpp
-   ZombieKiller.cpp
-   ZombieKiller.h
+#   ZombieKiller.cpp
+#   ZombieKiller.h
    _.h
    _.cpp
 )

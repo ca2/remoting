@@ -27,7 +27,7 @@
 
 #include "thread/GuiThread.h"
 #include "util/AnEventListener.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 class SessionChangesWatcher : public GuiThread
 {

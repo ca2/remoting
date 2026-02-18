@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 #include "rfb/FrameBuffer.h"
 #include "region/Point.h"
 
@@ -42,7 +42,7 @@ class CoreEventsAdapter;
 class FbUpdateNotifier : public Thread
 {
 public:
-  FbUpdateNotifier(FrameBuffer *fb, LocalMutex *fbLock, LogWriter *logger, WatermarksController* wmController);
+  FbUpdateNotifier(FrameBuffer *fb, LocalMutex *fbLock, LogWriter *LogWriter, WatermarksController* wmController);
   virtual ~FbUpdateNotifier();
 
   void setAdapter(CoreEventsAdapter *adapter);

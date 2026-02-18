@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "DesktopSrvDispatcher.h"
 #include "ReconnectException.h"
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 DesktopSrvDispatcher::DesktopSrvDispatcher(BlockingGate *gate,
                                            AnEventListener *extErrorListener,
@@ -69,16 +69,16 @@ void DesktopSrvDispatcher::execute()
       }
       (*iter).second->onRequest(code, m_gate);
     } catch (ReconnectException &) {
-      m_log->message("The DesktopServerApplication dispatcher has been reconnected");
-    } catch (::remoting::Exception &e) {
+      m_log->debug("The DesktopServerApplication dispatcher has been reconnected");
+    } catch (::exception &e) {
       m_log->error("The DesktopServerApplication dispatcher has "
-                 "failed with error: {}", e.getMessage());
+                 "failed with error: {}", e.get_message());
       notifyOnError();
       terminate();
     }
     Thread::yield();
   }
-  m_log->message("The DesktopServerApplication dispatcher has been stopped");
+  m_log->debug("The DesktopServerApplication dispatcher has been stopped");
 }
 
 void DesktopSrvDispatcher::registerNewHandle(unsigned char code, ClientListener *listener)

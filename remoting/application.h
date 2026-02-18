@@ -15,7 +15,7 @@ namespace remoting_remoting
    {
    public:
       ConnectingDialog m_connectingdialog;
-
+LogWriter * m_logWriter;
       bool m_bOpenFile = false;
 
       __DECLARE_APPLICATION_RELEASE_TIME();

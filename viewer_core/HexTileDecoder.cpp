@@ -36,7 +36,7 @@ HexTileDecoder::~HexTileDecoder()
 {
 }
 
-void HexTileDecoder::decode(RfbInputGate *input,
+void HexTileDecoder::decode(RfbInputGate *pinput,
                             FrameBuffer *pframebuffer,
                             const ::int_rectangle &  dstRect)
 {
@@ -58,15 +58,15 @@ void HexTileDecoder::decode(RfbInputGate *input,
       if (::int_rectangle(pframebuffer->getDimension()).intersection(tileRect) != tileRect)
         throw ::remoting::Exception("Error in protocol: incorrect size of tile in hextile-decoder");
 
-      unsigned char flags = input->readUInt8();
+      unsigned char flags = pinput->readUInt8();
       // If tile-coding is RAW.
       if (flags & 0x1) {
         for (int y = tileRect.top; y < tileRect.bottom; y++)
-          input->readFully(pframebuffer->getBufferPtr(tileRect.left, y),
+          pinput->readFully(pframebuffer->getBufferPtr(tileRect.left, y),
                            tileRect.width() * bytesPerPixel);
       } else {
         if (flags & 0x2) {
-          input->readFully(&background, bytesPerPixel);
+          pinput->readFully(&background, bytesPerPixel);
           backgroundAccepted = true;
         }
 
@@ -74,18 +74,18 @@ void HexTileDecoder::decode(RfbInputGate *input,
           pframebuffer->fillRect(tileRect, background);
 
         if (flags & 0x4)
-          input->readFully(&foreground, bytesPerPixel);
+          pinput->readFully(&foreground, bytesPerPixel);
 
         if (flags & 0x8) {
-          unsigned char numberOfSubrectangles = input->readUInt8();
+          unsigned char numberOfSubrectangles = pinput->readUInt8();
 
           for (int i = 0; i < numberOfSubrectangles; i++) {
 
             if (flags & 0x10 && !(flags & 0x4))
-              input->readFully(&foreground, bytesPerPixel);
+              pinput->readFully(&foreground, bytesPerPixel);
 
-            unsigned char xy = input->readUInt8();
-            unsigned char wh = input->readUInt8();
+            unsigned char xy = pinput->readUInt8();
+            unsigned char wh = pinput->readUInt8();
             int x = (xy >> 4) & 0xF;
             int y = xy & 0xF;
             int w = ((wh >> 4) & 0xF) + 1;

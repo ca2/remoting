@@ -27,7 +27,7 @@
 
 
 #include "region/Point.h"
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 //#include <list>
 #include "acme/prototype/geometry2d/rectangle.h"
 
@@ -63,8 +63,8 @@ protected:
   ::int_rectangle m_copyRect;
   Point m_source;
 
-  ::list<WinProp> m_lastWinProps;
-  ::list<WinProp> m_newWinProps;
+  ::list_base<WinProp> m_lastWinProps;
+  ::list_base<WinProp> m_newWinProps;
 };
 
 //// __COPYRECTDETECTOR_H__

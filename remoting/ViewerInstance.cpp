@@ -36,9 +36,9 @@ ViewerInstance::ViewerInstance(WindowsApplication *application,
   m_viewerWnd(application,
               &m_condata,
               &m_conConf,
-              ViewerConfig::getInstance()->getLogger()),
+              ::remoting::ViewerConfig::getInstance()->getLogWriter()),
   m_vncAuthHandler(&m_condata),
-  m_viewerCore(ViewerConfig::getInstance()->getLogger())
+  m_viewerCore(::remoting::ViewerConfig::getInstance()->getLogWriter())
 {
 }
 
@@ -52,9 +52,9 @@ ViewerInstance::ViewerInstance(WindowsApplication *application,
   m_viewerWnd(application,
               &m_condata,
               &m_conConf,
-              ViewerConfig::getInstance()->getLogger()),
+              ::remoting::ViewerConfig::getInstance()->getLogWriter()),
   m_vncAuthHandler(&m_condata),
-  m_viewerCore(ViewerConfig::getInstance()->getLogger())
+  m_viewerCore(::remoting::ViewerConfig::getInstance()->getLogWriter())
 {
 }
 
@@ -97,7 +97,7 @@ void ViewerInstance::stop()
 
 void ViewerInstance::start()
 {
-  Logger *logger = ViewerConfig::getInstance()->getLogger();
+  auto LogWriter = ::remoting::ViewerConfig::getInstance()->getLogWriter();
   m_viewerWnd.setRemoteViewerCore(&m_viewerCore);
 
 
@@ -111,8 +111,8 @@ void ViewerInstance::start()
     m_viewerCore.start(m_socket,
                        &m_viewerWnd, m_conConf.getSharedFlag());
   } else {
-    ::string strHost;
-    m_condata.getReducedHost(&strHost);
+    //::string strHost;
+    auto strHost = m_condata.getReducedHost();
     unsigned short portVal = m_condata.getPort();
     m_viewerCore.start(strHost, portVal,
                        &m_viewerWnd, m_conConf.getSharedFlag());

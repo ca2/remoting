@@ -31,17 +31,20 @@
 #include "NamingDefs.h"
 #include "remoting_impact.h"
 #include "ViewerWindow.h"
-
+#include "acme/filesystem/file/item.h"
 #include "acme/platform/application.h"
+#include "remoting/common/remoting.h"
+
+#include <commdlg.h>
 
 ViewerWindow::ViewerWindow(WindowsApplication *application,
                            ConnectionData *conData,
                            ConnectionConfig *conConf,
-                           Logger *logger)
+                           LogWriter *LogWriter)
 : m_ccsm(RegistryPaths::VIEWER_PATH,
          conData->getHost()),
   m_application(application),
-  m_logWriter(logger),
+  m_logWriter(LogWriter),
   m_conConf(conConf),
   m_scale(100),
   m_isFullScr(false),
@@ -49,7 +52,7 @@ ViewerWindow::ViewerWindow(WindowsApplication *application,
   m_viewerCore(0),
   m_fileTransfer(0),
   m_conData(conData),
-  m_dsktWnd(&m_logWriter, conConf),
+  m_dsktWnd(m_logWriter, conConf),
   m_isConnected(false),
   m_sizeIsChanged(false),
   m_hooksEnabledFirstTime(true),
@@ -96,7 +99,7 @@ ViewerWindow::~ViewerWindow()
   }
 }
 
-void ViewerWindow::setFileTransfer(FileTransferCapability *ft)
+void ViewerWindow::setFileTransfer(::remoting::ftp::FileTransferCapability *ft)
 {
   m_fileTransfer = ft;
 }
@@ -116,17 +119,17 @@ bool ViewerWindow::onCreate(LPCREATESTRUCT lps)
   loadIcon(IDI_APPICON);
   m_toolbar.loadToolBarfromRes(IDB_TOOLBAR);
   m_toolbar.setButtonsRange(IDS_TB_NEWCONNECTION);
-  m_toolbar.setViewAutoButtons(4, ToolBar::TB_Style_sep);
-  m_toolbar.setViewAutoButtons(6, ToolBar::TB_Style_sep);
-  m_toolbar.setViewAutoButtons(10, ToolBar::TB_Style_sep);
-  m_toolbar.setViewAutoButtons(11, ToolBar::TB_Style_sep);
-  m_toolbar.setViewAutoButtons(15, ToolBar::TB_Style_sep);
+  m_toolbar.setViewAutoButtons(4, ::remoting::ToolBar::TB_Style_sep);
+  m_toolbar.setViewAutoButtons(6, ::remoting::ToolBar::TB_Style_sep);
+  m_toolbar.setViewAutoButtons(10, ::remoting::ToolBar::TB_Style_sep);
+  m_toolbar.setViewAutoButtons(11, ::remoting::ToolBar::TB_Style_sep);
+  m_toolbar.setViewAutoButtons(15, ::remoting::ToolBar::TB_Style_sep);
   m_toolbar.attachToolBar(getHWnd());
   m_menu.getSystemMenu(getHWnd());
   m_menu.loadMenu();
   applySettings();
    m_timeStart.Now();
-  ViewerConfig *config = ViewerConfig::getInstance();
+ ::remoting:: ViewerConfig *config = ::remoting::ViewerConfig::getInstance();
   bool bShowToolbar = config->isToolbarShown();
   if (!bShowToolbar) {
     m_toolbar.hide();
@@ -255,9 +258,9 @@ bool ViewerWindow::onSysCommand(WPARAM wParam, LPARAM lParam)
   return onCommand(wParam, lParam);
 }
 
-bool ViewerWindow::onMessage(UINT message, WPARAM wParam, LPARAM lParam)
+bool ViewerWindow::onMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
 {
-  switch (message) {
+  switch (scopedstrMessage) {
   case WM_SIZING:
     m_sizeIsChanged = true;
     return false;
@@ -300,8 +303,8 @@ bool ViewerWindow::onMessage(UINT message, WPARAM wParam, LPARAM lParam)
         m_winHooks.registerKeyboardHook(this);
         // Switching off ignoring win key.
         m_dsktWnd.setWinKeyIgnore(false);
-      } catch (::remoting::Exception &e) {
-        m_logWriter.error("{}", e.getMessage());
+      } catch (::exception &e) {
+        m_logWriter->error("{}", e.get_message());
       }
     } else if (LOWORD(wParam) == WA_INACTIVE) {
       // Unregistration of keyboard hook.
@@ -357,10 +360,10 @@ void ViewerWindow::dialogConnectionOptions()
 
   dialog.setConnected();
   dialog.setConnectionConfig(m_conConf);
-  // FIXME: Removed Control from this code and another
-   //auto pcontrol = øcreate_new<Control>();
+  // FIXME: Removed ::remoting::Window from this code and another
+   //auto pcontrol = øcreate_new<::remoting::Window>();
    //pcontrol ->_setWindow(getHWnd());
-  dialog.setParent(this);
+  dialog.set_parent(this);
 
   if (dialog.showModal() == 1) {
     m_conConf->saveToStorage(&m_ccsm);
@@ -384,15 +387,15 @@ void ViewerWindow::dialogConnectionInfo()
   int pixelSize = 0;
   m_dsktWnd.getServerGeometry(&geometry, &pixelSize);
   ::string str;
-  str.format(StringTable::getString(IDS_CONNECTION_INFO_FORMAT),
-             host,
-             m_viewerCore->getRemoteDesktopName(),
-             m_viewerCore->getProtocolString(),
+  str.formatf(StringTable::getString(IDS_CONNECTION_INFO_FORMAT).c_str(),
+             host.c_str(),
+             m_viewerCore->getRemoteDesktopName().c_str(),
+             m_viewerCore->getProtocolString().c_str(),
              geometry.width(),
              geometry.height(),
              pixelSize,
              &kbdName[0]);
-  MessageBox(getHWnd(),
+  ::remoting::message_box(getHWnd(),
              str,
              StringTable::getString(IDS_CONNECTION_INFO_CAPTION),
              MB_OK | MB_ICONINFORMATION);
@@ -401,10 +404,10 @@ void ViewerWindow::dialogConnectionInfo()
 void ViewerWindow::switchFullScreenMode()
 {
   if (m_isFullScr) {
-    m_logWriter.debug("Switch to windowed mode");
+    m_logWriter->debug("Switch to windowed mode");
     doUnFullScr();
   } else {
-    m_logWriter.debug("Switch to full screen mode");
+    m_logWriter->debug("Switch to full screen mode");
     doFullScr();
   }
 }
@@ -501,13 +504,13 @@ void ViewerWindow::commandPause()
 void ViewerWindow::commandToolBar()
 {
   if (m_toolbar.isVisible()) {
-    m_logWriter.debug("Hide toolbar");
+    m_logWriter->debug("Hide toolbar");
     m_menu.checkedMenuItem(IDS_TB_TOOLBAR, false);
     m_toolbar.hide();
     doSize();
   } else {
     if (!m_isFullScr) {
-      m_logWriter.debug("Show toolbar");
+      m_logWriter->debug("Show toolbar");
       m_menu.checkedMenuItem(IDS_TB_TOOLBAR, true);
       m_toolbar.show();
       doSize();
@@ -522,57 +525,57 @@ void ViewerWindow::commandNewConnection()
 
 void ViewerWindow::commandSaveSession()
 {
-  TCHAR fileName[MAX_PATH] = "";
+   WCHAR fileName[MAX_PATH] = L"";
 
-  ::string filterVncFiles(StringTable::getString(IDS_SAVE_SESSION_FILTER_VNC_FILES));
-  ::string filterAllFiles(StringTable::getString(IDS_SAVE_SESSION_FILTER_ALL_FILES));
-  TCHAR vncMask[] = "*.vnc";
-  TCHAR allMask[] = "*.*";
+   ::wstring filterVncFiles(StringTable::getString(IDS_SAVE_SESSION_FILTER_VNC_FILES));
+   ::wstring filterAllFiles(StringTable::getString(IDS_SAVE_SESSION_FILTER_ALL_FILES));
+   ::wstring vncMask( L"*.vnc");
+   ::wstring allMask( L"*.*");
+   ::wstring semicolon( L";");
+   ::memory wnull(L"\0", sizeof(L"\0"));
 
+   ::memory filter;
+   filter.append(filterVncFiles.block_with_null_terminator());
+   filter.append(vncMask.block());
+   filter.append(semicolon.block());
+   filter.append(wnull);
 
-  ::array_base<TCHAR> filter;
-  filter.insert(filter.end(), filterVncFiles, filterVncFiles + filterVncFiles.getLength() + 1);
-  filter.insert(filter.end(), vncMask, vncMask + sizeof(vncMask) / sizeof(TCHAR) - 1);
-  filter.add(_T(';'));
-  filter.add(_T('\0'));
-
-  filter.insert(filter.end(), filterAllFiles, filterAllFiles + filterAllFiles.getLength() + 1);
-  filter.insert(filter.end(), allMask, allMask + sizeof(allMask) / sizeof(TCHAR) - 1);
-  filter.add(_T('\0'));
-  filter.add(_T('\0'));
+   filter.append( filterAllFiles.block_with_null_terminator());
+   filter.append(allMask.block());
+   filter.append(wnull);
+   filter.append(wnull);
 
 
   OPENFILENAME ofn;
   ZeroMemory(&ofn, sizeof(ofn));
   ofn.lStructSize = sizeof(ofn);
   ofn.hwndOwner = m_hwnd;
-  ofn.lpstrFilter = &filter.front();
-  ofn.lpstrDefExt = "vnc";
+  ofn.lpstrFilter = (LPCWSTR) filter.data();
+  ofn.lpstrDefExt = (LPCWSTR) "vnc";
   ofn.lpstrFile= fileName;
   ofn.nMaxFile = MAX_PATH;
   ofn.Flags = OFN_OVERWRITEPROMPT;
   try {
     if (GetSaveFileName(&ofn)) {
-      File oldSettings(fileName);
-      if (oldSettings.exists()) {
-        oldSettings.remove();
+      auto oldSettings = file_item(fileName);
+      if (oldSettings->exists()) {
+        oldSettings->erase();
       }
       IniFileSettingsManager sm(fileName);
       sm.setApplicationName("connection");
 
-      ::string host;
-      m_conData->getReducedHost(&host);
-      sm= "host", host;
+      auto host = m_conData->getReducedHost();
+      sm.setString("host", host);
       sm.setUINT("port", m_conData->getPort());
 
       if (m_conData->isSetPassword()) {
-        int whetherToSavePass = MessageBox(m_hwnd,
+        int whetherToSavePass = ::remoting::message_box(m_hwnd,
           StringTable::getString(IDS_QUESTION_SAVE_PASSWORD),
           StringTable::getString(IDS_SECURITY_WARNING_CAPTION),
           MB_YESNO);
         if (whetherToSavePass == IDYES) {
           ::string password = m_conData->getCryptedPassword();
-          sm= "password", password;
+          sm.setString("password", password);
         }
       }
 
@@ -580,7 +583,7 @@ void ViewerWindow::commandSaveSession()
       m_conConf->saveToStorage(&sm);
     }
   } catch (...) {
-    m_logWriter.error("Error in save connection");
+    m_logWriter->error("Error in save connection");
   }
 }
 
@@ -675,20 +678,20 @@ void ViewerWindow::commandScaleAuto()
 
 int ViewerWindow::translateAccelToTB(int val) 
 {
-  static const ::std::pair<int, int> accelerators[] = {
-    ::std::make_pair(ID_CONN_OPTIONS,    IDS_TB_CONNOPTIONS),
-    ::std::make_pair(ID_CONN_INFO,       IDS_TB_CONNINFO),
-    ::std::make_pair(ID_SHOW_TOOLBAR,    IDS_TB_TOOLBAR),
-    ::std::make_pair(ID_FULL_SCR,        IDS_TB_FULLSCREEN),
-    ::std::make_pair(ID_REQ_SCR_REFRESH, IDS_TB_REFRESH),
-    ::std::make_pair(ID_CTRL_ALT_DEL,    IDS_TB_CTRLALTDEL),
-    ::std::make_pair(ID_TRANSF_FILES,    IDS_TB_TRANSFER)
+  static const ::pair<int, int> accelerators[] = {
+    {ID_CONN_OPTIONS,    IDS_TB_CONNOPTIONS},
+    {ID_CONN_INFO,       IDS_TB_CONNINFO},
+    {ID_SHOW_TOOLBAR,    IDS_TB_TOOLBAR},
+    {ID_FULL_SCR,        IDS_TB_FULLSCREEN},
+    {ID_REQ_SCR_REFRESH, IDS_TB_REFRESH},
+    {ID_CTRL_ALT_DEL,    IDS_TB_CTRLALTDEL},
+    {ID_TRANSF_FILES,    IDS_TB_TRANSFER}
   };
 
-  for (int i = 0; i < sizeof(accelerators) / sizeof(::std::pair<int, int>); i++) {
-    if (accelerators[i].first == val) {
-      m_logWriter.debug("accelerator pressed: {}", val);
-      return accelerators[i].second;
+  for (int i = 0; i < sizeof(accelerators) / sizeof(::pair<int, int>); i++) {
+    if (accelerators[i].m_element1 == val) {
+      m_logWriter->debug("accelerator pressed: {}", val);
+      return accelerators[i].m_element2;
     }
   }
   return -1;
@@ -789,7 +792,7 @@ void ViewerWindow::showFileTransferDialog()
       m_fileTransfer->setInterface(m_ftDialog);
     }
     m_ftDialog->show();
-    HWND dialogWnd = m_ftDialog->getControl()->getWindow();
+    HWND dialogWnd = m_ftDialog->get_hwnd();
     m_application->addModelessDialog(dialogWnd);
   }
 }
@@ -815,17 +818,17 @@ void ViewerWindow::setSizeFullScreenWindow()
   if (!!GetMonitorInfo(hmon, &mi)) {
     fullScreenWindowsRect = mi.rcMonitor;
   } else {
-    m_logWriter.warning("Get monitor info is failed. Use second method (no multi-screen).");
+    m_logWriter->warning("Get monitor info is failed. Use second method (no multi-screen).");
     GetWindowRect(GetDesktopWindow(), &fullScreenWindowsRect);
   }
   ::int_rectangle fullScreenRect;
   fullScreenRect = fullScreenWindowsRect;
-  m_logWriter.detail("full screen window rect: {}, {}; {}, {}",
+  m_logWriter->debug("full screen window rect: {}, {}; {}, {}",
                      fullScreenRect.left, fullScreenRect.top,
                      fullScreenRect.width(), fullScreenRect.height());
 
-  setStyle((getStyle() | WS_MAXIMIZE) & ~(WS_CAPTION | WS_BORDER | WS_THICKFRAME  | WS_MAXIMIZEBOX));
-  setExStyle(getExStyle() | WS_EX_TOPMOST);
+  set_style((get_style() | WS_MAXIMIZE) & ~(WS_CAPTION | WS_BORDER | WS_THICKFRAME  | WS_MAXIMIZEBOX));
+  set_ex_style(get_ex_style() | WS_EX_TOPMOST);
 
   SetWindowPos(m_hwnd, 0,
                fullScreenRect.left, fullScreenRect.top,
@@ -842,7 +845,7 @@ void ViewerWindow::doFullScr()
   m_conConf->enableFullscreen(true);
   m_conConf->saveToStorage(&m_ccsm);
 
-  ViewerConfig *config = ViewerConfig::getInstance();
+  auto config = ::remoting::ViewerConfig::getInstance();
   m_bToolBar = m_toolbar.isVisible();
   m_toolbar.hide();
 
@@ -864,8 +867,8 @@ void ViewerWindow::doFullScr()
     m_winHooks.registerKeyboardHook(this);
     // Switching off ignoring win key.
     m_dsktWnd.setWinKeyIgnore(false);
-  } catch (::remoting::Exception &e) {
-    m_logWriter.error("{}", e.getMessage());
+  } catch (::exception &e) {
+    m_logWriter->error("{}", e.get_message());
   }
 }
 
@@ -891,15 +894,15 @@ void ViewerWindow::doUnFullScr()
   m_menu.enableMenuItem(IDS_TB_TOOLBAR, isEnable);
 
   // Restore position, style and exstyle of windowed window.
-  setStyle(getStyle() | WS_CAPTION | WS_BORDER | WS_THICKFRAME | WS_MAXIMIZEBOX);
-  setExStyle(getExStyle() & ~WS_EX_TOPMOST);
+  set_style(get_style() | WS_CAPTION | WS_BORDER | WS_THICKFRAME | WS_MAXIMIZEBOX);
+  set_ex_style(get_ex_style() & ~WS_EX_TOPMOST);
   ::int_rectangle workArea;
   workArea = m_workArea.rcNormalPosition;
   if (m_rcNormal.height() == workArea.height() ||
       m_rcNormal.width() == workArea.width()) {
     SetWindowPlacement(m_hwnd, &m_workArea);
   } else {
-    setStyle(getStyle() & ~WS_MAXIMIZE);
+    set_style(get_style() & ~WS_MAXIMIZE);
     setPosition(m_rcNormal.left, m_rcNormal.top);
     setSize(m_rcNormal.width(), m_rcNormal.height());
   }
@@ -921,8 +924,10 @@ bool ViewerWindow::onNotify(int idCtrl, LPNMHDR pnmh)
     return false;
   }
   int resId = static_cast<int>(toolTipText->hdr.idFrom);
-  rLoader->loadString(resId, &m_strToolTip);
-  toolTipText->lpszText = const_cast<TCHAR *>(m_strToolTip);
+   ::string strToolTip;
+  rLoader->loadString(resId, strToolTip);
+   m_wstrToolTip = strToolTip;
+  toolTipText->lpszText = const_cast<TCHAR *>(m_wstrToolTip.c_str());
   return true;
 }
 
@@ -956,7 +961,7 @@ bool ViewerWindow::onSize(WPARAM wParam, LPARAM lParam)
   int x, y;
 
   getClientRect(&rc);
-  m_logWriter.debug("client rect: {}, {}; {}, {}",
+  m_logWriter->debug("client rect: {}, {}; {}, {}",
                     rc.left, rc.top, rc.right, rc.bottom);
   x = y = 0;
   if (m_toolbar.isVisible()) {
@@ -969,7 +974,7 @@ bool ViewerWindow::onSize(WPARAM wParam, LPARAM lParam)
     int h = rc.bottom - rc.top;
     int w = rc.right - rc.left;
 
-    m_logWriter.debug("Desktop-window. (x, y): ({}, {}); (w, h): ({}, {})",
+    m_logWriter->debug("Desktop-window. (x, y): ({}, {}); (w, h): ({}, {})",
                       x, y, w, h);
     if (h > 0 && w > 0) {
       m_dsktWnd.setPosition(x, y);
@@ -991,7 +996,7 @@ void ViewerWindow::showWindow()
 
 bool ViewerWindow::onDisconnect()
 {
-  MessageBox(getHWnd(),
+  ::remoting::message_box(getHWnd(),
              m_disconnectMessage,
              formatWindowName(),
              MB_OK);
@@ -1003,10 +1008,10 @@ bool ViewerWindow::onDisconnect()
 
 bool ViewerWindow::onAuthError(WPARAM wParam)
 {
-  // If authentication is canceled, then do quiet exit, else show error-message.
+  // If authentication is canceled, then do quiet exit, else show error-scopedstrMessage.
   if (wParam != AuthException::AUTH_CANCELED) {
-    ::string error = m_error.getMessage();
-    int result = MessageBox(0,
+    ::string error = m_error.get_message();
+    int result = ::remoting::message_box(0,
                             error,
                             formatWindowName(),
                             MB_RETRYCANCEL | MB_ICONERROR);
@@ -1031,8 +1036,8 @@ bool ViewerWindow::onAuthError(WPARAM wParam)
 bool ViewerWindow::onError()
 {
   ::string error;
-  error.formatf("Error in {}: {}", ProductNames::VIEWER_PRODUCT_NAME, m_error.getMessage());
-  MessageBox(getHWnd(),
+  error.formatf("Error in {}: {}", ProductNames::VIEWER_PRODUCT_NAME, m_error.get_message());
+  ::remoting::message_box(getHWnd(),
              error,
              formatWindowName(),
              MB_OK | MB_ICONERROR);
@@ -1045,7 +1050,7 @@ bool ViewerWindow::onError()
 bool ViewerWindow::onFsWarning()
 {
   FsWarningDialog fsWarning;
-  fsWarning.setParent(&m_control);
+  fsWarning.set_parent(&m_control);
   fsWarning.showModal();
   return true;
 }
@@ -1077,7 +1082,7 @@ void ViewerWindow::onBell()
   if (!!GetMonitorInfo(hmon, &mi)) {
     defaultRect = mi.rcWork;
   } else {
-    m_logWriter.debug("Get monitor info is failed. Use second method (no multi-screen).");
+    m_logWriter->debug("Get monitor info is failed. Use second method (no multi-screen).");
     RECT desktopRc;
     if (!m_sysinf.getDesktopArea(&desktopRc)) {
        m_sysinf.getDesktopAllArea(&desktopRc);
@@ -1118,7 +1123,7 @@ void ViewerWindow::onConnected(RfbOutputGate *output)
   // Set output for client-to-server messages in file transfer.
   m_fileTransfer->setOutput(output);
 
-  // Update ::list of supported operation for file transfer.
+  // Update ::list_base of supported operation for file transfer.
   ::array_base<unsigned int> clientMsgCodes;
   m_viewerCore->getEnabledClientMsgCapabilities(&clientMsgCodes);
 
@@ -1133,10 +1138,10 @@ void ViewerWindow::onConnected(RfbOutputGate *output)
   applySettings();
 }
 
-void ViewerWindow::onDisconnect(const ::scoped_string & message)
+void ViewerWindow::onDisconnect(const ::scoped_string & scopedstrMessage)
 {
-  m_logWriter.info("onDisconnect: {}", message);
-  m_disconnectMessage = message;
+  m_logWriter->information("onDisconnect: {}", scopedstrMessage);
+  m_disconnectMessage = scopedstrMessage;
   if (!m_stopped) {
     postMessage(WM_USER_DISCONNECT);
   }
@@ -1144,8 +1149,8 @@ void ViewerWindow::onDisconnect(const ::scoped_string & message)
 
 void ViewerWindow::onAuthError(const AuthException *exception)
 {
-  m_logWriter.info("onAuthError ({}): {}",
-                   exception->getAuthCode(), exception->getMessage());
+  m_logWriter->information("onAuthError ({}): {}",
+                   exception->getAuthCode(), exception->get_message());
   int authCode = exception->getAuthCode();
   m_error = *exception;
   postMessage(WM_USER_AUTH_ERROR, authCode);
@@ -1212,8 +1217,8 @@ void ViewerWindow::adjustWindowSize()
         // Switching off ignoring win key.
         m_dsktWnd.setWinKeyIgnore(false);
         m_hooksEnabledFirstTime = false;
-      } catch (::remoting::Exception &e) {
-        m_logWriter.error("{}", e.getMessage());
+      } catch (::exception &e) {
+        m_logWriter->error("{}", e.get_message());
       }
     }
   }
@@ -1250,12 +1255,12 @@ void ViewerWindow::updateKeyState()
 LRESULT ViewerWindow::onHookProc(int code, WPARAM wParam, LPARAM lParam)
 {
   KBDLLHOOKSTRUCT *str = (KBDLLHOOKSTRUCT*) lParam;
-  // Ignoring of CapsLock, NumLock, ScrollLock, Control (Ctrl key), Menu (Alt key), Shift (shift key).
+  // Ignoring of CapsLock, NumLock, ScrollLock, ::remoting::Window (Ctrl key), Menu (Alt key), Shift (shift key).
   if (str->vkCode != VK_CAPITAL && str->vkCode != VK_NUMLOCK && str->vkCode != VK_SCROLL &&
       str->vkCode != VK_LCONTROL && str->vkCode != VK_RCONTROL &&
       str->vkCode != VK_LMENU && str->vkCode != VK_RMENU &&
       str->vkCode != VK_LSHIFT && str->vkCode != VK_RSHIFT) {
-    // Set the repeat count for the current message bits.
+    // Set the repeat count for the current scopedstrMessage bits.
     LPARAM newLParam = 1;
     // Set the scan code bits. 
     newLParam |= (str->scanCode & 0xf) << 16;

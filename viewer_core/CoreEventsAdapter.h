@@ -82,7 +82,7 @@ virtual void onGoodCursor();
   //
   // FIXME: now, onDisconnect not called after onError().
   // FIXME: change documentation or call onDisconnect() after onError().
-  virtual void onDisconnect(const ::scoped_string & message);
+  virtual void onDisconnect(const ::scoped_string & scopedstrMessage);
 
   //
   // Authentication has been failed.

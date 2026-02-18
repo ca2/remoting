@@ -24,14 +24,14 @@
 
 #pragma once
 
-#include "Control.h"
+#include "remoting/gui/Window.h"
 #include "ThemeLib.h"
 
 //
 // Owner draw button, that displays button with image and text.
 //
 
-class ImagedButton : public Control
+class ImagedButton : public ::remoting::Window
 {
 public:
   ImagedButton();
@@ -39,7 +39,7 @@ public:
 
   //
   // Draws this ownder-draw button.
-  // This method must be called in WM_DRAWITEM message handler of parent control
+  // This method must be called in WM_DRAWITEM scopedstrMessage handler of parent control
   //
 
   void drawItem(LPDRAWITEMSTRUCT dis);
@@ -83,7 +83,7 @@ protected:
   int m_iconWidth;
   int m_iconHeight;
 
-  bool window_procedure(LRESULT &lresult, UINT message, wparam wparam, lparam lparam) override;
+  bool window_procedure(LRESULT &lresult, UINT scopedstrMessage, wparam wparam, lparam lparam) override;
 };
 
 //

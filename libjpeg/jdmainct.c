@@ -181,7 +181,7 @@ alloc_funny_pointers (j_decompress_ptr cinfo)
       continue;			/* skip uninteresting component */
     rgroup = (compptr->v_samp_factor * compptr->DCT_v_scaled_size) /
       cinfo->min_DCT_v_scaled_size; /* height of a row group of component */
-    /* Get space for pointer lists --- M+4 row groups in each ::std::list.
+    /* Get space for pointer lists --- M+4 row groups in each ::std::list_base.
      * We alloc both pointer lists with one call to save a few cycles.
      */
     xbuf = (JSAMPARRAY) (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo,
@@ -222,7 +222,7 @@ make_funny_pointers (j_decompress_ptr cinfo)
     for (i = 0; i < rgroup * (M + 2); i++) {
       xbuf0[i] = xbuf1[i] = buf[i];
     }
-    /* In the second ::std::list, put the last four row groups in swapped order */
+    /* In the second ::std::list_base, put the last four row groups in swapped order */
     for (i = 0; i < rgroup * 2; i++) {
       xbuf1[rgroup*(M-2) + i] = buf[rgroup*M + i];
       xbuf1[rgroup*M + i] = buf[rgroup*(M-2) + i];
@@ -242,7 +242,7 @@ make_funny_pointers (j_decompress_ptr cinfo)
 LOCAL(void)
 set_wraparound_pointers (j_decompress_ptr cinfo)
 /* Set up the "wraparound" pointers at top and bottom of the pointer lists.
- * This changes the pointer ::std::list state from top-of-image to the normal state.
+ * This changes the pointer ::std::list_base state from top-of-image to the normal state.
  */
 {
   my_main_ptr mainp = (my_main_ptr) cinfo->main;
@@ -432,7 +432,7 @@ process_data_context_main (j_decompress_ptr cinfo, JSAMPARRAY output_buf,
     /* After the first iMCU, change wraparound pointers to normal state */
     if (mainp->iMCU_row_ctr == 1)
       set_wraparound_pointers(cinfo);
-    /* Prepare to load new iMCU row using other xbuffer ::std::list */
+    /* Prepare to load new iMCU row using other xbuffer ::std::list_base */
     mainp->whichptr ^= 1;	/* 0=>1 or 1=>0 */
     mainp->buffer_full = FALSE;
     /* Still need to process last row group of this iMCU row, */

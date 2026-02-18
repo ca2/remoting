@@ -21,7 +21,7 @@ local gzFile gz_open OF((const void *, int, const char *));
 
 #if defined UNDER_CE
 
-/* Map the Windows error number in ERROR to a locale-dependent error message
+/* Map the Windows error number in ERROR to a locale-dependent error scopedstrMessage
    string and return a pointer to it.  Typically, the values for ERROR come
    from GetLastError.
 
@@ -115,7 +115,7 @@ local gzFile gz_open(path, fd, mode)
         return NULL;
     state->size = 0;            /* no buffers allocated yet */
     state->want = GZBUFSIZE;    /* requested buffer size */
-    state->msg = NULL;          /* no error message yet */
+    state->msg = NULL;          /* no error scopedstrMessage yet */
 
     /* interpret mode */
     state->mode = GZ_NONE;
@@ -572,18 +572,18 @@ void ZEXPORT gzclearerr(file)
     gz_error(state, Z_OK, NULL);
 }
 
-/* Create an error message in allocated memory and set state->err and
-   state->msg accordingly.  Free any previous error message already there.  Do
+/* Create an error scopedstrMessage in allocated memory and set state->err and
+   state->msg accordingly.  Free any previous error scopedstrMessage already there.  Do
    not try to free or allocate space if the error is Z_MEM_ERROR (out of
-   memory).  Simply save the error message as a static string.  If there is an
-   allocation failure constructing the error message, then convert the error to
+   memory).  Simply save the error scopedstrMessage as a static string.  If there is an
+   allocation failure constructing the error scopedstrMessage, then convert the error to
    out of memory. */
 void ZLIB_INTERNAL gz_error(state, err, msg)
     gz_statep state;
     int err;
     const char *msg;
 {
-    /* free previously allocated message and clear */
+    /* free previously allocated scopedstrMessage and clear */
     if (state->msg != NULL) {
         if (state->err != Z_MEM_ERROR)
             free(state->msg);
@@ -594,7 +594,7 @@ void ZLIB_INTERNAL gz_error(state, err, msg)
     if (err != Z_OK && err != Z_BUF_ERROR)
         state->x.have = 0;
 
-    /* set error code, and if no message, then done */
+    /* set error code, and if no scopedstrMessage, then done */
     state->err = err;
     if (msg == NULL)
         return;
@@ -603,7 +603,7 @@ void ZLIB_INTERNAL gz_error(state, err, msg)
     if (err == Z_MEM_ERROR)
         return;
 
-    /* construct error message with path */
+    /* construct error scopedstrMessage with path */
     if ((state->msg = (char *)malloc(strlen(state->path) + strlen(msg) + 3)) ==
             NULL) {
         state->err = Z_MEM_ERROR;

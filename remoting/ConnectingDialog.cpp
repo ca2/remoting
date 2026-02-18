@@ -25,35 +25,46 @@
 // camilo on 2026-02-12 21:12 <3ThomasBorregaardSørensen!!
 #include "framework.h"
 #include "ConnectingDialog.h"
+#include "resource.h"
+#include "remoting/gui/ProgressBar.h"
+#include "remoting/gui/TextBox.h"
+#include "acme/platform/application.h"
+
 
 ConnectingDialog::ConnectingDialog()
 : BaseDialog(IDD_CONNECTING)
 {
+
+   øconstruct_new(m_ptextboxHost);
+   øconstruct_new(m_ptextboxStatus);
 }
 
 
 BOOL ConnectingDialog::onInitDialog()
 {
-  setControlById(m_hostname, IDC_EHOST);
-  m_hostname.setText(m_strHost);
-  setControlById(m_password, IDC_EPASSW);
-  m_password.setFocus();
+  subclassControlById(m_ptextboxHost, IDC_EHOST);
+  m_ptextboxHost->setText(m_strHost);
+  subclassControlById(m_ptextboxStatus, IDC_EPASSW);
+  m_ptextboxStatus->set_focus();
   return FALSE;
 }
 
-void ConnectingDialog::setHostName(const ::scoped_string &hostname) {
+void ConnectingDialog::set_host(const ::scoped_string &hostname) {
   m_strHost = hostname;
+}
+
+void ConnectingDialog::set_status(const ::scoped_string &status) {
+   m_strStatus = status;
 }
 
 BOOL ConnectingDialog::onCommand(UINT controlID, UINT notificationID)
 {
   if (controlID == IDOK) {
-    m_password.getText(&m_strPassword);
-    kill(1);
+    close_dialog(1);
     return TRUE;
   }
   if (controlID == IDCANCEL) {
-    kill(0);
+    close_dialog(0);
     return TRUE;
   }
   return FALSE;
@@ -116,7 +127,7 @@ while (m_bRunning)
 {
    m_d = m_time.elapsed().floating_second();
    auto d= fmod(m_d, m_dEnd - m_dStart) + m_dStart;
-   ::PostMessage(m_pbar->getWindow(), WM_USER + 327, (int) (d * 8'000.0), 0);
+   ::PostMessage(m_pbar->get_hwnd(), WM_USER + 327, (int) (d * 8'000.0), 0);
    preempt(100_ms);
 }
 
@@ -124,15 +135,18 @@ while (m_bRunning)
 //
 // };
 
-const ::scoped_string & ConnectingDialog::getPassword()
-{
-  return m_strPassword;
-}
+// const ::scoped_string & ConnectingDialog::get_status()
+// {
+//   return m_strPassword;
+// }
 void ConnectingDialog::_start_animating_progress_range(double dStart, double dEnd)
 {
 
-   m_dAnimationStart = dStart;
-   m_dAnimationEnd = dEnd;
+   ødefer_construct_new(m_panimation);
+
+   m_panimation->set_animation_range(dStart, dEnd);
+   //m_dAnimationStart = dStart;
+   //m_dAnimationEnd = dEnd;
 }
 void ConnectingDialog::set_phase1()
 {
@@ -140,3 +154,4 @@ void ConnectingDialog::set_phase1()
 
    _start_animating_progress_range(0.0, 0.2);
 }
+

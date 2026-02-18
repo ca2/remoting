@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 #include "network/RfbInputGate.h"
 #include "network/RfbOutputGate.h"
 #include "network/socket/SocketIPv4.h"

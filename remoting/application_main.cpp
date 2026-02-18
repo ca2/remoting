@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "client_config_lib/ViewerConfig.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 #include "application.h"
 #include "remoting_impact.h"
 #include "ConnectionData.h"
@@ -32,7 +32,7 @@
 #include "util/ResourceLoader.h"
 #include "acme/platform/system.h"
 #include "acme/filesystem/filesystem/file_context.h"
-
+#include "remoting/common/remoting.h"
 //int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE,
 //                       LPTSTR lpCmdLine, int nCmdShow)
 
@@ -80,7 +80,7 @@ int application::remoting_impact_main( const ::file::path & path)
    ViewerSettingsManager::initInstance(RegistryPaths::VIEWER_PATH);
    SettingsManager *sm = ViewerSettingsManager::getInstance();
 
-   ViewerConfig config(RegistryPaths::VIEWER_PATH);
+   ::remoting::ViewerConfig config(RegistryPaths::VIEWER_PATH);
    config.loadFromStorage(sm);
    HINSTANCE hInstance = remoting_impact_hinstance();
    ConnectionConfig conConf;
@@ -114,8 +114,8 @@ int application::remoting_impact_main( const ::file::path & path)
    //   cmd.parse();
    // }
    // catch (const CommandLineFormatException &exception) {
-   //   ::string strError(exception.getMessage());
-   //   MessageBox(0,
+   //   ::string strError(exception.get_message());
+   //   ::remoting::message_box(0,
    //     strError,
    //     ProductNames::VIEWER_PRODUCT_NAME,
    //     MB_OK | MB_ICONERROR);
@@ -126,12 +126,12 @@ int application::remoting_impact_main( const ::file::path & path)
    //   return 0;
    // }
 
-   LogWriter logWriter(config.getLogger());
+   m_logWriter = config.getLogWriter();
 
 
-   logWriter.debug("main()");
-   logWriter.debug("loading settings from storage completed");
-   logWriter.debug("Log initialization completed");
+   m_logWriter->debug("main()");
+   m_logWriter->debug("loading settings from storage completed");
+   m_logWriter->debug("Log initialization completed");
 
    int result = 0;
    try {
@@ -148,11 +148,11 @@ int application::remoting_impact_main( const ::file::path & path)
       }
       result = tvnViewer.run();
    } catch (const ::remoting::Exception &ex) {
-      MessageBox(0,
+      ::remoting::message_box(0,
                  StringTable::getString(IDS_UNKNOWN_ERROR_IN_VIEWER),
                  ProductNames::VIEWER_PRODUCT_NAME,
                  MB_OK | MB_ICONERROR);
-      logWriter.debug(ex.getMessage());
+      m_logWriter->debug(ex.get_message());
    }
 
    return result;

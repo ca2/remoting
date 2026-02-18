@@ -25,54 +25,60 @@
 #pragma once
 
 
-#include "ft_client_lib/FileTransferRequestSender.h"
-#include "ft_client_lib/FileTransferReplyBuffer.h"
-#include "ft_client_lib/FileTransferMessageProcessor.h"
-#include "ft_client_lib/FileTransferCore.h"
+#include "remoting/ftp_client/FileTransferRequestSender.h"
+#include "remoting/ftp_client/FileTransferReplyBuffer.h"
+#include "remoting/ftp_client/FileTransferMessageProcessor.h"
+#include "remoting/ftp_client/FileTransferCore.h"
 
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 #include "ServerMessageListener.h"
 #include "CapabilitiesManager.h"
 
-class FileTransferCapability : public ServerMessageListener
+
+namespace  remoting
 {
-public:
-  FileTransferCapability(Logger *logger = 0);
-  virtual ~FileTransferCapability();
+   namespace  ftp
+   {
+      class FileTransferCapability : public ServerMessageListener
+      {
+      public:
 
-  //
-  // This method return true, if server support File Transfer.
-  //
-  virtual bool isEnabled();
+         LogWriter * m_logWriter;
 
-  //
-  // This method must called from event onConnected() in CoreEventsAdapter.
-  //
-  void setOutput(RfbOutputGate *output);
+         FileTransferRequestSender m_ftRequestSender;
+         FileTransferReplyBuffer m_ftReplyBuffer;
+         FileTransferMessageProcessor m_ftMessageProcessor;
 
-  //
-  // Overrides MessageListener::onRequest().
-  //
-  virtual void onServerMessage(unsigned int code, DataInputStream *input);
+         FileTransferCore m_ftCore;
 
-  virtual FileTransferCore *getCore();
-  virtual void setInterface(FileTransferInterface *ftInterface);
+         FileTransferCapability(LogWriter *LogWriter = nullptr);
+         virtual ~FileTransferCapability();
 
-  //
-  // This method must be called before call RemoteViewerCore::start(),
-  // otherwise FT will no worked.
-  //
-  virtual void addCapabilities(CapabilitiesManager *capabilitiesManager);
+         //
+         // This method return true, if server support ::file::item Transfer.
+         //
+         virtual bool isEnabled();
 
-protected:
-  LogWriter m_logWriter;
+         //
+         // This method must called from event onConnected() in CoreEventsAdapter.
+         //
+         void setOutput(RfbOutputGate *output);
 
-  FileTransferRequestSender m_ftRequestSender;
-  FileTransferReplyBuffer m_ftReplyBuffer;
-  FileTransferMessageProcessor m_ftMessageProcessor;
+         //
+         // Overrides MessageListener::onRequest().
+         //
+         virtual void onServerMessage(unsigned int code, DataInputStream * pinput);
 
-  FileTransferCore m_ftCore;
-};
+         virtual FileTransferCore *getCore();
+         virtual void setInterface(FileTransferInterface *ftInterface);
 
+         //
+         // This method must be called before call RemoteViewerCore::start(),
+         // otherwise FT will no worked.
+         //
+         virtual void addCapabilities(CapabilitiesManager *capabilitiesManager);
 
+      };
+   }
+}

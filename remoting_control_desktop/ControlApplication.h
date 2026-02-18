@@ -28,11 +28,11 @@
 #include "Transport.h"
 #include "TransportFactory.h"
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "util/ResourceLoader.h"
 #include "util/Command.h"
 #include "server_config_lib/Configurator.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 #include "thread/Thread.h"
 #include "thread/LocalMutex.h"
@@ -67,7 +67,7 @@ public:
    */
   ControlApplication(HINSTANCE hinst,
                      const ::scoped_string & scopedstrwindowClassName,
-                     const ::scoped_string & scopedstrcommandLine);
+                     const ::scoped_string & scopedstrCommandLine);
   /**
    * Destructor of control application.
    */
@@ -83,7 +83,7 @@ public:
    * Inherited from Notificator abstract class
    * @see Notification class for details.
    */
-  virtual void notifyServerSideException(const ::scoped_string & scopedstrreason);
+  virtual void notifyServerSideException(const ::scoped_string & scopedstrReason);
   /**
    * Inherited from Notificator abstract class
    * @see Notification class for details.
@@ -178,7 +178,7 @@ protected:
    */
   ControlProxy *m_serverControl;
   /**
-   * Control tray icon.
+   * ::remoting::Window tray icon.
    */
   ControlTrayIcon *m_trayIcon;
   /**

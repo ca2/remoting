@@ -61,12 +61,12 @@ void ThreadCollector::deleteDeadThreads()
 
   ThreadList::iterator iter = m_threads.begin();
   while (iter != m_threads.end()) {
-    Thread *thread = *iter;
+     auto it= iter;
+     iter++;
+    Thread *thread = *it;
     if (!thread->isActive()) {
       delete thread;
-      iter = m_threads.erase(iter);
-    } else {
-      iter++;
+      m_threads.erase(it);
     }
   }
 }

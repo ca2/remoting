@@ -25,13 +25,13 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "thread/GuiThread.h"
 #include "thread/LocalMutex.h"
 #include "win_system/WinTimeMillis.h"
 #include "win_system/WindowsEvent.h"
 #include "InputBlocker.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 // Only one instance of this class may be created.
 
@@ -49,8 +49,8 @@ public:
   virtual void setSoftKeyboardBlocking(bool block, unsigned int timeInterval);
   virtual void setSoftMouseBlocking(bool block, unsigned int timeInterval);
 
-  virtual DateTime getLastInputTime() const;
-  virtual void correctLastTime(DateTime newTime);
+  virtual ::earth::time getLastInputTime() const;
+  virtual void correctLastTime(::earth::time newTime);
 
   virtual bool isRemoteInputAllowed();
 
@@ -91,7 +91,7 @@ protected:
   bool m_isSoftMouseBlocking;
 
   static unsigned int m_timeInterval;
-  static DateTime m_lastInputTime;
+  static ::earth::time m_lastInputTime;
   static LocalMutex m_lastInputTimeMutex;
 
   LogWriter *m_log;

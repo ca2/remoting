@@ -29,8 +29,8 @@
 #include "rfb/FrameBuffer.h"
 #include "desktop/Desktop.h"
 #include "thread/LocalMutex.h"
-#include "util/DateTime.h"
-#include "log_writer/LogWriter.h"
+//#include "util/::earth::time.h"
+//#include "log_writer/LogWriter.h"
 
 // This class calculates actual view port rectangle.
 // Typical usage:
@@ -91,7 +91,7 @@ private:
   Region m_appRegion;
   LocalMutex m_stateMutex;
 
-  DateTime m_latestHwndResolvingTime;
+  ::earth::time m_latestHwndResolvingTime;
 
   LogWriter *m_log;
 };

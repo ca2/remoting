@@ -28,7 +28,7 @@
 #include "ScreenDriver.h"
 #include "region/Region.h"
 #include "util/DemandTimer.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 //#include <vector>
 //#include <list>
 
@@ -87,10 +87,10 @@ private:
   void removeFirstElementsFromFragmentStats();
 
   int m_wholeS;
-  ::list<double> m_wholeTElements;
+  ::list_base<double> m_wholeTElements;
   double m_wholeTSum;
 
-  ::list<double> m_gElements;
+  ::list_base<double> m_gElements;
   double m_gSum;
 
   DemandTimer m_timer;

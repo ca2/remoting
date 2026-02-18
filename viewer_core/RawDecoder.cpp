@@ -76,7 +76,7 @@ void RawDecoder::process(RfbInputGate *input,
                               fbNotifier);
 }
 
-void RawDecoder::decode(RfbInputGate *input,
+void RawDecoder::decode(RfbInputGate *pinput,
                      FrameBuffer *frameBuffer,
                      const ::int_rectangle &  rect)
 {
@@ -86,5 +86,5 @@ void RawDecoder::decode(RfbInputGate *input,
   if (::int_rectangle(frameBuffer->getDimension()).intersection(rect) != rect)
     throw ::remoting::Exception("Error in protocol: incorrect size of rectangle");
   for (int y = rect.top; y < rect.bottom; y++)
-    input->readFully(frameBuffer->getBufferPtr(rect.left, y), bytesPerLine);
+    pinput->readFully(frameBuffer->getBufferPtr(rect.left, y), bytesPerLine);
 }

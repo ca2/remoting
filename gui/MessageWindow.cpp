@@ -31,13 +31,13 @@ MessageWindow::MessageWindow(const HINSTANCE hinst,
                              WindowMessageHandler *messageHandler)
 : m_hwnd(0),
   m_hinst(hinst),
-  m_windowClassName(0),
+//  m_windowClassName(0),
   m_messageHandler(messageHandler)
 {
-  if (windowClassName != 0) {
-    m_windowClassName = _tcsdup(windowClassName);
+  if (scopedstrwindowClassName.has_character()) {
+    m_windowClassName = scopedstrwindowClassName;
   } else {
-    m_windowClassName = _tcsdup(_T(DEFAULT_WINDOW_CLASS_NAME));
+    m_windowClassName = DEFAULT_WINDOW_CLASS_NAME;
   }
 
 }
@@ -46,9 +46,9 @@ MessageWindow::~MessageWindow(void)
 {
   destroyWindow();
 
-  if (m_windowClassName != 0) {
+  if (m_windowClassName.has_character()) {
     UnregisterClass(m_windowClassName, m_hinst);
-    free(m_windowClassName);
+    m_windowClassName.clear();
   }
 }
 
@@ -62,7 +62,7 @@ bool MessageWindow::createWindow(WindowMessageHandler *messageHandler)
     return false;
   }
 
-  m_hwnd = ::CreateWindow(m_windowClassName, "MessageWindow",
+  m_hwnd = ::CreateWindow(m_windowClassName, L"MessageWindow",
                           WS_OVERLAPPEDWINDOW, 0, 0, 1, 1,
                           0, NULL, m_hinst, this);
 
@@ -82,11 +82,11 @@ void MessageWindow::destroyWindow()
   }
 }
 
-LRESULT CALLBACK MessageWindow::staticWndProc(HWND hwnd, UINT message,
+LRESULT CALLBACK MessageWindow::staticWndProc(HWND hwnd, UINT scopedstrMessage,
                                        WPARAM wParam, LPARAM lParam)
 {
   MessageWindow *_this;
-  if (message == WM_CREATE) {
+  if (scopedstrMessage == WM_CREATE) {
     _this = (MessageWindow *)((CREATESTRUCT *)lParam)->lpCreateParams;
     wParam = (WPARAM)hwnd; // Pass hwnd throw wParam
   } else {
@@ -95,21 +95,21 @@ LRESULT CALLBACK MessageWindow::staticWndProc(HWND hwnd, UINT message,
   if (_this != NULL) {
     bool result;
     if (_this->m_messageHandler != 0) {
-      result = _this->m_messageHandler->processMessage(message,
+      result = _this->m_messageHandler->processMessage(scopedstrMessage,
                                                        wParam,
                                                        lParam);
     } else {
-      result = _this->wndProc(message, wParam, lParam);
+      result = _this->wndProc(scopedstrMessage, wParam, lParam);
     }
     if (result) {
       return 0;
     }
   }
 
-  return DefWindowProc(hwnd, message, wParam, lParam);
+  return DefWindowProc(hwnd, scopedstrMessage, wParam, lParam);
 }
 
-ATOM MessageWindow::regClass(HINSTANCE hinst, TCHAR *windowClassName)
+ATOM MessageWindow::regClass(HINSTANCE hinst, const WCHAR *windowClassName)
 {
   WNDCLASS wcWindowClass = {0};
   wcWindowClass.lpfnWndProc = staticWndProc;

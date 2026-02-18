@@ -26,14 +26,17 @@
 
 
 #include "io_lib/io_exception.h"
-
+#include "acme/filesystem/file/streamable.h"
 /**
  * Output stream interface (abstract class).
  */
-class OutputStream
+class OutputStream :
+   virtual public ::file::writable
 {
 public:
-  virtual ~OutputStream();
+
+
+   ~OutputStream() override;
 
   /**
    * Writes data to stream.
@@ -42,7 +45,7 @@ public:
    * @return count of written bytes.
    * @throws any kind of exception (depends on implementation).
    */
-  virtual size_t write(const void *buffer, size_t len) = 0;
+   virtual void write(const void * buffer, ::memsize len) = 0;
 
   /**
    * Flushes inner buffer to real output stream.
@@ -50,6 +53,8 @@ public:
    * flush method of OutputStream does nothing, it can be override
    * by subclasses which uses bufferization.
    */
-  virtual void flush();
+   virtual void flush();
+
+
 };
 

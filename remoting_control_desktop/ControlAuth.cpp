@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "ControlAuth.h"
-#include "util/AnsiStringStorage.h"
+//#include "util/::string.h"
 #include "remoting_control_desktop/ControlProto.h"
 
 #include "thread/AutoLock.h"
@@ -38,11 +38,11 @@ ControlAuth::ControlAuth(ControlGate *gate, const ::scoped_string & scopedstrPas
   ::string truncatedPass(password);
   truncatedPass.getSubstring(&truncatedPass, 0, ServerConfig::VNC_PASSWORD_SIZE - 1);
 
-  AnsiStringStorage passwordAnsi(&truncatedPass);
+  ::string passwordAnsi(&truncatedPass);
 
   memset(m_password, 0, sizeof(m_password));
   memcpy(m_password, passwordAnsi,
-         ::minimum(passwordAnsi.getLength(), sizeof(m_password)));
+         ::minimum(passwordAnsi.length(), sizeof(m_password)));
 
   // FIXME: Why it's commented out?
   // AutoLock l(m_gate);

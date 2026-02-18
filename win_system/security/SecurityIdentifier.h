@@ -44,7 +44,7 @@ enum Authority {
    * Specifies the Creator SID authority.
    * It defines the Creator Owner, Creator Group, and Creator Owner Server
    * well-known-SIDs.
-   * These SIDs are used as placeholders in an access control ::list (ACL) and are replaced by the user,
+   * These SIDs are used as placeholders in an access control ::list_base (ACL) and are replaced by the user,
    * group, and machine SIDs of the security principal.
    */
   Creator,

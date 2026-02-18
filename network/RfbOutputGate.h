@@ -35,7 +35,7 @@
  *
  * @features: gate is synchonized (can be locked and unlocked, supports data buffering, and writting
  * typized data).
- * @remark: after every message you want to send to must manually call flush() cause
+ * @remark: after every scopedstrMessage you want to send to must manually call flush() cause
  * "autoflush on unlock" is removed.
  * @author enikey.
  */

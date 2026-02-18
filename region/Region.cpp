@@ -24,6 +24,7 @@
 #include "framework.h"
 #include "Region.h"
 #include "acme/prototype/geometry2d/rectangle.h"
+#include "acme/prototype/geometry2d/rectangle_array.h"
 
 Region::Region()
 {
@@ -149,16 +150,19 @@ void Region::getRectVector(::array_base<::int_rectangle> *dst) const
 }
 
 // FIXME: Optimize, make BoxRec and ::int_rectangle identical to get rid of conversions.
-void Region::getRectList(::list<::int_rectangle> *dst) const
+::int_rectangle_array_base Region::getRects() const
 {
-  dst->clear();
+
+   ::int_rectangle_array_base recta;
+  //dst->clear();
 
   const BoxRec *boxPtr = REGION_RECTS(&m_reg);
   long numRects = REGION_NUM_RECTS(&m_reg);
   for (long i = 0; i < numRects; i++) {
     ::int_rectangle rect(boxPtr[i].x1, boxPtr[i].y1, boxPtr[i].x2, boxPtr[i].y2);
-    dst->add(rect);
+    recta.add(rect);
   }
+   return recta;
 }
 
 size_t Region::getCount() const

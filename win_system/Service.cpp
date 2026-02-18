@@ -35,7 +35,7 @@ Service *Service::g_service = 0;
 
 void WINAPI Service::ServiceMain(DWORD dwArgc, LPTSTR *lpszArgv)
 {
-  g_service->m_statusHandle = RegisterServiceCtrlHandler(g_service->m_name,
+  g_service->m_statusHandle = RegisterServiceCtrlHandler(::wstring(g_service->m_name),
                                                          &Service::ServiceControlHandler);
 
   if (!g_service->m_statusHandle) {
@@ -100,7 +100,7 @@ Service::Service(const ::scoped_string & scopedstrName)
 
   Service::g_service = this;
 
-  m_name= name;
+  m_name= scopedstrName;
 }
 
 Service::~Service()
@@ -112,7 +112,7 @@ void Service::run()
 {
   TCHAR name[1024];
 
-  _tcscpy_s(name, 1024, m_name);
+  _tcscpy_s(name, 1024, ::wstring(m_name));
 
   SERVICE_TABLE_ENTRY dispatchTable[] =  {{name, (LPSERVICE_MAIN_FUNCTION)ServiceMain }, { NULL, NULL }};
 

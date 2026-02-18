@@ -25,26 +25,26 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
-#include "Control.h"
+#include "remoting/util/CommonHeader.h"
+#include "remoting/gui/Window.h"
 
-class ComboBox : public Control
+class ComboBox : public ::remoting::Window
 {
 public:
   ComboBox();
   ~ComboBox();
 
-  // Adds new item to the end of combo box items ::list.
-  int addItem(const ::scoped_string & scopedstrtext);
+  // Adds new item to the end of combo box items ::list_base.
+  int addItem(const ::scoped_string & scopedstrText);
 
-  // Adds new item to the end of combo box items ::list.
-  int addItem(const ::scoped_string & scopedstrtext, void *tag);
-
-  // Inserts new item to the specified position
-  void insertItem(int index, const ::scoped_string & scopedstrtext);
+  // Adds new item to the end of combo box items ::list_base.
+  int addItem(const ::scoped_string & scopedstrText, void *tag);
 
   // Inserts new item to the specified position
-  void insertItem(int index, const ::scoped_string & scopedstrtext, void *tag);
+  void insertItem(int index, const ::scoped_string & scopedstrText);
+
+  // Inserts new item to the specified position
+  void insertItem(int index, const ::scoped_string & scopedstrText, void *tag);
 
   // Returns count of combo box items
   int getItemsCount() const;
@@ -56,7 +56,7 @@ public:
   void *getItemData(int index) const;
 
   // Sets text associated with combo box item with specified index
-  virtual void getItemText(int index, ::string & storage) const;
+  ::string getItemText(int index) const;
 
   // Returns current selected item index
   int getSelectedItemIndex();

@@ -28,7 +28,7 @@
 #include "TvnServer.h"
 #include "TvnServerListener.h"
 #include "log-server/LogServer.h"
-#include "log-server/ClientLogger.h"
+#include "log-server/ClientLogWriter.h"
 #include "win_system/Service.h"
 
 #include "thread/Thread.h"
@@ -129,7 +129,7 @@ protected:
   static bool getBinPath(::string & binPath);
 
   // This is a callback function that calls when the log can be initialized.
-  virtual void onLogInit(const ::scoped_string & scopedstrlogDir, const ::scoped_string & scopedstrFileName, unsigned char logLevel);
+  virtual void onLogInit(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrFileName, unsigned char logLevel);
 
   // This is a callback function that calls when log properties have changed.
   virtual void onChangeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel);
@@ -145,7 +145,7 @@ protected:
   TvnServer *m_tvnServer;
 
   LogServer m_logServer;
-  ClientLogger m_clientLogger;
+  ClientLogWriter m_clientLogWriter;
 
   WinServiceEvents *m_winServiceEvents;
   NewConnectionEvents *m_newConnectionEvents;

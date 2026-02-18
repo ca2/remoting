@@ -42,7 +42,7 @@ WindowsClipboard::~WindowsClipboard()
   wait();
 }
 
-bool WindowsClipboard::writeToClipBoard(const ::scoped_string & scopedstrtext)
+bool WindowsClipboard::writeToClipBoard(const ::scoped_string & scopedstrText)
 {
   ::string clipboard;
   convertFromRfbFormat(text, &clipboard);
@@ -97,7 +97,7 @@ void WindowsClipboard::readFromClipBoard(::string & clipDest) const
 
   HANDLE hglb = GetClipboardData(CF_TCTEXT);
   if (hglb != NULL) {
-    const ::scoped_string & scopedstrlpstr = (const ::scoped_string & scopedstr)GlobalLock(hglb);
+    const ::scoped_string & scopedstrLpstr = (const ::scoped_string & scopedstr)GlobalLock(hglb);
     if (lpstr != 0) {
       clipDest-= lpstr;
       GlobalUnlock(hglb);
@@ -106,10 +106,10 @@ void WindowsClipboard::readFromClipBoard(::string & clipDest) const
   CloseClipboard();
 }
 
-bool WindowsClipboard::wndProc(UINT message, WPARAM wParam, LPARAM lParam)
+bool WindowsClipboard::wndProc(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
 {
   int fake = 3;
-  switch (message)
+  switch (scopedstrMessage)
   {
   case WM_CREATE:
     m_hwndNextViewer = SetClipboardViewer((HWND)wParam);
@@ -120,7 +120,7 @@ bool WindowsClipboard::wndProc(UINT message, WPARAM wParam, LPARAM lParam)
       m_hwndNextViewer = (HWND) lParam;
     }
     else if (m_hwndNextViewer != NULL) {
-      SendMessage(m_hwndNextViewer, message, wParam, lParam);
+      SendMessage(m_hwndNextViewer, scopedstrMessage, wParam, lParam);
     }
 
     break;
@@ -137,7 +137,7 @@ bool WindowsClipboard::wndProc(UINT message, WPARAM wParam, LPARAM lParam)
 
       m_clipboardListener->onClipboardUpdate(&rfbClip);
     }
-    SendMessage(m_hwndNextViewer, message, wParam, lParam);
+    SendMessage(m_hwndNextViewer, scopedstrMessage, wParam, lParam);
     break;
 
   default:
@@ -178,7 +178,7 @@ void WindowsClipboard::convertToRfbFormat(const ::scoped_string & source,
                                           ::string & dest)
 {
   const ::scoped_string & scopedstrSrcText = source->getString();
-  size_t length = source->getLength();
+  size_t length = source->length();
   TCHAR *rfbText = new TCHAR[length + 1];
 
   size_t j = 0;

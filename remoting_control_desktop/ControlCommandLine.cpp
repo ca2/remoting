@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ControlCommandLine.h"
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "util/CommandLine.h"
 #include "region/RectSerializer.h"
 #include "util/StringParser.h"

@@ -34,12 +34,12 @@ CopyRectDecoder::~CopyRectDecoder()
 {
 }
 
-void CopyRectDecoder::decode(RfbInputGate *input,
+void CopyRectDecoder::decode(RfbInputGate *pinput,
                              FrameBuffer *frameBuffer,
                              const ::int_rectangle &  dstRect)
 {
-  m_sourcePosition.x = input->readInt16();
-  m_sourcePosition.y = input->readInt16();
+  m_sourcePosition.x = pinput->readInt16();
+  m_sourcePosition.y = pinput->readInt16();
 }
 
 void CopyRectDecoder::copy(FrameBuffer *dstFrameBuffer,

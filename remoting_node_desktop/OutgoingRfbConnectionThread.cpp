@@ -24,7 +24,7 @@
 
 #include "OutgoingRfbConnectionThread.h"
 
-OutgoingRfbConnectionThread::OutgoingRfbConnectionThread(const ::scoped_string & scopedstrconnectHost,
+OutgoingRfbConnectionThread::OutgoingRfbConnectionThread(const ::scoped_string & scopedstrConnectHost,
                                                          unsigned int connectPort,
                                                          bool viewOnly,
                                                          RfbClientManager *clientManager,
@@ -48,7 +48,7 @@ void OutgoingRfbConnectionThread::execute()
     socket->connect(m_connectHost, m_connectPort);
   } catch (::remoting::Exception &someEx) {
     m_log->error("Failed to connect to {}:{} with reason: '{}'",
-               m_connectHost, m_connectPort, someEx.getMessage());
+               m_connectHost, m_connectPort, someEx.get_message());
     delete socket;
     return ;
   }

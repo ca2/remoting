@@ -65,21 +65,21 @@ SCMClient::~SCMClient()
 }
 
 void SCMClient::installService(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrNameToDisplay,
-                               const ::scoped_string & scopedstrbinPath, const ::scoped_string & scopedstrDependencies)
+                               const ::scoped_string & scopedstrBinPath, const ::scoped_string & scopedstrDependencies)
 {
   SC_HANDLE serviceHandle = CreateService(
     m_managerHandle,              // SCManager database
-    name,                         // name of service
-    nameToDisplay,               // name to display
+    ::wstring(scopedstrName),                         // name of service
+    ::wstring(scopedstrNameToDisplay),               // name to display
     SERVICE_ALL_ACCESS,           // desired access
     SERVICE_WIN32_OWN_PROCESS,
     // service type
     SERVICE_AUTO_START,           // start type
     SERVICE_ERROR_NORMAL,         // error control type
-    binPath,                      // service's binary
+    ::wstring(scopedstrBinPath),                      // service's binary
     NULL,                         // no load ordering group
     NULL,                         // no tag identifier
-    dependencies,                 // dependencies
+    ::wstring(scopedstrDependencies),                 // dependencies
     NULL,                         // LocalSystem account
     NULL);                        // no password
 
@@ -107,9 +107,9 @@ void SCMClient::installService(const ::scoped_string & scopedstrName, const ::sc
 
 void SCMClient::removeService(const ::scoped_string & scopedstrName)
 {
-  try { stopService(name); } catch (...) { }
+  try { stopService(scopedstrName); } catch (...) { }
 
-  SC_HANDLE serviceHandle = OpenService(m_managerHandle, name, SERVICE_ALL_ACCESS);
+  SC_HANDLE serviceHandle = OpenService(m_managerHandle, ::wstring(scopedstrName), SERVICE_ALL_ACCESS);
 
   if (serviceHandle == NULL) {
     throw SystemException();
@@ -126,7 +126,7 @@ void SCMClient::removeService(const ::scoped_string & scopedstrName)
 
   int triesCount = 0;
   while (true) {
-    SC_HANDLE service = OpenService(m_managerHandle, name, SERVICE_ALL_ACCESS);
+    SC_HANDLE service = OpenService(m_managerHandle, ::wstring(scopedstrName), SERVICE_ALL_ACCESS);
     if (service == 0) {
       break;
     } else {
@@ -144,7 +144,7 @@ void SCMClient::startService(const ::scoped_string & scopedstrName, bool waitCom
 {
   // FIXME: Wrap SC_HANDLE into a class with a call to CloseServiceHandle()
   //        in the destructor.
-  SC_HANDLE serviceHandle = OpenService(m_managerHandle, name, SERVICE_START | SERVICE_QUERY_STATUS);
+  SC_HANDLE serviceHandle = OpenService(m_managerHandle, ::wstring(scopedstrName), SERVICE_START | SERVICE_QUERY_STATUS);
   if (serviceHandle == NULL) {
     throw SystemException();
   }
@@ -182,7 +182,7 @@ void SCMClient::startService(const ::scoped_string & scopedstrName, bool waitCom
 
 void SCMClient::stopService(const ::scoped_string & scopedstrName, bool waitCompletion)
 {
-  SC_HANDLE serviceHandle = OpenService(m_managerHandle, name, SERVICE_STOP | SERVICE_QUERY_STATUS);
+  SC_HANDLE serviceHandle = OpenService(m_managerHandle, ::wstring(scopedstrName), SERVICE_STOP | SERVICE_QUERY_STATUS);
   if (serviceHandle == NULL) {
     throw SystemException();
   }

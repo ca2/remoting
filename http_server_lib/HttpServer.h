@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "network/TcpServer.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 /**
  * Simple tcp server that accepts connections and give management over
@@ -43,7 +43,7 @@ public:
    * @param lockAddr determinates if server must set exclusive address.
    * @throws ::remoting::Exception on fail.
    */
-  HttpServer(const ::scoped_string & scopedstrbindHost,
+  HttpServer(const ::scoped_string & scopedstrBindHost,
              unsigned short bindPort,
              bool lockAddr,
              LogWriter *log);

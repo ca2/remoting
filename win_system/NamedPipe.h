@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "WindowsEvent.h"
 #include "io_lib/Channel.h"
 #include "thread/LocalMutex.h"
@@ -71,7 +71,7 @@ public:
    * @param len count of bytes to write.
    * @throws ::io_exception on io error.
    */
-  virtual size_t write(const void *buffer, size_t len);
+  virtual void write(const void *buffer, memsize len);
 
   virtual size_t available() { return 0; };
 

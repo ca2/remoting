@@ -25,13 +25,13 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "DesktopConfigLocal.h"
 #include "desktop/WallpaperUtil.h"
 #include "thread/GuiThread.h"
 #include "DesktopBaseImpl.h"
 #include "Win32ScreenDriverFactory.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 class DesktopWinImpl : public GuiThread, public DesktopBaseImpl
 {

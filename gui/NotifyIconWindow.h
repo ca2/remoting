@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 #include "WindowProcHolder.h"
 
@@ -35,7 +35,7 @@ public:
   NotifyIconWindow();
   virtual ~NotifyIconWindow();
 
-  HWND getWindow();
+  HWND get_hwnd();
 
   void setWindowProcHolder(WindowProcHolder *wph);
   

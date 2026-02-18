@@ -23,6 +23,8 @@
 //
 #include "framework.h"
 #include "OptionsDialog.h"
+#include "remoting/common/remoting.h"
+
 
 OptionsDialog::OptionsDialog()
 : BaseDialog(IDD_OPTIONS),
@@ -44,12 +46,12 @@ BOOL OptionsDialog::onCommand(UINT controlID, UINT notificationID)
 {
   if (controlID == IDOK) {
     if (onOkPressed()) {
-      kill(1);
+      close_dialog(1);
     }
     return TRUE;
   }
   if (controlID == IDCANCEL) {
-    kill(0);
+    close_dialog(0);
     return TRUE;
   }
   if (controlID == IDC_CVIEWONLY) {
@@ -125,10 +127,11 @@ BOOL OptionsDialog::onInitDialog()
 
 
   // FIXME: replaced literals to named constants
-  TCHAR scaleComboText[8][20] = {"25"), _T("50"), _T("75"), _T("90",
-                                 "100"), _T("125"), _T("150"), _T("Auto"};
-  for (int i = 0; i < sizeof(scaleComboText)/sizeof(scaleComboText[0]); i++) {
-      m_scale.addItem(static_cast<TCHAR FAR *>(scaleComboText[i]));
+  ::string_array scaleComboText {"25","50", "75", "90",
+                                 "100", "125","150", "Auto"};
+  for (auto & str :scaleComboText)
+     {
+      m_scale.addItem(str);
   }
 
   m_tjpeg.setRange(0, 9);
@@ -147,7 +150,7 @@ void OptionsDialog::updateControlValues()
       break;
     } // if found
 
-    // set default value, if preferred encoding not in ::list
+    // set default value, if preferred encoding not in ::list_base
     if (enc == EncodingDefs::HEXTILE)
       m_useEnc.setSelectedItem(i);
   } // for i
@@ -165,7 +168,7 @@ void OptionsDialog::updateControlValues()
   m_swapmouse.check(m_conConfig->isMouseSwapEnabled());
 
   m_sharedses.check(m_conConfig->getSharedFlag());
-  m_sharedses.setEnabled(!m_connected);
+  m_sharedses.enable_window(!m_connected);
 
   if (m_conConfig->isFitWindowEnabled()) {
     // FIXME: replace literal to named constant
@@ -241,9 +244,9 @@ void OptionsDialog::updateControlValues()
 void OptionsDialog::onViewOnlyClick()
 {
   if (m_viewonly.isChecked()) {
-    m_swapmouse.setEnabled(false);
+    m_swapmouse.enable_window(false);
   } else {
-    m_swapmouse.setEnabled(true);
+    m_swapmouse.enable_window(true);
   }
 }
 
@@ -253,20 +256,20 @@ void OptionsDialog::on8BitColorClick()
     if (m_jpeg.isChecked()) {
       enableJpegCompression(true);
     }
-    m_jpeg.setEnabled(true);
+    m_jpeg.enable_window(true);
   } else {
-    m_jpeg.setEnabled(false);
+    m_jpeg.enable_window(false);
     enableJpegCompression(false);
   }
 }
 
 void OptionsDialog::enableJpegCompression(bool enable)
 {
-  m_tjpeg.setEnabled(enable);
-  m_quality2.setEnabled(enable);
-  EnableWindow(GetDlgItem(getControl()->getWindow(), IDC_SPOOR), enable);
-  EnableWindow(GetDlgItem(getControl()->getWindow(), IDC_SBEST2), enable);
-  EnableWindow(GetDlgItem(getControl()->getWindow(), IDC_STQUALITY2), enable);
+  m_tjpeg.enable_window(enable);
+  m_quality2.enable_window(enable);
+  EnableWindow(GetDlgItem(get_hwnd(), IDC_SPOOR), enable);
+  EnableWindow(GetDlgItem(get_hwnd(), IDC_SBEST2), enable);
+  EnableWindow(GetDlgItem(get_hwnd(), IDC_STQUALITY2), enable);
 }
 void OptionsDialog::onAllowCustomCompressionClick()
 {
@@ -275,11 +278,11 @@ void OptionsDialog::onAllowCustomCompressionClick()
 
 void OptionsDialog::enableCustomCompression(bool enable)
 {
-  m_tcompLvl.setEnabled(enable);
-  m_quality.setEnabled(enable);
-  EnableWindow(GetDlgItem(getControl()->getWindow(), IDC_SBEST), enable);
-  EnableWindow(GetDlgItem(getControl()->getWindow(), IDC_SFAST), enable);
-  EnableWindow(GetDlgItem(getControl()->getWindow(), IDC_STQUALITY), enable);
+  m_tcompLvl.enable_window(enable);
+  m_quality.enable_window(enable);
+  EnableWindow(GetDlgItem(get_hwnd(), IDC_SBEST), enable);
+  EnableWindow(GetDlgItem(get_hwnd(), IDC_SFAST), enable);
+  EnableWindow(GetDlgItem(get_hwnd(), IDC_STQUALITY), enable);
 }
 
 void OptionsDialog::onAllowJpegCompressionClick()
@@ -297,11 +300,11 @@ void OptionsDialog::onPreferredEncodingSelectionChange()
   switch (encoding) {
   case EncodingDefs::TIGHT:
     enableCustomCompression(m_compLvl.isChecked());
-    m_compLvl.setEnabled(true);
+    m_compLvl.enable_window(true);
     break;
   default:
     enableCustomCompression(false);
-    m_compLvl.setEnabled(false);
+    m_compLvl.enable_window(false);
     break;
   } // switch
 } // void
@@ -324,10 +327,10 @@ void OptionsDialog::onMessageReceived(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
   switch (uMsg) {
   case WM_HSCROLL:
-    if (HWND(lParam) == m_tcompLvl.getWindow()) {
+    if (HWND(lParam) == m_tcompLvl.get_hwnd()) {
       onCustomCompressionLevelScroll();
     }
-    if (HWND(lParam) == m_tjpeg.getWindow()) {
+    if (HWND(lParam) == m_tjpeg.get_hwnd()) {
       onJpegCompressionLevelScroll();
     }
     break;
@@ -336,13 +339,13 @@ void OptionsDialog::onMessageReceived(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 void OptionsDialog::onScaleKillFocus()
 {
-  ::string scaleText;
-  m_scale.getText(&scaleText);
+  //::string scaleText;
+  auto scaleText = m_scale.get_text();
 
   int scale;
 
   if (!StringParser::parseInt(scaleText, &scale)) {
-    if (scaleText.isEqualTo("Auto")) {
+    if (scaleText == "Auto") {
       return ;
     }
     scale = 100;
@@ -361,30 +364,30 @@ void OptionsDialog::onScaleKillFocus()
 bool OptionsDialog::isInputValid()
 {
   int scaleInt;
-  ::string scaleText;
+  //::string scaleText;
 
-  m_scale.getText(&scaleText);
+  auto scaleText = m_scale.get_text();
 
-  if (scaleText.isEqualTo("Auto")) {
+  if (scaleText == "Auto") {
     return true;
   }
 
   if (!StringParser::parseInt(scaleText, &scaleInt)) {
     ::string error;
-    error.format(StringTable::getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC),
-                 StringTable::getString(IDS_OPTIONS_SCALE));
-    MessageBox(m_ctrlThis.getWindow(),
-               error,
-               StringTable::getString(IDS_OPTIONS_CAPTION),
+    error.formatf(StringTable::getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC).c_str(),
+                 StringTable::getString(IDS_OPTIONS_SCALE).c_str());
+    ::remoting::message_box(m_hwnd,
+               ::wstring(error),
+               ::wstring(StringTable::getString(IDS_OPTIONS_CAPTION)),
                MB_OK | MB_ICONWARNING);
     return false;
   }
 
   if (scaleInt < 0) {
     ::string error;
-    error.format(StringTable::getString(IDS_ERROR_VALUE_FIELD_ONLY_POSITIVE_NUMERIC),
-                 StringTable::getString(IDS_OPTIONS_SCALE));
-    MessageBox(m_ctrlThis.getWindow(),
+    error.formatf(StringTable::getString(IDS_ERROR_VALUE_FIELD_ONLY_POSITIVE_NUMERIC).c_str(),
+                 StringTable::getString(IDS_OPTIONS_SCALE).c_str());
+    ::remoting::message_box(m_hwnd,
                error,
                StringTable::getString(IDS_OPTIONS_CAPTION),
                MB_OK | MB_ICONWARNING);
@@ -439,7 +442,7 @@ void OptionsDialog::apply()
 
   ::string scaleText;
 
-  m_scale.getText(&scaleText);
+  scaleText = m_scale.get_text();
 
   int scaleInt = 0;
 

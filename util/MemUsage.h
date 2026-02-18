@@ -23,13 +23,18 @@
 //
 
 #pragma once
-
-
-class MemUsage
-{
-public:
-  static size_t getCurrentMemUsage();
-};
-
-//__MEMUSAGE_H__
-
+//
+//
+// namespace remoting
+// {
+//
+// class MemUsage
+// {
+// public:
+//   static size_t getCurrentMemUsage();
+// };
+//
+// }
+//
+// //__MEMUSAGE_H__
+//

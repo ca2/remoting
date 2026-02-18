@@ -24,9 +24,9 @@
 #include "framework.h"
 #include "TvnLogFilename.h"
 
-#include "file_lib/File.h"
+#include "file_lib/::file::item.h"
 
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 #include "remoting_node_desktop/NamingDefs.h"
 
 TvnLogFilename::TvnLogFilename()

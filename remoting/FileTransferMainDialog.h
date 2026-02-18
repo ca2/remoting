@@ -26,30 +26,30 @@
 
 
 #include "gui/BaseDialog.h"
-#include "gui/Control.h"
+//#include "gui/::remoting::Window.h"
 #include "gui/TextBox.h"
 #include "gui/ComboBox.h"
 #include "gui/ImagedButton.h"
 #include "gui/ProgressBar.h"
 
-#include "ft_common/FileInfo.h"
+#include "remoting/ftp_common/FileInfo.h"
 
 #include "io_lib/io_exception.h"
 
 #include "FileInfoListView.h"
 #include "FileExistDialog.h"
 #include "thread/Thread.h"
-#include "ft_client_lib/FileTransferInterface.h"
+#include "remoting/ftp_client/FileTransferInterface.h"
 
 //#include <vector>
 
 
 
 class FileTransferMainDialog : public BaseDialog,
-                               public FileTransferInterface
+                               public ::remoting::ftp::FileTransferInterface
 {
 public:
-  FileTransferMainDialog(FileTransferCore *core);
+  FileTransferMainDialog(::remoting::ftp::FileTransferCore *core);
   virtual ~FileTransferMainDialog();
 
   //
@@ -61,9 +61,9 @@ public:
   //
   // Inherited from FtInterface
   //
-  int onFtTargetFileExists(FileInfo *sourceFileInfo,
-                           FileInfo *targetFileInfo,
-                           const ::scoped_string & scopedstrPathToTargetFile);
+  int onFtTargetFileExists(::remoting::ftp::FileInfo *sourceFileInfo,
+                           ::remoting::ftp::FileInfo *targetFileInfo,
+                           const ::file::path & pathToTargetFile);
   void setProgress(double progress);
 
   void onFtOpError(const ::scoped_string & scopedstrMessage);
@@ -77,20 +77,20 @@ public:
   void setNothingState();
 
   //
-  // Called if local file ::list is updated
+  // Called if local file ::list_base is updated
   //
   void onRefreshLocalFileList();
 
-  // Called if remote file ::list is updated
+  // Called if remote file ::list_base is updated
   void onRefreshRemoteFileList();
 
   //
-  // Shows error message and throws exception
+  // Shows error scopedstrMessage and throws exception
   //
 
-  void raise(::remoting::Exception &ex);
+  void raise(::exception &ex) override;
 
-protected:
+//protected:
 
   //
   // Inherited from BaseDialog
@@ -138,7 +138,7 @@ protected:
 
   //
   // Enables or disables rename and delete buttons
-  // depending of file ::list views selected items count.
+  // depending of file ::list_base views selected items count.
   //
 
   void checkRemoteListViewSelection();
@@ -150,10 +150,10 @@ protected:
 
   void insertMessageIntoComboBox(const ::scoped_string & scopedstrMessage);
 
-private:
+//private:
 
   //
-  // Enables or disables all controls from m_controlsToBlock ::list
+  // Enables or disables all controls from m_controlsToBlock ::list_base
   //
 
   void enableControls(bool enabled);
@@ -166,30 +166,30 @@ private:
 
 
   //
-  // Refreshes local file ::list
+  // Refreshes local file ::list_base
   //
 
   void refreshLocalFileList();
 
   //
-  // Refreshes remote file ::list
+  // Refreshes remote file ::list_base
   //
 
   void refreshRemoteFileList();
 
   //
-  // Displays file ::list of pathToFile folder of local machine
-  // to local file ::list view
+  // Displays file ::list_base of pathToFile folder of local machine
+  // to local file ::list_base view
   //
 
-  void tryListLocalFolder(const ::scoped_string & scopedstrPathToFile);
+  void tryListLocalFolder(const ::file::path & pathToFile);
 
   //
-  // Sends file ::list request to server and shows result
-  // in remote file ::list view
+  // Sends file ::list_base request to server and shows result
+  // in remote file ::list_base view
   //
 
-  void tryListRemoteFolder(const ::scoped_string & scopedstrPathToFile);
+  void tryListRemoteFolder(const ::file::path & pathToFile);
 
   //
   // Filenames helper methods
@@ -199,15 +199,15 @@ private:
   // FIXME: Make classes for getPathTo*** methods
   //
 
-  void getPathToCurrentLocalFolder(::string & out);
-  void getPathToParentLocalFolder(::string & out);
-  void getPathToSelectedLocalFile(::string & out);
+  ::file::path getPathToCurrentLocalFolder();
+  ::file::path getPathToParentLocalFolder();
+  ::file::path getPathToSelectedLocalFile();
 
-  void getPathToCurrentRemoteFolder(::string & out);
-  void getPathToParentRemoteFolder(::string & out);
-  void getPathToSelectedRemoteFile(::string & out);
+  ::file::path getPathToCurrentRemoteFolder();
+  ::file::path getPathToParentRemoteFolder();
+  ::file::path getPathToSelectedRemoteFile();
 
-protected:
+//protected:
   //
   // True if window state is closing.
   //
@@ -223,20 +223,20 @@ protected:
   // Buttons
   //
 
-  Control m_renameRemoteButton;
-  Control m_mkDirRemoteButton;
-  Control m_removeRemoteButton;
-  Control m_refreshRemoteButton;
+  ::remoting::Window m_renameRemoteButton;
+  ::remoting::Window m_mkDirRemoteButton;
+  ::remoting::Window m_removeRemoteButton;
+  ::remoting::Window m_refreshRemoteButton;
 
-  Control m_renameLocalButton;
-  Control m_mkDirLocalButton;
-  Control m_removeLocalButton;
-  Control m_refreshLocalButton;
+  ::remoting::Window m_renameLocalButton;
+  ::remoting::Window m_mkDirLocalButton;
+  ::remoting::Window m_removeLocalButton;
+  ::remoting::Window m_refreshLocalButton;
 
-  Control m_uploadButton;
-  Control m_downloadButton;
+  ::remoting::Window m_uploadButton;
+  ::remoting::Window m_downloadButton;
 
-  Control m_cancelButton;
+  ::remoting::Window m_cancelButton;
 
   //
   // Progress bar
@@ -271,12 +271,12 @@ protected:
   FileExistDialog m_fileExistDialog;
 
   //
-  // File info of ".." fake folder
+  // ::file::item info of ".." fake folder
   //
 
-  FileInfo *m_fakeMoveUpFolder;
+ ::remoting::ftp:: FileInfo *m_fakeMoveUpFolder;
 
-private:
+//private:
 
   static const UINT WM_OPERATION_FINISHED = WM_USER + 2;
 };

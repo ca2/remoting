@@ -71,9 +71,9 @@ void CursorPainter::setNewCursor(const Point *hotSpot,
    {
       if (cursorSize != 0) {
          m_logWriter->debug("Set image of cursor...");
-         memcpy(m_cursor.getPixels()->getBuffer(), &cursor->front(), cursorSize);
+         memcpy(m_cursor.getPixels()->getBuffer(), cursor->data(), cursorSize);
          m_logWriter->debug("Set bitmask of cursor...");
-         m_cursor.assignMaskFromRfb(reinterpret_cast<const char *>(&bitmask->front()));
+         m_cursor.assignMaskFromRfb(reinterpret_cast<const char *>(bitmask->data()));
       }
    }
 }

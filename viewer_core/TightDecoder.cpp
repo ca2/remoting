@@ -48,7 +48,7 @@ TightDecoder::~TightDecoder()
   }
 }
 
-void TightDecoder::decode(RfbInputGate *input,
+void TightDecoder::decode(RfbInputGate *pinput,
                           FrameBuffer *fb,
                           const ::int_rectangle &  dstRect)
 {
@@ -63,7 +63,7 @@ void TightDecoder::decode(RfbInputGate *input,
     m_isCPixel = true;
 }
 
-  unsigned char compressionControl = input->readUInt8();
+  unsigned char compressionControl = pinput->readUInt8();
   resetDecoders(compressionControl);
   unsigned char compressionType = (compressionControl >> 4) & 0x0F;
 
@@ -76,12 +76,12 @@ void TightDecoder::decode(RfbInputGate *input,
     throw ::remoting::Exception("Error in protocol: incorrect size of rectangle (tight-decoder)");
 
   if (compressionType == FILL_TYPE) {
-    unsigned int color = readTightPixel(input, bytesPerCPixel);
+    unsigned int color = readTightPixel(pinput, bytesPerCPixel);
     fb->fillRect(dstRect, color);
   } else if (compressionType == JPEG_TYPE) {
-    processJpeg(input, fb, dstRect);
+    processJpeg(pinput, fb, dstRect);
   } else
-    processBasicTypes(input, fb, dstRect, compressionControl);
+    processBasicTypes(pinput, fb, dstRect, compressionControl);
 }
 
 unsigned int TightDecoder::transformPixelToTight(unsigned int color)
@@ -105,14 +105,14 @@ unsigned int TightDecoder::transformPixelToTight(unsigned int color)
   return result;
 }
 
-unsigned int TightDecoder::readTightPixel(RfbInputGate *input, int bytesPerCPixel)
+unsigned int TightDecoder::readTightPixel(RfbInputGate *pinput, int bytesPerCPixel)
 {
   unsigned int color = 0;
   unsigned char buffer[sizeof(color)];
   if (!m_isCPixel) {
-    input->readFully(buffer, bytesPerCPixel);
+    pinput->readFully(buffer, bytesPerCPixel);
   } else {
-    input->readFully(buffer, 3);
+    pinput->readFully(buffer, 3);
     unsigned char t = buffer[2];
     buffer[2] = buffer[0];
     buffer[0] = t;
@@ -139,30 +139,30 @@ void TightDecoder::resetDecoders(unsigned char compressionControl)
     }
 }
 
-int TightDecoder::readCompactSize(RfbInputGate *input)
+int TightDecoder::readCompactSize(RfbInputGate *pinput)
 {
-  int b = input->readUInt8();
+  int b = pinput->readUInt8();
   int size = b & 0x7F;
   if ((b & 0x80) != 0) {
-    b = input->readUInt8();
+    b = pinput->readUInt8();
     size += (b & 0x7F) << 7;
     if ((b & 0x80) != 0) {
-      size += input->readUInt8() << 14;
+      size += pinput->readUInt8() << 14;
     }
   }
   return size;
 }
 
-void TightDecoder::processJpeg(RfbInputGate *input,
+void TightDecoder::processJpeg(RfbInputGate *pinput,
                                FrameBuffer *frameBuffer,
                                const ::int_rectangle &  dstRect)
 {
-  unsigned int jpegBufLen = readCompactSize(input);
+  unsigned int jpegBufLen = readCompactSize(pinput);
   if (jpegBufLen == 0)
     throw ::remoting::Exception("Error in protocol: empty byffer of jpeg (tight-decoder)");
   ::array_base<unsigned char> buffer;
   buffer.resize(jpegBufLen);
-  input->readFully(&buffer.front(), jpegBufLen);
+  pinput->readFully(buffer.data(), jpegBufLen);
 
   if (dstRect.area() != 0) {
     ::array_base<unsigned char> pixels;
@@ -178,14 +178,14 @@ void TightDecoder::processJpeg(RfbInputGate *input,
       }
     } catch (const ::remoting::Exception &ex) {
       ::string error;
-      error..formatf("Error in tight-decoder, subencoding \"jpeg\": {}", 
-                   ex.getMessage());
+      error.format("Error in tight-decoder, subencoding \"jpeg\": {}",
+                   ex.get_message());
       m_logWriter->error(error);
     }
   }
 }
 
-void TightDecoder::processBasicTypes(RfbInputGate *input,
+void TightDecoder::processBasicTypes(RfbInputGate *pinput,
                                      FrameBuffer *fb,
                                      const ::int_rectangle &  dstRect,
                                      unsigned char compressionControl)
@@ -193,7 +193,7 @@ void TightDecoder::processBasicTypes(RfbInputGate *input,
   int decoderId = (compressionControl & STREAM_ID_MASK) >> 4;
   int filterId = COPY_FILTER;
   if ((compressionControl & FILTER_ID_MASK) != 0) {
-    filterId = input->readUInt8();
+    filterId = pinput->readUInt8();
   }
 
   int bytesPerCPixel = fb->getBytesPerPixel();
@@ -206,7 +206,7 @@ void TightDecoder::processBasicTypes(RfbInputGate *input,
 
   switch (filterId) {
   case COPY_FILTER:
-    readTightData(input, buffer, lengthCurrentBpp, decoderId);
+    readTightData(pinput, buffer, lengthCurrentBpp, decoderId);
     if (m_isCPixel) {
       buffer = transformArray(buffer);
     }
@@ -217,19 +217,19 @@ void TightDecoder::processBasicTypes(RfbInputGate *input,
   // when bits-per-pixel value is either 16 or 32, not 8.
   case PALETTE_FILTER:
     {
-      int paletteSize = input->readUInt8() + 1;
-      ::array_base<unsigned int> palette = readPalette(input, paletteSize, bytesPerCPixel);
+      int paletteSize = pinput->readUInt8() + 1;
+      ::array_base<unsigned int> palette = readPalette(pinput, paletteSize, bytesPerCPixel);
       size_t dataLength = dstRect.area();
       if (paletteSize == 2) {
         dataLength = (dstRect.width() + 7) / 8 * dstRect.height();
       }
-      readTightData(input, buffer, dataLength, decoderId);
+      readTightData(pinput, buffer, dataLength, decoderId);
       drawPalette(fb, palette, buffer, dstRect);
     }
     break;
 
   case GRADIENT_FILTER:
-    readTightData(input, buffer, lengthCurrentBpp, decoderId);
+    readTightData(pinput, buffer, lengthCurrentBpp, decoderId);
     drawGradient(fb, buffer, dstRect);
     break;
 
@@ -238,18 +238,18 @@ void TightDecoder::processBasicTypes(RfbInputGate *input,
   }
 }
 
-::array_base<unsigned int> TightDecoder::readPalette(RfbInputGate *input,
+::array_base<unsigned int> TightDecoder::readPalette(RfbInputGate *pinput,
                                       int paletteSize,
                                       int bytesPerCPixel)
 {
   ::array_base<unsigned int> palette(paletteSize);
   for (int i = 0; i < paletteSize; i++) {
-    palette[i] = readTightPixel(input, bytesPerCPixel);
+    palette[i] = readTightPixel(pinput, bytesPerCPixel);
   }
   return palette;
 }
 
-void TightDecoder::readTightData(RfbInputGate *input,
+void TightDecoder::readTightData(RfbInputGate *pinput,
                                  ::array_base<unsigned char> &buffer,
                                  size_t expectedLength,
                                  const int decoderId)
@@ -257,35 +257,35 @@ void TightDecoder::readTightData(RfbInputGate *input,
   if (expectedLength < MIN_SIZE_TO_COMPRESS) {
     buffer.resize(expectedLength);
     if (expectedLength != 0) {
-      input->readFully(&buffer.front(), expectedLength);
+      pinput->readFully(buffer.data(), expectedLength);
     }
   } else {
-    readCompressedData(input, buffer, expectedLength, decoderId);
+    readCompressedData(pinput, buffer, expectedLength, decoderId);
   }
 }
 
-void TightDecoder::readCompressedData(RfbInputGate *input,
+void TightDecoder::readCompressedData(RfbInputGate *pinput,
                                       ::array_base<unsigned char> &buffer,
                                       size_t expectedLength,
                                       const int decoderId)
 {
-  size_t rawDataLength = readCompactSize(input);
+  size_t rawDataLength = readCompactSize(pinput);
 
   ::array_base<char> compressed(rawDataLength);
 
   // read compressed (raw) data behind space allocated for decompressed data
   if (rawDataLength != 0) {
-    input->readFully(&compressed.front(), rawDataLength);
+    pinput->readFully(compressed.data(), rawDataLength);
 
     Inflater *decoder = m_inflater[decoderId];
-    decoder->setInput(&compressed.front(), rawDataLength);
+    decoder->setInput(compressed.data(), rawDataLength);
     decoder->setUnpackedSize(expectedLength);
     decoder->inflate();
 
     size_t size = decoder->getOutputSize();
     const char *output = decoder->getOutput();
     buffer.resize(size);
-    buffer.assign(output, output + size);
+    buffer.assign((unsigned char *) output, size);
   } else {
     _ASSERT(rawDataLength != 0);
     m_logWriter->debug("Tight decoder: Length of Raw compressed data is 0");
@@ -410,8 +410,8 @@ void TightDecoder::drawGradient(FrameBuffer *fb,
   opRows[0].resize(opRowLength);
   opRows[1].resize(opRowLength);
 
-  memset(&opRows[0].front(), 0, opRowLength * sizeof(unsigned short));
-  memset(&opRows[1].front(), 0, opRowLength * sizeof(unsigned short));
+  memset(opRows[0].data(), 0, opRowLength * sizeof(unsigned short));
+  memset(opRows[1].data(), 0, opRowLength * sizeof(unsigned short));
   
   PixelFormat pxFormat = fb->getPixelFormat();
   int fbBytesPerPixel = fb->getBytesPerPixel();

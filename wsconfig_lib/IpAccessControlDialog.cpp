@@ -29,9 +29,9 @@
 #include "UIDataAccess.h"
 #include "server_config_lib/Configurator.h"
 #include "server_config_lib/IpAccessControl.h"
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "util/StringParser.h"
-#include "util/AnsiStringStorage.h"
+//#include "util/::string.h"
 
 IpAccessControlDialog::IpAccessControlDialog()
 : BaseDialog(IDD_CONFIG_ACCESS_CONTROL_PAGE), m_parentDialog(NULL)
@@ -170,7 +170,7 @@ void IpAccessControlDialog::apply()
 {
   // Query timeout string storage
   ::string qtStringStorage;
-  m_queryTimeout.getText(&qtStringStorage);
+  m_queryTimeout.get_text(&qtStringStorage);
 
   int timeout = 0;
   StringParser::parseInt(qtStringStorage, &timeout);
@@ -196,7 +196,7 @@ void IpAccessControlDialog::apply()
 
 void IpAccessControlDialog::initControls()
 {
-  HWND hwnd = m_ctrlThis.getWindow();
+  HWND hwnd = m_ctrlThis.get_hwnd();
   m_list.setWindow(GetDlgItem(hwnd, IDC_IP_ACCESS_CONTROL_LIST));
   m_addButton.setWindow(GetDlgItem(hwnd, IDC_ADD_BUTTON));
   m_editButton.setWindow(GetDlgItem(hwnd, IDC_EDIT_BUTTON));
@@ -370,7 +370,7 @@ void IpAccessControlDialog::onAllowOnlyLoopbackConnectionsClick()
 void IpAccessControlDialog::onIpCheckUpdate()
 {
   ::string ipStorage;
-  m_ip.getText(&ipStorage);
+  m_ip.get_text(&ipStorage);
 
    // Check if ip address is valid.
 
@@ -387,7 +387,7 @@ void IpAccessControlDialog::onIpCheckUpdate()
   // Convert ip to ansi string
   //
 
-  AnsiStringStorage ansiIpStorage(&ipStorage);
+  ::string ansiIpStorage(&ipStorage);
   unsigned int addr = inet_addr(ansiIpStorage);
 
   IpAccessRule::ActionType action = IpAccessRule::ACTION_TYPE_ALLOW;
@@ -428,36 +428,36 @@ void IpAccessControlDialog::onQueryTimeoutUpdate()
 void IpAccessControlDialog::updateButtonsState()
 {
   /*if (m_onlyLoopbackConnections.isChecked()) {
-    m_list.setEnabled(false);
-    m_addButton.setEnabled(false);
-    m_editButton.setEnabled(false);
-    m_removeButton.setEnabled(false);
-    m_moveDownButton.setEnabled(false);
-    m_moveUpButton.setEnabled(false);
+    m_list.enable_window(false);
+    m_addButton.enable_window(false);
+    m_editButton.enable_window(false);
+    m_removeButton.enable_window(false);
+    m_moveDownButton.enable_window(false);
+    m_moveUpButton.enable_window(false);
     return ;
   } else {
-    m_list.setEnabled(true);
-    m_addButton.setEnabled(true);
+    m_list.enable_window(true);
+    m_addButton.enable_window(true);
   }*/
 
   int si = m_list.getSelectedIndex();
   if (si == -1) {
-    m_editButton.setEnabled(false);
-    m_removeButton.setEnabled(false);
-    m_moveUpButton.setEnabled(false);
-    m_moveDownButton.setEnabled(false);
+    m_editButton.enable_window(false);
+    m_removeButton.enable_window(false);
+    m_moveUpButton.enable_window(false);
+    m_moveDownButton.enable_window(false);
   } else {
-    m_editButton.setEnabled(true);
-    m_removeButton.setEnabled(true);
+    m_editButton.enable_window(true);
+    m_removeButton.enable_window(true);
     if (si > 0) {
-      m_moveUpButton.setEnabled(true);
+      m_moveUpButton.enable_window(true);
     } else {
-      m_moveUpButton.setEnabled(false);
+      m_moveUpButton.enable_window(false);
     }
     if (si < m_list.getCount() - 1) {
-      m_moveDownButton.setEnabled(true);
+      m_moveDownButton.enable_window(true);
     } else {
-      m_moveDownButton.setEnabled(false);
+      m_moveDownButton.enable_window(false);
     }
   }
 }
@@ -465,9 +465,9 @@ void IpAccessControlDialog::updateButtonsState()
 void IpAccessControlDialog::updateCheckBoxesState()
 {
   if (m_allowLoopbackConnections.isChecked()) {
-    m_onlyLoopbackConnections.setEnabled(true);
+    m_onlyLoopbackConnections.enable_window(true);
   } else {
-    m_onlyLoopbackConnections.setEnabled(false);
+    m_onlyLoopbackConnections.enable_window(false);
     m_onlyLoopbackConnections.check(false);
   }
 }

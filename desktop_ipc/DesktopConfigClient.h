@@ -27,7 +27,7 @@
 
 #include "desktop_ipc/DesktopServerProto.h"
 #include "DesktopSrvDispatcher.h"
-#include "util/DateTime.h"
+//#include "util/::earth::time.h"
 
 class DesktopConfigClient: public DesktopServerProto
 {
@@ -39,7 +39,7 @@ public:
   virtual bool isRemoteInputAllowed();
 
 private:
-  DateTime m_lastInputTime;
+  ::earth::time m_lastInputTime;
 };
 
 //// __DESKTOPCONFIGCLIENT_H__

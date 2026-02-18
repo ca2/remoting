@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "Control.h"
+#include "remoting/gui/Window.h"
 
-class ProgressBar : public Control
+class ProgressBar : public ::remoting::Window
 {
 public:
   ProgressBar();

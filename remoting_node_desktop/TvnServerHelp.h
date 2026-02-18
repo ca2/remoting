@@ -32,7 +32,7 @@ class TvnServerHelp
 {
 public:
   /**
-   * Shows remoting_node.exe usage message.
+   * Shows remoting_node.exe usage scopedstrMessage.
    */
   static void showUsage();
 private:

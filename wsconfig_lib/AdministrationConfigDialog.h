@@ -64,7 +64,7 @@ private:
   void initControls();
 
   //
-  // Control event handlers
+  // ::remoting::Window event handlers
   //
 
   void onShareRadioButtonClick(int number);
@@ -87,9 +87,9 @@ protected:
   // Configuration
   ServerConfig *m_config;
   // Controls
-  Control m_openLogPathButton;
-  Control m_setControlPasswordButton;
-  Control m_unsetControlPasswordButton;
+  ::remoting::Window m_openLogPathButton;
+  ::remoting::Window m_setControlPasswordButton;
+  ::remoting::Window m_unsetControlPasswordButton;
   CheckBox m_disconnectAction[3];
   TextBox m_logLevel;
   TextBox m_logPathTB;

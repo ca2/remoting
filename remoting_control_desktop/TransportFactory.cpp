@@ -28,7 +28,7 @@
 
 #include "win_system/SecurityAttributes.h"
 
-Transport *TransportFactory::createSocketClientTransport(const ::scoped_string & scopedstrconnectHost,
+Transport *TransportFactory::createSocketClientTransport(const ::scoped_string & scopedstrConnectHost,
                                                          unsigned int connectPort)
 {
   SocketIPv4 *socket = new SocketIPv4();
@@ -43,7 +43,7 @@ Transport *TransportFactory::createSocketClientTransport(const ::scoped_string &
   return new SocketIPv4Transport(socket);
 }
 
-Transport *TransportFactory::createSocketServerTransport(const ::scoped_string & scopedstrbindHost,
+Transport *TransportFactory::createSocketServerTransport(const ::scoped_string & scopedstrBindHost,
                                                          unsigned int bindPort)
 {
   SocketIPv4 *socket = new SocketIPv4();

@@ -31,41 +31,43 @@ ListView::ListView() :
   m_compareItem = 0;
 }
 
-void ListView::addColumn(int index, const ::scoped_string & scopedstrcaption, int width, int fmt)
+void ListView::addColumn(int index, const ::scoped_string & scopedstrCaption, int width, int fmt)
 {
   //
   // Create LV_COLUMN struct
   //
 
+   ::wstring wstrCaption(scopedstrCaption);
+
   LV_COLUMN lvColumn = {0};
   lvColumn.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT;
   lvColumn.fmt = fmt;
   lvColumn.cx = width;
-  lvColumn.pszText = (TCHAR *)caption;
+  lvColumn.pszText = (TCHAR *)wstrCaption.c_str();
 
   //
-  // Add column to ::list view
+  // Add column to ::list_base view
   //
 
   ListView_InsertColumn(m_hwnd, index, &lvColumn);
 }
 
-void ListView::addColumn(int index, const ::scoped_string & scopedstrcaption, int width)
+void ListView::addColumn(int index, const ::scoped_string & scopedstrCaption, int width)
 {
-  addColumn(index, caption, width, LVCFMT_LEFT);
+  addColumn(index, scopedstrCaption, width, LVCFMT_LEFT);
 }
 
 ListViewItem ListView::getItem(int index)
 {
   // Output structure
   ListViewItem item;
-  // Windows ::list view item concept
+  // Windows ::list_base view item concept
   LVITEM lvI;
   // Buffer for text data
   TCHAR textBuffer[256];
 
   //
-  // Retrieve text and tag from ::list view item (zero subitem)
+  // Retrieve text and tag from ::list_base view item (zero subitem)
   //
 
   lvI.mask = LVIF_TEXT | LVIF_PARAM;
@@ -83,7 +85,7 @@ ListViewItem ListView::getItem(int index)
   ListView_GetItem(m_hwnd, &lvI);
 
   //
-  // Copying data to our ::list view item structure
+  // Copying data to our ::list_base view item structure
   //
 
   item.index = lvI.iItem;
@@ -92,55 +94,56 @@ ListViewItem ListView::getItem(int index)
   return item;
 }
 
-void ListView::addItem(int index, const ::scoped_string & scopedstrcaption)
+void ListView::addItem(int index, const ::scoped_string & scopedstrCaption)
 {
-  addItem(index, caption, NULL);
+  addItem(index, scopedstrCaption, NULL);
 }
 
-void ListView::addItem(int index, const ::scoped_string & scopedstrcaption, LPARAM tag)
+void ListView::addItem(int index, const ::scoped_string & scopedstrCaption, LPARAM tag)
 {
   //
   // Prepare LVITEM structure
   //
 
+   ::wstring wstrCaption(scopedstrCaption);
   LVITEM lvI;
   lvI.mask = LVIF_TEXT | LVIF_PARAM;
   lvI.lParam = tag;
   lvI.iItem = index;
   lvI.iSubItem = 0;
-  lvI.pszText = (TCHAR*)caption;
+  lvI.pszText = (TCHAR*)wstrCaption.c_str();
 
   //
-  // Send message to window
+  // Send scopedstrMessage to window
   //
 
   ListView_InsertItem(m_hwnd, &lvI);
 }
 
-void ListView::addItem(int index, const ::scoped_string & scopedstrcaption, LPARAM tag, int imageIndex)
+void ListView::addItem(int index, const ::scoped_string & scopedstrCaption, LPARAM tag, int imageIndex)
 {
   //
   // Prepare LVITEM structure
   //
-
+::wstring wstrCaption(scopedstrCaption);
   LVITEM lvI;
   lvI.mask = LVIF_TEXT | LVIF_PARAM | LVIF_IMAGE;
   lvI.lParam = tag;
   lvI.iItem = index;
   lvI.iSubItem = 0;
   lvI.iImage = imageIndex;
-  lvI.pszText = (TCHAR*)caption;
+  lvI.pszText = (TCHAR*)wstrCaption.c_str();
 
   //
-  // Send message to window
+  // Send scopedstrMessage to window
   //
 
   ListView_InsertItem(m_hwnd, &lvI);
 }
 
-void ListView::removeItem(int i)
+void ListView::eraseItem(int i)
 {
-  ListView_DeleteItem(getWindow(), i);
+  ListView_DeleteItem(get_hwnd(), i);
 }
 
 void ListView::clear()
@@ -148,20 +151,20 @@ void ListView::clear()
   ListView_DeleteAllItems(m_hwnd);
 }
 
-void ListView::setSubItemText(int index, int subIndex, const ::scoped_string & scopedstrcaption)
+void ListView::setSubItemText(int index, int subIndex, const ::scoped_string & scopedstrCaption)
 {
   //
   // Prepare LVITEM structure
   //
-
+::wstring wstrCaption(scopedstrCaption);
   LVITEM lvI;
   lvI.mask = LVIF_TEXT;
   lvI.iItem = index;
   lvI.iSubItem = subIndex;
-  lvI.pszText = (TCHAR*)caption;
+  lvI.pszText = (TCHAR*)wstrCaption.c_str();
 
   //
-  // Send message to window
+  // Send scopedstrMessage to window
   //
 
   SendMessage(m_hwnd, LVM_SETITEM, 0, (LPARAM)&lvI);
@@ -181,7 +184,7 @@ void ListView::setItemData(int index, LPARAM tag)
   lvI.lParam = tag;
 
   //
-  // Send message to window
+  // Send scopedstrMessage to window
   //
 
   SendMessage(m_hwnd, LVM_SETITEM, 0, (LPARAM)&lvI);
@@ -218,24 +221,24 @@ void ListView::selectItem(int index)
   SendMessage(m_hwnd, LVM_ENSUREVISIBLE , itemIndex, FALSE);
   ListView_SetItemState(m_hwnd, itemIndex, LVIS_SELECTED, LVIS_SELECTED);
   ListView_SetItemState(m_hwnd, itemIndex, LVIS_FOCUSED, LVIS_FOCUSED);
-  setFocus();
+  set_focus();
 }
 
 void ListView::setFullRowSelectStyle(bool fullRowSelect)
 {
   if (fullRowSelect) {
-    addExStyle(LVS_EX_FULLROWSELECT);
+    add_ex_style(LVS_EX_FULLROWSELECT);
   } else {
-    removeExStyle(LVS_EX_FULLROWSELECT);
+    clear_ex_style(LVS_EX_FULLROWSELECT);
   }
 }
 
 void ListView::allowMultiSelection(bool allow)
 {
   if (allow) {
-    removeStyle(LVS_SINGLESEL);
+    clear_style(LVS_SINGLESEL);
   } else {
-    addStyle(LVS_SINGLESEL);
+    add_style(LVS_SINGLESEL);
   }
 }
 
@@ -244,13 +247,17 @@ unsigned int ListView::getSelectedItemsCount()
   return ListView_GetSelectedCount(m_hwnd);
 }
 
-void ListView::getSelectedItemsIndexes(int *indexes)
+
+::int_array ListView::getSelectedItemsIndexes()
 {
   int i = -1;
-  for (unsigned int j = 0; j < getSelectedItemsCount(); j++) {
-    i = ListView_GetNextItem(m_hwnd, i, LVNI_SELECTED);
-    indexes[j] = i;
+   ::int_array ia;
+  for (unsigned int j = 0; j < getSelectedItemsCount(); j++)
+     {
+     ListView_GetNextItem(m_hwnd, i, LVNI_SELECTED);
+    ia.add(i);
   }
+   return ia;
 }
 
 void ListView::sort(int columnIndex, PFNLVCOMPARE compareItem)
@@ -287,7 +294,7 @@ void ListView::sort(int columnIndex, PFNLVCOMPARE compareItem)
       Header_SetItem(hHeader, m_sortColumnIndex, &hdrItem);
     }
   }
-  // Sort ::list of item.
+  // Sort ::list_base of item.
   sort();
 }
 
@@ -305,26 +312,26 @@ void ListView::sort()
   }
 }
 
-void ListView::setExStyle(DWORD style)
+void ListView::set_ex_style(DWORD style)
 {
   ::SendMessage(m_hwnd, LVM_SETEXTENDEDLISTVIEWSTYLE, 0, (LPARAM)style); 
 }
 
-DWORD ListView::getExStyle()
+DWORD ListView::get_ex_style()
 {
   return ListView_GetExtendedListViewStyle(m_hwnd);
 }
 
-void ListView::addExStyle(DWORD styleFlag)
+void ListView::add_ex_style(DWORD styleFlag)
 {
-  DWORD flags = getExStyle();
+  DWORD flags = get_ex_style();
   flags |= styleFlag;
-  setExStyle(flags);
+  set_ex_style(flags);
 }
 
-void ListView::removeExStyle(DWORD styleFlag)
+void ListView::clear_ex_style(DWORD styleFlag)
 {
-  DWORD flags = getExStyle();
+  DWORD flags = get_ex_style();
   flags &= ~styleFlag;
-  setExStyle(flags);
+  set_ex_style(flags);
 }

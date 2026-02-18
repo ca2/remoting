@@ -22,8 +22,9 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/_operating_system.h"
 #include "ResourceLoader.h"
-#include "util/UnicodeStringStorage.h"
+
 
 #include <crtdbg.h>
 
@@ -38,18 +39,18 @@ ResourceLoader::~ResourceLoader()
 
 HICON ResourceLoader::loadStandartIcon(const ::scoped_string & scopedstriconName)
 {
-  return LoadIcon(NULL, iconName);
+  return LoadIcon(NULL, ::wstring(scopedstriconName));
 }
 
 HICON ResourceLoader::loadIcon(const ::scoped_string & scopedstriconName)
 {
-  return LoadIcon(m_appInstance, iconName);
+  return LoadIcon(m_appInstance, ::wstring(scopedstriconName));
 }
 
-bool ResourceLoader::loadString(UINT id, ::string & string)
+bool ResourceLoader::loadString(UINT id, ::string & str)
 {
-  _ASSERT(string != 0);
-  string-= "(Undef)";
+  //_ASSERT(string != 0);
+  str= "(Undef)";
 
   //
   // Format of string table:
@@ -79,15 +80,15 @@ bool ResourceLoader::loadString(UINT id, ::string & string)
 
     ::array_base<WCHAR> strBuff;
     strBuff.resize(strLen + 1);
-    memcpy(&strBuff.front(), lpStr + 1, strLen * sizeof(WCHAR));
+    memcpy(strBuff.data(), lpStr + 1, strLen * sizeof(WCHAR));
     strBuff[strLen] = L'\0';
 
     UnlockResource(lockRes);
     FreeResource(hGlobal);
 
-    UnicodeStringStorage unicodeString;
-    unicodeString= &strBuff.front();
-    unicodeString.toStringStorage(string);
+    ::wstring wstr;
+    wstr= strBuff.data();
+    str = wstr;
   }
   return true;
 }
@@ -100,7 +101,7 @@ HACCEL ResourceLoader::loadAccelerator(UINT id)
 
 HCURSOR ResourceLoader::loadStandardCursor(const ::scoped_string & scopedstrid)
 {
-  return LoadCursor(0, id);
+  return LoadCursor(0, ::wstring(scopedstrid));
 }
 
 HCURSOR ResourceLoader::loadCursor(UINT id)

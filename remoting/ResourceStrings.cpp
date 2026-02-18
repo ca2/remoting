@@ -50,18 +50,17 @@ bool ResourceStrings::isValid(int res)
   ResourceLoader *rLoader = ResourceLoader::getInstance();
 
   ::string str;
-  rLoader->loadString(strRes, &str);
+  rLoader->loadString(strRes, str);
   return str;
 }
 
 ::string ResourceStrings::getStrPureRes(int strRes) 
 {
   ::string strTemp = getStrRes(strRes);
-  size_t index = strTemp.findChar(_T('\t'));
-  if (index != -1) {
-    index /= sizeof(TCHAR);
-    strTemp.truncate(1+index);
+  auto p = strTemp.find_first_character('\t');
+  if (::found(p)) {
+    strTemp = {p + 1, strTemp.end()};
   }
-  strTemp.removeChars("&", 1);
+  strTemp.erase_any_character_in("&");
   return strTemp;
 }

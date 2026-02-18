@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "AppletParameter.h"
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 #include <crtdbg.h>
 

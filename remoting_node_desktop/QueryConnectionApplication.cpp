@@ -29,7 +29,7 @@
 #include "TvnServerHelp.h"
 
 #include "server_config_lib/Configurator.h"
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 #include "win_system/Process.h"
 #include "win_system/WinCommandLineArgs.h"
 #include "util/ResourceLoader.h"
@@ -38,7 +38,7 @@
 
 QueryConnectionApplication::QueryConnectionApplication(HINSTANCE hInstance,
                                                        const ::scoped_string & scopedstrwindowClassName,
-                                                       const ::scoped_string & scopedstrcmdLine)
+                                                       const ::scoped_string & scopedstrCmdLine)
 : LocalWindowsApplication(hInstance, windowClassName),
   m_cmdLine(cmdLine)
 {
@@ -91,7 +91,7 @@ int QueryConnectionApplication::execute(const ::scoped_string & scopedstrPeerAdd
                  QueryConnectionCommandLine::TIMEOUT,
                  timeOutSec);
 
-  LogWriter log(0); // Zero logger.
+  LogWriter log(0); // Zero LogWriter.
   Process *process = 0;
 
   int defaultRetCode = acceptByDefault ? 0 : 1;
@@ -110,7 +110,7 @@ int QueryConnectionApplication::execute(const ::scoped_string & scopedstrPeerAdd
     process->waitForExit();
     retCode = process->getExitCode();
   } catch (::remoting::Exception &ex) {
-    log.error(ex.getMessage());
+    log.error(ex.get_message());
   }
 
   delete process;

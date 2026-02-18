@@ -30,7 +30,7 @@ bool StringParser::parseInt(const ::scoped_string & scopedstrStr, int *out)
 {
   int value = 0;
   TCHAR c;
-  if(_stscanf(str, "{}%c", &value, &c) != 1) {
+  if(_stscanf(::wstring(scopedstrStr).c_str(), L"%d%c", &value, &c) != 1) {
     return false;
   }
   if (out != NULL) {
@@ -43,13 +43,13 @@ bool StringParser::parseInt(const ::scoped_string & scopedstrStr, int *out)
 bool StringParser::parseUInt(const ::scoped_string & scopedstrStr, unsigned int *out)
 {
   // Check the minus sign manually because _tcstoul does not fail on it.
-  if (str != 0 && str[0] == _T('-')) {
+  if (scopedstrStr == "-") {
     return false;
   }
 
   TCHAR *ptr = 0;
   errno = 0;
-  unsigned long ulongValue = _tcstoul(str, &ptr, 10);
+  unsigned long ulongValue = _tcstoul(::wstring(scopedstrStr).c_str(), &ptr, 10);
   if (errno != 0 || ptr == 0 || *ptr != _T('\0')) {
     return false;
   }
@@ -70,7 +70,7 @@ bool StringParser::parseUInt64(const ::scoped_string & scopedstrStr, unsigned lo
 {
   unsigned long long value = 0;
   TCHAR c;
-  if(_stscanf(str, "%llu%c", &value, &c) != 1) {
+  if(_stscanf(::wstring(scopedstrStr).c_str(), L"%llu%c", &value, &c) != 1) {
     return false;
   }
   if (out != NULL) {
@@ -82,14 +82,14 @@ bool StringParser::parseUInt64(const ::scoped_string & scopedstrStr, unsigned lo
 
 bool StringParser::tryParseInt(const ::scoped_string & scopedstrStr)
 {
-  return parseInt(str, NULL);
+  return parseInt(scopedstrStr, NULL);
 }
 
 bool StringParser::parseHex(const ::scoped_string & scopedstrStr, unsigned int *out)
 {
   TCHAR c;
   unsigned int val;
-  if (_stscanf(str, "%x%c", &val, &c) != 1) {
+  if (_stscanf(::wstring(scopedstrStr).c_str(), L"%x%c", &val, &c) != 1) {
     return false;
   }
   if (out != NULL) {
@@ -102,7 +102,7 @@ bool StringParser::parseByteHex(const ::scoped_string & scopedstrStr, unsigned c
 {
   TCHAR c;
   int val = 0;
-  if (_stscanf(str, "%x%c", &val, &c) != 1) {
+  if (_stscanf(::wstring(scopedstrStr).c_str(), L"%x%c", &val, &c) != 1) {
     return false;
   }
   if (out != NULL) {
@@ -115,7 +115,7 @@ bool StringParser::parseByte(const ::scoped_string & scopedstrStr, unsigned char
 {
   TCHAR c;
   int val = 0;
-  if (_stscanf(str, "{}%c", &val, &c) != 1) {
+  if (_stscanf(::wstring(scopedstrStr).c_str(), L"%d%c", &val, &c) != 1) {
     return false;
   }
   if (out != NULL) {

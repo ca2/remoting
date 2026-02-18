@@ -26,7 +26,7 @@
 
 
 #include "thread/LocalMutex.h"
-#include "util/DateTime.h"
+//#include "util/::earth::time.h"
 
 // This class will be insert an time interval between trying of
 // authentications
@@ -49,7 +49,7 @@ private:
 
   unsigned long long m_failureTimeInterval;
 
-  DateTime m_firstFailureTime;
+  ::earth::time m_firstFailureTime;
   unsigned int m_failureCount;
   unsigned int m_failureMaxCount;
   LocalMutex m_countMutex;

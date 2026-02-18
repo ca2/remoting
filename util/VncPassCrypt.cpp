@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "VncPassCrypt.h"
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "DesCrypt.h"
 
 const unsigned char VncPassCrypt::m_key[] = { 23, 82, 107, 6, 35, 78, 88, 7 };
@@ -41,7 +41,7 @@ VncPassCrypt::~VncPassCrypt()
 void VncPassCrypt::updatePlain(const unsigned char cryptedPass[VNC_PASSWORD_SIZE])
 {
   DesCrypt desCrypt;
-  desCrypt.decrypt(&m_plainPassword.front(), cryptedPass,
+  desCrypt.decrypt(m_plainPassword.data(), cryptedPass,
                    m_plainPassword.size(), m_key);
 }
 
@@ -67,7 +67,7 @@ bool VncPassCrypt::challengeAndResponseIsValid(const unsigned char challenge[16]
   unsigned char cryptedChallenge[16];
   DesCrypt desCrypt;
   desCrypt.encrypt(cryptedChallenge, challenge,
-                   sizeof(cryptedChallenge), &m_plainPassword.front());
+                   sizeof(cryptedChallenge), m_plainPassword.data());
   if (memcmp(cryptedChallenge, response, sizeof(cryptedChallenge)) == 0) {
     return true;
   } else {
@@ -77,5 +77,5 @@ bool VncPassCrypt::challengeAndResponseIsValid(const unsigned char challenge[16]
 
 void VncPassCrypt::clearPlainPass()
 {
-  memset(&m_plainPassword.front(), 0, m_plainPassword.size());
+  memset(m_plainPassword.data(), 0, m_plainPassword.size());
 }

@@ -50,10 +50,10 @@ protected:
   CheckBox m_eightBit;
   CheckBox m_compLvl;
   Trackbar m_tcompLvl;
-  Control m_quality;
+  ::remoting::Window m_quality;
   CheckBox m_jpeg;
   Trackbar m_tjpeg;
-  Control m_quality2;
+  ::remoting::Window m_quality2;
   CheckBox m_copyrect;
   CheckBox m_viewonly;
   CheckBox m_disclip;

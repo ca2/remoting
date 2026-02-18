@@ -46,7 +46,7 @@ public:
   // The NewConnectionEvents implementations.
   virtual void onSuccAuth(const ::scoped_string & ip);
   virtual void onAuthFailed(const ::scoped_string & ip);
-  virtual void onDisconnect(const ::scoped_string & message);
+  virtual void onDisconnect(const ::scoped_string & scopedstrMessage);
 
   // The ApplicationCrashEvents implementations.
   virtual void onCrash(const ::scoped_string & dumpPath);

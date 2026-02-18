@@ -24,8 +24,8 @@
 #include "framework.h"
 #include "ClipboardExchange.h"
 #include "rfb/MsgDefs.h"
-#include "util/Utf8StringStorage.h"
-#include "util/AnsiStringStorage.h"
+////#include "util/::string.h"
+//#include "util/::string.h"
 #include "thread/AutoLock.h"
 #include "rfb/VendorDefs.h"
 
@@ -64,8 +64,8 @@ void ClipboardExchange::onRequest(unsigned int reqCode, RfbInputGate *input)
 
   switch (reqCode) {
   case ClientMsgDefs::CLIENT_CUT_TEXT:
-    input->readUInt8(); // pad
-    input->readUInt16(); // pad
+    pinput->readUInt8(); // pad
+    pinput->readUInt16(); // pad
     onRequestWorker(false, input);
     break;
   case ClientMsgDefs::CLIENT_CUT_TEXT_UTF8:
@@ -83,11 +83,11 @@ void ClipboardExchange::onRequest(unsigned int reqCode, RfbInputGate *input)
 }
 void ClipboardExchange::onRequestWorker(bool utf8flag, RfbInputGate *input)
 {
-  unsigned int length = input->readUInt32();
+  unsigned int length = pinput->readUInt32();
 
   ::array_base<char> charBuff(length + 1);
 
-  input->readFully(&charBuff.front(), length);
+  pinput->readFully(&charBuff.front(), length);
   charBuff[length] = '\0';
   if (m_viewOnly) {
     return;
@@ -96,13 +96,13 @@ void ClipboardExchange::onRequestWorker(bool utf8flag, RfbInputGate *input)
   ::string clipText;
   if (utf8flag) {
     m_log->debug("UTF8 ClientCutText, payload length {}", length);
-    Utf8StringStorage utfText(&charBuff);
+    ::string utfText(&charBuff);
     utfText.toStringStorage(&clipText);
   }
   else
   {
     m_log->debug("ClientCutText, payload length {}", length);
-    AnsiStringStorage ansiText(&charBuff.front());
+    ::string ansiText(&charBuff.front());
     ansiText.toStringStorage(&clipText);
   }
   m_desktop->setNewClipText(&clipText);
@@ -134,14 +134,14 @@ void ClipboardExchange::execute()
         AutoLock al(m_output);
         if (m_isUtf8ClipboardEnabled) {
           m_output->writeUInt32(ServerMsgDefs::SERVER_CUT_TEXT_UTF8); // type
-          Utf8StringStorage charBuff;
+          ::string charBuff;
           {
             AutoLock al(&m_storedClipMut);
             charBuff.fromStringStorage(&m_storedClip);
             m_hasNewClip = false;
           }
           data = charBuff;
-          length = charBuff.getLength();
+          length = charBuff.length();
 		      m_log->debug("Sending Utf8 Clipboard, payload length {}", length);
           m_output->writeUInt32((unsigned int)length);
           m_output->writeFully(data, length);
@@ -150,22 +150,22 @@ void ClipboardExchange::execute()
           m_output->writeUInt8(ServerMsgDefs::SERVER_CUT_TEXT); // type
           m_output->writeUInt8(0); // pad
           m_output->writeUInt16(0); // pad
-          AnsiStringStorage charBuff;
+          ::string charBuff;
           {
             AutoLock al(&m_storedClipMut);
             charBuff.fromStringStorage(&m_storedClip);
             m_hasNewClip = false;
           }
           data = charBuff;
-          length = charBuff.getLength();
+          length = charBuff.length();
 		      m_log->debug("Sending Clipboard, payload length {}", length);
           m_output->writeUInt32((unsigned int)length);
           m_output->writeFully(data, length);
         }
         m_output->flush();
-      } catch (::remoting::Exception &e) {
+      } catch (::exception &e) {
         m_log->error("The clipboard thread force to terminate because"
-                   " it caught the error: {}", e.getMessage());
+                   " it caught the error: {}", e.get_message());
         terminate();
       }
     }

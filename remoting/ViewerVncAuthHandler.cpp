@@ -76,8 +76,10 @@ ViewerVncAuthHandler::~ViewerVncAuthHandler()
 
 
 
-void ViewerVncAuthHandler::getPassword(::string & passString)
+::string ViewerVncAuthHandler::getPassword()
 {
+   ::string passString;
+
   // get password from ConnectionData or User Interface
   if (!m_connectionData->isSetPassword()) {
     AuthenticationDialog authDialog;
@@ -107,5 +109,7 @@ else
    }
 }
   }
-  *passString = m_connectionData->getPlainPassword();
+  passString = m_connectionData->getPlainPassword();
+
+   return passString;
 }

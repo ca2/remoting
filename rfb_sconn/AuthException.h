@@ -30,7 +30,7 @@
 class AuthException : public ::remoting::Exception
 {
 public:
-  AuthException(const ::scoped_string & scopedstrMessage): ::remoting::Exception(message) {}
+  AuthException(const ::scoped_string & scopedstrMessage): ::remoting::Exception(scopedstrMessage) {}
   virtual ~AuthException() {}
 };
 

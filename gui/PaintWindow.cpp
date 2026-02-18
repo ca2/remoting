@@ -46,9 +46,9 @@ void PaintWindow::onPaint()
 {
 }
 
-bool PaintWindow::wndProc(UINT message, WPARAM wParam, LPARAM lParam)
+bool PaintWindow::wndProc(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
 {
-  if (message == WM_PAINT) {
+  if (scopedstrMessage == WM_PAINT) {
     m_hdc = BeginPaint(m_hwnd, &m_paintStruct);
     m_bIsDraw = true;
     //DeviceContext dc(this);
@@ -58,6 +58,6 @@ bool PaintWindow::wndProc(UINT message, WPARAM wParam, LPARAM lParam)
     m_bIsDraw = false;
     return true;
   }
-  return BaseWindow::wndProc(message, wParam, lParam);
+  return BaseWindow::wndProc(scopedstrMessage, wParam, lParam);
 }
 

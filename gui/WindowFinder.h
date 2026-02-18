@@ -25,14 +25,14 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 //#include <vector>
-#include "util/StringVector.h"
+//#include "util/::string_array.h"
 
 class WindowFinder
 {
 public:
-  static ::array_base<HWND> findWindowsByClass(StringVector classNames);
+  static ::array_base<HWND> findWindowsByClass(::string_array classNames);
 
   // Find first of windows that name contain the string.
   // It is not case sensitive.

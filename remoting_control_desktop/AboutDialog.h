@@ -56,9 +56,9 @@ protected:
    */
   void onVisitSiteButtonClick();
   /**
-   * Opens url in default browser or shows error message on fail.
+   * Opens url in default browser or shows error scopedstrMessage on fail.
    */
-  void openUrl(const ::scoped_string & scopedstrurl);
+  void openUrl(const ::scoped_string & scopedstrUrl);
 
 protected:
   /**

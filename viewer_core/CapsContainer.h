@@ -26,7 +26,7 @@
 //#include <vector>
 
 #include "thread/LocalMutex.h"
-//#include "util/::string.h"
+//////#include "util/::string.h"
 
 #pragma once
 
@@ -108,7 +108,7 @@ public:
   unsigned int getByOrder(size_t idx);
 
   //
-  // This method return ::list of enabled capabilities.
+  // This method return ::list_base of enabled capabilities.
   //
   void getEnabledCapabilities(::array_base<unsigned int> &codes) const;
 

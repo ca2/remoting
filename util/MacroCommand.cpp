@@ -34,7 +34,7 @@ MacroCommand::~MacroCommand()
 
 void MacroCommand::execute()
 {
-  for (::list<Command *>::iterator it = m_commandList.begin();
+  for (::list_base<Command *>::iterator it = m_commandList.begin();
     it != m_commandList.end();
     it++) {
     (*it)->execute();

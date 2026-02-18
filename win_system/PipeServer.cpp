@@ -24,8 +24,10 @@
 #include "framework.h"
 #include "acme/_operating_system.h"
 #include "PipeServer.h"
+
+#include "acme/platform/node.h"
 #include "util/Exception.h"
-#include "Environment.h"
+//#include "Environment.h"
 
 DynamicLibrary* PipeServer::m_kernel32Library = 0;
 pGetNamedPipeClientProcessId PipeServer::m_GetNamedPipeClientProcessId = 0;
@@ -43,7 +45,7 @@ PipeServer::PipeServer(const ::scoped_string & scopedstrName, unsigned int buffe
     initialize();
   }
 
-  m_pipeName.formatf("\\\\.\\pipe\\{}", name);
+  m_pipeName.format("\\\\.\\pipe\\{}", scopedstrName);
 
   createServerPipe();
 }
@@ -53,13 +55,13 @@ void PipeServer::createServerPipe()
   DWORD openMode = PIPE_ACCESS_DUPLEX |         // read/write access
                    FILE_FLAG_OVERLAPPED;        // overlapped mode
 
-  DWORD pipeMode = PIPE_TYPE_BYTE |             // message type pipe
-                   PIPE_READMODE_BYTE |         // message-read mode
+  DWORD pipeMode = PIPE_TYPE_BYTE |             // scopedstrMessage type pipe
+                   PIPE_READMODE_BYTE |         // scopedstrMessage-read mode
                    PIPE_WAIT;                   // blocking mode
-  if (Environment::isVistaOrLater()) {
+  if (::system()->node()->_windows_isVistaOrLater()) {
     pipeMode |= PIPE_REJECT_REMOTE_CLIENTS;     // local only
   }
-  m_serverPipe = CreateNamedPipe(m_pipeName,   // pipe name
+  m_serverPipe = CreateNamedPipe(::wstring(m_pipeName),   // pipe name
                                  openMode,
                                  pipeMode,
                                  PIPE_UNLIMITED_INSTANCES, // max. instances
@@ -158,7 +160,7 @@ void PipeServer::waitForConnect(DWORD milliseconds)
 
 void PipeServer::initialize()
 {
-  if (!Environment::isVistaOrLater()) {
+  if (!::system()->node()->_windows_isVistaOrLater()) {
     return;
   }
   try {

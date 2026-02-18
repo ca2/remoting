@@ -30,9 +30,9 @@
 #include "win_system/WindowsEvent.h"
 //#include <list>
 
+#include "acme/prototype/collection/list.h"
 
-
-typedef ::list<Thread *> ThreadList;
+typedef ::list_base<Thread *> ThreadList;
 
 // Collector threads.
 // ThreadCollector has it's own thread which deletes in infinity loop not
@@ -43,11 +43,11 @@ public:
   ThreadCollector();
   virtual ~ThreadCollector();
 
-  // Adds thread to a self ::list.
+  // Adds thread to a self ::list_base.
   virtual void addThread(Thread *thread);
 
   // Forces terminates all threads, waits until they dies and than
-  // delete them from memory and thread ::list.
+  // delete them from memory and thread ::list_base.
   void destroyAllThreads();
 
   const size_t Size();
@@ -55,7 +55,7 @@ public:
 protected:
   virtual void execute();
 
-  // Deletes all dead threads from memory and removes them from self ::list.
+  // Deletes all dead threads from memory and removes them from self ::list_base.
   void deleteDeadThreads();
 
 protected:

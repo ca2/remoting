@@ -25,22 +25,22 @@
 #pragma once
 
 
-#include "Control.h"
-//#include "util/::string.h"
+#include "remoting/gui/Window.h"
+//////#include "util/::string.h"
 
 class BaseDialog :
-virtual public windows::Window
+virtual public ::remoting::Window
 {
 public:
 
 
    BaseDialog();
    BaseDialog(DWORD resourceId);
-   BaseDialog(const ::scoped_string & scopedstrresourceName);
+   BaseDialog(const ::scoped_string & scopedstrResourceName);
    ~BaseDialog() override;
 //public:
 
-   void set_parent(::windows::Window *pwindowParam) override;
+   void set_parent(::remoting::Window *pwindowParam) override;
   // Method creates non modal window but not shows it
    void create();
 
@@ -57,23 +57,24 @@ public:
   // Method hides window
   void hide();
   // Method closes dialog
-  virtual void kill(int code);
+  virtual void close_dialog(int code);
   // Method sets parent window
 
   // Set resource name for dialog
-  void setResourceName(const ::scoped_string & scopedstrresourceName);
+  void setResourceName(const ::scoped_string & scopedstrResourceName);
   // Set resource id for dialog.
   void setResourceId(DWORD id);
   // Return
-  //Control *getControl() { return &m_ctrlThis; }
+  //::remoting::Window *getControl() { return &m_ctrlThis; }
   // Setup control by ID
-  void setControlById(Control &control, DWORD id);
+  void setControlById(::remoting::Window &control, DWORD id);
+   void subclassControlById(::remoting::Window * pcontrol, DWORD id);
   // Icon manipulation 
   void loadIcon(DWORD id);
   void updateIcon();
 
   // Puts this control foreground and activates it
-  bool setForeground();
+  //bool set_foreground_window();
 
 //protected:
   /**
@@ -102,7 +103,7 @@ public:
   virtual void onMessageReceived(UINT uMsg, WPARAM wParam, LPARAM lParam);
 
   //
-  // Window message proccessing method
+  // Window scopedstrMessage proccessing method
   //
 
   static INT_PTR CALLBACK dialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -114,8 +115,8 @@ public:
 
   TCHAR *m_resourceName;        // Name of dialog resource
   DWORD m_resourceId;            // Id of dialog resouce
-  //Control m_ctrlThis;           // This dialog control
-  ::windows::Window *m_pwindowParent;        // Parent dialog or NULL if no parent
+  //::remoting::Window m_ctrlThis;           // This dialog control
+  ::remoting::Window *m_pwindowParent;        // Parent dialog or NULL if no parent
 
   bool m_isModal;
   bool m_isCreated;

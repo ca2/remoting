@@ -30,7 +30,7 @@
 #include "ClientListener.h"
 #include "util/AnEventListener.h"
 #include "win_system/WindowsEvent.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 //#include <map>
 
 class DesktopSrvDispatcher: public GuiThread

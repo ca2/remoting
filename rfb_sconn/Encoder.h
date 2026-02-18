@@ -65,7 +65,7 @@ public:
 
   // splitRectangle() is used to let the encoder split one big rectangle to a
   // number of smaller ones for efficient encoding or for satisfying the
-  // limitations on maximum rectangle width and height. The resulting ::list of
+  // limitations on maximum rectangle width and height. The resulting ::list_base of
   // rectangles is added to the end of the provided `rectList'.
   //
   // The default implementation of this function provided by the base Encoder
@@ -74,7 +74,7 @@ public:
   // it should implement its own splitRectangle() function.
   //
   // UpdateSender calls splitRectangle() for each rectangle of the update
-  // region, then calls sendRectangle() for the same ::list of rectangles.
+  // region, then calls sendRectangle() for the same ::list_base of rectangles.
   //
   // The arguments of splitRectangle() are similar to those of
   // sendRectangle(). It's guaranteed that options and serverFb will point to

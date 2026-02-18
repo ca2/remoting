@@ -41,19 +41,19 @@ void IpAccessControl::serialize(DataOutputStream *output)
   }
 }
 
-void IpAccessControl::deserialize(DataInputStream *input)
+void IpAccessControl::deserialize(DataInputStream * pinput)
 {
   for (iterator i = begin(); i != end(); ++i) {
     delete *i;
   }
 
-  size_t count = input->readUInt32();
+  size_t count = pinput->readUInt32();
   resize(count);
 
   ::string string;
 
   for (iterator i = begin(); i != end(); ++i) {
-    input->readUTF8(&string);
+    pinput->readUTF8(&string);
 
     // Here is would be good to use unique_ptr, but
     // unique_ptr is not compatible with ::array_base.

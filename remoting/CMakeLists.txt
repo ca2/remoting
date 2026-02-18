@@ -16,6 +16,8 @@ list(APPEND library_source
    BuildTime.h
    ConfigurationDialog.cpp
    ConfigurationDialog.h
+   ConnectingDialog.cpp
+   ConnectingDialog.h
    ConnectionData.cpp
    ConnectionData.h
    ConnectionListener.cpp
@@ -74,14 +76,15 @@ list(APPEND library_source
 list(APPEND library_references
    acme
    remoting_client_config_lib
+   remoting_common
    remoting_config_lib
-   remoting_file_lib
-   remoting_ft_client_lib
-   remoting_ft_common
+   #remoting_file_lib
+   remoting_ftp_client
+   remoting_ftp_common
    remoting_gui
    remoting_io_lib
    remoting_libjpeg
-   remoting_log_writer
+   #remoting_log_writer
    remoting_network
    remoting_region
    remoting_rfb
@@ -131,15 +134,16 @@ elseif(${LINUX} OR ${__BSD__} OR ${ANDROID})
 endif ()
 
 add_dependencies(${PROJECT_NAME} acme)
+add_dependencies(${PROJECT_NAME} remoting_common)
 add_dependencies(${PROJECT_NAME} remoting_client_config_lib)
 add_dependencies(${PROJECT_NAME} remoting_config_lib)
-add_dependencies(${PROJECT_NAME} remoting_file_lib)
-add_dependencies(${PROJECT_NAME} remoting_ft_client_lib)
-add_dependencies(${PROJECT_NAME} remoting_ft_common)
+#add_dependencies(${PROJECT_NAME} remoting_file_lib)
+add_dependencies(${PROJECT_NAME} remoting_ftp_common)
+add_dependencies(${PROJECT_NAME} remoting_ftp_client)
 add_dependencies(${PROJECT_NAME} remoting_gui)
 add_dependencies(${PROJECT_NAME} remoting_io_lib)
 add_dependencies(${PROJECT_NAME} remoting_libjpeg)
-add_dependencies(${PROJECT_NAME} remoting_log_writer)
+#add_dependencies(${PROJECT_NAME} remoting_log_writer)
 add_dependencies(${PROJECT_NAME} remoting_zlib)
 add_dependencies(${PROJECT_NAME} remoting_network)
 add_dependencies(${PROJECT_NAME} remoting_region)

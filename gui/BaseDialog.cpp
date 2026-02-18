@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "BaseDialog.h"
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 #include <commctrl.h>
 #include <crtdbg.h>
@@ -42,10 +42,10 @@ BaseDialog::BaseDialog(DWORD resourceId)
 {
 }
 
-BaseDialog::BaseDialog(const ::scoped_string & scopedstrresourceName)
+BaseDialog::BaseDialog(const ::scoped_string & scopedstrResourceName)
 : m_pwindowParent(NULL), m_resourceName(0), m_resourceId(0), m_hicon(0)
 {
-  setResourceName(resourceName);
+  setResourceName(scopedstrResourceName);
 }
 
 BaseDialog::~BaseDialog()
@@ -58,13 +58,13 @@ BaseDialog::~BaseDialog()
   }
 }
 
-void BaseDialog::setResourceName(const ::scoped_string & scopedstrresourceName)
+void BaseDialog::setResourceName(const ::scoped_string & scopedstrResourceName)
 {
   if (m_resourceName != 0) {
     free(m_resourceName);
   }
 
-  m_resourceName = _tcsdup(resourceName);
+  m_resourceName = _tcsdup(::wstring(scopedstrResourceName).c_str());
 }
 
 void BaseDialog::setResourceId(DWORD id)
@@ -77,7 +77,7 @@ void BaseDialog::setDefaultPushButton(UINT buttonId)
   SendMessage(m_hwnd, DM_SETDEFID, buttonId, 0);
 }
 
-void BaseDialog::set_parent(::windows::Window *pwindowParent)
+void BaseDialog::set_parent(::remoting::Window *pwindowParent)
 {
   m_pwindowParent = pwindowParent;
 }
@@ -87,17 +87,17 @@ int BaseDialog::show()
   if (m_hwnd == NULL) {
     create();
   } else {
-    setForeground();
+    set_foreground_window();
   }
   return 0;
 }
 
 void BaseDialog::hide()
 {
-  setVisible(false);
+  set_visible(false);
 }
 
-void BaseDialog::kill(int code)
+void BaseDialog::close_dialog(int code)
 {
   // Destroy dialog
   if (!m_isModal) {
@@ -138,13 +138,13 @@ int BaseDialog::showModal()
   if (m_hwnd == NULL) {
     m_isModal = true;
      HINSTANCE hinstance = remoting_impact_hinstance();
-    HWND parentWindow = (m_pwindowParent != NULL) ? m_pwindowParent->getWindow() : NULL;
+    HWND parentWindow = (m_pwindowParent != NULL) ? m_pwindowParent->get_hwnd() : NULL;
     result = (int)DialogBoxParam(hinstance,
                                  getResouceName(),
                                  parentWindow, dialogProc, (LPARAM)this);
   } else {
-    setVisible(true);
-    setForeground();
+    set_visible(true);
+    set_foreground_window();
   }
 
   //
@@ -229,9 +229,15 @@ TCHAR *BaseDialog::getResouceName()
   return m_resourceName;
 }
 
-void BaseDialog::setControlById(Control &control, DWORD id) 
+void BaseDialog::setControlById(::remoting::Window &control, DWORD id) 
 {
   control = GetDlgItem(m_hwnd, id);
+}
+
+void BaseDialog::subclassControlById(::remoting::Window * pcontrol, DWORD id)
+{
+   pcontrol->m_hwnd = GetDlgItem(m_hwnd, id);
+   pcontrol->subclass_window();
 }
 
 void BaseDialog::updateIcon()
@@ -249,10 +255,10 @@ void BaseDialog::loadIcon(DWORD id)
   m_hicon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(id));
 }
 
-bool BaseDialog::setForeground()
-{
-  return setForeground();
-}
+// bool BaseDialog::set_foreground_window()
+// {
+//   return set_foreground_window();
+// }
 
 BOOL BaseDialog::onInitDialog()
 {

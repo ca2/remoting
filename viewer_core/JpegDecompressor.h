@@ -42,10 +42,10 @@
 #include "libjpeg-turbo/jpeglib.h"
 #else
 #include "libjpeg/jpeglib.h"
+#endif
 
 
-
-//#include "util/::string.h"
+//////#include "util/::string.h"
 
 
 class JpegDecompressor
@@ -83,7 +83,7 @@ private:
   void cleanup();
 
 private:
-  METHODDEF(::string) getMessage(j_common_ptr cinfo);
+  METHODDEF(::string) get_message(j_common_ptr cinfo);
   METHODDEF(void) errorExit(j_common_ptr cinfo);
   METHODDEF(void) outputMessage(j_common_ptr cinfo);
 

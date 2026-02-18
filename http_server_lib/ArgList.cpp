@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ArgList.h"
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 //#include <vector>
 
 ArgList::ArgList(const char *argString)
@@ -34,24 +34,24 @@ ArgList::ArgList(const char *argString)
   const char *src = argString;
 
   ::array_base<char> pairBuff(len + 1);
-  char *::std::pair = &pairBuff.front();
+  char *::pair = &pairBuff.front();
   ::array_base<char> leftBuff(len + 1);
   char *left = &leftBuff.front();
 
   while (true) {
-    splitPair(src, '&', ::std::pair, left);
+    splitPair(src, '&', ::pair, left);
 
-    if ((strlen(::std::pair) == 0) && (strlen(left) == 0)) {
+    if ((strlen(::pair) == 0) && (strlen(left) == 0)) {
       break;
     }
 
-    size_t pairLen = strlen(::std::pair);
+    size_t pairLen = strlen(::pair);
 
     ::array_base<char> keyBuff(pairLen + 1);
     char *key = &keyBuff.front();
     char *val = new char[pairLen + 1];
 
-    splitPair(::std::pair, '=', key, val);
+    splitPair(::pair, '=', key, val);
 
     htmlDecode(key);
     htmlDecode(val);

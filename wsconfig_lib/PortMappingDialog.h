@@ -26,7 +26,7 @@
 
 
 #include "gui/BaseDialog.h"
-#include "gui/Control.h"
+#include "gui/::remoting::Window.h"
 #include "gui/ListBox.h"
 
 #include "server_config_lib/Configurator.h"
@@ -65,8 +65,8 @@ private:
 
 protected:
   ListBox m_exPortsListBox;
-  Control m_editButton;
-  Control m_removeButton;
+  ::remoting::Window m_editButton;
+  ::remoting::Window m_removeButton;
 
   PortMappingContainer *m_extraPorts;
 

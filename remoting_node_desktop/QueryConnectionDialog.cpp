@@ -47,16 +47,16 @@ BOOL QueryConnectionDialog::onInitDialog()
   m_peerAddressLabel.setText(m_peerAddress);
 
   if (m_acceptByDefault) {
-    m_acceptButton.setFocus();
+    m_acceptButton.set_focus();
   } else {
-    m_rejectButton.setFocus();
+    m_rejectButton.set_focus();
   }
 
   setDefaultPushButton(m_acceptByDefault ? IDC_ACCEPT_BUTTON : IDC_REJECT_BUTTON);
 
   updateTimeoutLabel();
 
-  SetTimer(m_ctrlThis.getWindow(), 0, 1000, 0);
+  SetTimer(m_ctrlThis.get_hwnd(), 0, 1000, 0);
 
   return FALSE;
 }
@@ -93,7 +93,7 @@ void QueryConnectionDialog::onMessageReceived(UINT uMsg, WPARAM wParam, LPARAM l
 
 void QueryConnectionDialog::initControls()
 {
-  HWND window = m_ctrlThis.getWindow();
+  HWND window = m_ctrlThis.get_hwnd();
 
   m_peerAddressLabel.setWindow(GetDlgItem(window, IDC_IP_EDIT));
   m_acceptButton.setWindow(GetDlgItem(window, IDC_ACCEPT_BUTTON));
@@ -114,7 +114,7 @@ void QueryConnectionDialog::onReject()
 void QueryConnectionDialog::onTimer()
 {
   if (m_timeout == 0) {
-    KillTimer(m_ctrlThis.getWindow(), 0);
+    KillTimer(m_ctrlThis.get_hwnd(), 0);
 
     if (m_acceptByDefault) {
       onAccept();

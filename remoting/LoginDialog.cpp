@@ -25,7 +25,7 @@
 #include "LoginDialog.h"
 #include "NamingDefs.h"
 #include "OptionsDialog.h"
-
+#include "remoting/common/remoting.h"
 #include "win_system/Shell.h"
 
 LoginDialog::LoginDialog(remoting_impact *viewer)
@@ -45,10 +45,10 @@ BOOL LoginDialog::onInitDialog()
   setControlById(m_listening, IDC_LISTENING);
   setControlById(m_ok, IDOK);
   updateHistory();
-  SetForegroundWindow(getControl()->getWindow());
-  m_server.setFocus();
+  SetForegroundWindow(get_hwnd());
+  m_server.set_focus();
   if (m_isListening) {
-    m_listening.setEnabled(false);
+    m_listening.enable_window(false);
   }
   return TRUE;
 }
@@ -58,10 +58,10 @@ void LoginDialog::enableConnect()
   ::string str;
   int iSelected = m_server.getSelectedItemIndex();
   if (iSelected == -1) {
-    m_server.getText(&str);
-    m_ok.setEnabled(!str.is_empty());
+    str = m_server.get_text();
+    m_ok.enable_window(!str.is_empty());
   } else {
-    m_ok.setEnabled(true);
+    m_ok.enable_window(true);
   }
 }
 
@@ -70,9 +70,9 @@ void LoginDialog::updateHistory()
   ConnectionHistory *conHistory;
 
   ::string currentServer;
-  m_server.getText(&currentServer);
+  currentServer = m_server.get_text();
   m_server.removeAllItems();
-  conHistory = ViewerConfig::getInstance()->getConnectionHistory();
+  conHistory = ::remoting::ViewerConfig::getInstance()->getConnectionHistory();
   conHistory->load();
   for (size_t i = 0; i < conHistory->getHostCount(); i++) {
     m_server.insertItem(static_cast<int>(i), conHistory->getHost(i));
@@ -83,7 +83,7 @@ void LoginDialog::updateHistory()
       m_server.setSelectedItem(0);
     }
     ::string server;
-    m_server.getText(&server);
+    server = m_server.get_text();
     ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
                             server);
     m_connectionConfig.loadFromStorage(&ccsm);
@@ -92,9 +92,9 @@ void LoginDialog::updateHistory()
 
 void LoginDialog::onConnect()
 {
-  ConnectionHistory *conHistory = ViewerConfig::getInstance()->getConnectionHistory();
+  ConnectionHistory *conHistory = ::remoting::ViewerConfig::getInstance()->getConnectionHistory();
 
-  m_server.getText(&m_serverHost);
+  m_serverHost = m_server.get_text();
 
   conHistory->load();
   conHistory->addHost(m_serverHost);
@@ -117,10 +117,10 @@ BOOL LoginDialog::onOptions()
 {
   OptionsDialog dialog;
   dialog.setConnectionConfig(&m_connectionConfig);
-  dialog.setParent(getControl());
+  dialog.set_parent(this);
   if (dialog.showModal() == 1) {
     ::string server;
-    m_server.getText(&server);
+    server = m_server.get_text();
     if (server.is_empty()) {
       ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
                               server);
@@ -136,18 +136,18 @@ void LoginDialog::onOrder()
   openUrl(StringTable::getString(IDS_URL_LICENSING_FVC));
 }
 
-void LoginDialog::openUrl(const ::scoped_string & scopedstrurl)
+void LoginDialog::openUrl(const ::scoped_string & scopedstrUrl)
 {
   // TODO: removed duplicated code (see AboutDialog.h)
   try {
-    Shell::open(url, 0, 0);
+    Shell::open(scopedstrUrl, 0, 0);
   } catch (const SystemException &sysEx) {
-    ::string message;
+    ::string scopedstrMessage;
 
-    message.format(StringTable::getString(IDS_FAILED_TO_OPEN_URL_FORMAT), sysEx.getMessage());
+    scopedstrMessage.formatf(StringTable::getString(IDS_FAILED_TO_OPEN_URL_FORMAT).c_str(), sysEx.get_message().c_str());
 
-    MessageBox(m_ctrlThis.getWindow(),
-               message,
+    ::remoting::message_box(m_hwnd,
+               scopedstrMessage,
                StringTable::getString(IDS_MBC_TVNVIEWER),
                MB_OK | MB_ICONEXCLAMATION);
   }
@@ -157,9 +157,9 @@ void LoginDialog::setListening(bool isListening)
 {
   m_isListening = isListening;
   if (isListening) {
-    m_listening.setEnabled(false);
+    m_listening.enable_window(false);
   } else {
-    m_listening.setEnabled(true);
+    m_listening.enable_window(true);
   }
 }
 
@@ -169,8 +169,8 @@ void LoginDialog::onListening()
                           ".listen");
   m_connectionConfig.loadFromStorage(&ccsm);
 
-  m_listening.setEnabled(false);
-  m_viewer->startListening(ViewerConfig::getInstance()->getListenPort());
+  m_listening.enable_window(false);
+  m_viewer->startListening(::remoting::ViewerConfig::getInstance()->getListenPort());
 }
 
 void LoginDialog::onAbout()
@@ -187,15 +187,15 @@ BOOL LoginDialog::onCommand(UINT controlID, UINT notificationID)
       updateHistory();
       break;
 
-    // select item in ComboBox with ::list of history
+    // select item in ComboBox with ::list_base of history
     case CBN_SELENDOK:
       {
         int selectedItemIndex = m_server.getSelectedItemIndex();
         if (selectedItemIndex < 0) {
           return FALSE;
         }
-        ::string server;
-        m_server.getItemText(selectedItemIndex, &server);
+        //::string server;
+        auto server = m_server.getItemText(selectedItemIndex);
         ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
                                 server);
         m_connectionConfig.loadFromStorage(&ccsm);
@@ -209,12 +209,12 @@ BOOL LoginDialog::onCommand(UINT controlID, UINT notificationID)
   // click "Connect"
   case IDOK:
     onConnect();
-    kill(0);
+    close_dialog(0);
     break;
 
   // cancel connection
   case IDCANCEL:
-    kill(0);
+    close_dialog(0);
     break;
 
   case IDC_BCONFIGURATION:
@@ -226,7 +226,7 @@ BOOL LoginDialog::onCommand(UINT controlID, UINT notificationID)
 
   case IDC_LISTENING:
     onListening();
-    kill(0);
+    close_dialog(0);
     break;
 
   case IDC_ORDER_SUPPORT_BUTTON:

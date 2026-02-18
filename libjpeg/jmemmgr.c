@@ -91,7 +91,7 @@ typedef union small_pool_struct * small_pool_ptr;
 
 typedef union small_pool_struct {
   struct {
-    small_pool_ptr next;	/* next in ::std::list of pools */
+    small_pool_ptr next;	/* next in ::std::list_base of pools */
     size_t bytes_used;		/* how many bytes already used within pool */
     size_t bytes_left;		/* bytes still available in this pool */
   } hdr;
@@ -102,7 +102,7 @@ typedef union large_pool_struct FAR * large_pool_ptr;
 
 typedef union large_pool_struct {
   struct {
-    large_pool_ptr next;	/* next in ::std::list of pools */
+    large_pool_ptr next;	/* next in ::std::list_base of pools */
     size_t bytes_used;		/* how many bytes already used within pool */
     size_t bytes_left;		/* bytes still available in this pool */
   } hdr;
@@ -117,14 +117,14 @@ typedef union large_pool_struct {
 typedef struct {
   struct jpeg_memory_mgr pub;	/* public fields */
 
-  /* Each pool identifier (lifetime class) names a linked ::std::list of pools. */
+  /* Each pool identifier (lifetime class) names a linked ::std::list_base of pools. */
   small_pool_ptr small_list[JPOOL_NUMPOOLS];
   large_pool_ptr large_list[JPOOL_NUMPOOLS];
 
   /* Since we only have one lifetime class of virtual arrays, only one
-   * linked ::std::list is necessary (for each datatype).  Note that the virtual
+   * linked ::std::list_base is necessary (for each datatype).  Note that the virtual
    * array control blocks being linked together are actually stored somewhere
-   * in the small-pool ::std::list.
+   * in the small-pool ::std::list_base.
    */
   jvirt_sarray_ptr virt_sarray_list;
   jvirt_barray_ptr virt_barray_list;
@@ -191,8 +191,8 @@ print_mem_stats (j_common_ptr cinfo, int pool_id)
   large_pool_ptr lhdr_ptr;
 
   /* Since this is only a debugging stub, we can cheat a little by using
-   * fprintf directly rather than going through the trace message code.
-   * This is helpful because message parm array can't handle longs.
+   * fprintf directly rather than going through the trace scopedstrMessage code.
+   * This is helpful because scopedstrMessage parm array can't handle longs.
    */
   fprintf(stderr, "Freeing pool %d, total space = %ld\n",
 	  pool_id, (long) mem->total_space_allocated);
@@ -305,7 +305,7 @@ alloc_small (j_common_ptr cinfo, int pool_id, size_t sizeofobject)
 	out_of_memory(cinfo, 2); /* jpeg_get_small failed */
     }
     mem->total_space_allocated += min_request + slop;
-    /* Success, initialize the new pool header and add to end of ::std::list */
+    /* Success, initialize the new pool header and add to end of ::std::list_base */
     hdr_ptr->hdr.next = NULL;
     hdr_ptr->hdr.bytes_used = 0;
     hdr_ptr->hdr.bytes_left = sizeofobject + slop;
@@ -366,7 +366,7 @@ alloc_large (j_common_ptr cinfo, int pool_id, size_t sizeofobject)
     out_of_memory(cinfo, 4);	/* jpeg_get_large failed */
   mem->total_space_allocated += sizeofobject + SIZEOF(large_pool_hdr);
 
-  /* Success, initialize the new pool header and add to ::std::list */
+  /* Success, initialize the new pool header and add to ::std::list_base */
   hdr_ptr->hdr.next = mem->large_list[pool_id];
   /* We maintain space counts in each pool header for statistical purposes,
    * even though they are not needed for allocation.
@@ -541,7 +541,7 @@ request_virt_sarray (j_common_ptr cinfo, int pool_id, boolean pre_zero,
   result->maxaccess = maxaccess;
   result->pre_zero = pre_zero;
   result->b_s_open = FALSE;	/* no associated backing-store object */
-  result->next = mem->virt_sarray_list; /* add to ::std::list of virtual arrays */
+  result->next = mem->virt_sarray_list; /* add to ::std::list_base of virtual arrays */
   mem->virt_sarray_list = result;
 
   return result;
@@ -571,7 +571,7 @@ request_virt_barray (j_common_ptr cinfo, int pool_id, boolean pre_zero,
   result->maxaccess = maxaccess;
   result->pre_zero = pre_zero;
   result->b_s_open = FALSE;	/* no associated backing-store object */
-  result->next = mem->virt_barray_list; /* add to ::std::list of virtual arrays */
+  result->next = mem->virt_barray_list; /* add to ::std::list_base of virtual arrays */
   mem->virt_barray_list = result;
 
   return result;

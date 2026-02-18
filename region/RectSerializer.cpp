@@ -31,7 +31,7 @@
 
 void RectSerializer::toString(const ::int_rectangle &  rect, ::string & strOut)
 {
-  strOut->format("%dx{}+{}+{}", rect.width(),
+  strOut.format("{}x{}+{}+{}", rect.width(),
                                     rect.height(),
                                     rect.left,
                                     rect.top);
@@ -41,11 +41,11 @@ void RectSerializer::toString(const ::int_rectangle &  rect, ::string & strOut)
 {
   int width, height, x, y;
   TCHAR c;
-  if (_stscanf(strIn,
-               (TCHAR *)"%dx{}+{}+{}%c", &width, &height, &x, &y, &c) != 4 ||
+  if (_stscanf(::wstring(strIn).c_str(),
+               (TCHAR *)"%dx%d+%d+%d%c", &width, &height, &x, &y, &c) != 4 ||
       width < 0 || height < 0) {
     ::string errMess;
-    errMess.formatf("Invalid string format to convert it to a rectangle"
+    errMess.format("Invalid string format to convert it to a rectangle"
                    " ({}).", strIn);
     throw ::remoting::Exception(errMess);
   }

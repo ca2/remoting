@@ -148,9 +148,9 @@ void DesktopWindow::onPaint()
 }
 
 
-bool DesktopWindow::onMessage(UINT message, WPARAM wParam, LPARAM lParam)
+bool DesktopWindow::onMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
 {
-   switch (message)
+   switch (scopedstrMessage)
    {
       case WM_HSCROLL:
          return onHScroll(wParam, lParam);
@@ -168,13 +168,13 @@ bool DesktopWindow::onMessage(UINT message, WPARAM wParam, LPARAM lParam)
          }
          else if (m_hwndNextViewer != NULL)
          {
-            SendMessage(m_hwndNextViewer, message, wParam, lParam);
+            SendMessage(m_hwndNextViewer, scopedstrMessage, wParam, lParam);
          }
          return true;
       case WM_DRAWCLIPBOARD:
       {
          bool ok = onDrawClipboard();
-         SendMessage(m_hwndNextViewer, message, wParam, lParam);
+         SendMessage(m_hwndNextViewer, scopedstrMessage, wParam, lParam);
          return ok;
       }
       case WM_CREATE:
@@ -407,7 +407,7 @@ bool DesktopWindow::onDrawClipboard()
       return false;
    }
    ::string clipboardString;
-   if (m_clipboard.getString(&clipboardString))
+   if (m_clipboard.getString(clipboardString))
    {
 
       // if string in clipboard got from server, then don't send him too
@@ -426,7 +426,7 @@ void DesktopWindow::setClipboardData(const ::scoped_string &strText)
 {
    if (m_conConf->isClipboardEnabled())
    {
-      m_clipboard= strText;
+      m_clipboard.setString(strText);
       m_strClipboard= strText;
    }
 }
@@ -439,7 +439,7 @@ void DesktopWindow::doDraw(HDC hdc, const ::int_rectangle &rectangle)
 
    if (!fbWidth || !fbHeight)
    {
-      Graphics graphics(hdc);
+      ::remoting::Graphics graphics(hdc);
 
       graphics.fillRect(m_clientArea.left, m_clientArea.top, m_clientArea.right, m_clientArea.bottom, &m_brush);
       return;
@@ -583,7 +583,7 @@ void DesktopWindow::scrollProcessing(int fbWidth, int fbHeight)
 
 void DesktopWindow::drawBackground(HDC hdc, const RECT &rcMain, const RECT &rcImage)
 {
-   Graphics graphics(hdc);
+   ::remoting::Graphics graphics(hdc);
 
    // top rectangle
    graphics.fillRect(rcMain.left, rcMain.top, rcMain.right, rcImage.top, &m_brush);
@@ -654,7 +654,7 @@ void DesktopWindow::updateFramebuffer(const FrameBuffer *pframebuffer, const ::i
    {
       m_logWriter->error("Possible invalide region. ({}, {}), ({}, {})", dstRect.left, dstRect.top, dstRect.right,
                          dstRect.bottom);
-      m_logWriter->interror("Error in updateFramebuffer (ViewerWindow)");
+      m_logWriter->error("Error in updateFramebuffer (ViewerWindow)");
    }
    repaint(dstRect);
 }
@@ -666,7 +666,7 @@ void DesktopWindow::setNewFramebuffer(const FrameBuffer *pframebuffer)
 
    bool isBackgroundDirty = dimension.cx < olddimension.cx || dimension.cy < olddimension.cy;
 
-   m_logWriter->detail("Desktop size: {}, {}", dimension.cx, dimension.cy);
+   m_logWriter->debug("Desktop size: {}, {}", dimension.cx, dimension.cy);
    {
       // FIXME: Nested locks should not be used.
       AutoLock al(&m_bufferLock);
@@ -835,7 +835,7 @@ void DesktopWindow::sendKeyboardEvent(bool downFlag, unsigned int key)
    }
    catch (const ::remoting::Exception &exception)
    {
-      m_logWriter->detail("Error in DesktopWindow::sendKeyboardEvent(): {}", exception.getMessage());
+      m_logWriter->debug("Error in DesktopWindow::sendKeyboardEvent(): {}", exception.get_message());
    }
 }
 
@@ -859,7 +859,7 @@ void DesktopWindow::sendPointerEvent(unsigned char buttonMask, const Point *posi
    }
    catch (const ::remoting::Exception &exception)
    {
-      m_logWriter->detail("Error in DesktopWindow::sendPointerEvent(): {}", exception.getMessage());
+      m_logWriter->debug("Error in DesktopWindow::sendPointerEvent(): {}", exception.get_message());
    }
 }
 
@@ -883,6 +883,6 @@ void DesktopWindow::sendCutTextEvent(const ::scoped_string &cutText)
    }
    catch (const ::remoting::Exception &exception)
    {
-      m_logWriter->detail("Error in DesktopWindow::sendCutTextEvent(): {}", exception.getMessage());
+      m_logWriter->debug("Error in DesktopWindow::sendCutTextEvent(): {}", exception.get_message());
    }
 }

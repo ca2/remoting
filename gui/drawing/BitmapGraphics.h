@@ -28,28 +28,29 @@
 #include "Graphics.h"
 #include "Bitmap.h"
 
-//
-// Object that creates bitmap with specified size and allow to
-// draw into in through Graphics class methods.
-class BitmapGraphics : public Graphics
+namespace remoting
 {
-public:
-  // Creates BitmapGraphics object with bitmap complatible with specified dc and
-  // with specified size.
-  BitmapGraphics(HDC hdc, int width, int height);
-  // Destroys bitmap and graphics object.
-  virtual ~BitmapGraphics();
+   //
+   // Object that creates bitmap with specified size and allow to
+   // draw into in through Graphics class methods.
+   class BitmapGraphics : public Graphics
+   {
+   public:
+      // Creates BitmapGraphics object with bitmap complatible with specified dc and
+      // with specified size.
+      BitmapGraphics(HDC hdc, int width, int height);
+      // Destroys bitmap and graphics object.
+      virtual ~BitmapGraphics();
 
-  // Returns target bitmap that we paint.
-  Bitmap *getBitmap();
+      // Returns target bitmap that we paint.
+      Bitmap *getBitmap();
 
-  void beginPaint();
-  void endPaint();
+      void beginPaint();
+      void endPaint();
 
-protected:
-  bool m_isPainting;
-  Bitmap *m_bitmap;
-  HGDIOBJ m_oldBitmap;
-};
-
-
+   protected:
+      bool m_isPainting;
+      Bitmap *m_bitmap;
+      HGDIOBJ m_oldBitmap;
+   };
+}

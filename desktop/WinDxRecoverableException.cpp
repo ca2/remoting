@@ -25,7 +25,7 @@
 #include "WinDxRecoverableException.h"
 
 WinDxRecoverableException::WinDxRecoverableException(const ::scoped_string & scopedstrMessage, HRESULT errCode)
-: WinDxException(message, errCode)
+: WinDxException(scopedstrMessage, errCode)
 {
 }
 

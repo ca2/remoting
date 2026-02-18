@@ -26,7 +26,7 @@
 
 
 #include "InputBlocker.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 class DesktopConfigLocal
 {
@@ -37,8 +37,8 @@ public:
   virtual void updateByNewSettings();
 
   virtual bool isRemoteInputAllowed();
-  virtual DateTime getLastInputTime() const;
-  virtual void correctLastTime(DateTime newTime);
+  virtual ::earth::time getLastInputTime() const;
+  virtual void correctLastTime(::earth::time newTime);
 
 private:
   InputBlocker *m_inputBlocker;

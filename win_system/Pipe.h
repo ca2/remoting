@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "WindowsEvent.h"
 #include "io_lib/Channel.h"
 #include "thread/LocalMutex.h"

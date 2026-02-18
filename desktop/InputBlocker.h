@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/DateTime.h"
+//#include "util/::earth::time.h"
 
 class InputBlocker
 {
@@ -41,8 +41,8 @@ public:
   virtual void setSoftKeyboardBlocking(bool block, unsigned int timeInterval) = 0;
   virtual void setSoftMouseBlocking(bool block, unsigned int timeInterval) = 0;
 
-  virtual DateTime getLastInputTime() const = 0;
-  virtual void correctLastTime(DateTime newTime) = 0;
+  virtual ::earth::time getLastInputTime() const = 0;
+  virtual void correctLastTime(::earth::time newTime) = 0;
 
   virtual bool isRemoteInputAllowed() = 0;
 };

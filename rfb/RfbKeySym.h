@@ -27,7 +27,7 @@
 
 #include "RfbKeySymListener.h"
 #include "util/Keymap.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 // Translates pressed key to a series of rfb symbols. Gives the series
 // to out by the listener function serial calling.
@@ -41,7 +41,7 @@ public:
   void sendModifier(unsigned char virtKey, bool down);
 
   void processKeyEvent(unsigned short virtKey, unsigned int addKeyData);
-  bool vkCodeToString(unsigned short virtKey, bool isKeyDown, std::wstring *res);
+  bool vkCodeToString(unsigned short virtKey, bool isKeyDown, ::wstring *res);
   void processCharEvent(WCHAR charCode, unsigned int addKeyData);
   // Checks a new modifiers state after focus restoration and sends difference
   void processFocusRestoration();

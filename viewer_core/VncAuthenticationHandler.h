@@ -36,7 +36,7 @@ public:
   //
   // Overrides AuthHandler::authenticate().
   //
-  virtual void authenticate(DataInputStream *input, DataOutputStream *output);
+  virtual void authenticate(DataInputStream * pinput, DataOutputStream *output);
 
   //
   // Overrides AuthHandler::addAuthCapability().
@@ -44,7 +44,7 @@ public:
   virtual void addAuthCapability(CapabilitiesManager *capabilitiesManager);
 
 protected:
-  virtual void getPassword(::string & passString) = 0;
+  virtual ::string getPassword() = 0;
 };
 
 

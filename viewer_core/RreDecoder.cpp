@@ -34,24 +34,24 @@ RreDecoder::~RreDecoder()
 {
 }
 
-void RreDecoder::decode(RfbInputGate *input,
+void RreDecoder::decode(RfbInputGate *pinput,
                         FrameBuffer *frameBuffer,
                         const ::int_rectangle &  dstRect)
 {
-  unsigned int numberRectangle = input->readUInt32();
+  unsigned int numberRectangle = pinput->readUInt32();
   size_t bytesPerPixel = frameBuffer->getBytesPerPixel();
 
   unsigned int backgroundColor;
-  input->readFully(&backgroundColor, bytesPerPixel);
+  pinput->readFully(&backgroundColor, bytesPerPixel);
   frameBuffer->fillRect(dstRect, backgroundColor);
 
   while (numberRectangle--) {
     unsigned int color;
-    input->readFully(&color, bytesPerPixel);
-    unsigned int x = input->readUInt16();
-    unsigned int y = input->readUInt16();
-    unsigned int w = input->readUInt16();
-    unsigned int h = input->readUInt16();
+    pinput->readFully(&color, bytesPerPixel);
+    unsigned int x = pinput->readUInt16();
+    unsigned int y = pinput->readUInt16();
+    unsigned int w = pinput->readUInt16();
+    unsigned int h = pinput->readUInt16();
 
     ::int_rectangle rect(x, y, x + w, y + h);
     rect.offset(dstRect.left, dstRect.top);

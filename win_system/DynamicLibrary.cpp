@@ -30,7 +30,7 @@
 DynamicLibrary::DynamicLibrary(const ::scoped_string & scopedstrFilename)
 : m_module(0)
 {
-  init(filename);
+  init(scopedstrFilename);
 }
 
 DynamicLibrary::DynamicLibrary()
@@ -47,12 +47,12 @@ DynamicLibrary::~DynamicLibrary()
 
 void DynamicLibrary::init(const ::scoped_string & scopedstrFilename)
 {
-  m_module = LoadLibrary(filename);
+  m_module = LoadLibrary(::wstring(scopedstrFilename));
 
   if (m_module == 0) {
     ::string errMsg;
 
-    errMsg.formatf("{} library not found", filename);
+    errMsg.format("{} library not found", scopedstrFilename);
 
     throw ::remoting::Exception(errMsg);
   }

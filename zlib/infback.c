@@ -224,7 +224,7 @@ struct inflate_state FAR *state;
 /*
    strm provides the memory allocation functions and window buffer on input,
    and provides information on the unused input on return.  For Z_DATA_ERROR
-   returns, strm will also provide an error message.
+   returns, strm will also provide an error scopedstrMessage.
 
    in() and out() are the call-back input and output functions.  When
    inflateBack() needs more input, it calls in().  When inflateBack() has

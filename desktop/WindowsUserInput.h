@@ -30,7 +30,7 @@
 #include "util/Keymap.h"
 #include "win_system/InputInjector.h"
 #include "win_system/WindowsDisplays.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 class WindowsUserInput : public UserInput
 {

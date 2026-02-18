@@ -30,7 +30,7 @@
 #include "network/RfbOutputGate.h"
 #include "rfb_sconn/RfbCodeRegistrator.h"
 #include "rfb_sconn/RfbDispatcherListener.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 /**
  * Handler of echo extension plugin client to server messages.

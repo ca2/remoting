@@ -26,7 +26,7 @@
 
 
 #include "region/Point.h"
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 class WinCursor
 {

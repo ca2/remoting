@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "WindowsUserInput.h"
 #include "thread/DesktopSelector.h"
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 #include "win_system/Keyboard.h"
 #include "gui/WindowFinder.h"
 #include "util/BrokenHandleException.h"
@@ -153,12 +153,12 @@ void WindowsUserInput::setKeyboardEvent(unsigned int keySym, bool down)
     } else if (m_keyMap.keySymToUnicodeChar(keySym, &ch)) {
       m_inputInjector.injectCharEvent(ch, release);
     } else {
-      ::string message;
-      message.formatf("Unknown {} keysym", keySym);
-      throw ::remoting::Exception(message);
+      ::string scopedstrMessage;
+      scopedstrMessage.formatf("Unknown {} keysym", keySym);
+      throw ::remoting::Exception(scopedstrMessage);
     }
   } catch (::remoting::Exception &someEx) {
-    m_log->error("::remoting::Exception while processing key event: {}", someEx.getMessage());
+    m_log->error("::remoting::Exception while processing key event: {}", someEx.get_message());
   }
 }
 

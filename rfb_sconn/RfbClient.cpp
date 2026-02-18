@@ -81,7 +81,7 @@ void RfbClient::disconnect()
   // Shutdown and close socket.
   try { m_socket->shutdown(SD_BOTH); } catch (...) { }
   try { m_socket->close(); } catch (...) { }
-  m_log->message("Connection from {} has been closed for client #{}", peerStr, m_id);
+  m_log->debug("Connection from {} has been closed for client #{}", peerStr, m_id);
 }
 
 unsigned int RfbClient::getId() const
@@ -169,7 +169,7 @@ void RfbClient::onTerminate()
 
 void RfbClient::execute()
 {
-  // Initialized by default message that will be logged on normal way
+  // Initialized by default scopedstrMessage that will be logged on normal way
   // of disconnection.
   ::string peerStr;
   getPeerHost(&peerStr);
@@ -210,8 +210,8 @@ void RfbClient::execute()
       m_desktop = m_extAuthListener->onClientAuth(this);
 
       m_log->information("View only = {}", (int)m_viewOnly);
-    } catch (::remoting::Exception &e) {
-      m_log->error("Error during RFB initialization: {}", e.getMessage());
+    } catch (::exception &e) {
+      m_log->error("Error during RFB initialization: {}", e.get_message());
       throw;
     }
     _ASSERT(m_desktop != 0);
@@ -248,9 +248,9 @@ void RfbClient::execute()
     if (config->isFileTransfersEnabled() &&
         rfbInitializer.getTightEnabledFlag()) {
       fileTransfer = new FileTransferRequestHandler(&codeRegtor, &output, m_desktop, m_log, !m_viewOnly);
-      m_log->debug("File transfer has been created");
+      m_log->debug("::file::item transfer has been created");
     } else {
-      m_log->information("File transfer is not allowed");
+      m_log->information("::file::item transfer is not allowed");
     }
     // echo extension initialization
     echoExtension = new EchoExtensionRequestHandler(&codeRegtor, &output, m_log);
@@ -274,11 +274,11 @@ void RfbClient::execute()
     dispatcher.resume();
 
     m_connClosingEvent.waitForEvent();
-  } catch (::remoting::Exception &e) {
-    m_log->error("Connection will be closed: {}", e.getMessage());
+  } catch (::exception &e) {
+    m_log->error("Connection will be closed: {}", e.get_message());
     sysLogMessage.formatf("The client {} #{} has been"
                          " disconnected for the reason: {}",
-                         peerStr, m_id, e.getMessage());
+                         peerStr, m_id, e.get_message());
   }
 
   disconnect();

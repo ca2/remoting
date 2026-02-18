@@ -53,7 +53,7 @@ public:
    *
    * @throws SocketException on socket error.
    */
-  static Transport *createSocketClientTransport(const ::scoped_string & scopedstrconnectHost,
+  static Transport *createSocketClientTransport(const ::scoped_string & scopedstrConnectHost,
                                                 unsigned int connectPort);
   /**
    * Creates server transport that uses bound socket.
@@ -67,7 +67,7 @@ public:
    *
    * @throws SocketException on socket error.
    */
-  static Transport *createSocketServerTransport(const ::scoped_string & scopedstrbindHost,
+  static Transport *createSocketServerTransport(const ::scoped_string & scopedstrBindHost,
                                                 unsigned int bindPort);
 
   /**

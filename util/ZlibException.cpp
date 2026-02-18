@@ -25,7 +25,7 @@
 #include "ZLibException.h"
 
 ZLibException::ZLibException(const ::scoped_string & scopedstrMessage)
- : ::remoting::Exception(message)
+ : ::remoting::Exception(scopedstrMessage)
 {
 }
 

@@ -27,14 +27,14 @@
 
 #include "util/winhdr.h"
 #include "thread/LocalMutex.h"
-
+#include "acme/prototype/collection/comparable_list.h"
 //#include <list>
 
 
 
 /**
  * Base Windows Application class.
- * Have hidden main window and main message loop.
+ * Have hidden main window and main scopedstrMessage loop.
  */
 class WindowsApplication
 {
@@ -54,37 +54,37 @@ public:
 
   /**
    * Runs windows application.
-   * @remark really it creates main window and starts windows message loop.
+   * @remark really it creates main window and starts windows scopedstrMessage loop.
    * @return application exit code.
    */
   virtual int run();
 
   /**
-   * Posts close and destroy message to main window.
+   * Posts close and destroy scopedstrMessage to main window.
    */
   virtual void shutdown();
 
   /**
-   * Posts message to main window.
+   * Posts scopedstrMessage to main window.
    */
-  virtual void postMessage(UINT message, WPARAM wParam = 0, LPARAM lParam = 0);
+  virtual void postMessage(UINT scopedstrMessage, WPARAM wParam = 0, LPARAM lParam = 0);
 
   /**
-   * Adds modeless dialog to application modeless dialog ::list to
+   * Adds modeless dialog to application modeless dialog ::list_base to
    * enable switching between controls by pressing tab button.
    * @param dialogWindow HWND of modeless dialog.
    */
   static void addModelessDialog(HWND dialogWindow);
 
   /**
-   * Removes dialog from application modeless dialog ::list.
+   * Removes dialog from application modeless dialog ::list_base.
    * @param dialogWindow HWND of modeless dialog.
    */
   static void removeModelessDialog(HWND dialogWindow);
 
-protected:
+//protected:
   // Creates a window to receive messages.
-  virtual void createWindow(const ::scoped_string & scopedstrclassName);
+  virtual void createWindow(const ::scoped_string & scopedstrClassName);
 
   // Fills the wndClass argument and registers new class name in the Windows.
   virtual void registerWindowClass(WNDCLASS *wndClass);
@@ -100,17 +100,17 @@ protected:
 
   HINSTANCE m_appInstance;
   HWND m_mainWindow;
-  ::string m_windowClassName;
-protected:
+  ::wstring m_wstrWindowClassName;
+//protected:
   /**
-   * Helper method to process modeless dialog message for modal dialog.
-   * @param msg message to process.
-   * @return true if don't need to translate and dispatch message in main message loop.
+   * Helper method to process modeless dialog scopedstrMessage for modal dialog.
+   * @param msg scopedstrMessage to process.
+   * @return true if don't need to translate and dispatch scopedstrMessage in main scopedstrMessage loop.
    */
   static bool processDialogMessage(MSG *msg);
-private:
-  static LocalMutex m_MDLMutex; // Modeless dialog ::list mutex.
-  static ::list<HWND> m_modelessDialogList;
+//private:
+  static LocalMutex m_MDLMutex; // Modeless dialog ::list_base mutex.
+  static ::comparable_list_base<HWND> m_modelessDialogList;
 };
 
 //// __WINDOWSAPPLICATION_H__

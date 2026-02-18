@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "DateTime.h"
+//#include "::earth::time.h"
 
 // This class help to measure time intervals. On a time interval elapse the
 // timer only change self state. It doesn't call a callback function.
@@ -43,7 +43,7 @@ public:
 
 private:
   unsigned long long m_intervalMillis;
-  DateTime m_startTime;
+  class ::time m_timeStart;
 };
 
 //// __DEMANDTIMER_H__

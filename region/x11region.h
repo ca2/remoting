@@ -45,9 +45,8 @@ SOFTWARE.
 
 ******************************************************************/
 
-//#ifndef REGIONSTRUCT_H
-#pragma once
-//#define REGIONSTRUCT_H
+#ifndef REGIONSTRUCT_H
+#define REGIONSTRUCT_H
 
 #include <stdio.h>
 #include "util/inttypes.h"
@@ -62,10 +61,10 @@ SOFTWARE.
 
 #ifndef TIGHT_MAXSHORT  
 #define TIGHT_MAXSHORT 32767   
-
+#endif
 #ifndef TIGHT_MINSHORT
 #define TIGHT_MINSHORT -TIGHT_MAXSHORT
-
+#endif
 
 #define CT_YXBANDED 18
 
@@ -80,7 +79,7 @@ SOFTWARE.
 #ifndef FALSE
 #define FALSE 0
 #define TRUE  1
-
+#endif
 typedef int Bool;
 
 typedef struct _Box {
@@ -254,7 +253,7 @@ extern RegDataRec miBrokenData;
 #define REGION_EXTENTS(_pReg) \
     &(_pReg)->extents
 
-/* DONT_INLINE_REGION_OPS */
+#endif /* DONT_INLINE_REGION_OPS */
 
 /* moved from mi.h */
 
@@ -283,6 +282,6 @@ extern Bool miValidRegion(RegionPtr reg);
 
 #ifdef DEBUG
 extern int miPrintRegion(RegionPtr rgn);
+#endif
 
-
-///* REGIONSTRUCT_H */
+#endif /* REGIONSTRUCT_H */

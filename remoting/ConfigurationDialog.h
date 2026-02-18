@@ -31,7 +31,7 @@
 #include "client_config_lib/ViewerSettingsManager.h"
 #include "util/StringParser.h"
 #include "gui/BaseDialog.h"
-#include "gui/Control.h"
+//#include "gui/::remoting::Window.h"
 #include "gui/TextBox.h"
 #include "gui/CheckBox.h"
 #include "gui/SpinControl.h"
@@ -63,14 +63,14 @@ protected:
   TextBox m_verbLvl;
   SpinControl m_sverbLvl;
   TextBox m_logging;
-  Control m_openLogDir;
+  ::remoting::Window m_openLogDir;
 
   WindowsApplication *m_application;
 
 private:
   void updateControlValues();
   bool isInputValid();
-  bool testNum(TextBox *tb, const ::scoped_string & scopedstrtbName);
+  bool testNum(TextBox *tb, const ::scoped_string & scopedstrTbName);
   void onOkPressed();
 };
 

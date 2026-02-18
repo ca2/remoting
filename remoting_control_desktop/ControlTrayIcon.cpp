@@ -153,11 +153,11 @@ void ControlTrayIcon::onRightButtonUp()
     pos.x = pos.y = 0;
   }
 
-  SetForegroundWindow(getWindow());
+  SetForegroundWindow(get_hwnd());
 
   int action = TrackPopupMenu(hMenu,
                               TPM_NONOTIFY | TPM_RETURNCMD | TPM_RIGHTBUTTON,
-                              pos.x, pos.y, 0, getWindow(), NULL);
+                              pos.x, pos.y, 0, get_hwnd(), NULL);
 
   switch (action) {
   case ID_KILLCLIENTS:
@@ -188,7 +188,7 @@ void ControlTrayIcon::onLeftButtonDown()
 
 void ControlTrayIcon::onConfigurationMenuItemClick()
 {
-  ControlApplication::removeModelessDialog(m_configDialog->getControl()->getWindow());
+  ControlApplication::removeModelessDialog(m_configDialog->get_hwnd());
 
   bool isConnectedToService = false;
 
@@ -217,7 +217,7 @@ void ControlTrayIcon::onConfigurationMenuItemClick()
   m_configDialog->setServiceFlag(isConnectedToService);
   m_configDialog->show();
 
-  ControlApplication::addModelessDialog(m_configDialog->getControl()->getWindow());
+  ControlApplication::addModelessDialog(m_configDialog->get_hwnd());
 }
 
 void ControlTrayIcon::onDisconnectAllClientsMenuItemClick()
@@ -253,8 +253,8 @@ void ControlTrayIcon::onShutdownServerMenuItemClick()
       StringTable::getString(IDS_SHUTDOWN_NOTIFICATION_FORMAT),
       StringTable::getString(stringId));
 
-    if (MessageBox(
-      getWindow(),
+    if (::remoting::message_box(
+      get_hwnd(),
       userMessage,
       StringTable::getString(IDS_MBC_TVNCONTROL),
       MB_YESNO | MB_ICONQUESTION) == IDNO) {
@@ -291,7 +291,7 @@ void ControlTrayIcon::onAboutMenuItemClick()
 {
   m_aboutDialog.show();
 
-  ControlApplication::addModelessDialog(m_aboutDialog.getControl()->getWindow());
+  ControlApplication::addModelessDialog(m_aboutDialog.get_hwnd());
 }
 
 void ControlTrayIcon::onCloseControlInterfaceMenuItemClick()
@@ -304,7 +304,7 @@ void ControlTrayIcon::syncStatusWithServer()
   try {
      // Get TightVNC server info.
     TvnServerInfo info = m_serverControl->getServerInfo();
-    ::list<RfbClientInfo *> clients;
+    ::list_base<RfbClientInfo *> clients;
     m_serverControl->getClientsList(&clients);
 
     // Change icon status.
@@ -319,7 +319,7 @@ void ControlTrayIcon::syncStatusWithServer()
     setText(info.m_statusText);
 
     // Cleanup.
-    for (::list<RfbClientInfo *>::iterator it = clients.begin(); it != clients.end(); it++) {
+    for (::list_base<RfbClientInfo *>::iterator it = clients.begin(); it != clients.end(); it++) {
       delete *it;
     }
 
@@ -344,8 +344,8 @@ void ControlTrayIcon::setNotConnectedState()
 void ControlTrayIcon::terminate()
 {
   m_termination = true;
-  // Forcing window message
-  PostMessage(getWindow(), WM_USER + 1, 0, 0);
+  // Forcing window scopedstrMessage
+  PostMessage(get_hwnd(), WM_USER + 1, 0, 0);
 }
 
 void ControlTrayIcon::waitForTermination()

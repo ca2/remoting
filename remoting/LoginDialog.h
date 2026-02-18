@@ -67,8 +67,8 @@ protected:
   BOOL onCommand(UINT controlID, UINT notificationID);
   bool m_isListening;
 
-  Control m_listening;
-  Control m_ok;
+  ::remoting::Window m_listening;
+  ::remoting::Window m_ok;
   ConnectionConfig m_connectionConfig;
   ComboBox m_server;
   ::string m_serverHost;
@@ -81,7 +81,7 @@ private:
   void onConfiguration();
   BOOL onOptions();
   void onOrder();
-  void openUrl(const ::scoped_string & scopedstrurl);
+  void openUrl(const ::scoped_string & scopedstrUrl);
   void onListening();
   void onAbout();
 };

@@ -25,14 +25,14 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "WindowMessageHandler.h"
 
 class MessageWindow
 {
 public:
-  // messageHandler is an external message handler that replace the
-  // wndProc() function on message processing. If
+  // messageHandler is an external scopedstrMessage handler that replace the
+  // wndProc() function on scopedstrMessage processing. If
   // messageHandler == 0 the wndProc() function will be used.
   MessageWindow(const HINSTANCE hinst, const ::scoped_string & scopedstrwindowClassName,
                 WindowMessageHandler *messageHandler = 0);
@@ -43,21 +43,21 @@ public:
 
   HWND getHWND() const { return m_hwnd; }
 
-protected:
-  // Function must return true value if the message has been processed.
-  virtual bool wndProc(UINT message, WPARAM wParam, LPARAM lParam) { return true; }
+//protected:
+  // Function must return true value if the scopedstrMessage has been processed.
+  virtual bool wndProc(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam) { return true; }
 
   HWND m_hwnd;
   WindowMessageHandler *m_messageHandler;
 
   HINSTANCE m_hinst;
-  TCHAR *m_windowClassName;
+  ::wstring m_windowClassName;
 
-private:
-  ATOM regClass(HINSTANCE hinst, TCHAR *windowClassName);
+//private:
+  ATOM regClass(HINSTANCE hinst, const WCHAR *windowClassName);
 
   static LRESULT CALLBACK staticWndProc(HWND hwnd,
-                                        UINT message,
+                                        UINT scopedstrMessage,
                                         WPARAM wParam,
                                         LPARAM lParam);
 };

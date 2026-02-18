@@ -1,9 +1,12 @@
-﻿#ifndef _UPDATE_REQUEST_SENDER_
-#define _UPDATE_REQUEST_SENDER_
+﻿// #ifndef _UPDATE_REQUEST_SENDER_
+// #define _UPDATE_REQUEST_SENDER_
+
+
+#pragma once
 
 #include <thread/Thread.h>
 #include <rfb/FrameBuffer.h>
-#include <log_writer/LogWriter.h>
+//#include <log_writer/LogWriter.h>
 #include <network/RfbOutputGate.h>
 
 class UpdateRequestSender : public Thread

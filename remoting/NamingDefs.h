@@ -25,41 +25,41 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 class ProductNames
 {
 public:
-  static const TCHAR PRODUCT_NAME[];
-  static const TCHAR VIEWER_PRODUCT_NAME[];
+  static const char PRODUCT_NAME[];
+  static const char VIEWER_PRODUCT_NAME[];
 };
 
 class RegistryPaths
 {
 public:
-  static const TCHAR VIEWER_PATH[];
+  static const char VIEWER_PATH[];
 };
 
 class LogNames
 {
 public:
-  static const TCHAR VIEWER_LOG_FILE_STUB_NAME[];
-  static const TCHAR LOG_DIR_NAME[];
+  static const char VIEWER_LOG_FILE_STUB_NAME[];
+  static const char LOG_DIR_NAME[];
 };
 
 
 class ApplicationNames
 {
 public:
-  static const TCHAR WINDOW_CLASS_NAME[];
+  static const char WINDOW_CLASS_NAME[];
 };
 
 class WindowNames
 {
 public:
-  static const TCHAR TVN_WINDOW_CLASS_NAME[];
-  static const TCHAR TVN_WINDOW_TITLE_NAME[];
-  static const TCHAR TVN_SUB_WINDOW_TITLE_NAME[];
+  static const char TVN_WINDOW_CLASS_NAME[];
+  static const char TVN_WINDOW_TITLE_NAME[];
+  static const char TVN_SUB_WINDOW_TITLE_NAME[];
 };
 
 

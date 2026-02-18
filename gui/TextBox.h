@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "Control.h"
+#include "remoting/gui/Window.h"
 #include "Tooltip.h"
 
-class TextBox : public Control
+class TextBox : public ::remoting::Window
 {
 public:
   ~TextBox();

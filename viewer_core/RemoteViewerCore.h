@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 #include "network/RfbInputGate.h"
 #include "network/RfbOutputGate.h"
 #include "network/socket/SocketStream.h"
@@ -83,10 +83,10 @@ public:
   //
   // Call start() to "activate" an object created with this constructor.
   //
-  // To allow logging, pass a pointer to an object which implements the Logger
-  // interface (see log_writer/Logger.h). Logging is disabled by default.
+  // To allow logging, pass a pointer to an object which implements the LogWriter
+  // interface (see log_writer/LogWriter.h). Logging is disabled by default.
   //
-  RemoteViewerCore(Logger *logger = 0);
+  RemoteViewerCore(LogWriter *LogWriter = 0);
 
   //
   // Active constructors.
@@ -99,17 +99,17 @@ public:
   //
   // See also: start() for the details on operation and threading model.
   //
-  // To allow logging, pass a pointer to an object which implements the Logger
-  // interface (see log_writer/Logger.h). Logging is disabled by default.
+  // To allow logging, pass a pointer to an object which implements the LogWriter
+  // interface (see log_writer/LogWriter.h). Logging is disabled by default.
   //
 
   //
   // This constructor takes any type of connection that can be specified via
-  // a ::std::pair of abstract "gates" (RfbInputGate and RfbOutputGate).
+  // a ::pair of abstract "gates" (RfbInputGate and RfbOutputGate).
   //
   RemoteViewerCore(RfbInputGate *input, RfbOutputGate *output,
                    CoreEventsAdapter *adapter,
-                   Logger *logger = 0,
+                   LogWriter *LogWriter = 0,
                    bool sharedFlag = true);
 
   //
@@ -122,7 +122,7 @@ public:
   //
   RemoteViewerCore(const ::scoped_string & scopedstrHost, unsigned short port,
                    CoreEventsAdapter *adapter,
-                   Logger *logger = 0,
+                   LogWriter *LogWriter = 0,
                    bool sharedFlag = true);
 
   // FIX DOCUMENTATION: Clarify differents between the constructor with sockets and gates.
@@ -132,7 +132,7 @@ public:
   //
   RemoteViewerCore(SocketIPv4 *socket,
                    CoreEventsAdapter *adapter,
-                   Logger *logger = 0,
+                   LogWriter *LogWriter = 0,
                    bool sharedFlag = true);
 
   // FIX DOCUMENTATION: What objects will be destroyed? Will a socket object be destroyed
@@ -203,7 +203,7 @@ public:
 
   //
   // This version of start() takes any type of connection that can be
-  // specified via a ::std::pair of abstract "gates" (RfbInputGate and RfbOutputGate).
+  // specified via a ::pair of abstract "gates" (RfbInputGate and RfbOutputGate).
   //
   void start(RfbInputGate *input, RfbOutputGate *output,
              CoreEventsAdapter *adapter,
@@ -369,14 +369,14 @@ public:
   //
   // Allow or disallow CopyRect encoding. Correctly designed server is
   // guaranteed not to use CopyRect if disabled via this function (although
-  // passing the corresponding message to the server may take time). Normally,
+  // passing the corresponding scopedstrMessage to the server may take time). Normally,
   // CopyRect should be enabled, and it's enabled by default.
   //
   void allowCopyRect(bool allow);
 
   //
   // If the server anounced UTF8CUTT capability allow sending ClientCutTextUtf8 messages.
-  // If the server anounced UTF8CUTT and UTF8CUTE capabilities sends EnableCutTextUtf8 message.
+  // If the server anounced UTF8CUTT and UTF8CUTE capabilities sends EnableCutTextUtf8 scopedstrMessage.
   //
   void allowUtf8Clipboard();
 
@@ -453,7 +453,7 @@ public:
   virtual void getEnabledServerMsgCapabilities(::array_base<unsigned int> *codes) const;
   virtual void getEnabledEncodingCapabilities(::array_base<unsigned int> *codes) const;
 
-  // returns ::list of server displays offsets and dimensions
+  // returns ::list_base of server displays offsets and dimensions
   ::array_base<::int_rectangle> getDesktops();
   ::int_size getDesktopSize();
 
@@ -478,9 +478,9 @@ private:
   //
 
   //
-  // Read a message type code (unsigned char) from the data connection.
+  // Read a scopedstrMessage type code (unsigned char) from the data connection.
   // If the code is 0xFC then it's a beginning of TightVNC-specific extended
-  // code so we read next 3 bytes and compose unsigned int message type.
+  // code so we read next 3 bytes and compose unsigned int scopedstrMessage type.
   //
   unsigned int receiveServerMessageType();
 
@@ -490,10 +490,10 @@ private:
   PixelFormat readPixelFormat();
 
   //
-  // This method processes FramebufferUpdate server message (code 0):
+  // This method processes FramebufferUpdate server scopedstrMessage (code 0):
   //   * receive the number of rectangles in this update,
   //   * then call receiveFrameBufferUpdRectangle() for each rectangle,
-  //   * then send FramebufferUpdateRequest client message (code 3).
+  //   * then send FramebufferUpdateRequest client scopedstrMessage (code 3).
   //
   void receiveFbUpdate();
 
@@ -512,18 +512,18 @@ private:
   void processPseudoEncoding(const ::int_rectangle &  rect, int encType);
 
   //
-  // Send FramebufferUpdateRequest client message (code 3).
+  // Send FramebufferUpdateRequest client scopedstrMessage (code 3).
   // This method updates pixel format if needed.
   //
   void sendFbUpdateRequest(bool incremental = true);
 
   //
-  // Receive Bell server message (code 2) and send event to the adapter.
+  // Receive Bell server scopedstrMessage (code 2) and send event to the adapter.
   //
   void receiveBell();
 
   //
-  // Receive ServerCutText server message (code 3) and send event to the
+  // Receive ServerCutText server scopedstrMessage (code 3) and send event to the
   // adapter.
   //
   void receiveServerCutText();
@@ -531,7 +531,7 @@ private:
   void receiveServerCutTextUtf8();
 
   //
-  // Receive SetColourMapEntries server message (code 1) and forget it:
+  // Receive SetColourMapEntries server scopedstrMessage (code 1) and forget it:
   // for now, color maps are not supported.
   //
   void receiveSetColorMapEntries();
@@ -578,21 +578,21 @@ private:
   bool updatePixelFormat();
 
   //
-  // This method add ::std::pair <code, handler> to ::map m_authHandler.
+  // This method add ::pair <code, handler> to ::map m_authHandler.
   //
   void registerAuthHandler(const unsigned int code, AuthHandler *handler);
 
   //
-  // This method add ::std::pair <code, listener> to ::map m_serverMsgHandlers.
+  // This method add ::pair <code, listener> to ::map m_serverMsgHandlers.
   //
   void registerMessageListener(const unsigned int code, ServerMessageListener *listener);
 
   //
-  // This method add ::std::pair <code, decoder> to ::map m_decoderHandlers.
+  // This method add ::pair <code, decoder> to ::map m_decoderHandlers.
   //
   void registerDecoderHandler(const unsigned int code, Decoder *decoder, int priority);
 
-  LogWriter m_logWriter;
+  LogWriter * m_logWriter;
 
   // m_tcpConnection depends on m_logWriter and must be defined after it.
   // See also: C++ standard 12.6.2 - Initializing bases and members.
@@ -644,7 +644,7 @@ private:
   LocalMutex m_fbLock;
   FrameBuffer m_frameBuffer;
 
-  // ::list of server dispalys
+  // ::list_base of server dispalys
   ::array_base<::int_rectangle> m_desktops;
   ::int_size m_desktopSize;
 

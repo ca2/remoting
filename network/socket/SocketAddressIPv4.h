@@ -26,7 +26,7 @@
 #pragma once
 //#define SOCKET_ADDRESS_IPV4_H
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "thread/LocalMutex.h"
 #include "SocketException.h"
 #include "sockdefs.h"
@@ -49,7 +49,7 @@ public:
   struct sockaddr_in getSockAddr() const;
 
   // Converts socket address to it's string value (ip address as string).
-  void toString(::string & address) const;
+  ::string toString() const;
 
   // Returns socket port number 
   unsigned short getPort() const;

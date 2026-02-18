@@ -53,12 +53,12 @@ void Deflater::deflate()
   unsigned int constrainedValue = (unsigned int)avaliableOutput;
   _ASSERT(avaliableOutput == constrainedValue);
 
-  m_output.resize(avaliableOutput);
+  m_output.set_size(avaliableOutput);
 
   m_zlibStream.next_in = (Bytef *)m_input;
   m_zlibStream.avail_in = (unsigned int)m_inputSize;
 
-  m_zlibStream.next_out = (Bytef *)&m_output.front();
+  m_zlibStream.next_out = (Bytef *)m_output.data();
   m_zlibStream.avail_out = (unsigned int)avaliableOutput;
 
   if (::deflate(&m_zlibStream, Z_SYNC_FLUSH) != Z_OK) {

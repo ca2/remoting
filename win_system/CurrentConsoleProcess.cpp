@@ -26,13 +26,13 @@
 #include "CurrentConsoleProcess.h"
 
 #include "win_system/WinStaLibrary.h"
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 #include "win_system/SystemException.h"
 #include "win_system/Workstation.h"
 #include "win_system/WTS.h"
 
 CurrentConsoleProcess::CurrentConsoleProcess(LogWriter *log, bool connectRdpSession, const ::scoped_string & scopedstrPath, const ::scoped_string & scopedstrArgs)
-: Process(path, args),
+: Process(scopedstrPath, scopedstrArgs),
   m_log(log),
   m_connectRdpSession(connectRdpSession)
 {
@@ -68,11 +68,11 @@ void CurrentConsoleProcess::start()
 
     ::string commandLine = getCommandLineString();
 
-    m_log->debug("Try CreateProcessAsUser(%p, 0, {}, 0, 0, {}, NORMAL_PRIORITY_CLASS, 0, 0,"
+    m_log->debug("Try CreateProcessAsUser({} 0, {}, 0, 0, {}, NORMAL_PRIORITY_CLASS, 0, 0,"
                " sti, pi)",
                (void *)userToken, commandLine,
                (int)m_handlesIsInherited);
-    if (CreateProcessAsUser(userToken, 0, (LPTSTR) commandLine,
+    if (CreateProcessAsUser(userToken, 0, (LPTSTR)::wstring(commandLine).c_str(),
       0, 0, m_handlesIsInherited, NORMAL_PRIORITY_CLASS, 0, 0, &sti,
       &pi) == 0) {
         throw SystemException();

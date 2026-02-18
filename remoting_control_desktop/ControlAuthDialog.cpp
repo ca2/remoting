@@ -45,12 +45,12 @@ BOOL ControlAuthDialog::onInitDialog()
 {
   m_password= "";
 
-  HWND hwnd = m_ctrlThis.getWindow();
+  HWND hwnd = m_ctrlThis.get_hwnd();
   m_passwordTextBox.setWindow(GetDlgItem(hwnd, IDC_PASSWORD_EDIT));
   m_passwordTextBox.setTextLengthLimit(ServerConfig::VNC_PASSWORD_SIZE);
 
   SetForegroundWindow(hwnd);
-  m_passwordTextBox.setFocus();
+  m_passwordTextBox.set_focus();
 
   return TRUE;
 }
@@ -64,7 +64,7 @@ BOOL ControlAuthDialog::onCommand(UINT controlID, UINT notificationID)
 {
   switch (controlID) {
   case IDOK:
-    m_passwordTextBox.getText(&m_password);
+    m_passwordTextBox.get_text(&m_password);
     kill(controlID);
     break;
   case IDCANCEL:

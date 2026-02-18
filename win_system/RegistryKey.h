@@ -25,13 +25,13 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 
 class RegistryKey
 {
 public:
-  RegistryKey(HKEY rootKey, const ::scoped_string & scopedstrentry, bool createIfNotExists = true, SECURITY_ATTRIBUTES *sa = 0);
-  RegistryKey(RegistryKey *rootKey, const ::scoped_string & scopedstrentry, bool createIfNotExists = true, SECURITY_ATTRIBUTES *sa = 0);
+  RegistryKey(HKEY rootKey, const ::scoped_string & scopedstrEntry, bool createIfNotExists = true, SECURITY_ATTRIBUTES *sa = 0);
+  RegistryKey(RegistryKey *rootKey, const ::scoped_string & scopedstrEntry, bool createIfNotExists = true, SECURITY_ATTRIBUTES *sa = 0);
   RegistryKey(HKEY rootKey);
   // Default contructor for a defer initialization.
   RegistryKey();
@@ -43,14 +43,14 @@ public:
 
   // Defer initialization. Can be used only when it has been
   // created by the default constructor.
-  void open(HKEY rootKey, const ::scoped_string & scopedstrentry,
+  void open(HKEY rootKey, const ::scoped_string & scopedstrEntry,
             bool createIfNotExists = true,
             SECURITY_ATTRIBUTES *sa = 0);
 
   // Defer initialization. Can be used only when it has been
   // created by the default constructor.
   void open(RegistryKey *rootKey,
-            const ::scoped_string & scopedstrentry,
+            const ::scoped_string & scopedstrEntry,
             bool createIfNotExists = true,
             SECURITY_ATTRIBUTES *sa = 0);
 
@@ -94,7 +94,7 @@ public:
   bool getValueAsBinary(const ::scoped_string & scopedstrName, void *value, size_t *sizeInBytes);
 
   //
-  // Sets subkey names ::list to subKeyNames array.
+  // Sets subkey names ::list_base to subKeyNames array.
   // Remark: if subKeyNames is NULL then count of subkeys
   // is sets to count output var.
   //
@@ -105,7 +105,7 @@ public:
   // can be NULL.
   //
 
-  bool getSubKeyNames(::string & subKeyNames, size_t *count);
+  bool getSubKeyNames(::string_array & straKeyNames);
 
   // Returns true if key is valid and opened.
   bool isOpened();
@@ -115,7 +115,7 @@ public:
 private:
 
   // Helper method to avoid code duplicate in class constructor.
-  void initialize(HKEY rootKey, const ::scoped_string & scopedstrentry, bool createIfNotExists, SECURITY_ATTRIBUTES *sa);
+  void initialize(HKEY rootKey, const ::scoped_string & scopedstrEntry, bool createIfNotExists, SECURITY_ATTRIBUTES *sa);
 
   // Sets subkey name to name output variable not depending
   // on output buffer size, cause buffer allocates inside method.

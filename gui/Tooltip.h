@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
-#include "Control.h"
+#include "remoting/util/CommonHeader.h"
+#include "remoting/gui/Window.h"
 
 //
 // Abstract tooltip class
@@ -38,13 +38,13 @@ public:
   Tooltip();
   virtual ~Tooltip();
 
-  virtual void showTooltip(Control *control) = 0;
+  virtual void showTooltip(::remoting::Window * pwindow) = 0;
 
-  virtual void setText(const ::scoped_string & scopedstrtext) = 0;
-  virtual void setTitle(const ::scoped_string & scopedstrcaption) = 0;
+  virtual void setText(const ::scoped_string & scopedstrText) = 0;
+  virtual void setTitle(const ::scoped_string & scopedstrCaption) = 0;
 
-  virtual void getText(::string & text) const = 0;
-  virtual void getTitle(::string & title) const = 0;
+  virtual ::string get_text() const = 0;
+  virtual ::string getTitle() const = 0;
 
   virtual void setIconType(int iconType) = 0;
   virtual int getIconType() const = 0;

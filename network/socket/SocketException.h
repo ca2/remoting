@@ -40,7 +40,7 @@ public:
   // Creates socket exception object with specified error numner.
   // Error string generates automaticly;
   SocketException(int error);
-  // Creates socket exception object with specified message.
+  // Creates socket exception object with specified scopedstrMessage.
   // Error number is sets to zero.
   SocketException(const ::scoped_string & scopedstrMessage);
   // Destructor.
@@ -49,11 +49,11 @@ public:
   // Returns error number.
   int errno();
 
-protected:
+//protected:
   // Sets m_errno and generates error description string.
   void setErrno(int error);
 
-protected:
+//protected:
   int m_errno;
 };
 

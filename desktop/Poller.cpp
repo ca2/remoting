@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include "Poller.h"
 #include "region/Region.h"
 #include "server_config_lib/Configurator.h"

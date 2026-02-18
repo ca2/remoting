@@ -86,7 +86,7 @@ void ControlProxy::shutdownTightVnc()
   createMessage(ControlProto::SHUTDOWN_SERVER_MSG_ID)->send();
 }
 
-void ControlProxy::getClientsList(::list<RfbClientInfo *> *clients)
+void ControlProxy::getClientsList(::list_base<RfbClientInfo *> *clients)
 {
   AutoLock l(m_gate);
 
@@ -107,7 +107,7 @@ void ControlProxy::getClientsList(::list<RfbClientInfo *> *clients)
   }
 }
 
-void ControlProxy::makeOutgoingConnection(const ::scoped_string & scopedstrconnectString, bool viewOnly)
+void ControlProxy::makeOutgoingConnection(const ::scoped_string & scopedstrConnectString, bool viewOnly)
 {
   AutoLock l(m_gate);
 
@@ -119,7 +119,7 @@ void ControlProxy::makeOutgoingConnection(const ::scoped_string & scopedstrconne
   msg->send();
 }
 
-void ControlProxy::makeTcpDispatcherConnection(const ::scoped_string & scopedstrconnectString,
+void ControlProxy::makeTcpDispatcherConnection(const ::scoped_string & scopedstrConnectString,
                                                const ::scoped_string & scopedstrDispatcherName,
                                                const ::scoped_string & scopedstrKeyword,
                                                unsigned int connectionId)

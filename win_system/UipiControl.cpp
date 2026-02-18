@@ -24,20 +24,21 @@
 #include "framework.h"
 #include "acme/_operating_system.h"
 #include "UipiControl.h"
-#include "Environment.h"
+//#include "Environment.h"
 #include "DynamicLibrary.h"
 #include "SystemException.h"
+#include "acme/platform/node.h"
 
 #ifndef MSGFLT_ADD
 #define MSGFLT_ADD 1
 #endif
 
 typedef BOOL (WINAPI *SetFilterEx)(HWND hWnd,
-                                   UINT message,
+                                   UINT scopedstrMessage,
                                    DWORD action,
                                    unsigned int *reserved
                                    );
-typedef BOOL (WINAPI *SetFilter)(UINT message,
+typedef BOOL (WINAPI *SetFilter)(UINT scopedstrMessage,
                                  DWORD action);
 
 UipiControl::UipiControl(LogWriter *log)
@@ -49,10 +50,10 @@ UipiControl::~UipiControl()
 {
 }
 
-void UipiControl::allowMessage(UINT message, HWND hwnd)
+void UipiControl::allowMessage(UINT uMessage, HWND hwnd)
 {
-  m_log->information("Try allow to receive the %u windows message");
-  if (Environment::isVistaOrLater()) {
+  m_log->information("Try allow to receive the %u windows uMessage");
+  if (::system()->node()->_windows_isVistaOrLater()) {
     DynamicLibrary user32lib("user32.dll");
     m_log->information("user32.dll successfully loaded.");
     SetFilterEx setFilterEx;
@@ -69,10 +70,10 @@ void UipiControl::allowMessage(UINT message, HWND hwnd)
       }
       m_log->information("The ChangeWindowMessageFilter() function "
                 "successfully found.");
-      if (setFilter(message, MSGFLT_ADD) != TRUE) {
+      if (setFilter(uMessage, MSGFLT_ADD) != TRUE) {
         DWORD errCode = GetLastError();
         ::string errMess;
-        errMess.formatf("Can't allow to receive the {} windows message by "
+        errMess.formatf("Can't allow to receive the {} windows uMessage by "
                        "the ChangeWindowMessageFilter() function.");
         throw SystemException(errMess, errCode);
       }
@@ -82,10 +83,10 @@ void UipiControl::allowMessage(UINT message, HWND hwnd)
       // FIXME: Can't to check for Windows7.
       m_log->information("The ChangeWindowMessageFilterEx() function "
                 "successfully found.");
-      if (setFilterEx(hwnd, message, MSGFLT_ADD, 0) != TRUE) {
+      if (setFilterEx(hwnd, uMessage, MSGFLT_ADD, 0) != TRUE) {
         DWORD errCode = GetLastError();
         ::string errMess;
-        errMess.formatf("Can't allow to receive the {} windows message by "
+        errMess.formatf("Can't allow to receive the {} windows uMessage by "
                        "the ChangeWindowMessageFilterEx() function.");
         throw SystemException(errMess, errCode);
       }

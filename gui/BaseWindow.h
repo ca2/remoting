@@ -24,17 +24,17 @@
 
 #pragma once
 
-#include "util/CommonHeader.h"
-#include "remoting/gui/Control.h"
+#include "remoting/util/CommonHeader.h"
+#include "remoting/gui/Window.h"
 class BaseWindow :
-virtual public ::windows::Window
+virtual public ::remoting::Window
 {
 public:
   BaseWindow();
 
   ~BaseWindow() override;
 
-  // getWindow()
+  // get_hwnd()
   // Get a handle of the window 
   HWND getHWnd() const;
   void setHWnd(HWND hwnd);
@@ -75,10 +75,10 @@ public:
   void setClassMenu(LONG menu);
 
   // for changing or get style and exstyle of window
-  LONG getStyle();
-  void setStyle(DWORD style);
-  LONG getExStyle();
-  void setExStyle(DWORD exstyle);
+  LONG get_style();
+  void set_style(DWORD style);
+  LONG get_ex_style();
+  void set_ex_style(DWORD exstyle);
 
   // full redraw of window area
   void redraw(const RECT & rectArea ={});
@@ -91,13 +91,13 @@ public:
   // set foreground window
   void setForegroundWindow();
 
-  // post message to this window
+  // post scopedstrMessage to this window
   void postMessage(UINT Msg, WPARAM wParam = 0, LPARAM lParam = 0);
 
   void getClientRect(RECT *rc);
   void getBorderSize(int *width, int *height);
 
-  virtual bool wndProc(UINT message, WPARAM wParam, LPARAM lParam);
+  virtual bool wndProc(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam);
 
   static const int MOUSE_LDOWN  = 1;
   static const int MOUSE_MDOWN  = 2;
@@ -111,7 +111,7 @@ private:
   virtual bool onCommand(WPARAM wParam, LPARAM lParam);
   virtual bool onNotify(int idCtrl, LPNMHDR pnmh);
   virtual bool onSysCommand(WPARAM wParam, LPARAM lParam);
-  virtual bool onMessage(UINT message, WPARAM wParam, LPARAM lParam);
+  virtual bool onMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam);
   virtual bool onMouse(unsigned char mouseButtons, unsigned short wheelSpeed, POINT position);
 
 //protected:

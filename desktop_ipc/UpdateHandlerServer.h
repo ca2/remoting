@@ -28,7 +28,7 @@
 #include "DesktopServerProto.h"
 #include "desktop/UpdateHandlerImpl.h"
 #include "DesktopSrvDispatcher.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 #include "desktop/Win32ScreenDriverFactory.h"
 
 class UpdateHandlerServer: public DesktopServerProto, public ClientListener,

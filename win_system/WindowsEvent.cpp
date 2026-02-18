@@ -28,7 +28,7 @@
 
 WindowsEvent::WindowsEvent(const ::scoped_string & scopedstrName)
 {
-  m_hEvent = CreateEvent(0, FALSE, FALSE, name);
+  m_hEvent = CreateEvent(0, FALSE, FALSE, ::wstring(scopedstrName));
   if (m_hEvent == 0) {
     int errCode = GetLastError();
     ::string errMess;

@@ -25,7 +25,7 @@
 #include "JpegDecompressor.h"
 
 #include "acme/prototype/geometry2d/rectangle.h"
-#include "util/AnsiStringStorage.h"
+//#include "util/::string.h"
 #include "util/Exception.h"
 
 JpegDecompressor::JpegDecompressor()
@@ -41,22 +41,22 @@ JpegDecompressor::~JpegDecompressor()
   }
 }
 
-::string JpegDecompressor::getMessage(j_common_ptr cinfo)
+::string JpegDecompressor::get_message(j_common_ptr cinfo)
 {
   char buffer[JMSG_LENGTH_MAX];
-  // Create the message
+  // Create the scopedstrMessage
   (*cinfo->err->format_message) (cinfo, buffer);
 
-  AnsiStringStorage errorAnsi(buffer);
-  ::string error;
-  errorAnsi.toStringStorage(&error);
-  return error;
+  ::string errorAnsi(buffer);
+  //::string error;
+  //errorAnsi.toStringStorage(&error);
+  return errorAnsi;
 }
 
 void JpegDecompressor::errorExit(j_common_ptr cinfo)
 {
   (*cinfo->err->output_message) (cinfo);
-  ::string error = getMessage(cinfo);
+  ::string error = get_message(cinfo);
   jpeg_destroy(cinfo);
   throw ::remoting::Exception(error);
 }
@@ -76,7 +76,7 @@ void JpegDecompressor::decompress(::array_base<unsigned char> &buffer,
 
   if (buffer.size() == 0 || buffer.size() < jpegBufLen)
     throw ::remoting::Exception("incorrect size of buffer in jpeg-decompressor");
-  unsigned char *src_buf = &buffer.front();
+  unsigned char *src_buf = buffer.data();
   size_t src_buf_size = jpegBufLen;
 
   size_t width = dstRect.width();
@@ -84,7 +84,7 @@ void JpegDecompressor::decompress(::array_base<unsigned char> &buffer,
   size_t pixelBufferCount =  width * height * BYTES_PER_PIXEL;
   if (pixels.size() == 0 || pixels.size() < pixelBufferCount)
     throw ::remoting::Exception("incorrect size of pixels-buffer in jpeg-decompressor");
-  unsigned char *dst_buf = &pixels.front();
+  unsigned char *dst_buf = pixels.data();
 
   try {
     /* Initialize data source and read the header. */

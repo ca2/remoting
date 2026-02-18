@@ -30,7 +30,7 @@
 
 #include "Decoder.h"
 
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 class DecoderStore
 {
@@ -54,7 +54,7 @@ public:
 private:
   LogWriter *m_logWriter;
 
-  ::map<int, ::std::pair<int, Decoder*> > m_decoders;
+  ::map<int, ::pair<int, Decoder*> > m_decoders;
   int m_preferredEncoding;
   bool m_allowCopyRect;
 };

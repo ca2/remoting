@@ -48,7 +48,7 @@ public:
    * @param lockAddr determinates if need to lock adress to other processes cannot reuse it.
    * @throws ::remoting::Exception if fail to create tcp server.
    */
-  TcpServer(const ::scoped_string & scopedstrbindHost,
+  TcpServer(const ::scoped_string & scopedstrBindHost,
             unsigned short bindPort,
             bool autoStart = false,
             bool lockAddr = false);
@@ -61,7 +61,7 @@ public:
   /**
    * Returns bind host.
    */
-  const ::scoped_string & scopedstrgetBindHost() const;
+  ::string getBindHost() const;
 
   /**
    * Returns bind port.

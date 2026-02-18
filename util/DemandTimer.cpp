@@ -37,11 +37,11 @@ DemandTimer::~DemandTimer()
 // Starts the timer from the now time.
 void DemandTimer::reset()
 {
-  m_startTime = DateTime::now();
+  m_timeStart.Now();
 }
 
 // Returns true if timer time is elapsed.
 bool DemandTimer::isElapsed()
 {
-  return (DateTime::now() - m_startTime).getTime() >= m_intervalMillis;
+  return m_timeStart.elapsed().integral_millisecond() >= m_intervalMillis;
 }

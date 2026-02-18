@@ -31,8 +31,8 @@
 #include "server_config_lib/Configurator.h"
 #include "AuthException.h"
 #include "util/VncPassCrypt.h"
-#include "win_system/Environment.h"
-#include "util/AnsiStringStorage.h"
+//#include "win_system/Environment.h"
+//#include "util/::string.h"
 #include "remoting_node_desktop/NamingDefs.h"
 
 #include <stdlib.h>
@@ -93,15 +93,15 @@ void RfbInitializer::initVersion()
     checkForLoopback();
     // Checking for a ban before auth and then after.
     checkForBan();
-  } catch (::remoting::Exception &e) {
+  } catch (::exception &e) {
     if (m_minorVerNum == 3) {
       m_output->writeUInt32(0);
     } else {
       m_output->writeUInt8(0);
     }
-    AnsiStringStorage reason(&::string(e.getMessage()));
-    unsigned int reasonLen = (unsigned int)reason.getLength();
-    _ASSERT(reasonLen == reason.getLength());
+    ::string reason(&::string(e.get_message()));
+    unsigned int reasonLen = (unsigned int)reason.length();
+    _ASSERT(reasonLen == reason.length());
 
     m_output->writeUInt32(reasonLen);
     m_output->writeFully(reason, reasonLen);
@@ -236,7 +236,7 @@ void RfbInitializer::initAuthenticate()
     }
     // Here the protocol varies between versions 3.3 and 3.7+.
     if (m_minorVerNum >= 7) {
-      // Send a ::list with two security types -- VNC-compatible security type
+      // Send a ::list_base with two security types -- VNC-compatible security type
       // and a special code allowing to enable TightVNC protocol extensions.
       m_output->writeUInt8(2);
       m_output->writeUInt8(primSecType);
@@ -261,9 +261,9 @@ void RfbInitializer::initAuthenticate()
     // FIXME: The authentication result must be sent in protocols 3.3 and 3.7
     //        as well, unless the authentication was set to AuthDefs::NONE.
     if (m_minorVerNum >= 8) {
-      AnsiStringStorage reason(&::string(e.getMessage()));
-      unsigned int reasonLen = (unsigned int)reason.getLength();
-      _ASSERT(reasonLen == reason.getLength());
+      ::string reason(&::string(e.get_message()));
+      unsigned int reasonLen = (unsigned int)reason.length();
+      _ASSERT(reasonLen == reason.length());
 
       m_output->writeUInt32(1); // FIXME: Use a named constant instead of 1.
       m_output->writeUInt32(reasonLen);
@@ -306,9 +306,9 @@ void RfbInitializer::sendDesktopName()
     deskName= DefaultNames::DEFAULT_COMPUTER_NAME;
   }
 
-  AnsiStringStorage ansiName(&deskName);
-  unsigned int dnLen = (unsigned int)ansiName.getLength();
-  _ASSERT(dnLen == ansiName.getLength());
+  ::string ansiName(&deskName);
+  unsigned int dnLen = (unsigned int)ansiName.length();
+  _ASSERT(dnLen == ansiName.length());
 
   m_output->writeUInt32(dnLen);
   m_output->writeFully(ansiName, dnLen);
@@ -335,7 +335,7 @@ unsigned int RfbInitializer::getProtocolMinorVersion(const char str[12])
        str[7] != '.' ||
        !isdigit(str[8]) || !isdigit(str[9]) || !isdigit(str[10]) ||
        str[11] != '\n' ) {
-    throw ::remoting::Exception("Invalid format of the RFB version message");
+    throw ::remoting::Exception("Invalid format of the RFB version scopedstrMessage");
   }
 
   unsigned int majorVersion =

@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "SasUserInput.h"
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 #include "win_system/WTS.h"
 
 #define XK_MISCELLANY

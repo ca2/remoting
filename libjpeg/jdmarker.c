@@ -768,7 +768,7 @@ examine_app0 (j_decompress_ptr cinfo, JOCTET FAR * data,
       GETJOCTET(data[4]) == 0) {
     /* Found JFIF "JFXX" extension APP0 marker */
     /* The library doesn't actually do anything with these,
-     * but we try to produce a helpful trace message.
+     * but we try to produce a helpful trace scopedstrMessage.
      */
     switch (GETJOCTET(data[5])) {
     case 0x10:
@@ -871,7 +871,7 @@ get_interesting_appn (j_decompress_ptr cinfo)
 
 METHODDEF(boolean)
 save_marker (j_decompress_ptr cinfo)
-/* Save an APPn or COM marker into the marker ::std::list */
+/* Save an APPn or COM marker into the marker ::std::list_base */
 {
   my_marker_ptr marker = (my_marker_ptr) cinfo->marker;
   jpeg_saved_marker_ptr cur_marker = marker->cur_marker;
@@ -934,7 +934,7 @@ save_marker (j_decompress_ptr cinfo)
 
   /* Done reading what we want to read */
   if (cur_marker != NULL) {	/* will be NULL if bogus length word */
-    /* Add new marker to end of ::std::list */
+    /* Add new marker to end of ::std::list_base */
     if (cinfo->marker_list == NULL) {
       cinfo->marker_list = cur_marker;
     } else {
@@ -1436,7 +1436,7 @@ jinit_marker_reader (j_decompress_ptr cinfo)
 
 
 /*
- * Control saving of COM and APPn markers into marker_list.
+ * ::remoting::Window saving of COM and APPn markers into marker_list.
  */
 
 #ifdef SAVE_MARKERS_SUPPORTED

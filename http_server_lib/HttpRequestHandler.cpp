@@ -27,9 +27,9 @@
 #include "HttpReply.h"
 #include "AppletParameter.h"
 #include "VncViewerJarBody.h"
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 #include "server_config_lib/Configurator.h"
-#include "util/AnsiStringStorage.h"
+//#include "util/::string.h"
 #include "remoting_node_desktop/NamingDefs.h"
 
 HttpRequestHandler::HttpRequestHandler(DataInputStream *dataInput,
@@ -53,7 +53,7 @@ void HttpRequestHandler::processRequest()
 
   httpRequest.readHeader();
 
-  AnsiStringStorage ansiRequest(httpRequest.getRequest());
+  ::string ansiRequest(httpRequest.getRequest());
   ::string request;
   ansiRequest.toStringStorage(&request);
 
@@ -65,7 +65,7 @@ void HttpRequestHandler::processRequest()
   request.replaceChar(_T('\n'), _T(' '));
   request.replaceChar(_T('\t'), _T(' '));
 
-  m_log->message("\"{}\" from {}", request, m_peerHost);
+  m_log->debug("\"{}\" from {}", request, m_peerHost);
 
   HttpReply reply(m_dataOutput);
 
@@ -81,7 +81,7 @@ void HttpRequestHandler::processRequest()
     // Check arguments.
     //
 
-    AnsiStringStorage paramsString("\n");
+    ::string paramsString("\n");
 
     bool isAppletArgsValid = true;
 
@@ -114,19 +114,19 @@ void HttpRequestHandler::processRequest()
       m_dataOutput->writeFully(HttpStrings::HTTP_MSG_BADPARAMS,
                                strlen(HttpStrings::HTTP_MSG_BADPARAMS));
     } else {
-      AnsiStringStorage page;
+      ::string page;
 
       ::string computerName(DefaultNames::DEFAULT_COMPUTER_NAME);
 
       Environment::getComputerName(&computerName);
 
-      AnsiStringStorage computerNameANSI(&computerName);
+      ::string computerNameANSI(&computerName);
 
       page.format(HttpStrings::HTTP_INDEX_PAGE_FORMAT,
                   computerNameANSI,
                   Configurator::getInstance()->getServerConfig()->getRfbPort(),
                   paramsString);
-      m_dataOutput->writeFully(page, page.getLength());
+      m_dataOutput->writeFully(page, page.length());
     } // if applet arguments is valid.
 
     pageFound = true;

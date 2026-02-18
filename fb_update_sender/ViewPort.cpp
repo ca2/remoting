@@ -85,7 +85,7 @@ void ViewPort::update(const ::int_size & fbDimension)
       try {
         m_desktop->getWindowCoords(m_state.m_hwnd, &rect);
       } catch (BrokenHandleException &e) {
-		  m_log->error("ViewPort::update: {}", e.getMessage());
+		  m_log->error("ViewPort::update: {}", e.get_message());
         // Now hwnd is broken. This should be reflected in the viewport state.
         m_state.unresolveHwnd();
       }
@@ -117,12 +117,12 @@ void ViewPort::update(const ::int_size & fbDimension)
 void ViewPort::resolveWindowName()
 {
   // Skip the resolving if have been passed little time.
-  if ((DateTime::now() - m_latestHwndResolvingTime).getTime() > RESOLVING_PERIOD) {
+  if ((::earth::time::now() - m_latestHwndResolvingTime).getTime() > RESOLVING_PERIOD) {
     HWND hwnd = m_desktop->getWindowHandleByName(&m_state.m_windowName);
     if (hwnd != 0) {
       m_state.setWindowHandle(hwnd);
     }
-    m_latestHwndResolvingTime = DateTime::now();
+    m_latestHwndResolvingTime = ::earth::time::now();
   }
 }
 

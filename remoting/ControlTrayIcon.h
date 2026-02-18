@@ -33,7 +33,7 @@
 
 class remoting_impact;
 
-class ControlTrayIcon : public NotifyIcon,
+class ControlTrayIcon : public ::remoting::NotifyIcon,
                         public WindowProcHolder
 {
 public:
@@ -45,10 +45,10 @@ public:
   //
   void showIcon();
 
-protected:
+//protected:
   static UINT WM_USER_TASKBAR;
 
-protected:
+//protected:
   virtual LRESULT windowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, bool *useDefWindowProc);
 
   //
@@ -83,13 +83,13 @@ protected:
   //
   virtual void onShowMainWindow();
 
-  Icon m_icon;
+  ::remoting::Icon m_icon;
   Menu m_menu;
   bool m_inWindowProc;
 
   remoting_impact *m_application;
 
-private:
+//private:
   void onRightButtonUp();
   void onLeftButtonDown();
 };

@@ -25,16 +25,16 @@
 #pragma once
 
 
-#include "Control.h"
+#include "remoting/gui/Window.h"
 #include <commctrl.h>
 
-class SpinControl : public Control
+class SpinControl : public ::remoting::Window
 {
 public:
   SpinControl();
   ~SpinControl();
 
-  void setBuddy(Control *buddyControl);
+  void setBuddy(::remoting::Window *buddyControl);
   void setRange(short lower, short upper);
   void setRange32(int lower, int upper);
   void setAccel(UINT nSec, UINT nInc);
@@ -47,13 +47,13 @@ public:
   // Handler, call it on UDN_DELTAPOS notification
   //
 
-  void autoAccelerationHandler(LPNMUPDOWN message);
+  void autoAccelerationHandler(LPNMUPDOWN scopedstrMessage);
   void enableAutoAcceleration(bool enabled);
   void setAutoAccelerationParams(const ::array_base<int> *limitters,
                                  const ::array_base<int> *deltas,
                                  int maxDelta);
 protected:
-  Control *m_buddy;
+  ::remoting::Window *m_buddy;
 
   //
   // Members needed for auto acceleration

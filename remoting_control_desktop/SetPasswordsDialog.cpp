@@ -30,7 +30,7 @@
 #include "SetPasswordsDialog.h"
 
 #include "remoting_node/resource.h"
-#include "util/AnsiStringStorage.h"
+//#include "util/::string.h"
 
 SetPasswordsDialog::SetPasswordsDialog(bool initStateOfUseRfbAuth,
                                        bool initStateOfUseAdminAuth)
@@ -86,7 +86,7 @@ void SetPasswordsDialog::getAdmPass(::string & pass)
 
 void SetPasswordsDialog::initControls()
 {
-  HWND window = m_ctrlThis.getWindow();
+  HWND window = m_ctrlThis.get_hwnd();
 
   m_dontChangeRfbAuthSettingsRadio.setWindow(GetDlgItem(window,
     IDC_DONT_CHANGE_RFB_AUTH_SETTINGS_RADIO));
@@ -157,26 +157,26 @@ void SetPasswordsDialog::onOkButtonClick()
   ::string admPass1;
   ::string admPass2;
 
-  m_rfbPassEdit1.getText(&rfbPass1);
-  m_rfbPassEdit2.getText(&rfbPass2);
-  m_admPassEdit1.getText(&admPass1);
-  m_admPassEdit2.getText(&admPass2);
+  m_rfbPassEdit1.get_text(&rfbPass1);
+  m_rfbPassEdit2.get_text(&rfbPass2);
+  m_admPassEdit1.get_text(&admPass1);
+  m_admPassEdit2.get_text(&admPass2);
 
   if (m_useRfbAuth) {
     if (rfbPass1.is_empty()) {
       m_rfbPassEdit1.showBalloonTip(&m_passwordEmptyTooltip);
-      m_rfbPassEdit1.setFocus();
+      m_rfbPassEdit1.set_focus();
       return;
     }
     if (!rfbPass1.isEqualTo(&rfbPass2)) {
       m_rfbPassEdit2.showBalloonTip(&m_passwordsNotMatchTooltip);
-      m_rfbPassEdit2.setFocus();
+      m_rfbPassEdit2.set_focus();
       return;
     }
-    // shows message box if the password can't be converted to ANSI with no data lost
-    if (!AnsiStringStorage::checkAnsiConversion(rfbPass1)) {
+    // shows scopedstrMessage box if the password can't be converted to ANSI with no data lost
+    if (!::string::checkAnsiConversion(rfbPass1)) {
       m_rfbPassEdit1.showBalloonTip(&m_passwordWeakTooltip);
-      m_rfbPassEdit1.setFocus();
+      m_rfbPassEdit1.set_focus();
       return;
     }
     m_rfbPass= rfbPass1;
@@ -184,17 +184,17 @@ void SetPasswordsDialog::onOkButtonClick()
   if (m_protectControlInterface) {
     if (admPass1.is_empty()) {
       m_admPassEdit1.showBalloonTip(&m_passwordEmptyTooltip);
-      m_admPassEdit1.setFocus();
+      m_admPassEdit1.set_focus();
       return;
     }
     if (!admPass1.isEqualTo(&admPass2)) {
       m_admPassEdit2.showBalloonTip(&m_passwordsNotMatchTooltip);
-      m_admPassEdit2.setFocus();
+      m_admPassEdit2.set_focus();
       return;
     }
-    if (!AnsiStringStorage::checkAnsiConversion(admPass1)) {
+    if (!::string::checkAnsiConversion(admPass1)) {
       m_admPassEdit1.showBalloonTip(&m_passwordWeakTooltip);
-      m_admPassEdit1.setFocus();
+      m_admPassEdit1.set_focus();
       return;
     }
 
@@ -213,10 +213,10 @@ void SetPasswordsDialog::readRadio()
 
 void SetPasswordsDialog::updateEditControls()
 {
-  m_rfbPassEdit1.setEnabled(m_useRfbAuth);
-  m_rfbPassEdit2.setEnabled(m_useRfbAuth);
-  m_admPassEdit1.setEnabled(m_protectControlInterface);
-  m_admPassEdit2.setEnabled(m_protectControlInterface);
+  m_rfbPassEdit1.enable_window(m_useRfbAuth);
+  m_rfbPassEdit2.enable_window(m_useRfbAuth);
+  m_admPassEdit1.enable_window(m_protectControlInterface);
+  m_admPassEdit2.enable_window(m_protectControlInterface);
 }
 
 BOOL SetPasswordsDialog::onClose()

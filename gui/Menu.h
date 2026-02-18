@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/CommonHeader.h"
+#include "remoting/util/CommonHeader.h"
 #include <crtdbg.h>
 
 class Menu
@@ -45,14 +45,14 @@ public:
   void termMenu();
   
   int getMenuItemCount();
-  bool appendMenu(::string strVal, UINT uID); 
+  bool appendMenu(const ::scoped_string & strVal, UINT uID);
   bool appendSeparator();
-  bool appendSubMenu(::string strVal, Menu *pMenu);
+  bool appendSubMenu(const ::scoped_string &  strVal, Menu *pMenu);
 
-  bool insertMenuItem(UINT uItem, ::string strVal, UINT uID);
-  bool insertCheckMenuItem(UINT uItem, ::string strVal, UINT uID);
+  bool insertMenuItem(UINT uItem, const ::scoped_string &  strVal, UINT uID);
+  bool insertCheckMenuItem(UINT uItem, const ::scoped_string &  strVal, UINT uID);
   bool insertSeparator(UINT uItem);
-  bool insertSubMenu(UINT uItem, ::string strVal, Menu *pMenu);
+  bool insertSubMenu(UINT uItem, const ::scoped_string &  strVal, Menu *pMenu);
 
   bool enableMenuItem(UINT uID, UINT uEnable);
   bool checkedMenuItem(UINT uID, bool bEnable);
@@ -67,13 +67,13 @@ public:
     setMenu(hmenu);
   }
 
-private:
-  bool appendMenu(UINT uFlags, UINT_PTR uIDNewItem, LPCTSTR lpNewItem);
+//private:
+  bool appendMenu(UINT uFlags, UINT_PTR uIDNewItem, const ::scoped_string & scopedstrNewItem);
   bool insertMenuItem(UINT uItem, BOOL fByPosition, LPCMENUITEMINFO lpmii);
   bool modifyMenu(UINT uPosition, UINT uFlags, LONG_PTR uIDNewItem, LPCTSTR lpNewItem);
   bool setMenuItem(UINT uItem, BOOL fByPosition, LPMENUITEMINFO lpmii);
 
-protected:
+//protected:
   HMENU m_menu;
   bool m_bCreated;
 };

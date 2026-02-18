@@ -29,7 +29,7 @@
 #include "RfbCodeRegistrator.h"
 #include "desktop/Desktop.h"
 #include "network/RfbOutputGate.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 
 class ClipboardExchange : public RfbDispatcherListener, public Thread
 {

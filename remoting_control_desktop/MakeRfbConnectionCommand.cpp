@@ -25,7 +25,7 @@
 #include "MakeRfbConnectionCommand.h"
 
 MakeRfbConnectionCommand::MakeRfbConnectionCommand(ControlProxy *serverControl,
-                                                   const ::scoped_string & scopedstrconnectString,
+                                                   const ::scoped_string & scopedstrConnectString,
                                                    bool viewOnly)
 : m_proxy(serverControl), m_connectString(connectString), m_viewOnly(viewOnly)
 {

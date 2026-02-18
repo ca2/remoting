@@ -33,7 +33,7 @@
 #include "ScaleManager.h"
 #include "ViewerMenu.h"
 #include "gui/ToolBar.h"
-#include "log_writer/LogWriter.h"
+//#include "log_writer/LogWriter.h"
 #include "viewer_core/FileTransferCapability.h"
 #include "viewer_core/RemoteViewerCore.h"
 #include "viewer_core/CoreEventsAdapter.h"
@@ -49,10 +49,10 @@ class ViewerWindow : public BaseWindow,
 public:
   ViewerWindow(WindowsApplication *application,
                ConnectionData *conData, ConnectionConfig *conConf,
-               Logger *logger = 0);
+               LogWriter *LogWriter = 0);
   virtual ~ViewerWindow();
 
-  void setFileTransfer(FileTransferCapability *ft);
+  void setFileTransfer(::remoting::ftp::FileTransferCapability *ft);
   void setRemoteViewerCore(RemoteViewerCore *pCore);
 
   //
@@ -76,7 +76,7 @@ protected:
   static const int TIMER_DESKTOP_STATE = 1;
   static const int TIMER_DESKTOP_STATE_DELAY = 50;
 
-  bool onMessage(UINT message, WPARAM wParam, LPARAM lParam);
+  bool onMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam);
   bool onEraseBackground(HDC hdc);
   
   bool onDisconnect();
@@ -115,7 +115,7 @@ void onGoodCursor() override;
   //
   void onBell();
   void onConnected(RfbOutputGate *output);
-  void onDisconnect(const ::scoped_string & message);
+  void onDisconnect(const ::scoped_string & scopedstrMessage);
   void onAuthError(const AuthException *exception);
   void onError(const ::remoting::Exception *exception);
   void onFrameBufferUpdate(const FrameBuffer *fb, const ::int_rectangle &  rect);
@@ -130,26 +130,26 @@ void onGoodCursor() override;
   // else return rect of remote screen + border
   ::int_rectangle calculateDefaultSize();
 
-  LogWriter m_logWriter;
+  LogWriter * m_logWriter;
 
-  Control m_control;
+  ::remoting::Window m_control;
 
   ConnectionConfigSM m_ccsm;
   ConnectionConfig *m_conConf;
   WindowsApplication *m_application;
   RemoteViewerCore *m_viewerCore;
-  FileTransferCapability *m_fileTransfer;
+  ::remoting::ftp::FileTransferCapability *m_fileTransfer;
   FileTransferMainDialog *m_ftDialog;
   DesktopWindow m_dsktWnd;
-  ::string m_strToolTip;
-  ToolBar m_toolbar;
+  ::wstring m_wstrToolTip;
+  ::remoting::ToolBar m_toolbar;
   ViewerMenu m_menu;
   ConnectionData *m_conData;
   SystemInformation m_sysinf;
 
   // This variable save ::remoting::Exception after call onError().
   ::remoting::Exception m_error;
-  // This variable save disconnect-message after call onDisconnect().
+  // This variable save disconnect-scopedstrMessage after call onDisconnect().
   ::string m_disconnectMessage;
 
   // Flag is set, if now viewer is in full screen mode
@@ -160,7 +160,7 @@ void onGoodCursor() override;
   ::int_rectangle m_rcNormal;
 
 
-  // Flag is set after recv first message WM_SIZING.
+  // Flag is set after recv first scopedstrMessage WM_SIZING.
   bool m_sizeIsChanged;
   // Flag is set, if toolbar is visible.
   bool m_bToolBar;

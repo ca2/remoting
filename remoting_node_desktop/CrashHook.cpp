@@ -24,7 +24,7 @@
 
 #include "CrashHook.h"
 #include "win_system/DynamicLibrary.h"
-#include "win_system/Environment.h"
+//#include "win_system/Environment.h"
 #include "win_system/RegistryKey.h"
 #include "thread/AutoLock.h"
 #include "remoting_node_desktop/NamingDefs.h"
@@ -95,7 +95,7 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
   dumpPath.formatf("{}\\{}\\crash.dmp", specFolder,
                                            ProductNames::PRODUCT_NAME);
 
-  if (guiEnabled && MessageBox(0,
+  if (guiEnabled && ::remoting::message_box(0,
                                "Apllication crashing. Do you"
                                " want save debug information?",
                                ProductNames::PRODUCT_NAME,
@@ -150,14 +150,14 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
       ::string succMess;
       succMess.formatf("The debug information has been successfully"
                       " saved to the {} file", dumpPath);
-      MessageBox(0, succMess, ProductNames::PRODUCT_NAME, MB_OK);
+      ::remoting::message_box(0, succMess, ProductNames::PRODUCT_NAME, MB_OK);
     }
     m_notifier->onCrash(&dumpPath);
 
     retValue = EXCEPTION_EXECUTE_HANDLER;
-  } catch (::remoting::Exception &e) {
+  } catch (::exception &e) {
     if (guiEnabled) {
-      MessageBox(NULL, e.getMessage(), ProductNames::PRODUCT_NAME, MB_OK);
+      ::remoting::message_box(NULL, e.get_message(), ProductNames::PRODUCT_NAME, MB_OK);
     }
   }
   if (hFile != 0) {

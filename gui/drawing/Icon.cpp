@@ -24,56 +24,60 @@
 #include "framework.h"
 #include "Icon.h"
 
-Icon::Icon()
-: m_hasOwnIcon(true), m_icon(NULL)
+
+namespace remoting
 {
-}
+   Icon::Icon()
+   : m_hasOwnIcon(true), m_icon(NULL)
+   {
+   }
 
-Icon::Icon(HICON icon)
-: m_hasOwnIcon(true), m_icon(icon)
-{
-}
+   Icon::Icon(HICON icon)
+   : m_hasOwnIcon(true), m_icon(icon)
+   {
+   }
 
-Icon::Icon(Bitmap *pbitmap)
-: m_hasOwnIcon(true), m_icon(NULL)
-{
-  Bitmap mask(pbitmap->width(), pbitmap->height());
-  fromBitmap(pbitmap, &mask);
-}
+   Icon::Icon(Bitmap *pbitmap)
+   : m_hasOwnIcon(true), m_icon(NULL)
+   {
+      Bitmap mask(pbitmap->width(), pbitmap->height());
+      fromBitmap(pbitmap, &mask);
+   }
 
-Icon::Icon(Bitmap *pbitmap, Bitmap *pbitmapMask)
-: m_hasOwnIcon(true), m_icon(NULL)
-{
-  fromBitmap(pbitmap, pbitmapMask);
-}
+   Icon::Icon(Bitmap *pbitmap, Bitmap *pbitmapMask)
+   : m_hasOwnIcon(true), m_icon(NULL)
+   {
+      fromBitmap(pbitmap, pbitmapMask);
+   }
 
-Icon::Icon(DWORD icon)
-: m_hasOwnIcon(false)
-{
-  HINSTANCE hInstance = GetModuleHandle(NULL);
-  m_icon = LoadIcon(hInstance, MAKEINTRESOURCE(icon));
-}
+   Icon::Icon(DWORD icon)
+   : m_hasOwnIcon(false)
+   {
+      HINSTANCE hInstance = GetModuleHandle(NULL);
+      m_icon = LoadIcon(hInstance, MAKEINTRESOURCE(icon));
+   }
 
-Icon::~Icon()
-{
-  if (m_hasOwnIcon) {
-    DestroyIcon(m_icon);
-  }
-}
+   Icon::~Icon()
+   {
+      if (m_hasOwnIcon) {
+         DestroyIcon(m_icon);
+      }
+   }
 
-HICON Icon::getHICON()
-{
-  return m_icon;
-}
+   HICON Icon::getHICON()
+   {
+      return m_icon;
+   }
 
-void Icon::fromBitmap(Bitmap *bitmap, Bitmap *mask)
-{
-  ICONINFO ii;
+   void Icon::fromBitmap(Bitmap *bitmap, Bitmap *mask)
+   {
+      ICONINFO ii;
 
-  memset(&ii, 0, sizeof(ICONINFO));
+      memset(&ii, 0, sizeof(ICONINFO));
 
-  ii.hbmColor = (bitmap != 0) ? bitmap->m_bitmap : 0;
-  ii.hbmMask = (mask != 0) ? mask->m_bitmap : 0;
+      ii.hbmColor = (bitmap != 0) ? bitmap->m_bitmap : 0;
+      ii.hbmMask = (mask != 0) ? mask->m_bitmap : 0;
 
-  m_icon = CreateIconIndirect(&ii);
+      m_icon = CreateIconIndirect(&ii);
+   }
 }

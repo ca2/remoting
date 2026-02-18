@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "Control.h"
-//#include "util/::string.h"
+#include "remoting/gui/Window.h"
+//////#include "util/::string.h"
 
-class ListBox : public Control
+class ListBox : public ::remoting::Window
 {
 public:
   ListBox();
@@ -36,7 +36,7 @@ public:
 public:
   void addString(const ::scoped_string & scopedstrStr);
   void addString(const ::scoped_string & scopedstrStr, void *tag);
-  void getItemText(int index, ::string & storage);
+  ::string getItemText(int index);
   void setItemText(int index, const ::scoped_string & scopedstrStr);
   void insertString(int index, const ::scoped_string & scopedstrStr);
   void insertString(int index, const ::scoped_string & scopedstrStr, LPARAM data);

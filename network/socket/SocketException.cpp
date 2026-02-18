@@ -37,7 +37,7 @@ SocketException::SocketException(int error)
 }
 
 SocketException::SocketException(const ::scoped_string & scopedstrMessage)
-: ::remoting::Exception(message), m_errno(0)
+: ::remoting::Exception(scopedstrMessage), m_errno(0)
 {
 }
 
@@ -45,8 +45,10 @@ SocketException::~SocketException()
 {
 }
 
+
 void SocketException::setErrno(int error)
 {
+
   m_errno = error;
 
   TCHAR buffer[1024];
@@ -57,5 +59,9 @@ void SocketException::setErrno(int error)
                 (LPTSTR)&buffer[0],
                 sizeof(buffer), NULL);
 
-  m_message= &buffer[0];
+  m_strMessage= &buffer[0];
+
 }
+
+
+

@@ -9,7 +9,7 @@
 #include "inffast.h"
 
 #ifdef ASMINF
-#  pragma message("Assembler code may have bugs -- use at your own risk")
+#  pragma scopedstrMessage("Assembler code may have bugs -- use at your own risk")
 #else
 
 /*
@@ -36,13 +36,13 @@
 
    Notes:
 
-    - The maximum input bits used by a length/distance ::std::pair is 15 bits for the
+    - The maximum input bits used by a length/distance ::pair is 15 bits for the
       length code, 5 bits for the length extra, 15 bits for the distance code,
       and 13 bits for the distance extra.  This totals 48 bits, or six bytes.
       Therefore if strm->avail_in >= 6, then there is enough input to avoid
       checking for available input while decoding.
 
-    - The maximum bytes that a single length/distance ::std::pair can output is 258
+    - The maximum bytes that a single length/distance ::pair can output is 258
       bytes, which is the maximum length that can be coded.  inflate_fast()
       requires strm->avail_out >= 258 for each loop to avoid checking for
       output space.
