@@ -17,7 +17,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
@@ -31,6 +31,7 @@
 #include "NamingDefs.h"
 #include "remoting_impact.h"
 #include "ViewerWindow.h"
+#include "acme/constant/id.h"
 #include "acme/filesystem/file/item.h"
 #include "acme/platform/application.h"
 #include "remoting/common/remoting.h"
@@ -59,6 +60,7 @@ ViewerWindow::ViewerWindow(WindowsApplication *application,
   m_requiresReconnect(false),
   m_stopped(false)
 {
+   initialize(application);
   m_standardScale.add(10);
   m_standardScale.add(15);
   m_standardScale.add(25);
@@ -1036,7 +1038,7 @@ bool ViewerWindow::onAuthError(WPARAM wParam)
 bool ViewerWindow::onError()
 {
   ::string error;
-  error.formatf("Error in {}: {}", ProductNames::VIEWER_PRODUCT_NAME, m_error.get_message());
+  error.format("Error in {}: {}", ::string(ProductNames::VIEWER_PRODUCT_NAME), m_error.get_message());
   ::remoting::message_box(getHWnd(),
              error,
              formatWindowName(),
@@ -1113,12 +1115,23 @@ void ViewerWindow::onBell()
   return defaultRect;
 }
 
+
+void ViewerWindow::onConnecting(int iPhase)
+{
+
+   m_papplication->handle_direct_id(id_remoting_connecting, iPhase, 0);
+
+}
+
+
 void ViewerWindow::onConnected(RfbOutputGate *output)
 {
   // Set flags.
   m_isConnected = true;
   m_sizeIsChanged = false;
   m_dsktWnd.setConnected();
+
+   m_papplication->handle_direct_id(id_remoting_connected, 0, 0);
 
   // Set output for client-to-server messages in file transfer.
   m_fileTransfer->setOutput(output);
@@ -1245,9 +1258,9 @@ void ViewerWindow::updateKeyState()
   }
   ::string windowName;
   if (!desktopName.is_empty()) {
-    windowName.formatf("{} - {}", desktopName, ProductNames::VIEWER_PRODUCT_NAME);
+    windowName.format("{} - {}", desktopName, ::string(ProductNames::VIEWER_PRODUCT_NAME));
   } else {
-    windowName.formatf("{}", ProductNames::VIEWER_PRODUCT_NAME);
+    windowName.format("{}", ::string(ProductNames::VIEWER_PRODUCT_NAME));
   }
   return windowName;
 }

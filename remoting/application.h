@@ -27,6 +27,9 @@ LogWriter * m_logWriter;
       void on_request(::request * prequest) override;
 
 
+      ::lresult handle_direct_id(const ::enum_id eid, ::wparam wparam, ::lparam lparam) override;
+
+
    };
 
 } // namespace remoting_remoting

@@ -17,7 +17,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
@@ -74,7 +74,9 @@ virtual void onGoodCursor();
   //
   // FIXME: document it.
   // Output need for capability, e.g. FT.
+   virtual void onConnecting(int iPhase);
   virtual void onConnected(RfbOutputGate *output);
+
 
   //
   // RemoteViewerCore has been disconnected by calling stop()

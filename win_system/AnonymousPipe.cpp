@@ -17,7 +17,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
@@ -90,15 +90,15 @@ size_t AnonymousPipe::read(void *buffer, size_t len)
   }
 }
 
-void AnonymousPipe::write(const void *buffer, memsize len)
+memsize AnonymousPipe::defer_write(const void *buffer, memsize len)
 {
-  try {
-    writeByHandle(buffer, len, m_hWrite);
-  } catch (...) {
-    m_log->error("AnonymousPipe::write() failed (m_hWrite = %p)",
-               m_hWrite);
-    throw;
-  }
+   try {
+      return writeByHandle(buffer, len, m_hWrite);
+   } catch (...) {
+      m_log->error("AnonymousPipe::write() failed (m_hWrite = {})",
+                 m_hWrite);
+      throw;
+   }
 }
 
 void AnonymousPipe::checkPipeHandle(HANDLE handle)

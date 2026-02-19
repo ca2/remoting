@@ -17,7 +17,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
@@ -114,7 +114,8 @@ void onGoodCursor() override;
   // It is implementation of CoreEventsAdapter functions.
   //
   void onBell();
-  void onConnected(RfbOutputGate *output);
+   void onConnecting(int iPhase) override;
+  void onConnected(RfbOutputGate *output) override;
   void onDisconnect(const ::scoped_string & scopedstrMessage);
   void onAuthError(const AuthException *exception);
   void onError(const ::remoting::Exception *exception);

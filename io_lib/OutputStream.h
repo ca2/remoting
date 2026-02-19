@@ -17,7 +17,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
@@ -45,7 +45,7 @@ public:
    * @return count of written bytes.
    * @throws any kind of exception (depends on implementation).
    */
-   virtual void write(const void * buffer, ::memsize len) = 0;
+   virtual memsize defer_write(const void * buffer, ::memsize len) = 0;
 
   /**
    * Flushes inner buffer to real output stream.

@@ -17,7 +17,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
@@ -40,20 +40,21 @@ BufferedOutputStream::~BufferedOutputStream()
   delete m_output;
 }
 
-void BufferedOutputStream::write(const void *buffer, memsize len)
+memsize BufferedOutputStream::defer_write(const void *buffer, memsize len)
 {
-  if (m_dataLength + len >= sizeof(m_buffer)) {
-    flush();
+   if (m_dataLength + len >= sizeof(m_buffer)) {
+      flush();
 
-    m_output->write(buffer, len);
-  } else {
-    memcpy(&m_buffer[m_dataLength], buffer, len);
+      m_output->write(buffer, len);
+   } else {
+      memcpy(&m_buffer[m_dataLength], buffer, len);
 
-    m_dataLength += len;
-  }
+      m_dataLength += len;
+   }
 
-  //return len;
+   return len;
 }
+
 
 void BufferedOutputStream::flush()
 {

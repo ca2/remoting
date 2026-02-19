@@ -17,7 +17,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
@@ -46,7 +46,7 @@ public:
 
   virtual size_t read(void *, size_t);
 
-  virtual void write(const void *, memsize);
+  virtual memsize defer_write(const void *, memsize);
 
   // Closes connection and break all blocked operation.
   // @throw ::remoting::Exception on error.

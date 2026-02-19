@@ -17,7 +17,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
@@ -93,7 +93,7 @@ void writePasswordToRegistry(MSIHANDLE hInstall,
     RegistrySettingsManager sm(rootKey, registryPath, sa);
 
     if (!sm.setBinaryData(entryName, &cryptedPass[0], 8)) {
-      throw ::remoting::Exception("Can't write to the registry.");
+      throw ::remoting::Exception("Can't w_rite to the registry.");
     }
 
   } catch (::exception &e) {

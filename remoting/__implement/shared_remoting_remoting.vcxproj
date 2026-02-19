@@ -254,25 +254,19 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\acme\remoting_acme.vcxproj">
-      <Project>{638b242f-0f21-41c3-9f66-724660046133}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\apex\remoting_apex.vcxproj">
-      <Project>{e000ffaf-392f-4e32-bf51-777ca238991f}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\aura\remoting_aura.vcxproj">
-      <Project>{e000ffaf-392f-4e32-bf51-fd7ed638991f}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\remoting_app_app.vcxproj">
-      <Project>{40f49b85-a888-4a1d-a7f5-7631f14a3d4a}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="..\deployment.rc" />
     <ResourceCompile Include="main.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\app\acme\acme.vcxproj">
+      <Project>{638b242f-0f21-41c3-9f66-724660046133}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\remoting_remoting_remoting.vcxproj">
+      <Project>{082f71ad-cdf6-44de-84f7-9d2d16784b23}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

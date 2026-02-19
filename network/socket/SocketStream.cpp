@@ -17,7 +17,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
@@ -48,19 +48,14 @@ size_t SocketStream::read(void *buf, size_t wanted)
   return (size_t)m_socket->recv((char *)buf, (int)wanted);
 }
 
-void SocketStream::write(const void *buf, memsize size)
+memsize SocketStream::defer_write(const void *buf, memsize size)
 {
-  if ((int)size < 0) {
-    throw ::io_exception(error_io, "Size of buffer is too big.");
-  }
-
-  auto iWritten = m_socket->send((char *)buf, (int)size);
-
-   if (iWritten < size)
-   {
-
-      throw ::io_exception(error_io, "written less than requested");
+   if ((int)size < 0) {
+      throw ::io_exception(error_io, _T("Size of buffer is too big."));
    }
+
+   return (size_t)m_socket->send((char *)buf, (int)size);
+
 }
 
 void SocketStream::close()

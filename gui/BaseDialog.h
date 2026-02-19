@@ -17,7 +17,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
@@ -32,6 +32,18 @@ class BaseDialog :
 virtual public ::remoting::Window
 {
 public:
+
+
+    TCHAR *m_resourceName;        // Name of dialog resource
+    DWORD m_resourceId;            // Id of dialog resouce
+    //::remoting::Window m_ctrlThis;           // This dialog control
+    ::remoting::Window *m_pwindowParent;        // Parent dialog or NULL if no parent
+
+    bool m_isModal;
+    bool m_isCreated;
+
+    HICON m_hicon;
+
 
 
    BaseDialog();
@@ -106,22 +118,13 @@ public:
   // Window scopedstrMessage proccessing method
   //
 
-  static INT_PTR CALLBACK dialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
+    static INT_PTR CALLBACK dialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+    virtual bool dialog_procedure(INT_PTR & iptrResult, UINT message, ::wparam wparam, ::lparam lparam);
 //private:
-  TCHAR *getResouceName();
+    TCHAR *getResouceName();
 
 //protected:
 
-  TCHAR *m_resourceName;        // Name of dialog resource
-  DWORD m_resourceId;            // Id of dialog resouce
-  //::remoting::Window m_ctrlThis;           // This dialog control
-  ::remoting::Window *m_pwindowParent;        // Parent dialog or NULL if no parent
-
-  bool m_isModal;
-  bool m_isCreated;
-
-  HICON m_hicon;
 };
 
 

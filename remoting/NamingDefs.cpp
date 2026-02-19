@@ -17,25 +17,25 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
 #include "NamingDefs.h"
 
-const char ProductNames::PRODUCT_NAME[] = "TightVNC";
-const char ProductNames::VIEWER_PRODUCT_NAME[] = "TightVNC Viewer";
+const char ProductNames::PRODUCT_NAME[] = "remoting";
+const char ProductNames::VIEWER_PRODUCT_NAME[] = "remoting";
 
 const char LogNames::VIEWER_LOG_FILE_STUB_NAME[] = "remoting_impact";
-const char LogNames::LOG_DIR_NAME[] = "TightVNC";
+const char LogNames::LOG_DIR_NAME[] = "remoting";
 
-const char RegistryPaths::VIEWER_PATH[] = "Software\\TightVNC\\Viewer";
+const char RegistryPaths::VIEWER_PATH[] = "Software\\remoting\\remoting";
 
 const char ApplicationNames::WINDOW_CLASS_NAME[] = 
-  "TvnApplicationClass";
+  "remoting_application_class";
 
-const char WindowNames::TVN_WINDOW_CLASS_NAME[] = "TvnWindowClass";
-const char WindowNames::TVN_WINDOW_TITLE_NAME[] = "TightVNC Viewer";
-const char WindowNames::TVN_SUB_WINDOW_TITLE_NAME[] = "Viewer";
+const char WindowNames::TVN_WINDOW_CLASS_NAME[] = "remoting_window_class";
+const char WindowNames::TVN_WINDOW_TITLE_NAME[] = "remoting";
+const char WindowNames::TVN_SUB_WINDOW_TITLE_NAME[] = "remoting";
 

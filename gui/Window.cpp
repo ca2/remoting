@@ -17,7 +17,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
@@ -43,7 +43,7 @@ namespace remoting
       // Save handle
       m_hwnd = hwnd;
       // Save pointer to default window proc
-      subclass_window();
+      //subclass_window();
    }
    // void Window::replaceWindowProc(WNDPROC wndProc)
    // {
@@ -73,7 +73,18 @@ namespace remoting
       m_defWindowProc = (WNDPROC)GetWindowLongPtr(m_hwnd, GWLP_WNDPROC);
       SetWindowLongPtr(m_hwnd, GWLP_USERDATA, (LONG_PTR)(Window*)this);
       SetWindowLongPtr(m_hwnd, GWLP_WNDPROC, (LONG_PTR)&Window::s_window_procedure);
+      auto p = (WNDPROC)GetWindowLongPtr(m_hwnd, GWLP_WNDPROC);
 
+      if (p != &Window::s_window_procedure)
+      {
+         throw "what(1)?!?!";
+
+      }
+      if (p == m_defWindowProc)
+      {
+         throw "what(2)?!?!";
+
+      }
 
 
    }

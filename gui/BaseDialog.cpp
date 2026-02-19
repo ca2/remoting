@@ -17,7 +17,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
@@ -179,46 +179,65 @@ void BaseDialog::onMessageReceived(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 INT_PTR CALLBACK BaseDialog::dialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-  BaseDialog *_this;
+
+   BaseDialog * pbasedialog = nullptr;
   BOOL bResult;
 
   bResult = FALSE;
   if (uMsg == WM_INITDIALOG) {
-    _this = (BaseDialog *)lParam;
-    SetWindowLongPtr(hwnd, GWLP_USERDATA, (LONG_PTR)_this);
-    _this->setWindow(hwnd);
-    _this->updateIcon();
+    pbasedialog = (BaseDialog *)lParam;
+    SetWindowLongPtr(hwnd, GWLP_USERDATA, (LONG_PTR)pbasedialog);
+    pbasedialog->setWindow(hwnd);
+    pbasedialog->updateIcon();
   } else {
-    _this = (BaseDialog *)GetWindowLongPtr(hwnd, GWLP_USERDATA);
-    if (_this == 0) {
+    pbasedialog = (BaseDialog *)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+    if (pbasedialog == 0) {
       return FALSE;
     }
   }
+//   BaseDialog *_this;
 
-  _this->onMessageReceived(uMsg, wParam, lParam);
+    INT_PTR iptr = 0;
 
-  switch (uMsg) {
-  case WM_INITDIALOG:
-    bResult = _this->onInitDialog();
-    break;
-  case WM_NOTIFY:
-    bResult = _this->onNotify(LOWORD(wParam), lParam);
-    break;
-  case WM_COMMAND:
-    bResult =_this->onCommand(LOWORD(wParam), HIWORD(wParam));
-    break;
-  case WM_CLOSE:
-    bResult = _this->onClose();
-    break;
-  case WM_DESTROY:
-    bResult = _this->onDestroy();
-    break;
-  case WM_DRAWITEM:
-    bResult = _this->onDrawItem(wParam, (LPDRAWITEMSTRUCT)lParam);
-    break;
-  }
+    pbasedialog->dialog_procedure(iptr, uMsg, wParam, lParam);
 
-  return bResult;
+   return iptr;
+
+}
+
+bool BaseDialog::dialog_procedure(INT_PTR & iptrResult, UINT message, ::wparam wparam, ::lparam lparam)
+{
+
+   BOOL bResult = FALSE;
+
+   onMessageReceived(message, wparam, lparam);
+
+   switch (message) {
+      case WM_INITDIALOG:
+         bResult = onInitDialog();
+         break;
+      case WM_NOTIFY:
+         bResult = onNotify(LOWORD(wparam.m_number), lparam.m_lparam);
+         break;
+      case WM_COMMAND:
+         bResult =onCommand(LOWORD(wparam.m_number), HIWORD(wparam.m_number));
+         break;
+      case WM_CLOSE:
+         bResult = onClose();
+         break;
+      case WM_DESTROY:
+         bResult = onDestroy();
+         break;
+      case WM_DRAWITEM:
+         bResult = onDrawItem(wparam.m_number, (LPDRAWITEMSTRUCT)lparam.m_lparam);
+         break;
+   }
+
+
+    iptrResult = bResult;
+
+   return true;
+
 }
 
 TCHAR *BaseDialog::getResouceName()

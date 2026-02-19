@@ -17,7 +17,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
@@ -29,8 +29,8 @@
 
 #define GETBYTE(x, n) (((x) >> ((n) * 8)) & 0xFF)
 
-DataOutputStream::DataOutputStream(::file::writable * pfilewritable)
-: m_outStream(pfilewritable)
+DataOutputStream::DataOutputStream(::file::writable * pwritable)
+: m_outStream(pwritable)
 {
 }
 
@@ -38,22 +38,22 @@ DataOutputStream::~DataOutputStream()
 {
 }
 
-void DataOutputStream::write(const void *buffer, size_t len)
+memsize DataOutputStream::defer_write(const void *buffer, memsize len)
 {
-  m_outStream->write(buffer, len);
+  return m_outStream->defer_write(buffer, len);
 }
 
-// void DataOutputStream::writeFully(const void *buffer, size_t len)
-// {
-//   char *typedBuffer = (char *)buffer;
-//   size_t totalWritten = 0;
-//   size_t left = len;
-//   while (totalWritten < len) {
-//     size_t written = m_outStream->write(typedBuffer + totalWritten, left);
-//     left -= written;
-//     totalWritten += written;
-//   }
-// }
+void DataOutputStream::write(const void *buffer, memsize len)
+{
+  char *typedBuffer = (char *)buffer;
+  size_t totalWritten = 0;
+  size_t left = len;
+  while (totalWritten < len) {
+    size_t written = m_outStream->defer_write(typedBuffer + totalWritten, left);
+    left -= written;
+    totalWritten += written;
+  }
+}
 
 void DataOutputStream::writeUInt8(unsigned char x)
 {
@@ -118,21 +118,19 @@ void DataOutputStream::writeInt64(long long x)
   writeUInt64((unsigned long long)x);
 }
 
-void DataOutputStream::writeUTF8(const ::scoped_string & scopedstrString)
+void DataOutputStream::writeUTF8(const scoped_ansi_string &str)
 {
-  size_t sizeInBytes = 0;
-
-  ::string strstg(scopedstrString);
+  //size_t sizeInBytes = 0;
 
   // to UTF8 string convertion
-  ::string utf8str{strstg};
+  //Utf8StringStorage utf8String(&StringStorage(string));
 
   // FIXME: Why try/catch() is used?
   try {
-     unsigned int sizeInBytes = (unsigned int)utf8str.length();
-     _ASSERT(sizeInBytes == utf8str.length());
+    unsigned int sizeInBytes = (unsigned int)str.size();
+    //_ASSERT(sizeInBytes == str.size());
     writeUInt32(sizeInBytes);
-     write(utf8str, sizeInBytes);
+    write(str.data(), sizeInBytes);
   } catch (...) {
     throw;
   }

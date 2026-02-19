@@ -17,7 +17,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
@@ -74,7 +74,13 @@ bool RegistrySettingsManager::isOk()
 
 ::string RegistrySettingsManager::key_name(const ::scoped_string & scopedstrKey)
 {
-   return scopedstrKey.rear_word('\\');
+   auto str= scopedstrKey.rear_word('\\');
+   if (str.is_empty())
+   {
+      return scopedstrKey;
+
+   }
+   return str;
   // ::array_base<TCHAR> nameString(_tcslen(key) + 1);
   // memcpy(&nameString.front(), key, nameString.size() * sizeof(TCHAR));
   // TCHAR *token = _tcsrchr(&nameString.front(), _T('\\'));

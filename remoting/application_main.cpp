@@ -17,7 +17,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
@@ -97,6 +97,8 @@ int application::remoting_impact_main( const ::file::path & path)
    if (strHost.has_character())
    {
       condata.setHost(wstring(strHost).c_str());
+      m_connectingdialog.initialize(this);
+      m_connectingdialog.show();
       m_connectingdialog.set_host(strHost);
       m_connectingdialog.set_status("Initiating connection...");
       m_connectingdialog.set_phase1();
@@ -135,7 +137,7 @@ int application::remoting_impact_main( const ::file::path & path)
 
    int result = 0;
    try {
-      remoting_impact tvnViewer(hInstance,
+      remoting_impact tvnViewer(this, hInstance,
                           ApplicationNames::WINDOW_CLASS_NAME,
                           WindowNames::TVN_WINDOW_CLASS_NAME);
       if (isListening) {
@@ -146,7 +148,8 @@ int application::remoting_impact_main( const ::file::path & path)
       } else {
          tvnViewer.showLoginDialog();
       }
-      result = tvnViewer.run();
+      tvnViewer.run();
+      result = tvnViewer.m_iExitCode;
    } catch (const ::remoting::Exception &ex) {
       ::remoting::message_box(0,
                  StringTable::getString(IDS_UNKNOWN_ERROR_IN_VIEWER),

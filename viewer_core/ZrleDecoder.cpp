@@ -17,7 +17,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
@@ -55,9 +55,12 @@ void ZrleDecoder::decode(RfbInputGate *pinput,
     return;
   }
 
-  ::array_base<unsigned char> unpackedData;
-  unpackedData.resize(unpackedDataSize);
+  ::memory unpackedData;
+  //unpackedData.setresize(unpackedDataSize);
   unpackedData.assign((unsigned char *) m_inflater.getOutput(),  unpackedDataSize);
+   auto p =  m_inflater.getOutput();
+   auto p1 =  unpackedData.data();
+
   ByteArrayInputStream unpackedByteArrayStream(reinterpret_cast<char *>(unpackedData.data()),
                                                unpackedData.size());
   DataInputStream unpackedDataStream(&unpackedByteArrayStream);

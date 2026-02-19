@@ -17,7 +17,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
@@ -36,9 +36,12 @@
  * Base Windows Application class.
  * Have hidden main window and main scopedstrMessage loop.
  */
-class WindowsApplication
+class WindowsApplication :
+virtual public ::particle
 {
 public:
+
+   int m_iExitCode = 0;
   /**
    * Creates WindowsApplication instance.
    * @param appInstance parameter that passed to WinMain.
@@ -57,7 +60,7 @@ public:
    * @remark really it creates main window and starts windows scopedstrMessage loop.
    * @return application exit code.
    */
-  virtual int run();
+  virtual void run() override;
 
   /**
    * Posts close and destroy scopedstrMessage to main window.

@@ -17,7 +17,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
@@ -50,7 +50,7 @@ ByteArrayOutputStream::~ByteArrayOutputStream()
   }
 }
 
-size_t ByteArrayOutputStream::write(const void *buffer, size_t len)
+memsize ByteArrayOutputStream::defer_write(const void *buffer, memsize len)
 {
   bool allocateNewBuffer = (m_size + len) > m_max;
 

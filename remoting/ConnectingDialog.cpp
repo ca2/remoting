@@ -17,7 +17,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
@@ -26,6 +26,7 @@
 #include "framework.h"
 #include "ConnectingDialog.h"
 #include "resource.h"
+#include "acme/constant/id.h"
 #include "remoting/gui/ProgressBar.h"
 #include "remoting/gui/TextBox.h"
 #include "acme/platform/application.h"
@@ -35,26 +36,41 @@ ConnectingDialog::ConnectingDialog()
 : BaseDialog(IDD_CONNECTING)
 {
 
-   øconstruct_new(m_ptextboxHost);
-   øconstruct_new(m_ptextboxStatus);
 }
 
 
 BOOL ConnectingDialog::onInitDialog()
 {
-  subclassControlById(m_ptextboxHost, IDC_EHOST);
+
+   øconstruct_new(m_ptextboxHost);
+   øconstruct_new(m_ptextboxStatus);
+   øconstruct_new(m_panimation);
+   øconstruct_new(m_panimation->m_pbar);
+
+  subclassControlById(m_ptextboxHost, IDC_HOST);
   m_ptextboxHost->setText(m_strHost);
-  subclassControlById(m_ptextboxStatus, IDC_EPASSW);
+  subclassControlById(m_ptextboxStatus, IDC_STATUS);
   m_ptextboxStatus->set_focus();
+   //ødefer_construct_new(m_panimation);
+   subclassControlById(m_panimation->m_pbar, IDC_PROGRESS1);
+   m_panimation->m_pbar->setRange(0, 8000);
   return FALSE;
 }
 
 void ConnectingDialog::set_host(const ::scoped_string &hostname) {
   m_strHost = hostname;
+   if (m_ptextboxHost)
+   {
+      m_ptextboxHost->setText(m_strHost);
+   }
 }
 
 void ConnectingDialog::set_status(const ::scoped_string &status) {
    m_strStatus = status;
+   if (m_ptextboxStatus)
+   {
+      m_ptextboxStatus->setText(m_strStatus);
+   }
 }
 
 BOOL ConnectingDialog::onCommand(UINT controlID, UINT notificationID)
@@ -126,7 +142,7 @@ void progress_bar_animation::run()
 while (m_bRunning)
 {
    m_d = m_time.elapsed().floating_second();
-   auto d= fmod(m_d, m_dEnd - m_dStart) + m_dStart;
+   auto d= fmod(m_d * 0.125, m_dEnd - m_dStart) + m_dStart;
    ::PostMessage(m_pbar->get_hwnd(), WM_USER + 327, (int) (d * 8'000.0), 0);
    preempt(100_ms);
 }
@@ -152,6 +168,46 @@ void ConnectingDialog::set_phase1()
 {
 
 
-   _start_animating_progress_range(0.0, 0.2);
+   _start_animating_progress_range(0.0, 0.4);
 }
 
+void ConnectingDialog::set_connecting(int iPhase)
+{
+
+    if (iPhase == 1)
+    {
+        set_status("Authenticating...");
+    }
+    else
+    {
+
+
+    }
+   _start_animating_progress_range(0.4, 0.6);
+}
+
+
+bool ConnectingDialog::dialog_procedure(INT_PTR & iptrResult, UINT message, ::wparam wparam, ::lparam lparam)
+{
+
+    if (message == WM_USER + 328)
+    {
+
+        if (wparam == id_remoting_connecting)
+        {
+
+                set_connecting((int) lparam.m_lparam);
+
+        }
+
+        iptrResult = true;
+
+        return true;
+
+
+    }
+
+
+    return BaseDialog::dialog_procedure(iptrResult, message, wparam, lparam);
+
+}

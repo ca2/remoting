@@ -17,7 +17,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
@@ -154,7 +154,7 @@ long long DataInputStream::readInt64()
    buffer.set_size(sizeInBytes);
 
    readFully(buffer.data(), sizeInBytes);
-   ::string utf8String(&buffer);
+   ::string utf8String((const char *) buffer.data(), buffer.size());
    return utf8String;
 
 }

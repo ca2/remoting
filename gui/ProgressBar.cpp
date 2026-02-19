@@ -17,7 +17,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
@@ -42,4 +42,19 @@ void ProgressBar::setRange(WORD min, WORD max)
 void ProgressBar::setPos(WORD pos)
 {
   SendMessage(m_hwnd, PBM_SETPOS, (WPARAM)pos, 0);
+}
+
+
+bool ProgressBar::window_procedure(LRESULT & lresult, UINT scopedstrMessage, ::wparam wparam, ::lparam lparam)
+{
+
+   if (scopedstrMessage == WM_USER+327)
+   {
+
+      setPos(wparam);
+
+   }
+
+   return ::remoting::Window::window_procedure(lresult, scopedstrMessage, wparam, lparam);
+
 }

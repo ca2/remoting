@@ -17,7 +17,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
@@ -61,6 +61,13 @@ class ConnectingDialog : public BaseDialog
 public:
 
 
+    ::pointer < progress_bar_animation > m_panimation;
+    ::pointer < TextBox > m_ptextboxHost;
+    ::pointer < TextBox > m_ptextboxStatus;
+    ::string  m_strHost;
+    ::string m_strStatus;
+
+
    ConnectingDialog();
 
 
@@ -69,15 +76,13 @@ public:
   void set_status(const ::scoped_string &scopedstrStatus);
   void _start_animating_progress_range(double dStart, double dEnd);
    void set_phase1();
+   void set_connecting(int iPhase);
 
 //protected:
   BOOL onCommand(UINT controlID, UINT notificationID);
   BOOL onInitDialog();
 
-  ::pointer < progress_bar_animation > m_panimation;
-  ::pointer < TextBox > m_ptextboxHost;
-  ::pointer < TextBox > m_ptextboxStatus;
-  ::string  m_strHost;
-  ::string m_strStatus;
+    virtual bool dialog_procedure(INT_PTR & iptrResult, UINT message, ::wparam wparam, ::lparam lparam);
+
 };
 

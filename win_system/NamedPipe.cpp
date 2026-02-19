@@ -17,7 +17,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
@@ -67,10 +67,9 @@ void NamedPipe::close()
   m_writeEvent.notify();
 }
 
-void NamedPipe::write(const void *buffer, memsize len)
+memsize NamedPipe::defer_write(const void *buffer, memsize len)
 {
-  //return writeByHandle(buffer, len, m_hPipe);
-   writeByHandle(buffer, len, m_hPipe);
+   return writeByHandle(buffer, len, m_hPipe);
 }
 
 size_t NamedPipe::read(void *buffer, size_t len)

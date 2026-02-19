@@ -3,6 +3,7 @@
 //
 #include "framework.h"
 #include "application.h"
+#include "acme/constant/id.h"
 #include "acme/handler/request.h"
 #include "acme/platform/system.h"
 #include "remoting/common/remoting.h"
@@ -65,5 +66,27 @@ namespace remoting_remoting
 
       }
    }
+
+
+   lresult application::handle_direct_id(const enum_id eid, wparam wparam, lparam lparam)
+   {
+
+      if (eid == id_remoting_connecting)
+      {
+
+          m_connectingdialog.post_message(WM_USER + 328, id_remoting_connecting, wparam.m_number);
+
+      }
+      else if (eid == id_remoting_connected)
+      {
+
+         m_connectingdialog.hide();
+
+      }
+
+      return ::platform::application::handle_direct_id(eid, wparam, lparam);
+
+   }
+
 
 } // namespace remoting_remoting

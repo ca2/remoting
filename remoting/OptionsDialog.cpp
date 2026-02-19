@@ -17,7 +17,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
@@ -180,7 +180,7 @@ void OptionsDialog::updateControlValues()
     int percent = (n * 100) / d;
 
     ::string text;
-    text.formatf("{}", percent);
+    text.format("{}", percent);
 
     m_scale.setText(text);
   }
@@ -200,7 +200,7 @@ void OptionsDialog::updateControlValues()
     if (m_conConfig->isCustomCompressionEnabled())
       level = m_conConfig->getCustomCompressionLevel();
     m_tcompLvl.setPos(level);
-    labelText.formatf("{}", level);
+    labelText.format("{}", level);
     m_quality.setText(labelText);
   }
 
@@ -210,7 +210,7 @@ void OptionsDialog::updateControlValues()
     if (m_conConfig->isJpegCompressionEnabled())
       level = m_conConfig->getJpegCompressionLevel();
     m_tjpeg.setPos(level);
-    labelText.formatf("{}", level);
+    labelText.format("{}", level);
     m_quality2.setText(labelText);
   }
 
@@ -312,14 +312,14 @@ void OptionsDialog::onPreferredEncodingSelectionChange()
 void OptionsDialog::onCustomCompressionLevelScroll()
 {
   ::string labelText;
-  labelText.formatf("{}", m_tcompLvl.getPos());
+  labelText.format("{}", m_tcompLvl.getPos());
   m_quality.setText(labelText);
 }
 
 void OptionsDialog::onJpegCompressionLevelScroll()
 {
   ::string labelText;
-  labelText.formatf("{}", m_tjpeg.getPos());
+  labelText.format("{}", m_tjpeg.getPos());
   m_quality2.setText(labelText);
 }
 
@@ -357,7 +357,7 @@ void OptionsDialog::onScaleKillFocus()
     scale = 400;
   }
 
-  scaleText.formatf("{}", scale);
+  scaleText.format("{}", scale);
   m_scale.setText(scaleText);
 }
 

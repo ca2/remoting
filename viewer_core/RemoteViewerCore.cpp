@@ -17,7 +17,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, write to the Free Software Foundation, Inc.,
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
@@ -892,6 +892,14 @@ void RemoteViewerCore::execute()
 
     // negotiaty about security type and authenticate
     m_logWriter->information("Protocol stage is \"Authentication\".");
+     try {
+        m_adapter->onConnecting(1);
+     } catch (const ::remoting::Exception &ex) {
+        m_logWriter->error("Error in CoreEventsAdapter::onConnecting(): {}", ex.get_message());
+     } catch (...) {
+        m_logWriter->error("Unknown error in CoreEventsAdapter::onConnecting()");
+     }
+
     authenticate();
 
     // set shared flag, get server dimension, pixel format and hostname
