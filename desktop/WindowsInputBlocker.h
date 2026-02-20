@@ -25,11 +25,11 @@
 #pragma once
 
 
-#include "remoting/util/CommonHeader.h"
-#include "thread/GuiThread.h"
-#include "thread/LocalMutex.h"
-#include "win_system/WinTimeMillis.h"
-#include "win_system/WindowsEvent.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
+#include "remoting/remoting_common/thread/GuiThread.h"
+#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/win_system/WinTimeMillis.h"
+#include "remoting/remoting_common/win_system/WindowsEvent.h"
 #include "InputBlocker.h"
 //#include "log_writer/LogWriter.h"
 

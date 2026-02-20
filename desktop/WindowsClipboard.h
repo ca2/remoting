@@ -25,11 +25,11 @@
 #pragma once
 
 
-#include "remoting/util/CommonHeader.h"
-#include "gui/MessageWindow.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
+#include "remoting/remoting_common/gui/MessageWindow.h"
 #include "ClipboardListener.h"
 //#include "log_writer/LogWriter.h"
-#include "thread/GuiThread.h"
+#include "remoting/remoting_common/thread/GuiThread.h"
 
 class WindowsClipboard : protected MessageWindow, GuiThread
 {

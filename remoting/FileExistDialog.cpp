@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "FileExistDialog.h"
-//#include "util/::earth::time.h"
+//#include "remoting/remoting_common/util/::earth::time.h"
 #include "resource.h"
 #include <crtdbg.h>
 #include <stdio.h>

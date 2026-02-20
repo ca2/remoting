@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "OptionsDialog.h"
-#include "remoting/common/remoting.h"
+#include "remoting/remoting_common/remoting.h"
 
 
 OptionsDialog::OptionsDialog()

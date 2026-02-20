@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "gui/Menu.h"
+#include "remoting/remoting_common/gui/Menu.h"
 
 class ViewerMenu: public Menu
 {

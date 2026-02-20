@@ -27,7 +27,7 @@
 
 #include "NewConnectionEvents.h"
 #include "win-event-log/WinEventLog.h"
-#include "win_system/ApplicationCrashEvents.h"
+#include "remoting/remoting_common/win_system/ApplicationCrashEvents.h"
 #include "WinServiceEvents.h"
 
 // This class provide response to events by writing to the Windows log.

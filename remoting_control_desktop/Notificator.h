@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/util/CommonHeader.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
 
 // FIXME: Document this class.
 class Notificator

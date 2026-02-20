@@ -6,8 +6,8 @@
 #include "acme/constant/id.h"
 #include "acme/handler/request.h"
 #include "acme/platform/system.h"
-#include "remoting/common/remoting.h"
-
+#include "remoting/remoting_common/remoting.h"
+#include "acme/_operating_system.h"
 //#include "main_window.h"
 
 
@@ -15,14 +15,26 @@ __IMPLEMENT_APPLICATION_RELEASE_TIME(remoting_remoting);
 IMPLEMENT_APPLICATION_FACTORY(remoting_remoting);
 
 //int remoting_impact_main(::particle * pparticle, const ::file::path & path);
+CLASS_DECL_ACME HMODULE GetModuleFromFunction(void* pFunc);
+
 
 namespace remoting_remoting
 {
+
+   void function_at_remoting_remoting()
+   {
+   }
 
    application::application()
    {
 
       ::remoting::defer_initialize_remoting();
+
+      HINSTANCE hInstance = (HINSTANCE)GetModuleFromFunction(&function_at_remoting_remoting);
+
+      // return hInstance;
+
+      ::system()->m_premoting->m_pHinstance = (void *) hInstance;
 
       ::system()->m_bFinalizeIfNoSession = false;
 

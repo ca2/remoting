@@ -26,10 +26,10 @@
 
 
 #include "MirrorDriverClient.h"
-#include "win_system/RegistryKey.h"
+#include "remoting/remoting_common/win_system/RegistryKey.h"
 #include "DisplayEsc.h"
-#include "thread/GuiThread.h"
-#include "win_system/WindowsEvent.h"
+#include "remoting/remoting_common/thread/GuiThread.h"
+#include "remoting/remoting_common/win_system/WindowsEvent.h"
 #include "UpdateDetector.h"
 
 class MirrorScreenDriver : public UpdateDetector

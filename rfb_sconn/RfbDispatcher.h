@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "thread/Thread.h"
+#include "remoting/remoting_common/thread/Thread.h"
 #include "RfbDispatcherListener.h"
-#include "util/AnEventListener.h"
-#include "win_system/WindowsEvent.h"
+#include "remoting/remoting_common/util/AnEventListener.h"
+#include "remoting/remoting_common/win_system/WindowsEvent.h"
 //#include <map>
 
 class RfbDispatcher : public Thread

@@ -29,7 +29,7 @@
 #include "acme/_operating_system.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 
-//////#include "util/::string.h"
+//////#include "remoting/remoting_common/util/::string.h"
 
 
 // This class stores a view port state.

@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include "gui/drawing/Graphics.h"
+#include "remoting/remoting_common/gui/drawing/Graphics.h"
 
-#include "gui/drawing/SolidBrush.h"
+#include "remoting/remoting_common/gui/drawing/SolidBrush.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 class DesktopWindow;
 
@@ -31,7 +31,7 @@ namespace remoting
 
    };
 
-   class style :
+   class CLASS_DECL_REMOTING_REMOTING style :
       virtual public ::particle
    {
    public:
@@ -47,7 +47,7 @@ namespace remoting
 
    };
 
-   class control :
+   class CLASS_DECL_REMOTING_REMOTING control :
    virtual public ::particle
    {
    public:
@@ -94,7 +94,8 @@ bool m_bDrag = false;
 
    };
 
-   class toolbar_button :
+
+   class CLASS_DECL_REMOTING_REMOTING toolbar_button :
    virtual public control
    {
    public:
@@ -120,7 +121,9 @@ bool m_bDrag = false;
       toolbar_button();
       ~toolbar_button() override;
    };
-   class toolbar :
+
+
+   class CLASS_DECL_REMOTING_REMOTING toolbar :
    virtual public control
    {
    public:

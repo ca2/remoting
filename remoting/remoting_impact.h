@@ -32,10 +32,10 @@
 #include "LoginDialog.h"
 #include "OptionsDialog.h"
 #include "ViewerCollector.h"
-#include "win_system/WindowsApplication.h"
+#include "remoting/remoting_common/win_system/WindowsApplication.h"
 
 //#include "log_writer/LogWriter.h"
-#include "thread/AutoLock.h"
+#include "remoting/remoting_common/thread/AutoLock.h"
 
 //#include <map>
 

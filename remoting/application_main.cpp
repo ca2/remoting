@@ -22,34 +22,34 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "client_config_lib/ViewerConfig.h"
+#include "remoting/remoting_common/client_config/ViewerConfig.h"
 //#include "log_writer/LogWriter.h"
 #include "application.h"
 #include "remoting_impact.h"
 #include "ConnectionData.h"
 #include "ConnectionListener.h"
 #include "ViewerCmdLine.h"
-#include "util/ResourceLoader.h"
+#include "remoting/remoting_common/util/ResourceLoader.h"
 #include "acme/platform/system.h"
 #include "acme/filesystem/filesystem/file_context.h"
-#include "remoting/common/remoting.h"
+#include "remoting/remoting_common/remoting.h"
 //int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE,
 //                       LPTSTR lpCmdLine, int nCmdShow)
 
 
-HMODULE GetModuleFromFunction(void* pFunc)
-{
-   HMODULE hModule = NULL;
-
-   GetModuleHandleEx(
-       GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS |
-       GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
-       (LPCTSTR)pFunc,
-       &hModule
-   );
-
-   return hModule;
-}
+CLASS_DECL_ACME HMODULE GetModuleFromFunction(void* pFunc);
+//{
+//   HMODULE hModule = NULL;
+//
+//   GetModuleHandleEx(
+//       GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS |
+//       GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
+//       (LPCTSTR)pFunc,
+//       &hModule
+//   );
+//
+//   return hModule;
+//}
 
 HINSTANCE remoting_impact_hinstance()
 {

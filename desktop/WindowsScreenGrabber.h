@@ -25,17 +25,17 @@
 #pragma once
 
 
-#include "remoting/util/CommonHeader.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
 #ifndef CAPTUREBLT
 #define CAPTUREBLT          (DWORD)0x40000000 /* Include layered windows */
 
 
 #include "ScreenGrabber.h"
 
-#include "server_config_lib/Configurator.h"
-#include "win_system/WindowsEvent.h"
-#include "thread/GuiThread.h"
-#include "win_system/Screen.h"
+#include "remoting/remoting_common/server_config/Configurator.h"
+#include "remoting/remoting_common/win_system/WindowsEvent.h"
+#include "remoting/remoting_common/thread/GuiThread.h"
+#include "remoting/remoting_common/win_system/Screen.h"
 
 //
 // An abstract interface for screen grabbing.

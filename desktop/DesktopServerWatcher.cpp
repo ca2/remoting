@@ -23,16 +23,16 @@
 //
 #include "framework.h"
 #include "DesktopServerWatcher.h"
-//#include "win_system/Environment.h"
-#include "util/Exception.h"
-#include "server_config_lib/Configurator.h"
-#include "win_system/CurrentConsoleProcess.h"
-#include "win_system/AnonymousPipeFactory.h"
-#include "win_system/EmulatedAnonymousPipeFactory.h"
-#include "win_system/WTS.h"
-#include "win_system/WinStaLibrary.h"
-#include "win_system/WinHandles.h"
-#include "win_system/SharedMemory.h"
+//#include "remoting/remoting_common/win_system/Environment.h"
+#include "remoting/remoting_common/util/Exception.h"
+#include "remoting/remoting_common/server_config/Configurator.h"
+#include "remoting/remoting_common/win_system/CurrentConsoleProcess.h"
+#include "remoting/remoting_common/win_system/AnonymousPipeFactory.h"
+#include "remoting/remoting_common/win_system/EmulatedAnonymousPipeFactory.h"
+#include "remoting/remoting_common/win_system/WTS.h"
+#include "remoting/remoting_common/win_system/WinStaLibrary.h"
+#include "remoting/remoting_common/win_system/WinHandles.h"
+#include "remoting/remoting_common/win_system/SharedMemory.h"
 
 #include <time.h>
 

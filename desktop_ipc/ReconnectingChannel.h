@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "io_lib/Channel.h"
-#include "thread/LocalMutex.h"
-#include "win_system/WindowsEvent.h"
+#include "remoting/remoting_common/io/Channel.h"
+#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/win_system/WindowsEvent.h"
 //#include "log_writer/LogWriter.h"
 
 class ReconnectingChannel : public Channel

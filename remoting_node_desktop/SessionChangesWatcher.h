@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "thread/GuiThread.h"
-#include "util/AnEventListener.h"
+#include "remoting/remoting_common/thread/GuiThread.h"
+#include "remoting/remoting_common/util/AnEventListener.h"
 //#include "log_writer/LogWriter.h"
 
 class SessionChangesWatcher : public GuiThread

@@ -25,8 +25,8 @@
 #include "ServiceControlApplication.h"
 #include "ServiceControlCommandLine.h"
 
-#include "util/ResourceLoader.h"
-#include "util/StringTable.h"
+#include "remoting/remoting_common/util/ResourceLoader.h"
+#include "remoting/remoting_common/util/StringTable.h"
 #include "remoting_node_desktop/NamingDefs.h"
 
 #include "remoting_node/resource.h"
@@ -36,12 +36,12 @@
 
 #include "remoting_control_desktop/ControlCommandLine.h"
 
-#include "win_system/Registry.h"
-#include "win_system/RegistryKey.h"
-//#include "win_system/Environment.h"
-#include "win_system/Shell.h"
-#include "win_system/SCMClient.h"
-#include "win_system/WinCommandLineArgs.h"
+#include "remoting/remoting_common/win_system/Registry.h"
+#include "remoting/remoting_common/win_system/RegistryKey.h"
+//#include "remoting/remoting_common/win_system/Environment.h"
+#include "remoting/remoting_common/win_system/Shell.h"
+#include "remoting/remoting_common/win_system/SCMClient.h"
+#include "remoting/remoting_common/win_system/WinCommandLineArgs.h"
 
 ServiceControlApplication::ServiceControlApplication(HINSTANCE hInstance,
                                                      const ::scoped_string & scopedstrwindowClassName,

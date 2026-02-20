@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "thread/Thread.h"
+#include "remoting/remoting_common/thread/Thread.h"
 #include "UpdateListener.h"
-#include "win_system/WindowsEvent.h"
+#include "remoting/remoting_common/win_system/WindowsEvent.h"
 
 // This class is a timer that after calling the sear() function
 // wait a time interval after that it notifies to an update listener

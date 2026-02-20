@@ -25,18 +25,18 @@
 #pragma once
 
 
-#include "win_system/WinClipboard.h"
-#include "gui/DibFrameBuffer.h"
+#include "remoting/remoting_common/win_system/WinClipboard.h"
+#include "remoting/remoting_common/gui/DibFrameBuffer.h"
 
 
 #include "ScaleManager.h"
-#include "client_config_lib/ConnectionConfig.h"
-#include "gui/PaintWindow.h"
-#include "gui/ScrollBar.h"
-#include "gui/drawing/SolidBrush.h"
-#include "gui/drawing/Graphics.h"
-#include "rfb/RfbKeySym.h"
-#include "viewer_core/RemoteViewerCore.h"
+#include "remoting/remoting_common/client_config/ConnectionConfig.h"
+#include "remoting/remoting_common/gui/PaintWindow.h"
+#include "remoting/remoting_common/gui/ScrollBar.h"
+#include "remoting/remoting_common/gui/drawing/SolidBrush.h"
+#include "remoting/remoting_common/gui/drawing/Graphics.h"
+#include "remoting/remoting_common/rfb/RfbKeySym.h"
+#include "remoting/remoting_common/viewer_core/RemoteViewerCore.h"
 namespace remoting
 {
    class toolbar;

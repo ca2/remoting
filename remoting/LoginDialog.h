@@ -25,16 +25,16 @@
 #pragma once
 
 
-#include "client_config_lib/ViewerConfig.h"
-#include "client_config_lib/ConnectionConfig.h"
-#include "client_config_lib/ConnectionConfigSM.h"
-#include "client_config_lib/ViewerSettingsManager.h"
-#include "util/StringParser.h"
-#include "gui/BaseDialog.h"
-#include "gui/TextBox.h"
-#include "gui/CheckBox.h"
-#include "gui/ComboBox.h"
-#include "gui/TrackBar.h"
+#include "remoting/remoting_common/client_config/ViewerConfig.h"
+#include "remoting/remoting_common/client_config/ConnectionConfig.h"
+#include "remoting/remoting_common/client_config/ConnectionConfigSM.h"
+#include "remoting/remoting_common/client_config/ViewerSettingsManager.h"
+#include "remoting/remoting_common/util/StringParser.h"
+#include "remoting/remoting_common/gui/BaseDialog.h"
+#include "remoting/remoting_common/gui/TextBox.h"
+#include "remoting/remoting_common/gui/CheckBox.h"
+#include "remoting/remoting_common/gui/ComboBox.h"
+#include "remoting/remoting_common/gui/TrackBar.h"
 
 #include "remoting_impact.h"
 #include "resource.h"

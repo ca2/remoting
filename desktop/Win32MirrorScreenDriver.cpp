@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "Win32MirrorScreenDriver.h"
-#include "util/Exception.h"
+#include "remoting/remoting_common/util/Exception.h"
 
 Win32MirrorScreenDriver::Win32MirrorScreenDriver(UpdateKeeper *updateKeeper,
                                                  UpdateListener *updateListener,

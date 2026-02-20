@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "GrabOptimizator.h"
-#include "util/Exception.h"
+#include "remoting/remoting_common/util/Exception.h"
 
 GrabOptimizator::GrabOptimizator(LogWriter *log)
 : m_gSum(0),
@@ -74,7 +74,7 @@ bool GrabOptimizator::grab(const Region *grabRegion, ScreenDriver *grabber)
     boundsRectT += avgG;
 
     if (boundsRectT <= estimatedFragTime) {
-      __int64 realBoundsRectTime = grabOneRect(&boundsRect, grabber);
+      __int64 realBoundsRectTime = grabOneRect(boundsRect, grabber);
       m_log->debug("Bounds rectangle grab has been preferred:"
                  " bounds rectangle time = {},"
                  " estimated fragment time = {},"

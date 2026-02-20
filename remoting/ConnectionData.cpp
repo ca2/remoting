@@ -26,9 +26,9 @@
 #include <sstream>
 
 #include "ConnectionData.h"
-//#include "util/::string.h"
-#include "util/VncPassCrypt.h"
-#include "viewer_core/VncAuthentication.h"
+//#include "remoting/remoting_common/util/::string.h"
+#include "remoting/remoting_common/util/VncPassCrypt.h"
+#include "remoting/remoting_common/viewer_core/VncAuthentication.h"
 
 ConnectionData::ConnectionData()
 : m_isEmpty(true),

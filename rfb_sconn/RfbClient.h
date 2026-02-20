@@ -26,12 +26,12 @@
 
 
 //#include <list>
-#include "network/socket/SocketIPv4.h"
-#include "win_system/WindowsEvent.h"
-#include "thread/Thread.h"
-#include "network/RfbOutputGate.h"
+#include "remoting/remoting_common/network/socket/SocketIPv4.h"
+#include "remoting/remoting_common/win_system/WindowsEvent.h"
+#include "remoting/remoting_common/thread/Thread.h"
+#include "remoting/remoting_common/network/RfbOutputGate.h"
 #include "desktop/Desktop.h"
-#include "fb_update_sender/UpdateSender.h"
+#include "remoting/remoting_common/fb_update_sender/UpdateSender.h"
 //#include "log_writer/LogWriter.h"
 
 #include "RfbDispatcher.h"
@@ -40,7 +40,7 @@
 #include "ClientTerminationListener.h"
 #include "ClientInputEventListener.h"
 #include "remoting_node_desktop/NewConnectionEvents.h"
-#include "util/DemandTimer.h"
+#include "remoting/remoting_common/util/DemandTimer.h"
 
 class ClientAuthListener;
 

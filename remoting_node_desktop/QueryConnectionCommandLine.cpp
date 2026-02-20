@@ -24,7 +24,7 @@
 
 #include "QueryConnectionCommandLine.h"
 
-#include "util/StringParser.h"
+#include "remoting/remoting_common/util/StringParser.h"
 
 const TCHAR QueryConnectionCommandLine::QUERY_CONNECTION[] = "-queryconnection";
 const TCHAR QueryConnectionCommandLine::PEER_ADDR[] = "-peer";

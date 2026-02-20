@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "remoting/util/CommonHeader.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
 #include "desktop/UserInput.h"
 #include "desktop/ClipboardListener.h"
-#include "util/inttypes.h"
+#include "remoting/remoting_common/util/inttypes.h"
 #include "DesktopServerProto.h"
 #include "DesktopSrvDispatcher.h"
 

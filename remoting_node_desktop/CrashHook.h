@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "remoting/util/CommonHeader.h"
-#include "util/Singleton.h"
-#include "thread/LocalMutex.h"
-#include "win_system/ApplicationCrashEvents.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
+#include "remoting/remoting_common/util/Singleton.h"
+#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/win_system/ApplicationCrashEvents.h"
 
 class CrashHook : private Singleton<CrashHook>
 {

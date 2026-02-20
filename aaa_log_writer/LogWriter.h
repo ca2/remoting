@@ -26,7 +26,7 @@
 
 
 // #include "LogWriter.h"
-// #include "util/CharDefs.h"
+// #include "remoting/remoting_common/util/CharDefs.h"
 // #include "ProfileLogWriter.h"
 
 // This class is a high level wrap for the LogWriter class. It helps write log in different

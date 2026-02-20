@@ -24,11 +24,11 @@
 
 #include "DesktopServerApplication.h"
 #include "DesktopServerCommandLine.h"
-#include "util/ResourceLoader.h"
+#include "remoting/remoting_common/util/ResourceLoader.h"
 #include "desktop/WallpaperUtil.h"
-#include "win_system/WTS.h"
-//#include "win_system/Environment.h"
-#include "win_system/SharedMemory.h"
+#include "remoting/remoting_common/win_system/WTS.h"
+//#include "remoting/remoting_common/win_system/Environment.h"
+#include "remoting/remoting_common/win_system/SharedMemory.h"
 #include "remoting_node_desktop/NamingDefs.h"
 #include "TimeAPI.h"
 

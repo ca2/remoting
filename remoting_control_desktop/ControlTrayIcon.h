@@ -25,17 +25,17 @@
 #pragma once
 
 
-#include "gui/NotifyIcon.h"
-#include "gui/WindowProcHolder.h"
-#include "gui/drawing/Icon.h"
+#include "remoting/remoting_common/gui/NotifyIcon.h"
+#include "remoting/remoting_common/gui/WindowProcHolder.h"
+#include "remoting/remoting_common/gui/drawing/Icon.h"
 
-#include "thread/Thread.h"
-#include "thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/Thread.h"
+#include "remoting/remoting_common/thread/LocalMutex.h"
 
-#include "util/Command.h"
-#include "util/MacroCommand.h"
+#include "remoting/remoting_common/util/Command.h"
+#include "remoting/remoting_common/util/MacroCommand.h"
 
-#include "wsconfig_lib/ConfigDialog.h"
+#include "remoting/remoting_common/wsconfig/ConfigDialog.h"
 
 #include "ControlProxy.h"
 #include "Notificator.h"

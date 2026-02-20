@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "gui/BaseDialog.h"
-#include "gui/TextBox.h"
+#include "remoting/remoting_common/gui/BaseDialog.h"
+#include "remoting/remoting_common/gui/TextBox.h"
 #include "resource.h"
 
 class HelpDialog : public BaseDialog

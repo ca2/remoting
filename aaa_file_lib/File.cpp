@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "::file::item.h"
 #include "acme/operating_system/time.h"
-//#include "util/::earth::time.h"
+//#include "remoting/remoting_common/util/::earth::time.h"
 #include <crtdbg.h>
 
 TCHAR ::file::item::s_separatorChar = _T('\\');

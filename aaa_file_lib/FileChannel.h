@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "io_lib/Channel.h"
+#include "remoting/io/Channel.h"
 
 class FileChannel : public Channel
 {

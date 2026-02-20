@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "gui/BaseDialog.h"
-//#include "gui/::remoting::Window.h"
-#include "remoting/ftp_common/FileInfo.h"
+#include "remoting/remoting_common/gui/BaseDialog.h"
+//#include "remoting/remoting_common/gui/::remoting::Window.h"
+#include "remoting/remoting_common/ftp_common/FileInfo.h"
 
 class FileExistDialog : public BaseDialog
 {

@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "thread/LocalMutex.h"
-#include "io_lib/Channel.h"
-#include "io_lib/DataOutputStream.h"
-#include "io_lib/DataInputStream.h"
+#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/io/Channel.h"
+#include "remoting/remoting_common/io/DataOutputStream.h"
+#include "remoting/remoting_common/io/DataInputStream.h"
 
 class BlockingGate : public LocalMutex, public DataOutputStream,
                      public DataInputStream

@@ -25,7 +25,7 @@
 #include "ControlAuthDialog.h"
 
 #include "remoting_node/resource.h"
-#include "server_config_lib/ServerConfig.h"
+#include "remoting/remoting_common/server_config/ServerConfig.h"
 
 ControlAuthDialog::ControlAuthDialog()
 : BaseDialog(IDD_CONTROL_AUTH)

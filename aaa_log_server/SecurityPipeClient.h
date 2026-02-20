@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "io_lib/Channel.h"
+#include "remoting/io/Channel.h"
 
 // The SecurityPipeClient class gets new security pipe connection by
 // a granted temporary channel.

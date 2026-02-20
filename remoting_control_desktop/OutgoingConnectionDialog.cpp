@@ -22,10 +22,10 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "util/winhdr.h"
+#include "remoting/remoting_common/util/winhdr.h"
 #include "remoting_node_desktop/NamingDefs.h"
 
-#include "win_system/Registry.h"
+#include "remoting/remoting_common/win_system/Registry.h"
 
 #include "OutgoingConnectionDialog.h"
 

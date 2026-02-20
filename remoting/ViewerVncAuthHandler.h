@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "viewer_core/VncAuthenticationHandler.h"
+#include "remoting/remoting_common/viewer_core/VncAuthenticationHandler.h"
 #include "ConnectionData.h"
 
 class ViewerVncAuthHandler : public VncAuthenticationHandler

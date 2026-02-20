@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "remoting/util/CommonHeader.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
 
-#include "win_system/LocalWindowsApplication.h"
+#include "remoting/remoting_common/win_system/LocalWindowsApplication.h"
 
 /**
  * Windows application that used to do additional actions:

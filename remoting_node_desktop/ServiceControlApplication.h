@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "remoting/util/CommonHeader.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
 
-#include "win_system/WindowsApplication.h"
-#include "win_system/SCMClient.h"
+#include "remoting/remoting_common/win_system/WindowsApplication.h"
+#include "remoting/remoting_common/win_system/SCMClient.h"
 
 #include "TvnService.h"
 #include "ServiceControlCommandLine.h"

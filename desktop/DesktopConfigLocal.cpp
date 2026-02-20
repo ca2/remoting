@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "DesktopConfigLocal.h"
-#include "server_config_lib/Configurator.h"
+#include "remoting/remoting_common/server_config/Configurator.h"
 #include "desktop/WindowsInputBlocker.h"
 
 DesktopConfigLocal::DesktopConfigLocal(LogWriter *log)

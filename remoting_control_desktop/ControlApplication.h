@@ -28,14 +28,14 @@
 #include "Transport.h"
 #include "TransportFactory.h"
 
-#include "remoting/util/CommonHeader.h"
-#include "util/ResourceLoader.h"
-#include "util/Command.h"
-#include "server_config_lib/Configurator.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
+#include "remoting/remoting_common/util/ResourceLoader.h"
+#include "remoting/remoting_common/util/Command.h"
+#include "remoting/remoting_common/server_config/Configurator.h"
 //#include "log_writer/LogWriter.h"
 
-#include "thread/Thread.h"
-#include "thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/Thread.h"
+#include "remoting/remoting_common/thread/LocalMutex.h"
 
 #include "remoting_control_desktop/ControlGate.h"
 #include "remoting_control_desktop/ControlAuthException.h"
@@ -43,7 +43,7 @@
 #include "ControlProxy.h"
 #include "Notificator.h"
 
-#include "win_system/WindowsApplication.h"
+#include "remoting/remoting_common/win_system/WindowsApplication.h"
 
 /**
  * External definition of tray icon.

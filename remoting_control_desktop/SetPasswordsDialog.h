@@ -25,16 +25,16 @@
 #pragma once
 
 
-#include "util/winhdr.h"
+#include "remoting/remoting_common/util/winhdr.h"
 
-#include "gui/BaseDialog.h"
-#include "gui/CheckBox.h"
-#include "gui/TextBox.h"
-#include "gui/BalloonTip.h"
+#include "remoting/remoting_common/gui/BaseDialog.h"
+#include "remoting/remoting_common/gui/CheckBox.h"
+#include "remoting/remoting_common/gui/TextBox.h"
+#include "remoting/remoting_common/gui/BalloonTip.h"
 
-#include "win_system/RegistryKey.h"
+#include "remoting/remoting_common/win_system/RegistryKey.h"
 
-#include "config_lib/ConnectionHistory.h"
+#include "remoting/remoting_common/config/ConnectionHistory.h"
 
 // Set passwords dialog. Just allows user to set rfb and administrators
 // passwords.

@@ -26,7 +26,7 @@
 
 
 #include "ViewerWindow.h"
-#include "network/socket/SocketIPv4.h"
+#include "remoting/remoting_common/network/socket/SocketIPv4.h"
 
 #include "ViewerVncAuthHandler.h"
 

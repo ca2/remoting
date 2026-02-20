@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "thread/Thread.h"
-#include "win_system/WindowsEvent.h"
+#include "remoting/thread/Thread.h"
+#include "remoting/win_system/WindowsEvent.h"
 #include "TimerListener.h"
 
 // This class waits for time interval after that notifies to external listener.

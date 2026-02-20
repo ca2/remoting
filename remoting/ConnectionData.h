@@ -26,8 +26,8 @@
 //#define _CONNECTION_DATA_
 #pragma once
 
-//////#include "util/::string.h"
-#include "rfb/HostPath.h"
+//////#include "remoting/remoting_common/util/::string.h"
+#include "remoting/remoting_common/rfb/HostPath.h"
 
 class ConnectionData
 {

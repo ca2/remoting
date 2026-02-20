@@ -24,10 +24,10 @@
 #include "framework.h"
 #include "ControlCommandLine.h"
 
-#include "remoting/util/CommonHeader.h"
-#include "util/CommandLine.h"
-#include "region/RectSerializer.h"
-#include "util/StringParser.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
+#include "remoting/remoting_common/util/CommandLine.h"
+#include "remoting/remoting_common/region/RectSerializer.h"
+#include "remoting/remoting_common/util/StringParser.h"
 
 #include "ConnectStringParser.h"
 

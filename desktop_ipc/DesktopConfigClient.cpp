@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "DesktopConfigClient.h"
-#include "thread/AutoLock.h"
+#include "remoting/remoting_common/thread/AutoLock.h"
 #include "ReconnectException.h"
 
 DesktopConfigClient::DesktopConfigClient(BlockingGate *forwGate)

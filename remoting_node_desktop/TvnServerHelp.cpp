@@ -24,8 +24,8 @@
 
 #include "TvnServerHelp.h"
 
-#include "util/winhdr.h"
-#include "util/StringTable.h"
+#include "remoting/remoting_common/util/winhdr.h"
+#include "remoting/remoting_common/util/StringTable.h"
 
 #include "remoting_node/resource.h"
 

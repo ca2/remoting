@@ -26,7 +26,7 @@
 INCLUDED__
 
 // FIXME: Use some object-oriented wrapper instead of the pure zlib.
-#include "zlib/zlib.h"
+#include "remoting/remoting_common/zlib/zlib.h"
 
 #include "Encoder.h"
 #include "TightPalette.h"

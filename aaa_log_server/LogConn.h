@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "io_lib/Channel.h"
-#include "thread/Thread.h"
-#include "win_system/Pipe.h"
+#include "remoting/io/Channel.h"
+#include "remoting/thread/Thread.h"
+#include "remoting/win_system/Pipe.h"
 #include "LogListener.h"
 #include "LogLevelSender.h"
 

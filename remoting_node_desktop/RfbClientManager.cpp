@@ -23,10 +23,10 @@
 //
 
 #include "RfbClientManager.h"
-#include "thread/ZombieKiller.h"
+#include "remoting/remoting_common/thread/ZombieKiller.h"
 #include "QueryConnectionApplication.h"
-#include "server_config_lib/Configurator.h"
-#include "util/MemUsage.h"
+#include "remoting/remoting_common/server_config/Configurator.h"
+#include "remoting/remoting_common/util/MemUsage.h"
 
 RfbClientManager::RfbClientManager(const ::scoped_string & scopedstrServerName,
                                    NewConnectionEvents *newConnectionEvents,

@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "rfb/CursorShape.h"
+#include "remoting/remoting_common/rfb/CursorShape.h"
 
 class CursorShapeGrabber
 {

@@ -25,10 +25,10 @@
 #include "AdditionalActionApplication.h"
 #include "TvnServerHelp.h"
 
-#include "util/CommandLine.h"
+#include "remoting/remoting_common/util/CommandLine.h"
 
-#include "win_system/Workstation.h"
-#include "win_system/WinCommandLineArgs.h"
+#include "remoting/remoting_common/win_system/Workstation.h"
+#include "remoting/remoting_common/win_system/WinCommandLineArgs.h"
 
 const TCHAR AdditionalActionApplication::LOCK_WORKSTATION_KEY[] = "-lockworkstation";
 const TCHAR AdditionalActionApplication::LOGOUT_KEY[] = "-logout";

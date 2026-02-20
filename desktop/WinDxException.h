@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/Exception.h"
+#include "remoting/remoting_common/util/Exception.h"
 
 class WinDxException : public ::remoting::Exception
 {

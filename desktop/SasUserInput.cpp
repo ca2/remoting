@@ -23,11 +23,11 @@
 //
 #include "framework.h"
 #include "SasUserInput.h"
-//#include "win_system/Environment.h"
-#include "win_system/WTS.h"
+//#include "remoting/remoting_common/win_system/Environment.h"
+#include "remoting/remoting_common/win_system/WTS.h"
 
 #define XK_MISCELLANY
-#include "rfb/keysymdef.h"
+#include "remoting/remoting_common/rfb/keysymdef.h"
 
 SasUserInput::SasUserInput(UserInputClient *client, LogWriter *log)
 : m_client(client),

@@ -24,8 +24,8 @@
 #include "framework.h"
 #include "FileTransferMainDialog.h"
 
-#include "remoting/util/CommonHeader.h"
-#include "util/winhdr.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
+#include "remoting/remoting_common/util/winhdr.h"
 #include "NewFolderDialog.h"
 #include "FileRenameDialog.h"
 
@@ -33,7 +33,7 @@
 
 #include "resource.h"
 #include <stdio.h>
-#include "remoting/common/remoting.h"
+#include "remoting/remoting_common/remoting.h"
 
 
 FileTransferMainDialog::FileTransferMainDialog(::remoting::ftp::FileTransferCore *core)

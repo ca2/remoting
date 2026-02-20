@@ -23,9 +23,9 @@
 //
 
 #include "WsConfigRunner.h"
-#include "win_system/CurrentConsoleProcess.h"
-//#include "win_system/Environment.h"
-#include "server_config_lib/Configurator.h"
+#include "remoting/remoting_common/win_system/CurrentConsoleProcess.h"
+//#include "remoting/remoting_common/win_system/Environment.h"
+#include "remoting/remoting_common/server_config/Configurator.h"
 #include "remoting_control_desktop/ControlCommandLine.h"
 
 WsConfigRunner::WsConfigRunner(LogWriter *LogWriter, bool serviceMode)

@@ -25,11 +25,11 @@
 #pragma once
 
 
-#include "remoting/util/CommonHeader.h"
-#include "region/Point.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
+#include "remoting/remoting_common/region/Point.h"
 #include "desktop_ipc/BlockingGate.h"
 
-#include "region/Region.h"
+#include "remoting/remoting_common/region/Region.h"
 
 // This class will be an abstract interface for user input such as keyboard,
 // mouse pointer, e.t.c., on the server side.

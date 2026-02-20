@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "rfb/CursorShape.h"
+#include "remoting/remoting_common/rfb/CursorShape.h"
 
 // This class is wrapper for CursorShape class to extend it behaviour for the Win8 desktop
 // duplication model.

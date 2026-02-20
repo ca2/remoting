@@ -28,9 +28,9 @@
 #include "ListenLogServer.h"
 #include "LogConn.h"
 #include "log_writer/FileAccount.h"
-#include "util/Singleton.h"
+#include "remoting/remoting_common/util/Singleton.h"
 #include "LogConnAuthListener.h"
-#include "thread/ThreadCollector.h"
+#include "remoting/thread/ThreadCollector.h"
 #include "LogListener.h"
 //#include <list>
 //#include <map>

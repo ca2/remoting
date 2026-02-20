@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "thread/Thread.h"
-#include "win_system/WindowsEvent.h"
-#include "io_lib/DataOutputStream.h"
+#include "remoting/thread/Thread.h"
+#include "remoting/win_system/WindowsEvent.h"
+#include "remoting/io/DataOutputStream.h"
 
 class LogLevelSender : public Thread
 {

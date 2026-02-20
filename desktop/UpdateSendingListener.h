@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "rfb/CursorShape.h"
-#include "rfb/FrameBuffer.h"
+#include "remoting/remoting_common/rfb/CursorShape.h"
+#include "remoting/remoting_common/rfb/FrameBuffer.h"
 #include "UpdateContainer.h"
 
 class UpdateSendingListener

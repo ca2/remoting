@@ -23,12 +23,12 @@
 //
 #include "framework.h"
 #include "WinEventLog.h"
-#include "remoting/util/CommonHeader.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
 #include "remoting_node_desktop/NamingDefs.h"
-#include "util/Exception.h"
-//#include "win_system/Environment.h"
-#include "win_system/RegistryKey.h"
-#include "thread/AutoLock.h"
+#include "remoting/remoting_common/util/Exception.h"
+//#include "remoting/remoting_common/win_system/Environment.h"
+#include "remoting/remoting_common/win_system/RegistryKey.h"
+#include "remoting/remoting_common/thread/AutoLock.h"
 
 WinEventLog::WinEventLog(LogWriter *log)
 : m_hEventLog(0),

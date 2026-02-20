@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "thread/LocalMutex.h"
-//#include "util/::earth::time.h"
+#include "remoting/remoting_common/thread/LocalMutex.h"
+//#include "remoting/remoting_common/util/::earth::time.h"
 
 // This class will be insert an time interval between trying of
 // authentications

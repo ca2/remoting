@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "ViewerCollector.h"
-#include "thread/AutoLock.h"
+#include "remoting/remoting_common/thread/AutoLock.h"
 
 ViewerCollector::ViewerCollector()
 : m_countToReconnect(0)

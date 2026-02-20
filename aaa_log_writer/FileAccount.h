@@ -26,8 +26,8 @@
 
 
 #include "remoting/util/CommonHeader.h"
-//#include "util/::earth::time.h"
-#include "thread/LocalMutex.h"
+//#include "remoting/remoting_common/util/::earth::time.h"
+#include "remoting/thread/LocalMutex.h"
 //#include "file_lib/WinFile.h"
 #include "LogDump.h"
 

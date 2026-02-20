@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "DesktopBaseImpl.h"
-#include "util/BrokenHandleException.h"
+#include "remoting/remoting_common/util/BrokenHandleException.h"
 
 DesktopBaseImpl::DesktopBaseImpl(ClipboardListener *extClipListener,
                        UpdateSendingListener *extUpdSendingListener,

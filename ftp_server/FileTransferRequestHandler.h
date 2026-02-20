@@ -25,13 +25,13 @@
 #pragma once
 
 
-#include "util/inttypes.h"
-#include "network/RfbInputGate.h"
-#include "network/RfbOutputGate.h"
-#include "remoting/ftp_common/FileInfo.h"
+#include "remoting/remoting_common/util/inttypes.h"
+#include "remoting/remoting_common/network/RfbInputGate.h"
+#include "remoting/remoting_common/network/RfbOutputGate.h"
+#include "remoting/remoting_common/ftp_common/FileInfo.h"
 #include "file_lib/WinFileChannel.h"
-#include "util/Inflater.h"
-#include "util/Deflater.h"
+#include "remoting/remoting_common/util/Inflater.h"
+#include "remoting/remoting_common/util/Deflater.h"
 #include "desktop/Desktop.h"
 #include "rfb_sconn/RfbCodeRegistrator.h"
 #include "rfb_sconn/RfbDispatcherListener.h"

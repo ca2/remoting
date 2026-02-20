@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "ClientInputHandler.h"
-#include "rfb/MsgDefs.h"
+#include "remoting/remoting_common/rfb/MsgDefs.h"
 
 ClientInputHandler::ClientInputHandler(RfbCodeRegistrator *codeRegtor,
                                        ClientInputEventListener *extEventListener,

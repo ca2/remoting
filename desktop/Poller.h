@@ -27,9 +27,9 @@
 
 #include "UpdateDetector.h"
 #include "ScreenGrabber.h"
-#include "rfb/FrameBuffer.h"
+#include "remoting/remoting_common/rfb/FrameBuffer.h"
 
-#include "win_system/WindowsEvent.h"
+#include "remoting/remoting_common/win_system/WindowsEvent.h"
 //#include "log_writer/LogWriter.h"
 
 #define DEFAULT_SLEEP_TIME 1000

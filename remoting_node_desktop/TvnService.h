@@ -29,9 +29,9 @@
 #include "TvnServerListener.h"
 #include "log-server/LogServer.h"
 #include "log-server/ClientLogWriter.h"
-#include "win_system/Service.h"
+#include "remoting/remoting_common/win_system/Service.h"
 
-#include "thread/Thread.h"
+#include "remoting/remoting_common/thread/Thread.h"
 #include "WinServiceEvents.h"
 #include "NewConnectionEvents.h"
 

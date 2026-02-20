@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "LogLevelSender.h"
-#include "thread/AutoLock.h"
+#include "remoting/thread/AutoLock.h"
 
 LogLevelSender::LogLevelSender()
 : m_outStream(0),

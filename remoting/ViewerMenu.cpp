@@ -25,7 +25,7 @@
 #include "ViewerMenu.h"
 #include "resource.h"
 
-#include "util/ResourceLoader.h"
+#include "remoting/remoting_common/util/ResourceLoader.h"
 
 void ViewerMenu::makeSeparator()
 {

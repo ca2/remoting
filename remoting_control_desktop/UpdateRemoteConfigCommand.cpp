@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "UpdateRemoteConfigCommand.h"
 
-#include "server_config_lib/Configurator.h"
+#include "remoting/remoting_common/server_config/Configurator.h"
 
 UpdateRemoteConfigCommand::UpdateRemoteConfigCommand(ControlProxy *serverControl)
 : m_serverControl(serverControl)

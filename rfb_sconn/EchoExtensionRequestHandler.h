@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "util/inttypes.h"
-#include "network/RfbInputGate.h"
-#include "network/RfbOutputGate.h"
+#include "remoting/remoting_common/util/inttypes.h"
+#include "remoting/remoting_common/network/RfbInputGate.h"
+#include "remoting/remoting_common/network/RfbOutputGate.h"
 #include "rfb_sconn/RfbCodeRegistrator.h"
 #include "rfb_sconn/RfbDispatcherListener.h"
 //#include "log_writer/LogWriter.h"

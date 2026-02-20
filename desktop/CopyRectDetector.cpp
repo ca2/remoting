@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "CopyRectDetector.h"
-#include "remoting/util/CommonHeader.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
 
 CopyRectDetector::CopyRectDetector()
 {
@@ -35,7 +35,7 @@ CopyRectDetector::~CopyRectDetector()
 
 void CopyRectDetector::detectWindowMovements(::int_rectangle *copyRect, Point *source)
 {
-  m_copyRect.clear();
+  m_copyRect.Null();
   m_source.clear();
 
   EnumWindows((WNDENUMPROC)enumWindowsFnCopyRect, (LPARAM)this);

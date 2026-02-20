@@ -39,30 +39,30 @@
 #include "ConnectCommand.h"
 #include "ShutdownCommand.h"
 
-#include "util/VncPassCrypt.h"
-#include "util/winhdr.h"
-#include "util/StringTable.h"
+#include "remoting/remoting_common/util/VncPassCrypt.h"
+#include "remoting/remoting_common/util/winhdr.h"
+#include "remoting/remoting_common/util/StringTable.h"
 #include "remoting_node_desktop/NamingDefs.h"
 
 #include "remoting_control_desktop/ControlCommandLine.h"
 #include "remoting_node_desktop/TvnServerHelp.h"
 
-//#include "win_system/Environment.h"
-#include "win_system/Shell.h"
-#include "win_system/Process.h"
-#include "win_system/WinCommandLineArgs.h"
+//#include "remoting/remoting_common/win_system/Environment.h"
+#include "remoting/remoting_common/win_system/Shell.h"
+#include "remoting/remoting_common/win_system/Process.h"
+#include "remoting/remoting_common/win_system/WinCommandLineArgs.h"
 
-#include "thread/ZombieKiller.h"
-#include "thread/GlobalMutex.h"
+#include "remoting/remoting_common/thread/ZombieKiller.h"
+#include "remoting/remoting_common/thread/GlobalMutex.h"
 
-#include "gui/CommonControlsEx.h"
+#include "remoting/remoting_common/gui/CommonControlsEx.h"
 
-#include "network/socket/WindowsSocket.h"
+#include "remoting/remoting_common/network/socket/WindowsSocket.h"
 
 #include "remoting_node/resource.h"
 
-#include "wsconfig_lib/ConfigDialog.h"
-//#include "util/::string.h"
+#include "remoting/remoting_common/wsconfig/ConfigDialog.h"
+//#include "remoting/remoting_common/util/::string.h"
 #include "remoting_node_desktop/NamingDefs.h"
 #include "SetPasswordsDialog.h"
 #include <algorithm>

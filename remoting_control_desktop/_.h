@@ -3,13 +3,15 @@
 
 
 
-#include "remoting/common/_.h"
+#include "remoting/_.h"
 
 
-#if defined(_client_config_lib)
-#define CLASS_DECL_CLIENT_CONFIG_LIB  CLASS_DECL_EXPORT
+#if defined(_remoting_control_desktop)
+#define CLASS_DECL_REMOTING_CONTROL_DESKTOP CLASS_DECL_EXPORT
 #else
-#define CLASS_DECL_CLIENT_CONFIG_LIB  CLASS_DECL_IMPORT
+#define CLASS_DECL_REMOTING_CONTROL_DESKTOP CLASS_DECL_IMPORT
+#endif
+
 
 
 

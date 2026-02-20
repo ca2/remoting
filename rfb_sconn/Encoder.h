@@ -27,12 +27,12 @@ INCLUDED__
 
 //#include <vector>
 
-#include "rfb/FrameBuffer.h"
-#include "io_lib/io_exception.h"
-#include "network/RfbOutputGate.h"
-#include "rfb/EncodingDefs.h"
+#include "remoting/remoting_common/rfb/FrameBuffer.h"
+#include "acme/exception/io.h"
+#include "remoting/remoting_common/network/RfbOutputGate.h"
+#include "remoting/remoting_common/rfb/EncodingDefs.h"
 #include "EncodeOptions.h"
-#include "rfb/PixelConverter.h"
+#include "remoting/remoting_common/rfb/PixelConverter.h"
 
 //
 // Encoder is the base class for all RFB encoders.

@@ -24,13 +24,13 @@
 #include "framework.h"
 #include "acme/_operating_system.h"
 #include "UpdateSender.h"
-#include "rfb/VendorDefs.h"
-#include "rfb/EncodingDefs.h"
-#include "rfb/MsgDefs.h"
+#include "remoting/remoting_common/rfb/VendorDefs.h"
+#include "remoting/remoting_common/rfb/EncodingDefs.h"
+#include "remoting/remoting_common/rfb/MsgDefs.h"
 //#include <vector>
 #include <algorithm>
-#include "util/inttypes.h"
-#include "util/Exception.h"
+#include "remoting/remoting_common/util/inttypes.h"
+#include "remoting/remoting_common/util/Exception.h"
 #include "UpdSenderMsgDefs.h"
 #include "rfb_sconn/ClipboardExchange.h"
 

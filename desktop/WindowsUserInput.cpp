@@ -23,11 +23,11 @@
 //
 #include "framework.h"
 #include "WindowsUserInput.h"
-#include "thread/DesktopSelector.h"
-//#include "win_system/Environment.h"
-#include "win_system/Keyboard.h"
-#include "gui/WindowFinder.h"
-#include "util/BrokenHandleException.h"
+#include "remoting/remoting_common/thread/DesktopSelector.h"
+//#include "remoting/remoting_common/win_system/Environment.h"
+#include "remoting/remoting_common/win_system/Keyboard.h"
+#include "remoting/remoting_common/gui/WindowFinder.h"
+#include "remoting/remoting_common/util/BrokenHandleException.h"
 
 WindowsUserInput::WindowsUserInput(ClipboardListener *clipboardListener,
                                    bool ctrlAltDelEnabled,

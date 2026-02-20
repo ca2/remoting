@@ -25,12 +25,12 @@
 #pragma once
 
 
-#include "io_lib/Channel.h"
-#include "io_lib/DataOutputStream.h"
-#include "io_lib/DataInputStream.h"
+#include "remoting/remoting_common/io/Channel.h"
+#include "remoting/remoting_common/io/DataOutputStream.h"
+#include "remoting/remoting_common/io/DataInputStream.h"
 #include "CapContainer.h"
 
-#include "rfb/PixelFormat.h"
+#include "remoting/remoting_common/rfb/PixelFormat.h"
 // External listeners
 #include "ClientAuthListener.h"
 

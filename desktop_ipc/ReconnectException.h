@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "io_lib/io_exception.h"
+#include "acme/exception/io.h"
 
 class ReconnectException : public ::io_exception
 {

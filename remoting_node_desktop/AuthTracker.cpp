@@ -23,7 +23,7 @@
 //
 
 #include "AuthTracker.h"
-#include "thread/AutoLock.h"
+#include "remoting/remoting_common/thread/AutoLock.h"
 
 AuthTracker::AuthTracker(unsigned long long failureTimeInterval,
                          unsigned int failureMaxCount)

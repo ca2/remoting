@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "io_lib/DataInputStream.h"
-#include "thread/LocalMutex.h"
+#include "remoting/remoting_common/io/DataInputStream.h"
+#include "remoting/remoting_common/thread/LocalMutex.h"
 
 class BlockingInputGate : public LocalMutex, public DataInputStream
 {

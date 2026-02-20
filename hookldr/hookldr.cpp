@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-#include "remoting/util/CommonHeader.h"
-#include "util/StringParser.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
+#include "remoting/remoting_common/util/StringParser.h"
 #include "HookLoaderApplication.h"
 #include "remoting_node_desktop/NamingDefs.h"
 

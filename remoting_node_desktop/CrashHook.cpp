@@ -23,10 +23,10 @@
 //
 
 #include "CrashHook.h"
-#include "win_system/DynamicLibrary.h"
-//#include "win_system/Environment.h"
-#include "win_system/RegistryKey.h"
-#include "thread/AutoLock.h"
+#include "remoting/remoting_common/win_system/DynamicLibrary.h"
+//#include "remoting/remoting_common/win_system/Environment.h"
+#include "remoting/remoting_common/win_system/RegistryKey.h"
+#include "remoting/remoting_common/thread/AutoLock.h"
 #include "remoting_node_desktop/NamingDefs.h"
 
 typedef BOOL (WINAPI *MINIDUMPWRITEDUMP)(__in  HANDLE hProcess,

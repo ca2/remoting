@@ -21,6 +21,9 @@
     <ClInclude Include="WinEventLog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="_.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MessageProvider.rc">

@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ConnectStringParser.h"
 
-#include "util/StringParser.h"
+#include "remoting/remoting_common/util/StringParser.h"
 
 ConnectStringParser::ConnectStringParser()
 {

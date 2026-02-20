@@ -27,8 +27,8 @@ INCLUDED__
 
 #include <stdio.h>
 
-#include "remoting/util/CommonHeader.h"
-#include "rfb/PixelFormat.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
+#include "remoting/remoting_common/rfb/PixelFormat.h"
 
 // For Windows platforms only.
 // For using libjpeg for encoding go to Property Pages of remoting_node -> Linker -> Input -> Additional Dependencies

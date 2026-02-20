@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "network/RfbInputGate.h"
+#include "remoting/remoting_common/network/RfbInputGate.h"
 
 class RfbDispatcherListener
 {

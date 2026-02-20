@@ -22,10 +22,10 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/util/CommonHeader.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
 #include "Poller.h"
-#include "region/Region.h"
-#include "server_config_lib/Configurator.h"
+#include "remoting/remoting_common/region/Region.h"
+#include "remoting/remoting_common/server_config/Configurator.h"
 
 Poller::Poller(UpdateKeeper *updateKeeper,
                UpdateListener *updateListener,

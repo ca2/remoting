@@ -23,8 +23,8 @@
 //
 
 #include "ControlAppAuthenticator.h"
-#include "thread/AutoLock.h"
-#include "util/VncPassCrypt.h"
+#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/util/VncPassCrypt.h"
 
 ControlAppAuthenticator::ControlAppAuthenticator(unsigned long long failureTimeInterval,
                                                  unsigned int failureMaxCount)

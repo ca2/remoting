@@ -28,8 +28,8 @@
 #include "resource.h"
 #include "acme/filesystem/file/item.h"
 //#include "file_lib/::file::item.h"
-#include "win_system/Process.h"
-#include "remoting/common/remoting.h"
+#include "remoting/remoting_common/win_system/Process.h"
+#include "remoting/remoting_common/remoting.h"
 ConfigurationDialog::ConfigurationDialog()
 : BaseDialog(IDD_CONFIGURATION),
   m_application(0)

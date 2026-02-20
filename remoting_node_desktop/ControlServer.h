@@ -27,11 +27,11 @@
 
 #include "RfbClientManager.h"
 #include "ControlAppAuthenticator.h"
-#include "thread/ThreadCollector.h"
+#include "remoting/remoting_common/thread/ThreadCollector.h"
 
-#include "network/TcpServer.h"
+#include "remoting/remoting_common/network/TcpServer.h"
 
-#include "win_system/PipeServer.h"
+#include "remoting/remoting_common/win_system/PipeServer.h"
 
 /**
  * Tcp server that listens for incoming control connections

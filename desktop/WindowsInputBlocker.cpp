@@ -23,8 +23,8 @@
 //
 #include "framework.h"
 #include "WindowsInputBlocker.h"
-#include "util/Exception.h"
-#include "thread/AutoLock.h"
+#include "remoting/remoting_common/util/Exception.h"
+#include "remoting/remoting_common/thread/AutoLock.h"
 
 LocalMutex WindowsInputBlocker::m_instanceMutex;
 HHOOK WindowsInputBlocker::m_hKeyboardHook = 0;

@@ -26,9 +26,9 @@
 
 
 
-#include "region/Region.h"
-#include "rfb/FrameBuffer.h"
-#include "rfb/CursorShape.h"
+#include "remoting/remoting_common/region/Region.h"
+#include "remoting/remoting_common/rfb/FrameBuffer.h"
+#include "remoting/remoting_common/rfb/CursorShape.h"
 
 // Derived classes commits oneself that internal frame buffer (accessing with getScreenBuffer()) will
 // be valid after constructor until the applyNewScreenProperties() function will be called. If

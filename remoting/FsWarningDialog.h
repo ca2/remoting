@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "gui/BaseDialog.h"
-#include "gui/CheckBox.h"
+#include "remoting/remoting_common/gui/BaseDialog.h"
+#include "remoting/remoting_common/gui/CheckBox.h"
 #include "resource.h"
 
 class FsWarningDialog : public BaseDialog

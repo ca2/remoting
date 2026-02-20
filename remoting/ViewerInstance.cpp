@@ -24,8 +24,8 @@
 #include "framework.h"
 #include "ViewerInstance.h"
 
-#include "viewer_core/RemoteViewerCore.h"
-#include "viewer_core/FileTransferCapability.h"
+#include "remoting/remoting_common/viewer_core/RemoteViewerCore.h"
+#include "remoting/remoting_common/viewer_core/FileTransferCapability.h"
 
 ViewerInstance::ViewerInstance(WindowsApplication *application,
                                ConnectionData & conData,

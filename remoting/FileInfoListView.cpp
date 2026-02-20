@@ -23,12 +23,12 @@
 //
 #include "framework.h"
 #include "FileInfoListView.h"
-//#include "util/::earth::time.h"
-#include "remoting/resource.h"
-#include "util/ResourceLoader.h"
+//#include "remoting/remoting_common/util/::earth::time.h"
+#include "remoting/remoting_common/resource.h"
+#include "remoting/remoting_common/util/ResourceLoader.h"
 #include <crtdbg.h>
 #include <stdio.h>
-
+#include "resource.h"
 #include "acme/prototype/datetime/datetime.h"
 
 

@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "Win8ScreenDriver.h"
-#include "util/Exception.h"
+#include "remoting/remoting_common/util/Exception.h"
 
 Win8ScreenDriver::Win8ScreenDriver(UpdateKeeper *updateKeeper,
                                    UpdateListener *updateListener,

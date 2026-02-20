@@ -26,8 +26,8 @@
 
 
 #include "ViewerInstance.h"
-#include "network/TcpServer.h"
-#include "thread/LocalMutex.h"
+#include "remoting/remoting_common/network/TcpServer.h"
+#include "remoting/remoting_common/thread/LocalMutex.h"
 
 class ConnectionListener : protected TcpServer
 {

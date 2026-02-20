@@ -22,12 +22,12 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "util/Exception.h"
-#include "rfb/StandardPixelFormatFactory.h"
+#include "remoting/remoting_common/util/Exception.h"
+#include "remoting/remoting_common/rfb/StandardPixelFormatFactory.h"
 #include "WinDxCriticalException.h"
 #include "WinDxRecoverableException.h"
 #include <crtdbg.h>
-#include "win_system/Screen.h"
+#include "remoting/remoting_common/win_system/Screen.h"
 
 #include "WinDxgiOutput.h"
 

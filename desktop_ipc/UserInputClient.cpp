@@ -23,9 +23,9 @@
 //
 #include "framework.h"
 #include "UserInputClient.h"
-#include "thread/AutoLock.h"
+#include "remoting/remoting_common/thread/AutoLock.h"
 #include "ReconnectException.h"
-#include "util/BrokenHandleException.h"
+#include "remoting/remoting_common/util/BrokenHandleException.h"
 
 UserInputClient::UserInputClient(BlockingGate *forwGate,
                                  DesktopSrvDispatcher *dispatcher,

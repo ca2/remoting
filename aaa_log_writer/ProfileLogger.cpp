@@ -1,11 +1,11 @@
 #include "framework.h"
 #include "ProfileLogWriter.h"
 
-#include "util/GetCPUTime.h"
+#include "remoting/remoting_common/util/GetCPUTime.h"
 #include <algorithm>
 #include <numeric> 
 #include <utility> 
-#include "thread/AutoLock.h"
+#include "remoting/thread/AutoLock.h"
 
 // does not works on XP
 // #include "Realtimeapiset.h"

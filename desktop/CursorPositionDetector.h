@@ -26,9 +26,9 @@
 
 
 #include "UpdateDetector.h"
-#include "win_system/WindowsEvent.h"
+#include "remoting/remoting_common/win_system/WindowsEvent.h"
 //#include "log_writer/LogWriter.h"
-#include "win_system/WinCursor.h"
+#include "remoting/remoting_common/win_system/WinCursor.h"
 
 class CursorPositionDetector : public UpdateDetector
 {

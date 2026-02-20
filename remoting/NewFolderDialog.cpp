@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "NewFolderDialog.h"
 #include "resource.h"
-#include "remoting/common/remoting.h"
+#include "remoting/remoting_common/remoting.h"
 
 NewFolderDialog::NewFolderDialog()
 {

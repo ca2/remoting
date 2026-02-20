@@ -21,12 +21,16 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
+#include "framework.h"
 #include "DesktopWindow.h"
 #include "acme/operating_system/windows/geometry2d.h"
-#include "framework.h"
 #include "impact_toolbar.h"
-
 #include <dwmapi.h>
+
+
+#pragma comment(lib, "dwmapi.lib")
+
+
 DesktopWindow::DesktopWindow(LogWriter *logWriter, ConnectionConfig *conConf) :
     m_logWriter(logWriter), m_clipboard(0), m_showVert(false), m_showHorz(false), m_fbWidth(1), m_fbHeight(1),
     m_winResize(false), m_conConf(conConf), m_brush(RGB(0, 0, 0)),

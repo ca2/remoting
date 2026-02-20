@@ -23,7 +23,7 @@
 //
 
 #include "HookLoaderApplication.h"
-#include "util/StringParser.h"
+#include "remoting/remoting_common/util/StringParser.h"
 #include "remoting_node_desktop/NamingDefs.h"
 #include "desktop/HookInstaller.h"
 

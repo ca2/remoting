@@ -23,9 +23,9 @@
 //
 #include "framework.h"
 #include "FileAccount.h"
-#include "util/Unicode.h"
+#include "remoting/remoting_common/util/Unicode.h"
 #include "file_lib/::file::item.h"
-#include "thread/AutoLock.h"
+#include "remoting/thread/AutoLock.h"
 #include "file_lib/EOFException.h"
 
 FileAccount::FileAccount(const ::scoped_string & scopedstrLogDir,

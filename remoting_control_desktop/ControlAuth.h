@@ -28,9 +28,9 @@
 #include "remoting_control_desktop/ControlGate.h"
 #include "remoting_control_desktop/ControlAuthException.h"
 
-#include "util/Exception.h"
+#include "remoting/remoting_common/util/Exception.h"
 
-#include "server_config_lib/ServerConfig.h"
+#include "remoting/remoting_common/server_config/ServerConfig.h"
 
 class ControlAuth
 {

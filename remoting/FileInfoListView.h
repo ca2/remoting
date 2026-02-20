@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "gui/ListView.h"
-#include "remoting/ftp_common/FileInfo.h"
+#include "remoting/remoting_common/gui/ListView.h"
+#include "remoting/remoting_common/ftp_common/FileInfo.h"
 
 class FileInfoListView : public ListView
 {

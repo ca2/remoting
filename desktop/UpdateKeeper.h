@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "thread/LocalMutex.h"
-#include "region/Region.h"
+#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/region/Region.h"
 #include "UpdateContainer.h"
-#include "thread/AutoLock.h"
+#include "remoting/remoting_common/thread/AutoLock.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 
 

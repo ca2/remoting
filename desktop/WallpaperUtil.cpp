@@ -23,9 +23,9 @@
 //
 #include "framework.h"
 #include "WallpaperUtil.h"
-//#include "win_system/Environment.h"
-#include "server_config_lib/Configurator.h"
-#include "win_system/AutoImpersonator.h"
+//#include "remoting/remoting_common/win_system/Environment.h"
+#include "remoting/remoting_common/server_config/Configurator.h"
+#include "remoting/remoting_common/win_system/AutoImpersonator.h"
 
 WallpaperUtil::WallpaperUtil(LogWriter *log)
 : m_wasDisabled(false), 

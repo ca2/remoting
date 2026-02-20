@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "ConfigServer.h"
-#include "server_config_lib/Configurator.h"
+#include "remoting/remoting_common/server_config/Configurator.h"
 
 ConfigServer::ConfigServer(DesktopSrvDispatcher *dispatcher, LogWriter *log)
 : DesktopServerProto(0),

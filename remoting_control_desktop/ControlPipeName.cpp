@@ -24,10 +24,10 @@
 #include "framework.h"
 #include "ControlPipeName.h"
 
-#include "util/winhdr.h"
+#include "remoting/remoting_common/util/winhdr.h"
 #include "remoting_node_desktop/NamingDefs.h"
 
-#include "win_system/WTS.h"
+#include "remoting/remoting_common/win_system/WTS.h"
 
 void ControlPipeName::createPipeName(bool forService, ::string & pipeName, LogWriter *log)
 {

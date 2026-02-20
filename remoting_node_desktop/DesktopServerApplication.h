@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "win_system/WindowsApplication.h"
-#include "util/AnEventListener.h"
-#include "win_system/AnonymousPipe.h"
+#include "remoting/remoting_common/win_system/WindowsApplication.h"
+#include "remoting/remoting_common/util/AnEventListener.h"
+#include "remoting/remoting_common/win_system/AnonymousPipe.h"
 #include "desktop_ipc/BlockingGate.h"
 #include "desktop_ipc/DesktopSrvDispatcher.h"
 #include "desktop_ipc/UpdateHandlerServer.h"
@@ -35,11 +35,11 @@
 #include "desktop_ipc/ConfigServer.h"
 #include "desktop_ipc/GateKickHandler.h"
 #include "SessionChangesWatcher.h"
-#include "win_system/LocalWindowsApplication.h"
+#include "remoting/remoting_common/win_system/LocalWindowsApplication.h"
 #include "log-server/ClientLogWriter.h"
 //#include "log_writer/LogWriter.h"
-#include "server_config_lib/ConfigReloadListener.h"
-#include "util/CommandLineArgs.h"
+#include "remoting/remoting_common/server_config/ConfigReloadListener.h"
+#include "remoting/remoting_common/util/CommandLineArgs.h"
 
 /**
  * Desktop server application.

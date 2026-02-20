@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "remoting/util/CommonHeader.h"
-#include "win_system/DynamicLibrary.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
+#include "remoting/remoting_common/win_system/DynamicLibrary.h"
 
 class HookInstaller
 {

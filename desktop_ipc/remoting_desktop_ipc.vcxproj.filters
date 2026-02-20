@@ -115,5 +115,8 @@
     <ClInclude Include="UserInputServer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="_.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

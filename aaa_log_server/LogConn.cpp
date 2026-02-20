@@ -24,11 +24,11 @@
 #include "framework.h"
 #include "LogConn.h"
 #include "LogConnAuthListener.h"
-#include "thread/AutoLock.h"
+#include "remoting/thread/AutoLock.h"
 #include "SecurityPipeServer.h"
-#include "io_lib/DataInputStream.h"
-#include "io_lib/DataOutputStream.h"
-//#include "util/::earth::time.h"
+#include "remoting/io/DataInputStream.h"
+#include "remoting/io/DataOutputStream.h"
+//#include "remoting/remoting_common/util/::earth::time.h"
 
 LogConn::LogConn(Channel *channel, LogConnAuthListener *extAuthListener,
                  LogListener *extLogListener, unsigned char logLevel)

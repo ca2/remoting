@@ -7,7 +7,7 @@
  // Any Events
  // .
  // 
- // The following are the scopedstrMessage definitions.
+ // The following are the message definitions.
 //
 //  Values are 32 bit values laid out as follows:
 //

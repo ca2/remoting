@@ -3,7 +3,7 @@
 
 
 
-#include "remoting/common/_.h"
+#include "remoting/remoting_common/_.h"
 
 
 #if defined(_remoting_remoting_project)

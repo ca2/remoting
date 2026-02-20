@@ -26,11 +26,11 @@
 
 
 //#include "log_writer/LogWriter.h"
-#include "thread/GuiThread.h"
-#include "thread/ThreadCollector.h"
-#include "win_system/WindowsEvent.h"
+#include "remoting/remoting_common/thread/GuiThread.h"
+#include "remoting/remoting_common/thread/ThreadCollector.h"
+#include "remoting/remoting_common/win_system/WindowsEvent.h"
 
-#include "rfb/FrameBuffer.h"
+#include "remoting/remoting_common/rfb/FrameBuffer.h"
 #include "Win8CursorShape.h"
 #include "UpdateKeeper.h"
 #include "UpdateListener.h"

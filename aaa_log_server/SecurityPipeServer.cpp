@@ -23,12 +23,12 @@
 //
 #include "framework.h"
 #include "SecurityPipeServer.h"
-#include "win_system/PipeServer.h"
-#include "win_system/PipeClient.h"
-#include "io_lib/DataInputStream.h"
-#include "io_lib/DataOutputStream.h"
-//#include "win_system/Environment.h"
-#include "win_system/WinHandles.h"
+#include "remoting/win_system/PipeServer.h"
+#include "remoting/win_system/PipeClient.h"
+#include "remoting/io/DataInputStream.h"
+#include "remoting/io/DataOutputStream.h"
+//#include "remoting/win_system/Environment.h"
+#include "remoting/win_system/WinHandles.h"
 #include "ConnectionTimer.h"
 #include <time.h>
 

@@ -26,11 +26,11 @@
 
 #include "remoting_node/resource.h"
 
-#include "win_system/Shell.h"
-#include "win_system/VersionInfo.h"
-//#include "win_system/Environment.h"
+#include "remoting/remoting_common/win_system/Shell.h"
+#include "remoting/remoting_common/win_system/VersionInfo.h"
+//#include "remoting/remoting_common/win_system/Environment.h"
 
-#include "gui/::remoting::Window.h"
+#include "remoting/remoting_common/gui/::remoting::Window.h"
 
 #include "remoting_node/BuildTime.h"
 

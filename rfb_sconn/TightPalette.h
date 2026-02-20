@@ -33,7 +33,7 @@
 INCLUDED__
 
 #include <string.h>
-#include "util/inttypes.h"
+#include "remoting/remoting_common/util/inttypes.h"
 
 struct TightColorList {
   TightColorList *next;

@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "win_system/LocalWindowsApplication.h"
+#include "remoting/remoting_common/win_system/LocalWindowsApplication.h"
 #include "ParentWatcher.h"
 
 class HookLoaderApplication : public WindowsApplication,

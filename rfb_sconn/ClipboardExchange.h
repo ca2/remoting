@@ -28,7 +28,7 @@
 #include "RfbDispatcherListener.h"
 #include "RfbCodeRegistrator.h"
 #include "desktop/Desktop.h"
-#include "network/RfbOutputGate.h"
+#include "remoting/remoting_common/network/RfbOutputGate.h"
 //#include "log_writer/LogWriter.h"
 
 class ClipboardExchange : public RfbDispatcherListener, public Thread

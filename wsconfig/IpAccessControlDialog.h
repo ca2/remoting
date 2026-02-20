@@ -1,0 +1,115 @@
+// Copyright (C) 2009,2010,2011,2012 GlavSoft LLC.
+// All rights reserved.
+//
+//-------------------------------------------------------------------------
+// This file is part of the TightVNC software.  Please visit our Web site:
+//
+//                       http://www.tightvnc.com/
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//-------------------------------------------------------------------------
+//
+
+#pragma once
+
+
+#include "remoting/remoting_common/gui/BaseDialog.h"
+#include "remoting/remoting_common/gui/ListView.h"
+#include "remoting/remoting_common/gui/SpinControl.h"
+#include "remoting/remoting_common/gui/BalloonTip.h"
+
+#include "remoting/remoting_common/server_config/Configurator.h"
+
+#include "EditIpAccessRuleDialog.h"
+
+class IpAccessControlDialog : public BaseDialog
+{
+public:
+  IpAccessControlDialog();
+  virtual ~IpAccessControlDialog();
+
+  void setParentDialog(BaseDialog *dialog);
+
+  //
+  // BaseDialog overrided methods
+  //
+
+  virtual BOOL onInitDialog();
+  virtual BOOL onCommand(UINT controlID, UINT notificationID);
+  virtual BOOL onNotify(UINT controlID, LPARAM data);
+  virtual BOOL onDestroy() { return TRUE; }
+
+  //
+  // Helper methods
+  //
+
+  bool validateInput();
+  void updateUI();
+  void apply();
+
+private:
+  void initControls();
+
+  //
+  // ::remoting::Window event handlers
+  //
+
+  void onAddButtonClick();
+  void onEditButtonClick();
+  void onRemoveButtonClick();
+  void onMoveUpButtonClick();
+  void onMoveDownButtonClick();
+  void onListViewSelChange();
+  void onListViewSelChangeDblClick();
+  void onAcceptRadioClick();
+  void onRefuseRadioClick();
+  void onAllowLoopbackConnectionsClick();
+  void onAllowOnlyLoopbackConnectionsClick();
+  void onIpCheckUpdate();
+  void onQueryTimeoutUpdate();
+
+  //
+  // Private helper methods
+  //
+
+  void updateButtonsState();
+  void updateCheckBoxesState();
+  void setListViewItemText(int index, IpAccessRule *control);
+
+private:
+  // Configuration
+  IpAccessControl *m_container;
+  ServerConfig *m_config;
+  // Child dialog
+  EditIpAccessRuleDialog m_editDialog;
+  // Controls
+  ListView m_list;
+  ::remoting::Window m_addButton;
+  ::remoting::Window m_editButton;
+  ::remoting::Window m_removeButton;
+  ::remoting::Window m_moveUpButton;
+  ::remoting::Window m_moveDownButton;
+  CheckBox m_defaultActionAccept;
+  CheckBox m_defaultActionRefuse;
+  CheckBox m_allowLoopbackConnections;
+  CheckBox m_onlyLoopbackConnections;
+  TextBox m_queryTimeout;
+  TextBox m_ip;
+  ::remoting::Window m_ipCheckResult;
+  SpinControl m_queryTimeoutSpin;
+  BaseDialog *m_parentDialog;
+};
+
+

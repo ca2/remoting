@@ -25,21 +25,21 @@
 #pragma once
 
 
-#include "gui/BaseDialog.h"
-//#include "gui/::remoting::Window.h"
-#include "gui/TextBox.h"
-#include "gui/ComboBox.h"
-#include "gui/ImagedButton.h"
-#include "gui/ProgressBar.h"
+#include "remoting/remoting_common/gui/BaseDialog.h"
+//#include "remoting/remoting_common/gui/::remoting::Window.h"
+#include "remoting/remoting_common/gui/TextBox.h"
+#include "remoting/remoting_common/gui/ComboBox.h"
+#include "remoting/remoting_common/gui/ImagedButton.h"
+#include "remoting/remoting_common/gui/ProgressBar.h"
 
-#include "remoting/ftp_common/FileInfo.h"
+#include "remoting/remoting_common/ftp_common/FileInfo.h"
 
-#include "io_lib/io_exception.h"
+#include "acme/exception/io.h"
 
 #include "FileInfoListView.h"
 #include "FileExistDialog.h"
-#include "thread/Thread.h"
-#include "remoting/ftp_client/FileTransferInterface.h"
+#include "remoting/remoting_common/thread/Thread.h"
+#include "remoting/remoting_common/ftp_client/FileTransferInterface.h"
 
 //#include <vector>
 

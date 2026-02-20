@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/util/CommonHeader.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
 
 #include "desktop/WinServiceDesktopFactory.h"
 #include "desktop/ApplicationDesktopFactory.h"
@@ -37,14 +37,14 @@
 
 #include "http-server-lib/HttpServer.h"
 
-#include "thread/ZombieKiller.h"
-#include "thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/ZombieKiller.h"
+#include "remoting/remoting_common/thread/LocalMutex.h"
 //#include "log_writer/LogWriter.h"
-#include "util/Singleton.h"
-#include "util/ListenerContainer.h"
+#include "remoting/remoting_common/util/Singleton.h"
+#include "remoting/remoting_common/util/ListenerContainer.h"
 #include "NewConnectionEvents.h"
 
-#include "server_config_lib/Configurator.h"
+#include "remoting/remoting_common/server_config/Configurator.h"
 
 #include "remoting_control_desktop/TvnServerInfo.h"
 #include "LogInitListener.h"

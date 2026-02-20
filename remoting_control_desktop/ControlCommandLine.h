@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "util/CommandLine.h"
-#include "util/CommandLineFormatException.h"
+#include "remoting/remoting_common/util/CommandLine.h"
+#include "remoting/remoting_common/util/CommandLineFormatException.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 
 

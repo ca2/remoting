@@ -22,12 +22,12 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/util/CommonHeader.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
 #include "remoting_node_desktop/NamingDefs.h"
 #include "HooksUpdateDetector.h"
 
-#include "win_system/UipiControl.h"
-//#include "win_system/Environment.h"
+#include "remoting/remoting_common/win_system/UipiControl.h"
+//#include "remoting/remoting_common/win_system/Environment.h"
 
 HooksUpdateDetector::HooksUpdateDetector(UpdateKeeper *updateKeeper,
                                          UpdateListener *updateListener, LogWriter *log)

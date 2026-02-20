@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "ConsolePoller.h"
-#include "server_config_lib/Configurator.h"
+#include "remoting/remoting_common/server_config/Configurator.h"
 
 ConsolePoller::ConsolePoller(UpdateKeeper *updateKeeper,
                              UpdateListener *updateListener,

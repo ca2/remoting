@@ -26,7 +26,7 @@
 
 
 #include "AuthTracker.h"
-#include "win_system/WindowsEvent.h"
+#include "remoting/remoting_common/win_system/WindowsEvent.h"
 
 // This class will be authenticate insert an time interval between
 // failure trying of authentications.

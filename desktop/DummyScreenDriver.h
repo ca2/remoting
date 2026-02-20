@@ -28,8 +28,8 @@
 //#include "log_writer/LogWriter.h"
 #include "UpdateKeeper.h"
 #include "UpdateListener.h"
-#include "thread/Thread.h"
-#include "win_system/WindowsEvent.h"
+#include "remoting/remoting_common/thread/Thread.h"
+#include "remoting/remoting_common/win_system/WindowsEvent.h"
 
 
 class DummyScreenDriver : public ScreenDriver, Thread

@@ -23,10 +23,10 @@
 //
 
 #include "ScreenHooks.h"
-#include "remoting/util/CommonHeader.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
 #include "remoting_node_desktop/NamingDefs.h"
-#include "region/Point.h"
-#include "region/Region.h"
+#include "remoting/remoting_common/region/Point.h"
+#include "remoting/remoting_common/region/Region.h"
 
 // Pre-definition:
 LRESULT CALLBACK callWndRetProc(int nCode, WPARAM wParam, LPARAM lParam);

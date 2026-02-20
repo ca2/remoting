@@ -26,8 +26,8 @@
 
 
 
-#include "region/Point.h"
-#include "remoting/util/CommonHeader.h"
+#include "remoting/remoting_common/region/Point.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
 //#include <list>
 #include "acme/prototype/geometry2d/rectangle.h"
 

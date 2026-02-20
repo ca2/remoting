@@ -25,11 +25,11 @@
 #pragma once
 
 
-#include "thread/GuiThread.h"
+#include "remoting/remoting_common/thread/GuiThread.h"
 #include "BlockingGate.h"
 #include "ClientListener.h"
-#include "util/AnEventListener.h"
-#include "win_system/WindowsEvent.h"
+#include "remoting/remoting_common/util/AnEventListener.h"
+#include "remoting/remoting_common/win_system/WindowsEvent.h"
 //#include "log_writer/LogWriter.h"
 //#include <map>
 

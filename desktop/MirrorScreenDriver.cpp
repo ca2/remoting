@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "MirrorScreenDriver.h"
-#include "util/Exception.h"
+#include "remoting/remoting_common/util/Exception.h"
 
 MirrorScreenDriver::MirrorScreenDriver(UpdateKeeper *updateKeeper,
                                        UpdateListener *updateListener,

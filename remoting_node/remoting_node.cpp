@@ -22,10 +22,10 @@
 //-------------------------------------------------------------------------
 //
 
-#include "remoting/util/CommonHeader.h"
-#include "util/winhdr.h"
-#include "util/CommandLine.h"
-#include "win_system/WinCommandLineArgs.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
+#include "remoting/remoting_common/util/winhdr.h"
+#include "remoting/remoting_common/util/CommandLine.h"
+#include "remoting/remoting_common/win_system/WinCommandLineArgs.h"
 
 #include "remoting_node_desktop/TvnService.h"
 #include "remoting_node_desktop/TvnServerApplication.h"

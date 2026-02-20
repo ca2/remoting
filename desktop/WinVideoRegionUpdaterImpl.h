@@ -25,14 +25,14 @@
 #pragma once
 
 
-//#include "util/::earth::time.h"
-#include "region/Region.h"
-//#include "util/::string_array.h"
+//#include "remoting/remoting_common/util/::earth::time.h"
+#include "remoting/remoting_common/region/Region.h"
+//#include "remoting/remoting_common/util/::string_array.h"
 #include "ScreenDriver.h"
-#include "thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/LocalMutex.h"
 //#include "log_writer/LogWriter.h"
-#include "thread/Thread.h"
-#include "win_system/WindowsEvent.h"
+#include "remoting/remoting_common/thread/Thread.h"
+#include "remoting/remoting_common/win_system/WindowsEvent.h"
 
 class WinVideoRegionUpdaterImpl : public ScreenDriver, Thread
 {

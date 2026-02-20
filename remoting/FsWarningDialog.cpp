@@ -23,8 +23,8 @@
 //
 #include "framework.h"
 #include "FsWarningDialog.h"
-#include "client_config_lib/ViewerConfig.h"
-#include "client_config_lib/ViewerSettingsManager.h"
+#include "remoting/remoting_common/client_config/ViewerConfig.h"
+#include "remoting/remoting_common/client_config/ViewerSettingsManager.h"
 
 FsWarningDialog::FsWarningDialog()
 : BaseDialog(IDD_FS_WARNING)

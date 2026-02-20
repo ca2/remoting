@@ -26,7 +26,7 @@
 #include "SocketIPv4Transport.h"
 #include "NamedPipeTransport.h"
 
-#include "win_system/SecurityAttributes.h"
+#include "remoting/remoting_common/win_system/SecurityAttributes.h"
 
 Transport *TransportFactory::createSocketClientTransport(const ::scoped_string & scopedstrConnectHost,
                                                          unsigned int connectPort)
@@ -72,5 +72,5 @@ Transport *TransportFactory::createPipeServerTransport(const ::scoped_string & s
   pipeSecurity->setInheritable();
   pipeSecurity->shareToAllUsers();
 
-  return new NamedPipeTransport(new PipeServer(name, 0, pipeSecurity));
+  return new NamedPipeTransport(new PipeServer(scopedstrName, 0, pipeSecurity));
 }

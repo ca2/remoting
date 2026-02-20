@@ -26,10 +26,10 @@
 
 
 #include "ViewPortState.h"
-#include "rfb/FrameBuffer.h"
+#include "remoting/remoting_common/rfb/FrameBuffer.h"
 #include "desktop/Desktop.h"
-#include "thread/LocalMutex.h"
-//#include "util/::earth::time.h"
+#include "remoting/remoting_common/thread/LocalMutex.h"
+//#include "remoting/remoting_common/util/::earth::time.h"
 //#include "log_writer/LogWriter.h"
 
 // This class calculates actual view port rectangle.

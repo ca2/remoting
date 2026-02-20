@@ -23,9 +23,9 @@
 //
 #include "framework.h"
 #include "ReconnectingChannel.h"
-//#include "util/::earth::time.h"
+//#include "remoting/remoting_common/util/::earth::time.h"
 #include "desktop_ipc/ReconnectException.h"
-#include "thread/AutoLock.h"
+#include "remoting/remoting_common/thread/AutoLock.h"
 
 ReconnectingChannel::ReconnectingChannel(unsigned int timeOut, LogWriter *log)
 : m_timeOut(timeOut),

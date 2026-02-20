@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/Exception.h"
+#include "remoting/remoting_common/util/Exception.h"
 
 /**
  * ::remoting::Exception on remote side class.

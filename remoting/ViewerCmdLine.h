@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "win_system/WinProcessCommandLine.h"
-#include "client_config_lib/ViewerConfig.h"
-#include "util/CommandLineFormatException.h"
-#include "util/CommandLineFormatHelp.h"
+#include "remoting/remoting_common/win_system/WinProcessCommandLine.h"
+#include "remoting/remoting_common/client_config/ViewerConfig.h"
+#include "remoting/remoting_common/util/CommandLineFormatException.h"
+#include "remoting/remoting_common/util/CommandLineFormatHelp.h"
 #include "HelpDialog.h"
 #include "ConnectionData.h"
 

@@ -23,8 +23,8 @@
 //
 #include "framework.h"
 #include "ViewerCmdLine.h"
-#include "config_lib/IniFileSettingsManager.h"
-#include "win_system/SystemException.h"
+#include "remoting/remoting_common/config/IniFileSettingsManager.h"
+#include "remoting/remoting_common/win_system/SystemException.h"
 
 const char ViewerCmdLine::HELP[] = "help";
 const char ViewerCmdLine::HELP_SHORT[] = "h";

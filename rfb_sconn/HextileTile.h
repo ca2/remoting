@@ -26,7 +26,7 @@
 INCLUDED__
 
 #include "TightPalette.h"
-#include "util/inttypes.h"
+#include "remoting/remoting_common/util/inttypes.h"
 #include <crtdbg.h>
 
 

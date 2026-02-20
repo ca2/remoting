@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "ConnectionTimer.h"
-#include "thread/AutoLock.h"
+#include "remoting/thread/AutoLock.h"
 
 ConnectionTimer::ConnectionTimer(TimerListener *timerListener,
                                  unsigned int timeOut)

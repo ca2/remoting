@@ -3,7 +3,7 @@
 
 
 
-#include "remoting/common/_.h"
+#include "remoting/_.h"
 
 
 #if defined(_client_config_lib)

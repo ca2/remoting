@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "remoting/util/CommonHeader.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
 #include "DesktopConfigLocal.h"
 #include "desktop/WallpaperUtil.h"
-#include "thread/GuiThread.h"
+#include "remoting/remoting_common/thread/GuiThread.h"
 #include "DesktopBaseImpl.h"
 #include "Win32ScreenDriverFactory.h"
 //#include "log_writer/LogWriter.h"

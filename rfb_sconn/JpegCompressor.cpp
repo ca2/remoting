@@ -24,8 +24,8 @@
 #include "framework.h"
 #include "JpegCompressor.h"
 
-//#include "util/::string.h"
-#include "util/Exception.h"
+//#include "remoting/remoting_common/util/::string.h"
+#include "remoting/remoting_common/util/Exception.h"
 
 const int StandardJpegCompressor::ALLOC_CHUNK_SIZE = 65536;
 const int StandardJpegCompressor::DEFAULT_JPEG_QUALITY = 75;

@@ -25,11 +25,11 @@
 #pragma once
 
 
-#include "win_system/ParentProcess.h"
+#include "remoting/remoting_common/win_system/ParentProcess.h"
 #include "ParentEventsListener.h"
-#include "win_system/WindowsEvent.h"
-#include "remoting/util/CommonHeader.h"
-#include "thread/Thread.h"
+#include "remoting/remoting_common/win_system/WindowsEvent.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
+#include "remoting/remoting_common/thread/Thread.h"
 #include <Tlhelp32.h>
 
 class ParentWatcher : private Thread

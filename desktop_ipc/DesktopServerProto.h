@@ -25,12 +25,12 @@
 #pragma once
 
 
-#include "util/inttypes.h"
-#include "rfb/FrameBuffer.h"
-#include "region/Region.h"
+#include "remoting/remoting_common/util/inttypes.h"
+#include "remoting/remoting_common/rfb/FrameBuffer.h"
+#include "remoting/remoting_common/region/Region.h"
 
-#include "region/Point.h"
-//#include "util/::earth::time.h"
+#include "remoting/remoting_common/region/Point.h"
+//#include "remoting/remoting_common/util/::earth::time.h"
 
 #include "BlockingGate.h"
 

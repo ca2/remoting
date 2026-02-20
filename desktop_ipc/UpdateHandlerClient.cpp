@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "win_system/PipeClient.h"
+#include "remoting/remoting_common/win_system/PipeClient.h"
 #include "UpdateHandlerClient.h"
 #include "ReconnectException.h"
 

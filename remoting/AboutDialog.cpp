@@ -23,14 +23,14 @@
 //
 #include "framework.h"
 #include "AboutDialog.h"
-#include "win_system/Shell.h"
-#include "win_system/VersionInfo.h"
-//#include "win_system/Environment.h"
-//#include "gui/::remoting::Window.h"
+#include "remoting/remoting_common/win_system/Shell.h"
+#include "remoting/remoting_common/win_system/VersionInfo.h"
+//#include "remoting/remoting_common/win_system/Environment.h"
+//#include "remoting/remoting_common/gui/::remoting::Window.h"
 #include "BuildTime.h"
 #include "resource.h"
 #include "acme/filesystem/filesystem/file_context.h"
-#include "remoting/common/remoting.h"
+#include "remoting/remoting_common/remoting.h"
 
 AboutDialog::AboutDialog()
 : BaseDialog(IDD_ABOUT_DIALOG)

@@ -26,7 +26,7 @@
 
 
 #include "WinDxgiOutput1.h"
-#include "rfb/CursorShape.h"
+#include "remoting/remoting_common/rfb/CursorShape.h"
 
 #include <d3d11.h>
 #include <DXGI1_2.h>

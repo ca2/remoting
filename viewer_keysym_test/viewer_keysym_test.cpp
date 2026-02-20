@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "KeySymTest.h"
-#include "util/Exception.h"
+#include "remoting/remoting_common/util/Exception.h"
 #include <stdio.h>
 
 int _tmain(int argc, TCHAR *argv[])

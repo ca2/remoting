@@ -27,7 +27,7 @@
 
 //#include <list>
 #include "RfbServer.h"
-#include "server_config_lib/PortMappingContainer.h"
+#include "remoting/remoting_common/server_config/PortMappingContainer.h"
 
 class ExtraRfbServers
 {

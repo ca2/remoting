@@ -27,9 +27,9 @@
 
 #include "UserInput.h"
 #include "WindowsClipboard.h"
-#include "util/Keymap.h"
-#include "win_system/InputInjector.h"
-#include "win_system/WindowsDisplays.h"
+#include "remoting/remoting_common/util/Keymap.h"
+#include "remoting/remoting_common/win_system/InputInjector.h"
+#include "remoting/remoting_common/win_system/WindowsDisplays.h"
 //#include "log_writer/LogWriter.h"
 
 class WindowsUserInput : public UserInput

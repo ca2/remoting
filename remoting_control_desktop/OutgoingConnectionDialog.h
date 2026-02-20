@@ -25,15 +25,15 @@
 #pragma once
 
 
-#include "util/winhdr.h"
+#include "remoting/remoting_common/util/winhdr.h"
 
-#include "gui/BaseDialog.h"
-#include "gui/ComboBox.h"
-#include "gui/CheckBox.h"
+#include "remoting/remoting_common/gui/BaseDialog.h"
+#include "remoting/remoting_common/gui/ComboBox.h"
+#include "remoting/remoting_common/gui/CheckBox.h"
 
-#include "win_system/RegistryKey.h"
+#include "remoting/remoting_common/win_system/RegistryKey.h"
 
-#include "config_lib/ConnectionHistory.h"
+#include "remoting/remoting_common/config/ConnectionHistory.h"
 
 /**
  * Outgoing connection dialog. Just allows user to put connection string

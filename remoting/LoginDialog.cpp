@@ -25,8 +25,8 @@
 #include "LoginDialog.h"
 #include "NamingDefs.h"
 #include "OptionsDialog.h"
-#include "remoting/common/remoting.h"
-#include "win_system/Shell.h"
+#include "remoting/remoting_common/remoting.h"
+#include "remoting/remoting_common/win_system/Shell.h"
 
 LoginDialog::LoginDialog(remoting_impact *viewer)
 : BaseDialog(IDD_LOGINDIALOG),

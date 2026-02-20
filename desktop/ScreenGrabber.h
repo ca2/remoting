@@ -27,9 +27,9 @@
 
 
 
-#include "region/Point.h"
-#include "rfb/PixelFormat.h"
-#include "rfb/FrameBuffer.h"
+#include "remoting/remoting_common/region/Point.h"
+#include "remoting/remoting_common/rfb/PixelFormat.h"
+#include "remoting/remoting_common/rfb/FrameBuffer.h"
 
 //
 // An abstract interface for screen grabbing.

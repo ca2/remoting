@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ControlTrayIcon.h"
 #include "ResourceStrings.h"
-#include "gui/BaseWindow.h"
+#include "remoting/remoting_common/gui/BaseWindow.h"
 
 UINT ControlTrayIcon::WM_USER_TASKBAR;
 

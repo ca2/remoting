@@ -32,15 +32,15 @@
 #include "OptionsDialog.h"
 #include "ScaleManager.h"
 #include "ViewerMenu.h"
-#include "gui/ToolBar.h"
+#include "remoting/remoting_common/gui/ToolBar.h"
 //#include "log_writer/LogWriter.h"
-#include "viewer_core/FileTransferCapability.h"
-#include "viewer_core/RemoteViewerCore.h"
-#include "viewer_core/CoreEventsAdapter.h"
-#include "viewer_core/VncAuthentication.h"
-#include "win_system/SystemInformation.h"
-#include "win_system/WindowsApplication.h"
-#include "win_system/WinHooks.h"
+#include "remoting/remoting_common/viewer_core/FileTransferCapability.h"
+#include "remoting/remoting_common/viewer_core/RemoteViewerCore.h"
+#include "remoting/remoting_common/viewer_core/CoreEventsAdapter.h"
+#include "remoting/remoting_common/viewer_core/VncAuthentication.h"
+#include "remoting/remoting_common/win_system/SystemInformation.h"
+#include "remoting/remoting_common/win_system/WindowsApplication.h"
+#include "remoting/remoting_common/win_system/WinHooks.h"
 
 class ViewerWindow : public BaseWindow,
                      public CoreEventsAdapter,

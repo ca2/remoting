@@ -22,12 +22,12 @@
 //-------------------------------------------------------------------------
 //
 
-#include "win_system/RegistryKey.h"
+#include "remoting/remoting_common/win_system/RegistryKey.h"
 #include "MsiProperties.h"
-//#include "util/::string.h"
-#include "util/VncPassCrypt.h"
-#include "server_config_lib/Configurator.h"
-#include "config_lib/RegistrySettingsManager.h"
+//#include "remoting/remoting_common/util/::string.h"
+#include "remoting/remoting_common/util/VncPassCrypt.h"
+#include "remoting/remoting_common/server_config/Configurator.h"
+#include "remoting/remoting_common/config/RegistrySettingsManager.h"
 #include "remoting_node_desktop/NamingDefs.h"
 
 #include <msiquery.h>

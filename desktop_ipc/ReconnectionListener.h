@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "io_lib/Channel.h"
+#include "remoting/remoting_common/io/Channel.h"
 
 class ReconnectionListener
 {

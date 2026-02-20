@@ -33,9 +33,9 @@
 #include "ControlCommand.h"
 #include "UpdateLocalConfigCommand.h"
 
-#include "util/ResourceLoader.h"
-#include "util/StringTable.h"
-#include "util/MacroCommand.h"
+#include "remoting/remoting_common/util/ResourceLoader.h"
+#include "remoting/remoting_common/util/StringTable.h"
+#include "remoting/remoting_common/util/MacroCommand.h"
 
 #include "remoting_node/resource.h"
 

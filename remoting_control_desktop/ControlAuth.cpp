@@ -23,12 +23,12 @@
 //
 #include "framework.h"
 #include "ControlAuth.h"
-//#include "util/::string.h"
+//#include "remoting/remoting_common/util/::string.h"
 #include "remoting_control_desktop/ControlProto.h"
 
-#include "thread/AutoLock.h"
+#include "remoting/remoting_common/thread/AutoLock.h"
 
-#include "util/DesCrypt.h"
+#include "remoting/remoting_common/util/DesCrypt.h"
 #include <algorithm>
 
 ControlAuth::ControlAuth(ControlGate *gate, const ::scoped_string & scopedstrPassword)

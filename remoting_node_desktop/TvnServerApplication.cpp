@@ -26,16 +26,16 @@
 #include "ServerCommandLine.h"
 #include "TvnServerHelp.h"
 
-#include "thread/GlobalMutex.h"
+#include "remoting/remoting_common/thread/GlobalMutex.h"
 
-#include "util/ResourceLoader.h"
-#include "util/StringTable.h"
+#include "remoting/remoting_common/util/ResourceLoader.h"
+#include "remoting/remoting_common/util/StringTable.h"
 #include "remoting_node_desktop/NamingDefs.h"
-#include "win_system/WinCommandLineArgs.h"
+#include "remoting/remoting_common/win_system/WinCommandLineArgs.h"
 
 #include "remoting_node/resource.h"
 
-#include "win_system/RegistryKey.h"
+#include "remoting/remoting_common/win_system/RegistryKey.h"
 
 TvnServerApplication::TvnServerApplication(HINSTANCE hInstance,
                                            const ::scoped_string & scopedstrwindowClassName,

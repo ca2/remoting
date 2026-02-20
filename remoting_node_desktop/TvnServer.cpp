@@ -25,21 +25,21 @@
 #include "TvnServer.h"
 #include "WsConfigRunner.h"
 #include "AdditionalActionApplication.h"
-#include "win_system/CurrentConsoleProcess.h"
-//#include "win_system/Environment.h"
+#include "remoting/remoting_common/win_system/CurrentConsoleProcess.h"
+//#include "remoting/remoting_common/win_system/Environment.h"
 
-#include "server_config_lib/Configurator.h"
+#include "remoting/remoting_common/server_config/Configurator.h"
 
-#include "thread/GlobalMutex.h"
+#include "remoting/remoting_common/thread/GlobalMutex.h"
 
 #include "remoting_node/resource.h"
 
-#include "wsconfig_lib/TvnLogFilename.h"
+#include "remoting/remoting_common/wsconfig/TvnLogFilename.h"
 
-#include "network/socket/WindowsSocket.h"
+#include "remoting/remoting_common/network/socket/WindowsSocket.h"
 
-#include "util/StringTable.h"
-//#include "util/::string.h"
+#include "remoting/remoting_common/util/StringTable.h"
+//#include "remoting/remoting_common/util/::string.h"
 #include "remoting_node_desktop/NamingDefs.h"
 
 #include "file_lib/::file::item.h"

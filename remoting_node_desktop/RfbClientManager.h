@@ -25,12 +25,12 @@
 #pragma once
 
 
-#include "util/ListenerContainer.h"
+#include "remoting/remoting_common/util/ListenerContainer.h"
 #include "rfb_sconn/RfbClient.h"
-#include "thread/AutoLock.h"
-#include "thread/Thread.h"
-#include "thread/LocalMutex.h"
-#include "win_system/WindowsEvent.h"
+#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/Thread.h"
+#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/win_system/WindowsEvent.h"
 #include "desktop/Desktop.h"
 #include "desktop/DesktopFactory.h"
 //#include "log_writer/LogWriter.h"

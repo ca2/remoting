@@ -23,7 +23,7 @@
 //
 
 #include "ServerCommandLine.h"
-#include "util/CommandLine.h"
+#include "remoting/remoting_common/util/CommandLine.h"
 
 ServerCommandLine::ServerCommandLine()
 {

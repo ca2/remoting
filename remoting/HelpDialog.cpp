@@ -24,8 +24,8 @@
 #include "framework.h"
 #include "HelpDialog.h"
 
-#include "util/ResourceLoader.h"
-#include "remoting/remoting/resource.h"
+#include "remoting/remoting_common/util/ResourceLoader.h"
+#include "resource.h"
 
 HelpDialog::HelpDialog() 
 : BaseDialog(IDD_CMDLINE)

@@ -28,21 +28,21 @@
 
 #include "remoting_control_desktop/ControlProto.h"
 
-#include "network/socket/SocketStream.h"
+#include "remoting/remoting_common/network/socket/SocketStream.h"
 
-#include "server_config_lib/Configurator.h"
+#include "remoting/remoting_common/server_config/Configurator.h"
 
-#include "util/VncPassCrypt.h"
+#include "remoting/remoting_common/util/VncPassCrypt.h"
 
-#include "rfb/HostPath.h"
+#include "remoting/remoting_common/rfb/HostPath.h"
 
-#include "win_system/WTS.h"
+#include "remoting/remoting_common/win_system/WTS.h"
 
 #include "remoting_node/resource.h"
 
 #include <time.h>
-//#include "util/::string.h"
-#include "util/MemUsage.h"
+//#include "remoting/remoting_common/util/::string.h"
+#include "remoting/remoting_common/util/MemUsage.h"
 
 
 const unsigned int ControlClient::REQUIRES_AUTH[] = { ControlProto::ADD_CLIENT_MSG_ID,

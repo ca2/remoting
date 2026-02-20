@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/CharDefs.h"
+#include "remoting/remoting_common/util/CharDefs.h"
 
 //
 // The LogWriter class defines abstract low-level interface for logging

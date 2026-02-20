@@ -23,15 +23,15 @@
 //
 #include "framework.h"
 #include "DesktopWinImpl.h"
-#include "server_config_lib/Configurator.h"
+#include "remoting/remoting_common/server_config/Configurator.h"
 #include "desktop_ipc/UpdateHandlerClient.h"
 #include "UpdateHandlerImpl.h"
 #include "WindowsInputBlocker.h"
 #include "desktop_ipc/UserInputClient.h"
 #include "SasUserInput.h"
 #include "WindowsUserInput.h"
-//#include "win_system/Environment.h"
-#include "win_system/WindowsDisplays.h"
+//#include "remoting/remoting_common/win_system/Environment.h"
+#include "remoting/remoting_common/win_system/WindowsDisplays.h"
 
 DesktopWinImpl::DesktopWinImpl(ClipboardListener *extClipListener,
                        UpdateSendingListener *extUpdSendingListener,

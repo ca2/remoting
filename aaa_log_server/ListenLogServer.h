@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "thread/Thread.h"
-#include "win_system/PipeServer.h"
+#include "remoting/thread/Thread.h"
+#include "remoting/win_system/PipeServer.h"
 #include "ConnectionListener.h"
 
 class ListenLogServer : private Thread

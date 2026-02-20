@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "LogServer.h"
-#include "thread/AutoLock.h"
+#include "remoting/thread/AutoLock.h"
 
 LogServer::LogServer(const ::scoped_string & scopedstrPublicPipeName)
 : m_listenLogServer(0),

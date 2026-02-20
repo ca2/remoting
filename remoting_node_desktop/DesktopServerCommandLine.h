@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "util/CommandLine.h"
-#include "util/Exception.h"
+#include "remoting/remoting_common/util/CommandLine.h"
+#include "remoting/remoting_common/util/Exception.h"
 
 /**
  * Desktop server command line parser.

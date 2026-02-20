@@ -26,7 +26,7 @@
 
 
 
-#include "win_system/DynamicLibrary.h"
+#include "remoting/remoting_common/win_system/DynamicLibrary.h"
 //#include "log_writer/LogWriter.h"
 
 #include <d3d11.h>

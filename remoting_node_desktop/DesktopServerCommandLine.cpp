@@ -24,7 +24,7 @@
 
 #include "DesktopServerCommandLine.h"
 
-#include "util/StringParser.h"
+#include "remoting/remoting_common/util/StringParser.h"
 
 const TCHAR DesktopServerCommandLine::DESKTOP_SERVER_KEY[] = "-desktopserver";
 const TCHAR DesktopServerCommandLine::LOG_DIR_KEY[] = "-logdir";

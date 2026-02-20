@@ -25,10 +25,10 @@
 #pragma once
 
 
-//#include "util/::earth::time.h"
+//#include "remoting/remoting_common/util/::earth::time.h"
 //#include <vector>
 //#include <map>
-#include "thread/LocalMutex.h"
+#include "remoting/thread/LocalMutex.h"
 
 
 struct ProcessorTimes {

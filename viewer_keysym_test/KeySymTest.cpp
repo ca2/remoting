@@ -23,8 +23,8 @@
 //
 #include "framework.h"
 #include "KeySymTest.h"
-#include "util/Exception.h"
-#include "util/StringParser.h"
+#include "remoting/remoting_common/util/Exception.h"
+#include "remoting/remoting_common/util/StringParser.h"
 
 const TCHAR KeySymTest::VALID_WORD_LETTERS[] = "zyxwvutsrqponmlkjihgfedcba"
                                                "ZYXWVUTSRQPONMLKJIHGFEDCBA"

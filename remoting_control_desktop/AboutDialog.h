@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "gui/BaseDialog.h"
+#include "remoting/remoting_common/gui/BaseDialog.h"
 
 /**
  * TightVNC server about dialog.

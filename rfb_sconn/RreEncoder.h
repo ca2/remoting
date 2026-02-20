@@ -26,7 +26,7 @@
 INCLUDED__
 
 #include "Encoder.h"
-#include "region/Region.h"
+#include "remoting/remoting_common/region/Region.h"
 
 class RreEncoder : public Encoder
 {

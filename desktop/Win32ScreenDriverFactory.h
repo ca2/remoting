@@ -26,7 +26,7 @@
 
 
 #include "ScreenDriverFactory.h"
-#include "server_config_lib/ServerConfig.h"
+#include "remoting/remoting_common/server_config/ServerConfig.h"
 
 class Win32ScreenDriverFactory : public ScreenDriverFactory
 {

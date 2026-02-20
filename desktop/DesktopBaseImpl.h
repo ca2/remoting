@@ -27,7 +27,7 @@
 
 #include "Desktop.h"
 #include "UpdateHandler.h"
-#include "server_config_lib/ConfigReloadListener.h"
+#include "remoting/remoting_common/server_config/ConfigReloadListener.h"
 #include "UserInput.h"
 // External listeners
 #include "AbnormDeskTermListener.h"

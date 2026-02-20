@@ -23,8 +23,8 @@
 //
 #include "framework.h"
 #include "DesktopServerProto.h"
-#include "server_config_lib/Configurator.h"
-#include "util/Exception.h"
+#include "remoting/remoting_common/server_config/Configurator.h"
+#include "remoting/remoting_common/util/Exception.h"
 
 DesktopServerProto::DesktopServerProto(BlockingGate *forwGate)
 : m_forwGate(forwGate)

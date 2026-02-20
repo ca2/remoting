@@ -23,10 +23,10 @@
 //
 #include "framework.h"
 #include "remoting_impact.h"
-#include "network/socket/WindowsSocket.h"
-#include "util/ResourceLoader.h"
+#include "remoting/remoting_common/network/socket/WindowsSocket.h"
+#include "remoting/remoting_common/util/ResourceLoader.h"
 #include "resource.h"
-#include "remoting/common/remoting.h"
+#include "remoting/remoting_common/remoting.h"
 
 
 remoting_impact::remoting_impact(::particle * pparticle, HINSTANCE appInstance, const ::scoped_string & scopedstrwindowClassName,

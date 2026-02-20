@@ -22,10 +22,10 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "config_lib/IniFileSettingsManager.h"
-#include "util/Exception.h"
-#include "util/ResourceLoader.h"
-#include "rfb/StandardPixelFormatFactory.h"
+#include "remoting/remoting_common/config/IniFileSettingsManager.h"
+#include "remoting/remoting_common/util/Exception.h"
+#include "remoting/remoting_common/util/ResourceLoader.h"
+#include "remoting/remoting_common/rfb/StandardPixelFormatFactory.h"
 
 #include "FsWarningDialog.h"
 #include "NamingDefs.h"
@@ -34,7 +34,7 @@
 #include "acme/constant/id.h"
 #include "acme/filesystem/file/item.h"
 #include "acme/platform/application.h"
-#include "remoting/common/remoting.h"
+#include "remoting/remoting_common/remoting.h"
 
 #include <commdlg.h>
 

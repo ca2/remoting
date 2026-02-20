@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "remoting/util/CommonHeader.h"
-#include "util/winhdr.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
+#include "remoting/remoting_common/util/winhdr.h"
 
-#include "win_system/WindowsApplication.h"
+#include "remoting/remoting_common/win_system/WindowsApplication.h"
 
 #include "TvnServer.h"
 #include "TvnServerListener.h"

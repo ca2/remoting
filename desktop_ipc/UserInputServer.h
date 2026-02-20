@@ -25,11 +25,11 @@
 #pragma once
 
 
-#include "remoting/util/CommonHeader.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
 #include "DesktopServerProto.h"
 #include "ClientListener.h"
 #include "desktop/WindowsUserInput.h"
-#include "win_system/WindowsEvent.h"
+#include "remoting/remoting_common/win_system/WindowsEvent.h"
 #include "DesktopSrvDispatcher.h"
 //#include "log_writer/LogWriter.h"
 

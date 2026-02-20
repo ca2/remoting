@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "WinDxCriticalException.h"
 #include "WinDxRecoverableException.h"
-#include "rfb/StandardPixelFormatFactory.h"
+#include "remoting/remoting_common/rfb/StandardPixelFormatFactory.h"
 #include "WinCursorShapeUtils.h"
 
 // The header including of this cpp file must be at last place to avoid build conflicts.

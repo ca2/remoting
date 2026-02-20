@@ -26,12 +26,12 @@
 
 
 #include "remoting/util/CommonHeader.h"
-#include "io_lib/Channel.h"
-#include "io_lib/DataInputStream.h"
-#include "io_lib/DataOutputStream.h"
-#include "thread/Thread.h"
+#include "remoting/io/Channel.h"
+#include "remoting/io/DataInputStream.h"
+#include "remoting/io/DataOutputStream.h"
+#include "remoting/thread/Thread.h"
 #include "log_writer/LogWriter.h"
-#include "thread/AutoLock.h"
+#include "remoting/thread/AutoLock.h"
 #include "log_writer/LogDump.h"
 
 class ClientLogWriter : public LogWriter, private Thread, public LogDump

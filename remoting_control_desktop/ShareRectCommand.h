@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "util/Command.h"
+#include "remoting/remoting_common/util/Command.h"
 #include "ControlProxy.h"
 
 class ShareRectCommand : public Command

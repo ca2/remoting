@@ -24,8 +24,8 @@
 #include "framework.h"
 #include "WinFile.h"
 #include "acme/operating_system/windows_common/_string.h"
-#include "win_system/SystemException.h"
-//#include "win_system/Environment.h"
+#include "remoting/win_system/SystemException.h"
+//#include "remoting/win_system/Environment.h"
 #include "EOFException.h"
 
 

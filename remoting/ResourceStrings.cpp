@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "ResourceStrings.h"
-#include "util/ResourceLoader.h"
+#include "remoting/remoting_common/util/ResourceLoader.h"
 
 ResourceStrings::ResourceStrings() 
 : m_min(0), 

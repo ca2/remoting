@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "SocketIPv4Transport.h"
 
-#include "network/socket/SocketStream.h"
+#include "remoting/remoting_common/network/socket/SocketStream.h"
 
 SocketIPv4Transport::SocketIPv4Transport(SocketIPv4 *socket)
 : m_socket(socket)

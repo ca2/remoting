@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "rfb/FrameBuffer.h"
+#include "remoting/remoting_common/rfb/FrameBuffer.h"
 #include <DXGI1_2.h>
 //#include <vector>
 

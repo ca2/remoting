@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "io_lib/DataOutputStream.h"
-#include "thread/LocalMutex.h"
+#include "remoting/remoting_common/io/DataOutputStream.h"
+#include "remoting/remoting_common/thread/LocalMutex.h"
 
 class BlockingOutputGate : public LocalMutex, public DataOutputStream
 {

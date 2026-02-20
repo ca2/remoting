@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "win_system/LocalWindowsApplication.h"
+#include "remoting/remoting_common/win_system/LocalWindowsApplication.h"
 
-#include "win_system/SystemException.h"
+#include "remoting/remoting_common/win_system/SystemException.h"
 
 /**
  * Application that shows "Accept / Reject rfb connection dialog" to user

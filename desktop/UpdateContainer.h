@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "region/Region.h"
-#include "region/Point.h"
+#include "remoting/remoting_common/region/Region.h"
+#include "remoting/remoting_common/region/Point.h"
 
 class UpdateContainer
 {

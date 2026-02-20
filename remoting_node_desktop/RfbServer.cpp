@@ -23,7 +23,7 @@
 //
 
 #include "RfbServer.h"
-#include "server_config_lib/Configurator.h"
+#include "remoting/remoting_common/server_config/Configurator.h"
 
 RfbServer::RfbServer(const ::scoped_string & scopedstrBindHost, unsigned short bindPort,
                      RfbClientManager *clientManager,

@@ -25,12 +25,12 @@
 #pragma once
 
 
-//////#include "util/::string.h"
+//////#include "remoting/remoting_common/util/::string.h"
 
-#include "region/Region.h"
-#include "rfb/PixelFormat.h"
-#include "rfb/FrameBuffer.h"
-#include "fb_update_sender/UpdateRequestListener.h"
+#include "remoting/remoting_common/region/Region.h"
+#include "remoting/remoting_common/rfb/PixelFormat.h"
+#include "remoting/remoting_common/rfb/FrameBuffer.h"
+#include "remoting/remoting_common/fb_update_sender/UpdateRequestListener.h"
 //#include <vector>
 
 // This class is a public interface to a desktop.

@@ -25,11 +25,11 @@
 #pragma once
 
 
-#include "util/Exception.h"
-#include "util/Singleton.h"
+#include "remoting/remoting_common/util/Exception.h"
+#include "remoting/remoting_common/util/Singleton.h"
 //#include "log_writer/LogWriter.h"
 
-#include "win_system/Impersonator.h"
+#include "remoting/remoting_common/win_system/Impersonator.h"
 
 #include "desktop/Desktop.h"
 

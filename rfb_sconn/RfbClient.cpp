@@ -24,16 +24,16 @@
 #include "framework.h"
 #include "acme/_operating_system.h"
 #include "RfbClient.h"
-#include "thread/AutoLock.h"
+#include "remoting/remoting_common/thread/AutoLock.h"
 #include "RfbCodeRegistrator.h"
 #include "ft_server_lib/FileTransferRequestHandler.h"
 #include "EchoExtensionRequestHandler.h"
-#include "network/socket/SocketStream.h"
+#include "remoting/remoting_common/network/socket/SocketStream.h"
 #include "RfbInitializer.h"
 #include "ClientAuthListener.h"
-#include "server_config_lib/Configurator.h"
-#include "io_lib/BufferedInputStream.h"
-#include "util/MemUsage.h"
+#include "remoting/remoting_common/server_config/Configurator.h"
+#include "remoting/remoting_common/io/BufferedInputStream.h"
+#include "remoting/remoting_common/util/MemUsage.h"
 
 RfbClient::RfbClient(NewConnectionEvents *newConnectionEvents,
                      SocketIPv4 *socket,

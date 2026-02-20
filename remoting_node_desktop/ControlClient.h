@@ -31,7 +31,7 @@
 #include "remoting_control_desktop/ControlAuthException.h"
 #include "remoting_control_desktop/Transport.h"
 #include "ControlAppAuthenticator.h"
-#include "thread/ThreadCollector.h"
+#include "remoting/remoting_common/thread/ThreadCollector.h"
 //#include "log_writer/LogWriter.h"
 
 

@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "GateKicker.h"
-#include "thread/AutoLock.h"
+#include "remoting/remoting_common/thread/AutoLock.h"
 
 GateKicker::GateKicker(BlockingGate *gate)
 : m_gate(gate)

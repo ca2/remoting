@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "Win32ScreenDriverBaseImpl.h"
-#include "util/Exception.h"
+#include "remoting/remoting_common/util/Exception.h"
 
 Win32ScreenDriverBaseImpl::Win32ScreenDriverBaseImpl(UpdateKeeper *updateKeeper,
                                                  UpdateListener *updateListener,

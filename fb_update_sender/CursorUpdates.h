@@ -26,10 +26,10 @@
 
 
 #include "rfb_sconn/EncodeOptions.h"
-#include "rfb/CursorShape.h"
+#include "remoting/remoting_common/rfb/CursorShape.h"
 #include "desktop/UpdateContainer.h"
-//#include "util/::earth::time.h"
-#include "thread/LocalMutex.h"
+//#include "remoting/remoting_common/util/::earth::time.h"
+#include "remoting/remoting_common/thread/LocalMutex.h"
 //#include "log_writer/LogWriter.h"
 
 class CursorUpdates

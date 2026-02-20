@@ -27,8 +27,8 @@
 #include "ConnectingDialog.h"
 #include "resource.h"
 #include "acme/constant/id.h"
-#include "remoting/gui/ProgressBar.h"
-#include "remoting/gui/TextBox.h"
+#include "remoting/remoting_common/gui/ProgressBar.h"
+#include "remoting/remoting_common/gui/TextBox.h"
 #include "acme/platform/application.h"
 
 

@@ -25,9 +25,9 @@
 // camilo on 2026-02-12 21:12 <3ThomasBorregaardSørensen!!
 #pragma once
 
-#include "gui/BaseDialog.h"
-//#include "gui/ProgressBar.h"
-//#include "gui/TextBox.h"
+#include "remoting/remoting_common/gui/BaseDialog.h"
+//#include "remoting/remoting_common/gui/ProgressBar.h"
+//#include "remoting/remoting_common/gui/TextBox.h"
 //#include "resource.h"
 
 class BaseDialog;

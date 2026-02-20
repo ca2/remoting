@@ -27,8 +27,8 @@
 #include "ServerCommandLine.h"
 #include "remoting_node_desktop/NamingDefs.h"
 
-#include "win_system/SCMClient.h"
-//#include "win_system/Environment.h"
+#include "remoting/remoting_common/win_system/SCMClient.h"
+//#include "remoting/remoting_common/win_system/Environment.h"
 
 const TCHAR TvnService::SERVICE_COMMAND_LINE_KEY[] = "-service";
 

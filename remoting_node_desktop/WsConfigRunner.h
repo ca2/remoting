@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "thread/Thread.h"
+#include "remoting/remoting_common/thread/Thread.h"
 //#include "log_writer/LogWriter.h"
 
 // This class runs TvnControl in current session.

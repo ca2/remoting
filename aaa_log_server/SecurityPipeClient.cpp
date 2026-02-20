@@ -23,9 +23,9 @@
 //
 #include "framework.h"
 #include "SecurityPipeClient.h"
-#include "io_lib/DataInputStream.h"
-#include "io_lib/DataOutputStream.h"
-#include "win_system/NamedPipe.h"
+#include "remoting/io/DataInputStream.h"
+#include "remoting/io/DataOutputStream.h"
+#include "remoting/win_system/NamedPipe.h"
 
 SecurityPipeClient::SecurityPipeClient(Channel *tempPublChan, unsigned int maxPortionSize)
 : m_secChannel(0)

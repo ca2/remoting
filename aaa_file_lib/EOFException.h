@@ -24,7 +24,7 @@
 #pragma once
 
 
-#include "io_lib/io_exception.h"
+#include "remoting/io/io_exception.h"
 
 
 class EOFException : public ::io_exception

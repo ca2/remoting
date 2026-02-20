@@ -24,8 +24,8 @@
 #include "framework.h"
 #include "FileTransferSecurity.h"
 
-#include "server_config_lib/Configurator.h"
-#include "win_system/WTS.h"
+#include "remoting/remoting_common/server_config/Configurator.h"
+#include "remoting/remoting_common/win_system/WTS.h"
 
 FileTransferSecurity::FileTransferSecurity(Desktop *desktop, LogWriter *log)
 : Impersonator(log),

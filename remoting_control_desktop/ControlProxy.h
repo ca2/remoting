@@ -29,7 +29,7 @@
 #include "remoting_control_desktop/RfbClientInfo.h"
 #include "remoting_control_desktop/TvnServerInfo.h"
 
-#include "server_config_lib/ServerConfig.h"
+#include "remoting/remoting_common/server_config/ServerConfig.h"
 
 #include "ControlMessage.h"
 #include "RemoteException.h"

@@ -26,8 +26,8 @@
 
 
 #include "CursorShapeGrabber.h"
-#include "remoting/util/CommonHeader.h"
-#include "win_system/Screen.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
+#include "remoting/remoting_common/win_system/Screen.h"
 
 class WindowsCursorShapeGrabber : public CursorShapeGrabber
 {

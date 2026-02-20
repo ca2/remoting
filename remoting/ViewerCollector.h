@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/LocalMutex.h"
 //#include <list>
 #include "ViewerInstance.h"
 

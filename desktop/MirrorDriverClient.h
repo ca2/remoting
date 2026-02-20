@@ -27,13 +27,13 @@
 
 #include "UpdateKeeper.h"
 #include "UpdateListener.h"
-#include "rfb/FrameBuffer.h"
-#include "win_system/RegistryKey.h"
+#include "remoting/remoting_common/rfb/FrameBuffer.h"
+#include "remoting/remoting_common/win_system/RegistryKey.h"
 #include "DisplayEsc.h"
-#include "win_system/Screen.h"
-#include "gui/MessageWindow.h"
-#include "thread/GuiThread.h"
-#include "win_system/WindowsEvent.h"
+#include "remoting/remoting_common/win_system/Screen.h"
+#include "remoting/remoting_common/gui/MessageWindow.h"
+#include "remoting/remoting_common/thread/GuiThread.h"
+#include "remoting/remoting_common/win_system/WindowsEvent.h"
 //#include "log_writer/LogWriter.h"
 
 class MirrorDriverClient : private GuiThread, private WindowMessageHandler

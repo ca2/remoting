@@ -23,8 +23,8 @@
 //
 #include "framework.h"
 #include "ViewPort.h"
-#include "thread/AutoLock.h"
-#include "util/BrokenHandleException.h"
+#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/util/BrokenHandleException.h"
 
 ViewPort::ViewPort(LogWriter *log)
 : m_desktop(0),

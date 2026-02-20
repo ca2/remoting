@@ -23,10 +23,10 @@
 //
 #include "framework.h"
 #include "WinVideoRegionUpdaterImpl.h"
-#include "server_config_lib/Configurator.h"
-#include "gui/WindowFinder.h"
-#include "region/RectSerializer.h"
-#include "thread/AutoLock.h"
+#include "remoting/remoting_common/server_config/Configurator.h"
+#include "remoting/remoting_common/gui/WindowFinder.h"
+#include "remoting/remoting_common/region/RectSerializer.h"
+#include "remoting/remoting_common/thread/AutoLock.h"
 
 WinVideoRegionUpdaterImpl::WinVideoRegionUpdaterImpl(LogWriter *log)
   : m_log(log)

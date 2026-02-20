@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "remoting/util/CommonHeader.h"
+#include "remoting/remoting_common/util/CommonHeader.h"
 
-#include "gui/BaseDialog.h"
-#include "gui/::remoting::Window.h"
+#include "remoting/remoting_common/gui/BaseDialog.h"
+#include "remoting/remoting_common/gui/::remoting::Window.h"
 
 class QueryConnectionDialog : public BaseDialog
 {

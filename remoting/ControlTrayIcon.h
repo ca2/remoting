@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "gui/NotifyIcon.h"
-#include "gui/Menu.h"
+#include "remoting/remoting_common/gui/NotifyIcon.h"
+#include "remoting/remoting_common/gui/Menu.h"
 #include "remoting_impact.h"
 
 #include "resource.h"
