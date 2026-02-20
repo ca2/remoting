@@ -992,6 +992,7 @@ void ViewerWindow::showWindow()
 
   ::string windowName = formatWindowName();
   setWindowText(windowName);
+  m_dsktWnd.m_strHost = m_conData->getHost();
   m_dsktWnd.setWindowText(windowName);
 
 }

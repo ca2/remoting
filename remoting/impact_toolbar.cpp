@@ -601,13 +601,14 @@ namespace remoting
       pgraphics->set_blend_mode();
       pgraphics->set_antialias_on();
 
-      if (m_bHover)
+      if (m_bHover || m_pcontrolParent->m_bHover)
       {
          colorPaint = argb(225, 255, 255, 255);
       }
       else
       {
-         colorPaint = argb(160, 240, 240, 240);
+         //colorPaint = argb(160, 240, 240, 240);
+         colorPaint = argb(165, 215, 215, 215);
 
       }
 
@@ -669,9 +670,9 @@ namespace remoting
 
          ::int_rectangle rDash;
 
-         rDash.left = r.left + 6;
-         rDash.right = r.right - 6;
-         rDash.top = r.top + 10;
+         rDash.left = r.left + 7;
+         rDash.right = r.right - 7;
+         rDash.top = r.top + 13;
          rDash.bottom = rDash.top + 2;
 
          pgraphics->fill_solid_rectangle(rDash, colorPaint);
@@ -685,7 +686,7 @@ namespace remoting
 
          ::int_rectangle rDeflate = r;
 
-         rDeflate.deflate(6, 4, 6, 8);
+         rDeflate.deflate(7, 5, 7, 9);
 
          pgraphics->fill_solid_rectangle(::int_rectangle(rDeflate.left, rDeflate.top, rDeflate.right, rDeflate.top + 2), colorPaint);
          pgraphics->fill_solid_rectangle(::int_rectangle(rDeflate.right - 2, rDeflate.top, rDeflate.right, rDeflate.bottom), colorPaint);
@@ -701,7 +702,7 @@ namespace remoting
 
          ::int_rectangle rDeflate = r;
 
-         rDeflate.deflate(6, 4, 6, 8);
+         rDeflate.deflate(7, 5, 7, 9);
 
          //pgraphics->setPen(m_pstyle->m_ppenPaint);
          pgraphics->setPen(2.0f, colorPaint);
@@ -721,8 +722,17 @@ namespace remoting
       pgraphics->set_antialias_off();
 
 
-      ::color::color colorLite = argb(255, 200, 240, 255);
-      ::color::color colorDark = argb(255, 50, 80, 160);
+      int iAlpha = 180;
+
+      if (m_bHover)
+      {
+
+         iAlpha = 255;
+
+      }
+
+      ::color::color colorLite = argb(iAlpha, 200, 240, 255);
+      ::color::color colorDark = argb(iAlpha, 50, 80, 160);
       auto r = get_paint_rectangle();
 
 
@@ -744,6 +754,65 @@ namespace remoting
          y+= h;
          fOpacity -= 0.1f;
       }
+
+      Gdiplus::RectF layoutRect;
+
+      ::copy(layoutRect, r);
+
+      //layoutRect.Height = 24;
+
+      ::wstring wstr(m_pdesktopwindow->m_strHost);
+
+      auto& graphics = *pgraphics->m_pgraphics;
+      using namespace Gdiplus;
+      // Enable better quality rendering
+      graphics.SetTextRenderingHint(TextRenderingHintClearTypeGridFit);
+      graphics.SetCompositingMode(Gdiplus::CompositingModeSourceOver);
+      FLOAT fontSize = 12.f;
+      // Create Segoe UI font
+      Font font(L"Segoe UI", fontSize, FontStyleRegular, UnitPixel);
+
+      ::Gdiplus::Color colorPaint;
+
+
+      if (m_bHover)
+      {
+         colorPaint = Gdiplus::Color(225, 255, 255, 255);
+      }
+      else
+      {
+         //colorPaint = argb(160, 240, 240, 240);
+         colorPaint = Gdiplus::Color(165, 215, 215, 215);
+
+      }
+
+      // Create white brush (ARGB: 255 = fully opaque)
+      Gdiplus::SolidBrush brush(colorPaint);
+
+      // Create string format
+      StringFormat stringFormat;
+
+      // Horizontal alignment (center)
+      stringFormat.SetAlignment(StringAlignmentCenter);
+
+      // Vertical alignment (center)
+      stringFormat.SetLineAlignment(StringAlignmentCenter);
+
+      // Optional: prevent wrapping
+      stringFormat.SetFormatFlags(StringFormatFlagsNoWrap);
+
+      stringFormat.SetFormatFlags(StringFormatFlagsNoClip);
+
+      // Draw the string
+      graphics.DrawString(
+         wstr.c_str(),
+         wstr.size(),                 // auto-length
+         &font,
+         layoutRect,
+         &stringFormat,
+         &brush
+      );
+      //pgraphics->m_pgraphics->DrawString(wstr, wstr.size(),)
       // color=colorDark;
       // color.blend(colorLite, 0.6);
       // pgraphics->fill_solid_rectangle(::int_rectangle_dimension(x, y, w, h), color);

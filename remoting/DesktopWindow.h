@@ -47,6 +47,7 @@ class DesktopWindow : public PaintWindow,
                       protected RfbKeySymListener
 {
 public:
+   ::string m_strHost;
    ::int_size m_sizeBuffer = {};
    HDC m_hdcBuffer = nullptr;
    HBITMAP m_hbitmapOld = nullptr;
