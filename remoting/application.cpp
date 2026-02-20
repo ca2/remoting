@@ -92,6 +92,13 @@ namespace remoting_remoting
       else if (eid == id_remoting_connected)
       {
 
+         if (m_connectingdialog.m_panimation)
+         {
+
+            m_connectingdialog.m_panimation->m_bRunning = false;             
+
+         }
+
          m_connectingdialog.hide();
 
       }
