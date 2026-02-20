@@ -79,10 +79,10 @@ bool m_bDrag = false;
       int m_xCursorDragStart = -1;
       int m_xWindowDragStart = -1;
 
-      virtual bool _000OnMouse(bool bPress, POINT pointRoot, POINT pointClient);
-      virtual bool _001OnMouse(bool bPress, POINT pointRoot, POINT pointClient);
-      virtual bool on_left_down(POINT position);
-      virtual bool on_left_up(POINT position);
+      virtual bool _000OnMouse(bool bPress, const ::int_point& pointRoot, const ::int_point& pointClient);
+      virtual bool _001OnMouse(bool bPress, const ::int_point& pointRoot, const ::int_point& pointClient);
+      virtual bool on_left_down(const ::int_point& position);
+      virtual bool on_left_up(const ::int_point& position);
       virtual void __000OnTopDraw(HDC hdc, const ::int_rectangle & rectangle);
       virtual void __000OnDraw(GraphicsPlus * pgraphics, const ::int_rectangle & rectangle);
       virtual void __001OnDraw(GraphicsPlus * pgraphics, const ::int_rectangle & rectangle);
@@ -115,7 +115,7 @@ bool m_bDrag = false;
 
       //::int_rectangle m_rectangleMinimizeDash;
 
-      //bool on_mouse(bool bPress, POINT position);
+      //bool on_mouse(bool bPress, const ::int_point& position);
       //void on_draw(DeviceContext *dc);
 
       toolbar_button();
@@ -138,10 +138,10 @@ bool m_bDrag = false;
 
       virtual void create_impact_toolbar(DesktopWindow * pdesktopwindow,  style * pstyle);
 
-      //bool on_mouse(bool bPress, POINT position);
+      //bool on_mouse(bool bPress, const ::int_point& position);
       void __001OnDraw(GraphicsPlus *pgraphics, const ::int_rectangle & rectangle) override;
       bool on_button_click(enum_id eid) override;
-      bool _001OnMouse(bool bPress, POINT pointRoot, POINT pointClient) override;
+      bool _001OnMouse(bool bPress, const ::int_point & pointRoot, const ::int_point& pointClient) override;
    };
 
 

@@ -311,7 +311,7 @@ bool DesktopWindow::onMouse(unsigned char mouseButtons, unsigned short wheelSpee
 
    if (m_premotingtoolbar)
    {
-      if (m_premotingtoolbar->_000OnMouse(mouseButtons & MOUSE_LDOWN, position, position))
+      if (m_premotingtoolbar->_000OnMouse(mouseButtons & MOUSE_LDOWN, { position.x, position.y }, { position.x, position.y }))
       {
 
          return true;

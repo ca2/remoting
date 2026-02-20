@@ -163,7 +163,7 @@ namespace remoting
 
    }
 
-   bool control::_001OnMouse(bool bPress, POINT pointRoot, POINT pointClient)
+   bool control::_001OnMouse(bool bPress, const ::int_point& pointRoot, const ::int_point& pointClient)
    {
 
       auto rectangleClient = get_client_rectangle();
@@ -209,7 +209,7 @@ namespace remoting
    }
 
 
-   bool control::on_left_down(POINT position)
+   bool control::on_left_down(const ::int_point& position)
    {
 
 
@@ -218,7 +218,7 @@ namespace remoting
    }
 
 
-   bool control::on_left_up(POINT position)
+   bool control::on_left_up(const ::int_point& position)
    {
       if (m_bHover)
       {
@@ -232,7 +232,7 @@ namespace remoting
       return false;
    }
 
-   bool control::_000OnMouse(bool bPress, POINT pointRoot, POINT pointClientParam)
+   bool control::_000OnMouse(bool bPress, const ::int_point& pointRoot, const ::int_point& pointClientParam)
    {
 
       auto pointClient = pointClientParam;
@@ -270,7 +270,7 @@ namespace remoting
 
    }
 
-   // bool toolbar_button::on_mouse(bool bPress, POINT position)
+   // bool toolbar_button::on_mouse(bool bPress, const ::int_point& position)
    //{
 
 
@@ -348,7 +348,7 @@ namespace remoting
 
    }
 
-   // bool toolbar::on_mouse(bool bPress, POINT position)
+   // bool toolbar::on_mouse(bool bPress, const ::int_point& position)
    // {
    //
    //    auto bHoverNew= m_rectangle.contains(::int_point{position.x, position.y});
@@ -436,92 +436,97 @@ namespace remoting
 
 
    }
-   bool toolbar::_001OnMouse(bool bPress, POINT pointRoot, POINT pointClient)
+   bool toolbar::_001OnMouse(bool bPress, const ::int_point& pointRoot, const ::int_point& pointClient)
    {
 
-      control::_001OnMouse(bPress, pointRoot, pointClient);
-
-      bool bAnyChildHover = false;
-
-      for (auto & pcontrol : m_controlaChildren)
+      if (m_bHover || get_client_rectangle().contains(pointClient))
       {
 
-         if (pcontrol->m_bHover)
+         control::_001OnMouse(bPress, pointRoot, pointClient);
+
+         bool bAnyChildHover = false;
+
+         for (auto& pcontrol : m_controlaChildren)
          {
 
-            bAnyChildHover = true;
-
-         }
-
-      }
-
-      if (m_bDrag)
-      {
-
-         auto xNew = pointRoot.x - m_xCursorDragStart + m_xWindowDragStart;
-
-         if (xNew < 0)
-         {
-
-            xNew = 0;
-
-         }
-         else if (xNew > 1920 - m_rectangle.width())
-         {
-
-            xNew = 1920 - m_rectangle.width();
-
-         }
-
-         if (xNew != m_rectangle.left)
-         {
-
-            auto r1 = get_window_rectangle();
-            m_rectangle.set_top_left(xNew, 0);
-            auto r2 = get_window_rectangle();
-
-            auto r = r1.unite(r2);
-
-            //m_pdesktopwindow->repaint(r);
-
-            add_repaint(r);
-         }
-
-      }
-
-
-      if (m_bHover && !bAnyChildHover)
-      {
-
-         if (bPress)
-         {
-
-            if (!m_bDrag)
+            if (pcontrol->m_bHover)
             {
-               m_bDrag = true;
 
-               m_xCursorDragStart = pointRoot.x;
-               m_xWindowDragStart = m_rectangle.left;
+               bAnyChildHover = true;
+
             }
 
          }
 
-      }
-
-      if (m_bDrag)
-      {
-
-         if (!bPress)
+         if (m_bDrag)
          {
 
-            m_bDrag = false;
+            auto xNew = pointRoot.x - m_xCursorDragStart + m_xWindowDragStart;
+
+            if (xNew < 0)
+            {
+
+               xNew = 0;
+
+            }
+            else if (xNew > 1920 - m_rectangle.width())
+            {
+
+               xNew = 1920 - m_rectangle.width();
+
+            }
+
+            if (xNew != m_rectangle.left)
+            {
+
+               auto r1 = get_window_rectangle();
+               m_rectangle.set_top_left(xNew, 0);
+               auto r2 = get_window_rectangle();
+
+               auto r = r1.unite(r2);
+
+               //m_pdesktopwindow->repaint(r);
+
+               add_repaint(r);
+            }
 
          }
 
 
-      }
+         if (m_bHover && !bAnyChildHover)
+         {
 
-      m_pdesktopwindow->m_bShowCursor = m_bHover;
+            if (bPress)
+            {
+
+               if (!m_bDrag)
+               {
+                  m_bDrag = true;
+
+                  m_xCursorDragStart = pointRoot.x;
+                  m_xWindowDragStart = m_rectangle.left;
+               }
+
+            }
+
+         }
+
+         if (m_bDrag)
+         {
+
+            if (!bPress)
+            {
+
+               m_bDrag = false;
+
+            }
+
+
+         }
+
+         m_pdesktopwindow->m_bShowCursor = m_bHover;
+
+      }
 
       return false;
 
