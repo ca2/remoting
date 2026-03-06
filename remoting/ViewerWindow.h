@@ -181,6 +181,7 @@ private:
   ::array_base<int> m_standardScale;
   void changeCursor(int type);
   void applySettings();
+  ::int_rectangle getFullScreenRect();
   void setSizeFullScreenWindow();
   void doFullScr();
   void doUnFullScr();

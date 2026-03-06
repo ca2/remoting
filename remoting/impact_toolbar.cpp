@@ -20,6 +20,8 @@ namespace remoting
       m_pbitmapBuffer = nullptr;
       m_pgraphicsBuffer = nullptr;
       m_bNewRepaintRectangle = true;
+      m_bDrag = false;
+      m_bHover = false;
 
    }
    control::~control()
@@ -99,7 +101,20 @@ namespace remoting
       if (::is_set(pwindowPaint))
       {
 
-         pwindowPaint->_add_repaint(rectangle);
+         auto r = rectangle;
+
+         auto fScale = m_pdesktopwindow->m_scManager.getScale();
+
+         if (fScale <= 0.f)
+         {
+
+            return;
+
+         }
+
+         r /= fScale;
+
+         pwindowPaint->_add_repaint(r );
 
       }
 
@@ -293,58 +308,99 @@ namespace remoting
    }
 
 
-   void toolbar::create_impact_toolbar(DesktopWindow * pdesktopwindow, style * pstyle)
+   void toolbar::on_size()
    {
 
-      m_pstyle = pstyle;
+      //m_iDesktopWidth = iDesktopWidthParameter * fScaleParameter;
+      //m_fScale = fScaleParameter;
+      auto pdesktopwindow = m_pdesktopwindow;
+
+      if (::is_null(pdesktopwindow))
+      {
+
+         throw ::exception(error_failed);
+
+      }
+      int iDesktopWidth = pdesktopwindow->m_scManager.getScaledRect().width();
+      if (iDesktopWidth < 100)
+      {
+
+         return;
+
+      }
+      //int iToolbarWidth = 400 * iDesktopWidth / (1920 * iDivisor);
+      //int iButtonSize = 24 * iDesktopWidth / (1920 * iDivisor);
       int iToolbarWidth = 400;
       int iButtonSize = 24;
-      int iDesktopWidth = 1920;
-      m_rectangle ={((iDesktopWidth - iToolbarWidth)/2), 0, ((iDesktopWidth+iToolbarWidth)/2), iButtonSize};
-
-      m_pdesktopwindow = pdesktopwindow;
-
+      m_rectangle = { ((iDesktopWidth - iToolbarWidth) / 2), 0, ((iDesktopWidth + iToolbarWidth) / 2), iButtonSize };
 
       //m_brushBackgroundMinimizeDash(RGB(255, 255, 255))
 
       int iButtonCount = 3;
-      int iMarginRight = iButtonSize /3;
-      int iButton =  0;
+      int iMarginRight = iButtonSize / 3;
+      int iButton = 0;
       {
-         auto pbutton =øallocate toolbar_button();
-         pbutton->m_rectangle.set_top_left(iToolbarWidth - iMarginRight + iButtonSize*(iButton - iButtonCount), 0);
-         pbutton->m_rectangle.set_size(iButtonSize, iButtonSize);
-         //pbutton->m_pbrushBackground = m_pbrushButtonBackground;
-         pbutton->m_pstyle = m_pstyle;
-         pbutton->m_pdesktopwindow = pdesktopwindow;
-         pbutton->m_pcontrolParent = this;
-         pbutton->m_eid = id_minimize;
-         m_controlaChildren.add(pbutton);
+         if (!m_pbuttonMinimize)
+         {
+
+            m_pbuttonMinimize = øallocate toolbar_button();
+
+            m_pbuttonMinimize->m_pstyle = m_pstyle;
+            m_pbuttonMinimize->m_pdesktopwindow = pdesktopwindow;
+            m_pbuttonMinimize->m_pcontrolParent = this;
+            m_pbuttonMinimize->m_eid = id_minimize;
+            //m_pbuttonMinimize->m_pbrushBackground = m_pbrushButtonBackground;
+            m_controlaChildren.add(m_pbuttonMinimize);
+         }
+         m_pbuttonMinimize->m_rectangle.set_top_left(iToolbarWidth - iMarginRight + iButtonSize * (iButton - iButtonCount), 0);
+         m_pbuttonMinimize->m_rectangle.set_size(iButtonSize, iButtonSize);
+         
       }
       iButton++;
       {
-         auto pbutton =øallocate toolbar_button();
-         pbutton->m_rectangle.set_top_left(iToolbarWidth - iMarginRight + iButtonSize*(iButton - iButtonCount), 0);
-         pbutton->m_rectangle.set_size(iButtonSize, iButtonSize);
-         //pbutton->m_pbrushBackground = m_pbrushButtonBackground;
-         pbutton->m_pstyle = m_pstyle;
-         pbutton->m_pdesktopwindow = pdesktopwindow;
-         pbutton->m_pcontrolParent = this;
-         pbutton->m_eid = id_restore;
-         m_controlaChildren.add(pbutton);
+         if (!m_pbuttonRestore)
+         {
+            m_pbuttonRestore = øallocate toolbar_button();
+            m_pbuttonRestore->m_pstyle = m_pstyle;
+            m_pbuttonRestore->m_pdesktopwindow = pdesktopwindow;
+            m_pbuttonRestore->m_pcontrolParent = this;
+            m_pbuttonRestore->m_eid = id_restore;
+            //m_pbuttonRestore->m_pbrushBackground = m_pbrushButtonBackground;
+            m_controlaChildren.add(m_pbuttonRestore);
+
+         }
+         m_pbuttonRestore->m_rectangle.set_top_left(iToolbarWidth - iMarginRight + iButtonSize * (iButton - iButtonCount), 0);
+         m_pbuttonRestore->m_rectangle.set_size(iButtonSize, iButtonSize);
       }
+         
       iButton++;
       {
-         auto pbutton =øallocate toolbar_button();
-         pbutton->m_rectangle.set_top_left(iToolbarWidth - iMarginRight + iButtonSize*(iButton - iButtonCount), 0);
-         pbutton->m_rectangle.set_size(iButtonSize, iButtonSize);
-         //pbutton->m_pbrushBackground = m_pbrushButtonBackground;
-         pbutton->m_pstyle = m_pstyle;
-         pbutton->m_pdesktopwindow = pdesktopwindow;
-         pbutton->m_pcontrolParent = this;
-         pbutton->m_eid = id_close;
-         m_controlaChildren.add(pbutton);
+         if (!m_pbuttonClose)
+         {
+            m_pbuttonClose = øallocate toolbar_button();
+            m_pbuttonClose->m_pstyle = m_pstyle;
+            m_pbuttonClose->m_pdesktopwindow = pdesktopwindow;
+            m_pbuttonClose->m_pcontrolParent = this;
+            m_pbuttonClose->m_eid = id_close;
+            //m_pbuttonClose->m_pbrushBackground = m_pbrushButtonBackground;
+            m_controlaChildren.add(m_pbuttonClose);
+
+         }
+         m_pbuttonClose->m_rectangle.set_top_left(iToolbarWidth - iMarginRight + iButtonSize * (iButton - iButtonCount), 0);
+         m_pbuttonClose->m_rectangle.set_size(iButtonSize, iButtonSize);
       }
+
+
+   }
+
+   void toolbar::create_impact_toolbar(DesktopWindow * pdesktopwindow, style * pstyle)
+   {
+
+      m_pstyle = pstyle;
+
+      m_pdesktopwindow = pdesktopwindow;
+
+      //set_desktop_width(1920);
 
    }
 
@@ -436,10 +492,16 @@ namespace remoting
 
 
    }
+
+
    bool toolbar::_001OnMouse(bool bPress, const ::int_point& pointRoot, const ::int_point& pointClient)
    {
 
-      if (m_bHover || get_client_rectangle().contains(pointClient))
+      //auto pointClient = pointClientParameter * m_pdesktopwindow->m_scManager.getScale();
+
+      auto rClient = get_client_rectangle();
+
+      if (m_bHover || m_bDrag || rClient.contains(pointClient))
       {
 
          control::_001OnMouse(bPress, pointRoot, pointClient);
@@ -469,10 +531,10 @@ namespace remoting
                xNew = 0;
 
             }
-            else if (xNew > 1920 - m_rectangle.width())
+            else if (xNew > m_pdesktopwindow->m_scManager.getScaledRect().width() - m_rectangle.width())
             {
 
-               xNew = 1920 - m_rectangle.width();
+               xNew = m_pdesktopwindow->m_scManager.getScaledRect().width() - m_rectangle.width();
 
             }
 
@@ -524,7 +586,7 @@ namespace remoting
 
          }
 
-         m_pdesktopwindow->m_bShowCursor = m_bHover;
+         //m_pdesktopwindow->m_bShowCursor = m_bHover;
 
       }
 

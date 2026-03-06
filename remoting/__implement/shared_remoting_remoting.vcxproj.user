@@ -11,6 +11,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerCommandArguments>C:\Users\camilo\Desktop\fox.remoting</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArgumentsHistory>C:\Users\camilo\Desktop\fox.remoting|</LocalDebuggerCommandArgumentsHistory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>

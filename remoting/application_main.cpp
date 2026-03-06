@@ -90,10 +90,28 @@ int application::remoting_impact_main( const ::file::path & path)
    auto ini = file()->get_ini(path);
 
    ::string strHost =ini["host"];
+   int iNumerator = ini["numerator"].as_int();
+   int iDenominator = ini["denominator"].as_int();
    conConf.enableFullscreen(true);
    conConf.requestShapeUpdates(true);
    conConf.ignoreShapeUpdates(false);
 
+   if (iDenominator <= 0)
+   {
+
+      iDenominator = 1;
+
+   }
+
+   if (iNumerator <= 0)
+   {
+
+      iNumerator = 1;
+
+   }
+
+   conConf.setScale(iNumerator, iDenominator);
+      
    if (strHost.has_character())
    {
       condata.setHost(wstring(strHost).c_str());

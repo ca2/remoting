@@ -41,6 +41,9 @@ public:
   void setHost(const ::scoped_string & host);
   ::string getHost() const;
 
+  //void setDivisor(int iDivisor);
+  //int getDivisor() const;
+
   //
   // This method return hostname without port.
   //
@@ -74,8 +77,9 @@ public:
   void setIncoming(bool isIncoming);
   bool isIncoming() const;
 
-protected:
+//protected:
   HostPath m_hostPath;
+  int m_iDivisor;
 
   // This flag is true, if host isn't set.
   bool m_isEmpty;

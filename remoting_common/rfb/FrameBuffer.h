@@ -35,6 +35,7 @@
 class CLASS_DECL_REMOTING_COMMON FrameBuffer
 {
 public:
+   //int m_iDivisor = 1;
   FrameBuffer(void);
   virtual ~FrameBuffer(void);
 

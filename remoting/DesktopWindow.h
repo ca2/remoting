@@ -52,6 +52,7 @@ public:
    HDC m_hdcBuffer = nullptr;
    HBITMAP m_hbitmapOld = nullptr;
    HBITMAP m_hbitmapBuffer = nullptr;
+//   int m_iDivisor = 1;
    ::pointer< ::remoting::toolbar > m_premotingtoolbar;
    ::pointer< ::remoting::style > m_premotingstyle;
    bool m_bShowCursor = false;

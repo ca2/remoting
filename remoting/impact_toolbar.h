@@ -57,6 +57,10 @@ namespace remoting
       ::int_rectangle m_rectangle;
       bool m_bHover = false;
       bool m_bPressed = false;
+      bool m_bDrag = false;
+      int m_xCursorDragStart = -1;
+      int m_xWindowDragStart = -1;
+
       enum_control m_econtrol;
       enum_id m_eid;
       Gdiplus::Bitmap * m_pbitmapBuffer = nullptr;
@@ -75,9 +79,6 @@ namespace remoting
       void add_repaint(const ::int_rectangle & rectangle);
       void _add_repaint(const ::int_rectangle & rectangle);
 void defer_repaint();
-bool m_bDrag = false;
-      int m_xCursorDragStart = -1;
-      int m_xWindowDragStart = -1;
 
       virtual bool _000OnMouse(bool bPress, const ::int_point& pointRoot, const ::int_point& pointClient);
       virtual bool _001OnMouse(bool bPress, const ::int_point& pointRoot, const ::int_point& pointClient);
@@ -132,11 +133,18 @@ bool m_bDrag = false;
       //::pointer<impact_toolbar_button> m_pbuttonMinimize;
       //::pointer<impact_toolbar_button> m_pbuttonRestore;
       //::pointer<impact_toolbar_button> m_pbuttonClose;
+      //int m_iDesktopWidth = 1920;
+      //float m_fScale;
+      ::pointer<toolbar_button> m_pbuttonMinimize;
+      ::pointer<toolbar_button> m_pbuttonRestore;
+      ::pointer<toolbar_button> m_pbuttonClose;
 
       toolbar();
       ~toolbar() override;
 
       virtual void create_impact_toolbar(DesktopWindow * pdesktopwindow,  style * pstyle);
+
+      virtual void on_size();
 
       //bool on_mouse(bool bPress, const ::int_point& position);
       void __001OnDraw(GraphicsPlus *pgraphics, const ::int_rectangle & rectangle) override;

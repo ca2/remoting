@@ -40,7 +40,7 @@ public:
   void setScale(int scale);
   // set the rectangle of window
   void setWindow(const ::int_rectangle & rectangleWnd);
-
+  float getScale() const;
   // need to know for scrolling 
   // false -> single page
   // true -> multiple pages
@@ -57,6 +57,7 @@ public:
 
   // get viewed rectangle
   void getViewedRect(::int_rectangle * prectangleViewed) const;
+  ::int_rectangle getViewedRect() const;
 
   // get scaled rectangle
   ::int_rectangle getScaledRect();

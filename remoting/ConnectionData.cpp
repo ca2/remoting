@@ -42,7 +42,8 @@ ConnectionData::ConnectionData(const ConnectionData &connectionData)
 : m_isEmpty(connectionData.m_isEmpty),
   m_isSetPassword(connectionData.m_isSetPassword),
   m_isSetDispatchId(connectionData.m_isSetDispatchId),
-  m_isIncoming(connectionData.m_isIncoming)
+  m_isIncoming(connectionData.m_isIncoming),
+   m_iDivisor(connectionData.m_iDivisor)
 {
   if (!connectionData.is_empty()) {
     m_hostPath.set(connectionData.m_hostPath.get());
@@ -183,6 +184,18 @@ void ConnectionData::setPlainPassword(const ::scoped_string & password)
   host = hostAnsi;
   return host;
 }
+
+
+//void ConnectionData::setDivisor(int iDivisor)
+//{
+//   m_iDivisor = iDivisor;
+//}
+//
+//
+//int ConnectionData::getDivisor() const
+//{
+//   return m_iDivisor;
+//}
 
 ::string ConnectionData::getReducedHost() const
 {

@@ -38,6 +38,7 @@ DesktopWindow::DesktopWindow(LogWriter *logWriter, ConnectionConfig *conConf) :
     m_viewerCore(0), m_ctrlDown(false), m_altDown(false), m_previousMousePos(-1, -1), m_previousMouseState(0),
     m_isBackgroundDirty(false)
 {
+   m_bShowCursor = true;
    m_rfbKeySym = std::unique_ptr<RfbKeySym>(new RfbKeySym(this, m_logWriter));
 }
 
@@ -319,8 +320,13 @@ bool DesktopWindow::onMouse(unsigned char mouseButtons, unsigned short wheelSpee
       m_premotingtoolbar->defer_repaint();
    }
 
+   auto p = position;
+
+   //p.x *= m_iDivisor;
+   //p.y *= m_iDivisor;
+
    // Translate coordinates from the Viewer Window to Desktop Window.
-   POINTS mousePos = getViewerCoord(position.x, position.y);
+   POINTS mousePos = getViewerCoord(p.x, p.y);
    Point pos;
    pos.x = mousePos.x;
    pos.y = mousePos.y;
@@ -449,6 +455,16 @@ void DesktopWindow::doDraw(HDC hdc, const ::int_rectangle &rectangle)
       return;
    }
 
+   //int iDivisor = m_iDivisor;
+
+   //if (iDivisor <= 0)
+   //{
+
+   //   iDivisor = 1;
+
+   //}
+
+   //scrollProcessing(fbWidth/iDivisor, fbHeight/iDivisor);
    scrollProcessing(fbWidth, fbHeight);
 
    int iHorzPos = 0;
@@ -580,6 +596,12 @@ void DesktopWindow::scrollProcessing(int fbWidth, int fbHeight)
       m_fbWidth = fbWidth;
       m_fbHeight = fbHeight;
       m_scManager.setScreenResolution(fbWidth, fbHeight);
+      if (m_premotingtoolbar)
+      {
+
+         m_premotingtoolbar->on_size();
+
+      }
    }
 
    calculateWndSize(bChanged);
@@ -613,24 +635,30 @@ void DesktopWindow::calcClientArea()
 
 void DesktopWindow::drawImage(HDC hdc, const RECT &rectangleSource, const RECT &rectangleTarget)
 {
-   ::int_rectangle rc_src;
-   ::int_rectangle rc_dest;
-
-   ::copy(rc_src, rectangleSource);
-   ::copy(rc_dest, rectangleTarget);
+   ::int_rectangle rc_src = rectangleSource;
+   ::int_rectangle rc_dest = rectangleTarget;
 
    AutoLock al(&m_bufferLock);
    m_framebuffer.setTargetDC(hdc);
-   if ((rectangleSource.right - rectangleSource.left) == (rectangleTarget.right - rectangleTarget.left) &&
-       (rectangleSource.bottom - rectangleSource.top) == (rectangleTarget.bottom - rectangleTarget.top) &&
-       rectangleSource.left == rectangleTarget.left && rectangleSource.right == rectangleTarget.right &&
-       rectangleSource.top == rectangleTarget.top && rectangleSource.bottom == rectangleTarget.bottom)
+   ::int_rectangle rSource = rectangleSource;
+
+   //int iDivisor = m_iDivisor;
+
+   //if (iDivisor <= 0)
+   //{
+
+   //   iDivisor = 1;
+
+   //}
+
+   //rSource *= iDivisor;
+   if (rSource == rc_dest)
    {
       m_framebuffer.blitFromDibSection(rc_dest);
    }
    else
    {
-      m_framebuffer.stretchFromDibSection(rc_dest, rc_src);
+      m_framebuffer.stretchFromDibSection(rc_dest, rSource);
    }
 }
 
@@ -653,7 +681,6 @@ void DesktopWindow::updateFramebuffer(const FrameBuffer *pframebuffer, const ::i
    //
    // Size of framebuffer can not changed, because onFrameBufferUpdate()
    // and onFrameBufferPropChange() may be called only from one thread.
-
    if (!m_framebuffer.copyFrom(dstRect, pframebuffer, dstRect.left, dstRect.top))
    {
       m_logWriter->error("Possible invalide region. ({}, {}), ({}, {})", dstRect.left, dstRect.top, dstRect.right,
@@ -669,6 +696,10 @@ void DesktopWindow::setNewFramebuffer(const FrameBuffer *pframebuffer)
    ::int_size olddimension = m_framebuffer.getDimension();
 
    bool isBackgroundDirty = dimension.cx < olddimension.cx || dimension.cy < olddimension.cy;
+   
+   //m_premotingtoolbar->set_size(dimension.width(), m_iDivisor);
+
+   //m_premotingtoolbar->on_size();
 
    m_logWriter->debug("Desktop size: {}, {}", dimension.cx, dimension.cy);
    {
@@ -704,8 +735,10 @@ void DesktopWindow::setNewFramebuffer(const FrameBuffer *pframebuffer)
    }
 }
 
-void DesktopWindow::repaint(const ::int_rectangle &repaintRect)
+void DesktopWindow::repaint(const ::int_rectangle &repaintRectParameter)
 {
+   auto repaintRect = repaintRectParameter;
+   //repaintRect /= m_iDivisor;
    ::int_rectangle rect;
    m_scManager.getSourceRect(&rect);
    ::int_rectangle paint = repaintRect;

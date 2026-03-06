@@ -806,28 +806,36 @@ void ViewerWindow::applyScreenChanges(bool isFullScreen)
   redraw();
 }
 
+::int_rectangle ViewerWindow::getFullScreenRect()
+{
+
+
+   // Get size of desktop.
+   HMONITOR hmon = MonitorFromWindow(m_hwnd, MONITOR_DEFAULTTONEAREST);
+   MONITORINFO mi;
+   mi.cbSize = sizeof(mi);
+
+   RECT fullScreenWindowsRect;
+   if (!!GetMonitorInfo(hmon, &mi)) {
+      fullScreenWindowsRect = mi.rcMonitor;
+   }
+   else {
+      m_logWriter->warning("Get monitor info is failed. Use second method (no multi-screen).");
+      GetWindowRect(GetDesktopWindow(), &fullScreenWindowsRect);
+   }
+   ::int_rectangle fullScreenRect;
+   fullScreenRect = fullScreenWindowsRect;
+
+
+   return fullScreenRect;
+}
+
 void ViewerWindow::setSizeFullScreenWindow()
 {
   // Save position of window.
   GetWindowPlacement(m_hwnd, &m_workArea);
 
-  // Get size of desktop.
-  HMONITOR hmon = MonitorFromWindow(m_hwnd, MONITOR_DEFAULTTONEAREST);
-  MONITORINFO mi;
-  mi.cbSize = sizeof(mi);
-
-  RECT fullScreenWindowsRect;
-  if (!!GetMonitorInfo(hmon, &mi)) {
-    fullScreenWindowsRect = mi.rcMonitor;
-  } else {
-    m_logWriter->warning("Get monitor info is failed. Use second method (no multi-screen).");
-    GetWindowRect(GetDesktopWindow(), &fullScreenWindowsRect);
-  }
-  ::int_rectangle fullScreenRect;
-  fullScreenRect = fullScreenWindowsRect;
-  m_logWriter->debug("full screen window rect: {}, {}; {}, {}",
-                     fullScreenRect.left, fullScreenRect.top,
-                     fullScreenRect.width(), fullScreenRect.height());
+  auto fullScreenRect = getFullScreenRect();
 
   set_style((get_style() | WS_MAXIMIZE) & ~(WS_CAPTION | WS_BORDER | WS_THICKFRAME  | WS_MAXIMIZEBOX));
   set_ex_style(get_ex_style() | WS_EX_TOPMOST);
@@ -1183,6 +1191,8 @@ void ViewerWindow::onFrameBufferUpdate(const FrameBuffer *fb, const ::int_rectan
 
 void ViewerWindow::onFrameBufferPropChange(const FrameBuffer *fb)
 {
+//   m_dsktWnd.m_iDivisor = m_conData->getDivisor();
+   // ((FrameBuffer*)fb)->m_iDivisor = m_dsktWnd.m_iDivisor;
   m_dsktWnd.setNewFramebuffer(fb);
 }
 

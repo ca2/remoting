@@ -85,6 +85,13 @@ void ScaleManager::setWindow(const ::int_rectangle & rectangleWnd)
   setStartPoint(m_xStart, m_yStart);
 }
 
+float ScaleManager::getScale() const
+{
+
+   return (float) m_scale / (float) DEFAULT_SCALE_DENOMERATOR;
+
+}
+
 ::int_rectangle ScaleManager::calcScaled(const ::int_rectangle &  rcViewed, bool bCent)
 {
   ::int_rectangle rcScaled;
@@ -211,6 +218,15 @@ void ScaleManager::getViewedRect(::int_rectangle * prectangleViewed) const
   rect.set_top_left(m_iCentX, m_iCentY);
 
   *prectangleViewed = rect;
+}
+
+::int_rectangle ScaleManager::getViewedRect() const
+{
+
+   int_rectangle r;
+   getViewedRect(&r);
+   return r;
+
 }
 
 ::int_rectangle ScaleManager::getScaledRect()

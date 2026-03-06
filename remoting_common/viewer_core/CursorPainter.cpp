@@ -134,6 +134,7 @@ void CursorPainter::setIgnoreShapeUpdates(bool ignore)
 
     ::int_rectangle overlayRect(m_cursor.getDimension());
     overlayRect.offset(corner.x, corner.y);
+    //overlayRect /= m_fb->m_iDivisor;
 
     m_fb->overlay(overlayRect, m_cursor.getPixels(), 0, 0, m_cursor.getMask());
 
