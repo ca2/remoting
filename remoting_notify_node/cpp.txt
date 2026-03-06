@@ -1,0 +1,27 @@
+﻿ Volume in drive C has no label.
+ Volume serial Number is CC8D-9F90
+
+ Directory of C:\nordroid\app-core\notify_drawing
+
+17/04/2016  03:31                24 framework.cpp
+17/04/2016  03:31               573 notify_drawing.cpp
+24/04/2016  11:53            27.642 notify_drawing_application.cpp
+17/04/2016  03:31             2.435 notify_drawing_document.cpp
+17/04/2016  03:32             2.135 notify_drawing_edit_impact.cpp
+17/04/2016  03:31             2.907 notify_drawing_font_impact.cpp
+17/04/2016  03:32             1.876 notify_drawing_frame.cpp
+19/04/2016  09:27             2.476 notify_drawing_gcom.cpp
+17/04/2016  03:32             2.726 notify_drawing_main_impact.cpp
+19/04/2016  09:27            10.404 notify_drawing_pane_impact.cpp
+17/04/2016  03:32               509 aaa_want_to_remove_notify_drawing_impact_update_hint.cpp
+17/04/2016  03:31            17.309 notify_drawing_render.cpp
+17/04/2016  03:32             2.480 notify_drawing_switcher_impact.cpp
+17/04/2016  03:31               885 notify_drawing_toggle_impact.cpp
+17/04/2016  03:32             1.768 notify_drawing_top_impact.cpp
+02/05/2016  19:08            19.472 notify_drawing_impact.cpp
+01/05/2016  02:38             6.217 notify_drawing_impact_base.cpp
+17/04/2016  03:31               750 mac_main.cpp
+19/04/2016  09:27             6.572 user_font_list.cpp
+17/04/2016  03:31               309 winmetro_notify_drawing.cpp
+              20 File(s)        109.469 bytes
+               0 Dir(s)  59.980.251.136 bytes free

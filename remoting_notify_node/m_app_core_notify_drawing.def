@@ -1,0 +1,8 @@
+﻿; app_notify_drawing.def
+
+LIBRARY  "m_notify_drawing_notify_drawing"
+; For Win32 DLLs, only EXPORTs really required.
+
+EXPORTS
+get_new_library
+
