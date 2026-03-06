@@ -131,7 +131,7 @@ namespace remoting
          try {
             //::string path;
             auto path = m_pfileitem->final_path();
-            //øconstruct_new(m_pbinarystream);
+            //construct_newø(m_pbinarystream);
 
             m_pwriteable = file()->get_writer(path);
             // Seek to initial file position to continue writting

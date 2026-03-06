@@ -100,7 +100,7 @@ namespace  remoting
             auto & strName = listing[i];
 
             auto pfileitem = this->file_item( pathFolder/ strName);
-            auto pfileinfo = øallocate FileInfo(pfileitem);
+            auto pfileinfo = allocateø FileInfo(pfileitem);
 
             m_fileinfoa.add(pfileinfo);
 

@@ -42,10 +42,10 @@ ConnectingDialog::ConnectingDialog()
 BOOL ConnectingDialog::onInitDialog()
 {
 
-   øconstruct_new(m_ptextboxHost);
-   øconstruct_new(m_ptextboxStatus);
-   øconstruct_new(m_panimation);
-   øconstruct_new(m_panimation->m_pbar);
+   construct_newø(m_ptextboxHost);
+   construct_newø(m_ptextboxStatus);
+   construct_newø(m_panimation);
+   construct_newø(m_panimation->m_pbar);
 
   subclassControlById(m_ptextboxHost, IDC_HOST);
   m_ptextboxHost->setText(m_strHost);

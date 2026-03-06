@@ -30,7 +30,7 @@ namespace remoting
    //    if (!m_penvironment)
    //    {
    //
-   //       øconstruct_new(m_penvironment);
+   //       construct_newø(m_penvironment);
    //
    //    }
    //

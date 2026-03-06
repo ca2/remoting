@@ -144,7 +144,7 @@ namespace  remoting
 
                auto & pfileinfo = m_fileinfoa[i];
 
-               øconstruct_new(pfileinfo);
+               construct_newø(pfileinfo);
 
                pfileinfo->setSize(filesInfoReader.readUInt64());
                pfileinfo->setLastModified(filesInfoReader.readUInt64());

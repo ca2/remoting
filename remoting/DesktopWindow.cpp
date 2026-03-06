@@ -52,8 +52,8 @@ bool DesktopWindow::onCreate(LPCREATESTRUCT pcs)
 {
    m_sbar.setWindow(getHWnd());
    m_clipboard.setHWnd(getHWnd());
-   m_premotingstyle = øallocate ::remoting::style;
-   m_premotingtoolbar = øallocate ::remoting::toolbar;
+   m_premotingstyle = allocateø ::remoting::style;
+   m_premotingtoolbar = allocateø ::remoting::toolbar;
    m_premotingtoolbar->create_impact_toolbar(this, m_premotingstyle);
    m_timeStartDesktopWindow.Now();
    BOOL enable = TRUE; // Use TRUE to force disable, which is counter-intuitive but how the flag works

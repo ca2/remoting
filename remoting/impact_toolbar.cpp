@@ -292,12 +292,12 @@ namespace remoting
    style::style()
    {
 
-      m_pbrushBackground = øallocate SolidBrush(RGB(40, 120, 180));
-      m_pbrushBackgroundHover = øallocate SolidBrush(RGB(40, 120, 220));
-      m_pbrushButtonBackground = øallocate SolidBrush(RGB(40, 120, 180));
-      m_pbrushButtonBackgroundHover = øallocate SolidBrush(RGB(50, 130, 230));
-      m_pbrushButtonPaint  =  øallocate SolidBrush(RGB(255, 255, 255));
-      m_ppenPaint = øallocate Pen(PS_SOLID, 2, RGB(255, 255, 255));
+      m_pbrushBackground = allocateø SolidBrush(RGB(40, 120, 180));
+      m_pbrushBackgroundHover = allocateø SolidBrush(RGB(40, 120, 220));
+      m_pbrushButtonBackground = allocateø SolidBrush(RGB(40, 120, 180));
+      m_pbrushButtonBackgroundHover = allocateø SolidBrush(RGB(50, 130, 230));
+      m_pbrushButtonPaint  =  allocateø SolidBrush(RGB(255, 255, 255));
+      m_ppenPaint = allocateø Pen(PS_SOLID, 2, RGB(255, 255, 255));
 
    }
 
@@ -343,7 +343,7 @@ namespace remoting
          if (!m_pbuttonMinimize)
          {
 
-            m_pbuttonMinimize = øallocate toolbar_button();
+            m_pbuttonMinimize = allocateø toolbar_button();
 
             m_pbuttonMinimize->m_pstyle = m_pstyle;
             m_pbuttonMinimize->m_pdesktopwindow = pdesktopwindow;
@@ -360,7 +360,7 @@ namespace remoting
       {
          if (!m_pbuttonRestore)
          {
-            m_pbuttonRestore = øallocate toolbar_button();
+            m_pbuttonRestore = allocateø toolbar_button();
             m_pbuttonRestore->m_pstyle = m_pstyle;
             m_pbuttonRestore->m_pdesktopwindow = pdesktopwindow;
             m_pbuttonRestore->m_pcontrolParent = this;
@@ -377,7 +377,7 @@ namespace remoting
       {
          if (!m_pbuttonClose)
          {
-            m_pbuttonClose = øallocate toolbar_button();
+            m_pbuttonClose = allocateø toolbar_button();
             m_pbuttonClose->m_pstyle = m_pstyle;
             m_pbuttonClose->m_pdesktopwindow = pdesktopwindow;
             m_pbuttonClose->m_pcontrolParent = this;

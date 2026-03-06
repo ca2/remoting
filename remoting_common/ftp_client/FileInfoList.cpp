@@ -93,7 +93,7 @@ namespace remoting
          //    delete m_pchild;
          // }
          // Parent to child relationship
-         m_pchild = øallocate FileInfoList(pparticle, fileinfoa);
+         m_pchild = allocateø FileInfoList(pparticle, fileinfoa);
          // Child to parent relationship
          //if (m_pchild != NULL) {
             m_pchild->m_pparent = this;
@@ -193,7 +193,7 @@ namespace remoting
          ::pointer < FileInfoList > pprev;
 
          for (unsigned int i = 0; i < fileinfoa.size(); i++) {
-            pcurrent = øallocate FileInfoList(pparticle, *fileinfoa[i]);
+            pcurrent = allocateø FileInfoList(pparticle, *fileinfoa[i]);
             pcurrent->setPrev(pprev);
             if (pprev) {
                pprev->setNext(pcurrent);
