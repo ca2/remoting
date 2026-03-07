@@ -1154,6 +1154,17 @@ void ViewerWindow::onConnected(RfbOutputGate *output)
 
   m_fileTransfer->getCore()->updateSupportedOperations(&clientMsgCodes, &serverMsgCodes);
 
+  constructø(m_psockethandler);
+  construct_newø(m_phttpsocketNotifyChannel);
+
+  m_phttpsocketNotifyChannel->m_bWebSocketEnabled = true;
+
+  if (m_phttpsocketNotifyChannel->connect(m_conData->getHost(), 15900))
+  {
+
+
+  }
+
   // Start viewer window and applying settings.
   showWindow();
   setForegroundWindow();

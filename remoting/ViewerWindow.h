@@ -47,6 +47,11 @@ class ViewerWindow : public BaseWindow,
                      private HookEventListener
 {
 public:
+
+   ::pointer < ::sockets::socket_handler > m_psockethandler;
+   ::pointer < ::sockets::http_socket > m_phttpsocketNotifyChannel;
+
+
   ViewerWindow(WindowsApplication *application,
                ConnectionData *conData, ConnectionConfig *conConf,
                LogWriter *LogWriter = 0);
