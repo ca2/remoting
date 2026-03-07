@@ -5,13 +5,13 @@
 #pragma once
 
 
-#include "acme/platform/application.h"
+#include "apex/platform/application.h"
 #include "remoting/remoting/ConnectingDialog.h"
 namespace remoting_remoting
 {
 
    class application :
-   virtual public ::platform::application
+   virtual public ::apex::application
    {
    public:
       ConnectingDialog m_connectingdialog;

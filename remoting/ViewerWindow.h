@@ -41,6 +41,7 @@
 #include "remoting/remoting_common/win_system/SystemInformation.h"
 #include "remoting/remoting_common/win_system/WindowsApplication.h"
 #include "remoting/remoting_common/win_system/WinHooks.h"
+#include "apex/networking/sockets/http/get_socket.h"
 
 class ViewerWindow : public BaseWindow,
                      public CoreEventsAdapter,
@@ -48,8 +49,7 @@ class ViewerWindow : public BaseWindow,
 {
 public:
 
-   ::pointer < ::sockets::socket_handler > m_psockethandler;
-   ::pointer < ::sockets::http_socket > m_phttpsocketNotifyChannel;
+   ::pointer < ::sockets::http_client_socket > m_phttpclientsocketNotifyChannel;
 
 
   ViewerWindow(WindowsApplication *application,

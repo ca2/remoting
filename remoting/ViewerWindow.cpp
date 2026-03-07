@@ -34,6 +34,7 @@
 #include "acme/constant/id.h"
 #include "acme/filesystem/file/item.h"
 #include "acme/platform/application.h"
+#include "apex/networking/http/context.h"
 #include "remoting/remoting_common/remoting.h"
 
 #include <commdlg.h>
@@ -1154,16 +1155,13 @@ void ViewerWindow::onConnected(RfbOutputGate *output)
 
   m_fileTransfer->getCore()->updateSupportedOperations(&clientMsgCodes, &serverMsgCodes);
 
-  constructø(m_psockethandler);
-  construct_newø(m_phttpsocketNotifyChannel);
+  ::property_set setHttp;
 
-  m_phttpsocketNotifyChannel->m_bWebSocketEnabled = true;
+  ::string strUrl;
 
-  if (m_phttpsocketNotifyChannel->connect(m_conData->getHost(), 15900))
-  {
+  strUrl.format("wss://{}:{}/start_remoting_notify_node_websocket", m_conData->getHost(), 15900);
 
-
-  }
+  ::system()->m_papplication->http()->http_get(m_phttpclientsocketNotifyChannel, strUrl, setHttp);
 
   // Start viewer window and applying settings.
   showWindow();
