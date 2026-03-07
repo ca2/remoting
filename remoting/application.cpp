@@ -38,6 +38,8 @@ namespace remoting_remoting
 
       ::system()->m_bFinalizeIfNoSession = false;
 
+      m_bNetworking = true;
+
       m_strAppId = "remoting/remoting";
    }
 
