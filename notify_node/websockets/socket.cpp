@@ -8,6 +8,7 @@
 #include "acme/prototype/string/str.h"
 #include "acme/crypto/crypto.h"
 #include "apex/networking/sockets/http/websocket.h"
+#include "apex/networking/sockets/base/socket_thread.h"
 #include "apex/platform/system.h"
 #include "aura/user/user/interaction.h"
 #include "aura/user/user/notification_listener.h"
@@ -284,6 +285,8 @@ namespace remoting_notify_node
                
                websocket().defer_negotiate_incoming_request();
                
+               information() << "negotiated incoming request?!?!";
+               
             }
             else
             {
@@ -344,27 +347,34 @@ namespace remoting_notify_node
 
       }
 
-   
-   void socket::on_keyboard_layout_change(const char * pszKeyboardLayoutId)
-   {
       
-      ::payload payload;
+      void socket::on_keyboard_layout_change(const char * pszKeyboardLayoutId)
+      {
+         
+         ::string strKeyboardLayoutId(pszKeyboardLayoutId);
+         
+         m_psocketthread->postø() << [this, strKeyboardLayoutId]()
+         {
+            
+            ::payload payload;
+            
+            auto & set = payload.property_set_reference();
+            
+            set["notification"] = "keyboard_layout_change";
+            set["keyboard_layout_id"] = strKeyboardLayoutId;
+            
+            websocket().send_network_payload(payload);
+            
+         };
+         
+      }
       
-      auto & set = payload.property_set_reference();
       
-      set["notification"] = "keyboard_layout_change";
-      set["keyboard_layout_id"] = pszKeyboardLayoutId;
-      
-      this->websocket().send_network_payload(payload);
-      
-   }
-   
-   
-   void socket::on_websocket_data(const ::scoped_string & scopedstr)
-   {
-      
-      
-   }
+      void socket::on_websocket_data(const ::scoped_string & scopedstr)
+      {
+         
+         
+      }
 
 
    } // namespace websockets
