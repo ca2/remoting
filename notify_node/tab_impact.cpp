@@ -2,9 +2,10 @@
 #include "tab_impact.h"
 #include "application.h"
 #include "impact.h"
-//#include "render.h"
 #include "acme/constant/user_message.h"
 #include "berg/user/user/tab_pane.h"
+#include "remoting/notify_node/websockets/incoming_socket.h"
+#include "remoting/notify_node/websockets/incoming_socket_thread.h"
 
 
 namespace remoting_notify_node
@@ -42,7 +43,7 @@ namespace remoting_notify_node
          return;
 
       }
-
+      
       set_tab("Menu", MENU_IMPACT);
       set_tab("text://app-simple/drawing/:001", "drawing1");
       set_tab("text://app-simple/drawing/:002", "drawing2");

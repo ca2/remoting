@@ -10,7 +10,9 @@
 #include "apex/networking/sockets/http/websocket.h"
 #include "apex/platform/system.h"
 #include "aura/user/user/interaction.h"
+#include "aura/user/user/notification_listener.h"
 #include "aura/windowing/window.h"
+#include "berg/user/user/tab_impact.h"
 #include "bred/id.h"
 
 
@@ -30,6 +32,20 @@ namespace remoting_notify_node
 
       socket::~socket()
       {
+
+      }
+   
+   
+      void socket::on_initialize_particle()
+      {
+         
+         app_consumer < ::remoting_notify_node::websockets::application,  ::netserver::socket,::user::notification_listener >::on_initialize_particle();
+         
+         auto pwindow = get_app()->m_ptabimpactBerg->window();
+         
+         m_enotificationa.add(::user::e_notification_keyboard_layout_change);
+         
+         pwindow->add_user_notification_listener(this);
 
       }
 
@@ -327,6 +343,28 @@ namespace remoting_notify_node
          }
 
       }
+
+   
+   void socket::on_keyboard_layout_change(const char * pszKeyboardLayoutId)
+   {
+      
+      ::payload payload;
+      
+      auto & set = payload.property_set_reference();
+      
+      set["notification"] = "keyboard_layout_change";
+      set["keyboard_layout_id"] = pszKeyboardLayoutId;
+      
+      this->websocket().send_network_payload(payload);
+      
+   }
+   
+   
+   void socket::on_websocket_data(const ::scoped_string & scopedstr)
+   {
+      
+      
+   }
 
 
    } // namespace websockets
