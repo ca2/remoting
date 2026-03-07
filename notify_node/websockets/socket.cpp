@@ -3,12 +3,13 @@
 #include "application.h"
 #include "acme/filesystem/file/memory_file.h"
 #include "acme/parallelization/synchronous_lock.h"
-#include "aura/user/user/interaction.h"
 #include "acme/prototype/prototype/url.h"
 #include "acme/prototype/string/base64.h"
 #include "acme/prototype/string/str.h"
 #include "acme/crypto/crypto.h"
+#include "apex/networking/sockets/http/websocket.h"
 #include "apex/platform/system.h"
+#include "aura/user/user/interaction.h"
 #include "aura/windowing/window.h"
 #include "bred/id.h"
 
@@ -38,48 +39,48 @@ namespace remoting_notify_node
 
          string strHost = inheader("host");
 
-         if (!strHost.case_insensitive_begins("localhost.ca2.network:2000"))
-         {
-            outattr("http_status_code") = 500;
-            /*outattr("http_version") = "HTTP/1.1";*/
-            outattr("http_status") = "Server Error";
-
-            return;
-
-         }
+//         if (!strHost.case_insensitive_begins("localhost.ca2.network:2000"))
+//         {
+//            outattr("http_status_code") = 500;
+//            /*outattr("http_version") = "HTTP/1.1";*/
+//            outattr("http_status") = "Server Error";
+//
+//            return;
+//
+//         }
 
          string strReferer = inheader("referer");
 
          ::string strServer = ::url::get_host(strReferer);
 
-         if (strServer.case_insensitive_equals("ca2.store"))
-         {
-
-            outheader("Access-Control-Allow-Origin") = "https://ca2.store";
-
-         }
-         else if (strServer.case_insensitive_equals("ca2.network"))
-         {
-
-            outheader("Access-Control-Allow-Origin") = "https://ca2.network";
-
-         }
-         else if (strServer.case_insensitive_equals("camilothomas.com"))
-         {
-
-            outheader("Access-Control-Allow-Origin") = "https://camilothomas.com";
-
-         }
-         else
-         {
-
-            outattr("http_status_code") = 401;
-            /*outattr("http_version") = "HTTP/1.1";*/
-            outattr("http_status") = "Access Denied";
-
-            return;
-
-         }
+//         if (strServer.case_insensitive_equals("ca2.store"))
+//         {
+//
+//            outheader("Access-Control-Allow-Origin") = "https://ca2.store";
+//
+//         }
+//         else if (strServer.case_insensitive_equals("ca2.network"))
+//         {
+//
+//            outheader("Access-Control-Allow-Origin") = "https://ca2.network";
+//
+//         }
+//         else if (strServer.case_insensitive_equals("camilothomas.com"))
+//         {
+//
+//            outheader("Access-Control-Allow-Origin") = "https://camilothomas.com";
+//
+//         }
+//         else
+//         {
+//
+//            outattr("http_status_code") = 401;
+//            /*outattr("http_version") = "HTTP/1.1";*/
+//            outattr("http_status") = "Access Denied";
+//
+//            return;
+//
+//         }
 
          //Access - Control - Allow - Origin: https://developer.mozilla.org
       //Vary: Origin
@@ -260,42 +261,14 @@ namespace remoting_notify_node
                //response().file()->write("ca2Installer-pong");
 
             }
-//            else if (string_begins(m_request.m_strRequestUri, "/start_remoting_notify_node_websocket"))
-//            {
-//
-////               string strKey = inheader("sec-websocket-key");//
-////               //string strKey = "dGhlIHNhbXBsZSBub25jZQ==";
-////               strKey.trim();
-////               strKey += "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
-////               memory mem;
-////               mem.assign(strKey);
-////               memory memSha1;
-////
-////               auto psystem = system();
-////
-////               auto pcrypto = crypto();
-////
-////               pcrypto->sha1(memSha1, mem);
-////
-////               auto pbase64 = psystem->base64();
-////
-////               strKey = pbase64->encode(memSha1);
-////               outheader("Sec-WebSocket-Accept") = strKey;
-////               outheader("Connection") = "Upgrade";
-////               outheader("Upgrade") = "websocket";
-////               outattr("http_status_code") = 101;
-////               outattr("http_version") = "HTTP/1.1";
-////               outattr("http_status") = "Switching Protocols";
-////               Respond();
-////               memory m;
-////               string strMessage = "yes_account_com";
-////               m.set_size(strMessage.length() + 2);
-////               m.data()[0] = 0x81;
-////               m.data()[1] = (unsigned char) (strMessage.length());
-////               ::memory_copy(&m.data()[2], strMessage.c_str(), strMessage.length());
-////               write(m.data(), m.size());
-//               return;
-//            }
+            else if (string_begins(m_request.m_strRequestUri, "/start_remoting_notify_node_websocket"))
+            {
+               
+               enable_websocket();
+               
+               websocket().defer_negotiate_incoming_request();
+               
+            }
             else
             {
 
