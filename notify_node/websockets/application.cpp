@@ -275,6 +275,13 @@ namespace remoting_notify_node
          factory()->add_factory_item < ::remoting_notify_node::websockets::incoming_socket >();
          factory()->add_factory_item < ::remoting_notify_node::websockets::socket >();
          
+         if (!m_pincomingsocketthread)
+         {
+            
+            construct_newø(m_pincomingsocketthread);
+            
+         }
+         
       }
       
       
@@ -391,12 +398,12 @@ namespace remoting_notify_node
          
          psystem->payload("do_not_initialize_user_presence") = true;
          
-         if (!m_pincomingsocketthread)
-         {
-            
-            construct_newø(m_pincomingsocketthread);
-            
-         }
+//         if (!m_pincomingsocketthread)
+//         {
+//            
+//            construct_newø(m_pincomingsocketthread);
+//            
+//         }
          
          //if (!m_pthreadSsl)
          //{

@@ -47,7 +47,7 @@ namespace remoting_notify_node
       factory()->add_factory_item <::remoting_notify_node::impact >();
       factory()->add_factory_item <::remoting_notify_node::tab_impact >();
 
-      ::berg::application::init_instance();
+      websockets::application::init_instance();
 
       //if (!::app_simple_drawing::application::init_instance())
       //{

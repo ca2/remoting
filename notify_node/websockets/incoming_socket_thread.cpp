@@ -39,7 +39,7 @@ namespace remoting_notify_node
          m_typeIncomingSocket = typeid(::remoting_notify_node::websockets::incoming_socket );
          
          
-         m_strIp = "127.0.0.1";
+         m_strIp = "0.0.0.0";
          
          {
             
@@ -64,9 +64,9 @@ namespace remoting_notify_node
             
          }
          
-         m_iPortMinimum = (::networking::port_t)2000;
-         m_iPortMaximum = (::networking::port_t)2000;
-         
+         m_iPortMinimum = (::networking::port_t)15900;
+         m_iPortMaximum = (::networking::port_t)15900;
+         information("port minimum maximum: {} - {}", m_iPortMinimum, m_iPortMaximum);
          branch();
          
          //      if (!estatus)
