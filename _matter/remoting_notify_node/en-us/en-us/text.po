@@ -1,0 +1,30 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: app-simple/drawing\n"
+"Language: en\n"
+
+#: 
+msgid "application_title"
+msgstr "Simple Drawing"
+
+msgid "001"
+msgstr "001"
+
+msgid "002"
+msgstr "002"
+
+msgid "003"
+msgstr "003"
+
+msgid "arcs"
+msgstr "arcs"
+
+msgid "arcpths"
+msgstr "arcpths"
+
+
+

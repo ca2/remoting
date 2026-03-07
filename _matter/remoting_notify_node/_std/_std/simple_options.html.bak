@@ -1,0 +1,50 @@
+<html>
+<head>
+<style>
+body
+{
+	
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+		
+}
+h1
+{
+	
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #Af000000;
+	font-size: 54px;
+		
+}
+h2
+{
+	
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #Af000000;
+	font-size: 36px;
+}
+h3
+{
+	
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #Af000000;
+	font-size: 24px;
+}
+</style>
+</head>
+<body style="background-color: #7fffffff; color:#000000;">
+
+<h1>{$app_options_title}</h1>
+
+
+<h2>Simple Solutions</h2>
+
+<input type="checkbox" id="application://simple_checkbox"/>Simple Check Box<br><br>
+
+<input type="checkbox" id="check://application/no_client_frame"/>No Client Frame<br><br>
+
+Simple Text<br>
+<input type="text" id="application://simple_text"/><br><br>
+
+
+</body>
+</html>

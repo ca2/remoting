@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Simple Drawing!!
+GenericName=Simple Drawing
+Comment=simple-drawing
+Terminal=false
+X-MultipleArgs=false
+Categories=X-Utilities;
+StartupNotify=true
+MimeType=

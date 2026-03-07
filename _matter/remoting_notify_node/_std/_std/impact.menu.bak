@@ -1,0 +1,7 @@
+
+	<menubar id="link">
+		<item id="check://application/simple_checkbox">Simple</item>
+		<item id="application://no_client_frame">No Client Frame</item>
+		<separator />
+		<item id="app_exit">Exit</item>
+	</menubar>

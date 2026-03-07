@@ -1,0 +1,8 @@
+﻿; app_notify_drawing.def
+
+LIBRARY  "remoting_notify_node"
+; For Win32 DLLs, only EXPORTs really required.
+
+EXPORTS
+app_simple_notify_drawing_get_new_library
+

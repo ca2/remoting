@@ -1,3 +1,0 @@
-app/main
-app-simple/drawing
-app-simple/notify_drawing

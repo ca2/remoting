@@ -1,0 +1,7 @@
+{
+   "app_options":
+	{
+		"resource" : "matter://simple_options.html",
+		"title": "Simple Options"
+   }
+}
