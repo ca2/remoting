@@ -33,12 +33,12 @@ namespace remoting_notify_node
          
          void on_initialize_particle() override;
          
-         virtual void on_send_response() override;
+         virtual bool on_send_response() override;
          
          void on_keyboard_layout_change(const char * pszKeyboardLayoutId) override;
          
          
-         void on_websocket_data(const ::scoped_string & scopedstr) override;
+         void on_websocket_text(const ::scoped_string & scopedstr) override;
        
          
       };

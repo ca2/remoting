@@ -51,7 +51,7 @@ namespace remoting_notify_node
       }
 
 
-      void socket::on_send_response()
+      bool socket::on_send_response()
       {
 
          string strHost = inheader("host");
@@ -158,7 +158,6 @@ namespace remoting_notify_node
 //                  outattr("http_status") = "Not Found";
 //
 //               }
-
 
             }
             else if (m_request.m_strRequestUri.case_insensitive_begins("/start?"))
@@ -287,6 +286,8 @@ namespace remoting_notify_node
                
                information() << "negotiated incoming request?!?!";
                
+               return true;
+               
             }
             else
             {
@@ -344,6 +345,8 @@ namespace remoting_notify_node
             //}
 
          }
+         
+         return false;
 
       }
 
@@ -370,7 +373,7 @@ namespace remoting_notify_node
       }
       
       
-      void socket::on_websocket_data(const ::scoped_string & scopedstr)
+      void socket::on_websocket_text(const ::scoped_string & scopedstr)
       {
          
          
