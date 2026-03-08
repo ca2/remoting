@@ -22,10 +22,12 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/parallelization/manual_reset_happening.h"
 #include "remoting/remoting_common/config/IniFileSettingsManager.h"
 #include "remoting/remoting_common/util/Exception.h"
 #include "remoting/remoting_common/util/ResourceLoader.h"
 #include "remoting/remoting_common/rfb/StandardPixelFormatFactory.h"
+
 
 #include "FsWarningDialog.h"
 #include "NamingDefs.h"
@@ -1155,13 +1157,28 @@ void ViewerWindow::onConnected(RfbOutputGate *output)
 
   m_fileTransfer->getCore()->updateSupportedOperations(&clientMsgCodes, &serverMsgCodes);
 
-  ::property_set setHttp;
-
   ::string strUrl;
 
   strUrl.format("wss://{}:{}/start_remoting_notify_node_websocket", m_conData->getHost(), 15900);
 
-  ::system()->m_papplication->http()->http_get(m_phttpclientsocketNotifyChannel, strUrl, setHttp);
+  auto pmanualresethappeningWebsocketStarted = øcreate<::manual_reset_happening>();
+
+  m_papplication->forkø() << [this, strUrl, pmanualresethappeningWebsocketStarted]
+     {
+
+        ::task_set_name("wsRemotingNotify");
+
+        ::property_set setHttp;
+
+        setHttp["websocket_started_manual_reset_happening"] = pmanualresethappeningWebsocketStarted;
+
+        ::system()->m_papplication->http()->http_get(m_phttpclientsocketNotifyChannel, strUrl, setHttp);
+
+        information("websocket started or closed");
+
+     };
+
+  pmanualresethappeningWebsocketStarted->wait(30_minutes);
 
   // Start viewer window and applying settings.
   showWindow();
