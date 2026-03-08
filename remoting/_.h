@@ -13,3 +13,14 @@
 #endif
 
 
+namespace remoting_remoting
+{
+
+   
+   class keyboard_layout_change;
+
+
+} // namespace remoting_remoting
+
+
+

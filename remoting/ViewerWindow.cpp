@@ -27,7 +27,7 @@
 #include "remoting/remoting_common/util/Exception.h"
 #include "remoting/remoting_common/util/ResourceLoader.h"
 #include "remoting/remoting_common/rfb/StandardPixelFormatFactory.h"
-
+#include "remoting/remoting/keyboard_layout_change.h"
 
 #include "FsWarningDialog.h"
 #include "NamingDefs.h"
@@ -1166,11 +1166,15 @@ void ViewerWindow::onConnected(RfbOutputGate *output)
   m_papplication->forkø() << [this, strUrl, pmanualresethappeningWebsocketStarted]
      {
 
+        construct_newø(m_pkeyboardlayoutchange);
+
         ::task_set_name("wsRemotingNotify");
 
         ::property_set setHttp;
 
         setHttp["websocket_started_manual_reset_happening"] = pmanualresethappeningWebsocketStarted;
+
+        setHttp["socket_http_callback"] = m_pkeyboardlayoutchange;
 
         ::system()->m_papplication->http()->http_get(m_phttpclientsocketNotifyChannel, strUrl, setHttp);
 

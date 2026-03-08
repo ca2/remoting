@@ -10,12 +10,12 @@
 namespace remoting_remoting
 {
 
-   class application :
+   class CLASS_DECL_REMOTING_REMOTING application :
    virtual public ::apex::application
    {
    public:
       ConnectingDialog m_connectingdialog;
-LogWriter * m_logWriter;
+      LogWriter * m_logWriter;
       bool m_bOpenFile = false;
 
       __DECLARE_APPLICATION_RELEASE_TIME();

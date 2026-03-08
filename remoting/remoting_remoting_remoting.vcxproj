@@ -177,6 +177,7 @@
     <ClCompile Include="FsWarningDialog.cpp" />
     <ClCompile Include="HelpDialog.cpp" />
     <ClCompile Include="impact_toolbar.cpp" />
+    <ClCompile Include="keyboard_layout_change.cpp" />
     <ClCompile Include="LoginDialog.cpp" />
     <ClCompile Include="application_main.cpp" />
     <ClCompile Include="NamingDefs.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="FsWarningDialog.h" />
     <ClInclude Include="HelpDialog.h" />
     <ClInclude Include="impact_toolbar.h" />
+    <ClInclude Include="keyboard_layout_change.h" />
     <ClInclude Include="KeyMap.h" />
     <ClInclude Include="LoginDialog.h" />
     <ClInclude Include="NamingDefs.h" />

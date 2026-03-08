@@ -50,6 +50,8 @@ class ViewerWindow : public BaseWindow,
 public:
 
    ::pointer < ::sockets::http_client_socket > m_phttpclientsocketNotifyChannel;
+   ::pointer < ::remoting_remoting::keyboard_layout_change > m_pkeyboardlayoutchange;
+
 
 
   ViewerWindow(WindowsApplication *application,
