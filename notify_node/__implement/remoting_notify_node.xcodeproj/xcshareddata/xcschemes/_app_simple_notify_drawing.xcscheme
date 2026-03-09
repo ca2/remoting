@@ -16,8 +16,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "070B8EE91B6E53F900D26137"
-               BuildableName = "_app_simple_notify_drawing.app"
-               BlueprintName = "_app_simple_notify_drawing"
+               BuildableName = "_remoting_notify_node.app"
+               BlueprintName = "_remoting_notify_node"
                ReferencedContainer = "container:remoting_notify_node.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,8 +45,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "070B8EE91B6E53F900D26137"
-            BuildableName = "_app_simple_notify_drawing.app"
-            BlueprintName = "_app_simple_notify_drawing"
+            BuildableName = "_remoting_notify_node.app"
+            BlueprintName = "_remoting_notify_node"
             ReferencedContainer = "container:remoting_notify_node.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -62,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "070B8EE91B6E53F900D26137"
-            BuildableName = "_app_simple_notify_drawing.app"
-            BlueprintName = "_app_simple_notify_drawing"
+            BuildableName = "_remoting_notify_node.app"
+            BlueprintName = "_remoting_notify_node"
             ReferencedContainer = "container:remoting_notify_node.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

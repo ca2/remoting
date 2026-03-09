@@ -9,10 +9,8 @@
 /* Begin PBXBuildFile section */
 		9A22749F27CF41310042BAC2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A22749E27CF41310042BAC2 /* main.cpp */; };
 		9A273CA629CF17E300CBEB97 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A273CA229CF17E300CBEB97 /* InfoPlist.strings */; };
-		9A5D24A52F5AF35700103AC2 /* libremoting_notify_node.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEBC5072F5ADCED00855444 /* libremoting_notify_node.dylib */; };
 		9A5D24A82F5AF37E00103AC2 /* libremoting_notify_node.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 9AEBC5072F5ADCED00855444 /* libremoting_notify_node.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		9A5D24A92F5AFB2200103AC2 /* _matter.zip in Resources */ = {isa = PBXBuildFile; fileRef = 9A990437275332E900B13F01 /* _matter.zip */; };
-		9A5D24D92F5B015200103AC2 /* libnetworking_bsd.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A5D24D22F5B012100103AC2 /* libnetworking_bsd.dylib */; };
 		9A5D24DA2F5B015200103AC2 /* libnetworking_bsd.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 9A5D24D22F5B012100103AC2 /* libnetworking_bsd.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		9A71B8552A469ED900F9FC3D /* libunac.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 9A71B8532A469ED900F9FC3D /* libunac.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		9A79BDD5266455CC009E6C44 /* libaxis.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 9A79BDC5266455CB009E6C44 /* libaxis.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -412,10 +410,8 @@
 			files = (
 				9AA22D1F2F5AF2660024DE76 /* libremoting_notify_node.dylib in Frameworks */,
 				9AC01E742748DD46006BEBCC /* libberg.dylib in Frameworks */,
-				9A5D24D92F5B015200103AC2 /* libnetworking_bsd.dylib in Frameworks */,
 				9AFFC828267885D200C4104F /* libacme.dylib in Frameworks */,
 				9AFFC830267885D300C4104F /* libapex.dylib in Frameworks */,
-				9A5D24A52F5AF35700103AC2 /* libremoting_notify_node.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -958,8 +954,11 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${WorkspaceDir}/../operating_system/tool/bin/_on_before_build_executable",
+				"$(BUILT_PRODUCTS_DIR)/$(EXECUTABLE_FOLDER_PATH)/$(EXECUTABLE_NAME)",
 				"$(WorkspaceDir)/output_copy.txt",
+				"$(SRCROOT)/input.xcfilelist",
+				$HOME/code/operating_system/tool/bin/application_build_helper,
+				$HOME/code/operating_system/tool/bin/_on_after_build_executable,
 			);
 			name = _on_after_build_executable;
 			outputFileListPaths = (
@@ -970,7 +969,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$HOME/code/operating_system/tool/bin/_on_after_build_executable\n";
+			shellScript = "echo \"*** _remoting_notify_node _on_after_build_executable ***\"\n\n$HOME/code/operating_system/tool/bin/_on_after_build_executable\n\nEXIT_CODE=$?\n\necho \"EXIT_CODE is $EXIT_CODE\"\n\nexit $EXIT_CODE\n\n\n\n";
+			showEnvVarsInLog = 0;
 		};
 		9A932B3A2D6DB94D006557FC /* _on_before_build_executable */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -978,9 +978,12 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"$(SRCROOT)/../matter.txt",
+				"",
 			);
 			inputPaths = (
+				$HOME/code/operating_system/tool/bin/_on_before_build_executable,
+				"$(SRCROOT)/../matter.txt",
+				$HOME/code/operating_system/tool/bin/application_build_helper,
 			);
 			name = _on_before_build_executable;
 			outputFileListPaths = (
@@ -988,10 +991,12 @@
 			outputPaths = (
 				"$(SRCROOT)/_matter.zip",
 				"$(SRCROOT)/output.xcfilelist",
+				"$(SRCROOT)/input.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$HOME/code/operating_system/tool/bin/_on_before_build_executable\n";
+			shellScript = "$HOME/code/operating_system/tool/bin/_on_before_build_executable\n\nEXIT_CODE=$?\n\necho \"EXIT_CODE is $EXIT_CODE\"\n\nexit $EXIT_CODE\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
