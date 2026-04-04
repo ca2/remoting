@@ -113,6 +113,7 @@ private:
   virtual bool onSysCommand(WPARAM wParam, LPARAM lParam);
   virtual bool onMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam);
   virtual bool onMouse(unsigned char mouseButtons, unsigned short wheelSpeed, POINT position);
+  virtual bool onMouseEx(UINT message, int iButtonMask, unsigned short wspeed, POINT position);
 
 //protected:
   //HWND m_hwnd;

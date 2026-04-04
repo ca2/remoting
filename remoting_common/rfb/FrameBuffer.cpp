@@ -520,19 +520,6 @@ unsigned char FrameBuffer::getBitsPerPixel() const
   return (unsigned char)m_pixelFormat.bitsPerPixel;
 }
 
-unsigned char FrameBuffer::getBytesPerPixel() const
-{
-  return (unsigned char)(m_pixelFormat.bitsPerPixel / 8);
-}
-
-void *FrameBuffer::getBufferPtr(int x, int y) const
-{
-  char *ptr = (char *)m_buffer;
-  ptr += (y * m_dimension.cx + x) * getBytesPerPixel();
-
-  return (void *)ptr;
-}
-
 int FrameBuffer::getBufferSize() const
 { 
   return (int)((unsigned long long)m_dimension.area() * m_pixelFormat.bitsPerPixel / 8);

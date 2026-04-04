@@ -55,11 +55,11 @@ void ZrleDecoder::decode(RfbInputGate *pinput,
     return;
   }
 
-  ::memory unpackedData;
+  auto & unpackedData = m_unpackedData;
   //unpackedData.setresize(unpackedDataSize);
   unpackedData.assign((unsigned char *) m_inflater.getOutput(),  unpackedDataSize);
-   auto p =  m_inflater.getOutput();
-   auto p1 =  unpackedData.data();
+   //auto p =  m_inflater.getOutput();
+   //auto p1 =  unpackedData.data();
 
   ByteArrayInputStream unpackedByteArrayStream(reinterpret_cast<char *>(unpackedData.data()),
                                                unpackedData.size());
@@ -105,7 +105,7 @@ void ZrleDecoder::decode(RfbInputGate *pinput,
       }
       size_t tileLength = tileRect.area();
       size_t tileBytesLength = tileLength * m_bytesPerPixel;
-      ::array_base<char> pixels;
+      auto & pixels = m_pixels;
       pixels.resize(tileBytesLength);
 
       int type = readType(&unpackedDataStream);
@@ -142,7 +142,8 @@ void ZrleDecoder::decode(RfbInputGate *pinput,
 void ZrleDecoder::readAndInflate(RfbInputGate *pinput, size_t maximalUnpackedSize)
 {
   unsigned int length = pinput->readUInt32();
-  ::array_base<char> zlibData;
+  //::array_base<char> zlibData;
+  auto& zlibData = m_zlibDataReadAndInflate;
   zlibData.resize(length);
   if (length == 0) {
     zlibData.resize(1);
@@ -322,28 +323,3 @@ void ZrleDecoder::readPaletteRleTile(DataInputStream * pinput,
   }
 }
 
-void ZrleDecoder::drawTile(FrameBuffer *fb,
-                           const ::int_rectangle &  tileRect,
-                           const ::array_base<char> *pixels)
-{
-  int width = tileRect.width();
-  size_t fbBytesPerPixel = m_bytesPerPixel;
-
-  if (fbBytesPerPixel == 3) {
-    fbBytesPerPixel = 4;
-  }
-
-  int tileLength = tileRect.area();
-
-  int x = tileRect.left;
-  int y = tileRect.top;
-   
-  const char *pixelsPtr = pixels->data();
-  char *bufferPtr = 0;
-  for (int i = 0; i < tileLength; i++) {
-    bufferPtr = (char*)fb->getBufferPtr(x + i % width, y + i / width);
-    memset(bufferPtr, 0, fbBytesPerPixel);
-    memcpy(bufferPtr, pixelsPtr, m_bytesPerPixel);
-    pixelsPtr+=m_bytesPerPixel;
-  }
-}

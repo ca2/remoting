@@ -225,6 +225,12 @@ bool BaseWindow::onMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
 
 bool BaseWindow::wndProc(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
 {
+    if (scopedstrMessage == WM_LBUTTONDOWN)
+    {
+
+        OutputDebugString(L"WM_LBUTTONDOWN");
+
+    }
   switch (scopedstrMessage) {
     case WM_COMMAND:
       return onCommand(wParam, lParam);
@@ -241,6 +247,8 @@ bool BaseWindow::wndProc(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
     case WM_MOUSEWHEEL:
     case WM_MOUSEMOVE:
     {
+
+
       unsigned char mouseButtons = 0;
 
       mouseButtons |= LOWORD(wParam) & MK_RBUTTON ? MOUSE_RDOWN : 0;
@@ -259,10 +267,10 @@ bool BaseWindow::wndProc(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
         signed short wheelSignedSpeed = static_cast<signed short>(HIWORD(wParam));
         if (wheelSignedSpeed < 0) {
           mouseButtons |= MOUSE_WDOWN;
-          wheelSpeed = - wheelSignedSpeed / WHEEL_DELTA;
+          wheelSpeed = - wheelSignedSpeed * 24 / WHEEL_DELTA;
         } else {
           mouseButtons |= MOUSE_WUP;
-          wheelSpeed = wheelSignedSpeed / WHEEL_DELTA;
+          wheelSpeed = wheelSignedSpeed * 24 / WHEEL_DELTA;
         }
 
         // In some cases wheelSignedSpeed can be smaller than the WHEEL_DELTA,
@@ -276,7 +284,16 @@ bool BaseWindow::wndProc(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
           point.x = -1;
           point.y = -1;
         }
+
       }
+
+      if (onMouseEx(scopedstrMessage,mouseButtons, wheelSpeed, point))
+        {
+
+          return true;
+
+        }
+          
 
       // Notify window about mouse-event.
       return onMouse(mouseButtons, static_cast<unsigned short>(wheelSpeed), point);
@@ -305,6 +322,12 @@ void BaseWindow::redraw(const RECT & rectArea)
 {
   _ASSERT(m_hwnd != 0);
 
+  if (!::IsWindowVisible(m_hwnd) || IsIconic(m_hwnd) || ::IsIconic(::GetParent(m_hwnd)))
+  {
+
+      return;
+  }
+
   if (::is_empty(rectArea)) {
      InvalidateRect(m_hwnd, NULL, TRUE);
   } else {
@@ -315,6 +338,12 @@ void BaseWindow::redraw(const RECT & rectArea)
 bool BaseWindow::onMouse(unsigned char msg, unsigned short wspeed, POINT pt)
 {
   return false;
+}
+
+bool BaseWindow::onMouseEx(UINT message, int iButtonMask, unsigned short wspeed, POINT pt)
+{
+    return false;
+
 }
 
 void BaseWindow::setForegroundWindow()

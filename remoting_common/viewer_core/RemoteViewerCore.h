@@ -457,7 +457,7 @@ public:
   ::array_base<::int_rectangle> getDesktops();
   ::int_size getDesktopSize();
 
-private:
+//private:
   //
   // Overrides Thread::execute(). Implements the input thread.
   //

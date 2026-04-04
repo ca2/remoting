@@ -158,7 +158,7 @@ while (m_bRunning)
 void ConnectingDialog::_start_animating_progress_range(double dStart, double dEnd)
 {
 
-   ødefer_construct_new(m_panimation);
+   defer_construct_newø(m_panimation);
 
    m_panimation->set_animation_range(dStart, dEnd);
    //m_dAnimationStart = dStart;

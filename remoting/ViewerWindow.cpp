@@ -56,7 +56,7 @@ ViewerWindow::ViewerWindow(WindowsApplication *application,
   m_viewerCore(0),
   m_fileTransfer(0),
   m_conData(conData),
-  m_dsktWnd(m_logWriter, conConf),
+  m_dsktWnd(m_logWriter, conConf, this),
   m_isConnected(false),
   m_sizeIsChanged(false),
   m_hooksEnabledFirstTime(true),
@@ -83,6 +83,7 @@ ViewerWindow::ViewerWindow(WindowsApplication *application,
   createWindow(titleName, WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS);
 
   m_dsktWnd.setClass(windowClass);
+  m_dsktWnd.m_pviewerwindow = this;
   m_dsktWnd.createWindow(subTitleName,
                          WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_CHILD,
                          getHWnd());
@@ -260,7 +261,25 @@ void ViewerWindow::changeCursor(int type)
 
 bool ViewerWindow::onSysCommand(WPARAM wParam, LPARAM lParam)
 {
-  return onCommand(wParam, lParam);
+
+    if ((wParam & 0xfff0) == SC_RESTORE)
+    {
+
+        ShowWindow(m_hwnd, SW_RESTORE);
+        if (m_isMinimizedFromFullScreen)
+        {
+
+            doRestoreToFullScreen();
+
+        }
+
+        
+        m_dsktWnd.m_bMinimized = false;
+        
+        return true;
+    }
+    return false;
+
 }
 
 bool ViewerWindow::onMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
@@ -294,6 +313,24 @@ bool ViewerWindow::onMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam
     return onError();
   case WM_USER_DISCONNECT:
     return onDisconnect();
+  case WM_SYSCOMMAND:
+  {
+
+      //if ((wParam & 0xfff0) == SC_RESTORE)
+      //{
+
+      //    if (m_isMinimizedFromFullScreen)
+      //    {
+
+      //        doRestoreToFullScreen();
+      //        
+      //    }
+
+      //}
+
+  }
+
+      return false;
   case WM_ACTIVATE:
     if (!m_isFullScr) {
       return true;
@@ -314,7 +351,7 @@ bool ViewerWindow::onMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam
     } else if (LOWORD(wParam) == WA_INACTIVE) {
       // Unregistration of keyboard hook.
       m_winHooks.unregisterKeyboardHook(this);
-      // Switching on ignoring win key.
+      //// Switching on ignoring win key.
       m_dsktWnd.setWinKeyIgnore(true);
     }
     return true;
@@ -430,11 +467,15 @@ void ViewerWindow::onGoodCursor()
 }
 void ViewerWindow::desktopStateUpdate()
 {
-  // Adjust window of viewer to size of remote desktop.
-  adjustWindowSize();
+    if (!::IsIconic(m_hwnd))
+    {
+        // Adjust window of viewer to size of remote desktop.
+        adjustWindowSize();
 
-  // Update state of toolbar-buttons (Ctrl, Alt) to hardware-button state.
-  updateKeyState();
+        // Update state of toolbar-buttons (Ctrl, Alt) to hardware-button state.
+            updateKeyState();
+
+    }
 }
 
 void ViewerWindow::commandCtrlAltDel() 
@@ -709,6 +750,9 @@ void ViewerWindow::onAbout()
 
 bool ViewerWindow::onCommand(WPARAM wParam, LPARAM lParam)
 {
+
+
+
   if (HIWORD(wParam) == 1) {
     int transl = translateAccelToTB(LOWORD(wParam));
 
@@ -885,6 +929,40 @@ void ViewerWindow::doFullScr()
   }
 }
 
+void ViewerWindow::doRestoreToFullScreen()
+{
+    if (m_isFullScr) {
+        return;
+    }
+
+    m_conConf->enableFullscreen(true);
+    m_conConf->saveToStorage(&m_ccsm);
+
+    //auto config = ::remoting::ViewerConfig::getInstance();
+    //m_bToolBar = m_toolbar.isVisible();
+    //m_toolbar.hide();
+
+    //m_menu.checkedMenuItem(IDS_TB_FULLSCREEN, true);
+    //m_menu.checkedMenuItem(IDS_TB_TOOLBAR, false);
+    //m_menu.enableMenuItem(IDS_TB_TOOLBAR, 1);
+
+    setSizeFullScreenWindow();
+
+    SetFocus(m_dsktWnd.getHWnd());
+    applyScreenChanges(true);
+
+
+    try {
+        // Registration of keyboard hook.
+        m_winHooks.registerKeyboardHook(this);
+        // Switching off ignoring win key.
+        m_dsktWnd.setWinKeyIgnore(false);
+    }
+    catch (::exception& e) {
+        m_logWriter->error("{}", e.get_message());
+    }
+}
+
 void ViewerWindow::doUnFullScr()
 {
   if (!m_isFullScr) {
@@ -927,6 +1005,52 @@ void ViewerWindow::doUnFullScr()
   m_winHooks.unregisterKeyboardHook(this);
   // Switching on ignoring win key.
   m_dsktWnd.setWinKeyIgnore(true);
+}
+
+void ViewerWindow::doMinimizeFromFullScreen()
+{
+    if (!m_isFullScr) {
+        return;
+    }
+
+    m_conConf->enableFullscreen(false);
+    m_conConf->saveToStorage(&m_ccsm);
+
+    //m_menu.checkedMenuItem(IDS_TB_FULLSCREEN, false);
+    //m_menu.checkedMenuItem(IDS_TB_TOOLBAR, m_bToolBar);
+
+    //if (m_bToolBar) {
+    //    m_toolbar.show();
+    //}
+    //else {
+    //    m_toolbar.hide();
+    //}
+
+    //UINT isEnable = static_cast<UINT>(m_conConf->isViewOnly());
+    //m_menu.enableMenuItem(IDS_TB_TOOLBAR, isEnable);
+
+    //// Restore position, style and exstyle of windowed window.
+    //set_style(get_style() | WS_CAPTION | WS_BORDER | WS_THICKFRAME | WS_MAXIMIZEBOX);
+    set_ex_style(get_ex_style() & ~WS_EX_TOPMOST);
+    //::int_rectangle workArea;
+    //workArea = m_workArea.rcNormalPosition;
+    //if (m_rcNormal.height() == workArea.height() ||
+    //    m_rcNormal.width() == workArea.width()) {
+    //    SetWindowPlacement(m_hwnd, &m_workArea);
+    //}
+    //else {
+    //    set_style(get_style() & ~WS_MAXIMIZE);
+    //    setPosition(m_rcNormal.left, m_rcNormal.top);
+    //    setSize(m_rcNormal.width(), m_rcNormal.height());
+    //}
+
+//    m_dsktWnd.setScale(m_scale);
+    applyScreenChanges(false);
+
+    // Unregistration of keyboard hook.
+    m_winHooks.unregisterKeyboardHook(this);
+    // Switching on ignoring win key.
+    m_dsktWnd.setWinKeyIgnore(true);
 }
 
 bool ViewerWindow::onNotify(int idCtrl, LPNMHDR pnmh)
@@ -1157,32 +1281,32 @@ void ViewerWindow::onConnected(RfbOutputGate *output)
 
   m_fileTransfer->getCore()->updateSupportedOperations(&clientMsgCodes, &serverMsgCodes);
 
-  ::string strUrl;
+  //::string strUrl;
 
-  strUrl.format("wss://{}:{}/start_remoting_notify_node_websocket", m_conData->getHost(), 15900);
+  //strUrl.format("wss://{}:{}/start_remoting_notify_node_websocket", m_conData->getHost(), 15900);
 
-  auto pmanualresethappeningWebsocketStarted = øcreate<::manual_reset_happening>();
+  //auto pmanualresethappeningWebsocketStarted = createø<::manual_reset_happening>();
 
-  m_papplication->forkø() << [this, strUrl, pmanualresethappeningWebsocketStarted]
-     {
+  //m_papplication->forkø() << [this, strUrl, pmanualresethappeningWebsocketStarted]
+  //   {
 
-        construct_newø(m_pkeyboardlayoutchange);
+  //      construct_newø(m_pkeyboardlayoutchange);
 
-        ::task_set_name("wsRemotingNotify");
+  //      ::task_set_name("wsRemotingNotify");
 
-        ::property_set setHttp;
+  //      ::property_set setHttp;
 
-        setHttp["websocket_started_manual_reset_happening"] = pmanualresethappeningWebsocketStarted;
+  //      setHttp["websocket_started_manual_reset_happening"] = pmanualresethappeningWebsocketStarted;
 
-        setHttp["socket_http_callback"] = m_pkeyboardlayoutchange;
+  //      setHttp["socket_http_callback"] = m_pkeyboardlayoutchange;
 
-        ::system()->m_papplication->http()->http_get(m_phttpclientsocketNotifyChannel, strUrl, setHttp);
+  //      ::system()->m_papplication->http()->http_get(m_phttpclientsocketNotifyChannel, strUrl, setHttp);
 
-        information("websocket started or closed");
+  //      information("websocket started or closed");
 
-     };
+  //   };
 
-  pmanualresethappeningWebsocketStarted->wait(30_minutes);
+  //pmanualresethappeningWebsocketStarted->wait(30_minutes);
 
   // Start viewer window and applying settings.
   showWindow();

@@ -38,7 +38,9 @@ public:
 
 protected:
   typedef ::array_base<unsigned int> Palette;
-
+  ::array_base<char> m_pixels;
+  ::array_base<char> m_zlibDataReadAndInflate;
+  ::memory m_unpackedData;
 protected:
   virtual void decode(RfbInputGate *input,
                       FrameBuffer *frameBuffer,

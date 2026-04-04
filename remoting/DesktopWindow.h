@@ -42,22 +42,24 @@ namespace remoting
    class toolbar;
    class style;
 } // namespace remoting_impact
-
+class ViewerWindow;
 class DesktopWindow : public PaintWindow,
                       protected RfbKeySymListener
 {
 public:
+    ViewerWindow* m_pviewerwindow;
    ::string m_strHost;
    ::int_size m_sizeBuffer = {};
    HDC m_hdcBuffer = nullptr;
    HBITMAP m_hbitmapOld = nullptr;
    HBITMAP m_hbitmapBuffer = nullptr;
+   bool m_bMinimized = false;
 //   int m_iDivisor = 1;
    ::pointer< ::remoting::toolbar > m_premotingtoolbar;
    ::pointer< ::remoting::style > m_premotingstyle;
    bool m_bShowCursor = false;
 class ::time m_timeStartDesktopWindow;
-  DesktopWindow(LogWriter *logWriter, ConnectionConfig *conConf);
+  DesktopWindow(LogWriter *logWriter, ConnectionConfig *conConf, ViewerWindow * pviewerwindow);
   virtual ~DesktopWindow();
    virtual void _defer_update_double_buffering();
   void setClipboardData(const ::scoped_string & strText);
@@ -120,7 +122,8 @@ public:
   bool onVScroll(WPARAM wParam, LPARAM lParam);
   bool onKey(WPARAM wParam, LPARAM lParam);
   bool onChar(WPARAM wParam, LPARAM lParam);
-  bool onMouse(unsigned char mouseKeys, unsigned short wheelSpeed, POINT position);
+  bool onMouse(unsigned char mouseKeys, unsigned short wheelSpeed, POINT position) override;
+  bool onMouseEx(UINT message, int iButtonMask, unsigned short wspeed, POINT position) override;
   bool onSize(WPARAM wParam, LPARAM lParam);
   bool onDestroy();
 

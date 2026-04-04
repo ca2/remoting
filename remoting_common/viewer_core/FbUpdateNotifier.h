@@ -57,7 +57,7 @@ public:
                     const ::array_base<unsigned char> *bitmask);
 
   void setIgnoreShapeUpdates(bool ignore);
-protected:
+//protected:
   // Inherited from Thread
   void execute();
   void onTerminate();

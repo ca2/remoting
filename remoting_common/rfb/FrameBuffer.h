@@ -113,7 +113,7 @@ public:
   virtual unsigned char getBitsPerPixel() const;
 
   // Return the number of bytes occupied by one pixel (can be 1, 2 or 4).
-  virtual unsigned char getBytesPerPixel() const;
+  //virtual unsigned char getBytesPerPixel() const;
 
   virtual void setBuffer(void *newBuffer) { m_buffer = newBuffer; }
   virtual inline void *getBuffer() const { return m_buffer; }
@@ -122,13 +122,29 @@ public:
   // pixel. getBufferPtr(0, 0) should be equivalent to getBuffer(). This
   // function does not check if the coordinates are within the frame buffer
   // boundaries.
-  virtual void *getBufferPtr(int x, int y) const;
+//  virtual void *getBufferPtr(int x, int y) const;
+
+
+
+  unsigned char getBytesPerPixel() const
+  {
+      return (unsigned char)(m_pixelFormat.bitsPerPixel / 8);
+  }
+
+  void* getBufferPtr(int x, int y) const
+  {
+      char* ptr = (char*)m_buffer;
+      ptr += (y * m_dimension.cx + x) * getBytesPerPixel();
+
+      return (void*)ptr;
+  }
+
 
   virtual inline int getBufferSize() const;
   virtual inline int getBytesPerRow() const { return m_dimension.cx *
                                              m_pixelFormat.bitsPerPixel / 8; }
 
-protected:
+//protected:
   bool resizeBuffer();
   void clipRect(const ::int_rectangle &  dstRect, const FrameBuffer *srcFrameBuffer,
                 const int srcX, const int srcY,

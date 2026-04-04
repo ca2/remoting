@@ -45,7 +45,7 @@
 
 class ViewerWindow : public BaseWindow,
                      public CoreEventsAdapter,
-                     private HookEventListener
+                     public HookEventListener
 {
 public:
 
@@ -79,7 +79,7 @@ public:
   static const int WM_USER_FS_WARNING = WM_USER + 5;
    static const int WM_USER_SWITCH_FULL_SCREEN_MODE = WM_USER + 1005;
 class ::time m_timeStart;
-protected:
+//protected:
   static const int TIMER_DESKTOP_STATE = 1;
   static const int TIMER_DESKTOP_STATE_DELAY = 50;
 
@@ -162,6 +162,7 @@ void onGoodCursor() override;
 
   // Flag is set, if now viewer is in full screen mode
   bool m_isFullScr;
+  bool m_isMinimizedFromFullScreen = false;
   // It's size of work-area in windowed mode. It is necessary for restore size of window.
   WINDOWPLACEMENT m_workArea;
   // It's size of optimal size of work-area in windowed mode.
@@ -184,14 +185,17 @@ void onGoodCursor() override;
   // Flag is set, if viewer instance is stopped.
   // Destructor of ViewerWindow may be called, if this flag is true.
   bool m_stopped;
-private:
+//private:
   ::array_base<int> m_standardScale;
   void changeCursor(int type);
   void applySettings();
   ::int_rectangle getFullScreenRect();
   void setSizeFullScreenWindow();
   void doFullScr();
+  void doRestoreToFullScreen();
   void doUnFullScr();
+  void doMinimizeFromFullScreen();
+  
   void doSize();
   void doCommand(int iCommand);
   void showFileTransferDialog();

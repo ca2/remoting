@@ -56,7 +56,8 @@ namespace remoting
       ::pointer < style > m_pstyle;
       ::int_rectangle m_rectangle;
       bool m_bHover = false;
-      bool m_bPressed = false;
+      bool m_bLButtonDown = false;
+      //bool m_bPressed = false;
       bool m_bDrag = false;
       int m_xCursorDragStart = -1;
       int m_xWindowDragStart = -1;
@@ -79,9 +80,11 @@ namespace remoting
       void add_repaint(const ::int_rectangle & rectangle);
       void _add_repaint(const ::int_rectangle & rectangle);
 void defer_repaint();
-
-      virtual bool _000OnMouse(bool bPress, const ::int_point& pointRoot, const ::int_point& pointClient);
-      virtual bool _001OnMouse(bool bPress, const ::int_point& pointRoot, const ::int_point& pointClient);
+void set_hover_false();
+        virtual bool _000OnMouseEx(UINT uMessage, int iButtonMask, const ::int_point& pointRoot, const ::int_point& pointClient);
+        virtual bool _001OnMouseEx(UINT uMessage, int iButtonMask, const ::int_point& pointRoot, const ::int_point& pointClient);
+      //virtual bool _000OnMouse(bool bPress, const ::int_point& pointRoot, const ::int_point& pointClient);
+      //virtual bool _001OnMouse(bool bPress, const ::int_point& pointRoot, const ::int_point& pointClient);
       virtual bool on_left_down(const ::int_point& position);
       virtual bool on_left_up(const ::int_point& position);
       virtual void __000OnTopDraw(HDC hdc, const ::int_rectangle & rectangle);
@@ -119,8 +122,18 @@ void defer_repaint();
       //bool on_mouse(bool bPress, const ::int_point& position);
       //void on_draw(DeviceContext *dc);
 
+       bool m_bPressed;
+       class ::time m_timePressed;
+       
+
       toolbar_button();
       ~toolbar_button() override;
+
+     
+
+      bool on_left_down(const ::int_point& position) override;
+      bool on_left_up(const ::int_point& position) override;
+
    };
 
 
@@ -128,7 +141,7 @@ void defer_repaint();
    virtual public control
    {
    public:
-
+       
       //SolidBrush m_brushBackgroundMinimizeDash;
       //::pointer<impact_toolbar_button> m_pbuttonMinimize;
       //::pointer<impact_toolbar_button> m_pbuttonRestore;
@@ -149,7 +162,7 @@ void defer_repaint();
       //bool on_mouse(bool bPress, const ::int_point& position);
       void __001OnDraw(GraphicsPlus *pgraphics, const ::int_rectangle & rectangle) override;
       bool on_button_click(enum_id eid) override;
-      bool _001OnMouse(bool bPress, const ::int_point & pointRoot, const ::int_point& pointClient) override;
+      bool _001OnMouseEx(UINT uMessage,  int iButtonMask, const ::int_point & pointRoot, const ::int_point& pointClient) override;
    };
 
 

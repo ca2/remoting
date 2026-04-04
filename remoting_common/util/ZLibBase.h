@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/zlib/zlib.h"
+#include <zlib.h>
 //#include <vector>
 
 class CLASS_DECL_REMOTING_COMMON ZLibBase

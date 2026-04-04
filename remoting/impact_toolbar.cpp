@@ -136,6 +136,21 @@ namespace remoting
    }
 
 
+   void control::set_hover_false()
+   {
+
+       m_bHover = false;
+
+       for (auto& pcontrol : m_controlaChildren)
+       {
+
+           pcontrol->set_hover_false();
+
+       }
+
+   }
+
+
    ::int_rectangle control::get_window_rectangle()
    {
 
@@ -178,42 +193,43 @@ namespace remoting
 
    }
 
-   bool control::_001OnMouse(bool bPress, const ::int_point& pointRoot, const ::int_point& pointClient)
+   bool control::_001OnMouseEx(UINT uMessage, int iButtonMask, const ::int_point& pointRoot, const ::int_point& pointClient)
    {
 
       auto rectangleClient = get_client_rectangle();
 
-      auto bHoverNew= rectangleClient.contains(::int_point{pointClient.x, pointClient.y});
-
-      if (is_different(bHoverNew, m_bHover))
+      if (uMessage == WM_LBUTTONDOWN)
       {
-
-         m_bHover = bHoverNew;
-
-         add_repaint(get_window_rectangle());
-
-      }
-
-      if (bPress && bHoverNew)
-      {
-         if (!m_bPressed)
+         //if (!m_bPressed)
          {
 
-            m_bPressed = true;
+            //m_bPressed = true;
 
-            on_left_down(pointClient);
+            if (on_left_down(pointClient))
+            {
+
+                return true;
+
+            }
 
          }
       }
-      else
+      else if(uMessage == WM_LBUTTONUP)
       {
 
-         if (m_bPressed)
+         //if (m_bPressed)
          {
 
-            m_bPressed = false;
+            if (on_left_up(pointClient))
+            {
+            //    m_bPressed = false;
 
-            on_left_up(pointClient);
+
+                return true;
+
+            }
+            //m_bPressed = false;
+
 
          }
 
@@ -223,57 +239,172 @@ namespace remoting
 
    }
 
+   //bool control::_001OnMouseEx(UINT uMessage, const ::int_point& pointRoot, const ::int_point& pointClient)
+   //{
+
+   //    auto rectangleClient = get_client_rectangle();
+
+   //    auto bHoverNew = rectangleClient.contains(::int_point{ pointClient.x, pointClient.y });
+
+   //    if (is_different(bHoverNew, m_bHover))
+   //    {
+
+   //        m_bHover = bHoverNew;
+
+   //        add_repaint(get_window_rectangle());
+
+   //    }
+
+   //    if (uMessage == WM_LBUTTONDOWN)
+   //    {
+   //     //m_bPressed = true;
+
+   //     if (on_left_down(pointClient))
+   //     {
+
+   //         return true;
+
+   //     }
+   //    }
+   //    else if (uMessage == WM_LBUTTONUP)
+   //    {
+
+   //         if (on_left_up(pointClient))
+   //         {
+   //             //m_bPressed = false;
+
+
+   //             return true;
+
+   //         }
+   //            //m_bPressed = false;
+   //    }
+
+   //    return false;
+
+   //}
+
 
    bool control::on_left_down(const ::int_point& position)
    {
 
-
-      return false;
+       return false;
 
    }
 
 
    bool control::on_left_up(const ::int_point& position)
    {
-      if (m_bHover)
-      {
-         if (on_button_click(m_eid))
-         {
-            return true;
-         }
-
-      }
 
       return false;
    }
 
-   bool control::_000OnMouse(bool bPress, const ::int_point& pointRoot, const ::int_point& pointClientParam)
+
+   bool control::_000OnMouseEx(UINT uMessage, int iButtonMask, const ::int_point& pointRoot, const ::int_point& pointClientParam)
    {
 
       auto pointClient = pointClientParam;
       pointClient.x -= m_rectangle.left;
       pointClient.y -= m_rectangle.top;
 
-      if (_001OnMouse(bPress, pointRoot, pointClient))
+      auto rClient = get_client_rectangle();
+
+      bool bHoverNew = rClient.contains(pointClient);
+
+      if (is_different(bHoverNew, m_bHover))
+      {
+
+          m_bHover = bHoverNew;
+
+          if (!m_bHover)
+          {
+
+              set_hover_false();
+
+          }
+
+          add_repaint(get_window_rectangle());
+
+      }
+
+      if (!m_bLButtonDown && !bHoverNew)
+      {
+
+          return false;
+
+      }
+
+
+      if (uMessage == WM_LBUTTONDOWN)
+      {
+
+          m_bLButtonDown = true;
+
+      }
+      else if (uMessage == WM_RBUTTONDOWN)
+      {
+
+          m_bLButtonDown = false;
+
+      }
+      else if (!(iButtonMask & BaseWindow::MOUSE_LDOWN))
+      {
+
+          m_bLButtonDown = false;
+
+      }
+
+      for (auto& pcontrol : m_controlaChildren)
+      {
+
+          if (pcontrol->_000OnMouseEx(uMessage, iButtonMask, pointRoot, pointClient))
+          {
+              
+              return true;
+
+          }
+
+      }
+
+      if (_001OnMouseEx(uMessage, iButtonMask, pointRoot, pointClient))
       {
 
          return true;
 
       }
 
-      for (auto & pcontrol:m_controlaChildren)
-      {
+      return true;
 
-         if (pcontrol->_000OnMouse(bPress, pointRoot, pointClient))
-         {
-            return true;
-         }
-
-      }
-
-      return false;
 
    }
+
+   //bool control::_000OnMouseEx(UINT uMessage, const ::int_point& pointRoot, const ::int_point& pointClientParam)
+   //{
+
+   //    auto pointClient = pointClientParam;
+   //    pointClient.x -= m_rectangle.left;
+   //    pointClient.y -= m_rectangle.top;
+
+   //    for (auto& pcontrol : m_controlaChildren)
+   //    {
+
+   //        if (pcontrol->_000OnMouseEx(uMessage, pointRoot, pointClient))
+   //        {
+   //            return true;
+   //        }
+
+   //    }
+   //    if (_001OnMouseEx(uMessage, pointRoot, pointClient))
+   //    {
+
+   //        return true;
+
+   //    }
+
+
+   //    return false;
+
+   //}
 
    toolbar_button::toolbar_button()
    {
@@ -284,6 +415,31 @@ namespace remoting
    {
 
    }
+
+
+   bool toolbar_button::on_left_down(const ::int_point& position)
+   {
+
+       m_bPressed = true;
+       m_timePressed.Now();
+       return true;
+
+   }
+   bool toolbar_button::on_left_up(const ::int_point& position)
+   {
+
+       if (m_bPressed && m_timePressed.elapsed() < 5_s)
+       {
+           on_button_click(m_eid);
+
+           return true;
+
+       }
+
+       return false;
+
+   }
+
 
    // bool toolbar_button::on_mouse(bool bPress, const ::int_point& position)
    //{
@@ -450,9 +606,16 @@ namespace remoting
       if (eid==id_minimize)
       {
          //m_pdesktopwindow->m_viewerCore->ge
+          m_pdesktopwindow->m_bMinimized = true;
+          if (m_pdesktopwindow->m_pviewerwindow->m_isFullScr)
+          {
+              m_pdesktopwindow->m_pviewerwindow->m_isMinimizedFromFullScreen = true;
+              m_pdesktopwindow->m_pviewerwindow->doMinimizeFromFullScreen();
 
+          }
          ::ShowWindow(::GetParent(m_pdesktopwindow->getHWnd()), SW_MINIMIZE);
-
+         
+         return true;
       }
       else if (eid==id_restore)
       {
@@ -461,7 +624,7 @@ namespace remoting
          //HRESULT hr = DwmSetWindowAttribute(::GetParent(m_pdesktopwindow->getHWnd()), DWMWA_TRANSITIONS_FORCEDISABLED, &enable, sizeof(enable));
 
          ::PostMessageA(::GetParent(m_pdesktopwindow->getHWnd()), ViewerWindow::WM_USER_SWITCH_FULL_SCREEN_MODE, 0, 0);
-
+         return true;
       }
       else if (eid==id_close)
       {
@@ -469,7 +632,7 @@ namespace remoting
 
          ::PostMessageA(::GetParent(m_pdesktopwindow->getHWnd()), ViewerWindow::WM_USER_DISCONNECT, 0, 0);
          ::PostMessageA(::GetParent(m_pdesktopwindow->getHWnd()), WM_CLOSE, 0, 0);
-
+         return true;
       }
 
       return false;
@@ -494,7 +657,7 @@ namespace remoting
    }
 
 
-   bool toolbar::_001OnMouse(bool bPress, const ::int_point& pointRoot, const ::int_point& pointClient)
+   bool toolbar::_001OnMouseEx(UINT uMessage, int iButtonMask, const ::int_point& pointRoot, const ::int_point& pointClient)
    {
 
       //auto pointClient = pointClientParameter * m_pdesktopwindow->m_scManager.getScale();
@@ -504,7 +667,7 @@ namespace remoting
       if (m_bHover || m_bDrag || rClient.contains(pointClient))
       {
 
-         control::_001OnMouse(bPress, pointRoot, pointClient);
+         control::_001OnMouseEx(uMessage, iButtonMask, pointRoot, pointClient);
 
          bool bAnyChildHover = false;
 
@@ -558,7 +721,7 @@ namespace remoting
          if (m_bHover && !bAnyChildHover)
          {
 
-            if (bPress)
+            if (uMessage == WM_LBUTTONDOWN)
             {
 
                if (!m_bDrag)
@@ -576,7 +739,7 @@ namespace remoting
          if (m_bDrag)
          {
 
-            if (!bPress)
+            if(uMessage == WM_LBUTTONUP)
             {
 
                m_bDrag = false;
@@ -668,12 +831,15 @@ namespace remoting
       pgraphics->set_blend_mode();
       pgraphics->set_antialias_on();
 
-      if (m_bHover || m_pcontrolParent->m_bHover)
+      if (m_bHover || m_bLButtonDown)
       {
+
          colorPaint = argb(225, 255, 255, 255);
+
       }
       else
       {
+
          //colorPaint = argb(160, 240, 240, 240);
          colorPaint = argb(165, 215, 215, 215);
 

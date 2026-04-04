@@ -25,14 +25,15 @@
 #include "DesktopWindow.h"
 #include "acme/operating_system/windows/geometry2d.h"
 #include "impact_toolbar.h"
+#include "ViewerWindow.h"
 #include <dwmapi.h>
 
 
 #pragma comment(lib, "dwmapi.lib")
 
 
-DesktopWindow::DesktopWindow(LogWriter *logWriter, ConnectionConfig *conConf) :
-    m_logWriter(logWriter), m_clipboard(0), m_showVert(false), m_showHorz(false), m_fbWidth(1), m_fbHeight(1),
+DesktopWindow::DesktopWindow(LogWriter *logWriter, ConnectionConfig *conConf, ViewerWindow * pviewerwindow) :
+    m_logWriter(logWriter),m_pviewerwindow(pviewerwindow), m_clipboard(0), m_showVert(false), m_showHorz(false), m_fbWidth(1), m_fbHeight(1),
     m_winResize(false), m_conConf(conConf), m_brush(RGB(0, 0, 0)),
 
     m_viewerCore(0), m_ctrlDown(false), m_altDown(false), m_previousMousePos(-1, -1), m_previousMouseState(0),
@@ -196,7 +197,15 @@ bool DesktopWindow::onMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lPara
       case WM_KEYUP:
       case WM_SYSKEYDOWN:
       case WM_SYSKEYUP:
-         return onKey(wParam, lParam);
+      {
+
+          if (::IsIconic(::GetParent(m_hwnd)))
+          {
+              return false;
+
+          }
+          return onKey(wParam, lParam);
+      }
       case WM_SETCURSOR:
          if (m_bShowCursor || m_timeStartDesktopWindow.elapsed() < 8_s)
          {
@@ -208,12 +217,28 @@ bool DesktopWindow::onMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lPara
          }
          return true;
       case WM_SETFOCUS:
-         m_rfbKeySym->processFocusRestoration();
+      {
+
+          //       // Unregistration of keyboard hook.
+       m_pviewerwindow->m_winHooks.registerKeyboardHook(m_pviewerwindow);
+////// Switching on ignoring win key.
+setWinKeyIgnore(false);
+
+          m_rfbKeySym->processFocusRestoration();
+
+      }
          return true;
       case WM_KILLFOCUS:
-         m_ctrlDown = false;
-         m_altDown = false;
-         m_rfbKeySym->processFocusLoss();
+      {
+          m_ctrlDown = false;
+          m_altDown = false;
+          m_rfbKeySym->processFocusLoss();
+
+          //       // Unregistration of keyboard hook.
+                 m_pviewerwindow->m_winHooks.unregisterKeyboardHook(m_pviewerwindow);
+          ////// Switching on ignoring win key.
+          setWinKeyIgnore(true);
+      }
          return true;
    }
    return false;
@@ -279,8 +304,119 @@ bool DesktopWindow::onVScroll(WPARAM wParam, LPARAM lParam)
    return true;
 }
 
+bool DesktopWindow::onMouseEx(UINT uMessage, int iButtonMask, unsigned short wheelSpeed, POINT point)
+{
+
+    RECT rcClient;
+    if (::GetClientRect(m_hwnd, &rcClient))
+    {
+
+        if (point.x < -1 || point.y < -1 || point.x >width(rcClient) || point.y> height(rcClient))
+        {
+
+            m_bShowCursor = true;
+
+            m_viewerCore->m_fbUpdateNotifier.m_cursorPainter.m_bHideCursor = true;
+                
+
+            ::ReleaseCapture();
+
+     //       // Unregistration of keyboard hook.
+     //       m_pviewerwindow->m_winHooks.unregisterKeyboardHook(m_pviewerwindow);
+     ////// Switching on ignoring win key.
+     //setWinKeyIgnore(true);
+
+        }
+        else
+        {
+
+
+            auto hwndCapture = ::GetCapture();
+
+            if (hwndCapture != m_hwnd)
+            {
+
+                ::SetCapture(m_hwnd);
+
+                m_viewerCore->m_fbUpdateNotifier.m_cursorPainter.m_bHideCursor = false;
+                m_bShowCursor = false;
+
+                //                try {
+                //  // Registration of keyboard hook.
+                //  m_pviewerwindow->m_winHooks.registerKeyboardHook(m_pviewerwindow);
+                //  // Switching off ignoring win key.
+                //  setWinKeyIgnore(false);
+                //} catch (::exception &e) {
+                //  m_logWriter->error("{}", e.get_message());
+                //}
+
+
+            }
+
+        }
+
+    }
+
+
+
+
+    if (m_premotingtoolbar)
+    {
+        if (m_premotingtoolbar->_000OnMouseEx(uMessage, iButtonMask, { point.x, point.y }, { point.x, point.y }))
+        {
+
+            if (m_premotingtoolbar->m_bLButtonDown || m_premotingtoolbar->m_bHover)
+            {
+
+                m_bShowCursor = true;
+                m_viewerCore->m_fbUpdateNotifier.m_cursorPainter.m_bHideCursor = true;
+
+            }
+            else
+            {
+
+                m_bShowCursor = false;
+                m_viewerCore->m_fbUpdateNotifier.m_cursorPainter.m_bHideCursor = false;
+
+            }
+
+
+            return true;
+        }
+        if (m_premotingtoolbar->m_bLButtonDown || m_premotingtoolbar->m_bHover)
+        {
+
+            m_bShowCursor = true;
+            m_viewerCore->m_fbUpdateNotifier.m_cursorPainter.m_bHideCursor = true;
+
+        }
+        else
+        {
+
+            m_bShowCursor = false;
+            m_viewerCore->m_fbUpdateNotifier.m_cursorPainter.m_bHideCursor = false;
+
+        }
+        m_premotingtoolbar->defer_repaint();
+    }
+
+    return false;
+}
+
 bool DesktopWindow::onMouse(unsigned char mouseButtons, unsigned short wheelSpeed, POINT position)
 {
+    if (m_bMinimized)
+    {
+
+        return true;
+
+    }
+    if (m_premotingtoolbar->m_bLButtonDown)
+    {
+
+        return true;
+
+    }
    // If mode is "view-only", then skip event.
    if (m_conConf->isViewOnly())
    {
@@ -310,15 +446,6 @@ bool DesktopWindow::onMouse(unsigned char mouseButtons, unsigned short wheelSpee
       }
    }
 
-   if (m_premotingtoolbar)
-   {
-      if (m_premotingtoolbar->_000OnMouse(mouseButtons & MOUSE_LDOWN, { position.x, position.y }, { position.x, position.y }))
-      {
-
-         return true;
-      }
-      m_premotingtoolbar->defer_repaint();
-   }
 
    auto p = position;
 

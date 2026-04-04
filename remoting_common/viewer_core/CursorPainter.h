@@ -46,7 +46,7 @@ public:
                     unsigned short width, unsigned short height,
                     const ::array_base<unsigned char> *cursor, 
                     const ::array_base<unsigned char> *bitmask);
-private:
+//private:
   // This function is thread-save.
   Point getUpperLeftPoint(const Point *position) const;
 
@@ -73,6 +73,7 @@ private:
   bool m_cursorIsMoveable;
 
   bool m_ignoreShapeUpdates;
+  bool m_bHideCursor = false;
 
 private:
   // Do not allow copying objects.

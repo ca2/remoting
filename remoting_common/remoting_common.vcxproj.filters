@@ -30,9 +30,6 @@
     <Filter Include="Source Files\libjpeg">
       <UniqueIdentifier>{37792682-d3e0-479d-80ef-f74f96984eee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\zlib">
-      <UniqueIdentifier>{86771434-e527-44c1-97aa-86c15d2d23d5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\network">
       <UniqueIdentifier>{9ac95d3d-d8d5-4851-a75e-e3b0293cd5e7}</UniqueIdentifier>
     </Filter>
@@ -104,6 +101,9 @@
     </Filter>
     <Filter Include="Header Files\ftp_common">
       <UniqueIdentifier>{f78fca25-142b-431a-83c5-cbe845a51e8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\viewer_core\NewFilter1">
+      <UniqueIdentifier>{3589a4a4-ac44-4c04-82f1-70fa0307aa32}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -475,42 +475,6 @@
     </ClCompile>
     <ClCompile Include="libjpeg\jutils.c">
       <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="zlib\adler32.c">
-      <Filter>Source Files\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="zlib\compress.c">
-      <Filter>Source Files\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="zlib\crc32.c">
-      <Filter>Source Files\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="zlib\deflate.c">
-      <Filter>Source Files\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="zlib\gzlib.c">
-      <Filter>Source Files\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="zlib\infback.c">
-      <Filter>Source Files\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="zlib\inffast.c">
-      <Filter>Source Files\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="zlib\inflate.c">
-      <Filter>Source Files\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="zlib\inftrees.c">
-      <Filter>Source Files\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="zlib\trees.c">
-      <Filter>Source Files\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="zlib\uncompr.c">
-      <Filter>Source Files\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="zlib\zutil.c">
-      <Filter>Source Files\zlib</Filter>
     </ClCompile>
     <ClCompile Include="network\RfbInputGate.cpp">
       <Filter>Source Files\network</Filter>
@@ -967,6 +931,9 @@
     </ClCompile>
     <ClCompile Include="win_system\security\SecurityIdentifier.cpp">
       <Filter>Source Files\win_system\security</Filter>
+    </ClCompile>
+    <ClCompile Include="viewer_core\drawTile.cpp">
+      <Filter>Source Files\viewer_core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

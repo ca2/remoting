@@ -344,6 +344,8 @@ void RfbKeySym::processFocusLoss()
   checkAndSendDiff(VK_LSHIFT, 0);
   checkAndSendDiff(VK_LWIN, 0);
   checkAndSendDiff(VK_RWIN, 0);
+
+
 }
 
 void RfbKeySym::sendCtrlAltDel()

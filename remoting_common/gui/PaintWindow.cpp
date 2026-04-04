@@ -54,7 +54,7 @@ bool PaintWindow::wndProc(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
     //DeviceContext dc(this);
     //onPaint(&dc, &m_paintStruct);
      onPaint();
-    //EndPaint(m_hwnd, &m_paintStruct);
+    EndPaint(m_hwnd, &m_paintStruct);
     m_bIsDraw = false;
     return true;
   }

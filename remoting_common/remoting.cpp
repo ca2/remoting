@@ -46,7 +46,7 @@ namespace remoting
       if (!::system()->m_premoting)
       {
 
-         ::system()->m_premoting = ::system()->øcreate_new < ::remoting::remoting >();
+         ::system()->m_premoting = ::system()->create_newø < ::remoting::remoting >();
 
       }
 

@@ -54,10 +54,10 @@ void CursorPainter::setNewCursor(const Point *hotSpot,
                                  const ::array_base<unsigned char> *bitmask)
 {
   AutoLock al(&m_lock);
-  m_logWriter->debug("Cursor hot-spot is ({}, {})", hotSpot->x, hotSpot->y);
+  m_logWriter->information("setNewCursor Cursor hot-spot is ({}, {})", hotSpot->x, hotSpot->y);
   m_cursor.setHotSpot(hotSpot->x, hotSpot->y);
 
-  m_logWriter->debug("Cursor size is ({}, {})", width, height);
+  m_logWriter->information("setNewCursor Cursor size is ({}, {})", width, height);
   ::int_size cursorDimension(width, height);
   PixelFormat pixelFormat = m_fb->getPixelFormat();
 
@@ -101,7 +101,7 @@ void CursorPainter::setIgnoreShapeUpdates(bool ignore)
 
   erase.offset(corner.x, corner.y);
 
-  m_logWriter->information("Cursor rect: ({}, {}), ({}, {})", erase.left, erase.top, erase.right, erase.bottom);
+  m_logWriter->debug("Cursor rect: ({}, {}), ({}, {})", erase.left, erase.top, erase.right, erase.bottom);
 
   if (erase.area() == 0) {
     return ::int_rectangle();
@@ -124,7 +124,7 @@ void CursorPainter::setIgnoreShapeUpdates(bool ignore)
     _ASSERT(true);
   }
 
-  if (!m_ignoreShapeUpdates && m_cursorIsMoveable && m_cursor.getDimension().area() != 0) {
+  if (!m_bHideCursor && !m_ignoreShapeUpdates && m_cursorIsMoveable && m_cursor.getDimension().area() != 0) {
 
     m_logWriter->debug("Painting cursor...");
 
