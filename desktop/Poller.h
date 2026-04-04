@@ -41,7 +41,7 @@ public:
          UpdateListener *updateListener,
          ScreenGrabber *screenGrabber,
          FrameBuffer *backupFrameBuffer,
-         LocalMutex *frameBufferCriticalSection,
+         critical_section *frameBufferCriticalSection,
          LogWriter *log);
 
   virtual ~Poller();
@@ -53,7 +53,7 @@ protected:
 private:
   ScreenGrabber *m_screenGrabber;
   FrameBuffer *m_backupFrameBuffer;
-  LocalMutex *m_fbMutex;
+  critical_section *m_fbMutex;
   ::int_rectangle m_pollingRect;
   WindowsEvent m_intervalWaiter;
 

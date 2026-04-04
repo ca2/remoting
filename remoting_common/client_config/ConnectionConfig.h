@@ -27,7 +27,7 @@
 
 #include "remoting/remoting_common/config/SettingsManager.h"
 
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 
 #include "remoting/remoting_common/rfb/EncodingDefs.h"
 
@@ -238,7 +238,7 @@ protected:
   int m_localCursor;
 
   // Critical section
-  mutable LocalMutex m_cs;
+  mutable critical_section m_cs;
 };
 
 

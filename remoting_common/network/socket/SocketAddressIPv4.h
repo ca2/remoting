@@ -27,7 +27,7 @@
 //#define SOCKET_ADDRESS_IPV4_H
 
 #include "remoting/remoting_common/util/CommonHeader.h"
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 #include "SocketException.h"
 #include "sockdefs.h"
 #include "remoting/remoting_common/win_system/WsaStartup.h"
@@ -61,7 +61,7 @@ protected:
   unsigned short m_port;
   struct in_addr m_addr;
 
-  static LocalMutex s_resolveMutex;
+  static critical_section s_resolveMutex;
 };
 
 

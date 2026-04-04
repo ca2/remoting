@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "UserInputClient.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 #include "ReconnectException.h"
 #include "remoting/remoting_common/util/BrokenHandleException.h"
 
@@ -62,14 +62,14 @@ void UserInputClient::onRequest(unsigned char reqCode, BlockingGate *backGate)
 
 void UserInputClient::sendInit(BlockingGate *gate)
 {
-  AutoLock al(gate);
+  critical_section_lock al(gate);
   gate->writeUInt8(USER_INPUT_INIT);
   gate->writeUInt8(m_sendMouseFlags);
 }
 
 void UserInputClient::setMouseEvent(const Point newPos, unsigned char keyFlag)
 {
-  AutoLock al(m_forwGate);
+  critical_section_lock al(m_forwGate);
   try {
     // Send mouse data
     m_forwGate->writeUInt8(POINTER_POS_CHANGED);
@@ -81,7 +81,7 @@ void UserInputClient::setMouseEvent(const Point newPos, unsigned char keyFlag)
 
 void UserInputClient::setNewClipboard(const ::scoped_string & newClipboard)
 {
-  AutoLock al(m_forwGate);
+  critical_section_lock al(m_forwGate);
   try {
     // Send clipboard data
     m_forwGate->writeUInt8(CLIPBOARD_CHANGED);
@@ -92,7 +92,7 @@ void UserInputClient::setNewClipboard(const ::scoped_string & newClipboard)
 
 void UserInputClient::setKeyboardEvent(unsigned int keySym, bool down)
 {
-  AutoLock al(m_forwGate);
+  critical_section_lock al(m_forwGate);
   try {
     // Send keyboard data
     m_forwGate->writeUInt8(KEYBOARD_EVENT);
@@ -104,7 +104,7 @@ void UserInputClient::setKeyboardEvent(unsigned int keySym, bool down)
 void UserInputClient::getCurrentUserInfo(::string & desktopName,
                                          ::string & userName)
 {
-  AutoLock al(m_forwGate);
+  critical_section_lock al(m_forwGate);
   try {
     // Send request
     m_forwGate->writeUInt8(USER_INFO_REQ);
@@ -115,7 +115,7 @@ void UserInputClient::getCurrentUserInfo(::string & desktopName,
 
 void UserInputClient::getPrimaryDisplayCoords(::int_rectangle *rect)
 {
-  AutoLock al(m_forwGate);
+  critical_section_lock al(m_forwGate);
   bool success = false;
   do {
     try {
@@ -131,7 +131,7 @@ void UserInputClient::getPrimaryDisplayCoords(::int_rectangle *rect)
 void UserInputClient::getDisplayNumberCoords(::int_rectangle *rect,
                                              unsigned char dispNumber)
 {
-  AutoLock al(m_forwGate);
+  critical_section_lock al(m_forwGate);
   bool success = false;
   do {
     try {
@@ -148,7 +148,7 @@ void UserInputClient::getDisplayNumberCoords(::int_rectangle *rect,
 ::array_base<::int_rectangle> UserInputClient::getDisplaysCoords()
 {
   ::array_base<::int_rectangle> res;
-  AutoLock al(m_forwGate);
+  critical_section_lock al(m_forwGate);
   bool success = false;
   unsigned char number;
   do {
@@ -171,7 +171,7 @@ void UserInputClient::getDisplayNumberCoords(::int_rectangle *rect,
 
 void UserInputClient::getNormalizedRect(::int_rectangle *prect)
 {
-  AutoLock al(m_forwGate);
+  critical_section_lock al(m_forwGate);
   bool success = false;
   do {
     try {
@@ -187,7 +187,7 @@ void UserInputClient::getNormalizedRect(::int_rectangle *prect)
 
 void UserInputClient::getWindowCoords(HWND hwnd, ::int_rectangle *rect)
 {
-  AutoLock al(m_forwGate);
+  critical_section_lock al(m_forwGate);
   bool success = false;
   do {
     try {
@@ -212,7 +212,7 @@ void UserInputClient::getWindowCoords(HWND hwnd, ::int_rectangle *rect)
 
 HWND UserInputClient::getWindowHandleByName(const ::scoped_string & windowName)
 {
-  AutoLock al(m_forwGate);
+  critical_section_lock al(m_forwGate);
   bool success = false;
   HWND hwnd = 0;
   do {
@@ -230,7 +230,7 @@ HWND UserInputClient::getWindowHandleByName(const ::scoped_string & windowName)
 
 void UserInputClient::getApplicationRegion(unsigned int procId, Region *region)
 {
-  AutoLock al(m_forwGate);
+  critical_section_lock al(m_forwGate);
   bool success = false;
   do {
     try {
@@ -248,7 +248,7 @@ bool UserInputClient::isApplicationInFocus(unsigned int procId)
 {
   bool result = false;
 
-  AutoLock al(m_forwGate);
+  critical_section_lock al(m_forwGate);
   bool success = false;
   do {
     try {

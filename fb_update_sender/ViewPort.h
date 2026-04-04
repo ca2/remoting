@@ -28,7 +28,7 @@
 #include "ViewPortState.h"
 #include "remoting/remoting_common/rfb/FrameBuffer.h"
 #include "desktop/Desktop.h"
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 //#include "remoting/remoting_common/util/::earth::time.h"
 //#include "log_writer/LogWriter.h"
 
@@ -89,7 +89,7 @@ private:
   ViewPortState m_state;
   ::int_rectangle m_rect;
   Region m_appRegion;
-  LocalMutex m_stateMutex;
+  critical_section m_stateMutex;
 
   ::earth::time m_latestHwndResolvingTime;
 

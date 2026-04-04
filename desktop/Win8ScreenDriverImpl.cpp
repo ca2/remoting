@@ -35,7 +35,7 @@
 #include "Win8ScreenDriverImpl.h"
 
 Win8ScreenDriverImpl::Win8ScreenDriverImpl(LogWriter *log, UpdateKeeper *updateKeeper,
-                                           LocalMutex *fbLocalMutex,
+                                           critical_section *fbcritical_section,
                                            UpdateListener *updateListener,
                                            bool detectionEnabled)
 : m_updateKeeper(updateKeeper),
@@ -220,7 +220,7 @@ void Win8ScreenDriverImpl::onCopyRect(const ::int_rectangle &  dstRect, int srcX
 
 void Win8ScreenDriverImpl::onCursorPositionChanged(int x, int y)
 {
-  AutoLock al(&m_cursorMutex);
+  critical_section_lock al(&m_cursorMutex);
   Point newPos(x, y);
   if (!m_latestCursorPos.isEqualTo(&newPos)) {
     m_latestCursorPos = newPos;
@@ -266,12 +266,12 @@ PixelFormat Win8ScreenDriverImpl::getDxPixelFormat() const
 
 void Win8ScreenDriverImpl::updateCursorShape(CursorShape *dst)
 {
-  AutoLock al(&m_cursorMutex);
+  critical_section_lock al(&m_cursorMutex);
   dst->clone(m_win8CursorShape.getCursorShape());
 }
 
 Point Win8ScreenDriverImpl::getCursorPosition()
 {
-  AutoLock al(&m_cursorMutex);
+  critical_section_lock al(&m_cursorMutex);
   return m_latestCursorPos;
 }

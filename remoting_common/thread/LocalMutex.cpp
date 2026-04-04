@@ -22,24 +22,24 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "LocalMutex.h"
+#include "critical_section.h"
 
-LocalMutex::LocalMutex(void)
+critical_section::critical_section(void)
 {
   InitializeCriticalSection(&m_criticalSection);
 }
 
-LocalMutex::~LocalMutex(void)
+critical_section::~critical_section(void)
 {
   DeleteCriticalSection(&m_criticalSection);
 }
 
-void LocalMutex::lock()
+void critical_section::lock()
 {
   EnterCriticalSection(&m_criticalSection);
 }
 
-void LocalMutex::unlock()
+void critical_section::unlock()
 {
   LeaveCriticalSection(&m_criticalSection);
 }

@@ -30,8 +30,8 @@
 
 #include "remoting/remoting_common/rfb/FrameBuffer.h"
 #include "remoting/remoting_common/rfb/EncodingDefs.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 
 class CLASS_DECL_REMOTING_COMMON Decoder
 {

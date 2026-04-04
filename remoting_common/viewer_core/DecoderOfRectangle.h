@@ -49,7 +49,7 @@ public:
                        FrameBuffer *frameBuffer,
                        FrameBuffer *secondFrameBuffer,
                        const ::int_rectangle &  rect,
-                       LocalMutex *fbLock,
+                       critical_section *fbLock,
                        FbUpdateNotifier *fbNotifier);
 
   //
@@ -72,7 +72,7 @@ protected:
   virtual void copy(FrameBuffer *dstFrameBuffer,
                     const FrameBuffer *srcFrameBuffer,
                     const ::int_rectangle &  rect,
-                    LocalMutex *fbLock);
+                    critical_section *fbLock);
 
   //
   // This method notify fbNotifier about update of rect.

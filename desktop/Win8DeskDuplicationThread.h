@@ -27,7 +27,7 @@
 
 #include "remoting/remoting_common/rfb/FrameBuffer.h"
 #include "Win8CursorShape.h"
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 #include "remoting/remoting_common/thread/GuiThread.h"
 #include "Win8DuplicationListener.h"
 //#include "log_writer/LogWriter.h"
@@ -44,7 +44,7 @@ public:
                             ::array_base<::int_rectangle> &targetRect,
                             Win8CursorShape *targetCurShape,
                             LONGLONG *cursorTimeStamp,
-                            LocalMutex *cursorMutex,
+                            critical_section *cursorMutex,
                             Win8DuplicationListener *duplListener,
                             ::array_base<WinDxgiOutput> &dxgiOutput,
                             LogWriter *log);
@@ -73,7 +73,7 @@ private:
   ::array_base<::int_rectangle> m_targetRects;
   Win8CursorShape *m_targetCurShape;
   LONGLONG *m_cursorTimeStamp;
-  LocalMutex *m_cursorMutex;
+  critical_section *m_cursorMutex;
 
   ::array_base<DXGI_MODE_ROTATION> m_rotations;
 

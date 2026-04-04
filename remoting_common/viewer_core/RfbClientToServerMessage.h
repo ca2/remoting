@@ -27,7 +27,7 @@
 
 #include "remoting/remoting_common/rfb/MsgDefs.h"
 #include "remoting/remoting_common/network/RfbOutputGate.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 
 class CLASS_DECL_REMOTING_COMMON RfbClientToServerMessage
 {

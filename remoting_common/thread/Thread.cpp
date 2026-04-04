@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "Thread.h"
-#include "AutoLock.h"
+#include "critical_section_lock.h"
 #include "remoting/remoting_common/util/Exception.h"
 
 Thread::Thread()

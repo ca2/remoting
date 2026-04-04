@@ -121,7 +121,7 @@ private:
 
   ClientState m_clientState;
   bool m_isMarkedOk;
-  LocalMutex m_clientStateMut;
+  critical_section m_clientStateMut;
   ClientTerminationListener *m_extTermListener;
   WindowsEvent m_connClosingEvent;
 
@@ -131,7 +131,7 @@ private:
 
   ViewPort m_constViewPort;
   ViewPort m_dynamicViewPort;
-  LocalMutex m_viewPortMutex;
+  critical_section m_viewPortMutex;
 
   UpdateSender *m_updateSender;
   ClipboardExchange *m_clipboardExchange;

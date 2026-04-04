@@ -63,7 +63,7 @@ namespace remoting
 
       void FileTransferOperation::notifyStart()
       {
-         AutoLock al(&m_listeners);
+         critical_section_lock al(&m_listeners);
 
          ::array_base<OperationEventListener *>::iterator it;
          for (it = m_listeners.begin(); it != m_listeners.end(); it++) {
@@ -74,7 +74,7 @@ namespace remoting
 
       void FileTransferOperation::notifyFinish()
       {
-         AutoLock al(&m_listeners);
+         critical_section_lock al(&m_listeners);
 
          ::array_base<OperationEventListener *>::iterator it;
          for (it = m_listeners.begin(); it != m_listeners.end(); it++) {
@@ -87,7 +87,7 @@ namespace remoting
       {
          m_logWriter->debug("{}\n", ::string(scopedstrMessage).c_str());
 
-         AutoLock al(&m_listeners);
+         critical_section_lock al(&m_listeners);
 
          ::array_base<OperationEventListener *>::iterator it;
          for (it = m_listeners.begin(); it != m_listeners.end(); it++) {
@@ -100,7 +100,7 @@ namespace remoting
       {
          m_logWriter->debug("{}\n", scopedstrMessage);
 
-         AutoLock al(&m_listeners);
+         critical_section_lock al(&m_listeners);
 
          ::array_base<OperationEventListener *>::iterator it;
          for (it = m_listeners.begin(); it != m_listeners.end(); it++) {

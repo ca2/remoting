@@ -231,7 +231,7 @@ void DesktopBaseImpl::setNewClipText(const ::scoped_string & newClipboard)
   m_log->debug("set new clipboard text, length: {}", newClipboard->length());
 
   {
-    AutoLock al(&m_storedClipCritSec);
+    critical_section_lock al(&m_storedClipCritSec);
     m_receivedClip = *newClipboard;
   }
   try {
@@ -272,7 +272,7 @@ void DesktopBaseImpl::sendUpdate()
               " Updates will be given to all.");
     m_extUpdSendingListener->onSendUpdate(&updCont,
                                           m_updateHandler->getCursorShape());
-    AutoLock al(&m_reqRegMutex);
+    critical_section_lock al(&m_reqRegMutex);
     m_fullReqRegion.clear();
   } else {
     m_log->information("UpdateContainer is empty");
@@ -289,7 +289,7 @@ void DesktopBaseImpl::onUpdateRequest(const ::int_rectangle &  rectRequested, bo
 {
   m_log->debug("DesktopBaseImpl::onUpdateRequest: update requested");
 
-  AutoLock al(&m_reqRegMutex);
+  critical_section_lock al(&m_reqRegMutex);
   if (!incremental) {
     m_fullReqRegion.addRect(rectRequested);
   }
@@ -303,12 +303,12 @@ void DesktopBaseImpl::onClipboardUpdate(const ::scoped_string & newClipboard)
   m_log->debug("clipboard update detected, length: {}", newClipboard->length());
   bool isEqual;
   {
-    AutoLock al(&m_storedClipCritSec);
+    critical_section_lock al(&m_storedClipCritSec);
     isEqual = m_receivedClip.isEqualTo(newClipboard);
   }
   if (!isEqual) {
     {
-      AutoLock al(&m_storedClipCritSec);
+      critical_section_lock al(&m_storedClipCritSec);
       m_receivedClip = "";
     }
     // Send new clipboard text, even if it is empty.

@@ -175,7 +175,7 @@ void IpAccessControlDialog::apply()
   int timeout = 0;
   StringParser::parseInt(qtStringStorage, &timeout);
 
-  AutoLock al(m_config);
+  critical_section_lock al(m_config);
 
   m_config->allowLoopbackConnections(m_allowLoopbackConnections.isChecked());
   m_config->acceptOnlyLoopbackConnections(m_onlyLoopbackConnections.isChecked());
@@ -271,7 +271,7 @@ void IpAccessControlDialog::onRemoveButtonClick()
     return ;
   }
   {
-    AutoLock al(m_config);
+    critical_section_lock al(m_config);
     IpAccessRule *ip = (IpAccessRule *)m_list.getItemData(m_list.getSelectedIndex());
     for (IpAccessControl::iterator it = m_container->begin(); it != m_container->end(); it++) {
       IpAccessRule *ip2 = *it;

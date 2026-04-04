@@ -11,7 +11,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AutoLock.cpp">
+    <ClCompile Include="critical_section_lock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DesktopSelector.cpp">
@@ -20,7 +20,7 @@
     <ClCompile Include="GlobalMutex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LocalMutex.cpp">
+    <ClCompile Include="critical_section.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Thread.cpp">
@@ -37,7 +37,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AutoLock.h">
+    <ClInclude Include="critical_section_lock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DesktopSelector.h">
@@ -46,7 +46,7 @@
     <ClInclude Include="GlobalMutex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LocalMutex.h">
+    <ClInclude Include="critical_section.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Lockable.h">

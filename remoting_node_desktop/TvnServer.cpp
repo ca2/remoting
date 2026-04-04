@@ -119,7 +119,7 @@ TvnServer::TvnServer(bool runsInServiceContext,
   {
     // FIXME: Protect only primitive operations.
     // FIXME: Nested lock in protected code (congifuration locking).
-    AutoLock l(&m_mutex);
+    critical_section_lock l(&m_mutex);
 
     restartMainRfbServer();
     (void)m_extraRfbServers.reload(m_runAsService, m_rfbClientManager);
@@ -163,7 +163,7 @@ void TvnServer::onConfigReload(ServerConfig *serverConfig)
   {
     // FIXME: Protect only primitive operations.
     // FIXME: Nested lock in protected code (congifuration locking).
-    AutoLock l(&m_mutex);
+    critical_section_lock l(&m_mutex);
 
     bool toggleMainRfbServer =
       m_srvConfig->isAcceptingRfbConnections() != (m_rfbServer != 0);
@@ -190,7 +190,7 @@ void TvnServer::onConfigReload(ServerConfig *serverConfig)
   // Start/stop/restart HTTP server if needed.
   {
     // FIXME: Protect only primitive operations.
-    AutoLock l(&m_mutex);
+    critical_section_lock l(&m_mutex);
 
     bool toggleHttp =
       m_srvConfig->isAcceptingHttpConnections() != (m_httpServer != 0);
@@ -208,7 +208,7 @@ void TvnServer::getServerInfo(TvnServerInfo *info)
 {
   bool rfbServerListening = true;
   {
-    AutoLock l(&m_mutex);
+    critical_section_lock l(&m_mutex);
     rfbServerListening = m_rfbServer != 0;
   }
 
@@ -250,7 +250,7 @@ void TvnServer::getServerInfo(TvnServerInfo *info)
 
 void TvnServer::generateExternalShutdownSignal()
 {
-  AutoLock l(&m_listeners);
+  critical_section_lock l(&m_listeners);
 
   ::std::vector<TvnServerListener *>::iterator it;
   for (it = m_listeners.begin(); it != m_listeners.end(); it++) {
@@ -396,7 +396,7 @@ void TvnServer::stopHttpServer()
 
   HttpServer *httpServer = 0;
   {
-    AutoLock l(&m_mutex);
+    critical_section_lock l(&m_mutex);
     httpServer = m_httpServer;
     m_httpServer = 0;
   }
@@ -411,7 +411,7 @@ void TvnServer::stopControlServer()
 
   ControlServer *controlServer = 0;
   {
-    AutoLock l(&m_mutex);
+    critical_section_lock l(&m_mutex);
     controlServer = m_controlServer;
     m_controlServer = 0;
   }
@@ -426,7 +426,7 @@ void TvnServer::stopMainRfbServer()
 
   RfbServer *rfbServer = 0;
   {
-    AutoLock l(&m_mutex);
+    critical_section_lock l(&m_mutex);
     rfbServer = m_rfbServer;
     m_rfbServer = 0;
   }
@@ -440,7 +440,7 @@ void TvnServer::changeLogProps()
   ::string logDir;
   unsigned char logLevel;
   {
-    AutoLock al(&m_mutex);
+    critical_section_lock al(&m_mutex);
     m_srvConfig->getLogFileDir(&logDir);
     logLevel = m_srvConfig->getLogLevel();
   }

@@ -70,7 +70,7 @@ void UpdateHandlerClient::extract(UpdateContainer *updateContainer)
 {
   updateContainer->clear();
 
-  AutoLock al(m_forwGate);
+  critical_section_lock al(m_forwGate);
 
   UpdateContainer updCont;
   try {
@@ -103,7 +103,7 @@ void UpdateHandlerClient::extract(UpdateContainer *updateContainer)
                                 (int)newPf.redShift,
                                 (int)newPf.greenShift,
                                 (int)newPf.blueShift);
-        AutoLock al(&m_fbLocMut);
+        critical_section_lock al(&m_fbLocMut);
         m_backupFrameBuffer.setProperties(&newDim, &newPf);
       }
       // Equalizing this frame buffer by other side frame buffer.
@@ -169,7 +169,7 @@ void UpdateHandlerClient::extract(UpdateContainer *updateContainer)
 
 void UpdateHandlerClient::setFullUpdateRequested(const Region *region)
 {
-  AutoLock al(m_forwGate);
+  critical_section_lock al(m_forwGate);
 
   try {
     m_forwGate->writeUInt8(SET_FULL_UPD_REQ_REGION);
@@ -180,7 +180,7 @@ void UpdateHandlerClient::setFullUpdateRequested(const Region *region)
 
 void UpdateHandlerClient::setExcludedRegion(const Region *excludedRegion)
 {
-  AutoLock al(m_forwGate);
+  critical_section_lock al(m_forwGate);
 
   try {
     m_forwGate->writeUInt8(SET_EXCLUDING_REGION);
@@ -196,7 +196,7 @@ bool UpdateHandlerClient::checkForUpdates(Region *region)
 
 void UpdateHandlerClient::getScreenProperties(PixelFormat *pf, ::int_size *dim)
 {
-  AutoLock al(m_forwGate);
+  critical_section_lock al(m_forwGate);
 
   m_forwGate->writeUInt8(SCREEN_PROP_REQ);
   readPixelFormat(pf, m_forwGate);
@@ -205,7 +205,7 @@ void UpdateHandlerClient::getScreenProperties(PixelFormat *pf, ::int_size *dim)
 
 void UpdateHandlerClient::sendInit(BlockingGate *gate)
 {
-  AutoLock al(gate);
+  critical_section_lock al(gate);
   gate->writeUInt8(FRAME_BUFFER_INIT);
 
   sendPixelFormat(&m_backupFrameBuffer.getPixelFormat(), gate);

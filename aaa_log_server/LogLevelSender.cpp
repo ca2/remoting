@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "LogLevelSender.h"
-#include "remoting/thread/AutoLock.h"
+#include "remoting/thread/critical_section_lock.h"
 
 LogLevelSender::LogLevelSender()
 : m_outStream(0),
@@ -41,7 +41,7 @@ LogLevelSender::~LogLevelSender()
 
 void LogLevelSender::startSender(OutputStream *outStream)
 {
-  AutoLock al(&m_updateMutex);
+  critical_section_lock al(&m_updateMutex);
   m_outStream = outStream;
 }
 
@@ -52,7 +52,7 @@ void LogLevelSender::onTerminate()
 
 void LogLevelSender::updateLevel(unsigned char newLevel)
 {
-  AutoLock al(&m_updateMutex);
+  critical_section_lock al(&m_updateMutex);
   m_updateAvailable = true;
   m_logLevel = newLevel;
   if (m_logLevel > 10) {
@@ -70,7 +70,7 @@ void LogLevelSender::execute()
       bool updateAvailable;
       unsigned char logLevel;
       {
-        AutoLock al(&m_updateMutex);
+        critical_section_lock al(&m_updateMutex);
         outStream = m_outStream;
         updateAvailable = m_updateAvailable;
         m_updateAvailable = false;

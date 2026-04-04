@@ -25,12 +25,12 @@
 #pragma once
 
 
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 #include "remoting/remoting_common/io/Channel.h"
 #include "remoting/remoting_common/io/DataOutputStream.h"
 #include "remoting/remoting_common/io/DataInputStream.h"
 
-class BlockingGate : public LocalMutex, public DataOutputStream,
+class BlockingGate : public critical_section, public DataOutputStream,
                      public DataInputStream
 {
 public:

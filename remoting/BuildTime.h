@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include <tchar.h>
+//#include <tchar.h>
 
 /**
  * Application build time.
@@ -35,12 +35,12 @@ public:
   /**
    * String that contains application build date and time string (with "Built on" prefix").
    */
-  static const TCHAR STRING[];
+  static const char STRING[];
   /**
    * String that contains application build date and time.
    */
-  static const TCHAR DATE[];
-private:
+  static const char DATE[];
+//private:
   BuildTime() { };
 };
 

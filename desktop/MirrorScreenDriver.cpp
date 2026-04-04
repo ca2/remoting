@@ -27,11 +27,11 @@
 
 MirrorScreenDriver::MirrorScreenDriver(UpdateKeeper *updateKeeper,
                                        UpdateListener *updateListener,
-                                       LocalMutex *fbLocalMutex,
+                                       critical_section *fbcritical_section,
                                        LogWriter *log)
 : UpdateDetector(updateKeeper,
                  updateListener),
-  m_fbMutex(fbLocalMutex),
+  m_fbMutex(fbcritical_section),
   m_lastCounter(0),
   m_log(log)
 {
@@ -78,7 +78,7 @@ FrameBuffer *MirrorScreenDriver::getScreenBuffer()
 
 bool MirrorScreenDriver::grab(const ::int_rectangle &  rect)
 {
-  AutoLock al(m_fbMutex);
+  critical_section_lock al(m_fbMutex);
 
   if (m_mirrorClient == 0) {
     throw ::remoting::Exception("Mirror driver client didn't initilized.");
@@ -114,7 +114,7 @@ bool MirrorScreenDriver::grab(const ::int_rectangle &  rect)
 
 bool MirrorScreenDriver::getPropertiesChanged()
 {
-  AutoLock al(m_fbMutex);
+  critical_section_lock al(m_fbMutex);
   if (m_mirrorClient != 0) {
     return m_mirrorClient->getPropertiesChanged();
   } else {
@@ -124,7 +124,7 @@ bool MirrorScreenDriver::getPropertiesChanged()
 
 bool MirrorScreenDriver::getScreenSizeChanged()
 {
-  AutoLock al(m_fbMutex);
+  critical_section_lock al(m_fbMutex);
   if (m_mirrorClient != 0) {
     return m_mirrorClient->getScreenSizeChanged();
   } else {
@@ -134,7 +134,7 @@ bool MirrorScreenDriver::getScreenSizeChanged()
 
 bool MirrorScreenDriver::applyNewProperties()
 {
-  AutoLock al(m_fbMutex);
+  critical_section_lock al(m_fbMutex);
 
   delete m_mirrorClient;
   m_mirrorClient = 0;
@@ -163,7 +163,7 @@ void MirrorScreenDriver::execute()
     m_updateTimeout.waitForEvent(20);
 
     {
-      AutoLock al(m_fbMutex);
+      critical_section_lock al(m_fbMutex);
       if (m_mirrorClient != 0) {
         CHANGES_BUF *changesBuf = m_mirrorClient->getChangesBuf();
         if (changesBuf != 0) {

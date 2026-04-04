@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "CursorPainter.h"
 
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 
 CursorPainter::CursorPainter(FrameBuffer *fb, LogWriter *logWriter)
 : m_fb(fb),
@@ -41,7 +41,7 @@ CursorPainter::~CursorPainter()
 
 void CursorPainter::updatePointerPos(const Point *position)
 {
-  AutoLock al(&m_lock);
+  critical_section_lock al(&m_lock);
   m_pointerPosition = *position;
   m_cursorIsMoveable = true;
 
@@ -53,7 +53,7 @@ void CursorPainter::setNewCursor(const Point *hotSpot,
                                  const ::array_base<unsigned char> *cursor,
                                  const ::array_base<unsigned char> *bitmask)
 {
-  AutoLock al(&m_lock);
+  critical_section_lock al(&m_lock);
   m_logWriter->information("setNewCursor Cursor hot-spot is ({}, {})", hotSpot->x, hotSpot->y);
   m_cursor.setHotSpot(hotSpot->x, hotSpot->y);
 
@@ -82,13 +82,13 @@ void CursorPainter::setIgnoreShapeUpdates(bool ignore)
 {
   m_logWriter->debug("Set flag of ignor by cursor update is '{}'", ignore);
 
-  AutoLock al(&m_lock);
+  critical_section_lock al(&m_lock);
   m_ignoreShapeUpdates = ignore;
 }
 
 ::int_rectangle CursorPainter::hideCursor()
 {
-  AutoLock al(&m_lock);
+  critical_section_lock al(&m_lock);
 
   if (!m_isExist) {
     return ::int_rectangle();
@@ -115,7 +115,7 @@ void CursorPainter::setIgnoreShapeUpdates(bool ignore)
 
 ::int_rectangle CursorPainter::showCursor()
 {
-  AutoLock al(&m_lock);
+  critical_section_lock al(&m_lock);
 
   m_lastPosition = m_pointerPosition;
 

@@ -166,7 +166,7 @@ public:
   ::remoting::SolidBrush m_brush;
 
   // frame buffer
-  LocalMutex m_bufferLock;
+  critical_section m_bufferLock;
   DibFrameBuffer m_framebuffer;
   // This variable save server dimension.
   // ::int_size of m_framebuffer can be large m_serverDimension.

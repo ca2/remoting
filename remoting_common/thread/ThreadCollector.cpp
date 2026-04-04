@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ThreadCollector.h"
 
-#include "AutoLock.h"
+#include "critical_section_lock.h"
 
 ThreadCollector::ThreadCollector()
 {
@@ -51,13 +51,13 @@ void ThreadCollector::execute()
 
 void ThreadCollector::addThread(Thread *thread)
 {
-  AutoLock l(&m_lockObj);
+  critical_section_lock l(&m_lockObj);
   m_threads.add(thread);
 }
 
 void ThreadCollector::deleteDeadThreads()
 {
-  AutoLock l(&m_lockObj);
+  critical_section_lock l(&m_lockObj);
 
   ThreadList::iterator iter = m_threads.begin();
   while (iter != m_threads.end()) {
@@ -73,7 +73,7 @@ void ThreadCollector::deleteDeadThreads()
 
 void ThreadCollector::destroyAllThreads()
 {
-  AutoLock l(&m_lockObj);
+  critical_section_lock l(&m_lockObj);
 
   ThreadList::iterator iter;
   for (iter = m_threads.begin(); iter != m_threads.end(); iter++) {

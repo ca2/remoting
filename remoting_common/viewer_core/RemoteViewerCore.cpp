@@ -193,7 +193,7 @@ void RemoteViewerCore::start(CoreEventsAdapter *adapter,
   // Set flag "wasStarted".
   // This flag protects of second call start().
   {
-    AutoLock al(&m_startLock);
+    critical_section_lock al(&m_startLock);
     if (m_wasStarted) {
       throw ::remoting::Exception("Remote viewer core is already started");
     }
@@ -236,13 +236,13 @@ void RemoteViewerCore::start(RfbInputGate *input, RfbOutputGate *output,
 
 bool RemoteViewerCore::wasStarted() const
 {
-  AutoLock al(&m_startLock);
+  critical_section_lock al(&m_startLock);
   return m_wasStarted;
 }
 
 bool RemoteViewerCore::wasConnected() const
 {
-  AutoLock al(&m_connectLock);
+  critical_section_lock al(&m_connectLock);
   return m_wasConnected;
 }
 
@@ -251,7 +251,7 @@ void RemoteViewerCore::stop()
   {
     // We should use locking to prevent simultaneous reading and writing of
     // the m_dispatchDataProvider pointer.
-    AutoLock al(&m_dispatchDataProviderLock);
+    critical_section_lock al(&m_dispatchDataProviderLock);
     m_dispatchDataProvider = 0;
   }
 
@@ -272,14 +272,14 @@ void RemoteViewerCore::waitTermination()
 void RemoteViewerCore::setPixelFormat(const PixelFormat & pixelFormat)
 {
   m_logWriter->debug("Pixel format will changed");
-  AutoLock al(&m_pixelFormatLock);
+  critical_section_lock al(&m_pixelFormatLock);
   m_isNewPixelFormat = true;
   m_viewerPixelFormat = pixelFormat;
 }
 
 void RemoteViewerCore::enableDispatching(DispatchDataProvider *src)
 {
-  AutoLock al(&m_startLock);
+  critical_section_lock al(&m_startLock);
   if (!m_wasStarted) {
     // In other places, we use locking to access this pointer
     // (see m_dispatchDataProviderLock), but not here, as we assume there is
@@ -293,7 +293,7 @@ bool RemoteViewerCore::updatePixelFormat()
   PixelFormat pxFormat;
   m_logWriter->debug("Check pixel format change...");
   {
-    AutoLock al(&m_pixelFormatLock);
+    critical_section_lock al(&m_pixelFormatLock);
     if (!m_isNewPixelFormat)
       return false;
     m_isNewPixelFormat = false;
@@ -306,7 +306,7 @@ bool RemoteViewerCore::updatePixelFormat()
   }
 
   {
-    AutoLock al(&m_fbLock);
+    critical_section_lock al(&m_fbLock);
     // FIXME: here isn't accept true-colour flag.
     // PixelFormats may be equal, if isn't.
     if (pxFormat == m_frameBuffer.getPixelFormat() ){
@@ -325,7 +325,7 @@ bool RemoteViewerCore::updatePixelFormat()
 void RemoteViewerCore::refreshFrameBuffer()
 {
   m_logWriter->debug("Frame buffer will refreshed");
-  AutoLock al(&m_refreshingLock);
+  critical_section_lock al(&m_refreshingLock);
   m_isRefreshing = true;
 }
 
@@ -344,7 +344,7 @@ void RemoteViewerCore::deferUpdateRequests(const int& milliseconds)
 void RemoteViewerCore::sendFbUpdateRequest(bool incremental)
 {
   {
-    AutoLock al(&m_requestUpdateLock);
+    critical_section_lock al(&m_requestUpdateLock);
     bool requestUpdate = m_isNeedRequestUpdate;
     m_isNeedRequestUpdate = false;
     if (!requestUpdate)
@@ -358,7 +358,7 @@ void RemoteViewerCore::sendFbUpdateRequest(bool incremental)
   }
 
   {
-    AutoLock al(&m_refreshingLock);
+    critical_section_lock al(&m_refreshingLock);
     if (m_isRefreshing) {
       m_isRefreshing= false;
       isRefresh = true;
@@ -370,7 +370,7 @@ void RemoteViewerCore::sendFbUpdateRequest(bool incremental)
 	bool isIncremental = incremental && !isRefresh && !isUpdateFbProperties;
 	::int_rectangle updateRect;
 	{
-	  AutoLock al(&m_fbLock);
+	  critical_section_lock al(&m_fbLock);
 	  updateRect = m_frameBuffer.getDimension();
 	}
 
@@ -471,7 +471,7 @@ void RemoteViewerCore::allowUtf8Clipboard()
   }
   if (m_clientMsgCaps.isEnabled(ClientMsgDefs::ENABLE_CUT_TEXT_UTF8)) {
     m_logWriter->debug("Sending EnableCutTextUtf8 scopedstrMessage.");
-    AutoLock al(m_output);
+    critical_section_lock al(m_output);
     m_output->writeUInt32(ClientMsgDefs::ENABLE_CUT_TEXT_UTF8);
     m_output->flush();
   }
@@ -541,7 +541,7 @@ void RemoteViewerCore::ignoreCursorShapeUpdates(bool ignored)
 void RemoteViewerCore::stopUpdating(bool isStopped)
 {
   {
-    AutoLock al(&m_freezeLock);
+    critical_section_lock al(&m_freezeLock);
     if (isStopped == m_isFreeze)
       return;
     m_isFreeze = isStopped;
@@ -919,7 +919,7 @@ void RemoteViewerCore::execute()
     }
 
     {
-      AutoLock al(&m_connectLock);
+      critical_section_lock al(&m_connectLock);
       m_wasConnected = true;
     }
 
@@ -1060,11 +1060,11 @@ void RemoteViewerCore::receiveFbUpdate()
   }
 
   {
-    AutoLock al(&m_requestUpdateLock);
+    critical_section_lock al(&m_requestUpdateLock);
     m_isNeedRequestUpdate = true;
   }
   {
-    AutoLock al(&m_freezeLock);
+    critical_section_lock al(&m_freezeLock);
     if (m_isFreeze)
       return;
   }
@@ -1122,7 +1122,7 @@ void RemoteViewerCore::processPseudoEncoding(const ::int_rectangle &  rect,
   case PseudoEncDefs::DESKTOP_SIZE:
     m_logWriter->information("Changed size of desktop");
     {
-      AutoLock al(&m_fbLock);
+      critical_section_lock al(&m_fbLock);
       setFbProperties(rect.size(), m_frameBuffer.getPixelFormat());
     }
     break;
@@ -1346,7 +1346,7 @@ void RemoteViewerCore::clientAndServerInit()
   PixelFormat serverPixelFormat = readPixelFormat();
   
   {
-    AutoLock al(&m_fbLock);
+    critical_section_lock al(&m_fbLock);
     setFbProperties(screenDimension, serverPixelFormat);
   }
 

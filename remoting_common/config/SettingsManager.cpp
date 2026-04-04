@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "SettingsManager.h"
-#include <crtdbg.h>
+//#include <crtdbg.h>
 
 SettingsManager::SettingsManager()
 {

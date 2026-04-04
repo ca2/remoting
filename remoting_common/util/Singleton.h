@@ -27,10 +27,10 @@
 
 #include "CommonHeader.h"
 
-#include <crtdbg.h>
+//#include <crtdbg.h>
 
-#include "remoting/remoting_common/thread/LocalMutex.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/thread/critical_section_lock.h"
 
 //
 // Template that realize singleton pattern which does not supports "lazy"
@@ -65,27 +65,27 @@ virtual public ::system_particle
 {
 public:
   Singleton() {
-    AutoLock l(&m_instanceMutex);
+    critical_section_lock l(&m_instanceMutex);
 
     if (s_instance == 0) {
       s_instance = (T*)this;
     } else {
-      _ASSERT(FALSE);
+      ASSERT(FALSE);
     }
   }
 
   virtual ~Singleton() {
-    AutoLock l(&m_instanceMutex);
+     critical_section_lock l(&m_instanceMutex);
 
     s_instance = 0;
   }
 
   static T* getInstance() {
     {
-      AutoLock l(&m_instanceMutex);
+       critical_section_lock l(&m_instanceMutex);
 
       if (s_instance == 0) {
-        _ASSERT(FALSE);
+        ASSERT(FALSE);
       }
     }
 
@@ -93,12 +93,12 @@ public:
   }
 
 private:
-  static LocalMutex m_instanceMutex;
+  static critical_section m_instanceMutex;
 
   static void* s_instance;
 };
 
-template<class T> LocalMutex Singleton<T>::m_instanceMutex;
+template<class T> critical_section Singleton<T>::m_instanceMutex;
 template<class T> void *Singleton<T>::s_instance = 0;
 
 

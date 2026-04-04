@@ -530,7 +530,7 @@
     <ClCompile Include="rfb\VendorDefs.cpp">
       <Filter>Source Files\rfb</Filter>
     </ClCompile>
-    <ClCompile Include="thread\AutoLock.cpp">
+    <ClCompile Include="thread\critical_section_lock.cpp">
       <Filter>Source Files\thread</Filter>
     </ClCompile>
     <ClCompile Include="thread\DesktopSelector.cpp">
@@ -542,7 +542,7 @@
     <ClCompile Include="thread\GuiThread.cpp">
       <Filter>Source Files\thread</Filter>
     </ClCompile>
-    <ClCompile Include="thread\LocalMutex.cpp">
+    <ClCompile Include="thread\critical_section.cpp">
       <Filter>Source Files\thread</Filter>
     </ClCompile>
     <ClCompile Include="thread\Thread.cpp">
@@ -1339,7 +1339,7 @@
     <ClInclude Include="thread\_.h">
       <Filter>Header Files\thread</Filter>
     </ClInclude>
-    <ClInclude Include="thread\AutoLock.h">
+    <ClInclude Include="thread\critical_section_lock.h">
       <Filter>Header Files\thread</Filter>
     </ClInclude>
     <ClInclude Include="thread\DesktopSelector.h">
@@ -1351,7 +1351,7 @@
     <ClInclude Include="thread\GuiThread.h">
       <Filter>Header Files\thread</Filter>
     </ClInclude>
-    <ClInclude Include="thread\LocalMutex.h">
+    <ClInclude Include="thread\critical_section.h">
       <Filter>Header Files\thread</Filter>
     </ClInclude>
     <ClInclude Include="thread\Lockable.h">

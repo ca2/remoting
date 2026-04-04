@@ -132,7 +132,7 @@ void DesktopWindow::onPaint()
    }
 
 
-   AutoLock al(&m_bufferLock);
+   critical_section_lock al(&m_bufferLock);
 
 
    _defer_update_double_buffering();
@@ -570,7 +570,7 @@ void DesktopWindow::setClipboardData(const ::scoped_string &strText)
 
 void DesktopWindow::doDraw(HDC hdc, const ::int_rectangle &rectangle)
 {
-   AutoLock al(&m_bufferLock);
+   critical_section_lock al(&m_bufferLock);
    int fbWidth = m_framebuffer.getDimension().cx;
    int fbHeight = m_framebuffer.getDimension().cy;
 
@@ -765,7 +765,7 @@ void DesktopWindow::drawImage(HDC hdc, const RECT &rectangleSource, const RECT &
    ::int_rectangle rc_src = rectangleSource;
    ::int_rectangle rc_dest = rectangleTarget;
 
-   AutoLock al(&m_bufferLock);
+   critical_section_lock al(&m_bufferLock);
    m_framebuffer.setTargetDC(hdc);
    ::int_rectangle rSource = rectangleSource;
 
@@ -831,7 +831,7 @@ void DesktopWindow::setNewFramebuffer(const FrameBuffer *pframebuffer)
    m_logWriter->debug("Desktop size: {}, {}", dimension.cx, dimension.cy);
    {
       // FIXME: Nested locks should not be used.
-      AutoLock al(&m_bufferLock);
+      critical_section_lock al(&m_bufferLock);
 
       m_serverDimension = dimension;
       if (!dimension.is_empty())
@@ -903,7 +903,7 @@ void DesktopWindow::repaint(const ::int_rectangle &repaintRectParameter)
 
 void DesktopWindow::setScale(int scale)
 {
-   AutoLock al(&m_bufferLock);
+   critical_section_lock al(&m_bufferLock);
    m_scManager.setScale(scale);
    m_winResize = true;
    // Invalidate all area of desktop window.
@@ -945,13 +945,13 @@ POINTS DesktopWindow::getViewerCoord(long xPos, long yPos)
 
 ::int_rectangle DesktopWindow::getFrameBufferGeometry()
 {
-   AutoLock al(&m_bufferLock);
+   critical_section_lock al(&m_bufferLock);
    return m_framebuffer.getDimension();
 }
 
 void DesktopWindow::getServerGeometry(::int_rectangle *rect, int *pixelsize)
 {
-   AutoLock al(&m_bufferLock);
+   critical_section_lock al(&m_bufferLock);
    if (rect != 0)
    {
       *rect = m_serverDimension;

@@ -28,7 +28,7 @@
 #include "remoting/remoting_common/io/DataOutputStream.h"
 #include "remoting/remoting_common/io/BufferedOutputStream.h"
 
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 
 /**
  * Gate for writting rfb messages.
@@ -40,7 +40,7 @@
  * @author enikey.
  */
 class CLASS_DECL_REMOTING_COMMON RfbOutputGate : public DataOutputStream,
-                      public LocalMutex
+                      public critical_section
 {
 public:
   /**

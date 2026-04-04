@@ -27,13 +27,13 @@
 
 #include "remoting/remoting_common/config/RegistrySettingsManager.h"
 
-
-class CLASS_DECL_REMOTING_COMMON ConnectionConfigSM : public RegistrySettingsManager
-{
-public:
-  ConnectionConfigSM(const ::scoped_string & scopedstrRegistryPath,
-                     const ::scoped_string & scopedstrEntryName);
-  virtual ~ConnectionConfigSM();
-};
-
+//
+//class CLASS_DECL_REMOTING_COMMON ConnectionConfigSM : public RegistrySettingsManager
+//{
+//public:
+//  ConnectionConfigSM(const ::scoped_string & scopedstrRegistryPath,
+//                     const ::scoped_string & scopedstrEntryName);
+//  virtual ~ConnectionConfigSM();
+//};
+//
 

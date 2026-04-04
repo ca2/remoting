@@ -603,7 +603,7 @@ public:
 
   CoreEventsAdapter *m_adapter;
 
-  mutable LocalMutex m_dispatchDataProviderLock;
+  mutable critical_section m_dispatchDataProviderLock;
   DispatchDataProvider *m_dispatchDataProvider;
 
   WatermarksController m_watermarksController;
@@ -628,11 +628,11 @@ public:
   ::map<unsigned int, int> m_decoderPriority;
 
   // This flag is set after call start().
-  mutable LocalMutex m_startLock;
+  mutable critical_section m_startLock;
   bool m_wasStarted;
 
   // This flag is set after onConnected().
-  mutable LocalMutex m_connectLock;
+  mutable critical_section m_connectLock;
   bool m_wasConnected;
 
   // This is general frame buffer of RemoteViewerCore and local mutex to change him.
@@ -641,7 +641,7 @@ public:
   // and erased after (thread FbUpdateNotifier).
   //
   // Mutex m_fbLock must locked into only this thread, else may be deadlock.
-  LocalMutex m_fbLock;
+  critical_section m_fbLock;
   FrameBuffer m_frameBuffer;
 
   // ::list_base of server dispalys
@@ -656,17 +656,17 @@ public:
   // This buffer is not need to blocking: read information is one-thread.
   FrameBuffer m_rectangleFb;
 
-  LocalMutex m_pixelFormatLock;
+  critical_section m_pixelFormatLock;
   bool m_isNewPixelFormat;
   PixelFormat m_viewerPixelFormat;
 
-  LocalMutex m_refreshingLock;
+  critical_section m_refreshingLock;
   bool m_isRefreshing;
 
-  LocalMutex m_freezeLock;
+  critical_section m_freezeLock;
   bool m_isFreeze;
 
-  LocalMutex m_requestUpdateLock;
+  critical_section m_requestUpdateLock;
   bool m_isNeedRequestUpdate;
 
   bool m_sharedFlag;

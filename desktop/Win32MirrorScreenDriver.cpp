@@ -27,10 +27,10 @@
 
 Win32MirrorScreenDriver::Win32MirrorScreenDriver(UpdateKeeper *updateKeeper,
                                                  UpdateListener *updateListener,
-                                                 LocalMutex *fbLocalMutex,
+                                                 critical_section *fbcritical_section,
                                                  LogWriter *log)
-: Win32ScreenDriverBaseImpl(updateKeeper, updateListener, fbLocalMutex, log),
-  m_mirrorDriver(updateKeeper, updateListener, fbLocalMutex, log)
+: Win32ScreenDriverBaseImpl(updateKeeper, updateListener, fbcritical_section, log),
+  m_mirrorDriver(updateKeeper, updateListener, fbcritical_section, log)
 {
   // At this point the screen driver has valid screen properties.
 }

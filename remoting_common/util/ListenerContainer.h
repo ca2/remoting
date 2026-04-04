@@ -27,13 +27,13 @@
 
 //#include <vector>
 
-#include "remoting/remoting_common/thread/LocalMutex.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/thread/critical_section_lock.h"
 
 
 
 template<class T> class SafeVector : public ::array_base<T>,
-                                     public LocalMutex {
+                                     public critical_section {
 public:
   virtual ~SafeVector() { };
 };
@@ -54,7 +54,7 @@ public:
   //
 
   void addListener(T listener) {
-    AutoLock l(&m_listeners);
+    critical_section_lock l(&m_listeners);
 
     typename ::array_base<T>::iterator it;
     for (it = m_listeners.begin(); it != m_listeners.end(); it++) {
@@ -67,7 +67,7 @@ public:
   } // void
 
   void removeAllListeners() {
-    AutoLock l(&m_listeners);
+    critical_section_lock l(&m_listeners);
 
     m_listeners.clear();
   }
@@ -77,7 +77,7 @@ public:
   //
 
   void removeListener(T listener) {
-    AutoLock l(&m_listeners);
+    critical_section_lock l(&m_listeners);
 
     typename ::array_base<T>::iterator it;
     for (it = m_listeners.begin(); it != m_listeners.end(); it++) {

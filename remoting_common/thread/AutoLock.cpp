@@ -22,15 +22,15 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "AutoLock.h"
+#include "critical_section_lock.h"
 
-AutoLock::AutoLock(Lockable *locker)
+critical_section_lock::critical_section_lock(Lockable *locker)
 : m_locker(locker)
 {
   m_locker->lock();
 }
 
-AutoLock::~AutoLock()
+critical_section_lock::~critical_section_lock()
 {
   m_locker->unlock();
 }

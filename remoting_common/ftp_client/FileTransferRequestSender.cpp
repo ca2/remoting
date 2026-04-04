@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "FileTransferRequestSender.h"
 #include "remoting/remoting_common/ftp_common/FTMessage.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 
 
 namespace remoting
@@ -48,7 +48,7 @@ namespace remoting
 
       void FileTransferRequestSender::sendCompressionSupportRequest()
       {
-         AutoLock al(m_output);
+         critical_section_lock al(m_output);
 
          m_logWriter->information("{}", "Sending compresion support request");
 
@@ -59,7 +59,7 @@ namespace remoting
       void FileTransferRequestSender::sendFileListRequest(const ::scoped_string & scopedstrFullPath,
                                                           bool useCompression)
       {
-         AutoLock al(m_output);
+         critical_section_lock al(m_output);
 
          unsigned int messageId = FTMessage::FILE_LIST_REQUEST;
          unsigned char compressionLevel = useCompression ? (unsigned char)1 : (unsigned char)0;
@@ -79,7 +79,7 @@ namespace remoting
       void FileTransferRequestSender::sendDownloadRequest(const ::scoped_string & scopedstrFullPathName,
                                                           unsigned long long offset)
       {
-         AutoLock al(m_output);
+         critical_section_lock al(m_output);
 
          m_logWriter->information("Sending download request with parameters:\n"
                            "\tpath = {}\n"
@@ -95,7 +95,7 @@ namespace remoting
       void FileTransferRequestSender::sendDownloadDataRequest(unsigned int size,
                                                               bool useCompression)
       {
-         AutoLock al(m_output);
+         critical_section_lock al(m_output);
 
          unsigned char compressionLevel = useCompression ? (unsigned char)1 : (unsigned char)0;
 
@@ -113,7 +113,7 @@ namespace remoting
 
       void FileTransferRequestSender::sendRmFileRequest(const ::scoped_string & scopedstrFullPathName)
       {
-         AutoLock al(m_output);
+         critical_section_lock al(m_output);
 
          m_logWriter->information("Sending rm file request with parameters:\n\tpath = {}\n",
                            ::string(scopedstrFullPathName).c_str());
@@ -125,7 +125,7 @@ namespace remoting
 
       void FileTransferRequestSender::sendMkDirRequest(const ::scoped_string & scopedstrFullPathName)
       {
-         AutoLock al(m_output);
+         critical_section_lock al(m_output);
 
          m_logWriter->information("Sending mkdir request with parameters:\n\tpath = {}\n",
                            ::string(scopedstrFullPathName).c_str());
@@ -138,7 +138,7 @@ namespace remoting
       void FileTransferRequestSender::sendMvFileRequest(const ::scoped_string & scopedstroldFileName,
                                                         const ::scoped_string & scopedstrNewFileName)
       {
-         AutoLock al(m_output);
+         critical_section_lock al(m_output);
 
          m_logWriter->information("Sending rename file request with parameters:\n"
                            "\t old path = {}\n"
@@ -156,7 +156,7 @@ namespace remoting
                                                         bool overwrite,
                                                         unsigned long long offset)
       {
-         AutoLock al(m_output);
+         critical_section_lock al(m_output);
 
          unsigned char flags = 0;
          if (overwrite) {
@@ -182,7 +182,7 @@ namespace remoting
                                                             unsigned int size,
                                                             bool useCompression)
       {
-         AutoLock al(m_output);
+         critical_section_lock al(m_output);
 
          m_output->writeUInt32(FTMessage::UPLOAD_DATA_REQUEST);
 
@@ -213,7 +213,7 @@ namespace remoting
       void FileTransferRequestSender::sendUploadEndRequest(unsigned char fileFlags,
                                                            unsigned long long modificationTime)
       {
-         AutoLock al(m_output);
+         critical_section_lock al(m_output);
 
          m_logWriter->information("Sending upload end request with parameters:\n"
                            "\tflags = {}\n"
@@ -229,7 +229,7 @@ namespace remoting
 
       void FileTransferRequestSender::sendFolderSizeRequest(const ::scoped_string & scopedstrFullPath)
       {
-         AutoLock al(m_output);
+         critical_section_lock al(m_output);
 
          m_logWriter->information("Sending get folder size request with parameters:\n\tpath = {}\n",
                            scopedstrFullPath);

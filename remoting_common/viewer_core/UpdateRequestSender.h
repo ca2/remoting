@@ -35,13 +35,13 @@ private:
 	RfbOutputGate* getOutput();
 
 	bool m_wasUpdateRecieved;
-	LocalMutex m_wasUpdatedLock;
+	critical_section m_wasUpdatedLock;
 
 	int m_timeOut;
-	LocalMutex m_timeOutLock;
+	critical_section m_timeOutLock;
 
 	bool m_isIncrimental;
-	LocalMutex m_isIncrimentalLock;
+	critical_section m_isIncrimentalLock;
 
 	Lockable *m_fbLock;
 	FrameBuffer *m_frameBuffer;
@@ -49,7 +49,7 @@ private:
 	LogWriter *m_logWriter;
 	
 	RfbOutputGate *m_output;
-	LocalMutex m_outputLock;
+	critical_section m_outputLock;
 };
 
 //_UPDATE_REQUEST_SENDER_

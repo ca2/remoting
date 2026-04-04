@@ -39,7 +39,7 @@ UpdateKeeper::~UpdateKeeper(void)
 
 void UpdateKeeper::addChangedRegion(const Region *changedRegion)
 {
-  AutoLock al(&m_updContLocMut);
+  critical_section_lock al(&m_updContLocMut);
 
   // FIXME: Calling subtract() function is correct if use
   // copy region instead of copy rectangle.
@@ -56,7 +56,7 @@ void UpdateKeeper::addChangedRect(const ::int_rectangle &  changedRect)
 
 void UpdateKeeper::addCopyRect(const ::int_rectangle &  copyRect, const Point *src)
 {
-  AutoLock al(&m_updContLocMut);
+  critical_section_lock al(&m_updContLocMut);
 
   if (copyRect->is_empty()) {
     return;
@@ -132,38 +132,38 @@ void UpdateKeeper::addCopyRect(const ::int_rectangle &  copyRect, const Point *s
 
 void UpdateKeeper::setBorderRect(const ::int_rectangle &  borderRect)
 {
-  AutoLock al(&m_updContLocMut);
+  critical_section_lock al(&m_updContLocMut);
   m_borderRect = *borderRect;
 }
 
 void UpdateKeeper::setScreenSizeChanged()
 {
-  AutoLock al(&m_updContLocMut);
+  critical_section_lock al(&m_updContLocMut);
   m_updateContainer.screenSizeChanged = true;
 }
 
 void UpdateKeeper::setCursorPosChanged()
 {
-  AutoLock al(&m_updContLocMut);
+  critical_section_lock al(&m_updContLocMut);
   m_updateContainer.cursorPosChanged = true;
 }
 
 void UpdateKeeper::setCursorPos(const Point *curPos)
 {
-  AutoLock al(&m_updContLocMut);
+  critical_section_lock al(&m_updContLocMut);
   m_updateContainer.cursorPosChanged = true;
   m_updateContainer.cursorPos = *curPos;
 }
 
 void UpdateKeeper::setCursorShapeChanged()
 {
-  AutoLock al(&m_updContLocMut);
+  critical_section_lock al(&m_updContLocMut);
   m_updateContainer.cursorShapeChanged = true;
 }
 
 void UpdateKeeper::addUpdateContainer(const UpdateContainer *updateContainer)
 {
-  AutoLock al(&m_updContLocMut);
+  critical_section_lock al(&m_updContLocMut);
 
   // FIXME: Use addCopyRegion instead of addCopyRect
   // Add copied region
@@ -197,7 +197,7 @@ void UpdateKeeper::addUpdateContainer(const UpdateContainer *updateContainer)
 
 void UpdateKeeper::getUpdateContainer(UpdateContainer *updCont)
 {
-  AutoLock al(&m_updContLocMut);
+  critical_section_lock al(&m_updContLocMut);
   *updCont = m_updateContainer;
 }
 
@@ -221,7 +221,7 @@ bool UpdateKeeper::checkForUpdates(const Region *region)
 void UpdateKeeper::extract(UpdateContainer *updateContainer)
 {
   {
-    AutoLock al(&m_updContLocMut);
+    critical_section_lock al(&m_updContLocMut);
 
     // Clipping regions
     m_updateContainer.changedRegion.crop(&m_borderRect);
@@ -231,7 +231,7 @@ void UpdateKeeper::extract(UpdateContainer *updateContainer)
     m_updateContainer.clear();
   }
   {
-    AutoLock al(&m_exclRegLocMut);
+    critical_section_lock al(&m_exclRegLocMut);
     updateContainer->changedRegion.subtract(&m_excludedRegion);
     updateContainer->copiedRegion.subtract(&m_excludedRegion);
   }
@@ -239,7 +239,7 @@ void UpdateKeeper::extract(UpdateContainer *updateContainer)
 
 void UpdateKeeper::setExcludedRegion(const Region *excludedRegion)
 {
-  AutoLock al(&m_exclRegLocMut);
+  critical_section_lock al(&m_exclRegLocMut);
 
   if (excludedRegion == 0) {
     m_excludedRegion.clear();

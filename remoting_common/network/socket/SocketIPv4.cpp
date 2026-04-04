@@ -27,7 +27,7 @@
 #include "SocketAddressIPv4.h"
 #include "SocketIPv4.h"
 
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 
 #include <crtdbg.h>
 
@@ -51,7 +51,7 @@ SocketIPv4::~SocketIPv4()
   ::close(m_socket);
 #endif
 
-  AutoLock l(&m_mutex);
+  critical_section_lock l(&m_mutex);
 
   if (m_peerAddr) {
     delete m_peerAddr;
@@ -77,7 +77,7 @@ void SocketIPv4::connect(const SocketAddressIPv4 &addr)
     throw SocketException();
   }
 
-  AutoLock l(&m_mutex);
+  critical_section_lock l(&m_mutex);
 
   if (m_peerAddr) {
     delete m_peerAddr;
@@ -124,7 +124,7 @@ void SocketIPv4::bind(const SocketAddressIPv4 &addr)
     throw SocketException();
   }
 
-  AutoLock l(&m_mutex);
+  critical_section_lock l(&m_mutex);
 
   if (m_localAddr) {
     delete m_localAddr;
@@ -137,7 +137,7 @@ void SocketIPv4::bind(const SocketAddressIPv4 &addr)
 
 bool SocketIPv4::isBound()
 {
-  AutoLock l(&m_mutex);
+  critical_section_lock l(&m_mutex);
 
   return m_isBound;
 }
@@ -177,7 +177,7 @@ SocketIPv4 *SocketIPv4::accept()
 
 void SocketIPv4::set(SOCKET socket)
 {
-  AutoLock l(&m_mutex);
+  critical_section_lock l(&m_mutex);
 
 #ifdef _WIN32
   ::closesocket(m_socket);
@@ -268,7 +268,7 @@ int SocketIPv4::recv(char *buffer, int size, int flags)
 
 bool SocketIPv4::getLocalAddr(SocketAddressIPv4 *addr)
 {
-  AutoLock l(&m_mutex);
+  critical_section_lock l(&m_mutex);
 
   if (m_localAddr == 0) {
     return false;
@@ -281,7 +281,7 @@ bool SocketIPv4::getLocalAddr(SocketAddressIPv4 *addr)
 
 bool SocketIPv4::getPeerAddr(SocketAddressIPv4 *addr)
 {
-  AutoLock l(&m_mutex);
+  critical_section_lock l(&m_mutex);
 
   if (m_peerAddr == 0) {
     return false;

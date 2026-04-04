@@ -35,7 +35,7 @@
 #include "remoting/remoting_common/win_system/WindowsApplication.h"
 
 //#include "log_writer/LogWriter.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 
 //#include <map>
 

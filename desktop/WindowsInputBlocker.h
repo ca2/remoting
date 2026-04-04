@@ -27,7 +27,7 @@
 
 #include "remoting/remoting_common/util/CommonHeader.h"
 #include "remoting/remoting_common/thread/GuiThread.h"
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 #include "remoting/remoting_common/win_system/WinTimeMillis.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 #include "InputBlocker.h"
@@ -82,7 +82,7 @@ protected:
   static HHOOK m_hSoftMouseHook;
 
   static WindowsInputBlocker *m_instance;
-  static LocalMutex m_instanceMutex;
+  static critical_section m_instanceMutex;
 
   bool m_isKeyboardBlocking;
   bool m_isMouseBlocking;
@@ -92,7 +92,7 @@ protected:
 
   static unsigned int m_timeInterval;
   static ::earth::time m_lastInputTime;
-  static LocalMutex m_lastInputTimeMutex;
+  static critical_section m_lastInputTimeMutex;
 
   LogWriter *m_log;
 };

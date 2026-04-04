@@ -33,7 +33,7 @@ class Win32MirrorScreenDriver : public Win32ScreenDriverBaseImpl
 public:
   Win32MirrorScreenDriver(UpdateKeeper *updateKeeper,
                           UpdateListener *updateListener,
-                          LocalMutex *fbLocalMutex,
+                          critical_section *fbcritical_section,
                           LogWriter *log);
   virtual ~Win32MirrorScreenDriver();
 

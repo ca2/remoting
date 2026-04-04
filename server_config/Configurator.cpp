@@ -33,13 +33,13 @@
 #include "remoting_node_desktop/NamingDefs.h"
 
 Configurator *Configurator::s_instance = NULL;
-LocalMutex Configurator::m_instanceMutex;
+critical_section Configurator::m_instanceMutex;
 
 Configurator::Configurator(bool isConfiguringService)
 : m_isConfiguringService(isConfiguringService), m_isConfigLoadedPartly(false),
   m_isFirstLoad(true), m_regSA(0)
 {
-  AutoLock al(&m_instanceMutex);
+  critical_section_lock al(&m_instanceMutex);
   if (s_instance != 0) {
     throw ::remoting::Exception("Configurator instance already exists");
   }
@@ -58,7 +58,7 @@ Configurator::~Configurator()
 
 Configurator *Configurator::getInstance()
 {
-  AutoLock al(&m_instanceMutex);
+  critical_section_lock al(&m_instanceMutex);
   _ASSERT(s_instance != NULL);
   return s_instance;
 }
@@ -70,7 +70,7 @@ void Configurator::setInstance(Configurator *conf)
 
 void Configurator::notifyReload()
 {
-  AutoLock l(&m_listeners);
+  critical_section_lock l(&m_listeners);
 
   for (size_t i = 0; i < m_listeners.size(); i++) {
     m_listeners.at(i)->onConfigReload(getServerConfig());
@@ -152,7 +152,7 @@ bool Configurator::load(SettingsManager *sm)
   bool loadResult = true;
 
   {
-    AutoLock l(&m_serverConfig);
+    critical_section_lock l(&m_serverConfig);
 
     if (!loadPortMappingContainer(sm, m_serverConfig.getPortMappingContainer())) {
       loadResult = false;
@@ -167,7 +167,7 @@ bool Configurator::load(SettingsManager *sm)
   }
 
   {
-    AutoLock l(&m_serverConfig);
+    critical_section_lock l(&m_serverConfig);
 
     if (!loadIpAccessControlContainer(sm, m_serverConfig.getAccessControl())) {
       loadResult = false;
@@ -194,7 +194,7 @@ bool Configurator::savePortMappingContainer(SettingsManager *sm)
   // Get port mappings from server config
   //
 
-  AutoLock l(&m_serverConfig);
+  critical_section_lock l(&m_serverConfig);
 
   PortMappingContainer *portMappings = m_serverConfig.getPortMappingContainer();
 
@@ -358,7 +358,7 @@ bool Configurator::saveVideoRegionConfig(SettingsManager *sm)
   size_t size = videoClasses->size();
  ::array_base<::int_rectangle> *videoRects = m_serverConfig.getVideoRects();
 
-  AutoLock al(&m_serverConfig);
+  critical_section_lock al(&m_serverConfig);
   buffer= "";
   for (size_t i = 0; i < size; i++) {
     buffer.appendString(videoClasses->at(i));
@@ -394,7 +394,7 @@ bool Configurator::loadVideoRegionConfig(SettingsManager *sm, ServerConfig *conf
   ::array_base<::int_rectangle> *videoRects = m_serverConfig.getVideoRects();
 
   // Lock configuration
-  AutoLock al(&m_serverConfig);
+  critical_section_lock al(&m_serverConfig);
 
   //
   // Delete old video classes entries
@@ -469,7 +469,7 @@ bool Configurator::loadVideoRegionConfig(SettingsManager *sm, ServerConfig *conf
 
 bool Configurator::saveIpAccessControlContainer(SettingsManager *storage)
 {
-  AutoLock l(&m_serverConfig);
+  critical_section_lock l(&m_serverConfig);
 
   // Get rules container
   IpAccessControl *rules = m_serverConfig.getAccessControl();

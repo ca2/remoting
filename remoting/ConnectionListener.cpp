@@ -25,7 +25,7 @@
 #include "ConnectionListener.h"
 #include "remoting_impact.h"
 
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 
 const char ConnectionListener::DEFAULT_HOST[] = "0.0.0.0";
 
@@ -38,7 +38,7 @@ ConnectionListener::ConnectionListener(WindowsApplication *application,
 
 ConnectionListener::~ConnectionListener() 
 {
-  AutoLock al(&m_connectionsLock);
+  critical_section_lock al(&m_connectionsLock);
   while (!m_connections.empty()) {
     SocketIPv4 *socket = m_connections.front();
     delete socket;
@@ -53,14 +53,14 @@ unsigned short ConnectionListener::getBindPort() const
 
 void ConnectionListener::onAcceptConnection(SocketIPv4 *socket)
 {
-  AutoLock al(&m_connectionsLock);
+  critical_section_lock al(&m_connectionsLock);
   m_connections.push_front(socket);
   m_application->postMessage(remoting_impact::WM_USER_NEW_LISTENING);
 }
 
 SocketIPv4 *ConnectionListener::getNewConnection()
 {
-  AutoLock al(&m_connectionsLock);
+  critical_section_lock al(&m_connectionsLock);
   SocketIPv4 *socket = 0;
   if (!m_connections.empty()) {
     socket = m_connections.front();

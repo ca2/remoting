@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 //#include <list>
 #include "ViewerInstance.h"
 
@@ -55,7 +55,7 @@ public:
   void deleteDeadInstances();
 
 protected:
-  mutable LocalMutex m_lockObj;
+  mutable critical_section m_lockObj;
   InstanceList m_instances;
 
   // This variable contain count of instance, when need to reconnect.

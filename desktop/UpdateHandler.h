@@ -31,7 +31,7 @@
 #include "ScreenGrabber.h"
 #include "WindowsCursorShapeGrabber.h"
 #include "remoting/remoting_common/rfb/FrameBuffer.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 #include "UpdateListener.h"
 #include "UpdateDetector.h"
 #include "CopyRectDetector.h"
@@ -84,20 +84,20 @@ public:
   // (dimension and pixel format)
   void getFrameBufferProp(::int_size *dim, PixelFormat *pf)
   {
-    AutoLock al(&m_fbLocMut);
+    critical_section_lock al(&m_fbLocMut);
     *dim = m_backupFrameBuffer.getDimension();
     *pf = m_backupFrameBuffer.getPixelFormat();
   }
 
   ::int_size getFrameBufferDimension()
   {
-    AutoLock al(&m_fbLocMut);
+    critical_section_lock al(&m_fbLocMut);
     return m_backupFrameBuffer.getDimension();
   }
 
   PixelFormat getFrameBufferPixelFormat(::int_size *dim, PixelFormat *pf)
   {
-    AutoLock al(&m_fbLocMut);
+    critical_section_lock al(&m_fbLocMut);
     return m_backupFrameBuffer.getPixelFormat();
   }
 
@@ -116,7 +116,7 @@ protected:
                                          const ::int_rectangle &  viewPort);
 
   FrameBuffer m_backupFrameBuffer;
-  LocalMutex m_fbLocMut;
+  critical_section m_fbLocMut;
 
   // m_cursorShape not thread safed
   CursorShape m_cursorShape;

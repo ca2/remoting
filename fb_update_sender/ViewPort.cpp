@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "ViewPort.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 #include "remoting/remoting_common/util/BrokenHandleException.h"
 
 ViewPort::ViewPort(LogWriter *log)
@@ -50,13 +50,13 @@ void ViewPort::initDesktopInterface(Desktop *desktop)
 
 void ViewPort::changeState(const ViewPortState *newState)
 {
-  AutoLock al(&m_stateMutex);
+  critical_section_lock al(&m_stateMutex);
   m_state = *newState;
 }
 
 void ViewPort::update(const ::int_size & fbDimension)
 {
-  AutoLock al(&m_stateMutex);
+  critical_section_lock al(&m_stateMutex);
 
   ::int_rectangle rect;
   switch(m_state.m_mode) {
@@ -110,7 +110,7 @@ void ViewPort::update(const ::int_size & fbDimension)
 
 ::int_rectangle ViewPort::getViewPortRect()
 {
-  AutoLock al(&m_stateMutex);
+  critical_section_lock al(&m_stateMutex);
   return m_rect;
 }
 

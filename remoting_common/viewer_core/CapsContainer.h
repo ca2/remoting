@@ -25,7 +25,7 @@
 //#include <map>
 //#include <vector>
 
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 //////#include "remoting/remoting_common/util/::string.h"
 
 #pragma once
@@ -127,7 +127,7 @@ private:
   // List of enabled caps.
   ::array_base<unsigned int> m_plist;
 
-  mutable LocalMutex m_mapLock;
+  mutable critical_section m_mapLock;
 };
 
 

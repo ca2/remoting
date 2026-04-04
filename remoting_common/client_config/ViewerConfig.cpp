@@ -25,8 +25,8 @@
 #include "ViewerConfig.h"
 
 //#include "remoting/remoting_common/win_system/Environment.h"
-#include "remoting/remoting_common/win_system/RegistryKey.h"
-#include "remoting/remoting_common/win_system/Registry.h"
+//#include "remoting/remoting_common/win_system/RegistryKey.h"
+//#include "remoting/remoting_common/win_system/Registry.h"
 #include "acme/filesystem/filesystem/directory_context.h"
 
 //#include "file_lib/::file::item.h"
@@ -39,15 +39,15 @@ namespace remoting
 
    ViewerConfig::ViewerConfig(const ::scoped_string & scopedstrRegistryPath)
    : m_etracelevel(e_trace_level_information), m_listenPort(5500), m_historyLimit(32),
-     m_showToolbar(true), m_promptOnFullscreen(true),
-     m_conHistory(&m_conHistoryKey, m_historyLimit)
+     m_showToolbar(true), m_promptOnFullscreen(true)
+     //m_conHistory(&m_conHistoryKey, m_historyLimit)
    //,    m_LogWriter(0)
    {
-      ::string registryKey;
-      registryKey.format("{}\\History",::string(scopedstrRegistryPath).c_str());
-      m_conHistoryKey.open(Registry::getCurrentUserKey(),
-                           registryKey,
-                           true);
+//      ::string registryKey;
+//      registryKey.format("{}\\History",::string(scopedstrRegistryPath).c_str());
+//      m_conHistoryKey.open(Registry::getCurrentUserKey(),
+//                           registryKey,
+//                           true);
    }
 
    ViewerConfig::~ViewerConfig()
@@ -103,7 +103,7 @@ namespace remoting
 
    void ViewerConfig::setListenPort(int listenPort)
    {
-      AutoLock l(&m_cs);
+      critical_section_lock l(&m_cs);
 
       if (listenPort < 0) {
          listenPort = 0;
@@ -116,13 +116,13 @@ namespace remoting
 
    int ViewerConfig::getListenPort() const
    {
-      AutoLock l(&m_cs);
+      critical_section_lock l(&m_cs);
       return m_listenPort;
    }
 
     void ViewerConfig::setLogLevel(enum_trace_level etracelevel)
     {
-   AutoLock l(&m_cs);
+   critical_section_lock l(&m_cs);
 
    if (m_etracelevel < e_trace_level_none) {
       m_etracelevel = e_trace_level_none;
@@ -139,19 +139,19 @@ namespace remoting
 
     enum_trace_level ViewerConfig::getLogLevel() const
     {
-   //    AutoLock l(&m_cs);
+   //    critical_section_lock l(&m_cs);
        return m_etracelevel;
     }
 
     ::file::path ViewerConfig::getLogDir() const
     {
-       AutoLock l(&m_cs);
+       critical_section_lock l(&m_cs);
        return m_pathToLogFile;
     }
 
     void ViewerConfig::setLogDir(const ::file::path &logDir)
     {
-       AutoLock l(&m_cs);
+       critical_section_lock l(&m_cs);
        m_pathToLogFile = logDir;
    //    if (m_LogWriter != 0) {
    //       m_LogWriter->changeLogProps(m_pathToLogFile, m_logLevel);
@@ -160,7 +160,7 @@ namespace remoting
 
    void ViewerConfig::setHistoryLimit(int historyLimit)
    {
-      AutoLock l(&m_cs);
+      critical_section_lock l(&m_cs);
 
       if (historyLimit < 0) {
          historyLimit = 0;
@@ -175,43 +175,43 @@ namespace remoting
 
    int ViewerConfig::getHistoryLimit() const
    {
-      AutoLock l(&m_cs);
+      critical_section_lock l(&m_cs);
       return m_historyLimit;
    }
 
    void ViewerConfig::showToolbar(bool show)
    {
-      AutoLock l(&m_cs);
+      critical_section_lock l(&m_cs);
       m_showToolbar = show;
    }
 
    bool ViewerConfig::isToolbarShown() const
    {
-      AutoLock l(&m_cs);
+      critical_section_lock l(&m_cs);
       return m_showToolbar;
    }
 
    void ViewerConfig::promptOnFullscreen(bool prompt)
    {
-      AutoLock l(&m_cs);
+      critical_section_lock l(&m_cs);
       m_promptOnFullscreen = prompt;
    }
 
    bool ViewerConfig::isPromptOnFullscreenEnabled() const
    {
-      AutoLock l(&m_cs);
+      critical_section_lock l(&m_cs);
       return m_promptOnFullscreen;
    }
 
    ::string ViewerConfig::getPathToLogFile() const
    {
-      AutoLock l(&m_cs);
+      critical_section_lock l(&m_cs);
       return m_pathToLogFile;
    }
 
    ConnectionHistory *ViewerConfig::getConnectionHistory()
    {
-      AutoLock l(&m_cs);
+      critical_section_lock l(&m_cs);
       return &m_conHistory;
    }
    //
@@ -237,7 +237,7 @@ namespace remoting
    //    }
    //
    //    // Path to log file
-   //    AutoLock l(&m_cs);
+   //    critical_section_lock l(&m_cs);
    //    m_pathToLogFile = logFileFolderPath;
    //
    //    if (m_LogWriter != 0) {

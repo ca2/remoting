@@ -50,7 +50,7 @@ RfbSetPixelFormatClientMessage::~RfbSetPixelFormatClientMessage()
 
 void RfbSetPixelFormatClientMessage::send(RfbOutputGate *output)
 {
-  AutoLock al(output);
+  critical_section_lock al(output);
   output->writeUInt8(ClientMsgDefs::SET_PIXEL_FORMAT);
   // padding 3 bytes
   output->writeUInt16(0);

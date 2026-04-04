@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "GateKicker.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 
 GateKicker::GateKicker(BlockingGate *gate)
 : m_gate(gate)
@@ -48,7 +48,7 @@ void GateKicker::execute()
     m_sleeper.waitForEvent(500);
     if (!isTerminating()) {
       try {
-        AutoLock al(m_gate);
+        critical_section_lock al(m_gate);
         m_gate->writeUInt8(255);
       } catch (...) {
       }

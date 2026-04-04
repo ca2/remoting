@@ -37,7 +37,7 @@ public:
   Win32ScreenDriver(UpdateKeeper *updateKeeper,
                        UpdateListener *updateListener,
                        FrameBuffer *fb,
-                       LocalMutex *fbLocalMutex, LogWriter *log);
+                       critical_section *fbcritical_section, LogWriter *log);
   virtual ~Win32ScreenDriver();
 
   // Starts screen update detection if it not started yet.

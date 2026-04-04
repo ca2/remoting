@@ -38,7 +38,7 @@
 #include "http-server-lib/HttpServer.h"
 
 #include "remoting/remoting_common/thread/ZombieKiller.h"
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 //#include "log_writer/LogWriter.h"
 #include "remoting/remoting_common/util/Singleton.h"
 #include "remoting/remoting_common/util/ListenerContainer.h"
@@ -166,7 +166,7 @@ protected:
   /**
    * Mutex for protecting servers.
    */
-  LocalMutex m_mutex;
+  critical_section m_mutex;
 
   /**
    * Flag that determitates if we run in server context.

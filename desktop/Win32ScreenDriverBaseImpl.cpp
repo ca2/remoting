@@ -27,12 +27,12 @@
 
 Win32ScreenDriverBaseImpl::Win32ScreenDriverBaseImpl(UpdateKeeper *updateKeeper,
                                                  UpdateListener *updateListener,
-                                                 LocalMutex *fbLocalMutex,
+                                                 critical_section *fbcritical_section,
                                                  LogWriter *log)
 : WinVideoRegionUpdaterImpl(log),
-  m_fbLocalMutex(fbLocalMutex),
+  m_fbcritical_section(fbcritical_section),
   m_cursorPosDetector(updateKeeper, updateListener, log),
-  m_curShapeDetector(updateKeeper, updateListener, &m_curShapeGrabber, fbLocalMutex, log)
+  m_curShapeDetector(updateKeeper, updateListener, &m_curShapeGrabber, fbcritical_section, log)
 {
 }
 
@@ -56,16 +56,16 @@ void Win32ScreenDriverBaseImpl::terminateDetection()
   m_curShapeDetector.wait();
 }
 
-LocalMutex *Win32ScreenDriverBaseImpl::getFbMutex()
+critical_section *Win32ScreenDriverBaseImpl::getFbMutex()
 {
-  return m_fbLocalMutex;
+  return m_fbcritical_section;
 }
 
 bool Win32ScreenDriverBaseImpl::grabCursorShape(const PixelFormat & pf)
 {
   // Grabbing under the mutex avoid us from grab void cursor shape in time when the
   // shape hides until grabs screen.
-  AutoLock al(m_fbLocalMutex);
+  critical_section_lock al(m_fbcritical_section);
   return m_curShapeGrabber.grab(pf);
 }
 
@@ -76,12 +76,12 @@ const CursorShape *Win32ScreenDriverBaseImpl::getCursorShape()
 
 Point Win32ScreenDriverBaseImpl::getCursorPosition()
 {
-  AutoLock al(m_fbLocalMutex);
+  critical_section_lock al(m_fbcritical_section);
   return m_cursorPosDetector.getCursorPos();
 }
 
 void Win32ScreenDriverBaseImpl::getCopiedRegion(::int_rectangle *copyRect, Point *source)
 {
-  AutoLock al(m_fbLocalMutex);
+  critical_section_lock al(m_fbcritical_section);
   m_copyRectDetector.detectWindowMovements(copyRect, source);
 }

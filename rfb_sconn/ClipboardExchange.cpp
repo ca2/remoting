@@ -26,7 +26,7 @@
 #include "remoting/remoting_common/rfb/MsgDefs.h"
 ////#include "remoting/remoting_common/util/::string.h"
 //#include "remoting/remoting_common/util/::string.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 #include "remoting/remoting_common/rfb/VendorDefs.h"
 
 ClipboardExchange::ClipboardExchange(RfbCodeRegistrator *codeRegtor,
@@ -110,7 +110,7 @@ void ClipboardExchange::onRequestWorker(bool utf8flag, RfbInputGate *input)
 
 void ClipboardExchange::sendClipboard(const ::scoped_string & newClipboard)
 {
-  AutoLock al(&m_storedClipMut);
+  critical_section_lock al(&m_storedClipMut);
   m_storedClip = *newClipboard;
   m_hasNewClip = true;
   m_newClipWaiter.notify();
@@ -131,12 +131,12 @@ void ClipboardExchange::execute()
       try {
         const char * data;
         size_t length;
-        AutoLock al(m_output);
+        critical_section_lock al(m_output);
         if (m_isUtf8ClipboardEnabled) {
           m_output->writeUInt32(ServerMsgDefs::SERVER_CUT_TEXT_UTF8); // type
           ::string charBuff;
           {
-            AutoLock al(&m_storedClipMut);
+            critical_section_lock al(&m_storedClipMut);
             charBuff.fromStringStorage(&m_storedClip);
             m_hasNewClip = false;
           }
@@ -152,7 +152,7 @@ void ClipboardExchange::execute()
           m_output->writeUInt16(0); // pad
           ::string charBuff;
           {
-            AutoLock al(&m_storedClipMut);
+            critical_section_lock al(&m_storedClipMut);
             charBuff.fromStringStorage(&m_storedClip);
             m_hasNewClip = false;
           }

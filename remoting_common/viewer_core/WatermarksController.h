@@ -30,7 +30,7 @@
 #include "remoting/remoting_common/rfb/FrameBuffer.h"
 #include "remoting/remoting_common/rfb/PixelFormat.h"
 #include "remoting/remoting_common/rfb/StandardPixelFormatFactory.h"
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 
 class CLASS_DECL_REMOTING_COMMON WatermarksController
 {
@@ -41,10 +41,10 @@ public:
 	
 
 	void showWaterMarks(FrameBuffer *frameBuffer,
-		LocalMutex *fbLock);
+		critical_section *fbLock);
 
 	void hideWatermarks(FrameBuffer *frameBuffer,
-		LocalMutex *fbLock);
+		critical_section *fbLock);
 
 	const ::int_rectangle CurrentRect();
 

@@ -34,14 +34,14 @@ UpdateHandler::~UpdateHandler(void)
 
 void UpdateHandler::initFrameBuffer(const FrameBuffer *newFb)
 {
-  AutoLock al(&m_fbLocMut);
+  critical_section_lock al(&m_fbLocMut);
   m_backupFrameBuffer.clone(newFb);
 }
 
 bool UpdateHandler::updateExternalFrameBuffer(FrameBuffer *fb, const Region *region,
                                               const ::int_rectangle &  viewPort)
 {
-  AutoLock al(&m_fbLocMut);
+  critical_section_lock al(&m_fbLocMut);
   return updateExternalFrameBuffer(fb, &m_backupFrameBuffer, region, viewPort);
 }
 

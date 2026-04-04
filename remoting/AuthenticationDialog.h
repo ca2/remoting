@@ -25,11 +25,11 @@
 #pragma once
 
 
-#include "remoting/remoting_common/gui/BaseDialog.h"
-#include "remoting/remoting_common/gui/TextBox.h"
+#include "apex/innate/dialog.h"
+#include "apex/innate/text_box.h"
 #include "resource.h"
 
-class AuthenticationDialog : public BaseDialog
+class AuthenticationDialog : public innate::dialog
 {
 public:
   AuthenticationDialog();
@@ -40,12 +40,12 @@ public:
   // this function returns sets the name of host in dialog
   void setHostName(const ::scoped_string & hostname);
 
-protected:
+//protected:
   BOOL onCommand(UINT controlID, UINT notificationID);
   BOOL onInitDialog();
 
-  TextBox m_password;
-  TextBox m_hostname;
+  innate::text_box m_password;
+  innate::text_box m_hostname;
   ::string m_strPassword;
   ::string m_strHost;
 };

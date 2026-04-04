@@ -64,7 +64,7 @@ void UpdateHandlerImpl::extract(UpdateContainer *updateContainer)
   m_log->debug("UpdateHandlerImpl: getCopiedRegion");
   m_screenDriver->getCopiedRegion(&copyRect, &copySrc);
   {
-    AutoLock al(&m_updateKeeper); // The following operations should be atomic
+    critical_section_lock al(&m_updateKeeper); // The following operations should be atomic
     m_updateKeeper.addCopyRect(&copyRect, &copySrc);
     m_log->debug("UpdateHandlerImpl: extract Copy ::int_rectangle");
     m_updateKeeper.extract(updateContainer);
@@ -110,7 +110,7 @@ void UpdateHandlerImpl::extract(UpdateContainer *updateContainer)
       // must be under the mutex. Getters for the backup frame buffer in here (at this function)
       // can work without the mutex, but other getters for the frame buffer in other places
       // may be invoked from other threads and then it shall cover by the mutex.
-      AutoLock al(&m_fbLocMut);
+      critical_section_lock al(&m_fbLocMut);
       m_backupFrameBuffer.clone(m_screenDriver->getScreenBuffer());
     }
     updateContainer->changedRegion.clear();

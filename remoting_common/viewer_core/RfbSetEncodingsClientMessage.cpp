@@ -36,7 +36,7 @@ RfbSetEncodingsClientMessage::~RfbSetEncodingsClientMessage()
 
 void RfbSetEncodingsClientMessage::send(RfbOutputGate *output)
 {
-  AutoLock al(output);
+  critical_section_lock al(output);
   output->writeUInt8(ClientMsgDefs::SET_ENCODINGS);
   output->writeUInt8(0); // padding 1 byte
 

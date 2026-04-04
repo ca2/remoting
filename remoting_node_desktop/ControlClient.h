@@ -225,7 +225,7 @@ private:
   // the server across a tcp dispatcher.
   unsigned int m_tcpDispId;
   ::string m_gotDispatcherName;
-  LocalMutex m_tcpDispValuesMutex;
+  critical_section m_tcpDispValuesMutex;
 
   ThreadCollector m_outgoingConnectionThreadCollector;
   

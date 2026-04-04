@@ -29,7 +29,7 @@
 #include "remoting/remoting_common/region/Region.h"
 //#include "remoting/remoting_common/util/::string_array.h"
 #include "ScreenDriver.h"
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 //#include "log_writer/LogWriter.h"
 #include "remoting/remoting_common/thread/Thread.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
@@ -52,7 +52,7 @@ private:
 
   ::earth::time m_lastVidUpdTime;
   Region m_vidRegion;
-  LocalMutex m_regionMutex;
+  critical_section m_regionMutex;
   LogWriter *m_log;
   WindowsEvent m_sleeper;
 };

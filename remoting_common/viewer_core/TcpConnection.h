@@ -30,7 +30,7 @@
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 #include "remoting/remoting_common/network/socket/SocketIPv4.h"
 #include "remoting/remoting_common/network/socket/SocketStream.h"
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 #include "remoting/remoting_common/io/BufferedInputStream.h"
 
 class CLASS_DECL_REMOTING_COMMON TcpConnection
@@ -65,7 +65,7 @@ private:
 
   LogWriter *m_logWriter;
 
-  mutable LocalMutex m_connectLock;
+  mutable critical_section m_connectLock;
 };
 
 

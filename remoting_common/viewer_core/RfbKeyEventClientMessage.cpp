@@ -36,7 +36,7 @@ RfbKeyEventClientMessage::~RfbKeyEventClientMessage()
 
 void RfbKeyEventClientMessage::send(RfbOutputGate *output)
 {
-  AutoLock al(output);
+  critical_section_lock al(output);
   output->writeUInt8(ClientMsgDefs::KEYBOARD_EVENT);
   output->writeUInt8(m_downFlag);
   output->writeUInt16(0); // padding

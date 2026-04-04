@@ -63,7 +63,7 @@ Desktop *RfbClientManager::onClientAuth(RfbClient *client)
 
   m_newConnectionEvents->onSuccAuth(&ip);
 
-  AutoLock al(&m_clientListLocker);
+  critical_section_lock al(&m_clientListLocker);
 
   // Checking if this client is allowed to connect, depending on its "shared"
   // flag and the server's configuration.
@@ -178,7 +178,7 @@ void RfbClientManager::onCheckAccessControl(RfbClient *client)
 
 void RfbClientManager::onClipboardUpdate(const ::scoped_string & newClipboard)
 {
-  AutoLock al(&m_clientListLocker);
+  critical_section_lock al(&m_clientListLocker);
   for (ClientListIter iter = m_clientList.begin();
        iter != m_clientList.end(); iter++) {
     if ((*iter)->getClientState() == IN_NORMAL_PHASE) {
@@ -190,7 +190,7 @@ void RfbClientManager::onClipboardUpdate(const ::scoped_string & newClipboard)
 void RfbClientManager::onSendUpdate(const UpdateContainer *updateContainer,
                                     const CursorShape *cursorShape)
 {
-  AutoLock al(&m_clientListLocker);
+  critical_section_lock al(&m_clientListLocker);
   for (ClientListIter iter = m_clientList.begin();
        iter != m_clientList.end(); iter++) {
     if ((*iter)->getClientState() == IN_NORMAL_PHASE) {
@@ -201,7 +201,7 @@ void RfbClientManager::onSendUpdate(const UpdateContainer *updateContainer,
 
 bool RfbClientManager::isReadyToSend()
 {
-  AutoLock al(&m_clientListLocker);
+  critical_section_lock al(&m_clientListLocker);
   bool isReady = false;
   for (ClientListIter iter = m_clientList.begin();
        iter != m_clientList.end(); iter++) {
@@ -220,14 +220,14 @@ void RfbClientManager::onAbnormalDesktopTerminate()
 
 void RfbClientManager::disconnectAllClients()
 {
-  AutoLock al(&m_clientListLocker);
+  critical_section_lock al(&m_clientListLocker);
   disconnectNonAuthClients();
   disconnectAuthClients();
 }
 
 void RfbClientManager::disconnectNonAuthClients()
 {
-  AutoLock al(&m_clientListLocker);
+  critical_section_lock al(&m_clientListLocker);
   for (ClientListIter iter = m_nonAuthClientList.begin();
        iter != m_nonAuthClientList.end(); iter++) {
     (*iter)->disconnect();
@@ -236,7 +236,7 @@ void RfbClientManager::disconnectNonAuthClients()
 
 void RfbClientManager::disconnectAuthClients()
 {
-  AutoLock al(&m_clientListLocker);
+  critical_section_lock al(&m_clientListLocker);
   for (ClientListIter iter = m_clientList.begin();
        iter != m_clientList.end(); iter++) {
     (*iter)->disconnect();
@@ -247,7 +247,7 @@ void RfbClientManager::waitUntilAllClientAreBeenDestroyed()
 {
   while (true) {
     {
-      AutoLock al(&m_clientListLocker);
+      critical_section_lock al(&m_clientListLocker);
       if (m_clientList.empty() && m_nonAuthClientList.empty()) {
         break;
       }
@@ -261,7 +261,7 @@ void RfbClientManager::validateClientList()
 {
   Desktop *objectToDestroy = 0;
   {
-    AutoLock al(&m_clientListLocker);
+    critical_section_lock al(&m_clientListLocker);
     // If clients are in the IN_READY_TO_REMOVE phase, remove them from the
     // non-authorized clients ::list_base.
     ClientListIter iter = m_nonAuthClientList.begin();
@@ -302,7 +302,7 @@ void RfbClientManager::validateClientList()
     }
   }
 
-  AutoLock al(&m_clientListLocker);
+  critical_section_lock al(&m_clientListLocker);
   if (m_clientList.empty() && m_nonAuthClientList.empty()) {
     m_listUnderflowingEvent.notify();
   }
@@ -310,7 +310,7 @@ void RfbClientManager::validateClientList()
 
 bool RfbClientManager::checkForBan(const ::scoped_string & ip)
 {
-  AutoLock al(&m_banListMutex);
+  critical_section_lock al(&m_banListMutex);
 
   BanListIter it = m_banList.find(*ip);
   if (it != m_banList.end()) {
@@ -332,7 +332,7 @@ bool RfbClientManager::checkForBan(const ::scoped_string & ip)
 
 void RfbClientManager::updateIpInBan(const ::scoped_string & ip, bool success)
 {
-  AutoLock al(&m_banListMutex);
+  critical_section_lock al(&m_banListMutex);
 
   BanListIter it = m_banList.find(*ip);
   if (success) {
@@ -375,7 +375,7 @@ void RfbClientManager::addNewConnection(SocketIPv4 *socket,
                                         ViewPortState *constViewPort,
                                         bool viewOnly, bool isOutgoing)
 {
-  AutoLock al(&m_clientListLocker);
+  critical_section_lock al(&m_clientListLocker);
 
   ServerConfig *config = Configurator::getInstance()->getServerConfig();
   int timeout = 1000 * config->getIdleTimeout();
@@ -407,7 +407,7 @@ void RfbClientManager::addNewConnection(SocketIPv4 *socket,
 
 void RfbClientManager::getClientsInfo(RfbClientInfoList *::list_base)
 {
-  AutoLock al(&m_clientListLocker);
+  critical_section_lock al(&m_clientListLocker);
 
   for (ClientListIter it = m_clientList.begin(); it != m_clientList.end(); it++) {
     RfbClient *each = *it;
@@ -423,7 +423,7 @@ void RfbClientManager::getClientsInfo(RfbClientInfoList *::list_base)
 
 void RfbClientManager::setDynViewPort(const ViewPortState *dynViewPort)
 {
-  AutoLock al(&m_clientListLocker);
+  critical_section_lock al(&m_clientListLocker);
   m_dynViewPort = *dynViewPort;
 
   // Assign the dynViewPort value for all already run clients too.

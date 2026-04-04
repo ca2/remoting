@@ -26,7 +26,7 @@
 
 
 #include "remoting/remoting_common/io/Channel.h"
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 //#include "log_writer/LogWriter.h"
 
@@ -69,7 +69,7 @@ private:
   Channel *m_channel;
   Channel *m_oldChannel;
   bool m_chanWasChanged;
-  LocalMutex m_chanMut;
+  critical_section m_chanMut;
 
   WindowsEvent m_timer;
   unsigned int m_timeOut;

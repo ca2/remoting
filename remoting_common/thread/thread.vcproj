@@ -553,7 +553,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\AutoLock.cpp"
+				RelativePath=".\critical_section_lock.cpp"
 				>
 			</File>
 			<File
@@ -569,7 +569,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\LocalMutex.cpp"
+				RelativePath=".\critical_section.cpp"
 				>
 			</File>
 			<File
@@ -591,7 +591,7 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\AutoLock.h"
+				RelativePath=".\critical_section_lock.h"
 				>
 			</File>
 			<File
@@ -607,7 +607,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\LocalMutex.h"
+				RelativePath=".\critical_section.h"
 				>
 			</File>
 			<File

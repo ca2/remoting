@@ -35,7 +35,7 @@
 //#include "log_writer/LogWriter.h"
 
 #include "remoting/remoting_common/thread/Thread.h"
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 
 #include "remoting_control_desktop/ControlGate.h"
 #include "remoting_control_desktop/ControlAuthException.h"

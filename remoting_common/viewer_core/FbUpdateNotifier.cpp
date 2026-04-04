@@ -24,11 +24,11 @@
 #include "framework.h"
 #include "FbupdateNotifier.h"
 
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 
 #include "CoreEventsAdapter.h"
 
-FbUpdateNotifier::FbUpdateNotifier(FrameBuffer *fb, LocalMutex *fbLock, LogWriter *logWriter, WatermarksController* wmController)
+FbUpdateNotifier::FbUpdateNotifier(FrameBuffer *fb, critical_section *fbLock, LogWriter *logWriter, WatermarksController* wmController)
 : m_frameBuffer(fb),
   m_fbLock(fbLock),
   m_logWriter(logWriter),
@@ -55,7 +55,7 @@ FbUpdateNotifier::~FbUpdateNotifier()
 
 void FbUpdateNotifier::setAdapter(CoreEventsAdapter *adapter)
 {
-  AutoLock al(&m_updateLock);
+  critical_section_lock al(&m_updateLock);
   m_adapter = adapter;
   m_eventUpdate.notify();
 }
@@ -70,7 +70,7 @@ void FbUpdateNotifier::execute()
       m_eventUpdate.waitForEvent();
 
       // Check: now adapter is set?
-      AutoLock al(&m_updateLock);
+      critical_section_lock al(&m_updateLock);
       if (m_adapter != 0) {
         adapterIsNull = false;
       }
@@ -88,7 +88,7 @@ void FbUpdateNotifier::execute()
      bool isGoodCursor;
     Region update;
     {
-      AutoLock al(&m_updateLock);
+      critical_section_lock al(&m_updateLock);
       isNewSize = m_isNewSize;
       m_isNewSize = false;
 
@@ -107,7 +107,7 @@ void FbUpdateNotifier::execute()
       noUpdates = false;
       m_logWriter->debug("FbUpdateNotifier (event): new size of frame buffer");
       try {
-        AutoLock al(m_fbLock);
+        critical_section_lock al(m_fbLock);
         m_adapter->onFrameBufferPropChange(m_frameBuffer);
         // FIXME: it's bad code. Must work without one next line, but not it.
         m_adapter->onFrameBufferUpdate(m_frameBuffer, m_frameBuffer->getDimension());
@@ -131,7 +131,7 @@ void FbUpdateNotifier::execute()
     if (isCursorChange || !update.is_empty()) {
       noUpdates = false;
 
-      AutoLock al(m_fbLock);
+      critical_section_lock al(m_fbLock);
 	  ::int_rectangle cursor = m_cursorPainter.showCursor();
 	  update.addRect(cursor);
 	  update.addRect(m_oldPosition);
@@ -185,7 +185,7 @@ void FbUpdateNotifier::onTerminate()
 void FbUpdateNotifier::onUpdate(const ::int_rectangle &  update)
 {
   {
-    AutoLock al(&m_updateLock);
+    critical_section_lock al(&m_updateLock);
     m_update.addRect(update);
   }
   m_eventUpdate.notify();
@@ -195,7 +195,7 @@ void FbUpdateNotifier::onUpdate(const ::int_rectangle &  update)
 void FbUpdateNotifier::onPropertiesFb()
 {
   {
-    AutoLock al(&m_updateLock);
+    critical_section_lock al(&m_updateLock);
     m_update.clear();
     m_isNewSize = true;
   }
@@ -207,7 +207,7 @@ void FbUpdateNotifier::updatePointerPos(const Point *position)
 {
   m_cursorPainter.updatePointerPos(position);
 
-  AutoLock al(&m_updateLock);
+  critical_section_lock al(&m_updateLock);
   m_isCursorChange = true;
   m_eventUpdate.notify();
 }
@@ -218,10 +218,10 @@ void FbUpdateNotifier::setNewCursor(const Point *hotSpot,
                                     const ::array_base<unsigned char> *bitmask)
 {
   {
-    AutoLock al(m_fbLock);
+    critical_section_lock al(m_fbLock);
     m_cursorPainter.setNewCursor(hotSpot, width, height, cursor, bitmask);
   }
-  AutoLock al(&m_updateLock);
+  critical_section_lock al(&m_updateLock);
   m_isCursorChange = true;
    m_isGoodCursor = true;
   m_eventUpdate.notify();
@@ -232,7 +232,7 @@ void FbUpdateNotifier::setIgnoreShapeUpdates(bool ignore)
 {
   m_cursorPainter.setIgnoreShapeUpdates(ignore);
 
-  AutoLock al(&m_updateLock);
+  critical_section_lock al(&m_updateLock);
   m_isCursorChange = true;
   m_eventUpdate.notify();
 }

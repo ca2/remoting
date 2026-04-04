@@ -132,7 +132,7 @@ void UpdateSender::init(const ::int_size & viewPortDimension,
 {
   setClientPixelFormat(pf, false);
   {
-    AutoLock al(&m_viewPortMut);
+    critical_section_lock al(&m_viewPortMut);
     m_clientDim = viewPortDimension;
   }
   m_lastViewPortDim = viewPortDimension;
@@ -147,7 +147,7 @@ void UpdateSender::newUpdates(const UpdateContainer *updateContainer,
 
   m_cursorUpdates.updateCursorShape(cursorShape);
   {
-    AutoLock al(&m_reqRectLocMut);
+    critical_section_lock al(&m_reqRectLocMut);
     m_busy = true;
     m_newUpdatesEvent.notify();
   }
@@ -175,13 +175,13 @@ void UpdateSender::blockCursorPosSending()
 
 ::int_rectangle UpdateSender::getViewPort()
 {
-  AutoLock al(&m_viewPortMut);
+  critical_section_lock al(&m_viewPortMut);
   return m_viewPort;
 }
 
 bool UpdateSender::clientIsReady()
 {
-  AutoLock al(&m_reqRectLocMut);
+  critical_section_lock al(&m_reqRectLocMut);
   return (m_incrUpdIsReq || m_fullUpdIsReq) && !m_busy;
 }
 
@@ -371,11 +371,11 @@ void UpdateSender::sendUpdate()
   updateFrameBuffer(&updCont, shareOnlyApp, &prevShareAppRegion, &shareAppRegion);
   FrameBuffer *frameBuffer = &m_frameBuffer;
 
-  AutoLock l(m_output);
+  critical_section_lock l(m_output);
 
   ::int_size clientDim, lastViewPortDim;
   {
-    AutoLock al(&m_viewPortMut);
+    critical_section_lock al(&m_viewPortMut);
     clientDim = m_clientDim;
     lastViewPortDim = m_lastViewPortDim;
   }
@@ -396,7 +396,7 @@ void UpdateSender::sendUpdate()
   if (dimensionChanged || viewPortChanged) {
     updCont.copiedRegion.clear();
 
-    AutoLock al(&m_viewPortMut);
+    critical_section_lock al(&m_viewPortMut);
     m_lastViewPortDim.setDim(&viewPort);
     lastViewPortDim = m_lastViewPortDim;
     if (encodeOptions.desktopSizeEnabled() || encodeOptions.desktopConfigurationEnabled()) {
@@ -418,7 +418,7 @@ void UpdateSender::sendUpdate()
   bool setColorMapEntr;
   PixelFormat clientPixelFormat;
   {
-    AutoLock lock(&m_newPixelFormatLocker);
+    critical_section_lock lock(&m_newPixelFormatLocker);
     clientPixelFormat = m_newPixelFormat;
     setColorMapEntr = m_setColorMapEntr;
     m_setColorMapEntr = false;
@@ -630,7 +630,7 @@ void UpdateSender::sendUpdate()
                  (unsigned int)(::earth::time::now() - reqTimePoint).getTime());
     } else {
       m_log->debug("Nothing to send, restoring requested regions");
-      AutoLock al(&m_reqRectLocMut);
+      critical_section_lock al(&m_reqRectLocMut);
       m_requestedFullReg.add(&requestedFullReg);
       m_requestedIncrReg.add(&requestedIncrReg);
       m_incrUpdIsReq = incrUpdIsReq;
@@ -688,7 +688,7 @@ void UpdateSender::execute()
   while(!isTerminating()) {
     m_newUpdatesEvent.waitForEvent();
     {
-      AutoLock al(&m_reqRectLocMut);
+      critical_section_lock al(&m_reqRectLocMut);
       m_busy = true;
     }
     m_log->debug("Update sender thread of client #{} is awake", m_id);
@@ -698,7 +698,7 @@ void UpdateSender::execute()
         sendUpdate();
         m_log->debug("The sendUpdate() function has finished");
         {
-          AutoLock al(&m_reqRectLocMut);
+          critical_section_lock al(&m_reqRectLocMut);
           m_busy = false;
         }
       } catch(::exception &e) {
@@ -722,7 +722,7 @@ void UpdateSender::readUpdateRequest(RfbInputGate *io)
 
   Region combinedReqRegions;
   {
-    AutoLock al(&m_reqRectLocMut);
+    critical_section_lock al(&m_reqRectLocMut);
     if (incremental) {
       m_requestedIncrReg.addRect(&reqRect);
       m_incrUpdIsReq = true;
@@ -801,7 +801,7 @@ void UpdateSender::readSetPixelFormat(RfbInputGate *io)
 void UpdateSender::setClientPixelFormat(const PixelFormat & pf,
                                         bool clrMapEntries)
 {
-  AutoLock al(&m_newPixelFormatLocker);
+  critical_section_lock al(&m_newPixelFormatLocker);
   m_newPixelFormat = *pf;
   m_setColorMapEntr = clrMapEntries;
 }
@@ -818,19 +818,19 @@ void UpdateSender::readSetEncodings(RfbInputGate *io)
     ::list_base.add(code);
   }
 
-  AutoLock lock(&m_newEncodeOptionsLocker);
+  critical_section_lock lock(&m_newEncodeOptionsLocker);
   m_newEncodeOptions.setEncodings(&::list_base);
 }
 
 void UpdateSender::setVideoFrozen(bool value)
 {
-  AutoLock al(&m_vidFreezeLocMut);
+  critical_section_lock al(&m_vidFreezeLocMut);
   m_videoFrozen = value;
 }
 
 bool UpdateSender::getVideoFrozen()
 {
-  AutoLock al(&m_vidFreezeLocMut);
+  critical_section_lock al(&m_vidFreezeLocMut);
   return m_videoFrozen;
 }
 
@@ -845,7 +845,7 @@ bool UpdateSender::extractReqRegions(Region *incrReqReg,
                                      bool *fullUpdIsReq,
                                      ::earth::time *reqTimePoint)
 {
-  AutoLock al(&m_reqRectLocMut);
+  critical_section_lock al(&m_reqRectLocMut);
 
   *incrReqReg = m_requestedIncrReg;
   *fullReqReg = m_requestedFullReg;
@@ -921,7 +921,7 @@ void UpdateSender::selectEncoder(EncodeOptions *encodeOptions)
   // Make new encode options take effect. They might have been changed on
   // receiving SetEncodings client scopedstrMessage.
   {
-    AutoLock lock(&m_newEncodeOptionsLocker);
+    critical_section_lock lock(&m_newEncodeOptionsLocker);
     *encodeOptions = m_newEncodeOptions;
   }
   // Make sure the encoder object corresponds to the preferred encoding
@@ -956,7 +956,7 @@ void UpdateSender::updateFrameBuffer(UpdateContainer *updCont,
   changedAndCopyRgns.add(&updCont->videoRegion);
   changedAndCopyRgns.addRect(&m_cursorUpdates.getBackgroundRect());
   {
-    AutoLock al(&m_reqRectLocMut);
+    critical_section_lock al(&m_reqRectLocMut);
     changedAndCopyRgns.add(&m_requestedFullReg);
   }
 
@@ -970,7 +970,7 @@ bool UpdateSender::updateViewPort(::int_rectangle *outNewViewPort, bool *shareAp
   ::int_rectangle newViewPort;
   m_senderControlInformation->onGetViewPort(&newViewPort, shareApp, newShareAppRegion);
 
-  AutoLock al(&m_viewPortMut);
+  critical_section_lock al(&m_viewPortMut);
   bool viewPortChanged = !m_viewPort.isEqualTo(&newViewPort);
   if (viewPortChanged) {
     m_viewPort = newViewPort;

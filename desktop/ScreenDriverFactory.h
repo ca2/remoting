@@ -36,7 +36,7 @@ public:
   virtual ScreenDriver *createScreenDriver(UpdateKeeper *updateKeeper,
                                              UpdateListener *updateListener,
                                              FrameBuffer *fb,
-                                             LocalMutex *fbLocalMutex,
+                                             critical_section *fbcritical_section,
                                              LogWriter *log) = 0;
 private:
 };

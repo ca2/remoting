@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 
 #include "TcpConnection.h"
 
@@ -44,7 +44,7 @@ m_RfbGatesOwner(false)
 
 void TcpConnection::bind(const ::scoped_string & scopedstrHost, unsigned short port)
 {
-  AutoLock al(&m_connectLock);
+  critical_section_lock al(&m_connectLock);
   if (m_wasBound) {
     throw ::remoting::Exception("Tcp-connection already bound");
   }
@@ -58,7 +58,7 @@ void TcpConnection::bind(const ::scoped_string & scopedstrHost, unsigned short p
 
 void TcpConnection::bind(SocketIPv4 *socket)
 {
-  AutoLock al(&m_connectLock);
+  critical_section_lock al(&m_connectLock);
   if (m_wasBound) {
     throw ::remoting::Exception("Tcp-connection already bound");
   }
@@ -72,7 +72,7 @@ void TcpConnection::bind(SocketIPv4 *socket)
 
 void TcpConnection::bind(RfbInputGate *input, RfbOutputGate *output)
 {
-  AutoLock al(&m_connectLock);
+  critical_section_lock al(&m_connectLock);
   if (m_wasBound) {
     throw ::remoting::Exception("Tcp-connection already bound");
   }
@@ -88,7 +88,7 @@ void TcpConnection::connect()
 {
   // if connection is already established, then method do nothing.
   {
-    AutoLock al(&m_connectLock);
+    critical_section_lock al(&m_connectLock);
     m_wasConnected = true;
   }
   // need create to gates
@@ -123,7 +123,7 @@ void TcpConnection::connect()
     _ASSERT(m_input != 0 && m_output != 0);
   }
   {
-    AutoLock al(&m_connectLock);
+    critical_section_lock al(&m_connectLock);
     m_isEstablished = true;
   }
 }
@@ -140,7 +140,7 @@ void TcpConnection::close()
 RfbInputGate *TcpConnection::getInput() const
 {
   {
-    AutoLock al(&m_connectLock);
+    critical_section_lock al(&m_connectLock);
     if (!m_isEstablished) {
       throw ::remoting::Exception("Connecting has not been established");
     }
@@ -151,7 +151,7 @@ RfbInputGate *TcpConnection::getInput() const
 RfbOutputGate *TcpConnection::getOutput() const
 {
   {
-    AutoLock al(&m_connectLock);
+    critical_section_lock al(&m_connectLock);
     if (!m_isEstablished) {
       throw ::remoting::Exception("Connection has not been established");
     }

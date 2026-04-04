@@ -60,10 +60,10 @@ private:
   Channel *m_logListenChannel;
   Channel *m_levelSendChannel;
   FileAccountHandle m_handle;
-  LocalMutex m_channelMutex;
+  critical_section m_channelMutex;
 
   unsigned char m_logLevel;
-  LocalMutex m_logLevelMutex;
+  critical_section m_logLevelMutex;
 
   LogLevelSender m_logLevelSender;
 };

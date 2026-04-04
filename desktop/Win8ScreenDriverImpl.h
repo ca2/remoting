@@ -42,7 +42,7 @@ class Win8ScreenDriverImpl : private GuiThread, private Win8DuplicationListener
 {
 public:
   Win8ScreenDriverImpl(LogWriter *log, UpdateKeeper *updateKeeper,
-                       LocalMutex *fbLocalMutex,
+                       critical_section *fbcritical_section,
                        UpdateListener *updateListener, bool detectionEnabled = false);
   virtual ~Win8ScreenDriverImpl();
 
@@ -97,7 +97,7 @@ private:
   Point m_latestCursorPos;
   Win8CursorShape m_win8CursorShape;
   LONGLONG m_curTimeStamp;
-  LocalMutex m_cursorMutex;
+  critical_section m_cursorMutex;
 
   UpdateKeeper *m_updateKeeper;
   UpdateListener *m_updateListener;

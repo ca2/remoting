@@ -27,7 +27,7 @@
 
 #include "remoting/util/CommonHeader.h"
 //#include "remoting/remoting_common/util/::earth::time.h"
-#include "remoting/thread/LocalMutex.h"
+#include "remoting/thread/critical_section.h"
 //#include "file_lib/WinFile.h"
 #include "LogDump.h"
 
@@ -140,7 +140,7 @@ private:
   bool m_asFirstOpen;
   ::file_pointer m_pfile;
 
-  LocalMutex m_logMut;
+  critical_section m_logMut;
 };
 
 //// __FILEACCOUNT_H__

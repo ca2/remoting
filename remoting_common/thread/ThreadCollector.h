@@ -26,8 +26,8 @@
 
 
 #include "Thread.h"
-#include "LocalMutex.h"
-#include "remoting/remoting_common/win_system/WindowsEvent.h"
+#include "critical_section.h"
+//#include "remoting/remoting_common/win_system/WindowsEvent.h"
 //#include <list>
 
 #include "acme/prototype/collection/list.h"
@@ -37,14 +37,14 @@ typedef ::list_base<Thread *> ThreadList;
 // Collector threads.
 // ThreadCollector has it's own thread which deletes in infinity loop not
 // active threads.
-class CLASS_DECL_REMOTING_COMMON ThreadCollector : protected Thread
+class CLASS_DECL_REMOTING_COMMON ThreadCollector : protected task
 {
 public:
   ThreadCollector();
   virtual ~ThreadCollector();
 
   // Adds thread to a self ::list_base.
-  virtual void addThread(Thread *thread);
+  virtual void addThread(task *thread);
 
   // Forces terminates all threads, waits until they dies and than
   // delete them from memory and thread ::list_base.
@@ -60,9 +60,9 @@ protected:
 
 protected:
   ThreadList m_threads;
-  LocalMutex m_lockObj;
+  critical_section m_lockObj;
 
-  WindowsEvent m_timer;
+  manual_reset_happening m_timer;
 };
 
 //// __THREADCOLLECTOR_H__

@@ -37,7 +37,7 @@ public:
                 UpdateListener *updateListener,
                 ScreenGrabber *screenGrabber,
                 FrameBuffer *backupFrameBuffer,
-                LocalMutex *frameBufferMutex,
+                critical_section *frameBufferMutex,
                 LogWriter *log);
 
   virtual ~ConsolePoller();
@@ -51,7 +51,7 @@ private:
 
   ScreenGrabber *m_screenGrabber;
   FrameBuffer *m_backupFrameBuffer;
-  LocalMutex *m_frameBufferMutex;
+  critical_section *m_frameBufferMutex;
   ::int_rectangle m_pollingRect;
   WindowsEvent m_intervalWaiter;
   LogWriter *m_log;

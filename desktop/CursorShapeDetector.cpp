@@ -29,7 +29,7 @@ const int SLEEP_TIME = 100;
 CursorShapeDetector::CursorShapeDetector(UpdateKeeper *updateKeeper,
                                        UpdateListener *updateListener,
                                        CursorShapeGrabber *mouseGrabber,
-                                       LocalMutex *mouseGrabLocMut,
+                                       critical_section *mouseGrabLocMut,
                                        LogWriter *log)
 : UpdateDetector(updateKeeper, updateListener),
   m_mouseGrabber(mouseGrabber),
@@ -56,7 +56,7 @@ void CursorShapeDetector::execute()
   while (!isTerminating()) {
     bool isCursorShapeChanged;
     {
-      AutoLock al(m_mouseGrabLocMut);
+      critical_section_lock al(m_mouseGrabLocMut);
       isCursorShapeChanged = m_mouseGrabber->isCursorShapeChanged();
     }
     if (isCursorShapeChanged) {

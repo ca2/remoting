@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "UserInputServer.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 #include "remoting/remoting_common/util/BrokenHandleException.h"
 
 UserInputServer::UserInputServer(BlockingGate *forwGate,
@@ -60,7 +60,7 @@ UserInputServer::~UserInputServer()
 
 void UserInputServer::onClipboardUpdate(const ::scoped_string & newClipboard)
 {
-  AutoLock al(m_forwGate);
+  critical_section_lock al(m_forwGate);
   try {
     // Send clipboard data
     if (newClipboard->length() != 0) {

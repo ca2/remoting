@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "acme/_operating_system.h"
 #include "RfbClient.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 #include "RfbCodeRegistrator.h"
 #include "ft_server_lib/FileTransferRequestHandler.h"
 #include "EchoExtensionRequestHandler.h"
@@ -129,7 +129,7 @@ void RfbClient::getSocketAddr(SocketAddressIPv4 *addr) const
 
 void RfbClient::setClientState(ClientState newState)
 {
-  AutoLock al(&m_clientStateMut);
+  critical_section_lock al(&m_clientStateMut);
   if (newState > m_clientState) {
     m_clientState = newState;
   }
@@ -137,7 +137,7 @@ void RfbClient::setClientState(ClientState newState)
 
 ClientState RfbClient::getClientState()
 {
-  AutoLock al(&m_clientStateMut);
+  critical_section_lock al(&m_clientStateMut);
   return m_clientState;
 }
 
@@ -152,7 +152,7 @@ void RfbClient::setViewOnlyFlag(bool value)
 
 void RfbClient::changeDynViewPort(const ViewPortState *dynViewPort)
 {
-  AutoLock al(&m_viewPortMutex);
+  critical_section_lock al(&m_viewPortMutex);
   m_dynamicViewPort.changeState(dynViewPort);
 }
 
@@ -362,7 +362,7 @@ void RfbClient::onMouseEvent(unsigned short x, unsigned short y, unsigned char b
 
 ::int_rectangle RfbClient::getViewPortRect(const ::int_size & fbDimension)
 {
-  AutoLock al(&m_viewPortMutex);
+  critical_section_lock al(&m_viewPortMutex);
   m_constViewPort.update(fbDimension);
   m_dynamicViewPort.update(fbDimension);
 
@@ -373,7 +373,7 @@ void RfbClient::onMouseEvent(unsigned short x, unsigned short y, unsigned char b
 void RfbClient::getViewPortInfo(const ::int_size & fbDimension, ::int_rectangle *resultRect,
                                 bool *shareApp, Region *shareAppRegion)
 {
-  AutoLock al(&m_viewPortMutex);
+  critical_section_lock al(&m_viewPortMutex);
 
   *resultRect = getViewPortRect(fbDimension);
   *shareApp = m_dynamicViewPort.getOnlyApplication();

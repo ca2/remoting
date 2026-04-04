@@ -40,7 +40,7 @@ void RawDecoder::process(RfbInputGate *input,
                          FrameBuffer *frameBuffer,
                          FrameBuffer *secondFrameBuffer,
                          const ::int_rectangle &  rect,
-                         LocalMutex *fbLock,
+                         critical_section *fbLock,
                          FbUpdateNotifier *fbNotifier)
 {
   // If area of rectangle is 0, then exit from process: nothing update.

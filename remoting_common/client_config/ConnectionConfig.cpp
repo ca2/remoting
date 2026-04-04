@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ConnectionConfig.h"
 
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 
 #include <crtdbg.h>
 
@@ -72,7 +72,7 @@ ConnectionConfig& ConnectionConfig::operator=(const ConnectionConfig& other)
   int localCursor;
 
   {
-    AutoLock lockOther(&other.m_cs);
+    critical_section_lock lockOther(&other.m_cs);
     allowedCopyRect = other.m_allowedCopyRect;
     preferredEncoding = other.m_preferredEncoding;
     use8BitColor = other.m_use8BitColor;
@@ -93,7 +93,7 @@ ConnectionConfig& ConnectionConfig::operator=(const ConnectionConfig& other)
   }
 
   {
-    AutoLock lockThis(&m_cs);
+    critical_section_lock lockThis(&m_cs);
     m_allowedCopyRect = allowedCopyRect;
     m_preferredEncoding = preferredEncoding;
     m_use8BitColor = use8BitColor;
@@ -117,37 +117,37 @@ ConnectionConfig& ConnectionConfig::operator=(const ConnectionConfig& other)
 
 void ConnectionConfig::allowCopyRect(bool allow)
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   m_allowedCopyRect = allow;
 }
 
 bool ConnectionConfig::isCopyRectAllowed()
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   return m_allowedCopyRect;
 }
 
 void ConnectionConfig::setPreferredEncoding(int encoding)
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   m_preferredEncoding = encoding;
 }
 
 int ConnectionConfig::getPreferredEncoding()
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   return m_preferredEncoding;
 }
 
 void ConnectionConfig::use8BitColor(bool use)
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   m_use8BitColor = use;
 }
 
 bool ConnectionConfig::isUsing8BitColor()
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   return m_use8BitColor;
 }
 
@@ -161,7 +161,7 @@ void ConnectionConfig::setCustomCompressionLevel(int level)
     level = 9;
 
   {
-    AutoLock l(&m_cs);
+    critical_section_lock l(&m_cs);
     m_customCompressionLevel = level;
   }
 }
@@ -176,20 +176,20 @@ void ConnectionConfig::setJpegCompressionLevel(int level)
     level = 9;
 
   {
-    AutoLock l(&m_cs);
+    critical_section_lock l(&m_cs);
     m_jpegCompressionLevel = level;
   }
 }
 
 int ConnectionConfig::getCustomCompressionLevel()
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   return m_customCompressionLevel;
 }
 
 int ConnectionConfig::getJpegCompressionLevel()
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   return m_jpegCompressionLevel;
 }
 
@@ -215,61 +215,61 @@ void ConnectionConfig::disableJpegCompression()
 
 void ConnectionConfig::setViewOnly(bool viewOnly)
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   m_viewOnly = viewOnly;
 }
 
 bool ConnectionConfig::isViewOnly()
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   return m_viewOnly;
 }
 
 void ConnectionConfig::enableClipboard(bool enabled)
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   m_isClipboardEnabled = enabled;
 }
 
 bool ConnectionConfig::isClipboardEnabled()
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   return m_isClipboardEnabled;
 }
 
 void ConnectionConfig::enableFullscreen(bool useFullscreen)
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   m_useFullscreen = useFullscreen;
 }
 
 bool ConnectionConfig::isFullscreenEnabled()
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   return m_useFullscreen;
 }
 
 void ConnectionConfig::deiconifyOnRemoteBell(bool deiconifyFlag)
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   m_deiconifyOnRemoteBell = deiconifyFlag;
 }
 
 bool ConnectionConfig::isDeiconifyOnRemoteBellEnabled()
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   return m_deiconifyOnRemoteBell;
 }
 
 int ConnectionConfig::getScaleNumerator()
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   return m_scaleNumerator;
 }
 
 int ConnectionConfig::getScaleDenominator()
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   return m_scaleDenominator;
 }
 
@@ -290,7 +290,7 @@ void ConnectionConfig::setScale(int n, int d)
   d /= g;
 
   {
-    AutoLock l(&m_cs);
+    critical_section_lock l(&m_cs);
     m_scaleNumerator = n;
     m_scaleDenominator = d;
   }
@@ -298,61 +298,61 @@ void ConnectionConfig::setScale(int n, int d)
 
 void ConnectionConfig::swapMouse(bool enabled)
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   m_swapMouse = enabled;
 }
 
 bool ConnectionConfig::isMouseSwapEnabled()
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   return m_swapMouse;
 }
 
 void ConnectionConfig::setSharedFlag(bool shared)
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   m_requestSharedSession = shared;
 }
 
 bool ConnectionConfig::getSharedFlag()
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   return m_requestSharedSession;
 }
 
 void ConnectionConfig::fitWindow(bool enabled)
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   m_fitWindow = enabled;
 }
 
 bool ConnectionConfig::isFitWindowEnabled()
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   return m_fitWindow;
 }
 
 void ConnectionConfig::requestShapeUpdates(bool requestFlag)
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   m_requestShapeUpdates = requestFlag;
 }
 
 void ConnectionConfig::ignoreShapeUpdates(bool ignoreFlag)
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   m_ignoreShapeUpdates = ignoreFlag;
 }
 
 bool ConnectionConfig::isRequestingShapeUpdates()
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   return m_requestShapeUpdates;
 }
 
 bool ConnectionConfig::isIgnoringShapeUpdates()
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   return m_ignoreShapeUpdates;
 }
 
@@ -370,20 +370,20 @@ void ConnectionConfig::setLocalCursorShape(int cursorShape)
   } // switch
 
   {
-    AutoLock l(&m_cs);
+    critical_section_lock l(&m_cs);
     m_localCursor = cursorShape;
   }
 }
 
 int ConnectionConfig::getLocalCursorShape()
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
   return m_localCursor;
 }
 
 bool ConnectionConfig::saveToStorage(SettingsManager *sm) const
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
 
   bool saveAllOk = true;
 
@@ -415,7 +415,7 @@ bool ConnectionConfig::saveToStorage(SettingsManager *sm) const
 
 bool ConnectionConfig::loadFromStorage(SettingsManager *sm)
 {
-  AutoLock l(&m_cs);
+  critical_section_lock l(&m_cs);
 
   bool loadAllOk = true;
 

@@ -25,7 +25,7 @@
 #include "FileAccount.h"
 #include "remoting/remoting_common/util/Unicode.h"
 #include "file_lib/::file::item.h"
-#include "remoting/thread/AutoLock.h"
+#include "remoting/thread/critical_section_lock.h"
 #include "file_lib/EOFException.h"
 
 FileAccount::FileAccount(const ::scoped_string & scopedstrLogDir,
@@ -58,7 +58,7 @@ void FileAccount::init(const ::scoped_string & scopedstrLogDir, const ::scoped_s
 {
   m_strFileName= fileName;
 
-  AutoLock al(&m_logMut);
+  critical_section_lock al(&m_logMut);
   setNewFile(logLevel, logDir);
   // The log dump now must be disabled and cleared even if logLevel is zero.
   terminateLogDumping();
@@ -89,7 +89,7 @@ void FileAccount::print(unsigned int processId,
                         int level,
                         const ::scoped_string & scopedstrMessage)
 {
-  AutoLock al(&m_logMut);
+  critical_section_lock al(&m_logMut);
 
   updateLogHeaderLines(processId, threadId, dt, level, scopedstrMessage);
   updateLogDumpLines(processId, threadId, dt, level, scopedstrMessage);
@@ -112,7 +112,7 @@ void FileAccount::flush(unsigned int processId,
                         int level,
                         const ::scoped_string & scopedstrMessage)
 {
-  AutoLock al(&m_logMut);
+  critical_section_lock al(&m_logMut);
 
   if (printsLine(level)) {
     format(processId, threadId, dt, level, scopedstrMessage);
@@ -140,7 +140,7 @@ void FileAccount::format(unsigned int processId,
   dt.toUtcSystemTime(&st);
   unsigned char logBarrier;
   {
-    AutoLock al(&m_logMut);
+    critical_section_lock al(&m_logMut);
     logBarrier = m_level;
   }
   if (logBarrier < 9) {
@@ -182,7 +182,7 @@ void FileAccount::format(unsigned int processId,
 
 void FileAccount::setNewFile(unsigned char newLevel, const ::scoped_string & scopedstrNewDir)
 {
-  AutoLock al(&m_logMut);
+  critical_section_lock al(&m_logMut);
   bool levelChanged = newLevel != m_level;
   bool levelChangedFromZero = levelChanged && m_level == 0;
   bool logDirChanged = !m_logDir.isEqualTo(newDir);
@@ -258,7 +258,7 @@ void FileAccount::openFile()
   if (Unicode::isEnabled() && asFirstOpen) {
     try {
       addUnicodeSignature();
-      AutoLock al(&m_logMut);
+      critical_section_lock al(&m_logMut);
       if (getLogDumpSize() != 0) {
         // The log dump already contains the header and then is not needed to call
         // writeLogHeader().

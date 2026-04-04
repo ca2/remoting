@@ -39,7 +39,7 @@ void DecoderOfRectangle::process(RfbInputGate *input,
                      FrameBuffer *frameBuffer,
                      FrameBuffer *secondFrameBuffer,
                      const ::int_rectangle &  rect,
-                     LocalMutex *fbLock,
+                     critical_section *fbLock,
                      FbUpdateNotifier *fbNotifier)
 {
   decode(input, secondFrameBuffer, rect);
@@ -50,9 +50,9 @@ void DecoderOfRectangle::process(RfbInputGate *input,
 void DecoderOfRectangle::copy(FrameBuffer *dstFrameBuffer,
                    const FrameBuffer *srcFrameBuffer,
                    const ::int_rectangle &  rect,
-                   LocalMutex *fbLock)
+                   critical_section *fbLock)
 {
-  AutoLock al(fbLock);
+  critical_section_lock al(fbLock);
   dstFrameBuffer->copyFrom(rect, srcFrameBuffer, rect.left, rect.top);
 }
 

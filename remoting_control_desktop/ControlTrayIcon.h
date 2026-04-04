@@ -30,7 +30,7 @@
 #include "remoting/remoting_common/gui/drawing/Icon.h"
 
 #include "remoting/remoting_common/thread/Thread.h"
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 
 #include "remoting/remoting_common/util/Command.h"
 #include "remoting/remoting_common/util/MacroCommand.h"
@@ -138,7 +138,7 @@ protected:
   // Last known TightVNC server information.
   TvnServerInfo m_lastKnownServerInfo;
   // Thread-safety of m_lastKnownServerInfo member.
-  LocalMutex m_serverInfoMutex;
+  critical_section m_serverInfoMutex;
 
   // Commands for configuration dialog.
   Command *m_updateRemoteConfigCommand;

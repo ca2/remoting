@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "ViewerCollector.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 
 ViewerCollector::ViewerCollector()
 : m_countToReconnect(0)
@@ -37,13 +37,13 @@ ViewerCollector::~ViewerCollector()
 
 void ViewerCollector::addInstance(ViewerInstance *viewerInstance)
 {
-  AutoLock l(&m_lockObj);
+  critical_section_lock l(&m_lockObj);
   m_instances.add(viewerInstance);
 }
 
 void ViewerCollector::deleteDeadInstances()
 {
-  AutoLock l(&m_lockObj);
+  critical_section_lock l(&m_lockObj);
 
   InstanceList::iterator iter = m_instances.begin();
   while (iter != m_instances.end()) {
@@ -65,7 +65,7 @@ void ViewerCollector::deleteDeadInstances()
 
 void ViewerCollector::destroyAllInstances()
 {
-  AutoLock l(&m_lockObj);
+  critical_section_lock l(&m_lockObj);
 
   InstanceList::iterator iter;
   for (iter = m_instances.begin(); iter != m_instances.end(); iter++) {
@@ -80,14 +80,14 @@ void ViewerCollector::destroyAllInstances()
 
 void ViewerCollector::decreaseToReconnect()
 {
-  AutoLock l(&m_lockObj);
+  critical_section_lock l(&m_lockObj);
 
   --m_countToReconnect;
 }
 
 bool ViewerCollector::empty() const
 {
-  AutoLock l(&m_lockObj);
+  critical_section_lock l(&m_lockObj);
 
   // If not active instance and count wait to reconnect is 0,
   // then return true and false otherwise.

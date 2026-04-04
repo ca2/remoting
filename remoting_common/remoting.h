@@ -32,12 +32,5 @@ namespace remoting
 
    CLASS_DECL_REMOTING_COMMON void defer_initialize_remoting();
 
-
-   CLASS_DECL_REMOTING_COMMON int message_box(
-      HWND hwnd,
-      const ::scoped_string & scopedstrMessage,
-      const ::scoped_string & scopedstrCaption,
-      UINT uType);
-
 } // remoting
 

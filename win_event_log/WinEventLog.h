@@ -27,7 +27,7 @@
 
 #include "remoting/remoting_common/util/CommonHeader.h"
 //#include <vector>
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 //#include "log_writer/LogWriter.h"
 
 typedef ::array_base<TCHAR *> StringContainer;
@@ -60,7 +60,7 @@ private:
   HANDLE getLogHandle();
 
   HANDLE m_hEventLog;
-  LocalMutex m_hEventLogMutex;
+  critical_section m_hEventLogMutex;
 
   LogWriter *m_log;
 };

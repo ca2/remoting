@@ -50,7 +50,7 @@ UpdateHandlerServer::~UpdateHandlerServer()
 
 void UpdateHandlerServer::onUpdate()
 {
-  AutoLock al(m_forwGate);
+  critical_section_lock al(m_forwGate);
   try {
     m_forwGate->writeUInt8(UPDATE_DETECTED);
   } catch (::exception &e) {

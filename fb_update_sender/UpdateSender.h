@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 #include "remoting/remoting_common/thread/Thread.h"
 #include "desktop/UpdateKeeper.h"
 #include "UpdateRequestListener.h"
@@ -198,7 +198,7 @@ protected:
   bool m_busy;
   // Property for perfomance measurements. It uses with the regions mutex.
   ::earth::time m_requestTimePoint;
-  LocalMutex m_reqRectLocMut;
+  critical_section m_reqRectLocMut;
 
   SenderControlInformationInterface *m_senderControlInformation;
 
@@ -208,7 +208,7 @@ protected:
   bool m_shareOnlyApp;
   Region m_appRegion;
   Region m_prevAppRegion;
-  LocalMutex m_viewPortMut;
+  critical_section m_viewPortMut;
 
   UpdateKeeper *m_updateKeeper;
 
@@ -226,7 +226,7 @@ protected:
   // data. Thus, changes to m_newEncodeOptions will take effect on next
   // framebuffer update.
   EncodeOptions m_newEncodeOptions;
-  LocalMutex m_newEncodeOptionsLocker;
+  critical_section m_newEncodeOptionsLocker;
 
   // Pixel format requested by the RFB client. It may be changed at any time
   // but all change and read operations must be synchronized with
@@ -235,7 +235,7 @@ protected:
   // encoding data. Thus, changes to m_newPixelFormat will take effect on next
   // framebuffer update.
   PixelFormat m_newPixelFormat;
-  LocalMutex m_newPixelFormatLocker;
+  critical_section m_newPixelFormatLocker;
 
   // This flag indicates that color ::map entries requested. If this flag is true
   // then before send the updates updateSender must to send the color ::map
@@ -246,7 +246,7 @@ protected:
   bool m_videoFrozen;
   // This region constains a video region which was sent at previous time.
   Region m_prevVideoRegion;
-  LocalMutex m_vidFreezeLocMut;
+  critical_section m_vidFreezeLocMut;
 
 
   Region m_losslessDirty;

@@ -24,12 +24,11 @@
 #include "framework.h"
 #include "ConnectionHistory.h"
 
-#include "remoting/remoting_common/win_system/Registry.h"
+//#include "remoting/remoting_common/win_system/Registry.h"
 
-#include <crtdbg.h>
+//#include <crtdbg.h>
 
-ConnectionHistory::ConnectionHistory(RegistryKey *key, size_t limit)
-: m_key(key), m_limit(limit)
+ConnectionHistory::ConnectionHistory()
 {
 }
 
@@ -37,6 +36,13 @@ ConnectionHistory::~ConnectionHistory()
 {
   releaseHosts();
 }
+
+
+ConnectionHistory::initialize_connection_history(const ::scoped_string &scopedstr, size_t limit
+                                                 )
+{
+}
+
 
 void ConnectionHistory::setLimit(size_t limit)
 {

@@ -27,9 +27,9 @@
 
 #include "remoting/remoting_common/util/ListenerContainer.h"
 #include "rfb_sconn/RfbClient.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 #include "remoting/remoting_common/thread/Thread.h"
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 #include "desktop/Desktop.h"
 #include "desktop/DesktopFactory.h"
@@ -95,7 +95,7 @@ public:
                         bool viewOnly, bool isOutgoing);
 
   // returns ::list_base of bans.
-  BanList getBanList() { AutoLock al(&m_banListMutex); return m_banList; };
+  BanList getBanList() { critical_section_lock al(&m_banListMutex); return m_banList; };
   ::string getBanListString();
 
 protected:
@@ -130,7 +130,7 @@ private:
 
   ClientList m_nonAuthClientList;
   ClientList m_clientList;
-  LocalMutex m_clientListLocker;
+  critical_section m_clientListLocker;
   // m_dynViewPort is a client view port that can be changed during a
   // client work. Now, the dynViewPort has the same value for all clients.
   // By this field initilizes new clients.
@@ -139,7 +139,7 @@ private:
 
   BanList m_banList;
   WindowsEvent m_banTimer;
-  LocalMutex m_banListMutex;
+  critical_section m_banListMutex;
 
   WindowsEvent m_listUnderflowingEvent;
 

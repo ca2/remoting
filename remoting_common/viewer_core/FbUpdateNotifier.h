@@ -30,7 +30,7 @@
 #include "remoting/remoting_common/region/Point.h"
 
 #include "remoting/remoting_common/region/Region.h"
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 #include "remoting/remoting_common/thread/Thread.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 
@@ -42,7 +42,7 @@ class CoreEventsAdapter;
 class CLASS_DECL_REMOTING_COMMON FbUpdateNotifier : public Thread
 {
 public:
-  FbUpdateNotifier(FrameBuffer *fb, LocalMutex *fbLock, LogWriter *LogWriter, WatermarksController* wmController);
+  FbUpdateNotifier(FrameBuffer *fb, critical_section *fbLock, LogWriter *LogWriter, WatermarksController* wmController);
   virtual ~FbUpdateNotifier();
 
   void setAdapter(CoreEventsAdapter *adapter);
@@ -62,7 +62,7 @@ public:
   void execute();
   void onTerminate();
 
-  LocalMutex *m_fbLock;
+  critical_section *m_fbLock;
   FrameBuffer *m_frameBuffer;
   CursorPainter m_cursorPainter;
 
@@ -71,7 +71,7 @@ public:
   // or update cursor) don't sended to adapter, while m_adapter is 0.
   CoreEventsAdapter *m_adapter;
 
-  LocalMutex m_updateLock;
+  critical_section m_updateLock;
   WindowsEvent m_eventUpdate;
 
   LogWriter *m_logWriter;

@@ -24,19 +24,19 @@
 #include "framework.h"
 #include "ConnectionConfigSM.h"
 
-#include "remoting/remoting_common/win_system/Registry.h"
+//#include "remoting/remoting_common/win_system/Registry.h"
 
-ConnectionConfigSM::ConnectionConfigSM(const ::scoped_string & scopedstrRegistryPath,
-                     const ::scoped_string & scopedstrEntryName)
-: RegistrySettingsManager()
-{
-  ::string strKeyName;
-  strKeyName.format("{}\\History\\{}",
-                 ::string(scopedstrRegistryPath).c_str(),
-                 ::string(scopedstrEntryName).c_str());
-  setRegistryKey(Registry::getCurrentUserKey(), strKeyName);
-}
-
-ConnectionConfigSM::~ConnectionConfigSM()
-{
-}
+//ConnectionConfigSM::ConnectionConfigSM(const ::scoped_string & scopedstrRegistryPath,
+//                     const ::scoped_string & scopedstrEntryName)
+//: RegistrySettingsManager()
+//{
+//  ::string strKeyName;
+//  strKeyName.format("{}\\History\\{}",
+//                 ::string(scopedstrRegistryPath).c_str(),
+//                 ::string(scopedstrEntryName).c_str());
+//  setRegistryKey(Registry::getCurrentUserKey(), strKeyName);
+//}
+//
+//ConnectionConfigSM::~ConnectionConfigSM()
+//{
+//}

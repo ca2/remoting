@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ControlProxy.h"
 #include "remoting_control_desktop/ControlProto.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 
 #include <crtdbg.h>
 
@@ -53,7 +53,7 @@ TvnServerInfo ControlProxy::getServerInfo()
 {
   TvnServerInfo ret;
 
-  AutoLock l(m_gate);
+  critical_section_lock l(m_gate);
 
   createMessage(ControlProto::GET_SERVER_INFO_MSG_ID)->send();
 
@@ -67,28 +67,28 @@ TvnServerInfo ControlProxy::getServerInfo()
 
 void ControlProxy::reloadServerConfig()
 {
-  AutoLock l(m_gate);
+  critical_section_lock l(m_gate);
 
   createMessage(ControlProto::RELOAD_CONFIG_MSG_ID)->send();
 }
 
 void ControlProxy::disconnectAllClients()
 {
-  AutoLock l(m_gate);
+  critical_section_lock l(m_gate);
 
   createMessage(ControlProto::DISCONNECT_ALL_CLIENTS_MSG_ID)->send();
 }
 
 void ControlProxy::shutdownTightVnc()
 {
-  AutoLock l(m_gate);
+  critical_section_lock l(m_gate);
 
   createMessage(ControlProto::SHUTDOWN_SERVER_MSG_ID)->send();
 }
 
 void ControlProxy::getClientsList(::list_base<RfbClientInfo *> *clients)
 {
-  AutoLock l(m_gate);
+  critical_section_lock l(m_gate);
 
   createMessage(ControlProto::GET_CLIENT_LIST_MSG_ID)->send();
 
@@ -109,7 +109,7 @@ void ControlProxy::getClientsList(::list_base<RfbClientInfo *> *clients)
 
 void ControlProxy::makeOutgoingConnection(const ::scoped_string & scopedstrConnectString, bool viewOnly)
 {
-  AutoLock l(m_gate);
+  critical_section_lock l(m_gate);
 
   ControlMessage *msg = createMessage(ControlProto::ADD_CLIENT_MSG_ID);
 
@@ -124,7 +124,7 @@ void ControlProxy::makeTcpDispatcherConnection(const ::scoped_string & scopedstr
                                                const ::scoped_string & scopedstrKeyword,
                                                unsigned int connectionId)
 {
-  AutoLock l(m_gate);
+  critical_section_lock l(m_gate);
 
   ControlMessage *msg = createMessage(ControlProto::CONNECT_TO_TCPDISP_MSG_ID);
 
@@ -138,14 +138,14 @@ void ControlProxy::makeTcpDispatcherConnection(const ::scoped_string & scopedstr
 
 void ControlProxy::sharePrimary()
 {
-  AutoLock l(m_gate);
+  critical_section_lock l(m_gate);
   ControlMessage *msg = createMessage(ControlProto::SHARE_PRIMARY_MSG_ID);
   msg->send();
 }
 
 void ControlProxy::shareDisplay(unsigned char displayNumber)
 {
-  AutoLock l(m_gate);
+  critical_section_lock l(m_gate);
   ControlMessage *msg = createMessage(ControlProto::SHARE_DISPLAY_MSG_ID);
   msg->writeUInt8(displayNumber);
   msg->send();
@@ -153,7 +153,7 @@ void ControlProxy::shareDisplay(unsigned char displayNumber)
 
 void ControlProxy::shareRect(const ::int_rectangle &  shareRect)
 {
-  AutoLock l(m_gate);
+  critical_section_lock l(m_gate);
   ControlMessage *msg = createMessage(ControlProto::SHARE_RECT_MSG_ID);
 
   msg->writeInt32(shareRect.left);
@@ -166,7 +166,7 @@ void ControlProxy::shareRect(const ::int_rectangle &  shareRect)
 
 void ControlProxy::shareWindow(const ::scoped_string & shareWindowName)
 {
-  AutoLock l(m_gate);
+  critical_section_lock l(m_gate);
   ControlMessage *msg = createMessage(ControlProto::SHARE_WINDOW_MSG_ID);
   msg->writeUTF8(shareWindowName->getString());
   msg->send();
@@ -174,14 +174,14 @@ void ControlProxy::shareWindow(const ::scoped_string & shareWindowName)
 
 void ControlProxy::shareFull()
 {
-  AutoLock l(m_gate);
+  critical_section_lock l(m_gate);
   ControlMessage *msg = createMessage(ControlProto::SHARE_FULL_MSG_ID);
   msg->send();
 }
 
 void ControlProxy::shareApp(unsigned int procId)
 {
-  AutoLock l(m_gate);
+  critical_section_lock l(m_gate);
   ControlMessage *msg = createMessage(ControlProto::SHARE_APP_MSG_ID);
   msg->writeUInt32(procId);
   msg->send();
@@ -189,7 +189,7 @@ void ControlProxy::shareApp(unsigned int procId)
 
 void ControlProxy::setServerConfig(ServerConfig *config)
 {
-  AutoLock l(m_gate);
+  critical_section_lock l(m_gate);
 
   ControlMessage *msg = createMessage(ControlProto::SET_CONFIG_MSG_ID);
 
@@ -200,7 +200,7 @@ void ControlProxy::setServerConfig(ServerConfig *config)
 
 void ControlProxy::getServerConfig(ServerConfig *config)
 {
-  AutoLock l(m_gate);
+  critical_section_lock l(m_gate);
 
   createMessage(ControlProto::GET_CONFIG_MSG_ID)->send();
 
@@ -209,7 +209,7 @@ void ControlProxy::getServerConfig(ServerConfig *config)
 
 bool ControlProxy::getShowTrayIconFlag()
 {
-  AutoLock l(m_gate);
+  critical_section_lock l(m_gate);
 
   createMessage(ControlProto::GET_SHOW_TRAY_ICON_FLAG)->send();
 
@@ -218,7 +218,7 @@ bool ControlProxy::getShowTrayIconFlag()
 
 void ControlProxy::updateTvnControlProcessId(DWORD processId)
 {
-  AutoLock l(m_gate);
+  critical_section_lock l(m_gate);
 
   ControlMessage *msg = createMessage(ControlProto::UPDATE_TVNCONTROL_PROCESS_ID_MSG_ID);
 

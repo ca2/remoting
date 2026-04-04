@@ -27,11 +27,11 @@
 
 #include "Lockable.h"
 
-class CLASS_DECL_REMOTING_COMMON AutoLock
+class CLASS_DECL_REMOTING_COMMON critical_section_lock
 {
 public:
-  AutoLock(Lockable *locker);
-  virtual ~AutoLock();
+  critical_section_lock(Lockable *locker);
+  virtual ~critical_section_lock();
 
 protected:
   Lockable *m_locker;

@@ -1,6 +1,6 @@
 ﻿#include "framework.h"
 #include "UpdateRequestSender.h"
-#include <thread/AutoLock.h>
+#include <thread/critical_section_lock.h>
 #include "RfbFramebufferUpdateRequestClientMessage.h"
 
 UpdateRequestSender::UpdateRequestSender(Lockable* m_fb_lock, FrameBuffer* m_frame_buffer, LogWriter* m_log_writer):
@@ -29,26 +29,26 @@ UpdateRequestSender::~UpdateRequestSender()
 
 void UpdateRequestSender::setWasUpdated()
 {
-	AutoLock al(&m_wasUpdatedLock);
+	critical_section_lock al(&m_wasUpdatedLock);
 	m_wasUpdateRecieved = true;
 }
 
 void UpdateRequestSender::setTimeout(int miliseconds)
 {
-	AutoLock al(&m_timeOutLock);
+	critical_section_lock al(&m_timeOutLock);
 	m_timeOut = miliseconds;
 }
 
 void UpdateRequestSender::setIsIncremental(bool isIncremental)
 {
-	AutoLock al(&m_isIncrimentalLock);
+	critical_section_lock al(&m_isIncrimentalLock);
 	m_isIncrimental = isIncremental;
 }
 
 void UpdateRequestSender::setOutput(RfbOutputGate* output)
 {
 	{
-		AutoLock al(&m_outputLock);
+		critical_section_lock al(&m_outputLock);
 		m_output = output;
 	}
 
@@ -93,7 +93,7 @@ void UpdateRequestSender::sendFbUpdateRequest()
 
 	::int_rectangle updateRect;
 	{
-		AutoLock al(m_fbLock);
+		critical_section_lock al(m_fbLock);
 		updateRect = m_frameBuffer->getDimension();
 	}
 
@@ -117,7 +117,7 @@ void UpdateRequestSender::sendFbUpdateRequest()
 
 bool UpdateRequestSender::isUpdated()
 {
-	AutoLock al(&m_wasUpdatedLock);
+	critical_section_lock al(&m_wasUpdatedLock);
 	bool result = m_wasUpdateRecieved;
 	m_wasUpdateRecieved = false;
 	return result;
@@ -125,18 +125,18 @@ bool UpdateRequestSender::isUpdated()
 
 int UpdateRequestSender::getTimeout()
 {
-	AutoLock al(&m_timeOutLock);
+	critical_section_lock al(&m_timeOutLock);
 	return m_timeOut;
 }
 
 bool UpdateRequestSender::isIncremental()
 {
-	AutoLock al(&m_isIncrimentalLock);
+	critical_section_lock al(&m_isIncrimentalLock);
 	return m_isIncrimental;
 }
 
 RfbOutputGate* UpdateRequestSender::getOutput()
 {
-	AutoLock al(&m_outputLock);
+	critical_section_lock al(&m_outputLock);
 	return m_output;
 }

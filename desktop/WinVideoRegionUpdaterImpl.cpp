@@ -26,7 +26,7 @@
 #include "remoting/remoting_common/server_config/Configurator.h"
 #include "remoting/remoting_common/gui/WindowFinder.h"
 #include "remoting/remoting_common/region/RectSerializer.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 
 WinVideoRegionUpdaterImpl::WinVideoRegionUpdaterImpl(LogWriter *log)
   : m_log(log)
@@ -66,14 +66,14 @@ unsigned int WinVideoRegionUpdaterImpl::getInterval() {
 
 Region WinVideoRegionUpdaterImpl::getVideoRegion()
 {
-  AutoLock al(&m_regionMutex);
+  critical_section_lock al(&m_regionMutex);
   return m_vidRegion;
 }
 
 void WinVideoRegionUpdaterImpl::getClassNamesAndRectsFromConfig(::string_array &classNames, ::array_base<::int_rectangle> &rects)
 {
   ServerConfig *srvConf = Configurator::getInstance()->getServerConfig();
-  AutoLock al(srvConf);
+  critical_section_lock al(srvConf);
   classNames = *srvConf->getVideoClassNames();
   rects = *srvConf->getVideoRects();
 }
@@ -96,7 +96,7 @@ void WinVideoRegionUpdaterImpl::updateVideoRegion()
   }
   m_log->debug(L"WinVideoRegionUpdaterImpl: copy data");
   {
-    AutoLock al(&m_regionMutex);
+    critical_section_lock al(&m_regionMutex);
     m_vidRegion = tmpRegion;
   }
   m_log->debug(L"WinVideoRegionUpdaterImpl: exit updateVideoRegion()");

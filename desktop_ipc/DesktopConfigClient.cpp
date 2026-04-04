@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "DesktopConfigClient.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 #include "ReconnectException.h"
 
 DesktopConfigClient::DesktopConfigClient(BlockingGate *forwGate)
@@ -37,7 +37,7 @@ DesktopConfigClient::~DesktopConfigClient()
 
 void DesktopConfigClient::updateByNewSettings(BlockingGate *gate)
 {
-  AutoLock al(gate);
+  critical_section_lock al(gate);
   gate->writeUInt8(CONFIG_RELOAD_REQ);
   sendConfigSettings(gate);
 }
@@ -46,7 +46,7 @@ bool DesktopConfigClient::isRemoteInputAllowed()
 {
   bool result = false;
   try {
-    AutoLock al(m_forwGate);
+    critical_section_lock al(m_forwGate);
     m_forwGate->writeUInt8(SOFT_INPUT_ENABLING_REQ);
     m_forwGate->writeUInt64(m_lastInputTime.getTime());
     result = m_forwGate->readUInt8() != 0;

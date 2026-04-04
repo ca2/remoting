@@ -26,7 +26,7 @@
 
 //
 // #include "Thread.h"
-// #include "LocalMutex.h"
+// #include "critical_section.h"
 //
 // #include "remoting/remoting_common/util/Singleton.h"
 //
@@ -85,7 +85,7 @@
 //   /**
 //    * Thread-safety.
 //    */
-//   LocalMutex m_lockObj;
+//   critical_section m_lockObj;
 // };
 //
 //

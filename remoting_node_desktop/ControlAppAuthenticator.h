@@ -62,7 +62,7 @@ private:
   // is freed.
   void checkBeforeAuth();
 
-  LocalMutex m_authMutex;
+  critical_section m_authMutex;
   WindowsEvent m_banDelay;
   bool m_isBreaked;
 };

@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "CapsContainer.h"
 
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 
 CapsContainer::CapsContainer()
 {
@@ -49,7 +49,7 @@ void CapsContainer::add(unsigned int code, const char *vendor, const char *name,
 void CapsContainer::add(const RfbCapabilityInfo *capinfo,
                         const ::string desc)
 {
-  AutoLock al(&m_mapLock);
+  critical_section_lock al(&m_mapLock);
 
   infoMap[capinfo->code] = *capinfo;
   enableMap[capinfo->code] = false;
@@ -58,14 +58,14 @@ void CapsContainer::add(const RfbCapabilityInfo *capinfo,
 
 bool CapsContainer::isAdded(unsigned int code) const
 {
-  AutoLock al(&m_mapLock);
+  critical_section_lock al(&m_mapLock);
 
   return isKnown(code);
 }
 
 bool CapsContainer::getInfo(unsigned int code, RfbCapabilityInfo *capinfo)
 {
-  AutoLock al(&m_mapLock);
+  critical_section_lock al(&m_mapLock);
   if (isKnown(code)) {
     *capinfo = infoMap[code];
     return true;
@@ -76,13 +76,13 @@ bool CapsContainer::getInfo(unsigned int code, RfbCapabilityInfo *capinfo)
 
 ::string CapsContainer::getDescription(unsigned int code) const
 {
-  AutoLock al(&m_mapLock);
+  critical_section_lock al(&m_mapLock);
   return (isKnown(code)) ? descMap.find(code)->element2() : ::string();
 }
 
 bool CapsContainer::enable(const RfbCapabilityInfo *capinfo)
 {
-  AutoLock al(&m_mapLock);
+  critical_section_lock al(&m_mapLock);
   if (!isKnown(capinfo->code)) {
     return false;
   }
@@ -100,25 +100,25 @@ bool CapsContainer::enable(const RfbCapabilityInfo *capinfo)
 
 bool CapsContainer::isEnabled(unsigned int code) const
 {
-  AutoLock al(&m_mapLock);
+  critical_section_lock al(&m_mapLock);
   return (isKnown(code)) ? enableMap.find(code)->element2() : false;
 }
 
 size_t CapsContainer::numEnabled() const
 {
-  AutoLock al(&m_mapLock);
+  critical_section_lock al(&m_mapLock);
   return m_plist.size();
 }
 
 unsigned int CapsContainer::getByOrder(size_t idx)
 {
-  AutoLock al(&m_mapLock);
+  critical_section_lock al(&m_mapLock);
   return (idx < m_plist.size()) ? m_plist[idx] : 0;
 }
 
 void CapsContainer::getEnabledCapabilities(::array_base<unsigned int> &codes) const
 {
-  AutoLock al(&m_mapLock);
+  critical_section_lock al(&m_mapLock);
   codes = m_plist;
 }
 

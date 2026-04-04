@@ -26,7 +26,7 @@
 #include "remoting/remoting_common/win_system/DynamicLibrary.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 #include "remoting/remoting_common/win_system/RegistryKey.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 #include "remoting_node_desktop/NamingDefs.h"
 
 typedef BOOL (WINAPI *MINIDUMPWRITEDUMP)(__in  HANDLE hProcess,
@@ -39,7 +39,7 @@ typedef BOOL (WINAPI *MINIDUMPWRITEDUMP)(__in  HANDLE hProcess,
 
 bool CrashHook::m_guiEnabled = false;
 HKEY CrashHook::m_rootHkey = HKEY_CURRENT_USER;
-LocalMutex CrashHook::m_guiEnabledMutex;
+critical_section CrashHook::m_guiEnabledMutex;
 ApplicationCrashEvents *CrashHook::m_notifier = 0;
 
 CrashHook::CrashHook(ApplicationCrashEvents *notifier)
@@ -56,7 +56,7 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
 {
   bool guiEnabled;
   {
-    AutoLock al(&m_guiEnabledMutex);
+    critical_section_lock al(&m_guiEnabledMutex);
     guiEnabled = m_guiEnabled;
   }
 
@@ -110,7 +110,7 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
     try {
       HKEY root;
       {
-        AutoLock al(&m_guiEnabledMutex);
+        critical_section_lock al(&m_guiEnabledMutex);
         root = m_rootHkey;
       }
       RegistryKey regKey(root, RegistryPaths::SERVER_PATH);
@@ -169,12 +169,12 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
 
 void CrashHook::setGuiEnabled()
 {
-  AutoLock al(&m_guiEnabledMutex);
+  critical_section_lock al(&m_guiEnabledMutex);
   m_guiEnabled = true;
 }
 
 void CrashHook::setHklmRoot()
 {
-  AutoLock al(&m_guiEnabledMutex);
+  critical_section_lock al(&m_guiEnabledMutex);
   m_rootHkey = HKEY_LOCAL_MACHINE;
 }

@@ -45,8 +45,8 @@ void CopyRectDecoder::decode(RfbInputGate *pinput,
 void CopyRectDecoder::copy(FrameBuffer *dstFrameBuffer,
                            const FrameBuffer *srcFrameBuffer,
                            const ::int_rectangle &  rect,
-                           LocalMutex *fbLock)
+                           critical_section *fbLock)
 {
-  AutoLock al(fbLock);
+  critical_section_lock al(fbLock);
   dstFrameBuffer->move(rect, m_sourcePosition.x, m_sourcePosition.y);
 }

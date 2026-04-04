@@ -23,15 +23,15 @@
 //
 #include "framework.h"
 #include "Win32ScreenDriver.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 
 Win32ScreenDriver::Win32ScreenDriver(UpdateKeeper *updateKeeper,
                                      UpdateListener *updateListener,
                                      FrameBuffer *fb,
-                                     LocalMutex *fbLocalMutex, LogWriter *log)
-: Win32ScreenDriverBaseImpl(updateKeeper, updateListener, fbLocalMutex, log),
-  m_poller(updateKeeper, updateListener, &m_screenGrabber, fb, fbLocalMutex, log),
-  m_consolePoller(updateKeeper, updateListener, &m_screenGrabber, fb, fbLocalMutex, log),
+                                     critical_section *fbcritical_section, LogWriter *log)
+: Win32ScreenDriverBaseImpl(updateKeeper, updateListener, fbcritical_section, log),
+  m_poller(updateKeeper, updateListener, &m_screenGrabber, fb, fbcritical_section, log),
+  m_consolePoller(updateKeeper, updateListener, &m_screenGrabber, fb, fbcritical_section, log),
   m_hooks(updateKeeper, updateListener, log)
 {
   // At this point the screen driver has valid screen properties (provides by screen grabber).
@@ -65,13 +65,13 @@ void Win32ScreenDriver::terminateDetection()
 
 ::int_size Win32ScreenDriver::getScreenDimension()
 {
-  AutoLock al(getFbMutex());
+  critical_section_lock al(getFbMutex());
   return ::int_size(&m_screenGrabber.getScreenRect());
 }
 
 bool Win32ScreenDriver::grabFb(const ::int_rectangle &  rect)
 {
-  AutoLock al(getFbMutex());
+  critical_section_lock al(getFbMutex());
   return m_screenGrabber.grab(rect);
 }
 
@@ -82,18 +82,18 @@ FrameBuffer *Win32ScreenDriver::getScreenBuffer()
 
 bool Win32ScreenDriver::getScreenPropertiesChanged()
 {
-  AutoLock al(getFbMutex());
+  critical_section_lock al(getFbMutex());
   return m_screenGrabber.getPropertiesChanged();
 }
 
 bool Win32ScreenDriver::getScreenSizeChanged()
 {
-  AutoLock al(getFbMutex());
+  critical_section_lock al(getFbMutex());
   return m_screenGrabber.getScreenSizeChanged();
 }
 
 bool Win32ScreenDriver::applyNewScreenProperties()
 {
-  AutoLock al(getFbMutex());
+  critical_section_lock al(getFbMutex());
   return m_screenGrabber.applyNewProperties();
 }

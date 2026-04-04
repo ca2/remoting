@@ -24,44 +24,44 @@
 
 #pragma once
 
-#include "remoting/remoting_common/util/CommonHeader.h"
-
-#include "Lockable.h"
-
-/**
- * Local mutex (cannot be used within separate processes).
- *
- * @remark local mutex uses Windows critical sections to implement
- * lockable interface..
- */
-class CLASS_DECL_REMOTING_COMMON LocalMutex : public Lockable
-{
-public:
-  /**
-   * Creates new local mutex.
-   */
-  LocalMutex();
-
-  /**
-   * Deletes local mutex.
-   */
-  virtual ~LocalMutex();
-
-  /**
-   * Inherited from Lockable.
-   */
-  virtual void lock();
-
-  /**
-   * Inherited from Lockable.
-   */
-  virtual void unlock();
-
-private:
-  /**
-   * Windows critical section.
-   */
-  CRITICAL_SECTION m_criticalSection;
-};
-
-
+//#include "remoting/remoting_common/util/CommonHeader.h"
+//
+//#include "Lockable.h"
+//
+///**
+// * Local mutex (cannot be used within separate processes).
+// *
+// * @remark local mutex uses Windows critical sections to implement
+// * lockable interface..
+// */
+//class CLASS_DECL_REMOTING_COMMON critical_section : public Lockable
+//{
+//public:
+//  /**
+//   * Creates new local mutex.
+//   */
+//  critical_section();
+//
+//  /**
+//   * Deletes local mutex.
+//   */
+//  virtual ~critical_section();
+//
+//  /**
+//   * Inherited from Lockable.
+//   */
+//  virtual void lock();
+//
+//  /**
+//   * Inherited from Lockable.
+//   */
+//  virtual void unlock();
+//
+//private:
+//  /**
+//   * Windows critical section.
+//   */
+//  CRITICAL_SECTION m_criticalSection;
+//};
+//
+//

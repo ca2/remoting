@@ -23,7 +23,7 @@
 //
 
 #include "ControlAppAuthenticator.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 #include "remoting/remoting_common/util/VncPassCrypt.h"
 
 ControlAppAuthenticator::ControlAppAuthenticator(unsigned long long failureTimeInterval,
@@ -42,7 +42,7 @@ bool ControlAppAuthenticator::authenticate(const unsigned char cryptPassword[8],
                                            const unsigned char challenge[8],
                                            const unsigned char response[8])
 {
-  AutoLock al(&m_authMutex);
+  critical_section_lock al(&m_authMutex);
 
   checkBeforeAuth();
   if (m_isBreaked) {

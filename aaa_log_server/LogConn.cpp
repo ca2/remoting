@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "LogConn.h"
 #include "LogConnAuthListener.h"
-#include "remoting/thread/AutoLock.h"
+#include "remoting/thread/critical_section_lock.h"
 #include "SecurityPipeServer.h"
 #include "remoting/io/DataInputStream.h"
 #include "remoting/io/DataOutputStream.h"
@@ -59,7 +59,7 @@ LogConn::~LogConn()
 void LogConn::onTerminate()
 {
   {
-    AutoLock al(&m_channelMutex);
+    critical_section_lock al(&m_channelMutex);
     try {
       if (m_logListenChannel != 0) m_logListenChannel->close();
       if (m_levelSendChannel != 0) m_levelSendChannel->close();
@@ -79,7 +79,7 @@ void LogConn::close()
 void LogConn::changeLogLevel(unsigned char newLevel)
 {
   {
-    AutoLock al(&m_logLevelMutex);
+    critical_section_lock al(&m_logLevelMutex);
     m_logLevel = newLevel; // This will become useless since m_logLevelSender
                            // will be started.
     m_logLevelSender.updateLevel(m_logLevel);
@@ -96,7 +96,7 @@ void LogConn::assignConnection()
     SecurityPipeServer secLevelPipeServer(m_serviceChannel, maxChangeLevelMessageLength);
 
     {
-      AutoLock al(&m_channelMutex);
+      critical_section_lock al(&m_channelMutex);
       m_logListenChannel = secLogPipeServer.getChannel();
       m_levelSendChannel = secLevelPipeServer.getChannel();
     }
@@ -144,7 +144,7 @@ void LogConn::execute()
     m_logLevelSender.startSender(m_levelSendChannel);
     // Send first log level value
     {
-      AutoLock al(&m_logLevelMutex);
+      critical_section_lock al(&m_logLevelMutex);
       m_logLevelSender.updateLevel(m_logLevel);
     }
 

@@ -274,7 +274,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AutoLock.cpp" />
+    <ClCompile Include="critical_section_lock.cpp" />
     <ClCompile Include="DesktopSelector.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -288,16 +288,16 @@
     </ClCompile>
     <ClCompile Include="GlobalMutex.cpp" />
     <ClCompile Include="GuiThread.cpp" />
-    <ClCompile Include="LocalMutex.cpp" />
+    <ClCompile Include="critical_section.cpp" />
     <ClCompile Include="Thread.cpp" />
     <ClCompile Include="ThreadCollector.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AutoLock.h" />
+    <ClInclude Include="critical_section_lock.h" />
     <ClInclude Include="DesktopSelector.h" />
     <ClInclude Include="GlobalMutex.h" />
     <ClInclude Include="GuiThread.h" />
-    <ClInclude Include="LocalMutex.h" />
+    <ClInclude Include="critical_section.h" />
     <ClInclude Include="Lockable.h" />
     <ClInclude Include="Thread.h" />
     <ClInclude Include="ThreadCollector.h" />

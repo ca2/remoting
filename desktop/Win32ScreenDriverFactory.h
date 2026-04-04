@@ -39,17 +39,17 @@ public:
   virtual ScreenDriver *createScreenDriver(UpdateKeeper *updateKeeper,
                                              UpdateListener *updateListener,
                                              FrameBuffer *fb,
-                                             LocalMutex *fbLocalMutex,
+                                             critical_section *fbcritical_section,
                                              LogWriter *log);
 private:
   ScreenDriver *createStandardScreenDriver(UpdateKeeper *updateKeeper,
                                              UpdateListener *updateListener,
                                              FrameBuffer *fb,
-                                             LocalMutex *fbLocalMutex,
+                                             critical_section *fbcritical_section,
                                              LogWriter *log);
   ScreenDriver *createMirrorScreenDriver(UpdateKeeper *updateKeeper,
                                            UpdateListener *updateListener,
-                                           LocalMutex *fbLocalMutex,
+                                           critical_section *fbcritical_section,
                                            LogWriter *log);
 
   bool isMirrorDriverAllowed();

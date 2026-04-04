@@ -40,7 +40,7 @@ public:
                        FrameBuffer *frameBuffer,
                        FrameBuffer *secondFrameBuffer,
                        const ::int_rectangle &  rect,
-                       LocalMutex *fbLock,
+                       critical_section *fbLock,
                        FbUpdateNotifier *fbNotifier);
 
 protected:

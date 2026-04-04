@@ -31,7 +31,7 @@ Poller::Poller(UpdateKeeper *updateKeeper,
                UpdateListener *updateListener,
                ScreenGrabber *screenGrabber,
                FrameBuffer *backupFrameBuffer,
-               LocalMutex *frameBufferCriticalSection,
+               critical_section *frameBufferCriticalSection,
                LogWriter *log)
 : UpdateDetector(updateKeeper, updateListener),
   m_screenGrabber(screenGrabber),
@@ -60,7 +60,7 @@ void Poller::execute()
   FrameBuffer *screenFrameBuffer;
 
   {
-    AutoLock al(m_fbMutex);
+    critical_section_lock al(m_fbMutex);
     screenFrameBuffer = m_screenGrabber->getScreenBuffer();
     ::int_rectangle fullScreenRect(screenFrameBuffer->getDimension());
     m_updateKeeper->addChangedRect(&fullScreenRect);
@@ -70,7 +70,7 @@ void Poller::execute()
     Region region;
 
     {
-      AutoLock al(m_fbMutex);
+      critical_section_lock al(m_fbMutex);
 
       screenFrameBuffer = m_screenGrabber->getScreenBuffer();
       if (!screenFrameBuffer->isEqualTo(m_backupFrameBuffer)) {
@@ -100,7 +100,7 @@ void Poller::execute()
 
         m_updateKeeper->addChangedRegion(&region);
       }
-    } // AutoLock
+    } // critical_section_lock
 
     // Send event
     if (!region.is_empty()) {

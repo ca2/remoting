@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "CursorUpdates.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 
 CursorUpdates::CursorUpdates(LogWriter *log)
 : m_blockCurPosTime(0),
@@ -132,7 +132,7 @@ void CursorUpdates::update(const EncodeOptions *encodeOptions,
 
 void CursorUpdates::restoreFrameBuffer(FrameBuffer *fb)
 {
-  AutoLock al(&m_curPosLocMut);
+  critical_section_lock al(&m_curPosLocMut);
   ::int_rectangle dstRect = m_shapeBackground.getDimension();
   dstRect.set_top_left(m_backgroundPos.x, m_backgroundPos.y);
   fb->copyFrom(dstRect, &m_shapeBackground, 0, 0);
@@ -141,7 +141,7 @@ void CursorUpdates::restoreFrameBuffer(FrameBuffer *fb)
 
 void CursorUpdates::drawCursor(UpdateContainer *updCont, FrameBuffer *fb)
 {
-  AutoLock al(&m_curPosLocMut);
+  critical_section_lock al(&m_curPosLocMut);
   // Add previous background rectangle to the changed region.
   ::int_rectangle rect(m_shapeBackground.getDimension());
   rect.set_top_left(m_backgroundPos.x, m_backgroundPos.y);
@@ -169,7 +169,7 @@ bool CursorUpdates::checkCursorPos(UpdateContainer *updCont,
                                    const ::int_rectangle & viewPort,
                                    bool curPosBlockingIsIgnored)
 {
-  AutoLock al(&m_curPosLocMut);
+  critical_section_lock al(&m_curPosLocMut);
   Point cursorPos = updCont->cursorPos;
   cursorPos.x -= viewPort.left;
   cursorPos.y -= viewPort.top;
@@ -201,14 +201,14 @@ bool CursorUpdates::checkCursorPos(UpdateContainer *updCont,
 
 void CursorUpdates::blockCursorPosSending()
 {
-  AutoLock al(&m_curPosLocMut);
+  critical_section_lock al(&m_curPosLocMut);
   // Block cursor pos sending to a time interval.
   m_blockCurPosTime = ::earth::time::now();
 }
 
 bool CursorUpdates::isCursorPosBlocked()
 {
-  AutoLock al(&m_curPosLocMut);
+  critical_section_lock al(&m_curPosLocMut);
   if ((::earth::time::now() - m_blockCurPosTime).getTime() > 1000) {
     return false; // Unblocked
   } else {
@@ -218,13 +218,13 @@ bool CursorUpdates::isCursorPosBlocked()
 
 Point CursorUpdates::getCurPos()
 {
-  AutoLock al(&m_curPosLocMut);
+  critical_section_lock al(&m_curPosLocMut);
   return m_cursorPos;
 }
 
 ::int_rectangle CursorUpdates::getBackgroundRect()
 {
-  AutoLock al(&m_curPosLocMut);
+  critical_section_lock al(&m_curPosLocMut);
   ::int_rectangle rect(m_shapeBackground.getDimension());
   rect.set_top_left(m_backgroundPos.x, m_backgroundPos.y);
   return rect;
@@ -232,12 +232,12 @@ Point CursorUpdates::getCurPos()
 
 void CursorUpdates::updateCursorShape(const CursorShape *curShape)
 {
-  AutoLock al(&m_curPosLocMut);
+  critical_section_lock al(&m_curPosLocMut);
   m_cursorShape.clone(curShape);
 }
 
 void CursorUpdates::extractCursorShape(CursorShape *curShape)
 {
-  AutoLock al(&m_curPosLocMut);
+  critical_section_lock al(&m_curPosLocMut);
   curShape->clone(&m_cursorShape);
 }

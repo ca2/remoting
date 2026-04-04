@@ -91,7 +91,7 @@ protected:
   void sendUpdate();
 
   Region m_fullReqRegion;
-  LocalMutex m_reqRegMutex;
+  critical_section m_reqRegMutex;
 
   UpdateHandler *m_updateHandler;
 
@@ -102,7 +102,7 @@ protected:
 
   // Clipboard
   ::string m_receivedClip;
-  LocalMutex m_storedClipCritSec;
+  critical_section m_storedClipCritSec;
 
   // External listeners
   UpdateSendingListener *m_extUpdSendingListener;

@@ -27,24 +27,24 @@
 
 Win8ScreenDriver::Win8ScreenDriver(UpdateKeeper *updateKeeper,
                                    UpdateListener *updateListener,
-                                   LocalMutex *fbLocalMutex,
+                                   critical_section *fbcritical_section,
                                    LogWriter *log)
 : WinVideoRegionUpdaterImpl(log),
   m_log(log),
-  m_fbLocalMutex(fbLocalMutex),
+  m_fbcritical_section(fbcritical_section),
   m_updateKeeper(updateKeeper),
   m_updateListener(updateListener),
   m_detectionEnabled(false)
 {
   m_log->debug("Win8ScreenDriver creating new Win8ScreenDriverImpl");
-  AutoLock al(&m_drvImplMutex);
-  m_drvImpl = new Win8ScreenDriverImpl(m_log, m_updateKeeper, m_fbLocalMutex, m_updateListener);
+  critical_section_lock al(&m_drvImplMutex);
+  m_drvImpl = new Win8ScreenDriverImpl(m_log, m_updateKeeper, m_fbcritical_section, m_updateListener);
 }
 
 Win8ScreenDriver::~Win8ScreenDriver()
 {
   terminateDetection();
-  AutoLock al(&m_drvImplMutex);
+  critical_section_lock al(&m_drvImplMutex);
   if (m_drvImpl != 0) {
     delete m_drvImpl;
     m_drvImpl = 0;
@@ -53,14 +53,14 @@ Win8ScreenDriver::~Win8ScreenDriver()
 
 void Win8ScreenDriver::executeDetection()
 {
-  AutoLock al(&m_drvImplMutex);
+  critical_section_lock al(&m_drvImplMutex);
   m_detectionEnabled = true;
   m_drvImpl->executeDetection();
 }
 
 void Win8ScreenDriver::terminateDetection()
 {
-  AutoLock al(&m_drvImplMutex);
+  critical_section_lock al(&m_drvImplMutex);
   m_detectionEnabled = false;
   if (m_drvImpl != 0) {
     m_drvImpl->terminateDetection();
@@ -69,31 +69,31 @@ void Win8ScreenDriver::terminateDetection()
 
 ::int_size Win8ScreenDriver::getScreenDimension()
 {
-  AutoLock al(&m_drvImplMutex);
+  critical_section_lock al(&m_drvImplMutex);
   return m_drvImpl->getScreenBuffer()->getDimension();
 }
 
 FrameBuffer *Win8ScreenDriver::getScreenBuffer()
 {
-  AutoLock al(&m_drvImplMutex);
+  critical_section_lock al(&m_drvImplMutex);
   return m_drvImpl->getScreenBuffer();
 }
 
 bool Win8ScreenDriver::grabFb(const ::int_rectangle &  rect)
 {
-  AutoLock al(&m_drvImplMutex);
+  critical_section_lock al(&m_drvImplMutex);
   return m_drvImpl->grabFb(rect);
 }
 
 bool Win8ScreenDriver::getScreenPropertiesChanged()
 {
-  AutoLock al(&m_drvImplMutex);
+  critical_section_lock al(&m_drvImplMutex);
   return !m_drvImpl->isValid();
 }
 
 bool Win8ScreenDriver::getScreenSizeChanged()
 {
-  AutoLock al(&m_drvImplMutex);
+  critical_section_lock al(&m_drvImplMutex);
   return !m_drvImpl->isValid();
 }
 
@@ -101,14 +101,14 @@ bool Win8ScreenDriver::applyNewScreenProperties()
 {
   try {
     m_log->debug("Applying new screen properties, deleting old Win8ScreenDriverImpl");
-    AutoLock al(&m_drvImplMutex);
+    critical_section_lock al(&m_drvImplMutex);
     if (m_drvImpl != 0) {
       delete m_drvImpl;
       m_drvImpl = 0;
     }
     m_log->debug("Applying new screen properties, creating new Win8ScreenDriverImpl");
     Win8ScreenDriverImpl *drvImpl =
-      new Win8ScreenDriverImpl(m_log, m_updateKeeper, m_fbLocalMutex, m_updateListener, m_detectionEnabled);
+      new Win8ScreenDriverImpl(m_log, m_updateKeeper, m_fbcritical_section, m_updateListener, m_detectionEnabled);
     m_drvImpl = drvImpl;
   } catch (::exception &e) {
     m_log->error("Can't apply new screen properties: {}", e.get_message());
@@ -119,7 +119,7 @@ bool Win8ScreenDriver::applyNewScreenProperties()
 
 bool Win8ScreenDriver::grabCursorShape(const PixelFormat & pf)
 {
-  AutoLock al(&m_drvImplMutex);
+  critical_section_lock al(&m_drvImplMutex);
   m_drvImpl->updateCursorShape(&m_cursorShape);
   return !m_drvImpl->isValid();
 }
@@ -131,12 +131,12 @@ const CursorShape *Win8ScreenDriver::getCursorShape()
 
 Point Win8ScreenDriver::getCursorPosition()
 {
-  AutoLock al(&m_drvImplMutex);
+  critical_section_lock al(&m_drvImplMutex);
   return m_drvImpl->getCursorPosition();
 }
 
 void Win8ScreenDriver::getCopiedRegion(::int_rectangle *copyRect, Point *source)
 {
-  AutoLock al(m_fbLocalMutex);
+  critical_section_lock al(m_fbcritical_section);
   m_copyRectDetector.detectWindowMovements(copyRect, source);
 }

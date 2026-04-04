@@ -23,7 +23,7 @@
 //
 
 #include "AuthTracker.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 
 AuthTracker::AuthTracker(unsigned long long failureTimeInterval,
                          unsigned int failureMaxCount)
@@ -43,7 +43,7 @@ unsigned long long AuthTracker::checkBan()
 
   unsigned long long banTime = 0;
   {
-    AutoLock al(&m_countMutex);
+    critical_section_lock al(&m_countMutex);
     if (m_failureCount >= m_failureMaxCount) {
       banTime = max(0, m_failureTimeInterval -
                        (::earth::time::now() - m_firstFailureTime).getTime());
@@ -54,7 +54,7 @@ unsigned long long AuthTracker::checkBan()
 
 void AuthTracker::notifyAbAuthFailed()
 {
-  AutoLock al(&m_countMutex);
+  critical_section_lock al(&m_countMutex);
   if (m_failureCount == 0) {
     m_firstFailureTime = ::earth::time::now();
   }
@@ -63,7 +63,7 @@ void AuthTracker::notifyAbAuthFailed()
 
 void AuthTracker::refresh()
 {
-  AutoLock al(&m_countMutex);
+  critical_section_lock al(&m_countMutex);
   if ((::earth::time::now() - m_firstFailureTime).getTime() >= m_failureTimeInterval) {
     m_failureCount = 0;
   }

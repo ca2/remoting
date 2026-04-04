@@ -58,7 +58,7 @@ private:
 
   ::string m_storedClip;
   bool m_hasNewClip;
-  LocalMutex m_storedClipMut;
+  critical_section m_storedClipMut;
 
   LogWriter *m_log;
 };

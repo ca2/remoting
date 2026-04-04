@@ -25,7 +25,7 @@
 #include "ReconnectingChannel.h"
 //#include "remoting/remoting_common/util/::earth::time.h"
 #include "desktop_ipc/ReconnectException.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 
 ReconnectingChannel::ReconnectingChannel(unsigned int timeOut, LogWriter *log)
 : m_timeOut(timeOut),
@@ -49,7 +49,7 @@ ReconnectingChannel::~ReconnectingChannel()
 
 void ReconnectingChannel::close()
 {
-  AutoLock al(&m_chanMut);
+  critical_section_lock al(&m_chanMut);
   m_isClosed = true;
   if (m_channel != 0) {
     m_channel->close();
@@ -62,7 +62,7 @@ void ReconnectingChannel::close()
 
 void ReconnectingChannel::replaceChannel(Channel *newChannel)
 {
-  AutoLock al(&m_chanMut);
+  critical_section_lock al(&m_chanMut);
   if (m_channel != 0) {
     m_chanWasChanged = true; // Toggle to true except first initialization
   }
@@ -85,7 +85,7 @@ Channel *ReconnectingChannel::getChannel(const ::scoped_string & scopedstrFunNam
   }
   Channel *channel;
   {
-    AutoLock al(&m_chanMut);
+    critical_section_lock al(&m_chanMut);
     // Clean m_oldChannel
     if (m_oldChannel != 0) {
       delete m_oldChannel;
@@ -161,7 +161,7 @@ void ReconnectingChannel::waitForReconnect(const ::scoped_string & scopedstrFunN
       throw ::io_exception(errMess);
     }
     m_timer.waitForEvent(timeForWait);
-    AutoLock al(&m_chanMut);
+    critical_section_lock al(&m_chanMut);
     if (m_channel != channel) {
       m_chanWasChanged = false; // Reconnection catched in this place!
                                 // (other must don't know about this)

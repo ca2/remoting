@@ -32,9 +32,9 @@
 #include "SocketException.h"
 //#include "remoting/remoting_common/util/::string.h"
 
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 
-LocalMutex SocketAddressIPv4::s_resolveMutex;
+critical_section SocketAddressIPv4::s_resolveMutex;
 
 void getLocalIPAddrString(char *buffer, int buflen)
 {
@@ -150,7 +150,7 @@ SocketAddressIPv4 SocketAddressIPv4::resolve(const ::scoped_string & scopedstrHo
   ::string hostStorage(scopedstrHost);
 
   {
-    AutoLock l(&s_resolveMutex);
+    critical_section_lock l(&s_resolveMutex);
 
     ::string hostAnsi(hostStorage);
 

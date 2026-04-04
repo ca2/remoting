@@ -27,7 +27,7 @@
 
 //#include "log_writer/LogWriter.h"
 #include "remoting/remoting_common/rfb/CursorShape.h"
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 
 class CLASS_DECL_REMOTING_COMMON CursorPainter
 {
@@ -54,7 +54,7 @@ public:
 
   FrameBuffer *const m_fb;
 
-  LocalMutex m_lock;
+  critical_section m_lock;
   CursorShape m_cursor;
 
   // Actual position of pointer

@@ -24,141 +24,141 @@
 
 #pragma once
 
-
-#include "remoting/remoting_common/util/CommonHeader.h"
-#include "LocalMutex.h"
-#include "DesktopSelector.h"
-
-/**
- * Thread priority enumeration.
- */
-enum THREAD_PRIORITY
-{
-  PRIORITY_IDLE,
-  PRIORITY_LOWEST,
-  PRIORITY_BELOW_NORMAL,
-  PRIORITY_NORMAL,
-  PRIORITY_ABOVE_NORMAL,
-  PRIORITY_HIGHEST,
-  PRIORITY_TIME_CRITICAL
-};
-
-/**
- * Thread class.
- *
- * @fixme some of methods return bool instead of raising exceptions.
- * @fixme some methods seems to be not thread-safe (that uses m_active member).
- * @fixme member of HDESK type in THREAD class???
- */
-class CLASS_DECL_REMOTING_COMMON Thread
-{
-public:
-  /**
-   * Creates new thread.
-   * @remark thread is suspended by default.
-   */
-  Thread();
-  /**
-   * Deletes thread.
-   * @remark does not stops thread execution if it's still running.
-   */
-  virtual ~Thread();
-
-  /**
-   * Waits until thread stops.
-   * @return false on error.
-   */
-  bool wait();
-  /**
-   * Suspends thread execution.
-   * @return false on error.
-   */
-  bool suspend();
-  /**
-   * Resume thread execution.
-   * @return false on error.
-   */
-  bool resume();
-  /**
-   * Terminates thread execution.
-   * @remark thread-safe.
-   */
-  virtual void terminate();
-
-  /**
-   * Checks if thread is not dead.
-   * @return true if thread is not dead (still running or suspended).
-   */
-  bool isActive() const;
-
-  /**
-   * Returns thread id.
-   */
-  DWORD getThreadId() const;
-
-  /**
-   * Sets thread priority.
-   * @param value thread priority.
-   */
-  bool setPriority(THREAD_PRIORITY value);
-
-  /**
-   * Suspends the execution of the current thread until the time-out interval elapses.
-   * @param millis time to sleep.
-   */
-  static void sleep(DWORD millis);
-
-  /**
-   * Yield execution to the next ready thread.
-   */
-  static void yield();
-
-protected:
-  /**
-   * Returns true if terminate() method was called.
-   * @remark thread-safe.
-   */
-  bool isTerminating();
-
-  /**
-   * Slot of terminate() signal.
-   * Method called from terminate() method.
-   * Can be overrided by subclasses to gracefully shutdown thread.
-   */
-  virtual void onTerminate();
-
-  /**
-   * Thread's runnable body.
-   */
-  virtual void execute() = 0;
-
-private:
-  /**
-   * WinApi thread func.
-   */
-  static DWORD WINAPI threadProc(LPVOID pThread);
-
-  // This function calling before call a derived execute() function to
-  // perform any additional action.
-  virtual void initByDerived();
-
-private:
-  /**
-   * Win32 thread handle.
-   */
-  HANDLE m_hThread;
-  /**
-   * Thread ID.
-   */
-  DWORD m_threadID;
-  /**
-   * Activity flag.
-   */
-  bool m_active;
-  /**
-   * Terminating flag.
-   */
-  volatile bool m_terminated;
-};
-
-//// __THREAD_H__
+//
+//#include "remoting/remoting_common/util/CommonHeader.h"
+//#include "critical_section.h"
+//#include "DesktopSelector.h"
+//
+///**
+// * Thread priority enumeration.
+// */
+//enum THREAD_PRIORITY
+//{
+//  PRIORITY_IDLE,
+//  PRIORITY_LOWEST,
+//  PRIORITY_BELOW_NORMAL,
+//  PRIORITY_NORMAL,
+//  PRIORITY_ABOVE_NORMAL,
+//  PRIORITY_HIGHEST,
+//  PRIORITY_TIME_CRITICAL
+//};
+//
+///**
+// * Thread class.
+// *
+// * @fixme some of methods return bool instead of raising exceptions.
+// * @fixme some methods seems to be not thread-safe (that uses m_active member).
+// * @fixme member of HDESK type in THREAD class???
+// */
+//class CLASS_DECL_REMOTING_COMMON Thread
+//{
+//public:
+//  /**
+//   * Creates new thread.
+//   * @remark thread is suspended by default.
+//   */
+//  Thread();
+//  /**
+//   * Deletes thread.
+//   * @remark does not stops thread execution if it's still running.
+//   */
+//  virtual ~Thread();
+//
+//  /**
+//   * Waits until thread stops.
+//   * @return false on error.
+//   */
+//  bool wait();
+//  /**
+//   * Suspends thread execution.
+//   * @return false on error.
+//   */
+//  bool suspend();
+//  /**
+//   * Resume thread execution.
+//   * @return false on error.
+//   */
+//  bool resume();
+//  /**
+//   * Terminates thread execution.
+//   * @remark thread-safe.
+//   */
+//  virtual void terminate();
+//
+//  /**
+//   * Checks if thread is not dead.
+//   * @return true if thread is not dead (still running or suspended).
+//   */
+//  bool isActive() const;
+//
+//  /**
+//   * Returns thread id.
+//   */
+//  DWORD getThreadId() const;
+//
+//  /**
+//   * Sets thread priority.
+//   * @param value thread priority.
+//   */
+//  bool setPriority(THREAD_PRIORITY value);
+//
+//  /**
+//   * Suspends the execution of the current thread until the time-out interval elapses.
+//   * @param millis time to sleep.
+//   */
+//  static void sleep(DWORD millis);
+//
+//  /**
+//   * Yield execution to the next ready thread.
+//   */
+//  static void yield();
+//
+//protected:
+//  /**
+//   * Returns true if terminate() method was called.
+//   * @remark thread-safe.
+//   */
+//  bool isTerminating();
+//
+//  /**
+//   * Slot of terminate() signal.
+//   * Method called from terminate() method.
+//   * Can be overrided by subclasses to gracefully shutdown thread.
+//   */
+//  virtual void onTerminate();
+//
+//  /**
+//   * Thread's runnable body.
+//   */
+//  virtual void execute() = 0;
+//
+//private:
+//  /**
+//   * WinApi thread func.
+//   */
+//  static DWORD WINAPI threadProc(LPVOID pThread);
+//
+//  // This function calling before call a derived execute() function to
+//  // perform any additional action.
+//  virtual void initByDerived();
+//
+//private:
+//  /**
+//   * Win32 thread handle.
+//   */
+//  HANDLE m_hThread;
+//  /**
+//   * Thread ID.
+//   */
+//  DWORD m_threadID;
+//  /**
+//   * Activity flag.
+//   */
+//  bool m_active;
+//  /**
+//   * Terminating flag.
+//   */
+//  volatile bool m_terminated;
+//};
+//
+////// __THREAD_H__

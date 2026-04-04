@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "WinDxRecoverableException.h"
 #include "WinDxCriticalException.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 
 #include "WinDxgiAcquiredFrame.h"
 #include "WinD3D11Texture2D.h"
@@ -36,7 +36,7 @@ Win8DeskDuplication::Win8DeskDuplication(FrameBuffer *targetFb,
                                                      ::array_base<::int_rectangle> &targetRect,
                                                      Win8CursorShape *targetCurShape,
                                                      LONGLONG *cursorTimeStamp,
-                                                     LocalMutex *cursorMutex,
+                                                     critical_section *cursorMutex,
                                                      Win8DuplicationListener *duplListener,
                                                      ::array_base<WinDxgiOutput> &dxgiOutput,
                                                      LogWriter *log)
@@ -301,7 +301,7 @@ void Win8DeskDuplication::rotateRectInsideStage(::int_rectangle *toTranspose,
 
 void Win8DeskDuplication::processCursor(const DXGI_OUTDUPL_FRAME_INFO *info, size_t out)
 {
-  AutoLock al(m_cursorMutex);
+  critical_section_lock al(m_cursorMutex);
   LONGLONG lastUpdateTime = info->LastMouseUpdateTime.QuadPart;
   if (lastUpdateTime != 0 && lastUpdateTime > *m_cursorTimeStamp) {
     *m_cursorTimeStamp = lastUpdateTime;

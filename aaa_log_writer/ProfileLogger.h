@@ -28,7 +28,7 @@
 //#include "remoting/remoting_common/util/::earth::time.h"
 //#include <vector>
 //#include <map>
-#include "remoting/thread/LocalMutex.h"
+#include "remoting/thread/critical_section.h"
 
 
 struct ProcessorTimes {
@@ -54,7 +54,7 @@ public:
   ::array_base<::array_base<TCHAR>> dropStat();
 
 private:
-  LocalMutex m_mapMut;
+  critical_section m_mapMut;
   //::map<const ::scoped_string & scopedstr, ::array_base<ProcessorTimes>> m_checkPoints;
    ::string_map <::array_base<ProcessorTimes> > m_checkPoints;
   ProcessorTimes m_last;

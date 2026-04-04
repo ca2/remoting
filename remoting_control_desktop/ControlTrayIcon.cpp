@@ -240,7 +240,7 @@ void ControlTrayIcon::onShutdownServerMenuItemClick()
     TvnServerInfo serverInfo = {0};
 
     {
-      AutoLock l(&m_serverInfoMutex);
+      critical_section_lock l(&m_serverInfoMutex);
 
       serverInfo = m_lastKnownServerInfo;
     }
@@ -324,7 +324,7 @@ void ControlTrayIcon::syncStatusWithServer()
     }
 
     {
-      AutoLock l(&m_serverInfoMutex);
+      critical_section_lock l(&m_serverInfoMutex);
 
       m_lastKnownServerInfo = info;
     }

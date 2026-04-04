@@ -158,7 +158,7 @@ void ExtraRfbServers::getConfiguration(Conf *out)
   //        }                                            // auto-unlock
   //
   ServerConfig *config = Configurator::getInstance()->getServerConfig();
-  AutoLock l(config);
+  critical_section_lock l(config);
 
   out->acceptConnections = config->isAcceptingRfbConnections();
   out->loopbackOnly = config->isOnlyLoopbackConnectionsAllowed();

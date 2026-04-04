@@ -37,7 +37,7 @@
 #include "remoting/remoting_common/util/md5.h"
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 #include "remoting/remoting_common/network/RfbInputGate.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 #include "remoting/remoting_common/win_system/Impersonator.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 #include "remoting/remoting_common/server_config/Configurator.h"
@@ -203,7 +203,7 @@ void FileTransferRequestHandler::compressionSupportRequested()
   m_log->debug("sending compression support reply: {}"), (compressionSupport == 1) ? _T("supported") : _T("not supported");
 
   {
-    AutoLock l(m_output);
+    critical_section_lock l(m_output);
 
     m_output->writeUInt32(FTMessage::COMPRESSION_SUPPORT_REPLY);
     m_output->writeUInt8(compressionSupport);
@@ -288,7 +288,7 @@ void FileTransferRequestHandler::fileListRequested()
   //
 
   {
-    AutoLock l(m_output);
+    critical_section_lock l(m_output);
 
     m_output->writeUInt32(FTMessage::FILE_LIST_REPLY);
 
@@ -333,7 +333,7 @@ void FileTransferRequestHandler::mkDirRequested()
   }
 
   {
-    AutoLock l(m_output);
+    critical_section_lock l(m_output);
 
     m_output->writeUInt32(FTMessage::MKDIR_REPLY);
 
@@ -364,7 +364,7 @@ void FileTransferRequestHandler::rmFileRequested()
   } // if cannot delete file
 
   {
-    AutoLock l(m_output);
+    critical_section_lock l(m_output);
 
     m_output->writeUInt32(FTMessage::REMOVE_REPLY);
 
@@ -394,7 +394,7 @@ void FileTransferRequestHandler::mvFileRequested()
   }
 
   {
-    AutoLock l(m_output);
+    critical_section_lock l(m_output);
 
     m_output->writeUInt32(FTMessage::RENAME_REPLY);
 
@@ -422,7 +422,7 @@ void FileTransferRequestHandler::dirSizeRequested()
   }
 
   {
-    AutoLock l(m_output);
+    critical_section_lock l(m_output);
 
     m_output->writeUInt32(FTMessage::DIRSIZE_REPLY);
     m_output->writeUInt64(directorySize);
@@ -492,7 +492,7 @@ void FileTransferRequestHandler::md5Requested()
   md5calculator.finalize();
 
   {
-    AutoLock l(m_output);
+    critical_section_lock l(m_output);
 
     m_output->writeUInt32(FTMessage::MD5_REPLY);
     m_output->writeFully((const char *)md5calculator.getHash(), 16);
@@ -561,7 +561,7 @@ void FileTransferRequestHandler::uploadStartRequested()
   //
 
   {
-    AutoLock l(m_output);
+    critical_section_lock l(m_output);
 
     m_output->writeUInt32(FTMessage::UPLOAD_START_REPLY);
 
@@ -611,7 +611,7 @@ void FileTransferRequestHandler::uploadDataRequested()
   }
 
   {
-    AutoLock l(m_output);
+    critical_section_lock l(m_output);
 
     m_output->writeUInt32(FTMessage::UPLOAD_DATA_REPLY);
 
@@ -663,7 +663,7 @@ void FileTransferRequestHandler::uploadEndRequested()
   //
 
   {
-    AutoLock l(m_output);
+    critical_section_lock l(m_output);
 
     m_output->writeUInt32(FTMessage::UPLOAD_END_REPLY);
 
@@ -730,7 +730,7 @@ void FileTransferRequestHandler::downloadStartRequested()
   m_fileInputStream->seek(initialOffset);
 
   {
-    AutoLock l(m_output);
+    critical_section_lock l(m_output);
 
     m_output->writeUInt32(FTMessage::DOWNLOAD_START_REPLY);
 
@@ -798,7 +798,7 @@ void FileTransferRequestHandler::downloadDataRequested()
     unsigned char fileFlags = 0;
 
     {
-      AutoLock l(m_output);
+      critical_section_lock l(m_output);
 
       m_output->writeUInt32(FTMessage::DOWNLOAD_END_REPLY);
       m_output->writeUInt8(fileFlags);
@@ -837,7 +837,7 @@ void FileTransferRequestHandler::downloadDataRequested()
   // Send download data reply
   //
 
-  AutoLock l(m_output);
+  critical_section_lock l(m_output);
 
   m_output->writeUInt32(FTMessage::DOWNLOAD_DATA_REPLY);
   m_output->writeUInt8(compressionLevel);
@@ -865,7 +865,7 @@ void FileTransferRequestHandler::lastRequestFailed(const ::scoped_string & scope
   m_log->error("last request failed: \"{}\"", description);
 
   {
-    AutoLock l(m_output);
+    critical_section_lock l(m_output);
 
     m_output->writeUInt32(FTMessage::LAST_REQUEST_FAILED_REPLY);
     m_output->writeUTF8(description);

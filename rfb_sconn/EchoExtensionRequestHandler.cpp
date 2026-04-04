@@ -29,7 +29,7 @@
 #include "remoting/remoting_common/io/ByteArrayOutputStream.h"
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 #include "remoting/remoting_common/network/RfbInputGate.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 #include "remoting/remoting_common/server_config/Configurator.h"
 #include "remoting/remoting_common/win_system/SystemException.h"
 #include "remoting/remoting_common/rfb/VendorDefs.h"
@@ -69,7 +69,7 @@ void EchoExtensionRequestHandler::onRequest(unsigned int reqCode, RfbInputGate *
       unsigned int number = m_input->readUInt32();
       m_log->debug("got echo request with number {}", number);
       {
-        AutoLock l(m_output);
+        critical_section_lock l(m_output);
 
         m_output->writeUInt32(ServerMsgDefs::ECHO_RESPONSE);
         m_output->writeUInt32(number);

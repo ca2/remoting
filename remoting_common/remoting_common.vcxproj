@@ -544,11 +544,11 @@
     <ClCompile Include="rfb\StandardPixelFormatFactory.cpp" />
     <ClCompile Include="rfb\TunnelDefs.cpp" />
     <ClCompile Include="rfb\VendorDefs.cpp" />
-    <ClCompile Include="thread\AutoLock.cpp" />
+    <ClCompile Include="thread\critical_section_lock.cpp" />
     <ClCompile Include="thread\DesktopSelector.cpp" />
     <ClCompile Include="thread\GlobalMutex.cpp" />
     <ClCompile Include="thread\GuiThread.cpp" />
-    <ClCompile Include="thread\LocalMutex.cpp" />
+    <ClCompile Include="thread\critical_section.cpp" />
     <ClCompile Include="thread\Thread.cpp" />
     <ClCompile Include="thread\ThreadCollector.cpp" />
     <ClCompile Include="util\BrokenHandleException.cpp" />
@@ -803,11 +803,11 @@
     <ClInclude Include="rfb\TunnelDefs.h" />
     <ClInclude Include="rfb\VendorDefs.h" />
     <ClInclude Include="rfb\_.h" />
-    <ClInclude Include="thread\AutoLock.h" />
+    <ClInclude Include="thread\critical_section_lock.h" />
     <ClInclude Include="thread\DesktopSelector.h" />
     <ClInclude Include="thread\GlobalMutex.h" />
     <ClInclude Include="thread\GuiThread.h" />
-    <ClInclude Include="thread\LocalMutex.h" />
+    <ClInclude Include="thread\critical_section.h" />
     <ClInclude Include="thread\Lockable.h" />
     <ClInclude Include="thread\resource.h" />
     <ClInclude Include="thread\Thread.h" />

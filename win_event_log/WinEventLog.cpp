@@ -28,7 +28,7 @@
 #include "remoting/remoting_common/util/Exception.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 #include "remoting/remoting_common/win_system/RegistryKey.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 
 WinEventLog::WinEventLog(LogWriter *log)
 : m_hEventLog(0),
@@ -55,13 +55,13 @@ void WinEventLog::enable()
 
 void WinEventLog::registerEventSource()
 {
-  AutoLock al(&m_hEventLogMutex);
+  critical_section_lock al(&m_hEventLogMutex);
   m_hEventLog = RegisterEventSource(0, LogNames::WIN_EVENT_PROVIDER_NAME);
 }
 
 void WinEventLog::deRegisterEventSource()
 {
-  AutoLock al(&m_hEventLogMutex);
+  critical_section_lock al(&m_hEventLogMutex);
   if (m_hEventLog)
     DeregisterEventSource(m_hEventLog);
   m_hEventLog = 0;
@@ -150,6 +150,6 @@ void WinEventLog::reportEvent(unsigned int messageId,
 
 HANDLE WinEventLog::getLogHandle()
 {
-  AutoLock al(&m_hEventLogMutex);
+  critical_section_lock al(&m_hEventLogMutex);
   return m_hEventLog;
 }

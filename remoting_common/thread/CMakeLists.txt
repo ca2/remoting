@@ -5,8 +5,8 @@ project(remoting_thread)
 list(APPEND library_source
    framework.cpp
    framework.h
-   AutoLock.cpp
-   AutoLock.h
+   critical_section_lock.cpp
+   critical_section_lock.h
    DesktopSelector.cpp
    GlobalMutex.cpp
    GlobalMutex.h
@@ -14,8 +14,8 @@ list(APPEND library_source
    framework.h
    DesktopSelector.h
    Lockable.h
-   LocalMutex.h
-   LocalMutex.cpp
+   critical_section.h
+   critical_section.cpp
    GuiThread.h
    framework.cpp
    resource.h

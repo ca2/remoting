@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 #include "remoting/remoting_common/region/Region.h"
 #include "UpdateContainer.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 
 
@@ -54,7 +54,7 @@ public:
   // Adds border rectangle to changed region.
   void dazzleChangedReg()
   {
-    AutoLock al(&m_updContLocMut);
+    critical_section_lock al(&m_updContLocMut);
     addChangedRect(m_borderRect);
   }
 
@@ -79,10 +79,10 @@ private:
   ::int_rectangle m_borderRect;
 
   Region m_excludedRegion;
-  LocalMutex m_exclRegLocMut;
+  critical_section m_exclRegLocMut;
 
   UpdateContainer m_updateContainer;
-  LocalMutex m_updContLocMut;
+  critical_section m_updContLocMut;
 };
 
 //// __UPDATEKEEPER_H__

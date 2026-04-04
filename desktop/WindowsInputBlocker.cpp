@@ -24,9 +24,9 @@
 #include "framework.h"
 #include "WindowsInputBlocker.h"
 #include "remoting/remoting_common/util/Exception.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 
-LocalMutex WindowsInputBlocker::m_instanceMutex;
+critical_section WindowsInputBlocker::m_instanceMutex;
 HHOOK WindowsInputBlocker::m_hKeyboardHook = 0;
 HHOOK WindowsInputBlocker::m_hSoftKeyboardHook = 0;
 HHOOK WindowsInputBlocker::m_hMouseHook = 0;
@@ -34,7 +34,7 @@ HHOOK WindowsInputBlocker::m_hSoftMouseHook = 0;
 
 ::earth::time WindowsInputBlocker::m_lastInputTime;
 unsigned int WindowsInputBlocker::m_timeInterval = INFINITE;
-LocalMutex WindowsInputBlocker::m_lastInputTimeMutex;
+critical_section WindowsInputBlocker::m_lastInputTimeMutex;
 
 WindowsInputBlocker *WindowsInputBlocker::m_instance = 0;
 
@@ -46,7 +46,7 @@ WindowsInputBlocker::WindowsInputBlocker(LogWriter *log)
   m_log(log)
 {
   {
-    AutoLock al(&m_instanceMutex);
+    critical_section_lock al(&m_instanceMutex);
     if (m_instance != 0) {
       throw ::remoting::Exception("The only one instance of"
                       "WindowsInputBlocker is allowed");
@@ -65,13 +65,13 @@ WindowsInputBlocker::~WindowsInputBlocker()
 
 ::earth::time WindowsInputBlocker::getLastInputTime() const
 {
-  AutoLock al(&m_lastInputTimeMutex);
+  critical_section_lock al(&m_lastInputTimeMutex);
   return m_lastInputTime;
 }
 
 void WindowsInputBlocker::correctLastTime(::earth::time newTime)
 {
-  AutoLock al(&m_lastInputTimeMutex);
+  critical_section_lock al(&m_lastInputTimeMutex);
   if (newTime.getTime() > m_lastInputTime.getTime()) {
     newTime = ::earth::time(newTime.getTime());
   }

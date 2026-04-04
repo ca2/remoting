@@ -29,7 +29,7 @@
 #include "remoting/remoting_common/rfb/CursorShape.h"
 #include "desktop/UpdateContainer.h"
 //#include "remoting/remoting_common/util/::earth::time.h"
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 //#include "log_writer/LogWriter.h"
 
 class CursorUpdates
@@ -92,7 +92,7 @@ private:
   CursorShape m_cursorShape;
   FrameBuffer m_shapeBackground;
   Point m_backgroundPos;
-  LocalMutex m_curPosLocMut;
+  critical_section m_curPosLocMut;
   // Uses when the rich enabled but pointer pos disabled to determine
   // the last send method: by a cursor shape update or drawing on the
   // frame buffer.

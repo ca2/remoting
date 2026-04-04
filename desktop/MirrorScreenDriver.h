@@ -37,7 +37,7 @@ class MirrorScreenDriver : public UpdateDetector
 public:
   MirrorScreenDriver(UpdateKeeper *updateKeeper,
                      UpdateListener *updateListener,
-                     LocalMutex *fbLocalMutex,
+                     critical_section *fbcritical_section,
                      LogWriter *log);
   virtual ~MirrorScreenDriver();
 
@@ -69,7 +69,7 @@ private:
   FrameBuffer m_frameBuffer;
   // TO THINK: One may use a self mutex here, because do not
   // use external objects here.
-  LocalMutex *m_fbMutex;
+  critical_section *m_fbMutex;
 
   WindowsEvent m_updateTimeout;
 

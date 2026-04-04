@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "LogServer.h"
-#include "remoting/thread/AutoLock.h"
+#include "remoting/thread/critical_section_lock.h"
 
 LogServer::LogServer(const ::scoped_string & scopedstrPublicPipeName)
 : m_listenLogServer(0),
@@ -39,7 +39,7 @@ LogServer::~LogServer()
   if (m_listenLogServer != 0) delete m_listenLogServer;
 
   {
-    AutoLock al(&m_logPropsMutex);
+    critical_section_lock al(&m_logPropsMutex);
     for (ConnListIter iter = m_notAuthConnList.begin();
          iter != m_notAuthConnList.end(); iter++) {
       (*iter)->close();
@@ -51,7 +51,7 @@ LogServer::~LogServer()
   }
   m_threadCollector.destroyAllThreads();
   {
-    AutoLock al(&m_logPropsMutex);
+    critical_section_lock al(&m_logPropsMutex);
     for (FAccountListIter iter = m_fileAccountList.begin();
          iter != m_fileAccountList.end(); iter++) {
       delete (*iter).second;
@@ -70,7 +70,7 @@ void LogServer::start(const ::scoped_string & scopedstrLogDir,
 
 void LogServer::changeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel)
 {
-  AutoLock al(&m_logPropsMutex);
+  critical_section_lock al(&m_logPropsMutex);
   m_logLevel = newLevel;
   m_logDir= newLogDir;
 
@@ -93,7 +93,7 @@ void LogServer::changeLogProps(const ::scoped_string & scopedstrNewLogDir, unsig
 
 void LogServer::storeHeader()
 {
-  AutoLock al(&m_logPropsMutex);
+  critical_section_lock al(&m_logPropsMutex);
   if (m_fileAccountList.size() >= 1) {
     m_fileAccountList[0]->storeHeader();
   }
@@ -101,7 +101,7 @@ void LogServer::storeHeader()
 
 void LogServer::onNewConnection(Channel *channel)
 {
-  AutoLock al(&m_logPropsMutex);
+  critical_section_lock al(&m_logPropsMutex);
   m_notAuthConnList.add(new LogConn(channel, this, this, m_logLevel));
 }
 
@@ -112,7 +112,7 @@ FileAccountHandle LogServer::onLogConnAuth(LogConn *logConn, bool success,
   m_threadCollector.addThread(logConn);
   // Removing this connection from m_notAuthConnList
   {
-    AutoLock al(&m_logPropsMutex);
+    critical_section_lock al(&m_logPropsMutex);
     for (ConnListIter iter = m_notAuthConnList.begin();
          iter != m_notAuthConnList.end(); iter++) {
       LogConn *connOfList = *iter;
@@ -124,7 +124,7 @@ FileAccountHandle LogServer::onLogConnAuth(LogConn *logConn, bool success,
   }
   // Adding this connection to m_connList if success authentication
   if (success) {
-    AutoLock al(&m_logPropsMutex);
+    critical_section_lock al(&m_logPropsMutex);
     m_connList.add(logConn);
     return addConnection(fileName);
   } // Else ZombieKiller will destroy logConn.
@@ -133,7 +133,7 @@ FileAccountHandle LogServer::onLogConnAuth(LogConn *logConn, bool success,
 
 void LogServer::onDisconnect(LogConn *logConn)
 {
-  AutoLock al(&m_logPropsMutex);
+  critical_section_lock al(&m_logPropsMutex);
   // Search and removing this connection from m_notAuthConnList.
   for (ConnListIter iter = m_notAuthConnList.begin();
        iter != m_notAuthConnList.end(); iter++) {
@@ -161,7 +161,7 @@ void LogServer::onLog(FileAccountHandle handle,
                       int level,
                       const ::scoped_string & scopedstrMessage)
 {
-  AutoLock al(&m_logPropsMutex);
+  critical_section_lock al(&m_logPropsMutex);
   FAccountListIter iter = m_fileAccountList.find(handle);
   if (iter == m_fileAccountList.end()) {
     throw ::remoting::Exception("Unhandled log scopedstrMessage");
@@ -180,7 +180,7 @@ void LogServer::onAnErrorFromLogConn(const ::scoped_string & scopedstrMessage)
 
 FileAccountHandle LogServer::addConnection(const ::scoped_string & scopedstrFileName)
 {
-  AutoLock al(&m_logPropsMutex);
+  critical_section_lock al(&m_logPropsMutex);
   for (FAccountListIter iter = m_fileAccountList.begin();
        iter != m_fileAccountList.end(); iter++) {
     if ((*iter).second->isTheOurFileName(fileName)) {

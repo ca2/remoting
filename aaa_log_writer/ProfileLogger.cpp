@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <numeric> 
 #include <utility> 
-#include "remoting/thread/AutoLock.h"
+#include "remoting/thread/critical_section_lock.h"
 
 // does not works on XP
 // #include "Realtimeapiset.h"
@@ -16,7 +16,7 @@ ProfileLogWriter::~ProfileLogWriter()
 
 ProcessorTimes ProfileLogWriter::checkPoint(const ::scoped_string & scopedstrDescription)
 {
-  AutoLock al(&m_mapMut);
+  critical_section_lock al(&m_mapMut);
 
   /*
   try {
@@ -70,7 +70,7 @@ bool pairCompare(const CHECKPPOINTPAIR& firstElem, const CHECKPPOINTPAIR& second
 
 ::array_base<::array_base<TCHAR>> ProfileLogWriter::dropStat()
 {
-  AutoLock al(&m_mapMut);
+  critical_section_lock al(&m_mapMut);
   ::array_base<::array_base<TCHAR>> resultStrings;
   if (m_checkPoints.size() == 0)
     return resultStrings;

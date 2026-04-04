@@ -45,11 +45,20 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "070B8EE91B6E53F900D26137"
+            BuildableName = "_remoting_remoting.app"
+            BlueprintName = "_remoting_remoting"
+            ReferencedContainer = "container:_remoting_remoting.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "070B8EE91B6E53F900D26137"
             BuildableName = "_app_app.app"
             BlueprintName = "_app_app"
             ReferencedContainer = "container:_app_app.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -67,6 +76,15 @@
             ReferencedContainer = "container:_app_app.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "070B8EE91B6E53F900D26137"
+            BuildableName = "_app_app.app"
+            BlueprintName = "_app_app"
+            ReferencedContainer = "container:_app_app.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

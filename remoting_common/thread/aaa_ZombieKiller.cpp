@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ZombieKiller.h"
 
-#include "AutoLock.h"
+#include "critical_section_lock.h"
 
 // ZombieKiller::ZombieKiller()
 // {
@@ -50,14 +50,14 @@
 //
 // void ZombieKiller::addZombie(Thread *zombie)
 // {
-//   AutoLock l(&m_lockObj);
+//   critical_section_lock l(&m_lockObj);
 //
 //   m_zombies.add(zombie);
 // }
 //
 // void ZombieKiller::deleteDeadZombies()
 // {
-//   AutoLock l(&m_lockObj);
+//   critical_section_lock l(&m_lockObj);
 //
 //   ThreadList::iterator iter = m_zombies.begin();
 //   while (iter != m_zombies.end()) {
@@ -77,7 +77,7 @@
 //
 // void ZombieKiller::killAllZombies()
 // {
-//   AutoLock l(&m_lockObj);
+//   critical_section_lock l(&m_lockObj);
 //
 //   ThreadList::iterator iter;
 //   for (iter = m_zombies.begin(); iter != m_zombies.end(); iter++) {

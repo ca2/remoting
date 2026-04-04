@@ -43,7 +43,7 @@ void RfbCutTextEventClientMessage::send(RfbOutputGate *output)
   cutTextAnsi = m_cutText;
   unsigned int length = static_cast<unsigned int>(cutTextAnsi.length());
 
-  AutoLock al(output);
+  critical_section_lock al(output);
   output->writeUInt8(ClientMsgDefs::CLIENT_CUT_TEXT);
   output->writeUInt8(0); // padding 3 bytes
   output->writeUInt8(0);
@@ -59,7 +59,7 @@ void RfbCutTextEventClientMessage::sendUtf8(RfbOutputGate *output)
   cutTextUtf = m_cutText;
   unsigned int length = static_cast<unsigned int>(cutTextUtf.length());
 
-  AutoLock al(output);
+  critical_section_lock al(output);
   output->writeUInt32(ClientMsgDefs::CLIENT_CUT_TEXT_UTF8);
   output->writeUInt32(length);
   output->write(cutTextUtf, length);

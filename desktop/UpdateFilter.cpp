@@ -29,7 +29,7 @@ static const int BLOCK_SIZE = 32;
 
 UpdateFilter::UpdateFilter(ScreenDriver *screenDriver,
                            FrameBuffer *frameBuffer,
-                           LocalMutex *frameBufferCriticalSection,
+                           critical_section *frameBufferCriticalSection,
                            LogWriter *log)
 : m_screenDriver(screenDriver),
   m_frameBuffer(frameBuffer),
@@ -46,7 +46,7 @@ UpdateFilter::~UpdateFilter()
 void UpdateFilter::filter(UpdateContainer *updateContainer)
 {
   m_log->debug("UpdateFilter::filter()");
-  AutoLock al(m_fbMutex);
+  critical_section_lock al(m_fbMutex);
 
   FrameBuffer *screenFrameBuffer = m_screenDriver->getScreenBuffer();
 

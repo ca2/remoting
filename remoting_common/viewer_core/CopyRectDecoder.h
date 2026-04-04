@@ -49,7 +49,7 @@ protected:
   virtual void copy(FrameBuffer *dstFrameBuffer,
                     const FrameBuffer *srcFrameBuffer,
                     const ::int_rectangle &  rect,
-                    LocalMutex *fbLock);
+                    critical_section *fbLock);
 
 private:
   // This Point save left-top corner of copy-rectangle.

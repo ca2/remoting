@@ -129,7 +129,7 @@ protected:
   //
 
   static Configurator *s_instance;
-  static LocalMutex m_instanceMutex;
+  static critical_section m_instanceMutex;
 };
 
 

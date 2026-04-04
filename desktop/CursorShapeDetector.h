@@ -37,7 +37,7 @@ public:
   CursorShapeDetector(UpdateKeeper *updateKeeper,
                      UpdateListener *updateListener,
                      CursorShapeGrabber *mouseGrabber,
-                     LocalMutex *mouseGrabLocMut,
+                     critical_section *mouseGrabLocMut,
                      LogWriter *log);
   virtual ~CursorShapeDetector();
 
@@ -46,7 +46,7 @@ protected:
   virtual void onTerminate();
 
   CursorShapeGrabber *m_mouseGrabber;
-  LocalMutex *m_mouseGrabLocMut;
+  critical_section *m_mouseGrabLocMut;
   WindowsEvent m_sleepTimer;
 
   LogWriter *m_log;

@@ -91,7 +91,7 @@ void VideoRegionsConfigDialog::updateUI()
   ::string textAreaData;
   TCHAR endLine[3] = {13, 10, 0};
   {
-    AutoLock al(m_config);
+    critical_section_lock al(m_config);
     textAreaData= "";
     for (size_t i = 0; i < videoClasses->size(); i++) {
       textAreaData.appendString(videoClasses->at(i));
@@ -104,7 +104,7 @@ void VideoRegionsConfigDialog::updateUI()
   m_videoClasses.setText(textAreaData);
 
   {
-    AutoLock al(m_config);
+    critical_section_lock al(m_config);
     textAreaData= "";
     for (size_t i = 0; i < videoRects->size(); i++) {
       ::int_rectangle r = videoRects->at(i);
@@ -122,7 +122,7 @@ void VideoRegionsConfigDialog::apply()
   // FIXME: Bad code
 
   
-  AutoLock al(m_config);
+  critical_section_lock al(m_config);
 
   //
   // Clear old video classes names container

@@ -31,7 +31,7 @@
 #include "remoting/io/DataOutputStream.h"
 #include "remoting/thread/Thread.h"
 #include "log_writer/LogWriter.h"
-#include "remoting/thread/AutoLock.h"
+#include "remoting/thread/critical_section_lock.h"
 #include "log_writer/LogDump.h"
 
 class ClientLogWriter : public LogWriter, private Thread, public LogDump
@@ -72,12 +72,12 @@ private:
   Channel *m_logSendingChan;
   DataInputStream *m_logInput;
   DataOutputStream *m_logOutput;
-  LocalMutex m_logWritingMut;
+  critical_section m_logWritingMut;
 
   Channel *m_levListenChan;
 
   int m_logBarrier;
-  LocalMutex m_logBarMut;
+  critical_section m_logBarMut;
 
   ::string m_logFileName;
   ::string m_publicPipeName;

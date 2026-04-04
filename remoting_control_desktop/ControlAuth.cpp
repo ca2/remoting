@@ -26,7 +26,7 @@
 //#include "remoting/remoting_common/util/::string.h"
 #include "remoting_control_desktop/ControlProto.h"
 
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 
 #include "remoting/remoting_common/util/DesCrypt.h"
 #include <algorithm>
@@ -45,7 +45,7 @@ ControlAuth::ControlAuth(ControlGate *gate, const ::scoped_string & scopedstrPas
          ::minimum(passwordAnsi.length(), sizeof(m_password)));
 
   // FIXME: Why it's commented out?
-  // AutoLock l(m_gate);
+  // critical_section_lock l(m_gate);
 
   m_gate->writeUInt32(ControlProto::AUTH_MSG_ID);
   m_gate->writeUInt32(0);

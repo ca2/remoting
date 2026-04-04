@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 //#include "remoting/remoting_common/util/::earth::time.h"
 
 // This class will be insert an time interval between trying of
@@ -52,7 +52,7 @@ private:
   ::earth::time m_firstFailureTime;
   unsigned int m_failureCount;
   unsigned int m_failureMaxCount;
-  LocalMutex m_countMutex;
+  critical_section m_countMutex;
 };
 
 //// __AUTHTRACKER_H__

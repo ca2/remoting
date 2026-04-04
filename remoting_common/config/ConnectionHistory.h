@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/win_system/RegistryKey.h"
+//#include "remoting/remoting_common/win_system/RegistryKey.h"
 
 //#include <vector>
 
@@ -46,11 +46,14 @@ public:
    * @param key registry key identifing root storage for connection history.
    * @param limit maximum count of connection history entries.
    */
-  ConnectionHistory(RegistryKey *key, size_t limit);
+  //ConnectionHistory(RegistryKey *key, size_t limit);
+   ConnectionHistory();
   /**
    * Destructor.
    */
   virtual ~ConnectionHistory();
+   
+   virtual void initialize_connection_history(const ::scoped_string & scopedstr, size_t limit);
 
   /**
    * Sets connection history entries limit and truncates history
@@ -108,7 +111,7 @@ protected:
   void releaseHosts();
   void removeHost(const ::scoped_string & scopedstrHost);
 
-protected:
+//protected:
   /**
    * Array of history enries.
    */
@@ -122,7 +125,7 @@ protected:
   /**
    * Registry key for saving and loading connection history data.
    */
-  RegistryKey *m_key;
+  //RegistryKey *m_key;
 };
 
 

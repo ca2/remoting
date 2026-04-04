@@ -29,7 +29,7 @@ ConsolePoller::ConsolePoller(UpdateKeeper *updateKeeper,
                              UpdateListener *updateListener,
                              ScreenGrabber *screenGrabber,
                              FrameBuffer *backupFrameBuffer,
-                             LocalMutex *frameBufferMutex,
+                             critical_section *frameBufferMutex,
                              LogWriter *log)
 : UpdateDetector(updateKeeper, updateListener),
   m_screenGrabber(screenGrabber),
@@ -64,7 +64,7 @@ void ConsolePoller::execute()
       int pollWidth = m_pollingRect.width();
 
       {
-        AutoLock al(m_frameBufferMutex);
+        critical_section_lock al(m_frameBufferMutex);
         ::int_rectangle offsetFb = m_screenGrabber->getScreenRect();
         conRect.move(-offsetFb.left, -offsetFb.top);
         FrameBuffer *screenFrameBuffer = m_screenGrabber->getScreenBuffer();

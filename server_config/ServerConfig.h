@@ -29,8 +29,8 @@
 #include "remoting/remoting_common/util/Exception.h"
 #include "PortMappingContainer.h"
 #include "IpAccessControl.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 #include "IpAccessRule.h"
 #include "remoting/remoting_common/io/DataInputStream.h"
 #include "remoting/remoting_common/io/DataOutputStream.h"
@@ -434,7 +434,7 @@ private:
   // Critical section
   //
 
-  LocalMutex m_objectCS;
+  critical_section m_objectCS;
 };
 
 

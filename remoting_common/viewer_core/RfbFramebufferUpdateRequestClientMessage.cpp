@@ -37,7 +37,7 @@ RfbFramebufferUpdateRequestClientMessage::~RfbFramebufferUpdateRequestClientMess
 
 void RfbFramebufferUpdateRequestClientMessage::send(RfbOutputGate * output)
 {
-  AutoLock al(output);
+  critical_section_lock al(output);
   output->writeUInt8(ClientMsgDefs::FB_UPDATE_REQUEST);
   output->writeUInt8(m_incremental);
   output->writeUInt16(static_cast<unsigned short>(m_rect.left));

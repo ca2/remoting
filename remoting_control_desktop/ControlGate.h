@@ -29,10 +29,10 @@
 #include "remoting/remoting_common/io/DataOutputStream.h"
 #include "remoting/remoting_common/io/Channel.h"
 
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 
 class ControlGate : public DataInputStream, public DataOutputStream,
-                    public LocalMutex
+                    public critical_section
 {
 public:
   ControlGate(Channel *stream);

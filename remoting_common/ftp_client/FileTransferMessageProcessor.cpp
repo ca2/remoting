@@ -40,7 +40,7 @@ namespace remoting
       void FileTransferMessageProcessor::processRfbMessage(DataInputStream * pinput,
                                                            unsigned int rfbMessage)
       {
-         AutoLock al(&m_listeners);
+         critical_section_lock al(&m_listeners);
 
          for (size_t i = 0; i < m_listeners.size(); i++) {
             FileTransferEventHandler *listener = m_listeners.at(i);

@@ -29,8 +29,8 @@
 #include "remoting/remoting_common/util/Singleton.h"
 #include "remoting/remoting_common/config/ConnectionHistory.h"
 //#include "log_writer/FileLogWriter.h"
-#include "remoting/remoting_common/thread/LocalMutex.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/thread/critical_section_lock.h"
 
 #include "remoting/remoting_common/client_config/ConnectionConfig.h"
 
@@ -118,10 +118,10 @@ namespace remoting
       ::string m_logName;
       //FileLogWriter *m_LogWriter;
       // Connection history
-      RegistryKey m_conHistoryKey; // Used by m_conHistory
+      //RegistryKey m_conHistoryKey; // Used by m_conHistory
       ConnectionHistory m_conHistory;
       //private:
       // Critical section for synchronization
-      mutable LocalMutex m_cs;
+      mutable critical_section m_cs;
    };
 } // namespace remoting

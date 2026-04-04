@@ -47,7 +47,7 @@ public:
 
   Win8ScreenDriver(UpdateKeeper *updateKeeper,
                    UpdateListener *updateListener,
-                   LocalMutex *fbLocalMutex,
+                   critical_section *fbcritical_section,
                    LogWriter *log);
   virtual ~Win8ScreenDriver();
 
@@ -72,14 +72,14 @@ public:
 
 private:
   LogWriter *m_log;
-  LocalMutex *m_fbLocalMutex;
+  critical_section *m_fbcritical_section;
   UpdateKeeper *m_updateKeeper;
   UpdateListener *m_updateListener;
   // This member must be always gueranted non zero. Otherwise an excption must
   // be provided from the constructor of this class.
   Win8ScreenDriverImpl *m_drvImpl;
   CopyRectDetector m_copyRectDetector;
-  LocalMutex m_drvImplMutex;
+  critical_section m_drvImplMutex;
 
   CursorShape m_cursorShape;
 

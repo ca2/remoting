@@ -1,0 +1,629 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9A26B2812F816F280047ECA2 /* ControlTrayIcon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B24F2F816ED30047ECA2 /* ControlTrayIcon.cpp */; };
+		9A26B2822F816F280047ECA2 /* application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2412F816ED30047ECA2 /* application.cpp */; };
+		9A26B2832F816F280047ECA2 /* AboutDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B23F2F816ED30047ECA2 /* AboutDialog.cpp */; };
+		9A26B2842F816F280047ECA2 /* BuildTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2452F816ED30047ECA2 /* BuildTime.cpp */; };
+		9A26B2852F816F280047ECA2 /* ConnectingDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2492F816ED30047ECA2 /* ConnectingDialog.cpp */; };
+		9A26B2862F816F280047ECA2 /* ConfigurationDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2472F816ED30047ECA2 /* ConfigurationDialog.cpp */; };
+		9A26B2872F816F280047ECA2 /* ConnectionData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B24B2F816ED30047ECA2 /* ConnectionData.cpp */; };
+		9A26B2882F816F280047ECA2 /* ConnectionListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B24D2F816ED30047ECA2 /* ConnectionListener.cpp */; };
+		9A26B2892F816F280047ECA2 /* AuthenticationDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2432F816ED30047ECA2 /* AuthenticationDialog.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9A26B28A2F816F350047ECA2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A373F052F81649A00E892B1 /* remoting_common.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 9A373EFD2F81647000E892B1;
+			remoteInfo = remoting_common;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		9A26B23A2F816ED30047ECA2 /* _.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _.h; sourceTree = "<group>"; };
+		9A26B23B2F816ED30047ECA2 /* _.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = _.cpp; sourceTree = "<group>"; };
+		9A26B23C2F816ED30047ECA2 /* _____debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "_____debug.xcconfig"; sourceTree = "<group>"; };
+		9A26B23D2F816ED30047ECA2 /* _____release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "_____release.xcconfig"; sourceTree = "<group>"; };
+		9A26B23E2F816ED30047ECA2 /* AboutDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AboutDialog.h; sourceTree = "<group>"; };
+		9A26B23F2F816ED30047ECA2 /* AboutDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AboutDialog.cpp; sourceTree = "<group>"; };
+		9A26B2402F816ED30047ECA2 /* application.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = application.h; sourceTree = "<group>"; };
+		9A26B2412F816ED30047ECA2 /* application.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = application.cpp; sourceTree = "<group>"; };
+		9A26B2422F816ED30047ECA2 /* AuthenticationDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AuthenticationDialog.h; sourceTree = "<group>"; };
+		9A26B2432F816ED30047ECA2 /* AuthenticationDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AuthenticationDialog.cpp; sourceTree = "<group>"; };
+		9A26B2442F816ED30047ECA2 /* BuildTime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BuildTime.h; sourceTree = "<group>"; };
+		9A26B2452F816ED30047ECA2 /* BuildTime.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BuildTime.cpp; sourceTree = "<group>"; };
+		9A26B2462F816ED30047ECA2 /* ConfigurationDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigurationDialog.h; sourceTree = "<group>"; };
+		9A26B2472F816ED30047ECA2 /* ConfigurationDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigurationDialog.cpp; sourceTree = "<group>"; };
+		9A26B2482F816ED30047ECA2 /* ConnectingDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConnectingDialog.h; sourceTree = "<group>"; };
+		9A26B2492F816ED30047ECA2 /* ConnectingDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ConnectingDialog.cpp; sourceTree = "<group>"; };
+		9A26B24A2F816ED30047ECA2 /* ConnectionData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConnectionData.h; sourceTree = "<group>"; };
+		9A26B24B2F816ED30047ECA2 /* ConnectionData.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ConnectionData.cpp; sourceTree = "<group>"; };
+		9A26B24C2F816ED30047ECA2 /* ConnectionListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConnectionListener.h; sourceTree = "<group>"; };
+		9A26B24D2F816ED30047ECA2 /* ConnectionListener.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ConnectionListener.cpp; sourceTree = "<group>"; };
+		9A26B24E2F816ED30047ECA2 /* ControlTrayIcon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ControlTrayIcon.h; sourceTree = "<group>"; };
+		9A26B24F2F816ED30047ECA2 /* ControlTrayIcon.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ControlTrayIcon.cpp; sourceTree = "<group>"; };
+		9A26B2502F816ED30047ECA2 /* DesktopWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DesktopWindow.h; sourceTree = "<group>"; };
+		9A26B2512F816ED30047ECA2 /* DesktopWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DesktopWindow.cpp; sourceTree = "<group>"; };
+		9A26B2522F816ED30047ECA2 /* FileExistDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileExistDialog.h; sourceTree = "<group>"; };
+		9A26B2532F816ED30047ECA2 /* FileExistDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FileExistDialog.cpp; sourceTree = "<group>"; };
+		9A26B2542F816ED30047ECA2 /* FileInfoListView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileInfoListView.h; sourceTree = "<group>"; };
+		9A26B2552F816ED30047ECA2 /* FileInfoListView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FileInfoListView.cpp; sourceTree = "<group>"; };
+		9A26B2562F816ED30047ECA2 /* FileRenameDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileRenameDialog.h; sourceTree = "<group>"; };
+		9A26B2572F816ED30047ECA2 /* FileRenameDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FileRenameDialog.cpp; sourceTree = "<group>"; };
+		9A26B2582F816ED30047ECA2 /* FileTransferMainDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileTransferMainDialog.h; sourceTree = "<group>"; };
+		9A26B2592F816ED30047ECA2 /* FileTransferMainDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FileTransferMainDialog.cpp; sourceTree = "<group>"; };
+		9A26B25A2F816ED30047ECA2 /* framework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = framework.h; sourceTree = "<group>"; };
+		9A26B25B2F816ED30047ECA2 /* framework.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = framework.cpp; sourceTree = "<group>"; };
+		9A26B25C2F816ED30047ECA2 /* FsWarningDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FsWarningDialog.h; sourceTree = "<group>"; };
+		9A26B25D2F816ED30047ECA2 /* FsWarningDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FsWarningDialog.cpp; sourceTree = "<group>"; };
+		9A26B25E2F816ED30047ECA2 /* HelpDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpDialog.h; sourceTree = "<group>"; };
+		9A26B25F2F816ED30047ECA2 /* HelpDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HelpDialog.cpp; sourceTree = "<group>"; };
+		9A26B2602F816ED30047ECA2 /* impact_toolbar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = impact_toolbar.h; sourceTree = "<group>"; };
+		9A26B2612F816ED30047ECA2 /* impact_toolbar.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = impact_toolbar.cpp; sourceTree = "<group>"; };
+		9A26B2622F816ED30047ECA2 /* keyboard_layout_change.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = keyboard_layout_change.h; sourceTree = "<group>"; };
+		9A26B2632F816ED30047ECA2 /* keyboard_layout_change.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = keyboard_layout_change.cpp; sourceTree = "<group>"; };
+		9A26B2642F816ED30047ECA2 /* LoginDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginDialog.h; sourceTree = "<group>"; };
+		9A26B2652F816ED30047ECA2 /* LoginDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LoginDialog.cpp; sourceTree = "<group>"; };
+		9A26B2662F816ED30047ECA2 /* NamingDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NamingDefs.h; sourceTree = "<group>"; };
+		9A26B2672F816ED30047ECA2 /* NamingDefs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NamingDefs.cpp; sourceTree = "<group>"; };
+		9A26B2682F816ED30047ECA2 /* NewFolderDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewFolderDialog.h; sourceTree = "<group>"; };
+		9A26B2692F816ED30047ECA2 /* NewFolderDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NewFolderDialog.cpp; sourceTree = "<group>"; };
+		9A26B26A2F816ED30047ECA2 /* OptionsDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptionsDialog.h; sourceTree = "<group>"; };
+		9A26B26B2F816ED30047ECA2 /* OptionsDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OptionsDialog.cpp; sourceTree = "<group>"; };
+		9A26B26C2F816ED30047ECA2 /* remoting_impact.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = remoting_impact.h; sourceTree = "<group>"; };
+		9A26B26D2F816ED30047ECA2 /* remoting_impact.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = remoting_impact.cpp; sourceTree = "<group>"; };
+		9A26B2712F816EF70047ECA2 /* ResourceStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceStrings.h; sourceTree = "<group>"; };
+		9A26B2722F816EF70047ECA2 /* ResourceStrings.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ResourceStrings.cpp; sourceTree = "<group>"; };
+		9A26B2732F816EF70047ECA2 /* ScaleManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScaleManager.h; sourceTree = "<group>"; };
+		9A26B2742F816EF70047ECA2 /* ScaleManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ScaleManager.cpp; sourceTree = "<group>"; };
+		9A26B2752F816EF70047ECA2 /* ViewerCmdLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewerCmdLine.h; sourceTree = "<group>"; };
+		9A26B2762F816EF70047ECA2 /* ViewerCmdLine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ViewerCmdLine.cpp; sourceTree = "<group>"; };
+		9A26B2772F816EF70047ECA2 /* ViewerCollector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewerCollector.h; sourceTree = "<group>"; };
+		9A26B2782F816EF70047ECA2 /* ViewerCollector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ViewerCollector.cpp; sourceTree = "<group>"; };
+		9A26B2792F816EF70047ECA2 /* ViewerInstance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewerInstance.h; sourceTree = "<group>"; };
+		9A26B27A2F816EF70047ECA2 /* ViewerInstance.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ViewerInstance.cpp; sourceTree = "<group>"; };
+		9A26B27B2F816EF70047ECA2 /* ViewerMenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewerMenu.h; sourceTree = "<group>"; };
+		9A26B27C2F816EF70047ECA2 /* ViewerMenu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ViewerMenu.cpp; sourceTree = "<group>"; };
+		9A26B27D2F816EF70047ECA2 /* ViewerVncAuthHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewerVncAuthHandler.h; sourceTree = "<group>"; };
+		9A26B27E2F816EF70047ECA2 /* ViewerVncAuthHandler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ViewerVncAuthHandler.cpp; sourceTree = "<group>"; };
+		9A26B27F2F816EF70047ECA2 /* ViewerWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewerWindow.h; sourceTree = "<group>"; };
+		9A26B2802F816EF70047ECA2 /* ViewerWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ViewerWindow.cpp; sourceTree = "<group>"; };
+		9A373EE12F8162F100E892B1 /* libremoting.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libremoting.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A373F052F81649A00E892B1 /* remoting_common.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = remoting_common.xcodeproj; path = ../remoting_common/remoting_common.xcodeproj; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9A373EDF2F8162F100E892B1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9A373ED82F8162F100E892B1 = {
+			isa = PBXGroup;
+			children = (
+				9A373F052F81649A00E892B1 /* remoting_common.xcodeproj */,
+				9A373EF02F8163CA00E892B1 /* remoting */,
+				9A373EE22F8162F100E892B1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9A373EE22F8162F100E892B1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9A373EE12F8162F100E892B1 /* libremoting.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9A373EF02F8163CA00E892B1 /* remoting */ = {
+			isa = PBXGroup;
+			children = (
+				9A26B23A2F816ED30047ECA2 /* _.h */,
+				9A26B23B2F816ED30047ECA2 /* _.cpp */,
+				9A26B23C2F816ED30047ECA2 /* _____debug.xcconfig */,
+				9A26B23D2F816ED30047ECA2 /* _____release.xcconfig */,
+				9A26B23E2F816ED30047ECA2 /* AboutDialog.h */,
+				9A26B2402F816ED30047ECA2 /* application.h */,
+				9A26B2422F816ED30047ECA2 /* AuthenticationDialog.h */,
+				9A26B2432F816ED30047ECA2 /* AuthenticationDialog.cpp */,
+				9A26B2442F816ED30047ECA2 /* BuildTime.h */,
+				9A26B2462F816ED30047ECA2 /* ConfigurationDialog.h */,
+				9A26B2482F816ED30047ECA2 /* ConnectingDialog.h */,
+				9A26B24A2F816ED30047ECA2 /* ConnectionData.h */,
+				9A26B24C2F816ED30047ECA2 /* ConnectionListener.h */,
+				9A26B24E2F816ED30047ECA2 /* ControlTrayIcon.h */,
+				9A26B23F2F816ED30047ECA2 /* AboutDialog.cpp */,
+				9A26B2412F816ED30047ECA2 /* application.cpp */,
+				9A26B2452F816ED30047ECA2 /* BuildTime.cpp */,
+				9A26B2472F816ED30047ECA2 /* ConfigurationDialog.cpp */,
+				9A26B2492F816ED30047ECA2 /* ConnectingDialog.cpp */,
+				9A26B24B2F816ED30047ECA2 /* ConnectionData.cpp */,
+				9A26B24D2F816ED30047ECA2 /* ConnectionListener.cpp */,
+				9A26B24F2F816ED30047ECA2 /* ControlTrayIcon.cpp */,
+				9A26B2502F816ED30047ECA2 /* DesktopWindow.h */,
+				9A26B2512F816ED30047ECA2 /* DesktopWindow.cpp */,
+				9A26B2522F816ED30047ECA2 /* FileExistDialog.h */,
+				9A26B2532F816ED30047ECA2 /* FileExistDialog.cpp */,
+				9A26B2542F816ED30047ECA2 /* FileInfoListView.h */,
+				9A26B2552F816ED30047ECA2 /* FileInfoListView.cpp */,
+				9A26B2562F816ED30047ECA2 /* FileRenameDialog.h */,
+				9A26B2572F816ED30047ECA2 /* FileRenameDialog.cpp */,
+				9A26B2582F816ED30047ECA2 /* FileTransferMainDialog.h */,
+				9A26B2592F816ED30047ECA2 /* FileTransferMainDialog.cpp */,
+				9A26B25A2F816ED30047ECA2 /* framework.h */,
+				9A26B25B2F816ED30047ECA2 /* framework.cpp */,
+				9A26B25C2F816ED30047ECA2 /* FsWarningDialog.h */,
+				9A26B25D2F816ED30047ECA2 /* FsWarningDialog.cpp */,
+				9A26B25E2F816ED30047ECA2 /* HelpDialog.h */,
+				9A26B25F2F816ED30047ECA2 /* HelpDialog.cpp */,
+				9A26B2602F816ED30047ECA2 /* impact_toolbar.h */,
+				9A26B2612F816ED30047ECA2 /* impact_toolbar.cpp */,
+				9A26B2622F816ED30047ECA2 /* keyboard_layout_change.h */,
+				9A26B2632F816ED30047ECA2 /* keyboard_layout_change.cpp */,
+				9A26B2642F816ED30047ECA2 /* LoginDialog.h */,
+				9A26B2652F816ED30047ECA2 /* LoginDialog.cpp */,
+				9A26B2662F816ED30047ECA2 /* NamingDefs.h */,
+				9A26B2672F816ED30047ECA2 /* NamingDefs.cpp */,
+				9A26B2682F816ED30047ECA2 /* NewFolderDialog.h */,
+				9A26B2692F816ED30047ECA2 /* NewFolderDialog.cpp */,
+				9A26B26A2F816ED30047ECA2 /* OptionsDialog.h */,
+				9A26B26B2F816ED30047ECA2 /* OptionsDialog.cpp */,
+				9A26B26C2F816ED30047ECA2 /* remoting_impact.h */,
+				9A26B26D2F816ED30047ECA2 /* remoting_impact.cpp */,
+				9A26B2712F816EF70047ECA2 /* ResourceStrings.h */,
+				9A26B2722F816EF70047ECA2 /* ResourceStrings.cpp */,
+				9A26B2732F816EF70047ECA2 /* ScaleManager.h */,
+				9A26B2742F816EF70047ECA2 /* ScaleManager.cpp */,
+				9A26B2752F816EF70047ECA2 /* ViewerCmdLine.h */,
+				9A26B2762F816EF70047ECA2 /* ViewerCmdLine.cpp */,
+				9A26B2772F816EF70047ECA2 /* ViewerCollector.h */,
+				9A26B2782F816EF70047ECA2 /* ViewerCollector.cpp */,
+				9A26B2792F816EF70047ECA2 /* ViewerInstance.h */,
+				9A26B27A2F816EF70047ECA2 /* ViewerInstance.cpp */,
+				9A26B27B2F816EF70047ECA2 /* ViewerMenu.h */,
+				9A26B27C2F816EF70047ECA2 /* ViewerMenu.cpp */,
+				9A26B27D2F816EF70047ECA2 /* ViewerVncAuthHandler.h */,
+				9A26B27E2F816EF70047ECA2 /* ViewerVncAuthHandler.cpp */,
+				9A26B27F2F816EF70047ECA2 /* ViewerWindow.h */,
+				9A26B2802F816EF70047ECA2 /* ViewerWindow.cpp */,
+			);
+			name = remoting;
+			sourceTree = "<group>";
+		};
+		9A373F082F81649A00E892B1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		9A373EDD2F8162F100E892B1 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		9A373EE02F8162F100E892B1 /* remoting */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9A373EE52F8162F100E892B1 /* Build configuration list for PBXNativeTarget "remoting" */;
+			buildPhases = (
+				9A373EDD2F8162F100E892B1 /* Headers */,
+				9A373EDE2F8162F100E892B1 /* Sources */,
+				9A373EDF2F8162F100E892B1 /* Frameworks */,
+				9A26B2902F817AA30047ECA2 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9A26B28B2F816F350047ECA2 /* PBXTargetDependency */,
+			);
+			name = remoting;
+			packageProductDependencies = (
+			);
+			productName = remoting;
+			productReference = 9A373EE12F8162F100E892B1 /* libremoting.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9A373ED92F8162F100E892B1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 2640;
+				TargetAttributes = {
+					9A373EE02F8162F100E892B1 = {
+						CreatedOnToolsVersion = 26.4;
+					};
+				};
+			};
+			buildConfigurationList = 9A373EDC2F8162F100E892B1 /* Build configuration list for PBXProject "remoting" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9A373ED82F8162F100E892B1;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 9A373EE22F8162F100E892B1 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 9A373F082F81649A00E892B1 /* Products */;
+					ProjectRef = 9A373F052F81649A00E892B1 /* remoting_common.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				9A373EE02F8162F100E892B1 /* remoting */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9A26B2902F817AA30047ECA2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(EXECUTABLE_NAME)",
+				"$(WorkspaceDir)/output_copy.txt",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(WorkspaceDir)/time-$(PLATFORM_MODIFIER)/output/$(EXECUTABLE_NAME)",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = ". $HOME/code/operating_system/tool/bin/_on_after_build_dylib\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9A373EDE2F8162F100E892B1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9A26B2812F816F280047ECA2 /* ControlTrayIcon.cpp in Sources */,
+				9A26B2822F816F280047ECA2 /* application.cpp in Sources */,
+				9A26B2832F816F280047ECA2 /* AboutDialog.cpp in Sources */,
+				9A26B2842F816F280047ECA2 /* BuildTime.cpp in Sources */,
+				9A26B2852F816F280047ECA2 /* ConnectingDialog.cpp in Sources */,
+				9A26B2862F816F280047ECA2 /* ConfigurationDialog.cpp in Sources */,
+				9A26B2872F816F280047ECA2 /* ConnectionData.cpp in Sources */,
+				9A26B2882F816F280047ECA2 /* ConnectionListener.cpp in Sources */,
+				9A26B2892F816F280047ECA2 /* AuthenticationDialog.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9A26B28B2F816F350047ECA2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = remoting_common;
+			targetProxy = 9A26B28A2F816F350047ECA2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		9A373EE32F8162F100E892B1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ANALYZER_GCD = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_MEMORY_MANAGEMENT = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_CPP_STATIC_DESTRUCTORS = YES;
+				CLANG_ENABLE_MODULES = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_STATIC_ANALYZER_MODE = deep;
+				CLANG_STATIC_ANALYZER_MODE_ON_ANALYZE_ACTION = deep;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = NO;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = NO;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = NO;
+				CLANG_WARN_ENUM_CONVERSION = NO;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = NO;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_PRAGMA_PACK = NO;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = NO;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEPLOYMENT_POSTPROCESSING = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				EXCLUDED_ARCHS = "";
+				EXECUTABLE_PREFIX = lib;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(WorkspaceDir)/../operating_system/storage-$(PLATFORM_MODIFIER)/$(CONFIGURATION)/framework",
+				);
+				GCC_C_LANGUAGE_STANDARD = c11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = framework.h;
+				GCC_REUSE_STRINGS = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				"GCC_WARN_64_TO_32_BIT_CONVERSION[arch=*64]" = YES;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_UNDECLARED_SELECTOR = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path",
+					"@loader_path",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(WorkspaceDir)/operating_system",
+					"$(WorkspaceDir)/../operating_system/storage-$(PLATFORM_MODIFIER)/$(CONFIGURATION)/library",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-all_load";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				RUN_CLANG_STATIC_ANALYZER = NO;
+				SKIP_INSTALL = YES;
+				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYSTEM_HEADER_SEARCH_PATHS = (
+					"$(WorkspaceDir)/operating_system/operating_system-$(PLATFORM_MODIFIER)/include",
+					"$(WorkspaceDir)/operating_system/operating_system-$(PLATFORM_MODIFIER)/configuration",
+					"$(WorkspaceDir)/port/include",
+					"$(WorkspaceDir)/source/app/include",
+				);
+				USER_HEADER_SEARCH_PATHS = (
+					.,
+					"$(WorkspaceDir)/source",
+					"$(WorkspaceDir)/source/app",
+					"$(WorkspaceDir)/source/app/_include",
+					"$(WorkspaceDir)/operating_system",
+					"$(WorkspaceDir)/operating_system/operating_system-$(PLATFORM_MODIFIER)",
+					"$(WorkspaceDir)/operating_system/operating_system-$(PLATFORM_MODIFIER)/configuration_selection/$(CONFIGURATION)",
+					"$(WorkspaceDir)/port/_",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/..",
+					"$(PROJECT_DIR)/../..",
+					"$(HOME)/sensitive/sensitive/include",
+				);
+				USE_HEADERMAP = NO;
+				VALIDATE_PRODUCT = YES;
+				WARNING_CFLAGS = "";
+				WorkspaceDir = "$(SRCROOT)/../../..";
+			};
+			name = Debug;
+		};
+		9A373EE42F8162F100E892B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ANALYZER_GCD = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_MEMORY_MANAGEMENT = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_CPP_STATIC_DESTRUCTORS = YES;
+				CLANG_ENABLE_MODULES = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_STATIC_ANALYZER_MODE = deep;
+				CLANG_STATIC_ANALYZER_MODE_ON_ANALYZE_ACTION = deep;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = NO;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = NO;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = NO;
+				CLANG_WARN_ENUM_CONVERSION = NO;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = NO;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_PRAGMA_PACK = NO;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = NO;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEPLOYMENT_POSTPROCESSING = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				EXCLUDED_ARCHS = "";
+				EXECUTABLE_PREFIX = lib;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(WorkspaceDir)/../operating_system/storage-$(PLATFORM_MODIFIER)/$(CONFIGURATION)/framework",
+				);
+				GCC_C_LANGUAGE_STANDARD = c11;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = framework.h;
+				GCC_REUSE_STRINGS = YES;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				"GCC_WARN_64_TO_32_BIT_CONVERSION[arch=*64]" = YES;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_UNDECLARED_SELECTOR = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path",
+					"@loader_path",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(WorkspaceDir)/operating_system",
+					"$(WorkspaceDir)/../operating_system/storage-$(PLATFORM_MODIFIER)/$(CONFIGURATION)/library",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = "-all_load";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				RUN_CLANG_STATIC_ANALYZER = NO;
+				SKIP_INSTALL = YES;
+				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYSTEM_HEADER_SEARCH_PATHS = (
+					"$(WorkspaceDir)/operating_system/operating_system-$(PLATFORM_MODIFIER)/include",
+					"$(WorkspaceDir)/operating_system/operating_system-$(PLATFORM_MODIFIER)/configuration",
+					"$(WorkspaceDir)/port/include",
+					"$(WorkspaceDir)/source/app/include",
+				);
+				USER_HEADER_SEARCH_PATHS = (
+					.,
+					"$(WorkspaceDir)/source",
+					"$(WorkspaceDir)/source/app",
+					"$(WorkspaceDir)/source/app/_include",
+					"$(WorkspaceDir)/operating_system",
+					"$(WorkspaceDir)/operating_system/operating_system-$(PLATFORM_MODIFIER)",
+					"$(WorkspaceDir)/operating_system/operating_system-$(PLATFORM_MODIFIER)/configuration_selection/$(CONFIGURATION)",
+					"$(WorkspaceDir)/port/_",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/..",
+					"$(PROJECT_DIR)/../..",
+					"$(HOME)/sensitive/sensitive/include",
+				);
+				USE_HEADERMAP = NO;
+				VALIDATE_PRODUCT = YES;
+				WARNING_CFLAGS = "";
+				WorkspaceDir = "$(SRCROOT)/../../..";
+			};
+			name = Release;
+		};
+		9A373EE62F8162F100E892B1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_HARDENED_RUNTIME = YES;
+				EXECUTABLE_EXTENSION = dylib;
+				MACH_O_TYPE = mh_dylib;
+				PLATFORM_MODIFIER = macos;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		9A373EE72F8162F100E892B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_HARDENED_RUNTIME = YES;
+				EXECUTABLE_EXTENSION = dylib;
+				MACH_O_TYPE = mh_dylib;
+				PLATFORM_MODIFIER = macos;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9A373EDC2F8162F100E892B1 /* Build configuration list for PBXProject "remoting" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9A373EE32F8162F100E892B1 /* Debug */,
+				9A373EE42F8162F100E892B1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9A373EE52F8162F100E892B1 /* Build configuration list for PBXNativeTarget "remoting" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9A373EE62F8162F100E892B1 /* Debug */,
+				9A373EE72F8162F100E892B1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9A373ED92F8162F100E892B1 /* Project object */;
+}

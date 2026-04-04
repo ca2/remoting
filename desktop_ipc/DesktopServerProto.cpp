@@ -294,7 +294,7 @@ void DesktopServerProto::sendConfigSettings(BlockingGate *gate)
   gate->writeUInt8(srvConf->isRemovingDesktopWallpaperEnabled());
 
   // Send video class names
-  AutoLock al(srvConf);
+  critical_section_lock al(srvConf);
   ::string_array *wndClassNames = srvConf->getVideoClassNames();
   ::string_array::iterator iter = wndClassNames->begin();
   size_t stringCount = wndClassNames->size();
@@ -335,7 +335,7 @@ void DesktopServerProto::readConfigSettings(BlockingGate *gate)
   srvConf->enableRemovingDesktopWallpaper(gate->readUInt8() != 0);
 
   // Receive video class names
-  AutoLock al(srvConf);
+  critical_section_lock al(srvConf);
   size_t stringCount = gate->readUInt32();
 
   ::string tmpString;

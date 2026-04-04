@@ -26,9 +26,9 @@
 
 
 #include "remoting/remoting_common/io/DataInputStream.h"
-#include "remoting/remoting_common/thread/LocalMutex.h"
+#include "remoting/remoting_common/thread/critical_section.h"
 
-class BlockingInputGate : public LocalMutex, public DataInputStream
+class BlockingInputGate : public critical_section, public DataInputStream
 {
 public:
   BlockingInputGate(InputStream *inputStream);

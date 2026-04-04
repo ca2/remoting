@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "WatermarksController.h"
 #include "watermark_bmp.h"
-#include "remoting/remoting_common/thread/AutoLock.h"
+#include "remoting/remoting_common/thread/critical_section_lock.h"
 #include "remoting/remoting_common/rfb/PixelConverter.h"
 
 WatermarksController::WatermarksController(void)
@@ -77,14 +77,14 @@ void WatermarksController::setNewPixelFormat(const PixelFormat & pf)
 	}
 }
 
-void WatermarksController::showWaterMarks(FrameBuffer *frameBuffer, LocalMutex *fbLock)
+void WatermarksController::showWaterMarks(FrameBuffer *frameBuffer, critical_section *fbLock)
 {
 	m_overlay.copyFrom(frameBuffer, m_currentRect.left, m_currentRect.top);
 
 	frameBuffer->copyFrom(m_currentRect, &m_frameBuffer, 0, 0);
 }
 
-void WatermarksController::hideWatermarks(FrameBuffer *frameBuffer, LocalMutex *fbLock)
+void WatermarksController::hideWatermarks(FrameBuffer *frameBuffer, critical_section *fbLock)
 {
 	frameBuffer->copyFrom(m_currentRect, &m_overlay, 0, 0);
 }
