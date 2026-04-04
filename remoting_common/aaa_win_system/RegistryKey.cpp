@@ -26,7 +26,7 @@
 #include "RegistryKey.h"
 //#include <vector>
 
-RegistryKey::RegistryKey(HKEY rootKey, const ::scoped_string & scopedstrEntry,
+RegistryKey::RegistryKey(::acme::RegX rootKey, const ::scoped_string & scopedstrEntry,
                          bool createIfNotExists, SECURITY_ATTRIBUTES *sa)
 {
   initialize(rootKey, scopedstrEntry, createIfNotExists, sa);
@@ -38,7 +38,7 @@ RegistryKey::RegistryKey(RegistryKey *rootKey, const ::scoped_string & scopedstr
   initialize(rootKey->m_key, scopedstrEntry, createIfNotExists, sa);
 }
 
-RegistryKey::RegistryKey(HKEY rootKey)
+RegistryKey::RegistryKey(::acme::RegX rootKey)
 : m_key(rootKey), m_rootKey(rootKey)
 {
   m_entry= "";
@@ -53,7 +53,7 @@ RegistryKey::~RegistryKey()
   close();
 }
 
-void RegistryKey::open(HKEY rootKey,
+void RegistryKey::open(::acme::RegX rootKey,
                        const ::scoped_string & scopedstrEntry,
                        bool createIfNotExists,
                        SECURITY_ATTRIBUTES *sa)
@@ -69,7 +69,7 @@ void RegistryKey::open(RegistryKey *rootKey,
   initialize(rootKey->m_key, scopedstrEntry, createIfNotExists, sa);
 }
 
-HKEY RegistryKey::getHKEY() const
+::acme::RegX RegistryKey::getHKEY() const
 {
   return m_key;
 }
@@ -302,7 +302,7 @@ void RegistryKey::close()
   }
 }
 
-void RegistryKey::initialize(HKEY rootKey, const ::scoped_string & scopedstrEntry, bool createIfNotExists, SECURITY_ATTRIBUTES *sa)
+void RegistryKey::initialize(::acme::RegX rootKey, const ::scoped_string & scopedstrEntry, bool createIfNotExists, SECURITY_ATTRIBUTES *sa)
 {
   m_rootKey = rootKey;
   m_key = 0;
@@ -343,7 +343,7 @@ DWORD RegistryKey::enumKey(DWORD i, ::string & name)
   return ret;
 }
 
-bool RegistryKey::tryOpenSubKey(HKEY key, const ::scoped_string & scopedstrSubkey, HKEY *openedKey, bool createIfNotExists, SECURITY_ATTRIBUTES *sa)
+bool RegistryKey::tryOpenSubKey(::acme::RegX key, const ::scoped_string & scopedstrSubkey, ::acme::RegX *openedKey, bool createIfNotExists, SECURITY_ATTRIBUTES *sa)
 {
   if (RegOpenKey(key,::wstring(scopedstrSubkey), openedKey) != ERROR_SUCCESS) {
     if (createIfNotExists) {

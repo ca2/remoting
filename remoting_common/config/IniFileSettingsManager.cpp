@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "IniFileSettingsManager.h"
-
+#include "acme/platform/ini.h"
 
 //#include <crtdbg.h>
 // #include <vector>
@@ -73,7 +73,7 @@ bool IniFileSettingsManager::keyExist(const ::scoped_string &scopedstrName)
 
 bool IniFileSettingsManager::deleteKey(const ::scoped_string &scopedstrName)
 {
-   return WritePrivateProfileString(::wstring(m_appName), ::wstring(scopedstrName), NULL, m_path.windows_path()) ==
+   return ::acme::WritePrivateProfileString(m_appName, scopedstrName, nullptr, m_path) ==
           TRUE;
 }
 
@@ -93,7 +93,7 @@ bool IniFileSettingsManager::setString(const ::scoped_string &scopedstrName, con
    {
       return false;
    }
-   return WritePrivateProfileString(::wstring(m_appName), ::wstring(scopedstrName), ::wstring(scopedstrValue),
+   return WritePrivateProfileString(::string(m_appName), ::string(scopedstrName), ::string(scopedstrValue),
                                     m_path.windows_path()) == TRUE;
 }
 
@@ -147,7 +147,7 @@ bool IniFileSettingsManager::getInt(const ::scoped_string &scopedstrName, int *v
    // exists and method must return false.
    // FIXME: This trick will not work in some cases
    UINT defVal = 0xABCDEF;
-   UINT ret = GetPrivateProfileInt(::wstring(m_appName), ::wstring(scopedstrName), defVal, m_path.windows_path());
+   UINT ret = GetPrivateProfileInt(::string(m_appName), ::string(scopedstrName), defVal, m_path.windows_path());
    if (ret == defVal)
    {
       return false;
@@ -209,7 +209,7 @@ bool IniFileSettingsManager::setBinaryData(const ::scoped_string &scopedstrName,
 
       // Try to get string value from storage
       DWORD ret =
-         GetPrivateProfileString(::wstring(m_appName), ::wstring(scopedstrName), ::wstring(scopedstrDefaultValue),
+         GetPrivateProfileString(::string(m_appName), ::string(scopedstrName), ::string(scopedstrDefaultValue),
                                  (LPWSTR) buffer.data(), bufferSize, m_path.windows_path());
 
       // This mean that output buffer size is too small

@@ -27,7 +27,7 @@
 
 #include "remoting/remoting_common/util/CommonHeader.h"
 //#include <vector>
-#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 //#include "log_writer/LogWriter.h"
 
 typedef ::array_base<TCHAR *> StringContainer;

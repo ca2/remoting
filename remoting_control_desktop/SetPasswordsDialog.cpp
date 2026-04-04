@@ -25,7 +25,7 @@
 #include "remoting/remoting_common/util/winhdr.h"
 #include "remoting_node_desktop/NamingDefs.h"
 
-#include "remoting/remoting_common/win_system/Registry.h"
+#include "acme/acme/Registry.h"
 
 #include "SetPasswordsDialog.h"
 

@@ -28,7 +28,7 @@
 #include "WindowsScreenGrabber.h"
 #include "ScreenDriver.h"
 #include "remoting/remoting_common/rfb/FrameBuffer.h"
-#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 #include "UpdateContainer.h"
 #include "GrabOptimizator.h"
 

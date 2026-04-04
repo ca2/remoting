@@ -29,8 +29,8 @@
 #include "remoting/remoting_common/util/Singleton.h"
 #include "remoting/remoting_common/config/ConnectionHistory.h"
 //#include "log_writer/FileLogWriter.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
-//#include "remoting/remoting_common/thread/critical_section_lock.h"
+////#include "remoting/remoting_common/thread/critical_section.h"
+////#include "remoting/remoting_common/thread/critical_section.h"
 
 #include "remoting/remoting_common/client_config/ConnectionConfig.h"
 

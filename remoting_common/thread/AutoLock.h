@@ -25,16 +25,16 @@
 #pragma once
 
 
-#include "Lockable.h"
+#include "lockable.h"
 
 class CLASS_DECL_REMOTING_COMMON critical_section_lock
 {
 public:
-  critical_section_lock(Lockable *locker);
+  critical_section_lock(lockable *locker);
   virtual ~critical_section_lock();
 
 protected:
-  Lockable *m_locker;
+  lockable *m_locker;
 };
 
 //// __AUTOLOCK_H__

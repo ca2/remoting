@@ -49,7 +49,7 @@
     <ClInclude Include="critical_section.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Lockable.h">
+    <ClInclude Include="lockable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Thread.h">

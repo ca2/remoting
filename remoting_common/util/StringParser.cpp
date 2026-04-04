@@ -29,8 +29,8 @@
 bool StringParser::parseInt(const ::scoped_string & scopedstrStr, int *out)
 {
   int value = 0;
-  TCHAR c;
-  if(_stscanf(::wstring(scopedstrStr).c_str(), L"%d%c", &value, &c) != 1) {
+  char c;
+  if(_sscanf(::string(scopedstrStr).c_str(), L"%d%c", &value, &c) != 1) {
     return false;
   }
   if (out != NULL) {
@@ -47,9 +47,9 @@ bool StringParser::parseUInt(const ::scoped_string & scopedstrStr, unsigned int 
     return false;
   }
 
-  TCHAR *ptr = 0;
+  char *ptr = 0;
   errno = 0;
-  unsigned long ulongValue = _tcstoul(::wstring(scopedstrStr).c_str(), &ptr, 10);
+  unsigned long ulongValue = _atoul(::string(scopedstrStr).c_str(), &ptr, 10);
   if (errno != 0 || ptr == 0 || *ptr != _T('\0')) {
     return false;
   }
@@ -69,8 +69,8 @@ bool StringParser::parseUInt(const ::scoped_string & scopedstrStr, unsigned int 
 bool StringParser::parseUInt64(const ::scoped_string & scopedstrStr, unsigned long long *out)
 {
   unsigned long long value = 0;
-  TCHAR c;
-  if(_stscanf(::wstring(scopedstrStr).c_str(), L"%llu%c", &value, &c) != 1) {
+  char c;
+  if(_sscanf(::string(scopedstrStr).c_str(), L"%llu%c", &value, &c) != 1) {
     return false;
   }
   if (out != NULL) {
@@ -87,7 +87,7 @@ bool StringParser::tryParseInt(const ::scoped_string & scopedstrStr)
 
 bool StringParser::parseHex(const ::scoped_string & scopedstrStr, unsigned int *out)
 {
-  TCHAR c;
+  char c;
   unsigned int val;
   if (_stscanf(::wstring(scopedstrStr).c_str(), L"%x%c", &val, &c) != 1) {
     return false;
@@ -100,7 +100,7 @@ bool StringParser::parseHex(const ::scoped_string & scopedstrStr, unsigned int *
 
 bool StringParser::parseByteHex(const ::scoped_string & scopedstrStr, unsigned char *out)
 {
-  TCHAR c;
+  char c;
   int val = 0;
   if (_stscanf(::wstring(scopedstrStr).c_str(), L"%x%c", &val, &c) != 1) {
     return false;
@@ -113,9 +113,9 @@ bool StringParser::parseByteHex(const ::scoped_string & scopedstrStr, unsigned c
 
 bool StringParser::parseByte(const ::scoped_string & scopedstrStr, unsigned char *out)
 {
-  TCHAR c;
+  char c;
   int val = 0;
-  if (_stscanf(::wstring(scopedstrStr).c_str(), L"%d%c", &val, &c) != 1) {
+  if (_sscanf(::wstring(scopedstrStr).c_str(), L"%d%c", &val, &c) != 1) {
     return false;
   }
   if (out != NULL) {

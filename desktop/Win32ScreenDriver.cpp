@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "Win32ScreenDriver.h"
-#include "remoting/remoting_common/thread/critical_section_lock.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 
 Win32ScreenDriver::Win32ScreenDriver(UpdateKeeper *updateKeeper,
                                      UpdateListener *updateListener,

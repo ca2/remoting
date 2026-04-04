@@ -31,7 +31,7 @@
 #include "ScreenGrabber.h"
 #include "WindowsCursorShapeGrabber.h"
 #include "remoting/remoting_common/rfb/FrameBuffer.h"
-#include "remoting/remoting_common/thread/critical_section_lock.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 #include "UpdateListener.h"
 #include "UpdateDetector.h"
 #include "CopyRectDetector.h"

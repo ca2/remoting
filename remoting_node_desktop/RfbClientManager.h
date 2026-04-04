@@ -27,9 +27,9 @@
 
 #include "remoting/remoting_common/util/ListenerContainer.h"
 #include "rfb_sconn/RfbClient.h"
-#include "remoting/remoting_common/thread/critical_section_lock.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 #include "remoting/remoting_common/thread/Thread.h"
-#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 #include "desktop/Desktop.h"
 #include "desktop/DesktopFactory.h"

@@ -53,28 +53,13 @@ namespace remoting
    }
 
 
-   int message_box(
-   HWND hwnd,
-   const ::scoped_string & scopedstrMessage,
-   const ::scoped_string & scopedstrCaption,
-   UINT uType)
-   {
-
-      auto iResult = ::MessageBox(hwnd, ::wstring(scopedstrMessage), ::wstring(scopedstrCaption), uType);
-
-      return iResult;
-
-   }
-
-
-
 } // namespace remoting
 
 
-
-HINSTANCE remoting_impact_hinstance()
-{
-
-   return (HINSTANCE) ::system()->m_premoting->m_pHinstance;
-
-}
+//
+//HINSTANCE remoting_impact_hinstance()
+//{
+//
+//   return (HINSTANCE) ::system()->m_premoting->m_pHinstance;
+//
+//}

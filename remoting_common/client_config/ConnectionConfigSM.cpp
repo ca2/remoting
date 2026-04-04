@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ConnectionConfigSM.h"
 
-//#include "remoting/remoting_common/win_system/Registry.h"
+#include "acme/acme/Registry.h"
 
 //ConnectionConfigSM::ConnectionConfigSM(const ::scoped_string & scopedstrRegistryPath,
 //                     const ::scoped_string & scopedstrEntryName)

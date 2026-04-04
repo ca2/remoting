@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ConnectionHistory.h"
 
-//#include "remoting/remoting_common/win_system/Registry.h"
+#include "acme/acme/Registry.h"
 
 //#include <crtdbg.h>
 
@@ -38,7 +38,7 @@ ConnectionHistory::~ConnectionHistory()
 }
 
 
-ConnectionHistory::initialize_connection_history(const ::scoped_string &scopedstr, size_t limit
+void ConnectionHistory::initialize_connection_history(const ::scoped_string &scopedstr, size_t limit
                                                  )
 {
 }

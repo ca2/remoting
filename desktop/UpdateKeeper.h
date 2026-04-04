@@ -25,14 +25,14 @@
 #pragma once
 
 
-#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 #include "remoting/remoting_common/region/Region.h"
 #include "UpdateContainer.h"
-#include "remoting/remoting_common/thread/critical_section_lock.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 
 
-class UpdateKeeper : public Lockable
+class UpdateKeeper : public lockable
 {
 public:
   UpdateKeeper();

@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "FileTransferReplyBuffer.h"
 #include "remoting/remoting_common/io/ByteArrayInputStream.h"
-#include "remoting/remoting_common/thread/critical_section_lock.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 #include <crtdbg.h>
 
 namespace  remoting

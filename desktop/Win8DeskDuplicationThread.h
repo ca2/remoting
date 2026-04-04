@@ -27,7 +27,7 @@
 
 #include "remoting/remoting_common/rfb/FrameBuffer.h"
 #include "Win8CursorShape.h"
-#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 #include "remoting/remoting_common/thread/GuiThread.h"
 #include "Win8DuplicationListener.h"
 //#include "log_writer/LogWriter.h"

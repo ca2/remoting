@@ -49,14 +49,14 @@ struct VK2KSEntry {
 // Table for translating X11 keysyms to auxiliary windows virtual key codes.
 // FIXME: maybe place this into file as binary? such definitions make my eyes wet.
 const KS2VKEntry SERVER_AUXILIARY_TRANSLATE_TABLE[] = {
-  { XK_Shift_L,   VK_LSHIFT },
-  { XK_Shift_R,   VK_RSHIFT },
+  { XK_Shift_L,   ::user::e_key_left_shift },
+  { XK_Shift_R,   ::user::e_key_right_shift },
   { XK_Shift_L,   VK_SHIFT },
-  { XK_Control_L, VK_LCONTROL },
-  { XK_Control_R, VK_RCONTROL },
+  { XK_Control_L, ::user::e_key_left_control },
+  { XK_Control_R, ::user::e_key_right_control },
   { XK_Control_L, VK_CONTROL },
-  { XK_Alt_L,     VK_LMENU },
-  { XK_Alt_R,     VK_RMENU },
+  { XK_Alt_L,     ::user::e_key_left_alt },
+  { XK_Alt_R,     ::user::e_key_right_alt },
   { XK_Alt_L,     VK_MENU },
   { XK_Left,      VK_LEFT},
   { XK_Up,        VK_UP},
@@ -149,14 +149,14 @@ const KS2VKEntry SERVER_AUXILIARY_TRANSLATE_TABLE[] = {
 };
 
 const VK2KSEntry VIEWER_AUXILIARY_TRANSLATE_TABLE[] = {
-  { VK_LSHIFT,    XK_Shift_L },
-  { VK_RSHIFT,    XK_Shift_R },
+  { ::user::e_key_left_shift,    XK_Shift_L },
+  { ::user::e_key_right_shift,    XK_Shift_R },
   { VK_SHIFT,     XK_Shift_L },
-  { VK_LCONTROL,  XK_Control_L },
-  { VK_RCONTROL,  XK_Control_R },
+  { ::user::e_key_left_control,  XK_Control_L },
+  { ::user::e_key_right_control,  XK_Control_R },
   { VK_CONTROL,   XK_Control_L },
-  { VK_LMENU,     XK_Alt_L },
-  { VK_RMENU,     XK_Alt_R },
+  { ::user::e_key_left_alt,     XK_Alt_L },
+  { ::user::e_key_right_alt,     XK_Alt_R },
   { VK_MENU,      XK_Alt_L },
   { VK_LEFT,      XK_Left},
   { VK_UP,        XK_Up},

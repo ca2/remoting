@@ -28,7 +28,7 @@
 
 #include "remoting_control_desktop/ControlProto.h"
 
-#include "remoting/remoting_common/network/socket/SocketStream.h"
+//#include "remoting/remoting_common/network/socket/SocketStream.h"
 
 #include "remoting/remoting_common/server_config/Configurator.h"
 

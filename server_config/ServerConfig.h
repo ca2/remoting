@@ -29,8 +29,8 @@
 #include "remoting/remoting_common/util/Exception.h"
 #include "PortMappingContainer.h"
 #include "IpAccessControl.h"
-#include "remoting/remoting_common/thread/critical_section_lock.h"
-#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 #include "IpAccessRule.h"
 #include "remoting/remoting_common/io/DataInputStream.h"
 #include "remoting/remoting_common/io/DataOutputStream.h"
@@ -39,7 +39,7 @@
 
 #include <shlobj.h>
 
-class ServerConfig : public Lockable
+class ServerConfig : public lockable
 {
 public:
   static const unsigned int MINIMAL_POLLING_INTERVAL = 30;
@@ -84,7 +84,7 @@ public:
   void deserialize(DataInputStream * pinput);
 
   //
-  // Inherited from Lockable abstract class.
+  // Inherited from lockable abstract class.
   //
 
   virtual void lock() {

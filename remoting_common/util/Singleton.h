@@ -29,8 +29,8 @@
 
 //#include <crtdbg.h>
 
-//#include "remoting/remoting_common/thread/critical_section.h"
-//#include "remoting/remoting_common/thread/critical_section_lock.h"
+////#include "remoting/remoting_common/thread/critical_section.h"
+////#include "remoting/remoting_common/thread/critical_section.h"
 
 //
 // Template that realize singleton pattern which does not supports "lazy"

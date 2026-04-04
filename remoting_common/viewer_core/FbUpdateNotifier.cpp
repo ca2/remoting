@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "FbupdateNotifier.h"
 
-#include "remoting/remoting_common/thread/critical_section_lock.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 
 #include "CoreEventsAdapter.h"
 

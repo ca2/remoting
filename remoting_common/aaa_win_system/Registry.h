@@ -37,8 +37,8 @@ public:
   const static int QWORD_TYPE = REG_QWORD;
 
 public:
-  static HKEY getCurrentUserKey();
-  static HKEY getCurrentLocalMachineKey();
+  static ::acme::RegX getCurrentUserKey();
+  static ::acme::RegX getCurrentLocalMachineKey();
 
 private:
   Registry();

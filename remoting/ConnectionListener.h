@@ -27,7 +27,7 @@
 
 #include "ViewerInstance.h"
 #include "remoting/remoting_common/network/TcpServer.h"
-#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 
 class ConnectionListener : protected TcpServer
 {

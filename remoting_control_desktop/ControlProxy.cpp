@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ControlProxy.h"
 #include "remoting_control_desktop/ControlProto.h"
-#include "remoting/remoting_common/thread/critical_section_lock.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 
 #include <crtdbg.h>
 

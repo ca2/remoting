@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "ViewerCollector.h"
-#include "remoting/remoting_common/thread/critical_section_lock.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 
 ViewerCollector::ViewerCollector()
 : m_countToReconnect(0)

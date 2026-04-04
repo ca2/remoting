@@ -27,7 +27,7 @@
 #include "remoting/remoting_common/util/Exception.h"
 #include <crtdbg.h>
 //#include "remoting/remoting_common/win_system/Environment.h"
-#include "remoting/remoting_common/thread/critical_section_lock.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 
 #define MAX_PORTION_SIZE 512 * 1024
 

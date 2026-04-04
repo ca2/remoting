@@ -23,7 +23,7 @@
 //
 
 #include "ControlAppAuthenticator.h"
-#include "remoting/remoting_common/thread/critical_section_lock.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 #include "remoting/remoting_common/util/VncPassCrypt.h"
 
 ControlAppAuthenticator::ControlAppAuthenticator(unsigned long long failureTimeInterval,

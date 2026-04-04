@@ -36,7 +36,7 @@
 
 #include "remoting_control_desktop/ControlCommandLine.h"
 
-#include "remoting/remoting_common/win_system/Registry.h"
+#include "acme/acme/Registry.h"
 #include "remoting/remoting_common/win_system/RegistryKey.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 #include "remoting/remoting_common/win_system/Shell.h"

@@ -30,9 +30,9 @@
 class CLASS_DECL_REMOTING_COMMON RegistryKey
 {
 public:
-  RegistryKey(HKEY rootKey, const ::scoped_string & scopedstrEntry, bool createIfNotExists = true, SECURITY_ATTRIBUTES *sa = 0);
+  RegistryKey(::acme::RegX rootKey, const ::scoped_string & scopedstrEntry, bool createIfNotExists = true, SECURITY_ATTRIBUTES *sa = 0);
   RegistryKey(RegistryKey *rootKey, const ::scoped_string & scopedstrEntry, bool createIfNotExists = true, SECURITY_ATTRIBUTES *sa = 0);
-  RegistryKey(HKEY rootKey);
+  RegistryKey(::acme::RegX rootKey);
   // Default contructor for a defer initialization.
   RegistryKey();
 
@@ -43,7 +43,7 @@ public:
 
   // Defer initialization. Can be used only when it has been
   // created by the default constructor.
-  void open(HKEY rootKey, const ::scoped_string & scopedstrEntry,
+  void open(::acme::RegX rootKey, const ::scoped_string & scopedstrEntry,
             bool createIfNotExists = true,
             SECURITY_ATTRIBUTES *sa = 0);
 
@@ -55,9 +55,9 @@ public:
             SECURITY_ATTRIBUTES *sa = 0);
 
   //
-  // Returns WinAPI HKEY handle.
+  // Returns WinAPI ::acme::RegX handle.
   //
-  HKEY getHKEY() const;
+  ::acme::RegX getHKEY() const;
 
   // Creates subkey.
   //
@@ -115,7 +115,7 @@ public:
 private:
 
   // Helper method to avoid code duplicate in class constructor.
-  void initialize(HKEY rootKey, const ::scoped_string & scopedstrEntry, bool createIfNotExists, SECURITY_ATTRIBUTES *sa);
+  void initialize(::acme::RegX rootKey, const ::scoped_string & scopedstrEntry, bool createIfNotExists, SECURITY_ATTRIBUTES *sa);
 
   // Sets subkey name to name output variable not depending
   // on output buffer size, cause buffer allocates inside method.
@@ -133,15 +133,15 @@ private:
    * @param [in, opt] sa security attributes.
    * @return true if operation successfull executed, false otherwise.
    */
-  static bool tryOpenSubKey(HKEY key, const ::scoped_string & scopedstrSubkey,
-                            HKEY *openedKey, bool createIfNotExists,
+  static bool tryOpenSubKey(::acme::RegX key, const ::scoped_string & scopedstrSubkey,
+                            ::acme::RegX *openedKey, bool createIfNotExists,
                             SECURITY_ATTRIBUTES *sa);
 
 protected:
   // Registry entry associated with this class instance.
-  HKEY m_key;
+  ::acme::RegX m_key;
   // Root registry key (local machine, current user, etc).
-  HKEY m_rootKey;
+  ::acme::RegX m_rootKey;
   // Registry entry name.
   ::string m_entry;
 

@@ -28,7 +28,7 @@
 #include "remoting/remoting_common/util/Exception.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 #include "remoting/remoting_common/win_system/RegistryKey.h"
-#include "remoting/remoting_common/thread/critical_section_lock.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 
 WinEventLog::WinEventLog(LogWriter *log)
 : m_hEventLog(0),

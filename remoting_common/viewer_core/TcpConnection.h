@@ -28,9 +28,9 @@
 //#include "log_writer/LogWriter.h"
 #include "remoting/remoting_common/network/RfbInputGate.h"
 #include "remoting/remoting_common/network/RfbOutputGate.h"
-#include "remoting/remoting_common/network/socket/SocketIPv4.h"
-#include "remoting/remoting_common/network/socket/SocketStream.h"
-#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/network/socket/SocketIPv4.h"
+//#include "remoting/remoting_common/network/socket/SocketStream.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 #include "remoting/remoting_common/io/BufferedInputStream.h"
 
 class CLASS_DECL_REMOTING_COMMON TcpConnection

@@ -27,14 +27,14 @@
 
 #include "remoting/remoting_common/util/CommonHeader.h"
 #include "remoting/remoting_common/util/Exception.h"
-#include "Lockable.h"
+#include "lockable.h"
 
 /**
  * Global mutex (allows to use mutex between separate processes).
  *
  * @author yuri, enikey.
  */
-class CLASS_DECL_REMOTING_COMMON GlobalMutex : public Lockable
+class CLASS_DECL_REMOTING_COMMON GlobalMutex : public lockable
 {
 public:
   /**
@@ -55,12 +55,12 @@ public:
   virtual ~GlobalMutex();
 
   /**
-   * Inherited from Lockable.
+   * Inherited from lockable.
    */
   virtual void lock();
 
   /**
-   * Inherited from Lockable.
+   * Inherited from lockable.
    */
   virtual void unlock();
 

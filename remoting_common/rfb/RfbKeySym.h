@@ -42,7 +42,7 @@ public:
 
   void processKeyEvent(unsigned short virtKey, unsigned int addKeyData);
   bool vkCodeToString(unsigned short virtKey, bool isKeyDown, ::wstring *res);
-  void processCharEvent(WCHAR charCode, unsigned int addKeyData);
+  void processCharEvent(int charCode, unsigned int addKeyData);
   // Checks a new modifiers state after focus restoration and sends difference
   void processFocusRestoration();
   // This function release all modifiers unconditionally.
@@ -67,7 +67,7 @@ private:
 
   // This function does distinguish between a right or left modifier and
   // if the virtKey is a modifier (e.g VK_CONTROL), the function always return
-  // a left- or right-hand virtual key value (e.g. VK_LCONTROL or VK_RCONTROL)
+  // a left- or right-hand virtual key value (e.g. ::user::e_key_left_control or ::user::e_key_right_control)
   // by taking into account the isRightHint flag.
   // If virtKey is not a modifier, the function returns virtKey value without
   // changing.
@@ -84,10 +84,13 @@ private:
   virtual void sendVerbatimKeySymEvent(unsigned int rfbKeySym, bool down);
 
   // helper functions
-  WCHAR GettingCharFromCtrlSymbol(WCHAR ctrlSymbol);
+  int GettingCharFromCtrlSymbol(int ctrlSymbol);
   // E.g if pressed Ctrl + Alt + A
   // Try found char without modificators
+#ifdef WINDOWS
   bool TryTranslateNotPrintableToUnicode(unsigned short virtKey, HKL currentLayout, WCHAR *unicodeChar);
+   
+#endif
 
   RfbKeySymListener *m_extKeySymListener;
 

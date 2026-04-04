@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 
 class UpdateListener
 {

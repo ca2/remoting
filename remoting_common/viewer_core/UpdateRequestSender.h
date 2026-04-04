@@ -1,4 +1,4 @@
-﻿// #ifndef _UPDATE_REQUEST_SENDER_
+// #ifndef _UPDATE_REQUEST_SENDER_
 // #define _UPDATE_REQUEST_SENDER_
 
 
@@ -9,10 +9,10 @@
 //#include <log_writer/LogWriter.h>
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 
-class CLASS_DECL_REMOTING_COMMON UpdateRequestSender : public Thread
+class CLASS_DECL_REMOTING_COMMON UpdateRequestSender : public task
 {
 public:
-	UpdateRequestSender(Lockable* m_fb_lock, FrameBuffer* m_frame_buffer, LogWriter* m_log_writer);
+	UpdateRequestSender(lockable* m_fb_lock, FrameBuffer* m_frame_buffer, LogWriter* m_log_writer);
 
 	~UpdateRequestSender();
 
@@ -43,7 +43,7 @@ private:
 	bool m_isIncrimental;
 	critical_section m_isIncrimentalLock;
 
-	Lockable *m_fbLock;
+	lockable *m_fbLock;
 	FrameBuffer *m_frameBuffer;
 
 	LogWriter *m_logWriter;

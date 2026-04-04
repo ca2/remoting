@@ -1354,7 +1354,7 @@
     <ClInclude Include="thread\critical_section.h">
       <Filter>Header Files\thread</Filter>
     </ClInclude>
-    <ClInclude Include="thread\Lockable.h">
+    <ClInclude Include="thread\lockable.h">
       <Filter>Header Files\thread</Filter>
     </ClInclude>
     <ClInclude Include="thread\resource.h">

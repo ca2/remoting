@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "CursorPainter.h"
 
-#include "remoting/remoting_common/thread/critical_section_lock.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 
 CursorPainter::CursorPainter(FrameBuffer *fb, LogWriter *logWriter)
 : m_fb(fb),

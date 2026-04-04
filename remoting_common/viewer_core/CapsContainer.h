@@ -25,7 +25,7 @@
 //#include <map>
 //#include <vector>
 
-#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 //////#include "remoting/remoting_common/util/::string.h"
 
 #pragma once

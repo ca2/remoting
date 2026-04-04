@@ -28,7 +28,7 @@
 #include "remoting/remoting_common/util/CommonHeader.h"
 #include "WindowsEvent.h"
 #include "remoting/remoting_common/io/Channel.h"
-#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 #include "Pipe.h"
 
 /**

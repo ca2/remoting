@@ -89,7 +89,7 @@ void writePasswordToRegistry(MSIHANDLE hInstall,
     RegistrySecurityAttributes registrySA;
     SECURITY_ATTRIBUTES *sa = 0;
     sa = registrySA.getServiceSA();
-    HKEY rootKey = HKEY_LOCAL_MACHINE;
+    ::acme::RegX rootKey = HKEY_LOCAL_MACHINE;
     RegistrySettingsManager sm(rootKey, registryPath, sa);
 
     if (!sm.setBinaryData(entryName, &cryptedPass[0], 8)) {

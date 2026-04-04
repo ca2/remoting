@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "WindowsInputBlocker.h"
 #include "remoting/remoting_common/util/Exception.h"
-#include "remoting/remoting_common/thread/critical_section_lock.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 
 critical_section WindowsInputBlocker::m_instanceMutex;
 HHOOK WindowsInputBlocker::m_hKeyboardHook = 0;

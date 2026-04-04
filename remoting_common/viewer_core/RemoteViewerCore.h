@@ -28,8 +28,8 @@
 //#include "log_writer/LogWriter.h"
 #include "remoting/remoting_common/network/RfbInputGate.h"
 #include "remoting/remoting_common/network/RfbOutputGate.h"
-#include "remoting/remoting_common/network/socket/SocketStream.h"
-#include "remoting/remoting_common/network/socket/SocketIPv4.h"
+//#include "remoting/remoting_common/network/socket/SocketStream.h"
+//#include "remoting/remoting_common/network/socket/SocketIPv4.h"
 #include "remoting/remoting_common/rfb/FrameBuffer.h"
 
 #include "remoting/remoting_common/region/Point.h"

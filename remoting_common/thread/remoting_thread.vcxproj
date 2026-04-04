@@ -298,7 +298,7 @@
     <ClInclude Include="GlobalMutex.h" />
     <ClInclude Include="GuiThread.h" />
     <ClInclude Include="critical_section.h" />
-    <ClInclude Include="Lockable.h" />
+    <ClInclude Include="lockable.h" />
     <ClInclude Include="Thread.h" />
     <ClInclude Include="ThreadCollector.h" />
     <ClInclude Include="_.h" />

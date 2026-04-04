@@ -490,10 +490,10 @@ void ViewerWindow::commandCtrlEsc()
 {
   LRESULT iState = m_toolbar.getState(IDS_TB_CTRLESC);
   if (iState) {
-    m_dsktWnd.sendKey(VK_LCONTROL, true);
+    m_dsktWnd.sendKey(::user::e_key_left_control, true);
     m_dsktWnd.sendKey(VK_ESCAPE,   true);
     m_dsktWnd.sendKey(VK_ESCAPE,   false);
-    m_dsktWnd.sendKey(VK_LCONTROL, false);
+    m_dsktWnd.sendKey(::user::e_key_left_control, false);
   }
 }
 
@@ -505,12 +505,12 @@ void ViewerWindow::commandCtrl()
       m_menu.checkedMenuItem(IDS_TB_CTRL, true);
       m_toolbar.checkButton(IDS_TB_CTRL,  true);
       m_dsktWnd.setCtrlState(true);
-      m_dsktWnd.sendKey(VK_LCONTROL,      true);
+      m_dsktWnd.sendKey(::user::e_key_left_control,      true);
     } else {
       m_menu.checkedMenuItem(IDS_TB_CTRL, false);
       m_toolbar.checkButton(IDS_TB_CTRL,  false);
       m_dsktWnd.setCtrlState(false);
-      m_dsktWnd.sendKey(VK_LCONTROL,      false);
+      m_dsktWnd.sendKey(::user::e_key_left_control,      false);
     }
   }
 }
@@ -523,12 +523,12 @@ void ViewerWindow::commandAlt()
       m_menu.checkedMenuItem(IDS_TB_ALT, true);
       m_toolbar.checkButton(IDS_TB_ALT,  true);
       m_dsktWnd.setAltState(true);
-      m_dsktWnd.sendKey(VK_LMENU,        true);
+      m_dsktWnd.sendKey(::user::e_key_left_alt,        true);
     } else {
       m_menu.checkedMenuItem(IDS_TB_ALT, false);
       m_toolbar.checkButton(IDS_TB_ALT,  false);
       m_dsktWnd.setAltState(false);
-      m_dsktWnd.sendKey(VK_LMENU,        false);
+      m_dsktWnd.sendKey(::user::e_key_left_alt,        false);
     }
   }
 }
@@ -1434,10 +1434,10 @@ LRESULT ViewerWindow::onHookProc(int code, WPARAM wParam, LPARAM lParam)
 {
   KBDLLHOOKSTRUCT *str = (KBDLLHOOKSTRUCT*) lParam;
   // Ignoring of CapsLock, NumLock, ScrollLock, ::remoting::Window (Ctrl key), Menu (Alt key), Shift (shift key).
-  if (str->vkCode != VK_CAPITAL && str->vkCode != VK_NUMLOCK && str->vkCode != VK_SCROLL &&
-      str->vkCode != VK_LCONTROL && str->vkCode != VK_RCONTROL &&
-      str->vkCode != VK_LMENU && str->vkCode != VK_RMENU &&
-      str->vkCode != VK_LSHIFT && str->vkCode != VK_RSHIFT) {
+  if (str->vkCode != ::user::e_key_capslock && str->vkCode != VK_NUMLOCK && str->vkCode != VK_SCROLL &&
+      str->vkCode != ::user::e_key_left_control && str->vkCode != ::user::e_key_right_control &&
+      str->vkCode != ::user::e_key_left_alt && str->vkCode != ::user::e_key_right_alt &&
+      str->vkCode != ::user::e_key_left_shift && str->vkCode != ::user::e_key_right_shift) {
     // Set the repeat count for the current scopedstrMessage bits.
     LPARAM newLParam = 1;
     // Set the scan code bits. 

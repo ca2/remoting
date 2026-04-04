@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "WinDxRecoverableException.h"
 #include "WinDxCriticalException.h"
-#include "remoting/remoting_common/thread/critical_section_lock.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 
 #include "WinDxgiAcquiredFrame.h"
 #include "WinD3D11Texture2D.h"

@@ -27,7 +27,7 @@
 
 #include "remoting/remoting_common/util/CommonHeader.h"
 #include "remoting/remoting_common/util/Singleton.h"
-#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 #include "remoting/remoting_common/win_system/ApplicationCrashEvents.h"
 
 class CrashHook : private Singleton<CrashHook>
@@ -47,7 +47,7 @@ private:
   static LONG WINAPI topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionInfo);
 
   static bool m_guiEnabled;
-  static HKEY m_rootHkey;
+  static ::acme::RegX m_rootHkey;
   static critical_section m_guiEnabledMutex;
 
   static ApplicationCrashEvents *m_notifier;

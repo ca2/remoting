@@ -25,7 +25,7 @@
 #include "ConnectionListener.h"
 #include "remoting_impact.h"
 
-#include "remoting/remoting_common/thread/critical_section_lock.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 
 const char ConnectionListener::DEFAULT_HOST[] = "0.0.0.0";
 

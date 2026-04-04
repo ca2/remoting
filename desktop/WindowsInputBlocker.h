@@ -27,7 +27,7 @@
 
 #include "remoting/remoting_common/util/CommonHeader.h"
 #include "remoting/remoting_common/thread/GuiThread.h"
-#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 #include "remoting/remoting_common/win_system/WinTimeMillis.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 #include "InputBlocker.h"

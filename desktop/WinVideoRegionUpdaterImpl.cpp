@@ -26,7 +26,7 @@
 #include "remoting/remoting_common/server_config/Configurator.h"
 #include "remoting/remoting_common/gui/WindowFinder.h"
 #include "remoting/remoting_common/region/RectSerializer.h"
-#include "remoting/remoting_common/thread/critical_section_lock.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 
 WinVideoRegionUpdaterImpl::WinVideoRegionUpdaterImpl(LogWriter *log)
   : m_log(log)

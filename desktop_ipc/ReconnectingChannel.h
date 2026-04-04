@@ -26,7 +26,7 @@
 
 
 #include "remoting/remoting_common/io/Channel.h"
-#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 //#include "log_writer/LogWriter.h"
 

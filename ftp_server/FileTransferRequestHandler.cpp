@@ -37,7 +37,7 @@
 #include "remoting/remoting_common/util/md5.h"
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 #include "remoting/remoting_common/network/RfbInputGate.h"
-#include "remoting/remoting_common/thread/critical_section_lock.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 #include "remoting/remoting_common/win_system/Impersonator.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 #include "remoting/remoting_common/server_config/Configurator.h"

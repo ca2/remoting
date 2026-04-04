@@ -25,7 +25,7 @@
 #include "ViewerSettingsManager.h"
 
 #include "remoting/remoting_common/util/Exception.h"
-#include "remoting/remoting_common/win_system/Registry.h"
+#include "acme/acme/Registry.h"
 
 SettingsManager *ViewerSettingsManager::s_instance = 0;
 

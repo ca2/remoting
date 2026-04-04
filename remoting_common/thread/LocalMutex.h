@@ -26,7 +26,7 @@
 
 //#include "remoting/remoting_common/util/CommonHeader.h"
 //
-//#include "Lockable.h"
+//#include "lockable.h"
 //
 ///**
 // * Local mutex (cannot be used within separate processes).
@@ -34,7 +34,7 @@
 // * @remark local mutex uses Windows critical sections to implement
 // * lockable interface..
 // */
-//class CLASS_DECL_REMOTING_COMMON critical_section : public Lockable
+//class CLASS_DECL_REMOTING_COMMON critical_section : public lockable
 //{
 //public:
 //  /**
@@ -48,12 +48,12 @@
 //  virtual ~critical_section();
 //
 //  /**
-//   * Inherited from Lockable.
+//   * Inherited from lockable.
 //   */
 //  virtual void lock();
 //
 //  /**
-//   * Inherited from Lockable.
+//   * Inherited from lockable.
 //   */
 //  virtual void unlock();
 //

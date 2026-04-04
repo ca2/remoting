@@ -29,7 +29,7 @@
 #include "remoting/remoting_common/rfb/CursorShape.h"
 #include "desktop/UpdateContainer.h"
 //#include "remoting/remoting_common/util/::earth::time.h"
-#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 //#include "log_writer/LogWriter.h"
 
 class CursorUpdates

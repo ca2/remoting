@@ -26,7 +26,7 @@
 
 //#include "remoting/remoting_common/win_system/Environment.h"
 //#include "remoting/remoting_common/win_system/RegistryKey.h"
-//#include "remoting/remoting_common/win_system/Registry.h"
+#include "acme/acme/Registry.h"
 #include "acme/filesystem/filesystem/directory_context.h"
 
 //#include "file_lib/::file::item.h"

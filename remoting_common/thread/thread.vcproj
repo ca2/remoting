@@ -611,7 +611,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Lockable.h"
+				RelativePath=".\lockable.h"
 				>
 			</File>
 			<File

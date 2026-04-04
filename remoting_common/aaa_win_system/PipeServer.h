@@ -28,7 +28,7 @@
 #include "remoting/remoting_common/util/CommonHeader.h"
 
 #include "NamedPipe.h"
-#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 #include "SecurityAttributes.h"
 #include "DynamicLibrary.h"
 

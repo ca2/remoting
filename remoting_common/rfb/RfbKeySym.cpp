@@ -23,6 +23,7 @@
 //
 #include "framework.h"
 #include "RfbKeySym.h"
+#include "acme/constant/user_key.h"
 #include "remoting/remoting_common/util/CommonHeader.h"
 
 #define XK_MISCELLANY
@@ -49,7 +50,7 @@ void RfbKeySym::sendModifier(unsigned char virtKey, bool down)
 {
   unsigned int rfbSym;
   bool success = m_keyMap.virtualCodeToKeySym(&rfbSym, virtKey);
-  _ASSERT(success);
+  ASSERT(success);
   sendKeySymEvent(rfbSym, down);
 
   m_viewerKeyState[virtKey] = down ? 128 : 0;
@@ -62,6 +63,8 @@ void RfbKeySym::processKeyEvent(unsigned short virtKey,
 {
   m_log->debug("processKeyEvent() function called: virtKey = %#4.4x, addKeyData"
              " = %#x", (unsigned int)virtKey, addKeyData);
+   
+#ifdef WINDOWS
   // Ignoring win key (when fullscreen mode is off).
   if (m_winKeyIgnore) {
     if (virtKey == VK_LWIN || virtKey == VK_RWIN) { // Ignoring the Win key
@@ -69,14 +72,16 @@ void RfbKeySym::processKeyEvent(unsigned short virtKey,
       return;
     }
   }
+#endif
 
   bool down = (addKeyData & 0x80000000) == 0;
   m_log->debug("down = %u", (unsigned int)down);
 
-  bool ctrlPressed = isPressed(VK_LCONTROL) || isPressed(VK_RCONTROL);
-  bool altPressed = isPressed(VK_LMENU) || isPressed(VK_RMENU);
-  bool shiftPressed = isPressed(VK_LSHIFT) || isPressed(VK_RSHIFT);
-  bool capsToggled = (GetKeyState(VK_CAPITAL) & 1) != 0;
+   
+  bool ctrlPressed = isPressed(::user::e_key_left_control) || isPressed(::user::e_key_right_control);
+  bool altPressed = isPressed(::user::e_key_left_alt) || isPressed(::user::e_key_right_alt);
+  bool shiftPressed = isPressed(::user::e_key_left_shift) || isPressed(::user::e_key_right_shift);
+  bool capsToggled = isPressed(::user::e_key_capslock) ;
   m_log->debug("ctrl = %u, alt = %u, shift = %u, caps toggled = %u",
     (unsigned int)ctrlPressed,
     (unsigned int)altPressed,
@@ -85,7 +90,7 @@ void RfbKeySym::processKeyEvent(unsigned short virtKey,
 
   // Without distinguishing between left and right modifiers.
   m_viewerKeyState[virtKey & 255] = down ? 128 : 0;
-  m_viewerKeyState[VK_CAPITAL & 255] = capsToggled ? 1 : 0;
+  m_viewerKeyState[::user::e_key_capslock & 255] = capsToggled ? 1 : 0;
 
   bool extended = (addKeyData & 0x1000000) != 0; // 24 bit
   virtKey = distinguishLeftRightModifier((unsigned char)virtKey, extended);
@@ -128,7 +133,7 @@ void RfbKeySym::processKeyEvent(unsigned short virtKey,
   }
 }
 
-bool isDeadCharacter(WCHAR ch)
+bool isDeadCharacter(int ch)
 {
   return (ch == '^'    || 
           ch == 0x00a8 || // 
@@ -145,16 +150,16 @@ bool isDeadCharacter(WCHAR ch)
     );
 }
 
-bool isDoubleDeadCharacters(WCHAR *buff)
+bool isDoubleDeadCharacters(wchar_t *buff)
 {
   return (isDeadCharacter(buff[0]) && buff[0] == buff[1]);
 }
 
-WCHAR RfbKeySym::GettingCharFromCtrlSymbol(WCHAR ch)
+WCHAR RfbKeySym::GettingCharFromCtrlSymbol(int ch)
 {
-  bool ctrlPressed = isPressed(VK_LCONTROL) || isPressed(VK_RCONTROL);
-  bool altPressed = isPressed(VK_LMENU) || isPressed(VK_RMENU);
-  bool shiftPressed = isPressed(VK_LSHIFT) || isPressed(VK_RSHIFT);
+  bool ctrlPressed = isPressed(::user::e_key_left_control) || isPressed(::user::e_key_right_control);
+  bool altPressed = isPressed(::user::e_key_left_alt) || isPressed(::user::e_key_right_alt);
+  bool shiftPressed = isPressed(::user::e_key_left_shift) || isPressed(::user::e_key_right_shift);
   unsigned int oldCh = (unsigned int)ch;
   if (ctrlPressed && !altPressed && ch < 32) {
     if (ch >= 1 && ch <= 26 && !shiftPressed) {
@@ -179,11 +184,11 @@ bool RfbKeySym::TryTranslateNotPrintableToUnicode(unsigned short virtKey, HKL cu
   // Try found char without modificators
   unsigned char withoutCtrlAltKbdState[256];
   memcpy(withoutCtrlAltKbdState, m_viewerKeyState, sizeof(withoutCtrlAltKbdState));
-  withoutCtrlAltKbdState[VK_LCONTROL] = 0;
-  withoutCtrlAltKbdState[VK_RCONTROL] = 0;
+  withoutCtrlAltKbdState[::user::e_key_left_control] = 0;
+  withoutCtrlAltKbdState[::user::e_key_right_control] = 0;
   withoutCtrlAltKbdState[VK_CONTROL] = 0;
-  withoutCtrlAltKbdState[VK_LMENU] = 0;
-  withoutCtrlAltKbdState[VK_RMENU] = 0;
+  withoutCtrlAltKbdState[::user::e_key_left_alt] = 0;
+  withoutCtrlAltKbdState[::user::e_key_right_alt] = 0;
   withoutCtrlAltKbdState[VK_MENU] = 0;
   int count = ToUnicodeEx(virtKey, 0, withoutCtrlAltKbdState, outBuff,
     sizeof(outBuff) / sizeof(WCHAR),
@@ -291,8 +296,8 @@ void RfbKeySym::processCharEvent(WCHAR charCode,
     // For keyboards with dead keys
     if (m_allowProcessDoubleChar) {
       m_allowProcessDoubleChar = false;
-      bool ctrlPressed = isPressed(VK_LCONTROL) || isPressed(VK_RCONTROL);
-      bool altPressed = isPressed(VK_LMENU) || isPressed(VK_RMENU);
+      bool ctrlPressed = isPressed(::user::e_key_left_control) || isPressed(::user::e_key_right_control);
+      bool altPressed = isPressed(::user::e_key_left_alt) || isPressed(::user::e_key_right_alt);
       if (ctrlPressed && altPressed) {
         m_log->debug("Release the ctrl and alt"
           " modifiers before send dead combination");
@@ -318,9 +323,9 @@ void RfbKeySym::processFocusRestoration()
   m_log->information("Process focus restoration in the RfbKeySym class");
 
   // Send a modifier key state based on physical keyboard state, not thread key scopedstrMessage queue.
-  unsigned char keys[9] = {VK_CONTROL, VK_RCONTROL, VK_LCONTROL,
-                           VK_MENU, VK_RMENU, VK_LMENU, 
-                           VK_SHIFT, VK_RSHIFT, VK_LSHIFT};
+  unsigned char keys[9] = {VK_CONTROL, ::user::e_key_right_control, ::user::e_key_left_control,
+                           VK_MENU, ::user::e_key_right_alt, ::user::e_key_left_alt, 
+                           VK_SHIFT, ::user::e_key_right_shift, ::user::e_key_left_shift};
   for (int i = 0; i < 9 ; i++) {
     unsigned char key = keys[i];
     unsigned char state = GetAsyncKeyState(key) >> 8;
@@ -334,14 +339,14 @@ void RfbKeySym::processFocusLoss()
 
   // Send a modifier key up only if the key is down.
   checkAndSendDiff(VK_CONTROL, 0);
-  checkAndSendDiff(VK_RCONTROL, 0);
-  checkAndSendDiff(VK_LCONTROL, 0);
+  checkAndSendDiff(::user::e_key_right_control, 0);
+  checkAndSendDiff(::user::e_key_left_control, 0);
   checkAndSendDiff(VK_MENU, 0);
-  checkAndSendDiff(VK_LMENU, 0);
-  checkAndSendDiff(VK_RMENU, 0);
+  checkAndSendDiff(::user::e_key_left_alt, 0);
+  checkAndSendDiff(::user::e_key_right_alt, 0);
   checkAndSendDiff(VK_SHIFT, 0);
-  checkAndSendDiff(VK_RSHIFT, 0);
-  checkAndSendDiff(VK_LSHIFT, 0);
+  checkAndSendDiff(::user::e_key_right_shift, 0);
+  checkAndSendDiff(::user::e_key_left_shift, 0);
   checkAndSendDiff(VK_LWIN, 0);
   checkAndSendDiff(VK_RWIN, 0);
 
@@ -352,8 +357,8 @@ void RfbKeySym::sendCtrlAltDel()
 {
   releaseModifier(VK_RWIN);
   releaseModifier(VK_LWIN);
-  releaseModifier(VK_LSHIFT);
-  releaseModifier(VK_RSHIFT);
+  releaseModifier(::user::e_key_left_shift);
+  releaseModifier(::user::e_key_right_shift);
   releaseMeta();
 
   sendVerbatimKeySymEvent(XK_Control_L, true);
@@ -364,8 +369,8 @@ void RfbKeySym::sendCtrlAltDel()
   sendVerbatimKeySymEvent(XK_Control_L, false);
 
   restoreMeta();
-  restoreModifier(VK_RSHIFT);
-  restoreModifier(VK_LSHIFT);
+  restoreModifier(::user::e_key_right_shift);
+  restoreModifier(::user::e_key_left_shift);
   restoreModifier(VK_LWIN);
   restoreModifier(VK_RWIN);
 }
@@ -377,18 +382,18 @@ void RfbKeySym::setWinKeyIgnore(bool winKeyIgnore)
 
 void RfbKeySym::releaseModifiers()
 {
-  releaseModifier(VK_LCONTROL);
-  releaseModifier(VK_RCONTROL);
-  releaseModifier(VK_LMENU);
-  releaseModifier(VK_RMENU);
+  releaseModifier(::user::e_key_left_control);
+  releaseModifier(::user::e_key_right_control);
+  releaseModifier(::user::e_key_left_alt);
+  releaseModifier(::user::e_key_right_alt);
 }
 
 void RfbKeySym::restoreModifiers()
 {
-  restoreModifier(VK_LCONTROL);
-  restoreModifier(VK_RCONTROL);
-  restoreModifier(VK_LMENU);
-  restoreModifier(VK_RMENU);
+  restoreModifier(::user::e_key_left_control);
+  restoreModifier(::user::e_key_right_control);
+  restoreModifier(::user::e_key_left_alt);
+  restoreModifier(::user::e_key_right_alt);
 }
 
 void RfbKeySym::releaseModifier(unsigned char modifier)
@@ -488,13 +493,13 @@ unsigned char RfbKeySym::distinguishLeftRightModifier(unsigned char virtKey,
                                                       bool isRightHint)
 {
   if (virtKey == VK_CONTROL) {
-    virtKey = isRightHint ? VK_RCONTROL : VK_LCONTROL;
+    virtKey = isRightHint ? ::user::e_key_right_control : ::user::e_key_left_control;
   }
   if (virtKey == VK_MENU) {
-    virtKey = isRightHint ? VK_RMENU : VK_LMENU;
+    virtKey = isRightHint ? ::user::e_key_right_alt : ::user::e_key_left_alt;
   }
   if (virtKey == VK_SHIFT) {
-    virtKey = isRightHint ? VK_RSHIFT : VK_LSHIFT;
+    virtKey = isRightHint ? ::user::e_key_right_shift : ::user::e_key_left_shift;
   }
   return virtKey;
 }

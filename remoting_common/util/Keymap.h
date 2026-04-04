@@ -62,7 +62,7 @@ public:
    * @param ch [out] char.
    * @return true if keySym is translated into char, false otherwise.
    */
-  bool keySymToUnicodeChar(unsigned int keySym, WCHAR *ch);
+  bool keySymToUnicodeChar(unsigned int keySym, int *ch);
 
   /**
    * Converts char to X11 key sym.
@@ -70,7 +70,7 @@ public:
    * @param keySym [out] X11 key sym.
    * @return true if char is translated to key sym, false otherwise.
    */
-  bool unicodeCharToKeySym(WCHAR ch, unsigned int *keySym);
+  bool unicodeCharToKeySym(int ch, unsigned int *keySym);
 };
 
 

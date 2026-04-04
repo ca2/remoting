@@ -26,7 +26,7 @@
 
 
 #include "remoting/remoting_common/util/winhdr.h"
-#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 #include "DynamicLibrary.h"
 #include "SystemException.h"
 //#include "log_writer/LogWriter.h"

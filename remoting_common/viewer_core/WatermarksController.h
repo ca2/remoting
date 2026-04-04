@@ -30,7 +30,7 @@
 #include "remoting/remoting_common/rfb/FrameBuffer.h"
 #include "remoting/remoting_common/rfb/PixelFormat.h"
 #include "remoting/remoting_common/rfb/StandardPixelFormatFactory.h"
-#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 
 class CLASS_DECL_REMOTING_COMMON WatermarksController
 {

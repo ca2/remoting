@@ -65,8 +65,8 @@ public:
   virtual bool getBoolean(const ::scoped_string & scopedstrName, bool *value);
   virtual bool setBoolean(const ::scoped_string & scopedstrName, bool value);
 
-  virtual bool getUINT(const ::scoped_string & scopedstrName, UINT *value);
-  virtual bool setUINT(const ::scoped_string & scopedstrName, UINT value);
+  virtual bool getUINT(const ::scoped_string & scopedstrName, unsigned int *value);
+  virtual bool setUINT(const ::scoped_string & scopedstrName, unsigned int value);
 
   virtual bool getInt(const ::scoped_string & scopedstrName, int *value);
   virtual bool setInt(const ::scoped_string & scopedstrName, int value);

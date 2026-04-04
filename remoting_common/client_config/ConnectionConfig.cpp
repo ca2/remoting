@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ConnectionConfig.h"
 
-#include "remoting/remoting_common/thread/critical_section_lock.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 
 #include <crtdbg.h>
 

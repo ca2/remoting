@@ -30,7 +30,7 @@
 #include "remoting/remoting_common/region/Point.h"
 
 #include "remoting/remoting_common/region/Region.h"
-#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 #include "remoting/remoting_common/thread/Thread.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 

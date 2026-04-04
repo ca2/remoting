@@ -107,7 +107,7 @@ public:
    */
   ::string getHost(size_t i) const;
 
-protected:
+//protected:
   void releaseHosts();
   void removeHost(const ::scoped_string & scopedstrHost);
 

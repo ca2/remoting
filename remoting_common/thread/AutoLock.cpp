@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "critical_section_lock.h"
 
-critical_section_lock::critical_section_lock(Lockable *locker)
+critical_section_lock::critical_section_lock(lockable *locker)
 : m_locker(locker)
 {
   m_locker->lock();

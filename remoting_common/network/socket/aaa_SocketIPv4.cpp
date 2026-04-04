@@ -27,7 +27,7 @@
 #include "SocketAddressIPv4.h"
 #include "SocketIPv4.h"
 
-#include "remoting/remoting_common/thread/critical_section_lock.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 
 #include <crtdbg.h>
 

@@ -28,10 +28,10 @@
 /**
  * Synchronized (thread-safe) object that can be locked and unlocked.
  */
-class CLASS_DECL_REMOTING_COMMON Lockable
+class CLASS_DECL_REMOTING_COMMON lockable
 {
 public:
-  virtual ~Lockable() {}
+  virtual ~lockable() {}
 
   /**
    * Locks object.

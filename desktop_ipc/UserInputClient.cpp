@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "UserInputClient.h"
-#include "remoting/remoting_common/thread/critical_section_lock.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 #include "ReconnectException.h"
 #include "remoting/remoting_common/util/BrokenHandleException.h"
 

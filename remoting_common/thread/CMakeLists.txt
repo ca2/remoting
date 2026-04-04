@@ -13,7 +13,7 @@ list(APPEND library_source
    GuiThread.cpp
    framework.h
    DesktopSelector.h
-   Lockable.h
+   lockable.h
    critical_section.h
    critical_section.cpp
    GuiThread.h

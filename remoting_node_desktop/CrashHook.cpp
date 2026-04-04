@@ -26,7 +26,7 @@
 #include "remoting/remoting_common/win_system/DynamicLibrary.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 #include "remoting/remoting_common/win_system/RegistryKey.h"
-#include "remoting/remoting_common/thread/critical_section_lock.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 #include "remoting_node_desktop/NamingDefs.h"
 
 typedef BOOL (WINAPI *MINIDUMPWRITEDUMP)(__in  HANDLE hProcess,
@@ -38,7 +38,7 @@ typedef BOOL (WINAPI *MINIDUMPWRITEDUMP)(__in  HANDLE hProcess,
                                        __in  PMINIDUMP_CALLBACK_INFORMATION CallbackParam);
 
 bool CrashHook::m_guiEnabled = false;
-HKEY CrashHook::m_rootHkey = HKEY_CURRENT_USER;
+::acme::RegX CrashHook::m_rootHkey = HKEY_CURRENT_USER;
 critical_section CrashHook::m_guiEnabledMutex;
 ApplicationCrashEvents *CrashHook::m_notifier = 0;
 
@@ -108,7 +108,7 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
   try {
     // Store path to the registry.
     try {
-      HKEY root;
+      ::acme::RegX root;
       {
         critical_section_lock al(&m_guiEnabledMutex);
         root = m_rootHkey;

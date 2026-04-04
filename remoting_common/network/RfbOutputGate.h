@@ -28,7 +28,7 @@
 #include "remoting/remoting_common/io/DataOutputStream.h"
 #include "remoting/remoting_common/io/BufferedOutputStream.h"
 
-#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 
 /**
  * Gate for writting rfb messages.

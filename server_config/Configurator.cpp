@@ -26,7 +26,7 @@
 #include "remoting/remoting_common/wsconfig/TvnLogFilename.h"
 #include "remoting/remoting_common/config/RegistrySettingsManager.h"
 
-#include "remoting/remoting_common/win_system/Registry.h"
+#include "acme/acme/Registry.h"
 #include "remoting/remoting_common/win_system/RegistryKey.h"
 
 #include "Configurator.h"
@@ -91,7 +91,7 @@ bool Configurator::load(bool forService)
 {
   bool isOk = false;
 
-  HKEY rootKey = forService ? HKEY_LOCAL_MACHINE : HKEY_CURRENT_USER;
+  ::acme::RegX rootKey = forService ? HKEY_LOCAL_MACHINE : HKEY_CURRENT_USER;
 
   SECURITY_ATTRIBUTES *sa = 0;
   if (forService && m_regSA != 0) {
@@ -110,7 +110,7 @@ bool Configurator::save(bool forService)
 {
   bool isOk = false;
 
-  HKEY rootKey = forService ? HKEY_LOCAL_MACHINE : HKEY_CURRENT_USER;
+  ::acme::RegX rootKey = forService ? HKEY_LOCAL_MACHINE : HKEY_CURRENT_USER;
 
   SECURITY_ATTRIBUTES *sa = 0;
   if (forService && m_regSA != 0) {

@@ -88,16 +88,16 @@ void InputInjector::injectKeyEvent(BYTE vkCode, bool release, bool extended)
              (int)m_shiftIsPressed,
              (int)m_winIsPressed);
 
-  if (vkCode == VK_CONTROL || vkCode == VK_RCONTROL || vkCode == VK_LCONTROL) {
+  if (vkCode == VK_CONTROL || vkCode == ::user::e_key_right_control || vkCode == ::user::e_key_left_control) {
     m_controlIsPressed = !release;
   }
-  if (vkCode == VK_MENU || vkCode == VK_RMENU || vkCode == VK_LMENU) {
+  if (vkCode == VK_MENU || vkCode == ::user::e_key_right_alt || vkCode == ::user::e_key_left_alt) {
     m_menuIsPressed = !release;
   }
   if (vkCode == VK_DELETE) {
     m_deleteIsPressed = !release;
   }
-  if (vkCode == VK_SHIFT || vkCode == VK_RSHIFT || vkCode == VK_LSHIFT) {
+  if (vkCode == VK_SHIFT || vkCode == ::user::e_key_right_shift || vkCode == ::user::e_key_left_shift) {
     m_shiftIsPressed = !release;
   }
   if (vkCode == VK_LWIN || vkCode == VK_RWIN) {
@@ -356,7 +356,7 @@ SHORT InputInjector::searchVirtKey(WCHAR ch, HKL hklCurrent)
 
 bool InputInjector::capsToggled()
 {
-  return (GetKeyState(VK_CAPITAL) & 1) != 0;
+  return (GetKeyState(::user::e_key_capslock) & 1) != 0;
 }
 
 bool InputInjector::isDeadKey(SHORT scanResult, HKL keyboardLayout)
@@ -455,23 +455,23 @@ bool InputInjector::isInvariantToShift(BYTE virtKey, HKL keyboardLayout)
 
 bool InputInjector::isResistantToCaps(BYTE virtKey, HKL keyboardLayout)
 {
-  return isDifferentWith(VK_CAPITAL, 1, virtKey, keyboardLayout);
+  return isDifferentWith(::user::e_key_capslock, 1, virtKey, keyboardLayout);
 }
 
 void InputInjector::resetModifiers()
 {
   // The Alt key.
   injectKeyEvent(VK_MENU, true);
-  injectKeyEvent(VK_LMENU, true);
-  injectKeyEvent(VK_RMENU, true);
+  injectKeyEvent(::user::e_key_left_alt, true);
+  injectKeyEvent(::user::e_key_right_alt, true);
   // The Shift key.
   injectKeyEvent(VK_SHIFT, true);
-  injectKeyEvent(VK_LSHIFT, true);
-  injectKeyEvent(VK_RSHIFT, true);
+  injectKeyEvent(::user::e_key_left_shift, true);
+  injectKeyEvent(::user::e_key_right_shift, true);
   // The Ctrl key.
   injectKeyEvent(VK_CONTROL, true);
-  injectKeyEvent(VK_LCONTROL, true);
-  injectKeyEvent(VK_RCONTROL, true);
+  injectKeyEvent(::user::e_key_left_control, true);
+  injectKeyEvent(::user::e_key_right_control, true);
   // The Win key.
   injectKeyEvent(VK_LWIN, true);
   injectKeyEvent(VK_RWIN, true);

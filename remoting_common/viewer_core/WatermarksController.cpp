@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "WatermarksController.h"
 #include "watermark_bmp.h"
-#include "remoting/remoting_common/thread/critical_section_lock.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 #include "remoting/remoting_common/rfb/PixelConverter.h"
 
 WatermarksController::WatermarksController(void)

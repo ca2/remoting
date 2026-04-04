@@ -26,7 +26,7 @@
 
 #include "HttpRequestHandler.h"
 
-#include "remoting/remoting_common/network/socket/SocketStream.h"
+//#include "remoting/remoting_common/network/socket/SocketStream.h"
 
 HttpClient::HttpClient(SocketIPv4 *socket, LogWriter *log)
 : TcpClientThread(socket),

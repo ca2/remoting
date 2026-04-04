@@ -30,7 +30,7 @@
 #include "remoting/remoting_common/gui/drawing/Icon.h"
 
 #include "remoting/remoting_common/thread/Thread.h"
-#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 
 #include "remoting/remoting_common/util/Command.h"
 #include "remoting/remoting_common/util/MacroCommand.h"

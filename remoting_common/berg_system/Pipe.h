@@ -28,7 +28,7 @@
 #include "remoting/remoting_common/util/CommonHeader.h"
 #include "WindowsEvent.h"
 #include "remoting/remoting_common/io/Channel.h"
-#include "remoting/remoting_common/thread/critical_section.h"
+//#include "remoting/remoting_common/thread/critical_section.h"
 
 // This class is not an interface but is a class that contain common
 // methods/source codes for derived classes to work with pipe handles.

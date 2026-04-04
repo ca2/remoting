@@ -31,7 +31,7 @@
 //{
 //}
 //
-//RegistrySettingsManager::RegistrySettingsManager(HKEY rootKey, const ::scoped_string & scopedstrEntry, SECURITY_ATTRIBUTES *sa)
+//RegistrySettingsManager::RegistrySettingsManager(::acme::RegX * rootKey, const ::scoped_string & scopedstrEntry, SECURITY_ATTRIBUTES *sa)
 //: m_key(0)
 //{
 //  setRegistryKey(rootKey, scopedstrEntry, sa);
@@ -44,7 +44,7 @@
 //  }
 //}
 //
-//void RegistrySettingsManager::setRegistryKey(HKEY rootKey, const ::scoped_string & scopedstrEntry, SECURITY_ATTRIBUTES *sa)
+//void RegistrySettingsManager::setRegistryKey(::acme::RegX * rootKey, const ::scoped_string & scopedstrEntry, SECURITY_ATTRIBUTES *sa)
 //{
 //  if (m_key != 0) {
 //    delete m_key;
