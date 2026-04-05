@@ -37,8 +37,8 @@ public:
   const static int QWORD_TYPE = REG_QWORD;
 
 public:
-  static ::acme::RegX getCurrentUserKey();
-  static ::acme::RegX getCurrentLocalMachineKey();
+  static ::subsystem::registry getCurrentUserKey();
+  static ::subsystem::registry getCurrentLocalMachineKey();
 
 private:
   Registry();

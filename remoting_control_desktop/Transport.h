@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "remoting/remoting_common/io/Channel.h"
+#include "acme/subsystem/io/Channel.h"
 
-#include "remoting/remoting_common/util/Exception.h"
+#include "acme/subsystem/Exception.h"
 
 /**
  * Abstract control transport that can be used by client and server side

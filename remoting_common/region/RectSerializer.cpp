@@ -25,7 +25,7 @@
 #include "RectSerializer.h"
 #include <tchar.h>
 #include <stdio.h>
-#include "remoting/remoting_common/util/Exception.h"
+#include "acme/subsystem/Exception.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 
 

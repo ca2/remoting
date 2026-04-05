@@ -28,157 +28,160 @@
 
 //#include <crtdbg.h>
 
-ConnectionHistory::ConnectionHistory()
+namespace remoting
 {
-}
+   ConnectionHistory::ConnectionHistory()
+   {
+   }
 
-ConnectionHistory::~ConnectionHistory()
-{
-  releaseHosts();
-}
-
-
-void ConnectionHistory::initialize_connection_history(const ::scoped_string &scopedstr, size_t limit
-                                                 )
-{
-}
+   ConnectionHistory::~ConnectionHistory()
+   {
+      releaseHosts();
+   }
 
 
-void ConnectionHistory::setLimit(size_t limit)
-{
-  bool truncationNeeded = limit < m_limit;
+   void ConnectionHistory::initialize_connection_history(const ::scoped_string &scopedstr, size_t limit
+                                                    )
+   {
+   }
 
-  m_limit = limit;
 
-  if (truncationNeeded) {
-    truncate();
-  }
-}
+   void ConnectionHistory::setLimit(size_t limit)
+   {
+      bool truncationNeeded = limit < m_limit;
 
-size_t ConnectionHistory::getLimit() const
-{
-  return m_limit;
-}
+      m_limit = limit;
 
-void ConnectionHistory::load()
-{
-  releaseHosts();
+      if (truncationNeeded) {
+         truncate();
+      }
+   }
 
-  ::string valueName;
-  ::string value;
+   size_t ConnectionHistory::getLimit() const
+   {
+      return m_limit;
+   }
 
-  for (size_t i = 0; i < m_limit; i++) {
-    //valueName.formatf("{}", i);
-    if (!m_key->getValueAsString(::as_string(i), value)) {
-      break;
-    }
-    m_hosts.add(value);
-  }
-}
+   void ConnectionHistory::load()
+   {
+      releaseHosts();
 
-void ConnectionHistory::save()
-{
-  ::string valueName;
+      ::string valueName;
+      ::string value;
 
-  size_t count = m_hosts.size();
+      for (size_t i = 0; i < m_limit; i++) {
+         //valueName.formatf("{}", i);
+         if (!m_key->getValueAsString(::as_string(i), value)) {
+            break;
+         }
+         m_hosts.add(value);
+      }
+   }
 
-  for (size_t i = 0; i < minimum(count, m_limit); i++) {
-    //valueName.formatf("%u", i);
-    auto value = m_hosts.at(i);
+   void ConnectionHistory::save()
+   {
+      ::string valueName;
 
-    m_key->setValueAsString(::as_string(i), value);
-  }
+      size_t count = m_hosts.size();
 
-  if (count > m_limit) {
-    truncate();
-  }
-}
+      for (size_t i = 0; i < minimum(count, m_limit); i++) {
+         //valueName.formatf("%u", i);
+         auto value = m_hosts.at(i);
 
-void ConnectionHistory::truncate()
-{
-  ::string valueName;
-  ::string strValue;
+         m_key->setValueAsString(::as_string(i), value);
+      }
 
-  size_t i = (size_t)m_limit;
+      if (count > m_limit) {
+         truncate();
+      }
+   }
 
-  while (true) {
-    valueName.formatf("%u", i);
+   void ConnectionHistory::truncate()
+   {
+      ::string valueName;
+      ::string strValue;
 
-    if (i >= getHostCount()) {
-      return ;
-    }
+      size_t i = (size_t)m_limit;
 
-    removeHost(getHost(i));
+      while (true) {
+         valueName.formatf("%u", i);
 
-    if (!m_key->getValueAsString(valueName, strValue)) {
-      break;
-    }
+         if (i >= getHostCount()) {
+            return ;
+         }
 
-    m_key->deleteSubKey(strValue);
-    m_key->deleteValue(valueName);
+         removeHost(getHost(i));
 
-    i++;
-  }
+         if (!m_key->getValueAsString(valueName, strValue)) {
+            break;
+         }
 
-  load();
-}
+         m_key->deleteSubKey(strValue);
+         m_key->deleteValue(valueName);
 
-void ConnectionHistory::clear()
-{
-  ::string valueName;
+         i++;
+      }
 
-  for (size_t i = 0; i < m_hosts.size(); i++) {
-    valueName.formatf("%u", i);
+      load();
+   }
 
-    m_key->deleteSubKey(m_hosts.at(i));
-    m_key->deleteValue(valueName);
-  }
+   void ConnectionHistory::clear()
+   {
+      ::string valueName;
 
-  releaseHosts();
-}
+      for (size_t i = 0; i < m_hosts.size(); i++) {
+         valueName.formatf("%u", i);
 
-void ConnectionHistory::addHost(const ::scoped_string & scopedstrHost)
-{
+         m_key->deleteSubKey(m_hosts.at(i));
+         m_key->deleteValue(valueName);
+      }
 
-   m_hosts.add_unique(scopedstrHost);
-  // ::string hostS(host);
-  //
-  // for (::string_array::iterator it = m_hosts.begin(); it != m_hosts.end(); it++) {
-  //   if (it->isEqualTo(hostS)) {
-  //     m_hosts.erase(it);
-  //     break;
-  //   }
-  // }
-  //
-  // m_hosts.insert(m_hosts.begin(), hostS);
-}
+      releaseHosts();
+   }
 
-size_t ConnectionHistory::getHostCount() const
-{
-  return m_hosts.size();
-}
+   void ConnectionHistory::addHost(const ::scoped_string & scopedstrHost)
+   {
 
-::string ConnectionHistory::getHost(size_t i) const
-{
-  return m_hosts.at(i);
-}
+      m_hosts.add_unique(scopedstrHost);
+      // ::string hostS(host);
+      //
+      // for (::string_array::iterator it = m_hosts.begin(); it != m_hosts.end(); it++) {
+      //   if (it->isEqualTo(hostS)) {
+      //     m_hosts.erase(it);
+      //     break;
+      //   }
+      // }
+      //
+      // m_hosts.insert(m_hosts.begin(), hostS);
+   }
 
-void ConnectionHistory::releaseHosts()
-{
-  m_hosts.clear();
-}
+   size_t ConnectionHistory::getHostCount() const
+   {
+      return m_hosts.size();
+   }
 
-void ConnectionHistory::removeHost(const ::scoped_string & scopedstrHost)
-{
+   ::string ConnectionHistory::getHost(size_t i) const
+   {
+      return m_hosts.at(i);
+   }
 
-   m_hosts.erase(scopedstrHost);
+   void ConnectionHistory::releaseHosts()
+   {
+      m_hosts.clear();
+   }
 
-  // ::string hostS(scopedstrHost);
-  //
-  // for (::string_array::iterator it = m_hosts.begin(); it != m_hosts.end(); it++) {
-  //   if (*it == hostS) {
-  //     m_hosts.erase(it);
-  //     break;
-  //   }
-  // }
-}
+   void ConnectionHistory::removeHost(const ::scoped_string & scopedstrHost)
+   {
+
+      m_hosts.erase(scopedstrHost);
+
+      // ::string hostS(scopedstrHost);
+      //
+      // for (::string_array::iterator it = m_hosts.begin(); it != m_hosts.end(); it++) {
+      //   if (*it == hostS) {
+      //     m_hosts.erase(it);
+      //     break;
+      //   }
+      // }
+   }
+} // namespace remoting

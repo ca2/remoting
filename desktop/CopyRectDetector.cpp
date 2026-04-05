@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "CopyRectDetector.h"
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 
 CopyRectDetector::CopyRectDetector()
 {

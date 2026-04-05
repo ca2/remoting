@@ -25,73 +25,74 @@
 #pragma once
 
 
-#include "remoting/remoting_common/gui/NotifyIcon.h"
-#include "remoting/remoting_common/gui/Menu.h"
+#include "apex/innate_subsystem/NotifyIcon.h"
+#include "apex/innate_subsystem/Menu.h"
 #include "remoting_impact.h"
 
 #include "resource.h"
 
-class remoting_impact;
-
-class ControlTrayIcon : public ::remoting::NotifyIcon,
-                        public WindowProcHolder
+namespace remoting_remoting
 {
-public:
-  ControlTrayIcon(remoting_impact *viewerApplication);
-  virtual ~ControlTrayIcon();
+    class remoting_impact;
 
-  //
-  // this function set icon and show icon [call setIcon(), show()]
-  //
-  void showIcon();
+    class ControlTrayIcon : public ::remoting::NotifyIcon,
+                            public WindowProcHolder
+    {
+    public:
+        ControlTrayIcon(remoting_impact *viewerApplication);
+        virtual ~ControlTrayIcon();
 
-//protected:
-  static UINT WM_USER_TASKBAR;
+        //
+        // this function set icon and show icon [call setIcon(), show()]
+        //
+        void showIcon();
 
-//protected:
-  virtual LRESULT windowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, bool *useDefWindowProc);
+        //protected:
+        static UINT WM_USER_TASKBAR;
 
-  //
-  // Show login-dialog after click "New connection..." in pop-up menu of tray icon
-  //
-  virtual void onNewConnection();
-  
-  //
-  // Show dialog with connection options after click
-  // "Options for incoming connection..." in pop-up menu of tray icon
-  //
-  virtual void onListeningOptions();
+        //protected:
+        virtual LRESULT windowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, bool *useDefWindowProc);
 
-  //
-  // Show dialog with configuration of viewer
-  //
-  virtual void onConfiguration();
-  
-  //
-  // Show about-dialog of viewer
-  //
-  virtual void onAboutViewer();
+        //
+        // Show login-dialog after click "New connection..." in pop-up menu of tray icon
+        //
+        virtual void onNewConnection();
 
-  //
-  // Stopping of listening daemon after click
-  // "Close listening daemon" in pop-up menu of tray icon
-  //
-  virtual void onCloseListeningDaemon();
+        //
+        // Show dialog with connection options after click
+        // "Options for incoming connection..." in pop-up menu of tray icon
+        //
+        virtual void onListeningOptions();
 
-  //
-  // Show login-dialog after click on tray icon
-  //
-  virtual void onShowMainWindow();
+        //
+        // Show dialog with configuration of viewer
+        //
+        virtual void onConfiguration();
 
-  ::remoting::Icon m_icon;
-  Menu m_menu;
-  bool m_inWindowProc;
+        //
+        // Show about-dialog of viewer
+        //
+        virtual void onAboutViewer();
 
-  remoting_impact *m_application;
+        //
+        // Stopping of listening daemon after click
+        // "Close listening daemon" in pop-up menu of tray icon
+        //
+        virtual void onCloseListeningDaemon();
 
-//private:
-  void onRightButtonUp();
-  void onLeftButtonDown();
-};
+        //
+        // Show login-dialog after click on tray icon
+        //
+        virtual void onShowMainWindow();
 
+        ::remoting::Icon m_icon;
+        Menu m_menu;
+        bool m_inWindowProc;
 
+        remoting_impact *m_application;
+
+        //private:
+        void onRightButtonUp();
+        void onLeftButtonDown();
+    };
+} // namespace remoting_remoting

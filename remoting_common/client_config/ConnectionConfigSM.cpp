@@ -26,17 +26,21 @@
 
 #include "acme/acme/Registry.h"
 
-//ConnectionConfigSM::ConnectionConfigSM(const ::scoped_string & scopedstrRegistryPath,
-//                     const ::scoped_string & scopedstrEntryName)
-//: RegistrySettingsManager()
-//{
-//  ::string strKeyName;
-//  strKeyName.format("{}\\History\\{}",
-//                 ::string(scopedstrRegistryPath).c_str(),
-//                 ::string(scopedstrEntryName).c_str());
-//  setRegistryKey(Registry::getCurrentUserKey(), strKeyName);
-//}
-//
-//ConnectionConfigSM::~ConnectionConfigSM()
-//{
-//}
+namespace remoting
+{
+   ConnectionConfigSM::ConnectionConfigSM(const ::scoped_string & scopedstrRegistryPath,
+                      const ::scoped_string & scopedstrEntryName)
+   : RegistrySettingsManager()
+   {
+      ::string strKeyName;
+      strKeyName.format("{}\\History\\{}",
+                     ::string(scopedstrRegistryPath).c_str(),
+                     ::string(scopedstrEntryName).c_str());
+      setRegistryKey(Registry::getCurrentUserKey(), strKeyName);
+   }
+
+   ConnectionConfigSM::~ConnectionConfigSM()
+   {
+   }
+} // namespace remoting
+

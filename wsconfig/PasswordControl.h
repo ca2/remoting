@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/gui/::remoting::Window.h"
+#include "apex/innate_subsystem/::remoting::Window.h"
 //#include <vector>
 
 /**

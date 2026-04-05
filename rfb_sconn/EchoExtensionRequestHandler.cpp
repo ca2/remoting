@@ -24,9 +24,9 @@
 #include "framework.h"
 #include "EchoExtensionRequestHandler.h"
 #include "remoting/remoting_common/rfb/MsgDefs.h"
-#include "remoting/remoting_common/io/DataOutputStream.h"
+#include "acme/subsystem/io/DataOutputStream.h"
 
-#include "remoting/remoting_common/io/ByteArrayOutputStream.h"
+#include "acme/subsystem/io/ByteArrayOutputStream.h"
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 #include "remoting/remoting_common/network/RfbInputGate.h"
 //#include "remoting/remoting_common/thread/critical_section.h"

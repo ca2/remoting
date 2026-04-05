@@ -30,180 +30,183 @@
 #include "remoting/remoting_common/util/VncPassCrypt.h"
 #include "remoting/remoting_common/viewer_core/VncAuthentication.h"
 
-ConnectionData::ConnectionData()
-: m_isEmpty(true),
-  m_isSetPassword(false),
-  m_isSetDispatchId(false),
-  m_isIncoming(false)
+namespace remoting_remoting
 {
-}
+   ConnectionData::ConnectionData()
+   : m_isEmpty(true),
+     m_isSetPassword(false),
+     m_isSetDispatchId(false),
+     m_isIncoming(false)
+   {
+   }
 
-ConnectionData::ConnectionData(const ConnectionData &connectionData)
-: m_isEmpty(connectionData.m_isEmpty),
-  m_isSetPassword(connectionData.m_isSetPassword),
-  m_isSetDispatchId(connectionData.m_isSetDispatchId),
-  m_isIncoming(connectionData.m_isIncoming),
-   m_iDivisor(connectionData.m_iDivisor)
-{
-  if (!connectionData.is_empty()) {
-    m_hostPath.set(connectionData.m_hostPath.get());
-  }
-  if (m_isSetPassword) {
-    m_defaultPassword = connectionData.m_defaultPassword;
-  }
-  if (m_isSetDispatchId) {
-    m_dispatchId = connectionData.m_dispatchId;
-  }
-}
+   ConnectionData::ConnectionData(const ConnectionData &connectionData)
+   : m_isEmpty(connectionData.m_isEmpty),
+     m_isSetPassword(connectionData.m_isSetPassword),
+     m_isSetDispatchId(connectionData.m_isSetDispatchId),
+     m_isIncoming(connectionData.m_isIncoming),
+      m_iDivisor(connectionData.m_iDivisor)
+   {
+      if (!connectionData.is_empty()) {
+         m_hostPath.set(connectionData.m_hostPath.get());
+      }
+      if (m_isSetPassword) {
+         m_defaultPassword = connectionData.m_defaultPassword;
+      }
+      if (m_isSetDispatchId) {
+         m_dispatchId = connectionData.m_dispatchId;
+      }
+   }
 
-void ConnectionData::setIncoming(bool isIncoming)
-{
-  m_isIncoming = isIncoming;
-}
+   void ConnectionData::setIncoming(bool isIncoming)
+   {
+      m_isIncoming = isIncoming;
+   }
 
-bool ConnectionData::isIncoming() const
-{
-  return m_isIncoming;
-}
+   bool ConnectionData::isIncoming() const
+   {
+      return m_isIncoming;
+   }
 
-bool ConnectionData::is_empty() const
-{
-  return m_isEmpty;
-}
+   bool ConnectionData::is_empty() const
+   {
+      return m_isEmpty;
+   }
 
-bool ConnectionData::isSetPassword() const
-{
-  return m_isSetPassword;
-}
+   bool ConnectionData::isSetPassword() const
+   {
+      return m_isSetPassword;
+   }
 
-void ConnectionData::resetPassword()
-{
-  m_isSetPassword = false;
-}
+   void ConnectionData::resetPassword()
+   {
+      m_isSetPassword = false;
+   }
 
-unsigned int ConnectionData::getDispatchId() const
-{
-  return (m_isSetDispatchId ? m_dispatchId : 0);
-}
+   unsigned int ConnectionData::getDispatchId() const
+   {
+      return (m_isSetDispatchId ? m_dispatchId : 0);
+   }
 
-bool ConnectionData::isSetDispatchId() const
-{
-  return m_isSetDispatchId;
-}
+   bool ConnectionData::isSetDispatchId() const
+   {
+      return m_isSetDispatchId;
+   }
 
-void ConnectionData::setDispatchId(unsigned int id)
-{
-  m_dispatchId = id;
-  m_isSetDispatchId = true;
-}
+   void ConnectionData::setDispatchId(unsigned int id)
+   {
+      m_dispatchId = id;
+      m_isSetDispatchId = true;
+   }
 
-void ConnectionData::unsetDispatchId()
-{
-  m_isSetDispatchId = false;
-}
+   void ConnectionData::unsetDispatchId()
+   {
+      m_isSetDispatchId = false;
+   }
 
-void ConnectionData::setHost(const ::scoped_string & host)
-{
-  ::string chompedString = host;
-  //TCHAR spaceChar[] = ;
-  chompedString.erase_any_character_in(" \t\n\r");
+   void ConnectionData::setHost(const ::scoped_string & host)
+   {
+      ::string chompedString = host;
+      //TCHAR spaceChar[] = ;
+      chompedString.erase_any_character_in(" \t\n\r");
 
-  ::string ansiStr(chompedString);
+      ::string ansiStr(chompedString);
 
-  m_hostPath.set(ansiStr);
-  m_isEmpty = false;
-}
+      m_hostPath.set(ansiStr);
+      m_isEmpty = false;
+   }
 
-::string ConnectionData::getCryptedPassword() const
-{
-  return m_defaultPassword;
-}
+   ::string ConnectionData::getCryptedPassword() const
+   {
+      return m_defaultPassword;
+   }
 
-void ConnectionData::setCryptedPassword(const ::scoped_string & hidePassword)
-{
-  if (hidePassword == 0) {
-    m_isSetPassword = false;
-  } else {
-    m_defaultPassword = hidePassword;
-    m_isSetPassword = true;
-  }
-}
+   void ConnectionData::setCryptedPassword(const ::scoped_string & hidePassword)
+   {
+      if (hidePassword == 0) {
+         m_isSetPassword = false;
+      } else {
+         m_defaultPassword = hidePassword;
+         m_isSetPassword = true;
+      }
+   }
 
-::string ConnectionData::getPlainPassword() const
-{
-  // Transform password from hex-string to raw data.
-  ::string ansiHidePassword(m_defaultPassword);
-  unsigned char encPassword[VncAuthentication::VNC_PASSWORD_SIZE];
-  for (size_t i = 0; i < VncAuthentication::VNC_PASSWORD_SIZE; ++i) {
-    std::stringstream passwordStream;
-    passwordStream << ansiHidePassword[i * 2]
-                   << ansiHidePassword[i * 2 + 1];
-    int ordOfSymbol = 0;
-    passwordStream >> std::hex >> ordOfSymbol;
-    encPassword[i] = static_cast<unsigned char>(ordOfSymbol);
-  }
-  // Decrypt password.
-  unsigned char plainPassword[VncAuthentication::VNC_PASSWORD_SIZE];
-  VncPassCrypt::getPlainPass(plainPassword, encPassword);
+   ::string ConnectionData::getPlainPassword() const
+   {
+      // Transform password from hex-string to raw data.
+      ::string ansiHidePassword(m_defaultPassword);
+      unsigned char encPassword[VncAuthentication::VNC_PASSWORD_SIZE];
+      for (size_t i = 0; i < VncAuthentication::VNC_PASSWORD_SIZE; ++i) {
+         std::stringstream passwordStream;
+         passwordStream << ansiHidePassword[i * 2]
+                        << ansiHidePassword[i * 2 + 1];
+         int ordOfSymbol = 0;
+         passwordStream >> std::hex >> ordOfSymbol;
+         encPassword[i] = static_cast<unsigned char>(ordOfSymbol);
+      }
+      // Decrypt password.
+      unsigned char plainPassword[VncAuthentication::VNC_PASSWORD_SIZE];
+      VncPassCrypt::getPlainPass(plainPassword, encPassword);
 
-  ::string ansiPlainPassword(reinterpret_cast<char *>(plainPassword));
-  ::string password;
-  password = ansiPlainPassword;
-  return password;
-}
+      ::string ansiPlainPassword(reinterpret_cast<char *>(plainPassword));
+      ::string password;
+      password = ansiPlainPassword;
+      return password;
+   }
 
-void ConnectionData::setPlainPassword(const ::scoped_string & password)
-{
-  ::string ansiPlainPassword(password);
-  unsigned char plainPassword[VncAuthentication::VNC_PASSWORD_SIZE];
-  unsigned char encryptedPassword[VncAuthentication::VNC_PASSWORD_SIZE];
-  memset(plainPassword, 0, VncAuthentication::VNC_PASSWORD_SIZE);
-  memcpy(plainPassword,
-         ansiPlainPassword,
-         minimum(VncAuthentication::VNC_PASSWORD_SIZE, ansiPlainPassword.length()));
-  VncPassCrypt::getEncryptedPass(encryptedPassword, plainPassword);
-  unsigned char hidePasswordChars[VncAuthentication::VNC_PASSWORD_SIZE * 2 + 1];
-  hidePasswordChars[VncAuthentication::VNC_PASSWORD_SIZE * 2] = 0;
-  for (size_t i = 0; i < VncAuthentication::VNC_PASSWORD_SIZE; ++i) {
-    std::stringstream passwordStream;
-    int ordOfSymbol = encryptedPassword[i];
-    passwordStream << std::hex << std::setw(2) << std::setfill('0') << ordOfSymbol;
-    passwordStream >> hidePasswordChars[i * 2] >> hidePasswordChars[i * 2 + 1];
-  }
-  ::string ansiHidePassword(reinterpret_cast<char *>(hidePasswordChars));
+   void ConnectionData::setPlainPassword(const ::scoped_string & password)
+   {
+      ::string ansiPlainPassword(password);
+      unsigned char plainPassword[VncAuthentication::VNC_PASSWORD_SIZE];
+      unsigned char encryptedPassword[VncAuthentication::VNC_PASSWORD_SIZE];
+      memset(plainPassword, 0, VncAuthentication::VNC_PASSWORD_SIZE);
+      memcpy(plainPassword,
+             ansiPlainPassword,
+             minimum(VncAuthentication::VNC_PASSWORD_SIZE, ansiPlainPassword.length()));
+      VncPassCrypt::getEncryptedPass(encryptedPassword, plainPassword);
+      unsigned char hidePasswordChars[VncAuthentication::VNC_PASSWORD_SIZE * 2 + 1];
+      hidePasswordChars[VncAuthentication::VNC_PASSWORD_SIZE * 2] = 0;
+      for (size_t i = 0; i < VncAuthentication::VNC_PASSWORD_SIZE; ++i) {
+         std::stringstream passwordStream;
+         int ordOfSymbol = encryptedPassword[i];
+         passwordStream << std::hex << std::setw(2) << std::setfill('0') << ordOfSymbol;
+         passwordStream >> hidePasswordChars[i * 2] >> hidePasswordChars[i * 2 + 1];
+      }
+      ::string ansiHidePassword(reinterpret_cast<char *>(hidePasswordChars));
 
-  // save password
-  m_defaultPassword = ansiHidePassword;
-  m_isSetPassword = true;
-}
+      // save password
+      m_defaultPassword = ansiHidePassword;
+      m_isSetPassword = true;
+   }
 
-::string ConnectionData::getHost() const
-{
-  ::string host;
-  ::string hostAnsi(m_hostPath.get());
-  host = hostAnsi;
-  return host;
-}
+   ::string ConnectionData::getHost() const
+   {
+      ::string host;
+      ::string hostAnsi(m_hostPath.get());
+      host = hostAnsi;
+      return host;
+   }
 
 
-//void ConnectionData::setDivisor(int iDivisor)
-//{
-//   m_iDivisor = iDivisor;
-//}
-//
-//
-//int ConnectionData::getDivisor() const
-//{
-//   return m_iDivisor;
-//}
+   //void ConnectionData::setDivisor(int iDivisor)
+   //{
+   //   m_iDivisor = iDivisor;
+   //}
+   //
+   //
+   //int ConnectionData::getDivisor() const
+   //{
+   //   return m_iDivisor;
+   //}
 
-::string ConnectionData::getReducedHost() const
-{
-  ::string ansiStr(m_hostPath.getVncHost());
-  return ansiStr;
-}
+   ::string ConnectionData::getReducedHost() const
+   {
+      ::string ansiStr(m_hostPath.getVncHost());
+      return ansiStr;
+   }
 
-int ConnectionData::getPort() const
-{
-  return m_hostPath.getVncPort();
-}
+   int ConnectionData::getPort() const
+   {
+      return m_hostPath.getVncPort();
+   }
+} // namespace remoting_remoting

@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "RfbKeySym.h"
 #include "acme/constant/user_key.h"
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 
 #define XK_MISCELLANY
 #include "remoting/remoting_common/rfb/keysymdef.h"

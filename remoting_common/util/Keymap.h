@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 
 // FIXME: This class is Windows-specific so it should not reside in util/.
 

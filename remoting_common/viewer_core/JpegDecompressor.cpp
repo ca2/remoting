@@ -26,7 +26,7 @@
 
 #include "acme/prototype/geometry2d/rectangle.h"
 //#include "remoting/remoting_common/util/::string.h"
-#include "remoting/remoting_common/util/Exception.h"
+#include "acme/subsystem/Exception.h"
 
 JpegDecompressor::JpegDecompressor()
 {

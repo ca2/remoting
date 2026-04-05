@@ -4,14 +4,14 @@
 
 #pragma once
 
-#include "remoting/remoting_common/gui/drawing/Graphics.h"
+#include "apex/innate_subsystem/drawing/Graphics.h"
 
-#include "remoting/remoting_common/gui/drawing/SolidBrush.h"
+#include "apex/innate_subsystem/drawing/SolidBrush.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 class DesktopWindow;
 
 
-namespace remoting
+namespace remoting_remoting
 {
    enum enum_control
    {
@@ -166,4 +166,4 @@ void set_hover_false();
    };
 
 
-} // namespace remoting
+} // namespace remoting_remoting

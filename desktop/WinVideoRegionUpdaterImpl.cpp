@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "WinVideoRegionUpdaterImpl.h"
 #include "remoting/remoting_common/server_config/Configurator.h"
-#include "remoting/remoting_common/gui/WindowFinder.h"
+#include "apex/innate_subsystem/WindowFinder.h"
 #include "remoting/remoting_common/region/RectSerializer.h"
 //#include "remoting/remoting_common/thread/critical_section.h"
 

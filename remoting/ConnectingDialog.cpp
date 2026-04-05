@@ -27,68 +27,69 @@
 #include "ConnectingDialog.h"
 #include "resource.h"
 #include "acme/constant/id.h"
-#include "remoting/remoting_common/gui/ProgressBar.h"
-#include "remoting/remoting_common/gui/TextBox.h"
+#include "apex/innate_subsystem/ProgressBar.h"
+#include "apex/innate_subsystem/TextBox.h"
 #include "acme/platform/application.h"
 
-
-ConnectingDialog::ConnectingDialog()
-: BaseDialog(IDD_CONNECTING)
+namespace remoting_remoting
 {
-
-}
-
-
-BOOL ConnectingDialog::onInitDialog()
-{
-
-   construct_newø(m_ptextboxHost);
-   construct_newø(m_ptextboxStatus);
-   construct_newø(m_panimation);
-   construct_newø(m_panimation->m_pbar);
-
-  subclassControlById(m_ptextboxHost, IDC_HOST);
-  m_ptextboxHost->setText(m_strHost);
-  subclassControlById(m_ptextboxStatus, IDC_STATUS);
-  m_ptextboxStatus->set_focus();
-   //ødefer_construct_new(m_panimation);
-   subclassControlById(m_panimation->m_pbar, IDC_PROGRESS1);
-   m_panimation->m_pbar->setRange(0, 8000);
-  return FALSE;
-}
-
-void ConnectingDialog::set_host(const ::scoped_string &hostname) {
-  m_strHost = hostname;
-   if (m_ptextboxHost)
+   ConnectingDialog::ConnectingDialog()
+   : BaseDialog(IDD_CONNECTING)
    {
+
+   }
+
+
+   BOOL ConnectingDialog::onInitDialog()
+   {
+
+      construct_newø(m_ptextboxHost);
+      construct_newø(m_ptextboxStatus);
+      construct_newø(m_panimation);
+      construct_newø(m_panimation->m_pbar);
+
+      subclassControlById(m_ptextboxHost, IDC_HOST);
       m_ptextboxHost->setText(m_strHost);
+      subclassControlById(m_ptextboxStatus, IDC_STATUS);
+      m_ptextboxStatus->set_focus();
+      //ødefer_construct_new(m_panimation);
+      subclassControlById(m_panimation->m_pbar, IDC_PROGRESS1);
+      m_panimation->m_pbar->setRange(0, 8000);
+      return FALSE;
    }
-}
 
-void ConnectingDialog::set_status(const ::scoped_string &status) {
-   m_strStatus = status;
-   if (m_ptextboxStatus)
+   void ConnectingDialog::set_host(const ::scoped_string &hostname) {
+      m_strHost = hostname;
+      if (m_ptextboxHost)
+      {
+         m_ptextboxHost->setText(m_strHost);
+      }
+   }
+
+   void ConnectingDialog::set_status(const ::scoped_string &status) {
+      m_strStatus = status;
+      if (m_ptextboxStatus)
+      {
+         m_ptextboxStatus->setText(m_strStatus);
+      }
+   }
+
+   BOOL ConnectingDialog::onCommand(UINT controlID, UINT notificationID)
    {
-      m_ptextboxStatus->setText(m_strStatus);
+      if (controlID == IDOK) {
+         close_dialog(1);
+         return TRUE;
+      }
+      if (controlID == IDCANCEL) {
+         close_dialog(0);
+         return TRUE;
+      }
+      return FALSE;
    }
-}
-
-BOOL ConnectingDialog::onCommand(UINT controlID, UINT notificationID)
-{
-  if (controlID == IDOK) {
-    close_dialog(1);
-    return TRUE;
-  }
-  if (controlID == IDCANCEL) {
-    close_dialog(0);
-    return TRUE;
-  }
-  return FALSE;
-}
-// class progress_bar_animation :
-// virtual public ::particle
-// {
-// public:
+   // class progress_bar_animation :
+   // virtual public ::particle
+   // {
+   // public:
 
    // ProgressBar*m_pbar;
    // double m_dStart = 0.0;
@@ -108,106 +109,107 @@ BOOL ConnectingDialog::onCommand(UINT controlID, UINT notificationID)
 
    }
 
-void progress_bar_animation::set_animation_range(double dStart, double dEnd)
-{
-
-   m_dStart = dStart;
-
-   m_dEnd = dEnd;
-
-   if (!m_bRunning)
+   void progress_bar_animation::set_animation_range(double dStart, double dEnd)
    {
-      m_bRunning = true;
-      m_papplication->fork([this]()
+
+      m_dStart = dStart;
+
+      m_dEnd = dEnd;
+
+      if (!m_bRunning)
       {
-try
-{
-   run();
-}
-         catch (...)
+         m_bRunning = true;
+         m_papplication->fork([this]()
          {
+   try
+   {
+      run();
+   }
+            catch (...)
+            {
 
-            m_bRunning = false;
-         }
+               m_bRunning = false;
+            }
 
-      });
+         });
+      }
+
    }
 
-}
+
+   void progress_bar_animation::run()
+   {
+
+      while (m_bRunning)
+      {
+         m_d = m_time.elapsed().floating_second();
+         auto d= fmod(m_d * 0.125, m_dEnd - m_dStart) + m_dStart;
+         ::PostMessage(m_pbar->get_hwnd(), WM_USER + 327, (int) (d * 8'000.0), 0);
+         preempt(100_ms);
+      }
+
+   }
+   //
+   // };
+
+   // const ::scoped_string & ConnectingDialog::get_status()
+   // {
+   //   return m_strPassword;
+   // }
+   void ConnectingDialog::_start_animating_progress_range(double dStart, double dEnd)
+   {
+
+      defer_construct_newø(m_panimation);
+
+      m_panimation->set_animation_range(dStart, dEnd);
+      //m_dAnimationStart = dStart;
+      //m_dAnimationEnd = dEnd;
+   }
+   void ConnectingDialog::set_phase1()
+   {
 
 
-void progress_bar_animation::run()
-{
+      _start_animating_progress_range(0.0, 0.4);
+   }
 
-while (m_bRunning)
-{
-   m_d = m_time.elapsed().floating_second();
-   auto d= fmod(m_d * 0.125, m_dEnd - m_dStart) + m_dStart;
-   ::PostMessage(m_pbar->get_hwnd(), WM_USER + 327, (int) (d * 8'000.0), 0);
-   preempt(100_ms);
-}
+   void ConnectingDialog::set_connecting(int iPhase)
+   {
 
-}
-//
-// };
-
-// const ::scoped_string & ConnectingDialog::get_status()
-// {
-//   return m_strPassword;
-// }
-void ConnectingDialog::_start_animating_progress_range(double dStart, double dEnd)
-{
-
-   defer_construct_newø(m_panimation);
-
-   m_panimation->set_animation_range(dStart, dEnd);
-   //m_dAnimationStart = dStart;
-   //m_dAnimationEnd = dEnd;
-}
-void ConnectingDialog::set_phase1()
-{
+      if (iPhase == 1)
+      {
+         set_status("Authenticating...");
+      }
+      else
+      {
 
 
-   _start_animating_progress_range(0.0, 0.4);
-}
-
-void ConnectingDialog::set_connecting(int iPhase)
-{
-
-    if (iPhase == 1)
-    {
-        set_status("Authenticating...");
-    }
-    else
-    {
+      }
+      _start_animating_progress_range(0.4, 0.6);
+   }
 
 
-    }
-   _start_animating_progress_range(0.4, 0.6);
-}
+   bool ConnectingDialog::dialog_procedure(INT_PTR & iptrResult, UINT message, ::wparam wparam, ::lparam lparam)
+   {
+
+      if (message == WM_USER + 328)
+      {
+
+         if (wparam == id_remoting_connecting)
+         {
+
+            set_connecting((int) lparam.m_lparam);
+
+         }
+
+         iptrResult = true;
+
+         return true;
 
 
-bool ConnectingDialog::dialog_procedure(INT_PTR & iptrResult, UINT message, ::wparam wparam, ::lparam lparam)
-{
-
-    if (message == WM_USER + 328)
-    {
-
-        if (wparam == id_remoting_connecting)
-        {
-
-                set_connecting((int) lparam.m_lparam);
-
-        }
-
-        iptrResult = true;
-
-        return true;
+      }
 
 
-    }
+      return BaseDialog::dialog_procedure(iptrResult, message, wparam, lparam);
 
-
-    return BaseDialog::dialog_procedure(iptrResult, message, wparam, lparam);
-
-}
+   }
+} // namespace remoting_remoting

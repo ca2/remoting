@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "remoting/remoting_common/gui/BaseWindow.h"
-#include "remoting/remoting_common/gui/drawing/DeviceContext.h"
+#include "apex/innate_subsystem/BaseWindow.h"
+#include "apex/innate_subsystem/drawing/DeviceContext.h"
 
 class CLASS_DECL_REMOTING_COMMON PaintWindow: public BaseWindow
 {

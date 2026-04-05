@@ -25,24 +25,24 @@
 #pragma once
 
 
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 #include "resource.h"
 
-class ResourceStrings
+namespace remoting_remoting
 {
-public:
-  ResourceStrings();
-  ResourceStrings(int min, int max);
+    class ResourceStrings
+    {
+    public:
+        ResourceStrings();
+        ResourceStrings(int min, int max);
 
-  bool isValid(int res); 
-  // this function returns string as it is stored
-  ::string getStrRes(int strRes); 
-  // this function returns the string without '\t' and '&'
-  ::string getStrPureRes(int strRes);
+        bool isValid(int res);
+        // this function returns string as it is stored
+        ::string getStrRes(int strRes);
+        // this function returns the string without '\t' and '&'
+        ::string getStrPureRes(int strRes);
 
-protected:
-  int m_min, m_max;
-};
-
-
-
+    protected:
+        int m_min, m_max;
+    };
+} // namespace remoting_remoting

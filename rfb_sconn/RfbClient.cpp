@@ -32,7 +32,7 @@
 #include "RfbInitializer.h"
 #include "ClientAuthListener.h"
 #include "remoting/remoting_common/server_config/Configurator.h"
-#include "remoting/remoting_common/io/BufferedInputStream.h"
+#include "acme/subsystem/io/BufferedInputStream.h"
 #include "remoting/remoting_common/util/MemUsage.h"
 
 RfbClient::RfbClient(NewConnectionEvents *newConnectionEvents,

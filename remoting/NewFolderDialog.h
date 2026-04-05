@@ -25,52 +25,62 @@
 #pragma once
 
 
-#include "remoting/remoting_common/gui/BaseDialog.h"
-//#include "remoting/remoting_common/gui/::remoting::Window.h"
-#include "remoting/remoting_common/gui/TextBox.h"
+#include "apex/innate_subsystem/BaseDialog.h"
+#include "apex/innate_subsystem/Control.h"
+#include "apex/innate_subsystem/TextBox.h"
 
-class NewFolderDialog : public BaseDialog
+namespace remoting_remoting
 {
-public:
-  NewFolderDialog();
-  NewFolderDialog(::remoting::Window *parent);
-  ~NewFolderDialog();
 
-  void setFileName(const ::scoped_string & scopedstrFilename);
-  ::string getFileName();
 
-//protected:
+   class NewFolderDialog : public ::innate_subsystem::BaseDialog
+   {
+   public:
+      NewFolderDialog();
+      ~NewFolderDialog();
 
-  //
-  // Inherited from BaseDialog
-  //
 
-  virtual BOOL onInitDialog();
-  virtual BOOL onNotify(UINT controlID, LPARAM data);
-  virtual BOOL onCommand(UINT controlID, UINT notificationID);
-  virtual BOOL onDestroy();
+      virtual void initialize_new_folder_dialog(Control *parent);
 
-  //
-  // Button event handlers
-  //
+      void setFileName(const ::scoped_string & scopedstrFilename);
+      ::string getFileName();
 
-  void onOkButtonClick();
-  void onCancelButtonClick();
+      //protected:
 
-//private:
+      //
+      // Inherited from BaseDialog
+      //
 
-  void initControls();
+      virtual bool onInitDialog();
+      virtual bool onNotify(unsigned int controlID, ::lparam data);
+      virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
+      virtual bool onDestroy();
 
-//protected:
+      //
+      // Button event handlers
+      //
 
-  //
-  // Controls
-  //
+      virtual void onOkButtonClick();
+      virtual void onCancelButtonClick();
 
-  ::remoting::Window m_label;
-  TextBox m_fileNameTextBox;
+      //private:
 
-  ::string m_strFileName;
-};
+      virtual void initControls();
+
+      //protected:
+
+      //
+      // Controls
+      //
+
+      ::pointer < ::innate_subsystem::Control > m_pcontrolLabel;
+      ::pointer < ::innate_subsystem::TextBox > m_ptextboxFileName;
+
+      ::string m_strFileName;
+   };
+
+
+} // namespace remoting_remoting
+
 
 

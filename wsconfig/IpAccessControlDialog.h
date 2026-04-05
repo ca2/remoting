@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "remoting/remoting_common/gui/BaseDialog.h"
-#include "remoting/remoting_common/gui/ListView.h"
-#include "remoting/remoting_common/gui/SpinControl.h"
-#include "remoting/remoting_common/gui/BalloonTip.h"
+#include "apex/innate_subsystem/BaseDialog.h"
+#include "apex/innate_subsystem/ListView.h"
+#include "apex/innate_subsystem/SpinControl.h"
+#include "apex/innate_subsystem/BalloonTip.h"
 
 #include "remoting/remoting_common/server_config/Configurator.h"
 

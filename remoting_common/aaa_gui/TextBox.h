@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/gui/Window.h"
+#include "apex/innate_subsystem/Window.h"
 #include "Tooltip.h"
 
 class CLASS_DECL_REMOTING_COMMON TextBox : public ::remoting::Window

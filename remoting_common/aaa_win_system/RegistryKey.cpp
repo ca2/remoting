@@ -26,7 +26,7 @@
 #include "RegistryKey.h"
 //#include <vector>
 
-RegistryKey::RegistryKey(::acme::RegX rootKey, const ::scoped_string & scopedstrEntry,
+RegistryKey::RegistryKey(::subsystem::registry rootKey, const ::scoped_string & scopedstrEntry,
                          bool createIfNotExists, SECURITY_ATTRIBUTES *sa)
 {
   initialize(rootKey, scopedstrEntry, createIfNotExists, sa);
@@ -38,7 +38,7 @@ RegistryKey::RegistryKey(RegistryKey *rootKey, const ::scoped_string & scopedstr
   initialize(rootKey->m_key, scopedstrEntry, createIfNotExists, sa);
 }
 
-RegistryKey::RegistryKey(::acme::RegX rootKey)
+RegistryKey::RegistryKey(::subsystem::registry rootKey)
 : m_key(rootKey), m_rootKey(rootKey)
 {
   m_entry= "";
@@ -53,7 +53,7 @@ RegistryKey::~RegistryKey()
   close();
 }
 
-void RegistryKey::open(::acme::RegX rootKey,
+void RegistryKey::open(::subsystem::registry rootKey,
                        const ::scoped_string & scopedstrEntry,
                        bool createIfNotExists,
                        SECURITY_ATTRIBUTES *sa)
@@ -69,7 +69,7 @@ void RegistryKey::open(RegistryKey *rootKey,
   initialize(rootKey->m_key, scopedstrEntry, createIfNotExists, sa);
 }
 
-::acme::RegX RegistryKey::getHKEY() const
+::subsystem::registry RegistryKey::getHKEY() const
 {
   return m_key;
 }
@@ -302,7 +302,7 @@ void RegistryKey::close()
   }
 }
 
-void RegistryKey::initialize(::acme::RegX rootKey, const ::scoped_string & scopedstrEntry, bool createIfNotExists, SECURITY_ATTRIBUTES *sa)
+void RegistryKey::initialize(::subsystem::registry rootKey, const ::scoped_string & scopedstrEntry, bool createIfNotExists, SECURITY_ATTRIBUTES *sa)
 {
   m_rootKey = rootKey;
   m_key = 0;
@@ -343,7 +343,7 @@ DWORD RegistryKey::enumKey(DWORD i, ::string & name)
   return ret;
 }
 
-bool RegistryKey::tryOpenSubKey(::acme::RegX key, const ::scoped_string & scopedstrSubkey, ::acme::RegX *openedKey, bool createIfNotExists, SECURITY_ATTRIBUTES *sa)
+bool RegistryKey::tryOpenSubKey(::subsystem::registry key, const ::scoped_string & scopedstrSubkey, ::subsystem::registry *openedKey, bool createIfNotExists, SECURITY_ATTRIBUTES *sa)
 {
   if (RegOpenKey(key,::wstring(scopedstrSubkey), openedKey) != ERROR_SUCCESS) {
     if (createIfNotExists) {

@@ -25,28 +25,30 @@
 #pragma once
 
 
-#include "remoting/remoting_common/gui/Menu.h"
+#include "apex/innate_subsystem/Menu.h"
 
-class ViewerMenu: public Menu
+namespace remoting_remoting
 {
-public:
-  void loadMenu();
+    class ViewerMenu: public Menu
+    {
+    public:
+        void loadMenu();
 
-protected:
-  int m_startIndex;
+    protected:
+        int m_startIndex;
 
-  static const int SEPARATOR = 0;
-  static const int MENU_ITEM = 1;
+        static const int SEPARATOR = 0;
+        static const int MENU_ITEM = 1;
 
-  typedef struct {
-    int menu_id;
-    int menu_param;
-  } menu_item;
+        typedef struct {
+            int menu_id;
+            int menu_param;
+        } menu_item;
 
-private:
-  void makeSeparator();
-  void menuItem(int id);
-  void findStartIndex();
-};
-
+    private:
+        void makeSeparator();
+        void menuItem(int id);
+        void findStartIndex();
+    };
+} // namespace remoting_remoting
 

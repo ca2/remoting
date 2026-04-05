@@ -25,66 +25,71 @@
 #pragma once
 
 
-#include "remoting/remoting_common/gui/ListView.h"
+#include "apex/innate_subsystem/ListView.h"
 #include "remoting/remoting_common/ftp_common/FileInfo.h"
 
-class FileInfoListView : public ListView
+namespace remoting_remoting
 {
-public:
-  FileInfoListView();
-  virtual ~FileInfoListView();
 
-  virtual void setWindow(HWND hwnd);
 
-  //
-  // Adds new item to FileInfoListView
-  //
+    class FileInfoListView : public ::innate_subsystem::ListView
+    {
+    public:
+        FileInfoListView();
+        ~FileInfoListView() override;
 
-  void addItem(int index, ::remoting::ftp::FileInfo *fileInfo);
+        virtual void setWindow(const ::operating_system::window & operatingsystemwindow);
 
-  //
-  // Adds files info array to the end of ::list_base view
-  //
+        //
+        // Adds new item to FileInfoListView
+        //
 
-  //void addRange(::remoting::ftp::FileInfo **filesInfo, size_t count);
-   void addRange(const ::pointer_array < ::remoting::ftp::FileInfo > & fileinfoa);
+        virtual void addItem(int index, ::remoting::ftp::FileInfo *fileInfo);
 
-  //
-  // Returns file info notated by first selected ::list_base view item
-  //
+        //
+        // Adds files info array to the end of ::list_base view
+        //
 
-  ::pointer < ::remoting::ftp::FileInfo >getSelectedFileInfo();
+        //void addRange(::remoting::ftp::FileInfo **filesInfo, size_t count);
+        virtual void addRange(const ::pointer_array < ::remoting::ftp::FileInfo > & fileinfoa);
 
-  void sort(int columnIndex);
-//protected:
+        //
+        // Returns file info notated by first selected ::list_base view item
+        //
 
-  //
-  // Loads file ::list_base view icons from application resources
-  //
+        virtual ::pointer < ::remoting::ftp::FileInfo >getSelectedFileInfo();
 
-  void loadImages();
+        virtual void sort(int columnIndex);
+        //protected:
 
-  //
-  // This function compare two item with file-contex (file name, date, size).
-  //
-  static int CALLBACK compareItem(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort);
+        //
+        // Loads file ::list_base view icons from application resources
+        //
 
-  //
-  // This function return:
-  //   -1, if first < second
-  //   0, if first == second
-  //   1, if first > second
-  //
-  static int compareUInt64(unsigned long long first, unsigned long long second);
+        virtual void loadImages();
 
-  HIMAGELIST m_smallImageList;
+        //
+        // This function compare two item with file-contex (file name, date, size).
+        //
+        //static int CALLBACK compareItem(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort);
 
-//private:
-  bool window_procedure(LRESULT & lresult, UINT scopedstrMessage, ::wparam wparam, ::lparam lparam) override;
+        //
+        // This function return:
+        //   -1, if first < second
+        //   0, if first == second
+        //   1, if first > second
+        //
+        //static int compareUInt64(unsigned long long first, unsigned long long second);
 
-  static const int IMAGE_FOLDER_UP_INDEX = 0;
-  static const int IMAGE_FOLDER_INDEX = 1;
-  static const int IMAGE_FILE_INDEX = 2;
-};
+        //HIMAGELIST m_smallImageList;
+
+        //private:
+        virtual bool window_procedure(::lresult & lresult, unsigned int scopedstrMessage, ::wparam wparam, ::lparam lparam);
+
+        static const int IMAGE_FOLDER_UP_INDEX = 0;
+        static const int IMAGE_FOLDER_INDEX = 1;
+        static const int IMAGE_FILE_INDEX = 2;
+    };
+} // namespace remoting_remoting
 
 

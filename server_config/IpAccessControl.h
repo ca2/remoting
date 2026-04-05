@@ -29,10 +29,10 @@
 
 #include "remoting/remoting_common/server_config/IpAccessRule.h"
 
-#include "remoting/remoting_common/util/Exception.h"
+#include "acme/subsystem/Exception.h"
 
-#include "remoting/remoting_common/io/DataInputStream.h"
-#include "remoting/remoting_common/io/DataOutputStream.h"
+#include "acme/subsystem/io/DataInputStream.h"
+#include "acme/subsystem/io/DataOutputStream.h"
 
 
 class IpAccessControl : public ::array_base<IpAccessRule *>

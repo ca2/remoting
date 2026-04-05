@@ -23,42 +23,54 @@
 //
 #include "framework.h"
 #include "AuthenticationDialog.h"
+#include "acme/_operating_system.h"
 
-AuthenticationDialog::AuthenticationDialog()
-: BaseDialog(IDD_DAUTH)
+
+namespace remoting_remoting
 {
-}
 
 
-BOOL AuthenticationDialog::onInitDialog() 
-{
-  setControlById(m_hostname, IDC_EHOST);
-  m_hostname.setText(m_strHost);
-  setControlById(m_password, IDC_EPASSW);
-  m_password.set_focus();
-  return FALSE;
-}
+    AuthenticationDialog::AuthenticationDialog()
+    {
+        initialize_base_dialog(IDD_DAUTH);
+    }
 
-void AuthenticationDialog::setHostName(const ::scoped_string & hostname)
-{
-  m_strHost = hostname;
-}
 
-BOOL AuthenticationDialog::onCommand(UINT controlID, UINT notificationID)
-{
-  if (controlID == IDOK) {
-    m_strPassword = m_password.get_text();
-    close_dialog(1);
-    return TRUE;
-  }
-  if (controlID == IDCANCEL) {
-    close_dialog(0);
-    return TRUE;
-  }
-  return FALSE;
-}
+    bool AuthenticationDialog::onInitDialog()
+    {
+        setControlById(m_ptextboxHostname, IDC_EHOST);
+        m_ptextboxHostname->setText(m_strHost);
+        setControlById(m_ptextboxPassword, IDC_EPASSW);
+        m_ptextboxPassword->setFocus();
+        return false;
+    }
 
-string AuthenticationDialog::getPassword()
-{
-  return m_strPassword;
-}
+
+    void AuthenticationDialog::setHostName(const ::scoped_string & hostname)
+    {
+        m_strHost = hostname;
+    }
+
+    bool AuthenticationDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+    {
+        if (controlID == IDOK) {
+            m_strPassword = m_password.get_text();
+            close_dialog(1);
+            return TRUE;
+        }
+        if (controlID == IDCANCEL) {
+            close_dialog(0);
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    string AuthenticationDialog::getPassword()
+    {
+        return m_strPassword;
+    }
+
+
+} // namespace remoting_remoting
+
+

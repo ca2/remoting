@@ -25,11 +25,11 @@
 #pragma once
 
 
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 
 #include "NotifyIconWindow.h"
 
-#include "remoting/remoting_common/gui/drawing/Icon.h"
+#include "apex/innate_subsystem/drawing/Icon.h"
 
 #include <shellapi.h>
 

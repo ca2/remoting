@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "acme/_operating_system.h"
 #include "NamedPipe.h"
-#include "remoting/remoting_common/util/Exception.h"
+#include "acme/subsystem/Exception.h"
 #include <crtdbg.h>
 //#include "remoting/remoting_common/win_system/Environment.h"
 //#include "remoting/remoting_common/thread/critical_section.h"

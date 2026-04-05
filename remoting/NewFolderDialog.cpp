@@ -26,93 +26,96 @@
 #include "resource.h"
 #include "remoting/remoting_common/remoting.h"
 
-NewFolderDialog::NewFolderDialog()
+namespace remoting_remoting
 {
-  setResourceId(ftclient_createFolderDialog);
-  m_strFileName= "";
-}
+    NewFolderDialog::NewFolderDialog()
+    {
+        setResourceId(ftclient_createFolderDialog);
+        m_strFileName= "";
+    }
 
-NewFolderDialog::NewFolderDialog(::remoting::Window *parent)
-{
-  setResourceId(ftclient_createFolderDialog);
-  set_parent(parent);
-  m_strFileName= "";
-}
+    NewFolderDialog::NewFolderDialog(::remoting::Window *parent)
+    {
+        setResourceId(ftclient_createFolderDialog);
+        set_parent(parent);
+        m_strFileName= "";
+    }
 
-NewFolderDialog::~NewFolderDialog()
-{
-}
+    NewFolderDialog::~NewFolderDialog()
+    {
+    }
 
-void NewFolderDialog::setFileName(const ::scoped_string & scopedstrFilename)
-{
-  m_strFileName= scopedstrFilename;
-}
+    void NewFolderDialog::setFileName(const ::scoped_string & scopedstrFilename)
+    {
+        m_strFileName= scopedstrFilename;
+    }
 
-::string NewFolderDialog::getFileName()
-{
-  return m_strFileName;
-}
+    ::string NewFolderDialog::getFileName()
+    {
+        return m_strFileName;
+    }
 
-BOOL NewFolderDialog::onInitDialog()
-{
-  initControls();
-  m_fileNameTextBox.setText(m_strFileName);
-  return TRUE;
-}
+    BOOL NewFolderDialog::onInitDialog()
+    {
+        initControls();
+        m_fileNameTextBox.setText(m_strFileName);
+        return TRUE;
+    }
 
-BOOL NewFolderDialog::onNotify(UINT controlID, LPARAM data)
-{
-  return TRUE;
-}
+    BOOL NewFolderDialog::onNotify(UINT controlID, LPARAM data)
+    {
+        return TRUE;
+    }
 
-BOOL NewFolderDialog::onCommand(UINT controlID, UINT notificationID)
-{
-  switch (controlID) {
-  case IDOK:
-    onOkButtonClick();
-    break;
-  case IDCANCEL:
-    onCancelButtonClick();
-    break;
-  }
-  return TRUE;
-}
+    BOOL NewFolderDialog::onCommand(UINT controlID, UINT notificationID)
+    {
+        switch (controlID) {
+            case IDOK:
+                onOkButtonClick();
+                break;
+            case IDCANCEL:
+                onCancelButtonClick();
+                break;
+        }
+        return TRUE;
+    }
 
-BOOL NewFolderDialog::onDestroy()
-{
-  return TRUE;
-}
+    BOOL NewFolderDialog::onDestroy()
+    {
+        return TRUE;
+    }
 
-void NewFolderDialog::onOkButtonClick()
-{
-  ::string fileName;
+    void NewFolderDialog::onOkButtonClick()
+    {
+        ::string fileName;
 
-  fileName = m_fileNameTextBox.get_text();
+        fileName = m_fileNameTextBox.get_text();
 
-  if (fileName.is_empty() || fileName.contains_any_character_in("\\/"))
-     {
-    ::remoting::message_box(m_hwnd,
-               L"::file::item name cannot be empty and cannot contain '/' or '\\' characters.",
-               L"Incorrect ::file::item Name",
-               MB_OK | MB_ICONWARNING);
-    m_fileNameTextBox.set_focus();
-    return ;
-  }
+        if (fileName.is_empty() || fileName.contains_any_character_in("\\/"))
+        {
+            ::remoting::message_box(m_hwnd,
+                       L"::file::item name cannot be empty and cannot contain '/' or '\\' characters.",
+                       L"Incorrect ::file::item Name",
+                       MB_OK | MB_ICONWARNING);
+            m_fileNameTextBox.set_focus();
+            return ;
+        }
 
-  m_strFileName = fileName;
+        m_strFileName = fileName;
 
-  close_dialog(IDOK);
-}
+        close_dialog(IDOK);
+    }
 
-void NewFolderDialog::onCancelButtonClick()
-{
-  close_dialog(IDCANCEL);
-}
+    void NewFolderDialog::onCancelButtonClick()
+    {
+        close_dialog(IDCANCEL);
+    }
 
-void NewFolderDialog::initControls()
-{
-  HWND hwnd = m_hwnd;
+    void NewFolderDialog::initControls()
+    {
+        HWND hwnd = m_hwnd;
 
-  m_label.setWindow(GetDlgItem(hwnd, IDC_LABEL));
-  m_fileNameTextBox.setWindow(GetDlgItem(hwnd, IDC_FILENAME_EDIT));
-}
+        m_label.setWindow(GetDlgItem(hwnd, IDC_LABEL));
+        m_fileNameTextBox.setWindow(GetDlgItem(hwnd, IDC_FILENAME_EDIT));
+    }
+}// namespace remoting_remoting

@@ -25,12 +25,12 @@
 #pragma once
 
 
-#include "remoting/remoting_common/gui/BaseDialog.h"
-//#include "remoting/remoting_common/gui/::remoting::Window.h"
-#include "remoting/remoting_common/gui/TextBox.h"
-#include "remoting/remoting_common/gui/ComboBox.h"
-#include "remoting/remoting_common/gui/ImagedButton.h"
-#include "remoting/remoting_common/gui/ProgressBar.h"
+#include "apex/innate_subsystem/BaseDialog.h"
+#include "apex/innate_subsystem/Control.h"
+#include "apex/innate_subsystem/TextBox.h"
+#include "apex/innate_subsystem/ComboBox.h"
+#include "apex/innate_subsystem/ImagedButton.h"
+#include "apex/innate_subsystem/ProgressBar.h"
 
 #include "remoting/remoting_common/ftp_common/FileInfo.h"
 
@@ -38,247 +38,249 @@
 
 #include "FileInfoListView.h"
 #include "FileExistDialog.h"
-#include "remoting/remoting_common/thread/Thread.h"
+#include "acme/subsystem/thread/Thread.h"
 #include "remoting/remoting_common/ftp_client/FileTransferInterface.h"
 
 //#include <vector>
-
-
-
-class FileTransferMainDialog : public BaseDialog,
-                               public ::remoting::ftp::FileTransferInterface
+namespace remoting_remoting
 {
-public:
-  FileTransferMainDialog(::remoting::ftp::FileTransferCore *core);
-  virtual ~FileTransferMainDialog();
+    class FileTransferMainDialog : public BaseDialog,
+                                   public ::remoting::ftp::FileTransferInterface
+    {
+    public:
+        FileTransferMainDialog(::remoting::ftp::FileTransferCore *core);
+        virtual ~FileTransferMainDialog();
+
+        //
+        // Kill main dialog.
+        // Function return false, if closing dialog is canceled, and true else
+        //
+        bool tryClose();
 
-  //
-  // Kill main dialog.
-  // Function return false, if closing dialog is canceled, and true else
-  //
-  bool tryClose();
+        //
+        // Inherited from FtInterface
+        //
+        int onFtTargetFileExists(::remoting::ftp::FileInfo *sourceFileInfo,
+                                 ::remoting::ftp::FileInfo *targetFileInfo,
+                                 const ::file::path & pathToTargetFile);
+        void setProgress(double progress);
 
-  //
-  // Inherited from FtInterface
-  //
-  int onFtTargetFileExists(::remoting::ftp::FileInfo *sourceFileInfo,
-                           ::remoting::ftp::FileInfo *targetFileInfo,
-                           const ::file::path & pathToTargetFile);
-  void setProgress(double progress);
+        void onFtOpError(const ::scoped_string & scopedstrMessage);
+        void onFtOpInfo(const ::scoped_string & scopedstrMessage);
+        void onFtOpStarted();
+        void onFtOpFinished(int state, int result);
 
-  void onFtOpError(const ::scoped_string & scopedstrMessage);
-  void onFtOpInfo(const ::scoped_string & scopedstrMessage);
-  void onFtOpStarted();
-  void onFtOpFinished(int state, int result);
+        //
+        // filetransfer's operation is finished. Need update of control
+        //
+        void setNothingState();
 
-  //
-  // filetransfer's operation is finished. Need update of control
-  //
-  void setNothingState();
+        //
+        // Called if local file ::list_base is updated
+        //
+        void onRefreshLocalFileList();
 
-  //
-  // Called if local file ::list_base is updated
-  //
-  void onRefreshLocalFileList();
+        // Called if remote file ::list_base is updated
+        void onRefreshRemoteFileList();
 
-  // Called if remote file ::list_base is updated
-  void onRefreshRemoteFileList();
+        //
+        // Shows error scopedstrMessage and throws exception
+        //
 
-  //
-  // Shows error scopedstrMessage and throws exception
-  //
+        void raise(::exception &ex) override;
 
-  void raise(::exception &ex) override;
+        //protected:
 
-//protected:
+        //
+        // Inherited from BaseDialog
+        //
 
-  //
-  // Inherited from BaseDialog
-  //
+        virtual BOOL onInitDialog();
+        virtual BOOL onNotify(UINT controlID, LPARAM data);
+        virtual BOOL onCommand(UINT controlID, UINT notificationID);
+        virtual BOOL onDestroy();
 
-  virtual BOOL onInitDialog();
-  virtual BOOL onNotify(UINT controlID, LPARAM data);
-  virtual BOOL onCommand(UINT controlID, UINT notificationID);
-  virtual BOOL onDestroy();
+        virtual void onMessageReceived(UINT uMsg, WPARAM wParam, LPARAM lParam);
 
-  virtual void onMessageReceived(UINT uMsg, WPARAM wParam, LPARAM lParam);
+        //
+        // Button event handlers
+        //
 
-  //
-  // Button event handlers
-  //
+        void onCancelButtonClick();
+        void onCancelOperationButtonClick();
 
-  void onCancelButtonClick();
-  void onCancelOperationButtonClick();
+        void onRenameRemoteButtonClick();
+        void onMkDirRemoteButtonClick();
+        void onRemoveRemoteButtonClick();
+        void onRefreshRemoteButtonClick();
 
-  void onRenameRemoteButtonClick();
-  void onMkDirRemoteButtonClick();
-  void onRemoveRemoteButtonClick();
-  void onRefreshRemoteButtonClick();
+        void onRenameLocalButtonClick();
+        void onMkDirLocalButtonClick();
+        void onRemoveLocalButtonClick();
+        void onRefreshLocalButtonClick();
 
-  void onRenameLocalButtonClick();
-  void onMkDirLocalButtonClick();
-  void onRemoveLocalButtonClick();
-  void onRefreshLocalButtonClick();
+        void onUploadButtonClick();
+        void onDownloadButtonClick();
 
-  void onUploadButtonClick();
-  void onDownloadButtonClick();
+        void moveUpLocalFolder();
+        void moveUpRemoteFolder();
 
-  void moveUpLocalFolder();
-  void moveUpRemoteFolder();
+        //
+        // List view event handlers
+        //
 
-  //
-  // List view event handlers
-  //
+        void onRemoteListViewDoubleClick();
+        void onLocalListViewDoubleClick();
 
-  void onRemoteListViewDoubleClick();
-  void onLocalListViewDoubleClick();
+        void onRemoteListViewKeyDown(UINT key);
+        void onLocalListViewKeyDown(UINT key);
 
-  void onRemoteListViewKeyDown(UINT key);
-  void onLocalListViewKeyDown(UINT key);
+        //
+        // Enables or disables rename and delete buttons
+        // depending of file ::list_base views selected items count.
+        //
 
-  //
-  // Enables or disables rename and delete buttons
-  // depending of file ::list_base views selected items count.
-  //
+        void checkRemoteListViewSelection();
+        void checkLocalListViewSelection();
 
-  void checkRemoteListViewSelection();
-  void checkLocalListViewSelection();
+        //
+        // Text notification methods
+        //
 
-  //
-  // Text notification methods
-  //
+        void insertMessageIntoComboBox(const ::scoped_string & scopedstrMessage);
 
-  void insertMessageIntoComboBox(const ::scoped_string & scopedstrMessage);
+        //private:
 
-//private:
+        //
+        // Enables or disables all controls from m_controlsToBlock ::list_base
+        //
 
-  //
-  // Enables or disables all controls from m_controlsToBlock ::list_base
-  //
+        void enableControls(bool enabled);
 
-  void enableControls(bool enabled);
+        //
+        // Links gui control class members with windows in dialog
+        //
 
-  //
-  // Links gui control class members with windows in dialog
-  //
+        void initControls();
 
-  void initControls();
 
+        //
+        // Refreshes local file ::list_base
+        //
 
-  //
-  // Refreshes local file ::list_base
-  //
+        void refreshLocalFileList();
 
-  void refreshLocalFileList();
+        //
+        // Refreshes remote file ::list_base
+        //
 
-  //
-  // Refreshes remote file ::list_base
-  //
+        void refreshRemoteFileList();
 
-  void refreshRemoteFileList();
+        //
+        // Displays file ::list_base of pathToFile folder of local machine
+        // to local file ::list_base view
+        //
 
-  //
-  // Displays file ::list_base of pathToFile folder of local machine
-  // to local file ::list_base view
-  //
+        void tryListLocalFolder(const ::file::path & pathToFile);
 
-  void tryListLocalFolder(const ::file::path & pathToFile);
+        //
+        // Sends file ::list_base request to server and shows result
+        // in remote file ::list_base view
+        //
 
-  //
-  // Sends file ::list_base request to server and shows result
-  // in remote file ::list_base view
-  //
+        void tryListRemoteFolder(const ::file::path & pathToFile);
 
-  void tryListRemoteFolder(const ::file::path & pathToFile);
+        //
+        // Filenames helper methods
+        //
 
-  //
-  // Filenames helper methods
-  //
+        //
+        // FIXME: Make classes for getPathTo*** methods
+        //
 
-  //
-  // FIXME: Make classes for getPathTo*** methods
-  //
+        ::file::path getPathToCurrentLocalFolder();
+        ::file::path getPathToParentLocalFolder();
+        ::file::path getPathToSelectedLocalFile();
 
-  ::file::path getPathToCurrentLocalFolder();
-  ::file::path getPathToParentLocalFolder();
-  ::file::path getPathToSelectedLocalFile();
+        ::file::path getPathToCurrentRemoteFolder();
+        ::file::path getPathToParentRemoteFolder();
+        ::file::path getPathToSelectedRemoteFile();
 
-  ::file::path getPathToCurrentRemoteFolder();
-  ::file::path getPathToParentRemoteFolder();
-  ::file::path getPathToSelectedRemoteFile();
+        //protected:
+        //
+        // True if window state is closing.
+        //
 
-//protected:
-  //
-  // True if window state is closing.
-  //
+        bool m_isClosing;
 
-  bool m_isClosing;
 
 
+        ::string m_lastSentFileListPath;
+        ::string m_lastReceivedFileListPath;
 
-  ::string m_lastSentFileListPath;
-  ::string m_lastReceivedFileListPath;
+        //
+        // Buttons
+        //
 
-  //
-  // Buttons
-  //
+        ::remoting::Window m_renameRemoteButton;
+        ::remoting::Window m_mkDirRemoteButton;
+        ::remoting::Window m_removeRemoteButton;
+        ::remoting::Window m_refreshRemoteButton;
 
-  ::remoting::Window m_renameRemoteButton;
-  ::remoting::Window m_mkDirRemoteButton;
-  ::remoting::Window m_removeRemoteButton;
-  ::remoting::Window m_refreshRemoteButton;
+        ::remoting::Window m_renameLocalButton;
+        ::remoting::Window m_mkDirLocalButton;
+        ::remoting::Window m_removeLocalButton;
+        ::remoting::Window m_refreshLocalButton;
 
-  ::remoting::Window m_renameLocalButton;
-  ::remoting::Window m_mkDirLocalButton;
-  ::remoting::Window m_removeLocalButton;
-  ::remoting::Window m_refreshLocalButton;
+        ::remoting::Window m_uploadButton;
+        ::remoting::Window m_downloadButton;
 
-  ::remoting::Window m_uploadButton;
-  ::remoting::Window m_downloadButton;
+        ::remoting::Window m_cancelButton;
 
-  ::remoting::Window m_cancelButton;
+        //
+        // Progress bar
+        //
 
-  //
-  // Progress bar
-  //
+        ProgressBar m_copyProgressBar;
 
-  ProgressBar m_copyProgressBar;
+        //
+        // Combo box
+        //
 
-  //
-  // Combo box
-  //
+        ComboBox m_logComboBox;
 
-  ComboBox m_logComboBox;
+        //
+        // Text boxes
+        //
 
-  //
-  // Text boxes
-  //
+        TextBox m_localCurFolderTextBox;
+        TextBox m_remoteCurFolderTextBox;
 
-  TextBox m_localCurFolderTextBox;
-  TextBox m_remoteCurFolderTextBox;
+        //
+        // Tables
+        //
 
-  //
-  // Tables
-  //
+        FileInfoListView m_localFileListView;
+        FileInfoListView m_remoteFileListView;
 
-  FileInfoListView m_localFileListView;
-  FileInfoListView m_remoteFileListView;
+        //
+        // Helper modal dialogs
+        //
 
-  //
-  // Helper modal dialogs
-  //
+        FileExistDialog m_fileExistDialog;
 
-  FileExistDialog m_fileExistDialog;
+        //
+        // ::file::item info of ".." fake folder
+        //
 
-  //
-  // ::file::item info of ".." fake folder
-  //
+        ::remoting::ftp:: FileInfo *m_fakeMoveUpFolder;
 
- ::remoting::ftp:: FileInfo *m_fakeMoveUpFolder;
+        //private:
 
-//private:
+        static const UINT WM_OPERATION_FINISHED = WM_USER + 2;
+    };
 
-  static const UINT WM_OPERATION_FINISHED = WM_USER + 2;
-};
+
+} // namespace remoting_remoting
 
 

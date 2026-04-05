@@ -29,73 +29,73 @@
 //////#include "remoting/remoting_common/util/::string.h"
 #include "remoting/remoting_common/rfb/HostPath.h"
 
-class ConnectionData
+namespace remoting_remoting
 {
-public:
-  ConnectionData();
-  ConnectionData(const ConnectionData &connectionData);
+   class ConnectionData
+   {
+   public:
+      ConnectionData();
+      ConnectionData(const ConnectionData &connectionData);
 
-  //
-  // This methods is setter and getter of hostname or ::pair of hostname and port.
-  //
-  void setHost(const ::scoped_string & host);
-  ::string getHost() const;
+      //
+      // This methods is setter and getter of hostname or ::pair of hostname and port.
+      //
+      void setHost(const ::scoped_string & host);
+      ::string getHost() const;
 
-  //void setDivisor(int iDivisor);
-  //int getDivisor() const;
+      //void setDivisor(int iDivisor);
+      //int getDivisor() const;
 
-  //
-  // This method return hostname without port.
-  //
-  ::string getReducedHost() const;
+      //
+      // This method return hostname without port.
+      //
+      ::string getReducedHost() const;
 
-  //
-  // This method return port.
-  //
-  int getPort() const;
+      //
+      // This method return port.
+      //
+      int getPort() const;
 
-  //
-  // This method return true, if hostname isn't set.
-  //
-  bool is_empty() const;
+      //
+      // This method return true, if hostname isn't set.
+      //
+      bool is_empty() const;
 
-  //
-  // This methods is setter and getters of password.
-  //
-  ::string getPlainPassword() const;
-  ::string getCryptedPassword() const;
-  void setPlainPassword(const ::scoped_string & password);
-  void setCryptedPassword(const ::scoped_string & password);
-  bool isSetPassword() const;
-  void resetPassword();
+      //
+      // This methods is setter and getters of password.
+      //
+      ::string getPlainPassword() const;
+      ::string getCryptedPassword() const;
+      void setPlainPassword(const ::scoped_string & password);
+      void setCryptedPassword(const ::scoped_string & password);
+      bool isSetPassword() const;
+      void resetPassword();
 
-  unsigned int getDispatchId() const;
-  bool isSetDispatchId() const;
-  void setDispatchId(unsigned int id);
-  void unsetDispatchId();
+      unsigned int getDispatchId() const;
+      bool isSetDispatchId() const;
+      void setDispatchId(unsigned int id);
+      void unsetDispatchId();
 
-  void setIncoming(bool isIncoming);
-  bool isIncoming() const;
+      void setIncoming(bool isIncoming);
+      bool isIncoming() const;
 
-//protected:
-  HostPath m_hostPath;
-  int m_iDivisor;
+      //protected:
+      HostPath m_hostPath;
+      int m_iDivisor;
 
-  // This flag is true, if host isn't set.
-  bool m_isEmpty;
+      // This flag is true, if host isn't set.
+      bool m_isEmpty;
 
-  // This flag is true, if password is set.
-  bool m_isSetPassword;
+      // This flag is true, if password is set.
+      bool m_isSetPassword;
 
-  // This flag is true, if connection is incoming (e.g. listening mode).
-  bool m_isIncoming;
+      // This flag is true, if connection is incoming (e.g. listening mode).
+      bool m_isIncoming;
 
-  // Saved password is crypted.
-  ::string m_defaultPassword;
+      // Saved password is crypted.
+      ::string m_defaultPassword;
 
-  bool m_isSetDispatchId;
-  unsigned int m_dispatchId;
-};
-
-
-
+      bool m_isSetDispatchId;
+      unsigned int m_dispatchId;
+   };
+} //namespace remoting_remoting

@@ -28,16 +28,19 @@
 #include "remoting/remoting_common/viewer_core/VncAuthenticationHandler.h"
 #include "ConnectionData.h"
 
-class ViewerVncAuthHandler : public VncAuthenticationHandler
+namespace remoting_remoting
 {
-public:
-  ViewerVncAuthHandler(ConnectionData *connectionData);
-  virtual ~ViewerVncAuthHandler();
+    class ViewerVncAuthHandler : public VncAuthenticationHandler
+    {
+    public:
+        ViewerVncAuthHandler(ConnectionData *connectionData);
+        virtual ~ViewerVncAuthHandler();
 
-//private:
-  virtual ::string getPassword();
+        //private:
+        virtual ::string getPassword();
 
-  ConnectionData *m_connectionData;
-};
+        ConnectionData *m_connectionData;
+    };
 
-//// __VIEWERVNCAUTHHANDLER_H__
+    //// __VIEWERVNCAUTHHANDLER_H__
+} // namespace remoting_remoting

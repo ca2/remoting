@@ -28,7 +28,7 @@
 #include "Transport.h"
 #include "TransportFactory.h"
 
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 #include "remoting/remoting_common/util/ResourceLoader.h"
 #include "remoting/remoting_common/util/Command.h"
 #include "remoting/remoting_common/server_config/Configurator.h"

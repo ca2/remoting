@@ -24,4 +24,7 @@
 #include "framework.h"
 #include "BuildTime.h"
 
-const TCHAR BuildTime::DATE[] = _T(__DATE__) " at " _T(__TIME__);
+namespace remoting_remoting
+{
+   const char BuildTime::DATE[] = __DATE__ " at " __TIME__;
+} // namespace remoting_remoting

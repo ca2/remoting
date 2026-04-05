@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "TightEncoder.h"
 
-#include "remoting/remoting_common/io/ByteArrayOutputStream.h"
+#include "acme/subsystem/io/ByteArrayOutputStream.h"
 
 TightEncoder::TightEncoder(PixelConverter *conv, DataOutputStream *output)
 : Encoder(conv, output)

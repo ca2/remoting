@@ -25,41 +25,42 @@
 #pragma once
 
 
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 
-class ProductNames
+namespace remoting_remoting
 {
-public:
-  static const char PRODUCT_NAME[];
-  static const char VIEWER_PRODUCT_NAME[];
-};
+    class ProductNames
+    {
+    public:
+        static const char PRODUCT_NAME[];
+        static const char VIEWER_PRODUCT_NAME[];
+    };
 
-class RegistryPaths
-{
-public:
-  static const char VIEWER_PATH[];
-};
+    class RegistryPaths
+    {
+    public:
+        static const char VIEWER_PATH[];
+    };
 
-class LogNames
-{
-public:
-  static const char VIEWER_LOG_FILE_STUB_NAME[];
-  static const char LOG_DIR_NAME[];
-};
-
-
-class ApplicationNames
-{
-public:
-  static const char WINDOW_CLASS_NAME[];
-};
-
-class WindowNames
-{
-public:
-  static const char TVN_WINDOW_CLASS_NAME[];
-  static const char TVN_WINDOW_TITLE_NAME[];
-  static const char TVN_SUB_WINDOW_TITLE_NAME[];
-};
+    class LogNames
+    {
+    public:
+        static const char VIEWER_LOG_FILE_STUB_NAME[];
+        static const char LOG_DIR_NAME[];
+    };
 
 
+    class ApplicationNames
+    {
+    public:
+        static const char WINDOW_CLASS_NAME[];
+    };
+
+    class WindowNames
+    {
+    public:
+        static const char TVN_WINDOW_CLASS_NAME[];
+        static const char TVN_WINDOW_TITLE_NAME[];
+        static const char TVN_SUB_WINDOW_TITLE_NAME[];
+    };
+} // namespace remoting_remoting

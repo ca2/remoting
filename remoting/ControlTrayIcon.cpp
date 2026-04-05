@@ -24,147 +24,150 @@
 #include "framework.h"
 #include "ControlTrayIcon.h"
 #include "ResourceStrings.h"
-#include "remoting/remoting_common/gui/BaseWindow.h"
+#include "apex/innate_subsystem/BaseWindow.h"
 
-UINT ControlTrayIcon::WM_USER_TASKBAR;
-
-ControlTrayIcon::ControlTrayIcon(remoting_impact *viewerApplication)
-: NotifyIcon(false),
-  m_application(viewerApplication),
-  m_inWindowProc(false),
-  m_icon(IDI_APPICON)
+namespace remoting_remoting
 {
-  ResourceStrings resStr;
-  m_menu.createPopupMenu();
-  m_menu.appendMenu(resStr.getStrRes(IDS_TB_NEWCONNECTION), IDS_NEW_CONN);
-  m_menu.appendSeparator();
-  m_menu.appendMenu(resStr.getStrRes(IDS_LISTENING_OPTIONS), IDS_LISTENING_OPTIONS);
-  m_menu.appendMenu(resStr.getStrRes(IDS_CONFIG), IDS_CONFIG);
-  m_menu.appendSeparator();
-  m_menu.appendMenu(resStr.getStrRes(IDS_ABOUT_VIEWER), IDS_ABOUT_VIEWER);
-  m_menu.appendSeparator();
-  m_menu.appendMenu(resStr.getStrRes(IDS_CLOSE), IDS_CLOSE);
-  m_menu.setDefaultItem(IDS_NEW_CONN);
+    UINT ControlTrayIcon::WM_USER_TASKBAR;
 
-  setWindowProcHolder(this);
+    ControlTrayIcon::ControlTrayIcon(remoting_impact *viewerApplication)
+    : NotifyIcon(false),
+      m_application(viewerApplication),
+      m_inWindowProc(false),
+      m_icon(IDI_APPICON)
+    {
+        ResourceStrings resStr;
+        m_menu.createPopupMenu();
+        m_menu.appendMenu(resStr.getStrRes(IDS_TB_NEWCONNECTION), IDS_NEW_CONN);
+        m_menu.appendSeparator();
+        m_menu.appendMenu(resStr.getStrRes(IDS_LISTENING_OPTIONS), IDS_LISTENING_OPTIONS);
+        m_menu.appendMenu(resStr.getStrRes(IDS_CONFIG), IDS_CONFIG);
+        m_menu.appendSeparator();
+        m_menu.appendMenu(resStr.getStrRes(IDS_ABOUT_VIEWER), IDS_ABOUT_VIEWER);
+        m_menu.appendSeparator();
+        m_menu.appendMenu(resStr.getStrRes(IDS_CLOSE), IDS_CLOSE);
+        m_menu.setDefaultItem(IDS_NEW_CONN);
 
-  WM_USER_TASKBAR = RegisterWindowMessage(L"TaskbarCreated");
-}
+        setWindowProcHolder(this);
 
-ControlTrayIcon::~ControlTrayIcon()
-{
-}
-
-LRESULT ControlTrayIcon::windowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, bool *useDefWindowProc)
-{
-  if (m_inWindowProc) {
-    // This call is recursive, do not do any real work.
-    *useDefWindowProc = true;
-    return 0;
-  }
-  // Make sure to reset it back to false before leaving this function for any
-  // reason (check all return statements, exceptions should not happen here).
-  m_inWindowProc = true;
-
-  switch (uMsg) {
-  case WM_USER + 1:
-    switch (lParam) {
-    case WM_RBUTTONUP:
-      onRightButtonUp();
-      break;
-    case WM_LBUTTONDOWN:
-      onLeftButtonDown();
-      break;
-    } // switch (lParam)
-    break;
-  default:
-    if (uMsg == WM_USER_TASKBAR) {
-      if (isVisible()) {
-        hide();
-        show();
-      }
-      break;
+        WM_USER_TASKBAR = RegisterWindowMessage(L"TaskbarCreated");
     }
-    *useDefWindowProc = true;
-  }
 
-  m_inWindowProc = false;
-  return 0;
-}
+    ControlTrayIcon::~ControlTrayIcon()
+    {
+    }
 
-void ControlTrayIcon::showIcon()
-{
-  show();
-  setIcon(&m_icon);
-}
+    LRESULT ControlTrayIcon::windowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, bool *useDefWindowProc)
+    {
+        if (m_inWindowProc) {
+            // This call is recursive, do not do any real work.
+            *useDefWindowProc = true;
+            return 0;
+        }
+        // Make sure to reset it back to false before leaving this function for any
+        // reason (check all return statements, exceptions should not happen here).
+        m_inWindowProc = true;
 
-void ControlTrayIcon::onRightButtonUp()
-{
-  POINT pos;
+        switch (uMsg) {
+            case WM_USER + 1:
+                switch (lParam) {
+                case WM_RBUTTONUP:
+                        onRightButtonUp();
+                        break;
+                case WM_LBUTTONDOWN:
+                        onLeftButtonDown();
+                        break;
+                } // switch (lParam)
+                break;
+            default:
+                if (uMsg == WM_USER_TASKBAR) {
+                    if (isVisible()) {
+                        hide();
+                        show();
+                    }
+                    break;
+                }
+                *useDefWindowProc = true;
+        }
 
-  if (!GetCursorPos(&pos)) {
-    pos.x = pos.y = 0;
-  }
+        m_inWindowProc = false;
+        return 0;
+    }
 
-  HWND notifyWnd = get_hwnd();
-  SetForegroundWindow(notifyWnd);
+    void ControlTrayIcon::showIcon()
+    {
+        show();
+        setIcon(&m_icon);
+    }
 
-  int action = TrackPopupMenu(m_menu.getMenu(),
-                              TPM_NONOTIFY | TPM_RETURNCMD | TPM_RIGHTBUTTON,
-                              pos.x, pos.y, 0, notifyWnd, NULL);
+    void ControlTrayIcon::onRightButtonUp()
+    {
+        POINT pos;
 
-  switch (action) {
-  case IDS_NEW_CONN:
-    onNewConnection();
-    break;
-  case IDS_LISTENING_OPTIONS:
-    onListeningOptions();
-    break;
-  case IDS_CONFIG:
-    onConfiguration();
-    break;
-  case IDS_ABOUT_VIEWER:
-    onAboutViewer();
-    break;
-  case IDS_CLOSE:
-    onCloseListeningDaemon();
-    break;
-  default:
-    _ASSERT(true);
-  }
-}
+        if (!GetCursorPos(&pos)) {
+            pos.x = pos.y = 0;
+        }
 
-void ControlTrayIcon::onLeftButtonDown()
-{
-  onShowMainWindow();
-}
+        HWND notifyWnd = get_hwnd();
+        SetForegroundWindow(notifyWnd);
 
-void ControlTrayIcon::onShowMainWindow()
-{
-  onNewConnection();
-}
+        int action = TrackPopupMenu(m_menu.getMenu(),
+                                    TPM_NONOTIFY | TPM_RETURNCMD | TPM_RIGHTBUTTON,
+                                    pos.x, pos.y, 0, notifyWnd, NULL);
 
-void ControlTrayIcon::onNewConnection()
-{
-  m_application->showLoginDialog();
-}
+        switch (action) {
+            case IDS_NEW_CONN:
+                onNewConnection();
+                break;
+            case IDS_LISTENING_OPTIONS:
+                onListeningOptions();
+                break;
+            case IDS_CONFIG:
+                onConfiguration();
+                break;
+            case IDS_ABOUT_VIEWER:
+                onAboutViewer();
+                break;
+            case IDS_CLOSE:
+                onCloseListeningDaemon();
+                break;
+            default:
+                _ASSERT(true);
+        }
+    }
 
-void ControlTrayIcon::onListeningOptions()
-{
-  m_application->showListeningOptions();
-}
+    void ControlTrayIcon::onLeftButtonDown()
+    {
+        onShowMainWindow();
+    }
 
-void ControlTrayIcon::onConfiguration()
-{
-  m_application->showConfiguration();
-}
+    void ControlTrayIcon::onShowMainWindow()
+    {
+        onNewConnection();
+    }
 
-void ControlTrayIcon::onAboutViewer()
-{
-  m_application->showAboutViewer();
-}
+    void ControlTrayIcon::onNewConnection()
+    {
+        m_application->showLoginDialog();
+    }
 
-void ControlTrayIcon::onCloseListeningDaemon()
-{
-  m_application->stopListening();
-}
+    void ControlTrayIcon::onListeningOptions()
+    {
+        m_application->showListeningOptions();
+    }
+
+    void ControlTrayIcon::onConfiguration()
+    {
+        m_application->showConfiguration();
+    }
+
+    void ControlTrayIcon::onAboutViewer()
+    {
+        m_application->showAboutViewer();
+    }
+
+    void ControlTrayIcon::onCloseListeningDaemon()
+    {
+        m_application->stopListening();
+    }
+}// namespace remoting_remoting

@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "remoting/remoting_common/io/DataOutputStream.h"
-#include "remoting/remoting_common/io/ByteArrayOutputStream.h"
+#include "acme/subsystem/io/DataOutputStream.h"
+#include "acme/subsystem/io/ByteArrayOutputStream.h"
 
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 
 #include "RemoteException.h"
 #include "ControlGate.h"

@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ConfigDialog.h"
 #include "remoting_node/resource.h"
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 
 ConfigDialog::ConfigDialog(bool forService, ControlCommand *reloadConfigCommand)
 : BaseDialog(IDD_CONFIG),

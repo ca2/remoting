@@ -11,7 +11,7 @@
 #pragma comment (lib, "gdiplus.lib")
 #include <gdiplus.h>
 
-namespace remoting
+namespace remoting_remoting
 {
    control::control()
    {
@@ -1063,4 +1063,4 @@ namespace remoting
 
    }
 
-} // namespace remoting
+} // namespace remoting_remoting

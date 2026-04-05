@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "remoting/remoting_common/util/CommonHeader.h"
-#include "remoting/remoting_common/gui/MessageWindow.h"
+#include "acme/subsystem/_common_header.h"
+#include "apex/innate_subsystem/MessageWindow.h"
 #include "ClipboardListener.h"
 //#include "log_writer/LogWriter.h"
 #include "remoting/remoting_common/thread/GuiThread.h"

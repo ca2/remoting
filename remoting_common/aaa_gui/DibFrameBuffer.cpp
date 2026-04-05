@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "DibFrameBuffer.h"
-#include "remoting/remoting_common/util/Exception.h"
+#include "acme/subsystem/Exception.h"
 
 DibFrameBuffer::DibFrameBuffer()
 : m_dibSection(0)

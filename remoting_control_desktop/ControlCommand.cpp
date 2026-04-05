@@ -26,8 +26,8 @@
 #include "RemoteException.h"
 #include "ControlAuthException.h"
 
-#include "remoting/remoting_common/util/CommonHeader.h"
-#include "remoting/remoting_common/util/Exception.h"
+#include "acme/subsystem/_common_header.h"
+#include "acme/subsystem/Exception.h"
 
 #include "acme/exception/io.h"
 

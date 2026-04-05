@@ -27,31 +27,35 @@
 #include "remoting/remoting_common/util/ResourceLoader.h"
 #include "resource.h"
 
-HelpDialog::HelpDialog() 
-: BaseDialog(IDD_CMDLINE)
+namespace remoting_remoting
 {
-}
+    HelpDialog::HelpDialog()
+    : BaseDialog(IDD_CMDLINE)
+    {
+    }
 
-BOOL HelpDialog::onInitDialog() 
-{
-  setControlById(m_shelp, IDC_SHELP);
+    BOOL HelpDialog::onInitDialog()
+    {
+        setControlById(m_shelp, IDC_SHELP);
 
-  ::string helpString;
-  ResourceLoader *rLoader = ResourceLoader::getInstance();
-  rLoader->loadString(IDS_CMDLINE_HELP, helpString);
-  m_shelp.setText(helpString);
-  return TRUE;
-}
+        ::string helpString;
+        ResourceLoader *rLoader = ResourceLoader::getInstance();
+        rLoader->loadString(IDS_CMDLINE_HELP, helpString);
+        m_shelp.setText(helpString);
+        return TRUE;
+    }
 
-BOOL HelpDialog::onCommand(UINT controlID, UINT notificationID)
-{
-  if (controlID == IDOK) {
-    close_dialog(1);
-    return TRUE;
-  }
-  if (controlID == IDCANCEL) {
-    close_dialog(0);
-    return TRUE;
-  }
-  return FALSE;
-}
+    BOOL HelpDialog::onCommand(UINT controlID, UINT notificationID)
+    {
+        if (controlID == IDOK) {
+            close_dialog(1);
+            return TRUE;
+        }
+        if (controlID == IDCANCEL) {
+            close_dialog(0);
+            return TRUE;
+        }
+        return FALSE;
+    }
+} //     namespace remoting_remoting
+

@@ -29,28 +29,29 @@
 #include "remoting/remoting_common/network/TcpServer.h"
 //#include "remoting/remoting_common/thread/critical_section.h"
 
-class ConnectionListener : protected TcpServer
+namespace remoting_remoting
 {
-public:
-  static const char DEFAULT_HOST[];
-  static const unsigned short DEFAULT_PORT = 5500;
+   class ConnectionListener : protected TcpServer
+   {
+   public:
+      static const char DEFAULT_HOST[];
+      static const unsigned short DEFAULT_PORT = 5500;
 
-  // HWND mainWindow is handle of main window of program.
-  // this window received and processing messages "WM_USER_NEW_LISTENING"
-  ConnectionListener(WindowsApplication *application, unsigned short port = DEFAULT_PORT);
+      // HWND mainWindow is handle of main window of program.
+      // this window received and processing messages "WM_USER_NEW_LISTENING"
+      ConnectionListener(WindowsApplication *application, unsigned short port = DEFAULT_PORT);
 
-  virtual ~ConnectionListener();
+      virtual ~ConnectionListener();
 
-  // this method return pointer to new listening connection, if him is exist, and 0 if isn't
-  SocketIPv4 *getNewConnection();
+      // this method return pointer to new listening connection, if him is exist, and 0 if isn't
+      SocketIPv4 *getNewConnection();
 
-  unsigned short getBindPort() const;
-protected:
-  void onAcceptConnection(SocketIPv4 *socket);
+      unsigned short getBindPort() const;
+   protected:
+      void onAcceptConnection(SocketIPv4 *socket);
 
-  WindowsApplication *m_application;
-  ::list_base<SocketIPv4 *> m_connections;
-  critical_section m_connectionsLock;
-};
-
-
+      WindowsApplication *m_application;
+      ::list_base<SocketIPv4 *> m_connections;
+      critical_section m_connectionsLock;
+   };
+}//namespace remoting_remoting

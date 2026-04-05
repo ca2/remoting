@@ -23,112 +23,132 @@
 //
 #include "framework.h"
 #include "AboutDialog.h"
-#include "remoting/remoting_common/win_system/Shell.h"
-#include "remoting/remoting_common/win_system/VersionInfo.h"
+#include "acme/subsystem/Shell.h"
+#include "../../app/acme/subsystem/win-system/VersionInfo.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
-//#include "remoting/remoting_common/gui/::remoting::Window.h"
+#include "apex/innate_subsystem/Control.h"
 #include "BuildTime.h"
 #include "resource.h"
 #include "acme/filesystem/filesystem/file_context.h"
 #include "remoting/remoting_common/remoting.h"
 
-AboutDialog::AboutDialog()
-: BaseDialog(IDD_ABOUT_DIALOG)
+
+namespace remoting_remoting
 {
-}
 
-AboutDialog::~AboutDialog()
-{
-}
 
-void AboutDialog::onCloseButtonClick()
-{
-  close_dialog(IDCANCEL);
-}
+    AboutDialog::AboutDialog()
+    //: BaseDialog(IDD_ABOUT_DIALOG)
+    {
+    }
 
-void AboutDialog::onOrderSupportButtonClock()
-{
-  openUrl(StringTable::getString(IDS_URL_LICENSING_FVA));
-}
+    AboutDialog::~AboutDialog()
+    {
+    }
 
-void AboutDialog::onVisitSiteButtonClick()
-{
-  openUrl(StringTable::getString(IDS_URL_PRODUCT_FVA));
-}
 
-void AboutDialog::openUrl(const ::scoped_string & scopedstrUrl)
-{
-  try {
-    Shell::open(scopedstrUrl, 0, 0);
-  } catch (SystemException &sysEx) {
-    ::string strMessage;
+    void AboutDialog::initialize_about_dialog()
+    {
 
-    strMessage.formatf(StringTable::getString(IDS_FAILED_TO_OPEN_URL_FORMAT).c_str(), sysEx.get_message());
+        initialize_base_dialog(IDD_ABOUT_DIALOG);
 
-    ::remoting::message_box(m_hwnd,
-               wstring(strMessage),
-               wstring(StringTable::getString(IDS_MBC_TVNVIEWER)),
-               MB_OK | MB_ICONEXCLAMATION);
-  }
-}
+    }
 
-BOOL AboutDialog::onInitDialog()
-{
-  // Update product version string.
-  ::string versionString("unknown");
-  try {
-    ::string binaryPath;
-binaryPath = ::system()->file()->module();
-    VersionInfo productInfo(binaryPath);
-    versionString= productInfo.getProductVersionString();
-  } catch (SystemException &ex) {
-    ::remoting::message_box(m_hwnd,
-               ::wstring(ex.get_message()),
-               ::wstring(StringTable::getString(IDS_MBC_TVNVIEWER)),
-               MB_OK | MB_ICONEXCLAMATION);
-  }
+    void AboutDialog::onCloseButtonClick()
+    {
+        close_dialog(IDCANCEL);
+    }
 
-  // Format product version and build time for displaying on the dialog.
-  ::string versionText;
-  versionText.formatf(StringTable::getString(IDS_PRODUCT_VERSION_FORMAT).c_str(),
-                     ::string(versionString).c_str(),
-                     BuildTime::DATE);
+    void AboutDialog::onOrderSupportButtonClock()
+    {
+        openUrl(StringTable::getString(IDS_URL_LICENSING_FVA));
+    }
 
-  // Show version info on the dialog.
-  ::remoting::Window versionLabel;
-  versionLabel.setWindow(GetDlgItem(m_hwnd, IDC_STATIC_VERSION));
-  versionLabel.setText(versionText);
+    void AboutDialog::onVisitSiteButtonClick()
+    {
+        openUrl(StringTable::getString(IDS_URL_PRODUCT_FVA));
+    }
 
-  // Show licensing info and/or special build info.
-  ::remoting::Window licensingLabel;
-  licensingLabel.setWindow(GetDlgItem(m_hwnd, IDC_STATIC_LICENSING));
-  licensingLabel.setText(StringTable::getString(IDS_LICENSING_INFO));
+    void AboutDialog::openUrl(const ::scoped_string & scopedstrUrl)
+    {
+        try {
+            Shell::open(scopedstrUrl, 0, 0);
+        } catch (SystemException &sysEx) {
+            ::string strMessage;
 
-  return FALSE;
-}
+            strMessage.formatf(StringTable::getString(IDS_FAILED_TO_OPEN_URL_FORMAT).c_str(), sysEx.get_message());
 
-BOOL AboutDialog::onNotify(UINT controlID, LPARAM data)
-{
-  return FALSE;
-}
+            ::remoting::message_box(m_hwnd,
+                       wstring(strMessage),
+                       wstring(StringTable::getString(IDS_MBC_TVNVIEWER)),
+                       MB_OK | MB_ICONEXCLAMATION);
+        }
+    }
 
-BOOL AboutDialog::onCommand(UINT controlID, UINT notificationID)
-{
-  switch (controlID) {
-  case IDCANCEL:
-    onCloseButtonClick();
-    break;
-  case IDC_ORDER_SUPPORT_BUTTON:
-    onOrderSupportButtonClock();
-    break;
-  case IDC_VISIT_WEB_SITE_BUTTON:
-    onVisitSiteButtonClick();
-    break;
-  }
-  return FALSE;
-}
+    BOOL AboutDialog::onInitDialog()
+    {
+        // Update product version string.
+        ::string versionString("unknown");
+        try {
+            ::string binaryPath;
+            binaryPath = ::system()->file()->module();
+            VersionInfo productInfo(binaryPath);
+            versionString= productInfo.getProductVersionString();
+        } catch (SystemException &ex) {
+            ::remoting::message_box(m_hwnd,
+                       ::wstring(ex.get_message()),
+                       ::wstring(StringTable::getString(IDS_MBC_TVNVIEWER)),
+                       MB_OK | MB_ICONEXCLAMATION);
+        }
 
-BOOL AboutDialog::onDestroy()
-{
-  return FALSE;
-}
+        // Format product version and build time for displaying on the dialog.
+        ::string versionText;
+        versionText.formatf(StringTable::getString(IDS_PRODUCT_VERSION_FORMAT).c_str(),
+                           ::string(versionString).c_str(),
+                           BuildTime::DATE);
+
+        // Show version info on the dialog.
+        ::remoting::Window versionLabel;
+        versionLabel.setWindow(GetDlgItem(m_hwnd, IDC_STATIC_VERSION));
+        versionLabel.setText(versionText);
+
+        // Show licensing info and/or special build info.
+        ::remoting::Window licensingLabel;
+        licensingLabel.setWindow(GetDlgItem(m_hwnd, IDC_STATIC_LICENSING));
+        licensingLabel.setText(StringTable::getString(IDS_LICENSING_INFO));
+
+        return FALSE;
+    }
+
+    BOOL AboutDialog::onNotify(UINT controlID, LPARAM data)
+    {
+        return FALSE;
+    }
+
+    BOOL AboutDialog::onCommand(UINT controlID, UINT notificationID)
+    {
+        switch (controlID) {
+            case IDCANCEL:
+                onCloseButtonClick();
+                break;
+            case IDC_ORDER_SUPPORT_BUTTON:
+                onOrderSupportButtonClock();
+                break;
+            case IDC_VISIT_WEB_SITE_BUTTON:
+                onVisitSiteButtonClick();
+                break;
+        }
+        return FALSE;
+    }
+
+    BOOL AboutDialog::onDestroy()
+    {
+        return FALSE;
+    }
+
+
+
+} // namespace remoting_remoting
+
+
+

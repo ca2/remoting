@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/util/Exception.h"
+#include "acme/subsystem/Exception.h"
 namespace remoting
 {
    namespace ftp
@@ -41,11 +41,11 @@ namespace remoting
       // something that can't be received in current client state.
       //
 
-      class CLASS_DECL_REMOTING_COMMON OperationNotPermittedException : public ::remoting::Exception
+      class CLASS_DECL_REMOTING_COMMON OperationNotPermittedException : public ::subsystem::Exception
       {
       public:
          OperationNotPermittedException();
-         virtual ~OperationNotPermittedException();
+         ~OperationNotPermittedException() override;
       };
    }
-}
+} // namespace remoting

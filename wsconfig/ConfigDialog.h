@@ -28,10 +28,10 @@
 #include "remoting/remoting_common/config/SettingsManager.h"
 #include "remoting/remoting_common/config/RegistrySettingsManager.h"
 
-#include "remoting/remoting_common/gui/BaseDialog.h"
-#include "remoting/remoting_common/gui/Window.h"
-#include "remoting/remoting_common/gui/ListBox.h"
-#include "remoting/remoting_common/gui/TabControl.h"
+#include "apex/innate_subsystem/BaseDialog.h"
+#include "apex/innate_subsystem/Window.h"
+#include "apex/innate_subsystem/ListBox.h"
+#include "apex/innate_subsystem/TabControl.h"
 
 #include "remoting/remoting_common/server_config/Configurator.h"
 

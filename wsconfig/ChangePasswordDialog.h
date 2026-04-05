@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "remoting/remoting_common/gui/BaseDialog.h"
-#include "remoting/remoting_common/gui/TextBox.h"
-#include "remoting/remoting_common/gui/BalloonTip.h"
+#include "apex/innate_subsystem/BaseDialog.h"
+#include "apex/innate_subsystem/TextBox.h"
+#include "apex/innate_subsystem/BalloonTip.h"
 //////#include "remoting/remoting_common/util/::string.h"
 
 class ChangePasswordDialog : public BaseDialog

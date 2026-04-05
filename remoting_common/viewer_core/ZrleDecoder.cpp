@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ZrleDecoder.h"
 
-#include "remoting/remoting_common/io/ByteArrayInputStream.h"
+#include "acme/subsystem/io/ByteArrayInputStream.h"
 
 //#include <vector>
 #include <algorithm>

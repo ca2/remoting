@@ -25,21 +25,23 @@
 #pragma once
 
 
-#include "remoting/remoting_common/gui/BaseDialog.h"
-#include "remoting/remoting_common/gui/CheckBox.h"
+#include "apex/innate_subsystem/BaseDialog.h"
+#include "apex/innate_subsystem/CheckBox.h"
 #include "resource.h"
 
-class FsWarningDialog : public BaseDialog
+
+namespace remoting_remoting
 {
-public:
-  FsWarningDialog();
-  bool isFsWarning();
+    class FsWarningDialog : public ::innate_subsystem::BaseDialog
+    {
+    public:
+        FsWarningDialog();
+        bool isFsWarning();
 
-protected:
-  BOOL onInitDialog();
-  BOOL onCommand(UINT controlID, UINT notificationID);
+    ////protected:
+        bool onInitDialog();
+        bool onCommand(unsigned int controlID, unsigned int notificationID);
 
-  CheckBox m_fsWarning;
-};
-
-
+        ::pointer < ::innate_subsystem::CheckBox > m_pcheckboxFsWarning;
+    };
+} // namespace remoting_remoting

@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "remoting/remoting_common/io/Channel.h"
+#include "acme/subsystem/io/Channel.h"
 #include "remoting/remoting_common/win_system/Pipe.h"
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 //#include "remoting/remoting_common/thread/critical_section.h"

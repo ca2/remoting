@@ -38,7 +38,7 @@ typedef BOOL (WINAPI *MINIDUMPWRITEDUMP)(__in  HANDLE hProcess,
                                        __in  PMINIDUMP_CALLBACK_INFORMATION CallbackParam);
 
 bool CrashHook::m_guiEnabled = false;
-::acme::RegX CrashHook::m_rootHkey = HKEY_CURRENT_USER;
+::subsystem::registry CrashHook::m_rootHkey = HKEY_CURRENT_USER;
 critical_section CrashHook::m_guiEnabledMutex;
 ApplicationCrashEvents *CrashHook::m_notifier = 0;
 
@@ -108,7 +108,7 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
   try {
     // Store path to the registry.
     try {
-      ::acme::RegX root;
+      ::subsystem::registry root;
       {
         critical_section_lock al(&m_guiEnabledMutex);
         root = m_rootHkey;

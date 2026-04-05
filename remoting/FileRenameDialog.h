@@ -25,18 +25,28 @@
 #pragma once
 
 
-#include "NewFolderDialog.h"
+#include "remoting/remoting/NewFolderDialog.h"
 
-class FileRenameDialog : public NewFolderDialog
+
+namespace remoting_remoting
 {
-public:
-  FileRenameDialog();
-  FileRenameDialog(::remoting::Window *parent);
-  ~FileRenameDialog();
 
-protected:
 
-  virtual BOOL onInitDialog();
-};
+    class FileRenameDialog : public NewFolderDialog
+    {
+    public:
+        FileRenameDialog();
+        ~FileRenameDialog();
+
+    //protected:
+        virtual void initialize_file_rename_dialog(::innate_subsystem::Control *parent);
+
+        virtual bool onInitDialog();
+    };
+
+
+} // namespace remoting_remoting
+
+
 
 

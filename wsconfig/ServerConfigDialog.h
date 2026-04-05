@@ -25,11 +25,11 @@
 #pragma once
 
 
-#include "remoting/remoting_common/gui/BaseDialog.h"
-#include "remoting/remoting_common/gui/TextBox.h"
-#include "remoting/remoting_common/gui/CheckBox.h"
-#include "remoting/remoting_common/gui/SpinControl.h"
-#include "remoting/remoting_common/gui/BalloonTip.h"
+#include "apex/innate_subsystem/BaseDialog.h"
+#include "apex/innate_subsystem/TextBox.h"
+#include "apex/innate_subsystem/CheckBox.h"
+#include "apex/innate_subsystem/SpinControl.h"
+#include "apex/innate_subsystem/BalloonTip.h"
 
 #include "remoting/remoting_common/server_config/ServerConfig.h"
 #include "PasswordControl.h"

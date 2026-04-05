@@ -25,13 +25,14 @@
 #pragma once
 
 
-#include "remoting/remoting_common/util/Exception.h"
+#include "acme/subsystem/Exception.h"
 
-class CLASS_DECL_REMOTING_COMMON OperationNotSupportedException : public ::remoting::Exception
+namespace remoting
 {
-public:
-  OperationNotSupportedException();
-  virtual ~OperationNotSupportedException();
-};
-
-
+    class CLASS_DECL_REMOTING_COMMON OperationNotSupportedException : public ::subsystem::Exception
+    {
+    public:
+        OperationNotSupportedException();
+        ~OperationNotSupportedException() override;
+    };
+} // namespace remoting

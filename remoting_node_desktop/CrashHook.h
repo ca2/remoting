@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 #include "remoting/remoting_common/util/Singleton.h"
 //#include "remoting/remoting_common/thread/critical_section.h"
 #include "remoting/remoting_common/win_system/ApplicationCrashEvents.h"
@@ -47,7 +47,7 @@ private:
   static LONG WINAPI topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionInfo);
 
   static bool m_guiEnabled;
-  static ::acme::RegX m_rootHkey;
+  static ::subsystem::registry m_rootHkey;
   static critical_section m_guiEnabledMutex;
 
   static ApplicationCrashEvents *m_notifier;

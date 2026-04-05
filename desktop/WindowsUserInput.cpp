@@ -26,7 +26,7 @@
 #include "remoting/remoting_common/thread/DesktopSelector.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 #include "remoting/remoting_common/win_system/Keyboard.h"
-#include "remoting/remoting_common/gui/WindowFinder.h"
+#include "apex/innate_subsystem/WindowFinder.h"
 #include "remoting/remoting_common/util/BrokenHandleException.h"
 
 WindowsUserInput::WindowsUserInput(ClipboardListener *clipboardListener,

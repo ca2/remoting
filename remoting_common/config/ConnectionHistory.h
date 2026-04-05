@@ -29,103 +29,102 @@
 
 //#include <vector>
 
-
-
-/**
- * History of tcp connections.
- *
- * Solves problem with saving and restoring history of connections
- * for user (UI).
- *
- */
-class CLASS_DECL_REMOTING_COMMON ConnectionHistory
+namespace remoting
 {
-public:
-  /**
-   * Creates new empty connection history.
-   * @param key registry key identifing root storage for connection history.
-   * @param limit maximum count of connection history entries.
-   */
-  //ConnectionHistory(RegistryKey *key, size_t limit);
-   ConnectionHistory();
-  /**
-   * Destructor.
-   */
-  virtual ~ConnectionHistory();
-   
-   virtual void initialize_connection_history(const ::scoped_string & scopedstr, size_t limit);
+   /**
+    * History of tcp connections.
+    *
+    * Solves problem with saving and restoring history of connections
+    * for user (UI).
+    *
+    */
+   class CLASS_DECL_REMOTING_COMMON ConnectionHistory
+   {
+   public:
+      /**
+       * Creates new empty connection history.
+       * @param key registry key identifing root storage for connection history.
+       * @param limit maximum count of connection history entries.
+       */
+      //ConnectionHistory(RegistryKey *key, size_t limit);
+      ConnectionHistory();
+      /**
+       * Destructor.
+       */
+      virtual ~ConnectionHistory();
 
-  /**
-   * Sets connection history entries limit and truncates history
-   * if needed.
-   */
-  void setLimit(size_t limit);
+      virtual void initialize_connection_history(const ::scoped_string & scopedstr, size_t limit);
 
-  /**
-   * Returns connection history entries limit.
-   */
-  size_t getLimit() const;
+      /**
+       * Sets connection history entries limit and truncates history
+       * if needed.
+       */
+      void setLimit(size_t limit);
 
-  /**
-   * Loads connection history from registry.
-   */
-  void load();
+      /**
+       * Returns connection history entries limit.
+       */
+      size_t getLimit() const;
 
-  /**
-   * Saves connection history to registry.
-   */
-  void save();
+      /**
+       * Loads connection history from registry.
+       */
+      void load();
 
-  /**
-   * Truncates connection history (memory and registry both) to max limit.
-   */
-  void truncate();
+      /**
+       * Saves connection history to registry.
+       */
+      void save();
 
-  /**
-   * Clears connection history and removed it from registry.
-   */
-  void clear();
+      /**
+       * Truncates connection history (memory and registry both) to max limit.
+       */
+      void truncate();
 
-  /**
-   * Adds host to connection history.
-   * @param host host to add to history.
-   * @remark: if host is already in connection history,
-     then it's just moves it up to first position.
-   */
-  void addHost(const ::scoped_string & scopedstrHost);
+      /**
+       * Clears connection history and removed it from registry.
+       */
+      void clear();
 
-  /**
-   * Return hosts count.
-   * @return hosts count.
-   */
-  size_t getHostCount() const;
+      /**
+       * Adds host to connection history.
+       * @param host host to add to history.
+       * @remark: if host is already in connection history,
+         then it's just moves it up to first position.
+       */
+      void addHost(const ::scoped_string & scopedstrHost);
 
-  /**
-   * Return host with specified index.
-   * @param i index of history entry.
-   * @return host string.
-   */
-  ::string getHost(size_t i) const;
+      /**
+       * Return hosts count.
+       * @return hosts count.
+       */
+      size_t getHostCount() const;
 
-//protected:
-  void releaseHosts();
-  void removeHost(const ::scoped_string & scopedstrHost);
+      /**
+       * Return host with specified index.
+       * @param i index of history entry.
+       * @return host string.
+       */
+      ::string getHost(size_t i) const;
 
-//protected:
-  /**
-   * Array of history enries.
-   */
-  ::string_array m_hosts;
+      //protected:
+      void releaseHosts();
+      void removeHost(const ::scoped_string & scopedstrHost);
 
-  /**
-   * Maximum count of history entries.
-   */
-  size_t m_limit;
+      //protected:
+      /**
+       * Array of history enries.
+       */
+      ::string_array m_hosts;
 
-  /**
-   * Registry key for saving and loading connection history data.
-   */
-  //RegistryKey *m_key;
-};
+      /**
+       * Maximum count of history entries.
+       */
+      size_t m_limit;
 
-
+      /**
+       * Registry key for saving and loading connection history data.
+       */
+      //RegistryKey *m_key;
+   };
+} // namespace remoting

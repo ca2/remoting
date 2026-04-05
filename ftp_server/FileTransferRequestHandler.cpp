@@ -24,10 +24,10 @@
 #include "framework.h"
 #include "FileTransferRequestHandler.h"
 
-#include "remoting/remoting_common/io/DataOutputStream.h"
+#include "acme/subsystem/io/DataOutputStream.h"
 
 #include "remoting/remoting_common/ftp_common/FileTransferException.h"
-#include "remoting/remoting_common/io/ByteArrayOutputStream.h"
+#include "acme/subsystem/io/ByteArrayOutputStream.h"
 #include "file_lib/::file::item.h"
 #include "file_lib/EOFException.h"
 #include "remoting/remoting_common/ftp_common/FolderListener.h"

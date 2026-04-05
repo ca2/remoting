@@ -25,42 +25,45 @@
 #include "ResourceStrings.h"
 #include "remoting/remoting_common/util/ResourceLoader.h"
 
-ResourceStrings::ResourceStrings() 
-: m_min(0), 
-  m_max(0)
+namespace remoting_remoting
 {
-}
+    ResourceStrings::ResourceStrings()
+    : m_min(0),
+      m_max(0)
+    {
+    }
 
-ResourceStrings::ResourceStrings(int min, int max) 
-{
-  m_min = min;
-  m_max = max;
-}
+    ResourceStrings::ResourceStrings(int min, int max)
+    {
+        m_min = min;
+        m_max = max;
+    }
 
-bool ResourceStrings::isValid(int res) 
-{
-  if (res >= m_min && res <= m_max) {
-    return true;
-  }
-  return false;
-}
+    bool ResourceStrings::isValid(int res)
+    {
+        if (res >= m_min && res <= m_max) {
+            return true;
+        }
+        return false;
+    }
 
-::string ResourceStrings::getStrRes(int strRes) 
-{
-  ResourceLoader *rLoader = ResourceLoader::getInstance();
+    ::string ResourceStrings::getStrRes(int strRes)
+    {
+        ResourceLoader *rLoader = ResourceLoader::getInstance();
 
-  ::string str;
-  rLoader->loadString(strRes, str);
-  return str;
-}
+        ::string str;
+        rLoader->loadString(strRes, str);
+        return str;
+    }
 
-::string ResourceStrings::getStrPureRes(int strRes) 
-{
-  ::string strTemp = getStrRes(strRes);
-  auto p = strTemp.find_first_character('\t');
-  if (::found(p)) {
-    strTemp = {p + 1, strTemp.end()};
-  }
-  strTemp.erase_any_character_in("&");
-  return strTemp;
-}
+    ::string ResourceStrings::getStrPureRes(int strRes)
+    {
+        ::string strTemp = getStrRes(strRes);
+        auto p = strTemp.find_first_character('\t');
+        if (::found(p)) {
+            strTemp = {p + 1, strTemp.end()};
+        }
+        strTemp.erase_any_character_in("&");
+        return strTemp;
+    }
+} // namespace remoting_remoting

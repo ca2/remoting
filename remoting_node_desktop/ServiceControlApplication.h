@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 
 #include "remoting/remoting_common/win_system/WindowsApplication.h"
 #include "remoting/remoting_common/win_system/SCMClient.h"

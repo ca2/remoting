@@ -24,34 +24,37 @@
 #include "framework.h"
 #include "ViewerSettingsManager.h"
 
-#include "remoting/remoting_common/util/Exception.h"
+#include "acme/subsystem/Exception.h"
 #include "acme/acme/Registry.h"
 
-SettingsManager *ViewerSettingsManager::s_instance = 0;
-
-ViewerSettingsManager::ViewerSettingsManager(const ::scoped_string & scopedstrRegistryName)
-: RegistrySettingsManager()
+namespace remoting
 {
-  ::string keyName;
-  keyName.format("{}\\Settings\\", ::string(scopedstrRegistryName).c_str());
-  setRegistryKey(Registry::getCurrentUserKey(), keyName.c_str());
-}
+   SettingsManager *ViewerSettingsManager::s_instance = 0;
 
-ViewerSettingsManager::~ViewerSettingsManager()
-{
-}
+   ViewerSettingsManager::ViewerSettingsManager(const ::scoped_string & scopedstrRegistryName)
+   : RegistrySettingsManager()
+   {
+      ::string keyName;
+      keyName.format("{}\\Settings\\", ::string(scopedstrRegistryName).c_str());
+      setRegistryKey(Registry::getCurrentUserKey(), keyName.c_str());
+   }
 
-void ViewerSettingsManager::initInstance(const ::scoped_string & scopedstrRegistryName)
-{
-  if (s_instance != 0)
-    delete s_instance;
-  s_instance = new ViewerSettingsManager(scopedstrRegistryName);
-}
+   ViewerSettingsManager::~ViewerSettingsManager()
+   {
+   }
 
-SettingsManager *ViewerSettingsManager::getInstance()
-{
-  if (s_instance == 0) {
-    throw ::remoting::Exception("Instance of viewer settings manager is 0");
-  }
-  return s_instance;
-}
+   void ViewerSettingsManager::initInstance(const ::scoped_string & scopedstrRegistryName)
+   {
+      if (s_instance != 0)
+         delete s_instance;
+      s_instance = new ViewerSettingsManager(scopedstrRegistryName);
+   }
+
+   SettingsManager *ViewerSettingsManager::getInstance()
+   {
+      if (s_instance == 0) {
+         throw ::remoting::Exception("Instance of viewer settings manager is 0");
+      }
+      return s_instance;
+   }
+} // namespace remoting

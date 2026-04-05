@@ -30,7 +30,7 @@
 //#include <vector>
 #include <algorithm>
 #include "remoting/remoting_common/util/inttypes.h"
-#include "remoting/remoting_common/util/Exception.h"
+#include "acme/subsystem/Exception.h"
 #include "UpdSenderMsgDefs.h"
 #include "rfb_sconn/ClipboardExchange.h"
 

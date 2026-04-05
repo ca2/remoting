@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "remoting/remoting_common/gui/BaseDialog.h"
-#include "remoting/remoting_common/gui/Window.h"
-#include "remoting/remoting_common/gui/ListBox.h"
+#include "apex/innate_subsystem/BaseDialog.h"
+#include "apex/innate_subsystem/Window.h"
+#include "apex/innate_subsystem/ListBox.h"
 
 #include "remoting/remoting_common/server_config/Configurator.h"
 

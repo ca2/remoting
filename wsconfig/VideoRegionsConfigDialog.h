@@ -27,9 +27,9 @@
 
 #include "remoting/remoting_common/server_config/Configurator.h"
 
-#include "remoting/remoting_common/gui/BaseDialog.h"
-#include "remoting/remoting_common/gui/TextBox.h"
-#include "remoting/remoting_common/gui/SpinControl.h"
+#include "apex/innate_subsystem/BaseDialog.h"
+#include "apex/innate_subsystem/TextBox.h"
+#include "apex/innate_subsystem/SpinControl.h"
 
 class VideoRegionsConfigDialog : public BaseDialog
 {

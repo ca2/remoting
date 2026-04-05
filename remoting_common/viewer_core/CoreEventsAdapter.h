@@ -25,13 +25,13 @@
 #pragma once
 
 
-#include "remoting/remoting_common/io/DataInputStream.h"
-#include "remoting/remoting_common/io/DataOutputStream.h"
+#include "acme/subsystem/io/DataInputStream.h"
+#include "acme/subsystem/io/DataOutputStream.h"
 #include "acme/exception/io.h"
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 #include "remoting/remoting_common/rfb/FrameBuffer.h"
 
-#include "remoting/remoting_common/util/Exception.h"
+#include "acme/subsystem/Exception.h"
 
 #include "AuthHandler.h"
 

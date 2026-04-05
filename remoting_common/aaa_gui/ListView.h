@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 #include <commctrl.h>
-#include "remoting/remoting_common/gui/Window.h"
+#include "apex/innate_subsystem/Window.h"
 
 //
 // TODO: Maybe use class for this?

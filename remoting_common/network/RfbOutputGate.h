@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "remoting/remoting_common/io/DataOutputStream.h"
-#include "remoting/remoting_common/io/BufferedOutputStream.h"
+#include "acme/subsystem/io/DataOutputStream.h"
+#include "acme/subsystem/io/BufferedOutputStream.h"
 
 //#include "remoting/remoting_common/thread/critical_section.h"
 

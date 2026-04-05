@@ -31,39 +31,40 @@
 #include "ViewerVncAuthHandler.h"
 
 
-class ViewerInstance
+namespace remoting_remoting
 {
-public:
-  // creates the viewer instance by using host:port from condata
-  ViewerInstance(WindowsApplication *application,
-                 ConnectionData & condata,
-                 const ConnectionConfig & conConf);
+    class ViewerInstance
+    {
+    public:
+        // creates the viewer instance by using host:port from condata
+        ViewerInstance(WindowsApplication *application,
+                       ConnectionData & condata,
+                       const ConnectionConfig & conConf);
 
-  // creates the viewer instance if we have the socket
-  ViewerInstance(WindowsApplication *application,
-                 ConnectionData & condata,
-                 const ConnectionConfig & conConf,
-                 SocketIPv4 *socket);
+        // creates the viewer instance if we have the socket
+        ViewerInstance(WindowsApplication *application,
+                       ConnectionData & condata,
+                       const ConnectionConfig & conConf,
+                       SocketIPv4 *socket);
 
-  virtual ~ViewerInstance();
+        virtual ~ViewerInstance();
 
-  bool requiresReconnect() const;
-  bool isStopped() const;
-  void start();
-  void stop();
+        bool requiresReconnect() const;
+        bool isStopped() const;
+        void start();
+        void stop();
 
-  // wait while viewer is not terminated
-  void waitViewer();
+        // wait while viewer is not terminated
+        void waitViewer();
 
-protected:
-  ConnectionData m_condata;
-  ConnectionConfig m_conConf;
+    protected:
+        ConnectionData m_condata;
+        ConnectionConfig m_conConf;
 
-  ViewerWindow m_viewerWnd;
-  RemoteViewerCore m_viewerCore;
-  ViewerVncAuthHandler m_vncAuthHandler;
-  ::remoting::ftp::FileTransferCapability m_fileTransfer;
-  SocketIPv4 *m_socket;
-};
-
-
+        ViewerWindow m_viewerWnd;
+        RemoteViewerCore m_viewerCore;
+        ViewerVncAuthHandler m_vncAuthHandler;
+        ::remoting::ftp::FileTransferCapability m_fileTransfer;
+        SocketIPv4 *m_socket;
+    };
+} // namespace remoting_remoting

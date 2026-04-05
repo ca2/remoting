@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 
 // Abstract class for next using in WinHooks class and as a base class in others.
 class CLASS_DECL_REMOTING_COMMON HookEventListener

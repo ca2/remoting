@@ -1,4 +1,4 @@
-// Copyright (C) 2011,2012 GlavSoft LLC.
+// Copyright (C) 2009,2010,2011,2012 GlavSoft LLC.
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
@@ -25,21 +25,39 @@
 #pragma once
 
 
-#include "Thread.h"
+#include "acme/subsystem/ZLibBase.h"
+#include "acme/subsystem/ZLibException.h"
 
-class CLASS_DECL_REMOTING_COMMON GuiThread : public Thread
+namespace subsystem
 {
-public:
-  GuiThread();
-  virtual ~GuiThread();
-private:
-   // Replacing the base function.
-  static DWORD WINAPI threadProc(LPVOID pThread);
 
-  virtual void initByDerived();
 
-   // Desktop for current thread.
-  HDESK m_hDesk;
-};
+    class CLASS_DECL_ACME Inflater : public ZLibBase
+    {
+    public:
+        Inflater();
+        ~Inflater();
 
-//// __GUITHREAD_H__
+        //
+        // FIXME: Debug method.
+        //
+
+        void setUnpackedSize(size_t size);
+
+        void inflate();
+
+    //protected:
+        z_stream m_zlibStream;
+
+        //
+        // FIXME: Debug member
+        //
+
+        memsize m_unpackedSize;
+    };
+
+
+} // namespace subsystem
+
+
+

@@ -1,4 +1,4 @@
-// Copyright (C) 2009,2010,2011,2012 GlavSoft LLC.
+// Copyright (C) 2008,2009,2010,2011,2012 GlavSoft LLC.
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
@@ -25,29 +25,20 @@
 #pragma once
 
 
-#include <zlib.h>
-//#include <vector>
+//#include "inttypes.h"
+#include "CommonHeader.h"
 
-class CLASS_DECL_REMOTING_COMMON ZLibBase
+class CLASS_DECL_REMOTING_COMMON StringParser
 {
 public:
-  ZLibBase();
-  ~ZLibBase();
-
-  void setInput(const char *input, size_t size);
-
-  const char *getOutput() const;
-  unsigned long getOutputSize() const;
-
-//protected:
-  const char *m_input;
-  size_t m_inputSize;
-
-  ::memory m_output;
-
-  // Type of m_outputSize must be match with type m_zlibStream.total_out,
-  // otherwise may overflow long and value of m_outputSize will be too big.
-  unsigned long m_outputSize;
+  static bool tryParseInt(const ::scoped_string & scopedstrStr);
+  static bool parseInt(const ::scoped_string & scopedstrStr, int *out);
+  // FIXME: it returns true on values that greater then 0xFFFFFFFF.
+  static bool parseUInt(const ::scoped_string & scopedstrStr, unsigned int *out);
+  static bool parseUInt64(const ::scoped_string & scopedstrStr, unsigned long long *out);
+  static bool parseHex(const ::scoped_string & scopedstrStr, unsigned int *out);
+  static bool parseByte(const ::scoped_string & scopedstrStr, unsigned char *out);
+  static bool parseByteHex(const ::scoped_string & scopedstrStr, unsigned char *out);
 };
 
 

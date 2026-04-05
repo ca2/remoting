@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/gui/TextBox.h"
+#include "apex/innate_subsystem/TextBox.h"
 
 /**
  * Gives static methods set to validate integer data in text boxes.

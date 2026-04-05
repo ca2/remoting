@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/io/DataInputStream.h"
+#include "acme/subsystem/io/DataInputStream.h"
 
 // FIXME: document it.
 class CLASS_DECL_REMOTING_COMMON ServerMessageListener

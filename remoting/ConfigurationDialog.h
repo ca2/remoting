@@ -29,49 +29,49 @@
 #include "remoting/remoting_common/client_config/ConnectionConfig.h"
 #include "remoting/remoting_common/client_config/ConnectionConfigSM.h"
 #include "remoting/remoting_common/client_config/ViewerSettingsManager.h"
-#include "remoting/remoting_common/util/StringParser.h"
-#include "remoting/remoting_common/gui/BaseDialog.h"
-//#include "remoting/remoting_common/gui/::remoting::Window.h"
-#include "remoting/remoting_common/gui/TextBox.h"
-#include "remoting/remoting_common/gui/CheckBox.h"
-#include "remoting/remoting_common/gui/SpinControl.h"
-#include "remoting/remoting_common/gui/ComboBox.h"
-#include "remoting/remoting_common/gui/TrackBar.h"
+#include "acme/subsystem/StringParser.h"
+#include "apex/innate_subsystem/BaseDialog.h"
+#include "apex/innate_subsystem/Control.h"
+#include "apex/innate_subsystem/TextBox.h"
+#include "apex/innate_subsystem/CheckBox.h"
+#include "apex/innate_subsystem/SpinControl.h"
+#include "apex/innate_subsystem/ComboBox.h"
+#include "apex/innate_subsystem/TrackBar.h"
 #include "resource.h"
 
-#include "remoting/remoting_common/win_system/WindowsApplication.h"
-
-class ConfigurationDialog : public BaseDialog
+//#include "remoting/remoting_common/win_system/WindowsApplication.h"
+namespace remoting_remoting
 {
-public:
-  ConfigurationDialog();
+   class ConfigurationDialog : public BaseDialog
+   {
+   public:
+      ConfigurationDialog();
 
-  void setListenerOfUpdate(WindowsApplication *application);
+      void setListenerOfUpdate(WindowsApplication *application);
 
-protected:
-  BOOL onCommand(UINT controlID, UINT notificationID);
-  void onLogLevelChange();
-  void onOpenFolderButtonClick();
-  BOOL onInitDialog();
+      //protected:
+      BOOL onCommand(unsigned int controlID, unsigned int notificationID);
+      void onLogLevelChange();
+      void onOpenFolderButtonClick();
+      BOOL onInitDialog();
 
-  CheckBox m_showToolBars;
-  CheckBox m_warnAtSwitching;
-  TextBox m_numberConn;
-  SpinControl m_snumConn;
-  TextBox m_reverseConn;
-  SpinControl m_sreverseConn;
-  TextBox m_verbLvl;
-  SpinControl m_sverbLvl;
-  TextBox m_logging;
-  ::remoting::Window m_openLogDir;
+      ::pointer < ::innate_subsystem::CheckBox> m_pcheckboxShowToolBars;
+      ::pointer < ::innate_subsystem::CheckBox m_pcheckboxWarnAtSwitching;
+      ::pointer < ::innate_subsystem::TextBox m_ptextboxNumberConn;
+      ::pointer < ::innate_subsystem::SpinControl m_pspincontrolNumConn;
+      ::pointer < ::innate_subsystem::TextBox m_ptextboxReverseConn;
+      ::pointer < ::innate_subsystem::SpinControl > m_pspincontrolReverseConn;
+      ::pointer < ::innate_subsystem::TextBox > m_ptextboxVerbLvl;
+      ::pointer < ::innate_subsystem::SpinControl > m_pspincontrolVerbLvl;
+      ::pointer < ::innate_subsystem::TextBox > m_ptextboxLogging;
+      ::pointer < ::innate_subsystem::Control > m_pcontrolOpenLogDir;
 
-  WindowsApplication *m_application;
+      WindowsApplication *m_application;
 
-private:
-  void updateControlValues();
-  bool isInputValid();
-  bool testNum(TextBox *tb, const ::scoped_string & scopedstrTbName);
-  void onOkPressed();
-};
-
-
+      //private:
+      void updateControlValues();
+      bool isInputValid();
+      bool testNum(TextBox *tb, const ::scoped_string & scopedstrTbName);
+      void onOkPressed();
+   };
+} // namespace remoting_remoting

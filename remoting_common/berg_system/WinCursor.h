@@ -26,7 +26,7 @@
 
 
 #include "remoting/remoting_common/region/Point.h"
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 
 class CLASS_DECL_REMOTING_COMMON WinCursor
 {

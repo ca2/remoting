@@ -26,9 +26,9 @@
 
 
 //#include "remoting/remoting_common/thread/critical_section.h"
-#include "remoting/remoting_common/io/Channel.h"
-#include "remoting/remoting_common/io/DataOutputStream.h"
-#include "remoting/remoting_common/io/DataInputStream.h"
+#include "acme/subsystem/io/Channel.h"
+#include "acme/subsystem/io/DataOutputStream.h"
+#include "acme/subsystem/io/DataInputStream.h"
 
 class BlockingGate : public critical_section, public DataOutputStream,
                      public DataInputStream

@@ -26,20 +26,20 @@
 
 
 #include "remoting/remoting_common/config/RegistrySettingsManager.h"
-
-
-class CLASS_DECL_REMOTING_COMMON ViewerSettingsManager : public RegistrySettingsManager
+namespace remoting
 {
-public:
-  ViewerSettingsManager(const ::scoped_string & scopedstrRegistryName);
-  virtual ~ViewerSettingsManager();
+   class CLASS_DECL_REMOTING_COMMON ViewerSettingsManager : public RegistrySettingsManager
+   {
+   public:
+      ViewerSettingsManager(const ::scoped_string & scopedstrRegistryName);
+      virtual ~ViewerSettingsManager();
 
-  static void initInstance(const ::scoped_string & scopedstrRegistryName);
+      static void initInstance(const ::scoped_string & scopedstrRegistryName);
 
-  static SettingsManager *getInstance();
+      static SettingsManager *getInstance();
 
-protected:
-  static SettingsManager *s_instance;
-};
-
+   protected:
+      static SettingsManager *s_instance;
+   };
+} // namespace remoting
 

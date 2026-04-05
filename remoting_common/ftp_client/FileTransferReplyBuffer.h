@@ -27,11 +27,11 @@
 
 #include "FileTransferEventHandler.h"
 
-#include "remoting/remoting_common/io/DataInputStream.h"
+#include "acme/subsystem/io/DataInputStream.h"
 
 #include "remoting/remoting_common/ftp_common/FileInfo.h"
-#include "remoting/remoting_common/util/Inflater.h"
-#include "remoting/remoting_common/util/ZLibException.h"
+#include "../../../app/acme/subsystem/win-system/Inflater.h"
+#include "acme/subsystem/ZLibException.h"
 
 #include "remoting/remoting_common/ftp_common/OperationNotSupportedException.h"
 
@@ -103,7 +103,7 @@ namespace  remoting
          //
          // ZLib stream for decompression of compressed data
          //
-         Inflater m_inflater;
+         ::subsystem::Inflater m_inflater;
 
          //
          // Members than have access from public methods

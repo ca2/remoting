@@ -27,44 +27,47 @@
 
 //#include "remoting/remoting_common/thread/critical_section.h"
 
-const char ConnectionListener::DEFAULT_HOST[] = "0.0.0.0";
-
-ConnectionListener::ConnectionListener(WindowsApplication *application,
-                                       unsigned short port)
-: TcpServer(DEFAULT_HOST, port, true),
-  m_application(application)
+namespace remoting_remoting
 {
-}
+   const char ConnectionListener::DEFAULT_HOST[] = "0.0.0.0";
 
-ConnectionListener::~ConnectionListener() 
-{
-  critical_section_lock al(&m_connectionsLock);
-  while (!m_connections.empty()) {
-    SocketIPv4 *socket = m_connections.front();
-    delete socket;
-    m_connections.pop_front();
-  }
-}
+   ConnectionListener::ConnectionListener(WindowsApplication *application,
+                                          unsigned short port)
+   : TcpServer(DEFAULT_HOST, port, true),
+     m_application(application)
+   {
+   }
 
-unsigned short ConnectionListener::getBindPort() const
-{
-  return TcpServer::getBindPort();
-}
+   ConnectionListener::~ConnectionListener()
+   {
+      critical_section_lock al(&m_connectionsLock);
+      while (!m_connections.empty()) {
+         SocketIPv4 *socket = m_connections.front();
+         delete socket;
+         m_connections.pop_front();
+      }
+   }
 
-void ConnectionListener::onAcceptConnection(SocketIPv4 *socket)
-{
-  critical_section_lock al(&m_connectionsLock);
-  m_connections.push_front(socket);
-  m_application->postMessage(remoting_impact::WM_USER_NEW_LISTENING);
-}
+   unsigned short ConnectionListener::getBindPort() const
+   {
+      return TcpServer::getBindPort();
+   }
 
-SocketIPv4 *ConnectionListener::getNewConnection()
-{
-  critical_section_lock al(&m_connectionsLock);
-  SocketIPv4 *socket = 0;
-  if (!m_connections.empty()) {
-    socket = m_connections.front();
-    m_connections.pop_front();
-  }
-  return socket;
-}
+   void ConnectionListener::onAcceptConnection(SocketIPv4 *socket)
+   {
+      critical_section_lock al(&m_connectionsLock);
+      m_connections.push_front(socket);
+      m_application->postMessage(remoting_impact::WM_USER_NEW_LISTENING);
+   }
+
+   SocketIPv4 *ConnectionListener::getNewConnection()
+   {
+      critical_section_lock al(&m_connectionsLock);
+      SocketIPv4 *socket = 0;
+      if (!m_connections.empty()) {
+         socket = m_connections.front();
+         m_connections.pop_front();
+      }
+      return socket;
+   }
+}// namespace remoting_remoting

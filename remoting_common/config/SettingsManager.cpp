@@ -25,10 +25,13 @@
 #include "SettingsManager.h"
 //#include <crtdbg.h>
 
-SettingsManager::SettingsManager()
+namespace remoting
 {
-}
+   SettingsManager::SettingsManager()
+   {
+   }
 
-SettingsManager::~SettingsManager()
-{
-}
+   SettingsManager::~SettingsManager()
+   {
+   }
+} // namespace remoting

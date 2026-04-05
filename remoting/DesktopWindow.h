@@ -25,172 +25,171 @@
 #pragma once
 
 
-#include "remoting/remoting_common/win_system/WinClipboard.h"
-#include "remoting/remoting_common/gui/DibFrameBuffer.h"
+#include "acme/operating_system/windows/berg_system/WinClipboard.h"
+#include "apex/innate_subsystem/DibFrameBuffer.h"
 
 
 #include "ScaleManager.h"
 #include "remoting/remoting_common/client_config/ConnectionConfig.h"
-#include "remoting/remoting_common/gui/PaintWindow.h"
-#include "remoting/remoting_common/gui/ScrollBar.h"
-#include "remoting/remoting_common/gui/drawing/SolidBrush.h"
-#include "remoting/remoting_common/gui/drawing/Graphics.h"
+#include "apex/innate_subsystem/PaintWindow.h"
+#include "apex/innate_subsystem/ScrollBar.h"
+#include "apex/innate_subsystem/drawing/SolidBrush.h"
+#include "apex/innate_subsystem/drawing/Graphics.h"
 #include "remoting/remoting_common/rfb/RfbKeySym.h"
 #include "remoting/remoting_common/viewer_core/RemoteViewerCore.h"
-namespace remoting
+namespace remoting_remoting
 {
-   class toolbar;
-   class style;
-} // namespace remoting_impact
-class ViewerWindow;
-class DesktopWindow : public PaintWindow,
-                      protected RfbKeySymListener
-{
-public:
-    ViewerWindow* m_pviewerwindow;
-   ::string m_strHost;
-   ::int_size m_sizeBuffer = {};
-   HDC m_hdcBuffer = nullptr;
-   HBITMAP m_hbitmapOld = nullptr;
-   HBITMAP m_hbitmapBuffer = nullptr;
-   bool m_bMinimized = false;
-//   int m_iDivisor = 1;
-   ::pointer< ::remoting::toolbar > m_premotingtoolbar;
-   ::pointer< ::remoting::style > m_premotingstyle;
-   bool m_bShowCursor = false;
-class ::time m_timeStartDesktopWindow;
-  DesktopWindow(LogWriter *logWriter, ConnectionConfig *conConf, ViewerWindow * pviewerwindow);
-  virtual ~DesktopWindow();
-   virtual void _defer_update_double_buffering();
-  void setClipboardData(const ::scoped_string & strText);
-  void updateFramebuffer(const FrameBuffer * pframebuffer,
-                         const ::int_rectangle &  dstRect);
-  // this function must be called if size of image was changed
-  // or the number of bits per pixel
-  void setNewFramebuffer(const FrameBuffer * pframebuffer);
+    class toolbar;
+    class style;
 
-  // set scale of image, can -1 = Auto, in percent
-  void setScale(int scale);
-  // it returns the image width and height considering scale
-  ::int_rectangle getViewerGeometry();
-  // it returns the image width and height.
-  ::int_rectangle getFrameBufferGeometry();
-  // it return size of server frame buffer and pixelsize.
-  void getServerGeometry(::int_rectangle *rect, int *pixelsize);
+    class ViewerWindow;
+    class DesktopWindow : public PaintWindow,
+                          protected RfbKeySymListener
+    {
+    public:
+        ViewerWindow* m_pviewerwindow;
+        ::string m_strHost;
+        ::int_size m_sizeBuffer = {};
+        HDC m_hdcBuffer = nullptr;
+        HBITMAP m_hbitmapOld = nullptr;
+        HBITMAP m_hbitmapBuffer = nullptr;
+        bool m_bMinimized = false;
+        //   int m_iDivisor = 1;
+        ::pointer< ::remoting::toolbar > m_premotingtoolbar;
+        ::pointer< ::remoting::style > m_premotingstyle;
+        bool m_bShowCursor = false;
+        class ::time m_timeStartDesktopWindow;
+        DesktopWindow(LogWriter *logWriter, ConnectionConfig *conConf, ViewerWindow * pviewerwindow);
+        virtual ~DesktopWindow();
+        virtual void _defer_update_double_buffering();
+        void setClipboardData(const ::scoped_string & strText);
+        void updateFramebuffer(const FrameBuffer * pframebuffer,
+                               const ::int_rectangle &  dstRect);
+        // this function must be called if size of image was changed
+        // or the number of bits per pixel
+        void setNewFramebuffer(const FrameBuffer * pframebuffer);
 
-  void setConnected();
-  void setViewerCore(RemoteViewerCore *viewerCore);
+        // set scale of image, can -1 = Auto, in percent
+        void setScale(int scale);
+        // it returns the image width and height considering scale
+        ::int_rectangle getViewerGeometry();
+        // it returns the image width and height.
+        ::int_rectangle getFrameBufferGeometry();
+        // it return size of server frame buffer and pixelsize.
+        void getServerGeometry(::int_rectangle *rect, int *pixelsize);
 
-  // This function set state key "Ctrl", but not send data to server.
-  void setCtrlState(const bool ctrlState);
-  // This function set state key "Alt", but not send data to server.
-  void setAltState(const bool altState);
-  // This function return true, if key "::remoting::Window" is pressed.
-  bool getCtrlState() const;
-  // This function return true, if key "Alt" is pressed.
-  bool getAltState() const;
+        void setConnected();
+        void setViewerCore(RemoteViewerCore *viewerCore);
 
-  // this function sends to remote viewer core
-  // key what is pressed or unpressed
-  void sendKey(WCHAR key, bool pressed);
-  // this function sends to remote viewer core the combination
-  // Ctrl + Alt + Del
-  void sendCtrlAltDel();
+        // This function set state key "Ctrl", but not send data to server.
+        void setCtrlState(const bool ctrlState);
+        // This function set state key "Alt", but not send data to server.
+        void setAltState(const bool altState);
+        // This function return true, if key "::remoting::Window" is pressed.
+        bool getCtrlState() const;
+        // This function return true, if key "Alt" is pressed.
+        bool getAltState() const;
 
-  // Set function for m_winKeyIgnore.
-  void setWinKeyIgnore(bool winKeyIgnore) { m_rfbKeySym->setWinKeyIgnore(winKeyIgnore); }
+        // this function sends to remote viewer core
+        // key what is pressed or unpressed
+        void sendKey(WCHAR key, bool pressed);
+        // this function sends to remote viewer core the combination
+        // Ctrl + Alt + Del
+        void sendCtrlAltDel();
 
-protected:
-public:
+        // Set function for m_winKeyIgnore.
+        void setWinKeyIgnore(bool winKeyIgnore) { m_rfbKeySym->setWinKeyIgnore(winKeyIgnore); }
 
-  //
-  // Overrides RfbKeySymListener::onRfbKeySymEvent().
-  //
-  void onRfbKeySymEvent(unsigned int rfbKeySym, bool down);
+    protected:
+    public:
 
-  //
-  // Inherited from BaseWindow.
-  //
-  bool onMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam);
-  //void onPaint(DeviceContext *dc, PAINTSTRUCT *paintStruct);
-   void onPaint() override;
-  bool onCreate(LPCREATESTRUCT pcs);
-  bool onDrawClipboard();
-  bool onEraseBackground(HDC hdc);
-  bool onDeadChar(WPARAM wParam, LPARAM lParam);
-  bool onHScroll(WPARAM wParam, LPARAM lParam);
-  bool onVScroll(WPARAM wParam, LPARAM lParam);
-  bool onKey(WPARAM wParam, LPARAM lParam);
-  bool onChar(WPARAM wParam, LPARAM lParam);
-  bool onMouse(unsigned char mouseKeys, unsigned short wheelSpeed, POINT position) override;
-  bool onMouseEx(UINT message, int iButtonMask, unsigned short wspeed, POINT position) override;
-  bool onSize(WPARAM wParam, LPARAM lParam);
-  bool onDestroy();
+        //
+        // Overrides RfbKeySymListener::onRfbKeySymEvent().
+        //
+        void onRfbKeySymEvent(unsigned int rfbKeySym, bool down);
 
-  POINTS getViewerCoord(long xPos, long yPos);
-  void calculateWndSize(bool isChanged);
-  void applyScrollbarChanges(bool isChanged, bool isVert, bool isHorz, int wndWidth, int wndHeight);
+        //
+        // Inherited from BaseWindow.
+        //
+        bool onMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam);
+        //void onPaint(DeviceContext *dc, PAINTSTRUCT *paintStruct);
+        void onPaint() override;
+        bool onCreate(LPCREATESTRUCT pcs);
+        bool onDrawClipboard();
+        bool onEraseBackground(HDC hdc);
+        bool onDeadChar(WPARAM wParam, LPARAM lParam);
+        bool onHScroll(WPARAM wParam, LPARAM lParam);
+        bool onVScroll(WPARAM wParam, LPARAM lParam);
+        bool onKey(WPARAM wParam, LPARAM lParam);
+        bool onChar(WPARAM wParam, LPARAM lParam);
+        bool onMouse(unsigned char mouseKeys, unsigned short wheelSpeed, POINT position) override;
+        bool onMouseEx(UINT message, int iButtonMask, unsigned short wspeed, POINT position) override;
+        bool onSize(WPARAM wParam, LPARAM lParam);
+        bool onDestroy();
 
-  // This function check pointer to viewer core and send event.
-  // If into viewer core throwing exception ::remoting::Exception, then it catching
-  // in this function and logged.
-  void sendKeyboardEvent(bool downFlag, unsigned int key);
-  void sendPointerEvent(unsigned char buttonMask, const Point *position);
-  void sendCutTextEvent(const ::scoped_string & cutText);
+        POINTS getViewerCoord(long xPos, long yPos);
+        void calculateWndSize(bool isChanged);
+        void applyScrollbarChanges(bool isChanged, bool isVert, bool isHorz, int wndWidth, int wndHeight);
 
-  LogWriter *m_logWriter;
+        // This function check pointer to viewer core and send event.
+        // If into viewer core throwing exception ::remoting::Exception, then it catching
+        // in this function and logged.
+        void sendKeyboardEvent(bool downFlag, unsigned int key);
+        void sendPointerEvent(unsigned char buttonMask, const Point *position);
+        void sendCutTextEvent(const ::scoped_string & cutText);
 
-  // This variable is true after call CoreEventsAdapter::onConnected().
-  bool m_isConnected;
+        LogWriter *m_logWriter;
 
-  // keyboard support
-  std::unique_ptr<RfbKeySym> m_rfbKeySym;
+        // This variable is true after call CoreEventsAdapter::onConnected().
+        bool m_isConnected;
 
-  // This variable contained previously state of mouse-button and position of cursor.
-  unsigned char m_previousMouseState;
-  Point m_previousMousePos;
+        // keyboard support
+        std::unique_ptr<RfbKeySym> m_rfbKeySym;
 
-  // scroll bars: vertical and horizontal
-  ScrollBar m_sbar;
+        // This variable contained previously state of mouse-button and position of cursor.
+        unsigned char m_previousMouseState;
+        Point m_previousMousePos;
 
-  // This flag is true if size of window is changed (scroll must be updated).
-  bool m_winResize;
-  bool m_showVert;
-  bool m_showHorz;
+        // scroll bars: vertical and horizontal
+        ScrollBar m_sbar;
 
-  // for scaling
-  ScaleManager m_scManager;
-  ::int_rectangle m_clientArea;
-  int m_fbWidth;
-  int m_fbHeight;
-  ::remoting::SolidBrush m_brush;
+        // This flag is true if size of window is changed (scroll must be updated).
+        bool m_winResize;
+        bool m_showVert;
+        bool m_showHorz;
 
-  // frame buffer
-  critical_section m_bufferLock;
-  DibFrameBuffer m_framebuffer;
-  // This variable save server dimension.
-  // ::int_size of m_framebuffer can be large m_serverDimension.
-  ::int_size m_serverDimension;
+        // for scaling
+        ScaleManager m_scManager;
+        ::int_rectangle m_clientArea;
+        int m_fbWidth;
+        int m_fbHeight;
+        ::remoting::SolidBrush m_brush;
 
-  // clipboard
-  WinClipboard m_clipboard;
-  ::string m_strClipboard;
-  HWND m_hwndNextViewer;
+        // frame buffer
+        critical_section m_bufferLock;
+        DibFrameBuffer m_framebuffer;
+        // This variable save server dimension.
+        // ::int_size of m_framebuffer can be large m_serverDimension.
+        ::int_size m_serverDimension;
 
-  bool m_ctrlDown;
-  bool m_altDown;
-  RemoteViewerCore *m_viewerCore;
-  ConnectionConfig *m_conConf;
-  bool m_isBackgroundDirty;
+        // clipboard
+        WinClipboard m_clipboard;
+        ::string m_strClipboard;
+        HWND m_hwndNextViewer;
 
-public:
-  //void doDraw(DeviceContext *dc);
-   void doDraw(HDC hdc, const ::int_rectangle & rectangle);
-  void scrollProcessing(int fbWidth, int fbHeight);
-  void drawBackground(HDC hdc, const RECT & rcMain, const RECT & rcImage);
-  void drawImage(HDC hdc, const RECT & src, const RECT & dst);
-  void repaint(const ::int_rectangle &  repaintRect);
-  void calcClientArea();
-};
+        bool m_ctrlDown;
+        bool m_altDown;
+        RemoteViewerCore *m_viewerCore;
+        ConnectionConfig *m_conConf;
+        bool m_isBackgroundDirty;
 
-
+    public:
+        //void doDraw(DeviceContext *dc);
+        void doDraw(HDC hdc, const ::int_rectangle & rectangle);
+        void scrollProcessing(int fbWidth, int fbHeight);
+        void drawBackground(HDC hdc, const RECT & rcMain, const RECT & rcImage);
+        void drawImage(HDC hdc, const RECT & src, const RECT & dst);
+        void repaint(const ::int_rectangle &  repaintRect);
+        void calcClientArea();
+    };
+} // namespace remoting_remoting

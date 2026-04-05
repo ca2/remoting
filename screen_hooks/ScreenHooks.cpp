@@ -23,7 +23,7 @@
 //
 
 #include "ScreenHooks.h"
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 #include "remoting_node_desktop/NamingDefs.h"
 #include "remoting/remoting_common/region/Point.h"
 #include "remoting/remoting_common/region/Region.h"

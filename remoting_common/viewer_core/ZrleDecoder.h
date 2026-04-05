@@ -27,7 +27,7 @@
 
 #include "DecoderOfRectangle.h"
 
-#include "remoting/remoting_common/io/DataInputStream.h"
+#include "acme/subsystem/io/DataInputStream.h"
 #include "remoting/remoting_common/util/Inflater.h"
 
 class CLASS_DECL_REMOTING_COMMON ZrleDecoder : public DecoderOfRectangle

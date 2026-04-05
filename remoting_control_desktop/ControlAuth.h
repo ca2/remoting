@@ -28,7 +28,7 @@
 #include "remoting_control_desktop/ControlGate.h"
 #include "remoting_control_desktop/ControlAuthException.h"
 
-#include "remoting/remoting_common/util/Exception.h"
+#include "acme/subsystem/Exception.h"
 
 #include "remoting/remoting_common/server_config/ServerConfig.h"
 

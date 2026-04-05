@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/gui/Window.h"
+#include "apex/innate_subsystem/Window.h"
 #include <commctrl.h>
 
 class CLASS_DECL_REMOTING_COMMON SpinControl : public ::remoting::Window

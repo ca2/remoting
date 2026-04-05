@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "remoting/remoting_common/gui/BaseDialog.h"
-#include "remoting/remoting_common/gui/TextBox.h"
+#include "apex/innate_subsystem/BaseDialog.h"
+#include "apex/innate_subsystem/TextBox.h"
 
 /**
  * ::remoting::Window authentication dialog.

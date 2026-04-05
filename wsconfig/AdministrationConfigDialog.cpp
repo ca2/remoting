@@ -30,11 +30,11 @@
 #include "file_lib/::file::item.h"
 #include "remoting/remoting_common/server_config/ServerConfig.h"
 #include "remoting/remoting_common/server_config/Configurator.h"
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 #include "remoting/remoting_common/util/StringParser.h"
 #include "remoting/remoting_common/wsconfig/ChangePasswordDialog.h"
 #include "remoting/remoting_common/util/StringTable.h"
-#include "remoting/remoting_common/win_system/Process.h"
+#include "acme/subsystem/Process.h"
 #include "remoting_node_desktop/NamingDefs.h"
 
 AdministrationConfigDialog::AdministrationConfigDialog()

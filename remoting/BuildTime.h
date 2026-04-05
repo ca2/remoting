@@ -26,22 +26,22 @@
 
 
 //#include <tchar.h>
-
-/**
- * Application build time.
- */
-class BuildTime {
-public:
-  /**
-   * String that contains application build date and time string (with "Built on" prefix").
-   */
-  static const char STRING[];
-  /**
-   * String that contains application build date and time.
-   */
-  static const char DATE[];
-//private:
-  BuildTime() { };
-};
-
-
+namespace remoting_remoting
+{
+   /**
+    * Application build time.
+    */
+   class BuildTime {
+   public:
+      /**
+       * String that contains application build date and time string (with "Built on" prefix").
+       */
+      static const char STRING[];
+      /**
+       * String that contains application build date and time.
+       */
+      static const char DATE[];
+      //private:
+      BuildTime() { };
+   };
+} // namespace remoting_remoting

@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ControlCommandLine.h"
 
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 #include "remoting/remoting_common/util/CommandLine.h"
 #include "remoting/remoting_common/region/RectSerializer.h"
 #include "remoting/remoting_common/util/StringParser.h"

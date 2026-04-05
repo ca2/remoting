@@ -26,32 +26,37 @@
 #include "remoting/remoting_common/client_config/ViewerConfig.h"
 #include "remoting/remoting_common/client_config/ViewerSettingsManager.h"
 
-FsWarningDialog::FsWarningDialog()
-: BaseDialog(IDD_FS_WARNING)
+namespace remoting_remoting
 {
-}
+    FsWarningDialog::FsWarningDialog()
+    {
+         initialize_base_dialog(IDD_FS_WARNING);
+    }
 
-BOOL FsWarningDialog::onInitDialog()
-{
-  setControlById(m_fsWarning, IDC_CWARN_FS);
+    bool FsWarningDialog::onInitDialog()
+    {
+        setControlById(m_pcheckboxFsWarning, IDC_CWARN_FS);
 
-  m_fsWarning.check(false);
-  return FALSE;
-}
+        m_pcheckboxFsWarning->check(false);
+        return false;
+    }
 
-BOOL FsWarningDialog::onCommand(UINT controlID, UINT notificationID)
-{
-  if (controlID == IDOK) {
-    ::remoting::ViewerConfig *config = ::remoting::ViewerConfig::getInstance();
-    bool promt = !m_fsWarning.isChecked();
-    config->promptOnFullscreen(promt);
-    config->saveToStorage(ViewerSettingsManager::getInstance());
-    close_dialog(1);
-    return TRUE;
-  }
-  if (controlID == IDCANCEL) {
-    close_dialog(0);
-    return TRUE;
-  }
-  return FALSE;
-}
+    bool FsWarningDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+    {
+        if (controlID == ::innate_subsystem::IDOK) {
+            ::remoting::ViewerConfig *config = ::remoting::ViewerConfig::getInstance();
+            bool promt = !m_pcheckboxFsWarning->isChecked();
+            config->promptOnFullscreen(promt);
+            config->saveToStorage(::remoting::ViewerSettingsManager::getInstance());
+            closeDialog(1);
+            return true;
+        }
+        if (controlID == ::innate_subsystem::IDCANCEL) {
+            closeDialog(0);
+            return true;
+        }
+        return false;
+    }
+} // namespace remoting_remoting
+
+

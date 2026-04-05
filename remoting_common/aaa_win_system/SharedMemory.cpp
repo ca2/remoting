@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "acme/_operating_system.h"
 #include "SharedMemory.h"
-#include "remoting/remoting_common/util/Exception.h"
+#include "acme/subsystem/Exception.h"
 #include <Aclapi.h>
 
 SharedMemory::SharedMemory(const ::scoped_string & scopedstrName, size_t size)

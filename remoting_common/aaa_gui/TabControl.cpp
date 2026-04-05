@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "TabControl.h"
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 #include <commctrl.h>
 
 TabControl::TabControl()

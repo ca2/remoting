@@ -28,7 +28,7 @@
 #include "remoting/remoting_common/win_system/ParentProcess.h"
 #include "ParentEventsListener.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 #include "remoting/remoting_common/thread/Thread.h"
 #include <Tlhelp32.h>
 

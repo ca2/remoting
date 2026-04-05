@@ -29,38 +29,40 @@
 //#include <list>
 #include "ViewerInstance.h"
 
-typedef ::list_base<ViewerInstance *> InstanceList;
 
-// Collector instances.
-class ViewerCollector
+namespace remoting_remoting
 {
-public:
-  ViewerCollector();
-  virtual ~ViewerCollector();
+    typedef ::list_base<ViewerInstance *> InstanceList;
 
-  // Adds instance to a self ::list_base.
-  void addInstance(ViewerInstance *instance);
+    // Collector instances.
+    class ViewerCollector
+    {
+    public:
+        ViewerCollector();
+        virtual ~ViewerCollector();
 
-  // Forces terminates all instances, waits until they dies and than
-  // delete them from memory and thread ::list_base.
-  void destroyAllInstances();
+        // Adds instance to a self ::list_base.
+        void addInstance(ViewerInstance *instance);
 
-  // This function decrease counter of connection, requires reconnect.
-  void decreaseToReconnect();
+        // Forces terminates all instances, waits until they dies and than
+        // delete them from memory and thread ::list_base.
+        void destroyAllInstances();
 
-  // Return true, if and only if m_instances is empty()
-  bool empty() const;
+        // This function decrease counter of connection, requires reconnect.
+        void decreaseToReconnect();
 
-  // Deletes all stopped instances from memory and removes them from self ::list_base.
-  void deleteDeadInstances();
+        // Return true, if and only if m_instances is empty()
+        bool empty() const;
 
-protected:
-  mutable critical_section m_lockObj;
-  InstanceList m_instances;
+        // Deletes all stopped instances from memory and removes them from self ::list_base.
+        void deleteDeadInstances();
 
-  // This variable contain count of instance, when need to reconnect.
-  // If this count isn't 0, shutdown application is denied.
-  int m_countToReconnect;
-};
+    protected:
+        mutable critical_section m_lockObj;
+        InstanceList m_instances;
 
-
+        // This variable contain count of instance, when need to reconnect.
+        // If this count isn't 0, shutdown application is denied.
+        int m_countToReconnect;
+    };
+} // namespace remoting_remoting

@@ -21,91 +21,99 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
 #pragma once
 
 
-#include "remoting/remoting_common/gui/BaseDialog.h"
-//#include "remoting/remoting_common/gui/::remoting::Window.h"
+#include "apex/innate_subsystem/BaseDialog.h"
+#include "apex/innate_subsystem/Control.h"
 #include "remoting/remoting_common/ftp_common/FileInfo.h"
 
-class FileExistDialog : public BaseDialog
+
+namespace remoting_remoting
 {
-public:
 
-  //
-  // Dialog result contants
-  //
 
-  static const int OVERWRITE_RESULT = 0x0;
-  static const int SKIP_RESULT = 0x1;
-  static const int APPEND_RESULT = 0x2;
-  static const int CANCEL_RESULT = 0x3;
+    class FileExistDialog : public ::innate_subsystem::BaseDialog
+    {
+    public:
 
-  FileExistDialog();
-  ~FileExistDialog();
+        //
+        // Dialog result contants
+        //
 
-  // Override BaseDialog method
-  virtual int showModal();
+        static const int OVERWRITE_RESULT = 0x0;
+        static const int SKIP_RESULT = 0x1;
+        static const int APPEND_RESULT = 0x2;
+        static const int CANCEL_RESULT = 0x3;
 
-  void setFilesInfo(::remoting::ftp::FileInfo *existingFileInfo, ::remoting::ftp::FileInfo *newFileInfo,
-                    const ::scoped_string & scopedstrPathToFileCaption);
+        FileExistDialog();
+        ~FileExistDialog();
 
-  void resetDialogResultValue();
+        // Override BaseDialog method
+        virtual int showModal();
 
-protected:
+        void setFilesInfo(::remoting::ftp::FileInfo *existingFileInfo, ::remoting::ftp::FileInfo *newFileInfo,
+                          const ::scoped_string & scopedstrPathToFileCaption);
 
-  //
-  // Inherited from BaseDialog
-  //
+        void resetDialogResultValue();
 
-  virtual BOOL onInitDialog();
-  virtual BOOL onNotify(UINT controlID, LPARAM data);
-  virtual BOOL onCommand(UINT controlID, UINT notificationID);
-  virtual BOOL onDestroy();
+    //protected:
 
-  //
-  // Button event handlers
-  //
+        //
+        // Inherited from BaseDialog
+        //
 
-  void onOverwriteButtonClick();
-  void onOverwriteAllButtonClick();
-  void onSkipButtonClick();
-  void onSkipAllButtonClick();
-  void onAppendButtonClick();
-  void onCancelButtonClick();
+        virtual bool onInitDialog();
+        virtual bool onNotify(unsigned int controlID, ::lparam data);
+        virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
+        virtual bool onDestroy();
 
-//private:
+        //
+        // Button event handlers
+        //
 
-  void updateGui(::remoting::ftp::FileInfo *fileInfo, ::remoting::Window *sizeLabel, ::remoting::Window *modTimeLabel);
-  void initControls();
+        virtual void onOverwriteButtonClick();
+        virtual void onOverwriteAllButtonClick();
+        virtual void onSkipButtonClick();
+        virtual void onSkipAllButtonClick();
+        virtual void onAppendButtonClick();
+        virtual void onCancelButtonClick();
 
-//protected:
-  ::remoting::ftp::FileInfo *m_newFileInfo;
- ::remoting::ftp:: FileInfo *m_existingFileInfo;
-  ::string m_pathToFileCaption;
+        //private:
 
-  //
-  // Helper members
-  //
+        virtual void updateGui(::remoting::ftp::FileInfo *fileInfo, ::innate_subsystem::Control *sizeLabel, ::innate_subsystem::Control *modTimeLabel);
+        virtual void initControls();
 
-  bool m_controlsInitialized;
-  bool m_overwriteAll;
-  bool m_skipAll;
+        //protected:
+        ::remoting::ftp::FileInfo *m_newFileInfo;
+        ::remoting::ftp:: FileInfo *m_existingFileInfo;
+        ::string m_pathToFileCaption;
 
-  //
-  // User controls
-  //
+        //
+        // Helper members
+        //
 
-  ::remoting::Window m_fileNameLabel;
-  ::remoting::Window m_newSizeLabel;
-  ::remoting::Window m_newModTimeLabel;
-  ::remoting::Window m_existingSizeLabel;
-  ::remoting::Window m_existingModTimeLabel;
+        bool m_controlsInitialized;
+        bool m_overwriteAll;
+        bool m_skipAll;
 
-  ::remoting::Window m_appendButton;
+        //
+        // User controls
+        //
 
-  bool m_canAppend;
-};
+        ::pointer < ::innate_subsystem::Control > m_pcontrolFileNameLabel;
+        ::pointer < ::innate_subsystem::Control > m_pcontrolNewSizeLabel;
+        ::pointer < ::innate_subsystem::Control > m_pcontrolNewModTimeLabel;
+        ::pointer < ::innate_subsystem::Control > m_pcontrolExistingSizeLabel;
+        ::pointer < ::innate_subsystem::Control > m_pcontrolExistingModTimeLabel;
+
+        ::pointer < ::innate_subsystem::Control > m_pcontrolAppendButton;
+
+        bool m_canAppend;
+    };
+
+
+} // namespace remoting_remoting
+
 
 

@@ -29,51 +29,50 @@
 
 #include "SettingsManager.h"
 
-
-
-class CLASS_DECL_REMOTING_COMMON RegistrySettingsManager : public SettingsManager
+namespace remoting
 {
-public:
-  RegistrySettingsManager();
-  RegistrySettingsManager(const ::scoped_string & scopedstrKey, const ::scoped_string & scopedstrEntry);
-  virtual ~RegistrySettingsManager();
+   class CLASS_DECL_REMOTING_COMMON RegistrySettingsManager : public SettingsManager
+   {
+   public:
+      RegistrySettingsManager();
+      RegistrySettingsManager(const ::scoped_string & scopedstrKey, const ::scoped_string & scopedstrEntry);
+      virtual ~RegistrySettingsManager();
 
-//public:
+      //public:
 
-  void setRegistryKey(const ::scoped_string & scopedstrKey, const ::scoped_string & scopedstrEntry);
+      void setRegistryKey(const ::scoped_string & scopedstrKey, const ::scoped_string & scopedstrEntry);
 
-  virtual bool isOk();
+      virtual bool isOk();
 
-  virtual bool keyExist(const ::scoped_string & scopedstrName);
-  virtual bool deleteKey(const ::scoped_string & scopedstrName);
+      virtual bool keyExist(const ::scoped_string & scopedstrName);
+      virtual bool deleteKey(const ::scoped_string & scopedstrName);
 
-  virtual bool getString(const ::scoped_string & scopedstrName, ::string & value);
-  virtual bool setString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrPayload);
+      virtual bool getString(const ::scoped_string & scopedstrName, ::string & value);
+      virtual bool setString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrPayload);
 
-  virtual bool getLong(const ::scoped_string & scopedstrName, long *value);
-  virtual bool setLong(const ::scoped_string & scopedstrName, long value);
+      virtual bool getLong(const ::scoped_string & scopedstrName, long *value);
+      virtual bool setLong(const ::scoped_string & scopedstrName, long value);
 
-  virtual bool getBoolean(const ::scoped_string & scopedstrName, bool *value);
-  virtual bool setBoolean(const ::scoped_string & scopedstrName, bool value);
+      virtual bool getBoolean(const ::scoped_string & scopedstrName, bool *value);
+      virtual bool setBoolean(const ::scoped_string & scopedstrName, bool value);
 
-  virtual bool getUINT(const ::scoped_string & scopedstrName, unsigned int *value);
-  virtual bool setUINT(const ::scoped_string & scopedstrName, unsigned int value);
+      virtual bool getUINT(const ::scoped_string & scopedstrName, unsigned int *value);
+      virtual bool setUINT(const ::scoped_string & scopedstrName, unsigned int value);
 
-  virtual bool getInt(const ::scoped_string & scopedstrName, int *value);
-  virtual bool setInt(const ::scoped_string & scopedstrName, int value);
+      virtual bool getInt(const ::scoped_string & scopedstrName, int *value);
+      virtual bool setInt(const ::scoped_string & scopedstrName, int value);
 
-  virtual bool getByte(const ::scoped_string & scopedstrName, char *value);
-  virtual bool setByte(const ::scoped_string & scopedstrName, char value);
+      virtual bool getByte(const ::scoped_string & scopedstrName, char *value);
+      virtual bool setByte(const ::scoped_string & scopedstrName, char value);
 
-  virtual bool getBinaryData(const ::scoped_string & scopedstrName, void *value, size_t *size);
-  virtual bool setBinaryData(const ::scoped_string & scopedstrName, const void *value, size_t size);
+      virtual bool getBinaryData(const ::scoped_string & scopedstrName, void *value, size_t *size);
+      virtual bool setBinaryData(const ::scoped_string & scopedstrName, const void *value, size_t size);
 
-//protected:
-  //RegistryKey *m_key;
-   ::string m_strRegistryKey;
+      //protected:
+      //RegistryKey *m_key;
+      ::string m_strRegistryKey;
 
-  virtual ::string key_path(const ::scoped_string & scopedstrKey);
-  virtual ::string key_name(const ::scoped_string & scopedstrKey);
-};
-
-
+      virtual ::string key_path(const ::scoped_string & scopedstrKey);
+      virtual ::string key_name(const ::scoped_string & scopedstrKey);
+   };
+} // namespace remoting

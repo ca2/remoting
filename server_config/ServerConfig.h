@@ -26,14 +26,14 @@
 
 
 //#include "remoting/remoting_common/util/::string_array.h"
-#include "remoting/remoting_common/util/Exception.h"
+#include "acme/subsystem/Exception.h"
 #include "PortMappingContainer.h"
 #include "IpAccessControl.h"
 //#include "remoting/remoting_common/thread/critical_section.h"
 //#include "remoting/remoting_common/thread/critical_section.h"
 #include "IpAccessRule.h"
-#include "remoting/remoting_common/io/DataInputStream.h"
-#include "remoting/remoting_common/io/DataOutputStream.h"
+#include "acme/subsystem/io/DataInputStream.h"
+#include "acme/subsystem/io/DataOutputStream.h"
 #include "acme/exception/io.h"
 #include "remoting/remoting_common/region/RectSerializer.h"
 

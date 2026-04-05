@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 
 //#include <crtdbg.h>
 
@@ -70,7 +70,7 @@ public:
     if (s_instance == 0) {
       s_instance = (T*)this;
     } else {
-      ASSERT(FALSE);
+      ASSERT(false);
     }
   }
 
@@ -85,14 +85,14 @@ public:
        critical_section_lock l(&m_instanceMutex);
 
       if (s_instance == 0) {
-        ASSERT(FALSE);
+        ASSERT(false);
       }
     }
 
     return (T*)s_instance;
   }
 
-private:
+//private:
   static critical_section m_instanceMutex;
 
   static void* s_instance;

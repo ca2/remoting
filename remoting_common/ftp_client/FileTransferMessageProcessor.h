@@ -26,7 +26,7 @@
 
 
 #include "acme/exception/io.h"
-#include "remoting/remoting_common/io/DataInputStream.h"
+#include "acme/subsystem/io/DataInputStream.h"
 
 #include "remoting/remoting_common/util/inttypes.h"
 #include "remoting/remoting_common/util/ListenerContainer.h"

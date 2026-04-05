@@ -26,7 +26,7 @@
 
 
 ////////#include "remoting/remoting_common/util/::string.h"
-#include "remoting/remoting_common/util/Singleton.h"
+#include "../../../app/acme/subsystem/win-system/Singleton.h"
 #include "remoting/remoting_common/config/ConnectionHistory.h"
 //#include "log_writer/FileLogWriter.h"
 ////#include "remoting/remoting_common/thread/critical_section.h"
@@ -40,7 +40,7 @@ namespace remoting
    // Contains base set of viewer configuration options.
    //
 
-   class CLASS_DECL_REMOTING_COMMON ViewerConfig : public Singleton<ViewerConfig>
+   class CLASS_DECL_REMOTING_COMMON ViewerConfig : public ::subsystem::Singleton<ViewerConfig>
    {
    public:
       ViewerConfig(const ::scoped_string & scopedstrRegistryPath);

@@ -91,7 +91,7 @@ bool Configurator::load(bool forService)
 {
   bool isOk = false;
 
-  ::acme::RegX rootKey = forService ? HKEY_LOCAL_MACHINE : HKEY_CURRENT_USER;
+  ::subsystem::registry rootKey = forService ? HKEY_LOCAL_MACHINE : HKEY_CURRENT_USER;
 
   SECURITY_ATTRIBUTES *sa = 0;
   if (forService && m_regSA != 0) {
@@ -110,7 +110,7 @@ bool Configurator::save(bool forService)
 {
   bool isOk = false;
 
-  ::acme::RegX rootKey = forService ? HKEY_LOCAL_MACHINE : HKEY_CURRENT_USER;
+  ::subsystem::registry rootKey = forService ? HKEY_LOCAL_MACHINE : HKEY_CURRENT_USER;
 
   SECURITY_ATTRIBUTES *sa = 0;
   if (forService && m_regSA != 0) {

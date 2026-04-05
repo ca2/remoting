@@ -25,40 +25,41 @@
 #pragma once
 
 
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 //////#include "remoting/remoting_common/util/::string.h"
-
-class CLASS_DECL_REMOTING_COMMON SettingsManager
+///
+namespace remoting
 {
-public:
-  SettingsManager();
-  virtual ~SettingsManager();
-public:  
-  virtual bool isOk() = 0;
+   class CLASS_DECL_REMOTING_COMMON SettingsManager
+   {
+   public:
+      SettingsManager();
+      virtual ~SettingsManager();
+   public:
+      virtual bool isOk() = 0;
 
-  virtual bool keyExist(const ::scoped_string & scopedstrName) = 0;
-  virtual bool deleteKey(const ::scoped_string & scopedstrName) = 0;
+      virtual bool keyExist(const ::scoped_string & scopedstrName) = 0;
+      virtual bool deleteKey(const ::scoped_string & scopedstrName) = 0;
 
-  virtual bool getString(const ::scoped_string & scopedstrName, ::string & storage) = 0;
-  virtual bool setString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrPayload) = 0;
+      virtual bool getString(const ::scoped_string & scopedstrName, ::string & storage) = 0;
+      virtual bool setString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrPayload) = 0;
 
-  virtual bool getLong(const ::scoped_string & scopedstrName, long *value) = 0;
-  virtual bool setLong(const ::scoped_string & scopedstrName, long value) = 0;
+      virtual bool getLong(const ::scoped_string & scopedstrName, long *value) = 0;
+      virtual bool setLong(const ::scoped_string & scopedstrName, long value) = 0;
 
-  virtual bool getBoolean(const ::scoped_string & scopedstrName, bool *value) = 0;
-  virtual bool setBoolean(const ::scoped_string & scopedstrName, bool value) = 0;
+      virtual bool getBoolean(const ::scoped_string & scopedstrName, bool *value) = 0;
+      virtual bool setBoolean(const ::scoped_string & scopedstrName, bool value) = 0;
 
-  virtual bool getUINT(const ::scoped_string & scopedstrName, unsigned int *value) = 0;
-  virtual bool setUINT(const ::scoped_string & scopedstrName, unsigned int value) = 0;
+      virtual bool getUINT(const ::scoped_string & scopedstrName, unsigned int *value) = 0;
+      virtual bool setUINT(const ::scoped_string & scopedstrName, unsigned int value) = 0;
 
-  virtual bool getInt(const ::scoped_string & scopedstrName, int *value) = 0;
-  virtual bool setInt(const ::scoped_string & scopedstrName, int value) = 0;
+      virtual bool getInt(const ::scoped_string & scopedstrName, int *value) = 0;
+      virtual bool setInt(const ::scoped_string & scopedstrName, int value) = 0;
 
-  virtual bool getByte(const ::scoped_string & scopedstrName, char *value) = 0;
-  virtual bool setByte(const ::scoped_string & scopedstrName, char value) = 0;
+      virtual bool getByte(const ::scoped_string & scopedstrName, char *value) = 0;
+      virtual bool setByte(const ::scoped_string & scopedstrName, char value) = 0;
 
-  virtual bool getBinaryData(const ::scoped_string & scopedstrName, void *value, size_t *size) = 0;
-  virtual bool setBinaryData(const ::scoped_string & scopedstrName, const void *value, size_t size) = 0;
-};
-
-
+      virtual bool getBinaryData(const ::scoped_string & scopedstrName, void *value, size_t *size) = 0;
+      virtual bool setBinaryData(const ::scoped_string & scopedstrName, const void *value, size_t size) = 0;
+   };
+} // namespace remoting

@@ -24,18 +24,21 @@
 #include "framework.h"
 #include "NamingDefs.h"
 
-const char ProductNames::PRODUCT_NAME[] = "remoting";
-const char ProductNames::VIEWER_PRODUCT_NAME[] = "remoting";
 
-const char LogNames::VIEWER_LOG_FILE_STUB_NAME[] = "remoting_impact";
-const char LogNames::LOG_DIR_NAME[] = "remoting";
+namespace remoting_remoting
+{
+    const char ProductNames::PRODUCT_NAME[] = "remoting";
+    const char ProductNames::VIEWER_PRODUCT_NAME[] = "remoting";
 
-const char RegistryPaths::VIEWER_PATH[] = "Software\\remoting\\remoting";
+    const char LogNames::VIEWER_LOG_FILE_STUB_NAME[] = "remoting_impact";
+    const char LogNames::LOG_DIR_NAME[] = "remoting";
 
-const char ApplicationNames::WINDOW_CLASS_NAME[] = 
-  "remoting_application_class";
+    const char RegistryPaths::VIEWER_PATH[] = "Software\\remoting\\remoting";
 
-const char WindowNames::TVN_WINDOW_CLASS_NAME[] = "remoting_window_class";
-const char WindowNames::TVN_WINDOW_TITLE_NAME[] = "remoting";
-const char WindowNames::TVN_SUB_WINDOW_TITLE_NAME[] = "remoting";
+    const char ApplicationNames::WINDOW_CLASS_NAME[] =
+      "remoting_application_class";
 
+    const char WindowNames::TVN_WINDOW_CLASS_NAME[] = "remoting_window_class";
+    const char WindowNames::TVN_WINDOW_TITLE_NAME[] = "remoting";
+    const char WindowNames::TVN_SUB_WINDOW_TITLE_NAME[] = "remoting";
+} // namespace remoting_remoting

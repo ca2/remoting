@@ -27,94 +27,98 @@
 #include "remoting/remoting_common/viewer_core/RemoteViewerCore.h"
 #include "remoting/remoting_common/viewer_core/FileTransferCapability.h"
 
-ViewerInstance::ViewerInstance(WindowsApplication *application,
-                               ConnectionData & conData,
-                               const ConnectionConfig & conConf)
-: m_conConf(conConf),
-  m_condata(conData),
-  m_socket(0),
-  m_viewerWnd(application,
-              &m_condata,
-              &m_conConf,
-              ::remoting::ViewerConfig::getInstance()->getLogWriter()),
-  m_vncAuthHandler(&m_condata),
-  m_viewerCore(::remoting::ViewerConfig::getInstance()->getLogWriter())
+
+namespace remoting_remoting
 {
-}
+    ViewerInstance::ViewerInstance(WindowsApplication *application,
+                                   ConnectionData & conData,
+                                   const ConnectionConfig & conConf)
+    : m_conConf(conConf),
+      m_condata(conData),
+      m_socket(0),
+      m_viewerWnd(application,
+                  &m_condata,
+                  &m_conConf,
+                  ::remoting::ViewerConfig::getInstance()->getLogWriter()),
+      m_vncAuthHandler(&m_condata),
+      m_viewerCore(::remoting::ViewerConfig::getInstance()->getLogWriter())
+    {
+    }
 
-ViewerInstance::ViewerInstance(WindowsApplication *application,
-                               ConnectionData & conData,
-                               const ConnectionConfig & conConf,
-                               SocketIPv4 *socket)
-: m_conConf(conConf),
-  m_condata(conData),
-  m_socket(socket),
-  m_viewerWnd(application,
-              &m_condata,
-              &m_conConf,
-              ::remoting::ViewerConfig::getInstance()->getLogWriter()),
-  m_vncAuthHandler(&m_condata),
-  m_viewerCore(::remoting::ViewerConfig::getInstance()->getLogWriter())
-{
-}
-
-
-ViewerInstance::~ViewerInstance()
-{
-  if (m_socket != 0) {
-    m_socket->shutdown(SD_BOTH);
-    m_socket->close();
-  }
-
-  m_viewerCore.stop();
-  m_viewerCore.waitTermination();
-
-  if (m_socket != 0) {
-    delete m_socket;
-    m_socket = NULL;
-  }
-}
-
-void ViewerInstance::waitViewer()
-{
-  m_viewerCore.waitTermination();
-}
-
-bool ViewerInstance::requiresReconnect() const
-{
-  return m_viewerWnd.requiresReconnect();
-}
-
-bool ViewerInstance::isStopped() const
-{
-  return m_viewerWnd.isStopped();
-}
-
-void ViewerInstance::stop()
-{
-  m_viewerWnd.postMessage(ViewerWindow::WM_USER_STOP);
-}
-
-void ViewerInstance::start()
-{
-  auto LogWriter = ::remoting::ViewerConfig::getInstance()->getLogWriter();
-  m_viewerWnd.setRemoteViewerCore(&m_viewerCore);
+    ViewerInstance::ViewerInstance(WindowsApplication *application,
+                                   ConnectionData & conData,
+                                   const ConnectionConfig & conConf,
+                                   SocketIPv4 *socket)
+    : m_conConf(conConf),
+      m_condata(conData),
+      m_socket(socket),
+      m_viewerWnd(application,
+                  &m_condata,
+                  &m_conConf,
+                  ::remoting::ViewerConfig::getInstance()->getLogWriter()),
+      m_vncAuthHandler(&m_condata),
+      m_viewerCore(::remoting::ViewerConfig::getInstance()->getLogWriter())
+    {
+    }
 
 
-  m_viewerWnd.setFileTransfer(&m_fileTransfer);
+    ViewerInstance::~ViewerInstance()
+    {
+        if (m_socket != 0) {
+            m_socket->shutdown(SD_BOTH);
+            m_socket->close();
+        }
 
-  m_vncAuthHandler.addAuthCapability(&m_viewerCore);
+        m_viewerCore.stop();
+        m_viewerCore.waitTermination();
 
-  m_fileTransfer.addCapabilities(&m_viewerCore);
+        if (m_socket != 0) {
+            delete m_socket;
+            m_socket = NULL;
+        }
+    }
 
-  if (m_socket) {
-    m_viewerCore.start(m_socket,
-                       &m_viewerWnd, m_conConf.getSharedFlag());
-  } else {
-    //::string strHost;
-    auto strHost = m_condata.getReducedHost();
-    unsigned short portVal = m_condata.getPort();
-    m_viewerCore.start(strHost, portVal,
-                       &m_viewerWnd, m_conConf.getSharedFlag());
-  }
-}
+    void ViewerInstance::waitViewer()
+    {
+        m_viewerCore.waitTermination();
+    }
+
+    bool ViewerInstance::requiresReconnect() const
+    {
+        return m_viewerWnd.requiresReconnect();
+    }
+
+    bool ViewerInstance::isStopped() const
+    {
+        return m_viewerWnd.isStopped();
+    }
+
+    void ViewerInstance::stop()
+    {
+        m_viewerWnd.postMessage(ViewerWindow::WM_USER_STOP);
+    }
+
+    void ViewerInstance::start()
+    {
+        auto LogWriter = ::remoting::ViewerConfig::getInstance()->getLogWriter();
+        m_viewerWnd.setRemoteViewerCore(&m_viewerCore);
+
+
+        m_viewerWnd.setFileTransfer(&m_fileTransfer);
+
+        m_vncAuthHandler.addAuthCapability(&m_viewerCore);
+
+        m_fileTransfer.addCapabilities(&m_viewerCore);
+
+        if (m_socket) {
+            m_viewerCore.start(m_socket,
+                               &m_viewerWnd, m_conConf.getSharedFlag());
+        } else {
+            //::string strHost;
+            auto strHost = m_condata.getReducedHost();
+            unsigned short portVal = m_condata.getPort();
+            m_viewerCore.start(strHost, portVal,
+                               &m_viewerWnd, m_conConf.getSharedFlag());
+        }
+    }
+} // namespace remoting_remoting

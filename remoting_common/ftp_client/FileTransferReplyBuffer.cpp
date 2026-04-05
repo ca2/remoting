@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "FileTransferReplyBuffer.h"
-#include "remoting/remoting_common/io/ByteArrayInputStream.h"
+#include "acme/subsystem/io/ByteArrayInputStream.h"
 //#include "remoting/remoting_common/thread/critical_section.h"
 #include <crtdbg.h>
 

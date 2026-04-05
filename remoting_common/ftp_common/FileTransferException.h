@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/util/Exception.h"
+#include "acme/subsystem/Exception.h"
 
 class CLASS_DECL_REMOTING_COMMON FileTransferException : public ::remoting::Exception
 {

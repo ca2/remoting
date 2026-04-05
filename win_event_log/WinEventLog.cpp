@@ -23,9 +23,9 @@
 //
 #include "framework.h"
 #include "WinEventLog.h"
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 #include "remoting_node_desktop/NamingDefs.h"
-#include "remoting/remoting_common/util/Exception.h"
+#include "acme/subsystem/Exception.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 #include "remoting/remoting_common/win_system/RegistryKey.h"
 //#include "remoting/remoting_common/thread/critical_section.h"

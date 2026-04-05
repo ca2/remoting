@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 #include "Poller.h"
 #include "remoting/remoting_common/region/Region.h"
 #include "remoting/remoting_common/server_config/Configurator.h"

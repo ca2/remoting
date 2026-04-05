@@ -29,61 +29,62 @@
 #include "remoting/remoting_common/client_config/ConnectionConfig.h"
 #include "remoting/remoting_common/client_config/ConnectionConfigSM.h"
 #include "remoting/remoting_common/client_config/ViewerSettingsManager.h"
-#include "remoting/remoting_common/util/StringParser.h"
-#include "remoting/remoting_common/gui/BaseDialog.h"
-#include "remoting/remoting_common/gui/TextBox.h"
-#include "remoting/remoting_common/gui/CheckBox.h"
-#include "remoting/remoting_common/gui/ComboBox.h"
-#include "remoting/remoting_common/gui/TrackBar.h"
+#include "acme/subsystem/StringParser.h"
+#include "apex/innate_subsystem/BaseDialog.h"
+#include "apex/innate_subsystem/TextBox.h"
+#include "apex/innate_subsystem/CheckBox.h"
+#include "apex/innate_subsystem/ComboBox.h"
+#include "apex/innate_subsystem/TrackBar.h"
 
 #include "remoting_impact.h"
 #include "resource.h"
 
-class remoting_impact;
-
-class LoginDialog : public BaseDialog
+namespace remoting_remoting
 {
-public:
-  LoginDialog(remoting_impact *viewer);
-  ~LoginDialog();
+    class remoting_impact;
 
-  // this function returns the host
-  ::string getServerHost();
-  void setConConf(ConnectionConfig *conConf);
-  // set listening mode
-  void setListening(bool isListening);
+    class LoginDialog : public BaseDialog
+    {
+    public:
+        LoginDialog(remoting_impact *viewer);
+        ~LoginDialog();
 
-  static const int DEFAULT_PORT = 5900;
+        // this function returns the host
+        ::string getServerHost();
+        void setConConf(ConnectionConfig *conConf);
+        // set listening mode
+        void setListening(bool isListening);
 
-  // this constant will be returned if user have pressed 'Connect...' button
-  static const int CANCEL_MODE = 0;
-  // this constant will be returned if user have pressed 'Cancel' button
-  static const int CONNECTION_MODE = 1;
-  // this constant will be returned if user have pressed 'Listening' button
-  static const int LISTENING_MODE = 2;
+        static const int DEFAULT_PORT = 5900;
 
-protected:
-  BOOL onInitDialog();
-  BOOL onCommand(UINT controlID, UINT notificationID);
-  bool m_isListening;
+        // this constant will be returned if user have pressed 'Connect...' button
+        static const int CANCEL_MODE = 0;
+        // this constant will be returned if user have pressed 'Cancel' button
+        static const int CONNECTION_MODE = 1;
+        // this constant will be returned if user have pressed 'Listening' button
+        static const int LISTENING_MODE = 2;
 
-  ::remoting::Window m_listening;
-  ::remoting::Window m_ok;
-  ConnectionConfig m_connectionConfig;
-  ComboBox m_server;
-  ::string m_serverHost;
-  remoting_impact *m_viewer;
+    protected:
+        BOOL onInitDialog();
+        BOOL onCommand(UINT controlID, UINT notificationID);
+        bool m_isListening;
 
-private:
-  void enableConnect();
-  void updateHistory();
-  void onConnect();
-  void onConfiguration();
-  BOOL onOptions();
-  void onOrder();
-  void openUrl(const ::scoped_string & scopedstrUrl);
-  void onListening();
-  void onAbout();
-};
+        ::remoting::Window m_listening;
+        ::remoting::Window m_ok;
+        ConnectionConfig m_connectionConfig;
+        ComboBox m_server;
+        ::string m_serverHost;
+        remoting_impact *m_viewer;
 
-
+    private:
+        void enableConnect();
+        void updateHistory();
+        void onConnect();
+        void onConfiguration();
+        BOOL onOptions();
+        void onOrder();
+        void openUrl(const ::scoped_string & scopedstrUrl);
+        void onListening();
+        void onAbout();
+    };
+} // namespace remoting_remoting

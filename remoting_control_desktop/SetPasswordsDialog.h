@@ -27,10 +27,10 @@
 
 #include "remoting/remoting_common/util/winhdr.h"
 
-#include "remoting/remoting_common/gui/BaseDialog.h"
-#include "remoting/remoting_common/gui/CheckBox.h"
-#include "remoting/remoting_common/gui/TextBox.h"
-#include "remoting/remoting_common/gui/BalloonTip.h"
+#include "apex/innate_subsystem/BaseDialog.h"
+#include "apex/innate_subsystem/CheckBox.h"
+#include "apex/innate_subsystem/TextBox.h"
+#include "apex/innate_subsystem/BalloonTip.h"
 
 #include "remoting/remoting_common/win_system/RegistryKey.h"
 

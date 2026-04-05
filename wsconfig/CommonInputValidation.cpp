@@ -26,7 +26,7 @@
 
 #include "remoting/remoting_common/util/StringParser.h"
 
-#include "remoting/remoting_common/gui/BalloonTip.h"
+#include "apex/innate_subsystem/BalloonTip.h"
 
 #include "remoting_node/resource.h"
 

@@ -24,8 +24,11 @@
 
 #pragma once
 
+namespace subsystem
+{
 
-struct CLASS_DECL_REMOTING_COMMON PixelFormat
+
+struct CLASS_DECL_ACME PixelFormat
 {
   PixelFormat();
   // Initializes the bigEndian field by native machine value.
@@ -48,3 +51,7 @@ struct CLASS_DECL_REMOTING_COMMON PixelFormat
 };
 
 //// __PIXELFORMAT_H__
+///
+} // namespace subsystem
+
+

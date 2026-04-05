@@ -129,7 +129,7 @@ void ControlMessage::authFromFile()
 
 void ControlMessage::authFromRegistry()
 {
-  ::acme::RegX rootKey = m_forService ? HKEY_LOCAL_MACHINE : HKEY_CURRENT_USER;
+  ::subsystem::registry rootKey = m_forService ? HKEY_LOCAL_MACHINE : HKEY_CURRENT_USER;
   RegistrySettingsManager sm(rootKey, RegistryPaths::SERVER_PATH, 0);
 
   unsigned char hidePassword[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };

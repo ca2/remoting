@@ -25,62 +25,66 @@
 #pragma once
 
 
-#include "remoting/remoting_common/gui/BaseDialog.h"
+#include "apex/innate_subsystem/BaseDialog.h"
 
-/**
- * TightVNC server about dialog.
- */
-class AboutDialog : public BaseDialog
+namespace remoting_remoting
 {
-public:
-  /**
-   * Creates dialog.
-   */
-  AboutDialog();
-  /**
-   * Destroys dialog.
-   */
-  virtual ~AboutDialog();
+    /**
+     * TightVNC server about dialog.
+     */
+    class AboutDialog : public ::innate_subsystem::BaseDialog
+    {
+    public:
+        /**
+         * Creates dialog.
+         */
+        AboutDialog();
+        /**
+         * Destroys dialog.
+         */
+        ~AboutDialog() override;
 
-protected:
-  /**
-   * Called when user press "Close" button.
-   */
-  void onCloseButtonClick();
-  /**
-   * Called when user press "Order Technical Support" button.
-   */
-  void onOrderSupportButtonClock();
-  /**
-   * Called when user press "Visit Web Site" button.
-   */
-  void onVisitSiteButtonClick();
-  /**
-   * Opens url in default browser or shows error scopedstrMessage on fail.
-   */
-  void openUrl(const ::scoped_string & scopedstrUrl);
+    //protected:
+        /**
+         * Called when user press "Close" button.
+         */
+        virtual void onCloseButtonClick();
+        /**
+         * Called when user press "Order Technical Support" button.
+         */
+        virtual void onOrderSupportButtonClock();
+        /**
+         * Called when user press "Visit Web Site" button.
+         */
+        virtual void onVisitSiteButtonClick();
+        /**
+         * Opens url in default browser or shows error scopedstrMessage on fail.
+         */
+        virtual void openUrl(const ::scoped_string & scopedstrUrl);
 
-protected:
-  /**
-   * Inherited from BaseDialog.
-   * Does nothing.
-   */
-  virtual BOOL onInitDialog();
-  /**
-   * Inherited from BaseDialog.
-   * Does nothing.
-   */
-  virtual BOOL onNotify(UINT controlID, LPARAM data);
-  /**
-   * Inherited from BaseDialog.
-   * Handles buttons events.
-   */
-  virtual BOOL onCommand(UINT controlID, UINT notificationID);
-  /**
-   * Inherited from BaseDialog.
-   * Does nothing.
-   */
-  virtual BOOL onDestroy();
-};
+    //protected:
+        /**
+         * Inherited from BaseDialog.
+         * Does nothing.
+         */
+        virtual bool onInitDialog();
+        /**
+         * Inherited from BaseDialog.
+         * Does nothing.
+         */
+        virtual bool onNotify(unsigned int controlID, ::lparam data);
+        /**
+         * Inherited from BaseDialog.
+         * Handles buttons events.
+         */
+        virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
+        /**
+         * Inherited from BaseDialog.
+         * Does nothing.
+         */
+        virtual bool onDestroy();
+    };
+
+} // namespace remoting_remoting
 
 

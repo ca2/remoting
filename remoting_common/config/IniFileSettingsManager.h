@@ -28,85 +28,86 @@
 #include "SettingsManager.h"
 
 //////#include "remoting/remoting_common/util/::string.h"
-
-class CLASS_DECL_REMOTING_COMMON IniFileSettingsManager : public SettingsManager
+///
+namespace remoting
 {
-public:
-  IniFileSettingsManager(const ::file::path & path, const ::scoped_string & scopedstrAppName);
-  IniFileSettingsManager(const ::file::path & path);
-  IniFileSettingsManager();
+   class CLASS_DECL_REMOTING_COMMON IniFileSettingsManager : public SettingsManager
+   {
+   public:
+      IniFileSettingsManager(const ::file::path & path, const ::scoped_string & scopedstrAppName);
+      IniFileSettingsManager(const ::file::path & path);
+      IniFileSettingsManager();
 
-  virtual ~IniFileSettingsManager();
+      virtual ~IniFileSettingsManager();
 
-  // Sets application name (section name)
-  void setApplicationName(const ::scoped_string & scopedstrAppName);
+      // Sets application name (section name)
+      void setApplicationName(const ::scoped_string & scopedstrAppName);
 
-  // Sets path to ini file
-  void setPathToFile(const ::file::path & path);
+      // Sets path to ini file
+      void setPathToFile(const ::file::path & path);
 
-  //
-  // Inherited from SettingsManager class
-  //
+      //
+      // Inherited from SettingsManager class
+      //
 
-  // Return false if path to ini file name not specified
-  virtual bool isOk();
+      // Return false if path to ini file name not specified
+      virtual bool isOk();
 
-  virtual bool keyExist(const ::scoped_string & scopedstrName);
+      virtual bool keyExist(const ::scoped_string & scopedstrName);
 
-  virtual bool deleteKey(const ::scoped_string & scopedstrName);
+      virtual bool deleteKey(const ::scoped_string & scopedstrName);
 
-  virtual bool getString(const ::scoped_string & scopedstrName, ::string & storage);
-  // Remark: returns value if value is NULL.
-  virtual bool setString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrPayload);
+      virtual bool getString(const ::scoped_string & scopedstrName, ::string & storage);
+      // Remark: returns value if value is NULL.
+      virtual bool setString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrPayload);
 
-  virtual bool getLong(const ::scoped_string & scopedstrName, long *value);
-  virtual bool setLong(const ::scoped_string & scopedstrName, long value);
+      virtual bool getLong(const ::scoped_string & scopedstrName, long *value);
+      virtual bool setLong(const ::scoped_string & scopedstrName, long value);
 
-  virtual bool getBoolean(const ::scoped_string & scopedstrName, bool *value);
-  virtual bool setBoolean(const ::scoped_string & scopedstrName, bool value);
+      virtual bool getBoolean(const ::scoped_string & scopedstrName, bool *value);
+      virtual bool setBoolean(const ::scoped_string & scopedstrName, bool value);
 
-  virtual bool getUINT(const ::scoped_string & scopedstrName, unsigned int *value);
-  virtual bool setUINT(const ::scoped_string & scopedstrName, unsigned int value);
+      virtual bool getUINT(const ::scoped_string & scopedstrName, unsigned int *value);
+      virtual bool setUINT(const ::scoped_string & scopedstrName, unsigned int value);
 
-  virtual bool getInt(const ::scoped_string & scopedstrName, int *value);
-  virtual bool setInt(const ::scoped_string & scopedstrName, int value);
+      virtual bool getInt(const ::scoped_string & scopedstrName, int *value);
+      virtual bool setInt(const ::scoped_string & scopedstrName, int value);
 
-  virtual bool getByte(const ::scoped_string & scopedstrName, char *value);
-  virtual bool setByte(const ::scoped_string & scopedstrName, char value);
+      virtual bool getByte(const ::scoped_string & scopedstrName, char *value);
+      virtual bool setByte(const ::scoped_string & scopedstrName, char value);
 
-  virtual bool getBinaryData(const ::scoped_string & scopedstrName, void *value, size_t *size);
-  virtual bool setBinaryData(const ::scoped_string & scopedstrName, const void *value, size_t size);
+      virtual bool getBinaryData(const ::scoped_string & scopedstrName, void *value, size_t *size);
+      virtual bool setBinaryData(const ::scoped_string & scopedstrName, const void *value, size_t size);
 
-protected:
-  ::string m_appName;
-  ::file::path m_path;
+   protected:
+      ::string m_appName;
+      ::file::path m_path;
 
-private:
+   private:
 
-  // Helper method.
-  // Sets string returned by GetPrivateProfileString to value out argument.
-  //
-  // Parameters:
-  // [in]  name - key name
-  // [out] value - variable where output string will be located
-  // [in]  defaultValue -  if key does not exists defaultValue
-  //       will be storaged to value argument as output value.
-  ::string getPrivateProfileString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrDefaultValue);
+      // Helper method.
+      // Sets string returned by GetPrivateProfileString to value out argument.
+      //
+      // Parameters:
+      // [in]  name - key name
+      // [out] value - variable where output string will be located
+      // [in]  defaultValue -  if key does not exists defaultValue
+      //       will be storaged to value argument as output value.
+      ::string getPrivateProfileString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrDefaultValue);
 
-  //
-  // Helper template method to avoid code duplicate
-  // in such methods as getByte, getUINT.
-  //
+      //
+      // Helper template method to avoid code duplicate
+      // in such methods as getByte, getUINT.
+      //
 
-  template<typename T> bool getIntAndCastTo(const ::scoped_string & scopedstrName, T *value) {
-    int intValue = 0;
-    if (!getInt(scopedstrName, &intValue)) {
-      return false;
-    }
-    *value = (T)intValue;
-    return true;
-  };
+      template<typename T> bool getIntAndCastTo(const ::scoped_string & scopedstrName, T *value) {
+         int intValue = 0;
+         if (!getInt(scopedstrName, &intValue)) {
+            return false;
+         }
+         *value = (T)intValue;
+         return true;
+      };
 
-};
-
-
+   };
+} // namespace remoting

@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "remoting/remoting_common/gui/NotifyIcon.h"
-#include "remoting/remoting_common/gui/WindowProcHolder.h"
-#include "remoting/remoting_common/gui/drawing/Icon.h"
+#include "apex/innate_subsystem/NotifyIcon.h"
+#include "apex/innate_subsystem/WindowProcHolder.h"
+#include "apex/innate_subsystem/drawing/Icon.h"
 
 #include "remoting/remoting_common/thread/Thread.h"
 //#include "remoting/remoting_common/thread/critical_section.h"

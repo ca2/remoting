@@ -29,169 +29,181 @@
 #include <stdio.h>
 #include "acme/prototype/datetime/datetime.h"
 
-FileExistDialog::FileExistDialog()
-: m_controlsInitialized(false), 
-  m_newFileInfo(NULL),
-  m_existingFileInfo(NULL), 
-  m_canAppend(true)
+
+namespace remoting_remoting
 {
-  setResourceId(ftclient_fileExistDialog);
-  resetDialogResultValue();
-}
+    FileExistDialog::FileExistDialog()
+    : m_controlsInitialized(false),
+      m_newFileInfo(NULL),
+      m_existingFileInfo(NULL),
+      m_canAppend(true)
+    {
+        setResourceId(ftclient_fileExistDialog);
+        resetDialogResultValue();
+    }
 
-FileExistDialog::~FileExistDialog()
-{
-}
+    FileExistDialog::~FileExistDialog()
+    {
+    }
 
-int FileExistDialog::showModal()
-{
-  if (m_skipAll) {
-    return SKIP_RESULT;
-  } else if (m_overwriteAll) {
-    return OVERWRITE_RESULT;
-  }
-  return BaseDialog::showModal();
-}
+    int FileExistDialog::showModal()
+    {
+        if (m_skipAll) {
+            return SKIP_RESULT;
+        } else if (m_overwriteAll) {
+            return OVERWRITE_RESULT;
+        }
+        return BaseDialog::showModal();
+    }
 
-void FileExistDialog::setFilesInfo(::remoting::ftp::FileInfo *existingFileInfo, ::remoting::ftp::FileInfo *newFileInfo,
-                                   const ::scoped_string & scopedstrPathToFileCaption)
-{
-  m_newFileInfo = newFileInfo;
-  m_existingFileInfo = existingFileInfo;
+    void FileExistDialog::setFilesInfo(::remoting::ftp::FileInfo *existingFileInfo, ::remoting::ftp::FileInfo *newFileInfo,
+                                       const ::scoped_string & scopedstrPathToFileCaption)
+    {
+        m_newFileInfo = newFileInfo;
+        m_existingFileInfo = existingFileInfo;
 
-  m_pathToFileCaption= scopedstrPathToFileCaption;
+        m_pathToFileCaption= scopedstrPathToFileCaption;
 
-  _ASSERT(m_newFileInfo != NULL);
-  _ASSERT(m_existingFileInfo != NULL);
+        _ASSERT(m_newFileInfo != NULL);
+        _ASSERT(m_existingFileInfo != NULL);
 
-  m_canAppend = (m_existingFileInfo->getSize() < m_newFileInfo->getSize());
+        m_canAppend = (m_existingFileInfo->getSize() < m_newFileInfo->getSize());
 
-  if (m_controlsInitialized) {
-    updateGui(newFileInfo, &m_newSizeLabel, &m_newModTimeLabel);
-    m_fileNameLabel.setText(scopedstrPathToFileCaption);
-    m_appendButton.enable_window(m_canAppend);
-  }
-}
+        if (m_controlsInitialized) {
+            updateGui(newFileInfo, m_pcontrolNewSizeLabel, m_pcontrolNewModTimeLabel);
+            m_pcontrolFileNameLabel->setText(scopedstrPathToFileCaption);
+            m_pcontrolAppendButton->setEnabled(m_canAppend);
+        }
+    }
 
-void FileExistDialog::resetDialogResultValue()
-{
-  m_overwriteAll = false;
-  m_skipAll = false;
-}
+    void FileExistDialog::resetDialogResultValue()
+    {
+        m_overwriteAll = false;
+        m_skipAll = false;
+    }
 
-BOOL FileExistDialog::onInitDialog()
-{
-  initControls();
+    bool FileExistDialog::onInitDialog()
+    {
+        initControls();
 
-  _ASSERT(m_newFileInfo != NULL);
-  _ASSERT(m_existingFileInfo != NULL);
+        _ASSERT(m_newFileInfo != NULL);
+        _ASSERT(m_existingFileInfo != NULL);
 
-  updateGui(m_newFileInfo, &m_newSizeLabel, &m_newModTimeLabel);
-  updateGui(m_existingFileInfo, &m_existingSizeLabel, &m_existingModTimeLabel);
+        updateGui(m_newFileInfo, m_pcontrolNewSizeLabel, m_pcontrolNewModTimeLabel);
+        updateGui(m_existingFileInfo, m_pcontrolExistingSizeLabel, m_pcontrolExistingModTimeLabel);
 
-  m_appendButton.enable_window(m_canAppend);
+        m_pcontrolAppendButton->setEnabled(m_canAppend);
 
-  m_fileNameLabel.setText(m_pathToFileCaption);
+        m_pcontrolFileNameLabel->setText(m_pathToFileCaption);
 
-  return TRUE;
-}
+        return true;
+    }
 
-BOOL FileExistDialog::onNotify(UINT controlID, LPARAM data)
-{
-  return TRUE;
-}
+    bool FileExistDialog::onNotify(unsigned int controlID, ::lparam data)
+    {
+        return true;
+    }
 
-BOOL FileExistDialog::onCommand(UINT controlID, UINT notificationID)
-{
-  switch (controlID) {
-  case IDC_OVERWRITE_BUTTON:
-    onOverwriteButtonClick();
-    break;
-  case IDC_OVERWRITE_ALL_BUTTON:
-    onOverwriteAllButtonClick();
-    break;
-  case IDC_SKIP_BUTTON:
-    onSkipButtonClick();
-    break;
-  case IDC_SKIP_ALL_BUTTON:
-    onSkipAllButtonClick();
-    break;
-  case IDC_APPEND_BUTTON:
-    onAppendButtonClick();
-    break;
-  case IDC_CANCEL_BUTTON:
-    onCancelButtonClick();
-    break;
-  }
-  return TRUE;
-}
+    bool FileExistDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+    {
+        switch (controlID) {
+            case IDC_OVERWRITE_BUTTON:
+                onOverwriteButtonClick();
+                break;
+            case IDC_OVERWRITE_ALL_BUTTON:
+                onOverwriteAllButtonClick();
+                break;
+            case IDC_SKIP_BUTTON:
+                onSkipButtonClick();
+                break;
+            case IDC_SKIP_ALL_BUTTON:
+                onSkipAllButtonClick();
+                break;
+            case IDC_APPEND_BUTTON:
+                onAppendButtonClick();
+                break;
+            case IDC_CANCEL_BUTTON:
+                onCancelButtonClick();
+                break;
+        }
+        return true;
+    }
 
-BOOL FileExistDialog::onDestroy()
-{
-  return TRUE;
-}
+    bool FileExistDialog::onDestroy()
+    {
+        return true;
+    }
 
-void FileExistDialog::onOverwriteButtonClick()
-{
-  close_dialog(OVERWRITE_RESULT);
-}
+    void FileExistDialog::onOverwriteButtonClick()
+    {
+        closeDialog(OVERWRITE_RESULT);
+    }
 
-void FileExistDialog::onOverwriteAllButtonClick()
-{
-  close_dialog(OVERWRITE_RESULT);
-  m_overwriteAll = true;
-}
+    void FileExistDialog::onOverwriteAllButtonClick()
+    {
+        closeDialog(OVERWRITE_RESULT);
+        m_overwriteAll = true;
+    }
 
-void FileExistDialog::onSkipButtonClick()
-{
-  close_dialog(SKIP_RESULT);
-}
+    void FileExistDialog::onSkipButtonClick()
+    {
+        closeDialog(SKIP_RESULT);
+    }
 
-void FileExistDialog::onSkipAllButtonClick()
-{
-  close_dialog(SKIP_RESULT);
-  m_skipAll = true;
-}
+    void FileExistDialog::onSkipAllButtonClick()
+    {
+        closeDialog(SKIP_RESULT);
+        m_skipAll = true;
+    }
 
-void FileExistDialog::onAppendButtonClick()
-{
-  close_dialog(APPEND_RESULT);
-}
+    void FileExistDialog::onAppendButtonClick()
+    {
+        closeDialog(APPEND_RESULT);
+    }
 
-//
-// FIXME: Really it cannot break operation execution for now
-//
+    //
+    // FIXME: Really it cannot break operation execution for now
+    //
 
-void FileExistDialog::onCancelButtonClick()
-{
-  close_dialog(CANCEL_RESULT);
-}
+    void FileExistDialog::onCancelButtonClick()
+    {
+        closeDialog(CANCEL_RESULT);
+    }
 
-void FileExistDialog::updateGui(::remoting::ftp::FileInfo *fileInfo, ::remoting::Window *sizeLabel, ::remoting::Window *modTimeLabel)
-{
-  TCHAR buffer[255];
-  _stprintf_s(&buffer[0], 255, L"%lld bytes", fileInfo->getSize());
-  sizeLabel->setText(&buffer[0]);
+    void FileExistDialog::updateGui(::remoting::ftp::FileInfo *fileInfo, ::innate_subsystem::Control *sizeLabel, ::innate_subsystem::Control * modTimeLabel)
+    {
+        char buffer[255];
+        #ifdef WINDOWS
+        sprintf_s(&buffer[0], 255, "%lld bytes", fileInfo->getSize());
+        #else
+        sprintfs(&buffer[0], "%lld bytes", fileInfo->getSize());
+        #endif
+        sizeLabel->setText(&buffer[0]);
 
-  ::earth::time dateTime(::posix_time(::posix_time_t{}, fileInfo->lastModified()));
+        ::earth::time dateTime(::posix_time(::posix_time_t{}, fileInfo->lastModified()));
 
-  ::string formatTimeString;
-  formatTimeString = datetime()->date_time_text(dateTime);
+        ::string formatTimeString;
+        formatTimeString = datetime()->date_time_text(dateTime);
 
-  modTimeLabel->setText(formatTimeString);
-}
+        modTimeLabel->setText(formatTimeString);
+    }
 
-void FileExistDialog::initControls()
-{
-  HWND hwnd = m_hwnd;
+    void FileExistDialog::initControls()
+    {
+        //HWND hwnd = m_hwnd;
 
-  m_fileNameLabel.setWindow(GetDlgItem(hwnd, IDC_FILENAME_LABEL));
-  m_newSizeLabel.setWindow(GetDlgItem(hwnd, IDC_SIZE1_LABEL));
-  m_newModTimeLabel.setWindow(GetDlgItem(hwnd, IDC_DATE1_LABEL));
-  m_existingSizeLabel.setWindow(GetDlgItem(hwnd, IDC_SIZE2_LABEL));
-  m_existingModTimeLabel.setWindow(GetDlgItem(hwnd, IDC_DATE2_LABEL));
+        //m_pcontrolFileNameLabel->setWindow(GetDlgItem(hwnd, IDC_FILENAME_LABEL));
+        //m_pcontrolNewSizeLabel->setWindow(GetDlgItem(hwnd, IDC_SIZE1_LABEL));
+        //m_pcontrolNewModTimeLabel->setWindow(GetDlgItem(hwnd, IDC_DATE1_LABEL));
+        //m_pcontrolExistingSizeLabel->setWindow(GetDlgItem(hwnd, IDC_SIZE2_LABEL));
+        //m_pcontrolExistingModTimeLabel->setWindow(GetDlgItem(hwnd, IDC_DATE2_LABEL));
 
-  m_appendButton.setWindow(GetDlgItem(hwnd, IDC_APPEND_BUTTON));
+        //m_pcontrolAppendButton->setWindow(GetDlgItem(hwnd, IDC_APPEND_BUTTON));
 
-  m_controlsInitialized = true;
-}
+        m_controlsInitialized = true;
+    }
+
+
+} // namespace remoting_remoting
+
+

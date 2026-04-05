@@ -33,12 +33,12 @@ Registry::~Registry()
 {
 }
 
-::acme::RegX Registry::getCurrentUserKey()
+::subsystem::registry Registry::getCurrentUserKey()
 {
   return HKEY_CURRENT_USER;
 }
 
-::acme::RegX Registry::getCurrentLocalMachineKey()
+::subsystem::registry Registry::getCurrentLocalMachineKey()
 {
   return HKEY_LOCAL_MACHINE;
 }

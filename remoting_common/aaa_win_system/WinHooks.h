@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 #include "remoting/remoting_common/win_system/HookEventListener.h"
 
 // Class for intercepting keyboard on low level.

@@ -25,29 +25,40 @@
 #pragma once
 
 
-#include "apex/innate/dialog.h"
-#include "apex/innate/text_box.h"
+#include "apex/innate_subsystem/BaseDialog.h"
+#include "apex/innate_subsystem/TextBox.h"
 #include "resource.h"
 
-class AuthenticationDialog : public innate::dialog
+
+namespace remoting_remoting
 {
-public:
-  AuthenticationDialog();
+    class AuthenticationDialog :
+    virtual public innate_subsystem::BaseDialog
+    {
+    public:
+        AuthenticationDialog();
 
-  // this function returns the password entered by user
-  ::string getPassword();
 
-  // this function returns sets the name of host in dialog
-  void setHostName(const ::scoped_string & hostname);
 
-//protected:
-  BOOL onCommand(UINT controlID, UINT notificationID);
-  BOOL onInitDialog();
 
-  innate::text_box m_password;
-  innate::text_box m_hostname;
-  ::string m_strPassword;
-  ::string m_strHost;
-};
+        // this function returns the password entered by user
+        ::string getPassword();
+
+        // this function returns sets the name of host in dialog
+        void setHostName(const ::scoped_string & hostname);
+
+        //protected:
+        bool onCommand(unsigned int controlID, unsigned int notificationID);
+        bool onInitDialog();
+
+        ::pointer < ::innate_subsystem::TextBox > m_ptextboxPassword;
+        ::pointer < ::innate_subsystem::TextBox > m_ptextboxHostname;
+        ::string m_strPassword;
+        ::string m_strHost;
+    };
+
+
+} // namespace remoting_remoting
+
 
 

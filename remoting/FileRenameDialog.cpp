@@ -24,25 +24,31 @@
 #include "framework.h"
 #include "FileRenameDialog.h"
 
-FileRenameDialog::FileRenameDialog()
+
+namespace remoting_remoting
 {
-}
+    FileRenameDialog::FileRenameDialog()
+    {
+    }
 
-FileRenameDialog::FileRenameDialog(::remoting::Window *parent)
-{
-  NewFolderDialog::NewFolderDialog(parent);
-}
+    FileRenameDialog::~FileRenameDialog()
+    {
+    }
 
-FileRenameDialog::~FileRenameDialog()
-{
-}
+    void FileRenameDialog::initialize_file_rename_dialog(::innate_subsystem::Control *parent)
+    {
+        initialize_new_folder_dialog(parent);
+    }
 
-BOOL FileRenameDialog::onInitDialog()
-{
-  NewFolderDialog::onInitDialog();
+    bool FileRenameDialog::onInitDialog()
+    {
+        NewFolderDialog::onInitDialog();
 
-  m_label.setText("New file name:");
-  setText("Rename file");
+        m_pcontrolLabel->setText("New file name:");
+        setText("Rename file");
 
-  return TRUE;
-}
+        return true;
+    }
+} // namespace remoting_remoting
+
+

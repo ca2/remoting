@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "DesktopSrvDispatcher.h"
 #include "ReconnectException.h"
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 
 DesktopSrvDispatcher::DesktopSrvDispatcher(BlockingGate *gate,
                                            AnEventListener *extErrorListener,

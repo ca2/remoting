@@ -25,64 +25,72 @@
 // camilo on 2026-02-12 21:12 <3ThomasBorregaardSørensen!!
 #pragma once
 
-#include "apex/innate/dialog.h"
-//#include "remoting/remoting_common/gui/ProgressBar.h"
-//#include "remoting/remoting_common/gui/TextBox.h"
+#include "apex/innate_subsystem/BaseDialog.h"
+#include "apex/innate_subsystem/ProgressBar.h"
+#include "apex/innate_subsystem/TextBox.h"
 //#include "resource.h"
 
-class BaseDialog;
-class ProgressBar;
-class TextBox;
+//class BaseDialog;
+//class ProgressBar;
+//class TextBox;
 
-class progress_bar_animation :
-virtual public ::particle
+namespace remoting_remoting
 {
-public:
-
-   ::pointer < ProgressBar>m_pbar;
-   double m_dStart = 0.0;
-   double m_dEnd = 0.0;
-   double m_d;
-   class ::time m_time;
-bool m_bRunning = false;
-
-   progress_bar_animation();
-   ~progress_bar_animation();
-
-   void set_animation_range(double dStart, double dEnd);
-
-   void run() override;
-
-};
 
 
-class ConnectingDialog : public BaseDialog
-{
-public:
+    class progress_bar_animation :
+    virtual public ::particle
+    {
+    public:
+
+        ::pointer < ProgressBar>m_pbar;
+        double m_dStart = 0.0;
+        double m_dEnd = 0.0;
+        double m_d;
+        class ::time m_time;
+        bool m_bRunning = false;
+
+        progress_bar_animation();
+        ~progress_bar_animation();
+
+        void set_animation_range(double dStart, double dEnd);
+
+        void run() override;
+
+    };
 
 
-    ::pointer < progress_bar_animation > m_panimation;
-    ::pointer < TextBox > m_ptextboxHost;
-    ::pointer < TextBox > m_ptextboxStatus;
-    ::string  m_strHost;
-    ::string m_strStatus;
+    class ConnectingDialog : public innate_subsystem::BaseDialog
+    {
+    public:
 
 
-   ConnectingDialog();
+        ::pointer < progress_bar_animation > m_panimation;
+        ::pointer < ::innate_subsystem::TextBox > m_ptextboxHost;
+        ::pointer < ::innate_subsystem::TextBox > m_ptextboxStatus;
+        ::string  m_strHost;
+        ::string m_strStatus;
 
 
-  // this function returns sets the name of host in dialog
-  void set_host(const ::scoped_string & scopedstrHost);
-  void set_status(const ::scoped_string &scopedstrStatus);
-  void _start_animating_progress_range(double dStart, double dEnd);
-   void set_phase1();
-   void set_connecting(int iPhase);
+        ConnectingDialog();
 
-//protected:
-  BOOL onCommand(UINT controlID, UINT notificationID);
-  BOOL onInitDialog();
 
-    virtual bool dialog_procedure(INT_PTR & iptrResult, UINT message, ::wparam wparam, ::lparam lparam);
+        // this function returns sets the name of host in dialog
+        void set_host(const ::scoped_string & scopedstrHost);
+        void set_status(const ::scoped_string &scopedstrStatus);
+        void _start_animating_progress_range(double dStart, double dEnd);
+        void set_phase1();
+        void set_connecting(int iPhase);
 
-};
+        //protected:
+        bool onCommand(unsigned int controlID, unsigned int notificationID);
+        bool onInitDialog();
+
+        virtual bool dialog_procedure(::iptr & iptrResult, unsigned int message, ::wparam wparam, ::lparam lparam);
+
+    };
+
+
+} // namespace remoting_remoting
+
 

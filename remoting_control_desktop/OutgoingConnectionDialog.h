@@ -27,9 +27,9 @@
 
 #include "remoting/remoting_common/util/winhdr.h"
 
-#include "remoting/remoting_common/gui/BaseDialog.h"
-#include "remoting/remoting_common/gui/ComboBox.h"
-#include "remoting/remoting_common/gui/CheckBox.h"
+#include "apex/innate_subsystem/BaseDialog.h"
+#include "apex/innate_subsystem/ComboBox.h"
+#include "apex/innate_subsystem/CheckBox.h"
 
 #include "remoting/remoting_common/win_system/RegistryKey.h"
 

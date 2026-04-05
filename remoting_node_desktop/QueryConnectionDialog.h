@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 
-#include "remoting/remoting_common/gui/BaseDialog.h"
-#include "remoting/remoting_common/gui/::remoting::Window.h"
+#include "apex/innate_subsystem/BaseDialog.h"
+#include "apex/innate_subsystem/::remoting::Window.h"
 
 class QueryConnectionDialog : public BaseDialog
 {

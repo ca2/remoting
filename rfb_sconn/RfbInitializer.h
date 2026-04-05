@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "remoting/remoting_common/io/Channel.h"
-#include "remoting/remoting_common/io/DataOutputStream.h"
-#include "remoting/remoting_common/io/DataInputStream.h"
+#include "acme/subsystem/io/Channel.h"
+#include "acme/subsystem/io/DataOutputStream.h"
+#include "acme/subsystem/io/DataInputStream.h"
 #include "CapContainer.h"
 
 #include "remoting/remoting_common/rfb/PixelFormat.h"

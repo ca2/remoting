@@ -25,14 +25,14 @@
 #pragma once
 
 
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 
 class CLASS_DECL_REMOTING_COMMON RegistryKey
 {
 public:
-  RegistryKey(::acme::RegX rootKey, const ::scoped_string & scopedstrEntry, bool createIfNotExists = true, SECURITY_ATTRIBUTES *sa = 0);
+  RegistryKey(::subsystem::registry rootKey, const ::scoped_string & scopedstrEntry, bool createIfNotExists = true, SECURITY_ATTRIBUTES *sa = 0);
   RegistryKey(RegistryKey *rootKey, const ::scoped_string & scopedstrEntry, bool createIfNotExists = true, SECURITY_ATTRIBUTES *sa = 0);
-  RegistryKey(::acme::RegX rootKey);
+  RegistryKey(::subsystem::registry rootKey);
   // Default contructor for a defer initialization.
   RegistryKey();
 
@@ -43,7 +43,7 @@ public:
 
   // Defer initialization. Can be used only when it has been
   // created by the default constructor.
-  void open(::acme::RegX rootKey, const ::scoped_string & scopedstrEntry,
+  void open(::subsystem::registry rootKey, const ::scoped_string & scopedstrEntry,
             bool createIfNotExists = true,
             SECURITY_ATTRIBUTES *sa = 0);
 
@@ -55,9 +55,9 @@ public:
             SECURITY_ATTRIBUTES *sa = 0);
 
   //
-  // Returns WinAPI ::acme::RegX handle.
+  // Returns WinAPI ::subsystem::registry handle.
   //
-  ::acme::RegX getHKEY() const;
+  ::subsystem::registry getHKEY() const;
 
   // Creates subkey.
   //
@@ -115,7 +115,7 @@ public:
 private:
 
   // Helper method to avoid code duplicate in class constructor.
-  void initialize(::acme::RegX rootKey, const ::scoped_string & scopedstrEntry, bool createIfNotExists, SECURITY_ATTRIBUTES *sa);
+  void initialize(::subsystem::registry rootKey, const ::scoped_string & scopedstrEntry, bool createIfNotExists, SECURITY_ATTRIBUTES *sa);
 
   // Sets subkey name to name output variable not depending
   // on output buffer size, cause buffer allocates inside method.
@@ -133,15 +133,15 @@ private:
    * @param [in, opt] sa security attributes.
    * @return true if operation successfull executed, false otherwise.
    */
-  static bool tryOpenSubKey(::acme::RegX key, const ::scoped_string & scopedstrSubkey,
-                            ::acme::RegX *openedKey, bool createIfNotExists,
+  static bool tryOpenSubKey(::subsystem::registry key, const ::scoped_string & scopedstrSubkey,
+                            ::subsystem::registry *openedKey, bool createIfNotExists,
                             SECURITY_ATTRIBUTES *sa);
 
 protected:
   // Registry entry associated with this class instance.
-  ::acme::RegX m_key;
+  ::subsystem::registry m_key;
   // Root registry key (local machine, current user, etc).
-  ::acme::RegX m_rootKey;
+  ::subsystem::registry m_rootKey;
   // Registry entry name.
   ::string m_entry;
 

@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "GrabOptimizator.h"
-#include "remoting/remoting_common/util/Exception.h"
+#include "acme/subsystem/Exception.h"
 
 GrabOptimizator::GrabOptimizator(LogWriter *log)
 : m_gSum(0),

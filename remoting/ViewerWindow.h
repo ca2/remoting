@@ -32,7 +32,7 @@
 #include "OptionsDialog.h"
 #include "ScaleManager.h"
 #include "ViewerMenu.h"
-#include "remoting/remoting_common/gui/ToolBar.h"
+#include "apex/innate_subsystem/ToolBar.h"
 //#include "log_writer/LogWriter.h"
 #include "remoting/remoting_common/viewer_core/FileTransferCapability.h"
 #include "remoting/remoting_common/viewer_core/RemoteViewerCore.h"
@@ -43,177 +43,179 @@
 #include "remoting/remoting_common/win_system/WinHooks.h"
 #include "apex/networking/sockets/http/get_socket.h"
 
-class ViewerWindow : public BaseWindow,
-                     public CoreEventsAdapter,
-                     public HookEventListener
+namespace remoting_remoting
 {
-public:
+    class ViewerWindow : public BaseWindow,
+                         public CoreEventsAdapter,
+                         public HookEventListener
+    {
+    public:
 
-   ::pointer < ::sockets::http_client_socket > m_phttpclientsocketNotifyChannel;
-   ::pointer < ::remoting_remoting::keyboard_layout_change > m_pkeyboardlayoutchange;
-
-
-
-  ViewerWindow(WindowsApplication *application,
-               ConnectionData *conData, ConnectionConfig *conConf,
-               LogWriter *LogWriter = 0);
-  virtual ~ViewerWindow();
-
-  void setFileTransfer(::remoting::ftp::FileTransferCapability *ft);
-  void setRemoteViewerCore(RemoteViewerCore *pCore);
-
-  //
-  // This function return value of flag m_requiresReconnect.
-  //
-  bool requiresReconnect() const;
-
-  //
-  // This function return value of flag m_stopped.
-  //
-  bool isStopped() const;
-
-  static const int WM_USER_ERROR = WM_USER + 1;
-  static const int WM_USER_STOP = WM_USER + 2;
-  static const int WM_USER_DISCONNECT = WM_USER + 3;
-  static const int WM_USER_AUTH_ERROR = WM_USER + 4;
-  static const int WM_USER_FS_WARNING = WM_USER + 5;
-   static const int WM_USER_SWITCH_FULL_SCREEN_MODE = WM_USER + 1005;
-class ::time m_timeStart;
-//protected:
-  static const int TIMER_DESKTOP_STATE = 1;
-  static const int TIMER_DESKTOP_STATE_DELAY = 50;
-
-  bool onMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam);
-  bool onEraseBackground(HDC hdc);
-  
-  bool onDisconnect();
-  bool onAuthError(WPARAM wParam);
-  bool onError();
-
-  bool onFsWarning();
-  bool onSize(WPARAM wParam, LPARAM lParam);
-  bool onCreate(LPCREATESTRUCT lps);
-  bool onCommand(WPARAM wParam, LPARAM lParam);
-  bool onNotify(int idCtrl, LPNMHDR pnmh);
-  bool onSysCommand(WPARAM wParam, LPARAM lParam);
-  bool onClose();
-  bool onDestroy();
-  bool onFocus(WPARAM wParam);
-  bool onKillFocus(WPARAM wParam);
-  bool onTimer(WPARAM idTimer);
-void onGoodCursor() override;
-  void desktopStateUpdate();
-  void commandCtrlAltDel();
-  void commandCtrlEsc();
-  void commandCtrl();
-  void commandAlt();
-  void commandToolBar();
-  void commandPause();
-  void onAbout();
-  void commandNewConnection();
-  void commandSaveSession();
-  void commandScaleIn();
-  void commandScaleOut();
-  void commandScale100();
-  void commandScaleAuto();
-
-  //
-  // It is implementation of CoreEventsAdapter functions.
-  //
-  void onBell();
-   void onConnecting(int iPhase) override;
-  void onConnected(RfbOutputGate *output) override;
-  void onDisconnect(const ::scoped_string & scopedstrMessage);
-  void onAuthError(const AuthException *exception);
-  void onError(const ::remoting::Exception *exception);
-  void onFrameBufferUpdate(const FrameBuffer *fb, const ::int_rectangle &  rect);
-  void onFrameBufferPropChange(const FrameBuffer *fb);
-  void onCutText(const ::scoped_string & cutText);
-
-  int translateAccelToTB(int val);
-  void applyScreenChanges(bool isFullScreen);
-  
-  // function return default rect of viewer window:
-  // if size of remote screen is more local desktop, then return rect of desktop
-  // else return rect of remote screen + border
-  ::int_rectangle calculateDefaultSize();
-
-  LogWriter * m_logWriter;
-
-  ::remoting::Window m_control;
-
-  ConnectionConfigSM m_ccsm;
-  ConnectionConfig *m_conConf;
-  WindowsApplication *m_application;
-  RemoteViewerCore *m_viewerCore;
-  ::remoting::ftp::FileTransferCapability *m_fileTransfer;
-  FileTransferMainDialog *m_ftDialog;
-  DesktopWindow m_dsktWnd;
-  ::wstring m_wstrToolTip;
-  ::remoting::ToolBar m_toolbar;
-  ViewerMenu m_menu;
-  ConnectionData *m_conData;
-  SystemInformation m_sysinf;
-
-  // This variable save ::remoting::Exception after call onError().
-  ::remoting::Exception m_error;
-  // This variable save disconnect-scopedstrMessage after call onDisconnect().
-  ::string m_disconnectMessage;
-
-  // Flag is set, if now viewer is in full screen mode
-  bool m_isFullScr;
-  bool m_isMinimizedFromFullScreen = false;
-  // It's size of work-area in windowed mode. It is necessary for restore size of window.
-  WINDOWPLACEMENT m_workArea;
-  // It's size of optimal size of work-area in windowed mode.
-  ::int_rectangle m_rcNormal;
+        ::pointer < ::sockets::http_client_socket > m_phttpclientsocketNotifyChannel;
+        ::pointer < ::remoting_remoting::keyboard_layout_change > m_pkeyboardlayoutchange;
 
 
-  // Flag is set after recv first scopedstrMessage WM_SIZING.
-  bool m_sizeIsChanged;
-  // Flag is set, if toolbar is visible.
-  bool m_bToolBar;
-  // It is scale of viewer window in percent.
-  int m_scale;
 
-  // Flag is set after onConnected().
-  bool m_isConnected;
+        ViewerWindow(WindowsApplication *application,
+                     ConnectionData *conData, ConnectionConfig *conConf,
+                     LogWriter *LogWriter = 0);
+        virtual ~ViewerWindow();
 
-  // Flag is set, if instance is requires to reconnect.
-  bool m_requiresReconnect;
+        void setFileTransfer(::remoting::ftp::FileTransferCapability *ft);
+        void setRemoteViewerCore(RemoteViewerCore *pCore);
 
-  // Flag is set, if viewer instance is stopped.
-  // Destructor of ViewerWindow may be called, if this flag is true.
-  bool m_stopped;
-//private:
-  ::array_base<int> m_standardScale;
-  void changeCursor(int type);
-  void applySettings();
-  ::int_rectangle getFullScreenRect();
-  void setSizeFullScreenWindow();
-  void doFullScr();
-  void doRestoreToFullScreen();
-  void doUnFullScr();
-  void doMinimizeFromFullScreen();
-  
-  void doSize();
-  void doCommand(int iCommand);
-  void showFileTransferDialog();
-  void showWindow();
-  void enableUserElements();
-  bool viewerCoreSettings();
-  void dialogConnectionOptions();
-  void dialogConnectionInfo();
-  void switchFullScreenMode();
-  void dialogConfiguration();
-  void adjustWindowSize();
-  ::string formatWindowName() const;
-  void updateKeyState();
+        //
+        // This function return value of flag m_requiresReconnect.
+        //
+        bool requiresReconnect() const;
 
-  // onHookProc function implementation of HookEventListener base abstract class.
-  virtual LRESULT onHookProc(int code, WPARAM wParam, LPARAM lParam);
-  WinHooks m_winHooks;
-  bool m_hooksEnabledFirstTime;
-};
+        //
+        // This function return value of flag m_stopped.
+        //
+        bool isStopped() const;
 
+        static const int WM_USER_ERROR = WM_USER + 1;
+        static const int WM_USER_STOP = WM_USER + 2;
+        static const int WM_USER_DISCONNECT = WM_USER + 3;
+        static const int WM_USER_AUTH_ERROR = WM_USER + 4;
+        static const int WM_USER_FS_WARNING = WM_USER + 5;
+        static const int WM_USER_SWITCH_FULL_SCREEN_MODE = WM_USER + 1005;
+        class ::time m_timeStart;
+        //protected:
+        static const int TIMER_DESKTOP_STATE = 1;
+        static const int TIMER_DESKTOP_STATE_DELAY = 50;
+
+        bool onMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam);
+        bool onEraseBackground(HDC hdc);
+
+        bool onDisconnect();
+        bool onAuthError(WPARAM wParam);
+        bool onError();
+
+        bool onFsWarning();
+        bool onSize(WPARAM wParam, LPARAM lParam);
+        bool onCreate(LPCREATESTRUCT lps);
+        bool onCommand(WPARAM wParam, LPARAM lParam);
+        bool onNotify(int idCtrl, LPNMHDR pnmh);
+        bool onSysCommand(WPARAM wParam, LPARAM lParam);
+        bool onClose();
+        bool onDestroy();
+        bool onFocus(WPARAM wParam);
+        bool onKillFocus(WPARAM wParam);
+        bool onTimer(WPARAM idTimer);
+        void onGoodCursor() override;
+        void desktopStateUpdate();
+        void commandCtrlAltDel();
+        void commandCtrlEsc();
+        void commandCtrl();
+        void commandAlt();
+        void commandToolBar();
+        void commandPause();
+        void onAbout();
+        void commandNewConnection();
+        void commandSaveSession();
+        void commandScaleIn();
+        void commandScaleOut();
+        void commandScale100();
+        void commandScaleAuto();
+
+        //
+        // It is implementation of CoreEventsAdapter functions.
+        //
+        void onBell();
+        void onConnecting(int iPhase) override;
+        void onConnected(RfbOutputGate *output) override;
+        void onDisconnect(const ::scoped_string & scopedstrMessage);
+        void onAuthError(const AuthException *exception);
+        void onError(const ::remoting::Exception *exception);
+        void onFrameBufferUpdate(const FrameBuffer *fb, const ::int_rectangle &  rect);
+        void onFrameBufferPropChange(const FrameBuffer *fb);
+        void onCutText(const ::scoped_string & cutText);
+
+        int translateAccelToTB(int val);
+        void applyScreenChanges(bool isFullScreen);
+
+        // function return default rect of viewer window:
+        // if size of remote screen is more local desktop, then return rect of desktop
+        // else return rect of remote screen + border
+        ::int_rectangle calculateDefaultSize();
+
+        LogWriter * m_logWriter;
+
+        ::remoting::Window m_control;
+
+        ConnectionConfigSM m_ccsm;
+        ConnectionConfig *m_conConf;
+        WindowsApplication *m_application;
+        RemoteViewerCore *m_viewerCore;
+        ::remoting::ftp::FileTransferCapability *m_fileTransfer;
+        FileTransferMainDialog *m_ftDialog;
+        DesktopWindow m_dsktWnd;
+        ::wstring m_wstrToolTip;
+        ::remoting::ToolBar m_toolbar;
+        ViewerMenu m_menu;
+        ConnectionData *m_conData;
+        SystemInformation m_sysinf;
+
+        // This variable save ::remoting::Exception after call onError().
+        ::remoting::Exception m_error;
+        // This variable save disconnect-scopedstrMessage after call onDisconnect().
+        ::string m_disconnectMessage;
+
+        // Flag is set, if now viewer is in full screen mode
+        bool m_isFullScr;
+        bool m_isMinimizedFromFullScreen = false;
+        // It's size of work-area in windowed mode. It is necessary for restore size of window.
+        WINDOWPLACEMENT m_workArea;
+        // It's size of optimal size of work-area in windowed mode.
+        ::int_rectangle m_rcNormal;
+
+
+        // Flag is set after recv first scopedstrMessage WM_SIZING.
+        bool m_sizeIsChanged;
+        // Flag is set, if toolbar is visible.
+        bool m_bToolBar;
+        // It is scale of viewer window in percent.
+        int m_scale;
+
+        // Flag is set after onConnected().
+        bool m_isConnected;
+
+        // Flag is set, if instance is requires to reconnect.
+        bool m_requiresReconnect;
+
+        // Flag is set, if viewer instance is stopped.
+        // Destructor of ViewerWindow may be called, if this flag is true.
+        bool m_stopped;
+        //private:
+        ::array_base<int> m_standardScale;
+        void changeCursor(int type);
+        void applySettings();
+        ::int_rectangle getFullScreenRect();
+        void setSizeFullScreenWindow();
+        void doFullScr();
+        void doRestoreToFullScreen();
+        void doUnFullScr();
+        void doMinimizeFromFullScreen();
+
+        void doSize();
+        void doCommand(int iCommand);
+        void showFileTransferDialog();
+        void showWindow();
+        void enableUserElements();
+        bool viewerCoreSettings();
+        void dialogConnectionOptions();
+        void dialogConnectionInfo();
+        void switchFullScreenMode();
+        void dialogConfiguration();
+        void adjustWindowSize();
+        ::string formatWindowName() const;
+        void updateKeyState();
+
+        // onHookProc function implementation of HookEventListener base abstract class.
+        virtual LRESULT onHookProc(int code, WPARAM wParam, LPARAM lParam);
+        WinHooks m_winHooks;
+        bool m_hooksEnabledFirstTime;
+    };
+} //namespace remoting_remoting
 

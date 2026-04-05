@@ -24,458 +24,459 @@
 #include "framework.h"
 #include "OptionsDialog.h"
 #include "remoting/remoting_common/remoting.h"
-
-
-OptionsDialog::OptionsDialog()
-: BaseDialog(IDD_OPTIONS),
-  m_connected(false)
+namespace remoting_remoting
 {
-}
-
-void OptionsDialog::setConnectionConfig(ConnectionConfig *conConfig)
-{
-  m_conConfig = conConfig;
-}
-
-void OptionsDialog::setConnected()
-{
-  m_connected = true;
-}
-
-BOOL OptionsDialog::onCommand(UINT controlID, UINT notificationID)
-{
-  if (controlID == IDOK) {
-    if (onOkPressed()) {
-      close_dialog(1);
+    OptionsDialog::OptionsDialog()
+    : BaseDialog(IDD_OPTIONS),
+      m_connected(false)
+    {
     }
-    return TRUE;
-  }
-  if (controlID == IDCANCEL) {
-    close_dialog(0);
-    return TRUE;
-  }
-  if (controlID == IDC_CVIEWONLY) {
-    if (notificationID == BN_CLICKED) {
-      onViewOnlyClick();
-      return TRUE;
+
+    void OptionsDialog::setConnectionConfig(ConnectionConfig *conConfig)
+    {
+        m_conConfig = conConfig;
     }
-  }
-  if (controlID == IDC_CEIGHTBIT) {
-    if (notificationID == BN_CLICKED) {
-      on8BitColorClick();
-      return TRUE;
+
+    void OptionsDialog::setConnected()
+    {
+        m_connected = true;
     }
-  }
-  if (controlID == IDC_CJPEG) {
-    if (notificationID == BN_CLICKED) {
-      onAllowJpegCompressionClick();
-      return TRUE;
+
+    BOOL OptionsDialog::onCommand(UINT controlID, UINT notificationID)
+    {
+        if (controlID == IDOK) {
+            if (onOkPressed()) {
+                close_dialog(1);
+            }
+            return TRUE;
+        }
+        if (controlID == IDCANCEL) {
+            close_dialog(0);
+            return TRUE;
+        }
+        if (controlID == IDC_CVIEWONLY) {
+            if (notificationID == BN_CLICKED) {
+                onViewOnlyClick();
+                return TRUE;
+            }
+        }
+        if (controlID == IDC_CEIGHTBIT) {
+            if (notificationID == BN_CLICKED) {
+                on8BitColorClick();
+                return TRUE;
+            }
+        }
+        if (controlID == IDC_CJPEG) {
+            if (notificationID == BN_CLICKED) {
+                onAllowJpegCompressionClick();
+                return TRUE;
+            }
+        }
+        if (controlID == IDC_CCOMPRLVL) {
+            if (notificationID == BN_CLICKED) {
+                onAllowCustomCompressionClick();
+                return TRUE;
+            }
+        }
+        if (controlID == IDC_CUSEENC) {
+            if (notificationID == CBN_SELCHANGE) {
+                onPreferredEncodingSelectionChange();
+                return TRUE;
+            }
+        }
+        if (controlID == IDC_CSCALE) {
+            if (notificationID == CBN_KILLFOCUS) {
+                onScaleKillFocus();
+                return TRUE;
+            }
+        }
+        return FALSE;
     }
-  }
-  if (controlID == IDC_CCOMPRLVL) {
-    if (notificationID == BN_CLICKED) {
-      onAllowCustomCompressionClick();
-      return TRUE;
+
+    BOOL OptionsDialog::onInitDialog()
+    {
+        setControlById(m_useEnc, IDC_CUSEENC);
+        setControlById(m_eightBit, IDC_CEIGHTBIT);
+        setControlById(m_compLvl, IDC_CCOMPRLVL);
+        setControlById(m_tcompLvl, IDC_SCOMP);
+        setControlById(m_quality, IDC_SQUALITY);
+        setControlById(m_jpeg, IDC_CJPEG);
+        setControlById(m_tjpeg, IDC_SJPEG);
+        setControlById(m_quality2, IDC_SQUALITY2);
+        setControlById(m_copyrect, IDC_CCOPYRECT);
+        setControlById(m_viewonly, IDC_CVIEWONLY);
+        setControlById(m_disclip, IDC_CDISCLIP);
+        setControlById(m_sharedses, IDC_CSHAREDSES);
+        setControlById(m_scale, IDC_CSCALE);
+        setControlById(m_fullscr, IDC_CFULLSCR);
+        setControlById(m_deiconfy, IDC_CDEICONFY);
+        setControlById(m_swapmouse, IDC_CSWAPMOUSE);
+        setControlById(m_track, IDC_RTRACK);
+        setControlById(m_cursor, IDC_RCURSOR);
+        setControlById(m_ncursor, IDC_RNCURSOR);
+        setControlById(m_dot, IDC_RDOT);
+        setControlById(m_smalldot, IDC_RSMALLDOT);
+        setControlById(m_arrow, IDC_RARROW);
+        setControlById(m_nlocal, IDC_RNLOCAL);
+
+        m_useEnc.addItem("Raw", reinterpret_cast<void *>(EncodingDefs::RAW));
+        m_useEnc.addItem("Hextile", reinterpret_cast<void *>(EncodingDefs::HEXTILE));
+        m_useEnc.addItem("Tight", reinterpret_cast<void *>(EncodingDefs::TIGHT));
+        m_useEnc.addItem("RRE", reinterpret_cast<void *>(EncodingDefs::RRE));
+        m_useEnc.addItem("ZRLE", reinterpret_cast<void *>(EncodingDefs::ZRLE));
+
+
+        // FIXME: replaced literals to named constants
+        ::string_array scaleComboText {"25","50", "75", "90",
+                                       "100", "125","150", "Auto"};
+        for (auto & str :scaleComboText)
+        {
+            m_scale.addItem(str);
+        }
+
+        m_tjpeg.setRange(0, 9);
+        m_tcompLvl.setRange(0, 9);
+        updateControlValues();
+        return FALSE;
     }
-  }
-  if (controlID == IDC_CUSEENC) {
-    if (notificationID == CBN_SELCHANGE) {
-      onPreferredEncodingSelectionChange();
-      return TRUE;
+
+    void OptionsDialog::updateControlValues()
+    {
+        // Preferred encoding
+        for (int i = 0; i < m_useEnc.getItemsCount(); i++) {
+            int enc = reinterpret_cast<int>(m_useEnc.getItemData(i));
+            if (enc == m_conConfig->getPreferredEncoding()) {
+                m_useEnc.setSelectedItem(i);
+                break;
+            } // if found
+
+            // set default value, if preferred encoding not in ::list_base
+            if (enc == EncodingDefs::HEXTILE)
+                m_useEnc.setSelectedItem(i);
+        } // for i
+
+        m_eightBit.check(m_conConfig->isUsing8BitColor());
+
+        m_compLvl.check(m_conConfig->isCustomCompressionEnabled());
+        m_jpeg.check(m_conConfig->isJpegCompressionEnabled());
+
+        m_copyrect.check(m_conConfig->isCopyRectAllowed());
+        m_viewonly.check(m_conConfig->isViewOnly());
+        m_disclip.check(!m_conConfig->isClipboardEnabled());
+        m_fullscr.check(m_conConfig->isFullscreenEnabled());
+        m_deiconfy.check(m_conConfig->isDeiconifyOnRemoteBellEnabled());
+        m_swapmouse.check(m_conConfig->isMouseSwapEnabled());
+
+        m_sharedses.check(m_conConfig->getSharedFlag());
+        m_sharedses.enable_window(!m_connected);
+
+        if (m_conConfig->isFitWindowEnabled()) {
+            // FIXME: replace literal to named constant
+            m_scale.setSelectedItem(7);
+        } else {
+            int n = m_conConfig->getScaleNumerator();
+            int d = m_conConfig->getScaleDenominator();
+
+            int percent = (n * 100) / d;
+
+            ::string text;
+            text.format("{}", percent);
+
+            m_scale.setText(text);
+        }
+
+        {
+            bool enableCursorUpdate = m_conConfig->isRequestingShapeUpdates();
+            bool ignoreCursorUpdate = m_conConfig->isIgnoringShapeUpdates();
+            m_track.check(enableCursorUpdate && !ignoreCursorUpdate);
+            m_cursor.check(!enableCursorUpdate && ignoreCursorUpdate);
+            m_ncursor.check(enableCursorUpdate && ignoreCursorUpdate);
+        }
+
+        ::string labelText;
+        {
+            const int DEFAULT_COMPRESSION_LEVEL = 6;
+            int level = DEFAULT_COMPRESSION_LEVEL;
+            if (m_conConfig->isCustomCompressionEnabled())
+                level = m_conConfig->getCustomCompressionLevel();
+            m_tcompLvl.setPos(level);
+            labelText.format("{}", level);
+            m_quality.setText(labelText);
+        }
+
+        {
+            const int DEFAULT_JPEG_COMPRESSION_LEVEL = 6;
+            int level = DEFAULT_JPEG_COMPRESSION_LEVEL;
+            if (m_conConfig->isJpegCompressionEnabled())
+                level = m_conConfig->getJpegCompressionLevel();
+            m_tjpeg.setPos(level);
+            labelText.format("{}", level);
+            m_quality2.setText(labelText);
+        }
+
+        switch (m_conConfig->getLocalCursorShape()) {
+            case ConnectionConfig::SMALL_CURSOR:
+                m_smalldot.check(true);
+                break;
+            case ConnectionConfig::NORMAL_CURSOR:
+                m_arrow.check(true);
+                break;
+            case ConnectionConfig::NO_CURSOR:
+                m_nlocal.check(true);
+                break;
+            default:
+                m_dot.check(true);
+                break;
+        }
+
+        onViewOnlyClick();
+
+        onAllowCustomCompressionClick();
+        onAllowJpegCompressionClick();
+
+        onCustomCompressionLevelScroll();
+        onJpegCompressionLevelScroll();
+
+        onPreferredEncodingSelectionChange();
+        on8BitColorClick();
     }
-  }
-  if (controlID == IDC_CSCALE) {
-    if (notificationID == CBN_KILLFOCUS) {
-      onScaleKillFocus();
-      return TRUE;
+
+    void OptionsDialog::onViewOnlyClick()
+    {
+        if (m_viewonly.isChecked()) {
+            m_swapmouse.enable_window(false);
+        } else {
+            m_swapmouse.enable_window(true);
+        }
     }
-  }
-  return FALSE;
-}
 
-BOOL OptionsDialog::onInitDialog()
-{
-  setControlById(m_useEnc, IDC_CUSEENC);
-  setControlById(m_eightBit, IDC_CEIGHTBIT);
-  setControlById(m_compLvl, IDC_CCOMPRLVL);
-  setControlById(m_tcompLvl, IDC_SCOMP);
-  setControlById(m_quality, IDC_SQUALITY);
-  setControlById(m_jpeg, IDC_CJPEG);
-  setControlById(m_tjpeg, IDC_SJPEG);
-  setControlById(m_quality2, IDC_SQUALITY2);
-  setControlById(m_copyrect, IDC_CCOPYRECT);
-  setControlById(m_viewonly, IDC_CVIEWONLY);
-  setControlById(m_disclip, IDC_CDISCLIP);
-  setControlById(m_sharedses, IDC_CSHAREDSES);
-  setControlById(m_scale, IDC_CSCALE);
-  setControlById(m_fullscr, IDC_CFULLSCR);
-  setControlById(m_deiconfy, IDC_CDEICONFY);
-  setControlById(m_swapmouse, IDC_CSWAPMOUSE);
-  setControlById(m_track, IDC_RTRACK);
-  setControlById(m_cursor, IDC_RCURSOR);
-  setControlById(m_ncursor, IDC_RNCURSOR);
-  setControlById(m_dot, IDC_RDOT);
-  setControlById(m_smalldot, IDC_RSMALLDOT);
-  setControlById(m_arrow, IDC_RARROW);
-  setControlById(m_nlocal, IDC_RNLOCAL);
-
-  m_useEnc.addItem("Raw", reinterpret_cast<void *>(EncodingDefs::RAW));
-  m_useEnc.addItem("Hextile", reinterpret_cast<void *>(EncodingDefs::HEXTILE));
-  m_useEnc.addItem("Tight", reinterpret_cast<void *>(EncodingDefs::TIGHT));
-  m_useEnc.addItem("RRE", reinterpret_cast<void *>(EncodingDefs::RRE));
-  m_useEnc.addItem("ZRLE", reinterpret_cast<void *>(EncodingDefs::ZRLE));
-
-
-  // FIXME: replaced literals to named constants
-  ::string_array scaleComboText {"25","50", "75", "90",
-                                 "100", "125","150", "Auto"};
-  for (auto & str :scaleComboText)
-     {
-      m_scale.addItem(str);
-  }
-
-  m_tjpeg.setRange(0, 9);
-  m_tcompLvl.setRange(0, 9);
-  updateControlValues();
-  return FALSE;
-}
-
-void OptionsDialog::updateControlValues()
-{
-  // Preferred encoding
-  for (int i = 0; i < m_useEnc.getItemsCount(); i++) {
-    int enc = reinterpret_cast<int>(m_useEnc.getItemData(i));
-    if (enc == m_conConfig->getPreferredEncoding()) {
-      m_useEnc.setSelectedItem(i);
-      break;
-    } // if found
-
-    // set default value, if preferred encoding not in ::list_base
-    if (enc == EncodingDefs::HEXTILE)
-      m_useEnc.setSelectedItem(i);
-  } // for i
-
-  m_eightBit.check(m_conConfig->isUsing8BitColor());
-
-  m_compLvl.check(m_conConfig->isCustomCompressionEnabled());
-  m_jpeg.check(m_conConfig->isJpegCompressionEnabled());
-
-  m_copyrect.check(m_conConfig->isCopyRectAllowed());
-  m_viewonly.check(m_conConfig->isViewOnly());
-  m_disclip.check(!m_conConfig->isClipboardEnabled());
-  m_fullscr.check(m_conConfig->isFullscreenEnabled());
-  m_deiconfy.check(m_conConfig->isDeiconifyOnRemoteBellEnabled());
-  m_swapmouse.check(m_conConfig->isMouseSwapEnabled());
-
-  m_sharedses.check(m_conConfig->getSharedFlag());
-  m_sharedses.enable_window(!m_connected);
-
-  if (m_conConfig->isFitWindowEnabled()) {
-    // FIXME: replace literal to named constant
-    m_scale.setSelectedItem(7);
-  } else {
-    int n = m_conConfig->getScaleNumerator();
-    int d = m_conConfig->getScaleDenominator();
-
-    int percent = (n * 100) / d;
-
-    ::string text;
-    text.format("{}", percent);
-
-    m_scale.setText(text);
-  }
-
-  {
-    bool enableCursorUpdate = m_conConfig->isRequestingShapeUpdates();
-    bool ignoreCursorUpdate = m_conConfig->isIgnoringShapeUpdates();
-    m_track.check(enableCursorUpdate && !ignoreCursorUpdate);
-    m_cursor.check(!enableCursorUpdate && ignoreCursorUpdate);
-    m_ncursor.check(enableCursorUpdate && ignoreCursorUpdate);
-  }
-
-  ::string labelText;
-  {
-    const int DEFAULT_COMPRESSION_LEVEL = 6;
-    int level = DEFAULT_COMPRESSION_LEVEL;
-    if (m_conConfig->isCustomCompressionEnabled())
-      level = m_conConfig->getCustomCompressionLevel();
-    m_tcompLvl.setPos(level);
-    labelText.format("{}", level);
-    m_quality.setText(labelText);
-  }
-
-  {
-  const int DEFAULT_JPEG_COMPRESSION_LEVEL = 6;
-    int level = DEFAULT_JPEG_COMPRESSION_LEVEL;
-    if (m_conConfig->isJpegCompressionEnabled())
-      level = m_conConfig->getJpegCompressionLevel();
-    m_tjpeg.setPos(level);
-    labelText.format("{}", level);
-    m_quality2.setText(labelText);
-  }
-
-  switch (m_conConfig->getLocalCursorShape()) {
-  case ConnectionConfig::SMALL_CURSOR:
-    m_smalldot.check(true);
-    break;
-  case ConnectionConfig::NORMAL_CURSOR:
-    m_arrow.check(true);
-    break;
-  case ConnectionConfig::NO_CURSOR:
-    m_nlocal.check(true);
-    break;
-  default:
-    m_dot.check(true);
-    break;
-  }
-
-  onViewOnlyClick();
-
-  onAllowCustomCompressionClick();
-  onAllowJpegCompressionClick();
-
-  onCustomCompressionLevelScroll();
-  onJpegCompressionLevelScroll();
-
-  onPreferredEncodingSelectionChange();
-  on8BitColorClick();
-}
-
-void OptionsDialog::onViewOnlyClick()
-{
-  if (m_viewonly.isChecked()) {
-    m_swapmouse.enable_window(false);
-  } else {
-    m_swapmouse.enable_window(true);
-  }
-}
-
-void OptionsDialog::on8BitColorClick()
-{
-  if (!m_eightBit.isChecked()) {
-    if (m_jpeg.isChecked()) {
-      enableJpegCompression(true);
+    void OptionsDialog::on8BitColorClick()
+    {
+        if (!m_eightBit.isChecked()) {
+            if (m_jpeg.isChecked()) {
+                enableJpegCompression(true);
+            }
+            m_jpeg.enable_window(true);
+        } else {
+            m_jpeg.enable_window(false);
+            enableJpegCompression(false);
+        }
     }
-    m_jpeg.enable_window(true);
-  } else {
-    m_jpeg.enable_window(false);
-    enableJpegCompression(false);
-  }
-}
 
-void OptionsDialog::enableJpegCompression(bool enable)
-{
-  m_tjpeg.enable_window(enable);
-  m_quality2.enable_window(enable);
-  EnableWindow(GetDlgItem(get_hwnd(), IDC_SPOOR), enable);
-  EnableWindow(GetDlgItem(get_hwnd(), IDC_SBEST2), enable);
-  EnableWindow(GetDlgItem(get_hwnd(), IDC_STQUALITY2), enable);
-}
-void OptionsDialog::onAllowCustomCompressionClick()
-{
-  enableCustomCompression(m_compLvl.isChecked());
-}
-
-void OptionsDialog::enableCustomCompression(bool enable)
-{
-  m_tcompLvl.enable_window(enable);
-  m_quality.enable_window(enable);
-  EnableWindow(GetDlgItem(get_hwnd(), IDC_SBEST), enable);
-  EnableWindow(GetDlgItem(get_hwnd(), IDC_SFAST), enable);
-  EnableWindow(GetDlgItem(get_hwnd(), IDC_STQUALITY), enable);
-}
-
-void OptionsDialog::onAllowJpegCompressionClick()
-{
-  enableJpegCompression(m_jpeg.isChecked());
-}
-
-void OptionsDialog::onPreferredEncodingSelectionChange()
-{
-  int index = m_useEnc.getSelectedItemIndex();
-  if (index < 0) {
-    return ;
-  }
-  int encoding = reinterpret_cast<int>(m_useEnc.getItemData(index));
-  switch (encoding) {
-  case EncodingDefs::TIGHT:
-    enableCustomCompression(m_compLvl.isChecked());
-    m_compLvl.enable_window(true);
-    break;
-  default:
-    enableCustomCompression(false);
-    m_compLvl.enable_window(false);
-    break;
-  } // switch
-} // void
-
-void OptionsDialog::onCustomCompressionLevelScroll()
-{
-  ::string labelText;
-  labelText.format("{}", m_tcompLvl.getPos());
-  m_quality.setText(labelText);
-}
-
-void OptionsDialog::onJpegCompressionLevelScroll()
-{
-  ::string labelText;
-  labelText.format("{}", m_tjpeg.getPos());
-  m_quality2.setText(labelText);
-}
-
-void OptionsDialog::onMessageReceived(UINT uMsg, WPARAM wParam, LPARAM lParam)
-{
-  switch (uMsg) {
-  case WM_HSCROLL:
-    if (HWND(lParam) == m_tcompLvl.get_hwnd()) {
-      onCustomCompressionLevelScroll();
+    void OptionsDialog::enableJpegCompression(bool enable)
+    {
+        m_tjpeg.enable_window(enable);
+        m_quality2.enable_window(enable);
+        EnableWindow(GetDlgItem(get_hwnd(), IDC_SPOOR), enable);
+        EnableWindow(GetDlgItem(get_hwnd(), IDC_SBEST2), enable);
+        EnableWindow(GetDlgItem(get_hwnd(), IDC_STQUALITY2), enable);
     }
-    if (HWND(lParam) == m_tjpeg.get_hwnd()) {
-      onJpegCompressionLevelScroll();
+    void OptionsDialog::onAllowCustomCompressionClick()
+    {
+        enableCustomCompression(m_compLvl.isChecked());
     }
-    break;
-  }
-}
 
-void OptionsDialog::onScaleKillFocus()
-{
-  //::string scaleText;
-  auto scaleText = m_scale.get_text();
-
-  int scale;
-
-  if (!StringParser::parseInt(scaleText, &scale)) {
-    if (scaleText == "Auto") {
-      return ;
+    void OptionsDialog::enableCustomCompression(bool enable)
+    {
+        m_tcompLvl.enable_window(enable);
+        m_quality.enable_window(enable);
+        EnableWindow(GetDlgItem(get_hwnd(), IDC_SBEST), enable);
+        EnableWindow(GetDlgItem(get_hwnd(), IDC_SFAST), enable);
+        EnableWindow(GetDlgItem(get_hwnd(), IDC_STQUALITY), enable);
     }
-    scale = 100;
-  }
 
-  if (scale < 1) {
-    scale = 1;
-  } else if (scale > 400) {
-    scale = 400;
-  }
+    void OptionsDialog::onAllowJpegCompressionClick()
+    {
+        enableJpegCompression(m_jpeg.isChecked());
+    }
 
-  scaleText.format("{}", scale);
-  m_scale.setText(scaleText);
-}
+    void OptionsDialog::onPreferredEncodingSelectionChange()
+    {
+        int index = m_useEnc.getSelectedItemIndex();
+        if (index < 0) {
+            return ;
+        }
+        int encoding = reinterpret_cast<int>(m_useEnc.getItemData(index));
+        switch (encoding) {
+            case EncodingDefs::TIGHT:
+                enableCustomCompression(m_compLvl.isChecked());
+                m_compLvl.enable_window(true);
+                break;
+            default:
+                enableCustomCompression(false);
+                m_compLvl.enable_window(false);
+                break;
+        } // switch
+    } // void
 
-bool OptionsDialog::isInputValid()
-{
-  int scaleInt;
-  //::string scaleText;
+    void OptionsDialog::onCustomCompressionLevelScroll()
+    {
+        ::string labelText;
+        labelText.format("{}", m_tcompLvl.getPos());
+        m_quality.setText(labelText);
+    }
 
-  auto scaleText = m_scale.get_text();
+    void OptionsDialog::onJpegCompressionLevelScroll()
+    {
+        ::string labelText;
+        labelText.format("{}", m_tjpeg.getPos());
+        m_quality2.setText(labelText);
+    }
 
-  if (scaleText == "Auto") {
-    return true;
-  }
+    void OptionsDialog::onMessageReceived(UINT uMsg, WPARAM wParam, LPARAM lParam)
+    {
+        switch (uMsg) {
+            case WM_HSCROLL:
+                if (HWND(lParam) == m_tcompLvl.get_hwnd()) {
+                    onCustomCompressionLevelScroll();
+                }
+                if (HWND(lParam) == m_tjpeg.get_hwnd()) {
+                    onJpegCompressionLevelScroll();
+                }
+                break;
+        }
+    }
 
-  if (!StringParser::parseInt(scaleText, &scaleInt)) {
-    ::string error;
-    error.formatf(StringTable::getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC).c_str(),
-                 StringTable::getString(IDS_OPTIONS_SCALE).c_str());
-    ::remoting::message_box(m_hwnd,
-               ::wstring(error),
-               ::wstring(StringTable::getString(IDS_OPTIONS_CAPTION)),
-               MB_OK | MB_ICONWARNING);
-    return false;
-  }
+    void OptionsDialog::onScaleKillFocus()
+    {
+        //::string scaleText;
+        auto scaleText = m_scale.get_text();
 
-  if (scaleInt < 0) {
-    ::string error;
-    error.formatf(StringTable::getString(IDS_ERROR_VALUE_FIELD_ONLY_POSITIVE_NUMERIC).c_str(),
-                 StringTable::getString(IDS_OPTIONS_SCALE).c_str());
-    ::remoting::message_box(m_hwnd,
-               error,
-               StringTable::getString(IDS_OPTIONS_CAPTION),
-               MB_OK | MB_ICONWARNING);
-    return false;
-  }
+        int scale;
 
-  return true;
-}
+        if (!StringParser::parseInt(scaleText, &scale)) {
+            if (scaleText == "Auto") {
+                return ;
+            }
+            scale = 100;
+        }
 
-bool OptionsDialog::onOkPressed()
-{
-  if (!isInputValid())
-    return false;
-  apply();
-  return true;
-}
+        if (scale < 1) {
+            scale = 1;
+        } else if (scale > 400) {
+            scale = 400;
+        }
 
-void OptionsDialog::apply()
-{
-  // Preferred encoding
-  int pesii = m_useEnc.getSelectedItemIndex();
-  if (pesii >= 0) {
-    int preferredEncoding = reinterpret_cast<int>(m_useEnc.getItemData(pesii));
-    m_conConfig->setPreferredEncoding(preferredEncoding);
-  } else {
-    _ASSERT(pesii >= 0);
-    m_conConfig->setPreferredEncoding(EncodingDefs::TIGHT);
-  }
+        scaleText.format("{}", scale);
+        m_scale.setText(scaleText);
+    }
 
-  if (m_compLvl.isChecked()) {
-    int level = static_cast<int>(m_tcompLvl.getPos());
-    m_conConfig->setCustomCompressionLevel(level);
-  } else {
-    m_conConfig->disableCustomCompression();
-  }
+    bool OptionsDialog::isInputValid()
+    {
+        int scaleInt;
+        //::string scaleText;
 
-  if (m_jpeg.isChecked()) {
-    int level = static_cast<int>(m_tjpeg.getPos());
-    m_conConfig->setJpegCompressionLevel(level);
-  } else {
-    m_conConfig->disableJpegCompression();
-  }
+        auto scaleText = m_scale.get_text();
 
-  m_conConfig->use8BitColor(m_eightBit.isChecked());
-  m_conConfig->allowCopyRect(m_copyrect.isChecked());
-  m_conConfig->setViewOnly(m_viewonly.isChecked());
-  m_conConfig->enableClipboard(!m_disclip.isChecked());
-  m_conConfig->enableFullscreen(m_fullscr.isChecked());
-  m_conConfig->deiconifyOnRemoteBell(m_deiconfy.isChecked());
-  m_conConfig->swapMouse(m_swapmouse.isChecked());
-  m_conConfig->setSharedFlag(m_sharedses.isChecked());
+        if (scaleText == "Auto") {
+            return true;
+        }
 
-  ::string scaleText;
+        if (!StringParser::parseInt(scaleText, &scaleInt)) {
+            ::string error;
+            error.formatf(StringTable::getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC).c_str(),
+                         StringTable::getString(IDS_OPTIONS_SCALE).c_str());
+            ::remoting::message_box(m_hwnd,
+                       ::wstring(error),
+                       ::wstring(StringTable::getString(IDS_OPTIONS_CAPTION)),
+                       MB_OK | MB_ICONWARNING);
+            return false;
+        }
 
-  scaleText = m_scale.get_text();
+        if (scaleInt < 0) {
+            ::string error;
+            error.formatf(StringTable::getString(IDS_ERROR_VALUE_FIELD_ONLY_POSITIVE_NUMERIC).c_str(),
+                         StringTable::getString(IDS_OPTIONS_SCALE).c_str());
+            ::remoting::message_box(m_hwnd,
+                       error,
+                       StringTable::getString(IDS_OPTIONS_CAPTION),
+                       MB_OK | MB_ICONWARNING);
+            return false;
+        }
 
-  int scaleInt = 0;
+        return true;
+    }
 
-  if (StringParser::parseInt(scaleText, &scaleInt)) {
-    m_conConfig->setScale(scaleInt, 100);
-    m_conConfig->fitWindow(false);
-  } else {
-    m_conConfig->fitWindow(true);
-  }
+    bool OptionsDialog::onOkPressed()
+    {
+        if (!isInputValid())
+            return false;
+        apply();
+        return true;
+    }
 
-  if (m_track.isChecked()) {
-    m_conConfig->requestShapeUpdates(true);
-    m_conConfig->ignoreShapeUpdates(false);
-  }
+    void OptionsDialog::apply()
+    {
+        // Preferred encoding
+        int pesii = m_useEnc.getSelectedItemIndex();
+        if (pesii >= 0) {
+            int preferredEncoding = reinterpret_cast<int>(m_useEnc.getItemData(pesii));
+            m_conConfig->setPreferredEncoding(preferredEncoding);
+        } else {
+            _ASSERT(pesii >= 0);
+            m_conConfig->setPreferredEncoding(EncodingDefs::TIGHT);
+        }
 
-  if (m_cursor.isChecked()) {
-    m_conConfig->requestShapeUpdates(false);
-    m_conConfig->ignoreShapeUpdates(true);
-  }
+        if (m_compLvl.isChecked()) {
+            int level = static_cast<int>(m_tcompLvl.getPos());
+            m_conConfig->setCustomCompressionLevel(level);
+        } else {
+            m_conConfig->disableCustomCompression();
+        }
 
-  if (m_ncursor.isChecked()) {
-    m_conConfig->requestShapeUpdates(true);
-    m_conConfig->ignoreShapeUpdates(true);
-  }
+        if (m_jpeg.isChecked()) {
+            int level = static_cast<int>(m_tjpeg.getPos());
+            m_conConfig->setJpegCompressionLevel(level);
+        } else {
+            m_conConfig->disableJpegCompression();
+        }
 
-  int localCursorShape = ConnectionConfig::DOT_CURSOR;
-  if (m_smalldot.isChecked()) {
-    localCursorShape = ConnectionConfig::SMALL_CURSOR;
-  } else if (m_arrow.isChecked()) {
-    localCursorShape = ConnectionConfig::NORMAL_CURSOR;
-  } else if (m_nlocal.isChecked()) {
-    localCursorShape = ConnectionConfig::NO_CURSOR;
-  }
+        m_conConfig->use8BitColor(m_eightBit.isChecked());
+        m_conConfig->allowCopyRect(m_copyrect.isChecked());
+        m_conConfig->setViewOnly(m_viewonly.isChecked());
+        m_conConfig->enableClipboard(!m_disclip.isChecked());
+        m_conConfig->enableFullscreen(m_fullscr.isChecked());
+        m_conConfig->deiconifyOnRemoteBell(m_deiconfy.isChecked());
+        m_conConfig->swapMouse(m_swapmouse.isChecked());
+        m_conConfig->setSharedFlag(m_sharedses.isChecked());
 
-  m_conConfig->setLocalCursorShape(localCursorShape);
-}
+        ::string scaleText;
+
+        scaleText = m_scale.get_text();
+
+        int scaleInt = 0;
+
+        if (StringParser::parseInt(scaleText, &scaleInt)) {
+            m_conConfig->setScale(scaleInt, 100);
+            m_conConfig->fitWindow(false);
+        } else {
+            m_conConfig->fitWindow(true);
+        }
+
+        if (m_track.isChecked()) {
+            m_conConfig->requestShapeUpdates(true);
+            m_conConfig->ignoreShapeUpdates(false);
+        }
+
+        if (m_cursor.isChecked()) {
+            m_conConfig->requestShapeUpdates(false);
+            m_conConfig->ignoreShapeUpdates(true);
+        }
+
+        if (m_ncursor.isChecked()) {
+            m_conConfig->requestShapeUpdates(true);
+            m_conConfig->ignoreShapeUpdates(true);
+        }
+
+        int localCursorShape = ConnectionConfig::DOT_CURSOR;
+        if (m_smalldot.isChecked()) {
+            localCursorShape = ConnectionConfig::SMALL_CURSOR;
+        } else if (m_arrow.isChecked()) {
+            localCursorShape = ConnectionConfig::NORMAL_CURSOR;
+        } else if (m_nlocal.isChecked()) {
+            localCursorShape = ConnectionConfig::NO_CURSOR;
+        }
+
+        m_conConfig->setLocalCursorShape(localCursorShape);
+    }
+}//namespace remoting_remoting

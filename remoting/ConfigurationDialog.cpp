@@ -28,208 +28,218 @@
 #include "resource.h"
 #include "acme/filesystem/file/item.h"
 //#include "file_lib/::file::item.h"
-#include "remoting/remoting_common/win_system/Process.h"
+#include "acme/subsystem/Process.h"
 #include "remoting/remoting_common/remoting.h"
-ConfigurationDialog::ConfigurationDialog()
-: BaseDialog(IDD_CONFIGURATION),
-  m_application(0)
-{
-}
 
-void ConfigurationDialog::setListenerOfUpdate(WindowsApplication *application)
-{
-  m_application = application;
-}
 
-BOOL ConfigurationDialog::onCommand(UINT controlID, UINT notificationID)
+namespace remoting_remoting
 {
-  if (controlID == IDC_EVERBLVL) {
-    if (notificationID == EN_CHANGE) {
-      onLogLevelChange();
+    ConfigurationDialog::ConfigurationDialog()
+    : BaseDialog(IDD_CONFIGURATION),
+      m_application(0)
+    {
     }
-  }
-  if (controlID == IDOK) {
-    onOkPressed();
-    if (m_application != 0) {
-      m_application->postMessage(remoting_impact::WM_USER_CONFIGURATION_RELOAD);
+
+    void ConfigurationDialog::setListenerOfUpdate(WindowsApplication *application)
+    {
+        m_application = application;
     }
-    close_dialog(1);
-    return TRUE;
-  }
-  if (controlID == IDCANCEL) {
-    close_dialog(0);
-    return TRUE;
-  }
-  if (controlID == IDC_BCLEAR_LIST) {
-    ::remoting::ViewerConfig::getInstance()->getConnectionHistory()->clear();
-  }
-  if (controlID == IDC_OPEN_LOG_FOLDER_BUTTON) {
-    onOpenFolderButtonClick();
-  }
-  return FALSE;
-}
 
-void ConfigurationDialog::onLogLevelChange()
-{
-  ::string text;
-  int logLevel;
-  text = m_verbLvl.get_text();
-  StringParser::parseInt(text, &logLevel);
-  if (logLevel != 0) {
-    m_logging.enable_window(true);
-
-    // If log-file is exist, then enable button "Locate...", else disable him.
-    //::string logDir;
-    auto logDir = ::remoting::ViewerConfig::getInstance()->getLogDir();
-    auto logFileName = logDir / (::string(LogNames::VIEWER_LOG_FILE_STUB_NAME) + ".log");
-
-    auto  logFile=file_item(logFileName);
-    if (logFile->exists()) {
-      m_openLogDir.enable_window(true);
-    } else {
-      m_openLogDir.enable_window(false);
+    BOOL ConfigurationDialog::onCommand(UINT controlID, UINT notificationID)
+    {
+        if (controlID == IDC_EVERBLVL) {
+            if (notificationID == EN_CHANGE) {
+                onLogLevelChange();
+            }
+        }
+        if (controlID == IDOK) {
+            onOkPressed();
+            if (m_application != 0) {
+                m_application->postMessage(remoting_impact::WM_USER_CONFIGURATION_RELOAD);
+            }
+            close_dialog(1);
+            return TRUE;
+        }
+        if (controlID == IDCANCEL) {
+            close_dialog(0);
+            return TRUE;
+        }
+        if (controlID == IDC_BCLEAR_LIST) {
+            ::remoting::ViewerConfig::getInstance()->getConnectionHistory()->clear();
+        }
+        if (controlID == IDC_OPEN_LOG_FOLDER_BUTTON) {
+            onOpenFolderButtonClick();
+        }
+        return FALSE;
     }
-  } else {
-    m_logging.enable_window(false);
-    m_openLogDir.enable_window(false);
-  }
-}
-void ConfigurationDialog::onOpenFolderButtonClick()
-{
-  //::string logDir;
-  
-  auto logDir = ::remoting::ViewerConfig::getInstance()->getLogDir();
 
-   auto pathLog = logDir / (::string(LogNames::VIEWER_LOG_FILE_STUB_NAME) + ".log");
+    void ConfigurationDialog::onLogLevelChange()
+    {
+        ::string text;
+        int logLevel;
+        text = m_verbLvl.get_text();
+        StringParser::parseInt(text, &logLevel);
+        if (logLevel != 0) {
+            m_logging.enable_window(true);
 
-  ::string command;
+            // If log-file is exist, then enable button "Locate...", else disable him.
+            //::string logDir;
+            auto logDir = ::remoting::ViewerConfig::getInstance()->getLogDir();
+            auto logFileName = logDir / (::string(LogNames::VIEWER_LOG_FILE_STUB_NAME) + ".log");
 
-  command.format("explorer /select,{}", pathLog);
+            auto  logFile=file_item(logFileName);
+            if (logFile->exists()) {
+                m_openLogDir.enable_window(true);
+            } else {
+                m_openLogDir.enable_window(false);
+            }
+        } else {
+            m_logging.enable_window(false);
+            m_openLogDir.enable_window(false);
+        }
+    }
+    void ConfigurationDialog::onOpenFolderButtonClick()
+    {
+        //::string logDir;
 
-  Process explorer(command);
+        auto logDir = ::remoting::ViewerConfig::getInstance()->getLogDir();
 
-  try {
-    explorer.start();
-  } catch (...) {
-    // TODO: Place error notification here.
-  }
-}
+        auto pathLog = logDir / (::string(LogNames::VIEWER_LOG_FILE_STUB_NAME) + ".log");
 
-BOOL ConfigurationDialog::onInitDialog()
-{
-  setControlById(m_showToolBars, IDC_CSHOWTOOLBARS); 
-  setControlById(m_warnAtSwitching, IDC_CWARNATSW);
-  setControlById(m_numberConn, IDC_ENUMCON);
-  setControlById(m_snumConn, IDC_SNUMCON);
-  setControlById(m_reverseConn, IDC_EREVCON);
-  setControlById(m_sreverseConn, IDC_SREVCON);
-  setControlById(m_verbLvl, IDC_EVERBLVL);
-  setControlById(m_sverbLvl, IDC_SVERBLVL);
-  setControlById(m_logging, IDC_ELOGGING);
-  setControlById(m_openLogDir, IDC_OPEN_LOG_FOLDER_BUTTON);
+        ::string command;
 
-  m_snumConn.setRange(0, 1024);
-  m_snumConn.setBuddy(&m_numberConn);
+        command.format("explorer /select,{}", pathLog);
 
-  m_sreverseConn.setRange32(1, 65535);
-  m_sreverseConn.setBuddy(&m_reverseConn);
+        Process explorer(command);
 
-  m_sverbLvl.setRange(0, 9);
-  m_sverbLvl.setBuddy(&m_verbLvl);
+        try {
+            explorer.start();
+        } catch (...) {
+            // TODO: Place error notification here.
+        }
+    }
 
-  updateControlValues();
+    BOOL ConfigurationDialog::onInitDialog()
+    {
+        setControlById(m_showToolBars, IDC_CSHOWTOOLBARS);
+        setControlById(m_warnAtSwitching, IDC_CWARNATSW);
+        setControlById(m_numberConn, IDC_ENUMCON);
+        setControlById(m_snumConn, IDC_SNUMCON);
+        setControlById(m_reverseConn, IDC_EREVCON);
+        setControlById(m_sreverseConn, IDC_SREVCON);
+        setControlById(m_verbLvl, IDC_EVERBLVL);
+        setControlById(m_sverbLvl, IDC_SVERBLVL);
+        setControlById(m_logging, IDC_ELOGGING);
+        setControlById(m_openLogDir, IDC_OPEN_LOG_FOLDER_BUTTON);
 
-  return FALSE;
-}
+        m_snumConn.setRange(0, 1024);
+        m_snumConn.setBuddy(&m_numberConn);
 
-void ConfigurationDialog::updateControlValues()
-{
-  auto config = ::remoting::ViewerConfig::getInstance();
+        m_sreverseConn.setRange32(1, 65535);
+        m_sreverseConn.setBuddy(&m_reverseConn);
 
-  ::string txt;
+        m_sverbLvl.setRange(0, 9);
+        m_sverbLvl.setBuddy(&m_verbLvl);
 
-  txt.formatf("{}", config->getListenPort());
-  m_reverseConn.setText(txt);
+        updateControlValues();
 
-  txt.formatf("{}", config->getLogLevel());
-  m_verbLvl.setText(txt);
+        return FALSE;
+    }
 
-  txt.formatf("{}", config->getHistoryLimit());
-  m_numberConn.setText(txt);
+    void ConfigurationDialog::updateControlValues()
+    {
+        auto config = ::remoting::ViewerConfig::getInstance();
 
-  m_showToolBars.check(config->isToolbarShown());
-  m_warnAtSwitching.check(config->isPromptOnFullscreenEnabled());
+        ::string txt;
 
-  ::string logFileName;
-  logFileName.formatf("{}\\{}.log", config->getPathToLogFile(), LogNames::VIEWER_LOG_FILE_STUB_NAME);
-  m_logging.setText(logFileName);
-}
+        txt.formatf("{}", config->getListenPort());
+        m_reverseConn.setText(txt);
 
-bool ConfigurationDialog::isInputValid()
-{
-  if (!testNum(&m_reverseConn, StringTable::getString(IDS_CONFIGURATION_LISTEN_PORT))) {
-    return false;
-  }
-  if (!testNum(&m_verbLvl, StringTable::getString(IDS_CONFIGURATION_LOG_LEVEL))) {
-    return false;
-  }
-  if (!testNum(&m_numberConn, StringTable::getString(IDS_CONFIGURATION_HISTORY_LIMIT))) {
-    return false;
-  }
-  return true;
-}
+        txt.formatf("{}", config->getLogLevel());
+        m_verbLvl.setText(txt);
 
-bool ConfigurationDialog::testNum(TextBox *tb, const ::scoped_string & scopedstrTbName)
-{
-  //::string text;
-  auto text = tb->get_text();
+        txt.formatf("{}", config->getHistoryLimit());
+        m_numberConn.setText(txt);
 
-  if (StringParser::tryParseInt(text)) {
-    return true;
-  }
+        m_showToolBars.check(config->isToolbarShown());
+        m_warnAtSwitching.check(config->isPromptOnFullscreenEnabled());
 
-  ::string scopedstrMessage;
-  scopedstrMessage.formatf(StringTable::getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC).c_str(), scopedstrTbName.c_str());
+        ::string logFileName;
+        logFileName.formatf("{}\\{}.log", config->getPathToLogFile(), LogNames::VIEWER_LOG_FILE_STUB_NAME);
+        m_logging.setText(logFileName);
+    }
 
-  ::remoting::message_box(m_hwnd, scopedstrMessage,
-             StringTable::getString(IDS_CONFIGURATION_CAPTION), MB_OK | MB_ICONWARNING);
+    bool ConfigurationDialog::isInputValid()
+    {
+        if (!testNum(&m_reverseConn, StringTable::getString(IDS_CONFIGURATION_LISTEN_PORT))) {
+            return false;
+        }
+        if (!testNum(&m_verbLvl, StringTable::getString(IDS_CONFIGURATION_LOG_LEVEL))) {
+            return false;
+        }
+        if (!testNum(&m_numberConn, StringTable::getString(IDS_CONFIGURATION_HISTORY_LIMIT))) {
+            return false;
+        }
+        return true;
+    }
 
-  tb->set_focus();
+    bool ConfigurationDialog::testNum(TextBox *tb, const ::scoped_string & scopedstrTbName)
+    {
+        //::string text;
+        auto text = tb->get_text();
 
-  return false;
-}
+        if (StringParser::tryParseInt(text)) {
+            return true;
+        }
 
-void ConfigurationDialog::onOkPressed()
-{
-  if (!isInputValid()) {
-    return ;
-  }
+        ::string scopedstrMessage;
+        scopedstrMessage.formatf(StringTable::getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC).c_str(), scopedstrTbName.c_str());
 
-  auto config = ::remoting::ViewerConfig::getInstance();
+        ::remoting::message_box(m_hwnd, scopedstrMessage,
+                   StringTable::getString(IDS_CONFIGURATION_CAPTION), MB_OK | MB_ICONWARNING);
 
-  ::string text;
-  int intVal;
+        tb->set_focus();
 
-  text = m_reverseConn.get_text();
-  StringParser::parseInt(text, &intVal);
-  config->setListenPort(intVal);
+        return false;
+    }
 
-  text = m_verbLvl.get_text();
-  StringParser::parseInt(text, &intVal);
-  config->setLogLevel((enum_trace_level)intVal);
+    void ConfigurationDialog::onOkPressed()
+    {
+        if (!isInputValid()) {
+            return ;
+        }
 
-  int oldLimit = config->getHistoryLimit();
-  text=m_numberConn.get_text();
-  StringParser::parseInt(text, &intVal);
-  config->setHistoryLimit(intVal);
+        auto config = ::remoting::ViewerConfig::getInstance();
 
-  if (config->getHistoryLimit() < oldLimit) {
-    config->getConnectionHistory()->truncate();
-  }
+        ::string text;
+        int intVal;
 
-  config->showToolbar(m_showToolBars.isChecked());
-  config->promptOnFullscreen(m_warnAtSwitching.isChecked());
+        text = m_reverseConn.get_text();
+        StringParser::parseInt(text, &intVal);
+        config->setListenPort(intVal);
 
-  SettingsManager *sm = ViewerSettingsManager::getInstance();
-  config->saveToStorage(sm);
-}
+        text = m_verbLvl.get_text();
+        StringParser::parseInt(text, &intVal);
+        config->setLogLevel((enum_trace_level)intVal);
+
+        int oldLimit = config->getHistoryLimit();
+        text=m_numberConn.get_text();
+        StringParser::parseInt(text, &intVal);
+        config->setHistoryLimit(intVal);
+
+        if (config->getHistoryLimit() < oldLimit) {
+            config->getConnectionHistory()->truncate();
+        }
+
+        config->showToolbar(m_showToolBars.isChecked());
+        config->promptOnFullscreen(m_warnAtSwitching.isChecked());
+
+        SettingsManager *sm = ViewerSettingsManager::getInstance();
+        config->saveToStorage(sm);
+    }
+
+
+} // namespace remoting_remoting
+
+
+

@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "MirrorDriverClient.h"
-#include "remoting/remoting_common/util/Exception.h"
+#include "acme/subsystem/Exception.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 // FIXME: Why the class should depence from the remoting_node_desktop project?
 #include "remoting_node_desktop/NamingDefs.h"

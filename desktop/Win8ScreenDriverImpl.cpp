@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_common/util/Exception.h"
+#include "acme/subsystem/Exception.h"
 #include "remoting/remoting_common/rfb/StandardPixelFormatFactory.h"
 #include "WinDxCriticalException.h"
 #include "WinDxRecoverableException.h"

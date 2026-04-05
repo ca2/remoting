@@ -31,7 +31,7 @@
 #include "remoting/remoting_common/win_system/RegistryKey.h"
 #include "DisplayEsc.h"
 #include "remoting/remoting_common/win_system/Screen.h"
-#include "remoting/remoting_common/gui/MessageWindow.h"
+#include "apex/innate_subsystem/MessageWindow.h"
 #include "remoting/remoting_common/thread/GuiThread.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 //#include "log_writer/LogWriter.h"

@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "remoting/remoting_common/util/CommonHeader.h"
-#include "remoting/remoting_common/gui/Window.h"
+#include "acme/subsystem/_common_header.h"
+#include "apex/innate_subsystem/Window.h"
 
 class CLASS_DECL_REMOTING_COMMON ComboBox : public ::remoting::Window
 {

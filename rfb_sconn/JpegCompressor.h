@@ -27,7 +27,7 @@ INCLUDED__
 
 #include <stdio.h>
 
-#include "remoting/remoting_common/util/CommonHeader.h"
+#include "acme/subsystem/_common_header.h"
 #include "remoting/remoting_common/rfb/PixelFormat.h"
 
 // For Windows platforms only.

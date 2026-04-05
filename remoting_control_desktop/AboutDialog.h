@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/gui/BaseDialog.h"
+#include "apex/innate_subsystem/BaseDialog.h"
 
 /**
  * TightVNC server about dialog.
