@@ -39,11 +39,6 @@
 #ifdef __cplusplus
 
 
-using LogWriter = ::particle;
-
-
-
-
 namespace remoting
 {
 
