@@ -41,7 +41,7 @@
 #include "remoting/remoting_common/win_system/Impersonator.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 #include "remoting/remoting_common/server_config/Configurator.h"
-#include "remoting/remoting_common/win_system/SystemException.h"
+#include "acme/subsystem/node/SystemException.h"
 #include "remoting/remoting_common/rfb/VendorDefs.h"
 
 FileTransferRequestHandler::FileTransferRequestHandler(RfbCodeRegistrator *registrator,

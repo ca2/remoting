@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ViewerCmdLine.h"
 #include "remoting/remoting_common/config/IniFileSettingsManager.h"
-#include "remoting/remoting_common/win_system/SystemException.h"
+#include "acme/subsystem/node/SystemException.h"
 
 namespace remoting_remoting
 {

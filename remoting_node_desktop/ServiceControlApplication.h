@@ -28,7 +28,7 @@
 #include "acme/subsystem/_common_header.h"
 
 #include "remoting/remoting_common/win_system/WindowsApplication.h"
-#include "remoting/remoting_common/win_system/SCMClient.h"
+#include "remoting/remoting_common/win_system/ServiceControlManagerClient.h"
 
 #include "TvnService.h"
 #include "ServiceControlCommandLine.h"
@@ -86,14 +86,14 @@ private:
   // FIXME: Move this function to TvnService, call from TvnService::remove().
   void removeTvnControlStartEntry() const;
   /**
-   * Report an error using error description from a SCMClientException object.
+   * Report an error using error description from a ServiceControlManagerClientException object.
    * @param cmdLine pointer to command line parser.
-   * @param ex pointer to an SCMClientException object describing the error.
+   * @param ex pointer to an ServiceControlManagerClientException object describing the error.
    * @remark does not show up a scopedstrMessage box if the -silent flag was specified
    *   in the command line.
    */
   void reportError(const ServiceControlCommandLine *cmdLine,
-                   const SCMClientException *ex) const;
+                   const ServiceControlManagerClientException *ex) const;
   /**
    * Report an error using error description from a SystemException object.
    * @param cmdLine pointer to command line parser.

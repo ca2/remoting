@@ -27,7 +27,7 @@
 #include "ServerCommandLine.h"
 #include "remoting_node_desktop/NamingDefs.h"
 
-#include "remoting/remoting_common/win_system/SCMClient.h"
+#include "remoting/remoting_common/win_system/ServiceControlManagerClient.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 
 const TCHAR TvnService::SERVICE_COMMAND_LINE_KEY[] = "-service";
@@ -85,7 +85,7 @@ void TvnService::install()
 
   TvnService::getBinPath(&binPath);
 
-  SCMClient scManager;
+  ServiceControlManagerClient scManager;
 
   scManager.installService(ServiceNames::SERVICE_NAME,
                            ServiceNames::SERVICE_NAME_TO_DISPLAY,
@@ -94,7 +94,7 @@ void TvnService::install()
 
 void TvnService::remove()
 {
-  SCMClient scManager;
+  ServiceControlManagerClient scManager;
 
   scManager.removeService(ServiceNames::SERVICE_NAME);
 }
@@ -110,14 +110,14 @@ void TvnService::reinstall()
 
 void TvnService::start(bool waitCompletion)
 {
-  SCMClient scManager;
+  ServiceControlManagerClient scManager;
 
   scManager.startService(ServiceNames::SERVICE_NAME, waitCompletion);
 }
 
 void TvnService::stop(bool waitCompletion)
 {
-  SCMClient scManager;
+  ServiceControlManagerClient scManager;
 
   scManager.stopService(ServiceNames::SERVICE_NAME, waitCompletion);
 }

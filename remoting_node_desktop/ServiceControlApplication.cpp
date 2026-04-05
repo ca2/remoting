@@ -40,7 +40,7 @@
 #include "remoting/remoting_common/win_system/RegistryKey.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 #include "remoting/remoting_common/win_system/Shell.h"
-#include "remoting/remoting_common/win_system/SCMClient.h"
+#include "remoting/remoting_common/win_system/ServiceControlManagerClient.h"
 #include "remoting/remoting_common/win_system/WinCommandLineArgs.h"
 
 ServiceControlApplication::ServiceControlApplication(HINSTANCE hInstance,
@@ -95,7 +95,7 @@ int ServiceControlApplication::run()
     try {
       executeCommand(&cmdLine);
       success = true;
-    } catch (SCMClientException &scmEx) {
+    } catch (ServiceControlManagerClientException &scmEx) {
       reportError(&cmdLine, &scmEx);
     } catch (SystemException &servEx) {
       reportError(&cmdLine, &servEx);
@@ -181,21 +181,21 @@ void ServiceControlApplication::removeTvnControlStartEntry() const
 }
 
 void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmdLine,
-                                            const SCMClientException *ex) const
+                                            const ServiceControlManagerClientException *ex) const
 {
   ::string errorMessage;
 
-  switch (ex->getSCMErrorCode()) {
-  case SCMClientException::ERROR_ALREADY_RUNNING:
+  switch (ex->getServiceControlManagerErrorCode()) {
+  case ServiceControlManagerClientException::ERROR_ALREADY_RUNNING:
     errorMessage= StringTable::getString(IDS_SERVICE_ALREADY_RUNNING);
     break;
-  case SCMClientException::ERROR_ALREADY_STOPPED:
+  case ServiceControlManagerClientException::ERROR_ALREADY_STOPPED:
     errorMessage= StringTable::getString(IDS_SERVICE_ALREADY_STOPPED);
     break;
-  case SCMClientException::ERROR_START_TIMEOUT:
+  case ServiceControlManagerClientException::ERROR_START_TIMEOUT:
     errorMessage= StringTable::getString(IDS_SERVICE_START_TIMEOUT);
     break;
-  case SCMClientException::ERROR_STOP_TIMEOUT:
+  case ServiceControlManagerClientException::ERROR_STOP_TIMEOUT:
     errorMessage= StringTable::getString(IDS_SERVICE_STOP_TIMEOUT);
     break;
   default:

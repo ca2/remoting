@@ -31,7 +31,7 @@
 #include "remoting/remoting_common/network/RfbInputGate.h"
 //#include "remoting/remoting_common/thread/critical_section.h"
 #include "remoting/remoting_common/server_config/Configurator.h"
-#include "remoting/remoting_common/win_system/SystemException.h"
+#include "acme/subsystem/node/SystemException.h"
 #include "remoting/remoting_common/rfb/VendorDefs.h"
 
 EchoExtensionRequestHandler::EchoExtensionRequestHandler(RfbCodeRegistrator *registrator,

@@ -27,7 +27,7 @@
 
 #include "remoting/remoting_common/win_system/LocalWindowsApplication.h"
 
-#include "remoting/remoting_common/win_system/SystemException.h"
+#include "acme/subsystem/node/SystemException.h"
 
 /**
  * Application that shows "Accept / Reject rfb connection dialog" to user
