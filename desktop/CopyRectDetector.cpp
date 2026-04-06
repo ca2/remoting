@@ -38,7 +38,7 @@ void CopyRectDetector::detectWindowMovements(::int_rectangle *copyRect, Point *s
   m_copyRect.Null();
   m_source.clear();
 
-  EnumWindows((WNDENUMPROC)enumWindowsFnCopyRect, (LPARAM)this);
+  EnumWindows((WNDENUMPROC)enumWindowsFnCopyRect, (::lparam)this);
   m_lastWinProps = m_newWinProps;
   m_newWinProps.clear();
   *copyRect = m_copyRect;
@@ -46,13 +46,13 @@ void CopyRectDetector::detectWindowMovements(::int_rectangle *copyRect, Point *s
 }
 
 // Callback routine used internally to catch window movement...
-BOOL CALLBACK CopyRectDetector::enumWindowsFnCopyRect(HWND hwnd, LPARAM arg)
+bool CALLBACK CopyRectDetector::enumWindowsFnCopyRect(HWND hwnd, ::lparam arg)
 {
   CopyRectDetector *_this = (CopyRectDetector *)arg;
   return _this->checkWindowMovements(hwnd);
 }
 
-BOOL CopyRectDetector::checkWindowMovements(HWND hwnd)
+bool CopyRectDetector::checkWindowMovements(HWND hwnd)
 {
   ::int_rectangle currRect;
   if (IsWindowVisible(hwnd) && getWinRect(hwnd, &currRect)) {

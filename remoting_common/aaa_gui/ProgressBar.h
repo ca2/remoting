@@ -36,7 +36,7 @@ public:
   void setRange(WORD min, WORD max);
   void setPos(WORD pos);
 
-   virtual bool window_procedure(LRESULT & lresult, UINT scopedstrMessage, ::wparam wparam, ::lparam lparam);
+   virtual bool window_procedure(LRESULT & lresult, unsigned int scopedstrMessage, ::wparam wparam, ::lparam lparam);
 };
 
 

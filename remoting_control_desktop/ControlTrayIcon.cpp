@@ -41,7 +41,7 @@
 
 #include <crtdbg.h>
 
-UINT ControlTrayIcon::WM_USER_TASKBAR;
+unsigned int ControlTrayIcon::WM_USER_TASKBAR;
 
 ControlTrayIcon::ControlTrayIcon(ControlProxy *serverControl,
                                  Notificator *notificator,
@@ -96,7 +96,7 @@ ControlTrayIcon::~ControlTrayIcon()
   delete m_iconWorking;
 }
 
-LRESULT ControlTrayIcon::windowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,
+LRESULT ControlTrayIcon::windowProc(HWND hWnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam,
                                     bool *useDefWindowProc)
 {
   if (m_inWindowProc) {
@@ -247,16 +247,16 @@ void ControlTrayIcon::onShutdownServerMenuItemClick()
 
     ::string userMessage;
 
-    UINT stringId = serverInfo.m_serviceFlag ? IDS_TVNSERVER_SERVICE : IDS_TVNSERVER_APP;
+    unsigned int stringId = serverInfo.m_serviceFlag ? IDS_TVNSERVER_SERVICE : IDS_TVNSERVER_APP;
 
     userMessage.format(
-      StringTable::getString(IDS_SHUTDOWN_NOTIFICATION_FORMAT),
-      StringTable::getString(stringId));
+      main_subsystem()->string_table()->getString(IDS_SHUTDOWN_NOTIFICATION_FORMAT),
+      main_subsystem()->string_table()->getString(stringId));
 
-    if (::remoting::message_box(
+    if (main_innate_subsystem()->message_box(
       get_hwnd(),
       userMessage,
-      StringTable::getString(IDS_MBC_TVNCONTROL),
+      main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
       MB_YESNO | MB_ICONQUESTION) == IDNO) {
         return;
     }
@@ -338,7 +338,7 @@ void ControlTrayIcon::syncStatusWithServer()
 void ControlTrayIcon::setNotConnectedState()
 {
   setIcon(m_iconDisabled);
-  setText(StringTable::getString(IDS_CONTROL_CLIENT_NOT_CONNECTED));
+  setText(main_subsystem()->string_table()->getString(IDS_CONTROL_CLIENT_NOT_CONNECTED));
 }
 
 void ControlTrayIcon::terminate()

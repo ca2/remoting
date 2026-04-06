@@ -35,7 +35,7 @@
 class CLASS_DECL_REMOTING_COMMON DecoderStore
 {
 public:
-  DecoderStore(LogWriter *logWriter);
+  DecoderStore(::subsystem::LogWriter * plogwriter);
   ~DecoderStore();
 
   Decoder *getDecoder(int decoderId);
@@ -52,7 +52,7 @@ public:
   void allowCopyRect(bool allow);
 
 private:
-  LogWriter *m_logWriter;
+  LogWriter *m_plogwriter;
 
   ::map<int, ::pair<int, Decoder*> > m_decoders;
   int m_preferredEncoding;

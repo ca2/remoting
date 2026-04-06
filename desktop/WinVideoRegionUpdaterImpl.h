@@ -53,7 +53,7 @@ private:
   ::earth::time m_lastVidUpdTime;
   Region m_vidRegion;
   critical_section m_regionMutex;
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
   WindowsEvent m_sleeper;
 };
 

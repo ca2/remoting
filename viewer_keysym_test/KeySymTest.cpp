@@ -37,9 +37,9 @@ KeySymTest::KeySymTest(const ::scoped_string & scopedstrFileFrom, const ::scoped
   m_fromFileName(fileFrom),
   m_toFileName(fileTo),
   m_isNextEventInSeries(false),
-  m_log(0)
+  m_plogwriter(0)
 {
-  m_rfbKeySym = new RfbKeySym(this, &m_log);
+  m_rfbKeySym = new RfbKeySym(this, &m_plogwriter);
   m_fFrom = _tfopen(m_fromFileName, "rt,ccs=UNICODE");
   if (m_fFrom == 0) {
     ::string errMess;

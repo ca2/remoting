@@ -64,17 +64,17 @@ protected:
   bool setSoftMouseFilterHook(bool block);
 
   static LRESULT CALLBACK lowLevelKeyboardFilterProc(int nCode,
-                                                     WPARAM wParam,
-                                                     LPARAM lParam);
+                                                     ::wparam wParam,
+                                                     ::lparam lParam);
   static LRESULT CALLBACK lowLevelSoftKeyboardFilterProc(int nCode,
-                                                         WPARAM wParam,
-                                                         LPARAM lParam);
+                                                         ::wparam wParam,
+                                                         ::lparam lParam);
   static LRESULT CALLBACK lowLevelMouseFilterProc(int nCode,
-                                                  WPARAM wParam,
-                                                  LPARAM lParam);
+                                                  ::wparam wParam,
+                                                  ::lparam lParam);
   static LRESULT CALLBACK lowLevelSoftMouseFilterProc(int nCode,
-                                                      WPARAM wParam,
-                                                      LPARAM lParam);
+                                                      ::wparam wParam,
+                                                      ::lparam lParam);
 
   static HHOOK m_hKeyboardHook;
   static HHOOK m_hSoftKeyboardHook;
@@ -94,7 +94,7 @@ protected:
   static ::earth::time m_lastInputTime;
   static critical_section m_lastInputTimeMutex;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __WINDOWSINPUTBLOCKER_H__

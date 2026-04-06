@@ -49,7 +49,7 @@ protected:
   critical_section *m_mouseGrabLocMut;
   WindowsEvent m_sleepTimer;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __CURSORHAPEDETECTOR_H__

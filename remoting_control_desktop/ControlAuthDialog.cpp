@@ -41,7 +41,7 @@ const ::scoped_string & scopedstrControlAuthDialog::getPassword() const
   return m_password;
 }
 
-BOOL ControlAuthDialog::onInitDialog()
+bool ControlAuthDialog::onInitDialog()
 {
   m_password= "";
 
@@ -55,12 +55,12 @@ BOOL ControlAuthDialog::onInitDialog()
   return TRUE;
 }
 
-BOOL ControlAuthDialog::onNotify(UINT controlID, LPARAM data)
+bool ControlAuthDialog::onNotify(unsigned int controlID, ::lparam data)
 {
   return TRUE;
 }
 
-BOOL ControlAuthDialog::onCommand(UINT controlID, UINT notificationID)
+bool ControlAuthDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
   switch (controlID) {
   case IDOK:
@@ -74,7 +74,7 @@ BOOL ControlAuthDialog::onCommand(UINT controlID, UINT notificationID)
   return TRUE;
 }
 
-BOOL ControlAuthDialog::onDestroy()
+bool ControlAuthDialog::onDestroy()
 {
   return TRUE;
 }

@@ -41,10 +41,10 @@ namespace remoting
    {
 
       FileTransferCapability::FileTransferCapability(LogWriter *LogWriter)
-      : m_logWriter(LogWriter),
-        m_ftReplyBuffer(m_logWriter),
-        m_ftRequestSender(m_logWriter),
-        m_ftCore(m_logWriter,
+      : m_plogwriter(LogWriter),
+        m_ftReplyBuffer(m_plogwriter),
+        m_ftRequestSender(m_plogwriter),
+        m_ftCore(m_plogwriter,
                  &m_ftRequestSender,
                  &m_ftReplyBuffer,
                  &m_ftMessageProcessor)

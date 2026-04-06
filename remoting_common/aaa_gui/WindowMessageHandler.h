@@ -29,7 +29,7 @@ class CLASS_DECL_REMOTING_COMMON WindowMessageHandler
 {
 public:
   // This function must return true if a scopedstrMessage has been processed.
-  virtual bool processMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam) = 0;
+  virtual bool processMessage(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam) = 0;
 };
 
 //// __WINDOWMESSAGEHANDLER_H__

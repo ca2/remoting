@@ -193,7 +193,7 @@ namespace remoting_remoting
 
    }
 
-   bool control::_001OnMouseEx(UINT uMessage, int iButtonMask, const ::int_point& pointRoot, const ::int_point& pointClient)
+   bool control::_001OnMouseEx(unsigned int uMessage, int iButtonMask, const ::int_point& pointRoot, const ::int_point& pointClient)
    {
 
       auto rectangleClient = get_client_rectangle();
@@ -239,7 +239,7 @@ namespace remoting_remoting
 
    }
 
-   //bool control::_001OnMouseEx(UINT uMessage, const ::int_point& pointRoot, const ::int_point& pointClient)
+   //bool control::_001OnMouseEx(unsigned int uMessage, const ::int_point& pointRoot, const ::int_point& pointClient)
    //{
 
    //    auto rectangleClient = get_client_rectangle();
@@ -300,7 +300,7 @@ namespace remoting_remoting
    }
 
 
-   bool control::_000OnMouseEx(UINT uMessage, int iButtonMask, const ::int_point& pointRoot, const ::int_point& pointClientParam)
+   bool control::_000OnMouseEx(unsigned int uMessage, int iButtonMask, const ::int_point& pointRoot, const ::int_point& pointClientParam)
    {
 
       auto pointClient = pointClientParam;
@@ -378,7 +378,7 @@ namespace remoting_remoting
 
    }
 
-   //bool control::_000OnMouseEx(UINT uMessage, const ::int_point& pointRoot, const ::int_point& pointClientParam)
+   //bool control::_000OnMouseEx(unsigned int uMessage, const ::int_point& pointRoot, const ::int_point& pointClientParam)
    //{
 
    //    auto pointClient = pointClientParam;
@@ -620,7 +620,7 @@ namespace remoting_remoting
       else if (eid==id_restore)
       {
          //m_pdesktopwindow->m_viewerCore->ge
-         //BOOL enable = TRUE; // Use TRUE to force disable, which is counter-intuitive but how the flag works
+         //bool enable = TRUE; // Use TRUE to force disable, which is counter-intuitive but how the flag works
          //HRESULT hr = DwmSetWindowAttribute(::GetParent(m_pdesktopwindow->getHWnd()), DWMWA_TRANSITIONS_FORCEDISABLED, &enable, sizeof(enable));
 
          ::PostMessageA(::GetParent(m_pdesktopwindow->getHWnd()), ViewerWindow::WM_USER_SWITCH_FULL_SCREEN_MODE, 0, 0);
@@ -657,7 +657,7 @@ namespace remoting_remoting
    }
 
 
-   bool toolbar::_001OnMouseEx(UINT uMessage, int iButtonMask, const ::int_point& pointRoot, const ::int_point& pointClient)
+   bool toolbar::_001OnMouseEx(unsigned int uMessage, int iButtonMask, const ::int_point& pointRoot, const ::int_point& pointClient)
    {
 
       //auto pointClient = pointClientParameter * m_pdesktopwindow->m_scManager.getScale();

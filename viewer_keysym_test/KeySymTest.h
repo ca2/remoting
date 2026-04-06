@@ -61,5 +61,5 @@ private:
 
   bool m_isNextEventInSeries;
 
-  LogWriter m_log;
+  LogWriter m_plogwriter;
 };

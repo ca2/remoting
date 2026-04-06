@@ -60,7 +60,7 @@ private:
   bool m_hasNewClip;
   critical_section m_storedClipMut;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __CLIPBOARDEXCHANGE_H__

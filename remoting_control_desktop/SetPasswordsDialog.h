@@ -62,11 +62,11 @@ public:
 protected:
   void initControls();
 
-  virtual BOOL onInitDialog();
-  virtual BOOL onNotify(UINT controlID, LPARAM data);
-  virtual BOOL onCommand(UINT controlID, UINT notificationID);
-  virtual BOOL onClose();
-  virtual BOOL onDestroy();
+  virtual bool onInitDialog();
+  virtual bool onNotify(unsigned int controlID, ::lparam data);
+  virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
+  virtual bool onClose();
+  virtual bool onDestroy();
 
   void onOkButtonClick();
   void onUseRfbAuthCheckBoxClick();
@@ -78,7 +78,7 @@ protected:
   // Enables and disables the edit controls by the current state.
   void updateEditControls();
 
-  BOOL checkAnsiConversion(::string &plainTextInUTF16);
+  bool checkAnsiConversion(::string &plainTextInUTF16);
 
 
   CheckBox m_dontChangeRfbAuthSettingsRadio;

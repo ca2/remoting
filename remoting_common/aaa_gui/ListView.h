@@ -36,7 +36,7 @@
 typedef struct
 {
   int index;
-  LPARAM tag;
+  ::lparam tag;
    ::pointer < particle > m_pparticle;
 } ListViewItem;
 
@@ -81,13 +81,13 @@ public:
   // and user data(tag)
   //
 
-  void addItem(int index, const ::scoped_string & scopedstrCaption, LPARAM tag);
+  void addItem(int index, const ::scoped_string & scopedstrCaption, ::lparam tag);
 
   //
   // Inserts new item to ::list_base view
   //
 
-  void addItem(int index, const ::scoped_string & scopedstrCaption, LPARAM tag, int imageIndex);
+  void addItem(int index, const ::scoped_string & scopedstrCaption, ::lparam tag, int imageIndex);
 
   //
   // Removes item with specified index from ::list_base view
@@ -111,13 +111,13 @@ public:
   // Changes user data (tag) of ::list_base view item with specified index
   //
 
-  void setItemData(int index, LPARAM tag);
+  void setItemData(int index, ::lparam tag);
 
   //
   // Returns user data of ::list_base view item with specified index
   //
 
-  LPARAM getItemData(int index);
+  ::lparam getItemData(int index);
 
   //
   // Returns first selected ::list_base view item 

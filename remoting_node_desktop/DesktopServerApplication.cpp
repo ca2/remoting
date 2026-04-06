@@ -50,7 +50,7 @@ DesktopServerApplication::DesktopServerApplication(HINSTANCE appInstance,
   m_clientLogWriter(LogNames::LOG_PIPE_PUBLIC_NAME,
                 LogNames::SERVER_LOG_FILE_STUB_NAME),
   m_contextSwitchResolution(1),
-  m_log(&m_clientLogWriter)
+  m_plogwriter(&m_clientLogWriter)
 {
   try {
     m_clientLogWriter.connect();
@@ -62,7 +62,7 @@ DesktopServerApplication::DesktopServerApplication(HINSTANCE appInstance,
   cmdLineParser.parse(cmdArgs);
 
   // Keep session id
-  DWORD baseSessionId = WTS::getActiveConsoleSessionId(&m_log);
+  DWORD baseSessionId = WTS::getActiveConsoleSessionId(&m_plogwriter);
   m_configurator.addListener(this);
   m_configurator.load();
 
@@ -94,33 +94,33 @@ DesktopServerApplication::DesktopServerApplication(HINSTANCE appInstance,
     readPipeHandle = (HANDLE)mem[1];
     writePipeHandle = (HANDLE)mem[2];
     maxPortionSize = (unsigned int)mem[3];
-    m_clToSrvChan = new AnonymousPipe(readPipeHandle, writePipeHandle, maxPortionSize, &m_log);
-    m_log.info("Client->server readPipeHandle = %p, writePipeHandle = %p", readPipeHandle, writePipeHandle);
+    m_clToSrvChan = new AnonymousPipe(readPipeHandle, writePipeHandle, maxPortionSize, &m_plogwriter);
+    m_plogwriter.info("Client->server readPipeHandle = %p, writePipeHandle = %p", readPipeHandle, writePipeHandle);
 
     readPipeHandle = (HANDLE)mem[4];
     writePipeHandle = (HANDLE)mem[5];
     maxPortionSize = (unsigned int)mem[6];
-    m_srvToClChan = new AnonymousPipe(readPipeHandle, writePipeHandle, maxPortionSize, &m_log);
-    m_log.info("Server->client readPipeHandle = %p, writePipeHandle = %p", readPipeHandle, writePipeHandle);
+    m_srvToClChan = new AnonymousPipe(readPipeHandle, writePipeHandle, maxPortionSize, &m_plogwriter);
+    m_plogwriter.info("Server->client readPipeHandle = %p, writePipeHandle = %p", readPipeHandle, writePipeHandle);
 
     m_clToSrvGate = new BlockingGate(m_clToSrvChan);
     m_srvToClGate = new BlockingGate(m_srvToClChan);
 
     // Server initializations
-    m_dispatcher = new DesktopSrvDispatcher(m_clToSrvGate, this, &m_log);
+    m_dispatcher = new DesktopSrvDispatcher(m_clToSrvGate, this, &m_plogwriter);
 
-    m_updHandlerSrv = new UpdateHandlerServer(m_srvToClGate, m_dispatcher, this, &m_log);
-    m_uiSrv = new UserInputServer(m_srvToClGate, m_dispatcher, this, &m_log);
-    m_cfgServer = new ConfigServer(m_dispatcher, &m_log);
+    m_updHandlerSrv = new UpdateHandlerServer(m_srvToClGate, m_dispatcher, this, &m_plogwriter);
+    m_uiSrv = new UserInputServer(m_srvToClGate, m_dispatcher, this, &m_plogwriter);
+    m_cfgServer = new ConfigServer(m_dispatcher, &m_plogwriter);
     m_gateKickHandler = new GateKickHandler(m_dispatcher);
 
     // Start servers
     m_dispatcher->resume();
 
     // Spy for the session change.
-    m_sessionChangesWatcher = new SessionChangesWatcher(this, &m_log);
+    m_sessionChangesWatcher = new SessionChangesWatcher(this, &m_plogwriter);
   } catch (::exception &e) {
-    m_log.error("Desktop server application failed with error: {}",e.get_message());
+    m_plogwriter.error("Desktop server application failed with error: {}",e.get_message());
     freeResources();
     throw;
   }
@@ -128,9 +128,9 @@ DesktopServerApplication::DesktopServerApplication(HINSTANCE appInstance,
 
 DesktopServerApplication::~DesktopServerApplication()
 {
-  m_log.info("The Desktop server application destructor has been called");
+  m_plogwriter.info("The Desktop server application destructor has been called");
   freeResources();
-  m_log.info("Desktop server application has been terminated");
+  m_plogwriter.info("Desktop server application has been terminated");
 }
 
 void DesktopServerApplication::freeResources()
@@ -138,13 +138,13 @@ void DesktopServerApplication::freeResources()
   try {
     if (m_clToSrvChan) m_clToSrvChan->close();
   } catch (::exception &e) {
-    m_log.error("Cannot close client->server channel: {}",
+    m_plogwriter.error("Cannot close client->server channel: {}",
                e.get_message());
   }
   try {
     if (m_srvToClChan) m_srvToClChan->close();
   } catch (::exception &e) {
-    m_log.error("Cannot close server->client channel: {}",
+    m_plogwriter.error("Cannot close server->client channel: {}",
                e.get_message());
   }
 
@@ -167,7 +167,7 @@ void DesktopServerApplication::freeResources()
 
 void DesktopServerApplication::onAnObjectEvent()
 {
-  m_log.error("An error has been occurred in the desktop server."
+  m_plogwriter.error("An error has been occurred in the desktop server."
              " Application will be closed.");
   WindowsApplication::shutdown();
 }
@@ -179,13 +179,13 @@ void DesktopServerApplication::onConfigReload(ServerConfig *serverConfig)
 int DesktopServerApplication::run()
 {
   try {
-    WallpaperUtil wp(&m_log);
+    WallpaperUtil wp(&m_plogwriter);
 
     int retCode = WindowsApplication::run();
-    m_log.info("Desktop server terminated with return code = {}", retCode);
+    m_plogwriter.info("Desktop server terminated with return code = {}", retCode);
     return retCode;
   } catch (::exception &e) {
-    m_log.error("Desktop server has been terminated with error: {}",
+    m_plogwriter.error("Desktop server has been terminated with error: {}",
                e.get_message());
     return 0;
   }

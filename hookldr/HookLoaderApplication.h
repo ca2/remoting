@@ -43,9 +43,9 @@ private:
   virtual void registerWindowClass(WNDCLASS *wndClass);
   virtual int processMessages();
 
-  static LRESULT CALLBACK hookLoaderWndProc(HWND hWnd, UINT msg,
-                                            WPARAM wparam,
-                                            LPARAM lparam);
+  static LRESULT CALLBACK hookLoaderWndProc(HWND hWnd, unsigned int msg,
+                                            ::wparam wparam,
+                                            ::lparam lparam);
 
   ::string m_commandLine;
 

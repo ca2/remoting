@@ -55,11 +55,11 @@ protected:
   Process m_hookLoader32;
 
 private:
-  void broadcastMessage(UINT scopedstrMessage);
+  void broadcastMessage(unsigned int scopedstrMessage);
 
   static const TCHAR HOOK_LOADER_NAME[];
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __HOOKSUPDATEDETECTOR_H__

@@ -28,5 +28,5 @@
 class CLASS_DECL_REMOTING_COMMON HookEventListener
 {
 public:
-  virtual LRESULT onHookProc(int code, WPARAM wParam, LPARAM lParam) = 0;
+  virtual LRESULT onHookProc(int code, ::wparam wParam, ::lparam lParam) = 0;
 };

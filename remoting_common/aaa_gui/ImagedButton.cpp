@@ -46,10 +46,10 @@ void ImagedButton::drawItem(LPDRAWITEMSTRUCT dis)
   HDC dc = dis->hDC;
 
   // button state
-  BOOL isPressed = (dis->itemState & ODS_SELECTED);
-  BOOL isFocused = (dis->itemState & ODS_FOCUS);
-  BOOL isDisabled = (dis->itemState & ODS_DISABLED);
-  BOOL drawFocusRect = !(dis->itemState & ODS_NOFOCUSRECT);
+  bool isPressed = (dis->itemState & ODS_SELECTED);
+  bool isFocused = (dis->itemState & ODS_FOCUS);
+  bool isDisabled = (dis->itemState & ODS_DISABLED);
+  bool drawFocusRect = !(dis->itemState & ODS_NOFOCUSRECT);
 
   RECT itemRect = dis->rcItem;
   SetBkMode(dc, TRANSPARENT);
@@ -89,7 +89,7 @@ void ImagedButton::drawItem(LPDRAWITEMSTRUCT dis)
       FrameRect(dc, &itemRect, shadow);
       DeleteObject(shadow);
     } else {
-      UINT uState = DFCS_BUTTONPUSH |
+      unsigned int uState = DFCS_BUTTONPUSH |
                     ((m_mouseOver) ? DFCS_HOT : 0) |
                     ((isPressed) ? DFCS_PUSHED : 0);
 
@@ -218,14 +218,14 @@ void ImagedButton::calcRect(RECT* prectangleButton, bool isButtonPressed,
 
 void ImagedButton::drawIcon(HDC* dc, RECT* prectangleImage, bool isPressed, bool isDisabled)
 {
-  DrawState(*dc, NULL, NULL, (LPARAM)*m_icon, 0,
+  DrawState(*dc, NULL, NULL, (::lparam)*m_icon, 0,
             prectangleImage->left, prectangleImage->top,
             (prectangleImage->right - prectangleImage->left),
             (prectangleImage->bottom - prectangleImage->top), 
             (isDisabled ? DSS_DISABLED : DSS_NORMAL) | DST_ICON);
 } // End of drawIcon
 
-bool ImagedButton::window_procedure(LRESULT &lresul, UINT scopedstrMessage, ::wparam wparam, ::lparam lparam)
+bool ImagedButton::window_procedure(LRESULT &lresul, unsigned int scopedstrMessage, ::wparam wparam, ::lparam lparam)
 {
   //ImagedButton *_this = (ImagedButton *)GetWindowLongPtr(hWnd, GWLP_USERDATA);
 

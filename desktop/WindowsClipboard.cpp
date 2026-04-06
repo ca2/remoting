@@ -31,7 +31,7 @@ WindowsClipboard::WindowsClipboard(ClipboardListener *clipboardListener, LogWrit
 : MessageWindow(m_hinst, ClipboardNames::CLIPBOARD_WIN_CLASS_NAME),
   m_hwndNextViewer(0),
   m_clipboardListener(clipboardListener),
-  m_log(log)
+  m_plogwriter(log)
 {
   resume();
 }
@@ -85,9 +85,9 @@ void WindowsClipboard::readFromClipBoard(::string & clipDest) const
 // NOTE: In non-Unicode version, conversion correctness may depend on current
 //       input language. We should always use Unicode in all programs.
 #ifdef _UNICODE
-  const UINT CF_TCTEXT = CF_UNICODETEXT;
+  const unsigned int CF_TCTEXT = CF_UNICODETEXT;
 #else
-  const UINT CF_TCTEXT = CF_TEXT;
+  const unsigned int CF_TCTEXT = CF_TEXT;
 #endif
 
   clipDest-= "";
@@ -106,7 +106,7 @@ void WindowsClipboard::readFromClipBoard(::string & clipDest) const
   CloseClipboard();
 }
 
-bool WindowsClipboard::wndProc(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
+bool WindowsClipboard::wndProc(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam)
 {
   int fake = 3;
   switch (scopedstrMessage)
@@ -156,7 +156,7 @@ void WindowsClipboard::onTerminate()
 
 void WindowsClipboard::execute()
 {
-  m_log->information("clipboard thread id = {}", getThreadId());
+  m_plogwriter->information("clipboard thread id = {}", getThreadId());
 
   if (!createWindow()) {
     return;

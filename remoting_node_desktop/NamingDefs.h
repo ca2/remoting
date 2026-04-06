@@ -94,8 +94,8 @@ public:
   static const TCHAR HOOK_LOADER_WINDOW_CLASS[];
   static const TCHAR HOOK_TARGET_WIN_CLASS_NAME[];
   static const TCHAR HOOK_LOADER_NAME[];
-  static const UINT LOADER_CLOSE_CODE;
-  static const UINT SPEC_IPC_CODE;
+  static const unsigned int LOADER_CLOSE_CODE;
+  static const unsigned int SPEC_IPC_CODE;
 };
 
 class DefaultNames

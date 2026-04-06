@@ -123,7 +123,7 @@ private:
   bool m_winIsPressed;
   bool m_ctrlAltDelEnabled;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 

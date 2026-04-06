@@ -28,7 +28,7 @@
 SessionChangesWatcher::SessionChangesWatcher(AnEventListener *extSessionChangesListener,
                                              LogWriter *log)
 : m_extSessionChangesListener(extSessionChangesListener),
-  m_log(log)
+  m_plogwriter(log)
 {
   ProcessIdToSessionId(GetCurrentProcessId(), &m_baseSessionId);
   resume();
@@ -43,20 +43,20 @@ SessionChangesWatcher::~SessionChangesWatcher()
 void SessionChangesWatcher::execute()
 {
   DWORD prevSession = m_baseSessionId;
-  bool isRdp = WTS::SessionIsRdpSession(prevSession, m_log);
+  bool isRdp = WTS::SessionIsRdpSession(prevSession, m_plogwriter);
   ::string prevDeskName, currDeskName;
   DesktopSelector::getThreadDesktopName(&prevDeskName);
 
   while (!isTerminating()) {
     DWORD currSessionId = prevSession;
     if (!isRdp) {
-      currSessionId = WTS::getActiveConsoleSessionId(m_log);
+      currSessionId = WTS::getActiveConsoleSessionId(m_plogwriter);
     }
     bool sessionChanged = prevSession != currSessionId;
     bool desktopInfoIsAvailable = DesktopSelector::getCurrentDesktopName(&currDeskName);
     bool desktopChanged = !currDeskName.isEqualTo(&prevDeskName);
     if (sessionChanged || desktopChanged || !desktopInfoIsAvailable) {
-      m_log->debug("Session or desktop has been changed."
+      m_plogwriter->debug("Session or desktop has been changed."
                    " The process session = %u, current session = %u"
                    " The process desktop = {}, current desktop = {}",
                    (unsigned int)prevSession, (unsigned int)currSessionId,

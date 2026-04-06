@@ -36,7 +36,7 @@
 class CLASS_DECL_REMOTING_COMMON TcpConnection
 {
 public:
-  TcpConnection(LogWriter *logWriter);
+  TcpConnection(::subsystem::LogWriter * plogwriter);
   virtual ~TcpConnection();
 
   void bind(const ::scoped_string & scopedstrHost, unsigned short port);
@@ -63,7 +63,7 @@ private:
   bool m_wasConnected;
   bool m_isEstablished;
 
-  LogWriter *m_logWriter;
+  LogWriter *m_plogwriter;
 
   mutable critical_section m_connectLock;
 };

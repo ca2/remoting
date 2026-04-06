@@ -39,7 +39,7 @@ ProcessHandle::~ProcessHandle()
 }
 
 void ProcessHandle::openProcess(DWORD dwDesiredAccess,
-                                BOOL bInheritHandle,
+                                bool bInheritHandle,
                                 DWORD dwProcessId)
 {
   m_hProcess = OpenProcess(dwDesiredAccess, bInheritHandle, dwProcessId);

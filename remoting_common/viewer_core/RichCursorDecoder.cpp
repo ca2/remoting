@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "RichCursorDecoder.h"
 
-RichCursorDecoder::RichCursorDecoder(LogWriter *logWriter)
+RichCursorDecoder::RichCursorDecoder(::subsystem::LogWriter * plogwriter)
 : PseudoDecoder(logWriter)
 {
   m_encoding = PseudoEncDefs::RICH_CURSOR;

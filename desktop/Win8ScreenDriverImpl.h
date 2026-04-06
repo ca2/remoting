@@ -77,7 +77,7 @@ private:
   // This function always return the DX DXGI_FORMAT_B8G8R8A8_UNORM format in the PixelFormat type.
   PixelFormat getDxPixelFormat() const;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 
   ThreadCollector m_deskDuplThreadBundle;
 

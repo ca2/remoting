@@ -30,7 +30,7 @@
 class CLASS_DECL_REMOTING_COMMON HexTileDecoder : public DecoderOfRectangle
 {
 public:
-  HexTileDecoder(LogWriter *logWriter);
+  HexTileDecoder(::subsystem::LogWriter * plogwriter);
   virtual ~HexTileDecoder();
 
 protected:

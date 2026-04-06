@@ -84,7 +84,7 @@ size_t WinDxgiOutputDuplication::getFrameMoveRects(::array_base<DXGI_OUTDUPL_MOV
 {
   // Get move rect buffer size.
   char stub;
-  UINT reqBufSize = 0;
+  unsigned int reqBufSize = 0;
   HRESULT hr;
   hr = m_outDupl->GetFrameMoveRects(reqBufSize, reinterpret_cast<DXGI_OUTDUPL_MOVE_RECT *>(&stub), &reqBufSize);
   if (!FAILED(hr)) {
@@ -94,10 +94,10 @@ size_t WinDxgiOutputDuplication::getFrameMoveRects(::array_base<DXGI_OUTDUPL_MOV
   }
 
   size_t elementSize = sizeof((*moveRects)[0]);
-  UINT bufSize = (UINT)(moveRects->size() * elementSize);
+  unsigned int bufSize = (unsigned int)(moveRects->size() * elementSize);
   if (reqBufSize > bufSize) {
     moveRects->resize(reqBufSize / elementSize);
-    bufSize = (UINT)(moveRects->size() * elementSize);
+    bufSize = (unsigned int)(moveRects->size() * elementSize);
   }
 
   // Get move rectangles.
@@ -112,7 +112,7 @@ size_t WinDxgiOutputDuplication::getFrameDirtyRects(::array_base<RECT> *dirtyRec
 {
   // Get dirty rect buffer size.
   char stub;
-  UINT reqBufSize = 0;
+  unsigned int reqBufSize = 0;
   HRESULT hr;
   hr = m_outDupl->GetFrameDirtyRects(reqBufSize, reinterpret_cast<RECT *>(&stub), &reqBufSize);
   if (!FAILED(hr)) {
@@ -122,10 +122,10 @@ size_t WinDxgiOutputDuplication::getFrameDirtyRects(::array_base<RECT> *dirtyRec
   }
 
   size_t elementSize = sizeof((*dirtyRects)[0]);
-  UINT bufSize = (UINT)(dirtyRects->size() * elementSize);
+  unsigned int bufSize = (unsigned int)(dirtyRects->size() * elementSize);
   if (reqBufSize > bufSize) {
     dirtyRects->resize(reqBufSize / elementSize);
-    bufSize = (UINT)(dirtyRects->size() * elementSize);
+    bufSize = (unsigned int)(dirtyRects->size() * elementSize);
   }
 
   // Get dirty rectangles.
@@ -136,7 +136,7 @@ size_t WinDxgiOutputDuplication::getFrameDirtyRects(::array_base<RECT> *dirtyRec
   return bufSize / elementSize;
 }
 
-void WinDxgiOutputDuplication::getFrameCursorShape(CursorShape *cursorShape, UINT pointerShapeBufferSize, LogWriter *log)
+void WinDxgiOutputDuplication::getFrameCursorShape(CursorShape *cursorShape, unsigned int pointerShapeBufferSize, LogWriter *log)
 {
   //log->debug("{}", pointerShapeBufferSize);
   // This function can calculate required buffer size by self but the size is already known.
@@ -145,10 +145,10 @@ void WinDxgiOutputDuplication::getFrameCursorShape(CursorShape *cursorShape, UIN
 	  return;
   }
   HRESULT hr;
-  UINT reqSize = 0;
+  unsigned int reqSize = 0;
   ::array_base<char> buffer(pointerShapeBufferSize);
   DXGI_OUTDUPL_POINTER_SHAPE_INFO shapeInfo;
-  hr = m_outDupl->GetFramePointerShape((UINT)buffer.size(), &buffer.front(), &reqSize, &shapeInfo);
+  hr = m_outDupl->GetFramePointerShape((unsigned int)buffer.size(), &buffer.front(), &reqSize, &shapeInfo);
   log->debug("CursorShapeInfo: pounter info buffer size: {}, required: {}", pointerShapeBufferSize, reqSize);
   if (FAILED(hr)) {
     throw WinDxException("Can't get frame cursor shape with GetFramePointerShape() calling", hr);
@@ -165,7 +165,7 @@ void WinDxgiOutputDuplication::getFrameCursorShape(CursorShape *cursorShape, UIN
   PixelFormat pf = StandardPixelFormatFactory::create32bppPixelFormat();
   newCursorShape.setHotSpot(shapeInfo.HotSpot.x, shapeInfo.HotSpot.y);
 
-  UINT pitch;
+  unsigned int pitch;
   ::int_size dim;
 
   if (shapeInfo.Type == DXGI_OUTDUPL_POINTER_SHAPE_TYPE_MONOCHROME) {

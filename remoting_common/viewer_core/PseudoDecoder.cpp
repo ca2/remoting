@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "PseudoDecoder.h"
 
-PseudoDecoder::PseudoDecoder(LogWriter *logWriter)
+PseudoDecoder::PseudoDecoder(::subsystem::LogWriter * plogwriter)
 : Decoder(logWriter)
 {
 }

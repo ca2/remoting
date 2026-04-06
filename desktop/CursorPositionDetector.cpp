@@ -30,7 +30,7 @@ CursorPositionDetector::CursorPositionDetector(UpdateKeeper *updateKeeper,
                              UpdateListener *updateListener,
                              LogWriter *log)
 : UpdateDetector(updateKeeper, updateListener),
-  m_log(log)
+  m_plogwriter(log)
 {
 }
 
@@ -52,7 +52,7 @@ void CursorPositionDetector::onTerminate()
 
 void CursorPositionDetector::execute()
 {
-  m_log->information("mouse detector thread id = {}", getThreadId());
+  m_plogwriter->information("mouse detector thread id = {}", getThreadId());
 
   Point curPoint;
 

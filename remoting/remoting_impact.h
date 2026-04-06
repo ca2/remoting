@@ -85,7 +85,7 @@ public:
 
   // Inherited from WindowsApplication
   void registerWindowClass(WNDCLASS *wndClass);
-  static LRESULT CALLBACK wndProc(HWND hWnd, UINT msg, WPARAM wparam, LPARAM lparam);
+  static LRESULT CALLBACK wndProc(HWND hWnd, unsigned int msg, ::wparam wparam, ::lparam lparam);
   virtual void createWindow(const ::scoped_string & scopedstrClassName);
   int processMessages();
 
@@ -103,7 +103,7 @@ public:
   static const int WM_USER_ABOUT = WM_USER + 4;
 
   // This scopedstrMessage need send if you need reconnect to host.
-  // LPARAM contained pointer to ConnectionData.
+  // ::lparam contained pointer to ConnectionData.
   static const int WM_USER_RECONNECT = WM_USER + 5;
 
   // This scopedstrMessage need send if config is changed.
@@ -120,7 +120,7 @@ public:
 
   void registerViewerWindowClass();
   void unregisterViewerWindowClass();
-  static LRESULT CALLBACK wndProcViewer(HWND hWnd, UINT msg, WPARAM wparam, LPARAM lparam);
+  static LRESULT CALLBACK wndProcViewer(HWND hWnd, unsigned int msg, ::wparam wparam, ::lparam lparam);
 
   void runInstance(ConnectionData & sonData, const ConnectionConfig & config);
   void runInstance(const ::scoped_string & hostName, const ConnectionConfig & config);
@@ -128,7 +128,7 @@ public:
   // This method return true, if login dialog is visible.
   bool isVisibleLoginDialog() const;
 
-  bool onTimer(WPARAM idTimer);
+  bool onTimer(::wparam idTimer);
 
   ViewerCollector m_instances;
 
@@ -142,7 +142,7 @@ public:
 
   bool m_isListening;
   
-  LogWriter * m_logWriter;
+  LogWriter * m_plogwriter;
 
   AboutDialog m_aboutDialog;
   ConfigurationDialog m_configurationDialog;

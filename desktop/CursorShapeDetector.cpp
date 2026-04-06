@@ -34,7 +34,7 @@ CursorShapeDetector::CursorShapeDetector(UpdateKeeper *updateKeeper,
 : UpdateDetector(updateKeeper, updateListener),
   m_mouseGrabber(mouseGrabber),
   m_mouseGrabLocMut(mouseGrabLocMut),
-  m_log(log)
+  m_plogwriter(log)
 {
 }
 
@@ -51,7 +51,7 @@ void CursorShapeDetector::onTerminate()
 
 void CursorShapeDetector::execute()
 {
-  m_log->information("mouse shape detector thread id = {}", getThreadId());
+  m_plogwriter->information("mouse shape detector thread id = {}", getThreadId());
 
   while (!isTerminating()) {
     bool isCursorShapeChanged;

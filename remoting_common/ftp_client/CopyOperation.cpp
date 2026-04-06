@@ -28,7 +28,7 @@ namespace remoting
 {
    namespace ftp
    {
-      CopyOperation::CopyOperation(LogWriter *logWriter)
+      CopyOperation::CopyOperation(::subsystem::LogWriter * plogwriter)
       : FileTransferOperation(logWriter),
         m_copyListener(0),
         m_totalBytesToCopy(0),

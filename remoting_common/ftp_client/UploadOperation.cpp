@@ -244,7 +244,7 @@ namespace remoting
       {
          unsigned long long fileSize = 0;
 
-         auto pfileitem = m_logWriter->file_item(pathToFile);
+         auto pfileitem = m_plogwriter->file_item(pathToFile);
 
          if (pfileitem->is_folder())
          {
@@ -326,9 +326,9 @@ namespace remoting
          ::string scopedstrMessage;
 
          // Try ::list_base files from folder
-         FolderListener listener(m_logWriter, m_pathToSourceFile);
+         FolderListener listener(m_plogwriter, m_pathToSourceFile);
          if (listener.list()) {
-            m_toCopy->setChild(m_logWriter, listener.m_fileinfoa);
+            m_toCopy->setChild(m_plogwriter, listener.m_fileinfoa);
          } else {
             // Logging
             ::string scopedstrMessage;

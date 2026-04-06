@@ -167,7 +167,7 @@ protected:
   // Determinates if file transfer is enabled.
   bool m_enabled;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 

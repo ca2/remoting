@@ -42,7 +42,7 @@ protected:
 private:
   bool m_serviceMode;
 
-  LogWriter m_log;
+  LogWriter m_plogwriter;
 };
 
 //// __WSCONFIGRUNNER_H__

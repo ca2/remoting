@@ -39,7 +39,7 @@
  * "autoflush on unlock" is removed.
  * @author enikey.
  */
-class CLASS_DECL_REMOTING_COMMON RfbOutputGate : public DataOutputStream,
+class CLASS_DECL_REMOTING_COMMON RfbOutputGate : public ::subsystem::DataOutputStream,
                       public critical_section
 {
 public:
@@ -47,7 +47,7 @@ public:
    * Creates new rfb output gate.
    * @param stream real output stream.
    */
-  RfbOutputGate(OutputStream *stream);
+  RfbOutputGate(::subsystem::OutputStream *stream);
   /**
    * Deletes rfb output gate.
    */
@@ -63,7 +63,7 @@ private:
   /**
    * Tunnel that adds buffering.
    */
-  BufferedOutputStream *m_tunnel;
+  ::subsystem::BufferedOutputStream *m_tunnel;
 };
 
 

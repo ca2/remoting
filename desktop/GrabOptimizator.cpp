@@ -30,7 +30,7 @@ GrabOptimizator::GrabOptimizator(LogWriter *log)
   m_wholeTSum(0),
   m_wholeS(0),
   m_timer(1000 * 60 * 30),
-  m_log(log)
+  m_plogwriter(log)
 {
 }
 
@@ -75,23 +75,23 @@ bool GrabOptimizator::grab(const Region *grabRegion, ScreenDriver *grabber)
 
     if (boundsRectT <= estimatedFragTime) {
       __int64 realBoundsRectTime = grabOneRect(boundsRect, grabber);
-      m_log->debug("Bounds rectangle grab has been preferred:"
+      m_plogwriter->debug("Bounds rectangle grab has been preferred:"
                  " bounds rectangle time = {},"
                  " estimated fragment time = {},"
                  " estimated bounds rect time = {}",
                  (int)realBoundsRectTime, (int)estimatedFragTime,
                  (int)boundsRectT);
       // TEST:
-      //m_log->debug("Test: fragment grab time = {}",
+      //m_plogwriter->debug("Test: fragment grab time = {}",
       //           (int)grabFragments(&rects, grabber));
     } else {
       __int64 realFragTime = grabFragments(&rects, grabber);
-      m_log->debug("Fragment grab has been preferred:"
+      m_plogwriter->debug("Fragment grab has been preferred:"
                  " fragment time = {}, estimated fragment time = {},"
                  " estimated bounds rect time = {}",
                  (int)realFragTime, (int)estimatedFragTime, (int)boundsRectT);
       // TEST:
-      //m_log->debug("Test: bounds rectangle time = {}",
+      //m_plogwriter->debug("Test: bounds rectangle time = {}",
       //           (int)grabOneRect(&boundsRect, grabber));
     }
   } else {
@@ -154,14 +154,14 @@ bool GrabOptimizator::getGCompleted()
 void GrabOptimizator::refreshStatistic(ScreenDriver *grabber)
 {
   if (m_timer.isElapsed() && getOptimizationAvailable(grabber)) {
-    m_log->debug("The log statistics before refreshing:");
+    m_plogwriter->debug("The log statistics before refreshing:");
     logStatistic();
 
     removeFirstWholeTElement();
     removeFirstElementsFromFragmentStats();
 
     m_timer.reset();
-    m_log->debug("The log statistics after refreshing:");
+    m_plogwriter->debug("The log statistics after refreshing:");
     logStatistic();
   }
 }
@@ -336,7 +336,7 @@ void GrabOptimizator::removeFirstElementsFromFragmentStats()
 
 void GrabOptimizator::logStatistic()
 {
-  m_log->debug("GrabOptimizator::m_wholeS : {}",
+  m_plogwriter->debug("GrabOptimizator::m_wholeS : {}",
              m_wholeS);
 
   ::string value;
@@ -349,7 +349,7 @@ void GrabOptimizator::logStatistic()
   }
   double avgWholeT = m_wholeTElements.size() != 0 ?
                      m_wholeTSum / m_wholeTElements.size() : 0;
-  m_log->debug("GrabOptimizator::m_wholeT average: %.2f;"
+  m_plogwriter->debug("GrabOptimizator::m_wholeT average: %.2f;"
              " GrabOptimizator::m_wholeTSum: %.2f;"
              " GrabOptimizator::m_wholeTElements: {}",
              avgWholeT,
@@ -365,7 +365,7 @@ void GrabOptimizator::logStatistic()
   }
   double avgG = m_gElements.size() != 0 ?
                 m_gSum / m_gElements.size() : 0;
-  m_log->debug("GrabOptimizator::m_g average: %.2f;"
+  m_plogwriter->debug("GrabOptimizator::m_g average: %.2f;"
              " GrabOptimizator::m_gSum: %.2f;"
              " GrabOptimizator::m_gElements: {};",
              avgG,

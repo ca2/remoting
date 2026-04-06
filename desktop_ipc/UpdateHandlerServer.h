@@ -62,7 +62,7 @@ protected:
   UpdateHandlerImpl *m_updateHandler;
   AnEventListener *m_extTerminationListener;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __UPDATEHANDLERSERVER_H__

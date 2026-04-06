@@ -35,7 +35,7 @@ UpdateFilter::UpdateFilter(ScreenDriver *screenDriver,
   m_frameBuffer(frameBuffer),
   m_fbMutex(frameBufferCriticalSection),
   m_grabOptimizator(log),
-  m_log(log)
+  m_plogwriter(log)
 {
 }
 
@@ -45,13 +45,13 @@ UpdateFilter::~UpdateFilter()
 
 void UpdateFilter::filter(UpdateContainer *updateContainer)
 {
-  m_log->debug("UpdateFilter::filter()");
+  m_plogwriter->debug("UpdateFilter::filter()");
   critical_section_lock al(m_fbMutex);
 
   FrameBuffer *screenFrameBuffer = m_screenDriver->getScreenBuffer();
 
   // Checking for buffers equal
-  m_log->debug("UpdateFilter::filter : Checking for buffers equal");
+  m_plogwriter->debug("UpdateFilter::filter : Checking for buffers equal");
   if (!screenFrameBuffer->isEqualTo(m_frameBuffer)) {
     return;
   }
@@ -64,7 +64,7 @@ void UpdateFilter::filter(UpdateContainer *updateContainer)
   ::array_base<::int_rectangle>::iterator iRect;
 
   // Reproduce CopyRect operations in m_frameBuffer.
-  m_log->debug("UpdateFilter::filter : Reproduce CopyRect operations in m_frameBuffer");
+  m_plogwriter->debug("UpdateFilter::filter : Reproduce CopyRect operations in m_frameBuffer");
   updateContainer->copiedRegion.getRectVector(&rects);
   Point *src = &updateContainer->copySrc;
   for (iRect = rects.begin(); iRect < rects.end(); iRect++) {
@@ -74,14 +74,14 @@ void UpdateFilter::filter(UpdateContainer *updateContainer)
 
   toCheck.getRectVector(&rects);
   // Grabbing
-  m_log->debug("grabbing region, {} rectangles", (int)rects.size());
-  ProcessorTimes pt1 = m_log->checkPoint("grabbing region");
+  m_plogwriter->debug("grabbing region, {} rectangles", (int)rects.size());
+  ProcessorTimes pt1 = m_plogwriter->checkPoint("grabbing region");
   try {
     m_grabOptimizator.grab(&toCheck, m_screenDriver);
   } catch (...) {
     return;
   }
-  ProcessorTimes pt2 = m_log->checkPoint("end of grabbing region");
+  ProcessorTimes pt2 = m_plogwriter->checkPoint("end of grabbing region");
 
   toCheck.getRectVector(&rects);
   double area = 0.0;
@@ -90,16 +90,16 @@ void UpdateFilter::filter(UpdateContainer *updateContainer)
   }
   area /= 1000000.0; // in millions of pixels
   double dt = pt2.wall.getTime(); // in milliseconds
-  m_log->debug("Before grabbing region %f processor Mcycles, %f process time, %f kernel time, %f wall clock time ", 
+  m_plogwriter->debug("Before grabbing region %f processor Mcycles, %f process time, %f kernel time, %f wall clock time ", 
     pt1.cycle / 1000000., pt1.process, pt1.kernel, pt1.wall.getTime());
-  m_log->debug("After grabbing region Mpoint grabbed: %f for %f processor Mcycles. %f ms", 
+  m_plogwriter->debug("After grabbing region Mpoint grabbed: %f for %f processor Mcycles. %f ms", 
     area, pt2.cycle/1000000., dt);
-  m_log->debug("After grabbing region %f process time, %f kernel time, %f wall clock time", pt2.process, pt2.kernel, dt);
+  m_plogwriter->debug("After grabbing region %f process time, %f kernel time, %f wall clock time", pt2.process, pt2.kernel, dt);
 
-  m_log->debug("end of grabbing region");
+  m_plogwriter->debug("end of grabbing region");
 
   // Filtering
-  pt1 = m_log->checkPoint("filtering changed");
+  pt1 = m_plogwriter->checkPoint("filtering changed");
   updateContainer->changedRegion.clear();
   ::int_rectangle *rect;
   for (iRect = rects.begin(); iRect < rects.end(); iRect++) {
@@ -113,19 +113,19 @@ void UpdateFilter::filter(UpdateContainer *updateContainer)
     rect = &(*iRect);
     m_frameBuffer->copyFrom(rect, screenFrameBuffer, rect.left, rect.top);
   }
-  pt2 = m_log->checkPoint("after filtering changed");
+  pt2 = m_plogwriter->checkPoint("after filtering changed");
   dt = pt2.wall.getTime(); // in milliseconds
-  m_log->debug("Before filtering changed %f processor Mcycles, %f process time, %f kernel time, %f wall clock time ",
+  m_plogwriter->debug("Before filtering changed %f processor Mcycles, %f process time, %f kernel time, %f wall clock time ",
     pt1.cycle / 1000000., pt1.process, pt1.kernel, pt1.wall.getTime());
-  m_log->debug("After filtering changed Mpoint filtered: %f for %f processor Mcycles. %f ms",
+  m_plogwriter->debug("After filtering changed Mpoint filtered: %f for %f processor Mcycles. %f ms",
     area, pt2.cycle / 1000000., dt);
-  m_log->debug("After filtering changed %f process time, %f kernel time, %f wall clock time", pt2.process, pt2.kernel, dt);
+  m_plogwriter->debug("After filtering changed %f process time, %f kernel time, %f wall clock time", pt2.process, pt2.kernel, dt);
 }
 
 void UpdateFilter::getChangedRegion(Region *rgn, const ::int_rectangle &  rect)
 {
   
-  const UINT bytesPerPixel = m_frameBuffer->getBytesPerPixel();
+  const unsigned int bytesPerPixel = m_frameBuffer->getBytesPerPixel();
   const int bytes_per_scanline = (rect.right - rect.left) * bytesPerPixel;
 
   const int bytesPerRow = m_frameBuffer->getBytesPerRow();
@@ -187,7 +187,7 @@ void UpdateFilter::updateChangedRect(Region *rgn, const ::int_rectangle &  rect)
       return;
   }
 
-  const UINT bytesPerPixel = m_frameBuffer->getBytesPerPixel();
+  const unsigned int bytesPerPixel = m_frameBuffer->getBytesPerPixel();
 
   ::int_rectangle new_rect;
   int x, y, ay;
@@ -214,8 +214,8 @@ void UpdateFilter::updateChangedRect(Region *rgn, const ::int_rectangle &  rect)
       unsigned char *n_block_ptr = n_row_ptr;
       unsigned char *o_block_ptr = o_row_ptr;
 
-      const UINT blockright = min(x + BLOCK_SIZE, rect.right);
-      const UINT bytesPerBlockRow = (blockright-x) * bytesPerPixel;
+      const unsigned int blockright = min(x + BLOCK_SIZE, rect.right);
+      const unsigned int bytesPerBlockRow = (blockright-x) * bytesPerPixel;
 
       // Scan this block
       for (ay = y; ay < blockbottom; ay++) {
@@ -257,7 +257,7 @@ void UpdateFilter::updateChangedRect(Region *rgn, const ::int_rectangle &  rect)
 
 void UpdateFilter::updateChangedSubRect(Region *rgn, const ::int_rectangle &  rect)
 {
-  const UINT bytesPerPixel = m_frameBuffer->getBytesPerPixel();
+  const unsigned int bytesPerPixel = m_frameBuffer->getBytesPerPixel();
   int bytes_in_row = (rect.right - rect.left) * bytesPerPixel;
   int y, i;
 

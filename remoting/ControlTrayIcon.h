@@ -48,10 +48,10 @@ namespace remoting_remoting
         void showIcon();
 
         //protected:
-        static UINT WM_USER_TASKBAR;
+        static unsigned int WM_USER_TASKBAR;
 
         //protected:
-        virtual LRESULT windowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, bool *useDefWindowProc);
+        virtual LRESULT windowProc(HWND hWnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam, bool *useDefWindowProc);
 
         //
         // Show login-dialog after click "New connection..." in pop-up menu of tray icon

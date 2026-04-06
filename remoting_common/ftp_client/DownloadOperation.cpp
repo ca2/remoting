@@ -96,7 +96,7 @@ namespace remoting
 
       void DownloadOperation::onFileListReply(DataInputStream * pinput)
       {
-         m_toCopy->setChild(m_logWriter,m_replyBuffer->m_fileinfoa);
+         m_toCopy->setChild(m_plogwriter,m_replyBuffer->m_fileinfoa);
          gotoNext();
       }
 

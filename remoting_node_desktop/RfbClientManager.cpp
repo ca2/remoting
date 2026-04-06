@@ -35,18 +35,18 @@ RfbClientManager::RfbClientManager(const ::scoped_string & scopedstrServerName,
 : m_nextClientId(0),
   m_desktop(0),
   m_newConnectionEvents(newConnectionEvents),
-  m_log(log),
+  m_plogwriter(log),
   m_desktopFactory(desktopFactory)
 {
-  m_log->information("Starting rfb client manager");
+  m_plogwriter->information("Starting rfb client manager");
 }
 
 RfbClientManager::~RfbClientManager()
 {
-  m_log->information("~RfbClientManager() has been called");
+  m_plogwriter->information("~RfbClientManager() has been called");
   disconnectAllClients();
   waitUntilAllClientAreBeenDestroyed();
-  m_log->information("~RfbClientManager() has been completed");
+  m_plogwriter->information("~RfbClientManager() has been completed");
 }
 
 void RfbClientManager::onClientTerminate()
@@ -111,7 +111,7 @@ Desktop *RfbClientManager::onClientAuth(RfbClient *client)
   if (m_desktop == 0 && !m_clientList.empty()) {
     // Create WinDesktop and notify listeners that the first client has been
     // connected.
-    m_desktop = m_desktopFactory->createDesktop(this, this, this, m_log);
+    m_desktop = m_desktopFactory->createDesktop(this, this, this, m_plogwriter);
     ::std::vector<RfbClientManagerEventListener *>::iterator iter;
     for (iter = m_listeners.begin(); iter != m_listeners.end(); iter++) {
       (*iter)->afterFirstClientConnect();
@@ -214,7 +214,7 @@ bool RfbClientManager::isReadyToSend()
 
 void RfbClientManager::onAbnormalDesktopTerminate()
 {
-  m_log->error("onAbnormalDesktopTerminate() called");
+  m_plogwriter->error("onAbnormalDesktopTerminate() called");
   disconnectAllClients();
 }
 
@@ -380,19 +380,19 @@ void RfbClientManager::addNewConnection(SocketIPv4 *socket,
   ServerConfig *config = Configurator::getInstance()->getServerConfig();
   int timeout = 1000 * config->getIdleTimeout();
 
-  m_log->error("Set socket idle timeout, {} ms", timeout);
+  m_plogwriter->error("Set socket idle timeout, {} ms", timeout);
 
   try { 
     socket->setSocketOptions(SOL_SOCKET, SO_RCVTIMEO, (char*)&timeout, sizeof(timeout));
     socket->setSocketOptions(SOL_SOCKET, SO_SNDTIMEO, (char*)&timeout, sizeof(timeout));
   } catch ( SocketException ){
-    m_log->error("Can't set socket timeout, error: {}", WSAGetLastError());
+    m_plogwriter->error("Can't set socket timeout, error: {}", WSAGetLastError());
   }
 
   _ASSERT(constViewPort != 0);
 
-  m_log->error("Client #{} connected", m_nextClientId);
-  m_log->debug("new client, process memory usage: {} ", MemUsage::getCurrentMemUsage());
+  m_plogwriter->error("Client #{} connected", m_nextClientId);
+  m_plogwriter->debug("new client, process memory usage: {} ", MemUsage::getCurrentMemUsage());
 
   m_nonAuthClientList.add(new RfbClient(m_newConnectionEvents,
                                               socket, this, this, viewOnly,
@@ -401,7 +401,7 @@ void RfbClientManager::addNewConnection(SocketIPv4 *socket,
                                               constViewPort,
                                               &m_dynViewPort,
                                               timeout,
-                                              m_log));
+                                              m_plogwriter));
   m_nextClientId++;
 }
 

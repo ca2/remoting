@@ -76,7 +76,7 @@ ControlClient::ControlClient(Transport *transport,
   m_tcpDispId(0),
   m_pipeHandle(pipeHandle),
   m_authReqMessageId(0),
-  m_log(log),
+  m_plogwriter(log),
   m_repeatAuthPassed(false)
 {
   m_stream = m_transport->getIOStream();
@@ -107,10 +107,10 @@ void ControlClient::execute()
       unsigned int messageId = m_gate->readUInt32();
       unsigned int messageSize = m_gate->readUInt32();
 
-      m_log->debug("Recieved control scopedstrMessage ID %u, size %u",
+      m_plogwriter->debug("Recieved control scopedstrMessage ID %u, size %u",
                   (unsigned int)messageId, (unsigned int)messageSize);
       if (++i % 10 == 0) {
-        m_log->debug("process memory usage: {} ", MemUsage::getCurrentMemUsage());
+        m_plogwriter->debug("process memory usage: {} ", MemUsage::getCurrentMemUsage());
       }
       bool requiresControlAuth = Configurator::getInstance()->getServerConfig()->isControlAuthEnabled();
       bool repeatAuthEnabled = Configurator::getInstance()->getServerConfig()->getControlAuthAlwaysChecking();
@@ -134,7 +134,7 @@ void ControlClient::execute()
           }
           m_repeatAuthPassed = false;
           if (!authPassed) {
-            m_log->debug("Message requires control authentication");
+            m_plogwriter->debug("Message requires control authentication");
 
             m_gate->skipBytes(messageSize);
             m_gate->writeUInt32(ControlProto::REPLY_AUTH_NEEDED);
@@ -146,90 +146,90 @@ void ControlClient::execute()
 
         switch (messageId) {
         case ControlProto::AUTH_MSG_ID:
-          m_log->debug("::remoting::Window authentication requested");
+          m_plogwriter->debug("::remoting::Window authentication requested");
           authMsgRcdv();
           break;
         case ControlProto::RELOAD_CONFIG_MSG_ID:
-          m_log->debug("Command requested: Reload configuration");
+          m_plogwriter->debug("Command requested: Reload configuration");
           reloadConfigMsgRcvd();
           break;
         case ControlProto::DISCONNECT_ALL_CLIENTS_MSG_ID:
-          m_log->debug("Command requested: Disconnect all clients command requested");
+          m_plogwriter->debug("Command requested: Disconnect all clients command requested");
           disconnectAllMsgRcvd();
           break;
         case ControlProto::SHUTDOWN_SERVER_MSG_ID:
-          m_log->debug("Command requested: Shutdown command requested");
+          m_plogwriter->debug("Command requested: Shutdown command requested");
           shutdownMsgRcvd();
           break;
         case ControlProto::ADD_CLIENT_MSG_ID:
-          m_log->debug("Command requested: Attach listening viewer");
+          m_plogwriter->debug("Command requested: Attach listening viewer");
           addClientMsgRcvd();
           break;
         case ControlProto::CONNECT_TO_TCPDISP_MSG_ID:
-          m_log->debug("Connect to a tcp dispatcher command requested");
+          m_plogwriter->debug("Connect to a tcp dispatcher command requested");
           break;
         case ControlProto::GET_SERVER_INFO_MSG_ID:
-          m_log->debug("::remoting::Window client requests server info");
+          m_plogwriter->debug("::remoting::Window client requests server info");
           getServerInfoMsgRcvd();
           break;
         case ControlProto::GET_CLIENT_LIST_MSG_ID:
-          m_log->debug("::remoting::Window client requests client ::list_base");
+          m_plogwriter->debug("::remoting::Window client requests client ::list_base");
           getClientsListMsgRcvd();
           break;
         case ControlProto::SET_CONFIG_MSG_ID:
-          m_log->debug("::remoting::Window client sends new server config");
+          m_plogwriter->debug("::remoting::Window client sends new server config");
           setServerConfigMsgRcvd();
           break;
         case ControlProto::GET_CONFIG_MSG_ID:
-          m_log->debug("::remoting::Window client requests server config");
+          m_plogwriter->debug("::remoting::Window client requests server config");
           getServerConfigMsgRcvd();
           break;
         case ControlProto::GET_SHOW_TRAY_ICON_FLAG:
-          m_log->debug("::remoting::Window client requests tray icon visibility flag");
+          m_plogwriter->debug("::remoting::Window client requests tray icon visibility flag");
           getShowTrayIconFlagMsgRcvd();
           break;
         case ControlProto::UPDATE_TVNCONTROL_PROCESS_ID_MSG_ID:
-          m_log->debug("::remoting::Window client sends process ID");
+          m_plogwriter->debug("::remoting::Window client sends process ID");
           updateTvnControlProcessIdMsgRcvd();
           break;
         case ControlProto::SHARE_PRIMARY_MSG_ID:
-          m_log->debug("Share primary scopedstrMessage recieved");
+          m_plogwriter->debug("Share primary scopedstrMessage recieved");
           sharePrimaryIdMsgRcvd();
           break;
         case ControlProto::SHARE_DISPLAY_MSG_ID:
-          m_log->debug("Share display scopedstrMessage recieved");
+          m_plogwriter->debug("Share display scopedstrMessage recieved");
           shareDisplayIdMsgRcvd();
           break;
         case ControlProto::SHARE_WINDOW_MSG_ID:
-          m_log->debug("Share window scopedstrMessage recieved");
+          m_plogwriter->debug("Share window scopedstrMessage recieved");
           shareWindowIdMsgRcvd();
           break;
         case ControlProto::SHARE_RECT_MSG_ID:
-          m_log->debug("Share rect scopedstrMessage recieved");
+          m_plogwriter->debug("Share rect scopedstrMessage recieved");
           shareRectIdMsgRcvd();
           break;
         case ControlProto::SHARE_FULL_MSG_ID:
-          m_log->debug("Share full scopedstrMessage recieved");
+          m_plogwriter->debug("Share full scopedstrMessage recieved");
           shareFullIdMsgRcvd();
           break;
         case ControlProto::SHARE_APP_MSG_ID:
-          m_log->debug("Share app scopedstrMessage recieved");
+          m_plogwriter->debug("Share app scopedstrMessage recieved");
           shareAppIdMsgRcvd();
           break;
         default:
           m_gate->skipBytes(messageSize);
-          m_log->warning("Received unsupported scopedstrMessage from control client");
+          m_plogwriter->warning("Received unsupported scopedstrMessage from control client");
           throw ControlException("Unknown command");
         } // switch (messageId).
       } catch (ControlException &controlEx) {
-        m_log->error("::remoting::Exception while processing control client's request: \"{}\"",
+        m_plogwriter->error("::remoting::Exception while processing control client's request: \"{}\"",
                    controlEx.get_message());
 
         sendError(controlEx.get_message());
       }
     } // while
   } catch (::remoting::Exception &ex) {
-    m_log->error("::remoting::Exception in control client thread: \"{}\"", ex.get_message());
+    m_plogwriter->error("::remoting::Exception in control client thread: \"{}\"", ex.get_message());
   }
 }
 
@@ -274,7 +274,7 @@ void ControlClient::authMsgRcdv()
                                                      challenge,
                                                      response);
   if (!isAuthSucceed) {
-    sendError(StringTable::getString(IDS_INVALID_CONTROL_PASSWORD));
+    sendError(main_subsystem()->string_table()->getString(IDS_INVALID_CONTROL_PASSWORD));
   } else {
     m_gate->writeUInt32(ControlProto::REPLY_OK);
     m_authPassed = true;
@@ -335,7 +335,7 @@ void ControlClient::disconnectAllMsgRcvd()
 
   m_rfbClientManager->disconnectAllClients();
 
-  m_log->debug("Disconnecting clients");
+  m_plogwriter->debug("Disconnecting clients");
   m_outgoingConnectionThreadCollector.destroyAllThreads();
 }
 
@@ -380,7 +380,7 @@ void ControlClient::addClientMsgRcvd()
   OutgoingRfbConnectionThread *newConnectionThread =
                                new OutgoingRfbConnectionThread(host,
                                                                hp.getVncPort(), viewOnly,
-                                                               m_rfbClientManager, m_log);
+                                                               m_rfbClientManager, m_plogwriter);
 
   newConnectionThread->resume();
 
@@ -449,7 +449,7 @@ void ControlClient::updateTvnControlProcessIdMsgRcvd()
   try {
     WTS::duplicatePipeClientToken(m_pipeHandle);
   } catch (::exception &e) {
-    m_log->error("Can't update the control client impersonation token: {}",
+    m_plogwriter->error("Can't update the control client impersonation token: {}",
                e.get_message());
   }
   m_gate->writeUInt32(ControlProto::REPLY_OK);

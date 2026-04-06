@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "apex/innate_subsystem/BaseDialog.h"
+#include "apex/innate_subsystem/Dialog.h"
 #include "apex/innate_subsystem/Control.h"
 #include "apex/innate_subsystem/TextBox.h"
 
@@ -33,14 +33,14 @@ namespace remoting_remoting
 {
 
 
-   class NewFolderDialog : public ::innate_subsystem::BaseDialog
+   class NewFolderDialog : public ::innate_subsystem::Dialog
    {
    public:
       NewFolderDialog();
       ~NewFolderDialog();
 
 
-      virtual void initialize_new_folder_dialog(Control *parent);
+      virtual void initialize_new_folder_dialog(::innate_subsystem::Control *parent);
 
       void setFileName(const ::scoped_string & scopedstrFilename);
       ::string getFileName();

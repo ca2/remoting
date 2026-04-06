@@ -60,7 +60,7 @@ protected:
   virtual void onAcceptConnection(SocketIPv4 *socket);
 
 private:
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 

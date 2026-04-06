@@ -77,7 +77,7 @@ namespace remoting
       // Draws bitmap.
       void drawBitmap(const Bitmap *bitmap, int x, int y, int w, int h);
       // Draws text.
-      void drawText(const ::scoped_string & scopedstrText, int cchText, RECT *rect, UINT format);
+      void drawText(const ::scoped_string & scopedstrText, int cchText, RECT *rect, unsigned int format);
 
       //protected:
       //DeviceContext *m_dc;
@@ -129,7 +129,7 @@ namespace remoting
       // Draws bitmap.
       //void drawBitmap(const Bitmap *bitmap, int x, int y, int w, int h);
       // Draws text.
-      //void drawText(const ::scoped_string & scopedstrText, int cchText, RECT *rect, UINT format);
+      //void drawText(const ::scoped_string & scopedstrText, int cchText, RECT *rect, unsigned int format);
 
       //protected:
       Gdiplus::Graphics * m_pgraphics;

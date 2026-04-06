@@ -46,7 +46,7 @@ void ServerConfigDialog::setParentDialog(BaseDialog *dialog)
   m_parentDialog = dialog;
 }
 
-BOOL ServerConfigDialog::onInitDialog()
+bool ServerConfigDialog::onInitDialog()
 {
   m_config = Configurator::getInstance()->getServerConfig();
   initControls();
@@ -55,7 +55,7 @@ BOOL ServerConfigDialog::onInitDialog()
   return TRUE;
 }
 
-BOOL ServerConfigDialog::onNotify(UINT controlID, LPARAM data)
+bool ServerConfigDialog::onNotify(unsigned int controlID, ::lparam data)
 {
   if (controlID == IDC_POLLING_INTERVAL_SPIN) {
     LPNMUPDOWN scopedstrMessage = (LPNMUPDOWN)data;
@@ -66,7 +66,7 @@ BOOL ServerConfigDialog::onNotify(UINT controlID, LPARAM data)
   return TRUE;
 }
 
-BOOL ServerConfigDialog::onCommand(UINT controlID, UINT notificationID)
+bool ServerConfigDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
   if (notificationID == BN_CLICKED) {
     switch (controlID) {
@@ -146,10 +146,10 @@ bool ServerConfigDialog::validateInput()
     CommonInputValidation::validatePort(&m_httpPort) &&
     CommonInputValidation::validateUINT(
       &m_pollingInterval,
-      StringTable::getString(IDS_INVALID_POLLING_INTERVAL)) &&
+      main_subsystem()->string_table()->getString(IDS_INVALID_POLLING_INTERVAL)) &&
     CommonInputValidation::validateUINT(
       &m_localInputPriorityTimeout,
-      StringTable::getString(IDS_INVALID_INACTIVITY_TIMEOUT));
+      main_subsystem()->string_table()->getString(IDS_INVALID_INACTIVITY_TIMEOUT));
 
   if (!commonValidationOk) {
     return false;
@@ -163,7 +163,7 @@ bool ServerConfigDialog::validateInput()
   if (rfbPort == httpPort && m_acceptHttpConnections.isChecked()) {
     CommonInputValidation::notifyValidationError(
       &m_httpPort,
-      StringTable::getString(IDS_HTTP_RFB_PORTS_ARE_EQUAL));
+      main_subsystem()->string_table()->getString(IDS_HTTP_RFB_PORTS_ARE_EQUAL));
     return false;
   }
 
@@ -174,7 +174,7 @@ bool ServerConfigDialog::validateInput()
   if (pollingInterval < ServerConfig::MINIMAL_POLLING_INTERVAL) {
     CommonInputValidation::notifyValidationError(
       &m_pollingInterval,
-      StringTable::getString(IDS_POLL_INTERVAL_TOO_SMALL));
+      main_subsystem()->string_table()->getString(IDS_POLL_INTERVAL_TOO_SMALL));
     return false;
   }
 
@@ -185,7 +185,7 @@ bool ServerConfigDialog::validateInput()
   if (inactivityTimeout < ServerConfig::MINIMAL_LOCAL_INPUT_PRIORITY_TIMEOUT) {
     CommonInputValidation::notifyValidationError(
       &m_localInputPriorityTimeout,
-      StringTable::getString(IDS_INACTIVITY_TIMEOUT_TOO_SMALL));
+      main_subsystem()->string_table()->getString(IDS_INACTIVITY_TIMEOUT_TOO_SMALL));
     return false;
   }
 
@@ -197,9 +197,9 @@ bool ServerConfigDialog::validateInput()
   if (m_acceptRfbConnections.isChecked() &&
       m_useAuthentication.isChecked() &&
       !passwordSpecified) {
-    ::remoting::message_box(m_ctrlThis.get_hwnd(),
-               StringTable::getString(IDS_SET_PASSWORD_NOTIFICATION),
-               StringTable::getString(IDS_CAPTION_BAD_INPUT),
+    main_innate_subsystem()->message_box(m_ctrlThis.get_hwnd(),
+               main_subsystem()->string_table()->getString(IDS_SET_PASSWORD_NOTIFICATION),
+               main_subsystem()->string_table()->getString(IDS_CAPTION_BAD_INPUT),
                MB_ICONSTOP | MB_OK);
     return false;
   }

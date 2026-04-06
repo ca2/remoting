@@ -53,7 +53,7 @@ namespace remoting
               virtual public ListenerContainer<OperationEventListener *>
       {
       public:
-         FileTransferOperation(LogWriter *logWriter);
+         FileTransferOperation(::subsystem::LogWriter * plogwriter);
          ~FileTransferOperation() override;
 
          //
@@ -135,7 +135,7 @@ namespace remoting
          ::file::path getRemotePath(FileInfoList *currentFile, const ::scoped_string & scopedstrRemoteFolder);
 
       ///protected:
-         LogWriter *m_logWriter;
+         LogWriter *m_plogwriter;
 
          FileTransferRequestSender *m_sender;
          FileTransferReplyBuffer *m_replyBuffer;

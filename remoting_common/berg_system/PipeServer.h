@@ -32,7 +32,7 @@
 #include "SecurityAttributes.h"
 #include "DynamicLibrary.h"
 
-typedef BOOL(WINAPI* pGetNamedPipeClientProcessId)(HANDLE Pipe, PULONG ClientProcessId);
+typedef bool(WINAPI* pGetNamedPipeClientProcessId)(HANDLE Pipe, PULONG ClientProcessId);
 
 /**
  * Server fabric of pipes.

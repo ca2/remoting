@@ -66,11 +66,11 @@ TvnServer::TvnServer(bool runsInServiceContext,
   m_rfbClientManager(0),
   m_httpServer(0), m_controlServer(0), m_rfbServer(0),
   m_config(runsInServiceContext),
-  m_log(LogWriter),
+  m_plogwriter(LogWriter),
   m_contextSwitchResolution(1),
-  m_extraRfbServers(&m_log)
+  m_extraRfbServers(&m_plogwriter)
 {
-  m_log.scopedstrMessage("{} Build on {}",
+  m_plogwriter.scopedstrMessage("{} Build on {}",
                  ProductNames::SERVER_PRODUCT_NAME,
                  BuildTime::DATE);
 
@@ -93,12 +93,12 @@ TvnServer::TvnServer(bool runsInServiceContext,
 
   // Initialize windows sockets.
 
-  m_log.info("Initialize WinSock");
+  m_plogwriter.info("Initialize WinSock");
 
   try {
     WindowsSocket::startup(2, 1);
   } catch (::remoting::Exception &ex) {
-    m_log.interror("{}", ex.get_message());
+    m_plogwriter.interror("{}", ex.get_message());
   }
 
   DesktopFactory *desktopFactory = 0;
@@ -108,7 +108,7 @@ TvnServer::TvnServer(bool runsInServiceContext,
     desktopFactory = &m_applicationDesktopFactory;
   }
 
-  m_rfbClientManager = new RfbClientManager(0, newConnectionEvents, &m_log, desktopFactory);
+  m_rfbClientManager = new RfbClientManager(0, newConnectionEvents, &m_plogwriter, desktopFactory);
 
   m_rfbClientManager->addListener(this);
 
@@ -147,12 +147,12 @@ TvnServer::~TvnServer()
 
   delete m_rfbClientManager;
 
-  m_log.info("Shutdown WinSock");
+  m_plogwriter.info("Shutdown WinSock");
 
   try {
     WindowsSocket::cleanup();
   } catch (::remoting::Exception &ex) {
-    m_log.error("{}", ex.get_message());
+    m_plogwriter.error("{}", ex.get_message());
   }
 }
 
@@ -223,7 +223,7 @@ void TvnServer::getServerInfo(TvnServerInfo *info)
 
   if (rfbServerListening) {
     if (vncPasswordsError) {
-      statusString = StringTable::getString(IDS_NO_PASSWORDS_SET);
+      statusString = main_subsystem()->string_table()->getString(IDS_NO_PASSWORDS_SET);
     } else {
       // FIXME: Usage of deprecated FUNCTION!
       char localAddressString[1024];
@@ -232,17 +232,17 @@ void TvnServer::getServerInfo(TvnServerInfo *info)
       ansiString.toStringStorage(&statusString);
 
       if (!vncAuthEnabled) {
-        statusString.appendString(StringTable::getString(IDS_NO_AUTH_STATUS));
+        statusString.appendString(main_subsystem()->string_table()->getString(IDS_NO_AUTH_STATUS));
       } // if no auth enabled.
     } // accepting connections and no problem with passwords.
   } else {
-    statusString = StringTable::getString(IDS_SERVER_NOT_LISTENING);
+    statusString = main_subsystem()->string_table()->getString(IDS_SERVER_NOT_LISTENING);
   } // not accepting connections.
 
-  UINT stringId = m_runAsService ? IDS_TVNSERVER_SERVICE : IDS_TVNSERVER_APP;
+  unsigned int stringId = m_runAsService ? IDS_TVNSERVER_SERVICE : IDS_TVNSERVER_APP;
 
   info->m_statusText.formatf("{} - {}",
-                            StringTable::getString(stringId),
+                            main_subsystem()->string_table()->getString(stringId),
                             statusString);
   info->m_acceptFlag = rfbServerListening && !vncPasswordsError;
   info->m_serviceFlag = m_runAsService;
@@ -268,17 +268,17 @@ bool TvnServer::isRunningAsService() const
 void TvnServer::afterFirstClientConnect()
 {
   if (timeBeginPeriod(m_contextSwitchResolution) == TIMERR_NOERROR) {
-    m_log.scopedstrMessage("Set context switch resolution: {} ms", m_contextSwitchResolution);
+    m_plogwriter.scopedstrMessage("Set context switch resolution: {} ms", m_contextSwitchResolution);
   }
   else {
-    m_log.scopedstrMessage("Can't change context switch resolution to: {} ms", m_contextSwitchResolution);
+    m_plogwriter.scopedstrMessage("Can't change context switch resolution to: {} ms", m_contextSwitchResolution);
   }
 
 }
 
 void TvnServer::afterLastClientDisconnect()
 {
-  m_log.scopedstrMessage("Restore context switch resolution");
+  m_plogwriter.scopedstrMessage("Restore context switch resolution");
   timeEndPeriod(m_contextSwitchResolution);
 
   ServerConfig::DisconnectAction action = m_srvConfig->getDisconnectAction();
@@ -307,18 +307,18 @@ void TvnServer::afterLastClientDisconnect()
   thisModulePath.quoteSelf();
   if (isRunningAsService()) {
     bool connectToRdp = m_srvConfig->getConnectToRdpFlag();
-    process = new CurrentConsoleProcess(&m_log, connectToRdp, thisModulePath,
+    process = new CurrentConsoleProcess(&m_plogwriter, connectToRdp, thisModulePath,
                                         keys);
   } else {
     process = new Process(thisModulePath, keys);
   }
 
-  m_log.scopedstrMessage("Execute disconnect action in separate process");
+  m_plogwriter.scopedstrMessage("Execute disconnect action in separate process");
 
   try {
     process->start();
   } catch (SystemException &ex) {
-    m_log.error("Failed to start application: \"{}\"", ex.get_message());
+    m_plogwriter.error("Failed to start application: \"{}\"", ex.get_message());
   }
 
   delete process;
@@ -331,13 +331,13 @@ void TvnServer::restartHttpServer()
   stopHttpServer();
 
   if (m_srvConfig->isAcceptingHttpConnections()) {
-    m_log.scopedstrMessage("Starting HTTP server");
+    m_plogwriter.scopedstrMessage("Starting HTTP server");
     try {
       // FIXME: HTTP server should bind to localhost if only loopback
       //        connections are allowed.
-      m_httpServer = new HttpServer("0.0.0.0", m_srvConfig->getHttpPort(), m_runAsService, &m_log);
+      m_httpServer = new HttpServer("0.0.0.0", m_srvConfig->getHttpPort(), m_runAsService, &m_plogwriter);
     } catch (::remoting::Exception &ex) {
-      m_log.error("Failed to start HTTP server: \"{}\"", ex.get_message());
+      m_plogwriter.error("Failed to start HTTP server: \"{}\"", ex.get_message());
     }
   }
 }
@@ -349,11 +349,11 @@ void TvnServer::restartControlServer()
 
   stopControlServer();
 
-  m_log.scopedstrMessage("Starting control server");
+  m_plogwriter.scopedstrMessage("Starting control server");
 
   try {
     ::string pipeName;
-    ControlPipeName::createPipeName(isRunningAsService(), &pipeName, &m_log);
+    ControlPipeName::createPipeName(isRunningAsService(), &pipeName, &m_plogwriter);
 
     // FIXME: Memory leak
     SecurityAttributes *pipeSecurity = new SecurityAttributes();
@@ -362,9 +362,9 @@ void TvnServer::restartControlServer()
 
     const unsigned int maxControlServerPipeBufferSize = 0x10000;
     PipeServer *pipeServer = new PipeServer(pipeName, maxControlServerPipeBufferSize, pipeSecurity);
-    m_controlServer = new ControlServer(pipeServer , m_rfbClientManager, &m_log);
+    m_controlServer = new ControlServer(pipeServer , m_rfbClientManager, &m_plogwriter);
   } catch (::remoting::Exception &ex) {
-    m_log.error("Failed to start control server: \"{}\"", ex.get_message());
+    m_plogwriter.error("Failed to start control server: \"{}\"", ex.get_message());
   }
 }
 
@@ -381,18 +381,18 @@ void TvnServer::restartMainRfbServer()
   const ::scoped_string & scopedstrBindHost = m_srvConfig->isOnlyLoopbackConnectionsAllowed() ? "localhost") : _T("0.0.0.0";
   unsigned short bindPort = m_srvConfig->getRfbPort();
 
-  m_log.scopedstrMessage("Starting main RFB server");
+  m_plogwriter.scopedstrMessage("Starting main RFB server");
 
   try {
-    m_rfbServer = new RfbServer(bindHost, bindPort, m_rfbClientManager, m_runAsService, &m_log);
+    m_rfbServer = new RfbServer(bindHost, bindPort, m_rfbClientManager, m_runAsService, &m_plogwriter);
   } catch (::remoting::Exception &ex) {
-    m_log.error("Failed to start main RFB server: \"{}\"", ex.get_message());
+    m_plogwriter.error("Failed to start main RFB server: \"{}\"", ex.get_message());
   }
 }
 
 void TvnServer::stopHttpServer()
 {
-  m_log.scopedstrMessage("Stopping HTTP server");
+  m_plogwriter.scopedstrMessage("Stopping HTTP server");
 
   HttpServer *httpServer = 0;
   {
@@ -407,7 +407,7 @@ void TvnServer::stopHttpServer()
 
 void TvnServer::stopControlServer()
 {
-  m_log.scopedstrMessage("Stopping control server");
+  m_plogwriter.scopedstrMessage("Stopping control server");
 
   ControlServer *controlServer = 0;
   {
@@ -422,7 +422,7 @@ void TvnServer::stopControlServer()
 
 void TvnServer::stopMainRfbServer()
 {
-  m_log.scopedstrMessage("Stopping main RFB server");
+  m_plogwriter.scopedstrMessage("Stopping main RFB server");
 
   RfbServer *rfbServer = 0;
   {

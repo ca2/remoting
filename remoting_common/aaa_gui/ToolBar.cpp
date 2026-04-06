@@ -65,7 +65,7 @@ namespace remoting
          // It's required for backward compatibility
          SendMessage(m_hWndToolbar,
                      TB_BUTTONSTRUCTSIZE,
-                     static_cast<WPARAM>(sizeof(TBBUTTON)),
+                     static_cast<::wparam>(sizeof(TBBUTTON)),
                      0);
       }
       return !!m_hWndToolbar;
@@ -155,7 +155,7 @@ namespace remoting
    bool ToolBar::getButtonRect(int nIndex, LPRECT buttonRect)
    {
       LRESULT result = SendMessage(m_hWndToolbar, TB_GETITEMRECT,
-                                   nIndex, (LPARAM)buttonRect);
+                                   nIndex, (::lparam)buttonRect);
       return !!result;
    }
 
@@ -205,7 +205,7 @@ namespace remoting
    int ToolBar::getTotalWidth()
    {
       SIZE size;
-      SendMessage(m_hWndToolbar, TB_GETMAXSIZE, 0, reinterpret_cast<LPARAM>(&size));
+      SendMessage(m_hWndToolbar, TB_GETMAXSIZE, 0, reinterpret_cast<::lparam>(&size));
       return size.cx;
    }
 
@@ -239,25 +239,25 @@ namespace remoting
       return result;
    }
 
-   LRESULT ToolBar::addBitmap(int nButtons, UINT bitmapID)
+   LRESULT ToolBar::addBitmap(int nButtons, unsigned int bitmapID)
    {
       TBADDBITMAP resBitmap;
 
       resBitmap.hInst = remoting_impact_hinstance();
       resBitmap.nID = bitmapID;
-      return SendMessage(m_hWndToolbar, TB_ADDBITMAP, nButtons, reinterpret_cast<LPARAM>(&resBitmap));
+      return SendMessage(m_hWndToolbar, TB_ADDBITMAP, nButtons, reinterpret_cast<::lparam>(&resBitmap));
    }
 
-   LRESULT ToolBar::addSystemBitmap(UINT stdBitmapID)
+   LRESULT ToolBar::addSystemBitmap(unsigned int stdBitmapID)
    {
       TBADDBITMAP resBitmap;
 
       resBitmap.hInst = HINST_COMMCTRL;
       resBitmap.nID = stdBitmapID;
-      return SendMessage(m_hWndToolbar, TB_ADDBITMAP, 0, (LPARAM)&resBitmap);
+      return SendMessage(m_hWndToolbar, TB_ADDBITMAP, 0, (::lparam)&resBitmap);
    }
 
-   bool ToolBar::addButton(int iBitmap, int idCommand, BYTE state, BYTE style, UINT dwData, int iString)
+   bool ToolBar::addButton(int iBitmap, int idCommand, BYTE state, BYTE style, unsigned int dwData, int iString)
    {
       TBBUTTON tbb;
 
@@ -268,7 +268,7 @@ namespace remoting
       tbb.dwData = dwData;
       tbb.iString = iString;
 
-      LRESULT result = SendMessage(m_hWndToolbar, TB_ADDBUTTONS, 1, reinterpret_cast<LPARAM>(&tbb));
+      LRESULT result = SendMessage(m_hWndToolbar, TB_ADDBUTTONS, 1, reinterpret_cast<::lparam>(&tbb));
       if (result) {
          SendMessage(m_hWndToolbar, TB_AUTOSIZE, 0, 0);
       }
@@ -277,7 +277,7 @@ namespace remoting
 
    bool ToolBar::addNButton(int nButtons, LPTBBUTTON tbb)
    {
-      LRESULT result = SendMessage(m_hWndToolbar, TB_ADDBUTTONS, nButtons, reinterpret_cast<LPARAM>(tbb));
+      LRESULT result = SendMessage(m_hWndToolbar, TB_ADDBUTTONS, nButtons, reinterpret_cast<::lparam>(tbb));
       if (result) {
          SendMessage(m_hWndToolbar, TB_AUTOSIZE, 0, 0);
       }

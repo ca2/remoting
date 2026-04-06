@@ -35,7 +35,7 @@ ConsolePoller::ConsolePoller(UpdateKeeper *updateKeeper,
   m_screenGrabber(screenGrabber),
   m_backupFrameBuffer(backupFrameBuffer),
   m_frameBufferMutex(frameBufferMutex),
-  m_log(log)
+  m_plogwriter(log)
 {
   m_pollingRect.setRect(0, 0, 16, 16);
 }
@@ -53,7 +53,7 @@ void ConsolePoller::onTerminate()
 
 void ConsolePoller::execute()
 {
-  m_log->information("console poller thread id = {}", getThreadId());
+  m_plogwriter->information("console poller thread id = {}", getThreadId());
 
   ::int_rectangle scanRect;
   Region region;

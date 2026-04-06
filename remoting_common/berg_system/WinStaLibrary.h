@@ -29,7 +29,7 @@
 
 #include "DynamicLibrary.h"
 
-typedef BOOL (WINAPI* pWinStationConnectW)(HANDLE, ULONG, ULONG, PCWSTR, ULONG);
+typedef bool (WINAPI* pWinStationConnectW)(HANDLE, ULONG, ULONG, PCWSTR, ULONG);
 
 class CLASS_DECL_REMOTING_COMMON WinStaLibrary
 {
@@ -37,7 +37,7 @@ public:
   WinStaLibrary();
   virtual ~WinStaLibrary();
 
-  BOOL WinStationConnectW(HANDLE server, ULONG connectSessionId,
+  bool WinStationConnectW(HANDLE server, ULONG connectSessionId,
                           ULONG activeSessionId, PCWSTR password,
                           ULONG unknown);
 

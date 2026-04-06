@@ -50,7 +50,7 @@ namespace remoting_remoting
     : m_ccsm(RegistryPaths::VIEWER_PATH,
              conData->getHost()),
       m_application(application),
-      m_logWriter(LogWriter),
+      m_plogwriter(LogWriter),
       m_conConf(conConf),
       m_scale(100),
       m_isFullScr(false),
@@ -58,7 +58,7 @@ namespace remoting_remoting
       m_viewerCore(0),
       m_fileTransfer(0),
       m_conData(conData),
-      m_dsktWnd(m_logWriter, conConf, this),
+      m_dsktWnd(m_plogwriter, conConf, this),
       m_isConnected(false),
       m_sizeIsChanged(false),
       m_hooksEnabledFirstTime(true),
@@ -156,7 +156,7 @@ namespace remoting_remoting
         m_toolbar.enableButton(IDS_TB_CTRLESC, isEnable);
         m_toolbar.enableButton(IDS_TB_CTRLALTDEL, isEnable);
 
-        UINT enableMenu = static_cast<UINT>(!isEnable);
+        unsigned int enableMenu = static_cast<unsigned int>(!isEnable);
         m_menu.enableMenuItem(IDS_TB_CTRLALTDEL, enableMenu);
         m_menu.enableMenuItem(IDS_TB_CTRLESC, enableMenu);
         m_menu.enableMenuItem(IDS_TB_CTRL, enableMenu);
@@ -187,7 +187,7 @@ namespace remoting_remoting
         bool bFileTransfer = m_fileTransfer && m_fileTransfer->isEnabled();
 
         m_toolbar.enableButton(IDS_TB_TRANSFER, bFileTransfer && !m_conConf->isViewOnly());
-        UINT enableMenu = static_cast<UINT>(!(bFileTransfer && !m_conConf->isViewOnly()));
+        unsigned int enableMenu = static_cast<unsigned int>(!(bFileTransfer && !m_conConf->isViewOnly()));
         m_menu.enableMenuItem(IDS_TB_TRANSFER, enableMenu);
 
         m_viewerCore->allowCopyRect(m_conConf->isCopyRectAllowed());
@@ -261,7 +261,7 @@ namespace remoting_remoting
         setClassCursor(hcur);
     }
 
-    bool ViewerWindow::onSysCommand(WPARAM wParam, LPARAM lParam)
+    bool ViewerWindow::onSysCommand(::wparam wParam, ::lparam lParam)
     {
 
         if ((wParam & 0xfff0) == SC_RESTORE)
@@ -284,7 +284,7 @@ namespace remoting_remoting
 
     }
 
-    bool ViewerWindow::onMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
+    bool ViewerWindow::onMessage(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam)
     {
         switch (scopedstrMessage) {
             case WM_SIZING:
@@ -348,7 +348,7 @@ namespace remoting_remoting
                         // Switching off ignoring win key.
                         m_dsktWnd.setWinKeyIgnore(false);
                     } catch (::exception &e) {
-                        m_logWriter->error("{}", e.get_message());
+                        m_plogwriter->error("{}", e.get_message());
                     }
                 } else if (LOWORD(wParam) == WA_INACTIVE) {
                     // Unregistration of keyboard hook.
@@ -377,7 +377,7 @@ namespace remoting_remoting
         return true;
     }
 
-    bool ViewerWindow::onKillFocus(WPARAM wParam)
+    bool ViewerWindow::onKillFocus(::wparam wParam)
     {
         if (!m_conConf->isViewOnly()) {
             m_toolbar.checkButton(IDS_TB_ALT, false);
@@ -386,7 +386,7 @@ namespace remoting_remoting
         return true;
     }
 
-    bool ViewerWindow::onTimer(WPARAM idTimer)
+    bool ViewerWindow::onTimer(::wparam idTimer)
     {
         switch (idTimer) {
             case TIMER_DESKTOP_STATE:
@@ -431,7 +431,7 @@ namespace remoting_remoting
         int pixelSize = 0;
         m_dsktWnd.getServerGeometry(&geometry, &pixelSize);
         ::string str;
-        str.formatf(StringTable::getString(IDS_CONNECTION_INFO_FORMAT).c_str(),
+        str.formatf(main_subsystem()->string_table()->getString(IDS_CONNECTION_INFO_FORMAT).c_str(),
                    host.c_str(),
                    m_viewerCore->getRemoteDesktopName().c_str(),
                    m_viewerCore->getProtocolString().c_str(),
@@ -439,19 +439,19 @@ namespace remoting_remoting
                    geometry.height(),
                    pixelSize,
                    &kbdName[0]);
-        ::remoting::message_box(getHWnd(),
+        main_innate_subsystem()->message_box(getHWnd(),
                    str,
-                   StringTable::getString(IDS_CONNECTION_INFO_CAPTION),
+                   main_subsystem()->string_table()->getString(IDS_CONNECTION_INFO_CAPTION),
                    MB_OK | MB_ICONINFORMATION);
     }
 
     void ViewerWindow::switchFullScreenMode()
     {
         if (m_isFullScr) {
-            m_logWriter->debug("Switch to windowed mode");
+            m_plogwriter->debug("Switch to windowed mode");
             doUnFullScr();
         } else {
-            m_logWriter->debug("Switch to full screen mode");
+            m_plogwriter->debug("Switch to full screen mode");
             doFullScr();
         }
     }
@@ -552,13 +552,13 @@ namespace remoting_remoting
     void ViewerWindow::commandToolBar()
     {
         if (m_toolbar.isVisible()) {
-            m_logWriter->debug("Hide toolbar");
+            m_plogwriter->debug("Hide toolbar");
             m_menu.checkedMenuItem(IDS_TB_TOOLBAR, false);
             m_toolbar.hide();
             doSize();
         } else {
             if (!m_isFullScr) {
-                m_logWriter->debug("Show toolbar");
+                m_plogwriter->debug("Show toolbar");
                 m_menu.checkedMenuItem(IDS_TB_TOOLBAR, true);
                 m_toolbar.show();
                 doSize();
@@ -575,8 +575,8 @@ namespace remoting_remoting
     {
         WCHAR fileName[MAX_PATH] = L"";
 
-        ::wstring filterVncFiles(StringTable::getString(IDS_SAVE_SESSION_FILTER_VNC_FILES));
-        ::wstring filterAllFiles(StringTable::getString(IDS_SAVE_SESSION_FILTER_ALL_FILES));
+        ::wstring filterVncFiles(main_subsystem()->string_table()->getString(IDS_SAVE_SESSION_FILTER_VNC_FILES));
+        ::wstring filterAllFiles(main_subsystem()->string_table()->getString(IDS_SAVE_SESSION_FILTER_ALL_FILES));
         ::wstring vncMask( L"*.vnc");
         ::wstring allMask( L"*.*");
         ::wstring semicolon( L";");
@@ -617,9 +617,9 @@ namespace remoting_remoting
                 sm.setUINT("port", m_conData->getPort());
 
                 if (m_conData->isSetPassword()) {
-                    int whetherToSavePass = ::remoting::message_box(m_hwnd,
-                      StringTable::getString(IDS_QUESTION_SAVE_PASSWORD),
-                      StringTable::getString(IDS_SECURITY_WARNING_CAPTION),
+                    int whetherToSavePass = main_innate_subsystem()->message_box(m_hwnd,
+                      main_subsystem()->string_table()->getString(IDS_QUESTION_SAVE_PASSWORD),
+                      main_subsystem()->string_table()->getString(IDS_SECURITY_WARNING_CAPTION),
                       MB_YESNO);
                     if (whetherToSavePass == IDYES) {
                         ::string password = m_conData->getCryptedPassword();
@@ -631,7 +631,7 @@ namespace remoting_remoting
                 m_conConf->saveToStorage(&sm);
             }
         } catch (...) {
-            m_logWriter->error("Error in save connection");
+            m_plogwriter->error("Error in save connection");
         }
     }
 
@@ -738,7 +738,7 @@ namespace remoting_remoting
 
         for (int i = 0; i < sizeof(accelerators) / sizeof(::pair<int, int>); i++) {
             if (accelerators[i].m_element1 == val) {
-                m_logWriter->debug("accelerator pressed: {}", val);
+                m_plogwriter->debug("accelerator pressed: {}", val);
                 return accelerators[i].m_element2;
             }
         }
@@ -750,7 +750,7 @@ namespace remoting_remoting
         m_application->postMessage(remoting_impact::WM_USER_ABOUT);
     }
 
-    bool ViewerWindow::onCommand(WPARAM wParam, LPARAM lParam)
+    bool ViewerWindow::onCommand(::wparam wParam, ::lparam lParam)
     {
 
 
@@ -869,7 +869,7 @@ namespace remoting_remoting
             fullScreenWindowsRect = mi.rcMonitor;
         }
         else {
-            m_logWriter->warning("Get monitor info is failed. Use second method (no multi-screen).");
+            m_plogwriter->warning("Get monitor info is failed. Use second method (no multi-screen).");
             GetWindowRect(GetDesktopWindow(), &fullScreenWindowsRect);
         }
         ::int_rectangle fullScreenRect;
@@ -927,7 +927,7 @@ namespace remoting_remoting
             // Switching off ignoring win key.
             m_dsktWnd.setWinKeyIgnore(false);
         } catch (::exception &e) {
-            m_logWriter->error("{}", e.get_message());
+            m_plogwriter->error("{}", e.get_message());
         }
     }
 
@@ -961,7 +961,7 @@ namespace remoting_remoting
             m_dsktWnd.setWinKeyIgnore(false);
         }
         catch (::exception& e) {
-            m_logWriter->error("{}", e.get_message());
+            m_plogwriter->error("{}", e.get_message());
         }
     }
 
@@ -983,7 +983,7 @@ namespace remoting_remoting
             m_toolbar.hide();
         }
 
-        UINT isEnable = static_cast<UINT>(m_conConf->isViewOnly());
+        unsigned int isEnable = static_cast<unsigned int>(m_conConf->isViewOnly());
         m_menu.enableMenuItem(IDS_TB_TOOLBAR, isEnable);
 
         // Restore position, style and exstyle of windowed window.
@@ -1028,7 +1028,7 @@ namespace remoting_remoting
         //    m_toolbar.hide();
         //}
 
-        //UINT isEnable = static_cast<UINT>(m_conConf->isViewOnly());
+        //unsigned int isEnable = static_cast<unsigned int>(m_conConf->isViewOnly());
         //m_menu.enableMenuItem(IDS_TB_TOOLBAR, isEnable);
 
         //// Restore position, style and exstyle of windowed window.
@@ -1094,13 +1094,13 @@ namespace remoting_remoting
         postMessage(WM_SIZE);
     }
 
-    bool ViewerWindow::onSize(WPARAM wParam, LPARAM lParam)
+    bool ViewerWindow::onSize(::wparam wParam, ::lparam lParam)
     {
         RECT rc;
         int x, y;
 
         getClientRect(&rc);
-        m_logWriter->debug("client rect: {}, {}; {}, {}",
+        m_plogwriter->debug("client rect: {}, {}; {}, {}",
                           rc.left, rc.top, rc.right, rc.bottom);
         x = y = 0;
         if (m_toolbar.isVisible()) {
@@ -1113,7 +1113,7 @@ namespace remoting_remoting
             int h = rc.bottom - rc.top;
             int w = rc.right - rc.left;
 
-            m_logWriter->debug("Desktop-window. (x, y): ({}, {}); (w, h): ({}, {})",
+            m_plogwriter->debug("Desktop-window. (x, y): ({}, {}); (w, h): ({}, {})",
                               x, y, w, h);
             if (h > 0 && w > 0) {
                 m_dsktWnd.setPosition(x, y);
@@ -1136,7 +1136,7 @@ namespace remoting_remoting
 
     bool ViewerWindow::onDisconnect()
     {
-        ::remoting::message_box(getHWnd(),
+        main_innate_subsystem()->message_box(getHWnd(),
                    m_disconnectMessage,
                    formatWindowName(),
                    MB_OK);
@@ -1146,12 +1146,12 @@ namespace remoting_remoting
         return true;
     }
 
-    bool ViewerWindow::onAuthError(WPARAM wParam)
+    bool ViewerWindow::onAuthError(::wparam wParam)
     {
         // If authentication is canceled, then do quiet exit, else show error-scopedstrMessage.
         if (wParam != AuthException::AUTH_CANCELED) {
             ::string error = m_error.get_message();
-            int result = ::remoting::message_box(0,
+            int result = main_innate_subsystem()->message_box(0,
                                     error,
                                     formatWindowName(),
                                     MB_RETRYCANCEL | MB_ICONERROR);
@@ -1163,8 +1163,8 @@ namespace remoting_remoting
                     connectionData->resetPassword();
                     ConnectionConfig *connectionConfig = new ConnectionConfig(*m_conConf);
                     m_application->postMessage(remoting_impact::WM_USER_RECONNECT,
-                                               (WPARAM)connectionData,
-                                               (LPARAM)connectionConfig);
+                                               (::wparam)connectionData,
+                                               (::lparam)connectionConfig);
                 }
             }
         }
@@ -1177,7 +1177,7 @@ namespace remoting_remoting
     {
         ::string error;
         error.format("Error in {}: {}", ::string(ProductNames::VIEWER_PRODUCT_NAME), m_error.get_message());
-        ::remoting::message_box(getHWnd(),
+        main_innate_subsystem()->message_box(getHWnd(),
                    error,
                    formatWindowName(),
                    MB_OK | MB_ICONERROR);
@@ -1195,7 +1195,7 @@ namespace remoting_remoting
         return true;
     }
 
-    bool ViewerWindow::onFocus(WPARAM wParam)
+    bool ViewerWindow::onFocus(::wparam wParam)
     {
         SetFocus(m_dsktWnd.getHWnd());
         return true;
@@ -1222,7 +1222,7 @@ namespace remoting_remoting
         if (!!GetMonitorInfo(hmon, &mi)) {
             defaultRect = mi.rcWork;
         } else {
-            m_logWriter->debug("Get monitor info is failed. Use second method (no multi-screen).");
+            m_plogwriter->debug("Get monitor info is failed. Use second method (no multi-screen).");
             RECT desktopRc;
             if (!m_sysinf.getDesktopArea(&desktopRc)) {
                 m_sysinf.getDesktopAllArea(&desktopRc);
@@ -1318,7 +1318,7 @@ namespace remoting_remoting
 
     void ViewerWindow::onDisconnect(const ::scoped_string & scopedstrMessage)
     {
-        m_logWriter->information("onDisconnect: {}", scopedstrMessage);
+        m_plogwriter->information("onDisconnect: {}", scopedstrMessage);
         m_disconnectMessage = scopedstrMessage;
         if (!m_stopped) {
             postMessage(WM_USER_DISCONNECT);
@@ -1327,7 +1327,7 @@ namespace remoting_remoting
 
     void ViewerWindow::onAuthError(const AuthException *exception)
     {
-        m_logWriter->information("onAuthError ({}): {}",
+        m_plogwriter->information("onAuthError ({}): {}",
                          exception->getAuthCode(), exception->get_message());
         int authCode = exception->getAuthCode();
         m_error = *exception;
@@ -1398,7 +1398,7 @@ namespace remoting_remoting
                     m_dsktWnd.setWinKeyIgnore(false);
                     m_hooksEnabledFirstTime = false;
                 } catch (::exception &e) {
-                    m_logWriter->error("{}", e.get_message());
+                    m_plogwriter->error("{}", e.get_message());
                 }
             }
         }
@@ -1432,7 +1432,7 @@ namespace remoting_remoting
         return windowName;
     }
 
-    LRESULT ViewerWindow::onHookProc(int code, WPARAM wParam, LPARAM lParam)
+    LRESULT ViewerWindow::onHookProc(int code, ::wparam wParam, ::lparam lParam)
     {
         KBDLLHOOKSTRUCT *str = (KBDLLHOOKSTRUCT*) lParam;
         // Ignoring of CapsLock, NumLock, ScrollLock, ::remoting::Window (Ctrl key), Menu (Alt key), Shift (shift key).
@@ -1441,7 +1441,7 @@ namespace remoting_remoting
             str->vkCode != ::user::e_key_left_alt && str->vkCode != ::user::e_key_right_alt &&
             str->vkCode != ::user::e_key_left_shift && str->vkCode != ::user::e_key_right_shift) {
             // Set the repeat count for the current scopedstrMessage bits.
-            LPARAM newLParam = 1;
+            ::lparam newLParam = 1;
             // Set the scan code bits.
             newLParam |= (str->scanCode & 0xf) << 16;
             // Set the extended key bit.

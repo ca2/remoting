@@ -229,7 +229,7 @@ private:
 
   ThreadCollector m_outgoingConnectionThreadCollector;
   
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 
   /**
    * Array of client messages that needs client to be auth.

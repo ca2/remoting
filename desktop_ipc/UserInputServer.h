@@ -68,7 +68,7 @@ protected:
   WindowsUserInput *m_userInput;
   AnEventListener *m_extTerminationListener;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __USERINPUTSERVER_H__

@@ -73,7 +73,7 @@ private:
 
   WindowsEvent m_updateTimeout;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __MIRRORSCREENDRIVER_H__

@@ -33,7 +33,7 @@
 
 EmulatedAnonymousPipeFactory::EmulatedAnonymousPipeFactory(unsigned int bufferSize, LogWriter *log)
 : m_bufferSize(bufferSize),
-  m_log(log)
+  m_plogwriter(log)
 {
 }
 

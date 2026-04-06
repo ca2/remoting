@@ -44,7 +44,7 @@ BalloonTip::~BalloonTip()
 
 void BalloonTip::showTooltip(::remoting::Window *control)
 {
-  ::remoting::message_box(control->get_hwnd(),::wstring(m_text), ::wstring(m_title), MB_OK | MB_ICONWARNING);
+  main_innate_subsystem()->message_box(control->get_hwnd(),::wstring(m_text), ::wstring(m_title), MB_OK | MB_ICONWARNING);
 }
 
 void BalloonTip::setText(const ::scoped_string & scopedstrText)

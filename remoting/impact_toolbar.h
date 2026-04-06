@@ -81,8 +81,8 @@ namespace remoting_remoting
       void _add_repaint(const ::int_rectangle & rectangle);
 void defer_repaint();
 void set_hover_false();
-        virtual bool _000OnMouseEx(UINT uMessage, int iButtonMask, const ::int_point& pointRoot, const ::int_point& pointClient);
-        virtual bool _001OnMouseEx(UINT uMessage, int iButtonMask, const ::int_point& pointRoot, const ::int_point& pointClient);
+        virtual bool _000OnMouseEx(unsigned int uMessage, int iButtonMask, const ::int_point& pointRoot, const ::int_point& pointClient);
+        virtual bool _001OnMouseEx(unsigned int uMessage, int iButtonMask, const ::int_point& pointRoot, const ::int_point& pointClient);
       //virtual bool _000OnMouse(bool bPress, const ::int_point& pointRoot, const ::int_point& pointClient);
       //virtual bool _001OnMouse(bool bPress, const ::int_point& pointRoot, const ::int_point& pointClient);
       virtual bool on_left_down(const ::int_point& position);
@@ -162,7 +162,7 @@ void set_hover_false();
       //bool on_mouse(bool bPress, const ::int_point& position);
       void __001OnDraw(GraphicsPlus *pgraphics, const ::int_rectangle & rectangle) override;
       bool on_button_click(enum_id eid) override;
-      bool _001OnMouseEx(UINT uMessage,  int iButtonMask, const ::int_point & pointRoot, const ::int_point& pointClient) override;
+      bool _001OnMouseEx(unsigned int uMessage,  int iButtonMask, const ::int_point & pointRoot, const ::int_point& pointClient) override;
    };
 
 

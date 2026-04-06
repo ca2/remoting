@@ -34,9 +34,9 @@ WindowsUserInput::WindowsUserInput(ClipboardListener *clipboardListener,
                                    LogWriter *log)
 : m_prevKeyFlag(0),
   m_inputInjector(ctrlAltDelEnabled, log),
-  m_log(log)
+  m_plogwriter(log)
 {
-  m_clipboard = new WindowsClipboard(clipboardListener, m_log);
+  m_clipboard = new WindowsClipboard(clipboardListener, m_plogwriter);
 }
 
 WindowsUserInput::~WindowsUserInput(void)
@@ -47,7 +47,7 @@ WindowsUserInput::~WindowsUserInput(void)
 // FIXME: refactor this horror.
 void WindowsUserInput::setMouseEvent(const Point newPos, unsigned char keyFlag)
 {
-	m_log->debug("setMouseEvent ({},{}):{}", newPos.x, newPos.x, keyFlag);
+	m_plogwriter->debug("setMouseEvent ({},{}):{}", newPos.x, newPos.x, keyFlag);
   if (GetSystemMetrics(SM_SWAPBUTTON))
   {
     // read values of first and third bytes..
@@ -141,7 +141,7 @@ void WindowsUserInput::setNewClipboard(const ::scoped_string & newClipboard)
 void WindowsUserInput::setKeyboardEvent(unsigned int keySym, bool down)
 {
   try {
-    m_log->information("Received the %#4.4x keysym, down = {}", keySym, (int)down);
+    m_plogwriter->information("Received the %#4.4x keysym, down = {}", keySym, (int)down);
     // Generate single key event.
     BYTE vkCode;
     WCHAR ch;
@@ -158,7 +158,7 @@ void WindowsUserInput::setKeyboardEvent(unsigned int keySym, bool down)
       throw ::remoting::Exception(scopedstrMessage);
     }
   } catch (::remoting::Exception &someEx) {
-    m_log->error("::remoting::Exception while processing key event: {}", someEx.get_message());
+    m_plogwriter->error("::remoting::Exception while processing key event: {}", someEx.get_message());
   }
 }
 
@@ -166,7 +166,7 @@ void WindowsUserInput::getCurrentUserInfo(::string & desktopName,
                                           ::string & userName)
 {
   if (!DesktopSelector::getCurrentDesktopName(desktopName) &&
-	  !Environment::getCurrentUserName(userName, m_log)) {
+	  !Environment::getCurrentUserName(userName, m_plogwriter)) {
         ::string errMess;
         Environment::getErrStr("Can't get current user info", &errMess);
 		throw ::remoting::Exception(errMess);

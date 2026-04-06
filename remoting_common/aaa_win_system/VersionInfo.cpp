@@ -43,7 +43,7 @@ VersionInfo::VersionInfo(const ::file::path & pathToFile)
     throw SystemException();
   }
 
-  UINT fixedInfoSize = 0;
+  unsigned int fixedInfoSize = 0;
 
   VS_FIXEDFILEINFO *fixedInfo = 0;
 

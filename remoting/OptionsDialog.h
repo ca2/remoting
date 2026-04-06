@@ -73,9 +73,9 @@ namespace remoting_remoting
         CheckBox m_arrow;
         CheckBox m_nlocal;
 
-        void onMessageReceived(UINT uMsg, WPARAM wParam, LPARAM lParam);
-        BOOL onCommand(UINT controlID, UINT notificationID);
-        BOOL onInitDialog();
+        void onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam);
+        bool onCommand(unsigned int controlID, unsigned int notificationID);
+        bool onInitDialog();
 
         ConnectionConfig *m_conConfig;
         bool m_connected;

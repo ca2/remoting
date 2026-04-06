@@ -85,7 +85,7 @@ namespace remoting_remoting
         return ::remoting::ftp::CopyFileEventListener::TFE_OVERWRITE;
     }
 
-    BOOL FileTransferMainDialog::onInitDialog()
+    bool FileTransferMainDialog::onInitDialog()
     {
         m_isClosing = false;
 
@@ -97,7 +97,7 @@ namespace remoting_remoting
         return TRUE;
     }
 
-    BOOL FileTransferMainDialog::onNotify(UINT controlID, LPARAM data)
+    bool FileTransferMainDialog::onNotify(unsigned int controlID, ::lparam data)
     {
         LPNMHDR nmhdr = (LPNMHDR)data;
         switch (controlID) {
@@ -159,7 +159,7 @@ namespace remoting_remoting
         return TRUE;
     }
 
-    BOOL FileTransferMainDialog::onCommand(UINT controlID, UINT notificationID)
+    bool FileTransferMainDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
         switch (controlID) {
             case IDCANCEL:
@@ -202,12 +202,12 @@ namespace remoting_remoting
         return TRUE;
     }
 
-    BOOL FileTransferMainDialog::onDestroy()
+    bool FileTransferMainDialog::onDestroy()
     {
         return TRUE;
     }
 
-    void FileTransferMainDialog::onMessageReceived(UINT uMsg, WPARAM wParam, LPARAM lParam)
+    void FileTransferMainDialog::onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam)
     {
         switch (uMsg) {
             case WM_OPERATION_FINISHED:
@@ -222,7 +222,7 @@ namespace remoting_remoting
                     enableControls(true);
                     break;
                 } else { // If window is closing we can it only if operation finished
-                    close_dialog(0);
+                    closeDialog(0);
                     return;
                 }
         } // switch
@@ -232,10 +232,10 @@ namespace remoting_remoting
     {
         if (m_ftCore->isNothingState()) {
             // No operation is executing - close dialog
-            close_dialog(IDCANCEL);
+            closeDialog(IDCANCEL);
             return true;
         }
-        if (::remoting::message_box(m_hwnd,
+        if (main_innate_subsystem()->message_box(m_hwnd,
                        "Do you want to close file transfers and terminate current operation?",
                        "TightVNC ::file::item Transfers",
                        MB_YESNO | MB_ICONQUESTION) == IDYES) {
@@ -273,7 +273,7 @@ namespace remoting_remoting
         ::remoting::ftp::FileInfo *fileInfo = m_remoteFileListView.getSelectedFileInfo();
 
         if (fileInfo == NULL) {
-            ::remoting::message_box(m_hwnd,
+            main_innate_subsystem()->message_box(m_hwnd,
                        L"No file selected.",
                        L"Rename ::file::item", MB_OK | MB_ICONWARNING);
             return ;
@@ -320,7 +320,7 @@ namespace remoting_remoting
         unsigned int siCount = m_remoteFileListView.getSelectedItemsCount();
 
         if (siCount == 0) {
-            ::remoting::message_box(m_hwnd,
+            main_innate_subsystem()->message_box(m_hwnd,
                        L"No files selected.",
                        L"Delete Files", MB_OK | MB_ICONWARNING);
             return ;
@@ -337,7 +337,7 @@ namespace remoting_remoting
             fileinfoa.add(pfileinfo);
         }
 
-        if (::remoting::message_box(m_hwnd,
+        if (main_innate_subsystem()->message_box(m_hwnd,
                        L"Do you wish to delete the selected files?",
                        L"Delete Files",
                        MB_YESNO | MB_ICONQUESTION) != IDYES) {
@@ -365,7 +365,7 @@ namespace remoting_remoting
         ::remoting::ftp::FileInfo *fileInfo = m_localFileListView.getSelectedFileInfo();
 
         if (fileInfo == NULL) {
-            ::remoting::message_box(m_hwnd,
+            main_innate_subsystem()->message_box(m_hwnd,
                        L"No file selected.",
                        L"Rename ::file::item", MB_OK | MB_ICONWARNING);
             return ;
@@ -431,7 +431,7 @@ namespace remoting_remoting
 
         // Not allow user to create folders in our "fake" root folder
         if (pathToFile.is_empty()) {
-            ::remoting::message_box(m_hwnd,
+            main_innate_subsystem()->message_box(m_hwnd,
                        L"It's not allowed to create new folder here.",
                        L"New Folder", MB_OK | MB_ICONWARNING);
         }
@@ -477,7 +477,7 @@ namespace remoting_remoting
         unsigned int siCount = m_localFileListView.getSelectedItemsCount();
 
         if (siCount == 0) {
-            ::remoting::message_box(m_hwnd,
+            main_innate_subsystem()->message_box(m_hwnd,
                        L"No files selected.",
                        L"Delete Files", MB_OK | MB_ICONWARNING);
             return ;
@@ -493,7 +493,7 @@ namespace remoting_remoting
             fileinfoa.add(fileInfo);
         }
 
-        if (::remoting::message_box(m_hwnd,
+        if (main_innate_subsystem()->message_box(m_hwnd,
                        L"Do you wish to delete the selected files?",
                        L"Delete Files",
                        MB_YESNO | MB_ICONQUESTION) != IDYES) {
@@ -525,7 +525,7 @@ namespace remoting_remoting
         auto indexes = m_localFileListView.getSelectedItemsIndexes();
 
         if (indexes.is_empty()) {
-            ::remoting::message_box(m_hwnd,
+            main_innate_subsystem()->message_box(m_hwnd,
                        L"No files selected.",
                        L"Upload Files", MB_OK | MB_ICONWARNING);
             return ;
@@ -539,7 +539,7 @@ namespace remoting_remoting
             fileinfoa.add(fileInfo);
         }
 
-        if (::remoting::message_box(m_hwnd,
+        if (main_innate_subsystem()->message_box(m_hwnd,
                        L"Do you wish to upload the selected files?",
                        L"Upload Files",
                        MB_YESNO | MB_ICONQUESTION) != IDYES) {
@@ -571,7 +571,7 @@ namespace remoting_remoting
         auto indexes = m_remoteFileListView.getSelectedItemsIndexes();
 
         if (indexes.is_empty()) {
-            ::remoting::message_box(m_hwnd,
+            main_innate_subsystem()->message_box(m_hwnd,
       L"No files selected.",
                      L"Download Files", MB_OK | MB_ICONWARNING);
             return ;
@@ -588,7 +588,7 @@ namespace remoting_remoting
             fileinfoa.add(fileInfo);
         }
 
-        if (::remoting::message_box(m_hwnd,
+        if (main_innate_subsystem()->message_box(m_hwnd,
                        L"Do you wish to download the selected files?",
                        L"Download Files",
                        MB_YESNO | MB_ICONQUESTION) != IDYES) {
@@ -679,7 +679,7 @@ namespace remoting_remoting
         tryListLocalFolder(pathToFile);
     }
 
-    void FileTransferMainDialog::onRemoteListViewKeyDown(UINT key)
+    void FileTransferMainDialog::onRemoteListViewKeyDown(unsigned int key)
     {
         switch (key) {
             case VK_RETURN:
@@ -694,7 +694,7 @@ namespace remoting_remoting
         }
     }
 
-    void FileTransferMainDialog::onLocalListViewKeyDown(UINT key)
+    void FileTransferMainDialog::onLocalListViewKeyDown(unsigned int key)
     {
         // FIXME: removed duplicate code (see onRemoteListViewKeyDown)
         switch (key) {
@@ -817,7 +817,7 @@ namespace remoting_remoting
 
     void FileTransferMainDialog::raise(::exception &ex)
     {
-        ::remoting::message_box(m_hwnd, ::wstring(ex.get_message()),
+        main_innate_subsystem()->message_box(m_hwnd, ::wstring(ex.get_message()),
                    L"Exception", MB_OK | MB_ICONERROR);
         throw ex;
     }

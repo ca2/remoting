@@ -31,12 +31,12 @@ EditIpAccessRuleDialog::EditIpAccessRuleDialog()
 : BaseDialog(IDD_EDIT_IP_ACESS_CONTROL), m_data(NULL), m_isOpenedForEdit(false)
 {
   m_warningBalloonTip.setIconType(TTI_WARNING);
-  m_warningBalloonTip.setText(StringTable::getString(IDS_IP_ADDRESS_HINT));
-  m_warningBalloonTip.setTitle(StringTable::getString(IDS_INVALID_IP_TITLE));
+  m_warningBalloonTip.setText(main_subsystem()->string_table()->getString(IDS_IP_ADDRESS_HINT));
+  m_warningBalloonTip.setTitle(main_subsystem()->string_table()->getString(IDS_INVALID_IP_TITLE));
 
   m_lastIpLessThanFirstBT.setIconType(TTI_WARNING);
-  m_lastIpLessThanFirstBT.setText(StringTable::getString(IDS_LAST_IP_MUST_BE_MORE_THAN_FIRST));
-  m_lastIpLessThanFirstBT.setTitle(StringTable::getString(IDS_CAPTION_BAD_INPUT));
+  m_lastIpLessThanFirstBT.setText(main_subsystem()->string_table()->getString(IDS_LAST_IP_MUST_BE_MORE_THAN_FIRST));
+  m_lastIpLessThanFirstBT.setTitle(main_subsystem()->string_table()->getString(IDS_CAPTION_BAD_INPUT));
 }
 
 EditIpAccessRuleDialog::~EditIpAccessRuleDialog()
@@ -48,7 +48,7 @@ void EditIpAccessRuleDialog::setEditFlag(bool flagEnabled)
   m_isOpenedForEdit = flagEnabled;
 }
 
-BOOL EditIpAccessRuleDialog::onInitDialog()
+bool EditIpAccessRuleDialog::onInitDialog()
 {
   initControls();
 
@@ -82,15 +82,15 @@ BOOL EditIpAccessRuleDialog::onInitDialog()
     m_firstIp.setText(firstIp);
     m_lastIp.setText(lastIp);
 
-    m_ctrlThis.setText(StringTable::getString(IDS_EDIT_IP_ACCESS_RULE_DIALOG_CAPTION));
+    m_ctrlThis.setText(main_subsystem()->string_table()->getString(IDS_EDIT_IP_ACCESS_RULE_DIALOG_CAPTION));
   } else {
-    m_ctrlThis.setText(StringTable::getString(IDS_NEW_IP_ACCESS_RULE_DIALOG_CAPTION));
+    m_ctrlThis.setText(main_subsystem()->string_table()->getString(IDS_NEW_IP_ACCESS_RULE_DIALOG_CAPTION));
   }
 
   return FALSE;
 }
 
-BOOL EditIpAccessRuleDialog::onCommand(UINT cID, UINT nID)
+bool EditIpAccessRuleDialog::onCommand(unsigned int cID, unsigned int nID)
 {
   if (nID == BN_CLICKED) {
     switch (cID) {

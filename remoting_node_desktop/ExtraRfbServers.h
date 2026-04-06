@@ -76,7 +76,7 @@ private:
   ExtraRfbServers(const ExtraRfbServers &);
   ExtraRfbServers &operator=(const ExtraRfbServers &);
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __TVNSERVERAPP_EXTRA_RFB_SERVERS_H__

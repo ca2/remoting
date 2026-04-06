@@ -27,7 +27,7 @@
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "WinAutoMapDxgiSurface.h"
 
-WinAutoMapDxgiSurface::WinAutoMapDxgiSurface(WinDxgiSurface *surface, UINT mapFlags)
+WinAutoMapDxgiSurface::WinAutoMapDxgiSurface(WinDxgiSurface *surface, unsigned int mapFlags)
 : m_surface(surface)
 {
   HRESULT hr = m_surface->getSurface()->Map(&m_mappedRect, mapFlags);

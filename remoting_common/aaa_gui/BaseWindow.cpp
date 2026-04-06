@@ -191,7 +191,7 @@ void BaseWindow::updateWindow()
   UpdateWindow(m_hwnd);
 }
 
-void BaseWindow::setTimer(UINT_PTR ident, UINT time)
+void BaseWindow::setTimer(UINT_PTR ident, unsigned int time)
 {
   _ASSERT(m_hwnd != 0);
   SetTimer(m_hwnd, ident, time, 0);
@@ -203,7 +203,7 @@ void BaseWindow::killTimer(UINT_PTR ident)
   KillTimer(m_hwnd, ident);
 }
 
-bool BaseWindow::onCommand(WPARAM wParam, LPARAM lParam)
+bool BaseWindow::onCommand(::wparam wParam, ::lparam lParam)
 {
   return false;
 }
@@ -213,17 +213,17 @@ bool BaseWindow::onNotify(int idCtrl, LPNMHDR pnmh)
   return false;
 }
 
-bool BaseWindow::onSysCommand(WPARAM wParam, LPARAM lParam)
+bool BaseWindow::onSysCommand(::wparam wParam, ::lparam lParam)
 {
   return false;
 }
 
-bool BaseWindow::onMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
+bool BaseWindow::onMessage(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam)
 {
   return false;
 }
 
-bool BaseWindow::wndProc(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
+bool BaseWindow::wndProc(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam)
 {
     if (scopedstrMessage == WM_LBUTTONDOWN)
     {
@@ -255,7 +255,7 @@ bool BaseWindow::wndProc(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
       mouseButtons |= LOWORD(wParam) & MK_MBUTTON ? MOUSE_MDOWN : 0;
       mouseButtons |= LOWORD(wParam) & MK_LBUTTON ? MOUSE_LDOWN : 0;
 
-      // Translate position from LPARAM to POINT.
+      // Translate position from ::lparam to POINT.
       POINTS points = MAKEPOINTS(lParam);
       POINT point;
       point.x = points.x;
@@ -340,7 +340,7 @@ bool BaseWindow::onMouse(unsigned char msg, unsigned short wspeed, POINT pt)
   return false;
 }
 
-bool BaseWindow::onMouseEx(UINT message, int iButtonMask, unsigned short wspeed, POINT pt)
+bool BaseWindow::onMouseEx(unsigned int message, int iButtonMask, unsigned short wspeed, POINT pt)
 {
     return false;
 
@@ -353,7 +353,7 @@ void BaseWindow::setForegroundWindow()
   SetForegroundWindow(m_hwnd);
 }
 
-void BaseWindow::postMessage(UINT Msg, WPARAM wParam, LPARAM lParam)
+void BaseWindow::postMessage(unsigned int Msg, ::wparam wParam, ::lparam lParam)
 {
   _ASSERT(m_hwnd != 0);
 

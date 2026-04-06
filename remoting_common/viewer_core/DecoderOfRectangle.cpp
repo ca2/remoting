@@ -26,7 +26,7 @@
 
 #include "FbUpdateNotifier.h"
 
-DecoderOfRectangle::DecoderOfRectangle(LogWriter *logWriter)
+DecoderOfRectangle::DecoderOfRectangle(::subsystem::LogWriter * plogwriter)
 : Decoder(logWriter)
 {
 }

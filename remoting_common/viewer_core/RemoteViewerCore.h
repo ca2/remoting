@@ -592,9 +592,9 @@ public:
   //
   void registerDecoderHandler(const unsigned int code, Decoder *decoder, int priority);
 
-  LogWriter * m_logWriter;
+  LogWriter * m_plogwriter;
 
-  // m_tcpConnection depends on m_logWriter and must be defined after it.
+  // m_tcpConnection depends on m_plogwriter and must be defined after it.
   // See also: C++ standard 12.6.2 - Initializing bases and members.
   TcpConnection m_tcpConnection;
 
@@ -608,11 +608,11 @@ public:
 
   WatermarksController m_watermarksController;
 
-  // m_decoderStore depends on m_logWriter and must be defined after it.
+  // m_decoderStore depends on m_plogwriter and must be defined after it.
   // See also: C++ standard 12.6.2 - Initializing bases and members.
   DecoderStore m_decoderStore;
 
-  // m_fbUpdateNotifier depends on m_logWriter and must be defined after it.
+  // m_fbUpdateNotifier depends on m_plogwriter and must be defined after it.
   // See also: C++ standard 12.6.2 - Initializing bases and members.
   FbUpdateNotifier m_fbUpdateNotifier;
 

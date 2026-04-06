@@ -69,7 +69,7 @@ int HookLoaderApplication::processMessages()
   hookInstaller.install(targetWinHwnd);
 
   MSG msg;
-  BOOL ret;
+  bool ret;
   while (ret = GetMessage(&msg, NULL, 0, 0) != 0) {
     if (ret < 0) {
       return 1;
@@ -81,9 +81,9 @@ int HookLoaderApplication::processMessages()
 }
 
 LRESULT CALLBACK HookLoaderApplication::hookLoaderWndProc(HWND hWnd,
-                                                          UINT msg,
-                                                          WPARAM wparam,
-                                                          LPARAM lparam)
+                                                          unsigned int msg,
+                                                          ::wparam wparam,
+                                                          ::lparam lparam)
 {
   if (msg == HookDefinitions::LOADER_CLOSE_CODE) {
     PostMessage(hWnd, WM_CLOSE, 0, 0);

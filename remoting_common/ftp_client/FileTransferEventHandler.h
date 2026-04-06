@@ -48,24 +48,24 @@ namespace remoting
          FileTransferEventHandler();
          virtual ~FileTransferEventHandler();
 
-         virtual void onCompressionSupportReply(DataInputStream * pinput) = 0;
-         virtual void onFileListReply(DataInputStream * pinput) = 0;
-         virtual void onMd5DataReply(DataInputStream * pinput) = 0;
+         virtual void onCompressionSupportReply(::subsystem::DataInputStream * pinput) = 0;
+         virtual void onFileListReply(::subsystem::DataInputStream * pinput) = 0;
+         virtual void onMd5DataReply(::subsystem::DataInputStream * pinput) = 0;
 
-         virtual void onUploadReply(DataInputStream * pinput) = 0;
-         virtual void onUploadDataReply(DataInputStream * pinput) = 0;
-         virtual void onUploadEndReply(DataInputStream * pinput) = 0;
+         virtual void onUploadReply(::subsystem::DataInputStream * pinput) = 0;
+         virtual void onUploadDataReply(::subsystem::DataInputStream * pinput) = 0;
+         virtual void onUploadEndReply(::subsystem::DataInputStream * pinput) = 0;
 
-         virtual void onDownloadReply(DataInputStream * pinput) = 0;
-         virtual void onDownloadDataReply(DataInputStream * pinput) = 0;
-         virtual void onDownloadEndReply(DataInputStream * pinput) = 0;
+         virtual void onDownloadReply(::subsystem::DataInputStream * pinput) = 0;
+         virtual void onDownloadDataReply(::subsystem::DataInputStream * pinput) = 0;
+         virtual void onDownloadEndReply(::subsystem::DataInputStream * pinput) = 0;
 
-         virtual void onMkdirReply(DataInputStream * pinput) = 0;
-         virtual void onRmReply(DataInputStream * pinput) = 0;
-         virtual void onMvReply(DataInputStream * pinput) = 0;
+         virtual void onMkdirReply(::subsystem::DataInputStream * pinput) = 0;
+         virtual void onRmReply(::subsystem::DataInputStream * pinput) = 0;
+         virtual void onMvReply(::subsystem::DataInputStream * pinput) = 0;
 
-         virtual void onDirSizeReply(DataInputStream * pinput) = 0;
-         virtual void onLastRequestFailedReply(DataInputStream * pinput) = 0;
+         virtual void onDirSizeReply(::subsystem::DataInputStream * pinput) = 0;
+         virtual void onLastRequestFailedReply(::subsystem::DataInputStream * pinput) = 0;
       };
    }
 }

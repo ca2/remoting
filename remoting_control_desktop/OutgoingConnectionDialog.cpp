@@ -64,7 +64,7 @@ void OutgoingConnectionDialog::initControls()
   m_viewOnlyCB.setWindow(GetDlgItem(window, IDC_VIEW_ONLY_CHECKBOX));
 }
 
-BOOL OutgoingConnectionDialog::onInitDialog()
+bool OutgoingConnectionDialog::onInitDialog()
 {
   initControls();
 
@@ -84,12 +84,12 @@ BOOL OutgoingConnectionDialog::onInitDialog()
   return FALSE;
 }
 
-BOOL OutgoingConnectionDialog::onNotify(UINT controlID, LPARAM data)
+bool OutgoingConnectionDialog::onNotify(unsigned int controlID, ::lparam data)
 {
   return FALSE;
 }
 
-BOOL OutgoingConnectionDialog::onCommand(UINT controlID, UINT notificationID)
+bool OutgoingConnectionDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
   switch (controlID) {
   case IDOK:
@@ -102,7 +102,7 @@ BOOL OutgoingConnectionDialog::onCommand(UINT controlID, UINT notificationID)
   return FALSE;
 }
 
-BOOL OutgoingConnectionDialog::onDestroy()
+bool OutgoingConnectionDialog::onDestroy()
 {
   return FALSE;
 }

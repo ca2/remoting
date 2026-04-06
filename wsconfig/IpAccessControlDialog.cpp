@@ -47,7 +47,7 @@ void IpAccessControlDialog::setParentDialog(BaseDialog *dialog)
   m_parentDialog = dialog;
 }
 
-BOOL IpAccessControlDialog::onInitDialog()
+bool IpAccessControlDialog::onInitDialog()
 {
   m_config = Configurator::getInstance()->getServerConfig();
   m_container = m_config->getAccessControl();
@@ -59,7 +59,7 @@ BOOL IpAccessControlDialog::onInitDialog()
   return TRUE;
 }
 
-BOOL IpAccessControlDialog::onCommand(UINT controlID, UINT notificationID)
+bool IpAccessControlDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
   if (notificationID == BN_CLICKED) {
     switch (controlID) {
@@ -104,7 +104,7 @@ BOOL IpAccessControlDialog::onCommand(UINT controlID, UINT notificationID)
   return TRUE;
 }
 
-BOOL IpAccessControlDialog::onNotify(UINT controlID, LPARAM data)
+bool IpAccessControlDialog::onNotify(unsigned int controlID, ::lparam data)
 {
   if (controlID == IDC_IP_ACCESS_CONTROL_LIST) {
     NMHDR* pnmh = (NMHDR*)data;
@@ -124,7 +124,7 @@ bool IpAccessControlDialog::validateInput()
 {
   if (!CommonInputValidation::validateUINT(
     &m_queryTimeout,
-    StringTable::getString(IDS_INVALID_QUERY_TIMEOUT))) {
+    main_subsystem()->string_table()->getString(IDS_INVALID_QUERY_TIMEOUT))) {
     return false;
   }
 
@@ -135,7 +135,7 @@ bool IpAccessControlDialog::validateInput()
   if (queryTimeout < ServerConfig::MINIMAL_QUERY_TIMEOUT) {
     CommonInputValidation::notifyValidationError(
       &m_queryTimeout,
-      StringTable::getString(IDS_QUERY_TIMEOUT_TOO_SMALL));
+      main_subsystem()->string_table()->getString(IDS_QUERY_TIMEOUT_TOO_SMALL));
     return false;
   }
 
@@ -147,7 +147,7 @@ void IpAccessControlDialog::updateUI()
   m_list.clear();
   for (size_t i = 0; i < m_container->size(); i++) {
     IpAccessRule *ip = m_container->at(i);
-    m_list.addItem(m_list.getCount(), "", (LPARAM)ip);
+    m_list.addItem(m_list.getCount(), "", (::lparam)ip);
     _ASSERT((int)i == i);
     setListViewItemText((int)i, ip);
   }
@@ -212,9 +212,9 @@ void IpAccessControlDialog::initControls()
   m_ip.setWindow(GetDlgItem(hwnd, IDC_IP_FOR_CHECK_EDIT));
   m_ipCheckResult.setWindow(GetDlgItem(hwnd, IDC_IP_CHECK_RESULT_LABEL));
 
-  m_list.addColumn(0, StringTable::getString(IDS_FIRST_IP_COLUMN), 100);
-  m_list.addColumn(1, StringTable::getString(IDS_LAST_IP_COLUMN), 100);
-  m_list.addColumn(2, StringTable::getString(IDS_ACTION_COLUMN), 80);
+  m_list.addColumn(0, main_subsystem()->string_table()->getString(IDS_FIRST_IP_COLUMN), 100);
+  m_list.addColumn(1, main_subsystem()->string_table()->getString(IDS_LAST_IP_COLUMN), 100);
+  m_list.addColumn(2, main_subsystem()->string_table()->getString(IDS_ACTION_COLUMN), 80);
 
   m_list.allowMultiSelection(false);
   m_list.setFullRowSelectStyle(true);
@@ -231,7 +231,7 @@ void IpAccessControlDialog::onAddButtonClick()
   m_editDialog.setEditFlag(false);
   if (m_editDialog.showModal() == IDOK) {
     m_container->add(ip);
-    m_list.addItem(m_list.getCount(), "", (LPARAM)ip);
+    m_list.addItem(m_list.getCount(), "", (::lparam)ip);
     setListViewItemText(m_list.getCount() - 1, ip);
     updateButtonsState();
     onIpCheckUpdate();
@@ -376,9 +376,9 @@ void IpAccessControlDialog::onIpCheckUpdate()
 
   if (!IpAccessRule::isIpAddressStringValid(ipStorage)) {
     if (ipStorage.is_empty()) {
-      m_ipCheckResult.setText(StringTable::getString(IDS_ENTER_IP_HINT));
+      m_ipCheckResult.setText(main_subsystem()->string_table()->getString(IDS_ENTER_IP_HINT));
     } else {
-      m_ipCheckResult.setText(StringTable::getString(IDS_BAD_IP_HINT));
+      m_ipCheckResult.setText(main_subsystem()->string_table()->getString(IDS_BAD_IP_HINT));
     }
     return;
   }
@@ -404,16 +404,16 @@ void IpAccessControlDialog::onIpCheckUpdate()
   }
 
   ::string actionDescription;
-  actionDescription= StringTable::getString(IDS_ACTION_UNDEF_HINT);
+  actionDescription= main_subsystem()->string_table()->getString(IDS_ACTION_UNDEF_HINT);
   switch (action) {
   case IpAccessRule::ACTION_TYPE_ALLOW:
-    actionDescription= StringTable::getString(IDS_ACTION_ACCEPT_HINT);
+    actionDescription= main_subsystem()->string_table()->getString(IDS_ACTION_ACCEPT_HINT);
     break;
   case IpAccessRule::ACTION_TYPE_DENY:
-    actionDescription= StringTable::getString(IDS_ACTION_REJECT_HINT);
+    actionDescription= main_subsystem()->string_table()->getString(IDS_ACTION_REJECT_HINT);
     break;
   case IpAccessRule::ACTION_TYPE_QUERY:
-    actionDescription= StringTable::getString(IDS_ACTION_QUERY_HINT);
+    actionDescription= main_subsystem()->string_table()->getString(IDS_ACTION_QUERY_HINT);
     break;
   }
 
@@ -494,14 +494,14 @@ void IpAccessControlDialog::setListViewItemText(int index, IpAccessRule *control
   m_list.setSubItemText(index, 1, lastIp);
   switch (control->getAction()) {
   case IpAccessRule::ACTION_TYPE_ALLOW:
-    m_list.setSubItemText(index, 2, StringTable::getString(IDS_ACTION_ACCEPT));
+    m_list.setSubItemText(index, 2, main_subsystem()->string_table()->getString(IDS_ACTION_ACCEPT));
     break;
   case IpAccessRule::ACTION_TYPE_DENY:
-    m_list.setSubItemText(index, 2, StringTable::getString(IDS_ACTION_DENY));
+    m_list.setSubItemText(index, 2, main_subsystem()->string_table()->getString(IDS_ACTION_DENY));
     break;
   case IpAccessRule::ACTION_TYPE_QUERY:
-    m_list.setSubItemText(index, 2, StringTable::getString(IDS_ACTION_QUERY));
+    m_list.setSubItemText(index, 2, main_subsystem()->string_table()->getString(IDS_ACTION_QUERY));
     break;
   }
-  m_list.setItemData(index, (LPARAM)control);
+  m_list.setItemData(index, (::lparam)control);
 }

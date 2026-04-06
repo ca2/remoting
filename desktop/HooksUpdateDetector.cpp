@@ -35,18 +35,18 @@ HooksUpdateDetector::HooksUpdateDetector(UpdateKeeper *updateKeeper,
   m_updateTimer(updateListener),
   m_targetWin(0),
   m_hookInstaller(0),
-  m_log(log)
+  m_plogwriter(log)
 {
 #ifndef _WIN64
-  m_log->debug("Loading the screenhook library for 32bit system");
+  m_plogwriter->debug("Loading the screenhook library for 32bit system");
 #else
-  m_log->debug("Loading the screenhook library for 64bit system");
+  m_plogwriter->debug("Loading the screenhook library for 64bit system");
 #endif
   try {
     m_hookInstaller = new HookInstaller();
   } catch (::exception &e) {
     Thread::terminate();
-    m_log->error("Failed to load the hook library: {}", e.get_message());
+    m_plogwriter->error("Failed to load the hook library: {}", e.get_message());
   }
   HINSTANCE hinst = GetModuleHandle(0);
   m_targetWin = new MessageWindow(hinst,
@@ -77,7 +77,7 @@ void HooksUpdateDetector::onTerminate()
 void HooksUpdateDetector::start32Loader()
 {
 #ifdef _WIN64
-  m_log->debug("Loading the screenhook library for 32bit system with hookldr.exe");
+  m_plogwriter->debug("Loading the screenhook library for 32bit system with hookldr.exe");
   if (!isTerminating()) {
     ::string path, folder;
     Environment::getCurrentModuleFolderPath(&folder);
@@ -90,7 +90,7 @@ void HooksUpdateDetector::start32Loader()
     try {
       m_hookLoader32.start();
     } catch (::exception &e) {
-      m_log->error("Can't run the 32-bit hook loader: {}", e.get_message());
+      m_plogwriter->error("Can't run the 32-bit hook loader: {}", e.get_message());
     }
   }
 #endif
@@ -104,7 +104,7 @@ void HooksUpdateDetector::terminate32Loader()
   }
 }
 
-void HooksUpdateDetector::broadcastMessage(UINT scopedstrMessage)
+void HooksUpdateDetector::broadcastMessage(unsigned int scopedstrMessage)
 {
   HWND hwndFound = FindWindowEx(HWND_MESSAGE, 0, 0, 0);
   while(hwndFound) {
@@ -115,21 +115,21 @@ void HooksUpdateDetector::broadcastMessage(UINT scopedstrMessage)
 
 void HooksUpdateDetector::execute()
 {
-  m_log->information("Hooks update detector thread id = {}", getThreadId());
+  m_plogwriter->information("Hooks update detector thread id = {}", getThreadId());
 
   if (!isTerminating() && m_targetWin != 0) {
     m_targetWin->createWindow();
-    m_log->information("Hooks target window has been created (hwnd = {})",
+    m_plogwriter->information("Hooks target window has been created (hwnd = {})",
               m_targetWin->getHWND());
   }
 
   try {
-    UipiControl uipiControl(m_log);
+    UipiControl uipiControl(m_plogwriter);
     uipiControl.allowMessage(HookDefinitions::SPEC_IPC_CODE,
                              m_targetWin->getHWND());
   } catch (::exception &e) {
     terminate();
-    m_log->error(e.get_message());
+    m_plogwriter->error(e.get_message());
   }
 
   bool hookInstalled = false;
@@ -138,13 +138,13 @@ void HooksUpdateDetector::execute()
       m_hookInstaller->install(m_targetWin->getHWND());
       hookInstalled = true;
     } catch (::exception &e) {
-      m_log->error("Hooks installing failed, wait for the next trying: {}",
+      m_plogwriter->error("Hooks installing failed, wait for the next trying: {}",
                  e.get_message());
       m_initWaiter.waitForEvent(5000);
       try {
         m_hookInstaller->uninstall();
       } catch (::exception &e) {
-        m_log->error("Hooks uninstalling failed: {}",
+        m_plogwriter->error("Hooks uninstalling failed: {}",
                    e.get_message());
       }
     }
@@ -153,7 +153,7 @@ void HooksUpdateDetector::execute()
   start32Loader();
 
   if (!isTerminating()) {
-    m_log->information("Hooks update detector has been successfully initialized");
+    m_plogwriter->information("Hooks update detector has been successfully initialized");
   }
 
   MSG msg;
@@ -167,13 +167,13 @@ void HooksUpdateDetector::execute()
           m_updateKeeper->addChangedRect(rect);
           m_updateTimer.sear();
         }
-//        m_log->debug("Screenhook update rectangle: {x={}, y={}, w={}, h={}}", rect.left, rect.top, rect.width(), rect.height());
+//        m_plogwriter->debug("Screenhook update rectangle: {x={}, y={}, w={}, h={}}", rect.left, rect.top, rect.width(), rect.height());
       } else {
         DispatchMessage(&msg);
       }
     } else {
       if (WaitMessage() == 0) {
-        m_log->error("Hooks update detector has failed");
+        m_plogwriter->error("Hooks update detector has failed");
         Thread::terminate();
       }
     }
@@ -185,7 +185,7 @@ void HooksUpdateDetector::execute()
     }
     terminate32Loader();
   } catch (::exception &e) {
-    m_log->error("{}", e.get_message());
+    m_plogwriter->error("{}", e.get_message());
   }
-  m_log->information("Hooks update detector has been terminated.");
+  m_plogwriter->information("Hooks update detector has been terminated.");
 }

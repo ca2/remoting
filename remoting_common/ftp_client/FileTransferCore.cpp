@@ -43,7 +43,7 @@ namespace remoting
                                          FileTransferRequestSender *sender,
                                          FileTransferReplyBuffer *replyBuffer,
                                          ListenerContainer<FileTransferEventHandler *> *ftListeners)
-      : m_logWriter(logWriter),
+      : m_plogwriter(logWriter),
         m_state(NOTHING_STATE),
         m_sender(sender), m_replyBuffer(replyBuffer),
         m_fileTransferListeners(ftListeners),
@@ -95,7 +95,7 @@ namespace remoting
       ::pointer_array<FileInfo> FileTransferCore::getListLocalFolder(const ::file::path & pathToFile)
       {
 
-         FolderListener fl(m_logWriter, pathToFile);
+         FolderListener fl(m_plogwriter, pathToFile);
 
          if (!fl.list()) {
             throw "FileTransferCore: listLocalFolder";
@@ -231,7 +231,7 @@ namespace remoting
       {
          m_state = DOWNLOAD_STATE;
 
-         DownloadOperation *dOp = new DownloadOperation(m_logWriter,
+         DownloadOperation *dOp = new DownloadOperation(m_plogwriter,
                                                         fileinfoa,
                                                         pathToTargetRoot,
                                                         pathToSourceRoot);
@@ -245,7 +245,7 @@ namespace remoting
       {
          m_state = UPLOAD_STATE;
 
-         UploadOperation *uOp = new UploadOperation(m_logWriter,
+         UploadOperation *uOp = new UploadOperation(m_plogwriter,
                                                     fileinfoa,
                                                     pathToSourceRoot,
                                                     pathToTargetRoot);
@@ -257,7 +257,7 @@ namespace remoting
                                                        const ::file::path & pathToTargetRoot)
       {
          m_state = LOCAL_REMOVE_STATE;
-         executeOperation(new LocalFilesDeleteOperation(m_logWriter,
+         executeOperation(new LocalFilesDeleteOperation(m_plogwriter,
                                                         fileinfoa,
                                                         pathToTargetRoot));
       }
@@ -266,7 +266,7 @@ namespace remoting
                                                        const ::file::path & pathToTargetRoot)
       {
          m_state = REMOVE_STATE;
-         executeOperation(new RemoteFilesDeleteOperation(m_logWriter,
+         executeOperation(new RemoteFilesDeleteOperation(m_plogwriter,
                                                          fileinfoa,
                                                          pathToTargetRoot));
       }
@@ -275,7 +275,7 @@ namespace remoting
       {
          m_state = MKDIR_STATE;
 
-         executeOperation(new RemoteFolderCreateOperation(m_logWriter,
+         executeOperation(new RemoteFolderCreateOperation(m_plogwriter,
                                                           file,
                                                           pathToTargetRoot));
       }
@@ -285,7 +285,7 @@ namespace remoting
       {
          m_state = RENAME_STATE;
 
-         executeOperation(new RemoteFileRenameOperation(m_logWriter,
+         executeOperation(new RemoteFileRenameOperation(m_plogwriter,
                                                         sourceFileInfo,
                                                         targetFileInfo,
                                                         pathToTargetRoot));
@@ -294,7 +294,7 @@ namespace remoting
       void FileTransferCore::remoteFileListOperation(const ::file::path & pathToFile)
       {
          m_state = FILE_LIST_STATE;
-         executeOperation(new RemoteFileListOperation(m_logWriter, pathToFile));
+         executeOperation(new RemoteFileListOperation(m_plogwriter, pathToFile));
       }
 
       void FileTransferCore::terminateCurrentOperation()

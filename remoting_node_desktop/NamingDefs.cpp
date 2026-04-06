@@ -68,9 +68,9 @@ const TCHAR HookDefinitions::HOOK_LOADER_WINDOW_CLASS[] =
 const TCHAR HookDefinitions::HOOK_TARGET_WIN_CLASS_NAME[] =
   "HookTargetWinClassName";
 const TCHAR HookDefinitions::HOOK_LOADER_NAME[] = "hookldr.exe";
-const UINT HookDefinitions::LOADER_CLOSE_CODE =
+const unsigned int HookDefinitions::LOADER_CLOSE_CODE =
   RegisterWindowMessage("TVN.HOOK.LOADER.CLOSE.CODE");
-const UINT HookDefinitions::SPEC_IPC_CODE =
+const unsigned int HookDefinitions::SPEC_IPC_CODE =
   RegisterWindowMessage("TVN.HOOK.MESSAGE.CODE");
 
 const TCHAR DefaultNames::DEFAULT_COMPUTER_NAME[] = "TightVNC Server";

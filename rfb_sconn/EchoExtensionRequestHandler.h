@@ -73,7 +73,7 @@ protected:
   RfbOutputGate *m_output;
 
   bool m_enabled;
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 ////_ECHO_EXTENSION_REQUEST_HANDLER_H_

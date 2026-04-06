@@ -83,7 +83,7 @@ protected:
   int m_iconWidth;
   int m_iconHeight;
 
-  bool window_procedure(LRESULT &lresult, UINT scopedstrMessage, wparam wparam, lparam lparam) override;
+  bool window_procedure(LRESULT &lresult, unsigned int scopedstrMessage, wparam wparam, lparam lparam) override;
 };
 
 //

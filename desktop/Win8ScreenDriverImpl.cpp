@@ -40,18 +40,18 @@ Win8ScreenDriverImpl::Win8ScreenDriverImpl(LogWriter *log, UpdateKeeper *updateK
                                            bool detectionEnabled)
 : m_updateKeeper(updateKeeper),
   m_updateListener(updateListener),
-  m_log(log),
+  m_plogwriter(log),
   m_curTimeStamp(0),
   m_hasCriticalError(false),
   m_hasRecoverableError(false),
   m_detectionEnabled(detectionEnabled)
 {
   resume();
-  m_log->debug("Win8ScreenDriverImpl:: waiting for DXGI init");
+  m_plogwriter->debug("Win8ScreenDriverImpl:: waiting for DXGI init");
   m_initEvent.waitForEvent();
 
   if (m_hasCriticalError) {
-    m_log->debug("Win8ScreenDriverImpl init critical error");
+    m_plogwriter->debug("Win8ScreenDriverImpl init critical error");
     terminate();
     wait();
     throw ::remoting::Exception("Win8ScreenDriverImpl can't be successfully initialized");
@@ -77,8 +77,8 @@ Win8ScreenDriverImpl::~Win8ScreenDriverImpl()
   terminate();
   int activeResult = (int)isActive();
   int waitResult = (int)wait();
-  m_log->debug("Win8ScreenDriverImpl::activeResult = {}", activeResult);
-  m_log->debug("Win8ScreenDriverImpl::waitResult = {}", waitResult);
+  m_plogwriter->debug("Win8ScreenDriverImpl::activeResult = {}", activeResult);
+  m_plogwriter->debug("Win8ScreenDriverImpl::waitResult = {}", waitResult);
 }
 
 void Win8ScreenDriverImpl::executeDetection()
@@ -89,7 +89,7 @@ void Win8ScreenDriverImpl::executeDetection()
 
 void Win8ScreenDriverImpl::terminateDetection()
 {
-  m_log->debug("Stop Win8DeskDuplication");
+  m_plogwriter->debug("Stop Win8DeskDuplication");
   m_deskDuplThreadBundle.destroyAllThreads();
   m_detectionEnabled = false;
 }
@@ -101,18 +101,18 @@ FrameBuffer *Win8ScreenDriverImpl::getScreenBuffer()
 
 void Win8ScreenDriverImpl::initDxgi()
 {
-  m_log->debug("Creating of D3D11Device");
-  WinD3D11Device d3D11Device(m_log);
-  m_log->debug("Quering Interface for IDXGIDevice");
+  m_plogwriter->debug("Creating of D3D11Device");
+  WinD3D11Device d3D11Device(m_plogwriter);
+  m_plogwriter->debug("Quering Interface for IDXGIDevice");
   WinDxgiDevice dxgiDevice(&d3D11Device);
-  m_log->debug("Getting Parent for IDXGIAdapter");
+  m_plogwriter->debug("Getting Parent for IDXGIAdapter");
   WinDxgiAdapter dxgiAdapter(&dxgiDevice);
 
   Region virtDeskRegion;
-  m_log->debug("Try to enumerate dxgi outputs");
+  m_plogwriter->debug("Try to enumerate dxgi outputs");
   ::array_base<WinDxgiOutput> dxgiOutputArray;
   ::array_base<::int_rectangle> deskCoordArray;
-  UINT iOutput = 0;
+  unsigned int iOutput = 0;
   try {
     for (iOutput = 0; iOutput < 65535; iOutput++) {
       WinDxgiOutput dxgiOutput(&dxgiAdapter, iOutput);
@@ -124,10 +124,10 @@ void Win8ScreenDriverImpl::initDxgi()
       }
     }
   } catch (WinDxRecoverableException &) {
-    m_log->debug("Reached the end of dxgi output ::list_base with iOutput = %u", iOutput);
+    m_plogwriter->debug("Reached the end of dxgi output ::list_base with iOutput = %u", iOutput);
     // End of output ::list_base.
   }
-  m_log->debug("We have {} dxgi output(s) connected", dxgiOutputArray.size());
+  m_plogwriter->debug("We have {} dxgi output(s) connected", dxgiOutputArray.size());
 
   // Check that all outputs for the virtual screen are found (in case two or more
   // hardware graphic interfaces are used). It's better to avoid using buggy
@@ -156,9 +156,9 @@ void Win8ScreenDriverImpl::initDxgi()
     &m_cursorMutex,
     this,
     dxgiOutputArray,
-    m_log);
+    m_plogwriter);
   DWORD id = thread->getThreadId();
-  m_log->debug("Created a new Win8DeskDuplication with ID: ({})", id);
+  m_plogwriter->debug("Created a new Win8DeskDuplication with ID: ({})", id);
   m_deskDuplThreadBundle.addThread(thread);
 }
 
@@ -168,15 +168,15 @@ void Win8ScreenDriverImpl::execute()
     initDxgi();
   }
   catch (WinDxRecoverableException &e) {
-    m_log->error("Win8ScreenDriverImpl:: Catched WinDxRecoverableException: {}, (%x)", e.get_message(), (int)e.getErrorCode());
+    m_plogwriter->error("Win8ScreenDriverImpl:: Catched WinDxRecoverableException: {}, (%x)", e.get_message(), (int)e.getErrorCode());
     m_hasRecoverableError = true;
   }
   catch (WinDxCriticalException &e) {
-    m_log->error("Win8ScreenDriverImpl:: Catched WinDxCriticalException: {}, (%x)", e.get_message(), (int)e.getErrorCode());
+    m_plogwriter->error("Win8ScreenDriverImpl:: Catched WinDxCriticalException: {}, (%x)", e.get_message(), (int)e.getErrorCode());
     m_hasCriticalError = true;
   }
   catch (::exception &e) {
-    m_log->error("Catched ::remoting::Exception in the Win8ScreenDriverImpl::execute() function: {}."
+    m_plogwriter->error("Catched ::remoting::Exception in the Win8ScreenDriverImpl::execute() function: {}."
        " The exception will consider as critical", e.get_message());
     m_hasCriticalError = true;
   }
@@ -187,7 +187,7 @@ void Win8ScreenDriverImpl::execute()
   }
 
   if (!isValid()) {
-    m_log->error("Win8ScreenDriverImpl has an invalid state. The invalid state can be"
+    m_plogwriter->error("Win8ScreenDriverImpl has an invalid state. The invalid state can be"
                  " a part of screen propery changes. An update signal will be generated"
                  " as a screen size changed signal.");
     m_updateKeeper->setScreenSizeChanged();
@@ -237,14 +237,14 @@ void Win8ScreenDriverImpl::onCursorShapeChanged()
 
 void Win8ScreenDriverImpl::onRecoverableError(const ::scoped_string & scopedstrReason)
 {
-  m_log->error("Win8ScreenDriverImpl catch an recoverable error with reason: {}", reason);
+  m_plogwriter->error("Win8ScreenDriverImpl catch an recoverable error with reason: {}", reason);
   m_hasRecoverableError = true;
   m_errorEvent.notify();
 }
 
 void Win8ScreenDriverImpl::onCriticalError(const ::scoped_string & scopedstrReason)
 {
-  m_log->error("Win8ScreenDriverImpl catch an critical error with reason: {}", reason);
+  m_plogwriter->error("Win8ScreenDriverImpl catch an critical error with reason: {}", reason);
   m_hasCriticalError = true;
   m_errorEvent.notify();
 }

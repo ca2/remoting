@@ -65,22 +65,22 @@ protected:
    * Inherited from BaseDialog.
    * Does nothing.
    */
-  virtual BOOL onInitDialog();
+  virtual bool onInitDialog();
   /**
    * Inherited from BaseDialog.
    * Does nothing.
    */
-  virtual BOOL onNotify(UINT controlID, LPARAM data);
+  virtual bool onNotify(unsigned int controlID, ::lparam data);
   /**
    * Inherited from BaseDialog.
    * Handles buttons events.
    */
-  virtual BOOL onCommand(UINT controlID, UINT notificationID);
+  virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
   /**
    * Inherited from BaseDialog.
    * Does nothing.
    */
-  virtual BOOL onDestroy();
+  virtual bool onDestroy();
 };
 
 

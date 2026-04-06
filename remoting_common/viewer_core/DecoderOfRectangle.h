@@ -32,7 +32,7 @@ class FbUpdateNotifier;
 class CLASS_DECL_REMOTING_COMMON DecoderOfRectangle : public Decoder
 {
 public:
-  DecoderOfRectangle(LogWriter *logWriter);
+  DecoderOfRectangle(::subsystem::LogWriter * plogwriter);
   virtual ~DecoderOfRectangle();
 
   //

@@ -35,14 +35,14 @@ ChangePasswordDialog::ChangePasswordDialog(::remoting::Window *parent, bool isNe
 {
   setParent(parent);
 
-  m_passwordEmptyTooltip.setText(StringTable::getString(IDS_PASSWORD_IS_EMPTY));
-  m_passwordEmptyTooltip.setTitle(StringTable::getString(IDS_MBC_TVNCONTROL));
+  m_passwordEmptyTooltip.setText(main_subsystem()->string_table()->getString(IDS_PASSWORD_IS_EMPTY));
+  m_passwordEmptyTooltip.setTitle(main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL));
 
-  m_passwordsNotMatchTooltip.setText(StringTable::getString(IDS_PASSWORDS_NOT_MATCH));
-  m_passwordsNotMatchTooltip.setTitle(StringTable::getString(IDS_MBC_TVNCONTROL));
+  m_passwordsNotMatchTooltip.setText(main_subsystem()->string_table()->getString(IDS_PASSWORDS_NOT_MATCH));
+  m_passwordsNotMatchTooltip.setTitle(main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL));
 
-  m_passwordWeakTooltip.setText(StringTable::getString(IDS_BAD_PASSWORD));
-  m_passwordWeakTooltip.setTitle(StringTable::getString(IDS_MBC_BAD_PASSWORD));
+  m_passwordWeakTooltip.setText(main_subsystem()->string_table()->getString(IDS_BAD_PASSWORD));
+  m_passwordWeakTooltip.setTitle(main_subsystem()->string_table()->getString(IDS_MBC_BAD_PASSWORD));
 }
 
 ChangePasswordDialog::~ChangePasswordDialog()
@@ -54,18 +54,18 @@ const ::scoped_string & scopedstrChangePasswordDialog::getPasswordInPlainText() 
   return m_passwordText;
 }
 
-BOOL ChangePasswordDialog::onInitDialog()
+bool ChangePasswordDialog::onInitDialog()
 {
   initControls();
   if (m_newPassword) {
-    m_ctrlThis.setText(StringTable::getString(IDS_NEW_PASSWORD));
+    m_ctrlThis.setText(main_subsystem()->string_table()->getString(IDS_NEW_PASSWORD));
   } else {
-    m_ctrlThis.setText(StringTable::getString(IDS_CHANGE_PASSWORD));
+    m_ctrlThis.setText(main_subsystem()->string_table()->getString(IDS_CHANGE_PASSWORD));
   }
   return TRUE;
 }
 
-BOOL ChangePasswordDialog::onCommand(UINT cID, UINT nID)
+bool ChangePasswordDialog::onCommand(unsigned int cID, unsigned int nID)
 {
   if (nID == BN_CLICKED) {
     switch (cID) {

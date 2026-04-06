@@ -51,7 +51,7 @@ bool CommonInputValidation::validatePort(TextBox *textBox)
   }
 
   if (!validationOk) {
-    notifyValidationError(textBox, StringTable::getString(IDS_PORT_RANGE_ERROR));
+    notifyValidationError(textBox, main_subsystem()->string_table()->getString(IDS_PORT_RANGE_ERROR));
   }
 
   return validationOk;
@@ -80,7 +80,7 @@ void CommonInputValidation::notifyValidationError(TextBox *textBox, const ::scop
 
   invalidInputTip.setIconType(TTI_WARNING);
   invalidInputTip.setText(messageText);
-  invalidInputTip.setTitle(StringTable::getString(IDS_CAPTION_BAD_INPUT));
+  invalidInputTip.setTitle(main_subsystem()->string_table()->getString(IDS_CAPTION_BAD_INPUT));
 
   textBox->showBalloonTip(&invalidInputTip);
   textBox->set_focus();

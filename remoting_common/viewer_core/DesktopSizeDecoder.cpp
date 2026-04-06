@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "DesktopSizeDecoder.h"
 
-DesktopSizeDecoder::DesktopSizeDecoder(LogWriter *logWriter)
+DesktopSizeDecoder::DesktopSizeDecoder(::subsystem::LogWriter * plogwriter)
 : PseudoDecoder(logWriter)
 {
   m_encoding = PseudoEncDefs::DESKTOP_SIZE;

@@ -42,16 +42,16 @@ namespace remoting_remoting
         m_connected = true;
     }
 
-    BOOL OptionsDialog::onCommand(UINT controlID, UINT notificationID)
+    bool OptionsDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
         if (controlID == IDOK) {
             if (onOkPressed()) {
-                close_dialog(1);
+                closeDialog(1);
             }
             return TRUE;
         }
         if (controlID == IDCANCEL) {
-            close_dialog(0);
+            closeDialog(0);
             return TRUE;
         }
         if (controlID == IDC_CVIEWONLY) {
@@ -93,31 +93,31 @@ namespace remoting_remoting
         return FALSE;
     }
 
-    BOOL OptionsDialog::onInitDialog()
+    bool OptionsDialog::onInitDialog()
     {
-        setControlById(m_useEnc, IDC_CUSEENC);
-        setControlById(m_eightBit, IDC_CEIGHTBIT);
-        setControlById(m_compLvl, IDC_CCOMPRLVL);
-        setControlById(m_tcompLvl, IDC_SCOMP);
-        setControlById(m_quality, IDC_SQUALITY);
-        setControlById(m_jpeg, IDC_CJPEG);
-        setControlById(m_tjpeg, IDC_SJPEG);
-        setControlById(m_quality2, IDC_SQUALITY2);
-        setControlById(m_copyrect, IDC_CCOPYRECT);
-        setControlById(m_viewonly, IDC_CVIEWONLY);
-        setControlById(m_disclip, IDC_CDISCLIP);
-        setControlById(m_sharedses, IDC_CSHAREDSES);
-        setControlById(m_scale, IDC_CSCALE);
-        setControlById(m_fullscr, IDC_CFULLSCR);
-        setControlById(m_deiconfy, IDC_CDEICONFY);
-        setControlById(m_swapmouse, IDC_CSWAPMOUSE);
-        setControlById(m_track, IDC_RTRACK);
-        setControlById(m_cursor, IDC_RCURSOR);
-        setControlById(m_ncursor, IDC_RNCURSOR);
-        setControlById(m_dot, IDC_RDOT);
-        setControlById(m_smalldot, IDC_RSMALLDOT);
-        setControlById(m_arrow, IDC_RARROW);
-        setControlById(m_nlocal, IDC_RNLOCAL);
+        subclassControlById(m_useEnc, IDC_CUSEENC);
+        subclassControlById(m_eightBit, IDC_CEIGHTBIT);
+        subclassControlById(m_compLvl, IDC_CCOMPRLVL);
+        subclassControlById(m_tcompLvl, IDC_SCOMP);
+        subclassControlById(m_quality, IDC_SQUALITY);
+        subclassControlById(m_jpeg, IDC_CJPEG);
+        subclassControlById(m_tjpeg, IDC_SJPEG);
+        subclassControlById(m_quality2, IDC_SQUALITY2);
+        subclassControlById(m_copyrect, IDC_CCOPYRECT);
+        subclassControlById(m_viewonly, IDC_CVIEWONLY);
+        subclassControlById(m_disclip, IDC_CDISCLIP);
+        subclassControlById(m_sharedses, IDC_CSHAREDSES);
+        subclassControlById(m_scale, IDC_CSCALE);
+        subclassControlById(m_fullscr, IDC_CFULLSCR);
+        subclassControlById(m_deiconfy, IDC_CDEICONFY);
+        subclassControlById(m_swapmouse, IDC_CSWAPMOUSE);
+        subclassControlById(m_track, IDC_RTRACK);
+        subclassControlById(m_cursor, IDC_RCURSOR);
+        subclassControlById(m_ncursor, IDC_RNCURSOR);
+        subclassControlById(m_dot, IDC_RDOT);
+        subclassControlById(m_smalldot, IDC_RSMALLDOT);
+        subclassControlById(m_arrow, IDC_RARROW);
+        subclassControlById(m_nlocal, IDC_RNLOCAL);
 
         m_useEnc.addItem("Raw", reinterpret_cast<void *>(EncodingDefs::RAW));
         m_useEnc.addItem("Hextile", reinterpret_cast<void *>(EncodingDefs::HEXTILE));
@@ -323,7 +323,7 @@ namespace remoting_remoting
         m_quality2.setText(labelText);
     }
 
-    void OptionsDialog::onMessageReceived(UINT uMsg, WPARAM wParam, LPARAM lParam)
+    void OptionsDialog::onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam)
     {
         switch (uMsg) {
             case WM_HSCROLL:
@@ -374,22 +374,22 @@ namespace remoting_remoting
 
         if (!StringParser::parseInt(scaleText, &scaleInt)) {
             ::string error;
-            error.formatf(StringTable::getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC).c_str(),
-                         StringTable::getString(IDS_OPTIONS_SCALE).c_str());
-            ::remoting::message_box(m_hwnd,
+            error.formatf(main_subsystem()->string_table()->getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC).c_str(),
+                         main_subsystem()->string_table()->getString(IDS_OPTIONS_SCALE).c_str());
+            main_innate_subsystem()->message_box(m_hwnd,
                        ::wstring(error),
-                       ::wstring(StringTable::getString(IDS_OPTIONS_CAPTION)),
+                       ::wstring(main_subsystem()->string_table()->getString(IDS_OPTIONS_CAPTION)),
                        MB_OK | MB_ICONWARNING);
             return false;
         }
 
         if (scaleInt < 0) {
             ::string error;
-            error.formatf(StringTable::getString(IDS_ERROR_VALUE_FIELD_ONLY_POSITIVE_NUMERIC).c_str(),
-                         StringTable::getString(IDS_OPTIONS_SCALE).c_str());
-            ::remoting::message_box(m_hwnd,
+            error.formatf(main_subsystem()->string_table()->getString(IDS_ERROR_VALUE_FIELD_ONLY_POSITIVE_NUMERIC).c_str(),
+                         main_subsystem()->string_table()->getString(IDS_OPTIONS_SCALE).c_str());
+            main_innate_subsystem()->message_box(m_hwnd,
                        error,
-                       StringTable::getString(IDS_OPTIONS_CAPTION),
+                       main_subsystem()->string_table()->getString(IDS_OPTIONS_CAPTION),
                        MB_OK | MB_ICONWARNING);
             return false;
         }

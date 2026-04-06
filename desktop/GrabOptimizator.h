@@ -95,7 +95,7 @@ private:
 
   DemandTimer m_timer;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __GRABOPTIMIZATOR_H__

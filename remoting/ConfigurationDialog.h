@@ -30,7 +30,8 @@
 #include "remoting/remoting_common/client_config/ConnectionConfigSM.h"
 #include "remoting/remoting_common/client_config/ViewerSettingsManager.h"
 #include "acme/subsystem/StringParser.h"
-#include "apex/innate_subsystem/BaseDialog.h"
+#include "acme/subsystem/node/OperatingSystemApplication.h"
+#include "apex/innate_subsystem/Dialog.h"
 #include "apex/innate_subsystem/Control.h"
 #include "apex/innate_subsystem/TextBox.h"
 #include "apex/innate_subsystem/CheckBox.h"
@@ -42,7 +43,7 @@
 //#include "remoting/remoting_common/win_system/WindowsApplication.h"
 namespace remoting_remoting
 {
-   class ConfigurationDialog : public ::innate_subsystem::BaseDialog
+   class ConfigurationDialog : public ::innate_subsystem::Dialog
    {
    public:
       ConfigurationDialog();

@@ -30,7 +30,7 @@
 
 WsConfigRunner::WsConfigRunner(LogWriter *LogWriter, bool serviceMode)
 : m_serviceMode(serviceMode),
-  m_log(LogWriter)
+  m_plogwriter(LogWriter)
 {
   resume();
 }
@@ -60,7 +60,7 @@ void WsConfigRunner::execute()
     process = new Process(pathToBin, args);
     process->start();
   } catch (::exception &e) {
-    m_log.error("Cannot start the WsControl process ({})", e.get_message());
+    m_plogwriter.error("Cannot start the WsControl process ({})", e.get_message());
   }
 
   if (process != 0) {

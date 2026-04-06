@@ -34,14 +34,14 @@
 namespace remoting_remoting
 {
     DesktopWindow::DesktopWindow(LogWriter *logWriter, ConnectionConfig *conConf, ViewerWindow * pviewerwindow) :
-        m_logWriter(logWriter),m_pviewerwindow(pviewerwindow), m_clipboard(0), m_showVert(false), m_showHorz(false), m_fbWidth(1), m_fbHeight(1),
+        m_plogwriter(logWriter),m_pviewerwindow(pviewerwindow), m_clipboard(0), m_showVert(false), m_showHorz(false), m_fbWidth(1), m_fbHeight(1),
         m_winResize(false), m_conConf(conConf), m_brush(RGB(0, 0, 0)),
 
         m_viewerCore(0), m_ctrlDown(false), m_altDown(false), m_previousMousePos(-1, -1), m_previousMouseState(0),
         m_isBackgroundDirty(false)
     {
         m_bShowCursor = true;
-        m_rfbKeySym = std::unique_ptr<RfbKeySym>(new RfbKeySym(this, m_logWriter));
+        m_rfbKeySym = std::unique_ptr<RfbKeySym>(new RfbKeySym(this, m_plogwriter));
     }
 
     DesktopWindow::~DesktopWindow() {}
@@ -58,7 +58,7 @@ namespace remoting_remoting
         m_premotingtoolbar = allocateø ::remoting::toolbar;
         m_premotingtoolbar->create_impact_toolbar(this, m_premotingstyle);
         m_timeStartDesktopWindow.Now();
-        BOOL enable = TRUE; // Use TRUE to force disable, which is counter-intuitive but how the flag works
+        bool enable = TRUE; // Use TRUE to force disable, which is counter-intuitive but how the flag works
         HRESULT hr = DwmSetWindowAttribute(::GetParent(getHWnd()), DWMWA_TRANSITIONS_FORCEDISABLED, &enable, sizeof(enable));
 
         // m_pimpactoolbar->m_pdesktopwindow = this;
@@ -155,7 +155,7 @@ namespace remoting_remoting
     }
 
 
-    bool DesktopWindow::onMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
+    bool DesktopWindow::onMessage(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam)
     {
         switch (scopedstrMessage)
         {
@@ -247,7 +247,7 @@ namespace remoting_remoting
 
     bool DesktopWindow::onEraseBackground(HDC hdc) { return true; }
 
-    bool DesktopWindow::onHScroll(WPARAM wParam, LPARAM lParam)
+    bool DesktopWindow::onHScroll(::wparam wParam, ::lparam lParam)
     {
         switch (LOWORD(wParam))
         {
@@ -276,7 +276,7 @@ namespace remoting_remoting
         return true;
     }
 
-    bool DesktopWindow::onVScroll(WPARAM wParam, LPARAM lParam)
+    bool DesktopWindow::onVScroll(::wparam wParam, ::lparam lParam)
     {
         switch (LOWORD(wParam))
         {
@@ -305,7 +305,7 @@ namespace remoting_remoting
         return true;
     }
 
-    bool DesktopWindow::onMouseEx(UINT uMessage, int iButtonMask, unsigned short wheelSpeed, POINT point)
+    bool DesktopWindow::onMouseEx(unsigned int uMessage, int iButtonMask, unsigned short wheelSpeed, POINT point)
     {
 
         RECT rcClient;
@@ -348,7 +348,7 @@ namespace remoting_remoting
                     //  // Switching off ignoring win key.
                     //  setWinKeyIgnore(false);
                     //} catch (::exception &e) {
-                    //  m_logWriter->error("{}", e.get_message());
+                    //  m_plogwriter->error("{}", e.get_message());
                     //}
 
 
@@ -492,7 +492,7 @@ namespace remoting_remoting
         return true;
     }
 
-    bool DesktopWindow::onKey(WPARAM wParam, LPARAM lParam)
+    bool DesktopWindow::onKey(::wparam wParam, ::lparam lParam)
     {
         if (!m_conConf->isViewOnly())
         {
@@ -504,7 +504,7 @@ namespace remoting_remoting
             if (virtualKey == VK_PROCESSKEY)
             {
                 bool extended = HIWORD(lParam) & KF_EXTENDED;
-                UINT scancode = HIWORD(lParam) & 0xFF;
+                unsigned int scancode = HIWORD(lParam) & 0xFF;
                 if (extended)
                 {
                     scancode += 0xE000;
@@ -527,7 +527,7 @@ namespace remoting_remoting
         return true;
     }
 
-    bool DesktopWindow::onChar(WPARAM wParam, LPARAM lParam)
+    bool DesktopWindow::onChar(::wparam wParam, ::lparam lParam)
     {
         if (!m_conConf->isViewOnly())
         {
@@ -536,7 +536,7 @@ namespace remoting_remoting
         return true;
     }
 
-    bool DesktopWindow::onDeadChar(WPARAM wParam, LPARAM lParam) { return true; }
+    bool DesktopWindow::onDeadChar(::wparam wParam, ::lparam lParam) { return true; }
 
     bool DesktopWindow::onDrawClipboard()
     {
@@ -790,7 +790,7 @@ namespace remoting_remoting
         }
     }
 
-    bool DesktopWindow::onSize(WPARAM wParam, LPARAM lParam)
+    bool DesktopWindow::onSize(::wparam wParam, ::lparam lParam)
     {
         calcClientArea();
         m_winResize = true;
@@ -811,9 +811,9 @@ namespace remoting_remoting
         // and onFrameBufferPropChange() may be called only from one thread.
         if (!m_framebuffer.copyFrom(dstRect, pframebuffer, dstRect.left, dstRect.top))
         {
-            m_logWriter->error("Possible invalide region. ({}, {}), ({}, {})", dstRect.left, dstRect.top, dstRect.right,
+            m_plogwriter->error("Possible invalide region. ({}, {}), ({}, {})", dstRect.left, dstRect.top, dstRect.right,
                                dstRect.bottom);
-            m_logWriter->error("Error in updateFramebuffer (ViewerWindow)");
+            m_plogwriter->error("Error in updateFramebuffer (ViewerWindow)");
         }
         repaint(dstRect);
     }
@@ -829,7 +829,7 @@ namespace remoting_remoting
 
         //m_premotingtoolbar->on_size();
 
-        m_logWriter->debug("Desktop size: {}, {}", dimension.cx, dimension.cy);
+        m_plogwriter->debug("Desktop size: {}, {}", dimension.cx, dimension.cy);
         {
             // FIXME: Nested locks should not be used.
             critical_section_lock al(&m_bufferLock);
@@ -1000,7 +1000,7 @@ namespace remoting_remoting
         }
         catch (const ::remoting::Exception &exception)
         {
-            m_logWriter->debug("Error in DesktopWindow::sendKeyboardEvent(): {}", exception.get_message());
+            m_plogwriter->debug("Error in DesktopWindow::sendKeyboardEvent(): {}", exception.get_message());
         }
     }
 
@@ -1024,7 +1024,7 @@ namespace remoting_remoting
         }
         catch (const ::remoting::Exception &exception)
         {
-            m_logWriter->debug("Error in DesktopWindow::sendPointerEvent(): {}", exception.get_message());
+            m_plogwriter->debug("Error in DesktopWindow::sendPointerEvent(): {}", exception.get_message());
         }
     }
 
@@ -1048,7 +1048,7 @@ namespace remoting_remoting
         }
         catch (const ::remoting::Exception &exception)
         {
-            m_logWriter->debug("Error in DesktopWindow::sendCutTextEvent(): {}", exception.get_message());
+            m_plogwriter->debug("Error in DesktopWindow::sendCutTextEvent(): {}", exception.get_message());
         }
     }
 }//namespace remoting_remoting

@@ -31,8 +31,8 @@ namespace  remoting
 {
    namespace  ftp
    {
-      FileTransferReplyBuffer::FileTransferReplyBuffer(LogWriter *logWriter)
-      : m_logWriter(logWriter),
+      FileTransferReplyBuffer::FileTransferReplyBuffer(::subsystem::LogWriter * plogwriter)
+      : m_plogwriter(logWriter),
         m_isCompressionSupported(false),
         //m_filesInfoCount(0), m_filesInfo(NULL),
         m_downloadBufferSize(0),
@@ -98,7 +98,7 @@ namespace  remoting
       {
          m_isCompressionSupported = (pinput->readUInt8() == 1);
 
-         m_logWriter->information("Received compression support reply: {}\n",
+         m_plogwriter->information("Received compression support reply: {}\n",
                            m_isCompressionSupported ? "supported" : "not supported");
       }
 
@@ -155,12 +155,12 @@ namespace  remoting
                pfileinfo->setFileName(strFileName);
             } // for all newly created file's info
 
-            m_logWriter->information("Received file ::list_base reply: \n"
+            m_plogwriter->information("Received file ::list_base reply: \n"
                               "\t files count = {}\n"
                               "\t use compression = {}\n",
                               filesInfoCount, compressionLevel);
          } else {
-            m_logWriter->information("Received file ::list_base reply is not read: "
+            m_plogwriter->information("Received file ::list_base reply is not read: "
                               "compressed buffer is empty");
          }
       }
@@ -172,22 +172,22 @@ namespace  remoting
 
       void FileTransferReplyBuffer::onUploadReply(DataInputStream * pinput)
       {
-         m_logWriter->information("Received upload reply\n");
+         m_plogwriter->information("Received upload reply\n");
       }
 
       void FileTransferReplyBuffer::onUploadDataReply(DataInputStream * pinput)
       {
-         m_logWriter->information("Received upload data reply\n");
+         m_plogwriter->information("Received upload data reply\n");
       }
 
       void FileTransferReplyBuffer::onUploadEndReply(DataInputStream * pinput)
       {
-         m_logWriter->information("Received upload end reply\n");
+         m_plogwriter->information("Received upload end reply\n");
       }
 
       void FileTransferReplyBuffer::onDownloadReply(DataInputStream * pinput)
       {
-         m_logWriter->information("Received download reply\n");
+         m_plogwriter->information("Received download reply\n");
       }
 
       void FileTransferReplyBuffer::onDownloadDataReply(DataInputStream * pinput)
@@ -199,7 +199,7 @@ namespace  remoting
          m_downloadBuffer = readCompressedDataBlock(pinput, coBufferSize, uncoBufferSize, coLevel);
          m_downloadBufferSize = uncoBufferSize;
 
-         m_logWriter->information("Received download data reply:\n"
+         m_plogwriter->information("Received download data reply:\n"
                            "\tcompressed size: {}\n"
                            "\tuncompressed size: {}\n"
                            "\tuse compression: {}\n",
@@ -211,7 +211,7 @@ namespace  remoting
          m_downloadFileFlags = pinput->readUInt8();
          m_downloadLastModified = pinput->readUInt64();
 
-         m_logWriter->information("Received download end reply:\n"
+         m_plogwriter->information("Received download end reply:\n"
                            "\tfile flags: {}\n"
                            "\tmodification time: {}\n",
                            m_downloadFileFlags, m_downloadLastModified);
@@ -219,24 +219,24 @@ namespace  remoting
 
       void FileTransferReplyBuffer::onMkdirReply(DataInputStream * pinput)
       {
-         m_logWriter->information("Received mkdir reply\n");
+         m_plogwriter->information("Received mkdir reply\n");
       }
 
       void FileTransferReplyBuffer::onRmReply(DataInputStream * pinput)
       {
-         m_logWriter->information("Received rm reply\n");
+         m_plogwriter->information("Received rm reply\n");
       }
 
       void FileTransferReplyBuffer::onMvReply(DataInputStream * pinput)
       {
-         m_logWriter->information("Received rename reply\n");
+         m_plogwriter->information("Received rename reply\n");
       }
 
       void FileTransferReplyBuffer::onDirSizeReply(DataInputStream * pinput)
       {
          m_dirSize = pinput->readUInt64();
 
-         m_logWriter->information("Received dirsize reply\n");
+         m_plogwriter->information("Received dirsize reply\n");
       }
 
 
@@ -245,7 +245,7 @@ namespace  remoting
 
          m_lastErrorMessage = pinput->read_utf8_string();
 
-         m_logWriter->information("Received last request failed reply:\n"
+         m_plogwriter->information("Received last request failed reply:\n"
                            "\terror scopedstrMessage: {}\n",
                            m_lastErrorMessage);
       }

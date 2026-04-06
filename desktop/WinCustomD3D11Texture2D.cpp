@@ -26,7 +26,7 @@
 #include "framework.h"
 #include "WinCustomD3D11Texture2D.h"
 
-WinCustomD3D11Texture2D::Texture2DDescInitializer::Texture2DDescInitializer(UINT width, UINT height,
+WinCustomD3D11Texture2D::Texture2DDescInitializer::Texture2DDescInitializer(unsigned int width, unsigned int height,
                                                                             DXGI_MODE_ROTATION rotation)
 {
   if (rotation == DXGI_MODE_ROTATION_ROTATE90 || rotation == DXGI_MODE_ROTATION_ROTATE270) {
@@ -52,7 +52,7 @@ const D3D11_TEXTURE2D_DESC *WinCustomD3D11Texture2D::Texture2DDescInitializer::g
   return &m_desc;
 }
 
-WinCustomD3D11Texture2D::WinCustomD3D11Texture2D(ID3D11Device *device, UINT width, UINT height,
+WinCustomD3D11Texture2D::WinCustomD3D11Texture2D(ID3D11Device *device, unsigned int width, unsigned int height,
                                                  DXGI_MODE_ROTATION rotation)
 : m_textDescInitializer(width, height, rotation),
   m_textureWrapper(device, m_textDescInitializer.getDesc())

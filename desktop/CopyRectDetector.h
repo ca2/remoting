@@ -51,8 +51,8 @@ public:
   void detectWindowMovements(::int_rectangle *copyRect, Point *source);
 
 protected:
-  static BOOL CALLBACK enumWindowsFnCopyRect(HWND hwnd, LPARAM arg);
-  BOOL checkWindowMovements(HWND hwnd);
+  static bool CALLBACK enumWindowsFnCopyRect(HWND hwnd, ::lparam arg);
+  bool checkWindowMovements(HWND hwnd);
 
   bool getWinRect(HWND hwnd, ::int_rectangle *winRect);
 

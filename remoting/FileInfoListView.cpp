@@ -34,7 +34,7 @@
 namespace remoting_remoting
 {
     FileInfoListView::FileInfoListView()
-    : m_smallImageList(0)
+    //: m_imagelistSmall(0)
     {
         // By default, file ::list_base is sorted by file name.
         sort(0);
@@ -42,30 +42,31 @@ namespace remoting_remoting
 
     FileInfoListView::~FileInfoListView()
     {
-        if (m_smallImageList != 0) {
-            ImageList_Destroy(m_smallImageList);
-        }
+        // if (m_imagelistSmall != 0) {
+        //     ImageList_Destroy(m_imagelistSmall);
+        // }
     }
 
     //
     // Saves hwnd and automaticly adds columns to ::list_base view
     //
 
-    void FileInfoListView::setWindow(HWND hwnd)
+    void FileInfoListView::setWindow(const ::operating_system::window & operatingsystemwindow)
     {
-        ListView::setWindow(hwnd);
+        ListView::setWindow(operatingsystemwindow);
 
         ListView::addColumn(0, "Name", 135);
-        ListView::addColumn(1, "Size", 80, LVCFMT_RIGHT);
+        //ListView::addColumn(1, "Size", 80, LVCFMT_RIGHT);
+       ListView::addColumn(1, "Size", 80, 0);
         ListView::addColumn(2, "Modified", 115);
 
         setFullRowSelectStyle(true);
 
         loadImages();
 
-        ListView_SetImageList(m_hwnd, m_smallImageList, LVSIL_SMALL);
+        //ListView_SetImageList(m_hwnd, m_imagelistSmall, LVSIL_SMALL);
 
-        subclass_window();
+        subclassWindow();
 
         //::remoting::Window::replaceWindowProc(FileInfoListView::s_newWndProc);
     }
@@ -82,7 +83,7 @@ namespace remoting_remoting
             imageIndex = IMAGE_FOLDER_INDEX;
         }
 
-        ListView::addItem(index, strFilename, (LPARAM)fileInfo, imageIndex);
+        ListView::addItem(index, strFilename, (::lparam)fileInfo, imageIndex);
 
         ::string sizeString("<Folder>");
         ::string modTimeString("");
@@ -155,13 +156,16 @@ namespace remoting_remoting
 
     void FileInfoListView::loadImages()
     {
-        if (m_smallImageList != NULL) {
-            ImageList_Destroy(m_smallImageList);
-        }
-
-        m_smallImageList = ImageList_Create(GetSystemMetrics(SM_CXSMICON),
+        if (m_imagelistSmall != NULL) {
+            ImageList_Destroy(m_imagelistSmall);
+        } = ImageList_Create(GetSystemMetrics(SM_CXSMICON),
                                             GetSystemMetrics(SM_CYSMICON),
                                             ILC_MASK, 1, 1);
+
+        m_imagelistSmall.create(
+           GetSystemMetrics(SM_CXSMICON),
+           GetSystemMetrics(SM_CYSMICON),
+           image_list::e_create_flag_mask)
 
         HICON icon;
 
@@ -169,17 +173,17 @@ namespace remoting_remoting
 
         icon = rLoader->loadIcon(MAKEINTRESOURCE(IDI_FILEUP));
         _ASSERT(icon != NULL);
-        ImageList_AddIcon(m_smallImageList, icon);
+        ImageList_AddIcon(m_imagelistSmall, icon);
         DestroyIcon(icon);
 
         icon = rLoader->loadIcon(MAKEINTRESOURCE(IDI_FOLDER_ICON));
         _ASSERT(icon != NULL);
-        ImageList_AddIcon(m_smallImageList, icon);
+        ImageList_AddIcon(m_imagelistSmall, icon);
         DestroyIcon(icon);
 
         icon = rLoader->loadIcon(MAKEINTRESOURCE(IDI_FILE_ICON));
         _ASSERT(icon != NULL);
-        ImageList_AddIcon(m_smallImageList, icon);
+        ImageList_AddIcon(m_imagelistSmall, icon);
         DestroyIcon(icon);
     }
 
@@ -199,9 +203,9 @@ namespace remoting_remoting
         return 0;
     }
 
-    int FileInfoListView::compareItem(LPARAM lParam1,
-                                       LPARAM lParam2,
-                                       LPARAM lParamSort)
+    int FileInfoListView::compareItem(::lparam lParam1,
+                                       ::lparam lParam2,
+                                       ::lparam lParamSort)
     {
         // check ascending order
         bool sortAscending = lParamSort > 0;
@@ -279,7 +283,7 @@ namespace remoting_remoting
         }
     }
 
-    bool FileInfoListView::window_procedure(LRESULT & lresult, UINT uMsg, ::wparam wparam, ::lparam lparam)
+    bool FileInfoListView::window_procedure(LRESULT & lresult, unsigned int uMsg, ::wparam wparam, ::lparam lparam)
     {
         //FileInfoListView *_this = reinterpret_cast<FileInfoListView *>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
 

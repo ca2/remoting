@@ -26,7 +26,7 @@
 
 #include "remoting/remoting_common/rfb/StandardPixelFormatFactory.h"
 
-TightDecoder::TightDecoder(LogWriter *logWriter)
+TightDecoder::TightDecoder(::subsystem::LogWriter * plogwriter)
 : DecoderOfRectangle(logWriter),
   m_isCPixel(false)
 {
@@ -180,7 +180,7 @@ void TightDecoder::processJpeg(RfbInputGate *pinput,
       ::string error;
       error.format("Error in tight-decoder, subencoding \"jpeg\": {}",
                    ex.get_message());
-      m_logWriter->error(error);
+      m_plogwriter->error(error);
     }
   }
 }
@@ -288,7 +288,7 @@ void TightDecoder::readCompressedData(RfbInputGate *pinput,
     buffer.assign((unsigned char *) output, size);
   } else {
     _ASSERT(rawDataLength != 0);
-    m_logWriter->debug("Tight decoder: Length of Raw compressed data is 0");
+    m_plogwriter->debug("Tight decoder: Length of Raw compressed data is 0");
     buffer.resize(0);
   }
 }
@@ -328,7 +328,7 @@ void TightDecoder::drawPalette(FrameBuffer *fb,
       if (pixels[i] < palette.size()) {
         memcpy(pixelPtr, &palette[pixels[i]], bytesPerPixel);
       } else {
-        m_logWriter->error("Tight decoder: Invalid index in palette.");
+        m_plogwriter->error("Tight decoder: Invalid index in palette.");
       }
     }
   }

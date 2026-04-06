@@ -72,7 +72,7 @@ private:
   };
 
 private:
-  virtual bool processMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam);
+  virtual bool processMessage(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam);
 
   virtual void execute();
   virtual void onTerminate();
@@ -111,7 +111,7 @@ private:
   Point m_leftTopCorner;
   Screen m_screen;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __MIRRORDRIVERCLIENT_H__

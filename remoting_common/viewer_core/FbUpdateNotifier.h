@@ -74,7 +74,7 @@ public:
   critical_section m_updateLock;
   WindowsEvent m_eventUpdate;
 
-  LogWriter *m_logWriter;
+  LogWriter *m_plogwriter;
 
   //It is used for adding watermarks in demo version.
   WatermarksController* m_watermarksController;

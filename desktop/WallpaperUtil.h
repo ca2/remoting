@@ -48,7 +48,7 @@ private:
   // @throws SystemException on a fail.
   void restoreWallpaper();
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
   ::string m_wallparerPath;
   bool m_wasDisabled;
 };

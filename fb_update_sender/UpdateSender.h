@@ -186,7 +186,7 @@ protected:
   // calculate total area of rects in pixels
   int calcAreas(::array_base<::int_rectangle> rects);
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 
   WindowsEvent m_newUpdatesEvent;
 

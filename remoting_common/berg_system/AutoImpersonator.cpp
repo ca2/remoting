@@ -27,12 +27,12 @@
 
 AutoImpersonator::AutoImpersonator(Impersonator *imp, LogWriter *log)
 : m_imp(imp),
-  m_log(log)
+  m_plogwriter(log)
 {
   try {
     m_imp->impersonateAsLoggedUser();
   } catch (::exception &e) {
-    m_log->error(e.get_message());
+    m_plogwriter->error(e.get_message());
   }
 }
 
@@ -41,6 +41,6 @@ AutoImpersonator::~AutoImpersonator()
   try {
     m_imp->revertToSelf();
   } catch (::exception &e) {
-    m_log->error(e.get_message());
+    m_plogwriter->error(e.get_message());
   }
 }

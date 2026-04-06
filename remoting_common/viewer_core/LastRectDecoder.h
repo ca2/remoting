@@ -30,7 +30,7 @@
 class CLASS_DECL_REMOTING_COMMON LastRectDecoder : public PseudoDecoder
 {
 public:
-  LastRectDecoder(LogWriter *logWriter);
+  LastRectDecoder(::subsystem::LogWriter * plogwriter);
   virtual ~LastRectDecoder();
 };
 

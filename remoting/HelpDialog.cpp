@@ -30,13 +30,13 @@
 namespace remoting_remoting
 {
     HelpDialog::HelpDialog()
-    : BaseDialog(IDD_CMDLINE)
+    : Dialog(IDD_CMDLINE)
     {
     }
 
-    BOOL HelpDialog::onInitDialog()
+    bool HelpDialog::onInitDialog()
     {
-        setControlById(m_shelp, IDC_SHELP);
+        subclassControlById(m_shelp, IDC_SHELP);
 
         ::string helpString;
         ResourceLoader *rLoader = ResourceLoader::getInstance();
@@ -45,14 +45,14 @@ namespace remoting_remoting
         return TRUE;
     }
 
-    BOOL HelpDialog::onCommand(UINT controlID, UINT notificationID)
+    bool HelpDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
         if (controlID == IDOK) {
-            close_dialog(1);
+            closeDialog(1);
             return TRUE;
         }
         if (controlID == IDCANCEL) {
-            close_dialog(0);
+            closeDialog(0);
             return TRUE;
         }
         return FALSE;

@@ -49,7 +49,7 @@ private:
   WinCursor m_cursor;
   WindowsEvent m_sleepTimer;
   Point m_lastCursorPos;
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __CURSORPOSITIONDETECTOR_H__

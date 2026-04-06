@@ -109,7 +109,7 @@ protected:
   AbnormDeskTermListener *m_extDeskTermListener;
   ClipboardListener *m_extClipListener;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __DESKTOPBASEIMPL_H__

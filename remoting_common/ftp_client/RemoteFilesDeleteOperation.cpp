@@ -73,7 +73,7 @@ namespace remoting
          //
 
          // Set child file ::list_base to current folder
-         m_toDelete->setChild(m_logWriter, m_replyBuffer->m_fileinfoa);
+         m_toDelete->setChild(m_plogwriter, m_replyBuffer->m_fileinfoa);
          // Get child file ::list_base
          FileInfoList *child = m_toDelete->getChild();
 
@@ -166,7 +166,7 @@ namespace remoting
             //
 
             if ((removeIfFolder) && (fileInfo->isDirectory())) {
-               m_toDelete->setChild(m_logWriter, {});
+               m_toDelete->setChild(m_plogwriter, {});
             }
          } else {
             // Send file ::list_base request cause we must remove subfolders and files from

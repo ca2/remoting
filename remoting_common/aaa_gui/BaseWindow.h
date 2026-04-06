@@ -85,19 +85,19 @@ public:
 
   // set or kill timer, with identifactor ident
   // and time in milliseconds
-  void setTimer(UINT_PTR ident, UINT time);
+  void setTimer(UINT_PTR ident, unsigned int time);
   void killTimer(UINT_PTR ident);
 
   // set foreground window
   void setForegroundWindow();
 
   // post scopedstrMessage to this window
-  void postMessage(UINT Msg, WPARAM wParam = 0, LPARAM lParam = 0);
+  void postMessage(unsigned int Msg, ::wparam wParam = 0, ::lparam lParam = 0);
 
   void getClientRect(RECT *rc);
   void getBorderSize(int *width, int *height);
 
-  virtual bool wndProc(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam);
+  virtual bool wndProc(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam);
 
   static const int MOUSE_LDOWN  = 1;
   static const int MOUSE_MDOWN  = 2;
@@ -108,12 +108,12 @@ public:
 private:
   // This function may be implement in child class.
   // Here is stub function, always returned false.
-  virtual bool onCommand(WPARAM wParam, LPARAM lParam);
+  virtual bool onCommand(::wparam wParam, ::lparam lParam);
   virtual bool onNotify(int idCtrl, LPNMHDR pnmh);
-  virtual bool onSysCommand(WPARAM wParam, LPARAM lParam);
-  virtual bool onMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam);
+  virtual bool onSysCommand(::wparam wParam, ::lparam lParam);
+  virtual bool onMessage(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam);
   virtual bool onMouse(unsigned char mouseButtons, unsigned short wheelSpeed, POINT position);
-  virtual bool onMouseEx(UINT message, int iButtonMask, unsigned short wspeed, POINT position);
+  virtual bool onMouseEx(unsigned int message, int iButtonMask, unsigned short wspeed, POINT position);
 
 //protected:
   //HWND m_hwnd;

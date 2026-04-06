@@ -24,8 +24,8 @@
 #include "framework.h"
 #include "Decoder.h"
 
-Decoder::Decoder(LogWriter *logWriter)
-: m_logWriter(logWriter)
+Decoder::Decoder(::subsystem::LogWriter * plogwriter)
+: m_plogwriter(logWriter)
 {
 }
 

@@ -44,7 +44,7 @@ namespace  remoting
       {
       public:
 
-         LogWriter * m_logWriter;
+         LogWriter * m_plogwriter;
 
          FileTransferRequestSender m_ftRequestSender;
          FileTransferReplyBuffer m_ftReplyBuffer;

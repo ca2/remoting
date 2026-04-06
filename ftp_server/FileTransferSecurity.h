@@ -55,7 +55,7 @@ protected:
 
   Desktop *m_desktop;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 

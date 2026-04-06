@@ -51,7 +51,7 @@ void AdministrationConfigDialog::setParentDialog(BaseDialog *dialog)
   m_parentDialog = dialog;
 }
 
-BOOL AdministrationConfigDialog::onInitDialog()
+bool AdministrationConfigDialog::onInitDialog()
 {
   m_config = Configurator::getInstance()->getServerConfig();
 
@@ -61,7 +61,7 @@ BOOL AdministrationConfigDialog::onInitDialog()
   return TRUE;
 }
 
-BOOL AdministrationConfigDialog::onCommand(UINT controlID, UINT notificationID)
+bool AdministrationConfigDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
   if (notificationID == BN_CLICKED) {
     if (controlID == IDC_SHARED_RADIO1) {
@@ -106,7 +106,7 @@ bool AdministrationConfigDialog::validateInput()
 {
   if (!CommonInputValidation::validateUINT(
     &m_logLevel,
-    StringTable::getString(IDS_INVALID_LOG_LEVEL))) {
+    main_subsystem()->string_table()->getString(IDS_INVALID_LOG_LEVEL))) {
     return false;
   }
 
@@ -117,7 +117,7 @@ bool AdministrationConfigDialog::validateInput()
   if (logLevel > 10) {
     CommonInputValidation::notifyValidationError(
       &m_logLevel,
-      StringTable::getString(IDS_INVALID_LOG_LEVEL));
+      main_subsystem()->string_table()->getString(IDS_INVALID_LOG_LEVEL));
     return false;
   }
 
@@ -126,9 +126,9 @@ bool AdministrationConfigDialog::validateInput()
 
   // FIXME: Code duplicate (see ServerConfigDialog class).
   if (!passwordSpecified && m_useControlAuth.isChecked()) {
-    ::remoting::message_box(m_ctrlThis.get_hwnd(),
-               StringTable::getString(IDS_SET_CONTROL_PASSWORD_NOTIFICATION),
-               StringTable::getString(IDS_CAPTION_BAD_INPUT), MB_ICONSTOP | MB_OK);
+    main_innate_subsystem()->message_box(m_ctrlThis.get_hwnd(),
+               main_subsystem()->string_table()->getString(IDS_SET_CONTROL_PASSWORD_NOTIFICATION),
+               main_subsystem()->string_table()->getString(IDS_CAPTION_BAD_INPUT), MB_ICONSTOP | MB_OK);
     return false;
   }
 
@@ -150,7 +150,7 @@ void AdministrationConfigDialog::updateUI()
   m_config->getLogFileDir(&logPath);
 
   if (logPath.is_empty()) {
-    logPath= StringTable::getString(IDS_LOGPATH_UNAVALIABLE);
+    logPath= main_subsystem()->string_table()->getString(IDS_LOGPATH_UNAVALIABLE);
     m_openLogPathButton.enable_window(false);
     m_logPathTB.enable_window(false);
   }

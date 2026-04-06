@@ -30,7 +30,9 @@
 #include "BuildTime.h"
 #include "resource.h"
 #include "acme/filesystem/filesystem/file_context.h"
+#include "apex/innate_subsystem/subsystem.h"
 #include "remoting/remoting_common/remoting.h"
+#include "acme/subsystem/node/SystemException.h"
 
 
 namespace remoting_remoting
@@ -40,6 +42,7 @@ namespace remoting_remoting
     AboutDialog::AboutDialog()
     //: BaseDialog(IDD_ABOUT_DIALOG)
     {
+       initialize_base_dialog(IDD_ABOUT_DIALOG);
     }
 
     AboutDialog::~AboutDialog()
@@ -47,45 +50,45 @@ namespace remoting_remoting
     }
 
 
-    void AboutDialog::initialize_about_dialog()
-    {
-
-        initialize_base_dialog(IDD_ABOUT_DIALOG);
-
-    }
+    // void AboutDialog::initialize_about_dialog()
+    // {
+    //
+    //
+    //
+    // }
 
     void AboutDialog::onCloseButtonClick()
     {
-        close_dialog(IDCANCEL);
+        closeDialog(IDCANCEL);
     }
 
     void AboutDialog::onOrderSupportButtonClock()
     {
-        openUrl(StringTable::getString(IDS_URL_LICENSING_FVA));
+        openUrl(main_subsystem()->string_table()->getString(IDS_URL_LICENSING_FVA));
     }
 
     void AboutDialog::onVisitSiteButtonClick()
     {
-        openUrl(StringTable::getString(IDS_URL_PRODUCT_FVA));
+        openUrl(main_subsystem()->string_table()->getString(IDS_URL_PRODUCT_FVA));
     }
 
     void AboutDialog::openUrl(const ::scoped_string & scopedstrUrl)
     {
         try {
-            Shell::open(scopedstrUrl, 0, 0);
-        } catch (SystemException &sysEx) {
+            main_subsystem()->shell()->open(scopedstrUrl, 0, 0);
+        } catch (::subsystem::SystemException &sysEx) {
             ::string strMessage;
 
-            strMessage.formatf(StringTable::getString(IDS_FAILED_TO_OPEN_URL_FORMAT).c_str(), sysEx.get_message());
+            strMessage.formatf(main_subsystem()->string_table()->getString(IDS_FAILED_TO_OPEN_URL_FORMAT).c_str(), sysEx.get_message());
 
-            ::remoting::message_box(m_hwnd,
+            main_innate_subsystem()->message_box(this,
                        wstring(strMessage),
-                       wstring(StringTable::getString(IDS_MBC_TVNVIEWER)),
+                       wstring(main_subsystem()->string_table()->getString(IDS_MBC_TVNVIEWER)),
                        MB_OK | MB_ICONEXCLAMATION);
         }
     }
 
-    BOOL AboutDialog::onInitDialog()
+    bool AboutDialog::onInitDialog()
     {
         // Update product version string.
         ::string versionString("unknown");
@@ -95,15 +98,15 @@ namespace remoting_remoting
             VersionInfo productInfo(binaryPath);
             versionString= productInfo.getProductVersionString();
         } catch (SystemException &ex) {
-            ::remoting::message_box(m_hwnd,
+            main_innate_subsystem()->message_box(this,
                        ::wstring(ex.get_message()),
-                       ::wstring(StringTable::getString(IDS_MBC_TVNVIEWER)),
+                       ::wstring(main_subsystem()->string_table()->getString(IDS_MBC_TVNVIEWER)),
                        MB_OK | MB_ICONEXCLAMATION);
         }
 
         // Format product version and build time for displaying on the dialog.
         ::string versionText;
-        versionText.formatf(StringTable::getString(IDS_PRODUCT_VERSION_FORMAT).c_str(),
+        versionText.formatf(main_subsystem()->string_table()->getString(IDS_PRODUCT_VERSION_FORMAT).c_str(),
                            ::string(versionString).c_str(),
                            BuildTime::DATE);
 
@@ -115,17 +118,17 @@ namespace remoting_remoting
         // Show licensing info and/or special build info.
         ::remoting::Window licensingLabel;
         licensingLabel.setWindow(GetDlgItem(m_hwnd, IDC_STATIC_LICENSING));
-        licensingLabel.setText(StringTable::getString(IDS_LICENSING_INFO));
+        licensingLabel.setText(main_subsystem()->string_table()->getString(IDS_LICENSING_INFO));
 
         return FALSE;
     }
 
-    BOOL AboutDialog::onNotify(UINT controlID, LPARAM data)
+    bool AboutDialog::onNotify(unsigned int controlID, ::lparam data)
     {
         return FALSE;
     }
 
-    BOOL AboutDialog::onCommand(UINT controlID, UINT notificationID)
+    bool AboutDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
         switch (controlID) {
             case IDCANCEL:
@@ -141,7 +144,7 @@ namespace remoting_remoting
         return FALSE;
     }
 
-    BOOL AboutDialog::onDestroy()
+    bool AboutDialog::onDestroy()
     {
         return FALSE;
     }

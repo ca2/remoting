@@ -44,7 +44,7 @@ protected:
   DataOutputStream *m_dataOutput;
   ::string m_peerHost;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 

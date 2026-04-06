@@ -53,7 +53,7 @@ namespace remoting_remoting
         } else if (m_overwriteAll) {
             return OVERWRITE_RESULT;
         }
-        return BaseDialog::showModal();
+        return Dialog::showModal();
     }
 
     void FileExistDialog::setFilesInfo(::remoting::ftp::FileInfo *existingFileInfo, ::remoting::ftp::FileInfo *newFileInfo,

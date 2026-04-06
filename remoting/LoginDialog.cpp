@@ -42,11 +42,11 @@ namespace remoting_remoting
     {
     }
 
-    BOOL LoginDialog::onInitDialog()
+    bool LoginDialog::onInitDialog()
     {
-        setControlById(m_server, IDC_CSERVER);
-        setControlById(m_listening, IDC_LISTENING);
-        setControlById(m_ok, IDOK);
+        subclassControlById(m_server, IDC_CSERVER);
+        subclassControlById(m_listening, IDC_LISTENING);
+        subclassControlById(m_ok, IDOK);
         updateHistory();
         SetForegroundWindow(get_hwnd());
         m_server.set_focus();
@@ -116,7 +116,7 @@ namespace remoting_remoting
         m_viewer->postMessage(remoting_impact::WM_USER_CONFIGURATION);
     }
 
-    BOOL LoginDialog::onOptions()
+    bool LoginDialog::onOptions()
     {
         OptionsDialog dialog;
         dialog.setConnectionConfig(&m_connectionConfig);
@@ -136,7 +136,7 @@ namespace remoting_remoting
 
     void LoginDialog::onOrder()
     {
-        openUrl(StringTable::getString(IDS_URL_LICENSING_FVC));
+        openUrl(main_subsystem()->string_table()->getString(IDS_URL_LICENSING_FVC));
     }
 
     void LoginDialog::openUrl(const ::scoped_string & scopedstrUrl)
@@ -147,11 +147,11 @@ namespace remoting_remoting
         } catch (const SystemException &sysEx) {
             ::string scopedstrMessage;
 
-            scopedstrMessage.formatf(StringTable::getString(IDS_FAILED_TO_OPEN_URL_FORMAT).c_str(), sysEx.get_message().c_str());
+            scopedstrMessage.formatf(main_subsystem()->string_table()->getString(IDS_FAILED_TO_OPEN_URL_FORMAT).c_str(), sysEx.get_message().c_str());
 
-            ::remoting::message_box(m_hwnd,
+            main_innate_subsystem()->message_box(m_hwnd,
                        scopedstrMessage,
-                       StringTable::getString(IDS_MBC_TVNVIEWER),
+                       main_subsystem()->string_table()->getString(IDS_MBC_TVNVIEWER),
                        MB_OK | MB_ICONEXCLAMATION);
         }
     }
@@ -181,7 +181,7 @@ namespace remoting_remoting
         m_viewer->postMessage(remoting_impact::WM_USER_ABOUT);
     }
 
-    BOOL LoginDialog::onCommand(UINT controlID, UINT notificationID)
+    bool LoginDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
         switch (controlID) {
             case IDC_CSERVER:
@@ -212,12 +212,12 @@ namespace remoting_remoting
                 // click "Connect"
             case IDOK:
                 onConnect();
-                close_dialog(0);
+                closeDialog(0);
                 break;
 
                 // cancel connection
             case IDCANCEL:
-                close_dialog(0);
+                closeDialog(0);
                 break;
 
             case IDC_BCONFIGURATION:
@@ -229,7 +229,7 @@ namespace remoting_remoting
 
             case IDC_LISTENING:
                 onListening();
-                close_dialog(0);
+                closeDialog(0);
                 break;
 
             case IDC_ORDER_SUPPORT_BUTTON:

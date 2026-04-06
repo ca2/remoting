@@ -24,7 +24,7 @@
 #pragma once
 
 
-#include "apex/innate_subsystem/BaseDialog.h"
+#include "apex/innate_subsystem/Dialog.h"
 #include "apex/innate_subsystem/Control.h"
 #include "remoting/remoting_common/ftp_common/FileInfo.h"
 
@@ -33,7 +33,7 @@ namespace remoting_remoting
 {
 
 
-    class FileExistDialog : public ::innate_subsystem::BaseDialog
+    class FileExistDialog : public ::innate_subsystem::Dialog
     {
     public:
 

@@ -59,7 +59,7 @@ void WindowsApplication::run()
 int WindowsApplication::processMessages()
 {
   MSG msg;
-  BOOL ret;
+  bool ret;
   while ((ret = GetMessage(&msg, NULL, 0, 0)) != 0) {
     if (ret < 0) {
       return 1;
@@ -100,7 +100,7 @@ void WindowsApplication::shutdown()
   PostMessage(m_mainWindow, WM_CLOSE, 0, 0);
 }
 
-void WindowsApplication::postMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
+void WindowsApplication::postMessage(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam)
 {
   PostMessage(m_mainWindow, scopedstrMessage, wParam, lParam);
 }
@@ -131,7 +131,7 @@ bool WindowsApplication::processDialogMessage(MSG *msg)
   return false;
 }
 
-LRESULT CALLBACK WindowsApplication::wndProc(HWND hWnd, UINT msg, WPARAM wparam, LPARAM lparam)
+LRESULT CALLBACK WindowsApplication::wndProc(HWND hWnd, unsigned int msg, ::wparam wparam, ::lparam lparam)
 {
   switch (msg) {
   case WM_CLOSE:

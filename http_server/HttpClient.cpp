@@ -30,7 +30,7 @@
 
 HttpClient::HttpClient(SocketIPv4 *socket, LogWriter *log)
 : TcpClientThread(socket),
-  m_log(log)
+  m_plogwriter(log)
 {
   m_stream = new SocketStream(socket);
 
@@ -69,7 +69,7 @@ void HttpClient::execute()
     // Call request handler.
     //
 
-    HttpRequestHandler httpRequestHandler(m_dIS, m_dOS, m_log, peerHost);
+    HttpRequestHandler httpRequestHandler(m_dIS, m_dOS, m_plogwriter, peerHost);
 
     httpRequestHandler.processRequest();
   } catch (::io_exception &) { } // try / catch.

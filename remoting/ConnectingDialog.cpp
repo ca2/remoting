@@ -34,7 +34,7 @@
 namespace remoting_remoting
 {
    ConnectingDialog::ConnectingDialog()
-   : BaseDialog(IDD_CONNECTING)
+   : Dialog(IDD_CONNECTING)
    {
 
    }
@@ -209,7 +209,7 @@ namespace remoting_remoting
       }
 
 
-      return BaseDialog::dialog_procedure(iptrResult, message, wparam, lparam);
+      return Dialog::dialog_procedure(iptrResult, message, wparam, lparam);
 
    }
 } // namespace remoting_remoting

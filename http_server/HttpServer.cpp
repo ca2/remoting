@@ -29,19 +29,19 @@
 
 HttpServer::HttpServer(const ::scoped_string & scopedstrBindHost, unsigned short bindPort, bool lockAddr, LogWriter *log)
 : TcpServer(bindHost, bindPort, true, lockAddr),
-  m_log(log)
+  m_plogwriter(log)
 {
-  m_log->debug("Http server started");
+  m_plogwriter->debug("Http server started");
 }
 
 HttpServer::~HttpServer()
 {
-  m_log->debug("Http server stopped");
+  m_plogwriter->debug("Http server stopped");
 }
 
 void HttpServer::onAcceptConnection(SocketIPv4 *socket)
 {
-  TcpClientThread *clientThread = new HttpClient(socket, m_log);
+  TcpClientThread *clientThread = new HttpClient(socket, m_plogwriter);
 
   clientThread->resume();
 

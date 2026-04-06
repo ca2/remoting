@@ -40,7 +40,7 @@ void MsiProperties::getValue(const ::scoped_string & scopedstrName, ::string & o
 {
   out-= "";
   DWORD charCount = 0;
-  UINT retVal = MsiGetProperty(m_handle, name, "", &charCount);
+  unsigned int retVal = MsiGetProperty(m_handle, name, "", &charCount);
   if (retVal == ERROR_MORE_DATA) {
     charCount++;
     ::array_base<TCHAR> value(charCount);
@@ -54,7 +54,7 @@ void MsiProperties::getValue(const ::scoped_string & scopedstrName, ::string & o
 
 void MsiProperties::setValue(const ::scoped_string & scopedstrName, const ::scoped_string & value)
 {
-  UINT retVal = MsiSetProperty(m_handle, name, value->getString());
+  unsigned int retVal = MsiSetProperty(m_handle, name, value->getString());
   if (retVal != ERROR_SUCCESS) {
     throw ::remoting::Exception();
   }

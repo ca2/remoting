@@ -185,7 +185,7 @@ namespace remoting
       ::DeleteDC(hdcMem);
    }
 
-   void Graphics::drawText(const ::scoped_string & scopedstrText, int cchText, RECT *rect, UINT format)
+   void Graphics::drawText(const ::scoped_string & scopedstrText, int cchText, RECT *rect, unsigned int format)
    {
       DrawText(m_hdc, ::wstring(scopedstrText).c_str(), cchText, rect, format);
    }
@@ -372,7 +372,7 @@ namespace remoting
    //   memDC.selectObject(oldBitmap);
    // }
 
-   // void GraphicsPlus::drawText(const ::scoped_string & scopedstrText, int cchText, RECT *rect, UINT format)
+   // void GraphicsPlus::drawText(const ::scoped_string & scopedstrText, int cchText, RECT *rect, unsigned int format)
    // {
    //   DrawText(m_hdc, text, cchText, rect, format);
    // }

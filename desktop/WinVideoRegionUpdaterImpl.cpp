@@ -29,7 +29,7 @@
 //#include "remoting/remoting_common/thread/critical_section.h"
 
 WinVideoRegionUpdaterImpl::WinVideoRegionUpdaterImpl(LogWriter *log)
-  : m_log(log)
+  : m_plogwriter(log)
 {
   resume();
 }
@@ -84,22 +84,22 @@ void WinVideoRegionUpdaterImpl::updateVideoRegion()
   ::array_base<::int_rectangle> rects;
   getClassNamesAndRectsFromConfig(classNames, rects);
   Region tmpRegion;
-  m_log->debug(L"WinVideoRegionUpdaterImpl: ClassNames {}, Rects {}", classNames.size(), m_vidRegion.getCount());
+  m_plogwriter->debug(L"WinVideoRegionUpdaterImpl: ClassNames {}, Rects {}", classNames.size(), m_vidRegion.getCount());
   if (!classNames.empty()) {
     ::earth::time startTime = ::earth::time::now();
     tmpRegion.add(getRectsByClass(classNames));
     unsigned int millis = (::earth::time::now() - startTime).getTime();
-    m_log->debug(L"WinVideoRegionUpdaterImpl::getRectsByClass call took {} ms", millis);
+    m_plogwriter->debug(L"WinVideoRegionUpdaterImpl::getRectsByClass call took {} ms", millis);
   }
   if (!rects.empty()) {
     tmpRegion.add(getRectsByCoords(rects));
   }
-  m_log->debug(L"WinVideoRegionUpdaterImpl: copy data");
+  m_plogwriter->debug(L"WinVideoRegionUpdaterImpl: copy data");
   {
     critical_section_lock al(&m_regionMutex);
     m_vidRegion = tmpRegion;
   }
-  m_log->debug(L"WinVideoRegionUpdaterImpl: exit updateVideoRegion()");
+  m_plogwriter->debug(L"WinVideoRegionUpdaterImpl: exit updateVideoRegion()");
 }
 
 Region WinVideoRegionUpdaterImpl::getRectsByClass(::string_array classNames)
@@ -109,11 +109,11 @@ Region WinVideoRegionUpdaterImpl::getRectsByClass(::string_array classNames)
   Region vidRegion;
 
   for (int i = 0; i < classNames.size(); ++i) {
-    m_log->debug(L"WinVideoRegionUpdaterImpl: getRectsByClass : classname: {} ", classNames[i]);
+    m_plogwriter->debug(L"WinVideoRegionUpdaterImpl: getRectsByClass : classname: {} ", classNames[i]);
   }
   hwndVector = WindowFinder::findWindowsByClass(classNames);
 
-  m_log->debug(L"WinVideoRegionUpdaterImpl: getRectsByClass : %u windows found", hwndVector.size());
+  m_plogwriter->debug(L"WinVideoRegionUpdaterImpl: getRectsByClass : %u windows found", hwndVector.size());
 
   for (hwndIter = hwndVector.begin(); hwndIter != hwndVector.end(); hwndIter++) {
     HWND videoHWND = *hwndIter;

@@ -50,7 +50,7 @@ public:
   // This function is thread-save.
   Point getUpperLeftPoint(const Point *position) const;
 
-  LogWriter *m_logWriter;
+  LogWriter *m_plogwriter;
 
   FrameBuffer *const m_fb;
 

@@ -34,8 +34,8 @@ public:
   
   // Hook procedure.
   static LRESULT CALLBACK lowLevelKeyboardHook(int nCode,
-                                               WPARAM wParam,
-                                               LPARAM lParam);
+                                               ::wparam wParam,
+                                               ::lparam lParam);
   
   // Registration of keyboard hook.
   static void registerKeyboardHook(HookEventListener *hookEventListener);

@@ -29,7 +29,7 @@
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "WinDxgiOutput.h"
 
-WinDxgiOutput::WinDxgiOutput(WinDxgiAdapter *dxgiAdapter, UINT iOutput)
+WinDxgiOutput::WinDxgiOutput(WinDxgiAdapter *dxgiAdapter, unsigned int iOutput)
 : m_dxgiOutput(0)
 {
   dxgiAdapter->getDxgiOutput(iOutput, &m_dxgiOutput);

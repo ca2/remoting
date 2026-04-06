@@ -31,7 +31,7 @@
 FbUpdateNotifier::FbUpdateNotifier(FrameBuffer *fb, critical_section *fbLock, LogWriter *logWriter, WatermarksController* wmController)
 : m_frameBuffer(fb),
   m_fbLock(fbLock),
-  m_logWriter(logWriter),
+  m_plogwriter(logWriter),
   m_cursorPainter(fb, logWriter),
   m_isNewSize(false),
   m_isCursorChange(false),
@@ -105,14 +105,14 @@ void FbUpdateNotifier::execute()
     // with blocking frame buffer mutex "m_fbLock".
     if (isNewSize) {
       noUpdates = false;
-      m_logWriter->debug("FbUpdateNotifier (event): new size of frame buffer");
+      m_plogwriter->debug("FbUpdateNotifier (event): new size of frame buffer");
       try {
         critical_section_lock al(m_fbLock);
         m_adapter->onFrameBufferPropChange(m_frameBuffer);
         // FIXME: it's bad code. Must work without one next line, but not it.
         m_adapter->onFrameBufferUpdate(m_frameBuffer, m_frameBuffer->getDimension());
       } catch (...) {
-        m_logWriter->error("FbUpdateNotifier (event): error in set new size");
+        m_plogwriter->error("FbUpdateNotifier (event): error in set new size");
       }
     }
 
@@ -150,14 +150,14 @@ void FbUpdateNotifier::execute()
 
       ::array_base<::int_rectangle> updateList;
       update.getRectVector(&updateList);
-      m_logWriter->debug("FbUpdateNotifier (event): {} updates", updateList.size());
+      m_plogwriter->debug("FbUpdateNotifier (event): {} updates", updateList.size());
 
       try {
         for (::array_base<::int_rectangle>::iterator i = updateList.begin(); i != updateList.end(); ++i) {
 			m_adapter->onFrameBufferUpdate(m_frameBuffer, *i);
         }
       } catch (...) {
-        m_logWriter->error("FbUpdateNotifier (event): error in update");
+        m_plogwriter->error("FbUpdateNotifier (event): error in update");
       }
       
 
@@ -189,7 +189,7 @@ void FbUpdateNotifier::onUpdate(const ::int_rectangle &  update)
     m_update.addRect(update);
   }
   m_eventUpdate.notify();
-  m_logWriter->debug("FbUpdateNotifier: added rectangle");
+  m_plogwriter->debug("FbUpdateNotifier: added rectangle");
 }
 
 void FbUpdateNotifier::onPropertiesFb()
@@ -200,7 +200,7 @@ void FbUpdateNotifier::onPropertiesFb()
     m_isNewSize = true;
   }
   m_eventUpdate.notify();
-  m_logWriter->debug("FbUpdateNotifier: new size of frame buffer");
+  m_plogwriter->debug("FbUpdateNotifier: new size of frame buffer");
 }
 
 void FbUpdateNotifier::updatePointerPos(const Point *position)

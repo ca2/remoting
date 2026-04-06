@@ -35,7 +35,7 @@
 class CLASS_DECL_REMOTING_COMMON TightDecoder : public DecoderOfRectangle
 {
 public:
-  TightDecoder(LogWriter *logWriter);
+  TightDecoder(::subsystem::LogWriter * plogwriter);
   virtual ~TightDecoder();
 
 protected:

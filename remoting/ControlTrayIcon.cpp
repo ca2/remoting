@@ -28,7 +28,7 @@
 
 namespace remoting_remoting
 {
-    UINT ControlTrayIcon::WM_USER_TASKBAR;
+    unsigned int ControlTrayIcon::WM_USER_TASKBAR;
 
     ControlTrayIcon::ControlTrayIcon(remoting_impact *viewerApplication)
     : NotifyIcon(false),
@@ -57,7 +57,7 @@ namespace remoting_remoting
     {
     }
 
-    LRESULT ControlTrayIcon::windowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, bool *useDefWindowProc)
+    LRESULT ControlTrayIcon::windowProc(HWND hWnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam, bool *useDefWindowProc)
     {
         if (m_inWindowProc) {
             // This call is recursive, do not do any real work.

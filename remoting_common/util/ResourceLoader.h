@@ -67,14 +67,14 @@ public:
    * @param [out] string storage for string from resources.
    * @return true if string is loaded, false otherwise.
    */
-  bool loadString(UINT id, ::string & string);
+  bool loadString(unsigned int id, ::string & string);
 
   /**
    * Loads accelerator from resources.
    * @param [in] id identifier of accelerator in resource file.
    * @return handle of accelerator if it's loaded.
    */
-  HACCEL loadAccelerator(UINT id);
+  HACCEL loadAccelerator(unsigned int id);
 
   /**
    * Loads standart cursor.
@@ -87,7 +87,7 @@ public:
    * @param [in] id identifier of accelerator in resource file.
    * @return handle of cursor if it's loaded.
    */
-  HCURSOR loadCursor(UINT id);
+  HCURSOR loadCursor(unsigned int id);
 
 protected:
   /**

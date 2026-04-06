@@ -61,7 +61,7 @@ private:
 
   DesktopConfigLocal *m_deskConf;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __DESKTOPWINIMPL_H__

@@ -34,7 +34,7 @@ public:
 
   // @throws ::remoting::Exception on an error.
   void openProcess(DWORD dwDesiredAccess,
-                   BOOL bInheritHandle,
+                   bool bInheritHandle,
                    DWORD dwProcessId);
 
   // Returns the handle of the openned process by openProcess() function.

@@ -36,7 +36,7 @@
 class CLASS_DECL_REMOTING_COMMON Decoder
 {
 public:
-  Decoder(LogWriter *logWriter);
+  Decoder(::subsystem::LogWriter * plogwriter);
   virtual ~Decoder();
 
   //
@@ -55,7 +55,7 @@ public:
   static bool isPseudo(int encoding);
 
 protected:
-  LogWriter *m_logWriter;
+  LogWriter *m_plogwriter;
 
   int m_encoding;
 };

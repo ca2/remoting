@@ -69,7 +69,7 @@ protected:
 
   unsigned char m_prevKeyFlag;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __WINDOWSUSERINPUT_H__

@@ -58,7 +58,7 @@ private:
   unsigned int m_connectPort;
   bool m_viewOnly;
   RfbClientManager *m_clientManager;
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 

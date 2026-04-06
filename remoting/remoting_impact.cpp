@@ -35,11 +35,11 @@ remoting_impact::remoting_impact(::particle * pparticle, HINSTANCE appInstance, 
   m_viewerWindowClassName(scopedstrviewerWindowClassName),
   m_conListener(0),
   m_hAccelTable(0),
-  m_logWriter(::remoting::ViewerConfig::getInstance()->getLogWriter()),
+  m_plogwriter(::remoting::ViewerConfig::getInstance()->getLogWriter()),
   m_isListening(false)
 {
    initialize(pparticle);
-  m_logWriter->information("Init WinSock 2.1");
+  m_plogwriter->information("Init WinSock 2.1");
   WindowsSocket::startup(2, 1);
   registerViewerWindowClass();
 
@@ -55,7 +55,7 @@ remoting_impact::remoting_impact(::particle * pparticle, HINSTANCE appInstance, 
 
 remoting_impact::~remoting_impact()
 {
-  m_logWriter->information("Viewer collector: destroy all instances");
+  m_plogwriter->information("Viewer collector: destroy all instances");
   m_instances.destroyAllInstances();
 
   delete m_loginDialog;
@@ -63,7 +63,7 @@ remoting_impact::~remoting_impact()
 
   unregisterViewerWindowClass();
 
-  m_logWriter->information("Shutdown WinSock");
+  m_plogwriter->information("Shutdown WinSock");
   WindowsSocket::cleanup();
 }
 
@@ -76,9 +76,9 @@ void remoting_impact::startListeningServer(const int listeningPort)
     m_conListener = new ConnectionListener(this, listeningPort);
   } catch (const ::remoting::Exception &ex) {
     m_isListening = false;
-    m_logWriter->error("Error in start listening: {}", ex.get_message());
-    ::remoting::message_box(0,
-               StringTable::getString(IDS_ERROR_START_LISTENING),
+    m_plogwriter->error("Error in start listening: {}", ex.get_message());
+    main_innate_subsystem()->message_box(0,
+               main_subsystem()->string_table()->getString(IDS_ERROR_START_LISTENING),
                ProductNames::VIEWER_PRODUCT_NAME,
                MB_OK | MB_ICONERROR);
   }
@@ -91,7 +91,7 @@ void remoting_impact::stopListeningServer()
       delete m_conListener;
     }
   } catch (const ::remoting::Exception &ex) {
-    m_logWriter->error("Error of delete m_conListener: {}", ex.get_message());
+    m_plogwriter->error("Error of delete m_conListener: {}", ex.get_message());
   }
   m_conListener = 0;
 }
@@ -214,7 +214,7 @@ void remoting_impact::unregisterViewerWindowClass()
   UnregisterClass(m_viewerWndClass.lpszClassName, GetModuleHandle(0));
 }
 
-LRESULT CALLBACK remoting_impact::wndProcViewer(HWND hWnd, UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK remoting_impact::wndProcViewer(HWND hWnd, unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam)
 {
   BaseWindow *_this = 0;
 
@@ -264,7 +264,7 @@ void remoting_impact::showAboutViewer()
 int remoting_impact::processMessages()
 {
   MSG msg;
-  BOOL ret;
+  bool ret;
   while ((ret = GetMessage(&msg, NULL, 0, 0)) != 0) {
     if (ret < 0) {
       return 1;
@@ -308,7 +308,7 @@ void remoting_impact::newListeningConnection()
   }
 }
 
-bool remoting_impact::onTimer(WPARAM idTimer)
+bool remoting_impact::onTimer(::wparam idTimer)
 {
   switch (idTimer) {
   case TIMER_DELETE_DEAD_INSTANCE:
@@ -325,7 +325,7 @@ bool remoting_impact::onTimer(WPARAM idTimer)
   }
 }
 
-LRESULT CALLBACK remoting_impact::wndProc(HWND hWnd, UINT msg, WPARAM wparam, LPARAM lparam)
+LRESULT CALLBACK remoting_impact::wndProc(HWND hWnd, unsigned int msg, ::wparam wparam, ::lparam lparam)
 {
   if (msg >= WM_USER || msg == WM_TIMER) {
     remoting_impact *_this = reinterpret_cast<remoting_impact *>(GetWindowLongPtr(hWnd, GWLP_USERDATA));

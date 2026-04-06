@@ -51,10 +51,10 @@ protected:
   // BaseDialog overrided methods
   //
 
-  virtual BOOL onInitDialog();
-  virtual BOOL onCommand(UINT cID, UINT nID);
-  virtual BOOL onNotify(UINT controlID, LPARAM data) { return TRUE; }
-  virtual BOOL onDestroy() { return TRUE; }
+  virtual bool onInitDialog();
+  virtual bool onCommand(unsigned int cID, unsigned int nID);
+  virtual bool onNotify(unsigned int controlID, ::lparam data) { return TRUE; }
+  virtual bool onDestroy() { return TRUE; }
 
   //
   // Controls event handlers

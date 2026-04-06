@@ -34,7 +34,7 @@ SasUserInput::SasUserInput(UserInputClient *client, LogWriter *log)
   m_ctrlPressed(false),
   m_altPressed(false),
   m_underVista(false),
-  m_log(log)
+  m_plogwriter(log)
 {
   m_underVista = Environment::isVistaOrLater();
 }
@@ -78,10 +78,10 @@ void SasUserInput::setKeyboardEvent(unsigned int keySym, bool down)
   }
 
   if (m_ctrlPressed && m_altPressed && delPressed && m_underVista) {
-    DWORD sessionId = WTS::getActiveConsoleSessionId(m_log);
-    bool isRdp = WTS::SessionIsRdpSession(sessionId, m_log);
+    DWORD sessionId = WTS::getActiveConsoleSessionId(m_plogwriter);
+    bool isRdp = WTS::SessionIsRdpSession(sessionId, m_plogwriter);
     if (!isRdp) {
-      Environment::simulateCtrlAltDelUnderVista(m_log);
+      Environment::simulateCtrlAltDelUnderVista(m_plogwriter);
       return;
     }
   } 

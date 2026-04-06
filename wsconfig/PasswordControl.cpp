@@ -57,9 +57,9 @@ void PasswordControl::enable_window(bool enabled)
 void PasswordControl::unsetPassword(bool promtUser, HWND parentWindow)
 {
   if (promtUser) {
-    if (::remoting::message_box(parentWindow,
-      StringTable::getString(IDS_UNSET_PASSWORD_PROMT),
-      StringTable::getString(IDS_MBC_TVNCONTROL), MB_YESNO | MB_ICONQUESTION) == IDNO) {
+    if (main_innate_subsystem()->message_box(parentWindow,
+      main_subsystem()->string_table()->getString(IDS_UNSET_PASSWORD_PROMT),
+      main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL), MB_YESNO | MB_ICONQUESTION) == IDNO) {
       return;
     }
   }
@@ -121,9 +121,9 @@ void PasswordControl::updateControlsState()
 {
   if (m_changeButton != 0) {
     if (m_state == OldPassword || m_state == NewPassword) {
-      m_changeButton->setText(StringTable::getString(IDS_CHANGE_PASSWORD_CAPTION));
+      m_changeButton->setText(main_subsystem()->string_table()->getString(IDS_CHANGE_PASSWORD_CAPTION));
     } else {
-      m_changeButton->setText(StringTable::getString(IDS_SET_PASSWORD_CAPTION));
+      m_changeButton->setText(main_subsystem()->string_table()->getString(IDS_SET_PASSWORD_CAPTION));
     }
     m_changeButton->enable_window(m_enabled);
   }

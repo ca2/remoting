@@ -45,7 +45,7 @@ namespace remoting_remoting
         m_application = application;
     }
 
-    BOOL ConfigurationDialog::onCommand(UINT controlID, UINT notificationID)
+    bool ConfigurationDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
         if (controlID == IDC_EVERBLVL) {
             if (notificationID == EN_CHANGE) {
@@ -57,11 +57,11 @@ namespace remoting_remoting
             if (m_application != 0) {
                 m_application->postMessage(remoting_impact::WM_USER_CONFIGURATION_RELOAD);
             }
-            close_dialog(1);
+            closeDialog(1);
             return TRUE;
         }
         if (controlID == IDCANCEL) {
-            close_dialog(0);
+            closeDialog(0);
             return TRUE;
         }
         if (controlID == IDC_BCLEAR_LIST) {
@@ -119,18 +119,18 @@ namespace remoting_remoting
         }
     }
 
-    BOOL ConfigurationDialog::onInitDialog()
+    bool ConfigurationDialog::onInitDialog()
     {
-        setControlById(m_showToolBars, IDC_CSHOWTOOLBARS);
-        setControlById(m_warnAtSwitching, IDC_CWARNATSW);
-        setControlById(m_numberConn, IDC_ENUMCON);
-        setControlById(m_snumConn, IDC_SNUMCON);
-        setControlById(m_reverseConn, IDC_EREVCON);
-        setControlById(m_sreverseConn, IDC_SREVCON);
-        setControlById(m_verbLvl, IDC_EVERBLVL);
-        setControlById(m_sverbLvl, IDC_SVERBLVL);
-        setControlById(m_logging, IDC_ELOGGING);
-        setControlById(m_openLogDir, IDC_OPEN_LOG_FOLDER_BUTTON);
+        subclassControlById(m_showToolBars, IDC_CSHOWTOOLBARS);
+        subclassControlById(m_warnAtSwitching, IDC_CWARNATSW);
+        subclassControlById(m_numberConn, IDC_ENUMCON);
+        subclassControlById(m_snumConn, IDC_SNUMCON);
+        subclassControlById(m_reverseConn, IDC_EREVCON);
+        subclassControlById(m_sreverseConn, IDC_SREVCON);
+        subclassControlById(m_verbLvl, IDC_EVERBLVL);
+        subclassControlById(m_sverbLvl, IDC_SVERBLVL);
+        subclassControlById(m_logging, IDC_ELOGGING);
+        subclassControlById(m_openLogDir, IDC_OPEN_LOG_FOLDER_BUTTON);
 
         m_snumConn.setRange(0, 1024);
         m_snumConn.setBuddy(&m_numberConn);
@@ -171,13 +171,13 @@ namespace remoting_remoting
 
     bool ConfigurationDialog::isInputValid()
     {
-        if (!testNum(&m_reverseConn, StringTable::getString(IDS_CONFIGURATION_LISTEN_PORT))) {
+        if (!testNum(&m_reverseConn, main_subsystem()->string_table()->getString(IDS_CONFIGURATION_LISTEN_PORT))) {
             return false;
         }
-        if (!testNum(&m_verbLvl, StringTable::getString(IDS_CONFIGURATION_LOG_LEVEL))) {
+        if (!testNum(&m_verbLvl, main_subsystem()->string_table()->getString(IDS_CONFIGURATION_LOG_LEVEL))) {
             return false;
         }
-        if (!testNum(&m_numberConn, StringTable::getString(IDS_CONFIGURATION_HISTORY_LIMIT))) {
+        if (!testNum(&m_numberConn, main_subsystem()->string_table()->getString(IDS_CONFIGURATION_HISTORY_LIMIT))) {
             return false;
         }
         return true;
@@ -193,10 +193,10 @@ namespace remoting_remoting
         }
 
         ::string scopedstrMessage;
-        scopedstrMessage.formatf(StringTable::getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC).c_str(), scopedstrTbName.c_str());
+        scopedstrMessage.formatf(main_subsystem()->string_table()->getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC).c_str(), scopedstrTbName.c_str());
 
-        ::remoting::message_box(m_hwnd, scopedstrMessage,
-                   StringTable::getString(IDS_CONFIGURATION_CAPTION), MB_OK | MB_ICONWARNING);
+        main_innate_subsystem()->message_box(m_hwnd, scopedstrMessage,
+                   main_subsystem()->string_table()->getString(IDS_CONFIGURATION_CAPTION), MB_OK | MB_ICONWARNING);
 
         tb->set_focus();
 

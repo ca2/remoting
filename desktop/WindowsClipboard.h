@@ -43,7 +43,7 @@ public:
   virtual void readFromClipBoard(::string & clipDest) const;
 
 protected:
-  virtual bool wndProc(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam);
+  virtual bool wndProc(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam);
 
   virtual void execute();
   virtual void onTerminate();
@@ -55,7 +55,7 @@ protected:
 
   ClipboardListener *m_clipboardListener;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 
   static const HINSTANCE m_hinst;
 };

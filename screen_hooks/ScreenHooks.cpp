@@ -29,10 +29,10 @@
 #include "remoting/remoting_common/region/Region.h"
 
 // Pre-definition:
-LRESULT CALLBACK callWndRetProc(int nCode, WPARAM wParam, LPARAM lParam);
-LRESULT CALLBACK getMsgProc(int code, WPARAM wParam, LPARAM lParam);
-LRESULT CALLBACK sysMsgProc(int code, WPARAM wParam, LPARAM lParam);
-void processMessage(HWND hwnd, UINT scopedstrMessage, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK callWndRetProc(int nCode, ::wparam wParam, ::lparam lParam);
+LRESULT CALLBACK getMsgProc(int code, ::wparam wParam, ::lparam lParam);
+LRESULT CALLBACK sysMsgProc(int code, ::wparam wParam, ::lparam lParam);
+void processMessage(HWND hwnd, unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam);
 void sendRect(const ::int_rectangle &  rect);
 void sendClientRect(HWND hwnd);
 void sendNClientRegion(HWND hwnd);
@@ -50,7 +50,7 @@ HHOOK g_sysMessageH = 0;
 HWND g_targetWinHwnd = 0;
 #pragma data_seg()
 
-BOOL APIENTRY DllMain(HMODULE hModule,
+bool APIENTRY DllMain(HMODULE hModule,
                       DWORD  ul_reason_for_call,
                       LPVOID lpReserved)
 {
@@ -95,7 +95,7 @@ __declspec(dllexport) bool unsetHook()
   return result;
 }
 
-LRESULT CALLBACK callWndRetProc(int nCode, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK callWndRetProc(int nCode, ::wparam wParam, ::lparam lParam)
 {
   if (nCode == HC_ACTION) {
     CWPRETSTRUCT *cpwS = (CWPRETSTRUCT *)lParam;
@@ -104,7 +104,7 @@ LRESULT CALLBACK callWndRetProc(int nCode, WPARAM wParam, LPARAM lParam)
   return CallNextHookEx(g_callWndProcH, nCode, wParam, lParam);
 }
 
-LRESULT CALLBACK getMsgProc(int code, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK getMsgProc(int code, ::wparam wParam, ::lparam lParam)
 {
   if (code == MSGF_DIALOGBOX || code == MSGF_MENU || code == MSGF_SCROLLBAR) {
     MSG *msg = (MSG *)lParam;
@@ -113,7 +113,7 @@ LRESULT CALLBACK getMsgProc(int code, WPARAM wParam, LPARAM lParam)
   return CallNextHookEx(g_getMessageH, code, wParam, lParam);
 }
 
-LRESULT CALLBACK sysMsgProc(int code, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK sysMsgProc(int code, ::wparam wParam, ::lparam lParam)
 {
   if (code == MSGF_DIALOGBOX || code == MSGF_MENU || code == MSGF_SCROLLBAR) {
     MSG *msg = (MSG *)lParam;
@@ -122,7 +122,7 @@ LRESULT CALLBACK sysMsgProc(int code, WPARAM wParam, LPARAM lParam)
   return CallNextHookEx(g_sysMessageH, code, wParam, lParam);
 }
 
-void processMessage(HWND hwnd, UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
+void processMessage(HWND hwnd, unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam)
 {
   switch (scopedstrMessage) {
   case WM_PAINT:

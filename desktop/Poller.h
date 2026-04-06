@@ -57,7 +57,7 @@ private:
   ::int_rectangle m_pollingRect;
   WindowsEvent m_intervalWaiter;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __POLLER_H__

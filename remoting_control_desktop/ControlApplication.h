@@ -158,7 +158,7 @@ private:
   void reloadConfig();
 
 private:
-  LogWriter m_log;
+  LogWriter m_plogwriter;
 
   // Initialization of the Configurator instance.
   Configurator m_configurator;

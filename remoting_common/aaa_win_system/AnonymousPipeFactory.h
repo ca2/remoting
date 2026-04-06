@@ -53,7 +53,7 @@ public:
                      bool secondSideIsInheritable);
 
 private:
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
   unsigned int m_bufferSize;
 };
 

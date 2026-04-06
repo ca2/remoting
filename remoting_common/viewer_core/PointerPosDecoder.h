@@ -30,7 +30,7 @@
 class CLASS_DECL_REMOTING_COMMON PointerPosDecoder : public PseudoDecoder
 {
 public:
-  PointerPosDecoder(LogWriter *logWriter);
+  PointerPosDecoder(::subsystem::LogWriter * plogwriter);
   virtual ~PointerPosDecoder();
 };
 

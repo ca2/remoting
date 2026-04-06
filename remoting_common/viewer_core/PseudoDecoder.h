@@ -30,7 +30,7 @@
 class CLASS_DECL_REMOTING_COMMON PseudoDecoder : public Decoder
 {
 public:
-  PseudoDecoder(LogWriter *logWriter);
+  PseudoDecoder(::subsystem::LogWriter * plogwriter);
   virtual ~PseudoDecoder();
 
   virtual bool isPseudo() const;

@@ -59,7 +59,7 @@ private:
   critical_section *m_fbMutex;
   GrabOptimizator m_grabOptimizator;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __UPDATEFILTER_H__

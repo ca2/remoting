@@ -130,8 +130,8 @@ void WinCursorShapeUtils::inverse(char *bits, int count)
 
 void WinCursorShapeUtils::trimBuffer(::array_base<char> *buffer, DXGI_OUTDUPL_POINTER_SHAPE_INFO *shapeInfo)
 {
-  UINT newPitch;
-  UINT oldPitch = shapeInfo->Pitch;
+  unsigned int newPitch;
+  unsigned int oldPitch = shapeInfo->Pitch;
   trimTransparent(buffer, shapeInfo);
   if (shapeInfo->Type == DXGI_OUTDUPL_POINTER_SHAPE_TYPE_MONOCHROME) {
     newPitch = ((shapeInfo->Width + 15) / 16) * 2;
@@ -154,18 +154,18 @@ void WinCursorShapeUtils::trimBuffer(::array_base<char> *buffer, DXGI_OUTDUPL_PO
 
 void WinCursorShapeUtils::trimTransparent(::array_base<char> *buffer, DXGI_OUTDUPL_POINTER_SHAPE_INFO  *shapeInfo)
 {
-  UINT pitch = shapeInfo->Pitch;
-  UINT height = getCursorHeight(*shapeInfo);
-  UINT width = shapeInfo->Width;
-  UINT hotspotX = (UINT)(shapeInfo->HotSpot.x);
-  UINT type = shapeInfo->Type;
+  unsigned int pitch = shapeInfo->Pitch;
+  unsigned int height = getCursorHeight(*shapeInfo);
+  unsigned int width = shapeInfo->Width;
+  unsigned int hotspotX = (unsigned int)(shapeInfo->HotSpot.x);
+  unsigned int type = shapeInfo->Type;
 
   // width 
-  const UINT minimumWidth = 16;
-	UINT trimmedWidth = minimumWidth;
+  const unsigned int minimumWidth = 16;
+	unsigned int trimmedWidth = minimumWidth;
 
-	for (UINT y = 0; y < height; ++y) {
-		for (UINT x = width - 1; x > trimmedWidth; --x) {
+	for (unsigned int y = 0; y < height; ++y) {
+		for (unsigned int x = width - 1; x > trimmedWidth; --x) {
 			if (!isPixelTransparent(&buffer->front(), type, height, pitch, x, y)) {
 				trimmedWidth = x + 1;
 			}
@@ -180,10 +180,10 @@ void WinCursorShapeUtils::trimTransparent(::array_base<char> *buffer, DXGI_OUTDU
 	}
 
 	// height
-	UINT trimmedHeight = minimumWidth;
+	unsigned int trimmedHeight = minimumWidth;
 
-  for (UINT x = 0; x < width; ++x) {
-		for (UINT y = height - 1; y > trimmedHeight; --y) {
+  for (unsigned int x = 0; x < width; ++x) {
+		for (unsigned int y = height - 1; y > trimmedHeight; --y) {
 			if (!isPixelTransparent(&buffer->front(), type, height, pitch, x, y)) {
 				trimmedHeight = y + 1;
 			}
@@ -204,7 +204,7 @@ void WinCursorShapeUtils::trimTransparent(::array_base<char> *buffer, DXGI_OUTDU
 	}
 }
 
-bool WinCursorShapeUtils::isMonochromePixelTransparent(char andByte, char xorByte, UINT x)
+bool WinCursorShapeUtils::isMonochromePixelTransparent(char andByte, char xorByte, unsigned int x)
 {
 	bool pixelSet = WinCursorShapeUtils::testBit(andByte, x % 8);
 	bool xorSet = WinCursorShapeUtils::testBit(xorByte, x % 8);;
@@ -213,7 +213,7 @@ bool WinCursorShapeUtils::isMonochromePixelTransparent(char andByte, char xorByt
 	return transparent;
 }
 
-bool WinCursorShapeUtils::isColorPixelTransparent(unsigned int pixel, UINT type)
+bool WinCursorShapeUtils::isColorPixelTransparent(unsigned int pixel, unsigned int type)
 {
 	bool transparent;
 	// color data is 32 bpp ARGB DIB
@@ -233,24 +233,24 @@ bool WinCursorShapeUtils::isColorPixelTransparent(unsigned int pixel, UINT type)
 	return transparent;
 }
 
-bool WinCursorShapeUtils::isPixelTransparent(char* const buffer, UINT type, UINT height, UINT pitch, UINT x, UINT y)
+bool WinCursorShapeUtils::isPixelTransparent(char* const buffer, unsigned int type, unsigned int height, unsigned int pitch, unsigned int x, unsigned int y)
 {
 	if (type == DXGI_OUTDUPL_POINTER_SHAPE_TYPE_MONOCHROME) {
-		UINT andOffset = (y * pitch) + (x / 8);
-		UINT xorOffset = andOffset + height * pitch;
+		unsigned int andOffset = (y * pitch) + (x / 8);
+		unsigned int xorOffset = andOffset + height * pitch;
 		char andByte = buffer[andOffset];
 		char xorByte = buffer[xorOffset];
 
 		return isMonochromePixelTransparent(andByte, xorByte, x);
 	}
 
-	UINT offset = (y * pitch) + (x * 4);
+	unsigned int offset = (y * pitch) + (x * 4);
 	unsigned int *pixel = (unsigned int*)(&buffer[offset]);
 
 	return isColorPixelTransparent(*pixel, type);
 }
 
-UINT WinCursorShapeUtils::getCursorHeight(DXGI_OUTDUPL_POINTER_SHAPE_INFO& shapeInfo)
+unsigned int WinCursorShapeUtils::getCursorHeight(DXGI_OUTDUPL_POINTER_SHAPE_INFO& shapeInfo)
 {
 	if (shapeInfo.Type == DXGI_OUTDUPL_POINTER_SHAPE_TYPE_MONOCHROME) {
 		return shapeInfo.Height /= 2;

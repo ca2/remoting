@@ -42,7 +42,7 @@ public:
 //private:
   ::string getUniqPipeName();
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
   unsigned int m_bufferSize;
 };
 

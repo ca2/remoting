@@ -45,7 +45,7 @@ WinDxgiAdapter::~WinDxgiAdapter()
   }
 }
 
-void WinDxgiAdapter::getDxgiOutput(UINT iOutput, IDXGIOutput **iDxgiOutput)
+void WinDxgiAdapter::getDxgiOutput(unsigned int iOutput, IDXGIOutput **iDxgiOutput)
 {
   HRESULT hr = m_dxgiAdapter->EnumOutputs(iOutput, iDxgiOutput);
   if (hr == DXGI_ERROR_NOT_FOUND) {

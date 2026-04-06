@@ -37,7 +37,7 @@ class WinCustomD3D11Texture2D
 {
 public:
   // Initializes ID3D11Texture2D compatible to textures returned from the AcquireNextFrame() function.
-  WinCustomD3D11Texture2D(ID3D11Device *device, UINT width, UINT height, DXGI_MODE_ROTATION rotation);
+  WinCustomD3D11Texture2D(ID3D11Device *device, unsigned int width, unsigned int height, DXGI_MODE_ROTATION rotation);
   WinCustomD3D11Texture2D(const WinCustomD3D11Texture2D &other);
   virtual ~WinCustomD3D11Texture2D();
 
@@ -53,7 +53,7 @@ private:
   class Texture2DDescInitializer
   {
   public:
-    Texture2DDescInitializer(UINT width, UINT height, DXGI_MODE_ROTATION rotation);
+    Texture2DDescInitializer(unsigned int width, unsigned int height, DXGI_MODE_ROTATION rotation);
 
     const D3D11_TEXTURE2D_DESC *getDesc() const;
   private:

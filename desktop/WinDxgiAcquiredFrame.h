@@ -33,7 +33,7 @@
 class WinDxgiAcquiredFrame
 {
 public:
-  WinDxgiAcquiredFrame(WinDxgiOutputDuplication *outDupl, UINT timeOutMilliSec);
+  WinDxgiAcquiredFrame(WinDxgiOutputDuplication *outDupl, unsigned int timeOutMilliSec);
   virtual ~WinDxgiAcquiredFrame();
 
   bool wasTimeOut();

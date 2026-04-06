@@ -68,7 +68,7 @@ protected:
   HANDLE m_token;
   HANDLE m_dupToken;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 

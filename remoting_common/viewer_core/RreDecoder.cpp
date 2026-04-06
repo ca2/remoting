@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "RreDecoder.h"
 
-RreDecoder::RreDecoder(LogWriter *logWriter)
+RreDecoder::RreDecoder(::subsystem::LogWriter * plogwriter)
 : DecoderOfRectangle(logWriter)
 {
   m_encoding = EncodingDefs::RRE;

@@ -33,7 +33,7 @@
 class CLASS_DECL_REMOTING_COMMON ZrleDecoder : public DecoderOfRectangle
 {
 public:
-  ZrleDecoder(LogWriter *logWriter);
+  ZrleDecoder(::subsystem::LogWriter * plogwriter);
   virtual ~ZrleDecoder();
 
 protected:

@@ -49,7 +49,7 @@ protected:
   DataInputStream *m_dIS;
   DataOutputStream *m_dOS;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 

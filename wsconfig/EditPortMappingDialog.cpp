@@ -92,9 +92,9 @@ bool EditPortMappingDialog::isUserDataValid()
   m_portTextBox.get_text(&portStringStorage);
 
   if (!PortMappingRect::tryParse(rectStringStorage)) {
-    ::remoting::message_box(m_ctrlThis.get_hwnd(),
-               StringTable::getString(IDS_INVALID_PORT_MAPPING_STRING),
-               StringTable::getString(IDS_CAPTION_BAD_INPUT),
+    main_innate_subsystem()->message_box(m_ctrlThis.get_hwnd(),
+               main_subsystem()->string_table()->getString(IDS_INVALID_PORT_MAPPING_STRING),
+               main_subsystem()->string_table()->getString(IDS_CAPTION_BAD_INPUT),
                MB_OK | MB_ICONWARNING);
     m_geometryTextBox.set_focus();
     return false;
@@ -105,9 +105,9 @@ bool EditPortMappingDialog::isUserDataValid()
   StringParser::parseInt(portStringStorage, &port);
 
   if ((port < 1) || (port > 65535)) {
-    ::remoting::message_box(m_ctrlThis.get_hwnd(),
-               StringTable::getString(IDS_PORT_RANGE_ERROR),
-               StringTable::getString(IDS_CAPTION_BAD_INPUT),
+    main_innate_subsystem()->message_box(m_ctrlThis.get_hwnd(),
+               main_subsystem()->string_table()->getString(IDS_PORT_RANGE_ERROR),
+               main_subsystem()->string_table()->getString(IDS_CAPTION_BAD_INPUT),
                MB_OK | MB_ICONWARNING);
     m_portTextBox.set_focus();
     return false;
@@ -118,9 +118,9 @@ bool EditPortMappingDialog::isUserDataValid()
   size_t index = extraPorts->findByPort(port);
 
   if ((index != (size_t)-1) && (extraPorts->at(index) != m_mapping)) {
-    ::remoting::message_box(m_ctrlThis.get_hwnd(),
-               StringTable::getString(IDS_PORT_ALREADY_IN_USE),
-               StringTable::getString(IDS_CAPTION_BAD_INPUT),
+    main_innate_subsystem()->message_box(m_ctrlThis.get_hwnd(),
+               main_subsystem()->string_table()->getString(IDS_PORT_ALREADY_IN_USE),
+               main_subsystem()->string_table()->getString(IDS_CAPTION_BAD_INPUT),
                MB_OK | MB_ICONWARNING);
     m_portTextBox.set_focus();
     return false;
@@ -129,7 +129,7 @@ bool EditPortMappingDialog::isUserDataValid()
   return true;
 }
 
-BOOL EditPortMappingDialog::onInitDialog()
+bool EditPortMappingDialog::onInitDialog()
 {
   initControls();
 
@@ -150,7 +150,7 @@ BOOL EditPortMappingDialog::onInitDialog()
   return TRUE;
 }
 
-BOOL EditPortMappingDialog::onCommand(UINT cID, UINT nID)
+bool EditPortMappingDialog::onCommand(unsigned int cID, unsigned int nID)
 {
   switch (cID) {
   case IDOK:

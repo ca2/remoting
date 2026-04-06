@@ -30,7 +30,7 @@
 #include "remoting/remoting_common/client_config/ConnectionConfigSM.h"
 #include "remoting/remoting_common/client_config/ViewerSettingsManager.h"
 #include "acme/subsystem/StringParser.h"
-#include "apex/innate_subsystem/BaseDialog.h"
+#include "apex/innate_subsystem/Dialog.h"
 #include "apex/innate_subsystem/TextBox.h"
 #include "apex/innate_subsystem/CheckBox.h"
 #include "apex/innate_subsystem/ComboBox.h"
@@ -43,7 +43,7 @@ namespace remoting_remoting
 {
     class remoting_impact;
 
-    class LoginDialog : public BaseDialog
+    class LoginDialog : public ::innate_subsystem::Dialog
     {
     public:
         LoginDialog(remoting_impact *viewer);
@@ -51,7 +51,7 @@ namespace remoting_remoting
 
         // this function returns the host
         ::string getServerHost();
-        void setConConf(ConnectionConfig *conConf);
+        void setConConf(::remoting::ConnectionConfig *conConf);
         // set listening mode
         void setListening(bool isListening);
 
@@ -65,8 +65,8 @@ namespace remoting_remoting
         static const int LISTENING_MODE = 2;
 
     protected:
-        BOOL onInitDialog();
-        BOOL onCommand(UINT controlID, UINT notificationID);
+        bool onInitDialog();
+        bool onCommand(unsigned int controlID, unsigned int notificationID);
         bool m_isListening;
 
         ::remoting::Window m_listening;
@@ -81,7 +81,7 @@ namespace remoting_remoting
         void updateHistory();
         void onConnect();
         void onConfiguration();
-        BOOL onOptions();
+        bool onOptions();
         void onOrder();
         void openUrl(const ::scoped_string & scopedstrUrl);
         void onListening();

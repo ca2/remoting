@@ -25,7 +25,7 @@
 // camilo on 2026-02-12 21:12 <3ThomasBorregaardSørensen!!
 #pragma once
 
-#include "apex/innate_subsystem/BaseDialog.h"
+#include "apex/innate_subsystem/Dialog.h"
 #include "apex/innate_subsystem/ProgressBar.h"
 #include "apex/innate_subsystem/TextBox.h"
 //#include "resource.h"
@@ -60,7 +60,7 @@ namespace remoting_remoting
     };
 
 
-    class ConnectingDialog : public innate_subsystem::BaseDialog
+    class ConnectingDialog : public innate_subsystem::Dialog
     {
     public:
 

@@ -52,9 +52,9 @@ FileTransferRequestHandler::FileTransferRequestHandler(RfbCodeRegistrator *regis
 : m_downloadFile(NULL), m_fileInputStream(NULL),
   m_uploadFile(NULL), m_fileOutputStream(NULL),
   m_output(output), m_enabled(enabled),
-  m_log(log)
+  m_plogwriter(log)
 {
-  m_security = new FileTransferSecurity(desktop, m_log);
+  m_security = new FileTransferSecurity(desktop, m_plogwriter);
 
   if (!FileTransferRequestHandler::isFileTransferEnabled()) {
     return ;
@@ -107,7 +107,7 @@ FileTransferRequestHandler::FileTransferRequestHandler(RfbCodeRegistrator *regis
     registrator->regCode(rfbMessagesToProcess[i], this);
   }
 
-  m_log->debug("::file::item transfer request handler created");
+  m_plogwriter->debug("::file::item transfer request handler created");
 }
 
 FileTransferRequestHandler::~FileTransferRequestHandler()
@@ -127,7 +127,7 @@ FileTransferRequestHandler::~FileTransferRequestHandler()
     delete m_uploadFile;
   }
 
-  m_log->debug("::file::item transfer request handler deleted");
+  m_plogwriter->debug("::file::item transfer request handler deleted");
 }
 
 void FileTransferRequestHandler::onRequest(unsigned int reqCode, RfbInputGate *backGate)
@@ -191,7 +191,7 @@ bool FileTransferRequestHandler::isFileTransferEnabled()
 
 void FileTransferRequestHandler::compressionSupportRequested()
 {
-  m_log->debug("{}"), _T("compression support requested");
+  m_plogwriter->debug("{}"), _T("compression support requested");
 
   //
   // Can be 0 - compression not supported by server
@@ -200,7 +200,7 @@ void FileTransferRequestHandler::compressionSupportRequested()
 
   unsigned char compressionSupport = 1;
 
-  m_log->debug("sending compression support reply: {}"), (compressionSupport == 1) ? _T("supported") : _T("not supported");
+  m_plogwriter->debug("sending compression support reply: {}"), (compressionSupport == 1) ? _T("supported") : _T("not supported");
 
   {
     critical_section_lock l(m_output);
@@ -227,7 +227,7 @@ void FileTransferRequestHandler::fileListRequested()
     m_input->readUTF8(&fullPathName);
   }
 
-  m_log->debug("::file::item ::list_base of folder '{}' requested",
+  m_plogwriter->debug("::file::item ::list_base of folder '{}' requested",
                fullPathName);
 
   checkAccess();
@@ -314,7 +314,7 @@ void FileTransferRequestHandler::mkDirRequested()
     m_input->readUTF8(&folderPath);
   } // end of reading block.
 
-  m_log->debug("mkdir \"{}\" command requested", folderPath);
+  m_plogwriter->debug("mkdir \"{}\" command requested", folderPath);
 
   checkAccess();
 
@@ -349,7 +349,7 @@ void FileTransferRequestHandler::rmFileRequested()
     m_input->readUTF8(&fullPathName);
   } // end of reading block.
 
-  m_log->debug("rm \"{}\" command requested", fullPathName);
+  m_plogwriter->debug("rm \"{}\" command requested", fullPathName);
 
   checkAccess();
 
@@ -382,7 +382,7 @@ void FileTransferRequestHandler::mvFileRequested()
     m_input->readUTF8(&newFileName);
   } // end of reading block.
 
-  m_log->debug("move \"{}\" \"{}\" command requested", oldFileName, newFileName);
+  m_plogwriter->debug("move \"{}\" \"{}\" command requested", oldFileName, newFileName);
 
   checkAccess();
 
@@ -410,7 +410,7 @@ void FileTransferRequestHandler::dirSizeRequested()
     m_input->readUTF8(&fullPathName);
   } // end of reading block.
 
-  m_log->debug("Size of folder '{}\' requested",
+  m_plogwriter->debug("Size of folder '{}\' requested",
                fullPathName);
 
   checkAccess();
@@ -445,7 +445,7 @@ void FileTransferRequestHandler::md5Requested()
     dataLen = m_input->readUInt64();
   } // end of reading block.
 
-  m_log->debug("md5 \"{}\" {} {} command requested", fullPathName, offset, dataLen);
+  m_plogwriter->debug("md5 \"{}\" {} {} command requested", fullPathName, offset, dataLen);
 
   checkAccess();
 
@@ -517,7 +517,7 @@ void FileTransferRequestHandler::uploadStartRequested()
     initialOffset = m_input->readUInt64();
   }
 
-  m_log->debug("upload \"{}\" {} {} command requested", fullPathName, uploadFlags, initialOffset);
+  m_plogwriter->debug("upload \"{}\" {} {} command requested", fullPathName, uploadFlags, initialOffset);
 
   checkAccess();
 
@@ -587,7 +587,7 @@ void FileTransferRequestHandler::uploadDataRequested()
     m_input->readFully(&buffer.front(), compressedSize);
   }
 
-  m_log->information("upload data (cs = {}, us = {}) requested", compressedSize, uncompressedSize);
+  m_plogwriter->information("upload data (cs = {}, us = {}) requested", compressedSize, uncompressedSize);
 
   checkAccess();
 
@@ -629,7 +629,7 @@ void FileTransferRequestHandler::uploadEndRequested()
     modificationTime = m_input->readUInt64();
   } // end of reading block.
 
-  m_log->debug("{}"), _T("end of upload requested\n");
+  m_plogwriter->debug("{}"), _T("end of upload requested\n");
 
   checkAccess();
 
@@ -700,7 +700,7 @@ void FileTransferRequestHandler::downloadStartRequested()
     initialOffset = m_input->readUInt64();
   } // end of reading block.
 
-  m_log->debug("download of \"{}\" file (offset = {}) requested", fullPathName, initialOffset);
+  m_plogwriter->debug("download of \"{}\" file (offset = {}) requested", fullPathName, initialOffset);
 
   checkAccess();
 
@@ -756,7 +756,7 @@ void FileTransferRequestHandler::downloadDataRequested()
     dataSize = m_input->readUInt32();
   } // end of reading block.
 
-  m_log->information("download {} bytes (comp flag = {}) requested", dataSize, requestedCompressionLevel);
+  m_plogwriter->information("download {} bytes (comp flag = {}) requested", dataSize, requestedCompressionLevel);
 
   checkAccess();
 
@@ -807,7 +807,7 @@ void FileTransferRequestHandler::downloadDataRequested()
       m_output->flush();
     } // rfb io handle block
 
-    m_log->debug("{}"), _T("downloading has finished\n");
+    m_plogwriter->debug("{}"), _T("downloading has finished\n");
 
     delete m_fileInputStream;
     delete m_downloadFile;
@@ -862,7 +862,7 @@ void FileTransferRequestHandler::lastRequestFailed(::string & storage)
 
 void FileTransferRequestHandler::lastRequestFailed(const ::scoped_string & scopedstrDescription)
 {
-  m_log->error("last request failed: \"{}\"", description);
+  m_plogwriter->error("last request failed: \"{}\"", description);
 
   {
     critical_section_lock l(m_output);

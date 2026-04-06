@@ -99,7 +99,7 @@ void ListView::addItem(int index, const ::scoped_string & scopedstrCaption)
   addItem(index, scopedstrCaption, NULL);
 }
 
-void ListView::addItem(int index, const ::scoped_string & scopedstrCaption, LPARAM tag)
+void ListView::addItem(int index, const ::scoped_string & scopedstrCaption, ::lparam tag)
 {
   //
   // Prepare LVITEM structure
@@ -120,7 +120,7 @@ void ListView::addItem(int index, const ::scoped_string & scopedstrCaption, LPAR
   ListView_InsertItem(m_hwnd, &lvI);
 }
 
-void ListView::addItem(int index, const ::scoped_string & scopedstrCaption, LPARAM tag, int imageIndex)
+void ListView::addItem(int index, const ::scoped_string & scopedstrCaption, ::lparam tag, int imageIndex)
 {
   //
   // Prepare LVITEM structure
@@ -167,10 +167,10 @@ void ListView::setSubItemText(int index, int subIndex, const ::scoped_string & s
   // Send scopedstrMessage to window
   //
 
-  SendMessage(m_hwnd, LVM_SETITEM, 0, (LPARAM)&lvI);
+  SendMessage(m_hwnd, LVM_SETITEM, 0, (::lparam)&lvI);
 }
 
-void ListView::setItemData(int index, LPARAM tag)
+void ListView::setItemData(int index, ::lparam tag)
 {
   //
   // Prepare LVITEM structure
@@ -187,10 +187,10 @@ void ListView::setItemData(int index, LPARAM tag)
   // Send scopedstrMessage to window
   //
 
-  SendMessage(m_hwnd, LVM_SETITEM, 0, (LPARAM)&lvI);
+  SendMessage(m_hwnd, LVM_SETITEM, 0, (::lparam)&lvI);
 }
 
-LPARAM ListView::getItemData(int index)
+::lparam ListView::getItemData(int index)
 {
   return getItem(index).tag;
 }
@@ -216,7 +216,7 @@ int ListView::getSelectedIndex()
 
 void ListView::selectItem(int index)
 {
-  WPARAM itemIndex = (WPARAM)index;
+  ::wparam itemIndex = (::wparam)index;
   ListView_SetItemState(m_hwnd, -1, 0, LVIS_SELECTED);
   SendMessage(m_hwnd, LVM_ENSUREVISIBLE , itemIndex, FALSE);
   ListView_SetItemState(m_hwnd, itemIndex, LVIS_SELECTED, LVIS_SELECTED);
@@ -314,7 +314,7 @@ void ListView::sort()
 
 void ListView::set_ex_style(DWORD style)
 {
-  ::SendMessage(m_hwnd, LVM_SETEXTENDEDLISTVIEWSTYLE, 0, (LPARAM)style); 
+  ::SendMessage(m_hwnd, LVM_SETEXTENDEDLISTVIEWSTYLE, 0, (::lparam)style); 
 }
 
 DWORD ListView::get_ex_style()

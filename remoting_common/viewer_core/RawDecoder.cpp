@@ -26,7 +26,7 @@
 
 #include <algorithm>
 
-RawDecoder::RawDecoder(LogWriter *logWriter)
+RawDecoder::RawDecoder(::subsystem::LogWriter * plogwriter)
 : DecoderOfRectangle(logWriter)
 {
   m_encoding = EncodingDefs::RAW;

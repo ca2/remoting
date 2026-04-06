@@ -35,8 +35,8 @@
 #include <algorithm>
 
 // OSVERSIONINFO Environment::m_osVerInfo = { 0 };
-// typedef VOID (WINAPI *SendSas)(BOOL asUser);
-// typedef HRESULT (WINAPI *DwmIsCompositionEnabled)(BOOL *pfEnabled);
+// typedef VOID (WINAPI *SendSas)(bool asUser);
+// typedef HRESULT (WINAPI *DwmIsCompositionEnabled)(bool *pfEnabled);
 //
 // Environment::Environment()
 // {
@@ -257,7 +257,7 @@
 //     if (dwmIsEnabled == 0) {
 //       throw ::remoting::Exception("The DwmIsCompositionEnabled() has not been found in the Dwmapi.dll");
 //     }
-//     BOOL result = FALSE;
+//     bool result = FALSE;
 //     HRESULT dwmIsEnabledResult = dwmIsEnabled(&result);
 //     if (dwmIsEnabledResult != S_OK) {
 //       ::string errMess;

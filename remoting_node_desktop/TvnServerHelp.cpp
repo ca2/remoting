@@ -38,7 +38,7 @@ TvnServerHelp::TvnServerHelp()
 void TvnServerHelp::showUsage()
 {
   MessageBox(0,
-    StringTable::getString(IDS_TVNSERVER_USAGE),
-    StringTable::getString(IDS_MBC_TVNSERVER_USAGE),
+    main_subsystem()->string_table()->getString(IDS_TVNSERVER_USAGE),
+    main_subsystem()->string_table()->getString(IDS_MBC_TVNSERVER_USAGE),
     MB_OK|MB_ICONEXCLAMATION);
 }

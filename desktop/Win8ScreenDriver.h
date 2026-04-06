@@ -71,7 +71,7 @@ public:
   virtual void getCopiedRegion(::int_rectangle *copyRect, Point *source);
 
 private:
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
   critical_section *m_fbcritical_section;
   UpdateKeeper *m_updateKeeper;
   UpdateListener *m_updateListener;

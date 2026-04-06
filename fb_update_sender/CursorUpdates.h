@@ -98,7 +98,7 @@ private:
   // frame buffer.
   bool m_isDrawCursorMethod;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __CURSORUPDATES_H__

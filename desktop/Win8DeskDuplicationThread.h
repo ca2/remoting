@@ -96,7 +96,7 @@ private:
   ::array_base<WinCustomD3D11Texture2D> m_stageTextures2D;
   FrameBuffer m_auxiliaryFrameBuffer;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __WIN8DESKDUPLICATIONTHREAD_H__

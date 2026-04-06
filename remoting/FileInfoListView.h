@@ -25,6 +25,7 @@
 #pragma once
 
 
+#include "apex/innate_subsystem/ImageList.h"
 #include "apex/innate_subsystem/ListView.h"
 #include "remoting/remoting_common/ftp_common/FileInfo.h"
 
@@ -71,7 +72,7 @@ namespace remoting_remoting
         //
         // This function compare two item with file-contex (file name, date, size).
         //
-        //static int CALLBACK compareItem(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort);
+        //static int CALLBACK compareItem(::lparam lParam1, ::lparam lParam2, ::lparam lParamSort);
 
         //
         // This function return:
@@ -81,7 +82,7 @@ namespace remoting_remoting
         //
         //static int compareUInt64(unsigned long long first, unsigned long long second);
 
-        //HIMAGELIST m_smallImageList;
+        ::innate_subsystem::ImageList m_imagelistSmall;
 
         //private:
         virtual bool window_procedure(::lresult & lresult, unsigned int scopedstrMessage, ::wparam wparam, ::lparam lparam);

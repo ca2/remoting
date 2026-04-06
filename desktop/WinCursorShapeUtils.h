@@ -79,10 +79,10 @@ private:
   };
 
   static unsigned int getAlphaMask(const PixelFormat & pf);
-  static UINT getCursorHeight(DXGI_OUTDUPL_POINTER_SHAPE_INFO& shapeInfo);
-  static bool isPixelTransparent(char* const buffer, UINT type, UINT height, UINT pitch, UINT x, UINT y);
-  static bool isColorPixelTransparent(unsigned int pixel, UINT type);
-  static bool isMonochromePixelTransparent(char andByte, char xorByte, UINT x);
+  static unsigned int getCursorHeight(DXGI_OUTDUPL_POINTER_SHAPE_INFO& shapeInfo);
+  static bool isPixelTransparent(char* const buffer, unsigned int type, unsigned int height, unsigned int pitch, unsigned int x, unsigned int y);
+  static bool isColorPixelTransparent(unsigned int pixel, unsigned int type);
+  static bool isMonochromePixelTransparent(char andByte, char xorByte, unsigned int x);
   static void trimTransparent(::array_base<char> *buffer, DXGI_OUTDUPL_POINTER_SHAPE_INFO *shapeInfo);
 };
 

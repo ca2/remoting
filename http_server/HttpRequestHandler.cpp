@@ -38,7 +38,7 @@ HttpRequestHandler::HttpRequestHandler(DataInputStream *dataInput,
                                        const ::scoped_string & scopedstrPeerHost)
 : m_dataInput(dataInput), m_dataOutput(dataOutput),
   m_peerHost(peerHost),
-  m_log(log)
+  m_plogwriter(log)
 {
 }
 
@@ -58,14 +58,14 @@ void HttpRequestHandler::processRequest()
   ansiRequest.toStringStorage(&request);
 
   if (!httpRequest.parseHeader()) {
-    m_log->warning("invalid http request from {}", m_peerHost);
+    m_plogwriter->warning("invalid http request from {}", m_peerHost);
     return ;
   }
 
   request.replaceChar(_T('\n'), _T(' '));
   request.replaceChar(_T('\t'), _T(' '));
 
-  m_log->debug("\"{}\" from {}", request, m_peerHost);
+  m_plogwriter->debug("\"{}\" from {}", request, m_peerHost);
 
   HttpReply reply(m_dataOutput);
 

@@ -28,7 +28,7 @@ UpdateHandlerImpl::UpdateHandlerImpl(UpdateListener *externalUpdateListener, Scr
                                      LogWriter *log)
 : m_externalUpdateListener(externalUpdateListener),
   m_fullUpdateRequested(false),
-  m_log(log)
+  m_plogwriter(log)
 {
   m_screenDriver = scrDriverFactory->createScreenDriver(&m_updateKeeper,
                                                         this,
@@ -61,26 +61,26 @@ void UpdateHandlerImpl::extract(UpdateContainer *updateContainer)
 {
   ::int_rectangle copyRect;
   Point copySrc;
-  m_log->debug("UpdateHandlerImpl: getCopiedRegion");
+  m_plogwriter->debug("UpdateHandlerImpl: getCopiedRegion");
   m_screenDriver->getCopiedRegion(&copyRect, &copySrc);
   {
     critical_section_lock al(&m_updateKeeper); // The following operations should be atomic
     m_updateKeeper.addCopyRect(&copyRect, &copySrc);
-    m_log->debug("UpdateHandlerImpl: extract Copy ::int_rectangle");
+    m_plogwriter->debug("UpdateHandlerImpl: extract Copy ::int_rectangle");
     m_updateKeeper.extract(updateContainer);
   }
 
   // Note: The getVideoRegion() function is not a thread safe function, but it invokes
   // only from this one place and so that is why it does not cover by the mutex.
-  m_log->debug("UpdateHandlerImpl: getVideoRegion");
+  m_plogwriter->debug("UpdateHandlerImpl: getVideoRegion");
   updateContainer->videoRegion = m_screenDriver->getVideoRegion();
   // Constrain the video region to the current frame buffer border.
-  m_log->debug("UpdateHandlerImpl: getRect");
+  m_plogwriter->debug("UpdateHandlerImpl: getRect");
   Region fbRect(getFrameBufferDimension());
-  m_log->debug("UpdateHandlerImpl: intersect");
+  m_plogwriter->debug("UpdateHandlerImpl: intersect");
   updateContainer->videoRegion.intersect(&fbRect);
   
-  m_log->debug("UpdateHandlerImpl::extract : filter updates");
+  m_plogwriter->debug("UpdateHandlerImpl::extract : filter updates");
   m_updateFilter->filter(updateContainer);
 
   if (!m_absoluteRect.is_empty()) {
@@ -90,7 +90,7 @@ void UpdateHandlerImpl::extract(UpdateContainer *updateContainer)
   }
 
   // Checking for screen properties changing or frame buffers differ
-  m_log->debug("UpdateHandlerImpl::extract : Checking for screen properties changing or frame buffers differ");
+  m_plogwriter->debug("UpdateHandlerImpl::extract : Checking for screen properties changing or frame buffers differ");
   if (m_screenDriver->getScreenPropertiesChanged() ||
       !m_backupFrameBuffer.isEqualTo(m_screenDriver->getScreenBuffer())) {
     ::int_size currentDimension = m_backupFrameBuffer.getDimension();
@@ -98,12 +98,12 @@ void UpdateHandlerImpl::extract(UpdateContainer *updateContainer)
     if (m_screenDriver->getScreenSizeChanged() || !currentDimension.isEqualTo(&newDimension)) {
       updateContainer->screenSizeChanged = true;
     }
-    m_log->debug("UpdateHandlerImpl::extract: old dims: ({},{}), new dims: ({},{})", 
+    m_plogwriter->debug("UpdateHandlerImpl::extract: old dims: ({},{}), new dims: ({},{})", 
       currentDimension.cx,
       currentDimension.cy,
       newDimension.cx,
       newDimension.cy);
-    m_log->debug("UpdateHandlerImpl::extract : applyNewScreenProperties()");
+    m_plogwriter->debug("UpdateHandlerImpl::extract : applyNewScreenProperties()");
     applyNewScreenProperties();
     {
       // Only this place the class provides frame buffer changings, and then why it
@@ -124,7 +124,7 @@ void UpdateHandlerImpl::extract(UpdateContainer *updateContainer)
   {
     int x = updateContainer->cursorPos.x;
     int y = updateContainer->cursorPos.y;
-    m_log->debug("UpdateHandlerImpl::extract : update cursor position ({},{})", x, y);
+    m_plogwriter->debug("UpdateHandlerImpl::extract : update cursor position ({},{})", x, y);
   }
   // Checking for mouse shape changing
   if (updateContainer->cursorShapeChanged || m_fullUpdateRequested) {
@@ -135,7 +135,7 @@ void UpdateHandlerImpl::extract(UpdateContainer *updateContainer)
 
     m_fullUpdateRequested = false;
   }
-  m_log->debug("UpdateHandlerImpl::extract finished");
+  m_plogwriter->debug("UpdateHandlerImpl::extract finished");
 }
 
 void UpdateHandlerImpl::applyNewScreenProperties()
@@ -147,7 +147,7 @@ void UpdateHandlerImpl::applyNewScreenProperties()
       WindowsEvent waitEvent; // No way to made it abortable.
       waitEvent.waitForEvent(1000);
     }
-    m_log->information("Screen properties changed, applying new screen properties, total tries = {}", applyTryCount);
+    m_plogwriter->information("Screen properties changed, applying new screen properties, total tries = {}", applyTryCount);
     applyResult = m_screenDriver->applyNewScreenProperties();
     applyTryCount--;
   } while (applyTryCount > 0 && !applyResult);

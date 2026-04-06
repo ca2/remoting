@@ -33,7 +33,7 @@ ReconnectingChannel::ReconnectingChannel(unsigned int timeOut, LogWriter *log)
   m_channel(0),
   m_oldChannel(0),
   m_chanWasChanged(false),
-  m_log(log)
+  m_plogwriter(log)
 {
 }
 
@@ -117,7 +117,7 @@ size_t ReconnectingChannel::write(const void *buffer, size_t len)
     }
     return channel->write(buffer, len);
   } catch (::exception &e) {
-    m_log->error(e.get_message());
+    m_plogwriter->error(e.get_message());
     waitForReconnect("write", channel);
   }
 
@@ -135,7 +135,7 @@ size_t ReconnectingChannel::read(void *buffer, size_t len)
     }
     return channel->read(buffer, len);
   } catch (::exception &e) {
-    m_log->error(e.get_message());
+    m_plogwriter->error(e.get_message());
     waitForReconnect("read", channel);
   }
 
@@ -168,7 +168,7 @@ void ReconnectingChannel::waitForReconnect(const ::scoped_string & scopedstrFunN
       success = true;
     }
   }
-  m_log->information("ReconnectingChannel was successfully reconnected.");
+  m_plogwriter->information("ReconnectingChannel was successfully reconnected.");
   if (channel != 0) { // If this is not the first initialization
     ::string errMess;
     errMess.formatf("Transport was reconnected in the"

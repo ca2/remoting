@@ -35,7 +35,7 @@ namespace remoting_remoting
 
     bool FsWarningDialog::onInitDialog()
     {
-        setControlById(m_pcheckboxFsWarning, IDC_CWARN_FS);
+        subclassControlById(m_pcheckboxFsWarning, IDC_CWARN_FS);
 
         m_pcheckboxFsWarning->check(false);
         return false;

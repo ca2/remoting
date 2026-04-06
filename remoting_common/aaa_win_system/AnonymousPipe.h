@@ -101,7 +101,7 @@ private:
   WindowsEvent m_readEvent;
   WindowsEvent m_writeEvent;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __ANONYMOUSPIPE_H__

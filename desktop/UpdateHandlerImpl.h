@@ -65,7 +65,7 @@ private:
 
   ::int_rectangle m_absoluteRect;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 
   bool m_fullUpdateRequested;
 };

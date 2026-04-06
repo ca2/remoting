@@ -27,7 +27,7 @@
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "WinDxgiAcquiredFrame.h"
 
-WinDxgiAcquiredFrame::WinDxgiAcquiredFrame(WinDxgiOutputDuplication *outDupl, UINT timeOutMilliSec)
+WinDxgiAcquiredFrame::WinDxgiAcquiredFrame(WinDxgiOutputDuplication *outDupl, unsigned int timeOutMilliSec)
 : m_wasTimeOut(false),
   m_desktopResource(0),
   m_outDupl(*outDupl)

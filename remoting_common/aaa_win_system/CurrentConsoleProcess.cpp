@@ -33,7 +33,7 @@
 
 CurrentConsoleProcess::CurrentConsoleProcess(LogWriter *log, bool connectRdpSession, const ::scoped_string & scopedstrPath, const ::scoped_string & scopedstrArgs)
 : Process(scopedstrPath, scopedstrArgs),
-  m_log(log),
+  m_plogwriter(log),
   m_connectRdpSession(connectRdpSession)
 {
 }
@@ -46,7 +46,7 @@ void CurrentConsoleProcess::start()
 {
   cleanup();
 
-  m_log->information("Try to start \"{} {}\" process",
+  m_plogwriter->information("Try to start \"{} {}\" process",
     m_path,
     m_args);
 
@@ -55,7 +55,7 @@ void CurrentConsoleProcess::start()
   STARTUPINFO sti;
   getStartupInfo(&sti);
 
-  m_log->debug("sti: cb = {}, hStdError = %p, hStdInput = %p,"
+  m_plogwriter->debug("sti: cb = {}, hStdError = %p, hStdInput = %p,"
              " hStdOutput = %p, dwFlags = %u",
              (unsigned int)sti.cb,
              (void *)sti.hStdError,
@@ -64,11 +64,11 @@ void CurrentConsoleProcess::start()
              (unsigned int)sti.dwFlags);
 
   try {
-    HANDLE userToken = WTS::duplicateCurrentProcessUserToken(m_connectRdpSession, m_log);
+    HANDLE userToken = WTS::duplicateCurrentProcessUserToken(m_connectRdpSession, m_plogwriter);
 
     ::string commandLine = getCommandLineString();
 
-    m_log->debug("Try CreateProcessAsUser({} 0, {}, 0, 0, {}, NORMAL_PRIORITY_CLASS, 0, 0,"
+    m_plogwriter->debug("Try CreateProcessAsUser({} 0, {}, 0, 0, {}, NORMAL_PRIORITY_CLASS, 0, 0,"
                " sti, pi)",
                (void *)userToken, commandLine,
                (int)m_handlesIsInherited);
@@ -77,13 +77,13 @@ void CurrentConsoleProcess::start()
       &pi) == 0) {
         throw SystemException();
     }
-    m_log->information("Created \"{}\" process", commandLine);
+    m_plogwriter->information("Created \"{}\" process", commandLine);
     //
     // FIXME: Leak.
     //
     CloseHandle(userToken);
   } catch (SystemException &sysEx) {
-    m_log->error("Failed to start process with {} error", sysEx.getErrorCode());
+    m_plogwriter->error("Failed to start process with {} error", sysEx.getErrorCode());
     throw;
   }
 

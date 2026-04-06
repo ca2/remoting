@@ -50,7 +50,7 @@ void PortMappingDialog::initControls()
   m_removeButton.setWindow(GetDlgItem(dialogHwnd, IDC_REMOVE_PORT));
 }
 
-BOOL PortMappingDialog::onCommand(UINT controlID, UINT notificationID)
+bool PortMappingDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
   switch (controlID) {
   case IDC_ADD_PORT:
@@ -76,7 +76,7 @@ BOOL PortMappingDialog::onCommand(UINT controlID, UINT notificationID)
   return TRUE;
 }
 
-BOOL PortMappingDialog::onInitDialog()
+bool PortMappingDialog::onInitDialog()
 {
   initControls();
 

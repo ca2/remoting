@@ -30,7 +30,7 @@
 class CLASS_DECL_REMOTING_COMMON RichCursorDecoder : public PseudoDecoder
 {
 public:
-  RichCursorDecoder(LogWriter *logWriter);
+  RichCursorDecoder(::subsystem::LogWriter * plogwriter);
   virtual ~RichCursorDecoder();
 };
 

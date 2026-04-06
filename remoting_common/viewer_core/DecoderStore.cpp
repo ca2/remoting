@@ -27,8 +27,8 @@
 
 #include "DecoderStore.h"
 
-DecoderStore::DecoderStore(LogWriter *logWriter)
-: m_logWriter(logWriter),
+DecoderStore::DecoderStore(::subsystem::LogWriter * plogwriter)
+: m_plogwriter(logWriter),
   m_preferredEncoding(EncodingDefs::TIGHT),
   m_allowCopyRect(true)
 {
@@ -40,7 +40,7 @@ DecoderStore::~DecoderStore()
     for (::map<int, ::pair<int, Decoder *> >::iterator i = m_decoders.begin();
          i != m_decoders.end();
          i++) {
-      m_logWriter->debug("Decoder '{}' destroyed", i->m_element2.m_element2->getCode());
+      m_plogwriter->debug("Decoder '{}' destroyed", i->m_element2.m_element2->getCode());
       try {
         delete i->m_element2.m_element2;
       } catch (...) {
@@ -103,7 +103,7 @@ Decoder *DecoderStore::getDecoder(int decoderId)
 
 bool DecoderStore::addDecoder(Decoder *decoder, int priority)
 {
-  m_logWriter->debug("Decoder {} added", decoder->getCode());
+  m_plogwriter->debug("Decoder {} added", decoder->getCode());
   if (m_decoders.count(decoder->getCode()) == 0) {
     m_decoders[decoder->getCode()] = {priority, decoder};
     return true;
@@ -115,7 +115,7 @@ bool DecoderStore::addDecoder(Decoder *decoder, int priority)
 bool DecoderStore::removeDecoder(int decoderId)
 {
   if (m_decoders.count(decoderId)) {
-    m_logWriter->debug("Decoder '{}' destroyed (removed from ::list_base)",
+    m_plogwriter->debug("Decoder '{}' destroyed (removed from ::list_base)",
                         m_decoders[decoderId].m_element2->getCode());
     delete m_decoders[decoderId].m_element2;
     m_decoders.erase(decoderId);
@@ -126,16 +126,16 @@ bool DecoderStore::removeDecoder(int decoderId)
 
 void DecoderStore::setPreferredEncoding(int encodingType)
 {
-  m_logWriter->debug("Decoder store: preferred encoding is \"{}\".", encodingType);
+  m_plogwriter->debug("Decoder store: preferred encoding is \"{}\".", encodingType);
   m_preferredEncoding = encodingType;
 }
 
 void DecoderStore::allowCopyRect(bool allow)
 {
   if (allow) {
-    m_logWriter->debug("Decoder store: enable Copy ::int_rectangle");
+    m_plogwriter->debug("Decoder store: enable Copy ::int_rectangle");
   } else {
-    m_logWriter->debug("Decoder store: disable Copy ::int_rectangle");
+    m_plogwriter->debug("Decoder store: disable Copy ::int_rectangle");
   }
   m_allowCopyRect = allow;
 }

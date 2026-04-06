@@ -98,7 +98,7 @@ void ConfigDialog::loadSettings()
   m_config->load();
 }
 
-BOOL ConfigDialog::onCommand(UINT controlID, UINT notificationID)
+bool ConfigDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
   switch (controlID) {
   case IDOK:
@@ -114,7 +114,7 @@ BOOL ConfigDialog::onCommand(UINT controlID, UINT notificationID)
   return TRUE;
 }
 
-BOOL ConfigDialog::onNotify(UINT controlID, LPARAM data)
+bool ConfigDialog::onNotify(unsigned int controlID, ::lparam data)
 {
   switch (controlID) {
   case IDC_CONFIG_TAB:
@@ -131,7 +131,7 @@ BOOL ConfigDialog::onNotify(UINT controlID, LPARAM data)
   return TRUE;
 }
 
-BOOL ConfigDialog::onInitDialog()
+bool ConfigDialog::onInitDialog()
 {
   m_config = Configurator::getInstance();
   m_config->setServiceFlag(m_isConfiguringService);
@@ -166,11 +166,11 @@ BOOL ConfigDialog::onInitDialog()
   m_videoRegionsConfigDialog.create();
   moveDialogToTabControl(&m_videoRegionsConfigDialog);
 
-  m_tabControl.addTab(&m_serverConfigDialog, StringTable::getString(IDS_SERVER_TAB_CAPTION));
-  m_tabControl.addTab(&m_portMappingDialog, StringTable::getString(IDS_EXTRA_PORTS_TAB_CAPTION));
-  m_tabControl.addTab(&m_ipAccessControlDialog, StringTable::getString(IDS_ACCESS_CONTROL_TAB_CAPTION));
-  m_tabControl.addTab(&m_videoRegionsConfigDialog, StringTable::getString(IDS_VIDEO_WINDOWS_TAB_CAPTION));
-  m_tabControl.addTab(&m_administrationConfigDialog, StringTable::getString(IDS_ADMINISTRATION_TAB_CAPTION));
+  m_tabControl.addTab(&m_serverConfigDialog, main_subsystem()->string_table()->getString(IDS_SERVER_TAB_CAPTION));
+  m_tabControl.addTab(&m_portMappingDialog, main_subsystem()->string_table()->getString(IDS_EXTRA_PORTS_TAB_CAPTION));
+  m_tabControl.addTab(&m_ipAccessControlDialog, main_subsystem()->string_table()->getString(IDS_ACCESS_CONTROL_TAB_CAPTION));
+  m_tabControl.addTab(&m_videoRegionsConfigDialog, main_subsystem()->string_table()->getString(IDS_VIDEO_WINDOWS_TAB_CAPTION));
+  m_tabControl.addTab(&m_administrationConfigDialog, main_subsystem()->string_table()->getString(IDS_ADMINISTRATION_TAB_CAPTION));
 
   m_tabControl.removeTab(0);
 
@@ -183,7 +183,7 @@ BOOL ConfigDialog::onInitDialog()
   return FALSE;
 }
 
-BOOL ConfigDialog::onDestroy()
+bool ConfigDialog::onDestroy()
 {
   m_lastSelectedTabIndex = m_tabControl.getSelectedTabIndex();
   m_tabControl.deleteAllTabs();
@@ -232,16 +232,16 @@ void ConfigDialog::onApplyButtonClick()
   } 
   // We're working in offline mode and we need to save config
   if (!m_config->save()) {
-    ::remoting::message_box(m_ctrlThis.get_hwnd(),
-               StringTable::getString(IDS_CANNOT_SAVE_CONFIG),
-               StringTable::getString(IDS_MBC_ERROR),
+    main_innate_subsystem()->message_box(m_ctrlThis.get_hwnd(),
+               main_subsystem()->string_table()->getString(IDS_CANNOT_SAVE_CONFIG),
+               main_subsystem()->string_table()->getString(IDS_MBC_ERROR),
                MB_OK | MB_ICONERROR);
     return;
   } 
   m_ctrlApplyButton.enable_window(false);
-  ::remoting::message_box(m_ctrlThis.get_hwnd(),
-    StringTable::getString(IDS_OFFLINE_CONFIG_SAVE_NOTIFICATION),
-    StringTable::getString(IDS_MBC_TVNCONTROL),
+  main_innate_subsystem()->message_box(m_ctrlThis.get_hwnd(),
+    main_subsystem()->string_table()->getString(IDS_OFFLINE_CONFIG_SAVE_NOTIFICATION),
+    main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
     MB_OK | MB_ICONINFORMATION);
 }
 
@@ -313,9 +313,9 @@ void ConfigDialog::updateCaption()
 {
   ::string caption;
 
-  caption.format(StringTable::getString(IDS_SERVER_CONFIG_CAPTION_FORMAT),
-                 StringTable::getString(m_isConfiguringService ? IDS_SERVICE : IDS_SERVER),
-                 m_reloadConfigCommand == 0 ? StringTable::getString(IDS_OFFLINE_MODE) : "");
+  caption.format(main_subsystem()->string_table()->getString(IDS_SERVER_CONFIG_CAPTION_FORMAT),
+                 main_subsystem()->string_table()->getString(m_isConfiguringService ? IDS_SERVICE : IDS_SERVER),
+                 m_reloadConfigCommand == 0 ? main_subsystem()->string_table()->getString(IDS_OFFLINE_MODE) : "");
 
   m_ctrlThis.setText(caption);
 }

@@ -52,7 +52,7 @@ UpdateSender::UpdateSender(RfbCodeRegistrator *codeRegtor,
   m_id(id),
   m_videoFrozen(false),
   m_shareOnlyApp(false),
-  m_log(log),
+  m_plogwriter(log),
   m_cursorUpdates(log)
 {
   // FIXME: argument must be defined
@@ -142,7 +142,7 @@ void UpdateSender::init(const ::int_size & viewPortDimension,
 void UpdateSender::newUpdates(const UpdateContainer *updateContainer,
                               const CursorShape *cursorShape)
 {
-  m_log->debug("New updates passed to client #{}", m_id);
+  m_plogwriter->debug("New updates passed to client #{}", m_id);
   addUpdateContainer(updateContainer);
 
   m_cursorUpdates.updateCursorShape(cursorShape);
@@ -151,7 +151,7 @@ void UpdateSender::newUpdates(const UpdateContainer *updateContainer,
     m_busy = true;
     m_newUpdatesEvent.notify();
   }
-  m_log->debug("Client #{} is waking up", m_id);
+  m_plogwriter->debug("Client #{} is waking up", m_id);
 }
 
 void UpdateSender::addUpdateContainer(const UpdateContainer *updateContainer)
@@ -290,7 +290,7 @@ void UpdateSender::sendCursorShapeUpdate(const PixelFormat & fmt,
 void UpdateSender::sendCursorPosUpdate()
 {
   Point pos = m_cursorUpdates.getCurPos();
-  m_log->debug("Sending cursor position update: ({},{})", pos.x, pos.y);
+  m_plogwriter->debug("Sending cursor position update: ({},{})", pos.x, pos.y);
   sendRectHeader(pos.x, pos.y, 0, 0, PseudoEncDefs::POINTER_POS);
 }
 
@@ -325,9 +325,9 @@ void UpdateSender::sendPalette(PixelFormat *pf)
 
 void UpdateSender::sendUpdate()
 {
-  m_log->debug("Entered to the sendUpdate() function");
+  m_plogwriter->debug("Entered to the sendUpdate() function");
 
-//  m_log->checkPoint("1 sendUpdate() begins");
+//  m_plogwriter->checkPoint("1 sendUpdate() begins");
 
   // Check requested regions and immediately return if the client did not
   // request anything.
@@ -337,15 +337,15 @@ void UpdateSender::sendUpdate()
   if (!extractReqRegions(&requestedIncrReg, &requestedFullReg,
                          &incrUpdIsReq, &fullUpdIsReq,
                          &reqTimePoint)) {
-    m_log->debug("No request, exiting from the sendUpdate()");
+    m_plogwriter->debug("No request, exiting from the sendUpdate()");
     return;
   }
-  m_log->debug("Time between request and a point after extractReqRegions (in milliseconds): %u",
+  m_plogwriter->debug("Time between request and a point after extractReqRegions (in milliseconds): %u",
     (unsigned int)(::earth::time::now() - reqTimePoint).getTime());
-  m_log->debug("A request has been made, continuing");
-  m_log->debug("The incremental region has {} rectangles",
+  m_plogwriter->debug("A request has been made, continuing");
+  m_plogwriter->debug("The incremental region has {} rectangles",
              (int)requestedIncrReg.getCount());
-  m_log->debug("The full region has {} rectangles",
+  m_plogwriter->debug("The full region has {} rectangles",
              (int)requestedFullReg.getCount());
 
   UpdateContainer updCont;
@@ -432,22 +432,22 @@ void UpdateSender::sendUpdate()
   if (updCont.screenSizeChanged || (!requestedFullReg.is_empty() &&
                                     !encodeOptions.desktopSizeEnabled() && 
                                     !encodeOptions.desktopConfigurationEnabled())) {
-    m_log->debug("Screen size changed or full region requested");
+    m_plogwriter->debug("Screen size changed or full region requested");
     if (encodeOptions.desktopSizeEnabled() || encodeOptions.desktopConfigurationEnabled()) {
-      m_log->debug("Desktop resize is enabled, sending NewFBSize %dx{}",
+      m_plogwriter->debug("Desktop resize is enabled, sending NewFBSize %dx{}",
                  lastViewPortDim.cx, lastViewPortDim.cy);
       sendNewFBSize(&lastViewPortDim, encodeOptions.desktopConfigurationEnabled());
     } else {
-      m_log->debug("Desktop resize is disabled, sending blank screen");
+      m_plogwriter->debug("Desktop resize is disabled, sending blank screen");
       sendFbInClientDim(&encodeOptions, frameBuffer, &clientDim,
                         &frameBuffer->getPixelFormat());
     }
     // FIXME: "Dazzle" does not seem like a good word here.
-    m_log->debug("Dazzle changed region");
+    m_plogwriter->debug("Dazzle changed region");
     m_updateKeeper->dazzleChangedReg();
 	  m_updateKeeper->setCursorPosChanged();
   } else {
-    m_log->debug("Processing normal updates");
+    m_plogwriter->debug("Processing normal updates");
     CursorShape cursorShape;
     m_cursorUpdates.update(&encodeOptions,
                            &updCont,
@@ -459,7 +459,7 @@ void UpdateSender::sendUpdate()
                            &cursorShape);
 
     if (!encodeOptions.copyRectEnabled() || getVideoFrozen()) {
-      m_log->debug("CopyRect is disabled, converting to normal updates");
+      m_plogwriter->debug("CopyRect is disabled, converting to normal updates");
       updCont.changedRegion.add(&updCont.copiedRegion);
       updCont.copiedRegion.clear();
     }
@@ -529,7 +529,7 @@ void UpdateSender::sendUpdate()
     //
 
     // Convert changedRegion to the final ::list_base of rectangles.
-    m_log->debug("Number of normal rectangles before splitting: {}",
+    m_plogwriter->debug("Number of normal rectangles before splitting: {}",
                changedRegion.getCount());
     ::array_base<::int_rectangle> normalRects;
     splitRegion(m_enbox.getEncoder(), &changedRegion, &normalRects,
@@ -538,7 +538,7 @@ void UpdateSender::sendUpdate()
     // Convert losslessRegion to the final ::list_base of rectangles.
     ::array_base<::int_rectangle> losslessRects;
     if (losslessEnabled && !losslessRegion.is_empty()) {
-      m_log->debug("Number of lossless rectangles before splitting: {}",
+      m_plogwriter->debug("Number of lossless rectangles before splitting: {}",
         losslessRegion.getCount());
       splitRegion(m_enbox.getEncoder(), &losslessRegion, &losslessRects,
         frameBuffer, &losslessEncodeOptions);
@@ -546,7 +546,7 @@ void UpdateSender::sendUpdate()
     // Do the same for the videoRegion.
     ::array_base<::int_rectangle> videoRects;
     if (!videoRegion.is_empty()) {
-      m_log->debug("Video region is not empty");
+      m_plogwriter->debug("Video region is not empty");
       m_enbox.validateJpegEncoder(); // make sure JpegEncoder is allocated
       splitRegion(m_enbox.getJpegEncoder(), &videoRegion, &videoRects,
                   frameBuffer, &encodeOptions);
@@ -556,17 +556,17 @@ void UpdateSender::sendUpdate()
     ::array_base<::int_rectangle> copyRects;
     updCont.copiedRegion.getRectVector(&copyRects);
 
-    m_log->debug("Number of normal rectangles: {}", normalRects.size());
-    m_log->debug("Number of lossless rectangles: {}", losslessRects.size());
-    m_log->debug("Number of video rectangles: {}", videoRects.size());
-    m_log->debug("Number of CopyRect rectangles: {}", copyRects.size());
+    m_plogwriter->debug("Number of normal rectangles: {}", normalRects.size());
+    m_plogwriter->debug("Number of lossless rectangles: {}", losslessRects.size());
+    m_plogwriter->debug("Number of video rectangles: {}", videoRects.size());
+    m_plogwriter->debug("Number of CopyRect rectangles: {}", copyRects.size());
 
     // calculate regions areas
-    if (m_log->isDebug()) {
-      m_log->debug("Area of normal rectangles: {}", calcAreas(normalRects));
-      m_log->debug("Area of lossless rectangles: {}", calcAreas(losslessRects));
-      m_log->debug("Area of video rectangles: {}", calcAreas(videoRects));
-      m_log->debug("Area of CopyRect rectangles: {}", calcAreas(copyRects));
+    if (m_plogwriter->isDebug()) {
+      m_plogwriter->debug("Area of normal rectangles: {}", calcAreas(normalRects));
+      m_plogwriter->debug("Area of lossless rectangles: {}", calcAreas(losslessRects));
+      m_plogwriter->debug("Area of video rectangles: {}", calcAreas(videoRects));
+      m_plogwriter->debug("Area of CopyRect rectangles: {}", calcAreas(copyRects));
     }
 
     // Calculate the total number of rectangles and pseudo-rectangles.
@@ -575,20 +575,20 @@ void UpdateSender::sendUpdate()
 
     if (updCont.cursorPosChanged) {
       numTotalRects++;
-      m_log->debug("Adding a pseudo-rectangle for cursor position update");
+      m_plogwriter->debug("Adding a pseudo-rectangle for cursor position update");
     }
     if (updCont.cursorShapeChanged) {
       numTotalRects++;
-      m_log->debug("Adding a pseudo-rectangle for cursor shape update");
+      m_plogwriter->debug("Adding a pseudo-rectangle for cursor shape update");
     }
-    m_log->debug("Total number of rectangles and pseudo-rectangles: {}",
+    m_plogwriter->debug("Total number of rectangles and pseudo-rectangles: {}",
                numTotalRects);
 
     // FIXME: Handle this better, e.g. send first 65534 rectangles.
     _ASSERT(numTotalRects <= 65534);
 
     if (numTotalRects != 0) {
-      m_log->debug("Sending FramebufferUpdate scopedstrMessage header");
+      m_plogwriter->debug("Sending FramebufferUpdate scopedstrMessage header");
       m_output->writeUInt8(ServerMsgDefs::FB_UPDATE); // scopedstrMessage type
       m_output->writeUInt8(0); // padding
       m_output->writeUInt16((unsigned short)numTotalRects);
@@ -597,39 +597,39 @@ void UpdateSender::sendUpdate()
         sendCursorPosUpdate();
       }
       if (updCont.cursorShapeChanged) {
-        m_log->debug("Sending cursor shape update");
+        m_plogwriter->debug("Sending cursor shape update");
         sendCursorShapeUpdate(&clientPixelFormat,
                               &cursorShape);
       }
       if (copyRects.size() > 0) {
-        m_log->debug("Sending CopyRect rectangles");
+        m_plogwriter->debug("Sending CopyRect rectangles");
         sendCopyRect(&copyRects, &updCont.copySrc);
       }
 
-      m_log->debug("Time between request and a point before send and coding (in milliseconds): %u",
+      m_plogwriter->debug("Time between request and a point before send and coding (in milliseconds): %u",
                  (unsigned int)(::earth::time::now() - reqTimePoint).getTime());
-      m_log->debug("Sending video rectangles");
+      m_plogwriter->debug("Sending video rectangles");
       sendRectangles(m_enbox.getJpegEncoder(), &videoRects, frameBuffer, &encodeOptions);
-      m_log->debug("Sending normal rectangles");
+      m_plogwriter->debug("Sending normal rectangles");
       double area = ::int_rectangle::totalArea(normalRects) / 1000000.; //in millions of pixels
-      ProcessorTimes pt1 = m_log->checkPoint("Before Sending normal rectangles");
+      ProcessorTimes pt1 = m_plogwriter->checkPoint("Before Sending normal rectangles");
 
       sendRectangles(m_enbox.getEncoder(), &normalRects, frameBuffer, &encodeOptions);
 
       sendRectangles(m_enbox.getEncoder(), &losslessRects, frameBuffer, &losslessEncodeOptions);
 
-      ProcessorTimes pt2 = m_log->checkPoint("After Sending normal rectangles");
-      m_log->debug("Before Sending normal rectangles %f processor Mcycles, %f process time, %f kernel time, %f wall clock time", 
+      ProcessorTimes pt2 = m_plogwriter->checkPoint("After Sending normal rectangles");
+      m_plogwriter->debug("Before Sending normal rectangles %f processor Mcycles, %f process time, %f kernel time, %f wall clock time", 
         pt1.cycle / 1000000., pt1.process, pt1.kernel, (double)(pt1.wall.getTime()));
       double dt = (double)(pt2.wall.getTime());
-      m_log->debug("After Sending normal rectangles Mpoint encoded and send: %f for %f processor Mcycles", 
+      m_plogwriter->debug("After Sending normal rectangles Mpoint encoded and send: %f for %f processor Mcycles", 
         area, pt2.cycle/1000000.);
-      m_log->debug("After Sending normal rectangles %f process time, %f kernel time, %f wall clock time", pt2.process, pt2.kernel, dt);
+      m_plogwriter->debug("After Sending normal rectangles %f process time, %f kernel time, %f wall clock time", pt2.process, pt2.kernel, dt);
 
-      m_log->information("Time between request and answer is (in milliseconds): %u",
+      m_plogwriter->information("Time between request and answer is (in milliseconds): %u",
                  (unsigned int)(::earth::time::now() - reqTimePoint).getTime());
     } else {
-      m_log->debug("Nothing to send, restoring requested regions");
+      m_plogwriter->debug("Nothing to send, restoring requested regions");
       critical_section_lock al(&m_reqRectLocMut);
       m_requestedFullReg.add(&requestedFullReg);
       m_requestedIncrReg.add(&requestedIncrReg);
@@ -640,10 +640,10 @@ void UpdateSender::sendUpdate()
 
   }
 
-  m_log->debug("Flushing output");
-//  m_log->checkPoint("4 before flush");
+  m_plogwriter->debug("Flushing output");
+//  m_plogwriter->checkPoint("4 before flush");
   m_output->flush();
-//  m_log->checkPoint("5 sendUpdate() end");
+//  m_plogwriter->checkPoint("5 sendUpdate() end");
 }
 
 void UpdateSender::paintBlack(FrameBuffer *frameBuffer, const Region *blackRegion)
@@ -683,7 +683,7 @@ void UpdateSender::sendRectangles(Encoder *encoder,
 
 void UpdateSender::execute()
 {
-  m_log->information("Starting update sender thread for client #{}", m_id);
+  m_plogwriter->information("Starting update sender thread for client #{}", m_id);
 
   while(!isTerminating()) {
     m_newUpdatesEvent.waitForEvent();
@@ -691,18 +691,18 @@ void UpdateSender::execute()
       critical_section_lock al(&m_reqRectLocMut);
       m_busy = true;
     }
-    m_log->debug("Update sender thread of client #{} is awake", m_id);
+    m_plogwriter->debug("Update sender thread of client #{} is awake", m_id);
     if (!isTerminating()) {
       try {
-        m_log->debug("UpdateSender::Trying to call the sendUpdate() function");
+        m_plogwriter->debug("UpdateSender::Trying to call the sendUpdate() function");
         sendUpdate();
-        m_log->debug("The sendUpdate() function has finished");
+        m_plogwriter->debug("The sendUpdate() function has finished");
         {
           critical_section_lock al(&m_reqRectLocMut);
           m_busy = false;
         }
       } catch(::exception &e) {
-        m_log->interror("The update sender thread caught an error and will"
+        m_plogwriter->interror("The update sender thread caught an error and will"
                    " be terminated: {}", e.get_message());
         Thread::terminate();
       }
@@ -735,7 +735,7 @@ void UpdateSender::readUpdateRequest(RfbInputGate *io)
     combinedReqRegions.add(&m_requestedFullReg);
   }
 
-  m_log->information("update requested ({}, {}, %dx{}, incremental = {})"
+  m_plogwriter->information("update requested ({}, {}, %dx{}, incremental = {})"
               " by client (client #{})",
               reqRect.left, reqRect.top,
               reqRect.width(), reqRect.height(), (int)incremental,
@@ -748,7 +748,7 @@ void UpdateSender::readUpdateRequest(RfbInputGate *io)
     // We should initiaite send update to avoid it skipping on no updates from a desktop
     // FIXME: Code duplication, see the newUpdates() function.
     m_newUpdatesEvent.notify();
-    m_log->debug("Client #{} is waking up", m_id);
+    m_plogwriter->debug("Client #{} is waking up", m_id);
   }
 
   m_updReqListener->onUpdateRequest(&reqRect, incremental);

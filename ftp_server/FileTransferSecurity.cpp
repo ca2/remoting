@@ -31,7 +31,7 @@ FileTransferSecurity::FileTransferSecurity(Desktop *desktop, LogWriter *log)
 : Impersonator(log),
   m_hasAccess(false),
   m_desktop(desktop),
-  m_log(log)
+  m_plogwriter(log)
 {
   m_desktop = desktop;
 }
@@ -68,8 +68,8 @@ void FileTransferSecurity::beginMessageProcessing()
       throw ::remoting::Exception("Desktop is locked.");
     }
 
-    if (rdpEnabled && (WTS::getRdpSessionId(m_log) != 0)) {
-      HANDLE token = WTS::duplicateCurrentProcessUserToken(rdpEnabled, m_log);
+    if (rdpEnabled && (WTS::getRdpSessionId(m_plogwriter) != 0)) {
+      HANDLE token = WTS::duplicateCurrentProcessUserToken(rdpEnabled, m_plogwriter);
       impersonateAsUser(token);
     }
     else {
@@ -79,7 +79,7 @@ void FileTransferSecurity::beginMessageProcessing()
 
     m_hasAccess = true;
   } catch (::exception &e) {
-    m_log->error("Access denied to the file transfer: {}",
+    m_plogwriter->error("Access denied to the file transfer: {}",
                  e.get_message());
     m_hasAccess = false;
   } // try / catch.

@@ -94,7 +94,7 @@ void ControlMessage::checkRetCode()
       int retCode = authDialog.showModal();
       switch (retCode) {
       case IDCANCEL:
-        throw ControlAuthException(StringTable::getString(IDS_USER_CANCEL_CONTROL_AUTH), true);
+        throw ControlAuthException(main_subsystem()->string_table()->getString(IDS_USER_CANCEL_CONTROL_AUTH), true);
       case IDOK:
         ControlAuth auth(m_gate, authDialog.getPassword());
         send();

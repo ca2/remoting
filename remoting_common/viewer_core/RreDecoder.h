@@ -30,7 +30,7 @@
 class CLASS_DECL_REMOTING_COMMON RreDecoder : public DecoderOfRectangle
 {
 public:
-  RreDecoder(LogWriter *logWriter);
+  RreDecoder(::subsystem::LogWriter * plogwriter);
   virtual ~RreDecoder();
 
 protected:

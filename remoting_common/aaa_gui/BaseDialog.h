@@ -69,7 +69,7 @@
 //  // Method hides window
 //  void hide();
 //  // Method closes dialog
-//  virtual void close_dialog(int code);
+//  virtual void closeDialog(int code);
 //  // Method sets parent window
 //
 //  // Set resource name for dialog
@@ -79,7 +79,7 @@
 //  // Return
 //  //::remoting::Window *getControl() { return &m_ctrlThis; }
 //  // Setup control by ID
-//  void setControlById(::remoting::Window &control, DWORD id);
+//  void subclassControlById(::remoting::Window &control, DWORD id);
 //   void subclassControlById(::remoting::Window * pcontrol, DWORD id);
 //  // Icon manipulation 
 //  void loadIcon(DWORD id);
@@ -93,7 +93,7 @@
 //   * Sets default push button for dialog.
 //   * @pararm buttonId new default push button id.
 //   */
-//  void setDefaultPushButton(UINT buttonId);
+//  void setDefaultPushButton(unsigned int buttonId);
 //
 ////protected:
 //
@@ -101,25 +101,25 @@
 //  // This methods must be overrided by child classes.
 //  //
 //
-//  virtual BOOL onInitDialog();
-//  virtual BOOL onNotify(UINT controlID, LPARAM data);
-//  virtual BOOL onCommand(UINT controlID, UINT notificationID);
-//  virtual BOOL onClose();
-//  virtual BOOL onDestroy();
+//  virtual bool onInitDialog();
+//  virtual bool onNotify(unsigned int controlID, ::lparam data);
+//  virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
+//  virtual bool onClose();
+//  virtual bool onDestroy();
 //
 //  //
 //  // This methods can be overrided by child classes.
 //  //
 //
-//  virtual BOOL onDrawItem(WPARAM controlID, LPDRAWITEMSTRUCT dis);
-//  virtual void onMessageReceived(UINT uMsg, WPARAM wParam, LPARAM lParam);
+//  virtual bool onDrawItem(::wparam controlID, LPDRAWITEMSTRUCT dis);
+//  virtual void onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam);
 //
 //  //
 //  // Window scopedstrMessage proccessing method
 //  //
 //
-//    static INT_PTR CALLBACK dialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-//    virtual bool dialog_procedure(INT_PTR & iptrResult, UINT message, ::wparam wparam, ::lparam lparam);
+//    static INT_PTR CALLBACK dialogProc(HWND hwnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam);
+//    virtual bool dialog_procedure(INT_PTR & iptrResult, unsigned int message, ::wparam wparam, ::lparam lparam);
 ////private:
 //    TCHAR *getResouceName();
 //

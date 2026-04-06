@@ -1073,7 +1073,7 @@ bool Keymap::keySymToVirtualCode(unsigned int keySym, BYTE *vkCode, bool *extend
     }
   }
 
-  for (UINT i = 0; i < sizeof(SERVER_AUXILIARY_TRANSLATE_TABLE) /
+  for (unsigned int i = 0; i < sizeof(SERVER_AUXILIARY_TRANSLATE_TABLE) /
                               sizeof(KS2VKEntry); i++) {
     if (SERVER_AUXILIARY_TRANSLATE_TABLE[i].keySym == keySym) {
       *vkCode = SERVER_AUXILIARY_TRANSLATE_TABLE[i].vkCode;
@@ -1085,7 +1085,7 @@ bool Keymap::keySymToVirtualCode(unsigned int keySym, BYTE *vkCode, bool *extend
 
 bool Keymap::virtualCodeToKeySym(unsigned int *keySym, BYTE vkCode)
 {
-  for (UINT i = 0; i < sizeof(VIEWER_AUXILIARY_TRANSLATE_TABLE) / sizeof(KS2VKEntry); i++) {
+  for (unsigned int i = 0; i < sizeof(VIEWER_AUXILIARY_TRANSLATE_TABLE) / sizeof(KS2VKEntry); i++) {
     if (VIEWER_AUXILIARY_TRANSLATE_TABLE[i].vkCode == vkCode) {
       *keySym = VIEWER_AUXILIARY_TRANSLATE_TABLE[i].keySym;
       return true;

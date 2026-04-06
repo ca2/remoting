@@ -126,7 +126,7 @@ namespace remoting
          // Interface of log
          //
 
-         LogWriter *m_logWriter;
+         LogWriter *m_plogwriter;
 
          //
          // Current dialog state, needed for checking what type of

@@ -28,14 +28,14 @@
 
 ViewPort::ViewPort(LogWriter *log)
 : m_desktop(0),
-  m_log(log)
+  m_plogwriter(log)
 {
 }
 
 ViewPort::ViewPort(const ViewPortState *viewPortState, LogWriter *log)
 : m_desktop(0),
   m_state(*viewPortState),
-  m_log(log)
+  m_plogwriter(log)
 {
 }
 
@@ -85,7 +85,7 @@ void ViewPort::update(const ::int_size & fbDimension)
       try {
         m_desktop->getWindowCoords(m_state.m_hwnd, &rect);
       } catch (BrokenHandleException &e) {
-		  m_log->error("ViewPort::update: {}", e.get_message());
+		  m_plogwriter->error("ViewPort::update: {}", e.get_message());
         // Now hwnd is broken. This should be reflected in the viewport state.
         m_state.unresolveHwnd();
       }
@@ -97,14 +97,14 @@ void ViewPort::update(const ::int_size & fbDimension)
     m_desktop->getNormalizedRect(&rect);
     break;
   }
-  m_log->debug("View port coordinates: ({}, {} %dx{})",
+  m_plogwriter->debug("View port coordinates: ({}, {} %dx{})",
     rect.left, rect.top, rect.width(), rect.height());
   // Constrain and save
   m_rect = rect.intersection(::int_rectangle(fbDimension));
   if (m_rect.width() < 0 || m_rect.height() < 0) {
     m_rect.Null();
   }
-  m_log->debug("Constrained (to the FrameBuffer dimension) view port coordinates: ({}, {} %dx{})",
+  m_plogwriter->debug("Constrained (to the FrameBuffer dimension) view port coordinates: ({}, {} %dx{})",
     rect.left, rect.top, rect.width(), rect.height());
 }
 

@@ -58,7 +58,7 @@ private:
   bool m_ctrlPressed;
   bool m_altPressed;
   bool m_underVista;
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __SASUSERINPUT_H__

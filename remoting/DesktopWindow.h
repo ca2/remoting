@@ -26,7 +26,7 @@
 
 
 #include "acme/subsystem/windows/node/Clipboard.h"
-#include "remoting/remoting_common/gui/DibFrameBuffer.h"
+#include "acme/subsystem/framebuffer/DibFrameBuffer.h"
 
 
 #include "ScaleManager.h"
@@ -111,20 +111,20 @@ namespace remoting_remoting
         //
         // Inherited from BaseWindow.
         //
-        bool onMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam);
+        bool onMessage(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam);
         //void onPaint(DeviceContext *dc, PAINTSTRUCT *paintStruct);
         void onPaint() override;
         bool onCreate(LPCREATESTRUCT pcs);
         bool onDrawClipboard();
         bool onEraseBackground(HDC hdc);
-        bool onDeadChar(WPARAM wParam, LPARAM lParam);
-        bool onHScroll(WPARAM wParam, LPARAM lParam);
-        bool onVScroll(WPARAM wParam, LPARAM lParam);
-        bool onKey(WPARAM wParam, LPARAM lParam);
-        bool onChar(WPARAM wParam, LPARAM lParam);
+        bool onDeadChar(::wparam wParam, ::lparam lParam);
+        bool onHScroll(::wparam wParam, ::lparam lParam);
+        bool onVScroll(::wparam wParam, ::lparam lParam);
+        bool onKey(::wparam wParam, ::lparam lParam);
+        bool onChar(::wparam wParam, ::lparam lParam);
         bool onMouse(unsigned char mouseKeys, unsigned short wheelSpeed, POINT position) override;
-        bool onMouseEx(UINT message, int iButtonMask, unsigned short wspeed, POINT position) override;
-        bool onSize(WPARAM wParam, LPARAM lParam);
+        bool onMouseEx(unsigned int message, int iButtonMask, unsigned short wspeed, POINT position) override;
+        bool onSize(::wparam wParam, ::lparam lParam);
         bool onDestroy();
 
         POINTS getViewerCoord(long xPos, long yPos);
@@ -138,7 +138,7 @@ namespace remoting_remoting
         void sendPointerEvent(unsigned char buttonMask, const Point *position);
         void sendCutTextEvent(const ::scoped_string & cutText);
 
-        LogWriter *m_logWriter;
+        LogWriter *m_plogwriter;
 
         // This variable is true after call CoreEventsAdapter::onConnected().
         bool m_isConnected;

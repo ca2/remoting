@@ -82,13 +82,13 @@ void MessageWindow::destroyWindow()
   }
 }
 
-LRESULT CALLBACK MessageWindow::staticWndProc(HWND hwnd, UINT scopedstrMessage,
-                                       WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK MessageWindow::staticWndProc(HWND hwnd, unsigned int scopedstrMessage,
+                                       ::wparam wParam, ::lparam lParam)
 {
   MessageWindow *_this;
   if (scopedstrMessage == WM_CREATE) {
     _this = (MessageWindow *)((CREATESTRUCT *)lParam)->lpCreateParams;
-    wParam = (WPARAM)hwnd; // Pass hwnd throw wParam
+    wParam = (::wparam)hwnd; // Pass hwnd throw wParam
   } else {
     _this = (MessageWindow *)GetWindowLongPtr(hwnd, GWLP_USERDATA);
   }

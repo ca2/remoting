@@ -55,19 +55,19 @@ namespace remoting_remoting
         return m_strFileName;
     }
 
-    BOOL NewFolderDialog::onInitDialog()
+    bool NewFolderDialog::onInitDialog()
     {
         initControls();
         m_fileNameTextBox.setText(m_strFileName);
         return TRUE;
     }
 
-    BOOL NewFolderDialog::onNotify(UINT controlID, LPARAM data)
+    bool NewFolderDialog::onNotify(unsigned int controlID, ::lparam data)
     {
         return TRUE;
     }
 
-    BOOL NewFolderDialog::onCommand(UINT controlID, UINT notificationID)
+    bool NewFolderDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
         switch (controlID) {
             case IDOK:
@@ -80,7 +80,7 @@ namespace remoting_remoting
         return TRUE;
     }
 
-    BOOL NewFolderDialog::onDestroy()
+    bool NewFolderDialog::onDestroy()
     {
         return TRUE;
     }
@@ -93,7 +93,7 @@ namespace remoting_remoting
 
         if (fileName.is_empty() || fileName.contains_any_character_in("\\/"))
         {
-            ::remoting::message_box(m_hwnd,
+            main_innate_subsystem()->message_box(m_hwnd,
                        L"::file::item name cannot be empty and cannot contain '/' or '\\' characters.",
                        L"Incorrect ::file::item Name",
                        MB_OK | MB_ICONWARNING);
@@ -103,12 +103,12 @@ namespace remoting_remoting
 
         m_strFileName = fileName;
 
-        close_dialog(IDOK);
+        closeDialog(IDOK);
     }
 
     void NewFolderDialog::onCancelButtonClick()
     {
-        close_dialog(IDCANCEL);
+        closeDialog(IDCANCEL);
     }
 
     void NewFolderDialog::initControls()

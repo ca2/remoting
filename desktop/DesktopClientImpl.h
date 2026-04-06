@@ -81,7 +81,7 @@ private:
 
   DesktopConfigClient *m_deskConf;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __DESKTOPCLIENTIMPL_H__

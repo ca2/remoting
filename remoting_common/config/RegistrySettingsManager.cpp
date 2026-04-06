@@ -185,12 +185,12 @@ namespace remoting
       return setInt(scopedstrFullPath, value ? 1 : 0);
    }
 
-   bool RegistrySettingsManager::getUINT(const ::scoped_string & scopedstrFullPath, UINT *value)
+   bool RegistrySettingsManager::getUINT(const ::scoped_string & scopedstrFullPath, unsigned int *value)
    {
       return getInt(scopedstrFullPath, (int *)value);
    }
 
-   bool RegistrySettingsManager::setUINT(const ::scoped_string & scopedstrFullPath, UINT value)
+   bool RegistrySettingsManager::setUINT(const ::scoped_string & scopedstrFullPath, unsigned int value)
    {
       return setInt(scopedstrFullPath, (int)value);
    }

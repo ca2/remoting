@@ -49,7 +49,7 @@ void allowSas()
   regKey.setValueAsInt32(SAS_REG_KEY, sasValue);
 }
 
-UINT __stdcall AllowSas(MSIHANDLE hInstall)
+unsigned int __stdcall AllowSas(MSIHANDLE hInstall)
 {
   allowSas();
   return ERROR_SUCCESS;
@@ -103,7 +103,7 @@ void writePasswordToRegistry(MSIHANDLE hInstall,
 }
 
 
-UINT __stdcall SetRfbPassword(MSIHANDLE hInstall)
+unsigned int __stdcall SetRfbPassword(MSIHANDLE hInstall)
 {
   try {
     writePasswordToRegistry(hInstall,
@@ -114,7 +114,7 @@ UINT __stdcall SetRfbPassword(MSIHANDLE hInstall)
   return ERROR_SUCCESS;
 }
 
-UINT __stdcall SetViewOnlyPassword(MSIHANDLE hInstall)
+unsigned int __stdcall SetViewOnlyPassword(MSIHANDLE hInstall)
 {
   try {
     writePasswordToRegistry(hInstall,
@@ -125,7 +125,7 @@ UINT __stdcall SetViewOnlyPassword(MSIHANDLE hInstall)
   return ERROR_SUCCESS;
 }
 
-UINT __stdcall SetControlPassword(MSIHANDLE hInstall)
+unsigned int __stdcall SetControlPassword(MSIHANDLE hInstall)
 {
   try {
     writePasswordToRegistry(hInstall,
@@ -136,7 +136,7 @@ UINT __stdcall SetControlPassword(MSIHANDLE hInstall)
   return ERROR_SUCCESS;
 }
 
-extern "C" BOOL WINAPI DllMain(
+extern "C" bool WINAPI DllMain(
                                __in HINSTANCE hInst,
                                __in ULONG ulReason,
                                __in LPVOID

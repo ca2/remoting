@@ -52,7 +52,7 @@ protected:
 
   UpdateListener *m_externalUpdateListener;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __UPDATEHANDLERCLIENT_H__

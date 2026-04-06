@@ -187,16 +187,16 @@ void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmd
 
   switch (ex->getServiceControlManagerErrorCode()) {
   case ServiceControlManagerClientException::ERROR_ALREADY_RUNNING:
-    errorMessage= StringTable::getString(IDS_SERVICE_ALREADY_RUNNING);
+    errorMessage= main_subsystem()->string_table()->getString(IDS_SERVICE_ALREADY_RUNNING);
     break;
   case ServiceControlManagerClientException::ERROR_ALREADY_STOPPED:
-    errorMessage= StringTable::getString(IDS_SERVICE_ALREADY_STOPPED);
+    errorMessage= main_subsystem()->string_table()->getString(IDS_SERVICE_ALREADY_STOPPED);
     break;
   case ServiceControlManagerClientException::ERROR_START_TIMEOUT:
-    errorMessage= StringTable::getString(IDS_SERVICE_START_TIMEOUT);
+    errorMessage= main_subsystem()->string_table()->getString(IDS_SERVICE_START_TIMEOUT);
     break;
   case ServiceControlManagerClientException::ERROR_STOP_TIMEOUT:
-    errorMessage= StringTable::getString(IDS_SERVICE_STOP_TIMEOUT);
+    errorMessage= main_subsystem()->string_table()->getString(IDS_SERVICE_STOP_TIMEOUT);
     break;
   default:
     errorMessage= ex->get_message();
@@ -212,10 +212,10 @@ void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmd
 
   switch (ex->getErrorCode()) {
   case ERROR_SERVICE_DOES_NOT_EXIST:
-    errorMessage= StringTable::getString(IDS_1060_ERROR_DESCRIPTION);
+    errorMessage= main_subsystem()->string_table()->getString(IDS_1060_ERROR_DESCRIPTION);
     break;
   case ERROR_SERVICE_EXISTS:
-    errorMessage= StringTable::getString(IDS_1073_ERROR_DESCRIPTION);
+    errorMessage= main_subsystem()->string_table()->getString(IDS_1073_ERROR_DESCRIPTION);
     break;
   default:
     errorMessage= ex->get_message();
@@ -227,7 +227,7 @@ void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmd
 void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmdLine,
                                             const ::scoped_string & scopedstrErrorMessage) const
 {
-  UINT stringId = 0;
+  unsigned int stringId = 0;
 
   if (cmdLine->installationRequested()) {
     stringId = IDS_FAILED_TO_INSTALL_SERVICE_FORMAT;
@@ -245,16 +245,16 @@ void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmd
   }
 
   if (!cmdLine->beSilent()) {
-    const ::scoped_string & scopedstrCaption = StringTable::getString(IDS_MBC_TVNSERVER);
+    const ::scoped_string & scopedstrCaption = main_subsystem()->string_table()->getString(IDS_MBC_TVNSERVER);
     ::string text;
-    text.format(StringTable::getString(stringId), errorMessage);
-    ::remoting::message_box(NULL, text, caption, MB_OK | MB_ICONERROR);
+    text.format(main_subsystem()->string_table()->getString(stringId), errorMessage);
+    main_innate_subsystem()->message_box(NULL, text, caption, MB_OK | MB_ICONERROR);
   }
 }
 
 void ServiceControlApplication::reportSuccess(const ServiceControlCommandLine *cmdLine) const
 {
-  UINT stringId = 0;
+  unsigned int stringId = 0;
 
   if (cmdLine->installationRequested()) {
     stringId = IDS_SERVICE_INSTALLED;
@@ -268,8 +268,8 @@ void ServiceControlApplication::reportSuccess(const ServiceControlCommandLine *c
   }
 
   if (!cmdLine->beSilent()) {
-    const ::scoped_string & scopedstrCaption = StringTable::getString(IDS_MBC_TVNSERVER);
-    const ::scoped_string & scopedstrText = StringTable::getString(stringId);
-    ::remoting::message_box(NULL, text, caption, MB_OK | MB_ICONINFORMATION);
+    const ::scoped_string & scopedstrCaption = main_subsystem()->string_table()->getString(IDS_MBC_TVNSERVER);
+    const ::scoped_string & scopedstrText = main_subsystem()->string_table()->getString(stringId);
+    main_innate_subsystem()->message_box(NULL, text, caption, MB_OK | MB_ICONINFORMATION);
   }
 }

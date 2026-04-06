@@ -54,7 +54,7 @@ private:
   critical_section *m_frameBufferMutex;
   ::int_rectangle m_pollingRect;
   WindowsEvent m_intervalWaiter;
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __CONSOLEPOLLER_H__

@@ -28,7 +28,7 @@
 
 CursorPainter::CursorPainter(FrameBuffer *fb, LogWriter *logWriter)
 : m_fb(fb),
-  m_logWriter(logWriter),
+  m_plogwriter(logWriter),
   m_cursorIsMoveable(false),
   m_ignoreShapeUpdates(false),
   m_isExist(false)
@@ -54,10 +54,10 @@ void CursorPainter::setNewCursor(const Point *hotSpot,
                                  const ::array_base<unsigned char> *bitmask)
 {
   critical_section_lock al(&m_lock);
-  m_logWriter->information("setNewCursor Cursor hot-spot is ({}, {})", hotSpot->x, hotSpot->y);
+  m_plogwriter->information("setNewCursor Cursor hot-spot is ({}, {})", hotSpot->x, hotSpot->y);
   m_cursor.setHotSpot(hotSpot->x, hotSpot->y);
 
-  m_logWriter->information("setNewCursor Cursor size is ({}, {})", width, height);
+  m_plogwriter->information("setNewCursor Cursor size is ({}, {})", width, height);
   ::int_size cursorDimension(width, height);
   PixelFormat pixelFormat = m_fb->getPixelFormat();
 
@@ -70,9 +70,9 @@ void CursorPainter::setNewCursor(const Point *hotSpot,
    //if (0)
    {
       if (cursorSize != 0) {
-         m_logWriter->debug("Set image of cursor...");
+         m_plogwriter->debug("Set image of cursor...");
          memcpy(m_cursor.getPixels()->getBuffer(), cursor->data(), cursorSize);
-         m_logWriter->debug("Set bitmask of cursor...");
+         m_plogwriter->debug("Set bitmask of cursor...");
          m_cursor.assignMaskFromRfb(reinterpret_cast<const char *>(bitmask->data()));
       }
    }
@@ -80,7 +80,7 @@ void CursorPainter::setNewCursor(const Point *hotSpot,
 
 void CursorPainter::setIgnoreShapeUpdates(bool ignore)
 {
-  m_logWriter->debug("Set flag of ignor by cursor update is '{}'", ignore);
+  m_plogwriter->debug("Set flag of ignor by cursor update is '{}'", ignore);
 
   critical_section_lock al(&m_lock);
   m_ignoreShapeUpdates = ignore;
@@ -101,13 +101,13 @@ void CursorPainter::setIgnoreShapeUpdates(bool ignore)
 
   erase.offset(corner.x, corner.y);
 
-  m_logWriter->debug("Cursor rect: ({}, {}), ({}, {})", erase.left, erase.top, erase.right, erase.bottom);
+  m_plogwriter->debug("Cursor rect: ({}, {}), ({}, {})", erase.left, erase.top, erase.right, erase.bottom);
 
   if (erase.area() == 0) {
     return ::int_rectangle();
   }
 
-  m_logWriter->debug("Erasing cursor...");
+  m_plogwriter->debug("Erasing cursor...");
   m_fb->copyFrom(erase, &m_cursorOverlay, 0, 0);
 
   return erase;
@@ -120,13 +120,13 @@ void CursorPainter::setIgnoreShapeUpdates(bool ignore)
   m_lastPosition = m_pointerPosition;
 
   if (m_isExist) {
-    m_logWriter->error("Error in CursorPainter: painting double copy of cursor.");
+    m_plogwriter->error("Error in CursorPainter: painting double copy of cursor.");
     _ASSERT(true);
   }
 
   if (!m_bHideCursor && !m_ignoreShapeUpdates && m_cursorIsMoveable && m_cursor.getDimension().area() != 0) {
 
-    m_logWriter->debug("Painting cursor...");
+    m_plogwriter->debug("Painting cursor...");
 
     Point corner = getUpperLeftPoint(&m_lastPosition);
 

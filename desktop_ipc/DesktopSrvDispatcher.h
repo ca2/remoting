@@ -54,7 +54,7 @@ protected:
 
   AnEventListener *m_extErrorListener;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __DESKTOPSRVDISPATCHER_H__

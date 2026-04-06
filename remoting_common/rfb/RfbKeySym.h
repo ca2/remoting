@@ -34,7 +34,7 @@
 class CLASS_DECL_REMOTING_COMMON RfbKeySym
 {
 public:
-  RfbKeySym(RfbKeySymListener *extKeySymListener, LogWriter *log);
+  RfbKeySym(RfbKeySymListener *extKeySymListener, ::subsystem::LogWriter *log);
   virtual ~RfbKeySym();
 
   // This function doesn't distinguish between left and right modifiers.
@@ -110,7 +110,7 @@ private:
   bool m_allowProcessDoubleChar;
   bool m_doubleDeadCatched;
   
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 
   // Flag for ignoring win key.
   bool m_winKeyIgnore;

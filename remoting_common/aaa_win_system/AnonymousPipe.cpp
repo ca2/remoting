@@ -32,7 +32,7 @@ AnonymousPipe::AnonymousPipe(HANDLE hWrite, HANDLE hRead, unsigned int maxPortio
   m_hWrite(hWrite),
   m_hRead(hRead),
   m_neededToClose(true),
-  m_log(log)
+  m_plogwriter(log)
 {
 }
 
@@ -41,7 +41,7 @@ AnonymousPipe::~AnonymousPipe()
   try {
     close();
   } catch (::exception & e) {
-    m_log->error("The close() function failed at AnonymousPipe destructor: {}",
+    m_plogwriter->error("The close() function failed at AnonymousPipe destructor: {}",
                e.get_message());
   }
 }
@@ -58,7 +58,7 @@ void AnonymousPipe::close()
       wrErrText = ::windows::last_error_message("Cannot close anonymous pipe write handle.", ::windows::last_error());
       wrSuc = false;
     }
-    m_log->debug("Closed m_hWrite(%p) AnonymousPipe handle",
+    m_plogwriter->debug("Closed m_hWrite(%p) AnonymousPipe handle",
                m_hWrite);
   }
   m_hWrite = INVALID_HANDLE_VALUE;
@@ -67,7 +67,7 @@ void AnonymousPipe::close()
       wrErrText = ::windows::last_error_message("Cannot close anonymous pipe read handle.", ::windows::last_error());
       rdSuc = false;
     }
-    m_log->debug("Closed m_hRead(%p) AnonymousPipe handle",
+    m_plogwriter->debug("Closed m_hRead(%p) AnonymousPipe handle",
                m_hRead);
   }
   m_hRead = INVALID_HANDLE_VALUE;
@@ -84,7 +84,7 @@ size_t AnonymousPipe::read(void *buffer, size_t len)
   try {
     return readByHandle(buffer, len, m_hRead);
   } catch (...) {
-    m_log->error("AnonymousPipe::read() failed (m_hRead = %p)",
+    m_plogwriter->error("AnonymousPipe::read() failed (m_hRead = %p)",
                m_hRead);
     throw;
   }
@@ -95,7 +95,7 @@ memsize AnonymousPipe::defer_write(const void *buffer, memsize len)
    try {
       return writeByHandle(buffer, len, m_hWrite);
    } catch (...) {
-      m_log->error("AnonymousPipe::write() failed (m_hWrite = {})",
+      m_plogwriter->error("AnonymousPipe::write() failed (m_hWrite = {})",
                  m_hWrite);
       throw;
    }

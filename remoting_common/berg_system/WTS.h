@@ -35,26 +35,26 @@
 #include <WtsApi32.h>
 
 typedef DWORD (WINAPI *pWTSGetActiveConsoleSessionId)(void);
-typedef BOOL (WINAPI *pWTSQueryUserToken)(ULONG SessionId, PHANDLE phToken);
-typedef BOOL (WINAPI *pWTSQuerySessionInformationW)(
+typedef bool (WINAPI *pWTSQueryUserToken)(ULONG SessionId, PHANDLE phToken);
+typedef bool (WINAPI *pWTSQuerySessionInformationW)(
   HANDLE hServer, DWORD SessionId,
   WTS_INFO_CLASS WTSInfoClass,
   LPWSTR **ppBuffer,
   DWORD *pBytesReturned);
-typedef BOOL (WINAPI *pWTSQuerySessionInformationA)(
+typedef bool (WINAPI *pWTSQuerySessionInformationA)(
   HANDLE hServer, DWORD SessionId,
   WTS_INFO_CLASS WTSInfoClass,
   LPSTR **ppBuffer,
   DWORD *pBytesReturned);
 typedef VOID (WINAPI *pWTSFreeMemory)(void *buffer);
-typedef BOOL(WINAPI *pWTSEnumerateSessionsA)(
+typedef bool(WINAPI *pWTSEnumerateSessionsA)(
   IN HANDLE          hServer,
   IN DWORD           Reserved,
   IN DWORD           Version,
   PWTS_SESSION_INFOA *ppSessionInfo,
   DWORD              *pCount
 );
-typedef BOOL(WINAPI *pWTSEnumerateSessionsW)(
+typedef bool(WINAPI *pWTSEnumerateSessionsW)(
   IN HANDLE          hServer,
   IN DWORD           Reserved,
   IN DWORD           Version,

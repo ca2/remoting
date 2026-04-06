@@ -92,7 +92,7 @@ protected:
    *
    * Overrides default tray icon window behavour.
    */
-  virtual LRESULT windowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, bool *useDefWindowProc);
+  virtual LRESULT windowProc(HWND hWnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam, bool *useDefWindowProc);
 
   /**
    * Handlers of tray icon window events.
@@ -112,7 +112,7 @@ protected:
   void onCloseControlInterfaceMenuItemClick();
 
 protected:
-  static UINT WM_USER_TASKBAR;
+  static unsigned int WM_USER_TASKBAR;
 
 protected:
 

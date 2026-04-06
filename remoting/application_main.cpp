@@ -135,7 +135,7 @@ int application::remoting_impact_main( const ::file::path & path)
    // }
    // catch (const CommandLineFormatException &exception) {
    //   ::string strError(exception.get_message());
-   //   ::remoting::message_box(0,
+   //   main_innate_subsystem()->message_box(0,
    //     strError,
    //     ProductNames::VIEWER_PRODUCT_NAME,
    //     MB_OK | MB_ICONERROR);
@@ -146,12 +146,12 @@ int application::remoting_impact_main( const ::file::path & path)
    //   return 0;
    // }
 
-   m_logWriter = config.getLogWriter();
+   m_plogwriter = config.getLogWriter();
 
 
-   m_logWriter->debug("main()");
-   m_logWriter->debug("loading settings from storage completed");
-   m_logWriter->debug("Log initialization completed");
+   m_plogwriter->debug("main()");
+   m_plogwriter->debug("loading settings from storage completed");
+   m_plogwriter->debug("Log initialization completed");
 
    int result = 0;
    try {
@@ -169,11 +169,11 @@ int application::remoting_impact_main( const ::file::path & path)
       tvnViewer.run();
       result = tvnViewer.m_iExitCode;
    } catch (const ::remoting::Exception &ex) {
-      ::remoting::message_box(0,
-                 StringTable::getString(IDS_UNKNOWN_ERROR_IN_VIEWER),
+      main_innate_subsystem()->message_box(0,
+                 main_subsystem()->string_table()->getString(IDS_UNKNOWN_ERROR_IN_VIEWER),
                  ProductNames::VIEWER_PRODUCT_NAME,
                  MB_OK | MB_ICONERROR);
-      m_logWriter->debug(ex.get_message());
+      m_plogwriter->debug(ex.get_message());
    }
 
    return result;

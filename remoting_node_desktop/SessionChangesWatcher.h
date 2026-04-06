@@ -41,7 +41,7 @@ protected:
   DWORD m_baseSessionId;
   AnEventListener *m_extSessionChangesListener;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __SESSIONCHANGESWATCHER_H__

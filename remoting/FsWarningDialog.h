@@ -25,14 +25,14 @@
 #pragma once
 
 
-#include "apex/innate_subsystem/BaseDialog.h"
+#include "apex/innate_subsystem/Dialog.h"
 #include "apex/innate_subsystem/CheckBox.h"
 #include "resource.h"
 
 
 namespace remoting_remoting
 {
-    class FsWarningDialog : public ::innate_subsystem::BaseDialog
+    class FsWarningDialog : public ::innate_subsystem::Dialog
     {
     public:
         FsWarningDialog();

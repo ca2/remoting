@@ -194,7 +194,7 @@ unsigned long long ::file::item::length() const
   // when we attemt to find first file on unmounted device
   //
 
-  UINT savedErrorMode = SetErrorMode(SEM_FAILCRITICALERRORS);
+  unsigned int savedErrorMode = SetErrorMode(SEM_FAILCRITICALERRORS);
 
   hfile = FindFirstFile(pathPattern.windows_path(), &findFileData);
 
@@ -365,7 +365,7 @@ bool ::file::item::getFileInfo(WIN32_FIND_DATA *fileInfo) const
   // when we attemt to find first file on unmounted device
   //
 
-  UINT savedErrorMode = SetErrorMode(SEM_FAILCRITICALERRORS);
+  unsigned int savedErrorMode = SetErrorMode(SEM_FAILCRITICALERRORS);
 
   fileHandle = FindFirstFile(m_path.windows_path(), fileInfo);
 

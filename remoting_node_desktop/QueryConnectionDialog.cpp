@@ -40,7 +40,7 @@ QueryConnectionDialog::~QueryConnectionDialog()
 {
 }
 
-BOOL QueryConnectionDialog::onInitDialog()
+bool QueryConnectionDialog::onInitDialog()
 {
   initControls();
 
@@ -61,12 +61,12 @@ BOOL QueryConnectionDialog::onInitDialog()
   return FALSE;
 }
 
-BOOL QueryConnectionDialog::onNotify(UINT controlID, LPARAM data)
+bool QueryConnectionDialog::onNotify(unsigned int controlID, ::lparam data)
 {
   return TRUE;
 }
 
-BOOL QueryConnectionDialog::onCommand(UINT controlID, UINT notificationID)
+bool QueryConnectionDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
   switch (controlID) {
   case IDC_ACCEPT_BUTTON:
@@ -79,12 +79,12 @@ BOOL QueryConnectionDialog::onCommand(UINT controlID, UINT notificationID)
   return TRUE;
 }
 
-BOOL QueryConnectionDialog::onDestroy()
+bool QueryConnectionDialog::onDestroy()
 {
   return TRUE;
 }
 
-void QueryConnectionDialog::onMessageReceived(UINT uMsg, WPARAM wParam, LPARAM lParam)
+void QueryConnectionDialog::onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam)
 {
   if (uMsg == WM_TIMER) {
     onTimer();
@@ -133,9 +133,9 @@ void QueryConnectionDialog::updateTimeoutLabel()
   ::string labelText;
 
   if (m_acceptByDefault) {
-    labelText.format(StringTable::getString(IDS_AUTO_ACCEPT_CONNECTION_FORMAT), m_timeout);
+    labelText.format(main_subsystem()->string_table()->getString(IDS_AUTO_ACCEPT_CONNECTION_FORMAT), m_timeout);
   } else {
-    labelText.format(StringTable::getString(IDS_AUTO_REJECT_CONNECTION_FORMAT), m_timeout);
+    labelText.format(main_subsystem()->string_table()->getString(IDS_AUTO_REJECT_CONNECTION_FORMAT), m_timeout);
   }
 
   m_timeoutLabel.setText(labelText);

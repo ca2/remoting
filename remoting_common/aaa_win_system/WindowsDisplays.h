@@ -48,10 +48,10 @@ private:
   // Updates internal information to a current state.
   void update();
 
-  static BOOL CALLBACK monitorEnumProc(HMONITOR hMonitor,
+  static bool CALLBACK monitorEnumProc(HMONITOR hMonitor,
                                        HDC hdcMonitor,
                                        LPRECT lprcMonitor,
-                                       LPARAM dwData);
+                                       ::lparam dwData);
 
   // Returns true if the update() function has been called lately.
   bool isAlreadyUpdated();

@@ -37,7 +37,7 @@ public:
   void setBuddy(::remoting::Window *buddyControl);
   void setRange(short lower, short upper);
   void setRange32(int lower, int upper);
-  void setAccel(UINT nSec, UINT nInc);
+  void setAccel(unsigned int nSec, unsigned int nInc);
 
   //
   // Auto acceleration methods

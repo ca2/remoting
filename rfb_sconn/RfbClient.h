@@ -143,7 +143,7 @@ private:
   bool m_viewOnlyAuth;
   bool m_shared;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 
   // Information
   unsigned int m_id;

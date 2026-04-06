@@ -89,28 +89,28 @@ int Menu::getMenuItemCount()
   return GetMenuItemCount(m_menu);
 }
 
-bool Menu::appendMenu(UINT uFlags, UINT_PTR uIDNewItem, const ::scoped_string & scopedstrNewItem)
+bool Menu::appendMenu(unsigned int uFlags, UINT_PTR uIDNewItem, const ::scoped_string & scopedstrNewItem)
 {
   _ASSERT(m_menu != 0);
 
   return !!AppendMenu(m_menu, uFlags, uIDNewItem, ::wstring(scopedstrNewItem).c_str());
 }
 
-bool Menu::insertMenuItem(UINT uItem, BOOL fByPosition, LPCMENUITEMINFO lpmii)
+bool Menu::insertMenuItem(unsigned int uItem, bool fByPosition, LPCMENUITEMINFO lpmii)
 {
   _ASSERT(m_menu != 0);
 
   return !!InsertMenuItem(m_menu, uItem, fByPosition, lpmii);
 }
 
-bool Menu::modifyMenu(UINT uPosition, UINT uFlags, LONG_PTR uIDNewItem, LPCTSTR lpNewItem)
+bool Menu::modifyMenu(unsigned int uPosition, unsigned int uFlags, LONG_PTR uIDNewItem, LPCTSTR lpNewItem)
 {
   _ASSERT(m_menu != 0);
 
   return !!ModifyMenu(m_menu, uPosition, uFlags, uIDNewItem, lpNewItem);
 }
 
-bool Menu::deleteMenu(UINT uPosition)
+bool Menu::deleteMenu(unsigned int uPosition)
 {
   _ASSERT(m_menu != 0);
 
@@ -129,14 +129,14 @@ bool Menu::getSubMenu(int nPos, Menu *menu)
   return (!tmenu?false:true);
 }
 
-bool Menu::enableMenuItem(UINT uID, UINT uEnable)
+bool Menu::enableMenuItem(unsigned int uID, unsigned int uEnable)
 {
   _ASSERT(m_menu != 0);
 
   return !!EnableMenuItem(m_menu, uID, uEnable);
 }
 
-bool Menu::setMenuItem(UINT uItem, BOOL fByPosition, LPMENUITEMINFO lpmii)
+bool Menu::setMenuItem(unsigned int uItem, bool fByPosition, LPMENUITEMINFO lpmii)
 {
   _ASSERT(m_menu != 0);
 
@@ -159,7 +159,7 @@ Menu::~Menu()
   }
 }
 
-int Menu::findMenuItem(UINT uID)
+int Menu::findMenuItem(unsigned int uID)
 {
   _ASSERT(m_menu != 0);
 
@@ -171,7 +171,7 @@ int Menu::findMenuItem(UINT uID)
   return -1;
 }
 
-bool Menu::appendMenu(const ::scoped_string & scopedstrData, UINT uID)
+bool Menu::appendMenu(const ::scoped_string & scopedstrData, unsigned int uID)
 {
   return appendMenu(MF_STRING, uID, scopedstrData);
 }
@@ -186,7 +186,7 @@ bool Menu::appendSubMenu(const ::scoped_string & scopedstrData, Menu *pMenu)
   return appendMenu(MF_POPUP, (UINT_PTR)pMenu->getMenu(), scopedstrData);
 }
 
-bool Menu::insertMenuItem(UINT uItem, const ::scoped_string & scopedstrData, UINT uID)
+bool Menu::insertMenuItem(unsigned int uItem, const ::scoped_string & scopedstrData, unsigned int uID)
 {
   MENUITEMINFO mii;
 
@@ -201,7 +201,7 @@ bool Menu::insertMenuItem(UINT uItem, const ::scoped_string & scopedstrData, UIN
   return insertMenuItem(uItem, TRUE, (LPMENUITEMINFO)&mii);
 }
 
-bool Menu::insertCheckMenuItem(UINT uItem, const ::scoped_string & scopedstrData, UINT uID)
+bool Menu::insertCheckMenuItem(unsigned int uItem, const ::scoped_string & scopedstrData, unsigned int uID)
 {
   MENUITEMINFO mii;
 ::wstring wstrData(scopedstrData);
@@ -214,7 +214,7 @@ bool Menu::insertCheckMenuItem(UINT uItem, const ::scoped_string & scopedstrData
   return insertMenuItem(uItem, TRUE, (LPMENUITEMINFO)&mii);
 }
 
-bool Menu::checkedMenuItem(UINT uID, bool bEnable)
+bool Menu::checkedMenuItem(unsigned int uID, bool bEnable)
 {
   _ASSERT(m_menu != 0);
 
@@ -222,12 +222,12 @@ bool Menu::checkedMenuItem(UINT uID, bool bEnable)
   if (pos == -1) {
     return false;
   }
-  UINT command = bEnable ? MF_CHECKED : MF_UNCHECKED;
+  unsigned int command = bEnable ? MF_CHECKED : MF_UNCHECKED;
   DWORD res = CheckMenuItem(m_menu, pos, MF_BYPOSITION | command);
   return (res == -1) ? false : true;
 }
 
-bool Menu::insertSeparator(UINT uItem)
+bool Menu::insertSeparator(unsigned int uItem)
 {
   MENUITEMINFO mii;
 
@@ -237,7 +237,7 @@ bool Menu::insertSeparator(UINT uItem)
   return insertMenuItem(uItem, TRUE, (LPMENUITEMINFO)&mii);
 }
 
-bool Menu::insertSubMenu(UINT uItem, const ::scoped_string & scopedstrData, Menu *pMenu)
+bool Menu::insertSubMenu(unsigned int uItem, const ::scoped_string & scopedstrData, Menu *pMenu)
 {
   MENUITEMINFO mii;
 
@@ -248,7 +248,7 @@ bool Menu::insertSubMenu(UINT uItem, const ::scoped_string & scopedstrData, Menu
   return insertMenuItem(uItem, TRUE, (LPMENUITEMINFO)&mii);
 }
 
-bool Menu::setDefaultItem(UINT uID)
+bool Menu::setDefaultItem(unsigned int uID)
 {
   _ASSERT(m_menu != 0);
 

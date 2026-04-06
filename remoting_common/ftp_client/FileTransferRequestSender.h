@@ -39,7 +39,7 @@ namespace remoting
       class CLASS_DECL_REMOTING_COMMON FileTransferRequestSender
       {
       public:
-         FileTransferRequestSender(LogWriter *logWriter);
+         FileTransferRequestSender(::subsystem::LogWriter *logWriter);
          ~FileTransferRequestSender();
 
          void setOutput(RfbOutputGate *outputStream);
@@ -57,7 +57,7 @@ namespace remoting
          void sendFolderSizeRequest(const ::scoped_string & scopedstrFullPath);
 
       protected:
-         LogWriter *m_logWriter;
+         ::subsystem::LogWriter *m_plogwriter;
          RfbOutputGate *m_output;
       };
    }

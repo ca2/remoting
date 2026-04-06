@@ -50,12 +50,12 @@ void AboutDialog::onCloseButtonClick()
 
 void AboutDialog::onOrderSupportButtonClock()
 {
-  openUrl(StringTable::getString(IDS_URL_LICENSING_FSA));
+  openUrl(main_subsystem()->string_table()->getString(IDS_URL_LICENSING_FSA));
 }
 
 void AboutDialog::onVisitSiteButtonClick()
 {
-  openUrl(StringTable::getString(IDS_URL_PRODUCT_FSA));
+  openUrl(main_subsystem()->string_table()->getString(IDS_URL_PRODUCT_FSA));
 }
 
 void AboutDialog::openUrl(const ::scoped_string & scopedstrUrl)
@@ -65,16 +65,16 @@ void AboutDialog::openUrl(const ::scoped_string & scopedstrUrl)
   } catch (SystemException &sysEx) {
     ::string scopedstrMessage;
 
-    scopedstrMessage.format(StringTable::getString(IDS_FAILED_TO_OPEN_URL_FORMAT), sysEx.get_message());
+    scopedstrMessage.format(main_subsystem()->string_table()->getString(IDS_FAILED_TO_OPEN_URL_FORMAT), sysEx.get_message());
 
-    ::remoting::message_box(m_ctrlThis.get_hwnd(),
+    main_innate_subsystem()->message_box(m_ctrlThis.get_hwnd(),
       scopedstrMessage,
-      StringTable::getString(IDS_MBC_TVNCONTROL),
+      main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
       MB_OK|MB_ICONEXCLAMATION);
   }
 }
 
-BOOL AboutDialog::onInitDialog()
+bool AboutDialog::onInitDialog()
 {
   // Update product version string.
   ::string versionString("unknown");
@@ -84,15 +84,15 @@ BOOL AboutDialog::onInitDialog()
     VersionInfo productInfo(binaryPath);
     versionString= productInfo.getProductVersionString();
   } catch (SystemException &ex) {
-    ::remoting::message_box(m_ctrlThis.get_hwnd(),
+    main_innate_subsystem()->message_box(m_ctrlThis.get_hwnd(),
                ex.get_message(),
-               StringTable::getString(IDS_MBC_TVNCONTROL),
+               main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
                MB_OK | MB_ICONEXCLAMATION);
   }
 
   // Format product version and build time for displaying on the dialog.
   ::string versionText;
-  versionText.format(StringTable::getString(IDS_PRODUCT_VERSION_FORMAT),
+  versionText.format(main_subsystem()->string_table()->getString(IDS_PRODUCT_VERSION_FORMAT),
                      versionString,
                      BuildTime::DATE);
 
@@ -104,17 +104,17 @@ BOOL AboutDialog::onInitDialog()
   // Show licensing info and/or special build info.
   ::remoting::Window licensingLabel;
   licensingLabel.setWindow(GetDlgItem(m_ctrlThis.get_hwnd(), IDC_STATIC_LICENSING));
-  licensingLabel.setText(StringTable::getString(IDS_LICENSING_INFO));
+  licensingLabel.setText(main_subsystem()->string_table()->getString(IDS_LICENSING_INFO));
 
   return FALSE;
 }
 
-BOOL AboutDialog::onNotify(UINT controlID, LPARAM data)
+bool AboutDialog::onNotify(unsigned int controlID, ::lparam data)
 {
   return FALSE;
 }
 
-BOOL AboutDialog::onCommand(UINT controlID, UINT notificationID)
+bool AboutDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
   switch (controlID) {
   case IDCANCEL:
@@ -130,7 +130,7 @@ BOOL AboutDialog::onCommand(UINT controlID, UINT notificationID)
   return FALSE;
 }
 
-BOOL AboutDialog::onDestroy()
+bool AboutDialog::onDestroy()
 {
   return FALSE;
 }

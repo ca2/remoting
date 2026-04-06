@@ -33,9 +33,9 @@ MirrorScreenDriver::MirrorScreenDriver(UpdateKeeper *updateKeeper,
                  updateListener),
   m_fbMutex(fbcritical_section),
   m_lastCounter(0),
-  m_log(log)
+  m_plogwriter(log)
 {
-  m_mirrorClient = new MirrorDriverClient(m_log);
+  m_mirrorClient = new MirrorDriverClient(m_plogwriter);
   initFrameBuffer();
 }
 
@@ -138,7 +138,7 @@ bool MirrorScreenDriver::applyNewProperties()
 
   delete m_mirrorClient;
   m_mirrorClient = 0;
-  m_mirrorClient = new MirrorDriverClient(m_log);
+  m_mirrorClient = new MirrorDriverClient(m_plogwriter);
 
   ::int_size newDim = m_mirrorClient->getDimension();
   PixelFormat pf = m_mirrorClient->getPixelFormat();

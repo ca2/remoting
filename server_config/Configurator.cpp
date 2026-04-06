@@ -319,7 +319,7 @@ bool Configurator::loadInputHandlingConfig(SettingsManager *sm, ServerConfig *co
   //
 
   bool boolVal = false;
-  UINT uintVal = 0;
+  unsigned int uintVal = 0;
 
   if (!sm->getUINT("LocalInputPriorityTimeout", &uintVal)) {
     loadResult = false;
@@ -536,7 +536,7 @@ bool Configurator::saveServerConfig(SettingsManager *sm)
   if (!sm->setUINT("HttpPort", m_serverConfig.getHttpPort())) {
     saveResult = false;
   }
-  if (!sm->setUINT("DisconnectAction", (UINT)m_serverConfig.getDisconnectAction())) {
+  if (!sm->setUINT("DisconnectAction", (unsigned int)m_serverConfig.getDisconnectAction())) {
     saveResult = false;
   }
   if (!sm->setBoolean("AcceptRfbConnections", m_serverConfig.isAcceptingRfbConnections())) {
@@ -557,7 +557,7 @@ bool Configurator::saveServerConfig(SettingsManager *sm)
   if (!sm->setBoolean("AcceptHttpConnections", m_serverConfig.isAcceptingHttpConnections())) {
     saveResult = false;
   }
-  if (!sm->setUINT("LogLevel", (UINT)m_serverConfig.getLogLevel())) {
+  if (!sm->setUINT("LogLevel", (unsigned int)m_serverConfig.getLogLevel())) {
     saveResult = false;
   }
   if (!sm->setBoolean("EnableFileTransfers", m_serverConfig.isFileTransfersEnabled())) {
@@ -638,7 +638,7 @@ bool Configurator::saveServerConfig(SettingsManager *sm)
   if (!sm->setBoolean("ConnectToRdp", m_serverConfig.getConnectToRdpFlag())) {
     saveResult = false;
   }
-  if (!sm->setUINT("IdleTimeout", (UINT)m_serverConfig.getIdleTimeout())) {
+  if (!sm->setUINT("IdleTimeout", (unsigned int)m_serverConfig.getIdleTimeout())) {
     saveResult = false;
   }
   return saveResult;
@@ -653,7 +653,7 @@ bool Configurator::loadServerConfig(SettingsManager *sm, ServerConfig *config)
   //
 
   bool boolVal;
-  UINT uintVal;
+  unsigned int uintVal;
 
   if (!sm->getUINT("RfbPort", &uintVal)) {
     loadResult = false;

@@ -30,7 +30,7 @@
 #include "acme/subsystem/io/DataInputStream.h"
 
 #include "remoting/remoting_common/ftp_common/FileInfo.h"
-#include "../../../app/acme/subsystem/win-system/Inflater.h"
+#include "acme/subsystem/Inflater.h"
 #include "acme/subsystem/ZLibException.h"
 
 #include "remoting/remoting_common/ftp_common/OperationNotSupportedException.h"
@@ -44,7 +44,7 @@ namespace  remoting
       class CLASS_DECL_REMOTING_COMMON FileTransferReplyBuffer : public FileTransferEventHandler
       {
       public:
-         FileTransferReplyBuffer(LogWriter *logWriter);
+         FileTransferReplyBuffer(::subsystem::LogWriter * plogwriter);
          virtual ~FileTransferReplyBuffer();
 
          ::string getLastErrorMessage();
@@ -98,7 +98,7 @@ namespace  remoting
          //
          // Interface of log writer for log data
          //
-         LogWriter *m_logWriter;
+         LogWriter *m_plogwriter;
 
          //
          // ZLib stream for decompression of compressed data

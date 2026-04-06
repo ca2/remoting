@@ -32,7 +32,7 @@
 class CLASS_DECL_REMOTING_COMMON CopyRectDecoder : public DecoderOfRectangle
 {
 public:
-  CopyRectDecoder(LogWriter *logWriter);
+  CopyRectDecoder(::subsystem::LogWriter * plogwriter);
   virtual ~CopyRectDecoder();
 
 protected:

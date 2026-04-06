@@ -32,10 +32,10 @@ UserInputServer::UserInputServer(BlockingGate *forwGate,
                                  LogWriter *log)
 : DesktopServerProto(forwGate),
   m_extTerminationListener(extTerminationListener),
-  m_log(log)
+  m_plogwriter(log)
 {
   bool ctrlAltDelEnabled = true;
-  m_userInput = new WindowsUserInput(this, ctrlAltDelEnabled, m_log);
+  m_userInput = new WindowsUserInput(this, ctrlAltDelEnabled, m_plogwriter);
 
   dispatcher->registerNewHandle(POINTER_POS_CHANGED, this);
   dispatcher->registerNewHandle(CLIPBOARD_CHANGED, this);
@@ -54,7 +54,7 @@ UserInputServer::UserInputServer(BlockingGate *forwGate,
 
 UserInputServer::~UserInputServer()
 {
-  m_log->debug("The UserInputServer destructor has been called");
+  m_plogwriter->debug("The UserInputServer destructor has been called");
   delete m_userInput;
 }
 
@@ -68,7 +68,7 @@ void UserInputServer::onClipboardUpdate(const ::scoped_string & newClipboard)
       sendNewClipboard(newClipboard, m_forwGate);
     }
   } catch (::exception &e) {
-    m_log->error("An error has been occurred while sending a"
+    m_plogwriter->error("An error has been occurred while sending a"
                " CLIPBOARD_CHANGED scopedstrMessage from UserInputServer: {}",
                e.get_message());
     m_extTerminationListener->onAnObjectEvent();

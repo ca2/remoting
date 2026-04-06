@@ -39,7 +39,7 @@ ClipboardExchange::ClipboardExchange(RfbCodeRegistrator *codeRegtor,
   m_viewOnly(viewOnly),
   m_hasNewClip(false),
   m_isUtf8ClipboardEnabled(false),
-  m_log(log)
+  m_plogwriter(log)
 {
   // Request code
   codeRegtor->regCode(ClientMsgDefs::CLIENT_CUT_TEXT, this);
@@ -95,13 +95,13 @@ void ClipboardExchange::onRequestWorker(bool utf8flag, RfbInputGate *input)
 
   ::string clipText;
   if (utf8flag) {
-    m_log->debug("UTF8 ClientCutText, payload length {}", length);
+    m_plogwriter->debug("UTF8 ClientCutText, payload length {}", length);
     ::string utfText(&charBuff);
     utfText.toStringStorage(&clipText);
   }
   else
   {
-    m_log->debug("ClientCutText, payload length {}", length);
+    m_plogwriter->debug("ClientCutText, payload length {}", length);
     ::string ansiText(&charBuff.front());
     ansiText.toStringStorage(&clipText);
   }
@@ -142,7 +142,7 @@ void ClipboardExchange::execute()
           }
           data = charBuff;
           length = charBuff.length();
-		      m_log->debug("Sending Utf8 Clipboard, payload length {}", length);
+		      m_plogwriter->debug("Sending Utf8 Clipboard, payload length {}", length);
           m_output->writeUInt32((unsigned int)length);
           m_output->writeFully(data, length);
         }
@@ -158,13 +158,13 @@ void ClipboardExchange::execute()
           }
           data = charBuff;
           length = charBuff.length();
-		      m_log->debug("Sending Clipboard, payload length {}", length);
+		      m_plogwriter->debug("Sending Clipboard, payload length {}", length);
           m_output->writeUInt32((unsigned int)length);
           m_output->writeFully(data, length);
         }
         m_output->flush();
       } catch (::exception &e) {
-        m_log->error("The clipboard thread force to terminate because"
+        m_plogwriter->error("The clipboard thread force to terminate because"
                    " it caught the error: {}", e.get_message());
         terminate();
       }

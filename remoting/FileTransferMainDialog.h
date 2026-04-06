@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "apex/innate_subsystem/BaseDialog.h"
+#include "apex/innate_subsystem/Dialog.h"
 #include "apex/innate_subsystem/Control.h"
 #include "apex/innate_subsystem/TextBox.h"
 #include "apex/innate_subsystem/ComboBox.h"
@@ -44,7 +44,7 @@
 //#include <vector>
 namespace remoting_remoting
 {
-    class FileTransferMainDialog : public BaseDialog,
+    class FileTransferMainDialog : public ::innate_subsystem::Dialog,
                                    public ::remoting::ftp::FileTransferInterface
     {
     public:
@@ -95,12 +95,12 @@ namespace remoting_remoting
         // Inherited from BaseDialog
         //
 
-        virtual BOOL onInitDialog();
-        virtual BOOL onNotify(UINT controlID, LPARAM data);
-        virtual BOOL onCommand(UINT controlID, UINT notificationID);
-        virtual BOOL onDestroy();
+        virtual bool onInitDialog();
+        virtual bool onNotify(unsigned int controlID, ::lparam data);
+        virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
+        virtual bool onDestroy();
 
-        virtual void onMessageReceived(UINT uMsg, WPARAM wParam, LPARAM lParam);
+        virtual void onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam);
 
         //
         // Button event handlers
@@ -132,8 +132,8 @@ namespace remoting_remoting
         void onRemoteListViewDoubleClick();
         void onLocalListViewDoubleClick();
 
-        void onRemoteListViewKeyDown(UINT key);
-        void onLocalListViewKeyDown(UINT key);
+        void onRemoteListViewKeyDown(unsigned int key);
+        void onLocalListViewKeyDown(unsigned int key);
 
         //
         // Enables or disables rename and delete buttons
@@ -277,7 +277,7 @@ namespace remoting_remoting
 
         //private:
 
-        static const UINT WM_OPERATION_FINISHED = WM_USER + 2;
+        static const unsigned int WM_OPERATION_FINISHED = WM_USER + 2;
     };
 
 

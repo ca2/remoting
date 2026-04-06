@@ -153,7 +153,7 @@ private:
 
   NewConnectionEvents *m_newConnectionEvents;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __RFBCLIENTMANAGER_H__

@@ -39,7 +39,7 @@ namespace remoting
       class CLASS_DECL_REMOTING_COMMON CopyOperation : public FileTransferOperation
       {
       public:
-         CopyOperation(LogWriter *logWriter);
+         CopyOperation(::subsystem::LogWriter * plogwriter);
 
          virtual ~CopyOperation();
 

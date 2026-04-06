@@ -129,12 +129,12 @@ namespace remoting
       return setInt(scopedstrName, value ? 1 : 0);
    }
 
-   bool IniFileSettingsManager::getUINT(const ::scoped_string &scopedstrName, UINT *value)
+   bool IniFileSettingsManager::getUINT(const ::scoped_string &scopedstrName, unsigned int *value)
    {
-      return getIntAndCastTo<UINT>(scopedstrName, value);
+      return getIntAndCastTo<unsigned int>(scopedstrName, value);
    }
 
-   bool IniFileSettingsManager::setUINT(const ::scoped_string &scopedstrName, UINT value)
+   bool IniFileSettingsManager::setUINT(const ::scoped_string &scopedstrName, unsigned int value)
    {
       ::string stringVal;
       stringVal.formatf("%u", value);
@@ -148,8 +148,8 @@ namespace remoting
       // so use this trick, if returning value is defVal, than key does not
       // exists and method must return false.
       // FIXME: This trick will not work in some cases
-      UINT defVal = 0xABCDEF;
-      UINT ret = GetPrivateProfileInt(::string(m_appName), ::string(scopedstrName), defVal, m_path.windows_path());
+      unsigned int defVal = 0xABCDEF;
+      unsigned int ret = GetPrivateProfileInt(::string(m_appName), ::string(scopedstrName), defVal, m_path.windows_path());
       if (ret == defVal)
       {
          return false;

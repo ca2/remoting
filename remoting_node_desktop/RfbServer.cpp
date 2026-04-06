@@ -32,7 +32,7 @@ RfbServer::RfbServer(const ::scoped_string & scopedstrBindHost, unsigned short b
                      const ::int_rectangle & viewPort)
 : TcpServer(bindHost, bindPort, false, lockAddr),
   m_clientManager(clientManager),
-  m_log(log)
+  m_plogwriter(log)
 {
   if (viewPort != 0) {
     m_viewPort.setArbitraryRect(viewPort);
@@ -41,9 +41,9 @@ RfbServer::RfbServer(const ::scoped_string & scopedstrBindHost, unsigned short b
   TcpServer::start();
 
   if (viewPort == 0) {
-    m_log->debug("Rfb server started at {}:{}", bindHost, (int)bindPort);
+    m_plogwriter->debug("Rfb server started at {}:{}", bindHost, (int)bindPort);
   } else {
-    m_log->debug("Rfb server started at {}:{} with [{} {} {} {}] view port specified",
+    m_plogwriter->debug("Rfb server started at {}:{} with [{} {} {} {}] view port specified",
                  bindHost, (int)bindPort,
                  viewPort.left, viewPort.right, viewPort.top, viewPort.bottom);
   }
@@ -51,7 +51,7 @@ RfbServer::RfbServer(const ::scoped_string & scopedstrBindHost, unsigned short b
 
 RfbServer::~RfbServer()
 {
-  m_log->debug("Rfb server at {}:{} stopped", getBindHost(), (int)getBindPort());
+  m_plogwriter->debug("Rfb server at {}:{} stopped", getBindHost(), (int)getBindPort());
 }
 
 void RfbServer::onAcceptConnection(SocketIPv4 *socket)
@@ -63,7 +63,7 @@ void RfbServer::onAcceptConnection(SocketIPv4 *socket)
     ::string peerIpString;
     peerAddr.toString(&peerIpString);
 
-    m_log->debug("Incoming rfb connection from {} to port %u", peerIpString, peerAddr.getPort());
+    m_plogwriter->debug("Incoming rfb connection from {} to port %u", peerIpString, peerAddr.getPort());
 
     struct sockaddr_in addr_in = peerAddr.getSockAddr();
 
@@ -73,7 +73,7 @@ void RfbServer::onAcceptConnection(SocketIPv4 *socket)
     IpAccessRule::ActionType action = config->getActionByAddress((unsigned long)addr_in.sin_addr.S_un.S_addr);
 
     if (action == IpAccessRule::ACTION_TYPE_DENY) {
-      m_log->debug("Connection rejected due to access control rules");
+      m_plogwriter->debug("Connection rejected due to access control rules");
       delete socket;
       return;
     }
@@ -86,6 +86,6 @@ void RfbServer::onAcceptConnection(SocketIPv4 *socket)
     m_clientManager->addNewConnection(socket, &m_viewPort, false, false);
 
   } catch (::remoting::Exception &ex) {
-    m_log->error("Failed to process incoming rfb connection with following reason: \"{}\"", ex.get_message());
+    m_plogwriter->error("Failed to process incoming rfb connection with following reason: \"{}\"", ex.get_message());
   }
 }

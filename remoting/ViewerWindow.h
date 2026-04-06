@@ -85,24 +85,24 @@ namespace remoting_remoting
         static const int TIMER_DESKTOP_STATE = 1;
         static const int TIMER_DESKTOP_STATE_DELAY = 50;
 
-        bool onMessage(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam);
+        bool onMessage(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam);
         bool onEraseBackground(HDC hdc);
 
         bool onDisconnect();
-        bool onAuthError(WPARAM wParam);
+        bool onAuthError(::wparam wParam);
         bool onError();
 
         bool onFsWarning();
-        bool onSize(WPARAM wParam, LPARAM lParam);
+        bool onSize(::wparam wParam, ::lparam lParam);
         bool onCreate(LPCREATESTRUCT lps);
-        bool onCommand(WPARAM wParam, LPARAM lParam);
+        bool onCommand(::wparam wParam, ::lparam lParam);
         bool onNotify(int idCtrl, LPNMHDR pnmh);
-        bool onSysCommand(WPARAM wParam, LPARAM lParam);
+        bool onSysCommand(::wparam wParam, ::lparam lParam);
         bool onClose();
         bool onDestroy();
-        bool onFocus(WPARAM wParam);
-        bool onKillFocus(WPARAM wParam);
-        bool onTimer(WPARAM idTimer);
+        bool onFocus(::wparam wParam);
+        bool onKillFocus(::wparam wParam);
+        bool onTimer(::wparam idTimer);
         void onGoodCursor() override;
         void desktopStateUpdate();
         void commandCtrlAltDel();
@@ -140,7 +140,7 @@ namespace remoting_remoting
         // else return rect of remote screen + border
         ::int_rectangle calculateDefaultSize();
 
-        LogWriter * m_logWriter;
+        LogWriter * m_plogwriter;
 
         ::remoting::Window m_control;
 
@@ -213,7 +213,7 @@ namespace remoting_remoting
         void updateKeyState();
 
         // onHookProc function implementation of HookEventListener base abstract class.
-        virtual LRESULT onHookProc(int code, WPARAM wParam, LPARAM lParam);
+        virtual LRESULT onHookProc(int code, ::wparam wParam, ::lparam lParam);
         WinHooks m_winHooks;
         bool m_hooksEnabledFirstTime;
     };

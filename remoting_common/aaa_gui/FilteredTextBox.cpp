@@ -95,12 +95,12 @@ bool FilteredTextBox::isStringValid(const ::scoped_string & scopedstrString)
 //      other value - otherwise
 //
 
-LRESULT  FilteredTextBox::onKeyDown(WPARAM code, LPARAM params)
+LRESULT  FilteredTextBox::onKeyDown(::wparam code, ::lparam params)
 {
   return makeCheck();
 }
 
-LRESULT FilteredTextBox::windowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+LRESULT FilteredTextBox::windowProc(HWND hwnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam)
 {
   FilteredTextBox *_this = (FilteredTextBox *)GetWindowLongPtr(hwnd, GWLP_USERDATA);
   if (_this == NULL) {

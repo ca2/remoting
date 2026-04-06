@@ -62,7 +62,7 @@ private:
   HANDLE m_hEventLog;
   critical_section m_hEventLogMutex;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __WINEVENTLOG_H__

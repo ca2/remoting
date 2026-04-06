@@ -46,7 +46,7 @@ void PaintWindow::onPaint()
 {
 }
 
-bool PaintWindow::wndProc(UINT scopedstrMessage, WPARAM wParam, LPARAM lParam)
+bool PaintWindow::wndProc(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam)
 {
   if (scopedstrMessage == WM_PAINT) {
     m_hdc = BeginPaint(m_hwnd, &m_paintStruct);

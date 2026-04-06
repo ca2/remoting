@@ -30,7 +30,7 @@
 class CLASS_DECL_REMOTING_COMMON DesktopSizeDecoder : public PseudoDecoder
 {
 public:
-  DesktopSizeDecoder(LogWriter *logWriter);
+  DesktopSizeDecoder(::subsystem::LogWriter * plogwriter);
   virtual ~DesktopSizeDecoder();
 };
 

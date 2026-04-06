@@ -36,10 +36,10 @@ WindowsDisplays::~WindowsDisplays()
 {
 }
 
-BOOL CALLBACK WindowsDisplays::monitorEnumProc(HMONITOR hMonitor,
+bool CALLBACK WindowsDisplays::monitorEnumProc(HMONITOR hMonitor,
                                                HDC hdcMonitor,
                                                LPRECT lprcMonitor,
-                                               LPARAM dwData)
+                                               ::lparam dwData)
 {
   WindowsDisplays *_this = (WindowsDisplays *)dwData;
   ::int_rectangle rect(lprcMonitor->left - _this->m_xVirtualScreen,
@@ -59,7 +59,7 @@ void WindowsDisplays::update()
 
     // Enumerate only desktop's displays. Skip mirror driver desktops.
     HDC hdc = GetDC(0);
-    EnumDisplayMonitors(hdc, 0, monitorEnumProc, (LPARAM)this);
+    EnumDisplayMonitors(hdc, 0, monitorEnumProc, (::lparam)this);
     
     m_latestUpdateTime.Now();
     ReleaseDC(0, hdc);

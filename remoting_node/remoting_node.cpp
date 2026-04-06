@@ -126,7 +126,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     } catch (::remoting::Exception &fatalException) {
       MessageBox(0,
         fatalException.get_message(),
-        StringTable::getString(IDS_MBC_TVNCONTROL),
+        main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
         MB_OK | MB_ICONERROR);
       return 1;
     }

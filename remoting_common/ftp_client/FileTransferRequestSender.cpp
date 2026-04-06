@@ -31,8 +31,8 @@ namespace remoting
 {
    namespace ftp
    {
-      FileTransferRequestSender::FileTransferRequestSender(LogWriter *logWriter)
-      : m_logWriter(logWriter),
+      FileTransferRequestSender::FileTransferRequestSender(::subsystem::LogWriter * plogwriter)
+      : m_plogwriter(logWriter),
         m_output(0)
       {
       }
@@ -50,7 +50,7 @@ namespace remoting
       {
          critical_section_lock al(m_output);
 
-         m_logWriter->information("{}", "Sending compresion support request");
+         m_plogwriter->information("{}", "Sending compresion support request");
 
          m_output->writeUInt32(FTMessage::COMPRESSION_SUPPORT_REQUEST);
          m_output->flush();
@@ -64,7 +64,7 @@ namespace remoting
          unsigned int messageId = FTMessage::FILE_LIST_REQUEST;
          unsigned char compressionLevel = useCompression ? (unsigned char)1 : (unsigned char)0;
 
-         m_logWriter->information("Sending file ::list_base request with parameters:\n"
+         m_plogwriter->information("Sending file ::list_base request with parameters:\n"
                            "\tpath = {}\n"
                            "\tuse compression = {}\n",
                            scopedstrFullPath,
@@ -81,7 +81,7 @@ namespace remoting
       {
          critical_section_lock al(m_output);
 
-         m_logWriter->information("Sending download request with parameters:\n"
+         m_plogwriter->information("Sending download request with parameters:\n"
                            "\tpath = {}\n"
                            "\toffset = {}\n",
                            scopedstrFullPathName, offset);
@@ -99,7 +99,7 @@ namespace remoting
 
          unsigned char compressionLevel = useCompression ? (unsigned char)1 : (unsigned char)0;
 
-         m_logWriter->information("Sending download data request with parameters:\n"
+         m_plogwriter->information("Sending download data request with parameters:\n"
                            "\tsize = {}\n"
                            "\tuse compression = {}\n",
                            size,
@@ -115,7 +115,7 @@ namespace remoting
       {
          critical_section_lock al(m_output);
 
-         m_logWriter->information("Sending rm file request with parameters:\n\tpath = {}\n",
+         m_plogwriter->information("Sending rm file request with parameters:\n\tpath = {}\n",
                            ::string(scopedstrFullPathName).c_str());
 
          m_output->writeUInt32(FTMessage::REMOVE_REQUEST);
@@ -127,7 +127,7 @@ namespace remoting
       {
          critical_section_lock al(m_output);
 
-         m_logWriter->information("Sending mkdir request with parameters:\n\tpath = {}\n",
+         m_plogwriter->information("Sending mkdir request with parameters:\n\tpath = {}\n",
                            ::string(scopedstrFullPathName).c_str());
 
          m_output->writeUInt32(FTMessage::MKDIR_REQUEST);
@@ -140,7 +140,7 @@ namespace remoting
       {
          critical_section_lock al(m_output);
 
-         m_logWriter->information("Sending rename file request with parameters:\n"
+         m_plogwriter->information("Sending rename file request with parameters:\n"
                            "\t old path = {}\n"
                            "\t new path = {}\n",
                            scopedstroldFileName,
@@ -163,7 +163,7 @@ namespace remoting
             flags = 0x1;
          }
 
-         m_logWriter->information("Sending upload request with parameters:\n"
+         m_plogwriter->information("Sending upload request with parameters:\n"
                            "\tpath = {}\n"
                            "\toverwrite flag = {}\n"
                            "\toffset = {}\n",
@@ -197,7 +197,7 @@ namespace remoting
 
          unsigned char compressionLevel = useCompression ? (short)1 : (short)0;
 
-         m_logWriter->information("Sending upload data request with parameters:\n"
+         m_plogwriter->information("Sending upload data request with parameters:\n"
                            "\tsize = {}\n"
                            "\tuse compression = {}\n",
                            size,
@@ -215,7 +215,7 @@ namespace remoting
       {
          critical_section_lock al(m_output);
 
-         m_logWriter->information("Sending upload end request with parameters:\n"
+         m_plogwriter->information("Sending upload end request with parameters:\n"
                            "\tflags = {}\n"
                            "\tmodification time = {}\n",
                            fileFlags,
@@ -231,7 +231,7 @@ namespace remoting
       {
          critical_section_lock al(m_output);
 
-         m_logWriter->information("Sending get folder size request with parameters:\n\tpath = {}\n",
+         m_plogwriter->information("Sending get folder size request with parameters:\n\tpath = {}\n",
                            scopedstrFullPath);
 
          m_output->writeUInt32(FTMessage::DIRSIZE_REQUEST);

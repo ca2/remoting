@@ -54,7 +54,7 @@ public:
   // A wrap for the ID3D11DeviceContext::CopySubresourceRegion() function.
   void copySubresourceRegion(ID3D11Texture2D *dstTexture2D, int dstX, int dstY,
                              ID3D11Texture2D *srcTexture2D, const ::int_rectangle &  srcRect,
-                             UINT front, UINT back);
+                             unsigned int front, unsigned int back);
 private:
   void copy(const WinD3D11Device &src);
 
@@ -62,7 +62,7 @@ private:
   ID3D11Device *m_device;
   ID3D11DeviceContext *m_context;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __WIND3D11DEVICE_H__

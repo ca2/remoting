@@ -30,7 +30,7 @@ struct WindowsParam
   ::string_array *classNames;
 };
 
-BOOL CALLBACK WindowFinder::findWindowsByClassFunc(HWND hwnd, LPARAM lParam)
+bool CALLBACK WindowFinder::findWindowsByClassFunc(HWND hwnd, ::lparam lParam)
 {
   if (IsWindowVisible(hwnd) != 0) {
     WindowsParam *windowsParam = (WindowsParam *)lParam;
@@ -51,7 +51,7 @@ BOOL CALLBACK WindowFinder::findWindowsByClassFunc(HWND hwnd, LPARAM lParam)
       }
 
       // Recursion
-      EnumChildWindows(hwnd, findWindowsByClassFunc, (LPARAM) windowsParam);
+      EnumChildWindows(hwnd, findWindowsByClassFunc, (::lparam) windowsParam);
     }
   }
   return TRUE;
@@ -66,11 +66,11 @@ BOOL CALLBACK WindowFinder::findWindowsByClassFunc(HWND hwnd, LPARAM lParam)
   WindowsParam windowsParam;
   windowsParam.classNames = &classNames;
   windowsParam.hwndVector = &hwndVector;
-  EnumWindows(findWindowsByClassFunc, (LPARAM)&windowsParam);
+  EnumWindows(findWindowsByClassFunc, (::lparam)&windowsParam);
   return hwndVector;
 }
 
-BOOL CALLBACK WindowFinder::findWindowsByNameFunc(HWND hwnd, LPARAM lParam)
+bool CALLBACK WindowFinder::findWindowsByNameFunc(HWND hwnd, ::lparam lParam)
 {
   if (IsWindowVisible(hwnd) != 0) {
     const size_t maxTcharCount = 256;
@@ -100,7 +100,7 @@ HWND WindowFinder::findFirstWindowByName(const ::string windowName)
   winNameVector[0].make_lower();
   WindowsParam winParams = { &hwndVector, &winNameVector };
 
-  EnumWindows(findWindowsByNameFunc, (LPARAM)&winParams);
+  EnumWindows(findWindowsByNameFunc, (::lparam)&winParams);
   if (hwndVector.size() != 0) {
     return hwndVector[0];
   } else {

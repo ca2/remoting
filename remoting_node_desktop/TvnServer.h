@@ -154,7 +154,7 @@ protected:
   void changeLogProps();
 
 protected:
-  LogWriter m_log;
+  LogWriter m_plogwriter;
   ZombieKiller m_zombieKiller;
 
   Configurator m_config;
@@ -207,7 +207,7 @@ protected:
 
   LogInitListener *m_logInitListener;
 
-  UINT m_contextSwitchResolution; // in ms
+  unsigned int m_contextSwitchResolution; // in ms
 };
 
 

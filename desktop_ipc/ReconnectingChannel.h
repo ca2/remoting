@@ -74,7 +74,7 @@ private:
   WindowsEvent m_timer;
   unsigned int m_timeOut;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __RECONNECTINGCHANNEL_H__

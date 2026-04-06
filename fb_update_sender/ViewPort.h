@@ -93,7 +93,7 @@ private:
 
   ::earth::time m_latestHwndResolvingTime;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __VIEWPORT_H__

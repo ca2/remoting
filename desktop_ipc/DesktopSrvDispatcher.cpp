@@ -31,7 +31,7 @@ DesktopSrvDispatcher::DesktopSrvDispatcher(BlockingGate *gate,
                                            LogWriter *log)
 : m_gate(gate),
   m_extErrorListener(extErrorListener),
-  m_log(log)
+  m_plogwriter(log)
 {
 }
 
@@ -56,9 +56,9 @@ void DesktopSrvDispatcher::execute()
 {
   while (!isTerminating()) {
     try {
-      m_log->debug("DesktopSrvDispatcher reading code");
+      m_plogwriter->debug("DesktopSrvDispatcher reading code");
       unsigned char code = m_gate->readUInt8();
-      m_log->debug("DesktopSrvDispatcher, code {} recieved", code);
+      m_plogwriter->debug("DesktopSrvDispatcher, code {} recieved", code);
       ::map<unsigned char, ClientListener *>::iterator iter = m_handlers.find(code);
       if (iter == m_handlers.end()) {
         ::string errMess;
@@ -69,16 +69,16 @@ void DesktopSrvDispatcher::execute()
       }
       (*iter).second->onRequest(code, m_gate);
     } catch (ReconnectException &) {
-      m_log->debug("The DesktopServerApplication dispatcher has been reconnected");
+      m_plogwriter->debug("The DesktopServerApplication dispatcher has been reconnected");
     } catch (::exception &e) {
-      m_log->error("The DesktopServerApplication dispatcher has "
+      m_plogwriter->error("The DesktopServerApplication dispatcher has "
                  "failed with error: {}", e.get_message());
       notifyOnError();
       terminate();
     }
     Thread::yield();
   }
-  m_log->debug("The DesktopServerApplication dispatcher has been stopped");
+  m_plogwriter->debug("The DesktopServerApplication dispatcher has been stopped");
 }
 
 void DesktopSrvDispatcher::registerNewHandle(unsigned char code, ClientListener *listener)

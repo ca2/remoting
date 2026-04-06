@@ -46,7 +46,7 @@ private:
 	lockable *m_fbLock;
 	FrameBuffer *m_frameBuffer;
 
-	LogWriter *m_logWriter;
+	LogWriter *m_plogwriter;
 	
 	RfbOutputGate *m_output;
 	critical_section m_outputLock;

@@ -49,25 +49,25 @@ Win8DeskDuplication::Win8DeskDuplication(FrameBuffer *targetFb,
   m_device(log),
   m_hasCriticalError(false),
   m_hasRecoverableError(false),
-  m_log(log)
+  m_plogwriter(log)
 {
-  m_log->debug("Creating Win8DeskDuplication for {} outputs", dxgiOutput.size());
+  m_plogwriter->debug("Creating Win8DeskDuplication for {} outputs", dxgiOutput.size());
   for (size_t i = 0; i < dxgiOutput.size(); i++) {
     m_dxgiOutput1.add(&dxgiOutput[i]);
     m_outDupl.add(WinDxgiOutputDuplication(&m_dxgiOutput1[i], &m_device));
     m_rotations.add(dxgiOutput[i].getRotation());
     m_stageTextures2D.add(WinCustomD3D11Texture2D(m_device.getDevice(),
-      (UINT)targetRect[i].width(),
-      (UINT)targetRect[i].height(),
+      (unsigned int)targetRect[i].width(),
+      (unsigned int)targetRect[i].height(),
       m_rotations[i]));
   }
-  m_log->debug("Win8DeskDuplication created");
+  m_plogwriter->debug("Win8DeskDuplication created");
   resume();
 }
 
 Win8DeskDuplication::~Win8DeskDuplication()
 {
-  m_log->debug("deleting Win8DeskDuplication");
+  m_plogwriter->debug("deleting Win8DeskDuplication");
   terminate();
   wait();
 }
@@ -92,7 +92,7 @@ void Win8DeskDuplication::execute()
           WinDxgiAcquiredFrame acquiredFrame(&m_outDupl[i], ACQUIRE_TIMEOUT);
 		      if (acquiredFrame.wasTimeOut()) {
 			      timeouts[i]++;
-			      m_log->debug("Timeout on acquire frame for output: {}", i);
+			      m_plogwriter->debug("Timeout on acquire frame for output: {}", i);
 			      Thread::yield();
 			      continue;
           }
@@ -100,7 +100,7 @@ void Win8DeskDuplication::execute()
             DXGI_OUTDUPL_FRAME_INFO *info = acquiredFrame.getFrameInfo();
             int accum_frames = info->AccumulatedFrames;
             double dt = (double)(::earth::time::now() - begins[i]).getTime(); // in milliseconds
-            m_log->debug("Acquire frame for output: {} for %f ms, accumulated {} frames", i, dt + ACQUIRE_TIMEOUT * timeouts[i], accum_frames);
+            m_plogwriter->debug("Acquire frame for output: {} for %f ms, accumulated {} frames", i, dt + ACQUIRE_TIMEOUT * timeouts[i], accum_frames);
             timeouts[i] = 0;
             WinD3D11Texture2D acquiredDesktopImage(acquiredFrame.getDxgiResource());
 
@@ -118,7 +118,7 @@ void Win8DeskDuplication::execute()
               processCursor(info, i);
             }
             catch (WinDxException &e) {
-              m_log->debug("Error on cursor processing: {}, (%x)", e.get_message(), (int)e.getErrorCode());
+              m_plogwriter->debug("Error on cursor processing: {}, (%x)", e.get_message(), (int)e.getErrorCode());
             } // Cursor
           }
         }
@@ -229,7 +229,7 @@ void Win8DeskDuplication::processDirtyRects(size_t dirtyCount,
     rotateRectInsideStage(&dstRect, &stageDim, rotation);
     // Translate the rect to the frame buffer coordinates.
     dstRect.move(m_targetRects[out].left, m_targetRects[out].top);
-    m_log->debug("Destination dirty rect = {}, {}, %dx{}", dstRect.left, dstRect.top, dstRect.width(), dstRect.height());
+    m_plogwriter->debug("Destination dirty rect = {}, {}, %dx{}", dstRect.left, dstRect.top, dstRect.width(), dstRect.height());
 
     stageDim.cx = static_cast<int> (autoMapSurface.getStride() / 4);
     m_auxiliaryFrameBuffer.setPropertiesWithoutResize(&stageDim, &m_targetFb->getPixelFormat());
@@ -312,7 +312,7 @@ void Win8DeskDuplication::processCursor(const DXGI_OUTDUPL_FRAME_INFO *info, siz
     bool newVisibility = pointerPos.Visible != FALSE;
     bool visibleChanged = m_targetCurShape->getIsVisible() != newVisibility;
     if (visibleChanged) {
-	  m_log->debug(newVisibility ? "Cursor became visible") : _T("Cursor became not visible");
+	  m_plogwriter->debug(newVisibility ? "Cursor became visible") : _T("Cursor became not visible");
       m_targetCurShape->setVisibility(newVisibility, out);
       m_duplListener->onCursorShapeChanged();
     }
@@ -320,13 +320,13 @@ void Win8DeskDuplication::processCursor(const DXGI_OUTDUPL_FRAME_INFO *info, siz
     //
     bool shapeChanged = info->PointerShapeBufferSize != 0;
     if (shapeChanged) {
-	    m_log->debug("Cursor shape chagned");
-	    m_outDupl[out].getFrameCursorShape(m_targetCurShape->getCursorShapeForWriting(), info->PointerShapeBufferSize, m_log);
+	    m_plogwriter->debug("Cursor shape chagned");
+	    m_outDupl[out].getFrameCursorShape(m_targetCurShape->getCursorShapeForWriting(), info->PointerShapeBufferSize, m_plogwriter);
       m_duplListener->onCursorShapeChanged();
     }
 
     if (pointerPos.Visible) {
-  	  m_log->debug("Cursor position chagned");
+  	  m_plogwriter->debug("Cursor position chagned");
       Point hotPoint = m_targetCurShape->getCursorShape()->getHotSpot();
       ::int_rectangle targetRect = m_targetRects[out];
       m_duplListener->onCursorPositionChanged(pointerPos.Position.x + targetRect.left + hotPoint.x,

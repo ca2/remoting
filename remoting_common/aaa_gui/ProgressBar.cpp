@@ -41,11 +41,11 @@ void ProgressBar::setRange(WORD min, WORD max)
 
 void ProgressBar::setPos(WORD pos)
 {
-  SendMessage(m_hwnd, PBM_SETPOS, (WPARAM)pos, 0);
+  SendMessage(m_hwnd, PBM_SETPOS, (::wparam)pos, 0);
 }
 
 
-bool ProgressBar::window_procedure(LRESULT & lresult, UINT scopedstrMessage, ::wparam wparam, ::lparam lparam)
+bool ProgressBar::window_procedure(LRESULT & lresult, unsigned int scopedstrMessage, ::wparam wparam, ::lparam lparam)
 {
 
    if (scopedstrMessage == WM_USER+327)

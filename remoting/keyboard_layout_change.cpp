@@ -90,7 +90,7 @@ namespace remoting_remoting
          if (hkl)
          {
 
-            ::PostMessage(HWND_BROADCAST, WM_INPUTLANGCHANGEREQUEST, 0, (LPARAM)hkl);
+            ::PostMessage(HWND_BROADCAST, WM_INPUTLANGCHANGEREQUEST, 0, (::lparam)hkl);
 
          }
 

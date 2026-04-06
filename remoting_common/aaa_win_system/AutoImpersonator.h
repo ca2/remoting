@@ -38,7 +38,7 @@ public:
   virtual ~AutoImpersonator();
 private:
   Impersonator *m_imp;
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __AUTOIMPERSONATOR_H__

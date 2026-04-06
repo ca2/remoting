@@ -42,14 +42,14 @@ SetPasswordsDialog::SetPasswordsDialog(bool initStateOfUseRfbAuth,
   m_dontChangeAdmAuth(!initStateOfUseAdminAuth),
   m_protectControlInterface(initStateOfUseAdminAuth)
 {
-  m_passwordEmptyTooltip.setText(StringTable::getString(IDS_PASSWORD_IS_EMPTY));
-  m_passwordEmptyTooltip.setTitle(StringTable::getString(IDS_MBC_TVNCONTROL));
+  m_passwordEmptyTooltip.setText(main_subsystem()->string_table()->getString(IDS_PASSWORD_IS_EMPTY));
+  m_passwordEmptyTooltip.setTitle(main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL));
 
-  m_passwordsNotMatchTooltip.setText(StringTable::getString(IDS_PASSWORDS_NOT_MATCH));
-  m_passwordsNotMatchTooltip.setTitle(StringTable::getString(IDS_MBC_TVNCONTROL));
+  m_passwordsNotMatchTooltip.setText(main_subsystem()->string_table()->getString(IDS_PASSWORDS_NOT_MATCH));
+  m_passwordsNotMatchTooltip.setTitle(main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL));
 
-  m_passwordWeakTooltip.setText(StringTable::getString(IDS_BAD_PASSWORD));
-  m_passwordWeakTooltip.setTitle(StringTable::getString(IDS_MBC_BAD_PASSWORD));
+  m_passwordWeakTooltip.setText(main_subsystem()->string_table()->getString(IDS_BAD_PASSWORD));
+  m_passwordWeakTooltip.setTitle(main_subsystem()->string_table()->getString(IDS_MBC_BAD_PASSWORD));
 }
 
 SetPasswordsDialog::~SetPasswordsDialog()
@@ -110,7 +110,7 @@ void SetPasswordsDialog::initControls()
   m_admPassEdit2.setTextLengthLimit(8);
 }
 
-BOOL SetPasswordsDialog::onInitDialog()
+bool SetPasswordsDialog::onInitDialog()
 {
   initControls();
 
@@ -130,12 +130,12 @@ BOOL SetPasswordsDialog::onInitDialog()
   return FALSE;
 }
 
-BOOL SetPasswordsDialog::onNotify(UINT controlID, LPARAM data)
+bool SetPasswordsDialog::onNotify(unsigned int controlID, ::lparam data)
 {
   return FALSE;
 }
 
-BOOL SetPasswordsDialog::onCommand(UINT controlID, UINT notificationID)
+bool SetPasswordsDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
   if (notificationID == BN_CLICKED) {
     readRadio();
@@ -147,7 +147,7 @@ BOOL SetPasswordsDialog::onCommand(UINT controlID, UINT notificationID)
   return FALSE;
 }
 
-BOOL SetPasswordsDialog::onDestroy()
+bool SetPasswordsDialog::onDestroy()
 {
   return FALSE;
 }
@@ -221,7 +221,7 @@ void SetPasswordsDialog::updateEditControls()
   m_admPassEdit2.enable_window(m_protectControlInterface);
 }
 
-BOOL SetPasswordsDialog::onClose()
+bool SetPasswordsDialog::onClose()
 {
   kill(IDCANCEL);
   return FALSE;

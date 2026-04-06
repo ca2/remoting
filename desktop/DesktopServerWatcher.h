@@ -58,7 +58,7 @@ protected:
   Process *m_process;
   ReconnectionListener *m_recListener;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __DESKTOPSERVERWATCHER_H__

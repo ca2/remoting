@@ -32,7 +32,7 @@
 
 WinEventLog::WinEventLog(LogWriter *log)
 : m_hEventLog(0),
-  m_log(log)
+  m_plogwriter(log)
 {
 }
 
@@ -47,7 +47,7 @@ void WinEventLog::enable()
   try {
     updateEventSourcesSubkey();
   } catch (::exception &e) {
-    m_log->error("Cannot update event sources registry subkey: {}",
+    m_plogwriter->error("Cannot update event sources registry subkey: {}",
                e.get_message());
   }
   registerEventSource();
@@ -142,7 +142,7 @@ void WinEventLog::reportEvent(unsigned int messageId,
     ::string errStr;
     Environment::getErrStr("Cannot report an event to the system log",
                            &errStr);
-    m_log->error("{}", errStr);
+    m_plogwriter->error("{}", errStr);
   }
 }
 

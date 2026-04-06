@@ -41,10 +41,10 @@ public:
   // @param hwnd - handle to a window that will be to receive the allowed
   // scopedstrMessage (ignored at Windows Vista or older).
   // @throws ::remoting::Exception on a fail (Only for Vista and later).
-  void allowMessage(UINT scopedstrMessage, HWND hwnd);
+  void allowMessage(unsigned int scopedstrMessage, HWND hwnd);
 
 private:
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __UIPICONTROL_H__

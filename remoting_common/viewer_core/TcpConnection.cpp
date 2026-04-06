@@ -26,8 +26,8 @@
 
 #include "TcpConnection.h"
 
-TcpConnection::TcpConnection(LogWriter *logWriter)
-: m_logWriter(logWriter),
+TcpConnection::TcpConnection(::subsystem::LogWriter * plogwriter)
+: m_plogwriter(logWriter),
 m_socketOwner(false),
 m_bufInput(0),
 m_RfbGatesOwner(false)
@@ -100,7 +100,7 @@ void TcpConnection::connect()
 
         ::string ipAddressString;
         ipAddressString = ipAddress.toString();
-        m_logWriter->debug("Connecting to the host \"{}:{}\" ({}:{})...",
+        m_plogwriter->debug("Connecting to the host \"{}:{}\" ({}:{})...",
                             m_host, m_port,
                             ipAddressString, m_port);
 
@@ -113,7 +113,7 @@ void TcpConnection::connect()
       }
     }
 
-    m_logWriter->debug("Initialization of socket stream and input/output gates...");
+    m_plogwriter->debug("Initialization of socket stream and input/output gates...");
     m_socketStream = new SocketStream(m_socket);
     m_bufInput = new BufferedInputStream(m_socketStream);
     m_input = new RfbInputGate(m_bufInput);

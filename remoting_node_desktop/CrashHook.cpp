@@ -29,7 +29,7 @@
 //#include "remoting/remoting_common/thread/critical_section.h"
 #include "remoting_node_desktop/NamingDefs.h"
 
-typedef BOOL (WINAPI *MINIDUMPWRITEDUMP)(__in  HANDLE hProcess,
+typedef bool (WINAPI *MINIDUMPWRITEDUMP)(__in  HANDLE hProcess,
                                        __in  DWORD ProcessId,
                                        __in  HANDLE hFile,
                                        __in  MINIDUMP_TYPE DumpType,
@@ -95,7 +95,7 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
   dumpPath.formatf("{}\\{}\\crash.dmp", specFolder,
                                            ProductNames::PRODUCT_NAME);
 
-  if (guiEnabled && ::remoting::message_box(0,
+  if (guiEnabled && main_innate_subsystem()->message_box(0,
                                "Apllication crashing. Do you"
                                " want save debug information?",
                                ProductNames::PRODUCT_NAME,
@@ -136,7 +136,7 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
     exInfo.ExceptionPointers = pExceptionInfo;
     exInfo.ClientPointers = 0;
 
-    BOOL result = miniDumpWriteDump(GetCurrentProcess(),
+    bool result = miniDumpWriteDump(GetCurrentProcess(),
                                     GetCurrentProcessId(),
                                     hFile,
                                     MiniDumpNormal,
@@ -150,14 +150,14 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
       ::string succMess;
       succMess.formatf("The debug information has been successfully"
                       " saved to the {} file", dumpPath);
-      ::remoting::message_box(0, succMess, ProductNames::PRODUCT_NAME, MB_OK);
+      main_innate_subsystem()->message_box(0, succMess, ProductNames::PRODUCT_NAME, MB_OK);
     }
     m_notifier->onCrash(&dumpPath);
 
     retValue = EXCEPTION_EXECUTE_HANDLER;
   } catch (::exception &e) {
     if (guiEnabled) {
-      ::remoting::message_box(NULL, e.get_message(), ProductNames::PRODUCT_NAME, MB_OK);
+      main_innate_subsystem()->message_box(NULL, e.get_message(), ProductNames::PRODUCT_NAME, MB_OK);
     }
   }
   if (hFile != 0) {

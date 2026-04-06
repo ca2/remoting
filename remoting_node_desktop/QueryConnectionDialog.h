@@ -47,11 +47,11 @@ protected:
   // Inherited from BaseDialog.
   //
 
-  virtual BOOL onInitDialog();
-  virtual BOOL onNotify(UINT controlID, LPARAM data);
-  virtual BOOL onCommand(UINT controlID, UINT notificationID);
-  virtual BOOL onDestroy();
-  virtual void onMessageReceived(UINT uMsg, WPARAM wParam, LPARAM lParam);
+  virtual bool onInitDialog();
+  virtual bool onNotify(unsigned int controlID, ::lparam data);
+  virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
+  virtual bool onDestroy();
+  virtual void onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam);
 
   void initControls();
 

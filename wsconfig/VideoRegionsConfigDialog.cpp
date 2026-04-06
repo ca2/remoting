@@ -43,7 +43,7 @@ void VideoRegionsConfigDialog::setParentDialog(BaseDialog *dialog)
   m_parentDialog = dialog;
 }
 
-BOOL VideoRegionsConfigDialog::onInitDialog()
+bool VideoRegionsConfigDialog::onInitDialog()
 {
   m_config = Configurator::getInstance()->getServerConfig();
   initControls();
@@ -51,7 +51,7 @@ BOOL VideoRegionsConfigDialog::onInitDialog()
   return TRUE;
 }
 
-BOOL VideoRegionsConfigDialog::onNotify(UINT controlID, LPARAM data)
+bool VideoRegionsConfigDialog::onNotify(unsigned int controlID, ::lparam data)
 {
   if (controlID == IDC_VIDEO_RECOGNITION_INTERVAL_SPIN) {
     LPNMUPDOWN scopedstrMessage = (LPNMUPDOWN)data;
@@ -62,7 +62,7 @@ BOOL VideoRegionsConfigDialog::onNotify(UINT controlID, LPARAM data)
   return TRUE;
 }
 
-BOOL VideoRegionsConfigDialog::onCommand(UINT controlID, UINT notificationID)
+bool VideoRegionsConfigDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
   if (notificationID == EN_UPDATE) {
     if (controlID == IDC_VIDEO_CLASS_NAMES || controlID == IDC_VIDEO_RECTS) {
@@ -78,7 +78,7 @@ bool VideoRegionsConfigDialog::validateInput()
 {
   if (!CommonInputValidation::validateUINT(
     &m_videoRecognitionInterval,
-    StringTable::getString(IDS_INVALID_VIDEO_RECOGNITION_INTERVAL))) {
+    main_subsystem()->string_table()->getString(IDS_INVALID_VIDEO_RECOGNITION_INTERVAL))) {
     return false;
   }
   return true;

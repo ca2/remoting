@@ -29,7 +29,7 @@
 
 WallpaperUtil::WallpaperUtil(LogWriter *log)
 : m_wasDisabled(false), 
-  m_log(log)
+  m_plogwriter(log)
 {
   Configurator::getInstance()->addListener(this);
 }
@@ -40,10 +40,10 @@ WallpaperUtil::~WallpaperUtil()
   if (m_wasDisabled) {
     try {
       restoreWallpaper();
-      m_log->information("Wallpaper was successfully restored");
+      m_plogwriter->information("Wallpaper was successfully restored");
     }
     catch (::exception &e) {
-      m_log->error(e.get_message());
+      m_plogwriter->error(e.get_message());
     }
   }
 }
@@ -60,25 +60,25 @@ void WallpaperUtil::updateWallpaper()
     if (srvConf->isRemovingDesktopWallpaperEnabled()) {
       disableWallpaper();
       m_wasDisabled = true;
-      m_log->information("Wallpaper was successfully disabled");
+      m_plogwriter->information("Wallpaper was successfully disabled");
     } else {
       if (m_wasDisabled) {
         restoreWallpaper();
-        m_log->information("Wallpaper was successfully restored");
+        m_plogwriter->information("Wallpaper was successfully restored");
         m_wasDisabled = false;
       }
     }
   } catch (::exception &e) {
-    m_log->error(e.get_message());
+    m_plogwriter->error(e.get_message());
   }
 }
 
 void WallpaperUtil::restoreWallpaper()
 {
   // FIXME: Remove log from here. Log only from caller.
-  m_log->information("Try to restore wallpaper");
-  Impersonator imp(m_log);
-  AutoImpersonator ai(&imp, m_log);
+  m_plogwriter->information("Try to restore wallpaper");
+  Impersonator imp(m_plogwriter);
+  AutoImpersonator ai(&imp, m_plogwriter);
   int result;
 
   if (m_wallparerPath.length() == 0) {
@@ -95,9 +95,9 @@ void WallpaperUtil::restoreWallpaper()
 
 void WallpaperUtil::disableWallpaper()
 {
-  m_log->information("Try to disable wallpaper");
-  Impersonator imp(m_log);
-  AutoImpersonator ai(&imp, m_log);
+  m_plogwriter->information("Try to disable wallpaper");
+  Impersonator imp(m_plogwriter);
+  AutoImpersonator ai(&imp, m_plogwriter);
   TCHAR path[MAX_PATH] = "";
 
   if (SystemParametersInfo(SPI_GETDESKWALLPAPER, MAX_PATH, path, 0) == 0) {

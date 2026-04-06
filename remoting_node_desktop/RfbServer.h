@@ -79,7 +79,7 @@ protected:
   ViewPortState m_viewPort;
 
 private:
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 //// __LISTENTCPSOCKET_H__

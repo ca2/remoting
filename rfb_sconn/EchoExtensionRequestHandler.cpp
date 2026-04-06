@@ -39,7 +39,7 @@ EchoExtensionRequestHandler::EchoExtensionRequestHandler(RfbCodeRegistrator *reg
                                                        LogWriter *log,
                                                        bool enabled)
 : m_output(output), m_enabled(enabled),
-  m_log(log)
+  m_plogwriter(log)
 {
 
   if (!isEchoExtensionEnabled()) {
@@ -52,12 +52,12 @@ EchoExtensionRequestHandler::EchoExtensionRequestHandler(RfbCodeRegistrator *reg
 
   registrator->regCode(ClientMsgDefs::ECHO_REQUEST, this);
 
-  m_log->debug("Echo extension request handler created");
+  m_plogwriter->debug("Echo extension request handler created");
 }
 
 EchoExtensionRequestHandler::~EchoExtensionRequestHandler()
 {
-  m_log->debug("Echo extension request handler deleted");
+  m_plogwriter->debug("Echo extension request handler deleted");
 }
 
 void EchoExtensionRequestHandler::onRequest(unsigned int reqCode, RfbInputGate *backGate)
@@ -67,7 +67,7 @@ void EchoExtensionRequestHandler::onRequest(unsigned int reqCode, RfbInputGate *
   try {
     if (reqCode == ClientMsgDefs::ECHO_REQUEST) {
       unsigned int number = m_input->readUInt32();
-      m_log->debug("got echo request with number {}", number);
+      m_plogwriter->debug("got echo request with number {}", number);
       {
         critical_section_lock l(m_output);
 
@@ -77,7 +77,7 @@ void EchoExtensionRequestHandler::onRequest(unsigned int reqCode, RfbInputGate *
       }
     }   
   } catch (::remoting::Exception &someEx) {
-    m_log->error("Echo extension request failed: \"{}\"", someEx.get_message());
+    m_plogwriter->error("Echo extension request failed: \"{}\"", someEx.get_message());
   } // try / catch.
 
   m_input = NULL;

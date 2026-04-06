@@ -75,7 +75,7 @@ private:
 
   Configurator m_configurator;
   ClientLogWriter m_clientLogWriter;
-  LogWriter m_log;
+  LogWriter m_plogwriter;
 
   // Transport
   AnonymousPipe *m_clToSrvChan;
@@ -93,7 +93,7 @@ private:
 
   SessionChangesWatcher *m_sessionChangesWatcher;
 
-  UINT m_contextSwitchResolution; // in ms
+  unsigned int m_contextSwitchResolution; // in ms
 };
 
 //// __DESKTOPSERVER_H__

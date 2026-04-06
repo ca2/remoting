@@ -29,7 +29,7 @@
 AnonymousPipeFactory::AnonymousPipeFactory(unsigned int bufferSize,
                                            LogWriter *log)
 : m_bufferSize(bufferSize),
-  m_log(log)
+  m_plogwriter(log)
 {
 }
 
@@ -83,6 +83,6 @@ void AnonymousPipeFactory::generatePipes(AnonymousPipe **firstSide,
     }
   }
 
-  *firstSide = new AnonymousPipe(hFirstSideWrite, hFirstSideRead, m_bufferSize, m_log);
-  *secondSide = new AnonymousPipe(hSecondSideWrite, hSecondSideRead, m_bufferSize, m_log);
+  *firstSide = new AnonymousPipe(hFirstSideWrite, hFirstSideRead, m_bufferSize, m_plogwriter);
+  *secondSide = new AnonymousPipe(hSecondSideWrite, hSecondSideRead, m_bufferSize, m_plogwriter);
 }

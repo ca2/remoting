@@ -29,7 +29,7 @@
 //#include <vector>
 #include <algorithm>
 
-ZrleDecoder::ZrleDecoder(LogWriter *logWriter)
+ZrleDecoder::ZrleDecoder(::subsystem::LogWriter * plogwriter)
 : DecoderOfRectangle(logWriter)
 {
   m_encoding = EncodingDefs::ZRLE;
@@ -48,7 +48,7 @@ void ZrleDecoder::decode(RfbInputGate *pinput,
 
   size_t unpackedDataSize = m_inflater.getOutputSize();
   if (unpackedDataSize == 0) {
-    m_logWriter->debug("Empty unpacked data in ZRLE decoder");
+    m_plogwriter->debug("Empty unpacked data in ZRLE decoder");
     if (dstRect.area() != 0) {
       throw ::remoting::Exception("Bad data received from the server: Empty unpacked data in ZRLE decoder.");
     }

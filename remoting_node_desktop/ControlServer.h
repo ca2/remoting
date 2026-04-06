@@ -82,7 +82,7 @@ private:
    */
   RfbClientManager *m_rfbClientManager;
 
-  LogWriter *m_log;
+  ::subsystem::LogWriter *m_plogwriter;
 };
 
 

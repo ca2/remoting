@@ -56,10 +56,10 @@
 //      ~Window() override;
 //
 //      virtual void setWindow(HWND hwnd);
-//      virtual void post_message(UINT scopedstrMessage, ::wparam wparam=0, ::lparam lparam=0);
+//      virtual void post_message(unsigned int scopedstrMessage, ::wparam wparam=0, ::lparam lparam=0);
 //
-//      static LRESULT CALLBACK s_window_procedure(HWND hWnd, UINT scopedstrMessage, WPARAM wParam, LPARAM lParam);
-//      virtual bool window_procedure(LRESULT & lresult, UINT scopedstrMessage, ::wparam wparam, ::lparam lparam);
+//      static LRESULT CALLBACK s_window_procedure(HWND hWnd, unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam);
+//      virtual bool window_procedure(LRESULT & lresult, unsigned int scopedstrMessage, ::wparam wparam, ::lparam lparam);
 //
 //      virtual void subclass_window();
 //      virtual void unsubclass_window();
@@ -208,8 +208,8 @@
 //      //
 //
 //      //void replaceWindowProc(WNDPROC wndProc);
-//      //    static LRESULT CALLBACK s_control_window_procedure(HWND hWnd, UINT scopedstrMessage, WPARAM wParam, LPARAM lParam);
-//      //    virtual bool control_window_procedure(LRESULT & lresult, UINT scopedstrMessage, ::wparam wparam, ::lparam lparam);
+//      //    static LRESULT CALLBACK s_control_window_procedure(HWND hWnd, unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam);
+//      //    virtual bool control_window_procedure(LRESULT & lresult, unsigned int scopedstrMessage, ::wparam wparam, ::lparam lparam);
 //      // virtual void subclass_control();
 //      //    virtual void unsubclass_control();
 //      //protected:
@@ -288,8 +288,8 @@
 //   //    //
 //   //
 //   //    //void replaceWindowProc(WNDPROC wndProc);
-//   //    //    static LRESULT CALLBACK s_control_window_procedure(HWND hWnd, UINT scopedstrMessage, WPARAM wParam, LPARAM lParam);
-//   //    //    virtual bool control_window_procedure(LRESULT & lresult, UINT scopedstrMessage, ::wparam wparam, ::lparam lparam);
+//   //    //    static LRESULT CALLBACK s_control_window_procedure(HWND hWnd, unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam);
+//   //    //    virtual bool control_window_procedure(LRESULT & lresult, unsigned int scopedstrMessage, ::wparam wparam, ::lparam lparam);
 //   //    // virtual void subclass_control();
 //   //    //    virtual void unsubclass_control();
 //   //    //protected:

@@ -72,7 +72,7 @@ void BaseDialog::setResourceId(DWORD id)
   m_resourceId = id;
 }
 
-void BaseDialog::setDefaultPushButton(UINT buttonId)
+void BaseDialog::setDefaultPushButton(unsigned int buttonId)
 {
   SendMessage(m_hwnd, DM_SETDEFID, buttonId, 0);
 }
@@ -97,7 +97,7 @@ void BaseDialog::hide()
   set_visible(false);
 }
 
-void BaseDialog::close_dialog(int code)
+void BaseDialog::closeDialog(int code)
 {
   // Destroy dialog
   if (!m_isModal) {
@@ -123,7 +123,7 @@ void BaseDialog::create()
 
   //window = CreateDialogParam(GetModuleHandle(NULL), pszResourceName,
    window = CreateDialogParam(hinstance, pszResourceName,
-                             parentWindow, dialogProc, (LPARAM)this);
+                             parentWindow, dialogProc, (::lparam)this);
 
   m_isModal = false;
 
@@ -141,7 +141,7 @@ int BaseDialog::showModal()
     HWND parentWindow = (m_pwindowParent != NULL) ? m_pwindowParent->get_hwnd() : NULL;
     result = (int)DialogBoxParam(hinstance,
                                  getResouceName(),
-                                 parentWindow, dialogProc, (LPARAM)this);
+                                 parentWindow, dialogProc, (::lparam)this);
   } else {
     set_visible(true);
     set_foreground_window();
@@ -168,20 +168,20 @@ bool BaseDialog::isCreated()
   return !!IsWindow(m_hwnd);
 }
 
-BOOL BaseDialog::onDrawItem(WPARAM controlID, LPDRAWITEMSTRUCT dis)
+bool BaseDialog::onDrawItem(::wparam controlID, LPDRAWITEMSTRUCT dis)
 {
   return TRUE;
 }
 
-void BaseDialog::onMessageReceived(UINT uMsg, WPARAM wParam, LPARAM lParam)
+void BaseDialog::onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam)
 {
 }
 
-INT_PTR CALLBACK BaseDialog::dialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+INT_PTR CALLBACK BaseDialog::dialogProc(HWND hwnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam)
 {
 
    BaseDialog * pbasedialog = nullptr;
-  BOOL bResult;
+  bool bResult;
 
   bResult = FALSE;
   if (uMsg == WM_INITDIALOG) {
@@ -205,10 +205,10 @@ INT_PTR CALLBACK BaseDialog::dialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPA
 
 }
 
-bool BaseDialog::dialog_procedure(INT_PTR & iptrResult, UINT message, ::wparam wparam, ::lparam lparam)
+bool BaseDialog::dialog_procedure(INT_PTR & iptrResult, unsigned int message, ::wparam wparam, ::lparam lparam)
 {
 
-   BOOL bResult = FALSE;
+   bool bResult = FALSE;
 
    onMessageReceived(message, wparam, lparam);
 
@@ -248,7 +248,7 @@ TCHAR *BaseDialog::getResouceName()
   return m_resourceName;
 }
 
-void BaseDialog::setControlById(::remoting::Window &control, DWORD id) 
+void BaseDialog::subclassControlById(::remoting::Window &control, DWORD id) 
 {
   control = GetDlgItem(m_hwnd, id);
 }
@@ -279,27 +279,27 @@ void BaseDialog::loadIcon(DWORD id)
 //   return set_foreground_window();
 // }
 
-BOOL BaseDialog::onInitDialog()
+bool BaseDialog::onInitDialog()
 {
   return FALSE;
 }
 
-BOOL BaseDialog::onNotify(UINT controlID, LPARAM data)
+bool BaseDialog::onNotify(unsigned int controlID, ::lparam data)
 {
   return FALSE;
 }
 
-BOOL BaseDialog::onCommand(UINT controlID, UINT notificationID)
+bool BaseDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
   return FALSE;
 }
 
-BOOL BaseDialog::onDestroy()
+bool BaseDialog::onDestroy()
 {
   return FALSE;
 }
 
-BOOL BaseDialog::onClose()
+bool BaseDialog::onClose()
 {
   return FALSE;
 }

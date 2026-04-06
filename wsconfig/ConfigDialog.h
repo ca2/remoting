@@ -63,10 +63,10 @@ protected:
   void initControls();
   void loadSettings();
   // Init dialog handler
-  virtual BOOL onInitDialog();
-  virtual BOOL onCommand(UINT controlID, UINT notificationID);
-  virtual BOOL onNotify(UINT controlID, LPARAM data);
-  virtual BOOL onDestroy();
+  virtual bool onInitDialog();
+  virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
+  virtual bool onNotify(unsigned int controlID, ::lparam data);
+  virtual bool onDestroy();
   // Button handlers
   void onCancelButtonClick();
   void onOKButtonClick();

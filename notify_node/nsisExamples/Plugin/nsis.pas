@@ -106,7 +106,7 @@ var
 
 procedure Init(const hwndParent: HWND; const string_size: integer; const variables: PChar; const stacktop: pointer; const extraparameters: pointer = nil);
 
-function LogMessage(Msg : String): BOOL;
+function LogMessage(Msg : String): bool;
 function Call(NSIS_func : String) : Integer;
 function PopString(): string;
 procedure PushString(const str: string='');
@@ -140,7 +140,7 @@ begin
     end;
 end;
 
-function LogMessage(Msg : String): BOOL;
+function LogMessage(Msg : String): bool;
 var
   ItemCount : Integer;
   item: TLVItem;

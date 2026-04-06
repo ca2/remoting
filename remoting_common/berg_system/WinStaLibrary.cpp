@@ -44,7 +44,7 @@ WinStaLibrary::~WinStaLibrary()
   }
 }
 
-BOOL WinStaLibrary::WinStationConnectW(HANDLE server, ULONG connectSessionId,
+bool WinStaLibrary::WinStationConnectW(HANDLE server, ULONG connectSessionId,
                                        ULONG activeSessionId, PCWSTR password,
                                        ULONG unknown)
 {

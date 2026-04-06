@@ -42,10 +42,10 @@ public:
    */
   ::string getPassword() const;
 protected:
-  virtual BOOL onInitDialog();
-  virtual BOOL onNotify(UINT controlID, LPARAM data);
-  virtual BOOL onCommand(UINT controlID, UINT notificationID);
-  virtual BOOL onDestroy();
+  virtual bool onInitDialog();
+  virtual bool onNotify(unsigned int controlID, ::lparam data);
+  virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
+  virtual bool onDestroy();
 private:
   ::string m_password;
   TextBox m_passwordTextBox;

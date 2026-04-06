@@ -30,15 +30,15 @@ Win8ScreenDriver::Win8ScreenDriver(UpdateKeeper *updateKeeper,
                                    critical_section *fbcritical_section,
                                    LogWriter *log)
 : WinVideoRegionUpdaterImpl(log),
-  m_log(log),
+  m_plogwriter(log),
   m_fbcritical_section(fbcritical_section),
   m_updateKeeper(updateKeeper),
   m_updateListener(updateListener),
   m_detectionEnabled(false)
 {
-  m_log->debug("Win8ScreenDriver creating new Win8ScreenDriverImpl");
+  m_plogwriter->debug("Win8ScreenDriver creating new Win8ScreenDriverImpl");
   critical_section_lock al(&m_drvImplMutex);
-  m_drvImpl = new Win8ScreenDriverImpl(m_log, m_updateKeeper, m_fbcritical_section, m_updateListener);
+  m_drvImpl = new Win8ScreenDriverImpl(m_plogwriter, m_updateKeeper, m_fbcritical_section, m_updateListener);
 }
 
 Win8ScreenDriver::~Win8ScreenDriver()
@@ -100,18 +100,18 @@ bool Win8ScreenDriver::getScreenSizeChanged()
 bool Win8ScreenDriver::applyNewScreenProperties()
 {
   try {
-    m_log->debug("Applying new screen properties, deleting old Win8ScreenDriverImpl");
+    m_plogwriter->debug("Applying new screen properties, deleting old Win8ScreenDriverImpl");
     critical_section_lock al(&m_drvImplMutex);
     if (m_drvImpl != 0) {
       delete m_drvImpl;
       m_drvImpl = 0;
     }
-    m_log->debug("Applying new screen properties, creating new Win8ScreenDriverImpl");
+    m_plogwriter->debug("Applying new screen properties, creating new Win8ScreenDriverImpl");
     Win8ScreenDriverImpl *drvImpl =
-      new Win8ScreenDriverImpl(m_log, m_updateKeeper, m_fbcritical_section, m_updateListener, m_detectionEnabled);
+      new Win8ScreenDriverImpl(m_plogwriter, m_updateKeeper, m_fbcritical_section, m_updateListener, m_detectionEnabled);
     m_drvImpl = drvImpl;
   } catch (::exception &e) {
-    m_log->error("Can't apply new screen properties: {}", e.get_message());
+    m_plogwriter->error("Can't apply new screen properties: {}", e.get_message());
     return false;
   }
   return true;

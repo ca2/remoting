@@ -26,7 +26,7 @@
 
 #include <algorithm>
 
-HexTileDecoder::HexTileDecoder(LogWriter *logWriter)
+HexTileDecoder::HexTileDecoder(::subsystem::LogWriter * plogwriter)
 : DecoderOfRectangle(logWriter)
 {
   m_encoding = EncodingDefs::HEXTILE;

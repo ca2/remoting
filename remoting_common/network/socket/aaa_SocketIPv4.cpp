@@ -309,7 +309,7 @@ void SocketIPv4::getSocketOptions(int level, int name, void *value, socklen_t *l
 
 void SocketIPv4::enableNaggleAlgorithm(bool enabled)
 {
-  BOOL disabled = enabled ? 0 : 1;
+  bool disabled = enabled ? 0 : 1;
 
   setSocketOptions(IPPROTO_TCP, TCP_NODELAY, &disabled, sizeof(disabled));
 }

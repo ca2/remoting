@@ -29,8 +29,8 @@ namespace remoting
 {
    namespace ftp
    {
-      FileTransferOperation::FileTransferOperation(LogWriter *logWriter)
-      : m_logWriter(logWriter),
+      FileTransferOperation::FileTransferOperation(::subsystem::LogWriter * plogwriter)
+      : m_plogwriter(logWriter),
         m_sender(0),
         m_replyBuffer(0),
         m_isTerminating(false)
@@ -85,7 +85,7 @@ namespace remoting
 
       void FileTransferOperation::notifyError(const ::scoped_string & scopedstrMessage)
       {
-         m_logWriter->debug("{}\n", ::string(scopedstrMessage).c_str());
+         m_plogwriter->debug("{}\n", ::string(scopedstrMessage).c_str());
 
          critical_section_lock al(&m_listeners);
 
@@ -98,7 +98,7 @@ namespace remoting
 
       void FileTransferOperation::notifyInformation(const ::scoped_string & scopedstrMessage)
       {
-         m_logWriter->debug("{}\n", scopedstrMessage);
+         m_plogwriter->debug("{}\n", scopedstrMessage);
 
          critical_section_lock al(&m_listeners);
 
