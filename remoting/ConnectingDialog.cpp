@@ -40,7 +40,7 @@ namespace remoting_remoting
    }
 
 
-   BOOL ConnectingDialog::onInitDialog()
+   bool ConnectingDialog::onInitDialog()
    {
 
       construct_newø(m_ptextboxHost);
@@ -51,11 +51,11 @@ namespace remoting_remoting
       subclassControlById(m_ptextboxHost, IDC_HOST);
       m_ptextboxHost->setText(m_strHost);
       subclassControlById(m_ptextboxStatus, IDC_STATUS);
-      m_ptextboxStatus->set_focus();
+      m_ptextboxStatus->setFocus();
       //ødefer_construct_new(m_panimation);
       subclassControlById(m_panimation->m_pbar, IDC_PROGRESS1);
       m_panimation->m_pbar->setRange(0, 8000);
-      return FALSE;
+      return false;
    }
 
    void ConnectingDialog::set_host(const ::scoped_string &hostname) {
@@ -74,17 +74,17 @@ namespace remoting_remoting
       }
    }
 
-   BOOL ConnectingDialog::onCommand(UINT controlID, UINT notificationID)
+   bool ConnectingDialog::onCommand(unsigned int controlID, unsigned int notificationID)
    {
-      if (controlID == IDOK) {
-         close_dialog(1);
-         return TRUE;
+      if (controlID == ::innate_subsystem::IDOK) {
+         closeDialog(1);
+         return true;
       }
-      if (controlID == IDCANCEL) {
-         close_dialog(0);
-         return TRUE;
+      if (controlID == ::innate_subsystem::IDCANCEL) {
+         closeDialog(0);
+         return true;
       }
-      return FALSE;
+      return false;
    }
    // class progress_bar_animation :
    // virtual public ::particle
@@ -144,7 +144,7 @@ namespace remoting_remoting
       {
          m_d = m_time.elapsed().floating_second();
          auto d= fmod(m_d * 0.125, m_dEnd - m_dStart) + m_dStart;
-         ::PostMessage(m_pbar->get_hwnd(), WM_USER + 327, (int) (d * 8'000.0), 0);
+         m_pbar->postUserMessage(WM_USER + 327, (int) (d * 8'000.0), 0);
          preempt(100_ms);
       }
 
@@ -188,7 +188,7 @@ namespace remoting_remoting
    }
 
 
-   bool ConnectingDialog::dialog_procedure(INT_PTR & iptrResult, UINT message, ::wparam wparam, ::lparam lparam)
+   bool ConnectingDialog::dialog_procedure(iptr & iptrResult, unsigned int message, ::wparam wparam, ::lparam lparam)
    {
 
       if (message == WM_USER + 328)

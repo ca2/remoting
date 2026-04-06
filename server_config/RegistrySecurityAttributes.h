@@ -25,7 +25,9 @@
 #pragma once
 
 
-#include "remoting/remoting_common/util/winhdr.h"
+//#include "remoting/remoting_common/util/winhdr.h"
+#include "acme/_operating_system.h"
+
 
 #include "remoting/remoting_common/win_system/security/SecurityIdentifier.h"
 #include "remoting/remoting_common/win_system/security/SecurityDescriptor.h"

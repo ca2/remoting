@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "acme/operating_system/windows/berg_system/WinClipboard.h"
-#include "apex/innate_subsystem/DibFrameBuffer.h"
+#include "acme/subsystem/windows/node/Clipboard.h"
+#include "remoting/remoting_common/gui/DibFrameBuffer.h"
 
 
 #include "ScaleManager.h"

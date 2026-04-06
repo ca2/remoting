@@ -26,11 +26,14 @@
 
 
 //
-#include "remoting/remoting_common/rfb/PixelFormat.h"
+#include "acme/subsystem/framebuffer/PixelFormat.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 #include "acme/prototype/geometry2d/size.h"
 
 // FIXME: Move implementation to the .cpp file.
+
+namespace remoting
+{
 
 class CLASS_DECL_REMOTING_COMMON FrameBuffer
 {

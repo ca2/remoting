@@ -24,7 +24,9 @@
 #include "framework.h"
 #include "Keymap.h"
 
-#include "remoting/remoting_common/util/winhdr.h"
+//#include "remoting/remoting_common/util/winhdr.h"
+#include "acme/_operating_system.h"
+
 #include "remoting/remoting_common/win_system/InputInjector.h"
 #include "remoting/remoting_common/win_system/Keyboard.h"
 #include <crtdbg.h>

@@ -43,7 +43,7 @@ namespace remoting_remoting
     {
     public:
 
-        ::pointer < ProgressBar>m_pbar;
+        ::pointer < innate_subsystem::ProgressBar>m_pbar;
         double m_dStart = 0.0;
         double m_dEnd = 0.0;
         double m_d;

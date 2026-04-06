@@ -38,9 +38,9 @@ namespace remoting_remoting
 
     bool AuthenticationDialog::onInitDialog()
     {
-        setControlById(m_ptextboxHostname, IDC_EHOST);
+        subclassControlById(m_ptextboxHostname, IDC_EHOST);
         m_ptextboxHostname->setText(m_strHost);
-        setControlById(m_ptextboxPassword, IDC_EPASSW);
+        subclassControlById(m_ptextboxPassword, IDC_EPASSW);
         m_ptextboxPassword->setFocus();
         return false;
     }
@@ -54,12 +54,12 @@ namespace remoting_remoting
     bool AuthenticationDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
         if (controlID == IDOK) {
-            m_strPassword = m_password.get_text();
-            close_dialog(1);
+            m_strPassword = m_ptextboxPassword->getText();
+            closeDialog(1);
             return TRUE;
         }
         if (controlID == IDCANCEL) {
-            close_dialog(0);
+            closeDialog(0);
             return TRUE;
         }
         return FALSE;

@@ -42,18 +42,18 @@
 //#include "remoting/remoting_common/win_system/WindowsApplication.h"
 namespace remoting_remoting
 {
-   class ConfigurationDialog : public BaseDialog
+   class ConfigurationDialog : public ::innate_subsystem::BaseDialog
    {
    public:
       ConfigurationDialog();
 
-      void setListenerOfUpdate(WindowsApplication *application);
+      void setListenerOfUpdate(::subsystem::OperatingSystemApplicationInterface *application);
 
       //protected:
-      BOOL onCommand(unsigned int controlID, unsigned int notificationID);
+      bool onCommand(unsigned int controlID, unsigned int notificationID);
       void onLogLevelChange();
       void onOpenFolderButtonClick();
-      BOOL onInitDialog();
+      bool onInitDialog();
 
       ::pointer < ::innate_subsystem::CheckBox> m_pcheckboxShowToolBars;
       ::pointer < ::innate_subsystem::CheckBox m_pcheckboxWarnAtSwitching;
@@ -66,12 +66,12 @@ namespace remoting_remoting
       ::pointer < ::innate_subsystem::TextBox > m_ptextboxLogging;
       ::pointer < ::innate_subsystem::Control > m_pcontrolOpenLogDir;
 
-      WindowsApplication *m_application;
+      ::subsystem::OperatingSystemApplicationInterface *m_application;
 
       //private:
       void updateControlValues();
       bool isInputValid();
-      bool testNum(TextBox *tb, const ::scoped_string & scopedstrTbName);
+      bool testNum(::innate_subsystem::TextBox *tb, const ::scoped_string & scopedstrTbName);
       void onOkPressed();
    };
 } // namespace remoting_remoting

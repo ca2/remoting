@@ -26,7 +26,7 @@
 
 
 ////////#include "remoting/remoting_common/util/::string.h"
-#include "../../../app/acme/subsystem/win-system/Singleton.h"
+#include "acme/subsystem/Singleton.h"
 #include "remoting/remoting_common/config/ConnectionHistory.h"
 //#include "log_writer/FileLogWriter.h"
 ////#include "remoting/remoting_common/thread/critical_section.h"
@@ -73,10 +73,10 @@ namespace remoting
 
       // Creates path to log file and place value to m_pathToLogFile member
       // creates LogWriter and return pointer to him
-      LogWriter *initLog(const ::file::path &path, const ::scoped_string & scopedstrLogName, bool useSpecialFolder = true);
+      ::subsystem::LogWriter *initLog(const ::file::path &path, const ::scoped_string & scopedstrLogName, bool useSpecialFolder = true);
 
       // function return pointer to LogWriter
-      LogWriter *getLogWriter();
+      ::subsystem::LogWriter *getLogWriter();
 
       // Sets number of connections to remember
       void setHistoryLimit(int historyLimit);

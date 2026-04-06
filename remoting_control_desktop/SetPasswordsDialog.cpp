@@ -22,7 +22,9 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_common/util/winhdr.h"
+//#include "remoting/remoting_common/util/winhdr.h"
+#include "acme/_operating_system.h"
+
 #include "remoting_node_desktop/NamingDefs.h"
 
 #include "acme/acme/Registry.h"

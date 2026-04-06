@@ -30,7 +30,7 @@
 class CLASS_DECL_REMOTING_COMMON VncAuthentication
 {
 public:
-  static void vncAuthenticate(DataInputStream * pinput, DataOutputStream *output,
+  static void vncAuthenticate(::subsystem::DataInputStream * pinput, ::subsystem::DataOutputStream *output,
                     const ::scoped_string & password);
 
   // TODO: removed duplicate code: ServerConfig.h

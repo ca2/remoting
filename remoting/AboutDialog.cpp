@@ -23,8 +23,8 @@
 //
 #include "framework.h"
 #include "AboutDialog.h"
-#include "acme/subsystem/Shell.h"
-#include "../../app/acme/subsystem/win-system/VersionInfo.h"
+#include "acme/subsystem/node/Shell.h"
+#include "acme/subsystem/node/VersionInfo.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 #include "apex/innate_subsystem/Control.h"
 #include "BuildTime.h"
