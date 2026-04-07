@@ -26,8 +26,8 @@
 //#include "remoting/remoting_common/util/::earth::time.h"
 #include "remoting/remoting_common/resource.h"
 #include "remoting/remoting_common/util/ResourceLoader.h"
-#include <crtdbg.h>
-#include <stdio.h>
+////#include aaa_<crtdbg.h>
+//// #include aaa_<stdio.h>
 #include "resource.h"
 #include "acme/prototype/datetime/datetime.h"
 
@@ -68,7 +68,7 @@ namespace remoting_remoting
 
         subclassWindow();
 
-        //::remoting::Window::replaceWindowProc(FileInfoListView::s_newWndProc);
+        //::innate_subsystem::Control::replaceWindowProc(FileInfoListView::s_newWndProc);
     }
 
     void FileInfoListView::addItem(int index, ::remoting::ftp::FileInfo *fileInfo)
@@ -157,12 +157,17 @@ namespace remoting_remoting
     void FileInfoListView::loadImages()
     {
         if (m_imagelistSmall != NULL) {
-            ImageList_Destroy(m_imagelistSmall);
-        } = ImageList_Create(GetSystemMetrics(SM_CXSMICON),
-                                            GetSystemMetrics(SM_CYSMICON),
-                                            ILC_MASK, 1, 1);
+            // ImageList_Destroy(m_imagelistSmall);
 
-        m_imagelistSmall.create(
+           m_imagelistSmall.destroy_image_list();
+        }
+
+
+       // = ImageList_Create(GetSystemMetrics(SM_CXSMICON),
+       //                                      GetSystemMetrics(SM_CYSMICON),
+       //                                      ILC_MASK, 1, 1);
+
+        m_imagelistSmall.create_image_list(
            GetSystemMetrics(SM_CXSMICON),
            GetSystemMetrics(SM_CYSMICON),
            image_list::e_create_flag_mask)

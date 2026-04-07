@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "StringParser.h"
 
-#include <stdio.h>
+// #include aaa_<stdio.h>
 
 bool StringParser::parseInt(const ::scoped_string & scopedstrStr, int *out)
 {

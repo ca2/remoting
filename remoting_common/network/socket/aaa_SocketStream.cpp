@@ -22,12 +22,12 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include <stdlib.h>
+// #include aaa_<stdlib.h>
 #include "SocketStream.h"
 
 #include "../socket/sockdefs.h"
 
-#include <crtdbg.h>
+//#include aaa_<crtdbg.h>
 
 SocketStream::SocketStream(SocketIPv4 *sock)
 : m_socket(sock)

@@ -26,13 +26,13 @@
 
 
 //#include "remoting/remoting_common/util/winhdr.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 
 //#include "remoting/remoting_common/thread/critical_section.h"
 #include "DynamicLibrary.h"
 #include "SystemException.h"
 //#include "log_writer/LogWriter.h"
-#include <WtsApi32.h>
+// #include aaa_<wtsapi32.h>
 
 typedef DWORD (WINAPI *pWTSGetActiveConsoleSessionId)(void);
 typedef bool (WINAPI *pWTSQueryUserToken)(ULONG SessionId, PHANDLE phToken);

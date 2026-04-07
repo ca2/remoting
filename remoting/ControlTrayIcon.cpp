@@ -108,7 +108,7 @@ namespace remoting_remoting
             pos.x = pos.y = 0;
         }
 
-        HWND notifyWnd = get_hwnd();
+        HWND notifyWnd = operating_system_window();
         SetForegroundWindow(notifyWnd);
 
         int action = TrackPopupMenu(m_menu.getMenu(),

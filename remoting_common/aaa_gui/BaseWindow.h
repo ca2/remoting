@@ -27,14 +27,14 @@
 #include "acme/subsystem/_common_header.h"
 #include "apex/innate_subsystem/Window.h"
 class CLASS_DECL_REMOTING_COMMON BaseWindow :
-virtual public ::remoting::Window
+virtual public ::innate_subsystem::Control
 {
 public:
   BaseWindow();
 
   ~BaseWindow() override;
 
-  // get_hwnd()
+  // operating_system_window()
   // Get a handle of the window 
   HWND getHWnd() const;
   void setHWnd(HWND hwnd);

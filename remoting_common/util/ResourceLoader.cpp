@@ -22,11 +22,11 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "ResourceLoader.h"
 
 
-#include <crtdbg.h>
+//#include aaa_<crtdbg.h>
 
 ResourceLoader::ResourceLoader(HINSTANCE appInst)
 : m_appInstance(appInst)

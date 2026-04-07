@@ -41,7 +41,7 @@
 
 #include "remoting/remoting_common/util/VncPassCrypt.h"
 //#include "remoting/remoting_common/util/winhdr.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 
 #include "remoting/remoting_common/util/StringTable.h"
 #include "remoting_node_desktop/NamingDefs.h"
@@ -67,7 +67,7 @@
 //#include "remoting/remoting_common/util/::string.h"
 #include "remoting_node_desktop/NamingDefs.h"
 #include "SetPasswordsDialog.h"
-#include <algorithm>
+//#include aaa_<algorithm>
 
 ControlApplication::ControlApplication(HINSTANCE hinst,
                                        const ::scoped_string & scopedstrwindowClassName,
@@ -171,7 +171,7 @@ int ControlApplication::run()
     if (!cmdLineParser.isSlave() && !cmdLineParser.hasCheckServicePasswords()) {
       const ::scoped_string & scopedstrMsg = main_subsystem()->string_table()->getString(IDS_FAILED_TO_CONNECT_TO_CONTROL_SERVER);
       const ::scoped_string & scopedstrCaption = main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL);
-      main_innate_subsystem()->message_box(0, msg, caption, MB_OK | MB_ICONERROR);
+      main_subsystem()->message_box(0, msg, caption, ::user::e_message_box_ok | MB_ICONERROR);
     }
     return 1;
   }
@@ -238,7 +238,7 @@ int ControlApplication::run()
         notifyConnectionLost();
         return 1;
       } catch (::remoting::Exception &) {
-        _ASSERT(FALSE);
+        _ASSERT(false);
       }
     }
 
@@ -284,15 +284,15 @@ void ControlApplication::notifyServerSideException(const ::scoped_string & scope
 
   scopedstrMessage.format(main_subsystem()->string_table()->getString(IDS_CONTROL_SERVER_RAISE_EXCEPTION), reason);
 
-  main_innate_subsystem()->message_box(0, scopedstrMessage, main_subsystem()->string_table()->getString(IDS_MBC_TVNSERVER), MB_OK | MB_ICONERROR);
+  main_subsystem()->message_box(0, scopedstrMessage, main_subsystem()->string_table()->getString(IDS_MBC_TVNSERVER), ::user::e_message_box_ok | MB_ICONERROR);
 }
 
 void ControlApplication::notifyConnectionLost()
 {
-  main_innate_subsystem()->message_box(0,
+  main_subsystem()->message_box(0,
              main_subsystem()->string_table()->getString(IDS_CONTROL_CONNECTION_LOST),
              main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
-             MB_OK | MB_ICONEXCLAMATION);
+             ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
 }
 
 void ControlApplication::execute()
@@ -353,14 +353,14 @@ int ControlApplication::runConfigurator(bool configService, bool isRunAsRequeste
 {
   // If not enough rights to configurate service, then restart application requesting
   // admin access rights.
-  if (configService && (IsUserAnAdmin() == FALSE)) {
+  if (configService && (IsUserAnAdmin() == false)) {
     // If admin rights already requested and application still don't have them,
     // then show error scopedstrMessage and exit.
     if (isRunAsRequested) {
-      main_innate_subsystem()->message_box(0,
+      main_subsystem()->message_box(0,
         main_subsystem()->string_table()->getString(IDS_ADMIN_RIGHTS_NEEDED),
         main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
-        MB_OK | MB_ICONERROR);
+        ::user::e_message_box_ok | MB_ICONERROR);
       return 0;
     }
     // Path to remoting_node binary.
@@ -378,10 +378,10 @@ int ControlApplication::runConfigurator(bool configService, bool isRunAsRequeste
       Shell::runAsAdmin(pathToBinary, childCommandLine);
     } catch (SystemException &sysEx) {
       if (sysEx.getErrorCode() != ERROR_CANCELLED) {
-        main_innate_subsystem()->message_box(0,
+        main_subsystem()->message_box(0,
           sysEx.get_message(),
           main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
-          MB_OK | MB_ICONERROR);
+          ::user::e_message_box_ok | MB_ICONERROR);
       }
       return 1;
     } // try / catch.
@@ -419,14 +419,14 @@ void ControlApplication::getCryptedPassword(unsigned char cryptedPass[8], const 
 int ControlApplication::checkServicePasswords(bool isRunAsRequested)
 {
   // FIXME: code duplication.
-  if (IsUserAnAdmin() == FALSE) {
+  if (IsUserAnAdmin() == false) {
     // If admin rights already requested and application still don't have them,
     // then show error scopedstrMessage and exit.
     if (isRunAsRequested) {
-      main_innate_subsystem()->message_box(0,
+      main_subsystem()->message_box(0,
         main_subsystem()->string_table()->getString(IDS_ADMIN_RIGHTS_NEEDED),
         main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
-        MB_OK | MB_ICONERROR);
+        ::user::e_message_box_ok | MB_ICONERROR);
       return 1;
     }
     // Path to remoting_node binary.
@@ -445,10 +445,10 @@ int ControlApplication::checkServicePasswords(bool isRunAsRequested)
       return 0;
     } catch (SystemException &sysEx) {
       if (sysEx.getErrorCode() != ERROR_CANCELLED) {
-        main_innate_subsystem()->message_box(0,
+        main_subsystem()->message_box(0,
           sysEx.get_message(),
           main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
-          MB_OK | MB_ICONERROR);
+          ::user::e_message_box_ok | MB_ICONERROR);
       }
       return 1;
     } // try / catch.
@@ -467,7 +467,7 @@ void ControlApplication::checkServicePasswords()
   bool askToChangeRfbAuth = !config->isUsingAuthentication() || !config->hasPrimaryPassword();
   bool askToChangeAdmAuth = false;
   SetPasswordsDialog dialog(askToChangeRfbAuth, askToChangeAdmAuth);
-  if (dialog.showModal() == IDOK) {
+  if (dialog.showModal() == ::innate_subsystem::IDOK) {
     unsigned char cryptedPass[8];
     bool useRfbAuth = dialog.getUseRfbPass();
     bool dontUseRfbAuth = dialog.getRfbPassForClear();
@@ -512,9 +512,9 @@ void ControlApplication::reloadConfig()
   } catch (::exception &e) {
     ::string errMess;
     errMess.format(main_subsystem()->string_table()->getString(IDS_FAILED_TO_RELOAD_SERVICE_ON_CHECK_PASS), e.get_message());
-    main_innate_subsystem()->message_box(0,
+    main_subsystem()->message_box(0,
       errMess,
       main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
-      MB_OK | MB_ICONERROR);
+      ::user::e_message_box_ok | MB_ICONERROR);
   }
 }

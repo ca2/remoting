@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "acme/subsystem/windows/node/Clipboard.h"
+#include "acme/subsystem/node/Clipboard.h"
 #include "acme/subsystem/framebuffer/DibFrameBuffer.h"
 
 
@@ -85,7 +85,7 @@ namespace remoting_remoting
         void setCtrlState(const bool ctrlState);
         // This function set state key "Alt", but not send data to server.
         void setAltState(const bool altState);
-        // This function return true, if key "::remoting::Window" is pressed.
+        // This function return true, if key "::innate_subsystem::Control" is pressed.
         bool getCtrlState() const;
         // This function return true, if key "Alt" is pressed.
         bool getAltState() const;

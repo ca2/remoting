@@ -33,18 +33,18 @@
  */
 
 #ifdef HAVE_STDDEF_H
-#include <stddef.h>
+// #include aaa_<stddef.h>
 #endif
 
 #ifdef HAVE_STDLIB_H
-#include <stdlib.h>
+// #include aaa_<stdlib.h>
 #endif
 
 #ifdef NEED_SYS_TYPES_H
-#include <sys/types.h>
+// #include aaa_<sys/types.h>
 #endif
 
-#include <stdio.h>
+// #include aaa_<stdio.h>
 
 /*
  * We need memory copying and zeroing functions, plus strncpy().
@@ -58,13 +58,13 @@
 
 #ifdef NEED_BSD_STRINGS
 
-#include <strings.h>
+// #include aaa_<strings.h>
 #define MEMZERO(target,size)	bzero((void *)(target), (size_t)(size))
 #define MEMCOPY(dest,src,size)	bcopy((const void *)(src), (void *)(dest), (size_t)(size))
 
 #else /* not BSD, assume ANSI/SysV string lib */
 
-#include <string.h>
+// #include aaa_<string.h>
 #define MEMZERO(target,size)	memset((void *)(target), 0, (size_t)(size))
 #define MEMCOPY(dest,src,size)	memcpy((void *)(dest), (const void *)(src), (size_t)(size))
 

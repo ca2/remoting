@@ -5,13 +5,13 @@
  *          http://creativecommons.org/licenses/by/3.0/deed.en_US
  */
 #if defined(_WIN32)
-#include <Windows.h>
+// #include aaa_<windows.h>
 
 #elif defined(__unix__) || defined(__unix) || defined(unix) || (defined(__APPLE__) && defined(__MACH__))
-#include <unistd.h>
-#include <sys/resource.h>
-#include <sys/times.h>
-#include <time.h>
+// #include aaa_<unistd.h>
+// #include aaa_<sys/resource.h>
+// #include aaa_<sys/times.h>
+//#include aaa_<time.h>
 #include "GetCPUtime.h"
 
 #else

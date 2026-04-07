@@ -25,8 +25,8 @@
 #include "FileExistDialog.h"
 //#include "remoting/remoting_common/util/::earth::time.h"
 #include "resource.h"
-#include <crtdbg.h>
-#include <stdio.h>
+////#include aaa_<crtdbg.h>
+//// #include aaa_<stdio.h>
 #include "acme/prototype/datetime/datetime.h"
 
 

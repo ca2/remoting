@@ -26,7 +26,7 @@
 
 #include "remoting/remoting_common/ftp_common/FTMessage.h"
 
-#include <algorithm>
+//#include aaa_<algorithm>
 
 namespace remoting
 {

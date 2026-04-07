@@ -38,12 +38,12 @@ public:
   Tooltip();
   virtual ~Tooltip();
 
-  virtual void showTooltip(::remoting::Window * pwindow) = 0;
+  virtual void showTooltip(::innate_subsystem::Control * pwindow) = 0;
 
   virtual void setText(const ::scoped_string & scopedstrText) = 0;
   virtual void setTitle(const ::scoped_string & scopedstrCaption) = 0;
 
-  virtual ::string get_text() const = 0;
+  virtual ::string getText() const = 0;
   virtual ::string getTitle() const = 0;
 
   virtual void setIconType(int iconType) = 0;

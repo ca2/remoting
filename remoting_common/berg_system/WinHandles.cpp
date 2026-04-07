@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "WinHandles.h"
 //#include "Environment.h"
 #include "acme/subsystem/Exception.h"
@@ -41,7 +41,7 @@ HANDLE WinHandles::assignHandleFor(HANDLE hSource, HANDLE hTargetProc,
   if (neededToCloseSource) {
     options |= DUPLICATE_CLOSE_SOURCE;
   }
-  if (DuplicateHandle(hSrcProc, hSource, hTargetProc, &hDest, 0, FALSE,
+  if (DuplicateHandle(hSrcProc, hSource, hTargetProc, &hDest, 0, false,
                       options) == 0) {
     ::string errText;
     errText = windows::last_error_message(windows::last_error());
@@ -49,7 +49,7 @@ HANDLE WinHandles::assignHandleFor(HANDLE hSource, HANDLE hTargetProc,
   }
   // Try keep of the close rights.
   if (keepCloseRight) {
-    if (DuplicateHandle(hTargetProc, hDest, 0, 0, 0, FALSE,
+    if (DuplicateHandle(hTargetProc, hDest, 0, 0, 0, false,
                         DUPLICATE_CLOSE_SOURCE) == 0) {
       ::string errText;
        errText = windows::last_error_message(windows::last_error());
@@ -64,7 +64,7 @@ HANDLE WinHandles::assignHandleFor(HANDLE hSource,
                                    bool neededToCloseSource,
                                    bool keepCloseRight)
 {
-  HANDLE processHandle = OpenProcess(PROCESS_DUP_HANDLE, FALSE, procId);
+  HANDLE processHandle = OpenProcess(PROCESS_DUP_HANDLE, false, procId);
   if (processHandle == 0) {
     throw ::remoting::Exception("Couldn't open process to assign a handle");
   }

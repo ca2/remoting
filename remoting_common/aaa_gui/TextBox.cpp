@@ -64,7 +64,7 @@ int TextBox::getCaretPos()
 
 void TextBox::selectText(size_t startPos, size_t endPos)
 {
-  SendMessage(get_hwnd(), EM_SETSEL, startPos, endPos);
+  SendMessage(operating_system_window(), EM_SETSEL, startPos, endPos);
 }
 
 void TextBox::showBalloonTip(Tooltip *tip)

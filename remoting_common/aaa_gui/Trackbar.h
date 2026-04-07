@@ -27,7 +27,7 @@
 
 #include "apex/innate_subsystem/Window.h"
 
-class CLASS_DECL_REMOTING_COMMON Trackbar : public ::remoting::Window
+class CLASS_DECL_REMOTING_COMMON Trackbar : public ::innate_subsystem::Control
 {
 public:
   Trackbar();

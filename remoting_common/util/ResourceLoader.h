@@ -24,76 +24,76 @@
 
 #pragma once
 
-
-#include "winhdr.h"
-
-#include "Singleton.h"
-
-/**
- * Loader of resources from resource files linked with application.
- *
- * Singleton without support of "lazy" initialization.
- */
-class CLASS_DECL_REMOTING_COMMON ResourceLoader : public Singleton<ResourceLoader>
-{
-public:
-  /**
-   * Initializes resource loader singleton.
-   * @param appInst windwos application instance.
-   */
-  ResourceLoader(HINSTANCE appInst);
-  /**
-   * Frees resource loader singleton.
-   */
-  virtual ~ResourceLoader();
-
-  /**
-   * Loads standart icon from resources.
-   * @param iconName icon name.
-   * @return icon handle of 0 if cannot load icon.
-   */
-  HICON loadStandartIcon(const ::scoped_string & scopedstriconName);
-
-  /**
-   * Loads icon from resources.
-   * @param iconName icon name.
-   * @return icon handle of 0 if cannot load icon.
-   */
-  HICON loadIcon(const ::scoped_string & scopedstriconName);
-
-  /**
-   * Loads string from resources.
-   * @param [in] id identifier of string in resource file.
-   * @param [out] string storage for string from resources.
-   * @return true if string is loaded, false otherwise.
-   */
-  bool loadString(unsigned int id, ::string & string);
-
-  /**
-   * Loads accelerator from resources.
-   * @param [in] id identifier of accelerator in resource file.
-   * @return handle of accelerator if it's loaded.
-   */
-  HACCEL loadAccelerator(unsigned int id);
-
-  /**
-   * Loads standart cursor.
-   * @param [in] id identifier of accelerator in resource file.
-   * @return handle of cursor if it's loaded.
-   */
-  HCURSOR loadStandardCursor(const ::scoped_string & scopedstrid);
-  /**
-   * Loads cursor from resources.
-   * @param [in] id identifier of accelerator in resource file.
-   * @return handle of cursor if it's loaded.
-   */
-  HCURSOR loadCursor(unsigned int id);
-
-protected:
-  /**
-   * Application instance.
-   */
-  HINSTANCE m_appInstance;
-};
-
-
+//
+// #include "winhdr.h"
+//
+// #include "Singleton.h"
+//
+// /**
+//  * Loader of resources from resource files linked with application.
+//  *
+//  * Singleton without support of "lazy" initialization.
+//  */
+// class CLASS_DECL_REMOTING_COMMON ResourceLoader : public Singleton<ResourceLoader>
+// {
+// public:
+//   /**
+//    * Initializes resource loader singleton.
+//    * @param appInst windwos application instance.
+//    */
+//   ResourceLoader(HINSTANCE appInst);
+//   /**
+//    * Frees resource loader singleton.
+//    */
+//   virtual ~ResourceLoader();
+//
+//   /**
+//    * Loads standart icon from resources.
+//    * @param iconName icon name.
+//    * @return icon handle of 0 if cannot load icon.
+//    */
+//   HICON loadStandartIcon(const ::scoped_string & scopedstriconName);
+//
+//   /**
+//    * Loads icon from resources.
+//    * @param iconName icon name.
+//    * @return icon handle of 0 if cannot load icon.
+//    */
+//   HICON loadIcon(const ::scoped_string & scopedstriconName);
+//
+//   /**
+//    * Loads string from resources.
+//    * @param [in] id identifier of string in resource file.
+//    * @param [out] string storage for string from resources.
+//    * @return true if string is loaded, false otherwise.
+//    */
+//   bool loadString(unsigned int id, ::string & string);
+//
+//   /**
+//    * Loads accelerator from resources.
+//    * @param [in] id identifier of accelerator in resource file.
+//    * @return handle of accelerator if it's loaded.
+//    */
+//   HACCEL loadAccelerator(unsigned int id);
+//
+//   /**
+//    * Loads standart cursor.
+//    * @param [in] id identifier of accelerator in resource file.
+//    * @return handle of cursor if it's loaded.
+//    */
+//   HCURSOR loadStandardCursor(const ::scoped_string & scopedstrid);
+//   /**
+//    * Loads cursor from resources.
+//    * @param [in] id identifier of accelerator in resource file.
+//    * @return handle of cursor if it's loaded.
+//    */
+//   HCURSOR loadCursor(unsigned int id);
+//
+// protected:
+//   /**
+//    * Application instance.
+//    */
+//   HINSTANCE m_appInstance;
+// };
+//
+//

@@ -29,8 +29,8 @@
 #include "remoting/remoting_common/client_config/ConnectionConfig.h"
 #include "remoting/remoting_common/client_config/ConnectionConfigSM.h"
 #include "remoting/remoting_common/client_config/ViewerSettingsManager.h"
-#include "remoting/remoting_common/util/StringParser.h"
-#include "apex/innate_subsystem/BaseDialog.h"
+#include "acme/subsystem/StringParser.h"
+#include "apex/innate_subsystem/Dialog.h"
 #include "apex/innate_subsystem/TextBox.h"
 #include "apex/innate_subsystem/CheckBox.h"
 #include "apex/innate_subsystem/ComboBox.h"
@@ -40,44 +40,44 @@
 
 namespace remoting_remoting
 {
-    class OptionsDialog : public BaseDialog
+    class OptionsDialog : public ::innate_subsystem::Dialog
     {
     public:
         OptionsDialog();
 
-        void setConnectionConfig(ConnectionConfig *conConfig);
+        void setConnectionConfig(::remoting::ConnectionConfig *conConfig);
         void setConnected();
 
-    protected:
-        ComboBox m_useEnc;
-        CheckBox m_eightBit;
-        CheckBox m_compLvl;
-        Trackbar m_tcompLvl;
-        ::remoting::Window m_quality;
-        CheckBox m_jpeg;
-        Trackbar m_tjpeg;
-        ::remoting::Window m_quality2;
-        CheckBox m_copyrect;
-        CheckBox m_viewonly;
-        CheckBox m_disclip;
-        CheckBox m_sharedses;
-        ComboBox m_scale;
-        CheckBox m_fullscr;
-        CheckBox m_deiconfy;
-        CheckBox m_swapmouse;
-        CheckBox m_track;       // Track remote control locally
-        CheckBox m_cursor;      // Let remote server deal with mouse cursor
-        CheckBox m_ncursor;     // Don't show remote cursor
-        CheckBox m_dot;
-        CheckBox m_smalldot;
-        CheckBox m_arrow;
-        CheckBox m_nlocal;
+    //protected:
+        ::pointer < ::innate_subsystem::ComboBoxInterface >       m_pcomoboxUseEnc;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >        m_pcheckboxEightBit;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxCompressionLevel;
+        ::pointer < ::innate_subsystem::TrackbarInterface >       m_ptrackbarCompressionLevel;
+        ::pointer < ::innate_subsystem::ControlInterface >        m_pcontrolQuality;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxJpeg;
+        ::pointer < ::innate_subsystem::TrackbarInterface >       m_ptrackbarJpeg;
+        ::pointer < ::innate_subsystem::ControlInterface >        m_pcontrolQuality2;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxCopyrect;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxViewonly;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxDisclip;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxSharedses;
+        ::pointer < ::innate_subsystem::ComboBoxInterface >       m_pcheckboxScale;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxFullscr;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxDeiconfy;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxSwapmouse;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxTrack;       // Track remote control locally
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxCursor;      // Let remote server deal with mouse cursor
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxNcursor;     // Don't show remote cursor
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxDot;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxSmalldot;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxArrow;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxNlocal;
 
         void onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam);
         bool onCommand(unsigned int controlID, unsigned int notificationID);
         bool onInitDialog();
 
-        ConnectionConfig *m_conConfig;
+        ::pointer < ::remoting::ConnectionConfig  >m_pconnectionconfig;
         bool m_connected;
 
     private:

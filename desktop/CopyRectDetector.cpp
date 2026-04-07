@@ -75,7 +75,7 @@ bool CopyRectDetector::checkWindowMovements(HWND hwnd)
       }
     }
   }
-  return TRUE;
+  return true;
 }
 
 bool CopyRectDetector::getWinRect(HWND hwnd, ::int_rectangle *winRect)

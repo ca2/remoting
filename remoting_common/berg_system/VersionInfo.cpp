@@ -22,9 +22,9 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "VersionInfo.h"
-//#include <vector>
+//#include aaa_<vector>
 
 
 VersionInfo::VersionInfo(const ::file::path & pathToFile)

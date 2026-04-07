@@ -32,7 +32,7 @@
 
 #include "remoting_node/resource.h"
 
-PasswordControl::PasswordControl(::remoting::Window *changeButton, ::remoting::Window *unsetButton)
+PasswordControl::PasswordControl(::innate_subsystem::Control *changeButton, ::innate_subsystem::Control *unsetButton)
 : m_enabled(true), 
   m_changeButton(changeButton), 
   m_unsetButton(unsetButton),
@@ -57,9 +57,9 @@ void PasswordControl::enable_window(bool enabled)
 void PasswordControl::unsetPassword(bool promtUser, HWND parentWindow)
 {
   if (promtUser) {
-    if (main_innate_subsystem()->message_box(parentWindow,
+    if (main_subsystem()->message_box(parentWindow,
       main_subsystem()->string_table()->getString(IDS_UNSET_PASSWORD_PROMT),
-      main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL), MB_YESNO | MB_ICONQUESTION) == IDNO) {
+      main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL), MB_YESNO | MB_ICONQUESTION) == ::innate_subsystem::IDNO) {
       return;
     }
   }
@@ -104,11 +104,11 @@ const char *PasswordControl::getCryptedPassword() const
   return &m_cryptedPassword.front();
 }
 
-bool PasswordControl::showChangePasswordModalDialog(::remoting::Window *parent)
+bool PasswordControl::showChangePasswordModalDialog(::innate_subsystem::Control *parent)
 {
   ChangePasswordDialog changePasswordDialog(parent, m_state != NewPassword && m_state != ResetPassword);
 
-  if (changePasswordDialog.showModal() != IDOK) {
+  if (changePasswordDialog.showModal() != ::innate_subsystem::IDOK) {
     return false;
   }
 

@@ -31,7 +31,7 @@
 // Owner draw button, that displays button with image and text.
 //
 
-class CLASS_DECL_REMOTING_COMMON ImagedButton : public ::remoting::Window
+class CLASS_DECL_REMOTING_COMMON ImagedButton : public ::innate_subsystem::Control
 {
 public:
   ImagedButton();

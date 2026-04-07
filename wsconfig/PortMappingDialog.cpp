@@ -43,7 +43,7 @@ void PortMappingDialog::setParentDialog(BaseDialog *dialog)
 
 void PortMappingDialog::initControls()
 {
-  HWND dialogHwnd = m_ctrlThis.get_hwnd();
+  HWND dialogHwnd = m_ctrlThis.operating_system_window();
 
   m_exPortsListBox.setWindow(GetDlgItem(dialogHwnd, IDC_MAPPINGS));
   m_editButton.setWindow(GetDlgItem(dialogHwnd, IDC_EDIT_PORT));
@@ -73,7 +73,7 @@ bool PortMappingDialog::onCommand(unsigned int controlID, unsigned int notificat
     }
     break;
   }
-  return TRUE;
+  return true;
 }
 
 bool PortMappingDialog::onInitDialog()
@@ -94,7 +94,7 @@ bool PortMappingDialog::onInitDialog()
     m_exPortsListBox.insertString((int)i, mappingString);
   }
 
-  return TRUE;
+  return true;
 }
 
 void PortMappingDialog::onExPortsListBoxSelChange()
@@ -114,7 +114,7 @@ void PortMappingDialog::onAddButtonClick()
   addDialog.setMapping(&newPM);
   addDialog.setParent(&m_ctrlThis);
 
-  if (addDialog.showModal() == IDOK) {
+  if (addDialog.showModal() == ::innate_subsystem::IDOK) {
     {
       ::string mappingString;
       newPM.toString(&mappingString);
@@ -142,7 +142,7 @@ void PortMappingDialog::onEditButtonClick()
   editDialog.setParent(&m_ctrlThis);
   editDialog.setMapping(pPM);
 
-  if (editDialog.showModal() == IDOK) {
+  if (editDialog.showModal() == ::innate_subsystem::IDOK) {
     ::string mappingString;
     pPM->toString(&mappingString);
     m_exPortsListBox.setItemText(selectedIndex, mappingString);

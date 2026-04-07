@@ -114,7 +114,7 @@ void Region::crop(const ::int_rectangle &  rect)
 
 bool Region::is_empty() const
 {
-  return (miRegionNotEmpty((RegionPtr)&m_reg) == FALSE);
+  return (miRegionNotEmpty((RegionPtr)&m_reg) == false);
 }
 
 bool Region::isPointInside(int x, int y) const
@@ -132,7 +132,7 @@ bool Region::equals(const Region *other) const
   }
 
   return (miRegionsEqual((RegionPtr)&m_reg,
-                         (RegionPtr)&other->m_reg) == TRUE);
+                         (RegionPtr)&other->m_reg) == true);
 }
 
 // FIXME: Optimize, make BoxRec and ::int_rectangle identical to get rid of conversions.

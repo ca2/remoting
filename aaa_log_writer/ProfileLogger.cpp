@@ -2,9 +2,9 @@
 #include "ProfileLogWriter.h"
 
 #include "remoting/remoting_common/util/GetCPUTime.h"
-#include <algorithm>
-#include <numeric> 
-#include <utility> 
+//#include aaa_<algorithm>
+//#include aaa_<numeric> 
+//#include aaa_<utility> 
 #include "remoting/thread/critical_section_lock.h"
 
 // does not works on XP

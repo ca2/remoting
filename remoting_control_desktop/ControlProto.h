@@ -28,7 +28,7 @@
 #include "acme/subsystem/_common_header.h"
 
 /**
- * ::remoting::Window protocol constants.
+ * ::innate_subsystem::Control protocol constants.
  *
  * @section Client requests.
  * Client to server control messages are request-reply oriented and have format

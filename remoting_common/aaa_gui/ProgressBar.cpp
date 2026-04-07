@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ProgressBar.h"
 
-#include <commctrl.h>
+// #include aaa_<commctrl.h>
 
 ProgressBar::ProgressBar()
 {
@@ -55,6 +55,6 @@ bool ProgressBar::window_procedure(LRESULT & lresult, unsigned int scopedstrMess
 
    }
 
-   return ::remoting::Window::window_procedure(lresult, scopedstrMessage, wparam, lparam);
+   return ::innate_subsystem::Control::window_procedure(lresult, scopedstrMessage, wparam, lparam);
 
 }

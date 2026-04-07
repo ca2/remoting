@@ -89,7 +89,7 @@ void JpegDecompressor::decompress(::array_base<unsigned char> &buffer,
   try {
     /* Initialize data source and read the header. */
     jpeg_mem_src(&m_jpeg.cinfo, src_buf, static_cast<unsigned long>(src_buf_size));
-    if (jpeg_read_header(&m_jpeg.cinfo, TRUE) != JPEG_HEADER_OK) {
+    if (jpeg_read_header(&m_jpeg.cinfo, true) != JPEG_HEADER_OK) {
       throw ::remoting::Exception("possible, bad JPEG header");
     }
 

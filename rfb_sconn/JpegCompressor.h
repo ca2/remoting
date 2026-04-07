@@ -25,7 +25,7 @@
 #pragma onceINCLUDED__
 INCLUDED__
 
-#include <stdio.h>
+// #include aaa_<stdio.h>
 
 #include "acme/subsystem/_common_header.h"
 #include "remoting/remoting_common/rfb/PixelFormat.h"

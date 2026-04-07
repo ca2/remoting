@@ -20,7 +20,7 @@
  */
 
 #ifdef USE_WINDOWS_::remoting::message_box
-#include <windows.h>
+// #include aaa_<windows.h>
 #endif
 
 /* this is not a core library module, so it doesn't define JPEG_INTERNALS */

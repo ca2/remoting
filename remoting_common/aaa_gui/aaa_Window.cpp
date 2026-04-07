@@ -60,7 +60,7 @@ namespace remoting
       return ::CallWindowProc((WNDPROC)p->m_defWindowProc, hWnd, scopedstrMessage, wParam, lParam);
    }
 
-   HWND Window::get_hwnd() {
+   HWND Window::operating_system_window() {
 
       return m_hwnd;
 
@@ -121,10 +121,10 @@ namespace remoting
 
    void Window::invalidate()
    {
-      InvalidateRect(m_hwnd, NULL, TRUE);
+      InvalidateRect(m_hwnd, NULL, true);
    }
 
-   ::string Window::get_text()
+   ::string Window::getText()
    {
       int length = (int)SendMessage(m_hwnd, WM_GETTEXTLENGTH, 0, 0);
       ::array_base<TCHAR> buf(length + 1);
@@ -133,7 +133,7 @@ namespace remoting
    }
 
 
-   void Window::set_focus()
+   void Window::setFocus()
    {
       ::SetFocus(m_hwnd);
    }
@@ -145,7 +145,7 @@ namespace remoting
 
    bool Window::set_foreground_window()
    {
-      return SetForegroundWindow(get_hwnd()) != 0;
+      return SetForegroundWindow(operating_system_window()) != 0;
    }
 
    void Window::set_style(DWORD style)
@@ -229,13 +229,13 @@ namespace remoting
 void Window::enable_window(bool enabled)
 {
   if (enabled) {
-    SendMessage(m_hwnd, WM_ENABLE, TRUE, NULL);
+    SendMessage(m_hwnd, WM_ENABLE, true, NULL);
     clear_style(WS_DISABLED);
   } else {
     if (has_style(WS_DISABLED)) {
       return ;
     } // if already disabled
-    SendMessage(m_hwnd, WM_ENABLE, FALSE, NULL);
+    SendMessage(m_hwnd, WM_ENABLE, false, NULL);
     add_style(WS_DISABLED);
   }
   invalidate();
@@ -279,7 +279,7 @@ VerticalAlignment Window::getTextVerticalAlignment()
   return Left;
 }
 
- void Window::set_parent(Window * pwindow)
+ void Window::setParent(Window * pwindow)
  {
    ::SetParent(m_hwnd, pwindow->m_hwnd);
  }

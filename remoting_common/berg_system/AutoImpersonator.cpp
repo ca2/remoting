@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "AutoImpersonator.h"
 
 AutoImpersonator::AutoImpersonator(Impersonator *imp, LogWriter *log)

@@ -29,7 +29,7 @@
 #include "apex/innate_subsystem/TextBox.h"
 
 /**
- * ::remoting::Window authentication dialog.
+ * ::innate_subsystem::Control authentication dialog.
  */
 class ControlAuthDialog : public BaseDialog
 {

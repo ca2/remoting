@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "Pen.h"
 
-#include <crtdbg.h>
+//#include aaa_<crtdbg.h>
 
 
 namespace remoting

@@ -51,7 +51,7 @@ public:
   virtual bool onInitDialog();
   virtual bool onNotify(unsigned int controlID, ::lparam data);
   virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
-  virtual bool onDestroy() { return TRUE; }
+  virtual bool onDestroy() { return true; }
 
   //
   // Helper methods
@@ -113,10 +113,10 @@ protected:
   CheckBox m_acceptHttpConnections;
   CheckBox m_showTrayIcon;
   CheckBox m_connectToRdp;
-  ::remoting::Window m_primaryPassword;
-  ::remoting::Window m_readOnlyPassword;
-  ::remoting::Window m_unsetPrimaryPassword;
-  ::remoting::Window m_unsetReadOnlyPassword;
+  ::innate_subsystem::Control m_primaryPassword;
+  ::innate_subsystem::Control m_readOnlyPassword;
+  ::innate_subsystem::Control m_unsetPrimaryPassword;
+  ::innate_subsystem::Control m_unsetReadOnlyPassword;
   CheckBox m_useAuthentication;
   SpinControl m_rfbPortSpin;
   SpinControl m_httpPortSpin;

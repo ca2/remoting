@@ -27,8 +27,8 @@
 
 #include "WinD3D11Texture2D.h"
 
-#include <d3d11.h>
-#include <DXGI1_2.h>
+// #include aaa_<d3d11.h>
+// #include aaa_<DXGI1_2.h>
 
 // This class is a part of Win8DeskDuplication. This means that WinCustomD3D11Texture2D
 // is not an independed unit and it is designed to use only in Win8DeskDuplication.

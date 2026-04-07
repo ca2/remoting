@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include <string.h>
-#include <stdlib.h>
+// #include aaa_<string.h>
+// #include aaa_<stdlib.h>
 #include "HostPath.h"
 
 const size_t HostPath::m_SSH_USER_MAX_CHARS = 32;

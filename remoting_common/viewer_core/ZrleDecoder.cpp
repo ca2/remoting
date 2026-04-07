@@ -26,8 +26,8 @@
 
 #include "acme/subsystem/io/ByteArrayInputStream.h"
 
-//#include <vector>
-#include <algorithm>
+//#include aaa_<vector>
+//#include aaa_<algorithm>
 
 ZrleDecoder::ZrleDecoder(::subsystem::LogWriter * plogwriter)
 : DecoderOfRectangle(logWriter)

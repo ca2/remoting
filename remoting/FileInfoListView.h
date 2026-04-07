@@ -82,7 +82,7 @@ namespace remoting_remoting
         //
         //static int compareUInt64(unsigned long long first, unsigned long long second);
 
-        ::innate_subsystem::ImageList m_imagelistSmall;
+        ::pointer < ::innate_subsystem::ImageListInterface > m_pimagelistSmall;
 
         //private:
         virtual bool window_procedure(::lresult & lresult, unsigned int scopedstrMessage, ::wparam wparam, ::lparam lparam);

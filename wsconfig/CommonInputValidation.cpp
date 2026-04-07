@@ -83,5 +83,5 @@ void CommonInputValidation::notifyValidationError(TextBox *textBox, const ::scop
   invalidInputTip.setTitle(main_subsystem()->string_table()->getString(IDS_CAPTION_BAD_INPUT));
 
   textBox->showBalloonTip(&invalidInputTip);
-  textBox->set_focus();
+  textBox->setFocus();
 }

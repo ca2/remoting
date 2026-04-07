@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "Trackbar.h"
-#include <commctrl.h>
+// #include aaa_<commctrl.h>
 
 
    Trackbar::Trackbar()
@@ -36,13 +36,13 @@
 
    void Trackbar::setRange(long min, long max)
    {
-      SendMessage(m_hwnd, TBM_SETRANGEMIN, FALSE, min);
-      SendMessage(m_hwnd, TBM_SETRANGEMAX, TRUE, max);
+      SendMessage(m_hwnd, TBM_SETRANGEMIN, false, min);
+      SendMessage(m_hwnd, TBM_SETRANGEMAX, true, max);
    }
 
    void Trackbar::setPos(long pos)
    {
-      SendMessage(m_hwnd, TBM_SETPOS, TRUE, pos);
+      SendMessage(m_hwnd, TBM_SETPOS, true, pos);
    }
 
    long Trackbar::getPos()

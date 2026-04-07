@@ -46,7 +46,7 @@ void EditPortMappingDialog::setMapping(PortMapping *mapping)
 
 void EditPortMappingDialog::onCancelButtonClick()
 {
-  kill(IDCANCEL);
+  kill(::innate_subsystem::IDCANCEL);
 }
 
 void EditPortMappingDialog::onOkButtonClick()
@@ -64,8 +64,8 @@ void EditPortMappingDialog::onOkButtonClick()
   ::string portStringStorage;
   ::string rectStringStorage;
 
-  m_geometryTextBox.get_text(&rectStringStorage);
-  m_portTextBox.get_text(&portStringStorage);
+  m_geometryTextBox.getText(&rectStringStorage);
+  m_portTextBox.getText(&portStringStorage);
 
   PortMappingRect::parse(rectStringStorage, &rect);
   StringParser::parseInt(portStringStorage, &port);
@@ -73,12 +73,12 @@ void EditPortMappingDialog::onOkButtonClick()
   m_mapping->setPort(port);
   m_mapping->setRect(rect);
 
-  kill(IDOK);
+  kill(::innate_subsystem::IDOK);
 }
 
 void EditPortMappingDialog::initControls()
 {
-  HWND dialogHwnd = m_ctrlThis.get_hwnd();
+  HWND dialogHwnd = m_ctrlThis.operating_system_window();
   m_geometryTextBox.setWindow(GetDlgItem(dialogHwnd, IDC_GEOMETRY_EDIT));
   m_portTextBox.setWindow(GetDlgItem(dialogHwnd, IDC_PORT_EDIT));
 }
@@ -88,15 +88,15 @@ bool EditPortMappingDialog::isUserDataValid()
   ::string rectStringStorage;
   ::string portStringStorage;
 
-  m_geometryTextBox.get_text(&rectStringStorage);
-  m_portTextBox.get_text(&portStringStorage);
+  m_geometryTextBox.getText(&rectStringStorage);
+  m_portTextBox.getText(&portStringStorage);
 
   if (!PortMappingRect::tryParse(rectStringStorage)) {
-    main_innate_subsystem()->message_box(m_ctrlThis.get_hwnd(),
+    main_subsystem()->message_box(m_ctrlThis.operating_system_window(),
                main_subsystem()->string_table()->getString(IDS_INVALID_PORT_MAPPING_STRING),
                main_subsystem()->string_table()->getString(IDS_CAPTION_BAD_INPUT),
-               MB_OK | MB_ICONWARNING);
-    m_geometryTextBox.set_focus();
+               ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
+    m_geometryTextBox.setFocus();
     return false;
   }
 
@@ -105,11 +105,11 @@ bool EditPortMappingDialog::isUserDataValid()
   StringParser::parseInt(portStringStorage, &port);
 
   if ((port < 1) || (port > 65535)) {
-    main_innate_subsystem()->message_box(m_ctrlThis.get_hwnd(),
+    main_subsystem()->message_box(m_ctrlThis.operating_system_window(),
                main_subsystem()->string_table()->getString(IDS_PORT_RANGE_ERROR),
                main_subsystem()->string_table()->getString(IDS_CAPTION_BAD_INPUT),
-               MB_OK | MB_ICONWARNING);
-    m_portTextBox.set_focus();
+               ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
+    m_portTextBox.setFocus();
     return false;
   }
 
@@ -118,11 +118,11 @@ bool EditPortMappingDialog::isUserDataValid()
   size_t index = extraPorts->findByPort(port);
 
   if ((index != (size_t)-1) && (extraPorts->at(index) != m_mapping)) {
-    main_innate_subsystem()->message_box(m_ctrlThis.get_hwnd(),
+    main_subsystem()->message_box(m_ctrlThis.operating_system_window(),
                main_subsystem()->string_table()->getString(IDS_PORT_ALREADY_IN_USE),
                main_subsystem()->string_table()->getString(IDS_CAPTION_BAD_INPUT),
-               MB_OK | MB_ICONWARNING);
-    m_portTextBox.set_focus();
+               ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
+    m_portTextBox.setFocus();
     return false;
   }
 
@@ -147,18 +147,18 @@ bool EditPortMappingDialog::onInitDialog()
     m_geometryTextBox.setText(rectString);
   }
 
-  return TRUE;
+  return true;
 }
 
 bool EditPortMappingDialog::onCommand(unsigned int cID, unsigned int nID)
 {
   switch (cID) {
-  case IDOK:
+  case ::innate_subsystem::IDOK:
     onOkButtonClick();
     break;
-  case IDCANCEL:
+  case ::innate_subsystem::IDCANCEL:
     onCancelButtonClick();
     break;
   }
-  return TRUE;
+  return true;
 }

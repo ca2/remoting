@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "RegistrySettingsManager.h"
 #include "remoting/remoting_common/util/StringParser.h"
-//#include <vector>
+//#include aaa_<vector>
 
 namespace remoting
 {

@@ -22,11 +22,11 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "LocalWindowsApplication.h"
 
 //#include "remoting/remoting_common/util/winhdr.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 
 #include "remoting/remoting_common/thread/DesktopSelector.h"
 
@@ -36,7 +36,7 @@ LocalWindowsApplication::LocalWindowsApplication(HINSTANCE hInstance,
 {
   HWINSTA winSta = 0;
 
-  winSta = OpenWindowStation(L"WinSta0", TRUE, GENERIC_ALL);
+  winSta = OpenWindowStation(L"WinSta0", true, GENERIC_ALL);
 
   if (winSta== 0) {
     throw SystemException();

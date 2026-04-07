@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 
 
 //#ifndef WINVER
@@ -36,18 +36,18 @@
 //#define _WIN32_WINNT 0x0501
 //#endif
 
-// #include <winsock2.h>
-// #include <ws2tcpip.h>
-// #include <wspiapi.h>
-// #include <windows.h>
-// #include <psapi.h>
-// #include <Wtsapi32.h>
-// #include <tchar.h>
-// #include <commctrl.h>
+// // #include aaa_<winsock2.h>
+// // #include aaa_<ws2tcpip.h>
+// // #include aaa_<wspiapi.h>
+// // #include aaa_<windows.h>
+// // #include aaa_<psapi.h>
+// // #include aaa_<wtsapi32.h>
+// // #include aaa_<tchar.h>
+// // #include aaa_<commctrl.h>
 // // hide annoying warning c:\program files(x86)\windows kits\8.1\include\um\dbghelp.h(1544) : warning C4091 : 'typedef ' : ignored on left of '' when no variable is declared
 // #pragma warning(push)
 // #pragma warning(disable:4091)
-// #include <Dbghelp.h>
+// // #include aaa_<Dbghelp.h>
 // #pragma warning(pop)
-// #include <ShellAPI.h>
+// // #include aaa_<shellapi.h>
 //

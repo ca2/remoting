@@ -27,8 +27,8 @@
 
 
 
-#include <d3d11.h>
-#include <DXGI1_2.h>
+// #include aaa_<d3d11.h>
+// #include aaa_<DXGI1_2.h>
 
 #include "WinDxgiSurface.h"
 

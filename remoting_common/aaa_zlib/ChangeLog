@@ -697,7 +697,7 @@ Changes in 1.2.3.1 (16 August 2006)
 - Use $(DESTDIR) macro in Makefile.in [Reinholdtsen, Weigelt]
 - Replace set_data_type() with a more accurate detect_data_type() in
   trees.c, according to the txtvsbin.txt document [Truta]
-- Swap the order of #include <stdio.h> and #include "zlib.h" in
+- Swap the order of // #include aaa_<stdio.h> and #include "zlib.h" in
   gzio.c, example.c and minigzip.c [Truta]
 - Shut up annoying VS2005 warnings about standard C deprecation [Rowe,
   Truta] (where?)

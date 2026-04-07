@@ -77,10 +77,10 @@ void remoting_impact::startListeningServer(const int listeningPort)
   } catch (const ::remoting::Exception &ex) {
     m_isListening = false;
     m_plogwriter->error("Error in start listening: {}", ex.get_message());
-    main_innate_subsystem()->message_box(0,
+    main_subsystem()->message_box(0,
                main_subsystem()->string_table()->getString(IDS_ERROR_START_LISTENING),
                ProductNames::VIEWER_PRODUCT_NAME,
-               MB_OK | MB_ICONERROR);
+               ::user::e_message_box_ok | MB_ICONERROR);
   }
 }
 
@@ -153,7 +153,7 @@ void remoting_impact::runInstance(ConnectionData & conData, const ConnectionConf
 
 bool remoting_impact::isVisibleLoginDialog() const
 {
-  return !!m_loginDialog->get_hwnd();
+  return !!m_loginDialog->operating_system_window();
 }
 
 void remoting_impact::newConnection(const ::scoped_string & hostName, const ConnectionConfig & config)
@@ -174,7 +174,7 @@ void remoting_impact::showLoginDialog()
   m_loginDialog->setListening(m_isListening);
   m_loginDialog->loadIcon(IDI_APPICON);
   m_loginDialog->show();
-  addModelessDialog(m_loginDialog->get_hwnd());
+  addModelessDialog(m_loginDialog->operating_system_window());
 }
 
 void remoting_impact::createWindow(const ::scoped_string & scopedstrClassName)
@@ -252,13 +252,13 @@ void remoting_impact::showListeningOptions()
 void remoting_impact::showConfiguration()
 {
   m_configurationDialog.show();
-  addModelessDialog(m_configurationDialog.get_hwnd());
+  addModelessDialog(m_configurationDialog.operating_system_window());
 }
 
 void remoting_impact::showAboutViewer()
 {
   m_aboutDialog.show();
-  addModelessDialog(m_aboutDialog.get_hwnd());
+  addModelessDialog(m_aboutDialog.operating_system_window());
 }
 
 int remoting_impact::processMessages()

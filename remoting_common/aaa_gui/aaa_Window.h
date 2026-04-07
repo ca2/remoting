@@ -64,15 +64,15 @@
 //      virtual void subclass_window();
 //      virtual void unsubclass_window();
 //
-//      virtual void set_parent(Window *pwindowParent);
+//      virtual void setParent(Window *pwindowParent);
 //
-//      virtual HWND get_hwnd();
+//      virtual HWND operating_system_window();
 //
 //      //
 //      // Sets input focus to this control
 //      //
 //
-//      virtual void set_focus();
+//      virtual void setFocus();
 //
 //      //
 //      // Return true if window has input focus
@@ -108,8 +108,8 @@
 //      // Gets text associated with window
 //      //
 //
-//      //virtual void get_text(::string & storage);
-//      virtual ::string get_text();
+//      //virtual void getText(::string & storage);
+//      virtual ::string getText();
 //
 //
 //      //
@@ -228,7 +228,7 @@
 //
 //
 //   // class Control :
-//   // virtual public ::remoting::Window
+//   // virtual public ::innate_subsystem::Control
 //   // {
 //   // public:
 //   //    Control();

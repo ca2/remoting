@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "ToolBar.h"
-#include <CommCtrl.h>
+// #include aaa_<commctrl.h>
 
 HINSTANCE remoting_impact_hinstance();
 

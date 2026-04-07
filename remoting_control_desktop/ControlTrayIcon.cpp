@@ -39,7 +39,7 @@
 
 #include "remoting_node/resource.h"
 
-#include <crtdbg.h>
+//#include aaa_<crtdbg.h>
 
 unsigned int ControlTrayIcon::WM_USER_TASKBAR;
 
@@ -141,7 +141,7 @@ void ControlTrayIcon::onRightButtonUp()
   HMENU hRoot = LoadMenu(GetModuleHandle(0), MAKEINTRESOURCE(IDR_TRAYMENU));
   HMENU hMenu = GetSubMenu(hRoot, 0);
 
-  SetMenuDefaultItem(hMenu, ID_CONFIGURATION, FALSE);
+  SetMenuDefaultItem(hMenu, ID_CONFIGURATION, false);
 
   if (m_appControl->m_slaveModeEnabled) {
     RemoveMenu(hMenu, ID_CLOSE_CONTROL_INTERFACE, MF_BYCOMMAND);
@@ -153,11 +153,11 @@ void ControlTrayIcon::onRightButtonUp()
     pos.x = pos.y = 0;
   }
 
-  SetForegroundWindow(get_hwnd());
+  SetForegroundWindow(operating_system_window());
 
   int action = TrackPopupMenu(hMenu,
                               TPM_NONOTIFY | TPM_RETURNCMD | TPM_RIGHTBUTTON,
-                              pos.x, pos.y, 0, get_hwnd(), NULL);
+                              pos.x, pos.y, 0, operating_system_window(), NULL);
 
   switch (action) {
   case ID_KILLCLIENTS:
@@ -188,7 +188,7 @@ void ControlTrayIcon::onLeftButtonDown()
 
 void ControlTrayIcon::onConfigurationMenuItemClick()
 {
-  ControlApplication::removeModelessDialog(m_configDialog->get_hwnd());
+  ControlApplication::removeModelessDialog(m_configDialog->operating_system_window());
 
   bool isConnectedToService = false;
 
@@ -217,7 +217,7 @@ void ControlTrayIcon::onConfigurationMenuItemClick()
   m_configDialog->setServiceFlag(isConnectedToService);
   m_configDialog->show();
 
-  ControlApplication::addModelessDialog(m_configDialog->get_hwnd());
+  ControlApplication::addModelessDialog(m_configDialog->operating_system_window());
 }
 
 void ControlTrayIcon::onDisconnectAllClientsMenuItemClick()
@@ -253,11 +253,11 @@ void ControlTrayIcon::onShutdownServerMenuItemClick()
       main_subsystem()->string_table()->getString(IDS_SHUTDOWN_NOTIFICATION_FORMAT),
       main_subsystem()->string_table()->getString(stringId));
 
-    if (main_innate_subsystem()->message_box(
-      get_hwnd(),
+    if (main_subsystem()->message_box(
+      operating_system_window(),
       userMessage,
       main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
-      MB_YESNO | MB_ICONQUESTION) == IDNO) {
+      MB_YESNO | MB_ICONQUESTION) == ::innate_subsystem::IDNO) {
         return;
     }
   }
@@ -275,7 +275,7 @@ void ControlTrayIcon::onOutgoingConnectionMenuItemClick()
 {
   OutgoingConnectionDialog connDialog;
 
-  if (connDialog.showModal() == IDOK) {
+  if (connDialog.showModal() == ::innate_subsystem::IDOK) {
     MakeRfbConnectionCommand unsafeCommand(
       m_serverControl,
       connDialog.getConnectString(),
@@ -291,7 +291,7 @@ void ControlTrayIcon::onAboutMenuItemClick()
 {
   m_aboutDialog.show();
 
-  ControlApplication::addModelessDialog(m_aboutDialog.get_hwnd());
+  ControlApplication::addModelessDialog(m_aboutDialog.operating_system_window());
 }
 
 void ControlTrayIcon::onCloseControlInterfaceMenuItemClick()
@@ -331,7 +331,7 @@ void ControlTrayIcon::syncStatusWithServer()
   } catch (::io_exception &) {
     setNotConnectedState();
   } catch (::remoting::Exception &) {
-    _ASSERT(FALSE);
+    _ASSERT(false);
   } // try / catch.
 }
 
@@ -345,7 +345,7 @@ void ControlTrayIcon::terminate()
 {
   m_termination = true;
   // Forcing window scopedstrMessage
-  PostMessage(get_hwnd(), WM_USER + 1, 0, 0);
+  PostMessage(operating_system_window(), WM_USER + 1, 0, 0);
 }
 
 void ControlTrayIcon::waitForTermination()

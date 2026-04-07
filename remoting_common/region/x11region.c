@@ -67,9 +67,9 @@ SOFTWARE.
 *   or  in  FAR 52.227-19, as applicable.                       *
 *                                                               *
 *****************************************************************/
-#include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
+// #include aaa_<stdlib.h>
+// #include aaa_<string.h>
+// #include aaa_<sys/types.h>
 
 #include "x11region.h"
 

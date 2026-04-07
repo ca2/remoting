@@ -54,7 +54,7 @@ bool CALLBACK WindowFinder::findWindowsByClassFunc(HWND hwnd, ::lparam lParam)
       EnumChildWindows(hwnd, findWindowsByClassFunc, (::lparam) windowsParam);
     }
   }
-  return TRUE;
+  return true;
 }
 
 ::array_base<HWND> WindowFinder::findWindowsByClass(::string_array classNames)
@@ -84,12 +84,12 @@ bool CALLBACK WindowFinder::findWindowsByNameFunc(HWND hwnd, ::lparam lParam)
         auto & substr = winParams->classNames->first();
         if (substr == winName) {
           winParams->hwndVector->add(hwnd);
-          return FALSE;
+          return false;
         }
       }
     }
   }
-  return TRUE;
+  return true;
 }
 
 HWND WindowFinder::findFirstWindowByName(const ::string windowName)

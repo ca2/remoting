@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "RawDecoder.h"
 
-#include <algorithm>
+//#include aaa_<algorithm>
 
 RawDecoder::RawDecoder(::subsystem::LogWriter * plogwriter)
 : DecoderOfRectangle(logWriter)

@@ -128,7 +128,7 @@ bool WindowsInputBlocker::setKeyboardFilterHook(bool block)
 
   } else {
     if (m_hKeyboardHook != 0) {
-      if (UnhookWindowsHookEx(m_hKeyboardHook) == FALSE) {
+      if (UnhookWindowsHookEx(m_hKeyboardHook) == false) {
         return false;
       }
       m_hKeyboardHook = 0;
@@ -148,7 +148,7 @@ bool WindowsInputBlocker::setSoftKeyboardFilterHook(bool block)
 
   } else {
     if (m_hSoftKeyboardHook != 0) {
-      if (UnhookWindowsHookEx(m_hSoftKeyboardHook) == FALSE) {
+      if (UnhookWindowsHookEx(m_hSoftKeyboardHook) == false) {
         return false;
       }
       m_hSoftKeyboardHook = 0;
@@ -168,7 +168,7 @@ bool WindowsInputBlocker::setMouseFilterHook(bool block)
 
   } else {
     if (m_hMouseHook != 0) {
-      if (UnhookWindowsHookEx(m_hMouseHook) == FALSE) {
+      if (UnhookWindowsHookEx(m_hMouseHook) == false) {
         return false;
       }
       m_hMouseHook = 0;
@@ -188,7 +188,7 @@ bool WindowsInputBlocker::setSoftMouseFilterHook(bool block)
 
   } else {
     if (m_hSoftMouseHook != 0) {
-      if (UnhookWindowsHookEx(m_hSoftMouseHook) == FALSE) {
+      if (UnhookWindowsHookEx(m_hSoftMouseHook) == false) {
         return false;
       }
       m_hSoftMouseHook = 0;
@@ -203,7 +203,7 @@ LRESULT CALLBACK WindowsInputBlocker::lowLevelKeyboardFilterProc(int nCode, ::wp
     KBDLLHOOKSTRUCT *hookStruct = (KBDLLHOOKSTRUCT *)lParam;
     // If this a hardware event then block it.
     if (!(hookStruct->flags & LLKHF_INJECTED)) {
-      return TRUE;
+      return true;
     }
   }
   return CallNextHookEx(m_hKeyboardHook, nCode, wParam, lParam);
@@ -215,7 +215,7 @@ LRESULT CALLBACK WindowsInputBlocker::lowLevelMouseFilterProc(int nCode, ::wpara
     MSLLHOOKSTRUCT *hookStruct = (MSLLHOOKSTRUCT *)lParam;
     // If this a hardware event then block it.
     if (!(hookStruct->flags & LLMHF_INJECTED)) {
-      return TRUE;
+      return true;
     }
   }
   return CallNextHookEx(m_hMouseHook, nCode, wParam, lParam);

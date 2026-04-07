@@ -25,7 +25,7 @@
 //
 //class ::string;
 //
-////#include <vector>
+////#include aaa_<vector>
 //
 //// Note: The ::string class contains utf8 symbols "as is". The class
 //// do not adds termination symbol(s) and do not remove it when

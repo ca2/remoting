@@ -39,7 +39,7 @@
 #include "apex/networking/http/context.h"
 #include "remoting/remoting_common/remoting.h"
 
-#include <commdlg.h>
+//// #include aaa_<commdlg.h>
 
 namespace remoting_remoting
 {
@@ -404,10 +404,10 @@ namespace remoting_remoting
 
         dialog.setConnected();
         dialog.setConnectionConfig(m_conConf);
-        // FIXME: Removed ::remoting::Window from this code and another
-        //auto pcontrol = øcreate_new<::remoting::Window>();
+        // FIXME: Removed ::innate_subsystem::Control from this code and another
+        //auto pcontrol = øcreate_new<::innate_subsystem::Control>();
         //pcontrol ->_setWindow(getHWnd());
-        dialog.set_parent(this);
+        dialog.setParent(this);
 
         if (dialog.showModal() == 1) {
             m_conConf->saveToStorage(&m_ccsm);
@@ -439,10 +439,10 @@ namespace remoting_remoting
                    geometry.height(),
                    pixelSize,
                    &kbdName[0]);
-        main_innate_subsystem()->message_box(getHWnd(),
+        main_subsystem()->message_box(operating_system_window(),
                    str,
                    main_subsystem()->string_table()->getString(IDS_CONNECTION_INFO_CAPTION),
-                   MB_OK | MB_ICONINFORMATION);
+                   ::user::e_message_box_ok | MB_ICONINFORMATION);
     }
 
     void ViewerWindow::switchFullScreenMode()
@@ -617,7 +617,7 @@ namespace remoting_remoting
                 sm.setUINT("port", m_conData->getPort());
 
                 if (m_conData->isSetPassword()) {
-                    int whetherToSavePass = main_innate_subsystem()->message_box(m_hwnd,
+                    int whetherToSavePass = main_subsystem()->message_box(operating_system_window(),
                       main_subsystem()->string_table()->getString(IDS_QUESTION_SAVE_PASSWORD),
                       main_subsystem()->string_table()->getString(IDS_SECURITY_WARNING_CAPTION),
                       MB_YESNO);
@@ -843,7 +843,7 @@ namespace remoting_remoting
                 m_fileTransfer->setInterface(m_ftDialog);
             }
             m_ftDialog->show();
-            HWND dialogWnd = m_ftDialog->get_hwnd();
+            HWND dialogWnd = m_ftDialog->operating_system_window();
             m_application->addModelessDialog(dialogWnd);
         }
     }
@@ -1136,10 +1136,10 @@ namespace remoting_remoting
 
     bool ViewerWindow::onDisconnect()
     {
-        main_innate_subsystem()->message_box(getHWnd(),
+        main_subsystem()->message_box(operating_system_window(),
                    m_disconnectMessage,
                    formatWindowName(),
-                   MB_OK);
+                   ::user::e_message_box_ok);
 
         m_dsktWnd.destroyWindow();
         destroyWindow();
@@ -1151,7 +1151,7 @@ namespace remoting_remoting
         // If authentication is canceled, then do quiet exit, else show error-scopedstrMessage.
         if (wParam != AuthException::AUTH_CANCELED) {
             ::string error = m_error.get_message();
-            int result = main_innate_subsystem()->message_box(0,
+            int result = main_subsystem()->message_box(0,
                                     error,
                                     formatWindowName(),
                                     MB_RETRYCANCEL | MB_ICONERROR);
@@ -1177,10 +1177,10 @@ namespace remoting_remoting
     {
         ::string error;
         error.format("Error in {}: {}", ::string(ProductNames::VIEWER_PRODUCT_NAME), m_error.get_message());
-        main_innate_subsystem()->message_box(getHWnd(),
+        main_subsystem()->message_box(operating_system_window(),
                    error,
                    formatWindowName(),
-                   MB_OK | MB_ICONERROR);
+                   ::user::e_message_box_ok | MB_ICONERROR);
 
         m_dsktWnd.destroyWindow();
         destroyWindow();
@@ -1190,7 +1190,7 @@ namespace remoting_remoting
     bool ViewerWindow::onFsWarning()
     {
         FsWarningDialog fsWarning;
-        fsWarning.set_parent(&m_control);
+        fsWarning.setParent(&m_control);
         fsWarning.showModal();
         return true;
     }
@@ -1435,7 +1435,7 @@ namespace remoting_remoting
     LRESULT ViewerWindow::onHookProc(int code, ::wparam wParam, ::lparam lParam)
     {
         KBDLLHOOKSTRUCT *str = (KBDLLHOOKSTRUCT*) lParam;
-        // Ignoring of CapsLock, NumLock, ScrollLock, ::remoting::Window (Ctrl key), Menu (Alt key), Shift (shift key).
+        // Ignoring of CapsLock, NumLock, ScrollLock, ::innate_subsystem::Control (Ctrl key), Menu (Alt key), Shift (shift key).
         if (str->vkCode != ::user::e_key_capslock && str->vkCode != VK_NUMLOCK && str->vkCode != VK_SCROLL &&
             str->vkCode != ::user::e_key_left_control && str->vkCode != ::user::e_key_right_control &&
             str->vkCode != ::user::e_key_left_alt && str->vkCode != ::user::e_key_right_alt &&

@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "RfbClient.h"
 //#include "remoting/remoting_common/thread/critical_section.h"
 #include "RfbCodeRegistrator.h"
@@ -102,7 +102,7 @@ void RfbClient::getPeerHost(::string & host)
     addr.toString(host);
   } else {
     // FIXME: This may occur if the close() function has been called.
-    _ASSERT(FALSE);
+    _ASSERT(false);
 
     host-= "unknown";
   }
@@ -116,7 +116,7 @@ void RfbClient::getLocalIpAddress(::string & address)
     addr.toString(address);
   } else {
     // FIXME: This may occur if the close() function has been called.
-    _ASSERT(FALSE);
+    _ASSERT(false);
 
     address-= "unknown";
   }

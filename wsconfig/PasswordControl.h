@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "apex/innate_subsystem/::remoting::Window.h"
-//#include <vector>
+#include "apex/innate_subsystem/::innate_subsystem::Control.h"
+//#include aaa_<vector>
 
 /**
 Helper class that needed for managing one VNC-style password (set, change, unset password).
@@ -49,7 +49,7 @@ public:
    * @param changeButton change password button.
    * @param unsetButton unset password button.
    */
-  PasswordControl(::remoting::Window *changeButton, ::remoting::Window *unsetButton);
+  PasswordControl(::innate_subsystem::Control *changeButton, ::innate_subsystem::Control *unsetButton);
   virtual ~PasswordControl();
 
   /**
@@ -94,15 +94,15 @@ public:
   @param parent control of parent dialog (optional, can be null).
   @return false if user cancels dialog, true otherwise.
   */
-  bool showChangePasswordModalDialog(::remoting::Window *parent);
+  bool showChangePasswordModalDialog(::innate_subsystem::Control *parent);
 
 private:
   void updateControlsState();
   void releaseCryptedPassword();
 
 protected:
-  ::remoting::Window *m_changeButton;
-  ::remoting::Window *m_unsetButton;
+  ::innate_subsystem::Control *m_changeButton;
+  ::innate_subsystem::Control *m_unsetButton;
 
   ::array_base<char> m_cryptedPassword;
 

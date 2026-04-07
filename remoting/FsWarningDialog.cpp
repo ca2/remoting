@@ -37,7 +37,7 @@ namespace remoting_remoting
     {
         subclassControlById(m_pcheckboxFsWarning, IDC_CWARN_FS);
 
-        m_pcheckboxFsWarning->check(false);
+        m_pcheckboxFsWarning->setChecked(false);
         return false;
     }
 

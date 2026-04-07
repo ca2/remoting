@@ -22,12 +22,12 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "SecurityIdentifier.h"
 
-#include <Sddl.h>
-#include <crtdbg.h>
-#include <winnt.h>
+// #include aaa_<Sddl.h>
+//#include aaa_<crtdbg.h>
+// #include aaa_<winnt.h>
 
 SecurityIdentifier::SecurityIdentifier(SID *sid)
 {
@@ -53,14 +53,14 @@ SecurityIdentifier::~SecurityIdentifier()
 
 bool SecurityIdentifier::isValid()
 {
-  return IsValidSid(m_sid) == TRUE;
+  return IsValidSid(m_sid) == true;
 }
 
 void SecurityIdentifier::toString(::string & sidString)
 {
   TCHAR *localAllocatedSidString;
 
-  if (ConvertSidToStringSid(m_sid, &localAllocatedSidString) == FALSE) {
+  if (ConvertSidToStringSid(m_sid, &localAllocatedSidString) == false) {
     throw SystemException();
   }
 
@@ -105,7 +105,7 @@ SID *SecurityIdentifier::getSid() const
 
 void SecurityIdentifier::getSidByString(const ::scoped_string & scopedstrSidString, PSID *sid)
 {
-  if (ConvertStringSidToSid(::wstring(scopedstrSidString), sid) == FALSE) {
+  if (ConvertStringSidToSid(::wstring(scopedstrSidString), sid) == false) {
     throw SystemException();
   }
 

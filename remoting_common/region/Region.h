@@ -23,8 +23,8 @@
 //
 
 #pragma once
-//#include <vector>
-//#include <list>
+//#include aaa_<vector>
+//#include aaa_<list>
 
 //#include "::int_rectangle.h"
 

@@ -49,8 +49,8 @@ public:
 
   virtual bool onInitDialog();
   virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
-  virtual bool onDestroy() { return TRUE; }
-  virtual bool onNotify(unsigned int controlID, ::lparam data) { return TRUE; }
+  virtual bool onDestroy() { return true; }
+  virtual bool onNotify(unsigned int controlID, ::lparam data) { return true; }
 
   //
   // Helper methods
@@ -64,7 +64,7 @@ private:
   void initControls();
 
   //
-  // ::remoting::Window event handlers
+  // ::innate_subsystem::Control event handlers
   //
 
   void onShareRadioButtonClick(int number);
@@ -87,9 +87,9 @@ protected:
   // Configuration
   ServerConfig *m_config;
   // Controls
-  ::remoting::Window m_openLogPathButton;
-  ::remoting::Window m_setControlPasswordButton;
-  ::remoting::Window m_unsetControlPasswordButton;
+  ::innate_subsystem::Control m_openLogPathButton;
+  ::innate_subsystem::Control m_setControlPasswordButton;
+  ::innate_subsystem::Control m_unsetControlPasswordButton;
   CheckBox m_disconnectAction[3];
   TextBox m_logLevel;
   TextBox m_logPathTB;

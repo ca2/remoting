@@ -25,7 +25,7 @@
 #include "IniFileSettingsManager.h"
 #include "acme/platform/ini.h"
 
-//#include <crtdbg.h>
+////#include aaa_<crtdbg.h>
 // #include <vector>
 
 namespace remoting
@@ -76,7 +76,7 @@ namespace remoting
    bool IniFileSettingsManager::deleteKey(const ::scoped_string &scopedstrName)
    {
       return ::acme::WritePrivateProfileString(m_appName, scopedstrName, nullptr, m_path) ==
-             TRUE;
+             true;
    }
 
    bool IniFileSettingsManager::getString(const ::scoped_string &scopedstrName, ::string &strStorage)
@@ -96,20 +96,20 @@ namespace remoting
          return false;
       }
       return WritePrivateProfileString(::string(m_appName), ::string(scopedstrName), ::string(scopedstrValue),
-                                       m_path.windows_path()) == TRUE;
+                                       m_path.windows_path()) == true;
    }
 
    // FIXME: Stub
    bool IniFileSettingsManager::getLong(const ::scoped_string &scopedstrName, long *value)
    {
-      _ASSERT(FALSE);
+      _ASSERT(false);
       return false;
    }
 
    // FIXME: Stub
    bool IniFileSettingsManager::setLong(const ::scoped_string &scopedstrName, long value)
    {
-      _ASSERT(FALSE);
+      _ASSERT(false);
       return false;
    }
 
@@ -181,14 +181,14 @@ namespace remoting
    // FIXME: Stub
    bool IniFileSettingsManager::getBinaryData(const ::scoped_string &scopedstrName, void *value, size_t *size)
    {
-      _ASSERT(FALSE);
+      _ASSERT(false);
       return false;
    }
 
    // FIXME: Stub
    bool IniFileSettingsManager::setBinaryData(const ::scoped_string &scopedstrName, const void *value, size_t size)
    {
-      _ASSERT(FALSE);
+      _ASSERT(false);
       return false;
    }
 

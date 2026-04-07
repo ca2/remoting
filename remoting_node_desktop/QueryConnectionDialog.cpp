@@ -47,23 +47,23 @@ bool QueryConnectionDialog::onInitDialog()
   m_peerAddressLabel.setText(m_peerAddress);
 
   if (m_acceptByDefault) {
-    m_acceptButton.set_focus();
+    m_acceptButton.setFocus();
   } else {
-    m_rejectButton.set_focus();
+    m_rejectButton.setFocus();
   }
 
   setDefaultPushButton(m_acceptByDefault ? IDC_ACCEPT_BUTTON : IDC_REJECT_BUTTON);
 
   updateTimeoutLabel();
 
-  SetTimer(m_ctrlThis.get_hwnd(), 0, 1000, 0);
+  SetTimer(m_ctrlThis.operating_system_window(), 0, 1000, 0);
 
-  return FALSE;
+  return false;
 }
 
 bool QueryConnectionDialog::onNotify(unsigned int controlID, ::lparam data)
 {
-  return TRUE;
+  return true;
 }
 
 bool QueryConnectionDialog::onCommand(unsigned int controlID, unsigned int notificationID)
@@ -76,12 +76,12 @@ bool QueryConnectionDialog::onCommand(unsigned int controlID, unsigned int notif
     onReject();
     break;
   }
-  return TRUE;
+  return true;
 }
 
 bool QueryConnectionDialog::onDestroy()
 {
-  return TRUE;
+  return true;
 }
 
 void QueryConnectionDialog::onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam)
@@ -93,7 +93,7 @@ void QueryConnectionDialog::onMessageReceived(unsigned int uMsg, ::wparam wParam
 
 void QueryConnectionDialog::initControls()
 {
-  HWND window = m_ctrlThis.get_hwnd();
+  HWND window = m_ctrlThis.operating_system_window();
 
   m_peerAddressLabel.setWindow(GetDlgItem(window, IDC_IP_EDIT));
   m_acceptButton.setWindow(GetDlgItem(window, IDC_ACCEPT_BUTTON));
@@ -114,7 +114,7 @@ void QueryConnectionDialog::onReject()
 void QueryConnectionDialog::onTimer()
 {
   if (m_timeout == 0) {
-    KillTimer(m_ctrlThis.get_hwnd(), 0);
+    KillTimer(m_ctrlThis.operating_system_window(), 0);
 
     if (m_acceptByDefault) {
       onAccept();

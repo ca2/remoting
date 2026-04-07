@@ -24,15 +24,15 @@
 #include "framework.h"#include "Environment.h"
 #include "CtrlAltDelSimulator.h"
 
-#include <shlobj.h>
-#include <crtdbg.h>
+// #include aaa_<shlobj.h>
+//#include aaa_<crtdbg.h>
 #include "remoting/win_system/AutoImpersonator.h"
 #include "remoting/win_system/WTS.h"
 #include "remoting/win_system/ProcessHandle.h"
 #include "Shell.h"
 #include "DynamicLibrary.h"
-//#include <vector>
-#include <algorithm>
+//#include aaa_<vector>
+//#include aaa_<algorithm>
 
 // OSVERSIONINFO Environment::m_osVerInfo = { 0 };
 // typedef VOID (WINAPI *SendSas)(bool asUser);
@@ -84,14 +84,14 @@
 //     csidl = CSIDL_COMMON_APPDATA;
 //     break;
 //   default:
-//     _ASSERT(FALSE);
+//     _ASSERT(false);
 //     return false;
 //   } // switch
 //
 //   bool returnVal = false;
 //
 //   TCHAR path[MAX_PATH + 1];
-//   if (SHGetSpecialFolderPath(NULL, &path[0], csidl, TRUE) == TRUE) {
+//   if (SHGetSpecialFolderPath(NULL, &path[0], csidl, true) == true) {
 //     out-= &path[0];
 //     returnVal = true;
 //   }
@@ -241,7 +241,7 @@
 //     if (sendSas == 0) {
 //       throw ::remoting::Exception("The SendSAS function has not been found");
 //     }
-//     sendSas(FALSE); // Try only under service
+//     sendSas(false); // Try only under service
 //   } catch (::exception &e) {
 //     log->error("The simulateCtrlAltDelUnderVista() function failed: {}",
 //                e.get_message());
@@ -257,7 +257,7 @@
 //     if (dwmIsEnabled == 0) {
 //       throw ::remoting::Exception("The DwmIsCompositionEnabled() has not been found in the Dwmapi.dll");
 //     }
-//     bool result = FALSE;
+//     bool result = false;
 //     HRESULT dwmIsEnabledResult = dwmIsEnabled(&result);
 //     if (dwmIsEnabledResult != S_OK) {
 //       ::string errMess;
@@ -265,7 +265,7 @@
 //                      (int)dwmIsEnabledResult);
 //       throw ::remoting::Exception("");
 //     }
-//     return result != FALSE;
+//     return result != false;
 //   } catch (::exception &e) {
 //     log->error("The DwmIsCompositionEnabled() function failed: {}",
 //                e.get_message());

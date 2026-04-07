@@ -25,7 +25,7 @@
 #include "TvnServerHelp.h"
 
 //#include "remoting/remoting_common/util/winhdr.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 
 #include "remoting/remoting_common/util/StringTable.h"
 
@@ -40,5 +40,5 @@ void TvnServerHelp::showUsage()
   MessageBox(0,
     main_subsystem()->string_table()->getString(IDS_TVNSERVER_USAGE),
     main_subsystem()->string_table()->getString(IDS_MBC_TVNSERVER_USAGE),
-    MB_OK|MB_ICONEXCLAMATION);
+    ::user::e_message_box_ok|::user::e_message_box_icon_exclamation);
 }

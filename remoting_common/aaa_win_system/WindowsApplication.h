@@ -26,11 +26,11 @@
 
 
 //#include "remoting/remoting_common/util/winhdr.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 
 //#include "remoting/remoting_common/thread/critical_section.h"
 #include "acme/prototype/collection/comparable_list.h"
-//#include <list>
+//#include aaa_<list>
 
 
 

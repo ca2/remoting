@@ -28,19 +28,19 @@
 #include "resource.h"
 #include "acme/filesystem/file/item.h"
 //#include "file_lib/::file::item.h"
-#include "acme/subsystem/Process.h"
+#include "acme/subsystem/node/Process.h"
 #include "remoting/remoting_common/remoting.h"
 
 
 namespace remoting_remoting
 {
     ConfigurationDialog::ConfigurationDialog()
-    : BaseDialog(IDD_CONFIGURATION),
+    : Dialog(IDD_CONFIGURATION),
       m_application(0)
     {
     }
 
-    void ConfigurationDialog::setListenerOfUpdate(WindowsApplication *application)
+    void ConfigurationDialog::setListenerOfUpdate(::subsystem::OperatingSystemApplicationInterface *application)
     {
         m_application = application;
     }
@@ -52,17 +52,17 @@ namespace remoting_remoting
                 onLogLevelChange();
             }
         }
-        if (controlID == IDOK) {
+        if (controlID == ::innate_subsystem::IDOK) {
             onOkPressed();
             if (m_application != 0) {
                 m_application->postMessage(remoting_impact::WM_USER_CONFIGURATION_RELOAD);
             }
             closeDialog(1);
-            return TRUE;
+            return true;
         }
-        if (controlID == IDCANCEL) {
+        if (controlID == ::innate_subsystem::IDCANCEL) {
             closeDialog(0);
-            return TRUE;
+            return true;
         }
         if (controlID == IDC_BCLEAR_LIST) {
             ::remoting::ViewerConfig::getInstance()->getConnectionHistory()->clear();
@@ -70,14 +70,14 @@ namespace remoting_remoting
         if (controlID == IDC_OPEN_LOG_FOLDER_BUTTON) {
             onOpenFolderButtonClick();
         }
-        return FALSE;
+        return false;
     }
 
     void ConfigurationDialog::onLogLevelChange()
     {
         ::string text;
         int logLevel;
-        text = m_verbLvl.get_text();
+        text = m_verbLvl.getText();
         StringParser::parseInt(text, &logLevel);
         if (logLevel != 0) {
             m_logging.enable_window(true);
@@ -143,7 +143,7 @@ namespace remoting_remoting
 
         updateControlValues();
 
-        return FALSE;
+        return false;
     }
 
     void ConfigurationDialog::updateControlValues()
@@ -186,7 +186,7 @@ namespace remoting_remoting
     bool ConfigurationDialog::testNum(TextBox *tb, const ::scoped_string & scopedstrTbName)
     {
         //::string text;
-        auto text = tb->get_text();
+        auto text = tb->getText();
 
         if (StringParser::tryParseInt(text)) {
             return true;
@@ -195,10 +195,10 @@ namespace remoting_remoting
         ::string scopedstrMessage;
         scopedstrMessage.formatf(main_subsystem()->string_table()->getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC).c_str(), scopedstrTbName.c_str());
 
-        main_innate_subsystem()->message_box(m_hwnd, scopedstrMessage,
-                   main_subsystem()->string_table()->getString(IDS_CONFIGURATION_CAPTION), MB_OK | MB_ICONWARNING);
+        main_subsystem()->message_box(operating_system_window(), scopedstrMessage,
+                   main_subsystem()->string_table()->getString(IDS_CONFIGURATION_CAPTION), ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
 
-        tb->set_focus();
+        tb->setFocus();
 
         return false;
     }
@@ -214,16 +214,16 @@ namespace remoting_remoting
         ::string text;
         int intVal;
 
-        text = m_reverseConn.get_text();
+        text = m_reverseConn.getText();
         StringParser::parseInt(text, &intVal);
         config->setListenPort(intVal);
 
-        text = m_verbLvl.get_text();
+        text = m_verbLvl.getText();
         StringParser::parseInt(text, &intVal);
         config->setLogLevel((enum_trace_level)intVal);
 
         int oldLimit = config->getHistoryLimit();
-        text=m_numberConn.get_text();
+        text=m_numberConn.getText();
         StringParser::parseInt(text, &intVal);
         config->setHistoryLimit(intVal);
 

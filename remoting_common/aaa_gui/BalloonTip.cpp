@@ -42,9 +42,9 @@ BalloonTip::~BalloonTip()
 {
 }
 
-void BalloonTip::showTooltip(::remoting::Window *control)
+void BalloonTip::showTooltip(::innate_subsystem::Control *control)
 {
-  main_innate_subsystem()->message_box(control->get_hwnd(),::wstring(m_text), ::wstring(m_title), MB_OK | MB_ICONWARNING);
+  main_subsystem()->message_box(control->operating_system_window(),::wstring(m_text), ::wstring(m_title), ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
 }
 
 void BalloonTip::setText(const ::scoped_string & scopedstrText)
@@ -57,7 +57,7 @@ void BalloonTip::setTitle(const ::scoped_string & scopedstrTitle)
   m_title= scopedstrTitle;
 }
 
-void BalloonTip::get_text(::string & text) const
+void BalloonTip::getText(::string & text) const
 {
   text = m_text;
 }

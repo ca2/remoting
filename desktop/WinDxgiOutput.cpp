@@ -71,7 +71,7 @@ void WinDxgiOutput::copy(const WinDxgiOutput &src)
 
 bool WinDxgiOutput::isAttachedtoDesktop()
 {
-  return m_description.AttachedToDesktop != FALSE;
+  return m_description.AttachedToDesktop != false;
 }
 
 ::int_rectangle WinDxgiOutput::getDesktopCoordinates()

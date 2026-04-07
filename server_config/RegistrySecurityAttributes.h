@@ -26,14 +26,14 @@
 
 
 //#include "remoting/remoting_common/util/winhdr.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 
 
 #include "remoting/remoting_common/win_system/security/SecurityIdentifier.h"
 #include "remoting/remoting_common/win_system/security/SecurityDescriptor.h"
 
-#include <AccCtrl.h>
-#include <Aclapi.h>
+// #include aaa_<accctrl.h>
+// #include aaa_<aclapi.h>
 
 /**
  * Contains security attributes (security descriptor) for protecting

@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "WindowsDisplays.h"
 //#include "remoting/remoting_common/thread/critical_section.h"
 #include "acme/prototype/geometry2d/rectangle.h"
@@ -47,7 +47,7 @@ bool CALLBACK WindowsDisplays::monitorEnumProc(HMONITOR hMonitor,
             lprcMonitor->right - _this->m_xVirtualScreen,
             lprcMonitor->bottom - _this->m_yVirtualScreen);
   _this->m_displayRects.add(rect);
-  return TRUE;
+  return true;
 }
 
 void WindowsDisplays::update()

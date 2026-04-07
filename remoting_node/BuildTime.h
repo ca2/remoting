@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include <tchar.h>
+// #include aaa_<tchar.h>
 
 /**
  * Application build time.

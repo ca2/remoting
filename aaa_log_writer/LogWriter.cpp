@@ -23,8 +23,8 @@
 //
 #include "framework.h"
 #include "LogWriter.h"
-#include <cstdarg>
-//#include <vector>
+//#include aaa_<cstdarg>
+//#include aaa_<vector>
 
 // LogWriter::LogWriter(LogWriter *LogWriter)
 // : m_LogWriter(LogWriter)

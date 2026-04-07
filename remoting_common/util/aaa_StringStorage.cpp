@@ -25,11 +25,11 @@
 //#include "::string.h"
 #include "CommonHeader.h"
 #include "acme/subsystem/Exception.h"
-#include <stdio.h>
+// #include aaa_<stdio.h>
 
-#include <crtdbg.h>
+//#include aaa_<crtdbg.h>
 
-#include <algorithm>
+//#include aaa_<algorithm>
 
 ::string::string()
 {

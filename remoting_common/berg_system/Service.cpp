@@ -22,12 +22,12 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "Service.h"
 
 #include "acme/subsystem/node/SystemException.h"
 
-#include <crtdbg.h>
+//#include aaa_<crtdbg.h>
 
 #include "ServiceControlManagerClient.h"
 
@@ -91,7 +91,7 @@ bool Service::reportStatus(DWORD dwCurrentState, DWORD dwWin32ExitCode, DWORD dw
     m_status.dwCheckPoint++;
   }
 
-  return SetServiceStatus(m_statusHandle, &m_status) == TRUE;
+  return SetServiceStatus(m_statusHandle, &m_status) == true;
 }
 
 Service::Service(const ::scoped_string & scopedstrName)

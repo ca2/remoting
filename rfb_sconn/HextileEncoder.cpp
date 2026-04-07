@@ -25,7 +25,7 @@
 #include "HextileEncoder.h"
 #include "HextileTile.h"
 
-#include <crtdbg.h>
+//#include aaa_<crtdbg.h>
 
 
 HextileEncoder::HextileEncoder(PixelConverter *conv, DataOutputStream *output)

@@ -26,7 +26,7 @@
 
 
 #include "acme/subsystem/_common_header.h"
-#include <commctrl.h>
+// #include aaa_<commctrl.h>
 #include "apex/innate_subsystem/Window.h"
 
 //
@@ -45,7 +45,7 @@ typedef struct
 // that view data as report.
 //
 
-class CLASS_DECL_REMOTING_COMMON ListView : public ::remoting::Window
+class CLASS_DECL_REMOTING_COMMON ListView : public ::innate_subsystem::Control
 {
 public:
 

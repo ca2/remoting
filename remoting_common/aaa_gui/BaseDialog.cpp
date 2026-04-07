@@ -26,8 +26,8 @@
 
 #include "acme/subsystem/_common_header.h"
 
-#include <commctrl.h>
-#include <crtdbg.h>
+// #include aaa_<commctrl.h>
+//#include aaa_<crtdbg.h>
 
 
 HINSTANCE remoting_impact_hinstance();
@@ -77,7 +77,7 @@ void BaseDialog::setDefaultPushButton(unsigned int buttonId)
   SendMessage(m_hwnd, DM_SETDEFID, buttonId, 0);
 }
 
-void BaseDialog::set_parent(::remoting::Window *pwindowParent)
+void BaseDialog::setParent(::innate_subsystem::Control *pwindowParent)
 {
   m_pwindowParent = pwindowParent;
 }
@@ -114,7 +114,7 @@ void BaseDialog::create()
   HWND window, parentWindow = NULL;
 
   if (m_pwindowParent != NULL) {
-    parentWindow = m_pwindowParent->get_hwnd();
+    parentWindow = m_pwindowParent->operating_system_window();
   }
 
    auto pszResourceName = getResouceName();
@@ -138,7 +138,7 @@ int BaseDialog::showModal()
   if (m_hwnd == NULL) {
     m_isModal = true;
      HINSTANCE hinstance = remoting_impact_hinstance();
-    HWND parentWindow = (m_pwindowParent != NULL) ? m_pwindowParent->get_hwnd() : NULL;
+    HWND parentWindow = (m_pwindowParent != NULL) ? m_pwindowParent->operating_system_window() : NULL;
     result = (int)DialogBoxParam(hinstance,
                                  getResouceName(),
                                  parentWindow, dialogProc, (::lparam)this);
@@ -170,7 +170,7 @@ bool BaseDialog::isCreated()
 
 bool BaseDialog::onDrawItem(::wparam controlID, LPDRAWITEMSTRUCT dis)
 {
-  return TRUE;
+  return true;
 }
 
 void BaseDialog::onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam)
@@ -183,7 +183,7 @@ INT_PTR CALLBACK BaseDialog::dialogProc(HWND hwnd, unsigned int uMsg, ::wparam w
    BaseDialog * pbasedialog = nullptr;
   bool bResult;
 
-  bResult = FALSE;
+  bResult = false;
   if (uMsg == WM_INITDIALOG) {
     pbasedialog = (BaseDialog *)lParam;
     SetWindowLongPtr(hwnd, GWLP_USERDATA, (LONG_PTR)pbasedialog);
@@ -192,7 +192,7 @@ INT_PTR CALLBACK BaseDialog::dialogProc(HWND hwnd, unsigned int uMsg, ::wparam w
   } else {
     pbasedialog = (BaseDialog *)GetWindowLongPtr(hwnd, GWLP_USERDATA);
     if (pbasedialog == 0) {
-      return FALSE;
+      return false;
     }
   }
 //   BaseDialog *_this;
@@ -208,7 +208,7 @@ INT_PTR CALLBACK BaseDialog::dialogProc(HWND hwnd, unsigned int uMsg, ::wparam w
 bool BaseDialog::dialog_procedure(INT_PTR & iptrResult, unsigned int message, ::wparam wparam, ::lparam lparam)
 {
 
-   bool bResult = FALSE;
+   bool bResult = false;
 
    onMessageReceived(message, wparam, lparam);
 
@@ -248,12 +248,12 @@ TCHAR *BaseDialog::getResouceName()
   return m_resourceName;
 }
 
-void BaseDialog::subclassControlById(::remoting::Window &control, DWORD id) 
+void BaseDialog::subclassControlById(::innate_subsystem::Control &control, DWORD id) 
 {
   control = GetDlgItem(m_hwnd, id);
 }
 
-void BaseDialog::subclassControlById(::remoting::Window * pcontrol, DWORD id)
+void BaseDialog::subclassControlById(::innate_subsystem::Control * pcontrol, DWORD id)
 {
    pcontrol->m_hwnd = GetDlgItem(m_hwnd, id);
    pcontrol->subclass_window();
@@ -281,25 +281,25 @@ void BaseDialog::loadIcon(DWORD id)
 
 bool BaseDialog::onInitDialog()
 {
-  return FALSE;
+  return false;
 }
 
 bool BaseDialog::onNotify(unsigned int controlID, ::lparam data)
 {
-  return FALSE;
+  return false;
 }
 
 bool BaseDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
-  return FALSE;
+  return false;
 }
 
 bool BaseDialog::onDestroy()
 {
-  return FALSE;
+  return false;
 }
 
 bool BaseDialog::onClose()
 {
-  return FALSE;
+  return false;
 }

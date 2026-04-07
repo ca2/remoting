@@ -46,7 +46,7 @@ public:
   virtual bool onInitDialog();
   virtual bool onNotify(unsigned int controlID, ::lparam data);
   virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
-  virtual bool onDestroy() { return TRUE; }
+  virtual bool onDestroy() { return true; }
 
   //
   // Helper methods
@@ -61,7 +61,7 @@ protected:
   void initControls();
 
   //
-  // ::remoting::Window event handlers
+  // ::innate_subsystem::Control event handlers
   //
 
   void onRecognitionIntervalSpinChangePos(LPNMUPDOWN scopedstrMessage);

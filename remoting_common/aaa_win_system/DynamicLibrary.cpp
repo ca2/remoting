@@ -22,10 +22,10 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "DynamicLibrary.h"
 
-#include <crtdbg.h>
+//#include aaa_<crtdbg.h>
 
 DynamicLibrary::DynamicLibrary(const ::scoped_string & scopedstrFilename)
 : m_module(0)

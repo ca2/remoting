@@ -22,19 +22,19 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "Workstation.h"
 
 void Workstation::lock()
 {
-  if (LockWorkStation() == FALSE) {
+  if (LockWorkStation() == false) {
     throw SystemException();
   }
 }
 
 void Workstation::logOff()
 {
-  if (ExitWindowsEx(EWX_LOGOFF, SHTDN_REASON_MAJOR_APPLICATION) == FALSE) {
+  if (ExitWindowsEx(EWX_LOGOFF, SHTDN_REASON_MAJOR_APPLICATION) == false) {
     throw SystemException();
   }
 }

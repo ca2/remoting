@@ -31,7 +31,7 @@
 
 
 
-class CLASS_DECL_REMOTING_COMMON TabControl : public ::remoting::Window
+class CLASS_DECL_REMOTING_COMMON TabControl : public ::innate_subsystem::Control
 {
 public:
   TabControl();

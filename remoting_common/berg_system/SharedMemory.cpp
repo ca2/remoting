@@ -22,10 +22,10 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "SharedMemory.h"
 #include "acme/subsystem/Exception.h"
-#include <Aclapi.h>
+// #include aaa_<aclapi.h>
 
 SharedMemory::SharedMemory(const ::scoped_string & scopedstrName, size_t size)
 : m_hToMap(0),

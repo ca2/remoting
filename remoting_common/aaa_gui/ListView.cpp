@@ -143,7 +143,7 @@ void ListView::addItem(int index, const ::scoped_string & scopedstrCaption, ::lp
 
 void ListView::eraseItem(int i)
 {
-  ListView_DeleteItem(get_hwnd(), i);
+  ListView_DeleteItem(operating_system_window(), i);
 }
 
 void ListView::clear()
@@ -218,10 +218,10 @@ void ListView::selectItem(int index)
 {
   ::wparam itemIndex = (::wparam)index;
   ListView_SetItemState(m_hwnd, -1, 0, LVIS_SELECTED);
-  SendMessage(m_hwnd, LVM_ENSUREVISIBLE , itemIndex, FALSE);
+  SendMessage(m_hwnd, LVM_ENSUREVISIBLE , itemIndex, false);
   ListView_SetItemState(m_hwnd, itemIndex, LVIS_SELECTED, LVIS_SELECTED);
   ListView_SetItemState(m_hwnd, itemIndex, LVIS_FOCUSED, LVIS_FOCUSED);
-  set_focus();
+  setFocus();
 }
 
 void ListView::setFullRowSelectStyle(bool fullRowSelect)

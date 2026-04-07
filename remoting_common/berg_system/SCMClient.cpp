@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "ServiceControlManagerClient.h"
 
 #include "remoting/remoting_common/thread/Thread.h"
@@ -37,7 +37,7 @@ ServiceControlManagerClientException::ServiceControlManagerClientException(int s
   case ERROR_START_TIMEOUT:
     break;
   default:
-    _ASSERT(FALSE);
+    _ASSERT(false);
   };
 
   m_scmErrCode = scmErrCode;
@@ -154,7 +154,7 @@ void ServiceControlManagerClient::startService(const ::scoped_string & scopedstr
     if (state == SERVICE_RUNNING || state == SERVICE_START_PENDING) {
       throw ServiceControlManagerClientException(ServiceControlManagerClientException::ERROR_ALREADY_RUNNING);
     }
-    if (StartService(serviceHandle, 0, 0) == FALSE) {
+    if (StartService(serviceHandle, 0, 0) == false) {
       throw SystemException();
     }
 
@@ -193,7 +193,7 @@ void ServiceControlManagerClient::stopService(const ::scoped_string & scopedstrN
       throw ServiceControlManagerClientException(ServiceControlManagerClientException::ERROR_ALREADY_STOPPED);
     }
     SERVICE_STATUS status;
-    if (ControlService(serviceHandle, SERVICE_CONTROL_STOP, &status) == FALSE) {
+    if (ControlService(serviceHandle, SERVICE_CONTROL_STOP, &status) == false) {
       throw SystemException();
     }
 

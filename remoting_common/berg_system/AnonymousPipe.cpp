@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "AnonymousPipe.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 //#include "remoting/remoting_common/thread/critical_section.h"
@@ -123,7 +123,7 @@ void AnonymousPipe::assignHandlesFor(HANDLE hTargetProc, bool neededToClose,
 {
   HANDLE hSrcProc = GetCurrentProcess();
   HANDLE hWrite = 0, hRead = 0;
-  if (DuplicateHandle(hSrcProc, m_hWrite, hTargetProc, &hWrite, 0, FALSE,
+  if (DuplicateHandle(hSrcProc, m_hWrite, hTargetProc, &hWrite, 0, false,
                       DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS) == 0) {
     ::string errText;
     errText = windows::last_error_message("Cannot dupplicate write"
@@ -132,7 +132,7 @@ void AnonymousPipe::assignHandlesFor(HANDLE hTargetProc, bool neededToClose,
     throw ::remoting::Exception(errText);
   }
   m_hWrite = hWrite;
-  if (DuplicateHandle(hSrcProc, m_hRead, hTargetProc, &hRead, 0, FALSE,
+  if (DuplicateHandle(hSrcProc, m_hRead, hTargetProc, &hRead, 0, false,
                       DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS) == 0) {
     ::string errText;
     errText = windows::last_error_message("Cannot dupplicate read"
@@ -143,7 +143,7 @@ void AnonymousPipe::assignHandlesFor(HANDLE hTargetProc, bool neededToClose,
   m_hRead = hRead;
   // Try keep of the close rights.
   if (keepCloseRight) {
-    if (DuplicateHandle(hTargetProc, m_hWrite, 0, 0, 0, FALSE,
+    if (DuplicateHandle(hTargetProc, m_hWrite, 0, 0, 0, false,
                         DUPLICATE_CLOSE_SOURCE) == 0) {
       ::string errText;
       errText = ::windows::last_error_message("Cannot keep the right to close of the write"
@@ -151,7 +151,7 @@ void AnonymousPipe::assignHandlesFor(HANDLE hTargetProc, bool neededToClose,
                              ::windows::last_error());
       throw ::remoting::Exception(errText);
     }
-    if (DuplicateHandle(hTargetProc, m_hRead, 0, 0, 0, FALSE,
+    if (DuplicateHandle(hTargetProc, m_hRead, 0, 0, 0, false,
                         DUPLICATE_CLOSE_SOURCE) == 0) {
       ::string errText;
       errText = ::windows::last_error_message("Cannot keep the right to close of the read"

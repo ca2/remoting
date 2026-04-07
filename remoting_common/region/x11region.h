@@ -48,7 +48,7 @@ SOFTWARE.
 #ifndef REGIONSTRUCT_H
 #define REGIONSTRUCT_H
 
-#include <stdio.h>
+// #include aaa_<stdio.h>
 #include "remoting/remoting_common/util/inttypes.h"
 
 /* Return values from RectIn() */
@@ -76,9 +76,9 @@ SOFTWARE.
  * X data types
  */
 
-#ifndef FALSE
-#define FALSE 0
-#define TRUE  1
+#ifndef false
+#define false 0
+#define true  1
 #endif
 typedef int Bool;
 

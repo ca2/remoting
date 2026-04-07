@@ -54,7 +54,7 @@ void Menu::getSystemMenu(HWND hwnd)
 {
   _ASSERT(m_menu == 0);
 
-  m_menu = GetSystemMenu(hwnd, FALSE);
+  m_menu = GetSystemMenu(hwnd, false);
 }
 
 void Menu::create()
@@ -198,7 +198,7 @@ bool Menu::insertMenuItem(unsigned int uItem, const ::scoped_string & scopedstrD
   mii.dwTypeData = (LPTSTR)wstrData.c_str();
   mii.fState = MFS_DEFAULT; 
   mii.wID = uID;
-  return insertMenuItem(uItem, TRUE, (LPMENUITEMINFO)&mii);
+  return insertMenuItem(uItem, true, (LPMENUITEMINFO)&mii);
 }
 
 bool Menu::insertCheckMenuItem(unsigned int uItem, const ::scoped_string & scopedstrData, unsigned int uID)
@@ -211,7 +211,7 @@ bool Menu::insertCheckMenuItem(unsigned int uItem, const ::scoped_string & scope
   mii.dwTypeData = (LPTSTR)wstrData.c_str();
   mii.fState = MFS_UNCHECKED; 
   mii.wID = uID;
-  return insertMenuItem(uItem, TRUE, (LPMENUITEMINFO)&mii);
+  return insertMenuItem(uItem, true, (LPMENUITEMINFO)&mii);
 }
 
 bool Menu::checkedMenuItem(unsigned int uID, bool bEnable)
@@ -234,7 +234,7 @@ bool Menu::insertSeparator(unsigned int uItem)
   ZeroMemory(&mii, sizeof(MENUITEMINFO));
   mii.cbSize = sizeof(MENUITEMINFO);
   mii.fType = MFT_SEPARATOR;
-  return insertMenuItem(uItem, TRUE, (LPMENUITEMINFO)&mii);
+  return insertMenuItem(uItem, true, (LPMENUITEMINFO)&mii);
 }
 
 bool Menu::insertSubMenu(unsigned int uItem, const ::scoped_string & scopedstrData, Menu *pMenu)
@@ -245,12 +245,12 @@ bool Menu::insertSubMenu(unsigned int uItem, const ::scoped_string & scopedstrDa
   mii.cbSize = sizeof(MENUITEMINFO);
   mii.fMask = MIIM_SUBMENU;
   mii.hSubMenu = pMenu->getMenu();
-  return insertMenuItem(uItem, TRUE, (LPMENUITEMINFO)&mii);
+  return insertMenuItem(uItem, true, (LPMENUITEMINFO)&mii);
 }
 
 bool Menu::setDefaultItem(unsigned int uID)
 {
   _ASSERT(m_menu != 0);
 
-  return !!SetMenuDefaultItem(m_menu, uID, FALSE);
+  return !!SetMenuDefaultItem(m_menu, uID, false);
 }

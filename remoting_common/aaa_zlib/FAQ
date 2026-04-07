@@ -99,7 +99,7 @@ The lastest zlib FAQ is at http://zlib.net/zlib_faq.html
     However, many flavors of Unix come with a shared zlib already installed.
     Before going to the trouble of compiling a shared version of zlib and
     trying to install it, you may want to check if it's already there!  If you
-    can #include <zlib.h>, it's there.  The -lz option will probably link to
+    can // #include aaa_<zlib.h>, it's there.  The -lz option will probably link to
     it.  You can check the version at the top of zlib.h or with the
     ZLIB_VERSION symbol defined in zlib.h .
 

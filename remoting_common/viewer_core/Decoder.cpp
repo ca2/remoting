@@ -84,7 +84,7 @@ bool Decoder::isPseudo(int encoding)
     return true;
   default:
     // if the encoding type is unknown, then generate assertions.
-    _ASSERT(TRUE);
+    _ASSERT(true);
     return true;
   }
 }

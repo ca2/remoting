@@ -41,7 +41,7 @@
 #include "acme/subsystem/thread/Thread.h"
 #include "remoting/remoting_common/ftp_client/FileTransferInterface.h"
 
-//#include <vector>
+//#include aaa_<vector>
 namespace remoting_remoting
 {
     class FileTransferMainDialog : public ::innate_subsystem::Dialog,
@@ -222,20 +222,20 @@ namespace remoting_remoting
         // Buttons
         //
 
-        ::remoting::Window m_renameRemoteButton;
-        ::remoting::Window m_mkDirRemoteButton;
-        ::remoting::Window m_removeRemoteButton;
-        ::remoting::Window m_refreshRemoteButton;
+        ::innate_subsystem::Control m_renameRemoteButton;
+        ::innate_subsystem::Control m_mkDirRemoteButton;
+        ::innate_subsystem::Control m_removeRemoteButton;
+        ::innate_subsystem::Control m_refreshRemoteButton;
 
-        ::remoting::Window m_renameLocalButton;
-        ::remoting::Window m_mkDirLocalButton;
-        ::remoting::Window m_removeLocalButton;
-        ::remoting::Window m_refreshLocalButton;
+        ::innate_subsystem::Control m_renameLocalButton;
+        ::innate_subsystem::Control m_mkDirLocalButton;
+        ::innate_subsystem::Control m_removeLocalButton;
+        ::innate_subsystem::Control m_refreshLocalButton;
 
-        ::remoting::Window m_uploadButton;
-        ::remoting::Window m_downloadButton;
+        ::innate_subsystem::Control m_uploadButton;
+        ::innate_subsystem::Control m_downloadButton;
 
-        ::remoting::Window m_cancelButton;
+        ::innate_subsystem::Control m_cancelButton;
 
         //
         // Progress bar

@@ -22,9 +22,9 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "Shell.h"
-#include <shellapi.h>
+// #include aaa_<shellapi.h>
 
 
 Shell::Shell()
@@ -48,7 +48,7 @@ void Shell::runAsAdmin(const ::file::path & pathToFile, const ::scoped_string & 
   sei.lpParameters = wstrArgs;
   sei.nShow = SW_SHOWNORMAL;
 
-  if (ShellExecuteEx(&sei) == FALSE) {
+  if (ShellExecuteEx(&sei) == false) {
     throw SystemException();
   }
 

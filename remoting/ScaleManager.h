@@ -74,10 +74,10 @@ namespace remoting_remoting
         void getWndFromScreen(const ::int_rectangle &  screen, ::int_rectangle *wnd);
 
         // transform display coordinate to screen
-        POINTS transformDispToScr(int xPoint, int yPoint) const;
+        ::int_point transformDispToScr(int xPoint, int yPoint) const;
 
         static const int DEFAULT_SCALE_DENOMERATOR = 100;
-    protected:
+    //protected:
         // This method return round to up of (x/y).
         int sDiv(int x, int y) const;
 

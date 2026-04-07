@@ -23,8 +23,8 @@
 //
 #include "framework.h"
 #include "RectSerializer.h"
-#include <tchar.h>
-#include <stdio.h>
+// #include aaa_<tchar.h>
+// #include aaa_<stdio.h>
 #include "acme/subsystem/Exception.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 

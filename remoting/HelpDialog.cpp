@@ -26,6 +26,8 @@
 
 #include "remoting/remoting_common/util/ResourceLoader.h"
 #include "resource.h"
+#include "acme/subsystem/resource_loader.h"
+
 
 namespace remoting_remoting
 {
@@ -39,23 +41,24 @@ namespace remoting_remoting
         subclassControlById(m_shelp, IDC_SHELP);
 
         ::string helpString;
-        ResourceLoader *rLoader = ResourceLoader::getInstance();
-        rLoader->loadString(IDS_CMDLINE_HELP, helpString);
-        m_shelp.setText(helpString);
-        return TRUE;
+       auto presourceloader = main_subsystem()->resource_loader();
+        //ResourceLoader *rLoader = ResourceLoader::getInstance();
+        presourceloader->loadString(IDS_CMDLINE_HELP, helpString);
+        m_shelp->setText(helpString);
+        return true;
     }
 
     bool HelpDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
-        if (controlID == IDOK) {
+        if (controlID == ::innate_subsystem::IDOK) {
             closeDialog(1);
-            return TRUE;
+            return true;
         }
-        if (controlID == IDCANCEL) {
+        if (controlID == ::innate_subsystem::IDCANCEL) {
             closeDialog(0);
-            return TRUE;
+            return true;
         }
-        return FALSE;
+        return false;
     }
 } //     namespace remoting_remoting
 

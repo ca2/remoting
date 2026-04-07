@@ -22,10 +22,10 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "Pipe.h"
 #include "acme/subsystem/Exception.h"
-#include <crtdbg.h>
+//#include aaa_<crtdbg.h>
 //#include "remoting/remoting_common/win_system/Environment.h"
 //#include "remoting/remoting_common/thread/critical_section.h"
 
@@ -77,7 +77,7 @@ size_t Pipe::writeByHandle(const void *buffer, size_t len, HANDLE pipeHandle)
       DWORD cbRet;
       critical_section_lock al(&m_hPipeMutex);
       checkPipeHandle(pipeHandle);
-      if (GetOverlappedResult(pipeHandle, &overlapped, &cbRet, FALSE) ||
+      if (GetOverlappedResult(pipeHandle, &overlapped, &cbRet, false) ||
           cbRet == 0) {
         result = cbRet;
       } else {
@@ -137,7 +137,7 @@ size_t Pipe::readByHandle(void *buffer, size_t len, HANDLE pipeHandle)
       DWORD cbRet = 0;
       critical_section_lock al(&m_hPipeMutex);
       checkPipeHandle(pipeHandle);
-      if (GetOverlappedResult(pipeHandle, &overlapped, &cbRet, FALSE) &&
+      if (GetOverlappedResult(pipeHandle, &overlapped, &cbRet, false) &&
           cbRet != 0) {
         result = cbRet;
       } else {

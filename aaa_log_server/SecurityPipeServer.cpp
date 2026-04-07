@@ -30,7 +30,7 @@
 //#include "remoting/win_system/Environment.h"
 #include "remoting/win_system/WinHandles.h"
 #include "ConnectionTimer.h"
-#include <time.h>
+//#include aaa_<time.h>
 
 SecurityPipeServer::SecurityPipeServer(Channel *tempPublChan, unsigned int bufferSize)
 : m_secChannel(0),

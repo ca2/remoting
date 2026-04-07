@@ -32,7 +32,7 @@ documentation and/or software.
 #include "framework.h"
 #include "md5.h"
 
-#include <memory.h>
+// #include aaa_<memory.h>
 
 //
 // Constants for MD5Transform routine.

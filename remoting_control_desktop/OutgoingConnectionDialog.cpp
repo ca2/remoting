@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 //#include "remoting/remoting_common/util/winhdr.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 
 #include "remoting_node_desktop/NamingDefs.h"
 
@@ -58,7 +58,7 @@ bool OutgoingConnectionDialog::isViewOnly() const
 
 void OutgoingConnectionDialog::initControls()
 {
-  HWND window = m_ctrlThis.get_hwnd();
+  HWND window = m_ctrlThis.operating_system_window();
 
   m_connectStringCB.setWindow(GetDlgItem(window, IDC_HOSTNAME_COMBO));
   m_viewOnlyCB.setWindow(GetDlgItem(window, IDC_VIEW_ONLY_CHECKBOX));
@@ -79,37 +79,37 @@ bool OutgoingConnectionDialog::onInitDialog()
   }
 
   m_connectStringCB.setSelectedItem(0);
-  m_connectStringCB.set_focus();
+  m_connectStringCB.setFocus();
 
-  return FALSE;
+  return false;
 }
 
 bool OutgoingConnectionDialog::onNotify(unsigned int controlID, ::lparam data)
 {
-  return FALSE;
+  return false;
 }
 
 bool OutgoingConnectionDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
   switch (controlID) {
-  case IDOK:
+  case ::innate_subsystem::IDOK:
     onOkButtonClick();
     break;
-  case IDCANCEL:
+  case ::innate_subsystem::IDCANCEL:
     onCancelButtonClick();
     break;
   }
-  return FALSE;
+  return false;
 }
 
 bool OutgoingConnectionDialog::onDestroy()
 {
-  return FALSE;
+  return false;
 }
 
 void OutgoingConnectionDialog::onOkButtonClick()
 {
-  m_connectStringCB.get_text(&m_connectString);
+  m_connectStringCB.getText(&m_connectString);
 
   m_isViewOnly = m_viewOnlyCB.isChecked();
 
@@ -119,10 +119,10 @@ void OutgoingConnectionDialog::onOkButtonClick()
   m_connHistory.save();
   m_connHistory.rear_truncate();
 
-  kill(IDOK);
+  kill(::innate_subsystem::IDOK);
 }
 
 void OutgoingConnectionDialog::onCancelButtonClick()
 {
-  kill(IDCANCEL);
+  kill(::innate_subsystem::IDCANCEL);
 }

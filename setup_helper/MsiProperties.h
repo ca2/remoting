@@ -26,8 +26,8 @@
 
 
 #include "acme/subsystem/_common_header.h"
-#include <strsafe.h>
-#include <msiquery.h>
+// #include aaa_<strsafe.h>
+// #include aaa_<msiquery.h>
 
 class MsiProperties
 {

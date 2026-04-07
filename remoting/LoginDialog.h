@@ -69,8 +69,8 @@ namespace remoting_remoting
         bool onCommand(unsigned int controlID, unsigned int notificationID);
         bool m_isListening;
 
-        ::remoting::Window m_listening;
-        ::remoting::Window m_ok;
+        ::innate_subsystem::Control m_listening;
+        ::innate_subsystem::Control m_ok;
         ConnectionConfig m_connectionConfig;
         ComboBox m_server;
         ::string m_serverHost;

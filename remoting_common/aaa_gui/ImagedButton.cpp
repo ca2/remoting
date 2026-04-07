@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ImagedButton.h"
 
-#include <crtdbg.h>
+//#include aaa_<crtdbg.h>
 
 ImagedButton::ImagedButton()
 : m_mouseOver(false),
@@ -97,8 +97,8 @@ void ImagedButton::drawItem(LPDRAWITEMSTRUCT dis)
     } // if not pressed
   } // if not themed
 
-  ::string title = get_text();
-  //get_text(&title);
+  ::string title = getText();
+  //getText(&title);
 
   RECT captionRect = dis->rcItem;
 
@@ -111,11 +111,11 @@ void ImagedButton::drawItem(LPDRAWITEMSTRUCT dis)
 
   RECT prectangleImage;
 
-  calcRect(&itemRect, isPressed == TRUE, 0, metric.tmHeight,
+  calcRect(&itemRect, isPressed == true, 0, metric.tmHeight,
            m_iconWidth, m_iconHeight, &captionRect, &prectangleImage);
 
   if (m_icon != NULL) {
-    drawIcon(&dc, &prectangleImage, isPressed == TRUE, isDisabled == TRUE);
+    drawIcon(&dc, &prectangleImage, isPressed == true, isDisabled == true);
   }
 
   if (!title.is_empty()) {
@@ -165,11 +165,11 @@ void ImagedButton::drawItem(LPDRAWITEMSTRUCT dis)
 
 void ImagedButton::setWindow(HWND hwnd)
 {
-  ::remoting::Window::setWindow(hwnd);
+  ::innate_subsystem::Control::setWindow(hwnd);
   // Replace window event handler
 //  replaceWindowProc(ImagedButton::wndProc);
   // Add owner draw style to button
-  ::remoting::Window::add_style(BS_OWNERDRAW);
+  ::innate_subsystem::Control::add_style(BS_OWNERDRAW);
 
   if (ThemeLib::isLoaded())  {
     if (m_theme) {

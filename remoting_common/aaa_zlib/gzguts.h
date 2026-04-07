@@ -18,7 +18,7 @@
 #  define ZLIB_INTERNAL
 #endif
 
-#include <stdio.h>
+// #include aaa_<stdio.h>
 #include "zlib.h"
 #ifdef STDC
 #  include <string.h>
@@ -29,7 +29,7 @@
 #ifndef _POSIX_SOURCE
 #  define _POSIX_SOURCE
 #endif
-#include <fcntl.h>
+// #include aaa_<fcntl.h>
 
 #ifdef _WIN32
 #  include <stddef.h>

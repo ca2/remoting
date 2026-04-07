@@ -30,7 +30,7 @@
 #include "remoting/remoting_common/util/StringParser.h"
 #include "CommonInputValidation.h"
 #include "UIDataAccess.h"
-#include <limits.h>
+// #include aaa_<limits.h>
 
 ServerConfigDialog::ServerConfigDialog()
 : BaseDialog(IDD_CONFIG_SERVER_PAGE), m_parentDialog(NULL)
@@ -52,7 +52,7 @@ bool ServerConfigDialog::onInitDialog()
   initControls();
   updateUI();
 
-  return TRUE;
+  return true;
 }
 
 bool ServerConfigDialog::onNotify(unsigned int controlID, ::lparam data)
@@ -63,12 +63,12 @@ bool ServerConfigDialog::onNotify(unsigned int controlID, ::lparam data)
       onPollingIntervalSpinChangePos(scopedstrMessage);
     }
   }
-  return TRUE;
+  return true;
 }
 
 bool ServerConfigDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
-  if (notificationID == BN_CLICKED) {
+  if (notificationID == ::user::e_notification_button_clicked) {
     switch (controlID) {
     case IDC_ACCEPT_RFB_CONNECTIONS:
       onAcceptRfbConnectionsClick();
@@ -136,7 +136,7 @@ bool ServerConfigDialog::onCommand(unsigned int controlID, unsigned int notifica
       break;
     }
   }
-  return TRUE;
+  return true;
 }
 
 bool ServerConfigDialog::validateInput()
@@ -197,10 +197,10 @@ bool ServerConfigDialog::validateInput()
   if (m_acceptRfbConnections.isChecked() &&
       m_useAuthentication.isChecked() &&
       !passwordSpecified) {
-    main_innate_subsystem()->message_box(m_ctrlThis.get_hwnd(),
+    main_subsystem()->message_box(m_ctrlThis.operating_system_window(),
                main_subsystem()->string_table()->getString(IDS_SET_PASSWORD_NOTIFICATION),
                main_subsystem()->string_table()->getString(IDS_CAPTION_BAD_INPUT),
-               MB_ICONSTOP | MB_OK);
+               MB_ICONSTOP | ::user::e_message_box_ok);
     return false;
   }
 
@@ -249,9 +249,9 @@ void ServerConfigDialog::apply()
   // Polling interval string storage
   ::string pollingIntervalText;
 
-  m_rfbPort.get_text(&rfbPortText);
-  m_httpPort.get_text(&httpPortText);
-  m_pollingInterval.get_text(&pollingIntervalText);
+  m_rfbPort.getText(&rfbPortText);
+  m_httpPort.getText(&httpPortText);
+  m_pollingInterval.getText(&pollingIntervalText);
 
   int intVal = 0;
 
@@ -295,7 +295,7 @@ void ServerConfigDialog::apply()
 
   // Local input priority timeout string storage
   ::string liptStringStorage;
-  m_localInputPriorityTimeout.get_text(&liptStringStorage);
+  m_localInputPriorityTimeout.getText(&liptStringStorage);
   int timeout = 0;
 
   m_config->setLocalInputPriority(m_localInputPriority.isChecked());
@@ -314,7 +314,7 @@ void ServerConfigDialog::apply()
 
 void ServerConfigDialog::initControls()
 {
-  HWND hwnd = m_ctrlThis.get_hwnd();
+  HWND hwnd = m_ctrlThis.operating_system_window();
   m_rfbPort.setWindow(GetDlgItem(hwnd, IDC_RFB_PORT));
   m_httpPort.setWindow(GetDlgItem(hwnd, IDC_HTTP_PORT));
   m_pollingInterval.setWindow(GetDlgItem(hwnd, IDC_POLLING_INTERVAL));
@@ -461,14 +461,14 @@ void ServerConfigDialog::onReadOnlyPasswordChange()
 
 void ServerConfigDialog::onUnsetPrimaryPasswordClick()
 {
-  m_ppControl->unsetPassword(true, m_ctrlThis.get_hwnd());
+  m_ppControl->unsetPassword(true, m_ctrlThis.operating_system_window());
 
   ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
 }
 
 void ServerConfigDialog::onUnsetReadOnlyPasswordClick()
 {
-  m_vpControl->unsetPassword(true, m_ctrlThis.get_hwnd());
+  m_vpControl->unsetPassword(true, m_ctrlThis.operating_system_window());
 
   ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
 }

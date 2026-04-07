@@ -28,7 +28,7 @@
 //#include "Environment.h"
 #include "PipeImpersonatedThread.h"
 #include "acme/platform/node.h"
-#include <crtdbg.h>
+//#include aaa_<crtdbg.h>
 
 
 DynamicLibrary *WTS::m_kernel32Library = 0;
@@ -233,7 +233,7 @@ void WTS::wtsFreeMemory(void *buffer)
 
 void WTS::defineConsoleUserProcessId(DWORD userProcessId)
 {
-  HANDLE procHandle = OpenProcess(PROCESS_QUERY_INFORMATION, FALSE, userProcessId);
+  HANDLE procHandle = OpenProcess(PROCESS_QUERY_INFORMATION, false, userProcessId);
 
   if (procHandle == 0) {
     throw SystemException();
@@ -270,7 +270,7 @@ void WTS::duplicatePipeClientToken(HANDLE pipeHandle)
     throw ::remoting::Exception(errMessage);
   }
 
-  HANDLE threadHandle = OpenThread(THREAD_QUERY_INFORMATION, FALSE,
+  HANDLE threadHandle = OpenThread(THREAD_QUERY_INFORMATION, false,
                                    impThread.getThreadId());
   if (threadHandle == 0) {
     throw SystemException("Can't open thread to duplicate"
@@ -278,7 +278,7 @@ void WTS::duplicatePipeClientToken(HANDLE pipeHandle)
   }
   try {
     HANDLE userThreadToken;
-    if (OpenThreadToken(threadHandle, TOKEN_ALL_ACCESS, TRUE, &userThreadToken) == 0) {
+    if (OpenThreadToken(threadHandle, TOKEN_ALL_ACCESS, true, &userThreadToken) == 0) {
       throw SystemException("Can't open process token to duplicate"
                             " impersonate token");
     }

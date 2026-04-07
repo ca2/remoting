@@ -26,8 +26,8 @@
 
 
 #include "remoting/remoting_common/rfb/FrameBuffer.h"
-#include <DXGI1_2.h>
-//#include <vector>
+// #include aaa_<DXGI1_2.h>
+//#include aaa_<vector>
 
 // This class provides some functions to work with windows cursor shape data.
 class WinCursorShapeUtils

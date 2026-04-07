@@ -397,7 +397,7 @@ namespace remoting
                         terminate();
                      } // if not terminating
                      return ;
-                  default: _ASSERT(FALSE);
+                  default: _ASSERT(false);
                } // switch (action)
             } // if file already exists
          } // for all files in remote files

@@ -30,7 +30,7 @@
 #include "remoting/remoting_common/util/VncPassCrypt.h"
 //#include "remoting/remoting_common/util/::string.h"
 
-ChangePasswordDialog::ChangePasswordDialog(::remoting::Window *parent, bool isNewPassword)
+ChangePasswordDialog::ChangePasswordDialog(::innate_subsystem::Control *parent, bool isNewPassword)
 : BaseDialog(IDD_CHANGE_PASSWORD), m_allowEmptyPassword(false), m_newPassword(isNewPassword)
 {
   setParent(parent);
@@ -62,61 +62,61 @@ bool ChangePasswordDialog::onInitDialog()
   } else {
     m_ctrlThis.setText(main_subsystem()->string_table()->getString(IDS_CHANGE_PASSWORD));
   }
-  return TRUE;
+  return true;
 }
 
 bool ChangePasswordDialog::onCommand(unsigned int cID, unsigned int nID)
 {
-  if (nID == BN_CLICKED) {
+  if (nID == ::user::e_notification_button_clicked) {
     switch (cID) {
-    case IDOK:
+    case ::innate_subsystem::IDOK:
       onOkButtonClick();
       break;
-    case IDCANCEL:
+    case ::innate_subsystem::IDCANCEL:
       onCancelButtonClick();
       break;
     }
   }
-  return TRUE;
+  return true;
 }
 
 void ChangePasswordDialog::onOkButtonClick()
 {
   ::string password1;
   ::string password2;
-  m_password1.get_text(&password1);
-  m_password2.get_text(&password2);
+  m_password1.getText(&password1);
+  m_password2.getText(&password2);
 
   if (password1.is_empty() && !m_allowEmptyPassword) {
     m_password1.showBalloonTip(&m_passwordEmptyTooltip);
-    m_password1.set_focus();
+    m_password1.setFocus();
     return ;
   }
   if (!password1.isEqualTo(&password2)) {
     m_password2.showBalloonTip(&m_passwordsNotMatchTooltip);
-    m_password2.set_focus();
+    m_password2.setFocus();
     return ;
   }
 
   if (!::string::checkAnsiConversion(password1)) {
     m_password1.showBalloonTip(&m_passwordWeakTooltip);
-    m_password1.set_focus();
+    m_password1.setFocus();
     return;
   }
 
   m_passwordText= password1;
 
-  kill(IDOK);
+  kill(::innate_subsystem::IDOK);
 }
 
 void ChangePasswordDialog::onCancelButtonClick()
 {
-  kill(IDCANCEL);
+  kill(::innate_subsystem::IDCANCEL);
 }
 
 void ChangePasswordDialog::initControls()
 {
-  HWND hwnd = m_ctrlThis.get_hwnd();
+  HWND hwnd = m_ctrlThis.operating_system_window();
   m_password1.setWindow(GetDlgItem(hwnd, IDC_PASSWORD));
   m_password2.setWindow(GetDlgItem(hwnd, IDC_PASSWORD2));
 

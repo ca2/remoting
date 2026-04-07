@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "SecurityAttributes.h"
 
 SecurityAttributes::SecurityAttributes()
@@ -79,5 +79,5 @@ SECURITY_ATTRIBUTES *SecurityAttributes::getSecurityAttributes()
 void SecurityAttributes::setInheritable()
 {
   m_isDefaultAttributes = false;
-  m_securityAttributes.bInheritHandle = TRUE;
+  m_securityAttributes.bInheritHandle = true;
 }

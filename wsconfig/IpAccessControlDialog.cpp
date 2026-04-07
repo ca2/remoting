@@ -56,12 +56,12 @@ bool IpAccessControlDialog::onInitDialog()
   updateUI();
   updateButtonsState();
   onIpCheckUpdate();
-  return TRUE;
+  return true;
 }
 
 bool IpAccessControlDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
-  if (notificationID == BN_CLICKED) {
+  if (notificationID == ::user::e_notification_button_clicked) {
     switch (controlID) {
     case IDC_ADD_BUTTON:
       onAddButtonClick();
@@ -101,7 +101,7 @@ bool IpAccessControlDialog::onCommand(unsigned int controlID, unsigned int notif
       break;
     }
   }
-  return TRUE;
+  return true;
 }
 
 bool IpAccessControlDialog::onNotify(unsigned int controlID, ::lparam data)
@@ -117,7 +117,7 @@ bool IpAccessControlDialog::onNotify(unsigned int controlID, ::lparam data)
       break;
     }
   }
-  return TRUE;
+  return true;
 }
 
 bool IpAccessControlDialog::validateInput()
@@ -170,7 +170,7 @@ void IpAccessControlDialog::apply()
 {
   // Query timeout string storage
   ::string qtStringStorage;
-  m_queryTimeout.get_text(&qtStringStorage);
+  m_queryTimeout.getText(&qtStringStorage);
 
   int timeout = 0;
   StringParser::parseInt(qtStringStorage, &timeout);
@@ -196,7 +196,7 @@ void IpAccessControlDialog::apply()
 
 void IpAccessControlDialog::initControls()
 {
-  HWND hwnd = m_ctrlThis.get_hwnd();
+  HWND hwnd = m_ctrlThis.operating_system_window();
   m_list.setWindow(GetDlgItem(hwnd, IDC_IP_ACCESS_CONTROL_LIST));
   m_addButton.setWindow(GetDlgItem(hwnd, IDC_ADD_BUTTON));
   m_editButton.setWindow(GetDlgItem(hwnd, IDC_EDIT_BUTTON));
@@ -229,7 +229,7 @@ void IpAccessControlDialog::onAddButtonClick()
   IpAccessRule *ip = new IpAccessRule();
   m_editDialog.setIpAccessControl(ip);
   m_editDialog.setEditFlag(false);
-  if (m_editDialog.showModal() == IDOK) {
+  if (m_editDialog.showModal() == ::innate_subsystem::IDOK) {
     m_container->add(ip);
     m_list.addItem(m_list.getCount(), "", (::lparam)ip);
     setListViewItemText(m_list.getCount() - 1, ip);
@@ -252,7 +252,7 @@ void IpAccessControlDialog::onEditButtonClick()
   IpAccessRule *ip = (IpAccessRule *)m_list.getItemData(m_list.getSelectedIndex());
   m_editDialog.setIpAccessControl(ip);
   m_editDialog.setEditFlag(true);
-  if (m_editDialog.showModal() == IDOK) {
+  if (m_editDialog.showModal() == ::innate_subsystem::IDOK) {
     setListViewItemText(m_list.getSelectedIndex(), ip);
     updateButtonsState();
     onIpCheckUpdate();
@@ -370,7 +370,7 @@ void IpAccessControlDialog::onAllowOnlyLoopbackConnectionsClick()
 void IpAccessControlDialog::onIpCheckUpdate()
 {
   ::string ipStorage;
-  m_ip.get_text(&ipStorage);
+  m_ip.getText(&ipStorage);
 
    // Check if ip address is valid.
 

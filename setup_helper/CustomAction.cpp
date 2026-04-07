@@ -30,10 +30,10 @@
 #include "remoting/remoting_common/config/RegistrySettingsManager.h"
 #include "remoting_node_desktop/NamingDefs.h"
 
-#include <msiquery.h>
-#include <shlwapi.h>
-#include <algorithm>
-//#include <wcautil.h>
+// #include aaa_<msiquery.h>
+// #include aaa_<shlwapi.h>
+//#include aaa_<algorithm>
+//// #include aaa_<wcautil.h>
 
 const TCHAR SAS_REG_ENTRY[] = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System";
 const TCHAR SAS_REG_KEY[] = "SoftwareSASGeneration";
@@ -142,5 +142,5 @@ extern "C" bool WINAPI DllMain(
                                __in LPVOID
                                )
 {
-  return TRUE;
+  return true;
 }

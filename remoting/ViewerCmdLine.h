@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/win_system/WinProcessCommandLine.h"
+//#include "remoting/remoting_common/win_system/WindowsProcessCommandLine.h"
 #include "remoting/remoting_common/client_config/ViewerConfig.h"
 #include "remoting/remoting_common/util/CommandLineFormatException.h"
 #include "remoting/remoting_common/util/CommandLineFormatHelp.h"
@@ -37,7 +37,7 @@ namespace remoting_remoting
     class ViewerCmdLine {
     public:
         ViewerCmdLine(ConnectionData *conData,
-                      ConnectionConfig *conConf,
+                      ::remoting::ConnectionConfig *conConf,
                       ::remoting::ViewerConfig *config,
                       bool *isListening);
 

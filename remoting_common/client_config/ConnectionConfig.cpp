@@ -26,7 +26,7 @@
 
 //#include "remoting/remoting_common/thread/critical_section.h"
 
-//#include <crtdbg.h>
+////#include aaa_<crtdbg.h>
 
 namespace remoting
 {
@@ -368,7 +368,7 @@ namespace remoting
             break;
          default:
             cursorShape = DOT_CURSOR;
-            _ASSERT(FALSE);
+            _ASSERT(false);
       } // switch
 
       {

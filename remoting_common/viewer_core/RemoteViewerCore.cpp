@@ -58,7 +58,7 @@
 #include "PointerPosDecoder.h"
 #include "RichCursorDecoder.h"
 
-#include <algorithm>
+//#include aaa_<algorithm>
 
 RemoteViewerCore::RemoteViewerCore(LogWriter *LogWriter)
 : m_plogwriter(LogWriter),

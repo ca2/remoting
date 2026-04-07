@@ -45,36 +45,36 @@ bool ControlAuthDialog::onInitDialog()
 {
   m_password= "";
 
-  HWND hwnd = m_ctrlThis.get_hwnd();
+  HWND hwnd = m_ctrlThis.operating_system_window();
   m_passwordTextBox.setWindow(GetDlgItem(hwnd, IDC_PASSWORD_EDIT));
   m_passwordTextBox.setTextLengthLimit(ServerConfig::VNC_PASSWORD_SIZE);
 
   SetForegroundWindow(hwnd);
-  m_passwordTextBox.set_focus();
+  m_passwordTextBox.setFocus();
 
-  return TRUE;
+  return true;
 }
 
 bool ControlAuthDialog::onNotify(unsigned int controlID, ::lparam data)
 {
-  return TRUE;
+  return true;
 }
 
 bool ControlAuthDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
   switch (controlID) {
-  case IDOK:
-    m_passwordTextBox.get_text(&m_password);
+  case ::innate_subsystem::IDOK:
+    m_passwordTextBox.getText(&m_password);
     kill(controlID);
     break;
-  case IDCANCEL:
+  case ::innate_subsystem::IDCANCEL:
     kill(controlID);
     break;
   }
-  return TRUE;
+  return true;
 }
 
 bool ControlAuthDialog::onDestroy()
 {
-  return TRUE;
+  return true;
 }

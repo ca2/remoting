@@ -56,7 +56,7 @@
  *   3) Log singleton.
  *   4) Rfb servers (main rfb server and extra servers).
  *   5) Http server.
- *   6) ::remoting::Window server.
+ *   6) ::innate_subsystem::Control server.
  *   7) Other features:
      1) Do action when last client disconnects.
  */
@@ -182,7 +182,7 @@ protected:
    */
   RfbClientManager *m_rfbClientManager;
   /**
-   * ::remoting::Window server.
+   * ::innate_subsystem::Control server.
    */
   ControlServer *m_controlServer;
   /**

@@ -59,7 +59,7 @@ namespace remoting_remoting
 
     void AboutDialog::onCloseButtonClick()
     {
-        closeDialog(IDCANCEL);
+        closeDialog(::innate_subsystem::IDCANCEL);
     }
 
     void AboutDialog::onOrderSupportButtonClock()
@@ -81,10 +81,10 @@ namespace remoting_remoting
 
             strMessage.formatf(main_subsystem()->string_table()->getString(IDS_FAILED_TO_OPEN_URL_FORMAT).c_str(), sysEx.get_message());
 
-            main_innate_subsystem()->message_box(this,
+            main_subsystem()->message_box(operating_system_window(),
                        wstring(strMessage),
                        wstring(main_subsystem()->string_table()->getString(IDS_MBC_TVNVIEWER)),
-                       MB_OK | MB_ICONEXCLAMATION);
+                       ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
         }
     }
 
@@ -95,13 +95,14 @@ namespace remoting_remoting
         try {
             ::string binaryPath;
             binaryPath = ::system()->file()->module();
-            VersionInfo productInfo(binaryPath);
+            ::subsystem::VersionInfo productInfo;
+           productInfo.initialize_version_info(binaryPath);
             versionString= productInfo.getProductVersionString();
-        } catch (SystemException &ex) {
-            main_innate_subsystem()->message_box(this,
+        } catch (::subsystem::SystemException &ex) {
+            main_subsystem()->message_box(operating_system_window(),
                        ::wstring(ex.get_message()),
                        ::wstring(main_subsystem()->string_table()->getString(IDS_MBC_TVNVIEWER)),
-                       MB_OK | MB_ICONEXCLAMATION);
+                       ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
         }
 
         // Format product version and build time for displaying on the dialog.
@@ -111,27 +112,32 @@ namespace remoting_remoting
                            BuildTime::DATE);
 
         // Show version info on the dialog.
-        ::remoting::Window versionLabel;
-        versionLabel.setWindow(GetDlgItem(m_hwnd, IDC_STATIC_VERSION));
-        versionLabel.setText(versionText);
+        auto plabelVersion = dialog_item< ::innate_subsystem::Control >(IDC_STATIC_VERSION);
+       plabelVersion->setText(versionText);
+        //versionLabel.setWindow(GetDlgItem(m_hwnd, IDC_STATIC_VERSION));
+        //versionLabel.setText(versionText);
+
+
+       ::string strLicensingInfo = main_subsystem()->string_table()->getString(IDS_LICENSING_INFO);
 
         // Show licensing info and/or special build info.
-        ::remoting::Window licensingLabel;
-        licensingLabel.setWindow(GetDlgItem(m_hwnd, IDC_STATIC_LICENSING));
-        licensingLabel.setText(main_subsystem()->string_table()->getString(IDS_LICENSING_INFO));
+       auto plabelLicensing = dialog_item< ::innate_subsystem::Control >(IDC_STATIC_VERSION);
+        //::innate_subsystem::Control licensingLabel;
+        //licensingLabel.setWindow(GetDlgItem(m_hwnd, IDC_STATIC_LICENSING));
+        plabelLicensing->setText(strLicensingInfo);
 
-        return FALSE;
+        return false;
     }
 
     bool AboutDialog::onNotify(unsigned int controlID, ::lparam data)
     {
-        return FALSE;
+        return false;
     }
 
     bool AboutDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
         switch (controlID) {
-            case IDCANCEL:
+            case ::innate_subsystem::IDCANCEL:
                 onCloseButtonClick();
                 break;
             case IDC_ORDER_SUPPORT_BUTTON:
@@ -141,12 +147,12 @@ namespace remoting_remoting
                 onVisitSiteButtonClick();
                 break;
         }
-        return FALSE;
+        return false;
     }
 
     bool AboutDialog::onDestroy()
     {
-        return FALSE;
+        return false;
     }
 
 

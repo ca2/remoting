@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include <algorithm>
+//#include aaa_<algorithm>
 #include <functional>
 
 #include "DecoderStore.h"

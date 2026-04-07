@@ -66,7 +66,7 @@ void ControlCommand::execute()
         }
         throw;
       } catch (::remoting::Exception &) {
-        _ASSERT(FALSE);
+        _ASSERT(false);
         throw;
       }
     } catch (...) {

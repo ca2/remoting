@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "WinStaLibrary.h"
 
 WinStaLibrary::WinStaLibrary()
@@ -49,7 +49,7 @@ bool WinStaLibrary::WinStationConnectW(HANDLE server, ULONG connectSessionId,
                                        ULONG unknown)
 {
   if (m_winStaDll == 0 || m_winStationConnectW == 0) {
-    return FALSE;
+    return false;
   }
 
   return m_winStationConnectW(server, connectSessionId, activeSessionId, password, unknown);

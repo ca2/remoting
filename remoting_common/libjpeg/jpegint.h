@@ -96,7 +96,7 @@ struct jpeg_downsampler {
 			     JSAMPIMAGE output_buf,
 			     JDIMENSION out_row_group_index));
 
-  boolean need_context_rows;	/* TRUE if need rows above & below */
+  boolean need_context_rows;	/* true if need rows above & below */
 };
 
 /* Forward DCT (also controls coefficient quantization) */
@@ -237,7 +237,7 @@ struct jpeg_upsampler {
 			   JDIMENSION *out_row_ctr,
 			   JDIMENSION out_rows_avail));
 
-  boolean need_context_rows;	/* TRUE if need rows above & below */
+  boolean need_context_rows;	/* true if need rows above & below */
 };
 
 /* Colorspace conversion */

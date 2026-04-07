@@ -29,7 +29,7 @@
 
 #include "security/SecurityIdentifier.h"
 #include "security/SecurityDescriptor.h"
-//#include <vector>
+//#include aaa_<vector>
 
 class CLASS_DECL_REMOTING_COMMON SecurityAttributes
 {

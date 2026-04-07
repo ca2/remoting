@@ -22,12 +22,12 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "SecurityDescriptor.h"
 
-#include <AccCtrl.h>
-#include <Aclapi.h>
-#include <crtdbg.h>
+// #include aaa_<accctrl.h>
+// #include aaa_<aclapi.h>
+//#include aaa_<crtdbg.h>
 
 SecurityDescriptor::SecurityDescriptor()
 {
@@ -56,19 +56,19 @@ void SecurityDescriptor::setRulesAsDacl(size_t count,
 
 void SecurityDescriptor::setUserDacl(ACL *acl)
 {
-  if (SetSecurityDescriptorDacl(&m_sd, TRUE, acl,  FALSE) == FALSE) {
+  if (SetSecurityDescriptorDacl(&m_sd, true, acl,  false) == false) {
     throw SystemException();
   }
 }
 
 void SecurityDescriptor::clearOwner()
 {
-  SetSecurityDescriptorOwner(&m_sd, 0, TRUE);
+  SetSecurityDescriptorOwner(&m_sd, 0, true);
 }
 
 bool SecurityDescriptor::isValid()
 {
-  return IsValidSecurityDescriptor(&m_sd) == TRUE;
+  return IsValidSecurityDescriptor(&m_sd) == true;
 }
 
 SECURITY_DESCRIPTOR *SecurityDescriptor::getSD()

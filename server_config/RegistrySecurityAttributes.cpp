@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "RegistrySecurityAttributes.h"
 
-#include <crtdbg.h>
+//#include aaa_<crtdbg.h>
 
 RegistrySecurityAttributes::RegistrySecurityAttributes()
 {
@@ -39,11 +39,11 @@ RegistrySecurityAttributes::RegistrySecurityAttributes()
 
   m_serviceSA.nLength = sizeof(SECURITY_ATTRIBUTES);
   m_serviceSA.lpSecurityDescriptor = m_serviceSD.getSD();
-  m_serviceSA.bInheritHandle = FALSE;
+  m_serviceSA.bInheritHandle = false;
 
   m_applicationSA.nLength = sizeof(SECURITY_ATTRIBUTES);
   m_applicationSA.lpSecurityDescriptor = m_applicationSD.getSD();
-  m_applicationSA.bInheritHandle = FALSE;
+  m_applicationSA.bInheritHandle = false;
 }
 
 RegistrySecurityAttributes::~RegistrySecurityAttributes()

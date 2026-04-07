@@ -67,7 +67,7 @@ NotifyIconWindow::~NotifyIconWindow()
   //DestroyWindow(m_window);
 }
 
-HWND NotifyIconWindow::get_hwnd()
+HWND NotifyIconWindow::operating_system_window()
 {
   return m_window;
 }

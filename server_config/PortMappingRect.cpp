@@ -23,8 +23,8 @@
 //
 #include "framework.h"
 #include "PortMappingRect.h"
-#include <tchar.h>
-#include <stdio.h>
+// #include aaa_<tchar.h>
+// #include aaa_<stdio.h>
 
 PortMappingRect::PortMappingRect(int l, int t, int r, int b)
  : ::int_rectangle(l, t, r, b)

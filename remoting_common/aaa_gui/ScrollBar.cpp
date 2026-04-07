@@ -90,7 +90,7 @@ bool ScrollBar::_showVertScroll(bool show)
   } else {
     style &= ~WS_VSCROLL;
   }
-  bool result = !!ShowScrollBar(m_hwnd, SB_VERT, show ? TRUE : FALSE);  
+  bool result = !!ShowScrollBar(m_hwnd, SB_VERT, show ? true : false);  
   if (result) {
     SetWindowLongPtr(m_hwnd, GWL_STYLE, style);
     m_isVert = show;
@@ -116,7 +116,7 @@ bool ScrollBar::_showHorzScroll(bool show)
   } else {
     style &= ~WS_HSCROLL;
   }
-  bool result = !!ShowScrollBar(m_hwnd, SB_HORZ, show ? TRUE : FALSE);  
+  bool result = !!ShowScrollBar(m_hwnd, SB_HORZ, show ? true : false);  
   if (result) {
     SetWindowLong(m_hwnd, GWL_STYLE, style);
     m_isHorz = show;
@@ -139,7 +139,7 @@ void ScrollBar::setHorzRange(int imin, int imax, int istep)
     si.nMax   = imax;
     si.fMask  = SIF_RANGE | SIF_PAGE;
     si.nPage  = istep;
-    SetScrollInfo(m_hwnd, SB_HORZ, &si, TRUE);
+    SetScrollInfo(m_hwnd, SB_HORZ, &si, true);
   }
 }
 
@@ -157,7 +157,7 @@ void ScrollBar::setVertRange(int imin, int imax, int istep) {
     si.nMax   = imax;
     si.fMask  = SIF_RANGE | SIF_PAGE;
     si.nPage  = istep;
-    SetScrollInfo(m_hwnd, SB_VERT, &si, TRUE);
+    SetScrollInfo(m_hwnd, SB_VERT, &si, true);
   }
 }
 
@@ -169,7 +169,7 @@ void ScrollBar::setVertPos(int iPos) {
     si.cbSize = sizeof(SCROLLINFO);
     si.fMask  = SIF_POS;
     si.nPos   = iPos;
-    m_vPos    = SetScrollInfo(m_hwnd, SB_VERT, &si, TRUE);
+    m_vPos    = SetScrollInfo(m_hwnd, SB_VERT, &si, true);
   } else {
     m_vPos    = iPos;
   }
@@ -183,7 +183,7 @@ void ScrollBar::setHorzPos(int iPos) {
     si.cbSize = sizeof(SCROLLINFO);
     si.fMask  = SIF_POS;
     si.nPos   = iPos;
-    m_hPos    = SetScrollInfo(m_hwnd, SB_HORZ, &si, TRUE);
+    m_hPos    = SetScrollInfo(m_hwnd, SB_HORZ, &si, true);
   } else {
     m_hPos    = iPos;
   }

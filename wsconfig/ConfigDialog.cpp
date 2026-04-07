@@ -81,7 +81,7 @@ bool ConfigDialog::isConfiguringService()
 
 void ConfigDialog::initControls()
 {
-  HWND dialogHwnd = m_ctrlThis.get_hwnd();
+  HWND dialogHwnd = m_ctrlThis.operating_system_window();
 
   m_ctrlApplyButton.setWindow(GetDlgItem(dialogHwnd, IDC_APPLY));
   m_tabControl.setWindow(GetDlgItem(dialogHwnd, IDC_CONFIG_TAB));
@@ -101,17 +101,17 @@ void ConfigDialog::loadSettings()
 bool ConfigDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
   switch (controlID) {
-  case IDOK:
+  case ::innate_subsystem::IDOK:
     onOKButtonClick();
     break;
-  case IDCANCEL:
+  case ::innate_subsystem::IDCANCEL:
     onCancelButtonClick();
     break;
   case IDC_APPLY:
     onApplyButtonClick();
     break;
   }
-  return TRUE;
+  return true;
 }
 
 bool ConfigDialog::onNotify(unsigned int controlID, ::lparam data)
@@ -128,7 +128,7 @@ bool ConfigDialog::onNotify(unsigned int controlID, ::lparam data)
     }
     break;
   }
-  return TRUE;
+  return true;
 }
 
 bool ConfigDialog::onInitDialog()
@@ -175,19 +175,19 @@ bool ConfigDialog::onInitDialog()
   m_tabControl.removeTab(0);
 
   m_tabControl.showTab(m_lastSelectedTabIndex);
-  m_tabControl.set_focus();
+  m_tabControl.setFocus();
 
   m_ctrlApplyButton.enable_window(false);
   m_ctrlThis.set_foreground_window();
 
-  return FALSE;
+  return false;
 }
 
 bool ConfigDialog::onDestroy()
 {
   m_lastSelectedTabIndex = m_tabControl.getSelectedTabIndex();
   m_tabControl.deleteAllTabs();
-  return TRUE;
+  return true;
 }
 
 void ConfigDialog::onCancelButtonClick()
@@ -232,17 +232,17 @@ void ConfigDialog::onApplyButtonClick()
   } 
   // We're working in offline mode and we need to save config
   if (!m_config->save()) {
-    main_innate_subsystem()->message_box(m_ctrlThis.get_hwnd(),
+    main_subsystem()->message_box(m_ctrlThis.operating_system_window(),
                main_subsystem()->string_table()->getString(IDS_CANNOT_SAVE_CONFIG),
                main_subsystem()->string_table()->getString(IDS_MBC_ERROR),
-               MB_OK | MB_ICONERROR);
+               ::user::e_message_box_ok | MB_ICONERROR);
     return;
   } 
   m_ctrlApplyButton.enable_window(false);
-  main_innate_subsystem()->message_box(m_ctrlThis.get_hwnd(),
+  main_subsystem()->message_box(m_ctrlThis.operating_system_window(),
     main_subsystem()->string_table()->getString(IDS_OFFLINE_CONFIG_SAVE_NOTIFICATION),
     main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
-    MB_OK | MB_ICONINFORMATION);
+    ::user::e_message_box_ok | MB_ICONINFORMATION);
 }
 
 void ConfigDialog::onTabChange()
@@ -271,14 +271,14 @@ void ConfigDialog::moveDialogToTabControl(BaseDialog *dialog)
   last.x = rect.right;
   last.y = rect.bottom;
 
-  HWND hwndFrom = m_tabControl.get_hwnd();
-  HWND hwndTo = dialog->get_hwnd();
+  HWND hwndFrom = m_tabControl.operating_system_window();
+  HWND hwndTo = dialog->operating_system_window();
 
   MapWindowPoints(hwndFrom, hwndTo, &first, 1);
   MapWindowPoints(hwndFrom, hwndTo, &last, 1);
 
-  MoveWindow(dialog->get_hwnd(),
-             first.x, first.y, last.x - first.x, last.y - first.y, TRUE);
+  MoveWindow(dialog->operating_system_window(),
+             first.x, first.y, last.x - first.x, last.y - first.y, true);
 }
 
 bool ConfigDialog::validateInput()

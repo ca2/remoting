@@ -102,7 +102,7 @@ private:
 
 private:
   /**
-   * ::remoting::Window gate.
+   * ::innate_subsystem::Control gate.
    */
   ControlGate *m_gate;
   /**
@@ -110,7 +110,7 @@ private:
    */
   ByteArrayOutputStream *m_tunnel;
   /**
-   * ::remoting::Window scopedstrMessage id.
+   * ::innate_subsystem::Control scopedstrMessage id.
    */
   unsigned int m_messageId;
 

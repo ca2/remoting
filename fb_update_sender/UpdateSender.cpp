@@ -22,13 +22,13 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "UpdateSender.h"
 #include "remoting/remoting_common/rfb/VendorDefs.h"
 #include "remoting/remoting_common/rfb/EncodingDefs.h"
 #include "remoting/remoting_common/rfb/MsgDefs.h"
-//#include <vector>
-#include <algorithm>
+//#include aaa_<vector>
+//#include aaa_<algorithm>
 #include "remoting/remoting_common/util/inttypes.h"
 #include "acme/subsystem/Exception.h"
 #include "UpdSenderMsgDefs.h"

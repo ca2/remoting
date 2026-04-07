@@ -115,7 +115,7 @@ uLong ZEXPORT zlibCompileFlags()
 }
 
 #ifdef ZLIB_DEBUG
-#include <stdlib.h>
+// #include aaa_<stdlib.h>
 #  ifndef verbose
 #    define verbose 0
 #  endif

@@ -29,8 +29,8 @@
 
 // XP specific stuff
 
-#include <uxtheme.h>
-#include <vssym32.h>
+// #include aaa_<uxtheme.h>
+// #include aaa_<vssym32.h>
 
 //
 // Define type for api functions

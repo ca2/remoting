@@ -53,8 +53,8 @@ protected:
 
   virtual bool onInitDialog();
   virtual bool onCommand(unsigned int cID, unsigned int nID);
-  virtual bool onNotify(unsigned int controlID, ::lparam data) { return TRUE; }
-  virtual bool onDestroy() { return TRUE; }
+  virtual bool onNotify(unsigned int controlID, ::lparam data) { return true; }
+  virtual bool onDestroy() { return true; }
 
   //
   // Controls event handlers

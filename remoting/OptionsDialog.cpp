@@ -23,18 +23,21 @@
 //
 #include "framework.h"
 #include "OptionsDialog.h"
+#include "acme/constant/user_notification.h"
 #include "remoting/remoting_common/remoting.h"
+
+
 namespace remoting_remoting
 {
     OptionsDialog::OptionsDialog()
-    : BaseDialog(IDD_OPTIONS),
+    : Dialog(IDD_OPTIONS),
       m_connected(false)
     {
     }
 
-    void OptionsDialog::setConnectionConfig(ConnectionConfig *conConfig)
+    void OptionsDialog::setConnectionConfig(::remoting::ConnectionConfig *conConfig)
     {
-        m_conConfig = conConfig;
+        m_pconnectionconfig = conConfig;
     }
 
     void OptionsDialog::setConnected()
@@ -44,53 +47,53 @@ namespace remoting_remoting
 
     bool OptionsDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
-        if (controlID == IDOK) {
+        if (controlID == ::innate_subsystem::IDOK) {
             if (onOkPressed()) {
                 closeDialog(1);
             }
-            return TRUE;
+            return true;
         }
-        if (controlID == IDCANCEL) {
+        if (controlID == ::innate_subsystem::IDCANCEL) {
             closeDialog(0);
-            return TRUE;
+            return true;
         }
         if (controlID == IDC_CVIEWONLY) {
-            if (notificationID == BN_CLICKED) {
+            if (notificationID == ::user::e_notification_button_clicked) {
                 onViewOnlyClick();
-                return TRUE;
+                return true;
             }
         }
         if (controlID == IDC_CEIGHTBIT) {
-            if (notificationID == BN_CLICKED) {
+            if (notificationID == ::user::e_notification_button_clicked) {
                 on8BitColorClick();
-                return TRUE;
+                return true;
             }
         }
         if (controlID == IDC_CJPEG) {
-            if (notificationID == BN_CLICKED) {
+            if (notificationID == ::user::e_notification_button_clicked) {
                 onAllowJpegCompressionClick();
-                return TRUE;
+                return true;
             }
         }
         if (controlID == IDC_CCOMPRLVL) {
-            if (notificationID == BN_CLICKED) {
+            if (notificationID == ::user::e_notification_button_clicked) {
                 onAllowCustomCompressionClick();
-                return TRUE;
+                return true;
             }
         }
         if (controlID == IDC_CUSEENC) {
             if (notificationID == CBN_SELCHANGE) {
                 onPreferredEncodingSelectionChange();
-                return TRUE;
+                return true;
             }
         }
         if (controlID == IDC_CSCALE) {
             if (notificationID == CBN_KILLFOCUS) {
                 onScaleKillFocus();
-                return TRUE;
+                return true;
             }
         }
-        return FALSE;
+        return false;
     }
 
     bool OptionsDialog::onInitDialog()
@@ -137,7 +140,7 @@ namespace remoting_remoting
         m_tjpeg.setRange(0, 9);
         m_tcompLvl.setRange(0, 9);
         updateControlValues();
-        return FALSE;
+        return false;
     }
 
     void OptionsDialog::updateControlValues()
@@ -145,7 +148,7 @@ namespace remoting_remoting
         // Preferred encoding
         for (int i = 0; i < m_useEnc.getItemsCount(); i++) {
             int enc = reinterpret_cast<int>(m_useEnc.getItemData(i));
-            if (enc == m_conConfig->getPreferredEncoding()) {
+            if (enc == m_pconnectionconfig->getPreferredEncoding()) {
                 m_useEnc.setSelectedItem(i);
                 break;
             } // if found
@@ -155,27 +158,27 @@ namespace remoting_remoting
                 m_useEnc.setSelectedItem(i);
         } // for i
 
-        m_eightBit.check(m_conConfig->isUsing8BitColor());
+        m_eightBit.check(m_pconnectionconfig->isUsing8BitColor());
 
-        m_compLvl.check(m_conConfig->isCustomCompressionEnabled());
-        m_jpeg.check(m_conConfig->isJpegCompressionEnabled());
+        m_compLvl.check(m_pconnectionconfig->isCustomCompressionEnabled());
+        m_jpeg.check(m_pconnectionconfig->isJpegCompressionEnabled());
 
-        m_copyrect.check(m_conConfig->isCopyRectAllowed());
-        m_viewonly.check(m_conConfig->isViewOnly());
-        m_disclip.check(!m_conConfig->isClipboardEnabled());
-        m_fullscr.check(m_conConfig->isFullscreenEnabled());
-        m_deiconfy.check(m_conConfig->isDeiconifyOnRemoteBellEnabled());
-        m_swapmouse.check(m_conConfig->isMouseSwapEnabled());
+        m_copyrect.check(m_pconnectionconfig->isCopyRectAllowed());
+        m_viewonly.check(m_pconnectionconfig->isViewOnly());
+        m_disclip.check(!m_pconnectionconfig->isClipboardEnabled());
+        m_fullscr.check(m_pconnectionconfig->isFullscreenEnabled());
+        m_deiconfy.check(m_pconnectionconfig->isDeiconifyOnRemoteBellEnabled());
+        m_swapmouse.check(m_pconnectionconfig->isMouseSwapEnabled());
 
-        m_sharedses.check(m_conConfig->getSharedFlag());
+        m_sharedses.check(m_pconnectionconfig->getSharedFlag());
         m_sharedses.enable_window(!m_connected);
 
-        if (m_conConfig->isFitWindowEnabled()) {
+        if (m_pconnectionconfig->isFitWindowEnabled()) {
             // FIXME: replace literal to named constant
             m_scale.setSelectedItem(7);
         } else {
-            int n = m_conConfig->getScaleNumerator();
-            int d = m_conConfig->getScaleDenominator();
+            int n = m_pconnectionconfig->getScaleNumerator();
+            int d = m_pconnectionconfig->getScaleDenominator();
 
             int percent = (n * 100) / d;
 
@@ -186,8 +189,8 @@ namespace remoting_remoting
         }
 
         {
-            bool enableCursorUpdate = m_conConfig->isRequestingShapeUpdates();
-            bool ignoreCursorUpdate = m_conConfig->isIgnoringShapeUpdates();
+            bool enableCursorUpdate = m_pconnectionconfig->isRequestingShapeUpdates();
+            bool ignoreCursorUpdate = m_pconnectionconfig->isIgnoringShapeUpdates();
             m_track.check(enableCursorUpdate && !ignoreCursorUpdate);
             m_cursor.check(!enableCursorUpdate && ignoreCursorUpdate);
             m_ncursor.check(enableCursorUpdate && ignoreCursorUpdate);
@@ -197,8 +200,8 @@ namespace remoting_remoting
         {
             const int DEFAULT_COMPRESSION_LEVEL = 6;
             int level = DEFAULT_COMPRESSION_LEVEL;
-            if (m_conConfig->isCustomCompressionEnabled())
-                level = m_conConfig->getCustomCompressionLevel();
+            if (m_pconnectionconfig->isCustomCompressionEnabled())
+                level = m_pconnectionconfig->getCustomCompressionLevel();
             m_tcompLvl.setPos(level);
             labelText.format("{}", level);
             m_quality.setText(labelText);
@@ -207,14 +210,14 @@ namespace remoting_remoting
         {
             const int DEFAULT_JPEG_COMPRESSION_LEVEL = 6;
             int level = DEFAULT_JPEG_COMPRESSION_LEVEL;
-            if (m_conConfig->isJpegCompressionEnabled())
-                level = m_conConfig->getJpegCompressionLevel();
+            if (m_pconnectionconfig->isJpegCompressionEnabled())
+                level = m_pconnectionconfig->getJpegCompressionLevel();
             m_tjpeg.setPos(level);
             labelText.format("{}", level);
             m_quality2.setText(labelText);
         }
 
-        switch (m_conConfig->getLocalCursorShape()) {
+        switch (m_pconnectionconfig->getLocalCursorShape()) {
             case ConnectionConfig::SMALL_CURSOR:
                 m_smalldot.check(true);
                 break;
@@ -267,9 +270,9 @@ namespace remoting_remoting
     {
         m_tjpeg.enable_window(enable);
         m_quality2.enable_window(enable);
-        EnableWindow(GetDlgItem(get_hwnd(), IDC_SPOOR), enable);
-        EnableWindow(GetDlgItem(get_hwnd(), IDC_SBEST2), enable);
-        EnableWindow(GetDlgItem(get_hwnd(), IDC_STQUALITY2), enable);
+        EnableWindow(GetDlgItem(operating_system_window(), IDC_SPOOR), enable);
+        EnableWindow(GetDlgItem(operating_system_window(), IDC_SBEST2), enable);
+        EnableWindow(GetDlgItem(operating_system_window(), IDC_STQUALITY2), enable);
     }
     void OptionsDialog::onAllowCustomCompressionClick()
     {
@@ -280,9 +283,9 @@ namespace remoting_remoting
     {
         m_tcompLvl.enable_window(enable);
         m_quality.enable_window(enable);
-        EnableWindow(GetDlgItem(get_hwnd(), IDC_SBEST), enable);
-        EnableWindow(GetDlgItem(get_hwnd(), IDC_SFAST), enable);
-        EnableWindow(GetDlgItem(get_hwnd(), IDC_STQUALITY), enable);
+        EnableWindow(GetDlgItem(operating_system_window(), IDC_SBEST), enable);
+        EnableWindow(GetDlgItem(operating_system_window(), IDC_SFAST), enable);
+        EnableWindow(GetDlgItem(operating_system_window(), IDC_STQUALITY), enable);
     }
 
     void OptionsDialog::onAllowJpegCompressionClick()
@@ -327,10 +330,10 @@ namespace remoting_remoting
     {
         switch (uMsg) {
             case WM_HSCROLL:
-                if (HWND(lParam) == m_tcompLvl.get_hwnd()) {
+                if (HWND(lParam) == m_tcompLvl.operating_system_window()) {
                     onCustomCompressionLevelScroll();
                 }
-                if (HWND(lParam) == m_tjpeg.get_hwnd()) {
+                if (HWND(lParam) == m_tjpeg.operating_system_window()) {
                     onJpegCompressionLevelScroll();
                 }
                 break;
@@ -340,7 +343,7 @@ namespace remoting_remoting
     void OptionsDialog::onScaleKillFocus()
     {
         //::string scaleText;
-        auto scaleText = m_scale.get_text();
+        auto scaleText = m_scale.getText();
 
         int scale;
 
@@ -366,7 +369,7 @@ namespace remoting_remoting
         int scaleInt;
         //::string scaleText;
 
-        auto scaleText = m_scale.get_text();
+        auto scaleText = m_scale.getText();
 
         if (scaleText == "Auto") {
             return true;
@@ -376,10 +379,10 @@ namespace remoting_remoting
             ::string error;
             error.formatf(main_subsystem()->string_table()->getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC).c_str(),
                          main_subsystem()->string_table()->getString(IDS_OPTIONS_SCALE).c_str());
-            main_innate_subsystem()->message_box(m_hwnd,
+            main_subsystem()->message_box(operating_system_window(),
                        ::wstring(error),
                        ::wstring(main_subsystem()->string_table()->getString(IDS_OPTIONS_CAPTION)),
-                       MB_OK | MB_ICONWARNING);
+                       ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
             return false;
         }
 
@@ -387,10 +390,10 @@ namespace remoting_remoting
             ::string error;
             error.formatf(main_subsystem()->string_table()->getString(IDS_ERROR_VALUE_FIELD_ONLY_POSITIVE_NUMERIC).c_str(),
                          main_subsystem()->string_table()->getString(IDS_OPTIONS_SCALE).c_str());
-            main_innate_subsystem()->message_box(m_hwnd,
+            main_subsystem()->message_box(operating_system_window(),
                        error,
                        main_subsystem()->string_table()->getString(IDS_OPTIONS_CAPTION),
-                       MB_OK | MB_ICONWARNING);
+                       ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
             return false;
         }
 
@@ -411,61 +414,61 @@ namespace remoting_remoting
         int pesii = m_useEnc.getSelectedItemIndex();
         if (pesii >= 0) {
             int preferredEncoding = reinterpret_cast<int>(m_useEnc.getItemData(pesii));
-            m_conConfig->setPreferredEncoding(preferredEncoding);
+            m_pconnectionconfig->setPreferredEncoding(preferredEncoding);
         } else {
             _ASSERT(pesii >= 0);
-            m_conConfig->setPreferredEncoding(EncodingDefs::TIGHT);
+            m_pconnectionconfig->setPreferredEncoding(EncodingDefs::TIGHT);
         }
 
         if (m_compLvl.isChecked()) {
             int level = static_cast<int>(m_tcompLvl.getPos());
-            m_conConfig->setCustomCompressionLevel(level);
+            m_pconnectionconfig->setCustomCompressionLevel(level);
         } else {
-            m_conConfig->disableCustomCompression();
+            m_pconnectionconfig->disableCustomCompression();
         }
 
         if (m_jpeg.isChecked()) {
             int level = static_cast<int>(m_tjpeg.getPos());
-            m_conConfig->setJpegCompressionLevel(level);
+            m_pconnectionconfig->setJpegCompressionLevel(level);
         } else {
-            m_conConfig->disableJpegCompression();
+            m_pconnectionconfig->disableJpegCompression();
         }
 
-        m_conConfig->use8BitColor(m_eightBit.isChecked());
-        m_conConfig->allowCopyRect(m_copyrect.isChecked());
-        m_conConfig->setViewOnly(m_viewonly.isChecked());
-        m_conConfig->enableClipboard(!m_disclip.isChecked());
-        m_conConfig->enableFullscreen(m_fullscr.isChecked());
-        m_conConfig->deiconifyOnRemoteBell(m_deiconfy.isChecked());
-        m_conConfig->swapMouse(m_swapmouse.isChecked());
-        m_conConfig->setSharedFlag(m_sharedses.isChecked());
+        m_pconnectionconfig->use8BitColor(m_eightBit.isChecked());
+        m_pconnectionconfig->allowCopyRect(m_copyrect.isChecked());
+        m_pconnectionconfig->setViewOnly(m_viewonly.isChecked());
+        m_pconnectionconfig->enableClipboard(!m_disclip.isChecked());
+        m_pconnectionconfig->enableFullscreen(m_fullscr.isChecked());
+        m_pconnectionconfig->deiconifyOnRemoteBell(m_deiconfy.isChecked());
+        m_pconnectionconfig->swapMouse(m_swapmouse.isChecked());
+        m_pconnectionconfig->setSharedFlag(m_sharedses.isChecked());
 
         ::string scaleText;
 
-        scaleText = m_scale.get_text();
+        scaleText = m_scale.getText();
 
         int scaleInt = 0;
 
         if (StringParser::parseInt(scaleText, &scaleInt)) {
-            m_conConfig->setScale(scaleInt, 100);
-            m_conConfig->fitWindow(false);
+            m_pconnectionconfig->setScale(scaleInt, 100);
+            m_pconnectionconfig->fitWindow(false);
         } else {
-            m_conConfig->fitWindow(true);
+            m_pconnectionconfig->fitWindow(true);
         }
 
         if (m_track.isChecked()) {
-            m_conConfig->requestShapeUpdates(true);
-            m_conConfig->ignoreShapeUpdates(false);
+            m_pconnectionconfig->requestShapeUpdates(true);
+            m_pconnectionconfig->ignoreShapeUpdates(false);
         }
 
         if (m_cursor.isChecked()) {
-            m_conConfig->requestShapeUpdates(false);
-            m_conConfig->ignoreShapeUpdates(true);
+            m_pconnectionconfig->requestShapeUpdates(false);
+            m_pconnectionconfig->ignoreShapeUpdates(true);
         }
 
         if (m_ncursor.isChecked()) {
-            m_conConfig->requestShapeUpdates(true);
-            m_conConfig->ignoreShapeUpdates(true);
+            m_pconnectionconfig->requestShapeUpdates(true);
+            m_pconnectionconfig->ignoreShapeUpdates(true);
         }
 
         int localCursorShape = ConnectionConfig::DOT_CURSOR;
@@ -477,6 +480,6 @@ namespace remoting_remoting
             localCursorShape = ConnectionConfig::NO_CURSOR;
         }
 
-        m_conConfig->setLocalCursorShape(localCursorShape);
+        m_pconnectionconfig->setLocalCursorShape(localCursorShape);
     }
 }//namespace remoting_remoting

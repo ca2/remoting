@@ -35,7 +35,7 @@ public:
   NotifyIconWindow();
   virtual ~NotifyIconWindow();
 
-  HWND get_hwnd();
+  HWND operating_system_window();
 
   void setWindowProcHolder(WindowProcHolder *wph);
   

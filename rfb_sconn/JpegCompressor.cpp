@@ -222,7 +222,7 @@ StandardJpegCompressor::compress(const void *buf,
     m_quality = m_newQuality;
   }
 
-  jpeg_start_compress(&m_jpeg.cinfo, TRUE);
+  jpeg_start_compress(&m_jpeg.cinfo, true);
 
   const char *src = (const char *)buf;
 

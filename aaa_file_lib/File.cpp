@@ -25,7 +25,7 @@
 #include "::file::item.h"
 #include "acme/operating_system/time.h"
 //#include "remoting/remoting_common/util/::earth::time.h"
-#include <crtdbg.h>
+//#include aaa_<crtdbg.h>
 
 TCHAR ::file::item::s_separatorChar = _T('\\');
 
@@ -336,7 +336,7 @@ bool ::file::item::setLastModified(long long time)
 
   dt.toFileTime(&ft);
 
-  if (SetFileTime(hfile, NULL, NULL, &ft) == FALSE) {
+  if (SetFileTime(hfile, NULL, NULL, &ft) == false) {
     CloseHandle(hfile);
     return false;
   }

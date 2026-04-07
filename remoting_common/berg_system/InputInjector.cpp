@@ -22,13 +22,13 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "InputInjector.h"
 #include "Keyboard.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
-//#include <vector>
+//#include aaa_<vector>
 
-#include <crtdbg.h>
+//#include aaa_<crtdbg.h>
 
 InputInjector::InputInjector(bool ctrlAltDelEnabled, LogWriter *log)
 : m_controlIsPressed(false),

@@ -24,13 +24,13 @@
 #include "framework.h"
 #include "ViewerVncAuthHandler.h"
 #include "AuthenticationDialog.h"
-#include <windows.h>
-#include <wincrypt.h>
+//// #include aaa_<windows.h>
+//// #include aaa_<wincrypt.h>
 
 #include "acme/filesystem/filesystem/directory_context.h"
 #include "acme/filesystem/filesystem/file_context.h"
 
-#pragma comment (lib, "Crypt32.lib")
+//#pragma comment (lib, "Crypt32.lib")
 namespace remoting_remoting
 {
     bool EncryptData(const ::string& input, ::memory & output)

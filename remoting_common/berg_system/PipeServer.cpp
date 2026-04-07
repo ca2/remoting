@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "PipeServer.h"
 
 #include "acme/platform/node.h"
@@ -103,7 +103,7 @@ NamedPipe *PipeServer::accept()
     case ERROR_IO_PENDING:
       m_winEvent.waitForEvent(m_milliseconds);
       DWORD cbRet; // Fake
-      if (!GetOverlappedResult(m_serverPipe, &overlapped, &cbRet, FALSE)) {
+      if (!GetOverlappedResult(m_serverPipe, &overlapped, &cbRet, false)) {
         int errCode = GetLastError();
         ::string errMess;
         errMess.formatf("GetOverlappedResult() failed after the "

@@ -32,18 +32,18 @@
 #include "LoginDialog.h"
 #include "OptionsDialog.h"
 #include "ViewerCollector.h"
-#include "remoting/remoting_common/win_system/WindowsApplication.h"
+#include "acme/subsystem/node/OperatingSystemApplication.h"
 
 //#include "log_writer/LogWriter.h"
 //#include "remoting/remoting_common/thread/critical_section.h"
 
-//#include <map>
+//#include aaa_<map>
 
 class ViewerCollector;
 class ControlTrayIcon;
 class LoginDialog;
 
-class remoting_impact : public WindowsApplication
+class remoting_impact : public ::subsystem::OperatingSystemApplication
 {
 public:
   remoting_impact(::particle * pparticle,

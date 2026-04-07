@@ -100,7 +100,7 @@ int ServiceControlApplication::run()
     } catch (SystemException &servEx) {
       reportError(&cmdLine, &servEx);
     } catch (::remoting::Exception &ex) {
-      _ASSERT(FALSE);
+      _ASSERT(false);
       reportError(&cmdLine, ex.get_message());
     }
   }
@@ -240,7 +240,7 @@ void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmd
   } else if (cmdLine->stopRequested()) {
     stringId = IDS_FAILED_TO_STOP_SERVICE_FORMAT;
   } else {
-    _ASSERT(FALSE);
+    _ASSERT(false);
     return;
   }
 
@@ -248,7 +248,7 @@ void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmd
     const ::scoped_string & scopedstrCaption = main_subsystem()->string_table()->getString(IDS_MBC_TVNSERVER);
     ::string text;
     text.format(main_subsystem()->string_table()->getString(stringId), errorMessage);
-    main_innate_subsystem()->message_box(NULL, text, caption, MB_OK | MB_ICONERROR);
+    main_subsystem()->message_box(NULL, text, caption, ::user::e_message_box_ok | MB_ICONERROR);
   }
 }
 
@@ -263,13 +263,13 @@ void ServiceControlApplication::reportSuccess(const ServiceControlCommandLine *c
   } else if (cmdLine->reinstallRequested()) {
     stringId = IDS_SERVICE_REINSTALLED;
   } else {
-    _ASSERT(FALSE);
+    _ASSERT(false);
     return;
   }
 
   if (!cmdLine->beSilent()) {
     const ::scoped_string & scopedstrCaption = main_subsystem()->string_table()->getString(IDS_MBC_TVNSERVER);
     const ::scoped_string & scopedstrText = main_subsystem()->string_table()->getString(stringId);
-    main_innate_subsystem()->message_box(NULL, text, caption, MB_OK | MB_ICONINFORMATION);
+    main_subsystem()->message_box(NULL, text, caption, ::user::e_message_box_ok | MB_ICONINFORMATION);
   }
 }

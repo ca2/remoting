@@ -28,7 +28,7 @@
 #include "acme/subsystem/_common_header.h"
 
 #include "apex/innate_subsystem/BaseDialog.h"
-#include "apex/innate_subsystem/::remoting::Window.h"
+#include "apex/innate_subsystem/::innate_subsystem::Control.h"
 
 class QueryConnectionDialog : public BaseDialog
 {
@@ -66,10 +66,10 @@ protected:
   bool m_acceptByDefault;
   DWORD m_timeout;
 
-  ::remoting::Window m_peerAddressLabel;
-  ::remoting::Window m_timeoutLabel;
-  ::remoting::Window m_acceptButton;
-  ::remoting::Window m_rejectButton;
+  ::innate_subsystem::Control m_peerAddressLabel;
+  ::innate_subsystem::Control m_timeoutLabel;
+  ::innate_subsystem::Control m_acceptButton;
+  ::innate_subsystem::Control m_rejectButton;
 };
 
 

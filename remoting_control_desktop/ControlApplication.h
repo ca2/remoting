@@ -178,7 +178,7 @@ protected:
    */
   ControlProxy *m_serverControl;
   /**
-   * ::remoting::Window tray icon.
+   * ::innate_subsystem::Control tray icon.
    */
   ControlTrayIcon *m_trayIcon;
   /**

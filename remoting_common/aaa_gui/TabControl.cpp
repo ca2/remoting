@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "TabControl.h"
 #include "acme/subsystem/_common_header.h"
-#include <commctrl.h>
+// #include aaa_<commctrl.h>
 
 TabControl::TabControl()
 {
@@ -52,7 +52,7 @@ void TabControl::addTab(BaseDialog *dialog, const ::scoped_string & scopedstrCap
   TCHAR fixedCaption[255];
   _tcscpy(&fixedCaption[0], ::wstring(tab->get_caption()));
   tcitem.pszText = fixedCaption;
-  if (TabCtrl_InsertItem(get_hwnd(), m_tabContainer.size() - 1, &tcitem) == FALSE) {
+  if (TabCtrl_InsertItem(operating_system_window(), m_tabContainer.size() - 1, &tcitem) == false) {
     //
     // Handle error
     // ...
@@ -78,7 +78,7 @@ void TabControl::showTab(const BaseDialog *dialog)
       return;
     }
   }
-  _ASSERT(FALSE);
+  _ASSERT(false);
 }
 
 void TabControl::deleteAllTabs()
@@ -88,7 +88,7 @@ void TabControl::deleteAllTabs()
     delete tab;
   }
   m_tabContainer.clear();
-  TabCtrl_DeleteAllItems(get_hwnd());
+  TabCtrl_DeleteAllItems(operating_system_window());
 }
 
 void TabControl::removeTab(int index)
@@ -107,12 +107,12 @@ void TabControl::removeTab(int index)
 
 int TabControl::getSelectedTabIndex()
 {
-  int page = TabCtrl_GetCurSel(get_hwnd());
+  int page = TabCtrl_GetCurSel(operating_system_window());
   return page;
 }
 
 void TabControl::adjustRect(RECT *rect)
 {
   GetClientRect(m_hwnd, rect);
-  TabCtrl_AdjustRect(m_hwnd, FALSE, rect);
+  TabCtrl_AdjustRect(m_hwnd, false, rect);
 }

@@ -29,8 +29,8 @@
 #include "remoting/remoting_common/win_system/DynamicLibrary.h"
 //#include "log_writer/LogWriter.h"
 
-#include <d3d11.h>
-#include <DXGI1_2.h>
+// #include aaa_<d3d11.h>
+// #include aaa_<DXGI1_2.h>
 
 class WinD3D11Device
 {

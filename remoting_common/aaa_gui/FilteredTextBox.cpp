@@ -42,7 +42,7 @@ void FilteredTextBox::setWindow(HWND hwnd)
   } else {
     m_oldWindowProc = NULL;
   }
-  ::remoting::Window::setWindow(hwnd);
+  ::innate_subsystem::Control::setWindow(hwnd);
 }
 
 void FilteredTextBox::setText(TCHAR *text)
@@ -64,7 +64,7 @@ void FilteredTextBox::setStringFilter(StringFilter *filter)
 LRESULT FilteredTextBox::makeCheck()
 {
   ::string updatedText;
-  updatedText = TextBox::get_text();
+  updatedText = TextBox::getText();
   if (isStringValid(updatedText)) {
     m_text = updatedText;
   } else {
@@ -104,7 +104,7 @@ LRESULT FilteredTextBox::windowProc(HWND hwnd, unsigned int uMsg, ::wparam wPara
 {
   FilteredTextBox *_this = (FilteredTextBox *)GetWindowLongPtr(hwnd, GWLP_USERDATA);
   if (_this == NULL) {
-    return FALSE;
+    return false;
   }
   switch (uMsg) {
   case WM_CHAR:

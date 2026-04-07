@@ -34,7 +34,7 @@
 #include "remoting/remoting_common/win_system/WinHandles.h"
 #include "remoting/remoting_common/win_system/SharedMemory.h"
 
-#include <time.h>
+//#include aaa_<time.h>
 
 DesktopServerWatcher::DesktopServerWatcher(ReconnectionListener *recListener, LogWriter *log)
 : m_recListener(recListener),
@@ -198,7 +198,7 @@ void DesktopServerWatcher::doXPTrick()
     memset(password, 0, sizeof(password));
 
     if (winSta.WinStationConnectW(NULL, 0, WTS::getActiveConsoleSessionId(m_plogwriter),
-      password, 0) == FALSE) {
+      password, 0) == false) {
       throw SystemException("Failed to call WinStationConnectW");
     }
 

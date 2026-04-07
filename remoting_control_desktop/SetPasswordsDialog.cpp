@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 //#include "remoting/remoting_common/util/winhdr.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 
 #include "remoting_node_desktop/NamingDefs.h"
 
@@ -88,7 +88,7 @@ void SetPasswordsDialog::getAdmPass(::string & pass)
 
 void SetPasswordsDialog::initControls()
 {
-  HWND window = m_ctrlThis.get_hwnd();
+  HWND window = m_ctrlThis.operating_system_window();
 
   m_dontChangeRfbAuthSettingsRadio.setWindow(GetDlgItem(window,
     IDC_DONT_CHANGE_RFB_AUTH_SETTINGS_RADIO));
@@ -127,29 +127,29 @@ bool SetPasswordsDialog::onInitDialog()
 
   updateEditControls();
 
-  return FALSE;
+  return false;
 }
 
 bool SetPasswordsDialog::onNotify(unsigned int controlID, ::lparam data)
 {
-  return FALSE;
+  return false;
 }
 
 bool SetPasswordsDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
-  if (notificationID == BN_CLICKED) {
+  if (notificationID == ::user::e_notification_button_clicked) {
     readRadio();
     updateEditControls();
   }
-  if (controlID == IDOK) {
+  if (controlID == ::innate_subsystem::IDOK) {
     onOkButtonClick();
   }
-  return FALSE;
+  return false;
 }
 
 bool SetPasswordsDialog::onDestroy()
 {
-  return FALSE;
+  return false;
 }
 
 void SetPasswordsDialog::onOkButtonClick()
@@ -159,26 +159,26 @@ void SetPasswordsDialog::onOkButtonClick()
   ::string admPass1;
   ::string admPass2;
 
-  m_rfbPassEdit1.get_text(&rfbPass1);
-  m_rfbPassEdit2.get_text(&rfbPass2);
-  m_admPassEdit1.get_text(&admPass1);
-  m_admPassEdit2.get_text(&admPass2);
+  m_rfbPassEdit1.getText(&rfbPass1);
+  m_rfbPassEdit2.getText(&rfbPass2);
+  m_admPassEdit1.getText(&admPass1);
+  m_admPassEdit2.getText(&admPass2);
 
   if (m_useRfbAuth) {
     if (rfbPass1.is_empty()) {
       m_rfbPassEdit1.showBalloonTip(&m_passwordEmptyTooltip);
-      m_rfbPassEdit1.set_focus();
+      m_rfbPassEdit1.setFocus();
       return;
     }
     if (!rfbPass1.isEqualTo(&rfbPass2)) {
       m_rfbPassEdit2.showBalloonTip(&m_passwordsNotMatchTooltip);
-      m_rfbPassEdit2.set_focus();
+      m_rfbPassEdit2.setFocus();
       return;
     }
     // shows scopedstrMessage box if the password can't be converted to ANSI with no data lost
     if (!::string::checkAnsiConversion(rfbPass1)) {
       m_rfbPassEdit1.showBalloonTip(&m_passwordWeakTooltip);
-      m_rfbPassEdit1.set_focus();
+      m_rfbPassEdit1.setFocus();
       return;
     }
     m_rfbPass= rfbPass1;
@@ -186,23 +186,23 @@ void SetPasswordsDialog::onOkButtonClick()
   if (m_protectControlInterface) {
     if (admPass1.is_empty()) {
       m_admPassEdit1.showBalloonTip(&m_passwordEmptyTooltip);
-      m_admPassEdit1.set_focus();
+      m_admPassEdit1.setFocus();
       return;
     }
     if (!admPass1.isEqualTo(&admPass2)) {
       m_admPassEdit2.showBalloonTip(&m_passwordsNotMatchTooltip);
-      m_admPassEdit2.set_focus();
+      m_admPassEdit2.setFocus();
       return;
     }
     if (!::string::checkAnsiConversion(admPass1)) {
       m_admPassEdit1.showBalloonTip(&m_passwordWeakTooltip);
-      m_admPassEdit1.set_focus();
+      m_admPassEdit1.setFocus();
       return;
     }
 
     m_admPass= admPass1;
   }
-  kill(IDOK);
+  kill(::innate_subsystem::IDOK);
 }
 
 void SetPasswordsDialog::readRadio()
@@ -223,6 +223,6 @@ void SetPasswordsDialog::updateEditControls()
 
 bool SetPasswordsDialog::onClose()
 {
-  kill(IDCANCEL);
-  return FALSE;
+  kill(::innate_subsystem::IDCANCEL);
+  return false;
 }

@@ -29,15 +29,15 @@
 //////#include "remoting/remoting_common/util/::string.h"
 //
 //class CLASS_DECL_REMOTING_COMMON BaseDialog :
-//virtual public ::remoting::Window
+//virtual public ::innate_subsystem::Control
 //{
 //public:
 //
 //
 //    TCHAR *m_resourceName;        // Name of dialog resource
 //    DWORD m_resourceId;            // Id of dialog resouce
-//    //::remoting::Window m_ctrlThis;           // This dialog control
-//    ::remoting::Window *m_pwindowParent;        // Parent dialog or NULL if no parent
+//    //::innate_subsystem::Control m_ctrlThis;           // This dialog control
+//    ::innate_subsystem::Control *m_pwindowParent;        // Parent dialog or NULL if no parent
 //
 //    bool m_isModal;
 //    bool m_isCreated;
@@ -52,7 +52,7 @@
 //   ~BaseDialog() override;
 ////public:
 //
-//   void set_parent(::remoting::Window *pwindowParam) override;
+//   void setParent(::innate_subsystem::Control *pwindowParam) override;
 //  // Method creates non modal window but not shows it
 //   void create();
 //
@@ -77,10 +77,10 @@
 //  // Set resource id for dialog.
 //  void setResourceId(DWORD id);
 //  // Return
-//  //::remoting::Window *getControl() { return &m_ctrlThis; }
+//  //::innate_subsystem::Control *getControl() { return &m_ctrlThis; }
 //  // Setup control by ID
-//  void subclassControlById(::remoting::Window &control, DWORD id);
-//   void subclassControlById(::remoting::Window * pcontrol, DWORD id);
+//  void subclassControlById(::innate_subsystem::Control &control, DWORD id);
+//   void subclassControlById(::innate_subsystem::Control * pcontrol, DWORD id);
 //  // Icon manipulation 
 //  void loadIcon(DWORD id);
 //  void updateIcon();

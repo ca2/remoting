@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "AuthenticationDialog.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 
 
 namespace remoting_remoting
@@ -53,16 +53,16 @@ namespace remoting_remoting
 
     bool AuthenticationDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
-        if (controlID == IDOK) {
+        if (controlID == ::innate_subsystem::IDOK) {
             m_strPassword = m_ptextboxPassword->getText();
             closeDialog(1);
-            return TRUE;
+            return true;
         }
-        if (controlID == IDCANCEL) {
+        if (controlID == ::innate_subsystem::IDCANCEL) {
             closeDialog(0);
-            return TRUE;
+            return true;
         }
-        return FALSE;
+        return false;
     }
 
     string AuthenticationDialog::getPassword()

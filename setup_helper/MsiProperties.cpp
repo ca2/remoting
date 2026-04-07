@@ -25,7 +25,7 @@
 #include "MsiProperties.h"
 #include "acme/subsystem/Exception.h"
 #include "remoting/remoting_common/util/StringParser.h"
-//#include <vector>
+//#include aaa_<vector>
 
 MsiProperties::MsiProperties(MSIHANDLE handle)
 : m_handle(handle)

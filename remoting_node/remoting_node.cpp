@@ -24,7 +24,7 @@
 
 #include "acme/subsystem/_common_header.h"
 //#include "remoting/remoting_common/util/winhdr.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 
 #include "remoting/remoting_common/util/CommandLine.h"
 #include "remoting/remoting_common/win_system/WinCommandLineArgs.h"
@@ -127,7 +127,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
       MessageBox(0,
         fatalException.get_message(),
         main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
-        MB_OK | MB_ICONERROR);
+        ::user::e_message_box_ok | MB_ICONERROR);
       return 1;
     }
   } else if (firstKey.isEqualTo(AdditionalActionApplication::LOCK_WORKSTATION_KEY) ||

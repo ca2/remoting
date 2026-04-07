@@ -31,7 +31,7 @@
 
 #include "apex/innate_subsystem/drawing/Icon.h"
 
-#include <shellapi.h>
+// #include aaa_<shellapi.h>
 
 namespace remoting
 {

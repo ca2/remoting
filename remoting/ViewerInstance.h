@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "ViewerWindow.h"
+#include "remoting/remoting/ViewerWindow.h"
 //#include "remoting/remoting_common/network/socket/SocketIPv4.h"
 
 #include "ViewerVncAuthHandler.h"

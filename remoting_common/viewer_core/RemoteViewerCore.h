@@ -30,10 +30,10 @@
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 //#include "remoting/remoting_common/network/socket/SocketStream.h"
 //#include "remoting/remoting_common/network/socket/SocketIPv4.h"
-#include "remoting/remoting_common/rfb/FrameBuffer.h"
+#include "acme/subsystem/framebuffer/FrameBuffer.h"
 
 #include "remoting/remoting_common/region/Point.h"
-#include "remoting/remoting_common/thread/Thread.h"
+#include "acme/subsystem/thread/Thread.h"
 
 #include "CapsContainer.h"
 #include "CoreEventsAdapter.h"
@@ -44,7 +44,7 @@
 #include "TcpConnection.h"
 #include "WatermarksController.h"
 
-//#include <map>
+//#include aaa_<map>
 #include "UpdateRequestSender.h"
 
 //

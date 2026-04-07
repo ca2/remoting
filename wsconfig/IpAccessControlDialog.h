@@ -49,7 +49,7 @@ public:
   virtual bool onInitDialog();
   virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
   virtual bool onNotify(unsigned int controlID, ::lparam data);
-  virtual bool onDestroy() { return TRUE; }
+  virtual bool onDestroy() { return true; }
 
   //
   // Helper methods
@@ -63,7 +63,7 @@ private:
   void initControls();
 
   //
-  // ::remoting::Window event handlers
+  // ::innate_subsystem::Control event handlers
   //
 
   void onAddButtonClick();
@@ -96,18 +96,18 @@ private:
   EditIpAccessRuleDialog m_editDialog;
   // Controls
   ListView m_list;
-  ::remoting::Window m_addButton;
-  ::remoting::Window m_editButton;
-  ::remoting::Window m_removeButton;
-  ::remoting::Window m_moveUpButton;
-  ::remoting::Window m_moveDownButton;
+  ::innate_subsystem::Control m_addButton;
+  ::innate_subsystem::Control m_editButton;
+  ::innate_subsystem::Control m_removeButton;
+  ::innate_subsystem::Control m_moveUpButton;
+  ::innate_subsystem::Control m_moveDownButton;
   CheckBox m_defaultActionAccept;
   CheckBox m_defaultActionRefuse;
   CheckBox m_allowLoopbackConnections;
   CheckBox m_onlyLoopbackConnections;
   TextBox m_queryTimeout;
   TextBox m_ip;
-  ::remoting::Window m_ipCheckResult;
+  ::innate_subsystem::Control m_ipCheckResult;
   SpinControl m_queryTimeoutSpin;
   BaseDialog *m_parentDialog;
 };

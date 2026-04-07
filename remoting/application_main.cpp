@@ -135,10 +135,10 @@ int application::remoting_impact_main( const ::file::path & path)
    // }
    // catch (const CommandLineFormatException &exception) {
    //   ::string strError(exception.get_message());
-   //   main_innate_subsystem()->message_box(0,
+   //   main_subsystem()->message_box(0,
    //     strError,
    //     ProductNames::VIEWER_PRODUCT_NAME,
-   //     MB_OK | MB_ICONERROR);
+   //     ::user::e_message_box_ok | MB_ICONERROR);
    //   return 0;
    // }
    // catch (const CommandLineFormatHelp &) {
@@ -169,10 +169,10 @@ int application::remoting_impact_main( const ::file::path & path)
       tvnViewer.run();
       result = tvnViewer.m_iExitCode;
    } catch (const ::remoting::Exception &ex) {
-      main_innate_subsystem()->message_box(0,
+      main_subsystem()->message_box(0,
                  main_subsystem()->string_table()->getString(IDS_UNKNOWN_ERROR_IN_VIEWER),
                  ProductNames::VIEWER_PRODUCT_NAME,
-                 MB_OK | MB_ICONERROR);
+                 ::user::e_message_box_ok | MB_ICONERROR);
       m_plogwriter->debug(ex.get_message());
    }
 

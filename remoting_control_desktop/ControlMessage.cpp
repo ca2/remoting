@@ -35,7 +35,7 @@
 
 #include "remoting_node/resource.h"
 
-#include <crtdbg.h>
+//#include aaa_<crtdbg.h>
 
 ControlMessage::ControlMessage(unsigned int messageId, ControlGate *gate,
                                const ::scoped_string & scopedstrPasswordFile,
@@ -93,9 +93,9 @@ void ControlMessage::checkRetCode()
 
       int retCode = authDialog.showModal();
       switch (retCode) {
-      case IDCANCEL:
+      case ::innate_subsystem::IDCANCEL:
         throw ControlAuthException(main_subsystem()->string_table()->getString(IDS_USER_CANCEL_CONTROL_AUTH), true);
-      case IDOK:
+      case ::innate_subsystem::IDOK:
         ControlAuth auth(m_gate, authDialog.getPassword());
         send();
         break;
@@ -105,7 +105,7 @@ void ControlMessage::checkRetCode()
   case ControlProto::REPLY_OK:
     break;
   default:
-    _ASSERT(FALSE);
+    _ASSERT(false);
     throw RemoteException("Unknown ret code.");
   }
 }

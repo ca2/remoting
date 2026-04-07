@@ -29,7 +29,7 @@
 //#include "remoting/remoting_common/thread/critical_section.h"
 
 #include "remoting/remoting_common/util/DesCrypt.h"
-#include <algorithm>
+//#include aaa_<algorithm>
 
 ControlAuth::ControlAuth(ControlGate *gate, const ::scoped_string & scopedstrPassword)
 : m_gate(gate)

@@ -26,10 +26,10 @@
 
 
 //#include "remoting/remoting_common/util/winhdr.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 
 #include "acme/subsystem/node/SystemException.h"
-#include <AccCtrl.h>
+// #include aaa_<accctrl.h>
 
 /**
  * Contains the security information associated with an object.
@@ -40,7 +40,7 @@ public:
    * Creates new security descriptor.
    * @remark created security descriptor have no system access control ::list_base (SACL),
    * no discretionary access control ::list_base (DACL), no owner, no primary group,
-   * and all control flags set to FALSE (NULL). Thus, except for its revision level, it is empty
+   * and all control flags set to false (NULL). Thus, except for its revision level, it is empty
    */
   SecurityDescriptor();
   virtual ~SecurityDescriptor();

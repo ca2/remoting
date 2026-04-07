@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "NotifyIcon.h"
 
-#include <shellapi.h>
+// #include aaa_<shellapi.h>
 
 namespace remoting
 {

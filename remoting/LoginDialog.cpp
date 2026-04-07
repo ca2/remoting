@@ -46,14 +46,14 @@ namespace remoting_remoting
     {
         subclassControlById(m_server, IDC_CSERVER);
         subclassControlById(m_listening, IDC_LISTENING);
-        subclassControlById(m_ok, IDOK);
+        subclassControlById(m_ok, ::innate_subsystem::IDOK);
         updateHistory();
-        SetForegroundWindow(get_hwnd());
-        m_server.set_focus();
+        SetForegroundWindow(operating_system_window());
+        m_server.setFocus();
         if (m_isListening) {
             m_listening.enable_window(false);
         }
-        return TRUE;
+        return true;
     }
 
     void LoginDialog::enableConnect()
@@ -61,7 +61,7 @@ namespace remoting_remoting
         ::string str;
         int iSelected = m_server.getSelectedItemIndex();
         if (iSelected == -1) {
-            str = m_server.get_text();
+            str = m_server.getText();
             m_ok.enable_window(!str.is_empty());
         } else {
             m_ok.enable_window(true);
@@ -73,7 +73,7 @@ namespace remoting_remoting
         ConnectionHistory *conHistory;
 
         ::string currentServer;
-        currentServer = m_server.get_text();
+        currentServer = m_server.getText();
         m_server.removeAllItems();
         conHistory = ::remoting::ViewerConfig::getInstance()->getConnectionHistory();
         conHistory->load();
@@ -86,7 +86,7 @@ namespace remoting_remoting
                 m_server.setSelectedItem(0);
             }
             ::string server;
-            server = m_server.get_text();
+            server = m_server.getText();
             ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
                                     server);
             m_connectionConfig.loadFromStorage(&ccsm);
@@ -97,7 +97,7 @@ namespace remoting_remoting
     {
         ConnectionHistory *conHistory = ::remoting::ViewerConfig::getInstance()->getConnectionHistory();
 
-        m_serverHost = m_server.get_text();
+        m_serverHost = m_server.getText();
 
         conHistory->load();
         conHistory->addHost(m_serverHost);
@@ -120,18 +120,18 @@ namespace remoting_remoting
     {
         OptionsDialog dialog;
         dialog.setConnectionConfig(&m_connectionConfig);
-        dialog.set_parent(this);
+        dialog.setParent(this);
         if (dialog.showModal() == 1) {
             ::string server;
-            server = m_server.get_text();
+            server = m_server.getText();
             if (server.is_empty()) {
                 ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
                                         server);
                 m_connectionConfig.saveToStorage(&ccsm);
             }
-            return FALSE;
+            return false;
         }
-        return TRUE;
+        return true;
     }
 
     void LoginDialog::onOrder()
@@ -149,10 +149,10 @@ namespace remoting_remoting
 
             scopedstrMessage.formatf(main_subsystem()->string_table()->getString(IDS_FAILED_TO_OPEN_URL_FORMAT).c_str(), sysEx.get_message().c_str());
 
-            main_innate_subsystem()->message_box(m_hwnd,
+            main_subsystem()->message_box(operating_system_window(),
                        scopedstrMessage,
                        main_subsystem()->string_table()->getString(IDS_MBC_TVNVIEWER),
-                       MB_OK | MB_ICONEXCLAMATION);
+                       ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
         }
     }
 
@@ -195,7 +195,7 @@ namespace remoting_remoting
                 {
                     int selectedItemIndex = m_server.getSelectedItemIndex();
                     if (selectedItemIndex < 0) {
-                        return FALSE;
+                        return false;
                     }
                     //::string server;
                     auto server = m_server.getItemText(selectedItemIndex);
@@ -210,13 +210,13 @@ namespace remoting_remoting
                 break;
 
                 // click "Connect"
-            case IDOK:
+            case ::innate_subsystem::IDOK:
                 onConnect();
                 closeDialog(0);
                 break;
 
                 // cancel connection
-            case IDCANCEL:
+            case ::innate_subsystem::IDCANCEL:
                 closeDialog(0);
                 break;
 
@@ -242,9 +242,9 @@ namespace remoting_remoting
 
             default:
                 _ASSERT(true);
-                return FALSE;
+                return false;
         }
-        return TRUE;
+        return true;
     }
 
     ::string LoginDialog::getServerHost()

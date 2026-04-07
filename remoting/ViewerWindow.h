@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "ConnectionData.h"
+#include "remoting/remoting/ConnectionData.h"
 #include "DesktopWindow.h"
 #include "FileTransferMainDialog.h"
 #include "NamingDefs.h"
@@ -38,16 +38,16 @@
 #include "remoting/remoting_common/viewer_core/RemoteViewerCore.h"
 #include "remoting/remoting_common/viewer_core/CoreEventsAdapter.h"
 #include "remoting/remoting_common/viewer_core/VncAuthentication.h"
-#include "remoting/remoting_common/win_system/SystemInformation.h"
-#include "remoting/remoting_common/win_system/WindowsApplication.h"
-#include "remoting/remoting_common/win_system/WinHooks.h"
+#include "acme/subsystem/node/SystemInformation.h"
+#include "acme/subsystem/node/OperatingSystemApplication.h"
+#include "acme/subsystem/node/OperatingSystemHook.h"
 #include "apex/networking/sockets/http/get_socket.h"
 
 namespace remoting_remoting
 {
     class ViewerWindow : public BaseWindow,
                          public CoreEventsAdapter,
-                         public HookEventListener
+                         public subsystem::OperatingSystemHook
     {
     public:
 
@@ -142,7 +142,7 @@ namespace remoting_remoting
 
         LogWriter * m_plogwriter;
 
-        ::remoting::Window m_control;
+        ::innate_subsystem::Control m_control;
 
         ConnectionConfigSM m_ccsm;
         ConnectionConfig *m_conConf;
@@ -213,7 +213,10 @@ namespace remoting_remoting
         void updateKeyState();
 
         // onHookProc function implementation of HookEventListener base abstract class.
-        virtual LRESULT onHookProc(int code, ::wparam wParam, ::lparam lParam);
+        //virtual LRESULT onHookProc(int code, ::wparam wParam, ::lparam lParam);
+
+       bool on_keyboard_message()
+
         WinHooks m_winHooks;
         bool m_hooksEnabledFirstTime;
     };

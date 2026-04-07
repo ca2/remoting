@@ -48,7 +48,7 @@ bool VideoRegionsConfigDialog::onInitDialog()
   m_config = Configurator::getInstance()->getServerConfig();
   initControls();
   updateUI();
-  return TRUE;
+  return true;
 }
 
 bool VideoRegionsConfigDialog::onNotify(unsigned int controlID, ::lparam data)
@@ -59,7 +59,7 @@ bool VideoRegionsConfigDialog::onNotify(unsigned int controlID, ::lparam data)
       onRecognitionIntervalSpinChangePos(scopedstrMessage);
     }
   }
-  return TRUE;
+  return true;
 }
 
 bool VideoRegionsConfigDialog::onCommand(unsigned int controlID, unsigned int notificationID)
@@ -71,7 +71,7 @@ bool VideoRegionsConfigDialog::onCommand(unsigned int controlID, unsigned int no
       onRecognitionIntervalUpdate();
     } 
   }
-  return TRUE;
+  return true;
 }
 
 bool VideoRegionsConfigDialog::validateInput()
@@ -138,7 +138,7 @@ void VideoRegionsConfigDialog::apply()
   //
   
   ::string classNames;
-  m_videoClasses.get_text(&classNames);
+  m_videoClasses.getText(&classNames);
   size_t count = 0;
   TCHAR delimiters[] = " \n\r\t,;";
 
@@ -155,7 +155,7 @@ void VideoRegionsConfigDialog::apply()
   }
 
   ::string videoRectsStringStorage;
-  m_videoRects.get_text(&videoRectsStringStorage);
+  m_videoRects.getText(&videoRectsStringStorage);
   count = 0;
 
   videoRectsStringStorage.split(delimiters, NULL, &count);
@@ -180,7 +180,7 @@ void VideoRegionsConfigDialog::apply()
 
   ::string vriss;
 
-  m_videoRecognitionInterval.get_text(&vriss);
+  m_videoRecognitionInterval.getText(&vriss);
 
   int interval;
   StringParser::parseInt(vriss, &interval);
@@ -189,7 +189,7 @@ void VideoRegionsConfigDialog::apply()
 
 void VideoRegionsConfigDialog::initControls()
 {
-  HWND hwnd = m_ctrlThis.get_hwnd();
+  HWND hwnd = m_ctrlThis.operating_system_window();
   m_videoClasses.setWindow(GetDlgItem(hwnd, IDC_VIDEO_CLASS_NAMES));
   m_videoRects.setWindow(GetDlgItem(hwnd, IDC_VIDEO_RECTS));
   m_videoRecognitionInterval.setWindow(GetDlgItem(hwnd, IDC_VIDEO_RECOGNITION_INTERVAL));

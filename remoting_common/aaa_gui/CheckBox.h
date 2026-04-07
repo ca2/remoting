@@ -27,7 +27,7 @@
 
 #include "apex/innate_subsystem/Window.h"
 
-class CLASS_DECL_REMOTING_COMMON  CheckBox : public ::remoting::Window
+class CLASS_DECL_REMOTING_COMMON  CheckBox : public ::innate_subsystem::Control
 {
 public:
   bool isChecked();

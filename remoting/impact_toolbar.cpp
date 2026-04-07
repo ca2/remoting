@@ -5,11 +5,11 @@
 #include "DesktopWindow.h"
 #include "ViewerWindow.h"
 #include "impact_toolbar.h"
-#include <dwmapi.h>
-// Link with dwmapi.lib
-#pragma comment (lib, "dwmapi.lib")
-#pragma comment (lib, "gdiplus.lib")
-#include <gdiplus.h>
+// // #include aaa_<dwmapi.h>
+// // Link with dwmapi.lib
+// #pragma comment (lib, "dwmapi.lib")
+// #pragma comment (lib, "gdiplus.lib")
+// // #include aaa_<gdiplus.h>
 
 namespace remoting_remoting
 {
@@ -620,7 +620,7 @@ namespace remoting_remoting
       else if (eid==id_restore)
       {
          //m_pdesktopwindow->m_viewerCore->ge
-         //bool enable = TRUE; // Use TRUE to force disable, which is counter-intuitive but how the flag works
+         //bool enable = true; // Use true to force disable, which is counter-intuitive but how the flag works
          //HRESULT hr = DwmSetWindowAttribute(::GetParent(m_pdesktopwindow->getHWnd()), DWMWA_TRANSITIONS_FORCEDISABLED, &enable, sizeof(enable));
 
          ::PostMessageA(::GetParent(m_pdesktopwindow->getHWnd()), ViewerWindow::WM_USER_SWITCH_FULL_SCREEN_MODE, 0, 0);

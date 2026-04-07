@@ -26,15 +26,15 @@
 
 
 #include "apex/innate_subsystem/Window.h"
-#include <commctrl.h>
+// #include aaa_<commctrl.h>
 
-class CLASS_DECL_REMOTING_COMMON SpinControl : public ::remoting::Window
+class CLASS_DECL_REMOTING_COMMON SpinControl : public ::innate_subsystem::Control
 {
 public:
   SpinControl();
   ~SpinControl();
 
-  void setBuddy(::remoting::Window *buddyControl);
+  void setBuddy(::innate_subsystem::Control *buddyControl);
   void setRange(short lower, short upper);
   void setRange32(int lower, int upper);
   void setAccel(unsigned int nSec, unsigned int nInc);
@@ -53,7 +53,7 @@ public:
                                  const ::array_base<int> *deltas,
                                  int maxDelta);
 protected:
-  ::remoting::Window *m_buddy;
+  ::innate_subsystem::Control *m_buddy;
 
   //
   // Members needed for auto acceleration

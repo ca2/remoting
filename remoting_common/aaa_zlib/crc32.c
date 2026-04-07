@@ -182,7 +182,7 @@ local void once OF((once_t *, void (*)(void)));
 #if defined(__STDC__) && __STDC_VERSION__ >= 201112L && \
     !defined(__STDC_NO_ATOMICS__)
 
-#include <stdatomic.h>
+// #include aaa_<stdatomic.h>
 
 /* Structure for once(), which must be initialized with ONCE_INIT. */
 struct once_s {

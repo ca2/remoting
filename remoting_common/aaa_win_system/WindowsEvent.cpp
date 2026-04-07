@@ -22,13 +22,13 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "WindowsEvent.h"
 #include "acme/subsystem/Exception.h"
 
 WindowsEvent::WindowsEvent(const ::scoped_string & scopedstrName)
 {
-  m_hEvent = CreateEvent(0, FALSE, FALSE, ::wstring(scopedstrName));
+  m_hEvent = CreateEvent(0, false, false, ::wstring(scopedstrName));
   if (m_hEvent == 0) {
     int errCode = GetLastError();
     ::string errMess;

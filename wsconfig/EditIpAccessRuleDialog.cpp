@@ -57,7 +57,7 @@ bool EditIpAccessRuleDialog::onInitDialog()
   }
 
   if (m_data == NULL) {
-    return TRUE;
+    return true;
   }
 
   switch (m_data->getAction()) {
@@ -87,17 +87,17 @@ bool EditIpAccessRuleDialog::onInitDialog()
     m_ctrlThis.setText(main_subsystem()->string_table()->getString(IDS_NEW_IP_ACCESS_RULE_DIALOG_CAPTION));
   }
 
-  return FALSE;
+  return false;
 }
 
 bool EditIpAccessRuleDialog::onCommand(unsigned int cID, unsigned int nID)
 {
-  if (nID == BN_CLICKED) {
+  if (nID == ::user::e_notification_button_clicked) {
     switch (cID) {
-    case IDOK:
+    case ::innate_subsystem::IDOK:
       onOkButtonClick();
       break;
-    case IDCANCEL:
+    case ::innate_subsystem::IDCANCEL:
       onCancelButtonClick();
       break;
     case IDC_ALLOW:
@@ -111,7 +111,7 @@ bool EditIpAccessRuleDialog::onCommand(unsigned int cID, unsigned int nID)
       break;
     }
   }
-  return TRUE;
+  return true;
 }
 
 void EditIpAccessRuleDialog::onOkButtonClick()
@@ -131,19 +131,19 @@ void EditIpAccessRuleDialog::onOkButtonClick()
     ::string firstIp;
     ::string lastIp;
 
-    m_firstIp.get_text(&firstIp);
-    m_lastIp.get_text(&lastIp);
+    m_firstIp.getText(&firstIp);
+    m_lastIp.getText(&lastIp);
 
     m_data->setFirstIp(firstIp);
     m_data->setLastIp(lastIp);
 
   } // if
-  kill(IDOK);
+  kill(::innate_subsystem::IDOK);
 }
 
 void EditIpAccessRuleDialog::onCancelButtonClick()
 {
-  kill(IDCANCEL);
+  kill(::innate_subsystem::IDCANCEL);
 }
 
 void EditIpAccessRuleDialog::onAccessTypeRadioClick(int num)
@@ -160,7 +160,7 @@ void EditIpAccessRuleDialog::onAccessTypeRadioClick(int num)
 
 void EditIpAccessRuleDialog::initControls()
 {
-  HWND hwnd = m_ctrlThis.get_hwnd();
+  HWND hwnd = m_ctrlThis.operating_system_window();
 
   m_firstIp.setWindow(GetDlgItem(hwnd, IDC_FIRST_IP));
   m_lastIp.setWindow(GetDlgItem(hwnd, IDC_LAST_IP));
@@ -175,11 +175,11 @@ bool EditIpAccessRuleDialog::validateInput()
   ::string firstIp;
   ::string lastIp;
 
-  m_firstIp.get_text(&firstIp);
-  m_lastIp.get_text(&lastIp);
+  m_firstIp.getText(&firstIp);
+  m_lastIp.getText(&lastIp);
 
   if (!IpAccessRule::isIpAddressStringValid(firstIp)) {
-    m_firstIp.set_focus();
+    m_firstIp.setFocus();
     m_firstIp.showBalloonTip(&m_warningBalloonTip);
     return false;
   } // if
@@ -189,7 +189,7 @@ bool EditIpAccessRuleDialog::validateInput()
   }
 
   if (!IpAccessRule::isIpAddressStringValid(lastIp)) {
-    m_lastIp.set_focus();
+    m_lastIp.setFocus();
     m_lastIp.showBalloonTip(&m_warningBalloonTip);
     return false;
   } // if
@@ -201,7 +201,7 @@ bool EditIpAccessRuleDialog::validateInput()
   unsigned long lastIpAddr = inet_addr(lastIpAnsi);
 
   if (IpAccessRule::compareIp(firstIpAddr, lastIpAddr) == 1) {
-    m_lastIp.set_focus();
+    m_lastIp.setFocus();
     m_lastIp.showBalloonTip(&m_lastIpLessThanFirstBT);
     return false;
   }

@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "CapContainer.h"
-#include <crtdbg.h>
+//#include aaa_<crtdbg.h>
 
 CapContainer::CapContainer()
 {

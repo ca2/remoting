@@ -26,7 +26,7 @@
 #include "acme/operating_system/windows/geometry2d.h"
 #include "impact_toolbar.h"
 #include "ViewerWindow.h"
-#include <dwmapi.h>
+// #include aaa_<dwmapi.h>
 
 
 #pragma comment(lib, "dwmapi.lib")
@@ -58,7 +58,7 @@ namespace remoting_remoting
         m_premotingtoolbar = allocateø ::remoting::toolbar;
         m_premotingtoolbar->create_impact_toolbar(this, m_premotingstyle);
         m_timeStartDesktopWindow.Now();
-        bool enable = TRUE; // Use TRUE to force disable, which is counter-intuitive but how the flag works
+        bool enable = true; // Use true to force disable, which is counter-intuitive but how the flag works
         HRESULT hr = DwmSetWindowAttribute(::GetParent(getHWnd()), DWMWA_TRANSITIONS_FORCEDISABLED, &enable, sizeof(enable));
 
         // m_pimpactoolbar->m_pdesktopwindow = this;

@@ -36,7 +36,7 @@ public:
   FilteredTextBox();
   ~FilteredTextBox();
 
-  // Override ::remoting::Window::setWindow method
+  // Override ::innate_subsystem::Control::setWindow method
   void setWindow(HWND hwnd);
   void setText(TCHAR *text);
   void setErrorBalloonTip(BalloonTip *tip);

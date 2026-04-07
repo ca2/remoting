@@ -47,8 +47,8 @@ protected:
 
   virtual bool onInitDialog();
   virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
-  virtual bool onNotify(unsigned int controlID, ::lparam data) { return TRUE; }
-  virtual bool onDestroy() { return TRUE; }
+  virtual bool onNotify(unsigned int controlID, ::lparam data) { return true; }
+  virtual bool onDestroy() { return true; }
 
   //
   // Controls event handlers.
@@ -65,8 +65,8 @@ private:
 
 protected:
   ListBox m_exPortsListBox;
-  ::remoting::Window m_editButton;
-  ::remoting::Window m_removeButton;
+  ::innate_subsystem::Control m_editButton;
+  ::innate_subsystem::Control m_removeButton;
 
   PortMappingContainer *m_extraPorts;
 

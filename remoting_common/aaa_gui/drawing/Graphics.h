@@ -31,7 +31,7 @@
 #include "Bitmap.h"
 #include "Brush.h"
 #include "Pen.h"
-#include <gdiplus.h>
+// #include aaa_<gdiplus.h>
 
 
 namespace remoting

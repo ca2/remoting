@@ -34,16 +34,17 @@ namespace remoting_remoting
         m_strFileName= "";
     }
 
-    NewFolderDialog::NewFolderDialog(::remoting::Window *parent)
-    {
-        setResourceId(ftclient_createFolderDialog);
-        set_parent(parent);
-        m_strFileName= "";
-    }
-
     NewFolderDialog::~NewFolderDialog()
     {
     }
+
+   void NewFolderDialog::initialize_new_folder_dialog(::innate_subsystem::Control *parent)
+    {
+       setResourceId(ftclient_createFolderDialog);
+       setParent(parent);
+       m_strFileName= "";
+    }
+
 
     void NewFolderDialog::setFileName(const ::scoped_string & scopedstrFilename)
     {
@@ -58,64 +59,66 @@ namespace remoting_remoting
     bool NewFolderDialog::onInitDialog()
     {
         initControls();
-        m_fileNameTextBox.setText(m_strFileName);
-        return TRUE;
+        m_ptextboxFileName->setText(m_strFileName);
+        return true;
     }
 
     bool NewFolderDialog::onNotify(unsigned int controlID, ::lparam data)
     {
-        return TRUE;
+        return true;
     }
 
     bool NewFolderDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
         switch (controlID) {
-            case IDOK:
+            case ::innate_subsystem::IDOK:
                 onOkButtonClick();
                 break;
-            case IDCANCEL:
+            case ::innate_subsystem::IDCANCEL:
                 onCancelButtonClick();
                 break;
         }
-        return TRUE;
+        return true;
     }
 
     bool NewFolderDialog::onDestroy()
     {
-        return TRUE;
+        return true;
     }
 
     void NewFolderDialog::onOkButtonClick()
     {
         ::string fileName;
 
-        fileName = m_fileNameTextBox.get_text();
+        fileName = m_ptextboxFileName->getText();
 
         if (fileName.is_empty() || fileName.contains_any_character_in("\\/"))
         {
-            main_innate_subsystem()->message_box(m_hwnd,
+            main_subsystem()->message_box(operating_system_window(),
                        L"::file::item name cannot be empty and cannot contain '/' or '\\' characters.",
                        L"Incorrect ::file::item Name",
-                       MB_OK | MB_ICONWARNING);
-            m_fileNameTextBox.set_focus();
+                       ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
+            m_ptextboxFileName->setFocus();
             return ;
         }
 
         m_strFileName = fileName;
 
-        closeDialog(IDOK);
+        closeDialog(::innate_subsystem::IDOK);
     }
 
     void NewFolderDialog::onCancelButtonClick()
     {
-        closeDialog(IDCANCEL);
+        closeDialog(::innate_subsystem::IDCANCEL);
     }
 
     void NewFolderDialog::initControls()
     {
-        HWND hwnd = m_hwnd;
+        //HWND hwnd = m_hwnd;
 
-        m_label.setWindow(GetDlgItem(hwnd, IDC_LABEL));
-        m_fileNameTextBox.setWindow(GetDlgItem(hwnd, IDC_FILENAME_EDIT));
+        dialog_item(m_pcontrolLabel, IDC_LABEL);
+        dialog_item(m_ptextboxFileName, IDC_FILENAME_EDIT);
+
     }
+
 }// namespace remoting_remoting

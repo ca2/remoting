@@ -28,7 +28,7 @@
 #include "apex/innate_subsystem/Window.h"
 #include "Tooltip.h"
 
-class CLASS_DECL_REMOTING_COMMON TextBox : public ::remoting::Window
+class CLASS_DECL_REMOTING_COMMON TextBox : public ::innate_subsystem::Control
 {
 public:
   ~TextBox();

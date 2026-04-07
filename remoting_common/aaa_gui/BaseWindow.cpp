@@ -329,9 +329,9 @@ void BaseWindow::redraw(const RECT & rectArea)
   }
 
   if (::is_empty(rectArea)) {
-     InvalidateRect(m_hwnd, NULL, TRUE);
+     InvalidateRect(m_hwnd, NULL, true);
   } else {
-     InvalidateRect(m_hwnd, &rectArea, FALSE);
+     InvalidateRect(m_hwnd, &rectArea, false);
   }
 }
 

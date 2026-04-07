@@ -58,12 +58,12 @@ bool AdministrationConfigDialog::onInitDialog()
   initControls();
   updateUI();
 
-  return TRUE;
+  return true;
 }
 
 bool AdministrationConfigDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
-  if (notificationID == BN_CLICKED) {
+  if (notificationID == ::user::e_notification_button_clicked) {
     if (controlID == IDC_SHARED_RADIO1) {
       onShareRadioButtonClick(0);
     } else if (controlID == IDC_SHARED_RADIO2) {
@@ -99,7 +99,7 @@ bool AdministrationConfigDialog::onCommand(unsigned int controlID, unsigned int 
       onLogLevelUpdate();
     }
   }
-  return TRUE;
+  return true;
 }
 
 bool AdministrationConfigDialog::validateInput()
@@ -126,9 +126,9 @@ bool AdministrationConfigDialog::validateInput()
 
   // FIXME: Code duplicate (see ServerConfigDialog class).
   if (!passwordSpecified && m_useControlAuth.isChecked()) {
-    main_innate_subsystem()->message_box(m_ctrlThis.get_hwnd(),
+    main_subsystem()->message_box(m_ctrlThis.operating_system_window(),
                main_subsystem()->string_table()->getString(IDS_SET_CONTROL_PASSWORD_NOTIFICATION),
-               main_subsystem()->string_table()->getString(IDS_CAPTION_BAD_INPUT), MB_ICONSTOP | MB_OK);
+               main_subsystem()->string_table()->getString(IDS_CAPTION_BAD_INPUT), MB_ICONSTOP | ::user::e_message_box_ok);
     return false;
   }
 
@@ -223,7 +223,7 @@ void AdministrationConfigDialog::updateUI()
 void AdministrationConfigDialog::apply()
 {
   ::string logLevelStringStorage;
-  m_logLevel.get_text(&logLevelStringStorage);
+  m_logLevel.getText(&logLevelStringStorage);
 
   int logLevel = 0;
 
@@ -283,7 +283,7 @@ void AdministrationConfigDialog::apply()
 
 void AdministrationConfigDialog::initControls()
 {
-  HWND hwnd = m_ctrlThis.get_hwnd();
+  HWND hwnd = m_ctrlThis.operating_system_window();
   m_logLevel.setWindow(GetDlgItem(hwnd, IDC_LOG_LEVEL));
   m_logPathTB.setWindow(GetDlgItem(hwnd, IDC_LOG_FILEPATH_EDIT));
 
@@ -387,7 +387,7 @@ void AdministrationConfigDialog::onChangeControlPasswordClick()
 
 void AdministrationConfigDialog::onUnsetControlPasswordClick()
 {
-  m_cpControl->unsetPassword(true, m_ctrlThis.get_hwnd());
+  m_cpControl->unsetPassword(true, m_ctrlThis.operating_system_window());
 
   ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
 }

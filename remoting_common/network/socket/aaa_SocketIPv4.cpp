@@ -22,14 +22,14 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include <stdlib.h>
+// #include aaa_<stdlib.h>
 #include "SocketAddressIPv4.h"
 #include "SocketAddressIPv4.h"
 #include "SocketIPv4.h"
 
 //#include "remoting/remoting_common/thread/critical_section.h"
 
-#include <crtdbg.h>
+//#include aaa_<crtdbg.h>
 
 SocketIPv4::SocketIPv4()
 : m_localAddr(NULL), m_peerAddr(NULL), m_isBound(false),

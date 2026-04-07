@@ -1,6 +1,6 @@
 ﻿#include "framework.h"
 #include "UpdateRequestSender.h"
-#include <thread/critical_section_lock.h>
+// #include aaa_<thread/critical_section_lock.h>
 #include "RfbFramebufferUpdateRequestClientMessage.h"
 
 UpdateRequestSender::UpdateRequestSender(lockable* m_fb_lock, FrameBuffer* m_frame_buffer, LogWriter* m_log_writer):

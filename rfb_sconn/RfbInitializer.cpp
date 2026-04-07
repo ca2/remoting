@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "RfbInitializer.h"
 //#include "remoting/remoting_common/thread/critical_section.h"
 #include "remoting/remoting_common/rfb/VendorDefs.h"
@@ -35,8 +35,8 @@
 //#include "remoting/remoting_common/util/::string.h"
 #include "remoting_node_desktop/NamingDefs.h"
 
-#include <stdlib.h>
-#include <time.h>
+// #include aaa_<stdlib.h>
+//#include aaa_<time.h>
 
 RfbInitializer::RfbInitializer(Channel *stream,
                                ClientAuthListener *extAuthListener,

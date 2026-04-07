@@ -25,8 +25,8 @@
 #include "PortMapping.h"
 #include "remoting/remoting_common/util/StringParser.h"
 
-#include <tchar.h>
-#include <stdio.h>
+// #include aaa_<tchar.h>
+// #include aaa_<stdio.h>
 
 PortMapping::PortMapping()
 : m_port(0)

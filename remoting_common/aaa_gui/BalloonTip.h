@@ -27,7 +27,7 @@
 
 #include "acme/subsystem/_common_header.h"
 #include "Tooltip.h"
-#include <commctrl.h>
+// #include aaa_<commctrl.h>
 
 /**
  * @deprecated, use ToolTip instead.
@@ -39,12 +39,12 @@ public:
   BalloonTip();
   virtual ~BalloonTip();
 
-  void showTooltip(::remoting::Window *control);
+  void showTooltip(::innate_subsystem::Control *control);
 
   void setText(const ::scoped_string & scopedstrText);
   void setTitle(const ::scoped_string & scopedstrCaption);
 
-  void get_text(::string & text) const;
+  void getText(::string & text) const;
   void getTitle(::string & title) const;
 
   void setIconType(int iconType);

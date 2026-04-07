@@ -59,7 +59,7 @@ void DesktopServerCommandLine::parse(const CommandLineArgs *cmdArgs)
 void DesktopServerCommandLine::getLogDir(::string & logDir)
 {
   if (!optionSpecified(LOG_DIR_KEY, logDir)) {
-    _ASSERT(FALSE);
+    _ASSERT(false);
 
     logDir-= 0;
   }
@@ -70,13 +70,13 @@ int DesktopServerCommandLine::getLogLevel()
   ::string logLevelKeyArg;
 
   if (!optionSpecified(LOG_LEVEL_KEY, &logLevelKeyArg)) {
-    _ASSERT(FALSE);
+    _ASSERT(false);
   }
 
   int ret;
 
   if (!StringParser::parseInt(logLevelKeyArg, &ret)) {
-    _ASSERT(FALSE);
+    _ASSERT(false);
   }
 
   return ret;
@@ -85,7 +85,7 @@ int DesktopServerCommandLine::getLogLevel()
 void DesktopServerCommandLine::getSharedMemName(::string & shMemName)
 {
   if (!optionSpecified(SHARED_MEMORY_NAME_KEY, shMemName)) {
-    _ASSERT(FALSE);
+    _ASSERT(false);
 
     shMemName-= 0;
   }

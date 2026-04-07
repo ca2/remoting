@@ -27,7 +27,7 @@
 ////////#include "remoting/remoting_common/util/::string.h"
 //#include "remoting/remoting_common/win_system/RegistryKey.h"
 
-#include "SettingsManager.h"
+#include "remoting/remoting_common/config/SettingsManager.h"
 
 namespace remoting
 {

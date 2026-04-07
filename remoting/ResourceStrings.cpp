@@ -23,6 +23,7 @@
 //
 #include "framework.h"
 #include "ResourceStrings.h"
+#include "acme/subsystem/resource_loader.h"
 #include "remoting/remoting_common/util/ResourceLoader.h"
 
 namespace remoting_remoting
@@ -47,12 +48,18 @@ namespace remoting_remoting
         return false;
     }
 
-    ::string ResourceStrings::getStrRes(int strRes)
+    ::string ResourceStrings::getStrRes(int iRes)
     {
-        ResourceLoader *rLoader = ResourceLoader::getInstance();
+       auto presourceloader = main_subsystem()->resource_loader();
+
+
+        //ResourceLoader *rLoader = ResourceLoader::getInstance();
 
         ::string str;
-        rLoader->loadString(strRes, str);
+        //rLoader->loadString(strRes, str);
+
+       presourceloader->loadString(iRes, str);
+
         return str;
     }
 

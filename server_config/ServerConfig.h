@@ -37,7 +37,7 @@
 #include "acme/exception/io.h"
 #include "remoting/remoting_common/region/RectSerializer.h"
 
-#include <shlobj.h>
+// #include aaa_<shlobj.h>
 
 class ServerConfig : public lockable
 {

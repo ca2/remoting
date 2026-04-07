@@ -29,8 +29,8 @@
 #include "remoting/remoting_common/region/Region.h"
 #include "remoting/remoting_common/util/DemandTimer.h"
 //#include "log_writer/LogWriter.h"
-//#include <vector>
-//#include <list>
+//#include aaa_<vector>
+//#include aaa_<list>
 
 // This class provides the screen grabbing by an optimal way.
 // The class determines an optimal way by oneself dynamically.

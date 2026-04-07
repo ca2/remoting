@@ -30,7 +30,7 @@
 #include "remoting/remoting_common/win_system/VersionInfo.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 
-#include "apex/innate_subsystem/::remoting::Window.h"
+#include "apex/innate_subsystem/::innate_subsystem::Control.h"
 
 #include "remoting_node/BuildTime.h"
 
@@ -45,7 +45,7 @@ AboutDialog::~AboutDialog()
 
 void AboutDialog::onCloseButtonClick()
 {
-  kill(IDCANCEL);
+  kill(::innate_subsystem::IDCANCEL);
 }
 
 void AboutDialog::onOrderSupportButtonClock()
@@ -67,10 +67,10 @@ void AboutDialog::openUrl(const ::scoped_string & scopedstrUrl)
 
     scopedstrMessage.format(main_subsystem()->string_table()->getString(IDS_FAILED_TO_OPEN_URL_FORMAT), sysEx.get_message());
 
-    main_innate_subsystem()->message_box(m_ctrlThis.get_hwnd(),
+    main_subsystem()->message_box(m_ctrlThis.operating_system_window(),
       scopedstrMessage,
       main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
-      MB_OK|MB_ICONEXCLAMATION);
+      ::user::e_message_box_ok|::user::e_message_box_icon_exclamation);
   }
 }
 
@@ -84,10 +84,10 @@ bool AboutDialog::onInitDialog()
     VersionInfo productInfo(binaryPath);
     versionString= productInfo.getProductVersionString();
   } catch (SystemException &ex) {
-    main_innate_subsystem()->message_box(m_ctrlThis.get_hwnd(),
+    main_subsystem()->message_box(m_ctrlThis.operating_system_window(),
                ex.get_message(),
                main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
-               MB_OK | MB_ICONEXCLAMATION);
+               ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
   }
 
   // Format product version and build time for displaying on the dialog.
@@ -97,27 +97,27 @@ bool AboutDialog::onInitDialog()
                      BuildTime::DATE);
 
   // Show version info on the dialog.
-  ::remoting::Window versionLabel;
-  versionLabel.setWindow(GetDlgItem(m_ctrlThis.get_hwnd(), IDC_STATIC_VERSION));
+  ::innate_subsystem::Control versionLabel;
+  versionLabel.setWindow(GetDlgItem(m_ctrlThis.operating_system_window(), IDC_STATIC_VERSION));
   versionLabel.setText(versionText);
 
   // Show licensing info and/or special build info.
-  ::remoting::Window licensingLabel;
-  licensingLabel.setWindow(GetDlgItem(m_ctrlThis.get_hwnd(), IDC_STATIC_LICENSING));
+  ::innate_subsystem::Control licensingLabel;
+  licensingLabel.setWindow(GetDlgItem(m_ctrlThis.operating_system_window(), IDC_STATIC_LICENSING));
   licensingLabel.setText(main_subsystem()->string_table()->getString(IDS_LICENSING_INFO));
 
-  return FALSE;
+  return false;
 }
 
 bool AboutDialog::onNotify(unsigned int controlID, ::lparam data)
 {
-  return FALSE;
+  return false;
 }
 
 bool AboutDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
   switch (controlID) {
-  case IDCANCEL:
+  case ::innate_subsystem::IDCANCEL:
     onCloseButtonClick();
     break;
   case IDC_ORDER_SUPPORT_BUTTON:
@@ -127,10 +127,10 @@ bool AboutDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     onVisitSiteButtonClick();
     break;
   }
-  return FALSE;
+  return false;
 }
 
 bool AboutDialog::onDestroy()
 {
-  return FALSE;
+  return false;
 }

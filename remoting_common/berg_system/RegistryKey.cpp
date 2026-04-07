@@ -22,9 +22,9 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "RegistryKey.h"
-//#include <vector>
+//#include aaa_<vector>
 
 RegistryKey::RegistryKey(::subsystem::registry rootKey, const ::scoped_string & scopedstrEntry,
                          bool createIfNotExists, SECURITY_ATTRIBUTES *sa)

@@ -22,9 +22,9 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include <stdlib.h>
-#include <string.h>
-//#include <vector>
+// #include aaa_<stdlib.h>
+// #include aaa_<string.h>
+//#include aaa_<vector>
 
 #include "sockdefs.h"
 #include "SocketAddressIPv4.h"

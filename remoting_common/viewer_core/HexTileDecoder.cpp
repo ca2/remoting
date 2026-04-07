@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "HexTileDecoder.h"
 
-#include <algorithm>
+//#include aaa_<algorithm>
 
 HexTileDecoder::HexTileDecoder(::subsystem::LogWriter * plogwriter)
 : DecoderOfRectangle(logWriter)

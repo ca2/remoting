@@ -27,7 +27,7 @@
 //#include "remoting/remoting_common/util/::string.h"
 #include "remoting/remoting_common/util/DesCrypt.h"
 
-#include <algorithm>
+//#include aaa_<algorithm>
 
 void VncAuthentication::vncAuthenticate(DataInputStream * pinput,
                                         DataOutputStream *output,

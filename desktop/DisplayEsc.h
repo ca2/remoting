@@ -86,8 +86,8 @@ typedef enum
 
 // 1.0.9.0
 // mode-assert notifications to manifest PDEV limbo status
-	dmf_dfn_assert_on	= 64,	// DrvAssert(TRUE): PDEV reenabled
-	dmf_dfn_assert_off	= 65,	// DrvAssert(FALSE): PDEV disabled
+	dmf_dfn_assert_on	= 64,	// DrvAssert(true): PDEV reenabled
+	dmf_dfn_assert_off	= 65,	// DrvAssert(false): PDEV disabled
 
 } dmf_UpdEvent;
 
@@ -149,7 +149,7 @@ typedef	enum
 #define	dmf_sprb_STRICTSESSION_AFF	0x1fff
 
 // NON-STRICT SESSION AFFILIATION
-	dmf_sprb_pdev_detached			= 0x2000,	// DrvAssertMode: FALSE; transient problem, in general
+	dmf_sprb_pdev_detached			= 0x2000,	// DrvAssertMode: false; transient problem, in general
 
 //// NOTE: these flags are not part of the persistent state;
 //// these are only signaled for that commands;

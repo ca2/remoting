@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 
-//#include <map>
-//#include <vector>
+//#include aaa_<map>
+//#include aaa_<vector>
 
 //#include "remoting/remoting_common/thread/critical_section.h"
 //////#include "remoting/remoting_common/util/::string.h"

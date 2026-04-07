@@ -43,7 +43,7 @@ SocketIPv4Transport::~SocketIPv4Transport()
 Channel* SocketIPv4Transport::getIOStream()
 {
   if (m_socket->isBound()) {
-    _ASSERT(FALSE);
+    _ASSERT(false);
 
     return 0;
   }
@@ -54,7 +54,7 @@ Channel* SocketIPv4Transport::getIOStream()
 Transport *SocketIPv4Transport::accept()
 {
   if (!m_socket->isBound()) {
-    _ASSERT(FALSE);
+    _ASSERT(false);
 
     return 0;
   }

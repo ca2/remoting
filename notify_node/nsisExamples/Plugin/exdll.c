@@ -1,5 +1,5 @@
-#include <windows.h>
-#include <nsis/pluginapi.h> // nsis plugin
+// #include aaa_<windows.h>
+// #include aaa_<nsis/pluginapi.h> // nsis plugin
 
 HINSTANCE g_hInstance;
 HWND g_hwndParent;

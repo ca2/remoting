@@ -32,7 +32,7 @@
 #pragma onceINCLUDED__
 INCLUDED__
 
-#include <string.h>
+// #include aaa_<string.h>
 #include "remoting/remoting_common/util/inttypes.h"
 
 struct TightColorList {

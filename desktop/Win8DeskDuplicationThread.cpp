@@ -309,7 +309,7 @@ void Win8DeskDuplication::processCursor(const DXGI_OUTDUPL_FRAME_INFO *info, siz
     //
     DXGI_OUTDUPL_POINTER_POSITION pointerPos = info->PointerPosition;
 
-    bool newVisibility = pointerPos.Visible != FALSE;
+    bool newVisibility = pointerPos.Visible != false;
     bool visibleChanged = m_targetCurShape->getIsVisible() != newVisibility;
     if (visibleChanged) {
 	  m_plogwriter->debug(newVisibility ? "Cursor became visible") : _T("Cursor became not visible");

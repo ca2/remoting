@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "Process.h"
 #include "SystemException.h"
 
@@ -38,7 +38,7 @@ Process::Process(const ::file::path & path, const ::scoped_string & scopedstrArg
   setFilename(path);
   setArguments(scopedstrArgs);
 
-  m_hStopWait = CreateEvent(0, FALSE, FALSE, 0);
+  m_hStopWait = CreateEvent(0, false, false, 0);
 }
 
 Process::~Process()
@@ -116,7 +116,7 @@ void Process::waitForExit()
 {
   HANDLE handleArray[2] = { m_hProcess, m_hStopWait };
 
-  WaitForMultipleObjects(2, handleArray, FALSE, INFINITE);
+  WaitForMultipleObjects(2, handleArray, false, INFINITE);
 }
 
 void Process::stopWait()

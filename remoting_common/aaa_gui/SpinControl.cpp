@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "SpinControl.h"
-#include <CommCtrl.h>
+// #include aaa_<commctrl.h>
 #include "remoting/remoting_common/util/StringParser.h"
 
 SpinControl::SpinControl()
@@ -36,9 +36,9 @@ SpinControl::~SpinControl()
 {
 }
 
-void SpinControl::setBuddy(::remoting::Window *buddyControl)
+void SpinControl::setBuddy(::innate_subsystem::Control *buddyControl)
 {
-  SendMessage(m_hwnd, UDM_SETBUDDY, (::wparam)buddyControl->get_hwnd(), NULL);
+  SendMessage(m_hwnd, UDM_SETBUDDY, (::wparam)buddyControl->operating_system_window(), NULL);
   m_buddy = buddyControl;
 }
 
@@ -73,7 +73,7 @@ void SpinControl::autoAccelerationHandler(LPNMUPDOWN scopedstrMessage)
 
   // Get buddy textbox value
   ::string storage;
-  storage = m_buddy->get_text();
+  storage = m_buddy->getText();
   if (!StringParser::parseInt(storage, &currentValue)) {
     return;
   }

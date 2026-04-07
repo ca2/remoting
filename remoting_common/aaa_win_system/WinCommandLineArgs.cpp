@@ -22,11 +22,11 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "WinCommandLineArgs.h"
 #include "acme/subsystem/Exception.h"
 
-#include <shellapi.h>
+// #include aaa_<shellapi.h>
 
 
 WinCommandLineArgs::WinCommandLineArgs(const ::scoped_string & scopedstrCmdLineInWinFormat)

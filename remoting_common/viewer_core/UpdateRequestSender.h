@@ -6,7 +6,7 @@
 
 #include "remoting/remoting_common/thread/Thread.h"
 #include "remoting/remoting_common/rfb/FrameBuffer.h"
-//#include <log_writer/LogWriter.h>
+//// #include aaa_<log_writer/LogWriter.h>
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 
 class CLASS_DECL_REMOTING_COMMON UpdateRequestSender : public task

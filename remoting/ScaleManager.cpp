@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "ScaleManager.h"
 
 namespace remoting_remoting
@@ -258,7 +258,7 @@ namespace remoting_remoting
         prectangleWnd->offset(m_iCentX, m_iCentY);
     }
 
-    POINTS ScaleManager::transformDispToScr(int xPoint, int yPoint) const
+    ::int_point ScaleManager::transformDispToScr(int xPoint, int yPoint) const
     {
         xPoint -= m_iCentX;
         yPoint -= m_iCentY;
@@ -278,10 +278,10 @@ namespace remoting_remoting
         xPoint = xPoint * denomeratorScale / scale;
         yPoint = yPoint * denomeratorScale / scale;
 
-        POINTS pt;
-        pt.x = static_cast<SHORT>(xPoint + m_rcViewed.left);
-        pt.y = static_cast<SHORT>(yPoint + m_rcViewed.top);
+        ::int_point point;
+        point.x = static_cast<short>(xPoint + m_rcViewed.left);
+        point.y = static_cast<short>(yPoint + m_rcViewed.top);
 
-        return pt;
+        return point;
     }
 } // namespace remoting_remoting

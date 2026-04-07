@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 #include "UipiControl.h"
 //#include "Environment.h"
 #include "DynamicLibrary.h"
@@ -70,7 +70,7 @@ void UipiControl::allowMessage(unsigned int uMessage, HWND hwnd)
       }
       m_plogwriter->information("The ChangeWindowMessageFilter() function "
                 "successfully found.");
-      if (setFilter(uMessage, MSGFLT_ADD) != TRUE) {
+      if (setFilter(uMessage, MSGFLT_ADD) != true) {
         DWORD errCode = GetLastError();
         ::string errMess;
         errMess.formatf("Can't allow to receive the {} windows uMessage by "
@@ -83,7 +83,7 @@ void UipiControl::allowMessage(unsigned int uMessage, HWND hwnd)
       // FIXME: Can't to check for Windows7.
       m_plogwriter->information("The ChangeWindowMessageFilterEx() function "
                 "successfully found.");
-      if (setFilterEx(hwnd, uMessage, MSGFLT_ADD, 0) != TRUE) {
+      if (setFilterEx(hwnd, uMessage, MSGFLT_ADD, 0) != true) {
         DWORD errCode = GetLastError();
         ::string errMess;
         errMess.formatf("Can't allow to receive the {} windows uMessage by "

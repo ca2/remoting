@@ -38,7 +38,7 @@ public:
   @param parent - parent dialog, optional (can be null).
   @param isNewPassword - flag determinates caption of dialog.
   */
-  ChangePasswordDialog(::remoting::Window *parent, bool isNewPassword);
+  ChangePasswordDialog(::innate_subsystem::Control *parent, bool isNewPassword);
   virtual ~ChangePasswordDialog();
 
   /**
@@ -54,8 +54,8 @@ protected:
 
   virtual bool onInitDialog();
   virtual bool onCommand(unsigned int cID, unsigned int nID);
-  virtual bool onNotify(unsigned int controlID, ::lparam data) { return TRUE; }
-  virtual bool onDestroy() { return TRUE; }
+  virtual bool onNotify(unsigned int controlID, ::lparam data) { return true; }
+  virtual bool onDestroy() { return true; }
 
   //
   // Controls event handlers
