@@ -163,7 +163,7 @@
 //      // Changes enable state of this control
 //      //
 //
-//      virtual void enable_window(bool enabled);
+//      virtual void enableWindow(bool enabled);
 //
 //      //
 //      // Sets text associated with window
@@ -243,7 +243,7 @@
 //   //    // Changes enable state of this control
 //   //    //
 //   //
-//   //    virtual void enable_window(bool enabled);
+//   //    virtual void enableWindow(bool enabled);
 //   //
 //   //    //
 //   //    // Sets text associated with window

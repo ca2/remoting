@@ -89,7 +89,7 @@ int MsiProperties::getInt32(const ::scoped_string & scopedstrName)
   ::string strValue;
   getValue(name, &strValue);
   int retValue = 0;
-  if (!StringParser::parseInt(strValue, &retValue)) {
+  if (!main_subsystem()->string_parser()->parseInt(strValue, &retValue)) {
     ::string errMess;
     errMess.formatf("Can't convert the {} string value to int of the"
                    " {} property", strValue, name);

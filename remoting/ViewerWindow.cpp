@@ -51,7 +51,7 @@ namespace remoting_remoting
              conData->getHost()),
       m_application(application),
       m_plogwriter(LogWriter),
-      m_conConf(conConf),
+      m_pconnectionconfig(conConf),
       m_scale(100),
       m_isFullScr(false),
       m_ftDialog(0),
@@ -149,7 +149,7 @@ namespace remoting_remoting
 
     void ViewerWindow::enableUserElements()
     {
-        bool isEnable = !m_conConf->isViewOnly();
+        bool isEnable = !m_pconnectionconfig->isViewOnly();
 
         m_toolbar.enableButton(IDS_TB_ALT, isEnable);
         m_toolbar.enableButton(IDS_TB_CTRL, isEnable);
@@ -167,10 +167,10 @@ namespace remoting_remoting
             m_menu.checkedMenuItem(IDS_TB_CTRL, false);
         }
 
-        int scale = m_conConf->getScaleNumerator() * 100 / m_conConf->getScaleDenominator();
+        int scale = m_pconnectionconfig->getScaleNumerator() * 100 / m_pconnectionconfig->getScaleDenominator();
         m_toolbar.enableButton(IDS_TB_SCALEOUT, scale > m_standardScale[0]);
         m_toolbar.enableButton(IDS_TB_SCALEIN, scale < m_standardScale[m_standardScale.size() - 1]);
-        if (m_conConf->isFitWindowEnabled()) {
+        if (m_pconnectionconfig->isFitWindowEnabled()) {
             m_toolbar.checkButton(IDS_TB_SCALEAUTO, true);
             m_toolbar.enableButton(IDS_TB_SCALE100, true);
         } else {
@@ -186,23 +186,23 @@ namespace remoting_remoting
 
         bool bFileTransfer = m_fileTransfer && m_fileTransfer->isEnabled();
 
-        m_toolbar.enableButton(IDS_TB_TRANSFER, bFileTransfer && !m_conConf->isViewOnly());
-        unsigned int enableMenu = static_cast<unsigned int>(!(bFileTransfer && !m_conConf->isViewOnly()));
+        m_toolbar.enableButton(IDS_TB_TRANSFER, bFileTransfer && !m_pconnectionconfig->isViewOnly());
+        unsigned int enableMenu = static_cast<unsigned int>(!(bFileTransfer && !m_pconnectionconfig->isViewOnly()));
         m_menu.enableMenuItem(IDS_TB_TRANSFER, enableMenu);
 
-        m_viewerCore->allowCopyRect(m_conConf->isCopyRectAllowed());
-        m_viewerCore->setPreferredEncoding(m_conConf->getPreferredEncoding());
+        m_viewerCore->allowCopyRect(m_pconnectionconfig->isCopyRectAllowed());
+        m_viewerCore->setPreferredEncoding(m_pconnectionconfig->getPreferredEncoding());
 
-        m_viewerCore->ignoreCursorShapeUpdates(m_conConf->isIgnoringShapeUpdates());
-        m_viewerCore->enableCursorShapeUpdates(m_conConf->isRequestingShapeUpdates());
+        m_viewerCore->ignoreCursorShapeUpdates(m_pconnectionconfig->isIgnoringShapeUpdates());
+        m_viewerCore->enableCursorShapeUpdates(m_pconnectionconfig->isRequestingShapeUpdates());
 
         // set -1, if compression is disabled
-        m_viewerCore->setCompressionLevel(m_conConf->getCustomCompressionLevel());
+        m_viewerCore->setCompressionLevel(m_pconnectionconfig->getCustomCompressionLevel());
 
         // set -1, if jpeg-compression is disabled
-        m_viewerCore->setJpegQualityLevel(m_conConf->getJpegCompressionLevel());
+        m_viewerCore->setJpegQualityLevel(m_pconnectionconfig->getJpegCompressionLevel());
 
-        if (m_conConf->isUsing8BitColor()) {
+        if (m_pconnectionconfig->isUsing8BitColor()) {
             m_viewerCore->setPixelFormat(StandardPixelFormatFactory::create8bppPixelFormat());
         } else {
             m_viewerCore->setPixelFormat(StandardPixelFormatFactory::create32bppPixelFormat());
@@ -214,11 +214,11 @@ namespace remoting_remoting
     {
         int scale;
 
-        if (m_conConf->isFitWindowEnabled()) {
+        if (m_pconnectionconfig->isFitWindowEnabled()) {
             scale = -1;
         } else {
-            int iNum = m_conConf->getScaleNumerator();
-            int iDenom = m_conConf->getScaleDenominator();
+            int iNum = m_pconnectionconfig->getScaleNumerator();
+            int iDenom = m_pconnectionconfig->getScaleDenominator();
             scale = (iNum * 100) / iDenom;
         }
 
@@ -228,13 +228,13 @@ namespace remoting_remoting
             doSize();
         }
         if (m_isConnected) {
-            if (m_conConf->isFullscreenEnabled()) {
+            if (m_pconnectionconfig->isFullscreenEnabled()) {
                 doFullScr();
             } else {
                 doUnFullScr();
             }
         }
-        changeCursor(m_conConf->getLocalCursorShape());
+        changeCursor(m_pconnectionconfig->getLocalCursorShape());
         enableUserElements();
         viewerCoreSettings();
     }
@@ -243,19 +243,19 @@ namespace remoting_remoting
     {
         HCURSOR hcur = 0;
 
-        ResourceLoader *rLoader = ResourceLoader::getInstance();
+        auto presourceloader = main_subsystem()->resource_loader();
         switch (type) {
             case ConnectionConfig::DOT_CURSOR:
-                hcur = rLoader->loadCursor(IDI_CDOT);
+                hcur = presourceloader->loadCursor(IDI_CDOT);
                 break;
             case ConnectionConfig::SMALL_CURSOR:
-                hcur = rLoader->loadCursor(IDI_CSMALLDOT);
+                hcur = presourceloader->loadCursor(IDI_CSMALLDOT);
                 break;
             case ConnectionConfig::NO_CURSOR:
-                hcur = rLoader->loadCursor(IDI_CNOCURSOR);
+                hcur = presourceloader->loadCursor(IDI_CNOCURSOR);
                 break;
             case ConnectionConfig::NORMAL_CURSOR:
-                hcur = rLoader->loadStandardCursor(IDC_ARROW);
+                hcur = presourceloader->loadStandardCursor(IDC_ARROW);
                 break;
         }
         setClassCursor(hcur);
@@ -379,7 +379,7 @@ namespace remoting_remoting
 
     bool ViewerWindow::onKillFocus(::wparam wParam)
     {
-        if (!m_conConf->isViewOnly()) {
+        if (!m_pconnectionconfig->isViewOnly()) {
             m_toolbar.checkButton(IDS_TB_ALT, false);
             m_toolbar.checkButton(IDS_TB_CTRL, false);
         }
@@ -403,14 +403,14 @@ namespace remoting_remoting
         OptionsDialog dialog;
 
         dialog.setConnected();
-        dialog.setConnectionConfig(m_conConf);
+        dialog.setConnectionConfig(m_pconnectionconfig);
         // FIXME: Removed ::innate_subsystem::Control from this code and another
         //auto pcontrol = øcreate_new<::innate_subsystem::Control>();
         //pcontrol ->_setWindow(getHWnd());
         dialog.setParent(this);
 
         if (dialog.showModal() == 1) {
-            m_conConf->saveToStorage(&m_ccsm);
+            m_pconnectionconfig->saveToStorage(&m_ccsm);
             applySettings();
         }
     }
@@ -628,7 +628,7 @@ namespace remoting_remoting
                 }
 
                 sm.setApplicationName("options");
-                m_conConf->saveToStorage(&sm);
+                m_pconnectionconfig->saveToStorage(&sm);
             }
         } catch (...) {
             m_plogwriter->error("Error in save connection");
@@ -637,7 +637,7 @@ namespace remoting_remoting
 
     void ViewerWindow::commandScaleIn()
     {
-        if (m_conConf->isFitWindowEnabled()) {
+        if (m_pconnectionconfig->isFitWindowEnabled()) {
             commandScaleAuto();
         }
 
@@ -646,7 +646,7 @@ namespace remoting_remoting
             return;
         }
 
-        int scale = m_conConf->getScaleNumerator() * 100 / m_conConf->getScaleDenominator();
+        int scale = m_pconnectionconfig->getScaleNumerator() * 100 / m_pconnectionconfig->getScaleDenominator();
         size_t indexNewScale = 0;
         while (indexNewScale < m_standardScale.size() && m_standardScale[indexNewScale] <= scale + 5)
             indexNewScale++;
@@ -654,15 +654,15 @@ namespace remoting_remoting
         if (indexNewScale >= m_standardScale.size())
             indexNewScale = m_standardScale.size() - 1;
 
-        m_conConf->setScale(m_standardScale[indexNewScale], 100);
-        m_conConf->fitWindow(false);
-        m_conConf->saveToStorage(&m_ccsm);
+        m_pconnectionconfig->setScale(m_standardScale[indexNewScale], 100);
+        m_pconnectionconfig->fitWindow(false);
+        m_pconnectionconfig->saveToStorage(&m_ccsm);
         applySettings();
     }
 
     void ViewerWindow::commandScaleOut()
     {
-        if (m_conConf->isFitWindowEnabled()) {
+        if (m_pconnectionconfig->isFitWindowEnabled()) {
             commandScaleAuto();
         }
 
@@ -671,7 +671,7 @@ namespace remoting_remoting
             return;
         }
 
-        int scale = m_conConf->getScaleNumerator() * 100 / m_conConf->getScaleDenominator();
+        int scale = m_pconnectionconfig->getScaleNumerator() * 100 / m_pconnectionconfig->getScaleDenominator();
         size_t indexNewScale = m_standardScale.size();
         do {
             indexNewScale--;
@@ -680,18 +680,18 @@ namespace remoting_remoting
         if (indexNewScale > m_standardScale.size())
             indexNewScale = 0;
 
-        m_conConf->setScale(m_standardScale[indexNewScale], 100);
-        m_conConf->fitWindow(false);
-        m_conConf->saveToStorage(&m_ccsm);
+        m_pconnectionconfig->setScale(m_standardScale[indexNewScale], 100);
+        m_pconnectionconfig->fitWindow(false);
+        m_pconnectionconfig->saveToStorage(&m_ccsm);
         applySettings();
     }
 
     void ViewerWindow::commandScale100()
     {
         m_toolbar.checkButton(IDS_TB_SCALEAUTO, false);
-        m_conConf->setScale(1, 1);
-        m_conConf->fitWindow(false);
-        m_conConf->saveToStorage(&m_ccsm);
+        m_pconnectionconfig->setScale(1, 1);
+        m_pconnectionconfig->fitWindow(false);
+        m_pconnectionconfig->saveToStorage(&m_ccsm);
         applySettings();
     }
 
@@ -701,7 +701,7 @@ namespace remoting_remoting
         if (iState) {
             if (iState == TBSTATE_ENABLED) {
                 m_toolbar.checkButton(IDS_TB_SCALEAUTO, true);
-                m_conConf->fitWindow(true);
+                m_pconnectionconfig->fitWindow(true);
             } else {
                 m_toolbar.checkButton(IDS_TB_SCALEAUTO, false);
 
@@ -713,13 +713,13 @@ namespace remoting_remoting
                 ::int_rectangle screen = m_dsktWnd.getFrameBufferGeometry();
 
                 if (wndWidth * screen.height() <= wndHeight * screen.width()) {
-                    m_conConf->setScale(wndWidth, screen.width());
+                    m_pconnectionconfig->setScale(wndWidth, screen.width());
                 } else {
-                    m_conConf->setScale(wndHeight, screen.height());
+                    m_pconnectionconfig->setScale(wndHeight, screen.height());
                 }
-                m_conConf->fitWindow(false);
+                m_pconnectionconfig->fitWindow(false);
             }
-            m_conConf->saveToStorage(&m_ccsm);
+            m_pconnectionconfig->saveToStorage(&m_ccsm);
             applySettings();
         }
     }
@@ -901,8 +901,8 @@ namespace remoting_remoting
             return;
         }
 
-        m_conConf->enableFullscreen(true);
-        m_conConf->saveToStorage(&m_ccsm);
+        m_pconnectionconfig->enableFullscreen(true);
+        m_pconnectionconfig->saveToStorage(&m_ccsm);
 
         auto config = ::remoting::ViewerConfig::getInstance();
         m_bToolBar = m_toolbar.isVisible();
@@ -937,8 +937,8 @@ namespace remoting_remoting
             return;
         }
 
-        m_conConf->enableFullscreen(true);
-        m_conConf->saveToStorage(&m_ccsm);
+        m_pconnectionconfig->enableFullscreen(true);
+        m_pconnectionconfig->saveToStorage(&m_ccsm);
 
         //auto config = ::remoting::ViewerConfig::getInstance();
         //m_bToolBar = m_toolbar.isVisible();
@@ -971,8 +971,8 @@ namespace remoting_remoting
             return;
         }
 
-        m_conConf->enableFullscreen(false);
-        m_conConf->saveToStorage(&m_ccsm);
+        m_pconnectionconfig->enableFullscreen(false);
+        m_pconnectionconfig->saveToStorage(&m_ccsm);
 
         m_menu.checkedMenuItem(IDS_TB_FULLSCREEN, false);
         m_menu.checkedMenuItem(IDS_TB_TOOLBAR, m_bToolBar);
@@ -983,7 +983,7 @@ namespace remoting_remoting
             m_toolbar.hide();
         }
 
-        unsigned int isEnable = static_cast<unsigned int>(m_conConf->isViewOnly());
+        unsigned int isEnable = static_cast<unsigned int>(m_pconnectionconfig->isViewOnly());
         m_menu.enableMenuItem(IDS_TB_TOOLBAR, isEnable);
 
         // Restore position, style and exstyle of windowed window.
@@ -1015,8 +1015,8 @@ namespace remoting_remoting
             return;
         }
 
-        m_conConf->enableFullscreen(false);
-        m_conConf->saveToStorage(&m_ccsm);
+        m_pconnectionconfig->enableFullscreen(false);
+        m_pconnectionconfig->saveToStorage(&m_ccsm);
 
         //m_menu.checkedMenuItem(IDS_TB_FULLSCREEN, false);
         //m_menu.checkedMenuItem(IDS_TB_TOOLBAR, m_bToolBar);
@@ -1028,7 +1028,7 @@ namespace remoting_remoting
         //    m_toolbar.hide();
         //}
 
-        //unsigned int isEnable = static_cast<unsigned int>(m_conConf->isViewOnly());
+        //unsigned int isEnable = static_cast<unsigned int>(m_pconnectionconfig->isViewOnly());
         //m_menu.enableMenuItem(IDS_TB_TOOLBAR, isEnable);
 
         //// Restore position, style and exstyle of windowed window.
@@ -1057,14 +1057,14 @@ namespace remoting_remoting
 
     bool ViewerWindow::onNotify(int idCtrl, LPNMHDR pnmh)
     {
-        ResourceLoader *rLoader = ResourceLoader::getInstance();
+        auto presourceloader = main_subsystem()->resource_loader();
         LPTOOLTIPTEXT toolTipText = reinterpret_cast<LPTOOLTIPTEXT>(pnmh);
         if (toolTipText->hdr.code != TTN_NEEDTEXT) {
             return false;
         }
         int resId = static_cast<int>(toolTipText->hdr.idFrom);
         ::string strToolTip;
-        rLoader->loadString(resId, strToolTip);
+        presourceloader->loadString(resId, strToolTip);
         m_wstrToolTip = strToolTip;
         toolTipText->lpszText = const_cast<TCHAR *>(m_wstrToolTip.c_str());
         return true;
@@ -1161,7 +1161,7 @@ namespace remoting_remoting
                     m_requiresReconnect = true;
                     ConnectionData *connectionData = new ConnectionData(*m_conData);
                     connectionData->resetPassword();
-                    ConnectionConfig *connectionConfig = new ConnectionConfig(*m_conConf);
+                    ConnectionConfig *connectionConfig = new ConnectionConfig(*m_pconnectionconfig);
                     m_application->postMessage(remoting_impact::WM_USER_RECONNECT,
                                                (::wparam)connectionData,
                                                (::lparam)connectionConfig);
@@ -1203,7 +1203,7 @@ namespace remoting_remoting
 
     void ViewerWindow::onBell()
     {
-        if (m_conConf->isDeiconifyOnRemoteBellEnabled()) {
+        if (m_pconnectionconfig->isDeiconifyOnRemoteBellEnabled()) {
             ShowWindow(getHWnd(), SW_RESTORE);
             setForegroundWindow();
         }
@@ -1388,7 +1388,7 @@ namespace remoting_remoting
             }
 
             // This is done for keyboard hooks to work.
-            // If m_conConf->isFullscreenEnabled() is true,
+            // If m_pconnectionconfig->isFullscreenEnabled() is true,
             // hooks don't work at the first start of the viewer.
             if (m_hooksEnabledFirstTime && m_isFullScr) {
                 try {

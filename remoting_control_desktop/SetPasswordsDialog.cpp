@@ -215,10 +215,10 @@ void SetPasswordsDialog::readRadio()
 
 void SetPasswordsDialog::updateEditControls()
 {
-  m_rfbPassEdit1.enable_window(m_useRfbAuth);
-  m_rfbPassEdit2.enable_window(m_useRfbAuth);
-  m_admPassEdit1.enable_window(m_protectControlInterface);
-  m_admPassEdit2.enable_window(m_protectControlInterface);
+  m_rfbPassEdit1.enableWindow(m_useRfbAuth);
+  m_rfbPassEdit2.enableWindow(m_useRfbAuth);
+  m_admPassEdit1.enableWindow(m_protectControlInterface);
+  m_admPassEdit2.enableWindow(m_protectControlInterface);
 }
 
 bool SetPasswordsDialog::onClose()

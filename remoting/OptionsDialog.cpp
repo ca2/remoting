@@ -82,13 +82,13 @@ namespace remoting_remoting
             }
         }
         if (controlID == IDC_CUSEENC) {
-            if (notificationID == CBN_SELCHANGE) {
+            if (notificationID == ::user::e_notification_combo_box_selection_change) {
                 onPreferredEncodingSelectionChange();
                 return true;
             }
         }
         if (controlID == IDC_CSCALE) {
-            if (notificationID == CBN_KILLFOCUS) {
+            if (notificationID == ::user::e_notification_combo_box_lost_focus) {
                 onScaleKillFocus();
                 return true;
             }
@@ -98,35 +98,35 @@ namespace remoting_remoting
 
     bool OptionsDialog::onInitDialog()
     {
-        subclassControlById(m_useEnc, IDC_CUSEENC);
-        subclassControlById(m_eightBit, IDC_CEIGHTBIT);
-        subclassControlById(m_compLvl, IDC_CCOMPRLVL);
-        subclassControlById(m_tcompLvl, IDC_SCOMP);
-        subclassControlById(m_quality, IDC_SQUALITY);
-        subclassControlById(m_jpeg, IDC_CJPEG);
-        subclassControlById(m_tjpeg, IDC_SJPEG);
-        subclassControlById(m_quality2, IDC_SQUALITY2);
-        subclassControlById(m_copyrect, IDC_CCOPYRECT);
-        subclassControlById(m_viewonly, IDC_CVIEWONLY);
-        subclassControlById(m_disclip, IDC_CDISCLIP);
-        subclassControlById(m_sharedses, IDC_CSHAREDSES);
-        subclassControlById(m_scale, IDC_CSCALE);
-        subclassControlById(m_fullscr, IDC_CFULLSCR);
-        subclassControlById(m_deiconfy, IDC_CDEICONFY);
-        subclassControlById(m_swapmouse, IDC_CSWAPMOUSE);
-        subclassControlById(m_track, IDC_RTRACK);
-        subclassControlById(m_cursor, IDC_RCURSOR);
-        subclassControlById(m_ncursor, IDC_RNCURSOR);
-        subclassControlById(m_dot, IDC_RDOT);
-        subclassControlById(m_smalldot, IDC_RSMALLDOT);
-        subclassControlById(m_arrow, IDC_RARROW);
-        subclassControlById(m_nlocal, IDC_RNLOCAL);
+        subclassControlById(m_pcomboboxUseEnc, IDC_CUSEENC);
+        subclassControlById(m_pcheckboxEightBit, IDC_CEIGHTBIT);
+        subclassControlById(m_pcheckboxCompressionLevel, IDC_CCOMPRLVL);
+        subclassControlById(m_ptrackbarCompressionLevel, IDC_SCOMP);
+        subclassControlById(m_pcontrolQuality, IDC_SQUALITY);
+        subclassControlById(m_pcheckboxJpeg, IDC_CJPEG);
+        subclassControlById(m_ptrackbarJpeg, IDC_SJPEG);
+        subclassControlById(m_pcontrolQuality2, IDC_SQUALITY2);
+        subclassControlById(m_pcheckboxCopyrect, IDC_CCOPYRECT);
+        subclassControlById(m_pcheckboxViewonly, IDC_CVIEWONLY);
+        subclassControlById(m_pcheckboxClipboard, IDC_CDISCLIP);
+        subclassControlById(m_pcheckboxSharedses, IDC_CSHAREDSES);
+        subclassControlById(m_pcheckboxScale, IDC_CSCALE);
+        subclassControlById(m_pcheckboxFullscr, IDC_CFULLSCR);
+        subclassControlById(m_pcheckboxDeiconfy, IDC_CDEICONFY);
+        subclassControlById(m_pcheckboxSwapmouse, IDC_CSWAPMOUSE);
+        subclassControlById(m_pcheckboxTrack, IDC_RTRACK);
+        subclassControlById(m_pcheckboxCursor, IDC_RCURSOR);
+        subclassControlById(m_pcheckboxNcursor, IDC_RNCURSOR);
+        subclassControlById(m_pcheckboxDot, IDC_RDOT);
+        subclassControlById(m_pcheckboxSmalldot, IDC_RSMALLDOT);
+        subclassControlById(m_pcheckboxArrow, IDC_RARROW);
+        subclassControlById(m_pcheckboxNlocal, IDC_RNLOCAL);
 
-        m_useEnc.addItem("Raw", reinterpret_cast<void *>(EncodingDefs::RAW));
-        m_useEnc.addItem("Hextile", reinterpret_cast<void *>(EncodingDefs::HEXTILE));
-        m_useEnc.addItem("Tight", reinterpret_cast<void *>(EncodingDefs::TIGHT));
-        m_useEnc.addItem("RRE", reinterpret_cast<void *>(EncodingDefs::RRE));
-        m_useEnc.addItem("ZRLE", reinterpret_cast<void *>(EncodingDefs::ZRLE));
+        m_pcomboboxUseEnc->addItem("Raw", reinterpret_cast<void *>(EncodingDefs::RAW));
+        m_pcomboboxUseEnc->addItem("Hextile", reinterpret_cast<void *>(EncodingDefs::HEXTILE));
+        m_pcomboboxUseEnc->addItem("Tight", reinterpret_cast<void *>(EncodingDefs::TIGHT));
+        m_pcomboboxUseEnc->addItem("RRE", reinterpret_cast<void *>(EncodingDefs::RRE));
+        m_pcomboboxUseEnc->addItem("ZRLE", reinterpret_cast<void *>(EncodingDefs::ZRLE));
 
 
         // FIXME: replaced literals to named constants
@@ -134,11 +134,11 @@ namespace remoting_remoting
                                        "100", "125","150", "Auto"};
         for (auto & str :scaleComboText)
         {
-            m_scale.addItem(str);
+            m_pcheckboxScale->addItem(str);
         }
 
-        m_tjpeg.setRange(0, 9);
-        m_tcompLvl.setRange(0, 9);
+        m_ptrackbarJpeg->setRange(0, 9);
+        m_ptrackbarCompressionLevel->setRange(0, 9);
         updateControlValues();
         return false;
     }
@@ -146,36 +146,36 @@ namespace remoting_remoting
     void OptionsDialog::updateControlValues()
     {
         // Preferred encoding
-        for (int i = 0; i < m_useEnc.getItemsCount(); i++) {
-            int enc = reinterpret_cast<int>(m_useEnc.getItemData(i));
+        for (int i = 0; i < m_pcomboboxUseEnc->getItemsCount(); i++) {
+            int enc = reinterpret_cast<int>(m_pcomboboxUseEnc->getItemData(i));
             if (enc == m_pconnectionconfig->getPreferredEncoding()) {
-                m_useEnc.setSelectedItem(i);
+                m_pcomboboxUseEnc->setSelectedItem(i);
                 break;
             } // if found
 
             // set default value, if preferred encoding not in ::list_base
             if (enc == EncodingDefs::HEXTILE)
-                m_useEnc.setSelectedItem(i);
+                m_pcomboboxUseEnc->setSelectedItem(i);
         } // for i
 
-        m_eightBit.check(m_pconnectionconfig->isUsing8BitColor());
+        m_pcheckboxEightBit->setChecked(m_pconnectionconfig->isUsing8BitColor());
 
-        m_compLvl.check(m_pconnectionconfig->isCustomCompressionEnabled());
-        m_jpeg.check(m_pconnectionconfig->isJpegCompressionEnabled());
+        m_pcheckboxCompressionLevel->setChecked(m_pconnectionconfig->isCustomCompressionEnabled());
+        m_pcheckboxJpeg->setChecked(m_pconnectionconfig->isJpegCompressionEnabled());
 
-        m_copyrect.check(m_pconnectionconfig->isCopyRectAllowed());
-        m_viewonly.check(m_pconnectionconfig->isViewOnly());
-        m_disclip.check(!m_pconnectionconfig->isClipboardEnabled());
-        m_fullscr.check(m_pconnectionconfig->isFullscreenEnabled());
-        m_deiconfy.check(m_pconnectionconfig->isDeiconifyOnRemoteBellEnabled());
-        m_swapmouse.check(m_pconnectionconfig->isMouseSwapEnabled());
+        m_pcheckboxCopyrect->setChecked(m_pconnectionconfig->isCopyRectAllowed());
+        m_pcheckboxViewonly->setChecked(m_pconnectionconfig->isViewOnly());
+        m_pcheckboxClipboard->setChecked(!m_pconnectionconfig->isClipboardEnabled());
+        m_pcheckboxFullscr->setChecked(m_pconnectionconfig->isFullscreenEnabled());
+        m_pcheckboxDeiconfy->setChecked(m_pconnectionconfig->isDeiconifyOnRemoteBellEnabled());
+        m_pcheckboxSwapmouse->setChecked(m_pconnectionconfig->isMouseSwapEnabled());
 
-        m_sharedses.check(m_pconnectionconfig->getSharedFlag());
-        m_sharedses.enable_window(!m_connected);
+        m_pcheckboxSharedses->setChecked(m_pconnectionconfig->getSharedFlag());
+        m_pcheckboxSharedses->enableWindow(!m_connected);
 
         if (m_pconnectionconfig->isFitWindowEnabled()) {
             // FIXME: replace literal to named constant
-            m_scale.setSelectedItem(7);
+            m_pcheckboxScale->setSelectedItem(7);
         } else {
             int n = m_pconnectionconfig->getScaleNumerator();
             int d = m_pconnectionconfig->getScaleDenominator();
@@ -185,15 +185,15 @@ namespace remoting_remoting
             ::string text;
             text.format("{}", percent);
 
-            m_scale.setText(text);
+            m_pcheckboxScale->setText(text);
         }
 
         {
             bool enableCursorUpdate = m_pconnectionconfig->isRequestingShapeUpdates();
             bool ignoreCursorUpdate = m_pconnectionconfig->isIgnoringShapeUpdates();
-            m_track.check(enableCursorUpdate && !ignoreCursorUpdate);
-            m_cursor.check(!enableCursorUpdate && ignoreCursorUpdate);
-            m_ncursor.check(enableCursorUpdate && ignoreCursorUpdate);
+            m_pcheckboxTrack->setChecked(enableCursorUpdate && !ignoreCursorUpdate);
+            m_pcheckboxCursor->setChecked(!enableCursorUpdate && ignoreCursorUpdate);
+            m_pcheckboxNcursor->setChecked(enableCursorUpdate && ignoreCursorUpdate);
         }
 
         ::string labelText;
@@ -202,9 +202,9 @@ namespace remoting_remoting
             int level = DEFAULT_COMPRESSION_LEVEL;
             if (m_pconnectionconfig->isCustomCompressionEnabled())
                 level = m_pconnectionconfig->getCustomCompressionLevel();
-            m_tcompLvl.setPos(level);
+            m_ptrackbarCompressionLevel->setPos(level);
             labelText.format("{}", level);
-            m_quality.setText(labelText);
+            m_pcontrolQuality->setText(labelText);
         }
 
         {
@@ -212,23 +212,23 @@ namespace remoting_remoting
             int level = DEFAULT_JPEG_COMPRESSION_LEVEL;
             if (m_pconnectionconfig->isJpegCompressionEnabled())
                 level = m_pconnectionconfig->getJpegCompressionLevel();
-            m_tjpeg.setPos(level);
+            m_ptrackbarJpeg->setPos(level);
             labelText.format("{}", level);
-            m_quality2.setText(labelText);
+            m_pcontrolQuality2->setText(labelText);
         }
 
         switch (m_pconnectionconfig->getLocalCursorShape()) {
-            case ConnectionConfig::SMALL_CURSOR:
-                m_smalldot.check(true);
+           case ::remoting::ConnectionConfig::SMALL_CURSOR:
+                m_pcheckboxSmalldot->setChecked(true);
                 break;
-            case ConnectionConfig::NORMAL_CURSOR:
-                m_arrow.check(true);
+            case ::remoting::ConnectionConfig::NORMAL_CURSOR:
+                m_pcheckboxArrow->setChecked(true);
                 break;
-            case ConnectionConfig::NO_CURSOR:
-                m_nlocal.check(true);
+            case ::remoting::ConnectionConfig::NO_CURSOR:
+                m_pcheckboxNlocal->setChecked(true);
                 break;
             default:
-                m_dot.check(true);
+                m_pcheckboxDot->setChecked(true);
                 break;
         }
 
@@ -246,68 +246,68 @@ namespace remoting_remoting
 
     void OptionsDialog::onViewOnlyClick()
     {
-        if (m_viewonly.isChecked()) {
-            m_swapmouse.enable_window(false);
+        if (m_pcheckboxViewonly->isChecked()) {
+            m_pcheckboxSwapmouse->enableWindow(false);
         } else {
-            m_swapmouse.enable_window(true);
+            m_pcheckboxSwapmouse->enableWindow(true);
         }
     }
 
     void OptionsDialog::on8BitColorClick()
     {
-        if (!m_eightBit.isChecked()) {
-            if (m_jpeg.isChecked()) {
+        if (!m_pcheckboxEightBit->isChecked()) {
+            if (m_pcheckboxJpeg->isChecked()) {
                 enableJpegCompression(true);
             }
-            m_jpeg.enable_window(true);
+            m_pcheckboxJpeg->enableWindow(true);
         } else {
-            m_jpeg.enable_window(false);
+            m_pcheckboxJpeg->enableWindow(false);
             enableJpegCompression(false);
         }
     }
 
     void OptionsDialog::enableJpegCompression(bool enable)
     {
-        m_tjpeg.enable_window(enable);
-        m_quality2.enable_window(enable);
-        EnableWindow(GetDlgItem(operating_system_window(), IDC_SPOOR), enable);
-        EnableWindow(GetDlgItem(operating_system_window(), IDC_SBEST2), enable);
-        EnableWindow(GetDlgItem(operating_system_window(), IDC_STQUALITY2), enable);
+        m_ptrackbarJpeg->enableWindow(enable);
+        m_pcontrolQuality2->enableWindow(enable);
+       dialog_item (IDC_SPOOR)->enableWindow(enable);
+        dialog_item(IDC_SBEST2)->enableWindow(enable);
+        dialog_item(IDC_STQUALITY2)->enableWindow(enable);
     }
     void OptionsDialog::onAllowCustomCompressionClick()
     {
-        enableCustomCompression(m_compLvl.isChecked());
+        enableCustomCompression(m_pcheckboxCompressionLevel->isChecked());
     }
 
     void OptionsDialog::enableCustomCompression(bool enable)
     {
-        m_tcompLvl.enable_window(enable);
-        m_quality.enable_window(enable);
-        EnableWindow(GetDlgItem(operating_system_window(), IDC_SBEST), enable);
-        EnableWindow(GetDlgItem(operating_system_window(), IDC_SFAST), enable);
-        EnableWindow(GetDlgItem(operating_system_window(), IDC_STQUALITY), enable);
+        m_ptrackbarCompressionLevel->enableWindow(enable);
+        m_pcontrolQuality->enableWindow(enable);
+        dialog_item(IDC_SBEST)->enableWindow(enable);
+        dialog_item(IDC_SFAST)->enableWindow(enable);
+        dialog_item(IDC_STQUALITY)->enableWindow(enable);
     }
 
     void OptionsDialog::onAllowJpegCompressionClick()
     {
-        enableJpegCompression(m_jpeg.isChecked());
+        enableJpegCompression(m_pcheckboxJpeg->isChecked());
     }
 
     void OptionsDialog::onPreferredEncodingSelectionChange()
     {
-        int index = m_useEnc.getSelectedItemIndex();
+        int index = m_pcomboboxUseEnc->getSelectedItemIndex();
         if (index < 0) {
             return ;
         }
-        int encoding = reinterpret_cast<int>(m_useEnc.getItemData(index));
+        int encoding = reinterpret_cast<int>(m_pcomboboxUseEnc->getItemData(index));
         switch (encoding) {
             case EncodingDefs::TIGHT:
-                enableCustomCompression(m_compLvl.isChecked());
-                m_compLvl.enable_window(true);
+                enableCustomCompression(m_pcheckboxCompressionLevel->isChecked());
+                m_pcheckboxCompressionLevel->enableWindow(true);
                 break;
             default:
                 enableCustomCompression(false);
-                m_compLvl.enable_window(false);
+                m_pcheckboxCompressionLevel->enableWindow(false);
                 break;
         } // switch
     } // void
@@ -315,25 +315,25 @@ namespace remoting_remoting
     void OptionsDialog::onCustomCompressionLevelScroll()
     {
         ::string labelText;
-        labelText.format("{}", m_tcompLvl.getPos());
-        m_quality.setText(labelText);
+        labelText.format("{}", m_ptrackbarCompressionLevel->getPos());
+        m_pcontrolQuality->setText(labelText);
     }
 
     void OptionsDialog::onJpegCompressionLevelScroll()
     {
         ::string labelText;
-        labelText.format("{}", m_tjpeg.getPos());
-        m_quality2.setText(labelText);
+        labelText.format("{}", m_ptrackbarJpeg->getPos());
+        m_pcontrolQuality2->setText(labelText);
     }
 
     void OptionsDialog::onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam)
     {
         switch (uMsg) {
-            case WM_HSCROLL:
-                if (HWND(lParam) == m_tcompLvl.operating_system_window()) {
+           case ::user::e_message_scroll_x:
+                if (m_ptrackbarCompressionLevel->operating_system_window() == lParam) {
                     onCustomCompressionLevelScroll();
                 }
-                if (HWND(lParam) == m_tjpeg.operating_system_window()) {
+                if (m_ptrackbarJpeg->operating_system_window() == lParam) {
                     onJpegCompressionLevelScroll();
                 }
                 break;
@@ -343,11 +343,11 @@ namespace remoting_remoting
     void OptionsDialog::onScaleKillFocus()
     {
         //::string scaleText;
-        auto scaleText = m_scale.getText();
+        auto scaleText = m_pcheckboxScale->getText();
 
         int scale;
 
-        if (!StringParser::parseInt(scaleText, &scale)) {
+        if (!main_subsystem()->string_parser()->parseInt(scaleText, &scale)) {
             if (scaleText == "Auto") {
                 return ;
             }
@@ -361,7 +361,7 @@ namespace remoting_remoting
         }
 
         scaleText.format("{}", scale);
-        m_scale.setText(scaleText);
+        m_pcheckboxScale->setText(scaleText);
     }
 
     bool OptionsDialog::isInputValid()
@@ -369,13 +369,13 @@ namespace remoting_remoting
         int scaleInt;
         //::string scaleText;
 
-        auto scaleText = m_scale.getText();
+        auto scaleText = m_pcheckboxScale->getText();
 
         if (scaleText == "Auto") {
             return true;
         }
 
-        if (!StringParser::parseInt(scaleText, &scaleInt)) {
+        if (!main_subsystem()->string_parser()->parseInt(scaleText, &scaleInt)) {
             ::string error;
             error.formatf(main_subsystem()->string_table()->getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC).c_str(),
                          main_subsystem()->string_table()->getString(IDS_OPTIONS_SCALE).c_str());
@@ -411,73 +411,73 @@ namespace remoting_remoting
     void OptionsDialog::apply()
     {
         // Preferred encoding
-        int pesii = m_useEnc.getSelectedItemIndex();
+        int pesii = m_pcomboboxUseEnc->getSelectedItemIndex();
         if (pesii >= 0) {
-            int preferredEncoding = reinterpret_cast<int>(m_useEnc.getItemData(pesii));
+            int preferredEncoding = reinterpret_cast<int>(m_pcomboboxUseEnc->getItemData(pesii));
             m_pconnectionconfig->setPreferredEncoding(preferredEncoding);
         } else {
             _ASSERT(pesii >= 0);
             m_pconnectionconfig->setPreferredEncoding(EncodingDefs::TIGHT);
         }
 
-        if (m_compLvl.isChecked()) {
-            int level = static_cast<int>(m_tcompLvl.getPos());
+        if (m_pcheckboxCompressionLevel->isChecked()) {
+            int level = static_cast<int>(m_ptrackbarCompressionLevel->getPos());
             m_pconnectionconfig->setCustomCompressionLevel(level);
         } else {
             m_pconnectionconfig->disableCustomCompression();
         }
 
-        if (m_jpeg.isChecked()) {
-            int level = static_cast<int>(m_tjpeg.getPos());
+        if (m_pcheckboxJpeg->isChecked()) {
+            int level = static_cast<int>(m_ptrackbarJpeg->getPos());
             m_pconnectionconfig->setJpegCompressionLevel(level);
         } else {
             m_pconnectionconfig->disableJpegCompression();
         }
 
-        m_pconnectionconfig->use8BitColor(m_eightBit.isChecked());
-        m_pconnectionconfig->allowCopyRect(m_copyrect.isChecked());
-        m_pconnectionconfig->setViewOnly(m_viewonly.isChecked());
-        m_pconnectionconfig->enableClipboard(!m_disclip.isChecked());
-        m_pconnectionconfig->enableFullscreen(m_fullscr.isChecked());
-        m_pconnectionconfig->deiconifyOnRemoteBell(m_deiconfy.isChecked());
-        m_pconnectionconfig->swapMouse(m_swapmouse.isChecked());
-        m_pconnectionconfig->setSharedFlag(m_sharedses.isChecked());
+        m_pconnectionconfig->use8BitColor(m_pcheckboxEightBit->isChecked());
+        m_pconnectionconfig->allowCopyRect(m_pcheckboxCopyrect->isChecked());
+        m_pconnectionconfig->setViewOnly(m_pcheckboxViewonly->isChecked());
+        m_pconnectionconfig->enableClipboard(m_pcheckboxClipboard->isChecked());
+        m_pconnectionconfig->enableFullscreen(m_pcheckboxFullscr->isChecked());
+        m_pconnectionconfig->deiconifyOnRemoteBell(m_pcheckboxDeiconfy->isChecked());
+        m_pconnectionconfig->swapMouse(m_pcheckboxSwapmouse->isChecked());
+        m_pconnectionconfig->setSharedFlag(m_pcheckboxSharedses->isChecked());
 
         ::string scaleText;
 
-        scaleText = m_scale.getText();
+        scaleText = m_pcheckboxScale->getText();
 
         int scaleInt = 0;
 
-        if (StringParser::parseInt(scaleText, &scaleInt)) {
+        if (main_subsystem()->string_parser()->parseInt(scaleText, &scaleInt)) {
             m_pconnectionconfig->setScale(scaleInt, 100);
             m_pconnectionconfig->fitWindow(false);
         } else {
             m_pconnectionconfig->fitWindow(true);
         }
 
-        if (m_track.isChecked()) {
+        if (m_pcheckboxTrack->isChecked()) {
             m_pconnectionconfig->requestShapeUpdates(true);
             m_pconnectionconfig->ignoreShapeUpdates(false);
         }
 
-        if (m_cursor.isChecked()) {
+        if (m_pcheckboxCursor->isChecked()) {
             m_pconnectionconfig->requestShapeUpdates(false);
             m_pconnectionconfig->ignoreShapeUpdates(true);
         }
 
-        if (m_ncursor.isChecked()) {
+        if (m_pcheckboxNcursor->isChecked()) {
             m_pconnectionconfig->requestShapeUpdates(true);
             m_pconnectionconfig->ignoreShapeUpdates(true);
         }
 
-        int localCursorShape = ConnectionConfig::DOT_CURSOR;
-        if (m_smalldot.isChecked()) {
-            localCursorShape = ConnectionConfig::SMALL_CURSOR;
-        } else if (m_arrow.isChecked()) {
-            localCursorShape = ConnectionConfig::NORMAL_CURSOR;
-        } else if (m_nlocal.isChecked()) {
-            localCursorShape = ConnectionConfig::NO_CURSOR;
+        int localCursorShape = ::remoting::ConnectionConfig::DOT_CURSOR;
+        if (m_pcheckboxSmalldot->isChecked()) {
+            localCursorShape = ::remoting::ConnectionConfig::SMALL_CURSOR;
+        } else if (m_pcheckboxArrow->isChecked()) {
+            localCursorShape = ::remoting::ConnectionConfig::NORMAL_CURSOR;
+        } else if (m_pcheckboxNlocal->isChecked()) {
+            localCursorShape = ::remoting::ConnectionConfig::NO_CURSOR;
         }
 
         m_pconnectionconfig->setLocalCursorShape(localCursorShape);

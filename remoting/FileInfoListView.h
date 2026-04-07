@@ -36,8 +36,12 @@ namespace remoting_remoting
     class FileInfoListView : public ::innate_subsystem::ListView
     {
     public:
+
         FileInfoListView();
         ~FileInfoListView() override;
+
+
+       virtual bool we_want_WM_KEYDOWN_when_enter_is_pressed() const override;
 
         virtual void setWindow(const ::operating_system::window & operatingsystemwindow);
 
@@ -72,7 +76,9 @@ namespace remoting_remoting
         //
         // This function compare two item with file-contex (file name, date, size).
         //
-        //static int CALLBACK compareItem(::lparam lParam1, ::lparam lParam2, ::lparam lParamSort);
+        //static int  s_compareItem(::lparam lParam1, ::lparam lParam2, ::lparam lParamSort);
+
+        virtual int  compareItem(::lparam lParam1, ::lparam lParam2, ::lparam lParamSort);
 
         //
         // This function return:
@@ -80,7 +86,7 @@ namespace remoting_remoting
         //   0, if first == second
         //   1, if first > second
         //
-        //static int compareUInt64(unsigned long long first, unsigned long long second);
+        virtual int compareUInt64(unsigned long long first, unsigned long long second);
 
         ::pointer < ::innate_subsystem::ImageListInterface > m_pimagelistSmall;
 

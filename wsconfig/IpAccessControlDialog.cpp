@@ -173,7 +173,7 @@ void IpAccessControlDialog::apply()
   m_queryTimeout.getText(&qtStringStorage);
 
   int timeout = 0;
-  StringParser::parseInt(qtStringStorage, &timeout);
+  main_subsystem()->string_parser()->parseInt(qtStringStorage, &timeout);
 
   critical_section_lock al(m_config);
 
@@ -428,36 +428,36 @@ void IpAccessControlDialog::onQueryTimeoutUpdate()
 void IpAccessControlDialog::updateButtonsState()
 {
   /*if (m_onlyLoopbackConnections.isChecked()) {
-    m_list.enable_window(false);
-    m_addButton.enable_window(false);
-    m_editButton.enable_window(false);
-    m_removeButton.enable_window(false);
-    m_moveDownButton.enable_window(false);
-    m_moveUpButton.enable_window(false);
+    m_list.enableWindow(false);
+    m_addButton.enableWindow(false);
+    m_editButton.enableWindow(false);
+    m_removeButton.enableWindow(false);
+    m_moveDownButton.enableWindow(false);
+    m_moveUpButton.enableWindow(false);
     return ;
   } else {
-    m_list.enable_window(true);
-    m_addButton.enable_window(true);
+    m_list.enableWindow(true);
+    m_addButton.enableWindow(true);
   }*/
 
   int si = m_list.getSelectedIndex();
   if (si == -1) {
-    m_editButton.enable_window(false);
-    m_removeButton.enable_window(false);
-    m_moveUpButton.enable_window(false);
-    m_moveDownButton.enable_window(false);
+    m_editButton.enableWindow(false);
+    m_removeButton.enableWindow(false);
+    m_moveUpButton.enableWindow(false);
+    m_moveDownButton.enableWindow(false);
   } else {
-    m_editButton.enable_window(true);
-    m_removeButton.enable_window(true);
+    m_editButton.enableWindow(true);
+    m_removeButton.enableWindow(true);
     if (si > 0) {
-      m_moveUpButton.enable_window(true);
+      m_moveUpButton.enableWindow(true);
     } else {
-      m_moveUpButton.enable_window(false);
+      m_moveUpButton.enableWindow(false);
     }
     if (si < m_list.getCount() - 1) {
-      m_moveDownButton.enable_window(true);
+      m_moveDownButton.enableWindow(true);
     } else {
-      m_moveDownButton.enable_window(false);
+      m_moveDownButton.enableWindow(false);
     }
   }
 }
@@ -465,9 +465,9 @@ void IpAccessControlDialog::updateButtonsState()
 void IpAccessControlDialog::updateCheckBoxesState()
 {
   if (m_allowLoopbackConnections.isChecked()) {
-    m_onlyLoopbackConnections.enable_window(true);
+    m_onlyLoopbackConnections.enableWindow(true);
   } else {
-    m_onlyLoopbackConnections.enable_window(false);
+    m_onlyLoopbackConnections.enableWindow(false);
     m_onlyLoopbackConnections.check(false);
   }
 }

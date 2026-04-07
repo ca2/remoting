@@ -30,11 +30,15 @@
 //// #include aaa_<stdio.h>
 #include "resource.h"
 #include "acme/prototype/datetime/datetime.h"
+#include "acme/subsystem/resource_loader.h"
+#include "apex/innate_subsystem/subsystem.h"
+#include "apex/innate_subsystem/SystemMetrics.h"
+
 
 namespace remoting_remoting
 {
     FileInfoListView::FileInfoListView()
-    //: m_imagelistSmall(0)
+    //: m_pimagelistSmall(0)
     {
         // By default, file ::list_base is sorted by file name.
         sort(0);
@@ -42,14 +46,22 @@ namespace remoting_remoting
 
     FileInfoListView::~FileInfoListView()
     {
-        // if (m_imagelistSmall != 0) {
-        //     ImageList_Destroy(m_imagelistSmall);
+        // if (m_pimagelistSmall != 0) {
+        //     ImageList_Destroy(m_pimagelistSmall);
         // }
     }
 
     //
     // Saves hwnd and automaticly adds columns to ::list_base view
     //
+
+
+       bool FileInfoListView::we_want_WM_KEYDOWN_when_enter_is_pressed() const
+    {
+
+       return true;
+
+    }
 
     void FileInfoListView::setWindow(const ::operating_system::window & operatingsystemwindow)
     {
@@ -64,7 +76,7 @@ namespace remoting_remoting
 
         loadImages();
 
-        //ListView_SetImageList(m_hwnd, m_imagelistSmall, LVSIL_SMALL);
+        //ListView_SetImageList(m_hwnd, m_pimagelistSmall, LVSIL_SMALL);
 
         subclassWindow();
 
@@ -156,10 +168,10 @@ namespace remoting_remoting
 
     void FileInfoListView::loadImages()
     {
-        if (m_imagelistSmall != NULL) {
-            // ImageList_Destroy(m_imagelistSmall);
+        if (m_pimagelistSmall != NULL) {
+            // ImageList_Destroy(m_pimagelistSmall);
 
-           m_imagelistSmall.destroy_image_list();
+           m_pimagelistSmall->destroyImageList();
         }
 
 
@@ -167,34 +179,44 @@ namespace remoting_remoting
        //                                      GetSystemMetrics(SM_CYSMICON),
        //                                      ILC_MASK, 1, 1);
 
-        m_imagelistSmall.create_image_list(
-           GetSystemMetrics(SM_CXSMICON),
-           GetSystemMetrics(SM_CYSMICON),
-           image_list::e_create_flag_mask)
+       auto psystemmetrics = main_innate_subsystem()->metrics();
 
-        HICON icon;
+       auto sizeSmallIconInPixels = psystemmetrics->get_small_icon_size_in_pixels();
 
-        ResourceLoader *rLoader = ResourceLoader::getInstance();
+      m_pimagelistSmall->createImageList(sizeSmallIconInPixels, ::innate_subsystem::image_list::e_create_mask);
 
-        icon = rLoader->loadIcon(MAKEINTRESOURCE(IDI_FILEUP));
-        _ASSERT(icon != NULL);
-        ImageList_AddIcon(m_imagelistSmall, icon);
-        DestroyIcon(icon);
+        //HICON icon;
 
-        icon = rLoader->loadIcon(MAKEINTRESOURCE(IDI_FOLDER_ICON));
-        _ASSERT(icon != NULL);
-        ImageList_AddIcon(m_imagelistSmall, icon);
-        DestroyIcon(icon);
+        auto presourceloader = main_subsystem()->resource_loader();
 
-        icon = rLoader->loadIcon(MAKEINTRESOURCE(IDI_FILE_ICON));
-        _ASSERT(icon != NULL);
-        ImageList_AddIcon(m_imagelistSmall, icon);
-        DestroyIcon(icon);
+        auto picon = presourceloader->loadIconByIntResource(IDI_FILEUP);
+        _ASSERT(picon != NULL);
+        m_pimagelistSmall->addIcon(picon);
+        //DestroyIcon(icon);
+
+        picon = presourceloader->loadIconByIntResource(IDI_FOLDER_ICON);
+        _ASSERT(picon != NULL);
+        m_pimagelistSmall->addIcon( picon);
+        //DestroyIcon(icon);
+
+        picon = presourceloader->loadIconByIntResource(IDI_FILE_ICON);
+        _ASSERT(picon != NULL);
+        m_pimagelistSmall->addIcon(picon);
+//        DestroyIcon(icon);
     }
 
     void FileInfoListView::sort(int columnIndex)
     {
-        ListView::sort(columnIndex, compareItem);
+        ListView::sort(columnIndex, [this](::lparam lparam1, ::lparam lparam2)
+        {
+
+           ::lparam lParamSort = 0;
+
+           int iCompare = compareItem(lparam1, lparam2, lParamSort);
+
+           return iCompare;
+
+        });
     }
 
     int FileInfoListView::compareUInt64(unsigned long long first, unsigned long long second)
@@ -208,22 +230,39 @@ namespace remoting_remoting
         return 0;
     }
 
+   // int  FileInfoListView::s_compareItem(::lparam lParam1, ::lparam lParam2, ::lparam lParamSort)
+   //  {
+   //
+   //     auto pcompare = (compare_t *) lParamSort.m_lparam;
+   //
+   //     int iCompare= pcompare->m_pfileinfolistview->compareItem(lParam1, lParam2, pcompare);
+   //
+   //     return iCompare;
+   //
+   //  }
+   //
     int FileInfoListView::compareItem(::lparam lParam1,
                                        ::lparam lParam2,
                                        ::lparam lParamSort)
     {
-        // check ascending order
-        bool sortAscending = lParamSort > 0;
 
-        ::remoting::ftp::FileInfo *firstItem = reinterpret_cast<::remoting::ftp::FileInfo *>(lParam1);
-        ::remoting::ftp::FileInfo *secondItem = reinterpret_cast<::remoting::ftp::FileInfo *>(lParam2);
+//       auto pcompare = (compare_t*) pCompare;
+
+  //     auto lParamSort = pcompare->m_lparamSort;
+        // check ascending order
+        bool sortAscending = lParamSort < 0;
+
+        ::remoting::ftp::FileInfo *firstItem = (::remoting::ftp::FileInfo *)(lParam1.m_lparam);
+        ::remoting::ftp::FileInfo *secondItem = (::remoting::ftp::FileInfo *)(lParam2.m_lparam);
 
         // Fake directory ".." should be into top ::list_base.
-        if (wcscmp(::wstring(firstItem->getFileName()), L"..") == 0) {
+        if (firstItem->getFileName() == "..")
+         {
             return -1;
         }
 
-        if (wcscmp(::wstring(secondItem->getFileName()), L"..") == 0) {
+        if (secondItem->getFileName() == L"..")
+           {
             return 1;
         }
 
@@ -237,11 +276,12 @@ namespace remoting_remoting
 
         // change lParam1 and lParam2 with each other if order is descending
         if (sortAscending) {
-            firstItem = reinterpret_cast<::remoting::ftp::FileInfo *>(lParam1);
-            secondItem = reinterpret_cast<::remoting::ftp::FileInfo *>(lParam2);
+           firstItem = (::remoting::ftp::FileInfo *)(lParam1.m_lparam);
+           secondItem = (::remoting::ftp::FileInfo *)(lParam2.m_lparam);
         } else {
-            firstItem = reinterpret_cast<::remoting::ftp::FileInfo *>(lParam2);
-            secondItem = reinterpret_cast<::remoting::ftp::FileInfo *>(lParam1);
+           firstItem = (::remoting::ftp::FileInfo *)(lParam1.m_lparam);
+           secondItem = (::remoting::ftp::FileInfo *)(lParam2.m_lparam);
+
         }
 
         if (lParamSort < 0) {
@@ -255,7 +295,7 @@ namespace remoting_remoting
         switch (lParamSort) {
             // It's column "FileName".
             case 0:
-                return _tcsicmp(::wstring(firstItem->getFileName()), wstring(secondItem->getFileName()));
+                return _wcsicmp(::wstring(firstItem->getFileName()), wstring(secondItem->getFileName()));
 
                 // It's column "FileSize".
             case 1:
@@ -288,21 +328,10 @@ namespace remoting_remoting
         }
     }
 
-    bool FileInfoListView::window_procedure(LRESULT & lresult, unsigned int uMsg, ::wparam wparam, ::lparam lparam)
+    bool FileInfoListView::window_procedure(::lresult & lresult, unsigned int uMsg, ::wparam wparam, ::lparam lparam)
     {
         //FileInfoListView *_this = reinterpret_cast<FileInfoListView *>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
 
-        switch (uMsg) {
-            case WM_GETDLGCODE:
-                lresult= CallWindowProc(m_defWindowProc, m_hwnd, uMsg, wparam.m_number, lparam.m_lparam);
-                // We want WM_KEYDOWN scopedstrMessage when enter is pressed
-                if (lparam.m_lparam &&
-                    ((MSG *)lparam.m_lparam)->message == WM_KEYDOWN &&
-                    ((MSG *)lparam.m_lparam)->wParam == VK_RETURN) {
-                    lresult = DLGC_WANTMESSAGE;
-                    }
-                return true;
-        } // switch
 
         return false;
         //return CallWindowProc(m_defWindowProc, hwnd, uMsg, wParam, lParam);

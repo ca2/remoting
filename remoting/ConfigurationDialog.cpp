@@ -78,9 +78,9 @@ namespace remoting_remoting
         ::string text;
         int logLevel;
         text = m_verbLvl.getText();
-        StringParser::parseInt(text, &logLevel);
+        main_subsystem()->string_parser()->parseInt(text, &logLevel);
         if (logLevel != 0) {
-            m_logging.enable_window(true);
+            m_logging.enableWindow(true);
 
             // If log-file is exist, then enable button "Locate...", else disable him.
             //::string logDir;
@@ -89,13 +89,13 @@ namespace remoting_remoting
 
             auto  logFile=file_item(logFileName);
             if (logFile->exists()) {
-                m_openLogDir.enable_window(true);
+                m_openLogDir.enableWindow(true);
             } else {
-                m_openLogDir.enable_window(false);
+                m_openLogDir.enableWindow(false);
             }
         } else {
-            m_logging.enable_window(false);
-            m_openLogDir.enable_window(false);
+            m_logging.enableWindow(false);
+            m_openLogDir.enableWindow(false);
         }
     }
     void ConfigurationDialog::onOpenFolderButtonClick()
@@ -215,16 +215,16 @@ namespace remoting_remoting
         int intVal;
 
         text = m_reverseConn.getText();
-        StringParser::parseInt(text, &intVal);
+        main_subsystem()->string_parser()->parseInt(text, &intVal);
         config->setListenPort(intVal);
 
         text = m_verbLvl.getText();
-        StringParser::parseInt(text, &intVal);
+        main_subsystem()->string_parser()->parseInt(text, &intVal);
         config->setLogLevel((enum_trace_level)intVal);
 
         int oldLimit = config->getHistoryLimit();
         text=m_numberConn.getText();
-        StringParser::parseInt(text, &intVal);
+        main_subsystem()->string_parser()->parseInt(text, &intVal);
         config->setHistoryLimit(intVal);
 
         if (config->getHistoryLimit() < oldLimit) {

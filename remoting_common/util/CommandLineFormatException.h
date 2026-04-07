@@ -27,7 +27,7 @@
 
 #include "acme/subsystem/Exception.h"
 
-class CLASS_DECL_REMOTING_COMMON CommandLineFormatException : public ::remoting::Exception
+class CLASS_DECL_REMOTING_COMMON CommandLineFormatException : public ::subsystem::Exception
 {
 public:
   CommandLineFormatException(const ::scoped_string & scopedstrMessage = "Invalid command line format.");

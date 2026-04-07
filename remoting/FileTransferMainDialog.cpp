@@ -264,7 +264,7 @@ namespace remoting_remoting
             m_ftCore->terminateCurrentOperation();
             // Disable "Cancel" button while waiting for a moment
             // when operation will finishe execution.
-            m_cancelButton.enable_window(false);
+            m_cancelButton.enableWindow(false);
         }
     }
 
@@ -716,8 +716,8 @@ namespace remoting_remoting
 
             bool enabled = m_remoteFileListView.getSelectedItemsCount() > 0;
 
-            m_renameRemoteButton.enable_window(enabled && m_ftCore->getSupportedOps().isRenameSupported());
-            m_removeRemoteButton.enable_window(enabled && m_ftCore->getSupportedOps().isRemoveSupported());
+            m_renameRemoteButton.enableWindow(enabled && m_ftCore->getSupportedOps().isRenameSupported());
+            m_removeRemoteButton.enableWindow(enabled && m_ftCore->getSupportedOps().isRemoveSupported());
         }
     }
 
@@ -726,8 +726,8 @@ namespace remoting_remoting
         if (m_ftCore->isNothingState()) {
             bool enabled = m_localFileListView.getSelectedItemsCount() > 0;
 
-            m_renameLocalButton.enable_window(enabled);
-            m_removeLocalButton.enable_window(enabled);
+            m_renameLocalButton.enableWindow(enabled);
+            m_removeLocalButton.enableWindow(enabled);
         }
     }
 
@@ -739,17 +739,17 @@ namespace remoting_remoting
 
     void FileTransferMainDialog::enableControls(bool enabled)
     {
-        m_mkDirRemoteButton.enable_window(enabled && m_ftCore->getSupportedOps().isMkDirSupported());
+        m_mkDirRemoteButton.enableWindow(enabled && m_ftCore->getSupportedOps().isMkDirSupported());
 
         if (m_remoteFileListView.getSelectedItemsCount() > 0 && enabled) {
-            m_renameRemoteButton.enable_window(true && m_ftCore->getSupportedOps().isRenameSupported());
-            m_removeRemoteButton.enable_window(true && m_ftCore->getSupportedOps().isRemoveSupported());
+            m_renameRemoteButton.enableWindow(true && m_ftCore->getSupportedOps().isRenameSupported());
+            m_removeRemoteButton.enableWindow(true && m_ftCore->getSupportedOps().isRemoveSupported());
         } else {
-            m_renameRemoteButton.enable_window(enabled && m_ftCore->getSupportedOps().isRenameSupported());
-            m_removeRemoteButton.enable_window(enabled && m_ftCore->getSupportedOps().isRemoveSupported());
+            m_renameRemoteButton.enableWindow(enabled && m_ftCore->getSupportedOps().isRenameSupported());
+            m_removeRemoteButton.enableWindow(enabled && m_ftCore->getSupportedOps().isRemoveSupported());
         }
 
-        m_refreshRemoteButton.enable_window(enabled);
+        m_refreshRemoteButton.enableWindow(enabled);
 
         if (enabled) {
             //::string curLocalPath;
@@ -757,29 +757,29 @@ namespace remoting_remoting
             auto curLocalPath = getPathToCurrentLocalFolder();
 
             if (!curLocalPath.is_empty()) {
-                m_mkDirLocalButton.enable_window(true);
+                m_mkDirLocalButton.enableWindow(true);
             }
         } else {
-            m_mkDirLocalButton.enable_window(enabled);
+            m_mkDirLocalButton.enableWindow(enabled);
         }
 
         if (m_localFileListView.getSelectedItemsCount() > 0 && enabled) {
-            m_renameLocalButton.enable_window(true);
-            m_removeLocalButton.enable_window(true);
+            m_renameLocalButton.enableWindow(true);
+            m_removeLocalButton.enableWindow(true);
         } else {
-            m_renameLocalButton.enable_window(enabled);
-            m_removeLocalButton.enable_window(enabled);
+            m_renameLocalButton.enableWindow(enabled);
+            m_removeLocalButton.enableWindow(enabled);
         }
 
-        m_refreshLocalButton.enable_window(enabled);
+        m_refreshLocalButton.enableWindow(enabled);
 
-        m_uploadButton.enable_window(enabled && m_ftCore->getSupportedOps().isUploadSupported());
-        m_downloadButton.enable_window(enabled && m_ftCore->getSupportedOps().isDownloadSupported());
+        m_uploadButton.enableWindow(enabled && m_ftCore->getSupportedOps().isUploadSupported());
+        m_downloadButton.enableWindow(enabled && m_ftCore->getSupportedOps().isDownloadSupported());
 
-        m_localFileListView.enable_window(enabled);
-        m_remoteFileListView.enable_window(enabled);
+        m_localFileListView.enableWindow(enabled);
+        m_remoteFileListView.enableWindow(enabled);
 
-        m_cancelButton.enable_window(!enabled);
+        m_cancelButton.enableWindow(!enabled);
     }
 
     void FileTransferMainDialog::initControls()
@@ -854,7 +854,7 @@ namespace remoting_remoting
             // Set label text
             m_localCurFolderTextBox.setText(pathToFile);
             // Enable or disable mkdir button depending on isRoot flag
-            m_mkDirLocalButton.enable_window(!isRoot);
+            m_mkDirLocalButton.enableWindow(!isRoot);
 
         } catch (...) {
             ::string scopedstrMessage;

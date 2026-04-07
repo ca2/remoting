@@ -29,7 +29,7 @@
 #include "acme/subsystem/Exception.h"
 //#include "Environment.h"
 
-DynamicLibrary* PipeServer::m_kernel32Library = 0;
+DynamicLibrary* PipeServer::m_pdynamiclibraryKernel32 = 0;
 pGetNamedPipeClientProcessId PipeServer::m_GetNamedPipeClientProcessId = 0;
 volatile bool PipeServer::m_initialized = false;
 
@@ -37,7 +37,7 @@ PipeServer::PipeServer(const ::scoped_string & scopedstrName, unsigned int buffe
                        SecurityAttributes *secAttr,
                        DWORD milliseconds)
 : m_milliseconds(milliseconds),
-  m_secAttr(secAttr),
+  m_psecurityattributes(secAttr),
   m_serverPipe(INVALID_HANDLE_VALUE),
   m_bufferSize(bufferSize)
 {
@@ -68,8 +68,8 @@ void PipeServer::createServerPipe()
                                  m_bufferSize,             // output buffer size
                                  m_bufferSize,             // input buffer size
                                  0,                        // client time-out
-                                 m_secAttr != 0 ?          // security attributes
-                                 m_secAttr->getSecurityAttributes() : 0
+                                 m_psecurityattributes != 0 ?          // security attributes
+                                 m_psecurityattributes->getSecurityAttributes() : 0
                                  );
   if (m_serverPipe == INVALID_HANDLE_VALUE) {
     ::string errMess;
@@ -164,8 +164,8 @@ void PipeServer::initialize()
     return;
   }
   try {
-    m_kernel32Library = new DynamicLibrary("Kernel32.dll");
-    m_GetNamedPipeClientProcessId = (pGetNamedPipeClientProcessId)m_kernel32Library->getProcAddress("GetNamedPipeClientProcessId");
+    m_pdynamiclibraryKernel32 = new DynamicLibrary("Kernel32.dll");
+    m_GetNamedPipeClientProcessId = (pGetNamedPipeClientProcessId)m_pdynamiclibraryKernel32->getProcAddress("GetNamedPipeClientProcessId");
   }
   catch (...) {
     return;

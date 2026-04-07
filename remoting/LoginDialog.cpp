@@ -51,7 +51,7 @@ namespace remoting_remoting
         SetForegroundWindow(operating_system_window());
         m_server.setFocus();
         if (m_isListening) {
-            m_listening.enable_window(false);
+            m_listening.enableWindow(false);
         }
         return true;
     }
@@ -62,9 +62,9 @@ namespace remoting_remoting
         int iSelected = m_server.getSelectedItemIndex();
         if (iSelected == -1) {
             str = m_server.getText();
-            m_ok.enable_window(!str.is_empty());
+            m_ok.enableWindow(!str.is_empty());
         } else {
-            m_ok.enable_window(true);
+            m_ok.enableWindow(true);
         }
     }
 
@@ -160,9 +160,9 @@ namespace remoting_remoting
     {
         m_isListening = isListening;
         if (isListening) {
-            m_listening.enable_window(false);
+            m_listening.enableWindow(false);
         } else {
-            m_listening.enable_window(true);
+            m_listening.enableWindow(true);
         }
     }
 
@@ -172,7 +172,7 @@ namespace remoting_remoting
                                 ".listen");
         m_connectionConfig.loadFromStorage(&ccsm);
 
-        m_listening.enable_window(false);
+        m_listening.enableWindow(false);
         m_viewer->startListening(::remoting::ViewerConfig::getInstance()->getListenPort());
     }
 

@@ -71,7 +71,7 @@ namespace remoting_remoting
                                  ::remoting::ViewerConfig *config,
                                  bool *isListening)
     : m_conData(conData),
-      m_conConf(conConf),
+      m_pconnectionconfig(conConf),
       m_config(config),
       m_isListening(isListening)
     {
@@ -240,7 +240,7 @@ namespace remoting_remoting
         }
 
         sm.setApplicationName("options");
-        m_conConf->loadFromStorage(&sm);
+        m_pconnectionconfig->loadFromStorage(&sm);
     }
 
     void ViewerCmdLine::parsePassword()
@@ -267,7 +267,7 @@ namespace remoting_remoting
             if (m_options[ENCODING] == ZRLE) {
                 iEncoding = EncodingDefs::ZRLE;
             }
-            m_conConf->setPreferredEncoding(iEncoding);
+            m_pconnectionconfig->setPreferredEncoding(iEncoding);
         }
     }
 
@@ -285,21 +285,21 @@ namespace remoting_remoting
             if (m_options[MOUSE_LOCAL] == NORMAL) {
                 localCursorShape = ConnectionConfig::NORMAL_CURSOR;
             }
-            m_conConf->setLocalCursorShape(localCursorShape);
+            m_pconnectionconfig->setLocalCursorShape(localCursorShape);
         }
     }
 
     void ViewerCmdLine::parseMouseCursor()
     {
         if (isPresent(MOUSE_CURSOR)) {
-            m_conConf->requestShapeUpdates(false);
-            m_conConf->ignoreShapeUpdates(false);
+            m_pconnectionconfig->requestShapeUpdates(false);
+            m_pconnectionconfig->ignoreShapeUpdates(false);
             if (m_options[MOUSE_CURSOR] == NO) {
-                m_conConf->requestShapeUpdates(true);
-                m_conConf->ignoreShapeUpdates(true);
+                m_pconnectionconfig->requestShapeUpdates(true);
+                m_pconnectionconfig->ignoreShapeUpdates(true);
             } else {
                 if (m_options[MOUSE_CURSOR] == LOCAL) {
-                    m_conConf->requestShapeUpdates(true);
+                    m_pconnectionconfig->requestShapeUpdates(true);
                 }
             }
         }
@@ -309,7 +309,7 @@ namespace remoting_remoting
     {
         if (isPresent(SCALE)) {
             if (m_options[SCALE] == AUTO) {
-                m_conConf->fitWindow(true);
+                m_pconnectionconfig->fitWindow(true);
             } else {
                 int scale = atoi(m_options[SCALE]);
 
@@ -319,8 +319,8 @@ namespace remoting_remoting
                 if (scale > 400) {
                     scale = 400;
                 }
-                m_conConf->setScale(scale, 100);
-                m_conConf->fitWindow(false);
+                m_pconnectionconfig->setScale(scale, 100);
+                m_pconnectionconfig->fitWindow(false);
             }
         }
     }
@@ -333,7 +333,7 @@ namespace remoting_remoting
             if (m_options[FULL_SCREEN] == YES) {
                 isFullScreen = true;
             }
-            m_conConf->enableFullscreen(isFullScreen);
+            m_pconnectionconfig->enableFullscreen(isFullScreen);
         }
     }
 
@@ -357,7 +357,7 @@ namespace remoting_remoting
             if (m_options[MOUSE_SWAP] == YES) {
                 isMouseSwap = true;
             }
-            m_conConf->swapMouse(isMouseSwap);
+            m_pconnectionconfig->swapMouse(isMouseSwap);
         }
     }
 
@@ -369,7 +369,7 @@ namespace remoting_remoting
             if (m_options[USE_CLIPBOARD] == YES) {
                 isUseClipboard = true;
             }
-            m_conConf->enableClipboard(isUseClipboard);
+            m_pconnectionconfig->enableClipboard(isUseClipboard);
         }
     }
 
@@ -393,7 +393,7 @@ namespace remoting_remoting
             if (m_options[COPY_RECT] == YES) {
                 isCopyRect = true;
             }
-            m_conConf->allowCopyRect(isCopyRect);
+            m_pconnectionconfig->allowCopyRect(isCopyRect);
         }
     }
 
@@ -405,7 +405,7 @@ namespace remoting_remoting
             if (m_options[VIEW_ONLY] == ViewerCmdLine::YES) {
                 isViewOnly = true;
             }
-            m_conConf->setViewOnly(isViewOnly);
+            m_pconnectionconfig->setViewOnly(isViewOnly);
         }
     }
 
@@ -413,7 +413,7 @@ namespace remoting_remoting
     {
         if (isPresent(JPEG_IMAGE_QUALITY)) {
             int iJpegQuality = atoi(m_options[JPEG_IMAGE_QUALITY]);
-            m_conConf->setJpegCompressionLevel(iJpegQuality);
+            m_pconnectionconfig->setJpegCompressionLevel(iJpegQuality);
         }
     }
 
@@ -421,7 +421,7 @@ namespace remoting_remoting
     {
         if (isPresent(COMPRESSION_LEVEL)) {
             int iCompLvl = atoi(m_options[COMPRESSION_LEVEL]);
-            m_conConf->setCustomCompressionLevel(iCompLvl);
+            m_pconnectionconfig->setCustomCompressionLevel(iCompLvl);
         }
     }
 

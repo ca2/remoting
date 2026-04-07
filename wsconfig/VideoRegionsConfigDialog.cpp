@@ -183,7 +183,7 @@ void VideoRegionsConfigDialog::apply()
   m_videoRecognitionInterval.getText(&vriss);
 
   int interval;
-  StringParser::parseInt(vriss, &interval);
+  main_subsystem()->string_parser()->parseInt(vriss, &interval);
   m_config->setVideoRecognitionInterval((unsigned int)interval);
 }
 

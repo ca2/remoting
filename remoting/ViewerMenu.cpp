@@ -38,8 +38,8 @@ namespace remoting_remoting
     void ViewerMenu::menuItem(int id)
     {
         ::string helpString;
-        ResourceLoader *rLoader = ResourceLoader::getInstance();
-        rLoader->loadString(id, helpString);
+        auto presourceloader = main_subsystem()->resource_loader();
+        presourceloader->loadString(id, helpString);
         insertMenuItem(m_startIndex, helpString, id);
         m_startIndex++;
     }

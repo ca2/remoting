@@ -145,7 +145,7 @@ namespace remoting_remoting
         ::innate_subsystem::Control m_control;
 
         ConnectionConfigSM m_ccsm;
-        ConnectionConfig *m_conConf;
+        ConnectionConfig *m_pconnectionconfig;
         WindowsApplication *m_application;
         RemoteViewerCore *m_viewerCore;
         ::remoting::ftp::FileTransferCapability *m_fileTransfer;

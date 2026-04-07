@@ -95,14 +95,14 @@ private:
   static volatile bool m_initialized;
 
 private:
-  static DynamicLibrary* m_kernel32Library;
+  static DynamicLibrary* m_pdynamiclibraryKernel32;
   static pGetNamedPipeClientProcessId m_GetNamedPipeClientProcessId;
 
 private:
   ::string m_pipeName;
   WindowsEvent m_winEvent;
   DWORD m_milliseconds;
-  SecurityAttributes *m_secAttr;
+  SecurityAttributes *m_psecurityattributes;
   HANDLE m_serverPipe;
   unsigned int m_bufferSize;
 };

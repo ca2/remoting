@@ -58,7 +58,7 @@ int HookLoaderApplication::processMessages()
   // m_commandLine - is a target window hwnd by 64-bit text number.
   unsigned long long targetWinValue = 0;
   HWND targetWinHwnd = 0;
-  if (!StringParser::parseUInt64(m_commandLine,
+  if (!main_subsystem()->string_parser()->parseUInt64(m_commandLine,
                                  &targetWinValue)) {
     throw ::remoting::Exception("HookLoaderApplication failed: Can't"
                     " parse the command line to unsigned long long");

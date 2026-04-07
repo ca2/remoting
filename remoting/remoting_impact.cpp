@@ -46,8 +46,8 @@ remoting_impact::remoting_impact(::particle * pparticle, HINSTANCE appInstance, 
   m_configurationDialog.setListenerOfUpdate(this);
 
   // working with accelerator
-  ResourceLoader *rLoader = ResourceLoader::getInstance();
-  m_hAccelTable = rLoader->loadAccelerator(IDR_ACCEL_APP_KEYS);
+  auto presourceloader = main_subsystem()->resource_loader();
+  m_hAccelTable = presourceloader->loadAccelerator(IDR_ACCEL_APP_KEYS);
 
   m_trayIcon = new ControlTrayIcon(this);
   m_loginDialog = new LoginDialog(this);

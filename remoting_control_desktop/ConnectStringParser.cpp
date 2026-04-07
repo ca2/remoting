@@ -34,7 +34,7 @@ ConnectStringParser::~ConnectStringParser()
 {
 }
 
-bool ConnectStringParser::parse(const ::scoped_string & scopedstrConnectString,
+bool Connectmain_subsystem()->string_parser()->parse(const ::scoped_string & scopedstrConnectString,
                                 ::string & connectHost,
                                 unsigned short *connectPort)
 {
@@ -54,7 +54,7 @@ bool ConnectStringParser::parse(const ::scoped_string & scopedstrConnectString,
 
   int port = 0;
 
-  if (!StringParser::parseInt(splitted[1], &port)) {
+  if (!main_subsystem()->string_parser()->parseInt(splitted[1], &port)) {
     return false;
   }
 

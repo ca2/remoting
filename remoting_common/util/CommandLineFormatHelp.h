@@ -27,7 +27,7 @@
 
 #include "acme/subsystem/Exception.h"
 
-class CLASS_DECL_REMOTING_COMMON CommandLineFormatHelp : public ::remoting::Exception
+class CLASS_DECL_REMOTING_COMMON CommandLineFormatHelp : public ::subsystem::Exception
 {
 public:
   CommandLineFormatHelp(const ::scoped_string & scopedstrMessage = "Need help dialog");

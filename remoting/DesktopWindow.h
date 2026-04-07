@@ -180,7 +180,7 @@ namespace remoting_remoting
         bool m_ctrlDown;
         bool m_altDown;
         RemoteViewerCore *m_viewerCore;
-        ConnectionConfig *m_conConf;
+        ConnectionConfig *m_pconnectionconfig;
         bool m_isBackgroundDirty;
 
     public:

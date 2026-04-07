@@ -47,7 +47,7 @@ PasswordControl::~PasswordControl()
 }
 
 
-void PasswordControl::enable_window(bool enabled)
+void PasswordControl::enableWindow(bool enabled)
 {
   m_enabled = enabled;
 
@@ -125,10 +125,10 @@ void PasswordControl::updateControlsState()
     } else {
       m_changeButton->setText(main_subsystem()->string_table()->getString(IDS_SET_PASSWORD_CAPTION));
     }
-    m_changeButton->enable_window(m_enabled);
+    m_changeButton->enableWindow(m_enabled);
   }
   if (m_unsetButton != 0) {
-    m_unsetButton->enable_window(m_enabled && (m_state == OldPassword || m_state == NewPassword));
+    m_unsetButton->enableWindow(m_enabled && (m_state == OldPassword || m_state == NewPassword));
   }
 }
 

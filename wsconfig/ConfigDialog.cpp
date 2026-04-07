@@ -57,7 +57,7 @@ ConfigDialog::~ConfigDialog()
 // FIXME: Unimplemented
 void ConfigDialog::updateApplyButtonState()
 {
-  m_ctrlApplyButton.enable_window(true);
+  m_ctrlApplyButton.enableWindow(true);
 }
 
 void ConfigDialog::setConfigReloadCommand(ControlCommand *command)
@@ -177,7 +177,7 @@ bool ConfigDialog::onInitDialog()
   m_tabControl.showTab(m_lastSelectedTabIndex);
   m_tabControl.setFocus();
 
-  m_ctrlApplyButton.enable_window(false);
+  m_ctrlApplyButton.enableWindow(false);
   m_ctrlThis.set_foreground_window();
 
   return false;
@@ -226,7 +226,7 @@ void ConfigDialog::onApplyButtonClick()
     if (m_reloadConfigCommand->executionResultOk()) {
       m_administrationConfigDialog.updateUI();
       m_ipAccessControlDialog.updateUI();
-      m_ctrlApplyButton.enable_window(false);
+      m_ctrlApplyButton.enableWindow(false);
     }
     return;
   } 
@@ -238,7 +238,7 @@ void ConfigDialog::onApplyButtonClick()
                ::user::e_message_box_ok | MB_ICONERROR);
     return;
   } 
-  m_ctrlApplyButton.enable_window(false);
+  m_ctrlApplyButton.enableWindow(false);
   main_subsystem()->message_box(m_ctrlThis.operating_system_window(),
     main_subsystem()->string_table()->getString(IDS_OFFLINE_CONFIG_SAVE_NOTIFICATION),
     main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),

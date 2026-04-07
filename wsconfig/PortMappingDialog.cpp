@@ -101,8 +101,8 @@ void PortMappingDialog::onExPortsListBoxSelChange()
 {
   int selectedIndex = m_exPortsListBox.getSelectedIndex();
 
-  m_editButton.enable_window(selectedIndex >= 0);
-  m_removeButton.enable_window(selectedIndex >= 0);
+  m_editButton.enableWindow(selectedIndex >= 0);
+  m_removeButton.enableWindow(selectedIndex >= 0);
 }
 
 void PortMappingDialog::onAddButtonClick()
@@ -177,8 +177,8 @@ void PortMappingDialog::onRemoveButtonClick()
       m_exPortsListBox.setSelectedIndex(selectedIndex + 1);
     }
   } else {
-    m_removeButton.enable_window(false);
-    m_editButton.enable_window(false);
+    m_removeButton.enableWindow(false);
+    m_editButton.enableWindow(false);
   }
 }
 

@@ -59,7 +59,7 @@ namespace remoting_remoting
 
     protected:
         ConnectionData m_condata;
-        ConnectionConfig m_conConf;
+        ConnectionConfig m_pconnectionconfig;
 
         ViewerWindow m_viewerWnd;
         RemoteViewerCore m_viewerCore;

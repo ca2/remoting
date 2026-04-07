@@ -53,11 +53,11 @@ ControlTrayIcon::ControlTrayIcon(ControlProxy *serverControl,
   m_inWindowProc(false),
   m_termination(false)
 {
-  ResourceLoader *resLoader = ResourceLoader::getInstance();
+  auto presourceloader = main_subsystem()->resource_loader();
 
-  m_iconWorking = new Icon(resLoader->loadIcon(MAKEINTRESOURCE(IDI_CONNECTED)));
-  m_iconIdle = new Icon(resLoader->loadIcon(MAKEINTRESOURCE(IDI_IDLE)));
-  m_iconDisabled = new Icon(resLoader->loadIcon(MAKEINTRESOURCE(IDI_DISABLED)));
+  m_iconWorking = new Icon(presourceloader->loadIcon(MAKEINTRESOURCE(IDI_CONNECTED)));
+  m_iconIdle = new Icon(presourceloader->loadIcon(MAKEINTRESOURCE(IDI_IDLE)));
+  m_iconDisabled = new Icon(presourceloader->loadIcon(MAKEINTRESOURCE(IDI_DISABLED)));
 
   setWindowProcHolder(this);
 

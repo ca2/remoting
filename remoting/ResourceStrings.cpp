@@ -53,10 +53,10 @@ namespace remoting_remoting
        auto presourceloader = main_subsystem()->resource_loader();
 
 
-        //ResourceLoader *rLoader = ResourceLoader::getInstance();
+        //auto presourceloader = main_subsystem()->resource_loader();
 
         ::string str;
-        //rLoader->loadString(strRes, str);
+        //presourceloader->loadString(strRes, str);
 
        presourceloader->loadString(iRes, str);
 

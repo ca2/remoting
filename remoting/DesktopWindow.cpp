@@ -35,7 +35,7 @@ namespace remoting_remoting
 {
     DesktopWindow::DesktopWindow(LogWriter *logWriter, ConnectionConfig *conConf, ViewerWindow * pviewerwindow) :
         m_plogwriter(logWriter),m_pviewerwindow(pviewerwindow), m_clipboard(0), m_showVert(false), m_showHorz(false), m_fbWidth(1), m_fbHeight(1),
-        m_winResize(false), m_conConf(conConf), m_brush(RGB(0, 0, 0)),
+        m_winResize(false), m_pconnectionconfig(conConf), m_brush(RGB(0, 0, 0)),
 
         m_viewerCore(0), m_ctrlDown(false), m_altDown(false), m_previousMousePos(-1, -1), m_previousMouseState(0),
         m_isBackgroundDirty(false)
@@ -419,7 +419,7 @@ namespace remoting_remoting
 
         }
         // If mode is "view-only", then skip event.
-        if (m_conConf->isViewOnly())
+        if (m_pconnectionconfig->isViewOnly())
         {
             return true;
         }
@@ -432,7 +432,7 @@ namespace remoting_remoting
 
 
         // If swap of mouse button is enabled, then swap button.
-        if (m_conConf->isMouseSwapEnabled() && mouseButtons)
+        if (m_pconnectionconfig->isMouseSwapEnabled() && mouseButtons)
         {
             bool bSecond = !!(mouseButtons & MOUSE_MDOWN);
             bool bThird = !!(mouseButtons & MOUSE_RDOWN);
@@ -494,7 +494,7 @@ namespace remoting_remoting
 
     bool DesktopWindow::onKey(::wparam wParam, ::lparam lParam)
     {
-        if (!m_conConf->isViewOnly())
+        if (!m_pconnectionconfig->isViewOnly())
         {
             unsigned short virtualKey = static_cast<unsigned short>(wParam);
             unsigned int additionalInfo = static_cast<unsigned int>(lParam);
@@ -529,7 +529,7 @@ namespace remoting_remoting
 
     bool DesktopWindow::onChar(::wparam wParam, ::lparam lParam)
     {
-        if (!m_conConf->isViewOnly())
+        if (!m_pconnectionconfig->isViewOnly())
         {
             m_rfbKeySym->processCharEvent(static_cast<WCHAR>(wParam), static_cast<unsigned int>(lParam));
         }
@@ -540,7 +540,7 @@ namespace remoting_remoting
 
     bool DesktopWindow::onDrawClipboard()
     {
-        if (!IsWindowVisible(getHWnd()) || !m_conConf->isClipboardEnabled())
+        if (!IsWindowVisible(getHWnd()) || !m_pconnectionconfig->isClipboardEnabled())
         {
             return false;
         }
@@ -562,7 +562,7 @@ namespace remoting_remoting
 
     void DesktopWindow::setClipboardData(const ::scoped_string &strText)
     {
-        if (m_conConf->isClipboardEnabled())
+        if (m_pconnectionconfig->isClipboardEnabled())
         {
             m_clipboard.setString(strText);
             m_strClipboard= strText;
@@ -982,7 +982,7 @@ namespace remoting_remoting
 
     void DesktopWindow::sendKeyboardEvent(bool downFlag, unsigned int key)
     {
-        if (m_conConf->isViewOnly())
+        if (m_pconnectionconfig->isViewOnly())
         {
             return;
         }
@@ -1006,7 +1006,7 @@ namespace remoting_remoting
 
     void DesktopWindow::sendPointerEvent(unsigned char buttonMask, const Point *position)
     {
-        if (m_conConf->isViewOnly())
+        if (m_pconnectionconfig->isViewOnly())
         {
             return;
         }
@@ -1030,7 +1030,7 @@ namespace remoting_remoting
 
     void DesktopWindow::sendCutTextEvent(const ::scoped_string &cutText)
     {
-        if (!m_conConf->isClipboardEnabled())
+        if (!m_pconnectionconfig->isClipboardEnabled())
         {
             return;
         }

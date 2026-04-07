@@ -31,7 +31,7 @@
 //#include aaa_<crtdbg.h>
 
 
-DynamicLibrary *WTS::m_kernel32Library = 0;
+DynamicLibrary *WTS::m_pdynamiclibraryKernel32 = 0;
 DynamicLibrary *WTS::m_wtsapi32Library = 0;
 pWTSGetActiveConsoleSessionId WTS::m_WTSGetActiveConsoleSessionId = 0;
 pWTSQueryUserToken WTS::m_WTSQueryUserToken = 0;
@@ -310,8 +310,8 @@ void WTS::initialize(LogWriter *log)
   _ASSERT(!m_initialized);
 
   try {
-    m_kernel32Library = new DynamicLibrary("Kernel32.dll");
-    m_WTSGetActiveConsoleSessionId = (pWTSGetActiveConsoleSessionId)m_kernel32Library->getProcAddress("WTSGetActiveConsoleSessionId");
+    m_pdynamiclibraryKernel32 = new DynamicLibrary("Kernel32.dll");
+    m_WTSGetActiveConsoleSessionId = (pWTSGetActiveConsoleSessionId)m_pdynamiclibraryKernel32->getProcAddress("WTSGetActiveConsoleSessionId");
   } catch (::exception &e) {
     log->error("Can't load the Kernel32.dll library: {}", e.get_message());
   }

@@ -75,7 +75,7 @@ int DesktopServerCommandLine::getLogLevel()
 
   int ret;
 
-  if (!StringParser::parseInt(logLevelKeyArg, &ret)) {
+  if (!main_subsystem()->string_parser()->parseInt(logLevelKeyArg, &ret)) {
     _ASSERT(false);
   }
 

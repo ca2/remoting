@@ -141,7 +141,7 @@ void AdministrationConfigDialog::updateUI()
 
   m_useControlAuth.check(m_config->isControlAuthEnabled());
   m_repeatControlAuth.check(m_config->getControlAuthAlwaysChecking());
-  m_repeatControlAuth.enable_window(m_useControlAuth.isChecked());
+  m_repeatControlAuth.enableWindow(m_useControlAuth.isChecked());
 
   ConfigDialog *configDialog = (ConfigDialog *)m_parentDialog;
 
@@ -151,8 +151,8 @@ void AdministrationConfigDialog::updateUI()
 
   if (logPath.is_empty()) {
     logPath= main_subsystem()->string_table()->getString(IDS_LOGPATH_UNAVALIABLE);
-    m_openLogPathButton.enable_window(false);
-    m_logPathTB.enable_window(false);
+    m_openLogPathButton.enableWindow(false);
+    m_logPathTB.enableWindow(false);
   }
 
   m_logPathTB.setText(logPath);
@@ -163,9 +163,9 @@ void AdministrationConfigDialog::updateUI()
   ::file::item folderFile(folder);
 
   if (folderFile.canRead()) {
-    m_openLogPathButton.enable_window(true);
+    m_openLogPathButton.enableWindow(true);
   } else {
-    m_openLogPathButton.enable_window(false);
+    m_openLogPathButton.enableWindow(false);
   }
 
   for (int i = 0; i < 5; i++) {
@@ -217,7 +217,7 @@ void AdministrationConfigDialog::updateUI()
     m_cpControl->setCryptedPassword((char *)cryptedPassword);
   }
 
-  m_cpControl->enable_window(m_config->isControlAuthEnabled());
+  m_cpControl->enableWindow(m_config->isControlAuthEnabled());
 }
 
 void AdministrationConfigDialog::apply()
@@ -227,7 +227,7 @@ void AdministrationConfigDialog::apply()
 
   int logLevel = 0;
 
-  StringParser::parseInt(logLevelStringStorage, &logLevel);
+  main_subsystem()->string_parser()->parseInt(logLevelStringStorage, &logLevel);
 
   m_config->setLogLevel(logLevel);
 
@@ -367,8 +367,8 @@ void AdministrationConfigDialog::onLogForAllUsersClick()
 
 void AdministrationConfigDialog::onUseControlAuthClick()
 {
-  m_cpControl->enable_window(m_useControlAuth.isChecked());
-  m_repeatControlAuth.enable_window(m_useControlAuth.isChecked());
+  m_cpControl->enableWindow(m_useControlAuth.isChecked());
+  m_repeatControlAuth.enableWindow(m_useControlAuth.isChecked());
 
   ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
 }

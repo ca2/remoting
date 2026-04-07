@@ -59,7 +59,7 @@ void QueryConnectionCommandLine::parse(const CommandLineArgs *commandLine)
   ::string timeoutStr;
 
   if (optionSpecified(TIMEOUT, &timeoutStr) &&
-      !StringParser::parseInt(timeoutStr, (int *)&m_timeout)) {
+      !main_subsystem()->string_parser()->parseInt(timeoutStr, (int *)&m_timeout)) {
     throw ::remoting::Exception("Invalid timeout");
   }
 }

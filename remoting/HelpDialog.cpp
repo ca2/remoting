@@ -42,7 +42,7 @@ namespace remoting_remoting
 
         ::string helpString;
        auto presourceloader = main_subsystem()->resource_loader();
-        //ResourceLoader *rLoader = ResourceLoader::getInstance();
+        //auto presourceloader = main_subsystem()->resource_loader();
         presourceloader->loadString(IDS_CMDLINE_HELP, helpString);
         m_shelp->setText(helpString);
         return true;

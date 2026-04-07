@@ -226,7 +226,7 @@ namespace remoting
 // {
 // }
 
-void Window::enable_window(bool enabled)
+void Window::enableWindow(bool enabled)
 {
   if (enabled) {
     SendMessage(m_hwnd, WM_ENABLE, true, NULL);

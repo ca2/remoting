@@ -68,7 +68,7 @@ void EditPortMappingDialog::onOkButtonClick()
   m_portTextBox.getText(&portStringStorage);
 
   PortMappingRect::parse(rectStringStorage, &rect);
-  StringParser::parseInt(portStringStorage, &port);
+  main_subsystem()->string_parser()->parseInt(portStringStorage, &port);
 
   m_mapping->setPort(port);
   m_mapping->setRect(rect);
@@ -102,7 +102,7 @@ bool EditPortMappingDialog::isUserDataValid()
 
   int port;
 
-  StringParser::parseInt(portStringStorage, &port);
+  main_subsystem()->string_parser()->parseInt(portStringStorage, &port);
 
   if ((port < 1) || (port > 65535)) {
     main_subsystem()->message_box(m_ctrlThis.operating_system_window(),

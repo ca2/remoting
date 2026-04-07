@@ -26,7 +26,7 @@
 
 // #include aaa_<stdio.h>
 
-bool StringParser::parseInt(const ::scoped_string & scopedstrStr, int *out)
+bool main_subsystem()->string_parser()->parseInt(const ::scoped_string & scopedstrStr, int *out)
 {
   int value = 0;
   char c;
@@ -40,7 +40,7 @@ bool StringParser::parseInt(const ::scoped_string & scopedstrStr, int *out)
   return true;
 }
 
-bool StringParser::parseUInt(const ::scoped_string & scopedstrStr, unsigned int *out)
+bool main_subsystem()->string_parser()->parseUInt(const ::scoped_string & scopedstrStr, unsigned int *out)
 {
   // Check the minus sign manually because _tcstoul does not fail on it.
   if (scopedstrStr == "-") {
@@ -66,7 +66,7 @@ bool StringParser::parseUInt(const ::scoped_string & scopedstrStr, unsigned int 
   return true;
 }
 
-bool StringParser::parseUInt64(const ::scoped_string & scopedstrStr, unsigned long long *out)
+bool main_subsystem()->string_parser()->parseUInt64(const ::scoped_string & scopedstrStr, unsigned long long *out)
 {
   unsigned long long value = 0;
   char c;
@@ -85,7 +85,7 @@ bool StringParser::tryParseInt(const ::scoped_string & scopedstrStr)
   return parseInt(scopedstrStr, NULL);
 }
 
-bool StringParser::parseHex(const ::scoped_string & scopedstrStr, unsigned int *out)
+bool main_subsystem()->string_parser()->parseHex(const ::scoped_string & scopedstrStr, unsigned int *out)
 {
   char c;
   unsigned int val;
@@ -98,7 +98,7 @@ bool StringParser::parseHex(const ::scoped_string & scopedstrStr, unsigned int *
   return true;
 }
 
-bool StringParser::parseByteHex(const ::scoped_string & scopedstrStr, unsigned char *out)
+bool main_subsystem()->string_parser()->parseByteHex(const ::scoped_string & scopedstrStr, unsigned char *out)
 {
   char c;
   int val = 0;
@@ -111,7 +111,7 @@ bool StringParser::parseByteHex(const ::scoped_string & scopedstrStr, unsigned c
   return true;
 }
 
-bool StringParser::parseByte(const ::scoped_string & scopedstrStr, unsigned char *out)
+bool main_subsystem()->string_parser()->parseByte(const ::scoped_string & scopedstrStr, unsigned char *out)
 {
   char c;
   int val = 0;

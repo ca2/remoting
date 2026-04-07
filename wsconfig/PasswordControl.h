@@ -56,7 +56,7 @@ public:
   Enables or disables depending controls.
   @param enabled flag that to enable or disable controls.
   */
-  void enable_window(bool enabled);
+  void enableWindow(bool enabled);
 
   void setHadPassword(bool had) { 
     m_state = had? OldPassword : NoPassword; 

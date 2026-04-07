@@ -33,12 +33,12 @@ namespace remoting_remoting
     ViewerInstance::ViewerInstance(WindowsApplication *application,
                                    ConnectionData & conData,
                                    const ConnectionConfig & conConf)
-    : m_conConf(conConf),
+    : m_pconnectionconfig(conConf),
       m_condata(conData),
       m_socket(0),
       m_viewerWnd(application,
                   &m_condata,
-                  &m_conConf,
+                  &m_pconnectionconfig,
                   ::remoting::ViewerConfig::getInstance()->getLogWriter()),
       m_vncAuthHandler(&m_condata),
       m_viewerCore(::remoting::ViewerConfig::getInstance()->getLogWriter())
@@ -49,12 +49,12 @@ namespace remoting_remoting
                                    ConnectionData & conData,
                                    const ConnectionConfig & conConf,
                                    SocketIPv4 *socket)
-    : m_conConf(conConf),
+    : m_pconnectionconfig(conConf),
       m_condata(conData),
       m_socket(socket),
       m_viewerWnd(application,
                   &m_condata,
-                  &m_conConf,
+                  &m_pconnectionconfig,
                   ::remoting::ViewerConfig::getInstance()->getLogWriter()),
       m_vncAuthHandler(&m_condata),
       m_viewerCore(::remoting::ViewerConfig::getInstance()->getLogWriter())
@@ -112,13 +112,13 @@ namespace remoting_remoting
 
         if (m_socket) {
             m_viewerCore.start(m_socket,
-                               &m_viewerWnd, m_conConf.getSharedFlag());
+                               &m_viewerWnd, m_pconnectionconfig.getSharedFlag());
         } else {
             //::string strHost;
             auto strHost = m_condata.getReducedHost();
             unsigned short portVal = m_condata.getPort();
             m_viewerCore.start(strHost, portVal,
-                               &m_viewerWnd, m_conConf.getSharedFlag());
+                               &m_viewerWnd, m_pconnectionconfig.getSharedFlag());
         }
     }
 } // namespace remoting_remoting

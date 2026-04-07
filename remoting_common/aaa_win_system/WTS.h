@@ -153,7 +153,7 @@ private:
   // The initialize() function should be already called before use the wtsFreeMemory() function.
   static void wtsFreeMemory(void *buffer);
 
-  static DynamicLibrary *m_kernel32Library;
+  static DynamicLibrary *m_pdynamiclibraryKernel32;
   static DynamicLibrary *m_wtsapi32Library;
   static pWTSGetActiveConsoleSessionId m_WTSGetActiveConsoleSessionId;
   static pWTSQueryUserToken m_WTSQueryUserToken;

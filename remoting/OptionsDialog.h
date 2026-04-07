@@ -40,17 +40,15 @@
 
 namespace remoting_remoting
 {
+
+
     class OptionsDialog : public ::innate_subsystem::Dialog
     {
     public:
-        OptionsDialog();
-
-        void setConnectionConfig(::remoting::ConnectionConfig *conConfig);
-        void setConnected();
 
     //protected:
-        ::pointer < ::innate_subsystem::ComboBoxInterface >       m_pcomoboxUseEnc;
-        ::pointer < ::innate_subsystem::CheckBoxInterface >        m_pcheckboxEightBit;
+        ::pointer < ::innate_subsystem::ComboBoxInterface >       m_pcomboboxUseEnc;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxEightBit;
         ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxCompressionLevel;
         ::pointer < ::innate_subsystem::TrackbarInterface >       m_ptrackbarCompressionLevel;
         ::pointer < ::innate_subsystem::ControlInterface >        m_pcontrolQuality;
@@ -59,7 +57,7 @@ namespace remoting_remoting
         ::pointer < ::innate_subsystem::ControlInterface >        m_pcontrolQuality2;
         ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxCopyrect;
         ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxViewonly;
-        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxDisclip;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxClipboard;
         ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxSharedses;
         ::pointer < ::innate_subsystem::ComboBoxInterface >       m_pcheckboxScale;
         ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxFullscr;
@@ -78,9 +76,19 @@ namespace remoting_remoting
         bool onInitDialog();
 
         ::pointer < ::remoting::ConnectionConfig  >m_pconnectionconfig;
+
+
+
         bool m_connected;
 
-    private:
+
+
+               OptionsDialog();
+
+        void setConnectionConfig(::remoting::ConnectionConfig *conConfig);
+        void setConnected();
+
+    //private:
         void updateControlValues();
         void onViewOnlyClick();
         void on8BitColorClick();
