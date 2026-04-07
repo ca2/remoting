@@ -43,10 +43,10 @@ namespace remoting_remoting
    bool ConnectingDialog::onInitDialog()
    {
 
-      construct_newø(m_ptextboxHost);
-      construct_newø(m_ptextboxStatus);
-      construct_newø(m_panimation);
-      construct_newø(m_panimation->m_pbar);
+      constructø(m_ptextboxHost);
+      constructø(m_ptextboxStatus);
+      constructø(m_panimation);
+      constructø(m_panimation->m_pbar);
 
       subclassControlById(m_ptextboxHost, IDC_HOST);
       m_ptextboxHost->setText(m_strHost);

@@ -39,7 +39,7 @@ namespace remoting_remoting
     //protected:
         bool onInitDialog() ;
         bool onCommand(unsigned int controlID, unsigned int notificationID);
-        ::pointer < ::innate_subsystem::TextBoxInterface >  m_shelp;
+        ::pointer < ::innate_subsystem::TextBox >  m_shelp;
 
     };
 }//namespace remoting_remoting
