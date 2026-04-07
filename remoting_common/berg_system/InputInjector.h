@@ -47,14 +47,14 @@ public:
    * @param vkCode virtual code of key.
    * @throws SystemException on fail.
    */
-  void injectKeyPress(BYTE vkCode);
+  void injectKeyPress(unsigned char vkCode);
 
   /**
    * Syntezises key released event.
    * @param vkCode virtual code of key.
    * @throws SystemException on fail.
    */
-  void injectKeyRelease(BYTE vkCode);
+  void injectKeyRelease(unsigned char vkCode);
 
   /**
    * Syntezises key event (press or release).
@@ -62,7 +62,7 @@ public:
    * @param release if true then sybtezises release event, otherwise, press.
    * @throws SystemException on fail.
    */
-  void injectKeyEvent(BYTE vkCode, bool release, bool extended = false);
+  void injectKeyEvent(unsigned char vkCode, bool release, bool extended = false);
 
   /**
    * Syntezises char press or release event.
@@ -89,15 +89,15 @@ private:
   bool isOneKeyEventChar(WCHAR ch, SHORT scanResult, HKL keyboardLayout);
 
   // Returns true if characters differs when the modifier state is on and off.
-  bool isDifferentWith(BYTE modifier, BYTE modStateValueOfOn,
-                       BYTE virtKey, HKL keyboardLayout);
+  bool isDifferentWith(unsigned char modifier, unsigned char modStateValueOfOn,
+                       unsigned char virtKey, HKL keyboardLayout);
 
   // Return true if key generates the same symbol with pressed the Shift key
   // and without.
-  bool isInvariantToShift(BYTE virtKey, HKL keyboardLayout);
+  bool isInvariantToShift(unsigned char virtKey, HKL keyboardLayout);
 
   // Return true if the char is the same with the CAPS or without.
-  bool isResistantToCaps(BYTE virtKey, HKL keyboardLayout);
+  bool isResistantToCaps(unsigned char virtKey, HKL keyboardLayout);
 
   // Returns true if the ch symbol is a ascii symbol.
   bool isAscii(WCHAR ch);
@@ -114,7 +114,7 @@ private:
   /**
    * Array of extended virtual codes.
    */
-  static const BYTE EXTENDED_KEYS[];
+  static const unsigned char EXTENDED_KEYS[];
 
   bool m_controlIsPressed;
   bool m_menuIsPressed;

@@ -29,7 +29,7 @@
 #include "acme/subsystem/io/DataOutputStream.h"
 #include "acme/exception/io.h"
 #include "remoting/remoting_common/network/RfbOutputGate.h"
-#include "remoting/remoting_common/rfb/FrameBuffer.h"
+#include "acme/subsystem/framebuffer/FrameBuffer.h"
 
 #include "acme/subsystem/Exception.h"
 

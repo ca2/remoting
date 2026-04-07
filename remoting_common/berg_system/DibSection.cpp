@@ -123,13 +123,13 @@ void DibSection::setupBMIStruct(BITMAPINFO *pBmi, const PixelFormat & pf, const 
     for (int i = 0; i < 256; i++, index++) {
       unsigned int red = (index >> pf.redShift) & pf.redMax;
       red = red * 0xFF / pf.redMax;
-      paletteBMI->rgbQuad[index].rgbRed = (BYTE)red;
+      paletteBMI->rgbQuad[index].rgbRed = (unsigned char)red;
       unsigned int green = (index >> pf.greenShift) & pf.greenMax;
       green = green * 0xFF / pf.greenMax;
-      paletteBMI->rgbQuad[index].rgbGreen = (BYTE)(green);
+      paletteBMI->rgbQuad[index].rgbGreen = (unsigned char)(green);
       unsigned int blue = (index >> pf.blueShift) & pf.blueMax;
       blue = blue * 0xFF / pf.blueMax;
-      paletteBMI->rgbQuad[index].rgbBlue  = (BYTE)blue;
+      paletteBMI->rgbQuad[index].rgbBlue  = (unsigned char)blue;
     }
   } else {
     Screen::BMI *bitFieldBmi = reinterpret_cast<Screen::BMI *>(pBmi);

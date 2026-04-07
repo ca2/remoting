@@ -38,7 +38,7 @@ namespace remoting
    public:
       // Creates BitmapGraphics object with bitmap complatible with specified dc and
       // with specified size.
-      BitmapGraphics(HDC hdc, int width, int height);
+      BitmapGraphics(HDC hdc, const ::int_size & size);
       // Destroys bitmap and graphics object.
       virtual ~BitmapGraphics();
 

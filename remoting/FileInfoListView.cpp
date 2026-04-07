@@ -30,7 +30,7 @@
 //// #include aaa_<stdio.h>
 #include "resource.h"
 #include "acme/prototype/datetime/datetime.h"
-#include "acme/subsystem/resource_loader.h"
+#include "apex/innate_subsystem/resource_loader.h"
 #include "apex/innate_subsystem/subsystem.h"
 #include "apex/innate_subsystem/SystemMetrics.h"
 
@@ -187,7 +187,7 @@ namespace remoting_remoting
 
         //HICON icon;
 
-        auto presourceloader = main_subsystem()->resource_loader();
+        auto presourceloader = main_innate_subsystem()->resource_loader();
 
         auto picon = presourceloader->loadIconByIntResource(IDI_FILEUP);
         _ASSERT(picon != NULL);

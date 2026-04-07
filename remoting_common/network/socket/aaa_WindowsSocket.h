@@ -37,7 +37,7 @@ public:
   // Initializes Windows sockets subsystem.
   // Throws exception if winsock already initialized or
   // if was error during winsock startup.
-  static void startup(BYTE loVer, BYTE hiVer);
+  static void startup(unsigned char loVer, unsigned char hiVer);
 
   //  Deinitializes Windows sockets subsystem.
   // Throws exception if winsock does not initialized or

@@ -26,7 +26,7 @@
 
 bool WindowsSocket::m_isStarted = false;
 
-void WindowsSocket::startup(BYTE loVer, BYTE hiVer)
+void WindowsSocket::startup(unsigned char loVer, unsigned char hiVer)
 {
   if (m_isStarted) {
     throw ::remoting::Exception("WindowsSocket already initialized.");

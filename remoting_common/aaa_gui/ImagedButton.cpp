@@ -182,7 +182,7 @@ void ImagedButton::setWindow(HWND hwnd)
   }
 }
 
-void ImagedButton::setIcon(HICON *icon, int width, int height)
+void ImagedButton::setIcon(HICON *icon, const ::int_size & size)
 {
   m_icon = icon;
   m_iconWidth = width;

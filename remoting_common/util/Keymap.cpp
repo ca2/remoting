@@ -40,11 +40,11 @@
 // X11 Key sym to virtual key translation table entry.
 struct KS2VKEntry {
   unsigned int keySym;
-  BYTE vkCode;
+  unsigned char vkCode;
 };
 
 struct VK2KSEntry {
-  BYTE vkCode;
+  unsigned char vkCode;
   unsigned int keySym;
 };
 
@@ -1062,7 +1062,7 @@ long keysym2ucs(unsigned short keysym)
   return -1;
 }
 
-bool Keymap::keySymToVirtualCode(unsigned int keySym, BYTE *vkCode, bool *extended)
+bool Keymap::keySymToVirtualCode(unsigned int keySym, unsigned char *vkCode, bool *extended)
 {
   // Is extended key in the Windows?
   *extended = false;
@@ -1083,7 +1083,7 @@ bool Keymap::keySymToVirtualCode(unsigned int keySym, BYTE *vkCode, bool *extend
   return false;
 }
 
-bool Keymap::virtualCodeToKeySym(unsigned int *keySym, BYTE vkCode)
+bool Keymap::virtualCodeToKeySym(unsigned int *keySym, unsigned char vkCode)
 {
   for (unsigned int i = 0; i < sizeof(VIEWER_AUXILIARY_TRANSLATE_TABLE) / sizeof(KS2VKEntry); i++) {
     if (VIEWER_AUXILIARY_TRANSLATE_TABLE[i].vkCode == vkCode) {

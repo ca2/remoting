@@ -31,7 +31,7 @@
 class CLASS_DECL_REMOTING_COMMON WsaStartup
 {
 public:
-  WsaStartup(BYTE minorVer, BYTE majorVer);
+  WsaStartup(unsigned char minorVer, unsigned char majorVer);
   virtual ~WsaStartup();
 
 private:

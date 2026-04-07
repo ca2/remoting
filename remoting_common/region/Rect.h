@@ -34,7 +34,7 @@ public:
   //::int_rectangle(const ::int_rectangle &  rect) { setRect(rect); }
   ::int_rectangle(const ::int_rectangle &rect) { setRect(rect); }
   ::int_rectangle(int lt, int tp, int rt, int bm) { setRect(lt, tp, rt, bm); }
-  ::int_rectangle(int width, int height) { setRect(0, 0, width, height); }
+  ::int_rectangle(const ::int_size & size) { setRect(0, 0, width, height); }
   ::int_rectangle(const RECT *rect) {fromWindowsRect(rect);}
 
   virtual ~::int_rectangle(void) {}

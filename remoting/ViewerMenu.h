@@ -29,7 +29,7 @@
 
 namespace remoting_remoting
 {
-    class ViewerMenu: public Menu
+    class ViewerMenu: public ::innate_subsystem::Menu
     {
     public:
         void loadMenu();

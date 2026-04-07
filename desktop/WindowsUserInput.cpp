@@ -143,7 +143,7 @@ void WindowsUserInput::setKeyboardEvent(unsigned int keySym, bool down)
   try {
     m_plogwriter->information("Received the %#4.4x keysym, down = {}", keySym, (int)down);
     // Generate single key event.
-    BYTE vkCode;
+    unsigned char vkCode;
     WCHAR ch;
     bool release = !down;
     bool extended;

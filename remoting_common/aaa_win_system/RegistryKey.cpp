@@ -149,7 +149,7 @@ bool RegistryKey::setValueAsInt32(const ::scoped_string & scopedstrName, int val
     return false;
   }
 
-  return RegSetValueEx(m_key, ::wstring(scopedstrName), 0, REG_DWORD, (BYTE *)&value, sizeof(value)) == ERROR_SUCCESS;
+  return RegSetValueEx(m_key, ::wstring(scopedstrName), 0, REG_DWORD, (unsigned char *)&value, sizeof(value)) == ERROR_SUCCESS;
 }
 
 bool RegistryKey::setValueAsInt64(const ::scoped_string & scopedstrName, long value)
@@ -158,7 +158,7 @@ bool RegistryKey::setValueAsInt64(const ::scoped_string & scopedstrName, long va
     return false;
   }
 
-  return RegSetValueEx(m_key, ::wstring(scopedstrName), 0, REG_QWORD, (BYTE *)&value, sizeof(value)) == ERROR_SUCCESS;
+  return RegSetValueEx(m_key, ::wstring(scopedstrName), 0, REG_QWORD, (unsigned char *)&value, sizeof(value)) == ERROR_SUCCESS;
 }
 
 bool RegistryKey::setValueAsString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrPayload)
@@ -172,7 +172,7 @@ bool RegistryKey::setValueAsString(const ::scoped_string & scopedstrName, const 
   size_t origSize = (_tcslen(wstrPayload) + 1) * sizeof(TCHAR);
   DWORD size = (DWORD)origSize;
   _ASSERT(size == origSize);
-  return RegSetValueEx(m_key, ::wstring(scopedstrName), 0, REG_SZ, (BYTE *)wstrPayload.c_str(), size) == ERROR_SUCCESS;
+  return RegSetValueEx(m_key, ::wstring(scopedstrName), 0, REG_SZ, (unsigned char *)wstrPayload.c_str(), size) == ERROR_SUCCESS;
 }
 
 bool RegistryKey::setValueAsBinary(const ::scoped_string & scopedstrName, const void *value, size_t sizeInBytes)
@@ -183,7 +183,7 @@ bool RegistryKey::setValueAsBinary(const ::scoped_string & scopedstrName, const 
 
   DWORD size = (DWORD)sizeInBytes;
   _ASSERT(size == sizeInBytes);
-  return RegSetValueEx(m_key,::wstring( scopedstrName), 0, REG_BINARY, (BYTE *)value, size) == ERROR_SUCCESS;
+  return RegSetValueEx(m_key,::wstring( scopedstrName), 0, REG_BINARY, (unsigned char *)value, size) == ERROR_SUCCESS;
 }
 
 bool RegistryKey::getValueAsInt32(const ::scoped_string & scopedstrName, int *out)
@@ -195,7 +195,7 @@ bool RegistryKey::getValueAsInt32(const ::scoped_string & scopedstrName, int *ou
   DWORD type = REG_DWORD;
   DWORD size = 4;
 
-  return RegQueryValueEx(m_key, ::wstring(scopedstrName), 0, &type, (BYTE *)out, &size) == ERROR_SUCCESS;
+  return RegQueryValueEx(m_key, ::wstring(scopedstrName), 0, &type, (unsigned char *)out, &size) == ERROR_SUCCESS;
 }
 
 bool RegistryKey::getValueAsInt64(const ::scoped_string & scopedstrName, long *out)
@@ -207,7 +207,7 @@ bool RegistryKey::getValueAsInt64(const ::scoped_string & scopedstrName, long *o
   DWORD type = REG_QWORD;
   DWORD size = 8;
 
-  return RegQueryValueEx(m_key, ::wstring(scopedstrName), 0, &type, (BYTE *)out, &size) == ERROR_SUCCESS;
+  return RegQueryValueEx(m_key, ::wstring(scopedstrName), 0, &type, (unsigned char *)out, &size) == ERROR_SUCCESS;
 }
 
 bool RegistryKey::getValueAsString(const ::scoped_string & scopedstrName, ::string & out)
@@ -225,7 +225,7 @@ bool RegistryKey::getValueAsString(const ::scoped_string & scopedstrName, ::stri
 
   ::array_base<TCHAR> buffer(size + 1);
 
-  if (RegQueryValueEx(m_key, ::wstring(scopedstrName), 0, &type, (BYTE *)&buffer[0], &size) != ERROR_SUCCESS) {
+  if (RegQueryValueEx(m_key, ::wstring(scopedstrName), 0, &type, (unsigned char *)&buffer[0], &size) != ERROR_SUCCESS) {
     return false;
   }
 

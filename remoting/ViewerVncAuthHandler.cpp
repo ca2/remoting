@@ -38,7 +38,7 @@ namespace remoting_remoting
         DATA_BLOB inBlob;
         DATA_BLOB outBlob;
 
-        inBlob.pbData = (BYTE*)input.data();
+        inBlob.pbData = (unsigned char*)input.data();
         inBlob.cbData = (DWORD)input.size();
 
         if (!CryptProtectData(&inBlob, nullptr, nullptr, nullptr, nullptr, 0, &outBlob))
@@ -54,7 +54,7 @@ namespace remoting_remoting
         DATA_BLOB inBlob;
         DATA_BLOB outBlob;
 
-        inBlob.pbData = (BYTE*)input.data();
+        inBlob.pbData = (unsigned char*)input.data();
         inBlob.cbData = (DWORD)input.size();
 
         if (!CryptUnprotectData(&inBlob, nullptr, nullptr, nullptr, nullptr, 0, &outBlob))

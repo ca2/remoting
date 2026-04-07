@@ -436,7 +436,7 @@ HANDLE WTS::duplicateUserImpersonationToken(HANDLE token, DWORD sessionId, LogWr
     return name;
   }
 
-  BYTE* data = new BYTE[tokenSize];
+  unsigned char* data = new unsigned char[tokenSize];
   GetTokenInformation(token, TokenUser, data, tokenSize, &tokenSize); // 3- GetTokenInformation
   TOKEN_USER* pUser = (TOKEN_USER*)data;
   PSID pSID = pUser->User.Sid;

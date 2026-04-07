@@ -46,7 +46,7 @@ public:
 
   virtual void setWindow(HWND hwnd);
 
-  void setIcon(HICON *icon, int width, int height);
+  void setIcon(HICON *icon, const ::int_size & size);
 
 //private:
 

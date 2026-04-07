@@ -26,7 +26,7 @@
 #include "WsaStartup.h"
 #include "acme/subsystem/Exception.h"
 
-WsaStartup::WsaStartup(BYTE minorVer, BYTE majorVer)
+WsaStartup::WsaStartup(unsigned char minorVer, unsigned char majorVer)
 {
   WSAData wsaData;
   if (WSAStartup(MAKEWORD(majorVer, minorVer), &wsaData) != 0) {

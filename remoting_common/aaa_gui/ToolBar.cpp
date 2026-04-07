@@ -159,7 +159,7 @@ namespace remoting
       return !!result;
    }
 
-   bool ToolBar::setButtonsSize(int width, int height)
+   bool ToolBar::setButtonsSize(const ::int_size & size)
    {
       LRESULT result = SendMessage(m_hWndToolbar, TB_SETBUTTONSIZE,
                                    0, MAKELONG(width, height));
@@ -257,7 +257,7 @@ namespace remoting
       return SendMessage(m_hWndToolbar, TB_ADDBITMAP, 0, (::lparam)&resBitmap);
    }
 
-   bool ToolBar::addButton(int iBitmap, int idCommand, BYTE state, BYTE style, unsigned int dwData, int iString)
+   bool ToolBar::addButton(int iBitmap, int idCommand, unsigned char state, unsigned char style, unsigned int dwData, int iString)
    {
       TBBUTTON tbb;
 

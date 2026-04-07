@@ -27,7 +27,7 @@
 
 namespace remoting
 {
-   BitmapGraphics::BitmapGraphics(HDC hdc, int width, int height)
+   BitmapGraphics::BitmapGraphics(HDC hdc, const ::int_size & size)
    : Graphics(hdc), m_isPainting(false)
    {
       m_bitmap = new Bitmap(hdc, width, height);

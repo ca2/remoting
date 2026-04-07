@@ -59,17 +59,17 @@ InputInjector::~InputInjector()
   }
 }
 
-void InputInjector::injectKeyPress(BYTE vkCode)
+void InputInjector::injectKeyPress(unsigned char vkCode)
 {
   injectKeyEvent(vkCode, false);
 }
 
-void InputInjector::injectKeyRelease(BYTE vkCode)
+void InputInjector::injectKeyRelease(unsigned char vkCode)
 {
   injectKeyEvent(vkCode, true);
 }
 
-void InputInjector::injectKeyEvent(BYTE vkCode, bool release, bool extended)
+void InputInjector::injectKeyEvent(unsigned char vkCode, bool release, bool extended)
 {
   m_plogwriter->debug("Prepare to inject the key event:"
              " vkCode = {}, release = {}, extended = {}",
@@ -202,8 +202,8 @@ void InputInjector::injectCharEvent(WCHAR ch, bool release)
   }
   // Not all keys must be typed with the SHIFT to get the lower case when the
   // CAPS pressed, e.g. the numerical keys.
-  bool resistantToCaps = isResistantToCaps((BYTE)vkKeyScanResult, hklCurrent);
-  bool invariantToShift = isInvariantToShift((BYTE)vkKeyScanResult, hklCurrent);
+  bool resistantToCaps = isResistantToCaps((unsigned char)vkKeyScanResult, hklCurrent);
+  bool invariantToShift = isInvariantToShift((unsigned char)vkKeyScanResult, hklCurrent);
 
   // If code belonged with high registr we must generate shift up and shift
   // down also.
@@ -423,8 +423,8 @@ HKL InputInjector::getCurrentKbdLayout()
   return GetKeyboardLayout(threadId);
 }
 
-bool InputInjector::isDifferentWith(BYTE modifier, BYTE modStateValueOfOn,
-                                    BYTE virtKey, HKL keyboardLayout)
+bool InputInjector::isDifferentWith(unsigned char modifier, unsigned char modStateValueOfOn,
+                                    unsigned char virtKey, HKL keyboardLayout)
 {
   unsigned char kbdState[256];
   memset(kbdState, 0, sizeof(kbdState));
@@ -448,12 +448,12 @@ bool InputInjector::isDifferentWith(BYTE modifier, BYTE modStateValueOfOn,
   }
 }
 
-bool InputInjector::isInvariantToShift(BYTE virtKey, HKL keyboardLayout)
+bool InputInjector::isInvariantToShift(unsigned char virtKey, HKL keyboardLayout)
 {
   return isDifferentWith(VK_SHIFT, 128, virtKey, keyboardLayout);
 }
 
-bool InputInjector::isResistantToCaps(BYTE virtKey, HKL keyboardLayout)
+bool InputInjector::isResistantToCaps(unsigned char virtKey, HKL keyboardLayout)
 {
   return isDifferentWith(::user::e_key_capslock, 1, virtKey, keyboardLayout);
 }

@@ -91,7 +91,7 @@ namespace remoting_remoting
         static const char ZRLE[];
 
         //::pointer < ::windows::WindowsProcessCommandLine > m_pwindowsprocesscommandline;
-       ::pointer < ::subsystem::ProcessCommandLine > m_pprocesscommandlineOperatingSystem;
+       ::pointer < ::subsystem::ProcessCommandLineInterface > m_pprocesscommandlineOperatingSystem;
         ConnectionData *m_conData;
         ::remoting::ConnectionConfig *m_pconnectionconfig;
         ::remoting::ViewerConfig *m_config;

@@ -91,8 +91,8 @@ namespace remoting
       bool addNButton(int nButtons, LPTBBUTTON tbb);
 
       // addButton() adds one button.
-      bool addButton(int iBitmap, int idCommand, BYTE state=TBSTATE_ENABLED,
-                     BYTE style=TBSTYLE_BUTTON,  unsigned int dwData=0, int iString=0);
+      bool addButton(int iBitmap, int idCommand, unsigned char state=TBSTATE_ENABLED,
+                     unsigned char style=TBSTYLE_BUTTON,  unsigned int dwData=0, int iString=0);
 
       // checkButton() checks or unchecks a given button in a toolbar control.
       bool checkButton(int idButton, bool check);
@@ -109,7 +109,7 @@ namespace remoting
 
       // setButtonSize() sets the size of the buttons to be added to a toolbar.
       // Button size must be largen the button bitmap.
-      bool setButtonsSize(int width, int height);
+      bool setButtonsSize(const ::int_size & size);
 
       // autoSize() resizes the toolbar window.
       void autoSize();
