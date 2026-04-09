@@ -315,7 +315,7 @@ namespace remoting_remoting
         if (main_subsystem()->message_box(operating_system_window(),
                        "Do you want to close file transfers and terminate current operation?",
                        "TightVNC ::file::item Transfers",
-                       MB_YESNO | MB_ICONQUESTION) == IDYES) {
+                       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) == ::innate_subsystem::::innate_subsystem::IDYES) {
             // Set flag
             m_isClosing = true;
             // Terminate current operation
@@ -356,7 +356,8 @@ namespace remoting_remoting
             return ;
         }
 
-        FileRenameDialog renameDialog(this);
+        FileRenameDialog renameDialog;
+      renameDialog.initialize_file_rename_dialog(this);
         renameDialog.setFileName(fileInfo->getFileName());
 
         if (renameDialog.showModal() == ::innate_subsystem::IDOK) {
@@ -376,7 +377,8 @@ namespace remoting_remoting
 
     void FileTransferMainDialog::onMkDirRemoteButtonClick()
     {
-        NewFolderDialog folderDialog(this);
+        NewFolderDialog folderDialog;
+      folderDialog.initialize_new_folder_dialog(this);
         if (folderDialog.showModal() == ::innate_subsystem::IDOK) {
             ::string remoteFolder;
             remoteFolder = m_remoteCurFolderTextBox.getText();
@@ -410,14 +412,14 @@ namespace remoting_remoting
 
         auto indexes = m_remoteFileListView.getSelectedItemsIndexes();
         for (unsigned int i = 0; i < indexes.size(); i++) {
-            ::remoting::ftp::FileInfo * pfileinfo = reinterpret_cast<::remoting::ftp::FileInfo *>(m_remoteFileListView.getItemData(indexes[i]));
+            ::remoting::ftp::FileInfo * pfileinfo = reinterpret_cast<::remoting::ftp::FileInfo *>(m_remoteFileListView.getItemData(indexes[i]).m_lparam);
             fileinfoa.add(pfileinfo);
         }
 
         if (main_subsystem()->message_box(operating_system_window(),
                        L"Do you wish to delete the selected files?",
                        L"Delete Files",
-                       MB_YESNO | MB_ICONQUESTION) != IDYES) {
+                       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) != ::innate_subsystem::IDYES) {
             //delete[] indexes;
             //delete[] filesInfo;
             return ;
@@ -573,7 +575,7 @@ namespace remoting_remoting
         if (main_subsystem()->message_box(operating_system_window(),
                        L"Do you wish to delete the selected files?",
                        L"Delete Files",
-                       MB_YESNO | MB_ICONQUESTION) != IDYES) {
+                       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) != ::innate_subsystem::IDYES) {
             //delete[] indexes;
             //delete[] filesInfo;
             return ;
@@ -619,7 +621,7 @@ namespace remoting_remoting
         if (main_subsystem()->message_box(operating_system_window(),
                        L"Do you wish to upload the selected files?",
                        L"Upload Files",
-                       MB_YESNO | MB_ICONQUESTION) != IDYES) {
+                       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) != ::innate_subsystem::IDYES) {
             //delete[] indexes;
             //delete[] filesInfo;
             return ;
@@ -668,7 +670,7 @@ namespace remoting_remoting
         if (main_subsystem()->message_box(operating_system_window(),
                        L"Do you wish to download the selected files?",
                        L"Download Files",
-                       MB_YESNO | MB_ICONQUESTION) != IDYES) {
+                       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) != ::innate_subsystem::IDYES) {
             //delete[] indexes;
             //delete[] filesInfo;
             return ;

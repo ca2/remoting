@@ -59,7 +59,7 @@ void PasswordControl::unsetPassword(bool promtUser, HWND parentWindow)
   if (promtUser) {
     if (main_subsystem()->message_box(parentWindow,
       main_subsystem()->string_table()->getString(IDS_UNSET_PASSWORD_PROMT),
-      main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL), MB_YESNO | MB_ICONQUESTION) == ::innate_subsystem::IDNO) {
+      main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL), ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) == ::innate_subsystem::IDNO) {
       return;
     }
   }

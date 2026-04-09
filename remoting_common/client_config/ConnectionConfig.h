@@ -38,7 +38,8 @@
 
 namespace remoting
 {
-   class CLASS_DECL_REMOTING_COMMON ConnectionConfig
+   class CLASS_DECL_REMOTING_COMMON ConnectionConfig :
+    virtual public ::particle
    {
    public:
       static const int NO_CURSOR = 0;

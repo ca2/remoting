@@ -217,7 +217,7 @@ namespace remoting_remoting
             newPathToIniFile.format(".\\{}", pathToIniFile);
             pathToIniFile = newPathToIniFile;
         }
-        IniFileSettingsManager sm(pathToIniFile);
+        ::remoting::IniFileSettingsManager sm(pathToIniFile);
         sm.setApplicationName("connection");
 
         ::string host;
@@ -276,16 +276,16 @@ namespace remoting_remoting
     void ViewerCmdLine::parseMouseShape()
     {
         if (isPresent(MOUSE_LOCAL)) {
-            int localCursorShape = ConnectionConfig::DOT_CURSOR;
+            int localCursorShape = ::remoting::ConnectionConfig::DOT_CURSOR;
 
             if (m_options[MOUSE_LOCAL] == NO) {
-                localCursorShape = ConnectionConfig::NO_CURSOR;
+                localCursorShape = ::remoting::ConnectionConfig::NO_CURSOR;
             }
             if (m_options[MOUSE_LOCAL] == SMALLDOT) {
-                localCursorShape = ConnectionConfig::SMALL_CURSOR;
+                localCursorShape = ::remoting::ConnectionConfig::SMALL_CURSOR;
             }
             if (m_options[MOUSE_LOCAL] == NORMAL) {
-                localCursorShape = ConnectionConfig::NORMAL_CURSOR;
+                localCursorShape = ::remoting::ConnectionConfig::NORMAL_CURSOR;
             }
             m_pconnectionconfig->setLocalCursorShape(localCursorShape);
         }

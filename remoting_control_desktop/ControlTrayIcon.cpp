@@ -257,7 +257,7 @@ void ControlTrayIcon::onShutdownServerMenuItemClick()
       operating_system_window(),
       userMessage,
       main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
-      MB_YESNO | MB_ICONQUESTION) == ::innate_subsystem::IDNO) {
+      ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) == ::innate_subsystem::IDNO) {
         return;
     }
   }

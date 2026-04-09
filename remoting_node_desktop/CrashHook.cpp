@@ -99,8 +99,8 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
                                "Apllication crashing. Do you"
                                " want save debug information?",
                                ProductNames::PRODUCT_NAME,
-                               MB_YESNO)
-                               != IDYES)
+                               ::user::e_message_box_yes_no)
+                               != ::innate_subsystem::IDYES)
   {
     return retValue;
   }

@@ -620,8 +620,8 @@ namespace remoting_remoting
                     int whetherToSavePass = main_subsystem()->message_box(operating_system_window(),
                       main_subsystem()->string_table()->getString(IDS_QUESTION_SAVE_PASSWORD),
                       main_subsystem()->string_table()->getString(IDS_SECURITY_WARNING_CAPTION),
-                      MB_YESNO);
-                    if (whetherToSavePass == IDYES) {
+                      ::user::e_message_box_yes_no);
+                    if (whetherToSavePass == ::innate_subsystem::IDYES) {
                         ::string password = m_conData->getCryptedPassword();
                         sm.setString("password", password);
                     }
