@@ -29,7 +29,7 @@
 
 #include "remoting/remoting_common/region/Point.h"
 #include "remoting/remoting_common/rfb/PixelFormat.h"
-#include "remoting/remoting_common/rfb/FrameBuffer.h"
+#include "acme/subsystem/framebuffer/FrameBuffer.h"
 
 //
 // An abstract interface for screen grabbing.
@@ -78,7 +78,7 @@ public:
   */
   virtual bool grab(const ::int_rectangle &rect = {} ) = 0;
 
-  virtual FrameBuffer *getScreenBuffer() { return &m_workFrameBuffer; }
+  virtual ::subsystem::FrameBuffer *getScreenBuffer() { return &m_workFrameBuffer; }
   virtual void setWorkRect(::int_rectangle *workRect);
   virtual ::int_rectangle getWorkRect() const { return ::int_rectangle(m_offsetFrameBuffer.x,
                                                  m_offsetFrameBuffer.y,
@@ -108,7 +108,7 @@ protected:
   ::int_rectangle m_fullScreenRect;
   Point m_offsetFrameBuffer;
 
-  FrameBuffer m_workFrameBuffer;
+  ::subsystem::FrameBuffer m_workFrameBuffer;
 };
 
 //// __SCREENGRABBER_H__

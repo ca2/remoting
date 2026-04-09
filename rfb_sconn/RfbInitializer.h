@@ -47,7 +47,7 @@ public:
                       const CapContainer *clToSrvCaps,
                       const CapContainer *encCaps,
                       const ::int_size & dim,
-                      const PixelFormat & pf);
+                      const ::subsystem::PixelFormat & pf);
 
   // Returns shared flag value. Shared flag value is valid only after
   // the authPhase() function calling.
@@ -63,7 +63,7 @@ protected:
   void initAuthenticate();
   void readClientInit();
   void sendServerInit(const ::int_size & dim,
-                      const PixelFormat & pf);
+                      const ::subsystem::PixelFormat & pf);
   void sendDesktopName();
   void sendInteractionCaps(const CapContainer *srvToClCaps,
                            const CapContainer *clToSrvCaps,

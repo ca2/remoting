@@ -28,14 +28,14 @@
 //#include "log_writer/LogWriter.h"
 #include "UpdateKeeper.h"
 #include "UpdateListener.h"
-#include "remoting/remoting_common/thread/Thread.h"
+#include "acme/subsystem/thread/Thread.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 
 
 class DummyScreenDriver : public ScreenDriver, Thread
 {
 public:
-  DummyScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ::int_size dim, unsigned int interval, LogWriter *log);
+  DummyScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ::int_size dim, unsigned int interval, ::subsystem::LogWriter *log);
   virtual ~DummyScreenDriver();
 
   // Starts screen update detection if it not started yet.
@@ -46,11 +46,11 @@ public:
 
   virtual ::int_size getScreenDimension();
   virtual bool grabFb(const ::int_rectangle &rect = {} );
-  virtual FrameBuffer *getScreenBuffer();
+  virtual ::subsystem::FrameBuffer *getScreenBuffer();
   virtual bool getScreenPropertiesChanged();
   virtual bool getScreenSizeChanged();
   virtual bool applyNewScreenProperties();
-  bool grabCursorShape(const PixelFormat & pf) { return true; };
+  bool grabCursorShape(const ::subsystem::PixelFormat & pf) { return true; };
   const CursorShape *getCursorShape() { return &m_cursorShape; };
   Point getCursorPosition() { return Point(); };
 
@@ -62,7 +62,7 @@ protected:
   virtual void onTerminate();
 
 private:
-  FrameBuffer m_workFrameBuffer;
+  ::subsystem::FrameBuffer m_workFrameBuffer;
   CursorShape m_cursorShape;
   UpdateKeeper * m_updateKeeper;
   UpdateListener * m_updateListener;

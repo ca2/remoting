@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/thread/Thread.h"
+#include "acme/subsystem/thread/Thread.h"
 
 class CLASS_DECL_REMOTING_COMMON CtrlAltDelSimulator : public Thread
 {

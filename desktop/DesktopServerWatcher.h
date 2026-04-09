@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/thread/Thread.h"
+#include "acme/subsystem/thread/Thread.h"
 #include "acme/subsystem/Process.h"
 //#include "log_writer/LogWriter.h"
 #include "desktop_ipc/ReconnectionListener.h"
@@ -41,7 +41,7 @@
 class DesktopServerWatcher : public Thread
 {
 public:
-  DesktopServerWatcher(ReconnectionListener *recListener, LogWriter *log);
+  DesktopServerWatcher(ReconnectionListener *recListener, ::subsystem::LogWriter *log);
   virtual ~DesktopServerWatcher();
 
 protected:

@@ -26,18 +26,18 @@
 //#include aaa_<cstdarg>
 //#include aaa_<vector>
 
-// LogWriter::LogWriter(LogWriter *LogWriter)
-// : m_LogWriter(LogWriter)
+// ::subsystem::LogWriter::::subsystem::LogWriter(::subsystem::LogWriter * plogwriter)
+// : m_LogWriter(::subsystem::LogWriter)
 // {
 //   m_profiler = new ProfileLogWriter();
 // }
 //
-// LogWriter::~LogWriter()
+// ::subsystem::LogWriter::~::subsystem::LogWriter()
 // {
 //   delete m_profiler;
 // }
 //
-// void LogWriter::interror(const ::scoped_string & scopedstrFmt, ...)
+// void ::subsystem::LogWriter::interror(const ::scoped_string & scopedstrFmt, ...)
 // {
 //   int level = LOG_INTERR;
 //   if (m_LogWriter != 0 && m_LogWriter->acceptsLevel(level)) {
@@ -48,7 +48,7 @@
 //   }
 // }
 //
-// void LogWriter::error(const ::scoped_string & scopedstrFmt, ...)
+// void ::subsystem::LogWriter::error(const ::scoped_string & scopedstrFmt, ...)
 // {
 //   int level = LOG_ERR;
 //   if (m_LogWriter != 0 && m_LogWriter->acceptsLevel(level)) {
@@ -59,7 +59,7 @@
 //   }
 // }
 //
-// void LogWriter::warning(const ::scoped_string & scopedstrFmt, ...)
+// void ::subsystem::LogWriter::warning(const ::scoped_string & scopedstrFmt, ...)
 // {
 //   int level = LOG_WARN;
 //   if (m_LogWriter != 0 && m_LogWriter->acceptsLevel(level)) {
@@ -70,7 +70,7 @@
 //   }
 // }
 //
-// void LogWriter::scopedstrMessage(const ::scoped_string & scopedstrFmt, ...)
+// void ::subsystem::LogWriter::scopedstrMessage(const ::scoped_string & scopedstrFmt, ...)
 // {
 //   int level = LOG_MSG;
 //   if (m_LogWriter != 0 && m_LogWriter->acceptsLevel(level)) {
@@ -81,7 +81,7 @@
 //   }
 // }
 //
-// void LogWriter::info(const ::scoped_string & scopedstrFmt, ...)
+// void ::subsystem::LogWriter::info(const ::scoped_string & scopedstrFmt, ...)
 // {
 //   int level = LOG_INFO;
 //   if (m_LogWriter != 0 && m_LogWriter->acceptsLevel(level)) {
@@ -92,7 +92,7 @@
 //   }
 // }
 //
-// void LogWriter::detail(const ::scoped_string & scopedstrFmt, ...)
+// void ::subsystem::LogWriter::detail(const ::scoped_string & scopedstrFmt, ...)
 // {
 //   int level = LOG_DETAIL;
 //   if (m_LogWriter != 0 && m_LogWriter->acceptsLevel(level)) {
@@ -103,7 +103,7 @@
 //   }
 // }
 //
-// void LogWriter::debug(const ::scoped_string & scopedstrFmt, ...)
+// void ::subsystem::LogWriter::debug(const ::scoped_string & scopedstrFmt, ...)
 // {
 //   int level = LOG_DEBUG;
 //   if (m_LogWriter != 0 && m_LogWriter->acceptsLevel(level)) {
@@ -114,12 +114,12 @@
 //   }
 // }
 //
-// bool LogWriter::isDebug()
+// bool ::subsystem::LogWriter::isDebug()
 // {
 //   return (m_LogWriter != 0 && m_LogWriter->acceptsLevel(LOG_DEBUG));
 // }
 //
-// ProcessorTimes LogWriter::checkPoint(const ::scoped_string & scopedstrTag)
+// ProcessorTimes ::subsystem::LogWriter::checkPoint(const ::scoped_string & scopedstrTag)
 // {
 //   return m_profiler->checkPoint(tag);
 // }
@@ -127,7 +127,7 @@
 // #pragma warning(push)
 // #pragma warning(disable:4996)
 //
-// void LogWriter::vprintLog(int logLevel, const ::scoped_string & scopedstrFmt, va_list argList)
+// void ::subsystem::LogWriter::vprintLog(int logLevel, const ::scoped_string & scopedstrFmt, va_list argList)
 // {
 //   if (m_LogWriter != 0) {
 //     // Format the original string.

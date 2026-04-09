@@ -39,125 +39,202 @@
 
 namespace remoting_remoting
 {
-    FileTransferMainDialog::FileTransferMainDialog(::remoting::ftp::FileTransferCore *core)
-    : FileTransferInterface(core)
-    {
-        setResourceId(ftclient_mainDialog);
+   FileTransferMainDialog::FileTransferMainDialog(::remoting::ftp::FileTransferCore *core)
+   : FileTransferInterface(core)
+   {
+      setResourceId(ftclient_mainDialog);
 
-        m_lastSentFileListPath= "";
-        m_lastReceivedFileListPath= "";
+      m_lastSentFileListPath= "";
+      m_lastReceivedFileListPath= "";
 
-        m_fakeMoveUpFolder = new ::remoting::ftp::FileInfo(0, 0, ::remoting::ftp::FileInfo::DIRECTORY, "..");
-    }
+      m_fakeMoveUpFolder = new ::remoting::ftp::FileInfo(0, 0, ::remoting::ftp::FileInfo::DIRECTORY, "..");
+   }
 
-    FileTransferMainDialog::~FileTransferMainDialog()
-    {
-        delete m_fakeMoveUpFolder;
-    }
+   FileTransferMainDialog::~FileTransferMainDialog()
+   {
+      delete m_fakeMoveUpFolder;
+   }
 
-    void FileTransferMainDialog::setProgress(double progress)
-    {
-        WORD pt = 1000;
-        WORD pc = static_cast<WORD>(progress * pt);
+   void FileTransferMainDialog::setProgress(double progress)
+   {
+      unsigned short pt = 1000;
+      unsigned short pc = static_cast<unsigned short>(progress * pt);
 
-        m_copyProgressBar.setPos(pc);
-    }
+      m_copyProgressBar.setPos(pc);
+   }
 
-    int FileTransferMainDialog::onFtTargetFileExists(::remoting::ftp::FileInfo *sourceFileInfo,
-                                                     ::remoting::ftp::FileInfo *targetFileInfo,
-                                                     const ::file::path & pathToTargetFile)
-    {
-        m_fileExistDialog.setFilesInfo(targetFileInfo,
-                                       sourceFileInfo,
-                                       pathToTargetFile);
+   int FileTransferMainDialog::onFtTargetFileExists(::remoting::ftp::FileInfo *sourceFileInfo,
+                                                    ::remoting::ftp::FileInfo *targetFileInfo,
+                                                    const ::file::path & pathToTargetFile)
+   {
+      m_fileExistDialog.setFilesInfo(targetFileInfo,
+                                     sourceFileInfo,
+                                     pathToTargetFile);
 
-        int reasonOfDialog = m_fileExistDialog.showModal();
-        switch (reasonOfDialog) {
-            case FileExistDialog::SKIP_RESULT:
-                return ::remoting::ftp::CopyFileEventListener::TFE_SKIP;
-            case FileExistDialog::APPEND_RESULT:
-                return ::remoting::ftp::CopyFileEventListener::TFE_APPEND;
-            case FileExistDialog::CANCEL_RESULT:
-                onCancelOperationButtonClick();
-                return ::remoting::ftp::CopyFileEventListener::TFE_CANCEL;
-        } // switch
+      int reasonOfDialog = m_fileExistDialog.showModal();
+      switch (reasonOfDialog) {
+         case FileExistDialog::SKIP_RESULT:
+            return ::remoting::ftp::CopyFileEventListener::TFE_SKIP;
+         case FileExistDialog::APPEND_RESULT:
+            return ::remoting::ftp::CopyFileEventListener::TFE_APPEND;
+         case FileExistDialog::CANCEL_RESULT:
+            onCancelOperationButtonClick();
+            return ::remoting::ftp::CopyFileEventListener::TFE_CANCEL;
+      } // switch
 
-        return ::remoting::ftp::CopyFileEventListener::TFE_OVERWRITE;
-    }
+      return ::remoting::ftp::CopyFileEventListener::TFE_OVERWRITE;
+   }
 
-    bool FileTransferMainDialog::onInitDialog()
-    {
-        m_isClosing = false;
+   bool FileTransferMainDialog::onInitDialog()
+   {
+      m_isClosing = false;
 
-        initControls();
+      initControls();
 
-        tryListRemoteFolder("/");
-        tryListLocalFolder("");
+      tryListRemoteFolder("/");
+      tryListLocalFolder("");
 
-        return true;
-    }
+//       setChildDoubleClick(IDC_REMOTE_FILE_LIST, [this]()->bool
+//       {
+//
+//          onRemoteListViewDoubleClick();
+//       });
+//
+//       setChildListViewKeyDown(IDC_REMOTE_FILE_LIST, [this](int iKey)->bool
+// {
+//          onRemoteListViewKeyDown(iKey);
+//
+// });
 
-    bool FileTransferMainDialog::onNotify(unsigned int controlID, ::lparam data)
-    {
-        LPNMHDR nmhdr = (LPNMHDR)data;
-        switch (controlID) {
-            case IDC_REMOTE_FILE_LIST:
-                switch (nmhdr->code) {
-                case NM_DBLCLK:
-                        onRemoteListViewDoubleClick();
-                        break;
-                case LVN_KEYDOWN:
-                {
-                    LPNMLVKEYDOWN nmlvkd = (LPNMLVKEYDOWN)data;
-                    onRemoteListViewKeyDown(nmlvkd->wVKey);
-                }
-                        break;
-                case LVN_COLUMNCLICK:
-                {
-                    NMLISTVIEW *lpdi = reinterpret_cast<NMLISTVIEW *>(data);
-                    m_remoteFileListView.sort(lpdi->iSubItem);
-                }
-                        break;
-                } // switch notification code
 
-                //
-                // FIXME: Not better way to call this method at every notification
-                // for ::list_base view control, but windows have no notification for ::list_base view
-                // selection changed event. So for now, i didn't found better solution.
-                //
+      return true;
+   }
 
-                checkRemoteListViewSelection();
-                break;
-            case IDC_LOCAL_FILE_LIST:
-                switch (nmhdr->code) {
-                case NM_DBLCLK:
-                        onLocalListViewDoubleClick();
-                        break;
-                case LVN_KEYDOWN:
-                {
-                    LPNMLVKEYDOWN nmlvkd = (LPNMLVKEYDOWN)data;
-                    onLocalListViewKeyDown(nmlvkd->wVKey);
-                }
-                        break;
-                case LVN_COLUMNCLICK:
-                {
-                    NMLISTVIEW *lpdi = reinterpret_cast<NMLISTVIEW *>(data);
-                    m_localFileListView.sort(lpdi->iSubItem);
-                }
-                        break;
-                } // switch notification code
 
-                //
-                // FIXME: Not better way to call this method at every notification
-                // for ::list_base view control, but windows have no notification for ::list_base view
-                // selection changed event. So for now, i didn't found better solution.
-                //
+   bool FileTransferMainDialog::_002OnAction(int iControl)
+   {
+      switch (iControl)
+      {
+         case IDC_REMOTE_FILE_LIST:
+            onRemoteListViewDoubleClick();
+            return true;
+         case IDC_LOCAL_FILE_LIST:
+            onLocalListViewDoubleClick();
+            return true;
+      };
 
-                checkLocalListViewSelection();
-                break;
-        } // switch controls
-        return true;
-    }
+      return false;
+
+   }
+
+
+   bool FileTransferMainDialog::_002OnKeyDownNotification(int iControl, ::user::enum_key euserkey)
+   {
+      switch (iControl)
+      {
+         case IDC_REMOTE_FILE_LIST:
+            onRemoteListViewKeyDown(euserkey);
+            return true;
+            break;
+         case IDC_LOCAL_FILE_LIST:
+            onLocalListViewKeyDown(euserkey);
+            return true;
+      }
+
+      return false;
+   }
+
+   bool FileTransferMainDialog::_002OnColumnClick(int iControl, int iColumn)
+   {
+      switch (iControl) {
+         case IDC_REMOTE_FILE_LIST:
+            m_remoteFileListView.set_sort(iColumn);
+            return true;
+         case IDC_LOCAL_FILE_LIST:
+            m_localFileListView.set_sort(iColumn);
+            return true;
+      }
+
+      return false;
+
+   }
+
+   bool FileTransferMainDialog::_002OnSelectionChange(int iControl)
+   {
+      switch (iControl) {
+         case IDC_REMOTE_FILE_LIST:
+
+            checkRemoteListViewSelection();
+            return true;
+         case IDC_LOCAL_FILE_LIST:
+
+            checkLocalListViewSelection();
+            return true;
+      }
+      return false;
+   }
+
+    // bool FileTransferMainDialog::onNotify(unsigned int controlID, ::lparam data)
+    // {
+    //     LPNMHDR nmhdr = (LPNMHDR)data;
+    //     switch (controlID) {
+    //         case IDC_REMOTE_FILE_LIST:
+    //             switch (nmhdr->code) {
+    //             case NM_DBLCLK:
+    //                     onRemoteListViewDoubleClick();
+    //                     break;
+    //             case LVN_KEYDOWN:
+    //             {
+    //                 LPNMLVKEYDOWN nmlvkd = (LPNMLVKEYDOWN)data;
+    //                 onRemoteListViewKeyDown(nmlvkd->wVKey);
+    //             }
+    //                     break;
+    //             case LVN_COLUMNCLICK:
+    //             {
+    //                 NMLISTVIEW *lpdi = reinterpret_cast<NMLISTVIEW *>(data);
+    //                 m_remoteFileListView.sort(lpdi->iSubItem);
+    //             }
+    //                     break;
+    //             } // switch notification code
+    //
+    //             //
+    //             // FIXME: Not better way to call this method at every notification
+    //             // for ::list_base view control, but windows have no notification for ::list_base view
+    //             // selection changed event. So for now, i didn't found better solution.
+    //             //
+    //
+    //             checkRemoteListViewSelection();
+    //             break;
+    //         case IDC_LOCAL_FILE_LIST:
+    //             switch (nmhdr->code) {
+    //             case NM_DBLCLK:
+    //                     onLocalListViewDoubleClick();
+    //                     break;
+    //             case LVN_KEYDOWN:
+    //             {
+    //                 LPNMLVKEYDOWN nmlvkd = (LPNMLVKEYDOWN)data;
+    //                 onLocalListViewKeyDown(nmlvkd->wVKey);
+    //             }
+    //                     break;
+    //             case LVN_COLUMNCLICK:
+    //             {
+    //                 NMLISTVIEW *lpdi = reinterpret_cast<NMLISTVIEW *>(data);
+    //                 m_localFileListView.sort(lpdi->iSubItem);
+    //             }
+    //                     break;
+    //             } // switch notification code
+    //
+    //             //
+    //             // FIXME: Not better way to call this method at every notification
+    //             // for ::list_base view control, but windows have no notification for ::list_base view
+    //             // selection changed event. So for now, i didn't found better solution.
+    //             //
+    //
+    //             checkLocalListViewSelection();
+    //             break;
+    //     } // switch controls
+    //     return true;
+    // }
 
     bool FileTransferMainDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {

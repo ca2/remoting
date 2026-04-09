@@ -23,16 +23,16 @@
 //
 #include "framework.h"
 #include "ViewPort.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 #include "remoting/remoting_common/util/BrokenHandleException.h"
 
-ViewPort::ViewPort(LogWriter *log)
+ViewPort::ViewPort(::subsystem::LogWriter *log)
 : m_desktop(0),
   m_plogwriter(log)
 {
 }
 
-ViewPort::ViewPort(const ViewPortState *viewPortState, LogWriter *log)
+ViewPort::ViewPort(const ViewPortState *viewPortState, ::subsystem::LogWriter *log)
 : m_desktop(0),
   m_state(*viewPortState),
   m_plogwriter(log)
@@ -104,7 +104,7 @@ void ViewPort::update(const ::int_size & fbDimension)
   if (m_rect.width() < 0 || m_rect.height() < 0) {
     m_rect.Null();
   }
-  m_plogwriter->debug("Constrained (to the FrameBuffer dimension) view port coordinates: ({}, {} %dx{})",
+  m_plogwriter->debug("Constrained (to the ::subsystem::FrameBuffer dimension) view port coordinates: ({}, {} %dx{})",
     rect.left, rect.top, rect.width(), rect.height());
 }
 

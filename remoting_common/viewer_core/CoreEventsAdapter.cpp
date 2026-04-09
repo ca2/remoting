@@ -70,11 +70,11 @@ void CoreEventsAdapter::onError(const ::remoting::Exception *exception)
 {
 }
 
-void CoreEventsAdapter::onFrameBufferUpdate(const FrameBuffer *fb,
+void CoreEventsAdapter::onFrameBufferUpdate(const ::subsystem::FrameBuffer *fb,
                                             const ::int_rectangle &  rect)
 {
 }
 
-void CoreEventsAdapter::onFrameBufferPropChange(const FrameBuffer *fb)
+void CoreEventsAdapter::onFrameBufferPropChange(const ::subsystem::FrameBuffer *fb)
 {
 }

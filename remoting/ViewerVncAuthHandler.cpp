@@ -33,37 +33,6 @@
 //#pragma comment (lib, "Crypt32.lib")
 namespace remoting_remoting
 {
-    bool EncryptData(const ::string& input, ::memory & output)
-    {
-        DATA_BLOB inBlob;
-        DATA_BLOB outBlob;
-
-        inBlob.pbData = (unsigned char*)input.data();
-        inBlob.cbData = (DWORD)input.size();
-
-        if (!CryptProtectData(&inBlob, nullptr, nullptr, nullptr, nullptr, 0, &outBlob))
-            return false;
-
-        output.assign(outBlob.pbData, outBlob.cbData);
-        LocalFree(outBlob.pbData);
-        return true;
-    }
-
-    bool DecryptData(const memory & input, ::string& output)
-    {
-        DATA_BLOB inBlob;
-        DATA_BLOB outBlob;
-
-        inBlob.pbData = (unsigned char*)input.data();
-        inBlob.cbData = (DWORD)input.size();
-
-        if (!CryptUnprotectData(&inBlob, nullptr, nullptr, nullptr, nullptr, 0, &outBlob))
-            return false;
-
-        output.assign((char*)outBlob.pbData, outBlob.cbData);
-        LocalFree(outBlob.pbData);
-        return true;
-    }
 
     ViewerVncAuthHandler::ViewerVncAuthHandler(ConnectionData *connectionData)
     : m_connectionData(connectionData)
@@ -89,7 +58,7 @@ namespace remoting_remoting
             if (m.has_data())
             {
                 ::string str;
-                DecryptData(m, str);
+                main_subsystem()->DecryptData(m, str);
                 m_connectionData->setPlainPassword(::wstring(str).c_str());
             }
             else
@@ -98,14 +67,14 @@ namespace remoting_remoting
                     m_connectionData->setPlainPassword(authDialog.getPassword());
                     memory m2;
                     ::string str(authDialog.getPassword());
-                    EncryptData(str, m2);
+                    main_subsystem()->EncryptData(str, m2);
                     if (m2.has_data())
                     {
 
                         ::system()->file()->put_memory(::system()->directory()->appdata()/::string(hostname), m2);
                     }
                 } else {
-                    throw AuthCanceledException();
+                    throw ::remoting::AuthCanceledException();
                 }
             }
         }

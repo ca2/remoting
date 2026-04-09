@@ -48,11 +48,11 @@ namespace remoting
          // files to be deleted is located.
          //
 
-         RemoteFilesDeleteOperation(LogWriter *logWriter,
+         RemoteFilesDeleteOperation(::subsystem::LogWriter *logWriter,
                                     const ::pointer_array< FileInfo > & fileinfoa,
                                     const ::file::path & pathToTargetRoot);
 
-         RemoteFilesDeleteOperation(LogWriter *logWriter,
+         RemoteFilesDeleteOperation(::subsystem::LogWriter *logWriter,
                                     FileInfo fileInfoToDelete,
                                     const ::file::path & pathToTargetRoot);
 

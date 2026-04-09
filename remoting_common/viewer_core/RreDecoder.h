@@ -35,7 +35,7 @@ public:
 
 protected:
   virtual void decode(RfbInputGate *input,
-                      FrameBuffer *framebuffer,
+                      ::subsystem::FrameBuffer *framebuffer,
                       const ::int_rectangle &  dstRect);
 };
 

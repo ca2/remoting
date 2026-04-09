@@ -48,7 +48,7 @@ public:
    */
 EchoExtensionRequestHandler(RfbCodeRegistrator *registrator,
                              RfbOutputGate *output,
-                             LogWriter *log,
+                             ::subsystem::LogWriter *log,
                              bool enabled = true);
 
   /**

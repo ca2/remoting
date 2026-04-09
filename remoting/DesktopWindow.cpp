@@ -33,7 +33,7 @@
 
 namespace remoting_remoting
 {
-    DesktopWindow::DesktopWindow(LogWriter *logWriter, ConnectionConfig *conConf, ViewerWindow * pviewerwindow) :
+    DesktopWindow::DesktopWindow(::subsystem::LogWriter *logWriter, ConnectionConfig *conConf, ViewerWindow * pviewerwindow) :
         m_plogwriter(logWriter),m_pviewerwindow(pviewerwindow), m_clipboard(0), m_showVert(false), m_showHorz(false), m_fbWidth(1), m_fbHeight(1),
         m_winResize(false), m_pconnectionconfig(conConf), m_brush(RGB(0, 0, 0)),
 
@@ -799,7 +799,7 @@ namespace remoting_remoting
 
     bool DesktopWindow::onDestroy() { return true; }
 
-    void DesktopWindow::updateFramebuffer(const FrameBuffer *pframebuffer, const ::int_rectangle &dstRect)
+    void DesktopWindow::updateFramebuffer(const ::subsystem::FrameBuffer *pframebuffer, const ::int_rectangle &dstRect)
     {
         // This code doesn't require blocking of m_framebuffer.
         //
@@ -818,7 +818,7 @@ namespace remoting_remoting
         repaint(dstRect);
     }
 
-    void DesktopWindow::setNewFramebuffer(const FrameBuffer *pframebuffer)
+    void DesktopWindow::setNewFramebuffer(const ::subsystem::FrameBuffer *pframebuffer)
     {
         ::int_size dimension = pframebuffer->getDimension();
         ::int_size olddimension = m_framebuffer.getDimension();

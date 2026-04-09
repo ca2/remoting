@@ -29,7 +29,7 @@
 #define XK_MISCELLANY
 #include "remoting/remoting_common/rfb/keysymdef.h"
 
-SasUserInput::SasUserInput(UserInputClient *client, LogWriter *log)
+SasUserInput::SasUserInput(UserInputClient *client, ::subsystem::LogWriter *log)
 : m_client(client),
   m_ctrlPressed(false),
   m_altPressed(false),

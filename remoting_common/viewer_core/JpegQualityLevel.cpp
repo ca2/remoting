@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "JpegQualityLevel.h"
 
-JpegQualityLevel::JpegQualityLevel(LogWriter *logWriter, int quality)
+JpegQualityLevel::JpegQualityLevel(::subsystem::LogWriter *logWriter, int quality)
 : PseudoDecoder(logWriter)
 {
   m_encoding = qualityToEncoding(quality);

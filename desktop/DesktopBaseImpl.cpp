@@ -28,7 +28,7 @@
 DesktopBaseImpl::DesktopBaseImpl(ClipboardListener *extClipListener,
                        UpdateSendingListener *extUpdSendingListener,
                        AbnormDeskTermListener *extDeskTermListener,
-                       LogWriter *log)
+                       ::subsystem::LogWriter *log)
 : m_extUpdSendingListener(extUpdSendingListener),
   m_extDeskTermListener(extDeskTermListener),
   m_extClipListener(extClipListener),
@@ -56,7 +56,7 @@ void DesktopBaseImpl::getCurrentUserInfo(::string & desktopName,
   }
 }
 
-void DesktopBaseImpl::getFrameBufferProperties(::int_size *dim, PixelFormat *pf)
+void DesktopBaseImpl::getFrameBufferProperties(::int_size *dim, ::subsystem::PixelFormat *pf)
 {
   _ASSERT(m_updateHandler != 0);
   _ASSERT(m_extDeskTermListener != 0);
@@ -325,7 +325,7 @@ void DesktopBaseImpl::onConfigReload(ServerConfig *serverConfig)
   applyNewConfiguration();
 }
 
-bool DesktopBaseImpl::updateExternalFrameBuffer(FrameBuffer *fb, const Region *region,
+bool DesktopBaseImpl::updateExternalFrameBuffer(::subsystem::FrameBuffer *fb, const Region *region,
                                            const ::int_rectangle &  viewPort)
 {
   return m_updateHandler->updateExternalFrameBuffer(fb, region, viewPort);

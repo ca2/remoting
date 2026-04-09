@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "WinDxRecoverableException.h"
 #include "WinDxCriticalException.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 
 #include "WinDxgiAcquiredFrame.h"
 #include "WinD3D11Texture2D.h"
@@ -32,14 +32,14 @@
 
 #include "Win8DeskDuplicationThread.h"
 
-Win8DeskDuplication::Win8DeskDuplication(FrameBuffer *targetFb,
+Win8DeskDuplication::Win8DeskDuplication(::subsystem::FrameBuffer *targetFb,
                                                      ::array_base<::int_rectangle> &targetRect,
                                                      Win8CursorShape *targetCurShape,
                                                      LONGLONG *cursorTimeStamp,
                                                      critical_section *cursorMutex,
                                                      Win8DuplicationListener *duplListener,
                                                      ::array_base<WinDxgiOutput> &dxgiOutput,
-                                                     LogWriter *log)
+                                                     ::subsystem::LogWriter *log)
 : m_targetFb(targetFb),
   m_targetRects(targetRect),
   m_targetCurShape(targetCurShape),

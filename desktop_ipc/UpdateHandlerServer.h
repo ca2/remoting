@@ -38,7 +38,7 @@ public:
   UpdateHandlerServer(BlockingGate *forwGate,
                       DesktopSrvDispatcher *dispatcher,
                       AnEventListener *extTerminationListener,
-                      LogWriter *log);
+                      ::subsystem::LogWriter *log);
   virtual ~UpdateHandlerServer();
 
   // Internal dispatcher
@@ -57,7 +57,7 @@ protected:
 
   Win32ScreenDriverFactory m_scrDriverFactory;
 
-  PixelFormat m_oldPf;
+  ::subsystem::PixelFormat m_oldPf;
 
   UpdateHandlerImpl *m_updateHandler;
   AnEventListener *m_extTerminationListener;

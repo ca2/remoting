@@ -39,9 +39,9 @@ public:
 
   void update();
 
-  // Returns a PixelFormat that was at latest call of the
+  // Returns a ::subsystem::PixelFormat that was at latest call of the
   // update() function.
-  PixelFormat getPixelFormat();
+  ::subsystem::PixelFormat getPixelFormat();
 
   // Returns a desktop dimension that was at latest call of the
   // update() function.
@@ -86,7 +86,7 @@ private:
 
   void fillScreenRect();
 
-  PixelFormat m_pixelFormat;
+  ::subsystem::PixelFormat m_pixelFormat;
   ::int_rectangle m_virtDesktopRect;
 };
 

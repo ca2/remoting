@@ -27,8 +27,8 @@
 
 #include "WindowsScreenGrabber.h"
 #include "ScreenDriver.h"
-#include "remoting/remoting_common/rfb/FrameBuffer.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+#include "acme/subsystem/framebuffer/FrameBuffer.h"
+//#include "acme/subsystem/thread/critical_section.h"
 #include "UpdateContainer.h"
 #include "GrabOptimizator.h"
 
@@ -36,9 +36,9 @@ class UpdateFilter
 {
 public:
   UpdateFilter(ScreenDriver *screenDriver,
-               FrameBuffer *frameBuffer,
+               ::subsystem::FrameBuffer *frameBuffer,
                critical_section *frameBufferCriticalSection,
-               LogWriter *log);
+               ::subsystem::LogWriter *log);
   ~UpdateFilter();
 
   void filter(UpdateContainer *updateContainer);
@@ -55,7 +55,7 @@ private:
   bool grab();
 
   ScreenDriver *m_screenDriver;
-  FrameBuffer *m_frameBuffer;
+  ::subsystem::FrameBuffer *m_frameBuffer;
   critical_section *m_fbMutex;
   GrabOptimizator m_grabOptimizator;
 

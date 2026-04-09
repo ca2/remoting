@@ -26,7 +26,7 @@
 #include "WindowsApplication.h"
 
 #include "acme/subsystem/_common_header.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 
 critical_section WindowsApplication::m_MDLMutex;
 

@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/thread/GuiThread.h"
+#include "acme/subsystem/thread/GuiThread.h"
 #include "BlockingGate.h"
 #include "ClientListener.h"
 #include "remoting/remoting_common/util/AnEventListener.h"
@@ -38,7 +38,7 @@ class DesktopSrvDispatcher: public GuiThread
 public:
   DesktopSrvDispatcher(BlockingGate *gate,
                        AnEventListener *m_extTerminationListener,
-                       LogWriter *log);
+                       ::subsystem::LogWriter *log);
   virtual ~DesktopSrvDispatcher();
 
   void registerNewHandle(unsigned char code, ClientListener *listener);

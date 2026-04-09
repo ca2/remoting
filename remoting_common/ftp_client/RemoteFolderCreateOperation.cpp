@@ -29,14 +29,14 @@ namespace remoting
 {
    namespace ftp
    {
-      RemoteFolderCreateOperation::RemoteFolderCreateOperation(LogWriter *logWriter,
+      RemoteFolderCreateOperation::RemoteFolderCreateOperation(::subsystem::LogWriter *logWriter,
                                                                const ::file::path & pathToTargetFile)
       : FileTransferOperation(logWriter)
       {
          m_pathToTargetFile = pathToTargetFile;
       }
 
-      RemoteFolderCreateOperation::RemoteFolderCreateOperation(LogWriter *logWriter,
+      RemoteFolderCreateOperation::RemoteFolderCreateOperation(::subsystem::LogWriter *logWriter,
                                                                FileInfo file,
                                                                const ::file::path & pathToTargetRoot)
       : FileTransferOperation(logWriter)

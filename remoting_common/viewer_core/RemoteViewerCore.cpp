@@ -60,8 +60,8 @@
 
 //#include aaa_<algorithm>
 
-RemoteViewerCore::RemoteViewerCore(LogWriter *LogWriter)
-: m_plogwriter(LogWriter),
+RemoteViewerCore::RemoteViewerCore(::subsystem::LogWriter * plogwriter)
+: m_plogwriter(::subsystem::LogWriter),
   m_tcpConnection(m_plogwriter),
   m_fbUpdateNotifier(&m_frameBuffer, &m_fbLock, m_plogwriter, &m_watermarksController),
   m_decoderStore(m_plogwriter),
@@ -75,9 +75,9 @@ RemoteViewerCore::RemoteViewerCore(LogWriter *LogWriter)
 
 RemoteViewerCore::RemoteViewerCore(const ::scoped_string & scopedstrHost, unsigned short port,
                                    CoreEventsAdapter *adapter,
-                                   LogWriter *LogWriter,
+                                   ::subsystem::LogWriter * plogwriter,
                                    bool sharedFlag)
-: m_plogwriter(LogWriter),
+: m_plogwriter(::subsystem::LogWriter),
   m_tcpConnection(m_plogwriter),
   m_fbUpdateNotifier(&m_frameBuffer, &m_fbLock, m_plogwriter, &m_watermarksController),
   m_decoderStore(m_plogwriter),
@@ -93,9 +93,9 @@ RemoteViewerCore::RemoteViewerCore(const ::scoped_string & scopedstrHost, unsign
 
 RemoteViewerCore::RemoteViewerCore(SocketIPv4 *socket,
                                    CoreEventsAdapter *adapter,
-                                   LogWriter *LogWriter,
+                                   ::subsystem::LogWriter * plogwriter,
                                    bool sharedFlag)
-: m_plogwriter(LogWriter),
+: m_plogwriter(::subsystem::LogWriter),
   m_tcpConnection(m_plogwriter),
   m_fbUpdateNotifier(&m_frameBuffer, &m_fbLock, m_plogwriter, &m_watermarksController),
   m_decoderStore(m_plogwriter),
@@ -111,9 +111,9 @@ RemoteViewerCore::RemoteViewerCore(SocketIPv4 *socket,
 
 RemoteViewerCore::RemoteViewerCore(RfbInputGate *input, RfbOutputGate *output,
                                    CoreEventsAdapter *adapter,
-                                   LogWriter *LogWriter,
+                                   ::subsystem::LogWriter * plogwriter,
                                    bool sharedFlag)
-: m_plogwriter(LogWriter),
+: m_plogwriter(::subsystem::LogWriter),
   m_tcpConnection(m_plogwriter),
   m_fbUpdateNotifier(&m_frameBuffer, &m_fbLock, m_plogwriter, &m_watermarksController),
   m_decoderStore(m_plogwriter),
@@ -269,7 +269,7 @@ void RemoteViewerCore::waitTermination()
   wait();
 }
 
-void RemoteViewerCore::setPixelFormat(const PixelFormat & pixelFormat)
+void RemoteViewerCore::setPixelFormat(const ::subsystem::PixelFormat & pixelFormat)
 {
   m_plogwriter->debug("Pixel format will changed");
   critical_section_lock al(&m_pixelFormatLock);
@@ -290,7 +290,7 @@ void RemoteViewerCore::enableDispatching(DispatchDataProvider *src)
 
 bool RemoteViewerCore::updatePixelFormat()
 {
-  PixelFormat pxFormat;
+  ::subsystem::PixelFormat pxFormat;
   m_plogwriter->debug("Check pixel format change...");
   {
     critical_section_lock al(&m_pixelFormatLock);
@@ -552,9 +552,9 @@ void RemoteViewerCore::stopUpdating(bool isStopped)
   }
 }
 
-PixelFormat RemoteViewerCore::readPixelFormat()
+::subsystem::PixelFormat RemoteViewerCore::readPixelFormat()
 {
-  PixelFormat pixelFormat;
+  ::subsystem::PixelFormat pixelFormat;
   pixelFormat.bitsPerPixel = m_input->readUInt8();
   pixelFormat.colorDepth = m_input->readUInt8();
   pixelFormat.bigEndian = !!m_input->readUInt8();
@@ -829,13 +829,13 @@ int RemoteViewerCore::initAuthentication()
 }
 
 void RemoteViewerCore::setFbProperties(const ::int_size & fbDimension,
-                                       const PixelFormat & fbPixelFormat)
+                                       const ::subsystem::PixelFormat & fbPixelFormat)
 {
 #ifdef _DEMO_VERSION_
 	m_watermarksController.setNewFbProperties(&fbDimension->getRect(), fbPixelFormat);
 #endif
 
-  const PixelFormat &pxFormat = fbPixelFormat;
+  const ::subsystem::PixelFormat &pxFormat = fbPixelFormat;
   ::string pxString;
   pxString.formatf("[bits-per-pixel: {}, depth: {}, big-endian-flag: {}, "
                   "true-color-flag: is set, " // true color always is set
@@ -1325,7 +1325,7 @@ void RemoteViewerCore::handshake()
  * Server send:
  * 2           - U16         - framebuffer-width
  * 2           - U16         - framebuffer-height
- * 16          - PixelFormat - server-pixel-format
+ * 16          - ::subsystem::PixelFormat - server-pixel-format
  * 4           - U32         - name-length
  * name-length - U8 array    - name-string
  */
@@ -1343,7 +1343,7 @@ void RemoteViewerCore::clientAndServerInit()
   unsigned short width = m_input->readUInt16();
   unsigned short height = m_input->readUInt16();
   ::int_size screenDimension(width, height);
-  PixelFormat serverPixelFormat = readPixelFormat();
+  ::subsystem::PixelFormat serverPixelFormat = readPixelFormat();
   
   {
     critical_section_lock al(&m_fbLock);

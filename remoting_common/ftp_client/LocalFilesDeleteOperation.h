@@ -26,7 +26,7 @@
 
 
 #include "FileTransferOperation.h"
-#include "remoting/remoting_common/thread/Thread.h"
+#include "acme/subsystem/thread/Thread.h"
 
 namespace remoting
 {
@@ -35,7 +35,7 @@ namespace remoting
       class CLASS_DECL_REMOTING_COMMON LocalFilesDeleteOperation : public FileTransferOperation
       {
       public:
-         LocalFilesDeleteOperation(LogWriter *logWriter,
+         LocalFilesDeleteOperation(::subsystem::LogWriter *logWriter,
                                   const ::pointer_array<FileInfo> & fileinfoa,
                                    const ::file::path & pathToTargetRoot);
          ~LocalFilesDeleteOperation() override;

@@ -32,7 +32,7 @@ namespace remoting_remoting
 
     AuthenticationDialog::AuthenticationDialog()
     {
-        initialize_base_dialog(IDD_DAUTH);
+        initialize_dialog(IDD_DAUTH);
     }
 
 

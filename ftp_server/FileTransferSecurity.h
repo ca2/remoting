@@ -36,7 +36,7 @@
 class FileTransferSecurity : private Impersonator
 {
 public:
-  FileTransferSecurity(Desktop *desktop, LogWriter *log);
+  FileTransferSecurity(Desktop *desktop, ::subsystem::LogWriter *log);
   virtual ~FileTransferSecurity();
 
   // Sets access rights for calling process for execution

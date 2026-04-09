@@ -28,7 +28,7 @@
 Win32ScreenDriverBaseImpl::Win32ScreenDriverBaseImpl(UpdateKeeper *updateKeeper,
                                                  UpdateListener *updateListener,
                                                  critical_section *fbcritical_section,
-                                                 LogWriter *log)
+                                                 ::subsystem::LogWriter *log)
 : WinVideoRegionUpdaterImpl(log),
   m_fbcritical_section(fbcritical_section),
   m_cursorPosDetector(updateKeeper, updateListener, log),
@@ -61,7 +61,7 @@ critical_section *Win32ScreenDriverBaseImpl::getFbMutex()
   return m_fbcritical_section;
 }
 
-bool Win32ScreenDriverBaseImpl::grabCursorShape(const PixelFormat & pf)
+bool Win32ScreenDriverBaseImpl::grabCursorShape(const ::subsystem::PixelFormat & pf)
 {
   // Grabbing under the mutex avoid us from grab void cursor shape in time when the
   // shape hides until grabs screen.

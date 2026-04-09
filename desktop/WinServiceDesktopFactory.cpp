@@ -36,7 +36,7 @@ WinServiceDesktopFactory::~WinServiceDesktopFactory()
 Desktop *WinServiceDesktopFactory::createDesktop(ClipboardListener *extClipListener,
                                                           UpdateSendingListener *extUpdSendingListener,
                                                           AbnormDeskTermListener *extDeskTermListener,
-                                                          LogWriter *log)
+                                                          ::subsystem::LogWriter *log)
 {
   return new DesktopClientImpl(extClipListener, extUpdSendingListener,
                            extDeskTermListener, log);

@@ -28,36 +28,38 @@
 //#include "log_writer/LogWriter.h"
 #include "remoting/remoting_common/network/RfbInputGate.h"
 
-#include "remoting/remoting_common/rfb/FrameBuffer.h"
+#include "acme/subsystem/framebuffer/FrameBuffer.h"
 #include "remoting/remoting_common/rfb/EncodingDefs.h"
-////#include "remoting/remoting_common/thread/critical_section.h"
-////#include "remoting/remoting_common/thread/critical_section.h"
+////#include "acme/subsystem/thread/critical_section.h"
+////#include "acme/subsystem/thread/critical_section.h"
+///
 
-class CLASS_DECL_REMOTING_COMMON Decoder
+namespace remoting
 {
-public:
-  Decoder(::subsystem::LogWriter * plogwriter);
-  virtual ~Decoder();
+   class CLASS_DECL_REMOTING_COMMON Decoder
+   {
+   public:
+      Decoder(::subsystem::LogWriter * plogwriter);
+      virtual ~Decoder();
 
-  //
-  // This method return encoding of this Decoder.
-  //
-  virtual int getCode() const;
+      //
+      // This method return encoding of this Decoder.
+      //
+      virtual int getCode() const;
 
-  //
-  // This method return true, if decoder responsible for pseudo encoding.
-  //
-  virtual bool isPseudo() const;
+      //
+      // This method return true, if decoder responsible for pseudo encoding.
+      //
+      virtual bool isPseudo() const;
 
-  //
-  // This static method return true, if "encoding" is pseudo encoding.
-  //
-  static bool isPseudo(int encoding);
+      //
+      // This static method return true, if "encoding" is pseudo encoding.
+      //
+      static bool isPseudo(int encoding);
 
-protected:
-  LogWriter *m_plogwriter;
+   protected:
+     ::subsystem::LogWriter *m_plogwriter;
 
-  int m_encoding;
-};
-
-
+      int m_encoding;
+   };
+} // namespace remoting

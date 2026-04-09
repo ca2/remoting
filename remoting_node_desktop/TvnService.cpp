@@ -50,7 +50,7 @@ void TvnService::onStart()
 {
   try {
     m_winServiceEvents->enable();
-    // FIXME: Use real LogWriter instead of zero.
+    // FIXME: Use real ::subsystem::LogWriter instead of zero.
     m_tvnServer = new TvnServer(true, m_newConnectionEvents, this, &m_clientLogWriter);
     m_tvnServer->addListener(this);
     m_winServiceEvents->onSuccServiceStart();

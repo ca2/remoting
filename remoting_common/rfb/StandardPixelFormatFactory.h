@@ -21,28 +21,31 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
 #pragma once
 
-#include "remoting/remoting_common/rfb/PixelFormat.h"
 
-class CLASS_DECL_REMOTING_COMMON StandardPixelFormatFactory
+#include "acme/subsystem/framebuffer/PixelFormat.h"
+
+
+namespace remoting
 {
-public:
-  // specifies 16777216 colors, 8bit per Red, 8bit per Green, 8bit per Blue
-  static PixelFormat create32bppPixelFormat();
-  
-  // specifies 65536 colors, 5bit per Red, 6bit per Green, 5bit per Blue
-  static PixelFormat create16bppPixelFormat();
+   class CLASS_DECL_REMOTING_COMMON StandardPixelFormatFactory
+   {
+   public:
+      // specifies 16777216 colors, 8bit per Red, 8bit per Green, 8bit per Blue
+      static ::subsystem::PixelFormat create32bppPixelFormat();
 
-  // specifies 256 colors, 2bit per Blue, 3bit per Green & Red
-  static PixelFormat create8bppPixelFormat();
+      // specifies 65536 colors, 5bit per Red, 6bit per Green, 5bit per Blue
+      static ::subsystem::PixelFormat create16bppPixelFormat();
 
-  // specifies 64 colors, 2bit per Red, Green & Blue
-  static PixelFormat create6bppPixelFormat();
+      // specifies 256 colors, 2bit per Blue, 3bit per Green & Red
+      static ::subsystem::PixelFormat create8bppPixelFormat();
 
-  // specifies 8 colors, 1bit per Red, Green & Blue
-  static PixelFormat create3bppPixelFormat();
-};
+      // specifies 64 colors, 2bit per Red, Green & Blue
+      static ::subsystem::PixelFormat create6bppPixelFormat();
 
+      // specifies 8 colors, 1bit per Red, Green & Blue
+      static ::subsystem::PixelFormat create3bppPixelFormat();
+   };
+} // namespace remoting
 

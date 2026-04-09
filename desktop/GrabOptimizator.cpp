@@ -25,7 +25,7 @@
 #include "GrabOptimizator.h"
 #include "acme/subsystem/Exception.h"
 
-GrabOptimizator::GrabOptimizator(LogWriter *log)
+GrabOptimizator::GrabOptimizator(::subsystem::LogWriter *log)
 : m_gSum(0),
   m_wholeTSum(0),
   m_wholeS(0),

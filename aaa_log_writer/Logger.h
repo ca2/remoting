@@ -28,25 +28,25 @@
 #include "remoting/remoting_common/util/CharDefs.h"
 
 //
-// The LogWriter class defines abstract low-level interface for logging
+// The ::subsystem::LogWriter class defines abstract low-level interface for logging
 // (recording various types of events in software components or applications).
 //
-// To develop an implementation (e.g. a LogWriter which writes to a file, to the
+// To develop an implementation (e.g. a ::subsystem::LogWriter which writes to a file, to the
 // console etc.), inherit from this class and override its print() function.
-// For example, see FileLogWriter which implements the LogWriter interface to log
+// For example, see FileLogWriter which implements the ::subsystem::LogWriter interface to log
 // into a file.
 //
 // Normally, this class and its subclasses should not be used directly. It's
-// recommended to use LogWriter which adds separate functions for different
+// recommended to use ::subsystem::LogWriter which adds separate functions for different
 // log verbosity levels, and adds scopedstrMessage formatting.
 //
 // When developing components and libraries that use logging but should stay
-// independent from the actual logging method, allow passing LogWriter* pointer
-// to your module and construct LogWriter wrapper around that LogWriter. That
-// allows your caller to pass any sub-class of the LogWriter to your component,
+// independent from the actual logging method, allow passing ::subsystem::LogWriter* pointer
+// to your module and construct ::subsystem::LogWriter wrapper around that ::subsystem::LogWriter. That
+// allows your caller to pass any sub-class of the ::subsystem::LogWriter to your component,
 // or operate without logging by passing a null pointer.
 //
-class LogWriter
+class ::subsystem::LogWriter
 {
 public:
   //
@@ -58,7 +58,7 @@ public:
   //
   // The logLevel argument defines significance of the event. Higher values of
   // logLevel correspond to less important events. The recommended range for
-  // logLevel is 0..9. When this function is called, a LogWriter implementation
+  // logLevel is 0..9. When this function is called, a ::subsystem::LogWriter implementation
   // should check logLevel and decide either to accept or to decline the log
   // scopedstrMessage.
   //

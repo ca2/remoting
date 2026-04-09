@@ -26,7 +26,7 @@
 #include "ServerCommandLine.h"
 #include "TvnServerHelp.h"
 
-#include "remoting/remoting_common/thread/GlobalMutex.h"
+#include "acme/subsystem/thread/GlobalMutex.h"
 
 #include "remoting/remoting_common/util/ResourceLoader.h"
 #include "remoting/remoting_common/util/StringTable.h"

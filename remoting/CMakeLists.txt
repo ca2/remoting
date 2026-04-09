@@ -163,3 +163,8 @@ list(APPEND executable_include_directories ${CMAKE_CURRENT_SOURCE_DIR}/../..)
 target_include_directories(${PROJECT_NAME} PRIVATE ${executable_include_directories})
 
 add_subdirectory(__implement)
+
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE _${PROJECT_NAME}_project)
+
+

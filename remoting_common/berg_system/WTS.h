@@ -28,7 +28,7 @@
 //#include "remoting/remoting_common/util/winhdr.h"
 //#include "acme/_operating_system.h"
 
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 #include "DynamicLibrary.h"
 #include "SystemException.h"
 //#include "log_writer/LogWriter.h"
@@ -84,19 +84,19 @@ public:
    * @return active console session id if WTS is avaliable or 0 if 
    * WinAPI WTSGetActiveConsoleSessionId function not avaliable.
    */
-  static DWORD getActiveConsoleSessionId(LogWriter *log);
+  static DWORD getActiveConsoleSessionId(::subsystem::LogWriter *log);
 
   /**
   * Gets RDP console session id.
   * @return RDP console session id if WTS is avaliable and RDP console exists or 0 if
   * WinAPI WTSEnumerateSessions function not avaliable or there is no sessions with RDP in name.
   */
-  static DWORD getRdpSessionId(LogWriter *log);
+  static DWORD getRdpSessionId(::subsystem::LogWriter *log);
 
   /**
   * @return true if sessionId is the RDP console session id.
   */
-  static bool SessionIsRdpSession(DWORD sessionId, LogWriter *log);
+  static bool SessionIsRdpSession(DWORD sessionId, ::subsystem::LogWriter *log);
 
   /**
    * Queries user token in active console session.
@@ -107,9 +107,9 @@ public:
    * process id will be used to get user token (this id can be set by using of
    * defineConsoleUserProcessId() method).
    */
-  static HANDLE queryConsoleUserToken(LogWriter *log);
+  static HANDLE queryConsoleUserToken(::subsystem::LogWriter *log);
 
-  static HANDLE sessionUserToken(DWORD sessionId, LogWriter* log);
+  static HANDLE sessionUserToken(DWORD sessionId, ::subsystem::LogWriter* log);
 
   /**
    * Defines global (for WTS class) user process that will be used
@@ -124,14 +124,14 @@ public:
   // rdp.
   static void duplicatePipeClientToken(HANDLE pipeHandle);
 
-  static ::string getUserName(DWORD sessionId, LogWriter *log);
-  static ::string getCurrentUserName(LogWriter* log);
+  static ::string getUserName(DWORD sessionId, ::subsystem::LogWriter *log);
+  static ::string getCurrentUserName(::subsystem::LogWriter* log);
 
-  static bool sessionIsLocked(DWORD sessionId, LogWriter* log);
+  static bool sessionIsLocked(DWORD sessionId, ::subsystem::LogWriter* log);
 
-  static HANDLE duplicateCurrentProcessUserToken(bool rdpEnabled, LogWriter* log);
+  static HANDLE duplicateCurrentProcessUserToken(bool rdpEnabled, ::subsystem::LogWriter* log);
 
-  static HANDLE duplicateUserImpersonationToken(HANDLE token, DWORD sessionId, LogWriter* log);
+  static HANDLE duplicateUserImpersonationToken(HANDLE token, DWORD sessionId, ::subsystem::LogWriter* log);
 
   /**
    * Returns user name for given access token.
@@ -148,7 +148,7 @@ private:
   /**
    * Initializes WTS functions.
    */
-  static void initialize(LogWriter *log);
+  static void initialize(::subsystem::LogWriter *log);
 
   // The initialize() function should be already called before use the wtsFreeMemory() function.
   static void wtsFreeMemory(void *buffer);

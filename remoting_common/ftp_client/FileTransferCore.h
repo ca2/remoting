@@ -57,7 +57,7 @@ namespace remoting
          // ftListeners - needs for executing file transfer operations
          //
 
-         FileTransferCore(LogWriter *logWriter,
+         FileTransferCore(::subsystem::LogWriter *logWriter,
                           FileTransferRequestSender *sender,
                           FileTransferReplyBuffer *replyBuffer,
                           ListenerContainer<FileTransferEventHandler *> *ftListeners);
@@ -126,7 +126,7 @@ namespace remoting
          // Interface of log
          //
 
-         LogWriter *m_plogwriter;
+         ::subsystem::LogWriter *m_plogwriter;
 
          //
          // Current dialog state, needed for checking what type of

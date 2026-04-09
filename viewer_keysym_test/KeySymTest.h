@@ -61,5 +61,5 @@ private:
 
   bool m_isNextEventInSeries;
 
-  LogWriter m_plogwriter;
+  ::subsystem::LogWriter m_plogwriter;
 };

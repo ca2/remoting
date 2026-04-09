@@ -39,7 +39,7 @@ UpdateSender::UpdateSender(RfbCodeRegistrator *codeRegtor,
                            SenderControlInformationInterface *senderControlInformation,
                            RfbOutputGate *output, int id,
                            Desktop *desktop,
-                           LogWriter *log)
+                           ::subsystem::LogWriter *log)
 : m_updReqListener(updReqListener),
   m_desktop(desktop),
   m_senderControlInformation(senderControlInformation),
@@ -128,7 +128,7 @@ void UpdateSender::onRequest(unsigned int reqCode, RfbInputGate *input)
 }
 
 void UpdateSender::init(const ::int_size & viewPortDimension,
-                        const PixelFormat & pf)
+                        const ::subsystem::PixelFormat & pf)
 {
   setClientPixelFormat(pf, false);
   {
@@ -238,14 +238,14 @@ void UpdateSender::sendNewFBSize(::int_size *dim, bool extended)
 }
 
 void UpdateSender::sendFbInClientDim(const EncodeOptions *encodeOptions,
-                                     const FrameBuffer *fb,
+                                     const ::subsystem::FrameBuffer *fb,
                                      const ::int_size & dim,
-                                     const PixelFormat & pf)
+                                     const ::subsystem::PixelFormat & pf)
 {
   // On the black frame buffer will be overlayed the current framebuffer.
   // This is needed to combine the server frame buffer with a client frame
   // buffer when the dimensions are not equal.
-  FrameBuffer blankFrameBuffer;
+  ::subsystem::FrameBuffer blankFrameBuffer;
   blankFrameBuffer.setProperties(dim, pf);
   blankFrameBuffer.setColor(0, 0, 0);
   blankFrameBuffer.copyFrom(fb, 0, 0);
@@ -264,7 +264,7 @@ void UpdateSender::sendFbInClientDim(const EncodeOptions *encodeOptions,
   sendRectangles(m_enbox.getEncoder(), &rects, &blankFrameBuffer, encodeOptions);
 }
 
-void UpdateSender::sendCursorShapeUpdate(const PixelFormat & fmt,
+void UpdateSender::sendCursorShapeUpdate(const ::subsystem::PixelFormat & fmt,
                                          const CursorShape *cursorShape)
 {
   // Send pseudo-rectangle.
@@ -273,7 +273,7 @@ void UpdateSender::sendCursorShapeUpdate(const PixelFormat & fmt,
   sendRectHeader(hotSpot.x, hotSpot.y, dim.cx, dim.cy,
                  PseudoEncDefs::RICH_CURSOR);
 
-  FrameBuffer fbConverted;
+  ::subsystem::FrameBuffer fbConverted;
   fbConverted.setProperties(dim, fmt);
   ::int_rectangle rectangleFromDimension(dim);
   m_pixelConverter.convert(rectangleFromDimension, &fbConverted,
@@ -310,7 +310,7 @@ void UpdateSender::sendCopyRect(const ::array_base<::int_rectangle> *rects, cons
   }
 }
 
-void UpdateSender::sendPalette(PixelFormat *pf)
+void UpdateSender::sendPalette(::subsystem::PixelFormat *pf)
 {
   m_output->writeUInt8(1); // type
   m_output->writeUInt8(0); // pad
@@ -369,7 +369,7 @@ void UpdateSender::sendUpdate()
                                         &shareAppRegion);
 
   updateFrameBuffer(&updCont, shareOnlyApp, &prevShareAppRegion, &shareAppRegion);
-  FrameBuffer *frameBuffer = &m_frameBuffer;
+  ::subsystem::FrameBuffer *frameBuffer = &m_frameBuffer;
 
   critical_section_lock l(m_output);
 
@@ -414,9 +414,9 @@ void UpdateSender::sendUpdate()
 
   // Update pixel converter for effective pixel formats. We must do this
   // before using encoders.
-  const PixelFormat serverPixelFormat = frameBuffer->getPixelFormat();
+  const ::subsystem::PixelFormat serverPixelFormat = frameBuffer->getPixelFormat();
   bool setColorMapEntr;
-  PixelFormat clientPixelFormat;
+  ::subsystem::PixelFormat clientPixelFormat;
   {
     critical_section_lock lock(&m_newPixelFormatLocker);
     clientPixelFormat = m_newPixelFormat;
@@ -646,7 +646,7 @@ void UpdateSender::sendUpdate()
 //  m_plogwriter->checkPoint("5 sendUpdate() end");
 }
 
-void UpdateSender::paintBlack(FrameBuffer *frameBuffer, const Region *blackRegion)
+void UpdateSender::paintBlack(::subsystem::FrameBuffer *frameBuffer, const Region *blackRegion)
 {
   ::array_base<::int_rectangle> blackRects;
   blackRegion->getRectVector(&blackRects);
@@ -658,7 +658,7 @@ void UpdateSender::paintBlack(FrameBuffer *frameBuffer, const Region *blackRegio
 void UpdateSender::splitRegion(Encoder *encoder,
                                const Region *region,
                                ::array_base<::int_rectangle> *rects,
-                               const FrameBuffer *frameBuffer,
+                               const ::subsystem::FrameBuffer *frameBuffer,
                                const EncodeOptions *encodeOptions)
 {
   ::array_base<::int_rectangle> baseRects;
@@ -671,7 +671,7 @@ void UpdateSender::splitRegion(Encoder *encoder,
 
 void UpdateSender::sendRectangles(Encoder *encoder,
                                   const ::array_base<::int_rectangle> *rects,
-                                  const FrameBuffer *frameBuffer,
+                                  const ::subsystem::FrameBuffer *frameBuffer,
                                   const EncodeOptions *encodeOptions)
 {
   ::array_base<::int_rectangle>::const_iterator i;
@@ -756,7 +756,7 @@ void UpdateSender::readUpdateRequest(RfbInputGate *io)
 
 void UpdateSender::readSetPixelFormat(RfbInputGate *io)
 {
-  PixelFormat pf;
+  ::subsystem::PixelFormat pf;
   // Read padding
   io->readUInt16();
   io->readUInt8();
@@ -798,7 +798,7 @@ void UpdateSender::readSetPixelFormat(RfbInputGate *io)
   setClientPixelFormat(&pf, setColorMapEntr);
 }
 
-void UpdateSender::setClientPixelFormat(const PixelFormat & pf,
+void UpdateSender::setClientPixelFormat(const ::subsystem::PixelFormat & pf,
                                         bool clrMapEntries)
 {
   critical_section_lock al(&m_newPixelFormatLocker);

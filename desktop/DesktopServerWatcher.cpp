@@ -36,7 +36,7 @@
 
 //#include aaa_<time.h>
 
-DesktopServerWatcher::DesktopServerWatcher(ReconnectionListener *recListener, LogWriter *log)
+DesktopServerWatcher::DesktopServerWatcher(ReconnectionListener *recListener, ::subsystem::LogWriter *log)
 : m_recListener(recListener),
   m_process(0),
   m_plogwriter(log)

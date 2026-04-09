@@ -43,31 +43,31 @@ namespace remoting_remoting
     class style;
 
     class ViewerWindow;
-    class DesktopWindow : public PaintWindow,
+    class DesktopWindow : public ::innate_subsystem::PaintWindow,
                           protected RfbKeySymListener
     {
     public:
         ViewerWindow* m_pviewerwindow;
         ::string m_strHost;
         ::int_size m_sizeBuffer = {};
-        HDC m_hdcBuffer = nullptr;
-        HBITMAP m_hbitmapOld = nullptr;
-        HBITMAP m_hbitmapBuffer = nullptr;
+        //HDC m_hdcBuffer = nullptr;
+        //HBITMAP m_hbitmapOld = nullptr;
+        //HBITMAP m_hbitmapBuffer = nullptr;
         bool m_bMinimized = false;
         //   int m_iDivisor = 1;
-        ::pointer< ::remoting::toolbar > m_premotingtoolbar;
-        ::pointer< ::remoting::style > m_premotingstyle;
+        ::pointer< ::remoting_remoting::toolbar > m_premotingtoolbar;
+        ::pointer< ::remoting_remoting::style > m_premotingstyle;
         bool m_bShowCursor = false;
         class ::time m_timeStartDesktopWindow;
-        DesktopWindow(LogWriter *logWriter, ConnectionConfig *conConf, ViewerWindow * pviewerwindow);
+        DesktopWindow(::subsystem::LogWriter *logWriter, ::remoting::ConnectionConfig *conConf, ViewerWindow * pviewerwindow);
         virtual ~DesktopWindow();
         virtual void _defer_update_double_buffering();
         void setClipboardData(const ::scoped_string & strText);
-        void updateFramebuffer(const FrameBuffer * pframebuffer,
+        void updateFramebuffer(const ::subsystem::FrameBuffer * pframebuffer,
                                const ::int_rectangle &  dstRect);
         // this function must be called if size of image was changed
         // or the number of bits per pixel
-        void setNewFramebuffer(const FrameBuffer * pframebuffer);
+        void setNewFramebuffer(const ::subsystem::FrameBuffer * pframebuffer);
 
         // set scale of image, can -1 = Auto, in percent
         void setScale(int scale);
@@ -79,7 +79,7 @@ namespace remoting_remoting
         void getServerGeometry(::int_rectangle *rect, int *pixelsize);
 
         void setConnected();
-        void setViewerCore(RemoteViewerCore *viewerCore);
+        void setViewerCore(::remoting::RemoteViewerCore *viewerCore);
 
         // This function set state key "Ctrl", but not send data to server.
         void setCtrlState(const bool ctrlState);
@@ -92,7 +92,7 @@ namespace remoting_remoting
 
         // this function sends to remote viewer core
         // key what is pressed or unpressed
-        void sendKey(WCHAR key, bool pressed);
+        void sendKey(int key, bool pressed);
         // this function sends to remote viewer core the combination
         // Ctrl + Alt + Del
         void sendCtrlAltDel();
@@ -113,21 +113,21 @@ namespace remoting_remoting
         //
         bool onMessage(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam);
         //void onPaint(DeviceContext *dc, PAINTSTRUCT *paintStruct);
-        void onPaint() override;
-        bool onCreate(LPCREATESTRUCT pcs);
+        void onPaint();
+        //bool onCreate(LPCREATESTRUCT pcs); xxx
         bool onDrawClipboard();
-        bool onEraseBackground(HDC hdc);
+        //bool onEraseBackground(HDC hdc); xxx
         bool onDeadChar(::wparam wParam, ::lparam lParam);
         bool onHScroll(::wparam wParam, ::lparam lParam);
         bool onVScroll(::wparam wParam, ::lparam lParam);
         bool onKey(::wparam wParam, ::lparam lParam);
         bool onChar(::wparam wParam, ::lparam lParam);
-        bool onMouse(unsigned char mouseKeys, unsigned short wheelSpeed, POINT position) override;
-        bool onMouseEx(unsigned int message, int iButtonMask, unsigned short wspeed, POINT position) override;
+        bool onMouse(unsigned char mouseKeys, unsigned short wheelSpeed, const ::int_point & position) override;
+        virtual bool onMouseEx(unsigned int message, int iButtonMask, unsigned short wspeed, const ::int_point & position);
         bool onSize(::wparam wParam, ::lparam lParam);
         bool onDestroy();
 
-        POINTS getViewerCoord(long xPos, long yPos);
+        ::int_point getViewerCoord(long xPos, long yPos);
         void calculateWndSize(bool isChanged);
         void applyScrollbarChanges(bool isChanged, bool isVert, bool isHorz, int wndWidth, int wndHeight);
 
@@ -138,7 +138,7 @@ namespace remoting_remoting
         void sendPointerEvent(unsigned char buttonMask, const Point *position);
         void sendCutTextEvent(const ::scoped_string & cutText);
 
-        LogWriter *m_plogwriter;
+        ::subsystem::LogWriter *m_plogwriter;
 
         // This variable is true after call CoreEventsAdapter::onConnected().
         bool m_isConnected;
@@ -151,7 +151,7 @@ namespace remoting_remoting
         Point m_previousMousePos;
 
         // scroll bars: vertical and horizontal
-        ScrollBar m_sbar;
+        ::innate_subsystem::ScrollBar m_sbar;
 
         // This flag is true if size of window is changed (scroll must be updated).
         bool m_winResize;
@@ -163,32 +163,32 @@ namespace remoting_remoting
         ::int_rectangle m_clientArea;
         int m_fbWidth;
         int m_fbHeight;
-        ::remoting::SolidBrush m_brush;
+        ::innate_subsystem::SolidBrush m_brush;
 
         // frame buffer
         critical_section m_bufferLock;
-        DibFrameBuffer m_framebuffer;
+        ::subsystem::DibFrameBuffer m_framebuffer;
         // This variable save server dimension.
         // ::int_size of m_framebuffer can be large m_serverDimension.
         ::int_size m_serverDimension;
 
         // clipboard
-        WinClipboard m_clipboard;
+        ::subsystem::Clipboard m_clipboard;
         ::string m_strClipboard;
-        HWND m_hwndNextViewer;
+        ::operating_system::window m_hwndNextViewer;
 
         bool m_ctrlDown;
         bool m_altDown;
-        RemoteViewerCore *m_viewerCore;
-        ConnectionConfig *m_pconnectionconfig;
+        ::remoting::RemoteViewerCore *m_viewerCore;
+        ::remoting::ConnectionConfig *m_pconnectionconfig;
         bool m_isBackgroundDirty;
 
     public:
         //void doDraw(DeviceContext *dc);
-        void doDraw(HDC hdc, const ::int_rectangle & rectangle);
+        void doDraw(::innate_subsystem::Graphics * pgraphics, const ::int_rectangle & rectangle);
         void scrollProcessing(int fbWidth, int fbHeight);
-        void drawBackground(HDC hdc, const RECT & rcMain, const RECT & rcImage);
-        void drawImage(HDC hdc, const RECT & src, const RECT & dst);
+        void drawBackground(::innate_subsystem::Graphics * pgraphics, const ::int_rectangle & rcMain, const ::int_rectangle & rcImage);
+        void drawImage(::innate_subsystem::Graphics * pgraphics, const ::int_rectangle & src, const ::int_rectangle & dst);
         void repaint(const ::int_rectangle &  repaintRect);
         void calcClientArea();
     };

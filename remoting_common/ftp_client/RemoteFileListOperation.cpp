@@ -27,7 +27,7 @@ namespace remoting
 {
    namespace ftp
    {
-      RemoteFileListOperation::RemoteFileListOperation(LogWriter *logWriter,
+      RemoteFileListOperation::RemoteFileListOperation(::subsystem::LogWriter *logWriter,
                                                        const ::scoped_string & scopedstrRemotePath)
       : FileTransferOperation(logWriter),
         m_isOk(false),

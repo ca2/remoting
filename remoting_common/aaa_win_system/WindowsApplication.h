@@ -28,7 +28,7 @@
 //#include "remoting/remoting_common/util/winhdr.h"
 //#include "acme/_operating_system.h"
 
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 #include "acme/prototype/collection/comparable_list.h"
 //#include aaa_<list>
 

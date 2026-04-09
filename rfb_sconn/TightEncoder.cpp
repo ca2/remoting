@@ -50,7 +50,7 @@ int TightEncoder::getCode() const
 
 void TightEncoder::splitRectangle(const ::int_rectangle &  rect,
                                   ::array_base<::int_rectangle> *rectList,
-                                  const FrameBuffer *serverFb,
+                                  const ::subsystem::FrameBuffer *serverFb,
                                   const EncodeOptions *options)
 {
   int maxSize = getConf(options).maxRectSize;
@@ -80,11 +80,11 @@ void TightEncoder::splitRectangle(const ::int_rectangle &  rect,
 }
 
 void TightEncoder::sendRectangle(const ::int_rectangle &  rect,
-                                 const FrameBuffer *serverFb,
+                                 const ::subsystem::FrameBuffer *serverFb,
                                  const EncodeOptions *options)
 {
   // First, convert pixels to client format.
-  const FrameBuffer *clientFb = m_pixelConverter->convert(rect, serverFb);
+  const ::subsystem::FrameBuffer *clientFb = m_pixelConverter->convert(rect, serverFb);
 
   // Now call an encoder function corresponding to the client's pixel size.
   size_t bpp = clientFb->getBitsPerPixel();
@@ -109,8 +109,8 @@ void TightEncoder::sendRectangle(const ::int_rectangle &  rect,
 // FIXME: Make a special version for the case when PIXEL_T is unsigned char.
 template <class PIXEL_T>
 void TightEncoder::sendAnyRect(const ::int_rectangle &  rect,
-                               const FrameBuffer *serverFb,
-                               const FrameBuffer *clientFb,
+                               const ::subsystem::FrameBuffer *serverFb,
+                               const ::subsystem::FrameBuffer *clientFb,
                                const EncodeOptions *options)
 {
   // Compute maximum number of colors to be allowed in the palette.
@@ -147,9 +147,9 @@ void TightEncoder::sendAnyRect(const ::int_rectangle &  rect,
   }
 }
 
-void TightEncoder::sendSolidRect(const ::int_rectangle &  r, const FrameBuffer *fb)
+void TightEncoder::sendSolidRect(const ::int_rectangle &  r, const ::subsystem::FrameBuffer *fb)
 {
-  PixelFormat pf = fb->getPixelFormat();
+  ::subsystem::PixelFormat pf = fb->getPixelFormat();
   size_t pixelSize = pf.bitsPerPixel / 8;
 
   // Copy the leftmost upper pixel of the rectangle into a buffer.
@@ -167,7 +167,7 @@ void TightEncoder::sendSolidRect(const ::int_rectangle &  r, const FrameBuffer *
 
 template <class PIXEL_T>
 void TightEncoder::sendMonoRect(const ::int_rectangle &  rect,
-                                const FrameBuffer *fb,
+                                const ::subsystem::FrameBuffer *fb,
                                 const EncodeOptions *options)
 {
   // Send control info.
@@ -188,7 +188,7 @@ void TightEncoder::sendMonoRect(const ::int_rectangle &  rect,
     (PIXEL_T)m_pal.getEntry(0),
     (PIXEL_T)m_pal.getEntry(1)
   };
-  PixelFormat pf = fb->getPixelFormat();
+  ::subsystem::PixelFormat pf = fb->getPixelFormat();
   size_t pixelSize = sizeof(PIXEL_T);
   if (shouldPackPixels(pf)) {
     packPixels((unsigned char *)palette, 2, pf);
@@ -207,7 +207,7 @@ void TightEncoder::sendMonoRect(const ::int_rectangle &  rect,
 
 template <class PIXEL_T>
 void TightEncoder::sendIndexedRect(const ::int_rectangle &  rect,
-                                   const FrameBuffer *fb,
+                                   const ::subsystem::FrameBuffer *fb,
                                    const EncodeOptions *options)
 {
   // Send control info.
@@ -228,7 +228,7 @@ void TightEncoder::sendIndexedRect(const ::int_rectangle &  rect,
   for (int i = 0; i < numColors; i++) {
     palette[i] = (PIXEL_T)m_pal.getEntry(i);
   }
-  PixelFormat pf = fb->getPixelFormat();
+  ::subsystem::PixelFormat pf = fb->getPixelFormat();
   size_t pixelSize = sizeof(PIXEL_T);
   if (shouldPackPixels(pf)) {
     packPixels((unsigned char *)palette, numColors, pf);
@@ -247,7 +247,7 @@ void TightEncoder::sendIndexedRect(const ::int_rectangle &  rect,
 
 template <class PIXEL_T>
 void TightEncoder::sendFullColorRect(const ::int_rectangle &  rect,
-                                     const FrameBuffer *fb,
+                                     const ::subsystem::FrameBuffer *fb,
                                      const EncodeOptions *options)
 {
   // Send control info.
@@ -264,7 +264,7 @@ void TightEncoder::sendFullColorRect(const ::int_rectangle &  rect,
   _ASSERT(rgbData.size() == dataLen);
 
   // Pack pixels into 24-bit samples if necessary.
-  PixelFormat pf = fb->getPixelFormat();
+  ::subsystem::PixelFormat pf = fb->getPixelFormat();
   if (shouldPackPixels(pf)) {
     packPixels(rgbData.data(), rect.area(), pf);
     rgbData.resize(rect.area() * 3);
@@ -278,7 +278,7 @@ void TightEncoder::sendFullColorRect(const ::int_rectangle &  rect,
 }
 
 void TightEncoder::sendJpegRect(const ::int_rectangle &  rect,
-                                const FrameBuffer *serverFb,
+                                const ::subsystem::FrameBuffer *serverFb,
                                 const EncodeOptions *options)
 {
   _ASSERT(options->jpegEnabled());
@@ -291,7 +291,7 @@ void TightEncoder::sendJpegRect(const ::int_rectangle &  rect,
 
   // Shortcuts.
   const void *ptr = serverFb->getBufferPtr(rect.left, rect.top);
-  PixelFormat fmt = serverFb->getPixelFormat();
+  ::subsystem::PixelFormat fmt = serverFb->getPixelFormat();
   int width = rect.width();
   int height = rect.height();
   int stride = serverFb->getBytesPerRow();
@@ -308,7 +308,7 @@ void TightEncoder::sendJpegRect(const ::int_rectangle &  rect,
 
 //--------------------------------------------------------------------------//
 
-bool TightEncoder::shouldPackPixels(const PixelFormat & pf) const
+bool TightEncoder::shouldPackPixels(const ::subsystem::PixelFormat & pf) const
 {
   return (pf.colorDepth == 24 &&
           pf.redMax == 0xFF &&
@@ -317,7 +317,7 @@ bool TightEncoder::shouldPackPixels(const PixelFormat & pf) const
           pf.bitsPerPixel == 32);
 }
 
-void TightEncoder::packPixels(unsigned char *buf, int count, const PixelFormat & pf)
+void TightEncoder::packPixels(unsigned char *buf, int count, const ::subsystem::PixelFormat & pf)
 {
   unsigned char *dst = buf;
   unsigned int pix;
@@ -342,7 +342,7 @@ void TightEncoder::packPixels(unsigned char *buf, int count, const PixelFormat &
 }
 
 template <class PIXEL_T>
-void TightEncoder::fillPalette(const ::int_rectangle &  r, const FrameBuffer *fb, int maxColors)
+void TightEncoder::fillPalette(const ::int_rectangle &  r, const ::subsystem::FrameBuffer *fb, int maxColors)
 {
   // Clear the palette.
   m_pal.reset();
@@ -376,7 +376,7 @@ void TightEncoder::fillPalette(const ::int_rectangle &  r, const FrameBuffer *fb
 }
 
 template <class PIXEL_T>
-void TightEncoder::copyPixels(const ::int_rectangle &  rect, const FrameBuffer *fb,
+void TightEncoder::copyPixels(const ::int_rectangle &  rect, const ::subsystem::FrameBuffer *fb,
                               unsigned char *dst)
 {
   const int rectWidth = rect.width();
@@ -394,7 +394,7 @@ void TightEncoder::copyPixels(const ::int_rectangle &  rect, const FrameBuffer *
 }
 
 template <class PIXEL_T>
-void TightEncoder::encodeMonoRect(const ::int_rectangle &  rect, const FrameBuffer *fb,
+void TightEncoder::encodeMonoRect(const ::int_rectangle &  rect, const ::subsystem::FrameBuffer *fb,
                                   DataOutputStream *out)
 {
   const PIXEL_T *src = (const PIXEL_T *)fb->getBufferPtr(rect.left, rect.top);
@@ -443,7 +443,7 @@ void TightEncoder::encodeMonoRect(const ::int_rectangle &  rect, const FrameBuff
 }
 
 template <class PIXEL_T>
-void TightEncoder::encodeIndexedRect(const ::int_rectangle &  rect, const FrameBuffer *fb,
+void TightEncoder::encodeIndexedRect(const ::int_rectangle &  rect, const ::subsystem::FrameBuffer *fb,
                                      DataOutputStream *out)
 {
   const PIXEL_T *src = (const PIXEL_T *)fb->getBufferPtr(rect.left, rect.top);

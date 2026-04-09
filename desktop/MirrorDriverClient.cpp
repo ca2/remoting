@@ -32,7 +32,7 @@ const TCHAR MirrorDriverClient::MINIPORT_REGISTRY_PATH[] =
   "SYSTEM\\CurrentControlSet\\Hardware Profiles\\"
   "Current\\System\\CurrentControlSet\\Services";
 
-MirrorDriverClient::MirrorDriverClient(LogWriter *log)
+MirrorDriverClient::MirrorDriverClient(::subsystem::LogWriter *log)
 : m_isDriverOpened(false),
   m_isDriverLoaded(false),
   m_isDriverAttached(false),
@@ -89,7 +89,7 @@ void MirrorDriverClient::dispose()
   }
 }
 
-PixelFormat MirrorDriverClient::getPixelFormat() const
+::subsystem::PixelFormat MirrorDriverClient::getPixelFormat() const
 {
   return m_pixelFormat;
 }

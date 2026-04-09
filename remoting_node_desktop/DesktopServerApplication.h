@@ -75,7 +75,7 @@ private:
 
   Configurator m_configurator;
   ClientLogWriter m_clientLogWriter;
-  LogWriter m_plogwriter;
+  ::subsystem::LogWriter m_plogwriter;
 
   // Transport
   AnonymousPipe *m_clToSrvChan;

@@ -33,7 +33,7 @@
 class CLASS_DECL_REMOTING_COMMON EmulatedAnonymousPipeFactory
 {
 public:
-  EmulatedAnonymousPipeFactory(unsigned int bufferSize, LogWriter *log);
+  EmulatedAnonymousPipeFactory(unsigned int bufferSize, ::subsystem::LogWriter *log);
   virtual ~EmulatedAnonymousPipeFactory();
 
   void generatePipes(NamedPipe **serverPipe, bool serverInheritable,

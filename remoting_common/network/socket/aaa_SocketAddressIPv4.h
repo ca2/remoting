@@ -27,7 +27,7 @@
 //#define SOCKET_ADDRESS_IPV4_H
 
 #include "acme/subsystem/_common_header.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 #include "SocketException.h"
 #include "sockdefs.h"
 #include "remoting/remoting_common/win_system/WsaStartup.h"

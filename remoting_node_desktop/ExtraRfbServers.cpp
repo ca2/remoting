@@ -55,7 +55,7 @@ bool ExtraRfbServers::Conf::equals(const Conf *other)
           extraPorts.equals(&other->extraPorts));
 }
 
-ExtraRfbServers::ExtraRfbServers(LogWriter *log)
+ExtraRfbServers::ExtraRfbServers(::subsystem::LogWriter *log)
 : m_servers(),
   m_effectiveConf(),
   m_plogwriter(log)

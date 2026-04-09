@@ -35,7 +35,7 @@
 #include "acme/subsystem/io/Channel.h"
 #include "acme/exception/io.h"
 #include "remoting/remoting_common/win_system/WsaStartup.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 
 /**
  * IPv4 Socket class.

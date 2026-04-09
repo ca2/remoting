@@ -28,7 +28,7 @@ const int MOUSE_SLEEP_TIME = 10;
 
 CursorPositionDetector::CursorPositionDetector(UpdateKeeper *updateKeeper,
                              UpdateListener *updateListener,
-                             LogWriter *log)
+                             ::subsystem::LogWriter *log)
 : UpdateDetector(updateKeeper, updateListener),
   m_plogwriter(log)
 {

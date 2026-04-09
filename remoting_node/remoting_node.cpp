@@ -51,7 +51,7 @@
 int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
                        LPTSTR lpCmdLine, int nCmdShow)
 {
-  LogWriter preLog(0);
+  ::subsystem::LogWriter preLog(0);
 
   // Life time of the sysLog must be greater than a TvnService object
   // because the crashHook uses it but fully functional usage possible

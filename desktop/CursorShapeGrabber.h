@@ -33,7 +33,7 @@ public:
   CursorShapeGrabber();
   virtual ~CursorShapeGrabber();
 
-  virtual bool grab(const PixelFormat & pixelFormat) = 0;
+  virtual bool grab(const ::subsystem::PixelFormat & pixelFormat) = 0;
 
   // Returns true if the cursor shape has been changed, false otherwise.
   // Calling this function resets the state back to unchanged.

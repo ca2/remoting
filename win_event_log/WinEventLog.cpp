@@ -28,9 +28,9 @@
 #include "acme/subsystem/Exception.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 #include "remoting/remoting_common/win_system/RegistryKey.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 
-WinEventLog::WinEventLog(LogWriter *log)
+WinEventLog::WinEventLog(::subsystem::LogWriter *log)
 : m_hEventLog(0),
   m_plogwriter(log)
 {

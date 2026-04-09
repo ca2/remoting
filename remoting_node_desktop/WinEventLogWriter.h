@@ -36,7 +36,7 @@ class WinEventLogWriter : public NewConnectionEvents,
                           public WinServiceEvents
 {
 public:
-  WinEventLogWriter(LogWriter *log);
+  WinEventLogWriter(::subsystem::LogWriter *log);
   ~WinEventLogWriter();
 
   // This function enables fully functional this object usage,

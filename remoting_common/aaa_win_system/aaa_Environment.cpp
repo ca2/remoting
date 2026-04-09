@@ -152,7 +152,7 @@
 //   return true;
 // }
 //
-// bool Environment::getCurrentUserName(::string & out, LogWriter *log)
+// bool Environment::getCurrentUserName(::string & out, ::subsystem::LogWriter *log)
 // {
 //   *out = WTS::getCurrentUserName(log);
 //   return !out->is_empty();
@@ -218,7 +218,7 @@
 //   return ((m_osVerInfo.dwMajorVersion == 6) && (m_osVerInfo.dwMinorVersion == 1) && isWinNTFamily());
 // }
 //
-// void Environment::simulateCtrlAltDel(LogWriter *log)
+// void Environment::simulateCtrlAltDel(::subsystem::LogWriter *log)
 // {
 //   // FIXME: Do not use log here.
 //   log->information("Requested Ctrl+Alt+Del simulation");
@@ -230,7 +230,7 @@
 //   }
 // }
 //
-// void Environment::simulateCtrlAltDelUnderVista(LogWriter *log)
+// void Environment::simulateCtrlAltDelUnderVista(::subsystem::LogWriter *log)
 // {
 //   // FIXME: Do not use log here.
 //   log->information("Requested Ctrl+Alt+Del simulation under Vista or later");
@@ -248,7 +248,7 @@
 //   }
 // }
 //
-// bool Environment::isAeroOn(LogWriter *log)
+// bool Environment::isAeroOn(::subsystem::LogWriter *log)
 // {
 //   try {
 //     DynamicLibrary dwmLib("Dwmapi.dll");

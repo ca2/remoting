@@ -30,42 +30,47 @@
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 //#include "remoting/remoting_common/network/socket/SocketIPv4.h"
 //#include "remoting/remoting_common/network/socket/SocketStream.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 #include "acme/subsystem/io/BufferedInputStream.h"
 
-class CLASS_DECL_REMOTING_COMMON TcpConnection
+
+namespace remoting
 {
-public:
-  TcpConnection(::subsystem::LogWriter * plogwriter);
-  virtual ~TcpConnection();
+   class CLASS_DECL_REMOTING_COMMON TcpConnection
+   {
+   public:
+      TcpConnection(::subsystem::LogWriter * plogwriter);
+      virtual ~TcpConnection();
 
-  void bind(const ::scoped_string & scopedstrHost, unsigned short port);
-  void bind(SocketIPv4 *socket);
-  void bind(RfbInputGate *input, RfbOutputGate *output);
+      void bind(const ::scoped_string & scopedstrHost, unsigned short port);
+      void bind(SocketIPv4 *socket);
+      void bind(RfbInputGate *input, RfbOutputGate *output);
 
-  void connect();
-  void close();
+      void connect();
+      void close();
 
-  RfbInputGate *getInput() const;
-  RfbOutputGate *getOutput() const;
-private:
-  ::string m_host;
-  unsigned short m_port;
-  SocketIPv4 *m_socket;
-  bool m_socketOwner;
-  SocketStream *m_socketStream;
-  BufferedInputStream *m_bufInput;
-  RfbInputGate *m_input;
-  RfbOutputGate *m_output;
-  bool m_RfbGatesOwner;
+      RfbInputGate *getInput() const;
+      RfbOutputGate *getOutput() const;
+   ;;private:
+      ::string m_host;
+      unsigned short m_port;
+      SocketIPv4 *m_socket;
+      bool m_socketOwner;
+      SocketStream *m_socketStream;
+      ::subsystem::BufferedInputStream *m_bufInput;
+      RfbInputGate *m_input;
+      RfbOutputGate *m_output;
+      bool m_RfbGatesOwner;
 
-  bool m_wasBound;
-  bool m_wasConnected;
-  bool m_isEstablished;
+      bool m_wasBound;
+      bool m_wasConnected;
+      bool m_isEstablished;
 
-  LogWriter *m_plogwriter;
+      ::subsystem::LogWriter *m_plogwriter;
 
-  mutable critical_section m_connectLock;
-};
+      mutable critical_section m_connectLock;
+   };
+
+} // namespace remoting
 
 

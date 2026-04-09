@@ -100,7 +100,7 @@ namespace remoting_remoting
 
     void ViewerInstance::start()
     {
-        auto LogWriter = ::remoting::ViewerConfig::getInstance()->getLogWriter();
+        auto ::subsystem::LogWriter = ::remoting::ViewerConfig::getInstance()->getLogWriter();
         m_viewerWnd.setRemoteViewerCore(&m_viewerCore);
 
 

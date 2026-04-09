@@ -30,9 +30,9 @@
 Poller::Poller(UpdateKeeper *updateKeeper,
                UpdateListener *updateListener,
                ScreenGrabber *screenGrabber,
-               FrameBuffer *backupFrameBuffer,
+               ::subsystem::FrameBuffer *backupFrameBuffer,
                critical_section *frameBufferCriticalSection,
-               LogWriter *log)
+               ::subsystem::LogWriter *log)
 : UpdateDetector(updateKeeper, updateListener),
   m_screenGrabber(screenGrabber),
   m_backupFrameBuffer(backupFrameBuffer),
@@ -57,7 +57,7 @@ void Poller::execute()
 {
   m_plogwriter->information("poller thread id = {}", getThreadId());
 
-  FrameBuffer *screenFrameBuffer;
+  ::subsystem::FrameBuffer *screenFrameBuffer;
 
   {
     critical_section_lock al(m_fbMutex);

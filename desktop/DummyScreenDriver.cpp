@@ -24,12 +24,12 @@
 #include "framework.h"
 #include "DummyScreenDriver.h"
 
-DummyScreenDriver::DummyScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ::int_size dim, unsigned int interval, LogWriter *log)
+DummyScreenDriver::DummyScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ::int_size dim, unsigned int interval, ::subsystem::LogWriter *log)
   : m_updateListener(updateListener),
   m_updateKeeper(updateKeeper),
   m_interval(interval)
 {
-  PixelFormat pixelFormat;
+  ::subsystem::PixelFormat pixelFormat;
   pixelFormat.initBigEndianByNative();
   pixelFormat.bitsPerPixel = 32;
   pixelFormat.redMax = 0xff;
@@ -105,7 +105,7 @@ bool DummyScreenDriver::grabFb(const ::int_rectangle &  rect)
   return true;
 }
 
-FrameBuffer *DummyScreenDriver::getScreenBuffer()
+::subsystem::FrameBuffer *DummyScreenDriver::getScreenBuffer()
 {
   return &m_workFrameBuffer;
 }

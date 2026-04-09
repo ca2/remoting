@@ -27,7 +27,7 @@
 
 const HINSTANCE WindowsClipboard::m_hinst = GetModuleHandle(0);
 
-WindowsClipboard::WindowsClipboard(ClipboardListener *clipboardListener, LogWriter *log)
+WindowsClipboard::WindowsClipboard(ClipboardListener *clipboardListener, ::subsystem::LogWriter *log)
 : MessageWindow(m_hinst, ClipboardNames::CLIPBOARD_WIN_CLASS_NAME),
   m_hwndNextViewer(0),
   m_clipboardListener(clipboardListener),

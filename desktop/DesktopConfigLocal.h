@@ -31,7 +31,7 @@
 class DesktopConfigLocal
 {
 public:
-  DesktopConfigLocal(LogWriter *log);
+  DesktopConfigLocal(::subsystem::LogWriter *log);
   virtual ~DesktopConfigLocal();
 
   virtual void updateByNewSettings();

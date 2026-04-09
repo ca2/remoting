@@ -35,7 +35,7 @@ class CursorPositionDetector : public UpdateDetector
 public:
   CursorPositionDetector(UpdateKeeper *updateKeeper,
                 UpdateListener *updateListener,
-                LogWriter *log);
+                ::subsystem::LogWriter *log);
   virtual ~CursorPositionDetector(void);
 
   // Returns current position of a windows cursor.

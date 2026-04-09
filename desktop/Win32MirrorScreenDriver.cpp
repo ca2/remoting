@@ -28,7 +28,7 @@
 Win32MirrorScreenDriver::Win32MirrorScreenDriver(UpdateKeeper *updateKeeper,
                                                  UpdateListener *updateListener,
                                                  critical_section *fbcritical_section,
-                                                 LogWriter *log)
+                                                 ::subsystem::LogWriter *log)
 : Win32ScreenDriverBaseImpl(updateKeeper, updateListener, fbcritical_section, log),
   m_mirrorDriver(updateKeeper, updateListener, fbcritical_section, log)
 {
@@ -57,7 +57,7 @@ void Win32MirrorScreenDriver::terminateDetection()
   return m_mirrorDriver.getScreenDimension();
 }
 
-FrameBuffer *Win32MirrorScreenDriver::getScreenBuffer()
+::subsystem::FrameBuffer *Win32MirrorScreenDriver::getScreenBuffer()
 {
   return m_mirrorDriver.getScreenBuffer();
 }

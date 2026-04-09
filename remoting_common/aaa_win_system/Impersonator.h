@@ -39,7 +39,7 @@ console session.
 class CLASS_DECL_REMOTING_COMMON Impersonator
 {
 public:
-  Impersonator(LogWriter *log);
+  Impersonator(::subsystem::LogWriter *log);
   virtual ~Impersonator();
 
   /**

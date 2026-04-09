@@ -38,7 +38,7 @@ public:
                      UpdateListener *updateListener,
                      CursorShapeGrabber *mouseGrabber,
                      critical_section *mouseGrabLocMut,
-                     LogWriter *log);
+                     ::subsystem::LogWriter *log);
   virtual ~CursorShapeDetector();
 
 protected:

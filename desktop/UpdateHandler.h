@@ -30,8 +30,8 @@
 #include "UpdateFilter.h"
 #include "ScreenGrabber.h"
 #include "WindowsCursorShapeGrabber.h"
-#include "remoting/remoting_common/rfb/FrameBuffer.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+#include "acme/subsystem/framebuffer/FrameBuffer.h"
+//#include "acme/subsystem/thread/critical_section.h"
 #include "UpdateListener.h"
 #include "UpdateDetector.h"
 #include "CopyRectDetector.h"
@@ -74,15 +74,15 @@ public:
   // excludedRegion will never be present in changedRegion or copiedRegion.
   virtual void setExcludedRegion(const Region *excludedRegion) = 0;
 
-  // The function provides access to FrameBuffer data.
+  // The function provides access to ::subsystem::FrameBuffer data.
   // The data usage be able until next extract() function call.
   // Return:
-  //   constant pointer to the FrameBuffer object.
-  const FrameBuffer *getFrameBuffer() const { return &m_backupFrameBuffer; }
+  //   constant pointer to the ::subsystem::FrameBuffer object.
+  const ::subsystem::FrameBuffer *getFrameBuffer() const { return &m_backupFrameBuffer; }
   const CursorShape *getCursorShape() const { return &m_cursorShape; }
   // This function for asynchronous access to frame buffer properties
   // (dimension and pixel format)
-  void getFrameBufferProp(::int_size *dim, PixelFormat *pf)
+  void getFrameBufferProp(::int_size *dim, ::subsystem::PixelFormat *pf)
   {
     critical_section_lock al(&m_fbLocMut);
     *dim = m_backupFrameBuffer.getDimension();
@@ -95,15 +95,15 @@ public:
     return m_backupFrameBuffer.getDimension();
   }
 
-  PixelFormat getFrameBufferPixelFormat(::int_size *dim, PixelFormat *pf)
+  ::subsystem::PixelFormat getFrameBufferPixelFormat(::int_size *dim, ::subsystem::PixelFormat *pf)
   {
     critical_section_lock al(&m_fbLocMut);
     return m_backupFrameBuffer.getPixelFormat();
   }
 
-  void initFrameBuffer(const FrameBuffer *newFb);
+  void initFrameBuffer(const ::subsystem::FrameBuffer *newFb);
 
-  virtual bool updateExternalFrameBuffer(FrameBuffer *fb, const Region *region,
+  virtual bool updateExternalFrameBuffer(::subsystem::FrameBuffer *fb, const Region *region,
                                          const ::int_rectangle &  viewPort);
 
   // FIXME: It's no good idea to place this function to here.
@@ -111,11 +111,11 @@ public:
   virtual void sendInit(BlockingGate *gate) {}
 
 protected:
-  virtual bool updateExternalFrameBuffer(FrameBuffer *dstFb, FrameBuffer *srcFb,
+  virtual bool updateExternalFrameBuffer(::subsystem::FrameBuffer *dstFb, ::subsystem::FrameBuffer *srcFb,
                                          const Region *region,
                                          const ::int_rectangle &  viewPort);
 
-  FrameBuffer m_backupFrameBuffer;
+  ::subsystem::FrameBuffer m_backupFrameBuffer;
   critical_section m_fbLocMut;
 
   // m_cursorShape not thread safed

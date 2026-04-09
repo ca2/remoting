@@ -30,7 +30,7 @@
 
 namespace remoting_remoting
 {
-    class ViewerVncAuthHandler : public VncAuthenticationHandler
+    class ViewerVncAuthHandler : public ::remoting::VncAuthenticationHandler
     {
     public:
         ViewerVncAuthHandler(ConnectionData *connectionData);

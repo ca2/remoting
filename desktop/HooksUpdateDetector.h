@@ -37,7 +37,7 @@ class HooksUpdateDetector : public UpdateDetector
 {
 public:
   HooksUpdateDetector(UpdateKeeper *updateKeeper,
-                      UpdateListener *updateListener, LogWriter *log);
+                      UpdateListener *updateListener, ::subsystem::LogWriter *log);
   virtual ~HooksUpdateDetector();
 
 protected:

@@ -41,10 +41,10 @@ namespace remoting
       virtual ~DeviceContext();
 
    private:
-      // Initialize class from PaintWindow
-      DeviceContext(class PaintWindow * pntWnd);
+      // Initialize class from ::innate_subsystem::PaintWindow
+      DeviceContext(class ::innate_subsystem::PaintWindow * pntWnd);
 
-      friend class PaintWindow;
+      friend class ::innate_subsystem::PaintWindow;
 
    protected:
       // Selects an object into this device context.

@@ -32,6 +32,8 @@
 
 //#include "log_writer/LogWriter.h"
 
+
+
 class CLASS_DECL_REMOTING_COMMON DecoderStore
 {
 public:
@@ -52,7 +54,7 @@ public:
   void allowCopyRect(bool allow);
 
 private:
-  LogWriter *m_plogwriter;
+  ::subsystem::LogWriter *m_plogwriter;
 
   ::map<int, ::pair<int, Decoder*> > m_decoders;
   int m_preferredEncoding;

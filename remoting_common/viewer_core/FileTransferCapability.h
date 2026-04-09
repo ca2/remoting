@@ -44,7 +44,7 @@ namespace  remoting
       {
       public:
 
-         LogWriter * m_plogwriter;
+         ::subsystem::LogWriter * m_plogwriter;
 
          FileTransferRequestSender m_ftRequestSender;
          FileTransferReplyBuffer m_ftReplyBuffer;
@@ -52,7 +52,7 @@ namespace  remoting
 
          FileTransferCore m_ftCore;
 
-         FileTransferCapability(LogWriter *LogWriter = nullptr);
+         FileTransferCapability(::subsystem::LogWriter * plogwriter = nullptr);
          virtual ~FileTransferCapability();
 
          //

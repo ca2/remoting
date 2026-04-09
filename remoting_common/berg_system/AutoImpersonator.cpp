@@ -25,7 +25,7 @@
 //#include "acme/_operating_system.h"
 #include "AutoImpersonator.h"
 
-AutoImpersonator::AutoImpersonator(Impersonator *imp, LogWriter *log)
+AutoImpersonator::AutoImpersonator(Impersonator *imp, ::subsystem::LogWriter *log)
 : m_imp(imp),
   m_plogwriter(log)
 {

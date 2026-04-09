@@ -91,7 +91,7 @@ int QueryConnectionApplication::execute(const ::scoped_string & scopedstrPeerAdd
                  QueryConnectionCommandLine::TIMEOUT,
                  timeOutSec);
 
-  LogWriter log(0); // Zero LogWriter.
+  ::subsystem::LogWriter log(0); // Zero ::subsystem::LogWriter.
   Process *process = 0;
 
   int defaultRetCode = acceptByDefault ? 0 : 1;

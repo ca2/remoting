@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "remoting/remoting_common/rfb/FrameBuffer.h"
+#include "acme/subsystem/framebuffer/FrameBuffer.h"
 #include "Win8CursorShape.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
-#include "remoting/remoting_common/thread/GuiThread.h"
+//#include "acme/subsystem/thread/critical_section.h"
+#include "acme/subsystem/thread/GuiThread.h"
 #include "Win8DuplicationListener.h"
 //#include "log_writer/LogWriter.h"
 
@@ -40,14 +40,14 @@ class Win8DeskDuplication : public GuiThread
 public:
   // The WinDxgiOutput *dxgiOutput passed object can be destroyed right after the constructor calling.
   // The WinD3D11Device *device passed object can be destroyed right after the constructor calling.
-  Win8DeskDuplication(FrameBuffer *targetFb,
+  Win8DeskDuplication(::subsystem::FrameBuffer *targetFb,
                             ::array_base<::int_rectangle> &targetRect,
                             Win8CursorShape *targetCurShape,
                             LONGLONG *cursorTimeStamp,
                             critical_section *cursorMutex,
                             Win8DuplicationListener *duplListener,
                             ::array_base<WinDxgiOutput> &dxgiOutput,
-                            LogWriter *log);
+                            ::subsystem::LogWriter *log);
   virtual ~Win8DeskDuplication();
 
   bool isValid();
@@ -68,7 +68,7 @@ private:
 
   void rotateRectInsideStage(::int_rectangle *toTranspose, const ::int_size & stageDim, DXGI_MODE_ROTATION rotation);
 
-  FrameBuffer *m_targetFb;
+  ::subsystem::FrameBuffer *m_targetFb;
 
   ::array_base<::int_rectangle> m_targetRects;
   Win8CursorShape *m_targetCurShape;
@@ -94,7 +94,7 @@ private:
   ::array_base<DXGI_OUTDUPL_MOVE_RECT> m_moveRects;
 
   ::array_base<WinCustomD3D11Texture2D> m_stageTextures2D;
-  FrameBuffer m_auxiliaryFrameBuffer;
+  ::subsystem::FrameBuffer m_auxiliaryFrameBuffer;
 
   ::subsystem::LogWriter *m_plogwriter;
 };

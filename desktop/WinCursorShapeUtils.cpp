@@ -32,7 +32,7 @@ WinCursorShapeUtils::~WinCursorShapeUtils()
 {
 }
 
-void WinCursorShapeUtils::winMonoShapeToRfb(const FrameBuffer *pixels,
+void WinCursorShapeUtils::winMonoShapeToRfb(const ::subsystem::FrameBuffer *pixels,
                                             char *maskAND, char *maskXOR, int maskWidthInBytes)
 {
   char *pixelsBuffer = (char *)pixels->getBuffer();
@@ -69,10 +69,10 @@ void WinCursorShapeUtils::winMonoShapeToRfb(const FrameBuffer *pixels,
   }
 }
 
-void WinCursorShapeUtils::fixAlphaChannel(const FrameBuffer *pixels,
+void WinCursorShapeUtils::fixAlphaChannel(const ::subsystem::FrameBuffer *pixels,
   char *maskAND, bool maskedColor, int maskWidthInBytes)
 {
-  PixelFormat pf = pixels->getPixelFormat();
+  ::subsystem::PixelFormat pf = pixels->getPixelFormat();
   if (pf.bitsPerPixel != 32) {
     return;
   }
@@ -109,7 +109,7 @@ void WinCursorShapeUtils::fixAlphaChannel(const FrameBuffer *pixels,
 }
 
 
-unsigned int WinCursorShapeUtils::getAlphaMask(const PixelFormat & pf)
+unsigned int WinCursorShapeUtils::getAlphaMask(const ::subsystem::PixelFormat & pf)
 {
   if (pf.bitsPerPixel == 32) {
     unsigned int alphaMax = pf.redMax << pf.redShift |

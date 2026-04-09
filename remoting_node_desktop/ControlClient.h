@@ -31,7 +31,7 @@
 #include "remoting_control_desktop/ControlAuthException.h"
 #include "remoting_control_desktop/Transport.h"
 #include "ControlAppAuthenticator.h"
-#include "remoting/remoting_common/thread/ThreadCollector.h"
+#include "acme/subsystem/thread/ThreadCollector.h"
 //#include "log_writer/LogWriter.h"
 
 
@@ -70,7 +70,7 @@ public:
                 RfbClientManager *rfbClientManager,
                 ControlAppAuthenticator *authenticator,
                 HANDLE pipeHandle,
-                LogWriter *log);
+                ::subsystem::LogWriter *log);
   /**
    * Stops client thread and deletes control client.
    */

@@ -34,7 +34,7 @@
 class CLASS_DECL_REMOTING_COMMON AutoImpersonator
 {
 public:
-  AutoImpersonator(Impersonator *imp, LogWriter *log);
+  AutoImpersonator(Impersonator *imp, ::subsystem::LogWriter *log);
   virtual ~AutoImpersonator();
 private:
   Impersonator *m_imp;

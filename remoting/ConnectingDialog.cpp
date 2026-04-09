@@ -34,9 +34,10 @@
 namespace remoting_remoting
 {
    ConnectingDialog::ConnectingDialog()
-   : Dialog(IDD_CONNECTING)
+   //: Dialog(IDD_CONNECTING)
    {
 
+      initialize_dialog(IDD_CONNECTING);
    }
 
 

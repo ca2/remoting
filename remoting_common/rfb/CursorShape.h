@@ -25,48 +25,52 @@
 #pragma once
 
 
-#include "FrameBuffer.h"
+#include "acme/subsystem/framebuffer/FrameBuffer.h"
 #include "remoting/remoting_common/region/Point.h"
-//#include aaa_<vector>
 
-class CLASS_DECL_REMOTING_COMMON CursorShape
+namespace remoting
 {
-public:
-  CursorShape(){}
-  ~CursorShape();
+   //#include aaa_<vector>
 
-  bool clone(const CursorShape *srcCursorShape);
+   class CLASS_DECL_REMOTING_COMMON CursorShape
+   {
+   public:
+      CursorShape(){}
+      ~CursorShape();
 
-  bool setDimension(const ::int_size & newDim);
-  ::int_size getDimension() const { return m_pixels.getDimension(); }
+      bool clone(const CursorShape *srcCursorShape);
 
-  bool setPixelFormat(const PixelFormat & pixelFormat);
-  PixelFormat getPixelFormat() const { return m_pixels.getPixelFormat(); }
+      bool setDimension(const ::int_size & newDim);
+      ::int_size getDimension() const { return m_pixels.getDimension(); }
 
-  // This function set both PixelFormat and ::int_size
-  bool setProperties(const ::int_size & newDim, const PixelFormat & pixelFormat);
+      bool setPixelFormat(const ::subsystem::PixelFormat & pixelFormat);
+      ::subsystem::PixelFormat getPixelFormat() const { return m_pixels.getPixelFormat(); }
 
-  const FrameBuffer *getPixels() const { return &m_pixels; }
-  int getPixelsSize() const { return m_pixels.getBufferSize(); }
-  const char *getMask() const { return m_mask.empty() ? 0 : m_mask.data(); }
-  void assignMaskFromRfb(const char *srcMask);
-  void assignMaskFromWindows(const char *srcMask);
-  int getMaskSize() const;
-  int getMaskWidthInBytes() const;
+      // This function set both ::subsystem::PixelFormat and ::int_size
+      bool setProperties(const ::int_size & newDim, const ::subsystem::PixelFormat & pixelFormat);
 
-  void setHotSpot(int x, int y) { m_hotSpot.x = x; m_hotSpot.y = y; }
-  Point getHotSpot() const { return m_hotSpot; }
+      const ::subsystem::FrameBuffer *getPixels() const { return &m_pixels; }
+      int getPixelsSize() const { return m_pixels.getBufferSize(); }
+      const char *getMask() const { return m_mask.empty() ? 0 : m_mask.data(); }
+      void assignMaskFromRfb(const char *srcMask);
+      void assignMaskFromWindows(const char *srcMask);
+      int getMaskSize() const;
+      int getMaskWidthInBytes() const;
 
-  // Resets the cursor shape to empty state (zero dimension and hot spot
-  // and empty masks). But the pixel format saves the same.
-  void resetToEmpty();
+      void setHotSpot(int x, int y) { m_hotSpot.x = x; m_hotSpot.y = y; }
+      Point getHotSpot() const { return m_hotSpot; }
 
-private:
-  bool resizeBuffer();
+      // Resets the cursor shape to empty state (zero dimension and hot spot
+      // and empty masks). But the pixel format saves the same.
+      void resetToEmpty();
 
-  FrameBuffer m_pixels;
-  ::array_base<char> m_mask;
-  Point m_hotSpot;
-};
+   private:
+      bool resizeBuffer();
 
-//// __CURSORSHAPE_H__
+      ::subsystem::FrameBuffer m_pixels;
+      ::array_base<char> m_mask;
+      Point m_hotSpot;
+   };
+
+   //// __CURSORSHAPE_H__
+}

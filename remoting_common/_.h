@@ -45,8 +45,18 @@ namespace remoting
 
    class DeviceContext;
 
+   class SocketIPv4;
+
+   class SocketStream;
+
+
 }
 
 
 #endif
+
+
+#include "remoting/remoting_common/config/IniFileSettingsManager.h"
+
+
 

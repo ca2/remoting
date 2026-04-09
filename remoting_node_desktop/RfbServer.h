@@ -26,7 +26,7 @@
 
 
 #include "RfbClientManager.h"
-#include "remoting/remoting_common/thread/Thread.h"
+#include "acme/subsystem/thread/Thread.h"
 #include "remoting/remoting_common/network/TcpServer.h"
 
 
@@ -51,7 +51,7 @@ public:
   RfbServer(const ::scoped_string & scopedstrBindHost, unsigned short bindPort,
             RfbClientManager *clientManager,
             bool lockAddr,
-            LogWriter *log,
+            ::subsystem::LogWriter *log,
             const ::int_rectangle & viewPort = 0)
 ;
   /**

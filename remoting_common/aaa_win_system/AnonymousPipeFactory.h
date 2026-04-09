@@ -33,7 +33,7 @@
 class CLASS_DECL_REMOTING_COMMON AnonymousPipeFactory
 {
 public:
-  AnonymousPipeFactory(unsigned int bufferSize, LogWriter *log);
+  AnonymousPipeFactory(unsigned int bufferSize, ::subsystem::LogWriter *log);
   virtual ~AnonymousPipeFactory();
 
   // This function generates the ::pair of the AnonymousPipe

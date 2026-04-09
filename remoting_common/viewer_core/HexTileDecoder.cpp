@@ -37,7 +37,7 @@ HexTileDecoder::~HexTileDecoder()
 }
 
 void HexTileDecoder::decode(RfbInputGate *pinput,
-                            FrameBuffer *pframebuffer,
+                            ::subsystem::FrameBuffer *pframebuffer,
                             const ::int_rectangle &  dstRect)
 {
   // shorcut

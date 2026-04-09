@@ -32,8 +32,9 @@
 namespace remoting_remoting
 {
     HelpDialog::HelpDialog()
-    : Dialog(IDD_CMDLINE)
+    //: Dialog(IDD_CMDLINE)
     {
+       initialize_dialog(IDD_CMDLINE);
     }
 
     bool HelpDialog::onInitDialog()

@@ -23,7 +23,7 @@
 //
 
 #include "AuthTracker.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 
 AuthTracker::AuthTracker(unsigned long long failureTimeInterval,
                          unsigned int failureMaxCount)

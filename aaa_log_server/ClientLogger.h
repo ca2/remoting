@@ -34,7 +34,7 @@
 #include "remoting/thread/critical_section_lock.h"
 #include "log_writer/LogDump.h"
 
-class ClientLogWriter : public LogWriter, private Thread, public LogDump
+class ClientLogWriter : public ::subsystem::LogWriter, private Thread, public LogDump
 {
 public:
   // @param logFileName - is a file name for log without extension.

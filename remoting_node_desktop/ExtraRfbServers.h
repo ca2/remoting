@@ -44,7 +44,7 @@ class ExtraRfbServers
   };
 
 public:
-  ExtraRfbServers(LogWriter *log);
+  ExtraRfbServers(::subsystem::LogWriter *log);
   virtual ~ExtraRfbServers();
 
   // Check current configuration and restart the servers if necessary.

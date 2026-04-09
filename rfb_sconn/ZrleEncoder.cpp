@@ -48,14 +48,14 @@ int ZrleEncoder::getCode() const
 
 void ZrleEncoder::splitRectangle(const ::int_rectangle &  rect,
                                  ::array_base<::int_rectangle> *rectList,
-                                 const FrameBuffer *serverFb,
+                                 const ::subsystem::FrameBuffer *serverFb,
                                  const EncodeOptions *options)
 {
   rectList->add(rect);
 }
 
 void ZrleEncoder::sendRectangle(const ::int_rectangle &  rect,
-                                const FrameBuffer *serverFb,
+                                const ::subsystem::FrameBuffer *serverFb,
                                 const EncodeOptions *options)
 {
   // Determing the number of bytes per pixel and the first byte of them.
@@ -64,11 +64,11 @@ void ZrleEncoder::sendRectangle(const ::int_rectangle &  rect,
   // Used for futher work with CPIXELs.
   m_bytesPerPixel = 0;
   m_numberFirstByte = 0;
-  const FrameBuffer *clientFb = m_pixelConverter->convert(rect, serverFb);
+  const ::subsystem::FrameBuffer *clientFb = m_pixelConverter->convert(rect, serverFb);
   //client pixel format
   m_pxFormat = clientFb->getPixelFormat();
   //server pixel format
-  PixelFormat serverPxFormat = serverFb->getPixelFormat();
+  ::subsystem::PixelFormat serverPxFormat = serverFb->getPixelFormat();
   bool bigEndianDiffs = m_pxFormat.bigEndian != serverPxFormat.bigEndian;
   if (m_pxFormat.bitsPerPixel == 8) {
     m_bytesPerPixel = 1;
@@ -115,8 +115,8 @@ void ZrleEncoder::sendRectangle(const ::int_rectangle &  rect,
 
 template <class PIXEL_T>
 void ZrleEncoder::sendRect(const ::int_rectangle &  rect,
-                           const FrameBuffer *serverFb,
-                           const FrameBuffer *clientFb,
+                           const ::subsystem::FrameBuffer *serverFb,
+                           const ::subsystem::FrameBuffer *clientFb,
                            const EncodeOptions *options)
 {
   m_rgbData.resize(0);
@@ -216,7 +216,7 @@ void ZrleEncoder::sendRect(const ::int_rectangle &  rect,
 
 template <class PIXEL_T>
 void ZrleEncoder::writeRawTile(const ::int_rectangle &  tileRect,
-                               const FrameBuffer *fb)
+                               const ::subsystem::FrameBuffer *fb)
 {
   m_oldSize = m_rgbData.size();
   m_rgbData.resize(m_oldSize + tileRect.area() * m_bytesPerPixel + 1);
@@ -239,7 +239,7 @@ void ZrleEncoder::writeSolidTile()
 
 template <class PIXEL_T>
 void ZrleEncoder::writePackedPaletteTile(const ::int_rectangle &  tileRect,
-                                         const FrameBuffer *fb)
+                                         const ::subsystem::FrameBuffer *fb)
 {
   int numColors = m_pal.getNumColors();
   m_oldSize = m_rgbData.size();
@@ -322,7 +322,7 @@ void ZrleEncoder::pushRunLengthPaletteRle(int runLength,
 
 template <class PIXEL_T>
 void ZrleEncoder::writePaletteRleTile(const ::int_rectangle &  tileRect,
-                                      const FrameBuffer *fb)
+                                      const ::subsystem::FrameBuffer *fb)
 {
   int numColors = m_pal.getNumColors();
   ::array_base<unsigned char> paletteRleData;
@@ -340,7 +340,7 @@ void ZrleEncoder::writePaletteRleTile(const ::int_rectangle &  tileRect,
   }
 
   const PIXEL_T *buffer = static_cast<const PIXEL_T *>(fb->getBuffer());
-  PixelFormat pxFormat = fb->getPixelFormat();
+  ::subsystem::PixelFormat pxFormat = fb->getPixelFormat();
 
   // There is the first iteration of loop below.
   PIXEL_T px = buffer[tileRect.top * m_fbWidth + tileRect.left];
@@ -408,7 +408,7 @@ void ZrleEncoder::writePixelToPlainRleTile(const PIXEL_T px,
 
 template <class PIXEL_T>
 void ZrleEncoder::fillPalette(const ::int_rectangle &  tileRect,
-                              const FrameBuffer *fb)
+                              const ::subsystem::FrameBuffer *fb)
 {
   // Clear the palette.
   m_pal.reset();
@@ -416,7 +416,7 @@ void ZrleEncoder::fillPalette(const ::int_rectangle &  tileRect,
   int tryInsertPx = 1;
 
   const PIXEL_T *buffer = (const PIXEL_T *)fb->getBuffer();
-  PixelFormat pxFormat = fb->getPixelFormat();
+  ::subsystem::PixelFormat pxFormat = fb->getPixelFormat();
 
   // Mask for cutting rubbish bits.
   PIXEL_T mask = pxFormat.redMax << pxFormat.redShift |
@@ -480,7 +480,7 @@ void ZrleEncoder::fillPalette(const ::int_rectangle &  tileRect,
 
 template <class PIXEL_T>
 void ZrleEncoder::copyPixels(const ::int_rectangle &  rect,
-                             const FrameBuffer *fb,
+                             const ::subsystem::FrameBuffer *fb,
                              unsigned char *dst)
 {
   const int rectHeight = rect.height();
@@ -497,7 +497,7 @@ void ZrleEncoder::copyPixels(const ::int_rectangle &  rect,
 }
 
 void ZrleEncoder::copyCPixels(const ::int_rectangle &  rect,
-                              const FrameBuffer *fb,
+                              const ::subsystem::FrameBuffer *fb,
                               unsigned char *dst)
 {
   const int rectHeight = rect.height();

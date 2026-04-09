@@ -28,7 +28,7 @@
 #include "acme/subsystem/_common_header.h"
 #include "DesktopConfigLocal.h"
 #include "desktop/WallpaperUtil.h"
-#include "remoting/remoting_common/thread/GuiThread.h"
+#include "acme/subsystem/thread/GuiThread.h"
 #include "DesktopBaseImpl.h"
 #include "Win32ScreenDriverFactory.h"
 //#include "log_writer/LogWriter.h"
@@ -39,7 +39,7 @@ public:
   DesktopWinImpl(ClipboardListener *extClipListener,
              UpdateSendingListener *extUpdSendingListener,
              AbnormDeskTermListener *extDeskTermListener,
-             LogWriter *log);
+             ::subsystem::LogWriter *log);
   virtual ~DesktopWinImpl();
 
 protected:

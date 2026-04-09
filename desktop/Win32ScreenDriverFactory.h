@@ -38,19 +38,19 @@ public:
 
   virtual ScreenDriver *createScreenDriver(UpdateKeeper *updateKeeper,
                                              UpdateListener *updateListener,
-                                             FrameBuffer *fb,
+                                             ::subsystem::FrameBuffer *fb,
                                              critical_section *fbcritical_section,
-                                             LogWriter *log);
+                                             ::subsystem::LogWriter *log);
 private:
   ScreenDriver *createStandardScreenDriver(UpdateKeeper *updateKeeper,
                                              UpdateListener *updateListener,
-                                             FrameBuffer *fb,
+                                             ::subsystem::FrameBuffer *fb,
                                              critical_section *fbcritical_section,
-                                             LogWriter *log);
+                                             ::subsystem::LogWriter *log);
   ScreenDriver *createMirrorScreenDriver(UpdateKeeper *updateKeeper,
                                            UpdateListener *updateListener,
                                            critical_section *fbcritical_section,
-                                           LogWriter *log);
+                                           ::subsystem::LogWriter *log);
 
   bool isMirrorDriverAllowed();
   bool isD3DAllowed();

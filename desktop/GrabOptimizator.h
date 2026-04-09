@@ -37,7 +37,7 @@
 class GrabOptimizator
 {
 public:
-  GrabOptimizator(LogWriter *log);
+  GrabOptimizator(::subsystem::LogWriter *log);
   ~GrabOptimizator();
 
   bool grab(const Region *grabRegion, ScreenDriver *grabber);

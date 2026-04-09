@@ -32,25 +32,25 @@ UpdateHandler::~UpdateHandler(void)
 {
 }
 
-void UpdateHandler::initFrameBuffer(const FrameBuffer *newFb)
+void UpdateHandler::initFrameBuffer(const ::subsystem::FrameBuffer *newFb)
 {
   critical_section_lock al(&m_fbLocMut);
   m_backupFrameBuffer.clone(newFb);
 }
 
-bool UpdateHandler::updateExternalFrameBuffer(FrameBuffer *fb, const Region *region,
+bool UpdateHandler::updateExternalFrameBuffer(::subsystem::FrameBuffer *fb, const Region *region,
                                               const ::int_rectangle &  viewPort)
 {
   critical_section_lock al(&m_fbLocMut);
   return updateExternalFrameBuffer(fb, &m_backupFrameBuffer, region, viewPort);
 }
 
-bool UpdateHandler::updateExternalFrameBuffer(FrameBuffer *dstFb, FrameBuffer *srcFb,
+bool UpdateHandler::updateExternalFrameBuffer(::subsystem::FrameBuffer *dstFb, ::subsystem::FrameBuffer *srcFb,
                                               const Region *region,
                                               const ::int_rectangle &  viewPort)
 {
-  PixelFormat dstPf = dstFb->getPixelFormat();
-  PixelFormat srcPf = srcFb->getPixelFormat();
+  ::subsystem::PixelFormat dstPf = dstFb->getPixelFormat();
+  ::subsystem::PixelFormat srcPf = srcFb->getPixelFormat();
   ::int_size dstFbDim = dstFb->getDimension();
   ::int_rectangle srcFbRect = srcFb->getDimension();
   ::int_rectangle resultViewPort = srcFbRect.intersection(viewPort);

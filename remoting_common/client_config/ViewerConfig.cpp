@@ -215,7 +215,7 @@ namespace remoting
       return &m_conHistory;
    }
    //
-    LogWriter *ViewerConfig::initLog(const ::file::path & pathLogDir, const ::scoped_string & scopedstrLogName, bool useSpecialFolder)
+    ::subsystem::LogWriter *ViewerConfig::initLog(const ::file::path & pathLogDir, const ::scoped_string & scopedstrLogName, bool useSpecialFolder)
     {
    //    m_logName = scopedstrLogName;
    //    ::string logFileFolderPath;
@@ -247,7 +247,7 @@ namespace remoting
        return this;
     }
 
-    LogWriter *ViewerConfig::getLogWriter()
+    ::subsystem::LogWriter *ViewerConfig::getLogWriter()
     {
    //    return m_LogWriter;
       return this;

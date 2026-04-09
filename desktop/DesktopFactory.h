@@ -37,7 +37,7 @@ public:
   virtual Desktop *createDesktop(ClipboardListener *extClipListener,
                                           UpdateSendingListener *extUpdSendingListener,
                                           AbnormDeskTermListener *extDeskTermListener,
-                                          LogWriter *log) = 0;
+                                          ::subsystem::LogWriter *log) = 0;
 };
 
 //// __DESKTOPFACTORY_H__

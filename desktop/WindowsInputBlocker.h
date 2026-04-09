@@ -26,8 +26,8 @@
 
 
 #include "acme/subsystem/_common_header.h"
-#include "remoting/remoting_common/thread/GuiThread.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+#include "acme/subsystem/thread/GuiThread.h"
+//#include "acme/subsystem/thread/critical_section.h"
 #include "remoting/remoting_common/win_system/WinTimeMillis.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 #include "InputBlocker.h"
@@ -38,7 +38,7 @@
 class WindowsInputBlocker : public InputBlocker, protected GuiThread
 {
 public:
-  WindowsInputBlocker(LogWriter *log);
+  WindowsInputBlocker(::subsystem::LogWriter *log);
   virtual ~WindowsInputBlocker();
 
   // This functions set/unset blocks on a local keyboard and mouse.

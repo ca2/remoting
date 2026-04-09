@@ -37,8 +37,8 @@ namespace remoting
       class CLASS_DECL_REMOTING_COMMON RemoteFolderCreateOperation : public FileTransferOperation
       {
       public:
-         RemoteFolderCreateOperation(LogWriter *logWriter, const ::file::path & pathToTargetFile);
-         RemoteFolderCreateOperation(LogWriter *logWriter,
+         RemoteFolderCreateOperation(::subsystem::LogWriter *logWriter, const ::file::path & pathToTargetFile);
+         RemoteFolderCreateOperation(::subsystem::LogWriter *logWriter,
                                      FileInfo file,
                                      const ::file::path & pathToTargetRoot);
          virtual ~RemoteFolderCreateOperation();

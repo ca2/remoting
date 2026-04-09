@@ -36,8 +36,8 @@ class Win32ScreenDriver : public Win32ScreenDriverBaseImpl
 public:
   Win32ScreenDriver(UpdateKeeper *updateKeeper,
                        UpdateListener *updateListener,
-                       FrameBuffer *fb,
-                       critical_section *fbcritical_section, LogWriter *log);
+                       ::subsystem::FrameBuffer *fb,
+                       critical_section *fbcritical_section, ::subsystem::LogWriter *log);
   virtual ~Win32ScreenDriver();
 
   // Starts screen update detection if it not started yet.
@@ -48,7 +48,7 @@ public:
 
   virtual ::int_size getScreenDimension();
   virtual bool grabFb(const ::int_rectangle &  rect = 0);
-  virtual FrameBuffer *getScreenBuffer();
+  virtual ::subsystem::FrameBuffer *getScreenBuffer();
   virtual bool getScreenPropertiesChanged();
   virtual bool getScreenSizeChanged();
   virtual bool applyNewScreenProperties();

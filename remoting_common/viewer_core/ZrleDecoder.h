@@ -43,7 +43,7 @@ protected:
   ::memory m_unpackedData;
 protected:
   virtual void decode(RfbInputGate *input,
-                      FrameBuffer *frameBuffer,
+                      ::subsystem::FrameBuffer *frameBuffer,
                       const ::int_rectangle &  dstRect);
 
 
@@ -80,7 +80,7 @@ protected:
                           const int type);
 
 
-  void drawTile(FrameBuffer *fb,
+  void drawTile(::subsystem::FrameBuffer *fb,
                 const ::int_rectangle &  tileRect,
                 const ::array_base<char> *pixels);
 

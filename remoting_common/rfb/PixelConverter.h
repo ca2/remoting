@@ -40,8 +40,8 @@ public:
   // set by the most recent setPixelFormats() call. The source and destination
   // framebuffers must be of the same size. The entire rectangle referenced by
   // `rect' must be within the frame buffer boundaries.
-  virtual void convert(const ::int_rectangle &  rect, FrameBuffer *dstFb,
-                       const FrameBuffer *srcFb) const;
+  virtual void convert(const ::int_rectangle &  rect, ::subsystem::FrameBuffer *dstFb,
+                       const ::subsystem::FrameBuffer *srcFb) const;
 
   // Convert pixels for the specified `rect' from `srcFb' to the internal
   // PixelConverter's frame buffer and return a pointer to that frame buffer.
@@ -54,13 +54,13 @@ public:
   // not vary from call to call. It checks if the frame buffer size has
   // changed since the previous call and reallocates the frame buffer if
   // necessary.
-  virtual const FrameBuffer *convert(const ::int_rectangle &  rect,
-                                     const FrameBuffer *srcFb);
+  virtual const ::subsystem::FrameBuffer *convert(const ::int_rectangle &  rect,
+                                     const ::subsystem::FrameBuffer *srcFb);
 
   // FIXME: Review the argument order for each function of PixelConverter.
   // FIXME: Review the argument names for each function of PixelConverter.
-  virtual void setPixelFormats(const PixelFormat & dstPf,
-                               const PixelFormat & srcPf);
+  virtual void setPixelFormats(const ::subsystem::PixelFormat & dstPf,
+                               const ::subsystem::PixelFormat & srcPf);
 
   // Return the number of bits per pixel from the source pixel format.
   virtual size_t getSrcBitsPerPixel() const;
@@ -71,8 +71,8 @@ public:
 protected:
   void reset();
 
-  void fillHexBitsTable(const PixelFormat & dstPf, const PixelFormat & srcPf);
-  void fill32BitsTable(const PixelFormat & dstPf, const PixelFormat & srcPf);
+  void fillHexBitsTable(const ::subsystem::PixelFormat & dstPf, const ::subsystem::PixelFormat & srcPf);
+  void fill32BitsTable(const ::subsystem::PixelFormat & dstPf, const ::subsystem::PixelFormat & srcPf);
   unsigned int rotateUint32(unsigned int value) const;
 
   enum ConvertMode
@@ -88,12 +88,12 @@ protected:
   ::array_base<unsigned int> m_grnTable;
   ::array_base<unsigned int> m_bluTable;
 
-  PixelFormat m_srcFormat;
-  PixelFormat m_dstFormat;
+  ::subsystem::PixelFormat m_srcFormat;
+  ::subsystem::PixelFormat m_dstFormat;
 
   // An internally maintained frame buffer used by the two-argument version of
   // the convert() function.
-  FrameBuffer *m_dstFrameBuffer;
+  ::subsystem::FrameBuffer *m_dstFrameBuffer;
 };
 
 //// __RFB_PIXEL_CONVERTER_H_INCLUDED__

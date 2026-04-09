@@ -29,12 +29,12 @@
 #include "apex/innate_subsystem/MessageWindow.h"
 #include "ClipboardListener.h"
 //#include "log_writer/LogWriter.h"
-#include "remoting/remoting_common/thread/GuiThread.h"
+#include "acme/subsystem/thread/GuiThread.h"
 
 class WindowsClipboard : protected MessageWindow, GuiThread
 {
 public:
-  WindowsClipboard(ClipboardListener *clipboardListener, LogWriter *log);
+  WindowsClipboard(ClipboardListener *clipboardListener, ::subsystem::LogWriter *log);
   virtual ~WindowsClipboard(void);
 
   // This function replaces clipboard content by the text

@@ -32,7 +32,7 @@
 class CLASS_DECL_REMOTING_COMMON UipiControl
 {
 public:
-  UipiControl(LogWriter *log);
+  UipiControl(::subsystem::LogWriter *log);
   ~UipiControl();
 
   // This function allow to receive the scopedstrMessage from a lower integrity

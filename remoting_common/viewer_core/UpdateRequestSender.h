@@ -4,53 +4,55 @@
 
 #pragma once
 
-#include "remoting/remoting_common/thread/Thread.h"
-#include "remoting/remoting_common/rfb/FrameBuffer.h"
+#include "acme/subsystem/thread/Thread.h"
+#include "acme/subsystem/framebuffer/FrameBuffer.h"
 //// #include aaa_<log_writer/LogWriter.h>
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 
-class CLASS_DECL_REMOTING_COMMON UpdateRequestSender : public task
+namespace remoting
 {
-public:
-	UpdateRequestSender(lockable* m_fb_lock, FrameBuffer* m_frame_buffer, LogWriter* m_log_writer);
+   class CLASS_DECL_REMOTING_COMMON UpdateRequestSender : public ::subsystem::Thread
+   {
+   public:
+      UpdateRequestSender(lockable* m_fb_lock, ::subsystem::FrameBuffer * m_frame_buffer, ::subsystem::LogWriter* m_log_writer);
 
-	~UpdateRequestSender();
+      ~UpdateRequestSender();
 
-	void setWasUpdated();
-	void setTimeout(int miliseconds);
-	void setIsIncremental(bool isIncremental);
-	void setOutput(RfbOutputGate* output);
+      void setWasUpdated();
+      void setTimeout(int miliseconds);
+      void setIsIncremental(bool isIncremental);
+      void setOutput(RfbOutputGate* output);
 
-	int getTimeout();
+      int getTimeout();
 
-protected:
-	virtual void execute() override;
+   //protected:
+      virtual void execute() override;
 
 
-private:
-	void sendFbUpdateRequest();
+   private:
+      void sendFbUpdateRequest();
 
-	bool isUpdated();
-	bool isIncremental();
-	RfbOutputGate* getOutput();
+      bool isUpdated();
+      bool isIncremental();
+      RfbOutputGate* getOutput();
 
-	bool m_wasUpdateRecieved;
-	critical_section m_wasUpdatedLock;
+      bool m_wasUpdateRecieved;
+      critical_section m_wasUpdatedLock;
 
-	int m_timeOut;
-	critical_section m_timeOutLock;
+      int m_timeOut;
+      critical_section m_timeOutLock;
 
-	bool m_isIncrimental;
-	critical_section m_isIncrimentalLock;
+      bool m_isIncrimental;
+      critical_section m_isIncrimentalLock;
 
-	lockable *m_fbLock;
-	FrameBuffer *m_frameBuffer;
+      lockable *m_fbLock;
+      ::subsystem::FrameBuffer *m_frameBuffer;
 
-	LogWriter *m_plogwriter;
-	
-	RfbOutputGate *m_output;
-	critical_section m_outputLock;
-};
+      ::subsystem::LogWriter *m_plogwriter;
 
-//_UPDATE_REQUEST_SENDER_
+      RfbOutputGate *m_output;
+      critical_section m_outputLock;
+   };
 
+   //_UPDATE_REQUEST_SENDER_
+} // namespace remoting

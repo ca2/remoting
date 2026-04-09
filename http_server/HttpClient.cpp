@@ -28,7 +28,7 @@
 
 //#include "remoting/remoting_common/network/socket/SocketStream.h"
 
-HttpClient::HttpClient(SocketIPv4 *socket, LogWriter *log)
+HttpClient::HttpClient(SocketIPv4 *socket, ::subsystem::LogWriter *log)
 : TcpClientThread(socket),
   m_plogwriter(log)
 {

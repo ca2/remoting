@@ -23,14 +23,14 @@
 //
 
 #include "RfbClientManager.h"
-#include "remoting/remoting_common/thread/ZombieKiller.h"
+#include "acme/subsystem/thread/ZombieKiller.h"
 #include "QueryConnectionApplication.h"
 #include "remoting/remoting_common/server_config/Configurator.h"
 #include "remoting/remoting_common/util/MemUsage.h"
 
 RfbClientManager::RfbClientManager(const ::scoped_string & scopedstrServerName,
                                    NewConnectionEvents *newConnectionEvents,
-                                   LogWriter *log,
+                                   ::subsystem::LogWriter *log,
                                    DesktopFactory *desktopFactory)
 : m_nextClientId(0),
   m_desktop(0),

@@ -28,8 +28,8 @@
 #include "FileAccount.h"
 #include "log_writer/LogWriter.h"
 
-// This class is an implementation of the LogWriter class to write the log into a file.
-class FileLogWriter : public LogWriter
+// This class is an implementation of the ::subsystem::LogWriter class to write the log into a file.
+class FileLogWriter : public ::subsystem::LogWriter
 {
 public:
   // @param logDir - a valid path to directory for log file.

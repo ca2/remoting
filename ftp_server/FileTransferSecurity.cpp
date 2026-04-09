@@ -27,7 +27,7 @@
 #include "remoting/remoting_common/server_config/Configurator.h"
 #include "remoting/remoting_common/win_system/WTS.h"
 
-FileTransferSecurity::FileTransferSecurity(Desktop *desktop, LogWriter *log)
+FileTransferSecurity::FileTransferSecurity(Desktop *desktop, ::subsystem::LogWriter *log)
 : Impersonator(log),
   m_hasAccess(false),
   m_desktop(desktop),

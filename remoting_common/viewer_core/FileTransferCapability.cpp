@@ -40,8 +40,8 @@ namespace remoting
    namespace ftp
    {
 
-      FileTransferCapability::FileTransferCapability(LogWriter *LogWriter)
-      : m_plogwriter(LogWriter),
+      FileTransferCapability::FileTransferCapability(::subsystem::LogWriter * plogwriter)
+      : m_plogwriter(::subsystem::LogWriter),
         m_ftReplyBuffer(m_plogwriter),
         m_ftRequestSender(m_plogwriter),
         m_ftCore(m_plogwriter,

@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "WTS.h"
 #include "SystemException.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 //#include "Environment.h"
 #include "PipeImpersonatedThread.h"
 #include "acme/platform/node.h"
@@ -45,7 +45,7 @@ HANDLE WTS::m_userProcessToken = INVALID_HANDLE_VALUE;
 
 critical_section WTS::m_mutex;
 
-DWORD WTS::getActiveConsoleSessionId(LogWriter *log)
+DWORD WTS::getActiveConsoleSessionId(::subsystem::LogWriter *log)
 {
   critical_section_lock l(&m_mutex);
   DWORD id;
@@ -64,7 +64,7 @@ DWORD WTS::getActiveConsoleSessionId(LogWriter *log)
   return id;
 }
 
-DWORD WTS::getRdpSessionId(LogWriter *log)
+DWORD WTS::getRdpSessionId(::subsystem::LogWriter *log)
 {
   critical_section_lock l(&m_mutex);
 
@@ -98,7 +98,7 @@ DWORD WTS::getRdpSessionId(LogWriter *log)
 }
 
 
-bool WTS::SessionIsRdpSession(DWORD sessionId, LogWriter *log)
+bool WTS::SessionIsRdpSession(DWORD sessionId, ::subsystem::LogWriter *log)
 {
   {
     critical_section_lock l(&m_mutex);
@@ -129,13 +129,13 @@ bool WTS::SessionIsRdpSession(DWORD sessionId, LogWriter *log)
 }
 
 
-HANDLE WTS::queryConsoleUserToken(LogWriter *log)
+HANDLE WTS::queryConsoleUserToken(::subsystem::LogWriter *log)
 {
   DWORD sessionId = getActiveConsoleSessionId(log);
   return sessionUserToken(sessionId, log);
 }
 
-HANDLE WTS::sessionUserToken(DWORD sessionId, LogWriter* log)
+HANDLE WTS::sessionUserToken(DWORD sessionId, ::subsystem::LogWriter* log)
 {
   HANDLE token = NULL;
   {
@@ -166,14 +166,14 @@ HANDLE WTS::sessionUserToken(DWORD sessionId, LogWriter* log)
 }
 
 
-::string WTS::getCurrentUserName(LogWriter *log)
+::string WTS::getCurrentUserName(::subsystem::LogWriter *log)
 {
 
   DWORD sessionId = getActiveConsoleSessionId(log);
   return getUserName(sessionId, log);
 }
 
-::string WTS::getUserName(DWORD sessionId, LogWriter* log)
+::string WTS::getUserName(DWORD sessionId, ::subsystem::LogWriter* log)
 {
   ::string userName;
   if (m_WTSQuerySessionInformation == 0) {
@@ -190,7 +190,7 @@ HANDLE WTS::sessionUserToken(DWORD sessionId, LogWriter* log)
   return userName;
 }
 
-bool WTS::sessionIsLocked(DWORD sessionId, LogWriter* log)
+bool WTS::sessionIsLocked(DWORD sessionId, ::subsystem::LogWriter* log)
 {
 #ifndef UNICODE
   return false;
@@ -305,7 +305,7 @@ void WTS::duplicatePipeClientToken(HANDLE pipeHandle)
   CloseHandle(threadHandle);
 }
 
-void WTS::initialize(LogWriter *log)
+void WTS::initialize(::subsystem::LogWriter *log)
 {
   _ASSERT(!m_initialized);
 
@@ -333,7 +333,7 @@ void WTS::initialize(LogWriter *log)
   m_initialized = true;
 }
 
-HANDLE currentProcessUserToken(LogWriter* log)
+HANDLE currentProcessUserToken(::subsystem::LogWriter* log)
 {
   HANDLE token = NULL;
   HANDLE procHandle = GetCurrentProcess();
@@ -345,7 +345,7 @@ HANDLE currentProcessUserToken(LogWriter* log)
 }
 
 
-HANDLE WTS::duplicateCurrentProcessUserToken(bool rdpEnabled, LogWriter* log)
+HANDLE WTS::duplicateCurrentProcessUserToken(bool rdpEnabled, ::subsystem::LogWriter* log)
 {
   DWORD rdpSession = 0;
   DWORD activeSession = 0;
@@ -386,7 +386,7 @@ HANDLE WTS::duplicateCurrentProcessUserToken(bool rdpEnabled, LogWriter* log)
   return userToken;
 }
 
-HANDLE WTS::duplicateUserImpersonationToken(HANDLE token, DWORD sessionId, LogWriter* log)
+HANDLE WTS::duplicateUserImpersonationToken(HANDLE token, DWORD sessionId, ::subsystem::LogWriter* log)
 {
   HANDLE userToken;
 

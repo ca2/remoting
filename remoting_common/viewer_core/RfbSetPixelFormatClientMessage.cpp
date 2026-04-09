@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "RfbSetPixelFormatClientMessage.h"
 
-RfbSetPixelFormatClientMessage::RfbSetPixelFormatClientMessage(const PixelFormat & pixelFormat)
+RfbSetPixelFormatClientMessage::RfbSetPixelFormatClientMessage(const ::subsystem::PixelFormat & pixelFormat)
 {
   m_pixelFormat = pixelFormat;
 }

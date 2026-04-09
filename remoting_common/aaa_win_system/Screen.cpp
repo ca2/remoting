@@ -45,7 +45,7 @@ void Screen::update()
   fillScreenRect();
 }
 
-PixelFormat Screen::getPixelFormat()
+::subsystem::PixelFormat Screen::getPixelFormat()
 {
   return m_pixelFormat;
 }
@@ -103,7 +103,7 @@ void Screen::getBMI(BMI *bmi, HDC dc)
 
 void Screen::fillPixelFormat(const BMI *bmi)
 {
-  memset(&m_pixelFormat, 0, sizeof(PixelFormat));
+  memset(&m_pixelFormat, 0, sizeof(::subsystem::PixelFormat));
 
   m_pixelFormat.initBigEndianByNative();
 

@@ -54,7 +54,7 @@ namespace remoting
          // is located (system independed, see ft protocol info)
          //
 
-         DownloadOperation(LogWriter *logWriter,
+         DownloadOperation(::subsystem::LogWriter *logWriter,
                            const ::pointer_array< FileInfo >  & fileinfoa,
                            const ::file::path & pathToTargetRoot,
                            const ::file::path & pathToSourceRoot);

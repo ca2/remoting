@@ -26,7 +26,7 @@
 #include "remoting/remoting_common/server_config/Configurator.h"
 #include "desktop/WindowsInputBlocker.h"
 
-DesktopConfigLocal::DesktopConfigLocal(LogWriter *log)
+DesktopConfigLocal::DesktopConfigLocal(::subsystem::LogWriter *log)
 {
   m_inputBlocker = new WindowsInputBlocker(log);
 }

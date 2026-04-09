@@ -96,9 +96,15 @@ namespace remoting_remoting
         //
 
         virtual bool onInitDialog();
-        virtual bool onNotify(unsigned int controlID, ::lparam data);
+        //virtual bool onNotify(unsigned int controlID, ::lparam data);
         virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
         virtual bool onDestroy();
+
+         bool _002OnAction(int iControl) override;
+         bool _002OnKeyDownNotification(int iControl, ::user::enum_key ekey) override;
+         bool _002OnColumnClick(int iControl, int iColumn) override;
+         bool _002OnSelectionChange(int iControl) override;
+
 
         virtual void onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam);
 
@@ -241,20 +247,20 @@ namespace remoting_remoting
         // Progress bar
         //
 
-        ProgressBar m_copyProgressBar;
+        ::innate_subsystem::ProgressBar m_copyProgressBar;
 
         //
         // Combo box
         //
 
-        ComboBox m_logComboBox;
+        ::innate_subsystem::ComboBox m_logComboBox;
 
         //
         // Text boxes
         //
 
-        TextBox m_localCurFolderTextBox;
-        TextBox m_remoteCurFolderTextBox;
+        ::innate_subsystem::TextBox m_localCurFolderTextBox;
+        ::innate_subsystem::TextBox m_remoteCurFolderTextBox;
 
         //
         // Tables

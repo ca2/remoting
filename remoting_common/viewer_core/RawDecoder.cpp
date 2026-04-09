@@ -37,8 +37,8 @@ RawDecoder::~RawDecoder()
 }
 
 void RawDecoder::process(RfbInputGate *input,
-                         FrameBuffer *frameBuffer,
-                         FrameBuffer *secondFrameBuffer,
+                         ::subsystem::FrameBuffer *frameBuffer,
+                         ::subsystem::FrameBuffer *secondFrameBuffer,
                          const ::int_rectangle &  rect,
                          critical_section *fbLock,
                          FbUpdateNotifier *fbNotifier)
@@ -77,7 +77,7 @@ void RawDecoder::process(RfbInputGate *input,
 }
 
 void RawDecoder::decode(RfbInputGate *pinput,
-                     FrameBuffer *frameBuffer,
+                     ::subsystem::FrameBuffer *frameBuffer,
                      const ::int_rectangle &  rect)
 {
   size_t bytesPerPixel = frameBuffer->getPixelFormat().bitsPerPixel / 8;

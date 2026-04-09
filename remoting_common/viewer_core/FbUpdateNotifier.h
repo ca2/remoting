@@ -26,76 +26,82 @@
 
 
 //#include "log_writer/LogWriter.h"
-#include "remoting/remoting_common/rfb/FrameBuffer.h"
+#include "acme/subsystem/framebuffer/FrameBuffer.h"
 #include "remoting/remoting_common/region/Point.h"
 
 #include "remoting/remoting_common/region/Region.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
-#include "remoting/remoting_common/thread/Thread.h"
-#include "remoting/remoting_common/win_system/WindowsEvent.h"
+//#include "acme/subsystem/thread/critical_section.h"
+#include "acme/subsystem/thread/Thread.h"
+#include "acme/subsystem/node/WindowsEvent.h"
+
+#include "acme/parallelization/happening.h"
 
 #include "CursorPainter.h"
 #include "WatermarksController.h"
 
-class CoreEventsAdapter;
-
-class CLASS_DECL_REMOTING_COMMON FbUpdateNotifier : public Thread
+namespace remoting
 {
-public:
-  FbUpdateNotifier(FrameBuffer *fb, critical_section *fbLock, LogWriter *LogWriter, WatermarksController* wmController);
-  virtual ~FbUpdateNotifier();
+   class CoreEventsAdapter;
 
-  void setAdapter(CoreEventsAdapter *adapter);
+   class CLASS_DECL_REMOTING_COMMON FbUpdateNotifier : public ::subsystem::Thread
+   {
+   public:
+      FbUpdateNotifier(::subsystem::FrameBuffer *fb, critical_section *fbLock, ::subsystem::LogWriter * plogwriter, WatermarksController* wmController);
+      virtual ~FbUpdateNotifier();
 
-  void onUpdate(const ::int_rectangle &  rect);
-  void onPropertiesFb();
+      void setAdapter(CoreEventsAdapter *adapter);
 
-  void updatePointerPos(const Point *position);
-  void setNewCursor(const Point *hotSpot,
-                    unsigned short width, unsigned short height,
-                    const ::array_base<unsigned char> *cursor, 
-                    const ::array_base<unsigned char> *bitmask);
+      void onUpdate(const ::int_rectangle &  rect);
+      void onPropertiesFb();
 
-  void setIgnoreShapeUpdates(bool ignore);
-//protected:
-  // Inherited from Thread
-  void execute();
-  void onTerminate();
+      void updatePointerPos(const Point *position);
+      void setNewCursor(const Point *hotSpot,
+                        unsigned short width, unsigned short height,
+                        const ::array_base<unsigned char> *cursor,
+                        const ::array_base<unsigned char> *bitmask);
 
-  critical_section *m_fbLock;
-  FrameBuffer *m_frameBuffer;
-  CursorPainter m_cursorPainter;
+      void setIgnoreShapeUpdates(bool ignore);
+      //protected:
+      // Inherited from Thread
+      void execute();
+      void onTerminate();
 
-  // Pointer to adapter.
-  // Nothing event (changing properties of frame buffer, update frame buffer
-  // or update cursor) don't sended to adapter, while m_adapter is 0.
-  CoreEventsAdapter *m_adapter;
+      critical_section *m_fbLock;
+      ::subsystem::FrameBuffer *m_frameBuffer;
+      CursorPainter m_cursorPainter;
 
-  critical_section m_updateLock;
-  WindowsEvent m_eventUpdate;
+      // Pointer to adapter.
+      // Nothing event (changing properties of frame buffer, update frame buffer
+      // or update cursor) don't sended to adapter, while m_adapter is 0.
+      CoreEventsAdapter *m_adapter;
 
-  LogWriter *m_plogwriter;
+      critical_section m_updateLock;
+      //::subsystem::WindowsEvent m_eventUpdate;
+      ::happening m_eventUpdate;
 
-  //It is used for adding watermarks in demo version.
-  WatermarksController* m_watermarksController;
+      ::subsystem::LogWriter *m_plogwriter;
 
-  // In this region added all updates of frame buffer and cursor updates.
-  Region m_update;
+      //It is used for adding watermarks in demo version.
+      WatermarksController* m_watermarksController;
 
-  // This rectangle save position of cursor.
-  ::int_rectangle m_oldPosition;
+      // In this region added all updates of frame buffer and cursor updates.
+      Region m_update;
 
-  // This flag is true after call onPropertiesFb().
-  bool m_isNewSize;
+      // This rectangle save position of cursor.
+      ::int_rectangle m_oldPosition;
 
-  // This flag is true after set new cursor or update position.
-  bool m_isCursorChange;
-   bool m_isGoodCursor;
+      // This flag is true after call onPropertiesFb().
+      bool m_isNewSize;
 
-private:
-  // Do not allow copying objects.
-  FbUpdateNotifier(const FbUpdateNotifier &);
-  FbUpdateNotifier &operator=(const FbUpdateNotifier &);
-};
+      // This flag is true after set new cursor or update position.
+      bool m_isCursorChange;
+      bool m_isGoodCursor;
+
+   private:
+      // Do not allow copying objects.
+      FbUpdateNotifier(const FbUpdateNotifier &);
+      FbUpdateNotifier &operator=(const FbUpdateNotifier &);
+   };
+} // namespace remoting
 
 

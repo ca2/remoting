@@ -26,7 +26,7 @@
 #include "remoting/remoting_common/win_system/WTS.h"
 
 SessionChangesWatcher::SessionChangesWatcher(AnEventListener *extSessionChangesListener,
-                                             LogWriter *log)
+                                             ::subsystem::LogWriter *log)
 : m_extSessionChangesListener(extSessionChangesListener),
   m_plogwriter(log)
 {

@@ -28,7 +28,7 @@
 
 DesktopSrvDispatcher::DesktopSrvDispatcher(BlockingGate *gate,
                                            AnEventListener *extErrorListener,
-                                           LogWriter *log)
+                                           ::subsystem::LogWriter *log)
 : m_gate(gate),
   m_extErrorListener(extErrorListener),
   m_plogwriter(log)

@@ -24,11 +24,11 @@
 #include "framework.h"
 #include "FbupdateNotifier.h"
 
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 
 #include "CoreEventsAdapter.h"
 
-FbUpdateNotifier::FbUpdateNotifier(FrameBuffer *fb, critical_section *fbLock, LogWriter *logWriter, WatermarksController* wmController)
+FbUpdateNotifier::FbUpdateNotifier(::subsystem::FrameBuffer *fb, critical_section *fbLock, ::subsystem::LogWriter *logWriter, WatermarksController* wmController)
 : m_frameBuffer(fb),
   m_fbLock(fbLock),
   m_plogwriter(logWriter),

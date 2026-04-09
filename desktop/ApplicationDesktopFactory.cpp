@@ -36,7 +36,7 @@ ApplicationDesktopFactory::~ApplicationDesktopFactory()
 Desktop *ApplicationDesktopFactory::createDesktop(ClipboardListener *extClipListener,
                                                           UpdateSendingListener *extUpdSendingListener,
                                                           AbnormDeskTermListener *extDeskTermListener,
-                                                          LogWriter *log)
+                                                          ::subsystem::LogWriter *log)
 {
   return new DesktopWinImpl(extClipListener, extUpdSendingListener,
                             extDeskTermListener, log);

@@ -29,7 +29,7 @@
 #define XK_MISCELLANY
 #include "remoting/remoting_common/rfb/keysymdef.h"
 
-RfbKeySym::RfbKeySym(RfbKeySymListener *extKeySymListener, LogWriter *log)
+RfbKeySym::RfbKeySym(RfbKeySymListener *extKeySymListener, ::subsystem::LogWriter *log)
 : m_extKeySymListener(extKeySymListener),
   m_allowProcessCharEvent(false),
   m_allowProcessDoubleChar(false),

@@ -41,17 +41,17 @@ int Encoder::getCode() const
 
 void Encoder::splitRectangle(const ::int_rectangle &  rect,
                              ::array_base<::int_rectangle> *rectList,
-                             const FrameBuffer *serverFb,
+                             const ::subsystem::FrameBuffer *serverFb,
                              const EncodeOptions *options)
 {
   rectList->add(rect);
 }
 
 void Encoder::sendRectangle(const ::int_rectangle &  rect,
-                            const FrameBuffer *serverFb,
+                            const ::subsystem::FrameBuffer *serverFb,
                             const EncodeOptions *options)
 {
-  const FrameBuffer *fb = m_pixelConverter->convert(rect, serverFb);
+  const ::subsystem::FrameBuffer *fb = m_pixelConverter->convert(rect, serverFb);
   int pixelSize = (int)fb->getBytesPerPixel();
   _ASSERT(pixelSize == fb->getBytesPerPixel());
 

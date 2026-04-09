@@ -37,8 +37,8 @@ PixelConverter::~PixelConverter(void)
   reset();
 }
 
-void PixelConverter::convert(const ::int_rectangle &  rect, FrameBuffer *dstFb,
-                             const FrameBuffer *srcFb) const
+void PixelConverter::convert(const ::int_rectangle &  rect, ::subsystem::FrameBuffer *dstFb,
+                             const ::subsystem::FrameBuffer *srcFb) const
 {
   if (m_convertMode == NO_CONVERT) {
     dstFb->copyFrom(rect, srcFb, rect.left, rect.top);
@@ -46,13 +46,13 @@ void PixelConverter::convert(const ::int_rectangle &  rect, FrameBuffer *dstFb,
     int rectHeight = rect.height();
     int rectWidth = rect.width();
     int fbWidth = dstFb->getDimension().cx;
-    PixelFormat dstPf = dstFb->getPixelFormat();
-    PixelFormat srcPf = srcFb->getPixelFormat();
+    ::subsystem::PixelFormat dstPf = dstFb->getPixelFormat();
+    ::subsystem::PixelFormat srcPf = srcFb->getPixelFormat();
 
     unsigned int dstPixelSize = dstPf.bitsPerPixel / 8;
     unsigned int srcPixelSize = srcPf.bitsPerPixel / 8;
 
-    // FIXME: Make FrameBuffer do the math.
+    // FIXME: Make ::subsystem::FrameBuffer do the math.
     unsigned char *dstPixP = (unsigned char *)dstFb->getBuffer() +
                      (fbWidth * rect.top + rect.left) * dstPixelSize;
     unsigned char *srcPixP = (unsigned char *)srcFb->getBuffer() +
@@ -114,8 +114,8 @@ void PixelConverter::convert(const ::int_rectangle &  rect, FrameBuffer *dstFb,
   }
 }
 
-const FrameBuffer *
-PixelConverter::convert(const ::int_rectangle &  rect, const FrameBuffer *srcFb)
+const ::subsystem::FrameBuffer *
+PixelConverter::convert(const ::int_rectangle &  rect, const ::subsystem::FrameBuffer *srcFb)
 {
   if (m_convertMode == NO_CONVERT) {
     return srcFb;
@@ -124,7 +124,7 @@ PixelConverter::convert(const ::int_rectangle &  rect, const FrameBuffer *srcFb)
   const ::int_size fbSize = srcFb->getDimension();
   if (m_dstFrameBuffer == 0) {
     // No frame buffer allocated - construct new one from the scratch.
-    m_dstFrameBuffer = new FrameBuffer;
+    m_dstFrameBuffer = new ::subsystem::FrameBuffer;
     m_dstFrameBuffer->setProperties(fbSize, m_dstFormat);
   } else if (m_dstFrameBuffer->getDimension() != fbSize)
   {
@@ -149,8 +149,8 @@ void PixelConverter::reset()
   }
 }
 
-void PixelConverter::setPixelFormats(const PixelFormat & dstPf,
-                                     const PixelFormat & srcPf)
+void PixelConverter::setPixelFormats(const ::subsystem::PixelFormat & dstPf,
+                                     const ::subsystem::PixelFormat & srcPf)
 {
   if (srcPf != m_srcFormat || dstPf != m_dstFormat) {
     // Reset both translation tables and the internal frame buffer.
@@ -181,8 +181,8 @@ size_t PixelConverter::getDstBitsPerPixel() const
   return m_dstFormat.bitsPerPixel;
 }
 
-void PixelConverter::fillHexBitsTable(const PixelFormat & dstPf,
-                                      const PixelFormat & srcPf)
+void PixelConverter::fillHexBitsTable(const ::subsystem::PixelFormat & dstPf,
+                                      const ::subsystem::PixelFormat & srcPf)
 {
   m_hexBitsTable.resize(65536);
 
@@ -223,8 +223,8 @@ void PixelConverter::fillHexBitsTable(const PixelFormat & dstPf,
   }
 }
 
-void PixelConverter::fill32BitsTable(const PixelFormat & dstPf,
-                                     const PixelFormat & srcPf)
+void PixelConverter::fill32BitsTable(const ::subsystem::PixelFormat & dstPf,
+                                     const ::subsystem::PixelFormat & srcPf)
 {
   unsigned int dstRedMax = dstPf.redMax;
   unsigned int dstGrnMax = dstPf.greenMax;

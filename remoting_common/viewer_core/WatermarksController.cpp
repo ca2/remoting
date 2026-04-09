@@ -24,14 +24,14 @@
 #include "framework.h"
 #include "WatermarksController.h"
 #include "watermark_bmp.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 #include "remoting/remoting_common/rfb/PixelConverter.h"
 
 WatermarksController::WatermarksController(void)
 {
 }
 
-void WatermarksController::setNewFbProperties(const ::int_rectangle &  rect, const PixelFormat & pf)
+void WatermarksController::setNewFbProperties(const ::int_rectangle &  rect, const ::subsystem::PixelFormat & pf)
 {
 	setNewPixelFormat(pf);
 	setNewFbSize(rect);
@@ -52,12 +52,12 @@ void WatermarksController::setNewFbSize(const ::int_rectangle &  rect)
 	}
 }
 
-void WatermarksController::setNewPixelFormat(const PixelFormat & pf)
+void WatermarksController::setNewPixelFormat(const ::subsystem::PixelFormat & pf)
 {
 	if (is_empty() || m_frameBuffer.getPixelFormat()!= pf)
 	{
-		FrameBuffer temp;
-		FrameBuffer& fb = frameBuffer(true);
+		::subsystem::FrameBuffer temp;
+		::subsystem::FrameBuffer& fb = frameBuffer(true);
 
 		m_overlay.setPixelFormat(pf);
 
@@ -77,14 +77,14 @@ void WatermarksController::setNewPixelFormat(const PixelFormat & pf)
 	}
 }
 
-void WatermarksController::showWaterMarks(FrameBuffer *frameBuffer, critical_section *fbLock)
+void WatermarksController::showWaterMarks(::subsystem::FrameBuffer *frameBuffer, critical_section *fbLock)
 {
 	m_overlay.copyFrom(frameBuffer, m_currentRect.left, m_currentRect.top);
 
 	frameBuffer->copyFrom(m_currentRect, &m_frameBuffer, 0, 0);
 }
 
-void WatermarksController::hideWatermarks(FrameBuffer *frameBuffer, critical_section *fbLock)
+void WatermarksController::hideWatermarks(::subsystem::FrameBuffer *frameBuffer, critical_section *fbLock)
 {
 	frameBuffer->copyFrom(m_currentRect, &m_overlay, 0, 0);
 }
@@ -94,7 +94,7 @@ const ::int_rectangle WatermarksController::CurrentRect()
 	return m_currentRect;
 }
 
-FrameBuffer& WatermarksController::frameBuffer(bool fromFile)
+::subsystem::FrameBuffer& WatermarksController::frameBuffer(bool fromFile)
 {
 	if (m_frameBuffer.getBuffer() == 0 || fromFile)
 	{
@@ -121,7 +121,7 @@ void WatermarksController::loadFromfile()
 
 
 	::int_size dim(m_width, m_height);
-	PixelFormat pf = StandardPixelFormatFactory::create32bppPixelFormat();
+	::subsystem::PixelFormat pf = StandardPixelFormatFactory::create32bppPixelFormat();
 	m_frameBuffer.setPropertiesWithoutResize(dim, pf);
 	m_overlay.setPropertiesWithoutResize(m_overlay.getDimension(), pf);
 

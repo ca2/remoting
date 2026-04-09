@@ -27,7 +27,7 @@
 
 #include "RfbClientManager.h"
 #include "ControlAppAuthenticator.h"
-#include "remoting/remoting_common/thread/ThreadCollector.h"
+#include "acme/subsystem/thread/ThreadCollector.h"
 
 #include "remoting/remoting_common/network/TcpServer.h"
 
@@ -51,7 +51,7 @@ public:
    */
   ControlServer(PipeServer *pipeServer,
                 RfbClientManager *rfbClientManager,
-                LogWriter *log);
+                ::subsystem::LogWriter *log);
   /**
    * Stops and deletes control server and deletes transport.
    */

@@ -34,7 +34,7 @@
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "Win8ScreenDriverImpl.h"
 
-Win8ScreenDriverImpl::Win8ScreenDriverImpl(LogWriter *log, UpdateKeeper *updateKeeper,
+Win8ScreenDriverImpl::Win8ScreenDriverImpl(::subsystem::LogWriter *log, UpdateKeeper *updateKeeper,
                                            critical_section *fbcritical_section,
                                            UpdateListener *updateListener,
                                            bool detectionEnabled)
@@ -94,7 +94,7 @@ void Win8ScreenDriverImpl::terminateDetection()
   m_detectionEnabled = false;
 }
 
-FrameBuffer *Win8ScreenDriverImpl::getScreenBuffer()
+::subsystem::FrameBuffer *Win8ScreenDriverImpl::getScreenBuffer()
 {
   return &m_frameBuffer;
 }
@@ -137,7 +137,7 @@ void Win8ScreenDriverImpl::initDxgi()
     throw ::remoting::Exception("Unable get all DXGI outputs for virtual screen");
   }
 
-  PixelFormat pf = getDxPixelFormat();
+  ::subsystem::PixelFormat pf = getDxPixelFormat();
   ::int_rectangle virtDeskBoundRect = virtDeskRegion.getBounds();
   m_frameBuffer.setProperties(&virtDeskBoundRect, &pf);
   m_frameBuffer.setColor(0, 0, 0);
@@ -259,7 +259,7 @@ bool Win8ScreenDriverImpl::isValid()
   return !m_hasRecoverableError && !m_hasCriticalError;
 }
 
-PixelFormat Win8ScreenDriverImpl::getDxPixelFormat() const
+::subsystem::PixelFormat Win8ScreenDriverImpl::getDxPixelFormat() const
 {
   return StandardPixelFormatFactory::create32bppPixelFormat();
 }

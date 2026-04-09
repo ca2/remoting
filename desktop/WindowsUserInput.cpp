@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "WindowsUserInput.h"
-#include "remoting/remoting_common/thread/DesktopSelector.h"
+#include "acme/subsystem/thread/DesktopSelector.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 #include "remoting/remoting_common/win_system/Keyboard.h"
 #include "apex/innate_subsystem/WindowFinder.h"
@@ -31,7 +31,7 @@
 
 WindowsUserInput::WindowsUserInput(ClipboardListener *clipboardListener,
                                    bool ctrlAltDelEnabled,
-                                   LogWriter *log)
+                                   ::subsystem::LogWriter *log)
 : m_prevKeyFlag(0),
   m_inputInjector(ctrlAltDelEnabled, log),
   m_plogwriter(log)

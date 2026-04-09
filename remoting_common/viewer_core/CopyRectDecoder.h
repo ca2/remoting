@@ -40,14 +40,14 @@ protected:
   // This method inherited by DecoderOfRectangle.
   //
   virtual void decode(RfbInputGate *input,
-                      FrameBuffer *frameBuffer,
+                      ::subsystem::FrameBuffer *frameBuffer,
                       const ::int_rectangle &  dstRect);
 
   //
   // This method inherited by DecoderOfRectangle.
   //
-  virtual void copy(FrameBuffer *dstFrameBuffer,
-                    const FrameBuffer *srcFrameBuffer,
+  virtual void copy(::subsystem::FrameBuffer *dstFrameBuffer,
+                    const ::subsystem::FrameBuffer *srcFrameBuffer,
                     const ::int_rectangle &  rect,
                     critical_section *fbLock);
 

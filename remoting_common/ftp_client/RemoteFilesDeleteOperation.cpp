@@ -28,7 +28,7 @@ namespace remoting
 {
    namespace ftp
    {
-      RemoteFilesDeleteOperation::RemoteFilesDeleteOperation(LogWriter *logWriter,
+      RemoteFilesDeleteOperation::RemoteFilesDeleteOperation(::subsystem::LogWriter *logWriter,
                                                              const ::pointer_array< FileInfo > & fileinfoa,
                                                              const ::file::path & pathToTargetRoot)
       : FileTransferOperation(logWriter)
@@ -37,7 +37,7 @@ namespace remoting
          m_pathToTargetRoot= pathToTargetRoot;
       }
 
-      RemoteFilesDeleteOperation::RemoteFilesDeleteOperation(LogWriter *logWriter,
+      RemoteFilesDeleteOperation::RemoteFilesDeleteOperation(::subsystem::LogWriter *logWriter,
                                                              FileInfo fileInfoToDelete,
                                                              const ::file::path & pathToTargetRoot)
       : FileTransferOperation(logWriter)

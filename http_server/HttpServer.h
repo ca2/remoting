@@ -46,7 +46,7 @@ public:
   HttpServer(const ::scoped_string & scopedstrBindHost,
              unsigned short bindPort,
              bool lockAddr,
-             LogWriter *log);
+             ::subsystem::LogWriter *log);
   /**
    * Stops http server thread and deletes http server.
    */

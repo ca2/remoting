@@ -25,7 +25,7 @@
 #pragma once
 
 
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 #include "acme/subsystem/io/Channel.h"
 #include "acme/subsystem/io/DataOutputStream.h"
 #include "acme/subsystem/io/DataInputStream.h"

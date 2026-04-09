@@ -27,7 +27,7 @@
 
 #include "UpdateDetector.h"
 #include "ScreenGrabber.h"
-#include "remoting/remoting_common/rfb/FrameBuffer.h"
+#include "acme/subsystem/framebuffer/FrameBuffer.h"
 
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 //#include "log_writer/LogWriter.h"
@@ -40,9 +40,9 @@ public:
   Poller(UpdateKeeper *updateKeeper,
          UpdateListener *updateListener,
          ScreenGrabber *screenGrabber,
-         FrameBuffer *backupFrameBuffer,
+         ::subsystem::FrameBuffer *backupFrameBuffer,
          critical_section *frameBufferCriticalSection,
-         LogWriter *log);
+         ::subsystem::LogWriter *log);
 
   virtual ~Poller();
 
@@ -52,7 +52,7 @@ protected:
 
 private:
   ScreenGrabber *m_screenGrabber;
-  FrameBuffer *m_backupFrameBuffer;
+  ::subsystem::FrameBuffer *m_backupFrameBuffer;
   critical_section *m_fbMutex;
   ::int_rectangle m_pollingRect;
   WindowsEvent m_intervalWaiter;

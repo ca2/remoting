@@ -31,7 +31,7 @@
 #include "remoting/remoting_common/win_system/Workstation.h"
 #include "remoting/remoting_common/win_system/WTS.h"
 
-CurrentConsoleProcess::CurrentConsoleProcess(LogWriter *log, bool connectRdpSession, const ::scoped_string & scopedstrPath, const ::scoped_string & scopedstrArgs)
+CurrentConsoleProcess::CurrentConsoleProcess(::subsystem::LogWriter *log, bool connectRdpSession, const ::scoped_string & scopedstrPath, const ::scoped_string & scopedstrArgs)
 : Process(scopedstrPath, scopedstrArgs),
   m_plogwriter(log),
   m_connectRdpSession(connectRdpSession)

@@ -28,7 +28,7 @@
 RfbServer::RfbServer(const ::scoped_string & scopedstrBindHost, unsigned short bindPort,
                      RfbClientManager *clientManager,
                      bool lockAddr,
-                     LogWriter *log,
+                     ::subsystem::LogWriter *log,
                      const ::int_rectangle & viewPort)
 : TcpServer(bindHost, bindPort, false, lockAddr),
   m_clientManager(clientManager),

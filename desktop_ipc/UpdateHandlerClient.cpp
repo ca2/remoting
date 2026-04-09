@@ -29,7 +29,7 @@
 UpdateHandlerClient::UpdateHandlerClient(BlockingGate *forwGate,
                                          DesktopSrvDispatcher *dispatcher,
                                          UpdateListener *externalUpdateListener,
-                                         LogWriter *log)
+                                         ::subsystem::LogWriter *log)
 : DesktopServerProto(forwGate),
   m_externalUpdateListener(externalUpdateListener),
   m_plogwriter(log)
@@ -37,13 +37,13 @@ UpdateHandlerClient::UpdateHandlerClient(BlockingGate *forwGate,
   dispatcher->registerNewHandle(UPDATE_DETECTED, this);
 
   // m_backupFrameBuffer building
-  PixelFormat termPF;
+  ::subsystem::PixelFormat termPF;
   ::int_size termDim;
   getScreenProperties(&termPF, &termDim);
 
   m_backupFrameBuffer.setProperties(&termDim, &termPF);
 
-  // Synchronize our FrameBuffer and the server FrameBuffer
+  // Synchronize our ::subsystem::FrameBuffer and the server ::subsystem::FrameBuffer
   sendInit(m_forwGate);
 }
 
@@ -84,10 +84,10 @@ void UpdateHandlerClient::extract(UpdateContainer *updateContainer)
     if (updCont.screenSizeChanged) {
       m_plogwriter->information("UpdateHandlerClient: screen size changed");
       // Store old screen properties
-      PixelFormat oldPf = m_backupFrameBuffer.getPixelFormat();
+      ::subsystem::PixelFormat oldPf = m_backupFrameBuffer.getPixelFormat();
       ::int_size oldDim = m_backupFrameBuffer.getDimension();
       // Get new screen properties
-      PixelFormat newPf;
+      ::subsystem::PixelFormat newPf;
       readPixelFormat(&newPf, m_forwGate);
       ::int_size newDim = readDimension(m_forwGate);;
       if (!newPf.isEqualTo(&oldPf) || !newDim.isEqualTo(&oldDim)) {
@@ -144,7 +144,7 @@ void UpdateHandlerClient::extract(UpdateContainer *updateContainer)
     updCont.cursorShapeChanged = m_forwGate->readUInt8() != 0;
     if (updCont.cursorShapeChanged) {
       m_plogwriter->information("UpdateHandlerClient: cursor shape changed");
-      PixelFormat newPf = m_backupFrameBuffer.getPixelFormat();
+      ::subsystem::PixelFormat newPf = m_backupFrameBuffer.getPixelFormat();
       ::int_size newDim = readDimension(m_forwGate);
       Point newHotSpot = readPoint(m_forwGate);
 
@@ -194,7 +194,7 @@ bool UpdateHandlerClient::checkForUpdates(Region *region)
   return false;
 }
 
-void UpdateHandlerClient::getScreenProperties(PixelFormat *pf, ::int_size *dim)
+void UpdateHandlerClient::getScreenProperties(::subsystem::PixelFormat *pf, ::int_size *dim)
 {
   critical_section_lock al(m_forwGate);
 

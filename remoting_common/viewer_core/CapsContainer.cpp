@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "CapsContainer.h"
 
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 
 CapsContainer::CapsContainer()
 {

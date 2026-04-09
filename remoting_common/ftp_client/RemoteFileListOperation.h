@@ -39,7 +39,7 @@ namespace remoting
       class CLASS_DECL_REMOTING_COMMON RemoteFileListOperation : public FileTransferOperation
       {
       public:
-         RemoteFileListOperation(LogWriter *logWriter, const ::scoped_string & scopedstrRemotePath);
+         RemoteFileListOperation(::subsystem::LogWriter *logWriter, const ::scoped_string & scopedstrRemotePath);
          virtual ~RemoteFileListOperation();
 
          //

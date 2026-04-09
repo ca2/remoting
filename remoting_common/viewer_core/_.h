@@ -13,7 +13,15 @@
 #endif
 
 
+namespace remoting
+{
 
 
+   class AuthException;
+
+   class AuthHandler
+
+
+}// namespace remoting
 
 

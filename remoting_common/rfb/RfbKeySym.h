@@ -87,10 +87,10 @@ private:
   int GettingCharFromCtrlSymbol(int ctrlSymbol);
   // E.g if pressed Ctrl + Alt + A
   // Try found char without modificators
-#ifdef WINDOWS
-  bool TryTranslateNotPrintableToUnicode(unsigned short virtKey, HKL currentLayout, WCHAR *unicodeChar);
-   
-#endif
+// #ifdef WINDOWS
+//   bool TryTranslateNotPrintableToUnicode(unsigned short virtKey, HKL currentLayout, WCHAR *unicodeChar);
+//
+// #endif
 
   RfbKeySymListener *m_extKeySymListener;
 

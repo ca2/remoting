@@ -37,8 +37,8 @@
 
 #include "http-server-lib/HttpServer.h"
 
-#include "remoting/remoting_common/thread/ZombieKiller.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+#include "acme/subsystem/thread/ZombieKiller.h"
+//#include "acme/subsystem/thread/critical_section.h"
 //#include "log_writer/LogWriter.h"
 #include "remoting/remoting_common/util/Singleton.h"
 #include "remoting/remoting_common/util/ListenerContainer.h"
@@ -85,7 +85,7 @@ public:
   TvnServer(bool runsInServiceContext,
             NewConnectionEvents *newConnectionEvents,
             LogInitListener *logInitListener,
-            LogWriter *LogWriter);
+            ::subsystem::LogWriter * plogwriter);
   /**
    * Stops and destroys TightVNC server.
    * @remark don't generate shutdown signal(like shutdown() method does) for listeners.
@@ -154,7 +154,7 @@ protected:
   void changeLogProps();
 
 protected:
-  LogWriter m_plogwriter;
+  ::subsystem::LogWriter m_plogwriter;
   ZombieKiller m_zombieKiller;
 
   Configurator m_config;

@@ -32,7 +32,7 @@
 #include "SocketException.h"
 //#include "remoting/remoting_common/util/::string.h"
 
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 
 critical_section SocketAddressIPv4::s_resolveMutex;
 

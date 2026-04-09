@@ -34,7 +34,7 @@
 
 #include "remoting/remoting_common/server_config/Configurator.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
-#include "remoting/remoting_common/thread/GuiThread.h"
+#include "acme/subsystem/thread/GuiThread.h"
 #include "remoting/remoting_common/win_system/Screen.h"
 
 //

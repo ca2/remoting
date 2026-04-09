@@ -23,12 +23,12 @@
 //
 #include "framework.h"
 #include "Win32ScreenDriver.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 
 Win32ScreenDriver::Win32ScreenDriver(UpdateKeeper *updateKeeper,
                                      UpdateListener *updateListener,
-                                     FrameBuffer *fb,
-                                     critical_section *fbcritical_section, LogWriter *log)
+                                     ::subsystem::FrameBuffer *fb,
+                                     critical_section *fbcritical_section, ::subsystem::LogWriter *log)
 : Win32ScreenDriverBaseImpl(updateKeeper, updateListener, fbcritical_section, log),
   m_poller(updateKeeper, updateListener, &m_screenGrabber, fb, fbcritical_section, log),
   m_consolePoller(updateKeeper, updateListener, &m_screenGrabber, fb, fbcritical_section, log),
@@ -75,7 +75,7 @@ bool Win32ScreenDriver::grabFb(const ::int_rectangle &  rect)
   return m_screenGrabber.grab(rect);
 }
 
-FrameBuffer *Win32ScreenDriver::getScreenBuffer()
+::subsystem::FrameBuffer *Win32ScreenDriver::getScreenBuffer()
 {
   return m_screenGrabber.getScreenBuffer();
 }

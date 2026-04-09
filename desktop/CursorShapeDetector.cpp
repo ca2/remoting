@@ -30,7 +30,7 @@ CursorShapeDetector::CursorShapeDetector(UpdateKeeper *updateKeeper,
                                        UpdateListener *updateListener,
                                        CursorShapeGrabber *mouseGrabber,
                                        critical_section *mouseGrabLocMut,
-                                       LogWriter *log)
+                                       ::subsystem::LogWriter *log)
 : UpdateDetector(updateKeeper, updateListener),
   m_mouseGrabber(mouseGrabber),
   m_mouseGrabLocMut(mouseGrabLocMut),

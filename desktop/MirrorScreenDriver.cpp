@@ -28,7 +28,7 @@
 MirrorScreenDriver::MirrorScreenDriver(UpdateKeeper *updateKeeper,
                                        UpdateListener *updateListener,
                                        critical_section *fbcritical_section,
-                                       LogWriter *log)
+                                       ::subsystem::LogWriter *log)
 : UpdateDetector(updateKeeper,
                  updateListener),
   m_fbMutex(fbcritical_section),
@@ -61,7 +61,7 @@ void MirrorScreenDriver::terminateDetection()
 void MirrorScreenDriver::initFrameBuffer()
 {
   ::int_size dim = m_mirrorClient->getDimension();
-  PixelFormat pf = m_mirrorClient->getPixelFormat();
+  ::subsystem::PixelFormat pf = m_mirrorClient->getPixelFormat();
 
   m_frameBuffer.setProperties(&dim, &pf);
 }
@@ -71,7 +71,7 @@ void MirrorScreenDriver::initFrameBuffer()
   return m_frameBuffer.getDimension();
 }
 
-FrameBuffer *MirrorScreenDriver::getScreenBuffer()
+::subsystem::FrameBuffer *MirrorScreenDriver::getScreenBuffer()
 {
   return &m_frameBuffer;
 }
@@ -141,7 +141,7 @@ bool MirrorScreenDriver::applyNewProperties()
   m_mirrorClient = new MirrorDriverClient(m_plogwriter);
 
   ::int_size newDim = m_mirrorClient->getDimension();
-  PixelFormat pf = m_mirrorClient->getPixelFormat();
+  ::subsystem::PixelFormat pf = m_mirrorClient->getPixelFormat();
   m_frameBuffer.setProperties(&newDim, &pf);
   m_lastCounter = 0;
 

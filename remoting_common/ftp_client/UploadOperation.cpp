@@ -34,7 +34,7 @@ namespace remoting
 {
    namespace ftp
    {
-      UploadOperation::UploadOperation(LogWriter *logWriter,
+      UploadOperation::UploadOperation(::subsystem::LogWriter *logWriter,
                                        FileInfo fileToUpload,
                                        const ::file::path & pathToSourceRoot,
                                        const ::file::path & pathToTargetRoot)
@@ -53,7 +53,7 @@ namespace remoting
          m_lastRequestTime.Now();
       }
 
-      UploadOperation::UploadOperation(LogWriter *logWriter,
+      UploadOperation::UploadOperation(::subsystem::LogWriter *logWriter,
                                        const ::pointer_array< FileInfo > & fileinfoa,
                                        const ::file::path & pathToSourceRoot,
                                        const ::file::path & pathToTargetRoot)

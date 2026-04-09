@@ -30,7 +30,7 @@
 
 //#include aaa_<crtdbg.h>
 
-InputInjector::InputInjector(bool ctrlAltDelEnabled, LogWriter *log)
+InputInjector::InputInjector(bool ctrlAltDelEnabled, ::subsystem::LogWriter *log)
 : m_controlIsPressed(false),
   m_menuIsPressed(false),
   m_deleteIsPressed(false),

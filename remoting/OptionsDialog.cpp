@@ -25,14 +25,16 @@
 #include "OptionsDialog.h"
 #include "acme/constant/user_notification.h"
 #include "remoting/remoting_common/remoting.h"
+#include "remoting/remoting_common/client_config/ConnectionConfig.h"
 
 
 namespace remoting_remoting
 {
     OptionsDialog::OptionsDialog()
-    : Dialog(IDD_OPTIONS),
+    : //Dialog(IDD_OPTIONS),
       m_connected(false)
     {
+       initialize_dialog(IDD_OPTIONS);
     }
 
     void OptionsDialog::setConnectionConfig(::remoting::ConnectionConfig *conConfig)

@@ -31,7 +31,7 @@
 
 #include "remoting/remoting_common/win_system/WTS.h"
 
-void ControlPipeName::createPipeName(bool forService, ::string & pipeName, LogWriter *log)
+void ControlPipeName::createPipeName(bool forService, ::string & pipeName, ::subsystem::LogWriter *log)
 {
   if (forService) {
     pipeName->setString(

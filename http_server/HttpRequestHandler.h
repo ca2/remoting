@@ -32,7 +32,7 @@
 class HttpRequestHandler
 {
 public:
-  HttpRequestHandler(DataInputStream *dataInput, DataOutputStream *dataOutput, LogWriter *log,
+  HttpRequestHandler(DataInputStream *dataInput, DataOutputStream *dataOutput, ::subsystem::LogWriter *log,
                      const ::scoped_string & scopedstrPeerHost = 0);
   virtual ~HttpRequestHandler();
 

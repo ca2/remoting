@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "DesktopConfigClient.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 #include "ReconnectException.h"
 
 DesktopConfigClient::DesktopConfigClient(BlockingGate *forwGate)

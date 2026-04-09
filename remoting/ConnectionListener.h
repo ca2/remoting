@@ -27,7 +27,7 @@
 
 #include "remoting/remoting/ViewerInstance.h"
 #include "remoting/remoting_common/network/TcpServer.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 
 namespace remoting_remoting
 {

@@ -136,7 +136,7 @@ size_t WinDxgiOutputDuplication::getFrameDirtyRects(::array_base<RECT> *dirtyRec
   return bufSize / elementSize;
 }
 
-void WinDxgiOutputDuplication::getFrameCursorShape(CursorShape *cursorShape, unsigned int pointerShapeBufferSize, LogWriter *log)
+void WinDxgiOutputDuplication::getFrameCursorShape(CursorShape *cursorShape, unsigned int pointerShapeBufferSize, ::subsystem::LogWriter *log)
 {
   //log->debug("{}", pointerShapeBufferSize);
   // This function can calculate required buffer size by self but the size is already known.
@@ -162,7 +162,7 @@ void WinDxgiOutputDuplication::getFrameCursorShape(CursorShape *cursorShape, uns
   buffer.resize(reqSize);
 
   CursorShape newCursorShape;
-  PixelFormat pf = StandardPixelFormatFactory::create32bppPixelFormat();
+  ::subsystem::PixelFormat pf = StandardPixelFormatFactory::create32bppPixelFormat();
   newCursorShape.setHotSpot(shapeInfo.HotSpot.x, shapeInfo.HotSpot.y);
 
   unsigned int pitch;

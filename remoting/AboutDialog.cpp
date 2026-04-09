@@ -42,7 +42,7 @@ namespace remoting_remoting
     AboutDialog::AboutDialog()
     //: BaseDialog(IDD_ABOUT_DIALOG)
     {
-       initialize_base_dialog(IDD_ABOUT_DIALOG);
+       initialize_dialog(IDD_ABOUT_DIALOG);
     }
 
     AboutDialog::~AboutDialog()

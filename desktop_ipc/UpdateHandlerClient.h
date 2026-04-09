@@ -35,7 +35,7 @@ class UpdateHandlerClient : public UpdateHandler, public DesktopServerProto,
 {
 public:
   UpdateHandlerClient(BlockingGate *forwGate, DesktopSrvDispatcher *dispatcher,
-                      UpdateListener *externalUpdateListener, LogWriter *log);
+                      UpdateListener *externalUpdateListener, ::subsystem::LogWriter *log);
   virtual ~UpdateHandlerClient();
 
   virtual void extract(UpdateContainer *updateContainer);
@@ -44,7 +44,7 @@ public:
   virtual bool checkForUpdates(Region *region);
 
 protected:
-  virtual void getScreenProperties(PixelFormat *pf, ::int_size *dim);
+  virtual void getScreenProperties(::subsystem::PixelFormat *pf, ::int_size *dim);
   virtual void sendInit(BlockingGate *gate);
 
   // To catch update event

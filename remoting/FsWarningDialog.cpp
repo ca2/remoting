@@ -30,7 +30,7 @@ namespace remoting_remoting
 {
     FsWarningDialog::FsWarningDialog()
     {
-         initialize_base_dialog(IDD_FS_WARNING);
+         initialize_dialog(IDD_FS_WARNING);
     }
 
     bool FsWarningDialog::onInitDialog()

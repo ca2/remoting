@@ -36,7 +36,7 @@
 class CLASS_DECL_REMOTING_COMMON InputInjector
 {
 public:
-  InputInjector(bool ctrlAltDelEnabled, LogWriter *log);
+  InputInjector(bool ctrlAltDelEnabled, ::subsystem::LogWriter *log);
   ~InputInjector();
 
   // Toggles off all modifiers including the Delete key.

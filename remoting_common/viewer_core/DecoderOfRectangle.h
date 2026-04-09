@@ -46,8 +46,8 @@ public:
   // This function is thread-safe for frameBuffer.
   //
   virtual void process(RfbInputGate *input,
-                       FrameBuffer *frameBuffer,
-                       FrameBuffer *secondFrameBuffer,
+                       ::subsystem::FrameBuffer *frameBuffer,
+                       ::subsystem::FrameBuffer *secondFrameBuffer,
                        const ::int_rectangle &  rect,
                        critical_section *fbLock,
                        FbUpdateNotifier *fbNotifier);
@@ -62,15 +62,15 @@ protected:
   // This method read rectangle-update from input and decode on frameBuffer.
   //
   virtual void decode(RfbInputGate *input,
-                      FrameBuffer *frameBuffer,
+                      ::subsystem::FrameBuffer *frameBuffer,
                       const ::int_rectangle &  rect) = 0;
 
   //
   // This method copy rectangle from srcFrameBuffer to dstFrameBuffer.
   // This function is thread-safe from dstFrameBuffer.
   //
-  virtual void copy(FrameBuffer *dstFrameBuffer,
-                    const FrameBuffer *srcFrameBuffer,
+  virtual void copy(::subsystem::FrameBuffer *dstFrameBuffer,
+                    const ::subsystem::FrameBuffer *srcFrameBuffer,
                     const ::int_rectangle &  rect,
                     critical_section *fbLock);
 

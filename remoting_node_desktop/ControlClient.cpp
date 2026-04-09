@@ -70,7 +70,7 @@ const unsigned int ControlClient::WITHOUT_AUTH[] = {
 ControlClient::ControlClient(Transport *transport,
                              RfbClientManager *rfbClientManager,
                              ControlAppAuthenticator *authenticator,
-                             HANDLE pipeHandle, LogWriter *log)
+                             HANDLE pipeHandle, ::subsystem::LogWriter *log)
 : m_transport(transport), m_rfbClientManager(rfbClientManager),
   m_authenticator(authenticator),
   m_tcpDispId(0),

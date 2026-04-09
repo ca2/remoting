@@ -49,7 +49,7 @@ TightDecoder::~TightDecoder()
 }
 
 void TightDecoder::decode(RfbInputGate *pinput,
-                          FrameBuffer *fb,
+                          ::subsystem::FrameBuffer *fb,
                           const ::int_rectangle &  dstRect)
 {
  // The width of any Tight-encoded rectangle cannot exceed 2048
@@ -57,7 +57,7 @@ void TightDecoder::decode(RfbInputGate *pinput,
  // and each one should be encoded separately.
 
   m_isCPixel = false;
-  PixelFormat pf = fb->getPixelFormat();
+  ::subsystem::PixelFormat pf = fb->getPixelFormat();
   if (pf.colorDepth == 24 && pf.bitsPerPixel == 32 &&
       pf.redMax == 255 && pf.greenMax == 255 && pf.blueMax == 255) {
     m_isCPixel = true;
@@ -154,7 +154,7 @@ int TightDecoder::readCompactSize(RfbInputGate *pinput)
 }
 
 void TightDecoder::processJpeg(RfbInputGate *pinput,
-                               FrameBuffer *frameBuffer,
+                               ::subsystem::FrameBuffer *frameBuffer,
                                const ::int_rectangle &  dstRect)
 {
   unsigned int jpegBufLen = readCompactSize(pinput);
@@ -186,7 +186,7 @@ void TightDecoder::processJpeg(RfbInputGate *pinput,
 }
 
 void TightDecoder::processBasicTypes(RfbInputGate *pinput,
-                                     FrameBuffer *fb,
+                                     ::subsystem::FrameBuffer *fb,
                                      const ::int_rectangle &  dstRect,
                                      unsigned char compressionControl)
 {
@@ -293,7 +293,7 @@ void TightDecoder::readCompressedData(RfbInputGate *pinput,
   }
 }
 
-void TightDecoder::drawPalette(FrameBuffer *fb,
+void TightDecoder::drawPalette(::subsystem::FrameBuffer *fb,
                                const ::array_base<unsigned int> &palette,
                                const ::array_base<unsigned char> &pixels,
                                const ::int_rectangle &  dstRect)
@@ -334,7 +334,7 @@ void TightDecoder::drawPalette(FrameBuffer *fb,
   }
 }
 
-void TightDecoder::drawTightBytes(FrameBuffer *fb,
+void TightDecoder::drawTightBytes(::subsystem::FrameBuffer *fb,
                                   const ::array_base<unsigned char> *pixels,
                                   const ::int_rectangle &  dstRect)
 {
@@ -354,7 +354,7 @@ void TightDecoder::drawTightBytes(FrameBuffer *fb,
   }
 }
 
-void TightDecoder::drawJpegBytes(FrameBuffer *fb,
+void TightDecoder::drawJpegBytes(::subsystem::FrameBuffer *fb,
                                  const ::array_base<unsigned char> *pixels,
                                  const ::int_rectangle &  dstRect)
 {
@@ -364,7 +364,7 @@ void TightDecoder::drawJpegBytes(FrameBuffer *fb,
 
   int fbBytesPerPixel = fb->getBytesPerPixel();
   int bytesPerCPixel = 3;
-  PixelFormat pxFormat = fb->getPixelFormat();
+  ::subsystem::PixelFormat pxFormat = fb->getPixelFormat();
 
   int dstLength = dstRect.area();
 
@@ -399,7 +399,7 @@ void TightDecoder::drawJpegBytes(FrameBuffer *fb,
  * component.
  */
 
-void TightDecoder::drawGradient(FrameBuffer *fb,
+void TightDecoder::drawGradient(::subsystem::FrameBuffer *fb,
                                 const ::array_base<unsigned char> &pixels,
                                 const ::int_rectangle &  dstRect)
 {
@@ -413,7 +413,7 @@ void TightDecoder::drawGradient(FrameBuffer *fb,
   memset(opRows[0].data(), 0, opRowLength * sizeof(unsigned short));
   memset(opRows[1].data(), 0, opRowLength * sizeof(unsigned short));
   
-  PixelFormat pxFormat = fb->getPixelFormat();
+  ::subsystem::PixelFormat pxFormat = fb->getPixelFormat();
   int fbBytesPerPixel = fb->getBytesPerPixel();
   int bytesPerCPixel = fbBytesPerPixel;
   if (m_isCPixel) {
@@ -449,7 +449,7 @@ void TightDecoder::drawGradient(FrameBuffer *fb,
   }
 }
 
-unsigned int TightDecoder::getRawTightColor(const PixelFormat & pxFormat,
+unsigned int TightDecoder::getRawTightColor(const ::subsystem::PixelFormat & pxFormat,
                                       const ::array_base<unsigned char> &pixels,
                                       const size_t offset)
 {
@@ -463,7 +463,7 @@ unsigned int TightDecoder::getRawTightColor(const PixelFormat & pxFormat,
   return rawColor;
 }
 
-void TightDecoder::fillRawComponents(const PixelFormat & pxFormat,
+void TightDecoder::fillRawComponents(const ::subsystem::PixelFormat & pxFormat,
                                      unsigned char components[],
                                      const ::array_base<unsigned char> &pixels,
                                      const size_t pixelOffset)

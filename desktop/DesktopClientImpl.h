@@ -49,7 +49,7 @@ public:
   DesktopClientImpl(ClipboardListener *extClipListener,
                 UpdateSendingListener *extUpdSendingListener,
                 AbnormDeskTermListener *extDeskTermListener,
-                LogWriter *log);
+                ::subsystem::LogWriter *log);
   virtual ~DesktopClientImpl();
 
 protected:

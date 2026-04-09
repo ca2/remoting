@@ -28,7 +28,7 @@
 #include "MirrorDriverClient.h"
 #include "remoting/remoting_common/win_system/RegistryKey.h"
 #include "DisplayEsc.h"
-#include "remoting/remoting_common/thread/GuiThread.h"
+#include "acme/subsystem/thread/GuiThread.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 #include "UpdateDetector.h"
 
@@ -38,7 +38,7 @@ public:
   MirrorScreenDriver(UpdateKeeper *updateKeeper,
                      UpdateListener *updateListener,
                      critical_section *fbcritical_section,
-                     LogWriter *log);
+                     ::subsystem::LogWriter *log);
   virtual ~MirrorScreenDriver();
 
   // Starts screen update detection if it not started yet.
@@ -48,7 +48,7 @@ public:
   virtual void terminateDetection();
 
   virtual ::int_size getScreenDimension();
-  virtual FrameBuffer *getScreenBuffer();
+  virtual ::subsystem::FrameBuffer *getScreenBuffer();
   virtual bool grab(const ::int_rectangle &  rect = 0);
 
   virtual bool getPropertiesChanged();
@@ -66,7 +66,7 @@ private:
 
   MirrorDriverClient *m_mirrorClient;
   unsigned long m_lastCounter;
-  FrameBuffer m_frameBuffer;
+  ::subsystem::FrameBuffer m_frameBuffer;
   // TO THINK: One may use a self mutex here, because do not
   // use external objects here.
   critical_section *m_fbMutex;

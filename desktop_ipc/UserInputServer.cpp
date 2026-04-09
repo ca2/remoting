@@ -23,13 +23,13 @@
 //
 #include "framework.h"
 #include "UserInputServer.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 #include "remoting/remoting_common/util/BrokenHandleException.h"
 
 UserInputServer::UserInputServer(BlockingGate *forwGate,
                                  DesktopSrvDispatcher *dispatcher,
                                  AnEventListener *extTerminationListener,
-                                 LogWriter *log)
+                                 ::subsystem::LogWriter *log)
 : DesktopServerProto(forwGate),
   m_extTerminationListener(extTerminationListener),
   m_plogwriter(log)

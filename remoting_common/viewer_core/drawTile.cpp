@@ -31,7 +31,7 @@
 
 
 
-void ZrleDecoder::drawTile(FrameBuffer* fb,
+void ZrleDecoder::drawTile(::subsystem::FrameBuffer* fb,
     const ::int_rectangle& tileRect,
     const ::array_base<char>* pixels)
 {

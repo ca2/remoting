@@ -34,7 +34,7 @@ class UpdateHandlerImpl : public UpdateHandler, public UpdateListener
 {
 public:
   UpdateHandlerImpl(UpdateListener *externalUpdateListener, ScreenDriverFactory *scrDriverFactory,
-                    LogWriter *log);
+                    ::subsystem::LogWriter *log);
   virtual ~UpdateHandlerImpl();
 
   virtual void extract(UpdateContainer *updateContainer);

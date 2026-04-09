@@ -64,7 +64,7 @@ namespace remoting_remoting
 
         virtual ::pointer < ::remoting::ftp::FileInfo >getSelectedFileInfo();
 
-        virtual void sort(int columnIndex);
+        virtual void set_sort(int columnIndex);
         //protected:
 
         //

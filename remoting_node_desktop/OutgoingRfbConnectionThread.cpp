@@ -28,7 +28,7 @@ OutgoingRfbConnectionThread::OutgoingRfbConnectionThread(const ::scoped_string &
                                                          unsigned int connectPort,
                                                          bool viewOnly,
                                                          RfbClientManager *clientManager,
-                                                         LogWriter *log)
+                                                         ::subsystem::LogWriter *log)
 : m_connectHost(connectHost), m_connectPort(connectPort), m_viewOnly(viewOnly),
   m_clientManager(clientManager),
   m_plogwriter(log)

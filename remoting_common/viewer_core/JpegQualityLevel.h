@@ -30,7 +30,7 @@
 class CLASS_DECL_REMOTING_COMMON JpegQualityLevel : public PseudoDecoder
 {
 public:
-  JpegQualityLevel(LogWriter *logWriter, int quality);
+  JpegQualityLevel(::subsystem::LogWriter *logWriter, int quality);
   virtual ~JpegQualityLevel();
 
 public:

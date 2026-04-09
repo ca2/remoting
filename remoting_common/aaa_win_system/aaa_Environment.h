@@ -78,7 +78,7 @@
 //       virtual ::string getCurrentModuleFolderPath();
 //
 //       // Returns user name of the current desktop
-//       //virtual bool getCurrentUserName(::string & out, LogWriter *log);
+//       //virtual bool getCurrentUserName(::string & out, ::subsystem::LogWriter *log);
 //       virtual ::string getCurrentUserName();
 //
 //      // Fills "out" by computer name string.
@@ -99,13 +99,13 @@
 //       virtual bool isWin7();
 //
 //       // Simulates the "ctrl + alt + del" combination under WindowsXP.
-//       virtual void simulateCtrlAltDel(LogWriter *log);
+//       virtual void simulateCtrlAltDel(::subsystem::LogWriter *log);
 //
 //       // Simulates the "ctrl + alt + del" combination by using the "SAS" lib.
-//       virtual void simulateCtrlAltDelUnderVista(LogWriter *log);
+//       virtual void simulateCtrlAltDelUnderVista(::subsystem::LogWriter *log);
 //
 //       // Returns true if the Aero is On.
-//       virtual bool isAeroOn(LogWriter *log);
+//       virtual bool isAeroOn(::subsystem::LogWriter *log);
 //
 //    //private:
 //       virtual void init();

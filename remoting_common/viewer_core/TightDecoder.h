@@ -40,7 +40,7 @@ public:
 
 protected:
   virtual void decode(RfbInputGate *input,
-                      FrameBuffer *frameBuffer,
+                      ::subsystem::FrameBuffer *frameBuffer,
                       const ::int_rectangle &  dstRect);
 
 private:
@@ -52,10 +52,10 @@ private:
                           int paletteSize,
                           int bytesPerCPixel);
   void processJpeg(RfbInputGate *input,
-                   FrameBuffer *frameBuffer,
+                   ::subsystem::FrameBuffer *frameBuffer,
                    const ::int_rectangle &  dstRect);
   void processBasicTypes(RfbInputGate *input,
-                         FrameBuffer *frameBuffer,
+                         ::subsystem::FrameBuffer *frameBuffer,
                          const ::int_rectangle &  dstRect,
                          unsigned char compControl);
   void readTightData(RfbInputGate *input,
@@ -66,24 +66,24 @@ private:
                           ::array_base<unsigned char> &buffer,
                           size_t expectedLength,
                           const int decoderId);
-  void drawPalette(FrameBuffer *fb,
+  void drawPalette(::subsystem::FrameBuffer *fb,
                    const ::array_base<unsigned int> &palette,
                    const ::array_base<unsigned char> &pixels,
                    const ::int_rectangle &  dstRect);
-  void drawGradient(FrameBuffer *fb,
+  void drawGradient(::subsystem::FrameBuffer *fb,
                     const ::array_base<unsigned char> &pixels,
                     const ::int_rectangle &  dstRect);
-  void drawTightBytes(FrameBuffer *fb,
+  void drawTightBytes(::subsystem::FrameBuffer *fb,
                      const ::array_base<unsigned char> *pixels,
                      const ::int_rectangle &  dstRect);
-  void drawJpegBytes(FrameBuffer *fb,
+  void drawJpegBytes(::subsystem::FrameBuffer *fb,
                      const ::array_base<unsigned char> *pixels,
                      const ::int_rectangle &  dstRect);
 
-  unsigned int getRawTightColor(const PixelFormat & pxFormat,
+  unsigned int getRawTightColor(const ::subsystem::PixelFormat & pxFormat,
                           const ::array_base<unsigned char> &pixels,
                           size_t offset);
-  void fillRawComponents(const PixelFormat & pxFormat,
+  void fillRawComponents(const ::subsystem::PixelFormat & pxFormat,
                          unsigned char components[],
                          const ::array_base<unsigned char> &pixels,
                          size_t pixelOffset);

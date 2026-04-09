@@ -40,7 +40,7 @@ typedef HRESULT (WINAPI *D3D11CreateDeviceFunType)(
   _Out_opt_ D3D_FEATURE_LEVEL* pFeatureLevel,
   _Out_opt_ ID3D11DeviceContext** ppImmediateContext );
 
-WinD3D11Device::WinD3D11Device(LogWriter *log)
+WinD3D11Device::WinD3D11Device(::subsystem::LogWriter *log)
 : m_device(0),
   m_context(0),
   m_d3d11Lib("d3d11.dll"),

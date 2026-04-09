@@ -31,13 +31,13 @@
 class CLASS_DECL_REMOTING_COMMON RfbSetPixelFormatClientMessage : public RfbClientToServerMessage
 {
 public:
-  RfbSetPixelFormatClientMessage(const PixelFormat & pixelFormat);
+  RfbSetPixelFormatClientMessage(const ::subsystem::PixelFormat & pixelFormat);
   virtual ~RfbSetPixelFormatClientMessage();
 
   void send(RfbOutputGate *output);
 
 protected:
-  PixelFormat m_pixelFormat;
+  ::subsystem::PixelFormat m_pixelFormat;
 };
 
 

@@ -25,7 +25,7 @@
 #include "ConfigServer.h"
 #include "remoting/remoting_common/server_config/Configurator.h"
 
-ConfigServer::ConfigServer(DesktopSrvDispatcher *dispatcher, LogWriter *log)
+ConfigServer::ConfigServer(DesktopSrvDispatcher *dispatcher, ::subsystem::LogWriter *log)
 : DesktopServerProto(0),
   m_deskConf(log)
 {

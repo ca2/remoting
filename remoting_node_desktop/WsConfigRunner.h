@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/thread/Thread.h"
+#include "acme/subsystem/thread/Thread.h"
 //#include "log_writer/LogWriter.h"
 
 // This class runs TvnControl in current session.
@@ -33,7 +33,7 @@
 class WsConfigRunner : private Thread
 {
 public:
-  WsConfigRunner(LogWriter *LogWriter, bool serviceMode = false);
+  WsConfigRunner(::subsystem::LogWriter * plogwriter, bool serviceMode = false);
   virtual ~WsConfigRunner();
 
 protected:
@@ -42,7 +42,7 @@ protected:
 private:
   bool m_serviceMode;
 
-  LogWriter m_plogwriter;
+  ::subsystem::LogWriter m_plogwriter;
 };
 
 //// __WSCONFIGRUNNER_H__

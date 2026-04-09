@@ -25,49 +25,50 @@
 #pragma once
 
 
-
-
-#include "remoting/remoting_common/rfb/FrameBuffer.h"
-#include "remoting/remoting_common/rfb/PixelFormat.h"
+#include "acme/subsystem/framebuffer/FrameBuffer.h"
+#include "acme/subsystem/framebuffer/PixelFormat.h"
 #include "remoting/remoting_common/rfb/StandardPixelFormatFactory.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 
-class CLASS_DECL_REMOTING_COMMON WatermarksController
+namespace remoting
 {
-public:
-	WatermarksController(void);
-
-	void setNewFbProperties(const ::int_rectangle &  rect, const PixelFormat & pf);
-	
-
-	void showWaterMarks(FrameBuffer *frameBuffer,
-		critical_section *fbLock);
-
-	void hideWatermarks(FrameBuffer *frameBuffer,
-		critical_section *fbLock);
-
-	const ::int_rectangle CurrentRect();
-
-private:
-	::int_rectangle m_currentRect;
-	::int_rectangle m_currentFrameBufferRect;
-
-	void setNewPixelFormat(const PixelFormat & pf);
-
-	void setNewFbSize(const ::int_rectangle &  rect);
-	
-	FrameBuffer m_frameBuffer;
-	FrameBuffer& frameBuffer(bool fromFile = false);
-	void loadFromfile();
-
-	bool is_empty();
-
-	FrameBuffer m_overlay;
-
-	int m_height;
-	int m_width;
-};
-
-//_WATERMARKS_CONTROLLER_H_
 
 
+   class CLASS_DECL_REMOTING_COMMON WatermarksController
+   {
+   public:
+      WatermarksController(void);
+
+      void setNewFbProperties(const ::int_rectangle &  rect, const ::subsystem::PixelFormat & pf);
+
+
+      void showWaterMarks(::subsystem::FrameBuffer *frameBuffer,
+         critical_section *fbLock);
+
+      void hideWatermarks(::subsystem::FrameBuffer *frameBuffer,
+         critical_section *fbLock);
+
+      const ::int_rectangle CurrentRect();
+
+   //private:
+      ::int_rectangle m_currentRect;
+      ::int_rectangle m_currentFrameBufferRect;
+
+      void setNewPixelFormat(const ::subsystem::PixelFormat & pf);
+
+      void setNewFbSize(const ::int_rectangle &  rect);
+
+      ::subsystem::FrameBuffer m_frameBuffer;
+      ::subsystem::FrameBuffer& frameBuffer(bool fromFile = false);
+      void loadFromfile();
+
+      bool is_empty();
+
+      ::subsystem::FrameBuffer m_overlay;
+
+      int m_height;
+      int m_width;
+   };
+
+   //_WATERMARKS_CONTROLLER_H_
+} // namespace remoting

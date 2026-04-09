@@ -35,7 +35,7 @@ DesktopServerProto::~DesktopServerProto()
 {
 }
 
-void DesktopServerProto::checkPixelFormat(const PixelFormat & pf)
+void DesktopServerProto::checkPixelFormat(const ::subsystem::PixelFormat & pf)
 {
   ::string errMess;
   if (pf.bitsPerPixel != 16 && pf.bitsPerPixel != 32) {
@@ -77,7 +77,7 @@ void DesktopServerProto::checkDimension(const ::int_size & dim)
   }
 }
 
-void DesktopServerProto::readPixelFormat(PixelFormat *pf,
+void DesktopServerProto::readPixelFormat(::subsystem::PixelFormat *pf,
                                          BlockingGate *gate)
 {
   pf.bitsPerPixel = gate->readUInt16();
@@ -91,7 +91,7 @@ void DesktopServerProto::readPixelFormat(PixelFormat *pf,
   checkPixelFormat(pf);
 }
 
-void DesktopServerProto::sendPixelFormat(const PixelFormat & pf,
+void DesktopServerProto::sendPixelFormat(const ::subsystem::PixelFormat & pf,
                                          BlockingGate *gate)
 {
   gate->writeUInt16(pf.bitsPerPixel);
@@ -184,14 +184,14 @@ void DesktopServerProto::readRegion(Region *region, BlockingGate *gate)
   }
 }
 
-void DesktopServerProto::sendFrameBuffer(const FrameBuffer *srcFb,
+void DesktopServerProto::sendFrameBuffer(const ::subsystem::FrameBuffer *srcFb,
                                          const ::int_rectangle &  srcRect,
                                          BlockingGate *gate)
 {
-  // FIXME: Additional FrameBuffer will be used temporarily.
+  // FIXME: Additional ::subsystem::FrameBuffer will be used temporarily.
   // This is easy way to send all pixels.
-  PixelFormat pf = srcFb->getPixelFormat();
-  FrameBuffer fb;
+  ::subsystem::PixelFormat pf = srcFb->getPixelFormat();
+  ::subsystem::FrameBuffer fb;
 
   fb.setProperties(srcRect, &pf);
   fb.copyFrom(srcFb, srcRect.left, srcRect.top);
@@ -199,14 +199,14 @@ void DesktopServerProto::sendFrameBuffer(const FrameBuffer *srcFb,
   gate->writeFully(fb.getBuffer(), fb.getBufferSize());
 }
 
-void DesktopServerProto::readFrameBuffer(FrameBuffer *dstFb,
+void DesktopServerProto::readFrameBuffer(::subsystem::FrameBuffer *dstFb,
                                          const ::int_rectangle &  dstRect,
                                          BlockingGate *gate)
 {
-  // FIXME: FrameBuffer will be used temporarily.
+  // FIXME: ::subsystem::FrameBuffer will be used temporarily.
   // This is easy way to get all pixels.
-  PixelFormat pf = dstFb->getPixelFormat();
-  FrameBuffer fb;
+  ::subsystem::PixelFormat pf = dstFb->getPixelFormat();
+  ::subsystem::FrameBuffer fb;
   fb.setProperties(dstRect, &pf);
 
   gate->readFully(fb.getBuffer(), fb.getBufferSize());

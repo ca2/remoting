@@ -37,7 +37,7 @@ class WinD3D11Device
 public:
   // Creates new device and context of first found.
   WinD3D11Device();
-  WinD3D11Device(LogWriter *log);
+  WinD3D11Device(::subsystem::LogWriter *log);
   // Copy references and increase count for winD3D11Device's internal handles. So the
   // source winD3D11Device object can be destroyed while this object will use.
   WinD3D11Device(const WinD3D11Device &src);

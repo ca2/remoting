@@ -28,9 +28,9 @@
 #include "remoting/remoting_common/server_config/Configurator.h"
 #include "remoting_control_desktop/ControlCommandLine.h"
 
-WsConfigRunner::WsConfigRunner(LogWriter *LogWriter, bool serviceMode)
+WsConfigRunner::WsConfigRunner(::subsystem::LogWriter * plogwriter, bool serviceMode)
 : m_serviceMode(serviceMode),
-  m_plogwriter(LogWriter)
+  m_plogwriter(::subsystem::LogWriter)
 {
   resume();
 }

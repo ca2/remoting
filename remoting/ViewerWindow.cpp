@@ -46,11 +46,11 @@ namespace remoting_remoting
     ViewerWindow::ViewerWindow(WindowsApplication *application,
                                ConnectionData *conData,
                                ConnectionConfig *conConf,
-                               LogWriter *LogWriter)
+                               ::subsystem::LogWriter * plogwriter)
     : m_ccsm(RegistryPaths::VIEWER_PATH,
              conData->getHost()),
       m_application(application),
-      m_plogwriter(LogWriter),
+      m_plogwriter(::subsystem::LogWriter),
       m_pconnectionconfig(conConf),
       m_scale(100),
       m_isFullScr(false),
@@ -1340,15 +1340,15 @@ namespace remoting_remoting
         postMessage(WM_USER_ERROR);
     }
 
-    void ViewerWindow::onFrameBufferUpdate(const FrameBuffer *fb, const ::int_rectangle &  rect)
+    void ViewerWindow::onFrameBufferUpdate(const ::subsystem::FrameBuffer *fb, const ::int_rectangle &  rect)
     {
         m_dsktWnd.updateFramebuffer(fb, rect);
     }
 
-    void ViewerWindow::onFrameBufferPropChange(const FrameBuffer *fb)
+    void ViewerWindow::onFrameBufferPropChange(const ::subsystem::FrameBuffer *fb)
     {
         //   m_dsktWnd.m_iDivisor = m_conData->getDivisor();
-        // ((FrameBuffer*)fb)->m_iDivisor = m_dsktWnd.m_iDivisor;
+        // ((::subsystem::FrameBuffer*)fb)->m_iDivisor = m_dsktWnd.m_iDivisor;
         m_dsktWnd.setNewFramebuffer(fb);
     }
 

@@ -39,7 +39,7 @@ public:
   Win32ScreenDriverBaseImpl(UpdateKeeper *updateKeeper,
                           UpdateListener *updateListener,
                           critical_section *fbcritical_section,
-                          LogWriter *log);
+                          ::subsystem::LogWriter *log);
   virtual ~Win32ScreenDriverBaseImpl();
 
   // Starts screen update detection if it not started yet.
@@ -48,7 +48,7 @@ public:
   // Stops screen update detection.
   virtual void terminateDetection();
 
-  virtual bool grabCursorShape(const PixelFormat & pf);
+  virtual bool grabCursorShape(const ::subsystem::PixelFormat & pf);
   virtual const CursorShape *getCursorShape();
   virtual Point getCursorPosition();
 

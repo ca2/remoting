@@ -2,6 +2,7 @@
 #pragma once
 
 
+/*
 
 #include "remoting/_.h"
 
@@ -12,4 +13,11 @@
 #define CLASS_DECL_REMOTING_CONFIG  CLASS_DECL_IMPORT
 #endif
 
+*/
 
+namespace remoting
+{
+
+    class IniFileSettingsManager;
+
+} // namespace remoting

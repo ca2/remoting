@@ -30,7 +30,7 @@
 
 #include "remoting/remoting_common/util/inttypes.h"
 #include "remoting/remoting_common/util/ListenerContainer.h"
-#include "remoting/remoting_common/util/ZLibException.h"
+#include "acme/subsystem/ZlibException.h"
 
 #include "remoting/remoting_common/ftp_common/OperationNotSupportedException.h"
 

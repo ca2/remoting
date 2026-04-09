@@ -27,7 +27,7 @@
 #include "SocketAddressIPv4.h"
 #include "SocketIPv4.h"
 
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 
 //#include aaa_<crtdbg.h>
 

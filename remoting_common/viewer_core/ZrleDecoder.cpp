@@ -40,7 +40,7 @@ ZrleDecoder::~ZrleDecoder()
 }
 
 void ZrleDecoder::decode(RfbInputGate *pinput,
-                         FrameBuffer *frameBuffer,
+                         ::subsystem::FrameBuffer *frameBuffer,
                          const ::int_rectangle &  dstRect)
 {
   size_t maxUnpackedSize = getMaxSizeOfRectangle(dstRect);
@@ -66,7 +66,7 @@ void ZrleDecoder::decode(RfbInputGate *pinput,
   DataInputStream unpackedDataStream(&unpackedByteArrayStream);
 
   m_numberFirstByte = 0;
-  PixelFormat pxFormat = frameBuffer->getPixelFormat();
+  ::subsystem::PixelFormat pxFormat = frameBuffer->getPixelFormat();
 
   if (pxFormat.bitsPerPixel == 8) {
     m_bytesPerPixel = 1;

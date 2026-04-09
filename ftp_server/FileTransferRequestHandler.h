@@ -58,7 +58,7 @@ public:
   FileTransferRequestHandler(RfbCodeRegistrator *registrator,
                              RfbOutputGate *output,
                              Desktop *desktop,
-                             LogWriter *log,
+                             ::subsystem::LogWriter *log,
                              bool enabled = true);
 
   /**

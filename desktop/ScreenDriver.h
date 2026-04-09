@@ -27,7 +27,7 @@
 
 
 #include "remoting/remoting_common/region/Region.h"
-#include "remoting/remoting_common/rfb/FrameBuffer.h"
+#include "acme/subsystem/framebuffer/FrameBuffer.h"
 #include "remoting/remoting_common/rfb/CursorShape.h"
 
 // Derived classes commits oneself that internal frame buffer (accessing with getScreenBuffer()) will
@@ -53,14 +53,14 @@ public:
   // Implementions will ensure that this function is thread safety.
   virtual ::int_size getScreenDimension() = 0;
 
-  // Provides FrameBuffer grabbing.
+  // Provides ::subsystem::FrameBuffer grabbing.
   // Parameters:     *rect - Pointer to a ::int_rectangle object with relative workRect coordinates.
   // Return value:   true if success.
   // Implementions will ensure that this function is thread safety.
   virtual bool grabFb(const ::int_rectangle &rect = {} ) = 0;
 
-  // Returns a pointer an internal screen driver FrameBuffer
-  virtual FrameBuffer *getScreenBuffer() = 0;
+  // Returns a pointer an internal screen driver ::subsystem::FrameBuffer
+  virtual ::subsystem::FrameBuffer *getScreenBuffer() = 0;
 
   // Checks screen(desktop) properties on changes
   // Implementions will ensure that this function is thread safety.
@@ -77,7 +77,7 @@ public:
 
   // Grabs current cursor shape with the pixel format to internal buffer.
   // Implementions will ensure that this function is thread safety.
-  virtual bool grabCursorShape(const PixelFormat & pf) = 0;
+  virtual bool grabCursorShape(const ::subsystem::PixelFormat & pf) = 0;
 
   // Returns a pointer an internal screen driver CursorShape
   virtual const CursorShape *getCursorShape() = 0;

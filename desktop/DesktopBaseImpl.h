@@ -44,7 +44,7 @@ public:
   DesktopBaseImpl(ClipboardListener *extClipListener,
              UpdateSendingListener *extUpdSendingListener,
              AbnormDeskTermListener *extDeskTermListener,
-             LogWriter *log);
+             ::subsystem::LogWriter *log);
   virtual ~DesktopBaseImpl();
 
   // Puts a current desktop name from working session to the
@@ -53,7 +53,7 @@ public:
                                   ::string & userName);
   // Puts the current frame buffer dimension and pixel format to
   // the dim and pf function arguments.
-  virtual void getFrameBufferProperties(::int_size *dim, PixelFormat *pf);
+  virtual void getFrameBufferProperties(::int_size *dim, ::subsystem::PixelFormat *pf);
   virtual void getPrimaryDesktopCoords(::int_rectangle *rect);
   virtual void getDisplayNumberCoords(::int_rectangle *rect,
                                       unsigned char dispNumber);
@@ -85,7 +85,7 @@ protected:
   // This is an auxiliary function which determines that
   virtual bool isRemoteInputTempBlocked() = 0;
 
-  virtual bool updateExternalFrameBuffer(FrameBuffer *fb, const Region *region,
+  virtual bool updateExternalFrameBuffer(::subsystem::FrameBuffer *fb, const Region *region,
                                          const ::int_rectangle &  viewPort);
 
   void sendUpdate();

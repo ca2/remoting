@@ -29,7 +29,7 @@
 
 #include "remoting/remoting_common/win_system/WTS.h"
 
-Impersonator::Impersonator(LogWriter *log)
+Impersonator::Impersonator(::subsystem::LogWriter *log)
 : m_token(INVALID_HANDLE_VALUE),
   m_dupToken(INVALID_HANDLE_VALUE),
   m_plogwriter(log)

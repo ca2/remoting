@@ -27,7 +27,7 @@
 #include "remoting/remoting_common/win_system/SecurityAttributes.h"
 
 AnonymousPipeFactory::AnonymousPipeFactory(unsigned int bufferSize,
-                                           LogWriter *log)
+                                           ::subsystem::LogWriter *log)
 : m_bufferSize(bufferSize),
   m_plogwriter(log)
 {

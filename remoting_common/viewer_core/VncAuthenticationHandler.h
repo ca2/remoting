@@ -27,24 +27,25 @@
 
 #include "remoting/remoting_common/viewer_core/AuthHandler.h"
 
-class CLASS_DECL_REMOTING_COMMON VncAuthenticationHandler : public AuthHandler
+namespace remoting
 {
-public:
-  VncAuthenticationHandler();
-  virtual ~VncAuthenticationHandler();
+   class CLASS_DECL_REMOTING_COMMON VncAuthenticationHandler : public AuthHandler
+   {
+   public:
+      VncAuthenticationHandler();
+      virtual ~VncAuthenticationHandler();
 
-  //
-  // Overrides AuthHandler::authenticate().
-  //
-  virtual void authenticate(DataInputStream * pinput, DataOutputStream *output);
+      //
+      // Overrides AuthHandler::authenticate().
+      //
+      virtual void authenticate(::subsystem::DataInputStream * pinput, ::subsystem::DataOutputStream *output);
 
-  //
-  // Overrides AuthHandler::addAuthCapability().
-  //
-  virtual void addAuthCapability(CapabilitiesManager *capabilitiesManager);
+      //
+      // Overrides AuthHandler::addAuthCapability().
+      //
+      virtual void addAuthCapability(CapabilitiesManager *capabilitiesManager);
 
-protected:
-  virtual ::string getPassword() = 0;
-};
-
-
+   protected:
+      virtual ::string getPassword() = 0;
+   };
+} // namespace  remoting

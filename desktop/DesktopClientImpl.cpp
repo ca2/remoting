@@ -34,7 +34,7 @@
 DesktopClientImpl::DesktopClientImpl(ClipboardListener *extClipListener,
                        UpdateSendingListener *extUpdSendingListener,
                        AbnormDeskTermListener *extDeskTermListener,
-                       LogWriter *log)
+                       ::subsystem::LogWriter *log)
 : DesktopBaseImpl(extClipListener, extUpdSendingListener, extDeskTermListener, log),
   m_clToSrvChan(0),
   m_srvToClChan(0),

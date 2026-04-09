@@ -31,7 +31,7 @@
 #include "log-server/ClientLogWriter.h"
 #include "remoting/remoting_common/win_system/Service.h"
 
-#include "remoting/remoting_common/thread/Thread.h"
+#include "acme/subsystem/thread/Thread.h"
 #include "WinServiceEvents.h"
 #include "NewConnectionEvents.h"
 

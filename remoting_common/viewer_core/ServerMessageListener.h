@@ -27,17 +27,20 @@
 
 #include "acme/subsystem/io/DataInputStream.h"
 
-// FIXME: document it.
-class CLASS_DECL_REMOTING_COMMON ServerMessageListener
+
+namespace remoting
 {
-public:
-  virtual ~ServerMessageListener() {};
+   // FIXME: document it.
+   class CLASS_DECL_REMOTING_COMMON ServerMessageListener
+   {
+   public:
+      virtual ~ServerMessageListener() {};
 
-  //
-  // This method is called, if received server scopedstrMessage with code "msgCode".
-  // Use "input" outside onRequest() is prohibited.
-  //
-  virtual void onServerMessage(unsigned int msgCode, DataInputStream * pinput) = 0;
-};
-
+      //
+      // This method is called, if received server scopedstrMessage with code "msgCode".
+      // Use "input" outside onRequest() is prohibited.
+      //
+      virtual void onServerMessage(unsigned int msgCode,::subsystem::DataInputStream * pinput) = 0;
+   };
+} // namespace remoting
 

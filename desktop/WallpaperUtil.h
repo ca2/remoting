@@ -31,7 +31,7 @@
 class WallpaperUtil : protected ConfigReloadListener
 {
 public:
-  WallpaperUtil(LogWriter *log);
+  WallpaperUtil(::subsystem::LogWriter *log);
   virtual ~WallpaperUtil();
 
   virtual void updateWallpaper();

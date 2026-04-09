@@ -58,7 +58,7 @@ namespace remoting_remoting
 
         ViewerWindow(WindowsApplication *application,
                      ConnectionData *conData, ConnectionConfig *conConf,
-                     LogWriter *LogWriter = 0);
+                     ::subsystem::LogWriter * plogwriter = 0);
         virtual ~ViewerWindow();
 
         void setFileTransfer(::remoting::ftp::FileTransferCapability *ft);
@@ -128,8 +128,8 @@ namespace remoting_remoting
         void onDisconnect(const ::scoped_string & scopedstrMessage);
         void onAuthError(const AuthException *exception);
         void onError(const ::remoting::Exception *exception);
-        void onFrameBufferUpdate(const FrameBuffer *fb, const ::int_rectangle &  rect);
-        void onFrameBufferPropChange(const FrameBuffer *fb);
+        void onFrameBufferUpdate(const ::subsystem::FrameBuffer *fb, const ::int_rectangle &  rect);
+        void onFrameBufferPropChange(const ::subsystem::FrameBuffer *fb);
         void onCutText(const ::scoped_string & cutText);
 
         int translateAccelToTB(int val);
@@ -140,7 +140,7 @@ namespace remoting_remoting
         // else return rect of remote screen + border
         ::int_rectangle calculateDefaultSize();
 
-        LogWriter * m_plogwriter;
+        ::subsystem::LogWriter * m_plogwriter;
 
         ::innate_subsystem::Control m_control;
 

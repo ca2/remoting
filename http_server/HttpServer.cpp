@@ -25,9 +25,9 @@
 #include "HttpServer.h"
 #include "HttpClient.h"
 
-#include "remoting/remoting_common/thread/ZombieKiller.h"
+#include "acme/subsystem/thread/ZombieKiller.h"
 
-HttpServer::HttpServer(const ::scoped_string & scopedstrBindHost, unsigned short bindPort, bool lockAddr, LogWriter *log)
+HttpServer::HttpServer(const ::scoped_string & scopedstrBindHost, unsigned short bindPort, bool lockAddr, ::subsystem::LogWriter *log)
 : TcpServer(bindHost, bindPort, true, lockAddr),
   m_plogwriter(log)
 {

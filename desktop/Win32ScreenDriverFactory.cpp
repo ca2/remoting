@@ -39,9 +39,9 @@ Win32ScreenDriverFactory::~Win32ScreenDriverFactory()
 ScreenDriver *Win32ScreenDriverFactory::
 createScreenDriver(UpdateKeeper *updateKeeper,
                    UpdateListener *updateListener,
-                   FrameBuffer *fb,
+                   ::subsystem::FrameBuffer *fb,
                    critical_section *fbcritical_section,
-                   LogWriter *log)
+                   ::subsystem::LogWriter *log)
 {
   // Try to use Win8 duplication API firstly because it's in preference to other methods.
   if (isD3DAllowed()) {
@@ -79,9 +79,9 @@ createScreenDriver(UpdateKeeper *updateKeeper,
 ScreenDriver *Win32ScreenDriverFactory::
 createStandardScreenDriver(UpdateKeeper *updateKeeper,
                            UpdateListener *updateListener,
-                           FrameBuffer *fb,
+                           ::subsystem::FrameBuffer *fb,
                            critical_section *fbcritical_section,
-                           LogWriter *log)
+                           ::subsystem::LogWriter *log)
 {
   return new Win32ScreenDriver(updateKeeper, updateListener, fb, fbcritical_section, log);
 }
@@ -90,7 +90,7 @@ ScreenDriver *Win32ScreenDriverFactory::
 createMirrorScreenDriver(UpdateKeeper *updateKeeper,
                          UpdateListener *updateListener,
                          critical_section *fbcritical_section,
-                         LogWriter *log)
+                         ::subsystem::LogWriter *log)
 {
   return new Win32MirrorScreenDriver(updateKeeper, updateListener, fbcritical_section, log);
 }

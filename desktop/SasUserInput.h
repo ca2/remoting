@@ -33,7 +33,7 @@
 class SasUserInput : public UserInput
 {
 public:
-  SasUserInput(UserInputClient *client, LogWriter *log);
+  SasUserInput(UserInputClient *client, ::subsystem::LogWriter *log);
   virtual ~SasUserInput();
 
   virtual void sendInit(BlockingGate *gate);

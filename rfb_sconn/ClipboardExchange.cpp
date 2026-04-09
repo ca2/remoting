@@ -26,14 +26,14 @@
 #include "remoting/remoting_common/rfb/MsgDefs.h"
 ////#include "remoting/remoting_common/util/::string.h"
 //#include "remoting/remoting_common/util/::string.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 #include "remoting/remoting_common/rfb/VendorDefs.h"
 
 ClipboardExchange::ClipboardExchange(RfbCodeRegistrator *codeRegtor,
                                      Desktop *desktop,
                                      RfbOutputGate *output,
                                      bool viewOnly,
-                                     LogWriter *log)
+                                     ::subsystem::LogWriter *log)
 : m_desktop(desktop),
   m_output(output),
   m_viewOnly(viewOnly),

@@ -35,7 +35,7 @@
 #include "acme/subsystem/node/OperatingSystemApplication.h"
 
 //#include "log_writer/LogWriter.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 
 //#include aaa_<map>
 
@@ -142,7 +142,7 @@ public:
 
   bool m_isListening;
   
-  LogWriter * m_plogwriter;
+  ::subsystem::LogWriter * m_plogwriter;
 
   AboutDialog m_aboutDialog;
   ConfigurationDialog m_configurationDialog;

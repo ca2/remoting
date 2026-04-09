@@ -54,8 +54,8 @@
 #include "acme/subsystem/Process.h"
 #include "remoting/remoting_common/win_system/WinCommandLineArgs.h"
 
-#include "remoting/remoting_common/thread/ZombieKiller.h"
-#include "remoting/remoting_common/thread/GlobalMutex.h"
+#include "acme/subsystem/thread/ZombieKiller.h"
+#include "acme/subsystem/thread/GlobalMutex.h"
 
 #include "apex/innate_subsystem/CommonControlsEx.h"
 

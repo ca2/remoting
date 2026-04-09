@@ -40,7 +40,7 @@ public:
   UserInputServer(BlockingGate *forwGate,
                   DesktopSrvDispatcher *dispatcher,
                   AnEventListener *extTerminationListener,
-                  LogWriter *log);
+                  ::subsystem::LogWriter *log);
   virtual ~UserInputServer();
 
   // Internal dispatcher

@@ -30,7 +30,7 @@
 #include "acme/subsystem/_common_header.h"
 
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 //#include "log_writer/LogWriter.h"
 
 class CLASS_DECL_REMOTING_COMMON AnonymousPipe : public Channel, public Pipe
@@ -40,7 +40,7 @@ public:
   // function calling.
   // @param hRead is a read handle getting by the CreatePipe()
   // function calling but is not the same as for hWrite.
-  AnonymousPipe(HANDLE hWrite, HANDLE hRead, unsigned int maxPortionSize, LogWriter *log);
+  AnonymousPipe(HANDLE hWrite, HANDLE hRead, unsigned int maxPortionSize, ::subsystem::LogWriter *log);
   virtual ~AnonymousPipe();
 
   /**

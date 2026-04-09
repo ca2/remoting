@@ -27,58 +27,59 @@
 
 //#include "log_writer/LogWriter.h"
 #include "remoting/remoting_common/rfb/CursorShape.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 
-class CLASS_DECL_REMOTING_COMMON CursorPainter
+namespace remoting
 {
-public:
-  CursorPainter(FrameBuffer *fb, LogWriter *logWriter);
-  virtual ~CursorPainter();
+   class CLASS_DECL_REMOTING_COMMON CursorPainter
+   {
+   public:
+      CursorPainter(::subsystem::FrameBuffer *fb, ::subsystem::LogWriter *logWriter);
+      virtual ~CursorPainter();
 
-  // this functions is thread-safe for private data of cursor, but need external lock of frame buffer
-  ::int_rectangle hideCursor();
-  ::int_rectangle showCursor();
+      // this functions is thread-safe for private data of cursor, but need external lock of frame buffer
+      ::int_rectangle hideCursor();
+      ::int_rectangle showCursor();
 
-  // this functions is thread-safe
-  void setIgnoreShapeUpdates(bool ignore);
-  void updatePointerPos(const Point *position);
-  void setNewCursor(const Point *hotSpot,
-                    unsigned short width, unsigned short height,
-                    const ::array_base<unsigned char> *cursor, 
-                    const ::array_base<unsigned char> *bitmask);
-//private:
-  // This function is thread-save.
-  Point getUpperLeftPoint(const Point *position) const;
+      // this functions is thread-safe
+      void setIgnoreShapeUpdates(bool ignore);
+      void updatePointerPos(const Point *position);
+      void setNewCursor(const Point *hotSpot,
+                        unsigned short width, unsigned short height,
+                        const ::array_base<unsigned char> *cursor,
+                        const ::array_base<unsigned char> *bitmask);
+      //private:
+      // This function is thread-save.
+      Point getUpperLeftPoint(const Point *position) const;
 
-  LogWriter *m_plogwriter;
+      ::subsystem::LogWriter *m_plogwriter;
 
-  FrameBuffer *const m_fb;
+      ::subsystem::FrameBuffer *const m_fb;
 
-  critical_section m_lock;
-  CursorShape m_cursor;
+      critical_section m_lock;
+      CursorShape m_cursor;
 
-  // Actual position of pointer
-  Point m_pointerPosition;
+      // Actual position of pointer
+      Point m_pointerPosition;
 
-  // Last painted position of pointer
-  Point m_lastPosition;
-  // Copy of rect frame buffer under cursor
-  FrameBuffer m_cursorOverlay;
+      // Last painted position of pointer
+      Point m_lastPosition;
+      // Copy of rect frame buffer under cursor
+      ::subsystem::FrameBuffer m_cursorOverlay;
 
-  // Flag is set, if cursor is showed.
-  bool m_isExist;
+      // Flag is set, if cursor is showed.
+      bool m_isExist;
 
-  // Flag is set after first call updatePointerPosition().
-  // If flag is unset then pointer isn't painted.
-  bool m_cursorIsMoveable;
+      // Flag is set after first call updatePointerPosition().
+      // If flag is unset then pointer isn't painted.
+      bool m_cursorIsMoveable;
 
-  bool m_ignoreShapeUpdates;
-  bool m_bHideCursor = false;
+      bool m_ignoreShapeUpdates;
+      bool m_bHideCursor = false;
 
-private:
-  // Do not allow copying objects.
-  CursorPainter(const CursorPainter &);
-  CursorPainter &operator=(const CursorPainter &);
-};
-
-
+   private:
+      // Do not allow copying objects.
+      CursorPainter(const CursorPainter &);
+      CursorPainter &operator=(const CursorPainter &);
+   };
+} // namespace remoting

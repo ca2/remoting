@@ -27,7 +27,7 @@
 
 #include "acme/subsystem/_common_header.h"
 //#include aaa_<vector>
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 //#include "log_writer/LogWriter.h"
 
 typedef ::array_base<TCHAR *> StringContainer;
@@ -35,7 +35,7 @@ typedef ::array_base<TCHAR *> StringContainer;
 class WinEventLog
 {
 public:
-  WinEventLog(LogWriter *log);
+  WinEventLog(::subsystem::LogWriter *log);
   virtual ~WinEventLog();
 
   // This function enables fully functional this object usage,

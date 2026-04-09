@@ -29,16 +29,16 @@
 // #include "remoting/remoting_common/util/CharDefs.h"
 // #include "ProfileLogWriter.h"
 
-// This class is a high level wrap for the LogWriter class. It helps write log in different
+// This class is a high level wrap for the ::subsystem::LogWriter class. It helps write log in different
 // log levels by the different functions.
-class LogWriter :
+class ::subsystem::LogWriter :
 virtual public ::particle
 {
 public:
-//   // The LogWriter argument is a pointer to a LogWriter object that implements log writing.
+//   // The ::subsystem::LogWriter argument is a pointer to a ::subsystem::LogWriter object that implements log writing.
 //   // It can be zero, in this case no log is writing.
-//   LogWriter(LogWriter *LogWriter);
-//   virtual ~LogWriter();
+//   ::subsystem::LogWriter(::subsystem::LogWriter * plogwriter);
+//   virtual ~::subsystem::LogWriter();
 //
 //   // Write most important log messages such as code internal errors
 //   // (what shouldn't have happened but it did).
@@ -82,7 +82,7 @@ public:
 // private:
 //   void vprintLog(int logLevel, const ::scoped_string & scopedstrFmt, va_list argList);
 //
-//   LogWriter *m_LogWriter;
+//   ::subsystem::LogWriter *m_LogWriter;
 //   ProfileLogWriter *m_profiler;
 };
 

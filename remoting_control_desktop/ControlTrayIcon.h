@@ -29,8 +29,8 @@
 #include "apex/innate_subsystem/WindowProcHolder.h"
 #include "apex/innate_subsystem/drawing/Icon.h"
 
-#include "remoting/remoting_common/thread/Thread.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+#include "acme/subsystem/thread/Thread.h"
+//#include "acme/subsystem/thread/critical_section.h"
 
 #include "remoting/remoting_common/util/Command.h"
 #include "remoting/remoting_common/util/MacroCommand.h"

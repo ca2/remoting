@@ -28,7 +28,7 @@
 Win8ScreenDriver::Win8ScreenDriver(UpdateKeeper *updateKeeper,
                                    UpdateListener *updateListener,
                                    critical_section *fbcritical_section,
-                                   LogWriter *log)
+                                   ::subsystem::LogWriter *log)
 : WinVideoRegionUpdaterImpl(log),
   m_plogwriter(log),
   m_fbcritical_section(fbcritical_section),
@@ -73,7 +73,7 @@ void Win8ScreenDriver::terminateDetection()
   return m_drvImpl->getScreenBuffer()->getDimension();
 }
 
-FrameBuffer *Win8ScreenDriver::getScreenBuffer()
+::subsystem::FrameBuffer *Win8ScreenDriver::getScreenBuffer()
 {
   critical_section_lock al(&m_drvImplMutex);
   return m_drvImpl->getScreenBuffer();
@@ -117,7 +117,7 @@ bool Win8ScreenDriver::applyNewScreenProperties()
   return true;
 }
 
-bool Win8ScreenDriver::grabCursorShape(const PixelFormat & pf)
+bool Win8ScreenDriver::grabCursorShape(const ::subsystem::PixelFormat & pf)
 {
   critical_section_lock al(&m_drvImplMutex);
   m_drvImpl->updateCursorShape(&m_cursorShape);

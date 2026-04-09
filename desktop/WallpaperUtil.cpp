@@ -27,7 +27,7 @@
 #include "remoting/remoting_common/server_config/Configurator.h"
 #include "remoting/remoting_common/win_system/AutoImpersonator.h"
 
-WallpaperUtil::WallpaperUtil(LogWriter *log)
+WallpaperUtil::WallpaperUtil(::subsystem::LogWriter *log)
 : m_wasDisabled(false), 
   m_plogwriter(log)
 {

@@ -26,7 +26,7 @@
 
 
 //////#include "remoting/remoting_common/util/::string.h"
-#include "remoting/remoting_common/thread/Thread.h"
+#include "acme/subsystem/thread/Thread.h"
 #include "RfbClientManager.h"
 //#include "log_writer/LogWriter.h"
 
@@ -47,7 +47,7 @@ public:
   @param clientManager rfb client manager.
   */
   OutgoingRfbConnectionThread(const ::scoped_string & scopedstrConnectHost, unsigned int connectPort,
-                              bool viewOnly, RfbClientManager *clientManager, LogWriter *log);
+                              bool viewOnly, RfbClientManager *clientManager, ::subsystem::LogWriter *log);
   virtual ~OutgoingRfbConnectionThread();
 
 protected:

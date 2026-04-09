@@ -24,16 +24,16 @@
 #include "framework.h"
 #include "PaintWindow.h"
 
-PaintWindow::PaintWindow()
+::innate_subsystem::PaintWindow::::innate_subsystem::PaintWindow()
  : m_bIsDraw(false)
 {
 }
 
-PaintWindow::~PaintWindow()
+::innate_subsystem::PaintWindow::~::innate_subsystem::PaintWindow()
 {
 }
 
-HDC PaintWindow::getHDCPaint()
+HDC ::innate_subsystem::PaintWindow::getHDCPaint()
 {
   if (!m_bIsDraw) {
     return 0;
@@ -41,12 +41,12 @@ HDC PaintWindow::getHDCPaint()
   return m_hdc;
 }
 
-//void PaintWindow::onPaint(DeviceContext *dc, PAINTSTRUCT *paintStruct)
-void PaintWindow::onPaint()
+//void ::innate_subsystem::PaintWindow::onPaint(DeviceContext *dc, PAINTSTRUCT *paintStruct)
+void ::innate_subsystem::PaintWindow::onPaint()
 {
 }
 
-bool PaintWindow::wndProc(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam)
+bool ::innate_subsystem::PaintWindow::wndProc(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam)
 {
   if (scopedstrMessage == WM_PAINT) {
     m_hdc = BeginPaint(m_hwnd, &m_paintStruct);

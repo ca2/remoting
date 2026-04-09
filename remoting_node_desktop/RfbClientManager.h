@@ -27,9 +27,9 @@
 
 #include "remoting/remoting_common/util/ListenerContainer.h"
 #include "rfb_sconn/RfbClient.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
-#include "remoting/remoting_common/thread/Thread.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
+#include "acme/subsystem/thread/Thread.h"
+//#include "acme/subsystem/thread/critical_section.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 #include "desktop/Desktop.h"
 #include "desktop/DesktopFactory.h"
@@ -73,7 +73,7 @@ public:
   // FIXME: parameter is not used.
   RfbClientManager(const ::scoped_string & scopedstrServerName,
                    NewConnectionEvents *newConnectionEvents,
-                   LogWriter *log,
+                   ::subsystem::LogWriter *log,
                    DesktopFactory *desktopFactory);
   virtual ~RfbClientManager();
 

@@ -34,7 +34,7 @@
 
 HttpRequestHandler::HttpRequestHandler(DataInputStream *dataInput,
                                        DataOutputStream *dataOutput,
-                                       LogWriter *log,
+                                       ::subsystem::LogWriter *log,
                                        const ::scoped_string & scopedstrPeerHost)
 : m_dataInput(dataInput), m_dataOutput(dataOutput),
   m_peerHost(peerHost),

@@ -35,7 +35,7 @@ class ClipboardExchange : public RfbDispatcherListener, public Thread
 {
 public:
   ClipboardExchange(RfbCodeRegistrator *codeRegtor, Desktop *desktop,
-                    RfbOutputGate *output, bool viewOnly, LogWriter *log);
+                    RfbOutputGate *output, bool viewOnly, ::subsystem::LogWriter *log);
   virtual ~ClipboardExchange();
 
   void sendClipboard(const ::scoped_string & newClipboard);

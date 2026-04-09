@@ -26,9 +26,9 @@
 
 
 #include "ViewPortState.h"
-#include "remoting/remoting_common/rfb/FrameBuffer.h"
+#include "acme/subsystem/framebuffer/FrameBuffer.h"
 #include "desktop/Desktop.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 //#include "remoting/remoting_common/util/::earth::time.h"
 //#include "log_writer/LogWriter.h"
 
@@ -43,8 +43,8 @@
 class ViewPort
 {
 public:
-  ViewPort(LogWriter *log);
-  ViewPort(const ViewPortState *viewPortState, LogWriter *log);
+  ViewPort(::subsystem::LogWriter *log);
+  ViewPort(const ViewPortState *viewPortState, ::subsystem::LogWriter *log);
   ~ViewPort();
 
   // Sets desktop interface that can be used in some mode to get

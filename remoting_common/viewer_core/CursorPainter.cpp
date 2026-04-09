@@ -24,9 +24,9 @@
 #include "framework.h"
 #include "CursorPainter.h"
 
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 
-CursorPainter::CursorPainter(FrameBuffer *fb, LogWriter *logWriter)
+CursorPainter::CursorPainter(::subsystem::FrameBuffer *fb, ::subsystem::LogWriter *logWriter)
 : m_fb(fb),
   m_plogwriter(logWriter),
   m_cursorIsMoveable(false),
@@ -59,7 +59,7 @@ void CursorPainter::setNewCursor(const Point *hotSpot,
 
   m_plogwriter->information("setNewCursor Cursor size is ({}, {})", width, height);
   ::int_size cursorDimension(width, height);
-  PixelFormat pixelFormat = m_fb->getPixelFormat();
+  ::subsystem::PixelFormat pixelFormat = m_fb->getPixelFormat();
 
   m_cursor.setProperties(cursorDimension, pixelFormat);
   m_cursorOverlay.setProperties(cursorDimension, pixelFormat);

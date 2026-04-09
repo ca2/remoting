@@ -36,7 +36,7 @@
 DesktopWinImpl::DesktopWinImpl(ClipboardListener *extClipListener,
                        UpdateSendingListener *extUpdSendingListener,
                        AbnormDeskTermListener *extDeskTermListener,
-                       LogWriter *log)
+                       ::subsystem::LogWriter *log)
 : DesktopBaseImpl(extClipListener, extUpdSendingListener, extDeskTermListener, log),
   m_wallPaper(0),
   m_deskConf(0),

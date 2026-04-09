@@ -26,7 +26,7 @@
 
 
 #include "remoting/remoting_common/rfb/CursorShape.h"
-#include "remoting/remoting_common/rfb/FrameBuffer.h"
+#include "acme/subsystem/framebuffer/FrameBuffer.h"
 #include "UpdateContainer.h"
 
 class UpdateSendingListener

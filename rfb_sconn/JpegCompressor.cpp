@@ -207,7 +207,7 @@ StandardJpegCompressor::resetQuality()
 
 void
 StandardJpegCompressor::compress(const void *buf,
-                                 const PixelFormat & fmt,
+                                 const ::subsystem::PixelFormat & fmt,
                                  int w, int h, int stride)
 {
   bool useQuickConversion =
@@ -266,7 +266,7 @@ const char *StandardJpegCompressor::getOutputData()
 
 void
 StandardJpegCompressor::convertRow24(JSAMPLE *dst, const void *src,
-                                     const PixelFormat & fmt, int numPixels)
+                                     const ::subsystem::PixelFormat & fmt, int numPixels)
 {
   const unsigned int *srcPixels = (const unsigned int *)src;
   while (numPixels--) {
@@ -279,7 +279,7 @@ StandardJpegCompressor::convertRow24(JSAMPLE *dst, const void *src,
 
 void
 StandardJpegCompressor::convertRow(JSAMPLE *dst, const void *src,
-                                   const PixelFormat & fmt, int numPixels)
+                                   const ::subsystem::PixelFormat & fmt, int numPixels)
 {
   if (fmt.bitsPerPixel == 32) {
     const unsigned int *srcPixels = (const unsigned int *)src;

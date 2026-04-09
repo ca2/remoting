@@ -69,14 +69,14 @@ bool CursorShape::setDimension(const ::int_size & newDim)
   return result && resizeBuffer();
 }
 
-bool CursorShape::setPixelFormat(const PixelFormat & pixFormat)
+bool CursorShape::setPixelFormat(const ::subsystem::PixelFormat & pixFormat)
 {
   bool result = m_pixels.setPixelFormat(pixFormat);
   return result && resizeBuffer();
 }
 
 bool CursorShape::setProperties(const ::int_size & newDim,
-                                const PixelFormat & pixelFormat)
+                                const ::subsystem::PixelFormat & pixelFormat)
 {
   bool result = m_pixels.setDimension(newDim) &&
                 m_pixels.setPixelFormat(pixelFormat);

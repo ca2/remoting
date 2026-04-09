@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "FileTransferReplyBuffer.h"
 #include "acme/subsystem/io/ByteArrayInputStream.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 //#include aaa_<crtdbg.h>
 
 namespace  remoting

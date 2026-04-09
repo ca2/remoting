@@ -25,7 +25,7 @@
 //#include "acme/_operating_system.h"
 #include "ServiceControlManagerClient.h"
 
-#include "remoting/remoting_common/thread/Thread.h"
+#include "acme/subsystem/thread/Thread.h"
 
 ServiceControlManagerClientException::ServiceControlManagerClientException(int scmErrCode)
 : SystemException("[::remoting::Exception description is not avaliable]")

@@ -37,7 +37,7 @@ class WindowsUserInput : public UserInput
 public:
   WindowsUserInput(ClipboardListener *clipboardListener,
                    bool ctrlAltDelEnabled,
-                   LogWriter *log);
+                   ::subsystem::LogWriter *log);
   virtual ~WindowsUserInput(void);
 
   virtual void setNewClipboard(const ::scoped_string & newClipboard);

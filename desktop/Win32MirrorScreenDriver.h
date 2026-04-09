@@ -34,7 +34,7 @@ public:
   Win32MirrorScreenDriver(UpdateKeeper *updateKeeper,
                           UpdateListener *updateListener,
                           critical_section *fbcritical_section,
-                          LogWriter *log);
+                          ::subsystem::LogWriter *log);
   virtual ~Win32MirrorScreenDriver();
 
   // Starts screen update detection if it not started yet.
@@ -48,7 +48,7 @@ public:
 
   virtual ::int_size getScreenDimension();
   virtual bool grabFb(const ::int_rectangle &  rect = 0);
-  virtual FrameBuffer *getScreenBuffer();
+  virtual ::subsystem::FrameBuffer *getScreenBuffer();
   virtual bool getScreenPropertiesChanged();
   virtual bool getScreenSizeChanged();
   virtual bool applyNewScreenProperties();

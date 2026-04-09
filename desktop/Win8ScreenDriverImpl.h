@@ -26,11 +26,11 @@
 
 
 //#include "log_writer/LogWriter.h"
-#include "remoting/remoting_common/thread/GuiThread.h"
-#include "remoting/remoting_common/thread/ThreadCollector.h"
+#include "acme/subsystem/thread/GuiThread.h"
+#include "acme/subsystem/thread/ThreadCollector.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 
-#include "remoting/remoting_common/rfb/FrameBuffer.h"
+#include "acme/subsystem/framebuffer/FrameBuffer.h"
 #include "Win8CursorShape.h"
 #include "UpdateKeeper.h"
 #include "UpdateListener.h"
@@ -41,7 +41,7 @@
 class Win8ScreenDriverImpl : private GuiThread, private Win8DuplicationListener
 {
 public:
-  Win8ScreenDriverImpl(LogWriter *log, UpdateKeeper *updateKeeper,
+  Win8ScreenDriverImpl(::subsystem::LogWriter *log, UpdateKeeper *updateKeeper,
                        critical_section *fbcritical_section,
                        UpdateListener *updateListener, bool detectionEnabled = false);
   virtual ~Win8ScreenDriverImpl();
@@ -51,7 +51,7 @@ public:
 
   bool grabFb(const ::int_rectangle &  rect);
 
-  virtual FrameBuffer *getScreenBuffer();
+  virtual ::subsystem::FrameBuffer *getScreenBuffer();
 
   // Updates destination (*dst) cursor shape properties and data.
   void updateCursorShape(CursorShape *dst);
@@ -74,8 +74,8 @@ private:
 
   void initDxgi();
 
-  // This function always return the DX DXGI_FORMAT_B8G8R8A8_UNORM format in the PixelFormat type.
-  PixelFormat getDxPixelFormat() const;
+  // This function always return the DX DXGI_FORMAT_B8G8R8A8_UNORM format in the ::subsystem::PixelFormat type.
+  ::subsystem::PixelFormat getDxPixelFormat() const;
 
   ::subsystem::LogWriter *m_plogwriter;
 
@@ -91,7 +91,7 @@ private:
 
   // The frame buffer with appropriate properties creates once at the constructor time. And then
   // has these properties permanently.
-  FrameBuffer m_frameBuffer;
+  ::subsystem::FrameBuffer m_frameBuffer;
 
   // Cursor's properties changes at all time. And then it should be safe by a local mutex.
   Point m_latestCursorPos;

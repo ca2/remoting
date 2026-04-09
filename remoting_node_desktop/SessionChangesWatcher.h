@@ -25,14 +25,14 @@
 #pragma once
 
 
-#include "remoting/remoting_common/thread/GuiThread.h"
+#include "acme/subsystem/thread/GuiThread.h"
 #include "remoting/remoting_common/util/AnEventListener.h"
 //#include "log_writer/LogWriter.h"
 
 class SessionChangesWatcher : public GuiThread
 {
 public:
-  SessionChangesWatcher(AnEventListener *extSessionChangesListener, LogWriter *log);
+  SessionChangesWatcher(AnEventListener *extSessionChangesListener, ::subsystem::LogWriter *log);
   virtual ~SessionChangesWatcher();
 
 protected:

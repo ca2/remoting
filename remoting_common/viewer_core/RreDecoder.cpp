@@ -35,7 +35,7 @@ RreDecoder::~RreDecoder()
 }
 
 void RreDecoder::decode(RfbInputGate *pinput,
-                        FrameBuffer *frameBuffer,
+                        ::subsystem::FrameBuffer *frameBuffer,
                         const ::int_rectangle &  dstRect)
 {
   unsigned int numberRectangle = pinput->readUInt32();

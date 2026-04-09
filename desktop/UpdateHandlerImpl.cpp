@@ -25,7 +25,7 @@
 #include "UpdateHandlerImpl.h"
 
 UpdateHandlerImpl::UpdateHandlerImpl(UpdateListener *externalUpdateListener, ScreenDriverFactory *scrDriverFactory,
-                                     LogWriter *log)
+                                     ::subsystem::LogWriter *log)
 : m_externalUpdateListener(externalUpdateListener),
   m_fullUpdateRequested(false),
   m_plogwriter(log)

@@ -36,9 +36,9 @@ public:
   ConsolePoller(UpdateKeeper *updateKeeper,
                 UpdateListener *updateListener,
                 ScreenGrabber *screenGrabber,
-                FrameBuffer *backupFrameBuffer,
+                ::subsystem::FrameBuffer *backupFrameBuffer,
                 critical_section *frameBufferMutex,
-                LogWriter *log);
+                ::subsystem::LogWriter *log);
 
   virtual ~ConsolePoller();
 
@@ -50,7 +50,7 @@ private:
   ::int_rectangle getConsoleRect();
 
   ScreenGrabber *m_screenGrabber;
-  FrameBuffer *m_backupFrameBuffer;
+  ::subsystem::FrameBuffer *m_backupFrameBuffer;
   critical_section *m_frameBufferMutex;
   ::int_rectangle m_pollingRect;
   WindowsEvent m_intervalWaiter;

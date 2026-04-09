@@ -15,7 +15,7 @@ __IMPLEMENT_APPLICATION_RELEASE_TIME(remoting_remoting);
 IMPLEMENT_APPLICATION_FACTORY(remoting_remoting);
 
 //int remoting_impact_main(::particle * pparticle, const ::file::path & path);
-CLASS_DECL_ACME HMODULE GetModuleFromFunction(void* pFunc);
+//CLASS_DECL_ACME HMODULE GetModuleFromFunction(void* pFunc);
 
 
 namespace remoting_remoting
@@ -30,11 +30,11 @@ namespace remoting_remoting
 
       ::remoting::defer_initialize_remoting();
 
-      HINSTANCE hInstance = (HINSTANCE)GetModuleFromFunction(&function_at_remoting_remoting);
+      //HINSTANCE hInstance = (HINSTANCE)GetModuleFromFunction(&function_at_remoting_remoting);
 
       // return hInstance;
 
-      ::system()->m_premoting->m_pHinstance = (void *) hInstance;
+      //::system()->m_premoting->m_pHinstance = (void *) hInstance;
 
       ::system()->m_bFinalizeIfNoSession = false;
 
@@ -88,7 +88,7 @@ namespace remoting_remoting
       if (eid == id_remoting_connecting)
       {
 
-          m_connectingdialog.post_message(WM_USER + 328, id_remoting_connecting, wparam.m_number);
+          m_connectingdialog.postMessage(WM_USER + 328, id_remoting_connecting, wparam.m_number);
 
       }
       else if (eid == id_remoting_connected)

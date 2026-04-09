@@ -29,13 +29,13 @@
 #include "remoting/remoting_common/rfb/CursorShape.h"
 #include "desktop/UpdateContainer.h"
 //#include "remoting/remoting_common/util/::earth::time.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 //#include "log_writer/LogWriter.h"
 
 class CursorUpdates
 {
 public:
-  CursorUpdates(LogWriter *log);
+  CursorUpdates(::subsystem::LogWriter *log);
   virtual ~CursorUpdates();
 
   // Important: After calling the update() function frame buffer
@@ -50,9 +50,9 @@ public:
               const ::int_rectangle &  viewPort,
               bool shareOnlyApp,
               const Region *shareAppRegion,
-              FrameBuffer *fb,
+              ::subsystem::FrameBuffer *fb,
               CursorShape *cursorShape);
-  void restoreFrameBuffer(FrameBuffer *fb);
+  void restoreFrameBuffer(::subsystem::FrameBuffer *fb);
 
   // Returns current cursor position. Beetween
   Point getCurPos();
@@ -79,7 +79,7 @@ private:
                       bool curPosBlockingIsIgnored);
 
   // Shortcut function to draw cursor on the frame buffer directly.
-  void drawCursor(UpdateContainer *updCont, FrameBuffer *fb);
+  void drawCursor(UpdateContainer *updCont, ::subsystem::FrameBuffer *fb);
 
   // Check for cursor blocking state and
   // return true if it is blocked and false
@@ -90,7 +90,7 @@ private:
   Point m_cursorPos;
   ::earth::time m_blockCurPosTime;
   CursorShape m_cursorShape;
-  FrameBuffer m_shapeBackground;
+  ::subsystem::FrameBuffer m_shapeBackground;
   Point m_backgroundPos;
   critical_section m_curPosLocMut;
   // Uses when the rich enabled but pointer pos disabled to determine

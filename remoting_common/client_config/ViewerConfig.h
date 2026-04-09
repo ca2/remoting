@@ -29,8 +29,8 @@
 #include "acme/subsystem/Singleton.h"
 #include "remoting/remoting_common/config/ConnectionHistory.h"
 //#include "log_writer/FileLogWriter.h"
-////#include "remoting/remoting_common/thread/critical_section.h"
-////#include "remoting/remoting_common/thread/critical_section.h"
+////#include "acme/subsystem/thread/critical_section.h"
+////#include "acme/subsystem/thread/critical_section.h"
 
 #include "remoting/remoting_common/client_config/ConnectionConfig.h"
 
@@ -72,10 +72,10 @@ namespace remoting
       void setLogDir(const ::file::path &path);
 
       // Creates path to log file and place value to m_pathToLogFile member
-      // creates LogWriter and return pointer to him
+      // creates ::subsystem::LogWriter and return pointer to him
       ::subsystem::LogWriter *initLog(const ::file::path &path, const ::scoped_string & scopedstrLogName, bool useSpecialFolder = true);
 
-      // function return pointer to LogWriter
+      // function return pointer to ::subsystem::LogWriter
       ::subsystem::LogWriter *getLogWriter();
 
       // Sets number of connections to remember

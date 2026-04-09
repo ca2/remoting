@@ -25,9 +25,9 @@
 #include "StandardPixelFormatFactory.h"
 
 
-PixelFormat StandardPixelFormatFactory::create32bppPixelFormat()
+::subsystem::PixelFormat StandardPixelFormatFactory::create32bppPixelFormat()
 {
-  PixelFormat pixelFormat;
+  ::subsystem::PixelFormat pixelFormat;
   pixelFormat.initBigEndianByNative();
   pixelFormat.bitsPerPixel = 32;
   pixelFormat.blueMax = 255;
@@ -40,9 +40,9 @@ PixelFormat StandardPixelFormatFactory::create32bppPixelFormat()
   return pixelFormat;
 }
 
-PixelFormat StandardPixelFormatFactory::create16bppPixelFormat()
+::subsystem::PixelFormat StandardPixelFormatFactory::create16bppPixelFormat()
 {
-  PixelFormat pixelFormat;
+  ::subsystem::PixelFormat pixelFormat;
   pixelFormat.initBigEndianByNative();
   pixelFormat.bitsPerPixel = 16;
   pixelFormat.blueMax = 31;
@@ -55,9 +55,9 @@ PixelFormat StandardPixelFormatFactory::create16bppPixelFormat()
   return pixelFormat;
 }
 
-PixelFormat StandardPixelFormatFactory::create8bppPixelFormat()
+::subsystem::PixelFormat StandardPixelFormatFactory::create8bppPixelFormat()
 {
-  PixelFormat pixelFormat;
+  ::subsystem::PixelFormat pixelFormat;
   pixelFormat.initBigEndianByNative();
   pixelFormat.bitsPerPixel = 8;
   pixelFormat.redMax = 7;
@@ -70,9 +70,9 @@ PixelFormat StandardPixelFormatFactory::create8bppPixelFormat()
   return pixelFormat;
 }
 
-PixelFormat StandardPixelFormatFactory::create6bppPixelFormat()
+::subsystem::PixelFormat StandardPixelFormatFactory::create6bppPixelFormat()
 {
-  PixelFormat pixelFormat;
+  ::subsystem::PixelFormat pixelFormat;
   pixelFormat.initBigEndianByNative();
   pixelFormat.bitsPerPixel = 8;
   pixelFormat.blueMax = 3;
@@ -85,9 +85,9 @@ PixelFormat StandardPixelFormatFactory::create6bppPixelFormat()
   return pixelFormat;
 }
 
-PixelFormat StandardPixelFormatFactory::create3bppPixelFormat()
+::subsystem::PixelFormat StandardPixelFormatFactory::create3bppPixelFormat()
 {
-  PixelFormat pixelFormat;
+  ::subsystem::PixelFormat pixelFormat;
   pixelFormat.initBigEndianByNative();
   pixelFormat.bitsPerPixel = 8;
   pixelFormat.blueMax = 1;

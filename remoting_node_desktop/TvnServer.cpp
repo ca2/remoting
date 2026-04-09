@@ -30,7 +30,7 @@
 
 #include "remoting/remoting_common/server_config/Configurator.h"
 
-#include "remoting/remoting_common/thread/GlobalMutex.h"
+#include "acme/subsystem/thread/GlobalMutex.h"
 
 #include "remoting_node/resource.h"
 
@@ -58,7 +58,7 @@
 TvnServer::TvnServer(bool runsInServiceContext,
                      NewConnectionEvents *newConnectionEvents,
                      LogInitListener *logInitListener,
-                     LogWriter *LogWriter)
+                     ::subsystem::LogWriter * plogwriter)
 : Singleton<TvnServer>(),
   ListenerContainer<TvnServerListener *>(),
   m_runAsService(runsInServiceContext),
@@ -66,7 +66,7 @@ TvnServer::TvnServer(bool runsInServiceContext,
   m_rfbClientManager(0),
   m_httpServer(0), m_controlServer(0), m_rfbServer(0),
   m_config(runsInServiceContext),
-  m_plogwriter(LogWriter),
+  m_plogwriter(::subsystem::LogWriter),
   m_contextSwitchResolution(1),
   m_extraRfbServers(&m_plogwriter)
 {

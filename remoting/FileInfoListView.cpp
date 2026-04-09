@@ -41,7 +41,7 @@ namespace remoting_remoting
     //: m_pimagelistSmall(0)
     {
         // By default, file ::list_base is sorted by file name.
-        sort(0);
+        set_sort(0);
     }
 
     FileInfoListView::~FileInfoListView()
@@ -205,12 +205,12 @@ namespace remoting_remoting
 //        DestroyIcon(icon);
     }
 
-    void FileInfoListView::sort(int columnIndex)
+    void FileInfoListView::set_sort(int columnIndex)
     {
-        ListView::sort(columnIndex, [this](::lparam lparam1, ::lparam lparam2)
+        ListView::set_sort(columnIndex, [this](::lparam lparam1, ::lparam lparam2)->int
         {
 
-           ::lparam lParamSort = 0;
+           auto lParamSort = lparam_sort();
 
            int iCompare = compareItem(lparam1, lparam2, lParamSort);
 

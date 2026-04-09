@@ -41,12 +41,12 @@ void DibFrameBuffer::setTargetDC(HDC targetDC)
   m_dibSection->setTargetDC(targetDC);
 }
 
-bool DibFrameBuffer::assignProperties(const FrameBuffer *srcFrameBuffer)
+bool DibFrameBuffer::assignProperties(const ::subsystem::FrameBuffer *srcFrameBuffer)
 {
   throw ::remoting::Exception("Wrong: You shouln't use the DibFrameBuffer::assignProperties() function.");
 }
 
-bool DibFrameBuffer::clone(const FrameBuffer *srcFrameBuffer)
+bool DibFrameBuffer::clone(const ::subsystem::FrameBuffer *srcFrameBuffer)
 {
   throw ::remoting::Exception("Wrong: You shouln't use the DibFrameBuffer::clone() function.");
 }
@@ -61,23 +61,23 @@ void DibFrameBuffer::fillRect(const ::int_rectangle &  dstRect, unsigned int col
   m_fb.fillRect(dstRect, color);
 }
 
-bool DibFrameBuffer::isEqualTo(const FrameBuffer *frameBuffer)
+bool DibFrameBuffer::isEqualTo(const ::subsystem::FrameBuffer *frameBuffer)
 {
   return m_fb.isEqualTo(frameBuffer);
 }
 
-bool DibFrameBuffer::copyFrom(const ::int_rectangle &  dstRect, const FrameBuffer *srcFrameBuffer,
+bool DibFrameBuffer::copyFrom(const ::int_rectangle &  dstRect, const ::subsystem::FrameBuffer *srcFrameBuffer,
                               int srcX, int srcY)
 {
   return m_fb.copyFrom(dstRect, srcFrameBuffer, srcX, srcY);
 }
 
-bool DibFrameBuffer::copyFrom(const FrameBuffer *srcFrameBuffer, int srcX, int srcY)
+bool DibFrameBuffer::copyFrom(const ::subsystem::FrameBuffer *srcFrameBuffer, int srcX, int srcY)
 {
   return m_fb.copyFrom(srcFrameBuffer, srcX, srcY);
 }
 
-bool DibFrameBuffer::overlay(const ::int_rectangle &  dstRect, const FrameBuffer *srcFrameBuffer,
+bool DibFrameBuffer::overlay(const ::int_rectangle &  dstRect, const ::subsystem::FrameBuffer *srcFrameBuffer,
                              int srcX, int srcY, const char *andMask)
 {
   return m_fb.overlay(dstRect, srcFrameBuffer, srcX, srcY, andMask);
@@ -88,7 +88,7 @@ void DibFrameBuffer::move(const ::int_rectangle &  dstRect, const int srcX, cons
   m_fb.move(dstRect, srcX, srcY);
 }
 
-bool DibFrameBuffer::cmpFrom(const ::int_rectangle &  dstRect, const FrameBuffer *srcFrameBuffer,
+bool DibFrameBuffer::cmpFrom(const ::int_rectangle &  dstRect, const ::subsystem::FrameBuffer *srcFrameBuffer,
                              const int srcX, const int srcY)
 {
   return m_fb.cmpFrom(dstRect, srcFrameBuffer, srcX, srcY);
@@ -109,12 +109,12 @@ void DibFrameBuffer::setEmptyDimension(const ::int_rectangle &  dimByRect)
   throw ::remoting::Exception("This function is deprecated");
 }
 
-void DibFrameBuffer::setEmptyPixelFmt(const PixelFormat & pf)
+void DibFrameBuffer::setEmptyPixelFmt(const ::subsystem::PixelFormat & pf)
 {
   throw ::remoting::Exception("This function is deprecated");
 }
 
-void DibFrameBuffer::setPropertiesWithoutResize(const ::int_size & newDim, const PixelFormat & pf)
+void DibFrameBuffer::setPropertiesWithoutResize(const ::int_size & newDim, const ::subsystem::PixelFormat & pf)
 {
   throw ::remoting::Exception("Wrong: You shouln't use the DibFrameBuffer::setPropertiesWithoutResize() function.");
 }
@@ -124,22 +124,22 @@ inline ::int_size DibFrameBuffer::getDimension() const
   return m_fb.getDimension();
 }
 
-bool DibFrameBuffer::setPixelFormat(const PixelFormat & pixelFormat)
+bool DibFrameBuffer::setPixelFormat(const ::subsystem::PixelFormat & pixelFormat)
 {
   throw ::remoting::Exception("Wrong: You shouln't use the DibFrameBuffer::setPixelFormat() function.");
 }
 
-inline PixelFormat DibFrameBuffer::getPixelFormat() const
+inline ::subsystem::PixelFormat DibFrameBuffer::getPixelFormat() const
 {
   return m_fb.getPixelFormat();
 }
 
-bool DibFrameBuffer::setProperties(const ::int_size & newDim, const PixelFormat & pixelFormat)
+bool DibFrameBuffer::setProperties(const ::int_size & newDim, const ::subsystem::PixelFormat & pixelFormat)
 {
   throw ::remoting::Exception("Wrong: You shouln't use this variant of the DibFrameBuffer::setProperties() function.");
 }
 
-bool DibFrameBuffer::setProperties(const ::int_rectangle &  dimByRect, const PixelFormat & pixelFormat)
+bool DibFrameBuffer::setProperties(const ::int_rectangle &  dimByRect, const ::subsystem::PixelFormat & pixelFormat)
 {
   throw ::remoting::Exception("Wrong: You shouln't use this variant of the DibFrameBuffer::setProperties() function.");
 }
@@ -204,7 +204,7 @@ void DibFrameBuffer::stretchFromDibSection(const ::int_rectangle &  srcRect,cons
 }
 
 void DibFrameBuffer::setProperties(const ::int_size & newDim,
-                                   const PixelFormat & pixelFormat,
+                                   const ::subsystem::PixelFormat & pixelFormat,
                                    HWND compatibleWindow)
 {
   m_fb.setPropertiesWithoutResize(newDim, pixelFormat);
@@ -213,7 +213,7 @@ void DibFrameBuffer::setProperties(const ::int_size & newDim,
 }
 
 void *DibFrameBuffer::updateDibSection(const ::int_size & newDim,
-                                      const PixelFormat & pixelFormat,
+                                      const ::subsystem::PixelFormat & pixelFormat,
                                       HWND compatibleWindow)
 {
   releaseDibSection();

@@ -25,6 +25,8 @@
 #include "ViewerCmdLine.h"
 #include "remoting/remoting_common/config/IniFileSettingsManager.h"
 #include "acme/subsystem/node/SystemException.h"
+#include "acme/subsystem/node/ProcessCommandLine.h"
+
 
 namespace remoting_remoting
 {
@@ -67,7 +69,7 @@ namespace remoting_remoting
     const char ViewerCmdLine::ZRLE[] = "zrle";
 
     ViewerCmdLine::ViewerCmdLine(ConnectionData *conData,
-                                 ConnectionConfig *conConf,
+                                 ::remoting::ConnectionConfig *conConf,
                                  ::remoting::ViewerConfig *config,
                                  bool *isListening)
     : m_conData(conData),
@@ -79,24 +81,24 @@ namespace remoting_remoting
 
     bool ViewerCmdLine::processCmdLine(const CmdLineOption *cmdLines, size_t lenCmdLineOption)
     {
-        if (m_wpcl.getOptionsCount()) {
+        if (m_pprocesscommandlineOperatingSystem->getOptionsCount()) {
             int countRecog = 0;
 
             for (size_t i = 0; i < lenCmdLineOption; i++) {
                 ::string strOut;
 
-                for (size_t j = 0; j < m_wpcl.getOptionsCount(); j++) {
-                    m_wpcl.getOption(j , strOut);
+                for (size_t j = 0; j < m_pprocesscommandlineOperatingSystem->getOptionsCount(); j++) {
+                    m_pprocesscommandlineOperatingSystem->getOption(j , strOut);
 
                     if (strOut == cmdLines[i].keyName) {
                         countRecog++;
                     }
                 }
-                if (m_wpcl.findOptionValue(cmdLines[i].keyName, strOut)) {
+                if (m_pprocesscommandlineOperatingSystem->findOptionValue(cmdLines[i].keyName, strOut)) {
                     m_options[cmdLines[i].keyName] = strOut;
                 }
             }
-            if (countRecog != m_wpcl.getOptionsCount()) {
+            if (countRecog != m_pprocesscommandlineOperatingSystem->getOptionsCount()) {
                 return false;
             }
         }
@@ -139,11 +141,11 @@ namespace remoting_remoting
         }
 
 
-        if (m_wpcl.getArgumentsCount() > 2) {
+        if (m_pprocesscommandlineOperatingSystem->getArgumentsCount() > 2) {
             throw CommandLineFormatException(main_subsystem()->string_table()->getString(IDS_ERROR_COMMAND_LINE));
         }
 
-        if (m_wpcl.getArgumentsCount() > 1) {
+        if (m_pprocesscommandlineOperatingSystem->getArgumentsCount() > 1) {
             if (isPresent(ViewerCmdLine::HOST)) {
                 throw CommandLineFormatException(main_subsystem()->string_table()->getString(IDS_ERROR_COMMAND_LINE));
             }
@@ -183,9 +185,9 @@ namespace remoting_remoting
 
     bool ViewerCmdLine::isHelpPresent()
     {
-        for (size_t i = 0; i < m_wpcl.getArgumentsCount(); i++) {
+        for (size_t i = 0; i < m_pprocesscommandlineOperatingSystem->getArgumentsCount(); i++) {
             ::string argument;
-            if (m_wpcl.getArgument(i, argument)) {
+            if (m_pprocesscommandlineOperatingSystem->getArgument(i, argument)) {
                 if (argument == HELP_ARG)
                     return true;
                 if (argument == HELP_ARG_SHORT)
@@ -428,7 +430,7 @@ namespace remoting_remoting
     void ViewerCmdLine::parseHostArg()
     {
         ::string host;
-        m_wpcl.getArgument(1, host);
+        m_pprocesscommandlineOperatingSystem->getArgument(1, host);
 
         if (::not_found(host.find_first_character(':'))) {
             m_conData->setHost(host);
@@ -447,7 +449,7 @@ namespace remoting_remoting
     bool ViewerCmdLine::parseHostOptions()
     {
         if (!isPresent(HOST)) {
-            if (m_wpcl.getOptionsCount()) {
+            if (m_pprocesscommandlineOperatingSystem->getOptionsCount()) {
                 return false;
             }
             return true;
@@ -466,7 +468,7 @@ namespace remoting_remoting
 
     bool ViewerCmdLine::parseHost()
     {
-        if (m_wpcl.getArgumentsCount() > 1) {
+        if (m_pprocesscommandlineOperatingSystem->getArgumentsCount() > 1) {
             parseHostArg();
         } else {
             return parseHostOptions();

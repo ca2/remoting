@@ -34,8 +34,8 @@
 #include "remoting/remoting_common/server_config/Configurator.h"
 //#include "log_writer/LogWriter.h"
 
-#include "remoting/remoting_common/thread/Thread.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+#include "acme/subsystem/thread/Thread.h"
+//#include "acme/subsystem/thread/critical_section.h"
 
 #include "remoting_control_desktop/ControlGate.h"
 #include "remoting_control_desktop/ControlAuthException.h"
@@ -158,7 +158,7 @@ private:
   void reloadConfig();
 
 private:
-  LogWriter m_plogwriter;
+  ::subsystem::LogWriter m_plogwriter;
 
   // Initialization of the Configurator instance.
   Configurator m_configurator;

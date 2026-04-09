@@ -3,7 +3,7 @@
 // #include aaa_<thread/critical_section_lock.h>
 #include "RfbFramebufferUpdateRequestClientMessage.h"
 
-UpdateRequestSender::UpdateRequestSender(lockable* m_fb_lock, FrameBuffer* m_frame_buffer, LogWriter* m_log_writer):
+UpdateRequestSender::UpdateRequestSender(lockable* m_fb_lock, ::subsystem::FrameBuffer* m_frame_buffer, ::subsystem::LogWriter* m_log_writer):
 	m_wasUpdateRecieved(false),
 	m_timeOut(0),
 	m_isIncrimental(true),

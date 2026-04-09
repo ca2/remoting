@@ -26,14 +26,14 @@
 
 
 #include "acme/subsystem/io/Channel.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 //#include "log_writer/LogWriter.h"
 
 class ReconnectingChannel : public Channel
 {
 public:
-  ReconnectingChannel(unsigned int timeOut, LogWriter *log);
+  ReconnectingChannel(unsigned int timeOut, ::subsystem::LogWriter *log);
   virtual ~ReconnectingChannel();
 
   virtual size_t read(void *buffer, size_t len);

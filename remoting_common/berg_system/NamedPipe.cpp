@@ -27,7 +27,7 @@
 #include "acme/subsystem/Exception.h"
 //#include aaa_<crtdbg.h>
 //#include "remoting/remoting_common/win_system/Environment.h"
-//#include "remoting/remoting_common/thread/critical_section.h"
+//#include "acme/subsystem/thread/critical_section.h"
 
 #define MAX_PORTION_SIZE 512 * 1024
 

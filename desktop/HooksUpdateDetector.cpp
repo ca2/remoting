@@ -30,7 +30,7 @@
 //#include "remoting/remoting_common/win_system/Environment.h"
 
 HooksUpdateDetector::HooksUpdateDetector(UpdateKeeper *updateKeeper,
-                                         UpdateListener *updateListener, LogWriter *log)
+                                         UpdateListener *updateListener, ::subsystem::LogWriter *log)
 : UpdateDetector(updateKeeper, updateListener),
   m_updateTimer(updateListener),
   m_targetWin(0),

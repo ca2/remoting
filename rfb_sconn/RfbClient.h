@@ -28,7 +28,7 @@
 //#include aaa_<list>
 //#include "remoting/remoting_common/network/socket/SocketIPv4.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
-#include "remoting/remoting_common/thread/Thread.h"
+#include "acme/subsystem/thread/Thread.h"
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 #include "desktop/Desktop.h"
 #include "remoting/remoting_common/fb_update_sender/UpdateSender.h"
@@ -65,7 +65,7 @@ public:
             const ViewPortState *constViewPort,
             const ViewPortState *dynViewPort,
             int idleTimeout,
-            LogWriter *log);
+            ::subsystem::LogWriter *log);
   virtual ~RfbClient();
 
   void disconnect();

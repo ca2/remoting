@@ -41,7 +41,7 @@ typedef bool (WINAPI *SetFilterEx)(HWND hWnd,
 typedef bool (WINAPI *SetFilter)(unsigned int scopedstrMessage,
                                  DWORD action);
 
-UipiControl::UipiControl(LogWriter *log)
+UipiControl::UipiControl(::subsystem::LogWriter *log)
 : m_plogwriter(log)
 {
 }
