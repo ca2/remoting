@@ -411,7 +411,7 @@ namespace remoting
             // Try to seek
             m_preadable->set_position(initialFileOffset);
 
-         } catch (::remoting::Exception &ioEx) {
+         } catch (::subsystem::Exception &ioEx) {
             notifyFailedToUpload(ioEx.get_message());
             gotoNext();
             return ;

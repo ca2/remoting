@@ -54,13 +54,13 @@ public:
   /**
    * Accepts new connection using underlying transport.
    * @return accepted transport or 0 if this transport is client.
-   * @throw ::remoting::Exception on fail.
+   * @throw ::subsystem::Exception on fail.
    */
   virtual Transport *accept() = 0;
 
   /**
    * Closes transport.
-   * @throws ::remoting::Exception on fail.
+   * @throws ::subsystem::Exception on fail.
    */
   virtual void close() = 0;
 };

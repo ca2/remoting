@@ -46,7 +46,7 @@ public:
   // it's ready (If objects (server and client) will be automated then
   // no guarantees that configuration for service will be valid at them
   // constructors).
-  // @throw ::remoting::Exception on an error.
+  // @throw ::subsystem::Exception on an error.
   void connect();
 
   // Sends log line to the log server.

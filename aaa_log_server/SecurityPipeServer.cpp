@@ -68,7 +68,7 @@ void SecurityPipeServer::generateSecConnection(Channel *tempPublChan)
     // Check the id. If it is "right" process then generate
     // transport handles specially for it.
     if (!Environment::isItTheSamePathAsCurrent(procId)) {
-      throw ::remoting::Exception("The process that has requested connection"
+      throw ::subsystem::Exception("The process that has requested connection"
                       " to the log server has not access right");
     }
 
@@ -104,6 +104,6 @@ void SecurityPipeServer::makeSure()
   unsigned int timeOut = 10000; // milliseconds
   ConnectionTimer connTimer(this, timeOut);
   // If no byte received during time out interval connTimer has break
-  // read operation and the make sure throws an ::remoting::Exception.
+  // read operation and the make sure throws an ::subsystem::Exception.
   inputGate.readInt8();
 }

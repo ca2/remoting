@@ -294,7 +294,7 @@ void ::string::remove(size_t startIndex, size_t count)
   bool isFailed = startIndex + count > length();
   _ASSERT(!isFailed);
   if (isFailed) {
-    throw ::remoting::Exception("An incorrect ::string::remove() usage");
+    throw ::subsystem::Exception("An incorrect ::string::remove() usage");
   }
   BufferType newBuffer = m_buffer;
 

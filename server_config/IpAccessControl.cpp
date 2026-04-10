@@ -61,7 +61,7 @@ void IpAccessControl::deserialize(DataInputStream * pinput)
     IpAccessRule *rule = new IpAccessRule();
     try {
       if (!IpAccessRule::parse(string, rule)) {
-        throw ::remoting::Exception("Parsing of ip access rule is failed.");
+        throw ::subsystem::Exception("Parsing of ip access rule is failed.");
       }
     } catch (...) {
       delete rule;

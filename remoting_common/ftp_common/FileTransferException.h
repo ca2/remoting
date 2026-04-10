@@ -27,12 +27,12 @@
 
 #include "acme/subsystem/Exception.h"
 
-class CLASS_DECL_REMOTING_COMMON FileTransferException : public ::remoting::Exception
+class CLASS_DECL_REMOTING_COMMON FileTransferException : public ::subsystem::Exception
 {
 public:
   FileTransferException();
   FileTransferException(const ::scoped_string & scopedstrMessage);
-  FileTransferException(const ::remoting::Exception *baseException);
+  FileTransferException(const ::subsystem::Exception *baseException);
   virtual ~FileTransferException();
 };
 

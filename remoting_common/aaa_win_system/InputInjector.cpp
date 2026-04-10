@@ -151,7 +151,7 @@ void InputInjector::injectKeyEvent(unsigned char vkCode, bool release, bool exte
       } else {
         // Under Vista or later the SendInput() function doesn't return error
         // code if inputs blocked by UIPI.
-        throw ::remoting::Exception("SendInput() function failed");
+        throw ::subsystem::Exception("SendInput() function failed");
       }
     }
   }
@@ -296,17 +296,17 @@ SHORT InputInjector::searchVirtKey(WCHAR ch, HKL hklCurrent)
     ::string errMess;
     errMess.formatf("Can't translate the {} character to the scan code",
                    (unsigned int)ch);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
   }
   if (isDeadKey(vkKeyScanResult, hklCurrent)) {
-    throw ::remoting::Exception("Special dead symbol must be inserted"
+    throw ::subsystem::Exception("Special dead symbol must be inserted"
                     " only as unicode character");
   }
   if (!isOneKeyEventChar(ch, vkKeyScanResult, hklCurrent)) {
     ::string errMess;
     errMess.formatf("Can't get the {} character by one keyboard event",
                    (unsigned int)ch);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
   }
   // Special trick to get round a problem when printing the ^6 characters
   // instead of estimated 6.
@@ -320,33 +320,33 @@ SHORT InputInjector::searchVirtKey(WCHAR ch, HKL hklCurrent)
     const unsigned short POLISH2 = MAKELANGID(LANG_POLISH, SUBLANG_POLISH_POLAND);
 
     if ((layout == POLISH1 || layout == POLISH2) && ch == _T('`')) {
-      throw ::remoting::Exception("Special case for the '`' character on the POLISH"
+      throw ::subsystem::Exception("Special case for the '`' character on the POLISH"
         " keyboard, it will be inserted as"
         " an unicode");
     }
 
     if (layout == 0xf001 && ch == _T('6')) {
-      throw ::remoting::Exception("Special case for the '6' character on the USA"
+      throw ::subsystem::Exception("Special case for the '6' character on the USA"
                       " international keyboard, it will be inserted as"
                       " an unicode");
     }
     if (layout == BRAZILIAN && ch == _T('6')) {
-      throw ::remoting::Exception("Special case for the '6' character on the brazilian"
+      throw ::subsystem::Exception("Special case for the '6' character on the brazilian"
         " keyboard, it will be inserted as"
         " an unicode");
     }
     if (layout == NORWEGIAN && ch == _T('\\')) {
-      throw ::remoting::Exception("Special case for the '\\' character on the norwegian"
+      throw ::subsystem::Exception("Special case for the '\\' character on the norwegian"
                       " keyboard, it will be inserted as"
                       " an unicode");
     }
     if (layout == TURKISH && ch == _T('3')) {
-      throw ::remoting::Exception("Special case for the '3' character on the turkish-Q"
+      throw ::subsystem::Exception("Special case for the '3' character on the turkish-Q"
         " keyboard, it will be inserted as"
         " an unicode");
     }
     if (layout == GREEK && ch == 0x03c2) {
-      throw ::remoting::Exception("Special case for the 'w' character on the greek"
+      throw ::subsystem::Exception("Special case for the 'w' character on the greek"
         " keyboard, it will be inserted as"
         " an unicode");
     }
@@ -416,7 +416,7 @@ HKL InputInjector::getCurrentKbdLayout()
   // Determine current owning thread.
   HWND hwnd = GetForegroundWindow();
   if (hwnd == 0) {
-    throw ::remoting::Exception("Can't insert key event because"
+    throw ::subsystem::Exception("Can't insert key event because"
                     " a window is losing activation");
   }
   DWORD threadId = GetWindowThreadProcessId(hwnd, 0);

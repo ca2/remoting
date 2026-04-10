@@ -106,7 +106,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     try {
       crashHook.setHklmRoot();
       tvnService.run();
-    } catch (::remoting::Exception &) {
+    } catch (::subsystem::Exception &) {
       return 1;
     }
     return 0;
@@ -123,7 +123,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
         WindowNames::WINDOW_CLASS_NAME,
         lpCmdLine);
       return tvnControl.run();
-    } catch (::remoting::Exception &fatalException) {
+    } catch (::subsystem::Exception &fatalException) {
       MessageBox(0,
         fatalException.get_message(),
         main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),

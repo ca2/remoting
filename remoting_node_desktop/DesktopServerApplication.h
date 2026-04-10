@@ -52,7 +52,7 @@ public:
   /**
    * Initializes desktop server.
    * @param appInstance HINSTANCE of application.
-   * @throws ::remoting::Exception (or SystemException) on fail.
+   * @throws ::subsystem::Exception (or SystemException) on fail.
    * @fixme make command line parsing in this class.
    */
   DesktopServerApplication(HINSTANCE appInstance,

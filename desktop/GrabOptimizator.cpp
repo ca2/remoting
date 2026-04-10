@@ -205,7 +205,7 @@ __int64 GrabOptimizator::grabWhole(ScreenDriver *grabber)
   bool timerResult1 = QueryPerformanceCounter(&timeBegin) != 0;
 
   if (!grabber->grabFb()) {
-    throw ::remoting::Exception("Grabber failed. Is it not ready?");
+    throw ::subsystem::Exception("Grabber failed. Is it not ready?");
   }
 
   bool timerResult2 = QueryPerformanceCounter(&timeEnd) != 0;
@@ -227,7 +227,7 @@ __int64 GrabOptimizator::grabOneRect(const ::int_rectangle &  rect,
   bool timerResult1 = QueryPerformanceCounter(&timeBegin) != 0;
 
   if (!grabber->grabFb(rect)) {
-    throw ::remoting::Exception("Grabber failed. Is it not ready?");
+    throw ::subsystem::Exception("Grabber failed. Is it not ready?");
   }
 
   bool timerResult2 = QueryPerformanceCounter(&timeEnd) != 0;
@@ -281,7 +281,7 @@ __int64 GrabOptimizator::grabFragments(const ::array_base<::int_rectangle> *rect
   ::array_base<::int_rectangle>::const_iterator iRect;
   for (iRect = rects->begin(); iRect < rects->end(); iRect++) {
     if (!grabber->grabFb(&(*iRect))) {
-      throw ::remoting::Exception("Grabber failed. Is it not ready?");
+      throw ::subsystem::Exception("Grabber failed. Is it not ready?");
     }
   }
 

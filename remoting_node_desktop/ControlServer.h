@@ -44,7 +44,7 @@ public:
    * Creates and starts control server execution.
    * @param serverTransport ready transport for control server.
    * @param rfbClientManager active TightVNC rfb client manager.
-   * @throws ::remoting::Exception when fail to create server.
+   * @throws ::subsystem::Exception when fail to create server.
    * @remark control server takes ownership over server transport.
    * @remark rfbClientManager and rfbServers parameters are needed for
    * executing some of control commands and cannot be 0.

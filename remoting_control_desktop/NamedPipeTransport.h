@@ -57,7 +57,7 @@ public:
   /**
    * Accepts new connection.
    * @return transport for accepted connection.
-   * @throws ::remoting::Exception on fail.
+   * @throws ::subsystem::Exception on fail.
    */
   virtual Transport *accept();
 

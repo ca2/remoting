@@ -41,7 +41,7 @@ Configurator::Configurator(bool isConfiguringService)
 {
   critical_section_lock al(&m_instanceMutex);
   if (s_instance != 0) {
-    throw ::remoting::Exception("Configurator instance already exists");
+    throw ::subsystem::Exception("Configurator instance already exists");
   }
   s_instance = this;
   try {

@@ -63,7 +63,7 @@ public:
    * @param acceptByDefault if set, then default action in query dialog will be "Accept".
    * @param timeOutSec query dialog timeout(in seconds).
    * @return application exit code (0 means accept connection, 1 means reject connection).
-   * @throws ::remoting::Exception on fail.
+   * @throws ::subsystem::Exception on fail.
    */
   static int execute(const ::scoped_string & scopedstrPeerAddr, bool acceptByDefault, DWORD timeOutSec)
 ;

@@ -62,7 +62,7 @@ int TvnServerApplication::run()
     ServerCommandLine parser;
     WinCommandLineArgs cmdArgs(m_commandLine);
     if (!parser.parse(&cmdArgs) || parser.showHelp()) {
-      throw ::remoting::Exception("Wrong command line argument");
+      throw ::subsystem::Exception("Wrong command line argument");
     }
   } catch (...) {
     TvnServerHelp::showUsage();

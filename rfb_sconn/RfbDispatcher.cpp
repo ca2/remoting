@@ -72,7 +72,7 @@ void RfbDispatcher::execute()
         ::string errMess;
         errMess.formatf("unhandled {} code has been received from a client",
                        (int)code);
-        throw ::remoting::Exception(errMess);
+        throw ::subsystem::Exception(errMess);
       }
       (*iter).second->onRequest(code, m_gate);
     }

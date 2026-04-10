@@ -86,7 +86,7 @@ void ClientLogWriter::connect()
     ::string formattedException;
     formattedException.formatf("Can't connect to the log server: {}",
                               e.get_message());
-    throw ::remoting::Exception(formattedException);
+    throw ::subsystem::Exception(formattedException);
   }
   if (svcChan != 0) delete svcChan;
 

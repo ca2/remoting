@@ -175,7 +175,7 @@ void FileTransferRequestHandler::onRequest(unsigned int reqCode, RfbInputGate *b
       md5Requested();
       break;
     } // switch.
-  } catch (::remoting::Exception &someEx) {
+  } catch (::subsystem::Exception &someEx) {
     lastRequestFailed(someEx.get_message());
   } // try / catch.
 
@@ -925,10 +925,10 @@ void FileTransferRequestHandler::checkAccess()
 {
   try {
     if (!isFileTransferEnabled()) {
-      throw ::remoting::Exception("::file::item transfers is disabled");
+      throw ::subsystem::Exception("::file::item transfers is disabled");
     }
     m_security->throwIfAccessDenied();
-  } catch (::remoting::Exception &someEx) {
+  } catch (::subsystem::Exception &someEx) {
     throw SystemException(someEx.get_message());
   } // try / catch.
 }

@@ -222,14 +222,14 @@ void ControlClient::execute()
           throw ControlException("Unknown command");
         } // switch (messageId).
       } catch (ControlException &controlEx) {
-        m_plogwriter->error("::remoting::Exception while processing control client's request: \"{}\"",
+        m_plogwriter->error("::subsystem::Exception while processing control client's request: \"{}\"",
                    controlEx.get_message());
 
         sendError(controlEx.get_message());
       }
     } // while
-  } catch (::remoting::Exception &ex) {
-    m_plogwriter->error("::remoting::Exception in control client thread: \"{}\"", ex.get_message());
+  } catch (::subsystem::Exception &ex) {
+    m_plogwriter->error("::subsystem::Exception in control client thread: \"{}\"", ex.get_message());
   }
 }
 

@@ -44,7 +44,7 @@ public:
   // firstSide pipe handles by child('s) processes.
   // @param If secondSideIsInheritable is true then allows to inherit the
   // secondSide pipe handles by child('s) processes.
-  // @throw ::remoting::Exception if an error occured.
+  // @throw ::subsystem::Exception if an error occured.
   // After use the firstSide and secondSide object the caller must
   // destroy it by delete operator.
   void generatePipes(AnonymousPipe **firstSide,

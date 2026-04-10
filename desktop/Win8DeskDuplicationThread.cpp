@@ -137,7 +137,7 @@ void Win8DeskDuplication::execute()
     setCriticalError(errMess);
   } catch (::exception &e) {
     ::string errMess;
-    errMess.formatf("Win8DeskDuplication:: Catched ::remoting::Exception: {}" , e.get_message());
+    errMess.formatf("Win8DeskDuplication:: Catched ::subsystem::Exception: {}" , e.get_message());
     setRecoverableError(errMess);
   }
 }
@@ -215,7 +215,7 @@ void Win8DeskDuplication::processDirtyRects(size_t dirtyCount,
                      " from the stage rect ({}, {}, %dx{})",
                      rect.left, rect.top, rect.width(), rect.height(),
                      stageRect.left, stageRect.top, stageRect.width(), stageRect.height());
-      throw ::remoting::Exception(errMess);
+      throw ::subsystem::Exception(errMess);
       */
     }
     ID3D11Texture2D *texture = m_stageTextures2D[out].getTexture();

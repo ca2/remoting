@@ -68,7 +68,7 @@ int ServiceControlApplication::run()
   try {
     WinCommandLineArgs cmdArgs(m_commandLine);
     cmdLine.parse(&cmdArgs);
-  } catch (::remoting::Exception &) {
+  } catch (::subsystem::Exception &) {
     TvnServerHelp::showUsage();
     return RET_ERR;
   }
@@ -99,7 +99,7 @@ int ServiceControlApplication::run()
       reportError(&cmdLine, &scmEx);
     } catch (SystemException &servEx) {
       reportError(&cmdLine, &servEx);
-    } catch (::remoting::Exception &ex) {
+    } catch (::subsystem::Exception &ex) {
       _ASSERT(false);
       reportError(&cmdLine, ex.get_message());
     }

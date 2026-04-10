@@ -54,7 +54,7 @@ Win8ScreenDriverImpl::Win8ScreenDriverImpl(::subsystem::LogWriter *log, UpdateKe
     m_plogwriter->debug("Win8ScreenDriverImpl init critical error");
     terminate();
     wait();
-    throw ::remoting::Exception("Win8ScreenDriverImpl can't be successfully initialized");
+    throw ::subsystem::Exception("Win8ScreenDriverImpl can't be successfully initialized");
   }
 
 
@@ -65,7 +65,7 @@ Win8ScreenDriverImpl::Win8ScreenDriverImpl(::subsystem::LogWriter *log, UpdateKe
   if (!buildedDim.isEqualTo(&virtDimension)) {
     terminate();
     wait();
-    throw ::remoting::Exception("The builded screen dimension doesn't match to virtual screen dimension");
+    throw ::subsystem::Exception("The builded screen dimension doesn't match to virtual screen dimension");
   }
   // At this point the screen driver has valid screen properties.
 }
@@ -134,7 +134,7 @@ void Win8ScreenDriverImpl::initDxgi()
   // Desktop Duplication API here rather than getting the wrong framebuffer.
   Screen screen;
   if (screen.getVisibleMonitorCount() != dxgiOutputArray.size()) {
-    throw ::remoting::Exception("Unable get all DXGI outputs for virtual screen");
+    throw ::subsystem::Exception("Unable get all DXGI outputs for virtual screen");
   }
 
   ::subsystem::PixelFormat pf = getDxPixelFormat();
@@ -176,7 +176,7 @@ void Win8ScreenDriverImpl::execute()
     m_hasCriticalError = true;
   }
   catch (::exception &e) {
-    m_plogwriter->error("Catched ::remoting::Exception in the Win8ScreenDriverImpl::execute() function: {}."
+    m_plogwriter->error("Catched ::subsystem::Exception in the Win8ScreenDriverImpl::execute() function: {}."
        " The exception will consider as critical", e.get_message());
     m_hasCriticalError = true;
   }

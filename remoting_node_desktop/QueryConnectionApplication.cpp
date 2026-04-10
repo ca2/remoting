@@ -55,7 +55,7 @@ int QueryConnectionApplication::run()
   try {
     WinCommandLineArgs cmdArgs(m_cmdLine);
     parser.parse(&cmdArgs);
-  } catch (::remoting::Exception &) {
+  } catch (::subsystem::Exception &) {
     TvnServerHelp::showUsage();
     return 0;
   }
@@ -109,7 +109,7 @@ int QueryConnectionApplication::execute(const ::scoped_string & scopedstrPeerAdd
     process->start();
     process->waitForExit();
     retCode = process->getExitCode();
-  } catch (::remoting::Exception &ex) {
+  } catch (::subsystem::Exception &ex) {
     log.error(ex.get_message());
   }
 

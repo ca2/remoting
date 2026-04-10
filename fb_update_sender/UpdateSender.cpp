@@ -122,7 +122,7 @@ void UpdateSender::onRequest(unsigned int reqCode, RfbInputGate *input)
   default:
     ::string errMess;
     errMess.formatf("Unknown {} protocol code received", (int)reqCode);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
     break;
   }
 }
@@ -766,13 +766,13 @@ void UpdateSender::readSetPixelFormat(RfbInputGate *io)
   if (bpp == 8 || bpp == 16 || bpp == 32) {
     pf.bitsPerPixel = bpp;
   } else {
-    throw ::remoting::Exception("Only 8, 16 or 32 bits per pixel supported!");
+    throw ::subsystem::Exception("Only 8, 16 or 32 bits per pixel supported!");
   }
   pf.colorDepth = io->readUInt8();
   pf.bigEndian = io->readUInt8() != 0;
   bool setColorMapEntr = io->readUInt8() == 0;
   if (setColorMapEntr && bpp != 8) {
-    throw ::remoting::Exception("Only 8 bits per pixel supported with set color ::map "
+    throw ::subsystem::Exception("Only 8 bits per pixel supported with set color ::map "
                     "entries request.");
   }
   pf.redMax = io->readUInt16();

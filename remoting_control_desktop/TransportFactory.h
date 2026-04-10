@@ -76,7 +76,7 @@ public:
    * @param name name of pipe.
    * @return created transport.
    *
-   * @throws ::remoting::Exception on socket error.
+   * @throws ::subsystem::Exception on socket error.
    */
   static Transport *createPipeClientTransport(const ::scoped_string & scopedstrName);
 
@@ -86,7 +86,7 @@ public:
    * @param name name of pipe.
    * @return created transport.
    *
-   * @throws ::remoting::Exception on socket error.
+   * @throws ::subsystem::Exception on socket error.
    */
   static Transport *createPipeServerTransport(const ::scoped_string & scopedstrName);
 

@@ -70,10 +70,10 @@ void TightDecoder::decode(RfbInputGate *pinput,
   int bytesPerCPixel = fb->getBytesPerPixel();
 
   if (compressionType > MAX_SUBENCODING) {
-    throw ::remoting::Exception("Sub-encoding in Tight-encoder are not valid");
+    throw ::subsystem::Exception("Sub-encoding in Tight-encoder are not valid");
   }
    if (::int_rectangle(fb->getDimension()).intersection(dstRect)!= dstRect)
-    throw ::remoting::Exception("Error in protocol: incorrect size of rectangle (tight-decoder)");
+    throw ::subsystem::Exception("Error in protocol: incorrect size of rectangle (tight-decoder)");
 
   if (compressionType == FILL_TYPE) {
     unsigned int color = readTightPixel(pinput, bytesPerCPixel);
@@ -159,7 +159,7 @@ void TightDecoder::processJpeg(RfbInputGate *pinput,
 {
   unsigned int jpegBufLen = readCompactSize(pinput);
   if (jpegBufLen == 0)
-    throw ::remoting::Exception("Error in protocol: empty byffer of jpeg (tight-decoder)");
+    throw ::subsystem::Exception("Error in protocol: empty byffer of jpeg (tight-decoder)");
   ::array_base<unsigned char> buffer;
   buffer.resize(jpegBufLen);
   pinput->readFully(buffer.data(), jpegBufLen);
@@ -176,7 +176,7 @@ void TightDecoder::processJpeg(RfbInputGate *pinput,
       } else {
         drawJpegBytes(frameBuffer, &pixels, dstRect);
       }
-    } catch (const ::remoting::Exception &ex) {
+    } catch (const ::subsystem::Exception &ex) {
       ::string error;
       error.format("Error in tight-decoder, subencoding \"jpeg\": {}",
                    ex.get_message());

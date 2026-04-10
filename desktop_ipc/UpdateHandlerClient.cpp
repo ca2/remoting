@@ -61,7 +61,7 @@ void UpdateHandlerClient::onRequest(unsigned char reqCode, BlockingGate *backGat
     ::string errMess;
     errMess..formatf("Unknown {} protocol code received from a pipe "
                    "update detector", (int)reqCode);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
     break;
   }
 }

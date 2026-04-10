@@ -25,7 +25,7 @@
 #include "BrokenHandleException.h"
 
 BrokenHandleException::BrokenHandleException(const ::scoped_string & scopedstrMessage)
-: ::remoting::Exception(scopedstrMessage)
+: ::subsystem::Exception(scopedstrMessage)
 {
 }
 

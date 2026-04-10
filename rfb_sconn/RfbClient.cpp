@@ -144,7 +144,7 @@ ClientState RfbClient::getClientState()
 void RfbClient::setViewOnlyFlag(bool value)
 {
   if (getClientState() < IN_NORMAL_PHASE) {
-    throw ::remoting::Exception("Irrelevant call to RfbClient::setViewOnlyFlag()");
+    throw ::subsystem::Exception("Irrelevant call to RfbClient::setViewOnlyFlag()");
   }
   m_viewOnly = value || m_viewOnlyAuth;
   m_clientInputHandler->setViewOnlyFlag(m_viewOnly);

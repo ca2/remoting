@@ -25,7 +25,7 @@
 #include "AuthHandler.h"
 
 AuthException::AuthException(const ::scoped_string & scopedstrMessage)
-: ::remoting::Exception(scopedstrMessage),
+: ::subsystem::Exception(scopedstrMessage),
   m_authErrorCode(AUTH_ERROR)
 {
 }

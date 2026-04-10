@@ -203,7 +203,7 @@ void WinDxgiOutputDuplication::getFrameCursorShape(CursorShape *cursorShape, uns
   // Check buffer size.
   size_t shapeSize = newCursorShape.getPixelsSize();
   if (shapeSize > buffer.size()) {
-    throw ::remoting::Exception("Invalid buffer size for color cursor.");
+    throw ::subsystem::Exception("Invalid buffer size for color cursor.");
   }
   memcpy(newCursorShape.getPixels()->getBuffer(), &buffer.front(), shapeSize);
   int maskPitch = ((dim.cx + 15) / 16 ) * 2;

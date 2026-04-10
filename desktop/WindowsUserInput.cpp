@@ -155,10 +155,10 @@ void WindowsUserInput::setKeyboardEvent(unsigned int keySym, bool down)
     } else {
       ::string scopedstrMessage;
       scopedstrMessage.formatf("Unknown {} keysym", keySym);
-      throw ::remoting::Exception(scopedstrMessage);
+      throw ::subsystem::Exception(scopedstrMessage);
     }
-  } catch (::remoting::Exception &someEx) {
-    m_plogwriter->error("::remoting::Exception while processing key event: {}", someEx.get_message());
+  } catch (::subsystem::Exception &someEx) {
+    m_plogwriter->error("::subsystem::Exception while processing key event: {}", someEx.get_message());
   }
 }
 
@@ -169,7 +169,7 @@ void WindowsUserInput::getCurrentUserInfo(::string & desktopName,
 	  !Environment::getCurrentUserName(userName, m_plogwriter)) {
         ::string errMess;
         Environment::getErrStr("Can't get current user info", &errMess);
-		throw ::remoting::Exception(errMess);
+		throw ::subsystem::Exception(errMess);
   }
 }
 

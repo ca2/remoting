@@ -998,7 +998,7 @@ namespace remoting_remoting
         {
             m_viewerCore->sendKeyboardEvent(downFlag, key);
         }
-        catch (const ::remoting::Exception &exception)
+        catch (const ::subsystem::Exception &exception)
         {
             m_plogwriter->debug("Error in DesktopWindow::sendKeyboardEvent(): {}", exception.get_message());
         }
@@ -1022,7 +1022,7 @@ namespace remoting_remoting
         {
             m_viewerCore->sendPointerEvent(buttonMask, position);
         }
-        catch (const ::remoting::Exception &exception)
+        catch (const ::subsystem::Exception &exception)
         {
             m_plogwriter->debug("Error in DesktopWindow::sendPointerEvent(): {}", exception.get_message());
         }
@@ -1046,7 +1046,7 @@ namespace remoting_remoting
         {
             m_viewerCore->sendCutTextEvent(cutText);
         }
-        catch (const ::remoting::Exception &exception)
+        catch (const ::subsystem::Exception &exception)
         {
             m_plogwriter->debug("Error in DesktopWindow::sendCutTextEvent(): {}", exception.get_message());
         }

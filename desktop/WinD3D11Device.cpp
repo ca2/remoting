@@ -49,7 +49,7 @@ WinD3D11Device::WinD3D11Device(::subsystem::LogWriter *log)
   D3D11CreateDeviceFunType d3d11CreateDevice;
   d3d11CreateDevice = (D3D11CreateDeviceFunType)m_d3d11Lib.getProcAddress("D3D11CreateDevice");
   if (d3d11CreateDevice == 0) {
-    throw ::remoting::Exception("Unable to load the D3D11CreateDevice() function");
+    throw ::subsystem::Exception("Unable to load the D3D11CreateDevice() function");
   }
 
   // Driver types supported
@@ -94,7 +94,7 @@ WinD3D11Device::WinD3D11Device(::subsystem::LogWriter *log)
     ::string errMess;
     errMess.formatf("D3D11CreateDevice function was failed with code error = (%dl)", (long)hr);
     m_plogwriter->debug("D3D11CreateDevice function was failed with code error = (%dl)", (long)hr);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
   }
 }
 

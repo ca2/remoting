@@ -97,7 +97,7 @@ TvnServer::TvnServer(bool runsInServiceContext,
 
   try {
     WindowsSocket::startup(2, 1);
-  } catch (::remoting::Exception &ex) {
+  } catch (::subsystem::Exception &ex) {
     m_plogwriter.interror("{}", ex.get_message());
   }
 
@@ -151,7 +151,7 @@ TvnServer::~TvnServer()
 
   try {
     WindowsSocket::cleanup();
-  } catch (::remoting::Exception &ex) {
+  } catch (::subsystem::Exception &ex) {
     m_plogwriter.error("{}", ex.get_message());
   }
 }
@@ -336,7 +336,7 @@ void TvnServer::restartHttpServer()
       // FIXME: HTTP server should bind to localhost if only loopback
       //        connections are allowed.
       m_httpServer = new HttpServer("0.0.0.0", m_srvConfig->getHttpPort(), m_runAsService, &m_plogwriter);
-    } catch (::remoting::Exception &ex) {
+    } catch (::subsystem::Exception &ex) {
       m_plogwriter.error("Failed to start HTTP server: \"{}\"", ex.get_message());
     }
   }
@@ -363,7 +363,7 @@ void TvnServer::restartControlServer()
     const unsigned int maxControlServerPipeBufferSize = 0x10000;
     PipeServer *pipeServer = new PipeServer(pipeName, maxControlServerPipeBufferSize, pipeSecurity);
     m_controlServer = new ControlServer(pipeServer , m_rfbClientManager, &m_plogwriter);
-  } catch (::remoting::Exception &ex) {
+  } catch (::subsystem::Exception &ex) {
     m_plogwriter.error("Failed to start control server: \"{}\"", ex.get_message());
   }
 }
@@ -385,7 +385,7 @@ void TvnServer::restartMainRfbServer()
 
   try {
     m_rfbServer = new RfbServer(bindHost, bindPort, m_rfbClientManager, m_runAsService, &m_plogwriter);
-  } catch (::remoting::Exception &ex) {
+  } catch (::subsystem::Exception &ex) {
     m_plogwriter.error("Failed to start main RFB server: \"{}\"", ex.get_message());
   }
 }

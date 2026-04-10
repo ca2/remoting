@@ -40,7 +40,7 @@ public:
   // running at Windows Vista and later.
   // @param hwnd - handle to a window that will be to receive the allowed
   // scopedstrMessage (ignored at Windows Vista or older).
-  // @throws ::remoting::Exception on a fail (Only for Vista and later).
+  // @throws ::subsystem::Exception on a fail (Only for Vista and later).
   void allowMessage(unsigned int scopedstrMessage, HWND hwnd);
 
 private:

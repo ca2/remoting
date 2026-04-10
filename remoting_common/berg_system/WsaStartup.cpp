@@ -30,7 +30,7 @@ WsaStartup::WsaStartup(unsigned char minorVer, unsigned char majorVer)
 {
   WSAData wsaData;
   if (WSAStartup(MAKEWORD(majorVer, minorVer), &wsaData) != 0) {
-    throw ::remoting::Exception("Failed to initialize WsaStartup.");
+    throw ::subsystem::Exception("Failed to initialize WsaStartup.");
   }
 }
 

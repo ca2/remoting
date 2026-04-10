@@ -132,7 +132,7 @@ namespace remoting_remoting
         void applyScrollbarChanges(bool isChanged, bool isVert, bool isHorz, int wndWidth, int wndHeight);
 
         // This function check pointer to viewer core and send event.
-        // If into viewer core throwing exception ::remoting::Exception, then it catching
+        // If into viewer core throwing exception ::subsystem::Exception, then it catching
         // in this function and logged.
         void sendKeyboardEvent(bool downFlag, unsigned int key);
         void sendPointerEvent(unsigned char buttonMask, const Point *position);

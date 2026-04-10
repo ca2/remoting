@@ -103,11 +103,11 @@ private:
   bool isAscii(WCHAR ch);
 
   // Returns current kbd layout of an active window.
-  // Throws ::remoting::Exception on an error.
+  // Throws ::subsystem::Exception on an error.
   HKL getCurrentKbdLayout();
 
   // Searches virtual code in available keyboard layouts and returns the code
-  // if found. If virtual code has not been found throws an ::remoting::Exception.
+  // if found. If virtual code has not been found throws an ::subsystem::Exception.
   // Puts current kbd layout to the *hklCurrent argument (if no throwing).
   SHORT searchVirtKey(WCHAR ch, HKL hklCurrent);
 

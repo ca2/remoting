@@ -51,7 +51,7 @@ void DesktopBaseImpl::getCurrentUserInfo(::string & desktopName,
   try {
     m_userInput->getCurrentUserInfo(desktopName, userName);
   } catch (::exception &e) {
-	m_plogwriter->error("::remoting::Exception in DesktopBaseImpl::getCurrentUserInfo: {}", e.get_message());
+	m_plogwriter->error("::subsystem::Exception in DesktopBaseImpl::getCurrentUserInfo: {}", e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
 }
@@ -64,7 +64,7 @@ void DesktopBaseImpl::getFrameBufferProperties(::int_size *dim, ::subsystem::Pix
   try {
     m_updateHandler->getFrameBufferProp(dim, pf);
   } catch (::exception &e) {
-	m_plogwriter->error("::remoting::Exception in DesktopBaseImpl::getFrameBufferProperties: {}", e.get_message());
+	m_plogwriter->error("::subsystem::Exception in DesktopBaseImpl::getFrameBufferProperties: {}", e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
 }
@@ -77,7 +77,7 @@ void DesktopBaseImpl::getPrimaryDesktopCoords(::int_rectangle *rect)
   try {
     m_userInput->getPrimaryDisplayCoords(rect);
   } catch (::exception &e) {
-	m_plogwriter->error("::remoting::Exception in DesktopBaseImpl::getPrimaryDesktopCoords: {}", e.get_message());
+	m_plogwriter->error("::subsystem::Exception in DesktopBaseImpl::getPrimaryDesktopCoords: {}", e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
 }
@@ -91,7 +91,7 @@ void DesktopBaseImpl::getDisplayNumberCoords(::int_rectangle *rect,
   try {
     m_userInput->getDisplayNumberCoords(rect, dispNumber);
   } catch (::exception &e) {
-  	m_plogwriter->error("::remoting::Exception in DesktopBaseImpl::getDisplayNumberCoords: {}", e.get_message());
+  	m_plogwriter->error("::subsystem::Exception in DesktopBaseImpl::getDisplayNumberCoords: {}", e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
 }
@@ -105,7 +105,7 @@ void DesktopBaseImpl::getDisplayNumberCoords(::int_rectangle *rect,
     return m_userInput->getDisplaysCoords();
   }
   catch (::exception &e) {
-    m_plogwriter->error("::remoting::Exception in DesktopBaseImpl::getDisplayCoords: {}", e.get_message());
+    m_plogwriter->error("::subsystem::Exception in DesktopBaseImpl::getDisplayCoords: {}", e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
   return ::array_base<::int_rectangle>();
@@ -120,7 +120,7 @@ void DesktopBaseImpl::getNormalizedRect(::int_rectangle *rect)
   try {
     m_userInput->getNormalizedRect(rect);
   } catch (::exception &e) {
-	m_plogwriter->error("::remoting::Exception in DesktopBaseImpl::getNormalizedRect: {}", e.get_message());
+	m_plogwriter->error("::subsystem::Exception in DesktopBaseImpl::getNormalizedRect: {}", e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
 }
@@ -135,7 +135,7 @@ void DesktopBaseImpl::getWindowCoords(HWND hwnd, ::int_rectangle *rect)
   } catch (BrokenHandleException &) {
     throw;
   } catch (::exception &e) {
-	m_plogwriter->error("::remoting::Exception in DesktopBaseImpl::getWindowCoords: {}", e.get_message());
+	m_plogwriter->error("::subsystem::Exception in DesktopBaseImpl::getWindowCoords: {}", e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
 }
@@ -148,7 +148,7 @@ HWND DesktopBaseImpl::getWindowHandleByName(const ::scoped_string & windowName)
   try {
     return m_userInput->getWindowHandleByName(windowName);
   } catch (::exception &e) {
-	m_plogwriter->error("::remoting::Exception in DesktopBaseImpl::getWindowHandleByName: {}", e.get_message());
+	m_plogwriter->error("::subsystem::Exception in DesktopBaseImpl::getWindowHandleByName: {}", e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
   return 0;
@@ -162,7 +162,7 @@ void DesktopBaseImpl::getApplicationRegion(unsigned int procId, Region *region)
   try {
     m_userInput->getApplicationRegion(procId, region);
   } catch (::exception &e) {
-	m_plogwriter->error("::remoting::Exception in DesktopBaseImpl::getApplicationRegion: {}", e.get_message());
+	m_plogwriter->error("::subsystem::Exception in DesktopBaseImpl::getApplicationRegion: {}", e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
 }
@@ -175,7 +175,7 @@ bool DesktopBaseImpl::isApplicationInFocus(unsigned int procId)
   try {
     return m_userInput->isApplicationInFocus(procId);
   } catch (::exception &e) {
-	m_plogwriter->error("::remoting::Exception in DesktopBaseImpl::isApplicationInFocus {}", e.get_message());
+	m_plogwriter->error("::subsystem::Exception in DesktopBaseImpl::isApplicationInFocus {}", e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
   return false;
@@ -218,7 +218,7 @@ void DesktopBaseImpl::setMouseEvent(unsigned short x, unsigned short y, unsigned
       m_userInput->setMouseEvent(point, buttonMask);
     }
   } catch (::exception &e) {
-	m_plogwriter->error("::remoting::Exception in DesktopBaseImpl::setMouseEvent {}", e.get_message());
+	m_plogwriter->error("::subsystem::Exception in DesktopBaseImpl::setMouseEvent {}", e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
 }
@@ -237,7 +237,7 @@ void DesktopBaseImpl::setNewClipText(const ::scoped_string & newClipboard)
   try {
     m_userInput->setNewClipboard(newClipboard);
   } catch (::exception &e) {
-	  m_plogwriter->error("::remoting::Exception in DesktopBaseImpl::setNewClipText {}", e.get_message());
+	  m_plogwriter->error("::subsystem::Exception in DesktopBaseImpl::setNewClipText {}", e.get_message());
     m_extDeskTermListener->onAbnormalDesktopTerminate();
   }
 }

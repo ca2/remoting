@@ -46,7 +46,7 @@ public:
    * @param viewPort [optional] view port shared by this server.
    * @param lockAddr determinates if serever must set exclusive address usage.
    * if not set, then view port is full screen.
-   * @throws ::remoting::Exception when failed to create tcp server.
+   * @throws ::subsystem::Exception when failed to create tcp server.
    */
   RfbServer(const ::scoped_string & scopedstrBindHost, unsigned short bindPort,
             RfbClientManager *clientManager,

@@ -28,7 +28,7 @@ namespace remoting
    namespace ftp
    {
       OperationNotPermittedException::OperationNotPermittedException()
-       : ::remoting::Exception("Current scopedstrMessage is not permitted by current file transfer operation")
+       : ::subsystem::Exception("Current scopedstrMessage is not permitted by current file transfer operation")
       {
       }
 

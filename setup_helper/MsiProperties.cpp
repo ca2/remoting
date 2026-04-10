@@ -46,7 +46,7 @@ void MsiProperties::getValue(const ::scoped_string & scopedstrName, ::string & o
     ::array_base<TCHAR> value(charCount);
     retVal = MsiGetProperty(m_handle, name, &value.front(), &charCount);
     if (retVal != ERROR_SUCCESS) {
-      throw ::remoting::Exception();
+      throw ::subsystem::Exception();
     }
     out-= &value.front();
   }
@@ -56,7 +56,7 @@ void MsiProperties::setValue(const ::scoped_string & scopedstrName, const ::scop
 {
   unsigned int retVal = MsiSetProperty(m_handle, name, value->getString());
   if (retVal != ERROR_SUCCESS) {
-    throw ::remoting::Exception();
+    throw ::subsystem::Exception();
   }
 }
 
@@ -68,7 +68,7 @@ void MsiProperties::getString(const ::scoped_string & scopedstrName, ::string & 
     ::string errMess;
     errMess.formatf("Cant't retrieve a string from the {} property",
                    name);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
   }
 }
 
@@ -80,7 +80,7 @@ void MsiProperties::setString(const ::scoped_string & scopedstrName, const ::sco
     ::string errMess;
     errMess.formatf("Cant't set a string to the {} property",
                    name);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
   }
 }
 
@@ -93,7 +93,7 @@ int MsiProperties::getInt32(const ::scoped_string & scopedstrName)
     ::string errMess;
     errMess.formatf("Can't convert the {} string value to int of the"
                    " {} property", strValue, name);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
   }
   return retValue;
 }
@@ -109,6 +109,6 @@ void MsiProperties::setInt32(const ::scoped_string & scopedstrName, int value)
     errMess.formatf("Cant't set the (int){} value to the {} property",
                    value,
                    name);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
   }
 }

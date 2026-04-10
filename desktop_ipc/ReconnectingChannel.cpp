@@ -112,7 +112,7 @@ size_t ReconnectingChannel::write(const void *buffer, size_t len)
 
   try {
     if (channel == 0) {
-      throw ::remoting::Exception("write() function stopped because transport"
+      throw ::subsystem::Exception("write() function stopped because transport"
                       " has not been initialized yet.");
     }
     return channel->write(buffer, len);
@@ -130,7 +130,7 @@ size_t ReconnectingChannel::read(void *buffer, size_t len)
 
   try {
     if (channel == 0) {
-      throw ::remoting::Exception("read() function stopped because transport"
+      throw ::subsystem::Exception("read() function stopped because transport"
                       " has not been initialized yet.");
     }
     return channel->read(buffer, len);

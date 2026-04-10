@@ -89,7 +89,7 @@ Desktop *RfbClientManager::onClientAuth(RfbClient *client)
     } else {
       // Existing
       if (!m_clientList.empty()) {
-        throw ::remoting::Exception("Cannot disconnect existing clients and therefore"
+        throw ::subsystem::Exception("Cannot disconnect existing clients and therefore"
                         " the client will be disconected"); // Disconnect this client
       }
     }

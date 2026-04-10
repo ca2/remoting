@@ -95,7 +95,7 @@ void ::string::fromStringStorage(const ::scoped_string & src)
                                             0, 0);
 
   if (dstRequiredSize == 0) {
-    throw ::remoting::Exception("Cannot convert a string to the UTF8 format");
+    throw ::subsystem::Exception("Cannot convert a string to the UTF8 format");
   }
 
   m_buffer.resize(dstRequiredSize);
@@ -111,7 +111,7 @@ void ::string::toStringStorage(::string & dst)
   int dstReqSizeInSym = MultiByteToWideChar(CP_UTF8, 0, &m_buffer.front(),
                                             constrSize, 0, 0);
   if (dstReqSizeInSym == 0) {
-    throw ::remoting::Exception("Cannot convert a string from the UTF8 format");
+    throw ::subsystem::Exception("Cannot convert a string from the UTF8 format");
   }
   ::array_base<WCHAR> uniBuff(dstReqSizeInSym + 1);
   MultiByteToWideChar(CP_UTF8, 0, &m_buffer.front(),

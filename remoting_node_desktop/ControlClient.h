@@ -41,11 +41,11 @@
  * Solves problem with catching errors that occured when processing
  * control client scopedstrMessage (not IO errors).
  */
-class ControlException : public ::remoting::Exception
+class ControlException : public ::subsystem::Exception
 {
 public:
-  ControlException(const ::remoting::Exception *parent) : ::remoting::Exception(parent->get_message()) { }
-  ControlException(const ::scoped_string & scopedstrMessage) : ::remoting::Exception(scopedstrMessage) { }
+  ControlException(const ::subsystem::Exception *parent) : ::subsystem::Exception(parent->get_message()) { }
+  ControlException(const ::scoped_string & scopedstrMessage) : ::subsystem::Exception(scopedstrMessage) { }
   virtual ~ControlException() { };
 };
 

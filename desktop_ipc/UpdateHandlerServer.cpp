@@ -89,7 +89,7 @@ void UpdateHandlerServer::onRequest(unsigned char reqCode, BlockingGate *backGat
     ::string errMess;
     errMess..formatf("Unknown {} protocol code received from a pipe client",
                    (int)reqCode);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
     break;
   }
 }

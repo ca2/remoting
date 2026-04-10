@@ -75,7 +75,7 @@ protected:
   static bool encodingSupported(int encType);
 
   // Allocates the specified encoder (using new) and returns the pointer.
-  // If the encoding type is unknown, throws an ::remoting::Exception.
+  // If the encoding type is unknown, throws an ::subsystem::Exception.
   Encoder *allocateEncoder(int encType) const;
 
 protected:

@@ -112,7 +112,7 @@ namespace remoting_remoting
         m_fileTransfer = ft;
     }
 
-    void ViewerWindow::setRemoteViewerCore(RemoteViewerCore *pCore)
+    void ViewerWindow::setRemoteViewerCore(::remoting::RemoteViewerCore *pCore)
     {
         m_viewerCore = pCore;
         m_dsktWnd.setViewerCore(pCore);
@@ -121,7 +121,7 @@ namespace remoting_remoting
 
     bool ViewerWindow::onCreate(LPCREATESTRUCT lps)
     {
-        m_control.setWindow(m_hwnd);
+        m_control.setWindow((HWND) _HWND());
 
         setClassCursor(LoadCursor(NULL, IDC_ARROW));
         loadIcon(IDI_APPICON);
@@ -1334,7 +1334,7 @@ namespace remoting_remoting
         postMessage(WM_USER_AUTH_ERROR, authCode);
     }
 
-    void ViewerWindow::onError(const ::remoting::Exception *exception)
+    void ViewerWindow::onError(const ::subsystem::Exception *exception)
     {
         m_error = *exception;
         postMessage(WM_USER_ERROR);

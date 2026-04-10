@@ -114,7 +114,7 @@
 //                                    &unicodeBuffer.front(),
 //                                    symbolCount);
 //   if (result == 0) {
-//     throw ::remoting::Exception("Cannot convert from Ansi to ::string");
+//     throw ::subsystem::Exception("Cannot convert from Ansi to ::string");
 //   }
 //
 //   dst-= &unicodeBuffer.front();

@@ -45,10 +45,10 @@ enum FileMode
   // the file, a function succeeds.
   FM_CREATE,
   // Creates a new file, only if it does not already exist.
-  // If the specified file exists, a function fails with an ::remoting::Exception.
+  // If the specified file exists, a function fails with an ::subsystem::Exception.
   FM_CREATE_NEW,
   // Opens a file, only if it exists.
-  // If the specified file does not exist, a function fails with an ::remoting::Exception.
+  // If the specified file does not exist, a function fails with an ::subsystem::Exception.
   FM_OPEN,
   // Opens a file, always.
   // If the specified file does not exist and is a valid path to a writable

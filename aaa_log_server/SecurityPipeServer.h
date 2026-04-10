@@ -35,7 +35,7 @@ class SecurityPipeServer : private TimerListener
 public:
   // @param tempPublChan is a channel object connected to a client that
   // requires the security pipe channel.
-  // @throw ::remoting::Exception on an error.
+  // @throw ::subsystem::Exception on an error.
   // After successful creating this object take the security channel by
   // the getChannel() function to own.
   SecurityPipeServer(Channel *tempPublChan, unsigned int bufferSize);

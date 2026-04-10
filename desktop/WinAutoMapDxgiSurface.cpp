@@ -34,7 +34,7 @@ WinAutoMapDxgiSurface::WinAutoMapDxgiSurface(WinDxgiSurface *surface, unsigned i
   if (FAILED(hr)) {
     ::string errMess;
     errMess.formatf("Can't IDXGISurface->Map, error code = %l", (long)hr);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
   }
 }
 
@@ -46,7 +46,7 @@ WinAutoMapDxgiSurface::~WinAutoMapDxgiSurface()
 size_t WinAutoMapDxgiSurface::getStride() const
 {
   if (m_mappedRect.Pitch < 0) {
-    throw ::remoting::Exception("DXGI_MAPPED_RECT::Pitch is negative");
+    throw ::subsystem::Exception("DXGI_MAPPED_RECT::Pitch is negative");
   }
   return (size_t)m_mappedRect.Pitch;
 }

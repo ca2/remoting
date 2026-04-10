@@ -137,7 +137,7 @@ namespace remoting
             // Seek to initial file position to continue writting
             m_pwriteable->set_position((long long)m_fileOffset);
             m_totalBytesCopied += m_fileOffset;
-         } catch (::remoting::Exception &ioEx) {
+         } catch (::subsystem::Exception &ioEx) {
             notifyFailedToDownload(ioEx.get_message());
             gotoNext();
             return;

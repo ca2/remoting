@@ -92,8 +92,8 @@ DesktopClientImpl::DesktopClientImpl(ClipboardListener *extClipListener,
 
     m_plogwriter->debug("DesktopClientImpl: Registering as a listener in the Configurator");
     Configurator::getInstance()->addListener(this);
-  } catch (::remoting::Exception &ex) {
-    m_plogwriter->error("::remoting::Exception during DesktopClientImpl creaion: {}", ex.get_message());
+  } catch (::subsystem::Exception &ex) {
+    m_plogwriter->error("::subsystem::Exception during DesktopClientImpl creaion: {}", ex.get_message());
     freeResource();
     throw;
   }

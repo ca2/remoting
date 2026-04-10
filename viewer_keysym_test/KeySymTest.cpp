@@ -44,13 +44,13 @@ KeySymTest::KeySymTest(const ::scoped_string & scopedstrFileFrom, const ::scoped
   if (m_fFrom == 0) {
     ::string errMess;
     errMess.formatf("Cannot open the {} file", m_fromFileName);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
   }
   m_fTo = _tfopen(m_toFileName, "wt,ccs=UNICODE");
   if (m_fTo == 0) {
     ::string errMess;
     errMess.formatf("Cannot open the {} file", m_toFileName);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
   }
 }
 
@@ -81,7 +81,7 @@ int KeySymTest::run()
           errMess.formatf("Wrong \"kbdlayout\" argument at %u line ({})",
                          m_lineNumber,
                          m_fromFileName);
-          throw ::remoting::Exception(errMess);
+          throw ::subsystem::Exception(errMess);
         }
         changeKbdLayout((HKL)hkbdLayout);
         Sleep(500);
@@ -101,7 +101,7 @@ int KeySymTest::run()
           errMess.formatf("Wrong value(s) at %u line ({})",
                          m_lineNumber,
                          m_fromFileName);
-          throw ::remoting::Exception(errMess);
+          throw ::subsystem::Exception(errMess);
         }
       }
     }
@@ -118,7 +118,7 @@ void KeySymTest::changeKbdLayout(HKL hkl)
     errMess.formatf("Can't apply a keyboard layout requested at the %u line ({})",
                    m_lineNumber,
                    m_fromFileName);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
   }
 }
 

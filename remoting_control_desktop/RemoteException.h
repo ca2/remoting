@@ -28,13 +28,13 @@
 #include "acme/subsystem/Exception.h"
 
 /**
- * ::remoting::Exception on remote side class.
+ * ::subsystem::Exception on remote side class.
  *
- * ::remoting::Exception of such type can be raised only when execution of remote method (when
+ * ::subsystem::Exception of such type can be raised only when execution of remote method (when
  * using remote proxy objects for example) throws some kind of exception and this exception
  * has been sended to client side.
  */
-class RemoteException : public ::remoting::Exception
+class RemoteException : public ::subsystem::Exception
 {
 public:
   RemoteException(const ::scoped_string & scopedstrReason);

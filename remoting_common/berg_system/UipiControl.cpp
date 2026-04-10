@@ -65,7 +65,7 @@ void UipiControl::allowMessage(unsigned int uMessage, HWND hwnd)
       SetFilter setFilter;
       setFilter = (SetFilter)user32lib.getProcAddress("ChangeWindowMessageFilter");
       if (setFilter == 0) {
-        throw ::remoting::Exception("Can't load the ChangeWindowMessageFilterEx() or "
+        throw ::subsystem::Exception("Can't load the ChangeWindowMessageFilterEx() or "
                         "ChangeWindowMessageFilter() functions.");
       }
       m_plogwriter->information("The ChangeWindowMessageFilter() function "

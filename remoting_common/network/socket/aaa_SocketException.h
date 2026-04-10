@@ -30,7 +30,7 @@
 
 #include "sockdefs.h"
 
-class CLASS_DECL_REMOTING_COMMON SocketException : public ::remoting::Exception
+class CLASS_DECL_REMOTING_COMMON SocketException : public ::subsystem::Exception
 {
 public:
   // Creates socket exception object with error value eq to current value

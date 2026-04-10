@@ -145,7 +145,7 @@ void WinFile::seek(long long n)
   LARGE_INTEGER fileSize;
   GetFileSizeEx(m_hFile, &fileSize);
   if (fileSize.QuadPart < n) {
-    throw ::remoting::Exception("Specified file pointer position is more than file length");
+    throw ::subsystem::Exception("Specified file pointer position is more than file length");
   }
 
   LARGE_INTEGER li;

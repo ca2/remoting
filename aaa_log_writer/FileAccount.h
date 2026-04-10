@@ -102,13 +102,13 @@ private:
   // Changes or creates or closes file depending on a new level and
   // log directory. If no changes detected then function return without
   // doing.
-  // @throw ::remoting::Exception on an error.
+  // @throw ::subsystem::Exception on an error.
   void setNewFile(unsigned char newLevel, const ::scoped_string & scopedstrNewDir);
 
   // Opens a log file if backup supported or replaces/created if not.
   // If directory after twice changes is the same and level > 0 then
   // log file will be rewrited.
-  // @throw ::remoting::Exception on an error.
+  // @throw ::subsystem::Exception on an error.
   void openFile();
 
   // Closes the file if it is open.

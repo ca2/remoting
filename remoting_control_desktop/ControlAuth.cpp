@@ -67,7 +67,7 @@ ControlAuth::ControlAuth(ControlGate *gate, const ::scoped_string & scopedstrPas
   case ControlProto::REPLY_OK:
     break;
   default:
-    throw ::remoting::Exception("Server return unknown auth result");
+    throw ::subsystem::Exception("Server return unknown auth result");
     break;
   }
 }

@@ -36,7 +36,7 @@ public:
   // we receive the security pipe channel.
   // After successful creating this object take the security channel by
   // the getChannel() function to own.
-  // @throw ::remoting::Exception on an error, the security channel at this case will be
+  // @throw ::subsystem::Exception on an error, the security channel at this case will be
   // destroyed.
   SecurityPipeClient(Channel *tempPublChan, unsigned int maxPortionSize);
   virtual ~SecurityPipeClient();

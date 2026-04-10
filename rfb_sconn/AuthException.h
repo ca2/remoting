@@ -27,10 +27,10 @@
 
 #include "remoting/remoting_common/util/exception.h"
 
-class AuthException : public ::remoting::Exception
+class AuthException : public ::subsystem::Exception
 {
 public:
-  AuthException(const ::scoped_string & scopedstrMessage): ::remoting::Exception(scopedstrMessage) {}
+  AuthException(const ::scoped_string & scopedstrMessage): ::subsystem::Exception(scopedstrMessage) {}
   virtual ~AuthException() {}
 };
 

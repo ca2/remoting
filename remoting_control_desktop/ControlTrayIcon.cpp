@@ -330,7 +330,7 @@ void ControlTrayIcon::syncStatusWithServer()
     }
   } catch (::io_exception &) {
     setNotConnectedState();
-  } catch (::remoting::Exception &) {
+  } catch (::subsystem::Exception &) {
     _ASSERT(false);
   } // try / catch.
 }

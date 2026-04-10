@@ -46,7 +46,7 @@ void TcpConnection::bind(const ::scoped_string & scopedstrHost, unsigned short p
 {
   critical_section_lock al(&m_connectLock);
   if (m_wasBound) {
-    throw ::remoting::Exception("Tcp-connection already bound");
+    throw ::subsystem::Exception("Tcp-connection already bound");
   }
   m_host = scopedstrHost;
   m_port = port;
@@ -60,7 +60,7 @@ void TcpConnection::bind(SocketIPv4 *socket)
 {
   critical_section_lock al(&m_connectLock);
   if (m_wasBound) {
-    throw ::remoting::Exception("Tcp-connection already bound");
+    throw ::subsystem::Exception("Tcp-connection already bound");
   }
   m_host = "";
   m_port = 0;
@@ -74,7 +74,7 @@ void TcpConnection::bind(RfbInputGate *input, RfbOutputGate *output)
 {
   critical_section_lock al(&m_connectLock);
   if (m_wasBound) {
-    throw ::remoting::Exception("Tcp-connection already bound");
+    throw ::subsystem::Exception("Tcp-connection already bound");
   }
   m_host = "";
   m_port = 0;
@@ -109,7 +109,7 @@ void TcpConnection::connect()
         m_socket->connect(ipAddress);
         m_socket->enableNaggleAlgorithm(false);
       } else {
-        throw ::remoting::Exception("Connection parameters (host, port, socket, gates) is empty.");
+        throw ::subsystem::Exception("Connection parameters (host, port, socket, gates) is empty.");
       }
     }
 
@@ -142,7 +142,7 @@ RfbInputGate *TcpConnection::getInput() const
   {
     critical_section_lock al(&m_connectLock);
     if (!m_isEstablished) {
-      throw ::remoting::Exception("Connecting has not been established");
+      throw ::subsystem::Exception("Connecting has not been established");
     }
   }
   return m_input;
@@ -153,7 +153,7 @@ RfbOutputGate *TcpConnection::getOutput() const
   {
     critical_section_lock al(&m_connectLock);
     if (!m_isEstablished) {
-      throw ::remoting::Exception("Connection has not been established");
+      throw ::subsystem::Exception("Connection has not been established");
     }
   }
   return m_output;

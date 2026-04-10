@@ -77,7 +77,7 @@ void ClipboardExchange::onRequest(unsigned int reqCode, RfbInputGate *input)
   default:
     ::string errMess;
     errMess.formatf("Unknown {} protocol code received", (int)reqCode);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
     break;
   }
 }

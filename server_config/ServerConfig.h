@@ -70,7 +70,7 @@ public:
   /**
    * Serializes server config to output stream as byte stream.
    * Thread-safe method.
-   * @throws ::remoting::Exception on io error.
+   * @throws ::subsystem::Exception on io error.
    * @fixme stub.
    */
   void serialize(DataOutputStream *output);
@@ -78,7 +78,7 @@ public:
   /**
    * Deserializes server config from input stream.
    * Thread-safe method.
-   * @throws ::remoting::Exception on io error.
+   * @throws ::subsystem::Exception on io error.
    * @fixme stub.
    */
   void deserialize(DataInputStream * pinput);

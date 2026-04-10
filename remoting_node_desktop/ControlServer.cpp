@@ -48,7 +48,7 @@ ControlServer::~ControlServer()
 
   try {
     m_pipeServer->close();
-  } catch (::remoting::Exception &ex) {
+  } catch (::subsystem::Exception &ex) {
     m_plogwriter->error("Failed to destroy control server transport with '{}' reason", ex.get_message());
   }
 
@@ -77,8 +77,8 @@ void ControlServer::execute()
 
       m_threadCollector.addThread(clientThread);
     }
-  } catch (::remoting::Exception &ex) {
-    m_plogwriter->error("::remoting::Exception on control server thread: {}", ex.get_message());
+  } catch (::subsystem::Exception &ex) {
+    m_plogwriter->error("::subsystem::Exception on control server thread: {}", ex.get_message());
   }
 }
 

@@ -49,7 +49,7 @@ NamedPipe *PipeClient::connect(const ::scoped_string & scopedstrName, unsigned i
     int errCode = GetLastError();
     ::string errMess;
     errMess.formatf("Connect to pipe server failed, error code = {}", errCode);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
   }
 
   DWORD dwMode = PIPE_READMODE_BYTE;
@@ -61,7 +61,7 @@ NamedPipe *PipeClient::connect(const ::scoped_string & scopedstrName, unsigned i
     int errCode = GetLastError();
     ::string errMess;
     errMess.formatf("SetNamedPipeHandleState failed, error code = {}", errCode);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
   }
 
   return new NamedPipe(hPipe, maxPortionSize, false);

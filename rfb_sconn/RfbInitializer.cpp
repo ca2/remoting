@@ -120,10 +120,10 @@ void RfbInitializer::checkForLoopback()
 
   ServerConfig *srvConf = Configurator::getInstance()->getServerConfig();
   if (isLoopback && !srvConf->isLoopbackConnectionsAllowed()) {
-    throw ::remoting::Exception("Sorry, loopback connections are not enabled");
+    throw ::subsystem::Exception("Sorry, loopback connections are not enabled");
   }
   if (srvConf->isOnlyLoopbackConnectionsAllowed() && !isLoopback) {
-    throw ::remoting::Exception("Your connection has been rejected");
+    throw ::subsystem::Exception("Your connection has been rejected");
   }
 }
 
@@ -142,7 +142,7 @@ void RfbInitializer::doTightAuth()
     // Read the security type selected by the client.
     unsigned int clientAuthValue = m_input->readUInt32();
     if (!authInfo.includes(clientAuthValue)) {
-      throw ::remoting::Exception("");
+      throw ::subsystem::Exception("");
     }
     doAuth(clientAuthValue);
   } else {
@@ -158,7 +158,7 @@ void RfbInitializer::doAuth(unsigned int authType)
   } else if (authType == AuthDefs::NONE) {
     doAuthNone();
   } else {
-    throw ::remoting::Exception("");
+    throw ::subsystem::Exception("");
   }
   // Perform additional work via a listener.
   m_extAuthListener->onCheckAccessControl(m_client);
@@ -248,7 +248,7 @@ void RfbInitializer::initAuthenticate()
         doTightAuth();
       } else {
         if (clientSecType != primSecType) {
-          throw ::remoting::Exception("Security types do not match");
+          throw ::subsystem::Exception("Security types do not match");
         }
         doAuth(AuthDefs::convertFromSecurityType(clientSecType));
       }
@@ -335,13 +335,13 @@ unsigned int RfbInitializer::getProtocolMinorVersion(const char str[12])
        str[7] != '.' ||
        !isdigit(str[8]) || !isdigit(str[9]) || !isdigit(str[10]) ||
        str[11] != '\n' ) {
-    throw ::remoting::Exception("Invalid format of the RFB version scopedstrMessage");
+    throw ::subsystem::Exception("Invalid format of the RFB version scopedstrMessage");
   }
 
   unsigned int majorVersion =
     (str[4] - '0') * 100 + (str[5] - '0') * 10 + (str[6] - '0');
   if (majorVersion != 3) {
-    throw ::remoting::Exception("Unsupported RFB protocol version requested");
+    throw ::subsystem::Exception("Unsupported RFB protocol version requested");
   }
 
   unsigned int minorVersion =

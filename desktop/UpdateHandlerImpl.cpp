@@ -152,7 +152,7 @@ void UpdateHandlerImpl::applyNewScreenProperties()
     applyTryCount--;
   } while (applyTryCount > 0 && !applyResult);
   if (!applyResult) {
-    throw ::remoting::Exception("Unable set new screen properties at all tries");
+    throw ::subsystem::Exception("Unable set new screen properties at all tries");
   }
 }
 

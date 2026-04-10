@@ -41,7 +41,7 @@ public:
    * @param bindHost host to bind.
    * @param bindPort port bind.
    * @param lockAddr determinates if server must set exclusive address.
-   * @throws ::remoting::Exception on fail.
+   * @throws ::subsystem::Exception on fail.
    */
   HttpServer(const ::scoped_string & scopedstrBindHost,
              unsigned short bindPort,

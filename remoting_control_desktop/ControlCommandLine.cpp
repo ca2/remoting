@@ -320,7 +320,7 @@ void ControlCommandLine::parseDisplayNumber(const ::scoped_string & strDispNumbe
     ::string errMess;
     errMess.formatf("Can't parse the {} argument to a display number",
                    strDispNumber->getString());
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
   }
 }
 
@@ -332,6 +332,6 @@ void ControlCommandLine::parseProcessId(const ::scoped_string & str)
     // FIXME: Here the next string must be placed to the resource.
     errMess.formatf("Can't parse the {} argument to a process id",
                    str->getString());
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
   }
 }

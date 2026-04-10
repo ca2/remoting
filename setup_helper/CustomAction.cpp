@@ -93,7 +93,7 @@ void writePasswordToRegistry(MSIHANDLE hInstall,
     RegistrySettingsManager sm(rootKey, registryPath, sa);
 
     if (!sm.setBinaryData(entryName, &cryptedPass[0], 8)) {
-      throw ::remoting::Exception("Can't w_rite to the registry.");
+      throw ::subsystem::Exception("Can't w_rite to the registry.");
     }
 
   } catch (::exception &e) {

@@ -60,7 +60,7 @@ public:
   /**
    * Parses command line.
    * @param commandLine command line string to parse.
-   * @throws ::remoting::Exception on parse error.
+   * @throws ::subsystem::Exception on parse error.
    */
   void parse(const CommandLineArgs *cmdArgs);
 

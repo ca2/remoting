@@ -115,7 +115,7 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
       }
       RegistryKey regKey(root, RegistryPaths::SERVER_PATH);
       regKey.setValueAsString("CrashDumpPath", dumpPath);
-    } catch (::remoting::Exception &) {
+    } catch (::subsystem::Exception &) {
     }
 
     // FIXME: use the "file_lib" project from the trunk hive.
@@ -127,7 +127,7 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
                          FILE_ATTRIBUTE_NORMAL,
                          0);
     if (hFile == INVALID_HANDLE_VALUE) {
-      throw ::remoting::Exception("Cannot create file to save a debug information");
+      throw ::subsystem::Exception("Cannot create file to save a debug information");
     }
 
     _MINIDUMP_EXCEPTION_INFORMATION exInfo;
@@ -144,7 +144,7 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
                                     0,
                                     0);
     if (result == 0) {
-      throw ::remoting::Exception("Cannot create the crash dump file");
+      throw ::subsystem::Exception("Cannot create the crash dump file");
     }
     if (guiEnabled) {
       ::string succMess;

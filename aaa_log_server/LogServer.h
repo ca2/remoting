@@ -50,7 +50,7 @@ public:
   // The start() function allows to server accept connections. The function
   // was separated from the constructor to allow initialize the configuration
   // before.
-  // @throw ::remoting::Exception on an error.
+  // @throw ::subsystem::Exception on an error.
   void start(const ::scoped_string & scopedstrLogDir,
              unsigned char logLevel, size_t headerLineCount);
 

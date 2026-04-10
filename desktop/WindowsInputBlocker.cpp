@@ -48,7 +48,7 @@ WindowsInputBlocker::WindowsInputBlocker(::subsystem::LogWriter *log)
   {
     critical_section_lock al(&m_instanceMutex);
     if (m_instance != 0) {
-      throw ::remoting::Exception("The only one instance of"
+      throw ::subsystem::Exception("The only one instance of"
                       "WindowsInputBlocker is allowed");
     }
     m_instance = this;

@@ -27,8 +27,8 @@
 
 #include "acme/subsystem/Exception.h"
 
-// This ::remoting::Exception for situationw when a handle has been broken (e.g. handle of a closed window)
-class CLASS_DECL_REMOTING_COMMON BrokenHandleException : public ::remoting::Exception
+// This ::subsystem::Exception for situationw when a handle has been broken (e.g. handle of a closed window)
+class CLASS_DECL_REMOTING_COMMON BrokenHandleException : public ::subsystem::Exception
 {
 public:
   BrokenHandleException(const ::scoped_string & scopedstrMessage);

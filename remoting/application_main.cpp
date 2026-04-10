@@ -83,7 +83,7 @@ int application::remoting_impact_main( const ::file::path & path)
    ::remoting::ViewerConfig config(RegistryPaths::VIEWER_PATH);
    config.loadFromStorage(sm);
    HINSTANCE hInstance = remoting_impact_hinstance();
-   ConnectionConfig conConf;
+   ::remoting::ConnectionConfig conConf;
    ConnectionData condata;
    bool isListening = false;
    //::string strHost;
@@ -168,7 +168,7 @@ int application::remoting_impact_main( const ::file::path & path)
       }
       tvnViewer.run();
       result = tvnViewer.m_iExitCode;
-   } catch (const ::remoting::Exception &ex) {
+   } catch (const ::subsystem::Exception &ex) {
       main_subsystem()->message_box(0,
                  main_subsystem()->string_table()->getString(IDS_UNKNOWN_ERROR_IN_VIEWER),
                  ProductNames::VIEWER_PRODUCT_NAME,

@@ -29,13 +29,13 @@ bool WindowsSocket::m_isStarted = false;
 void WindowsSocket::startup(unsigned char loVer, unsigned char hiVer)
 {
   if (m_isStarted) {
-    throw ::remoting::Exception("WindowsSocket already initialized.");
+    throw ::subsystem::Exception("WindowsSocket already initialized.");
   }
 
   WSAData wsaData;
 
   if (WSAStartup(MAKEWORD(loVer, hiVer), &wsaData) != 0) {
-    throw ::remoting::Exception("Failed to initialize WindowsSocket.");
+    throw ::subsystem::Exception("Failed to initialize WindowsSocket.");
   }
 
   m_isStarted = true;
@@ -44,12 +44,12 @@ void WindowsSocket::startup(unsigned char loVer, unsigned char hiVer)
 void WindowsSocket::cleanup()
 {
   if (!m_isStarted) {
-    throw ::remoting::Exception("WindowsSocket don't initialized.");
+    throw ::subsystem::Exception("WindowsSocket don't initialized.");
   }
 
   m_isStarted = false;
 
   if (WSACleanup() == SOCKET_ERROR) {
-    throw ::remoting::Exception("Failed to deinitialize WindowsSocket.");
+    throw ::subsystem::Exception("Failed to deinitialize WindowsSocket.");
   }
 }

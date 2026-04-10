@@ -49,18 +49,18 @@ void QueryConnectionCommandLine::parse(const CommandLineArgs *commandLine)
   };
 
   if (!CommandLine::parse(format, sizeof(format) / sizeof(CommandLineFormat), commandLine)) {
-    throw ::remoting::Exception("Wrong command line format");
+    throw ::subsystem::Exception("Wrong command line format");
   }
 
   if (!optionSpecified(QUERY_CONNECTION)) {
-    throw ::remoting::Exception("-queryconnection flag is not specified");
+    throw ::subsystem::Exception("-queryconnection flag is not specified");
   }
 
   ::string timeoutStr;
 
   if (optionSpecified(TIMEOUT, &timeoutStr) &&
       !main_subsystem()->string_parser()->parseInt(timeoutStr, (int *)&m_timeout)) {
-    throw ::remoting::Exception("Invalid timeout");
+    throw ::subsystem::Exception("Invalid timeout");
   }
 }
 

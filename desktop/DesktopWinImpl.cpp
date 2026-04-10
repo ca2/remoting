@@ -57,7 +57,7 @@ DesktopWinImpl::DesktopWinImpl(ClipboardListener *extClipListener,
     m_wallPaper->updateWallpaper();
 
     Configurator::getInstance()->addListener(this);
-  } catch (::remoting::Exception &ex) {
+  } catch (::subsystem::Exception &ex) {
     m_plogwriter->error("exception during DesktopWinImpl creaion: {}", ex.get_message());
     freeResource();
     throw;

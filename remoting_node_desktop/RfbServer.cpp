@@ -85,7 +85,7 @@ void RfbServer::onAcceptConnection(SocketIPv4 *socket)
 
     m_clientManager->addNewConnection(socket, &m_viewPort, false, false);
 
-  } catch (::remoting::Exception &ex) {
+  } catch (::subsystem::Exception &ex) {
     m_plogwriter->error("Failed to process incoming rfb connection with following reason: \"{}\"", ex.get_message());
   }
 }

@@ -23,9 +23,9 @@
 //
 #include "framework.h"
 #include "ViewerSettingsManager.h"
-
 #include "acme/subsystem/Exception.h"
-#include "acme/acme/Registry.h"
+#include "acme/subsystem/Registry.h"
+
 
 namespace remoting
 {
@@ -36,7 +36,7 @@ namespace remoting
    {
       ::string keyName;
       keyName.format("{}\\Settings\\", ::string(scopedstrRegistryName).c_str());
-      setRegistryKey(Registry::getCurrentUserKey(), keyName.c_str());
+      setRegistryKey(::subsystem::Registry::getCurrentUserKey(), keyName.c_str());
    }
 
    ViewerSettingsManager::~ViewerSettingsManager()
@@ -53,7 +53,7 @@ namespace remoting
    SettingsManager *ViewerSettingsManager::getInstance()
    {
       if (s_instance == 0) {
-         throw ::remoting::Exception("Instance of viewer settings manager is 0");
+         throw ::subsystem::Exception("Instance of viewer settings manager is 0");
       }
       return s_instance;
    }

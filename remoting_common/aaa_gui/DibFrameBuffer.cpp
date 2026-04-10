@@ -43,12 +43,12 @@ void DibFrameBuffer::setTargetDC(HDC targetDC)
 
 bool DibFrameBuffer::assignProperties(const ::subsystem::FrameBuffer *srcFrameBuffer)
 {
-  throw ::remoting::Exception("Wrong: You shouln't use the DibFrameBuffer::assignProperties() function.");
+  throw ::subsystem::Exception("Wrong: You shouln't use the DibFrameBuffer::assignProperties() function.");
 }
 
 bool DibFrameBuffer::clone(const ::subsystem::FrameBuffer *srcFrameBuffer)
 {
-  throw ::remoting::Exception("Wrong: You shouln't use the DibFrameBuffer::clone() function.");
+  throw ::subsystem::Exception("Wrong: You shouln't use the DibFrameBuffer::clone() function.");
 }
 
 void DibFrameBuffer::setColor(unsigned char reg, unsigned char green, unsigned char blue)
@@ -96,27 +96,27 @@ bool DibFrameBuffer::cmpFrom(const ::int_rectangle &  dstRect, const ::subsystem
 
 bool DibFrameBuffer::setDimension(const ::int_size & newDim)
 {
-  throw ::remoting::Exception("Wrong: You shouln't use the DibFrameBuffer::clone() function.");
+  throw ::subsystem::Exception("Wrong: You shouln't use the DibFrameBuffer::clone() function.");
 }
 
 bool DibFrameBuffer::setDimension(const ::int_rectangle &  rect)
 {
-  throw ::remoting::Exception("Wrong: You shouln't use the DibFrameBuffer::clone() function.");
+  throw ::subsystem::Exception("Wrong: You shouln't use the DibFrameBuffer::clone() function.");
 }
 
 void DibFrameBuffer::setEmptyDimension(const ::int_rectangle &  dimByRect)
 {
-  throw ::remoting::Exception("This function is deprecated");
+  throw ::subsystem::Exception("This function is deprecated");
 }
 
 void DibFrameBuffer::setEmptyPixelFmt(const ::subsystem::PixelFormat & pf)
 {
-  throw ::remoting::Exception("This function is deprecated");
+  throw ::subsystem::Exception("This function is deprecated");
 }
 
 void DibFrameBuffer::setPropertiesWithoutResize(const ::int_size & newDim, const ::subsystem::PixelFormat & pf)
 {
-  throw ::remoting::Exception("Wrong: You shouln't use the DibFrameBuffer::setPropertiesWithoutResize() function.");
+  throw ::subsystem::Exception("Wrong: You shouln't use the DibFrameBuffer::setPropertiesWithoutResize() function.");
 }
 
 inline ::int_size DibFrameBuffer::getDimension() const
@@ -126,7 +126,7 @@ inline ::int_size DibFrameBuffer::getDimension() const
 
 bool DibFrameBuffer::setPixelFormat(const ::subsystem::PixelFormat & pixelFormat)
 {
-  throw ::remoting::Exception("Wrong: You shouln't use the DibFrameBuffer::setPixelFormat() function.");
+  throw ::subsystem::Exception("Wrong: You shouln't use the DibFrameBuffer::setPixelFormat() function.");
 }
 
 inline ::subsystem::PixelFormat DibFrameBuffer::getPixelFormat() const
@@ -136,12 +136,12 @@ inline ::subsystem::PixelFormat DibFrameBuffer::getPixelFormat() const
 
 bool DibFrameBuffer::setProperties(const ::int_size & newDim, const ::subsystem::PixelFormat & pixelFormat)
 {
-  throw ::remoting::Exception("Wrong: You shouln't use this variant of the DibFrameBuffer::setProperties() function.");
+  throw ::subsystem::Exception("Wrong: You shouln't use this variant of the DibFrameBuffer::setProperties() function.");
 }
 
 bool DibFrameBuffer::setProperties(const ::int_rectangle &  dimByRect, const ::subsystem::PixelFormat & pixelFormat)
 {
-  throw ::remoting::Exception("Wrong: You shouln't use this variant of the DibFrameBuffer::setProperties() function.");
+  throw ::subsystem::Exception("Wrong: You shouln't use this variant of the DibFrameBuffer::setProperties() function.");
 }
 
 unsigned char DibFrameBuffer::getBitsPerPixel() const
@@ -156,7 +156,7 @@ unsigned char DibFrameBuffer::getBytesPerPixel() const
 
 void DibFrameBuffer::setBuffer(void *newBuffer)
 {
-  throw ::remoting::Exception("Wrong: You shouln't use the DibFrameBuffer::setBuffer() function.");
+  throw ::subsystem::Exception("Wrong: You shouln't use the DibFrameBuffer::setBuffer() function.");
 }
 
 inline void *DibFrameBuffer::getBuffer() const
@@ -233,6 +233,6 @@ void DibFrameBuffer::releaseDibSection()
 void DibFrameBuffer::checkDibValid()
 {
   if (m_dibSection == 0) {
-    throw ::remoting::Exception("Can't set target DC because it is not initialized a DIB section yet");
+    throw ::subsystem::Exception("Can't set target DC because it is not initialized a DIB section yet");
   }
 }

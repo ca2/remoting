@@ -125,6 +125,6 @@ Encoder *EncoderStore::allocateEncoder(int encType) const
   case EncodingDefs::RAW:
     return new Encoder(m_pixelConverter, m_output);
   default:
-    throw ::remoting::Exception("Cannot create encoder of the specified type");
+    throw ::subsystem::Exception("Cannot create encoder of the specified type");
   }
 }

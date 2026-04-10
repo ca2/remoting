@@ -121,7 +121,7 @@ void UserInputServer::onRequest(unsigned char reqCode, BlockingGate *backGate)
     ::string errMess;
     errMess.formatf("Unknown {} protocol code received"
                    " from a UserInputClient", reqCode);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
     break;
   }
 }

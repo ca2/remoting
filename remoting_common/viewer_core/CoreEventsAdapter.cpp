@@ -66,7 +66,7 @@ void CoreEventsAdapter::onAuthError(const AuthException *exception)
   onError(exception);
 }
 
-void CoreEventsAdapter::onError(const ::remoting::Exception *exception)
+void CoreEventsAdapter::onError(const ::subsystem::Exception *exception)
 {
 }
 

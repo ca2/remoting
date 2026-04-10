@@ -33,7 +33,7 @@ FileTransferException::FileTransferException(const ::scoped_string & scopedstrMe
 {
 }
 
-FileTransferException::FileTransferException(const ::remoting::Exception *baseException)
+FileTransferException::FileTransferException(const ::subsystem::Exception *baseException)
 : Exception(baseException->get_message())
 {
 }

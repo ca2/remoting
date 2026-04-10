@@ -34,7 +34,7 @@ WinDxgiDevice::WinDxgiDevice(WinD3D11Device *winD3D11Device)
   if (FAILED(hr)) {
     ::string errMess;
     errMess.formatf("Can't QueryInterface for IDXGIDevice (%l)", (long)hr);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
   }
 }
 

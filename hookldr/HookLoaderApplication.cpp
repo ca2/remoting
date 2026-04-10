@@ -60,7 +60,7 @@ int HookLoaderApplication::processMessages()
   HWND targetWinHwnd = 0;
   if (!main_subsystem()->string_parser()->parseUInt64(m_commandLine,
                                  &targetWinValue)) {
-    throw ::remoting::Exception("HookLoaderApplication failed: Can't"
+    throw ::subsystem::Exception("HookLoaderApplication failed: Can't"
                     " parse the command line to unsigned long long");
   }
   targetWinHwnd = (HWND)targetWinValue;

@@ -50,7 +50,7 @@ void ConfigServer::onRequest(unsigned char reqCode, BlockingGate *backGate)
     ::string errMess;
     errMess..formatf("Unknown {} protocol code received from a pipe client",
                    (int)reqCode);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
     break;
   }
 }

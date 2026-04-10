@@ -76,7 +76,7 @@ void EchoExtensionRequestHandler::onRequest(unsigned int reqCode, RfbInputGate *
         m_output->flush();
       }
     }   
-  } catch (::remoting::Exception &someEx) {
+  } catch (::subsystem::Exception &someEx) {
     m_plogwriter->error("Echo extension request failed: \"{}\"", someEx.get_message());
   } // try / catch.
 

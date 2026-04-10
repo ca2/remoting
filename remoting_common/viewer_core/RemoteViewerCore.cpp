@@ -187,7 +187,7 @@ void RemoteViewerCore::start(CoreEventsAdapter *adapter,
   m_plogwriter->debug("Starting remote viewer core...");
 
   if (adapter == 0) {
-    throw ::remoting::Exception("Remote viewer core is not started: adapter is 0");
+    throw ::subsystem::Exception("Remote viewer core is not started: adapter is 0");
   }
 
   // Set flag "wasStarted".
@@ -195,7 +195,7 @@ void RemoteViewerCore::start(CoreEventsAdapter *adapter,
   {
     critical_section_lock al(&m_startLock);
     if (m_wasStarted) {
-      throw ::remoting::Exception("Remote viewer core is already started");
+      throw ::subsystem::Exception("Remote viewer core is already started");
     }
     m_wasStarted = true;
   }
@@ -302,7 +302,7 @@ bool RemoteViewerCore::updatePixelFormat()
 
   int bitsPerPixel = m_viewerPixelFormat.bitsPerPixel;
   if (bitsPerPixel != 8 && bitsPerPixel != 16 && bitsPerPixel != 32) {
-    throw ::remoting::Exception("Only 8, 16 or 32 bits per pixel supported!");
+    throw ::subsystem::Exception("Only 8, 16 or 32 bits per pixel supported!");
   }
 
   {
@@ -586,7 +586,7 @@ void RemoteViewerCore::connectToHost()
   m_plogwriter->debug("Connection is established");
   try {
     m_adapter->onEstablished();
-  } catch (const ::remoting::Exception &ex) {
+  } catch (const ::subsystem::Exception &ex) {
     m_plogwriter->error("Error in CoreEventsAdapter::onEstablished(): {}", ex.get_message());
   } catch (...) {
     m_plogwriter->error("Unknown error in CoreEventsAdapter::onEstablished()");
@@ -758,7 +758,7 @@ int RemoteViewerCore::selectSecurityType(const ::array_base<unsigned int> *secTy
       return *i;
   }
 
-  throw ::remoting::Exception("No security types supported. "
+  throw ::subsystem::Exception("No security types supported. "
                   "Server sent security types, "
                   "but we do not support any of them.");
 }
@@ -784,7 +784,7 @@ void RemoteViewerCore::initTunnelling()
       m_output->flush();
     } else {
       m_plogwriter->error("Viewer support only default tunneling tight-authentication");
-      throw ::remoting::Exception("Viewer support only default tunneling tight-authentication");
+      throw ::subsystem::Exception("Viewer support only default tunneling tight-authentication");
     }
   }
   m_plogwriter->debug("Tunneling is init");
@@ -815,7 +815,7 @@ int RemoteViewerCore::initAuthentication()
 
   m_plogwriter->debug("Select authentication capability");
   if (numEnabled == 0) {
-    throw ::remoting::Exception("No security types supported. "
+    throw ::subsystem::Exception("No security types supported. "
                     "Server sent security types, but we do not support any of their.");
   }
   int typeSelected = authTypes[0];
@@ -857,7 +857,7 @@ void RemoteViewerCore::setFbProperties(const ::int_size & fbDimension,
                  "::int_size: ({}, {}), Pixel format: {}",
                  fbDimension.cx, fbDimension.cy,
                  pxString);
-    throw ::remoting::Exception(error);
+    throw ::subsystem::Exception(error);
   }
   m_rectangleFb.setColor(0, 0, 0);
   m_frameBuffer.setColor(0, 0, 0);
@@ -894,7 +894,7 @@ void RemoteViewerCore::execute()
     m_plogwriter->information("Protocol stage is \"Authentication\".");
      try {
         m_adapter->onConnecting(1);
-     } catch (const ::remoting::Exception &ex) {
+     } catch (const ::subsystem::Exception &ex) {
         m_plogwriter->error("Error in CoreEventsAdapter::onConnecting(): {}", ex.get_message());
      } catch (...) {
         m_plogwriter->error("Unknown error in CoreEventsAdapter::onConnecting()");
@@ -912,7 +912,7 @@ void RemoteViewerCore::execute()
 
     try {
       m_adapter->onConnected(m_output);
-    } catch (const ::remoting::Exception &ex) {
+    } catch (const ::subsystem::Exception &ex) {
       m_plogwriter->error("Error in CoreEventsAdapter::onConnected(): {}", ex.get_message());
     } catch (...) {
       m_plogwriter->error("Unknown error in CoreEventsAdapter::onConnected()");
@@ -968,7 +968,7 @@ void RemoteViewerCore::execute()
           m_plogwriter->debug("Received scopedstrMessage ({}) transmit to capability handler", msgType);
           try {
             m_serverMsgHandlers[msgType]->onServerMessage(msgType, m_input);
-          } catch (const ::remoting::Exception &ex) {
+          } catch (const ::subsystem::Exception &ex) {
             m_plogwriter->error("Error in onServerMessage(): {}", ex.get_message());
           } catch (...) {
             m_plogwriter->error("Unknown error in onServerMessage()");
@@ -981,7 +981,7 @@ void RemoteViewerCore::execute()
     ::string scopedstrMessage("Remote viewer's core thread terminated");
     try {
       m_adapter->onDisconnect(scopedstrMessage);
-    } catch (const ::remoting::Exception &ex) {
+    } catch (const ::subsystem::Exception &ex) {
       m_plogwriter->error("Error in CoreEventsAdapter::onDisconnect(): {}", ex.get_message());
     } catch (...) {
       m_plogwriter->error("Unknown error in CoreEventsAdapter::onDisconnect()");
@@ -991,7 +991,7 @@ void RemoteViewerCore::execute()
     m_plogwriter->error("RemoteVewerCore. Auth exception: {}", ex.get_message());
     try {
       m_adapter->onAuthError(&ex);
-    } catch (const ::remoting::Exception &ex) {
+    } catch (const ::subsystem::Exception &ex) {
       m_plogwriter->error("Error in CoreEventsAdapter::onAuthError(): {}", ex.get_message());
     } catch (...) {
       m_plogwriter->error("Unknown error in CoreEventsAdapter::onAuthError()");
@@ -1000,13 +1000,13 @@ void RemoteViewerCore::execute()
     try {
       ::string disconnectMessage(ex.get_message());
       m_adapter->onDisconnect(disconnectMessage);
-    } catch (const ::remoting::Exception &ex) {
+    } catch (const ::subsystem::Exception &ex) {
       m_plogwriter->error("Error in CoreEventsAdapter::onDisconnect(): {}", ex.get_message());
     } catch (...) {
       m_plogwriter->error("Unknown error in CoreEventsAdapter::onDisconnect()");
     }
-  } catch (const ::remoting::Exception &ex) {
-    m_plogwriter->error("RemoteViewerCore. ::remoting::Exception: {}", ex.get_message());
+  } catch (const ::subsystem::Exception &ex) {
+    m_plogwriter->error("RemoteViewerCore. ::subsystem::Exception: {}", ex.get_message());
     try {
       m_adapter->onError(&ex);
     } catch (...) {
@@ -1016,7 +1016,7 @@ void RemoteViewerCore::execute()
     ::string error;
     error.formatf("RemoteViewerCore. Unknown exception");
     m_plogwriter->error("{}", error);
-    ::remoting::Exception ex(error);
+    ::subsystem::Exception ex(error);
     try {
       m_adapter->onError(&ex);
     } catch (...) {
@@ -1089,7 +1089,7 @@ bool RemoteViewerCore::receiveFbUpdateRectangle()
     return true;
   if (!Decoder::isPseudo(encodingType)) {
     if (::int_rectangle(m_frameBuffer.getDimension()).intersection(rect) != rect) {
-      throw ::remoting::Exception("Error in protocol: incorrect size of rectangle");
+      throw ::subsystem::Exception("Error in protocol: incorrect size of rectangle");
     }
 
     Decoder *decoder = m_decoderStore.getDecoder(encodingType);
@@ -1106,7 +1106,7 @@ bool RemoteViewerCore::receiveFbUpdateRectangle()
       ::string errorString;
       errorString.formatf("Decoder \"{}\" isn't exist", encodingType);
       m_plogwriter->error("{}", errorString);
-      throw ::remoting::Exception(errorString);
+      throw ::subsystem::Exception(errorString);
     } 
   } else { // it's pseudo encoding
     m_plogwriter->debug("It's pseudo encoding");
@@ -1167,7 +1167,7 @@ void RemoteViewerCore::processPseudoEncoding(const ::int_rectangle &  rect,
     ::string errorString;
     errorString.formatf("Pseudo encoding {} is not supported", encodingType);
     m_plogwriter->error("{}", errorString);
-    throw ::remoting::Exception(errorString);
+    throw ::subsystem::Exception(errorString);
   }
 }
 
@@ -1194,7 +1194,7 @@ void RemoteViewerCore::receiveBell()
   m_plogwriter->information("Bell!");
   try {
     m_adapter->onBell();
-  } catch (const ::remoting::Exception &ex) {
+  } catch (const ::subsystem::Exception &ex) {
     m_plogwriter->error("Error in CoreEventsAdapter::onBell(): {}", ex.get_message());
   } catch (...) {
     m_plogwriter->error("Unknown error in CoreEventsAdapter::onBell()");
@@ -1220,7 +1220,7 @@ void RemoteViewerCore::receiveServerCutText()
   m_plogwriter->debug("Cut text: {}", cutText);
   try {
     m_adapter->onCutText(cutText);
-  } catch (const ::remoting::Exception &ex) {
+  } catch (const ::subsystem::Exception &ex) {
     m_plogwriter->error("Error in CoreEventsAdapter::onCutText(): {}", ex.get_message());
   } catch (...) {
     m_plogwriter->error("Unknown error in CoreEventsAdapter::onCutText()");
@@ -1241,7 +1241,7 @@ void RemoteViewerCore::receiveServerCutTextUtf8()
   try {
     m_adapter->onCutText(cutText);
   }
-  catch (const ::remoting::Exception &ex) {
+  catch (const ::subsystem::Exception &ex) {
     m_plogwriter->error("Error in CoreEventsAdapter::onCutText(): {}", ex.get_message());
   }
   catch (...) {
@@ -1293,7 +1293,7 @@ void RemoteViewerCore::handshake()
     protocol = protocolAnsi;
     error.format("Unsupported protocol: {}", protocol);
     m_plogwriter->error("{}", error);
-    throw ::remoting::Exception(error);
+    throw ::subsystem::Exception(error);
   }
 
   // if version is 4.0 or later, then set version 3.8.

@@ -34,7 +34,7 @@ WinDxgiSurface::WinDxgiSurface(ID3D11Texture2D *texture2D)
   if (FAILED(hr) || m_dxgiSurface == 0) {
     ::string errMess;
     errMess.formatf("Can't create IDXGISurface from ID3D11Texture2D, error code = %l", (long)hr);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
   }
 }
 

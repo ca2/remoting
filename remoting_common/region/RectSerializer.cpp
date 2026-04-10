@@ -47,7 +47,7 @@ void RectSerializer::toString(const ::int_rectangle &  rect, ::string & strOut)
     ::string errMess;
     errMess.format("Invalid string format to convert it to a rectangle"
                    " ({}).", strIn);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
   }
   return ::int_rectangle(x, y, x + width, y + height);
 }

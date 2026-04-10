@@ -52,7 +52,7 @@ void DesktopServerCommandLine::parse(const CommandLineArgs *cmdArgs)
       !optionSpecified(DESKTOP_SERVER_KEY) || !optionSpecified(LOG_DIR_KEY) ||
       !optionSpecified(LOG_LEVEL_KEY) ||
       !optionSpecified(SHARED_MEMORY_NAME_KEY)) {
-    throw ::remoting::Exception("Command line is invalid");
+    throw ::subsystem::Exception("Command line is invalid");
   }
 }
 

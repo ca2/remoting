@@ -27,7 +27,7 @@
 
 #include "acme/subsystem/Exception.h"
 
-class WinDxException : public ::remoting::Exception
+class WinDxException : public ::subsystem::Exception
 {
 public:
   WinDxException(const ::scoped_string & scopedstrMessage, HRESULT errCode);

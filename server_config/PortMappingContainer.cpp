@@ -146,7 +146,7 @@ void PortMappingContainer::deserialize(DataInputStream * pinput)
     pinput->readUTF8(&string);
 
     if (!PortMapping::parse(string, &record)) {
-      throw ::remoting::Exception("Invalid port mapping string");
+      throw ::subsystem::Exception("Invalid port mapping string");
     }
 
     pushBack(record);

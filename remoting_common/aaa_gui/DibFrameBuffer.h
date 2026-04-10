@@ -62,7 +62,7 @@ public:
   // blitting operations. The window or DC for blitting operations can be changed many times during
   // a session of the DIB section later.
   // The compatibleWindow handle can be zero then the function will take a DC of entire desktop.
-  // Note that other function that can change properties will throw ::remoting::Exception().
+  // Note that other function that can change properties will throw ::subsystem::Exception().
   virtual void setProperties(const ::int_size & newDim,
     const ::subsystem::PixelFormat & pixelFormat, HWND compatibleWindow);
 
@@ -108,7 +108,7 @@ public:
 private:
   // This section to reduce access to some function that have been inherited from the
   // ::subsystem::FrameBuffer class and can't to be use in here. Also, if user code will to try
-  // use this functions from a base class its will throw ::remoting::Exception.
+  // use this functions from a base class its will throw ::subsystem::Exception.
   virtual bool assignProperties(const ::subsystem::FrameBuffer *srcFrameBuffer);
   virtual bool clone(const ::subsystem::FrameBuffer *srcFrameBuffer);
   virtual bool setDimension(const ::int_size & newDim);
@@ -128,7 +128,7 @@ private:
     HWND compatibleWindow);
   void releaseDibSection();
 
-  // This function generates an ::remoting::Exception if DIB section is not initialized yet.
+  // This function generates an ::subsystem::Exception if DIB section is not initialized yet.
   void checkDibValid();
 
   ::subsystem::FrameBuffer m_fb;

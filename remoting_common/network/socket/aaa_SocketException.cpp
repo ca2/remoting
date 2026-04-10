@@ -25,19 +25,19 @@
 #include "SocketException.h"
 
 SocketException::SocketException()
-: ::remoting::Exception()
+: ::subsystem::Exception()
 {
   setErrno(WSAGetLastError());
 }
 
 SocketException::SocketException(int error)
-: ::remoting::Exception()
+: ::subsystem::Exception()
 {
   setErrno(error);
 }
 
 SocketException::SocketException(const ::scoped_string & scopedstrMessage)
-: ::remoting::Exception(scopedstrMessage), m_errno(0)
+: ::subsystem::Exception(scopedstrMessage), m_errno(0)
 {
 }
 

@@ -73,14 +73,14 @@ public:
   /**
    * Serializes port all mappings in container as byte stream.
    * @param output output stream for serializing.
-   * @throws ::remoting::Exception on error.
+   * @throws ::subsystem::Exception on error.
    */
   void serialize(DataOutputStream *output) const;
 
   /**
    * Deserializes port mapping container from input stream.
    * @param input source input stream.
-   * @throws ::remoting::Exception on error.
+   * @throws ::subsystem::Exception on error.
    */
   void deserialize(DataInputStream * pinput);
 

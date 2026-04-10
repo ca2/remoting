@@ -55,7 +55,7 @@ public:
    *
    * Inhrited from Command abstract class.
    *
-   * @throws ::io_exception on io error, ::remoting::Exception on server side error.
+   * @throws ::io_exception on io error, ::subsystem::Exception on server side error.
    */
   virtual void execute();
 

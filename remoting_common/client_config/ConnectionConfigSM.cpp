@@ -23,11 +23,12 @@
 //
 #include "framework.h"
 #include "ConnectionConfigSM.h"
+#include "acme/subsystem/Registry.h"
 
-#include "acme/acme/Registry.h"
 
 namespace remoting
 {
+
    ConnectionConfigSM::ConnectionConfigSM(const ::scoped_string & scopedstrRegistryPath,
                       const ::scoped_string & scopedstrEntryName)
    : RegistrySettingsManager()

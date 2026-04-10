@@ -65,7 +65,7 @@ void DesktopSrvDispatcher::execute()
         errMess.formatf("Unhandled {} code has been "
                        "received from a client",
                        (int)code);
-        throw ::remoting::Exception(errMess);
+        throw ::subsystem::Exception(errMess);
       }
       (*iter).second->onRequest(code, m_gate);
     } catch (ReconnectException &) {

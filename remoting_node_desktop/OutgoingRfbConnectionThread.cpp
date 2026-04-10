@@ -46,7 +46,7 @@ void OutgoingRfbConnectionThread::execute()
 
   try {
     socket->connect(m_connectHost, m_connectPort);
-  } catch (::remoting::Exception &someEx) {
+  } catch (::subsystem::Exception &someEx) {
     m_plogwriter->error("Failed to connect to {}:{} with reason: '{}'",
                m_connectHost, m_connectPort, someEx.get_message());
     delete socket;

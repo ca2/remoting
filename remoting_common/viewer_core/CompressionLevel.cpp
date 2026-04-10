@@ -50,6 +50,6 @@ int CompressionLevel::levelToEncoding(int compressionLevel)
   default:
     ::string error;
     error.formatf("Compression level \"{}\" is not valid", compressionLevel);
-    throw ::remoting::Exception(error);
+    throw ::subsystem::Exception(error);
   }
 }

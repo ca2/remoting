@@ -167,7 +167,7 @@ int ControlApplication::run()
   // Connect to server.
   try {
     connect(cmdLineParser.hasControlServiceFlag(), cmdLineParser.isSlave());
-  } catch (::remoting::Exception &) {
+  } catch (::subsystem::Exception &) {
     if (!cmdLineParser.isSlave() && !cmdLineParser.hasCheckServicePasswords()) {
       const ::scoped_string & scopedstrMsg = main_subsystem()->string_table()->getString(IDS_FAILED_TO_CONNECT_TO_CONTROL_SERVER);
       const ::scoped_string & scopedstrCaption = main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL);
@@ -237,7 +237,7 @@ int ControlApplication::run()
       } catch (::io_exception &) {
         notifyConnectionLost();
         return 1;
-      } catch (::remoting::Exception &) {
+      } catch (::subsystem::Exception &) {
         _ASSERT(false);
       }
     }
@@ -265,7 +265,7 @@ void ControlApplication::connect(bool controlService, bool slave)
     try {
       m_transport = TransportFactory::createPipeClientTransport(pipeName);
       break;
-    } catch (::remoting::Exception &) {
+    } catch (::subsystem::Exception &) {
       if (numTriesRemaining <= 0) {
         throw;
       }

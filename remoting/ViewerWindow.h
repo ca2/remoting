@@ -127,7 +127,7 @@ namespace remoting_remoting
         void onConnected(RfbOutputGate *output) override;
         void onDisconnect(const ::scoped_string & scopedstrMessage);
         void onAuthError(const AuthException *exception);
-        void onError(const ::remoting::Exception *exception);
+        void onError(const ::subsystem::Exception *exception);
         void onFrameBufferUpdate(const ::subsystem::FrameBuffer *fb, const ::int_rectangle &  rect);
         void onFrameBufferPropChange(const ::subsystem::FrameBuffer *fb);
         void onCutText(const ::scoped_string & cutText);
@@ -157,8 +157,8 @@ namespace remoting_remoting
         ConnectionData *m_conData;
         SystemInformation m_sysinf;
 
-        // This variable save ::remoting::Exception after call onError().
-        ::remoting::Exception m_error;
+        // This variable save ::subsystem::Exception after call onError().
+        ::subsystem::Exception m_error;
         // This variable save disconnect-scopedstrMessage after call onDisconnect().
         ::string m_disconnectMessage;
 

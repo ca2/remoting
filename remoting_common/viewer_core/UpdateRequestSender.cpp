@@ -76,7 +76,7 @@ void UpdateRequestSender::execute()
 	}
 	catch(const ::exception &ex)
 	{
-		m_plogwriter->debug("UpdateRequestSender. ::remoting::Exception: {}", ex.get_message());
+		m_plogwriter->debug("UpdateRequestSender. ::subsystem::Exception: {}", ex.get_message());
 	}
 	catch(...)
 	{

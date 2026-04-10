@@ -50,7 +50,7 @@ void ZrleDecoder::decode(RfbInputGate *pinput,
   if (unpackedDataSize == 0) {
     m_plogwriter->debug("Empty unpacked data in ZRLE decoder");
     if (dstRect.area() != 0) {
-      throw ::remoting::Exception("Bad data received from the server: Empty unpacked data in ZRLE decoder.");
+      throw ::subsystem::Exception("Bad data received from the server: Empty unpacked data in ZRLE decoder.");
     }
     return;
   }
@@ -101,7 +101,7 @@ void ZrleDecoder::decode(RfbInputGate *pinput,
       //        it was enough to check once in the beginning of the function. I do not change that
       //        just to make sure I do not break anything. (-- const)
       if (::int_rectangle(frameBuffer->getDimension()).intersection(tileRect) != tileRect) {
-        throw ::remoting::Exception("Incorrect size of ZRLE tile.");
+        throw ::subsystem::Exception("Incorrect size of ZRLE tile.");
       }
       size_t tileLength = tileRect.area();
       size_t tileBytesLength = tileLength * m_bytesPerPixel;
@@ -128,7 +128,7 @@ void ZrleDecoder::decode(RfbInputGate *pinput,
         // invalid type
         ::string error;
         error.formatf("Bad data received from the server: Unused ZRLE subencoding type ({}).", type);
-        throw ::remoting::Exception(error);
+        throw ::subsystem::Exception(error);
       } if (type >= 130 && type <= 255) {
         // palette rle
         readPaletteRleTile(&unpackedDataStream, pixels, tileRect, type);
@@ -281,7 +281,7 @@ void ZrleDecoder::readPlainRleTile(DataInputStream * pinput,
 
     size_t runLength = readRunLength(pinput);
     if (indexByte + runLength * m_bytesPerPixel > pixels.size()) {
-      throw ::remoting::Exception("Bad data received from the server: ZRLE run length is too long in plain RLE tile.");
+      throw ::subsystem::Exception("Bad data received from the server: ZRLE run length is too long in plain RLE tile.");
     }
 
     for (size_t i = 0; i < runLength; i++) {
@@ -310,7 +310,7 @@ void ZrleDecoder::readPaletteRleTile(DataInputStream * pinput,
       color -= 128;
       runLength = readRunLength(pinput);
       if (indexPixel + runLength > tileLength) {
-        throw ::remoting::Exception("Bad data received from the server: ZRLE run length is too long in palette RLE tile.");
+        throw ::subsystem::Exception("Bad data received from the server: ZRLE run length is too long in palette RLE tile.");
       }
     }
     

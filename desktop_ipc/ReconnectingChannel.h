@@ -45,7 +45,7 @@ public:
   void replaceChannel(Channel *newChannel);
 
   // Closes connection and break all blocked operation.
-  // @throw ::remoting::Exception on error.
+  // @throw ::subsystem::Exception on error.
   virtual void close();
 
   virtual size_t available() { return 0; };

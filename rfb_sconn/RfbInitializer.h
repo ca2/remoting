@@ -58,7 +58,7 @@ public:
 
 protected:
   void initVersion();
-  // @throw ::remoting::Exception if loopback isn't allowed.
+  // @throw ::subsystem::Exception if loopback isn't allowed.
   void checkForLoopback();
   void initAuthenticate();
   void readClientInit();
@@ -81,7 +81,7 @@ protected:
   // Parse RFB version string which should look like "RFB 003.008\n", check
   // that the format is valid and that the major version number is 3. Returns
   // minor version number without checking its value. If the format is invalid
-  // or major version number is not 3, an ::remoting::Exception will be thrown.
+  // or major version number is not 3, an ::subsystem::Exception will be thrown.
   unsigned int getProtocolMinorVersion(const char str[12]);
 
   DataOutputStream *m_output;

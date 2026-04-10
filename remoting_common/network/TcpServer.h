@@ -46,7 +46,7 @@ public:
    * @param bool autoStart if true, then server starts listening for incoming connections
    * in it's own thread, if false, then you must call protected start() method later from subclass.
    * @param lockAddr determinates if need to lock adress to other processes cannot reuse it.
-   * @throws ::remoting::Exception if fail to create tcp server.
+   * @throws ::subsystem::Exception if fail to create tcp server.
    */
   TcpServer(const ::scoped_string & scopedstrBindHost,
             unsigned short bindPort,

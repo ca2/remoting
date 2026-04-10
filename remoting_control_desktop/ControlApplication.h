@@ -63,7 +63,7 @@ public:
   /**
    * Initializes all subsystems needed for wscontrol application and creates
    * ControlApplication instance.
-   * @throws ::remoting::Exception if initialization of needed subsystems has failed.
+   * @throws ::subsystem::Exception if initialization of needed subsystems has failed.
    */
   ControlApplication(HINSTANCE hinst,
                      const ::scoped_string & scopedstrwindowClassName,
@@ -104,7 +104,7 @@ protected:
    * @param slave true if -slave option was specified in the command line,
    *   false otherwise. This flag affects error handling on connection
    *   failures (together with the connectService flag).
-   * @throws ::remoting::Exception on errors.
+   * @throws ::subsystem::Exception on errors.
    */
   void connect(bool controlService, bool slave);
 

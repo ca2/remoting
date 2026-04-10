@@ -46,6 +46,6 @@ void CommonControlsEx::init()
   iccsex.dwSize = sizeof(INITCOMMONCONTROLSEX);
 
   if (::InitCommonControlsEx(&iccsex) != true) {
-    throw ::remoting::Exception("Cannot initialize common controls ex.");
+    throw ::subsystem::Exception("Cannot initialize common controls ex.");
   }
 }

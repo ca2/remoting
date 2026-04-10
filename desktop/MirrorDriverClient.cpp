@@ -57,7 +57,7 @@ MirrorDriverClient::MirrorDriverClient(::subsystem::LogWriter *log)
   m_initListener.waitForEvent();
   if (m_propertyChangeListenerWindow.getHWND() == 0) {
     dispose();
-    throw ::remoting::Exception("Can't create a client for a mirror driver because"
+    throw ::subsystem::Exception("Can't create a client for a mirror driver because"
                     " can't create a scopedstrMessage window to listen changing"
                     " screen properties.");
   }
@@ -171,7 +171,7 @@ void MirrorDriverClient::extractDeviceInfo(TCHAR *driverName)
   if (!result) {
     ::string errMess;
     errMess.formatf("Can't find {}!", driverName);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
   }
 }
 
@@ -198,7 +198,7 @@ void MirrorDriverClient::openDeviceRegKey(TCHAR *miniportName)
   m_regkeyDevice.open(&regKeyDriver, subKey, true);
   if (!regKeyServices.isOpened() || !regKeyDriver.isOpened() ||
       !m_regkeyDevice.isOpened()) {
-    throw ::remoting::Exception("Can't open registry for the mirror driver");
+    throw ::subsystem::Exception("Can't open registry for the mirror driver");
   }
 }
 
@@ -241,7 +241,7 @@ void MirrorDriverClient::load()
     // m_driverDC = CreateDC("DISPLAY", m_deviceInfo.DeviceName, NULL, NULL);
     m_driverDC = CreateDC(m_deviceInfo.DeviceName, 0, 0, 0);
     if (!m_driverDC) {
-      throw ::remoting::Exception("Can't create device context on mirror driver");
+      throw ::subsystem::Exception("Can't create device context on mirror driver");
     }
     m_plogwriter->information("Device context is created");
 
@@ -274,7 +274,7 @@ void MirrorDriverClient::setAttachToDesktop(bool value)
 {
   if (!m_regkeyDevice.setValueAsInt32("Attach.ToDesktop",
       (int)value)) {
-    throw ::remoting::Exception("Can't set the Attach.ToDesktop.");
+    throw ::subsystem::Exception("Can't set the Attach.ToDesktop.");
   }
   m_isDriverAttached = value;
 }
@@ -301,7 +301,7 @@ void MirrorDriverClient::commitDisplayChanges(DEVMODE *pdm)
       ::string errMess;
       errMess.formatf("1st ChangeDisplaySettingsEx() failed with code {}",
                      (int)code);
-      throw ::remoting::Exception(errMess);
+      throw ::subsystem::Exception(errMess);
     }
     m_plogwriter->information("CommitDisplayChanges(2): \"{}\"", m_deviceInfo.DeviceName);
     code = ChangeDisplaySettingsEx(m_deviceInfo.DeviceName, pdm, 0, 0, 0);
@@ -309,7 +309,7 @@ void MirrorDriverClient::commitDisplayChanges(DEVMODE *pdm)
       ::string errMess;
       errMess.formatf("2nd ChangeDisplaySettingsEx() failed with code {}",
                      (int)code);
-      throw ::remoting::Exception(errMess);
+      throw ::subsystem::Exception(errMess);
     }
   } else {
     LONG code = ChangeDisplaySettingsEx(m_deviceInfo.DeviceName, 0, 0, 0, 0);
@@ -317,7 +317,7 @@ void MirrorDriverClient::commitDisplayChanges(DEVMODE *pdm)
       ::string errMess;
       errMess.formatf("ChangeDisplaySettingsEx() failed with code {}",
                      (int)code);
-      throw ::remoting::Exception(errMess);
+      throw ::subsystem::Exception(errMess);
     }
   }
   m_plogwriter->information("ChangeDisplaySettingsEx() was successfull");
@@ -373,7 +373,7 @@ void MirrorDriverClient::connect()
       errMess.formatf("Can't set a connection for the mirror driver: "
                      "ExtEscape() failed with {}",
                      res);
-      throw ::remoting::Exception(errMess);
+      throw ::subsystem::Exception(errMess);
     }
 
     m_changesBuffer = buf.buffer;

@@ -267,7 +267,7 @@ void WTS::duplicatePipeClientToken(HANDLE pipeHandle)
     faultReason = impThread.getFaultReason();
     errMessage.format("Can't impersonate thread by pipe handle: {}",
                       faultReason);
-    throw ::remoting::Exception(errMessage);
+    throw ::subsystem::Exception(errMessage);
   }
 
   HANDLE threadHandle = OpenThread(THREAD_QUERY_INFORMATION, false,

@@ -51,7 +51,7 @@ public:
   /**
    * Closes transport.
    *
-   * @throws ::remoting::Exception on fail.
+   * @throws ::subsystem::Exception on fail.
    */
   void close();
 

@@ -83,7 +83,7 @@ DesktopServerApplication::DesktopServerApplication(HINSTANCE appInstance,
                                            startTime).getTime(),
                                      0);
       if (timeForWait == 0) {
-        throw ::remoting::Exception("The desktop server time out expired");
+        throw ::subsystem::Exception("The desktop server time out expired");
       }
       m_sleepInterval.waitForEvent(10);
     }

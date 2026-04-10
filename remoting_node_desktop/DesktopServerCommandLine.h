@@ -43,7 +43,7 @@ public:
   /**
    * Parses command line.
    * @param cmdLine command line to parse.
-   * @throws ::remoting::Exception on fail.
+   * @throws ::subsystem::Exception on fail.
    */
   virtual void parse(const CommandLineArgs *cmdArgs);
 

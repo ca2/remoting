@@ -164,7 +164,7 @@ void LogServer::onLog(FileAccountHandle handle,
   critical_section_lock al(&m_logPropsMutex);
   FAccountListIter iter = m_fileAccountList.find(handle);
   if (iter == m_fileAccountList.end()) {
-    throw ::remoting::Exception("Unhandled log scopedstrMessage");
+    throw ::subsystem::Exception("Unhandled log scopedstrMessage");
   }
   (*iter).second->print(processId, threadId, dt, level, scopedstrMessage);
 

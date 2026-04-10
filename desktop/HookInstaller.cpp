@@ -55,13 +55,13 @@ void HookInstaller::install(HWND targedWinHwnd)
   m_pSetHook = m_lib.getProcAddress(SET_HOOK_FUNCTION_NAME);
   m_pUnSetHook = m_lib.getProcAddress(UNSET_HOOK_FUNCTION_NAME);
   if (!m_pSetHook || !m_pUnSetHook) {
-    throw ::remoting::Exception("Cannot find the setHook() and unsetHook() functions");
+    throw ::subsystem::Exception("Cannot find the setHook() and unsetHook() functions");
   }
 
   // Hooks initializing
   SetHookFunction setHookFunction = (SetHookFunction)m_pSetHook;
   if (!setHookFunction(targedWinHwnd)) {
-    throw ::remoting::Exception("setHook() function failed");
+    throw ::subsystem::Exception("setHook() function failed");
   }
 }
 
@@ -70,7 +70,7 @@ void HookInstaller::uninstall()
   if (m_pUnSetHook) {
     UnsetHookFunction unsetHookFunction = (UnsetHookFunction)m_pUnSetHook;
     if (!unsetHookFunction()) {
-      throw ::remoting::Exception("unsetHook() function failed");
+      throw ::subsystem::Exception("unsetHook() function failed");
     }
     m_pUnSetHook = 0;
     m_pSetHook = 0;

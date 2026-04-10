@@ -50,6 +50,6 @@ int JpegQualityLevel::qualityToEncoding(int qualityLevel)
   default:
     ::string error;
     error.formatf("Quality of jpeg \"{}\" is not valid", qualityLevel);
-    throw ::remoting::Exception(error);
+    throw ::subsystem::Exception(error);
   }
 }

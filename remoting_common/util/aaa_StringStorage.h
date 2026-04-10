@@ -190,7 +190,7 @@
 //   void removeChars(const TCHAR badCharacters[], size_t count);
 //
 //   // Removes count characters from the specified start index.
-//   // Throws ::remoting::Exception if startIndex + count > length in the release
+//   // Throws ::subsystem::Exception if startIndex + count > length in the release
 //   // configuration and throws an ASSERTION FAILED scopedstrMessage in the debug
 //   // configuration.
 //   void remove(size_t startIndex, size_t count);

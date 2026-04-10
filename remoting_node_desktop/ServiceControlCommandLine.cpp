@@ -56,17 +56,17 @@ void ServiceControlCommandLine::parse(const CommandLineArgs *cmdArgs)
   if (!CommandLine::parse(format,
                           sizeof(format) / sizeof(CommandLineFormat),
                           cmdArgs)) {
-    throw ::remoting::Exception("invalid command line");
+    throw ::subsystem::Exception("invalid command line");
   } // if cannot parse it.
 
   // Check additional rules.
 
   if (keySpecified(SILENT)) {
     if (m_foundKeys.size() != (dontElevate() ? 3 : 2)) {
-      throw ::remoting::Exception("-silent key can be used only when one command specified");
+      throw ::subsystem::Exception("-silent key can be used only when one command specified");
     }
   } else if (m_foundKeys.size() != (dontElevate() ? 2 : 1)) {
-    throw ::remoting::Exception("only one service command can be specified");
+    throw ::subsystem::Exception("only one service command can be specified");
   }
 }
 

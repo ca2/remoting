@@ -71,10 +71,10 @@ void remoting_impact::startListeningServer(const int listeningPort)
 {
   try {
     if (m_conListener != 0) {
-      throw ::remoting::Exception("Listening Server already started");
+      throw ::subsystem::Exception("Listening Server already started");
     }
     m_conListener = new ConnectionListener(this, listeningPort);
-  } catch (const ::remoting::Exception &ex) {
+  } catch (const ::subsystem::Exception &ex) {
     m_isListening = false;
     m_plogwriter->error("Error in start listening: {}", ex.get_message());
     main_subsystem()->message_box(0,
@@ -90,7 +90,7 @@ void remoting_impact::stopListeningServer()
     if (m_conListener != 0) {
       delete m_conListener;
     }
-  } catch (const ::remoting::Exception &ex) {
+  } catch (const ::subsystem::Exception &ex) {
     m_plogwriter->error("Error of delete m_conListener: {}", ex.get_message());
   }
   m_conListener = 0;

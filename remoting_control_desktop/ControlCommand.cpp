@@ -65,7 +65,7 @@ void ControlCommand::execute()
           m_notificator->notifyServerSideException(someEx.get_message());
         }
         throw;
-      } catch (::remoting::Exception &) {
+      } catch (::subsystem::Exception &) {
         _ASSERT(false);
         throw;
       }

@@ -41,12 +41,12 @@ void DesktopServerProto::checkPixelFormat(const ::subsystem::PixelFormat & pf)
   if (pf.bitsPerPixel != 16 && pf.bitsPerPixel != 32) {
     errMess.formatf("Wrong value of bits per pixel ({})",
                    (int)pf.bitsPerPixel);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
   }
   if (pf.colorDepth > pf.bitsPerPixel) {
     errMess.formatf("Wrong value (color depth ({}) > bits per pixel ({}))",
                    (int)pf.colorDepth, (int)pf.bitsPerPixel);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
   }
 }
 
@@ -62,7 +62,7 @@ void DesktopServerProto::checkRectangle(const ::int_rectangle &  rect)
                                                            rect.top,
                                                            rect.right,
                                                            rect.bottom);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
   }
 }
 
@@ -73,7 +73,7 @@ void DesktopServerProto::checkDimension(const ::int_size & dim)
       abs(dim->height) > 64000) {
     errMess.formatf("Wrong dimension (%dx{})", dim->width,
                                                   dim->height);
-    throw ::remoting::Exception(errMess);
+    throw ::subsystem::Exception(errMess);
   }
 }
 
