@@ -26,9 +26,10 @@
 #include "remoting/remoting_common/config/IniFileSettingsManager.h"
 #include "acme/subsystem/Exception.h"
 #include "remoting/remoting_common/util/ResourceLoader.h"
-#include "remoting/remoting_common/rfb/StandardPixelFormatFactory.h"
+#include "acme/subsystem/framebuffer/StandardPixelFormatFactory.h"
 #include "remoting/remoting/keyboard_layout_change.h"
-
+#include "apex/innate_subsystem/Toolbar.h"
+#include "apex/innate_subsystem/drawing/Cursor.h"
 #include "FsWarningDialog.h"
 #include "NamingDefs.h"
 #include "remoting_impact.h"
@@ -38,19 +39,21 @@
 #include "acme/platform/application.h"
 #include "apex/networking/http/context.h"
 #include "remoting/remoting_common/remoting.h"
-
+#include "resource.h"
 //// #include aaa_<commdlg.h>
 
 namespace remoting_remoting
 {
-    ViewerWindow::ViewerWindow(WindowsApplication *application,
+
+
+    ViewerWindow::ViewerWindow(subsystem::OperatingSystemApplicationInterface *application,
                                ConnectionData *conData,
-                               ConnectionConfig *conConf,
+                               ::remoting::ConnectionConfig *conConf,
                                ::subsystem::LogWriter * plogwriter)
     : m_ccsm(RegistryPaths::VIEWER_PATH,
              conData->getHost()),
       m_application(application),
-      m_plogwriter(::subsystem::LogWriter),
+      m_plogwriter(plogwriter),
       m_pconnectionconfig(conConf),
       m_scale(100),
       m_isFullScr(false),
@@ -66,6 +69,7 @@ namespace remoting_remoting
       m_stopped(false)
     {
         initialize(application);
+       //m_application->initialize_operating_system_application()
         m_standardScale.add(10);
         m_standardScale.add(15);
         m_standardScale.add(25);
@@ -89,15 +93,15 @@ namespace remoting_remoting
         m_desktopwindow.m_pviewerwindow = this;
         m_desktopwindow.createWindow(subTitleName,
                                WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_CHILD,
-                               getHWnd());
+                               operating_system_window());
 
-        SetTimer(m_hwnd, TIMER_DESKTOP_STATE, TIMER_DESKTOP_STATE_DELAY, (TIMERPROC)NULL);
+        ///SetTimer(m_hwnd, TIMER_DESKTOP_STATE, TIMER_DESKTOP_STATE_DELAY, (TIMERPROC)NULL);
     }
 
     ViewerWindow::~ViewerWindow()
     {
         // Unregistration of keyboard hook.
-        m_winHooks.unregisterKeyboardHook(this);
+        m_operatingsystemhook.unregisterKeyboardHook(this);
 
         if (m_ftDialog != 0) {
             try {
@@ -119,22 +123,38 @@ namespace remoting_remoting
         m_desktopwindow.setViewerCore(pCore);
         applySettings();
     }
-
-    bool ViewerWindow::onCreate(LPCREATESTRUCT lps)
+   
+::innate_subsystem::ControlInterface * ViewerWindow::getControl()
     {
-        m_control.setWindow((HWND) _HWND());
+       
+       return this;
+       
+    }
+   
 
-        setClassCursor(LoadCursor(NULL, IDC_ARROW));
+    bool ViewerWindow::onCreate(void * pCreateStruct)
+    {
+        //getControl()->setWindow((HWND) _HWND());
+
+      auto pcursor = createø<::innate_subsystem::Cursor>();
+      pcursor->initialize_with_system_cursor(::e_cursor_arrow);
+      setClassCursor(pcursor);
+
+       //auto pcursor = createø<::innate_subsystem::Icon>();
+      //pcursor->initialize_icon(IDI_APPICON);
+      //setClassCursor(pcursor);
+      //  //setClassCursor(LoadCursor(NULL, IDC_ARROW));
         loadIcon(IDI_APPICON);
-        m_toolbar.loadToolBarfromRes(IDB_TOOLBAR);
+        //m_toolbar.loadToolBarfromRes(IDB_TOOLBAR);
+       m_toolbar.loadToolbarFromMatter("matter://toolbar.png");
         m_toolbar.setButtonsRange(IDS_TB_NEWCONNECTION);
-        m_toolbar.setViewAutoButtons(4, ::remoting::ToolBar::TB_Style_sep);
-        m_toolbar.setViewAutoButtons(6, ::remoting::ToolBar::TB_Style_sep);
-        m_toolbar.setViewAutoButtons(10, ::remoting::ToolBar::TB_Style_sep);
-        m_toolbar.setViewAutoButtons(11, ::remoting::ToolBar::TB_Style_sep);
-        m_toolbar.setViewAutoButtons(15, ::remoting::ToolBar::TB_Style_sep);
-        m_toolbar.attachToolBar(getHWnd());
-        m_menu.getSystemMenu(getHWnd());
+        m_toolbar.setViewAutoButtons(4, ::innate_subsystem::TB_Style_sep);
+        m_toolbar.setViewAutoButtons(6, ::innate_subsystem::TB_Style_sep);
+        m_toolbar.setViewAutoButtons(10, ::innate_subsystem::TB_Style_sep);
+        m_toolbar.setViewAutoButtons(11, ::innate_subsystem::TB_Style_sep);
+        m_toolbar.setViewAutoButtons(15, ::innate_subsystem::TB_Style_sep);
+        m_toolbar.attachToolbar(operating_system_window());
+        m_menu.getSystemMenu(this);
         m_menu.loadMenu();
         applySettings();
         m_timeStart.Now();
@@ -1152,7 +1172,7 @@ namespace remoting_remoting
         // If authentication is canceled, then do quiet exit, else show error-scopedstrMessage.
         if (wParam != AuthException::AUTH_CANCELED) {
             ::string error = m_error.get_message();
-            int result = main_subsystem()->message_box(0,
+            int result = main_subsystem()->message_box({},
                                     error,
                                     formatWindowName(),
                                     MB_RETRYCANCEL | MB_ICONERROR);
@@ -1341,15 +1361,15 @@ namespace remoting_remoting
         postMessage(WM_USER_ERROR);
     }
 
-    void ViewerWindow::onFrameBufferUpdate(const ::subsystem::FrameBuffer *fb, const ::int_rectangle &  rect)
+    void ViewerWindow::onFrameBufferUpdate(const ::innate_subsystem::FrameBuffer *fb, const ::int_rectangle &  rect)
     {
         m_desktopwindow.updateFramebuffer(fb, rect);
     }
 
-    void ViewerWindow::onFrameBufferPropChange(const ::subsystem::FrameBuffer *fb)
+    void ViewerWindow::onFrameBufferPropChange(const ::innate_subsystem::FrameBuffer *fb)
     {
         //   m_desktopwindow.m_iDivisor = m_conData->getDivisor();
-        // ((::subsystem::FrameBuffer*)fb)->m_iDivisor = m_desktopwindow.m_iDivisor;
+        // ((::innate_subsystem::FrameBuffer*)fb)->m_iDivisor = m_desktopwindow.m_iDivisor;
         m_desktopwindow.setNewFramebuffer(fb);
     }
 

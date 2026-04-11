@@ -70,7 +70,7 @@ void RfbInitializer::afterAuthPhase(const CapContainer *srvToClCaps,
                                     const CapContainer *clToSrvCaps,
                                     const CapContainer *encCaps,
                                     const ::int_size & dim,
-                                    const ::subsystem::PixelFormat & pf)
+                                    const ::innate_subsystem::PixelFormat & pf)
 {
   sendServerInit(dim, pf);
   sendDesktopName();
@@ -279,7 +279,7 @@ void RfbInitializer::readClientInit()
 }
 
 void RfbInitializer::sendServerInit(const ::int_size & dim,
-                                    const ::subsystem::PixelFormat & pf)
+                                    const ::innate_subsystem::PixelFormat & pf)
 {
   m_output->writeUInt16((unsigned short)dim->width);
   m_output->writeUInt16((unsigned short)dim->height);

@@ -45,7 +45,7 @@ namespace remoting
       ::memory m_unpackedData;
    protected:
       virtual void decode(RfbInputGate *input,
-                          ::subsystem::FrameBuffer *frameBuffer,
+                          ::innate_subsystem::FrameBuffer *frameBuffer,
                           const ::int_rectangle &  dstRect);
 
 
@@ -82,7 +82,7 @@ namespace remoting
                               const int type);
 
 
-      void drawTile(::subsystem::FrameBuffer *fb,
+      void drawTile(::innate_subsystem::FrameBuffer *fb,
                     const ::int_rectangle &  tileRect,
                     const ::array_base<char> *pixels);
 

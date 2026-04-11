@@ -7,6 +7,7 @@
 #include "impact_toolbar.h"
 
 #include "apex/innate_subsystem/drawing/Bitmap.h"
+#include "apex/innate_subsystem/drawing/Font.h"
 // // #include aaa_<dwmapi.h>
 // // Link with dwmapi.lib
 // #pragma comment (lib, "dwmapi.lib")
@@ -831,11 +832,8 @@ namespace remoting_remoting
       //    rIntersect.width(),
       //    rIntersect.height(),
       //    Gdiplus::UnitPixel);
-      pgraphics->drawBitmap(m_pbitmapBuffer,rIntersect.left, rIntersect.top,
-          rIntersect.left-m_rectangle.left,
-          rIntersect.top - m_rectangle.top,
-          rIntersect.width(),
-          rIntersect.height());
+      pgraphics->drawBitmap(m_pbitmapBuffer,rIntersect.top_left(),
+         { (::int_point) (rIntersect.origin()-m_rectangle.origin()),  rIntersect.size()});
    }
 
    void control::__001OnDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle)
@@ -960,10 +958,10 @@ namespace remoting_remoting
          //pgraphics->setPen(2.0f, colorPaint);
          pgraphics->setPen(m_ppen001);
 
-         pgraphics->moveTo(rDeflate.left, rDeflate.top);
-         pgraphics->lineTo(rDeflate.right, rDeflate.bottom);
-         pgraphics->moveTo(rDeflate.right, rDeflate.top);
-         pgraphics->lineTo(rDeflate.left, rDeflate.bottom);
+         pgraphics->moveTo(rDeflate.top_left());
+         pgraphics->lineTo(rDeflate.bottom_right());
+         pgraphics->moveTo(rDeflate.top_right());
+         pgraphics->lineTo(rDeflate.bottom_left());
 
       }
    }
@@ -1008,63 +1006,84 @@ namespace remoting_remoting
          fOpacity -= 0.1f;
       }
 
-      Gdiplus::RectF layoutRect;
+      if (!m_pfont001)
+      {
 
-      ::copy(layoutRect, r);
+         constructø(m_pfont001);
 
-      //layoutRect.Height = 24;
+         m_pfont001->initialize_font("Segoe UI", 14, 400);
 
-      ::wstring wstr(m_pdesktopwindow->m_strHost);
+      }
 
-      auto& graphics = *pgraphics->m_pgraphics;
-      using namespace Gdiplus;
-      // Enable better quality rendering
-      graphics.SetTextRenderingHint(TextRenderingHintClearTypeGridFit);
-      graphics.SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-      FLOAT fontSize = 12.f;
-      // Create Segoe UI font
-      Font font(L"Segoe UI", fontSize, FontStyleRegular, UnitPixel);
+      pgraphics->setTextRenderingHintClearType();
+      pgraphics->setBlendModeOn(true);
 
-      ::Gdiplus::Color colorPaint;
+      // Gdiplus::RectF layoutRect;
+      //
+      // ::copy(layoutRect, r);
+      //
+      // //layoutRect.Height = 24;
+      //
+      // ::wstring wstr(m_pdesktopwindow->m_strHost);
+      //
+      // auto& graphics = *pgraphics->m_pgraphics;
+      // using namespace Gdiplus;
+      // // Enable better quality rendering
+      // graphics.SetTextRenderingHint(TextRenderingHintClearTypeGridFit);
+      // graphics.SetCompositingMode(Gdiplus::CompositingModeSourceOver);
+      // FLOAT fontSize = 12.f;
+      // // Create Segoe UI font
+      // Font font(L"Segoe UI", fontSize, FontStyleRegular, UnitPixel);
+      //
+      // ::Gdiplus::Color colorPaint;
 
+      ::color::color colorPaint;
 
       if (m_bHover)
       {
-         colorPaint = Gdiplus::Color(225, 255, 255, 255);
+         colorPaint = argb(225, 255, 255, 255);
       }
       else
       {
          //colorPaint = argb(160, 240, 240, 240);
-         colorPaint = Gdiplus::Color(165, 215, 215, 215);
+         colorPaint = argb(165, 215, 215, 215);
 
       }
 
-      // Create white brush (ARGB: 255 = fully opaque)
-      Gdiplus::SolidBrush brush(colorPaint);
+      pgraphics->setTextColor(colorPaint);
 
-      // Create string format
-      StringFormat stringFormat;
+      // // Create white brush (ARGB: 255 = fully opaque)
+      // Gdiplus::SolidBrush brush(colorPaint);
+      //
+      // // Create string format
+      // StringFormat stringFormat;
+      //
+      // // Horizontal alignment (center)
+      // stringFormat.SetAlignment(StringAlignmentCenter);
+      //
+      // // Vertical alignment (center)
+      // stringFormat.SetLineAlignment(StringAlignmentCenter);
+      //
+      // // Optional: prevent wrapping
+      // stringFormat.SetFormatFlags(StringFormatFlagsNoWrap);
+      //
+      // stringFormat.SetFormatFlags(StringFormatFlagsNoClip);
+      //
+      // // Draw the string
+      // graphics.DrawString(
+      //    wstr.c_str(),
+      //    wstr.size(),                 // auto-length
+      //    &font,
+      //    layoutRect,
+      //    &stringFormat,
+      //    &brush
+      // );
 
-      // Horizontal alignment (center)
-      stringFormat.SetAlignment(StringAlignmentCenter);
+      pgraphics->setFont(m_pfont001);
 
-      // Vertical alignment (center)
-      stringFormat.SetLineAlignment(StringAlignmentCenter);
-
-      // Optional: prevent wrapping
-      stringFormat.SetFormatFlags(StringFormatFlagsNoWrap);
-
-      stringFormat.SetFormatFlags(StringFormatFlagsNoClip);
-
-      // Draw the string
-      graphics.DrawString(
-         wstr.c_str(),
-         wstr.size(),                 // auto-length
-         &font,
-         layoutRect,
-         &stringFormat,
-         &brush
-      );
+      pgraphics->drawText(m_pdesktopwindow->m_strHost,
+         m_pdesktopwindow->m_strHost.length(),
+         r, 0, e_align_center);
       //pgraphics->m_pgraphics->DrawString(wstr, wstr.size(),)
       // color=colorDark;
       // color.blend(colorLite, 0.6);

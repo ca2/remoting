@@ -27,7 +27,7 @@
 
 #include "WindowsScreenGrabber.h"
 #include "ScreenDriver.h"
-#include "acme/subsystem/framebuffer/FrameBuffer.h"
+#include "apex/innate_subsystem/framebuffer/FrameBuffer.h"
 //#include "acme/subsystem/thread/critical_section.h"
 #include "UpdateContainer.h"
 #include "GrabOptimizator.h"
@@ -36,7 +36,7 @@ class UpdateFilter
 {
 public:
   UpdateFilter(ScreenDriver *screenDriver,
-               ::subsystem::FrameBuffer *frameBuffer,
+               ::innate_subsystem::FrameBuffer *frameBuffer,
                critical_section *frameBufferCriticalSection,
                ::subsystem::LogWriter *log);
   ~UpdateFilter();
@@ -55,7 +55,7 @@ private:
   bool grab();
 
   ScreenDriver *m_screenDriver;
-  ::subsystem::FrameBuffer *m_frameBuffer;
+  ::innate_subsystem::FrameBuffer *m_frameBuffer;
   critical_section *m_fbMutex;
   GrabOptimizator m_grabOptimizator;
 

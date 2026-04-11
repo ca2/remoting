@@ -86,23 +86,24 @@ namespace remoting_remoting
       void stopListening();
 
       // Inherited from WindowsApplication
-      void registerWindowClass(WNDCLASS *wndClass);
-      static LRESULT CALLBACK wndProc(HWND hWnd, unsigned int msg, ::wparam wparam, ::lparam lparam);
-      virtual void createWindow(const ::scoped_string & scopedstrClassName);
-      int processMessages();
-
+      //void registerWindowClass(WNDCLASS *wndClass);
+      //static LRESULT CALLBACK wndProc(HWND hWnd, unsigned int msg, ::wparam wparam, ::lparam lparam);
+      //virtual void createWindow(const ::scoped_string & scopedstrClassName);
+      virtual void createApplicationMainTask() override;
+      //int processMessages();
+void defer_check_dead_instance();
       //public:
       // this scopedstrMessage must sended after accepted new listening-connection
-      static const int WM_USER_NEW_LISTENING = WM_USER + 1;
+      static const int _WM_USER_NEW_LISTENING = WM_USER + 1;
 
       // this scopedstrMessage need send if you need show login dialog
-      static const int WM_USER_SHOW_LOGIN_DIALOG = WM_USER + 2;
+      static const int _WM_USER_SHOW_LOGIN_DIALOG = WM_USER + 2;
 
       // this scopedstrMessage need send if you need show configuration dialog
-      static const int WM_USER_CONFIGURATION = WM_USER + 3;
+      static const int _WM_USER_CONFIGURATION = WM_USER + 3;
 
       // this scopedstrMessage need send if you need show about dialog
-      static const int WM_USER_ABOUT = WM_USER + 4;
+      static const int _WM_USER_ABOUT = WM_USER + 4;
 
       // This scopedstrMessage need send if you need reconnect to host.
       // ::lparam contained pointer to ConnectionData.
@@ -120,9 +121,13 @@ namespace remoting_remoting
       void stopListeningServer();
       void restartListeningServer();
 
-      void registerViewerWindowClass();
-      void unregisterViewerWindowClass();
-      static LRESULT CALLBACK wndProcViewer(HWND hWnd, unsigned int msg, ::wparam wparam, ::lparam lparam);
+
+      //void postStartDialog(int iStartDialogMessage);
+      //void startDialog(int iStartDialogMessage);
+      void onMainThreadMessage(int iMainThreadMessage) override;
+      //void registerViewerWindowClass();
+      //void unregisterViewerWindowClass();
+      //static LRESULT CALLBACK wndProcViewer(HWND hWnd, unsigned int msg, ::wparam wparam, ::lparam lparam);
 
       void runInstance(ConnectionData & sonData, const ::remoting::ConnectionConfig & config);
       void runInstance(const ::scoped_string & hostName, const ::remoting::ConnectionConfig & config);

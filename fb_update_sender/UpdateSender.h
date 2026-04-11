@@ -29,7 +29,7 @@
 #include "acme/subsystem/thread/Thread.h"
 #include "desktop/UpdateKeeper.h"
 #include "UpdateRequestListener.h"
-#include "acme/subsystem/framebuffer/FrameBuffer.h"
+#include "apex/innate_subsystem/framebuffer/FrameBuffer.h"
 #include "ViewPort.h"
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 #include "remoting/remoting_common/network/RfbInputGate.h"
@@ -58,7 +58,7 @@ public:
 
   // The sendServerInit() function sends first rfb init scopedstrMessage to a client
   // FIXME: The comment does not seem to be relevant.
-  void init(const ::int_size & viewPortDimension, const ::subsystem::PixelFormat & pf);
+  void init(const ::int_size & viewPortDimension, const ::innate_subsystem::PixelFormat & pf);
 
   // The triggerUpdate() function adds updateContainer to the UpdateKeeper,
   // gives new frame buffer properties if needed.
@@ -110,7 +110,7 @@ protected:
   bool getVideoFrozen();
 
   // The sendUpdate() function sends all stored updates to the client.
-  // Access to a ::subsystem::FrameBuffer data passes through the frameBuffer pointer
+  // Access to a ::innate_subsystem::FrameBuffer data passes through the frameBuffer pointer
   // of the function parameter.
   void sendUpdate();
 
@@ -141,11 +141,11 @@ protected:
 
   // The sendPalette() function sends pallete after a set color ::map request
   // by a client.
-  void sendPalette(::subsystem::PixelFormat *pf);
+  void sendPalette(::innate_subsystem::PixelFormat *pf);
 
   // Set new client pixel format. This function may be called from any thread.
   // New pixel format will take effect on sending next frame buffer update.
-  void setClientPixelFormat(const ::subsystem::PixelFormat & pf,
+  void setClientPixelFormat(const ::innate_subsystem::PixelFormat & pf,
                             bool clrMapEntries);
 
   void sendRectHeader(const ::int_rectangle &  rect, int encodingType);
@@ -153,10 +153,10 @@ protected:
                       int encodingType);
   void sendNewFBSize(::int_size *dim, bool extended);
   void sendFbInClientDim(const EncodeOptions *encodeOptions,
-                         const ::subsystem::FrameBuffer *fb,
+                         const ::innate_subsystem::FrameBuffer *fb,
                          const ::int_size & dim,
-                         const ::subsystem::PixelFormat & pf);
-  void sendCursorShapeUpdate(const ::subsystem::PixelFormat & fmt,
+                         const ::innate_subsystem::PixelFormat & pf);
+  void sendCursorShapeUpdate(const ::innate_subsystem::PixelFormat & fmt,
                              const CursorShape *cursorShape);
   void sendCursorPosUpdate();
   void sendCopyRect(const ::array_base<::int_rectangle> *rects, const Point *source);
@@ -164,11 +164,11 @@ protected:
   // Encode and send a ::list_base of rectangles via the specified encoder.
   void sendRectangles(Encoder *encoder,
                       const ::array_base<::int_rectangle> *rects,
-                      const ::subsystem::FrameBuffer *frameBuffer,
+                      const ::innate_subsystem::FrameBuffer *frameBuffer,
                       const EncodeOptions *encodeOptions);
 
   // This function paints black region in framebuffer.
-  void paintBlack(::subsystem::FrameBuffer *frameBuffer, const Region *blackRegion);
+  void paintBlack(::innate_subsystem::FrameBuffer *frameBuffer, const Region *blackRegion);
 
   // This function is used to split a region into a ::list_base of rectangles,
   // where actual splitting is performed by the specified encoder object.
@@ -177,7 +177,7 @@ protected:
   void splitRegion(Encoder *encoder,
                    const Region *region,
                    ::array_base<::int_rectangle> *rects,
-                   const ::subsystem::FrameBuffer *frameBuffer,
+                   const ::innate_subsystem::FrameBuffer *frameBuffer,
                    const EncodeOptions *encodeOptions);
 
   // Returns part of region with total area not much more than area
@@ -212,7 +212,7 @@ protected:
 
   UpdateKeeper *m_updateKeeper;
 
-  ::subsystem::FrameBuffer m_frameBuffer;
+  ::innate_subsystem::FrameBuffer m_frameBuffer;
   Desktop *m_desktop;
 
   CursorUpdates m_cursorUpdates;
@@ -234,7 +234,7 @@ protected:
   // will be safely copied to a local variable which then will be used while
   // encoding data. Thus, changes to m_newPixelFormat will take effect on next
   // framebuffer update.
-  ::subsystem::PixelFormat m_newPixelFormat;
+  ::innate_subsystem::PixelFormat m_newPixelFormat;
   critical_section m_newPixelFormatLocker;
 
   // This flag indicates that color ::map entries requested. If this flag is true

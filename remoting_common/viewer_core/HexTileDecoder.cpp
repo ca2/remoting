@@ -39,7 +39,7 @@ namespace remoting
    }
 
    void HexTileDecoder::decode(RfbInputGate *pinput,
-                               ::subsystem::FrameBuffer *pframebuffer,
+                               ::innate_subsystem::FrameBuffer *pframebuffer,
                                const ::int_rectangle &  dstRect)
    {
       // shorcut

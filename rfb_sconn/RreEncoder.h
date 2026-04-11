@@ -38,17 +38,17 @@ public:
 
   virtual void splitRectangle(const ::int_rectangle &  rect,
                               ::array_base<::int_rectangle> *rectList,
-                              const ::subsystem::FrameBuffer *serverFb,
+                              const ::innate_subsystem::FrameBuffer *serverFb,
                               const EncodeOptions *options);
 
   virtual void sendRectangle(const ::int_rectangle &  rect,
-                             const ::subsystem::FrameBuffer *serverFb,
+                             const ::innate_subsystem::FrameBuffer *serverFb,
                              const EncodeOptions *options);
 
 private:
   template <class PIXEL_T>
     void rreEncode(const ::int_rectangle &  r,
-                   const ::subsystem::FrameBuffer *frameBuffer);
+                   const ::innate_subsystem::FrameBuffer *frameBuffer);
 
   // Coordinates of subrectangles.
   ::array_base<::int_rectangle> m_rects;

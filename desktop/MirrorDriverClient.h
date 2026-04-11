@@ -27,7 +27,7 @@
 
 #include "UpdateKeeper.h"
 #include "UpdateListener.h"
-#include "acme/subsystem/framebuffer/FrameBuffer.h"
+#include "apex/innate_subsystem/framebuffer/FrameBuffer.h"
 #include "remoting/remoting_common/win_system/RegistryKey.h"
 #include "DisplayEsc.h"
 #include "remoting/remoting_common/win_system/Screen.h"
@@ -42,7 +42,7 @@ public:
   MirrorDriverClient(::subsystem::LogWriter *log);
   virtual ~MirrorDriverClient();
 
-  ::subsystem::PixelFormat getPixelFormat() const;
+  ::innate_subsystem::PixelFormat getPixelFormat() const;
   ::int_size getDimension() const;
 
   void *getBuffer();
@@ -106,7 +106,7 @@ private:
   bool m_isDisplayChanged;
   MessageWindow m_propertyChangeListenerWindow;
 
-  ::subsystem::PixelFormat m_pixelFormat;
+  ::innate_subsystem::PixelFormat m_pixelFormat;
   ::int_size m_dimension;
   Point m_leftTopCorner;
   Screen m_screen;

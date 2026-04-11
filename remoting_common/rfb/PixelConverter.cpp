@@ -39,8 +39,8 @@ namespace remoting
       reset();
    }
 
-   void PixelConverter::convert(const ::int_rectangle &  rect, ::subsystem::FrameBuffer *dstFb,
-                                const ::subsystem::FrameBuffer *srcFb) const
+   void PixelConverter::convert(const ::int_rectangle &  rect, ::innate_subsystem::FrameBuffer *dstFb,
+                                const ::innate_subsystem::FrameBuffer *srcFb) const
    {
       if (m_convertMode == NO_CONVERT) {
          dstFb->copyFrom(rect, srcFb, rect.left, rect.top);
@@ -48,13 +48,13 @@ namespace remoting
          int rectHeight = rect.height();
          int rectWidth = rect.width();
          int fbWidth = dstFb->getDimension().cx;
-         ::subsystem::PixelFormat dstPf = dstFb->getPixelFormat();
-         ::subsystem::PixelFormat srcPf = srcFb->getPixelFormat();
+         ::innate_subsystem::PixelFormat dstPf = dstFb->getPixelFormat();
+         ::innate_subsystem::PixelFormat srcPf = srcFb->getPixelFormat();
 
          unsigned int dstPixelSize = dstPf.bitsPerPixel / 8;
          unsigned int srcPixelSize = srcPf.bitsPerPixel / 8;
 
-         // FIXME: Make ::subsystem::FrameBuffer do the math.
+         // FIXME: Make ::innate_subsystem::FrameBuffer do the math.
          unsigned char *dstPixP = (unsigned char *)dstFb->getBuffer() +
                           (fbWidth * rect.top + rect.left) * dstPixelSize;
          unsigned char *srcPixP = (unsigned char *)srcFb->getBuffer() +
@@ -116,8 +116,8 @@ namespace remoting
       }
    }
 
-   const ::subsystem::FrameBuffer *
-   PixelConverter::convert(const ::int_rectangle &  rect, const ::subsystem::FrameBuffer *srcFb)
+   const ::innate_subsystem::FrameBuffer *
+   PixelConverter::convert(const ::int_rectangle &  rect, const ::innate_subsystem::FrameBuffer *srcFb)
    {
       if (m_convertMode == NO_CONVERT) {
          return srcFb;
@@ -126,7 +126,7 @@ namespace remoting
       const ::int_size fbSize = srcFb->getDimension();
       if (m_dstFrameBuffer == 0) {
          // No frame buffer allocated - construct new one from the scratch.
-         m_dstFrameBuffer = new ::subsystem::FrameBuffer;
+         m_dstFrameBuffer = new ::innate_subsystem::FrameBuffer;
          m_dstFrameBuffer->setProperties(fbSize, m_dstFormat);
       } else if (m_dstFrameBuffer->getDimension() != fbSize)
       {
@@ -151,8 +151,8 @@ namespace remoting
       }
    }
 
-   void PixelConverter::setPixelFormats(const ::subsystem::PixelFormat & dstPf,
-                                        const ::subsystem::PixelFormat & srcPf)
+   void PixelConverter::setPixelFormats(const ::innate_subsystem::PixelFormat & dstPf,
+                                        const ::innate_subsystem::PixelFormat & srcPf)
    {
       if (srcPf != m_srcFormat || dstPf != m_dstFormat) {
          // Reset both translation tables and the internal frame buffer.
@@ -183,8 +183,8 @@ namespace remoting
       return m_dstFormat.bitsPerPixel;
    }
 
-   void PixelConverter::fillHexBitsTable(const ::subsystem::PixelFormat & dstPf,
-                                         const ::subsystem::PixelFormat & srcPf)
+   void PixelConverter::fillHexBitsTable(const ::innate_subsystem::PixelFormat & dstPf,
+                                         const ::innate_subsystem::PixelFormat & srcPf)
    {
       m_hexBitsTable.resize(65536);
 
@@ -225,8 +225,8 @@ namespace remoting
       }
    }
 
-   void PixelConverter::fill32BitsTable(const ::subsystem::PixelFormat & dstPf,
-                                        const ::subsystem::PixelFormat & srcPf)
+   void PixelConverter::fill32BitsTable(const ::innate_subsystem::PixelFormat & dstPf,
+                                        const ::innate_subsystem::PixelFormat & srcPf)
    {
       unsigned int dstRedMax = dstPf.redMax;
       unsigned int dstGrnMax = dstPf.greenMax;

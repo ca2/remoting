@@ -150,6 +150,7 @@ void set_hover_false();
       //::pointer<impact_toolbar_button> m_pbuttonClose;
       //int m_iDesktopWidth = 1920;
       //float m_fScale;
+      ::pointer < ::innate_subsystem::FontInterface > m_pfont001;
       ::pointer<toolbar_button> m_pbuttonMinimize;
       ::pointer<toolbar_button> m_pbuttonRestore;
       ::pointer<toolbar_button> m_pbuttonClose;

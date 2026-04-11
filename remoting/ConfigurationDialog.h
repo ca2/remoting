@@ -72,7 +72,7 @@ namespace remoting_remoting
       //private:
       void updateControlValues();
       bool isInputValid();
-      bool testNum(::innate_subsystem::TextBox *tb, const ::scoped_string & scopedstrTbName);
+      bool testNum(::innate_subsystem::TextBoxInterface *tb, const ::scoped_string & scopedstrTbName);
       void onOkPressed();
    };
 } // namespace remoting_remoting

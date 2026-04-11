@@ -57,7 +57,7 @@ protected:
 
   Win32ScreenDriverFactory m_scrDriverFactory;
 
-  ::subsystem::PixelFormat m_oldPf;
+  ::innate_subsystem::PixelFormat m_oldPf;
 
   UpdateHandlerImpl *m_updateHandler;
   AnEventListener *m_extTerminationListener;

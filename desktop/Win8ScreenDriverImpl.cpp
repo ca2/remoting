@@ -94,7 +94,7 @@ void Win8ScreenDriverImpl::terminateDetection()
   m_detectionEnabled = false;
 }
 
-::subsystem::FrameBuffer *Win8ScreenDriverImpl::getScreenBuffer()
+::innate_subsystem::FrameBuffer *Win8ScreenDriverImpl::getScreenBuffer()
 {
   return &m_frameBuffer;
 }
@@ -137,7 +137,7 @@ void Win8ScreenDriverImpl::initDxgi()
     throw ::subsystem::Exception("Unable get all DXGI outputs for virtual screen");
   }
 
-  ::subsystem::PixelFormat pf = getDxPixelFormat();
+  ::innate_subsystem::PixelFormat pf = getDxPixelFormat();
   ::int_rectangle virtDeskBoundRect = virtDeskRegion.getBounds();
   m_frameBuffer.setProperties(&virtDeskBoundRect, &pf);
   m_frameBuffer.setColor(0, 0, 0);
@@ -259,7 +259,7 @@ bool Win8ScreenDriverImpl::isValid()
   return !m_hasRecoverableError && !m_hasCriticalError;
 }
 
-::subsystem::PixelFormat Win8ScreenDriverImpl::getDxPixelFormat() const
+::innate_subsystem::PixelFormat Win8ScreenDriverImpl::getDxPixelFormat() const
 {
   return StandardPixelFormatFactory::create32bppPixelFormat();
 }

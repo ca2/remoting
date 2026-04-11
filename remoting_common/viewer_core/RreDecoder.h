@@ -37,7 +37,7 @@ namespace remoting
 
    protected:
       virtual void decode(RfbInputGate *input,
-                          ::subsystem::FrameBuffer *framebuffer,
+                          ::innate_subsystem::FrameBuffer *framebuffer,
                           const ::int_rectangle &  dstRect);
    };
 } // namespace remoting

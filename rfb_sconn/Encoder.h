@@ -27,7 +27,7 @@ INCLUDED__
 
 //#include aaa_<vector>
 
-#include "acme/subsystem/framebuffer/FrameBuffer.h"
+#include "apex/innate_subsystem/framebuffer/FrameBuffer.h"
 #include "acme/exception/io.h"
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 #include "remoting/remoting_common/rfb/EncodingDefs.h"
@@ -84,7 +84,7 @@ public:
   // the state of PixelConverter that's why it cannot be declared const.
   virtual void splitRectangle(const ::int_rectangle &  rect,
                               ::array_base<::int_rectangle> *rectList,
-                              const ::subsystem::FrameBuffer *serverFb,
+                              const ::innate_subsystem::FrameBuffer *serverFb,
                               const EncodeOptions *options);
 
   // Encode and send the rectangle. The `serverFb' argument points to a frame
@@ -93,7 +93,7 @@ public:
   // encoders must convert the data from *serverFb explicitly, e.g. by calling
   // m_pixelConverter->convert().
   virtual void sendRectangle(const ::int_rectangle &  rect,
-                             const ::subsystem::FrameBuffer *serverFb,
+                             const ::innate_subsystem::FrameBuffer *serverFb,
                              const EncodeOptions *options);
 
 protected:

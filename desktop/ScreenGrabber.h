@@ -29,7 +29,7 @@
 
 #include "remoting/remoting_common/region/Point.h"
 #include "remoting/remoting_common/rfb/PixelFormat.h"
-#include "acme/subsystem/framebuffer/FrameBuffer.h"
+#include "apex/innate_subsystem/framebuffer/FrameBuffer.h"
 
 //
 // An abstract interface for screen grabbing.
@@ -78,7 +78,7 @@ public:
   */
   virtual bool grab(const ::int_rectangle &rect = {} ) = 0;
 
-  virtual ::subsystem::FrameBuffer *getScreenBuffer() { return &m_workFrameBuffer; }
+  virtual ::innate_subsystem::FrameBuffer *getScreenBuffer() { return &m_workFrameBuffer; }
   virtual void setWorkRect(::int_rectangle *workRect);
   virtual ::int_rectangle getWorkRect() const { return ::int_rectangle(m_offsetFrameBuffer.x,
                                                  m_offsetFrameBuffer.y,
@@ -108,7 +108,7 @@ protected:
   ::int_rectangle m_fullScreenRect;
   Point m_offsetFrameBuffer;
 
-  ::subsystem::FrameBuffer m_workFrameBuffer;
+  ::innate_subsystem::FrameBuffer m_workFrameBuffer;
 };
 
 //// __SCREENGRABBER_H__

@@ -27,7 +27,7 @@
 
 Win32ScreenDriver::Win32ScreenDriver(UpdateKeeper *updateKeeper,
                                      UpdateListener *updateListener,
-                                     ::subsystem::FrameBuffer *fb,
+                                     ::innate_subsystem::FrameBuffer *fb,
                                      critical_section *fbcritical_section, ::subsystem::LogWriter *log)
 : Win32ScreenDriverBaseImpl(updateKeeper, updateListener, fbcritical_section, log),
   m_poller(updateKeeper, updateListener, &m_screenGrabber, fb, fbcritical_section, log),
@@ -75,7 +75,7 @@ bool Win32ScreenDriver::grabFb(const ::int_rectangle &  rect)
   return m_screenGrabber.grab(rect);
 }
 
-::subsystem::FrameBuffer *Win32ScreenDriver::getScreenBuffer()
+::innate_subsystem::FrameBuffer *Win32ScreenDriver::getScreenBuffer()
 {
   return m_screenGrabber.getScreenBuffer();
 }

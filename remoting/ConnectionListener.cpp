@@ -57,7 +57,7 @@ namespace remoting_remoting
    {
       critical_section_lock al(&m_connectionsLock);
       m_connections.push_front(socket);
-      m_application->postMessage(remoting_impact::WM_USER_NEW_LISTENING);
+      m_application->postMainThreadMessage(remoting_impact::_WM_USER_NEW_LISTENING);
    }
 
    ::pointer < ::subsystem::SocketIPv4Interface > ConnectionListener::getNewConnection()

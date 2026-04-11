@@ -30,7 +30,7 @@
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 //#include "remoting/remoting_common/network/socket/SocketStream.h"
 //#include "remoting/remoting_common/network/socket/SocketIPv4.h"
-#include "acme/subsystem/framebuffer/FrameBuffer.h"
+#include "apex/innate_subsystem/framebuffer/FrameBuffer.h"
 
 //#include "remoting/remoting_common/region/::int_point.h"
 #include "acme/subsystem/thread/Thread.h"
@@ -291,7 +291,7 @@ namespace remoting
       // guaranteed to be applied immediately. It will be applied when allowed by
       // the protocol, and adapter's onNewFrameBuffer() will be called after that.
       //
-      void setPixelFormat(const ::subsystem::PixelFormat & viewerPixelFormat);
+      void setPixelFormat(const ::innate_subsystem::PixelFormat & viewerPixelFormat);
 
       //
       // Enable support for Dispatcher software which acts as a proxy and connects
@@ -489,7 +489,7 @@ namespace remoting
       //
       // Read pixel format from the data connection and return it.
       //
-      ::subsystem::PixelFormat readPixelFormat();
+      ::innate_subsystem::PixelFormat readPixelFormat();
 
       //
       // This method processes FramebufferUpdate server scopedstrMessage (code 0):
@@ -566,7 +566,7 @@ namespace remoting
       // Update properties (::int_size and PixelfFormat) of m_frameBuffer.
       //
       void setFbProperties(const ::int_size & fbDimension,
-                           const ::subsystem::PixelFormat & fbPixelFormat);
+                           const ::innate_subsystem::PixelFormat & fbPixelFormat);
 
       //
       // If m_isNewPixelFormat flag is set to true, then pixel format of the frame buffer
@@ -644,7 +644,7 @@ namespace remoting
       //
       // Mutex m_fbLock must locked into only this thread, else may be deadlock.
       critical_section m_fbLock;
-      ::subsystem::FrameBuffer m_frameBuffer;
+      ::innate_subsystem::FrameBuffer m_frameBuffer;
 
       // ::list_base of server dispalys
       ::array_base<::int_rectangle> m_desktops;
@@ -656,11 +656,11 @@ namespace remoting
       //
       // After finish of decoding Decoder copy data to m_frameBuffer.
       // This buffer is not need to blocking: read information is one-thread.
-      ::subsystem::FrameBuffer m_rectangleFb;
+      ::innate_subsystem::FrameBuffer m_rectangleFb;
 
       critical_section m_pixelFormatLock;
       bool m_isNewPixelFormat;
-      ::subsystem::PixelFormat m_viewerPixelFormat;
+      ::innate_subsystem::PixelFormat m_viewerPixelFormat;
 
       critical_section m_refreshingLock;
       bool m_isRefreshing;

@@ -26,7 +26,7 @@
 
 
 #include "acme/subsystem/node/Clipboard.h"
-#include "acme/subsystem/framebuffer/DibFrameBuffer.h"
+#include "apex/innate_subsystem/framebuffer/DibFrameBuffer.h"
 
 
 #include "ScaleManager.h"
@@ -59,11 +59,11 @@ namespace remoting_remoting
         virtual ~DesktopWindow();
         virtual void _defer_update_double_buffering();
         void setClipboardData(const ::scoped_string & strText);
-        void updateFramebuffer(const ::subsystem::FrameBuffer * pframebuffer,
+        void updateFramebuffer(const ::innate_subsystem::FrameBuffer * pframebuffer,
                                const ::int_rectangle &  dstRect);
         // this function must be called if size of image was changed
         // or the number of bits per pixel
-        void setNewFramebuffer(const ::subsystem::FrameBuffer * pframebuffer);
+        void setNewFramebuffer(const ::innate_subsystem::FrameBuffer * pframebuffer);
 
         // set scale of image, can -1 = Auto, in percent
         void setScale(int scale);
@@ -163,7 +163,7 @@ namespace remoting_remoting
 
         // frame buffer
         critical_section m_bufferLock;
-        ::subsystem::DibFrameBuffer m_framebuffer;
+        ::innate_subsystem::DibFrameBuffer m_framebuffer;
         // This variable save server dimension.
         // ::int_size of m_framebuffer can be large m_serverDimension.
         ::int_size m_serverDimension;
@@ -181,10 +181,10 @@ namespace remoting_remoting
 
     public:
         //void doDraw(DeviceContext *dc);
-        void onDraw(::innate_subsystem::Graphics * pgraphics, const ::int_rectangle & rectangle);
+        void onDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle);
         void scrollProcessing(int fbWidth, int fbHeight);
-        void drawBackground(::innate_subsystem::Graphics * pgraphics, const ::int_rectangle & rcMain, const ::int_rectangle & rcImage);
-        void drawImage(::innate_subsystem::Graphics * pgraphics, const ::int_rectangle & src, const ::int_rectangle & dst);
+        void drawBackground(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rcMain, const ::int_rectangle & rcImage);
+        void drawImage(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & src, const ::int_rectangle & dst);
         void repaint(const ::int_rectangle &  repaintRect);
         void calcClientArea();
     };

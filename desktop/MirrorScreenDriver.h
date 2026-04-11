@@ -48,7 +48,7 @@ public:
   virtual void terminateDetection();
 
   virtual ::int_size getScreenDimension();
-  virtual ::subsystem::FrameBuffer *getScreenBuffer();
+  virtual ::innate_subsystem::FrameBuffer *getScreenBuffer();
   virtual bool grab(const ::int_rectangle &  rect = 0);
 
   virtual bool getPropertiesChanged();
@@ -66,7 +66,7 @@ private:
 
   MirrorDriverClient *m_mirrorClient;
   unsigned long m_lastCounter;
-  ::subsystem::FrameBuffer m_frameBuffer;
+  ::innate_subsystem::FrameBuffer m_frameBuffer;
   // TO THINK: One may use a self mutex here, because do not
   // use external objects here.
   critical_section *m_fbMutex;

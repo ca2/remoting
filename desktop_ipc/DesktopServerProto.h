@@ -26,7 +26,7 @@
 
 
 #include "remoting/remoting_common/util/inttypes.h"
-#include "acme/subsystem/framebuffer/FrameBuffer.h"
+#include "apex/innate_subsystem/framebuffer/FrameBuffer.h"
 #include "remoting/remoting_common/region/Region.h"
 
 #include "remoting/remoting_common/region/Point.h"
@@ -40,9 +40,9 @@ protected:
   DesktopServerProto(BlockingGate *forwGate);
   virtual ~DesktopServerProto();
 
-  virtual void readPixelFormat(::subsystem::PixelFormat *pf,
+  virtual void readPixelFormat(::innate_subsystem::PixelFormat *pf,
                                BlockingGate *gate);
-  virtual void sendPixelFormat(const ::subsystem::PixelFormat & pf,
+  virtual void sendPixelFormat(const ::innate_subsystem::PixelFormat & pf,
                                BlockingGate *gate);
   virtual ::int_size readDimension(BlockingGate *gate);
   virtual void sendDimension(const ::int_size & dim,
@@ -58,9 +58,9 @@ protected:
   virtual void readRegion(Region *region,
                           BlockingGate *gate);
 
-  void sendFrameBuffer(const ::subsystem::FrameBuffer *srcFb, const ::int_rectangle &  srcRect,
+  void sendFrameBuffer(const ::innate_subsystem::FrameBuffer *srcFb, const ::int_rectangle &  srcRect,
                        BlockingGate *gate);
-  void readFrameBuffer(::subsystem::FrameBuffer *dstFb, const ::int_rectangle &  dstRect,
+  void readFrameBuffer(::innate_subsystem::FrameBuffer *dstFb, const ::int_rectangle &  dstRect,
                        BlockingGate *gate);
 
   virtual void sendNewClipboard(const ::scoped_string & newClipboard,
@@ -113,7 +113,7 @@ protected:
   static const unsigned char SOFT_INPUT_ENABLING_REQ = 51;
 
 private:
-  void checkPixelFormat(const ::subsystem::PixelFormat & pf);
+  void checkPixelFormat(const ::innate_subsystem::PixelFormat & pf);
   void checkRectangle(const ::int_rectangle &  rect);
   void checkDimension(const ::int_size & dim);
 };

@@ -271,7 +271,7 @@ namespace remoting
       wait();
    }
 
-   void RemoteViewerCore::setPixelFormat(const ::subsystem::PixelFormat & pixelFormat)
+   void RemoteViewerCore::setPixelFormat(const ::innate_subsystem::PixelFormat & pixelFormat)
    {
       m_plogwriter->debug("Pixel format will changed");
       critical_section_lock al(&m_pixelFormatLock);
@@ -292,7 +292,7 @@ namespace remoting
 
    bool RemoteViewerCore::updatePixelFormat()
    {
-      ::subsystem::PixelFormat pxFormat;
+      ::innate_subsystem::PixelFormat pxFormat;
       m_plogwriter->debug("Check pixel format change...");
       {
          critical_section_lock al(&m_pixelFormatLock);
@@ -554,9 +554,9 @@ namespace remoting
       }
    }
 
-   ::subsystem::PixelFormat RemoteViewerCore::readPixelFormat()
+   ::innate_subsystem::PixelFormat RemoteViewerCore::readPixelFormat()
    {
-      ::subsystem::PixelFormat pixelFormat;
+      ::innate_subsystem::PixelFormat pixelFormat;
       pixelFormat.bitsPerPixel = m_input->readUInt8();
       pixelFormat.colorDepth = m_input->readUInt8();
       pixelFormat.bigEndian = !!m_input->readUInt8();
@@ -831,13 +831,13 @@ namespace remoting
    }
 
    void RemoteViewerCore::setFbProperties(const ::int_size & fbDimension,
-                                          const ::subsystem::PixelFormat & fbPixelFormat)
+                                          const ::innate_subsystem::PixelFormat & fbPixelFormat)
    {
 #ifdef _DEMO_VERSION_
       m_watermarksController.setNewFbProperties(&fbDimension->getRect(), fbPixelFormat);
 #endif
 
-      const ::subsystem::PixelFormat &pxFormat = fbPixelFormat;
+      const ::innate_subsystem::PixelFormat &pxFormat = fbPixelFormat;
       ::string pxString;
       pxString.formatf("[bits-per-pixel: {}, depth: {}, big-endian-flag: {}, "
                       "true-color-flag: is set, " // true color always is set
@@ -1327,7 +1327,7 @@ namespace remoting
     * Server send:
     * 2           - U16         - framebuffer-width
     * 2           - U16         - framebuffer-height
-    * 16          - ::subsystem::PixelFormat - server-pixel-format
+    * 16          - ::innate_subsystem::PixelFormat - server-pixel-format
     * 4           - U32         - name-length
     * name-length - U8 array    - name-string
     */
@@ -1345,7 +1345,7 @@ namespace remoting
       unsigned short width = m_input->readUInt16();
       unsigned short height = m_input->readUInt16();
       ::int_size screenDimension(width, height);
-      ::subsystem::PixelFormat serverPixelFormat = readPixelFormat();
+      ::innate_subsystem::PixelFormat serverPixelFormat = readPixelFormat();
 
       {
          critical_section_lock al(&m_fbLock);

@@ -30,7 +30,7 @@
 
 namespace remoting
 {
-   FbUpdateNotifier::FbUpdateNotifier(::subsystem::FrameBuffer *fb, critical_section *fbLock, ::subsystem::LogWriter *logWriter, WatermarksController* wmController)
+   FbUpdateNotifier::FbUpdateNotifier(::innate_subsystem::FrameBuffer *fb, critical_section *fbLock, ::subsystem::LogWriter *logWriter, WatermarksController* wmController)
    : m_frameBuffer(fb),
      m_fbLock(fbLock),
      m_plogwriter(logWriter),

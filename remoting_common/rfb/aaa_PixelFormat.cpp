@@ -26,12 +26,12 @@
 
 // #include aaa_<string.h>
 
-::subsystem::PixelFormat::::subsystem::PixelFormat()
+::innate_subsystem::PixelFormat::::innate_subsystem::PixelFormat()
 {
-  memset(this, 0, sizeof(::subsystem::PixelFormat));
+  memset(this, 0, sizeof(::innate_subsystem::PixelFormat));
 }
 
-void ::subsystem::PixelFormat::initBigEndianByNative()
+void ::innate_subsystem::PixelFormat::initBigEndianByNative()
 {
   union {
     char test;
@@ -41,7 +41,7 @@ void ::subsystem::PixelFormat::initBigEndianByNative()
   bigEndian = (testBigEndian.test == 0);
 }
 
-bool ::subsystem::PixelFormat::operator ==(const ::subsystem::PixelFormat & pf) const {
+bool ::innate_subsystem::PixelFormat::operator ==(const ::innate_subsystem::PixelFormat & pf) const {
   return bitsPerPixel == pf.bitsPerPixel &&
          colorDepth   == pf.colorDepth &&
          redMax       == pf.redMax &&

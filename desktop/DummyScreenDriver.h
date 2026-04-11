@@ -46,11 +46,11 @@ public:
 
   virtual ::int_size getScreenDimension();
   virtual bool grabFb(const ::int_rectangle &rect = {} );
-  virtual ::subsystem::FrameBuffer *getScreenBuffer();
+  virtual ::innate_subsystem::FrameBuffer *getScreenBuffer();
   virtual bool getScreenPropertiesChanged();
   virtual bool getScreenSizeChanged();
   virtual bool applyNewScreenProperties();
-  bool grabCursorShape(const ::subsystem::PixelFormat & pf) { return true; };
+  bool grabCursorShape(const ::innate_subsystem::PixelFormat & pf) { return true; };
   const CursorShape *getCursorShape() { return &m_cursorShape; };
   Point getCursorPosition() { return Point(); };
 
@@ -62,7 +62,7 @@ protected:
   virtual void onTerminate();
 
 private:
-  ::subsystem::FrameBuffer m_workFrameBuffer;
+  ::innate_subsystem::FrameBuffer m_workFrameBuffer;
   CursorShape m_cursorShape;
   UpdateKeeper * m_updateKeeper;
   UpdateListener * m_updateListener;

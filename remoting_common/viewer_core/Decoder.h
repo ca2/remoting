@@ -28,7 +28,7 @@
 //#include "log_writer/LogWriter.h"
 #include "remoting/remoting_common/network/RfbInputGate.h"
 
-#include "acme/subsystem/framebuffer/FrameBuffer.h"
+#include "apex/innate_subsystem/framebuffer/FrameBuffer.h"
 #include "remoting/remoting_common/rfb/EncodingDefs.h"
 ////#include "acme/subsystem/thread/critical_section.h"
 ////#include "acme/subsystem/thread/critical_section.h"

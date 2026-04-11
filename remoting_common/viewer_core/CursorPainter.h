@@ -34,7 +34,7 @@ namespace remoting
    class CLASS_DECL_REMOTING_COMMON CursorPainter
    {
    public:
-      CursorPainter(::subsystem::FrameBuffer *fb, ::subsystem::LogWriter *logWriter);
+      CursorPainter(::innate_subsystem::FrameBuffer *fb, ::subsystem::LogWriter *logWriter);
       virtual ~CursorPainter();
 
       // this functions is thread-safe for private data of cursor, but need external lock of frame buffer
@@ -54,7 +54,7 @@ namespace remoting
 
       ::subsystem::LogWriter *m_plogwriter;
 
-      ::subsystem::FrameBuffer *const m_fb;
+      ::innate_subsystem::FrameBuffer *const m_fb;
 
       critical_section m_lock;
       CursorShape m_cursor;
@@ -65,7 +65,7 @@ namespace remoting
       // Last painted position of pointer
       ::int_point m_lastPosition;
       // Copy of rect frame buffer under cursor
-      ::subsystem::FrameBuffer m_cursorOverlay;
+      ::innate_subsystem::FrameBuffer m_cursorOverlay;
 
       // Flag is set, if cursor is showed.
       bool m_isExist;

@@ -95,7 +95,7 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
   dumpPath.formatf("{}\\{}\\crash.dmp", specFolder,
                                            ProductNames::PRODUCT_NAME);
 
-  if (guiEnabled && main_subsystem()->message_box(0,
+  if (guiEnabled && main_subsystem()->message_box({},
                                "Apllication crashing. Do you"
                                " want save debug information?",
                                ProductNames::PRODUCT_NAME,
@@ -150,7 +150,7 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
       ::string succMess;
       succMess.formatf("The debug information has been successfully"
                       " saved to the {} file", dumpPath);
-      main_subsystem()->message_box(0, succMess, ProductNames::PRODUCT_NAME, ::user::e_message_box_ok);
+      main_subsystem()->message_box({}, succMess, ProductNames::PRODUCT_NAME, ::user::e_message_box_ok);
     }
     m_notifier->onCrash(&dumpPath);
 

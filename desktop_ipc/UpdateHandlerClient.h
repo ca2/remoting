@@ -44,7 +44,7 @@ public:
   virtual bool checkForUpdates(Region *region);
 
 protected:
-  virtual void getScreenProperties(::subsystem::PixelFormat *pf, ::int_size *dim);
+  virtual void getScreenProperties(::innate_subsystem::PixelFormat *pf, ::int_size *dim);
   virtual void sendInit(BlockingGate *gate);
 
   // To catch update event

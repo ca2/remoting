@@ -42,7 +42,7 @@ void CursorUpdates::update(const EncodeOptions *encodeOptions,
                            const ::int_rectangle & viewPort,
                            bool shareOnlyApp,
                            const Region *shareAppRegion,
-                           ::subsystem::FrameBuffer *fb,
+                           ::innate_subsystem::FrameBuffer *fb,
                            CursorShape *cursorShape)
 {
   // Check cursor events. If they are outside of shared region then ignore they.
@@ -130,7 +130,7 @@ void CursorUpdates::update(const EncodeOptions *encodeOptions,
   }
 }
 
-void CursorUpdates::restoreFrameBuffer(::subsystem::FrameBuffer *fb)
+void CursorUpdates::restoreFrameBuffer(::innate_subsystem::FrameBuffer *fb)
 {
   critical_section_lock al(&m_curPosLocMut);
   ::int_rectangle dstRect = m_shapeBackground.getDimension();
@@ -139,7 +139,7 @@ void CursorUpdates::restoreFrameBuffer(::subsystem::FrameBuffer *fb)
   // m_shapeBackground.setDimension(&::int_size(0, 0));
 }
 
-void CursorUpdates::drawCursor(UpdateContainer *updCont, ::subsystem::FrameBuffer *fb)
+void CursorUpdates::drawCursor(UpdateContainer *updCont, ::innate_subsystem::FrameBuffer *fb)
 {
   critical_section_lock al(&m_curPosLocMut);
   // Add previous background rectangle to the changed region.

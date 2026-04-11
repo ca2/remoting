@@ -111,7 +111,7 @@ namespace remoting_remoting
 
         command.format("explorer /select,{}", pathLog);
 
-        ::innate_subsystem::Process explorer;
+        ::subsystem::Process explorer;
 
        explorer.initialize_process(command);
 
@@ -124,25 +124,25 @@ namespace remoting_remoting
 
     bool ConfigurationDialog::onInitDialog()
     {
-        subclassControlById(m_showToolBars, IDC_CSHOWTOOLBARS);
-        subclassControlById(m_warnAtSwitching, IDC_CWARNATSW);
-        subclassControlById(m_numberConn, IDC_ENUMCON);
-        subclassControlById(m_snumConn, IDC_SNUMCON);
-        subclassControlById(m_reverseConn, IDC_EREVCON);
-        subclassControlById(m_sreverseConn, IDC_SREVCON);
-        subclassControlById(m_verbLvl, IDC_EVERBLVL);
-        subclassControlById(m_sverbLvl, IDC_SVERBLVL);
-        subclassControlById(m_logging, IDC_ELOGGING);
-        subclassControlById(m_openLogDir, IDC_OPEN_LOG_FOLDER_BUTTON);
+        dialog_item(m_checkboxShowToolBars, IDC_CSHOWTOOLBARS);
+        dialog_item(m_checkboxWarnAtSwitching, IDC_CWARNATSW);
+        dialog_item(m_textboxNumberConn, IDC_ENUMCON);
+        dialog_item(m_spincontrolNumConn, IDC_SNUMCON);
+        dialog_item(m_textboxReverseConn, IDC_EREVCON);
+        dialog_item(m_spincontrolReverseConn, IDC_SREVCON);
+        dialog_item(m_textboxVerbLvl, IDC_EVERBLVL);
+        dialog_item(m_spincontrolVerbLvl, IDC_SVERBLVL);
+        dialog_item(m_textboxLogging, IDC_ELOGGING);
+        dialog_item(m_controlOpenLogDir, IDC_OPEN_LOG_FOLDER_BUTTON);
 
-        m_snumConn.setRange(0, 1024);
-        m_snumConn.setBuddy(&m_numberConn);
+        m_spincontrolNumConn.setRange(0, 1024);
+        m_spincontrolNumConn.setBuddy(&m_textboxNumberConn);
 
-        m_sreverseConn.setRange32(1, 65535);
-        m_sreverseConn.setBuddy(&m_reverseConn);
+        m_spincontrolReverseConn.setRange32(1, 65535);
+        m_spincontrolReverseConn.setBuddy(&m_textboxReverseConn);
 
-        m_sverbLvl.setRange(0, 9);
-        m_sverbLvl.setBuddy(&m_verbLvl);
+        m_spincontrolVerbLvl.setRange(0, 9);
+        m_spincontrolVerbLvl.setBuddy(&m_textboxVerbLvl);
 
         updateControlValues();
 
@@ -156,42 +156,43 @@ namespace remoting_remoting
         ::string txt;
 
         txt.formatf("{}", config->getListenPort());
-        m_reverseConn.setText(txt);
+        m_textboxReverseConn.setText(txt);
 
         txt.formatf("{}", config->getLogLevel());
-        m_verbLvl.setText(txt);
+        m_textboxVerbLvl.setText(txt);
 
         txt.formatf("{}", config->getHistoryLimit());
-        m_numberConn.setText(txt);
+        m_textboxNumberConn.setText(txt);
 
-        m_showToolBars.check(config->isToolbarShown());
-        m_warnAtSwitching.check(config->isPromptOnFullscreenEnabled());
+        m_checkboxShowToolBars.setChecked(config->isToolbarShown());
+        m_checkboxWarnAtSwitching.setChecked(config->isPromptOnFullscreenEnabled());
 
         ::string logFileName;
         logFileName.formatf("{}\\{}.log", config->getPathToLogFile(), LogNames::VIEWER_LOG_FILE_STUB_NAME);
-        m_logging.setText(logFileName);
+        m_textboxLogging.setText(logFileName);
     }
 
     bool ConfigurationDialog::isInputValid()
     {
-        if (!testNum(&m_reverseConn, main_subsystem()->string_table()->getString(IDS_CONFIGURATION_LISTEN_PORT))) {
+        if (!testNum(&m_textboxReverseConn, main_subsystem()->string_table()->getString(IDS_CONFIGURATION_LISTEN_PORT))) {
             return false;
         }
-        if (!testNum(&m_verbLvl, main_subsystem()->string_table()->getString(IDS_CONFIGURATION_LOG_LEVEL))) {
+        if (!testNum(&m_textboxVerbLvl, main_subsystem()->string_table()->getString(IDS_CONFIGURATION_LOG_LEVEL))) {
             return false;
         }
-        if (!testNum(&m_numberConn, main_subsystem()->string_table()->getString(IDS_CONFIGURATION_HISTORY_LIMIT))) {
+        if (!testNum(&m_textboxReverseConn, main_subsystem()->string_table()->getString(IDS_CONFIGURATION_HISTORY_LIMIT))) {
             return false;
         }
         return true;
     }
 
-    bool ConfigurationDialog::testNum(TextBox *tb, const ::scoped_string & scopedstrTbName)
+    bool ConfigurationDialog::testNum(innate_subsystem::TextBoxInterface *tb, const ::scoped_string & scopedstrTbName)
     {
         //::string text;
         auto text = tb->getText();
 
-        if (StringParser::tryParseInt(text)) {
+        if (main_subsystem()->string_parser()->tryParseInt(text))
+        {
             return true;
         }
 
@@ -217,16 +218,16 @@ namespace remoting_remoting
         ::string text;
         int intVal;
 
-        text = m_reverseConn.getText();
+        text = m_textboxReverseConn.getText();
         main_subsystem()->string_parser()->parseInt(text, &intVal);
         config->setListenPort(intVal);
 
-        text = m_verbLvl.getText();
+        text = m_textboxVerbLvl.getText();
         main_subsystem()->string_parser()->parseInt(text, &intVal);
         config->setLogLevel((enum_trace_level)intVal);
 
         int oldLimit = config->getHistoryLimit();
-        text=m_numberConn.getText();
+        text=m_textboxNumberConn.getText();
         main_subsystem()->string_parser()->parseInt(text, &intVal);
         config->setHistoryLimit(intVal);
 
@@ -234,10 +235,10 @@ namespace remoting_remoting
             config->getConnectionHistory()->truncate();
         }
 
-        config->showToolbar(m_showToolBars.isChecked());
-        config->promptOnFullscreen(m_warnAtSwitching.isChecked());
+        config->showToolbar(m_checkboxShowToolBars.isChecked());
+        config->promptOnFullscreen(m_checkboxWarnAtSwitching.isChecked());
 
-        SettingsManager *sm = ViewerSettingsManager::getInstance();
+        auto *sm = ::remoting::ViewerSettingsManager::getInstance();
         config->saveToStorage(sm);
     }
 

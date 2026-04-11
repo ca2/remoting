@@ -175,19 +175,19 @@ namespace remoting_remoting
             case WM_SYSDEADCHAR:
                 return onDeadChar(wParam, lParam);
             // case WM_CHANGECBCHAIN:
-            //     if ((HWND)wParam == m_hwndNextViewer)
+            //     if ((HWND)wParam == (HWND) _HWND()NextViewer)
             //     {
-            //         m_hwndNextViewer = (HWND)lParam;
+            //         (HWND) _HWND()NextViewer = (HWND)lParam;
             //     }
-            //     else if (m_hwndNextViewer != NULL)
+            //     else if ((HWND) _HWND()NextViewer != NULL)
             //     {
-            //         SendMessage(m_hwndNextViewer, scopedstrMessage, wParam, lParam);
+            //         SendMessage((HWND) _HWND()NextViewer, scopedstrMessage, wParam, lParam);
             //     }
             //     return true;
             // case WM_DRAWCLIPBOARD:
             // {
             //     bool ok = onDrawClipboard();
-            //     SendMessage(m_hwndNextViewer, scopedstrMessage, wParam, lParam);
+            //     SendMessage((HWND) _HWND()NextViewer, scopedstrMessage, wParam, lParam);
             //     return ok;
             // }
             case WM_CREATE:
@@ -306,11 +306,11 @@ namespace remoting_remoting
         return true;
     }
 
-    bool DesktopWindow::onMouseEx(unsigned int uMessage, int iButtonMask, unsigned short wheelSpeed, POINT point)
+    bool DesktopWindow::onMouseEx(unsigned int uMessage, int iButtonMask, unsigned short wheelSpeed, const ::int_point & point)
     {
 
         RECT rcClient;
-        if (::GetClientRect(m_hwnd, &rcClient))
+        if (::GetClientRect((HWND) _HWND(), &rcClient))
         {
 
             if (point.x < -1 || point.y < -1 || point.x >width(rcClient) || point.y> height(rcClient))
@@ -335,10 +335,10 @@ namespace remoting_remoting
 
                 auto hwndCapture = ::GetCapture();
 
-                if (hwndCapture != m_hwnd)
+                if (hwndCapture != (HWND) _HWND())
                 {
 
-                    ::SetCapture(m_hwnd);
+                    ::SetCapture((HWND) _HWND());
 
                     m_viewerCore->m_fbUpdateNotifier.m_cursorPainter.m_bHideCursor = false;
                     m_bShowCursor = false;
@@ -405,7 +405,7 @@ namespace remoting_remoting
         return false;
     }
 
-    bool DesktopWindow::onMouse(unsigned char mouseButtons, unsigned short wheelSpeed, POINT position)
+    bool DesktopWindow::onMouse(unsigned char mouseButtons, unsigned short wheelSpeed, const ::int_point & position)
     {
         if (m_bMinimized)
         {
@@ -435,16 +435,16 @@ namespace remoting_remoting
         // If swap of mouse button is enabled, then swap button.
         if (m_pconnectionconfig->isMouseSwapEnabled() && mouseButtons)
         {
-            bool bSecond = !!(mouseButtons & MOUSE_MDOWN);
-            bool bThird = !!(mouseButtons & MOUSE_RDOWN);
-            mouseButtons &= ~(MOUSE_MDOWN | MOUSE_RDOWN);
+            bool bSecond = !!(mouseButtons & ::innate_subsystem::e_mouse_middle);
+            bool bThird = !!(mouseButtons & ::innate_subsystem::e_mouse_right);
+            mouseButtons &= ~(::innate_subsystem::e_mouse_middle | ::innate_subsystem::e_mouse_right);
             if (bSecond)
             {
-                mouseButtons |= MOUSE_RDOWN;
+                mouseButtons |= ::innate_subsystem::e_mouse_right;
             }
             if (bThird)
             {
-                mouseButtons |= MOUSE_MDOWN;
+                mouseButtons |= ::innate_subsystem::e_mouse_middle;
             }
         }
 
@@ -455,7 +455,7 @@ namespace remoting_remoting
         //p.y *= m_iDivisor;
 
         // Translate coordinates from the Viewer Window to Desktop Window.
-        POINTS mousePos = getViewerCoord(p.x, p.y);
+        auto mousePos = getViewerCoord(p.x, p.y);
         ::int_point pos;
         pos.x = mousePos.x;
         pos.y = mousePos.y;
@@ -466,9 +466,9 @@ namespace remoting_remoting
             unsigned char buttons = mouseButtons;
 
             // If posititon of mouse isn't change, then don't send event to server.
-            if (buttons != m_previousMouseState || !pos.isEqualTo(&m_previousMousePos))
+            if (buttons != m_previousMouseState || pos != m_previousMousePos)
             {
-                int wheelMask = MOUSE_WUP | MOUSE_WDOWN;
+                int wheelMask = ::innate_subsystem::e_mouse_wheel_up | ::innate_subsystem::e_mouse_wheel_down;
 
                 // Update previously position of mouse.
                 m_previousMouseState = buttons & ~wheelMask;
@@ -547,7 +547,7 @@ namespace remoting_remoting
 
     bool DesktopWindow::onDrawClipboard()
     {
-        if (!IsWindowVisible(getHWnd()) || !m_pconnectionconfig->isClipboardEnabled())
+        if (!isVisible() || !m_pconnectionconfig->isClipboardEnabled())
         {
             return false;
         }
@@ -577,7 +577,7 @@ namespace remoting_remoting
     }
 
     //void DesktopWindow::doDraw(HDC hdc, const ::int_rectangle &rectangle)
-   void DesktopWindow::doDraw(::innate_subsystem::DeviceContextInterface * pdevicecontext, const ::int_rectangle &rectangle)
+   void DesktopWindow::onDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle &rectangle)
     {
         critical_section_lock al(&m_bufferLock);
         int fbWidth = m_framebuffer.getDimension().cx;
@@ -585,9 +585,9 @@ namespace remoting_remoting
 
         if (!fbWidth || !fbHeight)
         {
-            ::remoting::Graphics graphics(hdc);
+            //::remoting::Graphics graphics(hdc);
 
-            graphics.fillRect(m_clientArea.left, m_clientArea.top, m_clientArea.right, m_clientArea.bottom, &m_brush);
+            pgraphics->fillRect(m_clientArea, &m_brush);
             return;
         }
 
@@ -627,17 +627,17 @@ namespace remoting_remoting
 
         if (iWidth || iHeight)
         {
-            drawBackground(hdc, ::windows::as_RECT(m_clientArea), ::windows::as_RECT(::windows::as_RECT(dst)));
+            drawBackground(pgraphics, ::windows::as_RECT(m_clientArea), ::windows::as_RECT(::windows::as_RECT(dst)));
         }
 
-        drawImage(hdc, ::windows::as_RECT(src), ::windows::as_RECT(dst));
+        drawImage(pgraphics, ::windows::as_RECT(src), ::windows::as_RECT(dst));
 
         if (m_premotingtoolbar)
         {
 
             //Graphics graphics(hdc);
             //m_premotingtoolbar->__000OnTopDraw(&graphics);
-            m_premotingtoolbar->__000OnTopDraw(hdc, rectangle);
+            m_premotingtoolbar->__000OnTopDraw(pgraphics, rectangle);
         }
     }
 
@@ -743,39 +743,39 @@ namespace remoting_remoting
         calculateWndSize(bChanged);
     }
 
-    void DesktopWindow::drawBackground(HDC hdc, const RECT &rcMain, const RECT &rcImage)
+    void DesktopWindow::drawBackground(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rcMain, const ::int_rectangle & rcImage)
     {
-        ::remoting::Graphics graphics(hdc);
+        //::remoting::Graphics graphics(hdc);
 
         // top rectangle
-        graphics.fillRect(rcMain.left, rcMain.top, rcMain.right, rcImage.top, &m_brush);
+        pgraphics->fillRect({rcMain.left, rcMain.top, rcMain.right, rcImage.top}, &m_brush);
         // left rectangle
-        graphics.fillRect(rcMain.left, rcImage.top, rcImage.left, rcImage.bottom, &m_brush);
+        pgraphics->fillRect({rcMain.left, rcImage.top, rcImage.left, rcImage.bottom}, &m_brush);
         // bottom rectangle
-        graphics.fillRect(rcMain.left, rcImage.bottom, rcMain.right, rcMain.bottom, &m_brush);
+        pgraphics->fillRect({rcMain.left, rcImage.bottom, rcMain.right, rcMain.bottom}, &m_brush);
         // right rectangle
-        graphics.fillRect(rcImage.right, rcImage.top, rcMain.right, rcImage.bottom, &m_brush);
+        pgraphics->fillRect({rcImage.right, rcImage.top, rcMain.right, rcImage.bottom}, &m_brush);
     }
 
     void DesktopWindow::calcClientArea()
     {
-        if (getHWnd())
+        if (isWindow())
         {
-            RECT rc;
+        //    RECT rc;
 
-            getClientRect(&rc);
+            auto rc = getClientRect();
             m_clientArea = rc;
             m_scManager.setWindow(m_clientArea);
         }
     }
 
-    void DesktopWindow::drawImage(HDC hdc, const RECT &rectangleSource, const RECT &rectangleTarget)
+    void DesktopWindow::drawImage(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangleSource, const ::int_rectangle & rectangleTarget)
     {
         ::int_rectangle rc_src = rectangleSource;
         ::int_rectangle rc_dest = rectangleTarget;
 
         critical_section_lock al(&m_bufferLock);
-        m_framebuffer.setTargetDC(hdc);
+        m_framebuffer.setTargetDeviceContext(pgraphics->device_context());
         ::int_rectangle rSource = rectangleSource;
 
         //int iDivisor = m_iDivisor;
@@ -807,7 +807,7 @@ namespace remoting_remoting
 
     bool DesktopWindow::onDestroy() { return true; }
 
-    void DesktopWindow::updateFramebuffer(const ::subsystem::FrameBuffer *pframebuffer, const ::int_rectangle &dstRect)
+    void DesktopWindow::updateFramebuffer(const ::innate_subsystem::FrameBuffer *pframebuffer, const ::int_rectangle &dstRect)
     {
         // This code doesn't require blocking of m_framebuffer.
         //
@@ -826,7 +826,7 @@ namespace remoting_remoting
         repaint(dstRect);
     }
 
-    void DesktopWindow::setNewFramebuffer(const ::subsystem::FrameBuffer *pframebuffer)
+    void DesktopWindow::setNewFramebuffer(const ::innate_subsystem::FrameBuffer *pframebuffer)
     {
         ::int_size dimension = pframebuffer->getDimension();
         ::int_size olddimension = m_framebuffer.getDimension();
@@ -850,7 +850,7 @@ namespace remoting_remoting
                 dimension.cx = alignWidth * 4;
                 int alignHeight = (dimension.cy + 3) / 4;
                 dimension.cy = alignHeight * 4;
-                m_framebuffer.setProperties(dimension, pframebuffer->getPixelFormat(), getHWnd());
+                m_framebuffer.setProperties(dimension, pframebuffer->getPixelFormat(), operating_system_window());
                 m_framebuffer.setColor(0, 0, 0);
                 m_scManager.setScreenResolution(dimension.cx, dimension.cy);
             }
@@ -916,16 +916,16 @@ namespace remoting_remoting
         m_scManager.setScale(scale);
         m_winResize = true;
         // Invalidate all area of desktop window.
-        if (m_hwnd != 0)
+        if ((HWND) _HWND() != 0)
         {
             redraw();
         }
     }
 
-    POINTS DesktopWindow::getViewerCoord(long xPos, long yPos)
+    ::int_point DesktopWindow::getViewerCoord(long xPos, long yPos)
     {
         ::int_rectangle rect;
-        POINTS p;
+        ::int_point p;
 
         m_scManager.getDestinationRect(&rect);
         // it checks this point in the rect
@@ -981,7 +981,7 @@ namespace remoting_remoting
 
     bool DesktopWindow::getAltState() const { return m_altDown; }
 
-    void DesktopWindow::sendKey(WCHAR key, bool pressed)
+    void DesktopWindow::sendKey(int key, bool pressed)
     {
         m_rfbKeySym->sendModifier(static_cast<unsigned char>(key), pressed);
     }

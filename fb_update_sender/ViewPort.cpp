@@ -104,7 +104,7 @@ void ViewPort::update(const ::int_size & fbDimension)
   if (m_rect.width() < 0 || m_rect.height() < 0) {
     m_rect.Null();
   }
-  m_plogwriter->debug("Constrained (to the ::subsystem::FrameBuffer dimension) view port coordinates: ({}, {} %dx{})",
+  m_plogwriter->debug("Constrained (to the ::innate_subsystem::FrameBuffer dimension) view port coordinates: ({}, {} %dx{})",
     rect.left, rect.top, rect.width(), rect.height());
 }
 

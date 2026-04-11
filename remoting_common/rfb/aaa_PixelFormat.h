@@ -28,13 +28,13 @@ namespace subsystem
 {
 
 
-struct CLASS_DECL_ACME ::subsystem::PixelFormat
+struct CLASS_DECL_ACME ::innate_subsystem::PixelFormat
 {
-  ::subsystem::PixelFormat();
+  ::innate_subsystem::PixelFormat();
   // Initializes the bigEndian field by native machine value.
   void initBigEndianByNative();
 
-  bool operator == (const ::subsystem::PixelFormat & pf) const;
+  bool operator == (const ::innate_subsystem::PixelFormat & pf) const;
 
   unsigned short bitsPerPixel;
   unsigned short colorDepth;

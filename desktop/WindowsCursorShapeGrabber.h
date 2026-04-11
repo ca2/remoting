@@ -35,12 +35,12 @@ public:
   WindowsCursorShapeGrabber(void);
   virtual ~WindowsCursorShapeGrabber(void);
 
-  virtual bool grab(const ::subsystem::PixelFormat & pixelFormat);
+  virtual bool grab(const ::innate_subsystem::PixelFormat & pixelFormat);
 
   virtual bool isCursorShapeChanged();
 
 private:
-  bool grabPixels(const ::subsystem::PixelFormat & pixelFormat);
+  bool grabPixels(const ::innate_subsystem::PixelFormat & pixelFormat);
 
   HCURSOR getHCursor();
 

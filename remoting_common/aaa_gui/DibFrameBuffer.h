@@ -25,13 +25,13 @@
 #pragma once
 
 
-#include "acme/subsystem/framebuffer/FrameBuffer.h"
+#include "apex/innate_subsystem/framebuffer/FrameBuffer.h"
 #include "remoting/remoting_common/win_system/DibSection.h"
 
 // This class is a wrapper for a FramBuffer and a DIB section.
-// It changes DIB section proerties by oneself according to ::subsystem::FrameBuffer
-// properties (such as width, height and ::subsystem::PixelFormat)
-class CLASS_DECL_REMOTING_COMMON DibFrameBuffer : public ::subsystem::FrameBuffer
+// It changes DIB section proerties by oneself according to ::innate_subsystem::FrameBuffer
+// properties (such as width, height and ::innate_subsystem::PixelFormat)
+class CLASS_DECL_REMOTING_COMMON DibFrameBuffer : public ::innate_subsystem::FrameBuffer
 {
 public:
   DibFrameBuffer();
@@ -40,23 +40,23 @@ public:
   virtual void setColor(unsigned char reg, unsigned char green, unsigned char blue);
   virtual void fillRect(const ::int_rectangle &  dstRect, unsigned int color);
 
-  virtual bool isEqualTo(const ::subsystem::FrameBuffer *frameBuffer);
+  virtual bool isEqualTo(const ::innate_subsystem::FrameBuffer *frameBuffer);
 
-  virtual bool copyFrom(const ::int_rectangle &  dstRect, const ::subsystem::FrameBuffer *srcFrameBuffer,
+  virtual bool copyFrom(const ::int_rectangle &  dstRect, const ::innate_subsystem::FrameBuffer *srcFrameBuffer,
                         int srcX, int srcY);
-  virtual bool copyFrom(const ::subsystem::FrameBuffer *srcFrameBuffer,
+  virtual bool copyFrom(const ::innate_subsystem::FrameBuffer *srcFrameBuffer,
                         int srcX, int srcY);
-  virtual bool overlay(const ::int_rectangle &  dstRect, const ::subsystem::FrameBuffer *srcFrameBuffer,
+  virtual bool overlay(const ::int_rectangle &  dstRect, const ::innate_subsystem::FrameBuffer *srcFrameBuffer,
                        int srcX, int srcY, const char *andMask);
   virtual void move(const ::int_rectangle &  dstRect, const int srcX, const int srcY);
-  virtual bool cmpFrom(const ::int_rectangle &  dstRect, const ::subsystem::FrameBuffer *srcFrameBuffer,
+  virtual bool cmpFrom(const ::int_rectangle &  dstRect, const ::innate_subsystem::FrameBuffer *srcFrameBuffer,
                        const int srcX, const int srcY);
 
   virtual inline ::int_size getDimension() const;
 
-  virtual inline ::subsystem::PixelFormat getPixelFormat() const;
+  virtual inline ::innate_subsystem::PixelFormat getPixelFormat() const;
 
-  // This function must uses instead of function that can change the ::subsystem::FrameBuffer properties
+  // This function must uses instead of function that can change the ::innate_subsystem::FrameBuffer properties
   // compatibleWindow - is hwnd of a window that will be used to create a compatible DC for
   // the DIB section. Also, a DC of this window will be used as default for the
   // blitting operations. The window or DC for blitting operations can be changed many times during
@@ -64,7 +64,7 @@ public:
   // The compatibleWindow handle can be zero then the function will take a DC of entire desktop.
   // Note that other function that can change properties will throw ::subsystem::Exception().
   virtual void setProperties(const ::int_size & newDim,
-    const ::subsystem::PixelFormat & pixelFormat, HWND compatibleWindow);
+    const ::innate_subsystem::PixelFormat & pixelFormat, HWND compatibleWindow);
 
   // This function changes the target DC. In default target DC is a DC that has been
   // got from a compatible window on object creation. This function can be call many times.
@@ -107,31 +107,31 @@ public:
 
 private:
   // This section to reduce access to some function that have been inherited from the
-  // ::subsystem::FrameBuffer class and can't to be use in here. Also, if user code will to try
+  // ::innate_subsystem::FrameBuffer class and can't to be use in here. Also, if user code will to try
   // use this functions from a base class its will throw ::subsystem::Exception.
-  virtual bool assignProperties(const ::subsystem::FrameBuffer *srcFrameBuffer);
-  virtual bool clone(const ::subsystem::FrameBuffer *srcFrameBuffer);
+  virtual bool assignProperties(const ::innate_subsystem::FrameBuffer *srcFrameBuffer);
+  virtual bool clone(const ::innate_subsystem::FrameBuffer *srcFrameBuffer);
   virtual bool setDimension(const ::int_size & newDim);
   virtual bool setDimension(const ::int_rectangle &  rect);
   virtual void setEmptyDimension(const ::int_rectangle &  dimByRect);
-  virtual bool setPixelFormat(const ::subsystem::PixelFormat & pixelFormat);
-  virtual void setEmptyPixelFmt(const ::subsystem::PixelFormat & pf);
-  virtual bool setProperties(const ::int_size & newDim, const ::subsystem::PixelFormat & pixelFormat);
-  virtual bool setProperties(const ::int_rectangle &  dimByRect, const ::subsystem::PixelFormat & pixelFormat);
-  virtual void setPropertiesWithoutResize(const ::int_size & newDim, const ::subsystem::PixelFormat & pf);
+  virtual bool setPixelFormat(const ::innate_subsystem::PixelFormat & pixelFormat);
+  virtual void setEmptyPixelFmt(const ::innate_subsystem::PixelFormat & pf);
+  virtual bool setProperties(const ::int_size & newDim, const ::innate_subsystem::PixelFormat & pixelFormat);
+  virtual bool setProperties(const ::int_rectangle &  dimByRect, const ::innate_subsystem::PixelFormat & pixelFormat);
+  virtual void setPropertiesWithoutResize(const ::int_size & newDim, const ::innate_subsystem::PixelFormat & pf);
   virtual void setBuffer(void *newBuffer);
 
 private:
-  // This function updates a DIB section in accord with the ::subsystem::FrameBuffer
+  // This function updates a DIB section in accord with the ::innate_subsystem::FrameBuffer
   void *updateDibSection(const ::int_size & newDim,
-    const ::subsystem::PixelFormat & pixelFormat,
+    const ::innate_subsystem::PixelFormat & pixelFormat,
     HWND compatibleWindow);
   void releaseDibSection();
 
   // This function generates an ::subsystem::Exception if DIB section is not initialized yet.
   void checkDibValid();
 
-  ::subsystem::FrameBuffer m_fb;
+  ::innate_subsystem::FrameBuffer m_fb;
   DibSection *m_dibSection;
 };
 

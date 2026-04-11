@@ -32,6 +32,7 @@
 #include "OptionsDialog.h"
 #include "ScaleManager.h"
 #include "ViewerMenu.h"
+#include "apex/innate_subsystem/Control.h"
 #include "apex/innate_subsystem/ToolBar.h"
 //#include "log_writer/LogWriter.h"
 #include "remoting/remoting_common/viewer_core/FileTransferCapability.h"
@@ -46,7 +47,8 @@
 namespace remoting_remoting
 {
 
-    class ViewerWindow : public ::innate_subsystem::Window,
+    class ViewerWindow : //public ::innate_subsystem::Window,
+   public ::innate_subsystem::Control,
                          public ::remoting::CoreEventsAdapter,
                          public subsystem::OperatingSystemHookListener
     {
@@ -95,7 +97,8 @@ namespace remoting_remoting
 
         bool onFsWarning();
         bool onSize(::wparam wParam, ::lparam lParam);
-        bool onCreate(LPCREATESTRUCT lps);
+        //bool onCreate(LPCREATESTRUCT lps);
+       bool onCreate(void *pCreateStruct) override;
         bool onCommand(::wparam wParam, ::lparam lParam);
         bool onNotify(int idCtrl, LPNMHDR pnmh);
         bool onSysCommand(::wparam wParam, ::lparam lParam);
@@ -129,12 +132,14 @@ namespace remoting_remoting
         void onDisconnect(const ::scoped_string & scopedstrMessage);
         void onAuthError(const ::remoting::AuthException *exception);
         void onError(const ::subsystem::Exception *exception);
-        void onFrameBufferUpdate(const ::subsystem::FrameBuffer *fb, const ::int_rectangle &  rect);
-        void onFrameBufferPropChange(const ::subsystem::FrameBuffer *fb);
+        void onFrameBufferUpdate(const ::innate_subsystem::FrameBuffer *fb, const ::int_rectangle &  rect);
+        void onFrameBufferPropChange(const ::innate_subsystem::FrameBuffer *fb);
         void onCutText(const ::scoped_string & cutText);
 
         int translateAccelToTB(int val);
         void applyScreenChanges(bool isFullScreen);
+
+       ::innate_subsystem::ControlInterface * getControl();
 
         // function return default rect of viewer window:
         // if size of remote screen is more local desktop, then return rect of desktop
@@ -143,11 +148,11 @@ namespace remoting_remoting
 
         ::subsystem::LogWriter * m_plogwriter;
 
-        ::innate_subsystem::Control m_control;
+        //::innate_subsystem::Control m_control;
 
         ::remoting::ConnectionConfigSM m_ccsm;
         ::remoting::ConnectionConfig *m_pconnectionconfig;
-        subsystem::OperatingSystemApplication *m_application;
+        subsystem::OperatingSystemApplicationInterface *m_application;
         ::remoting::RemoteViewerCore *m_viewerCore;
         ::remoting::ftp::FileTransferCapability *m_fileTransfer;
         FileTransferMainDialog *m_ftDialog;

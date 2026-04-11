@@ -38,15 +38,15 @@ namespace remoting
    }
 
    void CopyRectDecoder::decode(RfbInputGate *pinput,
-                                ::subsystem::FrameBuffer *frameBuffer,
+                                ::innate_subsystem::FrameBuffer *frameBuffer,
                                 const ::int_rectangle &  dstRect)
    {
       m_sourcePosition.x = pinput->readInt16();
       m_sourcePosition.y = pinput->readInt16();
    }
 
-   void CopyRectDecoder::copy(::subsystem::FrameBuffer *dstFrameBuffer,
-                              const ::subsystem::FrameBuffer *srcFrameBuffer,
+   void CopyRectDecoder::copy(::innate_subsystem::FrameBuffer *dstFrameBuffer,
+                              const ::innate_subsystem::FrameBuffer *srcFrameBuffer,
                               const ::int_rectangle &  rect,
                               critical_section *fbLock)
    {

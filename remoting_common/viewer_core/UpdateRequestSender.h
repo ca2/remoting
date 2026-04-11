@@ -5,7 +5,7 @@
 #pragma once
 
 #include "acme/subsystem/thread/Thread.h"
-#include "acme/subsystem/framebuffer/FrameBuffer.h"
+#include "apex/innate_subsystem/framebuffer/FrameBuffer.h"
 //// #include aaa_<log_writer/LogWriter.h>
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 
@@ -14,7 +14,7 @@ namespace remoting
    class CLASS_DECL_REMOTING_COMMON UpdateRequestSender : public ::subsystem::Thread
    {
    public:
-      UpdateRequestSender(lockable* m_fb_lock, ::subsystem::FrameBuffer * m_frame_buffer, ::subsystem::LogWriter* m_log_writer);
+      UpdateRequestSender(lockable* m_fb_lock, ::innate_subsystem::FrameBuffer * m_frame_buffer, ::subsystem::LogWriter* m_log_writer);
 
       ~UpdateRequestSender();
 
@@ -46,7 +46,7 @@ namespace remoting
       critical_section m_isIncrimentalLock;
 
       lockable *m_fbLock;
-      ::subsystem::FrameBuffer *m_frameBuffer;
+      ::innate_subsystem::FrameBuffer *m_frameBuffer;
 
       ::subsystem::LogWriter *m_plogwriter;
 

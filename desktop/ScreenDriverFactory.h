@@ -35,7 +35,7 @@ class ScreenDriverFactory
 public:
   virtual ScreenDriver *createScreenDriver(UpdateKeeper *updateKeeper,
                                              UpdateListener *updateListener,
-                                             ::subsystem::FrameBuffer *fb,
+                                             ::innate_subsystem::FrameBuffer *fb,
                                              critical_section *fbcritical_section,
                                              ::subsystem::LogWriter *log) = 0;
 private:

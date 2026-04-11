@@ -72,7 +72,7 @@ bool WindowsScreenGrabber::openDIBSection()
     return false;
   }
 
-  ::subsystem::PixelFormat pixelFormat = m_workFrameBuffer.getPixelFormat();
+  ::innate_subsystem::PixelFormat pixelFormat = m_workFrameBuffer.getPixelFormat();
   ::int_size workDim = m_workFrameBuffer.getDimension();
 
   bmi.bmiHeader.biBitCount = pixelFormat.bitsPerPixel;
@@ -136,8 +136,8 @@ bool WindowsScreenGrabber::getPixelFormatChanged()
 {
   m_screen.update();
 
-  ::subsystem::PixelFormat currentPF = m_screen.getPixelFormat();
-  ::subsystem::PixelFormat frameBufferPF = m_workFrameBuffer.getPixelFormat();
+  ::innate_subsystem::PixelFormat currentPF = m_screen.getPixelFormat();
+  ::innate_subsystem::PixelFormat frameBufferPF = m_workFrameBuffer.getPixelFormat();
 
   return !frameBufferPF.isEqualTo(&currentPF);
 }

@@ -77,7 +77,7 @@ int TvnServerApplication::run()
     appInstanceMutex = new GlobalMutex(
       ServerApplicationNames::SERVER_INSTANCE_MUTEX_NAME, false, true);
   } catch (...) {
-    main_subsystem()->message_box(0,
+    main_subsystem()->message_box({},
                main_subsystem()->string_table()->getString(IDS_SERVER_ALREADY_RUNNING),
                main_subsystem()->string_table()->getString(IDS_MBC_TVNSERVER), ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
     return 1;
@@ -92,7 +92,7 @@ int TvnServerApplication::run()
   // $ACL | Set-Acl HKLM:\SOFTWARE\TightVNC\Server\ServiceOnly
   RegistryKey key(HKEY_LOCAL_MACHINE, "SOFTWARE\\TightVNC\\Server\\ServiceOnly", false);
   if (key.isOpened()) {
-    main_subsystem()->message_box(0,
+    main_subsystem()->message_box({},
       "Couldn't run the server in Application mode",
       "Server error", ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
     return 1;
@@ -115,7 +115,7 @@ int TvnServerApplication::run()
     // FIXME: Move string to resource
     ::string scopedstrMessage;
     scopedstrMessage.formatf("Couldn't run the server: {}", e.get_message());
-    main_subsystem()->message_box(0,
+    main_subsystem()->message_box({},
                scopedstrMessage,
                "Server error", ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
     return 1;

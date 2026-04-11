@@ -57,7 +57,7 @@ void Win32MirrorScreenDriver::terminateDetection()
   return m_mirrorDriver.getScreenDimension();
 }
 
-::subsystem::FrameBuffer *Win32MirrorScreenDriver::getScreenBuffer()
+::innate_subsystem::FrameBuffer *Win32MirrorScreenDriver::getScreenBuffer()
 {
   return m_mirrorDriver.getScreenBuffer();
 }

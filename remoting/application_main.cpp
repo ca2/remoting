@@ -77,8 +77,8 @@ int application::remoting_impact_main( const ::file::path & path)
    //
    // }
 
-   ViewerSettingsManager::initInstance(RegistryPaths::VIEWER_PATH);
-   SettingsManager *sm = ViewerSettingsManager::getInstance();
+   ::remoting::ViewerSettingsManager::initInstance(RegistryPaths::VIEWER_PATH);
+   ::remoting::SettingsManager *sm = ::remoting::ViewerSettingsManager::getInstance();
 
    ::remoting::ViewerConfig config(RegistryPaths::VIEWER_PATH);
    config.loadFromStorage(sm);
@@ -124,7 +124,8 @@ int application::remoting_impact_main( const ::file::path & path)
    }
    //ViewerCmdLine cmd(&condata, &conConf, &config, &isListening);
    // resource-loader initialization
-   ResourceLoader resourceLoader(hInstance);
+   //ResourceLoader resourceLoader(hInstance);
+   //auto presource
    try {
       config.initLog(LogNames::LOG_DIR_NAME, LogNames::VIEWER_LOG_FILE_STUB_NAME);
    }  catch (...) {
@@ -135,7 +136,7 @@ int application::remoting_impact_main( const ::file::path & path)
    // }
    // catch (const CommandLineFormatException &exception) {
    //   ::string strError(exception.get_message());
-   //   main_subsystem()->message_box(0,
+   //   main_subsystem()->message_box({},
    //     strError,
    //     ProductNames::VIEWER_PRODUCT_NAME,
    //     ::user::e_message_box_ok | MB_ICONERROR);
@@ -169,7 +170,7 @@ int application::remoting_impact_main( const ::file::path & path)
       tvnViewer.run();
       result = tvnViewer.m_iExitCode;
    } catch (const ::subsystem::Exception &ex) {
-      main_subsystem()->message_box(0,
+      main_subsystem()->message_box({},
                  main_subsystem()->string_table()->getString(IDS_UNKNOWN_ERROR_IN_VIEWER),
                  ProductNames::VIEWER_PRODUCT_NAME,
                  ::user::e_message_box_ok | MB_ICONERROR);
