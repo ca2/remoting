@@ -28,72 +28,69 @@
 #include "acme/subsystem/_common_header.h"
 #include "remoting/remoting_common/util/inttypes.h"
 
-class AuthHandler;
-class ServerMessageListener;
-class Decoder;
-
-//
-// This interface defined function, than need for work with capabilities.
-// Any capabilities must be added before call RemoteViewerCore::start().
-//
-class CLASS_DECL_REMOTING_COMMON CapabilitiesManager
+namespace remoting
 {
-public:
-  CapabilitiesManager();
-  virtual ~CapabilitiesManager();
+   //
+   // This interface defined function, than need for work with capabilities.
+   // Any capabilities must be added before call RemoteViewerCore::start().
+   //
+   class CLASS_DECL_REMOTING_COMMON CapabilitiesManager
+   {
+   public:
+      CapabilitiesManager();
+      virtual ~CapabilitiesManager();
 
-  //
-  // This function add authentication capability and authentication handler.
-  //
-  virtual void addAuthCapability(AuthHandler *authHandler,
-                                 unsigned int code,
-                                 const char *vendorSignature,
-                                 const char *nameSignature,
-                                 const ::string description = "") = 0;
-
-  //
-  // This function add capability and handler, to process server-to-client messages.
-  //
-  virtual void addServerMsgCapability(ServerMessageListener *listener,
-                                      unsigned int code,
-                                      const char *vendorSignature,
-                                      const char *nameSignature,
-                                      const ::string description = "") = 0;
-
-  //
-  // This function add capability, to process client-to-server messages.
-  //
-  virtual void addClientMsgCapability(unsigned int code,
-                                      const char *vendorSignature,
-                                      const char *nameSignature,
-                                      const ::string description = "") = 0;
-
-  //
-  // This function add encoding capability and decoder handler.
-  // Parameter "priorityEncoding" define priority of encoding.
-  // Encoding send to order in decrease of priority.
-  //
-  virtual void addEncodingCapability(Decoder *decoder,
-                                     int priorityEncoding,
+      //
+      // This function add authentication capability and authentication handler.
+      //
+      virtual void addAuthCapability(AuthHandler *authHandler,
                                      unsigned int code,
                                      const char *vendorSignature,
                                      const char *nameSignature,
                                      const ::string description = "") = 0;
 
-  //
-  // This function return ::array_base of enabled capabilities "client-to-server scopedstrMessage".
-  //
-  virtual void getEnabledClientMsgCapabilities(::array_base<unsigned int> *codes) const = 0;
+      //
+      // This function add capability and handler, to process server-to-client messages.
+      //
+      virtual void addServerMsgCapability(ServerMessageListener *listener,
+                                          unsigned int code,
+                                          const char *vendorSignature,
+                                          const char *nameSignature,
+                                          const ::string description = "") = 0;
 
-  //
-  // This function return ::array_base of enabled capabilities "server-to-client scopedstrMessage".
-  //
-  virtual void getEnabledServerMsgCapabilities(::array_base<unsigned int> *codes) const = 0;
+      //
+      // This function add capability, to process client-to-server messages.
+      //
+      virtual void addClientMsgCapability(unsigned int code,
+                                          const char *vendorSignature,
+                                          const char *nameSignature,
+                                          const ::string description = "") = 0;
 
-  //
-  // This function return ::array_base of enabled capabilities "encoding".
-  //
-  virtual void getEnabledEncodingCapabilities(::array_base<unsigned int> *codes) const = 0;
-};
+      //
+      // This function add encoding capability and decoder handler.
+      // Parameter "priorityEncoding" define priority of encoding.
+      // Encoding send to order in decrease of priority.
+      //
+      virtual void addEncodingCapability(Decoder *decoder,
+                                         int priorityEncoding,
+                                         unsigned int code,
+                                         const char *vendorSignature,
+                                         const char *nameSignature,
+                                         const ::string description = "") = 0;
 
+      //
+      // This function return ::array_base of enabled capabilities "client-to-server scopedstrMessage".
+      //
+      virtual void getEnabledClientMsgCapabilities(::array_base<unsigned int> *codes) const = 0;
 
+      //
+      // This function return ::array_base of enabled capabilities "server-to-client scopedstrMessage".
+      //
+      virtual void getEnabledServerMsgCapabilities(::array_base<unsigned int> *codes) const = 0;
+
+      //
+      // This function return ::array_base of enabled capabilities "encoding".
+      //
+      virtual void getEnabledEncodingCapabilities(::array_base<unsigned int> *codes) const = 0;
+   };
+} // namespace remoting

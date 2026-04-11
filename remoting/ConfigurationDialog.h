@@ -56,16 +56,16 @@ namespace remoting_remoting
       void onOpenFolderButtonClick();
       bool onInitDialog();
 
-      ::pointer < ::innate_subsystem::CheckBox> m_pcheckboxShowToolBars;
-      ::pointer < ::innate_subsystem::CheckBox m_pcheckboxWarnAtSwitching;
-      ::pointer < ::innate_subsystem::TextBox m_ptextboxNumberConn;
-      ::pointer < ::innate_subsystem::SpinControl m_pspincontrolNumConn;
-      ::pointer < ::innate_subsystem::TextBox m_ptextboxReverseConn;
-      ::pointer < ::innate_subsystem::SpinControl > m_pspincontrolReverseConn;
-      ::pointer < ::innate_subsystem::TextBox > m_ptextboxVerbLvl;
-      ::pointer < ::innate_subsystem::SpinControl > m_pspincontrolVerbLvl;
-      ::pointer < ::innate_subsystem::TextBox > m_ptextboxLogging;
-      ::pointer < ::innate_subsystem::Control > m_pcontrolOpenLogDir;
+      ::innate_subsystem::CheckBox  m_checkboxShowToolBars;
+      ::innate_subsystem::CheckBox m_checkboxWarnAtSwitching;
+      ::innate_subsystem::TextBox m_textboxNumberConn;
+      ::innate_subsystem::SpinControl m_spincontrolNumConn;
+      ::innate_subsystem::TextBox m_textboxReverseConn;
+      ::innate_subsystem::SpinControl  m_spincontrolReverseConn;
+      ::innate_subsystem::TextBox  m_textboxVerbLvl;
+      ::innate_subsystem::SpinControl  m_spincontrolVerbLvl;
+      ::innate_subsystem::TextBox  m_textboxLogging;
+      ::innate_subsystem::Control  m_controlOpenLogDir;
 
       ::subsystem::OperatingSystemApplicationInterface *m_application;
 

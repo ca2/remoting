@@ -26,16 +26,19 @@
 #include "NamingDefs.h"
 #include "OptionsDialog.h"
 #include "remoting/remoting_common/remoting.h"
-#include "remoting/remoting_common/win_system/Shell.h"
+#include "acme/subsystem/node/Shell.h"
+#include "apex/innate_subsystem/subsystem.h"
+#include "acme/subsystem/node/SystemException.h"
 
 
 namespace remoting_remoting
 {
     LoginDialog::LoginDialog(remoting_impact *viewer)
-    : BaseDialog(IDD_LOGINDIALOG),
+    :
       m_viewer(viewer),
       m_isListening(false)
     {
+       initialize_dialog(IDD_LOGINDIALOG);
     }
 
     LoginDialog::~LoginDialog()
@@ -44,11 +47,11 @@ namespace remoting_remoting
 
     bool LoginDialog::onInitDialog()
     {
-        subclassControlById(m_server, IDC_CSERVER);
-        subclassControlById(m_listening, IDC_LISTENING);
-        subclassControlById(m_ok, ::innate_subsystem::IDOK);
+        dialog_item(m_server, IDC_CSERVER);
+        dialog_item(m_listening, IDC_LISTENING);
+        dialog_item(m_ok, IDOK);
         updateHistory();
-        SetForegroundWindow(operating_system_window());
+        SetForegroundWindow((HWND) _HWND());
         m_server.setFocus();
         if (m_isListening) {
             m_listening.enableWindow(false);
@@ -70,7 +73,7 @@ namespace remoting_remoting
 
     void LoginDialog::updateHistory()
     {
-        ConnectionHistory *conHistory;
+        ::remoting::ConnectionHistory *conHistory;
 
         ::string currentServer;
         currentServer = m_server.getText();
@@ -87,7 +90,7 @@ namespace remoting_remoting
             }
             ::string server;
             server = m_server.getText();
-            ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
+            ::remoting::ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
                                     server);
             m_connectionConfig.loadFromStorage(&ccsm);
         }
@@ -95,7 +98,7 @@ namespace remoting_remoting
 
     void LoginDialog::onConnect()
     {
-        ConnectionHistory *conHistory = ::remoting::ViewerConfig::getInstance()->getConnectionHistory();
+        auto conHistory = ::remoting::ViewerConfig::getInstance()->getConnectionHistory();
 
         m_serverHost = m_server.getText();
 
@@ -104,7 +107,7 @@ namespace remoting_remoting
         conHistory->save();
 
         if (!m_serverHost.is_empty()) {
-            ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH, m_serverHost);
+            ::remoting::ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH, m_serverHost);
             m_connectionConfig.saveToStorage(&ccsm);
         }
 
@@ -125,7 +128,7 @@ namespace remoting_remoting
             ::string server;
             server = m_server.getText();
             if (server.is_empty()) {
-                ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
+                ::remoting::ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
                                         server);
                 m_connectionConfig.saveToStorage(&ccsm);
             }
@@ -143,8 +146,8 @@ namespace remoting_remoting
     {
         // TODO: removed duplicated code (see AboutDialog.h)
         try {
-            Shell::open(scopedstrUrl, 0, 0);
-        } catch (const SystemException &sysEx) {
+            main_innate_subsystem()->shell()->open(scopedstrUrl, 0, 0);
+        } catch (const ::subsystem::SystemException &sysEx) {
             ::string scopedstrMessage;
 
             scopedstrMessage.formatf(main_subsystem()->string_table()->getString(IDS_FAILED_TO_OPEN_URL_FORMAT).c_str(), sysEx.get_message().c_str());
@@ -168,7 +171,7 @@ namespace remoting_remoting
 
     void LoginDialog::onListening()
     {
-        ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
+        ::remoting::ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
                                 ".listen");
         m_connectionConfig.loadFromStorage(&ccsm);
 
@@ -199,7 +202,7 @@ namespace remoting_remoting
                     }
                     //::string server;
                     auto server = m_server.getItemText(selectedItemIndex);
-                    ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
+                    ::remoting::ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
                                             server);
                     m_connectionConfig.loadFromStorage(&ccsm);
                     break;
@@ -210,13 +213,13 @@ namespace remoting_remoting
                 break;
 
                 // click "Connect"
-            case ::innate_subsystem::IDOK:
+            case ::innate_subsystem::e_control_id_ok:
                 onConnect();
                 closeDialog(0);
                 break;
 
                 // cancel connection
-            case ::innate_subsystem::IDCANCEL:
+            case ::innate_subsystem::e_control_id_cancel:
                 closeDialog(0);
                 break;
 

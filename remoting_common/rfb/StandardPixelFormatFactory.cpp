@@ -25,77 +25,80 @@
 #include "StandardPixelFormatFactory.h"
 
 
-::subsystem::PixelFormat StandardPixelFormatFactory::create32bppPixelFormat()
+namespace remoting
 {
-  ::subsystem::PixelFormat pixelFormat;
-  pixelFormat.initBigEndianByNative();
-  pixelFormat.bitsPerPixel = 32;
-  pixelFormat.blueMax = 255;
-  pixelFormat.blueShift = 0;
-  pixelFormat.greenMax = 255;
-  pixelFormat.greenShift = 8;
-  pixelFormat.redMax = 255;
-  pixelFormat.redShift = 16;
-  pixelFormat.colorDepth = 24;
-  return pixelFormat;
-}
+   ::subsystem::PixelFormat StandardPixelFormatFactory::create32bppPixelFormat()
+   {
+      ::subsystem::PixelFormat pixelFormat;
+      pixelFormat.initBigEndianByNative();
+      pixelFormat.bitsPerPixel = 32;
+      pixelFormat.blueMax = 255;
+      pixelFormat.blueShift = 0;
+      pixelFormat.greenMax = 255;
+      pixelFormat.greenShift = 8;
+      pixelFormat.redMax = 255;
+      pixelFormat.redShift = 16;
+      pixelFormat.colorDepth = 24;
+      return pixelFormat;
+   }
 
-::subsystem::PixelFormat StandardPixelFormatFactory::create16bppPixelFormat()
-{
-  ::subsystem::PixelFormat pixelFormat;
-  pixelFormat.initBigEndianByNative();
-  pixelFormat.bitsPerPixel = 16;
-  pixelFormat.blueMax = 31;
-  pixelFormat.blueShift = 0;
-  pixelFormat.greenMax = 63;
-  pixelFormat.greenShift = 5;
-  pixelFormat.redMax = 31;
-  pixelFormat.redShift = 11;
-  pixelFormat.colorDepth = 16;
-  return pixelFormat;
-}
+   ::subsystem::PixelFormat StandardPixelFormatFactory::create16bppPixelFormat()
+   {
+      ::subsystem::PixelFormat pixelFormat;
+      pixelFormat.initBigEndianByNative();
+      pixelFormat.bitsPerPixel = 16;
+      pixelFormat.blueMax = 31;
+      pixelFormat.blueShift = 0;
+      pixelFormat.greenMax = 63;
+      pixelFormat.greenShift = 5;
+      pixelFormat.redMax = 31;
+      pixelFormat.redShift = 11;
+      pixelFormat.colorDepth = 16;
+      return pixelFormat;
+   }
 
-::subsystem::PixelFormat StandardPixelFormatFactory::create8bppPixelFormat()
-{
-  ::subsystem::PixelFormat pixelFormat;
-  pixelFormat.initBigEndianByNative();
-  pixelFormat.bitsPerPixel = 8;
-  pixelFormat.redMax = 7;
-  pixelFormat.redShift = 0;
-  pixelFormat.greenMax = 7;
-  pixelFormat.greenShift = 3;
-  pixelFormat.blueMax = 3;
-  pixelFormat.blueShift = 6;
-  pixelFormat.colorDepth = 8;
-  return pixelFormat;
-}
+   ::subsystem::PixelFormat StandardPixelFormatFactory::create8bppPixelFormat()
+   {
+      ::subsystem::PixelFormat pixelFormat;
+      pixelFormat.initBigEndianByNative();
+      pixelFormat.bitsPerPixel = 8;
+      pixelFormat.redMax = 7;
+      pixelFormat.redShift = 0;
+      pixelFormat.greenMax = 7;
+      pixelFormat.greenShift = 3;
+      pixelFormat.blueMax = 3;
+      pixelFormat.blueShift = 6;
+      pixelFormat.colorDepth = 8;
+      return pixelFormat;
+   }
 
-::subsystem::PixelFormat StandardPixelFormatFactory::create6bppPixelFormat()
-{
-  ::subsystem::PixelFormat pixelFormat;
-  pixelFormat.initBigEndianByNative();
-  pixelFormat.bitsPerPixel = 8;
-  pixelFormat.blueMax = 3;
-  pixelFormat.blueShift = 0;
-  pixelFormat.greenMax = 3;
-  pixelFormat.greenShift = 2;
-  pixelFormat.redMax = 3;
-  pixelFormat.redShift = 4;
-  pixelFormat.colorDepth = 6;
-  return pixelFormat;
-}
+   ::subsystem::PixelFormat StandardPixelFormatFactory::create6bppPixelFormat()
+   {
+      ::subsystem::PixelFormat pixelFormat;
+      pixelFormat.initBigEndianByNative();
+      pixelFormat.bitsPerPixel = 8;
+      pixelFormat.blueMax = 3;
+      pixelFormat.blueShift = 0;
+      pixelFormat.greenMax = 3;
+      pixelFormat.greenShift = 2;
+      pixelFormat.redMax = 3;
+      pixelFormat.redShift = 4;
+      pixelFormat.colorDepth = 6;
+      return pixelFormat;
+   }
 
-::subsystem::PixelFormat StandardPixelFormatFactory::create3bppPixelFormat()
-{
-  ::subsystem::PixelFormat pixelFormat;
-  pixelFormat.initBigEndianByNative();
-  pixelFormat.bitsPerPixel = 8;
-  pixelFormat.blueMax = 1;
-  pixelFormat.blueShift = 0;
-  pixelFormat.greenMax = 1;
-  pixelFormat.greenShift = 1;
-  pixelFormat.redMax = 1;
-  pixelFormat.redShift = 2;
-  pixelFormat.colorDepth = 3;
-  return pixelFormat;
-}
+   ::subsystem::PixelFormat StandardPixelFormatFactory::create3bppPixelFormat()
+   {
+      ::subsystem::PixelFormat pixelFormat;
+      pixelFormat.initBigEndianByNative();
+      pixelFormat.bitsPerPixel = 8;
+      pixelFormat.blueMax = 1;
+      pixelFormat.blueShift = 0;
+      pixelFormat.greenMax = 1;
+      pixelFormat.greenShift = 1;
+      pixelFormat.redMax = 1;
+      pixelFormat.redShift = 2;
+      pixelFormat.colorDepth = 3;
+      return pixelFormat;
+   }
+} // namespace remoting

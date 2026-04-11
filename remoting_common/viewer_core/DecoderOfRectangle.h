@@ -27,58 +27,61 @@
 
 #include "Decoder.h"
 
-class FbUpdateNotifier;
 
-class CLASS_DECL_REMOTING_COMMON DecoderOfRectangle : public Decoder
+namespace remoting
 {
-public:
-  DecoderOfRectangle(::subsystem::LogWriter * plogwriter);
-  virtual ~DecoderOfRectangle();
+   class FbUpdateNotifier;
 
-  //
-  // This function does the following:
-  //   1. read update of dstRect from input
-  //   2. decode rectangle on "secondFrameBuffer"
-  //   3. copy rectangle from secondFrameBuffer to "frameBuffer"
-  //   4. notify fbNotifier
-  // His called decode(), copy() and notify() by order, defined in implementation.
-  //
-  // This function is thread-safe for frameBuffer.
-  //
-  virtual void process(RfbInputGate *input,
-                       ::subsystem::FrameBuffer *frameBuffer,
-                       ::subsystem::FrameBuffer *secondFrameBuffer,
-                       const ::int_rectangle &  rect,
-                       critical_section *fbLock,
-                       FbUpdateNotifier *fbNotifier);
+   class CLASS_DECL_REMOTING_COMMON DecoderOfRectangle : public Decoder
+   {
+   public:
+      DecoderOfRectangle(::subsystem::LogWriter * plogwriter);
+      virtual ~DecoderOfRectangle();
 
-  //
-  // This method inherited Decoder::isPseudo() and return true.
-  //
-  virtual bool isPseudo() const;
+      //
+      // This function does the following:
+      //   1. read update of dstRect from input
+      //   2. decode rectangle on "secondFrameBuffer"
+      //   3. copy rectangle from secondFrameBuffer to "frameBuffer"
+      //   4. notify fbNotifier
+      // His called decode(), copy() and notify() by order, defined in implementation.
+      //
+      // This function is thread-safe for frameBuffer.
+      //
+      virtual void process(RfbInputGate *input,
+                           ::subsystem::FrameBuffer *frameBuffer,
+                           ::subsystem::FrameBuffer *secondFrameBuffer,
+                           const ::int_rectangle &  rect,
+                           critical_section *fbLock,
+                           FbUpdateNotifier *fbNotifier);
 
-protected:
-  //
-  // This method read rectangle-update from input and decode on frameBuffer.
-  //
-  virtual void decode(RfbInputGate *input,
-                      ::subsystem::FrameBuffer *frameBuffer,
-                      const ::int_rectangle &  rect) = 0;
+      //
+      // This method inherited Decoder::isPseudo() and return true.
+      //
+      virtual bool isPseudo() const;
 
-  //
-  // This method copy rectangle from srcFrameBuffer to dstFrameBuffer.
-  // This function is thread-safe from dstFrameBuffer.
-  //
-  virtual void copy(::subsystem::FrameBuffer *dstFrameBuffer,
-                    const ::subsystem::FrameBuffer *srcFrameBuffer,
-                    const ::int_rectangle &  rect,
-                    critical_section *fbLock);
+   protected:
+      //
+      // This method read rectangle-update from input and decode on frameBuffer.
+      //
+      virtual void decode(RfbInputGate *input,
+                          ::subsystem::FrameBuffer *frameBuffer,
+                          const ::int_rectangle &  rect) = 0;
 
-  //
-  // This method notify fbNotifier about update of rect.
-  //
-  virtual void notify(FbUpdateNotifier *fbNotifier,
-                      const ::int_rectangle &  rect);
-};
+      //
+      // This method copy rectangle from srcFrameBuffer to dstFrameBuffer.
+      // This function is thread-safe from dstFrameBuffer.
+      //
+      virtual void copy(::subsystem::FrameBuffer *dstFrameBuffer,
+                        const ::subsystem::FrameBuffer *srcFrameBuffer,
+                        const ::int_rectangle &  rect,
+                        critical_section *fbLock);
 
+      //
+      // This method notify fbNotifier about update of rect.
+      //
+      virtual void notify(FbUpdateNotifier *fbNotifier,
+                          const ::int_rectangle &  rect);
+   };
+} // namespace remoting
 

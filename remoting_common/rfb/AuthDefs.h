@@ -26,31 +26,36 @@
 
 #include "remoting/remoting_common/util/inttypes.h"
 
-class CLASS_DECL_REMOTING_COMMON SecurityDefs
+namespace remoting
 {
-public:
-  static const unsigned int INVALID = 0;
-  static const unsigned int NONE = 1;
-  static const unsigned int VNC = 2;
-  static const unsigned int TIGHT = 16;
-  static unsigned int convertFromAuthType(unsigned int authType);
-};
+   class CLASS_DECL_REMOTING_COMMON SecurityDefs
+   {
+   public:
+      static const unsigned int INVALID = 0;
+      static const unsigned int NONE = 1;
+      static const unsigned int VNC = 2;
+      static const unsigned int TIGHT = 16;
+      static unsigned int convertFromAuthType(unsigned int authType);
+   };
 
-class CLASS_DECL_REMOTING_COMMON AuthDefs
-{
-public:
-  static const unsigned int NONE = 1;
-  static const unsigned int VNC = 2;
-  static const unsigned int EXTERNAL = 130;
+   class CLASS_DECL_REMOTING_COMMON AuthDefs
+   {
+   public:
+      static const unsigned int NONE = 1;
+      static const unsigned int VNC = 2;
+      static const unsigned int EXTERNAL = 130;
 
-  static const char *const SIG_NONE;
-  static const char *const SIG_VNC;
-  static const char *const SIG_EXTERNAL;
+      static const char *const SIG_NONE;
+      static const char *const SIG_VNC;
+      static const char *const SIG_EXTERNAL;
 
-  // Return TightVNC authentication method corresponding to a VNC-style
-  // security type. Returns 0 if the specified security type does not ::map
-  // to any valid authentication type supported in TightVNC.
-  static unsigned int convertFromSecurityType(unsigned int securityType);
-};
+      // Return TightVNC authentication method corresponding to a VNC-style
+      // security type. Returns 0 if the specified security type does not ::map
+      // to any valid authentication type supported in TightVNC.
+      static unsigned int convertFromSecurityType(unsigned int securityType);
+   };
 
-//// __RFB_AUTH_DEFS_H_INCLUDED__
+   //// __RFB_AUTH_DEFS_H_INCLUDED__
+} // namespace remoting
+
+

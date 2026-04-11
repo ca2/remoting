@@ -24,25 +24,28 @@
 #include "framework.h"
 #include "RfbFramebufferUpdateRequestClientMessage.h"
 
-RfbFramebufferUpdateRequestClientMessage::RfbFramebufferUpdateRequestClientMessage
-  (bool incremental, ::int_rectangle updateRect)
-: m_incremental(incremental),
-  m_rect(updateRect)
+namespace remoting
 {
-}
+   RfbFramebufferUpdateRequestClientMessage::RfbFramebufferUpdateRequestClientMessage
+     (bool incremental, ::int_rectangle updateRect)
+   : m_incremental(incremental),
+     m_rect(updateRect)
+   {
+   }
 
-RfbFramebufferUpdateRequestClientMessage::~RfbFramebufferUpdateRequestClientMessage()
-{
-}
+   RfbFramebufferUpdateRequestClientMessage::~RfbFramebufferUpdateRequestClientMessage()
+   {
+   }
 
-void RfbFramebufferUpdateRequestClientMessage::send(RfbOutputGate * output)
-{
-  critical_section_lock al(output);
-  output->writeUInt8(ClientMsgDefs::FB_UPDATE_REQUEST);
-  output->writeUInt8(m_incremental);
-  output->writeUInt16(static_cast<unsigned short>(m_rect.left));
-  output->writeUInt16(static_cast<unsigned short>(m_rect.top));
-  output->writeUInt16(static_cast<unsigned short>(m_rect.width()));
-  output->writeUInt16(static_cast<unsigned short>(m_rect.height()));
-  output->flush();
-}
+   void RfbFramebufferUpdateRequestClientMessage::send(RfbOutputGate * output)
+   {
+      critical_section_lock al(output);
+      output->writeUInt8(ClientMsgDefs::FB_UPDATE_REQUEST);
+      output->writeUInt8(m_incremental);
+      output->writeUInt16(static_cast<unsigned short>(m_rect.left));
+      output->writeUInt16(static_cast<unsigned short>(m_rect.top));
+      output->writeUInt16(static_cast<unsigned short>(m_rect.width()));
+      output->writeUInt16(static_cast<unsigned short>(m_rect.height()));
+      output->flush();
+   }
+} //namespace remoting

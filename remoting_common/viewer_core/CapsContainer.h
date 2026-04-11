@@ -31,103 +31,104 @@
 #pragma once
 
 
-class CLASS_DECL_REMOTING_COMMON RfbCapabilityInfo {
-public:
-  static const size_t vendorSigSize = 4;
-  static const size_t nameSigSize = 8;
-
-public:
-  unsigned int code;                            // numeric identifier
-  char vendorSignature[vendorSigSize];    // vendor identification
-  char nameSignature[nameSigSize];        // abbreviated option name
-
-public:
-  //
-  // Returns true if capability vendor and signature are equal to args
-  //
-  bool isEqual(const char *vendor, const char *signature) const;
-};
-
-// This class is thread-safe.
-class CapsContainer
+namespace remoting
 {
-public:
-  CapsContainer();
-  virtual ~CapsContainer();
+   class CLASS_DECL_REMOTING_COMMON RfbCapabilityInfo {
+   public:
+      static const size_t vendorSigSize = 4;
+      static const size_t nameSigSize = 8;
 
-  //
-  // Add information about a particular capability into the object. There are
-  // two functions to perform this task. These functions overwrite capability
-  // records with the same code.
-  //
-  void add(const RfbCapabilityInfo *capinfo, const ::string desc = "");
-  void add(unsigned int code, const char *vendor, const char *name,
-           ::string desc = "");
+   public:
+      unsigned int code;                            // numeric identifier
+      char vendorSignature[vendorSigSize];    // vendor identification
+      char nameSignature[nameSigSize];        // abbreviated option name
 
-  //
-  // Check if a capability with the specified code was added earlier.
-  //
-  bool isAdded(unsigned int code) const;
+   public:
+      //
+      // Returns true if capability vendor and signature are equal to args
+      //
+      bool isEqual(const char *vendor, const char *signature) const;
+   };
 
-  //
-  // Fill in a rfbCapabilityInfo structure with contents corresponding to the
-  // specified code. Returns true on success, false if the specified code is
-  // not known.
-  //
-  bool getInfo(unsigned int code, RfbCapabilityInfo *capinfo);
+   // This class is thread-safe.
+   class CapsContainer
+   {
+   public:
+      CapsContainer();
+      virtual ~CapsContainer();
 
-  //
-  // Get a description string for the specified capability code. Returns NULL
-  // either if the code is not known, or if there is no description for this
-  // capability.
-  //
-  ::string getDescription(unsigned int code) const;
+      //
+      // Add information about a particular capability into the object. There are
+      // two functions to perform this task. These functions overwrite capability
+      // records with the same code.
+      //
+      void add(const RfbCapabilityInfo *capinfo, const ::string desc = "");
+      void add(unsigned int code, const char *vendor, const char *name,
+               ::string desc = "");
 
-  //
-  // Mark the specified capability as "enabled". This function checks "vendor"
-  // and "name" signatures in the existing record and in the argument structure
-  // and enables the capability only if both records are the same.
-  //
-  bool enable(const RfbCapabilityInfo *capinfo);
+      //
+      // Check if a capability with the specified code was added earlier.
+      //
+      bool isAdded(unsigned int code) const;
 
-  //
-  // Check if the specified capability is known and enabled.
-  //
-  bool isEnabled(unsigned int code) const;
+      //
+      // Fill in a rfbCapabilityInfo structure with contents corresponding to the
+      // specified code. Returns true on success, false if the specified code is
+      // not known.
+      //
+      bool getInfo(unsigned int code, RfbCapabilityInfo *capinfo);
 
-  //
-  // This function return count of enabled capabilities.
-  //
-  size_t numEnabled() const;
-  
-  //
-  // Return the capability code at the specified index.
-  // List of capabilities contained only enabled capability.
-  // If the index is not valid, return 0.
-  //
-  unsigned int getByOrder(size_t idx);
+      //
+      // Get a description string for the specified capability code. Returns NULL
+      // either if the code is not known, or if there is no description for this
+      // capability.
+      //
+      ::string getDescription(unsigned int code) const;
 
-  //
-  // This method return ::list_base of enabled capabilities.
-  //
-  void getEnabledCapabilities(::array_base<unsigned int> &codes) const;
+      //
+      // Mark the specified capability as "enabled". This function checks "vendor"
+      // and "name" signatures in the existing record and in the argument structure
+      // and enables the capability only if both records are the same.
+      //
+      bool enable(const RfbCapabilityInfo *capinfo);
+
+      //
+      // Check if the specified capability is known and enabled.
+      //
+      bool isEnabled(unsigned int code) const;
+
+      //
+      // This function return count of enabled capabilities.
+      //
+      size_t numEnabled() const;
+
+      //
+      // Return the capability code at the specified index.
+      // List of capabilities contained only enabled capability.
+      // If the index is not valid, return 0.
+      //
+      unsigned int getByOrder(size_t idx);
+
+      //
+      // This method return ::list_base of enabled capabilities.
+      //
+      void getEnabledCapabilities(::array_base<unsigned int> &codes) const;
 
 
-private:
-  //
-  // Check if a capability with the specified code was added earlier.
-  // This function isn't thread-safe.
-  //
-  bool isKnown(unsigned int code) const;
+   private:
+      //
+      // Check if a capability with the specified code was added earlier.
+      // This function isn't thread-safe.
+      //
+      bool isKnown(unsigned int code) const;
 
-  ::map<unsigned int, RfbCapabilityInfo> infoMap;
-  ::map<unsigned int, ::string> descMap;
-  ::map<unsigned int, bool> enableMap;
+      ::map<unsigned int, RfbCapabilityInfo> infoMap;
+      ::map<unsigned int, ::string> descMap;
+      ::map<unsigned int, bool> enableMap;
 
-  // List of enabled caps.
-  ::array_base<unsigned int> m_plist;
+      // List of enabled caps.
+      ::array_base<unsigned int> m_plist;
 
-  mutable critical_section m_mapLock;
-};
-
-
+      mutable critical_section m_mapLock;
+   };
+} // namespace remoting

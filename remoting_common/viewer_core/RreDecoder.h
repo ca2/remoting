@@ -27,16 +27,17 @@
 
 #include "DecoderOfRectangle.h"
 
-class CLASS_DECL_REMOTING_COMMON RreDecoder : public DecoderOfRectangle
+namespace remoting
 {
-public:
-  RreDecoder(::subsystem::LogWriter * plogwriter);
-  virtual ~RreDecoder();
+   class CLASS_DECL_REMOTING_COMMON RreDecoder : public DecoderOfRectangle
+   {
+   public:
+      RreDecoder(::subsystem::LogWriter * plogwriter);
+      virtual ~RreDecoder();
 
-protected:
-  virtual void decode(RfbInputGate *input,
-                      ::subsystem::FrameBuffer *framebuffer,
-                      const ::int_rectangle &  dstRect);
-};
-
-
+   protected:
+      virtual void decode(RfbInputGate *input,
+                          ::subsystem::FrameBuffer *framebuffer,
+                          const ::int_rectangle &  dstRect);
+   };
+} // namespace remoting

@@ -26,7 +26,7 @@
 
 
 #include "acme/subsystem/framebuffer/FrameBuffer.h"
-#include "remoting/remoting_common/region/Point.h"
+//#include "remoting/remoting_common/region/::int_point.h"
 
 namespace remoting
 {
@@ -58,7 +58,7 @@ namespace remoting
       int getMaskWidthInBytes() const;
 
       void setHotSpot(int x, int y) { m_hotSpot.x = x; m_hotSpot.y = y; }
-      Point getHotSpot() const { return m_hotSpot; }
+      ::int_point getHotSpot() const { return m_hotSpot; }
 
       // Resets the cursor shape to empty state (zero dimension and hot spot
       // and empty masks). But the pixel format saves the same.
@@ -69,7 +69,7 @@ namespace remoting
 
       ::subsystem::FrameBuffer m_pixels;
       ::array_base<char> m_mask;
-      Point m_hotSpot;
+      ::int_point m_hotSpot;
    };
 
    //// __CURSORSHAPE_H__

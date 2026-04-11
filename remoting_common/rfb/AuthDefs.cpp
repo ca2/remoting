@@ -24,30 +24,36 @@
 #include "framework.h"
 #include "remoting/remoting_common/rfb/AuthDefs.h"
 
-const char *const AuthDefs::SIG_NONE = "NOAUTH__";
-const char *const AuthDefs::SIG_VNC = "VNCAUTH_";
-const char *const AuthDefs::SIG_EXTERNAL = "XTRNAUTH";
 
-unsigned int SecurityDefs::convertFromAuthType(unsigned int authType)
+namespace remoting
 {
-  switch (authType) {
-  case AuthDefs::NONE:
-    return NONE;
-  case AuthDefs::VNC:
-    return VNC;
-  }
+   const char *const AuthDefs::SIG_NONE = "NOAUTH__";
+   const char *const AuthDefs::SIG_VNC = "VNCAUTH_";
+   const char *const AuthDefs::SIG_EXTERNAL = "XTRNAUTH";
 
-  return INVALID; // no corresponding authentication method
-}
+   unsigned int SecurityDefs::convertFromAuthType(unsigned int authType)
+   {
+      switch (authType) {
+         case AuthDefs::NONE:
+            return NONE;
+         case AuthDefs::VNC:
+            return VNC;
+      }
 
-unsigned int AuthDefs::convertFromSecurityType(unsigned int securityType)
-{
-  switch (securityType) {
-  case SecurityDefs::NONE:
-    return NONE;
-  case SecurityDefs::VNC:
-    return VNC;
-  }
+      return INVALID; // no corresponding authentication method
+   }
 
-  return 0; // no corresponding authentication method
-}
+   unsigned int AuthDefs::convertFromSecurityType(unsigned int securityType)
+   {
+      switch (securityType) {
+         case SecurityDefs::NONE:
+            return NONE;
+         case SecurityDefs::VNC:
+            return VNC;
+      }
+
+      return 0; // no corresponding authentication method
+   }
+}// namespace remoting
+
+

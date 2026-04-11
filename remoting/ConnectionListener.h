@@ -31,7 +31,8 @@
 
 namespace remoting_remoting
 {
-   class ConnectionListener : protected TcpServer
+   class ConnectionListener :
+    virtual public ::remoting::TcpServer
    {
    public:
       static const char DEFAULT_HOST[];
@@ -39,19 +40,19 @@ namespace remoting_remoting
 
       // HWND mainWindow is handle of main window of program.
       // this window received and processing messages "WM_USER_NEW_LISTENING"
-      ConnectionListener(WindowsApplication *application, unsigned short port = DEFAULT_PORT);
+      ConnectionListener(::subsystem::OperatingSystemApplicationInterface *application, unsigned short port = DEFAULT_PORT);
 
       virtual ~ConnectionListener();
 
       // this method return pointer to new listening connection, if him is exist, and 0 if isn't
-      SocketIPv4 *getNewConnection();
+      ::pointer< ::subsystem::SocketIPv4Interface > getNewConnection();
 
       unsigned short getBindPort() const;
    protected:
-      void onAcceptConnection(SocketIPv4 *socket);
+      void onAcceptConnection(::subsystem::SocketIPv4Interface *socket);
 
-      WindowsApplication *m_application;
-      ::list_base<SocketIPv4 *> m_connections;
+      ::subsystem::OperatingSystemApplicationInterface*m_application;
+      ::list_base<::pointer < ::subsystem::SocketIPv4Interface > > m_connections;
       critical_section m_connectionsLock;
    };
 }//namespace remoting_remoting

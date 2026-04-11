@@ -26,80 +26,83 @@
 
 //#include aaa_<algorithm>
 
-HexTileDecoder::HexTileDecoder(::subsystem::LogWriter * plogwriter)
-: DecoderOfRectangle(logWriter)
+namespace remoting
 {
-  m_encoding = EncodingDefs::HEXTILE;
-}
+   HexTileDecoder::HexTileDecoder(::subsystem::LogWriter * plogwriter)
+   : DecoderOfRectangle(logWriter)
+   {
+      m_encoding = EncodingDefs::HEXTILE;
+   }
 
-HexTileDecoder::~HexTileDecoder()
-{
-}
+   HexTileDecoder::~HexTileDecoder()
+   {
+   }
 
-void HexTileDecoder::decode(RfbInputGate *pinput,
-                            ::subsystem::FrameBuffer *pframebuffer,
-                            const ::int_rectangle &  dstRect)
-{
-  // shorcut
-  const int bytesPerPixel = pframebuffer->getBytesPerPixel();
+   void HexTileDecoder::decode(RfbInputGate *pinput,
+                               ::subsystem::FrameBuffer *pframebuffer,
+                               const ::int_rectangle &  dstRect)
+   {
+      // shorcut
+      const int bytesPerPixel = pframebuffer->getBytesPerPixel();
 
-  unsigned int background = 0;
-  unsigned int foreground = 0;
+      unsigned int background = 0;
+      unsigned int foreground = 0;
 
-  bool backgroundAccepted = false;
+      bool backgroundAccepted = false;
 
-  for (int y = dstRect.top; y < dstRect.bottom; y += TILE_SIZE) {
-    for (int x = dstRect.left; x < dstRect.right; x += TILE_SIZE) {
-      ::int_rectangle tileRect(x,
-                    y,
-                    ::minimum(x + TILE_SIZE, dstRect.right),
-                    ::minimum(y + TILE_SIZE, dstRect.bottom));
+      for (int y = dstRect.top; y < dstRect.bottom; y += TILE_SIZE) {
+         for (int x = dstRect.left; x < dstRect.right; x += TILE_SIZE) {
+            ::int_rectangle tileRect(x,
+                          y,
+                          ::minimum(x + TILE_SIZE, dstRect.right),
+                          ::minimum(y + TILE_SIZE, dstRect.bottom));
 
-      if (::int_rectangle(pframebuffer->getDimension()).intersection(tileRect) != tileRect)
-        throw ::subsystem::Exception("Error in protocol: incorrect size of tile in hextile-decoder");
+            if (::int_rectangle(pframebuffer->getDimension()).intersection(tileRect) != tileRect)
+               throw ::subsystem::Exception("Error in protocol: incorrect size of tile in hextile-decoder");
 
-      unsigned char flags = pinput->readUInt8();
-      // If tile-coding is RAW.
-      if (flags & 0x1) {
-        for (int y = tileRect.top; y < tileRect.bottom; y++)
-          pinput->readFully(pframebuffer->getBufferPtr(tileRect.left, y),
-                           tileRect.width() * bytesPerPixel);
-      } else {
-        if (flags & 0x2) {
-          pinput->readFully(&background, bytesPerPixel);
-          backgroundAccepted = true;
-        }
+            unsigned char flags = pinput->readUInt8();
+            // If tile-coding is RAW.
+            if (flags & 0x1) {
+               for (int y = tileRect.top; y < tileRect.bottom; y++)
+                  pinput->readFully(pframebuffer->getBufferPtr(tileRect.left, y),
+                                   tileRect.width() * bytesPerPixel);
+            } else {
+               if (flags & 0x2) {
+                  pinput->readFully(&background, bytesPerPixel);
+                  backgroundAccepted = true;
+               }
 
-        if (backgroundAccepted)
-          pframebuffer->fillRect(tileRect, background);
+               if (backgroundAccepted)
+                  pframebuffer->fillRect(tileRect, background);
 
-        if (flags & 0x4)
-          pinput->readFully(&foreground, bytesPerPixel);
+               if (flags & 0x4)
+                  pinput->readFully(&foreground, bytesPerPixel);
 
-        if (flags & 0x8) {
-          unsigned char numberOfSubrectangles = pinput->readUInt8();
+               if (flags & 0x8) {
+                  unsigned char numberOfSubrectangles = pinput->readUInt8();
 
-          for (int i = 0; i < numberOfSubrectangles; i++) {
+                  for (int i = 0; i < numberOfSubrectangles; i++) {
 
-            if (flags & 0x10 && !(flags & 0x4))
-              pinput->readFully(&foreground, bytesPerPixel);
+                     if (flags & 0x10 && !(flags & 0x4))
+                        pinput->readFully(&foreground, bytesPerPixel);
 
-            unsigned char xy = pinput->readUInt8();
-            unsigned char wh = pinput->readUInt8();
-            int x = (xy >> 4) & 0xF;
-            int y = xy & 0xF;
-            int w = ((wh >> 4) & 0xF) + 1;
-            int h = (wh & 0xF) + 1;
-            ::int_rectangle subRect(x, y, x + w, y + h);
+                     unsigned char xy = pinput->readUInt8();
+                     unsigned char wh = pinput->readUInt8();
+                     int x = (xy >> 4) & 0xF;
+                     int y = xy & 0xF;
+                     int w = ((wh >> 4) & 0xF) + 1;
+                     int h = (wh & 0xF) + 1;
+                     ::int_rectangle subRect(x, y, x + w, y + h);
 
-            subRect.offset(tileRect.left, tileRect.top);
-            pframebuffer->fillRect(subRect, foreground);
-          }
-        } else { // exist subrect
-          if (!backgroundAccepted)
-            throw ::subsystem::Exception("Server error in HexTile encoding: background color not accepted");
-        }
-      } // it tile is not RAW
-    } // for each tiles in line
-  } // for each line of tile
-}
+                     subRect.offset(tileRect.left, tileRect.top);
+                     pframebuffer->fillRect(subRect, foreground);
+                  }
+               } else { // exist subrect
+                  if (!backgroundAccepted)
+                     throw ::subsystem::Exception("Server error in HexTile encoding: background color not accepted");
+               }
+            } // it tile is not RAW
+         } // for each tiles in line
+      } // for each line of tile
+   }
+} // namespace remoting

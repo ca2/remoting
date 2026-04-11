@@ -32,7 +32,7 @@
 //#include "remoting/remoting_common/network/socket/SocketIPv4.h"
 #include "acme/subsystem/framebuffer/FrameBuffer.h"
 
-#include "remoting/remoting_common/region/Point.h"
+//#include "remoting/remoting_common/region/::int_point.h"
 #include "acme/subsystem/thread/Thread.h"
 
 #include "CapsContainer.h"
@@ -132,7 +132,7 @@ namespace remoting
       // This constructor expects a connected TCP socket. For example, it can be
       // used for reverse connections (when servers connect to viewers).
       //
-      RemoteViewerCore(SocketIPv4 *socket,
+      RemoteViewerCore(::subsystem::SocketIPv4Interface *socket,
                        CoreEventsAdapter *adapter,
                        ::subsystem::LogWriter * plogwriter = 0,
                        bool sharedFlag = true);
@@ -227,7 +227,7 @@ namespace remoting
       // This version expects a connected TCP socket. For example, it can be used
       // for reverse connections (when servers connect to viewers).
       //
-      void start(SocketIPv4 *socket,
+      void start(::subsystem::SocketIPv4Interface *socket,
                  CoreEventsAdapter *adapter,
                  bool sharedFlag = true);
 
@@ -354,7 +354,7 @@ namespace remoting
       // Send a pointer (mouse) event. Arguments specify the event as defined in
       // the RFB v.3 protocol specification.
       //
-      void sendPointerEvent(unsigned char buttonMask, const Point *position);
+      void sendPointerEvent(unsigned char buttonMask, const ::int_point *position);
 
       //
       // Send cut text (clipboard) to the server.
@@ -427,22 +427,22 @@ namespace remoting
       // Next methods is implements of CapabilitiesManager.
       //
 
-      virtual void addAuthCapability(AuthHandler *authHandler,
+      void addAuthCapability(AuthHandler *authHandler,
                                      unsigned int code,
                                      const char *vendorSignature,
                                      const char *nameSignature,
-                                     const ::string description = "");
+                                     const ::string description = "") override;
 
-      virtual void addServerMsgCapability(ServerMessageListener *listener,
+      void addServerMsgCapability(ServerMessageListener *listener,
                                           unsigned int code,
                                           const char *vendorSignature,
                                           const char *nameSignature,
-                                          const ::string description = "");
+                                          const ::string description = "")override;
 
-      virtual void addClientMsgCapability(unsigned int code,
+      void addClientMsgCapability(unsigned int code,
                                           const char *vendorSignature,
                                           const char *nameSignature,
-                                          const ::string description = "");
+                                          const ::string description = "")override;
 
       virtual void addEncodingCapability(Decoder *decoder,
                                          int priorityEncoding,

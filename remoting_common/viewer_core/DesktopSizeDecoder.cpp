@@ -24,12 +24,16 @@
 #include "framework.h"
 #include "DesktopSizeDecoder.h"
 
-DesktopSizeDecoder::DesktopSizeDecoder(::subsystem::LogWriter * plogwriter)
-: PseudoDecoder(logWriter)
-{
-  m_encoding = PseudoEncDefs::DESKTOP_SIZE;
-}
 
-DesktopSizeDecoder::~DesktopSizeDecoder()
+namespace remoting
 {
-}
+   DesktopSizeDecoder::DesktopSizeDecoder(::subsystem::LogWriter * plogwriter)
+   : PseudoDecoder(logWriter)
+   {
+      m_encoding = PseudoEncDefs::DESKTOP_SIZE;
+   }
+
+   DesktopSizeDecoder::~DesktopSizeDecoder()
+   {
+   }
+} // namespace remoting

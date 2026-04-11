@@ -26,14 +26,15 @@
 
 
 //////#include "remoting/remoting_common/util/::string.h"
-
-class CLASS_DECL_REMOTING_COMMON DispatchDataProvider
+///
+namespace remoting
 {
-public:
-  //
-  // This function should return true if data is available, false otherwise.
-  //
-  virtual bool getDispatchData(unsigned int *id, ::string & dispatcherName, ::string & keyword) = 0;
-};
-
-
+   class CLASS_DECL_REMOTING_COMMON DispatchDataProvider
+   {
+   public:
+      //
+      // This function should return true if data is available, false otherwise.
+      //
+      virtual bool getDispatchData(unsigned int *id, ::string & dispatcherName, ::string & keyword) = 0;
+   };
+} // namespace remoting

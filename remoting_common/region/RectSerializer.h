@@ -28,14 +28,15 @@
 #include "acme/subsystem/_common_header.h"
 //#include "::int_rectangle.h"
 
-class RectSerializer
+namespace remoting
 {
-public:
-  // Converts to string value.
-  static void toString(const ::int_rectangle &  rect, ::string & strOut);
+   class RectSerializer
+   {
+   public:
+      // Converts to string value.
+      static void toString(const ::int_rectangle &  rect, ::string & strOut);
 
-  // Converts to ::int_rectangle value.
-  static ::int_rectangle toRect(const ::scoped_string & strIn);
-};
-
-
+      // Converts to ::int_rectangle value.
+      static ::int_rectangle toRect(const ::scoped_string & strIn);
+   };
+} // namespace remoting

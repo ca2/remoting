@@ -29,29 +29,32 @@
 
 //#include aaa_<algorithm>
 
-void VncAuthentication::vncAuthenticate(DataInputStream * pinput,
-                                        DataOutputStream *output,
-                                        const ::scoped_string & password)
+namespace remoting
 {
-  // TODO: removed duplicate code: ControlAuth.cpp
+   void VncAuthentication::vncAuthenticate(DataInputStream * pinput,
+                                           DataOutputStream *output,
+                                           const ::scoped_string & password)
+   {
+      // TODO: removed duplicate code: ControlAuth.cpp
 
-  // Prepare data for authentication.
-  ::string truncatedPass;
-  truncatedPass = password.substr( 0, VNC_PASSWORD_SIZE);
+      // Prepare data for authentication.
+      ::string truncatedPass;
+      truncatedPass = password.substr( 0, VNC_PASSWORD_SIZE);
 
-  ::string passwordAnsi(truncatedPass);
+      ::string passwordAnsi(truncatedPass);
 
-  unsigned char m_password[VNC_PASSWORD_SIZE];
-  memset(m_password, 0, sizeof(m_password));
-  memcpy(m_password, passwordAnsi,
-         ::minimum(passwordAnsi.length(), sizeof(m_password)));
+      unsigned char m_password[VNC_PASSWORD_SIZE];
+      memset(m_password, 0, sizeof(m_password));
+      memcpy(m_password, passwordAnsi,
+             ::minimum(passwordAnsi.length(), sizeof(m_password)));
 
-  unsigned char challenge[16];
-  unsigned char response[16];
+      unsigned char challenge[16];
+      unsigned char response[16];
 
-  pinput->readFully(challenge, sizeof(challenge));
-  DesCrypt desCrypt;
-  desCrypt.encrypt(response, challenge, sizeof(challenge), m_password);
-  output->write(response, sizeof(response));
-  output->flush();
-}
+      pinput->readFully(challenge, sizeof(challenge));
+      DesCrypt desCrypt;
+      desCrypt.encrypt(response, challenge, sizeof(challenge), m_password);
+      output->write(response, sizeof(response));
+      output->flush();
+   }
+} // namespace remoting

@@ -31,7 +31,7 @@ namespace remoting_remoting
 {
    const char ConnectionListener::DEFAULT_HOST[] = "0.0.0.0";
 
-   ConnectionListener::ConnectionListener(WindowsApplication *application,
+   ConnectionListener::ConnectionListener(::subsystem::OperatingSystemApplicationInterface   *application,
                                           unsigned short port)
    : TcpServer(DEFAULT_HOST, port, true),
      m_application(application)
@@ -42,7 +42,7 @@ namespace remoting_remoting
    {
       critical_section_lock al(&m_connectionsLock);
       while (!m_connections.empty()) {
-         SocketIPv4 *socket = m_connections.front();
+         ::subsystem::SocketIPv4Interface *socket = m_connections.front();
          delete socket;
          m_connections.pop_front();
       }
@@ -53,17 +53,17 @@ namespace remoting_remoting
       return TcpServer::getBindPort();
    }
 
-   void ConnectionListener::onAcceptConnection(SocketIPv4 *socket)
+   void ConnectionListener::onAcceptConnection(::subsystem::SocketIPv4Interface *socket)
    {
       critical_section_lock al(&m_connectionsLock);
       m_connections.push_front(socket);
       m_application->postMessage(remoting_impact::WM_USER_NEW_LISTENING);
    }
 
-   SocketIPv4 *ConnectionListener::getNewConnection()
+   ::pointer < ::subsystem::SocketIPv4Interface > ConnectionListener::getNewConnection()
    {
       critical_section_lock al(&m_connectionsLock);
-      SocketIPv4 *socket = 0;
+      ::subsystem::SocketIPv4Interface *socket = nullptr;
       if (!m_connections.empty()) {
          socket = m_connections.front();
          m_connections.pop_front();

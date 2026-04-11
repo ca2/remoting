@@ -27,29 +27,30 @@
 
 #include "DecoderOfRectangle.h"
 
-class CLASS_DECL_REMOTING_COMMON RawDecoder : public DecoderOfRectangle
+namespace remoting
 {
-public:
-  RawDecoder(::subsystem::LogWriter * plogwriter);
-  virtual ~RawDecoder();
+   class CLASS_DECL_REMOTING_COMMON RawDecoder : public DecoderOfRectangle
+   {
+   public:
+      RawDecoder(::subsystem::LogWriter * plogwriter);
+      virtual ~RawDecoder();
 
-  //
-  // This method is inherited from DecoderOfRectangle.
-  //
-  virtual void process(RfbInputGate *input,
-                       ::subsystem::FrameBuffer *frameBuffer,
-                       ::subsystem::FrameBuffer *secondFrameBuffer,
-                       const ::int_rectangle &  rect,
-                       critical_section *fbLock,
-                       FbUpdateNotifier *fbNotifier);
+      //
+      // This method is inherited from DecoderOfRectangle.
+      //
+      virtual void process(RfbInputGate *input,
+                           ::subsystem::FrameBuffer *frameBuffer,
+                           ::subsystem::FrameBuffer *secondFrameBuffer,
+                           const ::int_rectangle &  rect,
+                           critical_section *fbLock,
+                           FbUpdateNotifier *fbNotifier);
 
-protected:
-  virtual void decode(RfbInputGate *input,
-                      ::subsystem::FrameBuffer *frameBuffer,
-                      const ::int_rectangle &  rect);
+   protected:
+      virtual void decode(RfbInputGate *input,
+                          ::subsystem::FrameBuffer *frameBuffer,
+                          const ::int_rectangle &  rect);
 
-private:
-  static const size_t AREA_OF_ONE_PART = 1024 * 64;
-};
-
-
+   private:
+      static const size_t AREA_OF_ONE_PART = 1024 * 64;
+   };
+} // namespace remoting

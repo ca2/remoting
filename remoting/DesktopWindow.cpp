@@ -33,127 +33,132 @@
 
 namespace remoting_remoting
 {
-    DesktopWindow::DesktopWindow(::subsystem::LogWriter *logWriter, ConnectionConfig *conConf, ViewerWindow * pviewerwindow) :
-        m_plogwriter(logWriter),m_pviewerwindow(pviewerwindow), m_clipboard(0), m_showVert(false), m_showHorz(false), m_fbWidth(1), m_fbHeight(1),
-        m_winResize(false), m_pconnectionconfig(conConf), m_brush(RGB(0, 0, 0)),
+    DesktopWindow::DesktopWindow(::subsystem::LogWriter *logWriter, ::remoting::ConnectionConfig *conConf, ViewerWindow * pviewerwindow) :
+        m_plogwriter(logWriter),m_pviewerwindow(pviewerwindow), m_showVert(false), m_showHorz(false), m_fbWidth(1), m_fbHeight(1),
+        m_winResize(false), m_pconnectionconfig(conConf),
 
         m_viewerCore(0), m_ctrlDown(false), m_altDown(false), m_previousMousePos(-1, -1), m_previousMouseState(0),
         m_isBackgroundDirty(false)
     {
+       m_clipboard.initialize_clipboard({});
+
+       m_brush.initialize_solid_brush(color::black);
+
         m_bShowCursor = true;
-        m_rfbKeySym = std::unique_ptr<RfbKeySym>(new RfbKeySym(this, m_plogwriter));
+       m_rfbKeySym = øraw_new ::remoting::RfbKeySym(this, m_plogwriter);
     }
 
     DesktopWindow::~DesktopWindow() {}
 
     void DesktopWindow::setConnected() { m_isConnected = true; }
 
-    void DesktopWindow::setViewerCore(RemoteViewerCore *viewerCore) { m_viewerCore = viewerCore; }
+    void DesktopWindow::setViewerCore(::remoting::RemoteViewerCore *viewerCore) { m_viewerCore = viewerCore; }
 
-    bool DesktopWindow::onCreate(LPCREATESTRUCT pcs)
+    bool DesktopWindow::onCreate(void * pCreateStruct)
     {
-        m_sbar.setWindow(getHWnd());
-        m_clipboard.setHWnd(getHWnd());
-        m_premotingstyle = allocateø ::remoting::style;
-        m_premotingtoolbar = allocateø ::remoting::toolbar;
+       //auto hwnd = (HWND) _HWND();
+        m_sbar.set_operating_system_window(operating_system_window());
+        m_clipboard.setHWnd(operating_system_window());
+        m_premotingstyle = allocateø ::remoting_remoting::style;
+        m_premotingtoolbar = allocateø ::remoting_remoting::toolbar;
         m_premotingtoolbar->create_impact_toolbar(this, m_premotingstyle);
         m_timeStartDesktopWindow.Now();
-        bool enable = true; // Use true to force disable, which is counter-intuitive but how the flag works
-        HRESULT hr = DwmSetWindowAttribute(::GetParent(getHWnd()), DWMWA_TRANSITIONS_FORCEDISABLED, &enable, sizeof(enable));
+        ///bool enable = true; // Use true to force disable, which is counter-intuitive but how the flag works
+        //HRESULT hr = DwmSetWindowAttribute(::GetParent(getHWnd()), DWMWA_TRANSITIONS_FORCEDISABLED, &enable, sizeof(enable));
 
         // m_pimpactoolbar->m_pdesktopwindow = this;
         return true;
     }
 
+    //
+    // void DesktopWindow::_defer_update_double_buffering()
+    // {
+    //     //
+    //     // if (m_hdcBuffer && m_sizeBuffer == m_clientArea.size())
+    //     // {
+    //     //
+    //     //     return;
+    //     // }
+    //     //
+    //     // if (m_hdcBuffer)
+    //     // {
+    //     //     if (m_hbitmapOld)
+    //     //     {
+    //     //         SelectObject(m_hdcBuffer, m_hbitmapOld);
+    //     //     }
+    //     //     ::DeleteDC(m_hdcBuffer);
+    //     // }
+    //     //
+    //     // m_sizeBuffer = m_clientArea.size();
+    //     //
+    //     // // 1️⃣ Create memory DC
+    //     // m_hdcBuffer = CreateCompatibleDC(m_paintStruct.hdc);
+    //     //
+    //     // // 2️⃣ Create 32-bit DIB section (alpha preserved)
+    //     // BITMAPINFO bi = {};
+    //     // bi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+    //     // bi.bmiHeader.biWidth = m_sizeBuffer.cx;
+    //     // bi.bmiHeader.biHeight = -m_sizeBuffer.cy; // top-down
+    //     // bi.bmiHeader.biPlanes = 1;
+    //     // bi.bmiHeader.biBitCount = 32;
+    //     // bi.bmiHeader.biCompression = BI_RGB;
+    //     //
+    //     // void *pBits = nullptr;
+    //     // m_hbitmapBuffer = CreateDIBSection(m_paintStruct.hdc, &bi, DIB_RGB_COLORS, &pBits, nullptr, 0);
+    //     // m_hbitmapOld = (HBITMAP)SelectObject(m_hdcBuffer, m_hbitmapBuffer);
+    //     // // 3️⃣ Clear buffer (transparent black)
+    //     // ZeroMemory(pBits, m_sizeBuffer.area() * 4);
+    // }
 
-    void DesktopWindow::_defer_update_double_buffering()
-    {
-
-        if (m_hdcBuffer && m_sizeBuffer == m_clientArea.size())
-        {
-
-            return;
-        }
-
-        if (m_hdcBuffer)
-        {
-            if (m_hbitmapOld)
-            {
-                SelectObject(m_hdcBuffer, m_hbitmapOld);
-            }
-            ::DeleteDC(m_hdcBuffer);
-        }
-
-        m_sizeBuffer = m_clientArea.size();
-
-        // 1️⃣ Create memory DC
-        m_hdcBuffer = CreateCompatibleDC(m_paintStruct.hdc);
-
-        // 2️⃣ Create 32-bit DIB section (alpha preserved)
-        BITMAPINFO bi = {};
-        bi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-        bi.bmiHeader.biWidth = m_sizeBuffer.cx;
-        bi.bmiHeader.biHeight = -m_sizeBuffer.cy; // top-down
-        bi.bmiHeader.biPlanes = 1;
-        bi.bmiHeader.biBitCount = 32;
-        bi.bmiHeader.biCompression = BI_RGB;
-
-        void *pBits = nullptr;
-        m_hbitmapBuffer = CreateDIBSection(m_paintStruct.hdc, &bi, DIB_RGB_COLORS, &pBits, nullptr, 0);
-        m_hbitmapOld = (HBITMAP)SelectObject(m_hdcBuffer, m_hbitmapBuffer);
-        // 3️⃣ Clear buffer (transparent black)
-        ZeroMemory(pBits, m_sizeBuffer.area() * 4);
-    }
-
-    // void DesktopWindow::onPaint(DeviceContext *dc, PAINTSTRUCT *paintStruct)
-    void DesktopWindow::onPaint()
-    {
-
-        ::int_rectangle paintRect(m_paintStruct.rcPaint);
-
-
-        // 5️⃣ Blit to screen (alpha ignored in normal window)
-
-
-        // Cleanup
-        // SelectObject(hdcMem, hOld);
-        // DeleteObject(hBmp);
-        // DeleteDC(hdcMem);
-
-        // EndPaint(hwnd, &ps);
-        if (paintRect.is_empty())
-        {
-
-            return;
-        }
-
-        if (m_clientArea.is_empty())
-        {
-            return;
-        }
-
-
-        critical_section_lock al(&m_bufferLock);
-
-
-        _defer_update_double_buffering();
-
-
-        doDraw(m_hdcBuffer, m_paintStruct.rcPaint);
-
-        ::BitBlt(
-           m_paintStruct.hdc,
-           m_paintStruct.rcPaint.left,
-           m_paintStruct.rcPaint.top,
-           ::width(m_paintStruct.rcPaint),
-           ::height(m_paintStruct.rcPaint),
-           m_hdcBuffer,
-           m_paintStruct.rcPaint.left,
-           m_paintStruct.rcPaint.top,
-           SRCCOPY);
-
-    }
-
+    // // void DesktopWindow::onPaint(DeviceContext *dc, PAINTSTRUCT *paintStruct)
+    // void DesktopWindow::onPaint()
+    // {
+    //
+    //     ::int_rectangle paintRect(m_paintStruct.rcPaint);
+    //
+    //
+    //     // 5️⃣ Blit to screen (alpha ignored in normal window)
+    //
+    //
+    //     // Cleanup
+    //     // SelectObject(hdcMem, hOld);
+    //     // DeleteObject(hBmp);
+    //     // DeleteDC(hdcMem);
+    //
+    //     // EndPaint(hwnd, &ps);
+    //     if (paintRect.is_empty())
+    //     {
+    //
+    //         return;
+    //     }
+    //
+    //     if (m_clientArea.is_empty())
+    //     {
+    //         return;
+    //     }
+    //
+    //
+    //     critical_section_lock al(&m_bufferLock);
+    //
+    //
+    //     _defer_update_double_buffering();
+    //
+    //
+    //     doDraw(m_hdcBuffer, m_paintStruct.rcPaint);
+    //
+    //     ::BitBlt(
+    //        m_paintStruct.hdc,
+    //        m_paintStruct.rcPaint.left,
+    //        m_paintStruct.rcPaint.top,
+    //        ::width(m_paintStruct.rcPaint),
+    //        ::height(m_paintStruct.rcPaint),
+    //        m_hdcBuffer,
+    //        m_paintStruct.rcPaint.left,
+    //        m_paintStruct.rcPaint.top,
+    //        SRCCOPY);
+    //
+    // }
+    //
 
     bool DesktopWindow::onMessage(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam)
     {
@@ -164,29 +169,30 @@ namespace remoting_remoting
             case WM_VSCROLL:
                 return onVScroll(wParam, lParam);
             case WM_ERASEBKGND:
-                return onEraseBackground(reinterpret_cast<HDC>(wParam));
+              return true;
+                //return onEraseBackground(reinterpret_cast<HDC>(wParam));
             case WM_DEADCHAR:
             case WM_SYSDEADCHAR:
                 return onDeadChar(wParam, lParam);
-            case WM_CHANGECBCHAIN:
-                if ((HWND)wParam == m_hwndNextViewer)
-                {
-                    m_hwndNextViewer = (HWND)lParam;
-                }
-                else if (m_hwndNextViewer != NULL)
-                {
-                    SendMessage(m_hwndNextViewer, scopedstrMessage, wParam, lParam);
-                }
-                return true;
-            case WM_DRAWCLIPBOARD:
-            {
-                bool ok = onDrawClipboard();
-                SendMessage(m_hwndNextViewer, scopedstrMessage, wParam, lParam);
-                return ok;
-            }
+            // case WM_CHANGECBCHAIN:
+            //     if ((HWND)wParam == m_hwndNextViewer)
+            //     {
+            //         m_hwndNextViewer = (HWND)lParam;
+            //     }
+            //     else if (m_hwndNextViewer != NULL)
+            //     {
+            //         SendMessage(m_hwndNextViewer, scopedstrMessage, wParam, lParam);
+            //     }
+            //     return true;
+            // case WM_DRAWCLIPBOARD:
+            // {
+            //     bool ok = onDrawClipboard();
+            //     SendMessage(m_hwndNextViewer, scopedstrMessage, wParam, lParam);
+            //     return ok;
+            // }
             case WM_CREATE:
-                m_hwndNextViewer = SetClipboardViewer((HWND)wParam);
-                return onCreate(reinterpret_cast<LPCREATESTRUCT>(lParam));
+                //return onCreate(reinterpret_cast<LPCREATESTRUCT>(lParam));
+              return false;
             case WM_SIZE:
                 return onSize(wParam, lParam);
             case WM_DESTROY:
@@ -200,28 +206,23 @@ namespace remoting_remoting
             case WM_SYSKEYUP:
             {
 
-                if (::IsIconic(::GetParent(m_hwnd)))
-                {
-                    return false;
-
-                }
                 return onKey(wParam, lParam);
             }
-            case WM_SETCURSOR:
-                if (m_bShowCursor || m_timeStartDesktopWindow.elapsed() < 8_s)
-                {
-                    ::SetCursor(LoadCursor(nullptr, IDC_ARROW));
-                }
-                else
-                {
-                    ::SetCursor(nullptr);
-                }
-                return true;
+            // case WM_SETCURSOR:
+            //     if (m_bShowCursor || m_timeStartDesktopWindow.elapsed() < 8_s)
+            //     {
+            //         ::SetCursor(LoadCursor(nullptr, IDC_ARROW));
+            //     }
+            //     else
+            //     {
+            //         ::SetCursor(nullptr);
+            //     }
+            //     return true;
             case WM_SETFOCUS:
             {
 
                 //       // Unregistration of keyboard hook.
-                m_pviewerwindow->m_winHooks.registerKeyboardHook(m_pviewerwindow);
+                m_pviewerwindow->m_operatingsystemhook.registerKeyboardHook(m_pviewerwindow);
                 ////// Switching on ignoring win key.
                 setWinKeyIgnore(false);
 
@@ -236,7 +237,7 @@ namespace remoting_remoting
                 m_rfbKeySym->processFocusLoss();
 
                 //       // Unregistration of keyboard hook.
-                m_pviewerwindow->m_winHooks.unregisterKeyboardHook(m_pviewerwindow);
+                m_pviewerwindow->m_operatingsystemhook.unregisterKeyboardHook(m_pviewerwindow);
                 ////// Switching on ignoring win key.
                 setWinKeyIgnore(true);
             }
@@ -245,7 +246,7 @@ namespace remoting_remoting
         return false;
     }
 
-    bool DesktopWindow::onEraseBackground(HDC hdc) { return true; }
+    //bool DesktopWindow::onEraseBackground(HDC hdc) { return true; }
 
     bool DesktopWindow::onHScroll(::wparam wParam, ::lparam lParam)
     {
@@ -257,7 +258,7 @@ namespace remoting_remoting
                 redraw();
                 break;
             case SB_LINELEFT:
-                m_sbar.moveLeftHorz(ScrollBar::SCROLL_STEP);
+                m_sbar.moveLeftHorz(::innate_subsystem::SCROLL_STEP);
                 redraw();
                 break;
             case SB_PAGELEFT:
@@ -265,7 +266,7 @@ namespace remoting_remoting
                 redraw();
                 break;
             case SB_LINERIGHT:
-                m_sbar.moveRightHorz(ScrollBar::SCROLL_STEP);
+                m_sbar.moveRightHorz(::innate_subsystem::SCROLL_STEP);
                 redraw();
                 break;
             case SB_PAGERIGHT:
@@ -286,7 +287,7 @@ namespace remoting_remoting
                 redraw();
                 break;
             case SB_LINEUP:
-                m_sbar.moveDownVert(ScrollBar::SCROLL_STEP);
+                m_sbar.moveDownVert(::innate_subsystem::SCROLL_STEP);
                 redraw();
                 break;
             case SB_PAGEUP:
@@ -294,7 +295,7 @@ namespace remoting_remoting
                 redraw();
                 break;
             case SB_LINEDOWN:
-                m_sbar.moveUpVert(ScrollBar::SCROLL_STEP);
+                m_sbar.moveUpVert(::innate_subsystem::SCROLL_STEP);
                 redraw();
                 break;
             case SB_PAGEDOWN:
@@ -455,7 +456,7 @@ namespace remoting_remoting
 
         // Translate coordinates from the Viewer Window to Desktop Window.
         POINTS mousePos = getViewerCoord(p.x, p.y);
-        Point pos;
+        ::int_point pos;
         pos.x = mousePos.x;
         pos.y = mousePos.y;
 
@@ -494,6 +495,12 @@ namespace remoting_remoting
 
     bool DesktopWindow::onKey(::wparam wParam, ::lparam lParam)
     {
+       if (m_pviewerwindow->isIconic())
+       {
+
+          return false;
+
+       }
         if (!m_pconnectionconfig->isViewOnly())
         {
             unsigned short virtualKey = static_cast<unsigned short>(wParam);
@@ -569,7 +576,8 @@ namespace remoting_remoting
         }
     }
 
-    void DesktopWindow::doDraw(HDC hdc, const ::int_rectangle &rectangle)
+    //void DesktopWindow::doDraw(HDC hdc, const ::int_rectangle &rectangle)
+   void DesktopWindow::doDraw(::innate_subsystem::DeviceContextInterface * pdevicecontext, const ::int_rectangle &rectangle)
     {
         critical_section_lock al(&m_bufferLock);
         int fbWidth = m_framebuffer.getDimension().cx;
@@ -1004,7 +1012,7 @@ namespace remoting_remoting
         }
     }
 
-    void DesktopWindow::sendPointerEvent(unsigned char buttonMask, const Point *position)
+    void DesktopWindow::sendPointerEvent(unsigned char buttonMask, const ::int_point *position)
     {
         if (m_pconnectionconfig->isViewOnly())
         {

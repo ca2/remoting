@@ -29,19 +29,20 @@
 #include "RfbClientToServerMessage.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 
-class CLASS_DECL_REMOTING_COMMON RfbFramebufferUpdateRequestClientMessage :
-  public RfbClientToServerMessage
+namespace remoting
 {
-public:
-  RfbFramebufferUpdateRequestClientMessage
-    (bool incremental, ::int_rectangle updateRect);
-  ~RfbFramebufferUpdateRequestClientMessage();
+   class CLASS_DECL_REMOTING_COMMON RfbFramebufferUpdateRequestClientMessage :
+     public RfbClientToServerMessage
+   {
+   public:
+      RfbFramebufferUpdateRequestClientMessage
+        (bool incremental, ::int_rectangle updateRect);
+      ~RfbFramebufferUpdateRequestClientMessage();
 
-  void send(RfbOutputGate *output);
+      void send(RfbOutputGate *output);
 
-private:
-  bool m_incremental;
-  ::int_rectangle m_rect;
-};
-
-
+   private:
+      bool m_incremental;
+      ::int_rectangle m_rect;
+   };
+} // namespace remoting

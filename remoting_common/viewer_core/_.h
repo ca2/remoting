@@ -2,15 +2,15 @@
 #pragma once
 
 
-
-#include "remoting/_.h"
-
-
-#if defined(_remoting_viewer_core_project)
-#define CLASS_DECL_REMOTING_VIEWER_CORE  CLASS_DECL_EXPORT
-#else
-#define CLASS_DECL_REMOTING_VIEWER_CORE  CLASS_DECL_IMPORT
-#endif
+//
+// #include "remoting/_.h"
+//
+//
+// #if defined(_remoting_viewer_core_project)
+// #define CLASS_DECL_REMOTING_VIEWER_CORE  CLASS_DECL_EXPORT
+// #else
+// #define CLASS_DECL_REMOTING_VIEWER_CORE  CLASS_DECL_IMPORT
+// #endif
 
 
 namespace remoting
@@ -19,7 +19,13 @@ namespace remoting
 
    class AuthException;
 
-   class AuthHandler
+   class AuthHandler;
+
+//   class AuthHandler;
+
+   class ServerMessageListener;
+
+   class Decoder;
 
 
 }// namespace remoting

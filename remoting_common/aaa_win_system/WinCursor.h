@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/region/Point.h"
+#include "remoting/remoting_common/region/::int_point.h"
 #include "acme/subsystem/_common_header.h"
 
 class CLASS_DECL_REMOTING_COMMON WinCursor
@@ -34,7 +34,7 @@ public:
   WinCursor();
   virtual ~WinCursor();
 
-  Point getCursorPos() const;
+  ::int_point getCursorPos() const;
 };
 
 //// __WINCURSOR_H__

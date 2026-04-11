@@ -28,40 +28,43 @@
 
 #include "RfbCutTextEventClientMessage.h"
 
-RfbCutTextEventClientMessage::RfbCutTextEventClientMessage(const ::scoped_string & cutText)
-: m_cutText(cutText)
+namespace remoting
 {
-}
+   RfbCutTextEventClientMessage::RfbCutTextEventClientMessage(const ::scoped_string & cutText)
+   : m_cutText(cutText)
+   {
+   }
 
-RfbCutTextEventClientMessage::~RfbCutTextEventClientMessage()
-{
-}
+   RfbCutTextEventClientMessage::~RfbCutTextEventClientMessage()
+   {
+   }
 
-void RfbCutTextEventClientMessage::send(RfbOutputGate *output)
-{
-  ::string cutTextAnsi;
-  cutTextAnsi = m_cutText;
-  unsigned int length = static_cast<unsigned int>(cutTextAnsi.length());
+   void RfbCutTextEventClientMessage::send(RfbOutputGate *output)
+   {
+      ::string cutTextAnsi;
+      cutTextAnsi = m_cutText;
+      unsigned int length = static_cast<unsigned int>(cutTextAnsi.length());
 
-  critical_section_lock al(output);
-  output->writeUInt8(ClientMsgDefs::CLIENT_CUT_TEXT);
-  output->writeUInt8(0); // padding 3 bytes
-  output->writeUInt8(0);
-  output->writeUInt8(0);
-  output->writeUInt32(length);
-  output->write(cutTextAnsi, length);
-  output->flush();
-}
+      critical_section_lock al(output);
+      output->writeUInt8(ClientMsgDefs::CLIENT_CUT_TEXT);
+      output->writeUInt8(0); // padding 3 bytes
+      output->writeUInt8(0);
+      output->writeUInt8(0);
+      output->writeUInt32(length);
+      output->write(cutTextAnsi, length);
+      output->flush();
+   }
 
-void RfbCutTextEventClientMessage::sendUtf8(RfbOutputGate *output)
-{
-  ::string cutTextUtf;
-  cutTextUtf = m_cutText;
-  unsigned int length = static_cast<unsigned int>(cutTextUtf.length());
+   void RfbCutTextEventClientMessage::sendUtf8(RfbOutputGate *output)
+   {
+      ::string cutTextUtf;
+      cutTextUtf = m_cutText;
+      unsigned int length = static_cast<unsigned int>(cutTextUtf.length());
 
-  critical_section_lock al(output);
-  output->writeUInt32(ClientMsgDefs::CLIENT_CUT_TEXT_UTF8);
-  output->writeUInt32(length);
-  output->write(cutTextUtf, length);
-  output->flush();
-}
+      critical_section_lock al(output);
+      output->writeUInt32(ClientMsgDefs::CLIENT_CUT_TEXT_UTF8);
+      output->writeUInt32(length);
+      output->write(cutTextUtf, length);
+      output->flush();
+   }
+} // namespace remoting

@@ -27,78 +27,81 @@
 
 #include "acme/subsystem/thread/Thread.h"
 #include "acme/subsystem/Exception.h"
-//#include "remoting/remoting_common/network/socket/SocketIPv4.h"
+#include "acme/subsystem/socket/SocketIPv4.h"
 
-/**
- * Abstract multithreaded TCP server class.
- * Bind on specified host and port and listening for connections,
- * but don't know what to do with incoming connections.
- * @usage create subclass of TcpServer and call start (or use autoStart flag)
- * in TcpServer constructor.
- */
-class CLASS_DECL_REMOTING_COMMON TcpServer : private Thread
+
+namespace remoting
 {
-public:
-  /**
-   * Creates new TcpServer that listens for incoming connection after creation.
-   * @param bindHost host to bind.
-   * @param bindPort port to bind.
-   * @param bool autoStart if true, then server starts listening for incoming connections
-   * in it's own thread, if false, then you must call protected start() method later from subclass.
-   * @param lockAddr determinates if need to lock adress to other processes cannot reuse it.
-   * @throws ::subsystem::Exception if fail to create tcp server.
-   */
-  TcpServer(const ::scoped_string & scopedstrBindHost,
-            unsigned short bindPort,
-            bool autoStart = false,
-            bool lockAddr = false);
-  /**
-   * Closes listening socket, terminates tcp server thread and
-   * deletes tcp server object.
-   */
-  virtual ~TcpServer();
+   /**
+    * Abstract multithreaded TCP server class.
+    * Bind on specified host and port and listening for connections,
+    * but don't know what to do with incoming connections.
+    * @usage create subclass of TcpServer and call start (or use autoStart flag)
+    * in TcpServer constructor.
+    */
+   class CLASS_DECL_REMOTING_COMMON TcpServer :
+   virtual public ::subsystem::Thread
+   {
+   public:
+      /**
+       * Creates new TcpServer that listens for incoming connection after creation.
+       * @param bindHost host to bind.
+       * @param bindPort port to bind.
+       * @param bool autoStart if true, then server starts listening for incoming connections
+       * in it's own thread, if false, then you must call protected start() method later from subclass.
+       * @param lockAddr determinates if need to lock adress to other processes cannot reuse it.
+       * @throws ::subsystem::Exception if fail to create tcp server.
+       */
+      TcpServer(const ::scoped_string & scopedstrBindHost,
+                unsigned short bindPort,
+                bool autoStart = false,
+                bool lockAddr = false);
+      /**
+       * Closes listening socket, terminates tcp server thread and
+       * deletes tcp server object.
+       */
+      virtual ~TcpServer();
 
-  /**
-   * Returns bind host.
-   */
-  ::string getBindHost() const;
+      /**
+       * Returns bind host.
+       */
+      ::string getBindHost() const;
 
-  /**
-   * Returns bind port.
-   */
-  unsigned short getBindPort() const;
+      /**
+       * Returns bind port.
+       */
+      unsigned short getBindPort() const;
 
-protected:
-  /**
-   * Starts tcp server thread (listen for incoming connections).
-   */
-  virtual void start();
+   protected:
+      /**
+       * Starts tcp server thread (listen for incoming connections).
+       */
+      virtual void start();
 
-  /**
-   * Called from tcp server thread when server accepts connection to process it.
-   * @param socket incoming connection socket.
-   */
-  virtual void onAcceptConnection(SocketIPv4 *socket) = 0;
+      /**
+       * Called from tcp server thread when server accepts connection to process it.
+       * @param socket incoming connection socket.
+       */
+      virtual void onAcceptConnection(::subsystem::SocketIPv4Interface *socket) = 0;
 
-  /**
-   * Inherited from Thread class.
-   * Listening for incoming tcp connections.
-   */
-  virtual void execute();
+      /**
+       * Inherited from Thread class.
+       * Listening for incoming tcp connections.
+       */
+      virtual void execute();
 
-private:
-  /**
-   * Listening socket.
-   */
-  SocketIPv4 m_listenSocket;
-  /**
-   * Host to bind.
-   */
-  ::string m_bindHost;
-  /**
-   * Port to bind.
-   */
-  unsigned short m_bindPort;
-};
-
-
+   private:
+      /**
+       * Listening socket.
+       */
+      ::subsystem::SocketIPv4 m_listenSocket;
+      /**
+       * Host to bind.
+       */
+      ::string m_bindHost;
+      /**
+       * Port to bind.
+       */
+      unsigned short m_bindPort;
+   };
+} // namespace remoting

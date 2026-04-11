@@ -80,7 +80,7 @@ namespace remoting_remoting
       bool isIncoming() const;
 
       //protected:
-      HostPath m_hostPath;
+      ;;remoting::HostPath m_hostPath;
       int m_iDivisor;
 
       // This flag is true, if host isn't set.

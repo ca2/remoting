@@ -29,12 +29,13 @@
 
 #include "acme/subsystem/io/DataInputStream.h"
 
-class CLASS_DECL_REMOTING_COMMON RfbInputGate : public ::subsystem::DataInputStream
+namespace remoting
 {
-public:
-  RfbInputGate(::subsystem::Channel *stream);
-  RfbInputGate(::subsystem::InputStream *stream);
-  virtual ~RfbInputGate();
-};
-
-
+   class CLASS_DECL_REMOTING_COMMON RfbInputGate : public ::subsystem::DataInputStream
+   {
+   public:
+      RfbInputGate(::subsystem::Channel *stream);
+      RfbInputGate(::subsystem::InputStream *stream);
+      virtual ~RfbInputGate();
+   };
+} // namespace remoting

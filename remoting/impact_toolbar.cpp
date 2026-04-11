@@ -5,6 +5,8 @@
 #include "DesktopWindow.h"
 #include "ViewerWindow.h"
 #include "impact_toolbar.h"
+
+#include "apex/innate_subsystem/drawing/Bitmap.h"
 // // #include aaa_<dwmapi.h>
 // // Link with dwmapi.lib
 // #pragma comment (lib, "dwmapi.lib")
@@ -17,8 +19,8 @@ namespace remoting_remoting
    {
       m_econtrol  = e_control_none;
       m_eid = id_none;
-      m_pbitmapBuffer = nullptr;
-      m_pgraphicsBuffer = nullptr;
+      //m_pbitmapBuffer = nullptr;
+      //m_pgraphicsBuffer = nullptr;
       m_bNewRepaintRectangle = true;
       m_bDrag = false;
       m_bHover = false;
@@ -347,7 +349,7 @@ namespace remoting_remoting
           m_bLButtonDown = false;
 
       }
-      else if (!(iButtonMask & BaseWindow::MOUSE_LDOWN))
+      else if (!(iButtonMask & ::innate_subsystem::e_mouse_left))
       {
 
           m_bLButtonDown = false;
@@ -448,12 +450,12 @@ namespace remoting_remoting
    style::style()
    {
 
-      m_pbrushBackground = allocateø SolidBrush(RGB(40, 120, 180));
-      m_pbrushBackgroundHover = allocateø SolidBrush(RGB(40, 120, 220));
-      m_pbrushButtonBackground = allocateø SolidBrush(RGB(40, 120, 180));
-      m_pbrushButtonBackgroundHover = allocateø SolidBrush(RGB(50, 130, 230));
-      m_pbrushButtonPaint  =  allocateø SolidBrush(RGB(255, 255, 255));
-      m_ppenPaint = allocateø Pen(PS_SOLID, 2, RGB(255, 255, 255));
+      m_brushBackground.initialize_solid_brush(argb(255, 40, 120, 180));
+      m_brushBackgroundHover.initialize_solid_brush(argb(255, 40, 120, 220));
+      m_brushButtonBackground.initialize_solid_brush(argb(255, 40, 120, 180));
+      m_brushButtonBackgroundHover.initialize_solid_brush(argb(255, 50, 130, 230));
+      m_brushButtonPaint.initialize_solid_brush(argb(255, 255, 255, 255));
+      m_penPaint.initialize_pen(::innate_subsystem::e_pen_solid, 2, argb(255, 255, 255, 255));
 
    }
 
@@ -613,7 +615,7 @@ namespace remoting_remoting
               m_pdesktopwindow->m_pviewerwindow->doMinimizeFromFullScreen();
 
           }
-         ::ShowWindow(::GetParent(m_pdesktopwindow->getHWnd()), SW_MINIMIZE);
+         ::ShowWindow(::GetParent((HWND) m_pdesktopwindow->_HWND()), SW_MINIMIZE);
          
          return true;
       }
@@ -621,17 +623,17 @@ namespace remoting_remoting
       {
          //m_pdesktopwindow->m_viewerCore->ge
          //bool enable = true; // Use true to force disable, which is counter-intuitive but how the flag works
-         //HRESULT hr = DwmSetWindowAttribute(::GetParent(m_pdesktopwindow->getHWnd()), DWMWA_TRANSITIONS_FORCEDISABLED, &enable, sizeof(enable));
+         //HRESULT hr = DwmSetWindowAttribute(::GetParent((HWND) m_pdesktopwindow->_HWND()), DWMWA_TRANSITIONS_FORCEDISABLED, &enable, sizeof(enable));
 
-         ::PostMessageA(::GetParent(m_pdesktopwindow->getHWnd()), ViewerWindow::WM_USER_SWITCH_FULL_SCREEN_MODE, 0, 0);
+         ::PostMessageA(::GetParent((HWND) m_pdesktopwindow->_HWND()), ViewerWindow::WM_USER_SWITCH_FULL_SCREEN_MODE, 0, 0);
          return true;
       }
       else if (eid==id_close)
       {
          //m_pdesktopwindow->m_viewerCore->ge
 
-         ::PostMessageA(::GetParent(m_pdesktopwindow->getHWnd()), ViewerWindow::WM_USER_DISCONNECT, 0, 0);
-         ::PostMessageA(::GetParent(m_pdesktopwindow->getHWnd()), WM_CLOSE, 0, 0);
+         ::PostMessageA(::GetParent((HWND) m_pdesktopwindow->_HWND()), ViewerWindow::WM_USER_DISCONNECT, 0, 0);
+         ::PostMessageA(::GetParent((HWND) m_pdesktopwindow->_HWND()), WM_CLOSE, 0, 0);
          return true;
       }
 
@@ -640,7 +642,7 @@ namespace remoting_remoting
    }
 
 
-   void control::__000OnDraw(GraphicsPlus * pgraphics, const ::int_rectangle & rectangle)
+   void control::__000OnDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle)
    {
       if (!rectangle.intersects(get_window_rectangle()))
       {
@@ -758,7 +760,7 @@ namespace remoting_remoting
    }
 
 
-   void control::__000OnTopDraw(HDC hdc, const ::int_rectangle & rectangle)
+   void control::__000OnTopDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle)
    {
 
       auto rIntersect = rectangle.intersection(m_rectangle);
@@ -770,39 +772,43 @@ namespace remoting_remoting
 
       }
 
-      Gdiplus::Graphics g(hdc);
+      //Gdiplus::Graphics g(hdc);
 
-      int w = m_rectangle.width();
-      int h = m_rectangle.height();
+      auto size = m_rectangle.size();
+      //int h = m_rectangle.height();
 
       //auto sizeBitmap = m_pbitmapBuffer->GetBit
 
-      if (::is_null(m_pbitmapBuffer) || m_pbitmapBuffer->GetWidth() != w
-         || m_pbitmapBuffer->GetHeight() != h)
+      if (::is_null(m_pbitmapBuffer) || m_pbitmapBuffer->getSize() != size)
       {
-         if (::is_set(m_pbitmapBuffer))
-         {
+         // if (::is_set(m_pbitmapBuffer))
+         // {
+         //
+         //    m_pbitmapBuffer;
+         //
+         // }
 
-            delete m_pbitmapBuffer;
+         constructø(m_pbitmapBuffer);
 
-         }
+         m_pbitmapBuffer->initialize_bitmap(size);
 
-         m_pbitmapBuffer = new  Gdiplus::Bitmap(w, h, PixelFormat32bppARGB);
+         // if (::is_set(m_pgraphicsBuffer))
+         // {
+         //
+         //    delete m_pgraphicsBuffer;
+         //
+         // }
 
-         if (::is_set(m_pgraphicsBuffer))
-         {
+         constructø(m_pgraphicsBuffer);
 
-            delete m_pgraphicsBuffer;
-
-         }
-
-         m_pgraphicsBuffer = new ::Gdiplus::Graphics(m_pbitmapBuffer);
+         m_pgraphicsBuffer->initialize_graphics(m_pbitmapBuffer);
       }
       // 2. Create graphics from bitmap
       //Gdiplus::Graphics gBuffer(&buffer);
       // Optional: high quality
-      GraphicsPlus gplus(m_pgraphicsBuffer);
-      __000OnDraw(&gplus, rectangle);
+      //GraphicsPlus gplus(m_pgraphicsBuffer);
+      //__000OnDraw(&gplus, rectangle);
+      __000OnDraw(m_pgraphicsBuffer, rectangle);
       //gBuffer.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
 
       // // 3. Draw to the offscreen buffer
@@ -816,20 +822,28 @@ namespace remoting_remoting
       // gBuffer.FillRectangle(&rectBrush, 100, 80, 150, 100);
 
       // 4. Blit buffer to final graphics
-      g.DrawImage(m_pbitmapBuffer, rIntersect.left, rIntersect.top,
-         rIntersect.left-m_rectangle.left,
-         rIntersect.top - m_rectangle.top,
-         rIntersect.width(),
-         rIntersect.height(),
-         Gdiplus::UnitPixel);
+
+      // Gdiplus::Graphics g;
+      //
+      // g.DrawImage(m_pbitmapBuffer, rIntersect.left, rIntersect.top,
+      //    rIntersect.left-m_rectangle.left,
+      //    rIntersect.top - m_rectangle.top,
+      //    rIntersect.width(),
+      //    rIntersect.height(),
+      //    Gdiplus::UnitPixel);
+      pgraphics->drawBitmap(m_pbitmapBuffer,rIntersect.left, rIntersect.top,
+          rIntersect.left-m_rectangle.left,
+          rIntersect.top - m_rectangle.top,
+          rIntersect.width(),
+          rIntersect.height());
    }
 
-   void control::__001OnDraw(GraphicsPlus * pgraphics, const ::int_rectangle & rectangle)
+   void control::__001OnDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle)
    {
       ::color::color colorPaint;
 
-      pgraphics->set_blend_mode();
-      pgraphics->set_antialias_on();
+      pgraphics->setBlendModeOn(true);
+      pgraphics->setAntiAliasOn(true);
 
       if (m_bHover || m_bLButtonDown)
       {
@@ -884,7 +898,7 @@ namespace remoting_remoting
                //Gdiplus::Rect gdiplusr;
                //::copy(gdiplusr, r);
                auto color = ::argb(20, 255, 255, 255);
-               pgraphics->fill_solid_rectangle(r, color);
+               pgraphics->fillRect(r, color);
             }
 
 
@@ -908,7 +922,7 @@ namespace remoting_remoting
          rDash.top = r.top + 13;
          rDash.bottom = rDash.top + 2;
 
-         pgraphics->fill_solid_rectangle(rDash, colorPaint);
+         pgraphics->fillRect(rDash, colorPaint);
 
       }
       else if (m_eid == id_restore)
@@ -921,10 +935,10 @@ namespace remoting_remoting
 
          rDeflate.deflate(7, 5, 7, 9);
 
-         pgraphics->fill_solid_rectangle(::int_rectangle(rDeflate.left, rDeflate.top, rDeflate.right, rDeflate.top + 2), colorPaint);
-         pgraphics->fill_solid_rectangle(::int_rectangle(rDeflate.right - 2, rDeflate.top, rDeflate.right, rDeflate.bottom), colorPaint);
-         pgraphics->fill_solid_rectangle(::int_rectangle(rDeflate.left, rDeflate.bottom-2, rDeflate.right, rDeflate.bottom), colorPaint);
-         pgraphics->fill_solid_rectangle(::int_rectangle(rDeflate.left, rDeflate.top, rDeflate.left+2, rDeflate.bottom), colorPaint);
+         pgraphics->fillRect(::int_rectangle(rDeflate.left, rDeflate.top, rDeflate.right, rDeflate.top + 2), colorPaint);
+         pgraphics->fillRect(::int_rectangle(rDeflate.right - 2, rDeflate.top, rDeflate.right, rDeflate.bottom), colorPaint);
+         pgraphics->fillRect(::int_rectangle(rDeflate.left, rDeflate.bottom-2, rDeflate.right, rDeflate.bottom), colorPaint);
+         pgraphics->fillRect(::int_rectangle(rDeflate.left, rDeflate.top, rDeflate.left+2, rDeflate.bottom), colorPaint);
 
       }
       else if (m_eid == id_close)
@@ -938,7 +952,13 @@ namespace remoting_remoting
          rDeflate.deflate(7, 5, 7, 9);
 
          //pgraphics->setPen(m_pstyle->m_ppenPaint);
-         pgraphics->setPen(2.0f, colorPaint);
+         if (!m_ppen001)
+         {
+            constructø(m_ppen001);
+            m_ppen001->initialize_pen(innate_subsystem::e_pen_solid, 2, colorPaint);
+         }
+         //pgraphics->setPen(2.0f, colorPaint);
+         pgraphics->setPen(m_ppen001);
 
          pgraphics->moveTo(rDeflate.left, rDeflate.top);
          pgraphics->lineTo(rDeflate.right, rDeflate.bottom);
@@ -948,11 +968,11 @@ namespace remoting_remoting
       }
    }
 
-   void toolbar::__001OnDraw(GraphicsPlus * pgraphics, const ::int_rectangle & rectangle)
+   void toolbar::__001OnDraw(innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle)
    {
 
-      pgraphics->set_copy_source_mode();
-      pgraphics->set_antialias_off();
+      pgraphics->setBlendModeOn(false);
+      pgraphics->setAntiAliasOn(false);
 
 
       int iAlpha = 180;
@@ -969,7 +989,7 @@ namespace remoting_remoting
       auto r = get_paint_rectangle();
 
 
-      pgraphics->fill_solid_rectangle(r, colorDark);
+      pgraphics->fillRect(r, colorDark);
 
       int x = r.left;
       int y = r.top;
@@ -982,7 +1002,7 @@ namespace remoting_remoting
       {
          color=colorDark;
          color.blend(colorLite, fOpacity);
-         pgraphics->fill_solid_rectangle(::int_rectangle_dimension(x, y, w, h), color);
+         pgraphics->fillRect(::int_rectangle_dimension(x, y, w, h), color);
 
          y+= h;
          fOpacity -= 0.1f;

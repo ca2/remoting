@@ -26,43 +26,46 @@
 
 #include "FbUpdateNotifier.h"
 
-DecoderOfRectangle::DecoderOfRectangle(::subsystem::LogWriter * plogwriter)
-: Decoder(logWriter)
+namespace remoting
 {
-}
+   DecoderOfRectangle::DecoderOfRectangle(::subsystem::LogWriter * plogwriter)
+   : Decoder(logWriter)
+   {
+   }
 
-DecoderOfRectangle::~DecoderOfRectangle()
-{
-}
+   DecoderOfRectangle::~DecoderOfRectangle()
+   {
+   }
 
-void DecoderOfRectangle::process(RfbInputGate *input,
-                     ::subsystem::FrameBuffer *frameBuffer,
-                     ::subsystem::FrameBuffer *secondFrameBuffer,
-                     const ::int_rectangle &  rect,
-                     critical_section *fbLock,
-                     FbUpdateNotifier *fbNotifier)
-{
-  decode(input, secondFrameBuffer, rect);
-  copy(frameBuffer, secondFrameBuffer, rect, fbLock);
-  notify(fbNotifier, rect);
-}
+   void DecoderOfRectangle::process(RfbInputGate *input,
+                        ::subsystem::FrameBuffer *frameBuffer,
+                        ::subsystem::FrameBuffer *secondFrameBuffer,
+                        const ::int_rectangle &  rect,
+                        critical_section *fbLock,
+                        FbUpdateNotifier *fbNotifier)
+   {
+      decode(input, secondFrameBuffer, rect);
+      copy(frameBuffer, secondFrameBuffer, rect, fbLock);
+      notify(fbNotifier, rect);
+   }
 
-void DecoderOfRectangle::copy(::subsystem::FrameBuffer *dstFrameBuffer,
-                   const ::subsystem::FrameBuffer *srcFrameBuffer,
-                   const ::int_rectangle &  rect,
-                   critical_section *fbLock)
-{
-  critical_section_lock al(fbLock);
-  dstFrameBuffer->copyFrom(rect, srcFrameBuffer, rect.left, rect.top);
-}
+   void DecoderOfRectangle::copy(::subsystem::FrameBuffer *dstFrameBuffer,
+                      const ::subsystem::FrameBuffer *srcFrameBuffer,
+                      const ::int_rectangle &  rect,
+                      critical_section *fbLock)
+   {
+      critical_section_lock al(fbLock);
+      dstFrameBuffer->copyFrom(rect, srcFrameBuffer, rect.left, rect.top);
+   }
 
-void DecoderOfRectangle::notify(FbUpdateNotifier *fbNotifier,
-                     const ::int_rectangle &  rect)
-{
-  fbNotifier->onUpdate(rect);
-}
+   void DecoderOfRectangle::notify(FbUpdateNotifier *fbNotifier,
+                        const ::int_rectangle &  rect)
+   {
+      fbNotifier->onUpdate(rect);
+   }
 
-bool DecoderOfRectangle::isPseudo() const
-{
-  return false;
-}
+   bool DecoderOfRectangle::isPseudo() const
+   {
+      return false;
+   }
+} // namespace remoting

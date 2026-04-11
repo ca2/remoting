@@ -77,11 +77,11 @@ namespace remoting_remoting
 
    bool ConnectingDialog::onCommand(unsigned int controlID, unsigned int notificationID)
    {
-      if (controlID == ::innate_subsystem::IDOK) {
+      if (controlID == ::innate_subsystem::e_control_id_ok) {
          closeDialog(1);
          return true;
       }
-      if (controlID == ::innate_subsystem::IDCANCEL) {
+      if (controlID == ::innate_subsystem::e_control_id_cancel) {
          closeDialog(0);
          return true;
       }

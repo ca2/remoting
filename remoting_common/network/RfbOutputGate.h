@@ -30,40 +30,42 @@
 
 //#include "acme/subsystem/thread/critical_section.h"
 
-/**
- * Gate for writting rfb messages.
- *
- * @features: gate is synchonized (can be locked and unlocked, supports data buffering, and writting
- * typized data).
- * @remark: after every scopedstrMessage you want to send to must manually call flush() cause
- * "autoflush on unlock" is removed.
- * @author enikey.
- */
-class CLASS_DECL_REMOTING_COMMON RfbOutputGate : public ::subsystem::DataOutputStream,
-                      public critical_section
+
+namespace remoting
 {
-public:
-  /**
-   * Creates new rfb output gate.
-   * @param stream real output stream.
-   */
-  RfbOutputGate(::subsystem::OutputStream *stream);
-  /**
-   * Deletes rfb output gate.
-   */
-  virtual ~RfbOutputGate();
+   /**
+    * Gate for writting rfb messages.
+    *
+    * @features: gate is synchonized (can be locked and unlocked, supports data buffering, and writting
+    * typized data).
+    * @remark: after every scopedstrMessage you want to send to must manually call flush() cause
+    * "autoflush on unlock" is removed.
+    * @author enikey.
+    */
+   class CLASS_DECL_REMOTING_COMMON RfbOutputGate : public ::subsystem::DataOutputStream,
+                         public critical_section
+   {
+   public:
+      /**
+       * Creates new rfb output gate.
+       * @param stream real output stream.
+       */
+      RfbOutputGate(::subsystem::OutputStream *stream);
+      /**
+       * Deletes rfb output gate.
+       */
+      virtual ~RfbOutputGate();
 
-  /**
-   * Flushes inner buffer to real output stream.
-   * @throws ::io_exception on error.
-   */
-  virtual void flush();
+      /**
+       * Flushes inner buffer to real output stream.
+       * @throws ::io_exception on error.
+       */
+      virtual void flush();
 
-private:
-  /**
-   * Tunnel that adds buffering.
-   */
-  ::subsystem::BufferedOutputStream *m_tunnel;
-};
-
-
+   private:
+      /**
+       * Tunnel that adds buffering.
+       */
+      ::subsystem::BufferedOutputStream *m_tunnel;
+   };
+} // namespace remoting

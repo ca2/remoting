@@ -24,12 +24,16 @@
 #include "framework.h"
 #include "LastRectDecoder.h"
 
-LastRectDecoder::LastRectDecoder(::subsystem::LogWriter * plogwriter)
-: PseudoDecoder(logWriter)
-{
-  m_encoding = PseudoEncDefs::LAST_RECT;
-}
 
-LastRectDecoder::~LastRectDecoder()
+namespace remoting
 {
-}
+   LastRectDecoder::LastRectDecoder(::subsystem::LogWriter * plogwriter)
+   : PseudoDecoder(logWriter)
+   {
+      m_encoding = PseudoEncDefs::LAST_RECT;
+   }
+
+   LastRectDecoder::~LastRectDecoder()
+   {
+   }
+} // namespace remoting

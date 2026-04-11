@@ -27,17 +27,18 @@
 
 #include "PseudoDecoder.h"
 
-class CLASS_DECL_REMOTING_COMMON CompressionLevel : public PseudoDecoder
+namespace remoting
 {
-public:
-  CompressionLevel(::subsystem::LogWriter *logWriter, int compression);
-  virtual ~CompressionLevel();
+   class CLASS_DECL_REMOTING_COMMON CompressionLevel : public PseudoDecoder
+   {
+   public:
+      CompressionLevel(::subsystem::LogWriter *logWriter, int compression);
+      virtual ~CompressionLevel();
 
-public:
-  static int levelToEncoding(int compressionLevel);
+   public:
+      static int levelToEncoding(int compressionLevel);
 
-  static const int COMPRESSION_LEVEL_MIN = 0;
-  static const int COMPRESSION_LEVEL_MAX = 9;
-};
-
-
+      static const int COMPRESSION_LEVEL_MIN = 0;
+      static const int COMPRESSION_LEVEL_MAX = 9;
+   };
+} // namespace remoting

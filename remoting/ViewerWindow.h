@@ -45,9 +45,10 @@
 
 namespace remoting_remoting
 {
-    class ViewerWindow : public BaseWindow,
-                         public CoreEventsAdapter,
-                         public subsystem::OperatingSystemHook
+
+    class ViewerWindow : public ::innate_subsystem::Window,
+                         public ::remoting::CoreEventsAdapter,
+                         public subsystem::OperatingSystemHookListener
     {
     public:
 
@@ -56,13 +57,13 @@ namespace remoting_remoting
 
 
 
-        ViewerWindow(WindowsApplication *application,
-                     ConnectionData *conData, ConnectionConfig *conConf,
+        ViewerWindow(::subsystem::OperatingSystemApplicationInterface *application,
+                     ConnectionData *conData, ::remoting::ConnectionConfig *conConf,
                      ::subsystem::LogWriter * plogwriter = 0);
         virtual ~ViewerWindow();
 
         void setFileTransfer(::remoting::ftp::FileTransferCapability *ft);
-        void setRemoteViewerCore(RemoteViewerCore *pCore);
+        void setRemoteViewerCore(::remoting::RemoteViewerCore *pCore);
 
         //
         // This function return value of flag m_requiresReconnect.
@@ -124,9 +125,9 @@ namespace remoting_remoting
         //
         void onBell();
         void onConnecting(int iPhase) override;
-        void onConnected(RfbOutputGate *output) override;
+        void onConnected(::remoting::RfbOutputGate *output) override;
         void onDisconnect(const ::scoped_string & scopedstrMessage);
-        void onAuthError(const AuthException *exception);
+        void onAuthError(const ::remoting::AuthException *exception);
         void onError(const ::subsystem::Exception *exception);
         void onFrameBufferUpdate(const ::subsystem::FrameBuffer *fb, const ::int_rectangle &  rect);
         void onFrameBufferPropChange(const ::subsystem::FrameBuffer *fb);
@@ -144,18 +145,18 @@ namespace remoting_remoting
 
         ::innate_subsystem::Control m_control;
 
-        ConnectionConfigSM m_ccsm;
-        ConnectionConfig *m_pconnectionconfig;
-        WindowsApplication *m_application;
-        RemoteViewerCore *m_viewerCore;
+        ::remoting::ConnectionConfigSM m_ccsm;
+        ::remoting::ConnectionConfig *m_pconnectionconfig;
+        subsystem::OperatingSystemApplication *m_application;
+        ::remoting::RemoteViewerCore *m_viewerCore;
         ::remoting::ftp::FileTransferCapability *m_fileTransfer;
         FileTransferMainDialog *m_ftDialog;
-        DesktopWindow m_dsktWnd;
+        DesktopWindow m_desktopwindow;
         ::wstring m_wstrToolTip;
-        ::remoting::ToolBar m_toolbar;
+        ::innate_subsystem::Toolbar m_toolbar;
         ViewerMenu m_menu;
         ConnectionData *m_conData;
-        SystemInformation m_sysinf;
+        ::subsystem::SystemInformation m_sysinf;
 
         // This variable save ::subsystem::Exception after call onError().
         ::subsystem::Exception m_error;
@@ -215,10 +216,16 @@ namespace remoting_remoting
         // onHookProc function implementation of HookEventListener base abstract class.
         //virtual LRESULT onHookProc(int code, ::wparam wParam, ::lparam lParam);
 
-       bool on_keyboard_message()
+       //bool on_keyboard_message()
 
-        WinHooks m_winHooks;
-        bool m_hooksEnabledFirstTime;
+       virtual bool operating_system_hook_on_keyboard_message(::lresult & lresult, ::user::enum_message emessage, int iVkCode, ::lparam lparam);
+
+
+       ::subsystem::OperatingSystemHook m_operatingsystemhook;
+       bool m_hooksEnabledFirstTime;
+
     };
+
+
 } //namespace remoting_remoting
 

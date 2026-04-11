@@ -24,18 +24,19 @@
 #include "framework.h"
 #include "ControlTrayIcon.h"
 #include "ResourceStrings.h"
-#include "apex/innate_subsystem/BaseWindow.h"
+#include "apex/innate_subsystem/Window.h"
 
 namespace remoting_remoting
 {
     unsigned int ControlTrayIcon::WM_USER_TASKBAR;
 
     ControlTrayIcon::ControlTrayIcon(remoting_impact *viewerApplication)
-    : NotifyIcon(false),
+    :
       m_application(viewerApplication),
-      m_inWindowProc(false),
-      m_icon(IDI_APPICON)
+      m_inWindowProc(false)
     {
+       initialize_notify_icon(false);
+       m_icon.initialize_icon(IDI_APPICON);
         ResourceStrings resStr;
         m_menu.createPopupMenu();
         m_menu.appendMenu(resStr.getStrRes(IDS_TB_NEWCONNECTION), IDS_NEW_CONN);
@@ -108,32 +109,32 @@ namespace remoting_remoting
             pos.x = pos.y = 0;
         }
 
-        HWND notifyWnd = operating_system_window();
+        HWND notifyWnd = (HWND) _HWND();
         SetForegroundWindow(notifyWnd);
 
-        int action = TrackPopupMenu(m_menu.getMenu(),
-                                    TPM_NONOTIFY | TPM_RETURNCMD | TPM_RIGHTBUTTON,
-                                    pos.x, pos.y, 0, notifyWnd, NULL);
-
-        switch (action) {
-            case IDS_NEW_CONN:
-                onNewConnection();
-                break;
-            case IDS_LISTENING_OPTIONS:
-                onListeningOptions();
-                break;
-            case IDS_CONFIG:
-                onConfiguration();
-                break;
-            case IDS_ABOUT_VIEWER:
-                onAboutViewer();
-                break;
-            case IDS_CLOSE:
-                onCloseListeningDaemon();
-                break;
-            default:
-                _ASSERT(true);
-        }
+        // int action = TrackPopupMenu(m_menu.getMenu(),
+        //                             TPM_NONOTIFY | TPM_RETURNCMD | TPM_RIGHTBUTTON,
+        //                             pos.x, pos.y, 0, notifyWnd, NULL);
+        //
+        // switch (action) {
+        //     case IDS_NEW_CONN:
+        //         onNewConnection();
+        //         break;
+        //     case IDS_LISTENING_OPTIONS:
+        //         onListeningOptions();
+        //         break;
+        //     case IDS_CONFIG:
+        //         onConfiguration();
+        //         break;
+        //     case IDS_ABOUT_VIEWER:
+        //         onAboutViewer();
+        //         break;
+        //     case IDS_CLOSE:
+        //         onCloseListeningDaemon();
+        //         break;
+        //     default:
+        //         _ASSERT(true);
+        // }
     }
 
     void ControlTrayIcon::onLeftButtonDown()

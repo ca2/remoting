@@ -27,7 +27,7 @@
 
 #include "remoting/remoting/ViewerWindow.h"
 //#include "remoting/remoting_common/network/socket/SocketIPv4.h"
-
+#include "remoting/remoting_common/viewer_core/RemoteViewerCore.h"
 #include "ViewerVncAuthHandler.h"
 
 
@@ -37,15 +37,15 @@ namespace remoting_remoting
     {
     public:
         // creates the viewer instance by using host:port from condata
-        ViewerInstance(WindowsApplication *application,
+        ViewerInstance(subsystem::OperatingSystemApplicationInterface *application,
                        ConnectionData & condata,
-                       const ConnectionConfig & conConf);
+                       const ::remoting::ConnectionConfig & conConf);
 
         // creates the viewer instance if we have the socket
-        ViewerInstance(WindowsApplication *application,
+        ViewerInstance(subsystem::OperatingSystemApplicationInterface *application,
                        ConnectionData & condata,
-                       const ConnectionConfig & conConf,
-                       SocketIPv4 *socket);
+                       const ::remoting::ConnectionConfig & conConf,
+                       ::subsystem::SocketIPv4Interface *socket);
 
         virtual ~ViewerInstance();
 
@@ -59,12 +59,12 @@ namespace remoting_remoting
 
     protected:
         ConnectionData m_condata;
-        ConnectionConfig m_pconnectionconfig;
+        ::remoting::ConnectionConfig m_pconnectionconfig;
 
         ViewerWindow m_viewerWnd;
-        RemoteViewerCore m_viewerCore;
+        ::remoting::RemoteViewerCore m_viewerCore;
         ViewerVncAuthHandler m_vncAuthHandler;
         ::remoting::ftp::FileTransferCapability m_fileTransfer;
-        SocketIPv4 *m_socket;
+        ::subsystem::SocketIPv4Interface *m_socket;
     };
 } // namespace remoting_remoting

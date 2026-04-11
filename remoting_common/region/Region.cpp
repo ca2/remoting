@@ -26,152 +26,155 @@
 #include "acme/prototype/geometry2d/rectangle.h"
 #include "acme/prototype/geometry2d/rectangle_array.h"
 
-Region::Region()
+namespace remoting
 {
-  miRegionInit(&m_reg, NullBox, 0);
-}
+   Region::Region()
+   {
+      miRegionInit(&m_reg, NullBox, 0);
+   }
 
-// FIXME: Make BoxRec and ::int_rectangle identical to get rid of conversions.
-Region::Region(const ::int_rectangle &rect)
-{
-  if (!rect.is_empty()) {
-    BoxRec box;
-    box.x1 = rect.left;
-    box.x2 = rect.right;
-    box.y1 = rect.top;
-    box.y2 = rect.bottom;
-    miRegionInit(&m_reg, &box, 0);
-  } else {
-    miRegionInit(&m_reg, NullBox, 0);
-  }
-}
+   // FIXME: Make BoxRec and ::int_rectangle identical to get rid of conversions.
+   Region::Region(const ::int_rectangle &rect)
+   {
+      if (!rect.is_empty()) {
+         BoxRec box;
+         box.x1 = rect.left;
+         box.x2 = rect.right;
+         box.y1 = rect.top;
+         box.y2 = rect.bottom;
+         miRegionInit(&m_reg, &box, 0);
+      } else {
+         miRegionInit(&m_reg, NullBox, 0);
+      }
+   }
 
-Region::Region(const Region &src)
-{
-  miRegionInit(&m_reg, NullBox, 0);
-  set(&src);
-}
+   Region::Region(const Region &src)
+   {
+      miRegionInit(&m_reg, NullBox, 0);
+      set(&src);
+   }
 
-Region::~Region()
-{
-  miRegionUninit(&m_reg);
-}
+   Region::~Region()
+   {
+      miRegionUninit(&m_reg);
+   }
 
-void Region::clear()
-{
-  miRegionEmpty(&m_reg);
-}
+   void Region::clear()
+   {
+      miRegionEmpty(&m_reg);
+   }
 
-void Region::set(const Region *src)
-{
-  miRegionCopy(&m_reg, (RegionPtr)&src->m_reg);
-}
+   void Region::set(const Region *src)
+   {
+      miRegionCopy(&m_reg, (RegionPtr)&src->m_reg);
+   }
 
-Region & Region::operator=(const Region &src)
-{
-  set(&src);
-  return *this;
-}
+   Region & Region::operator=(const Region &src)
+   {
+      set(&src);
+      return *this;
+   }
 
-void Region::addRect(const ::int_rectangle &  rect)
-{
-  if (!rect.is_empty()) {
-    Region temp(rect);
-    add(&temp);
-  }
-}
+   void Region::addRect(const ::int_rectangle &  rect)
+   {
+      if (!rect.is_empty()) {
+         Region temp(rect);
+         add(&temp);
+      }
+   }
 
-void Region::translate(int dx, int dy)
-{
-  miTranslateRegion(&m_reg, dx, dy);
-}
+   void Region::translate(int dx, int dy)
+   {
+      miTranslateRegion(&m_reg, dx, dy);
+   }
 
-void Region::add(const Region *other)
-{
-  miUnion(&m_reg, &m_reg, (RegionPtr)&other->m_reg);
-}
+   void Region::add(const Region *other)
+   {
+      miUnion(&m_reg, &m_reg, (RegionPtr)&other->m_reg);
+   }
 
-void Region::add(const Region &other)
-{
-  miUnion(&m_reg, &m_reg, (RegionPtr)&other.m_reg);
-}
+   void Region::add(const Region &other)
+   {
+      miUnion(&m_reg, &m_reg, (RegionPtr)&other.m_reg);
+   }
 
-void Region::subtract(const Region *other)
-{
-  miSubtract(&m_reg, &m_reg, (RegionPtr)&other->m_reg);
-}
+   void Region::subtract(const Region *other)
+   {
+      miSubtract(&m_reg, &m_reg, (RegionPtr)&other->m_reg);
+   }
 
-void Region::intersect(const Region *other)
-{
-  miIntersect(&m_reg, &m_reg, (RegionPtr)&other->m_reg);
-}
+   void Region::intersect(const Region *other)
+   {
+      miIntersect(&m_reg, &m_reg, (RegionPtr)&other->m_reg);
+   }
 
-void Region::crop(const ::int_rectangle &  rect)
-{
-  Region temp(rect);
-  intersect(&temp);
-}
+   void Region::crop(const ::int_rectangle &  rect)
+   {
+      Region temp(rect);
+      intersect(&temp);
+   }
 
-bool Region::is_empty() const
-{
-  return (miRegionNotEmpty((RegionPtr)&m_reg) == false);
-}
+   bool Region::is_empty() const
+   {
+      return (miRegionNotEmpty((RegionPtr)&m_reg) == false);
+   }
 
-bool Region::isPointInside(int x, int y) const
-{
-  BoxRec stubBox; // Ignore returning rect.
-  return !!miPointInRegion((RegionPtr)&m_reg, x, y, &stubBox);
-}
+   bool Region::isPointInside(int x, int y) const
+   {
+      BoxRec stubBox; // Ignore returning rect.
+      return !!miPointInRegion((RegionPtr)&m_reg, x, y, &stubBox);
+   }
 
-bool Region::equals(const Region *other) const
-{
-  // Handle a special case when both regions are empty.
-  // Such regions may be considered different by miRegionsEqual().
-  if (this->is_empty() && other->is_empty()) {
-    return true;
-  }
+   bool Region::equals(const Region *other) const
+   {
+      // Handle a special case when both regions are empty.
+      // Such regions may be considered different by miRegionsEqual().
+      if (this->is_empty() && other->is_empty()) {
+         return true;
+      }
 
-  return (miRegionsEqual((RegionPtr)&m_reg,
-                         (RegionPtr)&other->m_reg) == true);
-}
+      return (miRegionsEqual((RegionPtr)&m_reg,
+                             (RegionPtr)&other->m_reg) == true);
+   }
 
-// FIXME: Optimize, make BoxRec and ::int_rectangle identical to get rid of conversions.
-void Region::getRectVector(::array_base<::int_rectangle> *dst) const
-{
-  dst->clear();
+   // FIXME: Optimize, make BoxRec and ::int_rectangle identical to get rid of conversions.
+   void Region::getRectVector(::array_base<::int_rectangle> *dst) const
+   {
+      dst->clear();
 
-  const BoxRec *boxPtr = REGION_RECTS(&m_reg);
-  long numRects = REGION_NUM_RECTS(&m_reg);
-  dst->reserve((size_t)numRects);
-  for (long i = 0; i < numRects; i++) {
-    ::int_rectangle rect(boxPtr[i].x1, boxPtr[i].y1, boxPtr[i].x2, boxPtr[i].y2);
-    dst->add(rect);
-  }
-}
+      const BoxRec *boxPtr = REGION_RECTS(&m_reg);
+      long numRects = REGION_NUM_RECTS(&m_reg);
+      dst->reserve((size_t)numRects);
+      for (long i = 0; i < numRects; i++) {
+         ::int_rectangle rect(boxPtr[i].x1, boxPtr[i].y1, boxPtr[i].x2, boxPtr[i].y2);
+         dst->add(rect);
+      }
+   }
 
-// FIXME: Optimize, make BoxRec and ::int_rectangle identical to get rid of conversions.
-::int_rectangle_array_base Region::getRects() const
-{
+   // FIXME: Optimize, make BoxRec and ::int_rectangle identical to get rid of conversions.
+   ::int_rectangle_array_base Region::getRects() const
+   {
 
-   ::int_rectangle_array_base recta;
-  //dst->clear();
+      ::int_rectangle_array_base recta;
+      //dst->clear();
 
-  const BoxRec *boxPtr = REGION_RECTS(&m_reg);
-  long numRects = REGION_NUM_RECTS(&m_reg);
-  for (long i = 0; i < numRects; i++) {
-    ::int_rectangle rect(boxPtr[i].x1, boxPtr[i].y1, boxPtr[i].x2, boxPtr[i].y2);
-    recta.add(rect);
-  }
-   return recta;
-}
+      const BoxRec *boxPtr = REGION_RECTS(&m_reg);
+      long numRects = REGION_NUM_RECTS(&m_reg);
+      for (long i = 0; i < numRects; i++) {
+         ::int_rectangle rect(boxPtr[i].x1, boxPtr[i].y1, boxPtr[i].x2, boxPtr[i].y2);
+         recta.add(rect);
+      }
+      return recta;
+   }
 
-size_t Region::getCount() const
-{
-  return REGION_NUM_RECTS(&m_reg);
-}
+   size_t Region::getCount() const
+   {
+      return REGION_NUM_RECTS(&m_reg);
+   }
 
-::int_rectangle Region::getBounds() const
-{
-  const BoxRec *boxPtr = REGION_EXTENTS(&m_reg);
-  return ::int_rectangle(boxPtr->x1, boxPtr->y1, boxPtr->x2, boxPtr->y2);
-}
+   ::int_rectangle Region::getBounds() const
+   {
+      const BoxRec *boxPtr = REGION_EXTENTS(&m_reg);
+      return ::int_rectangle(boxPtr->x1, boxPtr->y1, boxPtr->x2, boxPtr->y2);
+   }
+} // namespace remoting

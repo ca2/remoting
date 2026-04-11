@@ -26,180 +26,183 @@
 
 #include "TcpConnection.h"
 
-TcpConnection::TcpConnection(::subsystem::LogWriter * plogwriter)
-: m_plogwriter(logWriter),
-m_socketOwner(false),
-m_bufInput(0),
-m_RfbGatesOwner(false)
+namespace remoting
 {
-  m_port = 0;
-  m_socket = 0;
-  m_socketStream = 0;
-  m_input = 0;
-  m_output = 0;
-  m_wasBound = false;
-  m_wasConnected = false;
-  m_isEstablished = false;
-}
+   TcpConnection::TcpConnection(::subsystem::LogWriter * plogwriter)
+   : m_plogwriter(logWriter),
+   m_socketOwner(false),
+   m_bufInput(0),
+   m_RfbGatesOwner(false)
+   {
+      m_port = 0;
+      m_socket = 0;
+      m_socketStream = 0;
+      m_input = 0;
+      m_output = 0;
+      m_wasBound = false;
+      m_wasConnected = false;
+      m_isEstablished = false;
+   }
 
-void TcpConnection::bind(const ::scoped_string & scopedstrHost, unsigned short port)
-{
-  critical_section_lock al(&m_connectLock);
-  if (m_wasBound) {
-    throw ::subsystem::Exception("Tcp-connection already bound");
-  }
-  m_host = scopedstrHost;
-  m_port = port;
-  m_socket = 0;
-  m_input = 0;
-  m_output = 0;
-  m_wasBound = true;
-}
+   void TcpConnection::bind(const ::scoped_string & scopedstrHost, unsigned short port)
+   {
+      critical_section_lock al(&m_connectLock);
+      if (m_wasBound) {
+         throw ::subsystem::Exception("Tcp-connection already bound");
+      }
+      m_host = scopedstrHost;
+      m_port = port;
+      m_socket = 0;
+      m_input = 0;
+      m_output = 0;
+      m_wasBound = true;
+   }
 
-void TcpConnection::bind(SocketIPv4 *socket)
-{
-  critical_section_lock al(&m_connectLock);
-  if (m_wasBound) {
-    throw ::subsystem::Exception("Tcp-connection already bound");
-  }
-  m_host = "";
-  m_port = 0;
-  m_socket = socket;
-  m_input = 0;
-  m_output = 0;
-  m_wasBound = true;
-}
+   void TcpConnection::bind(SocketIPv4 *socket)
+   {
+      critical_section_lock al(&m_connectLock);
+      if (m_wasBound) {
+         throw ::subsystem::Exception("Tcp-connection already bound");
+      }
+      m_host = "";
+      m_port = 0;
+      m_socket = socket;
+      m_input = 0;
+      m_output = 0;
+      m_wasBound = true;
+   }
 
-void TcpConnection::bind(RfbInputGate *input, RfbOutputGate *output)
-{
-  critical_section_lock al(&m_connectLock);
-  if (m_wasBound) {
-    throw ::subsystem::Exception("Tcp-connection already bound");
-  }
-  m_host = "";
-  m_port = 0;
-  m_socket = 0;
-  m_input = input;
-  m_output = output;
-  m_wasBound = true;
-}
+   void TcpConnection::bind(RfbInputGate *input, RfbOutputGate *output)
+   {
+      critical_section_lock al(&m_connectLock);
+      if (m_wasBound) {
+         throw ::subsystem::Exception("Tcp-connection already bound");
+      }
+      m_host = "";
+      m_port = 0;
+      m_socket = 0;
+      m_input = input;
+      m_output = output;
+      m_wasBound = true;
+   }
 
-void TcpConnection::connect()
-{
-  // if connection is already established, then method do nothing.
-  {
-    critical_section_lock al(&m_connectLock);
-    m_wasConnected = true;
-  }
-  // need create to gates
-  if (m_input == 0 && m_output == 0) {
-    // need create to socket
-    if (m_socket == 0) {
-      if (!m_host.is_empty() && m_port != 0) {
-        SocketAddressIPv4 ipAddress(m_host, m_port);
+   void TcpConnection::connect()
+   {
+      // if connection is already established, then method do nothing.
+      {
+         critical_section_lock al(&m_connectLock);
+         m_wasConnected = true;
+      }
+      // need create to gates
+      if (m_input == 0 && m_output == 0) {
+         // need create to socket
+         if (m_socket == 0) {
+            if (!m_host.is_empty() && m_port != 0) {
+               SocketAddressIPv4 ipAddress(m_host, m_port);
 
-        ::string ipAddressString;
-        ipAddressString = ipAddress.toString();
-        m_plogwriter->debug("Connecting to the host \"{}:{}\" ({}:{})...",
-                            m_host, m_port,
-                            ipAddressString, m_port);
+               ::string ipAddressString;
+               ipAddressString = ipAddress.toString();
+               m_plogwriter->debug("Connecting to the host \"{}:{}\" ({}:{})...",
+                                   m_host, m_port,
+                                   ipAddressString, m_port);
 
-        m_socket = new SocketIPv4;
-        m_socketOwner = true;
-        m_socket->connect(ipAddress);
-        m_socket->enableNaggleAlgorithm(false);
+               m_socket = new SocketIPv4;
+               m_socketOwner = true;
+               m_socket->connect(ipAddress);
+               m_socket->enableNaggleAlgorithm(false);
+            } else {
+               throw ::subsystem::Exception("Connection parameters (host, port, socket, gates) is empty.");
+            }
+         }
+
+         m_plogwriter->debug("Initialization of socket stream and input/output gates...");
+         m_socketStream = new SocketStream(m_socket);
+         m_bufInput = new BufferedInputStream(m_socketStream);
+         m_input = new RfbInputGate(m_bufInput);
+         m_output = new RfbOutputGate(m_socketStream);
+         m_RfbGatesOwner = true;
       } else {
-        throw ::subsystem::Exception("Connection parameters (host, port, socket, gates) is empty.");
+         _ASSERT(m_input != 0 && m_output != 0);
       }
-    }
+      {
+         critical_section_lock al(&m_connectLock);
+         m_isEstablished = true;
+      }
+   }
 
-    m_plogwriter->debug("Initialization of socket stream and input/output gates...");
-    m_socketStream = new SocketStream(m_socket);
-    m_bufInput = new BufferedInputStream(m_socketStream);
-    m_input = new RfbInputGate(m_bufInput);
-    m_output = new RfbOutputGate(m_socketStream);
-    m_RfbGatesOwner = true;
-  } else {
-    _ASSERT(m_input != 0 && m_output != 0);
-  }
-  {
-    critical_section_lock al(&m_connectLock);
-    m_isEstablished = true;
-  }
-}
+   void TcpConnection::close()
+   {
+      if (!m_host.is_empty() && m_port != 0) {
+         if (m_socketStream != 0) {
+            m_socketStream->close();
+         }
+      }
+   }
 
-void TcpConnection::close()
-{
-  if (!m_host.is_empty() && m_port != 0) {
-    if (m_socketStream != 0) {
-      m_socketStream->close();
-    }
-  }
-}
+   RfbInputGate *TcpConnection::getInput() const
+   {
+      {
+         critical_section_lock al(&m_connectLock);
+         if (!m_isEstablished) {
+            throw ::subsystem::Exception("Connecting has not been established");
+         }
+      }
+      return m_input;
+   }
 
-RfbInputGate *TcpConnection::getInput() const
-{
-  {
-    critical_section_lock al(&m_connectLock);
-    if (!m_isEstablished) {
-      throw ::subsystem::Exception("Connecting has not been established");
-    }
-  }
-  return m_input;
-}
+   RfbOutputGate *TcpConnection::getOutput() const
+   {
+      {
+         critical_section_lock al(&m_connectLock);
+         if (!m_isEstablished) {
+            throw ::subsystem::Exception("Connection has not been established");
+         }
+      }
+      return m_output;
+   }
 
-RfbOutputGate *TcpConnection::getOutput() const
-{
-  {
-    critical_section_lock al(&m_connectLock);
-    if (!m_isEstablished) {
-      throw ::subsystem::Exception("Connection has not been established");
-    }
-  }
-  return m_output;
-}
+   TcpConnection::~TcpConnection()
+   {
+      // if socket is defined, then need delete gates and socket stream
+      if (m_socket != 0) {
+         if (m_input != 0 && m_RfbGatesOwner) {
+            try {
+               delete m_input;
+            } catch (...) {
+            }
+         }
 
-TcpConnection::~TcpConnection()
-{
-  // if socket is defined, then need delete gates and socket stream
-  if (m_socket != 0) {
-    if (m_input != 0 && m_RfbGatesOwner) {
+         if (m_output != 0 && m_RfbGatesOwner) {
+            try {
+               delete m_output;
+            } catch (...) {
+            }
+         }
+
+         if (m_socketStream != 0) {
+            try {
+               delete m_socketStream;
+            }
+            catch (...) {
+            }
+         }
+         if (m_bufInput != 0) {
+            try {
+               delete m_bufInput;
+            }
+            catch (...) {
+            }
+         }
+
+      }
+
+      // if host and port is defined, then need delete socket
       try {
-        delete m_input;
+         if (m_socket != NULL && !m_host.is_empty() && m_port && m_socketOwner) {
+            delete m_socket;
+            m_socket = NULL;
+         }
       } catch (...) {
       }
-    }
-
-    if (m_output != 0 && m_RfbGatesOwner) {
-      try {
-        delete m_output;
-      } catch (...) {
-      }
-    }
-
-    if (m_socketStream != 0) {
-      try {
-        delete m_socketStream;
-      }
-      catch (...) {
-      }
-    }
-    if (m_bufInput != 0) {
-      try {
-        delete m_bufInput;
-      }
-      catch (...) {
-      }
-    }
-
-  }
-
-  // if host and port is defined, then need delete socket
-  try {
-    if (m_socket != NULL && !m_host.is_empty() && m_port && m_socketOwner) {
-      delete m_socket;
-      m_socket = NULL;
-    }
-  } catch (...) {
-  }
-}
+   }
+} // namespace remoting

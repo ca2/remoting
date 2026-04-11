@@ -24,29 +24,33 @@
 #include "framework.h"
 #include "CopyRectDecoder.h"
 
-CopyRectDecoder::CopyRectDecoder(::subsystem::LogWriter * plogwriter)
-: DecoderOfRectangle(logWriter)
-{
-  m_encoding = EncodingDefs::COPYRECT;
-}
 
-CopyRectDecoder::~CopyRectDecoder()
+namespace remoting
 {
-}
+   CopyRectDecoder::CopyRectDecoder(::subsystem::LogWriter * plogwriter)
+   : DecoderOfRectangle(logWriter)
+   {
+      m_encoding = EncodingDefs::COPYRECT;
+   }
 
-void CopyRectDecoder::decode(RfbInputGate *pinput,
-                             ::subsystem::FrameBuffer *frameBuffer,
-                             const ::int_rectangle &  dstRect)
-{
-  m_sourcePosition.x = pinput->readInt16();
-  m_sourcePosition.y = pinput->readInt16();
-}
+   CopyRectDecoder::~CopyRectDecoder()
+   {
+   }
 
-void CopyRectDecoder::copy(::subsystem::FrameBuffer *dstFrameBuffer,
-                           const ::subsystem::FrameBuffer *srcFrameBuffer,
-                           const ::int_rectangle &  rect,
-                           critical_section *fbLock)
-{
-  critical_section_lock al(fbLock);
-  dstFrameBuffer->move(rect, m_sourcePosition.x, m_sourcePosition.y);
-}
+   void CopyRectDecoder::decode(RfbInputGate *pinput,
+                                ::subsystem::FrameBuffer *frameBuffer,
+                                const ::int_rectangle &  dstRect)
+   {
+      m_sourcePosition.x = pinput->readInt16();
+      m_sourcePosition.y = pinput->readInt16();
+   }
+
+   void CopyRectDecoder::copy(::subsystem::FrameBuffer *dstFrameBuffer,
+                              const ::subsystem::FrameBuffer *srcFrameBuffer,
+                              const ::int_rectangle &  rect,
+                              critical_section *fbLock)
+   {
+      critical_section_lock al(fbLock);
+      dstFrameBuffer->move(rect, m_sourcePosition.x, m_sourcePosition.y);
+   }
+} // namespace remoting

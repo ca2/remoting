@@ -43,14 +43,14 @@ namespace remoting
 
       // this functions is thread-safe
       void setIgnoreShapeUpdates(bool ignore);
-      void updatePointerPos(const Point *position);
-      void setNewCursor(const Point *hotSpot,
+      void updatePointerPos(const ::int_point *position);
+      void setNewCursor(const ::int_point *hotSpot,
                         unsigned short width, unsigned short height,
                         const ::array_base<unsigned char> *cursor,
                         const ::array_base<unsigned char> *bitmask);
       //private:
       // This function is thread-save.
-      Point getUpperLeftPoint(const Point *position) const;
+      ::int_point getUpperLeftPoint(const ::int_point *position) const;
 
       ::subsystem::LogWriter *m_plogwriter;
 
@@ -60,10 +60,10 @@ namespace remoting
       CursorShape m_cursor;
 
       // Actual position of pointer
-      Point m_pointerPosition;
+      ::int_point m_pointerPosition;
 
       // Last painted position of pointer
-      Point m_lastPosition;
+      ::int_point m_lastPosition;
       // Copy of rect frame buffer under cursor
       ::subsystem::FrameBuffer m_cursorOverlay;
 

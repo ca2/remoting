@@ -27,12 +27,15 @@
 
 #include "remoting/remoting_common/util/inttypes.h"
 
-class TunnelDefs
+namespace remoting
 {
-public:
-  static const unsigned int NOTUNNEL = 0;
-  static const char *const SIG_NONE;
-private:
-};
+   class TunnelDefs
+   {
+   public:
+      static const unsigned int NOTUNNEL = 0;
+      static const char *const SIG_NONE;
+   private:
+   };
 
-//// __TUNNELDEFS_H__
+   //// __TUNNELDEFS_H__
+} // namespace remoting

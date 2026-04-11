@@ -26,66 +26,70 @@
 
 #include "remoting/remoting_common/network/socket/SocketAddressIPv4.h"
 
-TcpServer::TcpServer(const ::scoped_string & scopedstrBindHost, unsigned short bindPort,
-                     bool autoStart,
-                     bool lockAddr)
-: m_bindHost(scopedstrBindHost), m_bindPort(bindPort)
+
+namespace remoting
 {
-  SocketAddressIPv4 bindAddr = SocketAddressIPv4::resolve(scopedstrBindHost, bindPort);
+   TcpServer::TcpServer(const ::scoped_string & scopedstrBindHost, unsigned short bindPort,
+                        bool autoStart,
+                        bool lockAddr)
+   : m_bindHost(scopedstrBindHost), m_bindPort(bindPort)
+   {
+      SocketAddressIPv4 bindAddr = SocketAddressIPv4::resolve(scopedstrBindHost, bindPort);
 
-  if (lockAddr) {
-    m_listenSocket.setExclusiveAddrUse();
-  }
+      if (lockAddr) {
+         m_listenSocket.setExclusiveAddrUse();
+      }
 
-  m_listenSocket.bind(bindAddr);
-  m_listenSocket.listen(10);
+      m_listenSocket.bind(bindAddr);
+      m_listenSocket.listen(10);
 
-  if (autoStart) {
-    start();
-  }
-}
+      if (autoStart) {
+         start();
+      }
+   }
 
-TcpServer::~TcpServer()
-{
-  try { m_listenSocket.shutdown(SD_BOTH); } catch(...) { }
-  try { m_listenSocket.close(); } catch (...) { }
+   TcpServer::~TcpServer()
+   {
+      try { m_listenSocket.shutdown(SD_BOTH); } catch(...) { }
+      try { m_listenSocket.close(); } catch (...) { }
 
-  if (isActive()) {
-    Thread::terminate();
-    Thread::wait();
-  }
-}
+      if (isActive()) {
+         Thread::terminate();
+         Thread::wait();
+      }
+   }
 
-::string TcpServer::getBindHost() const
-{
-  return m_bindHost;
-}
+   ::string TcpServer::getBindHost() const
+   {
+      return m_bindHost;
+   }
 
-unsigned short TcpServer::getBindPort() const
-{
-  return m_bindPort;
-}
+   unsigned short TcpServer::getBindPort() const
+   {
+      return m_bindPort;
+   }
 
-void TcpServer::start()
-{
-  resume();
-}
+   void TcpServer::start()
+   {
+      resume();
+   }
 
-void TcpServer::execute()
-{
-  while (!isTerminating()) {
-    SocketIPv4 *clientSocket = NULL;
+   void TcpServer::execute()
+   {
+      while (!isTerminating()) {
+         SocketIPv4 *clientSocket = NULL;
 
-    try {
-      clientSocket = m_listenSocket.accept();
-    } catch (...) {
-      clientSocket = NULL;
-    }
+         try {
+            clientSocket = m_listenSocket.accept();
+         } catch (...) {
+            clientSocket = NULL;
+         }
 
-    if (clientSocket != NULL) {
-      onAcceptConnection(clientSocket);
-    } else {
-      break ;
-    }
-  }
-}
+         if (clientSocket != NULL) {
+            onAcceptConnection(clientSocket);
+         } else {
+            break ;
+         }
+      }
+   }
+} // namespace remoting

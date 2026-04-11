@@ -24,32 +24,37 @@
 #include "framework.h"
 #include "JpegQualityLevel.h"
 
-JpegQualityLevel::JpegQualityLevel(::subsystem::LogWriter *logWriter, int quality)
-: PseudoDecoder(logWriter)
+namespace remoting
 {
-  m_encoding = qualityToEncoding(quality);
-}
+   JpegQualityLevel::JpegQualityLevel(::subsystem::LogWriter *logWriter, int quality)
+   : PseudoDecoder(logWriter)
+   {
+      m_encoding = qualityToEncoding(quality);
+   }
 
-JpegQualityLevel::~JpegQualityLevel()
-{
-}
+   JpegQualityLevel::~JpegQualityLevel()
+   {
+   }
 
-int JpegQualityLevel::qualityToEncoding(int qualityLevel)
-{
-  switch (qualityLevel) {
-  case 0: return PseudoEncDefs::QUALITY_LEVEL_0;
-  case 1: return PseudoEncDefs::QUALITY_LEVEL_1;
-  case 2: return PseudoEncDefs::QUALITY_LEVEL_2;
-  case 3: return PseudoEncDefs::QUALITY_LEVEL_3;
-  case 4: return PseudoEncDefs::QUALITY_LEVEL_4;
-  case 5: return PseudoEncDefs::QUALITY_LEVEL_5;
-  case 6: return PseudoEncDefs::QUALITY_LEVEL_6;
-  case 7: return PseudoEncDefs::QUALITY_LEVEL_7;
-  case 8: return PseudoEncDefs::QUALITY_LEVEL_8;
-  case 9: return PseudoEncDefs::QUALITY_LEVEL_9;
-  default:
-    ::string error;
-    error.formatf("Quality of jpeg \"{}\" is not valid", qualityLevel);
-    throw ::subsystem::Exception(error);
-  }
-}
+   int JpegQualityLevel::qualityToEncoding(int qualityLevel)
+   {
+      switch (qualityLevel) {
+         case 0: return PseudoEncDefs::QUALITY_LEVEL_0;
+         case 1: return PseudoEncDefs::QUALITY_LEVEL_1;
+         case 2: return PseudoEncDefs::QUALITY_LEVEL_2;
+         case 3: return PseudoEncDefs::QUALITY_LEVEL_3;
+         case 4: return PseudoEncDefs::QUALITY_LEVEL_4;
+         case 5: return PseudoEncDefs::QUALITY_LEVEL_5;
+         case 6: return PseudoEncDefs::QUALITY_LEVEL_6;
+         case 7: return PseudoEncDefs::QUALITY_LEVEL_7;
+         case 8: return PseudoEncDefs::QUALITY_LEVEL_8;
+         case 9: return PseudoEncDefs::QUALITY_LEVEL_9;
+         default:
+            ::string error;
+            error.formatf("Quality of jpeg \"{}\" is not valid", qualityLevel);
+            throw ::subsystem::Exception(error);
+      }
+   }
+} // namespace remoting
+
+

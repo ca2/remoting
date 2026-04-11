@@ -70,5 +70,5 @@ namespace remoting
       int m_width;
    };
 
-   //_WATERMARKS_CONTROLLER_H_
+
 } // namespace remoting

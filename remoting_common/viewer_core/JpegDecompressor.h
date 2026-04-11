@@ -46,53 +46,52 @@
 
 
 //////#include "remoting/remoting_common/util/::string.h"
-
-
-class CLASS_DECL_REMOTING_COMMON JpegDecompressor
+namespace remoting
 {
-public:
-  static const size_t BYTES_PER_PIXEL = 3;
-public:
-  JpegDecompressor();
-  virtual ~JpegDecompressor();
+   class CLASS_DECL_REMOTING_COMMON JpegDecompressor
+   {
+   public:
+      static const size_t BYTES_PER_PIXEL = 3;
+   public:
+      JpegDecompressor();
+      virtual ~JpegDecompressor();
 
-  /*
-   * Decompress JPEG data from the given buffer. Image size must be known in
-   * advance, and dst_buf should have place for (w * h * 3) bytes. The output
-   * format is an array of bytes where each pixel is represented by three bytes
-   * for red, green and blue components, in that order.
-   */
-  void decompress(::array_base<unsigned char> &buffer,
-                  size_t jpegBufLen,
-                  ::array_base<unsigned char> &pixels,
-                  const ::int_rectangle &  dstRect);
+      /*
+       * Decompress JPEG data from the given buffer. Image size must be known in
+       * advance, and dst_buf should have place for (w * h * 3) bytes. The output
+       * format is an array of bytes where each pixel is represented by three bytes
+       * for red, green and blue components, in that order.
+       */
+      void decompress(::array_base<unsigned char> &buffer,
+                      size_t jpegBufLen,
+                      ::array_base<unsigned char> &pixels,
+                      const ::int_rectangle &  dstRect);
 
-private:
-  /*
-   * Initialize JPEG decoder. This function initializes the TD_JPEG_DECOMPRESSOR
-   * structure. 
-   */
-  void init();
+   private:
+      /*
+       * Initialize JPEG decoder. This function initializes the TD_JPEG_DECOMPRESSOR
+       * structure.
+       */
+      void init();
 
-  /* Release the JPEG decompression structure. */
-  /*
-   * Free all dynamically allocated data associated with this TD_JPEG_DECOMPRESSOR
-   * structure. This function should be called when the decoder is not needed
-   * any more.
-   */
-  void cleanup();
+      /* Release the JPEG decompression structure. */
+      /*
+       * Free all dynamically allocated data associated with this TD_JPEG_DECOMPRESSOR
+       * structure. This function should be called when the decoder is not needed
+       * any more.
+       */
+      void cleanup();
 
-private:
-  METHODDEF(::string) get_message(j_common_ptr cinfo);
-  METHODDEF(void) errorExit(j_common_ptr cinfo);
-  METHODDEF(void) outputMessage(j_common_ptr cinfo);
+   private:
+      METHODDEF(::string) get_message(j_common_ptr cinfo);
+      METHODDEF(void) errorExit(j_common_ptr cinfo);
+      METHODDEF(void) outputMessage(j_common_ptr cinfo);
 
-  typedef struct _TD_JPEG_DECOMPRESSOR {
-    struct jpeg_decompress_struct cinfo;
-    struct jpeg_error_mgr jerr;
-  } TD_JPEG_DECOMPRESSOR;
+      typedef struct _TD_JPEG_DECOMPRESSOR {
+         struct jpeg_decompress_struct cinfo;
+         struct jpeg_error_mgr jerr;
+      } TD_JPEG_DECOMPRESSOR;
 
-  TD_JPEG_DECOMPRESSOR m_jpeg;
-};
-
-
+      TD_JPEG_DECOMPRESSOR m_jpeg;
+   };
+} // namespace remoting

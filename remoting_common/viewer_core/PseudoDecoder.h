@@ -27,13 +27,14 @@
 
 #include "Decoder.h"
 
-class CLASS_DECL_REMOTING_COMMON PseudoDecoder : public Decoder
+namespace remoting
 {
-public:
-  PseudoDecoder(::subsystem::LogWriter * plogwriter);
-  virtual ~PseudoDecoder();
+   class CLASS_DECL_REMOTING_COMMON PseudoDecoder : public Decoder
+   {
+   public:
+      PseudoDecoder(::subsystem::LogWriter * plogwriter);
+      virtual ~PseudoDecoder();
 
-  virtual bool isPseudo() const;
-};
-
-
+      virtual bool isPseudo() const;
+   };
+} // namespace remoting

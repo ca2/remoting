@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "FileTransferMainDialog.h"
-
+#include "acme/constant/user_key.h"
 #include "acme/subsystem/_common_header.h"
 //#include "remoting/remoting_common/util/winhdr.h"
 //#include "acme/_operating_system.h"
@@ -239,7 +239,7 @@ namespace remoting_remoting
     bool FileTransferMainDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
         switch (controlID) {
-            case ::innate_subsystem::IDCANCEL:
+            case ::innate_subsystem::e_control_id_cancel:
                 onCancelButtonClick();
                 break;
             case IDC_CANCEL_BUTTON:
@@ -309,13 +309,13 @@ namespace remoting_remoting
     {
         if (m_ftCore->isNothingState()) {
             // No operation is executing - close dialog
-            closeDialog(::innate_subsystem::IDCANCEL);
+            closeDialog(::innate_subsystem::e_control_id_cancel);
             return true;
         }
         if (main_subsystem()->message_box(operating_system_window(),
                        "Do you want to close file transfers and terminate current operation?",
                        "TightVNC ::file::item Transfers",
-                       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) == ::innate_subsystem::::innate_subsystem::IDYES) {
+                       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) == ::innate_subsystem::e_control_id_yes) {
             // Set flag
             m_isClosing = true;
             // Terminate current operation
@@ -360,7 +360,7 @@ namespace remoting_remoting
       renameDialog.initialize_file_rename_dialog(this);
         renameDialog.setFileName(fileInfo->getFileName());
 
-        if (renameDialog.showModal() == ::innate_subsystem::IDOK) {
+        if (renameDialog.showModal() == ::innate_subsystem::e_control_id_ok) {
             //::string remoteFolder;
             auto remoteFolder  = getPathToCurrentRemoteFolder();
 
@@ -379,7 +379,7 @@ namespace remoting_remoting
     {
         NewFolderDialog folderDialog;
       folderDialog.initialize_new_folder_dialog(this);
-        if (folderDialog.showModal() == ::innate_subsystem::IDOK) {
+        if (folderDialog.showModal() == ::innate_subsystem::e_control_id_ok) {
             ::string remoteFolder;
             remoteFolder = m_remoteCurFolderTextBox.getText();
 
@@ -419,7 +419,7 @@ namespace remoting_remoting
         if (main_subsystem()->message_box(operating_system_window(),
                        L"Do you wish to delete the selected files?",
                        L"Delete Files",
-                       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) != ::innate_subsystem::IDYES) {
+                       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) != ::innate_subsystem::e_control_id_yes) {
             //delete[] indexes;
             //delete[] filesInfo;
             return ;
@@ -450,10 +450,11 @@ namespace remoting_remoting
             return ;
         }
 
-        FileRenameDialog renameDialog(this);
+        FileRenameDialog renameDialog;
+      renameDialog.initialize_file_rename_dialog(this);
         renameDialog.setFileName(fileInfo->getFileName());
 
-        if (renameDialog.showModal() == ::innate_subsystem::IDOK) {
+        if (renameDialog.showModal() == ::innate_subsystem::e_control_id_ok) {
             //::string localFolder;
             auto localFolder = getPathToCurrentLocalFolder();
 
@@ -515,9 +516,11 @@ namespace remoting_remoting
                        L"New Folder", ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
         }
 
-        NewFolderDialog folderDialog(this);
+        NewFolderDialog folderDialog;
 
-        if (folderDialog.showModal() == ::innate_subsystem::IDOK) {
+      folderDialog.initialize_new_folder_dialog(this);
+
+        if (folderDialog.showModal() == ::innate_subsystem::e_control_id_ok) {
             //::string fileName;
             auto fileName = folderDialog.getFileName();
 
@@ -568,14 +571,14 @@ namespace remoting_remoting
 
         auto indexes = m_localFileListView.getSelectedItemsIndexes();
         for (unsigned int i = 0; i < indexes.size(); i++) {
-            ::remoting::ftp::FileInfo *fileInfo = reinterpret_cast<::remoting::ftp::FileInfo *>(m_localFileListView.getItemData(indexes[i]));
-            fileinfoa.add(fileInfo);
+            auto pfileInfo = m_localFileListView.getItemData(indexes[i]).raw_cast<::remoting::ftp::FileInfo*>();
+            fileinfoa.add(pfileInfo);
         }
 
         if (main_subsystem()->message_box(operating_system_window(),
                        L"Do you wish to delete the selected files?",
                        L"Delete Files",
-                       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) != ::innate_subsystem::IDYES) {
+                       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) != ::innate_subsystem::e_control_id_yes) {
             //delete[] indexes;
             //delete[] filesInfo;
             return ;
@@ -614,14 +617,14 @@ namespace remoting_remoting
         //FileInfo *filesInfo = new FileInfo[siCount];
 
         for (unsigned int i = 0; i < indexes.size(); i++) {
-            ::remoting::ftp::FileInfo *fileInfo = reinterpret_cast<::remoting::ftp::FileInfo *>(m_localFileListView.getItemData(indexes[i]));
-            fileinfoa.add(fileInfo);
+            auto pfileInfo = m_localFileListView.getItemData(indexes[i]).raw_cast<::remoting::ftp::FileInfo *>();
+            fileinfoa.add(pfileInfo);
         }
 
         if (main_subsystem()->message_box(operating_system_window(),
                        L"Do you wish to upload the selected files?",
                        L"Upload Files",
-                       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) != ::innate_subsystem::IDYES) {
+                       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) != ::innate_subsystem::e_control_id_yes) {
             //delete[] indexes;
             //delete[] filesInfo;
             return ;
@@ -663,14 +666,14 @@ namespace remoting_remoting
 
         //m_remoteFileListView.getSelectedItemsIndexes(indexes);
         for (unsigned int i = 0; i < indexes.size(); i++) {
-            auto fileInfo = reinterpret_cast<::remoting::ftp::FileInfo *>(m_remoteFileListView.getItemData(indexes[i]));
-            fileinfoa.add(fileInfo);
+            auto pfileInfo = m_remoteFileListView.getItemData(indexes[i]).raw_cast<::remoting::ftp::FileInfo *>();
+            fileinfoa.add(pfileInfo);
         }
 
         if (main_subsystem()->message_box(operating_system_window(),
                        L"Do you wish to download the selected files?",
                        L"Download Files",
-                       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) != ::innate_subsystem::IDYES) {
+                       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) != ::innate_subsystem::e_control_id_yes) {
             //delete[] indexes;
             //delete[] filesInfo;
             return ;
@@ -758,32 +761,32 @@ namespace remoting_remoting
         tryListLocalFolder(pathToFile);
     }
 
-    void FileTransferMainDialog::onRemoteListViewKeyDown(unsigned int key)
+    void FileTransferMainDialog::onRemoteListViewKeyDown(::user::enum_key ekey)
     {
-        switch (key) {
-            case VK_RETURN:
+        switch (ekey) {
+           case ::user::e_key_return:
                 onRemoteListViewDoubleClick();
                 break;
-            case VK_DELETE:
+            case ::user::e_key_delete:
                 onRemoveRemoteButtonClick();
                 break;
-            case VK_BACK:
+            case ::user::e_key_back:
                 moveUpRemoteFolder();
                 break;
         }
     }
 
-    void FileTransferMainDialog::onLocalListViewKeyDown(unsigned int key)
+    void FileTransferMainDialog::onLocalListViewKeyDown(::user::enum_key ekey)
     {
         // FIXME: removed duplicate code (see onRemoteListViewKeyDown)
-        switch (key) {
-            case VK_RETURN:
+        switch (ekey) {
+            case ::user::e_key_return:
                 onLocalListViewDoubleClick();
                 break;
-            case VK_DELETE:
+            case ::user::e_key_delete:
                 onRemoveLocalButtonClick();
                 break;
-            case VK_BACK:
+            case ::user::e_key_back:
                 moveUpLocalFolder();
                 break;
         }
@@ -863,33 +866,33 @@ namespace remoting_remoting
 
     void FileTransferMainDialog::initControls()
     {
-        HWND hwnd = m_hwnd;
+        //HWND hwnd = m_hwnd;
 
-        m_renameRemoteButton.setWindow(GetDlgItem(hwnd, IDC_RENAME_REMOTE_BUTTON));
-        m_mkDirRemoteButton.setWindow(GetDlgItem(hwnd, IDC_MKDIR_REMOTE_BUTTON));
-        m_removeRemoteButton.setWindow(GetDlgItem(hwnd, IDC_REMOVE_REMOTE_BUTTON));
-        m_refreshRemoteButton.setWindow(GetDlgItem(hwnd, IDC_REFRESH_REMOTE_BUTTON));
+        dialog_item(m_renameRemoteButton, IDC_RENAME_REMOTE_BUTTON);
+        dialog_item(m_mkDirRemoteButton, IDC_MKDIR_REMOTE_BUTTON);
+        dialog_item(m_removeRemoteButton, IDC_REMOVE_REMOTE_BUTTON);
+        dialog_item(m_refreshRemoteButton, IDC_REFRESH_REMOTE_BUTTON);
 
-        m_renameLocalButton.setWindow(GetDlgItem(hwnd, IDC_RENAME_LOCAL_BUTTON));
-        m_mkDirLocalButton.setWindow(GetDlgItem(hwnd, IDC_MKDIR_LOCAL_BUTTON));
-        m_removeLocalButton.setWindow(GetDlgItem(hwnd, IDC_REMOVE_LOCAL_BUTTON));
-        m_refreshLocalButton.setWindow(GetDlgItem(hwnd, IDC_REFRESH_LOCAL_BUTTON));
+        dialog_item(m_renameLocalButton, IDC_RENAME_LOCAL_BUTTON);
+        dialog_item(m_mkDirLocalButton, IDC_MKDIR_LOCAL_BUTTON);
+        dialog_item(m_removeLocalButton, IDC_REMOVE_LOCAL_BUTTON);
+        dialog_item(m_refreshLocalButton, IDC_REFRESH_LOCAL_BUTTON);
 
-        m_uploadButton.setWindow(GetDlgItem(hwnd, IDC_UPLOAD_BUTTON));
-        m_downloadButton.setWindow(GetDlgItem(hwnd, IDC_DOWNLOAD_BUTTON));
+        dialog_item(m_uploadButton, IDC_UPLOAD_BUTTON);
+        dialog_item(m_downloadButton, IDC_DOWNLOAD_BUTTON);
 
-        m_cancelButton.setWindow(GetDlgItem(hwnd, IDC_CANCEL_BUTTON));
+        dialog_item(m_cancelButton, IDC_CANCEL_BUTTON);
 
-        m_copyProgressBar.setWindow(GetDlgItem(hwnd, IDC_TOTAL_PROGRESS));
+        dialog_item(m_copyProgressBar, IDC_TOTAL_PROGRESS);
         m_copyProgressBar.setRange(0, 1000);
 
-        m_logComboBox.setWindow(GetDlgItem(hwnd, IDC_LOG_COMBO));
+        dialog_item(m_logComboBox, IDC_LOG_COMBO);
 
-        m_localCurFolderTextBox.setWindow(GetDlgItem(hwnd, IDC_LOCAL_CURRENT_FOLDER_EDIT));
-        m_remoteCurFolderTextBox.setWindow(GetDlgItem(hwnd, IDC_REMOTE_CURRENT_FOLDER_EDIT));
+        dialog_item(m_localCurFolderTextBox, IDC_LOCAL_CURRENT_FOLDER_EDIT);
+        dialog_item(m_remoteCurFolderTextBox, IDC_REMOTE_CURRENT_FOLDER_EDIT);
 
-        m_localFileListView.setWindow(GetDlgItem(hwnd, IDC_LOCAL_FILE_LIST));
-        m_remoteFileListView.setWindow(GetDlgItem(hwnd, IDC_REMOTE_FILE_LIST));
+        dialog_item(m_localFileListView, IDC_LOCAL_FILE_LIST);
+        dialog_item(m_remoteFileListView, IDC_REMOTE_FILE_LIST);
 
         m_fileExistDialog.setParent(this);
     }
@@ -897,7 +900,7 @@ namespace remoting_remoting
     void FileTransferMainDialog::raise(::exception &ex)
     {
         main_subsystem()->message_box(operating_system_window(), ::wstring(ex.get_message()),
-                   L"Exception", ::user::e_message_box_ok | MB_ICONERROR);
+                   L"Exception", ::user::e_message_box_ok | ::user::e_message_box_icon_error);
         throw ex;
     }
 
@@ -1089,7 +1092,7 @@ namespace remoting_remoting
 
     void FileTransferMainDialog::onFtOpFinished(int state, int result)
     {
-        PostMessage(m_hwnd, WM_OPERATION_FINISHED, state, result);
+        postMessage(WM_OPERATION_FINISHED, state, result);
     }
 
     void FileTransferMainDialog::onRefreshLocalFileList()

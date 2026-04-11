@@ -138,8 +138,8 @@ namespace remoting_remoting
         void onRemoteListViewDoubleClick();
         void onLocalListViewDoubleClick();
 
-        void onRemoteListViewKeyDown(unsigned int key);
-        void onLocalListViewKeyDown(unsigned int key);
+        void onRemoteListViewKeyDown(::user::enum_key ekey);
+        void onLocalListViewKeyDown(::user::enum_key ekey);
 
         //
         // Enables or disables rename and delete buttons

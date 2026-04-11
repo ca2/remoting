@@ -44,15 +44,11 @@ namespace remoting_remoting
 
     class ViewerWindow;
     class DesktopWindow : public ::innate_subsystem::PaintWindow,
-                          protected RfbKeySymListener
+                          protected ::remoting::RfbKeySymListener
     {
     public:
         ViewerWindow* m_pviewerwindow;
         ::string m_strHost;
-        ::int_size m_sizeBuffer = {};
-        //HDC m_hdcBuffer = nullptr;
-        //HBITMAP m_hbitmapOld = nullptr;
-        //HBITMAP m_hbitmapBuffer = nullptr;
         bool m_bMinimized = false;
         //   int m_iDivisor = 1;
         ::pointer< ::remoting_remoting::toolbar > m_premotingtoolbar;
@@ -114,7 +110,7 @@ namespace remoting_remoting
         bool onMessage(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam);
         //void onPaint(DeviceContext *dc, PAINTSTRUCT *paintStruct);
         void onPaint();
-        //bool onCreate(LPCREATESTRUCT pcs); xxx
+        bool onCreate(void * pCreateStruct);
         bool onDrawClipboard();
         //bool onEraseBackground(HDC hdc); xxx
         bool onDeadChar(::wparam wParam, ::lparam lParam);
@@ -135,7 +131,7 @@ namespace remoting_remoting
         // If into viewer core throwing exception ::subsystem::Exception, then it catching
         // in this function and logged.
         void sendKeyboardEvent(bool downFlag, unsigned int key);
-        void sendPointerEvent(unsigned char buttonMask, const Point *position);
+        void sendPointerEvent(unsigned char buttonMask, const ::int_point *position);
         void sendCutTextEvent(const ::scoped_string & cutText);
 
         ::subsystem::LogWriter *m_plogwriter;
@@ -144,11 +140,11 @@ namespace remoting_remoting
         bool m_isConnected;
 
         // keyboard support
-        std::unique_ptr<RfbKeySym> m_rfbKeySym;
+        ::remoting::RfbKeySym * m_rfbKeySym;
 
         // This variable contained previously state of mouse-button and position of cursor.
         unsigned char m_previousMouseState;
-        Point m_previousMousePos;
+        ::int_point m_previousMousePos;
 
         // scroll bars: vertical and horizontal
         ::innate_subsystem::ScrollBar m_sbar;
@@ -175,7 +171,7 @@ namespace remoting_remoting
         // clipboard
         ::subsystem::Clipboard m_clipboard;
         ::string m_strClipboard;
-        ::operating_system::window m_hwndNextViewer;
+        //::operating_system::window m_hwndNextViewer;
 
         bool m_ctrlDown;
         bool m_altDown;
@@ -185,7 +181,7 @@ namespace remoting_remoting
 
     public:
         //void doDraw(DeviceContext *dc);
-        void doDraw(::innate_subsystem::Graphics * pgraphics, const ::int_rectangle & rectangle);
+        void onDraw(::innate_subsystem::Graphics * pgraphics, const ::int_rectangle & rectangle);
         void scrollProcessing(int fbWidth, int fbHeight);
         void drawBackground(::innate_subsystem::Graphics * pgraphics, const ::int_rectangle & rcMain, const ::int_rectangle & rcImage);
         void drawImage(::innate_subsystem::Graphics * pgraphics, const ::int_rectangle & src, const ::int_rectangle & dst);

@@ -24,32 +24,35 @@
 #include "framework.h"
 #include "CompressionLevel.h"
 
-CompressionLevel::CompressionLevel(::subsystem::LogWriter *logWriter, int compression)
-: PseudoDecoder(logWriter)
+namespace remoting
 {
-  m_encoding = levelToEncoding(compression);
-}
+   CompressionLevel::CompressionLevel(::subsystem::LogWriter *logWriter, int compression)
+   : PseudoDecoder(logWriter)
+   {
+      m_encoding = levelToEncoding(compression);
+   }
 
-CompressionLevel::~CompressionLevel()
-{
-}
+   CompressionLevel::~CompressionLevel()
+   {
+   }
 
-int CompressionLevel::levelToEncoding(int compressionLevel)
-{
-  switch (compressionLevel) {
-  case 0: return PseudoEncDefs::COMPR_LEVEL_0;
-  case 1: return PseudoEncDefs::COMPR_LEVEL_1;
-  case 2: return PseudoEncDefs::COMPR_LEVEL_2;
-  case 3: return PseudoEncDefs::COMPR_LEVEL_3;
-  case 4: return PseudoEncDefs::COMPR_LEVEL_4;
-  case 5: return PseudoEncDefs::COMPR_LEVEL_5;
-  case 6: return PseudoEncDefs::COMPR_LEVEL_6;
-  case 7: return PseudoEncDefs::COMPR_LEVEL_7;
-  case 8: return PseudoEncDefs::COMPR_LEVEL_8;
-  case 9: return PseudoEncDefs::COMPR_LEVEL_9;
-  default:
-    ::string error;
-    error.formatf("Compression level \"{}\" is not valid", compressionLevel);
-    throw ::subsystem::Exception(error);
-  }
-}
+   int CompressionLevel::levelToEncoding(int compressionLevel)
+   {
+      switch (compressionLevel) {
+         case 0: return PseudoEncDefs::COMPR_LEVEL_0;
+         case 1: return PseudoEncDefs::COMPR_LEVEL_1;
+         case 2: return PseudoEncDefs::COMPR_LEVEL_2;
+         case 3: return PseudoEncDefs::COMPR_LEVEL_3;
+         case 4: return PseudoEncDefs::COMPR_LEVEL_4;
+         case 5: return PseudoEncDefs::COMPR_LEVEL_5;
+         case 6: return PseudoEncDefs::COMPR_LEVEL_6;
+         case 7: return PseudoEncDefs::COMPR_LEVEL_7;
+         case 8: return PseudoEncDefs::COMPR_LEVEL_8;
+         case 9: return PseudoEncDefs::COMPR_LEVEL_9;
+         default:
+            ::string error;
+            error.formatf("Compression level \"{}\" is not valid", compressionLevel);
+            throw ::subsystem::Exception(error);
+      }
+   }
+} // namespace remoting

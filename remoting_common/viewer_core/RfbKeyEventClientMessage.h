@@ -27,17 +27,18 @@
 
 #include "RfbClientToServerMessage.h"
 
-class CLASS_DECL_REMOTING_COMMON RfbKeyEventClientMessage : public RfbClientToServerMessage
+namespace remoting
 {
-public:
-  RfbKeyEventClientMessage(bool downFlag, unsigned int key);
-  ~RfbKeyEventClientMessage();
+   class CLASS_DECL_REMOTING_COMMON RfbKeyEventClientMessage : public RfbClientToServerMessage
+   {
+   public:
+      RfbKeyEventClientMessage(bool downFlag, unsigned int key);
+      ~RfbKeyEventClientMessage();
 
-  void send(RfbOutputGate *output);
+      void send(RfbOutputGate *output);
 
-private:
-  unsigned int m_key;
-  bool m_downFlag;
-};
-
-
+   private:
+      unsigned int m_key;
+      bool m_downFlag;
+   };
+}

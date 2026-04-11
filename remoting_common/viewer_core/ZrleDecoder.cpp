@@ -29,297 +29,299 @@
 //#include aaa_<vector>
 //#include aaa_<algorithm>
 
-ZrleDecoder::ZrleDecoder(::subsystem::LogWriter * plogwriter)
-: DecoderOfRectangle(logWriter)
+namespace remoting
 {
-  m_encoding = EncodingDefs::ZRLE;
-}
+   ZrleDecoder::ZrleDecoder(::subsystem::LogWriter * plogwriter)
+   : DecoderOfRectangle(logWriter)
+   {
+      m_encoding = EncodingDefs::ZRLE;
+   }
 
-ZrleDecoder::~ZrleDecoder()
-{
-}
+   ZrleDecoder::~ZrleDecoder()
+   {
+   }
 
-void ZrleDecoder::decode(RfbInputGate *pinput,
-                         ::subsystem::FrameBuffer *frameBuffer,
-                         const ::int_rectangle &  dstRect)
-{
-  size_t maxUnpackedSize = getMaxSizeOfRectangle(dstRect);
-  readAndInflate(pinput, maxUnpackedSize);
+   void ZrleDecoder::decode(RfbInputGate *pinput,
+                            ::subsystem::FrameBuffer *frameBuffer,
+                            const ::int_rectangle &  dstRect)
+   {
+      size_t maxUnpackedSize = getMaxSizeOfRectangle(dstRect);
+      readAndInflate(pinput, maxUnpackedSize);
 
-  size_t unpackedDataSize = m_inflater.getOutputSize();
-  if (unpackedDataSize == 0) {
-    m_plogwriter->debug("Empty unpacked data in ZRLE decoder");
-    if (dstRect.area() != 0) {
-      throw ::subsystem::Exception("Bad data received from the server: Empty unpacked data in ZRLE decoder.");
-    }
-    return;
-  }
-
-  auto & unpackedData = m_unpackedData;
-  //unpackedData.setresize(unpackedDataSize);
-  unpackedData.assign((unsigned char *) m_inflater.getOutput(),  unpackedDataSize);
-   //auto p =  m_inflater.getOutput();
-   //auto p1 =  unpackedData.data();
-
-  ByteArrayInputStream unpackedByteArrayStream(reinterpret_cast<char *>(unpackedData.data()),
-                                               unpackedData.size());
-  DataInputStream unpackedDataStream(&unpackedByteArrayStream);
-
-  m_numberFirstByte = 0;
-  ::subsystem::PixelFormat pxFormat = frameBuffer->getPixelFormat();
-
-  if (pxFormat.bitsPerPixel == 8) {
-    m_bytesPerPixel = 1;
-  } else if (pxFormat.bitsPerPixel == 16) {
-    m_bytesPerPixel = 2;
-  } else if (pxFormat.bitsPerPixel == 32) {
-    unsigned int colorMaxValue =  pxFormat.blueMax  << pxFormat.blueShift  |
-                            pxFormat.greenMax << pxFormat.greenShift |
-                            pxFormat.redMax   << pxFormat.redShift;
-    //for CPIXELS
-    if ((colorMaxValue & (0xFF000000))==0) {
-      m_bytesPerPixel = 3;
-      m_numberFirstByte = 0;
-    } else if ((colorMaxValue & 0xFF)==0) {
-      m_bytesPerPixel = 3;
-      m_numberFirstByte = 1;
-    } else /*for other cases*/{
-      m_bytesPerPixel = 4;
-      m_numberFirstByte = 0;
-    }
-  }
-
-  for (int y = dstRect.top; y < dstRect.bottom; y += TILE_SIZE) {
-    for (int x = dstRect.left; x < dstRect.right; x += TILE_SIZE) {
-      ::int_rectangle tileRect(x, y, 
-                    ::minimum(x + TILE_SIZE, dstRect.right),
-                    ::minimum(y + TILE_SIZE, dstRect.bottom));
-
-      // FIXME: Check dstRect elsewhere on a higher level, once for all (non-pseudo) decoders,
-      //        and document that in the corresponding interface contract. Do not check here
-      //        or in other decoders. Also, placing this check in the tile loop is not necessary,
-      //        it was enough to check once in the beginning of the function. I do not change that
-      //        just to make sure I do not break anything. (-- const)
-      if (::int_rectangle(frameBuffer->getDimension()).intersection(tileRect) != tileRect) {
-        throw ::subsystem::Exception("Incorrect size of ZRLE tile.");
+      size_t unpackedDataSize = m_inflater.getOutputSize();
+      if (unpackedDataSize == 0) {
+         m_plogwriter->debug("Empty unpacked data in ZRLE decoder");
+         if (dstRect.area() != 0) {
+            throw ::subsystem::Exception("Bad data received from the server: Empty unpacked data in ZRLE decoder.");
+         }
+         return;
       }
+
+      auto & unpackedData = m_unpackedData;
+      //unpackedData.setresize(unpackedDataSize);
+      unpackedData.assign((unsigned char *) m_inflater.getOutput(),  unpackedDataSize);
+      //auto p =  m_inflater.getOutput();
+      //auto p1 =  unpackedData.data();
+
+      ByteArrayInputStream unpackedByteArrayStream(reinterpret_cast<char *>(unpackedData.data()),
+                                                   unpackedData.size());
+      DataInputStream unpackedDataStream(&unpackedByteArrayStream);
+
+      m_numberFirstByte = 0;
+      ::subsystem::PixelFormat pxFormat = frameBuffer->getPixelFormat();
+
+      if (pxFormat.bitsPerPixel == 8) {
+         m_bytesPerPixel = 1;
+      } else if (pxFormat.bitsPerPixel == 16) {
+         m_bytesPerPixel = 2;
+      } else if (pxFormat.bitsPerPixel == 32) {
+         unsigned int colorMaxValue =  pxFormat.blueMax  << pxFormat.blueShift  |
+                                 pxFormat.greenMax << pxFormat.greenShift |
+                                 pxFormat.redMax   << pxFormat.redShift;
+         //for CPIXELS
+         if ((colorMaxValue & (0xFF000000))==0) {
+            m_bytesPerPixel = 3;
+            m_numberFirstByte = 0;
+         } else if ((colorMaxValue & 0xFF)==0) {
+            m_bytesPerPixel = 3;
+            m_numberFirstByte = 1;
+         } else /*for other cases*/{
+            m_bytesPerPixel = 4;
+            m_numberFirstByte = 0;
+         }
+      }
+
+      for (int y = dstRect.top; y < dstRect.bottom; y += TILE_SIZE) {
+         for (int x = dstRect.left; x < dstRect.right; x += TILE_SIZE) {
+            ::int_rectangle tileRect(x, y,
+                          ::minimum(x + TILE_SIZE, dstRect.right),
+                          ::minimum(y + TILE_SIZE, dstRect.bottom));
+
+            // FIXME: Check dstRect elsewhere on a higher level, once for all (non-pseudo) decoders,
+            //        and document that in the corresponding interface contract. Do not check here
+            //        or in other decoders. Also, placing this check in the tile loop is not necessary,
+            //        it was enough to check once in the beginning of the function. I do not change that
+            //        just to make sure I do not break anything. (-- const)
+            if (::int_rectangle(frameBuffer->getDimension()).intersection(tileRect) != tileRect) {
+               throw ::subsystem::Exception("Incorrect size of ZRLE tile.");
+            }
+            size_t tileLength = tileRect.area();
+            size_t tileBytesLength = tileLength * m_bytesPerPixel;
+            auto & pixels = m_pixels;
+            pixels.resize(tileBytesLength);
+
+            int type = readType(&unpackedDataStream);
+
+            if (type == 0) {
+               // raw pixel data
+               readRawTile(&unpackedDataStream, pixels, tileRect);
+            } else if (type == 1) {
+               // a solid tile consisting of a single colour
+               readSolidTile(&unpackedDataStream, pixels, tileRect);
+            } else if (type >= 2 && type <= 16) {
+               // packed palette
+               readPackedPaletteTile(&unpackedDataStream, pixels, tileRect, type);
+            } else if (type >= 17 && type <= 127) {
+               // unused (no advantage over palette RLE)
+            } if (type == 128) {
+               // plain rle
+               readPlainRleTile(&unpackedDataStream, pixels, tileRect);
+            } if (type == 129) {
+               // invalid type
+               ::string error;
+               error.formatf("Bad data received from the server: Unused ZRLE subencoding type ({}).", type);
+               throw ::subsystem::Exception(error);
+            } if (type >= 130 && type <= 255) {
+               // palette rle
+               readPaletteRleTile(&unpackedDataStream, pixels, tileRect, type);
+            }
+
+            drawTile(frameBuffer, tileRect, &pixels);
+         } // tile(x, y)
+      } // tile(..., y)
+   }
+
+   void ZrleDecoder::readAndInflate(RfbInputGate *pinput, size_t maximalUnpackedSize)
+   {
+      unsigned int length = pinput->readUInt32();
+      //::array_base<char> zlibData;
+      auto& zlibData = m_zlibDataReadAndInflate;
+      zlibData.resize(length);
+      if (length == 0) {
+         zlibData.resize(1);
+      }
+      pinput->readFully(zlibData.data(), length);
+
+      m_inflater.setInput(zlibData.data(), length);
+      m_inflater.setUnpackedSize(maximalUnpackedSize);
+      m_inflater.inflate();
+   }
+
+   size_t ZrleDecoder::getMaxSizeOfRectangle(const ::int_rectangle &  dstRect)
+   {
+      size_t widthCount = (dstRect.width() + TILE_SIZE - 1) / TILE_SIZE;
+      size_t heightCount = (dstRect.height() + TILE_SIZE - 1) / TILE_SIZE;
+      size_t tileCount = widthCount * heightCount;
+      return TILE_LENGTH_SIZE + MAXIMAL_TILE_SIZE * tileCount;
+   }
+
+   int ZrleDecoder::readType(DataInputStream * pinput)
+   {
+      int type = pinput->readUInt8();
+      return type;
+   }
+
+   size_t ZrleDecoder::readRunLength(DataInputStream * pinput)
+   {
+      size_t runLength = 0;
+      unsigned char delta;
+      do {
+         delta = pinput->readUInt8();
+         runLength += delta;
+      } while (delta == 255); // if value == 255 then continue reading run-length
+      return runLength + 1; // the length is one more than the sum
+   }
+
+   void ZrleDecoder::readPalette(DataInputStream * pinput,
+                                 const int paletteSize,
+                                 Palette *palette)
+   {
+      palette->resize(paletteSize);
+
+      for (int i = 0; i < paletteSize; i++) {
+         pinput->readFully(&(*palette)[i] + m_numberFirstByte, m_bytesPerPixel);
+      }
+   }
+
+   void ZrleDecoder::readRawTile(DataInputStream * pinput,
+                                 ::array_base<char> &pixels,
+                                 const ::int_rectangle &  tileRect)
+   {
+      size_t tileBytesLength = tileRect.area() * m_bytesPerPixel;
+      pinput->readFully(pixels.data(), tileBytesLength);
+   }
+
+   void ZrleDecoder::readSolidTile(DataInputStream * pinput,
+                                   ::array_base<char> &pixels,
+                                   const ::int_rectangle &  tileRect)
+   {
       size_t tileLength = tileRect.area();
-      size_t tileBytesLength = tileLength * m_bytesPerPixel;
-      auto & pixels = m_pixels;
-      pixels.resize(tileBytesLength);
+      char solid[4] = {0, 0, 0, 0};
 
-      int type = readType(&unpackedDataStream);
+      pinput->readFully(solid + m_numberFirstByte, m_bytesPerPixel);
 
-      if (type == 0) {
-        // raw pixel data
-        readRawTile(&unpackedDataStream, pixels, tileRect);
-      } else if (type == 1) {
-        // a solid tile consisting of a single colour
-        readSolidTile(&unpackedDataStream, pixels, tileRect);
-      } else if (type >= 2 && type <= 16) {
-        // packed palette
-        readPackedPaletteTile(&unpackedDataStream, pixels, tileRect, type);
-      } else if (type >= 17 && type <= 127) {
-        // unused (no advantage over palette RLE)
-      } if (type == 128) {
-        // plain rle
-        readPlainRleTile(&unpackedDataStream, pixels, tileRect);
-      } if (type == 129) {
-        // invalid type
-        ::string error;
-        error.formatf("Bad data received from the server: Unused ZRLE subencoding type ({}).", type);
-        throw ::subsystem::Exception(error);
-      } if (type >= 130 && type <= 255) {
-        // palette rle
-        readPaletteRleTile(&unpackedDataStream, pixels, tileRect, type);
+      char *pixelsPtr = pixels.data();
+      // TODO: Can we optimize this?
+      for (size_t i = 0; i < tileLength; i++) {
+         memcpy(pixelsPtr + m_numberFirstByte, solid, m_bytesPerPixel);
+         pixelsPtr += m_bytesPerPixel;
+      }
+   }
+
+   void ZrleDecoder::readPackedPaletteTile(DataInputStream * pinput,
+                                           ::array_base<char> &pixels,
+                                           const ::int_rectangle &  tileRect,
+                                           const int type)
+   {
+      int width = tileRect.width();
+      int height = tileRect.height();
+
+      // type and palette size is equal
+      int paletteSize = type;
+      Palette palette;
+      readPalette(pinput, paletteSize, &palette);
+
+      int m = 0;
+      unsigned char mask = 0;
+      unsigned char deltaOffset = 0;
+      if (paletteSize == 2) {
+         m = (width + 7) / 8;
+         mask = 0x01;
+         deltaOffset = 1;
+      } else if (paletteSize == 3 || paletteSize == 4) {
+         m = (width + 3) / 4;
+         mask = 0x03;
+         deltaOffset = 2;
+      } else if (paletteSize >= 5 && paletteSize <= 16) {
+         m = (width + 1) / 2;
+         mask = 0x0F;
+         deltaOffset = 4;
       }
 
-      drawTile(frameBuffer, tileRect, &pixels);
-    } // tile(x, y)
-  } // tile(..., y)
-}
+      for (int y = 0; y < height; y++) {
+         // bit lenght of unsigned char
+         unsigned char offset = 8;
+         int index = 0;
+         // FIXME: optimization. Read by line.
+         int entryByIndex = pinput->readUInt8();
 
-void ZrleDecoder::readAndInflate(RfbInputGate *pinput, size_t maximalUnpackedSize)
-{
-  unsigned int length = pinput->readUInt32();
-  //::array_base<char> zlibData;
-  auto& zlibData = m_zlibDataReadAndInflate;
-  zlibData.resize(length);
-  if (length == 0) {
-    zlibData.resize(1);
-  }
-  pinput->readFully(zlibData.data(), length);
+         for (int x = 0; x < width; x++) {
+            offset -= deltaOffset;
+            int color = (entryByIndex >> offset) & mask;
+            if (offset == 0) {
+               offset = 8;
+               // Don't read next entry, if it's last pixel in tile.
+               if (x != width - 1) {
+                  entryByIndex = pinput->readUInt8();
+               }
+            }
 
-  m_inflater.setInput(zlibData.data(), length);
-  m_inflater.setUnpackedSize(maximalUnpackedSize);
-  m_inflater.inflate();
-}
+            size_t count = y * width + x;
+            memcpy(&pixels[count * m_bytesPerPixel], &palette[color], m_bytesPerPixel);
+         }
+      }
+   }
 
-size_t ZrleDecoder::getMaxSizeOfRectangle(const ::int_rectangle &  dstRect)
-{
-  size_t widthCount = (dstRect.width() + TILE_SIZE - 1) / TILE_SIZE;
-  size_t heightCount = (dstRect.height() + TILE_SIZE - 1) / TILE_SIZE;
-  size_t tileCount = widthCount * heightCount;
-  return TILE_LENGTH_SIZE + MAXIMAL_TILE_SIZE * tileCount;
-}
+   void ZrleDecoder::readPlainRleTile(DataInputStream * pinput,
+                                      ::array_base<char> &pixels,
+                                      const ::int_rectangle &  tileRect)
+   {
+      size_t tileLength = tileRect.area();
+      for (size_t indexByte = 0; indexByte < tileLength * m_bytesPerPixel;) {
+         char color[4] = {0, 0, 0, 0};
+         pinput->readFully(color + m_numberFirstByte, m_bytesPerPixel);
 
-int ZrleDecoder::readType(DataInputStream * pinput)
-{
-  int type = pinput->readUInt8();
-  return type;
-}
+         size_t runLength = readRunLength(pinput);
+         if (indexByte + runLength * m_bytesPerPixel > pixels.size()) {
+            throw ::subsystem::Exception("Bad data received from the server: ZRLE run length is too long in plain RLE tile.");
+         }
 
-size_t ZrleDecoder::readRunLength(DataInputStream * pinput)
-{
-  size_t runLength = 0;
-  unsigned char delta;
-  do {
-    delta = pinput->readUInt8();
-    runLength += delta;
-  } while (delta == 255); // if value == 255 then continue reading run-length
-  return runLength + 1; // the length is one more than the sum
-}
+         for (size_t i = 0; i < runLength; i++) {
+            memcpy(&pixels[indexByte], color, m_bytesPerPixel);
+            indexByte += m_bytesPerPixel;
+         }
+      }
+   }
 
-void ZrleDecoder::readPalette(DataInputStream * pinput,
-                              const int paletteSize,
-                              Palette *palette)
-{
-  palette->resize(paletteSize);
-
-  for (int i = 0; i < paletteSize; i++) {
-    pinput->readFully(&(*palette)[i] + m_numberFirstByte, m_bytesPerPixel);
-  }
-}
-
-void ZrleDecoder::readRawTile(DataInputStream * pinput,
-                              ::array_base<char> &pixels,
-                              const ::int_rectangle &  tileRect)
-{
-  size_t tileBytesLength = tileRect.area() * m_bytesPerPixel;
-  pinput->readFully(pixels.data(), tileBytesLength);
-}
-
-void ZrleDecoder::readSolidTile(DataInputStream * pinput,
-                                ::array_base<char> &pixels,
-                                const ::int_rectangle &  tileRect)
-{
-  size_t tileLength = tileRect.area();
-  char solid[4] = {0, 0, 0, 0};
-
-  pinput->readFully(solid + m_numberFirstByte, m_bytesPerPixel);
-  
-  char *pixelsPtr = pixels.data();
-  // TODO: Can we optimize this?
-  for (size_t i = 0; i < tileLength; i++) {
-    memcpy(pixelsPtr + m_numberFirstByte, solid, m_bytesPerPixel); 
-    pixelsPtr += m_bytesPerPixel;
-  }
-}
-
-void ZrleDecoder::readPackedPaletteTile(DataInputStream * pinput,
+   void ZrleDecoder::readPaletteRleTile(DataInputStream * pinput,
                                         ::array_base<char> &pixels,
                                         const ::int_rectangle &  tileRect,
                                         const int type)
-{
-  int width = tileRect.width();
-  int height = tileRect.height();
+   {
+      size_t tileLength = tileRect.area();
 
-  // type and palette size is equal
-  int paletteSize = type;
-  Palette palette;
-  readPalette(pinput, paletteSize, &palette);
+      int paletteSize = type - 128;
+      Palette palette;
+      readPalette(pinput, paletteSize, &palette);
 
-  int m = 0;
-  unsigned char mask = 0;
-  unsigned char deltaOffset = 0;
-  if (paletteSize == 2) {
-    m = (width + 7) / 8;
-    mask = 0x01;
-    deltaOffset = 1;
-  } else if (paletteSize == 3 || paletteSize == 4) {
-    m = (width + 3) / 4;
-    mask = 0x03;
-    deltaOffset = 2;
-  } else if (paletteSize >= 5 && paletteSize <= 16) {
-    m = (width + 1) / 2;
-    mask = 0x0F;
-    deltaOffset = 4;
-  }
+      for (size_t indexPixel = 0; indexPixel < tileLength;) {
+         unsigned char color = pinput->readUInt8();
 
-  for (int y = 0; y < height; y++) {
-    // bit lenght of unsigned char
-    unsigned char offset = 8;
-    int index = 0;
-    // FIXME: optimization. Read by line.
-    int entryByIndex = pinput->readUInt8();
+         size_t runLength = 1;
+         if (color >= 128) {
+            color -= 128;
+            runLength = readRunLength(pinput);
+            if (indexPixel + runLength > tileLength) {
+               throw ::subsystem::Exception("Bad data received from the server: ZRLE run length is too long in palette RLE tile.");
+            }
+         }
 
-    for (int x = 0; x < width; x++) {
-      offset -= deltaOffset;
-      int color = (entryByIndex >> offset) & mask;
-      if (offset == 0) {
-        offset = 8;
-        // Don't read next entry, if it's last pixel in tile.
-        if (x != width - 1) {
-          entryByIndex = pinput->readUInt8();
-        }
+         char * pixelsPtr = &pixels[indexPixel * m_bytesPerPixel];
+         for(size_t i = 0; i < runLength; i++) {
+            memcpy(pixelsPtr, &palette[color], m_bytesPerPixel);
+            pixelsPtr += m_bytesPerPixel;
+         }
+         indexPixel += runLength;
       }
-
-      size_t count = y * width + x;
-      memcpy(&pixels[count * m_bytesPerPixel], &palette[color], m_bytesPerPixel);
-    }
-  }
-}
-
-void ZrleDecoder::readPlainRleTile(DataInputStream * pinput,
-                                   ::array_base<char> &pixels,
-                                   const ::int_rectangle &  tileRect)
-{
-  size_t tileLength = tileRect.area();
-  for (size_t indexByte = 0; indexByte < tileLength * m_bytesPerPixel;) {
-    char color[4] = {0, 0, 0, 0};
-    pinput->readFully(color + m_numberFirstByte, m_bytesPerPixel);
-
-    size_t runLength = readRunLength(pinput);
-    if (indexByte + runLength * m_bytesPerPixel > pixels.size()) {
-      throw ::subsystem::Exception("Bad data received from the server: ZRLE run length is too long in plain RLE tile.");
-    }
-
-    for (size_t i = 0; i < runLength; i++) {
-      memcpy(&pixels[indexByte], color, m_bytesPerPixel);
-      indexByte += m_bytesPerPixel; 
-    }
-  }
-}
-
-void ZrleDecoder::readPaletteRleTile(DataInputStream * pinput,
-                                     ::array_base<char> &pixels,
-                                     const ::int_rectangle &  tileRect,
-                                     const int type)
-{
-  size_t tileLength = tileRect.area();
-
-  int paletteSize = type - 128;
-  Palette palette;
-  readPalette(pinput, paletteSize, &palette);
-
-  for (size_t indexPixel = 0; indexPixel < tileLength;) {
-    unsigned char color = pinput->readUInt8();
-
-    size_t runLength = 1;
-    if (color >= 128) {
-      color -= 128;
-      runLength = readRunLength(pinput);
-      if (indexPixel + runLength > tileLength) {
-        throw ::subsystem::Exception("Bad data received from the server: ZRLE run length is too long in palette RLE tile.");
-      }
-    }
-    
-    char * pixelsPtr = &pixels[indexPixel * m_bytesPerPixel];
-    for(size_t i = 0; i < runLength; i++) {
-      memcpy(pixelsPtr, &palette[color], m_bytesPerPixel);
-      pixelsPtr += m_bytesPerPixel;
-    }
-    indexPixel += runLength;
-  }
-}
-
+   }
+} // namespace remoting

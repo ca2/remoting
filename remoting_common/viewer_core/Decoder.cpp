@@ -24,67 +24,71 @@
 #include "framework.h"
 #include "Decoder.h"
 
-Decoder::Decoder(::subsystem::LogWriter * plogwriter)
-: m_plogwriter(logWriter)
+namespace remoting
 {
-}
+   Decoder::Decoder(::subsystem::LogWriter * plogwriter)
+   : m_plogwriter(logWriter)
+   {
+   }
 
-Decoder::~Decoder()
-{
-}
+   Decoder::~Decoder()
+   {
+   }
 
-int Decoder::getCode() const
-{
-  return m_encoding;
-}
+   int Decoder::getCode() const
+   {
+      return m_encoding;
+   }
 
-bool Decoder::isPseudo() const
-{
-  return isPseudo(getCode());
-}
+   bool Decoder::isPseudo() const
+   {
+      return isPseudo(getCode());
+   }
 
-bool Decoder::isPseudo(int encoding)
-{
-  switch (encoding) {
-  case EncodingDefs::RAW:
-  case EncodingDefs::COPYRECT:
-  case EncodingDefs::RRE:
-  case EncodingDefs::HEXTILE:
-  case EncodingDefs::TIGHT:
-  case EncodingDefs::ZRLE:
-    return false;
+   bool Decoder::isPseudo(int encoding)
+   {
+      switch (encoding) {
+         case EncodingDefs::RAW:
+         case EncodingDefs::COPYRECT:
+         case EncodingDefs::RRE:
+         case EncodingDefs::HEXTILE:
+         case EncodingDefs::TIGHT:
+         case EncodingDefs::ZRLE:
+            return false;
 
-  case PseudoEncDefs::COMPR_LEVEL_0:
-  case PseudoEncDefs::COMPR_LEVEL_1:
-  case PseudoEncDefs::COMPR_LEVEL_2:
-  case PseudoEncDefs::COMPR_LEVEL_3:
-  case PseudoEncDefs::COMPR_LEVEL_4:
-  case PseudoEncDefs::COMPR_LEVEL_5:
-  case PseudoEncDefs::COMPR_LEVEL_6:
-  case PseudoEncDefs::COMPR_LEVEL_7:
-  case PseudoEncDefs::COMPR_LEVEL_8:
-  case PseudoEncDefs::COMPR_LEVEL_9:
+         case PseudoEncDefs::COMPR_LEVEL_0:
+         case PseudoEncDefs::COMPR_LEVEL_1:
+         case PseudoEncDefs::COMPR_LEVEL_2:
+         case PseudoEncDefs::COMPR_LEVEL_3:
+         case PseudoEncDefs::COMPR_LEVEL_4:
+         case PseudoEncDefs::COMPR_LEVEL_5:
+         case PseudoEncDefs::COMPR_LEVEL_6:
+         case PseudoEncDefs::COMPR_LEVEL_7:
+         case PseudoEncDefs::COMPR_LEVEL_8:
+         case PseudoEncDefs::COMPR_LEVEL_9:
 
-  case PseudoEncDefs::QUALITY_LEVEL_0:
-  case PseudoEncDefs::QUALITY_LEVEL_1:
-  case PseudoEncDefs::QUALITY_LEVEL_2:
-  case PseudoEncDefs::QUALITY_LEVEL_3:
-  case PseudoEncDefs::QUALITY_LEVEL_4:
-  case PseudoEncDefs::QUALITY_LEVEL_5:
-  case PseudoEncDefs::QUALITY_LEVEL_6:
-  case PseudoEncDefs::QUALITY_LEVEL_7:
-  case PseudoEncDefs::QUALITY_LEVEL_8:
-  case PseudoEncDefs::QUALITY_LEVEL_9:
+         case PseudoEncDefs::QUALITY_LEVEL_0:
+         case PseudoEncDefs::QUALITY_LEVEL_1:
+         case PseudoEncDefs::QUALITY_LEVEL_2:
+         case PseudoEncDefs::QUALITY_LEVEL_3:
+         case PseudoEncDefs::QUALITY_LEVEL_4:
+         case PseudoEncDefs::QUALITY_LEVEL_5:
+         case PseudoEncDefs::QUALITY_LEVEL_6:
+         case PseudoEncDefs::QUALITY_LEVEL_7:
+         case PseudoEncDefs::QUALITY_LEVEL_8:
+         case PseudoEncDefs::QUALITY_LEVEL_9:
 
-  case PseudoEncDefs::DESKTOP_SIZE:
-  case PseudoEncDefs::X_CURSOR:
-  case PseudoEncDefs::RICH_CURSOR:
-  case PseudoEncDefs::POINTER_POS:
-  case PseudoEncDefs::LAST_RECT:
-    return true;
-  default:
-    // if the encoding type is unknown, then generate assertions.
-    _ASSERT(true);
-    return true;
-  }
-}
+         case PseudoEncDefs::DESKTOP_SIZE:
+         case PseudoEncDefs::X_CURSOR:
+         case PseudoEncDefs::RICH_CURSOR:
+         case PseudoEncDefs::POINTER_POS:
+         case PseudoEncDefs::LAST_RECT:
+            return true;
+         default:
+            // if the encoding type is unknown, then generate assertions.
+            _ASSERT(true);
+            return true;
+      }
+   }
+} // namespace remoting
+

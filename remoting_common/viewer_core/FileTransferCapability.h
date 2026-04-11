@@ -68,7 +68,7 @@ namespace  remoting
          //
          // Overrides MessageListener::onRequest().
          //
-         virtual void onServerMessage(unsigned int code, DataInputStream * pinput);
+         virtual void onServerMessage(unsigned int code, ::subsystem::DataInputStream * pinput);
 
          virtual FileTransferCore *getCore();
          virtual void setInterface(FileTransferInterface *ftInterface);

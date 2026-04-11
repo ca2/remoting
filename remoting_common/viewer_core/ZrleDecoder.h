@@ -30,82 +30,83 @@
 #include "acme/subsystem/io/DataInputStream.h"
 #include "remoting/remoting_common/util/Inflater.h"
 
-class CLASS_DECL_REMOTING_COMMON ZrleDecoder : public DecoderOfRectangle
+namespace remoting
 {
-public:
-  ZrleDecoder(::subsystem::LogWriter * plogwriter);
-  virtual ~ZrleDecoder();
+   class CLASS_DECL_REMOTING_COMMON ZrleDecoder : public DecoderOfRectangle
+   {
+   public:
+      ZrleDecoder(::subsystem::LogWriter * plogwriter);
+      virtual ~ZrleDecoder();
 
-protected:
-  typedef ::array_base<unsigned int> Palette;
-  ::array_base<char> m_pixels;
-  ::array_base<char> m_zlibDataReadAndInflate;
-  ::memory m_unpackedData;
-protected:
-  virtual void decode(RfbInputGate *input,
-                      ::subsystem::FrameBuffer *frameBuffer,
-                      const ::int_rectangle &  dstRect);
-
-
-  void readAndInflate(RfbInputGate *input, size_t maximalUnpackedSize);
-
-  int readType(DataInputStream * pinput);
-
-  size_t readRunLength(DataInputStream * pinput);
-
-  void readPalette(DataInputStream * pinput,
-                   const int paletteSize,
-                   Palette *palette);
-
-  void readRawTile(DataInputStream * pinput,
-                   ::array_base<char> &pixels,
-                   const ::int_rectangle &  tileRect);
-
-  void readSolidTile(DataInputStream * pinput,
-                     ::array_base<char> &pixels,
-                     const ::int_rectangle &  tileRect);
-
-  void readPackedPaletteTile(DataInputStream * pinput,
-                             ::array_base<char> &pixels,
-                             const ::int_rectangle &  tileRect,
-                             const int type);
-
-  void readPlainRleTile(DataInputStream * pinput,
-                        ::array_base<char> &pixels,
-                        const ::int_rectangle &  tileRect);
-
-  void readPaletteRleTile(DataInputStream * pinput,
-                          ::array_base<char> &pixels,
-                          const ::int_rectangle &  tileRect,
-                          const int type);
+   protected:
+      typedef ::array_base<unsigned int> Palette;
+      ::array_base<char> m_pixels;
+      ::array_base<char> m_zlibDataReadAndInflate;
+      ::memory m_unpackedData;
+   protected:
+      virtual void decode(RfbInputGate *input,
+                          ::subsystem::FrameBuffer *frameBuffer,
+                          const ::int_rectangle &  dstRect);
 
 
-  void drawTile(::subsystem::FrameBuffer *fb,
-                const ::int_rectangle &  tileRect,
-                const ::array_base<char> *pixels);
+      void readAndInflate(RfbInputGate *input, size_t maximalUnpackedSize);
 
-  Inflater m_inflater;
-  size_t m_bytesPerPixel;
-  size_t m_numberFirstByte;
+      int readType(DataInputStream * pinput);
 
-private:
-  static const int TILE_SIZE = 64;
+      size_t readRunLength(DataInputStream * pinput);
 
-  // maximal size of tile (64x64) is max value from follow:
-  // 1. size of raw: subenc + data:
-  //    1 + width * height * pixelSize = 1 + 64 * 64 * 4 = 16385
-  // 2. size of solid: subenc + solidColor:
-  //    1 + pixelSize = 1 + 4 = 5
-  // 3. size of packpalette: subenc + palleteSize + data:
-  //    1 + paletteSize * pixelSize + m = 1 + 16 * 4 + 32 * 64 = 2113
-  // 4. size of plainRle: subenc + rle * width * height:
-  //    1 + (pixelSize + 1) * width * height = 1 + (4 + 1) * 64 * 64 = 20481
-  // 5. size of paletteRle: subenc + paletteSzie + data:
-  //    1 + paletteSize * pixelSize + rle * width * height = 1 + 128 * 4 + (1 + 1) * 64 * 64 = 8705
-  static const size_t MAXIMAL_TILE_SIZE = 20481;
-  static const size_t TILE_LENGTH_SIZE = sizeof(unsigned int);
+      void readPalette(DataInputStream * pinput,
+                       const int paletteSize,
+                       Palette *palette);
 
-  static size_t getMaxSizeOfRectangle(const ::int_rectangle &  dstRect);
-};
+      void readRawTile(DataInputStream * pinput,
+                       ::array_base<char> &pixels,
+                       const ::int_rectangle &  tileRect);
+
+      void readSolidTile(DataInputStream * pinput,
+                         ::array_base<char> &pixels,
+                         const ::int_rectangle &  tileRect);
+
+      void readPackedPaletteTile(DataInputStream * pinput,
+                                 ::array_base<char> &pixels,
+                                 const ::int_rectangle &  tileRect,
+                                 const int type);
+
+      void readPlainRleTile(DataInputStream * pinput,
+                            ::array_base<char> &pixels,
+                            const ::int_rectangle &  tileRect);
+
+      void readPaletteRleTile(DataInputStream * pinput,
+                              ::array_base<char> &pixels,
+                              const ::int_rectangle &  tileRect,
+                              const int type);
 
 
+      void drawTile(::subsystem::FrameBuffer *fb,
+                    const ::int_rectangle &  tileRect,
+                    const ::array_base<char> *pixels);
+
+      Inflater m_inflater;
+      size_t m_bytesPerPixel;
+      size_t m_numberFirstByte;
+
+   private:
+      static const int TILE_SIZE = 64;
+
+      // maximal size of tile (64x64) is max value from follow:
+      // 1. size of raw: subenc + data:
+      //    1 + width * height * pixelSize = 1 + 64 * 64 * 4 = 16385
+      // 2. size of solid: subenc + solidColor:
+      //    1 + pixelSize = 1 + 4 = 5
+      // 3. size of packpalette: subenc + palleteSize + data:
+      //    1 + paletteSize * pixelSize + m = 1 + 16 * 4 + 32 * 64 = 2113
+      // 4. size of plainRle: subenc + rle * width * height:
+      //    1 + (pixelSize + 1) * width * height = 1 + (4 + 1) * 64 * 64 = 20481
+      // 5. size of paletteRle: subenc + paletteSzie + data:
+      //    1 + paletteSize * pixelSize + rle * width * height = 1 + 128 * 4 + (1 + 1) * 64 * 64 = 8705
+      static const size_t MAXIMAL_TILE_SIZE = 20481;
+      static const size_t TILE_LENGTH_SIZE = sizeof(unsigned int);
+
+      static size_t getMaxSizeOfRectangle(const ::int_rectangle &  dstRect);
+   };
+} //namespace remoting

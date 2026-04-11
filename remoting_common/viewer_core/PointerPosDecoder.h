@@ -27,11 +27,12 @@
 
 #include "PseudoDecoder.h"
 
-class CLASS_DECL_REMOTING_COMMON PointerPosDecoder : public PseudoDecoder
+namespace remoting
 {
-public:
-  PointerPosDecoder(::subsystem::LogWriter * plogwriter);
-  virtual ~PointerPosDecoder();
-};
-
-
+   class CLASS_DECL_REMOTING_COMMON PointerPosDecoder : public PseudoDecoder
+   {
+   public:
+      PointerPosDecoder(::subsystem::LogWriter * plogwriter);
+      virtual ~PointerPosDecoder();
+   };
+} // namespace remoting

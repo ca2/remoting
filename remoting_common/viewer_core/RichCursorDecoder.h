@@ -27,11 +27,12 @@
 
 #include "PseudoDecoder.h"
 
-class CLASS_DECL_REMOTING_COMMON RichCursorDecoder : public PseudoDecoder
+namespace remoting
 {
-public:
-  RichCursorDecoder(::subsystem::LogWriter * plogwriter);
-  virtual ~RichCursorDecoder();
-};
-
-
+   class CLASS_DECL_REMOTING_COMMON RichCursorDecoder : public PseudoDecoder
+   {
+   public:
+      RichCursorDecoder(::subsystem::LogWriter * plogwriter);
+      virtual ~RichCursorDecoder();
+   };
+}

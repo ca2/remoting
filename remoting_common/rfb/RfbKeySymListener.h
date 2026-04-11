@@ -24,11 +24,13 @@
 
 #pragma once
 
-
-class CLASS_DECL_REMOTING_COMMON RfbKeySymListener
+namespace remoting
 {
-public:
-  virtual void onRfbKeySymEvent(unsigned int rfbKeySym, bool down) = 0;
-};
+   class CLASS_DECL_REMOTING_COMMON RfbKeySymListener
+   {
+   public:
+      virtual void onRfbKeySymEvent(unsigned int rfbKeySym, bool down) = 0;
+   };
 
-//// __RFBKEYSYMLISTENER_H__
+   //// __RFBKEYSYMLISTENER_H__
+} // namespace remoting

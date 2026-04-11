@@ -49,13 +49,13 @@ namespace remoting_remoting
 
     bool OptionsDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
-        if (controlID == ::innate_subsystem::IDOK) {
+        if (controlID == ::innate_subsystem::e_control_id_ok) {
             if (onOkPressed()) {
                 closeDialog(1);
             }
             return true;
         }
-        if (controlID == ::innate_subsystem::IDCANCEL) {
+        if (controlID == ::innate_subsystem::e_control_id_cancel) {
             closeDialog(0);
             return true;
         }
@@ -124,11 +124,11 @@ namespace remoting_remoting
         subclassControlById(m_pcheckboxArrow, IDC_RARROW);
         subclassControlById(m_pcheckboxNlocal, IDC_RNLOCAL);
 
-        m_pcomboboxUseEnc->addItem("Raw", reinterpret_cast<void *>(EncodingDefs::RAW));
-        m_pcomboboxUseEnc->addItem("Hextile", reinterpret_cast<void *>(EncodingDefs::HEXTILE));
-        m_pcomboboxUseEnc->addItem("Tight", reinterpret_cast<void *>(EncodingDefs::TIGHT));
-        m_pcomboboxUseEnc->addItem("RRE", reinterpret_cast<void *>(EncodingDefs::RRE));
-        m_pcomboboxUseEnc->addItem("ZRLE", reinterpret_cast<void *>(EncodingDefs::ZRLE));
+        m_pcomboboxUseEnc->addItem("Raw", reinterpret_cast<void *>(::remoting::EncodingDefs::RAW));
+        m_pcomboboxUseEnc->addItem("Hextile", reinterpret_cast<void *>(::remoting::EncodingDefs::HEXTILE));
+        m_pcomboboxUseEnc->addItem("Tight", reinterpret_cast<void *>(::remoting::EncodingDefs::TIGHT));
+        m_pcomboboxUseEnc->addItem("RRE", reinterpret_cast<void *>(::remoting::EncodingDefs::RRE));
+        m_pcomboboxUseEnc->addItem("ZRLE", reinterpret_cast<void *>(::remoting::EncodingDefs::ZRLE));
 
 
         // FIXME: replaced literals to named constants
@@ -156,7 +156,7 @@ namespace remoting_remoting
             } // if found
 
             // set default value, if preferred encoding not in ::list_base
-            if (enc == EncodingDefs::HEXTILE)
+            if (enc == ::remoting::EncodingDefs::HEXTILE)
                 m_pcomboboxUseEnc->setSelectedItem(i);
         } // for i
 
@@ -303,7 +303,7 @@ namespace remoting_remoting
         }
         int encoding = reinterpret_cast<int>(m_pcomboboxUseEnc->getItemData(index));
         switch (encoding) {
-            case EncodingDefs::TIGHT:
+            case ::remoting::EncodingDefs::TIGHT:
                 enableCustomCompression(m_pcheckboxCompressionLevel->isChecked());
                 m_pcheckboxCompressionLevel->enableWindow(true);
                 break;
@@ -419,7 +419,7 @@ namespace remoting_remoting
             m_pconnectionconfig->setPreferredEncoding(preferredEncoding);
         } else {
             _ASSERT(pesii >= 0);
-            m_pconnectionconfig->setPreferredEncoding(EncodingDefs::TIGHT);
+            m_pconnectionconfig->setPreferredEncoding(::remoting::EncodingDefs::TIGHT);
         }
 
         if (m_pcheckboxCompressionLevel->isChecked()) {

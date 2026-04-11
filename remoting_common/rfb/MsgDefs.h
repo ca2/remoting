@@ -26,43 +26,47 @@
 
 #include "remoting/remoting_common/util/inttypes.h"
 
-class CLASS_DECL_REMOTING_COMMON ClientMsgDefs
-{
-public:
-  static const unsigned int SET_PIXEL_FORMAT = 0;
-  static const unsigned int FIX_COLOR_MAP_ENTRIES = 1;
-  static const unsigned int SET_ENCODINGS = 2;
-  static const unsigned int FB_UPDATE_REQUEST = 3;
-  static const unsigned int KEYBOARD_EVENT = 4;
-  static const unsigned int POINTER_EVENT = 5;
-  static const unsigned int CLIENT_CUT_TEXT = 6;
-  static const unsigned int CLIENT_CUT_TEXT_UTF8 = 0xFC000200;
-  static const unsigned int ENABLE_CUT_TEXT_UTF8 = 0xFC000201;
-  static const unsigned int ECHO_REQUEST = 0xFC000300;
-};
 
-class CLASS_DECL_REMOTING_COMMON ServerMsgDefs
+namespace remoting
 {
-public:
-  static const unsigned int FB_UPDATE = 0;
-  static const unsigned int SET_COLOR_MAP_ENTRIES = 1;
-  static const unsigned int BELL = 2;
-  static const unsigned int SERVER_CUT_TEXT = 3;
-  static const unsigned int SERVER_CUT_TEXT_UTF8 = 0xFC000200;
-  static const unsigned int ECHO_RESPONSE = 0xFC000300;
-};
+   class CLASS_DECL_REMOTING_COMMON ClientMsgDefs
+   {
+   public:
+      static const unsigned int SET_PIXEL_FORMAT = 0;
+      static const unsigned int FIX_COLOR_MAP_ENTRIES = 1;
+      static const unsigned int SET_ENCODINGS = 2;
+      static const unsigned int FB_UPDATE_REQUEST = 3;
+      static const unsigned int KEYBOARD_EVENT = 4;
+      static const unsigned int POINTER_EVENT = 5;
+      static const unsigned int CLIENT_CUT_TEXT = 6;
+      static const unsigned int CLIENT_CUT_TEXT_UTF8 = 0xFC000200;
+      static const unsigned int ENABLE_CUT_TEXT_UTF8 = 0xFC000201;
+      static const unsigned int ECHO_REQUEST = 0xFC000300;
+   };
 
-class CLASS_DECL_REMOTING_COMMON Utf8CutTextDefs
-{
-public: 
-    static const char *const CLIENT_CUT_TEXT_UTF8_SIG;
-    static const char *const SERVER_CUT_TEXT_UTF8_SIG;
-    static const char *const ENABLE_CUT_TEXT_UTF8_SIG;
-};
-class CLASS_DECL_REMOTING_COMMON EchoExtensionDefs
-{
-public:
-  static const char *const ECHO_REQUEST_SIG;
-  static const char *const ECHO_RESPONSE_SIG;
-};
-//// __RFB_MSG_DEFS_H_INCLUDED__
+   class CLASS_DECL_REMOTING_COMMON ServerMsgDefs
+   {
+   public:
+      static const unsigned int FB_UPDATE = 0;
+      static const unsigned int SET_COLOR_MAP_ENTRIES = 1;
+      static const unsigned int BELL = 2;
+      static const unsigned int SERVER_CUT_TEXT = 3;
+      static const unsigned int SERVER_CUT_TEXT_UTF8 = 0xFC000200;
+      static const unsigned int ECHO_RESPONSE = 0xFC000300;
+   };
+
+   class CLASS_DECL_REMOTING_COMMON Utf8CutTextDefs
+   {
+   public:
+      static const char *const CLIENT_CUT_TEXT_UTF8_SIG;
+      static const char *const SERVER_CUT_TEXT_UTF8_SIG;
+      static const char *const ENABLE_CUT_TEXT_UTF8_SIG;
+   };
+   class CLASS_DECL_REMOTING_COMMON EchoExtensionDefs
+   {
+   public:
+      static const char *const ECHO_REQUEST_SIG;
+      static const char *const ECHO_RESPONSE_SIG;
+   };
+   //// __RFB_MSG_DEFS_H_INCLUDED__
+} // namespace remoting

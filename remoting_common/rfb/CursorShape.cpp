@@ -24,83 +24,87 @@
 #include "framework.h"
 #include "CursorShape.h"
 
-CursorShape::~CursorShape()
-{
-}
 
-bool CursorShape::clone(const CursorShape *srcCursorShape)
+namespace remoting
 {
-  m_hotSpot = srcCursorShape->getHotSpot();
-  if (m_pixels.clone(srcCursorShape->getPixels())) {
-    m_mask = srcCursorShape->m_mask;
-    return true;
-  } else {
-    return false;
-  }
-}
+   CursorShape::~CursorShape()
+   {
+   }
 
-void CursorShape::assignMaskFromRfb(const char *srcMask)
-{
-  if (!m_mask.empty()) {
-    int height = m_pixels.getDimension().cy;
-    size_t rfbWidthInBytes = getMaskWidthInBytes();
-    size_t maskLen = height * rfbWidthInBytes;
-    memcpy(m_mask.data(), srcMask, maskLen);
-  }
-}
+   bool CursorShape::clone(const CursorShape *srcCursorShape)
+   {
+      m_hotSpot = srcCursorShape->getHotSpot();
+      if (m_pixels.clone(srcCursorShape->getPixels())) {
+         m_mask = srcCursorShape->m_mask;
+         return true;
+      } else {
+         return false;
+      }
+   }
 
-void CursorShape::assignMaskFromWindows(const char *srcMask)
-{
-  if (!m_mask.empty()) {
-    int height = m_pixels.getDimension().cy;
-    int winWidthInBytes = ((m_pixels.getDimension().cx + 15) / 16) * 2;
-    int rfbWidthInBytes = getMaskWidthInBytes();
-    for (int i = 0; i < height; i++) {
-      memcpy(&m_mask[i * rfbWidthInBytes],
-             &srcMask[i * winWidthInBytes],
-             rfbWidthInBytes);
-    }
-  }
-}
+   void CursorShape::assignMaskFromRfb(const char *srcMask)
+   {
+      if (!m_mask.empty()) {
+         int height = m_pixels.getDimension().cy;
+         size_t rfbWidthInBytes = getMaskWidthInBytes();
+         size_t maskLen = height * rfbWidthInBytes;
+         memcpy(m_mask.data(), srcMask, maskLen);
+      }
+   }
 
-bool CursorShape::setDimension(const ::int_size & newDim)
-{
-  bool result = m_pixels.setDimension(newDim);
-  return result && resizeBuffer();
-}
+   void CursorShape::assignMaskFromWindows(const char *srcMask)
+   {
+      if (!m_mask.empty()) {
+         int height = m_pixels.getDimension().cy;
+         int winWidthInBytes = ((m_pixels.getDimension().cx + 15) / 16) * 2;
+         int rfbWidthInBytes = getMaskWidthInBytes();
+         for (int i = 0; i < height; i++) {
+            memcpy(&m_mask[i * rfbWidthInBytes],
+                   &srcMask[i * winWidthInBytes],
+                   rfbWidthInBytes);
+         }
+      }
+   }
 
-bool CursorShape::setPixelFormat(const ::subsystem::PixelFormat & pixFormat)
-{
-  bool result = m_pixels.setPixelFormat(pixFormat);
-  return result && resizeBuffer();
-}
+   bool CursorShape::setDimension(const ::int_size & newDim)
+   {
+      bool result = m_pixels.setDimension(newDim);
+      return result && resizeBuffer();
+   }
 
-bool CursorShape::setProperties(const ::int_size & newDim,
-                                const ::subsystem::PixelFormat & pixelFormat)
-{
-  bool result = m_pixels.setDimension(newDim) &&
-                m_pixels.setPixelFormat(pixelFormat);
-  return result && resizeBuffer();
-}
+   bool CursorShape::setPixelFormat(const ::subsystem::PixelFormat & pixFormat)
+   {
+      bool result = m_pixels.setPixelFormat(pixFormat);
+      return result && resizeBuffer();
+   }
 
-void CursorShape::resetToEmpty()
-{
-  setDimension(::int_size(0, 0));
-  setHotSpot(0, 0);
-}
+   bool CursorShape::setProperties(const ::int_size & newDim,
+                                   const ::subsystem::PixelFormat & pixelFormat)
+   {
+      bool result = m_pixels.setDimension(newDim) &&
+                    m_pixels.setPixelFormat(pixelFormat);
+      return result && resizeBuffer();
+   }
 
-bool CursorShape::resizeBuffer()
-{
-  m_mask.resize(getMaskSize());
-  return true;
-}
+   void CursorShape::resetToEmpty()
+   {
+      setDimension(::int_size(0, 0));
+      setHotSpot(0, 0);
+   }
 
-int CursorShape::getMaskSize() const
-{
-  return getMaskWidthInBytes() * m_pixels.getDimension().cy;
-}
+   bool CursorShape::resizeBuffer()
+   {
+      m_mask.resize(getMaskSize());
+      return true;
+   }
 
-int CursorShape::getMaskWidthInBytes() const
-{
-  return (m_pixels.getDimension().cx + 7) / 8;
-}
+   int CursorShape::getMaskSize() const
+   {
+      return getMaskWidthInBytes() * m_pixels.getDimension().cy;
+   }
+
+   int CursorShape::getMaskWidthInBytes() const
+   {
+      return (m_pixels.getDimension().cx + 7) / 8;
+   }
+} // namespace remoting

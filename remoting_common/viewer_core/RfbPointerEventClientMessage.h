@@ -25,22 +25,23 @@
 #pragma once
 
 
-#include "remoting/remoting_common/region/Point.h"
+#include "remoting/remoting_common/region/::int_point.h"
 
 #include "RfbClientToServerMessage.h"
 
-class CLASS_DECL_REMOTING_COMMON RfbPointerEventClientMessage : public RfbClientToServerMessage
+namespace remoting
 {
-public:
-  RfbPointerEventClientMessage(const unsigned char buttonMask, const Point *position);
-  ~RfbPointerEventClientMessage();
+   class CLASS_DECL_REMOTING_COMMON RfbPointerEventClientMessage : public RfbClientToServerMessage
+   {
+   public:
+      RfbPointerEventClientMessage(const unsigned char buttonMask, const ::int_point *position);
+      ~RfbPointerEventClientMessage();
 
-  void send(RfbOutputGate *output);
+      void send(RfbOutputGate *output);
 
-private:
-  unsigned char m_buttonMask;
-  unsigned short m_xPos;
-  unsigned short m_yPos;
-};
-
-
+   private:
+      unsigned char m_buttonMask;
+      unsigned short m_xPos;
+      unsigned short m_yPos;
+   };
+} // namespace remoting

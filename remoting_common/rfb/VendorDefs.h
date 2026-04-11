@@ -24,11 +24,14 @@
 
 #pragma once
 
-class CLASS_DECL_REMOTING_COMMON VendorDefs
+namespace remoting
 {
-public:
-  static const char *const STANDARD;
-  static const char *const TIGHTVNC;
-};
+   class CLASS_DECL_REMOTING_COMMON VendorDefs
+   {
+   public:
+      static const char *const STANDARD;
+      static const char *const TIGHTVNC;
+   };
+} // namespace remoting
 
 //// __RFB_VENDOR_DEFS_H_INCLUDED__

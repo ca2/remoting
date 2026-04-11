@@ -28,16 +28,18 @@
 #include "remoting/remoting_common/rfb/PixelFormat.h"
 #include "RfbClientToServerMessage.h"
 
-class CLASS_DECL_REMOTING_COMMON RfbSetPixelFormatClientMessage : public RfbClientToServerMessage
+namespace remoting
 {
-public:
-  RfbSetPixelFormatClientMessage(const ::subsystem::PixelFormat & pixelFormat);
-  virtual ~RfbSetPixelFormatClientMessage();
+   class CLASS_DECL_REMOTING_COMMON RfbSetPixelFormatClientMessage : public RfbClientToServerMessage
+   {
+   public:
+      RfbSetPixelFormatClientMessage(const ::subsystem::PixelFormat & pixelFormat);
+      virtual ~RfbSetPixelFormatClientMessage();
 
-  void send(RfbOutputGate *output);
+      void send(RfbOutputGate *output);
 
-protected:
-  ::subsystem::PixelFormat m_pixelFormat;
-};
+   protected:
+      ::subsystem::PixelFormat m_pixelFormat;
+   };
 
-
+} // namespace remoting

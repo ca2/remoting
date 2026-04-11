@@ -24,4 +24,7 @@
 #include "framework.h"
 #include "TunnelDefs.h"
 
-const char *const TunnelDefs::SIG_NONE = "NOTUNNEL";
+namespace remoting
+{
+   const char *const TunnelDefs::SIG_NONE = "NOTUNNEL";
+} // namespace remoting

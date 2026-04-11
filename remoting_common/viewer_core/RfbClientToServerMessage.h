@@ -29,13 +29,14 @@
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 //#include "acme/subsystem/thread/critical_section.h"
 
-class CLASS_DECL_REMOTING_COMMON RfbClientToServerMessage
+namespace remoting
 {
-public:
-  RfbClientToServerMessage();
-  virtual ~RfbClientToServerMessage();
+   class CLASS_DECL_REMOTING_COMMON RfbClientToServerMessage
+   {
+   public:
+      RfbClientToServerMessage();
+      virtual ~RfbClientToServerMessage();
 
-  virtual void send(RfbOutputGate *output) = 0;
-};
-
-
+      virtual void send(RfbOutputGate *output) = 0;
+   };
+} // namespace remoting

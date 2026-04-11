@@ -255,19 +255,19 @@ namespace remoting_remoting
     void ViewerCmdLine::parseEncoding()
     {
         if (isPresent(ENCODING)) {
-            int iEncoding = EncodingDefs::RAW;
+            int iEncoding = ::remoting::EncodingDefs::RAW;
 
             if (m_options[ENCODING] == HEXTILE) {
-                iEncoding = EncodingDefs::HEXTILE;
+                iEncoding = ::remoting::EncodingDefs::HEXTILE;
             }
             if (m_options[ENCODING] == TIGHT) {
-                iEncoding = EncodingDefs::TIGHT;
+                iEncoding = ::remoting::EncodingDefs::TIGHT;
             }
             if (m_options[ENCODING] == RRE) {
-                iEncoding = EncodingDefs::RRE;
+                iEncoding = ::remoting::EncodingDefs::RRE;
             }
             if (m_options[ENCODING] == ZRLE) {
-                iEncoding = EncodingDefs::ZRLE;
+                iEncoding =::remoting:: EncodingDefs::ZRLE;
             }
             m_pconnectionconfig->setPreferredEncoding(iEncoding);
         }

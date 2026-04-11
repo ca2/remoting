@@ -27,17 +27,18 @@
 
 #include "RfbClientToServerMessage.h"
 
-class CLASS_DECL_REMOTING_COMMON RfbCutTextEventClientMessage : public RfbClientToServerMessage
+namespace remoting
 {
-public:
-  RfbCutTextEventClientMessage(const ::scoped_string & cutText);
-  ~RfbCutTextEventClientMessage();
+   class CLASS_DECL_REMOTING_COMMON RfbCutTextEventClientMessage : public RfbClientToServerMessage
+   {
+   public:
+      RfbCutTextEventClientMessage(const ::scoped_string & cutText);
+      ~RfbCutTextEventClientMessage();
 
-  void send(RfbOutputGate *output);
-  void sendUtf8(RfbOutputGate *output);
+      void send(RfbOutputGate *output);
+      void sendUtf8(RfbOutputGate *output);
 
-private:
-  ::string m_cutText;
-};
-
-
+   private:
+      ::string m_cutText;
+   };
+} // namespace remoting

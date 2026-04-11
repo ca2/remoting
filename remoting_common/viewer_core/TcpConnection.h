@@ -43,7 +43,7 @@ namespace remoting
       virtual ~TcpConnection();
 
       void bind(const ::scoped_string & scopedstrHost, unsigned short port);
-      void bind(SocketIPv4 *socket);
+      void bind(::subsystem::SocketIPv4Interface *socket);
       void bind(RfbInputGate *input, RfbOutputGate *output);
 
       void connect();
@@ -54,9 +54,9 @@ namespace remoting
    ;;private:
       ::string m_host;
       unsigned short m_port;
-      SocketIPv4 *m_socket;
+      ::subsystem::SocketIPv4Interface *m_socket;
       bool m_socketOwner;
-      SocketStream *m_socketStream;
+      ::subsystem::SocketStreamInterface *m_socketStream;
       ::subsystem::BufferedInputStream *m_bufInput;
       RfbInputGate *m_input;
       RfbOutputGate *m_output;

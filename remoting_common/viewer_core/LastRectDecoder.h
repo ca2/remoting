@@ -27,11 +27,13 @@
 
 #include "PseudoDecoder.h"
 
-class CLASS_DECL_REMOTING_COMMON LastRectDecoder : public PseudoDecoder
+
+namespace remoting
 {
-public:
-  LastRectDecoder(::subsystem::LogWriter * plogwriter);
-  virtual ~LastRectDecoder();
-};
-
-
+   class CLASS_DECL_REMOTING_COMMON LastRectDecoder : public PseudoDecoder
+   {
+   public:
+      LastRectDecoder(::subsystem::LogWriter * plogwriter);
+      virtual ~LastRectDecoder();
+   };
+} // namespace remoting

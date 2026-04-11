@@ -32,33 +32,32 @@
 
 //#include "log_writer/LogWriter.h"
 
-
-
-class CLASS_DECL_REMOTING_COMMON DecoderStore
+namespace remoting
 {
-public:
-  DecoderStore(::subsystem::LogWriter * plogwriter);
-  ~DecoderStore();
+   class CLASS_DECL_REMOTING_COMMON DecoderStore
+   {
+   public:
+      DecoderStore(::subsystem::LogWriter * plogwriter);
+      ~DecoderStore();
 
-  Decoder *getDecoder(int decoderId);
-  ::array_base<int> getDecoderIds();
-  
-  // return true, if adding is complete
-  // return false, if decoder already exist
-  bool addDecoder(Decoder *newDecoder, int priority);
-  // return true, if deleting is complete
-  // return false, if decoder not exist
-  bool removeDecoder(int decoderId);
+      Decoder *getDecoder(int decoderId);
+      ::array_base<int> getDecoderIds();
 
-  void setPreferredEncoding(int encodingType);
-  void allowCopyRect(bool allow);
+      // return true, if adding is complete
+      // return false, if decoder already exist
+      bool addDecoder(Decoder *newDecoder, int priority);
+      // return true, if deleting is complete
+      // return false, if decoder not exist
+      bool removeDecoder(int decoderId);
 
-private:
-  ::subsystem::LogWriter *m_plogwriter;
+      void setPreferredEncoding(int encodingType);
+      void allowCopyRect(bool allow);
 
-  ::map<int, ::pair<int, Decoder*> > m_decoders;
-  int m_preferredEncoding;
-  bool m_allowCopyRect;
-};
+   private:
+      ::subsystem::LogWriter *m_plogwriter;
 
-
+      ::map<int, ::pair<int, Decoder*> > m_decoders;
+      int m_preferredEncoding;
+      bool m_allowCopyRect;
+   };
+} // namespace remoting

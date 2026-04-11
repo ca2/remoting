@@ -27,33 +27,33 @@
 
 #include "DecoderOfRectangle.h"
 
-#include "remoting/remoting_common/region/Point.h"
-
-class CLASS_DECL_REMOTING_COMMON CopyRectDecoder : public DecoderOfRectangle
+#include "remoting/remoting_common/region/::int_point.h"
+namespace remoting
 {
-public:
-  CopyRectDecoder(::subsystem::LogWriter * plogwriter);
-  virtual ~CopyRectDecoder();
+   class CLASS_DECL_REMOTING_COMMON CopyRectDecoder : public DecoderOfRectangle
+   {
+   public:
+      CopyRectDecoder(::subsystem::LogWriter * plogwriter);
+      virtual ~CopyRectDecoder();
 
-protected:
-  //
-  // This method inherited by DecoderOfRectangle.
-  //
-  virtual void decode(RfbInputGate *input,
-                      ::subsystem::FrameBuffer *frameBuffer,
-                      const ::int_rectangle &  dstRect);
+   protected:
+      //
+      // This method inherited by DecoderOfRectangle.
+      //
+      virtual void decode(RfbInputGate *input,
+                          ::subsystem::FrameBuffer *frameBuffer,
+                          const ::int_rectangle &  dstRect);
 
-  //
-  // This method inherited by DecoderOfRectangle.
-  //
-  virtual void copy(::subsystem::FrameBuffer *dstFrameBuffer,
-                    const ::subsystem::FrameBuffer *srcFrameBuffer,
-                    const ::int_rectangle &  rect,
-                    critical_section *fbLock);
+      //
+      // This method inherited by DecoderOfRectangle.
+      //
+      virtual void copy(::subsystem::FrameBuffer *dstFrameBuffer,
+                        const ::subsystem::FrameBuffer *srcFrameBuffer,
+                        const ::int_rectangle &  rect,
+                        critical_section *fbLock);
 
-private:
-  // This Point save left-top corner of copy-rectangle.
-  Point m_sourcePosition;
-};
-
-
+   private:
+      // This ::int_point save left-top corner of copy-rectangle.
+      ::int_point m_sourcePosition;
+   };
+} // namespace remoting

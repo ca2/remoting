@@ -27,18 +27,19 @@
 
 #include "DecoderOfRectangle.h"
 
-class CLASS_DECL_REMOTING_COMMON HexTileDecoder : public DecoderOfRectangle
+namespace remoting
 {
-public:
-  HexTileDecoder(::subsystem::LogWriter * plogwriter);
-  virtual ~HexTileDecoder();
+   class CLASS_DECL_REMOTING_COMMON HexTileDecoder : public DecoderOfRectangle
+   {
+   public:
+      HexTileDecoder(::subsystem::LogWriter * plogwriter);
+      virtual ~HexTileDecoder();
 
-protected:
-  virtual void decode(RfbInputGate *input,
-                      ::subsystem::FrameBuffer *framebuffer,
-                      const ::int_rectangle &  dstRect);
-private:
-  static const int TILE_SIZE = 16;
-};
-
-
+   protected:
+      virtual void decode(RfbInputGate *input,
+                          ::subsystem::FrameBuffer *framebuffer,
+                          const ::int_rectangle &  dstRect);
+   private:
+      static const int TILE_SIZE = 16;
+   };
+} // namespace remoting

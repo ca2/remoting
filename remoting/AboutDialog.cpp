@@ -59,7 +59,7 @@ namespace remoting_remoting
 
     void AboutDialog::onCloseButtonClick()
     {
-        closeDialog(::innate_subsystem::IDCANCEL);
+        closeDialog(::innate_subsystem::e_control_id_cancel);
     }
 
     void AboutDialog::onOrderSupportButtonClock()
@@ -137,7 +137,7 @@ namespace remoting_remoting
     bool AboutDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
         switch (controlID) {
-            case ::innate_subsystem::IDCANCEL:
+            case ::innate_subsystem::e_control_id_cancel:
                 onCloseButtonClick();
                 break;
             case IDC_ORDER_SUPPORT_BUTTON:

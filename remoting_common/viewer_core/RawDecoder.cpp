@@ -26,65 +26,68 @@
 
 //#include aaa_<algorithm>
 
-RawDecoder::RawDecoder(::subsystem::LogWriter * plogwriter)
-: DecoderOfRectangle(logWriter)
+namespace remoting
 {
-  m_encoding = EncodingDefs::RAW;
-}
+   RawDecoder::RawDecoder(::subsystem::LogWriter * plogwriter)
+   : DecoderOfRectangle(logWriter)
+   {
+      m_encoding = EncodingDefs::RAW;
+   }
 
-RawDecoder::~RawDecoder()
-{
-}
+   RawDecoder::~RawDecoder()
+   {
+   }
 
-void RawDecoder::process(RfbInputGate *input,
-                         ::subsystem::FrameBuffer *frameBuffer,
-                         ::subsystem::FrameBuffer *secondFrameBuffer,
-                         const ::int_rectangle &  rect,
-                         critical_section *fbLock,
-                         FbUpdateNotifier *fbNotifier)
-{
-  // If area of rectangle is 0, then exit from process: nothing update.
-  if (rect.area() == 0) {
-    return;
-  }
+   void RawDecoder::process(RfbInputGate *input,
+                            ::subsystem::FrameBuffer *frameBuffer,
+                            ::subsystem::FrameBuffer *secondFrameBuffer,
+                            const ::int_rectangle &  rect,
+                            critical_section *fbLock,
+                            FbUpdateNotifier *fbNotifier)
+   {
+      // If area of rectangle is 0, then exit from process: nothing update.
+      if (rect.area() == 0) {
+         return;
+      }
 
-  int width = rect.width();
-  int height = rect.height();
+      int width = rect.width();
+      int height = rect.height();
 
-  // Division with round to up.
-  int deltaHeight = (AREA_OF_ONE_PART + width - 1) / width;
+      // Division with round to up.
+      int deltaHeight = (AREA_OF_ONE_PART + width - 1) / width;
 
-  ::int_rectangle deltaRect(0, 0, width, deltaHeight);
-  deltaRect.set_top_left(rect.left, rect.top);
+      ::int_rectangle deltaRect(0, 0, width, deltaHeight);
+      deltaRect.set_top_left(rect.left, rect.top);
 
-  // Process all rectangle without last part of rectangle or 
-  // two last part, if area of last part is less half of AREA_OF_ONE_PART.
-  while (deltaRect.bottom + deltaHeight / 2 < rect.bottom) {
-    DecoderOfRectangle::process(input,
-                                frameBuffer, secondFrameBuffer, deltaRect, fbLock,
-                                fbNotifier);
+      // Process all rectangle without last part of rectangle or
+      // two last part, if area of last part is less half of AREA_OF_ONE_PART.
+      while (deltaRect.bottom + deltaHeight / 2 < rect.bottom) {
+         DecoderOfRectangle::process(input,
+                                     frameBuffer, secondFrameBuffer, deltaRect, fbLock,
+                                     fbNotifier);
 
-    // Increment position of rectangle.
-    deltaRect.offset(0, deltaHeight);
-  }
+         // Increment position of rectangle.
+         deltaRect.offset(0, deltaHeight);
+      }
 
-  // And process remainder parts of rectangle.
-  deltaRect.top = ::maximum(rect.top, deltaRect.bottom - deltaHeight);
-  deltaRect.bottom = rect.bottom;
-  DecoderOfRectangle::process(input,
-                              frameBuffer, secondFrameBuffer, deltaRect, fbLock,
-                              fbNotifier);
-}
+      // And process remainder parts of rectangle.
+      deltaRect.top = ::maximum(rect.top, deltaRect.bottom - deltaHeight);
+      deltaRect.bottom = rect.bottom;
+      DecoderOfRectangle::process(input,
+                                  frameBuffer, secondFrameBuffer, deltaRect, fbLock,
+                                  fbNotifier);
+   }
 
-void RawDecoder::decode(RfbInputGate *pinput,
-                     ::subsystem::FrameBuffer *frameBuffer,
-                     const ::int_rectangle &  rect)
-{
-  size_t bytesPerPixel = frameBuffer->getPixelFormat().bitsPerPixel / 8;
-  size_t bytesPerLine = bytesPerPixel * rect.width();
+   void RawDecoder::decode(RfbInputGate *pinput,
+                        ::subsystem::FrameBuffer *frameBuffer,
+                        const ::int_rectangle &  rect)
+   {
+      size_t bytesPerPixel = frameBuffer->getPixelFormat().bitsPerPixel / 8;
+      size_t bytesPerLine = bytesPerPixel * rect.width();
 
-  if (::int_rectangle(frameBuffer->getDimension()).intersection(rect) != rect)
-    throw ::subsystem::Exception("Error in protocol: incorrect size of rectangle");
-  for (int y = rect.top; y < rect.bottom; y++)
-    pinput->readFully(frameBuffer->getBufferPtr(rect.left, y), bytesPerLine);
-}
+      if (::int_rectangle(frameBuffer->getDimension()).intersection(rect) != rect)
+         throw ::subsystem::Exception("Error in protocol: incorrect size of rectangle");
+      for (int y = rect.top; y < rect.bottom; y++)
+         pinput->readFully(frameBuffer->getBufferPtr(rect.left, y), bytesPerLine);
+   }
+} // namespace remoting

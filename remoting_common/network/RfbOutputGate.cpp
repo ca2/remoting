@@ -26,21 +26,24 @@
 
 #include <exception>
 
-RfbOutputGate::RfbOutputGate(OutputStream *stream)
-: DataOutputStream(0)
+namespace remoting
 {
-  m_tunnel = new BufferedOutputStream(stream);
+   RfbOutputGate::RfbOutputGate(OutputStream *stream)
+   : DataOutputStream(0)
+   {
+      m_tunnel = new BufferedOutputStream(stream);
 
-  // Change real output stream for data output stream to our tunnel.
-  m_outStream = m_tunnel;
-}
+      // Change real output stream for data output stream to our tunnel.
+      m_outStream = m_tunnel;
+   }
 
-RfbOutputGate::~RfbOutputGate()
-{
-  delete m_tunnel;
-}
+   RfbOutputGate::~RfbOutputGate()
+   {
+      delete m_tunnel;
+   }
 
-void RfbOutputGate::flush()
-{
-  m_tunnel->flush();
-}
+   void RfbOutputGate::flush()
+   {
+      m_tunnel->flush();
+   }
+} // namespace remoting

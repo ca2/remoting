@@ -35,9 +35,10 @@
 namespace remoting_remoting
 {
     ConfigurationDialog::ConfigurationDialog()
-    : Dialog(IDD_CONFIGURATION),
+    :
       m_application(0)
     {
+       initialize_dialog(IDD_CONFIGURATION);
     }
 
     void ConfigurationDialog::setListenerOfUpdate(::subsystem::OperatingSystemApplicationInterface *application)
@@ -52,7 +53,7 @@ namespace remoting_remoting
                 onLogLevelChange();
             }
         }
-        if (controlID == ::innate_subsystem::IDOK) {
+        if (controlID == ::innate_subsystem::e_control_id_ok) {
             onOkPressed();
             if (m_application != 0) {
                 m_application->postMessage(remoting_impact::WM_USER_CONFIGURATION_RELOAD);
@@ -60,7 +61,7 @@ namespace remoting_remoting
             closeDialog(1);
             return true;
         }
-        if (controlID == ::innate_subsystem::IDCANCEL) {
+        if (controlID == ::innate_subsystem::e_control_id_cancel) {
             closeDialog(0);
             return true;
         }
@@ -77,10 +78,10 @@ namespace remoting_remoting
     {
         ::string text;
         int logLevel;
-        text = m_verbLvl.getText();
+        text = m_textboxVerbLvl.getText();
         main_subsystem()->string_parser()->parseInt(text, &logLevel);
         if (logLevel != 0) {
-            m_logging.enableWindow(true);
+            m_textboxLogging.enableWindow(true);
 
             // If log-file is exist, then enable button "Locate...", else disable him.
             //::string logDir;
@@ -89,13 +90,13 @@ namespace remoting_remoting
 
             auto  logFile=file_item(logFileName);
             if (logFile->exists()) {
-                m_openLogDir.enableWindow(true);
+                m_controlOpenLogDir.enableWindow(true);
             } else {
-                m_openLogDir.enableWindow(false);
+                m_controlOpenLogDir.enableWindow(false);
             }
         } else {
-            m_logging.enableWindow(false);
-            m_openLogDir.enableWindow(false);
+            m_textboxLogging.enableWindow(false);
+            m_controlOpenLogDir.enableWindow(false);
         }
     }
     void ConfigurationDialog::onOpenFolderButtonClick()
@@ -110,7 +111,9 @@ namespace remoting_remoting
 
         command.format("explorer /select,{}", pathLog);
 
-        Process explorer(command);
+        ::innate_subsystem::Process explorer;
+
+       explorer.initialize_process(command);
 
         try {
             explorer.start();

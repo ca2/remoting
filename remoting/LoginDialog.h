@@ -71,8 +71,8 @@ namespace remoting_remoting
 
         ::innate_subsystem::Control m_listening;
         ::innate_subsystem::Control m_ok;
-        ConnectionConfig m_connectionConfig;
-        ComboBox m_server;
+        ::remoting::ConnectionConfig m_connectionConfig;
+        ::innate_subsystem::ComboBox m_server;
         ::string m_serverHost;
         remoting_impact *m_viewer;
 

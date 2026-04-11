@@ -27,115 +27,119 @@
 
 #include "DecoderStore.h"
 
-DecoderStore::DecoderStore(::subsystem::LogWriter * plogwriter)
-: m_plogwriter(logWriter),
-  m_preferredEncoding(EncodingDefs::TIGHT),
-  m_allowCopyRect(true)
-{
-}
 
-DecoderStore::~DecoderStore()
+namespace remoting
 {
-  try {
-    for (::map<int, ::pair<int, Decoder *> >::iterator i = m_decoders.begin();
-         i != m_decoders.end();
-         i++) {
-      m_plogwriter->debug("Decoder '{}' destroyed", i->m_element2.m_element2->getCode());
+   DecoderStore::DecoderStore(::subsystem::LogWriter * plogwriter)
+   : m_plogwriter(logWriter),
+     m_preferredEncoding(EncodingDefs::TIGHT),
+     m_allowCopyRect(true)
+   {
+   }
+
+   DecoderStore::~DecoderStore()
+   {
       try {
-        delete i->m_element2.m_element2;
+         for (::map<int, ::pair<int, Decoder *> >::iterator i = m_decoders.begin();
+              i != m_decoders.end();
+              i++) {
+            m_plogwriter->debug("Decoder '{}' destroyed", i->m_element2.m_element2->getCode());
+            try {
+               delete i->m_element2.m_element2;
+            } catch (...) {
+            }
+              }
       } catch (...) {
       }
-    }
-  } catch (...) {
-  }
-}
+   }
 
-Decoder *DecoderStore::getDecoder(int decoderId)
-{
-  if (m_decoders.count(decoderId))
-    return m_decoders[decoderId].m_element2;
-  else
-    return 0;
-}
+   Decoder *DecoderStore::getDecoder(int decoderId)
+   {
+      if (m_decoders.count(decoderId))
+         return m_decoders[decoderId].m_element2;
+      else
+         return 0;
+   }
 
-::array_base<int> DecoderStore::getDecoderIds()
-{
-  // this method returned ::list_base of decoders, sorted by priority.
-  // in first position is preffered encoding.
-  ::array_base<::pair<int, int> > decoders;
+   ::array_base<int> DecoderStore::getDecoderIds()
+   {
+      // this method returned ::list_base of decoders, sorted by priority.
+      // in first position is preffered encoding.
+      ::array_base<::pair<int, int> > decoders;
 
-  for (::map<int, ::pair <int, Decoder *> >::iterator i = m_decoders.begin();
-       i != m_decoders.end();
-       i++) {
-    // preferred encoding is skipping
-    if (i->m_element1 != m_preferredEncoding) {
-      // copy rect is allowed?
-      if (i->m_element1 != EncodingDefs::COPYRECT || m_allowCopyRect)
-        decoders.add({i->m_element2.m_element1, i->m_element1});
-    }
-  }
-  decoders.predicate_sort([]( auto& pair1, auto& pair2)
-       {
-          auto order =pair1.m_element1 <=> pair2.m_element1;
+      for (::map<int, ::pair <int, Decoder *> >::iterator i = m_decoders.begin();
+           i != m_decoders.end();
+           i++) {
+         // preferred encoding is skipping
+         if (i->m_element1 != m_preferredEncoding) {
+            // copy rect is allowed?
+            if (i->m_element1 != EncodingDefs::COPYRECT || m_allowCopyRect)
+               decoders.add({i->m_element2.m_element1, i->m_element1});
+         }
+           }
+      decoders.predicate_sort([]( auto& pair1, auto& pair2)
+           {
+              auto order =pair1.m_element1 <=> pair2.m_element1;
 
-     if (order != ::std::strong_ordering::equivalent)
-     {
+         if (order != ::std::strong_ordering::equivalent)
+         {
 
-        return order > 0;
+            return order > 0;
 
-     }
-     return (pair1.m_element2 <=> pair2.m_element2) > 0;
+         }
+         return (pair1.m_element2 <=> pair2.m_element2) > 0;
 
-       });
-  ::array_base<int> sortedDecoders;
-  auto priorityEnc = m_decoders.find(m_preferredEncoding);
-  if (priorityEnc != m_decoders.end())
-    sortedDecoders.add(priorityEnc->m_element1);
-  for (::array_base<::pair<int, int> >::iterator i = decoders.begin();
-       i != decoders.end();
-       i++) {
-    sortedDecoders.add(i->m_element2);
-  }
-  if (sortedDecoders.empty())
-    sortedDecoders.add(EncodingDefs::RAW);
-  return sortedDecoders;
-}
+           });
+      ::array_base<int> sortedDecoders;
+      auto priorityEnc = m_decoders.find(m_preferredEncoding);
+      if (priorityEnc != m_decoders.end())
+         sortedDecoders.add(priorityEnc->m_element1);
+      for (::array_base<::pair<int, int> >::iterator i = decoders.begin();
+           i != decoders.end();
+           i++) {
+         sortedDecoders.add(i->m_element2);
+           }
+      if (sortedDecoders.empty())
+         sortedDecoders.add(EncodingDefs::RAW);
+      return sortedDecoders;
+   }
 
-bool DecoderStore::addDecoder(Decoder *decoder, int priority)
-{
-  m_plogwriter->debug("Decoder {} added", decoder->getCode());
-  if (m_decoders.count(decoder->getCode()) == 0) {
-    m_decoders[decoder->getCode()] = {priority, decoder};
-    return true;
-  }
-  delete decoder;
-  return false;
-}
+   bool DecoderStore::addDecoder(Decoder *decoder, int priority)
+   {
+      m_plogwriter->debug("Decoder {} added", decoder->getCode());
+      if (m_decoders.count(decoder->getCode()) == 0) {
+         m_decoders[decoder->getCode()] = {priority, decoder};
+         return true;
+      }
+      delete decoder;
+      return false;
+   }
 
-bool DecoderStore::removeDecoder(int decoderId)
-{
-  if (m_decoders.count(decoderId)) {
-    m_plogwriter->debug("Decoder '{}' destroyed (removed from ::list_base)",
-                        m_decoders[decoderId].m_element2->getCode());
-    delete m_decoders[decoderId].m_element2;
-    m_decoders.erase(decoderId);
-    return true;
-  }
-  return false;
-}
+   bool DecoderStore::removeDecoder(int decoderId)
+   {
+      if (m_decoders.count(decoderId)) {
+         m_plogwriter->debug("Decoder '{}' destroyed (removed from ::list_base)",
+                             m_decoders[decoderId].m_element2->getCode());
+         delete m_decoders[decoderId].m_element2;
+         m_decoders.erase(decoderId);
+         return true;
+      }
+      return false;
+   }
 
-void DecoderStore::setPreferredEncoding(int encodingType)
-{
-  m_plogwriter->debug("Decoder store: preferred encoding is \"{}\".", encodingType);
-  m_preferredEncoding = encodingType;
-}
+   void DecoderStore::setPreferredEncoding(int encodingType)
+   {
+      m_plogwriter->debug("Decoder store: preferred encoding is \"{}\".", encodingType);
+      m_preferredEncoding = encodingType;
+   }
 
-void DecoderStore::allowCopyRect(bool allow)
-{
-  if (allow) {
-    m_plogwriter->debug("Decoder store: enable Copy ::int_rectangle");
-  } else {
-    m_plogwriter->debug("Decoder store: disable Copy ::int_rectangle");
-  }
-  m_allowCopyRect = allow;
-}
+   void DecoderStore::allowCopyRect(bool allow)
+   {
+      if (allow) {
+         m_plogwriter->debug("Decoder store: enable Copy ::int_rectangle");
+      } else {
+         m_plogwriter->debug("Decoder store: disable Copy ::int_rectangle");
+      }
+      m_allowCopyRect = allow;
+   }
+} // namespace remoting

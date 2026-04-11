@@ -24,37 +24,41 @@
 #include "framework.h"
 #include "RreDecoder.h"
 
-RreDecoder::RreDecoder(::subsystem::LogWriter * plogwriter)
-: DecoderOfRectangle(logWriter)
+
+namespace remoting
 {
-  m_encoding = EncodingDefs::RRE;
-}
+   RreDecoder::RreDecoder(::subsystem::LogWriter * plogwriter)
+   : DecoderOfRectangle(logWriter)
+   {
+      m_encoding = EncodingDefs::RRE;
+   }
 
-RreDecoder::~RreDecoder()
-{
-}
+   RreDecoder::~RreDecoder()
+   {
+   }
 
-void RreDecoder::decode(RfbInputGate *pinput,
-                        ::subsystem::FrameBuffer *frameBuffer,
-                        const ::int_rectangle &  dstRect)
-{
-  unsigned int numberRectangle = pinput->readUInt32();
-  size_t bytesPerPixel = frameBuffer->getBytesPerPixel();
+   void RreDecoder::decode(RfbInputGate *pinput,
+                           ::subsystem::FrameBuffer *frameBuffer,
+                           const ::int_rectangle &  dstRect)
+   {
+      unsigned int numberRectangle = pinput->readUInt32();
+      size_t bytesPerPixel = frameBuffer->getBytesPerPixel();
 
-  unsigned int backgroundColor;
-  pinput->readFully(&backgroundColor, bytesPerPixel);
-  frameBuffer->fillRect(dstRect, backgroundColor);
+      unsigned int backgroundColor;
+      pinput->readFully(&backgroundColor, bytesPerPixel);
+      frameBuffer->fillRect(dstRect, backgroundColor);
 
-  while (numberRectangle--) {
-    unsigned int color;
-    pinput->readFully(&color, bytesPerPixel);
-    unsigned int x = pinput->readUInt16();
-    unsigned int y = pinput->readUInt16();
-    unsigned int w = pinput->readUInt16();
-    unsigned int h = pinput->readUInt16();
+      while (numberRectangle--) {
+         unsigned int color;
+         pinput->readFully(&color, bytesPerPixel);
+         unsigned int x = pinput->readUInt16();
+         unsigned int y = pinput->readUInt16();
+         unsigned int w = pinput->readUInt16();
+         unsigned int h = pinput->readUInt16();
 
-    ::int_rectangle rect(x, y, x + w, y + h);
-    rect.offset(dstRect.left, dstRect.top);
-    frameBuffer->fillRect(rect, color);
-  }
-}
+         ::int_rectangle rect(x, y, x + w, y + h);
+         rect.offset(dstRect.left, dstRect.top);
+         frameBuffer->fillRect(rect, color);
+      }
+   }
+} // namespace remoting

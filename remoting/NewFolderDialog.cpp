@@ -71,10 +71,10 @@ namespace remoting_remoting
     bool NewFolderDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
         switch (controlID) {
-            case ::innate_subsystem::IDOK:
+            case ::innate_subsystem::e_control_id_ok:
                 onOkButtonClick();
                 break;
-            case ::innate_subsystem::IDCANCEL:
+            case ::innate_subsystem::e_control_id_cancel:
                 onCancelButtonClick();
                 break;
         }
@@ -104,12 +104,12 @@ namespace remoting_remoting
 
         m_strFileName = fileName;
 
-        closeDialog(::innate_subsystem::IDOK);
+        closeDialog(::innate_subsystem::e_control_id_ok);
     }
 
     void NewFolderDialog::onCancelButtonClick()
     {
-        closeDialog(::innate_subsystem::IDCANCEL);
+        closeDialog(::innate_subsystem::e_control_id_cancel);
     }
 
     void NewFolderDialog::initControls()

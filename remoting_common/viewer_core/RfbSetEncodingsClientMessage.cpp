@@ -25,29 +25,32 @@
 #include "RfbSetEncodingsClientMessage.h"
 #include "DecoderStore.h"
 
-RfbSetEncodingsClientMessage::RfbSetEncodingsClientMessage(const ::array_base<int> & encodings)
+namespace remoting
 {
-  m_encodings = encodings;
-}
+   RfbSetEncodingsClientMessage::RfbSetEncodingsClientMessage(const ::array_base<int> & encodings)
+   {
+      m_encodings = encodings;
+   }
 
-RfbSetEncodingsClientMessage::~RfbSetEncodingsClientMessage()
-{
-}
+   RfbSetEncodingsClientMessage::~RfbSetEncodingsClientMessage()
+   {
+   }
 
-void RfbSetEncodingsClientMessage::send(RfbOutputGate *output)
-{
-  critical_section_lock al(output);
-  output->writeUInt8(ClientMsgDefs::SET_ENCODINGS);
-  output->writeUInt8(0); // padding 1 byte
+   void RfbSetEncodingsClientMessage::send(RfbOutputGate *output)
+   {
+      critical_section_lock al(output);
+      output->writeUInt8(ClientMsgDefs::SET_ENCODINGS);
+      output->writeUInt8(0); // padding 1 byte
 
-  // output count of encoding and out code of all encodings
-  output->writeUInt16(static_cast<unsigned short>(m_encodings.size()));
+      // output count of encoding and out code of all encodings
+      output->writeUInt16(static_cast<unsigned short>(m_encodings.size()));
 
-  for (::array_base<int>::iterator i = m_encodings.begin();
-       i != m_encodings.end();
-       i++) {
-    output->writeInt32(*i);
-  }
+      for (::array_base<int>::iterator i = m_encodings.begin();
+           i != m_encodings.end();
+           i++) {
+         output->writeInt32(*i);
+           }
 
-  output->flush();
-}
+      output->flush();
+   }
+} // namespace remoting

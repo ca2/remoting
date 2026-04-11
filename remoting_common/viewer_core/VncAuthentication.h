@@ -27,14 +27,16 @@
 
 #include "AuthHandler.h"
 
-class CLASS_DECL_REMOTING_COMMON VncAuthentication
+
+namespace remoting
 {
-public:
-  static void vncAuthenticate(::subsystem::DataInputStream * pinput, ::subsystem::DataOutputStream *output,
-                    const ::scoped_string & password);
+   class CLASS_DECL_REMOTING_COMMON VncAuthentication
+   {
+   public:
+      static void vncAuthenticate(::subsystem::DataInputStream * pinput, ::subsystem::DataOutputStream *output,
+                        const ::scoped_string & password);
 
-  // TODO: removed duplicate code: ServerConfig.h
-  static const int VNC_PASSWORD_SIZE = 8;
-};
-
-
+      // TODO: removed duplicate code: ServerConfig.h
+      static const int VNC_PASSWORD_SIZE = 8;
+   };
+} // namespace remoting

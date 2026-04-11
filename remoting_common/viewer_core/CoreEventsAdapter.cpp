@@ -25,56 +25,59 @@
 #include "CoreEventsAdapter.h"
 #include "remoting/remoting_common/rfb/AuthDefs.h"
 
-// It's abstract, but still needs an implementation.
-CoreEventsAdapter::~CoreEventsAdapter()
+namespace remoting
 {
-}
+   // It's abstract, but still needs an implementation.
+   CoreEventsAdapter::~CoreEventsAdapter()
+   {
+   }
 
-void CoreEventsAdapter::onBell()
-{
-}
+   void CoreEventsAdapter::onBell()
+   {
+   }
 
-void CoreEventsAdapter::onCutText(const ::scoped_string & cutText)
-{
-}
+   void CoreEventsAdapter::onCutText(const ::scoped_string & cutText)
+   {
+   }
 
-void CoreEventsAdapter::onEstablished()
-{
-}
+   void CoreEventsAdapter::onEstablished()
+   {
+   }
 
-void CoreEventsAdapter::onGoodCursor()
-{
+   void CoreEventsAdapter::onGoodCursor()
+   {
 
-}
+   }
 
-void CoreEventsAdapter::onConnecting(int iPhase)
-{
+   void CoreEventsAdapter::onConnecting(int iPhase)
+   {
 
 
-}
+   }
 
-void CoreEventsAdapter::onConnected(RfbOutputGate *output)
-{
-}
+   void CoreEventsAdapter::onConnected(RfbOutputGate *output)
+   {
+   }
 
-void CoreEventsAdapter::onDisconnect(const ::scoped_string & scopedstrMessage)
-{
-}
+   void CoreEventsAdapter::onDisconnect(const ::scoped_string & scopedstrMessage)
+   {
+   }
 
-void CoreEventsAdapter::onAuthError(const AuthException *exception)
-{
-  onError(exception);
-}
+   void CoreEventsAdapter::onAuthError(const AuthException *exception)
+   {
+      onError(exception);
+   }
 
-void CoreEventsAdapter::onError(const ::subsystem::Exception *exception)
-{
-}
+   void CoreEventsAdapter::onError(const ::subsystem::Exception *exception)
+   {
+   }
 
-void CoreEventsAdapter::onFrameBufferUpdate(const ::subsystem::FrameBuffer *fb,
-                                            const ::int_rectangle &  rect)
-{
-}
+   void CoreEventsAdapter::onFrameBufferUpdate(const ::subsystem::FrameBuffer *fb,
+                                               const ::int_rectangle &  rect)
+   {
+   }
 
-void CoreEventsAdapter::onFrameBufferPropChange(const ::subsystem::FrameBuffer *fb)
-{
-}
+   void CoreEventsAdapter::onFrameBufferPropChange(const ::subsystem::FrameBuffer *fb)
+   {
+   }
+} // namespace remoting

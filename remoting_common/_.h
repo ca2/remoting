@@ -45,10 +45,6 @@ namespace remoting
 
    class DeviceContext;
 
-   class SocketIPv4;
-
-   class SocketStream;
-
 
 }
 
@@ -56,7 +52,7 @@ namespace remoting
 #endif
 
 
-#include "remoting/remoting_common/config/IniFileSettingsManager.h"
+//#include "remoting/remoting_common/config/IniFileSettingsManager.h"
 
 
-
+#include "remoting/remoting_common/viewer_core/_.h"

@@ -26,112 +26,115 @@
 
 //#include "acme/subsystem/thread/critical_section.h"
 
-CapsContainer::CapsContainer()
+namespace remoting
 {
-}
+   CapsContainer::CapsContainer()
+   {
+   }
 
-CapsContainer::~CapsContainer()
-{
-}
+   CapsContainer::~CapsContainer()
+   {
+   }
 
-void CapsContainer::add(unsigned int code, const char *vendor, const char *name,
-                        const ::string desc)
-{
-  // Fill in an RfbCapabilityInfo structure and pass it to the overloaded
-  // function.
-  RfbCapabilityInfo capinfo;
-  capinfo.code = code;
-  memcpy(capinfo.vendorSignature, vendor, RfbCapabilityInfo::vendorSigSize);
-  memcpy(capinfo.nameSignature, name, RfbCapabilityInfo::nameSigSize);
-  add(&capinfo, desc);
-}
+   void CapsContainer::add(unsigned int code, const char *vendor, const char *name,
+                           const ::string desc)
+   {
+      // Fill in an RfbCapabilityInfo structure and pass it to the overloaded
+      // function.
+      RfbCapabilityInfo capinfo;
+      capinfo.code = code;
+      memcpy(capinfo.vendorSignature, vendor, RfbCapabilityInfo::vendorSigSize);
+      memcpy(capinfo.nameSignature, name, RfbCapabilityInfo::nameSigSize);
+      add(&capinfo, desc);
+   }
 
-void CapsContainer::add(const RfbCapabilityInfo *capinfo,
-                        const ::string desc)
-{
-  critical_section_lock al(&m_mapLock);
+   void CapsContainer::add(const RfbCapabilityInfo *capinfo,
+                           const ::string desc)
+   {
+      critical_section_lock al(&m_mapLock);
 
-  infoMap[capinfo->code] = *capinfo;
-  enableMap[capinfo->code] = false;
-  descMap[capinfo->code] = desc;
-}
+      infoMap[capinfo->code] = *capinfo;
+      enableMap[capinfo->code] = false;
+      descMap[capinfo->code] = desc;
+   }
 
-bool CapsContainer::isAdded(unsigned int code) const
-{
-  critical_section_lock al(&m_mapLock);
+   bool CapsContainer::isAdded(unsigned int code) const
+   {
+      critical_section_lock al(&m_mapLock);
 
-  return isKnown(code);
-}
+      return isKnown(code);
+   }
 
-bool CapsContainer::getInfo(unsigned int code, RfbCapabilityInfo *capinfo)
-{
-  critical_section_lock al(&m_mapLock);
-  if (isKnown(code)) {
-    *capinfo = infoMap[code];
-    return true;
-  }
+   bool CapsContainer::getInfo(unsigned int code, RfbCapabilityInfo *capinfo)
+   {
+      critical_section_lock al(&m_mapLock);
+      if (isKnown(code)) {
+         *capinfo = infoMap[code];
+         return true;
+      }
 
-  return false;
-}
+      return false;
+   }
 
-::string CapsContainer::getDescription(unsigned int code) const
-{
-  critical_section_lock al(&m_mapLock);
-  return (isKnown(code)) ? descMap.find(code)->element2() : ::string();
-}
+   ::string CapsContainer::getDescription(unsigned int code) const
+   {
+      critical_section_lock al(&m_mapLock);
+      return (isKnown(code)) ? descMap.find(code)->element2() : ::string();
+   }
 
-bool CapsContainer::enable(const RfbCapabilityInfo *capinfo)
-{
-  critical_section_lock al(&m_mapLock);
-  if (!isKnown(capinfo->code)) {
-    return false;
-  }
+   bool CapsContainer::enable(const RfbCapabilityInfo *capinfo)
+   {
+      critical_section_lock al(&m_mapLock);
+      if (!isKnown(capinfo->code)) {
+         return false;
+      }
 
-  const RfbCapabilityInfo known = infoMap[capinfo->code];
-  if (!known.isEqual(capinfo->vendorSignature, capinfo->nameSignature)){
-    enableMap[capinfo->code] = false;
-    return false;
-  }
+      const RfbCapabilityInfo known = infoMap[capinfo->code];
+      if (!known.isEqual(capinfo->vendorSignature, capinfo->nameSignature)){
+         enableMap[capinfo->code] = false;
+         return false;
+      }
 
-  enableMap[capinfo->code] = true;
-  m_plist.add(capinfo->code);
-  return true;
-}
+      enableMap[capinfo->code] = true;
+      m_plist.add(capinfo->code);
+      return true;
+   }
 
-bool CapsContainer::isEnabled(unsigned int code) const
-{
-  critical_section_lock al(&m_mapLock);
-  return (isKnown(code)) ? enableMap.find(code)->element2() : false;
-}
+   bool CapsContainer::isEnabled(unsigned int code) const
+   {
+      critical_section_lock al(&m_mapLock);
+      return (isKnown(code)) ? enableMap.find(code)->element2() : false;
+   }
 
-size_t CapsContainer::numEnabled() const
-{
-  critical_section_lock al(&m_mapLock);
-  return m_plist.size();
-}
+   size_t CapsContainer::numEnabled() const
+   {
+      critical_section_lock al(&m_mapLock);
+      return m_plist.size();
+   }
 
-unsigned int CapsContainer::getByOrder(size_t idx)
-{
-  critical_section_lock al(&m_mapLock);
-  return (idx < m_plist.size()) ? m_plist[idx] : 0;
-}
+   unsigned int CapsContainer::getByOrder(size_t idx)
+   {
+      critical_section_lock al(&m_mapLock);
+      return (idx < m_plist.size()) ? m_plist[idx] : 0;
+   }
 
-void CapsContainer::getEnabledCapabilities(::array_base<unsigned int> &codes) const
-{
-  critical_section_lock al(&m_mapLock);
-  codes = m_plist;
-}
+   void CapsContainer::getEnabledCapabilities(::array_base<unsigned int> &codes) const
+   {
+      critical_section_lock al(&m_mapLock);
+      codes = m_plist;
+   }
 
-bool CapsContainer::isKnown(unsigned int code) const
-{
-  return (descMap.find(code) != descMap.end());
-}
+   bool CapsContainer::isKnown(unsigned int code) const
+   {
+      return (descMap.find(code) != descMap.end());
+   }
 
-bool RfbCapabilityInfo::isEqual(const char *vendor, const char *signature) const
-{
-  if (memcmp(vendorSignature, vendor, vendorSigSize) != 0 ||
-      memcmp(nameSignature, signature, nameSigSize) != 0 ) {
-    return false;
-  }
-  return true;
-}
+   bool RfbCapabilityInfo::isEqual(const char *vendor, const char *signature) const
+   {
+      if (memcmp(vendorSignature, vendor, vendorSigSize) != 0 ||
+          memcmp(nameSignature, signature, nameSigSize) != 0 ) {
+         return false;
+          }
+      return true;
+   }
+} // namespace remoting

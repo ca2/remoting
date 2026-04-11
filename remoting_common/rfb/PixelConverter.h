@@ -26,74 +26,77 @@
 
 
 #include "FrameBuffer.h"
-#include "remoting/remoting_common/region/Point.h"
+#include "remoting/remoting_common/region/::int_point.h"
 //#include aaa_<vector>
 
-class CLASS_DECL_REMOTING_COMMON PixelConverter
+namespace remoting
 {
-public:
-  PixelConverter(void);
-  virtual ~PixelConverter(void);
+   class CLASS_DECL_REMOTING_COMMON PixelConverter
+   {
+   public:
+      PixelConverter(void);
+      virtual ~PixelConverter(void);
 
-  // Convert pixels for the specified `rect' from `srcFb' to `dstFb'.
-  // The pixel formats of `srcFb' and `dstFb' must be identical to the formats
-  // set by the most recent setPixelFormats() call. The source and destination
-  // framebuffers must be of the same size. The entire rectangle referenced by
-  // `rect' must be within the frame buffer boundaries.
-  virtual void convert(const ::int_rectangle &  rect, ::subsystem::FrameBuffer *dstFb,
-                       const ::subsystem::FrameBuffer *srcFb) const;
+      // Convert pixels for the specified `rect' from `srcFb' to `dstFb'.
+      // The pixel formats of `srcFb' and `dstFb' must be identical to the formats
+      // set by the most recent setPixelFormats() call. The source and destination
+      // framebuffers must be of the same size. The entire rectangle referenced by
+      // `rect' must be within the frame buffer boundaries.
+      virtual void convert(const ::int_rectangle &  rect, ::subsystem::FrameBuffer *dstFb,
+                           const ::subsystem::FrameBuffer *srcFb) const;
 
-  // Convert pixels for the specified `rect' from `srcFb' to the internal
-  // PixelConverter's frame buffer and return a pointer to that frame buffer.
-  // If the source and destination formats are the same, then no translation
-  // will happen and srcFb will be returned.
-  // The pixel format of `srcFb' must be identical to the source format set by
-  // the most recent setPixelFormats() call. The entire rectangle referenced
-  // by `rect' must be within the frame buffer boundaries.
-  // This function will work efficiently only if the frame buffer size does
-  // not vary from call to call. It checks if the frame buffer size has
-  // changed since the previous call and reallocates the frame buffer if
-  // necessary.
-  virtual const ::subsystem::FrameBuffer *convert(const ::int_rectangle &  rect,
-                                     const ::subsystem::FrameBuffer *srcFb);
+      // Convert pixels for the specified `rect' from `srcFb' to the internal
+      // PixelConverter's frame buffer and return a pointer to that frame buffer.
+      // If the source and destination formats are the same, then no translation
+      // will happen and srcFb will be returned.
+      // The pixel format of `srcFb' must be identical to the source format set by
+      // the most recent setPixelFormats() call. The entire rectangle referenced
+      // by `rect' must be within the frame buffer boundaries.
+      // This function will work efficiently only if the frame buffer size does
+      // not vary from call to call. It checks if the frame buffer size has
+      // changed since the previous call and reallocates the frame buffer if
+      // necessary.
+      virtual const ::subsystem::FrameBuffer *convert(const ::int_rectangle &  rect,
+                                         const ::subsystem::FrameBuffer *srcFb);
 
-  // FIXME: Review the argument order for each function of PixelConverter.
-  // FIXME: Review the argument names for each function of PixelConverter.
-  virtual void setPixelFormats(const ::subsystem::PixelFormat & dstPf,
-                               const ::subsystem::PixelFormat & srcPf);
+      // FIXME: Review the argument order for each function of PixelConverter.
+      // FIXME: Review the argument names for each function of PixelConverter.
+      virtual void setPixelFormats(const ::subsystem::PixelFormat & dstPf,
+                                   const ::subsystem::PixelFormat & srcPf);
 
-  // Return the number of bits per pixel from the source pixel format.
-  virtual size_t getSrcBitsPerPixel() const;
+      // Return the number of bits per pixel from the source pixel format.
+      virtual size_t getSrcBitsPerPixel() const;
 
-  // Return the number of bits per pixel from the destination pixel format.
-  virtual size_t getDstBitsPerPixel() const;
+      // Return the number of bits per pixel from the destination pixel format.
+      virtual size_t getDstBitsPerPixel() const;
 
-protected:
-  void reset();
+   protected:
+      void reset();
 
-  void fillHexBitsTable(const ::subsystem::PixelFormat & dstPf, const ::subsystem::PixelFormat & srcPf);
-  void fill32BitsTable(const ::subsystem::PixelFormat & dstPf, const ::subsystem::PixelFormat & srcPf);
-  unsigned int rotateUint32(unsigned int value) const;
+      void fillHexBitsTable(const ::subsystem::PixelFormat & dstPf, const ::subsystem::PixelFormat & srcPf);
+      void fill32BitsTable(const ::subsystem::PixelFormat & dstPf, const ::subsystem::PixelFormat & srcPf);
+      unsigned int rotateUint32(unsigned int value) const;
 
-  enum ConvertMode
-  {
-    NO_CONVERT,
-    CONVERT_FROM_16,
-    CONVERT_FROM_32
-  };
+      enum ConvertMode
+      {
+         NO_CONVERT,
+         CONVERT_FROM_16,
+         CONVERT_FROM_32
+       };
 
-  ConvertMode m_convertMode;
-  ::array_base<unsigned int> m_hexBitsTable;
-  ::array_base<unsigned int> m_redTable;
-  ::array_base<unsigned int> m_grnTable;
-  ::array_base<unsigned int> m_bluTable;
+      ConvertMode m_convertMode;
+      ::array_base<unsigned int> m_hexBitsTable;
+      ::array_base<unsigned int> m_redTable;
+      ::array_base<unsigned int> m_grnTable;
+      ::array_base<unsigned int> m_bluTable;
 
-  ::subsystem::PixelFormat m_srcFormat;
-  ::subsystem::PixelFormat m_dstFormat;
+      ::subsystem::PixelFormat m_srcFormat;
+      ::subsystem::PixelFormat m_dstFormat;
 
-  // An internally maintained frame buffer used by the two-argument version of
-  // the convert() function.
-  ::subsystem::FrameBuffer *m_dstFrameBuffer;
-};
+      // An internally maintained frame buffer used by the two-argument version of
+      // the convert() function.
+      ::subsystem::FrameBuffer *m_dstFrameBuffer;
+   };
 
-//// __RFB_PIXEL_CONVERTER_H_INCLUDED__
+   //// __RFB_PIXEL_CONVERTER_H_INCLUDED__
+} // namespace remoting

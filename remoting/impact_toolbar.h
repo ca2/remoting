@@ -5,7 +5,7 @@
 #pragma once
 
 #include "apex/innate_subsystem/drawing/Graphics.h"
-
+#include "apex/innate_subsystem/drawing/Pen.h"
 #include "apex/innate_subsystem/drawing/SolidBrush.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 class DesktopWindow;
@@ -35,12 +35,12 @@ namespace remoting_remoting
       virtual public ::particle
    {
    public:
-      ::pointer < SolidBrush > m_pbrushBackground;
-      ::pointer < SolidBrush > m_pbrushBackgroundHover;
-      ::pointer < SolidBrush > m_pbrushButtonBackground;
-      ::pointer < SolidBrush > m_pbrushButtonBackgroundHover;
-      ::pointer < SolidBrush > m_pbrushButtonPaint;
-      ::pointer < Pen > m_ppenPaint;
+      ::innate_subsystem::SolidBrush m_brushBackground;
+      ::innate_subsystem::SolidBrush m_brushBackgroundHover;
+      ::innate_subsystem::SolidBrush m_brushButtonBackground;
+      ::innate_subsystem::SolidBrush m_brushButtonBackgroundHover;
+      ::innate_subsystem::SolidBrush m_brushButtonPaint;
+      ::innate_subsystem::Pen m_penPaint;
 
       style();
       ~style() override;
@@ -54,6 +54,7 @@ namespace remoting_remoting
       DesktopWindow * m_pdesktopwindow = nullptr;
       control * m_pcontrolParent = nullptr;
       ::pointer < style > m_pstyle;
+      ::pointer < ::innate_subsystem::Pen > m_ppen001;
       ::int_rectangle m_rectangle;
       bool m_bHover = false;
       bool m_bLButtonDown = false;
@@ -64,9 +65,10 @@ namespace remoting_remoting
 
       enum_control m_econtrol;
       enum_id m_eid;
-      Gdiplus::Bitmap * m_pbitmapBuffer = nullptr;
-      Gdiplus::Graphics * m_pgraphicsBuffer = nullptr;
-
+      //Gdiplus::Bitmap * m_pbitmapBuffer = nullptr;
+      //Gdiplus::Graphics * m_pgraphicsBuffer = nullptr;
+      ::pointer < ::innate_subsystem::BitmapInterface > m_pbitmapBuffer;
+      ::pointer < ::innate_subsystem::GraphicsInterface > m_pgraphicsBuffer;
 
       bool m_bNewRepaintRectangle;
       ::int_rectangle m_rectangleRepaint;
@@ -87,9 +89,9 @@ void set_hover_false();
       //virtual bool _001OnMouse(bool bPress, const ::int_point& pointRoot, const ::int_point& pointClient);
       virtual bool on_left_down(const ::int_point& position);
       virtual bool on_left_up(const ::int_point& position);
-      virtual void __000OnTopDraw(HDC hdc, const ::int_rectangle & rectangle);
-      virtual void __000OnDraw(GraphicsPlus * pgraphics, const ::int_rectangle & rectangle);
-      virtual void __001OnDraw(GraphicsPlus * pgraphics, const ::int_rectangle & rectangle);
+      virtual void __000OnTopDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle);
+      virtual void __000OnDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle);
+      virtual void __001OnDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle);
       virtual bool on_button_click(enum_id eid);
 
       virtual ::int_rectangle get_client_rectangle();
@@ -160,7 +162,7 @@ void set_hover_false();
       virtual void on_size();
 
       //bool on_mouse(bool bPress, const ::int_point& position);
-      void __001OnDraw(GraphicsPlus *pgraphics, const ::int_rectangle & rectangle) override;
+      void __001OnDraw(::innate_subsystem::GraphicsInterface *pgraphics, const ::int_rectangle & rectangle) override;
       bool on_button_click(enum_id eid) override;
       bool _001OnMouseEx(unsigned int uMessage,  int iButtonMask, const ::int_point & pointRoot, const ::int_point& pointClient) override;
    };

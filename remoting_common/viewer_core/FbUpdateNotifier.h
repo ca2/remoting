@@ -27,7 +27,7 @@
 
 //#include "log_writer/LogWriter.h"
 #include "acme/subsystem/framebuffer/FrameBuffer.h"
-#include "remoting/remoting_common/region/Point.h"
+//#include "remoting/remoting_common/region/::int_point.h"
 
 #include "remoting/remoting_common/region/Region.h"
 //#include "acme/subsystem/thread/critical_section.h"
@@ -54,8 +54,8 @@ namespace remoting
       void onUpdate(const ::int_rectangle &  rect);
       void onPropertiesFb();
 
-      void updatePointerPos(const Point *position);
-      void setNewCursor(const Point *hotSpot,
+      void updatePointerPos(const ::int_point *position);
+      void setNewCursor(const ::int_point *hotSpot,
                         unsigned short width, unsigned short height,
                         const ::array_base<unsigned char> *cursor,
                         const ::array_base<unsigned char> *bitmask);

@@ -39,120 +39,123 @@
 
 //#include aaa_<map>
 
-class ViewerCollector;
-class ControlTrayIcon;
-class LoginDialog;
-
-class remoting_impact : public ::subsystem::OperatingSystemApplication
+namespace remoting_remoting
 {
-public:
-  remoting_impact(::particle * pparticle,
-     HINSTANCE appInstance,
-            const ::scoped_string & scopedstrwindowClassName,
-            const ::scoped_string & scopedstrviewerWindowClassName);
-  virtual ~remoting_impact();
+   class ViewerCollector;
+   class ControlTrayIcon;
+   class LoginDialog;
 
-  //
-  // show login dialog
-  //
-  void showLoginDialog();
+   class remoting_impact : public ::subsystem::OperatingSystemApplication
+   {
+   public:
+      remoting_impact(::particle * pparticle,
+         HINSTANCE appInstance,
+                const ::scoped_string & scopedstrwindowClassName,
+                const ::scoped_string & scopedstrviewerWindowClassName);
+      virtual ~remoting_impact();
 
-  //
-  // show options for listening mode
-  //
-  void showListeningOptions();
+      //
+      // show login dialog
+      //
+      void showLoginDialog();
 
-  //
-  // show dialog "About of Viewer"
-  //
+      //
+      // show options for listening mode
+      //
+      void showListeningOptions();
 
-  void showAboutViewer();
+      //
+      // show dialog "About of Viewer"
+      //
 
-  //
-  // show dialog with configuration of viewer
-  //
-  void showConfiguration();
+      void showAboutViewer();
 
-  // newConnection(...) and startListening(...) always do copy of params (::string,
-  // ConnectionData and ConnectionConfig). After call this function can free memory
-  // with hostName, connectionData, connectionConfig
-  void newListeningConnection();
-  void newConnection(const ::scoped_string & hostName, const ConnectionConfig & connectionConfig);
-  void newConnection(const ConnectionData & conData, const ConnectionConfig &
-     connectionConfig);
-  void startListening(int listeningPort);
-  void stopListening();
+      //
+      // show dialog with configuration of viewer
+      //
+      void showConfiguration();
 
-  // Inherited from WindowsApplication
-  void registerWindowClass(WNDCLASS *wndClass);
-  static LRESULT CALLBACK wndProc(HWND hWnd, unsigned int msg, ::wparam wparam, ::lparam lparam);
-  virtual void createWindow(const ::scoped_string & scopedstrClassName);
-  int processMessages();
+      // newConnection(...) and startListening(...) always do copy of params (::string,
+      // ConnectionData and ConnectionConfig). After call this function can free memory
+      // with hostName, connectionData, connectionConfig
+      void newListeningConnection();
+      void newConnection(const ::scoped_string & hostName, const ::remoting::ConnectionConfig & connectionConfig);
+      void newConnection(const ConnectionData & conData, const ::remoting::ConnectionConfig &
+         connectionConfig);
+      void startListening(int listeningPort);
+      void stopListening();
 
-//public:
-  // this scopedstrMessage must sended after accepted new listening-connection
-  static const int WM_USER_NEW_LISTENING = WM_USER + 1;
+      // Inherited from WindowsApplication
+      void registerWindowClass(WNDCLASS *wndClass);
+      static LRESULT CALLBACK wndProc(HWND hWnd, unsigned int msg, ::wparam wparam, ::lparam lparam);
+      virtual void createWindow(const ::scoped_string & scopedstrClassName);
+      int processMessages();
 
-  // this scopedstrMessage need send if you need show login dialog
-  static const int WM_USER_SHOW_LOGIN_DIALOG = WM_USER + 2;
+      //public:
+      // this scopedstrMessage must sended after accepted new listening-connection
+      static const int WM_USER_NEW_LISTENING = WM_USER + 1;
 
-  // this scopedstrMessage need send if you need show configuration dialog
-  static const int WM_USER_CONFIGURATION = WM_USER + 3;
+      // this scopedstrMessage need send if you need show login dialog
+      static const int WM_USER_SHOW_LOGIN_DIALOG = WM_USER + 2;
 
-  // this scopedstrMessage need send if you need show about dialog
-  static const int WM_USER_ABOUT = WM_USER + 4;
+      // this scopedstrMessage need send if you need show configuration dialog
+      static const int WM_USER_CONFIGURATION = WM_USER + 3;
 
-  // This scopedstrMessage need send if you need reconnect to host.
-  // ::lparam contained pointer to ConnectionData.
-  static const int WM_USER_RECONNECT = WM_USER + 5;
+      // this scopedstrMessage need send if you need show about dialog
+      static const int WM_USER_ABOUT = WM_USER + 4;
 
-  // This scopedstrMessage need send if config is changed.
-  static const int WM_USER_CONFIGURATION_RELOAD = WM_USER + 6;
+      // This scopedstrMessage need send if you need reconnect to host.
+      // ::lparam contained pointer to ConnectionData.
+      static const int WM_USER_RECONNECT = WM_USER + 5;
 
-  // This timer is used for deleting dead instances of viewer.
-  static const int TIMER_DELETE_DEAD_INSTANCE = 1;
-  static const int TIMER_DELETE_DEAD_INSTANCE_DELAY = 50;
+      // This scopedstrMessage need send if config is changed.
+      static const int WM_USER_CONFIGURATION_RELOAD = WM_USER + 6;
 
-//protected:
-  void startListeningServer(const int listeningPort);
-  void stopListeningServer();
-  void restartListeningServer();
+      // This timer is used for deleting dead instances of viewer.
+      static const int TIMER_DELETE_DEAD_INSTANCE = 1;
+      static const int TIMER_DELETE_DEAD_INSTANCE_DELAY = 50;
 
-  void registerViewerWindowClass();
-  void unregisterViewerWindowClass();
-  static LRESULT CALLBACK wndProcViewer(HWND hWnd, unsigned int msg, ::wparam wparam, ::lparam lparam);
+      //protected:
+      void startListeningServer(const int listeningPort);
+      void stopListeningServer();
+      void restartListeningServer();
 
-  void runInstance(ConnectionData & sonData, const ConnectionConfig & config);
-  void runInstance(const ::scoped_string & hostName, const ConnectionConfig & config);
+      void registerViewerWindowClass();
+      void unregisterViewerWindowClass();
+      static LRESULT CALLBACK wndProcViewer(HWND hWnd, unsigned int msg, ::wparam wparam, ::lparam lparam);
 
-  // This method return true, if login dialog is visible.
-  bool isVisibleLoginDialog() const;
+      void runInstance(ConnectionData & sonData, const ::remoting::ConnectionConfig & config);
+      void runInstance(const ::scoped_string & hostName, const ::remoting::ConnectionConfig & config);
 
-  bool onTimer(::wparam idTimer);
+      // This method return true, if login dialog is visible.
+      bool isVisibleLoginDialog() const;
 
-  ViewerCollector m_instances;
+      bool onTimer(::wparam idTimer);
 
-  // class name of viewer-window
-  ::wstring m_viewerWindowClassName;
+      ViewerCollector m_instances;
 
-  HACCEL m_hAccelTable;
+      // class name of viewer-window
+      ::wstring m_viewerWindowClassName;
 
-//private:
-  void addInstance(ViewerInstance *viewerInstance);
+      HACCEL m_hAccelTable;
 
-  bool m_isListening;
-  
-  ::subsystem::LogWriter * m_plogwriter;
+      //private:
+      void addInstance(ViewerInstance *viewerInstance);
 
-  AboutDialog m_aboutDialog;
-  ConfigurationDialog m_configurationDialog;
-  OptionsDialog m_optionsDialog;
+      bool m_isListening;
 
-  LoginDialog *m_loginDialog;
-  ControlTrayIcon *m_trayIcon;
-  ConnectionListener *m_conListener;
+      ::subsystem::LogWriter * m_plogwriter;
 
-  WNDCLASS m_viewerWndClass;
-};
+      AboutDialog m_aboutDialog;
+      ConfigurationDialog m_configurationDialog;
+      OptionsDialog m_optionsDialog;
+
+      LoginDialog *m_loginDialog;
+      ControlTrayIcon *m_trayIcon;
+      ConnectionListener *m_conListener;
+
+      WNDCLASS m_viewerWndClass;
+   };
+} // namespace remoting_remoting
 
 

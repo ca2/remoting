@@ -23,16 +23,16 @@
 //
 #include "framework.h"
 #include "ViewerInstance.h"
-
+#include "acme/subsystem/socket/SocketIPv4.h"
 #include "remoting/remoting_common/viewer_core/RemoteViewerCore.h"
 #include "remoting/remoting_common/viewer_core/FileTransferCapability.h"
 
 
 namespace remoting_remoting
 {
-    ViewerInstance::ViewerInstance(WindowsApplication *application,
+    ViewerInstance::ViewerInstance(subsystem::OperatingSystemApplicationInterface *application,
                                    ConnectionData & conData,
-                                   const ConnectionConfig & conConf)
+                                   const ::remoting::ConnectionConfig & conConf)
     : m_pconnectionconfig(conConf),
       m_condata(conData),
       m_socket(0),
@@ -45,10 +45,10 @@ namespace remoting_remoting
     {
     }
 
-    ViewerInstance::ViewerInstance(WindowsApplication *application,
+    ViewerInstance::ViewerInstance(subsystem::OperatingSystemApplicationInterface *application,
                                    ConnectionData & conData,
-                                   const ConnectionConfig & conConf,
-                                   SocketIPv4 *socket)
+                                   const ::remoting::ConnectionConfig & conConf,
+                                   ::subsystem::SocketIPv4Interface *socket)
     : m_pconnectionconfig(conConf),
       m_condata(conData),
       m_socket(socket),
@@ -100,7 +100,7 @@ namespace remoting_remoting
 
     void ViewerInstance::start()
     {
-        auto ::subsystem::LogWriter = ::remoting::ViewerConfig::getInstance()->getLogWriter();
+        auto plogwriter = ::remoting::ViewerConfig::getInstance()->getLogWriter();
         m_viewerWnd.setRemoteViewerCore(&m_viewerCore);
 
 

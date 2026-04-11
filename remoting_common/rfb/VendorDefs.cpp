@@ -24,5 +24,8 @@
 #include "framework.h"
 #include "remoting/remoting_common/rfb/VendorDefs.h"
 
-const char *const VendorDefs::STANDARD = "STDV";
-const char *const VendorDefs::TIGHTVNC = "TGHT";
+namespace remoting
+{
+   const char *const VendorDefs::STANDARD = "STDV";
+   const char *const VendorDefs::TIGHTVNC = "TGHT";
+} // namespace remoting

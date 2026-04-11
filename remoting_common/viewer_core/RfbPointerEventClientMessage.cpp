@@ -24,24 +24,27 @@
 #include "framework.h"
 #include "RfbPointerEventClientMessage.h"
 
-RfbPointerEventClientMessage::RfbPointerEventClientMessage(const unsigned char buttonMask,
-                                                           const Point *position)
-: m_buttonMask(buttonMask)
+namespace remoting
 {
-  m_xPos = static_cast<unsigned short>(position->x);
-  m_yPos = static_cast<unsigned short>(position->y);
-}
+   RfbPointerEventClientMessage::RfbPointerEventClientMessage(const unsigned char buttonMask,
+                                                              const ::int_point *position)
+   : m_buttonMask(buttonMask)
+   {
+      m_xPos = static_cast<unsigned short>(position->x);
+      m_yPos = static_cast<unsigned short>(position->y);
+   }
 
-RfbPointerEventClientMessage::~RfbPointerEventClientMessage()
-{
-}
+   RfbPointerEventClientMessage::~RfbPointerEventClientMessage()
+   {
+   }
 
-void RfbPointerEventClientMessage::send(RfbOutputGate *output)
-{
-  critical_section_lock al(output);
-  output->writeUInt8(ClientMsgDefs::POINTER_EVENT);
-  output->writeUInt8(m_buttonMask);
-  output->writeUInt16(m_xPos);
-  output->writeUInt16(m_yPos);
-  output->flush();
-}
+   void RfbPointerEventClientMessage::send(RfbOutputGate *output)
+   {
+      critical_section_lock al(output);
+      output->writeUInt8(ClientMsgDefs::POINTER_EVENT);
+      output->writeUInt8(m_buttonMask);
+      output->writeUInt16(m_xPos);
+      output->writeUInt16(m_yPos);
+      output->flush();
+   }
+} // namespace remoting

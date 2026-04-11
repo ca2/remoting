@@ -24,18 +24,21 @@
 #include "framework.h"
 #include "TcpClientThread.h"
 
-TcpClientThread::TcpClientThread(SocketIPv4 *socket)
-: m_socket(socket)
+namespace remoting
 {
-}
+   TcpClientThread::TcpClientThread(SocketIPv4 *socket)
+   : m_socket(socket)
+   {
+   }
 
-TcpClientThread::~TcpClientThread()
-{
-  delete m_socket;
-}
+   TcpClientThread::~TcpClientThread()
+   {
+      delete m_socket;
+   }
 
-void TcpClientThread::onTerminate()
-{
-  try { m_socket->shutdown(SD_BOTH); } catch (...) { }
-  try { m_socket->close(); } catch (...) { }
-}
+   void TcpClientThread::onTerminate()
+   {
+      try { m_socket->shutdown(SD_BOTH); } catch (...) { }
+      try { m_socket->close(); } catch (...) { }
+   }
+} // namespace remoting

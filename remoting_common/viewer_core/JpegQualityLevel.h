@@ -27,17 +27,19 @@
 
 #include "PseudoDecoder.h"
 
-class CLASS_DECL_REMOTING_COMMON JpegQualityLevel : public PseudoDecoder
+namespace remoting
 {
-public:
-  JpegQualityLevel(::subsystem::LogWriter *logWriter, int quality);
-  virtual ~JpegQualityLevel();
+   class CLASS_DECL_REMOTING_COMMON JpegQualityLevel : public PseudoDecoder
+   {
+   public:
+      JpegQualityLevel(::subsystem::LogWriter *logWriter, int quality);
+      virtual ~JpegQualityLevel();
 
-public:
-  static int qualityToEncoding(int qualityLevel);
+   public:
+      static int qualityToEncoding(int qualityLevel);
 
-  static const int JPEG_QUALITY_LEVEL_MIN = 0;
-  static const int JPEG_QUALITY_LEVEL_MAX = 9;
-};
-
+      static const int JPEG_QUALITY_LEVEL_MIN = 0;
+      static const int JPEG_QUALITY_LEVEL_MAX = 9;
+   };
+} // namespace remoting
 

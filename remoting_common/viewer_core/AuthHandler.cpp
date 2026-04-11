@@ -24,51 +24,55 @@
 #include "framework.h"
 #include "AuthHandler.h"
 
-AuthException::AuthException(const ::scoped_string & scopedstrMessage)
-: ::subsystem::Exception(scopedstrMessage),
-  m_authErrorCode(AUTH_ERROR)
-{
-}
 
-AuthException::~AuthException()
+namespace remoting
 {
-}
+   AuthException::AuthException(const ::scoped_string & scopedstrMessage)
+   : ::subsystem::Exception(scopedstrMessage),
+     m_authErrorCode(AUTH_ERROR)
+   {
+   }
 
-int AuthException::getAuthCode() const
-{
-  return m_authErrorCode;
-}
+   AuthException::~AuthException()
+   {
+   }
 
-AuthUnknownException::AuthUnknownException(const ::scoped_string & scopedstrMessage)
-: AuthException(scopedstrMessage)
-{
-  m_authErrorCode = AUTH_UNKNOWN_TYPE;
-}
+   int AuthException::getAuthCode() const
+   {
+      return m_authErrorCode;
+   }
 
-AuthUnknownException::~AuthUnknownException()
-{
-}
+   AuthUnknownException::AuthUnknownException(const ::scoped_string & scopedstrMessage)
+   : AuthException(scopedstrMessage)
+   {
+      m_authErrorCode = AUTH_UNKNOWN_TYPE;
+   }
 
-AuthCanceledException::AuthCanceledException(const ::scoped_string & scopedstrMessage)
-: AuthException(scopedstrMessage)
-{
-  m_authErrorCode = AUTH_CANCELED;
-}
+   AuthUnknownException::~AuthUnknownException()
+   {
+   }
 
-AuthCanceledException::~AuthCanceledException()
-{
-}
+   AuthCanceledException::AuthCanceledException(const ::scoped_string & scopedstrMessage)
+   : AuthException(scopedstrMessage)
+   {
+      m_authErrorCode = AUTH_CANCELED;
+   }
 
-AuthHandler::AuthHandler(int authType)
-: m_id(authType)
-{
-}
+   AuthCanceledException::~AuthCanceledException()
+   {
+   }
 
-AuthHandler::~AuthHandler()
-{
-}
+   AuthHandler::AuthHandler(int authType)
+   : m_id(authType)
+   {
+   }
 
-int AuthHandler::getType() const
-{
-  return m_id;
-}
+   AuthHandler::~AuthHandler()
+   {
+   }
+
+   int AuthHandler::getType() const
+   {
+      return m_id;
+   }
+} // namespace remoting

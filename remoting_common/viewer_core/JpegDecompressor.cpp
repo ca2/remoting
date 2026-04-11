@@ -28,120 +28,123 @@
 //#include "remoting/remoting_common/util/::string.h"
 #include "acme/subsystem/Exception.h"
 
-JpegDecompressor::JpegDecompressor()
+namespace remoting
 {
-  init();
-}
+   JpegDecompressor::JpegDecompressor()
+   {
+      init();
+   }
 
-JpegDecompressor::~JpegDecompressor()
-{
-  try {
-    cleanup();
-  } catch (...) {
-  }
-}
-
-::string JpegDecompressor::get_message(j_common_ptr cinfo)
-{
-  char buffer[JMSG_LENGTH_MAX];
-  // Create the scopedstrMessage
-  (*cinfo->err->format_message) (cinfo, buffer);
-
-  ::string errorAnsi(buffer);
-  //::string error;
-  //errorAnsi.toStringStorage(&error);
-  return errorAnsi;
-}
-
-void JpegDecompressor::errorExit(j_common_ptr cinfo)
-{
-  (*cinfo->err->output_message) (cinfo);
-  ::string error = get_message(cinfo);
-  jpeg_destroy(cinfo);
-  throw ::subsystem::Exception(error);
-}
-
-void JpegDecompressor::outputMessage(j_common_ptr cinfo)
-{
-  return;
-}
-
-void JpegDecompressor::decompress(::array_base<unsigned char> &buffer,
-                                  size_t jpegBufLen,
-                                  ::array_base<unsigned char> &pixels,
-                                  const ::int_rectangle &  dstRect)
-{
-  if (dstRect.is_empty())
-    throw ::subsystem::Exception("invalid destination rectangle in jpeg-decompressor");
-
-  if (buffer.size() == 0 || buffer.size() < jpegBufLen)
-    throw ::subsystem::Exception("incorrect size of buffer in jpeg-decompressor");
-  unsigned char *src_buf = buffer.data();
-  size_t src_buf_size = jpegBufLen;
-
-  size_t width = dstRect.width();
-  size_t height = dstRect.height();
-  size_t pixelBufferCount =  width * height * BYTES_PER_PIXEL;
-  if (pixels.size() == 0 || pixels.size() < pixelBufferCount)
-    throw ::subsystem::Exception("incorrect size of pixels-buffer in jpeg-decompressor");
-  unsigned char *dst_buf = pixels.data();
-
-  try {
-    /* Initialize data source and read the header. */
-    jpeg_mem_src(&m_jpeg.cinfo, src_buf, static_cast<unsigned long>(src_buf_size));
-    if (jpeg_read_header(&m_jpeg.cinfo, true) != JPEG_HEADER_OK) {
-      throw ::subsystem::Exception("possible, bad JPEG header");
-    }
-
-    JDIMENSION jpegWidth = dstRect.width();
-    JDIMENSION jpegHeight = dstRect.height();
-    if (m_jpeg.cinfo.image_width != jpegWidth ||
-        m_jpeg.cinfo.image_height != jpegHeight) {
-      jpeg_abort_decompress(&m_jpeg.cinfo);
-      throw ::subsystem::Exception("wrong image size");
-    }
-
-    /* Configure and start decompression. */
-    m_jpeg.cinfo.out_color_space = JCS_RGB;
-    jpeg_start_decompress(&m_jpeg.cinfo);
-    if (m_jpeg.cinfo.output_width != jpegWidth ||
-        m_jpeg.cinfo.output_height != jpegHeight ) {
-      jpeg_abort_decompress(&m_jpeg.cinfo);
-      throw ::subsystem::Exception("something's wrong with the JPEG library");
-    }
-
-    /* Consume decompressed data. */
-    while (m_jpeg.cinfo.output_scanline < m_jpeg.cinfo.output_height) {
-      size_t bufferIndex = m_jpeg.cinfo.output_scanline;
-      size_t bufferOffset = bufferIndex * width * BYTES_PER_PIXEL;
-
-      JSAMPROW row_ptr[1];
-      row_ptr[0] = &dst_buf[bufferOffset];
-      if (jpeg_read_scanlines(&m_jpeg.cinfo, row_ptr, 1) != 1) {
-        jpeg_abort_decompress(&m_jpeg.cinfo);
-        throw ::subsystem::Exception("error decompressing JPEG data");
+   JpegDecompressor::~JpegDecompressor()
+   {
+      try {
+         cleanup();
+      } catch (...) {
       }
-    }
-    /* Cleanup after the decompression. */
-    jpeg_finish_decompress(&m_jpeg.cinfo);
-  } catch (const ::subsystem::Exception &ex) {
-    cleanup();
-    init();
-    throw ex;
-  }
-}
+   }
+
+   ::string JpegDecompressor::get_message(j_common_ptr cinfo)
+   {
+      char buffer[JMSG_LENGTH_MAX];
+      // Create the scopedstrMessage
+      (*cinfo->err->format_message) (cinfo, buffer);
+
+      ::string errorAnsi(buffer);
+      //::string error;
+      //errorAnsi.toStringStorage(&error);
+      return errorAnsi;
+   }
+
+   void JpegDecompressor::errorExit(j_common_ptr cinfo)
+   {
+      (*cinfo->err->output_message) (cinfo);
+      ::string error = get_message(cinfo);
+      jpeg_destroy(cinfo);
+      throw ::subsystem::Exception(error);
+   }
+
+   void JpegDecompressor::outputMessage(j_common_ptr cinfo)
+   {
+      return;
+   }
+
+   void JpegDecompressor::decompress(::array_base<unsigned char> &buffer,
+                                     size_t jpegBufLen,
+                                     ::array_base<unsigned char> &pixels,
+                                     const ::int_rectangle &  dstRect)
+   {
+      if (dstRect.is_empty())
+         throw ::subsystem::Exception("invalid destination rectangle in jpeg-decompressor");
+
+      if (buffer.size() == 0 || buffer.size() < jpegBufLen)
+         throw ::subsystem::Exception("incorrect size of buffer in jpeg-decompressor");
+      unsigned char *src_buf = buffer.data();
+      size_t src_buf_size = jpegBufLen;
+
+      size_t width = dstRect.width();
+      size_t height = dstRect.height();
+      size_t pixelBufferCount =  width * height * BYTES_PER_PIXEL;
+      if (pixels.size() == 0 || pixels.size() < pixelBufferCount)
+         throw ::subsystem::Exception("incorrect size of pixels-buffer in jpeg-decompressor");
+      unsigned char *dst_buf = pixels.data();
+
+      try {
+         /* Initialize data source and read the header. */
+         jpeg_mem_src(&m_jpeg.cinfo, src_buf, static_cast<unsigned long>(src_buf_size));
+         if (jpeg_read_header(&m_jpeg.cinfo, true) != JPEG_HEADER_OK) {
+            throw ::subsystem::Exception("possible, bad JPEG header");
+         }
+
+         JDIMENSION jpegWidth = dstRect.width();
+         JDIMENSION jpegHeight = dstRect.height();
+         if (m_jpeg.cinfo.image_width != jpegWidth ||
+             m_jpeg.cinfo.image_height != jpegHeight) {
+            jpeg_abort_decompress(&m_jpeg.cinfo);
+            throw ::subsystem::Exception("wrong image size");
+             }
+
+         /* Configure and start decompression. */
+         m_jpeg.cinfo.out_color_space = JCS_RGB;
+         jpeg_start_decompress(&m_jpeg.cinfo);
+         if (m_jpeg.cinfo.output_width != jpegWidth ||
+             m_jpeg.cinfo.output_height != jpegHeight ) {
+            jpeg_abort_decompress(&m_jpeg.cinfo);
+            throw ::subsystem::Exception("something's wrong with the JPEG library");
+             }
+
+         /* Consume decompressed data. */
+         while (m_jpeg.cinfo.output_scanline < m_jpeg.cinfo.output_height) {
+            size_t bufferIndex = m_jpeg.cinfo.output_scanline;
+            size_t bufferOffset = bufferIndex * width * BYTES_PER_PIXEL;
+
+            JSAMPROW row_ptr[1];
+            row_ptr[0] = &dst_buf[bufferOffset];
+            if (jpeg_read_scanlines(&m_jpeg.cinfo, row_ptr, 1) != 1) {
+               jpeg_abort_decompress(&m_jpeg.cinfo);
+               throw ::subsystem::Exception("error decompressing JPEG data");
+            }
+         }
+         /* Cleanup after the decompression. */
+         jpeg_finish_decompress(&m_jpeg.cinfo);
+      } catch (const ::subsystem::Exception &ex) {
+         cleanup();
+         init();
+         throw ex;
+      }
+   }
 
 
-void JpegDecompressor::init()
-{
-  jpeg_create_decompress(&m_jpeg.cinfo);
-  
-  m_jpeg.cinfo.err = jpeg_std_error(&m_jpeg.jerr);
-  m_jpeg.cinfo.err->error_exit = errorExit;
-  m_jpeg.cinfo.err->output_message = outputMessage;
-}
+   void JpegDecompressor::init()
+   {
+      jpeg_create_decompress(&m_jpeg.cinfo);
 
-void JpegDecompressor::cleanup()
-{
-  jpeg_destroy_decompress(&m_jpeg.cinfo);
-}
+      m_jpeg.cinfo.err = jpeg_std_error(&m_jpeg.jerr);
+      m_jpeg.cinfo.err->error_exit = errorExit;
+      m_jpeg.cinfo.err->output_message = outputMessage;
+   }
+
+   void JpegDecompressor::cleanup()
+   {
+      jpeg_destroy_decompress(&m_jpeg.cinfo);
+   }
+} // namespace remoting

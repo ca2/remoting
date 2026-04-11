@@ -58,7 +58,7 @@ namespace remoting_remoting
       m_viewerCore(0),
       m_fileTransfer(0),
       m_conData(conData),
-      m_dsktWnd(m_plogwriter, conConf, this),
+      m_desktopwindow(m_plogwriter, conConf, this),
       m_isConnected(false),
       m_sizeIsChanged(false),
       m_hooksEnabledFirstTime(true),
@@ -84,9 +84,10 @@ namespace remoting_remoting
         setClass(windowClass);
         createWindow(titleName, WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS);
 
-        m_dsktWnd.setClass(windowClass);
-        m_dsktWnd.m_pviewerwindow = this;
-        m_dsktWnd.createWindow(subTitleName,
+       m_desktopwindow.setClipboardViewerInterest();
+        m_desktopwindow.setClass(windowClass);
+        m_desktopwindow.m_pviewerwindow = this;
+        m_desktopwindow.createWindow(subTitleName,
                                WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_CHILD,
                                getHWnd());
 
@@ -115,7 +116,7 @@ namespace remoting_remoting
     void ViewerWindow::setRemoteViewerCore(::remoting::RemoteViewerCore *pCore)
     {
         m_viewerCore = pCore;
-        m_dsktWnd.setViewerCore(pCore);
+        m_desktopwindow.setViewerCore(pCore);
         applySettings();
     }
 
@@ -224,7 +225,7 @@ namespace remoting_remoting
 
         if (scale != m_scale) {
             m_scale = scale;
-            m_dsktWnd.setScale(m_scale);
+            m_desktopwindow.setScale(m_scale);
             doSize();
         }
         if (m_isConnected) {
@@ -276,7 +277,7 @@ namespace remoting_remoting
             }
 
 
-            m_dsktWnd.m_bMinimized = false;
+            m_desktopwindow.m_bMinimized = false;
 
             return true;
         }
@@ -346,7 +347,7 @@ namespace remoting_remoting
                         // Registration of keyboard hook.
                         m_winHooks.registerKeyboardHook(this);
                         // Switching off ignoring win key.
-                        m_dsktWnd.setWinKeyIgnore(false);
+                        m_desktopwindow.setWinKeyIgnore(false);
                     } catch (::exception &e) {
                         m_plogwriter->error("{}", e.get_message());
                     }
@@ -354,7 +355,7 @@ namespace remoting_remoting
                     // Unregistration of keyboard hook.
                     m_winHooks.unregisterKeyboardHook(this);
                     //// Switching on ignoring win key.
-                    m_dsktWnd.setWinKeyIgnore(true);
+                    m_desktopwindow.setWinKeyIgnore(true);
                 }
                 return true;
             case WM_SETFOCUS:
@@ -429,7 +430,7 @@ namespace remoting_remoting
 
         ::int_rectangle geometry;
         int pixelSize = 0;
-        m_dsktWnd.getServerGeometry(&geometry, &pixelSize);
+        m_desktopwindow.getServerGeometry(&geometry, &pixelSize);
         ::string str;
         str.formatf(main_subsystem()->string_table()->getString(IDS_CONNECTION_INFO_FORMAT).c_str(),
                    host.c_str(),
@@ -464,7 +465,7 @@ namespace remoting_remoting
     void ViewerWindow::onGoodCursor()
     {
 
-        m_dsktWnd.m_timeStartDesktopWindow.m_iSecond -= 120;
+        m_desktopwindow.m_timeStartDesktopWindow.m_iSecond -= 120;
 
     }
     void ViewerWindow::desktopStateUpdate()
@@ -484,7 +485,7 @@ namespace remoting_remoting
     {
         LRESULT iState = m_toolbar.getState(IDS_TB_CTRLALTDEL);
         if (iState) {
-            m_dsktWnd.sendCtrlAltDel();
+            m_desktopwindow.sendCtrlAltDel();
         }
     }
 
@@ -492,10 +493,10 @@ namespace remoting_remoting
     {
         LRESULT iState = m_toolbar.getState(IDS_TB_CTRLESC);
         if (iState) {
-            m_dsktWnd.sendKey(::user::e_key_left_control, true);
-            m_dsktWnd.sendKey(VK_ESCAPE,   true);
-            m_dsktWnd.sendKey(VK_ESCAPE,   false);
-            m_dsktWnd.sendKey(::user::e_key_left_control, false);
+            m_desktopwindow.sendKey(::user::e_key_left_control, true);
+            m_desktopwindow.sendKey(VK_ESCAPE,   true);
+            m_desktopwindow.sendKey(VK_ESCAPE,   false);
+            m_desktopwindow.sendKey(::user::e_key_left_control, false);
         }
     }
 
@@ -506,13 +507,13 @@ namespace remoting_remoting
             if (iState == TBSTATE_ENABLED) {
                 m_menu.checkedMenuItem(IDS_TB_CTRL, true);
                 m_toolbar.checkButton(IDS_TB_CTRL,  true);
-                m_dsktWnd.setCtrlState(true);
-                m_dsktWnd.sendKey(::user::e_key_left_control,      true);
+                m_desktopwindow.setCtrlState(true);
+                m_desktopwindow.sendKey(::user::e_key_left_control,      true);
             } else {
                 m_menu.checkedMenuItem(IDS_TB_CTRL, false);
                 m_toolbar.checkButton(IDS_TB_CTRL,  false);
-                m_dsktWnd.setCtrlState(false);
-                m_dsktWnd.sendKey(::user::e_key_left_control,      false);
+                m_desktopwindow.setCtrlState(false);
+                m_desktopwindow.sendKey(::user::e_key_left_control,      false);
             }
         }
     }
@@ -524,13 +525,13 @@ namespace remoting_remoting
             if (iState == TBSTATE_ENABLED) {
                 m_menu.checkedMenuItem(IDS_TB_ALT, true);
                 m_toolbar.checkButton(IDS_TB_ALT,  true);
-                m_dsktWnd.setAltState(true);
-                m_dsktWnd.sendKey(::user::e_key_left_alt,        true);
+                m_desktopwindow.setAltState(true);
+                m_desktopwindow.sendKey(::user::e_key_left_alt,        true);
             } else {
                 m_menu.checkedMenuItem(IDS_TB_ALT, false);
                 m_toolbar.checkButton(IDS_TB_ALT,  false);
-                m_dsktWnd.setAltState(false);
-                m_dsktWnd.sendKey(::user::e_key_left_alt,        false);
+                m_desktopwindow.setAltState(false);
+                m_desktopwindow.sendKey(::user::e_key_left_alt,        false);
             }
         }
     }
@@ -621,7 +622,7 @@ namespace remoting_remoting
                       main_subsystem()->string_table()->getString(IDS_QUESTION_SAVE_PASSWORD),
                       main_subsystem()->string_table()->getString(IDS_SECURITY_WARNING_CAPTION),
                       ::user::e_message_box_yes_no);
-                    if (whetherToSavePass == ::innate_subsystem::IDYES) {
+                    if (whetherToSavePass == ::innate_subsystem::e_control_id_yes) {
                         ::string password = m_conData->getCryptedPassword();
                         sm.setString("password", password);
                     }
@@ -706,11 +707,11 @@ namespace remoting_remoting
                 m_toolbar.checkButton(IDS_TB_SCALEAUTO, false);
 
                 RECT rcWindow;
-                m_dsktWnd.getClientRect(&rcWindow);
+                m_desktopwindow.getClientRect(&rcWindow);
                 int wndWidth = rcWindow.right - rcWindow.left - 1;
                 int wndHeight = rcWindow.bottom - rcWindow.top;
 
-                ::int_rectangle screen = m_dsktWnd.getFrameBufferGeometry();
+                ::int_rectangle screen = m_desktopwindow.getFrameBufferGeometry();
 
                 if (wndWidth * screen.height() <= wndHeight * screen.width()) {
                     m_pconnectionconfig->setScale(wndWidth, screen.width());
@@ -914,7 +915,7 @@ namespace remoting_remoting
 
         setSizeFullScreenWindow();
 
-        SetFocus(m_dsktWnd.getHWnd());
+        SetFocus(m_desktopwindow.getHWnd());
         applyScreenChanges(true);
 
         if (config->isPromptOnFullscreenEnabled()) {
@@ -925,7 +926,7 @@ namespace remoting_remoting
             // Registration of keyboard hook.
             m_winHooks.registerKeyboardHook(this);
             // Switching off ignoring win key.
-            m_dsktWnd.setWinKeyIgnore(false);
+            m_desktopwindow.setWinKeyIgnore(false);
         } catch (::exception &e) {
             m_plogwriter->error("{}", e.get_message());
         }
@@ -950,7 +951,7 @@ namespace remoting_remoting
 
         setSizeFullScreenWindow();
 
-        SetFocus(m_dsktWnd.getHWnd());
+        SetFocus(m_desktopwindow.getHWnd());
         applyScreenChanges(true);
 
 
@@ -958,7 +959,7 @@ namespace remoting_remoting
             // Registration of keyboard hook.
             m_winHooks.registerKeyboardHook(this);
             // Switching off ignoring win key.
-            m_dsktWnd.setWinKeyIgnore(false);
+            m_desktopwindow.setWinKeyIgnore(false);
         }
         catch (::exception& e) {
             m_plogwriter->error("{}", e.get_message());
@@ -1000,13 +1001,13 @@ namespace remoting_remoting
                 setSize(m_rcNormal.width(), m_rcNormal.height());
             }
 
-        m_dsktWnd.setScale(m_scale);
+        m_desktopwindow.setScale(m_scale);
         applyScreenChanges(false);
 
         // Unregistration of keyboard hook.
         m_winHooks.unregisterKeyboardHook(this);
         // Switching on ignoring win key.
-        m_dsktWnd.setWinKeyIgnore(true);
+        m_desktopwindow.setWinKeyIgnore(true);
     }
 
     void ViewerWindow::doMinimizeFromFullScreen()
@@ -1046,13 +1047,13 @@ namespace remoting_remoting
         //    setSize(m_rcNormal.width(), m_rcNormal.height());
         //}
 
-        //    m_dsktWnd.setScale(m_scale);
+        //    m_desktopwindow.setScale(m_scale);
         applyScreenChanges(false);
 
         // Unregistration of keyboard hook.
         m_winHooks.unregisterKeyboardHook(this);
         // Switching on ignoring win key.
-        m_dsktWnd.setWinKeyIgnore(true);
+        m_desktopwindow.setWinKeyIgnore(true);
     }
 
     bool ViewerWindow::onNotify(int idCtrl, LPNMHDR pnmh)
@@ -1077,7 +1078,7 @@ namespace remoting_remoting
                 return true;
             }
         }
-        m_dsktWnd.destroyWindow();
+        m_desktopwindow.destroyWindow();
         destroyWindow();
         ::system()->m_papplicationMain->set_finish();
         return true;
@@ -1108,7 +1109,7 @@ namespace remoting_remoting
             y = m_toolbar.height() - 1;
             rc.bottom -= y;
         }
-        if (m_dsktWnd.getHWnd()) {
+        if (m_desktopwindow.getHWnd()) {
 
             int h = rc.bottom - rc.top;
             int w = rc.right - rc.left;
@@ -1116,8 +1117,8 @@ namespace remoting_remoting
             m_plogwriter->debug("Desktop-window. (x, y): ({}, {}); (w, h): ({}, {})",
                               x, y, w, h);
             if (h > 0 && w > 0) {
-                m_dsktWnd.setPosition(x, y);
-                m_dsktWnd.setSize(w, h);
+                m_desktopwindow.setPosition(x, y);
+                m_desktopwindow.setSize(w, h);
             }
         }
         return true;
@@ -1129,8 +1130,8 @@ namespace remoting_remoting
 
         ::string windowName = formatWindowName();
         setWindowText(windowName);
-        m_dsktWnd.m_strHost = m_conData->getHost();
-        m_dsktWnd.setWindowText(windowName);
+        m_desktopwindow.m_strHost = m_conData->getHost();
+        m_desktopwindow.setWindowText(windowName);
 
     }
 
@@ -1141,7 +1142,7 @@ namespace remoting_remoting
                    formatWindowName(),
                    ::user::e_message_box_ok);
 
-        m_dsktWnd.destroyWindow();
+        m_desktopwindow.destroyWindow();
         destroyWindow();
         return true;
     }
@@ -1168,7 +1169,7 @@ namespace remoting_remoting
                 }
             }
         }
-        m_dsktWnd.destroyWindow();
+        m_desktopwindow.destroyWindow();
         destroyWindow();
         return true;
     }
@@ -1182,7 +1183,7 @@ namespace remoting_remoting
                    formatWindowName(),
                    ::user::e_message_box_ok | MB_ICONERROR);
 
-        m_dsktWnd.destroyWindow();
+        m_desktopwindow.destroyWindow();
         destroyWindow();
         return true;
     }
@@ -1197,7 +1198,7 @@ namespace remoting_remoting
 
     bool ViewerWindow::onFocus(::wparam wParam)
     {
-        SetFocus(m_dsktWnd.getHWnd());
+        SetFocus(m_desktopwindow.getHWnd());
         return true;
     }
 
@@ -1233,7 +1234,7 @@ namespace remoting_remoting
         int widthDesktop  = defaultRect.width();
         int heightDesktop = defaultRect.height();
 
-        ::int_rectangle viewerRect = m_dsktWnd.getViewerGeometry();
+        ::int_rectangle viewerRect = m_desktopwindow.getViewerGeometry();
         int serverWidth = viewerRect.width();
         int serverHeight = viewerRect.height();
 
@@ -1267,7 +1268,7 @@ namespace remoting_remoting
         // Set flags.
         m_isConnected = true;
         m_sizeIsChanged = false;
-        m_dsktWnd.setConnected();
+        m_desktopwindow.setConnected();
 
         m_papplication->handle_direct_id(id_remoting_connected, 0, 0);
 
@@ -1342,19 +1343,19 @@ namespace remoting_remoting
 
     void ViewerWindow::onFrameBufferUpdate(const ::subsystem::FrameBuffer *fb, const ::int_rectangle &  rect)
     {
-        m_dsktWnd.updateFramebuffer(fb, rect);
+        m_desktopwindow.updateFramebuffer(fb, rect);
     }
 
     void ViewerWindow::onFrameBufferPropChange(const ::subsystem::FrameBuffer *fb)
     {
-        //   m_dsktWnd.m_iDivisor = m_conData->getDivisor();
-        // ((::subsystem::FrameBuffer*)fb)->m_iDivisor = m_dsktWnd.m_iDivisor;
-        m_dsktWnd.setNewFramebuffer(fb);
+        //   m_desktopwindow.m_iDivisor = m_conData->getDivisor();
+        // ((::subsystem::FrameBuffer*)fb)->m_iDivisor = m_desktopwindow.m_iDivisor;
+        m_desktopwindow.setNewFramebuffer(fb);
     }
 
     void ViewerWindow::onCutText(const ::scoped_string & cutText)
     {
-        m_dsktWnd.setClipboardData(cutText);
+        m_desktopwindow.setClipboardData(cutText);
     }
 
     void ViewerWindow::doCommand(int iCommand)
@@ -1395,7 +1396,7 @@ namespace remoting_remoting
                     // Registration of keyboard hook.
                     m_winHooks.registerKeyboardHook(this);
                     // Switching off ignoring win key.
-                    m_dsktWnd.setWinKeyIgnore(false);
+                    m_desktopwindow.setWinKeyIgnore(false);
                     m_hooksEnabledFirstTime = false;
                 } catch (::exception &e) {
                     m_plogwriter->error("{}", e.get_message());
@@ -1408,12 +1409,12 @@ namespace remoting_remoting
     {
         LRESULT ctrlState = m_toolbar.getState(IDS_TB_CTRL);
         if (ctrlState != 0) {
-            m_toolbar.checkButton(IDS_TB_CTRL, m_dsktWnd.getCtrlState());
+            m_toolbar.checkButton(IDS_TB_CTRL, m_desktopwindow.getCtrlState());
         }
 
         LRESULT altState = m_toolbar.getState(IDS_TB_ALT);
         if (altState != 0) {
-            m_toolbar.checkButton(IDS_TB_ALT, m_dsktWnd.getAltState());
+            m_toolbar.checkButton(IDS_TB_ALT, m_desktopwindow.getAltState());
         }
     }
 
@@ -1451,9 +1452,9 @@ namespace remoting_remoting
             // Set the transition state bit.
             newLParam |= ((str->flags & LLKHF_UP) > 0) << 31;
             if (wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN) {
-                PostMessage(m_dsktWnd.getHWnd(), wParam, str->vkCode, newLParam);
+                PostMessage(m_desktopwindow.getHWnd(), wParam, str->vkCode, newLParam);
             } else if (wParam == WM_KEYUP || wParam == WM_SYSKEYUP) {
-                PostMessage(m_dsktWnd.getHWnd(), wParam, str->vkCode, newLParam);
+                PostMessage(m_desktopwindow.getHWnd(), wParam, str->vkCode, newLParam);
             }
             return true;
             } else {

@@ -27,124 +27,127 @@
 //#include "acme/subsystem/thread/critical_section.h"
 #include "remoting/remoting_common/rfb/PixelConverter.h"
 
-WatermarksController::WatermarksController(void)
+namespace remoting
 {
-}
+   WatermarksController::WatermarksController(void)
+   {
+   }
 
-void WatermarksController::setNewFbProperties(const ::int_rectangle &  rect, const ::subsystem::PixelFormat & pf)
-{
-	setNewPixelFormat(pf);
-	setNewFbSize(rect);
-}
+   void WatermarksController::setNewFbProperties(const ::int_rectangle &  rect, const ::subsystem::PixelFormat & pf)
+   {
+      setNewPixelFormat(pf);
+      setNewFbSize(rect);
+   }
 
-void WatermarksController::setNewFbSize(const ::int_rectangle &  rect)
-{
-	if (m_currentFrameBufferRect != rect || is_empty())
-	{
-		m_currentFrameBufferRect = rect;
+   void WatermarksController::setNewFbSize(const ::int_rectangle &  rect)
+   {
+      if (m_currentFrameBufferRect != rect || is_empty())
+      {
+         m_currentFrameBufferRect = rect;
 
-		m_currentRect = frameBuffer().getDimension();
-		int dx = (rect.width()/2) - (m_width/2);
-		int dy = (rect.height()/2) - (m_height/2);
-		m_currentRect.offset(dx, dy);
-	
-		m_overlay.setDimension(m_currentRect);
-	}
-}
+         m_currentRect = frameBuffer().getDimension();
+         int dx = (rect.width()/2) - (m_width/2);
+         int dy = (rect.height()/2) - (m_height/2);
+         m_currentRect.offset(dx, dy);
 
-void WatermarksController::setNewPixelFormat(const ::subsystem::PixelFormat & pf)
-{
-	if (is_empty() || m_frameBuffer.getPixelFormat()!= pf)
-	{
-		::subsystem::FrameBuffer temp;
-		::subsystem::FrameBuffer& fb = frameBuffer(true);
+         m_overlay.setDimension(m_currentRect);
+      }
+   }
 
-		m_overlay.setPixelFormat(pf);
+   void WatermarksController::setNewPixelFormat(const ::subsystem::PixelFormat & pf)
+   {
+      if (is_empty() || m_frameBuffer.getPixelFormat()!= pf)
+      {
+         ::subsystem::FrameBuffer temp;
+         ::subsystem::FrameBuffer& fb = frameBuffer(true);
 
-		if (pf == fb.getPixelFormat())
-			return;
+         m_overlay.setPixelFormat(pf);
 
-		temp.clone(&fb);
+         if (pf == fb.getPixelFormat())
+            return;
 
-		fb.setPixelFormat(pf);
+         temp.clone(&fb);
 
-		PixelConverter pc = PixelConverter();
-		::int_rectangle rect = fb.getDimension();
+         fb.setPixelFormat(pf);
 
-		pc.setPixelFormats(fb.getPixelFormat(), temp.getPixelFormat());
+         PixelConverter pc = PixelConverter();
+         ::int_rectangle rect = fb.getDimension();
 
-		pc.convert(rect, &fb, &temp);
-	}
-}
+         pc.setPixelFormats(fb.getPixelFormat(), temp.getPixelFormat());
 
-void WatermarksController::showWaterMarks(::subsystem::FrameBuffer *frameBuffer, critical_section *fbLock)
-{
-	m_overlay.copyFrom(frameBuffer, m_currentRect.left, m_currentRect.top);
+         pc.convert(rect, &fb, &temp);
+      }
+   }
 
-	frameBuffer->copyFrom(m_currentRect, &m_frameBuffer, 0, 0);
-}
+   void WatermarksController::showWaterMarks(::subsystem::FrameBuffer *frameBuffer, critical_section *fbLock)
+   {
+      m_overlay.copyFrom(frameBuffer, m_currentRect.left, m_currentRect.top);
 
-void WatermarksController::hideWatermarks(::subsystem::FrameBuffer *frameBuffer, critical_section *fbLock)
-{
-	frameBuffer->copyFrom(m_currentRect, &m_overlay, 0, 0);
-}
+      frameBuffer->copyFrom(m_currentRect, &m_frameBuffer, 0, 0);
+   }
 
-const ::int_rectangle WatermarksController::CurrentRect()
-{
-	return m_currentRect;
-}
+   void WatermarksController::hideWatermarks(::subsystem::FrameBuffer *frameBuffer, critical_section *fbLock)
+   {
+      frameBuffer->copyFrom(m_currentRect, &m_overlay, 0, 0);
+   }
 
-::subsystem::FrameBuffer& WatermarksController::frameBuffer(bool fromFile)
-{
-	if (m_frameBuffer.getBuffer() == 0 || fromFile)
-	{
-		loadFromfile();
-	}
+   const ::int_rectangle WatermarksController::CurrentRect()
+   {
+      return m_currentRect;
+   }
 
-	return m_frameBuffer;
-}
+   ::subsystem::FrameBuffer& WatermarksController::frameBuffer(bool fromFile)
+   {
+      if (m_frameBuffer.getBuffer() == 0 || fromFile)
+      {
+         loadFromfile();
+      }
 
-void WatermarksController::loadFromfile()
-{
-	int pixelsOfset = *(int*)&WATERMARK_BMP_BODY[14] + 14;
+      return m_frameBuffer;
+   }
 
-	m_width = *(int*)&WATERMARK_BMP_BODY[18];
-	m_height = *(int*)&WATERMARK_BMP_BODY[22];
+   void WatermarksController::loadFromfile()
+   {
+      int pixelsOfset = *(int*)&WATERMARK_BMP_BODY[14] + 14;
 
-	int imageBpp = (WATERMARK_BMP_BODY[28] + 7) / 8;
+      m_width = *(int*)&WATERMARK_BMP_BODY[18];
+      m_height = *(int*)&WATERMARK_BMP_BODY[22];
 
-	int pad = 4 - ((m_width * 3) % 4);
+      int imageBpp = (WATERMARK_BMP_BODY[28] + 7) / 8;
 
-	int bufferSize = m_width * m_height * 4;
+      int pad = 4 - ((m_width * 3) % 4);
 
-	unsigned char* buffer = new unsigned char[bufferSize];
+      int bufferSize = m_width * m_height * 4;
+
+      unsigned char* buffer = new unsigned char[bufferSize];
 
 
-	::int_size dim(m_width, m_height);
-	::subsystem::PixelFormat pf = StandardPixelFormatFactory::create32bppPixelFormat();
-	m_frameBuffer.setPropertiesWithoutResize(dim, pf);
-	m_overlay.setPropertiesWithoutResize(m_overlay.getDimension(), pf);
+      ::int_size dim(m_width, m_height);
+      ::subsystem::PixelFormat pf = StandardPixelFormatFactory::create32bppPixelFormat();
+      m_frameBuffer.setPropertiesWithoutResize(dim, pf);
+      m_overlay.setPropertiesWithoutResize(m_overlay.getDimension(), pf);
 
-	for (int i = 0; i < m_height; ++i)
-	{
-		int vi = m_width * i * 3 + i * pad + pixelsOfset;
-		int vb = m_width * (m_height - i - 1) * 4;
-		for(int j = 0; j < m_width; ++j)
-		{
-			int hi = vi + j*3;
-			int hb = vb + j*4;
+      for (int i = 0; i < m_height; ++i)
+      {
+         int vi = m_width * i * 3 + i * pad + pixelsOfset;
+         int vb = m_width * (m_height - i - 1) * 4;
+         for(int j = 0; j < m_width; ++j)
+         {
+            int hi = vi + j*3;
+            int hb = vb + j*4;
 
-			buffer[hb] = WATERMARK_BMP_BODY[hi];			//B
-			buffer[hb + 1] = WATERMARK_BMP_BODY[hi + 1];	//G
-			buffer[hb + 2] = WATERMARK_BMP_BODY[hi + 2];	//R
-			buffer[hb + 3] = 255;							//A
-		}
-	}
+            buffer[hb] = WATERMARK_BMP_BODY[hi];			//B
+            buffer[hb + 1] = WATERMARK_BMP_BODY[hi + 1];	//G
+            buffer[hb + 2] = WATERMARK_BMP_BODY[hi + 2];	//R
+            buffer[hb + 3] = 255;							//A
+         }
+      }
 
-	m_frameBuffer.setBuffer(buffer);
-}
+      m_frameBuffer.setBuffer(buffer);
+   }
 
-bool WatermarksController::is_empty()
-{
-	return m_frameBuffer.getBuffer() == 0;
-}
+   bool WatermarksController::is_empty()
+   {
+      return m_frameBuffer.getBuffer() == 0;
+   }
+} // namespace remoting

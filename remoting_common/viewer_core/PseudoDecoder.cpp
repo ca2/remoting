@@ -24,16 +24,19 @@
 #include "framework.h"
 #include "PseudoDecoder.h"
 
-PseudoDecoder::PseudoDecoder(::subsystem::LogWriter * plogwriter)
-: Decoder(logWriter)
+namespace remoting
 {
-}
+   PseudoDecoder::PseudoDecoder(::subsystem::LogWriter * plogwriter)
+   : Decoder(logWriter)
+   {
+   }
 
-PseudoDecoder::~PseudoDecoder()
-{
-}
+   PseudoDecoder::~PseudoDecoder()
+   {
+   }
 
-bool PseudoDecoder::isPseudo() const
-{
-  return true;
-}
+   bool PseudoDecoder::isPseudo() const
+   {
+      return true;
+   }
+} // namespace remoting

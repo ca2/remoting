@@ -24,12 +24,16 @@
 #include "framework.h"
 #include "PointerPosDecoder.h"
 
-PointerPosDecoder::PointerPosDecoder(::subsystem::LogWriter * plogwriter)
-: PseudoDecoder(logWriter)
-{
-  m_encoding = PseudoEncDefs::POINTER_POS;
-}
 
-PointerPosDecoder::~PointerPosDecoder()
+namespace remoting
 {
-}
+   PointerPosDecoder::PointerPosDecoder(::subsystem::LogWriter * plogwriter)
+   : PseudoDecoder(logWriter)
+   {
+      m_encoding = PseudoEncDefs::POINTER_POS;
+   }
+
+   PointerPosDecoder::~PointerPosDecoder()
+   {
+   }
+} // namespace remoting

@@ -24,10 +24,13 @@
 #include "framework.h"
 #include "CapabilitiesManager.h"
 
-CapabilitiesManager::CapabilitiesManager()
+namespace remoting
 {
-}
+   CapabilitiesManager::CapabilitiesManager()
+   {
+   }
 
-CapabilitiesManager::~CapabilitiesManager()
-{
-}
+   CapabilitiesManager::~CapabilitiesManager()
+   {
+   }
+} // namespace remoting

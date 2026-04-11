@@ -29,25 +29,28 @@
 #include "acme/prototype/geometry2d/rectangle.h"
 
 
-void RectSerializer::toString(const ::int_rectangle &  rect, ::string & strOut)
+namespace remoting
 {
-  strOut.format("{}x{}+{}+{}", rect.width(),
-                                    rect.height(),
-                                    rect.left,
-                                    rect.top);
-}
+   void RectSerializer::toString(const ::int_rectangle &  rect, ::string & strOut)
+   {
+      strOut.format("{}x{}+{}+{}", rect.width(),
+                                        rect.height(),
+                                        rect.left,
+                                        rect.top);
+   }
 
-::int_rectangle RectSerializer::toRect(const ::scoped_string & strIn)
-{
-  int width, height, x, y;
-  TCHAR c;
-  if (_stscanf(::wstring(strIn).c_str(),
-               (TCHAR *)"%dx%d+%d+%d%c", &width, &height, &x, &y, &c) != 4 ||
-      width < 0 || height < 0) {
-    ::string errMess;
-    errMess.format("Invalid string format to convert it to a rectangle"
-                   " ({}).", strIn);
-    throw ::subsystem::Exception(errMess);
-  }
-  return ::int_rectangle(x, y, x + width, y + height);
-}
+   ::int_rectangle RectSerializer::toRect(const ::scoped_string & strIn)
+   {
+      int width, height, x, y;
+      TCHAR c;
+      if (_stscanf(::wstring(strIn).c_str(),
+                   (TCHAR *)"%dx%d+%d+%d%c", &width, &height, &x, &y, &c) != 4 ||
+          width < 0 || height < 0) {
+         ::string errMess;
+         errMess.format("Invalid string format to convert it to a rectangle"
+                        " ({}).", strIn);
+         throw ::subsystem::Exception(errMess);
+          }
+      return ::int_rectangle(x, y, x + width, y + height);
+   }
+} // namespace remoting
