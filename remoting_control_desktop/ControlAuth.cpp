@@ -26,7 +26,7 @@
 //#include "remoting/remoting_common/util/::string.h"
 #include "remoting_control_desktop/ControlProto.h"
 
-//#include "subsystem_acme/thread/critical_section.h"
+//#include "subsystem/thread/critical_section.h"
 
 #include "remoting/remoting_common/util/DesCrypt.h"
 //#include aaa_<algorithm>

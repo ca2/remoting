@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "subsystem_apex/BaseWindow.h"
-#include "subsystem_apex/drawing/DeviceContext.h"
+#include "innate_subsystem/BaseWindow.h"
+#include "innate_subsystem/drawing/DeviceContext.h"
 
 class CLASS_DECL_REMOTING_COMMON ::subsystem_apex::PaintWindow: public BaseWindow
 {

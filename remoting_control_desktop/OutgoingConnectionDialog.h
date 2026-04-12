@@ -29,9 +29,9 @@
 //#include "acme/_operating_system.h"
 
 
-#include "subsystem_apex/BaseDialog.h"
-#include "subsystem_apex/ComboBox.h"
-#include "subsystem_apex/CheckBox.h"
+#include "innate_subsystem/BaseDialog.h"
+#include "innate_subsystem/ComboBox.h"
+#include "innate_subsystem/CheckBox.h"
 
 #include "remoting/remoting_common/win_system/RegistryKey.h"
 

@@ -25,11 +25,11 @@
 #pragma once
 
 
-//#include "subsystem_acme/thread/critical_section.h"
-#include "subsystem_acme/thread/Thread.h"
+//#include "subsystem/thread/critical_section.h"
+#include "subsystem/thread/Thread.h"
 #include "desktop/UpdateKeeper.h"
 #include "UpdateRequestListener.h"
-#include "subsystem_apex/framebuffer/FrameBuffer.h"
+#include "innate_subsystem/framebuffer/FrameBuffer.h"
 #include "ViewPort.h"
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 #include "remoting/remoting_common/network/RfbInputGate.h"

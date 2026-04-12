@@ -24,10 +24,10 @@
 #include "framework.h"
 #include "FileTransferRequestHandler.h"
 
-#include "subsystem_acme/io/DataOutputStream.h"
+#include "subsystem/io/DataOutputStream.h"
 
 #include "remoting/remoting_common/ftp_common/FileTransferException.h"
-#include "subsystem_acme/io/ByteArrayOutputStream.h"
+#include "subsystem/io/ByteArrayOutputStream.h"
 #include "file_lib/::file::item.h"
 #include "file_lib/EOFException.h"
 #include "remoting/remoting_common/ftp_common/FolderListener.h"
@@ -37,11 +37,11 @@
 #include "remoting/remoting_common/util/md5.h"
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 #include "remoting/remoting_common/network/RfbInputGate.h"
-//#include "subsystem_acme/thread/critical_section.h"
+//#include "subsystem/thread/critical_section.h"
 #include "remoting/remoting_common/win_system/Impersonator.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 #include "remoting/remoting_common/server_config/Configurator.h"
-#include "subsystem_acme/node/SystemException.h"
+#include "subsystem/node/SystemException.h"
 #include "remoting/remoting_common/rfb/VendorDefs.h"
 
 FileTransferRequestHandler::FileTransferRequestHandler(RfbCodeRegistrator *registrator,

@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "subsystem_acme/_common_header.h"
-#include "subsystem_apex/PaintWindow.h"
+#include "subsystem/_common_header.h"
+#include "innate_subsystem/PaintWindow.h"
 
 namespace remoting
 {

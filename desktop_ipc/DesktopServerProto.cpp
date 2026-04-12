@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "DesktopServerProto.h"
 #include "remoting/remoting_common/server_config/Configurator.h"
-#include "subsystem_acme/Exception.h"
+#include "subsystem/Exception.h"
 
 DesktopServerProto::DesktopServerProto(BlockingGate *forwGate)
 : m_forwGate(forwGate)

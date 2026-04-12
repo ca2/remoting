@@ -28,14 +28,14 @@
 #include "Transport.h"
 #include "TransportFactory.h"
 
-#include "subsystem_acme/_common_header.h"
+#include "subsystem/_common_header.h"
 #include "remoting/remoting_common/util/ResourceLoader.h"
 #include "remoting/remoting_common/util/Command.h"
 #include "remoting/remoting_common/server_config/Configurator.h"
 //#include "log_writer/LogWriter.h"
 
-#include "subsystem_acme/thread/Thread.h"
-//#include "subsystem_acme/thread/critical_section.h"
+#include "subsystem/thread/Thread.h"
+//#include "subsystem/thread/critical_section.h"
 
 #include "remoting_control_desktop/ControlGate.h"
 #include "remoting_control_desktop/ControlAuthException.h"

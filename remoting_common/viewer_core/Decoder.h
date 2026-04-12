@@ -28,10 +28,10 @@
 //#include "log_writer/LogWriter.h"
 #include "remoting/remoting_common/network/RfbInputGate.h"
 
-#include "subsystem_apex/framebuffer/FrameBuffer.h"
+#include "innate_subsystem/framebuffer/FrameBuffer.h"
 #include "remoting/remoting_common/rfb/EncodingDefs.h"
-////#include "subsystem_acme/thread/critical_section.h"
-////#include "subsystem_acme/thread/critical_section.h"
+////#include "subsystem/thread/critical_section.h"
+////#include "subsystem/thread/critical_section.h"
 ///
 
 namespace remoting

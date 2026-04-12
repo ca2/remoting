@@ -25,12 +25,12 @@
 #pragma once
 
 
-#include "subsystem_acme/_common_header.h"
+#include "subsystem/_common_header.h"
 
 ////#include aaa_<crtdbg.h>
 
-////#include "subsystem_acme/thread/critical_section.h"
-////#include "subsystem_acme/thread/critical_section.h"
+////#include "subsystem/thread/critical_section.h"
+////#include "subsystem/thread/critical_section.h"
 
 //
 // Template that realize singleton pattern which does not supports "lazy"

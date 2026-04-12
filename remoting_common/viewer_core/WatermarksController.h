@@ -25,10 +25,10 @@
 #pragma once
 
 
-//#include "subsystem_apex/framebuffer/FrameBuffer.h"
-//#include "subsystem_acme/framebuffer/PixelFormat.h"
-//#include "subsystem_acme/framebuffer/StandardPixelFormatFactory.h"
-//#include "subsystem_acme/thread/critical_section.h"
+//#include "innate_subsystem/framebuffer/FrameBuffer.h"
+//#include "subsystem/framebuffer/PixelFormat.h"
+//#include "subsystem/framebuffer/StandardPixelFormatFactory.h"
+//#include "subsystem/thread/critical_section.h"
 
 namespace remoting
 {

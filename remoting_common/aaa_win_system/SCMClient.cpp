@@ -25,7 +25,7 @@
 //#include "acme/_operating_system.h"
 #include "ServiceControlManagerClient.h"
 
-#include "subsystem_acme/thread/Thread.h"
+#include "subsystem/thread/Thread.h"
 
 ServiceControlManagerClientException::ServiceControlManagerClientException(int scmErrCode)
 : SystemException("[::subsystem::Exception description is not avaliable]")

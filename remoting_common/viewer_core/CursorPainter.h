@@ -27,7 +27,7 @@
 
 //#include "log_writer/LogWriter.h"
 #include "remoting/remoting_common/rfb/CursorShape.h"
-//#include "subsystem_acme/thread/critical_section.h"
+//#include "subsystem/thread/critical_section.h"
 
 namespace remoting
 {

@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "subsystem_apex/framebuffer/FrameBuffer.h"
+#include "innate_subsystem/framebuffer/FrameBuffer.h"
 #include "Win8CursorShape.h"
-//#include "subsystem_acme/thread/critical_section.h"
-#include "subsystem_acme/thread/GuiThread.h"
+//#include "subsystem/thread/critical_section.h"
+#include "subsystem/thread/GuiThread.h"
 #include "Win8DuplicationListener.h"
 //#include "log_writer/LogWriter.h"
 

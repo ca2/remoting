@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "WTS.h"
 #include "SystemException.h"
-//#include "subsystem_acme/thread/critical_section.h"
+//#include "subsystem/thread/critical_section.h"
 //#include "Environment.h"
 #include "PipeImpersonatedThread.h"
 #include "acme/platform/node.h"

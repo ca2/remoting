@@ -25,12 +25,12 @@
 #pragma once
 
 
-#include "subsystem_acme/io/Channel.h"
+#include "subsystem/io/Channel.h"
 #include "remoting/remoting_common/win_system/Pipe.h"
-#include "subsystem_acme/_common_header.h"
+#include "subsystem/_common_header.h"
 
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
-//#include "subsystem_acme/thread/critical_section.h"
+//#include "subsystem/thread/critical_section.h"
 //#include "log_writer/LogWriter.h"
 
 class CLASS_DECL_REMOTING_COMMON AnonymousPipe : public Channel, public Pipe

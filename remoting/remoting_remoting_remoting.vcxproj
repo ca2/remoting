@@ -249,12 +249,6 @@
     <ProjectReference Include="..\..\app\apex\apex.vcxproj">
       <Project>{e000ffaf-392f-4e32-bf51-777ca238991f}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\app\subsystem_acme\subsystem_acme.vcxproj">
-      <Project>{8cc36574-7cff-438f-ae5c-51fd5c6b2823}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\subsystem_apex\subsystem_apex.vcxproj">
-      <Project>{97d4f12a-916c-4cb2-b4d9-f0d35128065a}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\remoting_common\remoting_common.vcxproj">
       <Project>{97b29c1c-a911-41ab-9c88-019d9d827bfe}</Project>
     </ProjectReference>

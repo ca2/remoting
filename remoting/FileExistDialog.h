@@ -24,8 +24,8 @@
 #pragma once
 
 
-#include "subsystem_apex/Dialog.h"
-#include "subsystem_apex/Control.h"
+#include "innate_subsystem/Dialog.h"
+#include "innate_subsystem/Control.h"
 #include "remoting/remoting_common/ftp_common/FileInfo.h"
 
 

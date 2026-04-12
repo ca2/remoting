@@ -26,9 +26,9 @@
 #include "NamingDefs.h"
 #include "OptionsDialog.h"
 #include "remoting/remoting_common/remoting.h"
-#include "subsystem_acme/node/Shell.h"
-#include "subsystem_apex/subsystem.h"
-#include "subsystem_acme/node/SystemException.h"
+#include "subsystem/node/Shell.h"
+#include "innate_subsystem/subsystem.h"
+#include "subsystem/node/SystemException.h"
 
 
 namespace remoting_remoting

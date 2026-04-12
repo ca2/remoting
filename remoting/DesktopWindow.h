@@ -25,16 +25,16 @@
 #pragma once
 
 
-#include "subsystem_acme/node/Clipboard.h"
-#include "subsystem_apex/framebuffer/DibFrameBuffer.h"
+#include "subsystem/node/Clipboard.h"
+#include "innate_subsystem/framebuffer/DibFrameBuffer.h"
 
 
 #include "ScaleManager.h"
 #include "remoting/remoting_common/client_config/ConnectionConfig.h"
-#include "subsystem_apex/PaintWindow.h"
-#include "subsystem_apex/ScrollBar.h"
-#include "subsystem_apex/drawing/SolidBrush.h"
-#include "subsystem_apex/drawing/Graphics.h"
+#include "innate_subsystem/PaintWindow.h"
+#include "innate_subsystem/ScrollBar.h"
+#include "innate_subsystem/drawing/SolidBrush.h"
+#include "innate_subsystem/drawing/Graphics.h"
 #include "remoting/remoting_common/rfb/RfbKeySym.h"
 #include "remoting/remoting_common/viewer_core/RemoteViewerCore.h"
 namespace remoting_remoting

@@ -51,13 +51,13 @@
 
 //#include "remoting/remoting_common/win_system/Environment.h"
 #include "remoting/remoting_common/win_system/Shell.h"
-#include "subsystem_acme/Process.h"
+#include "subsystem/Process.h"
 #include "remoting/remoting_common/win_system/WinCommandLineArgs.h"
 
-#include "subsystem_acme/thread/ZombieKiller.h"
-#include "subsystem_acme/thread/GlobalMutex.h"
+#include "subsystem/thread/ZombieKiller.h"
+#include "subsystem/thread/GlobalMutex.h"
 
-#include "subsystem_apex/CommonControlsEx.h"
+#include "innate_subsystem/CommonControlsEx.h"
 
 #include "remoting/remoting_common/network/socket/WindowsSocket.h"
 

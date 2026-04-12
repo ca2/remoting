@@ -28,7 +28,7 @@
 #include "MirrorDriverClient.h"
 #include "remoting/remoting_common/win_system/RegistryKey.h"
 #include "DisplayEsc.h"
-#include "subsystem_acme/thread/GuiThread.h"
+#include "subsystem/thread/GuiThread.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 #include "UpdateDetector.h"
 

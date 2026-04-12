@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "subsystem_apex/framebuffer/FrameBuffer.h"
+#include "innate_subsystem/framebuffer/FrameBuffer.h"
 #include "remoting/remoting_common/win_system/DibSection.h"
 
 // This class is a wrapper for a FramBuffer and a DIB section.

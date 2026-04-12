@@ -27,8 +27,8 @@
 
 #include "WindowsScreenGrabber.h"
 #include "ScreenDriver.h"
-#include "subsystem_apex/framebuffer/FrameBuffer.h"
-//#include "subsystem_acme/thread/critical_section.h"
+#include "innate_subsystem/framebuffer/FrameBuffer.h"
+//#include "subsystem/thread/critical_section.h"
 #include "UpdateContainer.h"
 #include "GrabOptimizator.h"
 

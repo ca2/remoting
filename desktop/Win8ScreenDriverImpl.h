@@ -26,11 +26,11 @@
 
 
 //#include "log_writer/LogWriter.h"
-#include "subsystem_acme/thread/GuiThread.h"
-#include "subsystem_acme/thread/ThreadCollector.h"
+#include "subsystem/thread/GuiThread.h"
+#include "subsystem/thread/ThreadCollector.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 
-#include "subsystem_apex/framebuffer/FrameBuffer.h"
+#include "innate_subsystem/framebuffer/FrameBuffer.h"
 #include "Win8CursorShape.h"
 #include "UpdateKeeper.h"
 #include "UpdateListener.h"

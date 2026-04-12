@@ -6,8 +6,8 @@
 #include "ViewerWindow.h"
 #include "impact_toolbar.h"
 
-#include "subsystem_apex/drawing/Bitmap.h"
-#include "subsystem_apex/drawing/Font.h"
+#include "innate_subsystem/drawing/Bitmap.h"
+#include "innate_subsystem/drawing/Font.h"
 // // #include aaa_<dwmapi.h>
 // // Link with dwmapi.lib
 // #pragma comment (lib, "dwmapi.lib")

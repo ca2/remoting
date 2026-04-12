@@ -24,7 +24,7 @@
 #include "framework.h"
 //#include "acme/_operating_system.h"
 #include "RfbInitializer.h"
-//#include "subsystem_acme/thread/critical_section.h"
+//#include "subsystem/thread/critical_section.h"
 #include "remoting/remoting_common/rfb/VendorDefs.h"
 #include "remoting/remoting_common/rfb/AuthDefs.h"
 #include "CapContainer.h"

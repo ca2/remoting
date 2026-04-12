@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "subsystem_apex/Window.h"
+#include "innate_subsystem/Window.h"
 
 namespace remoting
 {

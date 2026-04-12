@@ -28,7 +28,7 @@
 //#include "remoting/remoting_common/util/winhdr.h"
 //#include "acme/_operating_system.h"
 
-#include "subsystem_acme/thread/DesktopSelector.h"
+#include "subsystem/thread/DesktopSelector.h"
 
 LocalWindowsApplication::LocalWindowsApplication(HINSTANCE hInstance,
                                                  const ::scoped_string & scopedstrwindowClassName)

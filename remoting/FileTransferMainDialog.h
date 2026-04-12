@@ -25,12 +25,12 @@
 #pragma once
 
 
-#include "subsystem_apex/Dialog.h"
-#include "subsystem_apex/Control.h"
-#include "subsystem_apex/TextBox.h"
-#include "subsystem_apex/ComboBox.h"
-#include "subsystem_apex/ImagedButton.h"
-#include "subsystem_apex/ProgressBar.h"
+#include "innate_subsystem/Dialog.h"
+#include "innate_subsystem/Control.h"
+#include "innate_subsystem/TextBox.h"
+#include "innate_subsystem/ComboBox.h"
+#include "innate_subsystem/ImagedButton.h"
+#include "innate_subsystem/ProgressBar.h"
 
 #include "remoting/remoting_common/ftp_common/FileInfo.h"
 
@@ -38,7 +38,7 @@
 
 #include "FileInfoListView.h"
 #include "FileExistDialog.h"
-#include "subsystem_acme/thread/Thread.h"
+#include "subsystem/thread/Thread.h"
 #include "remoting/remoting_common/ftp_client/FileTransferInterface.h"
 
 //#include aaa_<vector>

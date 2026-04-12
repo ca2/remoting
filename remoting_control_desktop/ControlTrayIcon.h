@@ -25,12 +25,12 @@
 #pragma once
 
 
-#include "subsystem_apex/NotifyIcon.h"
-#include "subsystem_apex/WindowProcHolder.h"
-#include "subsystem_apex/drawing/Icon.h"
+#include "innate_subsystem/NotifyIcon.h"
+#include "innate_subsystem/WindowProcHolder.h"
+#include "innate_subsystem/drawing/Icon.h"
 
-#include "subsystem_acme/thread/Thread.h"
-//#include "subsystem_acme/thread/critical_section.h"
+#include "subsystem/thread/Thread.h"
+//#include "subsystem/thread/critical_section.h"
 
 #include "remoting/remoting_common/util/Command.h"
 #include "remoting/remoting_common/util/MacroCommand.h"

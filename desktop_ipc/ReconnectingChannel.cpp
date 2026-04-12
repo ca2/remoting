@@ -25,7 +25,7 @@
 #include "ReconnectingChannel.h"
 //#include "remoting/remoting_common/util/::earth::time.h"
 #include "desktop_ipc/ReconnectException.h"
-//#include "subsystem_acme/thread/critical_section.h"
+//#include "subsystem/thread/critical_section.h"
 
 ReconnectingChannel::ReconnectingChannel(unsigned int timeOut, ::subsystem::LogWriter *log)
 : m_timeOut(timeOut),

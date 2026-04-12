@@ -27,7 +27,7 @@
 
 #include "RfbClientManager.h"
 #include "ControlAppAuthenticator.h"
-#include "subsystem_acme/thread/ThreadCollector.h"
+#include "subsystem/thread/ThreadCollector.h"
 
 #include "remoting/remoting_common/network/TcpServer.h"
 

@@ -24,7 +24,7 @@
 #include "framework.h"
 //#include "acme/_operating_system.h"
 #include "WindowsEvent.h"
-#include "subsystem_acme/Exception.h"
+#include "subsystem/Exception.h"
 
 WindowsEvent::WindowsEvent(const ::scoped_string & scopedstrName)
 {

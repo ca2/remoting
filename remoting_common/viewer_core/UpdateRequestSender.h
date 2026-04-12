@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "subsystem_acme/thread/Thread.h"
-#include "subsystem_apex/framebuffer/FrameBuffer.h"
+#include "subsystem/thread/Thread.h"
+#include "innate_subsystem/framebuffer/FrameBuffer.h"
 //// #include aaa_<log_writer/LogWriter.h>
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 

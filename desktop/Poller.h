@@ -27,7 +27,7 @@
 
 #include "UpdateDetector.h"
 #include "ScreenGrabber.h"
-#include "subsystem_apex/framebuffer/FrameBuffer.h"
+#include "innate_subsystem/framebuffer/FrameBuffer.h"
 
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 //#include "log_writer/LogWriter.h"

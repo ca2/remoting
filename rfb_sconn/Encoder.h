@@ -27,7 +27,7 @@ INCLUDED__
 
 //#include aaa_<vector>
 
-#include "subsystem_apex/framebuffer/FrameBuffer.h"
+#include "innate_subsystem/framebuffer/FrameBuffer.h"
 #include "acme/exception/io.h"
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 #include "remoting/remoting_common/rfb/EncodingDefs.h"

@@ -26,11 +26,11 @@
 
 
 ////////#include "remoting/remoting_common/util/::string.h"
-#include "subsystem_acme/Singleton.h"
+#include "subsystem/Singleton.h"
 #include "remoting/remoting_common/config/ConnectionHistory.h"
 //#include "log_writer/FileLogWriter.h"
-////#include "subsystem_acme/thread/critical_section.h"
-////#include "subsystem_acme/thread/critical_section.h"
+////#include "subsystem/thread/critical_section.h"
+////#include "subsystem/thread/critical_section.h"
 
 #include "remoting/remoting_common/client_config/ConnectionConfig.h"
 

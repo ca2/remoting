@@ -27,7 +27,7 @@
 
 #include "remoting/remoting_common/rfb/MsgDefs.h"
 #include "remoting/remoting_common/network/RfbOutputGate.h"
-//#include "subsystem_acme/thread/critical_section.h"
+//#include "subsystem/thread/critical_section.h"
 
 namespace remoting
 {

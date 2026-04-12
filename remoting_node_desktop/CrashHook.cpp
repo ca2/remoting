@@ -26,7 +26,7 @@
 #include "remoting/remoting_common/win_system/DynamicLibrary.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 #include "remoting/remoting_common/win_system/RegistryKey.h"
-//#include "subsystem_acme/thread/critical_section.h"
+//#include "subsystem/thread/critical_section.h"
 #include "remoting_node_desktop/NamingDefs.h"
 
 typedef bool (WINAPI *MINIDUMPWRITEDUMP)(__in  HANDLE hProcess,

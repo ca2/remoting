@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "subsystem_acme/_common_header.h"
-#include "subsystem_apex/Window.h"
+#include "subsystem/_common_header.h"
+#include "innate_subsystem/Window.h"
 
 class CLASS_DECL_REMOTING_COMMON ComboBox : public ::subsystem_apex::Control
 {

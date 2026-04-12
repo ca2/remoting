@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "UserInputClient.h"
-//#include "subsystem_acme/thread/critical_section.h"
+//#include "subsystem/thread/critical_section.h"
 #include "ReconnectException.h"
 #include "remoting/remoting_common/util/BrokenHandleException.h"
 

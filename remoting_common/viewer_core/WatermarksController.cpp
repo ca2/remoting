@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "WatermarksController.h"
 #include "watermark_bmp.h"
-//#include "subsystem_acme/thread/critical_section.h"
+//#include "subsystem/thread/critical_section.h"
 #include "remoting/remoting_common/rfb/PixelConverter.h"
 
 namespace remoting

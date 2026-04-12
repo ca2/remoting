@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "subsystem_apex/Dialog.h"
-#include "subsystem_apex/TextBox.h"
+#include "innate_subsystem/Dialog.h"
+#include "innate_subsystem/TextBox.h"
 #include "resource.h"
 
 namespace remoting_remoting

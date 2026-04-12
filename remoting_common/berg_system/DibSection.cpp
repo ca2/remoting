@@ -24,7 +24,7 @@
 #include "framework.h"
 //#include "acme/_operating_system.h"
 #include "DibSection.h"
-#include "subsystem_acme/node/SystemException.h"
+#include "subsystem/node/SystemException.h"
 
 DibSection::DibSection(const ::subsystem_apex::PixelFormat & pf, const ::int_size & dim, HWND compatibleWin)
 : m_isOwnTargetDC(false),

@@ -24,8 +24,8 @@
 #include "framework.h"
 #include "ViewerMenu.h"
 #include "resource.h"
-#include "subsystem_apex/resource_loader.h"
-#include "subsystem_apex/subsystem.h"
+#include "innate_subsystem/resource_loader.h"
+#include "innate_subsystem/subsystem.h"
 
 #include "remoting/remoting_common/util/ResourceLoader.h"
 

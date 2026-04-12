@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "subsystem_apex/Dialog.h"
-#include "subsystem_apex/CheckBox.h"
+#include "innate_subsystem/Dialog.h"
+#include "innate_subsystem/CheckBox.h"
 #include "resource.h"
 
 

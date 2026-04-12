@@ -30,9 +30,9 @@
 //// #include aaa_<stdio.h>
 #include "resource.h"
 #include "acme/prototype/datetime/datetime.h"
-#include "subsystem_apex/resource_loader.h"
-#include "subsystem_apex/subsystem.h"
-#include "subsystem_apex/SystemMetrics.h"
+#include "innate_subsystem/resource_loader.h"
+#include "innate_subsystem/subsystem.h"
+#include "innate_subsystem/SystemMetrics.h"
 
 
 namespace remoting_remoting

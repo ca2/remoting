@@ -26,13 +26,13 @@
 
 
 //#include "log_writer/LogWriter.h"
-#include "subsystem_apex/framebuffer/FrameBuffer.h"
+#include "innate_subsystem/framebuffer/FrameBuffer.h"
 //#include "remoting/remoting_common/region/::int_point.h"
 
 #include "remoting/remoting_common/region/Region.h"
-//#include "subsystem_acme/thread/critical_section.h"
-#include "subsystem_acme/thread/Thread.h"
-#include "subsystem_acme/node/WindowsEvent.h"
+//#include "subsystem/thread/critical_section.h"
+#include "subsystem/thread/Thread.h"
+#include "subsystem/node/WindowsEvent.h"
 
 #include "acme/parallelization/happening.h"
 

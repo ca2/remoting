@@ -26,7 +26,7 @@
 
 
 // This file contains all public names.
-#include "subsystem_acme/_common_header.h"
+#include "subsystem/_common_header.h"
 
 class NamingDefs
 {

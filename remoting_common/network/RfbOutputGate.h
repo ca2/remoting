@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "subsystem_acme/io/DataOutputStream.h"
-#include "subsystem_acme/io/BufferedOutputStream.h"
+#include "subsystem/io/DataOutputStream.h"
+#include "subsystem/io/BufferedOutputStream.h"
 
-//#include "subsystem_acme/thread/critical_section.h"
+//#include "subsystem/thread/critical_section.h"
 
 
 namespace remoting

@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "subsystem_acme/io/DataInputStream.h"
-//#include "subsystem_acme/thread/critical_section.h"
+#include "subsystem/io/DataInputStream.h"
+//#include "subsystem/thread/critical_section.h"
 
 class BlockingInputGate : public critical_section, public DataInputStream
 {

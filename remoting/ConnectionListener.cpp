@@ -25,7 +25,7 @@
 #include "ConnectionListener.h"
 #include "remoting_impact.h"
 
-//#include "subsystem_acme/thread/critical_section.h"
+//#include "subsystem/thread/critical_section.h"
 
 namespace remoting_remoting
 {

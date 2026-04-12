@@ -23,10 +23,10 @@
 //
 #include "framework.h"
 #include "WindowsUserInput.h"
-#include "subsystem_acme/thread/DesktopSelector.h"
+#include "subsystem/thread/DesktopSelector.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 #include "remoting/remoting_common/win_system/Keyboard.h"
-#include "subsystem_apex/WindowFinder.h"
+#include "innate_subsystem/WindowFinder.h"
 #include "remoting/remoting_common/util/BrokenHandleException.h"
 
 WindowsUserInput::WindowsUserInput(ClipboardListener *clipboardListener,

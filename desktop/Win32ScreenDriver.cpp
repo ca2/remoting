@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "Win32ScreenDriver.h"
-//#include "subsystem_acme/thread/critical_section.h"
+//#include "subsystem/thread/critical_section.h"
 
 Win32ScreenDriver::Win32ScreenDriver(UpdateKeeper *updateKeeper,
                                      UpdateListener *updateListener,

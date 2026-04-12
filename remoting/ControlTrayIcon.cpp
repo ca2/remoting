@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ControlTrayIcon.h"
 #include "ResourceStrings.h"
-#include "subsystem_apex/Window.h"
+#include "innate_subsystem/Window.h"
 
 namespace remoting_remoting
 {

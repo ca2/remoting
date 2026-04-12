@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "subsystem_apex/BaseDialog.h"
-#include "subsystem_apex/TextBox.h"
+#include "innate_subsystem/BaseDialog.h"
+#include "innate_subsystem/TextBox.h"
 
 /**
  * ::subsystem_apex::Control authentication dialog.

@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "FileTransferRequestSender.h"
 #include "remoting/remoting_common/ftp_common/FTMessage.h"
-//#include "subsystem_acme/thread/critical_section.h"
+//#include "subsystem/thread/critical_section.h"
 
 
 namespace remoting

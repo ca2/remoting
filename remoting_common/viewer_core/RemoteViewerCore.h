@@ -30,10 +30,10 @@
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 //#include "remoting/remoting_common/network/socket/SocketStream.h"
 //#include "remoting/remoting_common/network/socket/SocketIPv4.h"
-#include "subsystem_apex/framebuffer/FrameBuffer.h"
+#include "innate_subsystem/framebuffer/FrameBuffer.h"
 
 //#include "remoting/remoting_common/region/::int_point.h"
-#include "subsystem_acme/thread/Thread.h"
+#include "subsystem/thread/Thread.h"
 
 #include "CapsContainer.h"
 #include "CoreEventsAdapter.h"

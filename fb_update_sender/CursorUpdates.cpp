@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "CursorUpdates.h"
-//#include "subsystem_acme/thread/critical_section.h"
+//#include "subsystem/thread/critical_section.h"
 
 CursorUpdates::CursorUpdates(::subsystem::LogWriter *log)
 : m_blockCurPosTime(0),

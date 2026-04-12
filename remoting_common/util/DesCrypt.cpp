@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "DesCrypt.h"
-#include "subsystem_acme/_common_header.h"
+#include "subsystem/_common_header.h"
 
 /* The following array is reversed for VNC compatibility,
    by Constantin Kaplinsky */

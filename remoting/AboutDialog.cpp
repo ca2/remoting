@@ -23,16 +23,16 @@
 //
 #include "framework.h"
 #include "AboutDialog.h"
-#include "subsystem_acme/node/Shell.h"
-#include "subsystem_acme/node/VersionInfo.h"
+#include "subsystem/node/Shell.h"
+#include "subsystem/node/VersionInfo.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
-#include "subsystem_apex/Control.h"
+#include "innate_subsystem/Control.h"
 #include "BuildTime.h"
 #include "resource.h"
 #include "acme/filesystem/filesystem/file_context.h"
-#include "subsystem_apex/subsystem.h"
+#include "innate_subsystem/subsystem.h"
 #include "remoting/remoting_common/remoting.h"
-#include "subsystem_acme/node/SystemException.h"
+#include "subsystem/node/SystemException.h"
 
 
 namespace remoting_remoting

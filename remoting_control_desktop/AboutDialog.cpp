@@ -30,7 +30,7 @@
 #include "remoting/remoting_common/win_system/VersionInfo.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 
-#include "subsystem_apex/::subsystem_apex::Control.h"
+#include "innate_subsystem/::subsystem_apex::Control.h"
 
 #include "remoting_node/BuildTime.h"
 

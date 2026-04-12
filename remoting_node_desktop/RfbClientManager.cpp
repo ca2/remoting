@@ -23,7 +23,7 @@
 //
 
 #include "RfbClientManager.h"
-#include "subsystem_acme/thread/ZombieKiller.h"
+#include "subsystem/thread/ZombieKiller.h"
 #include "QueryConnectionApplication.h"
 #include "remoting/remoting_common/server_config/Configurator.h"
 #include "remoting/remoting_common/util/MemUsage.h"

@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include "subsystem_apex/drawing/Graphics.h"
-#include "subsystem_apex/drawing/Pen.h"
-#include "subsystem_apex/drawing/SolidBrush.h"
+#include "innate_subsystem/drawing/Graphics.h"
+#include "innate_subsystem/drawing/Pen.h"
+#include "innate_subsystem/drawing/SolidBrush.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 class DesktopWindow;
 

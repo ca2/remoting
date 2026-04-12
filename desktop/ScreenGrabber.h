@@ -29,7 +29,7 @@
 
 #include "remoting/remoting_common/region/Point.h"
 #include "remoting/remoting_common/rfb/PixelFormat.h"
-#include "subsystem_apex/framebuffer/FrameBuffer.h"
+#include "innate_subsystem/framebuffer/FrameBuffer.h"
 
 //
 // An abstract interface for screen grabbing.

@@ -24,9 +24,9 @@
 #include "framework.h"
 #include "WinVideoRegionUpdaterImpl.h"
 #include "remoting/remoting_common/server_config/Configurator.h"
-#include "subsystem_apex/WindowFinder.h"
+#include "innate_subsystem/WindowFinder.h"
 #include "remoting/remoting_common/region/RectSerializer.h"
-//#include "subsystem_acme/thread/critical_section.h"
+//#include "subsystem/thread/critical_section.h"
 
 WinVideoRegionUpdaterImpl::WinVideoRegionUpdaterImpl(::subsystem::LogWriter *log)
   : m_plogwriter(log)

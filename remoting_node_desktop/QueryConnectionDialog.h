@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "subsystem_acme/_common_header.h"
+#include "subsystem/_common_header.h"
 
-#include "subsystem_apex/BaseDialog.h"
-#include "subsystem_apex/::subsystem_apex::Control.h"
+#include "innate_subsystem/BaseDialog.h"
+#include "innate_subsystem/::subsystem_apex::Control.h"
 
 class QueryConnectionDialog : public BaseDialog
 {

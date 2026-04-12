@@ -26,7 +26,7 @@
 
 
 #include "remoting/remoting_common/util/inttypes.h"
-#include "subsystem_apex/framebuffer/FrameBuffer.h"
+#include "innate_subsystem/framebuffer/FrameBuffer.h"
 #include "remoting/remoting_common/region/Region.h"
 
 #include "remoting/remoting_common/region/Point.h"

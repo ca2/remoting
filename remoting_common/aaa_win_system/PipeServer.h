@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "subsystem_acme/_common_header.h"
+#include "subsystem/_common_header.h"
 
 #include "NamedPipe.h"
-//#include "subsystem_acme/thread/critical_section.h"
+//#include "subsystem/thread/critical_section.h"
 #include "SecurityAttributes.h"
 #include "DynamicLibrary.h"
 

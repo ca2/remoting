@@ -25,13 +25,13 @@
 #pragma once
 
 
-#include "subsystem_acme/io/DataInputStream.h"
-#include "subsystem_acme/io/DataOutputStream.h"
+#include "subsystem/io/DataInputStream.h"
+#include "subsystem/io/DataOutputStream.h"
 #include "acme/exception/io.h"
 #include "remoting/remoting_common/network/RfbOutputGate.h"
-#include "subsystem_apex/framebuffer/FrameBuffer.h"
+#include "innate_subsystem/framebuffer/FrameBuffer.h"
 
-#include "subsystem_acme/Exception.h"
+#include "subsystem/Exception.h"
 
 #include "AuthHandler.h"
 

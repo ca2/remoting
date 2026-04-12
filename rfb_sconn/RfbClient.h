@@ -28,7 +28,7 @@
 //#include aaa_<list>
 //#include "remoting/remoting_common/network/socket/SocketIPv4.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
-#include "subsystem_acme/thread/Thread.h"
+#include "subsystem/thread/Thread.h"
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 #include "desktop/Desktop.h"
 #include "remoting/remoting_common/fb_update_sender/UpdateSender.h"

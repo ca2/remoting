@@ -24,10 +24,10 @@
 #include "framework.h"
 //#include "acme/_operating_system.h"
 #include "NamedPipe.h"
-#include "subsystem_acme/Exception.h"
+#include "subsystem/Exception.h"
 //#include aaa_<crtdbg.h>
 //#include "remoting/remoting_common/win_system/Environment.h"
-//#include "subsystem_acme/thread/critical_section.h"
+//#include "subsystem/thread/critical_section.h"
 
 #define MAX_PORTION_SIZE 512 * 1024
 

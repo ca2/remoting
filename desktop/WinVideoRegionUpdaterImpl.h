@@ -29,9 +29,9 @@
 #include "remoting/remoting_common/region/Region.h"
 //#include "remoting/remoting_common/util/::string_array.h"
 #include "ScreenDriver.h"
-//#include "subsystem_acme/thread/critical_section.h"
+//#include "subsystem/thread/critical_section.h"
 //#include "log_writer/LogWriter.h"
-#include "subsystem_acme/thread/Thread.h"
+#include "subsystem/thread/Thread.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 
 class WinVideoRegionUpdaterImpl : public ScreenDriver, Thread

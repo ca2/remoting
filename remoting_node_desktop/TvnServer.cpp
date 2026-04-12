@@ -30,7 +30,7 @@
 
 #include "remoting/remoting_common/server_config/Configurator.h"
 
-#include "subsystem_acme/thread/GlobalMutex.h"
+#include "subsystem/thread/GlobalMutex.h"
 
 #include "remoting_node/resource.h"
 

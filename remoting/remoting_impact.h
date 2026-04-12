@@ -32,10 +32,10 @@
 #include "LoginDialog.h"
 #include "OptionsDialog.h"
 #include "ViewerCollector.h"
-#include "subsystem_acme/node/OperatingSystemApplication.h"
+#include "subsystem/node/OperatingSystemApplication.h"
 
 //#include "log_writer/LogWriter.h"
-//#include "subsystem_acme/thread/critical_section.h"
+//#include "subsystem/thread/critical_section.h"
 
 //#include aaa_<map>
 

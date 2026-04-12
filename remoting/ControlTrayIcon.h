@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "subsystem_apex/NotifyIcon.h"
-#include "subsystem_apex/Menu.h"
+#include "innate_subsystem/NotifyIcon.h"
+#include "innate_subsystem/Menu.h"
 #include "remoting_impact.h"
 
 #include "resource.h"

@@ -24,7 +24,7 @@
 #include "framework.h"
 //#include "acme/_operating_system.h"
 #include "RfbClient.h"
-//#include "subsystem_acme/thread/critical_section.h"
+//#include "subsystem/thread/critical_section.h"
 #include "RfbCodeRegistrator.h"
 #include "ft_server_lib/FileTransferRequestHandler.h"
 #include "EchoExtensionRequestHandler.h"
@@ -32,7 +32,7 @@
 #include "RfbInitializer.h"
 #include "ClientAuthListener.h"
 #include "remoting/remoting_common/server_config/Configurator.h"
-#include "subsystem_acme/io/BufferedInputStream.h"
+#include "subsystem/io/BufferedInputStream.h"
 #include "remoting/remoting_common/util/MemUsage.h"
 
 RfbClient::RfbClient(NewConnectionEvents *newConnectionEvents,

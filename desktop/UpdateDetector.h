@@ -26,7 +26,7 @@
 
 
 #include "UpdateKeeper.h"
-#include "subsystem_acme/thread/GuiThread.h"
+#include "subsystem/thread/GuiThread.h"
 #include "UpdateListener.h"
 
 class UpdateDetector : public GuiThread

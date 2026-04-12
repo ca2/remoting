@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "subsystem_apex/ImageList.h"
-#include "subsystem_apex/ListView.h"
+#include "innate_subsystem/ImageList.h"
+#include "innate_subsystem/ListView.h"
 #include "remoting/remoting_common/ftp_common/FileInfo.h"
 
 namespace remoting_remoting
