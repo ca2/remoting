@@ -30,7 +30,7 @@
 
 
 
-RfbSetPixelFormatClientMessage::RfbSetPixelFormatClientMessage(const ::innate_subsystem::PixelFormat & pixelFormat)
+RfbSetPixelFormatClientMessage::RfbSetPixelFormatClientMessage(const ::subsystem_apex::PixelFormat & pixelFormat)
 {
   m_pixelFormat = pixelFormat;
 }

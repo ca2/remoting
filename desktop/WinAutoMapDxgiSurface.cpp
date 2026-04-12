@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/subsystem/Exception.h"
+#include "subsystem_acme/Exception.h"
 
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "WinAutoMapDxgiSurface.h"

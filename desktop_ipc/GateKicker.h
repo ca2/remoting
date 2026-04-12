@@ -26,7 +26,7 @@
 
 
 #include "BlockingGate.h"
-#include "acme/subsystem/thread/Thread.h"
+#include "subsystem_acme/thread/Thread.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 
 class GateKicker : public Thread

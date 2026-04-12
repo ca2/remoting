@@ -46,7 +46,7 @@ void EditPortMappingDialog::setMapping(PortMapping *mapping)
 
 void EditPortMappingDialog::onCancelButtonClick()
 {
-  kill(::innate_subsystem::IDCANCEL);
+  kill(::subsystem_apex::IDCANCEL);
 }
 
 void EditPortMappingDialog::onOkButtonClick()
@@ -73,7 +73,7 @@ void EditPortMappingDialog::onOkButtonClick()
   m_mapping->setPort(port);
   m_mapping->setRect(rect);
 
-  kill(::innate_subsystem::IDOK);
+  kill(::subsystem_apex::IDOK);
 }
 
 void EditPortMappingDialog::initControls()
@@ -153,10 +153,10 @@ bool EditPortMappingDialog::onInitDialog()
 bool EditPortMappingDialog::onCommand(unsigned int cID, unsigned int nID)
 {
   switch (cID) {
-  case ::innate_subsystem::IDOK:
+  case ::subsystem_apex::IDOK:
     onOkButtonClick();
     break;
-  case ::innate_subsystem::IDCANCEL:
+  case ::subsystem_apex::IDCANCEL:
     onCancelButtonClick();
     break;
   }

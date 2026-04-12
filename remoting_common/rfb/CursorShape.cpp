@@ -72,14 +72,14 @@ namespace remoting
       return result && resizeBuffer();
    }
 
-   bool CursorShape::setPixelFormat(const ::innate_subsystem::PixelFormat & pixFormat)
+   bool CursorShape::setPixelFormat(const ::subsystem_apex::PixelFormat & pixFormat)
    {
       bool result = m_pixels.setPixelFormat(pixFormat);
       return result && resizeBuffer();
    }
 
    bool CursorShape::setProperties(const ::int_size & newDim,
-                                   const ::innate_subsystem::PixelFormat & pixelFormat)
+                                   const ::subsystem_apex::PixelFormat & pixelFormat)
    {
       bool result = m_pixels.setDimension(newDim) &&
                     m_pixels.setPixelFormat(pixelFormat);

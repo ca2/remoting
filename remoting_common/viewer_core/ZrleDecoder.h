@@ -27,7 +27,7 @@
 
 #include "DecoderOfRectangle.h"
 
-#include "acme/subsystem/io/DataInputStream.h"
+#include "subsystem_acme/io/DataInputStream.h"
 #include "remoting/remoting_common/util/Inflater.h"
 
 namespace remoting
@@ -45,7 +45,7 @@ namespace remoting
       ::memory m_unpackedData;
    protected:
       virtual void decode(RfbInputGate *input,
-                          ::innate_subsystem::FrameBuffer *frameBuffer,
+                          ::subsystem_apex::FrameBuffer *frameBuffer,
                           const ::int_rectangle &  dstRect);
 
 
@@ -82,7 +82,7 @@ namespace remoting
                               const int type);
 
 
-      void drawTile(::innate_subsystem::FrameBuffer *fb,
+      void drawTile(::subsystem_apex::FrameBuffer *fb,
                     const ::int_rectangle &  tileRect,
                     const ::array_base<char> *pixels);
 

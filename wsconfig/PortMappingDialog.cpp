@@ -114,7 +114,7 @@ void PortMappingDialog::onAddButtonClick()
   addDialog.setMapping(&newPM);
   addDialog.setParent(&m_ctrlThis);
 
-  if (addDialog.showModal() == ::innate_subsystem::IDOK) {
+  if (addDialog.showModal() == ::subsystem_apex::IDOK) {
     {
       ::string mappingString;
       newPM.toString(&mappingString);
@@ -142,7 +142,7 @@ void PortMappingDialog::onEditButtonClick()
   editDialog.setParent(&m_ctrlThis);
   editDialog.setMapping(pPM);
 
-  if (editDialog.showModal() == ::innate_subsystem::IDOK) {
+  if (editDialog.showModal() == ::subsystem_apex::IDOK) {
     ::string mappingString;
     pPM->toString(&mappingString);
     m_exPortsListBox.setItemText(selectedIndex, mappingString);

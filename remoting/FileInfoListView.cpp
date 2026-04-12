@@ -30,9 +30,9 @@
 //// #include aaa_<stdio.h>
 #include "resource.h"
 #include "acme/prototype/datetime/datetime.h"
-#include "apex/innate_subsystem/resource_loader.h"
-#include "apex/innate_subsystem/subsystem.h"
-#include "apex/innate_subsystem/SystemMetrics.h"
+#include "subsystem_apex/resource_loader.h"
+#include "subsystem_apex/subsystem.h"
+#include "subsystem_apex/SystemMetrics.h"
 
 
 namespace remoting_remoting
@@ -80,7 +80,7 @@ namespace remoting_remoting
 
         subclassWindow();
 
-        //::innate_subsystem::Control::replaceWindowProc(FileInfoListView::s_newWndProc);
+        //::subsystem_apex::Control::replaceWindowProc(FileInfoListView::s_newWndProc);
     }
 
     void FileInfoListView::addItem(int index, ::remoting::ftp::FileInfo *fileInfo)
@@ -183,7 +183,7 @@ namespace remoting_remoting
 
        auto sizeSmallIconInPixels = psystemmetrics->get_small_icon_size_in_pixels();
 
-      m_pimagelistSmall->createImageList(sizeSmallIconInPixels, ::innate_subsystem::image_list::e_create_mask);
+      m_pimagelistSmall->createImageList(sizeSmallIconInPixels, ::subsystem_apex::image_list::e_create_mask);
 
         //HICON icon;
 

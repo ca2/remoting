@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/subsystem/_common_header.h"
+#include "subsystem_acme/_common_header.h"
 #include "Poller.h"
 #include "remoting/remoting_common/region/Region.h"
 #include "remoting/remoting_common/server_config/Configurator.h"
@@ -30,7 +30,7 @@
 Poller::Poller(UpdateKeeper *updateKeeper,
                UpdateListener *updateListener,
                ScreenGrabber *screenGrabber,
-               ::innate_subsystem::FrameBuffer *backupFrameBuffer,
+               ::subsystem_apex::FrameBuffer *backupFrameBuffer,
                critical_section *frameBufferCriticalSection,
                ::subsystem::LogWriter *log)
 : UpdateDetector(updateKeeper, updateListener),
@@ -57,7 +57,7 @@ void Poller::execute()
 {
   m_plogwriter->information("poller thread id = {}", getThreadId());
 
-  ::innate_subsystem::FrameBuffer *screenFrameBuffer;
+  ::subsystem_apex::FrameBuffer *screenFrameBuffer;
 
   {
     critical_section_lock al(m_fbMutex);

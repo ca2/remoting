@@ -28,14 +28,14 @@
 #include "Transport.h"
 #include "TransportFactory.h"
 
-#include "acme/subsystem/_common_header.h"
+#include "subsystem_acme/_common_header.h"
 #include "remoting/remoting_common/util/ResourceLoader.h"
 #include "remoting/remoting_common/util/Command.h"
 #include "remoting/remoting_common/server_config/Configurator.h"
 //#include "log_writer/LogWriter.h"
 
-#include "acme/subsystem/thread/Thread.h"
-//#include "acme/subsystem/thread/critical_section.h"
+#include "subsystem_acme/thread/Thread.h"
+//#include "subsystem_acme/thread/critical_section.h"
 
 #include "remoting_control_desktop/ControlGate.h"
 #include "remoting_control_desktop/ControlAuthException.h"
@@ -178,7 +178,7 @@ protected:
    */
   ControlProxy *m_serverControl;
   /**
-   * ::innate_subsystem::Control tray icon.
+   * ::subsystem_apex::Control tray icon.
    */
   ControlTrayIcon *m_trayIcon;
   /**

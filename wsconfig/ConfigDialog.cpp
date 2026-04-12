@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ConfigDialog.h"
 #include "remoting_node/resource.h"
-#include "acme/subsystem/_common_header.h"
+#include "subsystem_acme/_common_header.h"
 
 ConfigDialog::ConfigDialog(bool forService, ControlCommand *reloadConfigCommand)
 : BaseDialog(IDD_CONFIG),
@@ -101,10 +101,10 @@ void ConfigDialog::loadSettings()
 bool ConfigDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
   switch (controlID) {
-  case ::innate_subsystem::IDOK:
+  case ::subsystem_apex::IDOK:
     onOKButtonClick();
     break;
-  case ::innate_subsystem::IDCANCEL:
+  case ::subsystem_apex::IDCANCEL:
     onCancelButtonClick();
     break;
   case IDC_APPLY:

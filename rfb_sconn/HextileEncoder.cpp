@@ -43,10 +43,10 @@ int HextileEncoder::getCode() const
 }
 
 void HextileEncoder::sendRectangle(const ::int_rectangle &  rect,
-                                   const ::innate_subsystem::FrameBuffer *serverFb,
+                                   const ::subsystem_apex::FrameBuffer *serverFb,
                                    const EncodeOptions *options)
 {
-  const ::innate_subsystem::FrameBuffer *fb = m_pixelConverter->convert(rect, serverFb);
+  const ::subsystem_apex::FrameBuffer *fb = m_pixelConverter->convert(rect, serverFb);
 
   size_t bpp = fb->getBitsPerPixel();
   if (bpp == 8) {
@@ -62,11 +62,11 @@ void HextileEncoder::sendRectangle(const ::int_rectangle &  rect,
 
 template <class PIXEL_T>
 void HextileEncoder::hextileFunction(const ::int_rectangle &r,
-                                     const ::innate_subsystem::FrameBuffer *frameBuffer)
+                                     const ::subsystem_apex::FrameBuffer *frameBuffer)
 {
   ::int_rectangle t;
   PIXEL_T *buf;
-  ::innate_subsystem::FrameBuffer fb;
+  ::subsystem_apex::FrameBuffer fb;
   PIXEL_T oldBg = 0, oldFg = 0;
   bool oldBgValid = false;
   bool oldFgValid = false;

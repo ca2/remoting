@@ -24,16 +24,16 @@
 #include "framework.h"
 #include "PaintWindow.h"
 
-::innate_subsystem::PaintWindow::::innate_subsystem::PaintWindow()
+::subsystem_apex::PaintWindow::::subsystem_apex::PaintWindow()
  : m_bIsDraw(false)
 {
 }
 
-::innate_subsystem::PaintWindow::~::innate_subsystem::PaintWindow()
+::subsystem_apex::PaintWindow::~::subsystem_apex::PaintWindow()
 {
 }
 
-HDC ::innate_subsystem::PaintWindow::getHDCPaint()
+HDC ::subsystem_apex::PaintWindow::getHDCPaint()
 {
   if (!m_bIsDraw) {
     return 0;
@@ -41,12 +41,12 @@ HDC ::innate_subsystem::PaintWindow::getHDCPaint()
   return m_hdc;
 }
 
-//void ::innate_subsystem::PaintWindow::onPaint(DeviceContext *dc, PAINTSTRUCT *paintStruct)
-void ::innate_subsystem::PaintWindow::onPaint()
+//void ::subsystem_apex::PaintWindow::onPaint(DeviceContext *dc, PAINTSTRUCT *paintStruct)
+void ::subsystem_apex::PaintWindow::onPaint()
 {
 }
 
-bool ::innate_subsystem::PaintWindow::wndProc(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam)
+bool ::subsystem_apex::PaintWindow::wndProc(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam)
 {
   if (scopedstrMessage == WM_PAINT) {
     m_hdc = BeginPaint(m_hwnd, &m_paintStruct);

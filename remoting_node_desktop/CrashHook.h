@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "acme/subsystem/_common_header.h"
+#include "subsystem_acme/_common_header.h"
 #include "remoting/remoting_common/util/Singleton.h"
-//#include "acme/subsystem/thread/critical_section.h"
+//#include "subsystem_acme/thread/critical_section.h"
 #include "remoting/remoting_common/win_system/ApplicationCrashEvents.h"
 
 class CrashHook : private Singleton<CrashHook>

@@ -51,7 +51,7 @@ namespace remoting
    }
 
    void TightDecoder::decode(RfbInputGate *pinput,
-                             ::innate_subsystem::FrameBuffer *fb,
+                             ::subsystem_apex::FrameBuffer *fb,
                              const ::int_rectangle &  dstRect)
    {
       // The width of any Tight-encoded rectangle cannot exceed 2048
@@ -59,7 +59,7 @@ namespace remoting
       // and each one should be encoded separately.
 
       m_isCPixel = false;
-      ::innate_subsystem::PixelFormat pf = fb->getPixelFormat();
+      ::subsystem_apex::PixelFormat pf = fb->getPixelFormat();
       if (pf.colorDepth == 24 && pf.bitsPerPixel == 32 &&
           pf.redMax == 255 && pf.greenMax == 255 && pf.blueMax == 255) {
          m_isCPixel = true;
@@ -156,7 +156,7 @@ namespace remoting
    }
 
    void TightDecoder::processJpeg(RfbInputGate *pinput,
-                                  ::innate_subsystem::FrameBuffer *frameBuffer,
+                                  ::subsystem_apex::FrameBuffer *frameBuffer,
                                   const ::int_rectangle &  dstRect)
    {
       unsigned int jpegBufLen = readCompactSize(pinput);
@@ -188,7 +188,7 @@ namespace remoting
    }
 
    void TightDecoder::processBasicTypes(RfbInputGate *pinput,
-                                        ::innate_subsystem::FrameBuffer *fb,
+                                        ::subsystem_apex::FrameBuffer *fb,
                                         const ::int_rectangle &  dstRect,
                                         unsigned char compressionControl)
    {
@@ -295,7 +295,7 @@ namespace remoting
       }
    }
 
-   void TightDecoder::drawPalette(::innate_subsystem::FrameBuffer *fb,
+   void TightDecoder::drawPalette(::subsystem_apex::FrameBuffer *fb,
                                   const ::array_base<unsigned int> &palette,
                                   const ::array_base<unsigned char> &pixels,
                                   const ::int_rectangle &  dstRect)
@@ -336,7 +336,7 @@ namespace remoting
       }
    }
 
-   void TightDecoder::drawTightBytes(::innate_subsystem::FrameBuffer *fb,
+   void TightDecoder::drawTightBytes(::subsystem_apex::FrameBuffer *fb,
                                      const ::array_base<unsigned char> *pixels,
                                      const ::int_rectangle &  dstRect)
    {
@@ -356,7 +356,7 @@ namespace remoting
       }
    }
 
-   void TightDecoder::drawJpegBytes(::innate_subsystem::FrameBuffer *fb,
+   void TightDecoder::drawJpegBytes(::subsystem_apex::FrameBuffer *fb,
                                     const ::array_base<unsigned char> *pixels,
                                     const ::int_rectangle &  dstRect)
    {
@@ -366,7 +366,7 @@ namespace remoting
 
       int fbBytesPerPixel = fb->getBytesPerPixel();
       int bytesPerCPixel = 3;
-      ::innate_subsystem::PixelFormat pxFormat = fb->getPixelFormat();
+      ::subsystem_apex::PixelFormat pxFormat = fb->getPixelFormat();
 
       int dstLength = dstRect.area();
 
@@ -401,7 +401,7 @@ namespace remoting
     * component.
     */
 
-   void TightDecoder::drawGradient(::innate_subsystem::FrameBuffer *fb,
+   void TightDecoder::drawGradient(::subsystem_apex::FrameBuffer *fb,
                                    const ::array_base<unsigned char> &pixels,
                                    const ::int_rectangle &  dstRect)
    {
@@ -415,7 +415,7 @@ namespace remoting
       memset(opRows[0].data(), 0, opRowLength * sizeof(unsigned short));
       memset(opRows[1].data(), 0, opRowLength * sizeof(unsigned short));
 
-      ::innate_subsystem::PixelFormat pxFormat = fb->getPixelFormat();
+      ::subsystem_apex::PixelFormat pxFormat = fb->getPixelFormat();
       int fbBytesPerPixel = fb->getBytesPerPixel();
       int bytesPerCPixel = fbBytesPerPixel;
       if (m_isCPixel) {
@@ -451,7 +451,7 @@ namespace remoting
       }
    }
 
-   unsigned int TightDecoder::getRawTightColor(const ::innate_subsystem::PixelFormat & pxFormat,
+   unsigned int TightDecoder::getRawTightColor(const ::subsystem_apex::PixelFormat & pxFormat,
                                          const ::array_base<unsigned char> &pixels,
                                          const size_t offset)
    {
@@ -465,7 +465,7 @@ namespace remoting
       return rawColor;
    }
 
-   void TightDecoder::fillRawComponents(const ::innate_subsystem::PixelFormat & pxFormat,
+   void TightDecoder::fillRawComponents(const ::subsystem_apex::PixelFormat & pxFormat,
                                         unsigned char components[],
                                         const ::array_base<unsigned char> &pixels,
                                         const size_t pixelOffset)

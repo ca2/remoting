@@ -40,7 +40,7 @@ namespace remoting
       m_dc = CreateCompatibleDC(compatibleDevice->m_dc);
    }
 
-   DeviceContext::DeviceContext(::innate_subsystem::PaintWindow* pntWnd)
+   DeviceContext::DeviceContext(::subsystem_apex::PaintWindow* pntWnd)
    : m_wnd(0), m_hasOwnDC(false)
    {
       m_dc = pntWnd->getHDCPaint();

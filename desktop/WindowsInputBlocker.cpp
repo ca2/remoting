@@ -23,8 +23,8 @@
 //
 #include "framework.h"
 #include "WindowsInputBlocker.h"
-#include "acme/subsystem/Exception.h"
-//#include "acme/subsystem/thread/critical_section.h"
+#include "subsystem_acme/Exception.h"
+//#include "subsystem_acme/thread/critical_section.h"
 
 critical_section WindowsInputBlocker::m_instanceMutex;
 HHOOK WindowsInputBlocker::m_hKeyboardHook = 0;

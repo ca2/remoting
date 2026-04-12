@@ -25,11 +25,11 @@
 #pragma once
 
 
-#include "apex/innate_subsystem/Menu.h"
+#include "subsystem_apex/Menu.h"
 
 namespace remoting_remoting
 {
-    class ViewerMenu: public ::innate_subsystem::Menu
+    class ViewerMenu: public ::subsystem_apex::Menu
     {
     public:
         void loadMenu();

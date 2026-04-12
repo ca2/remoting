@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "WinDxRecoverableException.h"
 #include "WinDxCriticalException.h"
-//#include "acme/subsystem/thread/critical_section.h"
+//#include "subsystem_acme/thread/critical_section.h"
 
 #include "WinDxgiAcquiredFrame.h"
 #include "WinD3D11Texture2D.h"
@@ -32,7 +32,7 @@
 
 #include "Win8DeskDuplicationThread.h"
 
-Win8DeskDuplication::Win8DeskDuplication(::innate_subsystem::FrameBuffer *targetFb,
+Win8DeskDuplication::Win8DeskDuplication(::subsystem_apex::FrameBuffer *targetFb,
                                                      ::array_base<::int_rectangle> &targetRect,
                                                      Win8CursorShape *targetCurShape,
                                                      LONGLONG *cursorTimeStamp,

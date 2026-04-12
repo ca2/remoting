@@ -1082,7 +1082,7 @@ EXTERN(int) jpeg_consume_input JPP((j_decompress_ptr cinfo));
 EXTERN(void) jpeg_core_output_dimensions JPP((j_decompress_ptr cinfo));
 EXTERN(void) jpeg_calc_output_dimensions JPP((j_decompress_ptr cinfo));
 
-/* ::innate_subsystem::Control saving of COM and APPn markers into marker_list. */
+/* ::subsystem_apex::Control saving of COM and APPn markers into marker_list. */
 EXTERN(void) jpeg_save_markers
 	JPP((j_decompress_ptr cinfo, int marker_code,
 	     unsigned int length_limit));

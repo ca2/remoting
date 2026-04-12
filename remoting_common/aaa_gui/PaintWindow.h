@@ -25,14 +25,14 @@
 #pragma once
 
 
-#include "apex/innate_subsystem/BaseWindow.h"
-#include "apex/innate_subsystem/drawing/DeviceContext.h"
+#include "subsystem_apex/BaseWindow.h"
+#include "subsystem_apex/drawing/DeviceContext.h"
 
-class CLASS_DECL_REMOTING_COMMON ::innate_subsystem::PaintWindow: public BaseWindow
+class CLASS_DECL_REMOTING_COMMON ::subsystem_apex::PaintWindow: public BaseWindow
 {
 public:
-  ::innate_subsystem::PaintWindow();
-  virtual ~::innate_subsystem::PaintWindow();
+  ::subsystem_apex::PaintWindow();
+  virtual ~::subsystem_apex::PaintWindow();
 
 private:
   HDC getHDCPaint();

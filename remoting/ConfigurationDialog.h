@@ -29,21 +29,21 @@
 #include "remoting/remoting_common/client_config/ConnectionConfig.h"
 #include "remoting/remoting_common/client_config/ConnectionConfigSM.h"
 #include "remoting/remoting_common/client_config/ViewerSettingsManager.h"
-#include "acme/subsystem/StringParser.h"
-#include "acme/subsystem/node/OperatingSystemApplication.h"
-#include "apex/innate_subsystem/Dialog.h"
-#include "apex/innate_subsystem/Control.h"
-#include "apex/innate_subsystem/TextBox.h"
-#include "apex/innate_subsystem/CheckBox.h"
-#include "apex/innate_subsystem/SpinControl.h"
-#include "apex/innate_subsystem/ComboBox.h"
-#include "apex/innate_subsystem/TrackBar.h"
+#include "subsystem_acme/StringParser.h"
+#include "subsystem_acme/node/OperatingSystemApplication.h"
+#include "subsystem_apex/Dialog.h"
+#include "subsystem_apex/Control.h"
+#include "subsystem_apex/TextBox.h"
+#include "subsystem_apex/CheckBox.h"
+#include "subsystem_apex/SpinControl.h"
+#include "subsystem_apex/ComboBox.h"
+#include "subsystem_apex/TrackBar.h"
 #include "resource.h"
 
 //#include "remoting/remoting_common/win_system/WindowsApplication.h"
 namespace remoting_remoting
 {
-   class ConfigurationDialog : public ::innate_subsystem::Dialog
+   class ConfigurationDialog : public ::subsystem_apex::Dialog
    {
    public:
       ConfigurationDialog();
@@ -56,23 +56,23 @@ namespace remoting_remoting
       void onOpenFolderButtonClick();
       bool onInitDialog();
 
-      ::innate_subsystem::CheckBox  m_checkboxShowToolBars;
-      ::innate_subsystem::CheckBox m_checkboxWarnAtSwitching;
-      ::innate_subsystem::TextBox m_textboxNumberConn;
-      ::innate_subsystem::SpinControl m_spincontrolNumConn;
-      ::innate_subsystem::TextBox m_textboxReverseConn;
-      ::innate_subsystem::SpinControl  m_spincontrolReverseConn;
-      ::innate_subsystem::TextBox  m_textboxVerbLvl;
-      ::innate_subsystem::SpinControl  m_spincontrolVerbLvl;
-      ::innate_subsystem::TextBox  m_textboxLogging;
-      ::innate_subsystem::Control  m_controlOpenLogDir;
+      ::subsystem_apex::CheckBox  m_checkboxShowToolBars;
+      ::subsystem_apex::CheckBox m_checkboxWarnAtSwitching;
+      ::subsystem_apex::TextBox m_textboxNumberConn;
+      ::subsystem_apex::SpinControl m_spincontrolNumConn;
+      ::subsystem_apex::TextBox m_textboxReverseConn;
+      ::subsystem_apex::SpinControl  m_spincontrolReverseConn;
+      ::subsystem_apex::TextBox  m_textboxVerbLvl;
+      ::subsystem_apex::SpinControl  m_spincontrolVerbLvl;
+      ::subsystem_apex::TextBox  m_textboxLogging;
+      ::subsystem_apex::Control  m_controlOpenLogDir;
 
       ::subsystem::OperatingSystemApplicationInterface *m_application;
 
       //private:
       void updateControlValues();
       bool isInputValid();
-      bool testNum(::innate_subsystem::TextBoxInterface *tb, const ::scoped_string & scopedstrTbName);
+      bool testNum(::subsystem_apex::TextBoxInterface *tb, const ::scoped_string & scopedstrTbName);
       void onOkPressed();
    };
 } // namespace remoting_remoting

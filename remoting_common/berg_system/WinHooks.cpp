@@ -24,7 +24,7 @@
 #include "framework.h"
 //#include "acme/_operating_system.h"
 #include "WinHooks.h"
-#include "acme/subsystem/node/SystemException.h"
+#include "subsystem_acme/node/SystemException.h"
 
 HHOOK WinHooks::s_hooks = 0;
 HookEventListener *WinHooks::s_eventListener = 0;

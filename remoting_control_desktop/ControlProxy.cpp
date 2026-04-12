@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ControlProxy.h"
 #include "remoting_control_desktop/ControlProto.h"
-//#include "acme/subsystem/thread/critical_section.h"
+//#include "subsystem_acme/thread/critical_section.h"
 
 //#include aaa_<crtdbg.h>
 

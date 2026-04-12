@@ -263,8 +263,23 @@
     <Image Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows\subsystem_acme_windows\subsystem_acme_windows.vcxproj">
+      <Project>{f46e1b15-7a8a-4bbd-8dfa-85c7074e2daa}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows\subsystem_apex_windows\subsystem_apex_windows.vcxproj">
+      <Project>{31f3d4c6-61f7-4e68-8c48-6de00a2d7d78}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\app\acme\acme.vcxproj">
       <Project>{638b242f-0f21-41c3-9f66-724660046133}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\app\subsystem_acme\subsystem_acme.vcxproj">
+      <Project>{8cc36574-7cff-438f-ae5c-51fd5c6b2823}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\app\subsystem_apex\subsystem_apex.vcxproj">
+      <Project>{97d4f12a-916c-4cb2-b4d9-f0d35128065a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\app\subsystem_bsd_sockets\subsystem_bsd_sockets.vcxproj">
+      <Project>{40f49b85-a888-4a1d-a7f5-7631f14a3d4a}</Project>
     </ProjectReference>
     <ProjectReference Include="..\remoting_remoting_remoting.vcxproj">
       <Project>{082f71ad-cdf6-44de-84f7-9d2d16784b23}</Project>

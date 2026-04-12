@@ -23,8 +23,8 @@
 //
 #include "framework.h"
 #include "FileTransferReplyBuffer.h"
-#include "acme/subsystem/io/ByteArrayInputStream.h"
-//#include "acme/subsystem/thread/critical_section.h"
+#include "subsystem_acme/io/ByteArrayInputStream.h"
+//#include "subsystem_acme/thread/critical_section.h"
 //#include aaa_<crtdbg.h>
 
 namespace  remoting

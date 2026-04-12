@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include "apex/innate_subsystem/drawing/Graphics.h"
-#include "apex/innate_subsystem/drawing/Pen.h"
-#include "apex/innate_subsystem/drawing/SolidBrush.h"
+#include "subsystem_apex/drawing/Graphics.h"
+#include "subsystem_apex/drawing/Pen.h"
+#include "subsystem_apex/drawing/SolidBrush.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 class DesktopWindow;
 
@@ -35,12 +35,12 @@ namespace remoting_remoting
       virtual public ::particle
    {
    public:
-      ::innate_subsystem::SolidBrush m_brushBackground;
-      ::innate_subsystem::SolidBrush m_brushBackgroundHover;
-      ::innate_subsystem::SolidBrush m_brushButtonBackground;
-      ::innate_subsystem::SolidBrush m_brushButtonBackgroundHover;
-      ::innate_subsystem::SolidBrush m_brushButtonPaint;
-      ::innate_subsystem::Pen m_penPaint;
+      ::subsystem_apex::SolidBrush m_brushBackground;
+      ::subsystem_apex::SolidBrush m_brushBackgroundHover;
+      ::subsystem_apex::SolidBrush m_brushButtonBackground;
+      ::subsystem_apex::SolidBrush m_brushButtonBackgroundHover;
+      ::subsystem_apex::SolidBrush m_brushButtonPaint;
+      ::subsystem_apex::Pen m_penPaint;
 
       style();
       ~style() override;
@@ -54,7 +54,7 @@ namespace remoting_remoting
       DesktopWindow * m_pdesktopwindow = nullptr;
       control * m_pcontrolParent = nullptr;
       ::pointer < style > m_pstyle;
-      ::pointer < ::innate_subsystem::Pen > m_ppen001;
+      ::pointer < ::subsystem_apex::Pen > m_ppen001;
       ::int_rectangle m_rectangle;
       bool m_bHover = false;
       bool m_bLButtonDown = false;
@@ -67,8 +67,8 @@ namespace remoting_remoting
       enum_id m_eid;
       //Gdiplus::Bitmap * m_pbitmapBuffer = nullptr;
       //Gdiplus::Graphics * m_pgraphicsBuffer = nullptr;
-      ::pointer < ::innate_subsystem::BitmapInterface > m_pbitmapBuffer;
-      ::pointer < ::innate_subsystem::GraphicsInterface > m_pgraphicsBuffer;
+      ::pointer < ::subsystem_apex::BitmapInterface > m_pbitmapBuffer;
+      ::pointer < ::subsystem_apex::GraphicsInterface > m_pgraphicsBuffer;
 
       bool m_bNewRepaintRectangle;
       ::int_rectangle m_rectangleRepaint;
@@ -89,9 +89,9 @@ void set_hover_false();
       //virtual bool _001OnMouse(bool bPress, const ::int_point& pointRoot, const ::int_point& pointClient);
       virtual bool on_left_down(const ::int_point& position);
       virtual bool on_left_up(const ::int_point& position);
-      virtual void __000OnTopDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle);
-      virtual void __000OnDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle);
-      virtual void __001OnDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle);
+      virtual void __000OnTopDraw(::subsystem_apex::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle);
+      virtual void __000OnDraw(::subsystem_apex::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle);
+      virtual void __001OnDraw(::subsystem_apex::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle);
       virtual bool on_button_click(enum_id eid);
 
       virtual ::int_rectangle get_client_rectangle();
@@ -150,7 +150,7 @@ void set_hover_false();
       //::pointer<impact_toolbar_button> m_pbuttonClose;
       //int m_iDesktopWidth = 1920;
       //float m_fScale;
-      ::pointer < ::innate_subsystem::FontInterface > m_pfont001;
+      ::pointer < ::subsystem_apex::FontInterface > m_pfont001;
       ::pointer<toolbar_button> m_pbuttonMinimize;
       ::pointer<toolbar_button> m_pbuttonRestore;
       ::pointer<toolbar_button> m_pbuttonClose;
@@ -163,7 +163,7 @@ void set_hover_false();
       virtual void on_size();
 
       //bool on_mouse(bool bPress, const ::int_point& position);
-      void __001OnDraw(::innate_subsystem::GraphicsInterface *pgraphics, const ::int_rectangle & rectangle) override;
+      void __001OnDraw(::subsystem_apex::GraphicsInterface *pgraphics, const ::int_rectangle & rectangle) override;
       bool on_button_click(enum_id eid) override;
       bool _001OnMouseEx(unsigned int uMessage,  int iButtonMask, const ::int_point & pointRoot, const ::int_point& pointClient) override;
    };

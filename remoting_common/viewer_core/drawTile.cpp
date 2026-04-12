@@ -24,14 +24,14 @@
 #include "framework.h"
 #include "ZrleDecoder.h"
 
-#include "acme/subsystem/io/ByteArrayInputStream.h"
+#include "subsystem_acme/io/ByteArrayInputStream.h"
 
 //#include aaa_<vector>
 //#include aaa_<algorithm>
 
 namespace remoting
 {
-   void ZrleDecoder::drawTile(::innate_subsystem::FrameBuffer* fb,
+   void ZrleDecoder::drawTile(::subsystem_apex::FrameBuffer* fb,
        const ::int_rectangle& tileRect,
        const ::array_base<char>* pixels)
    {

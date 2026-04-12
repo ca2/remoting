@@ -32,7 +32,7 @@
 
 #include "remoting_node/resource.h"
 
-PasswordControl::PasswordControl(::innate_subsystem::Control *changeButton, ::innate_subsystem::Control *unsetButton)
+PasswordControl::PasswordControl(::subsystem_apex::Control *changeButton, ::subsystem_apex::Control *unsetButton)
 : m_enabled(true), 
   m_changeButton(changeButton), 
   m_unsetButton(unsetButton),
@@ -59,7 +59,7 @@ void PasswordControl::unsetPassword(bool promtUser, HWND parentWindow)
   if (promtUser) {
     if (main_subsystem()->message_box(parentWindow,
       main_subsystem()->string_table()->getString(IDS_UNSET_PASSWORD_PROMT),
-      main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL), ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) == ::innate_subsystem::IDNO) {
+      main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL), ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) == ::subsystem_apex::IDNO) {
       return;
     }
   }
@@ -104,11 +104,11 @@ const char *PasswordControl::getCryptedPassword() const
   return &m_cryptedPassword.front();
 }
 
-bool PasswordControl::showChangePasswordModalDialog(::innate_subsystem::Control *parent)
+bool PasswordControl::showChangePasswordModalDialog(::subsystem_apex::Control *parent)
 {
   ChangePasswordDialog changePasswordDialog(parent, m_state != NewPassword && m_state != ResetPassword);
 
-  if (changePasswordDialog.showModal() != ::innate_subsystem::IDOK) {
+  if (changePasswordDialog.showModal() != ::subsystem_apex::IDOK) {
     return false;
   }
 

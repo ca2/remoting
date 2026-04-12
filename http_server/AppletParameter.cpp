@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "AppletParameter.h"
 
-#include "acme/subsystem/_common_header.h"
+#include "subsystem_acme/_common_header.h"
 
 //#include aaa_<crtdbg.h>
 

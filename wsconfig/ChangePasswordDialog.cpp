@@ -30,7 +30,7 @@
 #include "remoting/remoting_common/util/VncPassCrypt.h"
 //#include "remoting/remoting_common/util/::string.h"
 
-ChangePasswordDialog::ChangePasswordDialog(::innate_subsystem::Control *parent, bool isNewPassword)
+ChangePasswordDialog::ChangePasswordDialog(::subsystem_apex::Control *parent, bool isNewPassword)
 : BaseDialog(IDD_CHANGE_PASSWORD), m_allowEmptyPassword(false), m_newPassword(isNewPassword)
 {
   setParent(parent);
@@ -69,10 +69,10 @@ bool ChangePasswordDialog::onCommand(unsigned int cID, unsigned int nID)
 {
   if (nID == ::user::e_notification_button_clicked) {
     switch (cID) {
-    case ::innate_subsystem::IDOK:
+    case ::subsystem_apex::IDOK:
       onOkButtonClick();
       break;
-    case ::innate_subsystem::IDCANCEL:
+    case ::subsystem_apex::IDCANCEL:
       onCancelButtonClick();
       break;
     }
@@ -106,12 +106,12 @@ void ChangePasswordDialog::onOkButtonClick()
 
   m_passwordText= password1;
 
-  kill(::innate_subsystem::IDOK);
+  kill(::subsystem_apex::IDOK);
 }
 
 void ChangePasswordDialog::onCancelButtonClick()
 {
-  kill(::innate_subsystem::IDCANCEL);
+  kill(::subsystem_apex::IDCANCEL);
 }
 
 void ChangePasswordDialog::initControls()

@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "acme/subsystem/io/DataOutputStream.h"
-#include "acme/subsystem/io/ByteArrayOutputStream.h"
+#include "subsystem_acme/io/DataOutputStream.h"
+#include "subsystem_acme/io/ByteArrayOutputStream.h"
 
-#include "acme/subsystem/_common_header.h"
+#include "subsystem_acme/_common_header.h"
 
 #include "RemoteException.h"
 #include "ControlGate.h"
@@ -102,7 +102,7 @@ private:
 
 private:
   /**
-   * ::innate_subsystem::Control gate.
+   * ::subsystem_apex::Control gate.
    */
   ControlGate *m_gate;
   /**
@@ -110,7 +110,7 @@ private:
    */
   ByteArrayOutputStream *m_tunnel;
   /**
-   * ::innate_subsystem::Control scopedstrMessage id.
+   * ::subsystem_apex::Control scopedstrMessage id.
    */
   unsigned int m_messageId;
 

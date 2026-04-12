@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "apex/innate_subsystem/BaseDialog.h"
-#include "apex/innate_subsystem/Window.h"
-#include "apex/innate_subsystem/ListBox.h"
+#include "subsystem_apex/BaseDialog.h"
+#include "subsystem_apex/Window.h"
+#include "subsystem_apex/ListBox.h"
 
 #include "remoting/remoting_common/server_config/Configurator.h"
 
@@ -65,8 +65,8 @@ private:
 
 protected:
   ListBox m_exPortsListBox;
-  ::innate_subsystem::Control m_editButton;
-  ::innate_subsystem::Control m_removeButton;
+  ::subsystem_apex::Control m_editButton;
+  ::subsystem_apex::Control m_removeButton;
 
   PortMappingContainer *m_extraPorts;
 

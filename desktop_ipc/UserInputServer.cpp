@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "UserInputServer.h"
-//#include "acme/subsystem/thread/critical_section.h"
+//#include "subsystem_acme/thread/critical_section.h"
 #include "remoting/remoting_common/util/BrokenHandleException.h"
 
 UserInputServer::UserInputServer(BlockingGate *forwGate,

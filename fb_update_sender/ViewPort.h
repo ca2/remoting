@@ -26,9 +26,9 @@
 
 
 #include "ViewPortState.h"
-#include "apex/innate_subsystem/framebuffer/FrameBuffer.h"
+#include "subsystem_apex/framebuffer/FrameBuffer.h"
 #include "desktop/Desktop.h"
-//#include "acme/subsystem/thread/critical_section.h"
+//#include "subsystem_acme/thread/critical_section.h"
 //#include "remoting/remoting_common/util/::earth::time.h"
 //#include "log_writer/LogWriter.h"
 

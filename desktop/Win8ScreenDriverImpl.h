@@ -26,11 +26,11 @@
 
 
 //#include "log_writer/LogWriter.h"
-#include "acme/subsystem/thread/GuiThread.h"
-#include "acme/subsystem/thread/ThreadCollector.h"
+#include "subsystem_acme/thread/GuiThread.h"
+#include "subsystem_acme/thread/ThreadCollector.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 
-#include "apex/innate_subsystem/framebuffer/FrameBuffer.h"
+#include "subsystem_apex/framebuffer/FrameBuffer.h"
 #include "Win8CursorShape.h"
 #include "UpdateKeeper.h"
 #include "UpdateListener.h"
@@ -51,7 +51,7 @@ public:
 
   bool grabFb(const ::int_rectangle &  rect);
 
-  virtual ::innate_subsystem::FrameBuffer *getScreenBuffer();
+  virtual ::subsystem_apex::FrameBuffer *getScreenBuffer();
 
   // Updates destination (*dst) cursor shape properties and data.
   void updateCursorShape(CursorShape *dst);
@@ -74,8 +74,8 @@ private:
 
   void initDxgi();
 
-  // This function always return the DX DXGI_FORMAT_B8G8R8A8_UNORM format in the ::innate_subsystem::PixelFormat type.
-  ::innate_subsystem::PixelFormat getDxPixelFormat() const;
+  // This function always return the DX DXGI_FORMAT_B8G8R8A8_UNORM format in the ::subsystem_apex::PixelFormat type.
+  ::subsystem_apex::PixelFormat getDxPixelFormat() const;
 
   ::subsystem::LogWriter *m_plogwriter;
 
@@ -91,7 +91,7 @@ private:
 
   // The frame buffer with appropriate properties creates once at the constructor time. And then
   // has these properties permanently.
-  ::innate_subsystem::FrameBuffer m_frameBuffer;
+  ::subsystem_apex::FrameBuffer m_frameBuffer;
 
   // Cursor's properties changes at all time. And then it should be safe by a local mutex.
   Point m_latestCursorPos;

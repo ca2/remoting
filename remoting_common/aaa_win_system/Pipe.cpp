@@ -24,10 +24,10 @@
 #include "framework.h"
 //#include "acme/_operating_system.h"
 #include "Pipe.h"
-#include "acme/subsystem/Exception.h"
+#include "subsystem_acme/Exception.h"
 //#include aaa_<crtdbg.h>
 //#include "remoting/remoting_common/win_system/Environment.h"
-//#include "acme/subsystem/thread/critical_section.h"
+//#include "subsystem_acme/thread/critical_section.h"
 
 Pipe::Pipe(unsigned int maxPortionSize)
 : m_totalRead(0),

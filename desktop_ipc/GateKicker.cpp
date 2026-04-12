@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "GateKicker.h"
-//#include "acme/subsystem/thread/critical_section.h"
+//#include "subsystem_acme/thread/critical_section.h"
 
 GateKicker::GateKicker(BlockingGate *gate)
 : m_gate(gate)

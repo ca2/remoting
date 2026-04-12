@@ -25,11 +25,11 @@
 #pragma once
 
 
-#include "acme/subsystem/_common_header.h"
+#include "subsystem_acme/_common_header.h"
 
 #include "NotifyIconWindow.h"
 
-#include "apex/innate_subsystem/drawing/Icon.h"
+#include "subsystem_apex/drawing/Icon.h"
 
 // #include aaa_<shellapi.h>
 

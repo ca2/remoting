@@ -28,7 +28,7 @@
 ConsolePoller::ConsolePoller(UpdateKeeper *updateKeeper,
                              UpdateListener *updateListener,
                              ScreenGrabber *screenGrabber,
-                             ::innate_subsystem::FrameBuffer *backupFrameBuffer,
+                             ::subsystem_apex::FrameBuffer *backupFrameBuffer,
                              critical_section *frameBufferMutex,
                              ::subsystem::LogWriter *log)
 : UpdateDetector(updateKeeper, updateListener),
@@ -67,7 +67,7 @@ void ConsolePoller::execute()
         critical_section_lock al(m_frameBufferMutex);
         ::int_rectangle offsetFb = m_screenGrabber->getScreenRect();
         conRect.move(-offsetFb.left, -offsetFb.top);
-        ::innate_subsystem::FrameBuffer *screenFrameBuffer = m_screenGrabber->getScreenBuffer();
+        ::subsystem_apex::FrameBuffer *screenFrameBuffer = m_screenGrabber->getScreenBuffer();
         if (screenFrameBuffer->isEqualTo(m_backupFrameBuffer)) {
           m_screenGrabber->grab(&conRect);
           for (int iRow = conRect.top; iRow < conRect.bottom; iRow += pollHeight) {

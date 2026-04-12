@@ -24,9 +24,9 @@
 #include "framework.h"
 //#include "acme/_operating_system.h"
 #include "DibSection.h"
-#include "acme/subsystem/node/SystemException.h"
+#include "subsystem_acme/node/SystemException.h"
 
-DibSection::DibSection(const ::innate_subsystem::PixelFormat & pf, const ::int_size & dim, HWND compatibleWin)
+DibSection::DibSection(const ::subsystem_apex::PixelFormat & pf, const ::int_size & dim, HWND compatibleWin)
 : m_isOwnTargetDC(false),
   m_targetDC(0),
   m_memDC(0),
@@ -113,7 +113,7 @@ void DibSection::stretchFromDibSection(const ::int_rectangle &  srcRect,const ::
   }
 }
 
-void DibSection::setupBMIStruct(BITMAPINFO *pBmi, const ::innate_subsystem::PixelFormat & pf, const ::int_size & dim)
+void DibSection::setupBMIStruct(BITMAPINFO *pBmi, const ::subsystem_apex::PixelFormat & pf, const ::int_size & dim)
 {
   if (pf.bitsPerPixel == 8) {
     Screen::Palette8bitBMI *paletteBMI = reinterpret_cast<Screen::Palette8bitBMI *>(pBmi);
@@ -146,7 +146,7 @@ void DibSection::setupBMIStruct(BITMAPINFO *pBmi, const ::innate_subsystem::Pixe
   pBmi->bmiHeader.biHeight = -dim.cy;
 }
 
-void DibSection::openDIBSection(const ::innate_subsystem::PixelFormat & pf, const ::int_size & dim, HWND compatibleWin)
+void DibSection::openDIBSection(const ::subsystem_apex::PixelFormat & pf, const ::int_size & dim, HWND compatibleWin)
 {
   m_targetDC = GetDC(compatibleWin);
   m_isOwnTargetDC = true;

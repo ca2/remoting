@@ -25,11 +25,11 @@
 #pragma once
 
 
-#include "acme/subsystem/_common_header.h"
-#include "apex/innate_subsystem/MessageWindow.h"
+#include "subsystem_acme/_common_header.h"
+#include "subsystem_apex/MessageWindow.h"
 #include "ClipboardListener.h"
 //#include "log_writer/LogWriter.h"
-#include "acme/subsystem/thread/GuiThread.h"
+#include "subsystem_acme/thread/GuiThread.h"
 
 class WindowsClipboard : protected MessageWindow, GuiThread
 {

@@ -27,10 +27,10 @@
 
 #include "PortMapping.h"
 
-#include "acme/subsystem/Exception.h"
+#include "subsystem_acme/Exception.h"
 
-#include "acme/subsystem/io/DataInputStream.h"
-#include "acme/subsystem/io/DataOutputStream.h"
+#include "subsystem_acme/io/DataInputStream.h"
+#include "subsystem_acme/io/DataOutputStream.h"
 
 //#include aaa_<vector>
 

@@ -24,7 +24,7 @@
 #include "framework.h"
 //#include "acme/_operating_system.h"
 #include "Screen.h"
-#include "acme/subsystem/Exception.h"
+#include "subsystem_acme/Exception.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 
 Screen::Screen()
@@ -45,7 +45,7 @@ void Screen::update()
   fillScreenRect();
 }
 
-::innate_subsystem::PixelFormat Screen::getPixelFormat()
+::subsystem_apex::PixelFormat Screen::getPixelFormat()
 {
   return m_pixelFormat;
 }
@@ -103,7 +103,7 @@ void Screen::getBMI(BMI *bmi, HDC dc)
 
 void Screen::fillPixelFormat(const BMI *bmi)
 {
-  memset(&m_pixelFormat, 0, sizeof(::innate_subsystem::PixelFormat));
+  memset(&m_pixelFormat, 0, sizeof(::subsystem_apex::PixelFormat));
 
   m_pixelFormat.initBigEndianByNative();
 

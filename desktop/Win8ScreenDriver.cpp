@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "Win8ScreenDriver.h"
-#include "acme/subsystem/Exception.h"
+#include "subsystem_acme/Exception.h"
 
 Win8ScreenDriver::Win8ScreenDriver(UpdateKeeper *updateKeeper,
                                    UpdateListener *updateListener,
@@ -73,7 +73,7 @@ void Win8ScreenDriver::terminateDetection()
   return m_drvImpl->getScreenBuffer()->getDimension();
 }
 
-::innate_subsystem::FrameBuffer *Win8ScreenDriver::getScreenBuffer()
+::subsystem_apex::FrameBuffer *Win8ScreenDriver::getScreenBuffer()
 {
   critical_section_lock al(&m_drvImplMutex);
   return m_drvImpl->getScreenBuffer();
@@ -117,7 +117,7 @@ bool Win8ScreenDriver::applyNewScreenProperties()
   return true;
 }
 
-bool Win8ScreenDriver::grabCursorShape(const ::innate_subsystem::PixelFormat & pf)
+bool Win8ScreenDriver::grabCursorShape(const ::subsystem_apex::PixelFormat & pf)
 {
   critical_section_lock al(&m_drvImplMutex);
   m_drvImpl->updateCursorShape(&m_cursorShape);

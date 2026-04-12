@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "CursorUpdates.h"
-//#include "acme/subsystem/thread/critical_section.h"
+//#include "subsystem_acme/thread/critical_section.h"
 
 CursorUpdates::CursorUpdates(::subsystem::LogWriter *log)
 : m_blockCurPosTime(0),
@@ -42,7 +42,7 @@ void CursorUpdates::update(const EncodeOptions *encodeOptions,
                            const ::int_rectangle & viewPort,
                            bool shareOnlyApp,
                            const Region *shareAppRegion,
-                           ::innate_subsystem::FrameBuffer *fb,
+                           ::subsystem_apex::FrameBuffer *fb,
                            CursorShape *cursorShape)
 {
   // Check cursor events. If they are outside of shared region then ignore they.
@@ -130,7 +130,7 @@ void CursorUpdates::update(const EncodeOptions *encodeOptions,
   }
 }
 
-void CursorUpdates::restoreFrameBuffer(::innate_subsystem::FrameBuffer *fb)
+void CursorUpdates::restoreFrameBuffer(::subsystem_apex::FrameBuffer *fb)
 {
   critical_section_lock al(&m_curPosLocMut);
   ::int_rectangle dstRect = m_shapeBackground.getDimension();
@@ -139,7 +139,7 @@ void CursorUpdates::restoreFrameBuffer(::innate_subsystem::FrameBuffer *fb)
   // m_shapeBackground.setDimension(&::int_size(0, 0));
 }
 
-void CursorUpdates::drawCursor(UpdateContainer *updCont, ::innate_subsystem::FrameBuffer *fb)
+void CursorUpdates::drawCursor(UpdateContainer *updCont, ::subsystem_apex::FrameBuffer *fb)
 {
   critical_section_lock al(&m_curPosLocMut);
   // Add previous background rectangle to the changed region.

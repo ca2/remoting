@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "acme/subsystem/Exception.h"
+#include "subsystem_acme/Exception.h"
 #include "remoting/remoting_common/rfb/StandardPixelFormatFactory.h"
 #include "WinDxCriticalException.h"
 #include "WinDxRecoverableException.h"
@@ -94,7 +94,7 @@ void Win8ScreenDriverImpl::terminateDetection()
   m_detectionEnabled = false;
 }
 
-::innate_subsystem::FrameBuffer *Win8ScreenDriverImpl::getScreenBuffer()
+::subsystem_apex::FrameBuffer *Win8ScreenDriverImpl::getScreenBuffer()
 {
   return &m_frameBuffer;
 }
@@ -137,7 +137,7 @@ void Win8ScreenDriverImpl::initDxgi()
     throw ::subsystem::Exception("Unable get all DXGI outputs for virtual screen");
   }
 
-  ::innate_subsystem::PixelFormat pf = getDxPixelFormat();
+  ::subsystem_apex::PixelFormat pf = getDxPixelFormat();
   ::int_rectangle virtDeskBoundRect = virtDeskRegion.getBounds();
   m_frameBuffer.setProperties(&virtDeskBoundRect, &pf);
   m_frameBuffer.setColor(0, 0, 0);
@@ -259,7 +259,7 @@ bool Win8ScreenDriverImpl::isValid()
   return !m_hasRecoverableError && !m_hasCriticalError;
 }
 
-::innate_subsystem::PixelFormat Win8ScreenDriverImpl::getDxPixelFormat() const
+::subsystem_apex::PixelFormat Win8ScreenDriverImpl::getDxPixelFormat() const
 {
   return StandardPixelFormatFactory::create32bppPixelFormat();
 }

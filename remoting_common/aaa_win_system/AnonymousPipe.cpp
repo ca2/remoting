@@ -25,7 +25,7 @@
 //#include "acme/_operating_system.h"
 #include "AnonymousPipe.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
-//#include "acme/subsystem/thread/critical_section.h"
+//#include "subsystem_acme/thread/critical_section.h"
 
 AnonymousPipe::AnonymousPipe(HANDLE hWrite, HANDLE hRead, unsigned int maxPortionSize, ::subsystem::LogWriter *log)
 : Pipe(maxPortionSize),

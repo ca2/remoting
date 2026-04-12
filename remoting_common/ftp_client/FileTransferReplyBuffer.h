@@ -27,11 +27,11 @@
 
 #include "FileTransferEventHandler.h"
 
-#include "acme/subsystem/io/DataInputStream.h"
+#include "subsystem_acme/io/DataInputStream.h"
 
 #include "remoting/remoting_common/ftp_common/FileInfo.h"
-#include "acme/subsystem/Inflater.h"
-#include "acme/subsystem/ZLibException.h"
+#include "subsystem_acme/Inflater.h"
+#include "subsystem_acme/ZLibException.h"
 
 #include "remoting/remoting_common/ftp_common/OperationNotSupportedException.h"
 

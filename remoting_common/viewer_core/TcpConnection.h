@@ -30,8 +30,8 @@
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 //#include "remoting/remoting_common/network/socket/SocketIPv4.h"
 //#include "remoting/remoting_common/network/socket/SocketStream.h"
-//#include "acme/subsystem/thread/critical_section.h"
-#include "acme/subsystem/io/BufferedInputStream.h"
+//#include "subsystem_acme/thread/critical_section.h"
+#include "subsystem_acme/io/BufferedInputStream.h"
 
 
 namespace remoting

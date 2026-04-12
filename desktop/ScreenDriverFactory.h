@@ -35,7 +35,7 @@ class ScreenDriverFactory
 public:
   virtual ScreenDriver *createScreenDriver(UpdateKeeper *updateKeeper,
                                              UpdateListener *updateListener,
-                                             ::innate_subsystem::FrameBuffer *fb,
+                                             ::subsystem_apex::FrameBuffer *fb,
                                              critical_section *fbcritical_section,
                                              ::subsystem::LogWriter *log) = 0;
 private:

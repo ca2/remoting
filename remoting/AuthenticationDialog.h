@@ -25,15 +25,15 @@
 #pragma once
 
 
-#include "apex/innate_subsystem/Dialog.h"
-#include "apex/innate_subsystem/TextBox.h"
+#include "subsystem_apex/Dialog.h"
+#include "subsystem_apex/TextBox.h"
 #include "resource.h"
 
 
 namespace remoting_remoting
 {
     class AuthenticationDialog :
-    virtual public innate_subsystem::Dialog
+    virtual public subsystem_apex::Dialog
     {
     public:
         AuthenticationDialog();
@@ -51,8 +51,8 @@ namespace remoting_remoting
         bool onCommand(unsigned int controlID, unsigned int notificationID);
         bool onInitDialog();
 
-        ::pointer < ::innate_subsystem::TextBox > m_ptextboxPassword;
-        ::pointer < ::innate_subsystem::TextBox > m_ptextboxHostname;
+        ::pointer < ::subsystem_apex::TextBox > m_ptextboxPassword;
+        ::pointer < ::subsystem_apex::TextBox > m_ptextboxHostname;
         ::string m_strPassword;
         ::string m_strHost;
     };

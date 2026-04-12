@@ -92,10 +92,10 @@ bool OutgoingConnectionDialog::onNotify(unsigned int controlID, ::lparam data)
 bool OutgoingConnectionDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
   switch (controlID) {
-  case ::innate_subsystem::IDOK:
+  case ::subsystem_apex::IDOK:
     onOkButtonClick();
     break;
-  case ::innate_subsystem::IDCANCEL:
+  case ::subsystem_apex::IDCANCEL:
     onCancelButtonClick();
     break;
   }
@@ -119,10 +119,10 @@ void OutgoingConnectionDialog::onOkButtonClick()
   m_connHistory.save();
   m_connHistory.rear_truncate();
 
-  kill(::innate_subsystem::IDOK);
+  kill(::subsystem_apex::IDOK);
 }
 
 void OutgoingConnectionDialog::onCancelButtonClick()
 {
-  kill(::innate_subsystem::IDCANCEL);
+  kill(::subsystem_apex::IDCANCEL);
 }

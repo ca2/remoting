@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "acme/subsystem/thread/Thread.h"
-#include "acme/subsystem/Process.h"
+#include "subsystem_acme/thread/Thread.h"
+#include "subsystem_acme/Process.h"
 //#include "log_writer/LogWriter.h"
 #include "desktop_ipc/ReconnectionListener.h"
 

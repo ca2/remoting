@@ -23,12 +23,12 @@
 //
 #include "framework.h"
 #include "UpdateFilter.h"
-#include "acme/subsystem/_common_header.h"
+#include "subsystem_acme/_common_header.h"
 
 static const int BLOCK_SIZE = 32;
 
 UpdateFilter::UpdateFilter(ScreenDriver *screenDriver,
-                           ::innate_subsystem::FrameBuffer *frameBuffer,
+                           ::subsystem_apex::FrameBuffer *frameBuffer,
                            critical_section *frameBufferCriticalSection,
                            ::subsystem::LogWriter *log)
 : m_screenDriver(screenDriver),
@@ -48,7 +48,7 @@ void UpdateFilter::filter(UpdateContainer *updateContainer)
   m_plogwriter->debug("UpdateFilter::filter()");
   critical_section_lock al(m_fbMutex);
 
-  ::innate_subsystem::FrameBuffer *screenFrameBuffer = m_screenDriver->getScreenBuffer();
+  ::subsystem_apex::FrameBuffer *screenFrameBuffer = m_screenDriver->getScreenBuffer();
 
   // Checking for buffers equal
   m_plogwriter->debug("UpdateFilter::filter : Checking for buffers equal");

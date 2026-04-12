@@ -27,7 +27,7 @@
 
 #include "UpdateDetector.h"
 #include "ScreenGrabber.h"
-#include "apex/innate_subsystem/framebuffer/FrameBuffer.h"
+#include "subsystem_apex/framebuffer/FrameBuffer.h"
 
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 //#include "log_writer/LogWriter.h"
@@ -40,7 +40,7 @@ public:
   Poller(UpdateKeeper *updateKeeper,
          UpdateListener *updateListener,
          ScreenGrabber *screenGrabber,
-         ::innate_subsystem::FrameBuffer *backupFrameBuffer,
+         ::subsystem_apex::FrameBuffer *backupFrameBuffer,
          critical_section *frameBufferCriticalSection,
          ::subsystem::LogWriter *log);
 
@@ -52,7 +52,7 @@ protected:
 
 private:
   ScreenGrabber *m_screenGrabber;
-  ::innate_subsystem::FrameBuffer *m_backupFrameBuffer;
+  ::subsystem_apex::FrameBuffer *m_backupFrameBuffer;
   critical_section *m_fbMutex;
   ::int_rectangle m_pollingRect;
   WindowsEvent m_intervalWaiter;

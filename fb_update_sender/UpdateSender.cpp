@@ -30,7 +30,7 @@
 //#include aaa_<vector>
 //#include aaa_<algorithm>
 #include "remoting/remoting_common/util/inttypes.h"
-#include "acme/subsystem/Exception.h"
+#include "subsystem_acme/Exception.h"
 #include "UpdSenderMsgDefs.h"
 #include "rfb_sconn/ClipboardExchange.h"
 
@@ -128,7 +128,7 @@ void UpdateSender::onRequest(unsigned int reqCode, RfbInputGate *input)
 }
 
 void UpdateSender::init(const ::int_size & viewPortDimension,
-                        const ::innate_subsystem::PixelFormat & pf)
+                        const ::subsystem_apex::PixelFormat & pf)
 {
   setClientPixelFormat(pf, false);
   {
@@ -238,14 +238,14 @@ void UpdateSender::sendNewFBSize(::int_size *dim, bool extended)
 }
 
 void UpdateSender::sendFbInClientDim(const EncodeOptions *encodeOptions,
-                                     const ::innate_subsystem::FrameBuffer *fb,
+                                     const ::subsystem_apex::FrameBuffer *fb,
                                      const ::int_size & dim,
-                                     const ::innate_subsystem::PixelFormat & pf)
+                                     const ::subsystem_apex::PixelFormat & pf)
 {
   // On the black frame buffer will be overlayed the current framebuffer.
   // This is needed to combine the server frame buffer with a client frame
   // buffer when the dimensions are not equal.
-  ::innate_subsystem::FrameBuffer blankFrameBuffer;
+  ::subsystem_apex::FrameBuffer blankFrameBuffer;
   blankFrameBuffer.setProperties(dim, pf);
   blankFrameBuffer.setColor(0, 0, 0);
   blankFrameBuffer.copyFrom(fb, 0, 0);
@@ -264,7 +264,7 @@ void UpdateSender::sendFbInClientDim(const EncodeOptions *encodeOptions,
   sendRectangles(m_enbox.getEncoder(), &rects, &blankFrameBuffer, encodeOptions);
 }
 
-void UpdateSender::sendCursorShapeUpdate(const ::innate_subsystem::PixelFormat & fmt,
+void UpdateSender::sendCursorShapeUpdate(const ::subsystem_apex::PixelFormat & fmt,
                                          const CursorShape *cursorShape)
 {
   // Send pseudo-rectangle.
@@ -273,7 +273,7 @@ void UpdateSender::sendCursorShapeUpdate(const ::innate_subsystem::PixelFormat &
   sendRectHeader(hotSpot.x, hotSpot.y, dim.cx, dim.cy,
                  PseudoEncDefs::RICH_CURSOR);
 
-  ::innate_subsystem::FrameBuffer fbConverted;
+  ::subsystem_apex::FrameBuffer fbConverted;
   fbConverted.setProperties(dim, fmt);
   ::int_rectangle rectangleFromDimension(dim);
   m_pixelConverter.convert(rectangleFromDimension, &fbConverted,
@@ -310,7 +310,7 @@ void UpdateSender::sendCopyRect(const ::array_base<::int_rectangle> *rects, cons
   }
 }
 
-void UpdateSender::sendPalette(::innate_subsystem::PixelFormat *pf)
+void UpdateSender::sendPalette(::subsystem_apex::PixelFormat *pf)
 {
   m_output->writeUInt8(1); // type
   m_output->writeUInt8(0); // pad
@@ -369,7 +369,7 @@ void UpdateSender::sendUpdate()
                                         &shareAppRegion);
 
   updateFrameBuffer(&updCont, shareOnlyApp, &prevShareAppRegion, &shareAppRegion);
-  ::innate_subsystem::FrameBuffer *frameBuffer = &m_frameBuffer;
+  ::subsystem_apex::FrameBuffer *frameBuffer = &m_frameBuffer;
 
   critical_section_lock l(m_output);
 
@@ -414,9 +414,9 @@ void UpdateSender::sendUpdate()
 
   // Update pixel converter for effective pixel formats. We must do this
   // before using encoders.
-  const ::innate_subsystem::PixelFormat serverPixelFormat = frameBuffer->getPixelFormat();
+  const ::subsystem_apex::PixelFormat serverPixelFormat = frameBuffer->getPixelFormat();
   bool setColorMapEntr;
-  ::innate_subsystem::PixelFormat clientPixelFormat;
+  ::subsystem_apex::PixelFormat clientPixelFormat;
   {
     critical_section_lock lock(&m_newPixelFormatLocker);
     clientPixelFormat = m_newPixelFormat;
@@ -646,7 +646,7 @@ void UpdateSender::sendUpdate()
 //  m_plogwriter->checkPoint("5 sendUpdate() end");
 }
 
-void UpdateSender::paintBlack(::innate_subsystem::FrameBuffer *frameBuffer, const Region *blackRegion)
+void UpdateSender::paintBlack(::subsystem_apex::FrameBuffer *frameBuffer, const Region *blackRegion)
 {
   ::array_base<::int_rectangle> blackRects;
   blackRegion->getRectVector(&blackRects);
@@ -658,7 +658,7 @@ void UpdateSender::paintBlack(::innate_subsystem::FrameBuffer *frameBuffer, cons
 void UpdateSender::splitRegion(Encoder *encoder,
                                const Region *region,
                                ::array_base<::int_rectangle> *rects,
-                               const ::innate_subsystem::FrameBuffer *frameBuffer,
+                               const ::subsystem_apex::FrameBuffer *frameBuffer,
                                const EncodeOptions *encodeOptions)
 {
   ::array_base<::int_rectangle> baseRects;
@@ -671,7 +671,7 @@ void UpdateSender::splitRegion(Encoder *encoder,
 
 void UpdateSender::sendRectangles(Encoder *encoder,
                                   const ::array_base<::int_rectangle> *rects,
-                                  const ::innate_subsystem::FrameBuffer *frameBuffer,
+                                  const ::subsystem_apex::FrameBuffer *frameBuffer,
                                   const EncodeOptions *encodeOptions)
 {
   ::array_base<::int_rectangle>::const_iterator i;
@@ -756,7 +756,7 @@ void UpdateSender::readUpdateRequest(RfbInputGate *io)
 
 void UpdateSender::readSetPixelFormat(RfbInputGate *io)
 {
-  ::innate_subsystem::PixelFormat pf;
+  ::subsystem_apex::PixelFormat pf;
   // Read padding
   io->readUInt16();
   io->readUInt8();
@@ -798,7 +798,7 @@ void UpdateSender::readSetPixelFormat(RfbInputGate *io)
   setClientPixelFormat(&pf, setColorMapEntr);
 }
 
-void UpdateSender::setClientPixelFormat(const ::innate_subsystem::PixelFormat & pf,
+void UpdateSender::setClientPixelFormat(const ::subsystem_apex::PixelFormat & pf,
                                         bool clrMapEntries)
 {
   critical_section_lock al(&m_newPixelFormatLocker);

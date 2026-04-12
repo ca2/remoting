@@ -141,7 +141,7 @@ bool SetPasswordsDialog::onCommand(unsigned int controlID, unsigned int notifica
     readRadio();
     updateEditControls();
   }
-  if (controlID == ::innate_subsystem::IDOK) {
+  if (controlID == ::subsystem_apex::IDOK) {
     onOkButtonClick();
   }
   return false;
@@ -202,7 +202,7 @@ void SetPasswordsDialog::onOkButtonClick()
 
     m_admPass= admPass1;
   }
-  kill(::innate_subsystem::IDOK);
+  kill(::subsystem_apex::IDOK);
 }
 
 void SetPasswordsDialog::readRadio()
@@ -223,6 +223,6 @@ void SetPasswordsDialog::updateEditControls()
 
 bool SetPasswordsDialog::onClose()
 {
-  kill(::innate_subsystem::IDCANCEL);
+  kill(::subsystem_apex::IDCANCEL);
   return false;
 }

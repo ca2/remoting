@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "KeySymTest.h"
-#include "acme/subsystem/Exception.h"
+#include "subsystem_acme/Exception.h"
 // #include aaa_<stdio.h>
 
 int _tmain(int argc, TCHAR *argv[])

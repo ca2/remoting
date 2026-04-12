@@ -26,11 +26,11 @@
 
 
 ////////#include "remoting/remoting_common/util/::string.h"
-#include "acme/subsystem/Singleton.h"
+#include "subsystem_acme/Singleton.h"
 #include "remoting/remoting_common/config/ConnectionHistory.h"
 //#include "log_writer/FileLogWriter.h"
-////#include "acme/subsystem/thread/critical_section.h"
-////#include "acme/subsystem/thread/critical_section.h"
+////#include "subsystem_acme/thread/critical_section.h"
+////#include "subsystem_acme/thread/critical_section.h"
 
 #include "remoting/remoting_common/client_config/ConnectionConfig.h"
 
@@ -73,7 +73,7 @@ namespace remoting
 
       // Creates path to log file and place value to m_pathToLogFile member
       // creates ::subsystem::LogWriter and return pointer to him
-      ::subsystem::LogWriter *initLog(const ::file::path &path, const ::scoped_string & scopedstrLogName, bool useSpecialFolder = true);
+      //::subsystem::LogWriter *initLog(const ::file::path &path, const ::scoped_string & scopedstrLogName, bool useSpecialFolder = true);
 
       // function return pointer to ::subsystem::LogWriter
       ::subsystem::LogWriter *getLogWriter();
@@ -116,7 +116,7 @@ namespace remoting
       // Log file
       ::string m_pathToLogFile;
       ::string m_logName;
-      //FileLogWriter *m_LogWriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
       // Connection history
       //RegistryKey m_conHistoryKey; // Used by m_conHistory
       ConnectionHistory m_conHistory;

@@ -25,12 +25,12 @@
 #pragma once
 
 
-#include "apex/innate_subsystem/Dialog.h"
-#include "apex/innate_subsystem/Control.h"
-#include "apex/innate_subsystem/TextBox.h"
-#include "apex/innate_subsystem/ComboBox.h"
-#include "apex/innate_subsystem/ImagedButton.h"
-#include "apex/innate_subsystem/ProgressBar.h"
+#include "subsystem_apex/Dialog.h"
+#include "subsystem_apex/Control.h"
+#include "subsystem_apex/TextBox.h"
+#include "subsystem_apex/ComboBox.h"
+#include "subsystem_apex/ImagedButton.h"
+#include "subsystem_apex/ProgressBar.h"
 
 #include "remoting/remoting_common/ftp_common/FileInfo.h"
 
@@ -38,13 +38,13 @@
 
 #include "FileInfoListView.h"
 #include "FileExistDialog.h"
-#include "acme/subsystem/thread/Thread.h"
+#include "subsystem_acme/thread/Thread.h"
 #include "remoting/remoting_common/ftp_client/FileTransferInterface.h"
 
 //#include aaa_<vector>
 namespace remoting_remoting
 {
-    class FileTransferMainDialog : public ::innate_subsystem::Dialog,
+    class FileTransferMainDialog : public ::subsystem_apex::Dialog,
                                    public ::remoting::ftp::FileTransferInterface
     {
     public:
@@ -228,39 +228,39 @@ namespace remoting_remoting
         // Buttons
         //
 
-        ::innate_subsystem::Control m_renameRemoteButton;
-        ::innate_subsystem::Control m_mkDirRemoteButton;
-        ::innate_subsystem::Control m_removeRemoteButton;
-        ::innate_subsystem::Control m_refreshRemoteButton;
+        ::subsystem_apex::Control m_renameRemoteButton;
+        ::subsystem_apex::Control m_mkDirRemoteButton;
+        ::subsystem_apex::Control m_removeRemoteButton;
+        ::subsystem_apex::Control m_refreshRemoteButton;
 
-        ::innate_subsystem::Control m_renameLocalButton;
-        ::innate_subsystem::Control m_mkDirLocalButton;
-        ::innate_subsystem::Control m_removeLocalButton;
-        ::innate_subsystem::Control m_refreshLocalButton;
+        ::subsystem_apex::Control m_renameLocalButton;
+        ::subsystem_apex::Control m_mkDirLocalButton;
+        ::subsystem_apex::Control m_removeLocalButton;
+        ::subsystem_apex::Control m_refreshLocalButton;
 
-        ::innate_subsystem::Control m_uploadButton;
-        ::innate_subsystem::Control m_downloadButton;
+        ::subsystem_apex::Control m_uploadButton;
+        ::subsystem_apex::Control m_downloadButton;
 
-        ::innate_subsystem::Control m_cancelButton;
+        ::subsystem_apex::Control m_cancelButton;
 
         //
         // Progress bar
         //
 
-        ::innate_subsystem::ProgressBar m_copyProgressBar;
+        ::subsystem_apex::ProgressBar m_copyProgressBar;
 
         //
         // Combo box
         //
 
-        ::innate_subsystem::ComboBox m_logComboBox;
+        ::subsystem_apex::ComboBox m_logComboBox;
 
         //
         // Text boxes
         //
 
-        ::innate_subsystem::TextBox m_localCurFolderTextBox;
-        ::innate_subsystem::TextBox m_remoteCurFolderTextBox;
+        ::subsystem_apex::TextBox m_localCurFolderTextBox;
+        ::subsystem_apex::TextBox m_remoteCurFolderTextBox;
 
         //
         // Tables

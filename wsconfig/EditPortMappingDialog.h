@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "apex/innate_subsystem/BaseDialog.h"
-#include "apex/innate_subsystem/TextBox.h"
+#include "subsystem_apex/BaseDialog.h"
+#include "subsystem_apex/TextBox.h"
 
 #include "remoting/remoting_common/server_config/PortMapping.h"
 

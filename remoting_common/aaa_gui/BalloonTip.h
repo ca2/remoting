@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "acme/subsystem/_common_header.h"
+#include "subsystem_acme/_common_header.h"
 #include "Tooltip.h"
 // #include aaa_<commctrl.h>
 
@@ -39,7 +39,7 @@ public:
   BalloonTip();
   virtual ~BalloonTip();
 
-  void showTooltip(::innate_subsystem::Control *control);
+  void showTooltip(::subsystem_apex::Control *control);
 
   void setText(const ::scoped_string & scopedstrText);
   void setTitle(const ::scoped_string & scopedstrCaption);

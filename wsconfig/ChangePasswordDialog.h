@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "apex/innate_subsystem/BaseDialog.h"
-#include "apex/innate_subsystem/TextBox.h"
-#include "apex/innate_subsystem/BalloonTip.h"
+#include "subsystem_apex/BaseDialog.h"
+#include "subsystem_apex/TextBox.h"
+#include "subsystem_apex/BalloonTip.h"
 //////#include "remoting/remoting_common/util/::string.h"
 
 class ChangePasswordDialog : public BaseDialog
@@ -38,7 +38,7 @@ public:
   @param parent - parent dialog, optional (can be null).
   @param isNewPassword - flag determinates caption of dialog.
   */
-  ChangePasswordDialog(::innate_subsystem::Control *parent, bool isNewPassword);
+  ChangePasswordDialog(::subsystem_apex::Control *parent, bool isNewPassword);
   virtual ~ChangePasswordDialog();
 
   /**

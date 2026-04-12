@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "Win32MirrorScreenDriver.h"
-#include "acme/subsystem/Exception.h"
+#include "subsystem_acme/Exception.h"
 
 Win32MirrorScreenDriver::Win32MirrorScreenDriver(UpdateKeeper *updateKeeper,
                                                  UpdateListener *updateListener,
@@ -57,7 +57,7 @@ void Win32MirrorScreenDriver::terminateDetection()
   return m_mirrorDriver.getScreenDimension();
 }
 
-::innate_subsystem::FrameBuffer *Win32MirrorScreenDriver::getScreenBuffer()
+::subsystem_apex::FrameBuffer *Win32MirrorScreenDriver::getScreenBuffer()
 {
   return m_mirrorDriver.getScreenBuffer();
 }

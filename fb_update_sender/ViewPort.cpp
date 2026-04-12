@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "ViewPort.h"
-//#include "acme/subsystem/thread/critical_section.h"
+//#include "subsystem_acme/thread/critical_section.h"
 #include "remoting/remoting_common/util/BrokenHandleException.h"
 
 ViewPort::ViewPort(::subsystem::LogWriter *log)
@@ -104,7 +104,7 @@ void ViewPort::update(const ::int_size & fbDimension)
   if (m_rect.width() < 0 || m_rect.height() < 0) {
     m_rect.Null();
   }
-  m_plogwriter->debug("Constrained (to the ::innate_subsystem::FrameBuffer dimension) view port coordinates: ({}, {} %dx{})",
+  m_plogwriter->debug("Constrained (to the ::subsystem_apex::FrameBuffer dimension) view port coordinates: ({}, {} %dx{})",
     rect.left, rect.top, rect.width(), rect.height());
 }
 

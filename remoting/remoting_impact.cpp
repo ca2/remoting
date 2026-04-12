@@ -23,10 +23,10 @@
 //
 #include "framework.h"
 #include "remoting_impact.h"
-#include "acme/subsystem/socket/SocketIPv4.h"
-#include "apex/innate_subsystem/resource_loader.h"
+#include "subsystem_acme/socket/SocketIPv4.h"
+#include "subsystem_apex/resource_loader.h"
 #include "resource.h"
-#include "apex/innate_subsystem/subsystem.h"
+#include "subsystem_apex/subsystem.h"
 #include "remoting/remoting_common/remoting.h"
 
 

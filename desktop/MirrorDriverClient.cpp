@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "MirrorDriverClient.h"
-#include "acme/subsystem/Exception.h"
+#include "subsystem_acme/Exception.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 // FIXME: Why the class should depence from the remoting_node_desktop project?
 #include "remoting_node_desktop/NamingDefs.h"
@@ -89,7 +89,7 @@ void MirrorDriverClient::dispose()
   }
 }
 
-::innate_subsystem::PixelFormat MirrorDriverClient::getPixelFormat() const
+::subsystem_apex::PixelFormat MirrorDriverClient::getPixelFormat() const
 {
   return m_pixelFormat;
 }

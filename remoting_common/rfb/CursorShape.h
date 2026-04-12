@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "apex/innate_subsystem/framebuffer/FrameBuffer.h"
+#include "subsystem_apex/framebuffer/FrameBuffer.h"
 //#include "remoting/remoting_common/region/::int_point.h"
 
 namespace remoting
@@ -43,13 +43,13 @@ namespace remoting
       bool setDimension(const ::int_size & newDim);
       ::int_size getDimension() const { return m_pixels.getDimension(); }
 
-      bool setPixelFormat(const ::innate_subsystem::PixelFormat & pixelFormat);
-      ::innate_subsystem::PixelFormat getPixelFormat() const { return m_pixels.getPixelFormat(); }
+      bool setPixelFormat(const ::subsystem_apex::PixelFormat & pixelFormat);
+      ::subsystem_apex::PixelFormat getPixelFormat() const { return m_pixels.getPixelFormat(); }
 
-      // This function set both ::innate_subsystem::PixelFormat and ::int_size
-      bool setProperties(const ::int_size & newDim, const ::innate_subsystem::PixelFormat & pixelFormat);
+      // This function set both ::subsystem_apex::PixelFormat and ::int_size
+      bool setProperties(const ::int_size & newDim, const ::subsystem_apex::PixelFormat & pixelFormat);
 
-      const ::innate_subsystem::FrameBuffer *getPixels() const { return &m_pixels; }
+      const ::subsystem_apex::FrameBuffer *getPixels() const { return &m_pixels; }
       int getPixelsSize() const { return m_pixels.getBufferSize(); }
       const char *getMask() const { return m_mask.empty() ? 0 : m_mask.data(); }
       void assignMaskFromRfb(const char *srcMask);
@@ -67,7 +67,7 @@ namespace remoting
    private:
       bool resizeBuffer();
 
-      ::innate_subsystem::FrameBuffer m_pixels;
+      ::subsystem_apex::FrameBuffer m_pixels;
       ::array_base<char> m_mask;
       ::int_point m_hotSpot;
    };

@@ -27,9 +27,9 @@
 
 #include "remoting/remoting_common/server_config/Configurator.h"
 
-#include "apex/innate_subsystem/BaseDialog.h"
-#include "apex/innate_subsystem/TextBox.h"
-#include "apex/innate_subsystem/SpinControl.h"
+#include "subsystem_apex/BaseDialog.h"
+#include "subsystem_apex/TextBox.h"
+#include "subsystem_apex/SpinControl.h"
 
 class VideoRegionsConfigDialog : public BaseDialog
 {
@@ -61,7 +61,7 @@ protected:
   void initControls();
 
   //
-  // ::innate_subsystem::Control event handlers
+  // ::subsystem_apex::Control event handlers
   //
 
   void onRecognitionIntervalSpinChangePos(LPNMUPDOWN scopedstrMessage);

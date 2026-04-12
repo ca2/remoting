@@ -32,23 +32,23 @@
 #include "OptionsDialog.h"
 #include "ScaleManager.h"
 #include "ViewerMenu.h"
-#include "apex/innate_subsystem/Control.h"
-#include "apex/innate_subsystem/ToolBar.h"
+#include "subsystem_apex/Control.h"
+#include "subsystem_apex/ToolBar.h"
 //#include "log_writer/LogWriter.h"
 #include "remoting/remoting_common/viewer_core/FileTransferCapability.h"
 #include "remoting/remoting_common/viewer_core/RemoteViewerCore.h"
 #include "remoting/remoting_common/viewer_core/CoreEventsAdapter.h"
 #include "remoting/remoting_common/viewer_core/VncAuthentication.h"
-#include "acme/subsystem/node/SystemInformation.h"
-#include "acme/subsystem/node/OperatingSystemApplication.h"
-#include "acme/subsystem/node/OperatingSystemHook.h"
+#include "subsystem_acme/node/SystemInformation.h"
+#include "subsystem_acme/node/OperatingSystemApplication.h"
+#include "subsystem_acme/node/OperatingSystemHook.h"
 #include "apex/networking/sockets/http/get_socket.h"
 
 namespace remoting_remoting
 {
 
-    class ViewerWindow : //public ::innate_subsystem::Window,
-   public ::innate_subsystem::Control,
+    class ViewerWindow : //public ::subsystem_apex::Window,
+   public ::subsystem_apex::Control,
                          public ::remoting::CoreEventsAdapter,
                          public subsystem::OperatingSystemHookListener
     {
@@ -132,14 +132,14 @@ namespace remoting_remoting
         void onDisconnect(const ::scoped_string & scopedstrMessage);
         void onAuthError(const ::remoting::AuthException *exception);
         void onError(const ::subsystem::Exception *exception);
-        void onFrameBufferUpdate(const ::innate_subsystem::FrameBuffer *fb, const ::int_rectangle &  rect);
-        void onFrameBufferPropChange(const ::innate_subsystem::FrameBuffer *fb);
+        void onFrameBufferUpdate(const ::subsystem_apex::FrameBuffer *fb, const ::int_rectangle &  rect);
+        void onFrameBufferPropChange(const ::subsystem_apex::FrameBuffer *fb);
         void onCutText(const ::scoped_string & cutText);
 
         int translateAccelToTB(int val);
         //void applyScreenChanges(bool isFullScreen);
 
-       ::innate_subsystem::ControlInterface * getControl();
+       ::subsystem_apex::ControlInterface * getControl();
 
         // function return default rect of viewer window:
         // if size of remote screen is more local desktop, then return rect of desktop
@@ -148,7 +148,7 @@ namespace remoting_remoting
 
         ::subsystem::LogWriter * m_plogwriter;
 
-        //::innate_subsystem::Control m_control;
+        //::subsystem_apex::Control m_control;
 
         ::remoting::ConnectionConfigSM m_ccsm;
         ::remoting::ConnectionConfig *m_pconnectionconfig;
@@ -158,7 +158,7 @@ namespace remoting_remoting
         FileTransferMainDialog *m_ftDialog;
         DesktopWindow m_desktopwindow;
         //::wstring m_wstrToolTip;
-        ::innate_subsystem::Toolbar m_toolbar;
+        ::subsystem_apex::Toolbar m_toolbar;
         ViewerMenu m_menu;
         ConnectionData *m_conData;
         ::subsystem::SystemInformation m_sysinf;

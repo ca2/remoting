@@ -23,8 +23,7 @@
 //
 #include "framework.h"
 #include "ConnectionHistory.h"
-
-#include "acme/acme/Registry.h"
+#include "subsystem_acme/Registry.h"
 
 ////#include aaa_<crtdbg.h>
 
@@ -71,7 +70,7 @@ namespace remoting
 
       for (size_t i = 0; i < m_limit; i++) {
          //valueName.formatf("{}", i);
-         if (!m_key->getValueAsString(::as_string(i), value)) {
+         if (!m_pregistrykey->getValueAsString(::as_string(i), value)) {
             break;
          }
          m_hosts.add(value);
@@ -88,7 +87,7 @@ namespace remoting
          //valueName.formatf("%u", i);
          auto value = m_hosts.at(i);
 
-         m_key->setValueAsString(::as_string(i), value);
+         m_pregistrykey->setValueAsString(::as_string(i), value);
       }
 
       if (count > m_limit) {
@@ -112,12 +111,12 @@ namespace remoting
 
          removeHost(getHost(i));
 
-         if (!m_key->getValueAsString(valueName, strValue)) {
+         if (!m_pregistrykey->getValueAsString(valueName, strValue)) {
             break;
          }
 
-         m_key->deleteSubKey(strValue);
-         m_key->deleteValue(valueName);
+         m_pregistrykey->deleteSubKey(strValue);
+         m_pregistrykey->deleteValue(valueName);
 
          i++;
       }
@@ -132,8 +131,8 @@ namespace remoting
       for (size_t i = 0; i < m_hosts.size(); i++) {
          valueName.formatf("%u", i);
 
-         m_key->deleteSubKey(m_hosts.at(i));
-         m_key->deleteValue(valueName);
+         m_pregistrykey->deleteSubKey(m_hosts.at(i));
+         m_pregistrykey->deleteValue(valueName);
       }
 
       releaseHosts();

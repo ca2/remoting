@@ -26,7 +26,7 @@
 #include "remoting/remoting_common/rfb/MsgDefs.h"
 ////#include "remoting/remoting_common/util/::string.h"
 //#include "remoting/remoting_common/util/::string.h"
-//#include "acme/subsystem/thread/critical_section.h"
+//#include "subsystem_acme/thread/critical_section.h"
 #include "remoting/remoting_common/rfb/VendorDefs.h"
 
 ClipboardExchange::ClipboardExchange(RfbCodeRegistrator *codeRegtor,

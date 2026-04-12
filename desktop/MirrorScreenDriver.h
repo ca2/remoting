@@ -28,7 +28,7 @@
 #include "MirrorDriverClient.h"
 #include "remoting/remoting_common/win_system/RegistryKey.h"
 #include "DisplayEsc.h"
-#include "acme/subsystem/thread/GuiThread.h"
+#include "subsystem_acme/thread/GuiThread.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 #include "UpdateDetector.h"
 
@@ -48,7 +48,7 @@ public:
   virtual void terminateDetection();
 
   virtual ::int_size getScreenDimension();
-  virtual ::innate_subsystem::FrameBuffer *getScreenBuffer();
+  virtual ::subsystem_apex::FrameBuffer *getScreenBuffer();
   virtual bool grab(const ::int_rectangle &  rect = 0);
 
   virtual bool getPropertiesChanged();
@@ -66,7 +66,7 @@ private:
 
   MirrorDriverClient *m_mirrorClient;
   unsigned long m_lastCounter;
-  ::innate_subsystem::FrameBuffer m_frameBuffer;
+  ::subsystem_apex::FrameBuffer m_frameBuffer;
   // TO THINK: One may use a self mutex here, because do not
   // use external objects here.
   critical_section *m_fbMutex;

@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "acme/subsystem/_common_header.h"
+#include "subsystem_acme/_common_header.h"
 
 /**
- * ::innate_subsystem::Control protocol constants.
+ * ::subsystem_apex::Control protocol constants.
  *
  * @section Client requests.
  * Client to server control messages are request-reply oriented and have format

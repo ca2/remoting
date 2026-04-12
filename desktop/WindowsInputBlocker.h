@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "acme/subsystem/_common_header.h"
-#include "acme/subsystem/thread/GuiThread.h"
-//#include "acme/subsystem/thread/critical_section.h"
+#include "subsystem_acme/_common_header.h"
+#include "subsystem_acme/thread/GuiThread.h"
+//#include "subsystem_acme/thread/critical_section.h"
 #include "remoting/remoting_common/win_system/WinTimeMillis.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 #include "InputBlocker.h"

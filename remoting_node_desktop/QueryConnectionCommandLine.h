@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "acme/subsystem/_common_header.h"
+#include "subsystem_acme/_common_header.h"
 #include "remoting/remoting_common/util/CommandLine.h"
-#include "acme/subsystem/Exception.h"
+#include "subsystem_acme/Exception.h"
 
 class QueryConnectionCommandLine : private CommandLine
 {

@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "acme/subsystem/_common_header.h"
+#include "subsystem_acme/_common_header.h"
 #include "remoting/remoting_common/rfb/PixelFormat.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 
@@ -39,9 +39,9 @@ public:
 
   void update();
 
-  // Returns a ::innate_subsystem::PixelFormat that was at latest call of the
+  // Returns a ::subsystem_apex::PixelFormat that was at latest call of the
   // update() function.
-  ::innate_subsystem::PixelFormat getPixelFormat();
+  ::subsystem_apex::PixelFormat getPixelFormat();
 
   // Returns a desktop dimension that was at latest call of the
   // update() function.
@@ -86,7 +86,7 @@ private:
 
   void fillScreenRect();
 
-  ::innate_subsystem::PixelFormat m_pixelFormat;
+  ::subsystem_apex::PixelFormat m_pixelFormat;
   ::int_rectangle m_virtDesktopRect;
 };
 

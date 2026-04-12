@@ -25,13 +25,13 @@
 #pragma once
 
 
-#include "apex/innate_subsystem/Dialog.h"
-#include "apex/innate_subsystem/TextBox.h"
+#include "subsystem_apex/Dialog.h"
+#include "subsystem_apex/TextBox.h"
 #include "resource.h"
 
 namespace remoting_remoting
 {
-    class HelpDialog : public ::innate_subsystem::Dialog
+    class HelpDialog : public ::subsystem_apex::Dialog
     {
     public:
         HelpDialog();
@@ -39,7 +39,7 @@ namespace remoting_remoting
     //protected:
         bool onInitDialog() ;
         bool onCommand(unsigned int controlID, unsigned int notificationID);
-        ::pointer < ::innate_subsystem::TextBox >  m_shelp;
+        ::pointer < ::subsystem_apex::TextBox >  m_shelp;
 
     };
 }//namespace remoting_remoting

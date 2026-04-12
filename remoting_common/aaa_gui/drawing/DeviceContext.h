@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "acme/subsystem/_common_header.h"
-#include "apex/innate_subsystem/PaintWindow.h"
+#include "subsystem_acme/_common_header.h"
+#include "subsystem_apex/PaintWindow.h"
 
 namespace remoting
 {
@@ -41,10 +41,10 @@ namespace remoting
       virtual ~DeviceContext();
 
    private:
-      // Initialize class from ::innate_subsystem::PaintWindow
-      DeviceContext(class ::innate_subsystem::PaintWindow * pntWnd);
+      // Initialize class from ::subsystem_apex::PaintWindow
+      DeviceContext(class ::subsystem_apex::PaintWindow * pntWnd);
 
-      friend class ::innate_subsystem::PaintWindow;
+      friend class ::subsystem_apex::PaintWindow;
 
    protected:
       // Selects an object into this device context.

@@ -25,10 +25,10 @@
 #pragma once
 
 
-//#include "acme/subsystem/thread/critical_section.h"
-#include "acme/subsystem/io/Channel.h"
-#include "acme/subsystem/io/DataOutputStream.h"
-#include "acme/subsystem/io/DataInputStream.h"
+//#include "subsystem_acme/thread/critical_section.h"
+#include "subsystem_acme/io/Channel.h"
+#include "subsystem_acme/io/DataOutputStream.h"
+#include "subsystem_acme/io/DataInputStream.h"
 
 class BlockingGate : public critical_section, public DataOutputStream,
                      public DataInputStream

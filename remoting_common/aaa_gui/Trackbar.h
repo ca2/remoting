@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "apex/innate_subsystem/Window.h"
+#include "subsystem_apex/Window.h"
 
-class CLASS_DECL_REMOTING_COMMON Trackbar : public ::innate_subsystem::Control
+class CLASS_DECL_REMOTING_COMMON Trackbar : public ::subsystem_apex::Control
 {
 public:
   Trackbar();

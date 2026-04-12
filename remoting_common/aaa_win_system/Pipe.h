@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "acme/subsystem/_common_header.h"
+#include "subsystem_acme/_common_header.h"
 #include "WindowsEvent.h"
-#include "acme/subsystem/io/Channel.h"
-//#include "acme/subsystem/thread/critical_section.h"
+#include "subsystem_acme/io/Channel.h"
+//#include "subsystem_acme/thread/critical_section.h"
 
 // This class is not an interface but is a class that contain common
 // methods/source codes for derived classes to work with pipe handles.

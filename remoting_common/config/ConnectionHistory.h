@@ -125,6 +125,6 @@ namespace remoting
       /**
        * Registry key for saving and loading connection history data.
        */
-      //RegistryKey *m_key;
+      ::pointer < ::subsystem::RegistryKey > m_pregistrykey;
    };
 } // namespace remoting

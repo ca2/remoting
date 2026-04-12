@@ -41,14 +41,14 @@ namespace remoting
       // This method inherited by DecoderOfRectangle.
       //
       virtual void decode(RfbInputGate *input,
-                          ::innate_subsystem::FrameBuffer *frameBuffer,
+                          ::subsystem_apex::FrameBuffer *frameBuffer,
                           const ::int_rectangle &  dstRect);
 
       //
       // This method inherited by DecoderOfRectangle.
       //
-      virtual void copy(::innate_subsystem::FrameBuffer *dstFrameBuffer,
-                        const ::innate_subsystem::FrameBuffer *srcFrameBuffer,
+      virtual void copy(::subsystem_apex::FrameBuffer *dstFrameBuffer,
+                        const ::subsystem_apex::FrameBuffer *srcFrameBuffer,
                         const ::int_rectangle &  rect,
                         critical_section *fbLock);
 

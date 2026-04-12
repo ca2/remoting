@@ -28,9 +28,9 @@
 #include "UpdateDetector.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 #include "HookInstaller.h"
-#include "apex/innate_subsystem/MessageWindow.h"
+#include "subsystem_apex/MessageWindow.h"
 #include "HookUpdateTimer.h"
-#include "acme/subsystem/Process.h"
+#include "subsystem_acme/Process.h"
 //#include "log_writer/LogWriter.h"
 
 class HooksUpdateDetector : public UpdateDetector

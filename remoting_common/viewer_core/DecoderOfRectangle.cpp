@@ -38,8 +38,8 @@ namespace remoting
    }
 
    void DecoderOfRectangle::process(RfbInputGate *input,
-                        ::innate_subsystem::FrameBuffer *frameBuffer,
-                        ::innate_subsystem::FrameBuffer *secondFrameBuffer,
+                        ::subsystem_apex::FrameBuffer *frameBuffer,
+                        ::subsystem_apex::FrameBuffer *secondFrameBuffer,
                         const ::int_rectangle &  rect,
                         critical_section *fbLock,
                         FbUpdateNotifier *fbNotifier)
@@ -49,8 +49,8 @@ namespace remoting
       notify(fbNotifier, rect);
    }
 
-   void DecoderOfRectangle::copy(::innate_subsystem::FrameBuffer *dstFrameBuffer,
-                      const ::innate_subsystem::FrameBuffer *srcFrameBuffer,
+   void DecoderOfRectangle::copy(::subsystem_apex::FrameBuffer *dstFrameBuffer,
+                      const ::subsystem_apex::FrameBuffer *srcFrameBuffer,
                       const ::int_rectangle &  rect,
                       critical_section *fbLock)
    {

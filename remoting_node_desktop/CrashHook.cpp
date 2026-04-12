@@ -26,7 +26,7 @@
 #include "remoting/remoting_common/win_system/DynamicLibrary.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 #include "remoting/remoting_common/win_system/RegistryKey.h"
-//#include "acme/subsystem/thread/critical_section.h"
+//#include "subsystem_acme/thread/critical_section.h"
 #include "remoting_node_desktop/NamingDefs.h"
 
 typedef bool (WINAPI *MINIDUMPWRITEDUMP)(__in  HANDLE hProcess,
@@ -100,7 +100,7 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
                                " want save debug information?",
                                ProductNames::PRODUCT_NAME,
                                ::user::e_message_box_yes_no)
-                               != ::innate_subsystem::IDYES)
+                               != ::subsystem_apex::IDYES)
   {
     return retValue;
   }

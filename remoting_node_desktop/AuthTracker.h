@@ -25,7 +25,7 @@
 #pragma once
 
 
-//#include "acme/subsystem/thread/critical_section.h"
+//#include "subsystem_acme/thread/critical_section.h"
 //#include "remoting/remoting_common/util/::earth::time.h"
 
 // This class will be insert an time interval between trying of

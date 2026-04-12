@@ -257,7 +257,7 @@ void ControlTrayIcon::onShutdownServerMenuItemClick()
       operating_system_window(),
       userMessage,
       main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
-      ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) == ::innate_subsystem::IDNO) {
+      ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) == ::subsystem_apex::IDNO) {
         return;
     }
   }
@@ -275,7 +275,7 @@ void ControlTrayIcon::onOutgoingConnectionMenuItemClick()
 {
   OutgoingConnectionDialog connDialog;
 
-  if (connDialog.showModal() == ::innate_subsystem::IDOK) {
+  if (connDialog.showModal() == ::subsystem_apex::IDOK) {
     MakeRfbConnectionCommand unsafeCommand(
       m_serverControl,
       connDialog.getConnectString(),

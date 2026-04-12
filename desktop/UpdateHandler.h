@@ -30,8 +30,8 @@
 #include "UpdateFilter.h"
 #include "ScreenGrabber.h"
 #include "WindowsCursorShapeGrabber.h"
-#include "apex/innate_subsystem/framebuffer/FrameBuffer.h"
-//#include "acme/subsystem/thread/critical_section.h"
+#include "subsystem_apex/framebuffer/FrameBuffer.h"
+//#include "subsystem_acme/thread/critical_section.h"
 #include "UpdateListener.h"
 #include "UpdateDetector.h"
 #include "CopyRectDetector.h"
@@ -74,15 +74,15 @@ public:
   // excludedRegion will never be present in changedRegion or copiedRegion.
   virtual void setExcludedRegion(const Region *excludedRegion) = 0;
 
-  // The function provides access to ::innate_subsystem::FrameBuffer data.
+  // The function provides access to ::subsystem_apex::FrameBuffer data.
   // The data usage be able until next extract() function call.
   // Return:
-  //   constant pointer to the ::innate_subsystem::FrameBuffer object.
-  const ::innate_subsystem::FrameBuffer *getFrameBuffer() const { return &m_backupFrameBuffer; }
+  //   constant pointer to the ::subsystem_apex::FrameBuffer object.
+  const ::subsystem_apex::FrameBuffer *getFrameBuffer() const { return &m_backupFrameBuffer; }
   const CursorShape *getCursorShape() const { return &m_cursorShape; }
   // This function for asynchronous access to frame buffer properties
   // (dimension and pixel format)
-  void getFrameBufferProp(::int_size *dim, ::innate_subsystem::PixelFormat *pf)
+  void getFrameBufferProp(::int_size *dim, ::subsystem_apex::PixelFormat *pf)
   {
     critical_section_lock al(&m_fbLocMut);
     *dim = m_backupFrameBuffer.getDimension();
@@ -95,15 +95,15 @@ public:
     return m_backupFrameBuffer.getDimension();
   }
 
-  ::innate_subsystem::PixelFormat getFrameBufferPixelFormat(::int_size *dim, ::innate_subsystem::PixelFormat *pf)
+  ::subsystem_apex::PixelFormat getFrameBufferPixelFormat(::int_size *dim, ::subsystem_apex::PixelFormat *pf)
   {
     critical_section_lock al(&m_fbLocMut);
     return m_backupFrameBuffer.getPixelFormat();
   }
 
-  void initFrameBuffer(const ::innate_subsystem::FrameBuffer *newFb);
+  void initFrameBuffer(const ::subsystem_apex::FrameBuffer *newFb);
 
-  virtual bool updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *fb, const Region *region,
+  virtual bool updateExternalFrameBuffer(::subsystem_apex::FrameBuffer *fb, const Region *region,
                                          const ::int_rectangle &  viewPort);
 
   // FIXME: It's no good idea to place this function to here.
@@ -111,11 +111,11 @@ public:
   virtual void sendInit(BlockingGate *gate) {}
 
 protected:
-  virtual bool updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *dstFb, ::innate_subsystem::FrameBuffer *srcFb,
+  virtual bool updateExternalFrameBuffer(::subsystem_apex::FrameBuffer *dstFb, ::subsystem_apex::FrameBuffer *srcFb,
                                          const Region *region,
                                          const ::int_rectangle &  viewPort);
 
-  ::innate_subsystem::FrameBuffer m_backupFrameBuffer;
+  ::subsystem_apex::FrameBuffer m_backupFrameBuffer;
   critical_section m_fbLocMut;
 
   // m_cursorShape not thread safed

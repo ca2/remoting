@@ -57,7 +57,7 @@ protected:
 
   Win32ScreenDriverFactory m_scrDriverFactory;
 
-  ::innate_subsystem::PixelFormat m_oldPf;
+  ::subsystem_apex::PixelFormat m_oldPf;
 
   UpdateHandlerImpl *m_updateHandler;
   AnEventListener *m_extTerminationListener;

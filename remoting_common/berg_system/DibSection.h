@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "acme/subsystem/_common_header.h"
+#include "subsystem_acme/_common_header.h"
 #ifndef CAPTUREBLT
 #define CAPTUREBLT          (DWORD)0x40000000 /* Include layered windows */
 #endif
@@ -43,7 +43,7 @@ public:
   // In default the created DC will used as a target DC for the blitting operations.
   // It may be changed many times later. Note that changed DC must be compatible with
   // the DIB section.
-  DibSection(const ::innate_subsystem::PixelFormat & pf, const ::int_size & dim, HWND compatibleWin = 0);
+  DibSection(const ::subsystem_apex::PixelFormat & pf, const ::int_size & dim, HWND compatibleWin = 0);
   virtual ~DibSection();
 
   // This function changes the target DC. In default target DC is a DC that has been
@@ -79,7 +79,7 @@ public:
 private:
   // Opens a new DIB section.
   // If targetDC == 0 the function will use a current desktop DC.
-  void openDIBSection(const ::innate_subsystem::PixelFormat & pf, const ::int_size & dim, HWND compatibleWin);
+  void openDIBSection(const ::subsystem_apex::PixelFormat & pf, const ::int_size & dim, HWND compatibleWin);
   void closeDIBSection();
   void releaseTargetDC();
 
@@ -90,7 +90,7 @@ private:
   void blitFromDibSection(const ::int_rectangle &  rect, DWORD flags);
   void stretchFromDibSection(const ::int_rectangle &  srcRect,const ::int_rectangle & dstRect, DWORD flags);
 
-  void setupBMIStruct(BITMAPINFO *pBmi, const ::innate_subsystem::PixelFormat & pf, const ::int_size & dim);
+  void setupBMIStruct(BITMAPINFO *pBmi, const ::subsystem_apex::PixelFormat & pf, const ::int_size & dim);
 
   bool m_isOwnTargetDC;
   HDC m_targetDC;

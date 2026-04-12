@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "ResourceStrings.h"
-#include "acme/subsystem/resource_loader.h"
+#include "subsystem_acme/resource_loader.h"
 #include "remoting/remoting_common/util/ResourceLoader.h"
 
 namespace remoting_remoting

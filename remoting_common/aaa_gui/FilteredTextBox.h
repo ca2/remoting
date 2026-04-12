@@ -36,7 +36,7 @@ public:
   FilteredTextBox();
   ~FilteredTextBox();
 
-  // Override ::innate_subsystem::Control::setWindow method
+  // Override ::subsystem_apex::Control::setWindow method
   void setWindow(HWND hwnd);
   void setText(TCHAR *text);
   void setErrorBalloonTip(BalloonTip *tip);

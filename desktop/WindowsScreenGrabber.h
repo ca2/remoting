@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "acme/subsystem/_common_header.h"
+#include "subsystem_acme/_common_header.h"
 #ifndef CAPTUREBLT
 #define CAPTUREBLT          (DWORD)0x40000000 /* Include layered windows */
 
@@ -34,7 +34,7 @@
 
 #include "remoting/remoting_common/server_config/Configurator.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
-#include "acme/subsystem/thread/GuiThread.h"
+#include "subsystem_acme/thread/GuiThread.h"
 #include "remoting/remoting_common/win_system/Screen.h"
 
 //

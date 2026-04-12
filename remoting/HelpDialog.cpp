@@ -26,7 +26,7 @@
 
 #include "remoting/remoting_common/util/ResourceLoader.h"
 #include "resource.h"
-#include "acme/subsystem/resource_loader.h"
+#include "subsystem_acme/resource_loader.h"
 
 
 namespace remoting_remoting
@@ -51,11 +51,11 @@ namespace remoting_remoting
 
     bool HelpDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
-        if (controlID == ::innate_subsystem::e_control_id_ok) {
+        if (controlID == ::subsystem_apex::e_control_id_ok) {
             closeDialog(1);
             return true;
         }
-        if (controlID == ::innate_subsystem::e_control_id_cancel) {
+        if (controlID == ::subsystem_apex::e_control_id_cancel) {
             closeDialog(0);
             return true;
         }

@@ -30,9 +30,9 @@
 class Win8DuplicationListener
 {
 public:
-  // changedRegion in target ::innate_subsystem::FrameBuffer coordinates.
+  // changedRegion in target ::subsystem_apex::FrameBuffer coordinates.
   virtual void onFrameBufferUpdate(const Region *changedRegion) = 0;
-  // dstRect, srcX, srcY in target ::innate_subsystem::FrameBuffer coordinates.
+  // dstRect, srcX, srcY in target ::subsystem_apex::FrameBuffer coordinates.
   virtual void onCopyRect(const ::int_rectangle &  dstRect, int srcX, int srcY) = 0;
 
   virtual void onCursorPositionChanged(int x, int y) = 0;

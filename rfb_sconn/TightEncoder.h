@@ -46,80 +46,80 @@ public:
   // corresponding to the compression level set in EncodeOptions.
   virtual void splitRectangle(const ::int_rectangle &  rect,
                               ::array_base<::int_rectangle> *rectList,
-                              const ::innate_subsystem::FrameBuffer *serverFb,
+                              const ::subsystem_apex::FrameBuffer *serverFb,
                               const EncodeOptions *options);
 
   virtual void sendRectangle(const ::int_rectangle &  rect,
-                             const ::innate_subsystem::FrameBuffer *serverFb,
+                             const ::subsystem_apex::FrameBuffer *serverFb,
                              const EncodeOptions *options);
 
 protected:
   // An implementation of sendRectangle() for the given pixel size.
   template <class PIXEL_T>
     void sendAnyRect(const ::int_rectangle &  rect,
-                     const ::innate_subsystem::FrameBuffer *serverFb,
-                     const ::innate_subsystem::FrameBuffer *clientFb,
+                     const ::subsystem_apex::FrameBuffer *serverFb,
+                     const ::subsystem_apex::FrameBuffer *clientFb,
                      const EncodeOptions *options);
 
   // Send a solid-color rectangle.
-  void sendSolidRect(const ::int_rectangle &  r, const ::innate_subsystem::FrameBuffer *fb);
+  void sendSolidRect(const ::int_rectangle &  r, const ::subsystem_apex::FrameBuffer *fb);
 
   // Send a two-color rectangle (1 bit per pixel).
   template <class PIXEL_T>
     void sendMonoRect(const ::int_rectangle &  rect,
-                      const ::innate_subsystem::FrameBuffer *fb,
+                      const ::subsystem_apex::FrameBuffer *fb,
                       const EncodeOptions *options);
 
   // Send an indexed-color rectangle (1 byte per pixel).
   template <class PIXEL_T>
     void sendIndexedRect(const ::int_rectangle &  rect,
-                         const ::innate_subsystem::FrameBuffer *fb,
+                         const ::subsystem_apex::FrameBuffer *fb,
                          const EncodeOptions *options);
 
   // Send a true color rectangle.
   template <class PIXEL_T>
     void sendFullColorRect(const ::int_rectangle &  rect,
-                           const ::innate_subsystem::FrameBuffer *fb,
+                           const ::subsystem_apex::FrameBuffer *fb,
                            const EncodeOptions *options);
 
   // Send a rectangle encoded with JPEG.
   void sendJpegRect(const ::int_rectangle &  rect,
-                    const ::innate_subsystem::FrameBuffer *serverFb,
+                    const ::subsystem_apex::FrameBuffer *serverFb,
                     const EncodeOptions *options);
 
   // Return true if 32-bit pixels should be packed into 24-bit representation,
   // false otherwise. This function should be given the client's pixel format.
-  bool shouldPackPixels(const ::innate_subsystem::PixelFormat & pf) const;
+  bool shouldPackPixels(const ::subsystem_apex::PixelFormat & pf) const;
 
   // Convert 32-bit color samples into 24-bit sequences, in place. It should
   // be called only when bpp is 32; color depth is 24; and redMax, greenMax
   // and blueMax are all 255.
-  static void packPixels(unsigned char *buf, int count, const ::innate_subsystem::PixelFormat & pf);
+  static void packPixels(unsigned char *buf, int count, const ::subsystem_apex::PixelFormat & pf);
 
   // Fill in the palette (m_pal) assuming that pixels have the type PIXEL_T
   // (where PIXEL_T can be unsigned char, unsigned short or unsigned int). Do not allow more than
   // maxColors in the palette, reset the palette size to 0 if actual number of
   // colors exceeds this limitation.
   template <class PIXEL_T>
-    void fillPalette(const ::int_rectangle &  r, const ::innate_subsystem::FrameBuffer *fb, int maxColors);
+    void fillPalette(const ::int_rectangle &  r, const ::subsystem_apex::FrameBuffer *fb, int maxColors);
 
   // Copy pixel data from the frame buffer to a byte array.
   template <class PIXEL_T>
-    void copyPixels(const ::int_rectangle &  rect, const ::innate_subsystem::FrameBuffer *fb, unsigned char *dst);
+    void copyPixels(const ::int_rectangle &  rect, const ::subsystem_apex::FrameBuffer *fb, unsigned char *dst);
 
   // Encode a two-color rectangle using m_pal as a palette, produce a bitmap
   // where one pixel is represented by one bit. Each line is padded with
   // zeroes to the byte boundary.
   // FIXME: Do not use DataOutputStream, do not throw ::io_exception.
   template <class PIXEL_T>
-    void encodeMonoRect(const ::int_rectangle &  rect, const ::innate_subsystem::FrameBuffer *fb,
+    void encodeMonoRect(const ::int_rectangle &  rect, const ::subsystem_apex::FrameBuffer *fb,
                         DataOutputStream *out);
 
   // Encode a rectangle using m_pal as a palette, produce a pixmap where one
   // pixel is represented by one byte which is its index in the palette.
   // FIXME: Do not use DataOutputStream, do not throw ::io_exception.
   template <class PIXEL_T>
-    void encodeIndexedRect(const ::int_rectangle &  rect, const ::innate_subsystem::FrameBuffer *fb,
+    void encodeIndexedRect(const ::int_rectangle &  rect, const ::subsystem_apex::FrameBuffer *fb,
                            DataOutputStream *out);
 
   // FIXME: Throw ZlibException instead.

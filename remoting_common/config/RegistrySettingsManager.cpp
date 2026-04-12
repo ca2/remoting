@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "RegistrySettingsManager.h"
-#include "remoting/remoting_common/util/StringParser.h"
+#include "subsystem_acme/StringParser.h"
 //#include aaa_<vector>
 
 namespace remoting
@@ -33,7 +33,8 @@ namespace remoting
    {
    }
 
-   RegistrySettingsManager::RegistrySettingsManager(::subsystem::registry * rootKey, const ::scoped_string & scopedstrEntry, SECURITY_ATTRIBUTES *sa)
+   RegistrySettingsManager::RegistrySettingsManager(::subsystem::RegistryKeyInterface *rootKey,
+                                                    const ::scoped_string &scopedstrEntry, SECURITY_ATTRIBUTES *sa)
    : m_key(0)
    {
       setRegistryKey(rootKey, scopedstrEntry, sa);
@@ -46,13 +47,23 @@ namespace remoting
       }
    }
 
-   void RegistrySettingsManager::setRegistryKey(::subsystem::registry * rootKey, const ::scoped_string & scopedstrEntry, SECURITY_ATTRIBUTES *sa)
+
+      void RegistrySettingsManager::initialize_registry_settings_manager(::subsystem::RegistryKeyInterface *rootKey, const ::scoped_string &scopedstrEntry,
+      ::subsystem::SecurityAttributesInterface *psecurityattributes) 
+         //:   m_key(0)
+   {
+      setRegistryKey(rootKey, scopedstrEntry, psecurityattributes);
+   }
+
+   void RegistrySettingsManager::setRegistryKey(::subsystem::RegistryKeyInterface *rootKey,
+                                                const ::scoped_string &scopedstrEntry,
+                                                ::subsystem::SecurityAttributesInterface *psecurityattributes)
    {
       if (m_key != 0) {
          delete m_key;
       }
 
-      m_key = new RegistryKey(rootKey, scopedstrEntry, true, sa);
+      m_key = new RegistryKey(rootKey, scopedstrEntry, true, psecurityattributes);
    }
 
    bool RegistrySettingsManager::isOk()

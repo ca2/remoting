@@ -28,10 +28,10 @@
 #include "remoting/remoting_common/config/SettingsManager.h"
 #include "remoting/remoting_common/config/RegistrySettingsManager.h"
 
-#include "apex/innate_subsystem/BaseDialog.h"
-#include "apex/innate_subsystem/Window.h"
-#include "apex/innate_subsystem/ListBox.h"
-#include "apex/innate_subsystem/TabControl.h"
+#include "subsystem_apex/BaseDialog.h"
+#include "subsystem_apex/Window.h"
+#include "subsystem_apex/ListBox.h"
+#include "subsystem_apex/TabControl.h"
 
 #include "remoting/remoting_common/server_config/Configurator.h"
 
@@ -80,7 +80,7 @@ private:
   void updateCaption();
 protected:
   // Controls
-  ::innate_subsystem::Control m_ctrlApplyButton;
+  ::subsystem_apex::Control m_ctrlApplyButton;
   TabControl m_tabControl;
   // Settings
   Configurator *m_config;

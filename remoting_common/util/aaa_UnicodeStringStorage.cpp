@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "::wstring.h"
 #include "CommonHeader.h"
-#include "acme/subsystem/Exception.h"
+#include "subsystem_acme/Exception.h"
 //#include aaa_<crtdbg.h>
 
 ::wstring::::wstring()

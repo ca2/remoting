@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "apex/innate_subsystem/BaseDialog.h"
-#include "apex/innate_subsystem/ListView.h"
-#include "apex/innate_subsystem/SpinControl.h"
-#include "apex/innate_subsystem/BalloonTip.h"
+#include "subsystem_apex/BaseDialog.h"
+#include "subsystem_apex/ListView.h"
+#include "subsystem_apex/SpinControl.h"
+#include "subsystem_apex/BalloonTip.h"
 
 #include "remoting/remoting_common/server_config/Configurator.h"
 
@@ -63,7 +63,7 @@ private:
   void initControls();
 
   //
-  // ::innate_subsystem::Control event handlers
+  // ::subsystem_apex::Control event handlers
   //
 
   void onAddButtonClick();
@@ -96,18 +96,18 @@ private:
   EditIpAccessRuleDialog m_editDialog;
   // Controls
   ListView m_list;
-  ::innate_subsystem::Control m_addButton;
-  ::innate_subsystem::Control m_editButton;
-  ::innate_subsystem::Control m_removeButton;
-  ::innate_subsystem::Control m_moveUpButton;
-  ::innate_subsystem::Control m_moveDownButton;
+  ::subsystem_apex::Control m_addButton;
+  ::subsystem_apex::Control m_editButton;
+  ::subsystem_apex::Control m_removeButton;
+  ::subsystem_apex::Control m_moveUpButton;
+  ::subsystem_apex::Control m_moveDownButton;
   CheckBox m_defaultActionAccept;
   CheckBox m_defaultActionRefuse;
   CheckBox m_allowLoopbackConnections;
   CheckBox m_onlyLoopbackConnections;
   TextBox m_queryTimeout;
   TextBox m_ip;
-  ::innate_subsystem::Control m_ipCheckResult;
+  ::subsystem_apex::Control m_ipCheckResult;
   SpinControl m_queryTimeoutSpin;
   BaseDialog *m_parentDialog;
 };

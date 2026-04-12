@@ -26,7 +26,7 @@
 
 #include "acme/prototype/geometry2d/rectangle.h"
 //#include "remoting/remoting_common/util/::string.h"
-#include "acme/subsystem/Exception.h"
+#include "subsystem_acme/Exception.h"
 
 namespace remoting
 {

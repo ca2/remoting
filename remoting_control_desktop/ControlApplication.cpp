@@ -51,13 +51,13 @@
 
 //#include "remoting/remoting_common/win_system/Environment.h"
 #include "remoting/remoting_common/win_system/Shell.h"
-#include "acme/subsystem/Process.h"
+#include "subsystem_acme/Process.h"
 #include "remoting/remoting_common/win_system/WinCommandLineArgs.h"
 
-#include "acme/subsystem/thread/ZombieKiller.h"
-#include "acme/subsystem/thread/GlobalMutex.h"
+#include "subsystem_acme/thread/ZombieKiller.h"
+#include "subsystem_acme/thread/GlobalMutex.h"
 
-#include "apex/innate_subsystem/CommonControlsEx.h"
+#include "subsystem_apex/CommonControlsEx.h"
 
 #include "remoting/remoting_common/network/socket/WindowsSocket.h"
 
@@ -467,7 +467,7 @@ void ControlApplication::checkServicePasswords()
   bool askToChangeRfbAuth = !config->isUsingAuthentication() || !config->hasPrimaryPassword();
   bool askToChangeAdmAuth = false;
   SetPasswordsDialog dialog(askToChangeRfbAuth, askToChangeAdmAuth);
-  if (dialog.showModal() == ::innate_subsystem::IDOK) {
+  if (dialog.showModal() == ::subsystem_apex::IDOK) {
     unsigned char cryptedPass[8];
     bool useRfbAuth = dialog.getUseRfbPass();
     bool dontUseRfbAuth = dialog.getRfbPassForClear();

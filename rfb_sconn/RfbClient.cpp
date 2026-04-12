@@ -24,7 +24,7 @@
 #include "framework.h"
 //#include "acme/_operating_system.h"
 #include "RfbClient.h"
-//#include "acme/subsystem/thread/critical_section.h"
+//#include "subsystem_acme/thread/critical_section.h"
 #include "RfbCodeRegistrator.h"
 #include "ft_server_lib/FileTransferRequestHandler.h"
 #include "EchoExtensionRequestHandler.h"
@@ -32,7 +32,7 @@
 #include "RfbInitializer.h"
 #include "ClientAuthListener.h"
 #include "remoting/remoting_common/server_config/Configurator.h"
-#include "acme/subsystem/io/BufferedInputStream.h"
+#include "subsystem_acme/io/BufferedInputStream.h"
 #include "remoting/remoting_common/util/MemUsage.h"
 
 RfbClient::RfbClient(NewConnectionEvents *newConnectionEvents,
@@ -229,7 +229,7 @@ void RfbClient::execute()
     m_updateSender = new UpdateSender(&codeRegtor, m_desktop, this,
                                       &output, m_id, m_desktop, m_plogwriter);
     m_plogwriter->debug("UpdateSender has been created for client #{}", m_id);
-    ::innate_subsystem::PixelFormat pf;
+    ::subsystem_apex::PixelFormat pf;
     ::int_size fbDim;
     m_desktop->getFrameBufferProperties(&fbDim, &pf);
     ::int_rectangle viewPort = getViewPortRect(fbDim);
@@ -338,7 +338,7 @@ void RfbClient::onMouseEvent(unsigned short x, unsigned short y, unsigned char b
   // FIXME: Too much extra work. Typically we would share the whole desktop and would not need
   //        to compute regions on each mouse move.
 
-  ::innate_subsystem::PixelFormat pfStub;
+  ::subsystem_apex::PixelFormat pfStub;
   ::int_size fbDim;
   m_desktop->getFrameBufferProperties(&fbDim, &pfStub);
 
@@ -384,7 +384,7 @@ void RfbClient::getViewPortInfo(const ::int_size & fbDimension, ::int_rectangle 
 
 void RfbClient::onGetViewPort(::int_rectangle *viewRect, bool *shareApp, Region *shareAppRegion)
 {
-  ::innate_subsystem::PixelFormat pfStub;
+  ::subsystem_apex::PixelFormat pfStub;
   ::int_size fbDim;
   m_desktop->getFrameBufferProperties(&fbDim, &pfStub);
   getViewPortInfo(&fbDim, viewRect, shareApp, shareAppRegion);

@@ -28,7 +28,7 @@
 //#include "log_writer/LogWriter.h"
 #include "UpdateKeeper.h"
 #include "UpdateListener.h"
-#include "acme/subsystem/thread/Thread.h"
+#include "subsystem_acme/thread/Thread.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 
 
@@ -46,11 +46,11 @@ public:
 
   virtual ::int_size getScreenDimension();
   virtual bool grabFb(const ::int_rectangle &rect = {} );
-  virtual ::innate_subsystem::FrameBuffer *getScreenBuffer();
+  virtual ::subsystem_apex::FrameBuffer *getScreenBuffer();
   virtual bool getScreenPropertiesChanged();
   virtual bool getScreenSizeChanged();
   virtual bool applyNewScreenProperties();
-  bool grabCursorShape(const ::innate_subsystem::PixelFormat & pf) { return true; };
+  bool grabCursorShape(const ::subsystem_apex::PixelFormat & pf) { return true; };
   const CursorShape *getCursorShape() { return &m_cursorShape; };
   Point getCursorPosition() { return Point(); };
 
@@ -62,7 +62,7 @@ protected:
   virtual void onTerminate();
 
 private:
-  ::innate_subsystem::FrameBuffer m_workFrameBuffer;
+  ::subsystem_apex::FrameBuffer m_workFrameBuffer;
   CursorShape m_cursorShape;
   UpdateKeeper * m_updateKeeper;
   UpdateListener * m_updateListener;

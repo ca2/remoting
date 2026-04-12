@@ -35,12 +35,16 @@ namespace remoting
    {
    public:
       RegistrySettingsManager();
-      RegistrySettingsManager(const ::scoped_string & scopedstrKey, const ::scoped_string & scopedstrEntry);
       virtual ~RegistrySettingsManager();
 
       //public:
+      virtual void initialize_registry_settings_manager(::subsystem::RegistryKeyInterface *pregistrykey, 
+         const ::scoped_string &scopedstrEntry, 
+         ::subsystem::SecurityAttributesInterface * psecurityattributes = nullptr);
 
-      void setRegistryKey(const ::scoped_string & scopedstrKey, const ::scoped_string & scopedstrEntry);
+      void setRegistryKey(::subsystem::RegistryKeyInterface *pregistrykey,
+                          const ::scoped_string &scopedstrEntry,
+                          ::subsystem::SecurityAttributesInterface *psecurityattributes = nullptr);
 
       virtual bool isOk();
 
@@ -69,8 +73,8 @@ namespace remoting
       virtual bool setBinaryData(const ::scoped_string & scopedstrName, const void *value, size_t size);
 
       //protected:
-      //RegistryKey *m_key;
-      ::string m_strRegistryKey;
+      ::pointer<::subsystem::RegistryKey> m_key;
+      //::string m_strRegistryKey;
 
       virtual ::string key_path(const ::scoped_string & scopedstrKey);
       virtual ::string key_name(const ::scoped_string & scopedstrKey);

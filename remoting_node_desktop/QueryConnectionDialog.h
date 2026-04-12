@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "acme/subsystem/_common_header.h"
+#include "subsystem_acme/_common_header.h"
 
-#include "apex/innate_subsystem/BaseDialog.h"
-#include "apex/innate_subsystem/::innate_subsystem::Control.h"
+#include "subsystem_apex/BaseDialog.h"
+#include "subsystem_apex/::subsystem_apex::Control.h"
 
 class QueryConnectionDialog : public BaseDialog
 {
@@ -66,10 +66,10 @@ protected:
   bool m_acceptByDefault;
   DWORD m_timeout;
 
-  ::innate_subsystem::Control m_peerAddressLabel;
-  ::innate_subsystem::Control m_timeoutLabel;
-  ::innate_subsystem::Control m_acceptButton;
-  ::innate_subsystem::Control m_rejectButton;
+  ::subsystem_apex::Control m_peerAddressLabel;
+  ::subsystem_apex::Control m_timeoutLabel;
+  ::subsystem_apex::Control m_acceptButton;
+  ::subsystem_apex::Control m_rejectButton;
 };
 
 

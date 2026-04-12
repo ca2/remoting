@@ -25,15 +25,15 @@
 #pragma once
 
 
-#include "apex/innate_subsystem/ImageList.h"
-#include "apex/innate_subsystem/ListView.h"
+#include "subsystem_apex/ImageList.h"
+#include "subsystem_apex/ListView.h"
 #include "remoting/remoting_common/ftp_common/FileInfo.h"
 
 namespace remoting_remoting
 {
 
 
-    class FileInfoListView : public ::innate_subsystem::ListView
+    class FileInfoListView : public ::subsystem_apex::ListView
     {
     public:
 
@@ -88,7 +88,7 @@ namespace remoting_remoting
         //
         virtual int compareUInt64(unsigned long long first, unsigned long long second);
 
-        ::pointer < ::innate_subsystem::ImageListInterface > m_pimagelistSmall;
+        ::pointer < ::subsystem_apex::ImageListInterface > m_pimagelistSmall;
 
         //private:
         virtual bool window_procedure(::lresult & lresult, unsigned int scopedstrMessage, ::wparam wparam, ::lparam lparam);

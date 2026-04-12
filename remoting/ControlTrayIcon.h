@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "apex/innate_subsystem/NotifyIcon.h"
-#include "apex/innate_subsystem/Menu.h"
+#include "subsystem_apex/NotifyIcon.h"
+#include "subsystem_apex/Menu.h"
 #include "remoting_impact.h"
 
 #include "resource.h"
@@ -35,7 +35,7 @@ namespace remoting_remoting
 {
     class remoting_impact;
 
-    class ControlTrayIcon : public ::innate_subsystem::NotifyIcon,
+    class ControlTrayIcon : public ::subsystem_apex::NotifyIcon,
                             public WindowProcHolder
     {
     public:
@@ -85,8 +85,8 @@ namespace remoting_remoting
         //
         virtual void onShowMainWindow();
 
-        ::innate_subsystem::Icon m_icon;
-        ::innate_subsystem::Menu m_menu;
+        ::subsystem_apex::Icon m_icon;
+        ::subsystem_apex::Menu m_menu;
         bool m_inWindowProc;
 
         remoting_impact *m_application;

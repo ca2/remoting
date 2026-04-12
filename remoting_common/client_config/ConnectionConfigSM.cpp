@@ -23,7 +23,8 @@
 //
 #include "framework.h"
 #include "ConnectionConfigSM.h"
-#include "acme/subsystem/Registry.h"
+#include "subsystem_acme/Registry.h"
+#include "subsystem_acme/subsystem.h"
 
 
 namespace remoting
@@ -37,7 +38,7 @@ namespace remoting
       strKeyName.format("{}\\History\\{}",
                      ::string(scopedstrRegistryPath).c_str(),
                      ::string(scopedstrEntryName).c_str());
-      setRegistryKey(Registry::getCurrentUserKey(), strKeyName);
+      setRegistryKey(main_subsystem()->registry()->getCurrentUserKey(), strKeyName);
    }
 
    ConnectionConfigSM::~ConnectionConfigSM()

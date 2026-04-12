@@ -24,8 +24,8 @@
 #include "framework.h"
 #include "ViewerMenu.h"
 #include "resource.h"
-#include "apex/innate_subsystem/resource_loader.h"
-#include "apex/innate_subsystem/subsystem.h"
+#include "subsystem_apex/resource_loader.h"
+#include "subsystem_apex/subsystem.h"
 
 #include "remoting/remoting_common/util/ResourceLoader.h"
 
@@ -48,7 +48,7 @@ namespace remoting_remoting
 
     void ViewerMenu::findStartIndex()
     {
-        if ((m_startIndex = findMenuItem(::innate_subsystem::e_system_command_close)) == -1) {
+        if ((m_startIndex = findMenuItem(::subsystem_apex::e_system_command_close)) == -1) {
             m_startIndex= getMenuItemCount();
         } else if (m_startIndex > 0) {
             --m_startIndex;

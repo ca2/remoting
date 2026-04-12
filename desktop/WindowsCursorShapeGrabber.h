@@ -26,7 +26,7 @@
 
 
 #include "CursorShapeGrabber.h"
-#include "acme/subsystem/_common_header.h"
+#include "subsystem_acme/_common_header.h"
 #include "remoting/remoting_common/win_system/Screen.h"
 
 class WindowsCursorShapeGrabber : public CursorShapeGrabber
@@ -35,12 +35,12 @@ public:
   WindowsCursorShapeGrabber(void);
   virtual ~WindowsCursorShapeGrabber(void);
 
-  virtual bool grab(const ::innate_subsystem::PixelFormat & pixelFormat);
+  virtual bool grab(const ::subsystem_apex::PixelFormat & pixelFormat);
 
   virtual bool isCursorShapeChanged();
 
 private:
-  bool grabPixels(const ::innate_subsystem::PixelFormat & pixelFormat);
+  bool grabPixels(const ::subsystem_apex::PixelFormat & pixelFormat);
 
   HCURSOR getHCursor();
 

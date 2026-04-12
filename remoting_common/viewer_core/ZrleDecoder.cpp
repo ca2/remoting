@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ZrleDecoder.h"
 
-#include "acme/subsystem/io/ByteArrayInputStream.h"
+#include "subsystem_acme/io/ByteArrayInputStream.h"
 
 //#include aaa_<vector>
 //#include aaa_<algorithm>
@@ -42,7 +42,7 @@ namespace remoting
    }
 
    void ZrleDecoder::decode(RfbInputGate *pinput,
-                            ::innate_subsystem::FrameBuffer *frameBuffer,
+                            ::subsystem_apex::FrameBuffer *frameBuffer,
                             const ::int_rectangle &  dstRect)
    {
       size_t maxUnpackedSize = getMaxSizeOfRectangle(dstRect);
@@ -68,7 +68,7 @@ namespace remoting
       DataInputStream unpackedDataStream(&unpackedByteArrayStream);
 
       m_numberFirstByte = 0;
-      ::innate_subsystem::PixelFormat pxFormat = frameBuffer->getPixelFormat();
+      ::subsystem_apex::PixelFormat pxFormat = frameBuffer->getPixelFormat();
 
       if (pxFormat.bitsPerPixel == 8) {
          m_bytesPerPixel = 1;

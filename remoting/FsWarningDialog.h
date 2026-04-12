@@ -25,14 +25,14 @@
 #pragma once
 
 
-#include "apex/innate_subsystem/Dialog.h"
-#include "apex/innate_subsystem/CheckBox.h"
+#include "subsystem_apex/Dialog.h"
+#include "subsystem_apex/CheckBox.h"
 #include "resource.h"
 
 
 namespace remoting_remoting
 {
-    class FsWarningDialog : public ::innate_subsystem::Dialog
+    class FsWarningDialog : public ::subsystem_apex::Dialog
     {
     public:
         FsWarningDialog();
@@ -42,6 +42,6 @@ namespace remoting_remoting
         bool onInitDialog();
         bool onCommand(unsigned int controlID, unsigned int notificationID);
 
-        ::pointer < ::innate_subsystem::CheckBox > m_pcheckboxFsWarning;
+        ::pointer < ::subsystem_apex::CheckBox > m_pcheckboxFsWarning;
     };
 } // namespace remoting_remoting

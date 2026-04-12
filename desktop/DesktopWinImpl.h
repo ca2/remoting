@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "acme/subsystem/_common_header.h"
+#include "subsystem_acme/_common_header.h"
 #include "DesktopConfigLocal.h"
 #include "desktop/WallpaperUtil.h"
-#include "acme/subsystem/thread/GuiThread.h"
+#include "subsystem_acme/thread/GuiThread.h"
 #include "DesktopBaseImpl.h"
 #include "Win32ScreenDriverFactory.h"
 //#include "log_writer/LogWriter.h"

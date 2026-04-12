@@ -29,7 +29,7 @@
 #include "remoting/remoting_common/rfb/CursorShape.h"
 #include "desktop/UpdateContainer.h"
 //#include "remoting/remoting_common/util/::earth::time.h"
-//#include "acme/subsystem/thread/critical_section.h"
+//#include "subsystem_acme/thread/critical_section.h"
 //#include "log_writer/LogWriter.h"
 
 class CursorUpdates
@@ -50,9 +50,9 @@ public:
               const ::int_rectangle &  viewPort,
               bool shareOnlyApp,
               const Region *shareAppRegion,
-              ::innate_subsystem::FrameBuffer *fb,
+              ::subsystem_apex::FrameBuffer *fb,
               CursorShape *cursorShape);
-  void restoreFrameBuffer(::innate_subsystem::FrameBuffer *fb);
+  void restoreFrameBuffer(::subsystem_apex::FrameBuffer *fb);
 
   // Returns current cursor position. Beetween
   Point getCurPos();
@@ -79,7 +79,7 @@ private:
                       bool curPosBlockingIsIgnored);
 
   // Shortcut function to draw cursor on the frame buffer directly.
-  void drawCursor(UpdateContainer *updCont, ::innate_subsystem::FrameBuffer *fb);
+  void drawCursor(UpdateContainer *updCont, ::subsystem_apex::FrameBuffer *fb);
 
   // Check for cursor blocking state and
   // return true if it is blocked and false
@@ -90,7 +90,7 @@ private:
   Point m_cursorPos;
   ::earth::time m_blockCurPosTime;
   CursorShape m_cursorShape;
-  ::innate_subsystem::FrameBuffer m_shapeBackground;
+  ::subsystem_apex::FrameBuffer m_shapeBackground;
   Point m_backgroundPos;
   critical_section m_curPosLocMut;
   // Uses when the rich enabled but pointer pos disabled to determine

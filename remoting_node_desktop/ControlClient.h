@@ -31,7 +31,7 @@
 #include "remoting_control_desktop/ControlAuthException.h"
 #include "remoting_control_desktop/Transport.h"
 #include "ControlAppAuthenticator.h"
-#include "acme/subsystem/thread/ThreadCollector.h"
+#include "subsystem_acme/thread/ThreadCollector.h"
 //#include "log_writer/LogWriter.h"
 
 
@@ -81,7 +81,7 @@ protected:
    * Inherited from Thread class.
    * Processed control client connection, consists of following phases:
    *   Auth phase (send auth type and try auth client).
-   *   ::innate_subsystem::Control scopedstrMessage processing loop.
+   *   ::subsystem_apex::Control scopedstrMessage processing loop.
    */
   virtual void execute();
 

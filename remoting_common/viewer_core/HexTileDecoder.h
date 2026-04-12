@@ -37,7 +37,7 @@ namespace remoting
 
    protected:
       virtual void decode(RfbInputGate *input,
-                          ::innate_subsystem::FrameBuffer *framebuffer,
+                          ::subsystem_apex::FrameBuffer *framebuffer,
                           const ::int_rectangle &  dstRect);
    private:
       static const int TILE_SIZE = 16;

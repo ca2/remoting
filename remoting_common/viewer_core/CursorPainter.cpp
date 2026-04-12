@@ -24,11 +24,11 @@
 #include "framework.h"
 #include "CursorPainter.h"
 
-//#include "acme/subsystem/thread/critical_section.h"
+//#include "subsystem_acme/thread/critical_section.h"
 
 namespace remoting
 {
-   CursorPainter::CursorPainter(::innate_subsystem::FrameBuffer *fb, ::subsystem::LogWriter *logWriter)
+   CursorPainter::CursorPainter(::subsystem_apex::FrameBuffer *fb, ::subsystem::LogWriter *logWriter)
    : m_fb(fb),
      m_plogwriter(logWriter),
      m_cursorIsMoveable(false),
@@ -61,7 +61,7 @@ namespace remoting
 
       m_plogwriter->information("setNewCursor Cursor size is ({}, {})", width, height);
       ::int_size cursorDimension(width, height);
-      ::innate_subsystem::PixelFormat pixelFormat = m_fb->getPixelFormat();
+      ::subsystem_apex::PixelFormat pixelFormat = m_fb->getPixelFormat();
 
       m_cursor.setProperties(cursorDimension, pixelFormat);
       m_cursorOverlay.setProperties(cursorDimension, pixelFormat);

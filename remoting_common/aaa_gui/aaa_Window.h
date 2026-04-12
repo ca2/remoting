@@ -25,7 +25,7 @@
 //#pragma once
 //
 //
-#include "acme/subsystem/_common_header.h"
+#include "subsystem_acme/_common_header.h"
 ////////#include "remoting/remoting_common/util/::string.h"
 //
 //enum VerticalAlignment
@@ -228,7 +228,7 @@
 //
 //
 //   // class Control :
-//   // virtual public ::innate_subsystem::Control
+//   // virtual public ::subsystem_apex::Control
 //   // {
 //   // public:
 //   //    Control();

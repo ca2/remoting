@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "WatermarksController.h"
 #include "watermark_bmp.h"
-//#include "acme/subsystem/thread/critical_section.h"
+//#include "subsystem_acme/thread/critical_section.h"
 #include "remoting/remoting_common/rfb/PixelConverter.h"
 
 namespace remoting
@@ -33,7 +33,7 @@ namespace remoting
    {
    }
 
-   void WatermarksController::setNewFbProperties(const ::int_rectangle &  rect, const ::innate_subsystem::PixelFormat & pf)
+   void WatermarksController::setNewFbProperties(const ::int_rectangle &  rect, const ::subsystem_apex::PixelFormat & pf)
    {
       setNewPixelFormat(pf);
       setNewFbSize(rect);
@@ -54,12 +54,12 @@ namespace remoting
       }
    }
 
-   void WatermarksController::setNewPixelFormat(const ::innate_subsystem::PixelFormat & pf)
+   void WatermarksController::setNewPixelFormat(const ::subsystem_apex::PixelFormat & pf)
    {
       if (is_empty() || m_frameBuffer.getPixelFormat()!= pf)
       {
-         ::innate_subsystem::FrameBuffer temp;
-         ::innate_subsystem::FrameBuffer& fb = frameBuffer(true);
+         ::subsystem_apex::FrameBuffer temp;
+         ::subsystem_apex::FrameBuffer& fb = frameBuffer(true);
 
          m_overlay.setPixelFormat(pf);
 
@@ -79,14 +79,14 @@ namespace remoting
       }
    }
 
-   void WatermarksController::showWaterMarks(::innate_subsystem::FrameBuffer *frameBuffer, critical_section *fbLock)
+   void WatermarksController::showWaterMarks(::subsystem_apex::FrameBuffer *frameBuffer, critical_section *fbLock)
    {
       m_overlay.copyFrom(frameBuffer, m_currentRect.left, m_currentRect.top);
 
       frameBuffer->copyFrom(m_currentRect, &m_frameBuffer, 0, 0);
    }
 
-   void WatermarksController::hideWatermarks(::innate_subsystem::FrameBuffer *frameBuffer, critical_section *fbLock)
+   void WatermarksController::hideWatermarks(::subsystem_apex::FrameBuffer *frameBuffer, critical_section *fbLock)
    {
       frameBuffer->copyFrom(m_currentRect, &m_overlay, 0, 0);
    }
@@ -96,7 +96,7 @@ namespace remoting
       return m_currentRect;
    }
 
-   ::innate_subsystem::FrameBuffer& WatermarksController::frameBuffer(bool fromFile)
+   ::subsystem_apex::FrameBuffer& WatermarksController::frameBuffer(bool fromFile)
    {
       if (m_frameBuffer.getBuffer() == 0 || fromFile)
       {
@@ -123,7 +123,7 @@ namespace remoting
 
 
       ::int_size dim(m_width, m_height);
-      ::innate_subsystem::PixelFormat pf = StandardPixelFormatFactory::create32bppPixelFormat();
+      ::subsystem_apex::PixelFormat pf = StandardPixelFormatFactory::create32bppPixelFormat();
       m_frameBuffer.setPropertiesWithoutResize(dim, pf);
       m_overlay.setPropertiesWithoutResize(m_overlay.getDimension(), pf);
 

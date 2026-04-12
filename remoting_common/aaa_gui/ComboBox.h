@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "acme/subsystem/_common_header.h"
-#include "apex/innate_subsystem/Window.h"
+#include "subsystem_acme/_common_header.h"
+#include "subsystem_apex/Window.h"
 
-class CLASS_DECL_REMOTING_COMMON ComboBox : public ::innate_subsystem::Control
+class CLASS_DECL_REMOTING_COMMON ComboBox : public ::subsystem_apex::Control
 {
 public:
   ComboBox();

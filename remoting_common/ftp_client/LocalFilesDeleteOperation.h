@@ -26,7 +26,7 @@
 
 
 #include "FileTransferOperation.h"
-#include "acme/subsystem/thread/Thread.h"
+#include "subsystem_acme/thread/Thread.h"
 
 namespace remoting
 {

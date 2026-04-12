@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "apex/innate_subsystem/BaseDialog.h"
+#include "subsystem_apex/BaseDialog.h"
 
 /**
  * TightVNC server about dialog.

@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "FileTransferMainDialog.h"
 #include "acme/constant/user_key.h"
-#include "acme/subsystem/_common_header.h"
+#include "subsystem_acme/_common_header.h"
 //#include "remoting/remoting_common/util/winhdr.h"
 //#include "acme/_operating_system.h"
 
@@ -239,7 +239,7 @@ namespace remoting_remoting
     bool FileTransferMainDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
         switch (controlID) {
-            case ::innate_subsystem::e_control_id_cancel:
+            case ::subsystem_apex::e_control_id_cancel:
                 onCancelButtonClick();
                 break;
             case IDC_CANCEL_BUTTON:
@@ -309,13 +309,13 @@ namespace remoting_remoting
     {
         if (m_ftCore->isNothingState()) {
             // No operation is executing - close dialog
-            closeDialog(::innate_subsystem::e_control_id_cancel);
+            closeDialog(::subsystem_apex::e_control_id_cancel);
             return true;
         }
         if (main_subsystem()->message_box(operating_system_window(),
                        "Do you want to close file transfers and terminate current operation?",
                        "TightVNC ::file::item Transfers",
-                       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) == ::innate_subsystem::e_control_id_yes) {
+                       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) == ::subsystem_apex::e_control_id_yes) {
             // Set flag
             m_isClosing = true;
             // Terminate current operation
@@ -360,7 +360,7 @@ namespace remoting_remoting
       renameDialog.initialize_file_rename_dialog(this);
         renameDialog.setFileName(fileInfo->getFileName());
 
-        if (renameDialog.showModal() == ::innate_subsystem::e_control_id_ok) {
+        if (renameDialog.showModal() == ::subsystem_apex::e_control_id_ok) {
             //::string remoteFolder;
             auto remoteFolder  = getPathToCurrentRemoteFolder();
 
@@ -379,7 +379,7 @@ namespace remoting_remoting
     {
         NewFolderDialog folderDialog;
       folderDialog.initialize_new_folder_dialog(this);
-        if (folderDialog.showModal() == ::innate_subsystem::e_control_id_ok) {
+        if (folderDialog.showModal() == ::subsystem_apex::e_control_id_ok) {
             ::string remoteFolder;
             remoteFolder = m_remoteCurFolderTextBox.getText();
 
@@ -419,7 +419,7 @@ namespace remoting_remoting
         if (main_subsystem()->message_box(operating_system_window(),
                        L"Do you wish to delete the selected files?",
                        L"Delete Files",
-                       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) != ::innate_subsystem::e_control_id_yes) {
+                       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) != ::subsystem_apex::e_control_id_yes) {
             //delete[] indexes;
             //delete[] filesInfo;
             return ;
@@ -454,7 +454,7 @@ namespace remoting_remoting
       renameDialog.initialize_file_rename_dialog(this);
         renameDialog.setFileName(fileInfo->getFileName());
 
-        if (renameDialog.showModal() == ::innate_subsystem::e_control_id_ok) {
+        if (renameDialog.showModal() == ::subsystem_apex::e_control_id_ok) {
             //::string localFolder;
             auto localFolder = getPathToCurrentLocalFolder();
 
@@ -520,7 +520,7 @@ namespace remoting_remoting
 
       folderDialog.initialize_new_folder_dialog(this);
 
-        if (folderDialog.showModal() == ::innate_subsystem::e_control_id_ok) {
+        if (folderDialog.showModal() == ::subsystem_apex::e_control_id_ok) {
             //::string fileName;
             auto fileName = folderDialog.getFileName();
 
@@ -578,7 +578,7 @@ namespace remoting_remoting
         if (main_subsystem()->message_box(operating_system_window(),
                        L"Do you wish to delete the selected files?",
                        L"Delete Files",
-                       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) != ::innate_subsystem::e_control_id_yes) {
+                       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) != ::subsystem_apex::e_control_id_yes) {
             //delete[] indexes;
             //delete[] filesInfo;
             return ;
@@ -624,7 +624,7 @@ namespace remoting_remoting
         if (main_subsystem()->message_box(operating_system_window(),
                        L"Do you wish to upload the selected files?",
                        L"Upload Files",
-                       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) != ::innate_subsystem::e_control_id_yes) {
+                       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) != ::subsystem_apex::e_control_id_yes) {
             //delete[] indexes;
             //delete[] filesInfo;
             return ;
@@ -673,7 +673,7 @@ namespace remoting_remoting
         if (main_subsystem()->message_box(operating_system_window(),
                        L"Do you wish to download the selected files?",
                        L"Download Files",
-                       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) != ::innate_subsystem::e_control_id_yes) {
+                       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) != ::subsystem_apex::e_control_id_yes) {
             //delete[] indexes;
             //delete[] filesInfo;
             return ;

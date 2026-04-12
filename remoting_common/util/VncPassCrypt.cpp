@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "VncPassCrypt.h"
-#include "acme/subsystem/_common_header.h"
+#include "subsystem_acme/_common_header.h"
 #include "DesCrypt.h"
 
 const unsigned char VncPassCrypt::m_key[] = { 23, 82, 107, 6, 35, 78, 88, 7 };

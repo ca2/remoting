@@ -29,7 +29,7 @@
 #include "UIDataAccess.h"
 #include "remoting/remoting_common/server_config/Configurator.h"
 #include "remoting/remoting_common/server_config/IpAccessControl.h"
-#include "acme/subsystem/_common_header.h"
+#include "subsystem_acme/_common_header.h"
 #include "remoting/remoting_common/util/StringParser.h"
 //#include "remoting/remoting_common/util/::string.h"
 
@@ -229,7 +229,7 @@ void IpAccessControlDialog::onAddButtonClick()
   IpAccessRule *ip = new IpAccessRule();
   m_editDialog.setIpAccessControl(ip);
   m_editDialog.setEditFlag(false);
-  if (m_editDialog.showModal() == ::innate_subsystem::IDOK) {
+  if (m_editDialog.showModal() == ::subsystem_apex::IDOK) {
     m_container->add(ip);
     m_list.addItem(m_list.getCount(), "", (::lparam)ip);
     setListViewItemText(m_list.getCount() - 1, ip);
@@ -252,7 +252,7 @@ void IpAccessControlDialog::onEditButtonClick()
   IpAccessRule *ip = (IpAccessRule *)m_list.getItemData(m_list.getSelectedIndex());
   m_editDialog.setIpAccessControl(ip);
   m_editDialog.setEditFlag(true);
-  if (m_editDialog.showModal() == ::innate_subsystem::IDOK) {
+  if (m_editDialog.showModal() == ::subsystem_apex::IDOK) {
     setListViewItemText(m_list.getSelectedIndex(), ip);
     updateButtonsState();
     onIpCheckUpdate();

@@ -27,14 +27,14 @@
 
 //#include "log_writer/LogWriter.h"
 #include "remoting/remoting_common/rfb/CursorShape.h"
-//#include "acme/subsystem/thread/critical_section.h"
+//#include "subsystem_acme/thread/critical_section.h"
 
 namespace remoting
 {
    class CLASS_DECL_REMOTING_COMMON CursorPainter
    {
    public:
-      CursorPainter(::innate_subsystem::FrameBuffer *fb, ::subsystem::LogWriter *logWriter);
+      CursorPainter(::subsystem_apex::FrameBuffer *fb, ::subsystem::LogWriter *logWriter);
       virtual ~CursorPainter();
 
       // this functions is thread-safe for private data of cursor, but need external lock of frame buffer
@@ -54,7 +54,7 @@ namespace remoting
 
       ::subsystem::LogWriter *m_plogwriter;
 
-      ::innate_subsystem::FrameBuffer *const m_fb;
+      ::subsystem_apex::FrameBuffer *const m_fb;
 
       critical_section m_lock;
       CursorShape m_cursor;
@@ -65,7 +65,7 @@ namespace remoting
       // Last painted position of pointer
       ::int_point m_lastPosition;
       // Copy of rect frame buffer under cursor
-      ::innate_subsystem::FrameBuffer m_cursorOverlay;
+      ::subsystem_apex::FrameBuffer m_cursorOverlay;
 
       // Flag is set, if cursor is showed.
       bool m_isExist;

@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "ViewerCollector.h"
-//#include "acme/subsystem/thread/critical_section.h"
+//#include "subsystem_acme/thread/critical_section.h"
 
 namespace remoting_remoting
 {

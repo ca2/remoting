@@ -26,11 +26,11 @@
 
 
 #include "BaseDialog.h"
-#include "apex/innate_subsystem/Window.h"
+#include "subsystem_apex/Window.h"
 //////#include "remoting/remoting_common/util/::string.h"
 
 class CLASS_DECL_REMOTING_COMMON Tab :
-virtual public ::innate_subsystem::Control
+virtual public ::subsystem_apex::Control
 {
 public:
   Tab();

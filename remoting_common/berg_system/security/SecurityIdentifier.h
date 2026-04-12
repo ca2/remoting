@@ -28,7 +28,7 @@
 //#include "remoting/remoting_common/util/winhdr.h"
 //#include "acme/_operating_system.h"
 
-#include "acme/subsystem/node/SystemException.h"
+#include "subsystem_acme/node/SystemException.h"
 
 /**
  * Top-level authority of a security identifier (SID).

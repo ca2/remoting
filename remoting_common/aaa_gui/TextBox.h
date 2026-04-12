@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "apex/innate_subsystem/Window.h"
+#include "subsystem_apex/Window.h"
 #include "Tooltip.h"
 
-class CLASS_DECL_REMOTING_COMMON TextBox : public ::innate_subsystem::Control
+class CLASS_DECL_REMOTING_COMMON TextBox : public ::subsystem_apex::Control
 {
 public:
   ~TextBox();

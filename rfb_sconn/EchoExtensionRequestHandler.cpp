@@ -24,14 +24,14 @@
 #include "framework.h"
 #include "EchoExtensionRequestHandler.h"
 #include "remoting/remoting_common/rfb/MsgDefs.h"
-#include "acme/subsystem/io/DataOutputStream.h"
+#include "subsystem_acme/io/DataOutputStream.h"
 
-#include "acme/subsystem/io/ByteArrayOutputStream.h"
+#include "subsystem_acme/io/ByteArrayOutputStream.h"
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 #include "remoting/remoting_common/network/RfbInputGate.h"
-//#include "acme/subsystem/thread/critical_section.h"
+//#include "subsystem_acme/thread/critical_section.h"
 #include "remoting/remoting_common/server_config/Configurator.h"
-#include "acme/subsystem/node/SystemException.h"
+#include "subsystem_acme/node/SystemException.h"
 #include "remoting/remoting_common/rfb/VendorDefs.h"
 
 EchoExtensionRequestHandler::EchoExtensionRequestHandler(RfbCodeRegistrator *registrator,

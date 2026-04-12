@@ -25,13 +25,13 @@
 #pragma once
 
 
-#include "apex/innate_subsystem/Window.h"
+#include "subsystem_apex/Window.h"
 #include "Tab.h"
 #include "TabContainer.h"
 
 
 
-class CLASS_DECL_REMOTING_COMMON TabControl : public ::innate_subsystem::Control
+class CLASS_DECL_REMOTING_COMMON TabControl : public ::subsystem_apex::Control
 {
 public:
   TabControl();

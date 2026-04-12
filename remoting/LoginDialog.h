@@ -29,12 +29,12 @@
 #include "remoting/remoting_common/client_config/ConnectionConfig.h"
 #include "remoting/remoting_common/client_config/ConnectionConfigSM.h"
 #include "remoting/remoting_common/client_config/ViewerSettingsManager.h"
-#include "acme/subsystem/StringParser.h"
-#include "apex/innate_subsystem/Dialog.h"
-#include "apex/innate_subsystem/TextBox.h"
-#include "apex/innate_subsystem/CheckBox.h"
-#include "apex/innate_subsystem/ComboBox.h"
-#include "apex/innate_subsystem/TrackBar.h"
+#include "subsystem_acme/StringParser.h"
+#include "subsystem_apex/Dialog.h"
+#include "subsystem_apex/TextBox.h"
+#include "subsystem_apex/CheckBox.h"
+#include "subsystem_apex/ComboBox.h"
+#include "subsystem_apex/TrackBar.h"
 
 #include "remoting_impact.h"
 #include "resource.h"
@@ -43,7 +43,7 @@ namespace remoting_remoting
 {
     class remoting_impact;
 
-    class LoginDialog : public ::innate_subsystem::Dialog
+    class LoginDialog : public ::subsystem_apex::Dialog
     {
     public:
         LoginDialog(remoting_impact *viewer);
@@ -69,10 +69,10 @@ namespace remoting_remoting
         bool onCommand(unsigned int controlID, unsigned int notificationID);
         bool m_isListening;
 
-        ::innate_subsystem::Control m_listening;
-        ::innate_subsystem::Control m_ok;
+        ::subsystem_apex::Control m_listening;
+        ::subsystem_apex::Control m_ok;
         ::remoting::ConnectionConfig m_connectionConfig;
-        ::innate_subsystem::ComboBox m_server;
+        ::subsystem_apex::ComboBox m_server;
         ::string m_serverHost;
         remoting_impact *m_viewer;
 

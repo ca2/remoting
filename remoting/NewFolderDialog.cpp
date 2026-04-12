@@ -38,7 +38,7 @@ namespace remoting_remoting
     {
     }
 
-   void NewFolderDialog::initialize_new_folder_dialog(::innate_subsystem::Control *parent)
+   void NewFolderDialog::initialize_new_folder_dialog(::subsystem_apex::Control *parent)
     {
        setResourceId(ftclient_createFolderDialog);
        setParent(parent);
@@ -71,10 +71,10 @@ namespace remoting_remoting
     bool NewFolderDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
         switch (controlID) {
-            case ::innate_subsystem::e_control_id_ok:
+            case ::subsystem_apex::e_control_id_ok:
                 onOkButtonClick();
                 break;
-            case ::innate_subsystem::e_control_id_cancel:
+            case ::subsystem_apex::e_control_id_cancel:
                 onCancelButtonClick();
                 break;
         }
@@ -104,12 +104,12 @@ namespace remoting_remoting
 
         m_strFileName = fileName;
 
-        closeDialog(::innate_subsystem::e_control_id_ok);
+        closeDialog(::subsystem_apex::e_control_id_ok);
     }
 
     void NewFolderDialog::onCancelButtonClick()
     {
-        closeDialog(::innate_subsystem::e_control_id_cancel);
+        closeDialog(::subsystem_apex::e_control_id_cancel);
     }
 
     void NewFolderDialog::initControls()

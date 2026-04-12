@@ -48,7 +48,7 @@ public:
   // Stops screen update detection.
   virtual void terminateDetection();
 
-  virtual bool grabCursorShape(const ::innate_subsystem::PixelFormat & pf);
+  virtual bool grabCursorShape(const ::subsystem_apex::PixelFormat & pf);
   virtual const CursorShape *getCursorShape();
   virtual Point getCursorPosition();
 

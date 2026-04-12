@@ -48,7 +48,7 @@ public:
 
   virtual ::int_size getScreenDimension();
   virtual bool grabFb(const ::int_rectangle &  rect = 0);
-  virtual ::innate_subsystem::FrameBuffer *getScreenBuffer();
+  virtual ::subsystem_apex::FrameBuffer *getScreenBuffer();
   virtual bool getScreenPropertiesChanged();
   virtual bool getScreenSizeChanged();
   virtual bool applyNewScreenProperties();

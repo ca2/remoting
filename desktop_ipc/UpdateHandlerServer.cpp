@@ -101,9 +101,9 @@ void UpdateHandlerServer::extractReply(BlockingGate *backGate)
   m_updateHandler->extract(&updCont);
   m_plogwriter->debug("UpdateHandlerServer: %u changed rectangles", updCont.changedRegion.getCount());
 
-  const ::innate_subsystem::FrameBuffer *fb = m_updateHandler->getFrameBuffer();
+  const ::subsystem_apex::FrameBuffer *fb = m_updateHandler->getFrameBuffer();
 
-  ::innate_subsystem::PixelFormat newPf = fb->getPixelFormat();
+  ::subsystem_apex::PixelFormat newPf = fb->getPixelFormat();
 
   if (!m_oldPf.isEqualTo(&newPf)) {
     updCont.screenSizeChanged = true;
@@ -176,7 +176,7 @@ void UpdateHandlerServer::extractReply(BlockingGate *backGate)
 
 void UpdateHandlerServer::screenPropReply(BlockingGate *backGate)
 {
-  const ::innate_subsystem::FrameBuffer *fb = m_updateHandler->getFrameBuffer();
+  const ::subsystem_apex::FrameBuffer *fb = m_updateHandler->getFrameBuffer();
   sendPixelFormat(&fb->getPixelFormat(), backGate);
   sendDimension(&fb->getDimension(), backGate);
 }
@@ -199,7 +199,7 @@ void UpdateHandlerServer::serverInit(BlockingGate *backGate)
 {
   // FIXME: Use another method to initialize m_backupFrameBuffer
   // because this method use a lot of memory.
-  ::innate_subsystem::FrameBuffer fb;
+  ::subsystem_apex::FrameBuffer fb;
   readPixelFormat(&m_oldPf, backGate);
   ::int_size dim = readDimension(backGate);
   fb.setProperties(&dim, &m_oldPf);

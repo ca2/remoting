@@ -26,9 +26,9 @@
 #include "NamingDefs.h"
 #include "OptionsDialog.h"
 #include "remoting/remoting_common/remoting.h"
-#include "acme/subsystem/node/Shell.h"
-#include "apex/innate_subsystem/subsystem.h"
-#include "acme/subsystem/node/SystemException.h"
+#include "subsystem_acme/node/Shell.h"
+#include "subsystem_apex/subsystem.h"
+#include "subsystem_acme/node/SystemException.h"
 
 
 namespace remoting_remoting
@@ -214,13 +214,13 @@ namespace remoting_remoting
                 break;
 
                 // click "Connect"
-            case ::innate_subsystem::e_control_id_ok:
+            case ::subsystem_apex::e_control_id_ok:
                 onConnect();
                 closeDialog(0);
                 break;
 
                 // cancel connection
-            case ::innate_subsystem::e_control_id_cancel:
+            case ::subsystem_apex::e_control_id_cancel:
                 closeDialog(0);
                 break;
 

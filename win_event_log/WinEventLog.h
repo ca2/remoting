@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "acme/subsystem/_common_header.h"
+#include "subsystem_acme/_common_header.h"
 //#include aaa_<vector>
-//#include "acme/subsystem/thread/critical_section.h"
+//#include "subsystem_acme/thread/critical_section.h"
 //#include "log_writer/LogWriter.h"
 
 typedef ::array_base<TCHAR *> StringContainer;

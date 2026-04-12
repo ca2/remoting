@@ -36,7 +36,7 @@ SpinControl::~SpinControl()
 {
 }
 
-void SpinControl::setBuddy(::innate_subsystem::Control *buddyControl)
+void SpinControl::setBuddy(::subsystem_apex::Control *buddyControl)
 {
   SendMessage(m_hwnd, UDM_SETBUDDY, (::wparam)buddyControl->operating_system_window(), NULL);
   m_buddy = buddyControl;

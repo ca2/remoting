@@ -26,13 +26,13 @@
 
 
 //#include "log_writer/LogWriter.h"
-#include "apex/innate_subsystem/framebuffer/FrameBuffer.h"
+#include "subsystem_apex/framebuffer/FrameBuffer.h"
 //#include "remoting/remoting_common/region/::int_point.h"
 
 #include "remoting/remoting_common/region/Region.h"
-//#include "acme/subsystem/thread/critical_section.h"
-#include "acme/subsystem/thread/Thread.h"
-#include "acme/subsystem/node/WindowsEvent.h"
+//#include "subsystem_acme/thread/critical_section.h"
+#include "subsystem_acme/thread/Thread.h"
+#include "subsystem_acme/node/WindowsEvent.h"
 
 #include "acme/parallelization/happening.h"
 
@@ -46,7 +46,7 @@ namespace remoting
    class CLASS_DECL_REMOTING_COMMON FbUpdateNotifier : public ::subsystem::Thread
    {
    public:
-      FbUpdateNotifier(::innate_subsystem::FrameBuffer *fb, critical_section *fbLock, ::subsystem::LogWriter * plogwriter, WatermarksController* wmController);
+      FbUpdateNotifier(::subsystem_apex::FrameBuffer *fb, critical_section *fbLock, ::subsystem::LogWriter * plogwriter, WatermarksController* wmController);
       virtual ~FbUpdateNotifier();
 
       void setAdapter(CoreEventsAdapter *adapter);
@@ -67,7 +67,7 @@ namespace remoting
       void onTerminate();
 
       critical_section *m_fbLock;
-      ::innate_subsystem::FrameBuffer *m_frameBuffer;
+      ::subsystem_apex::FrameBuffer *m_frameBuffer;
       CursorPainter m_cursorPainter;
 
       // Pointer to adapter.

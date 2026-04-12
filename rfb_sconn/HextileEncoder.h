@@ -36,13 +36,13 @@ public:
   virtual int getCode() const;
 
   virtual void sendRectangle(const ::int_rectangle &  rect,
-                             const ::innate_subsystem::FrameBuffer *serverFb,
+                             const ::subsystem_apex::FrameBuffer *serverFb,
                              const EncodeOptions *options);
 
 private:
   template <class PIXEL_T>
     void hextileFunction(const ::int_rectangle &r,
-                         const ::innate_subsystem::FrameBuffer *frameBuffer);
+                         const ::subsystem_apex::FrameBuffer *frameBuffer);
 };
 
 //// __RFB_HEXTILE_ENCODER_H_INCLUDED__

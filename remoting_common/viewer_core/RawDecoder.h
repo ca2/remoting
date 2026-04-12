@@ -39,15 +39,15 @@ namespace remoting
       // This method is inherited from DecoderOfRectangle.
       //
       virtual void process(RfbInputGate *input,
-                           ::innate_subsystem::FrameBuffer *frameBuffer,
-                           ::innate_subsystem::FrameBuffer *secondFrameBuffer,
+                           ::subsystem_apex::FrameBuffer *frameBuffer,
+                           ::subsystem_apex::FrameBuffer *secondFrameBuffer,
                            const ::int_rectangle &  rect,
                            critical_section *fbLock,
                            FbUpdateNotifier *fbNotifier);
 
    protected:
       virtual void decode(RfbInputGate *input,
-                          ::innate_subsystem::FrameBuffer *frameBuffer,
+                          ::subsystem_apex::FrameBuffer *frameBuffer,
                           const ::int_rectangle &  rect);
 
    private:

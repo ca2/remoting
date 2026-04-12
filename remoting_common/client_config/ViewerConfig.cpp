@@ -26,7 +26,7 @@
 
 //#include "remoting/remoting_common/win_system/Environment.h"
 //#include "remoting/remoting_common/win_system/RegistryKey.h"
-#include "acme/subsystem/Registry.h"
+#include "subsystem_acme/Registry.h"
 #include "acme/filesystem/filesystem/directory_context.h"
 
 //#include "file_lib/::file::item.h"
@@ -215,42 +215,48 @@ namespace remoting
       return &m_conHistory;
    }
    //
-    ::subsystem::LogWriter *ViewerConfig::initLog(const ::file::path & pathLogDir, const ::scoped_string & scopedstrLogName, bool useSpecialFolder)
-    {
-   //    m_logName = scopedstrLogName;
-   //    ::string logFileFolderPath;
-   //    ::string appDataPath;
-   //
-   //    // After that logFilePath variable will contain path to folder
-   //    // where remoting_impact.log must be located
-   //    if (Environment::getSpecialFolderPath(Environment::APPLICATION_DATA_SPECIAL_FOLDER, appDataPath) && useSpecialFolder) {
-   //       logFileFolderPath.format("{}\\{}", appDataPath.c_str(), ::string(scopedstrLogDir).c_str());
-   //    } else {
-   //       logFileFolderPath.format("{}", ::string(scopedstrLogDir).c_str());
-   //    }
-   //
-   //    // Create TightVNC folder
-   //    {
-   //       //::file::item folder(logFileFolderPath);
-   //       //folder.mkdir();
-   //       directory()->create(logFileFolderPath);
-   //    }
-   //
-   //    // Path to log file
-   //    critical_section_lock l(&m_cs);
-   //    m_pathToLogFile = logFileFolderPath;
-   //
-   //    if (m_LogWriter != 0) {
-   //       delete m_LogWriter;
-   //    }
-   //    m_LogWriter = new FileLogWriter(m_pathToLogFile, scopedstrLogName, m_logLevel, false);
-       return this;
-    }
+    //::subsystem::LogWriter *ViewerConfig::initLog(const ::file::path & pathLogDir, const ::scoped_string & scopedstrLogName, bool useSpecialFolder)
+    //{
+    //   m_logName = scopedstrLogName;
+    //   ::file::path logFileFolderPath;
+    //   ::file::path appDataPath;
+   
+    //   // After that logFilePath variable will contain path to folder
+    //   // where remoting_impact.log must be located
+    //   if (useSpecialFolder)
+    //   {
+    //      appDataPath = ::system()->m_papplication->directory()->appdata();
+    //      logFileFolderPath = appDataPath / pathLogDir;
+    //   }
+    //   else 
+    //   {
+    //      logFileFolderPath = pathLogDir;
+    //   }
+   
+    //   // Create TightVNC folder
+    //   {
+    //      //::file::item folder(logFileFolderPath);
+    //      //folder.mkdir();
+    //      ::system()->m_papplication->directory()->create(logFileFolderPath);
+    //   }
+   
+    //   // Path to log file
+    //   critical_section_lock l(&m_cs);
+    //   m_pathToLogFile = logFileFolderPath;
+   
+    //   //if (m_LogWriter != 0) {
+    //   //   delete m_LogWriter;
+    //   //}
+    //   m_plogwriter = allocateø FileLogWriter(m_pathToLogFile, scopedstrLogName, m_logLevel, false);
+
+    //   return this;
+
+    //}
 
     ::subsystem::LogWriter *ViewerConfig::getLogWriter()
     {
-   //    return m_LogWriter;
-      return this;
+       return ::system()->m_papplication;
+   //   return this;
     }
 } // namespace remoting
 

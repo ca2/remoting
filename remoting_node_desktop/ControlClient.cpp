@@ -146,7 +146,7 @@ void ControlClient::execute()
 
         switch (messageId) {
         case ControlProto::AUTH_MSG_ID:
-          m_plogwriter->debug("::innate_subsystem::Control authentication requested");
+          m_plogwriter->debug("::subsystem_apex::Control authentication requested");
           authMsgRcdv();
           break;
         case ControlProto::RELOAD_CONFIG_MSG_ID:
@@ -169,27 +169,27 @@ void ControlClient::execute()
           m_plogwriter->debug("Connect to a tcp dispatcher command requested");
           break;
         case ControlProto::GET_SERVER_INFO_MSG_ID:
-          m_plogwriter->debug("::innate_subsystem::Control client requests server info");
+          m_plogwriter->debug("::subsystem_apex::Control client requests server info");
           getServerInfoMsgRcvd();
           break;
         case ControlProto::GET_CLIENT_LIST_MSG_ID:
-          m_plogwriter->debug("::innate_subsystem::Control client requests client ::list_base");
+          m_plogwriter->debug("::subsystem_apex::Control client requests client ::list_base");
           getClientsListMsgRcvd();
           break;
         case ControlProto::SET_CONFIG_MSG_ID:
-          m_plogwriter->debug("::innate_subsystem::Control client sends new server config");
+          m_plogwriter->debug("::subsystem_apex::Control client sends new server config");
           setServerConfigMsgRcvd();
           break;
         case ControlProto::GET_CONFIG_MSG_ID:
-          m_plogwriter->debug("::innate_subsystem::Control client requests server config");
+          m_plogwriter->debug("::subsystem_apex::Control client requests server config");
           getServerConfigMsgRcvd();
           break;
         case ControlProto::GET_SHOW_TRAY_ICON_FLAG:
-          m_plogwriter->debug("::innate_subsystem::Control client requests tray icon visibility flag");
+          m_plogwriter->debug("::subsystem_apex::Control client requests tray icon visibility flag");
           getShowTrayIconFlagMsgRcvd();
           break;
         case ControlProto::UPDATE_TVNCONTROL_PROCESS_ID_MSG_ID:
-          m_plogwriter->debug("::innate_subsystem::Control client sends process ID");
+          m_plogwriter->debug("::subsystem_apex::Control client sends process ID");
           updateTvnControlProcessIdMsgRcvd();
           break;
         case ControlProto::SHARE_PRIMARY_MSG_ID:

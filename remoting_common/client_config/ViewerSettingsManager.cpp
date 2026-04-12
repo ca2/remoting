@@ -23,8 +23,8 @@
 //
 #include "framework.h"
 #include "ViewerSettingsManager.h"
-#include "acme/subsystem/Exception.h"
-#include "acme/subsystem/Registry.h"
+#include "subsystem_acme/Exception.h"
+#include "subsystem_acme/Registry.h"
 
 
 namespace remoting
@@ -36,7 +36,7 @@ namespace remoting
    {
       ::string keyName;
       keyName.format("{}\\Settings\\", ::string(scopedstrRegistryName).c_str());
-      setRegistryKey(::subsystem::Registry::getCurrentUserKey(), keyName.c_str());
+      setRegistryKey(main_subsystem()->registry()->getCurrentUserKey(), keyName.c_str());
    }
 
    ViewerSettingsManager::~ViewerSettingsManager()

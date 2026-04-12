@@ -24,14 +24,14 @@
 #include "framework.h"
 #include "acme/parallelization/manual_reset_happening.h"
 #include "remoting/remoting_common/config/IniFileSettingsManager.h"
-#include "acme/subsystem/Exception.h"
+#include "subsystem_acme/Exception.h"
 #include "remoting/remoting_common/util/ResourceLoader.h"
-#include "acme/subsystem/framebuffer/StandardPixelFormatFactory.h"
+#include "subsystem_acme/framebuffer/StandardPixelFormatFactory.h"
 #include "remoting/remoting/keyboard_layout_change.h"
-#include "apex/innate_subsystem/resource_loader.h"
-#include "apex/innate_subsystem/subsystem.h"
-#include "apex/innate_subsystem/Toolbar.h"
-#include "apex/innate_subsystem/drawing/Cursor.h"
+#include "subsystem_apex/resource_loader.h"
+#include "subsystem_apex/subsystem.h"
+#include "subsystem_apex/Toolbar.h"
+#include "subsystem_apex/drawing/Cursor.h"
 #include "FsWarningDialog.h"
 #include "NamingDefs.h"
 #include "remoting_impact.h"
@@ -141,7 +141,7 @@ namespace remoting_remoting
         applySettings();
     }
    
-::innate_subsystem::ControlInterface * ViewerWindow::getControl()
+::subsystem_apex::ControlInterface * ViewerWindow::getControl()
     {
        
        return this;
@@ -153,11 +153,11 @@ namespace remoting_remoting
     {
         //getControl()->setWindow((HWND) _HWND());
 
-      auto pcursor = createø<::innate_subsystem::Cursor>();
+      auto pcursor = createø<::subsystem_apex::Cursor>();
       pcursor->initialize_with_system_cursor(::e_cursor_arrow);
       setClassCursor(pcursor);
 
-       //auto pcursor = createø<::innate_subsystem::Icon>();
+       //auto pcursor = createø<::subsystem_apex::Icon>();
       //pcursor->initialize_icon(IDI_APPICON);
       //setClassCursor(pcursor);
       //  //setClassCursor(LoadCursor(NULL, IDC_ARROW));
@@ -165,11 +165,11 @@ namespace remoting_remoting
         //m_toolbar.loadToolBarfromRes(IDB_TOOLBAR);
        m_toolbar.loadToolbarFromMatter("matter://toolbar.png");
         m_toolbar.setButtonsRange(IDS_TB_NEWCONNECTION);
-        m_toolbar.setViewAutoButtons(4, ::innate_subsystem::TB_Style_sep);
-        m_toolbar.setViewAutoButtons(6, ::innate_subsystem::TB_Style_sep);
-        m_toolbar.setViewAutoButtons(10, ::innate_subsystem::TB_Style_sep);
-        m_toolbar.setViewAutoButtons(11, ::innate_subsystem::TB_Style_sep);
-        m_toolbar.setViewAutoButtons(15, ::innate_subsystem::TB_Style_sep);
+        m_toolbar.setViewAutoButtons(4, ::subsystem_apex::TB_Style_sep);
+        m_toolbar.setViewAutoButtons(6, ::subsystem_apex::TB_Style_sep);
+        m_toolbar.setViewAutoButtons(10, ::subsystem_apex::TB_Style_sep);
+        m_toolbar.setViewAutoButtons(11, ::subsystem_apex::TB_Style_sep);
+        m_toolbar.setViewAutoButtons(15, ::subsystem_apex::TB_Style_sep);
         m_toolbar.attachToolbar(operating_system_window());
         m_menu.getSystemMenu(this);
         m_menu.loadMenu();
@@ -241,9 +241,9 @@ namespace remoting_remoting
         m_viewerCore->setJpegQualityLevel(m_pconnectionconfig->getJpegCompressionLevel());
 
         if (m_pconnectionconfig->isUsing8BitColor()) {
-            m_viewerCore->setPixelFormat(::innate_subsystem::StandardPixelFormatFactory::create8bppPixelFormat());
+            m_viewerCore->setPixelFormat(::subsystem_apex::StandardPixelFormatFactory::create8bppPixelFormat());
         } else {
-            m_viewerCore->setPixelFormat(::innate_subsystem::StandardPixelFormatFactory::create32bppPixelFormat());
+            m_viewerCore->setPixelFormat(::subsystem_apex::StandardPixelFormatFactory::create32bppPixelFormat());
         }
         return true;
     }
@@ -279,7 +279,7 @@ namespace remoting_remoting
 
     void ViewerWindow::changeCursor(int type)
     {
-        ::pointer < ::innate_subsystem::CursorInterface > pcursor;
+        ::pointer < ::subsystem_apex::CursorInterface > pcursor;
 
         auto presourceloader = main_innate_subsystem()->resource_loader();
         switch (type) {
@@ -431,8 +431,8 @@ namespace remoting_remoting
 
         dialog.setConnected();
         dialog.setConnectionConfig(m_pconnectionconfig);
-        // FIXME: Removed ::innate_subsystem::Control from this code and another
-        //auto pcontrol = øcreate_new<::innate_subsystem::Control>();
+        // FIXME: Removed ::subsystem_apex::Control from this code and another
+        //auto pcontrol = øcreate_new<::subsystem_apex::Control>();
         //pcontrol ->_setWindow(getHWnd());
         dialog.setParent(this);
 
@@ -530,7 +530,7 @@ namespace remoting_remoting
     {
         LRESULT iState = m_toolbar.getState(IDS_TB_CTRL);
         if (iState) {
-            if (iState & ::innate_subsystem::e_toolbar_item_state_enabled) {
+            if (iState & ::subsystem_apex::e_toolbar_item_state_enabled) {
                 m_menu.checkedMenuItem(IDS_TB_CTRL, true);
                 m_toolbar.checkButton(IDS_TB_CTRL,  true);
                 m_desktopwindow.setCtrlState(true);
@@ -548,7 +548,7 @@ namespace remoting_remoting
     {
         LRESULT iState = m_toolbar.getState(IDS_TB_ALT);
         if (iState) {
-            if (iState & ::innate_subsystem::e_toolbar_item_state_enabled) {
+            if (iState & ::subsystem_apex::e_toolbar_item_state_enabled) {
                 m_menu.checkedMenuItem(IDS_TB_ALT, true);
                 m_toolbar.checkButton(IDS_TB_ALT,  true);
                 m_desktopwindow.setAltState(true);
@@ -566,7 +566,7 @@ namespace remoting_remoting
     {
         LRESULT iState = m_toolbar.getState(IDS_TB_PAUSE);
         if (iState) {
-            if (iState & ::innate_subsystem::e_toolbar_item_state_enabled) {
+            if (iState & ::subsystem_apex::e_toolbar_item_state_enabled) {
                 m_toolbar.checkButton(IDS_TB_PAUSE, true);
                 m_viewerCore->stopUpdating(true);
             } else {
@@ -655,7 +655,7 @@ namespace remoting_remoting
                   main_subsystem()->string_table()->getString(IDS_QUESTION_SAVE_PASSWORD),
                   main_subsystem()->string_table()->getString(IDS_SECURITY_WARNING_CAPTION),
                   ::user::e_message_box_yes_no);
-                if (whetherToSavePass == ::innate_subsystem::e_control_id_yes) {
+                if (whetherToSavePass == ::subsystem_apex::e_control_id_yes) {
                    ::string password = m_conData->getCryptedPassword();
                    sm.setString("password", password);
                 }
@@ -733,7 +733,7 @@ namespace remoting_remoting
     {
         LRESULT iState = m_toolbar.getState(IDS_TB_SCALEAUTO);
         if (iState) {
-            if (iState & ::innate_subsystem::e_toolbar_item_state_enabled) {
+            if (iState & ::subsystem_apex::e_toolbar_item_state_enabled) {
                 m_toolbar.checkButton(IDS_TB_SCALEAUTO, true);
                 m_pconnectionconfig->fitWindow(true);
             } else {
@@ -1447,15 +1447,15 @@ namespace remoting_remoting
         postMessage(WM_USER_ERROR);
     }
 
-    void ViewerWindow::onFrameBufferUpdate(const ::innate_subsystem::FrameBuffer *fb, const ::int_rectangle &  rect)
+    void ViewerWindow::onFrameBufferUpdate(const ::subsystem_apex::FrameBuffer *fb, const ::int_rectangle &  rect)
     {
         m_desktopwindow.updateFramebuffer(fb, rect);
     }
 
-    void ViewerWindow::onFrameBufferPropChange(const ::innate_subsystem::FrameBuffer *fb)
+    void ViewerWindow::onFrameBufferPropChange(const ::subsystem_apex::FrameBuffer *fb)
     {
         //   m_desktopwindow.m_iDivisor = m_conData->getDivisor();
-        // ((::innate_subsystem::FrameBuffer*)fb)->m_iDivisor = m_desktopwindow.m_iDivisor;
+        // ((::subsystem_apex::FrameBuffer*)fb)->m_iDivisor = m_desktopwindow.m_iDivisor;
         m_desktopwindow.setNewFramebuffer(fb);
     }
 
@@ -1543,7 +1543,7 @@ namespace remoting_remoting
     {
 
        //KBDLLHOOKSTRUCT *str = (KBDLLHOOKSTRUCT*) lParam;
-       // Ignoring of CapsLock, NumLock, ScrollLock, ::innate_subsystem::Control (Ctrl key), Menu (Alt key), Shift (shift key).
+       // Ignoring of CapsLock, NumLock, ScrollLock, ::subsystem_apex::Control (Ctrl key), Menu (Alt key), Shift (shift key).
        if (iVkCode != ::user::e_key_capslock && iVkCode != VK_NUMLOCK && iVkCode != VK_SCROLL &&
            iVkCode != ::user::e_key_left_control && iVkCode != ::user::e_key_right_control &&
            iVkCode != ::user::e_key_left_alt && iVkCode != ::user::e_key_right_alt &&

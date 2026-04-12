@@ -25,10 +25,10 @@
 #pragma once
 
 
-//#include "acme/subsystem/thread/critical_section.h"
+//#include "subsystem_acme/thread/critical_section.h"
 #include "remoting/remoting_common/region/Region.h"
 #include "UpdateContainer.h"
-//#include "acme/subsystem/thread/critical_section.h"
+//#include "subsystem_acme/thread/critical_section.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 
 

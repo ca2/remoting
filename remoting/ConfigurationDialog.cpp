@@ -28,7 +28,7 @@
 #include "resource.h"
 #include "acme/filesystem/file/item.h"
 //#include "file_lib/::file::item.h"
-#include "acme/subsystem/node/Process.h"
+#include "subsystem_acme/node/Process.h"
 #include "remoting/remoting_common/remoting.h"
 
 
@@ -53,7 +53,7 @@ namespace remoting_remoting
                 onLogLevelChange();
             }
         }
-        if (controlID == ::innate_subsystem::e_control_id_ok) {
+        if (controlID == ::subsystem_apex::e_control_id_ok) {
             onOkPressed();
             if (m_application != 0) {
                 m_application->postMessage(remoting_impact::WM_USER_CONFIGURATION_RELOAD);
@@ -61,7 +61,7 @@ namespace remoting_remoting
             closeDialog(1);
             return true;
         }
-        if (controlID == ::innate_subsystem::e_control_id_cancel) {
+        if (controlID == ::subsystem_apex::e_control_id_cancel) {
             closeDialog(0);
             return true;
         }
@@ -186,7 +186,7 @@ namespace remoting_remoting
         return true;
     }
 
-    bool ConfigurationDialog::testNum(innate_subsystem::TextBoxInterface *tb, const ::scoped_string & scopedstrTbName)
+    bool ConfigurationDialog::testNum(subsystem_apex::TextBoxInterface *tb, const ::scoped_string & scopedstrTbName)
     {
         //::string text;
         auto text = tb->getText();

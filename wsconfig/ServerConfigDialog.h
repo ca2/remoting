@@ -25,11 +25,11 @@
 #pragma once
 
 
-#include "apex/innate_subsystem/BaseDialog.h"
-#include "apex/innate_subsystem/TextBox.h"
-#include "apex/innate_subsystem/CheckBox.h"
-#include "apex/innate_subsystem/SpinControl.h"
-#include "apex/innate_subsystem/BalloonTip.h"
+#include "subsystem_apex/BaseDialog.h"
+#include "subsystem_apex/TextBox.h"
+#include "subsystem_apex/CheckBox.h"
+#include "subsystem_apex/SpinControl.h"
+#include "subsystem_apex/BalloonTip.h"
 
 #include "remoting/remoting_common/server_config/ServerConfig.h"
 #include "PasswordControl.h"
@@ -113,10 +113,10 @@ protected:
   CheckBox m_acceptHttpConnections;
   CheckBox m_showTrayIcon;
   CheckBox m_connectToRdp;
-  ::innate_subsystem::Control m_primaryPassword;
-  ::innate_subsystem::Control m_readOnlyPassword;
-  ::innate_subsystem::Control m_unsetPrimaryPassword;
-  ::innate_subsystem::Control m_unsetReadOnlyPassword;
+  ::subsystem_apex::Control m_primaryPassword;
+  ::subsystem_apex::Control m_readOnlyPassword;
+  ::subsystem_apex::Control m_unsetPrimaryPassword;
+  ::subsystem_apex::Control m_unsetReadOnlyPassword;
   CheckBox m_useAuthentication;
   SpinControl m_rfbPortSpin;
   SpinControl m_httpPortSpin;

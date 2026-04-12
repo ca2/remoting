@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "MirrorScreenDriver.h"
-#include "acme/subsystem/Exception.h"
+#include "subsystem_acme/Exception.h"
 
 MirrorScreenDriver::MirrorScreenDriver(UpdateKeeper *updateKeeper,
                                        UpdateListener *updateListener,
@@ -61,7 +61,7 @@ void MirrorScreenDriver::terminateDetection()
 void MirrorScreenDriver::initFrameBuffer()
 {
   ::int_size dim = m_mirrorClient->getDimension();
-  ::innate_subsystem::PixelFormat pf = m_mirrorClient->getPixelFormat();
+  ::subsystem_apex::PixelFormat pf = m_mirrorClient->getPixelFormat();
 
   m_frameBuffer.setProperties(&dim, &pf);
 }
@@ -71,7 +71,7 @@ void MirrorScreenDriver::initFrameBuffer()
   return m_frameBuffer.getDimension();
 }
 
-::innate_subsystem::FrameBuffer *MirrorScreenDriver::getScreenBuffer()
+::subsystem_apex::FrameBuffer *MirrorScreenDriver::getScreenBuffer()
 {
   return &m_frameBuffer;
 }
@@ -141,7 +141,7 @@ bool MirrorScreenDriver::applyNewProperties()
   m_mirrorClient = new MirrorDriverClient(m_plogwriter);
 
   ::int_size newDim = m_mirrorClient->getDimension();
-  ::innate_subsystem::PixelFormat pf = m_mirrorClient->getPixelFormat();
+  ::subsystem_apex::PixelFormat pf = m_mirrorClient->getPixelFormat();
   m_frameBuffer.setProperties(&newDim, &pf);
   m_lastCounter = 0;
 

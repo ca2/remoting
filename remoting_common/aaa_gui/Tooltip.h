@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "acme/subsystem/_common_header.h"
-#include "apex/innate_subsystem/Window.h"
+#include "subsystem_acme/_common_header.h"
+#include "subsystem_apex/Window.h"
 
 //
 // Abstract tooltip class
@@ -38,7 +38,7 @@ public:
   Tooltip();
   virtual ~Tooltip();
 
-  virtual void showTooltip(::innate_subsystem::Control * pwindow) = 0;
+  virtual void showTooltip(::subsystem_apex::Control * pwindow) = 0;
 
   virtual void setText(const ::scoped_string & scopedstrText) = 0;
   virtual void setTitle(const ::scoped_string & scopedstrCaption) = 0;

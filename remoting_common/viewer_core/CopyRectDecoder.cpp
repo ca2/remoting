@@ -38,15 +38,15 @@ namespace remoting
    }
 
    void CopyRectDecoder::decode(RfbInputGate *pinput,
-                                ::innate_subsystem::FrameBuffer *frameBuffer,
+                                ::subsystem_apex::FrameBuffer *frameBuffer,
                                 const ::int_rectangle &  dstRect)
    {
       m_sourcePosition.x = pinput->readInt16();
       m_sourcePosition.y = pinput->readInt16();
    }
 
-   void CopyRectDecoder::copy(::innate_subsystem::FrameBuffer *dstFrameBuffer,
-                              const ::innate_subsystem::FrameBuffer *srcFrameBuffer,
+   void CopyRectDecoder::copy(::subsystem_apex::FrameBuffer *dstFrameBuffer,
+                              const ::subsystem_apex::FrameBuffer *srcFrameBuffer,
                               const ::int_rectangle &  rect,
                               critical_section *fbLock)
    {

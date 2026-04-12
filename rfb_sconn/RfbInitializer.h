@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "acme/subsystem/io/Channel.h"
-#include "acme/subsystem/io/DataOutputStream.h"
-#include "acme/subsystem/io/DataInputStream.h"
+#include "subsystem_acme/io/Channel.h"
+#include "subsystem_acme/io/DataOutputStream.h"
+#include "subsystem_acme/io/DataInputStream.h"
 #include "CapContainer.h"
 
 #include "remoting/remoting_common/rfb/PixelFormat.h"
@@ -47,7 +47,7 @@ public:
                       const CapContainer *clToSrvCaps,
                       const CapContainer *encCaps,
                       const ::int_size & dim,
-                      const ::innate_subsystem::PixelFormat & pf);
+                      const ::subsystem_apex::PixelFormat & pf);
 
   // Returns shared flag value. Shared flag value is valid only after
   // the authPhase() function calling.
@@ -63,7 +63,7 @@ protected:
   void initAuthenticate();
   void readClientInit();
   void sendServerInit(const ::int_size & dim,
-                      const ::innate_subsystem::PixelFormat & pf);
+                      const ::subsystem_apex::PixelFormat & pf);
   void sendDesktopName();
   void sendInteractionCaps(const CapContainer *srvToClCaps,
                            const CapContainer *clToSrvCaps,

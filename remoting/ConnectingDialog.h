@@ -25,9 +25,9 @@
 // camilo on 2026-02-12 21:12 <3ThomasBorregaardSørensen!!
 #pragma once
 
-#include "apex/innate_subsystem/Dialog.h"
-#include "apex/innate_subsystem/ProgressBar.h"
-#include "apex/innate_subsystem/TextBox.h"
+#include "subsystem_apex/Dialog.h"
+#include "subsystem_apex/ProgressBar.h"
+#include "subsystem_apex/TextBox.h"
 //#include "resource.h"
 
 //class BaseDialog;
@@ -43,7 +43,7 @@ namespace remoting_remoting
     {
     public:
 
-        ::pointer < innate_subsystem::ProgressBar>m_pbar;
+        ::pointer < subsystem_apex::ProgressBar>m_pbar;
         double m_dStart = 0.0;
         double m_dEnd = 0.0;
         double m_d;
@@ -60,14 +60,14 @@ namespace remoting_remoting
     };
 
 
-    class ConnectingDialog : public innate_subsystem::Dialog
+    class ConnectingDialog : public subsystem_apex::Dialog
     {
     public:
 
 
         ::pointer < progress_bar_animation > m_panimation;
-        ::pointer < ::innate_subsystem::TextBox > m_ptextboxHost;
-        ::pointer < ::innate_subsystem::TextBox > m_ptextboxStatus;
+        ::pointer < ::subsystem_apex::TextBox > m_ptextboxHost;
+        ::pointer < ::subsystem_apex::TextBox > m_ptextboxStatus;
         ::string  m_strHost;
         ::string m_strStatus;
 

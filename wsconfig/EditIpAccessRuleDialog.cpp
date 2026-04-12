@@ -94,10 +94,10 @@ bool EditIpAccessRuleDialog::onCommand(unsigned int cID, unsigned int nID)
 {
   if (nID == ::user::e_notification_button_clicked) {
     switch (cID) {
-    case ::innate_subsystem::IDOK:
+    case ::subsystem_apex::IDOK:
       onOkButtonClick();
       break;
-    case ::innate_subsystem::IDCANCEL:
+    case ::subsystem_apex::IDCANCEL:
       onCancelButtonClick();
       break;
     case IDC_ALLOW:
@@ -138,12 +138,12 @@ void EditIpAccessRuleDialog::onOkButtonClick()
     m_data->setLastIp(lastIp);
 
   } // if
-  kill(::innate_subsystem::IDOK);
+  kill(::subsystem_apex::IDOK);
 }
 
 void EditIpAccessRuleDialog::onCancelButtonClick()
 {
-  kill(::innate_subsystem::IDCANCEL);
+  kill(::subsystem_apex::IDCANCEL);
 }
 
 void EditIpAccessRuleDialog::onAccessTypeRadioClick(int num)

@@ -33,13 +33,13 @@ namespace remoting
    class CLASS_DECL_REMOTING_COMMON RfbSetPixelFormatClientMessage : public RfbClientToServerMessage
    {
    public:
-      RfbSetPixelFormatClientMessage(const ::innate_subsystem::PixelFormat & pixelFormat);
+      RfbSetPixelFormatClientMessage(const ::subsystem_apex::PixelFormat & pixelFormat);
       virtual ~RfbSetPixelFormatClientMessage();
 
       void send(RfbOutputGate *output);
 
    protected:
-      ::innate_subsystem::PixelFormat m_pixelFormat;
+      ::subsystem_apex::PixelFormat m_pixelFormat;
    };
 
 } // namespace remoting

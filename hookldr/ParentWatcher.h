@@ -28,8 +28,8 @@
 #include "remoting/remoting_common/win_system/ParentProcess.h"
 #include "ParentEventsListener.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
-#include "acme/subsystem/_common_header.h"
-#include "acme/subsystem/thread/Thread.h"
+#include "subsystem_acme/_common_header.h"
+#include "subsystem_acme/thread/Thread.h"
 // #include aaa_<Tlhelp32.h>
 
 class ParentWatcher : private Thread

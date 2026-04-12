@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "acme/subsystem/_common_header.h"
+#include "subsystem_acme/_common_header.h"
 
 #include "desktop/WinServiceDesktopFactory.h"
 #include "desktop/ApplicationDesktopFactory.h"
@@ -37,8 +37,8 @@
 
 #include "http-server-lib/HttpServer.h"
 
-#include "acme/subsystem/thread/ZombieKiller.h"
-//#include "acme/subsystem/thread/critical_section.h"
+#include "subsystem_acme/thread/ZombieKiller.h"
+//#include "subsystem_acme/thread/critical_section.h"
 //#include "log_writer/LogWriter.h"
 #include "remoting/remoting_common/util/Singleton.h"
 #include "remoting/remoting_common/util/ListenerContainer.h"
@@ -56,7 +56,7 @@
  *   3) Log singleton.
  *   4) Rfb servers (main rfb server and extra servers).
  *   5) Http server.
- *   6) ::innate_subsystem::Control server.
+ *   6) ::subsystem_apex::Control server.
  *   7) Other features:
      1) Do action when last client disconnects.
  */
@@ -182,7 +182,7 @@ protected:
    */
   RfbClientManager *m_rfbClientManager;
   /**
-   * ::innate_subsystem::Control server.
+   * ::subsystem_apex::Control server.
    */
   ControlServer *m_controlServer;
   /**

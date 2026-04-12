@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "acme/subsystem/_common_header.h"
+#include "subsystem_acme/_common_header.h"
 // #include aaa_<commctrl.h>
-#include "apex/innate_subsystem/Window.h"
+#include "subsystem_apex/Window.h"
 
 //
 // TODO: Maybe use class for this?
@@ -45,7 +45,7 @@ typedef struct
 // that view data as report.
 //
 
-class CLASS_DECL_REMOTING_COMMON ListView : public ::innate_subsystem::Control
+class CLASS_DECL_REMOTING_COMMON ListView : public ::subsystem_apex::Control
 {
 public:
 

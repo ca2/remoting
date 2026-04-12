@@ -29,8 +29,8 @@
 //#include "acme/_operating_system.h"
 
 //////#include "remoting/remoting_common/util/::string.h"
-#include "acme/subsystem/Exception.h"
-#include "acme/subsystem/thread/Thread.h"
+#include "subsystem_acme/Exception.h"
+#include "subsystem_acme/thread/Thread.h"
 
 /**
  * Win32 service class (abstract).

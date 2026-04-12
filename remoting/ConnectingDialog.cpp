@@ -27,8 +27,8 @@
 #include "ConnectingDialog.h"
 #include "resource.h"
 #include "acme/constant/id.h"
-#include "apex/innate_subsystem/ProgressBar.h"
-#include "apex/innate_subsystem/TextBox.h"
+#include "subsystem_apex/ProgressBar.h"
+#include "subsystem_apex/TextBox.h"
 #include "acme/platform/application.h"
 
 namespace remoting_remoting
@@ -77,11 +77,11 @@ namespace remoting_remoting
 
    bool ConnectingDialog::onCommand(unsigned int controlID, unsigned int notificationID)
    {
-      if (controlID == ::innate_subsystem::e_control_id_ok) {
+      if (controlID == ::subsystem_apex::e_control_id_ok) {
          closeDialog(1);
          return true;
       }
-      if (controlID == ::innate_subsystem::e_control_id_cancel) {
+      if (controlID == ::subsystem_apex::e_control_id_cancel) {
          closeDialog(0);
          return true;
       }

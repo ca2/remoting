@@ -25,14 +25,14 @@
 #pragma once
 
 
-#include "apex/innate_subsystem/Dialog.h"
+#include "subsystem_apex/Dialog.h"
 
 namespace remoting_remoting
 {
     /**
      * TightVNC server about dialog.
      */
-    class AboutDialog : public ::innate_subsystem::Dialog
+    class AboutDialog : public ::subsystem_apex::Dialog
     {
     public:
         /**

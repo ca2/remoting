@@ -24,13 +24,13 @@
 #include "framework.h"
 #include "FbupdateNotifier.h"
 
-//#include "acme/subsystem/thread/critical_section.h"
+//#include "subsystem_acme/thread/critical_section.h"
 
 #include "CoreEventsAdapter.h"
 
 namespace remoting
 {
-   FbUpdateNotifier::FbUpdateNotifier(::innate_subsystem::FrameBuffer *fb, critical_section *fbLock, ::subsystem::LogWriter *logWriter, WatermarksController* wmController)
+   FbUpdateNotifier::FbUpdateNotifier(::subsystem_apex::FrameBuffer *fb, critical_section *fbLock, ::subsystem::LogWriter *logWriter, WatermarksController* wmController)
    : m_frameBuffer(fb),
      m_fbLock(fbLock),
      m_plogwriter(logWriter),

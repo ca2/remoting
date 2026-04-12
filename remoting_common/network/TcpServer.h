@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "acme/subsystem/thread/Thread.h"
-#include "acme/subsystem/Exception.h"
-#include "acme/subsystem/socket/SocketIPv4.h"
+#include "subsystem_acme/thread/Thread.h"
+#include "subsystem_acme/Exception.h"
+#include "subsystem_acme/socket/SocketIPv4.h"
 
 
 namespace remoting
