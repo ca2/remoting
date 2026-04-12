@@ -168,7 +168,7 @@ int application::remoting_impact_main( const ::file::path & path)
          tvnViewer.showLoginDialog();
       }
       tvnViewer.run();
-      result = tvnViewer.m_iExitCode;
+      result = tvnViewer.getExitCode();
    } catch (const ::subsystem::Exception &ex) {
       main_subsystem()->message_box({},
                  main_subsystem()->string_table()->getString(IDS_UNKNOWN_ERROR_IN_VIEWER),

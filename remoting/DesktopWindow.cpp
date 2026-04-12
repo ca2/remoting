@@ -407,7 +407,7 @@ namespace remoting_remoting
 
     bool DesktopWindow::onMouse(unsigned char mouseButtons, unsigned short wheelSpeed, const ::int_point & position)
     {
-        if (m_bMinimized)
+        if (m_pviewerwindow->isMinimized())
         {
 
             return true;

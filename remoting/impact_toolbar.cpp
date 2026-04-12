@@ -608,16 +608,9 @@ namespace remoting_remoting
 
       if (eid==id_minimize)
       {
-         //m_pdesktopwindow->m_viewerCore->ge
-          m_pdesktopwindow->m_bMinimized = true;
-          if (m_pdesktopwindow->m_pviewerwindow->m_isFullScr)
-          {
-              m_pdesktopwindow->m_pviewerwindow->m_isMinimizedFromFullScreen = true;
-              m_pdesktopwindow->m_pviewerwindow->doMinimizeFromFullScreen();
 
-          }
-         ::ShowWindow(::GetParent((HWND) m_pdesktopwindow->_HWND()), SW_MINIMIZE);
-         
+         m_pdesktopwindow->m_pviewerwindow->minimizeWindow();
+
          return true;
       }
       else if (eid==id_restore)

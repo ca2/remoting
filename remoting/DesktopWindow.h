@@ -49,7 +49,6 @@ namespace remoting_remoting
     public:
         ViewerWindow* m_pviewerwindow;
         ::string m_strHost;
-        bool m_bMinimized = false;
         //   int m_iDivisor = 1;
         ::pointer< ::remoting_remoting::toolbar > m_premotingtoolbar;
         ::pointer< ::remoting_remoting::style > m_premotingstyle;

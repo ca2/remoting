@@ -106,7 +106,7 @@ namespace remoting_remoting
         bool onDestroy();
         bool onFocus(::wparam wParam);
         bool onKillFocus(::wparam wParam);
-        bool onTimer(::wparam idTimer);
+        //bool onTimer(::wparam idTimer);
         void onGoodCursor() override;
         void desktopStateUpdate();
         void commandCtrlAltDel();
@@ -137,14 +137,14 @@ namespace remoting_remoting
         void onCutText(const ::scoped_string & cutText);
 
         int translateAccelToTB(int val);
-        void applyScreenChanges(bool isFullScreen);
+        //void applyScreenChanges(bool isFullScreen);
 
        ::innate_subsystem::ControlInterface * getControl();
 
         // function return default rect of viewer window:
         // if size of remote screen is more local desktop, then return rect of desktop
         // else return rect of remote screen + border
-        ::int_rectangle calculateDefaultSize();
+        bool onCalculateDefaultSize(::int_rectangle & rectangleDefaultSize) override;
 
         ::subsystem::LogWriter * m_plogwriter;
 
@@ -157,7 +157,7 @@ namespace remoting_remoting
         ::remoting::ftp::FileTransferCapability *m_fileTransfer;
         FileTransferMainDialog *m_ftDialog;
         DesktopWindow m_desktopwindow;
-        ::wstring m_wstrToolTip;
+        //::wstring m_wstrToolTip;
         ::innate_subsystem::Toolbar m_toolbar;
         ViewerMenu m_menu;
         ConnectionData *m_conData;
@@ -169,16 +169,16 @@ namespace remoting_remoting
         ::string m_disconnectMessage;
 
         // Flag is set, if now viewer is in full screen mode
-        bool m_isFullScr;
-        bool m_isMinimizedFromFullScreen = false;
+        //bool m_isFullScr;
+        //bool m_isMinimizedFromFullScreen = false;
         // It's size of work-area in windowed mode. It is necessary for restore size of window.
-        WINDOWPLACEMENT m_workArea;
+        //WINDOWPLACEMENT m_workArea;
         // It's size of optimal size of work-area in windowed mode.
-        ::int_rectangle m_rcNormal;
+        //::int_rectangle m_rcNormal;
 
 
         // Flag is set after recv first scopedstrMessage WM_SIZING.
-        bool m_sizeIsChanged;
+        // bool m_sizeIsChanged;
         // Flag is set, if toolbar is visible.
         bool m_bToolBar;
         // It is scale of viewer window in percent.
@@ -198,11 +198,17 @@ namespace remoting_remoting
         void changeCursor(int type);
         void applySettings();
         ::int_rectangle getFullScreenRect();
-        void setSizeFullScreenWindow();
-        void doFullScr();
-        void doRestoreToFullScreen();
-        void doUnFullScr();
-        void doMinimizeFromFullScreen();
+
+       void onBeforeFullScreen(bool bRestore) override;
+       void onAfterFullScreen(bool bRestore) override;
+       void onBeforeUnFullScreen(bool bMinimizing) override;
+       void onAfterUnFullScreen(bool bMinimizing) override;
+       bool onGetTooltip(int iControl, ::string & strTooltip) override;
+        //void setSizeFullScreenWindow();
+        //void doFullScr();
+        //void doRestoreToFullScreen();
+        //void doUnFullScr();
+        //void doMinimizeFromFullScreen();
 
         void doSize();
         void doCommand(int iCommand);

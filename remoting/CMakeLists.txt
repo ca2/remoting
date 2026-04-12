@@ -75,24 +75,25 @@ list(APPEND library_source
 
 list(APPEND library_references
    acme
-   remoting_client_config_lib
-   remoting_common
-   remoting_config_lib
-   #remoting_file_lib
-   remoting_ftp_client
-   remoting_ftp_common
-   remoting_gui
-   remoting_io_lib
-   remoting_libjpeg
-   #remoting_log_writer
-   remoting_network
-   remoting_region
-   remoting_rfb
-   remoting_thread
-   remoting_util
-   remoting_viewer_core
-   remoting_win_system
-   remoting_zlib
+   apex
+#   remoting_client_config_lib
+#   remoting_common
+#   remoting_config_lib
+#   #remoting_file_lib
+#   remoting_ftp_client
+#   remoting_ftp_common
+#   remoting_gui
+#   remoting_io_lib
+#   remoting_libjpeg
+#   #remoting_log_writer
+#   remoting_network
+#   remoting_region
+#   remoting_rfb
+#   remoting_thread
+#   remoting_util
+#   remoting_viewer_core
+#   remoting_win_system
+#   remoting_zlib
 )
 
 
