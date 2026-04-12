@@ -44,7 +44,7 @@
 //#include aaa_<vector>
 namespace remoting_remoting
 {
-    class FileTransferMainDialog : public ::subsystem_apex::Dialog,
+    class FileTransferMainDialog : public ::innate_subsystem::Dialog,
                                    public ::remoting::ftp::FileTransferInterface
     {
     public:
@@ -228,39 +228,39 @@ namespace remoting_remoting
         // Buttons
         //
 
-        ::subsystem_apex::Control m_renameRemoteButton;
-        ::subsystem_apex::Control m_mkDirRemoteButton;
-        ::subsystem_apex::Control m_removeRemoteButton;
-        ::subsystem_apex::Control m_refreshRemoteButton;
+        ::innate_subsystem::Control m_renameRemoteButton;
+        ::innate_subsystem::Control m_mkDirRemoteButton;
+        ::innate_subsystem::Control m_removeRemoteButton;
+        ::innate_subsystem::Control m_refreshRemoteButton;
 
-        ::subsystem_apex::Control m_renameLocalButton;
-        ::subsystem_apex::Control m_mkDirLocalButton;
-        ::subsystem_apex::Control m_removeLocalButton;
-        ::subsystem_apex::Control m_refreshLocalButton;
+        ::innate_subsystem::Control m_renameLocalButton;
+        ::innate_subsystem::Control m_mkDirLocalButton;
+        ::innate_subsystem::Control m_removeLocalButton;
+        ::innate_subsystem::Control m_refreshLocalButton;
 
-        ::subsystem_apex::Control m_uploadButton;
-        ::subsystem_apex::Control m_downloadButton;
+        ::innate_subsystem::Control m_uploadButton;
+        ::innate_subsystem::Control m_downloadButton;
 
-        ::subsystem_apex::Control m_cancelButton;
+        ::innate_subsystem::Control m_cancelButton;
 
         //
         // Progress bar
         //
 
-        ::subsystem_apex::ProgressBar m_copyProgressBar;
+        ::innate_subsystem::ProgressBar m_copyProgressBar;
 
         //
         // Combo box
         //
 
-        ::subsystem_apex::ComboBox m_logComboBox;
+        ::innate_subsystem::ComboBox m_logComboBox;
 
         //
         // Text boxes
         //
 
-        ::subsystem_apex::TextBox m_localCurFolderTextBox;
-        ::subsystem_apex::TextBox m_remoteCurFolderTextBox;
+        ::innate_subsystem::TextBox m_localCurFolderTextBox;
+        ::innate_subsystem::TextBox m_remoteCurFolderTextBox;
 
         //
         // Tables

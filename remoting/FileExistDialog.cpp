@@ -170,7 +170,7 @@ namespace remoting_remoting
         closeDialog(CANCEL_RESULT);
     }
 
-    void FileExistDialog::updateGui(::remoting::ftp::FileInfo *fileInfo, ::subsystem_apex::Control *sizeLabel, ::subsystem_apex::Control * modTimeLabel)
+    void FileExistDialog::updateGui(::remoting::ftp::FileInfo *fileInfo, ::innate_subsystem::Control *sizeLabel, ::innate_subsystem::Control * modTimeLabel)
     {
         char buffer[255];
         #ifdef WINDOWS

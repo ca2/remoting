@@ -64,7 +64,7 @@ private:
   void initControls();
 
   //
-  // ::subsystem_apex::Control event handlers
+  // ::innate_subsystem::Control event handlers
   //
 
   void onShareRadioButtonClick(int number);
@@ -87,9 +87,9 @@ protected:
   // Configuration
   ServerConfig *m_config;
   // Controls
-  ::subsystem_apex::Control m_openLogPathButton;
-  ::subsystem_apex::Control m_setControlPasswordButton;
-  ::subsystem_apex::Control m_unsetControlPasswordButton;
+  ::innate_subsystem::Control m_openLogPathButton;
+  ::innate_subsystem::Control m_setControlPasswordButton;
+  ::innate_subsystem::Control m_unsetControlPasswordButton;
   CheckBox m_disconnectAction[3];
   TextBox m_logLevel;
   TextBox m_logPathTB;

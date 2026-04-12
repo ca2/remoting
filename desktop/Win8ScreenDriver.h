@@ -59,12 +59,12 @@ public:
 
   virtual ::int_size getScreenDimension();
   virtual bool grabFb(const ::int_rectangle &  rect = 0);
-  virtual ::subsystem_apex::FrameBuffer *getScreenBuffer();
+  virtual ::innate_subsystem::FrameBuffer *getScreenBuffer();
   virtual bool getScreenPropertiesChanged();
   virtual bool getScreenSizeChanged();
   virtual bool applyNewScreenProperties();
 
-  virtual bool grabCursorShape(const ::subsystem_apex::PixelFormat & pf);
+  virtual bool grabCursorShape(const ::innate_subsystem::PixelFormat & pf);
   virtual const CursorShape *getCursorShape();
   virtual Point getCursorPosition();
 

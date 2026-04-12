@@ -43,7 +43,7 @@ namespace remoting_remoting
 {
     class remoting_impact;
 
-    class LoginDialog : public ::subsystem_apex::Dialog
+    class LoginDialog : public ::innate_subsystem::Dialog
     {
     public:
         LoginDialog(remoting_impact *viewer);
@@ -69,10 +69,10 @@ namespace remoting_remoting
         bool onCommand(unsigned int controlID, unsigned int notificationID);
         bool m_isListening;
 
-        ::subsystem_apex::Control m_listening;
-        ::subsystem_apex::Control m_ok;
+        ::innate_subsystem::Control m_listening;
+        ::innate_subsystem::Control m_ok;
         ::remoting::ConnectionConfig m_connectionConfig;
-        ::subsystem_apex::ComboBox m_server;
+        ::innate_subsystem::ComboBox m_server;
         ::string m_serverHost;
         remoting_impact *m_viewer;
 

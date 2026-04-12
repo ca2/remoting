@@ -35,7 +35,7 @@ namespace remoting_remoting
 {
     class remoting_impact;
 
-    class ControlTrayIcon : public ::subsystem_apex::NotifyIcon,
+    class ControlTrayIcon : public ::innate_subsystem::NotifyIcon,
                             public WindowProcHolder
     {
     public:
@@ -85,8 +85,8 @@ namespace remoting_remoting
         //
         virtual void onShowMainWindow();
 
-        ::subsystem_apex::Icon m_icon;
-        ::subsystem_apex::Menu m_menu;
+        ::innate_subsystem::Icon m_icon;
+        ::innate_subsystem::Menu m_menu;
         bool m_inWindowProc;
 
         remoting_impact *m_application;

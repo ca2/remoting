@@ -39,7 +39,7 @@ namespace remoting_remoting
         ~FileRenameDialog();
 
     //protected:
-        virtual void initialize_file_rename_dialog(::subsystem_apex::Control *parent);
+        virtual void initialize_file_rename_dialog(::innate_subsystem::Control *parent);
 
         virtual bool onInitDialog();
     };

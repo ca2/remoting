@@ -38,7 +38,7 @@ public:
   @param parent - parent dialog, optional (can be null).
   @param isNewPassword - flag determinates caption of dialog.
   */
-  ChangePasswordDialog(::subsystem_apex::Control *parent, bool isNewPassword);
+  ChangePasswordDialog(::innate_subsystem::Control *parent, bool isNewPassword);
   virtual ~ChangePasswordDialog();
 
   /**

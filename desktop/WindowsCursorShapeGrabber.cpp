@@ -45,12 +45,12 @@ bool WindowsCursorShapeGrabber::isCursorShapeChanged()
   return true;
 }
 
-bool WindowsCursorShapeGrabber::grab(const ::subsystem_apex::PixelFormat & pixelFormat)
+bool WindowsCursorShapeGrabber::grab(const ::innate_subsystem::PixelFormat & pixelFormat)
 {
   return grabPixels(pixelFormat);
 }
 
-bool WindowsCursorShapeGrabber::grabPixels(const ::subsystem_apex::PixelFormat & pixelFormat)
+bool WindowsCursorShapeGrabber::grabPixels(const ::innate_subsystem::PixelFormat & pixelFormat)
 {
   HCURSOR hCursor = getHCursor();
   if (hCursor == 0) {
@@ -93,7 +93,7 @@ bool WindowsCursorShapeGrabber::grabPixels(const ::subsystem_apex::PixelFormat &
   int height = isColorShape ? bmMask.bmHeight : bmMask.bmHeight/2;
   int widthBytes = bmMask.bmWidthBytes;
 
-  const ::subsystem_apex::FrameBuffer *pixels= m_cursorShape.getPixels();
+  const ::innate_subsystem::FrameBuffer *pixels= m_cursorShape.getPixels();
 
   m_cursorShape.setProperties(&::int_size(width, height), pixelFormat);
 

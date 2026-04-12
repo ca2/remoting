@@ -28,11 +28,11 @@
 #include "innate_subsystem/BaseWindow.h"
 #include "innate_subsystem/drawing/DeviceContext.h"
 
-class CLASS_DECL_REMOTING_COMMON ::subsystem_apex::PaintWindow: public BaseWindow
+class CLASS_DECL_REMOTING_COMMON ::innate_subsystem::PaintWindow: public BaseWindow
 {
 public:
-  ::subsystem_apex::PaintWindow();
-  virtual ~::subsystem_apex::PaintWindow();
+  ::innate_subsystem::PaintWindow();
+  virtual ~::innate_subsystem::PaintWindow();
 
 private:
   HDC getHDCPaint();

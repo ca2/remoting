@@ -32,7 +32,7 @@
 
 #include "Win8DeskDuplicationThread.h"
 
-Win8DeskDuplication::Win8DeskDuplication(::subsystem_apex::FrameBuffer *targetFb,
+Win8DeskDuplication::Win8DeskDuplication(::innate_subsystem::FrameBuffer *targetFb,
                                                      ::array_base<::int_rectangle> &targetRect,
                                                      Win8CursorShape *targetCurShape,
                                                      LONGLONG *cursorTimeStamp,

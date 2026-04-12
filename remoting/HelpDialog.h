@@ -31,7 +31,7 @@
 
 namespace remoting_remoting
 {
-    class HelpDialog : public ::subsystem_apex::Dialog
+    class HelpDialog : public ::innate_subsystem::Dialog
     {
     public:
         HelpDialog();
@@ -39,7 +39,7 @@ namespace remoting_remoting
     //protected:
         bool onInitDialog() ;
         bool onCommand(unsigned int controlID, unsigned int notificationID);
-        ::pointer < ::subsystem_apex::TextBox >  m_shelp;
+        ::pointer < ::innate_subsystem::TextBox >  m_shelp;
 
     };
 }//namespace remoting_remoting

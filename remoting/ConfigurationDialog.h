@@ -43,7 +43,7 @@
 //#include "remoting/remoting_common/win_system/WindowsApplication.h"
 namespace remoting_remoting
 {
-   class ConfigurationDialog : public ::subsystem_apex::Dialog
+   class ConfigurationDialog : public ::innate_subsystem::Dialog
    {
    public:
       ConfigurationDialog();
@@ -56,23 +56,23 @@ namespace remoting_remoting
       void onOpenFolderButtonClick();
       bool onInitDialog();
 
-      ::subsystem_apex::CheckBox  m_checkboxShowToolBars;
-      ::subsystem_apex::CheckBox m_checkboxWarnAtSwitching;
-      ::subsystem_apex::TextBox m_textboxNumberConn;
-      ::subsystem_apex::SpinControl m_spincontrolNumConn;
-      ::subsystem_apex::TextBox m_textboxReverseConn;
-      ::subsystem_apex::SpinControl  m_spincontrolReverseConn;
-      ::subsystem_apex::TextBox  m_textboxVerbLvl;
-      ::subsystem_apex::SpinControl  m_spincontrolVerbLvl;
-      ::subsystem_apex::TextBox  m_textboxLogging;
-      ::subsystem_apex::Control  m_controlOpenLogDir;
+      ::innate_subsystem::CheckBox  m_checkboxShowToolBars;
+      ::innate_subsystem::CheckBox m_checkboxWarnAtSwitching;
+      ::innate_subsystem::TextBox m_textboxNumberConn;
+      ::innate_subsystem::SpinControl m_spincontrolNumConn;
+      ::innate_subsystem::TextBox m_textboxReverseConn;
+      ::innate_subsystem::SpinControl  m_spincontrolReverseConn;
+      ::innate_subsystem::TextBox  m_textboxVerbLvl;
+      ::innate_subsystem::SpinControl  m_spincontrolVerbLvl;
+      ::innate_subsystem::TextBox  m_textboxLogging;
+      ::innate_subsystem::Control  m_controlOpenLogDir;
 
       ::subsystem::OperatingSystemApplicationInterface *m_application;
 
       //private:
       void updateControlValues();
       bool isInputValid();
-      bool testNum(::subsystem_apex::TextBoxInterface *tb, const ::scoped_string & scopedstrTbName);
+      bool testNum(::innate_subsystem::TextBoxInterface *tb, const ::scoped_string & scopedstrTbName);
       void onOkPressed();
    };
 } // namespace remoting_remoting

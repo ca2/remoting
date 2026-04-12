@@ -43,7 +43,7 @@ namespace remoting_remoting
     {
     public:
 
-        ::pointer < subsystem_apex::ProgressBar>m_pbar;
+        ::pointer < innate_subsystem::ProgressBar>m_pbar;
         double m_dStart = 0.0;
         double m_dEnd = 0.0;
         double m_d;
@@ -60,14 +60,14 @@ namespace remoting_remoting
     };
 
 
-    class ConnectingDialog : public subsystem_apex::Dialog
+    class ConnectingDialog : public innate_subsystem::Dialog
     {
     public:
 
 
         ::pointer < progress_bar_animation > m_panimation;
-        ::pointer < ::subsystem_apex::TextBox > m_ptextboxHost;
-        ::pointer < ::subsystem_apex::TextBox > m_ptextboxStatus;
+        ::pointer < ::innate_subsystem::TextBox > m_ptextboxHost;
+        ::pointer < ::innate_subsystem::TextBox > m_ptextboxStatus;
         ::string  m_strHost;
         ::string m_strStatus;
 

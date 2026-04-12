@@ -78,7 +78,7 @@ public:
   */
   virtual bool grab(const ::int_rectangle &rect = {} ) = 0;
 
-  virtual ::subsystem_apex::FrameBuffer *getScreenBuffer() { return &m_workFrameBuffer; }
+  virtual ::innate_subsystem::FrameBuffer *getScreenBuffer() { return &m_workFrameBuffer; }
   virtual void setWorkRect(::int_rectangle *workRect);
   virtual ::int_rectangle getWorkRect() const { return ::int_rectangle(m_offsetFrameBuffer.x,
                                                  m_offsetFrameBuffer.y,
@@ -108,7 +108,7 @@ protected:
   ::int_rectangle m_fullScreenRect;
   Point m_offsetFrameBuffer;
 
-  ::subsystem_apex::FrameBuffer m_workFrameBuffer;
+  ::innate_subsystem::FrameBuffer m_workFrameBuffer;
 };
 
 //// __SCREENGRABBER_H__

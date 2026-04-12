@@ -31,7 +31,7 @@
 
 
 
-class CLASS_DECL_REMOTING_COMMON TabControl : public ::subsystem_apex::Control
+class CLASS_DECL_REMOTING_COMMON TabControl : public ::innate_subsystem::Control
 {
 public:
   TabControl();

@@ -228,7 +228,7 @@
 //
 //
 //   // class Control :
-//   // virtual public ::subsystem_apex::Control
+//   // virtual public ::innate_subsystem::Control
 //   // {
 //   // public:
 //   //    Control();

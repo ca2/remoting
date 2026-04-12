@@ -47,8 +47,8 @@
 namespace remoting_remoting
 {
 
-    class ViewerWindow : //public ::subsystem_apex::Window,
-   public ::subsystem_apex::Control,
+    class ViewerWindow : //public ::innate_subsystem::Window,
+   public ::innate_subsystem::Control,
                          public ::remoting::CoreEventsAdapter,
                          public subsystem::OperatingSystemHookListener
     {
@@ -132,14 +132,14 @@ namespace remoting_remoting
         void onDisconnect(const ::scoped_string & scopedstrMessage);
         void onAuthError(const ::remoting::AuthException *exception);
         void onError(const ::subsystem::Exception *exception);
-        void onFrameBufferUpdate(const ::subsystem_apex::FrameBuffer *fb, const ::int_rectangle &  rect);
-        void onFrameBufferPropChange(const ::subsystem_apex::FrameBuffer *fb);
+        void onFrameBufferUpdate(const ::innate_subsystem::FrameBuffer *fb, const ::int_rectangle &  rect);
+        void onFrameBufferPropChange(const ::innate_subsystem::FrameBuffer *fb);
         void onCutText(const ::scoped_string & cutText);
 
         int translateAccelToTB(int val);
         //void applyScreenChanges(bool isFullScreen);
 
-       ::subsystem_apex::ControlInterface * getControl();
+       ::innate_subsystem::ControlInterface * getControl();
 
         // function return default rect of viewer window:
         // if size of remote screen is more local desktop, then return rect of desktop
@@ -148,7 +148,7 @@ namespace remoting_remoting
 
         ::subsystem::LogWriter * m_plogwriter;
 
-        //::subsystem_apex::Control m_control;
+        //::innate_subsystem::Control m_control;
 
         ::remoting::ConnectionConfigSM m_ccsm;
         ::remoting::ConnectionConfig *m_pconnectionconfig;
@@ -158,7 +158,7 @@ namespace remoting_remoting
         FileTransferMainDialog *m_ftDialog;
         DesktopWindow m_desktopwindow;
         //::wstring m_wstrToolTip;
-        ::subsystem_apex::Toolbar m_toolbar;
+        ::innate_subsystem::Toolbar m_toolbar;
         ViewerMenu m_menu;
         ConnectionData *m_conData;
         ::subsystem::SystemInformation m_sysinf;

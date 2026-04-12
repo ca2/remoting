@@ -65,8 +65,8 @@ private:
 
 protected:
   ListBox m_exPortsListBox;
-  ::subsystem_apex::Control m_editButton;
-  ::subsystem_apex::Control m_removeButton;
+  ::innate_subsystem::Control m_editButton;
+  ::innate_subsystem::Control m_removeButton;
 
   PortMappingContainer *m_extraPorts;
 

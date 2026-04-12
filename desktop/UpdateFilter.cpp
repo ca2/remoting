@@ -28,7 +28,7 @@
 static const int BLOCK_SIZE = 32;
 
 UpdateFilter::UpdateFilter(ScreenDriver *screenDriver,
-                           ::subsystem_apex::FrameBuffer *frameBuffer,
+                           ::innate_subsystem::FrameBuffer *frameBuffer,
                            critical_section *frameBufferCriticalSection,
                            ::subsystem::LogWriter *log)
 : m_screenDriver(screenDriver),
@@ -48,7 +48,7 @@ void UpdateFilter::filter(UpdateContainer *updateContainer)
   m_plogwriter->debug("UpdateFilter::filter()");
   critical_section_lock al(m_fbMutex);
 
-  ::subsystem_apex::FrameBuffer *screenFrameBuffer = m_screenDriver->getScreenBuffer();
+  ::innate_subsystem::FrameBuffer *screenFrameBuffer = m_screenDriver->getScreenBuffer();
 
   // Checking for buffers equal
   m_plogwriter->debug("UpdateFilter::filter : Checking for buffers equal");

@@ -38,7 +38,7 @@ public:
   Tooltip();
   virtual ~Tooltip();
 
-  virtual void showTooltip(::subsystem_apex::Control * pwindow) = 0;
+  virtual void showTooltip(::innate_subsystem::Control * pwindow) = 0;
 
   virtual void setText(const ::scoped_string & scopedstrText) = 0;
   virtual void setTitle(const ::scoped_string & scopedstrCaption) = 0;

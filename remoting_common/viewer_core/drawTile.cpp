@@ -31,7 +31,7 @@
 
 namespace remoting
 {
-   void ZrleDecoder::drawTile(::subsystem_apex::FrameBuffer* fb,
+   void ZrleDecoder::drawTile(::innate_subsystem::FrameBuffer* fb,
        const ::int_rectangle& tileRect,
        const ::array_base<char>* pixels)
    {

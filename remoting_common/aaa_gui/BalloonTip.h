@@ -39,7 +39,7 @@ public:
   BalloonTip();
   virtual ~BalloonTip();
 
-  void showTooltip(::subsystem_apex::Control *control);
+  void showTooltip(::innate_subsystem::Control *control);
 
   void setText(const ::scoped_string & scopedstrText);
   void setTitle(const ::scoped_string & scopedstrCaption);

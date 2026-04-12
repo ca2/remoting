@@ -39,8 +39,8 @@ namespace remoting
    }
 
    void RawDecoder::process(RfbInputGate *input,
-                            ::subsystem_apex::FrameBuffer *frameBuffer,
-                            ::subsystem_apex::FrameBuffer *secondFrameBuffer,
+                            ::innate_subsystem::FrameBuffer *frameBuffer,
+                            ::innate_subsystem::FrameBuffer *secondFrameBuffer,
                             const ::int_rectangle &  rect,
                             critical_section *fbLock,
                             FbUpdateNotifier *fbNotifier)
@@ -79,7 +79,7 @@ namespace remoting
    }
 
    void RawDecoder::decode(RfbInputGate *pinput,
-                        ::subsystem_apex::FrameBuffer *frameBuffer,
+                        ::innate_subsystem::FrameBuffer *frameBuffer,
                         const ::int_rectangle &  rect)
    {
       size_t bytesPerPixel = frameBuffer->getPixelFormat().bitsPerPixel / 8;

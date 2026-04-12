@@ -102,7 +102,7 @@ private:
 
 private:
   /**
-   * ::subsystem_apex::Control gate.
+   * ::innate_subsystem::Control gate.
    */
   ControlGate *m_gate;
   /**
@@ -110,7 +110,7 @@ private:
    */
   ByteArrayOutputStream *m_tunnel;
   /**
-   * ::subsystem_apex::Control scopedstrMessage id.
+   * ::innate_subsystem::Control scopedstrMessage id.
    */
   unsigned int m_messageId;
 

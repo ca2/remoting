@@ -73,7 +73,7 @@ void Win8ScreenDriver::terminateDetection()
   return m_drvImpl->getScreenBuffer()->getDimension();
 }
 
-::subsystem_apex::FrameBuffer *Win8ScreenDriver::getScreenBuffer()
+::innate_subsystem::FrameBuffer *Win8ScreenDriver::getScreenBuffer()
 {
   critical_section_lock al(&m_drvImplMutex);
   return m_drvImpl->getScreenBuffer();
@@ -117,7 +117,7 @@ bool Win8ScreenDriver::applyNewScreenProperties()
   return true;
 }
 
-bool Win8ScreenDriver::grabCursorShape(const ::subsystem_apex::PixelFormat & pf)
+bool Win8ScreenDriver::grabCursorShape(const ::innate_subsystem::PixelFormat & pf)
 {
   critical_section_lock al(&m_drvImplMutex);
   m_drvImpl->updateCursorShape(&m_cursorShape);

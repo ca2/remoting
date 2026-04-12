@@ -77,7 +77,7 @@ void BaseDialog::setDefaultPushButton(unsigned int buttonId)
   SendMessage(m_hwnd, DM_SETDEFID, buttonId, 0);
 }
 
-void BaseDialog::setParent(::subsystem_apex::Control *pwindowParent)
+void BaseDialog::setParent(::innate_subsystem::Control *pwindowParent)
 {
   m_pwindowParent = pwindowParent;
 }
@@ -248,12 +248,12 @@ TCHAR *BaseDialog::getResouceName()
   return m_resourceName;
 }
 
-void BaseDialog::subclassControlById(::subsystem_apex::Control &control, DWORD id) 
+void BaseDialog::subclassControlById(::innate_subsystem::Control &control, DWORD id) 
 {
   control = GetDlgItem(m_hwnd, id);
 }
 
-void BaseDialog::subclassControlById(::subsystem_apex::Control * pcontrol, DWORD id)
+void BaseDialog::subclassControlById(::innate_subsystem::Control * pcontrol, DWORD id)
 {
    pcontrol->m_hwnd = GetDlgItem(m_hwnd, id);
    pcontrol->subclass_window();

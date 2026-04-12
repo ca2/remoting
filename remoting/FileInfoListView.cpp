@@ -80,7 +80,7 @@ namespace remoting_remoting
 
         subclassWindow();
 
-        //::subsystem_apex::Control::replaceWindowProc(FileInfoListView::s_newWndProc);
+        //::innate_subsystem::Control::replaceWindowProc(FileInfoListView::s_newWndProc);
     }
 
     void FileInfoListView::addItem(int index, ::remoting::ftp::FileInfo *fileInfo)
@@ -183,7 +183,7 @@ namespace remoting_remoting
 
        auto sizeSmallIconInPixels = psystemmetrics->get_small_icon_size_in_pixels();
 
-      m_pimagelistSmall->createImageList(sizeSmallIconInPixels, ::subsystem_apex::image_list::e_create_mask);
+      m_pimagelistSmall->createImageList(sizeSmallIconInPixels, ::innate_subsystem::image_list::e_create_mask);
 
         //HICON icon;
 

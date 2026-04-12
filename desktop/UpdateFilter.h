@@ -36,7 +36,7 @@ class UpdateFilter
 {
 public:
   UpdateFilter(ScreenDriver *screenDriver,
-               ::subsystem_apex::FrameBuffer *frameBuffer,
+               ::innate_subsystem::FrameBuffer *frameBuffer,
                critical_section *frameBufferCriticalSection,
                ::subsystem::LogWriter *log);
   ~UpdateFilter();
@@ -55,7 +55,7 @@ private:
   bool grab();
 
   ScreenDriver *m_screenDriver;
-  ::subsystem_apex::FrameBuffer *m_frameBuffer;
+  ::innate_subsystem::FrameBuffer *m_frameBuffer;
   critical_section *m_fbMutex;
   GrabOptimizator m_grabOptimizator;
 

@@ -36,7 +36,7 @@ class Win32ScreenDriver : public Win32ScreenDriverBaseImpl
 public:
   Win32ScreenDriver(UpdateKeeper *updateKeeper,
                        UpdateListener *updateListener,
-                       ::subsystem_apex::FrameBuffer *fb,
+                       ::innate_subsystem::FrameBuffer *fb,
                        critical_section *fbcritical_section, ::subsystem::LogWriter *log);
   virtual ~Win32ScreenDriver();
 
@@ -48,7 +48,7 @@ public:
 
   virtual ::int_size getScreenDimension();
   virtual bool grabFb(const ::int_rectangle &  rect = 0);
-  virtual ::subsystem_apex::FrameBuffer *getScreenBuffer();
+  virtual ::innate_subsystem::FrameBuffer *getScreenBuffer();
   virtual bool getScreenPropertiesChanged();
   virtual bool getScreenSizeChanged();
   virtual bool applyNewScreenProperties();

@@ -229,7 +229,7 @@ void RfbClient::execute()
     m_updateSender = new UpdateSender(&codeRegtor, m_desktop, this,
                                       &output, m_id, m_desktop, m_plogwriter);
     m_plogwriter->debug("UpdateSender has been created for client #{}", m_id);
-    ::subsystem_apex::PixelFormat pf;
+    ::innate_subsystem::PixelFormat pf;
     ::int_size fbDim;
     m_desktop->getFrameBufferProperties(&fbDim, &pf);
     ::int_rectangle viewPort = getViewPortRect(fbDim);
@@ -338,7 +338,7 @@ void RfbClient::onMouseEvent(unsigned short x, unsigned short y, unsigned char b
   // FIXME: Too much extra work. Typically we would share the whole desktop and would not need
   //        to compute regions on each mouse move.
 
-  ::subsystem_apex::PixelFormat pfStub;
+  ::innate_subsystem::PixelFormat pfStub;
   ::int_size fbDim;
   m_desktop->getFrameBufferProperties(&fbDim, &pfStub);
 
@@ -384,7 +384,7 @@ void RfbClient::getViewPortInfo(const ::int_size & fbDimension, ::int_rectangle 
 
 void RfbClient::onGetViewPort(::int_rectangle *viewRect, bool *shareApp, Region *shareAppRegion)
 {
-  ::subsystem_apex::PixelFormat pfStub;
+  ::innate_subsystem::PixelFormat pfStub;
   ::int_size fbDim;
   m_desktop->getFrameBufferProperties(&fbDim, &pfStub);
   getViewPortInfo(&fbDim, viewRect, shareApp, shareAppRegion);

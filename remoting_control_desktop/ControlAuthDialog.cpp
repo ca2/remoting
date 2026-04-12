@@ -63,11 +63,11 @@ bool ControlAuthDialog::onNotify(unsigned int controlID, ::lparam data)
 bool ControlAuthDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
   switch (controlID) {
-  case ::subsystem_apex::IDOK:
+  case ::innate_subsystem::IDOK:
     m_passwordTextBox.getText(&m_password);
     kill(controlID);
     break;
-  case ::subsystem_apex::IDCANCEL:
+  case ::innate_subsystem::IDCANCEL:
     kill(controlID);
     break;
   }

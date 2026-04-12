@@ -28,7 +28,7 @@
 #include "subsystem/_common_header.h"
 
 /**
- * ::subsystem_apex::Control protocol constants.
+ * ::innate_subsystem::Control protocol constants.
  *
  * @section Client requests.
  * Client to server control messages are request-reply oriented and have format

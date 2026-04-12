@@ -28,7 +28,7 @@
 
 namespace remoting
 {
-   CursorPainter::CursorPainter(::subsystem_apex::FrameBuffer *fb, ::subsystem::LogWriter *logWriter)
+   CursorPainter::CursorPainter(::innate_subsystem::FrameBuffer *fb, ::subsystem::LogWriter *logWriter)
    : m_fb(fb),
      m_plogwriter(logWriter),
      m_cursorIsMoveable(false),
@@ -61,7 +61,7 @@ namespace remoting
 
       m_plogwriter->information("setNewCursor Cursor size is ({}, {})", width, height);
       ::int_size cursorDimension(width, height);
-      ::subsystem_apex::PixelFormat pixelFormat = m_fb->getPixelFormat();
+      ::innate_subsystem::PixelFormat pixelFormat = m_fb->getPixelFormat();
 
       m_cursor.setProperties(cursorDimension, pixelFormat);
       m_cursorOverlay.setProperties(cursorDimension, pixelFormat);

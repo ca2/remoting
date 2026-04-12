@@ -34,7 +34,7 @@ ControlServer::ControlServer(PipeServer *pipeServer,
   m_rfbClientManager(rfbClientManager),
   m_plogwriter(log)
 {
-  m_plogwriter->debug("{}"), _T("::subsystem_apex::Control server started");
+  m_plogwriter->debug("{}"), _T("::innate_subsystem::Control server started");
 
   resume();
 }
@@ -57,7 +57,7 @@ ControlServer::~ControlServer()
   // Unblock all client if it has been blocked by authenticator
   m_authenticator.breakAndDisableAuthentications();
 
-  m_plogwriter->debug("{}"), _T("::subsystem_apex::Control server stopped");
+  m_plogwriter->debug("{}"), _T("::innate_subsystem::Control server stopped");
 }
 
 void ControlServer::execute()

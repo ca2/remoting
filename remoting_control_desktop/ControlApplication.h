@@ -178,7 +178,7 @@ protected:
    */
   ControlProxy *m_serverControl;
   /**
-   * ::subsystem_apex::Control tray icon.
+   * ::innate_subsystem::Control tray icon.
    */
   ControlTrayIcon *m_trayIcon;
   /**

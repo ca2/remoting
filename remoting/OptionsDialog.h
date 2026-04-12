@@ -42,34 +42,34 @@ namespace remoting_remoting
 {
 
 
-    class OptionsDialog : public ::subsystem_apex::Dialog
+    class OptionsDialog : public ::innate_subsystem::Dialog
     {
     public:
 
     //protected:
-        ::pointer < ::subsystem_apex::ComboBoxInterface >       m_pcomboboxUseEnc;
-        ::pointer < ::subsystem_apex::CheckBoxInterface >       m_pcheckboxEightBit;
-        ::pointer < ::subsystem_apex::CheckBoxInterface >       m_pcheckboxCompressionLevel;
-        ::pointer < ::subsystem_apex::TrackbarInterface >       m_ptrackbarCompressionLevel;
-        ::pointer < ::subsystem_apex::ControlInterface >        m_pcontrolQuality;
-        ::pointer < ::subsystem_apex::CheckBoxInterface >       m_pcheckboxJpeg;
-        ::pointer < ::subsystem_apex::TrackbarInterface >       m_ptrackbarJpeg;
-        ::pointer < ::subsystem_apex::ControlInterface >        m_pcontrolQuality2;
-        ::pointer < ::subsystem_apex::CheckBoxInterface >       m_pcheckboxCopyrect;
-        ::pointer < ::subsystem_apex::CheckBoxInterface >       m_pcheckboxViewonly;
-        ::pointer < ::subsystem_apex::CheckBoxInterface >       m_pcheckboxClipboard;
-        ::pointer < ::subsystem_apex::CheckBoxInterface >       m_pcheckboxSharedses;
-        ::pointer < ::subsystem_apex::ComboBoxInterface >       m_pcheckboxScale;
-        ::pointer < ::subsystem_apex::CheckBoxInterface >       m_pcheckboxFullscr;
-        ::pointer < ::subsystem_apex::CheckBoxInterface >       m_pcheckboxDeiconfy;
-        ::pointer < ::subsystem_apex::CheckBoxInterface >       m_pcheckboxSwapmouse;
-        ::pointer < ::subsystem_apex::CheckBoxInterface >       m_pcheckboxTrack;       // Track remote control locally
-        ::pointer < ::subsystem_apex::CheckBoxInterface >       m_pcheckboxCursor;      // Let remote server deal with mouse cursor
-        ::pointer < ::subsystem_apex::CheckBoxInterface >       m_pcheckboxNcursor;     // Don't show remote cursor
-        ::pointer < ::subsystem_apex::CheckBoxInterface >       m_pcheckboxDot;
-        ::pointer < ::subsystem_apex::CheckBoxInterface >       m_pcheckboxSmalldot;
-        ::pointer < ::subsystem_apex::CheckBoxInterface >       m_pcheckboxArrow;
-        ::pointer < ::subsystem_apex::CheckBoxInterface >       m_pcheckboxNlocal;
+        ::pointer < ::innate_subsystem::ComboBoxInterface >       m_pcomboboxUseEnc;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxEightBit;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxCompressionLevel;
+        ::pointer < ::innate_subsystem::TrackbarInterface >       m_ptrackbarCompressionLevel;
+        ::pointer < ::innate_subsystem::ControlInterface >        m_pcontrolQuality;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxJpeg;
+        ::pointer < ::innate_subsystem::TrackbarInterface >       m_ptrackbarJpeg;
+        ::pointer < ::innate_subsystem::ControlInterface >        m_pcontrolQuality2;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxCopyrect;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxViewonly;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxClipboard;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxSharedses;
+        ::pointer < ::innate_subsystem::ComboBoxInterface >       m_pcheckboxScale;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxFullscr;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxDeiconfy;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxSwapmouse;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxTrack;       // Track remote control locally
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxCursor;      // Let remote server deal with mouse cursor
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxNcursor;     // Don't show remote cursor
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxDot;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxSmalldot;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxArrow;
+        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxNlocal;
 
         void onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam);
         bool onCommand(unsigned int controlID, unsigned int notificationID);

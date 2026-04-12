@@ -30,7 +30,7 @@
 #include "remoting/remoting_common/win_system/VersionInfo.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 
-#include "innate_subsystem/::subsystem_apex::Control.h"
+#include "innate_subsystem/::innate_subsystem::Control.h"
 
 #include "remoting_node/BuildTime.h"
 
@@ -45,7 +45,7 @@ AboutDialog::~AboutDialog()
 
 void AboutDialog::onCloseButtonClick()
 {
-  kill(::subsystem_apex::IDCANCEL);
+  kill(::innate_subsystem::IDCANCEL);
 }
 
 void AboutDialog::onOrderSupportButtonClock()
@@ -97,12 +97,12 @@ bool AboutDialog::onInitDialog()
                      BuildTime::DATE);
 
   // Show version info on the dialog.
-  ::subsystem_apex::Control versionLabel;
+  ::innate_subsystem::Control versionLabel;
   versionLabel.setWindow(GetDlgItem(m_ctrlThis.operating_system_window(), IDC_STATIC_VERSION));
   versionLabel.setText(versionText);
 
   // Show licensing info and/or special build info.
-  ::subsystem_apex::Control licensingLabel;
+  ::innate_subsystem::Control licensingLabel;
   licensingLabel.setWindow(GetDlgItem(m_ctrlThis.operating_system_window(), IDC_STATIC_LICENSING));
   licensingLabel.setText(main_subsystem()->string_table()->getString(IDS_LICENSING_INFO));
 
@@ -117,7 +117,7 @@ bool AboutDialog::onNotify(unsigned int controlID, ::lparam data)
 bool AboutDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
   switch (controlID) {
-  case ::subsystem_apex::IDCANCEL:
+  case ::innate_subsystem::IDCANCEL:
     onCloseButtonClick();
     break;
   case IDC_ORDER_SUPPORT_BUTTON:

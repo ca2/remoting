@@ -43,7 +43,7 @@ namespace remoting_remoting
     class style;
 
     class ViewerWindow;
-    class DesktopWindow : public ::subsystem_apex::PaintWindow,
+    class DesktopWindow : public ::innate_subsystem::PaintWindow,
                           protected ::remoting::RfbKeySymListener
     {
     public:
@@ -58,11 +58,11 @@ namespace remoting_remoting
         virtual ~DesktopWindow();
         virtual void _defer_update_double_buffering();
         void setClipboardData(const ::scoped_string & strText);
-        void updateFramebuffer(const ::subsystem_apex::FrameBuffer * pframebuffer,
+        void updateFramebuffer(const ::innate_subsystem::FrameBuffer * pframebuffer,
                                const ::int_rectangle &  dstRect);
         // this function must be called if size of image was changed
         // or the number of bits per pixel
-        void setNewFramebuffer(const ::subsystem_apex::FrameBuffer * pframebuffer);
+        void setNewFramebuffer(const ::innate_subsystem::FrameBuffer * pframebuffer);
 
         // set scale of image, can -1 = Auto, in percent
         void setScale(int scale);
@@ -80,7 +80,7 @@ namespace remoting_remoting
         void setCtrlState(const bool ctrlState);
         // This function set state key "Alt", but not send data to server.
         void setAltState(const bool altState);
-        // This function return true, if key "::subsystem_apex::Control" is pressed.
+        // This function return true, if key "::innate_subsystem::Control" is pressed.
         bool getCtrlState() const;
         // This function return true, if key "Alt" is pressed.
         bool getAltState() const;
@@ -146,7 +146,7 @@ namespace remoting_remoting
         ::int_point m_previousMousePos;
 
         // scroll bars: vertical and horizontal
-        ::subsystem_apex::ScrollBar m_sbar;
+        ::innate_subsystem::ScrollBar m_sbar;
 
         // This flag is true if size of window is changed (scroll must be updated).
         bool m_winResize;
@@ -158,11 +158,11 @@ namespace remoting_remoting
         ::int_rectangle m_clientArea;
         int m_fbWidth;
         int m_fbHeight;
-        ::subsystem_apex::SolidBrush m_brush;
+        ::innate_subsystem::SolidBrush m_brush;
 
         // frame buffer
         critical_section m_bufferLock;
-        ::subsystem_apex::DibFrameBuffer m_framebuffer;
+        ::innate_subsystem::DibFrameBuffer m_framebuffer;
         // This variable save server dimension.
         // ::int_size of m_framebuffer can be large m_serverDimension.
         ::int_size m_serverDimension;
@@ -180,10 +180,10 @@ namespace remoting_remoting
 
     public:
         //void doDraw(DeviceContext *dc);
-        void onDraw(::subsystem_apex::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle);
+        void onDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle);
         void scrollProcessing(int fbWidth, int fbHeight);
-        void drawBackground(::subsystem_apex::GraphicsInterface * pgraphics, const ::int_rectangle & rcMain, const ::int_rectangle & rcImage);
-        void drawImage(::subsystem_apex::GraphicsInterface * pgraphics, const ::int_rectangle & src, const ::int_rectangle & dst);
+        void drawBackground(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rcMain, const ::int_rectangle & rcImage);
+        void drawImage(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & src, const ::int_rectangle & dst);
         void repaint(const ::int_rectangle &  repaintRect);
         void calcClientArea();
     };

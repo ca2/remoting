@@ -42,7 +42,7 @@ namespace remoting
 
    protected:
       virtual void decode(RfbInputGate *input,
-                          ::subsystem_apex::FrameBuffer *frameBuffer,
+                          ::innate_subsystem::FrameBuffer *frameBuffer,
                           const ::int_rectangle &  dstRect);
 
    private:
@@ -54,10 +54,10 @@ namespace remoting
                               int paletteSize,
                               int bytesPerCPixel);
       void processJpeg(RfbInputGate *input,
-                       ::subsystem_apex::FrameBuffer *frameBuffer,
+                       ::innate_subsystem::FrameBuffer *frameBuffer,
                        const ::int_rectangle &  dstRect);
       void processBasicTypes(RfbInputGate *input,
-                             ::subsystem_apex::FrameBuffer *frameBuffer,
+                             ::innate_subsystem::FrameBuffer *frameBuffer,
                              const ::int_rectangle &  dstRect,
                              unsigned char compControl);
       void readTightData(RfbInputGate *input,
@@ -68,24 +68,24 @@ namespace remoting
                               ::array_base<unsigned char> &buffer,
                               size_t expectedLength,
                               const int decoderId);
-      void drawPalette(::subsystem_apex::FrameBuffer *fb,
+      void drawPalette(::innate_subsystem::FrameBuffer *fb,
                        const ::array_base<unsigned int> &palette,
                        const ::array_base<unsigned char> &pixels,
                        const ::int_rectangle &  dstRect);
-      void drawGradient(::subsystem_apex::FrameBuffer *fb,
+      void drawGradient(::innate_subsystem::FrameBuffer *fb,
                         const ::array_base<unsigned char> &pixels,
                         const ::int_rectangle &  dstRect);
-      void drawTightBytes(::subsystem_apex::FrameBuffer *fb,
+      void drawTightBytes(::innate_subsystem::FrameBuffer *fb,
                          const ::array_base<unsigned char> *pixels,
                          const ::int_rectangle &  dstRect);
-      void drawJpegBytes(::subsystem_apex::FrameBuffer *fb,
+      void drawJpegBytes(::innate_subsystem::FrameBuffer *fb,
                          const ::array_base<unsigned char> *pixels,
                          const ::int_rectangle &  dstRect);
 
-      unsigned int getRawTightColor(const ::subsystem_apex::PixelFormat & pxFormat,
+      unsigned int getRawTightColor(const ::innate_subsystem::PixelFormat & pxFormat,
                               const ::array_base<unsigned char> &pixels,
                               size_t offset);
-      void fillRawComponents(const ::subsystem_apex::PixelFormat & pxFormat,
+      void fillRawComponents(const ::innate_subsystem::PixelFormat & pxFormat,
                              unsigned char components[],
                              const ::array_base<unsigned char> &pixels,
                              size_t pixelOffset);

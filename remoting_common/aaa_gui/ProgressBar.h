@@ -27,7 +27,7 @@
 
 #include "innate_subsystem/Window.h"
 
-class CLASS_DECL_REMOTING_COMMON ProgressBar : public ::subsystem_apex::Control
+class CLASS_DECL_REMOTING_COMMON ProgressBar : public ::innate_subsystem::Control
 {
 public:
   ProgressBar();

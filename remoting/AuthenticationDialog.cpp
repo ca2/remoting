@@ -53,12 +53,12 @@ namespace remoting_remoting
 
     bool AuthenticationDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
-        if (controlID == ::subsystem_apex::e_control_id_ok) {
+        if (controlID == ::innate_subsystem::e_control_id_ok) {
             m_strPassword = m_ptextboxPassword->getText();
             closeDialog(1);
             return true;
         }
-        if (controlID == ::subsystem_apex::e_control_id_cancel) {
+        if (controlID == ::innate_subsystem::e_control_id_cancel) {
             closeDialog(0);
             return true;
         }

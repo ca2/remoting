@@ -59,7 +59,7 @@ namespace remoting_remoting
 
     void AboutDialog::onCloseButtonClick()
     {
-        closeDialog(::subsystem_apex::e_control_id_cancel);
+        closeDialog(::innate_subsystem::e_control_id_cancel);
     }
 
     void AboutDialog::onOrderSupportButtonClock()
@@ -112,7 +112,7 @@ namespace remoting_remoting
                            BuildTime::DATE);
 
         // Show version info on the dialog.
-        auto plabelVersion = dialog_item< ::subsystem_apex::Control >(IDC_STATIC_VERSION);
+        auto plabelVersion = dialog_item< ::innate_subsystem::Control >(IDC_STATIC_VERSION);
        plabelVersion->setText(versionText);
         //versionLabel.setWindow(GetDlgItem(m_hwnd, IDC_STATIC_VERSION));
         //versionLabel.setText(versionText);
@@ -121,8 +121,8 @@ namespace remoting_remoting
        ::string strLicensingInfo = main_subsystem()->string_table()->getString(IDS_LICENSING_INFO);
 
         // Show licensing info and/or special build info.
-       auto plabelLicensing = dialog_item< ::subsystem_apex::Control >(IDC_STATIC_VERSION);
-        //::subsystem_apex::Control licensingLabel;
+       auto plabelLicensing = dialog_item< ::innate_subsystem::Control >(IDC_STATIC_VERSION);
+        //::innate_subsystem::Control licensingLabel;
         //licensingLabel.setWindow(GetDlgItem(m_hwnd, IDC_STATIC_LICENSING));
         plabelLicensing->setText(strLicensingInfo);
 
@@ -137,7 +137,7 @@ namespace remoting_remoting
     bool AboutDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
         switch (controlID) {
-            case ::subsystem_apex::e_control_id_cancel:
+            case ::innate_subsystem::e_control_id_cancel:
                 onCloseButtonClick();
                 break;
             case IDC_ORDER_SUPPORT_BUTTON:

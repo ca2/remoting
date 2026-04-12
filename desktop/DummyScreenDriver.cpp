@@ -29,7 +29,7 @@ DummyScreenDriver::DummyScreenDriver(UpdateKeeper *updateKeeper, UpdateListener 
   m_updateKeeper(updateKeeper),
   m_interval(interval)
 {
-  ::subsystem_apex::PixelFormat pixelFormat;
+  ::innate_subsystem::PixelFormat pixelFormat;
   pixelFormat.initBigEndianByNative();
   pixelFormat.bitsPerPixel = 32;
   pixelFormat.redMax = 0xff;
@@ -105,7 +105,7 @@ bool DummyScreenDriver::grabFb(const ::int_rectangle &  rect)
   return true;
 }
 
-::subsystem_apex::FrameBuffer *DummyScreenDriver::getScreenBuffer()
+::innate_subsystem::FrameBuffer *DummyScreenDriver::getScreenBuffer()
 {
   return &m_workFrameBuffer;
 }

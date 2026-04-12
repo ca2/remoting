@@ -62,7 +62,7 @@ public:
   // flag must correspond to the native byte order. The stride value specifies
   // the number of bytes (not pixels!) occupied by one row of the buffer,
   // including padding if any.
-  virtual void compress(const void *buf, const ::subsystem_apex::PixelFormat & fmt,
+  virtual void compress(const void *buf, const ::innate_subsystem::PixelFormat & fmt,
                         int w, int h, int stride) = 0;
 
   // Get the length of the output data, in bytes.
@@ -89,7 +89,7 @@ public:
   virtual void setQuality(int level);
   virtual void resetQuality();
 
-  virtual void compress(const void *buf, const ::subsystem_apex::PixelFormat & fmt,
+  virtual void compress(const void *buf, const ::innate_subsystem::PixelFormat & fmt,
                         int w, int h, int stride);
 
   virtual size_t getOutputLength();
@@ -118,14 +118,14 @@ protected:
   // Convert one row (scanline) from the specified pixel format to the format
   // supported by the IJG JPEG library (one byte per one color component).
   void convertRow(JSAMPLE *dst, const void *src,
-                  const ::subsystem_apex::PixelFormat & fmt, int numPixels);
+                  const ::innate_subsystem::PixelFormat & fmt, int numPixels);
 
   // Convert one row (scanline) from the specified pixel format to the format
   // supported by the IJG JPEG library (one byte per one color component).
   // This is a faster version assuming that source pixels are 32-bit values
   // with actual color depth of 24 (redMax, greenMax and blueMax are all 255).
   void convertRow24(JSAMPLE *dst, const void *src,
-                    const ::subsystem_apex::PixelFormat & fmt, int numPixels);
+                    const ::innate_subsystem::PixelFormat & fmt, int numPixels);
 
 private:
   METHODDEF(::string) get_message(j_common_ptr cinfo);

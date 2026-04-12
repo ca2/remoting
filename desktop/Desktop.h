@@ -45,7 +45,7 @@ public:
                                   ::string & userName) = 0;
   // Puts the current frame buffer dimension and pixel format to
   // the dim and pf function arguments.
-  virtual void getFrameBufferProperties(::int_size *dim, ::subsystem_apex::PixelFormat *pf) = 0;
+  virtual void getFrameBufferProperties(::int_size *dim, ::innate_subsystem::PixelFormat *pf) = 0;
 
   virtual void getPrimaryDesktopCoords(::int_rectangle *rect) = 0;
   // Returns a rect that is normilized from "virtual desktop" to frame buffer coordinates.
@@ -66,7 +66,7 @@ public:
   // Updates external frame buffer pixels only for the region from view port
   // located at the place in a central frame buffer.
   // If view port is out of central frame buffer bounds the function will return false.
-  virtual bool updateExternalFrameBuffer(::subsystem_apex::FrameBuffer *fb, const Region *region,
+  virtual bool updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *fb, const Region *region,
                                          const ::int_rectangle &  viewPort) = 0;
 };
 

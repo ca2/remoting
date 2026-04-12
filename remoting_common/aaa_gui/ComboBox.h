@@ -28,7 +28,7 @@
 #include "subsystem/_common_header.h"
 #include "innate_subsystem/Window.h"
 
-class CLASS_DECL_REMOTING_COMMON ComboBox : public ::subsystem_apex::Control
+class CLASS_DECL_REMOTING_COMMON ComboBox : public ::innate_subsystem::Control
 {
 public:
   ComboBox();

@@ -45,7 +45,7 @@ typedef struct
 // that view data as report.
 //
 
-class CLASS_DECL_REMOTING_COMMON ListView : public ::subsystem_apex::Control
+class CLASS_DECL_REMOTING_COMMON ListView : public ::innate_subsystem::Control
 {
 public:
 

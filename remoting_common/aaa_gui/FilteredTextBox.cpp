@@ -42,7 +42,7 @@ void FilteredTextBox::setWindow(HWND hwnd)
   } else {
     m_oldWindowProc = NULL;
   }
-  ::subsystem_apex::Control::setWindow(hwnd);
+  ::innate_subsystem::Control::setWindow(hwnd);
 }
 
 void FilteredTextBox::setText(TCHAR *text)

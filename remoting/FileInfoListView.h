@@ -33,7 +33,7 @@ namespace remoting_remoting
 {
 
 
-    class FileInfoListView : public ::subsystem_apex::ListView
+    class FileInfoListView : public ::innate_subsystem::ListView
     {
     public:
 
@@ -88,7 +88,7 @@ namespace remoting_remoting
         //
         virtual int compareUInt64(unsigned long long first, unsigned long long second);
 
-        ::pointer < ::subsystem_apex::ImageListInterface > m_pimagelistSmall;
+        ::pointer < ::innate_subsystem::ImageListInterface > m_pimagelistSmall;
 
         //private:
         virtual bool window_procedure(::lresult & lresult, unsigned int scopedstrMessage, ::wparam wparam, ::lparam lparam);

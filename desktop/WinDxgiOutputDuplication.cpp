@@ -162,7 +162,7 @@ void WinDxgiOutputDuplication::getFrameCursorShape(CursorShape *cursorShape, uns
   buffer.resize(reqSize);
 
   CursorShape newCursorShape;
-  ::subsystem_apex::PixelFormat pf = StandardPixelFormatFactory::create32bppPixelFormat();
+  ::innate_subsystem::PixelFormat pf = StandardPixelFormatFactory::create32bppPixelFormat();
   newCursorShape.setHotSpot(shapeInfo.HotSpot.x, shapeInfo.HotSpot.y);
 
   unsigned int pitch;

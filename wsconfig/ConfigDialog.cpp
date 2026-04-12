@@ -101,10 +101,10 @@ void ConfigDialog::loadSettings()
 bool ConfigDialog::onCommand(unsigned int controlID, unsigned int notificationID)
 {
   switch (controlID) {
-  case ::subsystem_apex::IDOK:
+  case ::innate_subsystem::IDOK:
     onOKButtonClick();
     break;
-  case ::subsystem_apex::IDCANCEL:
+  case ::innate_subsystem::IDCANCEL:
     onCancelButtonClick();
     break;
   case IDC_APPLY:

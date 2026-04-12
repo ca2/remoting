@@ -40,25 +40,25 @@ public:
 
   virtual void splitRectangle(const ::int_rectangle &  rect,
                               ::array_base<::int_rectangle> *rectList,
-                              const ::subsystem_apex::FrameBuffer *serverFb,
+                              const ::innate_subsystem::FrameBuffer *serverFb,
                               const EncodeOptions *options);
   
   virtual void sendRectangle(const ::int_rectangle &  rect,
-                             const ::subsystem_apex::FrameBuffer *serverFb,
+                             const ::innate_subsystem::FrameBuffer *serverFb,
                              const EncodeOptions *options);
 
 private:
   // Determine the class of rectangle and call necessary function for this type.
   template <class PIXEL_T>
     void sendRect(const ::int_rectangle &  rect,
-                  const ::subsystem_apex::FrameBuffer *serverFb,
-                  const ::subsystem_apex::FrameBuffer *clientFb,
+                  const ::innate_subsystem::FrameBuffer *serverFb,
+                  const ::innate_subsystem::FrameBuffer *clientFb,
                   const EncodeOptions *options);
 
   // Send raw tile.
   template <class PIXEL_T>
     void writeRawTile(const ::int_rectangle &  tileRect,
-                      const ::subsystem_apex::FrameBuffer *fb);
+                      const ::innate_subsystem::FrameBuffer *fb);
 
   // Send a solid-color tile.
     void writeSolidTile();
@@ -66,12 +66,12 @@ private:
   // Send packed palette tile.
   template <class PIXEL_T>
     void writePackedPaletteTile(const ::int_rectangle &  tileRect,
-                                const ::subsystem_apex::FrameBuffer *fb);
+                                const ::innate_subsystem::FrameBuffer *fb);
 
   // Send palette RLE tile.
   template <class PIXEL_T>
     void writePaletteRleTile(const ::int_rectangle &  tileRect,
-                             const ::subsystem_apex::FrameBuffer *fb);
+                             const ::innate_subsystem::FrameBuffer *fb);
 
   // Write data from runLength (used in plain Rle encoding).
   void pushRunLengthRle(int runLength);
@@ -88,17 +88,17 @@ private:
   // Fill palette (m_pal), create m_plainRleTile ::array_base and calculate size of data in palette RLE tile.
   template <class PIXEL_T>
     void fillPalette(const ::int_rectangle &  tileRect,
-                     const ::subsystem_apex::FrameBuffer *fb);
+                     const ::innate_subsystem::FrameBuffer *fb);
 
   // Copy ordinary PIXELs.
   template <class PIXEL_T>
     void copyPixels(const ::int_rectangle &  rect,
-                    const ::subsystem_apex::FrameBuffer *fb,
+                    const ::innate_subsystem::FrameBuffer *fb,
                     unsigned char *dst);
   
   // Copy CPIXELs.
   void copyCPixels(const ::int_rectangle &  rect,
-                   const ::subsystem_apex::FrameBuffer *fb,
+                   const ::innate_subsystem::FrameBuffer *fb,
                    unsigned char *dst);
 
   // Vector for storing all tiles for the future zlib compression.
@@ -113,7 +113,7 @@ private:
   int m_mSize;
   
   // The only pixel format type for whole rectangle.
-  ::subsystem_apex::PixelFormat m_pxFormat;
+  ::innate_subsystem::PixelFormat m_pxFormat;
 
   // Used for determing: is it CPIXEL or PIXEL.
   size_t m_bytesPerPixel;

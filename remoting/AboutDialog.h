@@ -32,7 +32,7 @@ namespace remoting_remoting
     /**
      * TightVNC server about dialog.
      */
-    class AboutDialog : public ::subsystem_apex::Dialog
+    class AboutDialog : public ::innate_subsystem::Dialog
     {
     public:
         /**

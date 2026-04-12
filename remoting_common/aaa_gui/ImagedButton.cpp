@@ -165,11 +165,11 @@ void ImagedButton::drawItem(LPDRAWITEMSTRUCT dis)
 
 void ImagedButton::setWindow(HWND hwnd)
 {
-  ::subsystem_apex::Control::setWindow(hwnd);
+  ::innate_subsystem::Control::setWindow(hwnd);
   // Replace window event handler
 //  replaceWindowProc(ImagedButton::wndProc);
   // Add owner draw style to button
-  ::subsystem_apex::Control::add_style(BS_OWNERDRAW);
+  ::innate_subsystem::Control::add_style(BS_OWNERDRAW);
 
   if (ThemeLib::isLoaded())  {
     if (m_theme) {

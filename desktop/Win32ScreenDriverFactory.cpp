@@ -39,7 +39,7 @@ Win32ScreenDriverFactory::~Win32ScreenDriverFactory()
 ScreenDriver *Win32ScreenDriverFactory::
 createScreenDriver(UpdateKeeper *updateKeeper,
                    UpdateListener *updateListener,
-                   ::subsystem_apex::FrameBuffer *fb,
+                   ::innate_subsystem::FrameBuffer *fb,
                    critical_section *fbcritical_section,
                    ::subsystem::LogWriter *log)
 {
@@ -79,7 +79,7 @@ createScreenDriver(UpdateKeeper *updateKeeper,
 ScreenDriver *Win32ScreenDriverFactory::
 createStandardScreenDriver(UpdateKeeper *updateKeeper,
                            UpdateListener *updateListener,
-                           ::subsystem_apex::FrameBuffer *fb,
+                           ::innate_subsystem::FrameBuffer *fb,
                            critical_section *fbcritical_section,
                            ::subsystem::LogWriter *log)
 {

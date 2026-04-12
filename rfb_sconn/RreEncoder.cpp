@@ -41,7 +41,7 @@ int RreEncoder::getCode() const
 
 void RreEncoder::splitRectangle(const ::int_rectangle &  rect,
                                 ::array_base<::int_rectangle> *rectList,
-                                const ::subsystem_apex::FrameBuffer *serverFb,
+                                const ::innate_subsystem::FrameBuffer *serverFb,
                                 const EncodeOptions *options)
 {
   for (int y0 = rect.top; y0 < rect.bottom; y0 += RECT_SIZE) {
@@ -54,10 +54,10 @@ void RreEncoder::splitRectangle(const ::int_rectangle &  rect,
 }
 
 void RreEncoder::sendRectangle(const ::int_rectangle &  rect,
-                               const ::subsystem_apex::FrameBuffer *serverFb,
+                               const ::innate_subsystem::FrameBuffer *serverFb,
                                const EncodeOptions *options)
 {
-  const ::subsystem_apex::FrameBuffer *fb = m_pixelConverter->convert(rect, serverFb);
+  const ::innate_subsystem::FrameBuffer *fb = m_pixelConverter->convert(rect, serverFb);
 
   size_t bpp = fb->getBitsPerPixel();
   // Choose size of pixel according to options.
@@ -74,11 +74,11 @@ void RreEncoder::sendRectangle(const ::int_rectangle &  rect,
 
 template <class PIXEL_T>
 void RreEncoder::rreEncode(const ::int_rectangle &  r,
-                           const ::subsystem_apex::FrameBuffer *frameBuffer)
+                           const ::innate_subsystem::FrameBuffer *frameBuffer)
 {
   PIXEL_T *buffer = (PIXEL_T *)frameBuffer->getBuffer();
   int fbWidth = frameBuffer->getDimension().cx;
-  ::subsystem_apex::PixelFormat pxFormat = frameBuffer->getPixelFormat();
+  ::innate_subsystem::PixelFormat pxFormat = frameBuffer->getPixelFormat();
   // Mask for cutting rubbish bits.
   PIXEL_T mask = pxFormat.redMax << pxFormat.redShift |
                  pxFormat.greenMax << pxFormat.greenShift |

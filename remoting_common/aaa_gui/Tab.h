@@ -30,7 +30,7 @@
 //////#include "remoting/remoting_common/util/::string.h"
 
 class CLASS_DECL_REMOTING_COMMON Tab :
-virtual public ::subsystem_apex::Control
+virtual public ::innate_subsystem::Control
 {
 public:
   Tab();

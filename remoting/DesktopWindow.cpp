@@ -258,7 +258,7 @@ namespace remoting_remoting
                 redraw();
                 break;
             case SB_LINELEFT:
-                m_sbar.moveLeftHorz(::subsystem_apex::SCROLL_STEP);
+                m_sbar.moveLeftHorz(::innate_subsystem::SCROLL_STEP);
                 redraw();
                 break;
             case SB_PAGELEFT:
@@ -266,7 +266,7 @@ namespace remoting_remoting
                 redraw();
                 break;
             case SB_LINERIGHT:
-                m_sbar.moveRightHorz(::subsystem_apex::SCROLL_STEP);
+                m_sbar.moveRightHorz(::innate_subsystem::SCROLL_STEP);
                 redraw();
                 break;
             case SB_PAGERIGHT:
@@ -287,7 +287,7 @@ namespace remoting_remoting
                 redraw();
                 break;
             case SB_LINEUP:
-                m_sbar.moveDownVert(::subsystem_apex::SCROLL_STEP);
+                m_sbar.moveDownVert(::innate_subsystem::SCROLL_STEP);
                 redraw();
                 break;
             case SB_PAGEUP:
@@ -295,7 +295,7 @@ namespace remoting_remoting
                 redraw();
                 break;
             case SB_LINEDOWN:
-                m_sbar.moveUpVert(::subsystem_apex::SCROLL_STEP);
+                m_sbar.moveUpVert(::innate_subsystem::SCROLL_STEP);
                 redraw();
                 break;
             case SB_PAGEDOWN:
@@ -435,16 +435,16 @@ namespace remoting_remoting
         // If swap of mouse button is enabled, then swap button.
         if (m_pconnectionconfig->isMouseSwapEnabled() && mouseButtons)
         {
-            bool bSecond = !!(mouseButtons & ::subsystem_apex::e_mouse_middle);
-            bool bThird = !!(mouseButtons & ::subsystem_apex::e_mouse_right);
-            mouseButtons &= ~(::subsystem_apex::e_mouse_middle | ::subsystem_apex::e_mouse_right);
+            bool bSecond = !!(mouseButtons & ::innate_subsystem::e_mouse_middle);
+            bool bThird = !!(mouseButtons & ::innate_subsystem::e_mouse_right);
+            mouseButtons &= ~(::innate_subsystem::e_mouse_middle | ::innate_subsystem::e_mouse_right);
             if (bSecond)
             {
-                mouseButtons |= ::subsystem_apex::e_mouse_right;
+                mouseButtons |= ::innate_subsystem::e_mouse_right;
             }
             if (bThird)
             {
-                mouseButtons |= ::subsystem_apex::e_mouse_middle;
+                mouseButtons |= ::innate_subsystem::e_mouse_middle;
             }
         }
 
@@ -468,7 +468,7 @@ namespace remoting_remoting
             // If posititon of mouse isn't change, then don't send event to server.
             if (buttons != m_previousMouseState || pos != m_previousMousePos)
             {
-                int wheelMask = ::subsystem_apex::e_mouse_wheel_up | ::subsystem_apex::e_mouse_wheel_down;
+                int wheelMask = ::innate_subsystem::e_mouse_wheel_up | ::innate_subsystem::e_mouse_wheel_down;
 
                 // Update previously position of mouse.
                 m_previousMouseState = buttons & ~wheelMask;
@@ -577,7 +577,7 @@ namespace remoting_remoting
     }
 
     //void DesktopWindow::doDraw(HDC hdc, const ::int_rectangle &rectangle)
-   void DesktopWindow::onDraw(::subsystem_apex::GraphicsInterface * pgraphics, const ::int_rectangle &rectangle)
+   void DesktopWindow::onDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle &rectangle)
     {
         critical_section_lock al(&m_bufferLock);
         int fbWidth = m_framebuffer.getDimension().cx;
@@ -743,7 +743,7 @@ namespace remoting_remoting
         calculateWndSize(bChanged);
     }
 
-    void DesktopWindow::drawBackground(::subsystem_apex::GraphicsInterface * pgraphics, const ::int_rectangle & rcMain, const ::int_rectangle & rcImage)
+    void DesktopWindow::drawBackground(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rcMain, const ::int_rectangle & rcImage)
     {
         //::remoting::Graphics graphics(hdc);
 
@@ -769,7 +769,7 @@ namespace remoting_remoting
         }
     }
 
-    void DesktopWindow::drawImage(::subsystem_apex::GraphicsInterface * pgraphics, const ::int_rectangle & rectangleSource, const ::int_rectangle & rectangleTarget)
+    void DesktopWindow::drawImage(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangleSource, const ::int_rectangle & rectangleTarget)
     {
         ::int_rectangle rc_src = rectangleSource;
         ::int_rectangle rc_dest = rectangleTarget;
@@ -807,7 +807,7 @@ namespace remoting_remoting
 
     bool DesktopWindow::onDestroy() { return true; }
 
-    void DesktopWindow::updateFramebuffer(const ::subsystem_apex::FrameBuffer *pframebuffer, const ::int_rectangle &dstRect)
+    void DesktopWindow::updateFramebuffer(const ::innate_subsystem::FrameBuffer *pframebuffer, const ::int_rectangle &dstRect)
     {
         // This code doesn't require blocking of m_framebuffer.
         //
@@ -826,7 +826,7 @@ namespace remoting_remoting
         repaint(dstRect);
     }
 
-    void DesktopWindow::setNewFramebuffer(const ::subsystem_apex::FrameBuffer *pframebuffer)
+    void DesktopWindow::setNewFramebuffer(const ::innate_subsystem::FrameBuffer *pframebuffer)
     {
         ::int_size dimension = pframebuffer->getDimension();
         ::int_size olddimension = m_framebuffer.getDimension();

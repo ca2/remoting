@@ -107,7 +107,7 @@ namespace remoting
       // the frame buffer is locked, and the rectangle is guaranteed to be valid
       // (no guarantees about other areas of the frame buffer).
       //
-      virtual void onFrameBufferUpdate(const ::subsystem_apex::FrameBuffer *fb, const ::int_rectangle &  update);
+      virtual void onFrameBufferUpdate(const ::innate_subsystem::FrameBuffer *fb, const ::int_rectangle &  update);
 
       // changed properties of frame buffer.
       // In this moment frame buffer area is dirty and may be contained incorrect data
@@ -116,7 +116,7 @@ namespace remoting
       // frame buffer has been created and the old one has been destroyed. This
       // notification will be called on initial frame buffer allocation as well.
       //
-      virtual void onFrameBufferPropChange(const ::subsystem_apex::FrameBuffer *fb);
+      virtual void onFrameBufferPropChange(const ::innate_subsystem::FrameBuffer *fb);
    };
 
 } // namespace remoting

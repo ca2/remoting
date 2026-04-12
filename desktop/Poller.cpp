@@ -30,7 +30,7 @@
 Poller::Poller(UpdateKeeper *updateKeeper,
                UpdateListener *updateListener,
                ScreenGrabber *screenGrabber,
-               ::subsystem_apex::FrameBuffer *backupFrameBuffer,
+               ::innate_subsystem::FrameBuffer *backupFrameBuffer,
                critical_section *frameBufferCriticalSection,
                ::subsystem::LogWriter *log)
 : UpdateDetector(updateKeeper, updateListener),
@@ -57,7 +57,7 @@ void Poller::execute()
 {
   m_plogwriter->information("poller thread id = {}", getThreadId());
 
-  ::subsystem_apex::FrameBuffer *screenFrameBuffer;
+  ::innate_subsystem::FrameBuffer *screenFrameBuffer;
 
   {
     critical_section_lock al(m_fbMutex);

@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "innate_subsystem/::subsystem_apex::Control.h"
+#include "innate_subsystem/::innate_subsystem::Control.h"
 //#include aaa_<vector>
 
 /**
@@ -49,7 +49,7 @@ public:
    * @param changeButton change password button.
    * @param unsetButton unset password button.
    */
-  PasswordControl(::subsystem_apex::Control *changeButton, ::subsystem_apex::Control *unsetButton);
+  PasswordControl(::innate_subsystem::Control *changeButton, ::innate_subsystem::Control *unsetButton);
   virtual ~PasswordControl();
 
   /**
@@ -94,15 +94,15 @@ public:
   @param parent control of parent dialog (optional, can be null).
   @return false if user cancels dialog, true otherwise.
   */
-  bool showChangePasswordModalDialog(::subsystem_apex::Control *parent);
+  bool showChangePasswordModalDialog(::innate_subsystem::Control *parent);
 
 private:
   void updateControlsState();
   void releaseCryptedPassword();
 
 protected:
-  ::subsystem_apex::Control *m_changeButton;
-  ::subsystem_apex::Control *m_unsetButton;
+  ::innate_subsystem::Control *m_changeButton;
+  ::innate_subsystem::Control *m_unsetButton;
 
   ::array_base<char> m_cryptedPassword;
 

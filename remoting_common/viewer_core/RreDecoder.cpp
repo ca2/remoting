@@ -38,7 +38,7 @@ namespace remoting
    }
 
    void RreDecoder::decode(RfbInputGate *pinput,
-                           ::subsystem_apex::FrameBuffer *frameBuffer,
+                           ::innate_subsystem::FrameBuffer *frameBuffer,
                            const ::int_rectangle &  dstRect)
    {
       unsigned int numberRectangle = pinput->readUInt32();

@@ -50,9 +50,9 @@ public:
               const ::int_rectangle &  viewPort,
               bool shareOnlyApp,
               const Region *shareAppRegion,
-              ::subsystem_apex::FrameBuffer *fb,
+              ::innate_subsystem::FrameBuffer *fb,
               CursorShape *cursorShape);
-  void restoreFrameBuffer(::subsystem_apex::FrameBuffer *fb);
+  void restoreFrameBuffer(::innate_subsystem::FrameBuffer *fb);
 
   // Returns current cursor position. Beetween
   Point getCurPos();
@@ -79,7 +79,7 @@ private:
                       bool curPosBlockingIsIgnored);
 
   // Shortcut function to draw cursor on the frame buffer directly.
-  void drawCursor(UpdateContainer *updCont, ::subsystem_apex::FrameBuffer *fb);
+  void drawCursor(UpdateContainer *updCont, ::innate_subsystem::FrameBuffer *fb);
 
   // Check for cursor blocking state and
   // return true if it is blocked and false
@@ -90,7 +90,7 @@ private:
   Point m_cursorPos;
   ::earth::time m_blockCurPosTime;
   CursorShape m_cursorShape;
-  ::subsystem_apex::FrameBuffer m_shapeBackground;
+  ::innate_subsystem::FrameBuffer m_shapeBackground;
   Point m_backgroundPos;
   critical_section m_curPosLocMut;
   // Uses when the rich enabled but pointer pos disabled to determine

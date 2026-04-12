@@ -214,13 +214,13 @@ namespace remoting_remoting
                 break;
 
                 // click "Connect"
-            case ::subsystem_apex::e_control_id_ok:
+            case ::innate_subsystem::e_control_id_ok:
                 onConnect();
                 closeDialog(0);
                 break;
 
                 // cancel connection
-            case ::subsystem_apex::e_control_id_cancel:
+            case ::innate_subsystem::e_control_id_cancel:
                 closeDialog(0);
                 break;
 

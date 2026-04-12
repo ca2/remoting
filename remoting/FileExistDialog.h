@@ -33,7 +33,7 @@ namespace remoting_remoting
 {
 
 
-    class FileExistDialog : public ::subsystem_apex::Dialog
+    class FileExistDialog : public ::innate_subsystem::Dialog
     {
     public:
 
@@ -81,7 +81,7 @@ namespace remoting_remoting
 
         //private:
 
-        virtual void updateGui(::remoting::ftp::FileInfo *fileInfo, ::subsystem_apex::Control *sizeLabel, ::subsystem_apex::Control *modTimeLabel);
+        virtual void updateGui(::remoting::ftp::FileInfo *fileInfo, ::innate_subsystem::Control *sizeLabel, ::innate_subsystem::Control *modTimeLabel);
         virtual void initControls();
 
         //protected:
@@ -101,13 +101,13 @@ namespace remoting_remoting
         // User controls
         //
 
-        ::pointer < ::subsystem_apex::Control > m_pcontrolFileNameLabel;
-        ::pointer < ::subsystem_apex::Control > m_pcontrolNewSizeLabel;
-        ::pointer < ::subsystem_apex::Control > m_pcontrolNewModTimeLabel;
-        ::pointer < ::subsystem_apex::Control > m_pcontrolExistingSizeLabel;
-        ::pointer < ::subsystem_apex::Control > m_pcontrolExistingModTimeLabel;
+        ::pointer < ::innate_subsystem::Control > m_pcontrolFileNameLabel;
+        ::pointer < ::innate_subsystem::Control > m_pcontrolNewSizeLabel;
+        ::pointer < ::innate_subsystem::Control > m_pcontrolNewModTimeLabel;
+        ::pointer < ::innate_subsystem::Control > m_pcontrolExistingSizeLabel;
+        ::pointer < ::innate_subsystem::Control > m_pcontrolExistingModTimeLabel;
 
-        ::pointer < ::subsystem_apex::Control > m_pcontrolAppendButton;
+        ::pointer < ::innate_subsystem::Control > m_pcontrolAppendButton;
 
         bool m_canAppend;
     };

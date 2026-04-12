@@ -39,9 +39,9 @@ public:
 
   void update();
 
-  // Returns a ::subsystem_apex::PixelFormat that was at latest call of the
+  // Returns a ::innate_subsystem::PixelFormat that was at latest call of the
   // update() function.
-  ::subsystem_apex::PixelFormat getPixelFormat();
+  ::innate_subsystem::PixelFormat getPixelFormat();
 
   // Returns a desktop dimension that was at latest call of the
   // update() function.
@@ -86,7 +86,7 @@ private:
 
   void fillScreenRect();
 
-  ::subsystem_apex::PixelFormat m_pixelFormat;
+  ::innate_subsystem::PixelFormat m_pixelFormat;
   ::int_rectangle m_virtDesktopRect;
 };
 

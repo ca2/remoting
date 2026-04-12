@@ -55,6 +55,6 @@ bool ProgressBar::window_procedure(LRESULT & lresult, unsigned int scopedstrMess
 
    }
 
-   return ::subsystem_apex::Control::window_procedure(lresult, scopedstrMessage, wparam, lparam);
+   return ::innate_subsystem::Control::window_procedure(lresult, scopedstrMessage, wparam, lparam);
 
 }

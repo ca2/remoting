@@ -61,7 +61,7 @@ protected:
   void initControls();
 
   //
-  // ::subsystem_apex::Control event handlers
+  // ::innate_subsystem::Control event handlers
   //
 
   void onRecognitionIntervalSpinChangePos(LPNMUPDOWN scopedstrMessage);

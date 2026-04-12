@@ -39,13 +39,13 @@ namespace remoting
    public:
       WatermarksController(void);
 
-      void setNewFbProperties(const ::int_rectangle &  rect, const ::subsystem_apex::PixelFormat & pf);
+      void setNewFbProperties(const ::int_rectangle &  rect, const ::innate_subsystem::PixelFormat & pf);
 
 
-      void showWaterMarks(::subsystem_apex::FrameBuffer *frameBuffer,
+      void showWaterMarks(::innate_subsystem::FrameBuffer *frameBuffer,
          critical_section *fbLock);
 
-      void hideWatermarks(::subsystem_apex::FrameBuffer *frameBuffer,
+      void hideWatermarks(::innate_subsystem::FrameBuffer *frameBuffer,
          critical_section *fbLock);
 
       const ::int_rectangle CurrentRect();
@@ -54,17 +54,17 @@ namespace remoting
       ::int_rectangle m_currentRect;
       ::int_rectangle m_currentFrameBufferRect;
 
-      void setNewPixelFormat(const ::subsystem_apex::PixelFormat & pf);
+      void setNewPixelFormat(const ::innate_subsystem::PixelFormat & pf);
 
       void setNewFbSize(const ::int_rectangle &  rect);
 
-      ::subsystem_apex::FrameBuffer m_frameBuffer;
-      ::subsystem_apex::FrameBuffer& frameBuffer(bool fromFile = false);
+      ::innate_subsystem::FrameBuffer m_frameBuffer;
+      ::innate_subsystem::FrameBuffer& frameBuffer(bool fromFile = false);
       void loadFromfile();
 
       bool is_empty();
 
-      ::subsystem_apex::FrameBuffer m_overlay;
+      ::innate_subsystem::FrameBuffer m_overlay;
 
       int m_height;
       int m_width;

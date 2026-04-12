@@ -80,7 +80,7 @@ private:
   void updateCaption();
 protected:
   // Controls
-  ::subsystem_apex::Control m_ctrlApplyButton;
+  ::innate_subsystem::Control m_ctrlApplyButton;
   TabControl m_tabControl;
   // Settings
   Configurator *m_config;

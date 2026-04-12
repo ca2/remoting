@@ -29,7 +29,7 @@
 
 namespace remoting_remoting
 {
-    class ViewerMenu: public ::subsystem_apex::Menu
+    class ViewerMenu: public ::innate_subsystem::Menu
     {
     public:
         void loadMenu();

@@ -100,7 +100,7 @@ LONG WINAPI CrashHook::topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionIn
                                " want save debug information?",
                                ProductNames::PRODUCT_NAME,
                                ::user::e_message_box_yes_no)
-                               != ::subsystem_apex::IDYES)
+                               != ::innate_subsystem::IDYES)
   {
     return retValue;
   }

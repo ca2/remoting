@@ -89,7 +89,7 @@ void MirrorDriverClient::dispose()
   }
 }
 
-::subsystem_apex::PixelFormat MirrorDriverClient::getPixelFormat() const
+::innate_subsystem::PixelFormat MirrorDriverClient::getPixelFormat() const
 {
   return m_pixelFormat;
 }

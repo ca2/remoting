@@ -48,7 +48,7 @@ namespace remoting_remoting
 
     void ViewerMenu::findStartIndex()
     {
-        if ((m_startIndex = findMenuItem(::subsystem_apex::e_system_command_close)) == -1) {
+        if ((m_startIndex = findMenuItem(::innate_subsystem::e_system_command_close)) == -1) {
             m_startIndex= getMenuItemCount();
         } else if (m_startIndex > 0) {
             --m_startIndex;

@@ -72,12 +72,12 @@ namespace remoting
    {
    }
 
-   void CoreEventsAdapter::onFrameBufferUpdate(const ::subsystem_apex::FrameBuffer *fb,
+   void CoreEventsAdapter::onFrameBufferUpdate(const ::innate_subsystem::FrameBuffer *fb,
                                                const ::int_rectangle &  rect)
    {
    }
 
-   void CoreEventsAdapter::onFrameBufferPropChange(const ::subsystem_apex::FrameBuffer *fb)
+   void CoreEventsAdapter::onFrameBufferPropChange(const ::innate_subsystem::FrameBuffer *fb)
    {
    }
 } // namespace remoting

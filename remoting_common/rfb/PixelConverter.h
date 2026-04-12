@@ -42,8 +42,8 @@ namespace remoting
       // set by the most recent setPixelFormats() call. The source and destination
       // framebuffers must be of the same size. The entire rectangle referenced by
       // `rect' must be within the frame buffer boundaries.
-      virtual void convert(const ::int_rectangle &  rect, ::subsystem_apex::FrameBuffer *dstFb,
-                           const ::subsystem_apex::FrameBuffer *srcFb) const;
+      virtual void convert(const ::int_rectangle &  rect, ::innate_subsystem::FrameBuffer *dstFb,
+                           const ::innate_subsystem::FrameBuffer *srcFb) const;
 
       // Convert pixels for the specified `rect' from `srcFb' to the internal
       // PixelConverter's frame buffer and return a pointer to that frame buffer.
@@ -56,13 +56,13 @@ namespace remoting
       // not vary from call to call. It checks if the frame buffer size has
       // changed since the previous call and reallocates the frame buffer if
       // necessary.
-      virtual const ::subsystem_apex::FrameBuffer *convert(const ::int_rectangle &  rect,
-                                         const ::subsystem_apex::FrameBuffer *srcFb);
+      virtual const ::innate_subsystem::FrameBuffer *convert(const ::int_rectangle &  rect,
+                                         const ::innate_subsystem::FrameBuffer *srcFb);
 
       // FIXME: Review the argument order for each function of PixelConverter.
       // FIXME: Review the argument names for each function of PixelConverter.
-      virtual void setPixelFormats(const ::subsystem_apex::PixelFormat & dstPf,
-                                   const ::subsystem_apex::PixelFormat & srcPf);
+      virtual void setPixelFormats(const ::innate_subsystem::PixelFormat & dstPf,
+                                   const ::innate_subsystem::PixelFormat & srcPf);
 
       // Return the number of bits per pixel from the source pixel format.
       virtual size_t getSrcBitsPerPixel() const;
@@ -73,8 +73,8 @@ namespace remoting
    protected:
       void reset();
 
-      void fillHexBitsTable(const ::subsystem_apex::PixelFormat & dstPf, const ::subsystem_apex::PixelFormat & srcPf);
-      void fill32BitsTable(const ::subsystem_apex::PixelFormat & dstPf, const ::subsystem_apex::PixelFormat & srcPf);
+      void fillHexBitsTable(const ::innate_subsystem::PixelFormat & dstPf, const ::innate_subsystem::PixelFormat & srcPf);
+      void fill32BitsTable(const ::innate_subsystem::PixelFormat & dstPf, const ::innate_subsystem::PixelFormat & srcPf);
       unsigned int rotateUint32(unsigned int value) const;
 
       enum ConvertMode
@@ -90,12 +90,12 @@ namespace remoting
       ::array_base<unsigned int> m_grnTable;
       ::array_base<unsigned int> m_bluTable;
 
-      ::subsystem_apex::PixelFormat m_srcFormat;
-      ::subsystem_apex::PixelFormat m_dstFormat;
+      ::innate_subsystem::PixelFormat m_srcFormat;
+      ::innate_subsystem::PixelFormat m_dstFormat;
 
       // An internally maintained frame buffer used by the two-argument version of
       // the convert() function.
-      ::subsystem_apex::FrameBuffer *m_dstFrameBuffer;
+      ::innate_subsystem::FrameBuffer *m_dstFrameBuffer;
    };
 
    //// __RFB_PIXEL_CONVERTER_H_INCLUDED__

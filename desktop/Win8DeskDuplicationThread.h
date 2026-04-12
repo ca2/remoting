@@ -40,7 +40,7 @@ class Win8DeskDuplication : public GuiThread
 public:
   // The WinDxgiOutput *dxgiOutput passed object can be destroyed right after the constructor calling.
   // The WinD3D11Device *device passed object can be destroyed right after the constructor calling.
-  Win8DeskDuplication(::subsystem_apex::FrameBuffer *targetFb,
+  Win8DeskDuplication(::innate_subsystem::FrameBuffer *targetFb,
                             ::array_base<::int_rectangle> &targetRect,
                             Win8CursorShape *targetCurShape,
                             LONGLONG *cursorTimeStamp,
@@ -68,7 +68,7 @@ private:
 
   void rotateRectInsideStage(::int_rectangle *toTranspose, const ::int_size & stageDim, DXGI_MODE_ROTATION rotation);
 
-  ::subsystem_apex::FrameBuffer *m_targetFb;
+  ::innate_subsystem::FrameBuffer *m_targetFb;
 
   ::array_base<::int_rectangle> m_targetRects;
   Win8CursorShape *m_targetCurShape;
@@ -94,7 +94,7 @@ private:
   ::array_base<DXGI_OUTDUPL_MOVE_RECT> m_moveRects;
 
   ::array_base<WinCustomD3D11Texture2D> m_stageTextures2D;
-  ::subsystem_apex::FrameBuffer m_auxiliaryFrameBuffer;
+  ::innate_subsystem::FrameBuffer m_auxiliaryFrameBuffer;
 
   ::subsystem::LogWriter *m_plogwriter;
 };

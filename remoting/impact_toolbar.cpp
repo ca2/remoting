@@ -350,7 +350,7 @@ namespace remoting_remoting
           m_bLButtonDown = false;
 
       }
-      else if (!(iButtonMask & ::subsystem_apex::e_mouse_left))
+      else if (!(iButtonMask & ::innate_subsystem::e_mouse_left))
       {
 
           m_bLButtonDown = false;
@@ -456,7 +456,7 @@ namespace remoting_remoting
       m_brushButtonBackground.initialize_solid_brush(argb(255, 40, 120, 180));
       m_brushButtonBackgroundHover.initialize_solid_brush(argb(255, 50, 130, 230));
       m_brushButtonPaint.initialize_solid_brush(argb(255, 255, 255, 255));
-      m_penPaint.initialize_pen(::subsystem_apex::e_pen_solid, 2, argb(255, 255, 255, 255));
+      m_penPaint.initialize_pen(::innate_subsystem::e_pen_solid, 2, argb(255, 255, 255, 255));
 
    }
 
@@ -636,7 +636,7 @@ namespace remoting_remoting
    }
 
 
-   void control::__000OnDraw(::subsystem_apex::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle)
+   void control::__000OnDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle)
    {
       if (!rectangle.intersects(get_window_rectangle()))
       {
@@ -754,7 +754,7 @@ namespace remoting_remoting
    }
 
 
-   void control::__000OnTopDraw(::subsystem_apex::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle)
+   void control::__000OnTopDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle)
    {
 
       auto rIntersect = rectangle.intersection(m_rectangle);
@@ -829,7 +829,7 @@ namespace remoting_remoting
          { (::int_point) (rIntersect.origin()-m_rectangle.origin()),  rIntersect.size()});
    }
 
-   void control::__001OnDraw(::subsystem_apex::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle)
+   void control::__001OnDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle)
    {
       ::color::color colorPaint;
 
@@ -946,7 +946,7 @@ namespace remoting_remoting
          if (!m_ppen001)
          {
             constructø(m_ppen001);
-            m_ppen001->initialize_pen(subsystem_apex::e_pen_solid, 2, colorPaint);
+            m_ppen001->initialize_pen(innate_subsystem::e_pen_solid, 2, colorPaint);
          }
          //pgraphics->setPen(2.0f, colorPaint);
          pgraphics->setPen(m_ppen001);
@@ -959,7 +959,7 @@ namespace remoting_remoting
       }
    }
 
-   void toolbar::__001OnDraw(subsystem_apex::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle)
+   void toolbar::__001OnDraw(innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle)
    {
 
       pgraphics->setBlendModeOn(false);

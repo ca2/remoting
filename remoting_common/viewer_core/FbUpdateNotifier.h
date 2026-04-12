@@ -46,7 +46,7 @@ namespace remoting
    class CLASS_DECL_REMOTING_COMMON FbUpdateNotifier : public ::subsystem::Thread
    {
    public:
-      FbUpdateNotifier(::subsystem_apex::FrameBuffer *fb, critical_section *fbLock, ::subsystem::LogWriter * plogwriter, WatermarksController* wmController);
+      FbUpdateNotifier(::innate_subsystem::FrameBuffer *fb, critical_section *fbLock, ::subsystem::LogWriter * plogwriter, WatermarksController* wmController);
       virtual ~FbUpdateNotifier();
 
       void setAdapter(CoreEventsAdapter *adapter);
@@ -67,7 +67,7 @@ namespace remoting
       void onTerminate();
 
       critical_section *m_fbLock;
-      ::subsystem_apex::FrameBuffer *m_frameBuffer;
+      ::innate_subsystem::FrameBuffer *m_frameBuffer;
       CursorPainter m_cursorPainter;
 
       // Pointer to adapter.

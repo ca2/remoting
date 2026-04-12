@@ -42,7 +42,7 @@ namespace remoting
    }
 
    void ZrleDecoder::decode(RfbInputGate *pinput,
-                            ::subsystem_apex::FrameBuffer *frameBuffer,
+                            ::innate_subsystem::FrameBuffer *frameBuffer,
                             const ::int_rectangle &  dstRect)
    {
       size_t maxUnpackedSize = getMaxSizeOfRectangle(dstRect);
@@ -68,7 +68,7 @@ namespace remoting
       DataInputStream unpackedDataStream(&unpackedByteArrayStream);
 
       m_numberFirstByte = 0;
-      ::subsystem_apex::PixelFormat pxFormat = frameBuffer->getPixelFormat();
+      ::innate_subsystem::PixelFormat pxFormat = frameBuffer->getPixelFormat();
 
       if (pxFormat.bitsPerPixel == 8) {
          m_bytesPerPixel = 1;

@@ -467,7 +467,7 @@ void ControlApplication::checkServicePasswords()
   bool askToChangeRfbAuth = !config->isUsingAuthentication() || !config->hasPrimaryPassword();
   bool askToChangeAdmAuth = false;
   SetPasswordsDialog dialog(askToChangeRfbAuth, askToChangeAdmAuth);
-  if (dialog.showModal() == ::subsystem_apex::IDOK) {
+  if (dialog.showModal() == ::innate_subsystem::IDOK) {
     unsigned char cryptedPass[8];
     bool useRfbAuth = dialog.getUseRfbPass();
     bool dontUseRfbAuth = dialog.getRfbPassForClear();

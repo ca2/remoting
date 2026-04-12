@@ -32,7 +32,7 @@
 
 namespace remoting_remoting
 {
-    class FsWarningDialog : public ::subsystem_apex::Dialog
+    class FsWarningDialog : public ::innate_subsystem::Dialog
     {
     public:
         FsWarningDialog();
@@ -42,6 +42,6 @@ namespace remoting_remoting
         bool onInitDialog();
         bool onCommand(unsigned int controlID, unsigned int notificationID);
 
-        ::pointer < ::subsystem_apex::CheckBox > m_pcheckboxFsWarning;
+        ::pointer < ::innate_subsystem::CheckBox > m_pcheckboxFsWarning;
     };
 } // namespace remoting_remoting

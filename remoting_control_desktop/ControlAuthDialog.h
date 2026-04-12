@@ -29,7 +29,7 @@
 #include "innate_subsystem/TextBox.h"
 
 /**
- * ::subsystem_apex::Control authentication dialog.
+ * ::innate_subsystem::Control authentication dialog.
  */
 class ControlAuthDialog : public BaseDialog
 {

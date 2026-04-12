@@ -38,13 +38,13 @@ public:
 
   virtual ScreenDriver *createScreenDriver(UpdateKeeper *updateKeeper,
                                              UpdateListener *updateListener,
-                                             ::subsystem_apex::FrameBuffer *fb,
+                                             ::innate_subsystem::FrameBuffer *fb,
                                              critical_section *fbcritical_section,
                                              ::subsystem::LogWriter *log);
 private:
   ScreenDriver *createStandardScreenDriver(UpdateKeeper *updateKeeper,
                                              UpdateListener *updateListener,
-                                             ::subsystem_apex::FrameBuffer *fb,
+                                             ::innate_subsystem::FrameBuffer *fb,
                                              critical_section *fbcritical_section,
                                              ::subsystem::LogWriter *log);
   ScreenDriver *createMirrorScreenDriver(UpdateKeeper *updateKeeper,

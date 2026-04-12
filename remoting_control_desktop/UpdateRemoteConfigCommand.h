@@ -56,7 +56,7 @@ public:
 
 protected:
   /**
-   * ::subsystem_apex::Control proxy on client side.
+   * ::innate_subsystem::Control proxy on client side.
    */
   ControlProxy *m_serverControl;
 };

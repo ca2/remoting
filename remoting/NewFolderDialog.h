@@ -33,14 +33,14 @@ namespace remoting_remoting
 {
 
 
-   class NewFolderDialog : public ::subsystem_apex::Dialog
+   class NewFolderDialog : public ::innate_subsystem::Dialog
    {
    public:
       NewFolderDialog();
       ~NewFolderDialog();
 
 
-      virtual void initialize_new_folder_dialog(::subsystem_apex::Control *parent);
+      virtual void initialize_new_folder_dialog(::innate_subsystem::Control *parent);
 
       void setFileName(const ::scoped_string & scopedstrFilename);
       ::string getFileName();
@@ -73,8 +73,8 @@ namespace remoting_remoting
       // Controls
       //
 
-      ::pointer < ::subsystem_apex::Control > m_pcontrolLabel;
-      ::pointer < ::subsystem_apex::TextBox > m_ptextboxFileName;
+      ::pointer < ::innate_subsystem::Control > m_pcontrolLabel;
+      ::pointer < ::innate_subsystem::TextBox > m_ptextboxFileName;
 
       ::string m_strFileName;
    };

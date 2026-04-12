@@ -81,7 +81,7 @@ protected:
    * Inherited from Thread class.
    * Processed control client connection, consists of following phases:
    *   Auth phase (send auth type and try auth client).
-   *   ::subsystem_apex::Control scopedstrMessage processing loop.
+   *   ::innate_subsystem::Control scopedstrMessage processing loop.
    */
   virtual void execute();
 

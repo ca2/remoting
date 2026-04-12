@@ -41,10 +41,10 @@ namespace remoting
       virtual ~DeviceContext();
 
    private:
-      // Initialize class from ::subsystem_apex::PaintWindow
-      DeviceContext(class ::subsystem_apex::PaintWindow * pntWnd);
+      // Initialize class from ::innate_subsystem::PaintWindow
+      DeviceContext(class ::innate_subsystem::PaintWindow * pntWnd);
 
-      friend class ::subsystem_apex::PaintWindow;
+      friend class ::innate_subsystem::PaintWindow;
 
    protected:
       // Selects an object into this device context.

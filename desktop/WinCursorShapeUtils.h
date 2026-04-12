@@ -40,11 +40,11 @@ public:
   // Builds rfb mask AND by alpha channel of given pixels.
   // If isInversedAlpha is false the pixel supposes by transparent if alpha value less than 128.
   // If isInversedAlpha is true the pixel supposes by transparent if alpha value greater than 128.
-  static void fixAlphaChannel(const ::subsystem_apex::FrameBuffer *pixels, char *maskAND, bool isInversedAlpha, int maskWidthInBytes);
+  static void fixAlphaChannel(const ::innate_subsystem::FrameBuffer *pixels, char *maskAND, bool isInversedAlpha, int maskWidthInBytes);
 
   // This function combines windows cursor mask and image and convert
   // theirs to rfb format. This function uses for monochrome cursor image.
-  static void winMonoShapeToRfb(const ::subsystem_apex::FrameBuffer *pixels, char *maskAND, char *maskXOR, int maskWidthInBytes);
+  static void winMonoShapeToRfb(const ::innate_subsystem::FrameBuffer *pixels, char *maskAND, char *maskXOR, int maskWidthInBytes);
 
   //   This function combines windows the cursor mask and image and convert
   // theirs to rfb format. This function uses for 16 or 24 bit color cursor
@@ -52,7 +52,7 @@ public:
   //   Also, this function determines whether image contains the alhpa channel
   // and returns true in this case.
   template< typename T >
-  static bool winColorShapeToRfb(const ::subsystem_apex::FrameBuffer *pixels, char *maskAND, int maskWidthInBytes);
+  static bool winColorShapeToRfb(const ::innate_subsystem::FrameBuffer *pixels, char *maskAND, int maskWidthInBytes);
 
   // Matrox videocard returns 256 byte width buffer for 32 pixel cursor,
   // need trim it for correct handling
@@ -78,7 +78,7 @@ private:
 	return ~dummy & byte;
   };
 
-  static unsigned int getAlphaMask(const ::subsystem_apex::PixelFormat & pf);
+  static unsigned int getAlphaMask(const ::innate_subsystem::PixelFormat & pf);
   static unsigned int getCursorHeight(DXGI_OUTDUPL_POINTER_SHAPE_INFO& shapeInfo);
   static bool isPixelTransparent(char* const buffer, unsigned int type, unsigned int height, unsigned int pitch, unsigned int x, unsigned int y);
   static bool isColorPixelTransparent(unsigned int pixel, unsigned int type);
@@ -87,11 +87,11 @@ private:
 };
 
 template< typename T >
-static bool WinCursorShapeUtils::winColorShapeToRfb(const ::subsystem_apex::FrameBuffer *pixels,
+static bool WinCursorShapeUtils::winColorShapeToRfb(const ::innate_subsystem::FrameBuffer *pixels,
                                                     char *maskAND, int maskWidthInBytes)
 {
   char *pixelsBuffer = (char *)pixels->getBuffer();
-  ::subsystem_apex::PixelFormat pf = pixels->getPixelFormat();
+  ::innate_subsystem::PixelFormat pf = pixels->getPixelFormat();
   T *pixel;
 
   int fbWidth = pixels->getDimension().cx;

@@ -113,10 +113,10 @@ protected:
   CheckBox m_acceptHttpConnections;
   CheckBox m_showTrayIcon;
   CheckBox m_connectToRdp;
-  ::subsystem_apex::Control m_primaryPassword;
-  ::subsystem_apex::Control m_readOnlyPassword;
-  ::subsystem_apex::Control m_unsetPrimaryPassword;
-  ::subsystem_apex::Control m_unsetReadOnlyPassword;
+  ::innate_subsystem::Control m_primaryPassword;
+  ::innate_subsystem::Control m_readOnlyPassword;
+  ::innate_subsystem::Control m_unsetPrimaryPassword;
+  ::innate_subsystem::Control m_unsetReadOnlyPassword;
   CheckBox m_useAuthentication;
   SpinControl m_rfbPortSpin;
   SpinControl m_httpPortSpin;

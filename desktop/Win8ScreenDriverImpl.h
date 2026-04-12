@@ -51,7 +51,7 @@ public:
 
   bool grabFb(const ::int_rectangle &  rect);
 
-  virtual ::subsystem_apex::FrameBuffer *getScreenBuffer();
+  virtual ::innate_subsystem::FrameBuffer *getScreenBuffer();
 
   // Updates destination (*dst) cursor shape properties and data.
   void updateCursorShape(CursorShape *dst);
@@ -74,8 +74,8 @@ private:
 
   void initDxgi();
 
-  // This function always return the DX DXGI_FORMAT_B8G8R8A8_UNORM format in the ::subsystem_apex::PixelFormat type.
-  ::subsystem_apex::PixelFormat getDxPixelFormat() const;
+  // This function always return the DX DXGI_FORMAT_B8G8R8A8_UNORM format in the ::innate_subsystem::PixelFormat type.
+  ::innate_subsystem::PixelFormat getDxPixelFormat() const;
 
   ::subsystem::LogWriter *m_plogwriter;
 
@@ -91,7 +91,7 @@ private:
 
   // The frame buffer with appropriate properties creates once at the constructor time. And then
   // has these properties permanently.
-  ::subsystem_apex::FrameBuffer m_frameBuffer;
+  ::innate_subsystem::FrameBuffer m_frameBuffer;
 
   // Cursor's properties changes at all time. And then it should be safe by a local mutex.
   Point m_latestCursorPos;
