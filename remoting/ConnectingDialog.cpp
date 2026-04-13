@@ -145,7 +145,7 @@ namespace remoting_remoting
       {
          m_d = m_time.elapsed().floating_second();
          auto d= fmod(m_d * 0.125, m_dEnd - m_dStart) + m_dStart;
-         m_pbar->postUserMessage(WM_USER + 327, (int) (d * 8'000.0), 0);
+         m_pbar->postMessage(WM_USER + 327, (int) (d * 8'000.0), 0);
          preempt(100_ms);
       }
 

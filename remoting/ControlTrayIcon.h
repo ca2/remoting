@@ -52,7 +52,7 @@ namespace remoting_remoting
 
         //protected:
         //virtual LRESULT windowProc(HWND hWnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam, bool *useDefWindowProc);
-       bool on_window_procedure(::lresult & lresult, unsigned int message, ::wparam wparam, ::lparam lparam) override;
+       //bool on_window_procedure(::lresult & lresult, unsigned int message, ::wparam wparam, ::lparam lparam) override;
         //
         // Show login-dialog after click "New connection..." in pop-up menu of tray icon
         //
@@ -94,5 +94,9 @@ namespace remoting_remoting
         //private:
         void onRightButtonUp();
         void onLeftButtonDown();
+
+       void onNotifyIconLeftButtonDown() override;
+       void onNotifyIconRightButtonUp() override;
+       void onTaskBarCreated() override;
     };
 } // namespace remoting_remoting

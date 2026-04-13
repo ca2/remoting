@@ -198,6 +198,30 @@ namespace remoting_remoting
         // // }
     }
 
+   void ControlTrayIcon::onNotifyIconLeftButtonDown()
+    {
+
+       onLeftButtonDown();
+
+    }
+   void ControlTrayIcon::onNotifyIconRightButtonUp()
+    {
+
+       onRightButtonUp();
+
+    }
+   void ControlTrayIcon::onTaskBarCreated()
+    {
+
+       if (isVisible()) {
+           hide();
+           show();
+       }
+
+
+    }
+
+
     void ControlTrayIcon::onLeftButtonDown()
     {
         onShowMainWindow();

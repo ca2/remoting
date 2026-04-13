@@ -132,8 +132,14 @@ list(APPEND library_source
    rfb/TunnelDefs.h
    rfb/VendorDefs.cpp
    rfb/VendorDefs.h
+   util/CommandLineFormatException.cpp
+   util/CommandLineFormatException.h
+   util/CommandLineFormatHelp.cpp
+   util/CommandLineFormatHelp.h
    util/DesCrypt.cpp
    util/DesCrypt.h
+   util/Keymap.cpp
+   util/Keymap.h
    viewer_core/_.cpp
    viewer_core/_.h
    viewer_core/_____debug.xcconfig
