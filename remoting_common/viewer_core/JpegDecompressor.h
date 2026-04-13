@@ -38,12 +38,12 @@
 // For Visual Studio 2008 add libjpeg project to the dependencies of remoting_node.
 // Also you need to delete LIBJPEG_TURBO directive from the CommonHeader.h file.
 
-#ifdef LIBJPEG_TURBO
-#include "libjpeg-turbo/jpeglib.h"
-#else
+//#ifdef LIBJPEG_TURBO
+//#include "libjpeg-turbo/jpeglib.h"
+//#else
 //#include "libjpeg/jpeglib.h"
 #include "port_jpeg/jpeglib.h"
-#endif
+//#endif
 
 
 //////#include "remoting/remoting_common/util/::string.h"

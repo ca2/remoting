@@ -21,15 +21,6 @@
     <Filter Include="Source Files\ftp_common">
       <UniqueIdentifier>{6d8fd7fa-4123-45c4-b66a-0c1e0c61024e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\gui">
-      <UniqueIdentifier>{f8bc7b4c-5a76-4cb0-89f8-79887cebfb68}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\io">
-      <UniqueIdentifier>{f238ea6d-fe8c-42e3-b48f-ec7000e0f721}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\libjpeg">
-      <UniqueIdentifier>{37792682-d3e0-479d-80ef-f74f96984eee}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\network">
       <UniqueIdentifier>{9ac95d3d-d8d5-4851-a75e-e3b0293cd5e7}</UniqueIdentifier>
     </Filter>
@@ -39,29 +30,14 @@
     <Filter Include="Source Files\rfb">
       <UniqueIdentifier>{9fe9e7a1-0a1d-4a61-b406-865b2349af80}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\thread">
-      <UniqueIdentifier>{3017dda3-4d1e-4ed0-9c34-55dd29884413}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\util">
       <UniqueIdentifier>{ec629c8a-e296-4391-8a3c-06c5a2ab8404}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\viewer_core">
       <UniqueIdentifier>{d71ba47e-2212-4a5f-ae24-dd7c00e1d391}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\win_system">
-      <UniqueIdentifier>{61d7301a-63c8-4406-a068-53e14ad113e5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\client_config">
       <UniqueIdentifier>{7f0104f9-cbf6-43db-b78d-46db64c38f52}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\gui\drawing">
-      <UniqueIdentifier>{cbd81ca3-060d-4f90-b794-e59d92cef8e9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\network\socket">
-      <UniqueIdentifier>{643d47a3-8c5c-4b78-ae3e-d7f3e579e63d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\win_system\security">
-      <UniqueIdentifier>{643918ce-b0f2-4a0e-ae36-5ef23de34119}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\win_system">
       <UniqueIdentifier>{db6bb7a4-2918-47e6-8724-567e568ec56b}</UniqueIdentifier>
@@ -83,9 +59,6 @@
     </Filter>
     <Filter Include="Header Files\network\socket">
       <UniqueIdentifier>{4895dd81-5c23-4a31-90d3-6b2c9dd7a1c0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\io">
-      <UniqueIdentifier>{e4522e59-ad85-47df-98fb-9da74a1d8d73}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\rfb">
       <UniqueIdentifier>{6d69830f-4d47-47ca-a0b9-43759b649e7a}</UniqueIdentifier>
@@ -206,270 +179,6 @@
     <ClCompile Include="ftp_common\WinFilePath.cpp">
       <Filter>Source Files\ftp_common</Filter>
     </ClCompile>
-    <ClCompile Include="gui\BalloonTip.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\BaseDialog.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\BaseWindow.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\CheckBox.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\ComboBox.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\CommonControlsEx.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\DibFrameBuffer.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\FilteredTextBox.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\ImagedButton.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\ListBox.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\ListView.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\Menu.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\MessageWindow.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\NotifyIcon.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\NotifyIconWindow.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\PaintWindow.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\ProgressBar.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\ScrollBar.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\SpinControl.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\StringFilter.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\Tab.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\TabContainer.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\TabControl.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\TextBox.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\ThemeLib.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\ToolBar.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\Tooltip.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\Trackbar.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\Window.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\WindowFinder.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\WindowProcHolder.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="io\BufferedInputStream.cpp">
-      <Filter>Source Files\io</Filter>
-    </ClCompile>
-    <ClCompile Include="io\BufferedOutputStream.cpp">
-      <Filter>Source Files\io</Filter>
-    </ClCompile>
-    <ClCompile Include="io\ByteArrayInputStream.cpp">
-      <Filter>Source Files\io</Filter>
-    </ClCompile>
-    <ClCompile Include="io\ByteArrayOutputStream.cpp">
-      <Filter>Source Files\io</Filter>
-    </ClCompile>
-    <ClCompile Include="io\Channel.cpp">
-      <Filter>Source Files\io</Filter>
-    </ClCompile>
-    <ClCompile Include="io\DataCopy.cpp">
-      <Filter>Source Files\io</Filter>
-    </ClCompile>
-    <ClCompile Include="io\DataInputStream.cpp">
-      <Filter>Source Files\io</Filter>
-    </ClCompile>
-    <ClCompile Include="io\DataOutputStream.cpp">
-      <Filter>Source Files\io</Filter>
-    </ClCompile>
-    <ClCompile Include="io\InputStream.cpp">
-      <Filter>Source Files\io</Filter>
-    </ClCompile>
-    <ClCompile Include="io\io_exception.cpp">
-      <Filter>Source Files\io</Filter>
-    </ClCompile>
-    <ClCompile Include="io\OutputStream.cpp">
-      <Filter>Source Files\io</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jaricom.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jcapimin.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jcapistd.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jcarith.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jccoefct.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jccolor.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jcdctmgr.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jchuff.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jcinit.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jcmainct.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jcmarker.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jcmaster.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jcomapi.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jcparam.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jcprepct.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jcsample.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jctrans.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jdapimin.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jdapistd.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jdarith.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jdatadst.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jdatasrc.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jdcoefct.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jdcolor.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jddctmgr.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jdhuff.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jdinput.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jdmainct.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jdmarker.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jdmaster.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jdmerge.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jdpostct.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jdsample.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jdtrans.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jerror.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jfdctflt.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jfdctfst.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jfdctint.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jidctflt.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jidctfst.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jidctint.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jmemmgr.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jmemnobs.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jquant1.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jquant2.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
-    <ClCompile Include="libjpeg\jutils.c">
-      <Filter>Source Files\libjpeg</Filter>
-    </ClCompile>
     <ClCompile Include="network\RfbInputGate.cpp">
       <Filter>Source Files\network</Filter>
     </ClCompile>
@@ -497,9 +206,6 @@
     <ClCompile Include="rfb\EncodingDefs.cpp">
       <Filter>Source Files\rfb</Filter>
     </ClCompile>
-    <ClCompile Include="rfb\FrameBuffer.cpp">
-      <Filter>Source Files\rfb</Filter>
-    </ClCompile>
     <ClCompile Include="rfb\HostPath.cpp">
       <Filter>Source Files\rfb</Filter>
     </ClCompile>
@@ -509,13 +215,7 @@
     <ClCompile Include="rfb\PixelConverter.cpp">
       <Filter>Source Files\rfb</Filter>
     </ClCompile>
-    <ClCompile Include="rfb\PixelFormat.cpp">
-      <Filter>Source Files\rfb</Filter>
-    </ClCompile>
     <ClCompile Include="rfb\RfbKeySym.cpp">
-      <Filter>Source Files\rfb</Filter>
-    </ClCompile>
-    <ClCompile Include="rfb\StandardPixelFormatFactory.cpp">
       <Filter>Source Files\rfb</Filter>
     </ClCompile>
     <ClCompile Include="rfb\TunnelDefs.cpp">
@@ -524,34 +224,10 @@
     <ClCompile Include="rfb\VendorDefs.cpp">
       <Filter>Source Files\rfb</Filter>
     </ClCompile>
-    <ClCompile Include="thread\critical_section_lock.cpp">
-      <Filter>Source Files\thread</Filter>
-    </ClCompile>
-    <ClCompile Include="thread\DesktopSelector.cpp">
-      <Filter>Source Files\thread</Filter>
-    </ClCompile>
-    <ClCompile Include="thread\GlobalMutex.cpp">
-      <Filter>Source Files\thread</Filter>
-    </ClCompile>
-    <ClCompile Include="thread\GuiThread.cpp">
-      <Filter>Source Files\thread</Filter>
-    </ClCompile>
-    <ClCompile Include="thread\critical_section.cpp">
-      <Filter>Source Files\thread</Filter>
-    </ClCompile>
-    <ClCompile Include="thread\Thread.cpp">
-      <Filter>Source Files\thread</Filter>
-    </ClCompile>
-    <ClCompile Include="thread\ThreadCollector.cpp">
-      <Filter>Source Files\thread</Filter>
-    </ClCompile>
     <ClCompile Include="util\BrokenHandleException.cpp">
       <Filter>Source Files\util</Filter>
     </ClCompile>
     <ClCompile Include="util\Command.cpp">
-      <Filter>Source Files\util</Filter>
-    </ClCompile>
-    <ClCompile Include="util\CommandLineArgs.cpp">
       <Filter>Source Files\util</Filter>
     </ClCompile>
     <ClCompile Include="util\CommandLineFormatException.cpp">
@@ -563,22 +239,13 @@
     <ClCompile Include="util\DateTime.cpp">
       <Filter>Source Files\util</Filter>
     </ClCompile>
-    <ClCompile Include="util\Deflater.cpp">
-      <Filter>Source Files\util</Filter>
-    </ClCompile>
     <ClCompile Include="util\DemandTimer.cpp">
       <Filter>Source Files\util</Filter>
     </ClCompile>
     <ClCompile Include="util\DesCrypt.cpp">
       <Filter>Source Files\util</Filter>
     </ClCompile>
-    <ClCompile Include="util\Exception.cpp">
-      <Filter>Source Files\util</Filter>
-    </ClCompile>
     <ClCompile Include="util\GetCPUtime.cpp">
-      <Filter>Source Files\util</Filter>
-    </ClCompile>
-    <ClCompile Include="util\Inflater.cpp">
       <Filter>Source Files\util</Filter>
     </ClCompile>
     <ClCompile Include="util\KeyContainer.cpp">
@@ -596,25 +263,10 @@
     <ClCompile Include="util\MemUsage.cpp">
       <Filter>Source Files\util</Filter>
     </ClCompile>
-    <ClCompile Include="util\ResourceLoader.cpp">
-      <Filter>Source Files\util</Filter>
-    </ClCompile>
-    <ClCompile Include="util\StringParser.cpp">
-      <Filter>Source Files\util</Filter>
-    </ClCompile>
-    <ClCompile Include="util\StringTable.cpp">
-      <Filter>Source Files\util</Filter>
-    </ClCompile>
     <ClCompile Include="util\Unicode.cpp">
       <Filter>Source Files\util</Filter>
     </ClCompile>
     <ClCompile Include="util\VncPassCrypt.cpp">
-      <Filter>Source Files\util</Filter>
-    </ClCompile>
-    <ClCompile Include="util\ZLibBase.cpp">
-      <Filter>Source Files\util</Filter>
-    </ClCompile>
-    <ClCompile Include="util\ZlibException.cpp">
       <Filter>Source Files\util</Filter>
     </ClCompile>
     <ClCompile Include="viewer_core\AuthHandler.cpp">
@@ -728,203 +380,17 @@
     <ClCompile Include="viewer_core\ZrleDecoder.cpp">
       <Filter>Source Files\viewer_core</Filter>
     </ClCompile>
-    <ClCompile Include="win_system\AnonymousPipe.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\AnonymousPipeFactory.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\AutoImpersonator.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\CtrlAltDelSimulator.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\CurrentConsoleProcess.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\DibSection.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\DynamicLibrary.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\EmulatedAnonymousPipeFactory.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\Impersonator.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\InputInjector.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\Keyboard.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\LocalWindowsApplication.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\NamedPipe.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\ParentProcess.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\Pipe.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\PipeClient.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\PipeImpersonatedThread.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\PipeServer.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\Process.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\ProcessHandle.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\Registry.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\RegistryKey.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\SCMClient.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\Screen.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\SecurityAttributes.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\Service.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\SharedMemory.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\Shell.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\SystemException.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\SystemInformation.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\UipiControl.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\VersionInfo.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\WinClipboard.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\WinCommandLineArgs.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\WinCursor.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\WindowsApplication.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\WindowsDisplays.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\WindowsEvent.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\WindowsEventEx.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\WinHandles.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\WinHooks.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\WinProcessCommandLine.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\WinStaLibrary.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\WinTimeMillis.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\Workstation.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\WsaStartup.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\WTS.cpp">
-      <Filter>Source Files\win_system</Filter>
-    </ClCompile>
     <ClCompile Include="EOFException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="remoting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gui\drawing\Bitmap.cpp">
-      <Filter>Source Files\gui\drawing</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\drawing\BitmapGraphics.cpp">
-      <Filter>Source Files\gui\drawing</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\drawing\Brush.cpp">
-      <Filter>Source Files\gui\drawing</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\drawing\DeviceContext.cpp">
-      <Filter>Source Files\gui\drawing</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\drawing\Graphics.cpp">
-      <Filter>Source Files\gui\drawing</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\drawing\Icon.cpp">
-      <Filter>Source Files\gui\drawing</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\drawing\Pen.cpp">
-      <Filter>Source Files\gui\drawing</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\drawing\SolidBrush.cpp">
-      <Filter>Source Files\gui\drawing</Filter>
-    </ClCompile>
-    <ClCompile Include="network\socket\SocketAddressIPv4.cpp">
-      <Filter>Source Files\network\socket</Filter>
-    </ClCompile>
-    <ClCompile Include="network\socket\SocketException.cpp">
-      <Filter>Source Files\network\socket</Filter>
-    </ClCompile>
-    <ClCompile Include="network\socket\SocketIPv4.cpp">
-      <Filter>Source Files\network\socket</Filter>
-    </ClCompile>
-    <ClCompile Include="network\socket\SocketStream.cpp">
-      <Filter>Source Files\network\socket</Filter>
-    </ClCompile>
-    <ClCompile Include="network\socket\WindowsSocket.cpp">
-      <Filter>Source Files\network\socket</Filter>
-    </ClCompile>
     <ClCompile Include="_.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="region\x11region.c">
       <Filter>Source Files\region</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\security\SecurityDescriptor.cpp">
-      <Filter>Source Files\win_system\security</Filter>
-    </ClCompile>
-    <ClCompile Include="win_system\security\SecurityIdentifier.cpp">
-      <Filter>Source Files\win_system\security</Filter>
     </ClCompile>
     <ClCompile Include="viewer_core\drawTile.cpp">
       <Filter>Source Files\viewer_core</Filter>
@@ -1428,42 +894,6 @@
     </ClInclude>
     <ClInclude Include="network\socket\WindowsSocket.h">
       <Filter>Header Files\network\socket</Filter>
-    </ClInclude>
-    <ClInclude Include="io\_.h">
-      <Filter>Header Files\io</Filter>
-    </ClInclude>
-    <ClInclude Include="io\BufferedInputStream.h">
-      <Filter>Header Files\io</Filter>
-    </ClInclude>
-    <ClInclude Include="io\BufferedOutputStream.h">
-      <Filter>Header Files\io</Filter>
-    </ClInclude>
-    <ClInclude Include="io\ByteArrayInputStream.h">
-      <Filter>Header Files\io</Filter>
-    </ClInclude>
-    <ClInclude Include="io\ByteArrayOutputStream.h">
-      <Filter>Header Files\io</Filter>
-    </ClInclude>
-    <ClInclude Include="io\Channel.h">
-      <Filter>Header Files\io</Filter>
-    </ClInclude>
-    <ClInclude Include="io\DataCopy.h">
-      <Filter>Header Files\io</Filter>
-    </ClInclude>
-    <ClInclude Include="io\DataInputStream.h">
-      <Filter>Header Files\io</Filter>
-    </ClInclude>
-    <ClInclude Include="io\DataOutputStream.h">
-      <Filter>Header Files\io</Filter>
-    </ClInclude>
-    <ClInclude Include="io\InputStream.h">
-      <Filter>Header Files\io</Filter>
-    </ClInclude>
-    <ClInclude Include="io\OutputStream.h">
-      <Filter>Header Files\io</Filter>
-    </ClInclude>
-    <ClInclude Include="io\resource.h">
-      <Filter>Header Files\io</Filter>
     </ClInclude>
     <ClInclude Include="rfb\_.h">
       <Filter>Header Files\rfb</Filter>
