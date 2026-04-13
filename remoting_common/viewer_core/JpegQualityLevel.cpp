@@ -23,6 +23,7 @@
 //
 #include "framework.h"
 #include "JpegQualityLevel.h"
+#include "subsystem/Exception.h"
 
 namespace remoting
 {

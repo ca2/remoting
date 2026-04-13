@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "TcpServer.h"
 
-#include "remoting/remoting_common/network/socket/SocketAddressIPv4.h"
+#include "subsystem/socket/SocketAddressIPv4.h"
 
 
 namespace remoting
@@ -34,13 +34,13 @@ namespace remoting
                         bool lockAddr)
    : m_bindHost(scopedstrBindHost), m_bindPort(bindPort)
    {
-      SocketAddressIPv4 bindAddr = SocketAddressIPv4::resolve(scopedstrBindHost, bindPort);
+      auto paddressBind = main_subsystem()->resolve_ip4_address(scopedstrBindHost, bindPort);
 
       if (lockAddr) {
          m_listenSocket.setExclusiveAddrUse();
       }
 
-      m_listenSocket.bind(bindAddr);
+      m_listenSocket.bind(paddressBind);
       m_listenSocket.listen(10);
 
       if (autoStart) {
@@ -50,7 +50,7 @@ namespace remoting
 
    TcpServer::~TcpServer()
    {
-      try { m_listenSocket.shutdown(SD_BOTH); } catch(...) { }
+      try { m_listenSocket.shutdown(::subsystem::e_socket_shutdown_both); } catch(...) { }
       try { m_listenSocket.close(); } catch (...) { }
 
       if (isActive()) {
@@ -77,7 +77,7 @@ namespace remoting
    void TcpServer::execute()
    {
       while (!isTerminating()) {
-         SocketIPv4 *clientSocket = NULL;
+         ::pointer < ::subsystem::SocketIPv4Interface > clientSocket;
 
          try {
             clientSocket = m_listenSocket.accept();

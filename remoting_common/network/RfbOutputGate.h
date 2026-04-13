@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "input_output/DataOutputStream.h"
-#include "input_output/BufferedOutputStream.h"
+#include "acme/input_output/DataOutputStream.h"
+#include "acme/input_output/BufferedOutputStream.h"
 
 //#include "subsystem/thread/critical_section.h"
 
@@ -42,7 +42,7 @@ namespace remoting
     * "autoflush on unlock" is removed.
     * @author enikey.
     */
-   class CLASS_DECL_REMOTING_COMMON RfbOutputGate : public ::subsystem::DataOutputStream,
+   class CLASS_DECL_REMOTING_COMMON RfbOutputGate : public ::DataOutputStream,
                          public critical_section
    {
    public:
@@ -50,7 +50,7 @@ namespace remoting
        * Creates new rfb output gate.
        * @param stream real output stream.
        */
-      RfbOutputGate(::subsystem::OutputStream *stream);
+      RfbOutputGate(::OutputStream *stream);
       /**
        * Deletes rfb output gate.
        */
@@ -66,6 +66,6 @@ namespace remoting
       /**
        * Tunnel that adds buffering.
        */
-      ::subsystem::BufferedOutputStream *m_tunnel;
+      ::BufferedOutputStream *m_tunnel;
    };
 } // namespace remoting

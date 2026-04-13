@@ -27,7 +27,7 @@
 
 #include "FileTransferEventHandler.h"
 
-#include "input_output/DataInputStream.h"
+#include "acme/input_output/DataInputStream.h"
 
 #include "remoting/remoting_common/ftp_common/FileInfo.h"
 #include "subsystem/Inflater.h"
@@ -66,28 +66,28 @@ namespace  remoting
          // Inherited from FileTransferEventHandler abstract class
          //
 
-         virtual void onCompressionSupportReply(::subsystem::DataInputStream * pinput);
-         virtual void onFileListReply(::subsystem::DataInputStream * pinput);
-         virtual void onMd5DataReply(::subsystem::DataInputStream * pinput);
+         virtual void onCompressionSupportReply(::DataInputStream * pinput);
+         virtual void onFileListReply(::DataInputStream * pinput);
+         virtual void onMd5DataReply(::DataInputStream * pinput);
 
-         virtual void onUploadReply(::subsystem::DataInputStream * pinput);
-         virtual void onUploadDataReply(::subsystem::DataInputStream * pinput);
-         virtual void onUploadEndReply(::subsystem::DataInputStream * pinput);
+         virtual void onUploadReply(::DataInputStream * pinput);
+         virtual void onUploadDataReply(::DataInputStream * pinput);
+         virtual void onUploadEndReply(::DataInputStream * pinput);
 
-         virtual void onDownloadReply(::subsystem::DataInputStream * pinput);
-         virtual void onDownloadDataReply(::subsystem::DataInputStream * pinput);
-         virtual void onDownloadEndReply(::subsystem::DataInputStream * pinput);
+         virtual void onDownloadReply(::DataInputStream * pinput);
+         virtual void onDownloadDataReply(::DataInputStream * pinput);
+         virtual void onDownloadEndReply(::DataInputStream * pinput);
 
-         virtual void onMkdirReply(::subsystem::DataInputStream * pinput);
-         virtual void onRmReply(::subsystem::DataInputStream * pinput);
-         virtual void onMvReply(::subsystem::DataInputStream * pinput);
+         virtual void onMkdirReply(::DataInputStream * pinput);
+         virtual void onRmReply(::DataInputStream * pinput);
+         virtual void onMvReply(::DataInputStream * pinput);
 
-         virtual void onDirSizeReply(::subsystem::DataInputStream * pinput);
-         virtual void onLastRequestFailedReply(::subsystem::DataInputStream * pinput);
+         virtual void onDirSizeReply(::DataInputStream * pinput);
+         virtual void onLastRequestFailedReply(::DataInputStream * pinput);
 
       //private:
 
-         ::array_base<unsigned char> readCompressedDataBlock(::subsystem::DataInputStream * pinput,
+         ::array_base<unsigned char> readCompressedDataBlock(::DataInputStream * pinput,
                                                unsigned int compressedSize,
                                                unsigned int uncompressedSize,
                                                unsigned char compressionLevel)

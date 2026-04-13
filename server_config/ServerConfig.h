@@ -32,8 +32,8 @@
 //#include "subsystem/thread/critical_section.h"
 //#include "subsystem/thread/critical_section.h"
 #include "IpAccessRule.h"
-#include "input_output/DataInputStream.h"
-#include "input_output/DataOutputStream.h"
+#include "acme/input_output/DataInputStream.h"
+#include "acme/input_output/DataOutputStream.h"
 #include "acme/exception/io.h"
 #include "remoting/remoting_common/region/RectSerializer.h"
 

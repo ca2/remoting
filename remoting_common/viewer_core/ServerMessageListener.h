@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "input_output/DataInputStream.h"
+#include "acme/input_output/DataInputStream.h"
 
 
 namespace remoting
@@ -40,7 +40,7 @@ namespace remoting
       // This method is called, if received server scopedstrMessage with code "msgCode".
       // Use "input" outside onRequest() is prohibited.
       //
-      virtual void onServerMessage(unsigned int msgCode,::subsystem::DataInputStream * pinput) = 0;
+      virtual void onServerMessage(unsigned int msgCode,::DataInputStream * pinput) = 0;
    };
 } // namespace remoting
 

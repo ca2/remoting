@@ -93,6 +93,20 @@ SOFTWARE.
 #define assert(expr)
 #endif
 
+#ifndef FALSE
+#define FALSE 0
+#endif
+
+#ifndef TRUE
+#define TRUE 1
+#endif
+
+
+#ifndef NULL
+#define NULL 0
+#endif
+
+
 #define good(reg) assert(miValidRegion(reg))
 
 /*

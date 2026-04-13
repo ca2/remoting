@@ -26,7 +26,7 @@
 
 
 #include "acme/exception/io.h"
-#include "input_output/DataInputStream.h"
+#include "acme/input_output/DataInputStream.h"
 
 #include "remoting/remoting_common/util/inttypes.h"
 #include "remoting/remoting_common/util/ListenerContainer.h"
@@ -47,7 +47,7 @@ namespace  remoting
          FileTransferMessageProcessor();
          ~FileTransferMessageProcessor();
 
-         void processRfbMessage(::subsystem::DataInputStream * pinput, unsigned int rfbMessage);
+         void processRfbMessage(::DataInputStream * pinput, unsigned int rfbMessage);
       };
    }
 }

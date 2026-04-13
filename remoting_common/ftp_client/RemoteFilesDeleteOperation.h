@@ -68,9 +68,9 @@ namespace remoting
          // ::file::item transfer scopedstrMessage(accepted by this operation) handlers
          //
 
-         void onFileListReply(::subsystem::DataInputStream * pinput);
-         void onRmReply(::subsystem::DataInputStream * pinput);
-         void onLastRequestFailedReply(::subsystem::DataInputStream * pinput);
+         void onFileListReply(::DataInputStream * pinput);
+         void onRmReply(::DataInputStream * pinput);
+         void onLastRequestFailedReply(::DataInputStream * pinput);
 
       //private:
 

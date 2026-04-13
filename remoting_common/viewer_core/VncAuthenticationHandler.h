@@ -38,7 +38,7 @@ namespace remoting
       //
       // Overrides AuthHandler::authenticate().
       //
-      virtual void authenticate(::subsystem::DataInputStream * pinput, ::subsystem::DataOutputStream *output);
+      virtual void authenticate(::DataInputStream * pinput, ::DataOutputStream *output);
 
       //
       // Overrides AuthHandler::addAuthCapability().

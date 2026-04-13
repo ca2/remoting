@@ -97,9 +97,22 @@ list(APPEND library_source
    #ftp_common/remoting_ftp_common.vcxproj
    #ftp_common/remoting_ftp_common.vcxproj.filters
    #ftp_common/remoting_ftp_common.vcxproj.user
+   network/RfbInputGate.cpp
+   network/RfbInputGate.h
+   network/RfbOutputGate.cpp
+   network/RfbOutputGate.h
+   network/TcpClientThread.cpp
+   network/TcpClientThread.h
+   network/TcpServer.cpp
+   network/TcpServer.h
    ftp_common/resource.h
    ftp_common/WinFilePath.cpp
    ftp_common/WinFilePath.h
+   region/RectSerializer.cpp
+   region/RectSerializer.h
+   region/Region.cpp
+   region/Region.h
+   region/x11region.c
    rfb/AuthDefs.cpp
    rfb/AuthDefs.h
    rfb/CursorShape.cpp
@@ -119,6 +132,8 @@ list(APPEND library_source
    rfb/TunnelDefs.h
    rfb/VendorDefs.cpp
    rfb/VendorDefs.h
+   util/DesCrypt.cpp
+   util/DesCrypt.h
    viewer_core/_.cpp
    viewer_core/_.h
    viewer_core/_____debug.xcconfig
@@ -246,7 +261,7 @@ if (NOT ${NO_PRECOMPILED_HEADER})
 
    target_precompile_headers(${PROJECT_NAME} PRIVATE framework.h)
    #target_precompile_headers(static_${PROJECT_NAME} PRIVATE framework.h)
-
+   set_source_files_properties(region/x11region.c PROPERTIES SKIP_PRECOMPILE_HEADERS ON)
 endif ()
 
 
@@ -259,7 +274,7 @@ if(${WIN32})
    target_compile_options(${PROJECT_NAME} PRIVATE "/MD$<$<CONFIG:Debug>:d>")
    target_link_options(${PROJECT_NAME} PRIVATE "/DEFAULTLIB:msvcrt$<$<CONFIG:Debug>:d>")
    target_link_options(${PROJECT_NAME} PRIVATE "/SUBSYSTEM:WINDOWS")
-   target_link_libraries(${PROJECT_NAME} PRIVATE ${library_references} ${global_library_references})
+   target_link_libraries(${PROJECT_NAME} PRIVATE ${library_references} ${global_library_references} jpeg)
 
 
 elseif (${LINUX} OR ${__BSD__} OR ${ANDROID})

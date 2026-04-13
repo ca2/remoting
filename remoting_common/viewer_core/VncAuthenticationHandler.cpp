@@ -42,8 +42,8 @@ namespace remoting
    }
 
 
-   void VncAuthenticationHandler::authenticate(::subsystem::DataInputStream * pinput,
-                                               ::subsystem::DataOutputStream *output)
+   void VncAuthenticationHandler::authenticate(::DataInputStream * pinput,
+                                               ::DataOutputStream *output)
    {
       ::string password;
       password = getPassword();

@@ -37,7 +37,7 @@ namespace remoting
       {
       }
 
-      void FileTransferMessageProcessor::processRfbMessage(::subsystem::DataInputStream * pinput,
+      void FileTransferMessageProcessor::processRfbMessage(::DataInputStream * pinput,
                                                            unsigned int rfbMessage)
       {
          critical_section_lock al(&m_listeners);

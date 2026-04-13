@@ -46,7 +46,7 @@ namespace remoting
          m_pathToSourceRoot= pathToSourceRoot;
          m_pathToTargetRoot= pathToTargetRoot;
 
-         m_toCopy = new FileInfoList(logWriter, fileToUpload);
+         m_toCopy = new FileInfoList(plogwriter, fileToUpload);
 
          changeFileToUpload(m_toCopy);
          //m_lastRequestTime = ::earth::time::now();
@@ -65,7 +65,7 @@ namespace remoting
          m_pathToSourceRoot= pathToSourceRoot;
          m_pathToTargetRoot= pathToTargetRoot;
 
-         m_toCopy = new FileInfoList(logWriter, fileinfoa);
+         m_toCopy = new FileInfoList(plogwriter, fileinfoa);
 
          changeFileToUpload(m_toCopy);
          //m_lastRequestTime = ::earth::time::now();

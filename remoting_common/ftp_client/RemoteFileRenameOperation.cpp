@@ -43,8 +43,8 @@ namespace remoting
                                                            const ::file::path & pathToTargetRoot)
       : FileTransferOperation(plogwriter)
       {
-         FileInfoList srcList(logWriter, sourceFileInfo);
-         FileInfoList dstList(logWriter, targetFileInfo);
+         FileInfoList srcList(plogwriter, sourceFileInfo);
+         FileInfoList dstList(plogwriter, targetFileInfo);
 
          m_pathToSourceFile = getRemotePath(&srcList, pathToTargetRoot);
          m_pathToTargetFile = getRemotePath(&dstList, pathToTargetRoot);

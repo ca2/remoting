@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "input_output/DataOutputStream.h"
+#include "acme/input_output/DataOutputStream.h"
 //#include "subsystem/thread/critical_section.h"
 
 class BlockingOutputGate : public critical_section, public DataOutputStream

@@ -44,7 +44,7 @@ namespace remoting
          m_pathToSourceRoot = pathToSourceRoot;
          m_pathToTargetRoot = pathToTargetRoot;
 
-         m_toCopy = new FileInfoList(logWriter, fileinfoa);
+         m_toCopy = new FileInfoList(plogwriter, fileinfoa);
 
          changeFileToDownload(m_toCopy);
       }

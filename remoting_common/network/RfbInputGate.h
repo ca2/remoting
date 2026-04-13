@@ -25,17 +25,17 @@
 #pragma once
 
 
-#include "input_output/Channel.h"
+#include "acme/input_output/Channel.h"
 
-#include "input_output/DataInputStream.h"
+#include "acme/input_output/DataInputStream.h"
 
 namespace remoting
 {
-   class CLASS_DECL_REMOTING_COMMON RfbInputGate : public ::subsystem::DataInputStream
+   class CLASS_DECL_REMOTING_COMMON RfbInputGate : public ::DataInputStream
    {
    public:
-      RfbInputGate(::subsystem::Channel *stream);
-      RfbInputGate(::subsystem::InputStream *stream);
+      RfbInputGate(::Channel *stream);
+      RfbInputGate(::InputStream *stream);
       virtual ~RfbInputGate();
    };
 } // namespace remoting

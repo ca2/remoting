@@ -50,14 +50,14 @@ namespace remoting
          notifyStart();
       }
 
-      void RemoteFileListOperation::onFileListReply(::subsystem::DataInputStream * pinput)
+      void RemoteFileListOperation::onFileListReply(::DataInputStream * pinput)
       {
          m_isOk = true;
          m_isFinished = true;
          notifyFinish();
       }
 
-      void RemoteFileListOperation::onLastRequestFailedReply(::subsystem::ataInputStream * pinput)
+      void RemoteFileListOperation::onLastRequestFailedReply(::DataInputStream * pinput)
       {
          m_isOk = false;
          m_isFinished = true;

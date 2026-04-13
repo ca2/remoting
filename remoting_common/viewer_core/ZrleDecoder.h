@@ -27,7 +27,7 @@
 
 #include "DecoderOfRectangle.h"
 
-#include "input_output/DataInputStream.h"
+#include "acme/input_output/DataInputStream.h"
 #include "subsystem/Inflater.h"
 
 namespace remoting
@@ -60,32 +60,32 @@ namespace remoting
 
       void readAndInflate(RfbInputGate *input, size_t maximalUnpackedSize);
 
-      int readType(::subsystem::DataInputStream * pinput);
+      int readType(::DataInputStream * pinput);
 
-      size_t readRunLength(::subsystem::DataInputStream * pinput);
+      size_t readRunLength(::DataInputStream * pinput);
 
-      void readPalette(::subsystem::DataInputStream * pinput,
+      void readPalette(::DataInputStream * pinput,
                        const int paletteSize,
                        Palette *palette);
 
-      void readRawTile(::subsystem::DataInputStream * pinput,
+      void readRawTile(::DataInputStream * pinput,
                        ::array_base<char> &pixels,
                        const ::int_rectangle &  tileRect);
 
-      void readSolidTile(::subsystem::DataInputStream * pinput,
+      void readSolidTile(::DataInputStream * pinput,
                          ::array_base<char> &pixels,
                          const ::int_rectangle &  tileRect);
 
-      void readPackedPaletteTile(::subsystem::DataInputStream * pinput,
+      void readPackedPaletteTile(::DataInputStream * pinput,
                                  ::array_base<char> &pixels,
                                  const ::int_rectangle &  tileRect,
                                  const int type);
 
-      void readPlainRleTile(::subsystem::DataInputStream * pinput,
+      void readPlainRleTile(::DataInputStream * pinput,
                             ::array_base<char> &pixels,
                             const ::int_rectangle &  tileRect);
 
-      void readPaletteRleTile(::subsystem::DataInputStream * pinput,
+      void readPaletteRleTile(::DataInputStream * pinput,
                               ::array_base<char> &pixels,
                               const ::int_rectangle &  tileRect,
                               const int type);

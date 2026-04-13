@@ -124,7 +124,7 @@ namespace remoting
 
          m_plogwriter->debug("Initialization of socket stream and input/output gates...");
          m_psocketstream = allocateø ::subsystem::SocketStream(m_psocket);
-         m_pbufInput = allocateø ::subsystem::BufferedInputStream(m_psocketstream);
+         m_pbufInput = allocateø ::BufferedInputStream(m_psocketstream);
          m_pinput = allocateø RfbInputGate(m_pbufInput);
          m_poutput = allocateø RfbOutputGate(m_psocketstream);
          m_RfbGatesOwner = true;

@@ -28,41 +28,44 @@
 //#include "subsystem/thread/Thread.h"
 //
 ////#include "socket/SocketIPv4.h"
-//
-///**
-// * Thread owning incoming tcp connection.
-// *
-// * Solves problem with code duplicates (see destructor and onTerminate() method)
-// * and some memory leaks.
-// *
-// * @remark it can be used as superclass in
-// * HttpClientThread, RfbClientThread, ControlClientThread classes for example).
-// */
-//class CLASS_DECL_REMOTING_COMMON TcpClientThread : public task
-//{
-//public:
-//  /**
-//   * Creates new tcp client thread.
-//   * @param socket incoming connection socket.
-//   */
-//  TcpClientThread(SocketIPv4 *socket);
-//  /**
-//   * Deletes socket that was passed to constructor (see above).
-//   */
-//  virtual ~TcpClientThread();
-//
-//protected:
-//  /**
-//   * Inherited from Thread class.
-//   * Shutdowns and closes socket.
-//   */
-//  virtual void onTerminate();
-//
-//protected:
-//  /**
-//   * Socket for owning.
-//   */
-//  //SocketIPv4 *m_socket;
-//};
-//
-//
+
+namespace remoting
+{
+   /**
+    * Thread owning incoming tcp connection.
+    *
+    * Solves problem with code duplicates (see destructor and onTerminate() method)
+    * and some memory leaks.
+    *
+    * @remark it can be used as superclass in
+    * HttpClientThread, RfbClientThread, ControlClientThread classes for example).
+    */
+   class CLASS_DECL_REMOTING_COMMON TcpClientThread : public task
+   {
+   public:
+      /**
+       * Creates new tcp client thread.
+       * @param socket incoming connection socket.
+       */
+      TcpClientThread(::subsystem::SocketIPv4Interface *socket);
+      /**
+       * Deletes socket that was passed to constructor (see above).
+       */
+      virtual ~TcpClientThread();
+
+   protected:
+      /**
+       * Inherited from Thread class.
+       * Shutdowns and closes socket.
+       */
+      virtual void onTerminate();
+
+   protected:
+      /**
+       * Socket for owning.
+       */
+      ::pointer < subsystem::SocketIPv4Interface > m_psocket;
+   };
+} // namespace remoting
+
+

@@ -33,7 +33,7 @@ namespace remoting
                                                              const ::file::path & pathToTargetRoot)
       : FileTransferOperation(plogwriter)
       {
-         m_toDelete = new FileInfoList(logWriter, fileinfoa);
+         m_toDelete = new FileInfoList(plogwriter, fileinfoa);
          m_pathToTargetRoot= pathToTargetRoot;
       }
 
@@ -42,7 +42,7 @@ namespace remoting
                                                              const ::file::path & pathToTargetRoot)
       : FileTransferOperation(plogwriter)
       {
-         m_toDelete = new FileInfoList(logWriter, fileInfoToDelete);
+         m_toDelete = new FileInfoList(plogwriter, fileInfoToDelete);
          m_pathToTargetRoot= pathToTargetRoot;
       }
 
