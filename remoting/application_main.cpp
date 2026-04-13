@@ -120,11 +120,11 @@ int application::remoting_impact_main( const ::file::path & path)
    if (strHost.has_character())
    {
       condata.setHost(wstring(strHost).c_str());
-      m_connectingdialog.initialize(this);
-      m_connectingdialog.show();
-      m_connectingdialog.set_host(strHost);
-      m_connectingdialog.set_status("Initiating connection...");
-      m_connectingdialog.set_phase1();
+      m_pconnectingdialog->initialize(this);
+      m_pconnectingdialog->show();
+      m_pconnectingdialog->set_host(strHost);
+      m_pconnectingdialog->set_status("Initiating connection...");
+      m_pconnectingdialog->set_phase1();
 
    }
    //ViewerCmdLine cmd(&condata, &conConf, &config, &isListening);

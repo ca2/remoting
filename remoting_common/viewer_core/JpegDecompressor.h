@@ -41,7 +41,8 @@
 #ifdef LIBJPEG_TURBO
 #include "libjpeg-turbo/jpeglib.h"
 #else
-#include "libjpeg/jpeglib.h"
+//#include "libjpeg/jpeglib.h"
+#include "port_jpeg/jpeglib.h"
 #endif
 
 

@@ -53,7 +53,13 @@ namespace remoting_remoting
    {
       auto ecommand = prequest->m_ecommand;
 
-      if (ecommand == e_command_file_open)
+      if (ecommand == e_command_application_start)
+      {
+
+         construct_newø(m_pconnectingdialog);
+
+      }
+      else if (ecommand == e_command_file_open)
       {
 
          auto path = prequest->m_payloadFile.as_file_path();
@@ -88,20 +94,20 @@ namespace remoting_remoting
       if (eid == id_remoting_connecting)
       {
 
-          m_connectingdialog.postMessage(WM_USER + 328, id_remoting_connecting, wparam.m_number);
+          m_pconnectingdialog->postMessage(WM_USER + 328, id_remoting_connecting, wparam.m_number);
 
       }
       else if (eid == id_remoting_connected)
       {
 
-         if (m_connectingdialog.m_panimation)
+         if (m_pconnectingdialog->m_panimation)
          {
 
-            m_connectingdialog.m_panimation->m_bRunning = false;             
+            m_pconnectingdialog->m_panimation->m_bRunning = false;
 
          }
 
-         m_connectingdialog.hide();
+         m_pconnectingdialog->hide();
 
       }
 

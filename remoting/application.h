@@ -14,7 +14,9 @@ namespace remoting_remoting
    virtual public ::apex::application
    {
    public:
-      ConnectingDialog m_connectingdialog;
+
+      ::pointer < ConnectingDialog > m_pconnectingdialog;
+
       ::subsystem::LogWriter * m_plogwriter;
       bool m_bOpenFile = false;
 

@@ -282,7 +282,7 @@ if(${WIN32})
    target_compile_options(${PROJECT_NAME} PRIVATE "/MD$<$<CONFIG:Debug>:d>")
    target_link_options(${PROJECT_NAME} PRIVATE "/DEFAULTLIB:msvcrt$<$<CONFIG:Debug>:d>")
    target_link_options(${PROJECT_NAME} PRIVATE "/SUBSYSTEM:WINDOWS")
-   target_link_libraries(${PROJECT_NAME} PRIVATE ${library_references} ${global_library_references} jpeg)
+   target_link_libraries(${PROJECT_NAME} PRIVATE ${library_references} ${global_library_references} port_jpeg)
 
 
 elseif (${LINUX} OR ${__BSD__} OR ${ANDROID})
