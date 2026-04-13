@@ -24,6 +24,7 @@
 #include "framework.h"
 #include "RegistrySettingsManager.h"
 #include "subsystem/StringParser.h"
+#include "subsystem/RegistryKey.h"
 //#include aaa_<vector>
 
 namespace remoting
@@ -33,11 +34,11 @@ namespace remoting
    {
    }
 
-   RegistrySettingsManager::RegistrySettingsManager(::subsystem::RegistryKeyInterface *rootKey,
-                                                    const ::scoped_string &scopedstrEntry, SECURITY_ATTRIBUTES *sa)
+   RegistrySettingsManager::RegistrySettingsManager(::subsystem::RegistryKey *rootKey,
+                                                    const ::scoped_string &scopedstrEntry, ::subsystem::SecurityAttributesInterface * psecurityattributes)
    : m_key(0)
    {
-      setRegistryKey(rootKey, scopedstrEntry, sa);
+      setRegistryKey(rootKey, scopedstrEntry, psecurityattributes);
    }
 
    RegistrySettingsManager::~RegistrySettingsManager()
@@ -47,15 +48,15 @@ namespace remoting
       }
    }
 
+   //
+   //    void RegistrySettingsManager::initialize_registry_settings_manager(::subsystem::RegistryKey *rootKey, const ::scoped_string &scopedstrEntry,
+   //    ::subsystem::SecurityAttributesInterface *psecurityattributes)
+   //       //:   m_key(0)
+   // {
+   //    setRegistryKey(rootKey, scopedstrEntry, psecurityattributes);
+   // }
 
-      void RegistrySettingsManager::initialize_registry_settings_manager(::subsystem::RegistryKeyInterface *rootKey, const ::scoped_string &scopedstrEntry,
-      ::subsystem::SecurityAttributesInterface *psecurityattributes) 
-         //:   m_key(0)
-   {
-      setRegistryKey(rootKey, scopedstrEntry, psecurityattributes);
-   }
-
-   void RegistrySettingsManager::setRegistryKey(::subsystem::RegistryKeyInterface *rootKey,
+   void RegistrySettingsManager::setRegistryKey(::subsystem::RegistryKey *rootKey,
                                                 const ::scoped_string &scopedstrEntry,
                                                 ::subsystem::SecurityAttributesInterface *psecurityattributes)
    {
@@ -63,7 +64,7 @@ namespace remoting
          delete m_key;
       }
 
-      m_key = new RegistryKey(rootKey, scopedstrEntry, true, psecurityattributes);
+      m_key = allocateø ::subsystem::RegistryKey(rootKey, scopedstrEntry, true, psecurityattributes);
    }
 
    bool RegistrySettingsManager::isOk()
@@ -107,7 +108,7 @@ namespace remoting
    bool RegistrySettingsManager::keyExist(const ::scoped_string & scopedstrName)
    {
       if (!isOk()) return false;
-      RegistryKey subKey(m_key, scopedstrName, false);
+      ::subsystem::RegistryKey subKey(m_key, scopedstrName, false);
       return subKey.isOpened();
    }
 
@@ -119,7 +120,7 @@ namespace remoting
       path = key_path(scopedstrFullPath);
       name = key_name(scopedstrFullPath);
 
-      RegistryKey subKey(m_key, path, false);
+      ::subsystem::RegistryKey subKey(m_key, path, false);
 
       bool deleteAsSubKey = m_key->deleteSubKeyTree(name);
       bool deleteAsValue = subKey.deleteValue(name);
@@ -135,7 +136,7 @@ namespace remoting
       path = key_path(scopedstrFullPath);
       name = key_name(scopedstrFullPath);
 
-      RegistryKey subKey(m_key, path, false);
+      ::subsystem::RegistryKey subKey(m_key, path, false);
 
       return subKey.getValueAsString(name, value);
    }
@@ -149,37 +150,37 @@ namespace remoting
       path = key_path(scopedstrFullPath);
       name = key_name(scopedstrFullPath);
 
-      RegistryKey subKey(m_key, path, false);
+      ::subsystem::RegistryKey subKey(m_key, path, false);
 
       return subKey.setValueAsString(name, name);
    }
 
-   bool RegistrySettingsManager::getLong(const ::scoped_string & scopedstrFullPath, long *value)
-   {
-      ::string path;
-      ::string name;
-
-      path = key_path(scopedstrFullPath);
-      name = key_name(scopedstrFullPath);
-
-
-      RegistryKey subKey(m_key, path, false);
-
-      return subKey.getValueAsInt64(name, value);
-   }
-
-   bool RegistrySettingsManager::setLong(const ::scoped_string & scopedstrFullPath, long value)
-   {
-      ::string path;
-      ::string name;
-
-      path = key_path(scopedstrFullPath);
-      name = key_name(scopedstrFullPath);
-
-      RegistryKey subKey(m_key, path, false);
-
-      return subKey.setValueAsInt64(name, value);
-   }
+   // bool RegistrySettingsManager::getLong(const ::scoped_string & scopedstrFullPath, long *value)
+   // {
+   //    ::string path;
+   //    ::string name;
+   //
+   //    path = key_path(scopedstrFullPath);
+   //    name = key_name(scopedstrFullPath);
+   //
+   //
+   //    ::subsystem::RegistryKey subKey(m_key, path, false);
+   //
+   //    return subKey.getValueAsInt64(name, value);
+   // }
+   //
+   // bool RegistrySettingsManager::setLong(const ::scoped_string & scopedstrFullPath, long value)
+   // {
+   //    ::string path;
+   //    ::string name;
+   //
+   //    path = key_path(scopedstrFullPath);
+   //    name = key_name(scopedstrFullPath);
+   //
+   //    ::subsystem::RegistryKey subKey(m_key, path, false);
+   //
+   //    return subKey.setValueAsInt64(name, value);
+   // }
 
    bool RegistrySettingsManager::getBoolean(const ::scoped_string & scopedstrFullPath, bool *value)
    {
@@ -215,7 +216,7 @@ namespace remoting
       name = key_name(scopedstrFullPath);
 
 
-      RegistryKey subKey(m_key, path, false);
+      ::subsystem::RegistryKey subKey(m_key, path, false);
 
       return subKey.getValueAsInt32(name, value);
    }
@@ -228,7 +229,7 @@ namespace remoting
       path = key_path(scopedstrFullPath);
       name = key_name(scopedstrFullPath);
 
-      RegistryKey subKey(m_key, path, false);
+      ::subsystem::RegistryKey subKey(m_key, path, false);
 
       return subKey.setValueAsInt32(name, value);
    }
@@ -256,7 +257,7 @@ namespace remoting
       path = key_path(scopedstrFullPath);
       name = key_name(scopedstrFullPath);
 
-      RegistryKey subKey(m_key, path, false);
+      ::subsystem::RegistryKey subKey(m_key, path, false);
 
       return subKey.getValueAsBinary(name, value, size);
    }
@@ -269,7 +270,7 @@ namespace remoting
       path = key_path(scopedstrFullPath);
       name = key_name(scopedstrFullPath);
 
-      RegistryKey subKey(m_key, path, false);
+      ::subsystem::RegistryKey subKey(m_key, path, false);
 
       return subKey.setValueAsBinary(name, value, size);
    }

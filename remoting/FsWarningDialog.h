@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "innate_subsystem/Dialog.h"
-#include "innate_subsystem/CheckBox.h"
+#include "innate_subsystem/gui/Dialog.h"
+#include "innate_subsystem/gui/CheckBox.h"
 #include "resource.h"
 
 

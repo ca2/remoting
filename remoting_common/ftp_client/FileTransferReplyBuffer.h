@@ -27,7 +27,7 @@
 
 #include "FileTransferEventHandler.h"
 
-#include "subsystem/io/DataInputStream.h"
+#include "input_output/DataInputStream.h"
 
 #include "remoting/remoting_common/ftp_common/FileInfo.h"
 #include "subsystem/Inflater.h"

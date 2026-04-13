@@ -25,7 +25,7 @@
 #pragma once
 
 #include "subsystem/_common_header.h"
-#include "innate_subsystem/Window.h"
+#include "innate_subsystem/gui/Window.h"
 class CLASS_DECL_REMOTING_COMMON BaseWindow :
 virtual public ::innate_subsystem::Control
 {

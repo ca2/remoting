@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "innate_subsystem/Dialog.h"
-#include "innate_subsystem/Control.h"
-#include "innate_subsystem/TextBox.h"
+#include "innate_subsystem/gui/Dialog.h"
+#include "innate_subsystem/gui/Control.h"
+#include "innate_subsystem/gui/TextBox.h"
 
 namespace remoting_remoting
 {
@@ -73,8 +73,8 @@ namespace remoting_remoting
       // Controls
       //
 
-      ::pointer < ::innate_subsystem::Control > m_pcontrolLabel;
-      ::pointer < ::innate_subsystem::TextBox > m_ptextboxFileName;
+      ::innate_subsystem::Control m_controlLabel;
+      ::innate_subsystem::TextBox m_textboxFileName;
 
       ::string m_strFileName;
    };

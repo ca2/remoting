@@ -37,72 +37,72 @@ namespace remoting
       {
       }
 
-      void FileTransferEventAdapter::onCompressionSupportReply(DataInputStream * pinput)
+      void FileTransferEventAdapter::onCompressionSupportReply(::subsystem::DataInputStream * pinput)
       {
          throw OperationNotPermittedException();
       }
 
-      void FileTransferEventAdapter::onFileListReply(DataInputStream * pinput)
+      void FileTransferEventAdapter::onFileListReply(::subsystem::DataInputStream * pinput)
       {
          throw OperationNotPermittedException();
       }
 
-      void FileTransferEventAdapter::onMd5DataReply(DataInputStream * pinput)
+      void FileTransferEventAdapter::onMd5DataReply(::subsystem::DataInputStream * pinput)
       {
          throw OperationNotPermittedException();
       }
 
-      void FileTransferEventAdapter::onUploadReply(DataInputStream * pinput)
+      void FileTransferEventAdapter::onUploadReply(::subsystem::DataInputStream * pinput)
       {
          throw OperationNotPermittedException();
       }
 
-      void FileTransferEventAdapter::onUploadDataReply(DataInputStream * pinput)
+      void FileTransferEventAdapter::onUploadDataReply(::subsystem::DataInputStream * pinput)
       {
          throw OperationNotPermittedException();
       }
 
-      void FileTransferEventAdapter::onUploadEndReply(DataInputStream * pinput)
+      void FileTransferEventAdapter::onUploadEndReply(::subsystem::DataInputStream * pinput)
       {
          throw OperationNotPermittedException();
       }
 
-      void FileTransferEventAdapter::onDownloadReply(DataInputStream * pinput)
+      void FileTransferEventAdapter::onDownloadReply(::subsystem::DataInputStream * pinput)
       {
          throw OperationNotPermittedException();
       }
 
-      void FileTransferEventAdapter::onDownloadDataReply(DataInputStream * pinput)
+      void FileTransferEventAdapter::onDownloadDataReply(::subsystem::DataInputStream * pinput)
       {
          throw OperationNotPermittedException();
       }
 
-      void FileTransferEventAdapter::onDownloadEndReply(DataInputStream * pinput)
+      void FileTransferEventAdapter::onDownloadEndReply(::subsystem::DataInputStream * pinput)
       {
          throw OperationNotPermittedException();
       }
 
-      void FileTransferEventAdapter::onMkdirReply(DataInputStream * pinput)
+      void FileTransferEventAdapter::onMkdirReply(::subsystem::DataInputStream * pinput)
       {
          throw OperationNotPermittedException();
       }
 
-      void FileTransferEventAdapter::onRmReply(DataInputStream * pinput)
+      void FileTransferEventAdapter::onRmReply(::subsystem::DataInputStream * pinput)
       {
          throw OperationNotPermittedException();
       }
 
-      void FileTransferEventAdapter::onMvReply(DataInputStream * pinput)
+      void FileTransferEventAdapter::onMvReply(::subsystem::DataInputStream * pinput)
       {
          throw OperationNotPermittedException();
       }
 
-      void FileTransferEventAdapter::onDirSizeReply(DataInputStream * pinput)
+      void FileTransferEventAdapter::onDirSizeReply(::subsystem::DataInputStream * pinput)
       {
          throw OperationNotPermittedException();
       }
 
-      void FileTransferEventAdapter::onLastRequestFailedReply(DataInputStream * pinput)
+      void FileTransferEventAdapter::onLastRequestFailedReply(::subsystem::DataInputStream * pinput)
       {
          throw OperationNotPermittedException();
       }

@@ -31,7 +31,7 @@
 namespace remoting
 {
    DecoderStore::DecoderStore(::subsystem::LogWriter * plogwriter)
-   : m_plogwriter(logWriter),
+   : m_plogwriter(plogwriter),
      m_preferredEncoding(EncodingDefs::TIGHT),
      m_allowCopyRect(true)
    {

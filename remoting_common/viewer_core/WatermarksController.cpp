@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "WatermarksController.h"
 #include "watermark_bmp.h"
-//#include "subsystem/thread/critical_section.h"
+#include "subsystem/framebuffer/StandardPixelFormatFactory.h"
 #include "remoting/remoting_common/rfb/PixelConverter.h"
 
 namespace remoting
@@ -123,7 +123,7 @@ namespace remoting
 
 
       ::int_size dim(m_width, m_height);
-      ::innate_subsystem::PixelFormat pf = StandardPixelFormatFactory::create32bppPixelFormat();
+      ::innate_subsystem::PixelFormat pf = ::innate_subsystem::StandardPixelFormatFactory::create32bppPixelFormat();
       m_frameBuffer.setPropertiesWithoutResize(dim, pf);
       m_overlay.setPropertiesWithoutResize(m_overlay.getDimension(), pf);
 

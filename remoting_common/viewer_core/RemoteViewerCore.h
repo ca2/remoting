@@ -643,7 +643,7 @@ namespace remoting
       // and erased after (thread FbUpdateNotifier).
       //
       // Mutex m_fbLock must locked into only this thread, else may be deadlock.
-      critical_section m_fbLock;
+      Lockable < critical_section > m_fbLock;
       ::innate_subsystem::FrameBuffer m_frameBuffer;
 
       // ::list_base of server dispalys

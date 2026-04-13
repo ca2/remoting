@@ -44,7 +44,7 @@ namespace remoting_remoting
     {
         NewFolderDialog::onInitDialog();
 
-        m_pcontrolLabel->setText("New file name:");
+        m_controlLabel.setText("New file name:");
         setText("Rename file");
 
         return true;

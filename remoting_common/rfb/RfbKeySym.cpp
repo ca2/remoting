@@ -67,13 +67,13 @@ namespace remoting
                  " = %#x", (unsigned int)virtKey, addKeyData);
 
 #ifdef WINDOWS
-      // Ignoring win key (when fullscreen mode is off).
-      if (m_winKeyIgnore) {
-         if (virtKey == VK_LWIN || virtKey == VK_RWIN) { // Ignoring the Win key
-            m_plogwriter->debug("Ignoring the Win key event");
-            return;
-         }
-      }
+      // // Ignoring win key (when fullscreen mode is off).
+      // if (m_winKeyIgnore) {
+      //    if (virtKey == VK_LWIN || virtKey == VK_RWIN) { // Ignoring the Win key
+      //       m_plogwriter->debug("Ignoring the Win key event");
+      //       return;
+      //    }
+      // }
 #endif
 
       bool down = (addKeyData & 0x80000000) == 0;
@@ -157,7 +157,7 @@ namespace remoting
       return (isDeadCharacter(buff[0]) && buff[0] == buff[1]);
    }
 
-   WCHAR RfbKeySym::GettingCharFromCtrlSymbol(int ch)
+   int RfbKeySym::GettingCharFromCtrlSymbol(int ch)
    {
       bool ctrlPressed = isPressed(::user::e_key_left_control) || isPressed(::user::e_key_right_control);
       bool altPressed = isPressed(::user::e_key_left_alt) || isPressed(::user::e_key_right_alt);
@@ -177,118 +177,118 @@ namespace remoting
       return ch;
    }
 
-   bool RfbKeySym::TryTranslateNotPrintableToUnicode(unsigned short virtKey, HKL currentLayout, WCHAR *unicodeChar)
-   {
-      WCHAR outBuff[20];
-      m_plogwriter->debug("Was get a not printable symbol then try get a printable"
-        " with turned off the ctrl and alt modifiers");
-      // E.g if pressed Ctrl + Alt + A
-      // Try found char without modificators
-      unsigned char withoutCtrlAltKbdState[256];
-      memcpy(withoutCtrlAltKbdState, m_viewerKeyState, sizeof(withoutCtrlAltKbdState));
-      withoutCtrlAltKbdState[::user::e_key_left_control] = 0;
-      withoutCtrlAltKbdState[::user::e_key_right_control] = 0;
-      withoutCtrlAltKbdState[VK_CONTROL] = 0;
-      withoutCtrlAltKbdState[::user::e_key_left_alt] = 0;
-      withoutCtrlAltKbdState[::user::e_key_right_alt] = 0;
-      withoutCtrlAltKbdState[VK_MENU] = 0;
-      int count = ToUnicodeEx(virtKey, 0, withoutCtrlAltKbdState, outBuff,
-        sizeof(outBuff) / sizeof(WCHAR),
-        0, currentLayout);
-      if (count > 0) {
-         outBuff[count] = 0;
-      }
-      else {
-         outBuff[0] = 0;
-      }
-      m_plogwriter->debug("ToUnicodeEx() without ctrl and alt return {} wchars : {}", count, ::wstring(outBuff));
-
-      if (count == 1) { // other case will be ignored
-         *unicodeChar = outBuff[0];
-         return true;
-      }
-      return false;
-   }
+   // bool RfbKeySym::TryTranslateNotPrintableToUnicode(unsigned short virtKey, HKL currentLayout, WCHAR *unicodeChar)
+   // {
+   //    WCHAR outBuff[20];
+   //    m_plogwriter->debug("Was get a not printable symbol then try get a printable"
+   //      " with turned off the ctrl and alt modifiers");
+   //    // E.g if pressed Ctrl + Alt + A
+   //    // Try found char without modificators
+   //    unsigned char withoutCtrlAltKbdState[256];
+   //    memcpy(withoutCtrlAltKbdState, m_viewerKeyState, sizeof(withoutCtrlAltKbdState));
+   //    withoutCtrlAltKbdState[::user::e_key_left_control] = 0;
+   //    withoutCtrlAltKbdState[::user::e_key_right_control] = 0;
+   //    withoutCtrlAltKbdState[VK_CONTROL] = 0;
+   //    withoutCtrlAltKbdState[::user::e_key_left_alt] = 0;
+   //    withoutCtrlAltKbdState[::user::e_key_right_alt] = 0;
+   //    withoutCtrlAltKbdState[VK_MENU] = 0;
+   //    int count = ToUnicodeEx(virtKey, 0, withoutCtrlAltKbdState, outBuff,
+   //      sizeof(outBuff) / sizeof(WCHAR),
+   //      0, currentLayout);
+   //    if (count > 0) {
+   //       outBuff[count] = 0;
+   //    }
+   //    else {
+   //       outBuff[0] = 0;
+   //    }
+   //    m_plogwriter->debug("ToUnicodeEx() without ctrl and alt return {} wchars : {}", count, ::wstring(outBuff));
+   //
+   //    if (count == 1) { // other case will be ignored
+   //       *unicodeChar = outBuff[0];
+   //       return true;
+   //    }
+   //    return false;
+   // }
 
    bool RfbKeySym::vkCodeToString(unsigned short virtKey, bool down, ::wstring *res)
    {
       bool needReleaseModifiers = false;
-      WCHAR outBuff[20];
+      wchar_t outBuff[20];
 
-      HKL currentLayout = GetKeyboardLayout(0);
-
-      int count = ToUnicodeEx(virtKey, 0, m_viewerKeyState, outBuff,
-          sizeof(outBuff) / sizeof(WCHAR),
-          0, currentLayout);
-
-      // For keyboards with dead keys
-      if (m_doubleDeadCatched && !down && !m_allowProcessDoubleChar) {
-         m_plogwriter->debug("Disable process char event");
-         m_allowProcessCharEvent = false;
-         m_doubleDeadCatched = false;
-      }
-
-      // For keyboards with dead keys
-      if (count == 2 && (isDoubleDeadCharacters(outBuff))) {
-         m_plogwriter->debug("Extra double dead key catched.");
-         if (down) {
-            m_plogwriter->debug("Enable process char event. Enable process double char.");
-            m_allowProcessDoubleChar = true;
-            m_allowProcessCharEvent = true;
-            m_doubleDeadCatched = true;
-            count = ToUnicodeEx(virtKey, 0, m_viewerKeyState, outBuff,
-                sizeof(outBuff) / sizeof(WCHAR),
-                0, currentLayout);
-            if (count > 0) {
-               outBuff[count] = 0;
-            } else {
-               outBuff[0] = 0;
-            }
-            //ToUnicodeEx can return without null termination
-            m_plogwriter->debug("ToUnicodeEx() function called second. Returned: {}. Output buff: {}", count, ::wstring(outBuff));
-            res->clear();
-            return false;
-         } else if (!m_allowProcessCharEvent) {
-            m_plogwriter->debug("Disable second calling ToUnicodeEx()");
-            res->clear();
-            return false;
-         }
-      }
-
-      if (count > 0) {
-         count = ToUnicodeEx(virtKey, 0, m_viewerKeyState, outBuff,
-               sizeof(outBuff) / sizeof(WCHAR), 0, currentLayout);
-      }
-      if (count > 0) {
-         outBuff[count] = 0;
-      } else {
-         outBuff[0] = 0;
-      }
-      m_plogwriter->debug("ToUnicodeEx() returned {}, output buff : {}", count, ::wstring(outBuff));
-
-      if (count == 1 && !m_allowProcessCharEvent) {
-         res->add(GettingCharFromCtrlSymbol(outBuff[0]));
-         needReleaseModifiers = true;
-      }
-      // Two or more (only two of them is relevant?)
-      else if (count > 1) {
-         for (int i = 0; i < count; i++) {
-            res->add(GettingCharFromCtrlSymbol(outBuff[i]));
-         }
-         needReleaseModifiers = true;
-      } else if (count == 0) {
-         WCHAR unicodeChar;
-         if (TryTranslateNotPrintableToUnicode(virtKey, currentLayout, &unicodeChar)) {
-            res->add(unicodeChar);
-         }
-      } else if (count == -1 && down) {
-         m_plogwriter->debug("Dead key pressed, wait for a char event");
-         m_allowProcessCharEvent = true;
-      }
+      // HKL currentLayout = GetKeyboardLayout(0);
+      //
+      // int count = ToUnicodeEx(virtKey, 0, m_viewerKeyState, outBuff,
+      //     sizeof(outBuff) / sizeof(WCHAR),
+      //     0, currentLayout);
+      //
+      // // For keyboards with dead keys
+      // if (m_doubleDeadCatched && !down && !m_allowProcessDoubleChar) {
+      //    m_plogwriter->debug("Disable process char event");
+      //    m_allowProcessCharEvent = false;
+      //    m_doubleDeadCatched = false;
+      // }
+      //
+      // // For keyboards with dead keys
+      // if (count == 2 && (isDoubleDeadCharacters(outBuff))) {
+      //    m_plogwriter->debug("Extra double dead key catched.");
+      //    if (down) {
+      //       m_plogwriter->debug("Enable process char event. Enable process double char.");
+      //       m_allowProcessDoubleChar = true;
+      //       m_allowProcessCharEvent = true;
+      //       m_doubleDeadCatched = true;
+      //       count = ToUnicodeEx(virtKey, 0, m_viewerKeyState, outBuff,
+      //           sizeof(outBuff) / sizeof(WCHAR),
+      //           0, currentLayout);
+      //       if (count > 0) {
+      //          outBuff[count] = 0;
+      //       } else {
+      //          outBuff[0] = 0;
+      //       }
+      //       //ToUnicodeEx can return without null termination
+      //       m_plogwriter->debug("ToUnicodeEx() function called second. Returned: {}. Output buff: {}", count, ::wstring(outBuff));
+      //       res->clear();
+      //       return false;
+      //    } else if (!m_allowProcessCharEvent) {
+      //       m_plogwriter->debug("Disable second calling ToUnicodeEx()");
+      //       res->clear();
+      //       return false;
+      //    }
+      // }
+      //
+      // if (count > 0) {
+      //    count = ToUnicodeEx(virtKey, 0, m_viewerKeyState, outBuff,
+      //          sizeof(outBuff) / sizeof(WCHAR), 0, currentLayout);
+      // }
+      // if (count > 0) {
+      //    outBuff[count] = 0;
+      // } else {
+      //    outBuff[0] = 0;
+      // }
+      // m_plogwriter->debug("ToUnicodeEx() returned {}, output buff : {}", count, ::wstring(outBuff));
+      //
+      // if (count == 1 && !m_allowProcessCharEvent) {
+      //    res->add(GettingCharFromCtrlSymbol(outBuff[0]));
+      //    needReleaseModifiers = true;
+      // }
+      // // Two or more (only two of them is relevant?)
+      // else if (count > 1) {
+      //    for (int i = 0; i < count; i++) {
+      //       res->add(GettingCharFromCtrlSymbol(outBuff[i]));
+      //    }
+      //    needReleaseModifiers = true;
+      // } else if (count == 0) {
+      //    WCHAR unicodeChar;
+      //    if (TryTranslateNotPrintableToUnicode(virtKey, currentLayout, &unicodeChar)) {
+      //       res->add(unicodeChar);
+      //    }
+      // } else if (count == -1 && down) {
+      //    m_plogwriter->debug("Dead key pressed, wait for a char event");
+      //    m_allowProcessCharEvent = true;
+      // }
       return needReleaseModifiers;
    }
 
-   void RfbKeySym::processCharEvent(WCHAR charCode,
+   void RfbKeySym::processCharEvent(int charCode,
                                     unsigned int addKeyData)
    {
       if (m_allowProcessCharEvent) {
@@ -324,15 +324,15 @@ namespace remoting
    {
       m_plogwriter->information("Process focus restoration in the RfbKeySym class");
 
-      // Send a modifier key state based on physical keyboard state, not thread key scopedstrMessage queue.
-      unsigned char keys[9] = {VK_CONTROL, ::user::e_key_right_control, ::user::e_key_left_control,
-                               VK_MENU, ::user::e_key_right_alt, ::user::e_key_left_alt,
-                               VK_SHIFT, ::user::e_key_right_shift, ::user::e_key_left_shift};
-      for (int i = 0; i < 9 ; i++) {
-         unsigned char key = keys[i];
-         unsigned char state = GetAsyncKeyState(key) >> 8;
-         checkAndSendDiff(key, state);
-      }
+      // // Send a modifier key state based on physical keyboard state, not thread key scopedstrMessage queue.
+      // unsigned char keys[9] = {VK_CONTROL, ::user::e_key_right_control, ::user::e_key_left_control,
+      //                          VK_MENU, ::user::e_key_right_alt, ::user::e_key_left_alt,
+      //                          VK_SHIFT, ::user::e_key_right_shift, ::user::e_key_left_shift};
+      // for (int i = 0; i < 9 ; i++) {
+      //    unsigned char key = keys[i];
+      //    unsigned char state = GetAsyncKeyState(key) >> 8;
+      //    checkAndSendDiff(key, state);
+      // }
    }
 
    void RfbKeySym::processFocusLoss()
@@ -340,25 +340,25 @@ namespace remoting
       m_plogwriter->information("Process focus loss in the RfbKeySym class");
 
       // Send a modifier key up only if the key is down.
-      checkAndSendDiff(VK_CONTROL, 0);
+      checkAndSendDiff(::user::e_key_control, 0);
       checkAndSendDiff(::user::e_key_right_control, 0);
       checkAndSendDiff(::user::e_key_left_control, 0);
-      checkAndSendDiff(VK_MENU, 0);
+      checkAndSendDiff(::user::e_key_alt, 0);
       checkAndSendDiff(::user::e_key_left_alt, 0);
       checkAndSendDiff(::user::e_key_right_alt, 0);
-      checkAndSendDiff(VK_SHIFT, 0);
+      checkAndSendDiff(::user::e_key_shift, 0);
       checkAndSendDiff(::user::e_key_right_shift, 0);
       checkAndSendDiff(::user::e_key_left_shift, 0);
-      checkAndSendDiff(VK_LWIN, 0);
-      checkAndSendDiff(VK_RWIN, 0);
+      checkAndSendDiff(::user::e_key_left_command, 0);
+      checkAndSendDiff(::user::e_key_right_command, 0);
 
 
    }
 
    void RfbKeySym::sendCtrlAltDel()
    {
-      releaseModifier(VK_RWIN);
-      releaseModifier(VK_LWIN);
+      releaseModifier(::user::e_key_right_command);
+      releaseModifier(::user::e_key_left_command);
       releaseModifier(::user::e_key_left_shift);
       releaseModifier(::user::e_key_right_shift);
       releaseMeta();
@@ -373,8 +373,8 @@ namespace remoting
       restoreMeta();
       restoreModifier(::user::e_key_right_shift);
       restoreModifier(::user::e_key_left_shift);
-      restoreModifier(VK_LWIN);
-      restoreModifier(VK_RWIN);
+      restoreModifier(::user::e_key_left_command);
+      restoreModifier(::user::e_key_right_command);
    }
 
    void RfbKeySym::setWinKeyIgnore(bool winKeyIgnore)
@@ -468,19 +468,19 @@ namespace remoting
 
    void RfbKeySym::sendKeySymEvent(unsigned int rfbKeySym, bool down)
    {
-      // Translate Alt to Meta if Scroll Lock is on.
-      if (rfbKeySym == XK_Alt_L || rfbKeySym == XK_Alt_R) {
-         bool scrollLockOn = (GetKeyState(VK_SCROLL) & 1) != 0;
-         if (scrollLockOn) {
-            if (rfbKeySym == XK_Alt_L) {
-               rfbKeySym = XK_Meta_L;
-               m_leftMetaIsPressed = down;
-            } else { // assuming (rfbKeySym == XK_Alt_R)
-               rfbKeySym = XK_Meta_R;
-               m_rightMetaIsPressed = down;
-            }
-         }
-      }
+      // // Translate Alt to Meta if Scroll Lock is on.
+      // if (rfbKeySym == XK_Alt_L || rfbKeySym == XK_Alt_R) {
+      //    bool scrollLockOn = (GetKeyState(VK_SCROLL) & 1) != 0;
+      //    if (scrollLockOn) {
+      //       if (rfbKeySym == XK_Alt_L) {
+      //          rfbKeySym = XK_Meta_L;
+      //          m_leftMetaIsPressed = down;
+      //       } else { // assuming (rfbKeySym == XK_Alt_R)
+      //          rfbKeySym = XK_Meta_R;
+      //          m_rightMetaIsPressed = down;
+      //       }
+      //    }
+      // }
 
       // Send the keyboard event.
       sendVerbatimKeySymEvent(rfbKeySym, down);
@@ -494,13 +494,13 @@ namespace remoting
    unsigned char RfbKeySym::distinguishLeftRightModifier(unsigned char virtKey,
                                                          bool isRightHint)
    {
-      if (virtKey == VK_CONTROL) {
+      if (virtKey == ::user::e_key_control) {
          virtKey = isRightHint ? ::user::e_key_right_control : ::user::e_key_left_control;
       }
-      if (virtKey == VK_MENU) {
+      if (virtKey == ::user::e_key_alt) {
          virtKey = isRightHint ? ::user::e_key_right_alt : ::user::e_key_left_alt;
       }
-      if (virtKey == VK_SHIFT) {
+      if (virtKey == ::user::e_key_shift) {
          virtKey = isRightHint ? ::user::e_key_right_shift : ::user::e_key_left_shift;
       }
       return virtKey;

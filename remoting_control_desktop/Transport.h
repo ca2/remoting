@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "subsystem/io/Channel.h"
+#include "input_output/Channel.h"
 
 #include "subsystem/Exception.h"
 

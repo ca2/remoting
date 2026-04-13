@@ -39,11 +39,11 @@ namespace remoting
       class CLASS_DECL_REMOTING_COMMON RemoteFileRenameOperation : public FileTransferOperation
       {
       public:
-         RemoteFileRenameOperation(::subsystem::LogWriter *logWriter,
+         RemoteFileRenameOperation(::subsystem::LogWriter * plogwriter,
                                    const ::file::path & pathToSourceFile,
                                    const ::file::path & pathToTargetFile);
 
-         RemoteFileRenameOperation(::subsystem::LogWriter *logWriter,
+         RemoteFileRenameOperation(::subsystem::LogWriter * plogwriter,
                                    FileInfo sourceFileInfo,
                                    FileInfo targetFileInfo,
                                    const ::file::path & pathToTargetRoot);

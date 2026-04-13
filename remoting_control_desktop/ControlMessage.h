@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "subsystem/io/DataOutputStream.h"
-#include "subsystem/io/ByteArrayOutputStream.h"
+#include "input_output/DataOutputStream.h"
+#include "input_output/ByteArrayOutputStream.h"
 
 #include "subsystem/_common_header.h"
 

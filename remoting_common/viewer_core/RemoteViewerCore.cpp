@@ -63,7 +63,7 @@
 namespace remoting
 {
    RemoteViewerCore::RemoteViewerCore(::subsystem::LogWriter * plogwriter)
-   : m_plogwriter(::subsystem::LogWriter),
+   : m_plogwriter(plogwriter),
      m_tcpConnection(m_plogwriter),
      m_fbUpdateNotifier(&m_frameBuffer, &m_fbLock, m_plogwriter, &m_watermarksController),
      m_decoderStore(m_plogwriter),
@@ -79,7 +79,7 @@ namespace remoting
                                       CoreEventsAdapter *adapter,
                                       ::subsystem::LogWriter * plogwriter,
                                       bool sharedFlag)
-   : m_plogwriter(::subsystem::LogWriter),
+   : m_plogwriter(plogwriter),
      m_tcpConnection(m_plogwriter),
      m_fbUpdateNotifier(&m_frameBuffer, &m_fbLock, m_plogwriter, &m_watermarksController),
      m_decoderStore(m_plogwriter),
@@ -93,11 +93,11 @@ namespace remoting
       start(scopedstrHost, port, adapter, sharedFlag);
    }
 
-   RemoteViewerCore::RemoteViewerCore(SocketIPv4 *socket,
+   RemoteViewerCore::RemoteViewerCore(::subsystem::SocketIPv4Interface * psocket,
                                       CoreEventsAdapter *adapter,
                                       ::subsystem::LogWriter * plogwriter,
                                       bool sharedFlag)
-   : m_plogwriter(::subsystem::LogWriter),
+   : m_plogwriter(plogwriter),
      m_tcpConnection(m_plogwriter),
      m_fbUpdateNotifier(&m_frameBuffer, &m_fbLock, m_plogwriter, &m_watermarksController),
      m_decoderStore(m_plogwriter),
@@ -108,14 +108,14 @@ namespace remoting
    {
       init();
 
-      start(socket, adapter, sharedFlag);
+      start(psocket, adapter, sharedFlag);
    }
 
    RemoteViewerCore::RemoteViewerCore(RfbInputGate *input, RfbOutputGate *output,
                                       CoreEventsAdapter *adapter,
                                       ::subsystem::LogWriter * plogwriter,
                                       bool sharedFlag)
-   : m_plogwriter(::subsystem::LogWriter),
+   : m_plogwriter(plogwriter),
      m_tcpConnection(m_plogwriter),
      m_fbUpdateNotifier(&m_frameBuffer, &m_fbLock, m_plogwriter, &m_watermarksController),
      m_decoderStore(m_plogwriter),
@@ -220,7 +220,7 @@ namespace remoting
       m_tcpConnection.bind(scopedstrHost, port);
       start(adapter, sharedFlag);
    }
-   void RemoteViewerCore::start(SocketIPv4 *socket,
+   void RemoteViewerCore::start(::subsystem::SocketIPv4Interface *socket,
                                 CoreEventsAdapter *adapter,
                                 bool sharedFlag)
    {

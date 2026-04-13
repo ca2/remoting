@@ -28,7 +28,7 @@
 namespace remoting
 {
    LastRectDecoder::LastRectDecoder(::subsystem::LogWriter * plogwriter)
-   : PseudoDecoder(logWriter)
+   : PseudoDecoder(plogwriter)
    {
       m_encoding = PseudoEncDefs::LAST_RECT;
    }

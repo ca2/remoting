@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "innate_subsystem/::innate_subsystem::Control.h"
+#include "innate_subsystem/gui/::innate_subsystem::Control.h"
 //#include aaa_<vector>
 
 /**

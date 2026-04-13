@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "subsystem/io/DataInputStream.h"
-#include "subsystem/io/DataOutputStream.h"
-#include "subsystem/io/Channel.h"
+#include "input_output/DataInputStream.h"
+#include "input_output/DataOutputStream.h"
+#include "input_output/Channel.h"
 
 //#include "subsystem/thread/critical_section.h"
 

@@ -25,7 +25,7 @@
 #pragma once
 
 
-//#include "innate_subsystem/framebuffer/FrameBuffer.h"
+#include "innate_subsystem/framebuffer/FrameBuffer.h"
 //#include "subsystem/framebuffer/PixelFormat.h"
 //#include "subsystem/framebuffer/StandardPixelFormatFactory.h"
 //#include "subsystem/thread/critical_section.h"

@@ -48,11 +48,11 @@ namespace remoting
          // files to be deleted is located.
          //
 
-         RemoteFilesDeleteOperation(::subsystem::LogWriter *logWriter,
+         RemoteFilesDeleteOperation(::subsystem::LogWriter * plogwriter,
                                     const ::pointer_array< FileInfo > & fileinfoa,
                                     const ::file::path & pathToTargetRoot);
 
-         RemoteFilesDeleteOperation(::subsystem::LogWriter *logWriter,
+         RemoteFilesDeleteOperation(::subsystem::LogWriter * plogwriter,
                                     FileInfo fileInfoToDelete,
                                     const ::file::path & pathToTargetRoot);
 
@@ -68,9 +68,9 @@ namespace remoting
          // ::file::item transfer scopedstrMessage(accepted by this operation) handlers
          //
 
-         void onFileListReply(DataInputStream * pinput);
-         void onRmReply(DataInputStream * pinput);
-         void onLastRequestFailedReply(DataInputStream * pinput);
+         void onFileListReply(::subsystem::DataInputStream * pinput);
+         void onRmReply(::subsystem::DataInputStream * pinput);
+         void onLastRequestFailedReply(::subsystem::DataInputStream * pinput);
 
       //private:
 

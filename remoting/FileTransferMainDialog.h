@@ -25,12 +25,12 @@
 #pragma once
 
 
-#include "innate_subsystem/Dialog.h"
-#include "innate_subsystem/Control.h"
-#include "innate_subsystem/TextBox.h"
-#include "innate_subsystem/ComboBox.h"
-#include "innate_subsystem/ImagedButton.h"
-#include "innate_subsystem/ProgressBar.h"
+#include "innate_subsystem/gui/Dialog.h"
+#include "innate_subsystem/gui/Control.h"
+#include "innate_subsystem/gui/TextBox.h"
+#include "innate_subsystem/gui/ComboBox.h"
+#include "innate_subsystem/gui/ImagedButton.h"
+#include "innate_subsystem/gui/ProgressBar.h"
 
 #include "remoting/remoting_common/ftp_common/FileInfo.h"
 

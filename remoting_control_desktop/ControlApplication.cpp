@@ -57,7 +57,7 @@
 #include "subsystem/thread/ZombieKiller.h"
 #include "subsystem/thread/GlobalMutex.h"
 
-#include "innate_subsystem/CommonControlsEx.h"
+#include "innate_subsystem/gui/CommonControlsEx.h"
 
 #include "remoting/remoting_common/network/socket/WindowsSocket.h"
 

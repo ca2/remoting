@@ -32,7 +32,7 @@ namespace remoting
    class CLASS_DECL_REMOTING_COMMON JpegQualityLevel : public PseudoDecoder
    {
    public:
-      JpegQualityLevel(::subsystem::LogWriter *logWriter, int quality);
+      JpegQualityLevel(::subsystem::LogWriter * plogwriter, int quality);
       virtual ~JpegQualityLevel();
 
    public:

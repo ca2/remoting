@@ -31,8 +31,8 @@
 
 #include "ScaleManager.h"
 #include "remoting/remoting_common/client_config/ConnectionConfig.h"
-#include "innate_subsystem/PaintWindow.h"
-#include "innate_subsystem/ScrollBar.h"
+#include "innate_subsystem/gui/PaintWindow.h"
+#include "innate_subsystem/gui/ScrollBar.h"
 #include "innate_subsystem/drawing/SolidBrush.h"
 #include "innate_subsystem/drawing/Graphics.h"
 #include "remoting/remoting_common/rfb/RfbKeySym.h"
@@ -54,7 +54,7 @@ namespace remoting_remoting
         ::pointer< ::remoting_remoting::style > m_premotingstyle;
         bool m_bShowCursor = false;
         class ::time m_timeStartDesktopWindow;
-        DesktopWindow(::subsystem::LogWriter *logWriter, ::remoting::ConnectionConfig *conConf, ViewerWindow * pviewerwindow);
+        DesktopWindow(::subsystem::LogWriter * plogwriter, ::remoting::ConnectionConfig *conConf, ViewerWindow * pviewerwindow);
         virtual ~DesktopWindow();
         virtual void _defer_update_double_buffering();
         void setClipboardData(const ::scoped_string & strText);

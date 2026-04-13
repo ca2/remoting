@@ -39,11 +39,11 @@ namespace remoting
 {
    namespace ftp
    {
-      FileTransferCore::FileTransferCore(::subsystem::LogWriter *logWriter,
+      FileTransferCore::FileTransferCore(::subsystem::LogWriter * plogwriter,
                                          FileTransferRequestSender *sender,
                                          FileTransferReplyBuffer *replyBuffer,
                                          ListenerContainer<FileTransferEventHandler *> *ftListeners)
-      : m_plogwriter(logWriter),
+      : m_plogwriter(plogwriter),
         m_state(NOTHING_STATE),
         m_sender(sender), m_replyBuffer(replyBuffer),
         m_fileTransferListeners(ftListeners),

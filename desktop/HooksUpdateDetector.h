@@ -28,7 +28,7 @@
 #include "UpdateDetector.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 #include "HookInstaller.h"
-#include "innate_subsystem/MessageWindow.h"
+#include "innate_subsystem/gui/MessageWindow.h"
 #include "HookUpdateTimer.h"
 #include "subsystem/Process.h"
 //#include "log_writer/LogWriter.h"

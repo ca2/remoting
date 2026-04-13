@@ -28,7 +28,7 @@
 namespace remoting
 {
    RreDecoder::RreDecoder(::subsystem::LogWriter * plogwriter)
-   : DecoderOfRectangle(logWriter)
+   : DecoderOfRectangle(plogwriter)
    {
       m_encoding = EncodingDefs::RRE;
    }

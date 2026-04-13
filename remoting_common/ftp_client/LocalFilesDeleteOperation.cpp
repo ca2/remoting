@@ -31,10 +31,10 @@ namespace remoting
 {
    namespace ftp
    {
-      LocalFilesDeleteOperation::LocalFilesDeleteOperation(::subsystem::LogWriter *logWriter,
+      LocalFilesDeleteOperation::LocalFilesDeleteOperation(::subsystem::LogWriter * plogwriter,
                                                            const ::pointer_array<FileInfo> & fileinfoa,
                                                            const ::file::path & pathToTargetRoot)
-      : FileTransferOperation(logWriter)
+      : FileTransferOperation(plogwriter)
       {
          // m_fileinfoaDelete.set(filesCount);
          // for (unsigned int i = 0; i < filesCount; i++) {

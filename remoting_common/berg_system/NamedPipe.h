@@ -27,7 +27,7 @@
 
 #include "subsystem/_common_header.h"
 #include "WindowsEvent.h"
-#include "subsystem/io/Channel.h"
+#include "input_output/Channel.h"
 //#include "subsystem/thread/critical_section.h"
 #include "Pipe.h"
 

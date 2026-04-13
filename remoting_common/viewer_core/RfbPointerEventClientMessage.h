@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/region/::int_point.h"
+//#include "remoting/remoting_common/region/::int_point.h"
 
 #include "RfbClientToServerMessage.h"
 

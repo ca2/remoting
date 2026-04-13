@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "FrameBuffer.h"
-#include "remoting/remoting_common/region/::int_point.h"
+#include "innate_subsystem/framebuffer/FrameBuffer.h"
+//#include "remoting/remoting_common/region/::int_point.h"
 //#include aaa_<vector>
 
 namespace remoting

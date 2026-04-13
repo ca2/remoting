@@ -31,11 +31,11 @@ namespace remoting
 {
    namespace ftp
    {
-      DownloadOperation::DownloadOperation(::subsystem::LogWriter *logWriter,
+      DownloadOperation::DownloadOperation(::subsystem::LogWriter * plogwriter,
                                            const ::pointer_array< FileInfo > & fileinfoa,
                                            const ::file::path & pathToTargetRoot,
                                            const ::file::path & pathToSourceRoot)
-      : CopyOperation(logWriter),
+      : CopyOperation(plogwriter),
         m_pfileitem(0),
         //m_pbinarystream(0),
         m_fileOffset(0),

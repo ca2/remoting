@@ -29,7 +29,7 @@
 namespace remoting
 {
    RawDecoder::RawDecoder(::subsystem::LogWriter * plogwriter)
-   : DecoderOfRectangle(logWriter)
+   : DecoderOfRectangle(plogwriter)
    {
       m_encoding = EncodingDefs::RAW;
    }

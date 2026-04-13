@@ -27,7 +27,7 @@
 namespace remoting
 {
    RichCursorDecoder::RichCursorDecoder(::subsystem::LogWriter * plogwriter)
-   : PseudoDecoder(logWriter)
+   : PseudoDecoder(plogwriter)
    {
       m_encoding = PseudoEncDefs::RICH_CURSOR;
    }

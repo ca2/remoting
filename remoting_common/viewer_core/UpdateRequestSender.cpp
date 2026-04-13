@@ -5,11 +5,11 @@
 
 namespace remoting
 {
-   UpdateRequestSender::UpdateRequestSender(lockable* m_fb_lock, ::innate_subsystem::FrameBuffer* m_frame_buffer, ::subsystem::LogWriter* m_log_writer):
+   UpdateRequestSender::UpdateRequestSender(LockableBase* plockable, ::innate_subsystem::FrameBuffer* m_frame_buffer, ::subsystem::LogWriter* m_log_writer):
       m_wasUpdateRecieved(false),
       m_timeOut(0),
       m_isIncrimental(true),
-       m_fbLock(m_fb_lock),
+       m_fbLock(plockable),
        m_frameBuffer(m_frame_buffer),
        m_plogwriter(m_log_writer),
        m_output(0)
@@ -95,7 +95,7 @@ namespace remoting
 
       ::int_rectangle updateRect;
       {
-         critical_section_lock al(m_fbLock);
+         AutoLock al(m_fbLock);
          updateRect = m_frameBuffer->getDimension();
       }
 

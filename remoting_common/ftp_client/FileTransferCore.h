@@ -57,7 +57,7 @@ namespace remoting
          // ftListeners - needs for executing file transfer operations
          //
 
-         FileTransferCore(::subsystem::LogWriter *logWriter,
+         FileTransferCore(::subsystem::LogWriter * plogwriter,
                           FileTransferRequestSender *sender,
                           FileTransferReplyBuffer *replyBuffer,
                           ListenerContainer<FileTransferEventHandler *> *ftListeners);

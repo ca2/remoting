@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "innate_subsystem/BaseDialog.h"
+#include "innate_subsystem/gui/BaseDialog.h"
 
 /**
  * TightVNC server about dialog.

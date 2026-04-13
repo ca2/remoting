@@ -26,11 +26,11 @@
 #pragma once
 //#define _ADMINISTRATION_CONFIG_DIALOG_H
 
-#include "innate_subsystem/BaseDialog.h"
-#include "innate_subsystem/CheckBox.h"
-#include "innate_subsystem/TextBox.h"
-#include "innate_subsystem/SpinControl.h"
-#include "innate_subsystem/BalloonTip.h"
+#include "innate_subsystem/gui/BaseDialog.h"
+#include "innate_subsystem/gui/CheckBox.h"
+#include "innate_subsystem/gui/TextBox.h"
+#include "innate_subsystem/gui/SpinControl.h"
+#include "innate_subsystem/gui/BalloonTip.h"
 #include "remoting/remoting_common/server_config/ServerConfig.h"
 #include "PasswordControl.h"
 

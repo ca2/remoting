@@ -28,7 +28,7 @@
 namespace remoting
 {
    CopyRectDecoder::CopyRectDecoder(::subsystem::LogWriter * plogwriter)
-   : DecoderOfRectangle(logWriter)
+   : DecoderOfRectangle(plogwriter)
    {
       m_encoding = EncodingDefs::COPYRECT;
    }

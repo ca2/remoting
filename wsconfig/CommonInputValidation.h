@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "innate_subsystem/TextBox.h"
+#include "innate_subsystem/gui/TextBox.h"
 
 /**
  * Gives static methods set to validate integer data in text boxes.

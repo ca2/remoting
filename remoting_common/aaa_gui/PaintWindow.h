@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "innate_subsystem/BaseWindow.h"
+#include "innate_subsystem/gui/BaseWindow.h"
 #include "innate_subsystem/drawing/DeviceContext.h"
 
 class CLASS_DECL_REMOTING_COMMON ::innate_subsystem::PaintWindow: public BaseWindow

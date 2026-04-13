@@ -39,7 +39,7 @@ namespace remoting
       class CLASS_DECL_REMOTING_COMMON FileTransferRequestSender
       {
       public:
-         FileTransferRequestSender(::subsystem::LogWriter *logWriter);
+         FileTransferRequestSender(::subsystem::LogWriter * plogwriter);
          ~FileTransferRequestSender();
 
          void setOutput(RfbOutputGate *outputStream);

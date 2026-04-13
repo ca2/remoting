@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "subsystem/io/DataInputStream.h"
-#include "subsystem/io/DataOutputStream.h"
+#include "input_output/DataInputStream.h"
+#include "input_output/DataOutputStream.h"
 #include "acme/exception/io.h"
 #include "remoting/remoting_common/network/RfbOutputGate.h"
 #include "innate_subsystem/framebuffer/FrameBuffer.h"

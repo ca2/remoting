@@ -29,7 +29,7 @@
 namespace remoting
 {
    DecoderOfRectangle::DecoderOfRectangle(::subsystem::LogWriter * plogwriter)
-   : Decoder(logWriter)
+   : Decoder(plogwriter)
    {
    }
 

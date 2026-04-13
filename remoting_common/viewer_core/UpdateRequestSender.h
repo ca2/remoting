@@ -14,7 +14,7 @@ namespace remoting
    class CLASS_DECL_REMOTING_COMMON UpdateRequestSender : public ::subsystem::Thread
    {
    public:
-      UpdateRequestSender(lockable* m_fb_lock, ::innate_subsystem::FrameBuffer * m_frame_buffer, ::subsystem::LogWriter* m_log_writer);
+      UpdateRequestSender(LockableBase* m_fb_lock, ::innate_subsystem::FrameBuffer * m_frame_buffer, ::subsystem::LogWriter* m_log_writer);
 
       ~UpdateRequestSender();
 
@@ -45,7 +45,7 @@ namespace remoting
       bool m_isIncrimental;
       critical_section m_isIncrimentalLock;
 
-      lockable *m_fbLock;
+      LockableBase *m_fbLock;
       ::innate_subsystem::FrameBuffer *m_frameBuffer;
 
       ::subsystem::LogWriter *m_plogwriter;

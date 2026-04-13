@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "subsystem/io/DataInputStream.h"
-#include "subsystem/io/DataOutputStream.h"
+#include "input_output/DataInputStream.h"
+#include "input_output/DataOutputStream.h"
 #include "remoting/remoting_common/rfb/AuthDefs.h"
 #include "subsystem/Exception.h"
 

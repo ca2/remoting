@@ -26,7 +26,7 @@
 
 
 #include "subsystem/_common_header.h"
-#include "innate_subsystem/PaintWindow.h"
+#include "innate_subsystem/gui/PaintWindow.h"
 
 namespace remoting
 {

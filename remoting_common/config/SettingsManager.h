@@ -44,8 +44,8 @@ namespace remoting
       virtual bool getString(const ::scoped_string & scopedstrName, ::string & storage) = 0;
       virtual bool setString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrPayload) = 0;
 
-      virtual bool getLong(const ::scoped_string & scopedstrName, long *value) = 0;
-      virtual bool setLong(const ::scoped_string & scopedstrName, long value) = 0;
+      //virtual bool getLong(const ::scoped_string & scopedstrName, long *value) = 0;
+      //virtual bool setLong(const ::scoped_string & scopedstrName, long value) = 0;
 
       virtual bool getBoolean(const ::scoped_string & scopedstrName, bool *value) = 0;
       virtual bool setBoolean(const ::scoped_string & scopedstrName, bool value) = 0;

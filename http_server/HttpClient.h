@@ -29,9 +29,9 @@
 
 //#include "remoting/remoting_common/network/socket/SocketIPv4.h"
 
-#include "subsystem/io/Channel.h"
-#include "subsystem/io/DataInputStream.h"
-#include "subsystem/io/DataOutputStream.h"
+#include "input_output/Channel.h"
+#include "input_output/DataInputStream.h"
+#include "input_output/DataOutputStream.h"
 //#include "log_writer/LogWriter.h"
 
 class HttpClient : public TcpClientThread

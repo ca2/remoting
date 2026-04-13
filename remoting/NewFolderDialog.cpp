@@ -59,7 +59,7 @@ namespace remoting_remoting
     bool NewFolderDialog::onInitDialog()
     {
         initControls();
-        m_ptextboxFileName->setText(m_strFileName);
+        m_textboxFileName.setText(m_strFileName);
         return true;
     }
 
@@ -90,7 +90,7 @@ namespace remoting_remoting
     {
         ::string fileName;
 
-        fileName = m_ptextboxFileName->getText();
+        fileName = m_textboxFileName.getText();
 
         if (fileName.is_empty() || fileName.contains_any_character_in("\\/"))
         {
@@ -98,7 +98,7 @@ namespace remoting_remoting
                        L"::file::item name cannot be empty and cannot contain '/' or '\\' characters.",
                        L"Incorrect ::file::item Name",
                        ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
-            m_ptextboxFileName->setFocus();
+            m_textboxFileName.setFocus();
             return ;
         }
 
@@ -116,8 +116,8 @@ namespace remoting_remoting
     {
         //HWND hwnd = m_hwnd;
 
-        dialog_item(m_pcontrolLabel, IDC_LABEL);
-        dialog_item(m_ptextboxFileName, IDC_FILENAME_EDIT);
+        dialog_item(m_controlLabel, IDC_LABEL);
+        dialog_item(m_textboxFileName, IDC_FILENAME_EDIT);
 
     }
 

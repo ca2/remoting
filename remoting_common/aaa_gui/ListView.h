@@ -27,7 +27,7 @@
 
 #include "subsystem/_common_header.h"
 // #include aaa_<commctrl.h>
-#include "innate_subsystem/Window.h"
+#include "innate_subsystem/gui/Window.h"
 
 //
 // TODO: Maybe use class for this?

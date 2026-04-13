@@ -76,6 +76,8 @@ list(APPEND library_source
 list(APPEND library_references
    acme
    apex
+   subsystem
+   innate_subsystem
 #   remoting_client_config_lib
 #   remoting_common
 #   remoting_config_lib
@@ -94,6 +96,7 @@ list(APPEND library_references
 #   remoting_viewer_core
 #   remoting_win_system
 #   remoting_zlib
+   remoting_common
 )
 
 

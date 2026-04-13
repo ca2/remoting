@@ -33,8 +33,8 @@
 
 namespace remoting_remoting
 {
-    DesktopWindow::DesktopWindow(::subsystem::LogWriter *logWriter, ::remoting::ConnectionConfig *conConf, ViewerWindow * pviewerwindow) :
-        m_plogwriter(logWriter),m_pviewerwindow(pviewerwindow), m_showVert(false), m_showHorz(false), m_fbWidth(1), m_fbHeight(1),
+    DesktopWindow::DesktopWindow(::subsystem::LogWriter * plogwriter, ::remoting::ConnectionConfig *conConf, ViewerWindow * pviewerwindow) :
+        m_plogwriter(plogwriter),m_pviewerwindow(pviewerwindow), m_showVert(false), m_showHorz(false), m_fbWidth(1), m_fbHeight(1),
         m_winResize(false), m_pconnectionconfig(conConf),
 
         m_viewerCore(0), m_ctrlDown(false), m_altDown(false), m_previousMousePos(-1, -1), m_previousMouseState(0),

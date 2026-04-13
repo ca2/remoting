@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "DecoderOfRectangle.h"
+#include "remoting/remoting_common/viewer_core/DecoderOfRectangle.h"
 
-#include "remoting/remoting_common/region/::int_point.h"
+//#include "remoting/remoting_common/region/::int_point.h"
 namespace remoting
 {
    class CLASS_DECL_REMOTING_COMMON CopyRectDecoder : public DecoderOfRectangle

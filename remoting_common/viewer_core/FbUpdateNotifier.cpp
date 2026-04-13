@@ -30,11 +30,11 @@
 
 namespace remoting
 {
-   FbUpdateNotifier::FbUpdateNotifier(::innate_subsystem::FrameBuffer *fb, critical_section *fbLock, ::subsystem::LogWriter *logWriter, WatermarksController* wmController)
+   FbUpdateNotifier::FbUpdateNotifier(::innate_subsystem::FrameBuffer *fb, critical_section *fbLock, ::subsystem::LogWriter * plogwriter, WatermarksController* wmController)
    : m_frameBuffer(fb),
      m_fbLock(fbLock),
-     m_plogwriter(logWriter),
-     m_cursorPainter(fb, logWriter),
+     m_plogwriter(plogwriter),
+     m_cursorPainter(fb, plogwriter),
      m_isNewSize(false),
      m_isCursorChange(false),
    m_isGoodCursor(false),
@@ -59,7 +59,7 @@ namespace remoting
    {
       critical_section_lock al(&m_updateLock);
       m_adapter = adapter;
-      m_eventUpdate.notify();
+      m_eventUpdate.set_happening();
    }
 
    void FbUpdateNotifier::execute()
@@ -69,7 +69,7 @@ namespace remoting
          bool adapterIsNull = true;
          while (!isTerminating() && adapterIsNull) {
             // Wait event.
-            m_eventUpdate.waitForEvent();
+            m_eventUpdate.wait();
 
             // Check: now adapter is set?
             critical_section_lock al(&m_updateLock);
@@ -174,14 +174,14 @@ namespace remoting
 
          // Pause this thread, if there are no updates (cursor, frame buffer).
          if (noUpdates) {
-            m_eventUpdate.waitForEvent();
+            m_eventUpdate.wait();
          }
       }
    }
 
    void FbUpdateNotifier::onTerminate()
    {
-      m_eventUpdate.notify();
+      m_eventUpdate.set_happening();
    }
 
    void FbUpdateNotifier::onUpdate(const ::int_rectangle &  update)
@@ -190,7 +190,7 @@ namespace remoting
          critical_section_lock al(&m_updateLock);
          m_update.addRect(update);
       }
-      m_eventUpdate.notify();
+      m_eventUpdate.set_happening();
       m_plogwriter->debug("FbUpdateNotifier: added rectangle");
    }
 
@@ -201,7 +201,7 @@ namespace remoting
          m_update.clear();
          m_isNewSize = true;
       }
-      m_eventUpdate.notify();
+      m_eventUpdate.set_happening();
       m_plogwriter->debug("FbUpdateNotifier: new size of frame buffer");
    }
 
@@ -211,7 +211,7 @@ namespace remoting
 
       critical_section_lock al(&m_updateLock);
       m_isCursorChange = true;
-      m_eventUpdate.notify();
+      m_eventUpdate.set_happening();
    }
 
    void FbUpdateNotifier::setNewCursor(const ::int_point *hotSpot,
@@ -226,7 +226,7 @@ namespace remoting
       critical_section_lock al(&m_updateLock);
       m_isCursorChange = true;
       m_isGoodCursor = true;
-      m_eventUpdate.notify();
+      m_eventUpdate.set_happening();
 
    }
 
@@ -236,6 +236,6 @@ namespace remoting
 
       critical_section_lock al(&m_updateLock);
       m_isCursorChange = true;
-      m_eventUpdate.notify();
+      m_eventUpdate.set_happening();
    }
 } // namespace remoting

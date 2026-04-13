@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "subsystem/io/DataOutputStream.h"
+#include "input_output/DataOutputStream.h"
 #include "acme/exception/io.h"
 
 

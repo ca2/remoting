@@ -65,7 +65,7 @@ namespace remoting_remoting
     ViewerInstance::~ViewerInstance()
     {
         if (m_socket != 0) {
-            m_socket->shutdown(SD_BOTH);
+            m_socket->shutdown(::subsystem::e_socket_shutdown_both);
             m_socket->close();
         }
 

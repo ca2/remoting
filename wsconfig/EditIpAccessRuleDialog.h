@@ -25,10 +25,10 @@
 #pragma once
 
 
-#include "innate_subsystem/BaseDialog.h"
-#include "innate_subsystem/TextBox.h"
-#include "innate_subsystem/CheckBox.h"
-#include "innate_subsystem/BalloonTip.h"
+#include "innate_subsystem/gui/BaseDialog.h"
+#include "innate_subsystem/gui/TextBox.h"
+#include "innate_subsystem/gui/CheckBox.h"
+#include "innate_subsystem/gui/BalloonTip.h"
 
 #include "remoting/remoting_common/server_config/IpAccessRule.h"
 

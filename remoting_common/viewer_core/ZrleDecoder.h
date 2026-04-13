@@ -27,23 +27,32 @@
 
 #include "DecoderOfRectangle.h"
 
-#include "subsystem/io/DataInputStream.h"
-#include "remoting/remoting_common/util/Inflater.h"
+#include "input_output/DataInputStream.h"
+#include "subsystem/Inflater.h"
 
 namespace remoting
 {
    class CLASS_DECL_REMOTING_COMMON ZrleDecoder : public DecoderOfRectangle
    {
    public:
-      ZrleDecoder(::subsystem::LogWriter * plogwriter);
-      virtual ~ZrleDecoder();
 
-   protected:
+
+
       typedef ::array_base<unsigned int> Palette;
       ::array_base<char> m_pixels;
       ::array_base<char> m_zlibDataReadAndInflate;
       ::memory m_unpackedData;
-   protected:
+      ::subsystem::Inflater m_inflater;
+      size_t m_bytesPerPixel;
+      size_t m_numberFirstByte;
+
+
+      ZrleDecoder(::subsystem::LogWriter * plogwriter);
+      virtual ~ZrleDecoder();
+
+   //protected:
+
+   //protected:
       virtual void decode(RfbInputGate *input,
                           ::innate_subsystem::FrameBuffer *frameBuffer,
                           const ::int_rectangle &  dstRect);
@@ -51,32 +60,32 @@ namespace remoting
 
       void readAndInflate(RfbInputGate *input, size_t maximalUnpackedSize);
 
-      int readType(DataInputStream * pinput);
+      int readType(::subsystem::DataInputStream * pinput);
 
-      size_t readRunLength(DataInputStream * pinput);
+      size_t readRunLength(::subsystem::DataInputStream * pinput);
 
-      void readPalette(DataInputStream * pinput,
+      void readPalette(::subsystem::DataInputStream * pinput,
                        const int paletteSize,
                        Palette *palette);
 
-      void readRawTile(DataInputStream * pinput,
+      void readRawTile(::subsystem::DataInputStream * pinput,
                        ::array_base<char> &pixels,
                        const ::int_rectangle &  tileRect);
 
-      void readSolidTile(DataInputStream * pinput,
+      void readSolidTile(::subsystem::DataInputStream * pinput,
                          ::array_base<char> &pixels,
                          const ::int_rectangle &  tileRect);
 
-      void readPackedPaletteTile(DataInputStream * pinput,
+      void readPackedPaletteTile(::subsystem::DataInputStream * pinput,
                                  ::array_base<char> &pixels,
                                  const ::int_rectangle &  tileRect,
                                  const int type);
 
-      void readPlainRleTile(DataInputStream * pinput,
+      void readPlainRleTile(::subsystem::DataInputStream * pinput,
                             ::array_base<char> &pixels,
                             const ::int_rectangle &  tileRect);
 
-      void readPaletteRleTile(DataInputStream * pinput,
+      void readPaletteRleTile(::subsystem::DataInputStream * pinput,
                               ::array_base<char> &pixels,
                               const ::int_rectangle &  tileRect,
                               const int type);
@@ -86,9 +95,6 @@ namespace remoting
                     const ::int_rectangle &  tileRect,
                     const ::array_base<char> *pixels);
 
-      Inflater m_inflater;
-      size_t m_bytesPerPixel;
-      size_t m_numberFirstByte;
 
    private:
       static const int TILE_SIZE = 64;

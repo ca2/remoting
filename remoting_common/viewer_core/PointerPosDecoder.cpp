@@ -28,7 +28,7 @@
 namespace remoting
 {
    PointerPosDecoder::PointerPosDecoder(::subsystem::LogWriter * plogwriter)
-   : PseudoDecoder(logWriter)
+   : PseudoDecoder(plogwriter)
    {
       m_encoding = PseudoEncDefs::POINTER_POS;
    }

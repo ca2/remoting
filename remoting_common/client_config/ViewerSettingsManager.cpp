@@ -47,7 +47,7 @@ namespace remoting
    {
       if (s_instance != 0)
          delete s_instance;
-      s_instance = new ViewerSettingsManager(scopedstrRegistryName);
+      s_instance = new ::remoting::ViewerSettingsManager(scopedstrRegistryName);
    }
 
    SettingsManager *ViewerSettingsManager::getInstance()

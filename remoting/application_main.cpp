@@ -126,10 +126,10 @@ int application::remoting_impact_main( const ::file::path & path)
    // resource-loader initialization
    //ResourceLoader resourceLoader(hInstance);
    //auto presource
-   try {
-      config.initLog(LogNames::LOG_DIR_NAME, LogNames::VIEWER_LOG_FILE_STUB_NAME);
-   }  catch (...) {
-   }
+   // try {
+   //    config.initLog(LogNames::LOG_DIR_NAME, LogNames::VIEWER_LOG_FILE_STUB_NAME);
+   // }  catch (...) {
+   // }
 
    // try {
    //   cmd.parse();

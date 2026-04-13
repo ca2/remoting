@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "innate_subsystem/BaseDialog.h"
-#include "innate_subsystem/TextBox.h"
+#include "innate_subsystem/gui/BaseDialog.h"
+#include "innate_subsystem/gui/TextBox.h"
 
 /**
  * ::innate_subsystem::Control authentication dialog.

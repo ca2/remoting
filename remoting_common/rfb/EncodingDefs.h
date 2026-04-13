@@ -52,7 +52,7 @@ namespace remoting
    // Codes for pseudo-encoding types
    //
 
-   class PseudoEncDefs
+   class CLASS_DECL_REMOTING_COMMON PseudoEncDefs
    {
    public:
       static const int COMPR_LEVEL_0 = -256;

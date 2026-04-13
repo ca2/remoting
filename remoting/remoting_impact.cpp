@@ -44,7 +44,7 @@ namespace remoting_remoting
    {
       initialize(pparticle);
       //initialize_operating_system_application(appInstance, scopedstrwindowClassName);
-      initialize_operating_system_application(scopedstrwindowClassName);
+      initialize_operating_system_application(appInstance, scopedstrwindowClassName);
       //m_plogwriter->information("Init WinSock 2.1");
       //WindowsSocket::startup(2, 1);
       //registerViewerWindowClass();

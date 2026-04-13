@@ -27,9 +27,9 @@ namespace remoting
 {
    namespace ftp
    {
-      RemoteFileListOperation::RemoteFileListOperation(::subsystem::LogWriter *logWriter,
+      RemoteFileListOperation::RemoteFileListOperation(::subsystem::LogWriter * plogwriter,
                                                        const ::scoped_string & scopedstrRemotePath)
-      : FileTransferOperation(logWriter),
+      : FileTransferOperation(plogwriter),
         m_isOk(false),
         m_isFinished(false)
       {
@@ -50,14 +50,14 @@ namespace remoting
          notifyStart();
       }
 
-      void RemoteFileListOperation::onFileListReply(DataInputStream * pinput)
+      void RemoteFileListOperation::onFileListReply(::subsystem::DataInputStream * pinput)
       {
          m_isOk = true;
          m_isFinished = true;
          notifyFinish();
       }
 
-      void RemoteFileListOperation::onLastRequestFailedReply(DataInputStream * pinput)
+      void RemoteFileListOperation::onLastRequestFailedReply(::subsystem::ataInputStream * pinput)
       {
          m_isOk = false;
          m_isFinished = true;

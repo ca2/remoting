@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "innate_subsystem/NotifyIcon.h"
-#include "innate_subsystem/WindowProcHolder.h"
+#include "innate_subsystem/gui/NotifyIcon.h"
+#include "innate_subsystem/gui/WindowProcHolder.h"
 #include "innate_subsystem/drawing/Icon.h"
 
 #include "subsystem/thread/Thread.h"

@@ -35,14 +35,17 @@ namespace remoting
    {
    public:
       RegistrySettingsManager();
+      RegistrySettingsManager(::subsystem::RegistryKey *pregistrykey,
+         const ::scoped_string &scopedstrEntry,
+         ::subsystem::SecurityAttributesInterface * psecurityattributes = nullptr);
       virtual ~RegistrySettingsManager();
 
       //public:
-      virtual void initialize_registry_settings_manager(::subsystem::RegistryKeyInterface *pregistrykey, 
-         const ::scoped_string &scopedstrEntry, 
-         ::subsystem::SecurityAttributesInterface * psecurityattributes = nullptr);
+      // virtual void initialize_registry_settings_manager(::subsystem::RegistryKey *pregistrykey,
+      //    const ::scoped_string &scopedstrEntry,
+      //    ::subsystem::SecurityAttributesInterface * psecurityattributes = nullptr);
 
-      void setRegistryKey(::subsystem::RegistryKeyInterface *pregistrykey,
+      void setRegistryKey(::subsystem::RegistryKey *pregistrykey,
                           const ::scoped_string &scopedstrEntry,
                           ::subsystem::SecurityAttributesInterface *psecurityattributes = nullptr);
 
@@ -54,8 +57,8 @@ namespace remoting
       virtual bool getString(const ::scoped_string & scopedstrName, ::string & value);
       virtual bool setString(const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrPayload);
 
-      virtual bool getLong(const ::scoped_string & scopedstrName, long *value);
-      virtual bool setLong(const ::scoped_string & scopedstrName, long value);
+      //virtual bool getLong(const ::scoped_string & scopedstrName, long *value);
+      //virtual bool setLong(const ::scoped_string & scopedstrName, long value);
 
       virtual bool getBoolean(const ::scoped_string & scopedstrName, bool *value);
       virtual bool setBoolean(const ::scoped_string & scopedstrName, bool value);

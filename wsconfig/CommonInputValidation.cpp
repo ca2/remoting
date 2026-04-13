@@ -26,7 +26,7 @@
 
 #include "remoting/remoting_common/util/StringParser.h"
 
-#include "innate_subsystem/BalloonTip.h"
+#include "innate_subsystem/gui/BalloonTip.h"
 
 #include "remoting_node/resource.h"
 

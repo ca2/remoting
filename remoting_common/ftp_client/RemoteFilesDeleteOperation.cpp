@@ -28,19 +28,19 @@ namespace remoting
 {
    namespace ftp
    {
-      RemoteFilesDeleteOperation::RemoteFilesDeleteOperation(::subsystem::LogWriter *logWriter,
+      RemoteFilesDeleteOperation::RemoteFilesDeleteOperation(::subsystem::LogWriter * plogwriter,
                                                              const ::pointer_array< FileInfo > & fileinfoa,
                                                              const ::file::path & pathToTargetRoot)
-      : FileTransferOperation(logWriter)
+      : FileTransferOperation(plogwriter)
       {
          m_toDelete = new FileInfoList(logWriter, fileinfoa);
          m_pathToTargetRoot= pathToTargetRoot;
       }
 
-      RemoteFilesDeleteOperation::RemoteFilesDeleteOperation(::subsystem::LogWriter *logWriter,
+      RemoteFilesDeleteOperation::RemoteFilesDeleteOperation(::subsystem::LogWriter * plogwriter,
                                                              FileInfo fileInfoToDelete,
                                                              const ::file::path & pathToTargetRoot)
-      : FileTransferOperation(logWriter)
+      : FileTransferOperation(plogwriter)
       {
          m_toDelete = new FileInfoList(logWriter, fileInfoToDelete);
          m_pathToTargetRoot= pathToTargetRoot;

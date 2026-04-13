@@ -28,9 +28,9 @@
 
 namespace remoting
 {
-   CursorPainter::CursorPainter(::innate_subsystem::FrameBuffer *fb, ::subsystem::LogWriter *logWriter)
+   CursorPainter::CursorPainter(::innate_subsystem::FrameBuffer *fb, ::subsystem::LogWriter * plogwriter)
    : m_fb(fb),
-     m_plogwriter(logWriter),
+     m_plogwriter(plogwriter),
      m_cursorIsMoveable(false),
      m_ignoreShapeUpdates(false),
      m_isExist(false)
@@ -149,7 +149,7 @@ namespace remoting
    ::int_point CursorPainter::getUpperLeftPoint(const ::int_point *position) const
    {
       ::int_point upperLeftPoint = *position;
-      upperLeftPoint.move(-m_cursor.getHotSpot().x, -m_cursor.getHotSpot().y);
+      upperLeftPoint.offset(-m_cursor.getHotSpot().x, -m_cursor.getHotSpot().y);
       return upperLeftPoint;
    }
 } //namespace remoting

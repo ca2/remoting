@@ -95,8 +95,8 @@ namespace remoting
       {
          return false;
       }
-      return WritePrivateProfileString(::string(m_appName), ::string(scopedstrName), ::string(scopedstrValue),
-                                       m_path.windows_path()) == true;
+      return ::acme::WritePrivateProfileString(::string(m_appName), ::string(scopedstrName), ::string(scopedstrValue),
+                                       m_path) == true;
    }
 
    // FIXME: Stub
@@ -149,7 +149,7 @@ namespace remoting
       // exists and method must return false.
       // FIXME: This trick will not work in some cases
       unsigned int defVal = 0xABCDEF;
-      unsigned int ret = GetPrivateProfileInt(::string(m_appName), ::string(scopedstrName), defVal, m_path.windows_path());
+      unsigned int ret = ::acme::GetPrivateProfileInt(::string(m_appName), ::string(scopedstrName), defVal, m_path);
       if (ret == defVal)
       {
          return false;
@@ -198,7 +198,7 @@ namespace remoting
 
       ::memory buffer;
 
-      DWORD bufferSize = 1024;
+      unsigned int bufferSize = 1024;
 
       bool tooSmall = false;
 
@@ -210,9 +210,9 @@ namespace remoting
          buffer.set_size(bufferSize);
 
          // Try to get string value from storage
-         DWORD ret =
-            GetPrivateProfileString(::string(m_appName), ::string(scopedstrName), ::string(scopedstrDefaultValue),
-                                    (LPWSTR) buffer.data(), bufferSize, m_path.windows_path());
+         unsigned int ret =
+            ::acme::GetPrivateProfileString(::string(m_appName), ::string(scopedstrName), ::string(scopedstrDefaultValue),
+                                    (char*) buffer.data(), bufferSize, m_path);
 
          // This mean that output buffer size is too small
          tooSmall = (ret == bufferSize - 1);

@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "innate_subsystem/NotifyIcon.h"
-#include "innate_subsystem/Menu.h"
+#include "innate_subsystem/gui/NotifyIcon.h"
+#include "innate_subsystem/gui/Menu.h"
 #include "remoting_impact.h"
 
 #include "resource.h"

@@ -34,11 +34,11 @@ namespace remoting
 {
    namespace ftp
    {
-      UploadOperation::UploadOperation(::subsystem::LogWriter *logWriter,
+      UploadOperation::UploadOperation(::subsystem::LogWriter * plogwriter,
                                        FileInfo fileToUpload,
                                        const ::file::path & pathToSourceRoot,
                                        const ::file::path & pathToTargetRoot)
-      : CopyOperation(logWriter),
+      : CopyOperation(plogwriter),
         m_pfileitem(0), m_preadable(0), m_gotoChild(false), m_gotoParent(false), m_firstUpload(true),
         //m_remoteFilesInfo(0), m_remoteFilesCount(0), m_bufferSize(20000)
       m_bufferSize(20000)
@@ -53,11 +53,11 @@ namespace remoting
          m_lastRequestTime.Now();
       }
 
-      UploadOperation::UploadOperation(::subsystem::LogWriter *logWriter,
+      UploadOperation::UploadOperation(::subsystem::LogWriter * plogwriter,
                                        const ::pointer_array< FileInfo > & fileinfoa,
                                        const ::file::path & pathToSourceRoot,
                                        const ::file::path & pathToTargetRoot)
-      : CopyOperation(logWriter),
+      : CopyOperation(plogwriter),
         m_pfileitem(0), m_preadable(0), m_gotoChild(false), m_gotoParent(false), m_firstUpload(true)
         //m_remoteFilesInfo(0), m_remoteFilesCount(0), m_bufferSize(20000)
       , m_bufferSize(20000)

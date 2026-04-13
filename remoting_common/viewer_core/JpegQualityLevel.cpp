@@ -26,8 +26,8 @@
 
 namespace remoting
 {
-   JpegQualityLevel::JpegQualityLevel(::subsystem::LogWriter *logWriter, int quality)
-   : PseudoDecoder(logWriter)
+   JpegQualityLevel::JpegQualityLevel(::subsystem::LogWriter * plogwriter, int quality)
+   : PseudoDecoder(plogwriter)
    {
       m_encoding = qualityToEncoding(quality);
    }

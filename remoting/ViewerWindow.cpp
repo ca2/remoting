@@ -30,7 +30,7 @@
 #include "remoting/remoting/keyboard_layout_change.h"
 #include "innate_subsystem/resource_loader.h"
 #include "innate_subsystem/subsystem.h"
-#include "innate_subsystem/Toolbar.h"
+#include "innate_subsystem/gui/Toolbar.h"
 #include "innate_subsystem/drawing/Cursor.h"
 #include "FsWarningDialog.h"
 #include "NamingDefs.h"
@@ -399,10 +399,10 @@ namespace remoting_remoting
         return false;
     }
 
-    bool ViewerWindow::onEraseBackground(HDC hdc)
-    {
-        return true;
-    }
+    // bool ViewerWindow::onEraseBackground(HDC hdc)
+    // {
+    //     return true;
+    // }
 
     bool ViewerWindow::onKillFocus(::wparam wParam)
     {
@@ -1180,10 +1180,10 @@ namespace remoting_remoting
     //     m_desktopwindow.setWinKeyIgnore(true);
     // }
 
-    bool ViewerWindow::onNotify(int idCtrl, LPNMHDR pnmh)
-    {
-        return true;
-    }
+    // bool ViewerWindow::onNotify(int idCtrl, LPNMHDR pnmh)
+    // {
+    //     return true;
+    // }
 
     bool ViewerWindow::onClose()
     {

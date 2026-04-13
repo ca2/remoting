@@ -32,7 +32,7 @@ namespace remoting
    class CLASS_DECL_REMOTING_COMMON CompressionLevel : public PseudoDecoder
    {
    public:
-      CompressionLevel(::subsystem::LogWriter *logWriter, int compression);
+      CompressionLevel(::subsystem::LogWriter * plogwriter, int compression);
       virtual ~CompressionLevel();
 
    public:

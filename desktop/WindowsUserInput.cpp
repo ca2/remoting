@@ -26,7 +26,7 @@
 #include "subsystem/thread/DesktopSelector.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 #include "remoting/remoting_common/win_system/Keyboard.h"
-#include "innate_subsystem/WindowFinder.h"
+#include "innate_subsystem/gui/WindowFinder.h"
 #include "remoting/remoting_common/util/BrokenHandleException.h"
 
 WindowsUserInput::WindowsUserInput(ClipboardListener *clipboardListener,

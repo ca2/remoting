@@ -28,7 +28,7 @@
 namespace remoting
 {
    DesktopSizeDecoder::DesktopSizeDecoder(::subsystem::LogWriter * plogwriter)
-   : PseudoDecoder(logWriter)
+   : PseudoDecoder(plogwriter)
    {
       m_encoding = PseudoEncDefs::DESKTOP_SIZE;
    }

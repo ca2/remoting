@@ -41,7 +41,7 @@ namespace remoting
    {
 
       FileTransferCapability::FileTransferCapability(::subsystem::LogWriter * plogwriter)
-      : m_plogwriter(::subsystem::LogWriter),
+      : m_plogwriter(plogwriter),
         m_ftReplyBuffer(m_plogwriter),
         m_ftRequestSender(m_plogwriter),
         m_ftCore(m_plogwriter,
@@ -76,7 +76,7 @@ namespace remoting
          m_ftCore.setInterface(ftInterface);
       }
 
-      void FileTransferCapability::onServerMessage(unsigned int code, DataInputStream * pinput)
+      void FileTransferCapability::onServerMessage(unsigned int code, ::subsystem::DataInputStream * pinput)
       {
          m_ftMessageProcessor.processRfbMessage(pinput, code);
       }

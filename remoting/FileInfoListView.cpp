@@ -32,7 +32,7 @@
 #include "acme/prototype/datetime/datetime.h"
 #include "innate_subsystem/resource_loader.h"
 #include "innate_subsystem/subsystem.h"
-#include "innate_subsystem/SystemMetrics.h"
+#include "innate_subsystem/gui/SystemMetrics.h"
 
 
 namespace remoting_remoting

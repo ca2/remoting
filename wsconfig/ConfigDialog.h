@@ -28,10 +28,10 @@
 #include "remoting/remoting_common/config/SettingsManager.h"
 #include "remoting/remoting_common/config/RegistrySettingsManager.h"
 
-#include "innate_subsystem/BaseDialog.h"
-#include "innate_subsystem/Window.h"
-#include "innate_subsystem/ListBox.h"
-#include "innate_subsystem/TabControl.h"
+#include "innate_subsystem/gui/BaseDialog.h"
+#include "innate_subsystem/gui/Window.h"
+#include "innate_subsystem/gui/ListBox.h"
+#include "innate_subsystem/gui/TabControl.h"
 
 #include "remoting/remoting_common/server_config/Configurator.h"
 

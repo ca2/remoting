@@ -27,7 +27,7 @@
 
 //#include aaa_<vector>
 
-#include "remoting/remoting_common/util/Inflater.h"
+#include "subsystem/Inflater.h"
 
 #include "DecoderOfRectangle.h"
 #include "JpegDecompressor.h"
@@ -93,7 +93,7 @@ namespace remoting
       unsigned int transformPixelToTight(unsigned int color);
       ::array_base<unsigned char> transformArray(const ::array_base<unsigned char> &buffer);
 
-      ::array_base<Inflater *> m_inflater;
+      ::pointer_array_base<::subsystem::Inflater > m_inflater;
       JpegDecompressor m_jpeg;
 
       bool m_isCPixel;

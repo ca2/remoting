@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "subsystem/io/Channel.h"
+#include "input_output/Channel.h"
 
-#include "subsystem/io/DataInputStream.h"
+#include "input_output/DataInputStream.h"
 
 namespace remoting
 {

@@ -27,8 +27,8 @@
 #include "ConnectingDialog.h"
 #include "resource.h"
 #include "acme/constant/id.h"
-#include "innate_subsystem/ProgressBar.h"
-#include "innate_subsystem/TextBox.h"
+#include "innate_subsystem/gui/ProgressBar.h"
+#include "innate_subsystem/gui/TextBox.h"
 #include "acme/platform/application.h"
 
 namespace remoting_remoting

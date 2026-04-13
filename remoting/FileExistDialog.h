@@ -24,8 +24,8 @@
 #pragma once
 
 
-#include "innate_subsystem/Dialog.h"
-#include "innate_subsystem/Control.h"
+#include "innate_subsystem/gui/Dialog.h"
+#include "innate_subsystem/gui/Control.h"
 #include "remoting/remoting_common/ftp_common/FileInfo.h"
 
 

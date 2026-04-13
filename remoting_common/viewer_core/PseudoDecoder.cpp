@@ -27,7 +27,7 @@
 namespace remoting
 {
    PseudoDecoder::PseudoDecoder(::subsystem::LogWriter * plogwriter)
-   : Decoder(logWriter)
+   : Decoder(plogwriter)
    {
    }
 

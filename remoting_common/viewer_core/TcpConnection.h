@@ -31,7 +31,7 @@
 //#include "remoting/remoting_common/network/socket/SocketIPv4.h"
 //#include "remoting/remoting_common/network/socket/SocketStream.h"
 //#include "subsystem/thread/critical_section.h"
-#include "subsystem/io/BufferedInputStream.h"
+#include "input_output/BufferedInputStream.h"
 
 
 namespace remoting
@@ -54,12 +54,12 @@ namespace remoting
    ;;private:
       ::string m_host;
       unsigned short m_port;
-      ::subsystem::SocketIPv4Interface *m_socket;
+      ::pointer < ::subsystem::SocketIPv4Interface > m_psocket;
       bool m_socketOwner;
-      ::subsystem::SocketStreamInterface *m_socketStream;
-      ::subsystem::BufferedInputStream *m_bufInput;
-      RfbInputGate *m_input;
-      RfbOutputGate *m_output;
+      ::pointer < ::subsystem::SocketStream > m_psocketstream;
+      ::pointer < ::subsystem::BufferedInputStream > m_pbufInput;
+      ::pointer < RfbInputGate > m_pinput;
+      ::pointer < RfbOutputGate > m_poutput;
       bool m_RfbGatesOwner;
 
       bool m_wasBound;

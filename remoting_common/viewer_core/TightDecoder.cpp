@@ -24,19 +24,19 @@
 #include "framework.h"
 #include "TightDecoder.h"
 
-#include "remoting/remoting_common/rfb/StandardPixelFormatFactory.h"
+#include "subsystem/framebuffer/StandardPixelFormatFactory.h"
 
 namespace remoting
 {
    TightDecoder::TightDecoder(::subsystem::LogWriter * plogwriter)
-   : DecoderOfRectangle(logWriter),
+   : DecoderOfRectangle(plogwriter),
      m_isCPixel(false)
    {
       m_encoding = EncodingDefs::TIGHT;
 
       m_inflater.resize(DECODERS_NUM);
       for (int i = 0; i < DECODERS_NUM; i++)
-         m_inflater[i] = new Inflater;
+         m_inflater[i] = new ::subsystem::Inflater;
       reset();
    }
 
@@ -128,7 +128,7 @@ namespace remoting
    {
       for (int i = 0; i < DECODERS_NUM; i++) {
          delete m_inflater[i];
-         m_inflater[i] = new Inflater;
+         m_inflater[i] = new ::subsystem::Inflater;
       }
    }
 
@@ -137,7 +137,7 @@ namespace remoting
       for (int i = 0; i < DECODERS_NUM; i++)
          if (compressionControl & (0x01 << i)) {
             delete m_inflater[i];
-            m_inflater[i] = new Inflater;
+            m_inflater[i] = new ::subsystem::Inflater;
          }
    }
 
@@ -279,7 +279,7 @@ namespace remoting
       if (rawDataLength != 0) {
          pinput->readFully(compressed.data(), rawDataLength);
 
-         Inflater *decoder = m_inflater[decoderId];
+         ::subsystem::Inflater *decoder = m_inflater[decoderId];
          decoder->setInput(compressed.data(), rawDataLength);
          decoder->setUnpackedSize(expectedLength);
          decoder->inflate();

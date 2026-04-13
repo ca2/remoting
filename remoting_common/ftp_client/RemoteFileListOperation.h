@@ -39,7 +39,7 @@ namespace remoting
       class CLASS_DECL_REMOTING_COMMON RemoteFileListOperation : public FileTransferOperation
       {
       public:
-         RemoteFileListOperation(::subsystem::LogWriter *logWriter, const ::scoped_string & scopedstrRemotePath);
+         RemoteFileListOperation(::subsystem::LogWriter * plogwriter, const ::scoped_string & scopedstrRemotePath);
          virtual ~RemoteFileListOperation();
 
          //
@@ -52,8 +52,8 @@ namespace remoting
          // ::file::item transfer scopedstrMessage handlers
          //
 
-         virtual void onFileListReply(DataInputStream * pinput);
-         virtual void onLastRequestFailedReply(DataInputStream * pinput);
+         virtual void onFileListReply(::subsystem::DataInputStream * pinput);
+         virtual void onLastRequestFailedReply(::subsystem::DataInputStream * pinput);
 
          //
          // Returns true if operation is finished and was no error,

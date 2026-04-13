@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "innate_subsystem/Window.h"
+#include "innate_subsystem/gui/Window.h"
 #include "Tooltip.h"
 
 class CLASS_DECL_REMOTING_COMMON TextBox : public ::innate_subsystem::Control

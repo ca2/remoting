@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "innate_subsystem/TextBox.h"
+#include "innate_subsystem/gui/TextBox.h"
 
 /**
  * Gives methods to get typized data from ui controls to

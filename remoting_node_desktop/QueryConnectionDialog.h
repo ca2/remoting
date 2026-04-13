@@ -27,8 +27,8 @@
 
 #include "subsystem/_common_header.h"
 
-#include "innate_subsystem/BaseDialog.h"
-#include "innate_subsystem/::innate_subsystem::Control.h"
+#include "innate_subsystem/gui/BaseDialog.h"
+#include "innate_subsystem/gui/::innate_subsystem::Control.h"
 
 class QueryConnectionDialog : public BaseDialog
 {

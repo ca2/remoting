@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "innate_subsystem/Window.h"
+#include "innate_subsystem/gui/Window.h"
 
 namespace remoting
 {

@@ -72,12 +72,12 @@ namespace remoting
          // filename format, see file transfer protocol extension for more information).
          //
 
-         UploadOperation(::subsystem::LogWriter *logWriter,
+         UploadOperation(::subsystem::LogWriter * plogwriter,
                          FileInfo fileToUpload,
                          const ::file::path & pathToSourceRoot,
                          const ::file::path & pathToTargetRoot);
 
-         UploadOperation(::subsystem::LogWriter *logWriter,
+         UploadOperation(::subsystem::LogWriter * plogwriter,
                          const ::pointer_array < FileInfo > & fileinfoa,
                          const ::file::path & pathToSourceRoot,
                          const ::file::path & pathToTargetRoot);

@@ -25,9 +25,9 @@
 // camilo on 2026-02-12 21:12 <3ThomasBorregaardSørensen!!
 #pragma once
 
-#include "innate_subsystem/Dialog.h"
-#include "innate_subsystem/ProgressBar.h"
-#include "innate_subsystem/TextBox.h"
+#include "innate_subsystem/gui/Dialog.h"
+#include "innate_subsystem/gui/ProgressBar.h"
+#include "innate_subsystem/gui/TextBox.h"
 //#include "resource.h"
 
 //class BaseDialog;

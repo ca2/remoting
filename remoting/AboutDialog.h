@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "innate_subsystem/Dialog.h"
+#include "innate_subsystem/gui/Dialog.h"
 
 namespace remoting_remoting
 {

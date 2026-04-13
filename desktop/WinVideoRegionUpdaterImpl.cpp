@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "WinVideoRegionUpdaterImpl.h"
 #include "remoting/remoting_common/server_config/Configurator.h"
-#include "innate_subsystem/WindowFinder.h"
+#include "innate_subsystem/gui/WindowFinder.h"
 #include "remoting/remoting_common/region/RectSerializer.h"
 //#include "subsystem/thread/critical_section.h"
 

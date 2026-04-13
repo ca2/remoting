@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "innate_subsystem/BaseDialog.h"
-#include "innate_subsystem/TextBox.h"
+#include "innate_subsystem/gui/BaseDialog.h"
+#include "innate_subsystem/gui/TextBox.h"
 
 #include "remoting/remoting_common/server_config/PortMapping.h"
 

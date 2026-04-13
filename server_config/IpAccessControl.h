@@ -31,8 +31,8 @@
 
 #include "subsystem/Exception.h"
 
-#include "subsystem/io/DataInputStream.h"
-#include "subsystem/io/DataOutputStream.h"
+#include "input_output/DataInputStream.h"
+#include "input_output/DataOutputStream.h"
 
 
 class IpAccessControl : public ::array_base<IpAccessRule *>

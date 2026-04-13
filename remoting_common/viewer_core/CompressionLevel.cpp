@@ -26,8 +26,8 @@
 
 namespace remoting
 {
-   CompressionLevel::CompressionLevel(::subsystem::LogWriter *logWriter, int compression)
-   : PseudoDecoder(logWriter)
+   CompressionLevel::CompressionLevel(::subsystem::LogWriter * plogwriter, int compression)
+   : PseudoDecoder(plogwriter)
    {
       m_encoding = levelToEncoding(compression);
    }

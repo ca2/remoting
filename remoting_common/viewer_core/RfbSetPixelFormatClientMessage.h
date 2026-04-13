@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/rfb/PixelFormat.h"
+#include "subsystem/framebuffer/PixelFormat.h"
 #include "RfbClientToServerMessage.h"
 
 namespace remoting

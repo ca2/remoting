@@ -27,7 +27,7 @@
 
 //#include aaa_<vector>
 #include "remoting/remoting_common/util/inttypes.h"
-#include "subsystem/io/DataOutputStream.h"
+#include "input_output/DataOutputStream.h"
 
 // FIXME: The same structure is used in the viewer named RfbCapabilityInfo.
 struct Cap

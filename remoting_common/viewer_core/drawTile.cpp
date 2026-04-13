@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ZrleDecoder.h"
 
-#include "subsystem/io/ByteArrayInputStream.h"
+#include "input_output/ByteArrayInputStream.h"
 
 //#include aaa_<vector>
 //#include aaa_<algorithm>

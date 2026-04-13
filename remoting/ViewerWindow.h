@@ -32,8 +32,8 @@
 #include "OptionsDialog.h"
 #include "ScaleManager.h"
 #include "ViewerMenu.h"
-#include "innate_subsystem/Control.h"
-#include "innate_subsystem/ToolBar.h"
+#include "innate_subsystem/gui/Control.h"
+#include "innate_subsystem/gui/ToolBar.h"
 //#include "log_writer/LogWriter.h"
 #include "remoting/remoting_common/viewer_core/FileTransferCapability.h"
 #include "remoting/remoting_common/viewer_core/RemoteViewerCore.h"
@@ -89,7 +89,7 @@ namespace remoting_remoting
         static const int TIMER_DESKTOP_STATE_DELAY = 50;
 
         bool onMessage(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam);
-        bool onEraseBackground(HDC hdc);
+        //bool onEraseBackground(HDC hdc);
 
         bool onDisconnect();
         bool onAuthError(::wparam wParam);
@@ -100,7 +100,7 @@ namespace remoting_remoting
         //bool onCreate(LPCREATESTRUCT lps);
        bool onCreate(void *pCreateStruct) override;
         bool onCommand(::wparam wParam, ::lparam lParam);
-        bool onNotify(int idCtrl, LPNMHDR pnmh);
+        //bool onNotify(int idCtrl, LPNMHDR pnmh);
         bool onSysCommand(::wparam wParam, ::lparam lParam);
         bool onClose();
         bool onDestroy();

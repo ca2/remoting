@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "FileTransferReplyBuffer.h"
-#include "subsystem/io/ByteArrayInputStream.h"
+#include "input_output/ByteArrayInputStream.h"
 //#include "subsystem/thread/critical_section.h"
 //#include aaa_<crtdbg.h>
 
@@ -32,7 +32,7 @@ namespace  remoting
    namespace  ftp
    {
       FileTransferReplyBuffer::FileTransferReplyBuffer(::subsystem::LogWriter * plogwriter)
-      : m_plogwriter(logWriter),
+      : m_plogwriter(plogwriter),
         m_isCompressionSupported(false),
         //m_filesInfoCount(0), m_filesInfo(NULL),
         m_downloadBufferSize(0),
@@ -94,7 +94,7 @@ namespace  remoting
          return m_downloadBuffer;
       }
 
-      void FileTransferReplyBuffer::onCompressionSupportReply(DataInputStream * pinput)
+      void FileTransferReplyBuffer::onCompressionSupportReply(::subsystem::DataInputStream * pinput)
       {
          m_isCompressionSupported = (pinput->readUInt8() == 1);
 
@@ -102,7 +102,7 @@ namespace  remoting
                            m_isCompressionSupported ? "supported" : "not supported");
       }
 
-      void FileTransferReplyBuffer::onFileListReply(DataInputStream * pinput)
+      void FileTransferReplyBuffer::onFileListReply(::subsystem::DataInputStream * pinput)
       {
          unsigned char compressionLevel = 0;
          unsigned int compressedSize = 0;
@@ -123,9 +123,9 @@ namespace  remoting
 
          if (!buffer.empty()) {
             // FIXME: type conversion in C-style
-            ByteArrayInputStream memoryInputStream(reinterpret_cast<char *>(buffer.data()),
+            ::subsystem::ByteArrayInputStream memoryInputStream(reinterpret_cast<char *>(buffer.data()),
                                                    uncompressedSize);
-            DataInputStream filesInfoReader(&memoryInputStream);
+            ::subsystem::DataInputStream filesInfoReader(&memoryInputStream);
 
             // if (m_filesInfo != 0) {
             //    delete[] m_filesInfo;
@@ -165,32 +165,32 @@ namespace  remoting
          }
       }
 
-      void FileTransferReplyBuffer::onMd5DataReply(DataInputStream * pinput)
+      void FileTransferReplyBuffer::onMd5DataReply(::subsystem::DataInputStream * pinput)
       {
          throw OperationNotSupportedException();
       }
 
-      void FileTransferReplyBuffer::onUploadReply(DataInputStream * pinput)
+      void FileTransferReplyBuffer::onUploadReply(::subsystem::DataInputStream * pinput)
       {
          m_plogwriter->information("Received upload reply\n");
       }
 
-      void FileTransferReplyBuffer::onUploadDataReply(DataInputStream * pinput)
+      void FileTransferReplyBuffer::onUploadDataReply(::subsystem::DataInputStream * pinput)
       {
          m_plogwriter->information("Received upload data reply\n");
       }
 
-      void FileTransferReplyBuffer::onUploadEndReply(DataInputStream * pinput)
+      void FileTransferReplyBuffer::onUploadEndReply(::subsystem::DataInputStream * pinput)
       {
          m_plogwriter->information("Received upload end reply\n");
       }
 
-      void FileTransferReplyBuffer::onDownloadReply(DataInputStream * pinput)
+      void FileTransferReplyBuffer::onDownloadReply(::subsystem::DataInputStream * pinput)
       {
          m_plogwriter->information("Received download reply\n");
       }
 
-      void FileTransferReplyBuffer::onDownloadDataReply(DataInputStream * pinput)
+      void FileTransferReplyBuffer::onDownloadDataReply(::subsystem::DataInputStream * pinput)
       {
          unsigned char coLevel = pinput->readUInt8();
          unsigned int coBufferSize = pinput->readUInt32();
@@ -206,7 +206,7 @@ namespace  remoting
                            coBufferSize, uncoBufferSize, coLevel);
       }
 
-      void FileTransferReplyBuffer::onDownloadEndReply(DataInputStream * pinput)
+      void FileTransferReplyBuffer::onDownloadEndReply(::subsystem::DataInputStream * pinput)
       {
          m_downloadFileFlags = pinput->readUInt8();
          m_downloadLastModified = pinput->readUInt64();
@@ -217,22 +217,22 @@ namespace  remoting
                            m_downloadFileFlags, m_downloadLastModified);
       }
 
-      void FileTransferReplyBuffer::onMkdirReply(DataInputStream * pinput)
+      void FileTransferReplyBuffer::onMkdirReply(::subsystem::DataInputStream * pinput)
       {
          m_plogwriter->information("Received mkdir reply\n");
       }
 
-      void FileTransferReplyBuffer::onRmReply(DataInputStream * pinput)
+      void FileTransferReplyBuffer::onRmReply(::subsystem::DataInputStream * pinput)
       {
          m_plogwriter->information("Received rm reply\n");
       }
 
-      void FileTransferReplyBuffer::onMvReply(DataInputStream * pinput)
+      void FileTransferReplyBuffer::onMvReply(::subsystem::DataInputStream * pinput)
       {
          m_plogwriter->information("Received rename reply\n");
       }
 
-      void FileTransferReplyBuffer::onDirSizeReply(DataInputStream * pinput)
+      void FileTransferReplyBuffer::onDirSizeReply(::subsystem::DataInputStream * pinput)
       {
          m_dirSize = pinput->readUInt64();
 
@@ -240,7 +240,7 @@ namespace  remoting
       }
 
 
-      void FileTransferReplyBuffer::onLastRequestFailedReply(DataInputStream * pinput)
+      void FileTransferReplyBuffer::onLastRequestFailedReply(::subsystem::DataInputStream * pinput)
       {
 
          m_lastErrorMessage = pinput->read_utf8_string();
@@ -251,7 +251,7 @@ namespace  remoting
       }
 
 
-      ::array_base<unsigned char> FileTransferReplyBuffer::readCompressedDataBlock(DataInputStream * pinput,
+      ::array_base<unsigned char> FileTransferReplyBuffer::readCompressedDataBlock(::subsystem::DataInputStream * pinput,
                                                                      unsigned int compressedSize,
                                                                      unsigned int uncompressedSize,
                                                                      unsigned char compressionLevel)

@@ -201,7 +201,7 @@ namespace remoting_remoting
 
       auto rectangleClient = get_client_rectangle();
 
-      if (uMessage == WM_LBUTTONDOWN)
+      if (uMessage == ::user::e_message_left_button_down)
       {
          //if (!m_bPressed)
          {
@@ -217,7 +217,7 @@ namespace remoting_remoting
 
          }
       }
-      else if(uMessage == WM_LBUTTONUP)
+      else if(uMessage == ::user::e_message_left_button_up)
       {
 
          //if (m_bPressed)
@@ -338,13 +338,13 @@ namespace remoting_remoting
       }
 
 
-      if (uMessage == WM_LBUTTONDOWN)
+      if (uMessage == ::user::e_message_left_button_down)
       {
 
           m_bLButtonDown = true;
 
       }
-      else if (uMessage == WM_RBUTTONDOWN)
+      else if (uMessage == ::user::e_message_right_button_down)
       {
 
           m_bLButtonDown = false;
@@ -619,15 +619,15 @@ namespace remoting_remoting
          //bool enable = true; // Use true to force disable, which is counter-intuitive but how the flag works
          //HRESULT hr = DwmSetWindowAttribute(::GetParent((HWND) m_pdesktopwindow->_HWND()), DWMWA_TRANSITIONS_FORCEDISABLED, &enable, sizeof(enable));
 
-         ::PostMessageA(::GetParent((HWND) m_pdesktopwindow->_HWND()), ViewerWindow::WM_USER_SWITCH_FULL_SCREEN_MODE, 0, 0);
+         m_pdesktopwindow->m_pviewerwindow->postMessage(ViewerWindow::WM_USER_SWITCH_FULL_SCREEN_MODE, 0, 0);
          return true;
       }
       else if (eid==id_close)
       {
          //m_pdesktopwindow->m_viewerCore->ge
 
-         ::PostMessageA(::GetParent((HWND) m_pdesktopwindow->_HWND()), ViewerWindow::WM_USER_DISCONNECT, 0, 0);
-         ::PostMessageA(::GetParent((HWND) m_pdesktopwindow->_HWND()), WM_CLOSE, 0, 0);
+         m_pdesktopwindow->m_pviewerwindow->postMessage(ViewerWindow::WM_USER_DISCONNECT, 0, 0);
+         m_pdesktopwindow->m_pviewerwindow->postMessage(::user::e_message_close, 0, 0);
          return true;
       }
 
@@ -717,7 +717,7 @@ namespace remoting_remoting
          if (m_bHover && !bAnyChildHover)
          {
 
-            if (uMessage == WM_LBUTTONDOWN)
+            if (uMessage == ::user::e_message_left_button_down)
             {
 
                if (!m_bDrag)
@@ -735,7 +735,7 @@ namespace remoting_remoting
          if (m_bDrag)
          {
 
-            if(uMessage == WM_LBUTTONUP)
+            if(uMessage == ::user::e_message_left_button_up)
             {
 
                m_bDrag = false;

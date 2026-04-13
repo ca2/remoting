@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ZrleDecoder.h"
 
-#include "subsystem/io/ByteArrayInputStream.h"
+#include "input_output/ByteArrayInputStream.h"
 
 //#include aaa_<vector>
 //#include aaa_<algorithm>
@@ -32,7 +32,7 @@
 namespace remoting
 {
    ZrleDecoder::ZrleDecoder(::subsystem::LogWriter * plogwriter)
-   : DecoderOfRectangle(logWriter)
+   : DecoderOfRectangle(plogwriter)
    {
       m_encoding = EncodingDefs::ZRLE;
    }
@@ -63,9 +63,9 @@ namespace remoting
       //auto p =  m_inflater.getOutput();
       //auto p1 =  unpackedData.data();
 
-      ByteArrayInputStream unpackedByteArrayStream(reinterpret_cast<char *>(unpackedData.data()),
+      ::subsystem::ByteArrayInputStream unpackedByteArrayStream(reinterpret_cast<char *>(unpackedData.data()),
                                                    unpackedData.size());
-      DataInputStream unpackedDataStream(&unpackedByteArrayStream);
+      ::subsystem::DataInputStream unpackedDataStream(&unpackedByteArrayStream);
 
       m_numberFirstByte = 0;
       ::innate_subsystem::PixelFormat pxFormat = frameBuffer->getPixelFormat();
@@ -165,13 +165,13 @@ namespace remoting
       return TILE_LENGTH_SIZE + MAXIMAL_TILE_SIZE * tileCount;
    }
 
-   int ZrleDecoder::readType(DataInputStream * pinput)
+   int ZrleDecoder::readType(::subsystem::DataInputStream * pinput)
    {
       int type = pinput->readUInt8();
       return type;
    }
 
-   size_t ZrleDecoder::readRunLength(DataInputStream * pinput)
+   size_t ZrleDecoder::readRunLength(::subsystem::DataInputStream * pinput)
    {
       size_t runLength = 0;
       unsigned char delta;
@@ -182,7 +182,7 @@ namespace remoting
       return runLength + 1; // the length is one more than the sum
    }
 
-   void ZrleDecoder::readPalette(DataInputStream * pinput,
+   void ZrleDecoder::readPalette(::subsystem::DataInputStream * pinput,
                                  const int paletteSize,
                                  Palette *palette)
    {
@@ -193,7 +193,7 @@ namespace remoting
       }
    }
 
-   void ZrleDecoder::readRawTile(DataInputStream * pinput,
+   void ZrleDecoder::readRawTile(::subsystem::DataInputStream * pinput,
                                  ::array_base<char> &pixels,
                                  const ::int_rectangle &  tileRect)
    {
@@ -201,7 +201,7 @@ namespace remoting
       pinput->readFully(pixels.data(), tileBytesLength);
    }
 
-   void ZrleDecoder::readSolidTile(DataInputStream * pinput,
+   void ZrleDecoder::readSolidTile(::subsystem::DataInputStream * pinput,
                                    ::array_base<char> &pixels,
                                    const ::int_rectangle &  tileRect)
    {
@@ -218,7 +218,7 @@ namespace remoting
       }
    }
 
-   void ZrleDecoder::readPackedPaletteTile(DataInputStream * pinput,
+   void ZrleDecoder::readPackedPaletteTile(::subsystem::DataInputStream * pinput,
                                            ::array_base<char> &pixels,
                                            const ::int_rectangle &  tileRect,
                                            const int type)
@@ -272,7 +272,7 @@ namespace remoting
       }
    }
 
-   void ZrleDecoder::readPlainRleTile(DataInputStream * pinput,
+   void ZrleDecoder::readPlainRleTile(::subsystem::DataInputStream * pinput,
                                       ::array_base<char> &pixels,
                                       const ::int_rectangle &  tileRect)
    {
@@ -293,7 +293,7 @@ namespace remoting
       }
    }
 
-   void ZrleDecoder::readPaletteRleTile(DataInputStream * pinput,
+   void ZrleDecoder::readPaletteRleTile(::subsystem::DataInputStream * pinput,
                                         ::array_base<char> &pixels,
                                         const ::int_rectangle &  tileRect,
                                         const int type)

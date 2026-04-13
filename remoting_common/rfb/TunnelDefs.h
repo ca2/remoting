@@ -29,7 +29,7 @@
 
 namespace remoting
 {
-   class TunnelDefs
+   class CLASS_DECL_REMOTING_COMMON TunnelDefs
    {
    public:
       static const unsigned int NOTUNNEL = 0;

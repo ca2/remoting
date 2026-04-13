@@ -25,57 +25,59 @@
 #include "RfbSetPixelFormatClientMessage.h"
 
 
-
-
-
-
-
-RfbSetPixelFormatClientMessage::RfbSetPixelFormatClientMessage(const ::innate_subsystem::PixelFormat & pixelFormat)
+namespace remoting
 {
-  m_pixelFormat = pixelFormat;
-}
+   RfbSetPixelFormatClientMessage::RfbSetPixelFormatClientMessage(const ::innate_subsystem::PixelFormat & pixelFormat)
+   {
+      m_pixelFormat = pixelFormat;
+   }
 
-RfbSetPixelFormatClientMessage::~RfbSetPixelFormatClientMessage()
-{
-}
+   RfbSetPixelFormatClientMessage::~RfbSetPixelFormatClientMessage()
+   {
+   }
 
-/**
- * Pixel Format:
- * 1 - U8  - bits-per-pixel
- * 1 - U8  - depth
- * 1 - U8  - big-endian-flag
- * 1 - U8  - true-color-flag
- * 2 - U16 - red-max
- * 2 - U16 - green-max
- * 2 - U16 - blue-max
- * 1 - U8  - red-shift
- * 1 - U8  - green-shift
- * 1 - U8  - blue-shift
- * 3 -     - padding
- */
+   /**
+    * Pixel Format:
+    * 1 - U8  - bits-per-pixel
+    * 1 - U8  - depth
+    * 1 - U8  - big-endian-flag
+    * 1 - U8  - true-color-flag
+    * 2 - U16 - red-max
+    * 2 - U16 - green-max
+    * 2 - U16 - blue-max
+    * 1 - U8  - red-shift
+    * 1 - U8  - green-shift
+    * 1 - U8  - blue-shift
+    * 3 -     - padding
+    */
 
-void RfbSetPixelFormatClientMessage::send(RfbOutputGate *output)
-{
-  critical_section_lock al(output);
-  output->writeUInt8(ClientMsgDefs::SET_PIXEL_FORMAT);
-  // padding 3 bytes
-  output->writeUInt16(0);
-  output->writeUInt8(0);
+   void RfbSetPixelFormatClientMessage::send(RfbOutputGate *output)
+   {
+      critical_section_lock al(output);
+      output->writeUInt8(ClientMsgDefs::SET_PIXEL_FORMAT);
+      // padding 3 bytes
+      output->writeUInt16(0);
+      output->writeUInt8(0);
 
-  // send pixel format
-  output->writeUInt8(static_cast<unsigned char>(m_pixelFormat.bitsPerPixel));
-  output->writeUInt8(static_cast<unsigned char>(m_pixelFormat.colorDepth));
-  output->writeUInt8(m_pixelFormat.bigEndian);
-  output->writeUInt8(true); // true color is always true
-  output->writeUInt16(m_pixelFormat.redMax);
-  output->writeUInt16(m_pixelFormat.greenMax);
-  output->writeUInt16(m_pixelFormat.blueMax);
-  output->writeUInt8(static_cast<unsigned char>(m_pixelFormat.redShift));
-  output->writeUInt8(static_cast<unsigned char>(m_pixelFormat.greenShift));
-  output->writeUInt8(static_cast<unsigned char>(m_pixelFormat.blueShift));
-  output->writeUInt8(0); // padding bytes (3)
-  output->writeUInt8(0);
-  output->writeUInt8(0);
+      // send pixel format
+      output->writeUInt8(static_cast<unsigned char>(m_pixelFormat.bitsPerPixel));
+      output->writeUInt8(static_cast<unsigned char>(m_pixelFormat.colorDepth));
+      output->writeUInt8(m_pixelFormat.bigEndian);
+      output->writeUInt8(true); // true color is always true
+      output->writeUInt16(m_pixelFormat.redMax);
+      output->writeUInt16(m_pixelFormat.greenMax);
+      output->writeUInt16(m_pixelFormat.blueMax);
+      output->writeUInt8(static_cast<unsigned char>(m_pixelFormat.redShift));
+      output->writeUInt8(static_cast<unsigned char>(m_pixelFormat.greenShift));
+      output->writeUInt8(static_cast<unsigned char>(m_pixelFormat.blueShift));
+      output->writeUInt8(0); // padding bytes (3)
+      output->writeUInt8(0);
+      output->writeUInt8(0);
 
-  output->flush();
-}
+      output->flush();
+   }
+
+} // namespace remoting
+
+
+

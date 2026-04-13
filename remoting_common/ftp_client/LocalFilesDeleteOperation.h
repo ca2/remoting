@@ -35,7 +35,7 @@ namespace remoting
       class CLASS_DECL_REMOTING_COMMON LocalFilesDeleteOperation : public FileTransferOperation
       {
       public:
-         LocalFilesDeleteOperation(::subsystem::LogWriter *logWriter,
+         LocalFilesDeleteOperation(::subsystem::LogWriter * plogwriter,
                                   const ::pointer_array<FileInfo> & fileinfoa,
                                    const ::file::path & pathToTargetRoot);
          ~LocalFilesDeleteOperation() override;

@@ -24,11 +24,15 @@
 #include "framework.h"
 #include "OperationNotSupportedException.h"
 
-OperationNotSupportedException::OperationNotSupportedException()
-: Exception("Operation not supported")
-{
-}
 
-OperationNotSupportedException::~OperationNotSupportedException()
+namespace remoting
 {
-}
+   OperationNotSupportedException::OperationNotSupportedException()
+   : ::subsystem::Exception("Operation not supported")
+   {
+   }
+
+   OperationNotSupportedException::~OperationNotSupportedException()
+   {
+   }
+} // namespace remoting

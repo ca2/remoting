@@ -30,7 +30,7 @@
 #include "remoting/remoting_common/win_system/VersionInfo.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
 
-#include "innate_subsystem/::innate_subsystem::Control.h"
+#include "innate_subsystem/gui/::innate_subsystem::Control.h"
 
 #include "remoting_node/BuildTime.h"
 

@@ -26,7 +26,7 @@
 
 
 #include "subsystem/_common_header.h"
-#include "innate_subsystem/MessageWindow.h"
+#include "innate_subsystem/gui/MessageWindow.h"
 #include "ClipboardListener.h"
 //#include "log_writer/LogWriter.h"
 #include "subsystem/thread/GuiThread.h"

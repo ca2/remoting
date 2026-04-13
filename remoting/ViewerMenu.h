@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "innate_subsystem/Menu.h"
+#include "innate_subsystem/gui/Menu.h"
 
 namespace remoting_remoting
 {

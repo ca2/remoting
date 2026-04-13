@@ -31,7 +31,7 @@
 #include "remoting/remoting_common/win_system/RegistryKey.h"
 #include "DisplayEsc.h"
 #include "remoting/remoting_common/win_system/Screen.h"
-#include "innate_subsystem/MessageWindow.h"
+#include "innate_subsystem/gui/MessageWindow.h"
 #include "subsystem/thread/GuiThread.h"
 #include "remoting/remoting_common/win_system/WindowsEvent.h"
 //#include "log_writer/LogWriter.h"
