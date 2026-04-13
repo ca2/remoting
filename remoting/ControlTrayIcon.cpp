@@ -49,51 +49,86 @@ namespace remoting_remoting
         m_menu.appendMenu(resStr.getStrRes(IDS_CLOSE), IDS_CLOSE);
         m_menu.setDefaultItem(IDS_NEW_CONN);
 
-        setWindowProcHolder(this);
+        //setWindowProcHolder(this);
 
-        WM_USER_TASKBAR = RegisterWindowMessage(L"TaskbarCreated");
+
     }
 
     ControlTrayIcon::~ControlTrayIcon()
     {
     }
 
-    LRESULT ControlTrayIcon::windowProc(HWND hWnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam, bool *useDefWindowProc)
-    {
-        if (m_inWindowProc) {
-            // This call is recursive, do not do any real work.
-            *useDefWindowProc = true;
-            return 0;
-        }
-        // Make sure to reset it back to false before leaving this function for any
-        // reason (check all return statements, exceptions should not happen here).
-        m_inWindowProc = true;
-
-        switch (uMsg) {
-            case WM_USER + 1:
-                switch (lParam) {
-                case WM_RBUTTONUP:
-                        onRightButtonUp();
-                        break;
-                case WM_LBUTTONDOWN:
-                        onLeftButtonDown();
-                        break;
-                } // switch (lParam)
-                break;
-            default:
-                if (uMsg == WM_USER_TASKBAR) {
-                    if (isVisible()) {
-                        hide();
-                        show();
-                    }
-                    break;
-                }
-                *useDefWindowProc = true;
-        }
-
-        m_inWindowProc = false;
-        return 0;
-    }
+    // LRESULT ControlTrayIcon::windowProc(HWND hWnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam, bool *useDefWindowProc)
+    // {
+    //     if (m_inWindowProc) {
+    //         // This call is recursive, do not do any real work.
+    //         *useDefWindowProc = true;
+    //         return 0;
+    //     }
+    //     // Make sure to reset it back to false before leaving this function for any
+    //     // reason (check all return statements, exceptions should not happen here).
+    //     m_inWindowProc = true;
+    //
+    //     switch (uMsg) {
+    //         case WM_USER + 1:
+    //             switch (lParam) {
+    //             case WM_RBUTTONUP:
+    //                     onRightButtonUp();
+    //                     break;
+    //             case WM_LBUTTONDOWN:
+    //                     onLeftButtonDown();
+    //                     break;
+    //             } // switch (lParam)
+    //             break;
+    //         default:
+    //             if (uMsg == WM_USER_TASKBAR) {
+    //                 if (isVisible()) {
+    //                     hide();
+    //                     show();
+    //                 }
+    //                 break;
+    //             }
+    //             *useDefWindowProc = true;
+    //     }
+    //
+    //     m_inWindowProc = false;
+    //     return 0;
+    // }
+    // bool ControlTrayIcon::on_window_procedure(lresult &lresult, unsigned int message, wparam wparam, lparam lparam)
+    // {
+    //
+    //    if (m_inWindowProc) {
+    //       return 0;
+    //    }
+    //    // Make sure to reset it back to false before leaving this function for any
+    //    // reason (check all return statements, exceptions should not happen here).
+    //    m_inWindowProc = true;
+    //
+    //    switch (message) {
+    //       case WM_USER + 1:
+    //          switch (lparam.m_lparam) {
+    //          case ::user::e_message_right_button_up:
+    //                onRightButtonUp();
+    //                break;
+    //          case ::user::e_message_left_button_down:
+    //                onLeftButtonDown();
+    //                break;
+    //          } // switch (lParam)
+    //          break;
+    //       default:
+    //          if (message == WM_USER_TASKBAR) {
+    //             if (isVisible()) {
+    //                hide();
+    //                show();
+    //             }
+    //             break;
+    //          }
+    //          *useDefWindowProc = true;
+    //    }
+    //
+    //    m_inWindowProc = false;
+    //    return 0;
+    // }
 
     void ControlTrayIcon::showIcon()
     {
@@ -103,38 +138,64 @@ namespace remoting_remoting
 
     void ControlTrayIcon::onRightButtonUp()
     {
-        POINT pos;
 
-        if (!GetCursorPos(&pos)) {
-            pos.x = pos.y = 0;
-        }
 
-        HWND notifyWnd = (HWND) _HWND();
-        SetForegroundWindow(notifyWnd);
+       m_menu.trackPopupMenuOnCursorPosition(this, [this](int iCommand)
+       {
 
-        // int action = TrackPopupMenu(m_menu.getMenu(),
-        //                             TPM_NONOTIFY | TPM_RETURNCMD | TPM_RIGHTBUTTON,
-        //                             pos.x, pos.y, 0, notifyWnd, NULL);
+          switch (iCommand) {
+    case IDS_NEW_CONN:
+        onNewConnection();
+        break;
+    case IDS_LISTENING_OPTIONS:
+        onListeningOptions();
+        break;
+    case IDS_CONFIG:
+        onConfiguration();
+        break;
+    case IDS_ABOUT_VIEWER:
+        onAboutViewer();
+        break;
+    case IDS_CLOSE:
+        onCloseListeningDaemon();
+        break;
+    default:
+        _ASSERT(true);
+}
+       });
+
+        // POINT pos;
         //
-        // switch (action) {
-        //     case IDS_NEW_CONN:
-        //         onNewConnection();
-        //         break;
-        //     case IDS_LISTENING_OPTIONS:
-        //         onListeningOptions();
-        //         break;
-        //     case IDS_CONFIG:
-        //         onConfiguration();
-        //         break;
-        //     case IDS_ABOUT_VIEWER:
-        //         onAboutViewer();
-        //         break;
-        //     case IDS_CLOSE:
-        //         onCloseListeningDaemon();
-        //         break;
-        //     default:
-        //         _ASSERT(true);
+        // if (!GetCursorPos(&pos)) {
+        //     pos.x = pos.y = 0;
         // }
+        //
+        // HWND notifyWnd = (HWND) _HWND();
+        // SetForegroundWindow(notifyWnd);
+        //
+        // // int action = TrackPopupMenu(m_menu.getMenu(),
+        // //                             TPM_NONOTIFY | TPM_RETURNCMD | TPM_RIGHTBUTTON,
+        // //                             pos.x, pos.y, 0, notifyWnd, NULL);
+        // //
+        // // switch (action) {
+        // //     case IDS_NEW_CONN:
+        // //         onNewConnection();
+        // //         break;
+        // //     case IDS_LISTENING_OPTIONS:
+        // //         onListeningOptions();
+        // //         break;
+        // //     case IDS_CONFIG:
+        // //         onConfiguration();
+        // //         break;
+        // //     case IDS_ABOUT_VIEWER:
+        // //         onAboutViewer();
+        // //         break;
+        // //     case IDS_CLOSE:
+        // //         onCloseListeningDaemon();
+        // //         break;
+        // //     default:
+        // //         _ASSERT(true);
+        // // }
     }
 
     void ControlTrayIcon::onLeftButtonDown()

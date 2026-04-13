@@ -49,7 +49,7 @@ namespace remoting_remoting
    {
    public:
       remoting_impact(::particle * pparticle,
-         HINSTANCE appInstance,
+         ::hinstance appInstance,
                 const ::scoped_string & scopedstrwindowClassName,
                 const ::scoped_string & scopedstrviewerWindowClassName);
       virtual ~remoting_impact();
@@ -142,7 +142,7 @@ void defer_check_dead_instance();
       // class name of viewer-window
       ::wstring m_viewerWindowClassName;
 
-      HACCEL m_hAccelTable;
+      //HACCEL m_hAccelTable;
 
       //private:
       void addInstance(ViewerInstance *viewerInstance);
@@ -159,7 +159,7 @@ void defer_check_dead_instance();
       ControlTrayIcon *m_trayIcon;
       ConnectionListener *m_conListener;
 
-      WNDCLASS m_viewerWndClass;
+      //WNDCLASS m_viewerWndClass;
    };
 } // namespace remoting_remoting
 

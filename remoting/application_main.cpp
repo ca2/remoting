@@ -37,7 +37,9 @@
 //                       LPTSTR lpCmdLine, int nCmdShow)
 
 
-CLASS_DECL_ACME HMODULE GetModuleFromFunction(void* pFunc);
+//CLASS_DECL_ACME HMODULE GetModuleFromFunction(void* pFunc);
+
+CLASS_DECL_ACME hinstance hinstance_from_function(void* pFunc);
 //{
 //   HMODULE hModule = NULL;
 //
@@ -51,13 +53,16 @@ CLASS_DECL_ACME HMODULE GetModuleFromFunction(void* pFunc);
 //   return hModule;
 //}
 
-HINSTANCE remoting_impact_hinstance()
+
+hinstance remoting_impact_hinstance()
 {
 
-   HINSTANCE hInstance = (HINSTANCE)GetModuleFromFunction(&remoting_impact_hinstance);
+   auto hinstance = hinstance_from_function(&remoting_impact_hinstance);
 
-   return hInstance;
+   return hinstance;
+
 }
+
 
 namespace remoting_remoting {
 int application::remoting_impact_main( const ::file::path & path)
@@ -82,7 +87,7 @@ int application::remoting_impact_main( const ::file::path & path)
 
    ::remoting::ViewerConfig config(RegistryPaths::VIEWER_PATH);
    config.loadFromStorage(sm);
-   HINSTANCE hInstance = remoting_impact_hinstance();
+   auto hinstance = remoting_impact_hinstance();
    ::remoting::ConnectionConfig conConf;
    ConnectionData condata;
    bool isListening = false;
@@ -156,7 +161,7 @@ int application::remoting_impact_main( const ::file::path & path)
 
    int result = 0;
    try {
-      remoting_impact tvnViewer(this, hInstance,
+      remoting_impact tvnViewer(this, hinstance,
                           ApplicationNames::WINDOW_CLASS_NAME,
                           WindowNames::TVN_WINDOW_CLASS_NAME);
       if (isListening) {
@@ -173,7 +178,7 @@ int application::remoting_impact_main( const ::file::path & path)
       main_subsystem()->message_box({},
                  main_subsystem()->string_table()->getString(IDS_UNKNOWN_ERROR_IN_VIEWER),
                  ProductNames::VIEWER_PRODUCT_NAME,
-                 ::user::e_message_box_ok | MB_ICONERROR);
+                 ::user::e_message_box_ok | ::user::e_message_box_icon_error);
       m_plogwriter->debug(ex.get_message());
    }
 

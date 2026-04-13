@@ -35,8 +35,8 @@ namespace remoting_remoting
 {
     class remoting_impact;
 
-    class ControlTrayIcon : public ::innate_subsystem::NotifyIcon,
-                            public WindowProcHolder
+    class ControlTrayIcon : public ::innate_subsystem::NotifyIcon
+       //,                           public WindowProcHolder
     {
     public:
         ControlTrayIcon(remoting_impact *viewerApplication);
@@ -51,8 +51,8 @@ namespace remoting_remoting
         static unsigned int WM_USER_TASKBAR;
 
         //protected:
-        virtual LRESULT windowProc(HWND hWnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam, bool *useDefWindowProc);
-
+        //virtual LRESULT windowProc(HWND hWnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam, bool *useDefWindowProc);
+       bool on_window_procedure(::lresult & lresult, unsigned int message, ::wparam wparam, ::lparam lparam) override;
         //
         // Show login-dialog after click "New connection..." in pop-up menu of tray icon
         //

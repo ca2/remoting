@@ -33,12 +33,12 @@
 
 namespace remoting_remoting
 {
-   remoting_impact::remoting_impact(::particle * pparticle, HINSTANCE appInstance, const ::scoped_string & scopedstrwindowClassName,
+   remoting_impact::remoting_impact(::particle * pparticle, ::hinstance appInstance, const ::scoped_string & scopedstrwindowClassName,
                         const ::scoped_string & scopedstrviewerWindowClassName)
    :
      m_viewerWindowClassName(scopedstrviewerWindowClassName),
      m_conListener(0),
-     m_hAccelTable(0),
+     //m_hAccelTable(0),
      m_plogwriter(::remoting::ViewerConfig::getInstance()->getLogWriter()),
      m_isListening(false)
    {
@@ -53,7 +53,7 @@ namespace remoting_remoting
 
       // working with accelerator
       auto presourceloader = main_innate_subsystem()->resource_loader();
-      m_hAccelTable = (HACCEL) presourceloader->loadAccelerator(IDR_ACCEL_APP_KEYS);
+      //m_hAccelTable = (HACCEL) presourceloader->loadAccelerator(IDR_ACCEL_APP_KEYS);
 
       m_trayIcon = new ControlTrayIcon(this);
       m_loginDialog = new LoginDialog(this);
@@ -86,7 +86,7 @@ namespace remoting_remoting
          main_subsystem()->message_box({},
                     main_subsystem()->string_table()->getString(IDS_ERROR_START_LISTENING),
                     ProductNames::VIEWER_PRODUCT_NAME,
-                    ::user::e_message_box_ok | MB_ICONERROR);
+                    ::user::e_message_box_ok | ::user::e_message_box_icon_error);
       }
    }
 

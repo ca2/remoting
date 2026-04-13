@@ -48,11 +48,11 @@ namespace remoting_remoting
 
     bool ConfigurationDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
-        if (controlID == IDC_EVERBLVL) {
-            if (notificationID == EN_CHANGE) {
-                onLogLevelChange();
-            }
-        }
+        // if (controlID == IDC_EVERBLVL) {
+        //     if (notificationID == EN_CHANGE) {
+        //         onLogLevelChange();
+        //     }
+        // }
         if (controlID == ::innate_subsystem::e_control_id_ok) {
             onOkPressed();
             if (m_application != 0) {

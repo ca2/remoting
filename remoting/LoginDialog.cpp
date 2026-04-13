@@ -49,9 +49,10 @@ namespace remoting_remoting
     {
         dialog_item(m_server, IDC_CSERVER);
         dialog_item(m_listening, IDC_LISTENING);
-        dialog_item(m_ok, IDOK);
+        dialog_item(m_ok, ::innate_subsystem::e_control_id_ok);
         updateHistory();
-        SetForegroundWindow((HWND) _HWND());
+       setForegroundWindow();
+        //SetForegroundWindow((HWND) _HWND());
         m_server.setFocus();
         if (m_isListening) {
             m_listening.enableWindow(false);
@@ -187,67 +188,67 @@ namespace remoting_remoting
 
     bool LoginDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
-        switch (controlID) {
-            case IDC_CSERVER:
-                switch (notificationID) {
-                case CBN_DROPDOWN:
-                        updateHistory();
-                        break;
-
-                        // select item in ComboBox with ::list_base of history
-                case CBN_SELENDOK:
-                {
-                    int selectedItemIndex = m_server.getSelectedItemIndex();
-                    if (selectedItemIndex < 0) {
-                        return false;
-                    }
-                    //::string server;
-                    auto server = m_server.getItemText(selectedItemIndex);
-                    ::remoting::ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
-                                            server);
-                    m_connectionConfig.loadFromStorage(&ccsm);
-                    break;
-                }
-                }
-
-                enableConnect();
-                break;
-
-                // click "Connect"
-            case ::innate_subsystem::e_control_id_ok:
-                onConnect();
-                closeDialog(0);
-                break;
-
-                // cancel connection
-            case ::innate_subsystem::e_control_id_cancel:
-                closeDialog(0);
-                break;
-
-            case IDC_BCONFIGURATION:
-                onConfiguration();
-                break;
-
-            case IDC_BOPTIONS:
-                return onOptions();
-
-            case IDC_LISTENING:
-                onListening();
-                closeDialog(0);
-                break;
-
-            case IDC_ORDER_SUPPORT_BUTTON:
-                onOrder();
-                break;
-
-            case IDC_BABOUT:
-                onAbout();
-                break;
-
-            default:
-                _ASSERT(true);
-                return false;
-        }
+        // switch (controlID) {
+        //     case IDC_CSERVER:
+        //         switch (notificationID) {
+        //         case CBN_DROPDOWN:
+        //                 updateHistory();
+        //                 break;
+        //
+        //                 // select item in ComboBox with ::list_base of history
+        //         case CBN_SELENDOK:
+        //         {
+        //             int selectedItemIndex = m_server.getSelectedItemIndex();
+        //             if (selectedItemIndex < 0) {
+        //                 return false;
+        //             }
+        //             //::string server;
+        //             auto server = m_server.getItemText(selectedItemIndex);
+        //             ::remoting::ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
+        //                                     server);
+        //             m_connectionConfig.loadFromStorage(&ccsm);
+        //             break;
+        //         }
+        //         }
+        //
+        //         enableConnect();
+        //         break;
+        //
+        //         // click "Connect"
+        //     case ::innate_subsystem::e_control_id_ok:
+        //         onConnect();
+        //         closeDialog(0);
+        //         break;
+        //
+        //         // cancel connection
+        //     case ::innate_subsystem::e_control_id_cancel:
+        //         closeDialog(0);
+        //         break;
+        //
+        //     case IDC_BCONFIGURATION:
+        //         onConfiguration();
+        //         break;
+        //
+        //     case IDC_BOPTIONS:
+        //         return onOptions();
+        //
+        //     case IDC_LISTENING:
+        //         onListening();
+        //         closeDialog(0);
+        //         break;
+        //
+        //     case IDC_ORDER_SUPPORT_BUTTON:
+        //         onOrder();
+        //         break;
+        //
+        //     case IDC_BABOUT:
+        //         onAbout();
+        //         break;
+        //
+        //     default:
+        //         _ASSERT(true);
+        //         return false;
+        // }
         return true;
     }
 
