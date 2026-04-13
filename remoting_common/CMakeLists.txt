@@ -140,6 +140,8 @@ list(APPEND library_source
    util/DesCrypt.h
    util/Keymap.cpp
    util/Keymap.h
+   util/VncPassCrypt.cpp
+   util/VncPassCrypt.h
    viewer_core/_.cpp
    viewer_core/_.h
    viewer_core/_____debug.xcconfig

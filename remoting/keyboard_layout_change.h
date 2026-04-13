@@ -19,7 +19,7 @@ namespace remoting_remoting
       ~keyboard_layout_change() override;
 
 
-      void on_websocket_text(const ::scoped_string& scopedstrText) override;
+      //void on_websocket_text(const ::scoped_string& scopedstrText) override;
 
 
    };

@@ -56,7 +56,7 @@ namespace remoting_remoting
         class ::time m_timeStartDesktopWindow;
         DesktopWindow(::subsystem::LogWriter * plogwriter, ::remoting::ConnectionConfig *conConf, ViewerWindow * pviewerwindow);
         virtual ~DesktopWindow();
-        virtual void _defer_update_double_buffering();
+        //virtual void _defer_update_double_buffering();
         void setClipboardData(const ::scoped_string & strText);
         void updateFramebuffer(const ::innate_subsystem::FrameBuffer * pframebuffer,
                                const ::int_rectangle &  dstRect);

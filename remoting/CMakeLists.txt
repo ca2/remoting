@@ -38,6 +38,8 @@ list(APPEND library_source
    FsWarningDialog.h
    HelpDialog.cpp
    HelpDialog.h
+   keyboard_layout_change.cpp
+   keyboard_layout_change.h
    LoginDialog.cpp
    LoginDialog.h
    NamingDefs.cpp

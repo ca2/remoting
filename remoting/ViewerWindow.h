@@ -197,7 +197,7 @@ namespace remoting_remoting
         ::array_base<int> m_standardScale;
         void changeCursor(int type);
         void applySettings();
-        ::int_rectangle getFullScreenRect();
+        //::int_rectangle getFullScreenRect();
 
        void onBeforeFullScreen(bool bRestore) override;
        void onAfterFullScreen(bool bRestore) override;
@@ -220,7 +220,7 @@ namespace remoting_remoting
         void dialogConnectionInfo();
         void switchFullScreenMode();
         void dialogConfiguration();
-        void adjustWindowSize();
+        //void adjustWindowSize();
         ::string formatWindowName() const;
         void updateKeyState();
 
