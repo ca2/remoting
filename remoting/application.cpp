@@ -56,6 +56,8 @@ namespace remoting_remoting
       if (ecommand == e_command_application_start)
       {
 
+
+
          construct_newø(m_pconnectingdialog);
 
       }

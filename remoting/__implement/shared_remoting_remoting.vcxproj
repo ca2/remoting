@@ -263,11 +263,11 @@
     <Image Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows\subsystem_acme_windows\subsystem_acme_windows.vcxproj">
-      <Project>{f46e1b15-7a8a-4bbd-8dfa-85c7074e2daa}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows\subsystem_apex_windows\subsystem_apex_windows.vcxproj">
+    <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows\innate_subsystem_windows\innate_subsystem_windows.vcxproj">
       <Project>{31f3d4c6-61f7-4e68-8c48-6de00a2d7d78}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows\subsystem_windows\subsystem_windows.vcxproj">
+      <Project>{f46e1b15-7a8a-4bbd-8dfa-85c7074e2daa}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\app\acme\acme.vcxproj">
       <Project>{638b242f-0f21-41c3-9f66-724660046133}</Project>

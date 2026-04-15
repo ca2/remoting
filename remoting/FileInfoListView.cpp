@@ -63,9 +63,9 @@ namespace remoting_remoting
 
     }
 
-    void FileInfoListView::setWindow(const ::operating_system::window & operatingsystemwindow)
+    void FileInfoListView::subclassWindow(const ::operating_system::window & operatingsystemwindow)
     {
-        ListView::setWindow(operatingsystemwindow);
+        ListView::subclassWindow(operatingsystemwindow);
 
         ListView::addColumn(0, "Name", 135);
         //ListView::addColumn(1, "Size", 80, LVCFMT_RIGHT);
@@ -78,7 +78,7 @@ namespace remoting_remoting
 
         //ListView_SetImageList(m_hwnd, m_pimagelistSmall, LVSIL_SMALL);
 
-        subclassWindow();
+        //subclassWindow();
 
         //::innate_subsystem::Control::replaceWindowProc(FileInfoListView::s_newWndProc);
     }

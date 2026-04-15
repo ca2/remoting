@@ -485,7 +485,7 @@ namespace remoting_remoting
 
     void ViewerWindow::dialogConfiguration()
     {
-        m_application->postMainThreadMessage(remoting_impact::_WM_USER_CONFIGURATION);
+        m_application->postMessage(remoting_impact::_WM_USER_CONFIGURATION);
     }
 
     void ViewerWindow::onGoodCursor()
@@ -595,7 +595,7 @@ namespace remoting_remoting
 
     void ViewerWindow::commandNewConnection()
     {
-        m_application->postMainThreadMessage(remoting_impact::_WM_USER_SHOW_LOGIN_DIALOG);
+        m_application->postMessage(remoting_impact::_WM_USER_SHOW_LOGIN_DIALOG);
     }
 
     void ViewerWindow::commandSaveSession()
@@ -780,7 +780,7 @@ namespace remoting_remoting
 
     void ViewerWindow::onAbout()
     {
-        m_application->postMainThreadMessage(remoting_impact::_WM_USER_ABOUT);
+        m_application->postMessage(remoting_impact::_WM_USER_ABOUT);
     }
 
     bool ViewerWindow::onCommand(::wparam wParam, ::lparam lParam)

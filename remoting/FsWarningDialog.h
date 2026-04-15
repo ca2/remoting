@@ -42,6 +42,6 @@ namespace remoting_remoting
         bool onInitDialog();
         bool onCommand(unsigned int controlID, unsigned int notificationID);
 
-        ::pointer < ::innate_subsystem::CheckBox > m_pcheckboxFsWarning;
+        ::innate_subsystem::CheckBox m_checkboxFsWarning;
     };
 } // namespace remoting_remoting

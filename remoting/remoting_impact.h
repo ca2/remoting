@@ -49,7 +49,7 @@ namespace remoting_remoting
    {
    public:
       remoting_impact(::particle * pparticle,
-         ::hinstance appInstance,
+         //::hinstance appInstance,
                 const ::scoped_string & scopedstrwindowClassName,
                 const ::scoped_string & scopedstrviewerWindowClassName);
       virtual ~remoting_impact();
@@ -124,7 +124,7 @@ void defer_check_dead_instance();
 
       //void postStartDialog(int iStartDialogMessage);
       //void startDialog(int iStartDialogMessage);
-      void onMainThreadMessage(int iMainThreadMessage) override;
+      void onMainThreadMessage(unsigned int message, ::wparam wparam, ::lparam lparam) override;
       //void registerViewerWindowClass();
       //void unregisterViewerWindowClass();
       //static LRESULT CALLBACK wndProcViewer(HWND hWnd, unsigned int msg, ::wparam wparam, ::lparam lparam);

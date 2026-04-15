@@ -118,7 +118,7 @@ namespace remoting_remoting
     void LoginDialog::onConfiguration()
     {
         //m_viewer->postMessage(remoting_impact::WM_USER_CONFIGURATION);
-       m_viewer->postMainThreadMessage(remoting_impact::_WM_USER_CONFIGURATION);
+       m_viewer->postMessage(remoting_impact::_WM_USER_CONFIGURATION);
     }
 
     bool LoginDialog::onOptions()
@@ -164,11 +164,17 @@ namespace remoting_remoting
     void LoginDialog::setListening(bool isListening)
     {
         m_isListening = isListening;
-        if (isListening) {
-            m_listening.enableWindow(false);
-        } else {
-            m_listening.enableWindow(true);
-        }
+       if (isWindow())
+       {
+          if (isListening)
+          {
+             m_listening.enableWindow(false);
+          }
+          else
+          {
+             m_listening.enableWindow(true);
+          }
+       }
     }
 
     void LoginDialog::onListening()
@@ -183,7 +189,7 @@ namespace remoting_remoting
 
     void LoginDialog::onAbout()
     {
-        m_viewer->postMainThreadMessage(remoting_impact::_WM_USER_ABOUT);
+        m_viewer->postMessage(remoting_impact::_WM_USER_ABOUT);
     }
 
     bool LoginDialog::onCommand(unsigned int controlID, unsigned int notificationID)

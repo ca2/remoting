@@ -39,7 +39,7 @@
 
 //CLASS_DECL_ACME HMODULE GetModuleFromFunction(void* pFunc);
 
-CLASS_DECL_ACME hinstance hinstance_from_function(void* pFunc);
+//CLASS_DECL_ACME hinstance hinstance_from_function(void* pFunc);
 //{
 //   HMODULE hModule = NULL;
 //
@@ -54,14 +54,14 @@ CLASS_DECL_ACME hinstance hinstance_from_function(void* pFunc);
 //}
 
 
-hinstance remoting_impact_hinstance()
-{
-
-   auto hinstance = hinstance_from_function(&remoting_impact_hinstance);
-
-   return hinstance;
-
-}
+//hinstance remoting_impact_hinstance()
+//{
+//
+//   auto hinstance = ::windows::hinstance_from_function(&remoting_impact_hinstance);
+//
+//   return hinstance;
+//
+//}
 
 
 namespace remoting_remoting {
@@ -87,7 +87,7 @@ int application::remoting_impact_main( const ::file::path & path)
 
    ::remoting::ViewerConfig config(RegistryPaths::VIEWER_PATH);
    config.loadFromStorage(sm);
-   auto hinstance = remoting_impact_hinstance();
+   //auto hinstance = remoting_impact_hinstance();
    ::remoting::ConnectionConfig conConf;
    ConnectionData condata;
    bool isListening = false;
@@ -161,7 +161,8 @@ int application::remoting_impact_main( const ::file::path & path)
 
    int result = 0;
    try {
-      remoting_impact tvnViewer(this, hinstance,
+      //remoting_impact tvnViewer(this, hinstance,
+      remoting_impact tvnViewer(this,
                           ApplicationNames::WINDOW_CLASS_NAME,
                           WindowNames::TVN_WINDOW_CLASS_NAME);
       if (isListening) {

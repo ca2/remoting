@@ -33,7 +33,9 @@
 
 namespace remoting_remoting
 {
-   remoting_impact::remoting_impact(::particle * pparticle, ::hinstance appInstance, const ::scoped_string & scopedstrwindowClassName,
+   remoting_impact::remoting_impact(::particle * pparticle,
+      //::hinstance appInstance,
+      const ::scoped_string & scopedstrwindowClassName,
                         const ::scoped_string & scopedstrviewerWindowClassName)
    :
      m_viewerWindowClassName(scopedstrviewerWindowClassName),
@@ -44,7 +46,9 @@ namespace remoting_remoting
    {
       initialize(pparticle);
       //initialize_operating_system_application(appInstance, scopedstrwindowClassName);
-      initialize_operating_system_application(appInstance, scopedstrwindowClassName);
+      //initialize_operating_system_application(appInstance, scopedstrwindowClassName);
+      //initialize_operating_system_application(scopedstrwindowClassName);
+       initialize_operating_system_application();
       //m_plogwriter->information("Init WinSock 2.1");
       //WindowsSocket::startup(2, 1);
       //registerViewerWindowClass();
@@ -384,12 +388,12 @@ namespace remoting_remoting
    // }
 
 
-   void remoting_impact::onMainThreadMessage(int iMainThreadMessage)
+   void remoting_impact::onMainThreadMessage(unsigned int message, ::wparam wparam, ::lparam lparam)
    {
 
       auto _this = this;
 
-      switch (iMainThreadMessage)
+      switch (message)
       {
 
          case _WM_USER_NEW_LISTENING:
@@ -407,6 +411,17 @@ namespace remoting_remoting
          case _WM_USER_ABOUT:
             _this->showAboutViewer();
             break;
+                         case WM_USER_RECONNECT: {
+                            ConnectionData *pconnectiondata = reinterpret_cast<ConnectionData *>(wparam.m_number);
+                            ::remoting::ConnectionConfig *pconnectionconfig = reinterpret_cast<::remoting::ConnectionConfig *>(lparam.m_lparam);
+                            _this->newConnection(*pconnectiondata, *pconnectionconfig);
+                            _this->m_instances.decreaseToReconnect();
+                            break;
+                         }
+            
+                         case WM_USER_CONFIGURATION_RELOAD:
+                            _this->restartListeningServer();
+                            break;
 
          default:
             break;
