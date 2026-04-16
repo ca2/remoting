@@ -59,7 +59,7 @@ namespace remoting
       virtual bool getByte(const ::scoped_string & scopedstrName, char *value) = 0;
       virtual bool setByte(const ::scoped_string & scopedstrName, char value) = 0;
 
-      virtual bool getBinaryData(const ::scoped_string & scopedstrName, void *value, size_t *size) = 0;
-      virtual bool setBinaryData(const ::scoped_string & scopedstrName, const void *value, size_t size) = 0;
+      virtual bool getBinaryData(const ::scoped_string & scopedstrName, void *value, memsize *size) = 0;
+      virtual bool setBinaryData(const ::scoped_string & scopedstrName, const void *value, memsize size) = 0;
    };
 } // namespace remoting

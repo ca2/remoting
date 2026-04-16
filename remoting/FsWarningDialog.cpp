@@ -35,9 +35,9 @@ namespace remoting_remoting
 
     bool FsWarningDialog::onInitDialog()
     {
-        subclassControlById(m_pcheckboxFsWarning, IDC_CWARN_FS);
+        subclassControlById(m_checkboxFsWarning, IDC_CWARN_FS);
 
-        m_pcheckboxFsWarning->setChecked(false);
+        m_checkboxFsWarning.setChecked(false);
         return false;
     }
 
@@ -45,7 +45,7 @@ namespace remoting_remoting
     {
         if (controlID == ::innate_subsystem::e_control_id_ok) {
             ::remoting::ViewerConfig *config = ::remoting::ViewerConfig::getInstance();
-            bool promt = !m_pcheckboxFsWarning->isChecked();
+            bool promt = !m_checkboxFsWarning.isChecked();
             config->promptOnFullscreen(promt);
             config->saveToStorage(::remoting::ViewerSettingsManager::getInstance());
             closeDialog(1);

@@ -249,7 +249,7 @@ namespace remoting
       return setInt(scopedstrFullPath, (int)value);
    }
 
-   bool RegistrySettingsManager::getBinaryData(const ::scoped_string & scopedstrFullPath, void *value, size_t *size)
+   bool RegistrySettingsManager::getBinaryData(const ::scoped_string & scopedstrFullPath, void *value, memsize *size)
    {
       ::string path;
       ::string name;
@@ -262,7 +262,7 @@ namespace remoting
       return subKey.getValueAsBinary(name, value, size);
    }
 
-   bool RegistrySettingsManager::setBinaryData(const ::scoped_string & scopedstrFullPath, const void *value, size_t size)
+   bool RegistrySettingsManager::setBinaryData(const ::scoped_string & scopedstrFullPath, const void *value, memsize size)
    {
       ::string path;
       ::string name;

@@ -162,9 +162,9 @@ namespace remoting
          }
 
          try {
-            DataOutputStream dos(m_pwriteable);
+            DataOutputStream dataoutputstream(m_pwriteable);
             if (!m_replyBuffer->getDownloadBuffer().empty()) {
-               dos.write(m_replyBuffer->getDownloadBuffer().data(),
+               dataoutputstream.write(m_replyBuffer->getDownloadBuffer().data(),
                               m_replyBuffer->getDownloadBufferSize());
             }
          } catch (::io_exception &ioEx) {
