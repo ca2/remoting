@@ -42,6 +42,11 @@ namespace remoting
    void ConnectionHistory::initialize_connection_history(const ::scoped_string &scopedstr, size_t limit
                                                     )
    {
+
+      m_pregistrykey = main_subsystem()->registry()->openKey(scopedstr);
+
+      m_limit = limit;
+
    }
 
 

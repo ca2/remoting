@@ -173,10 +173,10 @@
     <ClCompile Include="impact_toolbar.cpp" />
     <ClCompile Include="keyboard_layout_change.cpp" />
     <ClCompile Include="LoginDialog.cpp" />
-    <ClCompile Include="application_main.cpp" />
     <ClCompile Include="NamingDefs.cpp" />
     <ClCompile Include="NewFolderDialog.cpp" />
     <ClCompile Include="OptionsDialog.cpp" />
+    <ClCompile Include="remoting.cpp" />
     <ClCompile Include="ResourceStrings.cpp" />
     <ClCompile Include="ScaleManager.cpp" />
     <ClCompile Include="remoting_impact.cpp" />
@@ -212,6 +212,8 @@
     <ClInclude Include="NamingDefs.h" />
     <ClInclude Include="NewFolderDialog.h" />
     <ClInclude Include="OptionsDialog.h" />
+    <ClInclude Include="remoting.h" />
+    <ClInclude Include="remoting_impact.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceStrings.h" />
     <ClInclude Include="ScaleManager.h" />

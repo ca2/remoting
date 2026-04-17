@@ -40,7 +40,8 @@ namespace remoting
    // Contains base set of viewer configuration options.
    //
 
-   class CLASS_DECL_REMOTING_COMMON ViewerConfig : public ::subsystem::Singleton<ViewerConfig>
+   class CLASS_DECL_REMOTING_COMMON ViewerConfig : //public ::subsystem::Singleton<ViewerConfig>
+                                                   public ::particle
    {
    public:
       ViewerConfig(const ::scoped_string & scopedstrRegistryPath);

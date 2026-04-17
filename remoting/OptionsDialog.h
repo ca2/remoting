@@ -47,29 +47,29 @@ namespace remoting_remoting
     public:
 
     //protected:
-        ::pointer < ::innate_subsystem::ComboBoxInterface >       m_pcomboboxUseEnc;
-        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxEightBit;
-        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxCompressionLevel;
-        ::pointer < ::innate_subsystem::TrackbarInterface >       m_ptrackbarCompressionLevel;
-        ::pointer < ::innate_subsystem::ControlInterface >        m_pcontrolQuality;
-        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxJpeg;
-        ::pointer < ::innate_subsystem::TrackbarInterface >       m_ptrackbarJpeg;
-        ::pointer < ::innate_subsystem::ControlInterface >        m_pcontrolQuality2;
-        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxCopyrect;
-        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxViewonly;
-        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxClipboard;
-        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxSharedses;
-        ::pointer < ::innate_subsystem::ComboBoxInterface >       m_pcheckboxScale;
-        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxFullscr;
-        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxDeiconfy;
-        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxSwapmouse;
-        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxTrack;       // Track remote control locally
-        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxCursor;      // Let remote server deal with mouse cursor
-        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxNcursor;     // Don't show remote cursor
-        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxDot;
-        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxSmalldot;
-        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxArrow;
-        ::pointer < ::innate_subsystem::CheckBoxInterface >       m_pcheckboxNlocal;
+        ::innate_subsystem::ComboBox       m_comboboxUseEnc;
+        ::innate_subsystem::CheckBox       m_checkboxEightBit;
+        ::innate_subsystem::CheckBox       m_checkboxCompressionLevel;
+        ::innate_subsystem::Trackbar       m_trackbarCompressionLevel;
+        ::innate_subsystem::Control        m_controlQuality;
+        ::innate_subsystem::CheckBox       m_checkboxJpeg;
+        ::innate_subsystem::Trackbar       m_trackbarJpeg;
+        ::innate_subsystem::Control        m_controlQuality2;
+        ::innate_subsystem::CheckBox       m_checkboxCopyrect;
+        ::innate_subsystem::CheckBox       m_checkboxViewonly;
+        ::innate_subsystem::CheckBox       m_checkboxClipboard;
+        ::innate_subsystem::CheckBox       m_checkboxSharedses;
+        ::innate_subsystem::ComboBox       m_checkboxScale;
+        ::innate_subsystem::CheckBox       m_checkboxFullscr;
+        ::innate_subsystem::CheckBox       m_checkboxDeiconfy;
+        ::innate_subsystem::CheckBox       m_checkboxSwapmouse;
+        ::innate_subsystem::CheckBox       m_checkboxTrack;       // Track remote control locally
+        ::innate_subsystem::CheckBox       m_checkboxCursor;      // Let remote server deal with mouse cursor
+        ::innate_subsystem::CheckBox       m_checkboxNcursor;     // Don't show remote cursor
+        ::innate_subsystem::CheckBox       m_checkboxDot;
+        ::innate_subsystem::CheckBox       m_checkboxSmalldot;
+        ::innate_subsystem::CheckBox       m_checkboxArrow;
+        ::innate_subsystem::CheckBox       m_checkboxNlocal;
 
         void onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam);
         bool onCommand(unsigned int controlID, unsigned int notificationID);

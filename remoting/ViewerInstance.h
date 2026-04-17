@@ -33,16 +33,22 @@
 
 namespace remoting_remoting
 {
+   class remoting;
     class ViewerInstance
     {
     public:
+
+       ::pointer<::remoting_remoting::remoting> m_premoting;
+
         // creates the viewer instance by using host:port from condata
         ViewerInstance(subsystem::OperatingSystemApplicationInterface *application,
+           ::remoting_remoting::remoting * premoting,
                        ConnectionData & condata,
                        const ::remoting::ConnectionConfig & conConf);
 
         // creates the viewer instance if we have the socket
         ViewerInstance(subsystem::OperatingSystemApplicationInterface *application,
+                       ::remoting_remoting::remoting *premoting,
                        ConnectionData & condata,
                        const ::remoting::ConnectionConfig & conConf,
                        ::subsystem::SocketIPv4Interface *socket);

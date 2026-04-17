@@ -40,7 +40,7 @@ namespace remoting_remoting
       ~NewFolderDialog();
 
 
-      virtual void initialize_new_folder_dialog(::innate_subsystem::Control *parent);
+      virtual void initialize_new_folder_dialog(::innate_subsystem::ControlInterface *parent);
 
       void setFileName(const ::scoped_string & scopedstrFilename);
       ::string getFileName();

@@ -38,10 +38,10 @@ namespace remoting_remoting
     {
     }
 
-   void NewFolderDialog::initialize_new_folder_dialog(::innate_subsystem::Control *parent)
+   void NewFolderDialog::initialize_new_folder_dialog(::innate_subsystem::ControlInterface *parent)
     {
        setResourceId(ftclient_createFolderDialog);
-       setParent(parent);
+       setParent(parent->impl<WindowInterface>());
        m_strFileName= "";
     }
 

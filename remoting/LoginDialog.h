@@ -42,11 +42,15 @@
 namespace remoting_remoting
 {
     class remoting_impact;
+   class remoting;
 
     class LoginDialog : public ::innate_subsystem::Dialog
     {
     public:
-        LoginDialog(remoting_impact *viewer);
+
+       ::pointer<::remoting_remoting::remoting> m_premoting;
+
+       LoginDialog(remoting_impact *viewer, ::remoting_remoting::remoting *premoting);
         ~LoginDialog();
 
         // this function returns the host
@@ -65,7 +69,7 @@ namespace remoting_remoting
         static const int LISTENING_MODE = 2;
 
     protected:
-        bool onInitDialog();
+        bool onInitDialog() override;
         bool onCommand(unsigned int controlID, unsigned int notificationID);
         bool m_isListening;
 

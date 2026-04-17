@@ -179,14 +179,14 @@ namespace remoting
    }
 
    // FIXME: Stub
-   bool IniFileSettingsManager::getBinaryData(const ::scoped_string &scopedstrName, void *value, size_t *size)
+   bool IniFileSettingsManager::getBinaryData(const ::scoped_string &scopedstrName, void *value, memsize *size)
    {
       _ASSERT(false);
       return false;
    }
 
    // FIXME: Stub
-   bool IniFileSettingsManager::setBinaryData(const ::scoped_string &scopedstrName, const void *value, size_t size)
+   bool IniFileSettingsManager::setBinaryData(const ::scoped_string &scopedstrName, const void *value, memsize size)
    {
       _ASSERT(false);
       return false;

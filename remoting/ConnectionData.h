@@ -31,7 +31,8 @@
 
 namespace remoting_remoting
 {
-   class ConnectionData
+   class ConnectionData :
+      virtual public ::particle
    {
    public:
       ConnectionData();
@@ -80,7 +81,7 @@ namespace remoting_remoting
       bool isIncoming() const;
 
       //protected:
-      ;;remoting::HostPath m_hostPath;
+      ::remoting::HostPath m_hostPath;
       int m_iDivisor;
 
       // This flag is true, if host isn't set.

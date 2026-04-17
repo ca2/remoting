@@ -29,14 +29,15 @@
 #include "acme/filesystem/file/item.h"
 //#include "file_lib/::file::item.h"
 #include "subsystem/node/Process.h"
+#include "remoting/remoting/remoting.h"
 #include "remoting/remoting_common/remoting.h"
 
 
 namespace remoting_remoting
 {
-    ConfigurationDialog::ConfigurationDialog()
+    ConfigurationDialog::ConfigurationDialog(::remoting_remoting::remoting * premoting)
     :
-      m_application(0)
+      m_application(0), m_premoting(premoting)
     {
        initialize_dialog(IDD_CONFIGURATION);
     }
@@ -66,7 +67,7 @@ namespace remoting_remoting
             return true;
         }
         if (controlID == IDC_BCLEAR_LIST) {
-            ::remoting::ViewerConfig::getInstance()->getConnectionHistory()->clear();
+            m_premoting->m_pconfig->getConnectionHistory()->clear();
         }
         if (controlID == IDC_OPEN_LOG_FOLDER_BUTTON) {
             onOpenFolderButtonClick();
@@ -85,7 +86,7 @@ namespace remoting_remoting
 
             // If log-file is exist, then enable button "Locate...", else disable him.
             //::string logDir;
-            auto logDir = ::remoting::ViewerConfig::getInstance()->getLogDir();
+            auto logDir = m_premoting->m_pconfig->getLogDir();
             auto logFileName = logDir / (::string(LogNames::VIEWER_LOG_FILE_STUB_NAME) + ".log");
 
             auto  logFile=file_item(logFileName);
@@ -103,7 +104,7 @@ namespace remoting_remoting
     {
         //::string logDir;
 
-        auto logDir = ::remoting::ViewerConfig::getInstance()->getLogDir();
+        auto logDir = m_premoting->m_pconfig->getLogDir();
 
         auto pathLog = logDir / (::string(LogNames::VIEWER_LOG_FILE_STUB_NAME) + ".log");
 
@@ -151,7 +152,7 @@ namespace remoting_remoting
 
     void ConfigurationDialog::updateControlValues()
     {
-        auto config = ::remoting::ViewerConfig::getInstance();
+        auto config = m_premoting->m_pconfig;
 
         ::string txt;
 
@@ -189,7 +190,10 @@ namespace remoting_remoting
     bool ConfigurationDialog::testNum(innate_subsystem::TextBoxInterface *tb, const ::scoped_string & scopedstrTbName)
     {
         //::string text;
-        auto text = tb->getText();
+
+       auto pwindow = tb->impl<WindowInterface>();
+
+        auto text = pwindow->getText();
 
         if (main_subsystem()->string_parser()->tryParseInt(text))
         {
@@ -202,7 +206,7 @@ namespace remoting_remoting
         main_subsystem()->message_box(operating_system_window(), scopedstrMessage,
                    main_subsystem()->string_table()->getString(IDS_CONFIGURATION_CAPTION), ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
 
-        tb->setFocus();
+        pwindow->setFocus();
 
         return false;
     }
@@ -213,7 +217,7 @@ namespace remoting_remoting
             return ;
         }
 
-        auto config = ::remoting::ViewerConfig::getInstance();
+        auto config = m_premoting->m_pconfig;
 
         ::string text;
         int intVal;

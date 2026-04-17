@@ -100,35 +100,35 @@ namespace remoting_remoting
 
     bool OptionsDialog::onInitDialog()
     {
-        subclassControlById(m_pcomboboxUseEnc, IDC_CUSEENC);
-        subclassControlById(m_pcheckboxEightBit, IDC_CEIGHTBIT);
-        subclassControlById(m_pcheckboxCompressionLevel, IDC_CCOMPRLVL);
-        subclassControlById(m_ptrackbarCompressionLevel, IDC_SCOMP);
-        subclassControlById(m_pcontrolQuality, IDC_SQUALITY);
-        subclassControlById(m_pcheckboxJpeg, IDC_CJPEG);
-        subclassControlById(m_ptrackbarJpeg, IDC_SJPEG);
-        subclassControlById(m_pcontrolQuality2, IDC_SQUALITY2);
-        subclassControlById(m_pcheckboxCopyrect, IDC_CCOPYRECT);
-        subclassControlById(m_pcheckboxViewonly, IDC_CVIEWONLY);
-        subclassControlById(m_pcheckboxClipboard, IDC_CDISCLIP);
-        subclassControlById(m_pcheckboxSharedses, IDC_CSHAREDSES);
-        subclassControlById(m_pcheckboxScale, IDC_CSCALE);
-        subclassControlById(m_pcheckboxFullscr, IDC_CFULLSCR);
-        subclassControlById(m_pcheckboxDeiconfy, IDC_CDEICONFY);
-        subclassControlById(m_pcheckboxSwapmouse, IDC_CSWAPMOUSE);
-        subclassControlById(m_pcheckboxTrack, IDC_RTRACK);
-        subclassControlById(m_pcheckboxCursor, IDC_RCURSOR);
-        subclassControlById(m_pcheckboxNcursor, IDC_RNCURSOR);
-        subclassControlById(m_pcheckboxDot, IDC_RDOT);
-        subclassControlById(m_pcheckboxSmalldot, IDC_RSMALLDOT);
-        subclassControlById(m_pcheckboxArrow, IDC_RARROW);
-        subclassControlById(m_pcheckboxNlocal, IDC_RNLOCAL);
+        subclassControlById(m_comboboxUseEnc, IDC_CUSEENC);
+        subclassControlById(m_checkboxEightBit, IDC_CEIGHTBIT);
+        subclassControlById(m_checkboxCompressionLevel, IDC_CCOMPRLVL);
+        subclassControlById(m_trackbarCompressionLevel, IDC_SCOMP);
+        subclassControlById(m_controlQuality, IDC_SQUALITY);
+        subclassControlById(m_checkboxJpeg, IDC_CJPEG);
+        subclassControlById(m_trackbarJpeg, IDC_SJPEG);
+        subclassControlById(m_controlQuality2, IDC_SQUALITY2);
+        subclassControlById(m_checkboxCopyrect, IDC_CCOPYRECT);
+        subclassControlById(m_checkboxViewonly, IDC_CVIEWONLY);
+        subclassControlById(m_checkboxClipboard, IDC_CDISCLIP);
+        subclassControlById(m_checkboxSharedses, IDC_CSHAREDSES);
+        subclassControlById(m_checkboxScale, IDC_CSCALE);
+        subclassControlById(m_checkboxFullscr, IDC_CFULLSCR);
+        subclassControlById(m_checkboxDeiconfy, IDC_CDEICONFY);
+        subclassControlById(m_checkboxSwapmouse, IDC_CSWAPMOUSE);
+        subclassControlById(m_checkboxTrack, IDC_RTRACK);
+        subclassControlById(m_checkboxCursor, IDC_RCURSOR);
+        subclassControlById(m_checkboxNcursor, IDC_RNCURSOR);
+        subclassControlById(m_checkboxDot, IDC_RDOT);
+        subclassControlById(m_checkboxSmalldot, IDC_RSMALLDOT);
+        subclassControlById(m_checkboxArrow, IDC_RARROW);
+        subclassControlById(m_checkboxNlocal, IDC_RNLOCAL);
 
-        m_pcomboboxUseEnc->addItem("Raw", reinterpret_cast<void *>(::remoting::EncodingDefs::RAW));
-        m_pcomboboxUseEnc->addItem("Hextile", reinterpret_cast<void *>(::remoting::EncodingDefs::HEXTILE));
-        m_pcomboboxUseEnc->addItem("Tight", reinterpret_cast<void *>(::remoting::EncodingDefs::TIGHT));
-        m_pcomboboxUseEnc->addItem("RRE", reinterpret_cast<void *>(::remoting::EncodingDefs::RRE));
-        m_pcomboboxUseEnc->addItem("ZRLE", reinterpret_cast<void *>(::remoting::EncodingDefs::ZRLE));
+        m_comboboxUseEnc.addItem("Raw", reinterpret_cast<void *>(::remoting::EncodingDefs::RAW));
+        m_comboboxUseEnc.addItem("Hextile", reinterpret_cast<void *>(::remoting::EncodingDefs::HEXTILE));
+        m_comboboxUseEnc.addItem("Tight", reinterpret_cast<void *>(::remoting::EncodingDefs::TIGHT));
+        m_comboboxUseEnc.addItem("RRE", reinterpret_cast<void *>(::remoting::EncodingDefs::RRE));
+        m_comboboxUseEnc.addItem("ZRLE", reinterpret_cast<void *>(::remoting::EncodingDefs::ZRLE));
 
 
         // FIXME: replaced literals to named constants
@@ -136,11 +136,11 @@ namespace remoting_remoting
                                        "100", "125","150", "Auto"};
         for (auto & str :scaleComboText)
         {
-            m_pcheckboxScale->addItem(str);
+            m_checkboxScale.addItem(str);
         }
 
-        m_ptrackbarJpeg->setRange(0, 9);
-        m_ptrackbarCompressionLevel->setRange(0, 9);
+        m_trackbarJpeg.setRange(0, 9);
+        m_trackbarCompressionLevel.setRange(0, 9);
         updateControlValues();
         return false;
     }
@@ -148,36 +148,36 @@ namespace remoting_remoting
     void OptionsDialog::updateControlValues()
     {
         // Preferred encoding
-        for (int i = 0; i < m_pcomboboxUseEnc->getItemsCount(); i++) {
-            int enc = reinterpret_cast<int>(m_pcomboboxUseEnc->getItemData(i));
+        for (int i = 0; i < m_comboboxUseEnc.getItemsCount(); i++) {
+            int enc = reinterpret_cast<int>(m_comboboxUseEnc.getItemData(i));
             if (enc == m_pconnectionconfig->getPreferredEncoding()) {
-                m_pcomboboxUseEnc->setSelectedItem(i);
+                m_comboboxUseEnc.setSelectedItem(i);
                 break;
             } // if found
 
             // set default value, if preferred encoding not in ::list_base
             if (enc == ::remoting::EncodingDefs::HEXTILE)
-                m_pcomboboxUseEnc->setSelectedItem(i);
+                m_comboboxUseEnc.setSelectedItem(i);
         } // for i
 
-        m_pcheckboxEightBit->setChecked(m_pconnectionconfig->isUsing8BitColor());
+        m_checkboxEightBit.setChecked(m_pconnectionconfig->isUsing8BitColor());
 
-        m_pcheckboxCompressionLevel->setChecked(m_pconnectionconfig->isCustomCompressionEnabled());
-        m_pcheckboxJpeg->setChecked(m_pconnectionconfig->isJpegCompressionEnabled());
+        m_checkboxCompressionLevel.setChecked(m_pconnectionconfig->isCustomCompressionEnabled());
+        m_checkboxJpeg.setChecked(m_pconnectionconfig->isJpegCompressionEnabled());
 
-        m_pcheckboxCopyrect->setChecked(m_pconnectionconfig->isCopyRectAllowed());
-        m_pcheckboxViewonly->setChecked(m_pconnectionconfig->isViewOnly());
-        m_pcheckboxClipboard->setChecked(!m_pconnectionconfig->isClipboardEnabled());
-        m_pcheckboxFullscr->setChecked(m_pconnectionconfig->isFullscreenEnabled());
-        m_pcheckboxDeiconfy->setChecked(m_pconnectionconfig->isDeiconifyOnRemoteBellEnabled());
-        m_pcheckboxSwapmouse->setChecked(m_pconnectionconfig->isMouseSwapEnabled());
+        m_checkboxCopyrect.setChecked(m_pconnectionconfig->isCopyRectAllowed());
+        m_checkboxViewonly.setChecked(m_pconnectionconfig->isViewOnly());
+        m_checkboxClipboard.setChecked(!m_pconnectionconfig->isClipboardEnabled());
+        m_checkboxFullscr.setChecked(m_pconnectionconfig->isFullscreenEnabled());
+        m_checkboxDeiconfy.setChecked(m_pconnectionconfig->isDeiconifyOnRemoteBellEnabled());
+        m_checkboxSwapmouse.setChecked(m_pconnectionconfig->isMouseSwapEnabled());
 
-        m_pcheckboxSharedses->setChecked(m_pconnectionconfig->getSharedFlag());
-        m_pcheckboxSharedses->enableWindow(!m_connected);
+        m_checkboxSharedses.setChecked(m_pconnectionconfig->getSharedFlag());
+        m_checkboxSharedses.enableWindow(!m_connected);
 
         if (m_pconnectionconfig->isFitWindowEnabled()) {
             // FIXME: replace literal to named constant
-            m_pcheckboxScale->setSelectedItem(7);
+            m_checkboxScale.setSelectedItem(7);
         } else {
             int n = m_pconnectionconfig->getScaleNumerator();
             int d = m_pconnectionconfig->getScaleDenominator();
@@ -187,15 +187,15 @@ namespace remoting_remoting
             ::string text;
             text.format("{}", percent);
 
-            m_pcheckboxScale->setText(text);
+            m_checkboxScale.setText(text);
         }
 
         {
             bool enableCursorUpdate = m_pconnectionconfig->isRequestingShapeUpdates();
             bool ignoreCursorUpdate = m_pconnectionconfig->isIgnoringShapeUpdates();
-            m_pcheckboxTrack->setChecked(enableCursorUpdate && !ignoreCursorUpdate);
-            m_pcheckboxCursor->setChecked(!enableCursorUpdate && ignoreCursorUpdate);
-            m_pcheckboxNcursor->setChecked(enableCursorUpdate && ignoreCursorUpdate);
+            m_checkboxTrack.setChecked(enableCursorUpdate && !ignoreCursorUpdate);
+            m_checkboxCursor.setChecked(!enableCursorUpdate && ignoreCursorUpdate);
+            m_checkboxNcursor.setChecked(enableCursorUpdate && ignoreCursorUpdate);
         }
 
         ::string labelText;
@@ -204,9 +204,9 @@ namespace remoting_remoting
             int level = DEFAULT_COMPRESSION_LEVEL;
             if (m_pconnectionconfig->isCustomCompressionEnabled())
                 level = m_pconnectionconfig->getCustomCompressionLevel();
-            m_ptrackbarCompressionLevel->setPos(level);
+            m_trackbarCompressionLevel.setPos(level);
             labelText.format("{}", level);
-            m_pcontrolQuality->setText(labelText);
+            m_controlQuality.setText(labelText);
         }
 
         {
@@ -214,23 +214,23 @@ namespace remoting_remoting
             int level = DEFAULT_JPEG_COMPRESSION_LEVEL;
             if (m_pconnectionconfig->isJpegCompressionEnabled())
                 level = m_pconnectionconfig->getJpegCompressionLevel();
-            m_ptrackbarJpeg->setPos(level);
+            m_trackbarJpeg.setPos(level);
             labelText.format("{}", level);
-            m_pcontrolQuality2->setText(labelText);
+            m_controlQuality2.setText(labelText);
         }
 
         switch (m_pconnectionconfig->getLocalCursorShape()) {
            case ::remoting::ConnectionConfig::SMALL_CURSOR:
-                m_pcheckboxSmalldot->setChecked(true);
+                m_checkboxSmalldot.setChecked(true);
                 break;
             case ::remoting::ConnectionConfig::NORMAL_CURSOR:
-                m_pcheckboxArrow->setChecked(true);
+                m_checkboxArrow.setChecked(true);
                 break;
             case ::remoting::ConnectionConfig::NO_CURSOR:
-                m_pcheckboxNlocal->setChecked(true);
+                m_checkboxNlocal.setChecked(true);
                 break;
             default:
-                m_pcheckboxDot->setChecked(true);
+                m_checkboxDot.setChecked(true);
                 break;
         }
 
@@ -248,43 +248,43 @@ namespace remoting_remoting
 
     void OptionsDialog::onViewOnlyClick()
     {
-        if (m_pcheckboxViewonly->isChecked()) {
-            m_pcheckboxSwapmouse->enableWindow(false);
+        if (m_checkboxViewonly.isChecked()) {
+            m_checkboxSwapmouse.enableWindow(false);
         } else {
-            m_pcheckboxSwapmouse->enableWindow(true);
+            m_checkboxSwapmouse.enableWindow(true);
         }
     }
 
     void OptionsDialog::on8BitColorClick()
     {
-        if (!m_pcheckboxEightBit->isChecked()) {
-            if (m_pcheckboxJpeg->isChecked()) {
+        if (!m_checkboxEightBit.isChecked()) {
+            if (m_checkboxJpeg.isChecked()) {
                 enableJpegCompression(true);
             }
-            m_pcheckboxJpeg->enableWindow(true);
+            m_checkboxJpeg.enableWindow(true);
         } else {
-            m_pcheckboxJpeg->enableWindow(false);
+            m_checkboxJpeg.enableWindow(false);
             enableJpegCompression(false);
         }
     }
 
     void OptionsDialog::enableJpegCompression(bool enable)
     {
-        m_ptrackbarJpeg->enableWindow(enable);
-        m_pcontrolQuality2->enableWindow(enable);
+        m_trackbarJpeg.enableWindow(enable);
+        m_controlQuality2.enableWindow(enable);
        dialog_item (IDC_SPOOR)->enableWindow(enable);
         dialog_item(IDC_SBEST2)->enableWindow(enable);
         dialog_item(IDC_STQUALITY2)->enableWindow(enable);
     }
     void OptionsDialog::onAllowCustomCompressionClick()
     {
-        enableCustomCompression(m_pcheckboxCompressionLevel->isChecked());
+        enableCustomCompression(m_checkboxCompressionLevel.isChecked());
     }
 
     void OptionsDialog::enableCustomCompression(bool enable)
     {
-        m_ptrackbarCompressionLevel->enableWindow(enable);
-        m_pcontrolQuality->enableWindow(enable);
+        m_trackbarCompressionLevel.enableWindow(enable);
+        m_controlQuality.enableWindow(enable);
         dialog_item(IDC_SBEST)->enableWindow(enable);
         dialog_item(IDC_SFAST)->enableWindow(enable);
         dialog_item(IDC_STQUALITY)->enableWindow(enable);
@@ -292,24 +292,24 @@ namespace remoting_remoting
 
     void OptionsDialog::onAllowJpegCompressionClick()
     {
-        enableJpegCompression(m_pcheckboxJpeg->isChecked());
+        enableJpegCompression(m_checkboxJpeg.isChecked());
     }
 
     void OptionsDialog::onPreferredEncodingSelectionChange()
     {
-        int index = m_pcomboboxUseEnc->getSelectedItemIndex();
+        int index = m_comboboxUseEnc.getSelectedItemIndex();
         if (index < 0) {
             return ;
         }
-        int encoding = reinterpret_cast<int>(m_pcomboboxUseEnc->getItemData(index));
+        int encoding = reinterpret_cast<int>(m_comboboxUseEnc.getItemData(index));
         switch (encoding) {
             case ::remoting::EncodingDefs::TIGHT:
-                enableCustomCompression(m_pcheckboxCompressionLevel->isChecked());
-                m_pcheckboxCompressionLevel->enableWindow(true);
+                enableCustomCompression(m_checkboxCompressionLevel.isChecked());
+                m_checkboxCompressionLevel.enableWindow(true);
                 break;
             default:
                 enableCustomCompression(false);
-                m_pcheckboxCompressionLevel->enableWindow(false);
+                m_checkboxCompressionLevel.enableWindow(false);
                 break;
         } // switch
     } // void
@@ -317,25 +317,25 @@ namespace remoting_remoting
     void OptionsDialog::onCustomCompressionLevelScroll()
     {
         ::string labelText;
-        labelText.format("{}", m_ptrackbarCompressionLevel->getPos());
-        m_pcontrolQuality->setText(labelText);
+        labelText.format("{}", m_trackbarCompressionLevel.getPos());
+        m_controlQuality.setText(labelText);
     }
 
     void OptionsDialog::onJpegCompressionLevelScroll()
     {
         ::string labelText;
-        labelText.format("{}", m_ptrackbarJpeg->getPos());
-        m_pcontrolQuality2->setText(labelText);
+        labelText.format("{}", m_trackbarJpeg.getPos());
+        m_controlQuality2.setText(labelText);
     }
 
     void OptionsDialog::onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam)
     {
         switch (uMsg) {
            case ::user::e_message_scroll_x:
-                if (m_ptrackbarCompressionLevel->operating_system_window() == lParam) {
+                if (m_trackbarCompressionLevel.operating_system_window() == lParam) {
                     onCustomCompressionLevelScroll();
                 }
-                if (m_ptrackbarJpeg->operating_system_window() == lParam) {
+                if (m_trackbarJpeg.operating_system_window() == lParam) {
                     onJpegCompressionLevelScroll();
                 }
                 break;
@@ -345,7 +345,7 @@ namespace remoting_remoting
     void OptionsDialog::onScaleKillFocus()
     {
         //::string scaleText;
-        auto scaleText = m_pcheckboxScale->getText();
+        auto scaleText = m_checkboxScale.getText();
 
         int scale;
 
@@ -363,7 +363,7 @@ namespace remoting_remoting
         }
 
         scaleText.format("{}", scale);
-        m_pcheckboxScale->setText(scaleText);
+        m_checkboxScale.setText(scaleText);
     }
 
     bool OptionsDialog::isInputValid()
@@ -371,7 +371,7 @@ namespace remoting_remoting
         int scaleInt;
         //::string scaleText;
 
-        auto scaleText = m_pcheckboxScale->getText();
+        auto scaleText = m_checkboxScale.getText();
 
         if (scaleText == "Auto") {
             return true;
@@ -413,41 +413,41 @@ namespace remoting_remoting
     void OptionsDialog::apply()
     {
         // Preferred encoding
-        int pesii = m_pcomboboxUseEnc->getSelectedItemIndex();
+        int pesii = m_comboboxUseEnc.getSelectedItemIndex();
         if (pesii >= 0) {
-            int preferredEncoding = reinterpret_cast<int>(m_pcomboboxUseEnc->getItemData(pesii));
+            int preferredEncoding = reinterpret_cast<int>(m_comboboxUseEnc.getItemData(pesii));
             m_pconnectionconfig->setPreferredEncoding(preferredEncoding);
         } else {
             _ASSERT(pesii >= 0);
             m_pconnectionconfig->setPreferredEncoding(::remoting::EncodingDefs::TIGHT);
         }
 
-        if (m_pcheckboxCompressionLevel->isChecked()) {
-            int level = static_cast<int>(m_ptrackbarCompressionLevel->getPos());
+        if (m_checkboxCompressionLevel.isChecked()) {
+            int level = static_cast<int>(m_trackbarCompressionLevel.getPos());
             m_pconnectionconfig->setCustomCompressionLevel(level);
         } else {
             m_pconnectionconfig->disableCustomCompression();
         }
 
-        if (m_pcheckboxJpeg->isChecked()) {
-            int level = static_cast<int>(m_ptrackbarJpeg->getPos());
+        if (m_checkboxJpeg.isChecked()) {
+            int level = static_cast<int>(m_trackbarJpeg.getPos());
             m_pconnectionconfig->setJpegCompressionLevel(level);
         } else {
             m_pconnectionconfig->disableJpegCompression();
         }
 
-        m_pconnectionconfig->use8BitColor(m_pcheckboxEightBit->isChecked());
-        m_pconnectionconfig->allowCopyRect(m_pcheckboxCopyrect->isChecked());
-        m_pconnectionconfig->setViewOnly(m_pcheckboxViewonly->isChecked());
-        m_pconnectionconfig->enableClipboard(m_pcheckboxClipboard->isChecked());
-        m_pconnectionconfig->enableFullscreen(m_pcheckboxFullscr->isChecked());
-        m_pconnectionconfig->deiconifyOnRemoteBell(m_pcheckboxDeiconfy->isChecked());
-        m_pconnectionconfig->swapMouse(m_pcheckboxSwapmouse->isChecked());
-        m_pconnectionconfig->setSharedFlag(m_pcheckboxSharedses->isChecked());
+        m_pconnectionconfig->use8BitColor(m_checkboxEightBit.isChecked());
+        m_pconnectionconfig->allowCopyRect(m_checkboxCopyrect.isChecked());
+        m_pconnectionconfig->setViewOnly(m_checkboxViewonly.isChecked());
+        m_pconnectionconfig->enableClipboard(m_checkboxClipboard.isChecked());
+        m_pconnectionconfig->enableFullscreen(m_checkboxFullscr.isChecked());
+        m_pconnectionconfig->deiconifyOnRemoteBell(m_checkboxDeiconfy.isChecked());
+        m_pconnectionconfig->swapMouse(m_checkboxSwapmouse.isChecked());
+        m_pconnectionconfig->setSharedFlag(m_checkboxSharedses.isChecked());
 
         ::string scaleText;
 
-        scaleText = m_pcheckboxScale->getText();
+        scaleText = m_checkboxScale.getText();
 
         int scaleInt = 0;
 
@@ -458,27 +458,27 @@ namespace remoting_remoting
             m_pconnectionconfig->fitWindow(true);
         }
 
-        if (m_pcheckboxTrack->isChecked()) {
+        if (m_checkboxTrack.isChecked()) {
             m_pconnectionconfig->requestShapeUpdates(true);
             m_pconnectionconfig->ignoreShapeUpdates(false);
         }
 
-        if (m_pcheckboxCursor->isChecked()) {
+        if (m_checkboxCursor.isChecked()) {
             m_pconnectionconfig->requestShapeUpdates(false);
             m_pconnectionconfig->ignoreShapeUpdates(true);
         }
 
-        if (m_pcheckboxNcursor->isChecked()) {
+        if (m_checkboxNcursor.isChecked()) {
             m_pconnectionconfig->requestShapeUpdates(true);
             m_pconnectionconfig->ignoreShapeUpdates(true);
         }
 
         int localCursorShape = ::remoting::ConnectionConfig::DOT_CURSOR;
-        if (m_pcheckboxSmalldot->isChecked()) {
+        if (m_checkboxSmalldot.isChecked()) {
             localCursorShape = ::remoting::ConnectionConfig::SMALL_CURSOR;
-        } else if (m_pcheckboxArrow->isChecked()) {
+        } else if (m_checkboxArrow.isChecked()) {
             localCursorShape = ::remoting::ConnectionConfig::NORMAL_CURSOR;
-        } else if (m_pcheckboxNlocal->isChecked()) {
+        } else if (m_checkboxNlocal.isChecked()) {
             localCursorShape = ::remoting::ConnectionConfig::NO_CURSOR;
         }
 

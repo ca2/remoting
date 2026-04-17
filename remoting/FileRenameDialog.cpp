@@ -35,7 +35,7 @@ namespace remoting_remoting
     {
     }
 
-    void FileRenameDialog::initialize_file_rename_dialog(::innate_subsystem::Control *parent)
+    void FileRenameDialog::initialize_file_rename_dialog(::innate_subsystem::ControlInterface *parent)
     {
         initialize_new_folder_dialog(parent);
     }

@@ -28,15 +28,16 @@
 #include "remoting/remoting_common/remoting.h"
 #include "subsystem/node/Shell.h"
 #include "innate_subsystem/subsystem.h"
+#include "remoting/remoting/remoting.h"
 #include "subsystem/node/SystemException.h"
 
 
 namespace remoting_remoting
 {
-    LoginDialog::LoginDialog(remoting_impact *viewer)
+    LoginDialog::LoginDialog(remoting_impact *viewer, ::remoting_remoting::remoting * premoting)
     :
       m_viewer(viewer),
-      m_isListening(false)
+      m_isListening(false), m_premoting(premoting)
     {
        initialize_dialog(IDD_LOGINDIALOG);
     }
@@ -79,7 +80,7 @@ namespace remoting_remoting
         ::string currentServer;
         currentServer = m_server.getText();
         m_server.removeAllItems();
-        conHistory = ::remoting::ViewerConfig::getInstance()->getConnectionHistory();
+        conHistory = m_premoting->m_pconfig->getConnectionHistory();
         conHistory->load();
         for (size_t i = 0; i < conHistory->getHostCount(); i++) {
             m_server.insertItem(static_cast<int>(i), conHistory->getHost(i));
@@ -99,7 +100,7 @@ namespace remoting_remoting
 
     void LoginDialog::onConnect()
     {
-        auto conHistory = ::remoting::ViewerConfig::getInstance()->getConnectionHistory();
+        auto conHistory = m_premoting->m_pconfig->getConnectionHistory();
 
         m_serverHost = m_server.getText();
 
@@ -184,7 +185,7 @@ namespace remoting_remoting
         m_connectionConfig.loadFromStorage(&ccsm);
 
         m_listening.enableWindow(false);
-        m_viewer->startListening(::remoting::ViewerConfig::getInstance()->getListenPort());
+        m_viewer->startListening(m_premoting->m_pconfig->getListenPort());
     }
 
     void LoginDialog::onAbout()
@@ -194,67 +195,67 @@ namespace remoting_remoting
 
     bool LoginDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
-        // switch (controlID) {
-        //     case IDC_CSERVER:
-        //         switch (notificationID) {
-        //         case CBN_DROPDOWN:
-        //                 updateHistory();
-        //                 break;
-        //
-        //                 // select item in ComboBox with ::list_base of history
-        //         case CBN_SELENDOK:
-        //         {
-        //             int selectedItemIndex = m_server.getSelectedItemIndex();
-        //             if (selectedItemIndex < 0) {
-        //                 return false;
-        //             }
-        //             //::string server;
-        //             auto server = m_server.getItemText(selectedItemIndex);
-        //             ::remoting::ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
-        //                                     server);
-        //             m_connectionConfig.loadFromStorage(&ccsm);
-        //             break;
-        //         }
-        //         }
-        //
-        //         enableConnect();
-        //         break;
-        //
-        //         // click "Connect"
-        //     case ::innate_subsystem::e_control_id_ok:
-        //         onConnect();
-        //         closeDialog(0);
-        //         break;
-        //
-        //         // cancel connection
-        //     case ::innate_subsystem::e_control_id_cancel:
-        //         closeDialog(0);
-        //         break;
-        //
-        //     case IDC_BCONFIGURATION:
-        //         onConfiguration();
-        //         break;
-        //
-        //     case IDC_BOPTIONS:
-        //         return onOptions();
-        //
-        //     case IDC_LISTENING:
-        //         onListening();
-        //         closeDialog(0);
-        //         break;
-        //
-        //     case IDC_ORDER_SUPPORT_BUTTON:
-        //         onOrder();
-        //         break;
-        //
-        //     case IDC_BABOUT:
-        //         onAbout();
-        //         break;
-        //
-        //     default:
-        //         _ASSERT(true);
-        //         return false;
-        // }
+         switch (controlID) {
+             case IDC_CSERVER:
+                 //switch (notificationID) {
+                 //case CBN_DROPDOWN:
+                 //        updateHistory();
+                 //        break;
+        
+                 //        // select item in ComboBox with ::list_base of history
+                 //case CBN_SELENDOK:
+                 //{
+                 //    int selectedItemIndex = m_server.getSelectedItemIndex();
+                 //    if (selectedItemIndex < 0) {
+                 //        return false;
+                 //    }
+                 //    //::string server;
+                 //    auto server = m_server.getItemText(selectedItemIndex);
+                 //    ::remoting::ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
+                 //                            server);
+                 //    m_connectionConfig.loadFromStorage(&ccsm);
+                 //    break;
+                 //}
+                 //}
+        
+                 enableConnect();
+                 break;
+        
+                 // click "Connect"
+             case ::innate_subsystem::e_control_id_ok:
+                 onConnect();
+                 closeDialog(0);
+                 break;
+        
+                 // cancel connection
+             case ::innate_subsystem::e_control_id_cancel:
+                 closeDialog(0);
+                 break;
+        
+             case IDC_BCONFIGURATION:
+                 onConfiguration();
+                 break;
+        
+             case IDC_BOPTIONS:
+                 return onOptions();
+        
+             case IDC_LISTENING:
+                 onListening();
+                 closeDialog(0);
+                 break;
+        
+             case IDC_ORDER_SUPPORT_BUTTON:
+                 onOrder();
+                 break;
+        
+             case IDC_BABOUT:
+                 onAbout();
+                 break;
+        
+             default:
+                 _ASSERT(true);
+                 return false;
+         }
         return true;
     }
 

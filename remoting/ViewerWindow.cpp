@@ -34,6 +34,7 @@
 #include "innate_subsystem/drawing/Cursor.h"
 #include "FsWarningDialog.h"
 #include "NamingDefs.h"
+#include "remoting/remoting/remoting.h"
 #include "remoting_impact.h"
 #include "ViewerWindow.h"
 #include "acme/constant/id.h"
@@ -51,12 +52,14 @@ namespace remoting_remoting
 
 
     ViewerWindow::ViewerWindow(subsystem::OperatingSystemApplicationInterface *application,
+                              ::remoting_remoting::remoting *premoting, 
                                ConnectionData *conData,
                                ::remoting::ConnectionConfig *conConf,
                                ::subsystem::LogWriter * plogwriter)
     : m_ccsm(RegistryPaths::VIEWER_PATH,
              conData->getHost()),
       m_application(application),
+       m_premoting(premoting),
       m_plogwriter(plogwriter),
       m_pconnectionconfig(conConf),
       m_scale(100),
@@ -175,7 +178,7 @@ namespace remoting_remoting
         m_menu.loadMenu();
         applySettings();
         m_timeStart.Now();
-        ::remoting:: ViewerConfig *config = ::remoting::ViewerConfig::getInstance();
+        ::remoting:: ViewerConfig *config = m_premoting->m_pconfig;
         bool bShowToolbar = config->isToolbarShown();
         if (!bShowToolbar) {
             m_toolbar.hide();
@@ -954,7 +957,7 @@ namespace remoting_remoting
 
        if (!bRestore)
        {
-          auto config = ::remoting::ViewerConfig::getInstance();
+          auto config = m_premoting->m_pconfig;
 
           if (config->isPromptOnFullscreenEnabled()) {
              postMessage(WM_USER_FS_WARNING);
@@ -1038,7 +1041,7 @@ namespace remoting_remoting
     //     m_pconnectionconfig->enableFullscreen(true);
     //     m_pconnectionconfig->saveToStorage(&m_ccsm);
     //
-    //     auto config = ::remoting::ViewerConfig::getInstance();
+    //     auto config = m_premoting->m_pconfig;
     //     m_bToolBar = m_toolbar.isVisible();
     //     m_toolbar.hide();
     //
@@ -1076,7 +1079,7 @@ namespace remoting_remoting
     //     m_pconnectionconfig->enableFullscreen(true);
     //     m_pconnectionconfig->saveToStorage(&m_ccsm);
     //
-    //     //auto config = ::remoting::ViewerConfig::getInstance();
+    //     //auto config = m_premoting->m_pconfig;
     //     //m_bToolBar = m_toolbar.isVisible();
     //     //m_toolbar.hide();
     //
@@ -1304,7 +1307,7 @@ namespace remoting_remoting
 
     bool ViewerWindow::onFsWarning()
     {
-        FsWarningDialog fsWarning;
+        FsWarningDialog fsWarning(m_premoting);
         fsWarning.setParent(this);
         fsWarning.showModal();
         return true;

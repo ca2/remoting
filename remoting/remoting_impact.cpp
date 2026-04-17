@@ -27,6 +27,7 @@
 #include "innate_subsystem/resource_loader.h"
 #include "resource.h"
 #include "innate_subsystem/subsystem.h"
+#include "remoting/remoting/remoting.h"
 #include "remoting/remoting_common/remoting.h"
 
 
@@ -35,13 +36,16 @@ namespace remoting_remoting
 {
    remoting_impact::remoting_impact(::particle * pparticle,
       //::hinstance appInstance,
+                                    ::remoting_remoting::remoting * premoting,
       const ::scoped_string & scopedstrwindowClassName,
                         const ::scoped_string & scopedstrviewerWindowClassName)
    :
      m_viewerWindowClassName(scopedstrviewerWindowClassName),
      m_conListener(0),
      //m_hAccelTable(0),
-     m_plogwriter(::remoting::ViewerConfig::getInstance()->getLogWriter()),
+       m_premoting(premoting),
+       m_configurationDialog(premoting),
+     m_plogwriter(premoting->m_plogwriter),
      m_isListening(false)
    {
       initialize(pparticle);
@@ -60,7 +64,10 @@ namespace remoting_remoting
       //m_hAccelTable = (HACCEL) presourceloader->loadAccelerator(IDR_ACCEL_APP_KEYS);
 
       m_trayIcon = new ControlTrayIcon(this);
-      m_loginDialog = new LoginDialog(this);
+
+      auto plogindialog = new LoginDialog(this, m_premoting);
+
+      m_loginDialog = plogindialog;
    }
 
    remoting_impact::~remoting_impact()
@@ -109,7 +116,7 @@ namespace remoting_remoting
    void remoting_impact::restartListeningServer()
    {
       if (m_isListening) {
-         unsigned short newListenPort = ::remoting::ViewerConfig::getInstance()->getListenPort();
+         unsigned short newListenPort = m_premoting->m_pconfig->getListenPort();
          if (m_conListener->getBindPort() != newListenPort) {
             stopListeningServer();
             // FIXME: remove this parameter.
@@ -155,7 +162,7 @@ namespace remoting_remoting
 
    void remoting_impact::runInstance(ConnectionData & conData, const ::remoting::ConnectionConfig & config)
    {
-      ViewerInstance *pviewerinstance = new ViewerInstance(this, conData, config);
+      ViewerInstance *pviewerinstance = new ViewerInstance(this,m_premoting, conData, config);
       pviewerinstance->start();
 
       addInstance(pviewerinstance);
@@ -173,10 +180,10 @@ namespace remoting_remoting
       runInstance(*pconnectiondata, config);
    }
 
-   void remoting_impact::newConnection(const ConnectionData & conData, const ::remoting::ConnectionConfig & config)
+   void remoting_impact::newConnection(const ConnectionData  *pconData, const ::remoting::ConnectionConfig * pconfig)
    {
-      ConnectionData *pconnectiondataCopy = new ConnectionData(conData);
-      runInstance(*pconnectiondataCopy, config);
+      ConnectionData *pconnectiondataCopy = new ConnectionData(*pconData);
+      runInstance(*pconnectiondataCopy, *pconfig);
    }
 
    void remoting_impact::showLoginDialog()
@@ -344,6 +351,7 @@ namespace remoting_remoting
          auto socket = m_conListener->getNewConnection();
          while (socket != 0) {
             ViewerInstance *viewerInst = new ViewerInstance(this,
+               m_premoting,
                                                             connectionData,
                                                             connectionConfig,
                                                             socket);
@@ -414,7 +422,7 @@ namespace remoting_remoting
                          case WM_USER_RECONNECT: {
                             ConnectionData *pconnectiondata = reinterpret_cast<ConnectionData *>(wparam.m_number);
                             ::remoting::ConnectionConfig *pconnectionconfig = reinterpret_cast<::remoting::ConnectionConfig *>(lparam.m_lparam);
-                            _this->newConnection(*pconnectiondata, *pconnectionconfig);
+                            _this->newConnection(pconnectiondata, pconnectionconfig);
                             _this->m_instances.decreaseToReconnect();
                             break;
                          }
@@ -474,4 +482,16 @@ namespace remoting_remoting
    //       return WindowsApplication::wndProc(hWnd, msg, wparam, lparam);
    //    }
    // }
+
+
+
+   void remoting_impact::run()
+   {
+
+
+      doDefaultMainLoop();
+
+
+   }
+
 } // namespace remoting_remoting

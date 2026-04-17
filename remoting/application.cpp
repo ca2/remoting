@@ -7,6 +7,7 @@
 #include "acme/handler/request.h"
 #include "acme/platform/system.h"
 #include "remoting/remoting_common/remoting.h"
+#include "remoting/remoting/remoting.h"
 //#include "acme/_operating_system.h"
 //#include "main_window.h"
 
@@ -56,9 +57,11 @@ namespace remoting_remoting
       if (ecommand == e_command_application_start)
       {
 
+         defer_construct_newø(m_premoting);
 
+         m_premoting->on_start();
 
-         construct_newø(m_pconnectingdialog);
+         
 
       }
       else if (ecommand == e_command_file_open)
@@ -66,11 +69,14 @@ namespace remoting_remoting
 
          auto path = prequest->m_payloadFile.as_file_path();
          m_bOpenFile = true;
-         fork([this, path]()
-         {
-            remoting_impact_main(path);
 
-         });
+         m_premoting->open_file(path);
+
+         //fork([this, path]()
+         //{
+           // remoting_impact_main(path);
+
+         //});
 
       }
       else if (ecommand == e_command_application_started)
@@ -78,11 +84,8 @@ namespace remoting_remoting
 
          if (!m_bOpenFile)
          {
-            fork([this]()
-   {
-      remoting_impact_main({});
 
-   });
+            m_premoting->open_file({});
 
          }
 
@@ -93,25 +96,7 @@ namespace remoting_remoting
    lresult application::handle_direct_id(const enum_id eid, wparam wparam, lparam lparam)
    {
 
-      if (eid == id_remoting_connecting)
-      {
-
-          m_pconnectingdialog->postMessage(WM_USER + 328, id_remoting_connecting, wparam.m_number);
-
-      }
-      else if (eid == id_remoting_connected)
-      {
-
-         if (m_pconnectingdialog->m_panimation)
-         {
-
-            m_pconnectingdialog->m_panimation->m_bRunning = false;
-
-         }
-
-         m_pconnectingdialog->hide();
-
-      }
+      m_premoting->handle_direct_id(eid, wparam, lparam);
 
       return ::platform::application::handle_direct_id(eid, wparam, lparam);
 

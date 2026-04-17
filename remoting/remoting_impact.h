@@ -44,11 +44,15 @@ namespace remoting_remoting
    class ViewerCollector;
    class ControlTrayIcon;
    class LoginDialog;
-
+   class remoting;
    class remoting_impact : public ::subsystem::OperatingSystemApplication
    {
    public:
-      remoting_impact(::particle * pparticle,
+
+
+      ::pointer<::remoting_remoting::remoting> m_premoting;
+
+      remoting_impact(::particle *pparticle, ::remoting_remoting::remoting *premoting,
          //::hinstance appInstance,
                 const ::scoped_string & scopedstrwindowClassName,
                 const ::scoped_string & scopedstrviewerWindowClassName);
@@ -80,8 +84,7 @@ namespace remoting_remoting
       // with hostName, connectionData, connectionConfig
       void newListeningConnection();
       void newConnection(const ::scoped_string & hostName, const ::remoting::ConnectionConfig & connectionConfig);
-      void newConnection(const ConnectionData & conData, const ::remoting::ConnectionConfig &
-         connectionConfig);
+      void newConnection(const ConnectionData  * pconData, const ::remoting::ConnectionConfig * pconnectionConfig);
       void startListening(int listeningPort);
       void stopListening();
 
@@ -158,6 +161,9 @@ void defer_check_dead_instance();
       LoginDialog *m_loginDialog;
       ControlTrayIcon *m_trayIcon;
       ConnectionListener *m_conListener;
+
+
+      void run() override;
 
       //WNDCLASS m_viewerWndClass;
    };

@@ -24,6 +24,7 @@
 #include "framework.h"
 #include "ViewerInstance.h"
 #include "subsystem/socket/SocketIPv4.h"
+#include "remoting/remoting/remoting.h"
 #include "remoting/remoting_common/viewer_core/RemoteViewerCore.h"
 #include "remoting/remoting_common/viewer_core/FileTransferCapability.h"
 
@@ -31,33 +32,39 @@
 namespace remoting_remoting
 {
     ViewerInstance::ViewerInstance(subsystem::OperatingSystemApplicationInterface *application,
+                                  ::remoting_remoting::remoting *premoting,
                                    ConnectionData & conData,
                                    const ::remoting::ConnectionConfig & conConf)
     : m_pconnectionconfig(conConf),
       m_condata(conData),
       m_socket(0),
+       m_premoting(premoting),
       m_viewerWnd(application,
+         premoting,
                   &m_condata,
                   &m_pconnectionconfig,
-                  ::remoting::ViewerConfig::getInstance()->getLogWriter()),
+                  premoting->m_plogwriter),
       m_vncAuthHandler(&m_condata),
-      m_viewerCore(::remoting::ViewerConfig::getInstance()->getLogWriter())
+      m_viewerCore(premoting->m_plogwriter)
     {
     }
 
     ViewerInstance::ViewerInstance(subsystem::OperatingSystemApplicationInterface *application,
+                                   ::remoting_remoting::remoting *premoting,
                                    ConnectionData & conData,
                                    const ::remoting::ConnectionConfig & conConf,
                                    ::subsystem::SocketIPv4Interface *socket)
     : m_pconnectionconfig(conConf),
       m_condata(conData),
       m_socket(socket),
+        m_premoting(premoting),
       m_viewerWnd(application,
+         premoting,
                   &m_condata,
                   &m_pconnectionconfig,
-                  ::remoting::ViewerConfig::getInstance()->getLogWriter()),
+                  premoting->m_plogwriter),
       m_vncAuthHandler(&m_condata),
-      m_viewerCore(::remoting::ViewerConfig::getInstance()->getLogWriter())
+      m_viewerCore(premoting->m_plogwriter)
     {
     }
 
@@ -100,7 +107,7 @@ namespace remoting_remoting
 
     void ViewerInstance::start()
     {
-        auto plogwriter = ::remoting::ViewerConfig::getInstance()->getLogWriter();
+        auto plogwriter = m_premoting->m_plogwriter;
         m_viewerWnd.setRemoteViewerCore(&m_viewerCore);
 
 

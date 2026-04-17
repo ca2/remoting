@@ -43,11 +43,12 @@ namespace remoting
      //m_conHistory(&m_conHistoryKey, m_historyLimit)
    //,    m_LogWriter(0)
    {
-//      ::string registryKey;
-//      registryKey.format("{}\\History",::string(scopedstrRegistryPath).c_str());
-//      m_conHistoryKey.open(Registry::getCurrentUserKey(),
-//                           registryKey,
-//                           true);
+      ::string registryKey;
+      registryKey.format("{}\\History",::string(scopedstrRegistryPath).c_str());
+      m_conHistory.initialize_connection_history(registryKey, m_historyLimit);
+      //m_conHistoryKey.open(Registry::getCurrentUserKey(),
+        //                   registryKey,
+          //                 true);
    }
 
    ViewerConfig::~ViewerConfig()

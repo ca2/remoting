@@ -47,6 +47,7 @@
 namespace remoting_remoting
 {
 
+   class remoting;
     class ViewerWindow : //public ::innate_subsystem::Window,
    public ::innate_subsystem::Control,
                          public ::remoting::CoreEventsAdapter,
@@ -57,10 +58,11 @@ namespace remoting_remoting
         ::pointer < ::sockets::http_client_socket > m_phttpclientsocketNotifyChannel;
         ::pointer < ::remoting_remoting::keyboard_layout_change > m_pkeyboardlayoutchange;
 
+        ::pointer<::remoting_remoting::remoting> m_premoting;
 
 
         ViewerWindow(::subsystem::OperatingSystemApplicationInterface *application,
-                     ConnectionData *conData, ::remoting::ConnectionConfig *conConf,
+                    ::remoting_remoting::remoting * premoting, ConnectionData *conData, ::remoting::ConnectionConfig *conConf,
                      ::subsystem::LogWriter * plogwriter = 0);
         virtual ~ViewerWindow();
 

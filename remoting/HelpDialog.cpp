@@ -26,7 +26,7 @@
 
 #include "remoting/remoting_common/util/ResourceLoader.h"
 #include "resource.h"
-#include "subsystem/resource_loader.h"
+#include "subsystem/ResourceLoader.h"
 
 
 namespace remoting_remoting

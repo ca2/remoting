@@ -6,25 +6,28 @@
 
 
 #include "apex/platform/application.h"
-#include "remoting/remoting/ConnectingDialog.h"
+
+
+
 namespace remoting_remoting
 {
+
+
+   class remoting;
 
    class CLASS_DECL_REMOTING_REMOTING application :
    virtual public ::apex::application
    {
    public:
 
-      ::pointer < ConnectingDialog > m_pconnectingdialog;
-
-      ::subsystem::LogWriter * m_plogwriter;
       bool m_bOpenFile = false;
+
+      ::pointer<remoting> m_premoting;
 
       __DECLARE_APPLICATION_RELEASE_TIME();
 
       application();
       ~application() override;
-      int remoting_impact_main(const ::file::path &path);
 
       void on_request(::request * prequest) override;
 

@@ -43,10 +43,14 @@
 //#include "remoting/remoting_common/win_system/WindowsApplication.h"
 namespace remoting_remoting
 {
+
+   class remoting;
    class ConfigurationDialog : public ::innate_subsystem::Dialog
    {
    public:
-      ConfigurationDialog();
+
+      ::pointer<::remoting_remoting::remoting> m_premoting;
+      ConfigurationDialog(::remoting_remoting::remoting * premoting);
 
       void setListenerOfUpdate(::subsystem::OperatingSystemApplicationInterface *application);
 

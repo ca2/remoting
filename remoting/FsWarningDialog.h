@@ -29,13 +29,16 @@
 #include "innate_subsystem/gui/CheckBox.h"
 #include "resource.h"
 
-
 namespace remoting_remoting
 {
+   class remoting;
     class FsWarningDialog : public ::innate_subsystem::Dialog
     {
     public:
-        FsWarningDialog();
+
+       ::pointer<::remoting_remoting::remoting> m_premoting;
+
+        FsWarningDialog(::remoting_remoting::remoting * premoting);
         bool isFsWarning();
 
     ////protected:

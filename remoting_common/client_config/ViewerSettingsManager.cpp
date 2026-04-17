@@ -36,7 +36,9 @@ namespace remoting
    {
       ::string keyName;
       keyName.format("{}\\Settings\\", ::string(scopedstrRegistryName).c_str());
-      setRegistryKey(main_subsystem()->registry()->getCurrentUserKey(), keyName.c_str());
+
+      auto pregistrykeyUserKey = main_subsystem()->registry()->getCurrentUserKey();
+      setRegistryKey(pregistrykeyUserKey, keyName.c_str());
    }
 
    ViewerSettingsManager::~ViewerSettingsManager()

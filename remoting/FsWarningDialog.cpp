@@ -23,12 +23,14 @@
 //
 #include "framework.h"
 #include "FsWarningDialog.h"
+#include "innate_subsystem/gui/CheckBox.h"
+#include "remoting/remoting/remoting.h"
 #include "remoting/remoting_common/client_config/ViewerConfig.h"
 #include "remoting/remoting_common/client_config/ViewerSettingsManager.h"
 
 namespace remoting_remoting
 {
-    FsWarningDialog::FsWarningDialog()
+    FsWarningDialog::FsWarningDialog(::remoting_remoting::remoting * premoting) : m_premoting(premoting)
     {
          initialize_dialog(IDD_FS_WARNING);
     }
@@ -44,7 +46,7 @@ namespace remoting_remoting
     bool FsWarningDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
         if (controlID == ::innate_subsystem::e_control_id_ok) {
-            ::remoting::ViewerConfig *config = ::remoting::ViewerConfig::getInstance();
+           auto config = m_premoting->m_pconfig;
             bool promt = !m_checkboxFsWarning.isChecked();
             config->promptOnFullscreen(promt);
             config->saveToStorage(::remoting::ViewerSettingsManager::getInstance());
