@@ -68,7 +68,7 @@ list(APPEND library_source
    _.h
    framework.cpp
    framework.h
-   application_main.cpp
+   #application_main.cpp
    remoting_impact.cpp
    remoting_impact.h
    remoting_remoting.rc

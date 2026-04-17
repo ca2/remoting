@@ -87,15 +87,17 @@ namespace remoting_remoting
         m_standardScale.add(200);
         m_standardScale.add(400);
 
-        ::string windowClass = WindowNames::TVN_WINDOW_CLASS_NAME;
+        //::string windowClass = WindowNames::TVN_WINDOW_CLASS_NAME;
         ::string titleName = WindowNames::TVN_WINDOW_TITLE_NAME;
         ::string subTitleName = WindowNames::TVN_SUB_WINDOW_TITLE_NAME;
 
-        setClass(windowClass);
+        //setClass(windowClass);
+        setClass(::innate_subsystem::e_window_class_viewer);
         createWindow(titleName, WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS);
 
        m_desktopwindow.setClipboardViewerInterest();
-        m_desktopwindow.setClass(windowClass);
+        //m_desktopwindow.setClass(windowClass);
+       m_desktopwindow.setClass(::innate_subsystem::e_window_class_viewer);
         m_desktopwindow.m_pviewerwindow = this;
         m_desktopwindow.createWindow(subTitleName,
                                WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_CHILD,
@@ -156,7 +158,7 @@ namespace remoting_remoting
     {
         //getControl()->setWindow((HWND) _HWND());
 
-      auto pcursor = createø<::innate_subsystem::Cursor>();
+      auto pcursor = createø<::innate_subsystem::CursorInterface>();
       pcursor->initialize_with_system_cursor(::e_cursor_arrow);
       setClassCursor(pcursor);
 
@@ -499,7 +501,7 @@ namespace remoting_remoting
     }
     void ViewerWindow::desktopStateUpdate()
     {
-        if (!isIconic())
+        if (isWindow() && !isIconic())
         {
             // Adjust window of viewer to size of remote desktop.
             adjustWindowSize();

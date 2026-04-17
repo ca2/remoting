@@ -112,7 +112,7 @@ namespace remoting
                                    m_host, m_port,
                                    ipAddressString, m_port);
 
-               m_psocket = ::system()->create_newø< ::subsystem::SocketIPv4 >();
+               m_psocket = ::system()->createø< ::subsystem::SocketIPv4Interface >();
                //m_psocket->initialize_socket_ip4();
                m_socketOwner = true;
                m_psocket->connect(ipAddress);
