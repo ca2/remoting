@@ -188,8 +188,10 @@ namespace remoting_remoting
 
          if (eid == id_remoting_connecting)
    {
-
-      m_pconnectingdialog->postMessage(WM_USER + 328, id_remoting_connecting, wparam.m_number);
+            if (m_pconnectingdialog && m_pconnectingdialog->isWindow())
+            {
+               m_pconnectingdialog->postMessage(WM_USER + 328, id_remoting_connecting, wparam.m_number);
+            }
    }
    else if (eid == id_remoting_connected)
    {
