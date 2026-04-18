@@ -44,34 +44,34 @@ namespace remoting_remoting
    bool ConnectingDialog::onInitDialog()
    {
 
-      constructø(m_ptextboxHost);
-      constructø(m_ptextboxStatus);
-      constructø(m_panimation);
-      constructø(m_panimation->m_pbar);
+      //constructø(m_ptextboxHost);
+      //constructø(m_ptextboxStatus);
+      construct_newø(m_panimation);
+      //constructø(m_panimation->m_pbar);
 
-      subclassControlById(m_ptextboxHost, IDC_HOST);
-      m_ptextboxHost->setText(m_strHost);
-      subclassControlById(m_ptextboxStatus, IDC_STATUS);
-      m_ptextboxStatus->setFocus();
+      subclassControlById(m_textboxHost, IDC_HOST);
+      m_textboxHost.setText(m_strHost);
+      subclassControlById(m_textboxStatus, IDC_STATUS);
+      m_textboxStatus.setFocus();
       //ødefer_construct_new(m_panimation);
-      subclassControlById(m_panimation->m_pbar, IDC_PROGRESS1);
-      m_panimation->m_pbar->setRange(0, 8000);
+      subclassControlById(m_panimation->m_bar, IDC_PROGRESS1);
+      m_panimation->m_bar.setRange(0, 8000);
       return false;
    }
 
    void ConnectingDialog::set_host(const ::scoped_string &hostname) {
       m_strHost = hostname;
-      if (m_ptextboxHost)
+      if (m_textboxHost)
       {
-         m_ptextboxHost->setText(m_strHost);
+         m_textboxHost.setText(m_strHost);
       }
    }
 
    void ConnectingDialog::set_status(const ::scoped_string &status) {
       m_strStatus = status;
-      if (m_ptextboxStatus)
+      if (m_textboxStatus)
       {
-         m_ptextboxStatus->setText(m_strStatus);
+         m_textboxStatus.setText(m_strStatus);
       }
    }
 
@@ -101,7 +101,7 @@ namespace remoting_remoting
    progress_bar_animation::progress_bar_animation()
    {
 
-      m_pbar = nullptr;
+      //m_pbar = nullptr;
    }
 
    progress_bar_animation::~progress_bar_animation()
@@ -145,7 +145,7 @@ namespace remoting_remoting
       {
          m_d = m_time.elapsed().floating_second();
          auto d= fmod(m_d * 0.125, m_dEnd - m_dStart) + m_dStart;
-         m_pbar->postMessage(WM_USER + 327, (int) (d * 8'000.0), 0);
+         m_bar.postMessage(WM_USER + 327, (int) (d * 8'000.0), 0);
          preempt(100_ms);
       }
 

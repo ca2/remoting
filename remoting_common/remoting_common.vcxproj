@@ -330,6 +330,8 @@
     <ClInclude Include="network\TcpClientThread.h" />
     <ClInclude Include="network\TcpServer.h" />
     <ClInclude Include="network\_.h" />
+    <ClInclude Include="region\x11region.h" />
+    <ClInclude Include="region\x11region_inttypes.h" />
     <ClInclude Include="remoting.h" />
     <ClInclude Include="rfb\aaa_framework.h" />
     <ClInclude Include="rfb\AuthDefs.h" />

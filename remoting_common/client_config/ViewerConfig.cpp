@@ -80,8 +80,10 @@ namespace remoting
 
       TEST_FAIL(storage->getBoolean("NoToolbar", &m_showToolbar), loadAllOk);
 
-      if (storage->getBoolean("SkipFullScreenPrompt", &m_promptOnFullscreen)) {
-         m_promptOnFullscreen = !m_promptOnFullscreen;
+      bool bSkipFullScreenPrompt = false;
+      if (storage->getBoolean("SkipFullScreenPrompt", &bSkipFullScreenPrompt))
+      {
+         m_promptOnFullscreen = !bSkipFullScreenPrompt;
       } else {
          loadAllOk = false;
       }

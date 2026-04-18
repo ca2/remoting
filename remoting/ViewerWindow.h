@@ -98,10 +98,11 @@ namespace remoting_remoting
         bool onError();
 
         bool onFsWarning();
-        bool onSize(::wparam wParam, ::lparam lParam);
+        //bool onSize(::wparam wParam, ::lparam lParam);
+        void onSize() override;
         //bool onCreate(LPCREATESTRUCT lps);
        bool onCreate(void *pCreateStruct) override;
-        bool onCommand(::wparam wParam, ::lparam lParam);
+        bool onCommand(unsigned int controlID, bool bAccelerator, unsigned int notificationID) override;
         //bool onNotify(int idCtrl, LPNMHDR pnmh);
         bool onSysCommand(::wparam wParam, ::lparam lParam);
         bool onClose();

@@ -43,7 +43,7 @@ namespace remoting_remoting
     {
     public:
 
-        ::pointer < innate_subsystem::ProgressBar>m_pbar;
+        innate_subsystem::ProgressBar m_bar;
         double m_dStart = 0.0;
         double m_dEnd = 0.0;
         double m_d;
@@ -66,8 +66,8 @@ namespace remoting_remoting
 
 
         ::pointer < progress_bar_animation > m_panimation;
-        ::pointer < ::innate_subsystem::TextBox > m_ptextboxHost;
-        ::pointer < ::innate_subsystem::TextBox > m_ptextboxStatus;
+        ::innate_subsystem::TextBox m_textboxHost;
+        ::innate_subsystem::TextBox m_textboxStatus;
         ::string  m_strHost;
         ::string m_strStatus;
 

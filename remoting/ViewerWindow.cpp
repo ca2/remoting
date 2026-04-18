@@ -96,6 +96,8 @@ namespace remoting_remoting
         createWindow(titleName, WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS);
 
        m_desktopwindow.setClipboardViewerInterest();
+        m_desktopwindow.setDoubleBuffering(true);
+        m_desktopwindow.setOnDrawInterest();
         //m_desktopwindow.setClass(windowClass);
        m_desktopwindow.setClass(::innate_subsystem::e_window_class_viewer);
         m_desktopwindow.m_pviewerwindow = this;
@@ -167,8 +169,11 @@ namespace remoting_remoting
       //setClassCursor(pcursor);
       //  //setClassCursor(LoadCursor(NULL, IDC_ARROW));
         loadIcon(IDI_APPICON);
-        //m_toolbar.loadToolBarfromRes(IDB_TOOLBAR);
+        #ifdef WINDOWS
+        m_toolbar.loadToolbarfromRes(IDB_TOOLBAR);
+        #else
        m_toolbar.loadToolbarFromMatter("matter://toolbar.png");
+       #endif
         m_toolbar.setButtonsRange(IDS_TB_NEWCONNECTION);
         m_toolbar.setViewAutoButtons(4, ::innate_subsystem::TB_Style_sep);
         m_toolbar.setViewAutoButtons(6, ::innate_subsystem::TB_Style_sep);
@@ -336,10 +341,14 @@ namespace remoting_remoting
                 return onClose();
             case WM_DESTROY:
                 return onDestroy();
-            case WM_CREATE:
-                return onCreate((void *) lParam);
-            case WM_SIZE:
-                return onSize(wParam, lParam);
+            case WM_CREATE:;
+               return true;
+               /*           ;
+               return onCreate((void *)lParam);*/
+            //case WM_SIZE:;
+            //   ;
+            //   onSize(wParam, lParam);
+
             case WM_USER_AUTH_ERROR:
                 return onAuthError(wParam);
             case WM_USER_ERROR:
@@ -524,10 +533,10 @@ namespace remoting_remoting
     {
         LRESULT iState = m_toolbar.getState(IDS_TB_CTRLESC);
         if (iState) {
-            m_desktopwindow.sendKey(::user::e_key_left_control, true);
+            m_desktopwindow.sendKey(VK_LCONTROL, true);
             m_desktopwindow.sendKey(VK_ESCAPE,   true);
             m_desktopwindow.sendKey(VK_ESCAPE,   false);
-            m_desktopwindow.sendKey(::user::e_key_left_control, false);
+            m_desktopwindow.sendKey(VK_LCONTROL, false);
         }
     }
 
@@ -539,12 +548,12 @@ namespace remoting_remoting
                 m_menu.checkedMenuItem(IDS_TB_CTRL, true);
                 m_toolbar.checkButton(IDS_TB_CTRL,  true);
                 m_desktopwindow.setCtrlState(true);
-                m_desktopwindow.sendKey(::user::e_key_left_control,      true);
+                m_desktopwindow.sendKey(VK_LCONTROL,      true);
             } else {
                 m_menu.checkedMenuItem(IDS_TB_CTRL, false);
                 m_toolbar.checkButton(IDS_TB_CTRL,  false);
                 m_desktopwindow.setCtrlState(false);
-                m_desktopwindow.sendKey(::user::e_key_left_control,      false);
+                m_desktopwindow.sendKey(VK_LCONTROL,      false);
             }
         }
     }
@@ -557,12 +566,12 @@ namespace remoting_remoting
                 m_menu.checkedMenuItem(IDS_TB_ALT, true);
                 m_toolbar.checkButton(IDS_TB_ALT,  true);
                 m_desktopwindow.setAltState(true);
-                m_desktopwindow.sendKey(::user::e_key_left_alt,        true);
+                m_desktopwindow.sendKey(VK_LMENU,        true);
             } else {
                 m_menu.checkedMenuItem(IDS_TB_ALT, false);
                 m_toolbar.checkButton(IDS_TB_ALT,  false);
                 m_desktopwindow.setAltState(false);
-                m_desktopwindow.sendKey(::user::e_key_left_alt,        false);
+                m_desktopwindow.sendKey(VK_LMENU,        false);
             }
         }
     }
@@ -788,19 +797,19 @@ namespace remoting_remoting
         m_application->postMessage(remoting_impact::_WM_USER_ABOUT);
     }
 
-    bool ViewerWindow::onCommand(::wparam wParam, ::lparam lParam)
+    bool ViewerWindow::onCommand(unsigned int controlID, bool bAccelerator, unsigned int notificationID)
     {
 
 
 
-        if (HIWORD(wParam) == 1) {
-            int transl = translateAccelToTB(LOWORD(wParam));
+        if (bAccelerator) {
+            int transl = translateAccelToTB(controlID);
 
             if (transl != -1) {
-                wParam = transl;
+                controlID = transl;
             }
         }
-        switch(wParam) {
+        switch(controlID) {
             case IDS_ABOUT_VIEWER:
                 onAbout();
                 return true;
@@ -1214,7 +1223,7 @@ namespace remoting_remoting
         postMessage(WM_SIZE);
     }
 
-    bool ViewerWindow::onSize(::wparam wParam, ::lparam lParam)
+    void ViewerWindow::onSize()
     {
         //RECT rc;
         int x, y;
@@ -1240,7 +1249,7 @@ namespace remoting_remoting
                 //m_desktopwindow.setSize(w, h);
             }
         }
-        return true;
+        //return true;
     }
 
     void ViewerWindow::showWindow()
@@ -1549,10 +1558,10 @@ namespace remoting_remoting
 
        //KBDLLHOOKSTRUCT *str = (KBDLLHOOKSTRUCT*) lParam;
        // Ignoring of CapsLock, NumLock, ScrollLock, ::innate_subsystem::Control (Ctrl key), Menu (Alt key), Shift (shift key).
-       if (iVkCode != ::user::e_key_capslock && iVkCode != VK_NUMLOCK && iVkCode != VK_SCROLL &&
-           iVkCode != ::user::e_key_left_control && iVkCode != ::user::e_key_right_control &&
-           iVkCode != ::user::e_key_left_alt && iVkCode != ::user::e_key_right_alt &&
-           iVkCode != ::user::e_key_left_shift && iVkCode != ::user::e_key_right_shift)
+       if (iVkCode != VK_CAPITAL && iVkCode != VK_NUMLOCK && iVkCode != VK_SCROLL &&
+           iVkCode != VK_LCONTROL && iVkCode != VK_RCONTROL &&
+           iVkCode != VK_LMENU && iVkCode != VK_RMENU &&
+           iVkCode != VK_LSHIFT && iVkCode != VK_RSHIFT)
        {
           // // Set the repeat count for the current scopedstrMessage bits.
           // ::lparam newLParam = 1;
@@ -1572,7 +1581,7 @@ namespace remoting_remoting
          {
              m_desktopwindow.postMessage((unsigned int) emessage, iVkCode, lparam);
          }
-
+         lresult = 1;
           return true;
        } else {
           return false;

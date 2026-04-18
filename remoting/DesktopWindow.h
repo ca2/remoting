@@ -31,7 +31,7 @@
 
 #include "ScaleManager.h"
 #include "remoting/remoting_common/client_config/ConnectionConfig.h"
-#include "innate_subsystem/gui/PaintWindow.h"
+#include "innate_subsystem/gui/Window.h"
 #include "innate_subsystem/gui/ScrollBar.h"
 #include "innate_subsystem/drawing/SolidBrush.h"
 #include "innate_subsystem/drawing/Graphics.h"
@@ -43,7 +43,7 @@ namespace remoting_remoting
     class style;
 
     class ViewerWindow;
-    class DesktopWindow : public ::innate_subsystem::PaintWindow,
+    class DesktopWindow : public ::innate_subsystem::Window,
                           protected ::remoting::RfbKeySymListener
     {
     public:
@@ -118,8 +118,10 @@ namespace remoting_remoting
         bool onKey(::wparam wParam, ::lparam lParam);
         bool onChar(::wparam wParam, ::lparam lParam);
         bool onMouse(unsigned char mouseKeys, unsigned short wheelSpeed, const ::int_point & position) override;
-        virtual bool onMouseEx(unsigned int message, int iButtonMask, unsigned short wspeed, const ::int_point & position);
-        bool onSize(::wparam wParam, ::lparam lParam);
+        bool onMouseEx(unsigned int message, int iButtonMask, unsigned short wspeed, const ::int_point &position,
+                       bool &bDoDefaultProcessing) override;
+        //bool onSize(::wparam wParam, ::lparam lParam);
+        void onSize() override;
         bool onDestroy();
 
         ::int_point getViewerCoord(long xPos, long yPos);
@@ -180,7 +182,8 @@ namespace remoting_remoting
 
     public:
         //void doDraw(DeviceContext *dc);
-        void onDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle);
+        void onDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle) override;
+       //void onPaint(::innate_subsystem::DeviceContextInterface *pgraphics, const ::int_rectangle &rectangle) override;
         void scrollProcessing(int fbWidth, int fbHeight);
         void drawBackground(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rcMain, const ::int_rectangle & rcImage);
         void drawImage(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & src, const ::int_rectangle & dst);

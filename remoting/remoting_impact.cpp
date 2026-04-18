@@ -29,6 +29,7 @@
 #include "innate_subsystem/subsystem.h"
 #include "remoting/remoting/remoting.h"
 #include "remoting/remoting_common/remoting.h"
+#include "acme/windowing/windowing.h"
 
 
 
@@ -61,6 +62,15 @@ namespace remoting_remoting
 
       // working with accelerator
       auto presourceloader = main_innate_subsystem()->resource_loader();
+
+      #ifdef WINDOWS
+      {
+         auto p = presourceloader->loadAccelerator(IDR_ACCEL_APP_KEYS);
+         //::cast<thread> pthread = system()->acme_windowing();
+         ::cast<thread> pthread = ::get_task();
+         pthread->m_pAcceleratorTable = p;
+      }
+      #endif
       //m_hAccelTable = (HACCEL) presourceloader->loadAccelerator(IDR_ACCEL_APP_KEYS);
 
       m_trayIcon = new ControlTrayIcon(this);

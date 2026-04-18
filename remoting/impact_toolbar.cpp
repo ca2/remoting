@@ -138,8 +138,13 @@ namespace remoting_remoting
 
    }
 
+   void control::on_hover()
+   {
 
-   void control::set_hover_false()
+
+   }
+
+   void control::on_hover_off()
    {
 
        m_bHover = false;
@@ -147,7 +152,7 @@ namespace remoting_remoting
        for (auto& pcontrol : m_controlaChildren)
        {
 
-           pcontrol->set_hover_false();
+           pcontrol->on_hover_off();
 
        }
 
@@ -196,7 +201,8 @@ namespace remoting_remoting
 
    }
 
-   bool control::_001OnMouseEx(unsigned int uMessage, int iButtonMask, const ::int_point& pointRoot, const ::int_point& pointClient)
+   bool control::_001OnMouseEx(unsigned int uMessage, int iButtonMask, const ::int_point &pointRoot,
+                               const ::int_point &pointClient, bool &bDoDefaultProcessing)
    {
 
       auto rectangleClient = get_client_rectangle();
@@ -303,7 +309,8 @@ namespace remoting_remoting
    }
 
 
-   bool control::_000OnMouseEx(unsigned int uMessage, int iButtonMask, const ::int_point& pointRoot, const ::int_point& pointClientParam)
+   bool control::_000OnMouseEx(unsigned int uMessage, int iButtonMask, const ::int_point &pointRoot,
+                               const ::int_point &pointClientParam, bool &bDoDefaultProcessing)
    {
 
       auto pointClient = pointClientParam;
@@ -319,10 +326,16 @@ namespace remoting_remoting
 
           m_bHover = bHoverNew;
 
-          if (!m_bHover)
+          if (m_bHover)
           {
 
-              set_hover_false();
+              on_hover();
+
+          }
+          else
+          {
+
+              on_hover_off();
 
           }
 
@@ -332,6 +345,17 @@ namespace remoting_remoting
 
       if (!m_bLButtonDown && !bHoverNew)
       {
+
+          if (m_bHover)
+          {
+
+              if (uMessage == ::user::e_message_mouse_move)
+             {
+                bDoDefaultProcessing = true;
+                return true;
+             }
+
+          }
 
           return false;
 
@@ -360,7 +384,7 @@ namespace remoting_remoting
       for (auto& pcontrol : m_controlaChildren)
       {
 
-          if (pcontrol->_000OnMouseEx(uMessage, iButtonMask, pointRoot, pointClient))
+          if (pcontrol->_000OnMouseEx(uMessage, iButtonMask, pointRoot, pointClient, bDoDefaultProcessing))
           {
               
               return true;
@@ -369,7 +393,7 @@ namespace remoting_remoting
 
       }
 
-      if (_001OnMouseEx(uMessage, iButtonMask, pointRoot, pointClient))
+      if (_001OnMouseEx(uMessage, iButtonMask, pointRoot, pointClient, bDoDefaultProcessing))
       {
 
          return true;
@@ -466,6 +490,16 @@ namespace remoting_remoting
 
    }
 
+      void toolbar::on_hover() { m_pdesktopwindow->setCursor(e_cursor_arrow); }
+
+   void toolbar::on_hover_off()
+   {
+
+      m_pdesktopwindow->setCursor(e_cursor_none);
+
+      control::on_hover_off();
+
+   }
 
    void toolbar::on_size()
    {
@@ -653,7 +687,7 @@ namespace remoting_remoting
    }
 
 
-   bool toolbar::_001OnMouseEx(unsigned int uMessage, int iButtonMask, const ::int_point& pointRoot, const ::int_point& pointClient)
+   bool toolbar::_001OnMouseEx(unsigned int uMessage, int iButtonMask, const ::int_point& pointRoot, const ::int_point& pointClient, bool & bDoDefaultProcessing)
    {
 
       //auto pointClient = pointClientParameter * m_pdesktopwindow->m_scManager.getScale();
@@ -663,7 +697,7 @@ namespace remoting_remoting
       if (m_bHover || m_bDrag || rClient.contains(pointClient))
       {
 
-         control::_001OnMouseEx(uMessage, iButtonMask, pointRoot, pointClient);
+         control::_001OnMouseEx(uMessage, iButtonMask, pointRoot, pointClient, bDoDefaultProcessing);
 
          bool bAnyChildHover = false;
 
@@ -962,7 +996,7 @@ namespace remoting_remoting
    void toolbar::__001OnDraw(innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle)
    {
 
-      pgraphics->setBlendModeOn(false);
+      pgraphics->setBlendModeOn(true);
       pgraphics->setAntiAliasOn(false);
 
 

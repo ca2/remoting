@@ -27,6 +27,7 @@
 
 #include "RfbKeySymListener.h"
 #include "remoting/remoting_common/util/Keymap.h"
+#include "innate_subsystem/gui/KeyboardLayout.h"
 //#include "log_writer/LogWriter.h"
 
 namespace remoting
@@ -55,17 +56,7 @@ namespace remoting
       // Set function for m_winKeyIgnore.
       void setWinKeyIgnore(bool winIgnore);
 
-   private:
-      void clearKeyState();
-
-      void releaseMeta();
-      void restoreMeta();
-      void releaseModifier(unsigned char modifier);
-      void restoreModifier(unsigned char modifier);
-      void releaseModifiers();
-      void restoreModifiers();
-
-      bool isPressed(unsigned char virtKey);
+   //private:
 
       // This function does distinguish between a right or left modifier and
       // if the virtKey is a modifier (e.g VK_CONTROL), the function always return
@@ -86,31 +77,25 @@ namespace remoting
       virtual void sendVerbatimKeySymEvent(unsigned int rfbKeySym, bool down);
 
       // helper functions
-      int GettingCharFromCtrlSymbol(int ctrlSymbol);
+      //int GettingCharFromCtrlSymbol(int ctrlSymbol);
       // E.g if pressed Ctrl + Alt + A
       // Try found char without modificators
       // #ifdef WINDOWS
       //   bool TryTranslateNotPrintableToUnicode(unsigned short virtKey, HKL currentLayout, WCHAR *unicodeChar);
       //
       // #endif
+      void releaseMeta();
+      void restoreMeta();
+      void releaseModifier(unsigned char modifier);
+      void restoreModifier(unsigned char modifier);
+      void releaseModifiers();
+      void restoreModifiers();
+
 
       RfbKeySymListener *m_extKeySymListener;
-
-      // This state doesn't difference between left and right modifiers. It's
-      // needed to ToUnicodeEx().
-      unsigned char m_viewerKeyState[256];
-
-      // This state does difference between left and right modifiers. It's
-      // needed to know the server side state (e.g. to release or restore
-      // modifiyers state outside from a real key event).
-      unsigned char m_serverKeyState[256];
-      bool m_leftMetaIsPressed;
-      bool m_rightMetaIsPressed;
-
       Keymap m_keyMap;
-      bool m_allowProcessCharEvent;
-      bool m_allowProcessDoubleChar;
-      bool m_doubleDeadCatched;
+
+      ::innate_subsystem::keyboard_state_t m_keyboardstate;
 
       ::subsystem::LogWriter *m_plogwriter;
 

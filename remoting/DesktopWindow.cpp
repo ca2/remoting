@@ -193,8 +193,10 @@ namespace remoting_remoting
             case WM_CREATE:
                 //return onCreate(reinterpret_cast<LPCREATESTRUCT>(lParam));
               return false;
-            case WM_SIZE:
-                return onSize(wParam, lParam);
+            //case WM_SIZE:
+            //   onSize();
+               //return true;
+                //return onSize(wParam, lParam);
             case WM_DESTROY:
                 return onDestroy();
             case WM_CHAR:
@@ -306,7 +308,8 @@ namespace remoting_remoting
         return true;
     }
 
-    bool DesktopWindow::onMouseEx(unsigned int uMessage, int iButtonMask, unsigned short wheelSpeed, const ::int_point & point)
+    bool DesktopWindow::onMouseEx(unsigned int uMessage, int iButtonMask, unsigned short wheelSpeed,
+                                  const ::int_point &point, bool &bDoDefaultProcessing)
     {
 
         RECT rcClient;
@@ -364,7 +367,7 @@ namespace remoting_remoting
 
         if (m_premotingtoolbar)
         {
-            if (m_premotingtoolbar->_000OnMouseEx(uMessage, iButtonMask, { point.x, point.y }, { point.x, point.y }))
+            if (m_premotingtoolbar->_000OnMouseEx(uMessage, iButtonMask, { point.x, point.y }, { point.x, point.y }, bDoDefaultProcessing))
             {
 
                 if (m_premotingtoolbar->m_bLButtonDown || m_premotingtoolbar->m_bHover)
@@ -382,6 +385,7 @@ namespace remoting_remoting
 
                 }
 
+                m_premotingtoolbar->defer_repaint();
 
                 return true;
             }
@@ -576,6 +580,19 @@ namespace remoting_remoting
         }
     }
 
+
+    //void DesktopWindow::onPaint(::innate_subsystem::DeviceContextInterface* pdevicecontext,
+    //    const ::int_rectangle& rectangle)
+    //{
+
+    //    innate_subsystem::Graphics g;
+
+    //    g.initialize_graphics( pdevicecontext);
+
+    //    onDraw(&g, rectangle);
+
+    //}
+
     //void DesktopWindow::doDraw(HDC hdc, const ::int_rectangle &rectangle)
    void DesktopWindow::onDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle &rectangle)
     {
@@ -639,6 +656,9 @@ namespace remoting_remoting
             //m_premotingtoolbar->__000OnTopDraw(&graphics);
             m_premotingtoolbar->__000OnTopDraw(pgraphics, rectangle);
         }
+
+
+        //pgraphics->fillRect({100, 100, 500, 500}, argb(160, 100, 160, 200));
     }
 
     void DesktopWindow::applyScrollbarChanges(bool isChanged, bool isVert, bool isHorz, int wndWidth, int wndHeight)
@@ -798,11 +818,12 @@ namespace remoting_remoting
         }
     }
 
-    bool DesktopWindow::onSize(::wparam wParam, ::lparam lParam)
+    //bool DesktopWindow::onSize(::wparam wParam, ::lparam lParam)
+    void DesktopWindow::onSize()
     {
         calcClientArea();
         m_winResize = true;
-        return true;
+        //return true;
     }
 
     bool DesktopWindow::onDestroy() { return true; }
