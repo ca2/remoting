@@ -43,22 +43,35 @@ namespace remoting_remoting
         return false;
     }
 
-    bool FsWarningDialog::onCommand(unsigned int controlID, unsigned int notificationID)
-    {
-        if (controlID == ::innate_subsystem::e_control_id_ok) {
-           auto config = m_premoting->m_pconfig;
-            bool promt = !m_checkboxFsWarning.isChecked();
-            config->promptOnFullscreen(promt);
-            config->saveToStorage(::remoting::ViewerSettingsManager::getInstance());
-            closeDialog(1);
-            return true;
-        }
-        if (controlID == ::innate_subsystem::e_control_id_cancel) {
-            closeDialog(0);
-            return true;
-        }
-        return false;
+   
+   bool FsWarningDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+   {
+        
+      if (controlID == ::innate_subsystem::e_control_id_ok) 
+      {
+           
+         auto pviewerconfig = m_premoting->m_pviewerconfig;
+         bool bPrompt = !m_checkboxFsWarning.isChecked();
+         pviewerconfig->promptOnFullscreen(bPrompt);
+         pviewerconfig->saveToStorage(::remoting::ViewerSettingsManager::getInstance());
+         closeDialog(1);
+         return true;
+
+      }
+      
+      if (controlID == ::innate_subsystem::e_control_id_cancel) 
+      {
+      
+         closeDialog(0);
+         return true;
+
+      }
+
+      return false;
+
     }
+
+
 } // namespace remoting_remoting
 
 

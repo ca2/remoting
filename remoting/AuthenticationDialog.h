@@ -48,11 +48,11 @@ namespace remoting_remoting
         void setHostName(const ::scoped_string & hostname);
 
         //protected:
-        bool onCommand(unsigned int controlID, unsigned int notificationID);
+        bool onCommand(unsigned int controlID, bool bAccelerator, unsigned int notificationID) override;
         bool onInitDialog();
 
-        ::pointer < ::innate_subsystem::TextBox > m_ptextboxPassword;
-        ::pointer < ::innate_subsystem::TextBox > m_ptextboxHostname;
+        ::innate_subsystem::TextBox m_textboxPassword;
+        ::innate_subsystem::TextBox m_textboxHostname;
         ::string m_strPassword;
         ::string m_strHost;
     };

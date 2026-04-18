@@ -61,13 +61,12 @@ namespace remoting_remoting
 
          m_premoting->on_start();
 
-         
-
       }
       else if (ecommand == e_command_file_open)
       {
 
          auto path = prequest->m_payloadFile.as_file_path();
+
          m_bOpenFile = true;
 
          m_premoting->open_file(path);

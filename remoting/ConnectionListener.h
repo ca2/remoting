@@ -51,7 +51,7 @@ namespace remoting_remoting
    protected:
       void onAcceptConnection(::subsystem::SocketIPv4Interface *socket);
 
-      ::subsystem::OperatingSystemApplicationInterface*m_application;
+      ::subsystem::OperatingSystemApplicationInterface*m_poperatingsystemapplication;
       ::list_base<::pointer < ::subsystem::SocketIPv4Interface > > m_connections;
       critical_section m_connectionsLock;
    };

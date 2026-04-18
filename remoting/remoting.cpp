@@ -56,26 +56,33 @@ namespace remoting_remoting
       // }
 
 
-      if (!m_pconfig)
+      if (!m_pviewerconfig)
       {
 
-      ::remoting::ViewerSettingsManager::initInstance(RegistryPaths::VIEWER_PATH);
-         ::remoting::SettingsManager *sm = ::remoting::ViewerSettingsManager::getInstance();
-         m_pconfig = allocateø ::remoting::ViewerConfig(RegistryPaths::VIEWER_PATH);
+         ::remoting::ViewerSettingsManager::initInstance(RegistryPaths::VIEWER_PATH);
 
-         m_pconfig->loadFromStorage(sm);
+         auto pviewersettingsmanager = ::remoting::ViewerSettingsManager::getInstance();
+
+         m_pviewerconfig = allocateø ::remoting::ViewerConfig(RegistryPaths::VIEWER_PATH);
+
+         m_pviewerconfig->loadFromStorage(pviewersettingsmanager);
 
       }
 
-      if (!m_pconConf)
+      if (!m_pconnectionconfig)
       {
-         construct_newø(m_pconConf);
+         
+         construct_newø(m_pconnectionconfig);
 
       }
-      if (!m_pcondata)
+
+      if (!m_pconnectiondata)
       {
-         construct_newø(m_pcondata);
+
+         construct_newø(m_pconnectiondata);
+
       }
+
       // auto hinstance = remoting_impact_hinstance();
       bool isListening = false;
       //::string strHost;
@@ -84,9 +91,9 @@ namespace remoting_remoting
       ::string strHost = ini["host"];
       int iNumerator = ini["numerator"].as_int();
       int iDenominator = ini["denominator"].as_int();
-      m_pconConf->enableFullscreen(true);
-      m_pconConf->requestShapeUpdates(true);
-      m_pconConf->ignoreShapeUpdates(false);
+      m_pconnectionconfig->enableFullscreen(true);
+      m_pconnectionconfig->requestShapeUpdates(true);
+      m_pconnectionconfig->ignoreShapeUpdates(false);
 
       if (iDenominator <= 0)
       {
@@ -100,18 +107,20 @@ namespace remoting_remoting
          iNumerator = 1;
       }
 
-      m_pconConf->setScale(iNumerator, iDenominator);
+      m_pconnectionconfig->setScale(iNumerator, iDenominator);
 
       if (strHost.has_character())
       {
-         m_pcondata->setHost(wstring(strHost).c_str());
+         
+         m_pconnectiondata->setHost(wstring(strHost).c_str());
          m_pconnectingdialog->initialize(this);
          m_pconnectingdialog->show();
          m_pconnectingdialog->set_host(strHost);
          m_pconnectingdialog->set_status("Initiating connection...");
          m_pconnectingdialog->set_phase1();
+
       }
-      // ViewerCmdLine cmd(&condata, &conConf, &config, &isListening);
+      // ViewerCmdLine cmd(&condata, &pconnectionconfig, &config, &isListening);
       //  resource-loader initialization
       // ResourceLoader resourceLoader(hInstance);
       // auto presource
@@ -136,8 +145,7 @@ namespace remoting_remoting
       //   return 0;
       // }
 
-      m_plogwriter = m_pconfig->getLogWriter();
-
+      m_plogwriter = m_pviewerconfig->getLogWriter();
 
       m_plogwriter->debug("main()");
       m_plogwriter->debug("loading settings from storage completed");
@@ -146,7 +154,6 @@ namespace remoting_remoting
       //int result = 0;
       try
       {
-
 
          if (!m_premotingimpact)
          {
@@ -160,14 +167,19 @@ namespace remoting_remoting
          {
             // FIXME: set listening connection options.
             m_premotingimpact->startListening(ConnectionListener::DEFAULT_PORT);
+
          }
-         else if (!m_pcondata->is_empty())
+         else if (!m_pconnectiondata->is_empty())
          {
-            m_premotingimpact->newConnection(m_pcondata, m_pconConf);
+
+            m_premotingimpact->newConnection(m_pconnectiondata, m_pconnectionconfig);
+
          }
          else
          {
+
             m_premotingimpact->showLoginDialog();
+
          }
          //tvnViewer.run();
          //result = tvnViewer.getExitCode();
@@ -190,7 +202,7 @@ namespace remoting_remoting
    {
             if (m_pconnectingdialog && m_pconnectingdialog->isWindow())
             {
-               m_pconnectingdialog->postMessage(WM_USER + 328, id_remoting_connecting, wparam.m_number);
+               m_pconnectingdialog->postMessage(WM_USER + 328, id_remoting_connecting, wparam);
             }
    }
    else if (eid == id_remoting_connected)

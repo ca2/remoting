@@ -42,7 +42,7 @@ namespace remoting_remoting
                         const ::scoped_string & scopedstrviewerWindowClassName)
    :
      m_viewerWindowClassName(scopedstrviewerWindowClassName),
-     m_conListener(0),
+     m_pconnectionlistener(0),
      //m_hAccelTable(0),
        m_premoting(premoting),
        m_configurationDialog(premoting),
@@ -77,7 +77,7 @@ namespace remoting_remoting
 
       auto plogindialog = new LoginDialog(this, m_premoting);
 
-      m_loginDialog = plogindialog;
+      m_plogindialog = plogindialog;
    }
 
    remoting_impact::~remoting_impact()
@@ -85,7 +85,7 @@ namespace remoting_remoting
       m_plogwriter->information("Viewer collector: destroy all instances");
       m_instances.destroyAllInstances();
 
-      delete m_loginDialog;
+      delete m_plogindialog;
       delete m_trayIcon;
 
       //unregisterViewerWindowClass();
@@ -97,10 +97,10 @@ namespace remoting_remoting
    void remoting_impact::startListeningServer(const int listeningPort)
    {
       try {
-         if (m_conListener != 0) {
+         if (m_pconnectionlistener != 0) {
             throw ::subsystem::Exception("Listening Server already started");
          }
-         m_conListener = new ConnectionListener(this, listeningPort);
+         m_pconnectionlistener = new ConnectionListener(this, listeningPort);
       } catch (const ::subsystem::Exception &ex) {
          m_isListening = false;
          m_plogwriter->error("Error in start listening: {}", ex.get_message());
@@ -114,20 +114,20 @@ namespace remoting_remoting
    void remoting_impact::stopListeningServer()
    {
       try {
-         if (m_conListener != 0) {
-            delete m_conListener;
+         if (m_pconnectionlistener != 0) {
+            delete m_pconnectionlistener;
          }
       } catch (const ::subsystem::Exception &ex) {
-         m_plogwriter->error("Error of delete m_conListener: {}", ex.get_message());
+         m_plogwriter->error("Error of delete m_pconnectionlistener: {}", ex.get_message());
       }
-      m_conListener = 0;
+      m_pconnectionlistener = 0;
    }
 
    void remoting_impact::restartListeningServer()
    {
       if (m_isListening) {
-         unsigned short newListenPort = m_premoting->m_pconfig->getListenPort();
-         if (m_conListener->getBindPort() != newListenPort) {
+         unsigned short newListenPort = m_premoting->m_pviewerconfig->getListenPort();
+         if (m_pconnectionlistener->getBindPort() != newListenPort) {
             stopListeningServer();
             // FIXME: remove this parameter.
             startListeningServer(newListenPort);
@@ -154,7 +154,7 @@ namespace remoting_remoting
          stopListeningServer();
 
          m_isListening = false;
-         m_loginDialog->setListening(false);
+         m_plogindialog->setListening(false);
       }
    }
 
@@ -163,45 +163,65 @@ namespace remoting_remoting
       m_instances.addInstance(viewerInstance);
    }
 
-   void remoting_impact::runInstance(const ::scoped_string & hostName, const ::remoting::ConnectionConfig & config)
+   
+   void remoting_impact::runInstance(const ::scoped_string & hostName, ::remoting::ConnectionConfig * pconnectionconfig)
    {
-      ConnectionData *pconnectiondata = new ConnectionData;
+   
+      auto pconnectiondata = create_newø<ConnectionData>();
+
       pconnectiondata->setHost(hostName);
-      runInstance(*pconnectiondata, config);
+
+      runInstance(pconnectiondata, pconnectionconfig);
+
    }
 
-   void remoting_impact::runInstance(ConnectionData & conData, const ::remoting::ConnectionConfig & config)
+
+   void remoting_impact::runInstance(ConnectionData * pconnectiondata, ::remoting::ConnectionConfig * pconnectionconfig)
    {
-      ViewerInstance *pviewerinstance = new ViewerInstance(this,m_premoting, conData, config);
+      
+      auto pviewerinstance = allocateø ViewerInstance(this,m_premoting, pconnectiondata, pconnectionconfig);
+      
       pviewerinstance->start();
 
       addInstance(pviewerinstance);
+
    }
+
 
    bool remoting_impact::isVisibleLoginDialog() const
    {
-      return m_loginDialog->operating_system_window().is_set();
+      return m_plogindialog->operating_system_window().is_set();
    }
 
-   void remoting_impact::newConnection(const ::scoped_string & hostName, const ::remoting::ConnectionConfig & config)
+   
+   void remoting_impact::newConnection(const ::scoped_string & hostName, ::remoting::ConnectionConfig * pconnectionconfig)
    {
-      ConnectionData *pconnectiondata = new ConnectionData;
+   
+      auto pconnectiondata = create_newø<ConnectionData>();
+
       pconnectiondata->setHost(hostName);
-      runInstance(*pconnectiondata, config);
+
+      runInstance(pconnectiondata, pconnectionconfig);
+
    }
 
-   void remoting_impact::newConnection(const ConnectionData  *pconData, const ::remoting::ConnectionConfig * pconfig)
+
+   void remoting_impact::newConnection(ConnectionData * pconnectiondata, ::remoting::ConnectionConfig * pconnectionconfig)
    {
-      ConnectionData *pconnectiondataCopy = new ConnectionData(*pconData);
-      runInstance(*pconnectiondataCopy, *pconfig);
+      
+      auto pconnectiondataNew = allocateø ConnectionData(*pconnectiondata);
+
+      runInstance(pconnectiondataNew, pconnectionconfig);
+
    }
+
 
    void remoting_impact::showLoginDialog()
    {
-      m_loginDialog->setListening(m_isListening);
-      m_loginDialog->loadIcon(IDI_APPICON);
-      m_loginDialog->show();
-      addModelessDialog(m_loginDialog->operating_system_window());
+      m_plogindialog->setListening(m_isListening);
+      m_plogindialog->loadIcon(IDI_APPICON);
+      m_plogindialog->show();
+      addModelessDialog(m_plogindialog->operating_system_window());
    }
 
    // void remoting_impact::createWindow(const ::scoped_string & scopedstrClassName)
@@ -350,27 +370,47 @@ namespace remoting_remoting
 
    void remoting_impact::newListeningConnection()
    {
-      ConnectionData connectionData;
-      connectionData.setIncoming(true);
+      
+      auto pconnectiondata = create_newø<ConnectionData>();
+      
+      pconnectiondata->setIncoming(true);
 
-      ::remoting::ConnectionConfig connectionConfig;
+      auto pconnectionconfig = create_newø<::remoting::ConnectionConfig>();
+
       ::remoting::ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH, ".listen");
-      connectionConfig.loadFromStorage(&ccsm);
+      
+      pconnectionconfig->loadFromStorage(&ccsm);
 
-      if (m_conListener != 0) {
-         auto socket = m_conListener->getNewConnection();
-         while (socket != 0) {
-            ViewerInstance *viewerInst = new ViewerInstance(this,
+      if (m_pconnectionlistener) 
+      {
+
+         while (true) 
+         {
+
+            auto psocket = m_pconnectionlistener->getNewConnection();
+
+            if (!psocket)
+            {
+
+               break;
+
+            }
+
+            auto pviewerinstance =
+               allocateø ViewerInstance(this,
                m_premoting,
-                                                            connectionData,
-                                                            connectionConfig,
-                                                            socket);
-            viewerInst->start();
-            addInstance(viewerInst);
+               pconnectiondata,
+               pconnectionconfig,
+               psocket);
 
-            socket = m_conListener->getNewConnection();
+            pviewerinstance->start();
+
+            addInstance(pviewerinstance);
+
          }
+
       }
+
    }
 
    // bool remoting_impact::onTimer(::wparam idTimer)
@@ -430,7 +470,7 @@ namespace remoting_remoting
             _this->showAboutViewer();
             break;
                          case WM_USER_RECONNECT: {
-                            ConnectionData *pconnectiondata = reinterpret_cast<ConnectionData *>(wparam.m_number);
+                            ConnectionData *pconnectiondata = reinterpret_cast<ConnectionData *>(wparam.m_wparam);
                             ::remoting::ConnectionConfig *pconnectionconfig = reinterpret_cast<::remoting::ConnectionConfig *>(lparam.m_lparam);
                             _this->newConnection(pconnectiondata, pconnectionconfig);
                             _this->m_instances.decreaseToReconnect();

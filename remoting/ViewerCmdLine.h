@@ -36,8 +36,8 @@ namespace remoting_remoting
 {
     class ViewerCmdLine {
     public:
-        ViewerCmdLine(ConnectionData *conData,
-                      ::remoting::ConnectionConfig *conConf,
+        ViewerCmdLine(ConnectionData *pconnectiondata,
+                      ::remoting::ConnectionConfig *pconnectionconfig,
                       ::remoting::ViewerConfig *config,
                       bool *isListening);
 
@@ -92,7 +92,7 @@ namespace remoting_remoting
 
         //::pointer < ::windows::WindowsProcessCommandLine > m_pwindowsprocesscommandline;
        ::pointer < ::subsystem::ProcessCommandLineInterface > m_pprocesscommandlineOperatingSystem;
-        ConnectionData *m_conData;
+        ConnectionData *m_pconnectiondata;
         ::remoting::ConnectionConfig *m_pconnectionconfig;
         ::remoting::ViewerConfig *m_config;
         bool *m_isListening;

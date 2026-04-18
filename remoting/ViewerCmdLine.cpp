@@ -68,12 +68,12 @@ namespace remoting_remoting
     const char ViewerCmdLine::RRE[] = "rre";
     const char ViewerCmdLine::ZRLE[] = "zrle";
 
-    ViewerCmdLine::ViewerCmdLine(ConnectionData *conData,
-                                 ::remoting::ConnectionConfig *conConf,
+    ViewerCmdLine::ViewerCmdLine(ConnectionData *pconnectiondata,
+                                 ::remoting::ConnectionConfig *pconnectionconfig,
                                  ::remoting::ViewerConfig *config,
                                  bool *isListening)
-    : m_conData(conData),
-      m_pconnectionconfig(conConf),
+    : m_pconnectiondata(pconnectiondata),
+      m_pconnectionconfig(pconnectionconfig),
       m_config(config),
       m_isListening(isListening)
     {
@@ -228,15 +228,15 @@ namespace remoting_remoting
         if (sm.getString("port", port)) {
             ::string hostString;
             hostString.format("{}::{}", host, port);
-            m_conData->setHost(hostString);
+            m_pconnectiondata->setHost(hostString);
         } else {
-            m_conData->setHost(host);
+            m_pconnectiondata->setHost(host);
         }
 
         ::string password;
         sm.getString("password", password);
         if (!password.is_empty()) {
-            m_conData->setCryptedPassword(password);
+            m_pconnectiondata->setCryptedPassword(password);
         } else {
             parsePassword();
         }
@@ -248,7 +248,7 @@ namespace remoting_remoting
     void ViewerCmdLine::parsePassword()
     {
         if (isPresent(PASSWORD)) {
-            m_conData->setPlainPassword(m_options[PASSWORD]);
+            m_pconnectiondata->setPlainPassword(m_options[PASSWORD]);
         }
     }
 
@@ -433,16 +433,16 @@ namespace remoting_remoting
         m_pprocesscommandlineOperatingSystem->getArgument(1, host);
 
         if (::not_found(host.find_first_character(':'))) {
-            m_conData->setHost(host);
+            m_pconnectiondata->setHost(host);
         } else {
             if (isPresent(PORT)) {
                 ::string hostPort;
 
                 hostPort.format("{}::{}", host,
                                              m_options[PORT]);
-                m_conData->setHost(hostPort);
+                m_pconnectiondata->setHost(hostPort);
             }
-            m_conData->setHost(host);
+            m_pconnectiondata->setHost(host);
         }
     }
 
@@ -462,7 +462,7 @@ namespace remoting_remoting
             strHost.formatf("{}::{}", m_options[HOST],
                                         m_options[PORT]);
         }
-        m_conData->setHost(strHost);
+        m_pconnectiondata->setHost(strHost);
         return true;
     }
 

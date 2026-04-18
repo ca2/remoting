@@ -47,15 +47,20 @@ namespace remoting_remoting
                           protected ::remoting::RfbKeySymListener
     {
     public:
-        ViewerWindow* m_pviewerwindow;
+        
+       
+       ::pointer < ViewerWindow > m_pviewerwindow;
         ::string m_strHost;
         //   int m_iDivisor = 1;
         ::pointer< ::remoting_remoting::toolbar > m_premotingtoolbar;
         ::pointer< ::remoting_remoting::style > m_premotingstyle;
         bool m_bShowCursor = false;
         class ::time m_timeStartDesktopWindow;
-        DesktopWindow(::subsystem::LogWriter * plogwriter, ::remoting::ConnectionConfig *conConf, ViewerWindow * pviewerwindow);
-        virtual ~DesktopWindow();
+
+
+        DesktopWindow(::subsystem::LogWriter * plogwriter, ::remoting::ConnectionConfig * pconnectionconfig, ViewerWindow * pviewerwindow);
+        ~DesktopWindow() override;
+
         //virtual void _defer_update_double_buffering();
         void setClipboardData(const ::scoped_string & strText);
         void updateFramebuffer(const ::innate_subsystem::FrameBuffer * pframebuffer,
@@ -176,8 +181,8 @@ namespace remoting_remoting
 
         bool m_ctrlDown;
         bool m_altDown;
-        ::remoting::RemoteViewerCore *m_viewerCore;
-        ::remoting::ConnectionConfig *m_pconnectionconfig;
+        ::pointer < ::remoting::RemoteViewerCore > m_pviewercore;
+        ::pointer < ::remoting::ConnectionConfig > m_pconnectionconfig;
         bool m_isBackgroundDirty;
 
     public:

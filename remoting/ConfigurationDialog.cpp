@@ -37,14 +37,14 @@ namespace remoting_remoting
 {
     ConfigurationDialog::ConfigurationDialog(::remoting_remoting::remoting * premoting)
     :
-      m_application(0), m_premoting(premoting)
+      m_poperatingsystemapplication(0), m_premoting(premoting)
     {
        initialize_dialog(IDD_CONFIGURATION);
     }
 
     void ConfigurationDialog::setListenerOfUpdate(::subsystem::OperatingSystemApplicationInterface *application)
     {
-        m_application = application;
+        m_poperatingsystemapplication = application;
     }
 
     bool ConfigurationDialog::onCommand(unsigned int controlID, unsigned int notificationID)
@@ -56,8 +56,8 @@ namespace remoting_remoting
         // }
         if (controlID == ::innate_subsystem::e_control_id_ok) {
             onOkPressed();
-            if (m_application != 0) {
-                m_application->postMessage(remoting_impact::WM_USER_CONFIGURATION_RELOAD);
+            if (m_poperatingsystemapplication != 0) {
+                m_poperatingsystemapplication->postMessage(remoting_impact::WM_USER_CONFIGURATION_RELOAD);
             }
             closeDialog(1);
             return true;
@@ -67,7 +67,7 @@ namespace remoting_remoting
             return true;
         }
         if (controlID == IDC_BCLEAR_LIST) {
-            m_premoting->m_pconfig->getConnectionHistory()->clear();
+            m_premoting->m_pviewerconfig->getConnectionHistory()->clear();
         }
         if (controlID == IDC_OPEN_LOG_FOLDER_BUTTON) {
             onOpenFolderButtonClick();
@@ -86,7 +86,7 @@ namespace remoting_remoting
 
             // If log-file is exist, then enable button "Locate...", else disable him.
             //::string logDir;
-            auto logDir = m_premoting->m_pconfig->getLogDir();
+            auto logDir = m_premoting->m_pviewerconfig->getLogDir();
             auto logFileName = logDir / (::string(LogNames::VIEWER_LOG_FILE_STUB_NAME) + ".log");
 
             auto  logFile=file_item(logFileName);
@@ -104,7 +104,7 @@ namespace remoting_remoting
     {
         //::string logDir;
 
-        auto logDir = m_premoting->m_pconfig->getLogDir();
+        auto logDir = m_premoting->m_pviewerconfig->getLogDir();
 
         auto pathLog = logDir / (::string(LogNames::VIEWER_LOG_FILE_STUB_NAME) + ".log");
 
@@ -152,7 +152,7 @@ namespace remoting_remoting
 
     void ConfigurationDialog::updateControlValues()
     {
-        auto config = m_premoting->m_pconfig;
+        auto config = m_premoting->m_pviewerconfig;
 
         ::string txt;
 
@@ -217,7 +217,7 @@ namespace remoting_remoting
             return ;
         }
 
-        auto config = m_premoting->m_pconfig;
+        auto config = m_premoting->m_pviewerconfig;
 
         ::string text;
         int intVal;

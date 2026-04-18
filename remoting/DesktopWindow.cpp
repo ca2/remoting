@@ -33,11 +33,11 @@
 
 namespace remoting_remoting
 {
-    DesktopWindow::DesktopWindow(::subsystem::LogWriter * plogwriter, ::remoting::ConnectionConfig *conConf, ViewerWindow * pviewerwindow) :
+    DesktopWindow::DesktopWindow(::subsystem::LogWriter * plogwriter, ::remoting::ConnectionConfig *pconnectionconfig, ViewerWindow * pviewerwindow) :
         m_plogwriter(plogwriter),m_pviewerwindow(pviewerwindow), m_showVert(false), m_showHorz(false), m_fbWidth(1), m_fbHeight(1),
-        m_winResize(false), m_pconnectionconfig(conConf),
+        m_winResize(false), m_pconnectionconfig(pconnectionconfig),
 
-        m_viewerCore(0), m_ctrlDown(false), m_altDown(false), m_previousMousePos(-1, -1), m_previousMouseState(0),
+        m_pviewercore(0), m_ctrlDown(false), m_altDown(false), m_previousMousePos(-1, -1), m_previousMouseState(0),
         m_isBackgroundDirty(false)
     {
        m_clipboard.initialize_clipboard({});
@@ -52,7 +52,7 @@ namespace remoting_remoting
 
     void DesktopWindow::setConnected() { m_isConnected = true; }
 
-    void DesktopWindow::setViewerCore(::remoting::RemoteViewerCore *viewerCore) { m_viewerCore = viewerCore; }
+    void DesktopWindow::setViewerCore(::remoting::RemoteViewerCore *viewerCore) { m_pviewercore = viewerCore; }
 
     bool DesktopWindow::onCreate(void * pCreateStruct)
     {
@@ -321,7 +321,7 @@ namespace remoting_remoting
 
                 m_bShowCursor = true;
 
-                m_viewerCore->m_fbUpdateNotifier.m_cursorPainter.m_bHideCursor = true;
+                m_pviewercore->m_fbUpdateNotifier.m_cursorPainter.m_bHideCursor = true;
 
 
                 ::ReleaseCapture();
@@ -343,7 +343,7 @@ namespace remoting_remoting
 
                     ::SetCapture((HWND) _HWND());
 
-                    m_viewerCore->m_fbUpdateNotifier.m_cursorPainter.m_bHideCursor = false;
+                    m_pviewercore->m_fbUpdateNotifier.m_cursorPainter.m_bHideCursor = false;
                     m_bShowCursor = false;
 
                     //                try {
@@ -374,14 +374,14 @@ namespace remoting_remoting
                 {
 
                     m_bShowCursor = true;
-                    m_viewerCore->m_fbUpdateNotifier.m_cursorPainter.m_bHideCursor = true;
+                    m_pviewercore->m_fbUpdateNotifier.m_cursorPainter.m_bHideCursor = true;
 
                 }
                 else
                 {
 
                     m_bShowCursor = false;
-                    m_viewerCore->m_fbUpdateNotifier.m_cursorPainter.m_bHideCursor = false;
+                    m_pviewercore->m_fbUpdateNotifier.m_cursorPainter.m_bHideCursor = false;
 
                 }
 
@@ -393,14 +393,14 @@ namespace remoting_remoting
             {
 
                 m_bShowCursor = true;
-                m_viewerCore->m_fbUpdateNotifier.m_cursorPainter.m_bHideCursor = true;
+                m_pviewercore->m_fbUpdateNotifier.m_cursorPainter.m_bHideCursor = true;
 
             }
             else
             {
 
                 m_bShowCursor = false;
-                m_viewerCore->m_fbUpdateNotifier.m_cursorPainter.m_bHideCursor = false;
+                m_pviewercore->m_fbUpdateNotifier.m_cursorPainter.m_bHideCursor = false;
 
             }
             m_premotingtoolbar->defer_repaint();
@@ -1017,7 +1017,7 @@ namespace remoting_remoting
         }
 
         // If pointer to viewer core is 0, then exit.
-        if (m_viewerCore == 0)
+        if (m_pviewercore == 0)
         {
             return;
         }
@@ -1025,7 +1025,7 @@ namespace remoting_remoting
         // Trying send keyboard event...
         try
         {
-            m_viewerCore->sendKeyboardEvent(downFlag, key);
+            m_pviewercore->sendKeyboardEvent(downFlag, key);
         }
         catch (const ::subsystem::Exception &exception)
         {
@@ -1041,7 +1041,7 @@ namespace remoting_remoting
         }
 
         // If pointer to viewer core is 0, then exit.
-        if (m_viewerCore == 0)
+        if (m_pviewercore == 0)
         {
             return;
         }
@@ -1049,7 +1049,7 @@ namespace remoting_remoting
         // Trying send pointer event...
         try
         {
-            m_viewerCore->sendPointerEvent(buttonMask, position);
+            m_pviewercore->sendPointerEvent(buttonMask, position);
         }
         catch (const ::subsystem::Exception &exception)
         {
@@ -1065,7 +1065,7 @@ namespace remoting_remoting
         }
 
         // If pointer to viewer core is 0, then exit.
-        if (m_viewerCore == 0)
+        if (m_pviewercore == 0)
         {
             return;
         }
@@ -1073,7 +1073,7 @@ namespace remoting_remoting
         // Trying send cut-text event...
         try
         {
-            m_viewerCore->sendCutTextEvent(cutText);
+            m_pviewercore->sendCutTextEvent(cutText);
         }
         catch (const ::subsystem::Exception &exception)
         {

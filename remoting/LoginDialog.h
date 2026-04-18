@@ -55,7 +55,7 @@ namespace remoting_remoting
 
         // this function returns the host
         ::string getServerHost();
-        void setConConf(::remoting::ConnectionConfig *conConf);
+        void setConConf(::remoting::ConnectionConfig *pconnectionconfig);
         // set listening mode
         void setListening(bool isListening);
 
@@ -75,10 +75,10 @@ namespace remoting_remoting
 
         ::innate_subsystem::Control m_listening;
         ::innate_subsystem::Control m_ok;
-        ::remoting::ConnectionConfig m_connectionConfig;
+        ::pointer < ::remoting::ConnectionConfig > m_pconnectionconfig;
         ::innate_subsystem::ComboBox m_server;
         ::string m_serverHost;
-        remoting_impact *m_viewer;
+        ::pointer < remoting_impact > m_premotingimpact;
 
     private:
         void enableConnect();

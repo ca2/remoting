@@ -23,109 +23,96 @@
 //
 #include "framework.h"
 #include "ViewerInstance.h"
-#include "subsystem/socket/SocketIPv4.h"
 #include "remoting/remoting/remoting.h"
-#include "remoting/remoting_common/viewer_core/RemoteViewerCore.h"
 #include "remoting/remoting_common/viewer_core/FileTransferCapability.h"
+#include "remoting/remoting_common/viewer_core/RemoteViewerCore.h"
+#include "subsystem/socket/SocketIPv4.h"
 
 
 namespace remoting_remoting
 {
-    ViewerInstance::ViewerInstance(subsystem::OperatingSystemApplicationInterface *application,
-                                  ::remoting_remoting::remoting *premoting,
-                                   ConnectionData & conData,
-                                   const ::remoting::ConnectionConfig & conConf)
-    : m_pconnectionconfig(conConf),
-      m_condata(conData),
-      m_socket(0),
-       m_premoting(premoting),
-      m_viewerWnd(application,
-         premoting,
-                  &m_condata,
-                  &m_pconnectionconfig,
-                  premoting->m_plogwriter),
-      m_vncAuthHandler(&m_condata),
-      m_viewerCore(premoting->m_plogwriter)
-    {
-    }
+   ViewerInstance::ViewerInstance(subsystem::OperatingSystemApplicationInterface *papplication,
+                                  ::remoting_remoting::remoting *premoting, ConnectionData *pconnectiondata,
+                                  ::remoting::ConnectionConfig *pconnectionconfig) :
+       m_pconnectionconfig(pconnectionconfig), m_pconnectiondata(pconnectiondata), m_premoting(premoting),
+       m_vncAuthHandler(m_pconnectiondata)
+   {
 
-    ViewerInstance::ViewerInstance(subsystem::OperatingSystemApplicationInterface *application,
-                                   ::remoting_remoting::remoting *premoting,
-                                   ConnectionData & conData,
-                                   const ::remoting::ConnectionConfig & conConf,
-                                   ::subsystem::SocketIPv4Interface *socket)
-    : m_pconnectionconfig(conConf),
-      m_condata(conData),
-      m_socket(socket),
-        m_premoting(premoting),
-      m_viewerWnd(application,
-         premoting,
-                  &m_condata,
-                  &m_pconnectionconfig,
-                  premoting->m_plogwriter),
-      m_vncAuthHandler(&m_condata),
-      m_viewerCore(premoting->m_plogwriter)
-    {
-    }
+      m_pviewercore = allocateø ::remoting::RemoteViewerCore(premoting->m_plogwriter);
+
+      m_pviewerwindow = allocateø ViewerWindow(papplication, premoting, m_pconnectiondata, m_pconnectionconfig,
+                                               premoting->m_plogwriter);
+   }
 
 
-    ViewerInstance::~ViewerInstance()
-    {
-        if (m_socket != 0) {
-            m_socket->shutdown(::subsystem::e_socket_shutdown_both);
-            m_socket->close();
-        }
+   ViewerInstance::ViewerInstance(subsystem::OperatingSystemApplicationInterface *papplication,
+                                  ::remoting_remoting::remoting *premoting, ConnectionData *pconnectiondata,
+                                  ::remoting::ConnectionConfig *pconnectionconfig,
+                                  ::subsystem::SocketIPv4Interface *psocket) :
+       m_pconnectionconfig(pconnectionconfig), m_pconnectiondata(pconnectiondata), m_psocket(psocket),
+       m_premoting(premoting), m_vncAuthHandler(m_pconnectiondata)
+   {
 
-        m_viewerCore.stop();
-        m_viewerCore.waitTermination();
+      m_pviewercore = allocateø ::remoting::RemoteViewerCore(premoting->m_plogwriter);
 
-        if (m_socket != 0) {
-            delete m_socket;
-            m_socket = NULL;
-        }
-    }
-
-    void ViewerInstance::waitViewer()
-    {
-        m_viewerCore.waitTermination();
-    }
-
-    bool ViewerInstance::requiresReconnect() const
-    {
-        return m_viewerWnd.requiresReconnect();
-    }
-
-    bool ViewerInstance::isStopped() const
-    {
-        return m_viewerWnd.isStopped();
-    }
-
-    void ViewerInstance::stop()
-    {
-        m_viewerWnd.postMessage(ViewerWindow::WM_USER_STOP);
-    }
-
-    void ViewerInstance::start()
-    {
-        auto plogwriter = m_premoting->m_plogwriter;
-        m_viewerWnd.setRemoteViewerCore(&m_viewerCore);
+      m_pviewerwindow = allocateø ViewerWindow(papplication, premoting, m_pconnectiondata, m_pconnectionconfig,
+                                               premoting->m_plogwriter);
+   }
 
 
-        m_viewerWnd.setFileTransfer(&m_fileTransfer);
+   ViewerInstance::~ViewerInstance()
+   {
+      if (m_psocket != 0)
+      {
+         m_psocket->shutdown(::subsystem::e_socket_shutdown_both);
+         m_psocket->close();
+      }
 
-        m_vncAuthHandler.addAuthCapability(&m_viewerCore);
+      m_pviewercore->stop();
+      m_pviewercore->waitTermination();
 
-        m_fileTransfer.addCapabilities(&m_viewerCore);
+      ::release(m_psocket);
+      // if (m_psocket != 0) {
+      //     delete m_psocket;
+      //     m_psocket = NULL;
+      // }
+   }
 
-        if (m_socket) {
-            m_viewerCore.start(m_socket,
-                               &m_viewerWnd, m_pconnectionconfig.getSharedFlag());
-        } else {
-            //::string strHost;
-            auto strHost = m_condata.getReducedHost();
-            unsigned short portVal = m_condata.getPort();
-            m_viewerCore.start(strHost, portVal,
-                               &m_viewerWnd, m_pconnectionconfig.getSharedFlag());
-        }
-    }
+   void ViewerInstance::waitViewer() { m_pviewercore->waitTermination(); }
+
+   bool ViewerInstance::requiresReconnect() const { return m_pviewerwindow->requiresReconnect(); }
+
+   bool ViewerInstance::isStopped() const { return m_pviewerwindow->isStopped(); }
+
+   void ViewerInstance::stop() { m_pviewerwindow->postMessage(ViewerWindow::WM_USER_STOP); }
+
+
+   void ViewerInstance::start()
+   {
+
+      auto plogwriter = m_premoting->m_plogwriter;
+
+      m_pviewerwindow->setRemoteViewerCore(m_pviewercore);
+
+      m_pviewerwindow->setFileTransfer(&m_fileTransfer);
+
+      m_vncAuthHandler.addAuthCapability(m_pviewercore);
+
+      m_fileTransfer.addCapabilities(m_pviewercore);
+
+      if (m_psocket)
+      {
+
+         m_pviewercore->start(m_psocket, m_pviewerwindow, m_pconnectionconfig->getSharedFlag());
+      }
+      else
+      {
+
+         //::string strHost;
+         auto strHost = m_pconnectiondata->getReducedHost();
+         unsigned short portVal = m_pconnectiondata->getPort();
+         m_pviewercore->start(strHost, portVal, m_pviewerwindow, m_pconnectionconfig->getSharedFlag());
+      }
+   }
+
 } // namespace remoting_remoting

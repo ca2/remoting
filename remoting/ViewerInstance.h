@@ -33,44 +33,53 @@
 
 namespace remoting_remoting
 {
-   class remoting;
-    class ViewerInstance
-    {
-    public:
+   
 
-       ::pointer<::remoting_remoting::remoting> m_premoting;
+   class CLASS_DECL_REMOTING_REMOTING ViewerInstance :
+      virtual public ::particle
+   {
+   public:
 
-        // creates the viewer instance by using host:port from condata
-        ViewerInstance(subsystem::OperatingSystemApplicationInterface *application,
-           ::remoting_remoting::remoting * premoting,
-                       ConnectionData & condata,
-                       const ::remoting::ConnectionConfig & conConf);
+      ::pointer<::remoting_remoting::remoting> m_premoting;
+      ::pointer<ConnectionData> m_pconnectiondata;
+      ::pointer<::remoting::ConnectionConfig> m_pconnectionconfig;
 
-        // creates the viewer instance if we have the socket
-        ViewerInstance(subsystem::OperatingSystemApplicationInterface *application,
-                       ::remoting_remoting::remoting *premoting,
-                       ConnectionData & condata,
-                       const ::remoting::ConnectionConfig & conConf,
-                       ::subsystem::SocketIPv4Interface *socket);
+      ::pointer<ViewerWindow> m_pviewerwindow;
+      ::pointer<::remoting::RemoteViewerCore> m_pviewercore;
+      ViewerVncAuthHandler m_vncAuthHandler;
+      ::remoting::ftp::FileTransferCapability m_fileTransfer;
+      ::pointer<::subsystem::SocketIPv4Interface> m_psocket;
 
-        virtual ~ViewerInstance();
 
-        bool requiresReconnect() const;
-        bool isStopped() const;
-        void start();
-        void stop();
+      // creates the viewer instance by using host:port from condata
+      ViewerInstance(
+         ::subsystem::OperatingSystemApplicationInterface *papplication,
+         ::remoting_remoting::remoting * premoting,
+         ::remoting_remoting::ConnectionData * pconnectiondata,
+         ::remoting::ConnectionConfig * pconnectionconfig);
 
-        // wait while viewer is not terminated
-        void waitViewer();
+      // creates the viewer instance if we have the socket
+      ViewerInstance(
+         ::subsystem::OperatingSystemApplicationInterface *papplication,
+         ::remoting_remoting::remoting *premoting, 
+         ::remoting_remoting::ConnectionData *pconnectiondata,
+         ::remoting::ConnectionConfig *pconnectionconfig,
+         ::subsystem::SocketIPv4Interface *psocket);
 
-    protected:
-        ConnectionData m_condata;
-        ::remoting::ConnectionConfig m_pconnectionconfig;
+      ~ViewerInstance() override;
 
-        ViewerWindow m_viewerWnd;
-        ::remoting::RemoteViewerCore m_viewerCore;
-        ViewerVncAuthHandler m_vncAuthHandler;
-        ::remoting::ftp::FileTransferCapability m_fileTransfer;
-        ::subsystem::SocketIPv4Interface *m_socket;
+      bool requiresReconnect() const;
+      bool isStopped() const;
+      void start();
+      void stop();
+
+      // wait while viewer is not terminated
+      void waitViewer();
+
     };
+
+
 } // namespace remoting_remoting
+
+
+

@@ -19,6 +19,12 @@ namespace remoting_remoting
    
    class keyboard_layout_change;
 
+   class remoting;
+
+   class ViewerWindow;
+
+   class DesktopWindow;
+
 
 } // namespace remoting_remoting
 

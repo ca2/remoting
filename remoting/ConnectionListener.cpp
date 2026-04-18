@@ -34,7 +34,7 @@ namespace remoting_remoting
    ConnectionListener::ConnectionListener(::subsystem::OperatingSystemApplicationInterface   *application,
                                           unsigned short port)
    : TcpServer(DEFAULT_HOST, port, true),
-     m_application(application)
+     m_poperatingsystemapplication(application)
    {
    }
 
@@ -57,7 +57,7 @@ namespace remoting_remoting
    {
       critical_section_lock al(&m_connectionsLock);
       m_connections.push_front(socket);
-      m_application->postMessage(remoting_impact::_WM_USER_NEW_LISTENING);
+      m_poperatingsystemapplication->postMessage(remoting_impact::_WM_USER_NEW_LISTENING);
    }
 
    ::pointer < ::subsystem::SocketIPv4Interface > ConnectionListener::getNewConnection()

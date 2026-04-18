@@ -44,16 +44,73 @@
 #include "subsystem/node/OperatingSystemHook.h"
 #include "apex/networking/sockets/http/get_socket.h"
 
+
 namespace remoting_remoting
 {
 
-   class remoting;
-    class ViewerWindow : //public ::innate_subsystem::Window,
-   public ::innate_subsystem::Control,
-                         public ::remoting::CoreEventsAdapter,
-                         public subsystem::OperatingSystemHookListener
-    {
-    public:
+   
+   class CLASS_DECL_REMOTING_REMOTING ViewerWindow : 
+      //public ::innate_subsystem::Window,
+      public ::innate_subsystem::Control,
+      public ::remoting::CoreEventsAdapter,
+      public subsystem::OperatingSystemHookListener
+   {
+   public:
+       
+       
+      ::subsystem::LogWriter *m_plogwriter;
+
+       //::innate_subsystem::Control m_control;
+
+       ::remoting::ConnectionConfigSM m_ccsm;
+       ::pointer < ::remoting::ConnectionConfig > m_pconnectionconfig;
+       ::pointer < ::subsystem::OperatingSystemApplicationInterface > m_poperatingsystemapplication;
+       ::pointer < ::remoting::RemoteViewerCore > m_pviewercore;
+       ::remoting::ftp::FileTransferCapability *m_fileTransfer;
+       FileTransferMainDialog *m_ftDialog;
+       ::pointer < DesktopWindow > m_pdesktopwindow;
+       //::wstring m_wstrToolTip;
+       ::innate_subsystem::Toolbar m_toolbar;
+       ViewerMenu m_menu;
+       ::pointer < ConnectionData > m_pconnectiondata;
+       ::subsystem::SystemInformation m_sysinf;
+
+       // This variable save ::subsystem::Exception after call onError().
+       ::subsystem::Exception m_error;
+       // This variable save disconnect-scopedstrMessage after call onDisconnect().
+       ::string m_disconnectMessage;
+
+       // Flag is set, if now viewer is in full screen mode
+       // bool m_isFullScr;
+       // bool m_isMinimizedFromFullScreen = false;
+       // It's size of work-area in windowed mode. It is necessary for restore size of window.
+       // WINDOWPLACEMENT m_workArea;
+       // It's size of optimal size of work-area in windowed mode.
+       //::int_rectangle m_rcNormal;
+
+
+       // Flag is set after recv first scopedstrMessage WM_SIZING.
+       // bool m_sizeIsChanged;
+       // Flag is set, if toolbar is visible.
+       bool m_bToolBar;
+       // It is scale of viewer window in percent.
+       int m_scale;
+
+       // Flag is set after onConnected().
+       bool m_isConnected;
+
+       // Flag is set, if instance is requires to reconnect.
+       bool m_requiresReconnect;
+
+       // Flag is set, if viewer instance is stopped.
+       // Destructor of ViewerWindow may be called, if this flag is true.
+       bool m_stopped;
+       // private:
+       ::array_base<int> m_standardScale;
+
+       ::subsystem::OperatingSystemHook m_operatingsystemhook;
+       bool m_hooksEnabledFirstTime;
+       //ublic :
 
         ::pointer < ::sockets::http_client_socket > m_phttpclientsocketNotifyChannel;
         ::pointer < ::remoting_remoting::keyboard_layout_change > m_pkeyboardlayoutchange;
@@ -61,10 +118,13 @@ namespace remoting_remoting
         ::pointer<::remoting_remoting::remoting> m_premoting;
 
 
-        ViewerWindow(::subsystem::OperatingSystemApplicationInterface *application,
-                    ::remoting_remoting::remoting * premoting, ConnectionData *conData, ::remoting::ConnectionConfig *conConf,
-                     ::subsystem::LogWriter * plogwriter = 0);
-        virtual ~ViewerWindow();
+        ViewerWindow(
+           ::subsystem::OperatingSystemApplicationInterface * papplication,
+           ::remoting_remoting::remoting * premoting,
+           ConnectionData * pconnectiondata, 
+           ::remoting::ConnectionConfig * pconnectionconfig,
+           ::subsystem::LogWriter * plogwriter = nullptr);
+        ~ViewerWindow() override;
 
         void setFileTransfer(::remoting::ftp::FileTransferCapability *ft);
         void setRemoteViewerCore(::remoting::RemoteViewerCore *pCore);
@@ -149,55 +209,6 @@ namespace remoting_remoting
         // else return rect of remote screen + border
         bool onCalculateDefaultSize(::int_rectangle & rectangleDefaultSize) override;
 
-        ::subsystem::LogWriter * m_plogwriter;
-
-        //::innate_subsystem::Control m_control;
-
-        ::remoting::ConnectionConfigSM m_ccsm;
-        ::remoting::ConnectionConfig *m_pconnectionconfig;
-        subsystem::OperatingSystemApplicationInterface *m_application;
-        ::remoting::RemoteViewerCore *m_viewerCore;
-        ::remoting::ftp::FileTransferCapability *m_fileTransfer;
-        FileTransferMainDialog *m_ftDialog;
-        DesktopWindow m_desktopwindow;
-        //::wstring m_wstrToolTip;
-        ::innate_subsystem::Toolbar m_toolbar;
-        ViewerMenu m_menu;
-        ConnectionData *m_conData;
-        ::subsystem::SystemInformation m_sysinf;
-
-        // This variable save ::subsystem::Exception after call onError().
-        ::subsystem::Exception m_error;
-        // This variable save disconnect-scopedstrMessage after call onDisconnect().
-        ::string m_disconnectMessage;
-
-        // Flag is set, if now viewer is in full screen mode
-        //bool m_isFullScr;
-        //bool m_isMinimizedFromFullScreen = false;
-        // It's size of work-area in windowed mode. It is necessary for restore size of window.
-        //WINDOWPLACEMENT m_workArea;
-        // It's size of optimal size of work-area in windowed mode.
-        //::int_rectangle m_rcNormal;
-
-
-        // Flag is set after recv first scopedstrMessage WM_SIZING.
-        // bool m_sizeIsChanged;
-        // Flag is set, if toolbar is visible.
-        bool m_bToolBar;
-        // It is scale of viewer window in percent.
-        int m_scale;
-
-        // Flag is set after onConnected().
-        bool m_isConnected;
-
-        // Flag is set, if instance is requires to reconnect.
-        bool m_requiresReconnect;
-
-        // Flag is set, if viewer instance is stopped.
-        // Destructor of ViewerWindow may be called, if this flag is true.
-        bool m_stopped;
-        //private:
-        ::array_base<int> m_standardScale;
         void changeCursor(int type);
         void applySettings();
         //::int_rectangle getFullScreenRect();
@@ -235,8 +246,6 @@ namespace remoting_remoting
        virtual bool operating_system_hook_on_keyboard_message(::lresult & lresult, ::user::enum_message emessage, int iVkCode, ::lparam lparam);
 
 
-       ::subsystem::OperatingSystemHook m_operatingsystemhook;
-       bool m_hooksEnabledFirstTime;
 
     };
 

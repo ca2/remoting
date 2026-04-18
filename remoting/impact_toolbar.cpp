@@ -649,7 +649,7 @@ namespace remoting_remoting
       }
       else if (eid==id_restore)
       {
-         //m_pdesktopwindow->m_viewerCore->ge
+         //m_pdesktopwindow->m_pviewercore->ge
          //bool enable = true; // Use true to force disable, which is counter-intuitive but how the flag works
          //HRESULT hr = DwmSetWindowAttribute(::GetParent((HWND) m_pdesktopwindow->_HWND()), DWMWA_TRANSITIONS_FORCEDISABLED, &enable, sizeof(enable));
 
@@ -658,7 +658,7 @@ namespace remoting_remoting
       }
       else if (eid==id_close)
       {
-         //m_pdesktopwindow->m_viewerCore->ge
+         //m_pdesktopwindow->m_pviewercore->ge
 
          m_pdesktopwindow->m_pviewerwindow->postMessage(ViewerWindow::WM_USER_DISCONNECT, 0, 0);
          m_pdesktopwindow->m_pviewerwindow->postMessage(::user::e_message_close, 0, 0);

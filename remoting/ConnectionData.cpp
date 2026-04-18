@@ -40,23 +40,31 @@ namespace remoting_remoting
    {
    }
 
-   ConnectionData::ConnectionData(const ConnectionData &connectionData)
-   : m_isEmpty(connectionData.m_isEmpty),
-     m_isSetPassword(connectionData.m_isSetPassword),
-     m_isSetDispatchId(connectionData.m_isSetDispatchId),
-     m_isIncoming(connectionData.m_isIncoming),
-      m_iDivisor(connectionData.m_iDivisor)
+   ConnectionData::ConnectionData(ConnectionData *pconnectiondata)
+   : m_isEmpty(pconnectiondata->m_isEmpty),
+     m_isSetPassword(pconnectiondata->m_isSetPassword),
+     m_isSetDispatchId(pconnectiondata->m_isSetDispatchId),
+     m_isIncoming(pconnectiondata->m_isIncoming),
+      m_iDivisor(pconnectiondata->m_iDivisor)
    {
-      if (!connectionData.is_empty()) {
-         m_hostPath.set(connectionData.m_hostPath.get());
+      if (!pconnectiondata->is_empty()) {
+         m_hostPath.set(pconnectiondata->m_hostPath.get());
       }
       if (m_isSetPassword) {
-         m_defaultPassword = connectionData.m_defaultPassword;
+         m_defaultPassword = pconnectiondata->m_defaultPassword;
       }
       if (m_isSetDispatchId) {
-         m_dispatchId = connectionData.m_dispatchId;
+         m_dispatchId = pconnectiondata->m_dispatchId;
       }
    }
+
+
+   ConnectionData::~ConnectionData()
+   {
+
+
+   }
+
 
    void ConnectionData::setIncoming(bool isIncoming)
    {

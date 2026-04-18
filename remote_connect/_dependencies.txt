@@ -1,0 +1,2 @@
+default_draw2d
+default_operating_ambient

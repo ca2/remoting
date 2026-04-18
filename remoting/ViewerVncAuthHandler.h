@@ -33,13 +33,13 @@ namespace remoting_remoting
     class ViewerVncAuthHandler : public ::remoting::VncAuthenticationHandler
     {
     public:
-        ViewerVncAuthHandler(ConnectionData *connectionData);
+        ViewerVncAuthHandler(ConnectionData *pconnectiondata);
         virtual ~ViewerVncAuthHandler();
 
         //private:
         virtual ::string getPassword();
 
-        ConnectionData *m_connectionData;
+        ::pointer < ConnectionData > m_pconnectiondata;
     };
 
     //// __VIEWERVNCAUTHHANDLER_H__

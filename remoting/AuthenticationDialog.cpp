@@ -38,10 +38,10 @@ namespace remoting_remoting
 
     bool AuthenticationDialog::onInitDialog()
     {
-        subclassControlById(m_ptextboxHostname, IDC_EHOST);
-        m_ptextboxHostname->setText(m_strHost);
-        subclassControlById(m_ptextboxPassword, IDC_EPASSW);
-        m_ptextboxPassword->setFocus();
+        dialog_item(m_textboxHostname, IDC_EHOST);
+        m_textboxHostname.setText(m_strHost);
+        dialog_item(m_textboxPassword, IDC_EPASSW);
+        m_textboxPassword.setFocus();
         return false;
     }
 
@@ -51,10 +51,10 @@ namespace remoting_remoting
         m_strHost = hostname;
     }
 
-    bool AuthenticationDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+    bool AuthenticationDialog::onCommand(unsigned int controlID, bool bAccelerator, unsigned int notificationID)
     {
         if (controlID == ::innate_subsystem::e_control_id_ok) {
-            m_strPassword = m_ptextboxPassword->getText();
+            m_strPassword = m_textboxPassword.getText();
             closeDialog(1);
             return true;
         }

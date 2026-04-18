@@ -72,8 +72,9 @@ namespace remoting
    // Finally, each function of this class may throw exceptions, unless it's
    // explicitly stated that it will never do so.
    //
-   class CLASS_DECL_REMOTING_COMMON RemoteViewerCore : public CapabilitiesManager,
-                            protected subsystem::Thread
+   class CLASS_DECL_REMOTING_COMMON RemoteViewerCore :
+      virtual public CapabilitiesManager,
+      virtual public ::subsystem::Thread
    {
    public:
       //

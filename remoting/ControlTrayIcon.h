@@ -89,7 +89,7 @@ namespace remoting_remoting
         ::innate_subsystem::Menu m_menu;
         bool m_inWindowProc;
 
-        remoting_impact *m_application;
+        remoting_impact *m_poperatingsystemapplication;
 
         //private:
         void onRightButtonUp();

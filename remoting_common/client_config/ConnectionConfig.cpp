@@ -44,10 +44,6 @@ namespace remoting
    {
    }
 
-   ConnectionConfig::~ConnectionConfig()
-   {
-   }
-
    ConnectionConfig::ConnectionConfig(const ConnectionConfig &connectionConfig)
    {
       *this = connectionConfig;
@@ -116,6 +112,16 @@ namespace remoting
       }
       return *this;
    }
+
+
+   ConnectionConfig::~ConnectionConfig()
+   {
+   
+   
+   
+   }
+
+
 
    void ConnectionConfig::allowCopyRect(bool allow)
    {

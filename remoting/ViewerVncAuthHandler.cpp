@@ -34,8 +34,8 @@
 namespace remoting_remoting
 {
 
-    ViewerVncAuthHandler::ViewerVncAuthHandler(ConnectionData *connectionData)
-    : m_connectionData(connectionData)
+    ViewerVncAuthHandler::ViewerVncAuthHandler(ConnectionData *pconnectiondata)
+    : m_pconnectiondata(pconnectiondata)
     {
     }
 
@@ -50,21 +50,21 @@ namespace remoting_remoting
         ::string passString;
 
         // get password from ConnectionData or User Interface
-        if (!m_connectionData->isSetPassword()) {
+        if (!m_pconnectiondata->isSetPassword()) {
             AuthenticationDialog authDialog;
-            ::string hostname = m_connectionData->getHost();
+            ::string hostname = m_pconnectiondata->getHost();
             authDialog.setHostName(hostname);
             auto m = ::system()->file()->safe_get_memory(::system()->directory()->appdata()/::string(hostname));
             if (m.has_data())
             {
                 ::string str;
                 main_subsystem()->DecryptData(m, str);
-                m_connectionData->setPlainPassword(::wstring(str).c_str());
+                m_pconnectiondata->setPlainPassword(::wstring(str).c_str());
             }
             else
             {
                 if (authDialog.showModal()) {
-                    m_connectionData->setPlainPassword(authDialog.getPassword());
+                    m_pconnectiondata->setPlainPassword(authDialog.getPassword());
                     memory m2;
                     ::string str(authDialog.getPassword());
                     main_subsystem()->EncryptData(str, m2);
@@ -78,7 +78,7 @@ namespace remoting_remoting
                 }
             }
         }
-        passString = m_connectionData->getPlainPassword();
+        passString = m_pconnectiondata->getPlainPassword();
 
         return passString;
     }

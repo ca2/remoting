@@ -32,7 +32,7 @@ namespace remoting_remoting
 
     ControlTrayIcon::ControlTrayIcon(remoting_impact *viewerApplication)
     :
-      m_application(viewerApplication),
+      m_poperatingsystemapplication(viewerApplication),
       m_inWindowProc(false)
     {
        initialize_notify_icon(false);
@@ -234,26 +234,26 @@ namespace remoting_remoting
 
     void ControlTrayIcon::onNewConnection()
     {
-        m_application->showLoginDialog();
+        m_poperatingsystemapplication->showLoginDialog();
     }
 
     void ControlTrayIcon::onListeningOptions()
     {
-        m_application->showListeningOptions();
+        m_poperatingsystemapplication->showListeningOptions();
     }
 
     void ControlTrayIcon::onConfiguration()
     {
-        m_application->showConfiguration();
+        m_poperatingsystemapplication->showConfiguration();
     }
 
     void ControlTrayIcon::onAboutViewer()
     {
-        m_application->showAboutViewer();
+        m_poperatingsystemapplication->showAboutViewer();
     }
 
     void ControlTrayIcon::onCloseListeningDaemon()
     {
-        m_application->stopListening();
+        m_poperatingsystemapplication->stopListening();
     }
 }// namespace remoting_remoting

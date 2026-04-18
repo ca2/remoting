@@ -49,6 +49,25 @@ namespace remoting_remoting
    {
    public:
 
+      ViewerCollector m_instances;
+
+      // class name of viewer-window
+      ::wstring m_viewerWindowClassName;
+
+      // HACCEL m_hAccelTable;
+      bool m_isListening;
+
+      ::subsystem::LogWriter *m_plogwriter;
+
+      AboutDialog m_aboutDialog;
+      ConfigurationDialog m_configurationDialog;
+      OptionsDialog m_optionsDialog;
+
+      ::pointer < LoginDialog > m_plogindialog;
+      ControlTrayIcon *m_trayIcon;
+      ::pointer < ConnectionListener > m_pconnectionlistener;
+
+      // WNDCLASS m_viewerWndClass;
 
       ::pointer<::remoting_remoting::remoting> m_premoting;
 
@@ -81,10 +100,10 @@ namespace remoting_remoting
 
       // newConnection(...) and startListening(...) always do copy of params (::string,
       // ConnectionData and ConnectionConfig). After call this function can free memory
-      // with hostName, connectionData, connectionConfig
+      // with hostName, pconnectiondata, pconnectionconfig
       void newListeningConnection();
-      void newConnection(const ::scoped_string & hostName, const ::remoting::ConnectionConfig & connectionConfig);
-      void newConnection(const ConnectionData  * pconData, const ::remoting::ConnectionConfig * pconnectionConfig);
+      void newConnection(const ::scoped_string & hostName, ::remoting::ConnectionConfig * pconnectionconfig);
+      void newConnection(ConnectionData * pconnectiondata, ::remoting::ConnectionConfig * pconnectionconfig);
       void startListening(int listeningPort);
       void stopListening();
 
@@ -132,41 +151,24 @@ void defer_check_dead_instance();
       //void unregisterViewerWindowClass();
       //static LRESULT CALLBACK wndProcViewer(HWND hWnd, unsigned int msg, ::wparam wparam, ::lparam lparam);
 
-      void runInstance(ConnectionData & sonData, const ::remoting::ConnectionConfig & config);
-      void runInstance(const ::scoped_string & hostName, const ::remoting::ConnectionConfig & config);
+      void runInstance(ConnectionData * pconnectiondata, ::remoting::ConnectionConfig * pconnectionconfig);
+      void runInstance(const ::scoped_string & hostName, ::remoting::ConnectionConfig * pconnectionconfig);
 
       // This method return true, if login dialog is visible.
       bool isVisibleLoginDialog() const;
 
       bool onTimer(::wparam idTimer);
 
-      ViewerCollector m_instances;
-
-      // class name of viewer-window
-      ::wstring m_viewerWindowClassName;
-
-      //HACCEL m_hAccelTable;
 
       //private:
       void addInstance(ViewerInstance *viewerInstance);
 
-      bool m_isListening;
-
-      ::subsystem::LogWriter * m_plogwriter;
-
-      AboutDialog m_aboutDialog;
-      ConfigurationDialog m_configurationDialog;
-      OptionsDialog m_optionsDialog;
-
-      LoginDialog *m_loginDialog;
-      ControlTrayIcon *m_trayIcon;
-      ConnectionListener *m_conListener;
-
 
       void run() override;
 
-      //WNDCLASS m_viewerWndClass;
    };
+
+
 } // namespace remoting_remoting
 
 

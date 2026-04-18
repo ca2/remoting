@@ -29,14 +29,39 @@
 //////#include "remoting/remoting_common/util/::string.h"
 #include "remoting/remoting_common/rfb/HostPath.h"
 
+
 namespace remoting_remoting
 {
+
+
    class ConnectionData :
       virtual public ::particle
    {
    public:
+
+      // protected:
+      ::remoting::HostPath m_hostPath;
+      int m_iDivisor;
+
+      // This flag is true, if host isn't set.
+      bool m_isEmpty;
+
+      // This flag is true, if password is set.
+      bool m_isSetPassword;
+
+      // This flag is true, if connection is incoming (e.g. listening mode).
+      bool m_isIncoming;
+
+      // Saved password is crypted.
+      ::string m_defaultPassword;
+
+      bool m_isSetDispatchId;
+      unsigned int m_dispatchId;
+
+
       ConnectionData();
-      ConnectionData(const ConnectionData &connectionData);
+      ConnectionData(ConnectionData *pconnectiondata);
+      ~ConnectionData();
 
       //
       // This methods is setter and getter of hostname or ::pair of hostname and port.
@@ -80,23 +105,10 @@ namespace remoting_remoting
       void setIncoming(bool isIncoming);
       bool isIncoming() const;
 
-      //protected:
-      ::remoting::HostPath m_hostPath;
-      int m_iDivisor;
-
-      // This flag is true, if host isn't set.
-      bool m_isEmpty;
-
-      // This flag is true, if password is set.
-      bool m_isSetPassword;
-
-      // This flag is true, if connection is incoming (e.g. listening mode).
-      bool m_isIncoming;
-
-      // Saved password is crypted.
-      ::string m_defaultPassword;
-
-      bool m_isSetDispatchId;
-      unsigned int m_dispatchId;
    };
+
+
 } //namespace remoting_remoting
+
+
+

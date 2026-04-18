@@ -71,7 +71,7 @@ namespace remoting_remoting
       ::innate_subsystem::TextBox  m_textboxLogging;
       ::innate_subsystem::Control  m_controlOpenLogDir;
 
-      ::subsystem::OperatingSystemApplicationInterface *m_application;
+      ::subsystem::OperatingSystemApplicationInterface *m_poperatingsystemapplication;
 
       //private:
       void updateControlValues();

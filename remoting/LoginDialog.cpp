@@ -25,242 +25,259 @@
 #include "LoginDialog.h"
 #include "NamingDefs.h"
 #include "OptionsDialog.h"
-#include "remoting/remoting_common/remoting.h"
-#include "subsystem/node/Shell.h"
 #include "innate_subsystem/subsystem.h"
 #include "remoting/remoting/remoting.h"
+#include "remoting/remoting_common/remoting.h"
+#include "subsystem/node/Shell.h"
 #include "subsystem/node/SystemException.h"
 
 
 namespace remoting_remoting
 {
-    LoginDialog::LoginDialog(remoting_impact *viewer, ::remoting_remoting::remoting * premoting)
-    :
-      m_viewer(viewer),
-      m_isListening(false), m_premoting(premoting)
-    {
-       initialize_dialog(IDD_LOGINDIALOG);
-    }
+   LoginDialog::LoginDialog(remoting_impact *premotingimpact, ::remoting_remoting::remoting *premoting) :
+       m_premotingimpact(premotingimpact), m_isListening(false), m_premoting(premoting)
+   {
+      initialize_dialog(IDD_LOGINDIALOG);
+   }
 
-    LoginDialog::~LoginDialog()
-    {
-    }
+   LoginDialog::~LoginDialog() {}
 
-    bool LoginDialog::onInitDialog()
-    {
-        dialog_item(m_server, IDC_CSERVER);
-        dialog_item(m_listening, IDC_LISTENING);
-        dialog_item(m_ok, ::innate_subsystem::e_control_id_ok);
-        updateHistory();
-       setForegroundWindow();
-        //SetForegroundWindow((HWND) _HWND());
-        m_server.setFocus();
-        if (m_isListening) {
-            m_listening.enableWindow(false);
-        }
-        return true;
-    }
+   bool LoginDialog::onInitDialog()
+   {
+      dialog_item(m_server, IDC_CSERVER);
+      dialog_item(m_listening, IDC_LISTENING);
+      dialog_item(m_ok, ::innate_subsystem::e_control_id_ok);
+      updateHistory();
+      setForegroundWindow();
+      // SetForegroundWindow((HWND) _HWND());
+      m_server.setFocus();
+      if (m_isListening)
+      {
+         m_listening.enableWindow(false);
+      }
+      return true;
+   }
 
-    void LoginDialog::enableConnect()
-    {
-        ::string str;
-        int iSelected = m_server.getSelectedItemIndex();
-        if (iSelected == -1) {
-            str = m_server.getText();
-            m_ok.enableWindow(!str.is_empty());
-        } else {
-            m_ok.enableWindow(true);
-        }
-    }
+   void LoginDialog::enableConnect()
+   {
+      ::string str;
+      int iSelected = m_server.getSelectedItemIndex();
+      if (iSelected == -1)
+      {
+         str = m_server.getText();
+         m_ok.enableWindow(!str.is_empty());
+      }
+      else
+      {
+         m_ok.enableWindow(true);
+      }
+   }
 
-    void LoginDialog::updateHistory()
-    {
-        ::remoting::ConnectionHistory *conHistory;
+   void LoginDialog::updateHistory()
+   {
+      ::remoting::ConnectionHistory *conHistory;
 
-        ::string currentServer;
-        currentServer = m_server.getText();
-        m_server.removeAllItems();
-        conHistory = m_premoting->m_pconfig->getConnectionHistory();
-        conHistory->load();
-        for (size_t i = 0; i < conHistory->getHostCount(); i++) {
-            m_server.insertItem(static_cast<int>(i), conHistory->getHost(i));
-        }
-        m_server.setText(currentServer);
-        if (m_server.getItemsCount()) {
-            if (currentServer.is_empty()) {
-                m_server.setSelectedItem(0);
-            }
-            ::string server;
-            server = m_server.getText();
-            ::remoting::ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
-                                    server);
-            m_connectionConfig.loadFromStorage(&ccsm);
-        }
-    }
+      ::string currentServer;
+      currentServer = m_server.getText();
+      m_server.removeAllItems();
+      conHistory = m_premoting->m_pviewerconfig->getConnectionHistory();
+      conHistory->load();
+      for (size_t i = 0; i < conHistory->getHostCount(); i++)
+      {
+         m_server.insertItem(static_cast<int>(i), conHistory->getHost(i));
+      }
+      m_server.setText(currentServer);
+      if (m_server.getItemsCount())
+      {
 
-    void LoginDialog::onConnect()
-    {
-        auto conHistory = m_premoting->m_pconfig->getConnectionHistory();
+         if (currentServer.is_empty())
+         {
 
-        m_serverHost = m_server.getText();
-
-        conHistory->load();
-        conHistory->addHost(m_serverHost);
-        conHistory->save();
-
-        if (!m_serverHost.is_empty()) {
-            ::remoting::ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH, m_serverHost);
-            m_connectionConfig.saveToStorage(&ccsm);
-        }
-
-        m_viewer->newConnection(m_serverHost, m_connectionConfig);
-    }
-
-    void LoginDialog::onConfiguration()
-    {
-        //m_viewer->postMessage(remoting_impact::WM_USER_CONFIGURATION);
-       m_viewer->postMessage(remoting_impact::_WM_USER_CONFIGURATION);
-    }
-
-    bool LoginDialog::onOptions()
-    {
-        OptionsDialog dialog;
-        dialog.setConnectionConfig(&m_connectionConfig);
-        dialog.setParent(this);
-        if (dialog.showModal() == 1) {
-            ::string server;
-            server = m_server.getText();
-            if (server.is_empty()) {
-                ::remoting::ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
-                                        server);
-                m_connectionConfig.saveToStorage(&ccsm);
-            }
-            return false;
-        }
-        return true;
-    }
-
-    void LoginDialog::onOrder()
-    {
-        openUrl(main_subsystem()->string_table()->getString(IDS_URL_LICENSING_FVC));
-    }
-
-    void LoginDialog::openUrl(const ::scoped_string & scopedstrUrl)
-    {
-        // TODO: removed duplicated code (see AboutDialog.h)
-        try {
-            main_innate_subsystem()->shell()->open(scopedstrUrl, 0, 0);
-        } catch (const ::subsystem::SystemException &sysEx) {
-            ::string scopedstrMessage;
-
-            scopedstrMessage.formatf(main_subsystem()->string_table()->getString(IDS_FAILED_TO_OPEN_URL_FORMAT).c_str(), sysEx.get_message().c_str());
-
-            main_subsystem()->message_box(operating_system_window(),
-                       scopedstrMessage,
-                       main_subsystem()->string_table()->getString(IDS_MBC_TVNVIEWER),
-                       ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
-        }
-    }
-
-    void LoginDialog::setListening(bool isListening)
-    {
-        m_isListening = isListening;
-       if (isWindow())
-       {
-          if (isListening)
-          {
-             m_listening.enableWindow(false);
-          }
-          else
-          {
-             m_listening.enableWindow(true);
-          }
-       }
-    }
-
-    void LoginDialog::onListening()
-    {
-        ::remoting::ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
-                                ".listen");
-        m_connectionConfig.loadFromStorage(&ccsm);
-
-        m_listening.enableWindow(false);
-        m_viewer->startListening(m_premoting->m_pconfig->getListenPort());
-    }
-
-    void LoginDialog::onAbout()
-    {
-        m_viewer->postMessage(remoting_impact::_WM_USER_ABOUT);
-    }
-
-    bool LoginDialog::onCommand(unsigned int controlID, unsigned int notificationID)
-    {
-         switch (controlID) {
-             case IDC_CSERVER:
-                 //switch (notificationID) {
-                 //case CBN_DROPDOWN:
-                 //        updateHistory();
-                 //        break;
-        
-                 //        // select item in ComboBox with ::list_base of history
-                 //case CBN_SELENDOK:
-                 //{
-                 //    int selectedItemIndex = m_server.getSelectedItemIndex();
-                 //    if (selectedItemIndex < 0) {
-                 //        return false;
-                 //    }
-                 //    //::string server;
-                 //    auto server = m_server.getItemText(selectedItemIndex);
-                 //    ::remoting::ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
-                 //                            server);
-                 //    m_connectionConfig.loadFromStorage(&ccsm);
-                 //    break;
-                 //}
-                 //}
-        
-                 enableConnect();
-                 break;
-        
-                 // click "Connect"
-             case ::innate_subsystem::e_control_id_ok:
-                 onConnect();
-                 closeDialog(0);
-                 break;
-        
-                 // cancel connection
-             case ::innate_subsystem::e_control_id_cancel:
-                 closeDialog(0);
-                 break;
-        
-             case IDC_BCONFIGURATION:
-                 onConfiguration();
-                 break;
-        
-             case IDC_BOPTIONS:
-                 return onOptions();
-        
-             case IDC_LISTENING:
-                 onListening();
-                 closeDialog(0);
-                 break;
-        
-             case IDC_ORDER_SUPPORT_BUTTON:
-                 onOrder();
-                 break;
-        
-             case IDC_BABOUT:
-                 onAbout();
-                 break;
-        
-             default:
-                 _ASSERT(true);
-                 return false;
+            m_server.setSelectedItem(0);
          }
-        return true;
-    }
 
-    ::string LoginDialog::getServerHost()
-    {
-        return m_serverHost;
-    }
+         ::string server;
+
+         server = m_server.getText();
+
+         ::remoting::ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH, server);
+
+         m_pconnectionconfig->loadFromStorage(&ccsm);
+      }
+   }
+
+
+   void LoginDialog::onConnect()
+   {
+
+      auto conHistory = m_premoting->m_pviewerconfig->getConnectionHistory();
+
+      m_serverHost = m_server.getText();
+
+      conHistory->load();
+      conHistory->addHost(m_serverHost);
+      conHistory->save();
+
+      if (m_serverHost.has_character())
+      {
+
+         ::remoting::ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH, m_serverHost);
+
+         m_pconnectionconfig->saveToStorage(&ccsm);
+      }
+
+      m_premotingimpact->newConnection(m_serverHost, m_pconnectionconfig);
+   }
+
+
+   void LoginDialog::onConfiguration()
+   {
+
+      // m_premotingimpact->postMessage(remoting_impact::WM_USER_CONFIGURATION);
+      m_premotingimpact->postMessage(remoting_impact::_WM_USER_CONFIGURATION);
+   }
+
+   bool LoginDialog::onOptions()
+   {
+      OptionsDialog dialog;
+      dialog.setConnectionConfig(m_pconnectionconfig);
+      dialog.setParent(this);
+      if (dialog.showModal() == 1)
+      {
+         ::string server;
+         server = m_server.getText();
+         if (server.is_empty())
+         {
+
+            ::remoting::ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH, server);
+
+            m_pconnectionconfig->saveToStorage(&ccsm);
+         }
+
+         return false;
+      }
+
+      return true;
+   }
+
+   void LoginDialog::onOrder() { openUrl(main_subsystem()->string_table()->getString(IDS_URL_LICENSING_FVC)); }
+
+   void LoginDialog::openUrl(const ::scoped_string &scopedstrUrl)
+   {
+      // TODO: removed duplicated code (see AboutDialog.h)
+      try
+      {
+         main_innate_subsystem()->shell()->open(scopedstrUrl, 0, 0);
+      }
+      catch (const ::subsystem::SystemException &sysEx)
+      {
+         ::string scopedstrMessage;
+
+         scopedstrMessage.formatf(main_subsystem()->string_table()->getString(IDS_FAILED_TO_OPEN_URL_FORMAT).c_str(),
+                                  sysEx.get_message().c_str());
+
+         main_subsystem()->message_box(operating_system_window(), scopedstrMessage,
+                                       main_subsystem()->string_table()->getString(IDS_MBC_TVNVIEWER),
+                                       ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
+      }
+   }
+
+   void LoginDialog::setListening(bool isListening)
+   {
+      m_isListening = isListening;
+      if (isWindow())
+      {
+         if (isListening)
+         {
+            m_listening.enableWindow(false);
+         }
+         else
+         {
+            m_listening.enableWindow(true);
+         }
+      }
+   }
+
+
+   void LoginDialog::onListening()
+   {
+
+      ::remoting::ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH, ".listen");
+      m_pconnectionconfig->loadFromStorage(&ccsm);
+
+      m_listening.enableWindow(false);
+      m_premotingimpact->startListening(m_premoting->m_pviewerconfig->getListenPort());
+   }
+
+
+   void LoginDialog::onAbout() { m_premotingimpact->postMessage(remoting_impact::_WM_USER_ABOUT); }
+
+   bool LoginDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+   {
+      switch (controlID)
+      {
+         case IDC_CSERVER:
+            // switch (notificationID) {
+            // case CBN_DROPDOWN:
+            //         updateHistory();
+            //         break;
+
+            //        // select item in ComboBox with ::list_base of history
+            // case CBN_SELENDOK:
+            //{
+            //    int selectedItemIndex = m_server.getSelectedItemIndex();
+            //    if (selectedItemIndex < 0) {
+            //        return false;
+            //    }
+            //    //::string server;
+            //    auto server = m_server.getItemText(selectedItemIndex);
+            //    ::remoting::ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
+            //                            server);
+            //    m_pconnectionconfig.loadFromStorage(&ccsm);
+            //    break;
+            //}
+            //}
+
+            enableConnect();
+            break;
+
+            // click "Connect"
+         case ::innate_subsystem::e_control_id_ok:
+            onConnect();
+            closeDialog(0);
+            break;
+
+            // cancel connection
+         case ::innate_subsystem::e_control_id_cancel:
+            closeDialog(0);
+            break;
+
+         case IDC_BCONFIGURATION:
+            onConfiguration();
+            break;
+
+         case IDC_BOPTIONS:
+            return onOptions();
+
+         case IDC_LISTENING:
+            onListening();
+            closeDialog(0);
+            break;
+
+         case IDC_ORDER_SUPPORT_BUTTON:
+            onOrder();
+            break;
+
+         case IDC_BABOUT:
+            onAbout();
+            break;
+
+         default:
+            _ASSERT(true);
+            return false;
+      }
+      return true;
+   }
+
+   ::string LoginDialog::getServerHost() { return m_serverHost; }
 } // namespace remoting_remoting

@@ -20,18 +20,14 @@ namespace remoting_remoting
       public ::particle
    {
    public:
-      ::pointer < ::remoting::ConnectionConfig > m_pconConf;
-      ::pointer < ConnectionData  > m_pcondata;
-
-            ::pointer < ::remoting::ViewerConfig> m_pconfig;
-
-            ::pointer<ConnectingDialog> m_pconnectingdialog;
-
-      ::subsystem::LogWriter *m_plogwriter;
-      //bool m_bOpenFile = false;
-
-
-      ::pointer<remoting_remoting::remoting_impact> m_premotingimpact;
+      
+      
+      ::pointer < ::remoting::ConnectionConfig >         m_pconnectionconfig;
+      ::pointer < ConnectionData  >                      m_pconnectiondata;
+      ::pointer < ::remoting::ViewerConfig>              m_pviewerconfig;
+      ::pointer<ConnectingDialog>                        m_pconnectingdialog;
+      ::subsystem::LogWriter *                           m_plogwriter;
+      ::pointer<remoting_remoting::remoting_impact>      m_premotingimpact;
 
 
       remoting();
