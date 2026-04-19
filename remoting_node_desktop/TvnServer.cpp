@@ -21,12 +21,12 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
+#include "framework.h"
 #include "TvnServer.h"
 #include "WsConfigRunner.h"
 #include "AdditionalActionApplication.h"
-#include "remoting/remoting_common/win_system/CurrentConsoleProcess.h"
-//#include "remoting/remoting_common/win_system/Environment.h"
+#include "subsystem/node/CurrentConsoleProcess.h"
+//#include "subsystem/node/Environment.h"
 
 #include "remoting/remoting_common/server_config/Configurator.h"
 
@@ -223,7 +223,7 @@ void TvnServer::getServerInfo(TvnServerInfo *info)
 
   if (rfbServerListening) {
     if (vncPasswordsError) {
-      statusString = main_subsystem()->string_table()->getString(IDS_NO_PASSWORDS_SET);
+      statusString = MainSubsystem()->string_table()->getString(IDS_NO_PASSWORDS_SET);
     } else {
       // FIXME: Usage of deprecated FUNCTION!
       char localAddressString[1024];
@@ -232,17 +232,17 @@ void TvnServer::getServerInfo(TvnServerInfo *info)
       ansiString.toStringStorage(&statusString);
 
       if (!vncAuthEnabled) {
-        statusString.appendString(main_subsystem()->string_table()->getString(IDS_NO_AUTH_STATUS));
+        statusString.appendString(MainSubsystem()->string_table()->getString(IDS_NO_AUTH_STATUS));
       } // if no auth enabled.
     } // accepting connections and no problem with passwords.
   } else {
-    statusString = main_subsystem()->string_table()->getString(IDS_SERVER_NOT_LISTENING);
+    statusString = MainSubsystem()->string_table()->getString(IDS_SERVER_NOT_LISTENING);
   } // not accepting connections.
 
   unsigned int stringId = m_runAsService ? IDS_TVNSERVER_SERVICE : IDS_TVNSERVER_APP;
 
   info->m_statusText.formatf("{} - {}",
-                            main_subsystem()->string_table()->getString(stringId),
+                            MainSubsystem()->string_table()->getString(stringId),
                             statusString);
   info->m_acceptFlag = rfbServerListening && !vncPasswordsError;
   info->m_serviceFlag = m_runAsService;

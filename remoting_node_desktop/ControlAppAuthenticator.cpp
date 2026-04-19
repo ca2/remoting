@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
+#include "framework.h"
 #include "ControlAppAuthenticator.h"
 //#include "subsystem/thread/critical_section.h"
 #include "remoting/remoting_common/util/VncPassCrypt.h"
@@ -68,7 +68,8 @@ void ControlAppAuthenticator::checkBeforeAuth()
   while (banTime != 0 && !m_isBreaked) {
     banTime = checkBan();
     if (banTime != 0) {
-      m_banDelay.waitForEvent((DWORD)banTime);
+      //m_banDelay.waitForEvent((DWORD)banTime);
+       m_banDelay.wait(banTime * 1_s);
     }
   }
 }
@@ -76,5 +77,6 @@ void ControlAppAuthenticator::checkBeforeAuth()
 void ControlAppAuthenticator::breakAndDisableAuthentications()
 {
   m_isBreaked = true;
-  m_banDelay.notify();
+  //m_banDelay.notify();
+  m_banDelay.set_happening();
 }

@@ -150,7 +150,7 @@ namespace  remoting
                pfileinfo->setLastModified(filesInfoReader.readUInt64());
                pfileinfo->setFlags(filesInfoReader.readUInt16());
 
-               auto strFileName = filesInfoReader.read_utf8_string();
+               auto strFileName = filesInfoReader.readUtf8();
 
                pfileinfo->setFileName(strFileName);
             } // for all newly created file's info
@@ -243,7 +243,7 @@ namespace  remoting
       void FileTransferReplyBuffer::onLastRequestFailedReply(::DataInputStream * pinput)
       {
 
-         m_lastErrorMessage = pinput->read_utf8_string();
+         m_lastErrorMessage = pinput->readUtf8();
 
          m_plogwriter->information("Received last request failed reply:\n"
                            "\terror scopedstrMessage: {}\n",

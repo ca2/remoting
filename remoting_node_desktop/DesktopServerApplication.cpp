@@ -21,14 +21,14 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
+#include "framework.h"
 #include "DesktopServerApplication.h"
 #include "DesktopServerCommandLine.h"
 #include "remoting/remoting_common/util/ResourceLoader.h"
 #include "desktop/WallpaperUtil.h"
-#include "remoting/remoting_common/win_system/WTS.h"
-//#include "remoting/remoting_common/win_system/Environment.h"
-#include "remoting/remoting_common/win_system/SharedMemory.h"
+#include "subsystem/node/WTS.h"
+//#include "subsystem/node/Environment.h"
+#include "subsystem/node/SharedMemory.h"
 #include "remoting_node_desktop/NamingDefs.h"
 #include "TimeAPI.h"
 

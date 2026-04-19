@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
+#include "framework.h"
 #include "AuthTracker.h"
 //#include "subsystem/thread/critical_section.h"
 
@@ -45,8 +45,9 @@ unsigned long long AuthTracker::checkBan()
   {
     critical_section_lock al(&m_countMutex);
     if (m_failureCount >= m_failureMaxCount) {
-      banTime = max(0, m_failureTimeInterval -
-                       (::earth::time::now() - m_firstFailureTime).getTime());
+      banTime = maximum(0, m_failureTimeInterval -
+                       //(::earth::time::now() - m_firstFailureTime).getTime());
+                           (::earth::time::now() - m_firstFailureTime).m_iSecond);
     }
   }
   return banTime;
@@ -64,7 +65,9 @@ void AuthTracker::notifyAbAuthFailed()
 void AuthTracker::refresh()
 {
   critical_section_lock al(&m_countMutex);
-  if ((::earth::time::now() - m_firstFailureTime).getTime() >= m_failureTimeInterval) {
+  //if ((::earth::time::now() - m_firstFailureTime).getTime() >= m_failureTimeInterval) {
+  if ((::earth::time::now() - m_firstFailureTime).m_iSecond >= m_failureTimeInterval)
+  {
     m_failureCount = 0;
   }
 }

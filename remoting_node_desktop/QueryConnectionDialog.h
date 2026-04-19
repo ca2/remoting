@@ -27,10 +27,10 @@
 
 #include "subsystem/_common_header.h"
 
-#include "innate_subsystem/gui/BaseDialog.h"
-#include "innate_subsystem/gui/::innate_subsystem::Control.h"
+#include "innate_subsystem/gui/Dialog.h"
+#include "innate_subsystem/gui/Control.h"
 
-class QueryConnectionDialog : public BaseDialog
+class QueryConnectionDialog : public ::innate_subsystem::Dialog
 {
 public:
   static const int ACCEPT_CHOISE = 0x0;

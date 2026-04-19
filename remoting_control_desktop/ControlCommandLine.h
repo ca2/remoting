@@ -25,43 +25,43 @@
 #pragma once
 
 
-#include "remoting/remoting_common/util/CommandLine.h"
+#include "subsystem/CommandLine.h"
 #include "remoting/remoting_common/util/CommandLineFormatException.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 
 
-class ControlCommandLine : private CommandLine
+class ControlCommandLine : private ::subsystem::CommandLine
 {
 public:
-  static const TCHAR CONFIG_APPLICATION[];
-  static const TCHAR CONFIG_SERVICE[];
+  static const char CONFIG_APPLICATION[];
+  static const char CONFIG_SERVICE[];
 
-  static const TCHAR CONTROL_SERVICE[];
-  static const TCHAR CONTROL_APPLICATION[];
-  static const TCHAR PASSWORD_FILE[];
-  static const TCHAR CONFIG_RELOAD[];
-  static const TCHAR DISCONNECT_ALL[];
-  static const TCHAR CONNECT[];
-  static const TCHAR SHUTDOWN[];
-  static const TCHAR SHARE_PRIMARY[];
-  static const TCHAR SHARE_RECT[];
-  static const TCHAR SHARE_DISPLAY[];
-  static const TCHAR SHARE_WINDOW[];
-  static const TCHAR SHARE_FULL[];
-  static const TCHAR SHARE_APP[];
+  static const char CONTROL_SERVICE[];
+  static const char CONTROL_APPLICATION[];
+  static const char PASSWORD_FILE[];
+  static const char CONFIG_RELOAD[];
+  static const char DISCONNECT_ALL[];
+  static const char CONNECT[];
+  static const char SHUTDOWN[];
+  static const char SHARE_PRIMARY[];
+  static const char SHARE_RECT[];
+  static const char SHARE_DISPLAY[];
+  static const char SHARE_WINDOW[];
+  static const char SHARE_FULL[];
+  static const char SHARE_APP[];
 
-  static const TCHAR SET_CONTROL_PASSWORD[];
-  static const TCHAR SET_PRIMARY_VNC_PASSWORD[];
-  static const TCHAR CHECK_SERVICE_PASSWORDS[];
+  static const char SET_CONTROL_PASSWORD[];
+  static const char SET_PRIMARY_VNC_PASSWORD[];
+  static const char CHECK_SERVICE_PASSWORDS[];
 
-  static const TCHAR SLAVE_MODE[];
-  static const TCHAR DONT_ELEVATE[];
+  static const char SLAVE_MODE[];
+  static const char DONT_ELEVATE[];
 
 public:
   ControlCommandLine();
   virtual ~ControlCommandLine();
 
-  void parse(const CommandLineArgs *cmdArgs);
+  void parse(const ::subsystem::CommandLineArguments *cmdArgs);
 
   void getPasswordFile(::string & passwordFile) const;
   bool hasPasswordFile();

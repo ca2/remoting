@@ -30,7 +30,7 @@
 
 // This class runs TvnControl in current session.
 // This class only for application mode running.
-class WsConfigRunner : private Thread
+class WsConfigRunner : private ::subsystem::Thread
 {
 public:
   WsConfigRunner(::subsystem::LogWriter * plogwriter, bool serviceMode = false);

@@ -126,7 +126,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     } catch (::subsystem::Exception &fatalException) {
       MessageBox(0,
         fatalException.get_message(),
-        main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
+        MainSubsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
         ::user::e_message_box_ok | MB_ICONERROR);
       return 1;
     }

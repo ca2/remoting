@@ -36,10 +36,10 @@
 #include "acme/input_output/DataOutputStream.h"
 #include "acme/exception/io.h"
 #include "remoting/remoting_common/region/RectSerializer.h"
-
+#include "subsystem/thread/Lockable.h"
 // #include aaa_<shlobj.h>
 
-class ServerConfig : public lockable
+class ServerConfig : virtual public ::subsystem::LockableInterface
 {
 public:
   static const unsigned int MINIMAL_POLLING_INTERVAL = 30;
@@ -87,8 +87,9 @@ public:
   // Inherited from lockable abstract class.
   //
 
-  virtual void lock() {
+  virtual ::e_status lock() {
     m_objectCS.lock();
+     return ::success;
   }
 
   virtual void unlock() {

@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
+#include "framework.h"
 #include "TvnServerHelp.h"
 
 //#include "remoting/remoting_common/util/winhdr.h"
@@ -38,7 +38,7 @@ TvnServerHelp::TvnServerHelp()
 void TvnServerHelp::showUsage()
 {
   MessageBox(0,
-    main_subsystem()->string_table()->getString(IDS_TVNSERVER_USAGE),
-    main_subsystem()->string_table()->getString(IDS_MBC_TVNSERVER_USAGE),
+    MainSubsystem()->string_table()->getString(IDS_TVNSERVER_USAGE),
+    MainSubsystem()->string_table()->getString(IDS_MBC_TVNSERVER_USAGE),
     ::user::e_message_box_ok|::user::e_message_box_icon_exclamation);
 }

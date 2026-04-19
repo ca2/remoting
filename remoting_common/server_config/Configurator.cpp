@@ -23,11 +23,11 @@
 //
 #include "framework.h"
 //#include "remoting/remoting_common/win_system/Environment.h"
-#include "remoting/remoting_common/wsconfig/TvnLogFilename.h"
+//#include "remoting/remoting_common/wsconfig/TvnLogFilename.h"
 #include "remoting/remoting_common/config/RegistrySettingsManager.h"
 
-#include "acme/acme/Registry.h"
-#include "remoting/remoting_common/win_system/RegistryKey.h"
+#include "subsystem/Registry.h"
+#include "subsystem/RegistryKey.h"
 
 #include "Configurator.h"
 #include "remoting_node_desktop/NamingDefs.h"
@@ -37,7 +37,8 @@ critical_section Configurator::m_instanceMutex;
 
 Configurator::Configurator(bool isConfiguringService)
 : m_isConfiguringService(isConfiguringService), m_isConfigLoadedPartly(false),
-  m_isFirstLoad(true), m_regSA(0)
+  m_isFirstLoad(true)
+   //, m_regSA(0)
 {
   critical_section_lock al(&m_instanceMutex);
   if (s_instance != 0) {
@@ -45,7 +46,7 @@ Configurator::Configurator(bool isConfiguringService)
   }
   s_instance = this;
   try {
-    m_regSA = new RegistrySecurityAttributes();
+    //m_regSA = new RegistrySecurityAttributes();
   } catch (...) {
     // TODO: Place exception handler here.
   }
@@ -53,7 +54,7 @@ Configurator::Configurator(bool isConfiguringService)
 
 Configurator::~Configurator()
 {
-  if (m_regSA != 0) delete m_regSA;
+  //if (m_regSA != 0) delete m_regSA;
 }
 
 Configurator *Configurator::getInstance()
@@ -91,13 +92,26 @@ bool Configurator::load(bool forService)
 {
   bool isOk = false;
 
-  ::subsystem::registry rootKey = forService ? HKEY_LOCAL_MACHINE : HKEY_CURRENT_USER;
+  //::subsystem::registry rootKey = forService ? HKEY_LOCAL_MACHINE : HKEY_CURRENT_USER;
+  ::subsystem::RegistryKey *pregistrykey = nullptr;
+  if (forService)
+  {
 
-  SECURITY_ATTRIBUTES *sa = 0;
-  if (forService && m_regSA != 0) {
-    sa = m_regSA->getServiceSA();
+     pregistrykey = MainSubsystem()->registry()->getLocalMachineKey();
   }
-  RegistrySettingsManager sm(rootKey, RegistryPaths::SERVER_PATH, sa);
+  else
+  {
+
+     pregistrykey = MainSubsystem()->registry()->getCurrentUserKey();
+
+  }
+  //SECURITY_ATTRIBUTES *sa = 0;
+  //if (forService && m_regSA != 0) {
+  //  sa = m_regSA->getServiceSA();
+  //}
+  //RegistrySettingsManager sm(rootKey, RegistryPaths::SERVER_PATH, sa);
+
+  ::remoting::RegistrySettingsManager sm(pregistrykey, RegistryPaths::SERVER_PATH);
 
   isOk = load(&sm);
 
@@ -123,7 +137,7 @@ bool Configurator::save(bool forService)
   return isOk;
 }
 
-bool Configurator::save(SettingsManager *sm)
+bool Configurator::save(::remoting::SettingsManager *sm)
 {
   bool saveResult = true;
   if (!savePortMappingContainer(sm)) {
@@ -147,7 +161,7 @@ bool Configurator::save(SettingsManager *sm)
   return saveResult;
 }
 
-bool Configurator::load(SettingsManager *sm)
+bool Configurator::load(::remoting::SettingsManager *sm)
 {
   bool loadResult = true;
 

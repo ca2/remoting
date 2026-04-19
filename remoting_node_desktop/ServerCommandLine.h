@@ -25,12 +25,12 @@
 #pragma once
 
 
-#include "remoting/remoting_common/util/CommandLine.h"
+#include "subsystem/CommandLine.h"
 
 /**
  * TvnServerApplication command line parser.
  */
-class ServerCommandLine : public CommandLine
+class ServerCommandLine : public ::subsystem::CommandLine
 {
 public:
   ServerCommandLine();
@@ -41,7 +41,7 @@ public:
    * @param commandLine command line to parse.
    * @return true if success, false if command line is invalid.
    */
-  bool parse(const CommandLineArgs *cmdArgs);
+  bool parse(const ::subsystem::CommandLineArguments *cmdArgs);
 
   /**
    * Checks if help flags are set.

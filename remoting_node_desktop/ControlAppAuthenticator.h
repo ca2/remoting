@@ -26,7 +26,8 @@
 
 
 #include "AuthTracker.h"
-#include "remoting/remoting_common/win_system/WindowsEvent.h"
+#include "acme/parallelization/happening.h"
+//#include "su/WindowsEvent.h"
 
 // This class will be authenticate insert an time interval between
 // failure trying of authentications.
@@ -63,7 +64,8 @@ private:
   void checkBeforeAuth();
 
   critical_section m_authMutex;
-  WindowsEvent m_banDelay;
+  //WindowsEvent m_banDelay;
+  ::happening m_banDelay;
   bool m_isBreaked;
 };
 

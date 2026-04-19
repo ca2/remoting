@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
+#include "framework.h"
 #include "QueryConnectionDialog.h"
 
 #include "remoting_node/resource.h"
@@ -133,9 +133,9 @@ void QueryConnectionDialog::updateTimeoutLabel()
   ::string labelText;
 
   if (m_acceptByDefault) {
-    labelText.format(main_subsystem()->string_table()->getString(IDS_AUTO_ACCEPT_CONNECTION_FORMAT), m_timeout);
+    labelText.format(MainSubsystem()->string_table()->getString(IDS_AUTO_ACCEPT_CONNECTION_FORMAT), m_timeout);
   } else {
-    labelText.format(main_subsystem()->string_table()->getString(IDS_AUTO_REJECT_CONNECTION_FORMAT), m_timeout);
+    labelText.format(MainSubsystem()->string_table()->getString(IDS_AUTO_REJECT_CONNECTION_FORMAT), m_timeout);
   }
 
   m_timeoutLabel.setText(labelText);

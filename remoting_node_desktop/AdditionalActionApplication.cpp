@@ -21,14 +21,14 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
+#include "framework.h"
 #include "AdditionalActionApplication.h"
 #include "TvnServerHelp.h"
 
 #include "remoting/remoting_common/util/CommandLine.h"
 
-#include "remoting/remoting_common/win_system/Workstation.h"
-#include "remoting/remoting_common/win_system/WinCommandLineArgs.h"
+#include "subsystem/node/Workstation.h"
+#include "subsystem/node/WinCommandLineArgs.h"
 
 const TCHAR AdditionalActionApplication::LOCK_WORKSTATION_KEY[] = "-lockworkstation";
 const TCHAR AdditionalActionApplication::LOGOUT_KEY[] = "-logout";

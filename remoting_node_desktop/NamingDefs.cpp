@@ -21,59 +21,59 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
+#include "framework.h"
 #include "NamingDefs.h"
 
-const TCHAR NamingDefs::MIRROR_DRIVER_MESSAGE_WINDOW_CLASS_NAME[] =
+const char NamingDefs::MIRROR_DRIVER_MESSAGE_WINDOW_CLASS_NAME[] =
   "MIRROR_DRIVER_MESSAGE_WINDOW_CLASS_NAME";
 
-const TCHAR ProductNames::PRODUCT_NAME[] = "TightVNC";
-const TCHAR ProductNames::SERVER_PRODUCT_NAME[] = "TightVNC Server";
+const char ProductNames::PRODUCT_NAME[] = "TightVNC";
+const char ProductNames::SERVER_PRODUCT_NAME[] = "TightVNC Server";
 
-const TCHAR RegistryPaths::SERVER_PATH[] = "Software\\TightVNC\\Server";
-const TCHAR RegistryPaths::SERVER_REVERSE_CONN_HISTORY_PATH[] =
+const char RegistryPaths::SERVER_PATH[] = "Software\\TightVNC\\Server";
+const char RegistryPaths::SERVER_REVERSE_CONN_HISTORY_PATH[] =
   "Software\\TightVNC\\::innate_subsystem::Control\\ReverseConnectionHistory";
-const TCHAR RegistryPaths::DISPATCHER_CONN_HISTORY_PATH[] =
+const char RegistryPaths::DISPATCHER_CONN_HISTORY_PATH[] =
   "Software\\TightVNC\\::innate_subsystem::Control\\DispatcherConnectionHistory";
 
-const TCHAR WindowNames::WINDOW_CLASS_NAME[] =
+const char WindowNames::WINDOW_CLASS_NAME[] =
   "TvnWindowsApplicationClass";
 
-const TCHAR LogNames::SERVER_LOG_FILE_STUB_NAME[] = "remoting_node";
-const TCHAR LogNames::VIEWER_LOG_FILE_STUB_NAME[] = "remoting_impact";
-const TCHAR LogNames::LOG_DIR_NAME[] = "TightVNC";
-const TCHAR LogNames::LOG_PIPE_PUBLIC_NAME[] = "TVN_log_pipe_public_name";
-const TCHAR LogNames::WIN_EVENT_PROVIDER_NAME[] = "remoting_node";
+const char LogNames::SERVER_LOG_FILE_STUB_NAME[] = "remoting_node";
+const char LogNames::VIEWER_LOG_FILE_STUB_NAME[] = "remoting_impact";
+const char LogNames::LOG_DIR_NAME[] = "TightVNC";
+const char LogNames::LOG_PIPE_PUBLIC_NAME[] = "TVN_log_pipe_public_name";
+const char LogNames::WIN_EVENT_PROVIDER_NAME[] = "remoting_node";
 
-const TCHAR ClipboardNames::CLIPBOARD_WIN_CLASS_NAME[] = 
+const char ClipboardNames::CLIPBOARD_WIN_CLASS_NAME[] = 
   "Tvnserver.Clipboard.MessageWindow";
 
 
-const TCHAR ServiceNames::TVNCONTROL_START_REGISTRY_ENTRY_NAME[] =
+const char ServiceNames::TVNCONTROL_START_REGISTRY_ENTRY_NAME[] =
   "tvncontrol";
-const TCHAR ServiceNames::SERVICE_NAME[] = "remoting_node";
-const TCHAR ServiceNames::SERVICE_NAME_TO_DISPLAY[] = "TightVNC Server";
+const char ServiceNames::SERVICE_NAME[] = "remoting_node";
+const char ServiceNames::SERVICE_NAME_TO_DISPLAY[] = "TightVNC Server";
 
-const TCHAR ServerApplicationNames::SERVER_INSTANCE_MUTEX_NAME[] =
+const char ServerApplicationNames::SERVER_INSTANCE_MUTEX_NAME[] =
   "tvnserverApplication";
-const TCHAR ServerApplicationNames::CONTROL_APP_INSTANCE_MUTEX_NAME[] =
+const char ServerApplicationNames::CONTROL_APP_INSTANCE_MUTEX_NAME[] =
   "tvnserverServiceControlSlave";
-const TCHAR ServerApplicationNames::FOR_SERVICE_CONTROL_APP_PIPE_NAME[] =
+const char ServerApplicationNames::FOR_SERVICE_CONTROL_APP_PIPE_NAME[] =
   "TightVNC_Service_Control";
-const TCHAR ServerApplicationNames::FOR_APP_CONTROL_APP_SERVICE_PIPE_NAME[] =
+const char ServerApplicationNames::FOR_APP_CONTROL_APP_SERVICE_PIPE_NAME[] =
   "TightVNC_Application_Control";
 
-const TCHAR HookDefinitions::HOOK_LOADER_WINDOW_CLASS[] =
+const char HookDefinitions::HOOK_LOADER_WINDOW_CLASS[] =
   "TvnHookLoaderWindowClass";
-const TCHAR HookDefinitions::HOOK_TARGET_WIN_CLASS_NAME[] =
+const char HookDefinitions::HOOK_TARGET_WIN_CLASS_NAME[] =
   "HookTargetWinClassName";
-const TCHAR HookDefinitions::HOOK_LOADER_NAME[] = "hookldr.exe";
-const unsigned int HookDefinitions::LOADER_CLOSE_CODE =
-  RegisterWindowMessage("TVN.HOOK.LOADER.CLOSE.CODE");
-const unsigned int HookDefinitions::SPEC_IPC_CODE =
-  RegisterWindowMessage("TVN.HOOK.MESSAGE.CODE");
+const char HookDefinitions::HOOK_LOADER_NAME[] = "hookldr.exe";
+//const unsigned int HookDefinitions::LOADER_CLOSE_CODE =
+  //RegisterWindowMessage("TVN.HOOK.LOADER.CLOSE.CODE");
+//const unsigned int HookDefinitions::SPEC_IPC_CODE =
+  //RegisterWindowMessage("TVN.HOOK.MESSAGE.CODE");
 
-const TCHAR DefaultNames::DEFAULT_COMPUTER_NAME[] = "TightVNC Server";
+const char DefaultNames::DEFAULT_COMPUTER_NAME[] = "TightVNC Server";
 
 
 const char HttpStrings::HTTP_INDEX_PAGE_FORMAT[] =

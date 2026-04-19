@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
+#include "framework.h"
 #include "ExtraRfbServers.h"
 #include "remoting/remoting_common/server_config/Configurator.h"
 

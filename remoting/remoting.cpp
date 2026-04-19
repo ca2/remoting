@@ -134,7 +134,7 @@ namespace remoting_remoting
       // }
       // catch (const CommandLineFormatException &exception) {
       //   ::string strError(exception.get_message());
-      //   main_subsystem()->message_box({},
+      //   MainSubsystem()->message_box({},
       //     strError,
       //     ProductNames::VIEWER_PRODUCT_NAME,
       //     ::user::e_message_box_ok | MB_ICONERROR);
@@ -186,7 +186,7 @@ namespace remoting_remoting
       }
       catch (const ::subsystem::Exception &ex)
       {
-         main_subsystem()->message_box({}, main_subsystem()->string_table()->getString(IDS_UNKNOWN_ERROR_IN_VIEWER),
+         MainSubsystem()->message_box({}, MainSubsystem()->string_table()->getString(IDS_UNKNOWN_ERROR_IN_VIEWER),
                                        ProductNames::VIEWER_PRODUCT_NAME,
                                        ::user::e_message_box_ok | ::user::e_message_box_icon_error);
          m_plogwriter->debug(ex.get_message());

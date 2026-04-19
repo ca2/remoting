@@ -29,7 +29,7 @@
 #include "TvnServerListener.h"
 #include "log-server/LogServer.h"
 #include "log-server/ClientLogWriter.h"
-#include "remoting/remoting_common/win_system/Service.h"
+#include "subsystem/node/Service.h"
 
 #include "subsystem/thread/Thread.h"
 #include "WinServiceEvents.h"

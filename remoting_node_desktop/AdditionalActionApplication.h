@@ -27,7 +27,7 @@
 
 #include "subsystem/_common_header.h"
 
-#include "remoting/remoting_common/win_system/LocalWindowsApplication.h"
+#include "subsystem/node/LocalOperatingSystemApplication.h"
 
 /**
  * Windows application that used to do additional actions:
@@ -38,7 +38,7 @@
  *
  * @fixme stub class.
  */
-class AdditionalActionApplication : public LocalWindowsApplication
+class AdditionalActionApplication : public ::subsystem::LocalOperatingSystemApplication
 {
 public:
   /**

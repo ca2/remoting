@@ -26,22 +26,24 @@
 
 
 #include "subsystem/_common_header.h"
-#include "remoting/remoting_common/util/CommandLine.h"
+#include "subsystem/CommandLine.h"
 #include "subsystem/Exception.h"
 
-class QueryConnectionCommandLine : private CommandLine
+class QueryConnectionCommandLine : private ::subsystem::CommandLine
 {
 public:
-  static const TCHAR QUERY_CONNECTION[];
-  static const TCHAR PEER_ADDR[];
-  static const TCHAR TIMEOUT[];
-  static const TCHAR ACCEPT[];
+  static const char QUERY_CONNECTION[];
+  static const char PEER_ADDR[];
+  static const char TIMEOUT[];
+  static const char ACCEPT[];
+
+  unsigned int m_timeout;
 
 public:
   QueryConnectionCommandLine();
   virtual ~QueryConnectionCommandLine();
 
-  void parse(const CommandLineArgs *commandLine);
+  void parse(const ::subsystem::CommandLineArguments *commandLine);
 
   // Returns true if timeout is specified.
   bool isTimeoutSpecified();
@@ -51,10 +53,10 @@ public:
   // Returns true if default action is accept.
   bool isDefaultActionAccept();
   // Returns timeout in seconds.
-  DWORD getTimeout();
+  unsigned int getTimeout();
 
-protected:
-  DWORD m_timeout;
+//protected:
+  //unsigned int m_timeout;
 };
 
 

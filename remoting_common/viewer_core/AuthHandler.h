@@ -73,11 +73,18 @@ namespace remoting
         virtual ~AuthCanceledException();
     };
 
-    class CLASS_DECL_REMOTING_COMMON AuthHandler
+    
+    class CLASS_DECL_REMOTING_COMMON AuthHandler :
+       virtual public ::particle
     {
     public:
-        AuthHandler(int authType);
-        virtual ~AuthHandler();
+
+
+       int m_id;
+
+
+       AuthHandler(int authType);
+       ~AuthHandler() override;
 
         //
         // This abstract method that performs the authentication.
@@ -96,8 +103,6 @@ namespace remoting
         //
         virtual int getType() const;
 
-    private:
-        int m_id;
     };
 
 } // namespace remoting

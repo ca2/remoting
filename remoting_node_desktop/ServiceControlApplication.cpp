@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
+#include "framework.h"
 #include "ServiceControlApplication.h"
 #include "ServiceControlCommandLine.h"
 
@@ -37,11 +37,11 @@
 #include "remoting_control_desktop/ControlCommandLine.h"
 
 #include "acme/acme/Registry.h"
-#include "remoting/remoting_common/win_system/RegistryKey.h"
-//#include "remoting/remoting_common/win_system/Environment.h"
-#include "remoting/remoting_common/win_system/Shell.h"
-#include "remoting/remoting_common/win_system/ServiceControlManagerClient.h"
-#include "remoting/remoting_common/win_system/WinCommandLineArgs.h"
+#include "subsystem/node/RegistryKey.h"
+//#include "subsystem/node/Environment.h"
+#include "subsystem/node/Shell.h"
+#include "subsystem/node/ServiceControlManagerClient.h"
+#include "subsystem/node/WinCommandLineArgs.h"
 
 ServiceControlApplication::ServiceControlApplication(HINSTANCE hInstance,
                                                      const ::scoped_string & scopedstrwindowClassName,
@@ -187,16 +187,16 @@ void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmd
 
   switch (ex->getServiceControlManagerErrorCode()) {
   case ServiceControlManagerClientException::ERROR_ALREADY_RUNNING:
-    errorMessage= main_subsystem()->string_table()->getString(IDS_SERVICE_ALREADY_RUNNING);
+    errorMessage= MainSubsystem()->string_table()->getString(IDS_SERVICE_ALREADY_RUNNING);
     break;
   case ServiceControlManagerClientException::ERROR_ALREADY_STOPPED:
-    errorMessage= main_subsystem()->string_table()->getString(IDS_SERVICE_ALREADY_STOPPED);
+    errorMessage= MainSubsystem()->string_table()->getString(IDS_SERVICE_ALREADY_STOPPED);
     break;
   case ServiceControlManagerClientException::ERROR_START_TIMEOUT:
-    errorMessage= main_subsystem()->string_table()->getString(IDS_SERVICE_START_TIMEOUT);
+    errorMessage= MainSubsystem()->string_table()->getString(IDS_SERVICE_START_TIMEOUT);
     break;
   case ServiceControlManagerClientException::ERROR_STOP_TIMEOUT:
-    errorMessage= main_subsystem()->string_table()->getString(IDS_SERVICE_STOP_TIMEOUT);
+    errorMessage= MainSubsystem()->string_table()->getString(IDS_SERVICE_STOP_TIMEOUT);
     break;
   default:
     errorMessage= ex->get_message();
@@ -212,10 +212,10 @@ void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmd
 
   switch (ex->getErrorCode()) {
   case ERROR_SERVICE_DOES_NOT_EXIST:
-    errorMessage= main_subsystem()->string_table()->getString(IDS_1060_ERROR_DESCRIPTION);
+    errorMessage= MainSubsystem()->string_table()->getString(IDS_1060_ERROR_DESCRIPTION);
     break;
   case ERROR_SERVICE_EXISTS:
-    errorMessage= main_subsystem()->string_table()->getString(IDS_1073_ERROR_DESCRIPTION);
+    errorMessage= MainSubsystem()->string_table()->getString(IDS_1073_ERROR_DESCRIPTION);
     break;
   default:
     errorMessage= ex->get_message();
@@ -245,10 +245,10 @@ void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmd
   }
 
   if (!cmdLine->beSilent()) {
-    const ::scoped_string & scopedstrCaption = main_subsystem()->string_table()->getString(IDS_MBC_TVNSERVER);
+    const ::scoped_string & scopedstrCaption = MainSubsystem()->string_table()->getString(IDS_MBC_TVNSERVER);
     ::string text;
-    text.format(main_subsystem()->string_table()->getString(stringId), errorMessage);
-    main_subsystem()->message_box(NULL, text, caption, ::user::e_message_box_ok | MB_ICONERROR);
+    text.format(MainSubsystem()->string_table()->getString(stringId), errorMessage);
+    MainSubsystem()->message_box(NULL, text, caption, ::user::e_message_box_ok | MB_ICONERROR);
   }
 }
 
@@ -268,8 +268,8 @@ void ServiceControlApplication::reportSuccess(const ServiceControlCommandLine *c
   }
 
   if (!cmdLine->beSilent()) {
-    const ::scoped_string & scopedstrCaption = main_subsystem()->string_table()->getString(IDS_MBC_TVNSERVER);
-    const ::scoped_string & scopedstrText = main_subsystem()->string_table()->getString(stringId);
-    main_subsystem()->message_box(NULL, text, caption, ::user::e_message_box_ok | MB_ICONINFORMATION);
+    const ::scoped_string & scopedstrCaption = MainSubsystem()->string_table()->getString(IDS_MBC_TVNSERVER);
+    const ::scoped_string & scopedstrText = MainSubsystem()->string_table()->getString(stringId);
+    MainSubsystem()->message_box(NULL, text, caption, ::user::e_message_box_ok | MB_ICONINFORMATION);
   }
 }

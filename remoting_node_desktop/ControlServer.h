@@ -31,7 +31,7 @@
 
 #include "remoting/remoting_common/network/TcpServer.h"
 
-#include "remoting/remoting_common/win_system/PipeServer.h"
+#include "subsystem/node/PipeServer.h"
 
 /**
  * Tcp server that listens for incoming control connections

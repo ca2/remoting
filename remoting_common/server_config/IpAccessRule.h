@@ -53,10 +53,10 @@ public:
 
   void toString(::string & output) const;
 
-  static bool parse(const ::scoped_string & scopedstrString, IpAccessRule *rule);
-  static bool parseIp(const ::scoped_string & scopedstrString, IpAccessRule *rule);
-  static bool parseIpRange(const ::scoped_string & scopedstrString, IpAccessRule *rule);
-  static bool parseSubnet(const ::scoped_string & scopedstrString, IpAccessRule *rule);
+  static bool parse(const char * pszString, IpAccessRule *rule);
+  static bool parseIp(const char * pszString, IpAccessRule *rule);
+  static bool parseIpRange(const char * pszString, IpAccessRule *rule);
+  static bool parseSubnet(const char * pszString, IpAccessRule *rule);
 
   //
   // Method to access protected members
@@ -81,8 +81,8 @@ public:
   void getFirstIp(::string & firstIp) const;
   void getLastIp(::string & lastIp) const;
 
-  void setFirstIp(const ::scoped_string & scopedstrFirstIp);
-  void setLastIp(const ::scoped_string & scopedstrLastIp);
+  void setFirstIp(const char * pszFirstIp);
+  void setLastIp(const char * pszLastIp);
 
   //
   // Helper methods
@@ -96,7 +96,7 @@ public:
   //
 
   bool isIncludingAddress(unsigned long ip) const;
-  static bool isIpAddressStringValid(const ::scoped_string & scopedstrString);
+  static bool isIpAddressStringValid(const char * pszString);
 
   //
   // Return values:
@@ -108,9 +108,9 @@ public:
   static int compareIp(unsigned long ip1, unsigned long ip2);
 
 protected:
-  static bool tryParseIPPart(const ::scoped_string & scopedstrString);
-  static void getIpRange(const ::scoped_string & scopedstrip, const ::scoped_string & scopedstrNetmask,
-                         ::string & firstIp, ::string & lastIp);
+  static bool tryParseIPPart(const char * pszString);
+  static void getIpRange(const char * pszip, const char * pszNetmask,
+                         ::string * firstIp, ::string * lastIp);
 protected:
   ActionType m_action;
 

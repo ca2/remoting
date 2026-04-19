@@ -94,7 +94,7 @@ namespace remoting_remoting
 
         if (fileName.is_empty() || fileName.contains_any_character_in("\\/"))
         {
-            main_subsystem()->message_box(operating_system_window(),
+            MainSubsystem()->message_box(operating_system_window(),
                        L"::file::item name cannot be empty and cannot contain '/' or '\\' characters.",
                        L"Incorrect ::file::item Name",
                        ::user::e_message_box_ok | ::user::e_message_box_icon_warning);

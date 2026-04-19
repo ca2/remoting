@@ -21,16 +21,16 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
+#include "framework.h"
 #include "WsConfigRunner.h"
-#include "remoting/remoting_common/win_system/CurrentConsoleProcess.h"
-//#include "remoting/remoting_common/win_system/Environment.h"
+#include "subsystem/node/CurrentConsoleProcess.h"
+//#include "subsystem/node/Environment.h"
 #include "remoting/remoting_common/server_config/Configurator.h"
 #include "remoting_control_desktop/ControlCommandLine.h"
 
 WsConfigRunner::WsConfigRunner(::subsystem::LogWriter * plogwriter, bool serviceMode)
 : m_serviceMode(serviceMode),
-  m_plogwriter(::subsystem::LogWriter)
+  m_plogwriter(plogwriter)
 {
   resume();
 }
@@ -43,13 +43,13 @@ WsConfigRunner::~WsConfigRunner()
 
 void WsConfigRunner::execute()
 {
-  Process *process = 0;
+  ::pointer < ::subsystem::ProcessInterface > process;
 
   try {
      // Prepare path to executable.
     ::string pathToBin;
-    Environment::getCurrentModulePath(&pathToBin);
-    pathToBin.quoteSelf();
+     MainSubsystem()->OperatingSystem()->getCurrentModulePath(&pathToBin);
+    pathToBin.double_quote();
     // Prepare arguments.
     ::string args;
     args.formatf("{} {}",
@@ -57,13 +57,15 @@ void WsConfigRunner::execute()
                       ControlCommandLine::CONTROL_APPLICATION,
       ControlCommandLine::SLAVE_MODE);
     // Start process.
-    process = new Process(pathToBin, args);
+    process = createø<::subsystem::Process>();
+    
+    process->initialize_process(pathToBin, args);
     process->start();
   } catch (::exception &e) {
     m_plogwriter.error("Cannot start the WsControl process ({})", e.get_message());
   }
 
-  if (process != 0) {
-    delete process;
-  }
+  //if (process != 0) {
+  //  delete process;
+  //}
 }

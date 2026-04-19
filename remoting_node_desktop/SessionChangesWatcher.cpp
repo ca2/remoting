@@ -21,9 +21,9 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
+#include "framework.h"
 #include "SessionChangesWatcher.h"
-#include "remoting/remoting_common/win_system/WTS.h"
+#include "subsystem/node/WTS.h"
 
 SessionChangesWatcher::SessionChangesWatcher(AnEventListener *extSessionChangesListener,
                                              ::subsystem::LogWriter *log)

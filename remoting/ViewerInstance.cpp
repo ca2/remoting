@@ -31,12 +31,17 @@
 
 namespace remoting_remoting
 {
+   
+   
    ViewerInstance::ViewerInstance(subsystem::OperatingSystemApplicationInterface *papplication,
                                   ::remoting_remoting::remoting *premoting, ConnectionData *pconnectiondata,
                                   ::remoting::ConnectionConfig *pconnectionconfig) :
-       m_pconnectionconfig(pconnectionconfig), m_pconnectiondata(pconnectiondata), m_premoting(premoting),
-       m_vncAuthHandler(m_pconnectiondata)
+      m_pconnectionconfig(pconnectionconfig), 
+      m_pconnectiondata(pconnectiondata),
+      m_premoting(premoting)
    {
+
+      m_pvncauthhandler = allocateø ViewerVncAuthHandler(m_pconnectiondata);
 
       m_pviewercore = allocateø ::remoting::RemoteViewerCore(premoting->m_plogwriter);
 
@@ -49,9 +54,13 @@ namespace remoting_remoting
                                   ::remoting_remoting::remoting *premoting, ConnectionData *pconnectiondata,
                                   ::remoting::ConnectionConfig *pconnectionconfig,
                                   ::subsystem::SocketIPv4Interface *psocket) :
-       m_pconnectionconfig(pconnectionconfig), m_pconnectiondata(pconnectiondata), m_psocket(psocket),
-       m_premoting(premoting), m_vncAuthHandler(m_pconnectiondata)
+      m_pconnectionconfig(pconnectionconfig),
+      m_pconnectiondata(pconnectiondata), 
+      m_psocket(psocket),
+      m_premoting(premoting)
    {
+
+      m_pvncauthhandler = allocateø ViewerVncAuthHandler(m_pconnectiondata);
 
       m_pviewercore = allocateø ::remoting::RemoteViewerCore(premoting->m_plogwriter);
 
@@ -96,7 +105,7 @@ namespace remoting_remoting
 
       m_pviewerwindow->setFileTransfer(&m_fileTransfer);
 
-      m_vncAuthHandler.addAuthCapability(m_pviewercore);
+      m_pvncauthhandler->addAuthCapability(m_pviewercore);
 
       m_fileTransfer.addCapabilities(m_pviewercore);
 

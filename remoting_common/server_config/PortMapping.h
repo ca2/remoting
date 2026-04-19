@@ -25,29 +25,35 @@
 #pragma once
 
 
-#include "subsystem/_common_header.h"
 //////#include "remoting/remoting_common/util/::string.h"
-#include "acme/prototype/geometry2d/rectangle.h"
+#include "PortMappingRect.h"
 
-
-class PortMappingRect : public ::int_rectangle
+class PortMapping
 {
 public:
-  PortMappingRect(int left, int right, int top, int bottom);
-  PortMappingRect();
-  virtual ~PortMappingRect();
+  PortMapping();
+  PortMapping(int nport, PortMappingRect nrect);
+  PortMapping(const PortMapping &other);
+  virtual ~PortMapping();
 
-  // Converts this rect to string value.
+  PortMapping &operator=(const PortMapping &other);
+  bool isEqualTo(const PortMapping *other) const;
+
+  void setPort(int nport);
+  void setRect(PortMappingRect nrect);
+
+  int getPort() const;
+  PortMappingRect getRect() const;
+
   void toString(::string & string) const;
 
-  // Returns true if string can be parsed to rect object,
-  // false otherwise.
-  static bool tryParse(const ::scoped_string & scopedstrString);
+public:
+  static bool parse(const char * psz,  PortMapping *mapping);
 
-  // Parsed string and sets parsed values to output rect.
-  // Returns true if string is valid, false otherwise.
-  // Remark: "out" parameter can be null.
-  static bool parse(const ::scoped_string & scopedstrString, PortMappingRect *out);
+protected:
+  int m_port;
+
+  PortMappingRect m_rect;
 };
 
 

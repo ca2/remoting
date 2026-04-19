@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
+#include "framework.h"
 #include "ControlServer.h"
 #include "ControlClient.h"
 #include "remoting_control_desktop/NamedPipeTransport.h"

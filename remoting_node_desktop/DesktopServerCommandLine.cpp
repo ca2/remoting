@@ -21,15 +21,15 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
+#include "framework.h"
 #include "DesktopServerCommandLine.h"
 
-#include "remoting/remoting_common/util/StringParser.h"
+#include "subsystem/StringParser.h"
 
-const TCHAR DesktopServerCommandLine::DESKTOP_SERVER_KEY[] = "-desktopserver";
-const TCHAR DesktopServerCommandLine::LOG_DIR_KEY[] = "-logdir";
-const TCHAR DesktopServerCommandLine::LOG_LEVEL_KEY[] = "-loglevel";
-const TCHAR DesktopServerCommandLine::SHARED_MEMORY_NAME_KEY[] = "-shmemname";
+const char DesktopServerCommandLine::DESKTOP_SERVER_KEY[] = "-desktopserver";
+const char DesktopServerCommandLine::LOG_DIR_KEY[] = "-logdir";
+const char DesktopServerCommandLine::LOG_LEVEL_KEY[] = "-loglevel";
+const char DesktopServerCommandLine::SHARED_MEMORY_NAME_KEY[] = "-shmemname";
 
 DesktopServerCommandLine::DesktopServerCommandLine()
 {
@@ -39,9 +39,9 @@ DesktopServerCommandLine::~DesktopServerCommandLine()
 {
 }
 
-void DesktopServerCommandLine::parse(const CommandLineArgs *cmdArgs)
+void DesktopServerCommandLine::parse(const ::subsystem::CommandLineArguments *cmdArgs)
 {
-  CommandLineFormat format[] = {
+  ::subsystem::CommandLineFormat format[] = {
     { DESKTOP_SERVER_KEY, NO_ARG },
     { LOG_DIR_KEY, NEEDS_ARG },
     { LOG_LEVEL_KEY, NEEDS_ARG },
@@ -75,7 +75,7 @@ int DesktopServerCommandLine::getLogLevel()
 
   int ret;
 
-  if (!main_subsystem()->string_parser()->parseInt(logLevelKeyArg, &ret)) {
+  if (!MainSubsystem()->string_parser()->parseInt(logLevelKeyArg, &ret)) {
     _ASSERT(false);
   }
 

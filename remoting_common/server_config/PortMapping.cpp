@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "PortMapping.h"
-#include "remoting/remoting_common/util/StringParser.h"
+#include "subsystem/StringParser.h"
 
 // #include aaa_<tchar.h>
 // #include aaa_<stdio.h>
@@ -88,27 +88,29 @@ void PortMapping::toString(::string & string) const
   //
 
   ::string rectString;
-  m_rect.toString(&rectString);
+  m_rect.toString(rectString);
 
-  string->format("{}:{}", m_port, rectString);
+  string.format("{}:{}", m_port, rectString);
 }
 
-bool PortMapping::parse(const ::scoped_string & scopedstrStr, PortMapping *mapping)
+bool PortMapping::parse(const char * psz, PortMapping *mapping)
 {
   int port;
-  TCHAR c;
+  char c;
   PortMappingRect rect;
-  const ::scoped_string & scopedstrRectString = _tcschr(str, _T(':')) + 1;
-  if (rectString == NULL) {
+  auto pszRectString = strchr(psz, ':') + 1;
+  if (pszRectString == NULL)
+  {
     return false;
   }
-  if ((_stscanf(str, "{}%c", &port, &c) != 2) || (c != _T(':'))) {
+  if ((sscanf(psz, "{}%c", &port, &c) != 2) || (c != ':')) {
     return false;
   }
   if (port < 0) {
     return false;
   }
-  if (!PortMappingRect::parse(rectString, &rect)) {
+  if (!PortMappingRect::parse(pszRectString, &rect))
+  {
     return false;
   }
   if (mapping != NULL) {

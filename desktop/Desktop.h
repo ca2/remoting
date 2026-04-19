@@ -28,7 +28,7 @@
 //////#include "remoting/remoting_common/util/::string.h"
 
 #include "remoting/remoting_common/region/Region.h"
-#include "remoting/remoting_common/rfb/PixelFormat.h"
+#include "subsystem/framebuffer/PixelFormat.h"
 #include "innate_subsystem/framebuffer/FrameBuffer.h"
 #include "remoting/remoting_common/fb_update_sender/UpdateRequestListener.h"
 //#include aaa_<vector>

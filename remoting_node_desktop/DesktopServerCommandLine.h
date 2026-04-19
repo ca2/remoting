@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/util/CommandLine.h"
+#include "subsystem/CommandLine.h"
 #include "subsystem/Exception.h"
 
 /**
@@ -34,7 +34,7 @@
  * pathToLogDir arg is full path to directory where desktop server log
  * will be created.
  */
-class DesktopServerCommandLine : private CommandLine
+class DesktopServerCommandLine : private ::subsystem::CommandLine
 {
 public:
   DesktopServerCommandLine();
@@ -45,7 +45,7 @@ public:
    * @param cmdLine command line to parse.
    * @throws ::subsystem::Exception on fail.
    */
-  virtual void parse(const CommandLineArgs *cmdArgs);
+  virtual void parse(const ::subsystem::CommandLineArguments *cmdArgs);
 
   /**
    * Puts specified in command line path to log directory into output parameter.
@@ -66,12 +66,12 @@ public:
   void getSharedMemName(::string & shMemName);
 
 public:
-  const static TCHAR DESKTOP_SERVER_KEY[];
+  const static char DESKTOP_SERVER_KEY[];
 
 private:
-  const static TCHAR LOG_DIR_KEY[];
-  const static TCHAR LOG_LEVEL_KEY[];
-  const static TCHAR SHARED_MEMORY_NAME_KEY[];
+  const static char LOG_DIR_KEY[];
+  const static char LOG_LEVEL_KEY[];
+  const static char SHARED_MEMORY_NAME_KEY[];
 };
 
 

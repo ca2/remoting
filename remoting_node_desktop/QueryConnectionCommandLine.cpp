@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
+#include "framework.h"
 #include "QueryConnectionCommandLine.h"
 
 #include "remoting/remoting_common/util/StringParser.h"
@@ -59,7 +59,7 @@ void QueryConnectionCommandLine::parse(const CommandLineArgs *commandLine)
   ::string timeoutStr;
 
   if (optionSpecified(TIMEOUT, &timeoutStr) &&
-      !main_subsystem()->string_parser()->parseInt(timeoutStr, (int *)&m_timeout)) {
+      !MainSubsystem()->string_parser()->parseInt(timeoutStr, (int *)&m_timeout)) {
     throw ::subsystem::Exception("Invalid timeout");
   }
 }

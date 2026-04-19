@@ -160,7 +160,7 @@ namespace remoting_remoting
       return true;
    }
 
-   void LoginDialog::onOrder() { openUrl(main_subsystem()->string_table()->getString(IDS_URL_LICENSING_FVC)); }
+   void LoginDialog::onOrder() { openUrl(MainSubsystem()->string_table()->getString(IDS_URL_LICENSING_FVC)); }
 
    void LoginDialog::openUrl(const ::scoped_string &scopedstrUrl)
    {
@@ -173,11 +173,11 @@ namespace remoting_remoting
       {
          ::string scopedstrMessage;
 
-         scopedstrMessage.formatf(main_subsystem()->string_table()->getString(IDS_FAILED_TO_OPEN_URL_FORMAT).c_str(),
+         scopedstrMessage.formatf(MainSubsystem()->string_table()->getString(IDS_FAILED_TO_OPEN_URL_FORMAT).c_str(),
                                   sysEx.get_message().c_str());
 
-         main_subsystem()->message_box(operating_system_window(), scopedstrMessage,
-                                       main_subsystem()->string_table()->getString(IDS_MBC_TVNVIEWER),
+         MainSubsystem()->message_box(operating_system_window(), scopedstrMessage,
+                                       MainSubsystem()->string_table()->getString(IDS_MBC_TVNVIEWER),
                                        ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
       }
    }

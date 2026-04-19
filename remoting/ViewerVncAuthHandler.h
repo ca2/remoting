@@ -21,26 +21,37 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
 #pragma once
 
 
 #include "remoting/remoting_common/viewer_core/VncAuthenticationHandler.h"
 #include "ConnectionData.h"
 
+
 namespace remoting_remoting
 {
-    class ViewerVncAuthHandler : public ::remoting::VncAuthenticationHandler
-    {
-    public:
-        ViewerVncAuthHandler(ConnectionData *pconnectiondata);
-        virtual ~ViewerVncAuthHandler();
 
-        //private:
-        virtual ::string getPassword();
+   
+   class ViewerVncAuthHandler : public ::remoting::VncAuthenticationHandler
+   {
+   public:
 
-        ::pointer < ConnectionData > m_pconnectiondata;
-    };
+      
+      ::pointer<ConnectionData> m_pconnectiondata;
 
-    //// __VIEWERVNCAUTHHANDLER_H__
+
+      ViewerVncAuthHandler(ConnectionData *pconnectiondata);
+      ~ViewerVncAuthHandler() override;
+
+      
+      virtual ::string getPassword();
+
+   
+   };
+
+   
 } // namespace remoting_remoting
+
+
+
+

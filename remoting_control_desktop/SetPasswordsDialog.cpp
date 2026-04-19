@@ -42,14 +42,14 @@ SetPasswordsDialog::SetPasswordsDialog(bool initStateOfUseRfbAuth,
   m_dontChangeAdmAuth(!initStateOfUseAdminAuth),
   m_protectControlInterface(initStateOfUseAdminAuth)
 {
-  m_passwordEmptyTooltip.setText(main_subsystem()->string_table()->getString(IDS_PASSWORD_IS_EMPTY));
-  m_passwordEmptyTooltip.setTitle(main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL));
+  m_passwordEmptyTooltip.setText(MainSubsystem()->string_table()->getString(IDS_PASSWORD_IS_EMPTY));
+  m_passwordEmptyTooltip.setTitle(MainSubsystem()->string_table()->getString(IDS_MBC_TVNCONTROL));
 
-  m_passwordsNotMatchTooltip.setText(main_subsystem()->string_table()->getString(IDS_PASSWORDS_NOT_MATCH));
-  m_passwordsNotMatchTooltip.setTitle(main_subsystem()->string_table()->getString(IDS_MBC_TVNCONTROL));
+  m_passwordsNotMatchTooltip.setText(MainSubsystem()->string_table()->getString(IDS_PASSWORDS_NOT_MATCH));
+  m_passwordsNotMatchTooltip.setTitle(MainSubsystem()->string_table()->getString(IDS_MBC_TVNCONTROL));
 
-  m_passwordWeakTooltip.setText(main_subsystem()->string_table()->getString(IDS_BAD_PASSWORD));
-  m_passwordWeakTooltip.setTitle(main_subsystem()->string_table()->getString(IDS_MBC_BAD_PASSWORD));
+  m_passwordWeakTooltip.setText(MainSubsystem()->string_table()->getString(IDS_BAD_PASSWORD));
+  m_passwordWeakTooltip.setTitle(MainSubsystem()->string_table()->getString(IDS_MBC_BAD_PASSWORD));
 }
 
 SetPasswordsDialog::~SetPasswordsDialog()

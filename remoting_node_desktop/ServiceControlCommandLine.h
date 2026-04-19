@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/util/CommandLine.h"
+#include "subsystem/CommandLine.h"
 #include "subsystem/Exception.h"
 
 /**
@@ -35,17 +35,17 @@
  * @remark only one allowed key can be specified.
  * @fixme no test for this class.
  */
-class ServiceControlCommandLine : private CommandLine
+class ServiceControlCommandLine : private ::subsystem::CommandLine
 {
 public:
-  static const TCHAR APPLICATION_KEY[];
-  static const TCHAR INSTALL_SERVICE[];
-  static const TCHAR REMOVE_SERVICE[];
-  static const TCHAR REINSTALL_SERVICE[];
-  static const TCHAR START_SERVICE[];
-  static const TCHAR STOP_SERVICE[];
-  static const TCHAR SILENT[];
-  static const TCHAR DONT_ELEVATE[];
+  static const char APPLICATION_KEY[];
+  static const char INSTALL_SERVICE[];
+  static const char REMOVE_SERVICE[];
+  static const char REINSTALL_SERVICE[];
+  static const char START_SERVICE[];
+  static const char STOP_SERVICE[];
+  static const char SILENT[];
+  static const char DONT_ELEVATE[];
 
 public:
   /**
@@ -62,7 +62,7 @@ public:
    * @param commandLine command line string to parse.
    * @throws ::subsystem::Exception on parse error.
    */
-  void parse(const CommandLineArgs *cmdArgs);
+  void parse(const ::subsystem::CommandLineArguments *cmdArgs);
 
   /**
    * Checks if key is specified.

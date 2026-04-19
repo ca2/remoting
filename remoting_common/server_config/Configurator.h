@@ -72,28 +72,28 @@ private:
   // Serialize and deserialize methods
   //
 
-  bool savePortMappingContainer(SettingsManager *sm);
-  bool loadPortMappingContainer(SettingsManager *sm, PortMappingContainer *portMapping);
+  bool savePortMappingContainer(::remoting::SettingsManager *sm);
+   bool loadPortMappingContainer(::remoting::SettingsManager *sm, PortMappingContainer *portMapping);
 
-  bool saveIpAccessControlContainer(SettingsManager *sm);
-  bool loadIpAccessControlContainer(SettingsManager *sm,
+  bool saveIpAccessControlContainer(::remoting::SettingsManager *sm);
+  bool loadIpAccessControlContainer(::remoting::SettingsManager *sm,
                                     IpAccessControl *ipContainer);
 
-  bool saveServerConfig(SettingsManager *sm);
-  bool loadServerConfig(SettingsManager *sm, ServerConfig *config);
+  bool saveServerConfig(::remoting::SettingsManager *sm);
+  bool loadServerConfig(::remoting::SettingsManager *sm, ServerConfig *config);
   void updateLogDirPath();
 
-  bool saveQueryConfig(SettingsManager *sm);
-  bool loadQueryConfig(SettingsManager *sm, ServerConfig *config);
+  bool saveQueryConfig(::remoting::SettingsManager *sm);
+  bool loadQueryConfig(::remoting::SettingsManager *sm, ServerConfig *config);
 
-  bool saveInputHandlingConfig(SettingsManager *sm);
-  bool loadInputHandlingConfig(SettingsManager *sm, ServerConfig *config);
+  bool saveInputHandlingConfig(::remoting::SettingsManager *sm);
+  bool loadInputHandlingConfig(::remoting::SettingsManager *sm, ServerConfig *config);
 
-  bool saveVideoRegionConfig(SettingsManager *sm);
-  bool loadVideoRegionConfig(SettingsManager *sm, ServerConfig *config);
+  bool saveVideoRegionConfig(::remoting::SettingsManager *sm);
+  bool loadVideoRegionConfig(::remoting::SettingsManager *sm, ServerConfig *config);
 
-  bool save(SettingsManager *sm);
-  bool load(SettingsManager *sm);
+  bool save(::remoting::SettingsManager *sm);
+  bool load(::remoting::SettingsManager *sm);
 
   bool load(bool forService);
   bool save(bool forService);
@@ -116,7 +116,7 @@ protected:
   // Registry security attributes.
   //
 
-  RegistrySecurityAttributes *m_regSA;
+  //RegistrySecurityAttributes *m_regSA;
 
   //
   // Helper members

@@ -104,8 +104,8 @@ namespace remoting_remoting
       } catch (const ::subsystem::Exception &ex) {
          m_isListening = false;
          m_plogwriter->error("Error in start listening: {}", ex.get_message());
-         main_subsystem()->message_box({},
-                    main_subsystem()->string_table()->getString(IDS_ERROR_START_LISTENING),
+         MainSubsystem()->message_box({},
+                    MainSubsystem()->string_table()->getString(IDS_ERROR_START_LISTENING),
                     ProductNames::VIEWER_PRODUCT_NAME,
                     ::user::e_message_box_ok | ::user::e_message_box_icon_error);
       }
@@ -470,8 +470,8 @@ namespace remoting_remoting
             _this->showAboutViewer();
             break;
                          case WM_USER_RECONNECT: {
-                            ConnectionData *pconnectiondata = reinterpret_cast<ConnectionData *>(wparam.m_wparam);
-                            ::remoting::ConnectionConfig *pconnectionconfig = reinterpret_cast<::remoting::ConnectionConfig *>(lparam.m_lparam);
+                            ::pointer<ConnectionData> pconnectiondata(wparam);
+                            ::pointer <::remoting::ConnectionConfig > pconnectionconfig(lparam);
                             _this->newConnection(pconnectiondata, pconnectionconfig);
                             _this->m_instances.decreaseToReconnect();
                             break;

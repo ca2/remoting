@@ -21,17 +21,17 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
+#include "framework.h"
 #include "ServiceControlCommandLine.h"
 
-const TCHAR ServiceControlCommandLine::INSTALL_SERVICE[]   = "-install";
-const TCHAR ServiceControlCommandLine::REMOVE_SERVICE[]    = "-remove";
-const TCHAR ServiceControlCommandLine::REINSTALL_SERVICE[] = "-reinstall";
-const TCHAR ServiceControlCommandLine::START_SERVICE[]     = "-start";
-const TCHAR ServiceControlCommandLine::STOP_SERVICE[]      = "-stop";
+const char ServiceControlCommandLine::INSTALL_SERVICE[]   = "-install";
+const char ServiceControlCommandLine::REMOVE_SERVICE[]    = "-remove";
+const char ServiceControlCommandLine::REINSTALL_SERVICE[] = "-reinstall";
+const char ServiceControlCommandLine::START_SERVICE[]     = "-start";
+const char ServiceControlCommandLine::STOP_SERVICE[]      = "-stop";
 
-const TCHAR ServiceControlCommandLine::DONT_ELEVATE[]            = "-dontelevate";
-const TCHAR ServiceControlCommandLine::SILENT[]            = "-silent";
+const char ServiceControlCommandLine::DONT_ELEVATE[]            = "-dontelevate";
+const char ServiceControlCommandLine::SILENT[]            = "-silent";
 
 ServiceControlCommandLine::ServiceControlCommandLine()
 {

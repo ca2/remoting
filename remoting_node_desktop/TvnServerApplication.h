@@ -30,7 +30,7 @@
 //#include "acme/_operating_system.h"
 
 
-#include "remoting/remoting_common/win_system/WindowsApplication.h"
+#include "subsystem/node/WindowsApplication.h"
 
 #include "TvnServer.h"
 #include "TvnServerListener.h"

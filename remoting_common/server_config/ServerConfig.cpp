@@ -25,7 +25,7 @@
 #include "ServerConfig.h"
 
 //#include "remoting/remoting_common/win_system/Environment.h"
-
+#include "remoting/remoting_common/region/RectSerializer.h"
 //#include "file_lib/::file::item.h"
 #include "acme/input_output/DataCopy.h"
 
@@ -61,23 +61,27 @@ ServerConfig::~ServerConfig()
 
 ServerConfig::ServerConfig(ServerConfig& other)
 {
-  DataCopy dc;
-  other.serialize(&DataOutputStream(&dc));
-  this->deserialize(&DataInputStream(&dc));
+  DataCopy datacopy;
+   DataOutputStream outputstream(&datacopy);
+   other.serialize(&outputstream);
+   DataInputStream inputstream(&datacopy);
+   this->deserialize(&inputstream);
 }
 
 ServerConfig& ServerConfig::operator=(ServerConfig& other) {
   if (this != &other) {
-    DataCopy dc;
-    other.serialize(&DataOutputStream(&dc));
-    this->deserialize(&DataInputStream(&dc));
+    DataCopy datacopy;
+     DataOutputStream outputstream(&datacopy);
+    other.serialize(&outputstream);
+     DataInputStream inputstream(&datacopy);
+    this->deserialize(&inputstream);
   }
   return *this;
 }
 
 void ServerConfig::serialize(DataOutputStream *output)
 {
-  critical_section_lock l(this);
+  AutoLock l(this);
 
   output->writeInt32(m_rfbPort);
   output->writeInt32(m_httpPort);
@@ -90,11 +94,11 @@ void ServerConfig::serialize(DataOutputStream *output)
   output->writeInt8(m_acceptHttpConnections ? 1 : 0);
 
   output->writeInt8(m_hasPrimaryPassword ? 1 : 0);
-  output->writeFully(m_primaryPassword, VNC_PASSWORD_SIZE);
+  output->write(m_primaryPassword, VNC_PASSWORD_SIZE);
   output->writeInt8(m_hasReadOnlyPassword ? 1 : 0);
-  output->writeFully(m_readonlyPassword, VNC_PASSWORD_SIZE);
+  output->write(m_readonlyPassword, VNC_PASSWORD_SIZE);
   output->writeInt8(m_hasControlPassword ? 1 : 0);
-  output->writeFully(m_controlPassword, VNC_PASSWORD_SIZE);
+  output->write(m_controlPassword, VNC_PASSWORD_SIZE);
   output->writeInt8(m_useAuthentication ? 1 : 0);
   output->writeInt8(m_onlyLoopbackConnections ? 1 : 0);
   output->writeInt8(m_enableAppletParamInUrl ? 1 : 0);
@@ -134,7 +138,7 @@ void ServerConfig::serialize(DataOutputStream *output)
   output->writeUInt32((unsigned int)m_videoRects.size());
   for (size_t i = 0; i < m_videoRects.size(); i++) {
     ::string s;
-    RectSerializer::toString(&(m_videoRects.at(i)),&s);
+     ::remoting::RectSerializer::toString(m_videoRects[i], s);
     output->writeUTF8(s);
   }
 	
@@ -151,7 +155,7 @@ void ServerConfig::serialize(DataOutputStream *output)
 
 void ServerConfig::deserialize(DataInputStream * pinput)
 {
-  critical_section_lock l(this);
+  AutoLock l(this);
 
   m_rfbPort = pinput->readInt32();
   m_httpPort = pinput->readInt32();
@@ -189,9 +193,9 @@ void ServerConfig::deserialize(DataInputStream * pinput)
   m_queryTimeout = pinput->readUInt32();
   m_connectToRdp = pinput->readInt8() == 1;
 
-  m_portMappings.deserialize(input);
+  m_portMappings.deserialize(pinput);
 
-  m_accessControlContainer.deserialize(input);
+  m_accessControlContainer.deserialize(pinput);
 
   m_allowLoopbackConnections = pinput->readInt8() == 1;
 
@@ -199,7 +203,7 @@ void ServerConfig::deserialize(DataInputStream * pinput)
   size_t count = pinput->readUInt32();
   ::string videoClass;
   for (size_t i = 0; i < count; i++) {
-    pinput->readUTF8(&videoClass);
+    videoClass = pinput->readUtf8();
     m_videoClassNames.add(videoClass);
   }
 
@@ -210,8 +214,8 @@ void ServerConfig::deserialize(DataInputStream * pinput)
   count = pinput->readUInt32();
   ::string strVideoRect;
   for (size_t i = 0; i < count; i++) {
-    pinput->readUTF8(&strVideoRect);
-    m_videoRects.add(RectSerializer::toRect(&strVideoRect));
+     strVideoRect = pinput->readUtf8();
+    m_videoRects.add(::remoting::RectSerializer::toRect(strVideoRect));
   }
 
   m_grabTransparentWindows = pinput->readInt8() == 1;
@@ -222,54 +226,54 @@ void ServerConfig::deserialize(DataInputStream * pinput)
   m_hasControlPassword = pinput->readInt8() == 1;
   m_showTrayIcon = pinput->readInt8() == 1;
 
-  pinput->readUTF8(&m_logFilePath);
+  m_logFilePath = pinput->readUtf8();
 }
 
 bool ServerConfig::getShowTrayIconFlag()
 {
-  critical_section_lock l(this);
+  AutoLock l(this);
 
   return m_showTrayIcon;
 }
 
 void ServerConfig::setShowTrayIconFlag(bool val)
 {
-  critical_section_lock l(this);
+  AutoLock l(this);
 
   m_showTrayIcon = val;
 }
 
 bool ServerConfig::getConnectToRdpFlag()
 {
-  critical_section_lock l(this);
+  AutoLock l(this);
 
   return m_connectToRdp;
 }
 
 void ServerConfig::setConnectToRdpFlag(bool val)
 {
-  critical_section_lock l(this);
+  AutoLock l(this);
 
   m_connectToRdp = val;
 }
 
 void ServerConfig::getLogFileDir(::string & logFilePath)
 {
-  critical_section_lock l(this);
+  AutoLock l(this);
 
-  *logFilePath = m_logFilePath;
+  logFilePath = m_logFilePath;
 }
 
 void ServerConfig::setLogFileDir(const ::scoped_string & scopedstrLogFilePath)
 {
-  critical_section_lock l(this);
+  AutoLock l(this);
 
-  m_logFilePath= logFilePath;
+  m_logFilePath = scopedstrLogFilePath;
 }
 
 IpAccessRule::ActionType ServerConfig::getActionByAddress(unsigned long ip)
 {
-  critical_section_lock l(this);
+  AutoLock l(this);
 
   IpAccessControl *rules = &m_accessControlContainer;
 
@@ -287,35 +291,35 @@ IpAccessRule::ActionType ServerConfig::getActionByAddress(unsigned long ip)
 
 bool ServerConfig::isControlAuthEnabled()
 {
-  critical_section_lock l(&m_objectCS);
+  AutoLock l(&m_objectCS);
 
   return m_useControlAuth;
 }
 
 void ServerConfig::useControlAuth(bool useAuth)
 {
-  critical_section_lock l(&m_objectCS);
+  AutoLock l(&m_objectCS);
 
   m_useControlAuth = useAuth;
 }
 
 bool ServerConfig::getControlAuthAlwaysChecking()
 {
-  critical_section_lock l(&m_objectCS);
+  AutoLock l(&m_objectCS);
 
   return m_controlAuthAlwaysChecking;
 }
 
 void ServerConfig::setControlAuthAlwaysChecking(bool value)
 {
-  critical_section_lock l(&m_objectCS);
+  AutoLock l(&m_objectCS);
 
   m_controlAuthAlwaysChecking = value;
 }
 
 void ServerConfig::setRfbPort(int port)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   if (port > 65535) {
     m_rfbPort = 65535;
   } else if (port <= 0) {
@@ -327,13 +331,13 @@ void ServerConfig::setRfbPort(int port)
 
 int ServerConfig::getRfbPort()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_rfbPort;
 }
 
 void ServerConfig::setHttpPort(int port)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   if (port > 65535) {
     m_httpPort = 65535;
   } else if (port < 0) {
@@ -345,92 +349,92 @@ void ServerConfig::setHttpPort(int port)
 
 int ServerConfig::getHttpPort()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_httpPort;
 }
 
 void ServerConfig::enableFileTransfers(bool enabled)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   m_enableFileTransfers = enabled;
 }
 
 bool ServerConfig::isFileTransfersEnabled()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_enableFileTransfers;
 }
 
 void ServerConfig::enableRemovingDesktopWallpaper(bool enabled)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   m_removeWallpaper = enabled;
 }
 
 bool ServerConfig::isRemovingDesktopWallpaperEnabled()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_removeWallpaper;
 }
 
 void ServerConfig::setDisconnectAction(DisconnectAction action)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   m_disconnectAction = action;
 }
 
 ServerConfig::DisconnectAction ServerConfig::getDisconnectAction()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_disconnectAction;
 }
 
 bool ServerConfig::getD3DIsAllowed()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_D3DAllowed;
 }
 
 void ServerConfig::setD3DAllowing(bool value)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   m_D3DAllowed = value;
 }
 
 bool ServerConfig::getMirrorIsAllowed()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_mirrorDriverAllowed;
 }
 
 void ServerConfig::setMirrorAllowing(bool value)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   m_mirrorDriverAllowed = value;
 }
 
 bool ServerConfig::isAcceptingRfbConnections()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_acceptRfbConnections;
 }
 
 void ServerConfig::acceptRfbConnections(bool accept)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   m_acceptRfbConnections = accept;
 }
 
 void ServerConfig::getPrimaryPassword(unsigned char *password)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
 
   memcpy(password, m_primaryPassword, VNC_PASSWORD_SIZE);
 }
 
 void ServerConfig::setPrimaryPassword(const unsigned char *value)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
 
   m_hasPrimaryPassword = true;
 
@@ -439,14 +443,14 @@ void ServerConfig::setPrimaryPassword(const unsigned char *value)
 
 void ServerConfig::getReadOnlyPassword(unsigned char *password)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
 
   memcpy(password, m_readonlyPassword, VNC_PASSWORD_SIZE);
 }
 
 void ServerConfig::setReadOnlyPassword(const unsigned char *value)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
 
   m_hasReadOnlyPassword = true;
 
@@ -455,14 +459,14 @@ void ServerConfig::setReadOnlyPassword(const unsigned char *value)
 
 void ServerConfig::getControlPassword(unsigned char *password)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
 
   memcpy(password, m_controlPassword, VNC_PASSWORD_SIZE);
 }
 
 void ServerConfig::setControlPassword(const unsigned char *password)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
 
   memcpy((void *)&m_controlPassword[0], (const void *)password, VNC_PASSWORD_SIZE);
 
@@ -471,103 +475,103 @@ void ServerConfig::setControlPassword(const unsigned char *password)
 
 bool ServerConfig::hasPrimaryPassword()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
 
   return m_hasPrimaryPassword;
 }
 
 bool ServerConfig::hasReadOnlyPassword()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
 
   return m_hasReadOnlyPassword;
 }
 
 bool ServerConfig::hasControlPassword()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
 
   return m_hasControlPassword;
 }
 
 void ServerConfig::deletePrimaryPassword()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
 
   m_hasPrimaryPassword = false;
 }
 
 void ServerConfig::deleteReadOnlyPassword()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
 
   m_hasReadOnlyPassword = false;
 }
 
 void ServerConfig::deleteControlPassword()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
 
   m_hasControlPassword = false;
 }
 
 bool ServerConfig::isUsingAuthentication()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_useAuthentication;
 }
 
 void ServerConfig::useAuthentication(bool enabled)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   m_useAuthentication = enabled;
 }
 
 bool ServerConfig::isOnlyLoopbackConnectionsAllowed()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_onlyLoopbackConnections;
 }
 
 void ServerConfig::acceptOnlyLoopbackConnections(bool enabled)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   m_onlyLoopbackConnections = enabled;
 }
 
 bool ServerConfig::isAcceptingHttpConnections()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_acceptHttpConnections;
 }
 
 void ServerConfig::acceptHttpConnections(bool accept)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   m_acceptHttpConnections = accept;
 }
 
 bool ServerConfig::isAppletParamInUrlEnabled()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_enableAppletParamInUrl;
 }
 
 void ServerConfig::enableAppletParamInUrl(bool enabled)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   m_enableAppletParamInUrl = enabled;
 }
 
 int ServerConfig::getLogLevel()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_logLevel;
 }
 
 void ServerConfig::setLogLevel(int logLevel)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   if (logLevel < 0) {
     m_logLevel = 0;
   } else if (logLevel > 10) {
@@ -579,43 +583,43 @@ void ServerConfig::setLogLevel(int logLevel)
 
 bool ServerConfig::isAlwaysShared()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_alwaysShared;
 }
 
 bool ServerConfig::isNeverShared()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_neverShared;
 }
 
 bool ServerConfig::isDisconnectingExistingClients()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_disconnectClients;
 }
 
 void ServerConfig::setAlwaysShared(bool enabled)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   m_alwaysShared = enabled;
 }
 
 void ServerConfig::setNeverShared(bool enabled)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   m_neverShared = enabled;
 }
 
 void ServerConfig::disconnectExistingClients(bool disconnectExisting)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   m_disconnectClients = disconnectExisting;
 }
 
 void ServerConfig::setPollingInterval(unsigned int interval)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   if (interval < MINIMAL_POLLING_INTERVAL) {
     m_pollingInterval = MINIMAL_POLLING_INTERVAL;
   } else {
@@ -625,43 +629,43 @@ void ServerConfig::setPollingInterval(unsigned int interval)
 
 unsigned int ServerConfig::getPollingInterval()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_pollingInterval;
 }
 
 void ServerConfig::blockRemoteInput(bool blockEnabled)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   m_blockRemoteInput = blockEnabled;
 }
 
 bool ServerConfig::isBlockingRemoteInput()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_blockRemoteInput;
 }
 
 void ServerConfig::setLocalInputPriority(bool localPriority)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   m_localInputPriority = localPriority;
 }
 
 bool ServerConfig::isLocalInputPriorityEnabled()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_localInputPriority;
 }
 
 unsigned int ServerConfig::getLocalInputPriorityTimeout()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_localInputPriorityTimeout;
 }
 
 void ServerConfig::setLocalInputPriorityTimeout(unsigned int value)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   if (value < MINIMAL_LOCAL_INPUT_PRIORITY_TIMEOUT) {
     m_localInputPriorityTimeout = MINIMAL_LOCAL_INPUT_PRIORITY_TIMEOUT;
   } else {
@@ -671,25 +675,25 @@ void ServerConfig::setLocalInputPriorityTimeout(unsigned int value)
 
 void ServerConfig::blockLocalInput(bool enabled)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   m_blockLocalInput = enabled;
 }
 
 bool ServerConfig::isBlockingLocalInput()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_blockLocalInput;
 }
 
 unsigned int ServerConfig::getQueryTimeout()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_queryTimeout;
 }
 
 void ServerConfig::setQueryTimeout(unsigned int timeout)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   if (timeout < MINIMAL_QUERY_TIMEOUT) {
     m_queryTimeout = MINIMAL_QUERY_TIMEOUT;
   } else {
@@ -699,13 +703,13 @@ void ServerConfig::setQueryTimeout(unsigned int timeout)
 
 bool ServerConfig::isDefaultActionAccept()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_defaultActionAccept;
 }
 
 void ServerConfig::setDefaultActionToAccept(bool accept)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   m_defaultActionAccept = accept;
 }
 
@@ -725,13 +729,13 @@ IpAccessControl *ServerConfig::getAccessControl()
 
 void ServerConfig::allowLoopbackConnections(bool allow)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   m_allowLoopbackConnections = allow;
 }
 
 bool ServerConfig::isLoopbackConnectionsAllowed()
 {
-  critical_section_lock l(&m_objectCS);
+  AutoLock l(&m_objectCS);
 
   return m_allowLoopbackConnections;
 }
@@ -743,13 +747,13 @@ bool ServerConfig::isLoopbackConnectionsAllowed()
 
 unsigned int ServerConfig::getVideoRecognitionInterval()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_videoRecognitionInterval;
 }
 
 void ServerConfig::setVideoRecognitionInterval(unsigned int interval)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
 
   m_videoRecognitionInterval = interval;
 }
@@ -761,38 +765,38 @@ void ServerConfig::setVideoRecognitionInterval(unsigned int interval)
 
 int ServerConfig::getIdleTimeout()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_idleTimeout;
 }
 
 void ServerConfig::setIdleTimeout(int timeout)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   m_idleTimeout = timeout;
 }
 
 void ServerConfig::saveLogToAllUsersPath(bool enabled)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
 
   m_saveLogToAllUsersPath = enabled;
 }
 
 bool ServerConfig::isSaveLogToAllUsersPathFlagEnabled()
 {
-  critical_section_lock l(&m_objectCS);
+  AutoLock l(&m_objectCS);
 
   return m_saveLogToAllUsersPath;
 }
 
 void ServerConfig::setGrabTransparentWindowsFlag(bool grab)
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   m_grabTransparentWindows = grab;
 }
 
 bool ServerConfig::getGrabTransparentWindowsFlag()
 {
-  critical_section_lock lock(&m_objectCS);
+  AutoLock lock(&m_objectCS);
   return m_grabTransparentWindows;
 }

@@ -53,7 +53,7 @@ void IpAccessControl::deserialize(DataInputStream * pinput)
   ::string string;
 
   for (iterator i = begin(); i != end(); ++i) {
-    pinput->readUTF8(&string);
+     string = pinput->readUtf8();
 
     // Here is would be good to use unique_ptr, but
     // unique_ptr is not compatible with ::array_base.

@@ -27,8 +27,8 @@
 
 #include "subsystem/_common_header.h"
 
-#include "remoting/remoting_common/win_system/WindowsApplication.h"
-#include "remoting/remoting_common/win_system/ServiceControlManagerClient.h"
+#include "subsystem/node/OperatingSystemApplication.h"
+#include "subsystem/node/ServiceControlManagerClient.h"
 
 #include "TvnService.h"
 #include "ServiceControlCommandLine.h"
@@ -37,7 +37,7 @@
  * Service control application.
  * Application that can install, remove, start and stop remoting_node service.
  */
-class ServiceControlApplication : public WindowsApplication
+class ServiceControlApplication : public ::subsystem::OperatingSystemApplication
 {
 public:
   /**

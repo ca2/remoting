@@ -38,7 +38,7 @@ namespace remoting
       strKeyName.format("{}\\History\\{}",
                      ::string(scopedstrRegistryPath).c_str(),
                      ::string(scopedstrEntryName).c_str());
-      setRegistryKey(main_subsystem()->registry()->getCurrentUserKey(), strKeyName);
+      setRegistryKey(MainSubsystem()->registry()->getCurrentUserKey(), strKeyName);
    }
 
    ConnectionConfigSM::~ConnectionConfigSM()

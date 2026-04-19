@@ -21,14 +21,14 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
+#include "framework.h"
 #include "TvnService.h"
 
 #include "ServerCommandLine.h"
 #include "remoting_node_desktop/NamingDefs.h"
 
-#include "remoting/remoting_common/win_system/ServiceControlManagerClient.h"
-//#include "remoting/remoting_common/win_system/Environment.h"
+#include "subsystem/node/ServiceControlManagerClient.h"
+//#include "subsystem/node/Environment.h"
 
 const TCHAR TvnService::SERVICE_COMMAND_LINE_KEY[] = "-service";
 

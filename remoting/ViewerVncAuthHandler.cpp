@@ -30,19 +30,24 @@
 #include "acme/filesystem/filesystem/directory_context.h"
 #include "acme/filesystem/filesystem/file_context.h"
 
-//#pragma comment (lib, "Crypt32.lib")
+
 namespace remoting_remoting
 {
 
+
     ViewerVncAuthHandler::ViewerVncAuthHandler(ConnectionData *pconnectiondata)
-    : m_pconnectiondata(pconnectiondata)
+      : m_pconnectiondata(pconnectiondata)
     {
+
+
     }
+
 
     ViewerVncAuthHandler::~ViewerVncAuthHandler()
     {
-    }
 
+
+    }
 
 
     ::string ViewerVncAuthHandler::getPassword()
@@ -54,11 +59,12 @@ namespace remoting_remoting
             AuthenticationDialog authDialog;
             ::string hostname = m_pconnectiondata->getHost();
             authDialog.setHostName(hostname);
+            hostname.find_replace(":", "_");
             auto m = ::system()->file()->safe_get_memory(::system()->directory()->appdata()/::string(hostname));
             if (m.has_data())
             {
                 ::string str;
-                main_subsystem()->DecryptData(m, str);
+                MainSubsystem()->DecryptData(m, str);
                 m_pconnectiondata->setPlainPassword(::wstring(str).c_str());
             }
             else
@@ -67,7 +73,7 @@ namespace remoting_remoting
                     m_pconnectiondata->setPlainPassword(authDialog.getPassword());
                     memory m2;
                     ::string str(authDialog.getPassword());
-                    main_subsystem()->EncryptData(str, m2);
+                    MainSubsystem()->EncryptData(str, m2);
                     if (m2.has_data())
                     {
 

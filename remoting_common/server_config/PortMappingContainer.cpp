@@ -53,9 +53,9 @@ size_t PortMappingContainer::find(PortMapping searchElement) const
 {
   for (size_t i = 0; i < count(); i++) {
     PortMapping each = m_vector.at(i);
-     PortMappingRect rect = each.getRect;
+     PortMappingRect rect = each.getRect();
     if (each.getPort() == searchElement.getPort() &&
-        each == rect) {
+        rect == searchElement.getRect()) {
       return i;
     }
   }
@@ -125,7 +125,7 @@ void PortMappingContainer::serialize(DataOutputStream *output) const
   ::string string;
 
   for (size_t i = 0; i < count(); i++) {
-    at(i)->toString(&string);
+     at(i)->toString(string);
 
     output->writeUTF8(string);
   }
@@ -143,7 +143,7 @@ void PortMappingContainer::deserialize(DataInputStream * pinput)
 
   for (size_t i = 0; i < cnt; i++) {
 
-    pinput->readUTF8(&string);
+    string = pinput->readUtf8();
 
     if (!PortMapping::parse(string, &record)) {
       throw ::subsystem::Exception("Invalid port mapping string");

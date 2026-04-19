@@ -78,7 +78,7 @@ bool VideoRegionsConfigDialog::validateInput()
 {
   if (!CommonInputValidation::validateUINT(
     &m_videoRecognitionInterval,
-    main_subsystem()->string_table()->getString(IDS_INVALID_VIDEO_RECOGNITION_INTERVAL))) {
+    MainSubsystem()->string_table()->getString(IDS_INVALID_VIDEO_RECOGNITION_INTERVAL))) {
     return false;
   }
   return true;
@@ -183,7 +183,7 @@ void VideoRegionsConfigDialog::apply()
   m_videoRecognitionInterval.getText(&vriss);
 
   int interval;
-  main_subsystem()->string_parser()->parseInt(vriss, &interval);
+  MainSubsystem()->string_parser()->parseInt(vriss, &interval);
   m_config->setVideoRecognitionInterval((unsigned int)interval);
 }
 

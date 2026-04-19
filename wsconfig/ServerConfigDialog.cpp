@@ -146,10 +146,10 @@ bool ServerConfigDialog::validateInput()
     CommonInputValidation::validatePort(&m_httpPort) &&
     CommonInputValidation::validateUINT(
       &m_pollingInterval,
-      main_subsystem()->string_table()->getString(IDS_INVALID_POLLING_INTERVAL)) &&
+      MainSubsystem()->string_table()->getString(IDS_INVALID_POLLING_INTERVAL)) &&
     CommonInputValidation::validateUINT(
       &m_localInputPriorityTimeout,
-      main_subsystem()->string_table()->getString(IDS_INVALID_INACTIVITY_TIMEOUT));
+      MainSubsystem()->string_table()->getString(IDS_INVALID_INACTIVITY_TIMEOUT));
 
   if (!commonValidationOk) {
     return false;
@@ -163,7 +163,7 @@ bool ServerConfigDialog::validateInput()
   if (rfbPort == httpPort && m_acceptHttpConnections.isChecked()) {
     CommonInputValidation::notifyValidationError(
       &m_httpPort,
-      main_subsystem()->string_table()->getString(IDS_HTTP_RFB_PORTS_ARE_EQUAL));
+      MainSubsystem()->string_table()->getString(IDS_HTTP_RFB_PORTS_ARE_EQUAL));
     return false;
   }
 
@@ -174,7 +174,7 @@ bool ServerConfigDialog::validateInput()
   if (pollingInterval < ServerConfig::MINIMAL_POLLING_INTERVAL) {
     CommonInputValidation::notifyValidationError(
       &m_pollingInterval,
-      main_subsystem()->string_table()->getString(IDS_POLL_INTERVAL_TOO_SMALL));
+      MainSubsystem()->string_table()->getString(IDS_POLL_INTERVAL_TOO_SMALL));
     return false;
   }
 
@@ -185,7 +185,7 @@ bool ServerConfigDialog::validateInput()
   if (inactivityTimeout < ServerConfig::MINIMAL_LOCAL_INPUT_PRIORITY_TIMEOUT) {
     CommonInputValidation::notifyValidationError(
       &m_localInputPriorityTimeout,
-      main_subsystem()->string_table()->getString(IDS_INACTIVITY_TIMEOUT_TOO_SMALL));
+      MainSubsystem()->string_table()->getString(IDS_INACTIVITY_TIMEOUT_TOO_SMALL));
     return false;
   }
 
@@ -197,9 +197,9 @@ bool ServerConfigDialog::validateInput()
   if (m_acceptRfbConnections.isChecked() &&
       m_useAuthentication.isChecked() &&
       !passwordSpecified) {
-    main_subsystem()->message_box(m_ctrlThis.operating_system_window(),
-               main_subsystem()->string_table()->getString(IDS_SET_PASSWORD_NOTIFICATION),
-               main_subsystem()->string_table()->getString(IDS_CAPTION_BAD_INPUT),
+    MainSubsystem()->message_box(m_ctrlThis.operating_system_window(),
+               MainSubsystem()->string_table()->getString(IDS_SET_PASSWORD_NOTIFICATION),
+               MainSubsystem()->string_table()->getString(IDS_CAPTION_BAD_INPUT),
                MB_ICONSTOP | ::user::e_message_box_ok);
     return false;
   }
@@ -255,13 +255,13 @@ void ServerConfigDialog::apply()
 
   int intVal = 0;
 
-  main_subsystem()->string_parser()->parseInt(rfbPortText, &intVal);
+  MainSubsystem()->string_parser()->parseInt(rfbPortText, &intVal);
   m_config->setRfbPort(intVal);
   
-  main_subsystem()->string_parser()->parseInt(httpPortText, &intVal);
+  MainSubsystem()->string_parser()->parseInt(httpPortText, &intVal);
   m_config->setHttpPort(intVal);
 
-  main_subsystem()->string_parser()->parseInt(pollingIntervalText, &intVal);
+  MainSubsystem()->string_parser()->parseInt(pollingIntervalText, &intVal);
   m_config->setPollingInterval(intVal);
 
   m_config->enableFileTransfers(m_enableFileTransfers.isChecked());
@@ -299,7 +299,7 @@ void ServerConfigDialog::apply()
   int timeout = 0;
 
   m_config->setLocalInputPriority(m_localInputPriority.isChecked());
-  if (main_subsystem()->string_parser()->parseInt(liptStringStorage, &timeout)) {
+  if (MainSubsystem()->string_parser()->parseInt(liptStringStorage, &timeout)) {
     timeout = max(0, timeout);
     m_config->setLocalInputPriorityTimeout((unsigned int)timeout);
   }

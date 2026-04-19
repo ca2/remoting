@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/win_system/LocalWindowsApplication.h"
+#include "subsystem/node/LocalOperatingSystemApplication.h"
 
 #include "subsystem/node/SystemException.h"
 
@@ -33,7 +33,7 @@
  * Application that shows "Accept / Reject rfb connection dialog" to user
  * and returns user choise as application return value.
  */
-class QueryConnectionApplication : public LocalWindowsApplication
+class QueryConnectionApplication : public ::subsystem::LocalOperatingSystemApplication
 {
 public:
   /**
@@ -41,7 +41,7 @@ public:
    * @remark behavour inherited from superclass.
    * @throws SystemException on fail.
    */
-  QueryConnectionApplication(HINSTANCE hInstance,
+  QueryConnectionApplication(::hinstance hInstance,
                              const ::scoped_string & scopedstrwindowClassName,
                              const ::scoped_string & scopedstrCmdLine);
   /**
@@ -54,7 +54,8 @@ public:
    *
    * @return 0 when user chooses "accept", 1 when user chooses "reject".
    */
-  virtual int run();
+  //virtual int run();
+  virtual void run() override;
 
   /**
    * Executes query application in separate process
@@ -65,7 +66,7 @@ public:
    * @return application exit code (0 means accept connection, 1 means reject connection).
    * @throws ::subsystem::Exception on fail.
    */
-  static int execute(const ::scoped_string & scopedstrPeerAddr, bool acceptByDefault, DWORD timeOutSec)
+  static int execute(const ::scoped_string & scopedstrPeerAddr, bool acceptByDefault, unsigned int timeOutSec)
 ;
 
 private:

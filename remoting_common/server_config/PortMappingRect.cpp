@@ -21,39 +21,49 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
-#pragma once
-
-
-//////#include "remoting/remoting_common/util/::string.h"
+#include "framework.h"
 #include "PortMappingRect.h"
+// #include aaa_<tchar.h>
+// #include aaa_<stdio.h>
 
-class PortMapping
+PortMappingRect::PortMappingRect(int l, int t, int r, int b)
+ : ::int_rectangle(l, t, r, b)
 {
-public:
-  PortMapping();
-  PortMapping(int nport, PortMappingRect nrect);
-  PortMapping(const PortMapping &other);
-  virtual ~PortMapping();
+}
 
-  PortMapping &operator=(const PortMapping &other);
-  bool isEqualTo(const PortMapping *other) const;
+PortMappingRect::PortMappingRect()
+{
+}
 
-  void setPort(int nport);
-  void setRect(PortMappingRect nrect);
+PortMappingRect::~PortMappingRect()
+{
+}
 
-  int getPort() const;
-  PortMappingRect getRect() const;
+void PortMappingRect::toString(::string & string) const
+{
+  string.format("%dx{}+{}+{}", right - left, bottom - top, left, top);
+}
 
-  void toString(::string & string) const;
+bool PortMappingRect::parse(const char * psz, PortMappingRect *pout)
+{
+  int width, height, x, y;
+  char c;
+  if (sscanf(psz, "%dx{}+{}+{}%c", &width, &height, &x, &y, &c) != 4) {
+    return false;
+  }
+  if (width < 0 || height < 0) {
+    return false;
+  }
+  if (pout != NULL) {
+    pout->left = x;
+    pout->right = x + width;
+    pout->top = y;
+    pout->bottom = y + height;
+  }
+  return true;
+}
 
-public:
-  static bool parse(const ::scoped_string & scopedstrStr, PortMapping *mapping);
-
-protected:
-  int m_port;
-
-  PortMappingRect m_rect;
-};
-
-
+bool PortMappingRect::tryParse(const char * psz)
+{
+  return parse(psz, NULL);
+}

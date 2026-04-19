@@ -50,10 +50,10 @@ namespace remoting_remoting
 
     ::string ResourceStrings::getStrRes(int iRes)
     {
-       auto presourceloader = main_subsystem()->resource_loader();
+       auto presourceloader = MainSubsystem()->ResourceLoader();
 
 
-        //auto presourceloader = main_subsystem()->resource_loader();
+        //auto presourceloader = MainSubsystem()->ResourceLoader();
 
         ::string str;
         //presourceloader->loadString(strRes, str);

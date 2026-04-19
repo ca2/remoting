@@ -24,33 +24,33 @@
 
 #pragma once
 
-
-#include "subsystem/_common_header.h"
-#include "remoting/remoting_common/util/Singleton.h"
-//#include "subsystem/thread/critical_section.h"
-#include "remoting/remoting_common/win_system/ApplicationCrashEvents.h"
-
-class CrashHook : private Singleton<CrashHook>
-{
-public:
-  CrashHook(ApplicationCrashEvents *notifier);
-  virtual ~CrashHook();
-
-  // Call this function to enables GUI on application crash.
-  void setGuiEnabled();
-
-  // Call this function to set the HKLM registry root to write an auxiliary
-  // information. Default value is HKEY_CURRENT_USER.
-  void setHklmRoot();
-
-private:
-  static LONG WINAPI topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionInfo);
-
-  static bool m_guiEnabled;
-  static ::subsystem::registry m_rootHkey;
-  static critical_section m_guiEnabledMutex;
-
-  static ApplicationCrashEvents *m_notifier;
-};
-
-//// __CrashHook_H__
+//
+//#include "subsystem/_common_header.h"
+//#include "remoting/remoting_common/util/Singleton.h"
+////#include "subsystem/thread/critical_section.h"
+//#include "subsystem/node/ApplicationCrashEvents.h"
+//
+//class CrashHook : private Singleton<CrashHook>
+//{
+//public:
+//  CrashHook(ApplicationCrashEvents *notifier);
+//  virtual ~CrashHook();
+//
+//  // Call this function to enables GUI on application crash.
+//  void setGuiEnabled();
+//
+//  // Call this function to set the HKLM registry root to write an auxiliary
+//  // information. Default value is HKEY_CURRENT_USER.
+//  void setHklmRoot();
+//
+//private:
+//  static LONG WINAPI topLevelExceptionFilter(_EXCEPTION_POINTERS *pExceptionInfo);
+//
+//  static bool m_guiEnabled;
+//  static ::subsystem::registry m_rootHkey;
+//  static critical_section m_guiEnabledMutex;
+//
+//  static ApplicationCrashEvents *m_notifier;
+//};
+//
+////// __CrashHook_H__

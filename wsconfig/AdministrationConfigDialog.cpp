@@ -106,7 +106,7 @@ bool AdministrationConfigDialog::validateInput()
 {
   if (!CommonInputValidation::validateUINT(
     &m_logLevel,
-    main_subsystem()->string_table()->getString(IDS_INVALID_LOG_LEVEL))) {
+    MainSubsystem()->string_table()->getString(IDS_INVALID_LOG_LEVEL))) {
     return false;
   }
 
@@ -117,7 +117,7 @@ bool AdministrationConfigDialog::validateInput()
   if (logLevel > 10) {
     CommonInputValidation::notifyValidationError(
       &m_logLevel,
-      main_subsystem()->string_table()->getString(IDS_INVALID_LOG_LEVEL));
+      MainSubsystem()->string_table()->getString(IDS_INVALID_LOG_LEVEL));
     return false;
   }
 
@@ -126,9 +126,9 @@ bool AdministrationConfigDialog::validateInput()
 
   // FIXME: Code duplicate (see ServerConfigDialog class).
   if (!passwordSpecified && m_useControlAuth.isChecked()) {
-    main_subsystem()->message_box(m_ctrlThis.operating_system_window(),
-               main_subsystem()->string_table()->getString(IDS_SET_CONTROL_PASSWORD_NOTIFICATION),
-               main_subsystem()->string_table()->getString(IDS_CAPTION_BAD_INPUT), MB_ICONSTOP | ::user::e_message_box_ok);
+    MainSubsystem()->message_box(m_ctrlThis.operating_system_window(),
+               MainSubsystem()->string_table()->getString(IDS_SET_CONTROL_PASSWORD_NOTIFICATION),
+               MainSubsystem()->string_table()->getString(IDS_CAPTION_BAD_INPUT), MB_ICONSTOP | ::user::e_message_box_ok);
     return false;
   }
 
@@ -150,7 +150,7 @@ void AdministrationConfigDialog::updateUI()
   m_config->getLogFileDir(&logPath);
 
   if (logPath.is_empty()) {
-    logPath= main_subsystem()->string_table()->getString(IDS_LOGPATH_UNAVALIABLE);
+    logPath= MainSubsystem()->string_table()->getString(IDS_LOGPATH_UNAVALIABLE);
     m_openLogPathButton.enableWindow(false);
     m_logPathTB.enableWindow(false);
   }
@@ -227,7 +227,7 @@ void AdministrationConfigDialog::apply()
 
   int logLevel = 0;
 
-  main_subsystem()->string_parser()->parseInt(logLevelStringStorage, &logLevel);
+  MainSubsystem()->string_parser()->parseInt(logLevelStringStorage, &logLevel);
 
   m_config->setLogLevel(logLevel);
 

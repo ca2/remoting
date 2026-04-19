@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
+#include "framework.h"
 #include "TvnServerApplication.h"
 #include "ServerCommandLine.h"
 #include "TvnServerHelp.h"
@@ -31,11 +31,11 @@
 #include "remoting/remoting_common/util/ResourceLoader.h"
 #include "remoting/remoting_common/util/StringTable.h"
 #include "remoting_node_desktop/NamingDefs.h"
-#include "remoting/remoting_common/win_system/WinCommandLineArgs.h"
+#include "subsystem/node/WinCommandLineArgs.h"
 
 #include "remoting_node/resource.h"
 
-#include "remoting/remoting_common/win_system/RegistryKey.h"
+#include "subsystem/node/RegistryKey.h"
 
 TvnServerApplication::TvnServerApplication(HINSTANCE hInstance,
                                            const ::scoped_string & scopedstrwindowClassName,
@@ -77,9 +77,9 @@ int TvnServerApplication::run()
     appInstanceMutex = new GlobalMutex(
       ServerApplicationNames::SERVER_INSTANCE_MUTEX_NAME, false, true);
   } catch (...) {
-    main_subsystem()->message_box({},
-               main_subsystem()->string_table()->getString(IDS_SERVER_ALREADY_RUNNING),
-               main_subsystem()->string_table()->getString(IDS_MBC_TVNSERVER), ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
+    MainSubsystem()->message_box({},
+               MainSubsystem()->string_table()->getString(IDS_SERVER_ALREADY_RUNNING),
+               MainSubsystem()->string_table()->getString(IDS_MBC_TVNSERVER), ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
     return 1;
   }
 
@@ -92,7 +92,7 @@ int TvnServerApplication::run()
   // $ACL | Set-Acl HKLM:\SOFTWARE\TightVNC\Server\ServiceOnly
   RegistryKey key(HKEY_LOCAL_MACHINE, "SOFTWARE\\TightVNC\\Server\\ServiceOnly", false);
   if (key.isOpened()) {
-    main_subsystem()->message_box({},
+    MainSubsystem()->message_box({},
       "Couldn't run the server in Application mode",
       "Server error", ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
     return 1;
@@ -115,7 +115,7 @@ int TvnServerApplication::run()
     // FIXME: Move string to resource
     ::string scopedstrMessage;
     scopedstrMessage.formatf("Couldn't run the server: {}", e.get_message());
-    main_subsystem()->message_box({},
+    MainSubsystem()->message_box({},
                scopedstrMessage,
                "Server error", ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
     return 1;

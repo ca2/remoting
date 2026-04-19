@@ -46,7 +46,7 @@ namespace remoting_remoting
 
       ::pointer<ViewerWindow> m_pviewerwindow;
       ::pointer<::remoting::RemoteViewerCore> m_pviewercore;
-      ViewerVncAuthHandler m_vncAuthHandler;
+      ::pointer < ViewerVncAuthHandler > m_pvncauthhandler;
       ::remoting::ftp::FileTransferCapability m_fileTransfer;
       ::pointer<::subsystem::SocketIPv4Interface> m_psocket;
 

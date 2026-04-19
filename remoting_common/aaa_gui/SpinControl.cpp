@@ -74,7 +74,7 @@ void SpinControl::autoAccelerationHandler(LPNMUPDOWN scopedstrMessage)
   // Get buddy textbox value
   ::string storage;
   storage = m_buddy->getText();
-  if (!main_subsystem()->string_parser()->parseInt(storage, &currentValue)) {
+  if (!MainSubsystem()->string_parser()->parseInt(storage, &currentValue)) {
     return;
   }
 

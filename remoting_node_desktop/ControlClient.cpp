@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
+#include "framework.h"
 #include "ControlClient.h"
 #include "TvnServer.h"
 #include "OutgoingRfbConnectionThread.h"
@@ -36,7 +36,7 @@
 
 #include "remoting/remoting_common/rfb/HostPath.h"
 
-#include "remoting/remoting_common/win_system/WTS.h"
+#include "subsystem/node/WTS.h"
 
 #include "remoting_node/resource.h"
 
@@ -274,7 +274,7 @@ void ControlClient::authMsgRcdv()
                                                      challenge,
                                                      response);
   if (!isAuthSucceed) {
-    sendError(main_subsystem()->string_table()->getString(IDS_INVALID_CONTROL_PASSWORD));
+    sendError(MainSubsystem()->string_table()->getString(IDS_INVALID_CONTROL_PASSWORD));
   } else {
     m_gate->writeUInt32(ControlProto::REPLY_OK);
     m_authPassed = true;

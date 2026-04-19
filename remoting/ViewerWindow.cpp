@@ -478,7 +478,7 @@ namespace remoting_remoting
         int pixelSize = 0;
         m_pdesktopwindow->getServerGeometry(&geometry, &pixelSize);
         ::string str;
-        str.formatf(main_subsystem()->string_table()->getString(IDS_CONNECTION_INFO_FORMAT).c_str(),
+        str.formatf(MainSubsystem()->string_table()->getString(IDS_CONNECTION_INFO_FORMAT).c_str(),
                    host.c_str(),
                    m_pviewercore->getRemoteDesktopName().c_str(),
                    m_pviewercore->getProtocolString().c_str(),
@@ -486,9 +486,9 @@ namespace remoting_remoting
                    geometry.height(),
                    pixelSize,
                    &kbdName[0]);
-        main_subsystem()->message_box(operating_system_window(),
+        MainSubsystem()->message_box(operating_system_window(),
                    str,
-                   main_subsystem()->string_table()->getString(IDS_CONNECTION_INFO_CAPTION),
+                   MainSubsystem()->string_table()->getString(IDS_CONNECTION_INFO_CAPTION),
                    ::user::e_message_box_ok | MB_ICONINFORMATION);
     }
 
@@ -622,8 +622,8 @@ namespace remoting_remoting
     {
         WCHAR fileName[MAX_PATH] = L"";
 
-        ::wstring filterVncFiles(main_subsystem()->string_table()->getString(IDS_SAVE_SESSION_FILTER_VNC_FILES));
-        ::wstring filterAllFiles(main_subsystem()->string_table()->getString(IDS_SAVE_SESSION_FILTER_ALL_FILES));
+        ::wstring filterVncFiles(MainSubsystem()->string_table()->getString(IDS_SAVE_SESSION_FILTER_VNC_FILES));
+        ::wstring filterAllFiles(MainSubsystem()->string_table()->getString(IDS_SAVE_SESSION_FILTER_ALL_FILES));
         ::wstring vncMask( L"*.vnc");
         ::wstring allMask( L"*.*");
         ::wstring semicolon( L";");
@@ -671,9 +671,9 @@ namespace remoting_remoting
              sm.setUINT("port", m_pconnectiondata->getPort());
 
              if (m_pconnectiondata->isSetPassword()) {
-                int whetherToSavePass = main_subsystem()->message_box(operating_system_window(),
-                  main_subsystem()->string_table()->getString(IDS_QUESTION_SAVE_PASSWORD),
-                  main_subsystem()->string_table()->getString(IDS_SECURITY_WARNING_CAPTION),
+                int whetherToSavePass = MainSubsystem()->message_box(operating_system_window(),
+                  MainSubsystem()->string_table()->getString(IDS_QUESTION_SAVE_PASSWORD),
+                  MainSubsystem()->string_table()->getString(IDS_SECURITY_WARNING_CAPTION),
                   ::user::e_message_box_yes_no);
                 if (whetherToSavePass == ::innate_subsystem::e_control_id_yes) {
                    ::string password = m_pconnectiondata->getCryptedPassword();
@@ -1039,7 +1039,7 @@ namespace remoting_remoting
    bool ViewerWindow::onGetTooltip(int iControl, ::string & strTooltip)
    {
 
-       auto presourceloader = main_subsystem()->resource_loader();
+       auto presourceloader = MainSubsystem()->ResourceLoader();
        int resId = static_cast<int>(iControl);
        //::string strToolTip;
        presourceloader->loadString(resId, strTooltip);
@@ -1271,7 +1271,7 @@ namespace remoting_remoting
 
     bool ViewerWindow::onDisconnect()
     {
-        main_subsystem()->message_box(operating_system_window(),
+        MainSubsystem()->message_box(operating_system_window(),
                    m_disconnectMessage,
                    formatWindowName(),
                    ::user::e_message_box_ok);
@@ -1286,7 +1286,7 @@ namespace remoting_remoting
         // If authentication is canceled, then do quiet exit, else show error-scopedstrMessage.
         if (wParam != ::remoting::AuthException::AUTH_CANCELED) {
             ::string error = m_error.get_message();
-            int result = main_subsystem()->message_box({},
+            int result = MainSubsystem()->message_box({},
                                     error,
                                     formatWindowName(),
                                     MB_RETRYCANCEL | MB_ICONERROR);
@@ -1313,7 +1313,7 @@ namespace remoting_remoting
     {
         ::string error;
         error.format("Error in {}: {}", ::string(ProductNames::VIEWER_PRODUCT_NAME), m_error.get_message());
-        main_subsystem()->message_box(operating_system_window(),
+        MainSubsystem()->message_box(operating_system_window(),
                    error,
                    formatWindowName(),
                    ::user::e_message_box_ok | MB_ICONERROR);

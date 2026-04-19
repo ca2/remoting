@@ -21,49 +21,33 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-#include "framework.h"
-#include "PortMappingRect.h"
-// #include aaa_<tchar.h>
-// #include aaa_<stdio.h>
 
-PortMappingRect::PortMappingRect(int l, int t, int r, int b)
- : ::int_rectangle(l, t, r, b)
-{
-}
+#pragma once
 
-PortMappingRect::PortMappingRect()
-{
-}
 
-PortMappingRect::~PortMappingRect()
-{
-}
+#include "subsystem/_common_header.h"
+//////#include "remoting/remoting_common/util/::string.h"
+#include "acme/prototype/geometry2d/rectangle.h"
 
-void PortMappingRect::toString(::string & string) const
-{
-  string->format("%dx{}+{}+{}", right - left, bottom - top, left, top);
-}
 
-bool PortMappingRect::parse(const ::scoped_string & scopedstrString, PortMappingRect *pout)
+class PortMappingRect : public ::int_rectangle
 {
-  int width, height, x, y;
-  TCHAR c;
-  if (_stscanf(string, "%dx{}+{}+{}%c", &width, &height, &x, &y, &c) != 4) {
-    return false;
-  }
-  if (width < 0 || height < 0) {
-    return false;
-  }
-  if (pout != NULL) {
-    pout->left = x;
-    pout->right = x + width;
-    pout->top = y;
-    pout->bottom = y + height;
-  }
-  return true;
-}
+public:
+  PortMappingRect(int left, int right, int top, int bottom);
+  PortMappingRect();
+  virtual ~PortMappingRect();
 
-bool PortMappingRect::tryParse(const ::scoped_string & scopedstrString)
-{
-  return parse(string, NULL);
-}
+  // Converts this rect to string value.
+  void toString(::string & string) const;
+
+  // Returns true if string can be parsed to rect object,
+  // false otherwise.
+  static bool tryParse(const char * psz);
+
+  // Parsed string and sets parsed values to output rect.
+  // Returns true if string is valid, false otherwise.
+  // Remark: "out" parameter can be null.
+  static bool parse(const char * psz,  PortMappingRect *out);
+};
+
+

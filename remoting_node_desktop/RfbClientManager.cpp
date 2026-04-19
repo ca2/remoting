@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
+#include "framework.h"
 #include "RfbClientManager.h"
 #include "subsystem/thread/ZombieKiller.h"
 #include "QueryConnectionApplication.h"

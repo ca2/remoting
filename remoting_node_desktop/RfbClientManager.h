@@ -30,7 +30,7 @@
 //#include "subsystem/thread/critical_section.h"
 #include "subsystem/thread/Thread.h"
 //#include "subsystem/thread/critical_section.h"
-#include "remoting/remoting_common/win_system/WindowsEvent.h"
+#include "subsystem/node/WindowsEvent.h"
 #include "desktop/Desktop.h"
 #include "desktop/DesktopFactory.h"
 //#include "log_writer/LogWriter.h"

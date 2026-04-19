@@ -75,6 +75,12 @@
     <Filter Include="Header Files\region">
       <UniqueIdentifier>{a11a7b24-63b7-4cce-bb1f-e1f80c6144e5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\serverconfig">
+      <UniqueIdentifier>{3c200226-ee87-44f3-81ce-04a9b4c3245d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\server_config">
+      <UniqueIdentifier>{30b50dc8-cc51-4a80-88d3-ff581a49e799}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework.cpp">
@@ -397,6 +403,39 @@
     </ClCompile>
     <ClCompile Include="viewer_core\drawTile.cpp">
       <Filter>Source Files\viewer_core</Filter>
+    </ClCompile>
+    <ClCompile Include="server_config\_.cpp">
+      <Filter>Source Files\serverconfig</Filter>
+    </ClCompile>
+    <ClCompile Include="server_config\ConfigReloadListener.cpp">
+      <Filter>Source Files\serverconfig</Filter>
+    </ClCompile>
+    <ClCompile Include="server_config\Configurator.cpp">
+      <Filter>Source Files\serverconfig</Filter>
+    </ClCompile>
+    <ClCompile Include="server_config\framework.cpp">
+      <Filter>Source Files\serverconfig</Filter>
+    </ClCompile>
+    <ClCompile Include="server_config\IpAccessControl.cpp">
+      <Filter>Source Files\serverconfig</Filter>
+    </ClCompile>
+    <ClCompile Include="server_config\IpAccessRule.cpp">
+      <Filter>Source Files\serverconfig</Filter>
+    </ClCompile>
+    <ClCompile Include="server_config\PortMapping.cpp">
+      <Filter>Source Files\serverconfig</Filter>
+    </ClCompile>
+    <ClCompile Include="server_config\PortMappingContainer.cpp">
+      <Filter>Source Files\serverconfig</Filter>
+    </ClCompile>
+    <ClCompile Include="server_config\PortMappingRect.cpp">
+      <Filter>Source Files\serverconfig</Filter>
+    </ClCompile>
+    <ClCompile Include="server_config\RegistrySecurityAttributes.cpp">
+      <Filter>Source Files\serverconfig</Filter>
+    </ClCompile>
+    <ClCompile Include="server_config\ServerConfig.cpp">
+      <Filter>Source Files\serverconfig</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1044,6 +1083,42 @@
     </ClInclude>
     <ClInclude Include="region\x11region.h">
       <Filter>Header Files\region</Filter>
+    </ClInclude>
+    <ClInclude Include="server_config\_.h">
+      <Filter>Header Files\server_config</Filter>
+    </ClInclude>
+    <ClInclude Include="server_config\ConfigReloadListener.h">
+      <Filter>Header Files\server_config</Filter>
+    </ClInclude>
+    <ClInclude Include="server_config\Configurator.h">
+      <Filter>Header Files\server_config</Filter>
+    </ClInclude>
+    <ClInclude Include="server_config\framework.h">
+      <Filter>Header Files\server_config</Filter>
+    </ClInclude>
+    <ClInclude Include="server_config\IpAccessControl.h">
+      <Filter>Header Files\server_config</Filter>
+    </ClInclude>
+    <ClInclude Include="server_config\IpAccessRule.h">
+      <Filter>Header Files\server_config</Filter>
+    </ClInclude>
+    <ClInclude Include="server_config\PortMapping.h">
+      <Filter>Header Files\server_config</Filter>
+    </ClInclude>
+    <ClInclude Include="server_config\PortMappingContainer.h">
+      <Filter>Header Files\server_config</Filter>
+    </ClInclude>
+    <ClInclude Include="server_config\PortMappingRect.h">
+      <Filter>Header Files\server_config</Filter>
+    </ClInclude>
+    <ClInclude Include="server_config\RegistrySecurityAttributes.h">
+      <Filter>Header Files\server_config</Filter>
+    </ClInclude>
+    <ClInclude Include="server_config\resource.h">
+      <Filter>Header Files\server_config</Filter>
+    </ClInclude>
+    <ClInclude Include="server_config\ServerConfig.h">
+      <Filter>Header Files\server_config</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

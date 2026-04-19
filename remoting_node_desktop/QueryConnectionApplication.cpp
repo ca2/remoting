@@ -21,17 +21,17 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
+#include "framework.h"
 #include "QueryConnectionApplication.h"
 #include "QueryConnectionCommandLine.h"
 #include "QueryConnectionDialog.h"
-#include "remoting/remoting_common/win_system/CurrentConsoleProcess.h"
+#include "subsystem/node/CurrentConsoleProcess.h"
 #include "TvnServerHelp.h"
 
 #include "remoting/remoting_common/server_config/Configurator.h"
-//#include "remoting/remoting_common/win_system/Environment.h"
+//#include "subsystem/node/Environment.h"
 #include "subsystem/Process.h"
-#include "remoting/remoting_common/win_system/WinCommandLineArgs.h"
+#include "subsystem/node/WinCommandLineArgs.h"
 #include "remoting/remoting_common/util/ResourceLoader.h"
 #include "remoting_node/resource.h"
 #include "remoting_node_desktop/NamingDefs.h"

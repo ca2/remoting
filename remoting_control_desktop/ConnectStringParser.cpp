@@ -54,7 +54,7 @@ bool Connectmain_subsystem()->string_parser()->parse(const ::scoped_string & sco
 
   int port = 0;
 
-  if (!main_subsystem()->string_parser()->parseInt(splitted[1], &port)) {
+  if (!MainSubsystem()->string_parser()->parseInt(splitted[1], &port)) {
     return false;
   }
 

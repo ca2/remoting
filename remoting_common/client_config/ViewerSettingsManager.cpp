@@ -37,7 +37,7 @@ namespace remoting
       ::string keyName;
       keyName.format("{}\\Settings\\", ::string(scopedstrRegistryName).c_str());
 
-      auto pregistrykeyUserKey = main_subsystem()->registry()->getCurrentUserKey();
+      auto pregistrykeyUserKey = MainSubsystem()->registry()->getCurrentUserKey();
       setRegistryKey(pregistrykeyUserKey, keyName.c_str());
    }
 
