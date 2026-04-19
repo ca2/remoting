@@ -76,7 +76,7 @@ int KeySymTest::run()
       if (word1.isEqualTo("kbdlayout")) {
         // Try parse word2 as a hexadecimal value
         unsigned int hkbdLayout = 0;
-        if (!MainSubsystem()->string_parser()->parseHex(word2, &hkbdLayout)) {
+        if (!MainSubsystem().string_parser()->parseHex(word2, &hkbdLayout)) {
           ::string errMess;
           errMess.formatf("Wrong \"kbdlayout\" argument at %u line ({})",
                          m_lineNumber,
@@ -87,9 +87,9 @@ int KeySymTest::run()
         Sleep(500);
       } else {
         unsigned int virtKeyInt, downInt;
-        bool validWord = MainSubsystem()->string_parser()->parseUInt(word1, &virtKeyInt);
+        bool validWord = MainSubsystem().string_parser()->parseUInt(word1, &virtKeyInt);
         validWord = validWord &&
-                    MainSubsystem()->string_parser()->parseUInt(word2, &downInt);
+                    MainSubsystem().string_parser()->parseUInt(word2, &downInt);
         if (validWord && (downInt == 0 || downInt == 1)) {
           unsigned char virtKey = virtKeyInt & 255;
           bool down = downInt != 0;

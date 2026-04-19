@@ -43,7 +43,7 @@ namespace remoting
                                                     )
    {
 
-      m_pregistrykey = MainSubsystem()->registry()->openKey(scopedstr);
+      m_pregistrykey = MainSubsystem().registry()->openKey(scopedstr);
 
       m_limit = limit;
 

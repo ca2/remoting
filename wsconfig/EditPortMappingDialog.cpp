@@ -68,7 +68,7 @@ void EditPortMappingDialog::onOkButtonClick()
   m_portTextBox.getText(&portStringStorage);
 
   PortMappingRect::parse(rectStringStorage, &rect);
-  MainSubsystem()->string_parser()->parseInt(portStringStorage, &port);
+  MainSubsystem().string_parser()->parseInt(portStringStorage, &port);
 
   m_mapping->setPort(port);
   m_mapping->setRect(rect);
@@ -92,9 +92,9 @@ bool EditPortMappingDialog::isUserDataValid()
   m_portTextBox.getText(&portStringStorage);
 
   if (!PortMappingRect::tryParse(rectStringStorage)) {
-    MainSubsystem()->message_box(m_ctrlThis.operating_system_window(),
-               MainSubsystem()->string_table()->getString(IDS_INVALID_PORT_MAPPING_STRING),
-               MainSubsystem()->string_table()->getString(IDS_CAPTION_BAD_INPUT),
+    MainSubsystem().message_box(m_ctrlThis.operating_system_window(),
+               MainSubsystem().string_table()->getString(IDS_INVALID_PORT_MAPPING_STRING),
+               MainSubsystem().string_table()->getString(IDS_CAPTION_BAD_INPUT),
                ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
     m_geometryTextBox.setFocus();
     return false;
@@ -102,12 +102,12 @@ bool EditPortMappingDialog::isUserDataValid()
 
   int port;
 
-  MainSubsystem()->string_parser()->parseInt(portStringStorage, &port);
+  MainSubsystem().string_parser()->parseInt(portStringStorage, &port);
 
   if ((port < 1) || (port > 65535)) {
-    MainSubsystem()->message_box(m_ctrlThis.operating_system_window(),
-               MainSubsystem()->string_table()->getString(IDS_PORT_RANGE_ERROR),
-               MainSubsystem()->string_table()->getString(IDS_CAPTION_BAD_INPUT),
+    MainSubsystem().message_box(m_ctrlThis.operating_system_window(),
+               MainSubsystem().string_table()->getString(IDS_PORT_RANGE_ERROR),
+               MainSubsystem().string_table()->getString(IDS_CAPTION_BAD_INPUT),
                ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
     m_portTextBox.setFocus();
     return false;
@@ -118,9 +118,9 @@ bool EditPortMappingDialog::isUserDataValid()
   size_t index = extraPorts->findByPort(port);
 
   if ((index != (size_t)-1) && (extraPorts->at(index) != m_mapping)) {
-    MainSubsystem()->message_box(m_ctrlThis.operating_system_window(),
-               MainSubsystem()->string_table()->getString(IDS_PORT_ALREADY_IN_USE),
-               MainSubsystem()->string_table()->getString(IDS_CAPTION_BAD_INPUT),
+    MainSubsystem().message_box(m_ctrlThis.operating_system_window(),
+               MainSubsystem().string_table()->getString(IDS_PORT_ALREADY_IN_USE),
+               MainSubsystem().string_table()->getString(IDS_CAPTION_BAD_INPUT),
                ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
     m_portTextBox.setFocus();
     return false;

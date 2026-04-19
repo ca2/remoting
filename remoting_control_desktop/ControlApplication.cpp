@@ -169,9 +169,9 @@ int ControlApplication::run()
     connect(cmdLineParser.hasControlServiceFlag(), cmdLineParser.isSlave());
   } catch (::subsystem::Exception &) {
     if (!cmdLineParser.isSlave() && !cmdLineParser.hasCheckServicePasswords()) {
-      const ::scoped_string & scopedstrMsg = MainSubsystem()->string_table()->getString(IDS_FAILED_TO_CONNECT_TO_CONTROL_SERVER);
-      const ::scoped_string & scopedstrCaption = MainSubsystem()->string_table()->getString(IDS_MBC_TVNCONTROL);
-      MainSubsystem()->message_box({}, msg, caption, ::user::e_message_box_ok | MB_ICONERROR);
+      const ::scoped_string & scopedstrMsg = MainSubsystem().string_table()->getString(IDS_FAILED_TO_CONNECT_TO_CONTROL_SERVER);
+      const ::scoped_string & scopedstrCaption = MainSubsystem().string_table()->getString(IDS_MBC_TVNCONTROL);
+      MainSubsystem().message_box({}, msg, caption, ::user::e_message_box_ok | MB_ICONERROR);
     }
     return 1;
   }
@@ -282,16 +282,16 @@ void ControlApplication::notifyServerSideException(const ::scoped_string & scope
 {
   ::string scopedstrMessage;
 
-  scopedstrMessage.format(MainSubsystem()->string_table()->getString(IDS_CONTROL_SERVER_RAISE_EXCEPTION), reason);
+  scopedstrMessage.format(MainSubsystem().string_table()->getString(IDS_CONTROL_SERVER_RAISE_EXCEPTION), reason);
 
-  MainSubsystem()->message_box({}, scopedstrMessage, MainSubsystem()->string_table()->getString(IDS_MBC_TVNSERVER), ::user::e_message_box_ok | MB_ICONERROR);
+  MainSubsystem().message_box({}, scopedstrMessage, MainSubsystem().string_table()->getString(IDS_MBC_TVNSERVER), ::user::e_message_box_ok | MB_ICONERROR);
 }
 
 void ControlApplication::notifyConnectionLost()
 {
-  MainSubsystem()->message_box({},
-             MainSubsystem()->string_table()->getString(IDS_CONTROL_CONNECTION_LOST),
-             MainSubsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
+  MainSubsystem().message_box({},
+             MainSubsystem().string_table()->getString(IDS_CONTROL_CONNECTION_LOST),
+             MainSubsystem().string_table()->getString(IDS_MBC_TVNCONTROL),
              ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
 }
 
@@ -357,9 +357,9 @@ int ControlApplication::runConfigurator(bool configService, bool isRunAsRequeste
     // If admin rights already requested and application still don't have them,
     // then show error scopedstrMessage and exit.
     if (isRunAsRequested) {
-      MainSubsystem()->message_box({},
-        MainSubsystem()->string_table()->getString(IDS_ADMIN_RIGHTS_NEEDED),
-        MainSubsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
+      MainSubsystem().message_box({},
+        MainSubsystem().string_table()->getString(IDS_ADMIN_RIGHTS_NEEDED),
+        MainSubsystem().string_table()->getString(IDS_MBC_TVNCONTROL),
         ::user::e_message_box_ok | MB_ICONERROR);
       return 0;
     }
@@ -378,9 +378,9 @@ int ControlApplication::runConfigurator(bool configService, bool isRunAsRequeste
       Shell::runAsAdmin(pathToBinary, childCommandLine);
     } catch (SystemException &sysEx) {
       if (sysEx.getErrorCode() != ERROR_CANCELLED) {
-        MainSubsystem()->message_box({},
+        MainSubsystem().message_box({},
           sysEx.get_message(),
-          MainSubsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
+          MainSubsystem().string_table()->getString(IDS_MBC_TVNCONTROL),
           ::user::e_message_box_ok | MB_ICONERROR);
       }
       return 1;
@@ -423,9 +423,9 @@ int ControlApplication::checkServicePasswords(bool isRunAsRequested)
     // If admin rights already requested and application still don't have them,
     // then show error scopedstrMessage and exit.
     if (isRunAsRequested) {
-      MainSubsystem()->message_box({},
-        MainSubsystem()->string_table()->getString(IDS_ADMIN_RIGHTS_NEEDED),
-        MainSubsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
+      MainSubsystem().message_box({},
+        MainSubsystem().string_table()->getString(IDS_ADMIN_RIGHTS_NEEDED),
+        MainSubsystem().string_table()->getString(IDS_MBC_TVNCONTROL),
         ::user::e_message_box_ok | MB_ICONERROR);
       return 1;
     }
@@ -445,9 +445,9 @@ int ControlApplication::checkServicePasswords(bool isRunAsRequested)
       return 0;
     } catch (SystemException &sysEx) {
       if (sysEx.getErrorCode() != ERROR_CANCELLED) {
-        MainSubsystem()->message_box({},
+        MainSubsystem().message_box({},
           sysEx.get_message(),
-          MainSubsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
+          MainSubsystem().string_table()->getString(IDS_MBC_TVNCONTROL),
           ::user::e_message_box_ok | MB_ICONERROR);
       }
       return 1;
@@ -511,10 +511,10 @@ void ControlApplication::reloadConfig()
     processToReloadConfig.start();
   } catch (::exception &e) {
     ::string errMess;
-    errMess.format(MainSubsystem()->string_table()->getString(IDS_FAILED_TO_RELOAD_SERVICE_ON_CHECK_PASS), e.get_message());
-    MainSubsystem()->message_box({},
+    errMess.format(MainSubsystem().string_table()->getString(IDS_FAILED_TO_RELOAD_SERVICE_ON_CHECK_PASS), e.get_message());
+    MainSubsystem().message_box({},
       errMess,
-      MainSubsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
+      MainSubsystem().string_table()->getString(IDS_MBC_TVNCONTROL),
       ::user::e_message_box_ok | MB_ICONERROR);
   }
 }

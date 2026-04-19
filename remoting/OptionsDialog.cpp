@@ -349,7 +349,7 @@ namespace remoting_remoting
 
         int scale;
 
-        if (!MainSubsystem()->string_parser()->parseInt(scaleText, &scale)) {
+        if (!MainSubsystem().string_parser()->parseInt(scaleText, &scale)) {
             if (scaleText == "Auto") {
                 return ;
             }
@@ -377,24 +377,24 @@ namespace remoting_remoting
             return true;
         }
 
-        if (!MainSubsystem()->string_parser()->parseInt(scaleText, &scaleInt)) {
+        if (!MainSubsystem().string_parser()->parseInt(scaleText, &scaleInt)) {
             ::string error;
-            error.formatf(MainSubsystem()->string_table()->getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC).c_str(),
-                         MainSubsystem()->string_table()->getString(IDS_OPTIONS_SCALE).c_str());
-            MainSubsystem()->message_box(operating_system_window(),
+            error.formatf(MainSubsystem().string_table()->getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC).c_str(),
+                         MainSubsystem().string_table()->getString(IDS_OPTIONS_SCALE).c_str());
+            MainSubsystem().message_box(operating_system_window(),
                        ::wstring(error),
-                       ::wstring(MainSubsystem()->string_table()->getString(IDS_OPTIONS_CAPTION)),
+                       ::wstring(MainSubsystem().string_table()->getString(IDS_OPTIONS_CAPTION)),
                        ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
             return false;
         }
 
         if (scaleInt < 0) {
             ::string error;
-            error.formatf(MainSubsystem()->string_table()->getString(IDS_ERROR_VALUE_FIELD_ONLY_POSITIVE_NUMERIC).c_str(),
-                         MainSubsystem()->string_table()->getString(IDS_OPTIONS_SCALE).c_str());
-            MainSubsystem()->message_box(operating_system_window(),
+            error.formatf(MainSubsystem().string_table()->getString(IDS_ERROR_VALUE_FIELD_ONLY_POSITIVE_NUMERIC).c_str(),
+                         MainSubsystem().string_table()->getString(IDS_OPTIONS_SCALE).c_str());
+            MainSubsystem().message_box(operating_system_window(),
                        error,
-                       MainSubsystem()->string_table()->getString(IDS_OPTIONS_CAPTION),
+                       MainSubsystem().string_table()->getString(IDS_OPTIONS_CAPTION),
                        ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
             return false;
         }
@@ -451,7 +451,7 @@ namespace remoting_remoting
 
         int scaleInt = 0;
 
-        if (MainSubsystem()->string_parser()->parseInt(scaleText, &scaleInt)) {
+        if (MainSubsystem().string_parser()->parseInt(scaleText, &scaleInt)) {
             m_pconnectionconfig->setScale(scaleInt, 100);
             m_pconnectionconfig->fitWindow(false);
         } else {

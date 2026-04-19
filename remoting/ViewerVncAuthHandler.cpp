@@ -64,7 +64,7 @@ namespace remoting_remoting
             if (m.has_data())
             {
                 ::string str;
-                MainSubsystem()->DecryptData(m, str);
+                MainSubsystem().DecryptData(m, str);
                 m_pconnectiondata->setPlainPassword(::wstring(str).c_str());
             }
             else
@@ -73,7 +73,7 @@ namespace remoting_remoting
                     m_pconnectiondata->setPlainPassword(authDialog.getPassword());
                     memory m2;
                     ::string str(authDialog.getPassword());
-                    MainSubsystem()->EncryptData(str, m2);
+                    MainSubsystem().EncryptData(str, m2);
                     if (m2.has_data())
                     {
 

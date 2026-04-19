@@ -64,26 +64,26 @@ namespace remoting_remoting
 
     void AboutDialog::onOrderSupportButtonClock()
     {
-        openUrl(MainSubsystem()->string_table()->getString(IDS_URL_LICENSING_FVA));
+        openUrl(MainSubsystem().string_table()->getString(IDS_URL_LICENSING_FVA));
     }
 
     void AboutDialog::onVisitSiteButtonClick()
     {
-        openUrl(MainSubsystem()->string_table()->getString(IDS_URL_PRODUCT_FVA));
+        openUrl(MainSubsystem().string_table()->getString(IDS_URL_PRODUCT_FVA));
     }
 
     void AboutDialog::openUrl(const ::scoped_string & scopedstrUrl)
     {
         try {
-            MainSubsystem()->shell()->open(scopedstrUrl, 0, 0);
+            MainSubsystem().shell()->open(scopedstrUrl, 0, 0);
         } catch (::subsystem::SystemException &sysEx) {
             ::string strMessage;
 
-            strMessage.formatf(MainSubsystem()->string_table()->getString(IDS_FAILED_TO_OPEN_URL_FORMAT).c_str(), sysEx.get_message());
+            strMessage.formatf(MainSubsystem().string_table()->getString(IDS_FAILED_TO_OPEN_URL_FORMAT).c_str(), sysEx.get_message());
 
-            MainSubsystem()->message_box(operating_system_window(),
+            MainSubsystem().message_box(operating_system_window(),
                        wstring(strMessage),
-                       wstring(MainSubsystem()->string_table()->getString(IDS_MBC_TVNVIEWER)),
+                       wstring(MainSubsystem().string_table()->getString(IDS_MBC_TVNVIEWER)),
                        ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
         }
     }
@@ -99,15 +99,15 @@ namespace remoting_remoting
            productInfo.initialize_version_info(binaryPath);
             versionString= productInfo.getProductVersionString();
         } catch (::subsystem::SystemException &ex) {
-            MainSubsystem()->message_box(operating_system_window(),
+            MainSubsystem().message_box(operating_system_window(),
                        ::wstring(ex.get_message()),
-                       ::wstring(MainSubsystem()->string_table()->getString(IDS_MBC_TVNVIEWER)),
+                       ::wstring(MainSubsystem().string_table()->getString(IDS_MBC_TVNVIEWER)),
                        ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
         }
 
         // Format product version and build time for displaying on the dialog.
         ::string versionText;
-        versionText.formatf(MainSubsystem()->string_table()->getString(IDS_PRODUCT_VERSION_FORMAT).c_str(),
+        versionText.formatf(MainSubsystem().string_table()->getString(IDS_PRODUCT_VERSION_FORMAT).c_str(),
                            ::string(versionString).c_str(),
                            BuildTime::DATE);
 
@@ -118,7 +118,7 @@ namespace remoting_remoting
         //versionLabel.setText(versionText);
 
 
-       ::string strLicensingInfo = MainSubsystem()->string_table()->getString(IDS_LICENSING_INFO);
+       ::string strLicensingInfo = MainSubsystem().string_table()->getString(IDS_LICENSING_INFO);
 
         // Show licensing info and/or special build info.
        auto plabelLicensing = dialog_item< ::innate_subsystem::Control >(IDC_STATIC_VERSION);

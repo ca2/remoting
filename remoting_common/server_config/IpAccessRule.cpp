@@ -166,11 +166,11 @@ bool IpAccessRule::isIncludingAddress(unsigned long ip) const
   ::string firstIpAnsi(m_firstIp);
   ::string lastIpAnsi(m_lastIp);
 
-  unsigned long firstIp = MainSubsystem()->internet_address4(firstIpAnsi);
+  unsigned long firstIp = MainSubsystem().internet_address4(firstIpAnsi);
   unsigned long lastIp  = firstIp;
 
   if (m_lastIp.has_character()) {
-     lastIp = MainSubsystem()->internet_address4(lastIpAnsi);
+     lastIp = MainSubsystem().internet_address4(lastIpAnsi);
   }
 
   if (ip == firstIp || ip == lastIp) {
@@ -213,8 +213,8 @@ int IpAccessRule::compareIp(unsigned long ip1, unsigned long ip2)
     return 0;
   }
 
-  unsigned long l1 = MainSubsystem()->host_to_network_long(ip1);
-  unsigned long l2 = MainSubsystem()->host_to_network_long(ip2);
+  unsigned long l1 = MainSubsystem().host_to_network_long(ip1);
+  unsigned long l2 = MainSubsystem().host_to_network_long(ip2);
 
   if (l1 > l2) {
     return 1;
@@ -247,20 +247,20 @@ void IpAccessRule::getIpRange(const char * pszIp, const char * pszNetmask,
   ::string ipAnsi(ipStorage);
   ::string netmaskAnsi(netmaskStorage);
 
-  unsigned long ipAddr = MainSubsystem()->internet_address4(ipAnsi);
-  unsigned long netmaskAddr = MainSubsystem()->internet_address4(netmaskAnsi);
+  unsigned long ipAddr = MainSubsystem().internet_address4(ipAnsi);
+  unsigned long netmaskAddr = MainSubsystem().internet_address4(netmaskAnsi);
   unsigned long subnetAddr = ipAddr & netmaskAddr;
   unsigned long broadcastAddr = subnetAddr | (~netmaskAddr);
 
 
-  *firstIp = MainSubsystem()->internet_address4_as_string(subnetAddr);
+  *firstIp = MainSubsystem().internet_address4_as_string(subnetAddr);
   //in_addr addr = {0};
 
   //memcpy(&addr, &subnetAddr, sizeof(unsigned long));
   //::string subnetworkAnsi(inet_ntoa(addr));
   //subnetworkAnsi.toStringStorage(firstIp);
 
-  *lastIp = MainSubsystem()->internet_address4_as_string(broadcastAddr);
+  *lastIp = MainSubsystem().internet_address4_as_string(broadcastAddr);
   //memcpy(&addr, &broadcastAddr, sizeof(unsigned long));
   //::string broadcastAnsi(inet_ntoa(addr));
   //broadcastAnsi.toStringStorage(lastIp);

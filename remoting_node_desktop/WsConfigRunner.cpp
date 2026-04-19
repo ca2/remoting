@@ -48,7 +48,7 @@ void WsConfigRunner::execute()
   try {
      // Prepare path to executable.
     ::string pathToBin;
-     MainSubsystem()->OperatingSystem()->getCurrentModulePath(&pathToBin);
+     MainSubsystem().OperatingSystem()->getCurrentModulePath(&pathToBin);
     pathToBin.double_quote();
     // Prepare arguments.
     ::string args;

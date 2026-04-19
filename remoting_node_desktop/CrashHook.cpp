@@ -95,7 +95,7 @@
 //  dumpPath.formatf("{}\\{}\\crash.dmp", specFolder,
 //                                           ProductNames::PRODUCT_NAME);
 //
-//  if (guiEnabled && MainSubsystem()->message_box({},
+//  if (guiEnabled && MainSubsystem().message_box({},
 //                               "Apllication crashing. Do you"
 //                               " want save debug information?",
 //                               ProductNames::PRODUCT_NAME,
@@ -150,14 +150,14 @@
 //      ::string succMess;
 //      succMess.formatf("The debug information has been successfully"
 //                      " saved to the {} file", dumpPath);
-//      MainSubsystem()->message_box({}, succMess, ProductNames::PRODUCT_NAME, ::user::e_message_box_ok);
+//      MainSubsystem().message_box({}, succMess, ProductNames::PRODUCT_NAME, ::user::e_message_box_ok);
 //    }
 //    m_notifier->onCrash(&dumpPath);
 //
 //    retValue = EXCEPTION_EXECUTE_HANDLER;
 //  } catch (::exception &e) {
 //    if (guiEnabled) {
-//      MainSubsystem()->message_box(NULL, e.get_message(), ProductNames::PRODUCT_NAME, ::user::e_message_box_ok);
+//      MainSubsystem().message_box(NULL, e.get_message(), ProductNames::PRODUCT_NAME, ::user::e_message_box_ok);
 //    }
 //  }
 //  if (hFile != 0) {

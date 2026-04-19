@@ -312,7 +312,7 @@ namespace remoting_remoting
             closeDialog(::innate_subsystem::e_control_id_cancel);
             return true;
         }
-        if (MainSubsystem()->message_box(operating_system_window(),
+        if (MainSubsystem().message_box(operating_system_window(),
                        "Do you want to close file transfers and terminate current operation?",
                        "TightVNC ::file::item Transfers",
                        ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) == ::innate_subsystem::e_control_id_yes) {
@@ -350,7 +350,7 @@ namespace remoting_remoting
         ::remoting::ftp::FileInfo *fileInfo = m_remoteFileListView.getSelectedFileInfo();
 
         if (fileInfo == NULL) {
-            MainSubsystem()->message_box(operating_system_window(),
+            MainSubsystem().message_box(operating_system_window(),
                        L"No file selected.",
                        L"Rename ::file::item", ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
             return ;
@@ -399,7 +399,7 @@ namespace remoting_remoting
         unsigned int siCount = m_remoteFileListView.getSelectedItemsCount();
 
         if (siCount == 0) {
-            MainSubsystem()->message_box(operating_system_window(),
+            MainSubsystem().message_box(operating_system_window(),
                        L"No files selected.",
                        L"Delete Files", ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
             return ;
@@ -416,7 +416,7 @@ namespace remoting_remoting
             fileinfoa.add(pfileinfo);
         }
 
-        if (MainSubsystem()->message_box(operating_system_window(),
+        if (MainSubsystem().message_box(operating_system_window(),
                        L"Do you wish to delete the selected files?",
                        L"Delete Files",
                        ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) != ::innate_subsystem::e_control_id_yes) {
@@ -444,7 +444,7 @@ namespace remoting_remoting
         ::remoting::ftp::FileInfo *fileInfo = m_localFileListView.getSelectedFileInfo();
 
         if (fileInfo == NULL) {
-            MainSubsystem()->message_box(operating_system_window(),
+            MainSubsystem().message_box(operating_system_window(),
                        L"No file selected.",
                        L"Rename ::file::item", ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
             return ;
@@ -511,7 +511,7 @@ namespace remoting_remoting
 
         // Not allow user to create folders in our "fake" root folder
         if (pathToFile.is_empty()) {
-            MainSubsystem()->message_box(operating_system_window(),
+            MainSubsystem().message_box(operating_system_window(),
                        L"It's not allowed to create new folder here.",
                        L"New Folder", ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
         }
@@ -559,7 +559,7 @@ namespace remoting_remoting
         unsigned int siCount = m_localFileListView.getSelectedItemsCount();
 
         if (siCount == 0) {
-            MainSubsystem()->message_box(operating_system_window(),
+            MainSubsystem().message_box(operating_system_window(),
                        L"No files selected.",
                        L"Delete Files", ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
             return ;
@@ -575,7 +575,7 @@ namespace remoting_remoting
             fileinfoa.add(pfileInfo);
         }
 
-        if (MainSubsystem()->message_box(operating_system_window(),
+        if (MainSubsystem().message_box(operating_system_window(),
                        L"Do you wish to delete the selected files?",
                        L"Delete Files",
                        ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) != ::innate_subsystem::e_control_id_yes) {
@@ -607,7 +607,7 @@ namespace remoting_remoting
         auto indexes = m_localFileListView.getSelectedItemsIndexes();
 
         if (indexes.is_empty()) {
-            MainSubsystem()->message_box(operating_system_window(),
+            MainSubsystem().message_box(operating_system_window(),
                        L"No files selected.",
                        L"Upload Files", ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
             return ;
@@ -621,7 +621,7 @@ namespace remoting_remoting
             fileinfoa.add(pfileInfo);
         }
 
-        if (MainSubsystem()->message_box(operating_system_window(),
+        if (MainSubsystem().message_box(operating_system_window(),
                        L"Do you wish to upload the selected files?",
                        L"Upload Files",
                        ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) != ::innate_subsystem::e_control_id_yes) {
@@ -653,7 +653,7 @@ namespace remoting_remoting
         auto indexes = m_remoteFileListView.getSelectedItemsIndexes();
 
         if (indexes.is_empty()) {
-            MainSubsystem()->message_box(operating_system_window(),
+            MainSubsystem().message_box(operating_system_window(),
       L"No files selected.",
                      L"Download Files", ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
             return ;
@@ -670,7 +670,7 @@ namespace remoting_remoting
             fileinfoa.add(pfileInfo);
         }
 
-        if (MainSubsystem()->message_box(operating_system_window(),
+        if (MainSubsystem().message_box(operating_system_window(),
                        L"Do you wish to download the selected files?",
                        L"Download Files",
                        ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) != ::innate_subsystem::e_control_id_yes) {
@@ -899,7 +899,7 @@ namespace remoting_remoting
 
     void FileTransferMainDialog::raise(::exception &ex)
     {
-        MainSubsystem()->message_box(operating_system_window(), ::wstring(ex.get_message()),
+        MainSubsystem().message_box(operating_system_window(), ::wstring(ex.get_message()),
                    L"Exception", ::user::e_message_box_ok | ::user::e_message_box_icon_error);
         throw ex;
     }

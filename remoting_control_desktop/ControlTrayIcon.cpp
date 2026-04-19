@@ -53,7 +53,7 @@ ControlTrayIcon::ControlTrayIcon(ControlProxy *serverControl,
   m_inWindowProc(false),
   m_termination(false)
 {
-  auto presourceloader = MainSubsystem()->ResourceLoader();
+  auto presourceloader = MainSubsystem().ResourceLoader();
 
   m_iconWorking = new Icon(presourceloader->loadIcon(MAKEINTRESOURCE(IDI_CONNECTED)));
   m_iconIdle = new Icon(presourceloader->loadIcon(MAKEINTRESOURCE(IDI_IDLE)));
@@ -250,13 +250,13 @@ void ControlTrayIcon::onShutdownServerMenuItemClick()
     unsigned int stringId = serverInfo.m_serviceFlag ? IDS_TVNSERVER_SERVICE : IDS_TVNSERVER_APP;
 
     userMessage.format(
-      MainSubsystem()->string_table()->getString(IDS_SHUTDOWN_NOTIFICATION_FORMAT),
-      MainSubsystem()->string_table()->getString(stringId));
+      MainSubsystem().string_table()->getString(IDS_SHUTDOWN_NOTIFICATION_FORMAT),
+      MainSubsystem().string_table()->getString(stringId));
 
-    if (MainSubsystem()->message_box(
+    if (MainSubsystem().message_box(
       operating_system_window(),
       userMessage,
-      MainSubsystem()->string_table()->getString(IDS_MBC_TVNCONTROL),
+      MainSubsystem().string_table()->getString(IDS_MBC_TVNCONTROL),
       ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) == ::innate_subsystem::IDNO) {
         return;
     }
@@ -338,7 +338,7 @@ void ControlTrayIcon::syncStatusWithServer()
 void ControlTrayIcon::setNotConnectedState()
 {
   setIcon(m_iconDisabled);
-  setText(MainSubsystem()->string_table()->getString(IDS_CONTROL_CLIENT_NOT_CONNECTED));
+  setText(MainSubsystem().string_table()->getString(IDS_CONTROL_CLIENT_NOT_CONNECTED));
 }
 
 void ControlTrayIcon::terminate()

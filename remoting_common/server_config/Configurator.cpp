@@ -97,12 +97,12 @@ bool Configurator::load(bool forService)
   if (forService)
   {
 
-     pregistrykey = MainSubsystem()->registry()->getLocalMachineKey();
+     pregistrykey = MainSubsystem().registry()->getLocalMachineKey();
   }
   else
   {
 
-     pregistrykey = MainSubsystem()->registry()->getCurrentUserKey();
+     pregistrykey = MainSubsystem().registry()->getCurrentUserKey();
 
   }
   //SECURITY_ATTRIBUTES *sa = 0;

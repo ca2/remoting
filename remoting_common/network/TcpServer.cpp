@@ -34,7 +34,7 @@ namespace remoting
                         bool lockAddr)
    : m_bindHost(scopedstrBindHost), m_bindPort(bindPort)
    {
-      auto paddressBind = MainSubsystem()->resolve_ip4_address(scopedstrBindHost, bindPort);
+      auto paddressBind = MainSubsystem().resolve_ip4_address(scopedstrBindHost, bindPort);
 
       if (lockAddr) {
          m_listenSocket.setExclusiveAddrUse();

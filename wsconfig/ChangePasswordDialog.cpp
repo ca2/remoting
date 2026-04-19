@@ -35,14 +35,14 @@ ChangePasswordDialog::ChangePasswordDialog(::innate_subsystem::Control *parent, 
 {
   setParent(parent);
 
-  m_passwordEmptyTooltip.setText(MainSubsystem()->string_table()->getString(IDS_PASSWORD_IS_EMPTY));
-  m_passwordEmptyTooltip.setTitle(MainSubsystem()->string_table()->getString(IDS_MBC_TVNCONTROL));
+  m_passwordEmptyTooltip.setText(MainSubsystem().string_table()->getString(IDS_PASSWORD_IS_EMPTY));
+  m_passwordEmptyTooltip.setTitle(MainSubsystem().string_table()->getString(IDS_MBC_TVNCONTROL));
 
-  m_passwordsNotMatchTooltip.setText(MainSubsystem()->string_table()->getString(IDS_PASSWORDS_NOT_MATCH));
-  m_passwordsNotMatchTooltip.setTitle(MainSubsystem()->string_table()->getString(IDS_MBC_TVNCONTROL));
+  m_passwordsNotMatchTooltip.setText(MainSubsystem().string_table()->getString(IDS_PASSWORDS_NOT_MATCH));
+  m_passwordsNotMatchTooltip.setTitle(MainSubsystem().string_table()->getString(IDS_MBC_TVNCONTROL));
 
-  m_passwordWeakTooltip.setText(MainSubsystem()->string_table()->getString(IDS_BAD_PASSWORD));
-  m_passwordWeakTooltip.setTitle(MainSubsystem()->string_table()->getString(IDS_MBC_BAD_PASSWORD));
+  m_passwordWeakTooltip.setText(MainSubsystem().string_table()->getString(IDS_BAD_PASSWORD));
+  m_passwordWeakTooltip.setTitle(MainSubsystem().string_table()->getString(IDS_MBC_BAD_PASSWORD));
 }
 
 ChangePasswordDialog::~ChangePasswordDialog()
@@ -58,9 +58,9 @@ bool ChangePasswordDialog::onInitDialog()
 {
   initControls();
   if (m_newPassword) {
-    m_ctrlThis.setText(MainSubsystem()->string_table()->getString(IDS_NEW_PASSWORD));
+    m_ctrlThis.setText(MainSubsystem().string_table()->getString(IDS_NEW_PASSWORD));
   } else {
-    m_ctrlThis.setText(MainSubsystem()->string_table()->getString(IDS_CHANGE_PASSWORD));
+    m_ctrlThis.setText(MainSubsystem().string_table()->getString(IDS_CHANGE_PASSWORD));
   }
   return true;
 }

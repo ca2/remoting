@@ -42,8 +42,8 @@ namespace remoting_remoting
         subclassControlById(m_shelp, IDC_SHELP);
 
         ::string helpString;
-       auto presourceloader = MainSubsystem()->ResourceLoader();
-        //auto presourceloader = MainSubsystem()->ResourceLoader();
+       auto presourceloader = MainSubsystem().ResourceLoader();
+        //auto presourceloader = MainSubsystem().ResourceLoader();
         presourceloader->loadString(IDS_CMDLINE_HELP, helpString);
         m_shelp->setText(helpString);
         return true;

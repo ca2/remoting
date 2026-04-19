@@ -124,7 +124,7 @@ bool IpAccessControlDialog::validateInput()
 {
   if (!CommonInputValidation::validateUINT(
     &m_queryTimeout,
-    MainSubsystem()->string_table()->getString(IDS_INVALID_QUERY_TIMEOUT))) {
+    MainSubsystem().string_table()->getString(IDS_INVALID_QUERY_TIMEOUT))) {
     return false;
   }
 
@@ -135,7 +135,7 @@ bool IpAccessControlDialog::validateInput()
   if (queryTimeout < ServerConfig::MINIMAL_QUERY_TIMEOUT) {
     CommonInputValidation::notifyValidationError(
       &m_queryTimeout,
-      MainSubsystem()->string_table()->getString(IDS_QUERY_TIMEOUT_TOO_SMALL));
+      MainSubsystem().string_table()->getString(IDS_QUERY_TIMEOUT_TOO_SMALL));
     return false;
   }
 
@@ -173,7 +173,7 @@ void IpAccessControlDialog::apply()
   m_queryTimeout.getText(&qtStringStorage);
 
   int timeout = 0;
-  MainSubsystem()->string_parser()->parseInt(qtStringStorage, &timeout);
+  MainSubsystem().string_parser()->parseInt(qtStringStorage, &timeout);
 
   critical_section_lock al(m_config);
 
@@ -212,9 +212,9 @@ void IpAccessControlDialog::initControls()
   m_ip.setWindow(GetDlgItem(hwnd, IDC_IP_FOR_CHECK_EDIT));
   m_ipCheckResult.setWindow(GetDlgItem(hwnd, IDC_IP_CHECK_RESULT_LABEL));
 
-  m_list.addColumn(0, MainSubsystem()->string_table()->getString(IDS_FIRST_IP_COLUMN), 100);
-  m_list.addColumn(1, MainSubsystem()->string_table()->getString(IDS_LAST_IP_COLUMN), 100);
-  m_list.addColumn(2, MainSubsystem()->string_table()->getString(IDS_ACTION_COLUMN), 80);
+  m_list.addColumn(0, MainSubsystem().string_table()->getString(IDS_FIRST_IP_COLUMN), 100);
+  m_list.addColumn(1, MainSubsystem().string_table()->getString(IDS_LAST_IP_COLUMN), 100);
+  m_list.addColumn(2, MainSubsystem().string_table()->getString(IDS_ACTION_COLUMN), 80);
 
   m_list.allowMultiSelection(false);
   m_list.setFullRowSelectStyle(true);
@@ -376,9 +376,9 @@ void IpAccessControlDialog::onIpCheckUpdate()
 
   if (!IpAccessRule::isIpAddressStringValid(ipStorage)) {
     if (ipStorage.is_empty()) {
-      m_ipCheckResult.setText(MainSubsystem()->string_table()->getString(IDS_ENTER_IP_HINT));
+      m_ipCheckResult.setText(MainSubsystem().string_table()->getString(IDS_ENTER_IP_HINT));
     } else {
-      m_ipCheckResult.setText(MainSubsystem()->string_table()->getString(IDS_BAD_IP_HINT));
+      m_ipCheckResult.setText(MainSubsystem().string_table()->getString(IDS_BAD_IP_HINT));
     }
     return;
   }
@@ -404,16 +404,16 @@ void IpAccessControlDialog::onIpCheckUpdate()
   }
 
   ::string actionDescription;
-  actionDescription= MainSubsystem()->string_table()->getString(IDS_ACTION_UNDEF_HINT);
+  actionDescription= MainSubsystem().string_table()->getString(IDS_ACTION_UNDEF_HINT);
   switch (action) {
   case IpAccessRule::ACTION_TYPE_ALLOW:
-    actionDescription= MainSubsystem()->string_table()->getString(IDS_ACTION_ACCEPT_HINT);
+    actionDescription= MainSubsystem().string_table()->getString(IDS_ACTION_ACCEPT_HINT);
     break;
   case IpAccessRule::ACTION_TYPE_DENY:
-    actionDescription= MainSubsystem()->string_table()->getString(IDS_ACTION_REJECT_HINT);
+    actionDescription= MainSubsystem().string_table()->getString(IDS_ACTION_REJECT_HINT);
     break;
   case IpAccessRule::ACTION_TYPE_QUERY:
-    actionDescription= MainSubsystem()->string_table()->getString(IDS_ACTION_QUERY_HINT);
+    actionDescription= MainSubsystem().string_table()->getString(IDS_ACTION_QUERY_HINT);
     break;
   }
 
@@ -494,13 +494,13 @@ void IpAccessControlDialog::setListViewItemText(int index, IpAccessRule *control
   m_list.setSubItemText(index, 1, lastIp);
   switch (control->getAction()) {
   case IpAccessRule::ACTION_TYPE_ALLOW:
-    m_list.setSubItemText(index, 2, MainSubsystem()->string_table()->getString(IDS_ACTION_ACCEPT));
+    m_list.setSubItemText(index, 2, MainSubsystem().string_table()->getString(IDS_ACTION_ACCEPT));
     break;
   case IpAccessRule::ACTION_TYPE_DENY:
-    m_list.setSubItemText(index, 2, MainSubsystem()->string_table()->getString(IDS_ACTION_DENY));
+    m_list.setSubItemText(index, 2, MainSubsystem().string_table()->getString(IDS_ACTION_DENY));
     break;
   case IpAccessRule::ACTION_TYPE_QUERY:
-    m_list.setSubItemText(index, 2, MainSubsystem()->string_table()->getString(IDS_ACTION_QUERY));
+    m_list.setSubItemText(index, 2, MainSubsystem().string_table()->getString(IDS_ACTION_QUERY));
     break;
   }
   m_list.setItemData(index, (::lparam)control);

@@ -44,7 +44,7 @@ BalloonTip::~BalloonTip()
 
 void BalloonTip::showTooltip(::innate_subsystem::Control *control)
 {
-  MainSubsystem()->message_box(control->operating_system_window(),::wstring(m_text), ::wstring(m_title), ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
+  MainSubsystem().message_box(control->operating_system_window(),::wstring(m_text), ::wstring(m_title), ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
 }
 
 void BalloonTip::setText(const ::scoped_string & scopedstrText)

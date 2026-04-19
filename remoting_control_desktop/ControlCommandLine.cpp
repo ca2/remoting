@@ -315,7 +315,7 @@ void ControlCommandLine::parseRectCoordinates(const ::scoped_string & strCoord)
 
 void ControlCommandLine::parseDisplayNumber(const ::scoped_string & strDispNumber)
 {
-  if (!MainSubsystem()->string_parser()->parseByte(strDispNumber->getString(),
+  if (!MainSubsystem().string_parser()->parseByte(strDispNumber->getString(),
                                &m_displayNumber)) {
     ::string errMess;
     errMess.formatf("Can't parse the {} argument to a display number",
@@ -326,7 +326,7 @@ void ControlCommandLine::parseDisplayNumber(const ::scoped_string & strDispNumbe
 
 void ControlCommandLine::parseProcessId(const ::scoped_string & str)
 {
-  if (!MainSubsystem()->string_parser()->parseUInt(str->getString(),
+  if (!MainSubsystem().string_parser()->parseUInt(str->getString(),
                                &m_sharedAppProcessId)) {
     ::string errMess;
     // FIXME: Here the next string must be placed to the resource.

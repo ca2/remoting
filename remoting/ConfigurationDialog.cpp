@@ -80,7 +80,7 @@ namespace remoting_remoting
         ::string text;
         int logLevel;
         text = m_textboxVerbLvl.getText();
-        MainSubsystem()->string_parser()->parseInt(text, &logLevel);
+        MainSubsystem().string_parser()->parseInt(text, &logLevel);
         if (logLevel != 0) {
             m_textboxLogging.enableWindow(true);
 
@@ -175,13 +175,13 @@ namespace remoting_remoting
 
     bool ConfigurationDialog::isInputValid()
     {
-        if (!testNum(&m_textboxReverseConn, MainSubsystem()->string_table()->getString(IDS_CONFIGURATION_LISTEN_PORT))) {
+        if (!testNum(&m_textboxReverseConn, MainSubsystem().string_table()->getString(IDS_CONFIGURATION_LISTEN_PORT))) {
             return false;
         }
-        if (!testNum(&m_textboxVerbLvl, MainSubsystem()->string_table()->getString(IDS_CONFIGURATION_LOG_LEVEL))) {
+        if (!testNum(&m_textboxVerbLvl, MainSubsystem().string_table()->getString(IDS_CONFIGURATION_LOG_LEVEL))) {
             return false;
         }
-        if (!testNum(&m_textboxReverseConn, MainSubsystem()->string_table()->getString(IDS_CONFIGURATION_HISTORY_LIMIT))) {
+        if (!testNum(&m_textboxReverseConn, MainSubsystem().string_table()->getString(IDS_CONFIGURATION_HISTORY_LIMIT))) {
             return false;
         }
         return true;
@@ -195,16 +195,16 @@ namespace remoting_remoting
 
         auto text = pwindow->getText();
 
-        if (MainSubsystem()->string_parser()->tryParseInt(text))
+        if (MainSubsystem().string_parser()->tryParseInt(text))
         {
             return true;
         }
 
         ::string scopedstrMessage;
-        scopedstrMessage.formatf(MainSubsystem()->string_table()->getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC).c_str(), scopedstrTbName.c_str());
+        scopedstrMessage.formatf(MainSubsystem().string_table()->getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC).c_str(), scopedstrTbName.c_str());
 
-        MainSubsystem()->message_box(operating_system_window(), scopedstrMessage,
-                   MainSubsystem()->string_table()->getString(IDS_CONFIGURATION_CAPTION), ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
+        MainSubsystem().message_box(operating_system_window(), scopedstrMessage,
+                   MainSubsystem().string_table()->getString(IDS_CONFIGURATION_CAPTION), ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
 
         pwindow->setFocus();
 
@@ -223,16 +223,16 @@ namespace remoting_remoting
         int intVal;
 
         text = m_textboxReverseConn.getText();
-        MainSubsystem()->string_parser()->parseInt(text, &intVal);
+        MainSubsystem().string_parser()->parseInt(text, &intVal);
         config->setListenPort(intVal);
 
         text = m_textboxVerbLvl.getText();
-        MainSubsystem()->string_parser()->parseInt(text, &intVal);
+        MainSubsystem().string_parser()->parseInt(text, &intVal);
         config->setLogLevel((enum_trace_level)intVal);
 
         int oldLimit = config->getHistoryLimit();
         text=m_textboxNumberConn.getText();
-        MainSubsystem()->string_parser()->parseInt(text, &intVal);
+        MainSubsystem().string_parser()->parseInt(text, &intVal);
         config->setHistoryLimit(intVal);
 
         if (config->getHistoryLimit() < oldLimit) {
