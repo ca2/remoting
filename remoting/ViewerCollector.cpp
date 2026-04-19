@@ -23,6 +23,7 @@
 //
 #include "framework.h"
 #include "ViewerCollector.h"
+#include "ViewerInstance.h"
 //#include "subsystem/thread/critical_section.h"
 
 namespace remoting_remoting
@@ -39,26 +40,28 @@ namespace remoting_remoting
 
     void ViewerCollector::addInstance(ViewerInstance *viewerInstance)
     {
-        critical_section_lock l(&m_lockObj);
-        m_instances.add(viewerInstance);
+        critical_section_lock l(&m_criticalsection);
+        m_viewerinstancelist.add(viewerInstance);
     }
 
     void ViewerCollector::deleteDeadInstances()
     {
-        critical_section_lock l(&m_lockObj);
+        critical_section_lock l(&m_criticalsection);
 
-        InstanceList::iterator iter = m_instances.begin();
-        while (iter != m_instances.end()) {
+        auto iter = m_viewerinstancelist.begin();
+        while (iter != m_viewerinstancelist.end()) {
             auto it = iter;
             iter++;
-            ViewerInstance *instance = *it;
+            auto pinstance = *it;
 
-            if (instance->isStopped()) {
-                if (instance->requiresReconnect()) {
+            if (pinstance->isStopped())
+            {
+               if (pinstance->requiresReconnect())
+               {
                     ++m_countToReconnect;
                 }
-                delete instance;
-                m_instances.erase(it);
+                //delete instance;
+                m_viewerinstancelist.erase(it);
             } //else {
             //iter++;
             //}
@@ -67,13 +70,13 @@ namespace remoting_remoting
 
     void ViewerCollector::destroyAllInstances()
     {
-        critical_section_lock l(&m_lockObj);
+        critical_section_lock l(&m_criticalsection);
 
-        InstanceList::iterator iter;
-        for (iter = m_instances.begin(); iter != m_instances.end(); iter++) {
+        //InstanceList::iterator iter;
+        for (auto iter = m_viewerinstancelist.begin(); iter != m_viewerinstancelist.end(); iter++) {
             (*iter)->stop();
         }
-        for (iter = m_instances.begin(); iter != m_instances.end(); iter++) {
+        for (auto iter = m_viewerinstancelist.begin(); iter != m_viewerinstancelist.end(); iter++) {
             (*iter)->waitViewer();
         }
 
@@ -82,17 +85,17 @@ namespace remoting_remoting
 
     void ViewerCollector::decreaseToReconnect()
     {
-        critical_section_lock l(&m_lockObj);
+        critical_section_lock l(&m_criticalsection);
 
         --m_countToReconnect;
     }
 
     bool ViewerCollector::empty() const
     {
-        critical_section_lock l(&m_lockObj);
+        critical_section_lock l(&m_criticalsection);
 
         // If not active instance and count wait to reconnect is 0,
         // then return true and false otherwise.
-        return m_instances.empty() && (m_countToReconnect == 0);
+        return m_viewerinstancelist.empty() && (m_countToReconnect == 0);
     }
 } // namespace remoting_remoting

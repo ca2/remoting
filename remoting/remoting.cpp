@@ -213,8 +213,7 @@ namespace remoting_remoting
 
          m_pconnectingdialog->m_panimation->m_bRunning = false;
       }
-
-      m_pconnectingdialog->hide();
+      m_pconnectingdialog->post([this]() { m_pconnectingdialog->hide(); });
    }
    return 0;
 

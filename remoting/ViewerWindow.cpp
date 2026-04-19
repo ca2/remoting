@@ -1439,9 +1439,13 @@ namespace remoting_remoting
         //pmanualresethappeningWebsocketStarted->wait(30_minutes);
 
         // Start viewer window and applying settings.
-        showWindow();
-        setForegroundWindow();
-        applySettings();
+        post(
+           [this]()
+           {
+              showWindow();
+              setForegroundWindow();
+              applySettings();
+           });
     }
 
     void ViewerWindow::onDisconnect(const ::scoped_string & scopedstrMessage)

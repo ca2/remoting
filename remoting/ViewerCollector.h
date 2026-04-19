@@ -27,19 +27,32 @@
 
 //#include "subsystem/thread/critical_section.h"
 //#include aaa_<list>
-#include "ViewerInstance.h"
+//#include "ViewerInstance.h"
 
 
 namespace remoting_remoting
 {
-    typedef ::list_base<ViewerInstance *> InstanceList;
+
+    class ViewerInstance;
+
+    using ViewerInstanceList = ::list_base<::pointer < ViewerInstance > > ;
 
     // Collector instances.
-    class ViewerCollector
+    class ViewerCollector :
+        virtual public ::particle
     {
     public:
+
+       mutable critical_section m_criticalsection;
+       ViewerInstanceList m_viewerinstancelist;
+
+       // This variable contain count of instance, when need to reconnect.
+       // If this count isn't 0, shutdown application is denied.
+       int m_countToReconnect;
+
+
         ViewerCollector();
-        virtual ~ViewerCollector();
+        ~ViewerCollector() override;
 
         // Adds instance to a self ::list_base.
         void addInstance(ViewerInstance *instance);
@@ -57,12 +70,10 @@ namespace remoting_remoting
         // Deletes all stopped instances from memory and removes them from self ::list_base.
         void deleteDeadInstances();
 
-    protected:
-        mutable critical_section m_lockObj;
-        InstanceList m_instances;
-
-        // This variable contain count of instance, when need to reconnect.
-        // If this count isn't 0, shutdown application is denied.
-        int m_countToReconnect;
     };
+
+
 } // namespace remoting_remoting
+
+
+
