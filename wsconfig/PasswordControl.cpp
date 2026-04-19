@@ -58,8 +58,8 @@ void PasswordControl::unsetPassword(bool promtUser, HWND parentWindow)
 {
   if (promtUser) {
     if (MainSubsystem().message_box(parentWindow,
-      MainSubsystem().string_table()->getString(IDS_UNSET_PASSWORD_PROMT),
-      MainSubsystem().string_table()->getString(IDS_MBC_TVNCONTROL), ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) == ::innate_subsystem::IDNO) {
+      MainSubsystem().StringTable().getString(IDS_UNSET_PASSWORD_PROMT),
+      MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL), ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) == ::innate_subsystem::IDNO) {
       return;
     }
   }
@@ -121,9 +121,9 @@ void PasswordControl::updateControlsState()
 {
   if (m_changeButton != 0) {
     if (m_state == OldPassword || m_state == NewPassword) {
-      m_changeButton->setText(MainSubsystem().string_table()->getString(IDS_CHANGE_PASSWORD_CAPTION));
+      m_changeButton->setText(MainSubsystem().StringTable().getString(IDS_CHANGE_PASSWORD_CAPTION));
     } else {
-      m_changeButton->setText(MainSubsystem().string_table()->getString(IDS_SET_PASSWORD_CAPTION));
+      m_changeButton->setText(MainSubsystem().StringTable().getString(IDS_SET_PASSWORD_CAPTION));
     }
     m_changeButton->enableWindow(m_enabled);
   }

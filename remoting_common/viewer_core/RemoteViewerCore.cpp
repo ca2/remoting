@@ -634,7 +634,7 @@ namespace remoting
             }
             // if version 3.8 then try read reasonAuth.
             ::string reasonAuth;
-            reasonAuth = m_input->read_utf8_string();
+            reasonAuth = m_input->readUtf8();
             ::string errorMessage = "Authentication reason: ";
             errorMessage+=reasonAuth;
             m_plogwriter->error("{}", errorMessage);

@@ -28,7 +28,7 @@
 #include "remoting/remoting_common/util/ResourceLoader.h"
 #include "subsystem/framebuffer/StandardPixelFormatFactory.h"
 #include "remoting/remoting/keyboard_layout_change.h"
-#include "innate_subsystem/resource_loader.h"
+#include "innate_subsystem/ResourceLoader.h"
 #include "innate_subsystem/subsystem.h"
 #include "innate_subsystem/gui/Toolbar.h"
 #include "innate_subsystem/drawing/Cursor.h"
@@ -293,7 +293,7 @@ namespace remoting_remoting
     {
         ::pointer < ::innate_subsystem::CursorInterface > pcursor;
 
-        auto presourceloader = main_innate_subsystem()->resource_loader();
+        auto presourceloader = MainInnateSubsystem().ResourceLoader();
         switch (type) {
            case ::remoting::ConnectionConfig::DOT_CURSOR:
                 pcursor = presourceloader->loadCursor(IDI_CDOT);
@@ -478,7 +478,7 @@ namespace remoting_remoting
         int pixelSize = 0;
         m_pdesktopwindow->getServerGeometry(&geometry, &pixelSize);
         ::string str;
-        str.formatf(MainSubsystem().string_table()->getString(IDS_CONNECTION_INFO_FORMAT).c_str(),
+        str.formatf(MainSubsystem().StringTable().getString(IDS_CONNECTION_INFO_FORMAT).c_str(),
                    host.c_str(),
                    m_pviewercore->getRemoteDesktopName().c_str(),
                    m_pviewercore->getProtocolString().c_str(),
@@ -488,7 +488,7 @@ namespace remoting_remoting
                    &kbdName[0]);
         MainSubsystem().message_box(operating_system_window(),
                    str,
-                   MainSubsystem().string_table()->getString(IDS_CONNECTION_INFO_CAPTION),
+                   MainSubsystem().StringTable().getString(IDS_CONNECTION_INFO_CAPTION),
                    ::user::e_message_box_ok | MB_ICONINFORMATION);
     }
 
@@ -622,8 +622,8 @@ namespace remoting_remoting
     {
         WCHAR fileName[MAX_PATH] = L"";
 
-        ::wstring filterVncFiles(MainSubsystem().string_table()->getString(IDS_SAVE_SESSION_FILTER_VNC_FILES));
-        ::wstring filterAllFiles(MainSubsystem().string_table()->getString(IDS_SAVE_SESSION_FILTER_ALL_FILES));
+        ::wstring filterVncFiles(MainSubsystem().StringTable().getString(IDS_SAVE_SESSION_FILTER_VNC_FILES));
+        ::wstring filterAllFiles(MainSubsystem().StringTable().getString(IDS_SAVE_SESSION_FILTER_ALL_FILES));
         ::wstring vncMask( L"*.vnc");
         ::wstring allMask( L"*.*");
         ::wstring semicolon( L";");
@@ -672,8 +672,8 @@ namespace remoting_remoting
 
              if (m_pconnectiondata->isSetPassword()) {
                 int whetherToSavePass = MainSubsystem().message_box(operating_system_window(),
-                  MainSubsystem().string_table()->getString(IDS_QUESTION_SAVE_PASSWORD),
-                  MainSubsystem().string_table()->getString(IDS_SECURITY_WARNING_CAPTION),
+                  MainSubsystem().StringTable().getString(IDS_QUESTION_SAVE_PASSWORD),
+                  MainSubsystem().StringTable().getString(IDS_SECURITY_WARNING_CAPTION),
                   ::user::e_message_box_yes_no);
                 if (whetherToSavePass == ::innate_subsystem::e_control_id_yes) {
                    ::string password = m_pconnectiondata->getCryptedPassword();

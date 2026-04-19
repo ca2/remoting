@@ -50,12 +50,12 @@ void AboutDialog::onCloseButtonClick()
 
 void AboutDialog::onOrderSupportButtonClock()
 {
-  openUrl(MainSubsystem().string_table()->getString(IDS_URL_LICENSING_FSA));
+  openUrl(MainSubsystem().StringTable().getString(IDS_URL_LICENSING_FSA));
 }
 
 void AboutDialog::onVisitSiteButtonClick()
 {
-  openUrl(MainSubsystem().string_table()->getString(IDS_URL_PRODUCT_FSA));
+  openUrl(MainSubsystem().StringTable().getString(IDS_URL_PRODUCT_FSA));
 }
 
 void AboutDialog::openUrl(const ::scoped_string & scopedstrUrl)
@@ -65,11 +65,11 @@ void AboutDialog::openUrl(const ::scoped_string & scopedstrUrl)
   } catch (SystemException &sysEx) {
     ::string scopedstrMessage;
 
-    scopedstrMessage.format(MainSubsystem().string_table()->getString(IDS_FAILED_TO_OPEN_URL_FORMAT), sysEx.get_message());
+    scopedstrMessage.format(MainSubsystem().StringTable().getString(IDS_FAILED_TO_OPEN_URL_FORMAT), sysEx.get_message());
 
     MainSubsystem().message_box(m_ctrlThis.operating_system_window(),
       scopedstrMessage,
-      MainSubsystem().string_table()->getString(IDS_MBC_TVNCONTROL),
+      MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL),
       ::user::e_message_box_ok|::user::e_message_box_icon_exclamation);
   }
 }
@@ -86,13 +86,13 @@ bool AboutDialog::onInitDialog()
   } catch (SystemException &ex) {
     MainSubsystem().message_box(m_ctrlThis.operating_system_window(),
                ex.get_message(),
-               MainSubsystem().string_table()->getString(IDS_MBC_TVNCONTROL),
+               MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL),
                ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
   }
 
   // Format product version and build time for displaying on the dialog.
   ::string versionText;
-  versionText.format(MainSubsystem().string_table()->getString(IDS_PRODUCT_VERSION_FORMAT),
+  versionText.format(MainSubsystem().StringTable().getString(IDS_PRODUCT_VERSION_FORMAT),
                      versionString,
                      BuildTime::DATE);
 
@@ -104,7 +104,7 @@ bool AboutDialog::onInitDialog()
   // Show licensing info and/or special build info.
   ::innate_subsystem::Control licensingLabel;
   licensingLabel.setWindow(GetDlgItem(m_ctrlThis.operating_system_window(), IDC_STATIC_LICENSING));
-  licensingLabel.setText(MainSubsystem().string_table()->getString(IDS_LICENSING_INFO));
+  licensingLabel.setText(MainSubsystem().StringTable().getString(IDS_LICENSING_INFO));
 
   return false;
 }

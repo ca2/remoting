@@ -78,8 +78,8 @@ int TvnServerApplication::run()
       ServerApplicationNames::SERVER_INSTANCE_MUTEX_NAME, false, true);
   } catch (...) {
     MainSubsystem().message_box({},
-               MainSubsystem().string_table()->getString(IDS_SERVER_ALREADY_RUNNING),
-               MainSubsystem().string_table()->getString(IDS_MBC_TVNSERVER), ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
+               MainSubsystem().StringTable().getString(IDS_SERVER_ALREADY_RUNNING),
+               MainSubsystem().StringTable().getString(IDS_MBC_TVNSERVER), ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
     return 1;
   }
 

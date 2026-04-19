@@ -78,7 +78,7 @@ bool VideoRegionsConfigDialog::validateInput()
 {
   if (!CommonInputValidation::validateUINT(
     &m_videoRecognitionInterval,
-    MainSubsystem().string_table()->getString(IDS_INVALID_VIDEO_RECOGNITION_INTERVAL))) {
+    MainSubsystem().StringTable().getString(IDS_INVALID_VIDEO_RECOGNITION_INTERVAL))) {
     return false;
   }
   return true;

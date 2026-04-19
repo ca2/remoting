@@ -124,15 +124,27 @@ bool Configurator::save(bool forService)
 {
   bool isOk = false;
 
-  ::subsystem::registry rootKey = forService ? HKEY_LOCAL_MACHINE : HKEY_CURRENT_USER;
+  //::subsystem::registry rootKey = forService ? HKEY_LOCAL_MACHINE : HKEY_CURRENT_USER;
+  ::subsystem::RegistryKey *pregistrykey = nullptr;
+  if (forService)
+  {
 
-  SECURITY_ATTRIBUTES *sa = 0;
-  if (forService && m_regSA != 0) {
-    sa = m_regSA->getServiceSA();
+     pregistrykey = MainSubsystem().registry()->getLocalMachineKey();
   }
-  RegistrySettingsManager sm(rootKey, RegistryPaths::SERVER_PATH, sa);
+  else
+  {
 
-  isOk = save(&sm);
+     pregistrykey = MainSubsystem().registry()->getCurrentUserKey();
+  }
+
+
+  //SECURITY_ATTRIBUTES *sa = 0;
+  //if (forService && m_regSA != 0) {
+  //  sa = m_regSA->getServiceSA();
+  //}
+  //RegistrySettingsManager sm(rootKey, RegistryPaths::SERVER_PATH, sa);
+
+  //isOk = save(&sm);
 
   return isOk;
 }
@@ -166,7 +178,7 @@ bool Configurator::load(::remoting::SettingsManager *sm)
   bool loadResult = true;
 
   {
-    critical_section_lock l(&m_serverConfig);
+    AutoLock l(&m_serverConfig);
 
     if (!loadPortMappingContainer(sm, m_serverConfig.getPortMappingContainer())) {
       loadResult = false;
@@ -181,7 +193,7 @@ bool Configurator::load(::remoting::SettingsManager *sm)
   }
 
   {
-    critical_section_lock l(&m_serverConfig);
+    AutoLock l(&m_serverConfig);
 
     if (!loadIpAccessControlContainer(sm, m_serverConfig.getAccessControl())) {
       loadResult = false;
@@ -200,7 +212,7 @@ bool Configurator::load(::remoting::SettingsManager *sm)
   return loadResult;
 }
 
-bool Configurator::savePortMappingContainer(SettingsManager *sm)
+bool Configurator::savePortMappingContainer(::remoting::SettingsManager *sm)
 {
   bool saveResult = true;
 
@@ -208,7 +220,7 @@ bool Configurator::savePortMappingContainer(SettingsManager *sm)
   // Get port mappings from server config
   //
 
-  critical_section_lock l(&m_serverConfig);
+  AutoLock l(&m_serverConfig);
 
   PortMappingContainer *portMappings = m_serverConfig.getPortMappingContainer();
 
@@ -223,10 +235,10 @@ bool Configurator::savePortMappingContainer(SettingsManager *sm)
   portMappingsString= "";
   for (size_t i = 0; i < count; i++) {
     const PortMapping *portMapping = portMappings->at(i);
-    portMapping->toString(&portMappingString);
-    portMappingsString.appendString(portMappingString);
+    portMapping->toString(portMappingString);
+    portMappingsString+= portMappingString;
     if (i != count - 1) {
-      portMappingsString.appendString(",");
+      portMappingsString+=",";
     }
   }
 
@@ -240,7 +252,7 @@ bool Configurator::savePortMappingContainer(SettingsManager *sm)
   return saveResult;
 }
 
-bool Configurator::loadPortMappingContainer(SettingsManager *sm,
+bool Configurator::loadPortMappingContainer(::remoting::SettingsManager *sm,
                                             PortMappingContainer *portMapping)
 {
   bool wasError = false;
@@ -249,16 +261,19 @@ bool Configurator::loadPortMappingContainer(SettingsManager *sm,
 
   ::string extraPorts;
 
-  if (!sm->getString("ExtraPorts", &extraPorts)) {
+  if (!sm->getString("ExtraPorts", extraPorts)) {
     return false;
   }
 
   size_t count = 0;
-
-  extraPorts.split(",", NULL, &count);
-  if (count != 0) {
-    ::string_array chunks(count);
-    extraPorts.split(",", &chunks.front(), &count);
+  ::string_array chunks;
+  
+  chunks.explode(",", extraPorts);
+  //extraPorts.split(",", NULL, &count);
+  if (chunks.has_element())
+  {
+    //::string_array chunks(count);
+    //extraPorts.split(",", &chunks.front(), &count);
 
     PortMapping mapping;
 
@@ -274,7 +289,7 @@ bool Configurator::loadPortMappingContainer(SettingsManager *sm,
   return !wasError;
 }
 
-bool Configurator::saveQueryConfig(SettingsManager *sm)
+bool Configurator::saveQueryConfig(::remoting::SettingsManager *sm)
 {
   bool saveResult = true;
   if (!sm->setUINT("QueryTimeout", m_serverConfig.getQueryTimeout())) {
@@ -286,7 +301,7 @@ bool Configurator::saveQueryConfig(SettingsManager *sm)
   return saveResult;
 }
 
-bool Configurator::loadQueryConfig(SettingsManager *sm, ServerConfig *config)
+bool Configurator::loadQueryConfig(::remoting::SettingsManager *sm, ServerConfig *config)
 {
   bool loadResult = true;
   unsigned int uintValue;
@@ -306,7 +321,7 @@ bool Configurator::loadQueryConfig(SettingsManager *sm, ServerConfig *config)
   return loadResult;
 }
 
-bool Configurator::saveInputHandlingConfig(SettingsManager *sm)
+bool Configurator::saveInputHandlingConfig(::remoting::SettingsManager *sm)
 {
   bool saveResult = true;
   if (!sm->setUINT("LocalInputPriorityTimeout", m_serverConfig.getLocalInputPriorityTimeout())) {
@@ -324,7 +339,7 @@ bool Configurator::saveInputHandlingConfig(SettingsManager *sm)
   return saveResult;
 }
 
-bool Configurator::loadInputHandlingConfig(SettingsManager *sm, ServerConfig *config)
+bool Configurator::loadInputHandlingConfig(::remoting::SettingsManager *sm, ServerConfig *config)
 {
   bool loadResult = true;
 
@@ -363,7 +378,7 @@ bool Configurator::loadInputHandlingConfig(SettingsManager *sm, ServerConfig *co
   return loadResult;
 }
 
-bool Configurator::saveVideoRegionConfig(SettingsManager *sm)
+bool Configurator::saveVideoRegionConfig(::remoting::SettingsManager *sm)
 {
   bool saveResult = true;
 
@@ -372,12 +387,12 @@ bool Configurator::saveVideoRegionConfig(SettingsManager *sm)
   size_t size = videoClasses->size();
  ::array_base<::int_rectangle> *videoRects = m_serverConfig.getVideoRects();
 
-  critical_section_lock al(&m_serverConfig);
+  AutoLock al(&m_serverConfig);
   buffer= "";
   for (size_t i = 0; i < size; i++) {
-    buffer.appendString(videoClasses->at(i));
+    buffer += videoClasses->at(i);
     if (i != size - 1) {
-      buffer.appendString("\n");
+      buffer += "\n";
     }
   }
   if (!sm->setString("VideoClasses", buffer)) {
@@ -388,10 +403,10 @@ bool Configurator::saveVideoRegionConfig(SettingsManager *sm)
   buffer= "";
   for (size_t i = 0; i < size; i++) {
     ::string s;
-    RectSerializer::toString(&(videoRects->at(i)),&s);
-    buffer.appendString(s);
+    ::remoting::RectSerializer::toString(videoRects->at(i),s);
+    buffer += s;
     if (i != size - 1) {
-      buffer.appendString("\n");
+      buffer += "\n";
     }
   }
   if (!sm->setString("VideoRects", buffer)) {
@@ -400,7 +415,7 @@ bool Configurator::saveVideoRegionConfig(SettingsManager *sm)
   return saveResult;
 }
 
-bool Configurator::loadVideoRegionConfig(SettingsManager *sm, ServerConfig *config)
+bool Configurator::loadVideoRegionConfig(::remoting::SettingsManager *sm, ServerConfig *config)
 {
   bool loadResult = true;
 
@@ -408,7 +423,7 @@ bool Configurator::loadVideoRegionConfig(SettingsManager *sm, ServerConfig *conf
   ::array_base<::int_rectangle> *videoRects = m_serverConfig.getVideoRects();
 
   // Lock configuration
-  critical_section_lock al(&m_serverConfig);
+  AutoLock al(&m_serverConfig);
 
   //
   // Delete old video classes entries
@@ -422,7 +437,7 @@ bool Configurator::loadVideoRegionConfig(SettingsManager *sm, ServerConfig *conf
 
   ::string storage;
 
-  if (!sm->getString("VideoClasses", &storage)) {
+  if (!sm->getString("VideoClasses", storage)) {
     loadResult = false;
   }
 
@@ -431,11 +446,12 @@ bool Configurator::loadVideoRegionConfig(SettingsManager *sm, ServerConfig *conf
   //
 
   size_t count = 0;
-
-  storage.split("\n\t ,;", NULL, &count);
-  if (count != 0) {
-    ::string_array chunks(count);
-    storage.split("\n\t ,;", &chunks.front(), &count);
+  ::string_array chunks;
+  chunks.explode("\n\t ,;", storage);
+  if (chunks.has_element())
+  {
+    
+//    storage.split("\n\t ,;", &chunks.front(), &count);
 
     for (size_t i = 0; i < count; i++) {
       if (!chunks[i].is_empty()) {
@@ -457,7 +473,7 @@ bool Configurator::loadVideoRegionConfig(SettingsManager *sm, ServerConfig *conf
   // Try to load.
   //
   
-  if (!sm->getString("VideoRects", &storage)) {
+  if (!sm->getString("VideoRects", storage)) {
     loadResult = false;
   }
 
@@ -466,24 +482,27 @@ bool Configurator::loadVideoRegionConfig(SettingsManager *sm, ServerConfig *conf
   //
 
   count = 0;
-
-  storage.split("\n\t ,;", NULL, &count);
-  if (count != 0) {
-    ::string_array chunks(count);
-    storage.split("\n\t ,;", &chunks.front(), &count);
+  //::string_array chunks;
+  chunks.clear();
+  
+  chunks.explode("\n\t ,;", storage);
+  //storage.split("\n\t ,;", NULL, &count);
+  if (chunks.has_element()) {
+    //::string_array chunks(count);
+    //storage.split(, &chunks.front(), &count);
 
     for (size_t i = 0; i < count; i++) {
       if (!chunks[i].is_empty()) {
-        videoRects->add(RectSerializer::toRect(&chunks[i]));
+        videoRects->add(::remoting::RectSerializer::toRect(chunks[i]));
       }
     }
   }
   return loadResult;
 }
 
-bool Configurator::saveIpAccessControlContainer(SettingsManager *storage)
+bool Configurator::saveIpAccessControlContainer(::remoting::SettingsManager *storage)
 {
-  critical_section_lock l(&m_serverConfig);
+  AutoLock l(&m_serverConfig);
 
   // Get rules container
   IpAccessControl *rules = m_serverConfig.getAccessControl();
@@ -500,12 +519,12 @@ bool Configurator::saveIpAccessControlContainer(SettingsManager *storage)
   for (size_t i = 0; i < rulesCount; i++) {
     IpAccessRule *rule = rules->at(i);
     // Get rule as string
-    rule->toString(&ruleString);
+    rule->toString(ruleString);
     // Add it to result buffer
-    buffer.appendString(ruleString);
+    buffer+=ruleString;
     // Add delimiter if we need it
     if (i != rulesCount - 1)
-      buffer.appendString(",");
+      buffer+=",";
   }
   if (!storage->setString("IpAccessControl", buffer)) {
     return false;
@@ -513,35 +532,40 @@ bool Configurator::saveIpAccessControlContainer(SettingsManager *storage)
   return true;
 }
 
-bool
-Configurator::loadIpAccessControlContainer(SettingsManager *sm, IpAccessControl *rules)
+bool Configurator::loadIpAccessControlContainer(::remoting::SettingsManager *sm, IpAccessControl *rules)
 {
   bool wasError = false;
   rules->clear();
 
   ::string storage;
-  if (!sm->getString("IpAccessControl", &storage)) {
+  if (!sm->getString("IpAccessControl", storage)) {
     return false;
   } else {
     size_t maxBufSize = storage.length() + 1;
-    ::array_base<TCHAR> ipacStringBuffer(maxBufSize + 1);
-    _tcscpy_s(&ipacStringBuffer.front(), maxBufSize, storage);
-    TCHAR *pch = _tcstok(&ipacStringBuffer[0], ",");
-    while (pch != NULL) {
-      if (IpAccessRule::parse(pch, NULL)) {
+     ::memory ipacStringBuffer;
+     
+     ipacStringBuffer.set_size(maxBufSize + 1);
+     auto p = (char *)ipacStringBuffer.data();
+     strcpy(p, storage);
+    //_tcscpy_s(&ipacStringBuffer.front(), maxBufSize, storage);
+    auto pch =strtok(p, ",");
+    while (pch != NULL)
+    {
+      if (IpAccessRule::parse(pch, NULL))
+      {
         IpAccessRule *rule = new IpAccessRule();
         IpAccessRule::parse(pch, rule);
         rules->add(rule);
       } else {
         wasError = true;
       }
-      pch = _tcstok(NULL, ",");
+      pch = strtok(NULL, ",");
     } // while
   } // else
   return !wasError;
 }
 
-bool Configurator::saveServerConfig(SettingsManager *sm)
+bool Configurator::saveServerConfig(::remoting::SettingsManager *sm)
 {
   bool saveResult = true;
   if (!sm->setUINT("RfbPort", m_serverConfig.getRfbPort())) {
@@ -658,7 +682,7 @@ bool Configurator::saveServerConfig(SettingsManager *sm)
   return saveResult;
 }
 
-bool Configurator::loadServerConfig(SettingsManager *sm, ServerConfig *config)
+bool Configurator::loadServerConfig(::remoting::SettingsManager *sm, ServerConfig *config)
 {
   bool loadResult = true;
 
@@ -760,7 +784,7 @@ bool Configurator::loadServerConfig(SettingsManager *sm, ServerConfig *config)
     m_serverConfig.enableAppletParamInUrl(boolVal);
   }
 
-  size_t passSize = 8;
+  memsize passSize = 8;
   unsigned char buffer[ServerConfig::VNC_PASSWORD_SIZE] = {0};
 
   if (!sm->getBinaryData("Password", (void *)&buffer, &passSize)) {
@@ -862,9 +886,9 @@ bool Configurator::loadServerConfig(SettingsManager *sm, ServerConfig *config)
 
 void Configurator::updateLogDirPath()
 {
-  ::string pathToLogDirectory;
-  TvnLogFilename::queryLogFileDirectory(m_isConfiguringService,
-    m_serverConfig.isSaveLogToAllUsersPathFlagEnabled(),
-    &pathToLogDirectory);
-  m_serverConfig.setLogFileDir(pathToLogDirectory);
+  //::string pathToLogDirectory;
+  //TvnLogFilename::queryLogFileDirectory(m_isConfiguringService,
+  //  m_serverConfig.isSaveLogToAllUsersPathFlagEnabled(),
+  //  &pathToLogDirectory);
+  //m_serverConfig.setLogFileDir(pathToLogDirectory);
 }

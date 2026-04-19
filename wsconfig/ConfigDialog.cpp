@@ -166,11 +166,11 @@ bool ConfigDialog::onInitDialog()
   m_videoRegionsConfigDialog.create();
   moveDialogToTabControl(&m_videoRegionsConfigDialog);
 
-  m_tabControl.addTab(&m_serverConfigDialog, MainSubsystem().string_table()->getString(IDS_SERVER_TAB_CAPTION));
-  m_tabControl.addTab(&m_portMappingDialog, MainSubsystem().string_table()->getString(IDS_EXTRA_PORTS_TAB_CAPTION));
-  m_tabControl.addTab(&m_ipAccessControlDialog, MainSubsystem().string_table()->getString(IDS_ACCESS_CONTROL_TAB_CAPTION));
-  m_tabControl.addTab(&m_videoRegionsConfigDialog, MainSubsystem().string_table()->getString(IDS_VIDEO_WINDOWS_TAB_CAPTION));
-  m_tabControl.addTab(&m_administrationConfigDialog, MainSubsystem().string_table()->getString(IDS_ADMINISTRATION_TAB_CAPTION));
+  m_tabControl.addTab(&m_serverConfigDialog, MainSubsystem().StringTable().getString(IDS_SERVER_TAB_CAPTION));
+  m_tabControl.addTab(&m_portMappingDialog, MainSubsystem().StringTable().getString(IDS_EXTRA_PORTS_TAB_CAPTION));
+  m_tabControl.addTab(&m_ipAccessControlDialog, MainSubsystem().StringTable().getString(IDS_ACCESS_CONTROL_TAB_CAPTION));
+  m_tabControl.addTab(&m_videoRegionsConfigDialog, MainSubsystem().StringTable().getString(IDS_VIDEO_WINDOWS_TAB_CAPTION));
+  m_tabControl.addTab(&m_administrationConfigDialog, MainSubsystem().StringTable().getString(IDS_ADMINISTRATION_TAB_CAPTION));
 
   m_tabControl.removeTab(0);
 
@@ -233,15 +233,15 @@ void ConfigDialog::onApplyButtonClick()
   // We're working in offline mode and we need to save config
   if (!m_config->save()) {
     MainSubsystem().message_box(m_ctrlThis.operating_system_window(),
-               MainSubsystem().string_table()->getString(IDS_CANNOT_SAVE_CONFIG),
-               MainSubsystem().string_table()->getString(IDS_MBC_ERROR),
+               MainSubsystem().StringTable().getString(IDS_CANNOT_SAVE_CONFIG),
+               MainSubsystem().StringTable().getString(IDS_MBC_ERROR),
                ::user::e_message_box_ok | MB_ICONERROR);
     return;
   } 
   m_ctrlApplyButton.enableWindow(false);
   MainSubsystem().message_box(m_ctrlThis.operating_system_window(),
-    MainSubsystem().string_table()->getString(IDS_OFFLINE_CONFIG_SAVE_NOTIFICATION),
-    MainSubsystem().string_table()->getString(IDS_MBC_TVNCONTROL),
+    MainSubsystem().StringTable().getString(IDS_OFFLINE_CONFIG_SAVE_NOTIFICATION),
+    MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL),
     ::user::e_message_box_ok | MB_ICONINFORMATION);
 }
 
@@ -313,9 +313,9 @@ void ConfigDialog::updateCaption()
 {
   ::string caption;
 
-  caption.format(MainSubsystem().string_table()->getString(IDS_SERVER_CONFIG_CAPTION_FORMAT),
-                 MainSubsystem().string_table()->getString(m_isConfiguringService ? IDS_SERVICE : IDS_SERVER),
-                 m_reloadConfigCommand == 0 ? MainSubsystem().string_table()->getString(IDS_OFFLINE_MODE) : "");
+  caption.format(MainSubsystem().StringTable().getString(IDS_SERVER_CONFIG_CAPTION_FORMAT),
+                 MainSubsystem().StringTable().getString(m_isConfiguringService ? IDS_SERVICE : IDS_SERVER),
+                 m_reloadConfigCommand == 0 ? MainSubsystem().StringTable().getString(IDS_OFFLINE_MODE) : "");
 
   m_ctrlThis.setText(caption);
 }

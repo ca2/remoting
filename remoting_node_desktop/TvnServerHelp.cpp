@@ -38,7 +38,7 @@ TvnServerHelp::TvnServerHelp()
 void TvnServerHelp::showUsage()
 {
   MessageBox(0,
-    MainSubsystem().string_table()->getString(IDS_TVNSERVER_USAGE),
-    MainSubsystem().string_table()->getString(IDS_MBC_TVNSERVER_USAGE),
+    MainSubsystem().StringTable().getString(IDS_TVNSERVER_USAGE),
+    MainSubsystem().StringTable().getString(IDS_MBC_TVNSERVER_USAGE),
     ::user::e_message_box_ok|::user::e_message_box_icon_exclamation);
 }

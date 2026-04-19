@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "WsConfigRunner.h"
 #include "subsystem/node/CurrentConsoleProcess.h"
-//#include "subsystem/node/Environment.h"
+#include "subsystem/node/OperatingSystem.h"
 #include "remoting/remoting_common/server_config/Configurator.h"
 #include "remoting_control_desktop/ControlCommandLine.h"
 
@@ -48,7 +48,7 @@ void WsConfigRunner::execute()
   try {
      // Prepare path to executable.
     ::string pathToBin;
-     MainSubsystem().OperatingSystem()->getCurrentModulePath(&pathToBin);
+     pathToBin = MainSubsystem().OperatingSystem().getCurrentModulePath();
     pathToBin.double_quote();
     // Prepare arguments.
     ::string args;

@@ -194,7 +194,7 @@ namespace remoting
    bool RfbKeySym::vkCodeToString(unsigned short virtKey, bool down, ::wstring *res)
    {
 
-      auto pkeyboardlayout = main_innate_subsystem()->keyboard_layout();
+      auto pkeyboardlayout = MainInnateSubsystem().keyboard_layout();
 
       return pkeyboardlayout->vkCodeToString(virtKey, down, res, &m_keyboardstate);
 

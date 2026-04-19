@@ -274,7 +274,7 @@ void ControlClient::authMsgRcdv()
                                                      challenge,
                                                      response);
   if (!isAuthSucceed) {
-    sendError(MainSubsystem().string_table()->getString(IDS_INVALID_CONTROL_PASSWORD));
+    sendError(MainSubsystem().StringTable().getString(IDS_INVALID_CONTROL_PASSWORD));
   } else {
     m_gate->writeUInt32(ControlProto::REPLY_OK);
     m_authPassed = true;

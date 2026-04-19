@@ -177,7 +177,7 @@ int application::remoting_impact_main( const ::file::path & path)
       result = tvnViewer.getExitCode();
    } catch (const ::subsystem::Exception &ex) {
       MainSubsystem().message_box({},
-                 MainSubsystem().string_table()->getString(IDS_UNKNOWN_ERROR_IN_VIEWER),
+                 MainSubsystem().StringTable().getString(IDS_UNKNOWN_ERROR_IN_VIEWER),
                  ProductNames::VIEWER_PRODUCT_NAME,
                  ::user::e_message_box_ok | ::user::e_message_box_icon_error);
       m_plogwriter->debug(ex.get_message());

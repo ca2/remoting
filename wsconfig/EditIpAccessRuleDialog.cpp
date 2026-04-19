@@ -31,12 +31,12 @@ EditIpAccessRuleDialog::EditIpAccessRuleDialog()
 : BaseDialog(IDD_EDIT_IP_ACESS_CONTROL), m_data(NULL), m_isOpenedForEdit(false)
 {
   m_warningBalloonTip.setIconType(TTI_WARNING);
-  m_warningBalloonTip.setText(MainSubsystem().string_table()->getString(IDS_IP_ADDRESS_HINT));
-  m_warningBalloonTip.setTitle(MainSubsystem().string_table()->getString(IDS_INVALID_IP_TITLE));
+  m_warningBalloonTip.setText(MainSubsystem().StringTable().getString(IDS_IP_ADDRESS_HINT));
+  m_warningBalloonTip.setTitle(MainSubsystem().StringTable().getString(IDS_INVALID_IP_TITLE));
 
   m_lastIpLessThanFirstBT.setIconType(TTI_WARNING);
-  m_lastIpLessThanFirstBT.setText(MainSubsystem().string_table()->getString(IDS_LAST_IP_MUST_BE_MORE_THAN_FIRST));
-  m_lastIpLessThanFirstBT.setTitle(MainSubsystem().string_table()->getString(IDS_CAPTION_BAD_INPUT));
+  m_lastIpLessThanFirstBT.setText(MainSubsystem().StringTable().getString(IDS_LAST_IP_MUST_BE_MORE_THAN_FIRST));
+  m_lastIpLessThanFirstBT.setTitle(MainSubsystem().StringTable().getString(IDS_CAPTION_BAD_INPUT));
 }
 
 EditIpAccessRuleDialog::~EditIpAccessRuleDialog()
@@ -82,9 +82,9 @@ bool EditIpAccessRuleDialog::onInitDialog()
     m_firstIp.setText(firstIp);
     m_lastIp.setText(lastIp);
 
-    m_ctrlThis.setText(MainSubsystem().string_table()->getString(IDS_EDIT_IP_ACCESS_RULE_DIALOG_CAPTION));
+    m_ctrlThis.setText(MainSubsystem().StringTable().getString(IDS_EDIT_IP_ACCESS_RULE_DIALOG_CAPTION));
   } else {
-    m_ctrlThis.setText(MainSubsystem().string_table()->getString(IDS_NEW_IP_ACCESS_RULE_DIALOG_CAPTION));
+    m_ctrlThis.setText(MainSubsystem().StringTable().getString(IDS_NEW_IP_ACCESS_RULE_DIALOG_CAPTION));
   }
 
   return false;

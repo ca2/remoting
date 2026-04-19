@@ -175,13 +175,13 @@ namespace remoting_remoting
 
     bool ConfigurationDialog::isInputValid()
     {
-        if (!testNum(&m_textboxReverseConn, MainSubsystem().string_table()->getString(IDS_CONFIGURATION_LISTEN_PORT))) {
+        if (!testNum(&m_textboxReverseConn, MainSubsystem().StringTable().getString(IDS_CONFIGURATION_LISTEN_PORT))) {
             return false;
         }
-        if (!testNum(&m_textboxVerbLvl, MainSubsystem().string_table()->getString(IDS_CONFIGURATION_LOG_LEVEL))) {
+        if (!testNum(&m_textboxVerbLvl, MainSubsystem().StringTable().getString(IDS_CONFIGURATION_LOG_LEVEL))) {
             return false;
         }
-        if (!testNum(&m_textboxReverseConn, MainSubsystem().string_table()->getString(IDS_CONFIGURATION_HISTORY_LIMIT))) {
+        if (!testNum(&m_textboxReverseConn, MainSubsystem().StringTable().getString(IDS_CONFIGURATION_HISTORY_LIMIT))) {
             return false;
         }
         return true;
@@ -201,10 +201,10 @@ namespace remoting_remoting
         }
 
         ::string scopedstrMessage;
-        scopedstrMessage.formatf(MainSubsystem().string_table()->getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC).c_str(), scopedstrTbName.c_str());
+        scopedstrMessage.formatf(MainSubsystem().StringTable().getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC).c_str(), scopedstrTbName.c_str());
 
         MainSubsystem().message_box(operating_system_window(), scopedstrMessage,
-                   MainSubsystem().string_table()->getString(IDS_CONFIGURATION_CAPTION), ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
+                   MainSubsystem().StringTable().getString(IDS_CONFIGURATION_CAPTION), ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
 
         pwindow->setFocus();
 

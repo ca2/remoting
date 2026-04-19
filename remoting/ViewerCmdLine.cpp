@@ -132,7 +132,7 @@ namespace remoting_remoting
           };
 
         if (!processCmdLine(&options[0], sizeof(options) / sizeof(CmdLineOption))) {
-            throw CommandLineFormatException(MainSubsystem().string_table()->getString(IDS_ERROR_COMMAND_LINE));
+            throw CommandLineFormatException(MainSubsystem().StringTable().getString(IDS_ERROR_COMMAND_LINE));
         }
 
         // If options "help" is present, then show "Help dialog" and exit.
@@ -142,12 +142,12 @@ namespace remoting_remoting
 
 
         if (m_pprocesscommandlineOperatingSystem->getArgumentsCount() > 2) {
-            throw CommandLineFormatException(MainSubsystem().string_table()->getString(IDS_ERROR_COMMAND_LINE));
+            throw CommandLineFormatException(MainSubsystem().StringTable().getString(IDS_ERROR_COMMAND_LINE));
         }
 
         if (m_pprocesscommandlineOperatingSystem->getArgumentsCount() > 1) {
             if (isPresent(ViewerCmdLine::HOST)) {
-                throw CommandLineFormatException(MainSubsystem().string_table()->getString(IDS_ERROR_COMMAND_LINE));
+                throw CommandLineFormatException(MainSubsystem().StringTable().getString(IDS_ERROR_COMMAND_LINE));
             }
         }
 
@@ -158,7 +158,7 @@ namespace remoting_remoting
         } else if (isPresent(ViewerCmdLine::LOG_PATH)) {
             parseLogPath();
         } else if (!parseHost()) {
-            throw CommandLineFormatException(MainSubsystem().string_table()->getString(IDS_ERROR_COMMAND_LINE));
+            throw CommandLineFormatException(MainSubsystem().StringTable().getString(IDS_ERROR_COMMAND_LINE));
         }
         parsePassword();
         parseEncoding();
@@ -222,7 +222,7 @@ namespace remoting_remoting
 
         ::string host;
         if (!sm.getString("host", host)) {
-            throw CommandLineFormatException(MainSubsystem().string_table()->getString(IDS_ERROR_PARSE_OPTIONS_FILE));
+            throw CommandLineFormatException(MainSubsystem().StringTable().getString(IDS_ERROR_PARSE_OPTIONS_FILE));
         }
         ::string port;
         if (sm.getString("port", port)) {

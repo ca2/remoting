@@ -106,7 +106,7 @@ bool AdministrationConfigDialog::validateInput()
 {
   if (!CommonInputValidation::validateUINT(
     &m_logLevel,
-    MainSubsystem().string_table()->getString(IDS_INVALID_LOG_LEVEL))) {
+    MainSubsystem().StringTable().getString(IDS_INVALID_LOG_LEVEL))) {
     return false;
   }
 
@@ -117,7 +117,7 @@ bool AdministrationConfigDialog::validateInput()
   if (logLevel > 10) {
     CommonInputValidation::notifyValidationError(
       &m_logLevel,
-      MainSubsystem().string_table()->getString(IDS_INVALID_LOG_LEVEL));
+      MainSubsystem().StringTable().getString(IDS_INVALID_LOG_LEVEL));
     return false;
   }
 
@@ -127,8 +127,8 @@ bool AdministrationConfigDialog::validateInput()
   // FIXME: Code duplicate (see ServerConfigDialog class).
   if (!passwordSpecified && m_useControlAuth.isChecked()) {
     MainSubsystem().message_box(m_ctrlThis.operating_system_window(),
-               MainSubsystem().string_table()->getString(IDS_SET_CONTROL_PASSWORD_NOTIFICATION),
-               MainSubsystem().string_table()->getString(IDS_CAPTION_BAD_INPUT), MB_ICONSTOP | ::user::e_message_box_ok);
+               MainSubsystem().StringTable().getString(IDS_SET_CONTROL_PASSWORD_NOTIFICATION),
+               MainSubsystem().StringTable().getString(IDS_CAPTION_BAD_INPUT), MB_ICONSTOP | ::user::e_message_box_ok);
     return false;
   }
 
@@ -150,7 +150,7 @@ void AdministrationConfigDialog::updateUI()
   m_config->getLogFileDir(&logPath);
 
   if (logPath.is_empty()) {
-    logPath= MainSubsystem().string_table()->getString(IDS_LOGPATH_UNAVALIABLE);
+    logPath= MainSubsystem().StringTable().getString(IDS_LOGPATH_UNAVALIABLE);
     m_openLogPathButton.enableWindow(false);
     m_logPathTB.enableWindow(false);
   }

@@ -146,10 +146,10 @@ bool ServerConfigDialog::validateInput()
     CommonInputValidation::validatePort(&m_httpPort) &&
     CommonInputValidation::validateUINT(
       &m_pollingInterval,
-      MainSubsystem().string_table()->getString(IDS_INVALID_POLLING_INTERVAL)) &&
+      MainSubsystem().StringTable().getString(IDS_INVALID_POLLING_INTERVAL)) &&
     CommonInputValidation::validateUINT(
       &m_localInputPriorityTimeout,
-      MainSubsystem().string_table()->getString(IDS_INVALID_INACTIVITY_TIMEOUT));
+      MainSubsystem().StringTable().getString(IDS_INVALID_INACTIVITY_TIMEOUT));
 
   if (!commonValidationOk) {
     return false;
@@ -163,7 +163,7 @@ bool ServerConfigDialog::validateInput()
   if (rfbPort == httpPort && m_acceptHttpConnections.isChecked()) {
     CommonInputValidation::notifyValidationError(
       &m_httpPort,
-      MainSubsystem().string_table()->getString(IDS_HTTP_RFB_PORTS_ARE_EQUAL));
+      MainSubsystem().StringTable().getString(IDS_HTTP_RFB_PORTS_ARE_EQUAL));
     return false;
   }
 
@@ -174,7 +174,7 @@ bool ServerConfigDialog::validateInput()
   if (pollingInterval < ServerConfig::MINIMAL_POLLING_INTERVAL) {
     CommonInputValidation::notifyValidationError(
       &m_pollingInterval,
-      MainSubsystem().string_table()->getString(IDS_POLL_INTERVAL_TOO_SMALL));
+      MainSubsystem().StringTable().getString(IDS_POLL_INTERVAL_TOO_SMALL));
     return false;
   }
 
@@ -185,7 +185,7 @@ bool ServerConfigDialog::validateInput()
   if (inactivityTimeout < ServerConfig::MINIMAL_LOCAL_INPUT_PRIORITY_TIMEOUT) {
     CommonInputValidation::notifyValidationError(
       &m_localInputPriorityTimeout,
-      MainSubsystem().string_table()->getString(IDS_INACTIVITY_TIMEOUT_TOO_SMALL));
+      MainSubsystem().StringTable().getString(IDS_INACTIVITY_TIMEOUT_TOO_SMALL));
     return false;
   }
 
@@ -198,8 +198,8 @@ bool ServerConfigDialog::validateInput()
       m_useAuthentication.isChecked() &&
       !passwordSpecified) {
     MainSubsystem().message_box(m_ctrlThis.operating_system_window(),
-               MainSubsystem().string_table()->getString(IDS_SET_PASSWORD_NOTIFICATION),
-               MainSubsystem().string_table()->getString(IDS_CAPTION_BAD_INPUT),
+               MainSubsystem().StringTable().getString(IDS_SET_PASSWORD_NOTIFICATION),
+               MainSubsystem().StringTable().getString(IDS_CAPTION_BAD_INPUT),
                MB_ICONSTOP | ::user::e_message_box_ok);
     return false;
   }

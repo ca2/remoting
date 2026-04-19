@@ -179,7 +179,7 @@ namespace remoting_remoting
        //                                      GetSystemMetrics(SM_CYSMICON),
        //                                      ILC_MASK, 1, 1);
 
-       auto psystemmetrics = main_innate_subsystem()->metrics();
+       auto psystemmetrics = MainInnateSubsystem().metrics();
 
        auto sizeSmallIconInPixels = psystemmetrics->get_small_icon_size_in_pixels();
 
@@ -187,7 +187,7 @@ namespace remoting_remoting
 
         //HICON icon;
 
-        auto presourceloader = main_innate_subsystem()->resource_loader();
+        auto presourceloader = MainInnateSubsystem().ResourceLoader();
 
         auto picon = presourceloader->loadIconByIntResource(IDI_FILEUP);
         _ASSERT(picon != NULL);

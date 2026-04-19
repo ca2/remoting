@@ -223,7 +223,7 @@ void TvnServer::getServerInfo(TvnServerInfo *info)
 
   if (rfbServerListening) {
     if (vncPasswordsError) {
-      statusString = MainSubsystem().string_table()->getString(IDS_NO_PASSWORDS_SET);
+      statusString = MainSubsystem().StringTable().getString(IDS_NO_PASSWORDS_SET);
     } else {
       // FIXME: Usage of deprecated FUNCTION!
       char localAddressString[1024];
@@ -232,17 +232,17 @@ void TvnServer::getServerInfo(TvnServerInfo *info)
       ansiString.toStringStorage(&statusString);
 
       if (!vncAuthEnabled) {
-        statusString.appendString(MainSubsystem().string_table()->getString(IDS_NO_AUTH_STATUS));
+        statusString.appendString(MainSubsystem().StringTable().getString(IDS_NO_AUTH_STATUS));
       } // if no auth enabled.
     } // accepting connections and no problem with passwords.
   } else {
-    statusString = MainSubsystem().string_table()->getString(IDS_SERVER_NOT_LISTENING);
+    statusString = MainSubsystem().StringTable().getString(IDS_SERVER_NOT_LISTENING);
   } // not accepting connections.
 
   unsigned int stringId = m_runAsService ? IDS_TVNSERVER_SERVICE : IDS_TVNSERVER_APP;
 
   info->m_statusText.formatf("{} - {}",
-                            MainSubsystem().string_table()->getString(stringId),
+                            MainSubsystem().StringTable().getString(stringId),
                             statusString);
   info->m_acceptFlag = rfbServerListening && !vncPasswordsError;
   info->m_serviceFlag = m_runAsService;
