@@ -25,7 +25,7 @@
 #include "ClientLogWriter.h"
 #include "remoting/win_system/PipeClient.h"
 #include "SecurityPipeClient.h"
-//#include "remoting/remoting_common/util/::earth::time.h"
+//#include "subsystem/::earth::time.h"
 
 ClientLogWriter::ClientLogWriter(const ::scoped_string & scopedstrPublicPipeName, const ::scoped_string & scopedstrLogFileName)
 : LogDump(false, true),

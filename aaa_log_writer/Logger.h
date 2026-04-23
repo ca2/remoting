@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/util/CharDefs.h"
+#include "subsystem/CharDefs.h"
 
 //
 // The ::subsystem::LogWriter class defines abstract low-level interface for logging

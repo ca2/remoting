@@ -31,7 +31,7 @@
 #include "innate_subsystem/gui/TextBox.h"
 #include "innate_subsystem/gui/SpinControl.h"
 #include "innate_subsystem/gui/BalloonTip.h"
-#include "remoting/remoting_common/server_config/ServerConfig.h"
+#include "remoting/remoting/server_config/ServerConfig.h"
 #include "PasswordControl.h"
 
 class AdministrationConfigDialog: public BaseDialog

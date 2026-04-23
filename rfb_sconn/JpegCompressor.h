@@ -22,13 +22,12 @@
 //-------------------------------------------------------------------------
 //
 
-#pragma onceINCLUDED__
-INCLUDED__
+#pragma once
 
 // #include aaa_<stdio.h>
 
 #include "subsystem/_common_header.h"
-#include "remoting/remoting_common/rfb/PixelFormat.h"
+#include "subsystem/framebuffer/PixelFormat.h"
 
 // For Windows platforms only.
 // For using libjpeg for encoding go to Property Pages of remoting_node -> Linker -> Input -> Additional Dependencies
@@ -36,12 +35,12 @@ INCLUDED__
 // (without quotes) from the end of all configurations.
 // For Visual Studio 2008 add libjpeg project to the dependencies of remoting_node.
 // Also you need to delete LIBJPEG_TURBO directive from the CommonHeader.h file.
-
-#ifdef LIBJPEG_TURBO
-#include "libjpeg-turbo/jpeglib.h"
-#else
-#include "libjpeg/jpeglib.h"
-
+//
+//#ifdef LIBJPEG_TURBO
+//#include "libjpeg-turbo/jpeglib.h"
+//#else
+//#include "libjpeg/jpeglib.h"
+#include "port_jpeg/jpeglib.h"
 
 //
 // An abstract interface for performing JPEG compression.

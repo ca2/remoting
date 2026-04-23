@@ -22,12 +22,12 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting_node/resource.h"
+#include "remoting/node_desktop/resource.h"
 #include "ServerConfigDialog.h"
 #include "ConfigDialog.h"
 #include "ChangePasswordDialog.h"
-#include "remoting/remoting_common/server_config/Configurator.h"
-#include "remoting/remoting_common/util/StringParser.h"
+#include "remoting/remoting/server_config/Configurator.h"
+#include "subsystem/StringParser.h"
 #include "CommonInputValidation.h"
 #include "UIDataAccess.h"
 // #include aaa_<limits.h>
@@ -255,13 +255,13 @@ void ServerConfigDialog::apply()
 
   int intVal = 0;
 
-  MainSubsystem().string_parser()->parseInt(rfbPortText, &intVal);
+  MainSubsystem().StringParser().parseInt(rfbPortText, &intVal);
   m_config->setRfbPort(intVal);
   
-  MainSubsystem().string_parser()->parseInt(httpPortText, &intVal);
+  MainSubsystem().StringParser().parseInt(httpPortText, &intVal);
   m_config->setHttpPort(intVal);
 
-  MainSubsystem().string_parser()->parseInt(pollingIntervalText, &intVal);
+  MainSubsystem().StringParser().parseInt(pollingIntervalText, &intVal);
   m_config->setPollingInterval(intVal);
 
   m_config->enableFileTransfers(m_enableFileTransfers.isChecked());
@@ -299,7 +299,7 @@ void ServerConfigDialog::apply()
   int timeout = 0;
 
   m_config->setLocalInputPriority(m_localInputPriority.isChecked());
-  if (MainSubsystem().string_parser()->parseInt(liptStringStorage, &timeout)) {
+  if (MainSubsystem().StringParser().parseInt(liptStringStorage, &timeout)) {
     timeout = max(0, timeout);
     m_config->setLocalInputPriorityTimeout((unsigned int)timeout);
   }

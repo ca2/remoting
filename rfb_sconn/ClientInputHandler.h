@@ -41,7 +41,7 @@ public:
 
 protected:
   // Listen function
-  virtual void onRequest(unsigned int reqCode, RfbInputGate *input);
+  virtual void onRequest(unsigned int reqCode, ::remoting::RfbInputGate *input);
 
   ClientInputEventListener *m_extEventListener;
   bool m_viewOnly;

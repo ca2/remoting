@@ -22,16 +22,16 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting_node/resource.h"
+#include "remoting/node_desktop/resource.h"
 #include "IpAccessControlDialog.h"
 #include "ConfigDialog.h"
 #include "CommonInputValidation.h"
 #include "UIDataAccess.h"
-#include "remoting/remoting_common/server_config/Configurator.h"
-#include "remoting/remoting_common/server_config/IpAccessControl.h"
+#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/server_config/IpAccessControl.h"
 #include "subsystem/_common_header.h"
-#include "remoting/remoting_common/util/StringParser.h"
-//#include "remoting/remoting_common/util/::string.h"
+#include "subsystem/StringParser.h"
+//#include "subsystem/::string.h"
 
 IpAccessControlDialog::IpAccessControlDialog()
 : BaseDialog(IDD_CONFIG_ACCESS_CONTROL_PAGE), m_parentDialog(NULL)
@@ -173,7 +173,7 @@ void IpAccessControlDialog::apply()
   m_queryTimeout.getText(&qtStringStorage);
 
   int timeout = 0;
-  MainSubsystem().string_parser()->parseInt(qtStringStorage, &timeout);
+  MainSubsystem().StringParser().parseInt(qtStringStorage, &timeout);
 
   critical_section_lock al(m_config);
 

@@ -25,7 +25,9 @@
 #pragma once
 
 
-#include "remoting/remoting_common/util/exception.h"
+//#include "subsystem/exception.h"
+#include "subsystem/Exception.h"
+
 
 class AuthException : public ::subsystem::Exception
 {

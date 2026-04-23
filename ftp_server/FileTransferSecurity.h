@@ -26,10 +26,10 @@
 
 
 #include "subsystem/Exception.h"
-#include "remoting/remoting_common/util/Singleton.h"
+#include "subsystem/Singleton.h"
 //#include "log_writer/LogWriter.h"
 
-#include "remoting/remoting_common/win_system/Impersonator.h"
+#include "remoting/remoting/win_system/Impersonator.h"
 
 #include "desktop/Desktop.h"
 

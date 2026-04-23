@@ -28,7 +28,7 @@
 #include "innate_subsystem/gui/BaseDialog.h"
 #include "innate_subsystem/gui/TextBox.h"
 #include "innate_subsystem/gui/BalloonTip.h"
-//////#include "remoting/remoting_common/util/::string.h"
+//////#include "subsystem/::string.h"
 
 class ChangePasswordDialog : public BaseDialog
 {

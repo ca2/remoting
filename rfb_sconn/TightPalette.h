@@ -29,11 +29,10 @@
 // frequent first).
 //
 
-#pragma onceINCLUDED__
-INCLUDED__
+#pragma once
 
 // #include aaa_<string.h>
-#include "remoting/remoting_common/util/inttypes.h"
+//#include "subsystem/inttypes.h"
 
 struct TightColorList {
   TightColorList *next;

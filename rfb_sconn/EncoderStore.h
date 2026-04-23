@@ -22,9 +22,7 @@
 //-------------------------------------------------------------------------
 //
 
-#pragma onceINCLUDED__
-INCLUDED__
-
+#pragma once
 //#include aaa_<map>
 
 #include "Encoder.h"
@@ -50,7 +48,7 @@ public:
   // will return 0 if called right after the object creation. The caller must
   // call selectEncoder() explicitly to allocate encoders, even if that's Raw
   // encoder (implemented in the base Encoder class).
-  EncoderStore(PixelConverter *pixelConverter, DataOutputStream *output);
+  EncoderStore(::remoting::PixelConverter *pixelConverter, DataOutputStream *output);
   ~EncoderStore();
 
   // Get current (preferred) encoder if it was previously allocated by
@@ -98,7 +96,7 @@ protected:
   JpegEncoder *m_jpegEncoder;
 
   // This pointer to PixelConverter will be used to construct encoders.
-  PixelConverter *m_pixelConverter;
+  ::remoting::PixelConverter *m_pixelConverter;
   // This pointer to DataOutputStream will be used to construct encoders.
   DataOutputStream *m_output;
 

@@ -22,15 +22,16 @@
 //-------------------------------------------------------------------------
 //
 
-#pragma onceINCLUDED__
-INCLUDED__
+#pragma once
+//INCLUDED__
+//INCLUDED__
 
 #include "Encoder.h"
 
 class HextileEncoder : public Encoder
 {
 public:
-  HextileEncoder(PixelConverter *conv, DataOutputStream *output);
+  HextileEncoder(::remoting::PixelConverter *conv, DataOutputStream *output);
   virtual ~HextileEncoder();
 
   virtual int getCode() const;
@@ -39,7 +40,7 @@ public:
                              const ::innate_subsystem::FrameBuffer *serverFb,
                              const EncodeOptions *options);
 
-private:
+//private:
   template <class PIXEL_T>
     void hextileFunction(const ::int_rectangle &r,
                          const ::innate_subsystem::FrameBuffer *frameBuffer);

@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "EncodeOptions.h"
-#include "remoting/remoting_common/rfb/EncodingDefs.h"
+#include "remoting/remoting/rfb/EncodingDefs.h"
 
 EncodeOptions::EncodeOptions()
 {

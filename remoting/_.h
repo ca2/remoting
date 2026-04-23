@@ -1,32 +1,57 @@
-// Into tightvnc sources by Camilo on 2026-02-10 <3ThomasBorregaardSorensen!!
+//
+// Created by camilo on 2026-02-14 23:03 <3ThomasBorregaardSørensen!!
+//
+
+///TBS__<3tbs
 #pragma once
 
 
 
-#include "remoting/remoting_common/_.h"
+#include "innate_subsystem/_.h"
 
 
-#if defined(_remoting_remoting_project)
-#define CLASS_DECL_REMOTING_REMOTING  CLASS_DECL_EXPORT
+#if defined(_remoting_project)
+#define CLASS_DECL_REMOTING CLASS_DECL_EXPORT
 #else
-#define CLASS_DECL_REMOTING_REMOTING  CLASS_DECL_IMPORT
+#define CLASS_DECL_REMOTING CLASS_DECL_IMPORT
+#endif
+
+//
+//#include "acme/_.h"
+////#if defined(_STDIO_H_)
+////#error "already included?!?! WHAT?!?! (At apex:a)"
+////#endif
+//
+//#undef PLATFORM_LAYER_NAME
+//#define PLATFORM_LAYER_NAME apex
+//
+//#if defined(_apex_project)
+//#define CLASS_DECL_APEX  CLASS_DECL_EXPORT
+//#else
+//#define CLASS_DECL_APEX  CLASS_DECL_IMPORT
+//#endif
+//
+//
+////#define CA2_APEX
+//
+
+#ifdef __cplusplus
+
+
+namespace remoting
+{
+
+
+   class DeviceContext;
+
+
+}
+
+
 #endif
 
 
-namespace remoting_remoting
-{
-
-   
-   class keyboard_layout_change;
-
-   class remoting;
-
-   class ViewerWindow;
-
-   class DesktopWindow;
+//#include "remoting/remoting/config/IniFileSettingsManager.h"
 
 
-} // namespace remoting_remoting
-
-
-
+#include "remoting/remoting/viewer_core/_.h"

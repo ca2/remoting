@@ -1,0 +1,111 @@
+// Copyright (C) 2009,2010,2011,2012 GlavSoft LLC.
+// All rights reserved.
+//
+//-------------------------------------------------------------------------
+// This file is part of the TightVNC software.  Please visit our Web site:
+//
+//                       http://www.tightvnc.com/
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//-------------------------------------------------------------------------
+//
+#include "framework.h"
+#include "WallpaperUtil.h"
+//#include "remoting/remoting/win_system/Environment.h"
+#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/win_system/AutoImpersonator.h"
+
+WallpaperUtil::WallpaperUtil(::subsystem::LogWriter *log)
+: m_wasDisabled(false), 
+  m_plogwriter(log)
+{
+  Configurator::getInstance()->addListener(this);
+}
+
+WallpaperUtil::~WallpaperUtil()
+{
+  Configurator::getInstance()->removeListener(this);
+  if (m_wasDisabled) {
+    try {
+      restoreWallpaper();
+      m_plogwriter->information("Wallpaper was successfully restored");
+    }
+    catch (::exception &e) {
+      m_plogwriter->error(e.get_message());
+    }
+  }
+}
+
+void WallpaperUtil::onConfigReload(ServerConfig *serverConfig)
+{
+  updateWallpaper();
+}
+
+void WallpaperUtil::updateWallpaper()
+{
+  try {
+    ServerConfig *srvConf = Configurator::getInstance()->getServerConfig();
+    if (srvConf->isRemovingDesktopWallpaperEnabled()) {
+      disableWallpaper();
+      m_wasDisabled = true;
+      m_plogwriter->information("Wallpaper was successfully disabled");
+    } else {
+      if (m_wasDisabled) {
+        restoreWallpaper();
+        m_plogwriter->information("Wallpaper was successfully restored");
+        m_wasDisabled = false;
+      }
+    }
+  } catch (::exception &e) {
+    m_plogwriter->error(e.get_message());
+  }
+}
+
+void WallpaperUtil::restoreWallpaper()
+{
+  // FIXME: Remove log from here. Log only from caller.
+  m_plogwriter->information("Try to restore wallpaper");
+  Impersonator imp(m_plogwriter);
+  AutoImpersonator ai(&imp, m_plogwriter);
+  int result;
+
+  if (m_wallparerPath.length() == 0) {
+    result = SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, 0, 0);
+  }
+  else {
+    result = SystemParametersInfo(SPI_SETDESKWALLPAPER, m_wallparerPath.getSize(), (void *)m_wallparerPath, 0);
+  }
+
+  if (result == 0) {
+    throw SystemException("Cannot restore desktop wallpaper");
+  }
+}
+
+void WallpaperUtil::disableWallpaper()
+{
+  m_plogwriter->information("Try to disable wallpaper");
+  Impersonator imp(m_plogwriter);
+  AutoImpersonator ai(&imp, m_plogwriter);
+  TCHAR path[MAX_PATH] = "";
+
+  if (SystemParametersInfo(SPI_GETDESKWALLPAPER, MAX_PATH, path, 0) == 0) {
+    path[0] = '\0';
+  }
+
+  if (SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, "", 0) == 0) {
+    throw SystemException("Cannot disable desktop wallpaper");
+  }
+  m_wallparerPath = ::string(path);
+}

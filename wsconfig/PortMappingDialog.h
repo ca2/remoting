@@ -29,7 +29,7 @@
 #include "innate_subsystem/gui/Window.h"
 #include "innate_subsystem/gui/ListBox.h"
 
-#include "remoting/remoting_common/server_config/Configurator.h"
+#include "remoting/remoting/server_config/Configurator.h"
 
 class PortMappingDialog : public BaseDialog
 {

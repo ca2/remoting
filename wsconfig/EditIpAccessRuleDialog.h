@@ -30,9 +30,9 @@
 #include "innate_subsystem/gui/CheckBox.h"
 #include "innate_subsystem/gui/BalloonTip.h"
 
-#include "remoting/remoting_common/server_config/IpAccessRule.h"
+#include "remoting/remoting/server_config/IpAccessRule.h"
 
-//////#include "remoting/remoting_common/util/::string.h"
+//////#include "subsystem/::string.h"
 
 class EditIpAccessRuleDialog : public BaseDialog
 {

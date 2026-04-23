@@ -23,12 +23,12 @@
 //
 #include "framework.h"
 #include "ChangePasswordDialog.h"
-#include "remoting_node/resource.h"
+#include "remoting/node_desktop/resource.h"
 
-#include "remoting/remoting_common/server_config/ServerConfig.h"
+#include "remoting/remoting/server_config/ServerConfig.h"
 
-#include "remoting/remoting_common/util/VncPassCrypt.h"
-//#include "remoting/remoting_common/util/::string.h"
+#include "subsystem/VncPassCrypt.h"
+//#include "subsystem/::string.h"
 
 ChangePasswordDialog::ChangePasswordDialog(::innate_subsystem::Control *parent, bool isNewPassword)
 : BaseDialog(IDD_CHANGE_PASSWORD), m_allowEmptyPassword(false), m_newPassword(isNewPassword)

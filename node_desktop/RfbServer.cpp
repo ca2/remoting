@@ -1,0 +1,92 @@
+// Copyright (C) 2009,2010,2011,2012 GlavSoft LLC.
+// All rights reserved.
+//
+//-------------------------------------------------------------------------
+// This file is part of the TightVNC software.  Please visit our Web site:
+//
+//                       http://www.tightvnc.com/
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//-------------------------------------------------------------------------
+//
+#include "framework.h"
+#include "RfbServer.h"
+#include "remoting/node_desktop/server_config/Configurator.h"
+#include "subsystem_bsd_sockets/SocketAddressIPv4.h"
+
+RfbServer::RfbServer(const ::scoped_string & scopedstrBindHost, unsigned short bindPort,
+                     RfbClientManager *clientManager,
+                     bool lockAddr,
+                     ::subsystem::LogWriter *log,
+                     const ::int_rectangle & viewPort)
+: TcpServer(scopedstrBindHost, bindPort, false, lockAddr),
+  m_clientManager(clientManager),
+  m_plogwriter(log)
+{
+  if (viewPort != 0) {
+    m_viewPort.setArbitraryRect(viewPort);
+  }
+
+  TcpServer::start();
+
+  if (viewPort == 0) {
+    m_plogwriter->debug("Rfb server started at {}:{}", scopedstrBindHost, (int)bindPort);
+  } else {
+    m_plogwriter->debug("Rfb server started at {}:{} with [{} {} {} {}] view port specified",
+                 scopedstrBindHost, (int)bindPort,
+                 viewPort.left, viewPort.right, viewPort.top, viewPort.bottom);
+  }
+}
+
+RfbServer::~RfbServer()
+{
+  m_plogwriter->debug("Rfb server at {}:{} stopped", getBindHost(), (int)getBindPort());
+}
+
+void RfbServer::onAcceptConnection(::subsystem::SocketIPv4Interface *socket)
+{
+  try {
+    // Get incoming connection address and convert it to string.
+    ::pointer < ::subsystem::SocketAddressIPv4Interface > peerAddr;
+    peerAddr = socket->getPeerAddr();
+    ::string peerIpString;
+    peerIpString = peerAddr->toString();
+
+    m_plogwriter->debug("Incoming rfb connection from {} to port %u", peerIpString, peerAddr->getPort());
+    auto paddrImpl = peerAddr->impl<::subsystem_bsd_sockets::SocketAddressIPv4>();
+    auto addr_in = paddrImpl->_getSockAddr();
+
+    // Check access control rules for the IP address of the peer.
+    // FIXME: Check loopback-related rules separately, report differently.
+    ServerConfig *config = Configurator::getInstance()->getServerConfig();
+    IpAccessRule::ActionType action = config->getActionByAddress((unsigned long)addr_in.sin_addr.S_un.S_addr);
+
+    if (action == IpAccessRule::ACTION_TYPE_DENY) {
+      m_plogwriter->debug("Connection rejected due to access control rules");
+      delete socket;
+      return;
+    }
+
+    // Access granted, add new RFB client. One more check will follow later in
+    // RfbClientManager::onCheckAccessControl().
+
+    socket->enableNaggleAlgorithm(false);
+
+    m_clientManager->addNewConnection(socket, &m_viewPort, false, false);
+
+  } catch (::subsystem::Exception &ex) {
+    m_plogwriter->error("Failed to process incoming rfb connection with following reason: \"{}\"", ex.get_message());
+  }
+}

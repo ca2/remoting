@@ -23,8 +23,8 @@
 //
 
 #include "HookLoaderApplication.h"
-#include "remoting/remoting_common/util/StringParser.h"
-#include "remoting_node_desktop/NamingDefs.h"
+#include "subsystem/StringParser.h"
+#include "remoting/node_desktop/NamingDefs.h"
 #include "desktop/HookInstaller.h"
 
 HookLoaderApplication::HookLoaderApplication(HINSTANCE appInstance,
@@ -58,7 +58,7 @@ int HookLoaderApplication::processMessages()
   // m_commandLine - is a target window hwnd by 64-bit text number.
   unsigned long long targetWinValue = 0;
   HWND targetWinHwnd = 0;
-  if (!MainSubsystem().string_parser()->parseUInt64(m_commandLine,
+  if (!MainSubsystem().StringParser().parseUInt64(m_commandLine,
                                  &targetWinValue)) {
     throw ::subsystem::Exception("HookLoaderApplication failed: Can't"
                     " parse the command line to unsigned long long");

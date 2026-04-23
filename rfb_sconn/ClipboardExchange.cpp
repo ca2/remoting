@@ -23,11 +23,11 @@
 //
 #include "framework.h"
 #include "ClipboardExchange.h"
-#include "remoting/remoting_common/rfb/MsgDefs.h"
-////#include "remoting/remoting_common/util/::string.h"
-//#include "remoting/remoting_common/util/::string.h"
+#include "remoting/remoting/rfb/MsgDefs.h"
+////#include "subsystem/::string.h"
+//#include "subsystem/::string.h"
 //#include "subsystem/thread/critical_section.h"
-#include "remoting/remoting_common/rfb/VendorDefs.h"
+#include "remoting/remoting/rfb/VendorDefs.h"
 
 ClipboardExchange::ClipboardExchange(RfbCodeRegistrator *codeRegtor,
                                      Desktop *desktop,

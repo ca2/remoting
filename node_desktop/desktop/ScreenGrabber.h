@@ -1,0 +1,114 @@
+// Copyright (C) 2008,2009,2010,2011,2012 GlavSoft LLC.
+// All rights reserved.
+//
+//-------------------------------------------------------------------------
+// This file is part of the TightVNC software.  Please visit our Web site:
+//
+//                       http://www.tightvnc.com/
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//-------------------------------------------------------------------------
+//
+
+#pragma once
+
+
+
+
+//#include "remoting/remoting/region/::int_point.h"
+#include "subsystem/framebuffer/PixelFormat.h"
+#include "innate_subsystem/framebuffer/FrameBuffer.h"
+
+//
+// An abstract interface for screen grabbing.
+//
+
+/*
+  //
+  // Usage example:
+  //
+
+  ScreenGrabber *frameBuffer;
+
+  // Initialisation
+  frameBuffer = new WindowsScreenGrabber;
+
+  ::int_rectangle grabRect, workRect;
+  workRect.setRect(100, 100, 500, 500);
+  grabRect.setRect(20, 20, 120, 120); // Relative to the workRect
+  frameBuffer->setWorkRect(&workRect);
+
+  // One-time grabbing
+  while (!frameBuffer->grab(&grabRect)) {
+    if (frameBuffer->getPropertiesChanged()) { // Check desktop properties
+      if (!frameBuffer->applyNewProperties()) {
+        MessageBox(NULL, "Cannot apply new screen properties"), _T("Error", MB_ICONHAND);
+        return 1;
+      }
+    } else {
+      MessageBox(NULL, "Cannot grab screen"), _T("Error", MB_ICONHAND);
+      return 1;
+    }
+  }
+*/
+
+class ScreenGrabber
+{
+public:
+  // Derived constructors will ensure that the getScreenBuffer() returns
+  // a frame buffer with valid screen properties.
+  ScreenGrabber(void);
+  virtual ~ScreenGrabber(void);
+
+  /* Provides grabbing.
+  Parameters:     *rect - Pointer to a ::int_rectangle object with relative workRect coordinates.
+  Return value:   true if success.
+  */
+  virtual bool grab(const ::int_rectangle &rect = {} ) = 0;
+
+  virtual ::innate_subsystem::FrameBuffer *getScreenBuffer() { return &m_workFrameBuffer; }
+  virtual void setWorkRect(::int_rectangle *workRect);
+  virtual ::int_rectangle getWorkRect() const { return ::int_rectangle(m_offsetFrameBuffer.x,
+                                                 m_offsetFrameBuffer.y,
+                                                 m_workFrameBuffer.getDimension().cx +
+                                                 m_offsetFrameBuffer.x,
+                                                 m_workFrameBuffer.getDimension().cy +
+                                                 m_offsetFrameBuffer.y); }
+  /* Provides read access to rectangular coordinates of the screen (desktop).*/
+  virtual ::int_rectangle getScreenRect() { return m_fullScreenRect; }
+
+  // Checks screen(desktop) properties on changes
+  inline virtual bool getPropertiesChanged() = 0;
+  inline virtual bool getPixelFormatChanged() = 0;
+  inline virtual bool getScreenSizeChanged() = 0;
+
+  // Set new values of the WorkRect to default (to full screen rectangle coordinates)
+  // and m_fullScreenRect if desktop properties has been changed.
+  // Also m_pixelFormat set to actual value.
+  virtual bool applyNewProperties();
+
+protected:
+  virtual bool applyNewFullScreenRect() = 0;
+  virtual bool applyNewPixelFormat() = 0;
+
+  virtual bool setWorkRectDefault();
+
+  ::int_rectangle m_fullScreenRect;
+  ::int_point m_offsetFrameBuffer;
+
+  ::innate_subsystem::FrameBuffer m_workFrameBuffer;
+};
+
+//// __SCREENGRABBER_H__

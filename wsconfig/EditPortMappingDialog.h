@@ -28,7 +28,7 @@
 #include "innate_subsystem/gui/BaseDialog.h"
 #include "innate_subsystem/gui/TextBox.h"
 
-#include "remoting/remoting_common/server_config/PortMapping.h"
+#include "remoting/remoting/server_config/PortMapping.h"
 
 class EditPortMappingDialog : public BaseDialog
 {

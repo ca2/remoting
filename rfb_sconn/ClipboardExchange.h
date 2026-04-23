@@ -28,33 +28,36 @@
 #include "RfbDispatcherListener.h"
 #include "RfbCodeRegistrator.h"
 #include "desktop/Desktop.h"
-#include "remoting/remoting_common/network/RfbOutputGate.h"
+#include "remoting/remoting/network/RfbOutputGate.h"
 //#include "log_writer/LogWriter.h"
 
-class ClipboardExchange : public RfbDispatcherListener, public Thread
+class ClipboardExchange : public RfbDispatcherListener, public ::subsystem::Thread
 {
 public:
   ClipboardExchange(RfbCodeRegistrator *codeRegtor, Desktop *desktop,
-                    RfbOutputGate *output, bool viewOnly, ::subsystem::LogWriter *log);
+                    ::remoting::RfbOutputGate *output, bool viewOnly, ::subsystem::LogWriter *log);
   virtual ~ClipboardExchange();
 
   void sendClipboard(const ::scoped_string & newClipboard);
 
 protected:
   // Listen function
-  virtual void onRequest(unsigned int reqCode, RfbInputGate *input);
+  virtual void onRequest(unsigned int reqCode, ::remoting::RfbInputGate *input);
   virtual void execute();
   virtual void onTerminate();
 
 private:
-  void onRequestWorker(bool utf8data, RfbInputGate *input);
+  void onRequestWorker(bool utf8data, ::remoting::RfbInputGate *input);
 
   bool m_viewOnly;
   bool m_isUtf8ClipboardEnabled;
   Desktop *m_desktop;
-  RfbOutputGate *m_output;
+  ::remoting::RfbOutputGate *m_output;
 
-  WindowsEvent m_newClipWaiter;
+  //WindowsEvent m_newClipWaiter;
+
+  ::happening m_newClipWaiter;
+  
 
   ::string m_storedClip;
   bool m_hasNewClip;

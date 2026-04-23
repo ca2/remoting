@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "UIDataAccess.h"
 
-#include "remoting/remoting_common/util/StringParser.h"
+#include "subsystem/StringParser.h"
 
 UIDataAccess::UIDataAccess()
 {
@@ -38,7 +38,7 @@ bool UIDataAccess::queryValueAsInt(TextBox *textBox, int *value)
 
   textBox->getText(&textBoxText);
 
-  return MainSubsystem().string_parser()->parseInt(textBoxText, value);
+  return MainSubsystem().StringParser().parseInt(textBoxText, value);
 }
 
 bool UIDataAccess::queryValueAsUInt(TextBox *textBox, unsigned int *value)
@@ -49,5 +49,5 @@ bool UIDataAccess::queryValueAsUInt(TextBox *textBox, unsigned int *value)
 
   textBox->getText(&textBoxText);
 
-  return MainSubsystem().string_parser()->parseUInt(textBoxText, value);
+  return MainSubsystem().StringParser().parseUInt(textBoxText, value);
 }

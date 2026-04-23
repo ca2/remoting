@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "ConfigDialog.h"
-#include "remoting_node/resource.h"
+#include "remoting/node_desktop/resource.h"
 #include "subsystem/_common_header.h"
 
 ConfigDialog::ConfigDialog(bool forService, ControlCommand *reloadConfigCommand)

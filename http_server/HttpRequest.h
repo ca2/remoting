@@ -27,7 +27,7 @@
 
 #include "acme/input_output/DataInputStream.h"
 
-#include "remoting/remoting_common/http_server/ArgList.h"
+#include "remoting/remoting/http_server/ArgList.h"
 
 class HttpRequest
 {

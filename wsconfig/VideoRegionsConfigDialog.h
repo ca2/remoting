@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/server_config/Configurator.h"
+#include "remoting/remoting/server_config/Configurator.h"
 
 #include "innate_subsystem/gui/BaseDialog.h"
 #include "innate_subsystem/gui/TextBox.h"

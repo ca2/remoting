@@ -1,46 +1,36 @@
-// Created by camilo on 2026-04-16 23:52 <3ThomasBorregaardSørensen!!
+//
+// Created by camilo on 2026-02-15 21:52 <3ThomasBorregaardSørensen!!
+//
+
 #pragma once
+
+//#include "acme/_operating_system.h"
+#include "acme/platform/remoting.h"
 
 namespace remoting
 {
 
-   class ViewerConfig;
-   class ConnectionConfig;
-}
 
-namespace remoting_remoting
-{
+//   class Environment;
 
-   class ConnectingDialog;
-   class ConnectionData;
 
-   class remoting_impact;
-
-   class remoting :
-      public ::particle
+   class CLASS_DECL_REMOTING remoting :
+   virtual public  ::platform::remoting
    {
    public:
-      
-      
-      ::pointer < ::remoting::ConnectionConfig >         m_pconnectionconfig;
-      ::pointer < ConnectionData  >                      m_pconnectiondata;
-      ::pointer < ::remoting::ViewerConfig>              m_pviewerconfig;
-      ::pointer<ConnectingDialog>                        m_pconnectingdialog;
-      ::subsystem::LogWriter *                           m_plogwriter;
-      ::pointer<remoting_remoting::remoting_impact>      m_premotingimpact;
+
+      //::pointer < Environment > m_penvironment;
 
 
       remoting();
       ~remoting() override;
 
-
-      virtual void on_start();
-      virtual void open_file(const ::file::path & path);
-
-
-      virtual ::lresult handle_direct_id(const ::enum_id eid, ::wparam wparam, ::lparam lparam);
+      //virtual Environment * environment();
 
    };
 
 
-} // namespace remoting_remoting
+   CLASS_DECL_REMOTING void defer_initialize_remoting();
+
+} // remoting
+

@@ -22,10 +22,10 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting_node/resource.h"
+#include "remoting/node_desktop/resource.h"
 #include "EditIpAccessRuleDialog.h"
-#include "remoting/remoting_common/util/StringParser.h"
-//#include "remoting/remoting_common/util/::string.h"
+#include "subsystem/StringParser.h"
+//#include "subsystem/::string.h"
 
 EditIpAccessRuleDialog::EditIpAccessRuleDialog()
 : BaseDialog(IDD_EDIT_IP_ACESS_CONTROL), m_data(NULL), m_isOpenedForEdit(false)

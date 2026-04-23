@@ -25,15 +25,15 @@
 #pragma once
 
 
-#include "remoting/remoting_common/config/SettingsManager.h"
-#include "remoting/remoting_common/config/RegistrySettingsManager.h"
+#include "remoting/remoting/config/SettingsManager.h"
+#include "remoting/remoting/config/RegistrySettingsManager.h"
 
 #include "innate_subsystem/gui/BaseDialog.h"
 #include "innate_subsystem/gui/Window.h"
 #include "innate_subsystem/gui/ListBox.h"
 #include "innate_subsystem/gui/TabControl.h"
 
-#include "remoting/remoting_common/server_config/Configurator.h"
+#include "remoting/remoting/server_config/Configurator.h"
 
 #include "ServerConfigDialog.h"
 #include "AdministrationConfigDialog.h"
@@ -41,7 +41,7 @@
 #include "IpAccessControlDialog.h"
 #include "VideoRegionsConfigDialog.h"
 
-#include "remoting_control_desktop/ControlCommand.h"
+#include "remoting/control_desktop/ControlCommand.h"
 
 class ConfigDialog : public BaseDialog
 {

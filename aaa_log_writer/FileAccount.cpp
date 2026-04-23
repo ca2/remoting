@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "FileAccount.h"
-#include "remoting/remoting_common/util/Unicode.h"
+#include "subsystem/Unicode.h"
 #include "file_lib/::file::item.h"
 #include "remoting/thread/critical_section_lock.h"
 #include "file_lib/EOFException.h"

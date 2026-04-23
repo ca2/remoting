@@ -28,7 +28,7 @@
 #include "SecurityPipeServer.h"
 #include "remoting/io/DataInputStream.h"
 #include "remoting/io/DataOutputStream.h"
-//#include "remoting/remoting_common/util/::earth::time.h"
+//#include "subsystem/::earth::time.h"
 
 LogConn::LogConn(Channel *channel, LogConnAuthListener *extAuthListener,
                  LogListener *extLogListener, unsigned char logLevel)

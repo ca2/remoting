@@ -24,11 +24,11 @@
 #include "framework.h"
 #include "CommonInputValidation.h"
 
-#include "remoting/remoting_common/util/StringParser.h"
+#include "subsystem/StringParser.h"
 
 #include "innate_subsystem/gui/BalloonTip.h"
 
-#include "remoting_node/resource.h"
+#include "remoting/node_desktop/resource.h"
 
 #include "UIDataAccess.h"
 

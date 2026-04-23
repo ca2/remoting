@@ -24,10 +24,10 @@
 #include "framework.h"
 #include "WinEventLog.h"
 #include "subsystem/_common_header.h"
-#include "remoting_node_desktop/NamingDefs.h"
+#include "remoting/node_desktop/NamingDefs.h"
 #include "subsystem/Exception.h"
-//#include "remoting/remoting_common/win_system/Environment.h"
-#include "remoting/remoting_common/win_system/RegistryKey.h"
+//#include "remoting/remoting/win_system/Environment.h"
+#include "remoting/remoting/win_system/RegistryKey.h"
 //#include "subsystem/thread/critical_section.h"
 
 WinEventLog::WinEventLog(::subsystem::LogWriter *log)

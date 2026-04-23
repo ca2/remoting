@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting_common/util/inttypes.h"
+//#include "subsystem/inttypes.h"
 
 class ClientInputEventListener
 {

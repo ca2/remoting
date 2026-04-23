@@ -22,8 +22,10 @@
 //-------------------------------------------------------------------------
 //
 
-#pragma onceINCLUDED__
-INCLUDED__
+#pragma once
+
+//INCLUDED__
+//INCLUDED__
 
 //#include aaa_<vector>
 

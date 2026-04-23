@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "remoting/remoting_common/win_system/ParentProcess.h"
+#include "remoting/remoting/win_system/ParentProcess.h"
 #include "ParentEventsListener.h"
-#include "remoting/remoting_common/win_system/WindowsEvent.h"
+#include "remoting/remoting/win_system/WindowsEvent.h"
 #include "subsystem/_common_header.h"
 #include "subsystem/thread/Thread.h"
 // #include aaa_<Tlhelp32.h>

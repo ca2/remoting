@@ -25,13 +25,13 @@
 #pragma once
 
 
-#include "remoting/remoting_common/network/RfbInputGate.h"
+#include "remoting/remoting/network/RfbInputGate.h"
 
 class RfbDispatcherListener
 {
 public:
   virtual ~RfbDispatcherListener() {};
-  virtual void onRequest(unsigned int reqCode, RfbInputGate *input) = 0;
+  virtual void onRequest(unsigned int reqCode, ::remoting::RfbInputGate *input) = 0;
 };
 
 //// __RFBDISPATCHERLISTENER_H__

@@ -22,11 +22,11 @@
 //-------------------------------------------------------------------------
 //
 
-#pragma onceINCLUDED__
-INCLUDED__
+#pragma once
 
 // FIXME: Use some object-oriented wrapper instead of the pure zlib.
-#include "remoting/remoting_common/zlib/zlib.h"
+//#include "remoting/remoting/zlib/zlib.h"
+#include <zlib.h>
 
 #include "Encoder.h"
 #include "TightPalette.h"
@@ -37,7 +37,7 @@ class TightEncoder : public Encoder
   friend class JpegEncoder;
 
 public:
-  TightEncoder(PixelConverter *conv, DataOutputStream *output);
+  TightEncoder(::remoting::PixelConverter *conv, DataOutputStream *output);
   virtual ~TightEncoder();
 
   virtual int getCode() const;
@@ -185,4 +185,4 @@ protected:
   StandardJpegCompressor m_compressor;
 };
 
-//// __RFB_TIGHT_ENCODER_H_INCLUDED__
+

@@ -30,7 +30,7 @@
 #include "acme/input_output/DataInputStream.h"
 #include "CapContainer.h"
 
-#include "remoting/remoting_common/rfb/PixelFormat.h"
+#include "remoting/remoting/rfb/PixelFormat.h"
 // External listeners
 #include "ClientAuthListener.h"
 

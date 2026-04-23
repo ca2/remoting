@@ -22,12 +22,12 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting_node/resource.h"
+#include "remoting/node_desktop/resource.h"
 #include "VideoRegionsConfigDialog.h"
 #include "ConfigDialog.h"
 #include "UIDataAccess.h"
 #include "CommonInputValidation.h"
-#include "remoting/remoting_common/util/StringParser.h"
+#include "subsystem/StringParser.h"
 
 VideoRegionsConfigDialog::VideoRegionsConfigDialog()
 : BaseDialog(IDD_CONFIG_VIDEO_PAGE), m_parentDialog(NULL)
@@ -183,7 +183,7 @@ void VideoRegionsConfigDialog::apply()
   m_videoRecognitionInterval.getText(&vriss);
 
   int interval;
-  MainSubsystem().string_parser()->parseInt(vriss, &interval);
+  MainSubsystem().StringParser().parseInt(vriss, &interval);
   m_config->setVideoRecognitionInterval((unsigned int)interval);
 }
 

@@ -22,20 +22,20 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting_node/resource.h"
+#include "remoting/node_desktop/resource.h"
 #include "AdministrationConfigDialog.h"
 #include "CommonInputValidation.h"
 #include "UIDataAccess.h"
 #include "ConfigDialog.h"
 #include "file_lib/::file::item.h"
-#include "remoting/remoting_common/server_config/ServerConfig.h"
-#include "remoting/remoting_common/server_config/Configurator.h"
+#include "remoting/remoting/server_config/ServerConfig.h"
+#include "remoting/remoting/server_config/Configurator.h"
 #include "subsystem/_common_header.h"
-#include "remoting/remoting_common/util/StringParser.h"
-#include "remoting/remoting_common/wsconfig/ChangePasswordDialog.h"
-#include "remoting/remoting_common/util/StringTable.h"
+#include "subsystem/StringParser.h"
+#include "remoting/remoting/wsconfig/ChangePasswordDialog.h"
+#include "subsystem/StringTable.h"
 #include "subsystem/Process.h"
-#include "remoting_node_desktop/NamingDefs.h"
+#include "remoting/node_desktop/NamingDefs.h"
 
 AdministrationConfigDialog::AdministrationConfigDialog()
 : BaseDialog(IDD_CONFIG_ADMINISTRATION_PAGE), m_parentDialog(NULL)
@@ -227,7 +227,7 @@ void AdministrationConfigDialog::apply()
 
   int logLevel = 0;
 
-  MainSubsystem().string_parser()->parseInt(logLevelStringStorage, &logLevel);
+  MainSubsystem().StringParser().parseInt(logLevelStringStorage, &logLevel);
 
   m_config->setLogLevel(logLevel);
 

@@ -24,13 +24,13 @@
 #include "framework.h"
 #include "PasswordControl.h"
 
-#include "remoting/remoting_common/util/VncPassCrypt.h"
-#include "remoting/remoting_common/util/StringTable.h"
-//#include "remoting/remoting_common/util/::string.h"
+#include "subsystem/VncPassCrypt.h"
+#include "subsystem/StringTable.h"
+//#include "subsystem/::string.h"
 
 #include "ChangePasswordDialog.h"
 
-#include "remoting_node/resource.h"
+#include "remoting/node_desktop/resource.h"
 
 PasswordControl::PasswordControl(::innate_subsystem::Control *changeButton, ::innate_subsystem::Control *unsetButton)
 : m_enabled(true), 

@@ -1,0 +1,102 @@
+// Copyright (C) 2009,2010,2011,2012 GlavSoft LLC.
+// All rights reserved.
+//
+//-------------------------------------------------------------------------
+// This file is part of the TightVNC software.  Please visit our Web site:
+//
+//                       http://www.tightvnc.com/
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//-------------------------------------------------------------------------
+//
+
+#pragma once
+
+
+//#include "subsystem/winhdr.h"
+//#include "acme/_operating_system.h"
+
+
+#include "innate_subsystem/gui/BaseDialog.h"
+#include "innate_subsystem/gui/ComboBox.h"
+#include "innate_subsystem/gui/CheckBox.h"
+
+#include "remoting/remoting/win_system/RegistryKey.h"
+
+#include "remoting/remoting/config/ConnectionHistory.h"
+
+/**
+ * Outgoing connection dialog. Just allows user to put connection string
+ * and select mode for connection.
+ */
+class OutgoingConnectionDialog : public BaseDialog
+{
+public:
+  OutgoingConnectionDialog();
+  virtual ~OutgoingConnectionDialog();
+
+  /**
+   * Gets connection string, specified by user.
+   * @return connection string.
+   */
+  ::string getConnectString() const;
+
+  /**
+   * Gets view only flag, specified by user.
+   * @return view only flag.
+   */
+  bool isViewOnly() const;
+
+protected:
+  void initControls();
+
+  virtual bool onInitDialog();
+  virtual bool onNotify(unsigned int controlID, ::lparam data);
+  virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
+  virtual bool onDestroy();
+
+  void onOkButtonClick();
+  void onCancelButtonClick();
+
+protected:
+  /**
+   * Member to hold connection string after dialog is destroyed.
+   */
+  ::string m_connectString;
+  /**
+   * Like m_connectString, but for view only flag.
+   */
+  bool m_isViewOnly;
+
+  /**
+   * Connection history registry key.
+   */
+  RegistryKey m_connHistoryKey;
+  /**
+   * Connection history container.
+   */
+  ConnectionHistory m_connHistory;
+
+  /**
+   * Combo box with connection history.
+   */
+  ComboBox m_connectStringCB;
+  /**
+   * "View-only" checkbox.
+   */
+  CheckBox m_viewOnlyCB;
+};
+
+

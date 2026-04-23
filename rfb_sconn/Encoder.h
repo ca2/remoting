@@ -22,17 +22,17 @@
 //-------------------------------------------------------------------------
 //
 
-#pragma onceINCLUDED__
-INCLUDED__
+#pragma once
+
 
 //#include aaa_<vector>
 
 #include "innate_subsystem/framebuffer/FrameBuffer.h"
 #include "acme/exception/io.h"
-#include "remoting/remoting_common/network/RfbOutputGate.h"
-#include "remoting/remoting_common/rfb/EncodingDefs.h"
+#include "remoting/remoting/network/RfbOutputGate.h"
+#include "remoting/remoting/rfb/EncodingDefs.h"
 #include "EncodeOptions.h"
-#include "remoting/remoting_common/rfb/PixelConverter.h"
+#include "remoting/remoting/rfb/PixelConverter.h"
 
 //
 // Encoder is the base class for all RFB encoders.
@@ -55,7 +55,7 @@ public:
   // `output' specifies the output stream to write the encoded data to.
   // Both `conv' and 'output' should point to objects that should remain
   // relevant during the whole life cycle of the Encoder.
-  Encoder(PixelConverter *conv, DataOutputStream *output);
+  Encoder(::remoting::PixelConverter *conv, DataOutputStream *output);
 
   virtual ~Encoder(void);
 
@@ -105,15 +105,15 @@ protected:
   // be used by other threads during the execution the mentioned functions of
   // the Encoder, and it may not be altered between a call to splitRectangle()
   // and the corresponding calls to sendRectangle().
-  PixelConverter *m_pixelConverter;
+   ::remoting::PixelConverter *m_pixelConverter;
 
   // The output stream to write the encoded data to.
   DataOutputStream *m_output;
 
-private:
+///private:
   // Do not allow copying objects.
-  Encoder(const Encoder &other);
-  Encoder &operator=(const Encoder &other);
+  //Encoder(const Encoder &other);
+  //Encoder &operator=(const Encoder &other);
 };
 
 //// __RFB_ENCODER_H_INCLUDED__

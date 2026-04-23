@@ -27,10 +27,10 @@
 #include "HttpReply.h"
 #include "AppletParameter.h"
 #include "VncViewerJarBody.h"
-//#include "remoting/remoting_common/win_system/Environment.h"
-#include "remoting/remoting_common/server_config/Configurator.h"
-//#include "remoting/remoting_common/util/::string.h"
-#include "remoting_node_desktop/NamingDefs.h"
+//#include "remoting/remoting/win_system/Environment.h"
+#include "remoting/remoting/server_config/Configurator.h"
+//#include "subsystem/::string.h"
+#include "remoting/node_desktop/NamingDefs.h"
 
 HttpRequestHandler::HttpRequestHandler(DataInputStream *dataInput,
                                        DataOutputStream *dataOutput,

@@ -22,13 +22,13 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting_node/resource.h"
+#include "remoting/node_desktop/resource.h"
 #include "EditPortMappingDialog.h"
 
-#include "remoting/remoting_common/util/StringParser.h"
+#include "subsystem/StringParser.h"
 
-#include "remoting/remoting_common/server_config/Configurator.h"
-#include "remoting/remoting_common/server_config/PortMappingContainer.h"
+#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/server_config/PortMappingContainer.h"
 
 EditPortMappingDialog::EditPortMappingDialog(DialogType dlgType)
 : BaseDialog(IDD_EDIT_PORT_MAPPING), m_dialogType(dlgType)
@@ -68,7 +68,7 @@ void EditPortMappingDialog::onOkButtonClick()
   m_portTextBox.getText(&portStringStorage);
 
   PortMappingRect::parse(rectStringStorage, &rect);
-  MainSubsystem().string_parser()->parseInt(portStringStorage, &port);
+  MainSubsystem().StringParser().parseInt(portStringStorage, &port);
 
   m_mapping->setPort(port);
   m_mapping->setRect(rect);
@@ -102,7 +102,7 @@ bool EditPortMappingDialog::isUserDataValid()
 
   int port;
 
-  MainSubsystem().string_parser()->parseInt(portStringStorage, &port);
+  MainSubsystem().StringParser().parseInt(portStringStorage, &port);
 
   if ((port < 1) || (port > 65535)) {
     MainSubsystem().message_box(m_ctrlThis.operating_system_window(),

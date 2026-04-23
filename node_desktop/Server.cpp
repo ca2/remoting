@@ -1,0 +1,458 @@
+// Copyright (C) 2009,2010,2011,2012 GlavSoft LLC.
+// All rights reserved.
+//
+//-------------------------------------------------------------------------
+// This file is part of the TightVNC software.  Please visit our Web site:
+//
+//                       http://www.tightvnc.com/
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//-------------------------------------------------------------------------
+//
+#include "framework.h"
+#include "Server.h"
+#include "WsConfigRunner.h"
+#include "AdditionalActionApplication.h"
+#include "subsystem/node/CurrentConsoleProcess.h"
+#include "subsystem/node/OperatingSystem.h"
+
+#include "remoting/node_desktop/server_config/Configurator.h"
+
+#include "subsystem/thread/GlobalMutex.h"
+
+#include "remoting/node_desktop/resource.h"
+
+//#include "remoting/remoting/wsconfig/TvnLogFilename.h"
+
+///#include "remoting/remoting/network/socket/WindowsSocket.h"
+
+#include "subsystem/StringTable.h"
+//#include "subsystem/::string.h"
+#include "remoting/node_desktop/NamingDefs.h"
+
+#include "subsystem/node/file.h"
+#include "subsystem/thread/ZombieKiller.h"
+// FIXME: Bad dependency on remoting_control_desktop.
+#include "remoting/control_desktop/TransportFactory.h"
+#include "remoting/control_desktop/ControlPipeName.h"
+
+#include "remoting/node_desktop/BuildTime.h"
+
+//#include aaa_<crtdbg.h>
+//#include aaa_<time.h>
+#include "TimeAPI.h"
+
+
+
+namespace remoting_node_desktop
+{
+   Server::Server(bool runsInServiceContext,
+                        NewConnectionEvents *newConnectionEvents,
+                        LogInitListener *logInitListener,
+                        ::subsystem::LogWriter * plogwriter)
+   //: Singleton<Server>(),
+   :  ListenerContainer<ServerListener *>(),
+     m_runAsService(runsInServiceContext),
+     m_logInitListener(logInitListener),
+     m_rfbClientManager(0),
+     //m_httpServer(0),
+      m_controlServer(0), m_rfbServer(0),
+     m_config(runsInServiceContext),
+     //m_plogwriter(::subsystem::LogWriter),
+       m_plogwriter(plogwriter),
+     m_contextSwitchResolution(1),
+     //m_extraRfbServers(&m_plogwriter)
+       m_extraRfbServers(::system())
+   {
+      m_plogwriter->information("{} Build on {}",
+                     ProductNames::SERVER_PRODUCT_NAME,
+                     BuildTime::DATE);
+
+      // Initialize configuration.
+      // FIXME: It looks like configurator may be created as a member object.
+      Configurator *configurator = Configurator::getInstance();
+      configurator->load();
+      m_srvConfig = Configurator::getInstance()->getServerConfig();
+
+      try {
+         ::string logDir;
+         m_srvConfig->getLogFileDir(logDir);
+         unsigned char logLevel = m_srvConfig->getLogLevel();
+         // FIXME: Use correct log name.
+         m_logInitListener->onLogInit(logDir, LogNames::SERVER_LOG_FILE_STUB_NAME, logLevel);
+
+      } catch (...) {
+         // A log error must not be a reason that stop the server.
+      }
+
+      // Initialize windows sockets.
+
+      m_plogwriter->information("Initialize WinSock");
+
+
+      MainSubsystem().startSockets();
+      // try {
+      //   WindowsSocket::startup(2, 1);
+      // } catch (::subsystem::Exception &ex) {
+      //   m_plogwriter.interror("{}", ex.get_message());
+      // }
+
+      DesktopFactory *desktopFactory = 0;
+      if (runsInServiceContext) {
+         desktopFactory = &m_serviceDesktopFactory;
+      } else {
+         desktopFactory = &m_applicationDesktopFactory;
+      }
+
+      m_rfbClientManager = new RfbClientManager(0, newConnectionEvents, m_plogwriter, desktopFactory);
+
+      m_rfbClientManager->addListener(this);
+
+      // FIXME: No good to act as a listener before completing the object
+      //        construction.
+      Configurator::getInstance()->addListener(this);
+
+      {
+         // FIXME: Protect only primitive operations.
+         // FIXME: Nested lock in protected code (congifuration locking).
+         critical_section_lock l(&m_mutex);
+
+         restartMainRfbServer();
+         (void)m_extraRfbServers.reload(m_runAsService, m_rfbClientManager);
+         restartHttpServer();
+         restartControlServer();
+      }
+   }
+
+   Server::~Server()
+   {
+      Configurator::getInstance()->removeListener(this);
+
+      stopControlServer();
+      stopHttpServer();
+      m_extraRfbServers.shutDown();
+      stopMainRfbServer();
+
+      //auto ZombieKiller *zombieKiller = ZombieKiller::getInstance();
+
+      // Disconnect all zombies http, rfb, control clients though killing
+      // their threads.
+      MainSubsystem().ZombieKiller().killAllZombies();
+
+      m_rfbClientManager->removeListener(this);
+
+      delete m_rfbClientManager;
+
+      m_plogwriter->information("Shutdown WinSock");
+
+      // try {
+      //    WindowsSocket::cleanup();
+      // } catch (::subsystem::Exception &ex) {
+      //    m_plogwriter.error("{}", ex.get_message());
+      // }
+      MainSubsystem().cleanupSockets();
+   }
+
+   // Remark: this method can be called from other threads.
+   void Server::onConfigReload(ServerConfig *serverConfig)
+   {
+      // Start/stop/restart RFB servers if needed.
+      {
+         // FIXME: Protect only primitive operations.
+         // FIXME: Nested lock in protected code (congifuration locking).
+         critical_section_lock l(&m_mutex);
+
+         bool toggleMainRfbServer =
+           m_srvConfig->isAcceptingRfbConnections() != (m_rfbServer != 0);
+         bool changeMainRfbPort = m_rfbServer != 0 &&
+           (m_srvConfig->getRfbPort() != (int)m_rfbServer->getBindPort());
+
+         ::string strBindHost =
+           m_srvConfig->isOnlyLoopbackConnectionsAllowed() ? "localhost" : "0.0.0.0";
+         bool changeBindHost =  m_rfbServer != 0 &&
+          strBindHost != m_rfbServer->getBindHost();
+
+         if (toggleMainRfbServer ||
+             changeMainRfbPort ||
+             changeBindHost) {
+           restartMainRfbServer();
+         }
+
+         // NOTE: ExtraRfbServers::reload() does not throw exceptions if some
+         //       servers did not start. However, it returns false in that case.
+         //       Here we ignore all errors.
+         (void)m_extraRfbServers.reload(m_runAsService, m_rfbClientManager);
+       }
+
+      // // Start/stop/restart HTTP server if needed.
+      // {
+      //    // FIXME: Protect only primitive operations.
+      //    critical_section_lock l(&m_mutex);
+      //
+      //    bool toggleHttp =
+      //      m_srvConfig->isAcceptingHttpConnections() != (m_httpServer != 0);
+      //    bool changePort = m_httpServer != 0 &&
+      //      (m_srvConfig->getHttpPort() != (int)m_httpServer->getBindPort());
+      //
+      //    if (toggleHttp || changePort) {
+      //       restartHttpServer();
+      //    }
+      // }
+      changeLogProps();
+   }
+
+   void Server::getServerInfo(ServerInfo *info)
+   {
+      bool rfbServerListening = true;
+      {
+         critical_section_lock l(&m_mutex);
+         rfbServerListening = m_rfbServer != 0;
+      }
+
+      ::string statusString;
+
+      // Vnc authentication enabled.
+      bool vncAuthEnabled = m_srvConfig->isUsingAuthentication();
+      // No vnc passwords are set.
+      bool noVncPasswords = !m_srvConfig->hasPrimaryPassword() && !m_srvConfig->hasReadOnlyPassword();
+      // Determinates that main rfb server cannot accept connection in case of passwords problem.
+      bool vncPasswordsError = vncAuthEnabled && noVncPasswords;
+
+      if (rfbServerListening) {
+         if (vncPasswordsError) {
+            statusString = MainSubsystem().StringTable().getString(IDS_NO_PASSWORDS_SET);
+         } else {
+            // FIXME: Usage of deprecated FUNCTION!
+            char localAddressString[1024];
+            getLocalIPAddrString(localAddressString, 1024);
+            ::string ansiString(localAddressString);
+            ansiString.toStringStorage(&statusString);
+
+            if (!vncAuthEnabled) {
+               statusString.appendString(MainSubsystem().StringTable().getString(IDS_NO_AUTH_STATUS));
+            } // if no auth enabled.
+         } // accepting connections and no problem with passwords.
+      } else {
+         statusString = MainSubsystem().StringTable().getString(IDS_SERVER_NOT_LISTENING);
+      } // not accepting connections.
+
+      unsigned int stringId = m_runAsService ? IDS_TVNSERVER_SERVICE : IDS_TVNSERVER_APP;
+
+      info->m_statusText.formatf("{} - {}",
+                                MainSubsystem().StringTable().getString(stringId),
+                                statusString);
+      info->m_acceptFlag = rfbServerListening && !vncPasswordsError;
+      info->m_serviceFlag = m_runAsService;
+   }
+
+   void Server::generateExternalShutdownSignal()
+   {
+      critical_section_lock l(&m_listeners);
+
+      ::std::vector<ServerListener *>::iterator it;
+      for (it = m_listeners.begin(); it != m_listeners.end(); it++) {
+         ServerListener *each = *it;
+
+         each->onServerShutdown();
+      } // for all listeners.
+   }
+
+   bool Server::isRunningAsService() const
+   {
+      return m_runAsService;
+   }
+
+   void Server::afterFirstClientConnect()
+   {
+      if (timeBeginPeriod(m_contextSwitchResolution) == TIMERR_NOERROR) {
+         m_plogwriter.scopedstrMessage("Set context switch resolution: {} ms", m_contextSwitchResolution);
+      }
+      else {
+         m_plogwriter.scopedstrMessage("Can't change context switch resolution to: {} ms", m_contextSwitchResolution);
+      }
+
+   }
+
+   void Server::afterLastClientDisconnect()
+   {
+      m_plogwriter.scopedstrMessage("Restore context switch resolution");
+      timeEndPeriod(m_contextSwitchResolution);
+
+      ServerConfig::DisconnectAction action = m_srvConfig->getDisconnectAction();
+
+      // Disconnect action must be executed in process on interactive user session to take effect.
+      // Now, choose application keys for specified action.
+
+      ::string keys;
+
+      switch (action) {
+         case ServerConfig::DA_LOCK_WORKSTATION:
+            keys.formatf("{}", AdditionalActionApplication::LOCK_WORKSTATION_KEY);
+            break;
+         case ServerConfig::DA_LOGOUT_WORKSTATION:
+            keys.formatf("{}", AdditionalActionApplication::LOGOUT_KEY);
+            break;
+         default:
+            return;
+      }
+
+      Process *process;
+
+      // Choose how to start process.
+      ::string thisModulePath;
+      Environment::getCurrentModulePath(&thisModulePath);
+      thisModulePath.quoteSelf();
+      if (isRunningAsService()) {
+         bool connectToRdp = m_srvConfig->getConnectToRdpFlag();
+         process = new CurrentConsoleProcess(&m_plogwriter, connectToRdp, thisModulePath,
+                                             keys);
+      } else {
+         process = new Process(thisModulePath, keys);
+      }
+
+      m_plogwriter.scopedstrMessage("Execute disconnect action in separate process");
+
+      try {
+         process->start();
+      } catch (SystemException &ex) {
+         m_plogwriter.error("Failed to start application: \"{}\"", ex.get_message());
+      }
+
+      delete process;
+   }
+
+   void Server::restartHttpServer()
+   {
+      // FIXME: Errors are critical here, they should not be ignored.
+
+      stopHttpServer();
+
+      if (m_srvConfig->isAcceptingHttpConnections()) {
+         m_plogwriter.scopedstrMessage("Starting HTTP server");
+         try {
+            // FIXME: HTTP server should bind to localhost if only loopback
+            //        connections are allowed.
+            m_httpServer = new HttpServer("0.0.0.0", m_srvConfig->getHttpPort(), m_runAsService, &m_plogwriter);
+         } catch (::subsystem::Exception &ex) {
+            m_plogwriter.error("Failed to start HTTP server: \"{}\"", ex.get_message());
+         }
+      }
+   }
+
+   void Server::restartControlServer()
+   {
+      // FIXME: Memory leaks.
+      // FIXME: Errors are critical here, they should not be ignored.
+
+      stopControlServer();
+
+      m_plogwriter.scopedstrMessage("Starting control server");
+
+      try {
+         ::string pipeName;
+         ControlPipeName::createPipeName(isRunningAsService(), &pipeName, &m_plogwriter);
+
+         // FIXME: Memory leak
+         SecurityAttributes *pipeSecurity = new SecurityAttributes();
+         pipeSecurity->setInheritable();
+         pipeSecurity->shareToAllUsers();
+
+         const unsigned int maxControlServerPipeBufferSize = 0x10000;
+         PipeServer *pipeServer = new PipeServer(pipeName, maxControlServerPipeBufferSize, pipeSecurity);
+         m_controlServer = new ControlServer(pipeServer , m_rfbClientManager, &m_plogwriter);
+      } catch (::subsystem::Exception &ex) {
+         m_plogwriter.error("Failed to start control server: \"{}\"", ex.get_message());
+      }
+   }
+
+   void Server::restartMainRfbServer()
+   {
+      // FIXME: Errors are critical here, they should not be ignored.
+
+      stopMainRfbServer();
+
+      if (!m_srvConfig->isAcceptingRfbConnections()) {
+         return;
+      }
+
+      const ::scoped_string & scopedstrBindHost = m_srvConfig->isOnlyLoopbackConnectionsAllowed() ? "localhost") : _T("0.0.0.0";
+      unsigned short bindPort = m_srvConfig->getRfbPort();
+
+      m_plogwriter.scopedstrMessage("Starting main RFB server");
+
+      try {
+        m_rfbServer = new RfbServer(bindHost, bindPort, m_rfbClientManager, m_runAsService, &m_plogwriter);
+      } catch (::subsystem::Exception &ex) {
+        m_plogwriter.error("Failed to start main RFB server: \"{}\"", ex.get_message());
+      }
+    }
+
+   void Server::stopHttpServer()
+   {
+      m_plogwriter.scopedstrMessage("Stopping HTTP server");
+
+      HttpServer *httpServer = 0;
+      {
+         critical_section_lock l(&m_mutex);
+         httpServer = m_httpServer;
+         m_httpServer = 0;
+      }
+      if (httpServer != 0) {
+         delete httpServer;
+      }
+   }
+
+   void Server::stopControlServer()
+   {
+      m_plogwriter.scopedstrMessage("Stopping control server");
+
+      ControlServer *controlServer = 0;
+      {
+         critical_section_lock l(&m_mutex);
+         controlServer = m_controlServer;
+         m_controlServer = 0;
+      }
+      if (controlServer != 0) {
+         delete controlServer;
+      }
+   }
+
+   void Server::stopMainRfbServer()
+   {
+      m_plogwriter.scopedstrMessage("Stopping main RFB server");
+
+      RfbServer *rfbServer = 0;
+      {
+         critical_section_lock l(&m_mutex);
+         rfbServer = m_rfbServer;
+         m_rfbServer = 0;
+      }
+      if (rfbServer != 0) {
+         delete rfbServer;
+      }
+   }
+
+   void Server::changeLogProps()
+   {
+      ::string logDir;
+      unsigned char logLevel;
+      {
+         critical_section_lock al(&m_mutex);
+         m_srvConfig->getLogFileDir(&logDir);
+         logLevel = m_srvConfig->getLogLevel();
+      }
+      m_logInitListener->onChangeLogProps(logDir, logLevel);
+   }
+} // namespace remoting_node_desktop

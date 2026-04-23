@@ -2,11 +2,11 @@ cmake_minimum_required(VERSION 3.16)
 project(remoting)
 
 
-
-add_subdirectory(remoting_common)
 add_subdirectory(remoting)
-add_subdirectory(remoting_node)
-add_subdirectory(remoting_node_desktop)
+add_subdirectory(client)
+add_subdirectory(control_desktop)
+add_subdirectory(node_desktop)
+
 
 #add_subdirectory(client_config)
 #add_subdirectory(config)
@@ -46,3 +46,6 @@ add_subdirectory(remoting_node_desktop)
 ##add_subdirectory(wsconfig_lib)
 ##add_subdirectory(x64)
 #add_subdirectory(zlib)
+
+
+

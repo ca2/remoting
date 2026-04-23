@@ -1,0 +1,101 @@
+// Copyright (C) 2009,2010,2011,2012 GlavSoft LLC.
+// All rights reserved.
+//
+//-------------------------------------------------------------------------
+// This file is part of the TightVNC software.  Please visit our Web site:
+//
+//                       http://www.tightvnc.com/
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//-------------------------------------------------------------------------
+//
+
+#pragma once
+
+
+#include "subsystem/node/OperatingSystemApplication.h"
+////#include "subsystem/AnEventListener.h"
+#include "subsystem/node/AnonymousPipe.h"
+#include "desktop_ipc/BlockingGate.h"
+#include "desktop_ipc/DesktopSrvDispatcher.h"
+#include "desktop_ipc/UpdateHandlerServer.h"
+#include "desktop_ipc/UserInputServer.h"
+#include "desktop_ipc/ConfigServer.h"
+#include "desktop_ipc/GateKickHandler.h"
+#include "subsystem/thread/SessionChangesWatcher.h"
+#include "subsystem/node/LocalOperatingSystemApplication.h"
+//#include "log-server/ClientLogWriter.h"
+//#include "log_writer/LogWriter.h"
+#include "remoting/remoting/server_config/ConfigReloadListener.h"
+#include "subsystem/CommandLineArguments.h"
+
+/**
+ * Desktop server application.
+ */
+class DesktopServerApplication : 
+   public ::subsystem::LocalOperatingSystemApplication,
+   //public AnEventListener,
+   public ConfigReloadListener
+{
+public:
+  /**
+   * Initializes desktop server.
+   * @param appInstance HINSTANCE of application.
+   * @throws ::subsystem::Exception (or SystemException) on fail.
+   * @fixme make command line parsing in this class.
+   */
+  DesktopServerApplication(HINSTANCE appInstance,
+                           const ::scoped_string & scopedstrwindowClassName,
+                           const ::subsystem::CommandLineArguments *cmdArgs);
+
+  virtual ~DesktopServerApplication();
+
+  /**
+   * Inherited from superclass.
+   */
+  virtual void run() override;
+
+protected:
+  //virtual void onAnObjectEvent();
+   virtual void onHappening();
+  virtual void onConfigReload(ServerConfig *serverConfig);
+
+private:
+  void freeResources();
+
+  Configurator m_configurator;
+  //::subsystem::LogWriter *m_clientLogWriter;
+  ::subsystem::LogWriter * m_plogwriter;
+
+  // Transport
+  ::subsystem::AnonymousPipe *m_clToSrvChan;
+  ::subsystem::AnonymousPipe *m_srvToClChan;
+  BlockingGate *m_clToSrvGate;
+  BlockingGate *m_srvToClGate;
+
+  DesktopSrvDispatcher *m_dispatcher;
+
+  // Servers
+  UpdateHandlerServer *m_updHandlerSrv;
+  UserInputServer *m_uiSrv;
+  ConfigServer *m_cfgServer;
+  GateKickHandler *m_gateKickHandler;
+
+  ::subsystem::SessionChangesWatcher *m_sessionChangesWatcher;
+
+  unsigned int m_contextSwitchResolution; // in ms
+};
+
+//// __DESKTOPSERVER_H__

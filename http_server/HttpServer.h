@@ -26,7 +26,7 @@
 
 
 #include "subsystem/_common_header.h"
-#include "remoting/remoting_common/network/TcpServer.h"
+#include "remoting/remoting/network/TcpServer.h"
 //#include "log_writer/LogWriter.h"
 
 /**

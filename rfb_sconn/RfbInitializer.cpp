@@ -25,15 +25,15 @@
 //#include "acme/_operating_system.h"
 #include "RfbInitializer.h"
 //#include "subsystem/thread/critical_section.h"
-#include "remoting/remoting_common/rfb/VendorDefs.h"
-#include "remoting/remoting_common/rfb/AuthDefs.h"
+#include "remoting/remoting/rfb/VendorDefs.h"
+#include "remoting/remoting/rfb/AuthDefs.h"
 #include "CapContainer.h"
-#include "remoting/remoting_common/server_config/Configurator.h"
+#include "remoting/remoting/server_config/Configurator.h"
 #include "AuthException.h"
-#include "remoting/remoting_common/util/VncPassCrypt.h"
-//#include "remoting/remoting_common/win_system/Environment.h"
-//#include "remoting/remoting_common/util/::string.h"
-#include "remoting_node_desktop/NamingDefs.h"
+#include "subsystem/VncPassCrypt.h"
+//#include "remoting/remoting/win_system/Environment.h"
+//#include "subsystem/::string.h"
+#include "remoting/node_desktop/NamingDefs.h"
 
 // #include aaa_<stdlib.h>
 //#include aaa_<time.h>

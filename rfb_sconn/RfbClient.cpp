@@ -28,12 +28,12 @@
 #include "RfbCodeRegistrator.h"
 #include "ft_server_lib/FileTransferRequestHandler.h"
 #include "EchoExtensionRequestHandler.h"
-//#include "remoting/remoting_common/network/socket/SocketStream.h"
+//#include "remoting/remoting/network/socket/SocketStream.h"
 #include "RfbInitializer.h"
 #include "ClientAuthListener.h"
-#include "remoting/remoting_common/server_config/Configurator.h"
+#include "remoting/remoting/server_config/Configurator.h"
 #include "acme/input_output/BufferedInputStream.h"
-#include "remoting/remoting_common/util/MemUsage.h"
+#include "subsystem/MemUsage.h"
 
 RfbClient::RfbClient(NewConnectionEvents *newConnectionEvents,
                      SocketIPv4 *socket,

@@ -27,18 +27,19 @@
 
 #include "subsystem/thread/Thread.h"
 #include "RfbDispatcherListener.h"
-#include "remoting/remoting_common/util/AnEventListener.h"
-#include "remoting/remoting_common/win_system/WindowsEvent.h"
+//#include "subsystem/AnEventListener.h"
+//#include "remoting/remoting/win_system/WindowsEvent.h"
 //#include aaa_<map>
 
-class RfbDispatcher : public Thread
+class RfbDispatcher : public ::subsystem::Thread
 {
 public:
-  RfbDispatcher(RfbInputGate *gate,
-                AnEventListener *m_extTerminationListener);
-  RfbDispatcher(RfbInputGate *gate,
-                WindowsEvent *terminationEvent);
-
+  //RfbDispatcher(RfbInputGate *gate,
+  //              AnEventListener *m_extTerminationListener);
+  //RfbDispatcher(RfbInputGate *gate,
+  //              WindowsEvent *terminationEvent);
+   RfbDispatcher(::remoting::RfbInputGate *gate,
+                const ::procedure & procedureTermination);
   virtual ~RfbDispatcher();
 
   void registerNewHandle(unsigned int code, RfbDispatcherListener *listener);
@@ -47,12 +48,13 @@ protected:
   virtual void execute();
   void notifyAbTermination();
 
-  RfbInputGate *m_gate;
+  ::remoting::RfbInputGate *m_gate;
 
   ::map<unsigned int, RfbDispatcherListener *> m_handlers;
 
-  AnEventListener *m_extTerminationListener;
-  WindowsEvent *m_terminationEvent;
+  ::procedure m_procedureTermination;
+  //AnEventListener *m_extTerminationListener;
+  //WindowsEvent *m_terminationEvent;
 };
 
 //// __RFBDISPATCHER_H__

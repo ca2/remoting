@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "remoting/remoting_common/network/TcpClientThread.h"
+#include "remoting/remoting/network/TcpClientThread.h"
 
-//#include "remoting/remoting_common/network/socket/SocketIPv4.h"
+//#include "remoting/remoting/network/socket/SocketIPv4.h"
 
 #include "acme/input_output/Channel.h"
 #include "acme/input_output/DataInputStream.h"

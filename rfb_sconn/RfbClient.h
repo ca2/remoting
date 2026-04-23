@@ -26,12 +26,12 @@
 
 
 //#include aaa_<list>
-//#include "remoting/remoting_common/network/socket/SocketIPv4.h"
-//#include "remoting/remoting_common/win_system/WindowsEvent.h"
+//#include "remoting/remoting/network/socket/SocketIPv4.h"
+//#include "remoting/remoting/win_system/WindowsEvent.h"
 #include "subsystem/thread/Thread.h"
-#include "remoting/remoting_common/network/RfbOutputGate.h"
+#include "remoting/remoting/network/RfbOutputGate.h"
 #include "desktop/Desktop.h"
-#include "remoting/remoting_common/fb_update_sender/UpdateSender.h"
+#include "remoting/node_desktop/fb_update_sender/UpdateSender.h"
 //#include "log_writer/LogWriter.h"
 
 #include "RfbDispatcher.h"
@@ -39,8 +39,8 @@
 #include "ClientInputHandler.h"
 #include "ClientTerminationListener.h"
 #include "ClientInputEventListener.h"
-#include "remoting_node_desktop/NewConnectionEvents.h"
-#include "remoting/remoting_common/util/DemandTimer.h"
+#include "remoting/node_desktop/NewConnectionEvents.h"
+#include "subsystem/DemandTimer.h"
 
 class ClientAuthListener;
 
@@ -55,10 +55,10 @@ enum ClientState
 };
 
 // FIXME: Document it, i understand nothing from such kind of description.
-class RfbClient: public Thread, ClientInputEventListener, private SenderControlInformationInterface
+class RfbClient: public ::subsystem::Thread, ClientInputEventListener, private SenderControlInformationInterface
 {
 public:
-  RfbClient(NewConnectionEvents *newConnectionEvents, SocketIPv4 *socket,
+  RfbClient(NewConnectionEvents *newConnectionEvents, ::subsystem::SocketIPv4Interface *socket,
             ClientTerminationListener *extTermListener,
             ClientAuthListener *extAuthListener, bool viewOnly,
             bool isOutgoing, unsigned int id,
@@ -75,7 +75,7 @@ public:
   unsigned int getId() const;
   void getPeerHost(::string & address);
   void getLocalIpAddress(::string & address);
-  void getSocketAddr(SocketAddressIPv4 *addr) const;
+  ::pointer < ::subsystem::SocketAddressIPv4Interface > getSocketAddr() const;
 
   // Return true if connection has been initialised from the server to a client
   // else return false.
@@ -91,7 +91,7 @@ public:
 
   bool clientIsReady() const { return m_updateSender->clientIsReady(); }
   void sendUpdate(const UpdateContainer *updateContainer,
-                  const CursorShape *cursorShape);
+                  const ::remoting::CursorShape *cursorShape);
   void sendClipboard(const ::scoped_string & newClipboard);
 
 protected:
@@ -115,17 +115,18 @@ private:
   void setClientState(ClientState newState);
 
   ::int_rectangle getViewPortRect(const ::int_size & fbDimension);
-  virtual void onGetViewPort(::int_rectangle *viewRect, bool *shareApp, Region *shareAppRegion);
+  virtual void onGetViewPort(::int_rectangle *viewRect, bool *shareApp, ::remoting::Region *shareAppRegion);
   void getViewPortInfo(const ::int_size & fbDimension, ::int_rectangle *resultRect,
-                       bool *shareApp, Region *shareAppRegion);
+                       bool *shareApp, ::remoting::Region *shareAppRegion);
 
   ClientState m_clientState;
   bool m_isMarkedOk;
   critical_section m_clientStateMut;
   ClientTerminationListener *m_extTermListener;
-  WindowsEvent m_connClosingEvent;
+  //WindowsEvent m_connClosingEvent;
+  ::happening m_connClosingEvent;
 
-  SocketIPv4 *m_socket;
+  ::subsystem::SocketIPv4 *m_socket;
 
   ClientAuthListener *m_extAuthListener;
 

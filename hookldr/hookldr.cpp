@@ -23,9 +23,9 @@
 //
 
 #include "subsystem/_common_header.h"
-#include "remoting/remoting_common/util/StringParser.h"
+#include "subsystem/StringParser.h"
 #include "HookLoaderApplication.h"
-#include "remoting_node_desktop/NamingDefs.h"
+#include "remoting/node_desktop/NamingDefs.h"
 
 int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
                        LPTSTR lpCmdLine, int nCmdShow)

@@ -1,0 +1,96 @@
+// Copyright (C) 2012 GlavSoft LLC.
+// All rights reserved.
+//
+//-------------------------------------------------------------------------
+// This file is part of the TightVNC software.  Please visit our Web site:
+//
+//                       http://www.tightvnc.com/
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//-------------------------------------------------------------------------
+//
+// From AuthenticationDialog.h by 
+// camilo on 2026-02-12 21:12 <3ThomasBorregaardSørensen!!
+#pragma once
+
+#include "innate_subsystem/gui/Dialog.h"
+#include "innate_subsystem/gui/ProgressBar.h"
+#include "innate_subsystem/gui/TextBox.h"
+//#include "resource.h"
+
+//class BaseDialog;
+//class ProgressBar;
+//class TextBox;
+
+namespace remoting_client
+{
+
+
+    class progress_bar_animation :
+    virtual public ::particle
+    {
+    public:
+
+        innate_subsystem::ProgressBar m_bar;
+        double m_dStart = 0.0;
+        double m_dEnd = 0.0;
+        double m_d;
+        class ::time m_time;
+        bool m_bRunning = false;
+
+        progress_bar_animation();
+        ~progress_bar_animation();
+
+        void set_animation_range(double dStart, double dEnd);
+
+        void run() override;
+
+    };
+
+
+    class ConnectingDialog : public innate_subsystem::Dialog
+    {
+    public:
+
+
+        ::pointer < progress_bar_animation > m_panimation;
+        ::innate_subsystem::TextBox m_textboxHost;
+        ::innate_subsystem::TextBox m_textboxStatus;
+        ::string  m_strHost;
+        ::string m_strStatus;
+
+
+        ConnectingDialog();
+
+
+        // this function returns sets the name of host in dialog
+        void set_host(const ::scoped_string & scopedstrHost);
+        void set_status(const ::scoped_string &scopedstrStatus);
+        void _start_animating_progress_range(double dStart, double dEnd);
+        void set_phase1();
+        void set_connecting(int iPhase);
+
+        //protected:
+        bool onCommand(unsigned int controlID, unsigned int notificationID);
+        bool onInitDialog();
+
+        virtual bool dialog_procedure(::iptr & iptrResult, unsigned int message, ::wparam wparam, ::lparam lparam);
+
+    };
+
+
+} // namespace remoting_client
+
+

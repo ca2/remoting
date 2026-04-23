@@ -1,0 +1,61 @@
+// Copyright (C) 2012 GlavSoft LLC.
+// All rights reserved.
+//
+//-------------------------------------------------------------------------
+// This file is part of the TightVNC software.  Please visit our Web site:
+//
+//                       http://www.tightvnc.com/
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//-------------------------------------------------------------------------
+//
+
+#pragma once
+
+
+#include "ScreenDriverFactory.h"
+#include "remoting/remoting/server_config/ServerConfig.h"
+
+class Win32ScreenDriverFactory : public ScreenDriverFactory
+{
+public:
+  // The factory stores pointer to a ServerConfig object and will use it on
+  // createScreenDriver() function calls.
+  Win32ScreenDriverFactory(ServerConfig *srvConf);
+  virtual ~Win32ScreenDriverFactory();
+
+  virtual ScreenDriver *createScreenDriver(UpdateKeeper *updateKeeper,
+                                             UpdateListener *updateListener,
+                                             ::innate_subsystem::FrameBuffer *fb,
+                                             critical_section *fbcritical_section,
+                                             ::subsystem::LogWriter *log);
+private:
+  ScreenDriver *createStandardScreenDriver(UpdateKeeper *updateKeeper,
+                                             UpdateListener *updateListener,
+                                             ::innate_subsystem::FrameBuffer *fb,
+                                             critical_section *fbcritical_section,
+                                             ::subsystem::LogWriter *log);
+  ScreenDriver *createMirrorScreenDriver(UpdateKeeper *updateKeeper,
+                                           UpdateListener *updateListener,
+                                           critical_section *fbcritical_section,
+                                           ::subsystem::LogWriter *log);
+
+  bool isMirrorDriverAllowed();
+  bool isD3DAllowed();
+
+  ServerConfig *m_srvConf;
+};
+
+//// __WIN32SCREENDRIVERFACTORY_H__

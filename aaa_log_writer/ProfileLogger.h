@@ -25,7 +25,7 @@
 #pragma once
 
 
-//#include "remoting/remoting_common/util/::earth::time.h"
+//#include "subsystem/::earth::time.h"
 //#include aaa_<vector>
 //#include aaa_<map>
 #include "remoting/thread/critical_section.h"

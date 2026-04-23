@@ -24,9 +24,9 @@
 
 #include "ScreenHooks.h"
 #include "subsystem/_common_header.h"
-#include "remoting_node_desktop/NamingDefs.h"
-#include "remoting/remoting_common/region/Point.h"
-#include "remoting/remoting_common/region/Region.h"
+#include "remoting/node_desktop/NamingDefs.h"
+//#include "remoting/remoting/region/::int_point.h"
+#include "remoting/remoting/region/Region.h"
 
 // Pre-definition:
 LRESULT CALLBACK callWndRetProc(int nCode, ::wparam wParam, ::lparam lParam);
@@ -189,7 +189,7 @@ void sendNClientRegion(HWND hwnd)
 
 ::int_rectangle getWindowRect(HWND hwnd)
 {
-  Point offset;
+  ::int_point offset;
   offset.x = GetSystemMetrics(SM_XVIRTUALSCREEN);
   offset.y = GetSystemMetrics(SM_YVIRTUALSCREEN);
 
