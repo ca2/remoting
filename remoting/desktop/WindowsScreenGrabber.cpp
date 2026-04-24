@@ -31,7 +31,7 @@ namespace remoting_node_desktop
 
    WindowsScreenGrabber::WindowsScreenGrabber(void) : m_destDC(NULL), m_screenDC(NULL), m_hbmDIB(NULL), m_hbmOld(NULL)
    {
-      m_serverConfig = Configurator::getInstance()->getServerConfig();
+      m_pserverconfig = m_pconfigurator->getServerConfig();
       setWorkRectDefault();
       resume();
       m_hasStartedSignal.waitForEvent();
@@ -228,7 +228,7 @@ namespace remoting_node_desktop
       }
 
       DWORD bitBltFlag;
-      if (m_serverConfig->getGrabTransparentWindowsFlag())
+      if (m_pserverconfig->getGrabTransparentWindowsFlag())
       {
          bitBltFlag = SRCCOPY | CAPTUREBLT;
       }

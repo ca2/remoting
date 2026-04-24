@@ -63,7 +63,7 @@ namespace remoting_node_desktop
 
    unsigned int WinVideoRegionUpdaterImpl::getInterval()
    {
-      ServerConfig *srvConf = Configurator::getInstance()->getServerConfig();
+      ServerConfig *srvConf = m_pconfigurator->getServerConfig();
       return srvConf->getVideoRecognitionInterval();
    }
 
@@ -76,7 +76,7 @@ namespace remoting_node_desktop
    void WinVideoRegionUpdaterImpl::getClassNamesAndRectsFromConfig(::string_array &classNames,
                                                                    ::array_base<::int_rectangle> &rects)
    {
-      ServerConfig *srvConf = Configurator::getInstance()->getServerConfig();
+      ServerConfig *srvConf = m_pconfigurator->getServerConfig();
       critical_section_lock al(srvConf);
       classNames = *srvConf->getVideoClassNames();
       rects = *srvConf->getVideoRects();

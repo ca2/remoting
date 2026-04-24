@@ -118,7 +118,7 @@ void RfbInitializer::checkForLoopback()
 
   bool isLoopback = (unsigned long)addrIn.sin_addr.S_un.S_addr == 16777343;
 
-  ServerConfig *srvConf = Configurator::getInstance()->getServerConfig();
+  ServerConfig *srvConf = m_pconfigurator->getServerConfig();
   if (isLoopback && !srvConf->isLoopbackConnectionsAllowed()) {
     throw ::subsystem::Exception("Sorry, loopback connections are not enabled");
   }
@@ -133,7 +133,7 @@ void RfbInitializer::doTightAuth()
   m_output->writeUInt32(0);
   // Negotiate authentication.
   // FIXME: Recognize authentication types.
-  if (Configurator::getInstance()->getServerConfig()->isUsingAuthentication()
+  if (m_pconfigurator->getServerConfig()->isUsingAuthentication()
       && m_authAllowed) {
     CapContainer authInfo;
     authInfo.addCap(AuthDefs::VNC, VendorDefs::STANDARD, AuthDefs::SIG_VNC);
@@ -183,7 +183,7 @@ void RfbInitializer::doVncAuth()
   checkForBan();
 
   // Comparing the challenge with the response.
-  ServerConfig *srvConf = Configurator::getInstance()->getServerConfig();
+  ServerConfig *srvConf = m_pconfigurator->getServerConfig();
   bool hasPrim = srvConf->hasPrimaryPassword();
   bool hasRdly = srvConf->hasReadOnlyPassword();
 
@@ -230,7 +230,7 @@ void RfbInitializer::initAuthenticate()
   try {
     // Determine effective security type from the configuration.
     unsigned int primSecType = SecurityDefs::VNC;
-    if (!Configurator::getInstance()->getServerConfig()->isUsingAuthentication()
+    if (!m_pconfigurator->getServerConfig()->isUsingAuthentication()
         || !m_authAllowed) {
       primSecType = SecurityDefs::NONE;
     }

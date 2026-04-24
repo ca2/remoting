@@ -109,7 +109,7 @@ namespace remoting_node_desktop
             doUpdate();
          }
 
-         unsigned int pollInterval = Configurator::getInstance()->getServerConfig()->getPollingInterval();
+         unsigned int pollInterval = m_pconfigurator->getServerConfig()->getPollingInterval();
          m_intervalWaiter.waitForEvent(pollInterval);
       }
    }

@@ -27,7 +27,7 @@
 
 //#include "subsystem/thread/critical_section.h"
 #include "subsystem/thread/Thread.h"
-#include "desktop/UpdateKeeper.h"
+#include "remoting/remoting/desktop/UpdateKeeper.h"
 #include "UpdateRequestListener.h"
 #include "innate_subsystem/framebuffer/FrameBuffer.h"
 #include "ViewPort.h"

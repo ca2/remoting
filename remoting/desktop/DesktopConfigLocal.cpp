@@ -38,7 +38,7 @@ namespace remoting_node_desktop
 
    void DesktopConfigLocal::updateByNewSettings()
    {
-      ServerConfig *srvConf = Configurator::getInstance()->getServerConfig();
+      ServerConfig *srvConf = m_pconfigurator->getServerConfig();
       bool hardBlocking = srvConf->isBlockingLocalInput();
       m_inputBlocker->setKeyboardBlocking(hardBlocking);
       m_inputBlocker->setMouseBlocking(hardBlocking);

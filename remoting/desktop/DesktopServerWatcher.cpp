@@ -54,7 +54,7 @@ namespace remoting_node_desktop
 
       try
       {
-         bool connectRdpSession = Configurator::getInstance()->getServerConfig()->getConnectToRdpFlag();
+         bool connectRdpSession = m_pconfigurator->getServerConfig()->getConnectToRdpFlag();
          m_process = new CurrentConsoleProcess(m_plogwriter, connectRdpSession, path);
       }
       catch (...)
@@ -101,12 +101,12 @@ namespace remoting_node_desktop
 
             // TightVNC server log directory.
             ::string logDir;
-            Configurator::getInstance()->getServerConfig()->getLogFileDir(&logDir);
+            m_pconfigurator->getServerConfig()->getLogFileDir(&logDir);
 
             // Arguments that must be passed to desktop server application.
             ::string args;
             args.formatf("-desktopserver -logdir \"{}\" -loglevel {} -shmemname {}", logDir,
-                         Configurator::getInstance()->getServerConfig()->getLogLevel(), shMemName);
+                         m_pconfigurator->getServerConfig()->getLogLevel(), shMemName);
 
             m_process->setArguments(args);
             start();

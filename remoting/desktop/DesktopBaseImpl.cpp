@@ -212,7 +212,7 @@ namespace remoting_node_desktop
    {
       m_plogwriter->debug("checking remote input allowing");
 
-      bool enabled = !Configurator::getInstance()->getServerConfig()->isBlockingRemoteInput();
+      bool enabled = !m_pconfigurator->getServerConfig()->isBlockingRemoteInput();
       enabled = enabled && !isRemoteInputTempBlocked();
       return enabled;
    }

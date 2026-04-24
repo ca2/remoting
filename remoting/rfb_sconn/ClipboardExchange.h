@@ -27,43 +27,50 @@
 
 #include "RfbDispatcherListener.h"
 #include "RfbCodeRegistrator.h"
-#include "desktop/Desktop.h"
+#include "remoting/remoting/desktop/Desktop.h"
 #include "remoting/remoting/network/RfbOutputGate.h"
 //#include "log_writer/LogWriter.h"
 
-class ClipboardExchange : public RfbDispatcherListener, public ::subsystem::Thread
+
+namespace remoting
 {
-public:
-  ClipboardExchange(RfbCodeRegistrator *codeRegtor, Desktop *desktop,
-                    ::remoting::RfbOutputGate *output, bool viewOnly, ::subsystem::LogWriter *log);
-  virtual ~ClipboardExchange();
+   class ClipboardExchange : public RfbDispatcherListener, public ::subsystem::Thread
+   {
+   public:
+      ClipboardExchange(RfbCodeRegistrator *codeRegtor, Desktop *desktop,
+                        ::remoting::RfbOutputGate *output, bool viewOnly, ::subsystem::LogWriter *log);
+      virtual ~ClipboardExchange();
 
-  void sendClipboard(const ::scoped_string & newClipboard);
+      void sendClipboard(const ::scoped_string & newClipboard);
 
-protected:
-  // Listen function
-  virtual void onRequest(unsigned int reqCode, ::remoting::RfbInputGate *input);
-  virtual void execute();
-  virtual void onTerminate();
+   protected:
+      // Listen function
+      virtual void onRequest(unsigned int reqCode, ::remoting::RfbInputGate *input);
+      virtual void execute();
+      virtual void onTerminate();
 
-private:
-  void onRequestWorker(bool utf8data, ::remoting::RfbInputGate *input);
+   private:
+      void onRequestWorker(bool utf8data, ::remoting::RfbInputGate *input);
 
-  bool m_viewOnly;
-  bool m_isUtf8ClipboardEnabled;
-  Desktop *m_desktop;
-  ::remoting::RfbOutputGate *m_output;
+      bool m_viewOnly;
+      bool m_isUtf8ClipboardEnabled;
+      Desktop *m_desktop;
+      ::remoting::RfbOutputGate *m_output;
 
-  //WindowsEvent m_newClipWaiter;
+      //WindowsEvent m_newClipWaiter;
 
-  ::happening m_newClipWaiter;
-  
+      ::happening m_newClipWaiter;
 
-  ::string m_storedClip;
-  bool m_hasNewClip;
-  critical_section m_storedClipMut;
 
-  ::subsystem::LogWriter *m_plogwriter;
-};
+      ::string m_storedClip;
+      bool m_hasNewClip;
+      critical_section m_storedClipMut;
 
-//// __CLIPBOARDEXCHANGE_H__
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+
+} // namespace remoting
+
+
+

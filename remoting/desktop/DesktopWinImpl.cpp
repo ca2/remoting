@@ -40,7 +40,7 @@ namespace remoting_node_desktop
    DesktopWinImpl::DesktopWinImpl(ClipboardListener *extClipListener, UpdateSendingListener *extUpdSendingListener,
                                   AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter *log) :
        DesktopBaseImpl(extClipListener, extUpdSendingListener, extDeskTermListener, log), m_wallPaper(0), m_deskConf(0),
-       m_plogwriter(log), m_scrDriverFactory(Configurator::getInstance()->getServerConfig())
+       m_plogwriter(log), m_scrDriverFactory(m_pconfigurator->getServerConfig())
    {
       m_plogwriter->information("Creating DesktopWinImpl");
 
@@ -56,7 +56,7 @@ namespace remoting_node_desktop
          m_wallPaper = new WallpaperUtil(m_plogwriter);
          m_wallPaper->updateWallpaper();
 
-         Configurator::getInstance()->addListener(this);
+         m_pconfigurator->addListener(this);
       }
       catch (::subsystem::Exception &ex)
       {
@@ -78,7 +78,7 @@ namespace remoting_node_desktop
 
    void DesktopWinImpl::freeResource()
    {
-      Configurator::getInstance()->removeListener(this);
+      m_pconfigurator->removeListener(this);
 
       if (m_wallPaper)
          delete m_wallPaper;

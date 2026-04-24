@@ -177,7 +177,7 @@ void RfbClient::execute()
   sysLogMessage.formatf("The client {} has disconnected",
                        peerStr);
 
-  ServerConfig *config = Configurator::getInstance()->getServerConfig();
+  ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
 
   SocketStream sockStream(m_socket);
 

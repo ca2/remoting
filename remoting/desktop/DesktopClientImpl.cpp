@@ -84,7 +84,7 @@ namespace remoting_node_desktop
          onConfigReload(0);
 
          m_plogwriter->debug("DesktopClientImpl: Registering as a listener in the Configurator");
-         Configurator::getInstance()->addListener(this);
+         m_pconfigurator->addListener(this);
       }
       catch (::subsystem::Exception &ex)
       {
@@ -107,7 +107,7 @@ namespace remoting_node_desktop
 
    void DesktopClientImpl::freeResource()
    {
-      Configurator::getInstance()->removeListener(this);
+      m_pconfigurator->removeListener(this);
 
       if (m_deskServWatcher)
          delete m_deskServWatcher;

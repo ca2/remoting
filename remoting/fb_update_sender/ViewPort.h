@@ -27,7 +27,7 @@
 
 #include "ViewPortState.h"
 #include "innate_subsystem/framebuffer/FrameBuffer.h"
-#include "desktop/Desktop.h"
+#include "remoting/remoting/desktop/Desktop.h"
 //#include "subsystem/thread/critical_section.h"
 //#include "subsystem/platform/::earth::time.h"
 //#include "log_writer/LogWriter.h"
@@ -53,7 +53,7 @@ namespace remoting_node_desktop
 
       // Sets desktop interface that can be used in some mode to get
       // desktop info. The desktop interface uses only in the update() function.
-      void initDesktopInterface(Desktop *desktop);
+      void initDesktopInterface(::remoting::Desktop *desktop);
 
       // This function updates view port rectangle. The new view port rectangle
       // will be constrained by fbDimension.

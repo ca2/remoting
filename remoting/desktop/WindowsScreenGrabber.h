@@ -110,7 +110,7 @@ namespace remoting_node_desktop
 
       // private:
       ::int_size m_dibSectionDim;
-      ServerConfig *m_serverConfig;
+      ServerConfig *m_pserverconfig;
 
       // Screen m_screen;
       ::subsystem::Screen m_screen;

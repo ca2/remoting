@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "desktop/Desktop.h"
+#include "remoting/remoting/desktop/Desktop.h"
 #include "rfb_sconn/RfbClient.h"
 #include "AuthException.h"
 

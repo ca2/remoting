@@ -34,12 +34,12 @@ namespace remoting_node_desktop
 
    WallpaperUtil::WallpaperUtil(::subsystem::LogWriter *log) : m_wasDisabled(false), m_plogwriter(log)
    {
-      Configurator::getInstance()->addListener(this);
+      m_pconfigurator->addListener(this);
    }
 
    WallpaperUtil::~WallpaperUtil()
    {
-      Configurator::getInstance()->removeListener(this);
+      m_pconfigurator->removeListener(this);
       if (m_wasDisabled)
       {
          try
@@ -60,7 +60,7 @@ namespace remoting_node_desktop
    {
       try
       {
-         ServerConfig *srvConf = Configurator::getInstance()->getServerConfig();
+         ServerConfig *srvConf = m_pconfigurator->getServerConfig();
          if (srvConf->isRemovingDesktopWallpaperEnabled())
          {
             disableWallpaper();
