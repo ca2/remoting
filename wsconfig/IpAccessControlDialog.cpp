@@ -30,8 +30,8 @@
 #include "remoting/remoting/server_config/Configurator.h"
 #include "remoting/remoting/server_config/IpAccessControl.h"
 #include "subsystem/_common_header.h"
-#include "subsystem/StringParser.h"
-//#include "subsystem/::string.h"
+#include "subsystem/platform/StringParser.h"
+//#include "subsystem/platform/::string.h"
 
 IpAccessControlDialog::IpAccessControlDialog()
 : BaseDialog(IDD_CONFIG_ACCESS_CONTROL_PAGE), m_parentDialog(NULL)

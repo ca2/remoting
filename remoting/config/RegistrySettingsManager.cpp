@@ -23,8 +23,8 @@
 //
 #include "framework.h"
 #include "RegistrySettingsManager.h"
-#include "subsystem/StringParser.h"
-#include "subsystem/RegistryKey.h"
+#include "subsystem/platform/StringParser.h"
+#include "subsystem/platform/RegistryKey.h"
 //#include aaa_<vector>
 
 namespace remoting

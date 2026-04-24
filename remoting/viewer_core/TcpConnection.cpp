@@ -27,7 +27,7 @@
 #include "subsystem/socket/SocketStream.h"
 #include "TcpConnection.h"
 
-//#include "subsystem_bsd_sockets/subsystem.h"
+//#include "subsystem_bsd_sockets/platform/subsystem.h"
 
 
 namespace remoting

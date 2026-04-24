@@ -23,8 +23,8 @@
 //
 #include "framework.h"
 #include "ConnectionConfigSM.h"
-#include "subsystem/Registry.h"
-#include "subsystem/subsystem.h"
+#include "subsystem/platform/Registry.h"
+#include "subsystem/platform/subsystem.h"
 
 
 namespace remoting

@@ -26,17 +26,17 @@
 //#include "subsystem/thread/ZombieKiller.h"
 #include "QueryConnectionApplication.h"
 #include "remoting/node_desktop/server_config/Configurator.h"
-#include "subsystem/MemUsage.h"
-#include "subsystem_bsd_sockets/SocketAddressIPv4.h"
+#include "subsystem/platform/MemUsage.h"
+#include "subsystem_bsd_sockets/socket/SocketAddressIPv4.h"
 #include "subsystem/socket/SocketIPv4.h"
 
 RfbClientManager::RfbClientManager(const ::scoped_string & scopedstrServerName,
-                                   NewConnectionEvents *newConnectionEvents,
+                                   ::remoting_node_desktop::NewConnectionEvents * pnewconnectionevents,
                                    ::subsystem::LogWriter *log,
                                    DesktopFactory *desktopFactory)
 : m_nextClientId(0),
   m_desktop(0),
-  m_newConnectionEvents(newConnectionEvents),
+  m_pnewconnectionevents(pnewconnectionevents),
   m_plogwriter(log),
   m_desktopFactory(desktopFactory)
 {
@@ -63,7 +63,7 @@ Desktop *RfbClientManager::onClientAuth(RfbClient *client)
   client->getPeerHost(ip);
   updateIpInBan(ip, true);
 
-  m_newConnectionEvents->onSuccAuth(ip);
+  m_pnewconnectionevents->onSuccAuth(ip);
 
   critical_section_lock al(&m_clientListLocker);
 
@@ -137,8 +137,10 @@ void RfbClientManager::onAuthFailed(RfbClient *client)
 
   updateIpInBan(ip, false);
 
-  m_newConnectionEvents->onAuthFailed(ip);
+  m_pnewconnectionevents->onAuthFailed(ip);
+
 }
+
 
 void RfbClientManager::onCheckAccessControl(RfbClient *client)
 {
@@ -424,7 +426,7 @@ void RfbClientManager::addNewConnection(::subsystem::SocketIPv4Interface *psocke
   m_plogwriter->error("Client #{} connected", m_nextClientId);
   m_plogwriter->debug("new client, process memory usage: {} ", MainSubsystem().getCurrentMemoryUsage());
 
-  m_nonAuthClientList.add(new RfbClient(m_newConnectionEvents,
+  m_nonAuthClientList.add(new RfbClient(m_pnewconnectionevents,
                                               psocket, this, this, viewOnly,
                                               isOutgoing,
                                               m_nextClientId,

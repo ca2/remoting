@@ -29,8 +29,8 @@
 #include "remoting/remoting/rfb/MsgDefs.h"
 //#include aaa_<vector>
 //#include aaa_<algorithm>
-//#include "subsystem/inttypes.h"
-#include "subsystem/Exception.h"
+//#include "subsystem/platform/inttypes.h"
+#include "subsystem/platform/Exception.h"
 #include "UpdSenderMsgDefs.h"
 #include "rfb_sconn/ClipboardExchange.h"
 

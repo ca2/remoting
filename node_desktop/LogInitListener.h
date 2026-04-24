@@ -21,15 +21,28 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-
 #pragma once
 
 
-class LogInitListener
+namespace remoting_node_desktop
 {
-public:
-  virtual void onLogInit(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrFileName, unsigned char logLevel) = 0;
-  virtual void onChangeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel) = 0;
-};
+   
+   
+   class CLASS_DECL_REMOTING_NODE_DESKTOP LogInitListener :
+      virtual public ::Particle
+   {
+   public:
+      
+      
+      virtual void onLogInit(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrFileName, unsigned char logLevel) = 0;
+      virtual void onChangeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel) = 0;
 
-//// __LOGINITLISTENER_H__
+
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+

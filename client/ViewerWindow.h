@@ -49,7 +49,7 @@ namespace remoting_client
 {
 
    
-   class CLASS_DECL_REMOTING_REMOTING ViewerWindow : 
+   class CLASS_DECL_REMOTING_CLIENT ViewerWindow : 
       //public ::innate_subsystem::Window,
       public ::innate_subsystem::Control,
       public ::remoting::CoreEventsAdapter,

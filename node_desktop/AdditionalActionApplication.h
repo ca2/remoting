@@ -47,11 +47,11 @@ namespace remoting_node_desktop
       /**
        * Key identifying lock workstation action.
        */
-      static const char LOCK_WORKSTATION_KEY[];
+      static ::string_literal LOCK_WORKSTATION_KEY;
       /**
        * Key identifying logout action.
        */
-      static const char LOGOUT_KEY[];
+      static ::string_literal LOGOUT_KEY;
 
    public:
       /**

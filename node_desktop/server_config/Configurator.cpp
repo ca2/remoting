@@ -26,8 +26,8 @@
 //#include "remoting/remoting/wsconfig/TvnLogFilename.h"
 #include "remoting/remoting/config/RegistrySettingsManager.h"
 
-#include "subsystem/Registry.h"
-#include "subsystem/RegistryKey.h"
+#include "subsystem/platform/Registry.h"
+#include "subsystem/platform/RegistryKey.h"
 
 #include "Configurator.h"
 #include "remoting/node_desktop/NamingDefs.h"

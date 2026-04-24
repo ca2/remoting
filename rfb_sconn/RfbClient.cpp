@@ -33,7 +33,7 @@
 #include "ClientAuthListener.h"
 #include "remoting/remoting/server_config/Configurator.h"
 #include "acme/input_output/BufferedInputStream.h"
-#include "subsystem/MemUsage.h"
+#include "subsystem/platform/MemUsage.h"
 
 RfbClient::RfbClient(NewConnectionEvents *newConnectionEvents,
                      SocketIPv4 *socket,

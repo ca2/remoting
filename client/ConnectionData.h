@@ -26,7 +26,7 @@
 //#define _CONNECTION_DATA_
 #pragma once
 
-//////#include "subsystem/::string.h"
+//////#include "subsystem/platform/::string.h"
 #include "remoting/remoting/rfb/HostPath.h"
 
 

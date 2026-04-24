@@ -20,5 +20,22 @@ namespace remoting_node_desktop
    class Server;
 
 
+   class ServiceControlCommandLine;
+
+
+   class ServerApplication;
+
+
+   class Service;
+
+
+   class WsConfigRunner;
+
+
+   class NewConnectionEvents;
+
+
+   class WinServiceEvents;
+
 
 } // namespace remoting_node_desktop

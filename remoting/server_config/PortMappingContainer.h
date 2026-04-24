@@ -27,7 +27,7 @@
 
 #include "PortMapping.h"
 
-#include "subsystem/Exception.h"
+#include "subsystem/platform/Exception.h"
 
 #include "acme/input_output/DataInputStream.h"
 #include "acme/input_output/DataOutputStream.h"

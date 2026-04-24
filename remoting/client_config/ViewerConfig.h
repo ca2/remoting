@@ -25,8 +25,8 @@
 #pragma once
 
 
-////////#include "subsystem/::string.h"
-#include "subsystem/Singleton.h"
+////////#include "subsystem/platform/::string.h"
+#include "subsystem/platform/Singleton.h"
 #include "remoting/remoting/config/ConnectionHistory.h"
 //#include "log_writer/FileLogWriter.h"
 ////#include "subsystem/thread/critical_section.h"

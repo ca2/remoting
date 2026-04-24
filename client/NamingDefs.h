@@ -32,35 +32,35 @@ namespace remoting_client
     class ProductNames
     {
     public:
-        static const char PRODUCT_NAME[];
-        static const char VIEWER_PRODUCT_NAME[];
+        static ::string_literal PRODUCT_NAME;
+        static ::string_literal VIEWER_PRODUCT_NAME;
     };
 
     class RegistryPaths
     {
     public:
-        static const char VIEWER_PATH[];
+        static ::string_literal VIEWER_PATH;
     };
 
     class LogNames
     {
     public:
-        static const char VIEWER_LOG_FILE_STUB_NAME[];
-        static const char LOG_DIR_NAME[];
+        static ::string_literal VIEWER_LOG_FILE_STUB_NAME;
+        static ::string_literal LOG_DIR_NAME;
     };
 
 
     class ApplicationNames
     {
     public:
-        static const char WINDOW_CLASS_NAME[];
+        static ::string_literal WINDOW_CLASS_NAME;
     };
 
     class WindowNames
     {
     public:
-        static const char TVN_WINDOW_CLASS_NAME[];
-        static const char TVN_WINDOW_TITLE_NAME[];
-        static const char TVN_SUB_WINDOW_TITLE_NAME[];
+        static ::string_literal TVN_WINDOW_CLASS_NAME;
+        static ::string_literal TVN_WINDOW_TITLE_NAME;
+        static ::string_literal TVN_SUB_WINDOW_TITLE_NAME;
     };
 } // namespace remoting_client

@@ -26,7 +26,7 @@
 
 
 // #include "LogWriter.h"
-// #include "subsystem/CharDefs.h"
+// #include "subsystem/platform/CharDefs.h"
 // #include "ProfileLogWriter.h"
 
 // This class is a high level wrap for the ::subsystem::LogWriter class. It helps write log in different

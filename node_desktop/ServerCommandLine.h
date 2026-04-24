@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "subsystem/CommandLine.h"
+#include "subsystem/platform/CommandLine.h"
 
 /**
  * ServerApplication command line parser.

@@ -23,8 +23,8 @@
 //
 
 #include "MsiProperties.h"
-#include "subsystem/Exception.h"
-#include "subsystem/StringParser.h"
+#include "subsystem/platform/Exception.h"
+#include "subsystem/platform/StringParser.h"
 //#include aaa_<vector>
 
 MsiProperties::MsiProperties(MSIHANDLE handle)

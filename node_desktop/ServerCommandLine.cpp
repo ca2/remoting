@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "ServerCommandLine.h"
-#include "subsystem/CommandLine.h"
+#include "subsystem/platform/CommandLine.h"
 
 ServerCommandLine::ServerCommandLine()
 {

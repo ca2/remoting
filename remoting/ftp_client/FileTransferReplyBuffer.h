@@ -30,8 +30,8 @@
 #include "acme/input_output/DataInputStream.h"
 
 #include "remoting/remoting/ftp_common/FileInfo.h"
-#include "subsystem/Inflater.h"
-#include "subsystem/ZLibException.h"
+#include "subsystem/platform/Inflater.h"
+#include "subsystem/platform/ZLibException.h"
 
 #include "remoting/remoting/ftp_common/OperationNotSupportedException.h"
 

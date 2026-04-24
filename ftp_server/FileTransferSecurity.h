@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "subsystem/Exception.h"
-#include "subsystem/Singleton.h"
+#include "subsystem/platform/Exception.h"
+#include "subsystem/platform/Singleton.h"
 //#include "log_writer/LogWriter.h"
 
 #include "remoting/remoting/win_system/Impersonator.h"

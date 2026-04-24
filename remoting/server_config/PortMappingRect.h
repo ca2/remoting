@@ -26,7 +26,7 @@
 
 
 #include "subsystem/_common_header.h"
-//////#include "subsystem/::string.h"
+//////#include "subsystem/platform/::string.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 
 

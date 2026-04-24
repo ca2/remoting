@@ -43,8 +43,8 @@ public:
 
 private:
   static const TCHAR LIBRARY_NAME[];
-  static const char SET_HOOK_FUNCTION_NAME[];
-  static const char UNSET_HOOK_FUNCTION_NAME[];
+  static ::string_literal SET_HOOK_FUNCTION_NAME;
+  static ::string_literal UNSET_HOOK_FUNCTION_NAME;
 
   DynamicLibrary m_lib;
   FARPROC m_pSetHook;

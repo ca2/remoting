@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "subsystem/Exception.h"
+#include "subsystem/platform/Exception.h"
 #include "remoting/remoting/rfb/StandardPixelFormatFactory.h"
 #include "WinDxCriticalException.h"
 #include "WinDxRecoverableException.h"

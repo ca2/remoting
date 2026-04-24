@@ -27,7 +27,7 @@
 #include "ConfigDialog.h"
 #include "ChangePasswordDialog.h"
 #include "remoting/remoting/server_config/Configurator.h"
-#include "subsystem/StringParser.h"
+#include "subsystem/platform/StringParser.h"
 #include "CommonInputValidation.h"
 #include "UIDataAccess.h"
 // #include aaa_<limits.h>

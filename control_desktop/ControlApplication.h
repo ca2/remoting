@@ -29,9 +29,9 @@
 #include "TransportFactory.h"
 
 #include "subsystem/_common_header.h"
-#include "subsystem/ResourceLoader.h"
-#include "subsystem/Command.h"
-#include "remoting/remoting/server_config/Configurator.h"
+#include "subsystem/platform/ResourceLoader.h"
+#include "subsystem/platform/Command.h"
+#include "remoting/node_desktop/server_config/Configurator.h"
 //#include "log_writer/LogWriter.h"
 
 #include "subsystem/thread/Thread.h"
@@ -43,157 +43,161 @@
 #include "ControlProxy.h"
 #include "Notificator.h"
 
-#include "remoting/remoting/win_system/WindowsApplication.h"
+#include "subsystem/node/OperatingSystemApplication.h"
 
-/**
- * External definition of tray icon.
- */
-class ControlTrayIcon;
 
-/**
- * Windows server control application.
- *
- * Contains code of wscontrol.exe.
- */
-class ControlApplication : public WindowsApplication, /** Windows application running on current interactive desktop. */
-                           public Notificator, /** Implement interface to show notifications. */
-                           private Thread /** Status check thread. */
+namespace remoting_control_desktop
 {
-public:
-  /**
-   * Initializes all subsystems needed for wscontrol application and creates
-   * ControlApplication instance.
-   * @throws ::subsystem::Exception if initialization of needed subsystems has failed.
-   */
-  ControlApplication(HINSTANCE hinst,
-                     const ::scoped_string & scopedstrwindowClassName,
-                     const ::scoped_string & scopedstrCommandLine);
-  /**
-   * Destructor of control application.
-   */
-  virtual ~ControlApplication();
+   /**
+    * External definition of tray icon.
+    */
+   class ControlTrayIcon;
 
-  /**
-   * Executes control application.
-   * @returns exit code.
-   */
-  virtual int run();
+   /**
+    * Windows server control application.
+    *
+    * Contains code of wscontrol.exe.
+    */
+   class ControlApplication : public subsystem::OperatingSystemApplication, /** Windows application running on current interactive desktop. */
+                              public Notificator, /** Implement interface to show notifications. */
+                              public ::subsystem::Thread /** Status check thread. */
+   {
+   public:
+      /**
+       * Initializes all subsystems needed for wscontrol application and creates
+       * ControlApplication instance.
+       * @throws ::subsystem::Exception if initialization of needed subsystems has failed.
+       */
+      ControlApplication(::hinstance hinst,
+                         const ::scoped_string & scopedstrwindowClassName,
+                         const ::scoped_string & scopedstrCommandLine);
+      /**
+       * Destructor of control application.
+       */
+      virtual ~ControlApplication();
 
-  /**
-   * Inherited from Notificator abstract class
-   * @see Notification class for details.
-   */
-  virtual void notifyServerSideException(const ::scoped_string & scopedstrReason);
-  /**
-   * Inherited from Notificator abstract class
-   * @see Notification class for details.
-   */
-  virtual void notifyConnectionLost();
+      /**
+       * Executes control application.
+       * @returns exit code.
+       */
+      virtual int run();
 
-protected:
-  /**
-   * Connect to the control interface of the server. If both -controlservice
-   * and -slave keys were specified, this function makes several tries to
-   * connect, with a pause between tries. That should recover the case when
-   * the control interface starts before the service is fully started.
-   *
-   * @param controlService true if -controlservice was specified in the
-   *   command line, false otherwise. This flag is used to determine the name
-   *   of the pipe to connect to, and affects error handling on connection
-   *   failures (together with the slave flag).
-   * @param slave true if -slave option was specified in the command line,
-   *   false otherwise. This flag affects error handling on connection
-   *   failures (together with the connectService flag).
-   * @throws ::subsystem::Exception on errors.
-   */
-  void connect(bool controlService, bool slave);
+      /**
+       * Inherited from Notificator abstract class
+       * @see Notification class for details.
+       */
+      virtual void notifyServerSideException(const ::scoped_string & scopedstrReason);
+      /**
+       * Inherited from Notificator abstract class
+       * @see Notification class for details.
+       */
+      virtual void notifyConnectionLost();
 
-  /**
-   * Inherited from Thread class.
-   *
-   * Checks TightVNC server status.
-   */
-  void execute();
+   protected:
+      /**
+       * Connect to the control interface of the server. If both -controlservice
+       * and -slave keys were specified, this function makes several tries to
+       * connect, with a pause between tries. That should recover the case when
+       * the control interface starts before the service is fully started.
+       *
+       * @param controlService true if -controlservice was specified in the
+       *   command line, false otherwise. This flag is used to determine the name
+       *   of the pipe to connect to, and affects error handling on connection
+       *   failures (together with the slave flag).
+       * @param slave true if -slave option was specified in the command line,
+       *   false otherwise. This flag affects error handling on connection
+       *   failures (together with the connectService flag).
+       * @throws ::subsystem::Exception on errors.
+       */
+      void connect(bool controlService, bool slave);
 
-  /**
-   * Runs control interface (tray icon).
-   * @param showIcon determinates to show tray icon or not.
-   * @return application exit code.
-   */
-  int runControlInterface(bool showIcon);
-  /**
-   * Runs control command (mode of tvncontrol).
-   * @return application exit code.
-   */
-  int runControlCommand(Command *command);
-  /**
-   * Runs configuration dialog (mode of tvncontrol).
-   * @param configService determinates if we gonna to configure service.
-   * @param isRunAsRequested determinates if admin rights for tvncontrol was already requested
-   * by parent process, ignored when configService is false.
-   * @remark if configService is true and application don't have admin rights, then it
-   * will start new process requesting admin rights.
-   * @return application exit code.
-   * @remark Call this function only to config in offline mode because it uses
-   * the registry.
-   */
-  int runConfigurator(bool configService, bool isRunAsRequested);
+      /**
+       * Inherited from Thread class.
+       *
+       * Checks TightVNC server status.
+       */
+      void execute();
 
-  // Checks the rfb and administrator authentications. If one of them is empty
-  // the function runs a dialog to prompt to enable the both authentication and
-  // to set or to add passwords.
-  int checkServicePasswords(bool isRunAsRequested);
+      /**
+       * Runs control interface (tray icon).
+       * @param showIcon determinates to show tray icon or not.
+       * @return application exit code.
+       */
+      int runControlInterface(bool showIcon);
+      /**
+       * Runs control command (mode of tvncontrol).
+       * @return application exit code.
+       */
+      int runControlCommand(Command *command);
+      /**
+       * Runs configuration dialog (mode of tvncontrol).
+       * @param configService determinates if we gonna to configure service.
+       * @param isRunAsRequested determinates if admin rights for tvncontrol was already requested
+       * by parent process, ignored when configService is false.
+       * @remark if configService is true and application don't have admin rights, then it
+       * will start new process requesting admin rights.
+       * @return application exit code.
+       * @remark Call this function only to config in offline mode because it uses
+       * the registry.
+       */
+      int runConfigurator(bool configService, bool isRunAsRequested);
 
-private:
-  /**
-   * Converts plain text password to crypted password.
-   * @fixme move in to remoting_node application as additional application.
-   */
-  static void getCryptedPassword(unsigned char cryptedPass[8], const ::scoped_string & scopedstrPlainTextPass);
+      // Checks the rfb and administrator authentications. If one of them is empty
+      // the function runs a dialog to prompt to enable the both authentication and
+      // to set or to add passwords.
+      int checkServicePasswords(bool isRunAsRequested);
 
-  // Auxiliary function to the same name function. It does real work.
-  void checkServicePasswords();
+   private:
+      /**
+       * Converts plain text password to crypted password.
+       * @fixme move in to remoting_node application as additional application.
+       */
+      static void getCryptedPassword(unsigned char cryptedPass[8], const ::scoped_string & scopedstrPlainTextPass);
 
-  // Auxiliary function that forces the current run service to reload configuration.
-  void reloadConfig();
+      // Auxiliary function to the same name function. It does real work.
+      void checkServicePasswords();
 
-private:
-  ::subsystem::LogWriter m_plogwriter;
+      // Auxiliary function that forces the current run service to reload configuration.
+      void reloadConfig();
 
-  // Initialization of the Configurator instance.
-  Configurator m_configurator;
+   private:
+      ::subsystem::LogWriter m_plogwriter;
 
-protected:
+      // Initialization of the Configurator instance.
+      Configurator m_configurator;
 
-  /**
-   * Low-level transport to control server.
-   */
-  Transport *m_transport;
-  /**
-   * Middle-level transport to control server.
-   */
-  ControlGate *m_gate;
-  /**
-   * High-level transport to control server (proxy).
-   */
-  ControlProxy *m_serverControl;
-  /**
-   * ::innate_subsystem::Control tray icon.
-   */
-  ControlTrayIcon *m_trayIcon;
-  /**
-   * Application command line.
-   */
-  ::string m_commandLine;
-  /**
-   * If application is in slave mode.
-   */
-  bool m_slaveModeEnabled;
-  /**
-   * Icon need to known if tvncontrol runs in slave mode
-   * to modify menu.
-   */
-  friend class ControlTrayIcon;
-};
+   protected:
+
+      /**
+       * Low-level transport to control server.
+       */
+      Transport *m_transport;
+      /**
+       * Middle-level transport to control server.
+       */
+      ControlGate *m_gate;
+      /**
+       * High-level transport to control server (proxy).
+       */
+      ControlProxy *m_serverControl;
+      /**
+       * ::innate_subsystem::Control tray icon.
+       */
+      ControlTrayIcon *m_trayIcon;
+      /**
+       * Application command line.
+       */
+      ::string m_commandLine;
+      /**
+       * If application is in slave mode.
+       */
+      bool m_slaveModeEnabled;
+      /**
+       * Icon need to known if tvncontrol runs in slave mode
+       * to modify menu.
+       */
+      friend class ControlTrayIcon;
+   };
 
 
+} // namespace remoting_control_desktop

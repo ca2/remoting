@@ -310,6 +310,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AdditionalActionApplication.cpp" />
+    <ClCompile Include="application.cpp" />
     <ClCompile Include="AuthTracker.cpp" />
     <ClCompile Include="ControlAppAuthenticator.cpp" />
     <ClCompile Include="ControlClient.cpp" />
@@ -425,19 +426,22 @@
     <ClCompile Include="RfbClientManagerEventListener.cpp" />
     <ClCompile Include="RfbServer.cpp" />
     <ClCompile Include="ServerCommandLine.cpp" />
+    <ClCompile Include="Task.cpp" />
     <ClCompile Include="server_config\Configurator.cpp" />
     <ClCompile Include="ServiceControlApplication.cpp" />
     <ClCompile Include="ServiceControlCommandLine.cpp" />
-    <ClCompile Include="TvnServer.cpp" />
-    <ClCompile Include="TvnServerApplication.cpp" />
-    <ClCompile Include="TvnServerHelp.cpp" />
-    <ClCompile Include="TvnServerListener.cpp" />
-    <ClCompile Include="TvnService.cpp" />
+    <ClCompile Include="Server.cpp" />
+    <ClCompile Include="ServerApplication.cpp" />
+    <ClCompile Include="ServerHelp.cpp" />
+    <ClCompile Include="ServerListener.cpp" />
+    <ClCompile Include="Service.cpp" />
     <ClCompile Include="WinEventLogWriter.cpp" />
     <ClCompile Include="WsConfigRunner.cpp" />
+    <ClCompile Include="_.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdditionalActionApplication.h" />
+    <ClInclude Include="application.h" />
     <ClInclude Include="AuthTracker.h" />
     <ClInclude Include="ControlAppAuthenticator.h" />
     <ClInclude Include="ControlClient.h" />
@@ -550,7 +554,9 @@
     <ClInclude Include="fb_update_sender\ViewPortState.h" />
     <ClInclude Include="fb_update_sender\_.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="LogInitListener.h" />
     <ClInclude Include="NamingDefs.h" />
+    <ClInclude Include="NewConnectionEvents.h" />
     <ClInclude Include="OutgoingRfbConnectionThread.h" />
     <ClInclude Include="QueryConnectionApplication.h" />
     <ClInclude Include="QueryConnectionCommandLine.h" />
@@ -559,14 +565,15 @@
     <ClInclude Include="RfbClientManagerEventListener.h" />
     <ClInclude Include="RfbServer.h" />
     <ClInclude Include="ServerCommandLine.h" />
+    <ClInclude Include="Task.h" />
     <ClInclude Include="server_config\Configurator.h" />
     <ClInclude Include="ServiceControlApplication.h" />
     <ClInclude Include="ServiceControlCommandLine.h" />
-    <ClInclude Include="TvnServer.h" />
-    <ClInclude Include="TvnServerApplication.h" />
-    <ClInclude Include="TvnServerHelp.h" />
-    <ClInclude Include="TvnServerListener.h" />
-    <ClInclude Include="TvnService.h" />
+    <ClInclude Include="Server.h" />
+    <ClInclude Include="ServerApplication.h" />
+    <ClInclude Include="ServerHelp.h" />
+    <ClInclude Include="ServerListener.h" />
+    <ClInclude Include="Service.h" />
     <ClInclude Include="WinEventLogWriter.h" />
     <ClInclude Include="WinServiceEvents.h" />
     <ClInclude Include="WsConfigRunner.h" />

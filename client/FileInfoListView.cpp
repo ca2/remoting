@@ -23,15 +23,15 @@
 //
 #include "framework.h"
 #include "FileInfoListView.h"
-//#include "subsystem/::earth::time.h"
+//#include "subsystem/platform/::earth::time.h"
 #include "remoting/remoting/resource.h"
-#include "subsystem/ResourceLoader.h"
+#include "subsystem/platform/ResourceLoader.h"
 ////#include aaa_<crtdbg.h>
 //// #include aaa_<stdio.h>
 #include "resource.h"
 #include "acme/prototype/datetime/datetime.h"
-#include "innate_subsystem/ResourceLoader.h"
-#include "innate_subsystem/subsystem.h"
+#include "innate_subsystem/platform/ResourceLoader.h"
+#include "innate_subsystem/platform/subsystem.h"
 #include "innate_subsystem/gui/SystemMetrics.h"
 
 

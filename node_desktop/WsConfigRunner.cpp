@@ -28,44 +28,59 @@
 #include "remoting/node_desktop/server_config/Configurator.h"
 #include "remoting/control_desktop/ControlCommandLine.h"
 
-WsConfigRunner::WsConfigRunner(::subsystem::LogWriter * plogwriter, bool serviceMode)
-: m_serviceMode(serviceMode),
-  m_plogwriter(plogwriter)
+namespace remoting_node_desktop
 {
-  resume();
-}
 
-WsConfigRunner::~WsConfigRunner()
-{
-  terminate();
-  wait();
-}
+   WsConfigRunner::WsConfigRunner() 
+   {
+   }
 
-void WsConfigRunner::execute()
-{
-  ::pointer < ::subsystem::ProcessInterface > process;
+   WsConfigRunner::~WsConfigRunner()
+   {
+      terminate();
+      wait();
+   }
 
-  try {
-     // Prepare path to executable.
-    ::string pathToBin;
-     pathToBin = MainSubsystem().OperatingSystem().getCurrentModulePath();
-    pathToBin.double_quote();
-    // Prepare arguments.
-    ::string args;
-    args.formatf("{} {}",
-      m_serviceMode ? ControlCommandLine::CONTROL_SERVICE :
-                      ControlCommandLine::CONTROL_APPLICATION,
-      ControlCommandLine::SLAVE_MODE);
-    // Start process.
-    process = createø<::subsystem::Process>();
-    
-    process->initialize_process(pathToBin, args);
-    process->start();
-  } catch (::exception &e) {
-    m_plogwriter->error("Cannot start the WsControl process ({})", e.get_message());
-  }
 
-  //if (process != 0) {
-  //  delete process;
-  //}
-}
+   void WsConfigRunner::initialize_ws_config_runner(::subsystem::LogWriter* plogwriter, bool serviceMode)
+   {
+
+      m_serviceMode = serviceMode;
+      m_plogwriter = plogwriter;
+
+      resume();
+   }
+
+   void WsConfigRunner::execute()
+   {
+      ::pointer<::subsystem::ProcessInterface> process;
+
+      try
+      {
+         // Prepare path to executable.
+         ::string pathToBin;
+         pathToBin = MainSubsystem().OperatingSystem().getCurrentModulePath();
+         pathToBin.double_quote();
+         // Prepare arguments.
+         ::string args;
+         args.formatf("{} {}",
+                      m_serviceMode ? ControlCommandLine::CONTROL_SERVICE : ControlCommandLine::CONTROL_APPLICATION,
+                      ControlCommandLine::SLAVE_MODE);
+         // Start process.
+         process = createø<::subsystem::Process>();
+
+         process->initialize_process(pathToBin, args);
+         process->start();
+      }
+      catch (::exception &e)
+      {
+         m_plogwriter->error("Cannot start the WsControl process ({})", e.get_message());
+      }
+
+      // if (process != 0) {
+      //   delete process;
+      // }
+   }
+
+
+} // namespace remoting_node_desktop

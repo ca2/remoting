@@ -24,8 +24,8 @@
 
 #pragma once
 
-//////#include "subsystem/::string.h"
-//#include "subsystem/inttypes.h"
+//////#include "subsystem/platform/::string.h"
+//#include "subsystem/platform/inttypes.h"
 //#include "file_lib/::file::item.h"
 
 namespace remoting

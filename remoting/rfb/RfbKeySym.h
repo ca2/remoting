@@ -26,7 +26,7 @@
 
 
 #include "RfbKeySymListener.h"
-#include "subsystem/Keymap.h"
+#include "subsystem/platform/Keymap.h"
 #include "innate_subsystem/gui/KeyboardLayout.h"
 //#include "log_writer/LogWriter.h"
 
@@ -93,7 +93,7 @@ namespace remoting
 
 
       RfbKeySymListener *m_extKeySymListener;
-      Keymap m_keyMap;
+      ::subsystem::Keymap m_keyMap;
 
       ::innate_subsystem::keyboard_state_t m_keyboardstate;
 

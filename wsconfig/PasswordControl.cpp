@@ -24,9 +24,9 @@
 #include "framework.h"
 #include "PasswordControl.h"
 
-#include "subsystem/VncPassCrypt.h"
-#include "subsystem/StringTable.h"
-//#include "subsystem/::string.h"
+#include "subsystem/platform/VncPassCrypt.h"
+#include "subsystem/platform/StringTable.h"
+//#include "subsystem/platform/::string.h"
 
 #include "ChangePasswordDialog.h"
 

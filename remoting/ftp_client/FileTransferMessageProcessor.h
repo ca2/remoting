@@ -28,9 +28,9 @@
 #include "acme/exception/io.h"
 #include "acme/input_output/DataInputStream.h"
 
-//#include "subsystem/inttypes.h"
-#include "subsystem/ListenerContainer.h"
-#include "subsystem/ZlibException.h"
+//#include "subsystem/platform/inttypes.h"
+#include "subsystem/platform/ListenerContainer.h"
+#include "subsystem/platform/ZlibException.h"
 
 #include "remoting/remoting/ftp_common/OperationNotSupportedException.h"
 

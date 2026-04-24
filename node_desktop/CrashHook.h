@@ -26,7 +26,7 @@
 
 //
 //#include "subsystem/_common_header.h"
-//#include "subsystem/Singleton.h"
+//#include "subsystem/platform/Singleton.h"
 ////#include "subsystem/thread/critical_section.h"
 //#include "subsystem/node/ApplicationCrashEvents.h"
 //

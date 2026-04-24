@@ -25,12 +25,12 @@
 #pragma once
 
 
-//#include "subsystem/inttypes.h"
+//#include "subsystem/platform/inttypes.h"
 #include "innate_subsystem/framebuffer/FrameBuffer.h"
 #include "remoting/remoting/region/Region.h"
 
 //#include "remoting/remoting/region/::int_point.h"
-//#include "subsystem/::earth::time.h"
+//#include "subsystem/platform/::earth::time.h"
 
 #include "BlockingGate.h"
 

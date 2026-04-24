@@ -26,7 +26,7 @@
 
 
 //#include "subsystem/thread/critical_section.h"
-//#include "subsystem/::earth::time.h"
+//#include "subsystem/platform/::earth::time.h"
 
 // This class will be insert an time interval between trying of
 // authentications

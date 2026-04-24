@@ -33,7 +33,7 @@ documentation and/or software.
 #pragma once
 
 
-//#include "subsystem/inttypes.h"
+//#include "subsystem/platform/inttypes.h"
 
 class MD5
 {

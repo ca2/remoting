@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "ProfileLogWriter.h"
 
-#include "subsystem/GetCPUTime.h"
+#include "subsystem/platform/GetCPUTime.h"
 //#include aaa_<algorithm>
 //#include aaa_<numeric> 
 //#include aaa_<utility> 

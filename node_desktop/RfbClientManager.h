@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "subsystem/ListenerContainer.h"
+#include "subsystem/platform/ListenerContainer.h"
 #include "rfb_sconn/RfbClient.h"
 //#include "subsystem/thread/critical_section.h"
 #include "subsystem/thread/Thread.h"
@@ -72,7 +72,7 @@ class RfbClientManager: public ClientTerminationListener,
 public:
   // FIXME: parameter is not used.
   RfbClientManager(const ::scoped_string & scopedstrServerName,
-                   NewConnectionEvents *newConnectionEvents,
+                   ::remoting_node_desktop::NewConnectionEvents *newConnectionEvents,
                    ::subsystem::LogWriter *log,
                    DesktopFactory *desktopFactory);
   virtual ~RfbClientManager();
@@ -155,7 +155,7 @@ private:
   // Inforamtion
   unsigned int m_nextClientId;
 
-  NewConnectionEvents *m_newConnectionEvents;
+  ::pointer < ::remoting_node_desktop::NewConnectionEvents > m_pnewconnectionevents;
 
   ::subsystem::LogWriter *m_plogwriter;
 };

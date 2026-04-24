@@ -23,8 +23,8 @@
 //
 #include "framework.h"
 #include "ViewerSettingsManager.h"
-#include "subsystem/Exception.h"
-#include "subsystem/Registry.h"
+#include "subsystem/platform/Exception.h"
+#include "subsystem/platform/Registry.h"
 
 
 namespace remoting

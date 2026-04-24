@@ -28,7 +28,7 @@
 #include "ListenLogServer.h"
 #include "LogConn.h"
 #include "log_writer/FileAccount.h"
-#include "subsystem/Singleton.h"
+#include "subsystem/platform/Singleton.h"
 #include "LogConnAuthListener.h"
 #include "remoting/thread/ThreadCollector.h"
 #include "LogListener.h"

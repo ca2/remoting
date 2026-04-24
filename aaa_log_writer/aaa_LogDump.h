@@ -25,7 +25,7 @@
 #pragma once
 
 //
-// //#include "subsystem/::earth::time.h"
+// //#include "subsystem/platform/::earth::time.h"
 //
 // struct LogEntry
 // {

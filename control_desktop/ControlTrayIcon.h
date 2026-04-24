@@ -32,8 +32,8 @@
 #include "subsystem/thread/Thread.h"
 //#include "subsystem/thread/critical_section.h"
 
-#include "subsystem/Command.h"
-#include "subsystem/MacroCommand.h"
+#include "subsystem/platform/Command.h"
+#include "subsystem/platform/MacroCommand.h"
 
 #include "remoting/remoting/wsconfig/ConfigDialog.h"
 

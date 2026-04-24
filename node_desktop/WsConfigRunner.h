@@ -28,21 +28,30 @@
 #include "subsystem/thread/Thread.h"
 //#include "log_writer/LogWriter.h"
 
-// This class runs TvnControl in current session.
-// This class only for application mode running.
-class WsConfigRunner : virtual public ::subsystem::Thread
+namespace remoting_node_desktop
 {
-public:
-  WsConfigRunner(::subsystem::LogWriter * plogwriter, bool serviceMode = false);
-  virtual ~WsConfigRunner();
 
-protected:
-  virtual void execute();
+   // This class runs TvnControl in current session.
+   // This class only for application mode running.
+   class CLASS_DECL_REMOTING_NODE_DESKTOP WsConfigRunner : 
+      virtual public ::subsystem::Thread
+   {
+   public:
 
-private:
-  bool m_serviceMode;
 
-  ::subsystem::LogWriter * m_plogwriter;
-};
+      WsConfigRunner();
+      virtual ~WsConfigRunner();
 
-//// __WSCONFIGRUNNER_H__
+
+      virtual void initialize_ws_config_runner(::subsystem::LogWriter *plogwriter, bool serviceMode = false);
+
+      virtual void execute();
+
+      bool m_serviceMode;
+
+      ::subsystem::LogWriter *m_plogwriter;
+
+   };
+
+
+} // namespace remoting_node_desktop

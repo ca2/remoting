@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "subsystem/Exception.h"
+#include "subsystem/platform/Exception.h"
 
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "WinDxgiSurface.h"

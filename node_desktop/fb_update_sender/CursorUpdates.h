@@ -28,7 +28,7 @@
 #include "rfb_sconn/EncodeOptions.h"
 #include "remoting/remoting/rfb/CursorShape.h"
 #include "desktop/UpdateContainer.h"
-//#include "subsystem/::earth::time.h"
+//#include "subsystem/platform/::earth::time.h"
 //#include "subsystem/thread/critical_section.h"
 //#include "log_writer/LogWriter.h"
 

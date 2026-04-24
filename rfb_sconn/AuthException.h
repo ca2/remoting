@@ -25,8 +25,8 @@
 #pragma once
 
 
-//#include "subsystem/exception.h"
-#include "subsystem/Exception.h"
+//#include "subsystem/platform/exception.h"
+#include "subsystem/platform/Exception.h"
 
 
 class AuthException : public ::subsystem::Exception

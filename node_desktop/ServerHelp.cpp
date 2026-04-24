@@ -24,10 +24,10 @@
 #include "framework.h"
 #include "ServerHelp.h"
 
-//#include "subsystem/winhdr.h"
+//#include "subsystem/platform/winhdr.h"
 //#include "acme/_operating_system.h"
 
-#include "subsystem/StringTable.h"
+#include "subsystem/platform/StringTable.h"
 
 
 #include "remoting/node_desktop/resource.h"

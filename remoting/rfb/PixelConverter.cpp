@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "PixelConverter.h"
-//#include "subsystem/inttypes.h"
+//#include "subsystem/platform/inttypes.h"
 ////#include aaa_<crtdbg.h>
 ///
 namespace remoting

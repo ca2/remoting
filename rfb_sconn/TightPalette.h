@@ -32,7 +32,7 @@
 #pragma once
 
 // #include aaa_<string.h>
-//#include "subsystem/inttypes.h"
+//#include "subsystem/platform/inttypes.h"
 
 struct TightColorList {
   TightColorList *next;

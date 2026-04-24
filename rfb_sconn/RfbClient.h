@@ -40,7 +40,7 @@
 #include "ClientTerminationListener.h"
 #include "ClientInputEventListener.h"
 #include "remoting/node_desktop/NewConnectionEvents.h"
-#include "subsystem/DemandTimer.h"
+#include "subsystem/platform/DemandTimer.h"
 
 class ClientAuthListener;
 
@@ -58,7 +58,9 @@ enum ClientState
 class RfbClient: public ::subsystem::Thread, ClientInputEventListener, private SenderControlInformationInterface
 {
 public:
-  RfbClient(NewConnectionEvents *newConnectionEvents, ::subsystem::SocketIPv4Interface *socket,
+
+
+  RfbClient(::remoting_node_desktop::NewConnectionEvents *newConnectionEvents, ::subsystem::SocketIPv4Interface *socket,
             ClientTerminationListener *extTermListener,
             ClientAuthListener *extAuthListener, bool viewOnly,
             bool isOutgoing, unsigned int id,
@@ -66,6 +68,7 @@ public:
             const ViewPortState *dynViewPort,
             int idleTimeout,
             ::subsystem::LogWriter *log);
+
   virtual ~RfbClient();
 
   void disconnect();
@@ -149,7 +152,7 @@ private:
   // Information
   unsigned int m_id;
 
-  NewConnectionEvents *m_newConnectionEvents;
+  ::remoting_node_desktop::NewConnectionEvents *m_pnewconnectionevents;
   // This timer sets by IdleTimeout value from server config 
   // and resets on mouse or keyboard event
   DemandTimer m_idleTimer;

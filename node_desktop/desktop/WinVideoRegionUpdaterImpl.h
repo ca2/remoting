@@ -25,9 +25,9 @@
 #pragma once
 
 
-//#include "subsystem/::earth::time.h"
+//#include "subsystem/platform/::earth::time.h"
 #include "remoting/remoting/region/Region.h"
-//#include "subsystem/::string_array.h"
+//#include "subsystem/platform/::string_array.h"
 #include "ScreenDriver.h"
 //#include "subsystem/thread/critical_section.h"
 //#include "log_writer/LogWriter.h"

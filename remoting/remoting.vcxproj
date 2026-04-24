@@ -218,26 +218,6 @@
     <ClCompile Include="server_config\RegistrySecurityAttributes.cpp" />
     <ClCompile Include="server_config\ServerConfig.cpp" />
     <ClCompile Include="server_config\_.cpp" />
-    <ClCompile Include="util\BrokenHandleException.cpp" />
-    <ClCompile Include="util\Command.cpp" />
-    <ClCompile Include="util\CommandLineFormatException.cpp" />
-    <ClCompile Include="util\CommandLineFormatHelp.cpp" />
-    <ClCompile Include="util\DateTime.cpp" />
-    <ClCompile Include="util\DemandTimer.cpp" />
-    <ClCompile Include="util\DesCrypt.cpp" />
-    <ClCompile Include="util\GetCPUtime.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="util\KeyContainer.cpp" />
-    <ClCompile Include="util\Keymap.cpp" />
-    <ClCompile Include="util\MacroCommand.cpp" />
-    <ClCompile Include="util\md5.cpp" />
-    <ClCompile Include="util\MemUsage.cpp" />
-    <ClCompile Include="util\Unicode.cpp" />
-    <ClCompile Include="util\VncPassCrypt.cpp" />
     <ClCompile Include="viewer_core\AuthHandler.cpp" />
     <ClCompile Include="viewer_core\CapabilitiesManager.cpp" />
     <ClCompile Include="viewer_core\CapsContainer.cpp" />
@@ -382,41 +362,6 @@
     <ClInclude Include="thread\Thread.h" />
     <ClInclude Include="thread\ThreadCollector.h" />
     <ClInclude Include="thread\_.h" />
-    <ClInclude Include="util\AnEventListener.h" />
-    <ClInclude Include="util\BrokenHandleException.h" />
-    <ClInclude Include="util\CharDefs.h" />
-    <ClInclude Include="util\Command.h" />
-    <ClInclude Include="util\CommandLineArgs.h" />
-    <ClInclude Include="util\CommandLineFormatException.h" />
-    <ClInclude Include="util\CommandLineFormatHelp.h" />
-    <ClInclude Include="util\CommonHeader.h" />
-    <ClInclude Include="util\DateTime.h" />
-    <ClInclude Include="util\Deflater.h" />
-    <ClInclude Include="util\DemandTimer.h" />
-    <ClInclude Include="util\DesCrypt.h" />
-    <ClInclude Include="util\Exception.h" />
-    <ClInclude Include="util\GetCPUtime.h" />
-    <ClInclude Include="util\Inflater.h" />
-    <ClInclude Include="util\inttypes.h" />
-    <ClInclude Include="util\KeyContainer.h" />
-    <ClInclude Include="util\Keymap.h" />
-    <ClInclude Include="util\ListenerContainer.h" />
-    <ClInclude Include="util\MacroCommand.h" />
-    <ClInclude Include="util\md5.h" />
-    <ClInclude Include="util\MemUsage.h" />
-    <ClInclude Include="util\resource.h" />
-    <ClInclude Include="util\ResourceLoader.h" />
-    <ClInclude Include="util\Singleton.h" />
-    <ClInclude Include="util\StringParser.h" />
-    <ClInclude Include="util\StringStorage.h" />
-    <ClInclude Include="util\StringTable.h" />
-    <ClInclude Include="util\StringVector.h" />
-    <ClInclude Include="util\Unicode.h" />
-    <ClInclude Include="util\VncPassCrypt.h" />
-    <ClInclude Include="util\winhdr.h" />
-    <ClInclude Include="util\ZLibBase.h" />
-    <ClInclude Include="util\ZlibException.h" />
-    <ClInclude Include="util\_.h" />
     <ClInclude Include="viewer_core\AuthHandler.h" />
     <ClInclude Include="viewer_core\CapabilitiesManager.h" />
     <ClInclude Include="viewer_core\CapsContainer.h" />

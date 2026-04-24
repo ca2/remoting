@@ -32,8 +32,8 @@
 #include "remoting/node_desktop/server_config/Configurator.h"
 #include "subsystem/node/OperatingSystem.h"
 #include "subsystem/node/Process.h"
-#include "subsystem/CommandLineArguments.h"
-#include "subsystem/ResourceLoader.h"
+#include "subsystem/platform/CommandLineArguments.h"
+#include "subsystem/platform/ResourceLoader.h"
 #include "remoting/node_desktop/resource.h"
 #include "remoting/node_desktop/NamingDefs.h"
 

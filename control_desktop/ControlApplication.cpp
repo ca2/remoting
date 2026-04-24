@@ -39,11 +39,11 @@
 #include "ConnectCommand.h"
 #include "ShutdownCommand.h"
 
-#include "subsystem/VncPassCrypt.h"
-//#include "subsystem/winhdr.h"
+#include "subsystem/platform/VncPassCrypt.h"
+//#include "subsystem/platform/winhdr.h"
 //#include "acme/_operating_system.h"
 
-#include "subsystem/StringTable.h"
+#include "subsystem/platform/StringTable.h"
 #include "remoting/node_desktop/NamingDefs.h"
 
 #include "remoting/control_desktop/ControlCommandLine.h"
@@ -51,8 +51,8 @@
 
 //#include "remoting/remoting/win_system/Environment.h"
 #include "remoting/remoting/win_system/Shell.h"
-#include "subsystem/Process.h"
-#include "subsystem/CommandLineArguments.h"
+#include "subsystem/platform/Process.h"
+#include "subsystem/platform/CommandLineArguments.h"
 
 #include "subsystem/thread/ZombieKiller.h"
 #include "subsystem/thread/GlobalMutex.h"
@@ -64,7 +64,7 @@
 #include "remoting/node_desktop/resource.h"
 
 #include "remoting/remoting/wsconfig/ConfigDialog.h"
-//#include "subsystem/::string.h"
+//#include "subsystem/platform/::string.h"
 #include "remoting/node_desktop/NamingDefs.h"
 #include "SetPasswordsDialog.h"
 //#include aaa_<algorithm>

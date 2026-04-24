@@ -27,7 +27,7 @@
 #pragma once
 
 #include "remoting/util/CommonHeader.h"
-//#include "subsystem/inttypes.h"
+//#include "subsystem/platform/inttypes.h"
 
 class ::file::item
 {

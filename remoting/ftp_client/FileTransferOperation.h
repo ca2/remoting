@@ -32,7 +32,7 @@
 #include "FileInfoList.h"
 
 //#include "log_writer/LogWriter.h"
-#include "subsystem/ListenerContainer.h"
+#include "subsystem/platform/ListenerContainer.h"
 
 namespace remoting
 {

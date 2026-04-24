@@ -26,7 +26,7 @@
 
 
 #include "subsystem/_common_header.h"
-//#include "subsystem/inttypes.h"
+//#include "subsystem/platform/inttypes.h"
 
 namespace remoting
 {

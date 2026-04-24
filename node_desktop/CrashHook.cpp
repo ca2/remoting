@@ -25,7 +25,7 @@
 //#include "CrashHook.h"
 //#include "subsystem/node/DynamicLibrary.h"
 //#include "subsystem/node/OperatingSystem.h"
-//#include "subsystem/RegistryKey.h"
+//#include "subsystem/platform/RegistryKey.h"
 ////#include "subsystem/thread/critical_section.h"
 //#include "remoting/node_desktop/NamingDefs.h"
 //

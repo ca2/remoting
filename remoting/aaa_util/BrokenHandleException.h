@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "subsystem/Exception.h"
+#include "subsystem/platform/Exception.h"
 
 // This ::subsystem::Exception for situationw when a handle has been broken (e.g. handle of a closed window)
 class CLASS_DECL_REMOTING BrokenHandleException : public ::subsystem::Exception

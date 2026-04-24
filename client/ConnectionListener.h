@@ -35,7 +35,7 @@ namespace remoting_client
     virtual public ::remoting::TcpServer
    {
    public:
-      static const char DEFAULT_HOST[];
+      static ::string_literal DEFAULT_HOST;
       static const unsigned short DEFAULT_PORT = 5500;
 
       // HWND mainWindow is handle of main window of program.

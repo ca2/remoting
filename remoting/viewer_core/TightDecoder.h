@@ -27,7 +27,7 @@
 
 //#include aaa_<vector>
 
-#include "subsystem/Inflater.h"
+#include "subsystem/platform/Inflater.h"
 
 #include "DecoderOfRectangle.h"
 #include "JpegDecompressor.h"

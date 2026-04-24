@@ -23,7 +23,7 @@
 //
 
 #include "subsystem/_common_header.h"
-#include "subsystem/StringParser.h"
+#include "subsystem/platform/StringParser.h"
 #include "HookLoaderApplication.h"
 #include "remoting/node_desktop/NamingDefs.h"
 

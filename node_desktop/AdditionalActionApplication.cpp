@@ -25,10 +25,10 @@
 #include "AdditionalActionApplication.h"
 #include "ServerHelp.h"
 
-#include "subsystem/CommandLine.h"
+#include "subsystem/platform/CommandLine.h"
 
 #include "subsystem/node/Workstation.h"
-#include "subsystem/CommandLineArguments.h"
+#include "subsystem/platform/CommandLineArguments.h"
 
 namespace remoting_node_desktop
 {

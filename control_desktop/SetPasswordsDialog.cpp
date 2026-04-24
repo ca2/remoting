@@ -22,17 +22,17 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-//#include "subsystem/winhdr.h"
+//#include "subsystem/platform/winhdr.h"
 //#include "acme/_operating_system.h"
 
 #include "remoting/node_desktop/NamingDefs.h"
 
-#include "subsystem/Registry.h"
+#include "subsystem/platform/Registry.h"
 
 #include "SetPasswordsDialog.h"
 
 #include "remoting/node_desktop/resource.h"
-//#include "subsystem/::string.h"
+//#include "subsystem/platform/::string.h"
 
 SetPasswordsDialog::SetPasswordsDialog(bool initStateOfUseRfbAuth,
                                        bool initStateOfUseAdminAuth)

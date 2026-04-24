@@ -26,7 +26,7 @@
 
 
 //#include aaa_<vector>
-//#include "subsystem/inttypes.h"
+//#include "subsystem/platform/inttypes.h"
 #include "acme/input_output/DataOutputStream.h"
 
 // FIXME: The same structure is used in the viewer named RfbCapabilityInfo.

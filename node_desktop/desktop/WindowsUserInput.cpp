@@ -27,7 +27,7 @@
 //#include "remoting/remoting/win_system/Environment.h"
 #include "remoting/remoting/win_system/Keyboard.h"
 #include "innate_subsystem/gui/WindowFinder.h"
-#include "subsystem/BrokenHandleException.h"
+#include "subsystem/platform/BrokenHandleException.h"
 
 WindowsUserInput::WindowsUserInput(ClipboardListener *clipboardListener,
                                    bool ctrlAltDelEnabled,

@@ -32,7 +32,7 @@
     <ProjectGuid>{5C3FBF49-7D9A-41EE-90D5-E5AF6F7C0E97}</ProjectGuid>
     <RootNamespace>app</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>shared_remoting_remoting_node_desktop</ProjectName>
+    <ProjectName>shared_remoting_node_desktop</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -265,10 +265,13 @@
     <ProjectReference Include="..\..\..\app\acme\acme.vcxproj">
       <Project>{638b242f-0f21-41c3-9f66-724660046133}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\remoting_common\remoting_common.vcxproj">
-      <Project>{97b29c1c-a911-41ab-9c88-019d9d827bfe}</Project>
+    <ProjectReference Include="..\..\..\app\apex\apex.vcxproj">
+      <Project>{e000ffaf-392f-4e32-bf51-777ca238991f}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\remoting_remoting_node_desktop.vcxproj">
+    <ProjectReference Include="..\..\..\app\subsystem_bsd_sockets\subsystem_bsd_sockets.vcxproj">
+      <Project>{40f49b85-a888-4a1d-a7f5-7631f14a3d4a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\remoting_node_desktop.vcxproj">
       <Project>{ebfc3125-72a4-4029-9941-3be9ee6444d5}</Project>
     </ProjectReference>
   </ItemGroup>

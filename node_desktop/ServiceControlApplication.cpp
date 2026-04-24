@@ -25,8 +25,8 @@
 #include "ServiceControlApplication.h"
 #include "ServiceControlCommandLine.h"
 
-#include "subsystem/ResourceLoader.h"
-#include "subsystem/StringTable.h"
+#include "subsystem/platform/ResourceLoader.h"
+#include "subsystem/platform/StringTable.h"
 #include "remoting/node_desktop/NamingDefs.h"
 
 #include "remoting/node_desktop/resource.h"
@@ -36,12 +36,12 @@
 
 #include "remoting/control_desktop/ControlCommandLine.h"
 
-#include "subsystem/Registry.h"
-#include "subsystem/RegistryKey.h"
+#include "subsystem/platform/Registry.h"
+#include "subsystem/platform/RegistryKey.h"
 #include "subsystem/node/OperatingSystem.h"
 #include "subsystem/node/Shell.h"
 #include "subsystem/node/ServiceControlManagerClient.h"
-#include "subsystem/CommandLineArguments.h"
+#include "subsystem/platform/CommandLineArguments.h"
 #include "resource.h"
 
 namespace remoting_node_desktop
@@ -116,20 +116,35 @@ namespace remoting_node_desktop
       // After trying to start the service, regardless of the result, run the
       // control interface with non-elevated privileges. Make sure to skip this
       // step if there was a -dontelevate option (so we are a child process).
-      if (cmdLine.startRequested() && !cmdLine.dontElevate()) {
-         try {
+      if (cmdLine.startRequested() && !cmdLine.dontElevate()) 
+      {
+
+         try 
+         {
+
             // FIXME: WsConfigRunner is a Thread, so the work will be made in a
             //        newly created thread and thus we are not aware of the result.
             //        Are there any reasons why we cannot do that synchronously?
-            WsConfigRunner tvncontrol(0, true);
-         } catch (...) { }
+            WsConfigRunner tvncontrol;
+            
+            tvncontrol.initialize_ws_config_runner(nullptr, true);
+
+         } 
+         catch (...) 
+         {
+         
+         }
+
       }
 
       setExitCode(success ? RET_OK : RET_ERR);
+
    }
 
-   void ServiceControlApplication::runElevatedInstance() const
+
+   void ServiceControlApplication::runElevatedInstance()
    {
+
       ::string executablePath;
       executablePath = MainSubsystem().OperatingSystem().getCurrentModulePath();
 
@@ -140,7 +155,8 @@ namespace remoting_node_desktop
       MainSubsystem().Shell().runAsAdmin(executablePath, commandLine);
    }
 
-   void ServiceControlApplication::executeCommand(const ServiceControlCommandLine *cmdLine) const
+
+   void ServiceControlApplication::executeCommand(const ServiceControlCommandLine *cmdLine)
    {
       if (cmdLine->installationRequested()) {
          Service::install();
@@ -161,7 +177,7 @@ namespace remoting_node_desktop
       }
    }
 
-   void ServiceControlApplication::setTvnControlStartEntry() const
+   void ServiceControlApplication::setTvnControlStartEntry()
    {
       // Prepare tvncontrol start command.
       ::string executablePath;
@@ -180,7 +196,7 @@ namespace remoting_node_desktop
                               pathToTvnControl);
    }
 
-   void ServiceControlApplication::removeTvnControlStartEntry() const
+   void ServiceControlApplication::removeTvnControlStartEntry()
    {
       ::subsystem::RegistryKey runKey(MainSubsystem().Registry().getLocalMachineKey(),
                          "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
@@ -189,7 +205,7 @@ namespace remoting_node_desktop
    }
 
    void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmdLine,
-                                               const ::subsystem::ServiceControlManagerClientException *ex) const
+                                               const ::subsystem::ServiceControlManagerClientException *ex)
    {
       ::string errorMessage;
 
@@ -214,7 +230,7 @@ namespace remoting_node_desktop
    }
 
    void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmdLine,
-                                               const ::subsystem::SystemException *ex) const
+                                               const ::subsystem::SystemException *ex)
    {
       ::string errorMessage;
 
@@ -233,7 +249,7 @@ namespace remoting_node_desktop
    }
 
    void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmdLine,
-                                               const ::scoped_string & scopedstrErrorMessage) const
+                                               const ::scoped_string & scopedstrErrorMessage)
    {
       unsigned int stringId = 0;
 
@@ -256,12 +272,12 @@ namespace remoting_node_desktop
 
          auto strCaption = MainSubsystem().StringTable().getString(IDS_MBC_TVNSERVER);
          ::string text;
-         text.format(MainSubsystem().StringTable().getString(stringId), scopedstrErrorMessage);
-         MainSubsystem().message_box(NULL, text, strCaption, ::user::e_message_box_ok | MB_ICONERROR);
+         text.formatf(MainSubsystem().StringTable().getString(stringId), scopedstrErrorMessage);
+         MainSubsystem().message_box({}, text, strCaption, ::user::e_message_box_ok | MB_ICONERROR);
       }
    }
 
-   void ServiceControlApplication::reportSuccess(const ServiceControlCommandLine *cmdLine) const
+   void ServiceControlApplication::reportSuccess(const ServiceControlCommandLine *cmdLine)
    {
       unsigned int stringId = 0;
 
@@ -277,9 +293,9 @@ namespace remoting_node_desktop
       }
 
       if (!cmdLine->beSilent()) {
-         const ::scoped_string & scopedstrCaption = MainSubsystem().StringTable().getString(IDS_MBC_TVNSERVER);
-         const ::scoped_string & scopedstrText = MainSubsystem().StringTable().getString(stringId);
-         MainSubsystem().message_box(NULL, text, caption, ::user::e_message_box_ok | MB_ICONINFORMATION);
+         auto strCaption = MainSubsystem().StringTable().getString(IDS_MBC_TVNSERVER);
+         auto strText = MainSubsystem().StringTable().getString(stringId);
+         MainSubsystem().message_box({}, strText, strCaption, ::user::e_message_box_ok | MB_ICONINFORMATION);
       }
    }
 } // namespace remoting_node_desktop

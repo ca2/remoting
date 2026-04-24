@@ -26,7 +26,7 @@
 
 
 #include "subsystem/thread/Thread.h"
-#include "subsystem/Exception.h"
+#include "subsystem/platform/Exception.h"
 #include "subsystem/socket/SocketIPv4.h"
 
 

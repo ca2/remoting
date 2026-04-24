@@ -27,7 +27,7 @@
 
 #include "subsystem/_common_header.h"
 //#include aaa_<vector>
-//#include "subsystem/::string_array.h"
+//#include "subsystem/platform/::string_array.h"
 
 class CLASS_DECL_REMOTING WindowFinder
 {

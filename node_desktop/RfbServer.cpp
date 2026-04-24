@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "RfbServer.h"
 #include "remoting/node_desktop/server_config/Configurator.h"
-#include "subsystem_bsd_sockets/SocketAddressIPv4.h"
+#include "subsystem_bsd_sockets/socket/SocketAddressIPv4.h"
 
 RfbServer::RfbServer(const ::scoped_string & scopedstrBindHost, unsigned short bindPort,
                      RfbClientManager *clientManager,

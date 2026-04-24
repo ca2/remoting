@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "subsystem/ZLibBase.h"
-#include "subsystem/ZLibException.h"
+#include "subsystem/platform/ZLibBase.h"
+#include "subsystem/platform/ZLibException.h"
 
 namespace subsystem
 {

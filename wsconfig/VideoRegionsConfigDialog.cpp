@@ -27,7 +27,7 @@
 #include "ConfigDialog.h"
 #include "UIDataAccess.h"
 #include "CommonInputValidation.h"
-#include "subsystem/StringParser.h"
+#include "subsystem/platform/StringParser.h"
 
 VideoRegionsConfigDialog::VideoRegionsConfigDialog()
 : BaseDialog(IDD_CONFIG_VIDEO_PAGE), m_parentDialog(NULL)

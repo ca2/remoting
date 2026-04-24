@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "::string.h"
 #include "CommonHeader.h"
-#include "subsystem/Exception.h"
+#include "subsystem/platform/Exception.h"
 #include "::wstring.h"
 //#include aaa_<crtdbg.h>
 

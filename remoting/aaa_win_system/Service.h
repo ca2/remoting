@@ -25,11 +25,11 @@
 #pragma once
 
 
-//#include "subsystem/winhdr.h"
+//#include "subsystem/platform/winhdr.h"
 //#include "acme/_operating_system.h"
 
-//////#include "subsystem/::string.h"
-#include "subsystem/Exception.h"
+//////#include "subsystem/platform/::string.h"
+#include "subsystem/platform/Exception.h"
 #include "subsystem/thread/Thread.h"
 
 /**

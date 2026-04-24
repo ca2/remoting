@@ -26,7 +26,7 @@
 
 
 #include "subsystem/_common_header.h"
-//////#include "subsystem/::string.h"
+//////#include "subsystem/platform/::string.h"
 //#include "log_writer/LogWriter.h"
 
 #include "SystemException.h"

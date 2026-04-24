@@ -28,7 +28,7 @@
 #include "acme/input_output/DataInputStream.h"
 #include "acme/input_output/DataOutputStream.h"
 #include "remoting/remoting/rfb/AuthDefs.h"
-#include "subsystem/Exception.h"
+#include "subsystem/platform/Exception.h"
 
 #include "CapabilitiesManager.h"
 

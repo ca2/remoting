@@ -32,7 +32,7 @@
 
 #include "remoting/remoting/server_config/IpAccessRule.h"
 
-//////#include "subsystem/::string.h"
+//////#include "subsystem/platform/::string.h"
 
 class EditIpAccessRuleDialog : public BaseDialog
 {

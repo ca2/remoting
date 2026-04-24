@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "RfbKeySym.h"
 #include "subsystem/_common_header.h"
-#include "innate_subsystem/subsystem.h"
+#include "innate_subsystem/platform/subsystem.h"
 #include "innate_subsystem/gui/KeyboardLayout.h"
 #define XK_MISCELLANY
 #include "remoting/remoting/rfb/keysymdef.h"

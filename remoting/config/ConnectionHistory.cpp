@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "ConnectionHistory.h"
-#include "subsystem/Registry.h"
+#include "subsystem/platform/Registry.h"
 
 ////#include aaa_<crtdbg.h>
 

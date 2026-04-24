@@ -32,8 +32,10 @@
 
 #include "remoting/node_desktop/server_config/Configurator.h"
 
-#include "subsystem/VncPassCrypt.h"
-
+#include "subsystem/platform/VncPassCrypt.h"
+#include "subsystem_windows/node/WTS.h"
+#include "subsystem_windows/platform/subsystem.h"
+#include "subsystem/node/File.h"
 #include "remoting/remoting/rfb/HostPath.h"
 
 #include "subsystem/node/WTS.h"
@@ -41,8 +43,8 @@
 #include "resource.h"
 
 //#include aaa_<time.h>
-//#include "subsystem/::string.h"
-#include "subsystem/MemUsage.h"
+//#include "subsystem/platform/::string.h"
+#include "subsystem/platform/MemUsage.h"
 
 
 const unsigned int ControlClient::REQUIRES_AUTH[] = { ControlProto::ADD_CLIENT_MSG_ID,
@@ -351,7 +353,9 @@ void ControlClient::shutdownMsgRcvd()
 {
   m_gate->writeUInt32(ControlProto::REPLY_OK);
 
-  Server::getInstance()->generateExternalShutdownSignal();
+   ::cast < ::remoting_node_desktop::application > papplication = ::system()->m_papplication;
+
+   papplication->Server().generateExternalShutdownSignal();
 }
 
 void ControlClient::addClientMsgRcvd()
@@ -364,7 +368,7 @@ void ControlClient::addClientMsgRcvd()
 
   ::string connectString;
 
-  m_gate->readUTF8(&connectString);
+  connectString = m_gate->readUtf8();
 
   bool viewOnly = m_gate->readUInt8() == 1;
 
@@ -372,15 +376,15 @@ void ControlClient::addClientMsgRcvd()
   // Parse host and port from connection string.
   //
   ::string connectStringAnsi(&connectString);
-  HostPath hp(connectStringAnsi, 5500);
+  ::remoting::HostPath hp(connectStringAnsi, 5500);
 
   if (!hp.isValid()) {
     return;
   }
 
-  ::string host;
-  ::string ansiHost(hp.getVncHost());
-  ansiHost.toStringStorage(&host);
+  //::string host;
+  ::string host(hp.getVncHost());
+  //sansiHost.toStringStorage(&host);
 
   //
   // Make outgoing connection in separate thread.
@@ -393,8 +397,12 @@ void ControlClient::addClientMsgRcvd()
   newConnectionThread->resume();
 
 //  ZombieKiller::getInstance()->addZombie(newConnectionThread);
-  m_outgoingConnectionThreadCollector.addThread(newConnectionThread);
+  m_pthreadcollectorOutgoingConnection->addThread(newConnectionThread);
+
 }
+
+
+
 bool allZeroes(unsigned char p[ServerConfig::VNC_PASSWORD_SIZE]) {
   for (int i = 0; i < ServerConfig::VNC_PASSWORD_SIZE; i++) {
     if (p[i] != 0) {
@@ -455,7 +463,7 @@ void ControlClient::updateTvnControlProcessIdMsgRcvd()
   m_gate->readUInt32();
 
   try {
-    WTS::duplicatePipeClientToken(m_pipeHandle);
+     WindowsSubsystem().WTS().duplicatePipeClientToken(m_pfilePipeHandle);
   } catch (::exception &e) {
     m_plogwriter->error("Can't update the control client impersonation token: {}",
                e.get_message());
@@ -501,12 +509,12 @@ void ControlClient::shareDisplayIdMsgRcvd()
 void ControlClient::shareWindowIdMsgRcvd()
 {
   ::string windowName;
-  m_gate->readUTF8(&windowName);
+  windowName = m_gate->readUtf8();
 
   m_gate->writeUInt32(ControlProto::REPLY_OK);
 
   ViewPortState dynViewPort;
-  dynViewPort.setWindowName(&windowName);
+  dynViewPort.setWindowName(windowName);
   m_rfbClientManager->setDynViewPort(&dynViewPort);
 }
 
@@ -520,7 +528,7 @@ void ControlClient::shareRectIdMsgRcvd()
   m_gate->writeUInt32(ControlProto::REPLY_OK);
 
   ViewPortState dynViewPort;
-  dynViewPort.setArbitraryRect(&shareRect);
+  dynViewPort.setArbitraryRect(shareRect);
   m_rfbClientManager->setDynViewPort(&dynViewPort);
 }
 

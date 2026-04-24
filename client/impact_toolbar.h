@@ -31,7 +31,7 @@ namespace remoting_client
 
    };
 
-   class CLASS_DECL_REMOTING_REMOTING style :
+   class CLASS_DECL_REMOTING_CLIENT style :
       virtual public ::particle
    {
    public:
@@ -47,7 +47,7 @@ namespace remoting_client
 
    };
 
-   class CLASS_DECL_REMOTING_REMOTING control :
+   class CLASS_DECL_REMOTING_CLIENT control :
    virtual public ::particle
    {
    public:
@@ -104,7 +104,7 @@ virtual bool _001OnMouseEx(unsigned int uMessage, int iButtonMask, const ::int_p
    };
 
 
-   class CLASS_DECL_REMOTING_REMOTING toolbar_button :
+   class CLASS_DECL_REMOTING_CLIENT toolbar_button :
    virtual public control
    {
    public:
@@ -142,7 +142,7 @@ virtual bool _001OnMouseEx(unsigned int uMessage, int iButtonMask, const ::int_p
    };
 
 
-   class CLASS_DECL_REMOTING_REMOTING toolbar :
+   class CLASS_DECL_REMOTING_CLIENT toolbar :
    virtual public control
    {
    public:

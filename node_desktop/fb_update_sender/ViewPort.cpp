@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ViewPort.h"
 //#include "subsystem/thread/critical_section.h"
-#include "subsystem/BrokenHandleException.h"
+#include "subsystem/platform/BrokenHandleException.h"
 
 ViewPort::ViewPort(::subsystem::LogWriter *log)
 : m_desktop(0),

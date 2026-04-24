@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "ReconnectingChannel.h"
-//#include "subsystem/::earth::time.h"
+//#include "subsystem/platform/::earth::time.h"
 #include "desktop_ipc/ReconnectException.h"
 //#include "subsystem/thread/critical_section.h"
 

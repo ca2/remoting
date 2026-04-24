@@ -25,7 +25,7 @@
 #pragma once
 
 
-//////#include "subsystem/::string.h"
+//////#include "subsystem/platform/::string.h"
 #include "subsystem/thread/Thread.h"
 #include "RfbClientManager.h"
 //#include "log_writer/LogWriter.h"

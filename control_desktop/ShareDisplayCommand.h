@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "subsystem/Command.h"
+#include "subsystem/platform/Command.h"
 #include "ControlProxy.h"
 
 class ShareDisplayCommand : public Command

@@ -29,7 +29,7 @@
 #include "ConnectionData.h"
 #include "ConnectionListener.h"
 #include "ViewerCmdLine.h"
-#include "subsystem/ResourceLoader.h"
+#include "subsystem/platform/ResourceLoader.h"
 #include "acme/platform/system.h"
 #include "acme/filesystem/filesystem/file_context.h"
 #include "remoting/remoting/remoting.h"

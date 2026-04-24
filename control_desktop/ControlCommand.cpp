@@ -27,7 +27,7 @@
 #include "ControlAuthException.h"
 
 #include "subsystem/_common_header.h"
-#include "subsystem/Exception.h"
+#include "subsystem/platform/Exception.h"
 
 #include "acme/exception/io.h"
 

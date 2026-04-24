@@ -15,7 +15,7 @@ namespace remoting_client
 
    class remoting;
 
-   class CLASS_DECL_REMOTING_REMOTING application :
+   class CLASS_DECL_REMOTING_CLIENT application :
    virtual public ::apex::application
    {
    public:

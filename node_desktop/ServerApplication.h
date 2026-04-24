@@ -25,18 +25,18 @@
 #pragma once
 
 
-#include "subsystem/_common_header.h"
-//#include "subsystem/winhdr.h"
+//#include "subsystem/_common_header.h"
+//#include "subsystem/platform/winhdr.h"
 //#include "acme/_operating_system.h"
 
 
 #include "subsystem/node/OperatingSystemApplication.h"
-
-#include "Server.h"
-#include "ServerListener.h"
-#include "WsConfigRunner.h"
+#include "remoting/node_desktop/Task.h"
+//#include "subsystem_node_desktop/Server.h"
+//#include "subsystem_node_desktop/ServerListener.h"
+//#include "subsystem_node_desktop/WsConfigRunner.h"
 //#include "log_writer/FileLogWriter.h"
-#include "LogInitListener.h"
+//#include "subsystem_node_desktop/LogInitListener.h"
 
 namespace remoting_node_desktop
 {
@@ -44,24 +44,51 @@ namespace remoting_node_desktop
     * Windows TightVNC server application.
     * Used for running TightVNC server as single windows application.
     */
-   class ServerApplication : public ::subsystem::OperatingSystemApplication,
-                                public ServerListener,
-                                private LogInitListener
+   class CLASS_DECL_REMOTING_NODE_DESKTOP  ServerApplication : 
+      virtual public ::subsystem::OperatingSystemApplication,
+                             virtual public ServerTask
    {
    public:
+
+            // FileLogWriter m_fileLogWriter;
+      //::subsystem::LogWriter * m_fileLogWriter;
+
+      /**
+       * Command line string.
+       */
+      ::string m_commandLine;
+      ///**
+      // * TightVNC server.
+      // */
+      //::pointer < Server > m_pserver;
+      /**
+       * TvnControl application watcher.
+       */
+      ::pointer < WsConfigRunner > m_pcontrolrunner;
+
+      // NewConnectionEvents *m_newConnectionEvents;
+
       /**
        * Creates TightVNC server application instance.
        * @param hInstance HINSTANCE of application.
        * @param commaneLine command line string.
        */
-      ServerApplication(HINSTANCE hInstance,
-                           const ::scoped_string & scopedstrwindowClassName,
-                           const ::scoped_string & scopedstrCommandLine,
-                           NewConnectionEvents *newConnectionEvents);
+      ServerApplication();
       /**
        * Deletes TightVNC server application instance.
        */
       virtual ~ServerApplication();
+
+
+      virtual void initialize_server_application(HINSTANCE hInstance, const ::scoped_string &scopedstrwindowClassName,
+                                                 const ::scoped_string &scopedstrCommandLine,
+                                                 NewConnectionEvents *newConnectionEvents);
+
+
+      void task_start() override;
+      void maintain_task_running_wait_stop_task_signal_and_stop() override;
+      void signal_task_stop() override;
+
 
       /**
        * Runs TightVNC server windows application.
@@ -75,7 +102,7 @@ namespace remoting_node_desktop
        * @return application exit code.
        */
       //virtual int run();
-      virtual void run();
+      //void on_server_task_run() override;
 
       /**
        * Inherited from ServerListener abstact class.
@@ -84,29 +111,18 @@ namespace remoting_node_desktop
        */
       virtual void onServerShutdown();
 
-   private:
+   //private:
       // This is a callback function that calls when the log can be initialized.
       virtual void onLogInit(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrFileName, unsigned char logLevel);
 
       // This is a callback function that calls when log properties have changed.
       virtual void onChangeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel);
 
-      //FileLogWriter m_fileLogWriter;
-      ::subsystem::LogWriter * m_fileLogWriter;
 
-      /**
-       * Command line string.
-       */
-      ::string m_commandLine;
-      /**
-       * TightVNC server.
-       */
-      Server *m_tvnServer;
-      /**
-       * TvnControl application watcher.
-       */
-      WsConfigRunner *m_tvnControlRunner;
-
-      NewConnectionEvents *m_newConnectionEvents;
    };
+
+
 } // remoting_node_desktop
+
+
+

@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "WindowsInputBlocker.h"
-#include "subsystem/Exception.h"
+#include "subsystem/platform/Exception.h"
 //#include "subsystem/thread/critical_section.h"
 
 critical_section WindowsInputBlocker::m_instanceMutex;

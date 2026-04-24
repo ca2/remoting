@@ -25,37 +25,37 @@
 #pragma once
 
 
-#include "subsystem/CommandLine.h"
-#include "subsystem/CommandLineFormatException.h"
+#include "subsystem/platform/CommandLine.h"
+#include "subsystem/platform/CommandLineFormatException.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 
 
 class ControlCommandLine : private ::subsystem::CommandLine
 {
 public:
-  static const char CONFIG_APPLICATION[];
-  static const char CONFIG_SERVICE[];
+  static ::string_literal CONFIG_APPLICATION;
+  static ::string_literal CONFIG_SERVICE;
 
-  static const char CONTROL_SERVICE[];
-  static const char CONTROL_APPLICATION[];
-  static const char PASSWORD_FILE[];
-  static const char CONFIG_RELOAD[];
-  static const char DISCONNECT_ALL[];
-  static const char CONNECT[];
-  static const char SHUTDOWN[];
-  static const char SHARE_PRIMARY[];
-  static const char SHARE_RECT[];
-  static const char SHARE_DISPLAY[];
-  static const char SHARE_WINDOW[];
-  static const char SHARE_FULL[];
-  static const char SHARE_APP[];
+  static ::string_literal CONTROL_SERVICE;
+  static ::string_literal CONTROL_APPLICATION;
+  static ::string_literal PASSWORD_FILE;
+  static ::string_literal CONFIG_RELOAD;
+  static ::string_literal DISCONNECT_ALL;
+  static ::string_literal CONNECT;
+  static ::string_literal SHUTDOWN;
+  static ::string_literal SHARE_PRIMARY;
+  static ::string_literal SHARE_RECT;
+  static ::string_literal SHARE_DISPLAY;
+  static ::string_literal SHARE_WINDOW;
+  static ::string_literal SHARE_FULL;
+  static ::string_literal SHARE_APP;
 
-  static const char SET_CONTROL_PASSWORD[];
-  static const char SET_PRIMARY_VNC_PASSWORD[];
-  static const char CHECK_SERVICE_PASSWORDS[];
+  static ::string_literal SET_CONTROL_PASSWORD;
+  static ::string_literal SET_PRIMARY_VNC_PASSWORD;
+  static ::string_literal CHECK_SERVICE_PASSWORDS;
 
-  static const char SLAVE_MODE[];
-  static const char DONT_ELEVATE[];
+  static ::string_literal SLAVE_MODE;
+  static ::string_literal DONT_ELEVATE;
 
 public:
   ControlCommandLine();

@@ -66,27 +66,26 @@ namespace remoting_node_desktop
        * used to avoid infinite elevation loop).
        * @throws SystemException on failure.
        */
-      void runElevatedInstance() const;
+      void runElevatedInstance();
       /**
        * Perform the action specified in cmdLine (install, reinstall, remove,
        * start or stop the service).
        * @param cmdLine pointer to the parsed command line.
        * @throws SystemException on failure.
        */
-      void executeCommand(const ServiceControlCommandLine *cmdLine) const
-    ;
+      void executeCommand(const ServiceControlCommandLine *cmdLine);
       /**
        * Writes tvncontrol entry to registry to start it in every session.
        * @throws SystemException when failed to write to registry.
        */
       // FIXME: Move this function to TvnService, call from TvnService::install().
-      void setTvnControlStartEntry() const;
+      void setTvnControlStartEntry();
       /**
        * Removes tvncontrol start entry from registry.
        * @throws SystemException when failed delete registry key.
        */
       // FIXME: Move this function to TvnService, call from TvnService::remove().
-      void removeTvnControlStartEntry() const;
+      void removeTvnControlStartEntry();
       /**
        * Report an error using error description from a ServiceControlManagerClientException object.
        * @param cmdLine pointer to command line parser.
@@ -95,7 +94,7 @@ namespace remoting_node_desktop
        *   in the command line.
        */
       void reportError(const ServiceControlCommandLine *cmdLine,
-                       const ::subsystem::ServiceControlManagerClientException *ex) const;
+                       const ::subsystem::ServiceControlManagerClientException *ex);
       /**
        * Report an error using error description from a SystemException object.
        * @param cmdLine pointer to command line parser.
@@ -104,7 +103,7 @@ namespace remoting_node_desktop
        *   in the command line.
        */
       void reportError(const ServiceControlCommandLine *cmdLine,
-                       const ::subsystem::SystemException *ex) const;
+                       const ::subsystem::SystemException *ex);
       /**
        * Report an error using error description specified as a string.
        * @param cmdLine pointer to command line parser.
@@ -113,14 +112,14 @@ namespace remoting_node_desktop
        *   in the command line.
        */
       void reportError(const ServiceControlCommandLine *cmdLine,
-                       const ::scoped_string & scopedstrErrorMessage) const;
+                       const ::scoped_string & scopedstrErrorMessage);
       /**
        * Report successful command execution.
        * @param cmdLine pointer to command line parser.
        * @remark does not show up a scopedstrMessage box if the -silent flag was specified
        *   in the command line.
        */
-      void reportSuccess(const ServiceControlCommandLine *cmdLine) const;
+      void reportSuccess(const ServiceControlCommandLine *cmdLine);
 
    private:
       /**

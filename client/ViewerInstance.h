@@ -35,7 +35,7 @@ namespace remoting_client
 {
    
 
-   class CLASS_DECL_REMOTING_REMOTING ViewerInstance :
+   class CLASS_DECL_REMOTING_CLIENT ViewerInstance :
       virtual public ::particle
    {
    public:

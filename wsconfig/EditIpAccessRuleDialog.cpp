@@ -24,8 +24,8 @@
 #include "framework.h"
 #include "remoting/node_desktop/resource.h"
 #include "EditIpAccessRuleDialog.h"
-#include "subsystem/StringParser.h"
-//#include "subsystem/::string.h"
+#include "subsystem/platform/StringParser.h"
+//#include "subsystem/platform/::string.h"
 
 EditIpAccessRuleDialog::EditIpAccessRuleDialog()
 : BaseDialog(IDD_EDIT_IP_ACESS_CONTROL), m_data(NULL), m_isOpenedForEdit(false)

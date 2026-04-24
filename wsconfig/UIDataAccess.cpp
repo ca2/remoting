@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "UIDataAccess.h"
 
-#include "subsystem/StringParser.h"
+#include "subsystem/platform/StringParser.h"
 
 UIDataAccess::UIDataAccess()
 {

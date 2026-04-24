@@ -28,7 +28,7 @@
 #include "DecoderOfRectangle.h"
 
 #include "acme/input_output/DataInputStream.h"
-#include "subsystem/Inflater.h"
+#include "subsystem/platform/Inflater.h"
 
 namespace remoting
 {

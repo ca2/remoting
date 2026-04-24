@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "Win32ScreenDriverBaseImpl.h"
-#include "subsystem/Exception.h"
+#include "subsystem/platform/Exception.h"
 
 Win32ScreenDriverBaseImpl::Win32ScreenDriverBaseImpl(UpdateKeeper *updateKeeper,
                                                  UpdateListener *updateListener,

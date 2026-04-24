@@ -27,8 +27,8 @@
 
 #include "remoting/remoting/server_config/ServerConfig.h"
 
-#include "subsystem/VncPassCrypt.h"
-//#include "subsystem/::string.h"
+#include "subsystem/platform/VncPassCrypt.h"
+//#include "subsystem/platform/::string.h"
 
 ChangePasswordDialog::ChangePasswordDialog(::innate_subsystem::Control *parent, bool isNewPassword)
 : BaseDialog(IDD_CHANGE_PASSWORD), m_allowEmptyPassword(false), m_newPassword(isNewPassword)

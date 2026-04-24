@@ -89,19 +89,19 @@
     <ClCompile Include="ServiceControlCommandLine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TvnServer.cpp">
+    <ClCompile Include="Server.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TvnServerApplication.cpp">
+    <ClCompile Include="ServerApplication.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TvnServerHelp.cpp">
+    <ClCompile Include="ServerHelp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TvnServerListener.cpp">
+    <ClCompile Include="ServerListener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TvnService.cpp">
+    <ClCompile Include="Service.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WsConfigRunner.cpp">
@@ -386,6 +386,15 @@
     <ClCompile Include="desktop_ipc\UserInputServer.cpp">
       <Filter>Source Files\desktop_ipc</Filter>
     </ClCompile>
+    <ClCompile Include="_.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Task.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdditionalActionApplication.h">
@@ -442,19 +451,19 @@
     <ClInclude Include="ServiceControlCommandLine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TvnServer.h">
+    <ClInclude Include="Server.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TvnServerApplication.h">
+    <ClInclude Include="ServerApplication.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TvnServerHelp.h">
+    <ClInclude Include="ServerHelp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TvnServerListener.h">
+    <ClInclude Include="ServerListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TvnService.h">
+    <ClInclude Include="Service.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WsConfigRunner.h">
@@ -789,6 +798,18 @@
     </ClInclude>
     <ClInclude Include="desktop_ipc\UserInputServer.h">
       <Filter>Header Files\desktop_ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Task.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LogInitListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NewConnectionEvents.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -29,7 +29,7 @@
 
 
 
-//////#include "subsystem/::string.h"
+//////#include "subsystem/platform/::string.h"
 
 //ypedef ::string_array ::string_array;
 

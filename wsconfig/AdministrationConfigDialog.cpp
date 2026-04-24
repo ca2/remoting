@@ -31,10 +31,10 @@
 #include "remoting/remoting/server_config/ServerConfig.h"
 #include "remoting/remoting/server_config/Configurator.h"
 #include "subsystem/_common_header.h"
-#include "subsystem/StringParser.h"
+#include "subsystem/platform/StringParser.h"
 #include "remoting/remoting/wsconfig/ChangePasswordDialog.h"
-#include "subsystem/StringTable.h"
-#include "subsystem/Process.h"
+#include "subsystem/platform/StringTable.h"
+#include "subsystem/platform/Process.h"
 #include "remoting/node_desktop/NamingDefs.h"
 
 AdministrationConfigDialog::AdministrationConfigDialog()

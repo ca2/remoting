@@ -22,12 +22,12 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-//#include "subsystem/winhdr.h"
+//#include "subsystem/platform/winhdr.h"
 //#include "acme/_operating_system.h"
 
 #include "remoting/node_desktop/NamingDefs.h"
 
-#include "subsystem/Registry.h"
+#include "subsystem/platform/Registry.h"
 
 #include "OutgoingConnectionDialog.h"
 

@@ -22,7 +22,9 @@ namespace remoting_node_desktop
 
       bool m_bOpenFile = false;
 
-      ::pointer < Server > m_pserver;
+      //::pointer < Server > m_pserver;
+      ::pointer<Service> m_pservice;
+      ::pointer<ServerApplication> m_pserverapplication;
 
       ///::pointer<remoting> m_premoting;
 

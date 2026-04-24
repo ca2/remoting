@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "QueryConnectionCommandLine.h"
 
-#include "subsystem/StringParser.h"
+#include "subsystem/platform/StringParser.h"
 
 const char QueryConnectionCommandLine::QUERY_CONNECTION[] = "-queryconnection";
 const char QueryConnectionCommandLine::PEER_ADDR[] = "-peer";

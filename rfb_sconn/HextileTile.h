@@ -26,7 +26,7 @@
 INCLUDED__
 
 #include "TightPalette.h"
-//#include "subsystem/inttypes.h"
+//#include "subsystem/platform/inttypes.h"
 //#include aaa_<crtdbg.h>
 
 

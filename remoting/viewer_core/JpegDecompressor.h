@@ -46,7 +46,7 @@
 //#endif
 
 
-//////#include "subsystem/::string.h"
+//////#include "subsystem/platform/::string.h"
 namespace remoting
 {
    class CLASS_DECL_REMOTING JpegDecompressor

@@ -27,7 +27,7 @@
 
 #include "desktop_ipc/DesktopServerProto.h"
 #include "DesktopSrvDispatcher.h"
-//#include "subsystem/::earth::time.h"
+//#include "subsystem/platform/::earth::time.h"
 
 class DesktopConfigClient: public DesktopServerProto
 {

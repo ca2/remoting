@@ -27,7 +27,7 @@
 
 #include "acme/input_output/Channel.h"
 
-#include "subsystem/Exception.h"
+#include "subsystem/platform/Exception.h"
 
 /**
  * Abstract control transport that can be used by client and server side

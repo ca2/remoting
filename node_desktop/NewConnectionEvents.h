@@ -25,14 +25,21 @@
 #pragma once
 
 
-#include "subsystem/_common_header.h"
-
-class NewConnectionEvents
+namespace remoting_node_desktop
 {
-public:
-  virtual void onSuccAuth(const ::scoped_string & ip) = 0;
-  virtual void onAuthFailed(const ::scoped_string & ip) = 0;
-  virtual void onDisconnect(const ::scoped_string & scopedstrMessage) = 0;
-};
 
-//// __NEWCONNECTIONEVENTS_H__
+
+   class NewConnectionEvents :
+      virtual public ::Particle
+   {
+   public:
+      virtual void onSuccAuth(const ::scoped_string &ip) = 0;
+      virtual void onAuthFailed(const ::scoped_string &ip) = 0;
+      virtual void onDisconnect(const ::scoped_string &scopedstrMessage) = 0;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+

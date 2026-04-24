@@ -26,8 +26,8 @@
 #include <sstream>
 
 #include "ConnectionData.h"
-//#include "subsystem/::string.h"
-#include "subsystem/VncPassCrypt.h"
+//#include "subsystem/platform/::string.h"
+#include "subsystem/platform/VncPassCrypt.h"
 #include "remoting/remoting/viewer_core/VncAuthentication.h"
 
 namespace remoting_client
@@ -154,7 +154,7 @@ namespace remoting_client
       }
       // Decrypt password.
       unsigned char plainPassword[::remoting::VncAuthentication::VNC_PASSWORD_SIZE];
-      VncPassCrypt::getPlainPass(plainPassword, encPassword);
+      ::subsystem::VncPassCrypt::getPlainPass(plainPassword, encPassword);
 
       ::string ansiPlainPassword(reinterpret_cast<char *>(plainPassword));
       ::string password;
@@ -171,7 +171,7 @@ namespace remoting_client
       memcpy(plainPassword,
              ansiPlainPassword,
              minimum(::remoting::VncAuthentication::VNC_PASSWORD_SIZE, ansiPlainPassword.length()));
-      VncPassCrypt::getEncryptedPass(encryptedPassword, plainPassword);
+      ::subsystem::VncPassCrypt::getEncryptedPass(encryptedPassword, plainPassword);
       unsigned char hidePasswordChars[::remoting::VncAuthentication::VNC_PASSWORD_SIZE * 2 + 1];
       hidePasswordChars[::remoting::VncAuthentication::VNC_PASSWORD_SIZE * 2] = 0;
       for (size_t i = 0; i < ::remoting::VncAuthentication::VNC_PASSWORD_SIZE; ++i) {

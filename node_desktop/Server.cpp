@@ -27,7 +27,7 @@
 #include "AdditionalActionApplication.h"
 #include "subsystem/node/CurrentConsoleProcess.h"
 #include "subsystem/node/OperatingSystem.h"
-
+#include "subsystem/node/security/SecurityAttributes.h"
 #include "remoting/node_desktop/server_config/Configurator.h"
 
 #include "subsystem/thread/GlobalMutex.h"
@@ -38,8 +38,8 @@
 
 ///#include "remoting/remoting/network/socket/WindowsSocket.h"
 
-#include "subsystem/StringTable.h"
-//#include "subsystem/::string.h"
+#include "subsystem/platform/StringTable.h"
+//#include "subsystem/platform/::string.h"
 #include "remoting/node_desktop/NamingDefs.h"
 
 #include "subsystem/node/file.h"
@@ -106,7 +106,7 @@ namespace remoting_node_desktop
       // try {
       //   WindowsSocket::startup(2, 1);
       // } catch (::subsystem::Exception &ex) {
-      //   m_plogwriter.interror("{}", ex.get_message());
+      //   m_plogwriter->interror("{}", ex.get_message());
       // }
 
       DesktopFactory *desktopFactory = 0;
@@ -160,7 +160,7 @@ namespace remoting_node_desktop
       // try {
       //    WindowsSocket::cleanup();
       // } catch (::subsystem::Exception &ex) {
-      //    m_plogwriter.error("{}", ex.get_message());
+      //    m_plogwriter->error("{}", ex.get_message());
       // }
       MainSubsystem().cleanupSockets();
    }
@@ -235,13 +235,11 @@ namespace remoting_node_desktop
             statusString = MainSubsystem().StringTable().getString(IDS_NO_PASSWORDS_SET);
          } else {
             // FIXME: Usage of deprecated FUNCTION!
-            char localAddressString[1024];
-            getLocalIPAddrString(localAddressString, 1024);
-            ::string ansiString(localAddressString);
-            ansiString.toStringStorage(&statusString);
+            ::string localAddressString = MainSubsystem().getLocalIpAddressString();
+            statusString = localAddressString;
 
             if (!vncAuthEnabled) {
-               statusString.appendString(MainSubsystem().StringTable().getString(IDS_NO_AUTH_STATUS));
+               statusString += MainSubsystem().StringTable().getString(IDS_NO_AUTH_STATUS);
             } // if no auth enabled.
          } // accepting connections and no problem with passwords.
       } else {
@@ -250,7 +248,7 @@ namespace remoting_node_desktop
 
       unsigned int stringId = m_runAsService ? IDS_TVNSERVER_SERVICE : IDS_TVNSERVER_APP;
 
-      info->m_statusText.formatf("{} - {}",
+      info->m_statusText.format("{} - {}",
                                 MainSubsystem().StringTable().getString(stringId),
                                 statusString);
       info->m_acceptFlag = rfbServerListening && !vncPasswordsError;
@@ -261,8 +259,8 @@ namespace remoting_node_desktop
    {
       critical_section_lock l(&m_listeners);
 
-      ::std::vector<ServerListener *>::iterator it;
-      for (it = m_listeners.begin(); it != m_listeners.end(); it++) {
+      //::std::vector<ServerListener *>::iterator it;
+      for (auto it = m_listeners.begin(); it != m_listeners.end(); it++) {
          ServerListener *each = *it;
 
          each->onServerShutdown();
@@ -277,17 +275,17 @@ namespace remoting_node_desktop
    void Server::afterFirstClientConnect()
    {
       if (timeBeginPeriod(m_contextSwitchResolution) == TIMERR_NOERROR) {
-         m_plogwriter.scopedstrMessage("Set context switch resolution: {} ms", m_contextSwitchResolution);
+         m_plogwriter->debug("Set context switch resolution: {} ms", m_contextSwitchResolution);
       }
       else {
-         m_plogwriter.scopedstrMessage("Can't change context switch resolution to: {} ms", m_contextSwitchResolution);
+         m_plogwriter->debug("Can't change context switch resolution to: {} ms", m_contextSwitchResolution);
       }
 
    }
 
    void Server::afterLastClientDisconnect()
    {
-      m_plogwriter.scopedstrMessage("Restore context switch resolution");
+      m_plogwriter->debug("Restore context switch resolution");
       timeEndPeriod(m_contextSwitchResolution);
 
       ServerConfig::DisconnectAction action = m_srvConfig->getDisconnectAction();
@@ -308,29 +306,34 @@ namespace remoting_node_desktop
             return;
       }
 
-      Process *process;
+      ::pointer < ::subsystem::ProcessInterface > pprocess;
 
       // Choose how to start process.
       ::string thisModulePath;
-      Environment::getCurrentModulePath(&thisModulePath);
-      thisModulePath.quoteSelf();
+      thisModulePath = MainSubsystem().OperatingSystem().getCurrentModuleFolderPath();
+      thisModulePath.double_quote();
       if (isRunningAsService()) {
          bool connectToRdp = m_srvConfig->getConnectToRdpFlag();
-         process = new CurrentConsoleProcess(&m_plogwriter, connectToRdp, thisModulePath,
+         auto pprocessNew = createø <subsystem::CurrentConsoleProcess>();
+         pprocessNew->initialize_current_console_process(m_plogwriter, connectToRdp, thisModulePath,
                                              keys);
+         pprocess = pprocessNew;
       } else {
-         process = new Process(thisModulePath, keys);
+
+         auto pprocessNew = createø< subsystem::Process >();
+         pprocessNew->initialize_process(thisModulePath, keys);
+         pprocess = pprocessNew;
       }
 
-      m_plogwriter.scopedstrMessage("Execute disconnect action in separate process");
+      m_plogwriter->information("Execute disconnect action in separate process");
 
       try {
-         process->start();
-      } catch (SystemException &ex) {
-         m_plogwriter.error("Failed to start application: \"{}\"", ex.get_message());
+         pprocess->start();
+      } catch (::subsystem::SystemException &ex) {
+         m_plogwriter->error("Failed to start application: \"{}\"", ex.get_message());
       }
 
-      delete process;
+      //delete process;
    }
 
    void Server::restartHttpServer()
@@ -339,16 +342,16 @@ namespace remoting_node_desktop
 
       stopHttpServer();
 
-      if (m_srvConfig->isAcceptingHttpConnections()) {
-         m_plogwriter.scopedstrMessage("Starting HTTP server");
-         try {
-            // FIXME: HTTP server should bind to localhost if only loopback
-            //        connections are allowed.
-            m_httpServer = new HttpServer("0.0.0.0", m_srvConfig->getHttpPort(), m_runAsService, &m_plogwriter);
-         } catch (::subsystem::Exception &ex) {
-            m_plogwriter.error("Failed to start HTTP server: \"{}\"", ex.get_message());
-         }
-      }
+      // if (m_srvConfig->isAcceptingHttpConnections()) {
+      //    m_plogwriter->debug("Starting HTTP server");
+      //    try {
+      //       // FIXME: HTTP server should bind to localhost if only loopback
+      //       //        connections are allowed.
+      //       m_httpServer = new HttpServer("0.0.0.0", m_srvConfig->getHttpPort(), m_runAsService, &m_plogwriter);
+      //    } catch (::subsystem::Exception &ex) {
+      //       m_plogwriter->error("Failed to start HTTP server: \"{}\"", ex.get_message());
+      //    }
+      // }
    }
 
    void Server::restartControlServer()
@@ -358,22 +361,23 @@ namespace remoting_node_desktop
 
       stopControlServer();
 
-      m_plogwriter.scopedstrMessage("Starting control server");
+      m_plogwriter->debug("Starting control server");
 
       try {
          ::string pipeName;
-         ControlPipeName::createPipeName(isRunningAsService(), &pipeName, &m_plogwriter);
+         ControlPipeName::createPipeName(isRunningAsService(), pipeName, m_plogwriter);
 
          // FIXME: Memory leak
-         SecurityAttributes *pipeSecurity = new SecurityAttributes();
-         pipeSecurity->setInheritable();
-         pipeSecurity->shareToAllUsers();
+         auto psecurityattributes = createø<::subsystem::SecurityAttributes >();
+         psecurityattributes->setInheritable();
+         psecurityattributes->shareToAllUsers();
 
          const unsigned int maxControlServerPipeBufferSize = 0x10000;
-         PipeServer *pipeServer = new PipeServer(pipeName, maxControlServerPipeBufferSize, pipeSecurity);
-         m_controlServer = new ControlServer(pipeServer , m_rfbClientManager, &m_plogwriter);
+         auto ppipeserver = createø< ::subsystem::PipeServer>();
+         ppipeserver->initialize_pipe_server(pipeName, maxControlServerPipeBufferSize, psecurityattributes);
+         m_controlServer = new ControlServer(ppipeserver , m_rfbClientManager, m_plogwriter);
       } catch (::subsystem::Exception &ex) {
-         m_plogwriter.error("Failed to start control server: \"{}\"", ex.get_message());
+         m_plogwriter->error("Failed to start control server: \"{}\"", ex.get_message());
       }
    }
 
@@ -387,36 +391,36 @@ namespace remoting_node_desktop
          return;
       }
 
-      const ::scoped_string & scopedstrBindHost = m_srvConfig->isOnlyLoopbackConnectionsAllowed() ? "localhost") : _T("0.0.0.0";
+      ::string strBindHost = m_srvConfig->isOnlyLoopbackConnectionsAllowed() ? "localhost" : "0.0.0.0";
       unsigned short bindPort = m_srvConfig->getRfbPort();
 
-      m_plogwriter.scopedstrMessage("Starting main RFB server");
+      m_plogwriter->debug("Starting main RFB server");
 
       try {
-        m_rfbServer = new RfbServer(bindHost, bindPort, m_rfbClientManager, m_runAsService, &m_plogwriter);
+        m_rfbServer = new RfbServer(strBindHost, bindPort, m_rfbClientManager, m_runAsService, m_plogwriter);
       } catch (::subsystem::Exception &ex) {
-        m_plogwriter.error("Failed to start main RFB server: \"{}\"", ex.get_message());
+        m_plogwriter->error("Failed to start main RFB server: \"{}\"", ex.get_message());
       }
     }
 
    void Server::stopHttpServer()
    {
-      m_plogwriter.scopedstrMessage("Stopping HTTP server");
+      m_plogwriter->debug("Stopping HTTP server");
 
-      HttpServer *httpServer = 0;
-      {
-         critical_section_lock l(&m_mutex);
-         httpServer = m_httpServer;
-         m_httpServer = 0;
-      }
-      if (httpServer != 0) {
-         delete httpServer;
-      }
+      // HttpServer *httpServer = 0;
+      // {
+      //    critical_section_lock l(&m_mutex);
+      //    httpServer = m_httpServer;
+      //    m_httpServer = 0;
+      // }
+      // if (httpServer != 0) {
+      //    delete httpServer;
+      // }
    }
 
    void Server::stopControlServer()
    {
-      m_plogwriter.scopedstrMessage("Stopping control server");
+      m_plogwriter->debug("Stopping control server");
 
       ControlServer *controlServer = 0;
       {
@@ -431,7 +435,7 @@ namespace remoting_node_desktop
 
    void Server::stopMainRfbServer()
    {
-      m_plogwriter.scopedstrMessage("Stopping main RFB server");
+      m_plogwriter->debug("Stopping main RFB server");
 
       RfbServer *rfbServer = 0;
       {
@@ -450,7 +454,7 @@ namespace remoting_node_desktop
       unsigned char logLevel;
       {
          critical_section_lock al(&m_mutex);
-         m_srvConfig->getLogFileDir(&logDir);
+         m_srvConfig->getLogFileDir(logDir);
          logLevel = m_srvConfig->getLogLevel();
       }
       m_logInitListener->onChangeLogProps(logDir, logLevel);

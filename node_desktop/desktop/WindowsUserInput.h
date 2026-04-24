@@ -27,7 +27,7 @@
 
 #include "UserInput.h"
 //#include "WindowsClipboard.h"
-#include "subsystem/Keymap.h"
+#include "subsystem/platform/Keymap.h"
 #include "subsystem/node/InputInjector.h"
 #include "subsystem/node/Displays.h"
 //#include "log_writer/LogWriter.h"

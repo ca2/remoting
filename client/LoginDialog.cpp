@@ -25,7 +25,7 @@
 #include "LoginDialog.h"
 #include "NamingDefs.h"
 #include "OptionsDialog.h"
-#include "innate_subsystem/subsystem.h"
+#include "innate_subsystem/platform/subsystem.h"
 #include "remoting/client/remoting.h"
 #include "remoting/remoting/remoting.h"
 #include "subsystem/node/Shell.h"

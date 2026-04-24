@@ -24,9 +24,9 @@
 #include "framework.h"
 #include "HelpDialog.h"
 
-#include "subsystem/ResourceLoader.h"
+#include "subsystem/platform/ResourceLoader.h"
 #include "resource.h"
-#include "subsystem/ResourceLoader.h"
+#include "subsystem/platform/ResourceLoader.h"
 
 
 namespace remoting_client

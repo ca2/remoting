@@ -36,11 +36,11 @@ namespace remoting_client
       /**
        * String that contains application build date and time string (with "Built on" prefix").
        */
-      static const char STRING[];
+      static ::string_literal STRING;
       /**
        * String that contains application build date and time.
        */
-      static const char DATE[];
+      static ::string_literal DATE;
       //private:
       BuildTime() { };
    };

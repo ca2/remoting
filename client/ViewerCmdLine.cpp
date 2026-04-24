@@ -137,7 +137,7 @@ namespace remoting_client
 
         // If options "help" is present, then show "Help dialog" and exit.
         if (isHelpPresent()) {
-            throw CommandLineFormatHelp();
+            throw ::subsystem::CommandLineFormatHelp();
         }
 
 

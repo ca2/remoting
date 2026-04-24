@@ -24,87 +24,96 @@
 #include "framework.h"
 #include "ServiceControlCommandLine.h"
 
-const char ServiceControlCommandLine::INSTALL_SERVICE[]   = "-install";
-const char ServiceControlCommandLine::REMOVE_SERVICE[]    = "-remove";
-const char ServiceControlCommandLine::REINSTALL_SERVICE[] = "-reinstall";
-const char ServiceControlCommandLine::START_SERVICE[]     = "-start";
-const char ServiceControlCommandLine::STOP_SERVICE[]      = "-stop";
 
-const char ServiceControlCommandLine::DONT_ELEVATE[]            = "-dontelevate";
-const char ServiceControlCommandLine::SILENT[]            = "-silent";
-
-ServiceControlCommandLine::ServiceControlCommandLine()
+namespace remoting_node_desktop
 {
-}
 
-ServiceControlCommandLine::~ServiceControlCommandLine()
-{
-}
 
-void ServiceControlCommandLine::parse(const ::subsystem::CommandLineArguments *cmdArgs)
-{
-   ::subsystem::CommandLineFormat format[] = {
-      {INSTALL_SERVICE, ::subsystem::NO_ARG},
-                                 {REMOVE_SERVICE, ::subsystem::NO_ARG},
-                                 {REINSTALL_SERVICE, ::subsystem::NO_ARG},
-                                 {START_SERVICE, ::subsystem::NO_ARG},
-                                 {STOP_SERVICE, ::subsystem::NO_ARG},
-                                 {SILENT, ::subsystem::NO_ARG},
-                                 {DONT_ELEVATE, ::subsystem::NO_ARG}
-  };
+   string_literal ServiceControlCommandLine::INSTALL_SERVICE   = "-install";
+   string_literal ServiceControlCommandLine::REMOVE_SERVICE    = "-remove";
+   string_literal ServiceControlCommandLine::REINSTALL_SERVICE = "-reinstall";
+   string_literal ServiceControlCommandLine::START_SERVICE     = "-start";
+   string_literal ServiceControlCommandLine::STOP_SERVICE      = "-stop";
 
-  if (!CommandLine::parse(format, sizeof(format) / sizeof(::subsystem::CommandLineFormat),
-                          cmdArgs)) {
-    throw ::subsystem::Exception("invalid command line");
-  } // if cannot parse it.
+   string_literal ServiceControlCommandLine::DONT_ELEVATE      = "-dontelevate";
+   string_literal ServiceControlCommandLine::SILENT            = "-silent";
 
-  // Check additional rules.
 
-  if (keySpecified(SILENT)) {
-    if (m_foundKeys.size() != (dontElevate() ? 3 : 2)) {
-      throw ::subsystem::Exception("-silent key can be used only when one command specified");
-    }
-  } else if (m_foundKeys.size() != (dontElevate() ? 2 : 1)) {
-    throw ::subsystem::Exception("only one service command can be specified");
-  }
-}
+   ServiceControlCommandLine::ServiceControlCommandLine()
+   {
+   }
 
-bool ServiceControlCommandLine::keySpecified(const ::scoped_string & scopedstrKey) const
-{
-  return optionSpecified(scopedstrKey);
-}
+   ServiceControlCommandLine::~ServiceControlCommandLine()
+   {
+   }
 
-bool ServiceControlCommandLine::installationRequested() const
-{
-  return keySpecified(INSTALL_SERVICE);
-}
+   void ServiceControlCommandLine::parse(const ::subsystem::CommandLineArguments *cmdArgs)
+   {
+      ::subsystem::CommandLineFormat format[] = {
+         {INSTALL_SERVICE, ::subsystem::NO_ARG},
+                                    {REMOVE_SERVICE, ::subsystem::NO_ARG},
+                                    {REINSTALL_SERVICE, ::subsystem::NO_ARG},
+                                    {START_SERVICE, ::subsystem::NO_ARG},
+                                    {STOP_SERVICE, ::subsystem::NO_ARG},
+                                    {SILENT, ::subsystem::NO_ARG},
+                                    {DONT_ELEVATE, ::subsystem::NO_ARG}
+      };
 
-bool ServiceControlCommandLine::removalRequested() const
-{
-  return keySpecified(REMOVE_SERVICE);
-}
+      if (!CommandLine::parse(format, sizeof(format) / sizeof(::subsystem::CommandLineFormat),
+                              cmdArgs)) {
+         throw ::subsystem::Exception("invalid command line");
+                              } // if cannot parse it.
 
-bool ServiceControlCommandLine::reinstallRequested() const
-{
-  return keySpecified(REINSTALL_SERVICE);
-}
+      // Check additional rules.
 
-bool ServiceControlCommandLine::startRequested() const
-{
-  return keySpecified(START_SERVICE);
-}
+      if (keySpecified(SILENT)) {
+         if (m_foundKeys.size() != (dontElevate() ? 3 : 2)) {
+            throw ::subsystem::Exception("-silent key can be used only when one command specified");
+         }
+      } else if (m_foundKeys.size() != (dontElevate() ? 2 : 1)) {
+         throw ::subsystem::Exception("only one service command can be specified");
+      }
+   }
 
-bool ServiceControlCommandLine::stopRequested() const
-{
-  return keySpecified(STOP_SERVICE);
-}
+   bool ServiceControlCommandLine::keySpecified(const ::scoped_string & scopedstrKey) const
+   {
+      return optionSpecified(scopedstrKey);
+   }
 
-bool ServiceControlCommandLine::beSilent() const
-{
-  return keySpecified(SILENT);
-}
+   bool ServiceControlCommandLine::installationRequested() const
+   {
+      return keySpecified(INSTALL_SERVICE);
+   }
 
-bool ServiceControlCommandLine::dontElevate() const
-{
-  return keySpecified(DONT_ELEVATE);
-}
+   bool ServiceControlCommandLine::removalRequested() const
+   {
+      return keySpecified(REMOVE_SERVICE);
+   }
+
+   bool ServiceControlCommandLine::reinstallRequested() const
+   {
+      return keySpecified(REINSTALL_SERVICE);
+   }
+
+   bool ServiceControlCommandLine::startRequested() const
+   {
+      return keySpecified(START_SERVICE);
+   }
+
+   bool ServiceControlCommandLine::stopRequested() const
+   {
+      return keySpecified(STOP_SERVICE);
+   }
+
+   bool ServiceControlCommandLine::beSilent() const
+   {
+      return keySpecified(SILENT);
+   }
+
+   bool ServiceControlCommandLine::dontElevate() const
+   {
+      return keySpecified(DONT_ELEVATE);
+   }
+}  //namespace remoting_node_desktop
+
+

@@ -26,7 +26,7 @@
 
 
 #include "subsystem/thread/Thread.h"
-#include "subsystem/Process.h"
+#include "subsystem/platform/Process.h"
 //#include "log_writer/LogWriter.h"
 #include "desktop_ipc/ReconnectionListener.h"
 

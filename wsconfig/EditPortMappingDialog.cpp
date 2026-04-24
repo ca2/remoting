@@ -25,7 +25,7 @@
 #include "remoting/node_desktop/resource.h"
 #include "EditPortMappingDialog.h"
 
-#include "subsystem/StringParser.h"
+#include "subsystem/platform/StringParser.h"
 
 #include "remoting/remoting/server_config/Configurator.h"
 #include "remoting/remoting/server_config/PortMappingContainer.h"

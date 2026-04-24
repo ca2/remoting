@@ -31,69 +31,69 @@
 class NamingDefs
 {
 public:
-  static const char MIRROR_DRIVER_MESSAGE_WINDOW_CLASS_NAME[];
+  static ::string_literal MIRROR_DRIVER_MESSAGE_WINDOW_CLASS_NAME;
 };
 
 class ProductNames
 {
 public:
-  static const char PRODUCT_NAME[];
-  static const char SERVER_PRODUCT_NAME[];
+  static ::string_literal PRODUCT_NAME;
+  static ::string_literal SERVER_PRODUCT_NAME;
 };
 
 class RegistryPaths
 {
 public:
-  static const char SERVER_PATH[];
-  static const char SERVER_REVERSE_CONN_HISTORY_PATH[];
-  static const char DISPATCHER_CONN_HISTORY_PATH[];
+  static ::string_literal SERVER_PATH;
+  static ::string_literal SERVER_REVERSE_CONN_HISTORY_PATH;
+  static ::string_literal DISPATCHER_CONN_HISTORY_PATH;
 };
 
 class WindowNames
 {
 public:
-  static const char WINDOW_CLASS_NAME[];
+  static ::string_literal WINDOW_CLASS_NAME;
 };
 
 class LogNames
 {
 public:
-  static const char SERVER_LOG_FILE_STUB_NAME[];
-  static const char VIEWER_LOG_FILE_STUB_NAME[];
-  static const char LOG_DIR_NAME[];
-  static const char LOG_PIPE_PUBLIC_NAME[];
-  static const char WIN_EVENT_PROVIDER_NAME[];
+  static ::string_literal SERVER_LOG_FILE_STUB_NAME;
+  static ::string_literal VIEWER_LOG_FILE_STUB_NAME;
+  static ::string_literal LOG_DIR_NAME;
+  static ::string_literal LOG_PIPE_PUBLIC_NAME;
+  static ::string_literal WIN_EVENT_PROVIDER_NAME;
 };
 
-class ClipboardNames
+class CLASS_DECL_SUBSYSTEM_WINDOWS ClipboardNames
 {
 public:
-  static const char CLIPBOARD_WIN_CLASS_NAME[];
+  static ::string_literal CLIPBOARD_WIN_CLASS_NAME;
 };
 
 class ServiceNames
 {
 public:
-  static const char TVNCONTROL_START_REGISTRY_ENTRY_NAME[];
-  static const char SERVICE_NAME[];
-  static const char SERVICE_NAME_TO_DISPLAY[];
+  static ::string_literal TVNCONTROL_START_REGISTRY_ENTRY_NAME;
+  static ::string_literal SERVICE_NAME;
+  static ::string_literal SERVICE_NAME_TO_DISPLAY;
 };
 
 class ServerApplicationNames
 {
 public:
-  static const char SERVER_INSTANCE_MUTEX_NAME[];
-  static const char CONTROL_APP_INSTANCE_MUTEX_NAME[];
-  static const char FOR_SERVICE_CONTROL_APP_PIPE_NAME[];
-  static const char FOR_APP_CONTROL_APP_SERVICE_PIPE_NAME[];
+  static ::string_literal SERVER_INSTANCE_MUTEX_NAME;
+  static ::string_literal CONTROL_APP_INSTANCE_MUTEX_NAME;
+  static ::string_literal FOR_SERVICE_CONTROL_APP_PIPE_NAME;
+  static ::string_literal FOR_APP_CONTROL_APP_SERVICE_PIPE_NAME;
 };
 
 class HookDefinitions
 {
 public:
-  static const char HOOK_LOADER_WINDOW_CLASS[];
-  static const char HOOK_TARGET_WIN_CLASS_NAME[];
-  static const char HOOK_LOADER_NAME[];
+  static ::string_literal HOOK_LOADER_WINDOW_CLASS;
+  static ::string_literal HOOK_TARGET_WIN_CLASS_NAME;
+  static ::string_literal HOOK_LOADER_NAME;
   static const unsigned int LOADER_CLOSE_CODE;
   static const unsigned int SPEC_IPC_CODE;
 };
@@ -101,14 +101,14 @@ public:
 class DefaultNames
 {
 public:
-  static const char DEFAULT_COMPUTER_NAME[];
+  static ::string_literal DEFAULT_COMPUTER_NAME;
 };
 
 class HttpStrings
 {
 public:
-  static const char HTTP_INDEX_PAGE_FORMAT[];
-  static const char HTTP_MSG_BADPARAMS[];
+  static ::string_literal HTTP_INDEX_PAGE_FORMAT;
+  static ::string_literal HTTP_MSG_BADPARAMS;
 };
 
 //// _PUBLIC_NAMES_H_

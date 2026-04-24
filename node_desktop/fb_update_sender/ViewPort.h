@@ -29,7 +29,7 @@
 #include "innate_subsystem/framebuffer/FrameBuffer.h"
 #include "desktop/Desktop.h"
 //#include "subsystem/thread/critical_section.h"
-//#include "subsystem/::earth::time.h"
+//#include "subsystem/platform/::earth::time.h"
 //#include "log_writer/LogWriter.h"
 
 // This class calculates actual view port rectangle.

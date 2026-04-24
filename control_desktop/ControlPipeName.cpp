@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ControlPipeName.h"
 
-//#include "subsystem/winhdr.h"
+//#include "subsystem/platform/winhdr.h"
 //#include "acme/_operating_system.h"
 
 #include "remoting/node_desktop/NamingDefs.h"

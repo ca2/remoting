@@ -23,11 +23,11 @@
 //
 
 #include "subsystem/_common_header.h"
-//#include "subsystem/winhdr.h"
+//#include "subsystem/platform/winhdr.h"
 //#include "acme/_operating_system.h"
 
-#include "subsystem/CommandLine.h"
-#include "subsystem/CommandLineArguments.h"
+#include "subsystem/platform/CommandLine.h"
+#include "subsystem/platform/CommandLineArguments.h"
 
 #include "remoting/node_desktop/Service.h"
 #include "remoting/node_desktop/ServerApplication.h"

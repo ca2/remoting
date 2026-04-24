@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "FileExistDialog.h"
-//#include "subsystem/::earth::time.h"
+//#include "subsystem/platform/::earth::time.h"
 #include "resource.h"
 ////#include aaa_<crtdbg.h>
 //// #include aaa_<stdio.h>

@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "UserInputServer.h"
 //#include "subsystem/thread/critical_section.h"
-#include "subsystem/BrokenHandleException.h"
+#include "subsystem/platform/BrokenHandleException.h"
 
 UserInputServer::UserInputServer(BlockingGate *forwGate,
                                  DesktopSrvDispatcher *dispatcher,

@@ -30,7 +30,7 @@
 #include "HookInstaller.h"
 #include "innate_subsystem/gui/MessageWindow.h"
 #include "HookUpdateTimer.h"
-#include "subsystem/Process.h"
+#include "subsystem/platform/Process.h"
 //#include "log_writer/LogWriter.h"
 
 class HooksUpdateDetector : public UpdateDetector

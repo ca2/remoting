@@ -30,8 +30,8 @@
 #include "remoting/remoting/rfb/MsgDefs.h"
 #include "remoting/remoting/rfb/EncodingDefs.h"
 #include "remoting/remoting/rfb/VendorDefs.h"
-//#include "subsystem/::string.h"
-////#include "subsystem/::string.h"
+//#include "subsystem/platform/::string.h"
+////#include "subsystem/platform/::string.h"
 
 #include "AuthHandler.h"
 #include "RichCursorDecoder.h"

@@ -26,16 +26,16 @@
 
 
 #include "subsystem/_common_header.h"
-#include "subsystem/CommandLine.h"
-#include "subsystem/Exception.h"
+#include "subsystem/platform/CommandLine.h"
+#include "subsystem/platform/Exception.h"
 
 class QueryConnectionCommandLine : private ::subsystem::CommandLine
 {
 public:
-  static const char QUERY_CONNECTION[];
-  static const char PEER_ADDR[];
-  static const char TIMEOUT[];
-  static const char ACCEPT[];
+  static ::string_literal QUERY_CONNECTION;
+  static ::string_literal PEER_ADDR;
+  static ::string_literal TIMEOUT;
+  static ::string_literal ACCEPT;
 
   unsigned int m_timeout;
 

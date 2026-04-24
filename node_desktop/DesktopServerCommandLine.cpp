@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "DesktopServerCommandLine.h"
 
-#include "subsystem/StringParser.h"
+#include "subsystem/platform/StringParser.h"
 
 const char DesktopServerCommandLine::DESKTOP_SERVER_KEY[] = "-desktopserver";
 const char DesktopServerCommandLine::LOG_DIR_KEY[] = "-logdir";

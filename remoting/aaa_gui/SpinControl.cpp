@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "SpinControl.h"
 // #include aaa_<commctrl.h>
-#include "subsystem/StringParser.h"
+#include "subsystem/platform/StringParser.h"
 
 SpinControl::SpinControl()
 : m_buddy(NULL),

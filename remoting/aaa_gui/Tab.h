@@ -27,7 +27,7 @@
 
 #include "BaseDialog.h"
 #include "innate_subsystem/gui/Window.h"
-//////#include "subsystem/::string.h"
+//////#include "subsystem/platform/::string.h"
 
 class CLASS_DECL_REMOTING Tab :
 virtual public ::innate_subsystem::Control

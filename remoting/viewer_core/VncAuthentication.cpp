@@ -24,13 +24,15 @@
 #include "framework.h"
 #include "VncAuthentication.h"
 
-//#include "subsystem/::string.h"
-#include "subsystem/DesCrypt.h"
+//#include "subsystem/platform/::string.h"
+#include "subsystem/platform/DesCrypt.h"
 
 //#include aaa_<algorithm>
 
 namespace remoting
 {
+
+
    void VncAuthentication::vncAuthenticate(::DataInputStream * pinput,
                                            ::DataOutputStream *output,
                                            const ::scoped_string & password)
@@ -52,9 +54,17 @@ namespace remoting
       unsigned char response[16];
 
       pinput->readFully(challenge, sizeof(challenge));
-      DesCrypt desCrypt;
+      
+      
+      ::subsystem::DesCrypt desCrypt;
       desCrypt.encrypt(response, challenge, sizeof(challenge), m_password);
       output->write(response, sizeof(response));
       output->flush();
+
    }
+
+
 } // namespace remoting
+
+
+

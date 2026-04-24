@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "subsystem/CharDefs.h"
+#include "subsystem/platform/CharDefs.h"
 
 //
 // The ::subsystem::LogWriter class defines abstract low-level interface for logging

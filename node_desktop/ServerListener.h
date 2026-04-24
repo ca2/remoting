@@ -26,10 +26,13 @@
 
 namespace remoting_node_desktop
 {
+
+
    /**
     * Listener of TightVNC server (Server class) events.
     */
-   class ServerListener
+   class ServerListener :
+      virtual public ::Particle
    {
    public:
       /**
@@ -41,5 +44,8 @@ namespace remoting_node_desktop
        * Slot of Server shutdown signal (generated in Server::shutdown() method).
        */
       virtual void onServerShutdown() = 0;
+
    };
+
+
 } // namespace remoting_node_desktop

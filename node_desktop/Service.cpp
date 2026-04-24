@@ -26,21 +26,19 @@
 #include "subsystem/node/OperatingSystem.h"
 #include "ServerCommandLine.h"
 #include "remoting/node_desktop/NamingDefs.h"
-
+#include "remoting/node_desktop/NewConnectionEvents.h"
+#include "remoting/node_desktop/WinServiceEvents.h"
 #include "subsystem/node/ServiceControlManagerClient.h"
 #include "subsystem/node/OperatingSystem.h"
+
 
 namespace remoting_node_desktop
 {
    const char Service::SERVICE_COMMAND_LINE_KEY[] = "-service";
 
-   Service::Service(WinServiceEvents *winServiceEvents, NewConnectionEvents *newConnectionEvents) :
-      m_tvnServer(0),
-      m_winServiceEvents(winServiceEvents),
-      m_newConnectionEvents(newConnectionEvents)
-      //m_logServer(LogNames::LOG_PIPE_PUBLIC_NAME),
-      //m_clientLogWriter(LogNames::LOG_PIPE_PUBLIC_NAME, LogNames::SERVER_LOG_FILE_STUB_NAME)
+   Service::Service()
    {
+      m_bService = true;
       initialize_service(ServiceNames::SERVICE_NAME);
    }
 
@@ -48,35 +46,61 @@ namespace remoting_node_desktop
    {
    }
 
-   void Service::onStart()
+
+   void Service::initialize_remoting_node_desktop_service(WinServiceEvents * pwinserviceevents,
+                                                          NewConnectionEvents *pnewconnectionevents)
    {
-      try {
-         m_winServiceEvents->enable();
-         // FIXME: Use real ::subsystem::LogWriter instead of zero.
-         m_tvnServer = allocateø Server(true, m_newConnectionEvents, this, m_clientLogWriter);
-         m_tvnServer->addListener(this);
-         m_winServiceEvents->onSuccServiceStart();
-      } catch (::exception &e) {
-         m_winServiceEvents->onFailedServiceStart(e.get_message());
+
+      m_pwinserviceevents = pwinserviceevents;
+      m_pnewconnectionevents = pnewconnectionevents;
+      // m_logServer(LogNames::LOG_PIPE_PUBLIC_NAME),
+      // m_clientLogWriter(LogNames::LOG_PIPE_PUBLIC_NAME, LogNames::SERVER_LOG_FILE_STUB_NAME)
+      
+   }
+      
+    
+   void Service::task_start()
+   {
+
+      try 
+      {
+      
+         m_pwinserviceevents->enable();
+
+         _start();
+         
+         m_pwinserviceevents->onSuccServiceStart();
+
       }
+      catch (::exception &e) 
+      {
+
+         m_pwinserviceevents->onFailedServiceStart(e.get_message());
+
+      }
+
    }
 
-   void Service::main()
+   
+   void Service::maintain_task_running_wait_stop_task_signal_and_stop()
    {
-      //m_shutdownEvent.waitForEvent();
+
       m_shutdownEvent.wait();
-      m_tvnServer->removeListener(this);
-      delete m_tvnServer;
-      m_tvnServer = 0;
 
-      m_winServiceEvents->onServiceStop();
+      _stop();
+
+      m_pwinserviceevents->onServiceStop();
+
    }
 
-   void Service::onStop()
+
+   void Service::signal_task_stop()
    {
-      //  m_shutdownEvent.notify();
+
       m_shutdownEvent.set_happening();
+
    }
+
 
    void Service::onServerShutdown()
    {

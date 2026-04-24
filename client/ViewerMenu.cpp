@@ -24,10 +24,10 @@
 #include "framework.h"
 #include "ViewerMenu.h"
 #include "resource.h"
-#include "innate_subsystem/ResourceLoader.h"
-#include "innate_subsystem/subsystem.h"
+#include "innate_subsystem/platform/ResourceLoader.h"
+#include "innate_subsystem/platform/subsystem.h"
 
-#include "subsystem/ResourceLoader.h"
+#include "subsystem/platform/ResourceLoader.h"
 
 namespace remoting_client
 {

@@ -33,7 +33,7 @@
 #include "remoting/remoting/server_config/ConfigReloadListener.h"
 #include "remoting/remoting/server_config/RegistrySecurityAttributes.h"
 
-#include "subsystem/ListenerContainer.h"
+#include "subsystem/platform/ListenerContainer.h"
 
 class Configurator : public ::subsystem::ListenerContainer<ConfigReloadListener *>
 {

@@ -27,8 +27,8 @@
 
 //#include "remoting/remoting/win_system/WindowsProcessCommandLine.h"
 #include "remoting/remoting/client_config/ViewerConfig.h"
-#include "subsystem/CommandLineFormatException.h"
-#include "subsystem/CommandLineFormatHelp.h"
+#include "subsystem/platform/CommandLineFormatException.h"
+#include "subsystem/platform/CommandLineFormatHelp.h"
 #include "HelpDialog.h"
 #include "ConnectionData.h"
 
@@ -52,43 +52,43 @@ namespace remoting_client
         bool parseHostOptions();
         bool isPresent(const ::scoped_string & scopedstrKeyName);
 
-        static const char HELP[];
-        static const char HELP_SHORT[];
-        static const char HELP_ARG[];
-        static const char HELP_ARG_SHORT[];
-        static const char HELP_ARG_QUESTION[];
-        static const char OPTIONS_FILE[];
-        static const char LISTEN[];
-        static const char HOST[];
-        static const char PORT[];
-        static const char PASSWORD[];
-        static const char DISPATCH_ID[];
-        static const char SHOW_CONTROLS[];
-        static const char VIEW_ONLY[];
-        static const char USE_CLIPBOARD[];
-        static const char SCALE[];
-        static const char FULL_SCREEN[];
-        static const char WARN_FULL_SCREEN[];
-        static const char ENCODING[];
-        static const char COPY_RECT[];
-        static const char MOUSE_CURSOR[];
-        static const char MOUSE_LOCAL[];
-        static const char MOUSE_SWAP[];
-        static const char JPEG_IMAGE_QUALITY[];
-        static const char COMPRESSION_LEVEL[];
-        static const char LOG_PATH[];
+        static ::string_literal HELP;
+        static ::string_literal HELP_SHORT;
+        static ::string_literal HELP_ARG;
+        static ::string_literal HELP_ARG_SHORT;
+        static ::string_literal HELP_ARG_QUESTION;
+        static ::string_literal OPTIONS_FILE;
+        static ::string_literal LISTEN;
+        static ::string_literal HOST;
+        static ::string_literal PORT;
+        static ::string_literal PASSWORD;
+        static ::string_literal DISPATCH_ID;
+        static ::string_literal SHOW_CONTROLS;
+        static ::string_literal VIEW_ONLY;
+        static ::string_literal USE_CLIPBOARD;
+        static ::string_literal SCALE;
+        static ::string_literal FULL_SCREEN;
+        static ::string_literal WARN_FULL_SCREEN;
+        static ::string_literal ENCODING;
+        static ::string_literal COPY_RECT;
+        static ::string_literal MOUSE_CURSOR;
+        static ::string_literal MOUSE_LOCAL;
+        static ::string_literal MOUSE_SWAP;
+        static ::string_literal JPEG_IMAGE_QUALITY;
+        static ::string_literal COMPRESSION_LEVEL;
+        static ::string_literal LOG_PATH;
 
 
-        static const char YES[];
-        static const char NO[];
-        static const char AUTO[];
-        static const char LOCAL[];
-        static const char SMALLDOT[];
-        static const char NORMAL[];
-        static const char HEXTILE[];
-        static const char TIGHT[];
-        static const char RRE[];
-        static const char ZRLE[];
+        static ::string_literal YES;
+        static ::string_literal NO;
+        static ::string_literal AUTO;
+        static ::string_literal LOCAL;
+        static ::string_literal SMALLDOT;
+        static ::string_literal NORMAL;
+        static ::string_literal HEXTILE;
+        static ::string_literal TIGHT;
+        static ::string_literal RRE;
+        static ::string_literal ZRLE;
 
         //::pointer < ::windows::WindowsProcessCommandLine > m_pwindowsprocesscommandline;
        ::pointer < ::subsystem::ProcessCommandLineInterface > m_pprocesscommandlineOperatingSystem;

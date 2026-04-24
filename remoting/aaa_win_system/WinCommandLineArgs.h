@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "subsystem/CommandLineArgs.h"
+#include "subsystem/platform/CommandLineArgs.h"
 
 class CLASS_DECL_REMOTING WinCommandLineArgs : public CommandLineArgs
 {

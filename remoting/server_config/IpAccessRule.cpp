@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "IpAccessRule.h"
-//#include "subsystem/::string.h"
+//#include "subsystem/platform/::string.h"
 
 IpAccessRule::IpAccessRule()
 : m_action(ACTION_TYPE_DENY)

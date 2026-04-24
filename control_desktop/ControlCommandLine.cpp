@@ -25,9 +25,9 @@
 #include "ControlCommandLine.h"
 
 #include "subsystem/_common_header.h"
-#include "subsystem/CommandLine.h"
+#include "subsystem/platform/CommandLine.h"
 #include "remoting/remoting/region/RectSerializer.h"
-#include "subsystem/StringParser.h"
+#include "subsystem/platform/StringParser.h"
 
 #include "ConnectStringParser.h"
 

@@ -25,8 +25,8 @@
 #pragma once
 
 
-//#include "subsystem/::string_array.h"
-#include "subsystem/Exception.h"
+//#include "subsystem/platform/::string_array.h"
+#include "subsystem/platform/Exception.h"
 #include "PortMappingContainer.h"
 #include "IpAccessControl.h"
 //#include "subsystem/thread/critical_section.h"

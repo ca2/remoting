@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ControlAppAuthenticator.h"
 //#include "subsystem/thread/critical_section.h"
-#include "subsystem/VncPassCrypt.h"
+#include "subsystem/platform/VncPassCrypt.h"
 
 ControlAppAuthenticator::ControlAppAuthenticator(unsigned long long failureTimeInterval,
                                                  unsigned int failureMaxCount)
@@ -49,7 +49,7 @@ bool ControlAppAuthenticator::authenticate(const unsigned char cryptPassword[8],
     return false;
   }
 
-  VncPassCrypt passCrypt;
+  ::subsystem::VncPassCrypt passCrypt;
   passCrypt.updatePlain(cryptPassword);
   bool isAuthSucceed = passCrypt.challengeAndResponseIsValid(challenge,
                                                              response);

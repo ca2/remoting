@@ -33,9 +33,9 @@
 #include "ControlCommand.h"
 #include "UpdateLocalConfigCommand.h"
 
-#include "subsystem/ResourceLoader.h"
-#include "subsystem/StringTable.h"
-#include "subsystem/MacroCommand.h"
+#include "subsystem/platform/ResourceLoader.h"
+#include "subsystem/platform/StringTable.h"
+#include "subsystem/platform/MacroCommand.h"
 
 #include "remoting/node_desktop/resource.h"
 

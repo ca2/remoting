@@ -26,7 +26,7 @@
 #include "PipeServer.h"
 
 #include "acme/platform/node.h"
-#include "subsystem/Exception.h"
+#include "subsystem/platform/Exception.h"
 //#include "Environment.h"
 
 DynamicLibrary* PipeServer::m_pdynamiclibraryKernel32 = 0;

@@ -9,7 +9,7 @@ namespace remoting_client
 {
 
 
-   class CLASS_DECL_REMOTING_REMOTING keyboard_layout_change :
+   class CLASS_DECL_REMOTING_CLIENT keyboard_layout_change :
       virtual public ::sockets::http_callback
    {
    public:

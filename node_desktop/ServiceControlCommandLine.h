@@ -25,61 +25,70 @@
 #pragma once
 
 
-#include "subsystem/CommandLine.h"
-#include "subsystem/Exception.h"
+#include "subsystem/platform/CommandLine.h"
+#include "subsystem/platform/Exception.h"
 
-/**
- * Service control application command line parser.
- * Supported keys are:
- *  -install, -reinstall, -remove, -start, -stop.
- * @remark only one allowed key can be specified.
- * @fixme no test for this class.
- */
-class ServiceControlCommandLine : private ::subsystem::CommandLine
+
+namespace remoting_node_desktop
 {
-public:
-  static const char APPLICATION_KEY[];
-  static const char INSTALL_SERVICE[];
-  static const char REMOVE_SERVICE[];
-  static const char REINSTALL_SERVICE[];
-  static const char START_SERVICE[];
-  static const char STOP_SERVICE[];
-  static const char SILENT[];
-  static const char DONT_ELEVATE[];
+   /**
+    * Service control application command line parser.
+    * Supported keys are:
+    *  -install, -reinstall, -remove, -start, -stop.
+    * @remark only one allowed key can be specified.
+    * @fixme no test for this class.
+    */
+   class ServiceControlCommandLine :
+      virtual public ::subsystem::CommandLine
+   {
+   public:
+      static string_literal APPLICATION_KEY;
+      static string_literal INSTALL_SERVICE;
+      static string_literal REMOVE_SERVICE;
+      static string_literal REINSTALL_SERVICE;
+      static string_literal START_SERVICE;
+      static string_literal STOP_SERVICE;
+      static string_literal SILENT;
+      static string_literal DONT_ELEVATE;
 
-public:
-  /**
-   * Default constructor.
-   */
-  ServiceControlCommandLine();
-  /**
-   * Destructor.
-   */
-  virtual ~ServiceControlCommandLine();
+   public:
+      /**
+       * Default constructor.
+       */
+      ServiceControlCommandLine();
+      /**
+       * Destructor.
+       */
+      virtual ~ServiceControlCommandLine();
 
-  /**
-   * Parses command line.
-   * @param commandLine command line string to parse.
-   * @throws ::subsystem::Exception on parse error.
-   */
-  void parse(const ::subsystem::CommandLineArguments *cmdArgs);
+      /**
+       * Parses command line.
+       * @param commandLine command line string to parse.
+       * @throws ::subsystem::Exception on parse error.
+       */
+      void parse(const ::subsystem::CommandLineArguments *cmdArgs);
 
-  /**
-   * Checks if key is specified.
-   * @param key key to check.
-   * @return true if key is specified, false otherwise.
-   * @remark must be called only after call of parse method.
-   */
-  bool keySpecified(const ::scoped_string & scopedstrKey) const;
+      /**
+       * Checks if key is specified.
+       * @param key key to check.
+       * @return true if key is specified, false otherwise.
+       * @remark must be called only after call of parse method.
+       */
+      bool keySpecified(const ::scoped_string & scopedstrKey) const;
 
-  bool installationRequested() const;
-  bool removalRequested() const;
-  bool reinstallRequested() const;
-  bool startRequested() const;
-  bool stopRequested() const;
+      bool installationRequested() const;
+      bool removalRequested() const;
+      bool reinstallRequested() const;
+      bool startRequested() const;
+      bool stopRequested() const;
 
-  bool beSilent() const;
-  bool dontElevate() const;
-};
+      bool beSilent() const;
+      bool dontElevate() const;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
 
 

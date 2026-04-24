@@ -27,7 +27,7 @@ INCLUDED__
 
 #include "Encoder.h"
 #include "TightPalette.h"
-#include "subsystem/Deflater.h"
+#include "subsystem/platform/Deflater.h"
 
 class ZrleEncoder : public Encoder
 {

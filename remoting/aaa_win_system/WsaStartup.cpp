@@ -24,7 +24,7 @@
 #include "framework.h"
 //#include "acme/_operating_system.h"
 #include "WsaStartup.h"
-#include "subsystem/Exception.h"
+#include "subsystem/platform/Exception.h"
 
 WsaStartup::WsaStartup(unsigned char minorVer, unsigned char majorVer)
 {

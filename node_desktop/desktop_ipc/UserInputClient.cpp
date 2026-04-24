@@ -25,7 +25,7 @@
 #include "UserInputClient.h"
 //#include "subsystem/thread/critical_section.h"
 #include "ReconnectException.h"
-#include "subsystem/BrokenHandleException.h"
+#include "subsystem/platform/BrokenHandleException.h"
 
 UserInputClient::UserInputClient(BlockingGate *forwGate,
                                  DesktopSrvDispatcher *dispatcher,

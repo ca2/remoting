@@ -24,7 +24,7 @@
 
 #pragma once
 
-//#include "subsystem/inttypes.h"
+//#include "subsystem/platform/inttypes.h"
 #include "remoting/remoting/ftp_common/FileInfo.h"
 
 //

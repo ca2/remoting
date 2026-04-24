@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "CompressionLevel.h"
-#include "subsystem/Exception.h"
+#include "subsystem/platform/Exception.h"
 
 
 namespace remoting

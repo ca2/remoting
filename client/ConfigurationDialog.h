@@ -29,7 +29,7 @@
 #include "remoting/remoting/client_config/ConnectionConfig.h"
 #include "remoting/remoting/client_config/ConnectionConfigSM.h"
 #include "remoting/remoting/client_config/ViewerSettingsManager.h"
-#include "subsystem/StringParser.h"
+#include "subsystem/platform/StringParser.h"
 #include "subsystem/node/OperatingSystemApplication.h"
 #include "innate_subsystem/gui/Dialog.h"
 #include "innate_subsystem/gui/Control.h"

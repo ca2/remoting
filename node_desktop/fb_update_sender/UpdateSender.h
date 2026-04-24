@@ -39,7 +39,7 @@
 #include "rfb_sconn/JpegEncoder.h"
 #include "rfb_sconn/EncoderStore.h"
 #include "rfb_sconn/RfbCodeRegistrator.h"
-//#include "subsystem/::earth::time.h"
+//#include "subsystem/platform/::earth::time.h"
 #include "CursorUpdates.h"
 #include "SenderControlInformationInterface.h"
 //#include "log_writer/LogWriter.h"

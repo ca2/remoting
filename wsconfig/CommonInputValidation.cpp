@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "CommonInputValidation.h"
 
-#include "subsystem/StringParser.h"
+#include "subsystem/platform/StringParser.h"
 
 #include "innate_subsystem/gui/BalloonTip.h"
 

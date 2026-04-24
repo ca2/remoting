@@ -30,9 +30,9 @@
 #include "CapContainer.h"
 #include "remoting/remoting/server_config/Configurator.h"
 #include "AuthException.h"
-#include "subsystem/VncPassCrypt.h"
+#include "subsystem/platform/VncPassCrypt.h"
 //#include "remoting/remoting/win_system/Environment.h"
-//#include "subsystem/::string.h"
+//#include "subsystem/platform/::string.h"
 #include "remoting/node_desktop/NamingDefs.h"
 
 // #include aaa_<stdlib.h>

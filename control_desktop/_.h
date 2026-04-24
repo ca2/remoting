@@ -13,5 +13,11 @@
 #endif
 
 
+namespace remoting_control_desktop
+{
 
+
+   class ControlApplication;
+
+}
 

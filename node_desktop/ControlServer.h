@@ -37,7 +37,7 @@
  * Tcp server that listens for incoming control connections
  * and give management over these connection to ControlClient instances.
  */
-class ControlServer : private ::subsystem::Thread
+class ControlServer : public ::subsystem::Thread
 {
 public:
   /**

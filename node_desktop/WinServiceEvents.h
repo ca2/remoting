@@ -27,15 +27,25 @@
 
 #include "subsystem/_common_header.h"
 
-class WinServiceEvents
+namespace remoting_node_desktop
 {
-public:
-  virtual void onSuccServiceStart() = 0;
-  virtual void onFailedServiceStart(const ::scoped_string & reason) = 0;
-  virtual void onServiceStop() = 0;
-  // This function enables fully functional this object usage,
-  // before that all report will be ignored.
-  virtual void enable() = 0;
-};
 
-//// __WINSERVICEEVENTS_H__
+
+   class CLASS_DECL_REMOTING_NODE_DESKTOP WinServiceEvents :
+      virtual public ::Particle
+   {
+   public:
+     virtual void onSuccServiceStart() = 0;
+     virtual void onFailedServiceStart(const ::scoped_string & reason) = 0;
+     virtual void onServiceStop() = 0;
+     // This function enables fully functional this object usage,
+     // before that all report will be ignored.
+     virtual void enable() = 0;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+

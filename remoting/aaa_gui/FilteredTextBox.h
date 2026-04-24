@@ -28,7 +28,7 @@
 #include "TextBox.h"
 #include "BalloonTip.h"
 #include "StringFilter.h"
-//////#include "subsystem/::string.h"
+//////#include "subsystem/platform/::string.h"
 
 class CLASS_DECL_REMOTING FilteredTextBox : public TextBox
 {

@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "HexTileDecoder.h"
-#include "subsystem/Exception.h"
+#include "subsystem/platform/Exception.h"
 
 //#include aaa_<algorithm>
 

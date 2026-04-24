@@ -34,7 +34,7 @@
 #include "remoting/remoting/ftp_common/FTMessage.h"
 #include "remoting/remoting/ftp_common/WinFilePath.h"
 #include "remoting/remoting/ftp_common/FileInfo.h"
-#include "subsystem/md5.h"
+#include "subsystem/platform/md5.h"
 #include "remoting/remoting/network/RfbOutputGate.h"
 #include "remoting/remoting/network/RfbInputGate.h"
 //#include "subsystem/thread/critical_section.h"

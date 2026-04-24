@@ -23,8 +23,8 @@
 //
 #include "framework.h"
 #include "ResourceStrings.h"
-#include "subsystem/ResourceLoader.h"
-#include "subsystem/ResourceLoader.h"
+#include "subsystem/platform/ResourceLoader.h"
+#include "subsystem/platform/ResourceLoader.h"
 
 namespace remoting_client
 {

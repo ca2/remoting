@@ -30,7 +30,7 @@
 #include "BuildTime.h"
 #include "resource.h"
 #include "acme/filesystem/filesystem/file_context.h"
-#include "innate_subsystem/subsystem.h"
+#include "innate_subsystem/platform/subsystem.h"
 #include "remoting/remoting/remoting.h"
 #include "subsystem/node/SystemException.h"
 

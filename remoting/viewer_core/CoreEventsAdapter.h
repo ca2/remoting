@@ -31,7 +31,7 @@
 #include "remoting/remoting/network/RfbOutputGate.h"
 #include "innate_subsystem/framebuffer/FrameBuffer.h"
 
-#include "subsystem/Exception.h"
+#include "subsystem/platform/Exception.h"
 
 #include "AuthHandler.h"
 

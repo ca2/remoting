@@ -26,7 +26,7 @@
 
 
 #include "subsystem/node/OperatingSystemApplication.h"
-////#include "subsystem/AnEventListener.h"
+////#include "subsystem/platform/AnEventListener.h"
 #include "subsystem/node/AnonymousPipe.h"
 #include "desktop_ipc/BlockingGate.h"
 #include "desktop_ipc/DesktopSrvDispatcher.h"
@@ -39,7 +39,7 @@
 //#include "log-server/ClientLogWriter.h"
 //#include "log_writer/LogWriter.h"
 #include "remoting/remoting/server_config/ConfigReloadListener.h"
-#include "subsystem/CommandLineArguments.h"
+#include "subsystem/platform/CommandLineArguments.h"
 
 /**
  * Desktop server application.

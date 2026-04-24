@@ -29,7 +29,7 @@
 #include "VncViewerJarBody.h"
 //#include "remoting/remoting/win_system/Environment.h"
 #include "remoting/remoting/server_config/Configurator.h"
-//#include "subsystem/::string.h"
+//#include "subsystem/platform/::string.h"
 #include "remoting/node_desktop/NamingDefs.h"
 
 HttpRequestHandler::HttpRequestHandler(DataInputStream *dataInput,

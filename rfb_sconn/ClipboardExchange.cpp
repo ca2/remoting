@@ -24,8 +24,8 @@
 #include "framework.h"
 #include "ClipboardExchange.h"
 #include "remoting/remoting/rfb/MsgDefs.h"
-////#include "subsystem/::string.h"
-//#include "subsystem/::string.h"
+////#include "subsystem/platform/::string.h"
+//#include "subsystem/platform/::string.h"
 //#include "subsystem/thread/critical_section.h"
 #include "remoting/remoting/rfb/VendorDefs.h"
 

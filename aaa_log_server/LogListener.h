@@ -26,7 +26,7 @@
 
 
 #include "FileLogDefs.h"
-//#include "subsystem/::earth::time.h"
+//#include "subsystem/platform/::earth::time.h"
 
 class LogListener
 {

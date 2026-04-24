@@ -43,7 +43,9 @@ namespace remoting_node_desktop
       m_bNetworking = true;
 
       m_strAppId = "remoting/node_desktop";
+
    }
+
 
    application::~application()
    {
@@ -53,14 +55,15 @@ namespace remoting_node_desktop
 
    void application::on_request(::request * prequest)
    {
+
       auto ecommand = prequest->m_ecommand;
 
       if (ecommand == e_command_application_start)
       {
 
-         defer_construct_newø(m_pserver);
+         defer_construct_newø(m_pserverapplication);
 
-         m_pserver->on_start();
+         m_pserverapplication->on_start();
 
       }
       else if (ecommand == e_command_file_open)
@@ -70,7 +73,7 @@ namespace remoting_node_desktop
 
          m_bOpenFile = true;
 
-         m_premoting->open_file(path);
+         m_pserverapplication->open_file(path);
 
          //fork([this, path]()
          //{
@@ -85,7 +88,7 @@ namespace remoting_node_desktop
          if (!m_bOpenFile)
          {
 
-            m_premoting->open_file({});
+            m_pserverapplication->open_file({});
 
          }
 
@@ -96,7 +99,7 @@ namespace remoting_node_desktop
    lresult application::handle_direct_id(const enum_id eid, wparam wparam, lparam lparam)
    {
 
-      m_premoting->handle_direct_id(eid, wparam, lparam);
+      Server().handle_direct_id(eid, wparam, lparam);
 
       return ::platform::application::handle_direct_id(eid, wparam, lparam);
 
@@ -106,6 +109,22 @@ namespace remoting_node_desktop
    Server & application::Server()
    {
 
+      if (m_pservice)
+      {
+
+         return *m_pservice->m_pserver;
+
+      }
+      else if (m_pserverapplication)
+      {
+
+         return *m_pserverapplication->m_pserver
+
+      }
+
+      throw ::interface_only();
+
+      return *((Server *) nullptr);
 
    }
 

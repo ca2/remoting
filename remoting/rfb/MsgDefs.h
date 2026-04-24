@@ -24,7 +24,7 @@
 
 #pragma once
 
-//#include "subsystem/inttypes.h"
+//#include "subsystem/platform/inttypes.h"
 
 
 namespace remoting

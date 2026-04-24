@@ -25,15 +25,17 @@
 #pragma once
 
 
-#include "Server.h"
-#include "ServerListener.h"
+//#include "Server.h"
+//#include "ServerListener.h"
 //#include "log-server/LogServer.h"
 //#include "log-server/ClientLogWriter.h"
 #include "subsystem/node/Service.h"
 
-#include "subsystem/thread/Thread.h"
-#include "WinServiceEvents.h"
-#include "NewConnectionEvents.h"
+//#include "subsystem/thread/Thread.h"
+#include "remoting/node_desktop/Task.h"
+//#include "WinServiceEvents.h"
+//#include "NewConnectionEvents.h"
+#include "acme/parallelization/happening.h"
 
 
 namespace remoting_node_desktop
@@ -46,25 +48,55 @@ namespace remoting_node_desktop
     *
     * Also contains body of tvnservice.
     */
-   class Service : public ::subsystem::Service,
-                      public ServerListener,
-                      private LogInitListener
+   class CLASS_DECL_REMOTING_NODE_DESKTOP Service : 
+      virtual public ::subsystem::Service,
+      virtual public ServerTask        
    {
    public:
+
+   //protected:
+      /**
+       * Shutdown service event.
+       */
+      // WindowsEvent m_shutdownEvent;
+      ::happening m_shutdownEvent;
+      ///**
+      // * TightVNC server.
+      // */
+      //::pointer < Server > m_pserver;
+
+      // LogServer m_logServer;
+      //  ClientLogWriter m_clientLogWriter;
+      //::subsystem::LogWriter *m_clientLogWriter;
+
+      ::pointer < WinServiceEvents > m_pwinserviceevents;
+      /*NewConnectionEvents *m_newConnectionEvents;*/
       /**
        * Command line key which needed to start remoting_node binary as service.
        */
-      static const char SERVICE_COMMAND_LINE_KEY[];
-   public:
+      static ::string_literal SERVICE_COMMAND_LINE_KEY;
+   //public:
       /**
        * Creates object.
        */
-      Service(WinServiceEvents *winServiceEvents,
-                 NewConnectionEvents *newConnectionEvents);
+      //Service(WinServiceEvents *winServiceEvents,
+        //         NewConnectionEvents *newConnectionEvents);
+      Service();
       /**
        * Deletes object.
        */
       virtual ~Service();
+
+
+      virtual void initialize_remoting_node_desktop_service(WinServiceEvents *winServiceEvents, NewConnectionEvents *newConnectionEvents);
+
+
+      void task_start() override;
+      void maintain_task_running_wait_stop_task_signal_and_stop() override;
+      //void _maintain_task_running() override;
+      void signal_task_stop() override;
+      ///void task_stop() override;
+
 
       /**
        * Inherited from abstract ServerListener class.
@@ -103,13 +135,16 @@ namespace remoting_node_desktop
        */
       static void stop(bool waitCompletion = false);
 
-   protected:
+   //protected:
       /**
        * Inherited from superclass.
        * Starts remoting_node execution.
        * @throws SystemException when failed to start.
        */
       virtual void onStart();
+
+
+      ///void on_server_task_run() override;
 
       /**
        * Inherited from superclass.
@@ -137,22 +172,11 @@ namespace remoting_node_desktop
       // This is a callback function that calls when log properties have changed.
       virtual void onChangeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel);
 
-   protected:
-      /**
-       * Shutdown service event.
-       */
-      //WindowsEvent m_shutdownEvent;
-      ::happening m_shutdownEvent;
-      /**
-       * TightVNC server.
-       */
-      Server *m_tvnServer;
 
-      //LogServer m_logServer;
-      // ClientLogWriter m_clientLogWriter;
-      ::subsystem::LogWriter * m_clientLogWriter;
-
-      WinServiceEvents *m_winServiceEvents;
-      NewConnectionEvents *m_newConnectionEvents;
    };
+
+
 } // namespace remoting_node_desktop
+
+
+

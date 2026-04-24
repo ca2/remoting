@@ -40,8 +40,8 @@
 //#include "subsystem/thread/ZombieKiller.h"
 //#include "subsystem/thread/critical_section.h"
 //#include "log_writer/LogWriter.h"
-#include "subsystem/Singleton.h"
-#include "subsystem/ListenerContainer.h"
+#include "subsystem/platform/Singleton.h"
+#include "subsystem/platform/ListenerContainer.h"
 #include "NewConnectionEvents.h"
 
 #include "remoting/node_desktop/server_config/Configurator.h"
@@ -63,9 +63,10 @@ namespace remoting_node_desktop
         1) Do action when last client disconnects.
     */
    //class Server : public Singleton<Server>,
-   class  CLASS_DECL_REMOTING_NODE_DESKTOP  Server : public ::subsystem::ListenerContainer<ServerListener *>,
-                     public ConfigReloadListener,
-                     public RfbClientManagerEventListener
+   class  CLASS_DECL_REMOTING_NODE_DESKTOP Server : 
+         public ::subsystem::ListenerContainer<ServerListener *>,
+         public ConfigReloadListener,
+         public RfbClientManagerEventListener
    {
    public:
       /**
@@ -84,10 +85,7 @@ namespace remoting_node_desktop
        * @remark doesn't block calling thread execution cause all servers runs in it's own threads.
        * To know when need to shutdown TightVNC server you need to use addListener method.
        */
-      Server(bool runsInServiceContext,
-                NewConnectionEvents *newConnectionEvents,
-                LogInitListener *logInitListener,
-                ::subsystem::LogWriter * plogwriter);
+      Server();
       /**
        * Stops and destroys TightVNC server.
        * @remark don't generate shutdown signal(like shutdown() method does) for listeners.
@@ -100,7 +98,12 @@ namespace remoting_node_desktop
        * after call of this method.
        * @fixme place extended information to server info.
        */
-      void getServerInfo(ServerInfo *info);
+      virtual void getServerInfo(ServerInfo *info);
+
+      virtual void initialize_server(bool runsInServiceContext, NewConnectionEvents *newConnectionEvents,
+                                    LogInitListener *logInitListener, ::subsystem::LogWriter *plogwriter);
+
+      virtual void on_start();
 
       /**
        * Inherited from ConfigReloadListener interface to catch configuration reload event.
@@ -119,14 +122,14 @@ namespace remoting_node_desktop
        * @remark doesn't stop TightVNC server.
        * @fixme rename this method.
        */
-      void generateExternalShutdownSignal();
+      virtual void generateExternalShutdownSignal();
 
       /**
        * Checks if TightVNC server runs in service context.
        * @returns true if runs in service context.
        * @deprecated use getServerInfo() instead or move to private.
        */
-      bool isRunningAsService() const;
+      virtual bool isRunningAsService() const;
 
       /**
        * Implemented from RfbClientManagerEventListener.
@@ -144,16 +147,16 @@ namespace remoting_node_desktop
       virtual void afterLastClientDisconnect();
 
    protected:
-      void restartHttpServer();
-      void restartControlServer();
-      void restartMainRfbServer();
+      virtual void restartHttpServer();
+      virtual void restartControlServer();
+      virtual void restartMainRfbServer();
 
-      void stopHttpServer();
-      void stopControlServer();
-      void stopMainRfbServer();
+      virtual void stopHttpServer();
+      virtual void stopControlServer();
+      virtual void stopMainRfbServer();
 
       // Calls a callback function to change update log properties.
-      void changeLogProps();
+      virtual void changeLogProps();
 
    protected:
       ::subsystem::LogWriter * m_plogwriter;

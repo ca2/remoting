@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "DesktopServerWatcher.h"
 //#include "remoting/remoting/win_system/Environment.h"
-#include "subsystem/Exception.h"
+#include "subsystem/platform/Exception.h"
 #include "remoting/remoting/server_config/Configurator.h"
 #include "remoting/remoting/win_system/CurrentConsoleProcess.h"
 #include "remoting/remoting/win_system/AnonymousPipeFactory.h"
