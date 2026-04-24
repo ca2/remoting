@@ -24,32 +24,38 @@
 
 #pragma once
 
-
+#include "remoting/remoting/desktop/windows/_common_header.h"
 #include "UpdateKeeper.h"
 #include "UpdateListener.h"
 #include "innate_subsystem/framebuffer/FrameBuffer.h"
-#include "remoting/remoting/win_system/RegistryKey.h"
+#include "subsystem/platform/RegistryKey.h"
 #include "DisplayEsc.h"
-#include "remoting/remoting/win_system/Screen.h"
+#include "subsystem/node/Screen.h"
+#include "subsystem/platform/WindowMessageHandler.h"
 #include "innate_subsystem/gui/MessageWindow.h"
 #include "subsystem/thread/GuiThread.h"
-#include "remoting/remoting/win_system/WindowsEvent.h"
+#include "acme/parallelization/happening.h"
 //#include "log_writer/LogWriter.h"
 
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING MirrorDriverClient : private GuiThread, private WindowMessageHandler
+   class CLASS_DECL_REMOTING MirrorDriverClient :
+      virtual public ::subsystem::GuiThread,
+      virtual public ::subsystem::WindowMessageHandler
    {
    public:
+
+
       MirrorDriverClient(::subsystem::LogWriter *log);
-      virtual ~MirrorDriverClient();
+         virtual ~MirrorDriverClient();
 
       ::innate_subsystem::PixelFormat getPixelFormat() const;
       ::int_size getDimension() const;
 
       void *getBuffer();
-      CHANGES_BUF *getChangesBuf() const;
+      //CHANGES_BUF *getChangesBuf() const;
+      void *getChangesBuf() const;
 
       bool getPropertiesChanged();
       bool getScreenSizeChanged();
@@ -66,7 +72,7 @@ namespace remoting
       void disconnect();
 
    private:
-      static const TCHAR MINIPORT_REGISTRY_PATH[];
+      static ::string_literal MINIPORT_REGISTRY_PATH[];
 
       static const int EXT_DEVMODE_SIZE_MAX = 3072;
       struct DFEXT_DEVMODE : DEVMODE
@@ -82,8 +88,8 @@ namespace remoting
 
       void dispose();
 
-      void extractDeviceInfo(TCHAR *driverName);
-      void openDeviceRegKey(TCHAR *miniportName);
+      void extractDeviceInfo(const char *driverName);
+      void openDeviceRegKey(const char *miniportName);
 
       void initScreenPropertiesByCurrent();
       // value - true to attach, false to detach.
@@ -105,7 +111,7 @@ namespace remoting
       CHANGES_BUF *m_changesBuffer;
       void *m_screenBuffer;
 
-      WindowsEvent m_initListener;
+      ::happening m_initListener;
       bool m_isDisplayChanged;
       MessageWindow m_propertyChangeListenerWindow;
 

@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "DesktopConfigLocal.h"
 #include "remoting/remoting/server_config/Configurator.h"
-#include "remoting/remoting/desktop/WindowsInputBlocker.h"
+#include "windows/WindowsInputBlocker.h"
 
 namespace remoting
 {

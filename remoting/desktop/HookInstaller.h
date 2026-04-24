@@ -26,7 +26,7 @@
 
 
 #include "subsystem/_common_header.h"
-#include "remoting/remoting/win_system/DynamicLibrary.h"
+//#include "subsystem/node/DynamicLibrary.h"
 
 
 namespace remoting
@@ -42,18 +42,18 @@ namespace remoting
       // Instals hooks to windowed applications.
       // targedWinHwnd - is hwnd to a target window that will receive
       // hooked messages.
-      void install(HWND targedWinHwnd);
+      void install(const ::operating_system::window & operatingsystemwindow);
       // Uninstals hooks from windowed applications.
       void uninstall();
 
-   private:
-      static const TCHAR LIBRARY_NAME[];
+   //private:
+      static ::string_literal LIBRARY_NAME;
       static ::string_literal SET_HOOK_FUNCTION_NAME;
       static ::string_literal UNSET_HOOK_FUNCTION_NAME;
 
-      DynamicLibrary m_lib;
-      FARPROC m_pSetHook;
-      FARPROC m_pUnSetHook;
+      ::pointer < ::subsystem::DynamicLibraryInterface > m_plibrary;
+      void * m_pSetHook;
+      void * m_pUnSetHook;
    };
 
 

@@ -27,7 +27,7 @@
 
 #include "subsystem/thread/Thread.h"
 #include "UpdateListener.h"
-#include "remoting/remoting/win_system/WindowsEvent.h"
+#include "acme/parallelization/happening.h"
 
 namespace remoting
 {
@@ -37,23 +37,24 @@ namespace remoting
    // for update/updates catching. It's should to help the HooksupdateDetector
    // to wait an time interval because the HooksupdateDetector can't wait
    // directly by sleep. Usage of this class  is questionable.
-   class CLASS_DECL_REMOTING HookUpdateTimer : public Thread
+   class CLASS_DECL_REMOTING HookUpdateTimer :
+   virtual public ::subsystem::Thread
    {
    public:
       // @param updateListener - pointer to an UpdateListener object
       HookUpdateTimer(UpdateListener *updateListener);
-      virtual ~HookUpdateTimer();
+      virtual ~HookUpdateTimer() override;
 
       // This function start a timer after that will calling onUpdate()
       // function of the update listener
       void sear();
 
-   protected:
+   //protected:
       virtual void execute();
       virtual void onTerminate();
 
-      WindowsEvent m_updateWaiter;
-      WindowsEvent m_timer;
+      ::happening m_updateWaiter;
+      ::happening m_timer;
       UpdateListener *m_updateListener;
    };
 

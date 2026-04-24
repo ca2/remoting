@@ -23,10 +23,10 @@
 //
 #include "framework.h"
 //#include "acme/_operating_system.h"
-#include "WindowsEvent.h"
+#include "::happening.h"
 #include "subsystem/platform/Exception.h"
 
-WindowsEvent::WindowsEvent(const ::scoped_string & scopedstrName)
+::happening::::happening(const ::scoped_string & scopedstrName)
 {
   m_hEvent = CreateEvent(0, false, false, ::wstring(scopedstrName));
   if (m_hEvent == 0) {
@@ -37,21 +37,21 @@ WindowsEvent::WindowsEvent(const ::scoped_string & scopedstrName)
   }
 }
 
-WindowsEvent::~WindowsEvent()
+::happening::~::happening()
 {
   if (m_hEvent) {
     CloseHandle(m_hEvent);
   }
 }
 
-void WindowsEvent::notify()
+void ::happening::notify()
 {
   if (m_hEvent) {
     SetEvent(m_hEvent);
   }
 }
 
-void WindowsEvent::waitForEvent(DWORD milliseconds)
+void ::happening::waitForEvent(DWORD milliseconds)
 {
   // FIXME: Check WaitForSingleObject result to an error
   if (m_hEvent) {

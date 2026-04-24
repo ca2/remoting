@@ -29,10 +29,10 @@
 #include "remoting/remoting/desktop/UpdateHandlerImpl.h"
 #include "DesktopSrvDispatcher.h"
 //#include "log_writer/LogWriter.h"
-#include "remoting/remoting/desktop/Win32ScreenDriverFactory.h"
+#include "../desktop/windows/Win32ScreenDriverFactory.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    class UpdateHandlerServer : public DesktopServerProto, public ClientListener, public UpdateListener
@@ -69,7 +69,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

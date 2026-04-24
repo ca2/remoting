@@ -29,7 +29,7 @@
 #include "ScreenGrabber.h"
 #include "innate_subsystem/framebuffer/FrameBuffer.h"
 
-#include "remoting/remoting/win_system/WindowsEvent.h"
+#include "acme/parallelization/happening.h"
 //#include "log_writer/LogWriter.h"
 
 #define DEFAULT_SLEEP_TIME 1000
@@ -41,24 +41,24 @@ namespace remoting
    class CLASS_DECL_REMOTING Poller : public UpdateDetector
    {
    public:
+
+      ScreenGrabber *m_screenGrabber;
+      ::innate_subsystem::FrameBuffer *m_backupFrameBuffer;
+      critical_section *m_fbMutex;
+      ::int_rectangle m_pollingRect;
+      ::happening m_intervalWaiter;
+      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < Configurator > m_pconfigurator;
+
       Poller(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ScreenGrabber *screenGrabber,
              ::innate_subsystem::FrameBuffer *backupFrameBuffer, critical_section *frameBufferCriticalSection,
              ::subsystem::LogWriter *log);
 
       virtual ~Poller();
 
-   protected:
       virtual void execute();
       virtual void onTerminate();
 
-   private:
-      ScreenGrabber *m_screenGrabber;
-      ::innate_subsystem::FrameBuffer *m_backupFrameBuffer;
-      critical_section *m_fbMutex;
-      ::int_rectangle m_pollingRect;
-      WindowsEvent m_intervalWaiter;
-
-      ::subsystem::LogWriter *m_plogwriter;
    };
 
 

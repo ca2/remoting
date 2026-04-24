@@ -29,13 +29,13 @@
 #include "UpdateKeeper.h"
 #include "UpdateFilter.h"
 #include "ScreenGrabber.h"
-#include "WindowsCursorShapeGrabber.h"
+#include "windows/WindowsCursorShapeGrabber.h"
 #include "innate_subsystem/framebuffer/FrameBuffer.h"
 //#include "subsystem/thread/critical_section.h"
 #include "UpdateListener.h"
 #include "UpdateDetector.h"
 #include "CopyRectDetector.h"
-#include "desktop_ipc/BlockingGate.h"
+#include "remoting/remoting/desktop_ipc/BlockingGate.h"
 
 
 namespace remoting
@@ -112,7 +112,7 @@ namespace remoting
 
       // FIXME: It's no good idea to place this function to here.
       // Because it uses only for the UpdateHandlerClient class.
-      virtual void sendInit(BlockingGate *gate) {}
+      virtual void sendInit(::remoting::BlockingGate *gate) {}
 
    protected:
       virtual bool updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *dstFb,

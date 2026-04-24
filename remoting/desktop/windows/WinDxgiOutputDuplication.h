@@ -24,7 +24,7 @@
 
 #pragma once
 
-
+#include "remoting/remoting/desktop/windows/_common_header.h"
 #include "WinDxgiOutput1.h"
 #include "remoting/remoting/rfb/CursorShape.h"
 

@@ -41,13 +41,13 @@ namespace remoting
       wait();
    }
 
-   void WinVideoRegionUpdaterImpl::onTerminate() { m_sleeper.notify(); }
+   void WinVideoRegionUpdaterImpl::onTerminate() { m_sleeper.set_happening(); }
 
    void WinVideoRegionUpdaterImpl::execute()
    {
       while (!isTerminating())
       {
-         m_sleeper.waitForEvent(getInterval());
+         m_sleeper.wait(getInterval() * 1_ms);
          if (!isTerminating())
          {
             try

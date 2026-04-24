@@ -27,7 +27,7 @@
 #include "../WinDxCriticalException.h"
 #include "../WinDxRecoverableException.h"
 //#include aaa_<crtdbg.h>
-#include "remoting/remoting/win_system/Screen.h"
+#include "subsystem/node/Screen.h"
 
 #include "../WinDxgiOutput.h"
 
@@ -46,7 +46,7 @@ namespace remoting
    {
       resume();
       m_plogwriter->debug("Win8ScreenDriverImpl:: waiting for DXGI init");
-      m_initEvent.waitForEvent();
+      m_initEvent.wait();
 
       if (m_hasCriticalError)
       {
@@ -186,11 +186,11 @@ namespace remoting
                              e.get_message());
          m_hasCriticalError = true;
       }
-      m_initEvent.notify();
+      m_initEvent.set_happening();
 
       while (!isTerminating() && isValid())
       {
-         m_errorEvent.waitForEvent();
+         m_errorEvent.wait();
       }
 
       if (!isValid())
@@ -204,7 +204,7 @@ namespace remoting
       terminateDetection();
    }
 
-   void Win8ScreenDriverImpl::onTerminate() { m_errorEvent.notify(); }
+   void Win8ScreenDriverImpl::onTerminate() { m_errorEvent.set_happening(); }
 
    void Win8ScreenDriverImpl::onFrameBufferUpdate(const Region *changedRegion)
    {
@@ -247,14 +247,14 @@ namespace remoting
    {
       m_plogwriter->error("Win8ScreenDriverImpl catch an recoverable error with reason: {}", reason);
       m_hasRecoverableError = true;
-      m_errorEvent.notify();
+      m_errorEvent.set_happening();
    }
 
    void Win8ScreenDriverImpl::onCriticalError(const ::scoped_string &scopedstrReason)
    {
       m_plogwriter->error("Win8ScreenDriverImpl catch an critical error with reason: {}", reason);
       m_hasCriticalError = true;
-      m_errorEvent.notify();
+      m_errorEvent.set_happening();
    }
 
    bool Win8ScreenDriverImpl::grabFb(const ::int_rectangle &rect) { return isValid(); }

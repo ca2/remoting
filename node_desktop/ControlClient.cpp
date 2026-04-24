@@ -30,7 +30,7 @@
 #include "application.h"
 //#include "remoting/remoting/network/socket/SocketStream.h"
 
-#include "remoting/node_desktop/server_config/Configurator.h"
+#include "remoting/remoting/server_config/Configurator.h"
 
 #include "subsystem/platform/VncPassCrypt.h"
 #include "subsystem_windows/node/WTS.h"

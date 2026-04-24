@@ -32,7 +32,7 @@
 #include "remoting/remoting/region/Region.h"
 //#include "subsystem/thread/critical_section.h"
 #include "subsystem/thread/Thread.h"
-#include "subsystem/node/WindowsEvent.h"
+#include "subsystem/node/::happening.h"
 
 #include "acme/parallelization/happening.h"
 
@@ -76,7 +76,7 @@ namespace remoting
       CoreEventsAdapter *m_adapter;
 
       critical_section m_updateLock;
-      //::subsystem::WindowsEvent m_eventUpdate;
+      //::subsystem::::happening m_eventUpdate;
       ::happening m_eventUpdate;
 
       ::subsystem::LogWriter *m_plogwriter;

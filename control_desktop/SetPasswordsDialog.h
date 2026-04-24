@@ -34,7 +34,7 @@
 #include "innate_subsystem/gui/TextBox.h"
 #include "innate_subsystem/gui/BalloonTip.h"
 
-#include "remoting/remoting/win_system/RegistryKey.h"
+#include "subsystem/platform/RegistryKey.h"
 
 #include "remoting/remoting/config/ConnectionHistory.h"
 

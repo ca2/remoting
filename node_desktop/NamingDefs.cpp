@@ -61,7 +61,7 @@ namespace remoting_node_desktop
    ::string_literal ServerApplicationNames::FOR_APP_CONTROL_APP_SERVICE_PIPE_NAME = "TightVNC_Application_Control";
 
    ::string_literal HookDefinitions::HOOK_LOADER_WINDOW_CLASS = "TvnHookLoaderWindowClass";
-   ::string_literal HookDefinitions::HOOK_TARGET_WIN_CLASS_NAME = "HookTargetWinClassName";
+   //::string_literal HookDefinitions::HOOK_TARGET_WIN_CLASS_NAME = "HookTargetWinClassName";
    ::string_literal HookDefinitions::HOOK_LOADER_NAME = "hookldr.exe";
    // const unsigned int HookDefinitions::LOADER_CLOSE_CODE =
    // RegisterWindowMessage("TVN.HOOK.LOADER.CLOSE.CODE");

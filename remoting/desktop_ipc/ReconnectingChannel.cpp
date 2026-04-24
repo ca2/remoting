@@ -24,10 +24,10 @@
 #include "framework.h"
 #include "ReconnectingChannel.h"
 //#include "subsystem/platform/::earth::time.h"
-#include "desktop_ipc/ReconnectException.h"
+#include "remoting/remoting/desktop_ipc/ReconnectException.h"
 //#include "subsystem/thread/critical_section.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -60,7 +60,7 @@ namespace remoting_node_desktop
       {
          m_oldChannel->close();
       }
-      m_timer.notify();
+      m_timer.set_happening();
    }
 
    void ReconnectingChannel::replaceChannel(Channel *newChannel)
@@ -76,7 +76,7 @@ namespace remoting_node_desktop
       }
       m_oldChannel = m_channel;
       m_channel = newChannel; // Now we are the owner.
-      m_timer.notify();
+      m_timer.set_happening();
    }
 
    Channel *ReconnectingChannel::getChannel(const ::scoped_string &scopedstrFunName)
@@ -174,7 +174,7 @@ namespace remoting_node_desktop
                             funName);
             throw ::io_exception(errMess);
          }
-         m_timer.waitForEvent(timeForWait);
+         m_timer.wait(timeForWait * 1_ms);
          critical_section_lock al(&m_chanMut);
          if (m_channel != channel)
          {
@@ -196,4 +196,4 @@ namespace remoting_node_desktop
    }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting

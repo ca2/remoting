@@ -27,7 +27,7 @@
 
 #include "AuthTracker.h"
 #include "acme/parallelization/happening.h"
-//#include "su/WindowsEvent.h"
+//#include "su/::happening.h"
 
 
 namespace remoting_node_desktop
@@ -66,7 +66,7 @@ namespace remoting_node_desktop
       void checkBeforeAuth();
 
       critical_section m_authMutex;
-      // WindowsEvent m_banDelay;
+      // ::happening m_banDelay;
       ::happening m_banDelay;
       bool m_isBreaked;
    };

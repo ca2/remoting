@@ -84,7 +84,7 @@ namespace remoting
 
       // Current state
       ::int_point m_cursorPos;
-      ::earth::time m_blockCurPosTime;
+      class ::time m_blockCurPosTime;
       ::remoting::CursorShape m_cursorShape;
       ::innate_subsystem::FrameBuffer m_shapeBackground;
       ::int_point m_backgroundPos;

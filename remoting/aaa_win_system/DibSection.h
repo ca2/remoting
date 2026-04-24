@@ -31,7 +31,7 @@
 #endif
 
 
-#include "remoting/remoting/win_system/Screen.h"
+#include "subsystem/node/Screen.h"
 
 // This clas is a primitive wrapper to a DIB section.
 class CLASS_DECL_REMOTING  DibSection

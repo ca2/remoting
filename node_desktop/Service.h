@@ -58,7 +58,7 @@ namespace remoting_node_desktop
       /**
        * Shutdown service event.
        */
-      // WindowsEvent m_shutdownEvent;
+      // ::happening m_shutdownEvent;
       ::happening m_shutdownEvent;
       ///**
       // * TightVNC server.

@@ -48,14 +48,14 @@
 //   {
 //   public:
 //
-//      HWND m_hwnd = nullptr;
+//      ::operating_system::window m_operatingsystemwindow = nullptr;
 //      WNDPROC m_defWindowProc=nullptr;
 //
 //
 //      Window();
 //      ~Window() override;
 //
-//      virtual void setWindow(HWND hwnd);
+//      virtual void setWindow(const ::operating_system::window & operatingsystemwindow);
 //      virtual void post_message(unsigned int scopedstrMessage, ::wparam wparam=0, ::lparam lparam=0);
 //
 //      static LRESULT CALLBACK s_window_procedure(HWND hWnd, unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam);
@@ -218,7 +218,7 @@
 //      // Handle of window
 //      //
 //
-//      //HWND m_hwnd= nullptr;
+//      //::operating_system::window m_operatingsystemwindow= nullptr;
 //
 //      //
 //      // Pointer to default window procedure
@@ -232,7 +232,7 @@
 //   // {
 //   // public:
 //   //    Control();
-//   //    //Control(HWND hwnd);
+//   //    //Control(const ::operating_system::window & operatingsystemwindow);
 //   //    ~Control() override;
 //   //
 //   //    //
@@ -298,7 +298,7 @@
 //   //    // Handle of window
 //   //    //
 //   //
-//   //    //HWND m_hwnd= nullptr;
+//   //    //::operating_system::window m_operatingsystemwindow= nullptr;
 //   //
 //   //    //
 //   //    // Pointer to default window procedure

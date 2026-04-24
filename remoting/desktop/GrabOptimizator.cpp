@@ -24,6 +24,8 @@
 #include "framework.h"
 #include "GrabOptimizator.h"
 #include "subsystem/platform/Exception.h"
+#include "acme/_operating_system.h"
+
 
 namespace remoting
 {
@@ -97,12 +99,12 @@ namespace remoting
       }
       else
       {
-         bool itIsEnoughForWholeStats = isEnoughForWholeStats(&boundsRect);
+         bool itIsEnoughForWholeStats = isEnoughForWholeStats(boundsRect);
          bool itIsEnoughForFragmentsStats = isAlikeToFragments(&rects);
 
          if (itIsEnoughForWholeStats && !isAvailableWholeStats())
          {
-            grabOneRect(&boundsRect, grabber);
+            grabOneRect(boundsRect, grabber);
          }
          else if (itIsEnoughForFragmentsStats && !isAvailableFragmentStats())
          {
@@ -110,7 +112,7 @@ namespace remoting
          }
          else if (isAlikeToWhole(&rects))
          {
-            grabOneRect(&boundsRect, grabber);
+            grabOneRect(boundsRect, grabber);
          }
          else
          {

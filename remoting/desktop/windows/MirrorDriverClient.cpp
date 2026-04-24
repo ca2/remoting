@@ -48,7 +48,7 @@ namespace remoting
       connect();
 
       resume();
-      m_initListener.waitForEvent();
+      m_initListener.wait();
       if (m_propertyChangeListenerWindow.getHWND() == 0)
       {
          dispose();
@@ -423,7 +423,7 @@ namespace remoting
                                    (int)m_propertyChangeListenerWindow.getHWND());
       }
 
-      m_initListener.notify();
+      m_initListener.set_happening();
 
       MSG msg;
       while (!isTerminating())

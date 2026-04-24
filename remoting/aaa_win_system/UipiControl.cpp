@@ -50,7 +50,7 @@ UipiControl::~UipiControl()
 {
 }
 
-void UipiControl::allowMessage(unsigned int uMessage, HWND hwnd)
+void UipiControl::allowMessage(unsigned int uMessage, const ::operating_system::window & operatingsystemwindow)
 {
   m_plogwriter->information("Try allow to receive the %u windows uMessage");
   if (::system()->node()->_windows_isVistaOrLater()) {

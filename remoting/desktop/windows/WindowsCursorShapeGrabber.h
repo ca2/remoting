@@ -25,6 +25,8 @@
 #pragma once
 
 
+#include "remoting/remoting/desktop/windows/_common_header.h"
+#include "remoting/remoting/desktop/windows/_common_header.h"
 #include "../CursorShapeGrabber.h"
 #include "subsystem/_common_header.h"
 #include "subsystem/node/Screen.h"

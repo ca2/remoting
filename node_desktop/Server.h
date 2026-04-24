@@ -27,7 +27,7 @@
 
 #include "subsystem/_common_header.h"
 
-#include "remoting/remoting/desktop/WinServiceDesktopFactory.h"
+#include "../remoting/desktop/windows/WinServiceDesktopFactory.h"
 #include "remoting/remoting/desktop/ApplicationDesktopFactory.h"
 #include "RfbClientManager.h"
 #include "RfbServer.h"
@@ -44,7 +44,7 @@
 #include "subsystem/platform/ListenerContainer.h"
 #include "NewConnectionEvents.h"
 
-#include "remoting/node_desktop/server_config/Configurator.h"
+#include "remoting/remoting/server_config/Configurator.h"
 
 #include "remoting/control_desktop/ServerInfo.h"
 #include "LogInitListener.h"

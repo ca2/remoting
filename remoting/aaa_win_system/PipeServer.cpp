@@ -101,7 +101,7 @@ NamedPipe *PipeServer::accept()
     case ERROR_PIPE_CONNECTED:
       break;
     case ERROR_IO_PENDING:
-      m_winEvent.waitForEvent(m_milliseconds);
+      m_winEvent.wait(m_milliseconds * 1_ms);
       DWORD cbRet; // Fake
       if (!GetOverlappedResult(m_serverPipe, &overlapped, &cbRet, false)) {
         int errCode = GetLastError();
@@ -142,7 +142,7 @@ void PipeServer::close()
       throw ::subsystem::Exception(errMess);
     }
   }*/
-  m_winEvent.notify();
+  m_winEvent.set_happening();
 }
 
 PipeServer::~PipeServer()

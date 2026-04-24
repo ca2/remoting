@@ -26,7 +26,7 @@
 //#include "subsystem/thread/critical_section.h"
 #include "subsystem/platform/BrokenHandleException.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -179,7 +179,7 @@ namespace remoting_node_desktop
    void UserInputServer::ansWindowCoords(BlockingGate *backGate)
    {
       ::int_rectangle rect;
-      HWND hwnd = (HWND)backGate->readUInt64();
+      const ::operating_system::window & operatingsystemwindow = (HWND)backGate->readUInt64();
       try
       {
          m_userInput->getWindowCoords(hwnd, &rect);
@@ -198,7 +198,7 @@ namespace remoting_node_desktop
    {
       ::string windowName;
       backGate->readUTF8(&windowName);
-      HWND hwnd = m_userInput->getWindowHandleByName(&windowName);
+      const ::operating_system::window & operatingsystemwindow = m_userInput->getWindowHandleByName(&windowName);
       backGate->writeUInt64((unsigned long long)hwnd);
    }
 
@@ -249,4 +249,4 @@ namespace remoting_node_desktop
    }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting

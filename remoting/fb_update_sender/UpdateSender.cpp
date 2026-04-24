@@ -80,7 +80,7 @@ namespace remoting
       delete m_updateKeeper;
    }
 
-   void UpdateSender::onTerminate() { m_newUpdatesEvent.notify(); }
+   void UpdateSender::onTerminate() { m_newUpdatesEvent.set_happening(); }
 
    void UpdateSender::onRequest(unsigned int reqCode, RfbInputGate *input)
    {
@@ -127,7 +127,7 @@ namespace remoting
       {
          critical_section_lock al(&m_reqRectLocMut);
          m_busy = true;
-         m_newUpdatesEvent.notify();
+         m_newUpdatesEvent.set_happening();
       }
       m_plogwriter->debug("Client #{} is waking up", m_id);
    }
@@ -676,7 +676,7 @@ namespace remoting
 
       while (!isTerminating())
       {
-         m_newUpdatesEvent.waitForEvent();
+         m_newUpdatesEvent.wait();
          {
             critical_section_lock al(&m_reqRectLocMut);
             m_busy = true;
@@ -744,7 +744,7 @@ namespace remoting
       {
          // We should initiaite send update to avoid it skipping on no updates from a desktop
          // FIXME: Code duplication, see the newUpdates() function.
-         m_newUpdatesEvent.notify();
+         m_newUpdatesEvent.set_happening();
          m_plogwriter->debug("Client #{} is waking up", m_id);
       }
 

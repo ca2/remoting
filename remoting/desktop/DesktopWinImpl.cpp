@@ -24,12 +24,12 @@
 #include "framework.h"
 #include "DesktopWinImpl.h"
 #include "remoting/remoting/server_config/Configurator.h"
-#include "desktop_ipc/UpdateHandlerClient.h"
+#include "remoting/remoting/desktop_ipc/UpdateHandlerClient.h"
 #include "UpdateHandlerImpl.h"
-#include "WindowsInputBlocker.h"
-#include "desktop_ipc/UserInputClient.h"
+#include "windows/WindowsInputBlocker.h"
+#include "remoting/remoting/desktop_ipc/UserInputClient.h"
 #include "SasUserInput.h"
-#include "WindowsUserInput.h"
+#include "windows/WindowsUserInput.h"
 //#include "remoting/remoting/win_system/Environment.h"
 #include "remoting/remoting/win_system/WindowsDisplays.h"
 
@@ -91,7 +91,7 @@ namespace remoting
          delete m_userInput;
    }
 
-   void DesktopWinImpl::onTerminate() { m_newUpdateEvent.notify(); }
+   void DesktopWinImpl::onTerminate() { m_newUpdateEvent.set_happening(); }
 
    void DesktopWinImpl::execute()
    {
@@ -99,7 +99,7 @@ namespace remoting
 
       while (!isTerminating())
       {
-         m_newUpdateEvent.waitForEvent();
+         m_newUpdateEvent.wait();
          if (!isTerminating())
          {
             m_plogwriter->debug("DesktopWinImpl sendUpdate()");

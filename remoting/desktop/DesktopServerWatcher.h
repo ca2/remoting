@@ -26,9 +26,9 @@
 
 
 #include "subsystem/thread/Thread.h"
-#include "subsystem/platform/Process.h"
+#include "subsystem/node/Process.h"
 //#include "log_writer/LogWriter.h"
-#include "desktop_ipc/ReconnectionListener.h"
+#include "remoting/remoting/desktop_ipc/ReconnectionListener.h"
 
 
 namespace remoting
@@ -42,7 +42,7 @@ namespace remoting
     *   server application.
     *   It will break only if thread will be terminated.
     */
-   class CLASS_DECL_REMOTING DesktopServerWatcher : public Thread
+   class CLASS_DECL_REMOTING DesktopServerWatcher : public ::subsystem::Thread
    {
    public:
       DesktopServerWatcher(ReconnectionListener *recListener, ::subsystem::LogWriter *log);
@@ -59,7 +59,7 @@ namespace remoting
       // @throws SystemException on fail.
       void doXPTrick();
 
-      Process *m_process;
+      ::subsystem::Process *m_process;
       ReconnectionListener *m_recListener;
 
       ::subsystem::LogWriter *m_plogwriter;

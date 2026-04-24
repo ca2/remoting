@@ -31,10 +31,10 @@ class CLASS_DECL_REMOTING WinClipboard
 {
 public:
 
-  WinClipboard(HWND hwnd);
+  WinClipboard(const ::operating_system::window & operatingsystemwindow);
   virtual ~WinClipboard();
 
-  void setHWnd(HWND hwnd);
+  void setHWnd(const ::operating_system::window & operatingsystemwindow);
   
   // get string from windows clipboard
   bool getString(::string & str);
@@ -54,7 +54,7 @@ public:
   ::string addCR(const ::scoped_string & str);
 
   HANDLE m_hndClipboard;
-  HWND m_hwnd;
+  ::operating_system::window m_operatingsystemwindow;
 };
 
 

@@ -29,6 +29,8 @@
 #include "Win8CursorShape.h"
 //#include "subsystem/thread/critical_section.h"
 #include "subsystem/thread/GuiThread.h"
+
+#include "remoting/remoting/desktop/windows/_common_header.h"
 #include "Win8DuplicationListener.h"
 //#include "log_writer/LogWriter.h"
 

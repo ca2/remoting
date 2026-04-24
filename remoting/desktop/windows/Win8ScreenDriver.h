@@ -26,7 +26,11 @@
 
 
 // FIXME: Remove this detectors when will be ready win8 detectors.
+#include "remoting/remoting/desktop/windows/_common_header.h"
+
+#include "remoting/remoting/desktop/windows/_common_header.h"
 #include "../CursorPositionDetector.h"
+
 #include "../CursorShapeDetector.h"
 #include "../WindowsCursorShapeGrabber.h"
 

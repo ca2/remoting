@@ -25,7 +25,7 @@
 #pragma once
 
 ////////#include "subsystem/platform/::string.h"
-//#include "remoting/remoting/win_system/RegistryKey.h"
+//#include "subsystem/platform/RegistryKey.h"
 
 #include "remoting/remoting/config/SettingsManager.h"
 

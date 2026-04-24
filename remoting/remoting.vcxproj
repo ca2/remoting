@@ -232,7 +232,7 @@
     <ClCompile Include="rfb_sconn\TightPalette.cpp" />
     <ClCompile Include="rfb_sconn\ZrleEncoder.cpp" />
     <ClCompile Include="server_config\ConfigReloadListener.cpp" />
-    <ClCompile Include="server_config\framework.cpp" />
+    <ClCompile Include="server_config\Configurator.cpp" />
     <ClCompile Include="server_config\IpAccessControl.cpp" />
     <ClCompile Include="server_config\IpAccessRule.cpp" />
     <ClCompile Include="server_config\PortMapping.cpp" />
@@ -240,7 +240,6 @@
     <ClCompile Include="server_config\PortMappingRect.cpp" />
     <ClCompile Include="server_config\RegistrySecurityAttributes.cpp" />
     <ClCompile Include="server_config\ServerConfig.cpp" />
-    <ClCompile Include="server_config\_.cpp" />
     <ClCompile Include="viewer_core\AuthHandler.cpp" />
     <ClCompile Include="viewer_core\CapabilitiesManager.cpp" />
     <ClCompile Include="viewer_core\CapsContainer.cpp" />
@@ -396,7 +395,7 @@
     <ClInclude Include="rfb_sconn\ZrleEncoder.h" />
     <ClInclude Include="rfb_sconn\_.h" />
     <ClInclude Include="server_config\ConfigReloadListener.h" />
-    <ClInclude Include="server_config\framework.h" />
+    <ClInclude Include="server_config\Configurator.h" />
     <ClInclude Include="server_config\IpAccessControl.h" />
     <ClInclude Include="server_config\IpAccessRule.h" />
     <ClInclude Include="server_config\PortMapping.h" />

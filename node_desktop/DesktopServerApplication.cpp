@@ -76,7 +76,7 @@ namespace remoting_node_desktop
 
          ::earth::time startTime = ::earth::time::now();
 
-         // WindowsEvent m_sleepInterval;
+         // ::happening m_sleepInterval;
          ::happening m_sleepInterval;
          while (mem[0] == 0)
          {
@@ -117,17 +117,17 @@ namespace remoting_node_desktop
          m_plogwriter->informationf("Server->client readPipeHandle = %p, writePipeHandle = %p", readPipeHandle,
                                     writePipeHandle);
 
-         m_clToSrvGate = new BlockingGate(m_clToSrvChan);
-         m_srvToClGate = new BlockingGate(m_srvToClChan);
+         m_clToSrvGate = new ::remoting::BlockingGate(m_clToSrvChan);
+         m_srvToClGate = new ::remoting::BlockingGate(m_srvToClChan);
 
          // Server initializations
-         m_dispatcher = new DesktopSrvDispatcher(m_clToSrvGate, [this]() { onHappening(); }, m_plogwriter);
+         m_dispatcher = new ::remoting::DesktopSrvDispatcher(m_clToSrvGate, [this]() { onHappening(); }, m_plogwriter);
 
          m_updHandlerSrv =
-            new UpdateHandlerServer(m_srvToClGate, m_dispatcher, [this]() { onHappening(); }, m_plogwriter);
-         m_uiSrv = new UserInputServer(m_srvToClGate, m_dispatcher, [this]() { onHappening(); }, m_plogwriter);
-         m_cfgServer = new ConfigServer(m_dispatcher, m_plogwriter);
-         m_gateKickHandler = new GateKickHandler(m_dispatcher);
+            new ::remoting::UpdateHandlerServer(m_srvToClGate, m_dispatcher, [this]() { onHappening(); }, m_plogwriter);
+         m_uiSrv = new ::remoting::UserInputServer(m_srvToClGate, m_dispatcher, [this]() { onHappening(); }, m_plogwriter);
+         m_cfgServer = new ::remoting::ConfigServer(m_dispatcher, m_plogwriter);
+         m_gateKickHandler = new ::remoting::GateKickHandler(m_dispatcher);
 
          // Start servers
          m_dispatcher->resume();

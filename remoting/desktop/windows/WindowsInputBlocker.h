@@ -28,8 +28,9 @@
 #include "subsystem/_common_header.h"
 #include "subsystem/thread/GuiThread.h"
 //#include "subsystem/thread/critical_section.h"
-#include "remoting/remoting/win_system/WinTimeMillis.h"
-#include "remoting/remoting/win_system/WindowsEvent.h"
+//#include "remoting/remoting/win_system/WinTimeMillis.h"
+#include "WindowsInputBlocker.h"
+#include "acme/parallelization/happening.h"
 #include "../InputBlocker.h"
 //#include "log_writer/LogWriter.h"
 
@@ -38,9 +39,16 @@ namespace remoting
 {
    // Only one instance of this class  may be created.
 
-   class CLASS_DECL_REMOTING WindowsInputBlocker : public InputBlocker, protected GuiThread
+   struct _windows_input_blocker_t;
+
+
+   class CLASS_DECL_REMOTING WindowsInputBlocker :
+   virtual public InputBlocker,
+    virtual public ::subsystem::GuiThread
    {
    public:
+
+
       WindowsInputBlocker(::subsystem::LogWriter *log);
       virtual ~WindowsInputBlocker();
 
@@ -52,12 +60,12 @@ namespace remoting
       virtual void setSoftKeyboardBlocking(bool block, unsigned int timeInterval);
       virtual void setSoftMouseBlocking(bool block, unsigned int timeInterval);
 
-      virtual ::earth::time getLastInputTime() const;
-      virtual void correctLastTime(::earth::time newTime);
+      class ::time getLastInputTime() const override;
+      void correctLastTime(const class ::time & time) override;
 
       virtual bool isRemoteInputAllowed();
 
-   protected:
+   //protected:
       virtual void execute();
       virtual void onTerminate();
 
@@ -66,28 +74,21 @@ namespace remoting
       bool setMouseFilterHook(bool block);
       bool setSoftMouseFilterHook(bool block);
 
-      static LRESULT CALLBACK lowLevelKeyboardFilterProc(int nCode, ::wparam wParam, ::lparam lParam);
-      static LRESULT CALLBACK lowLevelSoftKeyboardFilterProc(int nCode, ::wparam wParam, ::lparam lParam);
-      static LRESULT CALLBACK lowLevelMouseFilterProc(int nCode, ::wparam wParam, ::lparam lParam);
-      static LRESULT CALLBACK lowLevelSoftMouseFilterProc(int nCode, ::wparam wParam, ::lparam lParam);
+      _windows_input_blocker_t  *    m_pwindowsinputblocker;
 
-      static HHOOK m_hKeyboardHook;
-      static HHOOK m_hSoftKeyboardHook;
-      static HHOOK m_hMouseHook;
-      static HHOOK m_hSoftMouseHook;
+      static WindowsInputBlocker *s_pwindowsinputblocker;
+      static critical_section s_criticalsection;
 
-      static WindowsInputBlocker *m_instance;
-      static critical_section m_instanceMutex;
 
       bool m_isKeyboardBlocking;
       bool m_isMouseBlocking;
 
       bool m_isSoftKeyboardBlocking;
       bool m_isSoftMouseBlocking;
+      unsigned int m_timeInterval;
+      class ::time  m_lastInputTime;
+      critical_section m_lastInputTimeMutex;
 
-      static unsigned int m_timeInterval;
-      static ::earth::time m_lastInputTime;
-      static critical_section m_lastInputTimeMutex;
 
       ::subsystem::LogWriter *m_plogwriter;
    };

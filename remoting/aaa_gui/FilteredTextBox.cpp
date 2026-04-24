@@ -34,7 +34,7 @@ FilteredTextBox::~FilteredTextBox()
 {
 }
 
-void FilteredTextBox::setWindow(HWND hwnd)
+void FilteredTextBox::setWindow(const ::operating_system::window & operatingsystemwindow)
 {
   if (hwnd != NULL) {
     m_oldWindowProc = SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)&windowProc);
@@ -100,7 +100,7 @@ LRESULT  FilteredTextBox::onKeyDown(::wparam code, ::lparam params)
   return makeCheck();
 }
 
-LRESULT FilteredTextBox::windowProc(HWND hwnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam)
+LRESULT FilteredTextBox::windowProc(const ::operating_system::window & operatingsystemwindow, unsigned int uMsg, ::wparam wParam, ::lparam lParam)
 {
   FilteredTextBox *_this = (FilteredTextBox *)GetWindowLongPtr(hwnd, GWLP_USERDATA);
   if (_this == NULL) {

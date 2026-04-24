@@ -73,7 +73,7 @@ void SessionChangesWatcher::execute()
       m_extSessionChangesListener->onAnObjectEvent();
       terminate();
     } else {
-      // FIXME: Use WindowsEvent instead of Sleep().
+      // FIXME: Use ::happening instead of Sleep().
       Sleep(100);
     }
   }

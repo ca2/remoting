@@ -24,7 +24,7 @@
 
 #pragma once
 
-
+#include "remoting/remoting/desktop/windows/_common_header.h"
 #include "WinDxException.h"
 
 namespace remoting

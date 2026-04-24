@@ -95,7 +95,7 @@ namespace remoting
       m_initialStr = id;
    }
 
-   void ToolBar::attachToolBar(HWND hwnd)
+   void ToolBar::attachToolBar(const ::operating_system::window & operatingsystemwindow)
    {
       ::array_base<TBBUTTON> tbuttons;
 

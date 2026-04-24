@@ -27,7 +27,7 @@
 #include "ReconnectException.h"
 #include "subsystem/platform/BrokenHandleException.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -190,7 +190,7 @@ void UserInputClient::getNormalizedRect(::int_rectangle *prect)
   } while (!success);
 }
 
-void UserInputClient::getWindowCoords(HWND hwnd, ::int_rectangle *rect)
+void UserInputClient::getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle *rect)
 {
   critical_section_lock al(m_forwGate);
   bool success = false;
@@ -219,7 +219,7 @@ HWND UserInputClient::getWindowHandleByName(const ::scoped_string & windowName)
 {
   critical_section_lock al(m_forwGate);
   bool success = false;
-  HWND hwnd = 0;
+  const ::operating_system::window & operatingsystemwindow = 0;
   do {
     try {
       // Send request
@@ -272,7 +272,7 @@ bool UserInputClient::isApplicationInFocus(unsigned int procId)
 
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

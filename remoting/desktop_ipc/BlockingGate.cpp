@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "BlockingGate.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -33,7 +33,7 @@ namespace remoting_node_desktop
    BlockingGate::~BlockingGate() {}
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

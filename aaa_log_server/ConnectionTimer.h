@@ -26,7 +26,7 @@
 
 
 #include "remoting/thread/Thread.h"
-#include "remoting/win_system/WindowsEvent.h"
+#include "remoting/win_system/::happening.h"
 #include "TimerListener.h"
 
 // This class waits for time interval after that notifies to external listener.
@@ -44,7 +44,7 @@ private:
 
   TimerListener *m_timerListener;
   unsigned int m_timeOut;
-  WindowsEvent m_timer;
+  ::happening m_timer;
   bool m_signalEnabled;
 };
 

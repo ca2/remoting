@@ -36,8 +36,8 @@ public:
 
   HMENU getMenu();
   void setMenu(HMENU hmenu);
-  bool getWindowMenu(HWND hwnd);
-  void getSystemMenu(HWND hwnd);
+  bool getWindowMenu(const ::operating_system::window & operatingsystemwindow);
+  void getSystemMenu(const ::operating_system::window & operatingsystemwindow);
   void create();
   bool loadMenu(LPCTSTR lpMenuName);
   void createPopupMenu();

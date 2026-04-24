@@ -56,6 +56,15 @@ namespace remoting
 
 }
 
+// server_config
+namespace remoting
+{
+
+   class Configurator;
+
+}
+
+
 
 #endif
 

@@ -43,11 +43,11 @@ namespace remoting
       wait();
    }
 
-   void CursorShapeDetector::onTerminate() { m_sleepTimer.notify(); }
+   void CursorShapeDetector::onTerminate() { m_sleepTimer.set_happening(); }
 
    void CursorShapeDetector::execute()
    {
-      m_plogwriter->information("mouse shape detector thread id = {}", getThreadId());
+      m_plogwriter->information("mouse shape detector thread id = {}", (::iptr) getThreadId());
 
       while (!isTerminating())
       {
@@ -61,7 +61,7 @@ namespace remoting
             m_updateKeeper->setCursorShapeChanged();
             doUpdate();
          }
-         m_sleepTimer.waitForEvent(SLEEP_TIME);
+         m_sleepTimer.wait(SLEEP_TIME * 1_ms);
       }
    }
 

@@ -63,8 +63,8 @@ void NamedPipe::close()
     m_hPipe = INVALID_HANDLE_VALUE;
   }
   // Unblock a blocked operation
-  m_readEvent.notify();
-  m_writeEvent.notify();
+  m_readEvent.set_happening();
+  m_writeEvent.set_happening();
 }
 
 memsize NamedPipe::defer_write(const void *buffer, memsize len)

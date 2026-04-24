@@ -25,7 +25,7 @@
 #include "ViewerConfig.h"
 
 //#include "remoting/remoting/win_system/Environment.h"
-//#include "remoting/remoting/win_system/RegistryKey.h"
+//#include "subsystem/platform/RegistryKey.h"
 #include "subsystem/platform/Registry.h"
 #include "acme/filesystem/filesystem/directory_context.h"
 

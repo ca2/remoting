@@ -36,7 +36,7 @@ class CLASS_DECL_REMOTING ScrollBar
 public:
   ScrollBar();
 
-  void setWindow(HWND hwnd);
+  void setWindow(const ::operating_system::window & operatingsystemwindow);
   bool showVertScroll(bool show);
   bool showHorzScroll(bool show);
   void setHorzRange(int imin, int imax, int istep);
@@ -59,7 +59,7 @@ protected:
   bool _showVertScroll(bool show);
   bool _showHorzScroll(bool show);
 
-  HWND m_hwnd;
+  ::operating_system::window m_operatingsystemwindow;
   int m_vPos, m_hPos;
   int m_vMin, m_vMax;
   int m_hMin, m_hMax;

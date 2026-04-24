@@ -26,7 +26,7 @@
 
 
 #include "subsystem/_common_header.h"
-#include "WindowsEvent.h"
+#include "::happening.h"
 #include "acme/input_output/Channel.h"
 //#include "subsystem/thread/critical_section.h"
 
@@ -54,8 +54,8 @@ protected:
   // The mutex protect collision accesses to handle fields of derived classes.
   critical_section m_hPipeMutex;
 
-  WindowsEvent m_readEvent;
-  WindowsEvent m_writeEvent;
+  ::happening m_readEvent;
+  ::happening m_writeEvent;
 
 private:
   void checkPipeHandle(HANDLE pipeHandle);

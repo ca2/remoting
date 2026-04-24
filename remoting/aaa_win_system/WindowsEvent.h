@@ -27,14 +27,14 @@
 
 #include "subsystem/_common_header.h"
 
-class CLASS_DECL_REMOTING WindowsEvent
+class CLASS_DECL_REMOTING ::happening
 {
 public:
-  WindowsEvent(const ::scoped_string & scopedstrName = 0);
-  virtual ~WindowsEvent();
+  ::happening(const ::scoped_string & scopedstrName = 0);
+  virtual ~::happening();
 
   void notify();
-  void waitForEvent(DWORD milliseconds = INFINITE);
+  void.wait(DWORD milliseconds = INFINITE * 1_ms);
 
   HANDLE getHandle() const { return m_hEvent; }
 

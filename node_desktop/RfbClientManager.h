@@ -30,7 +30,7 @@
 //#include "subsystem/thread/critical_section.h"
 #include "subsystem/thread/Thread.h"
 //#include "subsystem/thread/critical_section.h"
-#include "subsystem/node/WindowsEvent.h"
+#include "subsystem/node/::happening.h"
 #include "remoting/remoting/desktop/Desktop.h"
 #include "remoting/remoting/desktop/DesktopFactory.h"
 //#include "log_writer/LogWriter.h"
@@ -49,8 +49,8 @@
 namespace remoting_node_desktop
 {
 
-   typedef ::list_base<RfbClient *> ClientList;
-   typedef ::list_base<RfbClient *>::iterator ClientListIter;
+   using ClientList =  ::ø<::list_base<::pointer < ::remoting::RfbClient >> >;
+   using ClientListIter = typename ClientList::iterator;
 
    struct BanProp
    {
@@ -65,10 +65,10 @@ namespace remoting_node_desktop
    // application is running. Is this fixme deprecated?
    //
    // FIXME: No documentation for problem which this class solves.
-   class RfbClientManager : public ClientTerminationListener,
+   class RfbClientManager : public ::remoting::ClientTerminationListener,
                             public ::subsystem::ClipboardListener,
-                            public UpdateSendingListener,
-                            public ClientAuthListener,
+                            public ::remoting::UpdateSendingListener,
+                            public ::remoting::ClientAuthListener,
                             public AbnormDeskTermListener,
                             public ::subsystem::ListenerContainer<RfbClientManagerEventListener *>
    {
@@ -76,7 +76,7 @@ namespace remoting_node_desktop
       // FIXME: parameter is not used.
       RfbClientManager(const ::scoped_string &scopedstrServerName, ::remoting_node_desktop::Configurator *pconfigurator,
                        ::remoting_node_desktop::NewConnectionEvents *newConnectionEvents, ::subsystem::LogWriter *log,
-                       DesktopFactory *desktopFactory);
+                       ::remoting::DesktopFactory *desktopFactory);
       virtual ~RfbClientManager();
 
       // Adds rfb clients info to specified rfb client info ::list_base.
@@ -90,10 +90,10 @@ namespace remoting_node_desktop
 
       // Sets a view port value to all client that already run and
       // will be run.
-      void setDynViewPort(const ViewPortState *dynViewPort);
+      void setDynViewPort(const ::remoting::ViewPortState *dynViewPort);
 
       // FIXME: Place comment for this method here.
-      void addNewConnection(::subsystem::SocketIPv4Interface *socket, ViewPortState *constViewPort, bool viewOnly,
+      void addNewConnection(::subsystem::SocketIPv4Interface *socket, ::remoting::ViewPortState *constViewPort, bool viewOnly,
                             bool isOutgoing);
 
       // returns ::list_base of bans.
@@ -107,13 +107,13 @@ namespace remoting_node_desktop
    protected:
       // Listen functions
       virtual void onClientTerminate();
-      virtual Desktop *onClientAuth(RfbClient *client);
-      virtual bool onCheckForBan(RfbClient *client);
+      virtual ::remoting::Desktop *onClientAuth(::remoting::RfbClient *client);
+      virtual bool onCheckForBan(::remoting::RfbClient *client);
       // This function only adds the client to the ban ::list_base.
-      virtual void onAuthFailed(RfbClient *client);
-      virtual void onCheckAccessControl(RfbClient *client);
+      virtual void onAuthFailed(::remoting::RfbClient *client);
+      virtual void onCheckAccessControl(::remoting::RfbClient *client);
       virtual void onClipboardUpdate(const ::scoped_string &newClipboard);
-      virtual void onSendUpdate(const UpdateContainer *updateContainer, const ::remoting::CursorShape *cursorShape);
+      virtual void onSendUpdate(const ::remoting::UpdateContainer *updateContainer, const ::remoting::CursorShape *cursorShape);
       virtual bool isReadyToSend();
       // If an error occured RfbClientManager closes all current connections
       // (authorized and not authorized) that bring to closing the belonged desktop
@@ -140,22 +140,22 @@ namespace remoting_node_desktop
       // client work. Now, the dynViewPort has the same value for all clients.
       // By this field initilizes new clients.
       // Acces to the viewport must be covered by the m_clientListLocker mutex.
-      ViewPortState m_dynViewPort;
+      ::remoting::ViewPortState m_dynViewPort;
 
       BanList m_banList;
-      // WindowsEvent m_banTimer;
+      // ::happening m_banTimer;
       ::happening m_banTimer;
       //;
       critical_section m_banListMutex;
 
-      // WindowsEvent m_listUnderflowingEvent;
+      // ::happening m_listUnderflowingEvent;
 
       ::happening m_listUnderflowingEvent;
 
       // Creating and destroying this object must be with the locked
       // m_clientListLocker
-      Desktop *m_desktop;
-      DesktopFactory *m_desktopFactory;
+      ::remoting::Desktop *m_desktop;
+      ::remoting::DesktopFactory *m_desktopFactory;
 
       // Inforamtion
       unsigned int m_nextClientId;

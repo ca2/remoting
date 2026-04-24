@@ -32,7 +32,7 @@
 #include "DesktopServerProto.h"
 #include "DesktopSrvDispatcher.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    class UserInputClient : public UserInput, public DesktopServerProto, public ClientListener
@@ -50,7 +50,7 @@ namespace remoting_node_desktop
       virtual void getDisplayNumberCoords(::int_rectangle *rect, unsigned char dispNumber);
       virtual ::array_base<::int_rectangle> getDisplaysCoords();
       virtual void getNormalizedRect(::int_rectangle *rect);
-      virtual void getWindowCoords(HWND hwnd, ::int_rectangle *rect);
+      virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle *rect);
       virtual HWND getWindowHandleByName(const ::scoped_string &windowName);
       virtual void getApplicationRegion(unsigned int procId, Region *region);
       virtual bool isApplicationInFocus(unsigned int procId);
@@ -64,7 +64,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

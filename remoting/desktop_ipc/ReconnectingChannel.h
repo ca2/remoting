@@ -27,11 +27,11 @@
 
 #include "acme/input_output/Channel.h"
 //#include "subsystem/thread/critical_section.h"
-#include "remoting/remoting/win_system/WindowsEvent.h"
+#include "acme/parallelization/happening.h"
 //#include "log_writer/LogWriter.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -76,14 +76,14 @@ namespace remoting_node_desktop
       bool m_chanWasChanged;
       critical_section m_chanMut;
 
-      WindowsEvent m_timer;
+      ::happening m_timer;
       unsigned int m_timeOut;
 
       ::subsystem::LogWriter *m_plogwriter;
    };
 
 
-}  // namespace remoting_node_desktop
+}  // namespace remoting
 
 
 

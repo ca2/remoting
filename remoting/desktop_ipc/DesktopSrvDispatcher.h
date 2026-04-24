@@ -29,11 +29,11 @@
 #include "BlockingGate.h"
 #include "ClientListener.h"
 //#include "subsystem/platform/AnEventListener.h"
-//#include "remoting/remoting/win_system/WindowsEvent.h"
+//#include "acme/parallelization/happening.h"
 //#include "log_writer/LogWriter.h"
 //#include aaa_<map>
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    class DesktopSrvDispatcher : public ::subsystem::GuiThread
@@ -63,7 +63,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

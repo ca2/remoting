@@ -25,11 +25,11 @@
 #pragma once
 
 
-#include "desktop_ipc/DesktopServerProto.h"
+#include "remoting/remoting/desktop_ipc/DesktopServerProto.h"
 #include "DesktopSrvDispatcher.h"
 //#include "subsystem/platform/::earth::time.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    class DesktopConfigClient : public DesktopServerProto
@@ -46,7 +46,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

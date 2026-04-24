@@ -29,7 +29,7 @@ namespace remoting
 
 
    ViewPortState::ViewPortState() :
-       m_mode(FULL_DESKTOP), m_hwnd(0), m_windowIsResolved(false), m_displayNumber(1), m_processId(0)
+       m_mode(FULL_DESKTOP), m_windowIsResolved(false), m_displayNumber(1), m_processId(0)
    {
    }
 
@@ -39,7 +39,7 @@ namespace remoting
    {
       m_mode = viewPortState.m_mode;
       m_arbitraryRect = viewPortState.m_arbitraryRect;
-      m_hwnd = viewPortState.m_hwnd;
+      m_operatingsystemwindow = viewPortState.m_operatingsystemwindow;
       m_windowName = viewPortState.m_windowName;
       m_windowIsResolved = viewPortState.m_windowIsResolved;
       m_displayNumber = viewPortState.m_displayNumber;
@@ -66,10 +66,10 @@ namespace remoting
       m_displayNumber = displayNumber;
    }
 
-   void ViewPortState::setWindowHandle(HWND hwnd)
+   void ViewPortState::setWindowHandle(const ::operating_system::window & operatingsystemwindow)
    {
       m_mode = WINDOW_RECT;
-      m_hwnd = hwnd;
+      m_operatingsystemwindow= operatingsystemwindow;
       m_windowIsResolved = true;
    }
 
@@ -83,7 +83,7 @@ namespace remoting
    void ViewPortState::unresolveHwnd()
    {
       m_windowIsResolved = false;
-      m_hwnd = 0;
+      m_operatingsystemwindow = nullptr;
    }
 
    void ViewPortState::setProcessId(unsigned int processId)

@@ -37,7 +37,7 @@ namespace remoting
        UpdateDetector(updateKeeper, updateListener), m_screenGrabber(screenGrabber),
        m_backupFrameBuffer(backupFrameBuffer), m_fbMutex(frameBufferCriticalSection), m_plogwriter(log)
    {
-      m_pollingRect.setRect(0, 0, 16, 16);
+      m_pollingRect.set(0, 0, 16, 16);
    }
 
    Poller::~Poller()
@@ -46,11 +46,11 @@ namespace remoting
       wait();
    }
 
-   void Poller::onTerminate() { m_intervalWaiter.notify(); }
+   void Poller::onTerminate() { m_intervalWaiter.set_happening(); }
 
    void Poller::execute()
    {
-      m_plogwriter->information("poller thread id = {}", getThreadId());
+      m_plogwriter->information("poller thread id = {}", (::iptr) getThreadId());
 
       ::innate_subsystem::FrameBuffer *screenFrameBuffer;
 
@@ -58,7 +58,7 @@ namespace remoting
          critical_section_lock al(m_fbMutex);
          screenFrameBuffer = m_screenGrabber->getScreenBuffer();
          ::int_rectangle fullScreenRect(screenFrameBuffer->getDimension());
-         m_updateKeeper->addChangedRect(&fullScreenRect);
+         m_updateKeeper->addChangedRect(fullScreenRect);
       }
 
       while (!isTerminating())
@@ -90,11 +90,11 @@ namespace remoting
                {
                   for (int iCol = 0; iCol < screenWidth; iCol += pollingWidth)
                   {
-                     scanRect.setRect(iCol, iRow, min(iCol + pollingWidth, screenWidth),
-                                      min(iRow + pollingHeight, screenHeight));
-                     if (!screenFrameBuffer->cmpFrom(&scanRect, m_backupFrameBuffer, scanRect.left, scanRect.top))
+                     scanRect.set(iCol, iRow, minimum(iCol + pollingWidth, screenWidth),
+                                      minimum(iRow + pollingHeight, screenHeight));
+                     if (!screenFrameBuffer->cmpFrom(scanRect, m_backupFrameBuffer, scanRect.left, scanRect.top))
                      {
-                        region.addRect(&scanRect);
+                        region.addRect(scanRect);
                      }
                   }
                }
@@ -110,7 +110,7 @@ namespace remoting
          }
 
          unsigned int pollInterval = m_pconfigurator->getServerConfig()->getPollingInterval();
-         m_intervalWaiter.waitForEvent(pollInterval);
+         m_intervalWaiter.wait(pollInterval * 1_ms);
       }
    }
 

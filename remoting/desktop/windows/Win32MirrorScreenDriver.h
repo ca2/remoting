@@ -24,7 +24,7 @@
 
 #pragma once
 
-
+#include "remoting/remoting/desktop/windows/_common_header.h"
 #include "../MirrorScreenDriver.h"
 #include "Win32ScreenDriverBaseImpl.h"
 

@@ -27,7 +27,7 @@
 #include "remoting/node_desktop/NamingDefs.h"
 #include "subsystem/platform/Exception.h"
 //#include "remoting/remoting/win_system/Environment.h"
-#include "remoting/remoting/win_system/RegistryKey.h"
+#include "subsystem/platform/RegistryKey.h"
 //#include "subsystem/thread/critical_section.h"
 
 WinEventLog::WinEventLog(::subsystem::LogWriter *log)

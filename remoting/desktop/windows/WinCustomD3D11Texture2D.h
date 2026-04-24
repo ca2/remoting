@@ -24,7 +24,7 @@
 
 #pragma once
 
-
+#include "remoting/remoting/desktop/windows/_common_header.h"
 #include "../WinD3D11Texture2D.h"
 
 // #include aaa_<d3d11.h>

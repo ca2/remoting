@@ -27,7 +27,7 @@
 
 #include "remoting/remoting/win_system/ParentProcess.h"
 #include "ParentEventsListener.h"
-#include "remoting/remoting/win_system/WindowsEvent.h"
+#include "acme/parallelization/happening.h"
 #include "subsystem/_common_header.h"
 #include "subsystem/thread/Thread.h"
 // #include aaa_<Tlhelp32.h>
@@ -44,7 +44,7 @@ private:
 
   ParentEventsListener *m_parentEventListener;
   ParentProcess m_parentProcess;
-  WindowsEvent m_timer;
+  ::happening m_timer;
 };
 
 //// __PARENTWATCHER_H__

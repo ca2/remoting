@@ -131,7 +131,7 @@ bool BaseWindow::setPosition(int xPos, int yPos)
                         SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
 }
 
-void BaseWindow::setParent(HWND hwnd)
+void BaseWindow::setParent(const ::operating_system::window & operatingsystemwindow)
 {
   _ASSERT(m_hwnd != 0);
   SetParent(m_hwnd, hwnd);
@@ -302,7 +302,7 @@ bool BaseWindow::wndProc(unsigned int scopedstrMessage, ::wparam wParam, ::lpara
   return onMessage(scopedstrMessage, wParam, lParam);
 }
 
-void BaseWindow::setHWnd(HWND hwnd)
+void BaseWindow::setHWnd(const ::operating_system::window & operatingsystemwindow)
 {
   m_hwnd = hwnd;
 }

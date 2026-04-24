@@ -31,11 +31,15 @@
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING DesktopConfigLocal
+   class CLASS_DECL_REMOTING DesktopConfigLocal :
+   virtual public ::particle
    {
    public:
       DesktopConfigLocal(::subsystem::LogWriter *log);
       virtual ~DesktopConfigLocal();
+
+
+      void initialize_desktop_config_local(Configurator * pconfigurator, ::subsystem::LogWriter *log);
 
       virtual void updateByNewSettings();
 
@@ -43,7 +47,8 @@ namespace remoting
       virtual ::earth::time getLastInputTime() const;
       virtual void correctLastTime(::earth::time newTime);
 
-   private:
+   //private:
+      ::pointer < Configurator > m_pconfigurator;
       InputBlocker *m_inputBlocker;
    };
 

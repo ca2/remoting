@@ -54,8 +54,8 @@ namespace remoting
       virtual void getNormalizedRect(::int_rectangle *rect) = 0;
       virtual void getDisplayNumberCoords(::int_rectangle *rect, unsigned char dispNumber) = 0;
       virtual ::array_base<::int_rectangle> getDisplaysCoords() = 0;
-      virtual void getWindowCoords(HWND hwnd, ::int_rectangle *rect) = 0;
-      virtual HWND getWindowHandleByName(const ::scoped_string &windowName) = 0;
+      virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle *rect) = 0;
+      virtual ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName) = 0;
 
       virtual void getApplicationRegion(unsigned int procId, ::remoting::Region *region) = 0;
       virtual bool isApplicationInFocus(unsigned int procId) = 0;

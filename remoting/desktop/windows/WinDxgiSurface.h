@@ -24,7 +24,7 @@
 
 #pragma once
 
-
+#include "remoting/remoting/desktop/windows/_common_header.h"
 // #include aaa_<d3d11.h>
 // #include aaa_<DXGI1_2.h>
 

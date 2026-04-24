@@ -23,9 +23,10 @@
 //
 #include "framework.h"
 #include "subsystem/_common_header.h"
-#include "remoting/node_desktop/NamingDefs.h"
+//#include "remoting/node_desktop/NamingDefs.h"
 #include "HooksUpdateDetector.h"
 
+#include "acme/operating_system/windows/_.h"
 #include "remoting/remoting/win_system/UipiControl.h"
 //#include "remoting/remoting/win_system/Environment.h"
 
@@ -51,8 +52,9 @@ namespace remoting
          Thread::terminate();
          m_plogwriter->error("Failed to load the hook library: {}", e.get_message());
       }
-      HINSTANCE hinst = GetModuleHandle(0);
-      m_targetWin = new MessageWindow(hinst, HookDefinitions::HOOK_TARGET_WIN_CLASS_NAME);
+      //HINSTANCE hinst = GetModuleHandle(0);
+      auto hinst = (HINSTANCE) windows::hinstance_from_function(::windows::window::s_window_procedure);
+      m_targetWin = new MessageWindow(hinst, "HookTargetWinClassName");
    }
 
    HooksUpdateDetector::~HooksUpdateDetector()
@@ -76,7 +78,7 @@ namespace remoting
       {
          PostMessage(m_targetWin->getHWND(), WM_QUIT, 0, 0);
       }
-      m_initWaiter.notify();
+      m_initWaiter.set_happening();
    }
 
    void HooksUpdateDetector::start32Loader()
@@ -155,7 +157,7 @@ namespace remoting
          catch (::exception &e)
          {
             m_plogwriter->error("Hooks installing failed, wait for the next trying: {}", e.get_message());
-            m_initWaiter.waitForEvent(5000);
+            m_initWaiter.wait(5000 * 1_ms);
             try
             {
                m_hookInstaller->uninstall();

@@ -22,58 +22,78 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "../WindowsInputBlocker.h"
+#include "WindowsInputBlocker.h"
 #include "subsystem/platform/Exception.h"
 //#include "subsystem/thread/critical_section.h"
+#include "acme/_operating_system.h"
 
 namespace remoting
 {
 
+   struct _windows_input_blocker_t
+   {
+      static LRESULT CALLBACK lowLevelKeyboardFilterProc(int nCode, WPARAM wParam, LPARAM lParam);
+      static LRESULT CALLBACK lowLevelSoftKeyboardFilterProc(int nCode, WPARAM wParam, LPARAM lParam);
+      static LRESULT CALLBACK lowLevelMouseFilterProc(int nCode, WPARAM wParam, LPARAM lParam);
+      static LRESULT CALLBACK lowLevelSoftMouseFilterProc(int nCode, WPARAM wParam, WPARAM lParam);
 
-   critical_section WindowsInputBlocker::m_instanceMutex;
-   HHOOK WindowsInputBlocker::m_hKeyboardHook = 0;
-   HHOOK WindowsInputBlocker::m_hSoftKeyboardHook = 0;
-   HHOOK WindowsInputBlocker::m_hMouseHook = 0;
-   HHOOK WindowsInputBlocker::m_hSoftMouseHook = 0;
+      HHOOK m_hKeyboardHook = nullptr;
+      HHOOK m_hSoftKeyboardHook = nullptr;
+      HHOOK m_hMouseHook = nullptr;
+      HHOOK m_hSoftMouseHook = nullptr;
 
-   ::earth::time WindowsInputBlocker::m_lastInputTime;
-   unsigned int WindowsInputBlocker::m_timeInterval = INFINITE;
-   critical_section WindowsInputBlocker::m_lastInputTimeMutex;
 
-   WindowsInputBlocker *WindowsInputBlocker::m_instance = 0;
+   };
+
+
+   //
+   // critical_section WindowsInputBlocker::m_instanceMutex;
+   // HHOOK WindowsInputBlocker::m_hKeyboardHook = 0;
+   // HHOOK WindowsInputBlocker::m_hSoftKeyboardHook = 0;
+   // HHOOK WindowsInputBlocker::m_hMouseHook = 0;
+   // HHOOK WindowsInputBlocker::m_hSoftMouseHook = 0;
+
+   //::earth::time WindowsInputBlocker::m_lastInputTime;
+   //unsigned int WindowsInputBlocker::m_timeInterval = INFINITE;
+   //critical_section WindowsInputBlocker::m_lastInputTimeMutex;
+
+   WindowsInputBlocker *WindowsInputBlocker::s_pwindowsinputblocker = 0;
 
    WindowsInputBlocker::WindowsInputBlocker(::subsystem::LogWriter *log) :
        m_isKeyboardBlocking(false), m_isMouseBlocking(false), m_isSoftKeyboardBlocking(false),
        m_isSoftMouseBlocking(false), m_plogwriter(log)
    {
       {
-         critical_section_lock al(&m_instanceMutex);
-         if (m_instance != 0)
+         critical_section_lock al(&s_criticalsection);
+         if (s_pwindowsinputblocker)
          {
             throw ::subsystem::Exception("The only one instance of"
                                          "WindowsInputBlocker is allowed");
          }
-         m_instance = this;
+         s_pwindowsinputblocker = this;
       }
-      resume();
+      m_pwindowsinputblocker = new _windows_input_blocker_t;
+s      resume();
    }
 
    WindowsInputBlocker::~WindowsInputBlocker()
    {
       terminate();
       wait();
-      m_instance = 0;
+      delete m_pwindowsinputblocker;
+      s_pwindowsinputblocker = nullptr;
+
    }
 
    ::earth::time WindowsInputBlocker::getLastInputTime() const
    {
-      critical_section_lock al(&m_lastInputTimeMutex);
-      return m_lastInputTime;
+      critical_section_lock al(&m_pwindowsinputblocker->m_lastInputTimeMutex);
+      return m_pwindowsinputblocker->m_lastInputTime;
    }
 
    void WindowsInputBlocker::correctLastTime(::earth::time newTime)
    {
-      critical_section_lock al(&m_lastInputTimeMutex);
+      critical_section_lock al(&m_pwindowsinputblocker->m_lastInputTimeMutex);
       if (newTime.getTime() > m_lastInputTime.getTime())
       {
          newTime = ::earth::time(newTime.getTime());

@@ -150,7 +150,7 @@ protected:
   // and is used to prevent from executing that function recursively.
   bool m_inWindowProc;
 
-  WindowsEvent m_endEvent;
+  ::happening m_endEvent;
   bool m_termination;
 };
 

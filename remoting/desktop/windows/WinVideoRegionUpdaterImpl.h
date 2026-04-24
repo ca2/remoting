@@ -24,7 +24,7 @@
 
 #pragma once
 
-
+#include "remoting/remoting/desktop/windows/_common_header.h"
 //#include "subsystem/platform/::earth::time.h"
 #include "remoting/remoting/region/Region.h"
 //#include "subsystem/platform/::string_array.h"
@@ -32,7 +32,7 @@
 //#include "subsystem/thread/critical_section.h"
 //#include "log_writer/LogWriter.h"
 #include "subsystem/thread/Thread.h"
-#include "remoting/remoting/win_system/WindowsEvent.h"
+#include "acme/parallelization/happening.h"
 
 namespace remoting
 {
@@ -57,7 +57,7 @@ namespace remoting
       Region m_vidRegion;
       critical_section m_regionMutex;
       ::subsystem::LogWriter *m_plogwriter;
-      WindowsEvent m_sleeper;
+      ::happening m_sleeper;
    };
 
    //// __WINVIDEOREGIONUPDATERIMPL_H__

@@ -26,7 +26,7 @@
 
 
 #include "subsystem/thread/Thread.h"
-#include "WindowsEvent.h"
+#include "::happening.h"
 
 class CLASS_DECL_REMOTING PipeImpersonatedThread : public Thread
 {
@@ -45,8 +45,8 @@ private:
   HANDLE m_pipeHandle;
   bool m_success;
   ::string m_faultReason;
-  WindowsEvent m_impersonationReadyEvent;
-  WindowsEvent m_threadSleeper;
+  ::happening m_impersonationReadyEvent;
+  ::happening m_threadSleeper;
 };
 
 //// __PIPEIMPERSONATEDTHREAD_H__

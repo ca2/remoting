@@ -118,7 +118,7 @@
 //  // Window scopedstrMessage proccessing method
 //  //
 //
-//    static INT_PTR CALLBACK dialogProc(HWND hwnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam);
+//    static INT_PTR CALLBACK dialogProc(const ::operating_system::window & operatingsystemwindow, unsigned int uMsg, ::wparam wParam, ::lparam lParam);
 //    virtual bool dialog_procedure(INT_PTR & iptrResult, unsigned int message, ::wparam wparam, ::lparam lparam);
 ////private:
 //    TCHAR *getResouceName();

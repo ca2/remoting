@@ -43,7 +43,7 @@ typedef HRESULT (__stdcall *PFNDRAWTHEMEBACKGROUND)(HTHEME hTheme, HDC hdc,
                                                     const RECT *pRect,
                                                     const RECT *pClipRect);
 
-typedef HTHEME (__stdcall *PFNOPENTHEMEDATA)(HWND hwnd, LPCWSTR pszClassList);
+typedef HTHEME (__stdcall *PFNOPENTHEMEDATA)(const ::operating_system::window & operatingsystemwindow, LPCWSTR pszClassList);
 
 typedef HRESULT (__stdcall *PFNDRAWTHEMETEXT)(HTHEME hTheme, HDC hdc, int iPartId,
                                               int iStateId, LPCWSTR pszText,
@@ -73,7 +73,7 @@ public:
                                      const RECT *pRect,
                                      const RECT *pClipRect);
 
-  static HTHEME OpenThemeData(HWND hwnd, LPCWSTR pszClassList);
+  static HTHEME OpenThemeData(const ::operating_system::window & operatingsystemwindow, LPCWSTR pszClassList);
 
   static HRESULT DrawThemeText(HTHEME hTheme, HDC hdc, int iPartId,
                                int iStateId, LPCWSTR pszText,

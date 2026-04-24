@@ -173,7 +173,7 @@ namespace remoting
 
       ::subsystem::LogWriter *m_plogwriter;
 
-      // WindowsEvent m_newUpdatesEvent;
+      // ::happening m_newUpdatesEvent;
 
       ::happening m_newUpdatesEvent;
 

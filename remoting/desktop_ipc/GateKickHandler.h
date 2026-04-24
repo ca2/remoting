@@ -27,7 +27,7 @@
 
 #include "DesktopSrvDispatcher.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -40,7 +40,7 @@ namespace remoting_node_desktop
       virtual void onRequest(unsigned char reqCode, BlockingGate *backGate);
    };
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

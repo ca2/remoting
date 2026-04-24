@@ -57,7 +57,7 @@ namespace remoting
       Desktop *m_desktop;
       ::remoting::RfbOutputGate *m_output;
 
-      //WindowsEvent m_newClipWaiter;
+      //::happening m_newClipWaiter;
 
       ::happening m_newClipWaiter;
 

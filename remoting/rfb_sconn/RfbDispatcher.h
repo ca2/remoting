@@ -28,7 +28,7 @@
 #include "subsystem/thread/Thread.h"
 #include "RfbDispatcherListener.h"
 //#include "subsystem/platform/AnEventListener.h"
-//#include "remoting/remoting/win_system/WindowsEvent.h"
+//#include "acme/parallelization/happening.h"
 //#include aaa_<map>
 
 namespace remoting
@@ -41,7 +41,7 @@ namespace remoting
       // RfbDispatcher(RfbInputGate *gate,
       //               AnEventListener *m_extTerminationListener);
       // RfbDispatcher(RfbInputGate *gate,
-      //               WindowsEvent *terminationEvent);
+      //               ::happening *terminationEvent);
       RfbDispatcher(::remoting::RfbInputGate *gate, const ::procedure &procedureTermination);
       virtual ~RfbDispatcher();
 
@@ -57,7 +57,7 @@ namespace remoting
 
       ::procedure m_procedureTermination;
       // AnEventListener *m_extTerminationListener;
-      // WindowsEvent *m_terminationEvent;
+      // ::happening *m_terminationEvent;
    };
 
 

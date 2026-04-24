@@ -25,7 +25,7 @@
 #include "GateKicker.h"
 //#include "subsystem/thread/critical_section.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -37,13 +37,13 @@ namespace remoting_node_desktop
       wait();
    }
 
-   void GateKicker::onTerminate() { m_sleeper.notify(); }
+   void GateKicker::onTerminate() { m_sleeper.set_happening(); }
 
    void GateKicker::execute()
    {
       while (!isTerminating())
       {
-         m_sleeper.waitForEvent(500);
+         m_sleeper.wait(500 * 1_ms);
          if (!isTerminating())
          {
             try
@@ -59,6 +59,6 @@ namespace remoting_node_desktop
    }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 

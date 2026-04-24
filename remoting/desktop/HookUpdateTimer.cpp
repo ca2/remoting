@@ -37,21 +37,21 @@ namespace remoting
 
    void HookUpdateTimer::onTerminate()
    {
-      m_updateWaiter.notify();
-      m_timer.notify();
+      m_updateWaiter.set_happening();
+      m_timer.set_happening();
    }
 
    void HookUpdateTimer::execute()
    {
       while (!isTerminating())
       {
-         m_updateWaiter.waitForEvent();
-         m_timer.waitForEvent(100);
+         m_updateWaiter.wait();
+         m_timer.wait(100 * 1_ms);
          m_updateListener->onUpdate();
       }
    }
 
-   void HookUpdateTimer::sear() { m_updateWaiter.notify(); }
+   void HookUpdateTimer::sear() { m_updateWaiter.set_happening(); }
 
 
 } // namespace remoting

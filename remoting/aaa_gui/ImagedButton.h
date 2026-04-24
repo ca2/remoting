@@ -44,7 +44,7 @@ public:
 
   void drawItem(LPDRAWITEMSTRUCT dis);
 
-  virtual void setWindow(HWND hwnd);
+  virtual void setWindow(const ::operating_system::window & operatingsystemwindow);
 
   void setIcon(HICON *icon, const ::int_size & size);
 

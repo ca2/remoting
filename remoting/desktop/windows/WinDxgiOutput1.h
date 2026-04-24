@@ -26,7 +26,7 @@
 
 
 
-
+#include "remoting/remoting/desktop/windows/_common_header.h"
 #include "WinDxgiOutput.h"
 
 // #include aaa_<d3d11.h>

@@ -23,8 +23,8 @@
 //
 #include "framework.h"
 #include "ExtraRfbServers.h"
-#include "remoting/node_desktop/server_config/Configurator.h"
-
+#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/server_config/Configurator.h"
 
 namespace remoting_node_desktop
 {
@@ -175,12 +175,12 @@ namespace remoting_node_desktop
       //          someSetting = cfg.getSomeSetting();        // use
       //        }                                            // auto-unlock
       //
-      ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
-      AutoLock l(config);
+      auto pserverconfig = m_pconfigurator->getServerConfig();
+      AutoLock l(pserverconfig);
 
-      out->acceptConnections = config->isAcceptingRfbConnections();
-      out->loopbackOnly = config->isOnlyLoopbackConnectionsAllowed();
-      out->extraPorts = *config->getPortMappingContainer();
+      out->acceptConnections = pserverconfig->isAcceptingRfbConnections();
+      out->loopbackOnly = pserverconfig->isOnlyLoopbackConnectionsAllowed();
+      out->extraPorts = *pserverconfig->getPortMappingContainer();
    }
 
 

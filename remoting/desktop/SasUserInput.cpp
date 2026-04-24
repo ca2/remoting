@@ -100,7 +100,7 @@ namespace remoting
 
    void SasUserInput::getNormalizedRect(::int_rectangle *rect) { m_client->getNormalizedRect(rect); }
 
-   void SasUserInput::getWindowCoords(HWND hwnd, ::int_rectangle *rect) { m_client->getWindowCoords(hwnd, rect); }
+   void SasUserInput::getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle *rect) { m_client->getWindowCoords(hwnd, rect); }
 
    HWND SasUserInput::getWindowHandleByName(const ::scoped_string &windowName)
    {

@@ -30,7 +30,7 @@
 #include "acme/input_output/DataOutputStream.h"
 #include "acme/input_output/DataInputStream.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    class BlockingGate : public critical_section, public DataOutputStream, public DataInputStream
@@ -40,7 +40,7 @@ namespace remoting_node_desktop
       virtual ~BlockingGate();
    };
 
-} // namespace remoting_node_desktop
+} // namespace remoting
  
 
 

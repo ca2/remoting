@@ -25,7 +25,7 @@
 #pragma once
 
 
-//#include "remoting/remoting/win_system/RegistryKey.h"
+//#include "subsystem/platform/RegistryKey.h"
 
 //#include aaa_<vector>
 

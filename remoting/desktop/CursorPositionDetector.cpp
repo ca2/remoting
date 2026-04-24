@@ -44,7 +44,7 @@ namespace remoting
 
    ::int_point CursorPositionDetector::getCursorPos() { return m_cursor.getCursorPos(); }
 
-   void CursorPositionDetector::onTerminate() { m_sleepTimer.notify(); }
+   void CursorPositionDetector::onTerminate() { m_sleepTimer.set_happening(); }
 
    void CursorPositionDetector::execute()
    {
@@ -61,7 +61,7 @@ namespace remoting
             m_updateKeeper->setCursorPos(&m_lastCursorPos);
             doUpdate();
          }
-         m_sleepTimer.waitForEvent(MOUSE_SLEEP_TIME);
+         m_sleepTimer.wait(MOUSE_SLEEP_TIME * 1_ms);
       }
    }
 

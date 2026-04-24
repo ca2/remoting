@@ -33,7 +33,7 @@ RfbDispatcher::RfbDispatcher(RfbInputGate *gate,
 }
 
 RfbDispatcher::RfbDispatcher(RfbInputGate *gate,
-                             WindowsEvent *terminationEvent)
+                             ::happening *terminationEvent)
 : m_gate(gate),
   m_extTerminationListener(0),
   m_terminationEvent(terminationEvent)

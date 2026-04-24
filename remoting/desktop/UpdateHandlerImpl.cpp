@@ -145,8 +145,8 @@ namespace remoting
       {
          if (!applyResult)
          {
-            WindowsEvent waitEvent; // No way to made it abortable.
-            waitEvent.waitForEvent(1000);
+            ::happening waitEvent; // No way to made it abortable.
+            waitEvent.wait(1000 * 1_ms);
          }
          m_plogwriter->information("Screen properties changed, applying new screen properties, total tries = {}",
                                    applyTryCount);

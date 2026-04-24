@@ -26,13 +26,13 @@
 //#include "remoting/remoting/win_system/Environment.h"
 #include "subsystem/platform/Exception.h"
 #include "remoting/remoting/server_config/Configurator.h"
-#include "remoting/remoting/win_system/CurrentConsoleProcess.h"
-#include "remoting/remoting/win_system/AnonymousPipeFactory.h"
-#include "remoting/remoting/win_system/EmulatedAnonymousPipeFactory.h"
-#include "remoting/remoting/win_system/WTS.h"
-#include "remoting/remoting/win_system/WinStaLibrary.h"
-#include "remoting/remoting/win_system/WinHandles.h"
-#include "remoting/remoting/win_system/SharedMemory.h"
+#include "subsystem_windows/node/CurrentConsoleProcess.h"
+#include "subsystem_windows/node/AnonymousPipeFactory.h"
+#include "subsystem_windows/node/EmulatedAnonymousPipeFactory.h"
+#include "subsystem_windows/node/WTS.h"
+#include "subsystem_windows/node/WinStaLibrary.h"
+#include "subsystem_windows/node/WinHandles.h"
+#include "subsystem_windows/node/SharedMemory.h"
 
 //#include aaa_<time.h>
 

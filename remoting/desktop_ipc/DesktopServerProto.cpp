@@ -26,7 +26,7 @@
 #include "remoting/remoting/server_config/Configurator.h"
 #include "subsystem/platform/Exception.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -344,4 +344,4 @@ namespace remoting_node_desktop
    }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting

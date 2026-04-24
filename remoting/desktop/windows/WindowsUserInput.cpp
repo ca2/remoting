@@ -217,7 +217,7 @@ namespace remoting
       rect.move(-GetSystemMetrics(SM_XVIRTUALSCREEN), -GetSystemMetrics(SM_YVIRTUALSCREEN));
    }
 
-   void WindowsUserInput::getWindowCoords(HWND hwnd, ::int_rectangle *rect)
+   void WindowsUserInput::getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle *rect)
    {
       rect.clear();
       RECT winRect;

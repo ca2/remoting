@@ -100,7 +100,7 @@ private:
 
 private:
   ::string m_pipeName;
-  WindowsEvent m_winEvent;
+  ::happening m_winEvent;
   DWORD m_milliseconds;
   SecurityAttributes *m_psecurityattributes;
   HANDLE m_serverPipe;

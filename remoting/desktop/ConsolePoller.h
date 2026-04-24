@@ -27,7 +27,7 @@
 
 #include "UpdateDetector.h"
 #include "ScreenGrabber.h"
-#include "remoting/remoting/win_system/WindowsEvent.h"
+#include "acme/parallelization/happening.h"
 //#include "log_writer/LogWriter.h"
 
 namespace remoting
@@ -53,7 +53,7 @@ namespace remoting
       ::innate_subsystem::FrameBuffer *m_backupFrameBuffer;
       critical_section *m_frameBufferMutex;
       ::int_rectangle m_pollingRect;
-      WindowsEvent m_intervalWaiter;
+      ::happening m_intervalWaiter;
       ::subsystem::LogWriter *m_plogwriter;
    };
 

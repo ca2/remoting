@@ -28,12 +28,12 @@
 #include "subsystem/node/OperatingSystemApplication.h"
 ////#include "subsystem/platform/AnEventListener.h"
 #include "subsystem/node/AnonymousPipe.h"
-#include "desktop_ipc/BlockingGate.h"
-#include "desktop_ipc/DesktopSrvDispatcher.h"
-#include "desktop_ipc/UpdateHandlerServer.h"
-#include "desktop_ipc/UserInputServer.h"
-#include "desktop_ipc/ConfigServer.h"
-#include "desktop_ipc/GateKickHandler.h"
+#include "remoting/remoting/desktop_ipc/BlockingGate.h"
+#include "remoting/remoting/desktop_ipc/DesktopSrvDispatcher.h"
+#include "remoting/remoting/desktop_ipc/UpdateHandlerServer.h"
+#include "remoting/remoting/desktop_ipc/UserInputServer.h"
+#include "remoting/remoting/desktop_ipc/ConfigServer.h"
+#include "remoting/remoting/desktop_ipc/GateKickHandler.h"
 #include "subsystem/thread/SessionChangesWatcher.h"
 #include "subsystem/node/LocalOperatingSystemApplication.h"
 //#include "log-server/ClientLogWriter.h"
@@ -84,16 +84,16 @@ namespace remoting_node_desktop
       // Transport
       ::subsystem::AnonymousPipe *m_clToSrvChan;
       ::subsystem::AnonymousPipe *m_srvToClChan;
-      BlockingGate *m_clToSrvGate;
-      BlockingGate *m_srvToClGate;
+      ::remoting::BlockingGate *m_clToSrvGate;
+      ::remoting::BlockingGate *m_srvToClGate;
 
-      DesktopSrvDispatcher *m_dispatcher;
+      ::remoting::DesktopSrvDispatcher *m_dispatcher;
 
       // Servers
-      UpdateHandlerServer *m_updHandlerSrv;
-      UserInputServer *m_uiSrv;
-      ConfigServer *m_cfgServer;
-      GateKickHandler *m_gateKickHandler;
+      ::remoting::UpdateHandlerServer *m_updHandlerSrv;
+      ::remoting::UserInputServer *m_uiSrv;
+      ::remoting::ConfigServer *m_cfgServer;
+      ::remoting::GateKickHandler *m_gateKickHandler;
 
       ::subsystem::SessionChangesWatcher *m_sessionChangesWatcher;
 

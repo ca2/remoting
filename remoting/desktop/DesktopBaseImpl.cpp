@@ -138,7 +138,7 @@ namespace remoting
       }
    }
 
-   void DesktopBaseImpl::getWindowCoords(HWND hwnd, ::int_rectangle *rect)
+   void DesktopBaseImpl::getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle *rect)
    {
       _ASSERT(m_userInput != 0);
       _ASSERT(m_extDeskTermListener != 0);
@@ -327,7 +327,7 @@ namespace remoting
    void DesktopBaseImpl::onUpdate()
    {
       m_plogwriter->debug("update detected");
-      m_newUpdateEvent.notify();
+      m_newUpdateEvent.set_happening();
    }
 
    void DesktopBaseImpl::onUpdateRequest(const ::int_rectangle &rectRequested, bool incremental)
@@ -339,7 +339,7 @@ namespace remoting
       {
          m_fullReqRegion.addRect(rectRequested);
       }
-      m_newUpdateEvent.notify();
+      m_newUpdateEvent.set_happening();
    }
 
    void DesktopBaseImpl::onClipboardUpdate(const ::scoped_string &newClipboard)

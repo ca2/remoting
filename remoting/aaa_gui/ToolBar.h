@@ -64,7 +64,7 @@ namespace remoting
       // attachToolBar()
       // This one will create and attach toolbar window to
       // which handle is passed in hwnd. Only for toolbar from bitmap.
-      void attachToolBar(HWND hwnd);
+      void attachToolBar(const ::operating_system::window & operatingsystemwindow);
 
       /////////////////////////////////////////////////////////
       // Manual mode procedures

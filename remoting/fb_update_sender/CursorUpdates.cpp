@@ -30,7 +30,8 @@ namespace remoting
 
 
    CursorUpdates::CursorUpdates(::subsystem::LogWriter *log) :
-       m_blockCurPosTime(0), m_isDrawCursorMethod(false), m_plogwriter(log)
+       //m_blockCurPosTime(0), 
+       m_isDrawCursorMethod(false), m_plogwriter(log)
    {
    }
 

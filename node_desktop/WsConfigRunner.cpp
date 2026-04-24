@@ -25,7 +25,7 @@
 #include "WsConfigRunner.h"
 #include "subsystem/node/CurrentConsoleProcess.h"
 #include "subsystem/node/OperatingSystem.h"
-#include "remoting/node_desktop/server_config/Configurator.h"
+#include "remoting/remoting/server_config/Configurator.h"
 #include "remoting/control_desktop/ControlCommandLine.h"
 
 namespace remoting_node_desktop

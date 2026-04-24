@@ -25,7 +25,7 @@
 #include "RfbClientManager.h"
 //#include "subsystem/thread/ZombieKiller.h"
 #include "QueryConnectionApplication.h"
-#include "remoting/node_desktop/server_config/Configurator.h"
+#include "remoting/remoting/server_config/Configurator.h"
 #include "subsystem/platform/MemUsage.h"
 #include "subsystem_bsd_sockets/socket/SocketAddressIPv4.h"
 #include "subsystem/socket/SocketIPv4.h"
@@ -38,7 +38,7 @@ namespace remoting_node_desktop
    RfbClientManager::RfbClientManager(const ::scoped_string &scopedstrServerName,
                                       ::remoting_node_desktop::Configurator *pconfigurator,
                                       ::remoting_node_desktop::NewConnectionEvents *pnewconnectionevents,
-                                      ::subsystem::LogWriter *log, DesktopFactory *desktopFactory) :
+                                      ::subsystem::LogWriter *log, ::remoting::DesktopFactory *desktopFactory) :
        m_nextClientId(0), m_desktop(0), m_pconfigurator(pconfigurator), m_pnewconnectionevents(pnewconnectionevents),
        m_plogwriter(log), m_desktopFactory(desktopFactory)
    {
@@ -55,7 +55,7 @@ namespace remoting_node_desktop
 
    void RfbClientManager::onClientTerminate() { validateClientList(); }
 
-   Desktop *RfbClientManager::onClientAuth(RfbClient *client)
+   ::remoting::Desktop *RfbClientManager::onClientAuth(::remoting::RfbClient *client)
    {
       // The client is now authenticated, so remove its IP from the ban ::list_base.
       ::string ip;

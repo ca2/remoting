@@ -23,15 +23,15 @@
 //
 #include "framework.h"
 #include "HookInstaller.h"
-
+#include "acme/_operating_system.h"
 
 namespace remoting
 {
 
 #ifndef _WIN64
-   const TCHAR HookInstaller::LIBRARY_NAME[] = "screenhooks32.dll";
+   const ::string_literal HookInstaller::LIBRARY_NAME = "screenhooks32.dll";
 #else
-   const TCHAR HookInstaller::LIBRARY_NAME[] = "screenhooks64.dll";
+   const ::string_literal HookInstaller::LIBRARY_NAME = "screenhooks64.dll";
 #endif
 
    ::string_literal HookInstaller::SET_HOOK_FUNCTION_NAME = "setHook";

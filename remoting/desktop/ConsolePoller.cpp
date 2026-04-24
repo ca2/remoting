@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ConsolePoller.h"
 #include "remoting/remoting/server_config/Configurator.h"
-
+#include "acme/_operating_system.h"
 
 namespace remoting
 {
@@ -35,7 +35,7 @@ namespace remoting
        UpdateDetector(updateKeeper, updateListener), m_screenGrabber(screenGrabber),
        m_backupFrameBuffer(backupFrameBuffer), m_frameBufferMutex(frameBufferMutex), m_plogwriter(log)
    {
-      m_pollingRect.setRect(0, 0, 16, 16);
+      m_pollingRect.set(0, 0, 16, 16);
    }
 
    ConsolePoller::~ConsolePoller()
@@ -44,11 +44,11 @@ namespace remoting
       wait();
    }
 
-   void ConsolePoller::onTerminate() { m_intervalWaiter.notify(); }
+   void ConsolePoller::onTerminate() { m_intervalWaiter.set_happening(); }
 
    void ConsolePoller::execute()
    {
-      m_plogwriter->information("console poller thread id = {}", getThreadId());
+      m_plogwriter->information("console poller thread id = {}", (::iptr) getThreadId());
 
       ::int_rectangle scanRect;
       Region region;
@@ -63,20 +63,20 @@ namespace remoting
             {
                critical_section_lock al(m_frameBufferMutex);
                ::int_rectangle offsetFb = m_screenGrabber->getScreenRect();
-               conRect.move(-offsetFb.left, -offsetFb.top);
+               conRect.offset(-offsetFb.left, -offsetFb.top);
                ::innate_subsystem::FrameBuffer *screenFrameBuffer = m_screenGrabber->getScreenBuffer();
                if (screenFrameBuffer->isEqualTo(m_backupFrameBuffer))
                {
-                  m_screenGrabber->grab(&conRect);
+                  m_screenGrabber->grab(conRect);
                   for (int iRow = conRect.top; iRow < conRect.bottom; iRow += pollHeight)
                   {
                      for (int iCol = conRect.left; iCol < conRect.right; iCol += pollWidth)
                      {
-                        scanRect.setRect(iCol, iRow, min(iCol + pollWidth, conRect.right),
-                                         min(iRow + pollHeight, conRect.bottom));
-                        if (!screenFrameBuffer->cmpFrom(&scanRect, m_backupFrameBuffer, scanRect.left, scanRect.top))
+                        scanRect.set(iCol, iRow, minimum(iCol + pollWidth, conRect.right),
+                                         minimum(iRow + pollHeight, conRect.bottom));
+                        if (!screenFrameBuffer->cmpFrom(scanRect, m_backupFrameBuffer, scanRect.left, scanRect.top))
                         {
-                           region.addRect(&scanRect);
+                           region.addRect(scanRect);
                         }
                      }
                   }
@@ -91,25 +91,25 @@ namespace remoting
             }
          }
          unsigned int pollInterval = 200;
-         m_intervalWaiter.waitForEvent(pollInterval);
+         m_intervalWaiter.wait(pollInterval * 1_ms);
       }
    }
 
    ::int_rectangle ConsolePoller::getConsoleRect()
    {
       ::int_rectangle rect;
-      HWND hwnd = GetForegroundWindow();
+      auto hwnd = ::GetForegroundWindow();
 
-      const TCHAR consoleClassName[] = "ConsoleWindowClass";
+      const WCHAR consoleClassName[] = L"ConsoleWindowClass";
 
-      const size_t nameLength = sizeof(consoleClassName) / sizeof(TCHAR) + 1;
-      TCHAR className[nameLength];
-      GetClassName(hwnd, className, nameLength);
+      const character_count nameLength = sizeof(consoleClassName) / sizeof(WCHAR) + 1;
+      WCHAR className[nameLength];
+      GetClassNameW(hwnd, className, nameLength);
       if (wcscmp(consoleClassName, className) == 0)
       {
          RECT winRect;
          GetWindowRect(hwnd, &winRect);
-         rect.fromWindowsRect(&winRect);
+         rect = winRect;
       }
       return rect;
    }

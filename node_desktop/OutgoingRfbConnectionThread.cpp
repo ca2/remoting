@@ -56,7 +56,7 @@ namespace remoting_node_desktop
          return;
       }
 
-      ViewPortState viewportstate;
+      ::remoting::ViewPortState viewportstate;
 
       m_clientManager->addNewConnection(psocket,
                                         &viewportstate, // with a default view port

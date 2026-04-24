@@ -26,9 +26,9 @@
 
 
 //#include "subsystem/platform/inttypes.h"
-#include "desktop_ipc/BlockingGate.h"
+#include "remoting/remoting/desktop_ipc/BlockingGate.h"
 
-namespace remoting_node_desktop
+namespace remoting
 
 {
 
@@ -42,6 +42,6 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop 
+} // namespace remoting
 
 

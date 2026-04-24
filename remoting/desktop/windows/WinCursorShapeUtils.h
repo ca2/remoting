@@ -24,7 +24,7 @@
 
 #pragma once
 
-
+#include "remoting/remoting/desktop/windows/_common_header.h"
 #include "innate_subsystem/framebuffer/FrameBuffer.h"
 // #include aaa_<DXGI1_2.h>
 //#include aaa_<vector>

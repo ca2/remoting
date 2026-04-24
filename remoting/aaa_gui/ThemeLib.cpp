@@ -97,7 +97,7 @@ HRESULT ThemeLib::DrawThemeBackground(HTHEME hTheme, HDC hdc,
   return s_DrawThemeBackground(hTheme, hdc, iPartId, iStateId, pRect, pClipRect);
 }
 
-HTHEME ThemeLib::OpenThemeData(HWND hwnd, LPCWSTR pszClassList)
+HTHEME ThemeLib::OpenThemeData(const ::operating_system::window & operatingsystemwindow, LPCWSTR pszClassList)
 {
   return s_OpenThemeData(hwnd, pszClassList);
 }

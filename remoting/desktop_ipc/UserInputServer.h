@@ -29,13 +29,13 @@
 #include "subsystem/node/ClipboardListener.h"
 #include "DesktopServerProto.h"
 #include "ClientListener.h"
-#include "remoting/remoting/desktop/WindowsUserInput.h"
-//#include "remoting/remoting/win_system/WindowsEvent.h"
+#include "../desktop/windows/WindowsUserInput.h"
+//#include "acme/parallelization/happening.h"
 #include "acme/parallelization/happening.h"
 #include "DesktopSrvDispatcher.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -77,7 +77,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

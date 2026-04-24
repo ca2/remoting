@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ReconnectException.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -33,6 +33,6 @@ namespace remoting_node_desktop
    ReconnectException::~ReconnectException() {}
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 

@@ -80,9 +80,9 @@ namespace remoting
             {
                try
                {
-                  m_desktop->getWindowCoords(m_state.m_hwnd, &rect);
+                  m_desktop->getWindowCoords(m_state.m_operatingsystemwindow, &rect);
                }
-               catch (BrokenHandleException &e)
+               catch (::subsystem::BrokenHandleException &e)
                {
                   m_plogwriter->error("ViewPort::update: {}", e.get_message());
                   // Now hwnd is broken. This should be reflected in the viewport state.
@@ -119,7 +119,7 @@ namespace remoting
       // Skip the resolving if have been passed little time.
       if ((::earth::time::now() - m_latestHwndResolvingTime).getTime() > RESOLVING_PERIOD)
       {
-         HWND hwnd = m_desktop->getWindowHandleByName(&m_state.m_windowName);
+         const ::operating_system::window & operatingsystemwindow = m_desktop->getWindowHandleByName(&m_state.m_windowName);
          if (hwnd != 0)
          {
             m_state.setWindowHandle(hwnd);

@@ -163,7 +163,7 @@ void ImagedButton::drawItem(LPDRAWITEMSTRUCT dis)
   } // if
 } // void
 
-void ImagedButton::setWindow(HWND hwnd)
+void ImagedButton::setWindow(const ::operating_system::window & operatingsystemwindow)
 {
   ::innate_subsystem::Control::setWindow(hwnd);
   // Replace window event handler

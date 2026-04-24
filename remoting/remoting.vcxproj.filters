@@ -63,14 +63,8 @@
     <Filter Include="Header Files\ftp_common">
       <UniqueIdentifier>{f78fca25-142b-431a-83c5-cbe845a51e8e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\viewer_core\NewFilter1">
-      <UniqueIdentifier>{3589a4a4-ac44-4c04-82f1-70fa0307aa32}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\region">
       <UniqueIdentifier>{a11a7b24-63b7-4cce-bb1f-e1f80c6144e5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\serverconfig">
-      <UniqueIdentifier>{3c200226-ee87-44f3-81ce-04a9b4c3245d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\server_config">
       <UniqueIdentifier>{30b50dc8-cc51-4a80-88d3-ff581a49e799}</UniqueIdentifier>
@@ -86,6 +80,12 @@
     </Filter>
     <Filter Include="Source Files\fb_update_sender">
       <UniqueIdentifier>{1501d7aa-4571-4178-93ed-e50a607dfc02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ds">
+      <UniqueIdentifier>{9364a541-8436-4de9-953d-f56fcebc7f7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\server_config">
+      <UniqueIdentifier>{3c200226-ee87-44f3-81ce-04a9b4c3245d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -365,35 +365,29 @@
     <ClCompile Include="viewer_core\drawTile.cpp">
       <Filter>Source Files\viewer_core</Filter>
     </ClCompile>
-    <ClCompile Include="server_config\_.cpp">
-      <Filter>Source Files\serverconfig</Filter>
-    </ClCompile>
     <ClCompile Include="server_config\ConfigReloadListener.cpp">
-      <Filter>Source Files\serverconfig</Filter>
-    </ClCompile>
-    <ClCompile Include="server_config\framework.cpp">
-      <Filter>Source Files\serverconfig</Filter>
+      <Filter>Source Files\server_config</Filter>
     </ClCompile>
     <ClCompile Include="server_config\IpAccessControl.cpp">
-      <Filter>Source Files\serverconfig</Filter>
+      <Filter>Source Files\server_config</Filter>
     </ClCompile>
     <ClCompile Include="server_config\IpAccessRule.cpp">
-      <Filter>Source Files\serverconfig</Filter>
+      <Filter>Source Files\server_config</Filter>
     </ClCompile>
     <ClCompile Include="server_config\PortMapping.cpp">
-      <Filter>Source Files\serverconfig</Filter>
+      <Filter>Source Files\server_config</Filter>
     </ClCompile>
     <ClCompile Include="server_config\PortMappingContainer.cpp">
-      <Filter>Source Files\serverconfig</Filter>
+      <Filter>Source Files\server_config</Filter>
     </ClCompile>
     <ClCompile Include="server_config\PortMappingRect.cpp">
-      <Filter>Source Files\serverconfig</Filter>
+      <Filter>Source Files\server_config</Filter>
     </ClCompile>
     <ClCompile Include="server_config\RegistrySecurityAttributes.cpp">
-      <Filter>Source Files\serverconfig</Filter>
+      <Filter>Source Files\server_config</Filter>
     </ClCompile>
     <ClCompile Include="server_config\ServerConfig.cpp">
-      <Filter>Source Files\serverconfig</Filter>
+      <Filter>Source Files\server_config</Filter>
     </ClCompile>
     <ClCompile Include="rfb_sconn\CapContainer.cpp">
       <Filter>Source Files\rfb_sconn</Filter>
@@ -463,6 +457,9 @@
     </ClCompile>
     <ClCompile Include="fb_update_sender\ViewPortState.cpp">
       <Filter>Source Files\fb_update_sender</Filter>
+    </ClCompile>
+    <ClCompile Include="server_config\Configurator.cpp">
+      <Filter>Source Files\server_config</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1006,9 +1003,6 @@
     <ClInclude Include="server_config\ConfigReloadListener.h">
       <Filter>Header Files\server_config</Filter>
     </ClInclude>
-    <ClInclude Include="server_config\framework.h">
-      <Filter>Header Files\server_config</Filter>
-    </ClInclude>
     <ClInclude Include="server_config\IpAccessControl.h">
       <Filter>Header Files\server_config</Filter>
     </ClInclude>
@@ -1134,6 +1128,9 @@
     </ClInclude>
     <ClInclude Include="fb_update_sender\ViewPortState.h">
       <Filter>Header Files\fb_update_sender</Filter>
+    </ClInclude>
+    <ClInclude Include="server_config\Configurator.h">
+      <Filter>Header Files\server_config</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

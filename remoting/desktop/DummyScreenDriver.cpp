@@ -41,7 +41,7 @@ namespace remoting
       pixelFormat.redShift = 16;
       pixelFormat.greenShift = 8;
       pixelFormat.blueShift = 0;
-      m_workFrameBuffer.setProperties(&dim, &pixelFormat);
+      m_workFrameBuffer.setProperties(dim, pixelFormat);
       m_detectionEnabled = false;
       resume();
    }
@@ -52,13 +52,13 @@ namespace remoting
       wait();
    }
 
-   void DummyScreenDriver::onTerminate() { m_sleeper.notify(); }
+   void DummyScreenDriver::onTerminate() { m_sleeper.set_happening(); }
 
    void DummyScreenDriver::execute()
    {
       while (!isTerminating())
       {
-         m_sleeper.waitForEvent(m_interval);
+         m_sleeper.wait(m_interval * 1_ms);
          if (!isTerminating())
          {
             try
@@ -69,15 +69,15 @@ namespace remoting
                int x = rand() % (w / 50) + (w / 50);
                int y = rand() % (h / 50) + (h / 50);
 
-               ::int_rectangle r(x, y);
-               r.move(rand() % w, rand() % h);
+               ::int_rectangle r(0, 0, x, y);
+               r.offset(rand() % w, rand() % h);
                int m = 0xffffff / RAND_MAX;
                unsigned int color = rand() * m + rand() % m;
-               ::int_rectangle tmp(w, h);
+               ::int_rectangle tmp(0, 0, w, h);
                Region reg(tmp);
                if (m_detectionEnabled)
                {
-                  m_workFrameBuffer.fillRect(&r, color);
+                  m_workFrameBuffer.fillRect(r, color);
                   m_updateKeeper->addChangedRegion(&reg);
                   m_updateListener->onUpdate();
                }

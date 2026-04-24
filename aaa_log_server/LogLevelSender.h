@@ -26,7 +26,7 @@
 
 
 #include "remoting/thread/Thread.h"
-#include "remoting/win_system/WindowsEvent.h"
+#include "remoting/win_system/::happening.h"
 #include "remoting/io/DataOutputStream.h"
 
 class LogLevelSender : public Thread
@@ -46,7 +46,7 @@ private:
   virtual void execute();
   virtual void onTerminate();
 
-  WindowsEvent m_sleeper;
+  ::happening m_sleeper;
 
   OutputStream *m_outStream;
   bool m_updateAvailable;

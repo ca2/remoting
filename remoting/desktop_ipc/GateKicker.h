@@ -27,9 +27,9 @@
 
 #include "BlockingGate.h"
 #include "subsystem/thread/Thread.h"
-#include "remoting/remoting/win_system/WindowsEvent.h"
+#include "acme/parallelization/happening.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    class GateKicker : public Thread
@@ -43,11 +43,11 @@ namespace remoting_node_desktop
       virtual void onTerminate();
    private:
       BlockingGate *m_gate;
-      WindowsEvent m_sleeper;
+      ::happening m_sleeper;
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

@@ -73,7 +73,7 @@ size_t Pipe::writeByHandle(const void *buffer, size_t len, HANDLE pipeHandle)
     int errCode = GetLastError();
 
     if (errCode == ERROR_IO_PENDING) {
-      m_writeEvent.waitForEvent();
+      m_writeEvent.wait();
       DWORD cbRet;
       critical_section_lock al(&m_hPipeMutex);
       checkPipeHandle(pipeHandle);
@@ -133,7 +133,7 @@ size_t Pipe::readByHandle(void *buffer, size_t len, HANDLE pipeHandle)
     DWORD errCode = GetLastError();
 
     if (errCode == ERROR_IO_PENDING) {
-      m_readEvent.waitForEvent();
+      m_readEvent.wait();
       DWORD cbRet = 0;
       critical_section_lock al(&m_hPipeMutex);
       checkPipeHandle(pipeHandle);

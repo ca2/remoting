@@ -37,7 +37,7 @@ public:
   ~FilteredTextBox();
 
   // Override ::innate_subsystem::Control::setWindow method
-  void setWindow(HWND hwnd);
+  void setWindow(const ::operating_system::window & operatingsystemwindow);
   void setText(TCHAR *text);
   void setErrorBalloonTip(BalloonTip *tip);
   void setStringFilter(StringFilter *filter);
@@ -47,7 +47,7 @@ protected:
   virtual bool isStringValid(const ::scoped_string & scopedstrString);
   virtual LRESULT onKeyDown(::wparam code, ::lparam params);
 
-  static LRESULT CALLBACK windowProc(HWND hwnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam);
+  static LRESULT CALLBACK windowProc(const ::operating_system::window & operatingsystemwindow, unsigned int uMsg, ::wparam wParam, ::lparam lParam);
 
 protected:
   LONG_PTR m_oldWindowProc;

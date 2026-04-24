@@ -113,18 +113,18 @@ void ClipboardExchange::sendClipboard(const ::scoped_string & newClipboard)
   critical_section_lock al(&m_storedClipMut);
   m_storedClip = *newClipboard;
   m_hasNewClip = true;
-  m_newClipWaiter.notify();
+  m_newClipWaiter.set_happening();
 }
 
 void ClipboardExchange::onTerminate()
 {
-  m_newClipWaiter.notify();
+  m_newClipWaiter.set_happening();
 }
 
 void ClipboardExchange::execute()
 {
   while (!isTerminating()) {
-    m_newClipWaiter.waitForEvent();
+    m_newClipWaiter.wait();
 
     if (m_hasNewClip && !isTerminating() && !m_viewOnly) {
 

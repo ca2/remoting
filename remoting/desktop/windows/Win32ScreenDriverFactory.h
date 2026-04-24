@@ -24,7 +24,7 @@
 
 #pragma once
 
-
+#include "remoting/remoting/desktop/windows/_common_header.h"
 #include "../ScreenDriverFactory.h"
 #include "remoting/remoting/server_config/ServerConfig.h"
 

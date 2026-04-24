@@ -156,7 +156,7 @@ namespace remoting
 
       while (!isTerminating())
       {
-         m_updateTimeout.waitForEvent(20);
+         m_updateTimeout.wait(20 * 1_ms);
 
          {
             critical_section_lock al(m_fbMutex);
@@ -189,7 +189,7 @@ namespace remoting
       }
    }
 
-   void MirrorScreenDriver::onTerminate() { m_updateTimeout.notify(); }
+   void MirrorScreenDriver::onTerminate() { m_updateTimeout.set_happening(); }
 
 
 } // namespace remoting

@@ -34,7 +34,7 @@ namespace remoting
       m_pserverconfig = m_pconfigurator->getServerConfig();
       setWorkRectDefault();
       resume();
-      m_hasStartedSignal.waitForEvent();
+      m_hasStartedSignal.wait();
    }
 
    WindowsScreenGrabber::~WindowsScreenGrabber(void)
@@ -249,11 +249,11 @@ namespace remoting
    void WindowsScreenGrabber::execute()
    {
       applyNewProperties();
-      m_hasStartedSignal.notify();
-      m_threadStopper.waitForEvent();
+      m_hasStartedSignal.set_happening();
+      m_threadStopper.wait();
    }
 
-   void WindowsScreenGrabber::onTerminate() { m_threadStopper.notify(); }
+   void WindowsScreenGrabber::onTerminate() { m_threadStopper.set_happening(); }
 
 
 } // namespace remoting

@@ -26,12 +26,13 @@
 
 
 #include "UpdateDetector.h"
-#include "remoting/remoting/win_system/WindowsEvent.h"
+#include "acme/parallelization/happening.h"
 #include "HookInstaller.h"
-#include "innate_subsystem/gui/MessageWindow.h"
+//#include "subsystem_windows/node/MessageWindow.h"
 #include "HookUpdateTimer.h"
-#include "subsystem/platform/Process.h"
+#include "subsystem/node/Process.h"
 //#include "log_writer/LogWriter.h"
+
 
 namespace remoting
 {
@@ -42,21 +43,21 @@ namespace remoting
       HooksUpdateDetector(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ::subsystem::LogWriter *log);
       virtual ~HooksUpdateDetector();
 
-   protected:
+   //protected:
       virtual void execute();
       virtual void onTerminate();
 
       void start32Loader();
       void terminate32Loader();
 
-      WindowsEvent m_initWaiter;
+      ::happening m_initWaiter;
 
       HookInstaller *m_hookInstaller;
-      MessageWindow *m_targetWin;
+      ::subsystem_windows::MessageWindow *m_targetWin;
       HookUpdateTimer m_updateTimer;
-      Process m_hookLoader32;
+      ::subsystem::Process m_hookLoader32;
 
-   private:
+   //private:
       void broadcastMessage(unsigned int scopedstrMessage);
 
       static const TCHAR HOOK_LOADER_NAME[];

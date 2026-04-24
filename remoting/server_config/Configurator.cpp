@@ -33,7 +33,7 @@
 #include "remoting/node_desktop/NamingDefs.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    Configurator *Configurator::s_instance = NULL;
@@ -1078,7 +1078,7 @@ namespace remoting_node_desktop
    }
 
 
-} // namespace remoting_node_destkop
+} // namespace remoting
  
 
 

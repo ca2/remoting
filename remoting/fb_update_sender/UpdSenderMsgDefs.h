@@ -35,7 +35,7 @@ namespace remoting
    {
    public:
       static const unsigned int RFB_VIDEO_FREEZE = 152;
-      const static char RFB_VIDEO_FREEZE_SIG[];
+      static ::string_literal RFB_VIDEO_FREEZE_SIG;
    };
 
 

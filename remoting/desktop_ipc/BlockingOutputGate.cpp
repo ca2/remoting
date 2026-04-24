@@ -25,7 +25,7 @@
 #include "BlockingOutputGate.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -34,4 +34,4 @@ namespace remoting_node_desktop
    BlockingOutputGate::~BlockingOutputGate() {}
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting

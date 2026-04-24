@@ -37,12 +37,12 @@ namespace remoting
 
    struct WinProp
    {
-      WinProp(HWND hwnd, const ::int_rectangle &rectangleOld)
+      WinProp(const ::operating_system::window & operatingsystemwindow, const ::int_rectangle &rectangleOld)
       {
-         m_hwnd = hwnd;
+         m_operatingsystemwindow = operatingsystemwindow;
          m_rectangleOld = rectangleOld;
       }
-      HWND m_hwnd;
+      ::operating_system::window m_operatingsystemwindow;
       ::int_rectangle m_rectangleOld;
    };
 
@@ -55,14 +55,13 @@ namespace remoting
       void detectWindowMovements(::int_rectangle *copyRect, ::int_point *source);
 
    protected:
-      static bool CALLBACK enumWindowsFnCopyRect(HWND hwnd, ::lparam arg);
-      bool checkWindowMovements(HWND hwnd);
+      bool checkWindowMovements(const ::operating_system::window & operatingsystemwindow);
 
-      bool getWinRect(HWND hwnd, ::int_rectangle *winRect);
+      bool getWinRect(const ::operating_system::window & operatingsystemwindow, ::int_rectangle *winRect);
 
       // If window properties successfully was found then function returns
       // true. Else this function returns false.
-      bool findPrevWinProps(HWND hwnd, ::int_rectangle *rect);
+      bool findPrevWinProps(const ::operating_system::window & operatingsystemwindow, ::int_rectangle *rect);
 
       ::int_rectangle m_copyRect;
       ::int_point m_source;

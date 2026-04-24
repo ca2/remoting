@@ -24,7 +24,7 @@
 
 #pragma once
 
-
+#include "remoting/remoting/desktop/windows/_common_header.h"
 #include "Win32ScreenDriverBaseImpl.h"
 #include "../Poller.h"
 #include "../ConsolePoller.h"

@@ -24,15 +24,19 @@
 #include "framework.h"
 #include "CursorShapeGrabber.h"
 
-CursorShapeGrabber::CursorShapeGrabber()
-{
-}
 
-CursorShapeGrabber::~CursorShapeGrabber()
+namespace remoting
 {
-}
+   CursorShapeGrabber::CursorShapeGrabber()
+   {
+   }
 
-const CursorShape *CursorShapeGrabber::getCursorShape() const
-{
-  return &m_cursorShape;
-}
+   CursorShapeGrabber::~CursorShapeGrabber()
+   {
+   }
+
+   const CursorShape *CursorShapeGrabber::getCursorShape() const
+   {
+      return &m_cursorShape;
+   }
+} // namespace remoting

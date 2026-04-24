@@ -40,12 +40,12 @@ PipeImpersonatedThread::~PipeImpersonatedThread()
 
 void PipeImpersonatedThread::onTerminate()
 {
-  m_threadSleeper.notify();
+  m_threadSleeper.set_happening();
 }
 
 void PipeImpersonatedThread::waitUntilImpersonated()
 {
-  m_impersonationReadyEvent.waitForEvent();
+  m_impersonationReadyEvent.wait();
 }
 
 bool PipeImpersonatedThread::getImpersonationSuccess()
@@ -65,10 +65,10 @@ void PipeImpersonatedThread::execute()
     // Store fault reason
     m_faultReason = ::windows::last_error_message(::windows::last_error());
   }
-  m_impersonationReadyEvent.notify();
+  m_impersonationReadyEvent.set_happening();
 
   while (!isTerminating()) {
-    m_threadSleeper.waitForEvent();
+    m_threadSleeper.wait();
   }
   RevertToSelf();
 }

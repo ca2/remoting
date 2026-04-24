@@ -28,7 +28,7 @@
 #include "UpdateKeeper.h"
 #include "CursorShapeGrabber.h"
 #include "UpdateDetector.h"
-#include "remoting/remoting/win_system/WindowsEvent.h"
+#include "acme/parallelization/happening.h"
 //#include "log_writer/LogWriter.h"
 
 namespace remoting
@@ -47,7 +47,7 @@ namespace remoting
 
       CursorShapeGrabber *m_mouseGrabber;
       critical_section *m_mouseGrabLocMut;
-      WindowsEvent m_sleepTimer;
+      ::happening m_sleepTimer;
 
       ::subsystem::LogWriter *m_plogwriter;
    };

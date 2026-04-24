@@ -24,11 +24,11 @@
 #include "framework.h"
 #include "DesktopClientImpl.h"
 #include "remoting/remoting/server_config/Configurator.h"
-#include "desktop_ipc/UpdateHandlerClient.h"
-#include "WindowsInputBlocker.h"
-#include "desktop_ipc/UserInputClient.h"
+#include "remoting/remoting/desktop_ipc/UpdateHandlerClient.h"
+#include "windows/WindowsInputBlocker.h"
+#include "remoting/remoting/desktop_ipc/UserInputClient.h"
 #include "SasUserInput.h"
-#include "WindowsUserInput.h"
+#include "windows/WindowsUserInput.h"
 #include "DesktopConfigLocal.h"
 
 namespace remoting
@@ -194,7 +194,7 @@ namespace remoting
       m_srvToClChan->replaceChannel(newChannelFrom);
    }
 
-   void DesktopClientImpl::onTerminate() { m_newUpdateEvent.notify(); }
+   void DesktopClientImpl::onTerminate() { m_newUpdateEvent.set_happening(); }
 
    void DesktopClientImpl::execute()
    {
@@ -202,7 +202,7 @@ namespace remoting
 
       while (!isTerminating())
       {
-         m_newUpdateEvent.waitForEvent();
+         m_newUpdateEvent.wait();
          if (!isTerminating())
          {
             sendUpdate();

@@ -30,7 +30,7 @@
 #include "remoting/remoting/desktop/WallpaperUtil.h"
 #include "subsystem/thread/GuiThread.h"
 #include "DesktopBaseImpl.h"
-#include "Win32ScreenDriverFactory.h"
+#include "windows/Win32ScreenDriverFactory.h"
 //#include "log_writer/LogWriter.h"
 
 namespace remoting

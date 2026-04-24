@@ -24,12 +24,12 @@
 
 #pragma once
 
-
+#include "remoting/remoting/desktop/windows/_common_header.h"
 #include "MirrorDriverClient.h"
-#include "remoting/remoting/win_system/RegistryKey.h"
+#include "subsystem/platform/RegistryKey.h"
 #include "DisplayEsc.h"
 #include "subsystem/thread/GuiThread.h"
-#include "remoting/remoting/win_system/WindowsEvent.h"
+#include "acme/parallelization/happening.h"
 #include "UpdateDetector.h"
 
 
@@ -73,7 +73,7 @@ namespace remoting
       // use external objects here.
       critical_section *m_fbMutex;
 
-      WindowsEvent m_updateTimeout;
+      ::happening m_updateTimeout;
 
       ::subsystem::LogWriter *m_plogwriter;
    };

@@ -26,7 +26,7 @@
 
 
 #include "UserInput.h"
-#include "desktop_ipc/UserInputClient.h"
+#include "remoting/remoting/desktop_ipc/UserInputClient.h"
 
 
 namespace remoting
@@ -49,7 +49,7 @@ namespace remoting
       virtual void getDisplayNumberCoords(::int_rectangle *rect, unsigned char dispNumber);
       virtual ::array_base<::int_rectangle> getDisplaysCoords();
       virtual void getNormalizedRect(::int_rectangle *rect);
-      virtual void getWindowCoords(HWND hwnd, ::int_rectangle *rect);
+      virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle *rect);
       virtual HWND getWindowHandleByName(const ::scoped_string &windowName);
       virtual void getApplicationRegion(unsigned int procId, Region *region);
       virtual bool isApplicationInFocus(unsigned int procId);

@@ -44,8 +44,8 @@ namespace remoting
       virtual void setSoftKeyboardBlocking(bool block, unsigned int timeInterval) = 0;
       virtual void setSoftMouseBlocking(bool block, unsigned int timeInterval) = 0;
 
-      virtual ::earth::time getLastInputTime() const = 0;
-      virtual void correctLastTime(::earth::time newTime) = 0;
+      virtual class ::time getLastInputTime() const = 0;
+      virtual void correctLastTime(const class ::time & time) = 0;
 
       virtual bool isRemoteInputAllowed() = 0;
    };

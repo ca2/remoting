@@ -24,12 +24,12 @@
 
 #pragma once
 
-
+#include "remoting/remoting/desktop/windows/_common_header.h"
+#include "remoting/remoting/win_system/DynamicLibrary.h"
 
 namespace remoting
 {
 
-#include "remoting/remoting/win_system/DynamicLibrary.h"
    // #include "log_writer/LogWriter.h"
 
    // #include aaa_<d3d11.h>

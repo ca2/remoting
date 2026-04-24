@@ -3,12 +3,10 @@
 
 #pragma once
 
-namespace remoting
+namespace df_mirage
 {
    // NOTE: shared among DISPLAY and R3 projects
 
-   // namespace df_mirage_drv
-   //{
 
    enum
    {
@@ -278,9 +276,11 @@ struct	Esc_dmf_pointer_shape_get_OUT
 
 //DF_MIRAGE__DISP_ESCAPES
 
+#endif
 
+#endif
 
-} // namespace remoting
+} // namespace df_mirage
 
 
 

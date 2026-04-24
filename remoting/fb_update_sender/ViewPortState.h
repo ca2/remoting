@@ -35,7 +35,7 @@
 namespace remoting
 {
 
-   // This class CLASS_DECL_REMOTING  stores a view port state.
+   // This class stores a view port state.
    class CLASS_DECL_REMOTING  ViewPortState
    {
    public:
@@ -63,7 +63,7 @@ namespace remoting
 
       // After calling this function the update() function will set the view
       // port rectangle by a window that own the hwnd argument.
-      void setWindowHandle(HWND hwnd);
+      void setWindowHandle(const ::operating_system::window & operatingsystemwindow);
 
       // After calling this function the update() function will set the view
       // port rectangle by a window that own the windowName argument.
@@ -88,7 +88,7 @@ namespace remoting
 
       int m_mode;
       ::int_rectangle m_arbitraryRect;
-      HWND m_hwnd;
+      ::operating_system::window m_operatingsystemwindow;
       ::string m_windowName;
       bool m_windowIsResolved;
       unsigned char m_displayNumber;

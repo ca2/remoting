@@ -27,7 +27,7 @@
 
 //#include aaa_<list>
 //#include "remoting/remoting/network/socket/SocketIPv4.h"
-//#include "remoting/remoting/win_system/WindowsEvent.h"
+//#include "acme/parallelization/happening.h"
 #include "subsystem/thread/Thread.h"
 #include "remoting/remoting/network/RfbOutputGate.h"
 #include "remoting/remoting/desktop/Desktop.h"
@@ -128,7 +128,7 @@ namespace remoting
       bool m_isMarkedOk;
       critical_section m_clientStateMut;
       ClientTerminationListener *m_extTermListener;
-      //WindowsEvent m_connClosingEvent;
+      //::happening m_connClosingEvent;
       ::happening m_connClosingEvent;
 
       ::subsystem::SocketIPv4 *m_socket;

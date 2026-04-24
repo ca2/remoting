@@ -28,7 +28,7 @@
 #include "acme/input_output/DataInputStream.h"
 //#include "subsystem/thread/critical_section.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    class BlockingInputGate : public critical_section, public DataInputStream
@@ -39,4 +39,4 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting

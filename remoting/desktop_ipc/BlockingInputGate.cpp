@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "BlockingInputGate.h"
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -32,4 +32,4 @@ namespace remoting_node_desktop
    BlockingInputGate::~BlockingInputGate() {}
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting

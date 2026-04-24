@@ -24,7 +24,7 @@
 
 #pragma once
 
-
+#include "remoting/remoting/desktop/windows/_common_header.h"
 #include "subsystem/_common_header.h"
 #ifndef CAPTUREBLT
 #define CAPTUREBLT          (DWORD)0x40000000 /* Include layered windows */
@@ -32,12 +32,14 @@
 
 #include "../ScreenGrabber.h"
 
-#include "remoting/node_desktop/server_config/Configurator.h"
-//#include "remoting/remoting/win_system/WindowsEvent.h"
+
+
+#include "remoting/remoting/server_config/Configurator.h"
+//#include "acme/parallelization/happening.h"
 #include "acme/parallelization/happening.h"
 #include "subsystem/thread/GuiThread.h"
 #include "subsystem/node/Screen.h"
-
+#include "remoting/remoting/desktop/windows/_common_header.h"
 
 namespace remoting
 {
@@ -103,8 +105,8 @@ namespace remoting
       HDC m_destDC, m_screenDC;
       HBITMAP m_hbmOld, m_hbmDIB;
 
-      // WindowsEvent m_hasStartedSignal;
-      // WindowsEvent m_threadStopper;
+      // ::happening m_hasStartedSignal;
+      // ::happening m_threadStopper;
       ::happening m_hasStartedSignal;
       ::happening m_threadStopper;
 

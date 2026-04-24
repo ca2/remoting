@@ -38,7 +38,7 @@ namespace remoting
 
    }
 
-   void Window::setWindow(HWND hwnd)
+   void Window::setWindow(const ::operating_system::window & operatingsystemwindow)
    {
       // Save handle
       m_hwnd = hwnd;
@@ -217,7 +217,7 @@ namespace remoting
 // {
 // }
 //
-// // Window::Window(HWND hwnd)
+// // Window::Window(const ::operating_system::window & operatingsystemwindow)
 // // : m_hwnd(hwnd)
 // // {
 // // }

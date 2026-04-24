@@ -273,7 +273,7 @@ void RfbClient::execute()
     m_plogwriter->information("Entering normal phase of the RFB protocol");
     dispatcher.resume();
 
-    m_connClosingEvent.waitForEvent();
+    m_connClosingEvent.wait();
   } catch (::exception &e) {
     m_plogwriter->error("Connection will be closed: {}", e.get_message());
     sysLogMessage.formatf("The client {} #{} has been"
@@ -305,7 +305,7 @@ void RfbClient::sendUpdate(const UpdateContainer *updateContainer,
 
   if (m_idleTimeout != 0  && m_idleTimer.isElapsed()) {
     m_plogwriter->error("Connection will be closed due to client inactivity. IdleTimeout = {} ms", m_idleTimeout);
-    m_connClosingEvent.notify();
+    m_connClosingEvent.set_happening();
   }
 }
 

@@ -31,7 +31,7 @@
 #include "subsystem/_common_header.h"
 #include "subsystem/platform/ResourceLoader.h"
 #include "subsystem/platform/Command.h"
-#include "remoting/node_desktop/server_config/Configurator.h"
+#include "remoting/remoting/server_config/Configurator.h"
 //#include "log_writer/LogWriter.h"
 
 #include "subsystem/thread/Thread.h"
@@ -164,7 +164,7 @@ namespace remoting_control_desktop
       ::subsystem::LogWriter m_plogwriter;
 
       // Initialization of the Configurator instance.
-      Configurator m_configurator;
+      ::pointer < ::remoting::Configurator >  m_configurator;
 
    protected:
 

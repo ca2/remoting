@@ -29,7 +29,7 @@
 #include "remoting/remoting/win_system/Pipe.h"
 #include "subsystem/_common_header.h"
 
-#include "remoting/remoting/win_system/WindowsEvent.h"
+#include "acme/parallelization/happening.h"
 //#include "subsystem/thread/critical_section.h"
 //#include "log_writer/LogWriter.h"
 
@@ -98,8 +98,8 @@ private:
   unsigned int m_timeOut;
 
   critical_section m_hPipeMutex;
-  WindowsEvent m_readEvent;
-  WindowsEvent m_writeEvent;
+  ::happening m_readEvent;
+  ::happening m_writeEvent;
 
   ::subsystem::LogWriter *m_plogwriter;
 };

@@ -37,7 +37,7 @@ public:
   // operating_system_window()
   // Get a handle of the window 
   HWND getHWnd() const;
-  void setHWnd(HWND hwnd);
+  void setHWnd(const ::operating_system::window & operatingsystemwindow);
 
   // createWindow()
   // Create window with windowName and setted style
@@ -66,7 +66,7 @@ public:
 
   // setParent()
   // Making child window by changing parent of the window
-  void setParent(HWND hwnd);
+  void setParent(const ::operating_system::window & operatingsystemwindow);
 
   // for changing registered class parameters of created window
   void setClassStyle(DWORD style);
@@ -116,7 +116,7 @@ private:
   virtual bool onMouseEx(unsigned int message, int iButtonMask, unsigned short wspeed, POINT position);
 
 //protected:
-  //HWND m_hwnd;
+  //::operating_system::window m_operatingsystemwindow;
   ::string m_className;
   ::string m_windowName;
   HICON m_hicon;

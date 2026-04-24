@@ -26,7 +26,7 @@
 #include "ReconnectException.h"
 #include "subsystem/_common_header.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -95,4 +95,4 @@ namespace remoting_node_desktop
    }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting

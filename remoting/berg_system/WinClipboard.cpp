@@ -25,7 +25,7 @@
 //#include "acme/_operating_system.h"
 #include "WinClipboard.h"
 
-WinClipboard::WinClipboard(HWND hwnd) 
+WinClipboard::WinClipboard(const ::operating_system::window & operatingsystemwindow) 
   : m_hndClipboard(0), m_hwnd(hwnd)
 {
 }
@@ -38,7 +38,7 @@ WinClipboard::~WinClipboard()
   }
 }
 
-void WinClipboard::setHWnd(HWND hwnd)
+void WinClipboard::setHWnd(const ::operating_system::window & operatingsystemwindow)
 {
   m_hwnd = hwnd;
   SetClipboardViewer(m_hwnd);

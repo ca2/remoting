@@ -26,9 +26,9 @@
 
 
 #include "UpdateDetector.h"
-#include "remoting/remoting/win_system/WindowsEvent.h"
+#include "acme/parallelization/happening.h"
 //#include "log_writer/LogWriter.h"
-#include "remoting/remoting/win_system/WinCursor.h"
+#include "innate_subsystem/drawing/Cursor.h"
 
 
 namespace remoting
@@ -49,7 +49,7 @@ namespace remoting
 
    private:
       WinCursor m_cursor;
-      WindowsEvent m_sleepTimer;
+      ::happening m_sleepTimer;
       ::int_point m_lastCursorPos;
       ::subsystem::LogWriter *m_plogwriter;
    };

@@ -43,7 +43,7 @@ private:
   SecurityAttributes m_pipeSecurity;
 
   ConnectionListener *m_connListener;
-  WindowsEvent m_timer;
+  ::happening m_timer;
 };
 
 //// __LISTENLOGSERVER_H__

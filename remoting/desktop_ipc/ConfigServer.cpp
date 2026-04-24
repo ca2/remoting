@@ -25,7 +25,7 @@
 #include "ConfigServer.h"
 #include "remoting/remoting/server_config/Configurator.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -73,4 +73,4 @@ namespace remoting_node_desktop
    }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting

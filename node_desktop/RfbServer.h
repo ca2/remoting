@@ -76,7 +76,7 @@ namespace remoting_node_desktop
       /**
        * View port for server.
        */
-      ViewPortState m_viewPort;
+      ::remoting::ViewPortState m_viewPort;
 
       // private:
       ::subsystem::LogWriter *m_plogwriter;

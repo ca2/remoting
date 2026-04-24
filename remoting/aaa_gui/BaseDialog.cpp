@@ -177,7 +177,7 @@ void BaseDialog::onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam 
 {
 }
 
-INT_PTR CALLBACK BaseDialog::dialogProc(HWND hwnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam)
+INT_PTR CALLBACK BaseDialog::dialogProc(const ::operating_system::window & operatingsystemwindow, unsigned int uMsg, ::wparam wParam, ::lparam lParam)
 {
 
    BaseDialog * pbasedialog = nullptr;

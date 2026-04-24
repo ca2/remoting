@@ -414,7 +414,7 @@ bool InputInjector::isOneKeyEventChar(WCHAR ch, SHORT scanResult,
 HKL InputInjector::getCurrentKbdLayout()
 {
   // Determine current owning thread.
-  HWND hwnd = GetForegroundWindow();
+  const ::operating_system::window & operatingsystemwindow = GetForegroundWindow();
   if (hwnd == 0) {
     throw ::subsystem::Exception("Can't insert key event because"
                     " a window is losing activation");

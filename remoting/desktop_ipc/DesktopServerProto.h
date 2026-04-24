@@ -34,7 +34,7 @@
 
 #include "BlockingGate.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    class DesktopServerProto
@@ -105,7 +105,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

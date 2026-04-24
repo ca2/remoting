@@ -30,7 +30,7 @@
 #include "DesktopSrvDispatcher.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    class UpdateHandlerClient : public UpdateHandler, public DesktopServerProto, public ClientListener
@@ -58,7 +58,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

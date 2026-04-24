@@ -42,7 +42,7 @@ void Menu::setMenu(HMENU hmenu)
   m_menu = hmenu;
 }
 
-bool Menu::getWindowMenu(HWND hwnd)
+bool Menu::getWindowMenu(const ::operating_system::window & operatingsystemwindow)
 {
   _ASSERT(m_menu == 0);
 
@@ -50,7 +50,7 @@ bool Menu::getWindowMenu(HWND hwnd)
   return (m_menu == 0 ? false : true);
 }
 
-void Menu::getSystemMenu(HWND hwnd)
+void Menu::getSystemMenu(const ::operating_system::window & operatingsystemwindow)
 {
   _ASSERT(m_menu == 0);
 

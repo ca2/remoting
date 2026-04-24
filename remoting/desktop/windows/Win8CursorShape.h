@@ -26,6 +26,7 @@
 
 
 #include "remoting/remoting/rfb/CursorShape.h"
+#include "remoting/remoting/desktop/windows/_common_header.h"
 
 
 namespace remoting

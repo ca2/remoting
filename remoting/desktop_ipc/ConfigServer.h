@@ -29,7 +29,7 @@
 #include "DesktopServerProto.h"
 #include "remoting/remoting/desktop/DesktopConfigLocal.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    class ConfigServer : public DesktopServerProto, public ClientListener
@@ -49,7 +49,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

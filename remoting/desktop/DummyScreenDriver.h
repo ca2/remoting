@@ -29,13 +29,13 @@
 #include "UpdateKeeper.h"
 #include "UpdateListener.h"
 #include "subsystem/thread/Thread.h"
-#include "remoting/remoting/win_system/WindowsEvent.h"
+#include "acme/parallelization/happening.h"
 
 
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING DummyScreenDriver : public ScreenDriver, Thread
+   class CLASS_DECL_REMOTING DummyScreenDriver : public ScreenDriver, ::subsystem::Thread
    {
    public:
       DummyScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ::int_size dim,
@@ -70,7 +70,7 @@ namespace remoting
       CursorShape m_cursorShape;
       UpdateKeeper *m_updateKeeper;
       UpdateListener *m_updateListener;
-      WindowsEvent m_sleeper;
+      ::happening m_sleeper;
       unsigned int m_interval;
       bool m_detectionEnabled;
    };

@@ -27,7 +27,7 @@
 
 #include "acme/exception/io.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    class ReconnectException : public ::io_exception
@@ -38,7 +38,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop 
+} // namespace remoting
 
 
 

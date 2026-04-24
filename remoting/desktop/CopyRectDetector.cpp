@@ -24,6 +24,7 @@
 #include "framework.h"
 #include "CopyRectDetector.h"
 #include "subsystem/_common_header.h"
+#include "acme/_operating_system.h"
 
 namespace remoting
 {
@@ -32,10 +33,19 @@ namespace remoting
 
    CopyRectDetector::~CopyRectDetector() {}
 
+
+   // Callback routine used internally to catch window movement...
+   static bool CALLBACK enumWindowsFnCopyRect(const ::operating_system::window & operatingsystemwindow, ::lparam arg)
+   {
+      CopyRectDetector *_this = (CopyRectDetector *)arg;
+      return _this->checkWindowMovements(hwnd);
+   }
+
+
    void CopyRectDetector::detectWindowMovements(::int_rectangle *copyRect, ::int_point *source)
    {
       m_copyRect.Null();
-      m_source.clear();
+      m_source.Null();
 
       EnumWindows((WNDENUMPROC)enumWindowsFnCopyRect, (::lparam)this);
       m_lastWinProps = m_newWinProps;
@@ -44,14 +54,8 @@ namespace remoting
       *source = m_source;
    }
 
-   // Callback routine used internally to catch window movement...
-   bool CALLBACK CopyRectDetector::enumWindowsFnCopyRect(HWND hwnd, ::lparam arg)
-   {
-      CopyRectDetector *_this = (CopyRectDetector *)arg;
-      return _this->checkWindowMovements(hwnd);
-   }
 
-   bool CopyRectDetector::checkWindowMovements(HWND hwnd)
+   bool CopyRectDetector::checkWindowMovements(const ::operating_system::window & operatingsystemwindow)
    {
       ::int_rectangle currRect;
       if (IsWindowVisible(hwnd) && getWinRect(hwnd, &currRect))
@@ -79,7 +83,7 @@ namespace remoting
       return true;
    }
 
-   bool CopyRectDetector::getWinRect(HWND hwnd, ::int_rectangle *winRect)
+   bool CopyRectDetector::getWinRect(const ::operating_system::window & operatingsystemwindow, ::int_rectangle *winRect)
    {
       RECT rect;
       if (GetWindowRect(hwnd, &rect))
@@ -90,7 +94,7 @@ namespace remoting
       return false;
    }
 
-   bool CopyRectDetector::findPrevWinProps(HWND hwnd, ::int_rectangle *rect)
+   bool CopyRectDetector::findPrevWinProps(const ::operating_system::window & operatingsystemwindow, ::int_rectangle *rect)
    {
       ::list_base<WinProp>::iterator winPropsIter;
       WinProp *winProp;

@@ -28,7 +28,7 @@
 //#include "log_writer/LogWriter.h"
 #include "subsystem/thread/GuiThread.h"
 #include "subsystem/thread/ThreadCollector.h"
-#include "remoting/remoting/win_system/WindowsEvent.h"
+#include "acme/parallelization/happening.h"
 
 #include "innate_subsystem/framebuffer/FrameBuffer.h"
 #include "Win8CursorShape.h"
@@ -86,8 +86,8 @@ namespace remoting
 
       ThreadCollector m_deskDuplThreadBundle;
 
-      WindowsEvent m_initEvent;
-      WindowsEvent m_errorEvent;
+      ::happening m_initEvent;
+      ::happening m_errorEvent;
 
       // The duplication interface can't be used
       bool m_hasCriticalError;
