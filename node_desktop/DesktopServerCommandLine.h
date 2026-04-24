@@ -28,50 +28,58 @@
 #include "subsystem/platform/CommandLine.h"
 #include "subsystem/platform/Exception.h"
 
-/**
- * Desktop server command line parser.
- * @valid command line is '-desktopserver -logdir pathToLogDir' where
- * pathToLogDir arg is full path to directory where desktop server log
- * will be created.
- */
-class DesktopServerCommandLine : private ::subsystem::CommandLine
+
+namespace remoting_node_desktop
 {
-public:
-  DesktopServerCommandLine();
-  virtual ~DesktopServerCommandLine();
 
-  /**
-   * Parses command line.
-   * @param cmdLine command line to parse.
-   * @throws ::subsystem::Exception on fail.
-   */
-  virtual void parse(const ::subsystem::CommandLineArguments *cmdArgs);
+   /**
+    * Desktop server command line parser.
+    * @valid command line is '-desktopserver -logdir pathToLogDir' where
+    * pathToLogDir arg is full path to directory where desktop server log
+    * will be created.
+    */
+   class CLASS_DECL_REMOTING_NODE_DESKTOP DesktopServerCommandLine : private ::subsystem::CommandLine
+   {
+   public:
+      DesktopServerCommandLine();
+      virtual ~DesktopServerCommandLine();
 
-  /**
-   * Puts specified in command line path to log directory into output parameter.
-   * @param [out] logDir output parameter for log directory.
-   * @remark if parse method wasn't before this will return 0 as log dir.
-   */
-  void getLogDir(::string & logDir);
+      /**
+       * Parses command line.
+       * @param cmdLine command line to parse.
+       * @throws ::subsystem::Exception on fail.
+       */
+      virtual void parse(const ::subsystem::CommandLineArguments *cmdArgs);
 
-  /**
-   * Returns specified log level.
-   * @return specified log level.
-   */
-  int getLogLevel();
+      /**
+       * Puts specified in command line path to log directory into output parameter.
+       * @param [out] logDir output parameter for log directory.
+       * @remark if parse method wasn't before this will return 0 as log dir.
+       */
+      void getLogDir(::string &logDir);
 
-  /**
-   * Puts specified shared memory name into output parameter.
-   */
-  void getSharedMemName(::string & shMemName);
+      /**
+       * Returns specified log level.
+       * @return specified log level.
+       */
+      int getLogLevel();
 
-public:
-  const static char DESKTOP_SERVER_KEY[];
+      /**
+       * Puts specified shared memory name into output parameter.
+       */
+      void getSharedMemName(::string &shMemName);
 
-private:
-  const static char LOG_DIR_KEY[];
-  const static char LOG_LEVEL_KEY[];
-  const static char SHARED_MEMORY_NAME_KEY[];
-};
+   public:
+      static ::string_literal DESKTOP_SERVER_KEY;
+
+   private:
+      static ::string_literal LOG_DIR_KEY;
+      static ::string_literal LOG_LEVEL_KEY;
+      static ::string_literal SHARED_MEMORY_NAME_KEY;
+   };
+
+
+} // namespace remoting_node_desktop
+
 
 

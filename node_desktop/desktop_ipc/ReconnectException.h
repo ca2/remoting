@@ -27,11 +27,18 @@
 
 #include "acme/exception/io.h"
 
-class ReconnectException : public ::io_exception
+namespace remoting_node_desktop
 {
-public:
-  ReconnectException(const ::scoped_string & scopedstrMessage);
-  virtual ~ReconnectException();
-};
 
-//// __RECONNECTEXCEPTION_H__
+   class ReconnectException : public ::io_exception
+   {
+   public:
+      ReconnectException(const ::scoped_string &scopedstrMessage);
+      virtual ~ReconnectException();
+   };
+
+
+} // namespace remoting_node_desktop 
+
+
+

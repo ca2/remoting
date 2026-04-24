@@ -32,36 +32,41 @@
 #include "DesktopServerProto.h"
 #include "DesktopSrvDispatcher.h"
 
-class UserInputClient : public UserInput, public DesktopServerProto,
-                        public ClientListener
+namespace remoting_node_desktop
 {
-public:
-  UserInputClient(BlockingGate *forwGate, DesktopSrvDispatcher *dispatcher,
-                  ClipboardListener *clipboardListener);
-  virtual ~UserInputClient();
 
-  virtual void sendInit(BlockingGate *gate);
-  virtual void setNewClipboard(const ::scoped_string & newClipboard);
-  virtual void setMouseEvent(const ::int_point newPos, unsigned char keyFlag);
-  virtual void setKeyboardEvent(unsigned int keySym, bool down);
-  virtual void getCurrentUserInfo(::string & desktopName,
-                                  ::string & userName);
-  virtual void getPrimaryDisplayCoords(::int_rectangle *rect);
-  virtual void getDisplayNumberCoords(::int_rectangle *rect,
-                                      unsigned char dispNumber);
-  virtual ::array_base<::int_rectangle> getDisplaysCoords();
-  virtual void getNormalizedRect(::int_rectangle *rect);
-  virtual void getWindowCoords(HWND hwnd, ::int_rectangle *rect);
-  virtual HWND getWindowHandleByName(const ::scoped_string & windowName);
-  virtual void getApplicationRegion(unsigned int procId, Region *region);
-  virtual bool isApplicationInFocus(unsigned int procId);
+   class UserInputClient : public UserInput, public DesktopServerProto, public ClientListener
+   {
+   public:
+      UserInputClient(BlockingGate *forwGate, DesktopSrvDispatcher *dispatcher, ClipboardListener *clipboardListener);
+      virtual ~UserInputClient();
 
-  // To catch a new clipboard
-  virtual void onRequest(unsigned char reqCode, BlockingGate *backGate);
+      virtual void sendInit(BlockingGate *gate);
+      virtual void setNewClipboard(const ::scoped_string &newClipboard);
+      virtual void setMouseEvent(const ::int_point newPos, unsigned char keyFlag);
+      virtual void setKeyboardEvent(unsigned int keySym, bool down);
+      virtual void getCurrentUserInfo(::string &desktopName, ::string &userName);
+      virtual void getPrimaryDisplayCoords(::int_rectangle *rect);
+      virtual void getDisplayNumberCoords(::int_rectangle *rect, unsigned char dispNumber);
+      virtual ::array_base<::int_rectangle> getDisplaysCoords();
+      virtual void getNormalizedRect(::int_rectangle *rect);
+      virtual void getWindowCoords(HWND hwnd, ::int_rectangle *rect);
+      virtual HWND getWindowHandleByName(const ::scoped_string &windowName);
+      virtual void getApplicationRegion(unsigned int procId, Region *region);
+      virtual bool isApplicationInFocus(unsigned int procId);
 
-protected:
-  unsigned char m_sendMouseFlags;
-  ClipboardListener *m_clipboardListener;
-};
+      // To catch a new clipboard
+      virtual void onRequest(unsigned char reqCode, BlockingGate *backGate);
 
-//// __USERINPUTCLIENT_H__
+   protected:
+      unsigned char m_sendMouseFlags;
+      ClipboardListener *m_clipboardListener;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+

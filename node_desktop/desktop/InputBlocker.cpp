@@ -24,10 +24,14 @@
 #include "framework.h"
 #include "InputBlocker.h"
 
-InputBlocker::InputBlocker()
-{
-}
+namespace remoting_node_desktop
 
-InputBlocker::~InputBlocker()
 {
-}
+
+   InputBlocker::InputBlocker() {}
+
+   InputBlocker::~InputBlocker() {}
+
+
+} // namespace remoting_node_desktop
+ 

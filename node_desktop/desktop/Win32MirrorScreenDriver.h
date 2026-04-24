@@ -28,33 +28,41 @@
 #include "MirrorScreenDriver.h"
 #include "Win32ScreenDriverBaseImpl.h"
 
-class Win32MirrorScreenDriver : public Win32ScreenDriverBaseImpl
+namespace remoting_node_desktop
 {
-public:
-  Win32MirrorScreenDriver(UpdateKeeper *updateKeeper,
-                          UpdateListener *updateListener,
-                          critical_section *fbcritical_section,
-                          ::subsystem::LogWriter *log);
-  virtual ~Win32MirrorScreenDriver();
 
-  // Starts screen update detection if it not started yet.
-  virtual void executeDetection();
+   class Win32MirrorScreenDriver : public Win32ScreenDriverBaseImpl
+   {
+   public:
+      Win32MirrorScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
+                              critical_section *fbcritical_section, ::subsystem::LogWriter *log);
+      virtual ~Win32MirrorScreenDriver();
 
-  // Stops screen update detection.
-  virtual void terminateDetection();
+      // Starts screen update detection if it not started yet.
+      virtual void executeDetection();
 
-  // Note: This class is a wrapper for the MirrorScreenDriver class and then
-  // only MirrorScreenDriver can provide appropriate thread safety for the ScreenDriver functions.
+      // Stops screen update detection.
+      virtual void terminateDetection();
 
-  virtual ::int_size getScreenDimension();
-  virtual bool grabFb(const ::int_rectangle &  rect = 0);
-  virtual ::innate_subsystem::FrameBuffer *getScreenBuffer();
-  virtual bool getScreenPropertiesChanged();
-  virtual bool getScreenSizeChanged();
-  virtual bool applyNewScreenProperties();
+      // Note: This class is a wrapper for the MirrorScreenDriver class and then
+      // only MirrorScreenDriver can provide appropriate thread safety for the ScreenDriver functions.
 
-private:
-  MirrorScreenDriver m_mirrorDriver;
-};
+      virtual ::int_size getScreenDimension();
+      virtual bool grabFb(const ::int_rectangle &rect = 0);
+      virtual ::innate_subsystem::FrameBuffer *getScreenBuffer();
+      virtual bool getScreenPropertiesChanged();
+      virtual bool getScreenSizeChanged();
+      virtual bool applyNewScreenProperties();
 
-//// __WIN32MIRRORSCREENDRIVER_H__
+   private:
+      MirrorScreenDriver m_mirrorDriver;
+   };
+
+   //// __WIN32MIRRORSCREENDRIVER_H__
+
+
+} // namespace remoting_node_desktop
+
+
+
+

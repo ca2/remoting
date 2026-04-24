@@ -33,56 +33,63 @@
 
 #include "subsystem/node/PipeServer.h"
 
-/**
- * Tcp server that listens for incoming control connections
- * and give management over these connection to ControlClient instances.
- */
-class ControlServer : public ::subsystem::Thread
+namespace remoting_node_desktop
 {
-public:
-  /**
-   * Creates and starts control server execution.
-   * @param serverTransport ready transport for control server.
-   * @param rfbClientManager active TightVNC rfb client manager.
-   * @throws ::subsystem::Exception when fail to create server.
-   * @remark control server takes ownership over server transport.
-   * @remark rfbClientManager and rfbServers parameters are needed for
-   * executing some of control commands and cannot be 0.
-   */
-  ControlServer(::subsystem::PipeServer *pipeServer,
-                RfbClientManager *rfbClientManager,
-                ::subsystem::LogWriter *log);
-  /**
-   * Stops and deletes control server and deletes transport.
-   */
-  virtual ~ControlServer();
 
-protected:
-  /**
-   * Inherited from Thread.
-   *
-   * Awaits for incoming connections.
-   */
-  virtual void execute();
+   /**
+    * Tcp server that listens for incoming control connections
+    * and give management over these connection to ControlClient instances.
+    */
+   class ControlServer : public ::subsystem::Thread
+   {
+   public:
+      /**
+       * Creates and starts control server execution.
+       * @param serverTransport ready transport for control server.
+       * @param rfbClientManager active TightVNC rfb client manager.
+       * @throws ::subsystem::Exception when fail to create server.
+       * @remark control server takes ownership over server transport.
+       * @remark rfbClientManager and rfbServers parameters are needed for
+       * executing some of control commands and cannot be 0.
+       */
+      ControlServer(::subsystem::PipeServer *pipeServer, RfbClientManager *rfbClientManager,
+                    ::subsystem::LogWriter *log);
+      /**
+       * Stops and deletes control server and deletes transport.
+       */
+      virtual ~ControlServer();
 
-  /**
-   * Inherited from Thread.
-   *
-   * Forced closes transport.
-   */
-  virtual void onTerminate();
+   protected:
+      /**
+       * Inherited from Thread.
+       *
+       * Awaits for incoming connections.
+       */
+      virtual void execute();
 
-private:
-  ControlAppAuthenticator m_authenticator;
-  ::pointer < ::subsystem::ThreadCollector > m_pthreadCollector;
+      /**
+       * Inherited from Thread.
+       *
+       * Forced closes transport.
+       */
+      virtual void onTerminate();
 
-  ::subsystem::PipeServer *m_pipeServer;
-  /**
-   * Active rfb client manager that used in TightVNC server.
-   */
-  RfbClientManager *m_rfbClientManager;
+   private:
+      ControlAppAuthenticator m_authenticator;
+      ::pointer<::subsystem::ThreadCollector> m_pthreadCollector;
 
-  ::subsystem::LogWriter *m_plogwriter;
-};
+      ::subsystem::PipeServer *m_pipeServer;
+      /**
+       * Active rfb client manager that used in TightVNC server.
+       */
+      RfbClientManager *m_rfbClientManager;
+
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
 
 

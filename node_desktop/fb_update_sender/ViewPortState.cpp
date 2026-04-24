@@ -24,81 +24,76 @@
 #include "framework.h"
 #include "ViewPortState.h"
 
-ViewPortState::ViewPortState()
-: m_mode(FULL_DESKTOP),
-  m_hwnd(0),
-  m_windowIsResolved(false),
-  m_displayNumber(1),
-  m_processId(0)
+namespace remoting_node_desktop
 {
-}
 
-ViewPortState::ViewPortState(const ViewPortState &viewPortState)
-{
-  *this = viewPortState;
-}
 
-ViewPortState & ViewPortState::operator =(const ViewPortState &viewPortState)
-{
-  m_mode = viewPortState.m_mode;
-  m_arbitraryRect = viewPortState.m_arbitraryRect;
-  m_hwnd = viewPortState.m_hwnd;
-  m_windowName = viewPortState.m_windowName;
-  m_windowIsResolved = viewPortState.m_windowIsResolved;
-  m_displayNumber = viewPortState.m_displayNumber;
-  m_processId = viewPortState.m_processId;
+   ViewPortState::ViewPortState() :
+       m_mode(FULL_DESKTOP), m_hwnd(0), m_windowIsResolved(false), m_displayNumber(1), m_processId(0)
+   {
+   }
 
-  return *this;
-}
+   ViewPortState::ViewPortState(const ViewPortState &viewPortState) { *this = viewPortState; }
 
-ViewPortState::~ViewPortState()
-{
-}
+   ViewPortState &ViewPortState::operator=(const ViewPortState &viewPortState)
+   {
+      m_mode = viewPortState.m_mode;
+      m_arbitraryRect = viewPortState.m_arbitraryRect;
+      m_hwnd = viewPortState.m_hwnd;
+      m_windowName = viewPortState.m_windowName;
+      m_windowIsResolved = viewPortState.m_windowIsResolved;
+      m_displayNumber = viewPortState.m_displayNumber;
+      m_processId = viewPortState.m_processId;
 
-void ViewPortState::setFullDesktop()
-{
-  m_mode = FULL_DESKTOP;
-}
+      return *this;
+   }
 
-void ViewPortState::setArbitraryRect(const ::int_rectangle &  rect)
-{
-  m_mode = ARBITRARY_RECT;
-  m_arbitraryRect = rect;
-}
+   ViewPortState::~ViewPortState() {}
 
-void ViewPortState::setPrimaryDisplay()
-{
-  m_mode = PRIMARY_DISPLAY;
-}
+   void ViewPortState::setFullDesktop() { m_mode = FULL_DESKTOP; }
 
-void ViewPortState::setDisplayNumber(unsigned char displayNumber)
-{
-  m_mode = DISPLAY_NUMBER;
-  m_displayNumber = displayNumber;
-}
+   void ViewPortState::setArbitraryRect(const ::int_rectangle &rect)
+   {
+      m_mode = ARBITRARY_RECT;
+      m_arbitraryRect = rect;
+   }
 
-void ViewPortState::setWindowHandle(HWND hwnd)
-{
-  m_mode = WINDOW_RECT;
-  m_hwnd = hwnd;
-  m_windowIsResolved = true;
-}
+   void ViewPortState::setPrimaryDisplay() { m_mode = PRIMARY_DISPLAY; }
 
-void ViewPortState::setWindowName(const ::scoped_string & windowName)
-{
-  m_mode = WINDOW_RECT;
-  m_windowName = *windowName;
-  m_windowIsResolved = false;
-}
+   void ViewPortState::setDisplayNumber(unsigned char displayNumber)
+   {
+      m_mode = DISPLAY_NUMBER;
+      m_displayNumber = displayNumber;
+   }
 
-void ViewPortState::unresolveHwnd()
-{
-  m_windowIsResolved = false;
-  m_hwnd = 0;
-}
+   void ViewPortState::setWindowHandle(HWND hwnd)
+   {
+      m_mode = WINDOW_RECT;
+      m_hwnd = hwnd;
+      m_windowIsResolved = true;
+   }
 
-void ViewPortState::setProcessId(unsigned int processId)
-{
-  m_mode = APPLICATION;
-  m_processId = processId;
-}
+   void ViewPortState::setWindowName(const ::scoped_string &windowName)
+   {
+      m_mode = WINDOW_RECT;
+      m_windowName = *windowName;
+      m_windowIsResolved = false;
+   }
+
+   void ViewPortState::unresolveHwnd()
+   {
+      m_windowIsResolved = false;
+      m_hwnd = 0;
+   }
+
+   void ViewPortState::setProcessId(unsigned int processId)
+   {
+      m_mode = APPLICATION;
+      m_processId = processId;
+   }
+
+
+} // namespace remoting_node_desktop
+
+
+

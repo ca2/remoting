@@ -24,13 +24,17 @@
 #include "framework.h"
 #include "UpdateDetector.h"
 
-UpdateDetector::UpdateDetector(UpdateKeeper *updateKeeper,
-                               UpdateListener *updateListener)
-: m_updateKeeper(updateKeeper),
-m_updateListener(updateListener)
-{
-}
 
-UpdateDetector::~UpdateDetector()
+namespace remoting_node_desktop
 {
-}
+
+
+   UpdateDetector::UpdateDetector(UpdateKeeper *updateKeeper, UpdateListener *updateListener) :
+       m_updateKeeper(updateKeeper), m_updateListener(updateListener)
+   {
+   }
+
+   UpdateDetector::~UpdateDetector() {}
+
+
+} // namespace remoting_node_desktop

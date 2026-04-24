@@ -40,7 +40,7 @@
 
 namespace remoting_node_desktop
 {
-   //ServerTask::ServerTask(HINSTANCE hInstance,
+   //Task::Task(HINSTANCE hInstance,
    //                                           const ::scoped_string & scopedstrwindowClassName,
    //                                           const ::scoped_string & scopedstrCommandLine,
    //                                           NewConnectionEvents *newConnectionEvents)
@@ -52,7 +52,7 @@ namespace remoting_node_desktop
    //{
    //   initialize_operating_system_application();
    //}
-    ServerTask::ServerTask() :
+    Task::Task() :
        m_plogwriter(nullptr), 
        m_bService(false)
    {
@@ -60,13 +60,13 @@ namespace remoting_node_desktop
    }
 
 
-   ServerTask::~ServerTask()
+   Task::~Task()
    {
 
    }
 
 
-   void ServerTask::initialize_remoting_node_desktop_server_task(NewConnectionEvents * pnewconnectionevents)
+   void Task::initialize_remoting_node_desktop_server_task(NewConnectionEvents * pnewconnectionevents)
    {
    
       m_pnewconnectionevents = pnewconnectionevents;
@@ -74,7 +74,7 @@ namespace remoting_node_desktop
    }
 
 
-   //void ServerTask::on_server_task_run()
+   //void Task::on_server_task_run()
    //{
 
    //   // FIXME: May be an unhandled exception.
@@ -170,21 +170,21 @@ namespace remoting_node_desktop
    //}
 
 
-   //void ServerTask::on_server_task_prepare()
+   //void Task::on_server_task_prepare()
    //{
 
 
 
    //}
 
-   void ServerTask::_start()
+   void Task::_start()
    {
 
       // FIXME: Use real ::subsystem::LogWriter instead of zero.
 
       auto pserverNew = create_newø<Server>();
       
-      pserverNew->initialize_server(m_bService, m_pnewconnectionevents, this, m_plogwriter);
+      pserverNew->initialize_remoting_node_desktop_server(m_bService, m_pnewconnectionevents, this, m_plogwriter);
 
       pserverNew->addListener(this);
 
@@ -193,14 +193,14 @@ namespace remoting_node_desktop
    }
 
 
-   //void ServerTask::_execute() 
+   //void Task::_execute() 
    //{
    //
    //
    //}
 
 
-   void ServerTask::_stop()
+   void Task::_stop()
    {
 
       if (m_pserver)
@@ -208,26 +208,26 @@ namespace remoting_node_desktop
 
          m_pserver->removeListener(this);
 
-         m_pserver.defer_destroy();
+         m_pserver.defer_destroy_and_release();
 
       }
 
    }
 
 
-   void ServerTask::onServerShutdown()
+   void Task::onServerShutdown()
    {
       //OperatingSystemApplication::shutdown();
    }
 
-   void ServerTask::onLogInit(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrFileName,
+   void Task::onLogInit(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrFileName,
                                         unsigned char logLevel)
    {
       //m_fileLogWriter.init(logDir, fileName, logLevel);
       //m_fileLogWriter.storeHeader();
    }
 
-   void ServerTask::onChangeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel)
+   void Task::onChangeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel)
    {
       //m_fileLogWriter.changeLogProps(newLogDir, newLevel);
    }

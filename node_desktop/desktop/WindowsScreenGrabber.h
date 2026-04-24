@@ -38,79 +38,89 @@
 #include "subsystem/thread/GuiThread.h"
 #include "subsystem/node/Screen.h"
 
-//
-// An abstract interface for screen grabbing.
-//
 
-/*
-  //
-  // Usage example:
-  //
-
-  ScreenGrabber *frameBuffer;
-
-  // Initialisation
-  frameBuffer = new WindowsScreenGrabber;
-
-  ::int_rectangle grabRect, workRect;
-  workRect.setRect(100, 100, 500, 500);
-  grabRect.setRect(20, 20, 120, 120); // Relative to the workRect
-  frameBuffer->setWorkRect(&workRect);
-
-  // One-time grabbing
-  while (!frameBuffer->grab(&grabRect)) {
-    if (frameBuffer->getPropertiesChanged()) { // Check desktop properties
-      if (!frameBuffer->applyNewProperties()) {
-        MessageBox(NULL, "Cannot apply new screen properties"), _T("Error", MB_ICONHAND);
-        return 1;
-      }
-    } else {
-      MessageBox(NULL, "Cannot grab screen"), _T("Error", MB_ICONHAND);
-      return 1;
-    }
-  }
-*/
-
-class WindowsScreenGrabber :
-  public ScreenGrabber, public ::subsystem::GuiThread
+namespace remoting_node_desktop
 {
-public:
-  WindowsScreenGrabber(void);
-  virtual ~WindowsScreenGrabber(void);
 
-  virtual bool grab(const ::int_rectangle &  rect);
+   //
+   // An abstract interface for screen grabbing.
+   //
 
-  inline virtual bool getPropertiesChanged();
-  inline virtual bool getPixelFormatChanged();
-  inline virtual bool getScreenSizeChanged();
+   /*
+     //
+     // Usage example:
+     //
 
-  virtual bool applyNewFullScreenRect();
-  virtual bool applyNewPixelFormat();
-  virtual bool applyNewProperties();
+     ScreenGrabber *frameBuffer;
 
-//protected:
-  virtual void execute();
-  virtual void onTerminate();
+     // Initialisation
+     frameBuffer = new WindowsScreenGrabber;
 
-  virtual bool openDIBSection();
-  virtual bool closeDIBSection();
-  virtual bool grabByDIBSection(const ::int_rectangle &  rect);
+     ::int_rectangle grabRect, workRect;
+     workRect.setRect(100, 100, 500, 500);
+     grabRect.setRect(20, 20, 120, 120); // Relative to the workRect
+     frameBuffer->setWorkRect(&workRect);
 
-  // Windows specific variebles
-  HDC m_destDC, m_screenDC;
-  HBITMAP m_hbmOld, m_hbmDIB;
+     // One-time grabbing
+     while (!frameBuffer->grab(&grabRect)) {
+       if (frameBuffer->getPropertiesChanged()) { // Check desktop properties
+         if (!frameBuffer->applyNewProperties()) {
+           MessageBox(NULL, "Cannot apply new screen properties"), _T("Error", MB_ICONHAND);
+           return 1;
+         }
+       } else {
+         MessageBox(NULL, "Cannot grab screen"), _T("Error", MB_ICONHAND);
+         return 1;
+       }
+     }
+   */
 
-  //WindowsEvent m_hasStartedSignal;
-  //WindowsEvent m_threadStopper;
-  ::happening m_hasStartedSignal;
-  ::happening m_threadStopper;
+   class WindowsScreenGrabber : public ScreenGrabber, public ::subsystem::GuiThread
+   {
+   public:
+      WindowsScreenGrabber(void);
+      virtual ~WindowsScreenGrabber(void);
 
-  //private:
-  ::int_size m_dibSectionDim;
-  ServerConfig *m_serverConfig;
+      virtual bool grab(const ::int_rectangle &rect);
 
-  //Screen m_screen;
-  ::subsystem::Screen m_screen;
-};
+      inline virtual bool getPropertiesChanged();
+      inline virtual bool getPixelFormatChanged();
+      inline virtual bool getScreenSizeChanged();
 
-//// __WINDOWSSCREENGRABBER_H__
+      virtual bool applyNewFullScreenRect();
+      virtual bool applyNewPixelFormat();
+      virtual bool applyNewProperties();
+
+      // protected:
+      virtual void execute();
+      virtual void onTerminate();
+
+      virtual bool openDIBSection();
+      virtual bool closeDIBSection();
+      virtual bool grabByDIBSection(const ::int_rectangle &rect);
+
+      // Windows specific variebles
+      HDC m_destDC, m_screenDC;
+      HBITMAP m_hbmOld, m_hbmDIB;
+
+      // WindowsEvent m_hasStartedSignal;
+      // WindowsEvent m_threadStopper;
+      ::happening m_hasStartedSignal;
+      ::happening m_threadStopper;
+
+      // private:
+      ::int_size m_dibSectionDim;
+      ServerConfig *m_serverConfig;
+
+      // Screen m_screen;
+      ::subsystem::Screen m_screen;
+   };
+
+   //// __WINDOWSSCREENGRABBER_H__
+
+} // namespace remoting_node_desktop
+
+
+
+
+

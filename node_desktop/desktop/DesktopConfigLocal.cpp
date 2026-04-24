@@ -26,40 +26,35 @@
 #include "remoting/remoting/server_config/Configurator.h"
 #include "desktop/WindowsInputBlocker.h"
 
-DesktopConfigLocal::DesktopConfigLocal(::subsystem::LogWriter *log)
+namespace remoting_node_desktop
 {
-  m_inputBlocker = new WindowsInputBlocker(log);
-}
 
-DesktopConfigLocal::~DesktopConfigLocal()
-{
-  delete m_inputBlocker;
-}
+   DesktopConfigLocal::DesktopConfigLocal(::subsystem::LogWriter *log)
+   {
+      m_inputBlocker = new WindowsInputBlocker(log);
+   }
 
-void DesktopConfigLocal::updateByNewSettings()
-{
-  ServerConfig *srvConf = Configurator::getInstance()->getServerConfig();
-  bool hardBlocking = srvConf->isBlockingLocalInput();
-  m_inputBlocker->setKeyboardBlocking(hardBlocking);
-  m_inputBlocker->setMouseBlocking(hardBlocking);
+   DesktopConfigLocal::~DesktopConfigLocal() { delete m_inputBlocker; }
 
-  bool softBlocking = srvConf->isLocalInputPriorityEnabled();
-  unsigned int interval = srvConf->getLocalInputPriorityTimeout() * 1000;
-  m_inputBlocker->setSoftKeyboardBlocking(softBlocking, interval);
-  m_inputBlocker->setSoftMouseBlocking(softBlocking, interval);
-}
+   void DesktopConfigLocal::updateByNewSettings()
+   {
+      ServerConfig *srvConf = Configurator::getInstance()->getServerConfig();
+      bool hardBlocking = srvConf->isBlockingLocalInput();
+      m_inputBlocker->setKeyboardBlocking(hardBlocking);
+      m_inputBlocker->setMouseBlocking(hardBlocking);
 
-bool DesktopConfigLocal::isRemoteInputAllowed()
-{
-  return m_inputBlocker->isRemoteInputAllowed();
-}
+      bool softBlocking = srvConf->isLocalInputPriorityEnabled();
+      unsigned int interval = srvConf->getLocalInputPriorityTimeout() * 1000;
+      m_inputBlocker->setSoftKeyboardBlocking(softBlocking, interval);
+      m_inputBlocker->setSoftMouseBlocking(softBlocking, interval);
+   }
 
-::earth::time DesktopConfigLocal::getLastInputTime() const
-{
-  return m_inputBlocker->getLastInputTime();
-}
+   bool DesktopConfigLocal::isRemoteInputAllowed() { return m_inputBlocker->isRemoteInputAllowed(); }
 
-void DesktopConfigLocal::correctLastTime(::earth::time newTime)
-{
-  m_inputBlocker->correctLastTime(newTime);
-}
+   ::earth::time DesktopConfigLocal::getLastInputTime() const { return m_inputBlocker->getLastInputTime(); }
+
+   void DesktopConfigLocal::correctLastTime(::earth::time newTime) { m_inputBlocker->correctLastTime(newTime); }
+
+
+} // namespace remoting_node_desktop
+ 

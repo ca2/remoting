@@ -31,59 +31,66 @@
 #include "subsystem/thread/Lockable.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 
-
-class UpdateKeeper : public ::subsystem::LockableInterface
+namespace remoting_node_desktop
 {
-public:
-  UpdateKeeper();
-  UpdateKeeper(const ::int_rectangle &  borderRect);
-  ~UpdateKeeper(void);
 
-  virtual ::e_status lock()
-  {
-    m_updContLocMut.lock();
-     return ::success;
-  }
 
-  virtual void unlock()
-  {
-    m_updContLocMut.unlock();
-  }
+   class UpdateKeeper : public ::subsystem::LockableInterface
+   {
+   public:
+      UpdateKeeper();
+      UpdateKeeper(const ::int_rectangle &borderRect);
+      ~UpdateKeeper(void);
 
-  void addChangedRegion(const ::remoting::Region *changedRegion);
-  void addChangedRect(const ::int_rectangle &  changedRect);
-  // Adds border rectangle to changed region.
-  void dazzleChangedReg()
-  {
-    critical_section_lock al(&m_updContLocMut);
-    addChangedRect(m_borderRect);
-  }
+      virtual ::e_status lock()
+      {
+         m_updContLocMut.lock();
+         return ::success;
+      }
 
-  void addCopyRect(const ::int_rectangle &  copyRect, const ::int_point *src);
+      virtual void unlock() { m_updContLocMut.unlock(); }
 
-  void setBorderRect(const ::int_rectangle &  borderRect);
+      void addChangedRegion(const ::remoting::Region *changedRegion);
+      void addChangedRect(const ::int_rectangle &changedRect);
+      // Adds border rectangle to changed region.
+      void dazzleChangedReg()
+      {
+         critical_section_lock al(&m_updContLocMut);
+         addChangedRect(m_borderRect);
+      }
 
-  void setScreenSizeChanged();
-  void setCursorPosChanged();
-  void setCursorPos(const ::int_point *curPos);
-  void setCursorShapeChanged();
+      void addCopyRect(const ::int_rectangle &copyRect, const ::int_point *src);
 
-  void setExcludedRegion(const ::remoting::Region *excludedRegion);
+      void setBorderRect(const ::int_rectangle &borderRect);
 
-  void addUpdateContainer(const UpdateContainer *updateContainer);
-  void getUpdateContainer(UpdateContainer *updCont);
-  bool checkForUpdates(const ::remoting::Region *region);
+      void setScreenSizeChanged();
+      void setCursorPosChanged();
+      void setCursorPos(const ::int_point *curPos);
+      void setCursorShapeChanged();
 
-  void extract(UpdateContainer *updateContainer);
+      void setExcludedRegion(const ::remoting::Region *excludedRegion);
 
-private:
-  ::int_rectangle m_borderRect;
+      void addUpdateContainer(const UpdateContainer *updateContainer);
+      void getUpdateContainer(UpdateContainer *updCont);
+      bool checkForUpdates(const ::remoting::Region *region);
 
-  ::remoting::Region m_excludedRegion;
-  critical_section m_exclRegLocMut;
+      void extract(UpdateContainer *updateContainer);
 
-  UpdateContainer m_updateContainer;
-  critical_section m_updContLocMut;
-};
+   private:
+      ::int_rectangle m_borderRect;
 
-//// __UPDATEKEEPER_H__
+      ::remoting::Region m_excludedRegion;
+      critical_section m_exclRegLocMut;
+
+      UpdateContainer m_updateContainer;
+      critical_section m_updContLocMut;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+

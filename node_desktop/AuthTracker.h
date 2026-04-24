@@ -28,31 +28,42 @@
 //#include "subsystem/thread/critical_section.h"
 //#include "subsystem/platform/::earth::time.h"
 
-// This class will be insert an time interval between trying of
-// authentications
-class AuthTracker
+namespace remoting_node_desktop
 {
-public:
-  AuthTracker(unsigned long long failureTimeInterval, unsigned int failureMaxCount);
-  virtual ~AuthTracker();
 
-protected:
-  // Return ban time if new connection banned and zero if it's not banned.
-  unsigned long long checkBan();
-  // If authentication failed this function must be called to increase an
-  // internal failure count.
-  void notifyAbAuthFailed();
+   // This class will be insert an time interval between trying of
+   // authentications
+   class AuthTracker
+   {
+   public:
+      AuthTracker(unsigned long long failureTimeInterval, unsigned int failureMaxCount);
+      virtual ~AuthTracker();
 
-private:
-  // If ban time is elapsed the refresh() function reset m_failureCount.
-  void refresh();
+   protected:
+      // Return ban time if new connection banned and zero if it's not banned.
+      unsigned long long checkBan();
+      // If authentication failed this function must be called to increase an
+      // internal failure count.
+      void notifyAbAuthFailed();
 
-  unsigned long long m_failureTimeInterval;
+   private:
+      // If ban time is elapsed the refresh() function reset m_failureCount.
+      void refresh();
 
-  ::earth::time m_firstFailureTime;
-  unsigned int m_failureCount;
-  unsigned int m_failureMaxCount;
-  critical_section m_countMutex;
-};
+      unsigned long long m_failureTimeInterval;
 
-//// __AUTHTRACKER_H__
+      ::earth::time m_firstFailureTime;
+      unsigned int m_failureCount;
+      unsigned int m_failureMaxCount;
+      critical_section m_countMutex;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+
+

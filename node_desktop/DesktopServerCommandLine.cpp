@@ -26,66 +26,75 @@
 
 #include "subsystem/platform/StringParser.h"
 
-const char DesktopServerCommandLine::DESKTOP_SERVER_KEY[] = "-desktopserver";
-const char DesktopServerCommandLine::LOG_DIR_KEY[] = "-logdir";
-const char DesktopServerCommandLine::LOG_LEVEL_KEY[] = "-loglevel";
-const char DesktopServerCommandLine::SHARED_MEMORY_NAME_KEY[] = "-shmemname";
-
-DesktopServerCommandLine::DesktopServerCommandLine()
+namespace remoting_node_desktop
 {
-}
 
-DesktopServerCommandLine::~DesktopServerCommandLine()
-{
-}
 
-void DesktopServerCommandLine::parse(const ::subsystem::CommandLineArguments *cmdArgs)
-{
-  ::subsystem::CommandLineFormat format[] = {
-    { DESKTOP_SERVER_KEY, ::subsystem::NO_ARG },
-                                              {LOG_DIR_KEY, ::subsystem::NEEDS_ARG},
-                                              {LOG_LEVEL_KEY, ::subsystem::NEEDS_ARG},
-                                              {SHARED_MEMORY_NAME_KEY, ::subsystem::NEEDS_ARG}};
+   ::string_literal DesktopServerCommandLine::DESKTOP_SERVER_KEY = "-desktopserver";
+   ::string_literal DesktopServerCommandLine::LOG_DIR_KEY = "-logdir";
+   ::string_literal DesktopServerCommandLine::LOG_LEVEL_KEY = "-loglevel";
+   ::string_literal DesktopServerCommandLine::SHARED_MEMORY_NAME_KEY = "-shmemname";
 
-  if (!CommandLine::parse(format, sizeof(format) / sizeof(::subsystem::CommandLineFormat), cmdArgs) ||
-      !optionSpecified(DESKTOP_SERVER_KEY) || !optionSpecified(LOG_DIR_KEY) ||
-      !optionSpecified(LOG_LEVEL_KEY) ||
-      !optionSpecified(SHARED_MEMORY_NAME_KEY)) {
-    throw ::subsystem::Exception("Command line is invalid");
-  }
-}
+   DesktopServerCommandLine::DesktopServerCommandLine() {}
 
-void DesktopServerCommandLine::getLogDir(::string & logDir)
-{
-  if (!optionSpecified(LOG_DIR_KEY, &logDir)) {
-    _ASSERT(false);
+   DesktopServerCommandLine::~DesktopServerCommandLine() {}
 
-    logDir.clear();
-  }
-}
+   void DesktopServerCommandLine::parse(const ::subsystem::CommandLineArguments *cmdArgs)
+   {
+      ::subsystem::CommandLineFormat format[] = {{DESKTOP_SERVER_KEY, ::subsystem::NO_ARG},
+                                                 {LOG_DIR_KEY, ::subsystem::NEEDS_ARG},
+                                                 {LOG_LEVEL_KEY, ::subsystem::NEEDS_ARG},
+                                                 {SHARED_MEMORY_NAME_KEY, ::subsystem::NEEDS_ARG}};
 
-int DesktopServerCommandLine::getLogLevel()
-{
-  ::string logLevelKeyArg;
+      if (!CommandLine::parse(format, sizeof(format) / sizeof(::subsystem::CommandLineFormat), cmdArgs) ||
+          !optionSpecified(DESKTOP_SERVER_KEY) || !optionSpecified(LOG_DIR_KEY) || !optionSpecified(LOG_LEVEL_KEY) ||
+          !optionSpecified(SHARED_MEMORY_NAME_KEY))
+      {
+         throw ::subsystem::Exception("Command line is invalid");
+      }
+   }
 
-  if (!optionSpecified(LOG_LEVEL_KEY, &logLevelKeyArg)) {
-    _ASSERT(false);
-  }
+   void DesktopServerCommandLine::getLogDir(::string &logDir)
+   {
+      if (!optionSpecified(LOG_DIR_KEY, &logDir))
+      {
+         _ASSERT(false);
 
-  int ret;
+         logDir.clear();
+      }
+   }
 
-  if (!MainSubsystem().StringParser().parseInt(logLevelKeyArg, &ret)) {
-    _ASSERT(false);
-  }
+   int DesktopServerCommandLine::getLogLevel()
+   {
+      ::string logLevelKeyArg;
 
-  return ret;
+      if (!optionSpecified(LOG_LEVEL_KEY, &logLevelKeyArg))
+      {
+         _ASSERT(false);
+      }
 
-}
-void DesktopServerCommandLine::getSharedMemName(::string & shMemName)
-{
-  if (!optionSpecified(SHARED_MEMORY_NAME_KEY, &shMemName)) {
-    _ASSERT(false);
+      int ret;
 
-    shMemName.clear();
-  }
-}
+      if (!MainSubsystem().StringParser().parseInt(logLevelKeyArg, &ret))
+      {
+         _ASSERT(false);
+      }
+
+      return ret;
+   }
+   void DesktopServerCommandLine::getSharedMemName(::string &shMemName)
+   {
+      if (!optionSpecified(SHARED_MEMORY_NAME_KEY, &shMemName))
+      {
+         _ASSERT(false);
+
+         shMemName.clear();
+      }
+   }
+
+
+} // namespace remoting_node_desktop
+
+
+
+

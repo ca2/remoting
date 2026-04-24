@@ -28,11 +28,20 @@
 #include "acme/input_output/DataOutputStream.h"
 //#include "subsystem/thread/critical_section.h"
 
-class BlockingOutputGate : public critical_section, public DataOutputStream
+namespace remoting_node_desktop
 {
-public:
-  BlockingOutputGate(OutputStream *outputStream);
-  virtual ~BlockingOutputGate();
-};
 
-//// __BLOCKINGOUTPUTGATE_H__
+   class BlockingOutputGate : public critical_section, public DataOutputStream
+   {
+   public:
+      BlockingOutputGate(OutputStream *outputStream);
+      virtual ~BlockingOutputGate();
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+

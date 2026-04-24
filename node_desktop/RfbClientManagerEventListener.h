@@ -25,25 +25,32 @@
 #pragma once
 
 
-/**
- * Listener of RfbClientManager object events.
- */
-class RfbClientManagerEventListener
+namespace remoting_node_desktop
 {
-public:
-  /**
-   * Destructor, does nothing.
-   */
-  virtual ~RfbClientManagerEventListener();
+   /**
+    * Listener of RfbClientManager object events.
+    */
+   class RfbClientManagerEventListener
+   {
+   public:
+      /**
+       * Destructor, does nothing.
+       */
+      virtual ~RfbClientManagerEventListener();
 
-  /**
-   * Called when first rfb client connects to server.
-   */
-  virtual void afterFirstClientConnect() = 0;
-  /**
-   * Called when last rfb client disconnects from server.
-   */
-  virtual void afterLastClientDisconnect() = 0;
-};
+      /**
+       * Called when first rfb client connects to server.
+       */
+      virtual void afterFirstClientConnect() = 0;
+      /**
+       * Called when last rfb client disconnects from server.
+       */
+      virtual void afterLastClientDisconnect() = 0;
+   };
+
+
+} // namespace remoting_node_desktop
+ 
+
 
 

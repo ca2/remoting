@@ -25,24 +25,34 @@
 #pragma once
 
 
-// #include aaa_<d3d11.h>
-// #include aaa_<DXGI1_2.h>
-
-class WinD3D11Texture2D
+namespace remoting_node_desktop
 {
-public:
-  WinD3D11Texture2D(ID3D11Device *device, const D3D11_TEXTURE2D_DESC *deskTexture);
-  // Texture will be created by the IDXGIResource->QueryInterface() function call.
-  WinD3D11Texture2D(IDXGIResource *dxgiResource);
 
-  WinD3D11Texture2D(const WinD3D11Texture2D & other);
+   // #include aaa_<d3d11.h>
+   // #include aaa_<DXGI1_2.h>
 
-  virtual ~WinD3D11Texture2D();
+   class WinD3D11Texture2D
+   {
+   public:
+      WinD3D11Texture2D(ID3D11Device *device, const D3D11_TEXTURE2D_DESC *deskTexture);
+      // Texture will be created by the IDXGIResource->QueryInterface() function call.
+      WinD3D11Texture2D(IDXGIResource *dxgiResource);
 
-  ID3D11Texture2D *getTexture() const;
+      WinD3D11Texture2D(const WinD3D11Texture2D &other);
 
-private:
-  ID3D11Texture2D *m_dxgiTexture;
-};
+      virtual ~WinD3D11Texture2D();
 
-//// __WIND3D11TEXTURE2D_H__
+      ID3D11Texture2D *getTexture() const;
+
+   private:
+      ID3D11Texture2D *m_dxgiTexture;
+   };
+
+   //// __WIND3D11TEXTURE2D_H__
+
+
+} // namespace remoting_node_desktop
+
+
+
+

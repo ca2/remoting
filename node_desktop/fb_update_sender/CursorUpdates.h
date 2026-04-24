@@ -32,73 +32,77 @@
 //#include "subsystem/thread/critical_section.h"
 //#include "log_writer/LogWriter.h"
 
-class CursorUpdates
+namespace remoting_node_desktop
 {
-public:
-  CursorUpdates(::subsystem::LogWriter *log);
-  virtual ~CursorUpdates();
 
-  // Important: After calling the update() function frame buffer
-  // may contain a cursor image to send it as a frame buffer update.
-  // After sending the frame buffer updates the user code must at sight
-  // call the restoreFrameBuffer() function. Also function clones
-  // actual cursor shape to the cursorShape argument (Only when after call
-  // the updCont->cursorShapeChanged flag is raised).
-  void update(const EncodeOptions *encodeOptions,
-              UpdateContainer *updCont,
-              bool fullRegReq,
-              const ::int_rectangle &  viewPort,
-              bool shareOnlyApp,
-              const ::remoting::Region *shareAppRegion,
-              ::innate_subsystem::FrameBuffer *fb,
-              ::remoting::CursorShape *cursorShape);
-  void restoreFrameBuffer(::innate_subsystem::FrameBuffer *fb);
+   class CursorUpdates
+   {
+   public:
+      CursorUpdates(::subsystem::LogWriter *log);
+      virtual ~CursorUpdates();
 
-  // Returns current cursor position. Beetween
-  ::int_point getCurPos();
+      // Important: After calling the update() function frame buffer
+      // may contain a cursor image to send it as a frame buffer update.
+      // After sending the frame buffer updates the user code must at sight
+      // call the restoreFrameBuffer() function. Also function clones
+      // actual cursor shape to the cursorShape argument (Only when after call
+      // the updCont->cursorShapeChanged flag is raised).
+      void update(const EncodeOptions *encodeOptions, UpdateContainer *updCont, bool fullRegReq,
+                  const ::int_rectangle &viewPort, bool shareOnlyApp, const ::remoting::Region *shareAppRegion,
+                  ::innate_subsystem::FrameBuffer *fb, ::remoting::CursorShape *cursorShape);
+      void restoreFrameBuffer(::innate_subsystem::FrameBuffer *fb);
 
-  // Returns background rectangle.
-  ::int_rectangle getBackgroundRect();
+      // Returns current cursor position. Beetween
+      ::int_point getCurPos();
 
-  // Block cursor pos sending by this
-  // connection to a client. Unblocking will
-  // be automaticly for a time.
-  void blockCursorPosSending();
+      // Returns background rectangle.
+      ::int_rectangle getBackgroundRect();
 
-  // Clones (updates internal) the cursor shape.
-  void updateCursorShape(const ::remoting::CursorShape *curShape);
+      // Block cursor pos sending by this
+      // connection to a client. Unblocking will
+      // be automaticly for a time.
+      void blockCursorPosSending();
 
-private:
-  // Clones the internal cursor shape to curShape.
-  void extractCursorShape(::remoting::CursorShape *curShape);
+      // Clones (updates internal) the cursor shape.
+      void updateCursorShape(const ::remoting::CursorShape *curShape);
 
-  // Check cursor position for changing and store it to the m_cursorPos.
-  // Return true value if cursor position has been changed.
-  bool checkCursorPos(UpdateContainer *updCont,
-                      const ::int_rectangle &  viewPort,
-                      bool curPosBlockingIsIgnored);
+   private:
+      // Clones the internal cursor shape to curShape.
+      void extractCursorShape(::remoting::CursorShape *curShape);
 
-  // Shortcut function to draw cursor on the frame buffer directly.
-  void drawCursor(UpdateContainer *updCont, ::innate_subsystem::FrameBuffer *fb);
+      // Check cursor position for changing and store it to the m_cursorPos.
+      // Return true value if cursor position has been changed.
+      bool checkCursorPos(UpdateContainer *updCont, const ::int_rectangle &viewPort, bool curPosBlockingIsIgnored);
 
-  // Check for cursor blocking state and
-  // return true if it is blocked and false
-  // otherwise.
-  bool isCursorPosBlocked();
+      // Shortcut function to draw cursor on the frame buffer directly.
+      void drawCursor(UpdateContainer *updCont, ::innate_subsystem::FrameBuffer *fb);
 
-  // Current state
-  ::int_point m_cursorPos;
-  ::earth::time m_blockCurPosTime;
-  ::remoting::CursorShape m_cursorShape;
-  ::innate_subsystem::FrameBuffer m_shapeBackground;
-  ::int_point m_backgroundPos;
-  critical_section m_curPosLocMut;
-  // Uses when the rich enabled but pointer pos disabled to determine
-  // the last send method: by a cursor shape update or drawing on the
-  // frame buffer.
-  bool m_isDrawCursorMethod;
+      // Check for cursor blocking state and
+      // return true if it is blocked and false
+      // otherwise.
+      bool isCursorPosBlocked();
 
-  ::subsystem::LogWriter *m_plogwriter;
-};
+      // Current state
+      ::int_point m_cursorPos;
+      ::earth::time m_blockCurPosTime;
+      ::remoting::CursorShape m_cursorShape;
+      ::innate_subsystem::FrameBuffer m_shapeBackground;
+      ::int_point m_backgroundPos;
+      critical_section m_curPosLocMut;
+      // Uses when the rich enabled but pointer pos disabled to determine
+      // the last send method: by a cursor shape update or drawing on the
+      // frame buffer.
+      bool m_isDrawCursorMethod;
 
-//// __CURSORUPDATES_H__
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+
+

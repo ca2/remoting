@@ -28,43 +28,48 @@
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "WinDxgiOutput1.h"
 
-WinDxgiOutput1::WinDxgiOutput1(WinDxgiOutput *dxgiOutput)
-: m_dxgiOutput1(0)
+ namespace remoting_node_desktop
 {
-  HRESULT hr = dxgiOutput->queryInterface(__uuidof(m_dxgiOutput1), reinterpret_cast<void**>(&m_dxgiOutput1));
-  if (FAILED(hr)) {
-    throw WinDxCriticalException("Can't get IDXGIOutput1", hr);
-  }
-}
 
-WinDxgiOutput1::WinDxgiOutput1(const WinDxgiOutput1 &src)
-{
-  copy(src);
-}
 
-WinDxgiOutput1::~WinDxgiOutput1()
-{
-  if (m_dxgiOutput1 != 0) {
-    m_dxgiOutput1->Release();
-    m_dxgiOutput1 = 0;
-  }
-}
+   WinDxgiOutput1::WinDxgiOutput1(WinDxgiOutput * dxgiOutput) : m_dxgiOutput1(0)
+   {
+      HRESULT hr = dxgiOutput->queryInterface(__uuidof(m_dxgiOutput1), reinterpret_cast<void **>(&m_dxgiOutput1));
+      if (FAILED(hr))
+      {
+         throw WinDxCriticalException("Can't get IDXGIOutput1", hr);
+      }
+   }
 
-WinDxgiOutput1 &WinDxgiOutput1::operator = (WinDxgiOutput1 const &src)
-{
-  copy(src);
-  return *this;
-}
+   WinDxgiOutput1::WinDxgiOutput1(const WinDxgiOutput1 &src) { copy(src); }
 
-void WinDxgiOutput1::copy(const WinDxgiOutput1 &src)
-{
-  if (this != &src) {
-    m_dxgiOutput1 = src.m_dxgiOutput1;
-    m_dxgiOutput1->AddRef();
-  }
-}
+   WinDxgiOutput1::~WinDxgiOutput1()
+   {
+      if (m_dxgiOutput1 != 0)
+      {
+         m_dxgiOutput1->Release();
+         m_dxgiOutput1 = 0;
+      }
+   }
 
-IDXGIOutput1 *WinDxgiOutput1::getDxgiOutput1()
-{
-  return m_dxgiOutput1;
-}
+   WinDxgiOutput1 &WinDxgiOutput1::operator=(WinDxgiOutput1 const &src)
+   {
+      copy(src);
+      return *this;
+   }
+
+   void WinDxgiOutput1::copy(const WinDxgiOutput1 &src)
+   {
+      if (this != &src)
+      {
+         m_dxgiOutput1 = src.m_dxgiOutput1;
+         m_dxgiOutput1->AddRef();
+      }
+   }
+
+   IDXGIOutput1 *WinDxgiOutput1::getDxgiOutput1() { return m_dxgiOutput1; }
+} // // namespace remoting_node_desktop
+
+
+
+  

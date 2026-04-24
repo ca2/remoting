@@ -27,22 +27,34 @@
 
 #include "remoting/remoting/rfb/CursorShape.h"
 
-class CursorShapeGrabber
+
+namespace remoting_node_desktop
 {
-public:
-  CursorShapeGrabber();
-  virtual ~CursorShapeGrabber();
 
-  virtual bool grab(const ::innate_subsystem::PixelFormat & pixelFormat) = 0;
+   class CursorShapeGrabber
+   {
+   public:
+      CursorShapeGrabber();
+      virtual ~CursorShapeGrabber();
 
-  // Returns true if the cursor shape has been changed, false otherwise.
-  // Calling this function resets the state back to unchanged.
-  virtual bool isCursorShapeChanged() = 0;
+      virtual bool grab(const ::innate_subsystem::PixelFormat &pixelFormat) = 0;
 
-  virtual const ::remoting::CursorShape *getCursorShape() const;
+      // Returns true if the cursor shape has been changed, false otherwise.
+      // Calling this function resets the state back to unchanged.
+      virtual bool isCursorShapeChanged() = 0;
 
-//protected:
-  ::remoting::CursorShape m_cursorShape;
-};
+      virtual const ::remoting::CursorShape *getCursorShape() const;
 
-//// __CURSORSHAPEGRABBER_H__
+      // protected:
+      ::remoting::CursorShape m_cursorShape;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+
+

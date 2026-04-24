@@ -30,31 +30,38 @@
 #include "remoting/remoting/win_system/WindowsEvent.h"
 //#include "log_writer/LogWriter.h"
 
-class ConsolePoller : public UpdateDetector
+namespace remoting_node_desktop
 {
-public:
-  ConsolePoller(UpdateKeeper *updateKeeper,
-                UpdateListener *updateListener,
-                ScreenGrabber *screenGrabber,
-                ::innate_subsystem::FrameBuffer *backupFrameBuffer,
-                critical_section *frameBufferMutex,
-                ::subsystem::LogWriter *log);
 
-  virtual ~ConsolePoller();
+   class ConsolePoller : public UpdateDetector
+   {
+   public:
+      ConsolePoller(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ScreenGrabber *screenGrabber,
+                    ::innate_subsystem::FrameBuffer *backupFrameBuffer, critical_section *frameBufferMutex,
+                    ::subsystem::LogWriter *log);
 
-protected:
-  virtual void execute();
-  virtual void onTerminate();
+      virtual ~ConsolePoller();
 
-private:
-  ::int_rectangle getConsoleRect();
+   protected:
+      virtual void execute();
+      virtual void onTerminate();
 
-  ScreenGrabber *m_screenGrabber;
-  ::innate_subsystem::FrameBuffer *m_backupFrameBuffer;
-  critical_section *m_frameBufferMutex;
-  ::int_rectangle m_pollingRect;
-  WindowsEvent m_intervalWaiter;
-  ::subsystem::LogWriter *m_plogwriter;
-};
+   private:
+      ::int_rectangle getConsoleRect();
 
-//// __CONSOLEPOLLER_H__
+      ScreenGrabber *m_screenGrabber;
+      ::innate_subsystem::FrameBuffer *m_backupFrameBuffer;
+      critical_section *m_frameBufferMutex;
+      ::int_rectangle m_pollingRect;
+      WindowsEvent m_intervalWaiter;
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+

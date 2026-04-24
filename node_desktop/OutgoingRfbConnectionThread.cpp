@@ -25,38 +25,43 @@
 #include "OutgoingRfbConnectionThread.h"
 #include "subsystem/socket/SocketIPv4.h"
 
-OutgoingRfbConnectionThread::OutgoingRfbConnectionThread(const ::scoped_string & scopedstrConnectHost,
-                                                         unsigned int connectPort,
-                                                         bool viewOnly,
-                                                         RfbClientManager *clientManager,
-                                                         ::subsystem::LogWriter *log)
-: m_connectHost(scopedstrConnectHost), m_connectPort(connectPort), m_viewOnly(viewOnly),
-  m_clientManager(clientManager),
-  m_plogwriter(log)
+namespace remoting_node_desktop
 {
-}
 
-OutgoingRfbConnectionThread::~OutgoingRfbConnectionThread()
-{
-  
-}
 
-void OutgoingRfbConnectionThread::execute()
-{
-  auto psocket = createø<::subsystem::SocketIPv4Interface>();
+   OutgoingRfbConnectionThread::OutgoingRfbConnectionThread(const ::scoped_string &scopedstrConnectHost,
+                                                            unsigned int connectPort, bool viewOnly,
+                                                            RfbClientManager *clientManager,
+                                                            ::subsystem::LogWriter *log) :
+       m_connectHost(scopedstrConnectHost), m_connectPort(connectPort), m_viewOnly(viewOnly),
+       m_clientManager(clientManager), m_plogwriter(log)
+   {
+   }
 
-  try {
-    psocket->connect(m_connectHost, m_connectPort);
-  } catch (::subsystem::Exception &someEx) {
-    m_plogwriter->error("Failed to connect to {}:{} with reason: '{}'",
-               m_connectHost, m_connectPort, someEx.get_message());
-    //delete socket;
-    return ;
-  }
+   OutgoingRfbConnectionThread::~OutgoingRfbConnectionThread() {}
 
-  ViewPortState viewportstate;
+   void OutgoingRfbConnectionThread::execute()
+   {
+      auto psocket = createø<::subsystem::SocketIPv4Interface>();
 
-  m_clientManager->addNewConnection(psocket,
-                                    &viewportstate, // with a default view port
-                                    m_viewOnly, true);
-}
+      try
+      {
+         psocket->connect(m_connectHost, m_connectPort);
+      }
+      catch (::subsystem::Exception &someEx)
+      {
+         m_plogwriter->error("Failed to connect to {}:{} with reason: '{}'", m_connectHost, m_connectPort,
+                             someEx.get_message());
+         // delete socket;
+         return;
+      }
+
+      ViewPortState viewportstate;
+
+      m_clientManager->addNewConnection(psocket,
+                                        &viewportstate, // with a default view port
+                                        m_viewOnly, true);
+   }
+
+
+} // namespace remoting_node_desktop

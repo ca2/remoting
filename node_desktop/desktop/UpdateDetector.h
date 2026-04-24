@@ -29,27 +29,40 @@
 #include "subsystem/thread/GuiThread.h"
 #include "UpdateListener.h"
 
-class UpdateDetector : public ::subsystem::GuiThread
+
+
+namespace remoting_node_desktop
 {
-public:
-  UpdateDetector(UpdateKeeper *updateKeeper,
-                 UpdateListener *updateListener);
-  virtual ~UpdateDetector();
 
-  void setUpdateKeeper(UpdateKeeper *updateKeeper) { m_updateKeeper = updateKeeper; }
-  UpdateKeeper *getUpdateKeeper() const { return m_updateKeeper; }
 
-protected:
-  void doUpdate()
-  {
-    if (m_updateListener) {
-      m_updateListener->onUpdate();
-    }
-  }
+   class UpdateDetector : public ::subsystem::GuiThread
+   {
+   public:
+      UpdateDetector(UpdateKeeper *updateKeeper, UpdateListener *updateListener);
+      virtual ~UpdateDetector();
 
-  UpdateKeeper *m_updateKeeper;
+      void setUpdateKeeper(UpdateKeeper *updateKeeper) { m_updateKeeper = updateKeeper; }
+      UpdateKeeper *getUpdateKeeper() const { return m_updateKeeper; }
 
-  UpdateListener *m_updateListener;
-};
+   protected:
+      void doUpdate()
+      {
+         if (m_updateListener)
+         {
+            m_updateListener->onUpdate();
+         }
+      }
 
-//// __UPDATEDETECTOR_H__
+      UpdateKeeper *m_updateKeeper;
+
+      UpdateListener *m_updateListener;
+   };
+
+   //// __UPDATEDETECTOR_H__
+
+} // namespace remoting_node_desktop
+
+
+
+
+

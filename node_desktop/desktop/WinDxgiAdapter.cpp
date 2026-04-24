@@ -28,31 +28,43 @@
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "WinDxgiAdapter.h"
 
-WinDxgiAdapter::WinDxgiAdapter(WinDxgiDevice *winDxgiDevice)
-: m_dxgiAdapter(0)
+namespace remoting_node_desktop
 {
-  HRESULT hr = winDxgiDevice->getParent(__uuidof(IDXGIAdapter), reinterpret_cast<void**>(&m_dxgiAdapter));
-  if (FAILED(hr)) {
-    throw WinDxCriticalException("Can't GetParent for IDXGIAdapter", hr);
-  }
-}
 
-WinDxgiAdapter::~WinDxgiAdapter()
-{
-  if (m_dxgiAdapter != 0) {
-    m_dxgiAdapter->Release();
-    m_dxgiAdapter = 0;
-  }
-}
 
-void WinDxgiAdapter::getDxgiOutput(unsigned int iOutput, IDXGIOutput **iDxgiOutput)
-{
-  HRESULT hr = m_dxgiAdapter->EnumOutputs(iOutput, iDxgiOutput);
-  if (hr == DXGI_ERROR_NOT_FOUND) {
-    ::string errMess;
-    errMess.formatf("IDXGIOutput not found for iOutput = %u", iOutput);
-    throw WinDxRecoverableException(errMess, hr);
-  } else if (FAILED(hr)) {
-    throw WinDxCriticalException("Can't IDXGIAdapter::EnumOutputs()", hr);
-  }
-}
+   WinDxgiAdapter::WinDxgiAdapter(WinDxgiDevice *winDxgiDevice) : m_dxgiAdapter(0)
+   {
+      HRESULT hr = winDxgiDevice->getParent(__uuidof(IDXGIAdapter), reinterpret_cast<void **>(&m_dxgiAdapter));
+      if (FAILED(hr))
+      {
+         throw WinDxCriticalException("Can't GetParent for IDXGIAdapter", hr);
+      }
+   }
+
+   WinDxgiAdapter::~WinDxgiAdapter()
+   {
+      if (m_dxgiAdapter != 0)
+      {
+         m_dxgiAdapter->Release();
+         m_dxgiAdapter = 0;
+      }
+   }
+
+   void WinDxgiAdapter::getDxgiOutput(unsigned int iOutput, IDXGIOutput **iDxgiOutput)
+   {
+      HRESULT hr = m_dxgiAdapter->EnumOutputs(iOutput, iDxgiOutput);
+      if (hr == DXGI_ERROR_NOT_FOUND)
+      {
+         ::string errMess;
+         errMess.formatf("IDXGIOutput not found for iOutput = %u", iOutput);
+         throw WinDxRecoverableException(errMess, hr);
+      }
+      else if (FAILED(hr))
+      {
+         throw WinDxCriticalException("Can't IDXGIAdapter::EnumOutputs()", hr);
+      }
+   }
+
+
+} // namespace remoting_node_desktop
+

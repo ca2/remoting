@@ -24,52 +24,55 @@
 #include "framework.h"
 #include "UpdateHandler.h"
 
-UpdateHandler::UpdateHandler()
+namespace remoting_node_desktop
 {
-}
 
-UpdateHandler::~UpdateHandler(void)
-{
-}
 
-void UpdateHandler::initFrameBuffer(const ::innate_subsystem::FrameBuffer *newFb)
-{
-  critical_section_lock al(&m_fbLocMut);
-  m_backupFrameBuffer.clone(newFb);
-}
+   UpdateHandler::UpdateHandler() {}
 
-bool UpdateHandler::updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *fb, const Region *region,
-                                              const ::int_rectangle &  viewPort)
-{
-  critical_section_lock al(&m_fbLocMut);
-  return updateExternalFrameBuffer(fb, &m_backupFrameBuffer, region, viewPort);
-}
+   UpdateHandler::~UpdateHandler(void) {}
 
-bool UpdateHandler::updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *dstFb, ::innate_subsystem::FrameBuffer *srcFb,
-                                              const Region *region,
-                                              const ::int_rectangle &  viewPort)
-{
-  ::innate_subsystem::PixelFormat dstPf = dstFb->getPixelFormat();
-  ::innate_subsystem::PixelFormat srcPf = srcFb->getPixelFormat();
-  ::int_size dstFbDim = dstFb->getDimension();
-  ::int_rectangle srcFbRect = srcFb->getDimension();
-  ::int_rectangle resultViewPort = srcFbRect.intersection(viewPort);
+   void UpdateHandler::initFrameBuffer(const ::innate_subsystem::FrameBuffer *newFb)
+   {
+      critical_section_lock al(&m_fbLocMut);
+      m_backupFrameBuffer.clone(newFb);
+   }
 
-  if (!dstPf.isEqualTo(&srcPf) || !dstFbDim.isEqualTo(&::int_size(&resultViewPort)) ||
-      !resultViewPort.isEqualTo(viewPort)) {
-    dstFb->setProperties(&resultViewPort, &srcPf);
-    return false;
-  }
+   bool UpdateHandler::updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *fb, const Region *region,
+                                                 const ::int_rectangle &viewPort)
+   {
+      critical_section_lock al(&m_fbLocMut);
+      return updateExternalFrameBuffer(fb, &m_backupFrameBuffer, region, viewPort);
+   }
 
-  ::array_base<::int_rectangle> rects;
-  ::array_base<::int_rectangle>::iterator iRect;
-  region->getRectVector(&rects);
+   bool UpdateHandler::updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *dstFb,
+                                                 ::innate_subsystem::FrameBuffer *srcFb, const Region *region,
+                                                 const ::int_rectangle &viewPort)
+   {
+      ::innate_subsystem::PixelFormat dstPf = dstFb->getPixelFormat();
+      ::innate_subsystem::PixelFormat srcPf = srcFb->getPixelFormat();
+      ::int_size dstFbDim = dstFb->getDimension();
+      ::int_rectangle srcFbRect = srcFb->getDimension();
+      ::int_rectangle resultViewPort = srcFbRect.intersection(viewPort);
 
-  for (iRect = rects.begin(); iRect < rects.end(); iRect++) {
-    ::int_rectangle *rect = &(*iRect);
-    dstFb->copyFrom(rect, srcFb,
-                           rect.left + viewPort.left,
-                           rect.top + viewPort.top);
-  }
-  return true;
-}
+      if (!dstPf.isEqualTo(&srcPf) || !dstFbDim.isEqualTo(&::int_size(&resultViewPort)) ||
+          !resultViewPort.isEqualTo(viewPort))
+      {
+         dstFb->setProperties(&resultViewPort, &srcPf);
+         return false;
+      }
+
+      ::array_base<::int_rectangle> rects;
+      ::array_base<::int_rectangle>::iterator iRect;
+      region->getRectVector(&rects);
+
+      for (iRect = rects.begin(); iRect < rects.end(); iRect++)
+      {
+         ::int_rectangle *rect = &(*iRect);
+         dstFb->copyFrom(rect, srcFb, rect.left + viewPort.left, rect.top + viewPort.top);
+      }
+      return true;
+   }
+
+
+} // namespace remoting_node_desktop

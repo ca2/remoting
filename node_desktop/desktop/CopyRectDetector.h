@@ -31,40 +31,49 @@
 //#include aaa_<list>
 #include "acme/prototype/geometry2d/rectangle.h"
 
-struct WinProp
+namespace remoting_node_desktop
+
 {
-   WinProp(HWND hwnd, const ::int_rectangle &rectangleOld)
+
+   struct WinProp
    {
-      m_hwnd = hwnd;
-      m_rectangleOld = rectangleOld;
-   }
-  HWND m_hwnd;
-  ::int_rectangle m_rectangleOld;
-};
+      WinProp(HWND hwnd, const ::int_rectangle &rectangleOld)
+      {
+         m_hwnd = hwnd;
+         m_rectangleOld = rectangleOld;
+      }
+      HWND m_hwnd;
+      ::int_rectangle m_rectangleOld;
+   };
 
-class CopyRectDetector
-{
-public:
-  CopyRectDetector();
-  virtual ~CopyRectDetector();
+   class CopyRectDetector
+   {
+   public:
+      CopyRectDetector();
+      virtual ~CopyRectDetector();
 
-  void detectWindowMovements(::int_rectangle *copyRect, ::int_point *source);
+      void detectWindowMovements(::int_rectangle *copyRect, ::int_point *source);
 
-protected:
-  static bool CALLBACK enumWindowsFnCopyRect(HWND hwnd, ::lparam arg);
-  bool checkWindowMovements(HWND hwnd);
+   protected:
+      static bool CALLBACK enumWindowsFnCopyRect(HWND hwnd, ::lparam arg);
+      bool checkWindowMovements(HWND hwnd);
 
-  bool getWinRect(HWND hwnd, ::int_rectangle *winRect);
+      bool getWinRect(HWND hwnd, ::int_rectangle *winRect);
 
-  // If window properties successfully was found then function returns
-  // true. Else this function returns false.
-  bool findPrevWinProps(HWND hwnd, ::int_rectangle *rect);
+      // If window properties successfully was found then function returns
+      // true. Else this function returns false.
+      bool findPrevWinProps(HWND hwnd, ::int_rectangle *rect);
 
-  ::int_rectangle m_copyRect;
-  ::int_point m_source;
+      ::int_rectangle m_copyRect;
+      ::int_point m_source;
 
-  ::list_base<WinProp> m_lastWinProps;
-  ::list_base<WinProp> m_newWinProps;
-};
+      ::list_base<WinProp> m_lastWinProps;
+      ::list_base<WinProp> m_newWinProps;
+   };
 
-//// __COPYRECTDETECTOR_H__
+   
+
+} // namespace remoting_node_desktop
+ 
+
+

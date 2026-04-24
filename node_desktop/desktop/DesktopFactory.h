@@ -31,15 +31,18 @@
 //#include "log_writer/LogWriter.h"
 #include "Desktop.h"
 
-class DesktopFactory
+namespace remoting_node_desktop
 {
-public:
 
-   virtual Desktop *createDesktop(::subsystem::ClipboardListener *extClipListener,
-                                          UpdateSendingListener *extUpdSendingListener,
-                                          AbnormDeskTermListener *extDeskTermListener,
-                                          ::subsystem::LogWriter *log) = 0;
+   class DesktopFactory :
+      virtual public ::particle
+   {
+   public:
 
-};
+      virtual Desktop *createDesktop(::subsystem::ClipboardListener *extClipListener,
+                                     UpdateSendingListener *extUpdSendingListener,
+                                     AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter *log) = 0;
+   };
 
 
+} // namespace remoting_node_desktop

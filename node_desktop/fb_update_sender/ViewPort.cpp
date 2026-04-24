@@ -26,117 +26,114 @@
 //#include "subsystem/thread/critical_section.h"
 #include "subsystem/platform/BrokenHandleException.h"
 
-ViewPort::ViewPort(::subsystem::LogWriter *log)
-: m_desktop(0),
-  m_plogwriter(log)
+namespace remoting_node_desktop
 {
-}
 
-ViewPort::ViewPort(const ViewPortState *viewPortState, ::subsystem::LogWriter *log)
-: m_desktop(0),
-  m_state(*viewPortState),
-  m_plogwriter(log)
-{
-}
 
-ViewPort::~ViewPort()
-{
-}
+   ViewPort::ViewPort(::subsystem::LogWriter *log) : m_desktop(0), m_plogwriter(log) {}
 
-void ViewPort::initDesktopInterface(Desktop *desktop)
-{
-  m_desktop = desktop;
-}
+   ViewPort::ViewPort(const ViewPortState *viewPortState, ::subsystem::LogWriter *log) :
+       m_desktop(0), m_state(*viewPortState), m_plogwriter(log)
+   {
+   }
 
-void ViewPort::changeState(const ViewPortState *newState)
-{
-  critical_section_lock al(&m_stateMutex);
-  m_state = *newState;
-}
+   ViewPort::~ViewPort() {}
 
-void ViewPort::update(const ::int_size & fbDimension)
-{
-  critical_section_lock al(&m_stateMutex);
+   void ViewPort::initDesktopInterface(Desktop *desktop) { m_desktop = desktop; }
 
-  ::int_rectangle rect;
-  switch(m_state.m_mode) {
-  case ViewPortState::APPLICATION:
-    _ASSERT(m_desktop != 0);
-    m_desktop->getApplicationRegion(m_state.m_processId, &m_appRegion);
-    // Also, the view port rectangle will be FULL_DESKTOP.
-  case ViewPortState::FULL_DESKTOP:
-    rect = fbDimension;
-    break;
-  case ViewPortState::PRIMARY_DISPLAY:
-    _ASSERT(m_desktop != 0);
-    m_desktop->getPrimaryDesktopCoords(&rect);
-    break;
-  case ViewPortState::DISPLAY_NUMBER:
-    _ASSERT(m_desktop != 0);
-    m_desktop->getDisplayNumberCoords(&rect, m_state.m_displayNumber);
-    break;
-  case ViewPortState::WINDOW_RECT:
-    _ASSERT(m_desktop != 0);
-    if (!m_state.m_windowIsResolved) {
-      // Try resolve a window name to a hwnd.
-      resolveWindowName();
-    }
-    if (m_state.m_windowIsResolved) {
-      try {
-        m_desktop->getWindowCoords(m_state.m_hwnd, &rect);
-      } catch (BrokenHandleException &e) {
-		  m_plogwriter->error("ViewPort::update: {}", e.get_message());
-        // Now hwnd is broken. This should be reflected in the viewport state.
-        m_state.unresolveHwnd();
+   void ViewPort::changeState(const ViewPortState *newState)
+   {
+      critical_section_lock al(&m_stateMutex);
+      m_state = *newState;
+   }
+
+   void ViewPort::update(const ::int_size &fbDimension)
+   {
+      critical_section_lock al(&m_stateMutex);
+
+      ::int_rectangle rect;
+      switch (m_state.m_mode)
+      {
+         case ViewPortState::APPLICATION:
+            _ASSERT(m_desktop != 0);
+            m_desktop->getApplicationRegion(m_state.m_processId, &m_appRegion);
+            // Also, the view port rectangle will be FULL_DESKTOP.
+         case ViewPortState::FULL_DESKTOP:
+            rect = fbDimension;
+            break;
+         case ViewPortState::PRIMARY_DISPLAY:
+            _ASSERT(m_desktop != 0);
+            m_desktop->getPrimaryDesktopCoords(&rect);
+            break;
+         case ViewPortState::DISPLAY_NUMBER:
+            _ASSERT(m_desktop != 0);
+            m_desktop->getDisplayNumberCoords(&rect, m_state.m_displayNumber);
+            break;
+         case ViewPortState::WINDOW_RECT:
+            _ASSERT(m_desktop != 0);
+            if (!m_state.m_windowIsResolved)
+            {
+               // Try resolve a window name to a hwnd.
+               resolveWindowName();
+            }
+            if (m_state.m_windowIsResolved)
+            {
+               try
+               {
+                  m_desktop->getWindowCoords(m_state.m_hwnd, &rect);
+               }
+               catch (BrokenHandleException &e)
+               {
+                  m_plogwriter->error("ViewPort::update: {}", e.get_message());
+                  // Now hwnd is broken. This should be reflected in the viewport state.
+                  m_state.unresolveHwnd();
+               }
+            }
+            break;
+         case ViewPortState::ARBITRARY_RECT:
+            rect = m_state.m_arbitraryRect;
+            _ASSERT(m_desktop != 0);
+            m_desktop->getNormalizedRect(&rect);
+            break;
       }
-    }
-    break;
-  case ViewPortState::ARBITRARY_RECT:
-    rect = m_state.m_arbitraryRect;
-    _ASSERT(m_desktop != 0);
-    m_desktop->getNormalizedRect(&rect);
-    break;
-  }
-  m_plogwriter->debug("View port coordinates: ({}, {} %dx{})",
-    rect.left, rect.top, rect.width(), rect.height());
-  // Constrain and save
-  m_rect = rect.intersection(::int_rectangle(fbDimension));
-  if (m_rect.width() < 0 || m_rect.height() < 0) {
-    m_rect.Null();
-  }
-  m_plogwriter->debug("Constrained (to the ::innate_subsystem::FrameBuffer dimension) view port coordinates: ({}, {} %dx{})",
-    rect.left, rect.top, rect.width(), rect.height());
-}
+      m_plogwriter->debug("View port coordinates: ({}, {} %dx{})", rect.left, rect.top, rect.width(), rect.height());
+      // Constrain and save
+      m_rect = rect.intersection(::int_rectangle(fbDimension));
+      if (m_rect.width() < 0 || m_rect.height() < 0)
+      {
+         m_rect.Null();
+      }
+      m_plogwriter->debug(
+         "Constrained (to the ::innate_subsystem::FrameBuffer dimension) view port coordinates: ({}, {} %dx{})",
+         rect.left, rect.top, rect.width(), rect.height());
+   }
 
-::int_rectangle ViewPort::getViewPortRect()
-{
-  critical_section_lock al(&m_stateMutex);
-  return m_rect;
-}
+   ::int_rectangle ViewPort::getViewPortRect()
+   {
+      critical_section_lock al(&m_stateMutex);
+      return m_rect;
+   }
 
-void ViewPort::resolveWindowName()
-{
-  // Skip the resolving if have been passed little time.
-  if ((::earth::time::now() - m_latestHwndResolvingTime).getTime() > RESOLVING_PERIOD) {
-    HWND hwnd = m_desktop->getWindowHandleByName(&m_state.m_windowName);
-    if (hwnd != 0) {
-      m_state.setWindowHandle(hwnd);
-    }
-    m_latestHwndResolvingTime = ::earth::time::now();
-  }
-}
+   void ViewPort::resolveWindowName()
+   {
+      // Skip the resolving if have been passed little time.
+      if ((::earth::time::now() - m_latestHwndResolvingTime).getTime() > RESOLVING_PERIOD)
+      {
+         HWND hwnd = m_desktop->getWindowHandleByName(&m_state.m_windowName);
+         if (hwnd != 0)
+         {
+            m_state.setWindowHandle(hwnd);
+         }
+         m_latestHwndResolvingTime = ::earth::time::now();
+      }
+   }
 
-bool ViewPort::getOnlyApplication()
-{
-  return m_state.m_mode == ViewPortState::APPLICATION;
-}
+   bool ViewPort::getOnlyApplication() { return m_state.m_mode == ViewPortState::APPLICATION; }
 
-unsigned int ViewPort::getApplicationId()
-{
-  return m_state.m_processId;
-}
+   unsigned int ViewPort::getApplicationId() { return m_state.m_processId; }
 
-void ViewPort::getApplicationRegion(Region *region)
-{
-  *region = m_appRegion;
-}
+   void ViewPort::getApplicationRegion(Region *region) { *region = m_appRegion; }
+
+
+} // namespace remoting_node_desktop
+ 

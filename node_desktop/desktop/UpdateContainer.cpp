@@ -23,48 +23,45 @@
 //
 #include "framework.h"
 #include "UpdateContainer.h"
-
-UpdateContainer::UpdateContainer()
+namespace remoting_node_desktop
 {
-  clear();
-}
 
-UpdateContainer::~UpdateContainer(void)
-{
-}
 
-void UpdateContainer::clear()
-{
-  copiedRegion.clear();
-  changedRegion.clear();
-  videoRegion.clear();
-  screenSizeChanged = false;
-  cursorPosChanged = false;
-  cursorShapeChanged = false;
-  copySrc.clear();
-  cursorPos.clear();
-}
+   UpdateContainer::UpdateContainer() { clear(); }
 
-UpdateContainer& UpdateContainer::operator=(const UpdateContainer& src)
-{
-  copiedRegion        = src.copiedRegion;
-  changedRegion       = src.changedRegion;
-  videoRegion         = src.videoRegion;
-  screenSizeChanged   = src.screenSizeChanged;
-  cursorPosChanged    = src.cursorPosChanged;
-  cursorShapeChanged  = src.cursorShapeChanged;
-  copySrc             = src.copySrc;
-  cursorPos           = src.cursorPos;
+   UpdateContainer::~UpdateContainer(void) {}
 
-  return *this;
-}
+   void UpdateContainer::clear()
+   {
+      copiedRegion.clear();
+      changedRegion.clear();
+      videoRegion.clear();
+      screenSizeChanged = false;
+      cursorPosChanged = false;
+      cursorShapeChanged = false;
+      copySrc.clear();
+      cursorPos.clear();
+   }
 
-bool UpdateContainer::is_empty() const
-{
-  return copiedRegion.is_empty() &&
-         changedRegion.is_empty() &&
-         videoRegion.is_empty() &&
-         !screenSizeChanged &&
-         !cursorPosChanged &&
-         !cursorShapeChanged;
-}
+   UpdateContainer &UpdateContainer::operator=(const UpdateContainer &src)
+   {
+      copiedRegion = src.copiedRegion;
+      changedRegion = src.changedRegion;
+      videoRegion = src.videoRegion;
+      screenSizeChanged = src.screenSizeChanged;
+      cursorPosChanged = src.cursorPosChanged;
+      cursorShapeChanged = src.cursorShapeChanged;
+      copySrc = src.copySrc;
+      cursorPos = src.cursorPos;
+
+      return *this;
+   }
+
+   bool UpdateContainer::is_empty() const
+   {
+      return copiedRegion.is_empty() && changedRegion.is_empty() && videoRegion.is_empty() && !screenSizeChanged &&
+             !cursorPosChanged && !cursorShapeChanged;
+   }
+
+
+} // namespace remoting_node_desktop

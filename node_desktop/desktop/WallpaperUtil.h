@@ -28,29 +28,39 @@
 #include "remoting/remoting/server_config/ConfigReloadListener.h"
 //#include "log_writer/LogWriter.h"
 
-class WallpaperUtil : protected ConfigReloadListener
+namespace remoting_node_desktop
 {
-public:
-  WallpaperUtil(::subsystem::LogWriter *log);
-  virtual ~WallpaperUtil();
 
-  virtual void updateWallpaper();
+   class WallpaperUtil : protected ConfigReloadListener
+   {
+   public:
+      WallpaperUtil(::subsystem::LogWriter *log);
+      virtual ~WallpaperUtil();
 
-protected:
-  virtual void onConfigReload(ServerConfig *serverConfig);
+      virtual void updateWallpaper();
 
-private:
-  // Hides the desktop wallpaper.
-  // @throws SystemException on a fail.
-  void disableWallpaper();
+   protected:
+      virtual void onConfigReload(ServerConfig *serverConfig);
 
-  // Restores the desktop wallpaper.
-  // @throws SystemException on a fail.
-  void restoreWallpaper();
+   private:
+      // Hides the desktop wallpaper.
+      // @throws SystemException on a fail.
+      void disableWallpaper();
 
-  ::subsystem::LogWriter *m_plogwriter;
-  ::string m_wallparerPath;
-  bool m_wasDisabled;
-};
+      // Restores the desktop wallpaper.
+      // @throws SystemException on a fail.
+      void restoreWallpaper();
 
-//// __WALLPAPERUTIL_H__
+      ::subsystem::LogWriter *m_plogwriter;
+      ::string m_wallparerPath;
+      bool m_wasDisabled;
+   };
+
+   //// __WALLPAPERUTIL_H__
+
+
+}// namespace remoting_node_desktop
+
+
+
+

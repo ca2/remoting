@@ -27,13 +27,19 @@
 
 #include "acme/input_output/Channel.h"
 
-class ReconnectionListener
+namespace remoting_node_desktop
 {
-public:
-  ReconnectionListener() {}
-  virtual ~ReconnectionListener() {}
 
-  virtual void onReconnect(Channel *newChannelTo, Channel *newChannelFrom) = 0;
-};
+   class ReconnectionListener
+   {
+   public:
+      ReconnectionListener() {}
+      virtual ~ReconnectionListener() {}
 
-//// __RECONNECTIONLISTENER_H__
+      virtual void onReconnect(Channel *newChannelTo, Channel *newChannelFrom) = 0;
+   };
+
+} // namespace remoting_node_desktop 
+
+
+

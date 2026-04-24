@@ -30,43 +30,43 @@
 
 namespace remoting_client
 {
-    const char ViewerCmdLine::HELP[] = "help";
-    const char ViewerCmdLine::HELP_SHORT[] = "h";
-    const char ViewerCmdLine::HELP_ARG[] = "/help";
-    const char ViewerCmdLine::HELP_ARG_SHORT[] = "/h";
-    const char ViewerCmdLine::HELP_ARG_QUESTION[] = "/?";
+    ::string_literal ViewerCmdLine::HELP = "help";
+    ::string_literal ViewerCmdLine::HELP_SHORT = "h";
+    ::string_literal ViewerCmdLine::HELP_ARG = "/help";
+    ::string_literal ViewerCmdLine::HELP_ARG_SHORT = "/h";
+    ::string_literal ViewerCmdLine::HELP_ARG_QUESTION = "/?";
 
-    const char ViewerCmdLine::OPTIONS_FILE[] = "optionsfile";
-    const char ViewerCmdLine::LISTEN[] = "listen";
-    const char ViewerCmdLine::HOST[] = "host";
-    const char ViewerCmdLine::PORT[] = "port";
-    const char ViewerCmdLine::PASSWORD[] = "password";
-    const char ViewerCmdLine::SHOW_CONTROLS[] = "showcontrols";
-    const char ViewerCmdLine::VIEW_ONLY[] = "viewonly";
-    const char ViewerCmdLine::USE_CLIPBOARD[] = "useclipboard";
-    const char ViewerCmdLine::SCALE[] = "scale";
-    const char ViewerCmdLine::FULL_SCREEN[] = "fullscreen";
-    const char ViewerCmdLine::WARN_FULL_SCREEN[] = "warnfullscr";
-    const char ViewerCmdLine::ENCODING[] = "encoding";
-    const char ViewerCmdLine::COPY_RECT[] = "copyrect";
-    const char ViewerCmdLine::MOUSE_CURSOR[] = "mousecursor";
-    const char ViewerCmdLine::MOUSE_LOCAL[] = "mouselocal";
-    const char ViewerCmdLine::MOUSE_SWAP[] = "mouseswap";
-    const char ViewerCmdLine::JPEG_IMAGE_QUALITY[] = "jpegimagequality";
-    const char ViewerCmdLine::COMPRESSION_LEVEL[] = "compressionlevel";
-    const char ViewerCmdLine::LOG_PATH[] = "logpath";
+    ::string_literal ViewerCmdLine::OPTIONS_FILE = "optionsfile";
+    ::string_literal ViewerCmdLine::LISTEN = "listen";
+    ::string_literal ViewerCmdLine::HOST = "host";
+    ::string_literal ViewerCmdLine::PORT = "port";
+    ::string_literal ViewerCmdLine::PASSWORD = "password";
+    ::string_literal ViewerCmdLine::SHOW_CONTROLS = "showcontrols";
+    ::string_literal ViewerCmdLine::VIEW_ONLY = "viewonly";
+    ::string_literal ViewerCmdLine::USE_CLIPBOARD = "useclipboard";
+    ::string_literal ViewerCmdLine::SCALE = "scale";
+    ::string_literal ViewerCmdLine::FULL_SCREEN = "fullscreen";
+    ::string_literal ViewerCmdLine::WARN_FULL_SCREEN = "warnfullscr";
+    ::string_literal ViewerCmdLine::ENCODING = "encoding";
+    ::string_literal ViewerCmdLine::COPY_RECT = "copyrect";
+    ::string_literal ViewerCmdLine::MOUSE_CURSOR = "mousecursor";
+    ::string_literal ViewerCmdLine::MOUSE_LOCAL = "mouselocal";
+    ::string_literal ViewerCmdLine::MOUSE_SWAP = "mouseswap";
+    ::string_literal ViewerCmdLine::JPEG_IMAGE_QUALITY = "jpegimagequality";
+    ::string_literal ViewerCmdLine::COMPRESSION_LEVEL = "compressionlevel";
+    ::string_literal ViewerCmdLine::LOG_PATH = "logpath";
 
 
-    const char ViewerCmdLine::YES[] = "yes";
-    const char ViewerCmdLine::NO[] = "no";
-    const char ViewerCmdLine::AUTO[] = "auto";
-    const char ViewerCmdLine::LOCAL[] = "local";
-    const char ViewerCmdLine::SMALLDOT[] = "smalldot";
-    const char ViewerCmdLine::NORMAL[] = "normal";
-    const char ViewerCmdLine::HEXTILE[] = "hextile";
-    const char ViewerCmdLine::TIGHT[] = "tight";
-    const char ViewerCmdLine::RRE[] = "rre";
-    const char ViewerCmdLine::ZRLE[] = "zrle";
+    ::string_literal ViewerCmdLine::YES = "yes";
+    ::string_literal ViewerCmdLine::NO = "no";
+    ::string_literal ViewerCmdLine::AUTO = "auto";
+    ::string_literal ViewerCmdLine::LOCAL = "local";
+    ::string_literal ViewerCmdLine::SMALLDOT = "smalldot";
+    ::string_literal ViewerCmdLine::NORMAL = "normal";
+    ::string_literal ViewerCmdLine::HEXTILE = "hextile";
+    ::string_literal ViewerCmdLine::TIGHT = "tight";
+    ::string_literal ViewerCmdLine::RRE = "rre";
+    ::string_literal ViewerCmdLine::ZRLE = "zrle";
 
     ViewerCmdLine::ViewerCmdLine(ConnectionData *pconnectiondata,
                                  ::remoting::ConnectionConfig *pconnectionconfig,

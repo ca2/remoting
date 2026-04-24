@@ -24,43 +24,46 @@
 #include "framework.h"
 #include "WinDxRecoverableException.h"
 
+namespace remoting_node_desktop
+{
+
+
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "WinDxgiAcquiredFrame.h"
 
-WinDxgiAcquiredFrame::WinDxgiAcquiredFrame(WinDxgiOutputDuplication *outDupl, unsigned int timeOutMilliSec)
-: m_wasTimeOut(false),
-  m_desktopResource(0),
-  m_outDupl(*outDupl)
-{
-  ZeroMemory(&m_frameInfo, sizeof(m_frameInfo));
-  HRESULT hr = m_outDupl.getDxgiOutputDuplication()->AcquireNextFrame(timeOutMilliSec, &m_frameInfo, &m_desktopResource);
-  if (hr == DXGI_ERROR_WAIT_TIMEOUT) {
-    m_wasTimeOut = true;
-  } else if (FAILED(hr)) {
-    throw WinDxRecoverableException("Can't AcquireNextFrame()", hr);
-  }
-}
+   WinDxgiAcquiredFrame::WinDxgiAcquiredFrame(WinDxgiOutputDuplication *outDupl, unsigned int timeOutMilliSec) :
+       m_wasTimeOut(false), m_desktopResource(0), m_outDupl(*outDupl)
+   {
+      ZeroMemory(&m_frameInfo, sizeof(m_frameInfo));
+      HRESULT hr =
+         m_outDupl.getDxgiOutputDuplication()->AcquireNextFrame(timeOutMilliSec, &m_frameInfo, &m_desktopResource);
+      if (hr == DXGI_ERROR_WAIT_TIMEOUT)
+      {
+         m_wasTimeOut = true;
+      }
+      else if (FAILED(hr))
+      {
+         throw WinDxRecoverableException("Can't AcquireNextFrame()", hr);
+      }
+   }
 
-WinDxgiAcquiredFrame::~WinDxgiAcquiredFrame()
-{
-  if (m_desktopResource != 0) {
-    m_desktopResource->Release();
-    m_desktopResource = 0;
-  }
-  m_outDupl.getDxgiOutputDuplication()->ReleaseFrame();
-}
+   WinDxgiAcquiredFrame::~WinDxgiAcquiredFrame()
+   {
+      if (m_desktopResource != 0)
+      {
+         m_desktopResource->Release();
+         m_desktopResource = 0;
+      }
+      m_outDupl.getDxgiOutputDuplication()->ReleaseFrame();
+   }
 
-bool WinDxgiAcquiredFrame::wasTimeOut()
-{
-  return m_wasTimeOut;
-}
+   bool WinDxgiAcquiredFrame::wasTimeOut() { return m_wasTimeOut; }
 
-IDXGIResource *WinDxgiAcquiredFrame::getDxgiResource()
-{
-  return m_desktopResource;
-}
+   IDXGIResource *WinDxgiAcquiredFrame::getDxgiResource() { return m_desktopResource; }
 
-DXGI_OUTDUPL_FRAME_INFO *WinDxgiAcquiredFrame::getFrameInfo()
+   DXGI_OUTDUPL_FRAME_INFO *WinDxgiAcquiredFrame::getFrameInfo() { return &m_frameInfo; }
+
+
+} // namespace remoting_node_desktop
+namespace remoting_node_desktop
 {
-  return &m_frameInfo;
-}

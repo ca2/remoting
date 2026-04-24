@@ -35,207 +35,213 @@
 //#include "log_writer/LogWriter.h"
 
 
-/**
- * ControlClient exception sclass.
- *
- * Solves problem with catching errors that occured when processing
- * control client scopedstrMessage (not IO errors).
- */
-class ControlException : public ::subsystem::Exception
+namespace remoting_node_desktop
 {
-public:
-  ControlException(const ::subsystem::Exception *parent) : ::subsystem::Exception(parent->get_message()) { }
-  ControlException(const ::scoped_string & scopedstrMessage) : ::subsystem::Exception(scopedstrMessage) { }
-  virtual ~ControlException() { };
-};
 
-/**
- * Handler of control client connections.
- *
- * @remark runs in it's own thread.
- *
- * @remark class uses Server singleton and actual Server instance must exist
- * while any control client is runnin. If this rule is broken, it can cause application crash.
- */
-class ControlClient : public ::subsystem::Thread
-{
-public:
-  /**
-   * Creates new control client handler thread and starts it.
-   * @param transport transport of incoming control connection (non-authorized).
-   * @param rfbClientManager active TightVNC rfb client manager.
-   * @remark control client takes ownership over client transport.
-   */
-  ControlClient(Transport *transport,
-                RfbClientManager *rfbClientManager,
-                ControlAppAuthenticator *authenticator,
-                ::subsystem::FileInterface * pfilePipeHandle,
-                ::subsystem::LogWriter *log);
-  /**
-   * Stops client thread and deletes control client.
-   */
-  virtual ~ControlClient();
+   /**
+    * ControlClient exception sclass.
+    *
+    * Solves problem with catching errors that occured when processing
+    * control client scopedstrMessage (not IO errors).
+    */
+   class ControlException : public ::subsystem::Exception
+   {
+   public:
+      ControlException(const ::subsystem::Exception *parent) : ::subsystem::Exception(parent->get_message()) {}
+      ControlException(const ::scoped_string &scopedstrMessage) : ::subsystem::Exception(scopedstrMessage) {}
+      virtual ~ControlException() {};
+   };
 
-protected:
-  /**
-   * Inherited from Thread class.
-   * Processed control client connection, consists of following phases:
-   *   Auth phase (send auth type and try auth client).
-   *   ::innate_subsystem::Control scopedstrMessage processing loop.
-   */
-  virtual void execute();
+   /**
+    * Handler of control client connections.
+    *
+    * @remark runs in it's own thread.
+    *
+    * @remark class uses Server singleton and actual Server instance must exist
+    * while any control client is runnin. If this rule is broken, it can cause application crash.
+    */
+   class ControlClient : public ::subsystem::Thread
+   {
+   public:
+      /**
+       * Creates new control client handler thread and starts it.
+       * @param transport transport of incoming control connection (non-authorized).
+       * @param rfbClientManager active TightVNC rfb client manager.
+       * @remark control client takes ownership over client transport.
+       */
+      ControlClient(Transport *transport, RfbClientManager *rfbClientManager, ControlAppAuthenticator *authenticator,
+                    ::subsystem::FileInterface *pfilePipeHandle, ::subsystem::LogWriter *log);
+      /**
+       * Stops client thread and deletes control client.
+       */
+      virtual ~ControlClient();
 
-  /**
-   * Inherited from Thread class.
-   *
-   * Closes transport.
-   */
-  virtual void onTerminate();
+   protected:
+      /**
+       * Inherited from Thread class.
+       * Processed control client connection, consists of following phases:
+       *   Auth phase (send auth type and try auth client).
+       *   ::innate_subsystem::Control scopedstrMessage processing loop.
+       */
+      virtual void execute();
 
-private:
-  /**
-   * Sends error (server exception scopedstrMessage) to client side.
-   * @param scopedstrMessage description of error.
-   * @throws ::io_exception on io error.
-   */
-  void sendError(const ::scoped_string & scopedstrMessage);
+      /**
+       * Inherited from Thread class.
+       *
+       * Closes transport.
+       */
+      virtual void onTerminate();
 
-  /**
-   * Called when auth scopedstrMessage recieved.
-   * @throws ::io_exception on io error.
-   */
-  void authMsgRcdv();
+   private:
+      /**
+       * Sends error (server exception scopedstrMessage) to client side.
+       * @param scopedstrMessage description of error.
+       * @throws ::io_exception on io error.
+       */
+      void sendError(const ::scoped_string &scopedstrMessage);
 
-  /**
-   * Handlers of control proto messages.
-   */
+      /**
+       * Called when auth scopedstrMessage recieved.
+       * @throws ::io_exception on io error.
+       */
+      void authMsgRcdv();
 
-  /**
-   * Called when get client ::list_base scopedstrMessage recieved.
-   * @throws ::io_exception on io error.
-   */
-  void getClientsListMsgRcvd();
-  /**
-   * Called when get server info scopedstrMessage reciveved.
-   * @throws ::io_exception on io error.
-   */
-  void getServerInfoMsgRcvd();
-  /**
-   * Called when reload configuration scopedstrMessage recieved.
-   * @throws ::io_exception on io error.
-   * @deprecated.
-   */
-  void reloadConfigMsgRcvd();
-  /**
-   * Called when disconnect all clients scopedstrMessage recieved.
-   * @throws ::io_exception on io error.
-   */
-  void disconnectAllMsgRcvd();
-  /**
-   * Called when shutdown scopedstrMessage recieved.
-   * @throws ::io_exception on io error.
-   */
-  void shutdownMsgRcvd();
-  /**
-   * Called when add new client scopedstrMessage recieved.
-   * @throws ::io_exception on io error.
-   */
-  void addClientMsgRcvd();
-  /**
-   * Called when Connect to a tcp dispatcher scopedstrMessage recieved.
-   * @throws ::io_exception on io error.
-   */
-  void connectToTcpDispatcher();
-  /**
-   * Called when set server config scopedstrMessage recieved.
-   * @throws ::io_exception on io error.
-   */
-  void setServerConfigMsgRcvd();
-  /**
-   * Called when get server config scopedstrMessage recieved.
-   * @throws ::io_exception on io error.
-   */
-  void getServerConfigMsgRcvd();
-  /**
-   * Called when "get show tray icon flag" scopedstrMessage recieved.
-   * @throws ::io_exception on io error.
-   */
-  void getShowTrayIconFlagMsgRcvd();
-  /**
-   * Called when "update tvncontrol process id" scopedstrMessage recieved.
-   * @throws ::io_exception on io error.
-   */
-  void updateTvnControlProcessIdMsgRcvd();
-  /**
-   * Calling when "share primary id" scopedstrMessage recieved.
-   */
-  void sharePrimaryIdMsgRcvd();
-  /**
-   * Calling when "share display id" scopedstrMessage recieved.
-   */
-  void shareDisplayIdMsgRcvd();
-  /**
-   * Calling when "share window id" scopedstrMessage recieved.
-   */
-  void shareWindowIdMsgRcvd();
-  /**
-   * Calling when "share rect id" scopedstrMessage recieved.
-   */
-  void shareRectIdMsgRcvd();
-  /**
-   * Calling when "share full id" scopedstrMessage recieved.
-   */
-  void shareFullIdMsgRcvd();
-  /**
-   * Calling when "share app id" scopedstrMessage recieved.
-   */
-  void shareAppIdMsgRcvd();
+      /**
+       * Handlers of control proto messages.
+       */
 
-private:
-  /**
-   * Client transport.
-   */
-  Transport *m_transport;
-  /**
-   * Low-level transport for writting and recieving bytes.
-   */
-  Channel *m_stream;
+      /**
+       * Called when get client ::list_base scopedstrMessage recieved.
+       * @throws ::io_exception on io error.
+       */
+      void getClientsListMsgRcvd();
+      /**
+       * Called when get server info scopedstrMessage reciveved.
+       * @throws ::io_exception on io error.
+       */
+      void getServerInfoMsgRcvd();
+      /**
+       * Called when reload configuration scopedstrMessage recieved.
+       * @throws ::io_exception on io error.
+       * @deprecated.
+       */
+      void reloadConfigMsgRcvd();
+      /**
+       * Called when disconnect all clients scopedstrMessage recieved.
+       * @throws ::io_exception on io error.
+       */
+      void disconnectAllMsgRcvd();
+      /**
+       * Called when shutdown scopedstrMessage recieved.
+       * @throws ::io_exception on io error.
+       */
+      void shutdownMsgRcvd();
+      /**
+       * Called when add new client scopedstrMessage recieved.
+       * @throws ::io_exception on io error.
+       */
+      void addClientMsgRcvd();
+      /**
+       * Called when Connect to a tcp dispatcher scopedstrMessage recieved.
+       * @throws ::io_exception on io error.
+       */
+      void connectToTcpDispatcher();
+      /**
+       * Called when set server config scopedstrMessage recieved.
+       * @throws ::io_exception on io error.
+       */
+      void setServerConfigMsgRcvd();
+      /**
+       * Called when get server config scopedstrMessage recieved.
+       * @throws ::io_exception on io error.
+       */
+      void getServerConfigMsgRcvd();
+      /**
+       * Called when "get show tray icon flag" scopedstrMessage recieved.
+       * @throws ::io_exception on io error.
+       */
+      void getShowTrayIconFlagMsgRcvd();
+      /**
+       * Called when "update tvncontrol process id" scopedstrMessage recieved.
+       * @throws ::io_exception on io error.
+       */
+      void updateTvnControlProcessIdMsgRcvd();
+      /**
+       * Calling when "share primary id" scopedstrMessage recieved.
+       */
+      void sharePrimaryIdMsgRcvd();
+      /**
+       * Calling when "share display id" scopedstrMessage recieved.
+       */
+      void shareDisplayIdMsgRcvd();
+      /**
+       * Calling when "share window id" scopedstrMessage recieved.
+       */
+      void shareWindowIdMsgRcvd();
+      /**
+       * Calling when "share rect id" scopedstrMessage recieved.
+       */
+      void shareRectIdMsgRcvd();
+      /**
+       * Calling when "share full id" scopedstrMessage recieved.
+       */
+      void shareFullIdMsgRcvd();
+      /**
+       * Calling when "share app id" scopedstrMessage recieved.
+       */
+      void shareAppIdMsgRcvd();
 
-  /**
-   * High-level transport for writting and reading control proto messages.
-   */
-  ControlGate *m_gate;
-  ::pointer < ::subsystem::FileInterface > m_pfilePipeHandle;
+   private:
+      /**
+       * Client transport.
+       */
+      Transport *m_transport;
+      /**
+       * Low-level transport for writting and recieving bytes.
+       */
+      Channel *m_stream;
 
-  /**
-   * Active TightVNC rfb client manager.
-   */
-  RfbClientManager *m_rfbClientManager;
+      /**
+       * High-level transport for writting and reading control proto messages.
+       */
+      ControlGate *m_gate;
+      ::pointer<::subsystem::FileInterface> m_pfilePipeHandle;
 
-  /**
-   * true if control authentication is passed or no auth is set.
-   */
-  bool m_authPassed;
-  bool m_repeatAuthPassed;
-  unsigned int m_authReqMessageId;
+      /**
+       * Active TightVNC rfb client manager.
+       */
+      RfbClientManager *m_rfbClientManager;
 
-  ControlAppAuthenticator *m_authenticator;
+      /**
+       * true if control authentication is passed or no auth is set.
+       */
+      bool m_authPassed;
+      bool m_repeatAuthPassed;
+      unsigned int m_authReqMessageId;
 
-  // A connection identifier will be used by a viewer to connect to
-  // the server across a tcp dispatcher.
-  unsigned int m_tcpDispId;
-  ::string m_gotDispatcherName;
-  critical_section m_tcpDispValuesMutex;
+      ControlAppAuthenticator *m_authenticator;
 
-  ::pointer < ::subsystem::ThreadCollector > m_pthreadcollectorOutgoingConnection;
-  
-  ::subsystem::LogWriter *m_plogwriter;
+      // A connection identifier will be used by a viewer to connect to
+      // the server across a tcp dispatcher.
+      unsigned int m_tcpDispId;
+      ::string m_gotDispatcherName;
+      critical_section m_tcpDispValuesMutex;
 
-  /**
-   * Array of client messages that needs client to be auth.
-   */
-  static const unsigned int REQUIRES_AUTH[];
-  static const unsigned int WITHOUT_AUTH[];
-};
+      ::pointer<::subsystem::ThreadCollector> m_pthreadcollectorOutgoingConnection;
+
+      ::subsystem::LogWriter *m_plogwriter;
+
+      /**
+       * Array of client messages that needs client to be auth.
+       */
+      static const unsigned int REQUIRES_AUTH[];
+      static const unsigned int WITHOUT_AUTH[];
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
 
 

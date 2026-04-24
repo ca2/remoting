@@ -30,15 +30,25 @@
 #include "UpdateListener.h"
 //#include "log_writer/LogWriter.h"
 
-class ScreenDriverFactory
-{
-public:
-  virtual ScreenDriver *createScreenDriver(UpdateKeeper *updateKeeper,
-                                             UpdateListener *updateListener,
-                                             ::innate_subsystem::FrameBuffer *fb,
-                                             critical_section *fbcritical_section,
-                                             ::subsystem::LogWriter *log) = 0;
-private:
-};
 
-//// __SCREENDRIVERFACTORY_H__
+namespace remoting_node_desktop
+
+{
+
+   class ScreenDriverFactory
+   {
+   public:
+      virtual ScreenDriver *createScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
+                                               ::innate_subsystem::FrameBuffer *fb,
+                                               critical_section *fbcritical_section, ::subsystem::LogWriter *log) = 0;
+   private:
+   };
+
+   //// __SCREENDRIVERFACTORY_H__
+
+
+} // namespace remoting_node_desktop 
+
+
+
+

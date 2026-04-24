@@ -26,62 +26,58 @@
 #include "framework.h"
 #include "WinCustomD3D11Texture2D.h"
 
-WinCustomD3D11Texture2D::Texture2DDescInitializer::Texture2DDescInitializer(unsigned int width, unsigned int height,
-                                                                            DXGI_MODE_ROTATION rotation)
-{
-  if (rotation == DXGI_MODE_ROTATION_ROTATE90 || rotation == DXGI_MODE_ROTATION_ROTATE270) {
-    m_desc.Width = height;
-    m_desc.Height = width;
-  } else {
-    m_desc.Width = width;
-    m_desc.Height = height;
-  }
-  m_desc.MipLevels = 1;
-  m_desc.ArraySize = 1;
-  m_desc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
-  m_desc.SampleDesc.Count = 1;
-  m_desc.SampleDesc.Quality = 0;
-  m_desc.Usage = D3D11_USAGE_STAGING;
-  m_desc.BindFlags = 0;
-  m_desc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
-  m_desc.MiscFlags = 0;
-}
-
-const D3D11_TEXTURE2D_DESC *WinCustomD3D11Texture2D::Texture2DDescInitializer::getDesc() const
-{
-  return &m_desc;
-}
-
-WinCustomD3D11Texture2D::WinCustomD3D11Texture2D(ID3D11Device *device, unsigned int width, unsigned int height,
-                                                 DXGI_MODE_ROTATION rotation)
-: m_textDescInitializer(width, height, rotation),
-  m_textureWrapper(device, m_textDescInitializer.getDesc())
-{
-}
-
-WinCustomD3D11Texture2D::WinCustomD3D11Texture2D(const WinCustomD3D11Texture2D &other)
-  : m_textDescInitializer(other.m_textDescInitializer),
-    m_textureWrapper(other.m_textureWrapper)
-{
-}
-
-void WinCustomD3D11Texture2D::operator= (const WinCustomD3D11Texture2D &other) 
-{
-  m_textDescInitializer = other.m_textDescInitializer;
-  m_textureWrapper = other.m_textureWrapper;
-}
-
-WinCustomD3D11Texture2D::~WinCustomD3D11Texture2D()
+namespace remoting_node_desktop
 {
 
-}
 
-ID3D11Texture2D *WinCustomD3D11Texture2D::getTexture() const
-{
-  return m_textureWrapper.getTexture();
-}
+   WinCustomD3D11Texture2D::Texture2DDescInitializer::Texture2DDescInitializer(unsigned int width, unsigned int height,
+                                                                               DXGI_MODE_ROTATION rotation)
+   {
+      if (rotation == DXGI_MODE_ROTATION_ROTATE90 || rotation == DXGI_MODE_ROTATION_ROTATE270)
+      {
+         m_desc.Width = height;
+         m_desc.Height = width;
+      }
+      else
+      {
+         m_desc.Width = width;
+         m_desc.Height = height;
+      }
+      m_desc.MipLevels = 1;
+      m_desc.ArraySize = 1;
+      m_desc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+      m_desc.SampleDesc.Count = 1;
+      m_desc.SampleDesc.Quality = 0;
+      m_desc.Usage = D3D11_USAGE_STAGING;
+      m_desc.BindFlags = 0;
+      m_desc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+      m_desc.MiscFlags = 0;
+   }
 
-const D3D11_TEXTURE2D_DESC *WinCustomD3D11Texture2D::getDesc() const
-{
-  return m_textDescInitializer.getDesc();
-}
+   const D3D11_TEXTURE2D_DESC *WinCustomD3D11Texture2D::Texture2DDescInitializer::getDesc() const { return &m_desc; }
+
+   WinCustomD3D11Texture2D::WinCustomD3D11Texture2D(ID3D11Device *device, unsigned int width, unsigned int height,
+                                                    DXGI_MODE_ROTATION rotation) :
+       m_textDescInitializer(width, height, rotation), m_textureWrapper(device, m_textDescInitializer.getDesc())
+   {
+   }
+
+   WinCustomD3D11Texture2D::WinCustomD3D11Texture2D(const WinCustomD3D11Texture2D &other) :
+       m_textDescInitializer(other.m_textDescInitializer), m_textureWrapper(other.m_textureWrapper)
+   {
+   }
+
+   void WinCustomD3D11Texture2D::operator=(const WinCustomD3D11Texture2D &other)
+   {
+      m_textDescInitializer = other.m_textDescInitializer;
+      m_textureWrapper = other.m_textureWrapper;
+   }
+
+   WinCustomD3D11Texture2D::~WinCustomD3D11Texture2D() {}
+
+   ID3D11Texture2D *WinCustomD3D11Texture2D::getTexture() const { return m_textureWrapper.getTexture(); }
+
+   const D3D11_TEXTURE2D_DESC *WinCustomD3D11Texture2D::getDesc() const { return m_textDescInitializer.getDesc(); }
+
+
+} // namespace remoting_node_desktop

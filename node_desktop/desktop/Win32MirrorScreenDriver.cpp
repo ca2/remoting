@@ -25,59 +25,47 @@
 #include "Win32MirrorScreenDriver.h"
 #include "subsystem/platform/Exception.h"
 
-Win32MirrorScreenDriver::Win32MirrorScreenDriver(UpdateKeeper *updateKeeper,
-                                                 UpdateListener *updateListener,
-                                                 critical_section *fbcritical_section,
-                                                 ::subsystem::LogWriter *log)
-: Win32ScreenDriverBaseImpl(updateKeeper, updateListener, fbcritical_section, log),
-  m_mirrorDriver(updateKeeper, updateListener, fbcritical_section, log)
-{
-  // At this point the screen driver has valid screen properties.
-}
 
-Win32MirrorScreenDriver::~Win32MirrorScreenDriver()
+namespace remoting_node_desktop
 {
-  terminateDetection();
-}
 
-void Win32MirrorScreenDriver::executeDetection()
-{
-  Win32ScreenDriverBaseImpl::executeDetection();
-  m_mirrorDriver.executeDetection();
-}
 
-void Win32MirrorScreenDriver::terminateDetection()
-{
-  Win32ScreenDriverBaseImpl::terminateDetection();
-  m_mirrorDriver.terminateDetection();
-}
+   Win32MirrorScreenDriver::Win32MirrorScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
+                                                    critical_section *fbcritical_section, ::subsystem::LogWriter *log) :
+       Win32ScreenDriverBaseImpl(updateKeeper, updateListener, fbcritical_section, log),
+       m_mirrorDriver(updateKeeper, updateListener, fbcritical_section, log)
+   {
+      // At this point the screen driver has valid screen properties.
+   }
 
-::int_size Win32MirrorScreenDriver::getScreenDimension()
-{
-  return m_mirrorDriver.getScreenDimension();
-}
+   Win32MirrorScreenDriver::~Win32MirrorScreenDriver() { terminateDetection(); }
 
-::innate_subsystem::FrameBuffer *Win32MirrorScreenDriver::getScreenBuffer()
-{
-  return m_mirrorDriver.getScreenBuffer();
-}
+   void Win32MirrorScreenDriver::executeDetection()
+   {
+      Win32ScreenDriverBaseImpl::executeDetection();
+      m_mirrorDriver.executeDetection();
+   }
 
-bool Win32MirrorScreenDriver::grabFb(const ::int_rectangle &  rect)
-{
-  return m_mirrorDriver.grab(rect);
-}
+   void Win32MirrorScreenDriver::terminateDetection()
+   {
+      Win32ScreenDriverBaseImpl::terminateDetection();
+      m_mirrorDriver.terminateDetection();
+   }
 
-bool Win32MirrorScreenDriver::getScreenPropertiesChanged()
-{
-  return m_mirrorDriver.getPropertiesChanged();
-}
+   ::int_size Win32MirrorScreenDriver::getScreenDimension() { return m_mirrorDriver.getScreenDimension(); }
 
-bool Win32MirrorScreenDriver::getScreenSizeChanged()
-{
-  return m_mirrorDriver.getScreenSizeChanged();
-}
+   ::innate_subsystem::FrameBuffer *Win32MirrorScreenDriver::getScreenBuffer()
+   {
+      return m_mirrorDriver.getScreenBuffer();
+   }
 
-bool Win32MirrorScreenDriver::applyNewScreenProperties()
-{
-  return m_mirrorDriver.applyNewProperties();
-}
+   bool Win32MirrorScreenDriver::grabFb(const ::int_rectangle &rect) { return m_mirrorDriver.grab(rect); }
+
+   bool Win32MirrorScreenDriver::getScreenPropertiesChanged() { return m_mirrorDriver.getPropertiesChanged(); }
+
+   bool Win32MirrorScreenDriver::getScreenSizeChanged() { return m_mirrorDriver.getScreenSizeChanged(); }
+
+   bool Win32MirrorScreenDriver::applyNewScreenProperties() { return m_mirrorDriver.applyNewProperties(); }
+
+
+} // namespace remoting_node_desktop

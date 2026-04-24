@@ -26,57 +26,65 @@
 //#include "subsystem/thread/critical_section.h"
 #include "subsystem/platform/VncPassCrypt.h"
 
-ControlAppAuthenticator::ControlAppAuthenticator(unsigned long long failureTimeInterval,
-                                                 unsigned int failureMaxCount)
-: AuthTracker(failureTimeInterval, failureMaxCount),
-  m_isBreaked(false)
+namespace remoting_node_desktop
 {
-}
 
-ControlAppAuthenticator::~ControlAppAuthenticator()
-{
-  breakAndDisableAuthentications();
-}
 
-bool ControlAppAuthenticator::authenticate(const unsigned char cryptPassword[8],
-                                           const unsigned char challenge[8],
-                                           const unsigned char response[8])
-{
-  critical_section_lock al(&m_authMutex);
+   ControlAppAuthenticator::ControlAppAuthenticator(unsigned long long failureTimeInterval,
+                                                    unsigned int failureMaxCount) :
+       AuthTracker(failureTimeInterval, failureMaxCount), m_isBreaked(false)
+   {
+   }
 
-  checkBeforeAuth();
-  if (m_isBreaked) {
-    return false;
-  }
+   ControlAppAuthenticator::~ControlAppAuthenticator() { breakAndDisableAuthentications(); }
 
-  ::subsystem::VncPassCrypt passCrypt;
-  passCrypt.updatePlain(cryptPassword);
-  bool isAuthSucceed = passCrypt.challengeAndResponseIsValid(challenge,
-                                                             response);
+   bool ControlAppAuthenticator::authenticate(const unsigned char cryptPassword[8], const unsigned char challenge[8],
+                                              const unsigned char response[8])
+   {
+      critical_section_lock al(&m_authMutex);
 
-  if (!isAuthSucceed) {
-    notifyAbAuthFailed();
-  }
+      checkBeforeAuth();
+      if (m_isBreaked)
+      {
+         return false;
+      }
 
-  return isAuthSucceed;
-}
+      ::subsystem::VncPassCrypt passCrypt;
+      passCrypt.updatePlain(cryptPassword);
+      bool isAuthSucceed = passCrypt.challengeAndResponseIsValid(challenge, response);
 
-void ControlAppAuthenticator::checkBeforeAuth()
-{
-  // Wait ban time before authentication
-  unsigned long long banTime = 1;
-  while (banTime != 0 && !m_isBreaked) {
-    banTime = checkBan();
-    if (banTime != 0) {
-      //m_banDelay.waitForEvent((DWORD)banTime);
-       m_banDelay.wait(banTime * 1_s);
-    }
-  }
-}
+      if (!isAuthSucceed)
+      {
+         notifyAbAuthFailed();
+      }
 
-void ControlAppAuthenticator::breakAndDisableAuthentications()
-{
-  m_isBreaked = true;
-  //m_banDelay.notify();
-  m_banDelay.set_happening();
-}
+      return isAuthSucceed;
+   }
+
+   void ControlAppAuthenticator::checkBeforeAuth()
+   {
+      // Wait ban time before authentication
+      unsigned long long banTime = 1;
+      while (banTime != 0 && !m_isBreaked)
+      {
+         banTime = checkBan();
+         if (banTime != 0)
+         {
+            // m_banDelay.waitForEvent((DWORD)banTime);
+            m_banDelay.wait(banTime * 1_s);
+         }
+      }
+   }
+
+   void ControlAppAuthenticator::breakAndDisableAuthentications()
+   {
+      m_isBreaked = true;
+      // m_banDelay.notify();
+      m_banDelay.set_happening();
+   }
+
+
+} // namespace remoting_node_desktop
+
+
+

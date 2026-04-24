@@ -30,35 +30,44 @@
 //#include "log_writer/LogWriter.h"
 #include "desktop_ipc/ReconnectionListener.h"
 
-/**
- * Thread that used to execute desktop server application.
- *
- * @behavour:
- *   Thread in infinity loop executes (and waits until it dies) desktop
- *   server application.
- *   It will break only if thread will be terminated.
- */
-class DesktopServerWatcher : public Thread
+
+namespace remoting_node_desktop
 {
-public:
-  DesktopServerWatcher(ReconnectionListener *recListener, ::subsystem::LogWriter *log);
-  virtual ~DesktopServerWatcher();
 
-protected:
-  virtual void execute();
-  virtual void onTerminate();
+   /**
+    * Thread that used to execute desktop server application.
+    *
+    * @behavour:
+    *   Thread in infinity loop executes (and waits until it dies) desktop
+    *   server application.
+    *   It will break only if thread will be terminated.
+    */
+   class DesktopServerWatcher : public Thread
+   {
+   public:
+      DesktopServerWatcher(ReconnectionListener *recListener, ::subsystem::LogWriter *log);
+      virtual ~DesktopServerWatcher();
 
-  // Runs desktop server with XP trick if it's needed.
-  void start();
+   protected:
+      virtual void execute();
+      virtual void onTerminate();
 
-  // Changes active physical session to session0 and locks workstation.
-  // @throws SystemException on fail.
-  void doXPTrick();
+      // Runs desktop server with XP trick if it's needed.
+      void start();
 
-  Process *m_process;
-  ReconnectionListener *m_recListener;
+      // Changes active physical session to session0 and locks workstation.
+      // @throws SystemException on fail.
+      void doXPTrick();
 
-  ::subsystem::LogWriter *m_plogwriter;
-};
+      Process *m_process;
+      ReconnectionListener *m_recListener;
 
-//// __DESKTOPSERVERWATCHER_H__
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+ 
+
+} // namespace remoting_node_desktop
+ 
+
+

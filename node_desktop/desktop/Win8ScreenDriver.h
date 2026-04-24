@@ -38,52 +38,60 @@
 #include "Win8ScreenDriverImpl.h"
 #include "CopyRectDetector.h"
 
-class Win8ScreenDriver : public WinVideoRegionUpdaterImpl
+namespace remoting_node_desktop
 {
-public:
-  // (Note: This class has no link to an external backup frame buffer and then it does not have
-  // to use an external belonged mutex. Thread safe coordiantion commitments between this class
-  // and external some elements should be entirely provided by an owner code.)
 
-  Win8ScreenDriver(UpdateKeeper *updateKeeper,
-                   UpdateListener *updateListener,
-                   critical_section *fbcritical_section,
-                   ::subsystem::LogWriter *log);
-  virtual ~Win8ScreenDriver();
+   class Win8ScreenDriver : public WinVideoRegionUpdaterImpl
+   {
+   public:
+      // (Note: This class has no link to an external backup frame buffer and then it does not have
+      // to use an external belonged mutex. Thread safe coordiantion commitments between this class
+      // and external some elements should be entirely provided by an owner code.)
 
-  // Starts screen update detection if it not started yet.
-  virtual void executeDetection();
+      Win8ScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener, critical_section *fbcritical_section,
+                       ::subsystem::LogWriter *log);
+      virtual ~Win8ScreenDriver();
 
-  // Stops screen update detection.
-  virtual void terminateDetection();
+      // Starts screen update detection if it not started yet.
+      virtual void executeDetection();
 
-  virtual ::int_size getScreenDimension();
-  virtual bool grabFb(const ::int_rectangle &  rect = 0);
-  virtual ::innate_subsystem::FrameBuffer *getScreenBuffer();
-  virtual bool getScreenPropertiesChanged();
-  virtual bool getScreenSizeChanged();
-  virtual bool applyNewScreenProperties();
+      // Stops screen update detection.
+      virtual void terminateDetection();
 
-  virtual bool grabCursorShape(const ::innate_subsystem::PixelFormat & pf);
-  virtual const CursorShape *getCursorShape();
-  virtual ::int_point getCursorPosition();
+      virtual ::int_size getScreenDimension();
+      virtual bool grabFb(const ::int_rectangle &rect = 0);
+      virtual ::innate_subsystem::FrameBuffer *getScreenBuffer();
+      virtual bool getScreenPropertiesChanged();
+      virtual bool getScreenSizeChanged();
+      virtual bool applyNewScreenProperties();
 
-  virtual void getCopiedRegion(::int_rectangle *copyRect, ::int_point *source);
+      virtual bool grabCursorShape(const ::innate_subsystem::PixelFormat &pf);
+      virtual const CursorShape *getCursorShape();
+      virtual ::int_point getCursorPosition();
 
-private:
-  ::subsystem::LogWriter *m_plogwriter;
-  critical_section *m_fbcritical_section;
-  UpdateKeeper *m_updateKeeper;
-  UpdateListener *m_updateListener;
-  // This member must be always gueranted non zero. Otherwise an excption must
-  // be provided from the constructor of this class.
-  Win8ScreenDriverImpl *m_drvImpl;
-  CopyRectDetector m_copyRectDetector;
-  critical_section m_drvImplMutex;
+      virtual void getCopiedRegion(::int_rectangle *copyRect, ::int_point *source);
 
-  CursorShape m_cursorShape;
+   private:
+      ::subsystem::LogWriter *m_plogwriter;
+      critical_section *m_fbcritical_section;
+      UpdateKeeper *m_updateKeeper;
+      UpdateListener *m_updateListener;
+      // This member must be always gueranted non zero. Otherwise an excption must
+      // be provided from the constructor of this class.
+      Win8ScreenDriverImpl *m_drvImpl;
+      CopyRectDetector m_copyRectDetector;
+      critical_section m_drvImplMutex;
 
-  bool m_detectionEnabled;
-};
+      CursorShape m_cursorShape;
 
-//// __WIN8SCREENDRIVER_H__
+      bool m_detectionEnabled;
+   };
+
+   //// __WIN8SCREENDRIVER_H__
+
+} // namespace remoting_node_desktop
+
+
+
+
+

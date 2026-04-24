@@ -27,11 +27,20 @@
 
 #include "WinDxException.h"
 
-class WinDxCriticalException : public WinDxException
+namespace remoting_node_desktop
 {
-public:
-  WinDxCriticalException(const ::scoped_string & scopedstrMessage, HRESULT errCode);
-  virtual ~WinDxCriticalException();
-};
 
-//// __WINDXCRITICALEXCEPTION_H__
+   class WinDxCriticalException : public WinDxException
+   {
+   public:
+      WinDxCriticalException(const ::scoped_string &scopedstrMessage, HRESULT errCode);
+      virtual ~WinDxCriticalException();
+   };
+
+   //// __WINDXCRITICALEXCEPTION_H__
+
+} // namespace remoting_node_desktop
+
+
+
+

@@ -26,61 +26,52 @@
 
 #include "subsystem/platform/StringParser.h"
 
-const char QueryConnectionCommandLine::QUERY_CONNECTION[] = "-queryconnection";
-const char QueryConnectionCommandLine::PEER_ADDR[] = "-peer";
-const char QueryConnectionCommandLine::TIMEOUT[] = "-timeout";
-const char QueryConnectionCommandLine::ACCEPT[] = "-accept";
-
-QueryConnectionCommandLine::QueryConnectionCommandLine()
+namespace remoting_node_desktop
 {
-}
 
-QueryConnectionCommandLine::~QueryConnectionCommandLine()
-{
-}
 
-void QueryConnectionCommandLine::parse(const ::subsystem::CommandLineArguments *commandLine)
-{
-   ::subsystem::CommandLineFormat format[] = {
-      {QUERY_CONNECTION, ::subsystem::NO_ARG},
-                                              {PEER_ADDR, ::subsystem::NEEDS_ARG},
-                                              {TIMEOUT, ::subsystem::NEEDS_ARG},
-                                              {ACCEPT, ::subsystem::NO_ARG}
-  };
+   ::string_literal QueryConnectionCommandLine::QUERY_CONNECTION = "-queryconnection";
+   ::string_literal QueryConnectionCommandLine::PEER_ADDR = "-peer";
+   ::string_literal QueryConnectionCommandLine::TIMEOUT = "-timeout";
+   ::string_literal QueryConnectionCommandLine::ACCEPT = "-accept";
 
-  if (!CommandLine::parse(format, sizeof(format) / sizeof(::subsystem::CommandLineFormat), commandLine))
+   QueryConnectionCommandLine::QueryConnectionCommandLine() {}
+
+   QueryConnectionCommandLine::~QueryConnectionCommandLine() {}
+
+   void QueryConnectionCommandLine::parse(const ::subsystem::CommandLineArguments *commandLine)
    {
-    throw ::subsystem::Exception("Wrong command line format");
-  }
+      ::subsystem::CommandLineFormat format[] = {{QUERY_CONNECTION, ::subsystem::NO_ARG},
+                                                 {PEER_ADDR, ::subsystem::NEEDS_ARG},
+                                                 {TIMEOUT, ::subsystem::NEEDS_ARG},
+                                                 {ACCEPT, ::subsystem::NO_ARG}};
 
-  if (!optionSpecified(QUERY_CONNECTION)) {
-    throw ::subsystem::Exception("-queryconnection flag is not specified");
-  }
+      if (!CommandLine::parse(format, sizeof(format) / sizeof(::subsystem::CommandLineFormat), commandLine))
+      {
+         throw ::subsystem::Exception("Wrong command line format");
+      }
 
-  ::string timeoutStr;
+      if (!optionSpecified(QUERY_CONNECTION))
+      {
+         throw ::subsystem::Exception("-queryconnection flag is not specified");
+      }
 
-  if (optionSpecified(TIMEOUT, &timeoutStr) &&
-      !MainSubsystem().StringParser().parseInt(timeoutStr, (int *)&m_timeout)) {
-    throw ::subsystem::Exception("Invalid timeout");
-  }
-}
+      ::string timeoutStr;
 
-bool QueryConnectionCommandLine::isTimeoutSpecified()
-{
-  return optionSpecified(TIMEOUT);
-}
+      if (optionSpecified(TIMEOUT, &timeoutStr) &&
+          !MainSubsystem().StringParser().parseInt(timeoutStr, (int *)&m_timeout))
+      {
+         throw ::subsystem::Exception("Invalid timeout");
+      }
+   }
 
-void QueryConnectionCommandLine::getPeerAddress(::string & storage)
-{
-  optionSpecified(PEER_ADDR, &storage);
-}
+   bool QueryConnectionCommandLine::isTimeoutSpecified() { return optionSpecified(TIMEOUT); }
 
-bool QueryConnectionCommandLine::isDefaultActionAccept()
-{
-  return optionSpecified(ACCEPT);
-}
+   void QueryConnectionCommandLine::getPeerAddress(::string &storage) { optionSpecified(PEER_ADDR, &storage); }
 
-unsigned int QueryConnectionCommandLine::getTimeout()
-{
-  return m_timeout;
-}
+   bool QueryConnectionCommandLine::isDefaultActionAccept() { return optionSpecified(ACCEPT); }
+
+   unsigned int QueryConnectionCommandLine::getTimeout() { return m_timeout; }
+
+
+} // namespace remoting_node_desktop

@@ -32,45 +32,54 @@
 #include "subsystem/node/Displays.h"
 //#include "log_writer/LogWriter.h"
 
-class WindowsUserInput : public UserInput
+
+namespace remoting_node_desktop
 {
-public:
-  WindowsUserInput(::subsystem::ClipboardListener *clipboardListener,
-                   bool ctrlAltDelEnabled,
-                   ::subsystem::LogWriter *log);
-  virtual ~WindowsUserInput(void);
 
-  virtual void setNewClipboard(const ::scoped_string & newClipboard);
-  virtual void setMouseEvent(const ::int_point newPos, unsigned char keyFlag);
-  virtual void setKeyboardEvent(unsigned int keySym, bool down);
+   class WindowsUserInput : public UserInput
+   {
+   public:
+      WindowsUserInput(::subsystem::ClipboardListener *clipboardListener, bool ctrlAltDelEnabled,
+                       ::subsystem::LogWriter *log);
+      virtual ~WindowsUserInput(void);
 
-  virtual void getCurrentUserInfo(::string & desktopName,
-                                  ::string & userName);
-  virtual void getDisplayNumberCoords(::int_rectangle *rect,
-                                      unsigned char dispNumber);
-  virtual ::array_base<::int_rectangle> WindowsUserInput::getDisplaysCoords();
-  virtual void getNormalizedRect(::int_rectangle *rect);
-  virtual void getPrimaryDisplayCoords(::int_rectangle *rect);
-  virtual void getWindowCoords(HWND hwnd, ::int_rectangle *rect);
-  virtual HWND getWindowHandleByName(const ::scoped_string & windowName);
-  virtual void getApplicationRegion(unsigned int procId, ::remoting::Region *region);
-  virtual bool isApplicationInFocus(unsigned int procId);
+      virtual void setNewClipboard(const ::scoped_string &newClipboard);
+      virtual void setMouseEvent(const ::int_point newPos, unsigned char keyFlag);
+      virtual void setKeyboardEvent(unsigned int keySym, bool down);
 
-  virtual void initKeyFlag(unsigned char initValue) { m_prevKeyFlag = initValue; }
+      virtual void getCurrentUserInfo(::string &desktopName, ::string &userName);
+      virtual void getDisplayNumberCoords(::int_rectangle *rect, unsigned char dispNumber);
+      virtual ::array_base<::int_rectangle> WindowsUserInput::getDisplaysCoords();
+      virtual void getNormalizedRect(::int_rectangle *rect);
+      virtual void getPrimaryDisplayCoords(::int_rectangle *rect);
+      virtual void getWindowCoords(HWND hwnd, ::int_rectangle *rect);
+      virtual HWND getWindowHandleByName(const ::scoped_string &windowName);
+      virtual void getApplicationRegion(unsigned int procId, ::remoting::Region *region);
+      virtual bool isApplicationInFocus(unsigned int procId);
 
-protected:
-  void toFbCoordinates(::int_rectangle *rect);
+      virtual void initKeyFlag(unsigned char initValue) { m_prevKeyFlag = initValue; }
 
-  ::pointer < ::subsystem::Clipboard2 >m_pclipboard;
-  //WindowsDisplays m_winDisplays;
-  ::subsystem::Displays m_winDisplays;
+   protected:
+      void toFbCoordinates(::int_rectangle *rect);
 
-  ::subsystem::Keymap m_keyMap;
-  ::subsystem::InputInjector m_inputInjector;
+      ::pointer<::subsystem::Clipboard2> m_pclipboard;
+      // WindowsDisplays m_winDisplays;
+      ::subsystem::Displays m_winDisplays;
 
-  unsigned char m_prevKeyFlag;
+      ::subsystem::Keymap m_keyMap;
+      ::subsystem::InputInjector m_inputInjector;
 
-  ::subsystem::LogWriter *m_plogwriter;
-};
+      unsigned char m_prevKeyFlag;
 
-//// __WINDOWSUSERINPUT_H__
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+   //// __WINDOWSUSERINPUT_H__
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+

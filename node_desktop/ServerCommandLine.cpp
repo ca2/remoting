@@ -25,39 +25,38 @@
 #include "ServerCommandLine.h"
 #include "subsystem/platform/CommandLine.h"
 
-ServerCommandLine::ServerCommandLine()
+namespace remoting_node_desktop
 {
-}
 
-ServerCommandLine::~ServerCommandLine()
-{
-}
 
-bool ServerCommandLine::parse(const ::subsystem::CommandLineArguments *cmdArgs)
-{
-  ::subsystem::CommandLineFormat format[] = {{"-help", ::subsystem::NO_ARG},
-                                              {"-h", ::subsystem::NO_ARG},
-                                              {"-?", ::subsystem::NO_ARG},
-                                              {"/help", ::subsystem::NO_ARG},
-                                              {"/h", ::subsystem::NO_ARG},
-                                              {"/?", ::subsystem::NO_ARG},
-                                              {"-run", ::subsystem::NO_ARG}
-  };
+   ServerCommandLine::ServerCommandLine() {}
 
-  if (!CommandLine::parse(format, sizeof(format) / sizeof(::subsystem::CommandLineFormat), cmdArgs))
-  {
-    return false;
-  }
-  if (showHelp() && optionSpecified("-run")) {
-    return false;
-  }
+   ServerCommandLine::~ServerCommandLine() {}
 
-  return true;
-}
+   bool ServerCommandLine::parse(const ::subsystem::CommandLineArguments *cmdArgs)
+   {
+      ::subsystem::CommandLineFormat format[] = {{"-help", ::subsystem::NO_ARG}, {"-h", ::subsystem::NO_ARG},
+                                                 {"-?", ::subsystem::NO_ARG},    {"/help", ::subsystem::NO_ARG},
+                                                 {"/h", ::subsystem::NO_ARG},    {"/?", ::subsystem::NO_ARG},
+                                                 {"-run", ::subsystem::NO_ARG}};
 
-bool ServerCommandLine::showHelp()
-{
-  return optionSpecified("-help") || optionSpecified("-h") ||
-         optionSpecified("-?") || optionSpecified("/help") ||
-         optionSpecified("/h") || optionSpecified("/?");
-}
+      if (!CommandLine::parse(format, sizeof(format) / sizeof(::subsystem::CommandLineFormat), cmdArgs))
+      {
+         return false;
+      }
+      if (showHelp() && optionSpecified("-run"))
+      {
+         return false;
+      }
+
+      return true;
+   }
+
+   bool ServerCommandLine::showHelp()
+   {
+      return optionSpecified("-help") || optionSpecified("-h") || optionSpecified("-?") || optionSpecified("/help") ||
+             optionSpecified("/h") || optionSpecified("/?");
+   }
+
+
+} // namespace remoting_node_desktop

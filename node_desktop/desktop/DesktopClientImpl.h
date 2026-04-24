@@ -40,48 +40,55 @@
 #include "desktop_ipc/ReconnectionListener.h"
 #include "UpdateListener.h"
 
-class DesktopClientImpl : public AnEventListener,
-                   public ReconnectionListener,
-                   public Thread,
-                   public DesktopBaseImpl
+namespace remoting_node_desktop
 {
-public:
-  DesktopClientImpl(ClipboardListener *extClipListener,
-                UpdateSendingListener *extUpdSendingListener,
-                AbnormDeskTermListener *extDeskTermListener,
-                ::subsystem::LogWriter *log);
-  virtual ~DesktopClientImpl();
 
-protected:
-  virtual void execute();
-  virtual void onTerminate();
+   class DesktopClientImpl : public AnEventListener, public ReconnectionListener, public Thread, public DesktopBaseImpl
+   {
+   public:
+      DesktopClientImpl(ClipboardListener *extClipListener, UpdateSendingListener *extUpdSendingListener,
+                        AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter *log);
+      virtual ~DesktopClientImpl();
 
-private:
-  // Interface functions
-  virtual void onAnObjectEvent();
-  virtual void onReconnect(Channel *newChannelTo, Channel *newChannelFrom);
+   protected:
+      virtual void execute();
+      virtual void onTerminate();
 
-  void freeResource();
-  void closeDesktopServerTransport();
+   private:
+      // Interface functions
+      virtual void onAnObjectEvent();
+      virtual void onReconnect(Channel *newChannelTo, Channel *newChannelFrom);
 
-  virtual bool isRemoteInputTempBlocked();
-  virtual void applyNewConfiguration();
+      void freeResource();
+      void closeDesktopServerTransport();
 
-  // Inter process transport
-  ReconnectingChannel *m_clToSrvChan;
-  ReconnectingChannel *m_srvToClChan;
-  BlockingGate *m_clToSrvGate;
-  BlockingGate *m_srvToClGate;
+      virtual bool isRemoteInputTempBlocked();
+      virtual void applyNewConfiguration();
 
-  DesktopServerWatcher *m_deskServWatcher;
-  DesktopSrvDispatcher *m_dispatcher;
+      // Inter process transport
+      ReconnectingChannel *m_clToSrvChan;
+      ReconnectingChannel *m_srvToClChan;
+      BlockingGate *m_clToSrvGate;
+      BlockingGate *m_srvToClGate;
 
-  GateKicker *m_gateKicker;
-  UserInput *m_userInputClient; // It uses for delegation by the SasUserInput.
+      DesktopServerWatcher *m_deskServWatcher;
+      DesktopSrvDispatcher *m_dispatcher;
 
-  DesktopConfigClient *m_deskConf;
+      GateKicker *m_gateKicker;
+      UserInput *m_userInputClient; // It uses for delegation by the SasUserInput.
 
-  ::subsystem::LogWriter *m_plogwriter;
-};
+      DesktopConfigClient *m_deskConf;
 
-//// __DESKTOPCLIENTIMPL_H__
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+
+
+

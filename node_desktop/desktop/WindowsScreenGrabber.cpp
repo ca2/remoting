@@ -24,218 +24,237 @@
 #include "framework.h"
 #include "WindowsScreenGrabber.h"
 
-WindowsScreenGrabber::WindowsScreenGrabber(void)
-: m_destDC(NULL), m_screenDC(NULL), m_hbmDIB(NULL), m_hbmOld(NULL)
+
+namespace remoting_node_desktop
 {
-  m_serverConfig = Configurator::getInstance()->getServerConfig();
-  setWorkRectDefault();
-  resume();
-  m_hasStartedSignal.waitForEvent();
-}
 
-WindowsScreenGrabber::~WindowsScreenGrabber(void)
-{
-  closeDIBSection();
-  terminate();
-  wait();
-}
 
-bool WindowsScreenGrabber::applyNewProperties()
-{
-  if (!applyNewPixelFormat() || !applyNewFullScreenRect() || !openDIBSection()) 
-  {
-    return false;
-  }
+   WindowsScreenGrabber::WindowsScreenGrabber(void) : m_destDC(NULL), m_screenDC(NULL), m_hbmDIB(NULL), m_hbmOld(NULL)
+   {
+      m_serverConfig = Configurator::getInstance()->getServerConfig();
+      setWorkRectDefault();
+      resume();
+      m_hasStartedSignal.waitForEvent();
+   }
 
-  return true;
-}
+   WindowsScreenGrabber::~WindowsScreenGrabber(void)
+   {
+      closeDIBSection();
+      terminate();
+      wait();
+   }
 
-bool WindowsScreenGrabber::openDIBSection()
-{
-  closeDIBSection();
+   bool WindowsScreenGrabber::applyNewProperties()
+   {
+      if (!applyNewPixelFormat() || !applyNewFullScreenRect() || !openDIBSection())
+      {
+         return false;
+      }
 
-  m_workFrameBuffer.setBuffer(0);
+      return true;
+   }
 
-  m_screenDC = GetDC(0);
-  if (m_screenDC == NULL) {
-    return false;
-  }
+   bool WindowsScreenGrabber::openDIBSection()
+   {
+      closeDIBSection();
 
-  if (getPropertiesChanged()) {
-    return false;
-  }
+      m_workFrameBuffer.setBuffer(0);
 
-  Screen::BMI bmi;
-  try {
-    m_screen.getBMI(&bmi, m_screenDC);
-  } catch (...) {
-    return false;
-  }
+      m_screenDC = GetDC(0);
+      if (m_screenDC == NULL)
+      {
+         return false;
+      }
 
-  ::innate_subsystem::PixelFormat pixelFormat = m_workFrameBuffer.getPixelFormat();
-  ::int_size workDim = m_workFrameBuffer.getDimension();
+      if (getPropertiesChanged())
+      {
+         return false;
+      }
 
-  bmi.bmiHeader.biBitCount = pixelFormat.bitsPerPixel;
-  bmi.bmiHeader.biWidth = workDim.cx;
-  bmi.bmiHeader.biHeight = -workDim.cy;
-  bmi.bmiHeader.biCompression = BI_BITFIELDS;
-  bmi.red   = pixelFormat.redMax   << pixelFormat.redShift;
-  bmi.green = pixelFormat.greenMax << pixelFormat.greenShift;
-  bmi.blue  = pixelFormat.blueMax  << pixelFormat.blueShift;
+      Screen::BMI bmi;
+      try
+      {
+         m_screen.getBMI(&bmi, m_screenDC);
+      }
+      catch (...)
+      {
+         return false;
+      }
 
-  m_destDC = CreateCompatibleDC(NULL);
-  if (m_destDC == NULL) {
-    DeleteDC(m_screenDC);
-    return false;
-  }
+      ::innate_subsystem::PixelFormat pixelFormat = m_workFrameBuffer.getPixelFormat();
+      ::int_size workDim = m_workFrameBuffer.getDimension();
 
-  void *buffer;
-  m_hbmDIB = CreateDIBSection(m_destDC, (BITMAPINFO *) &bmi, DIB_RGB_COLORS, &buffer, NULL, NULL);
-  if (m_hbmDIB == 0) {
-    DeleteDC(m_destDC);
-    DeleteDC(m_screenDC);
-    return false;
-  }
-  m_workFrameBuffer.setBuffer(buffer);
-  m_dibSectionDim = workDim;
+      bmi.bmiHeader.biBitCount = pixelFormat.bitsPerPixel;
+      bmi.bmiHeader.biWidth = workDim.cx;
+      bmi.bmiHeader.biHeight = -workDim.cy;
+      bmi.bmiHeader.biCompression = BI_BITFIELDS;
+      bmi.red = pixelFormat.redMax << pixelFormat.redShift;
+      bmi.green = pixelFormat.greenMax << pixelFormat.greenShift;
+      bmi.blue = pixelFormat.blueMax << pixelFormat.blueShift;
 
-  m_hbmOld = (HBITMAP) SelectObject(m_destDC, m_hbmDIB);
+      m_destDC = CreateCompatibleDC(NULL);
+      if (m_destDC == NULL)
+      {
+         DeleteDC(m_screenDC);
+         return false;
+      }
 
-  return true;
-}
+      void *buffer;
+      m_hbmDIB = CreateDIBSection(m_destDC, (BITMAPINFO *)&bmi, DIB_RGB_COLORS, &buffer, NULL, NULL);
+      if (m_hbmDIB == 0)
+      {
+         DeleteDC(m_destDC);
+         DeleteDC(m_screenDC);
+         return false;
+      }
+      m_workFrameBuffer.setBuffer(buffer);
+      m_dibSectionDim = workDim;
 
-bool WindowsScreenGrabber::closeDIBSection()
-{
-  // Free resources
-  SelectObject(m_destDC, m_hbmOld);
+      m_hbmOld = (HBITMAP)SelectObject(m_destDC, m_hbmDIB);
 
-  DeleteObject(m_hbmDIB);
-  m_hbmDIB = NULL;
+      return true;
+   }
 
-  DeleteDC(m_destDC);
-  m_destDC = NULL;
+   bool WindowsScreenGrabber::closeDIBSection()
+   {
+      // Free resources
+      SelectObject(m_destDC, m_hbmOld);
 
-  DeleteDC(m_screenDC);
-  m_screenDC = NULL;
+      DeleteObject(m_hbmDIB);
+      m_hbmDIB = NULL;
 
-  m_workFrameBuffer.setBuffer(NULL);;
-  return true;
-}
+      DeleteDC(m_destDC);
+      m_destDC = NULL;
 
-bool WindowsScreenGrabber::getPropertiesChanged()
-{
-  // Check for changing
-  if (getScreenSizeChanged() || getPixelFormatChanged()) {
-    return true;
-  }
+      DeleteDC(m_screenDC);
+      m_screenDC = NULL;
 
-  return false;
-}
+      m_workFrameBuffer.setBuffer(NULL);
+      ;
+      return true;
+   }
 
-bool WindowsScreenGrabber::getPixelFormatChanged()
-{
-  m_screen.update();
+   bool WindowsScreenGrabber::getPropertiesChanged()
+   {
+      // Check for changing
+      if (getScreenSizeChanged() || getPixelFormatChanged())
+      {
+         return true;
+      }
 
-  ::innate_subsystem::PixelFormat currentPF = m_screen.getPixelFormat();
-  ::innate_subsystem::PixelFormat frameBufferPF = m_workFrameBuffer.getPixelFormat();
-
-  return !frameBufferPF.isEqualTo(&currentPF);
-}
-
-bool WindowsScreenGrabber::getScreenSizeChanged()
-{
-  m_screen.update();
-
-  ::int_rectangle screenRect = m_screen.getDesktopRect();
-  int width = screenRect.width();
-  int height = screenRect.height();
-
-  if (width != m_fullScreenRect.width() ||
-      height != m_fullScreenRect.height()) {
-    return true;
-  }
-
-  int left = screenRect.left;
-  int top = screenRect.top;
-
-  if (left != m_fullScreenRect.left||
-      top != m_fullScreenRect.top) {
-    // In this case apply new properties automatically
-    // and don't inform anybody.
-    applyNewProperties();
-  }
-
-  return false;
-}
-
-bool WindowsScreenGrabber::applyNewPixelFormat()
-{
-  m_screen.update();
-  m_workFrameBuffer.setEmptyPixelFmt(&m_screen.getPixelFormat());
-
-  return true;
-}
-
-bool WindowsScreenGrabber::applyNewFullScreenRect()
-{
-  m_screen.update();
-  m_fullScreenRect = m_screen.getDesktopRect();
-  setWorkRect(&m_fullScreenRect);
-
-  return true;
-}
-
-bool WindowsScreenGrabber::grab(const ::int_rectangle &  rect)
-{
-  if (rect != NULL) {
-    return grabByDIBSection(rect);
-  }
-
-  ::int_rectangle grabRect;
-  ::int_size workDim = m_workFrameBuffer.getDimension();
-  // Set relative co-ordinates
-  grabRect.left = 0;
-  grabRect.top = 0;
-  grabRect.set_width(workDim.cx);
-  grabRect.set_height(workDim.cy);
-
-  return grabByDIBSection(&grabRect);
-}
-
-bool WindowsScreenGrabber::grabByDIBSection(const ::int_rectangle &  rect)
-{
-  ::int_size workDim = m_workFrameBuffer.getDimension();
-  if (workDim.cx != m_dibSectionDim.cx ||
-      workDim.cy != m_dibSectionDim.cy) {
-    if (!openDIBSection()) {
       return false;
-    }
-  }
+   }
 
-  DWORD bitBltFlag;
-  if (m_serverConfig->getGrabTransparentWindowsFlag()) {
-    bitBltFlag = SRCCOPY | CAPTUREBLT;
-  } else {
-    bitBltFlag = SRCCOPY;
-  }
+   bool WindowsScreenGrabber::getPixelFormatChanged()
+   {
+      m_screen.update();
 
-  if (BitBlt(m_destDC, rect.left, rect.top, rect.width(), rect.height(), 
-             m_screenDC, rect.left + m_offsetFrameBuffer.x,
-             rect.top + m_offsetFrameBuffer.y, bitBltFlag) == 0) {
-    return false;
-  }
+      ::innate_subsystem::PixelFormat currentPF = m_screen.getPixelFormat();
+      ::innate_subsystem::PixelFormat frameBufferPF = m_workFrameBuffer.getPixelFormat();
 
-  return !getPropertiesChanged();
-}
+      return !frameBufferPF.isEqualTo(&currentPF);
+   }
 
-void WindowsScreenGrabber::execute()
-{
-  applyNewProperties();
-  m_hasStartedSignal.notify();
-  m_threadStopper.waitForEvent();
-}
+   bool WindowsScreenGrabber::getScreenSizeChanged()
+   {
+      m_screen.update();
 
-void WindowsScreenGrabber::onTerminate()
-{
-  m_threadStopper.notify();
-}
+      ::int_rectangle screenRect = m_screen.getDesktopRect();
+      int width = screenRect.width();
+      int height = screenRect.height();
+
+      if (width != m_fullScreenRect.width() || height != m_fullScreenRect.height())
+      {
+         return true;
+      }
+
+      int left = screenRect.left;
+      int top = screenRect.top;
+
+      if (left != m_fullScreenRect.left || top != m_fullScreenRect.top)
+      {
+         // In this case apply new properties automatically
+         // and don't inform anybody.
+         applyNewProperties();
+      }
+
+      return false;
+   }
+
+   bool WindowsScreenGrabber::applyNewPixelFormat()
+   {
+      m_screen.update();
+      m_workFrameBuffer.setEmptyPixelFmt(&m_screen.getPixelFormat());
+
+      return true;
+   }
+
+   bool WindowsScreenGrabber::applyNewFullScreenRect()
+   {
+      m_screen.update();
+      m_fullScreenRect = m_screen.getDesktopRect();
+      setWorkRect(&m_fullScreenRect);
+
+      return true;
+   }
+
+   bool WindowsScreenGrabber::grab(const ::int_rectangle &rect)
+   {
+      if (rect != NULL)
+      {
+         return grabByDIBSection(rect);
+      }
+
+      ::int_rectangle grabRect;
+      ::int_size workDim = m_workFrameBuffer.getDimension();
+      // Set relative co-ordinates
+      grabRect.left = 0;
+      grabRect.top = 0;
+      grabRect.set_width(workDim.cx);
+      grabRect.set_height(workDim.cy);
+
+      return grabByDIBSection(&grabRect);
+   }
+
+   bool WindowsScreenGrabber::grabByDIBSection(const ::int_rectangle &rect)
+   {
+      ::int_size workDim = m_workFrameBuffer.getDimension();
+      if (workDim.cx != m_dibSectionDim.cx || workDim.cy != m_dibSectionDim.cy)
+      {
+         if (!openDIBSection())
+         {
+            return false;
+         }
+      }
+
+      DWORD bitBltFlag;
+      if (m_serverConfig->getGrabTransparentWindowsFlag())
+      {
+         bitBltFlag = SRCCOPY | CAPTUREBLT;
+      }
+      else
+      {
+         bitBltFlag = SRCCOPY;
+      }
+
+      if (BitBlt(m_destDC, rect.left, rect.top, rect.width(), rect.height(), m_screenDC,
+                 rect.left + m_offsetFrameBuffer.x, rect.top + m_offsetFrameBuffer.y, bitBltFlag) == 0)
+      {
+         return false;
+      }
+
+      return !getPropertiesChanged();
+   }
+
+   void WindowsScreenGrabber::execute()
+   {
+      applyNewProperties();
+      m_hasStartedSignal.notify();
+      m_threadStopper.waitForEvent();
+   }
+
+   void WindowsScreenGrabber::onTerminate() { m_threadStopper.notify(); }
+
+
+} // namespace remoting_node_desktop
+ 

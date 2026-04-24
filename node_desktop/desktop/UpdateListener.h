@@ -27,14 +27,21 @@
 
 //#include "subsystem/thread/critical_section.h"
 
-class UpdateListener
+namespace remoting_node_desktop
 {
-public:
-  UpdateListener(void);
-  virtual ~UpdateListener(void);
 
-  // Interface function
-  virtual void onUpdate() = 0;
-};
+   class UpdateListener
+   {
+   public:
+      UpdateListener(void);
+      virtual ~UpdateListener(void);
 
-//// __UPDATELISTENER_H__
+      // Interface function
+      virtual void onUpdate() = 0;
+   };
+
+
+} // namespace remoting_node_desktop 
+
+
+

@@ -29,44 +29,52 @@
 #include "acme/parallelization/happening.h"
 //#include "su/WindowsEvent.h"
 
-// This class will be authenticate insert an time interval between
-// failure trying of authentications.
-class ControlAppAuthenticator : private AuthTracker
+
+namespace remoting_node_desktop
 {
-public:
-  // failureMaxCount is a max count of failure try during a failureTimeInterval
-  // without ban. If failure count greater than failureMaxCount then
-  // the authenticate() function will be blocked for the failureTimeInterval
-  // time elapsed from first failure authentication.
-  ControlAppAuthenticator(unsigned long long failureTimeInterval,
-                          unsigned int failureMaxCount);
-  virtual ~ControlAppAuthenticator();
 
-  // Returns true if authentication has succeed and still has not been called
-  // the breakAndDisableAuthentications() function.
-  // The function may be blocked as described above then if it will
-  // be called again the caller will wait other callers in order.
-  bool authenticate(const unsigned char cryptPassword[8],
-                    const unsigned char challenge[8],
-                    const unsigned char response[8]);
+   // This class will be authenticate insert an time interval between
+   // failure trying of authentications.
+   class ControlAppAuthenticator : private AuthTracker
+   {
+   public:
+      // failureMaxCount is a max count of failure try during a failureTimeInterval
+      // without ban. If failure count greater than failureMaxCount then
+      // the authenticate() function will be blocked for the failureTimeInterval
+      // time elapsed from first failure authentication.
+      ControlAppAuthenticator(unsigned long long failureTimeInterval, unsigned int failureMaxCount);
+      virtual ~ControlAppAuthenticator();
 
-  // Breaks all wait operations for this authenticator. Also if some
-  // caller calls the authenticate() function it immediately return the
-  // false value and will be returns the false value for next calls.
-  // Call this function
-  // before wait of termination of an object user.
-  void breakAndDisableAuthentications();
+      // Returns true if authentication has succeed and still has not been called
+      // the breakAndDisableAuthentications() function.
+      // The function may be blocked as described above then if it will
+      // be called again the caller will wait other callers in order.
+      bool authenticate(const unsigned char cryptPassword[8], const unsigned char challenge[8],
+                        const unsigned char response[8]);
 
-private:
-  // Call this function before process an authentication. If authentication
-  // is banned at this time then the funciton will wait until authentication
-  // is freed.
-  void checkBeforeAuth();
+      // Breaks all wait operations for this authenticator. Also if some
+      // caller calls the authenticate() function it immediately return the
+      // false value and will be returns the false value for next calls.
+      // Call this function
+      // before wait of termination of an object user.
+      void breakAndDisableAuthentications();
 
-  critical_section m_authMutex;
-  //WindowsEvent m_banDelay;
-  ::happening m_banDelay;
-  bool m_isBreaked;
-};
+   private:
+      // Call this function before process an authentication. If authentication
+      // is banned at this time then the funciton will wait until authentication
+      // is freed.
+      void checkBeforeAuth();
 
-//// __CONTROLAPPAUTHENTICATOR_H__
+      critical_section m_authMutex;
+      // WindowsEvent m_banDelay;
+      ::happening m_banDelay;
+      bool m_isBreaked;
+   };
+
+   //// __CONTROLAPPAUTHENTICATOR_H__
+
+
+} // namespace remoting_node_desktop
+
+
+

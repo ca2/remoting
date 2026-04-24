@@ -27,29 +27,42 @@
 
 #include "remoting/remoting/rfb/CursorShape.h"
 
-// This class is wrapper for CursorShape class to extend it behaviour for the Win8 desktop
-// duplication model.
-class Win8CursorShape
+
+namespace remoting_node_desktop
 {
-public:
-  Win8CursorShape();
-  virtual ~Win8CursorShape();
 
-  const CursorShape *getCursorShape() const;
+   // This class is wrapper for CursorShape class to extend it behaviour for the Win8 desktop
+   // duplication model.
+   class Win8CursorShape
+   {
+   public:
+      Win8CursorShape();
+      virtual ~Win8CursorShape();
 
-  CursorShape *getCursorShapeForWriting();
+      const CursorShape *getCursorShape() const;
 
-  // threadOwner is a number of latest thread which call this function.
-  void setVisibility(bool value, int threadOwner);
+      CursorShape *getCursorShapeForWriting();
 
-  bool getIsVisible() const;
+      // threadOwner is a number of latest thread which call this function.
+      void setVisibility(bool value, int threadOwner);
 
-private:
-  int m_threadOwner;
+      bool getIsVisible() const;
 
-  bool m_isVisible;
-  CursorShape m_emptyDimensionCursorShape;
-  CursorShape m_cursorShape;
-};
+   private:
+      int m_threadOwner;
 
-//// __WIN8CURSORSHAPE_H__
+      bool m_isVisible;
+      CursorShape m_emptyDimensionCursorShape;
+      CursorShape m_cursorShape;
+   };
+
+
+} //  namespace remoting_node_desktop
+
+
+
+
+
+
+
+

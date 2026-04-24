@@ -32,68 +32,77 @@
 //#include "subsystem/platform/::earth::time.h"
 //#include "log_writer/LogWriter.h"
 
-// This class calculates actual view port rectangle.
-// Typical usage:
-// // Initialisation
-// ViewPort m_viewPort;
-// ...
-// ...
-// m_viewPort.update(&frameBuffer->getDimension());
-// ::int_rectangle viewPort = m_viewPort.getViewPortRect();
-class ViewPort
+
+namespace remoting_node_desktop
 {
-public:
-  ViewPort(::subsystem::LogWriter *log);
-  ViewPort(const ViewPortState *viewPortState, ::subsystem::LogWriter *log);
-  ~ViewPort();
 
-  // Sets desktop interface that can be used in some mode to get
-  // desktop info. The desktop interface uses only in the update() function.
-  void initDesktopInterface(Desktop *desktop);
+   // This class calculates actual view port rectangle.
+   // Typical usage:
+   // // Initialisation
+   // ViewPort m_viewPort;
+   // ...
+   // ...
+   // m_viewPort.update(&frameBuffer->getDimension());
+   // ::int_rectangle viewPort = m_viewPort.getViewPortRect();
+   class ViewPort
+   {
+   public:
+      ViewPort(::subsystem::LogWriter *log);
+      ViewPort(const ViewPortState *viewPortState, ::subsystem::LogWriter *log);
+      ~ViewPort();
 
-  // This function updates view port rectangle. The new view port rectangle
-  // will be constrained by fbDimension.
-  void update(const ::int_size & fbDimension);
+      // Sets desktop interface that can be used in some mode to get
+      // desktop info. The desktop interface uses only in the update() function.
+      void initDesktopInterface(Desktop *desktop);
 
-  // This function returns the view port rectangle.
-  ::int_rectangle getViewPortRect();
+      // This function updates view port rectangle. The new view port rectangle
+      // will be constrained by fbDimension.
+      void update(const ::int_size &fbDimension);
 
-  // Returns true if checked share only application.
-  bool getOnlyApplication();
+      // This function returns the view port rectangle.
+      ::int_rectangle getViewPortRect();
 
-  // Returns application PID if we share one application. Check getOnlyApplication() as well,
-  // to make sure the returned value is relevant.
-  unsigned int getApplicationId();
+      // Returns true if checked share only application.
+      bool getOnlyApplication();
 
-  // Returns a region that has rectangles of application which was visible
-  // window parts at latest calling of the update() function. The region
-  // doesn't changes by the update function if checked mode isn't "shareapp".
-  void getApplicationRegion(::remoting::Region *region);
+      // Returns application PID if we share one application. Check getOnlyApplication() as well,
+      // to make sure the returned value is relevant.
+      unsigned int getApplicationId();
 
-  // Assignes self values by an external state.
-  void changeState(const ViewPortState *newState);
+      // Returns a region that has rectangles of application which was visible
+      // window parts at latest calling of the update() function. The region
+      // doesn't changes by the update function if checked mode isn't "shareapp".
+      void getApplicationRegion(::remoting::Region *region);
 
-private:
-  // Disable the copy operation and constructor.
-  ViewPort(const ViewPort &);
-  ViewPort & operator =(const ViewPort &);
+      // Assignes self values by an external state.
+      void changeState(const ViewPortState *newState);
 
-  // Resolves a window name of the view port state to window handle.
-  // On an error the function do nothing.
-  void resolveWindowName();
+   private:
+      // Disable the copy operation and constructor.
+      ViewPort(const ViewPort &);
+      ViewPort &operator=(const ViewPort &);
 
-  static const int RESOLVING_PERIOD = 3000;
+      // Resolves a window name of the view port state to window handle.
+      // On an error the function do nothing.
+      void resolveWindowName();
 
-  Desktop *m_desktop;
+      static const int RESOLVING_PERIOD = 3000;
 
-  ViewPortState m_state;
-  ::int_rectangle m_rect;
-  ::remoting::Region m_appRegion;
-  critical_section m_stateMutex;
+      Desktop *m_desktop;
 
-  ::earth::time m_latestHwndResolvingTime;
+      ViewPortState m_state;
+      ::int_rectangle m_rect;
+      ::remoting::Region m_appRegion;
+      critical_section m_stateMutex;
 
-  ::subsystem::LogWriter *m_plogwriter;
-};
+      ::earth::time m_latestHwndResolvingTime;
 
-//// __VIEWPORT_H__
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+
+} // namespace remoting_node_desktop 
+
+
+
+

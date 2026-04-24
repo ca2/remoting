@@ -26,297 +26,348 @@
 #include "subsystem/platform/Exception.h"
 //#include "subsystem/thread/critical_section.h"
 
-critical_section WindowsInputBlocker::m_instanceMutex;
-HHOOK WindowsInputBlocker::m_hKeyboardHook = 0;
-HHOOK WindowsInputBlocker::m_hSoftKeyboardHook = 0;
-HHOOK WindowsInputBlocker::m_hMouseHook = 0;
-HHOOK WindowsInputBlocker::m_hSoftMouseHook = 0;
-
-::earth::time WindowsInputBlocker::m_lastInputTime;
-unsigned int WindowsInputBlocker::m_timeInterval = INFINITE;
-critical_section WindowsInputBlocker::m_lastInputTimeMutex;
-
-WindowsInputBlocker *WindowsInputBlocker::m_instance = 0;
-
-WindowsInputBlocker::WindowsInputBlocker(::subsystem::LogWriter *log)
-: m_isKeyboardBlocking(false),
-  m_isMouseBlocking(false),
-  m_isSoftKeyboardBlocking(false),
-  m_isSoftMouseBlocking(false),
-  m_plogwriter(log)
+namespace remoting_node_desktop
 {
-  {
-    critical_section_lock al(&m_instanceMutex);
-    if (m_instance != 0) {
-      throw ::subsystem::Exception("The only one instance of"
-                      "WindowsInputBlocker is allowed");
-    }
-    m_instance = this;
-  }
-  resume();
-}
 
-WindowsInputBlocker::~WindowsInputBlocker()
-{
-  terminate();
-  wait();
-  m_instance = 0;
-}
 
-::earth::time WindowsInputBlocker::getLastInputTime() const
-{
-  critical_section_lock al(&m_lastInputTimeMutex);
-  return m_lastInputTime;
-}
+   critical_section WindowsInputBlocker::m_instanceMutex;
+   HHOOK WindowsInputBlocker::m_hKeyboardHook = 0;
+   HHOOK WindowsInputBlocker::m_hSoftKeyboardHook = 0;
+   HHOOK WindowsInputBlocker::m_hMouseHook = 0;
+   HHOOK WindowsInputBlocker::m_hSoftMouseHook = 0;
 
-void WindowsInputBlocker::correctLastTime(::earth::time newTime)
-{
-  critical_section_lock al(&m_lastInputTimeMutex);
-  if (newTime.getTime() > m_lastInputTime.getTime()) {
-    newTime = ::earth::time(newTime.getTime());
-  }
-}
+   ::earth::time WindowsInputBlocker::m_lastInputTime;
+   unsigned int WindowsInputBlocker::m_timeInterval = INFINITE;
+   critical_section WindowsInputBlocker::m_lastInputTimeMutex;
 
-bool WindowsInputBlocker::isRemoteInputAllowed()
-{
-  if ((::earth::time::now() - m_lastInputTime).getTime() < m_timeInterval
-      && (m_hSoftKeyboardHook != 0 || m_hSoftMouseHook != 0)) {
-    return false;
-  }
+   WindowsInputBlocker *WindowsInputBlocker::m_instance = 0;
 
-  return true;
-}
-
-void WindowsInputBlocker::setKeyboardBlocking(bool block)
-{
-  m_isKeyboardBlocking = block;
-  PostThreadMessage(getThreadId(), 0, 0, 0);
-}
-
-void WindowsInputBlocker::setMouseBlocking(bool block)
-{
-  m_isMouseBlocking = block;
-  PostThreadMessage(getThreadId(), 0, 0, 0);
-}
-
-void WindowsInputBlocker::setSoftKeyboardBlocking(bool block, unsigned int timeInterval)
-{
-  if (block) {
-    m_timeInterval = timeInterval;
-  }
-  m_isSoftKeyboardBlocking = block;
-  PostThreadMessage(getThreadId(), 0, 0, 0);
-}
-
-void WindowsInputBlocker::setSoftMouseBlocking(bool block, unsigned int timeInterval)
-{
-  if (block) {
-    m_timeInterval = timeInterval;
-  }
-  m_isSoftMouseBlocking = block;
-  PostThreadMessage(getThreadId(), 0, 0, 0);
-}
-
-bool WindowsInputBlocker::setKeyboardFilterHook(bool block)
-{
-  if (block) {
-    if (m_hKeyboardHook == 0) {
-      HINSTANCE hinst = GetModuleHandle(0);
-      m_hKeyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, (HOOKPROC)lowLevelKeyboardFilterProc, hinst, 0L);
-    }
-    return m_hKeyboardHook != 0;
-
-  } else {
-    if (m_hKeyboardHook != 0) {
-      if (UnhookWindowsHookEx(m_hKeyboardHook) == false) {
-        return false;
+   WindowsInputBlocker::WindowsInputBlocker(::subsystem::LogWriter *log) :
+       m_isKeyboardBlocking(false), m_isMouseBlocking(false), m_isSoftKeyboardBlocking(false),
+       m_isSoftMouseBlocking(false), m_plogwriter(log)
+   {
+      {
+         critical_section_lock al(&m_instanceMutex);
+         if (m_instance != 0)
+         {
+            throw ::subsystem::Exception("The only one instance of"
+                                         "WindowsInputBlocker is allowed");
+         }
+         m_instance = this;
       }
-      m_hKeyboardHook = 0;
-    }
-  }
-  return true;
-}
+      resume();
+   }
 
-bool WindowsInputBlocker::setSoftKeyboardFilterHook(bool block)
-{
-  if (block) {
-    if (m_hSoftKeyboardHook == 0) {
-      HINSTANCE hinst = GetModuleHandle(0);
-      m_hSoftKeyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, (HOOKPROC)lowLevelSoftKeyboardFilterProc, hinst, 0L);
-    }
-    return m_hSoftKeyboardHook != 0;
+   WindowsInputBlocker::~WindowsInputBlocker()
+   {
+      terminate();
+      wait();
+      m_instance = 0;
+   }
 
-  } else {
-    if (m_hSoftKeyboardHook != 0) {
-      if (UnhookWindowsHookEx(m_hSoftKeyboardHook) == false) {
-        return false;
+   ::earth::time WindowsInputBlocker::getLastInputTime() const
+   {
+      critical_section_lock al(&m_lastInputTimeMutex);
+      return m_lastInputTime;
+   }
+
+   void WindowsInputBlocker::correctLastTime(::earth::time newTime)
+   {
+      critical_section_lock al(&m_lastInputTimeMutex);
+      if (newTime.getTime() > m_lastInputTime.getTime())
+      {
+         newTime = ::earth::time(newTime.getTime());
       }
-      m_hSoftKeyboardHook = 0;
-    }
-  }
-  return true;
-}
+   }
 
-bool WindowsInputBlocker::setMouseFilterHook(bool block)
-{
-  if (block) {
-    if (m_hMouseHook == 0) {
-      HINSTANCE hinst = GetModuleHandle(0);
-      m_hMouseHook = SetWindowsHookEx(WH_MOUSE_LL, (HOOKPROC)lowLevelMouseFilterProc, hinst, 0L);
-    }
-    return m_hMouseHook != 0;
-
-  } else {
-    if (m_hMouseHook != 0) {
-      if (UnhookWindowsHookEx(m_hMouseHook) == false) {
-        return false;
+   bool WindowsInputBlocker::isRemoteInputAllowed()
+   {
+      if ((::earth::time::now() - m_lastInputTime).getTime() < m_timeInterval &&
+          (m_hSoftKeyboardHook != 0 || m_hSoftMouseHook != 0))
+      {
+         return false;
       }
-      m_hMouseHook = 0;
-    }
-  }
-  return true;
-}
 
-bool WindowsInputBlocker::setSoftMouseFilterHook(bool block)
-{
-  if (block) {
-    if (m_hSoftMouseHook == 0) {
-      HINSTANCE hinst = GetModuleHandle(0);
-      m_hSoftMouseHook = SetWindowsHookEx(WH_MOUSE_LL, (HOOKPROC)lowLevelSoftMouseFilterProc, hinst, 0L);
-    }
-    return m_hSoftMouseHook != 0;
-
-  } else {
-    if (m_hSoftMouseHook != 0) {
-      if (UnhookWindowsHookEx(m_hSoftMouseHook) == false) {
-        return false;
-      }
-      m_hSoftMouseHook = 0;
-    }
-  }
-  return true;
-}
-
-LRESULT CALLBACK WindowsInputBlocker::lowLevelKeyboardFilterProc(int nCode, ::wparam wParam, ::lparam lParam)
-{
-  if (nCode == HC_ACTION) {
-    KBDLLHOOKSTRUCT *hookStruct = (KBDLLHOOKSTRUCT *)lParam;
-    // If this a hardware event then block it.
-    if (!(hookStruct->flags & LLKHF_INJECTED)) {
       return true;
-    }
-  }
-  return CallNextHookEx(m_hKeyboardHook, nCode, wParam, lParam);
-}
+   }
 
-LRESULT CALLBACK WindowsInputBlocker::lowLevelMouseFilterProc(int nCode, ::wparam wParam, ::lparam lParam)
-{
-  if (nCode == HC_ACTION) {
-    MSLLHOOKSTRUCT *hookStruct = (MSLLHOOKSTRUCT *)lParam;
-    // If this a hardware event then block it.
-    if (!(hookStruct->flags & LLMHF_INJECTED)) {
+   void WindowsInputBlocker::setKeyboardBlocking(bool block)
+   {
+      m_isKeyboardBlocking = block;
+      PostThreadMessage(getThreadId(), 0, 0, 0);
+   }
+
+   void WindowsInputBlocker::setMouseBlocking(bool block)
+   {
+      m_isMouseBlocking = block;
+      PostThreadMessage(getThreadId(), 0, 0, 0);
+   }
+
+   void WindowsInputBlocker::setSoftKeyboardBlocking(bool block, unsigned int timeInterval)
+   {
+      if (block)
+      {
+         m_timeInterval = timeInterval;
+      }
+      m_isSoftKeyboardBlocking = block;
+      PostThreadMessage(getThreadId(), 0, 0, 0);
+   }
+
+   void WindowsInputBlocker::setSoftMouseBlocking(bool block, unsigned int timeInterval)
+   {
+      if (block)
+      {
+         m_timeInterval = timeInterval;
+      }
+      m_isSoftMouseBlocking = block;
+      PostThreadMessage(getThreadId(), 0, 0, 0);
+   }
+
+   bool WindowsInputBlocker::setKeyboardFilterHook(bool block)
+   {
+      if (block)
+      {
+         if (m_hKeyboardHook == 0)
+         {
+            HINSTANCE hinst = GetModuleHandle(0);
+            m_hKeyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, (HOOKPROC)lowLevelKeyboardFilterProc, hinst, 0L);
+         }
+         return m_hKeyboardHook != 0;
+      }
+      else
+      {
+         if (m_hKeyboardHook != 0)
+         {
+            if (UnhookWindowsHookEx(m_hKeyboardHook) == false)
+            {
+               return false;
+            }
+            m_hKeyboardHook = 0;
+         }
+      }
       return true;
-    }
-  }
-  return CallNextHookEx(m_hMouseHook, nCode, wParam, lParam);
-}
+   }
 
-LRESULT CALLBACK WindowsInputBlocker::lowLevelSoftKeyboardFilterProc(int nCode, ::wparam wParam, ::lparam lParam)
-{
-  if (nCode == HC_ACTION) {
-    KBDLLHOOKSTRUCT *hookStruct = (KBDLLHOOKSTRUCT *)lParam;
-    // If this a hardware event then update software blocking time.
-    if (!(hookStruct->flags & LLKHF_INJECTED)) {
-      m_lastInputTime = ::earth::time::now();
-    }
-  }
-  return CallNextHookEx(m_hSoftKeyboardHook, nCode, wParam, lParam);
-}
-
-LRESULT CALLBACK WindowsInputBlocker::lowLevelSoftMouseFilterProc(int nCode, ::wparam wParam, ::lparam lParam)
-{
-  if (nCode == HC_ACTION) {
-    MSLLHOOKSTRUCT *hookStruct = (MSLLHOOKSTRUCT *)lParam;
-    // If this a hardware event then update software blocking time.
-    if (!(hookStruct->flags & LLMHF_INJECTED)) {
-      m_lastInputTime = ::earth::time::now();
-    }
-  }
-  return CallNextHookEx(m_hSoftMouseHook, nCode, wParam, lParam);
-}
-
-void WindowsInputBlocker::onTerminate()
-{
-  PostThreadMessage(getThreadId(), 0, 0, 0);
-}
-
-void WindowsInputBlocker::execute()
-{
-  m_plogwriter->information("input blocker thread id = {}", getThreadId());
-
-  MSG msg;
-  try {
-    while (!isTerminating()) {
-      if (m_isKeyboardBlocking && m_hKeyboardHook == 0) {
-        // FIXME: write error handler
-        bool res = setKeyboardFilterHook(true);
-		m_plogwriter->information("setKeyboardFilterHook result = {}", res);
+   bool WindowsInputBlocker::setSoftKeyboardFilterHook(bool block)
+   {
+      if (block)
+      {
+         if (m_hSoftKeyboardHook == 0)
+         {
+            HINSTANCE hinst = GetModuleHandle(0);
+            m_hSoftKeyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, (HOOKPROC)lowLevelSoftKeyboardFilterProc, hinst, 0L);
+         }
+         return m_hSoftKeyboardHook != 0;
       }
-      if (!m_isKeyboardBlocking && m_hKeyboardHook != 0) {
-        // FIXME: write error handler
-        setKeyboardFilterHook(false);
+      else
+      {
+         if (m_hSoftKeyboardHook != 0)
+         {
+            if (UnhookWindowsHookEx(m_hSoftKeyboardHook) == false)
+            {
+               return false;
+            }
+            m_hSoftKeyboardHook = 0;
+         }
+      }
+      return true;
+   }
+
+   bool WindowsInputBlocker::setMouseFilterHook(bool block)
+   {
+      if (block)
+      {
+         if (m_hMouseHook == 0)
+         {
+            HINSTANCE hinst = GetModuleHandle(0);
+            m_hMouseHook = SetWindowsHookEx(WH_MOUSE_LL, (HOOKPROC)lowLevelMouseFilterProc, hinst, 0L);
+         }
+         return m_hMouseHook != 0;
+      }
+      else
+      {
+         if (m_hMouseHook != 0)
+         {
+            if (UnhookWindowsHookEx(m_hMouseHook) == false)
+            {
+               return false;
+            }
+            m_hMouseHook = 0;
+         }
+      }
+      return true;
+   }
+
+   bool WindowsInputBlocker::setSoftMouseFilterHook(bool block)
+   {
+      if (block)
+      {
+         if (m_hSoftMouseHook == 0)
+         {
+            HINSTANCE hinst = GetModuleHandle(0);
+            m_hSoftMouseHook = SetWindowsHookEx(WH_MOUSE_LL, (HOOKPROC)lowLevelSoftMouseFilterProc, hinst, 0L);
+         }
+         return m_hSoftMouseHook != 0;
+      }
+      else
+      {
+         if (m_hSoftMouseHook != 0)
+         {
+            if (UnhookWindowsHookEx(m_hSoftMouseHook) == false)
+            {
+               return false;
+            }
+            m_hSoftMouseHook = 0;
+         }
+      }
+      return true;
+   }
+
+   LRESULT CALLBACK WindowsInputBlocker::lowLevelKeyboardFilterProc(int nCode, ::wparam wParam, ::lparam lParam)
+   {
+      if (nCode == HC_ACTION)
+      {
+         KBDLLHOOKSTRUCT *hookStruct = (KBDLLHOOKSTRUCT *)lParam;
+         // If this a hardware event then block it.
+         if (!(hookStruct->flags & LLKHF_INJECTED))
+         {
+            return true;
+         }
+      }
+      return CallNextHookEx(m_hKeyboardHook, nCode, wParam, lParam);
+   }
+
+   LRESULT CALLBACK WindowsInputBlocker::lowLevelMouseFilterProc(int nCode, ::wparam wParam, ::lparam lParam)
+   {
+      if (nCode == HC_ACTION)
+      {
+         MSLLHOOKSTRUCT *hookStruct = (MSLLHOOKSTRUCT *)lParam;
+         // If this a hardware event then block it.
+         if (!(hookStruct->flags & LLMHF_INJECTED))
+         {
+            return true;
+         }
+      }
+      return CallNextHookEx(m_hMouseHook, nCode, wParam, lParam);
+   }
+
+   LRESULT CALLBACK WindowsInputBlocker::lowLevelSoftKeyboardFilterProc(int nCode, ::wparam wParam, ::lparam lParam)
+   {
+      if (nCode == HC_ACTION)
+      {
+         KBDLLHOOKSTRUCT *hookStruct = (KBDLLHOOKSTRUCT *)lParam;
+         // If this a hardware event then update software blocking time.
+         if (!(hookStruct->flags & LLKHF_INJECTED))
+         {
+            m_lastInputTime = ::earth::time::now();
+         }
+      }
+      return CallNextHookEx(m_hSoftKeyboardHook, nCode, wParam, lParam);
+   }
+
+   LRESULT CALLBACK WindowsInputBlocker::lowLevelSoftMouseFilterProc(int nCode, ::wparam wParam, ::lparam lParam)
+   {
+      if (nCode == HC_ACTION)
+      {
+         MSLLHOOKSTRUCT *hookStruct = (MSLLHOOKSTRUCT *)lParam;
+         // If this a hardware event then update software blocking time.
+         if (!(hookStruct->flags & LLMHF_INJECTED))
+         {
+            m_lastInputTime = ::earth::time::now();
+         }
+      }
+      return CallNextHookEx(m_hSoftMouseHook, nCode, wParam, lParam);
+   }
+
+   void WindowsInputBlocker::onTerminate() { PostThreadMessage(getThreadId(), 0, 0, 0); }
+
+   void WindowsInputBlocker::execute()
+   {
+      m_plogwriter->information("input blocker thread id = {}", getThreadId());
+
+      MSG msg;
+      try
+      {
+         while (!isTerminating())
+         {
+            if (m_isKeyboardBlocking && m_hKeyboardHook == 0)
+            {
+               // FIXME: write error handler
+               bool res = setKeyboardFilterHook(true);
+               m_plogwriter->information("setKeyboardFilterHook result = {}", res);
+            }
+            if (!m_isKeyboardBlocking && m_hKeyboardHook != 0)
+            {
+               // FIXME: write error handler
+               setKeyboardFilterHook(false);
+            }
+
+            if (m_isMouseBlocking && m_hMouseHook == 0)
+            {
+               // FIXME: write error handler
+               bool res = setMouseFilterHook(true);
+               m_plogwriter->information("setMouseFilterHook result = {}", res);
+            }
+            if (!m_isMouseBlocking && m_hMouseHook != 0)
+            {
+               // FIXME: write error handler
+               setMouseFilterHook(false);
+            }
+
+            if (m_isSoftKeyboardBlocking && m_hSoftKeyboardHook == 0)
+            {
+               // FIXME: write error handler
+               bool res = setSoftKeyboardFilterHook(true);
+               m_plogwriter->information("setSoftKeyboardFilterHook result = %b", res);
+            }
+            if (!m_isSoftKeyboardBlocking && m_hSoftKeyboardHook != 0)
+            {
+               // FIXME: write error handler
+               setSoftKeyboardFilterHook(false);
+            }
+
+            if (m_isSoftMouseBlocking && m_hSoftMouseHook == 0)
+            {
+               // FIXME: write error handler
+               bool res = setSoftMouseFilterHook(true);
+               m_plogwriter->information("setSoftMouseFilterHook result = %b", res);
+            }
+            if (!m_isSoftMouseBlocking && m_hSoftMouseHook != 0)
+            {
+               // FIXME: write error handler
+               setSoftMouseFilterHook(false);
+            }
+
+            if (!PeekMessage(&msg, NULL, NULL, NULL, PM_REMOVE))
+            {
+               if (!WaitMessage())
+               {
+                  break;
+               }
+            }
+            else if (msg.scopedstrMessage == WM_QUIT)
+            {
+               break;
+            }
+            else
+            {
+               DispatchMessage(&msg);
+            }
+         }
+      }
+      catch (::exception &e)
+      {
+         m_plogwriter->error("The WindowsInputBlocker thread failed with error: {}", e.get_message());
       }
 
-      if (m_isMouseBlocking && m_hMouseHook == 0) {
-        // FIXME: write error handler
-        bool res = setMouseFilterHook(true);
-		m_plogwriter->information("setMouseFilterHook result = {}", res);
-      }
-      if (!m_isMouseBlocking && m_hMouseHook != 0) {
-        // FIXME: write error handler
-        setMouseFilterHook(false);
-      }
+      // Free system resources
+      setKeyboardFilterHook(false);
+      setMouseFilterHook(false);
+      setSoftKeyboardFilterHook(false);
+      setSoftMouseFilterHook(false);
+   }
 
-      if (m_isSoftKeyboardBlocking && m_hSoftKeyboardHook == 0) {
-        // FIXME: write error handler
-        bool res = setSoftKeyboardFilterHook(true);
-		m_plogwriter->information("setSoftKeyboardFilterHook result = %b", res);
-      }
-      if (!m_isSoftKeyboardBlocking && m_hSoftKeyboardHook != 0) {
-        // FIXME: write error handler
-        setSoftKeyboardFilterHook(false);
-      }
 
-      if (m_isSoftMouseBlocking && m_hSoftMouseHook == 0) {
-        // FIXME: write error handler
-        bool res = setSoftMouseFilterHook(true);
-		m_plogwriter->information("setSoftMouseFilterHook result = %b", res);
-      }
-      if (!m_isSoftMouseBlocking && m_hSoftMouseHook != 0) {
-        // FIXME: write error handler
-        setSoftMouseFilterHook(false);
-      }
+} // namespace remoting_node_desktop
 
-      if (!PeekMessage(&msg, NULL, NULL, NULL, PM_REMOVE)) {
-        if (!WaitMessage()) {
-          break;
-        }
 
-      } else if (msg.scopedstrMessage == WM_QUIT) {
-        break;
-
-      } else {
-        DispatchMessage(&msg);
-      }
-    }
-  } catch (::exception &e) {
-    m_plogwriter->error("The WindowsInputBlocker thread failed with error: {}",
-               e.get_message());
-  }
-
-  // Free system resources
-  setKeyboardFilterHook(false);
-  setMouseFilterHook(false);
-  setSoftKeyboardFilterHook(false);
-  setSoftMouseFilterHook(false);
-}

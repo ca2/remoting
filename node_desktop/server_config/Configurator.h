@@ -35,101 +35,112 @@
 
 #include "subsystem/platform/ListenerContainer.h"
 
-class Configurator : public ::subsystem::ListenerContainer<ConfigReloadListener *>
+
+namespace remoting_node_desktop
 {
-public:
-  Configurator(bool isConfiguringService);
-  virtual ~Configurator();
 
-public:
 
-  bool getServiceFlag() { return m_isConfiguringService; }
-  void setServiceFlag(bool asService) { m_isConfiguringService = asService; }
+   class Configurator : public ::subsystem::ListenerContainer<ConfigReloadListener *>
+   {
+   public:
 
-  bool load();
-  bool save();
 
-  bool isConfigLoadedPartly() { return m_isConfigLoadedPartly; }
+      Configurator();
+      ~Configurator() override;
 
-  //
-  // Get global configurator method
-  //
 
-  static Configurator *getInstance();
-  static void setInstance(Configurator *conf);
+      virtual void initialize_configurator(bool isConfiguringService);
 
-  void notifyReload();
+      bool getServiceFlag() { return m_isConfiguringService; }
+      void setServiceFlag(bool asService) { m_isConfiguringService = asService; }
 
-  //
-  // Protected members read methods
-  //
+      bool load();
+      bool save();
 
-  ServerConfig *getServerConfig() { return &m_serverConfig; }
+      bool isConfigLoadedPartly() { return m_isConfigLoadedPartly; }
 
-private:
+      //
+      // Get global configurator method
+      //
 
-  //
-  // Serialize and deserialize methods
-  //
+      //static Configurator *getInstance();
+      //static void setInstance(Configurator *conf);
 
-  bool savePortMappingContainer(::remoting::SettingsManager *sm);
-   bool loadPortMappingContainer(::remoting::SettingsManager *sm, PortMappingContainer *portMapping);
+      void notifyReload();
 
-  bool saveIpAccessControlContainer(::remoting::SettingsManager *sm);
-  bool loadIpAccessControlContainer(::remoting::SettingsManager *sm,
-                                    IpAccessControl *ipContainer);
+      //
+      // Protected members read methods
+      //
 
-  bool saveServerConfig(::remoting::SettingsManager *sm);
-  bool loadServerConfig(::remoting::SettingsManager *sm, ServerConfig *config);
-  void updateLogDirPath();
+      ServerConfig *getServerConfig() { return &m_serverConfig; }
 
-  bool saveQueryConfig(::remoting::SettingsManager *sm);
-  bool loadQueryConfig(::remoting::SettingsManager *sm, ServerConfig *config);
+   //private:
 
-  bool saveInputHandlingConfig(::remoting::SettingsManager *sm);
-  bool loadInputHandlingConfig(::remoting::SettingsManager *sm, ServerConfig *config);
+      //
+      // Serialize and deserialize methods
+      //
 
-  bool saveVideoRegionConfig(::remoting::SettingsManager *sm);
-  bool loadVideoRegionConfig(::remoting::SettingsManager *sm, ServerConfig *config);
+      bool savePortMappingContainer(::remoting::SettingsManager *sm);
+      bool loadPortMappingContainer(::remoting::SettingsManager *sm, PortMappingContainer *portMapping);
 
-  bool save(::remoting::SettingsManager *sm);
-  bool load(::remoting::SettingsManager *sm);
+      bool saveIpAccessControlContainer(::remoting::SettingsManager *sm);
+      bool loadIpAccessControlContainer(::remoting::SettingsManager *sm, IpAccessControl *ipContainer);
 
-  bool load(bool forService);
-  bool save(bool forService);
-protected:
+      bool saveServerConfig(::remoting::SettingsManager *sm);
+      bool loadServerConfig(::remoting::SettingsManager *sm, ServerConfig *config);
+      void updateLogDirPath();
 
-  //
-  // Server configuration
-  //
+      bool saveQueryConfig(::remoting::SettingsManager *sm);
+      bool loadQueryConfig(::remoting::SettingsManager *sm, ServerConfig *config);
 
-  ServerConfig m_serverConfig;
+      bool saveInputHandlingConfig(::remoting::SettingsManager *sm);
+      bool loadInputHandlingConfig(::remoting::SettingsManager *sm, ServerConfig *config);
 
-  //
-  // Is this flag is set configurator think than application run as service
-  //
+      bool saveVideoRegionConfig(::remoting::SettingsManager *sm);
+      bool loadVideoRegionConfig(::remoting::SettingsManager *sm, ServerConfig *config);
 
-  bool m_isConfiguringService;
-  bool m_isConfigLoadedPartly;
+      bool save(::remoting::SettingsManager *sm);
+      bool load(::remoting::SettingsManager *sm);
 
-  //
-  // Registry security attributes.
-  //
+      bool load(bool forService);
+      bool save(bool forService);
+   //protected:
 
-  //RegistrySecurityAttributes *m_regSA;
+      //
+      // Server configuration
+      //
 
-  //
-  // Helper members
-  //
+      ::pointer < ServerConfig > m_pserverconfig;
 
-  bool m_isFirstLoad;
+      //
+      // Is this flag is set configurator think than application run as service
+      //
 
-  //
-  // Global configurator object
-  //
+      bool m_isConfiguringService;
+      bool m_isConfigLoadedPartly;
 
-  static Configurator *s_instance;
-  static critical_section m_instanceMutex;
-};
+      //
+      // Registry security attributes.
+      //
+
+      // RegistrySecurityAttributes *m_regSA;
+
+      //
+      // Helper members
+      //
+
+      bool m_isFirstLoad;
+
+      //
+      // Global configurator object
+      //
+
+      //static Configurator *s_instance;
+      //static critical_section m_instanceMutex;
+   };
+
+
+} // namespace remoting_node_desktop
+ 
 
 

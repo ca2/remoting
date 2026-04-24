@@ -33,41 +33,50 @@
 #include "remoting/node_desktop/fb_update_sender/UpdateRequestListener.h"
 //#include aaa_<vector>
 
-// This class is a public interface to a desktop.
-class Desktop : public UpdateRequestListener
+namespace remoting_node_desktop
 {
-public:
-  virtual ~Desktop() {}
 
-  // Puts a current desktop name from working session to the
-  // desktopName argument and an user name to userMame.
-  virtual void getCurrentUserInfo(::string & desktopName,
-                                  ::string & userName) = 0;
-  // Puts the current frame buffer dimension and pixel format to
-  // the dim and pf function arguments.
-  virtual void getFrameBufferProperties(::int_size *dim, ::innate_subsystem::PixelFormat *pf) = 0;
+   // This class is a public interface to a desktop.
+   class Desktop : public UpdateRequestListener
+   {
+   public:
+      virtual ~Desktop() {}
 
-  virtual void getPrimaryDesktopCoords(::int_rectangle *rect) = 0;
-  // Returns a rect that is normilized from "virtual desktop" to frame buffer coordinates.
-  virtual void getNormalizedRect(::int_rectangle *rect) = 0;
-  virtual void getDisplayNumberCoords(::int_rectangle *rect,
-                                      unsigned char dispNumber) = 0;
-  virtual ::array_base<::int_rectangle> getDisplaysCoords() = 0;
-  virtual void getWindowCoords(HWND hwnd, ::int_rectangle *rect) = 0;
-  virtual HWND getWindowHandleByName(const ::scoped_string & windowName) = 0;
+      // Puts a current desktop name from working session to the
+      // desktopName argument and an user name to userMame.
+      virtual void getCurrentUserInfo(::string &desktopName, ::string &userName) = 0;
+      // Puts the current frame buffer dimension and pixel format to
+      // the dim and pf function arguments.
+      virtual void getFrameBufferProperties(::int_size *dim, ::innate_subsystem::PixelFormat *pf) = 0;
 
-  virtual void getApplicationRegion(unsigned int procId, ::remoting::Region *region) = 0;
-  virtual bool isApplicationInFocus(unsigned int procId) = 0;
+      virtual void getPrimaryDesktopCoords(::int_rectangle *rect) = 0;
+      // Returns a rect that is normilized from "virtual desktop" to frame buffer coordinates.
+      virtual void getNormalizedRect(::int_rectangle *rect) = 0;
+      virtual void getDisplayNumberCoords(::int_rectangle *rect, unsigned char dispNumber) = 0;
+      virtual ::array_base<::int_rectangle> getDisplaysCoords() = 0;
+      virtual void getWindowCoords(HWND hwnd, ::int_rectangle *rect) = 0;
+      virtual HWND getWindowHandleByName(const ::scoped_string &windowName) = 0;
 
-  virtual void setKeyboardEvent(unsigned int keySym, bool down) = 0;
-  virtual void setMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask) = 0;
-  virtual void setNewClipText(const ::scoped_string & newClipboard) = 0;
+      virtual void getApplicationRegion(unsigned int procId, ::remoting::Region *region) = 0;
+      virtual bool isApplicationInFocus(unsigned int procId) = 0;
 
-  // Updates external frame buffer pixels only for the region from view port
-  // located at the place in a central frame buffer.
-  // If view port is out of central frame buffer bounds the function will return false.
-  virtual bool updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *fb, const ::remoting::Region *region,
-                                         const ::int_rectangle &  viewPort) = 0;
-};
+      virtual void setKeyboardEvent(unsigned int keySym, bool down) = 0;
+      virtual void setMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask) = 0;
+      virtual void setNewClipText(const ::scoped_string &newClipboard) = 0;
 
-//// __DESKTOP_H__
+      // Updates external frame buffer pixels only for the region from view port
+      // located at the place in a central frame buffer.
+      // If view port is out of central frame buffer bounds the function will return false.
+      virtual bool updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *fb, const ::remoting::Region *region,
+                                             const ::int_rectangle &viewPort) = 0;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+
+

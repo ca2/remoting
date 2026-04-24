@@ -24,6 +24,11 @@
 #include "framework.h"
 #include "RfbClientManagerEventListener.h"
 
-RfbClientManagerEventListener::~RfbClientManagerEventListener()
+namespace remoting_node_desktop
 {
-}
+
+
+   RfbClientManagerEventListener::~RfbClientManagerEventListener() {}
+
+
+} // namespace remoting_node_desktop

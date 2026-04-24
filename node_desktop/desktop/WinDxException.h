@@ -27,16 +27,25 @@
 
 #include "subsystem/platform/Exception.h"
 
-class WinDxException : public ::subsystem::Exception
+namespace remoting_node_desktop
 {
-public:
-  WinDxException(const ::scoped_string & scopedstrMessage, HRESULT errCode);
-  virtual ~WinDxException();
 
-  HRESULT getErrorCode() const;
+   class WinDxException : public ::subsystem::Exception
+   {
+   public:
+      WinDxException(const ::scoped_string &scopedstrMessage, HRESULT errCode);
+      virtual ~WinDxException();
 
-private:
-  HRESULT m_errCode;
-};
+      HRESULT getErrorCode() const;
 
-//// __WINDXEXCEPTION_H__
+   private:
+      HRESULT m_errCode;
+   };
+
+   //// __WINDXEXCEPTION_H__
+
+}// namespace remoting_node_desktop
+
+
+
+

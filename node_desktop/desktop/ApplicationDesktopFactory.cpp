@@ -25,19 +25,23 @@
 #include "ApplicationDesktopFactory.h"
 #include "DesktopWinImpl.h"
 
-ApplicationDesktopFactory::ApplicationDesktopFactory()
+namespace remoting_node_desktop
 {
-}
 
-ApplicationDesktopFactory::~ApplicationDesktopFactory()
-{
-}
+   ApplicationDesktopFactory::ApplicationDesktopFactory() {}
 
-Desktop *ApplicationDesktopFactory::createDesktop(ClipboardListener *extClipListener,
-                                                          UpdateSendingListener *extUpdSendingListener,
-                                                          AbnormDeskTermListener *extDeskTermListener,
-                                                          ::subsystem::LogWriter *log)
-{
-  return new DesktopWinImpl(extClipListener, extUpdSendingListener,
-                            extDeskTermListener, log);
-}
+   ApplicationDesktopFactory::~ApplicationDesktopFactory() {}
+
+   Desktop *ApplicationDesktopFactory::createDesktop(ClipboardListener *extClipListener,
+                                                     UpdateSendingListener *extUpdSendingListener,
+                                                     AbnormDeskTermListener *extDeskTermListener,
+                                                     ::subsystem::LogWriter *log)
+   {
+      return new DesktopWinImpl(extClipListener, extUpdSendingListener, extDeskTermListener, log);
+   }
+
+
+} // namespace remoting_node_desktop
+
+
+

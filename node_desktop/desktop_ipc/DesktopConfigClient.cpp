@@ -26,32 +26,37 @@
 //#include "subsystem/thread/critical_section.h"
 #include "ReconnectException.h"
 
-DesktopConfigClient::DesktopConfigClient(BlockingGate *forwGate)
-: DesktopServerProto(forwGate)
+namespace remoting_node_desktop
 {
-}
 
-DesktopConfigClient::~DesktopConfigClient()
-{
-}
 
-void DesktopConfigClient::updateByNewSettings(BlockingGate *gate)
-{
-  critical_section_lock al(gate);
-  gate->writeUInt8(CONFIG_RELOAD_REQ);
-  sendConfigSettings(gate);
-}
+   DesktopConfigClient::DesktopConfigClient(BlockingGate *forwGate) : DesktopServerProto(forwGate) {}
 
-bool DesktopConfigClient::isRemoteInputAllowed()
-{
-  bool result = false;
-  try {
-    critical_section_lock al(m_forwGate);
-    m_forwGate->writeUInt8(SOFT_INPUT_ENABLING_REQ);
-    m_forwGate->writeUInt64(m_lastInputTime.getTime());
-    result = m_forwGate->readUInt8() != 0;
-    m_lastInputTime = ::earth::time(m_forwGate->readUInt64());
-  } catch (ReconnectException &) {
-  }
-  return result;
-}
+   DesktopConfigClient::~DesktopConfigClient() {}
+
+   void DesktopConfigClient::updateByNewSettings(BlockingGate *gate)
+   {
+      critical_section_lock al(gate);
+      gate->writeUInt8(CONFIG_RELOAD_REQ);
+      sendConfigSettings(gate);
+   }
+
+   bool DesktopConfigClient::isRemoteInputAllowed()
+   {
+      bool result = false;
+      try
+      {
+         critical_section_lock al(m_forwGate);
+         m_forwGate->writeUInt8(SOFT_INPUT_ENABLING_REQ);
+         m_forwGate->writeUInt64(m_lastInputTime.getTime());
+         result = m_forwGate->readUInt8() != 0;
+         m_lastInputTime = ::earth::time(m_forwGate->readUInt64());
+      }
+      catch (ReconnectException &)
+      {
+      }
+      return result;
+   }
+
+
+} // namespace remoting_node_desktop

@@ -30,38 +30,47 @@
 // #include aaa_<d3d11.h>
 // #include aaa_<DXGI1_2.h>
 
-// This class is a part of Win8DeskDuplication. This means that WinCustomD3D11Texture2D
-// is not an independed unit and it is designed to use only in Win8DeskDuplication.
-// This is a Win8DeskDuplication helper to custom appropriate textures.
-class WinCustomD3D11Texture2D
+
+namespace remoting_node_desktop
 {
-public:
-  // Initializes ID3D11Texture2D compatible to textures returned from the AcquireNextFrame() function.
-  WinCustomD3D11Texture2D(ID3D11Device *device, unsigned int width, unsigned int height, DXGI_MODE_ROTATION rotation);
-  WinCustomD3D11Texture2D(const WinCustomD3D11Texture2D &other);
-  virtual ~WinCustomD3D11Texture2D();
-
-  void operator = (const WinCustomD3D11Texture2D &other);
-
-  ID3D11Texture2D *getTexture() const;
-
-  const D3D11_TEXTURE2D_DESC *getDesc() const;
 
 
+   //
+   // This class is a part of Win8DeskDuplication. This means that WinCustomD3D11Texture2D
+   // is not an independed unit and it is designed to use only in Win8DeskDuplication.
+   // This is a Win8DeskDuplication helper to custom appropriate textures.
+   class WinCustomD3D11Texture2D
+   {
+   public:
+      // Initializes ID3D11Texture2D compatible to textures returned from the AcquireNextFrame() function.
+      WinCustomD3D11Texture2D(ID3D11Device *device, unsigned int width, unsigned int height,
+                              DXGI_MODE_ROTATION rotation);
+      WinCustomD3D11Texture2D(const WinCustomD3D11Texture2D &other);
+      virtual ~WinCustomD3D11Texture2D();
 
-private:
-  class Texture2DDescInitializer
-  {
-  public:
-    Texture2DDescInitializer(unsigned int width, unsigned int height, DXGI_MODE_ROTATION rotation);
+      void operator=(const WinCustomD3D11Texture2D &other);
 
-    const D3D11_TEXTURE2D_DESC *getDesc() const;
-  private:
-    D3D11_TEXTURE2D_DESC m_desc;
-  };
+      ID3D11Texture2D *getTexture() const;
 
-  Texture2DDescInitializer m_textDescInitializer;
-  WinD3D11Texture2D m_textureWrapper;
-};
+      const D3D11_TEXTURE2D_DESC *getDesc() const;
 
-//// __WINCUSTOMD3D11TEXTURE2D_H__
+
+
+   private:
+      class Texture2DDescInitializer
+      {
+      public:
+         Texture2DDescInitializer(unsigned int width, unsigned int height, DXGI_MODE_ROTATION rotation);
+
+         const D3D11_TEXTURE2D_DESC *getDesc() const;
+      private:
+         D3D11_TEXTURE2D_DESC m_desc;
+      };
+
+      Texture2DDescInitializer m_textDescInitializer;
+      WinD3D11Texture2D m_textureWrapper;
+   };
+
+   //// __WINCUSTOMD3D11TEXTURE2D_H__
+
+} // namespace remoting_node_desktop

@@ -24,38 +24,43 @@
 #include "framework.h"
 #include "ScreenGrabber.h"
 
-ScreenGrabber::ScreenGrabber(void)
+namespace remoting_node_desktop
 {
-}
 
-ScreenGrabber::~ScreenGrabber(void)
-{
-}
 
-bool ScreenGrabber::applyNewProperties()
-{
-  if (!applyNewPixelFormat() || !applyNewFullScreenRect()) {
-    return false;
-  }
+   ScreenGrabber::ScreenGrabber(void) {}
 
-  return true;
-}
+   ScreenGrabber::~ScreenGrabber(void) {}
 
-void ScreenGrabber::setWorkRect(::int_rectangle *prectWork)
-{
-   m_offsetFrameBuffer.x = prectWork->left;
-   m_offsetFrameBuffer.y = prectWork->top;
-   m_workFrameBuffer.setEmptyDimension(*prectWork);
-}
+   bool ScreenGrabber::applyNewProperties()
+   {
+      if (!applyNewPixelFormat() || !applyNewFullScreenRect())
+      {
+         return false;
+      }
 
-bool ScreenGrabber::setWorkRectDefault()
-{
-  // Set workRect to full screen by default
-  if (!applyNewFullScreenRect()) {
-    return false;
-  }
+      return true;
+   }
 
-  setWorkRect(&m_fullScreenRect);
+   void ScreenGrabber::setWorkRect(::int_rectangle *prectWork)
+   {
+      m_offsetFrameBuffer.x = prectWork->left;
+      m_offsetFrameBuffer.y = prectWork->top;
+      m_workFrameBuffer.setEmptyDimension(*prectWork);
+   }
 
-  return true;
-}
+   bool ScreenGrabber::setWorkRectDefault()
+   {
+      // Set workRect to full screen by default
+      if (!applyNewFullScreenRect())
+      {
+         return false;
+      }
+
+      setWorkRect(&m_fullScreenRect);
+
+      return true;
+   }
+
+
+} // namespace remoting_node_desktop

@@ -34,82 +34,85 @@
 #include "UpdateSendingListener.h"
 #include "ClipboardListener.h"
 
-// This class is a base class for different implemetations of desktops
-class DesktopBaseImpl : public Desktop,
-                   public UpdateListener,
-                   public ClipboardListener,
-                   public ConfigReloadListener
+namespace remoting_node_desktop
 {
-public:
-  DesktopBaseImpl(ClipboardListener *extClipListener,
-             UpdateSendingListener *extUpdSendingListener,
-             AbnormDeskTermListener *extDeskTermListener,
-             ::subsystem::LogWriter *log);
-  virtual ~DesktopBaseImpl();
 
-  // Puts a current desktop name from working session to the
-  // desktopName argument and an user name to userMame.
-  virtual void getCurrentUserInfo(::string & desktopName,
-                                  ::string & userName);
-  // Puts the current frame buffer dimension and pixel format to
-  // the dim and pf function arguments.
-  virtual void getFrameBufferProperties(::int_size *dim, ::innate_subsystem::PixelFormat *pf);
-  virtual void getPrimaryDesktopCoords(::int_rectangle *rect);
-  virtual void getDisplayNumberCoords(::int_rectangle *rect,
-                                      unsigned char dispNumber);
-  virtual ::array_base<::int_rectangle> getDisplaysCoords();
-  virtual void getNormalizedRect(::int_rectangle *rect);
-  virtual void getWindowCoords(HWND hwnd, ::int_rectangle *rect);
-  virtual HWND getWindowHandleByName(const ::scoped_string & windowName);
-  virtual void getApplicationRegion(unsigned int procId, Region *region);
-  virtual bool isApplicationInFocus(unsigned int procId);
+   // This class is a base class for different implemetations of desktops
+   class DesktopBaseImpl : public Desktop, public UpdateListener, public ClipboardListener, public ConfigReloadListener
+   {
+   public:
+      DesktopBaseImpl(ClipboardListener *extClipListener, UpdateSendingListener *extUpdSendingListener,
+                      AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter *log);
+      virtual ~DesktopBaseImpl();
 
-  virtual void setKeyboardEvent(unsigned int keySym, bool down);
-  virtual void setMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask);
-  virtual void setNewClipText(const ::scoped_string & newClipboard);
+      // Puts a current desktop name from working session to the
+      // desktopName argument and an user name to userMame.
+      virtual void getCurrentUserInfo(::string &desktopName, ::string &userName);
+      // Puts the current frame buffer dimension and pixel format to
+      // the dim and pf function arguments.
+      virtual void getFrameBufferProperties(::int_size *dim, ::innate_subsystem::PixelFormat *pf);
+      virtual void getPrimaryDesktopCoords(::int_rectangle *rect);
+      virtual void getDisplayNumberCoords(::int_rectangle *rect, unsigned char dispNumber);
+      virtual ::array_base<::int_rectangle> getDisplaysCoords();
+      virtual void getNormalizedRect(::int_rectangle *rect);
+      virtual void getWindowCoords(HWND hwnd, ::int_rectangle *rect);
+      virtual HWND getWindowHandleByName(const ::scoped_string &windowName);
+      virtual void getApplicationRegion(unsigned int procId, Region *region);
+      virtual bool isApplicationInFocus(unsigned int procId);
 
-protected:
-  // Calling when at least one update has been detected.
-  virtual void onUpdate();
-  // Implementation of the UpdateRequestListener interface.
-  virtual void onUpdateRequest(const ::int_rectangle &  rectRequested, bool incremental);
-  // Calling when a clipbard change detected.
-  virtual void onClipboardUpdate(const ::scoped_string & newClipboard);
-  // Calling when a configuration has been reloaded.
-  // Uses to update internal settings.
-  virtual void onConfigReload(ServerConfig *serverConfig);
-  virtual void applyNewConfiguration() = 0;
+      virtual void setKeyboardEvent(unsigned int keySym, bool down);
+      virtual void setMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask);
+      virtual void setNewClipText(const ::scoped_string &newClipboard);
 
-  // Returns true when a remote input allowed.
-  bool isRemoteInputAllowed();
-  // This is an auxiliary function which determines that
-  virtual bool isRemoteInputTempBlocked() = 0;
+   protected:
+      // Calling when at least one update has been detected.
+      virtual void onUpdate();
+      // Implementation of the UpdateRequestListener interface.
+      virtual void onUpdateRequest(const ::int_rectangle &rectRequested, bool incremental);
+      // Calling when a clipbard change detected.
+      virtual void onClipboardUpdate(const ::scoped_string &newClipboard);
+      // Calling when a configuration has been reloaded.
+      // Uses to update internal settings.
+      virtual void onConfigReload(ServerConfig *serverConfig);
+      virtual void applyNewConfiguration() = 0;
 
-  virtual bool updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *fb, const Region *region,
-                                         const ::int_rectangle &  viewPort);
+      // Returns true when a remote input allowed.
+      bool isRemoteInputAllowed();
+      // This is an auxiliary function which determines that
+      virtual bool isRemoteInputTempBlocked() = 0;
 
-  void sendUpdate();
+      virtual bool updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *fb, const Region *region,
+                                             const ::int_rectangle &viewPort);
 
-  Region m_fullReqRegion;
-  critical_section m_reqRegMutex;
+      void sendUpdate();
 
-  UpdateHandler *m_updateHandler;
+      Region m_fullReqRegion;
+      critical_section m_reqRegMutex;
 
-  // A derived class thread control.
-  WindowsEvent m_newUpdateEvent;
+      UpdateHandler *m_updateHandler;
 
-  UserInput *m_userInput;
+      // A derived class thread control.
+      WindowsEvent m_newUpdateEvent;
 
-  // Clipboard
-  ::string m_receivedClip;
-  critical_section m_storedClipCritSec;
+      UserInput *m_userInput;
 
-  // External listeners
-  UpdateSendingListener *m_extUpdSendingListener;
-  AbnormDeskTermListener *m_extDeskTermListener;
-  ClipboardListener *m_extClipListener;
+      // Clipboard
+      ::string m_receivedClip;
+      critical_section m_storedClipCritSec;
 
-  ::subsystem::LogWriter *m_plogwriter;
-};
+      // External listeners
+      UpdateSendingListener *m_extUpdSendingListener;
+      AbnormDeskTermListener *m_extDeskTermListener;
+      ClipboardListener *m_extClipListener;
 
-//// __DESKTOPBASEIMPL_H__
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+

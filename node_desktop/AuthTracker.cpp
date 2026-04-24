@@ -25,49 +25,54 @@
 #include "AuthTracker.h"
 //#include "subsystem/thread/critical_section.h"
 
-AuthTracker::AuthTracker(unsigned long long failureTimeInterval,
-                         unsigned int failureMaxCount)
-: m_failureCount(0),
-  m_failureTimeInterval(failureTimeInterval),
-  m_failureMaxCount(failureMaxCount)
-{
-}
 
-AuthTracker::~AuthTracker()
+namespace remoting_node_desktop
 {
-}
 
-unsigned long long AuthTracker::checkBan()
-{
-  refresh();
 
-  unsigned long long banTime = 0;
-  {
-    critical_section_lock al(&m_countMutex);
-    if (m_failureCount >= m_failureMaxCount) {
-      banTime = maximum(0, m_failureTimeInterval -
-                       //(::earth::time::now() - m_firstFailureTime).getTime());
-                           (::earth::time::now() - m_firstFailureTime).m_iSecond);
-    }
-  }
-  return banTime;
-}
+   AuthTracker::AuthTracker(unsigned long long failureTimeInterval, unsigned int failureMaxCount) :
+       m_failureCount(0), m_failureTimeInterval(failureTimeInterval), m_failureMaxCount(failureMaxCount)
+   {
+   }
 
-void AuthTracker::notifyAbAuthFailed()
-{
-  critical_section_lock al(&m_countMutex);
-  if (m_failureCount == 0) {
-    m_firstFailureTime = ::earth::time::now();
-  }
-  m_failureCount++;
-}
+   AuthTracker::~AuthTracker() {}
 
-void AuthTracker::refresh()
-{
-  critical_section_lock al(&m_countMutex);
-  //if ((::earth::time::now() - m_firstFailureTime).getTime() >= m_failureTimeInterval) {
-  if ((::earth::time::now() - m_firstFailureTime).m_iSecond >= m_failureTimeInterval)
-  {
-    m_failureCount = 0;
-  }
-}
+   unsigned long long AuthTracker::checkBan()
+   {
+      refresh();
+
+      unsigned long long banTime = 0;
+      {
+         critical_section_lock al(&m_countMutex);
+         if (m_failureCount >= m_failureMaxCount)
+         {
+            banTime = maximum(0, m_failureTimeInterval -
+                                    //(::earth::time::now() - m_firstFailureTime).getTime());
+                                    (::earth::time::now() - m_firstFailureTime).m_iSecond);
+         }
+      }
+      return banTime;
+   }
+
+   void AuthTracker::notifyAbAuthFailed()
+   {
+      critical_section_lock al(&m_countMutex);
+      if (m_failureCount == 0)
+      {
+         m_firstFailureTime = ::earth::time::now();
+      }
+      m_failureCount++;
+   }
+
+   void AuthTracker::refresh()
+   {
+      critical_section_lock al(&m_countMutex);
+      // if ((::earth::time::now() - m_firstFailureTime).getTime() >= m_failureTimeInterval) {
+      if ((::earth::time::now() - m_firstFailureTime).m_iSecond >= m_failureTimeInterval)
+      {
+         m_failureCount = 0;
+      }
+   }
+
+
+} // namespace remoting_node_desktop

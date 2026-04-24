@@ -28,13 +28,20 @@
 //#include "subsystem/platform/inttypes.h"
 #include "desktop_ipc/BlockingGate.h"
 
-class ClientListener
+namespace remoting_node_desktop
+
 {
-public:
-  ClientListener();
-  virtual ~ClientListener();
 
-  virtual void onRequest(unsigned char reqCode, BlockingGate *backGate) = 0;
-};
+   class ClientListener
+   {
+   public:
+      ClientListener();
+      virtual ~ClientListener();
 
-//// __CLIENTLISTENER_H__
+      virtual void onRequest(unsigned char reqCode, BlockingGate *backGate) = 0;
+   };
+
+
+} // namespace remoting_node_desktop 
+
+

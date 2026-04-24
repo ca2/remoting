@@ -69,6 +69,62 @@ namespace remoting_node_desktop
          public RfbClientManagerEventListener
    {
    public:
+
+
+            ::subsystem::LogWriter *m_plogwriter;
+      // ZombieKiller m_zombieKiller;
+
+      ::pointer<Configurator> m_pconfigurator;
+      /**
+       * Shortcut to global server configuration.
+       */
+      ::pointer < ServerConfig > m_pserverconfig;
+
+      /**
+       * Mutex for protecting servers.
+       */
+      critical_section m_mutex;
+
+      /**
+       * Flag that determitates if we run in server context.
+       * true if service, false if application.
+       */
+      bool m_bRunAsService;
+
+      ::pointer < WinServiceDesktopFactory > m_pservicedesktopfactory;
+      ::pointer < ApplicationDesktopFactory > m_papplicationdesktopfactory;
+      /**
+       * Rfb client manager (for all rfb servers), used by rfb servers
+       * rfb clients, control server and control clients.
+       */
+      ::pointer < RfbClientManager > m_prfbclientmanager;
+      /**
+       * ::innate_subsystem::Control server.
+       */
+      ::pointer < ControlServer  > m_pcontrolserver;
+      /**
+       * Builtin http server.
+       */
+      // HttpServer *m_httpServer;
+      /**
+       * Main rfb server.
+       */
+      ::pointer < RfbServer  > m_prfbserver;
+      /**
+       * Extra servers for extra ports. This object is not protected by any mutex
+       * and it does not implement any internal locking, so it should be used with
+       * caution. Here we change its state on owner creation, on owner deletion
+       * and on each configuration change (via a listener function called from
+       * other threads). The listener function is registered after the object
+       * creation and unregistered before the owner destruction, and its calls are
+       * properly synchronized. Thus, we can be sure that m_extraRfbServers is not
+       * used by different threads simultaneously.
+       */
+      ::pointer < ExtraRfbServers  > m_pextrarfbservers;
+
+      ::pointer < LogInitListener  > m_ploginitlistener;
+
+      unsigned int m_contextSwitchResolution; // in ms
       /**
        * Creates and starts TightVNC server execution (in separate thread).
        *
@@ -90,7 +146,7 @@ namespace remoting_node_desktop
        * Stops and destroys TightVNC server.
        * @remark don't generate shutdown signal(like shutdown() method does) for listeners.
        */
-      virtual ~Server();
+      ~Server() override;
 
       /**
        * Fills structure with information of current state of Server.
@@ -100,7 +156,7 @@ namespace remoting_node_desktop
        */
       virtual void getServerInfo(ServerInfo *info);
 
-      virtual void initialize_server(bool runsInServiceContext, NewConnectionEvents *newConnectionEvents,
+      virtual void initialize_remoting_node_desktop_server(bool runsInServiceContext, NewConnectionEvents *newConnectionEvents,
                                     LogInitListener *logInitListener, ::subsystem::LogWriter *plogwriter);
 
       virtual void on_start();
@@ -146,7 +202,7 @@ namespace remoting_node_desktop
        */
       virtual void afterLastClientDisconnect();
 
-   protected:
+   //protected:
       virtual void restartHttpServer();
       virtual void restartControlServer();
       virtual void restartMainRfbServer();
@@ -158,61 +214,61 @@ namespace remoting_node_desktop
       // Calls a callback function to change update log properties.
       virtual void changeLogProps();
 
-   protected:
-      ::subsystem::LogWriter * m_plogwriter;
-      //ZombieKiller m_zombieKiller;
+   //protected:
+      //::subsystem::LogWriter * m_plogwriter;
+      ////ZombieKiller m_zombieKiller;
 
-      Configurator m_config;
-      /**
-       * Shortcut to global server configuration.
-       */
-      ServerConfig *m_srvConfig;
+      //::pointer < Configurator > m_pconfigurator;
+      ///**
+      // * Shortcut to global server configuration.
+      // */
+      //ServerConfig *m_srvConfig;
 
-      /**
-       * Mutex for protecting servers.
-       */
-      critical_section m_mutex;
+      ///**
+      // * Mutex for protecting servers.
+      // */
+      //critical_section m_mutex;
 
-      /**
-       * Flag that determitates if we run in server context.
-       * true if service, false if application.
-       */
-      const bool m_runAsService;
+      ///**
+      // * Flag that determitates if we run in server context.
+      // * true if service, false if application.
+      // */
+      //bool m_bRunAsService;
 
-      WinServiceDesktopFactory m_serviceDesktopFactory;
-      ApplicationDesktopFactory m_applicationDesktopFactory;
-      /**
-       * Rfb client manager (for all rfb servers), used by rfb servers
-       * rfb clients, control server and control clients.
-       */
-      RfbClientManager *m_rfbClientManager;
-      /**
-       * ::innate_subsystem::Control server.
-       */
-      ControlServer *m_controlServer;
-      /**
-       * Builtin http server.
-       */
-      //HttpServer *m_httpServer;
-      /**
-       * Main rfb server.
-       */
-      RfbServer *m_rfbServer;
-      /**
-       * Extra servers for extra ports. This object is not protected by any mutex
-       * and it does not implement any internal locking, so it should be used with
-       * caution. Here we change its state on owner creation, on owner deletion
-       * and on each configuration change (via a listener function called from
-       * other threads). The listener function is registered after the object
-       * creation and unregistered before the owner destruction, and its calls are
-       * properly synchronized. Thus, we can be sure that m_extraRfbServers is not
-       * used by different threads simultaneously.
-       */
-      ExtraRfbServers m_extraRfbServers;
+      //WinServiceDesktopFactory m_serviceDesktopFactory;
+      //ApplicationDesktopFactory m_applicationDesktopFactory;
+      ///**
+      // * Rfb client manager (for all rfb servers), used by rfb servers
+      // * rfb clients, control server and control clients.
+      // */
+      //RfbClientManager *m_rfbClientManager;
+      ///**
+      // * ::innate_subsystem::Control server.
+      // */
+      //ControlServer *m_controlServer;
+      ///**
+      // * Builtin http server.
+      // */
+      ////HttpServer *m_httpServer;
+      ///**
+      // * Main rfb server.
+      // */
+      //RfbServer *m_rfbServer;
+      ///**
+      // * Extra servers for extra ports. This object is not protected by any mutex
+      // * and it does not implement any internal locking, so it should be used with
+      // * caution. Here we change its state on owner creation, on owner deletion
+      // * and on each configuration change (via a listener function called from
+      // * other threads). The listener function is registered after the object
+      // * creation and unregistered before the owner destruction, and its calls are
+      // * properly synchronized. Thus, we can be sure that m_extraRfbServers is not
+      // * used by different threads simultaneously.
+      // */
+      //ExtraRfbServers m_extraRfbServers;
 
-      LogInitListener *m_logInitListener;
+      //LogInitListener *m_logInitListener;
 
-      unsigned int m_contextSwitchResolution; // in ms
+      //unsigned int m_contextSwitchResolution; // in ms
    };
 
 

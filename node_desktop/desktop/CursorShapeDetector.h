@@ -31,25 +31,31 @@
 #include "remoting/remoting/win_system/WindowsEvent.h"
 //#include "log_writer/LogWriter.h"
 
-class CursorShapeDetector : public UpdateDetector
+namespace remoting_node_desktop
 {
-public:
-  CursorShapeDetector(UpdateKeeper *updateKeeper,
-                     UpdateListener *updateListener,
-                     CursorShapeGrabber *mouseGrabber,
-                     critical_section *mouseGrabLocMut,
-                     ::subsystem::LogWriter *log);
-  virtual ~CursorShapeDetector();
 
-protected:
-  virtual void execute();
-  virtual void onTerminate();
+   class CursorShapeDetector : public UpdateDetector
+   {
+   public:
+      CursorShapeDetector(UpdateKeeper *updateKeeper, UpdateListener *updateListener, CursorShapeGrabber *mouseGrabber,
+                          critical_section *mouseGrabLocMut, ::subsystem::LogWriter *log);
+      virtual ~CursorShapeDetector();
 
-  CursorShapeGrabber *m_mouseGrabber;
-  critical_section *m_mouseGrabLocMut;
-  WindowsEvent m_sleepTimer;
+   protected:
+      virtual void execute();
+      virtual void onTerminate();
 
-  ::subsystem::LogWriter *m_plogwriter;
-};
+      CursorShapeGrabber *m_mouseGrabber;
+      critical_section *m_mouseGrabLocMut;
+      WindowsEvent m_sleepTimer;
 
-//// __CURSORHAPEDETECTOR_H__
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+   //// __CURSORHAPEDETECTOR_H__
+
+
+} // namespace remoting_node_desktop
+ 
+
+

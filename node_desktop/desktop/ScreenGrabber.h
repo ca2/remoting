@@ -64,51 +64,64 @@
   }
 */
 
-class ScreenGrabber
+
+namespace remoting_node_desktop
 {
-public:
-  // Derived constructors will ensure that the getScreenBuffer() returns
-  // a frame buffer with valid screen properties.
-  ScreenGrabber(void);
-  virtual ~ScreenGrabber(void);
 
-  /* Provides grabbing.
-  Parameters:     *rect - Pointer to a ::int_rectangle object with relative workRect coordinates.
-  Return value:   true if success.
-  */
-  virtual bool grab(const ::int_rectangle &rect = {} ) = 0;
 
-  virtual ::innate_subsystem::FrameBuffer *getScreenBuffer() { return &m_workFrameBuffer; }
-  virtual void setWorkRect(::int_rectangle *workRect);
-  virtual ::int_rectangle getWorkRect() const { return ::int_rectangle(m_offsetFrameBuffer.x,
-                                                 m_offsetFrameBuffer.y,
-                                                 m_workFrameBuffer.getDimension().cx +
-                                                 m_offsetFrameBuffer.x,
-                                                 m_workFrameBuffer.getDimension().cy +
-                                                 m_offsetFrameBuffer.y); }
-  /* Provides read access to rectangular coordinates of the screen (desktop).*/
-  virtual ::int_rectangle getScreenRect() { return m_fullScreenRect; }
+   class ScreenGrabber
+   {
+   public:
+      // Derived constructors will ensure that the getScreenBuffer() returns
+      // a frame buffer with valid screen properties.
+      ScreenGrabber(void);
+      virtual ~ScreenGrabber(void);
 
-  // Checks screen(desktop) properties on changes
-  inline virtual bool getPropertiesChanged() = 0;
-  inline virtual bool getPixelFormatChanged() = 0;
-  inline virtual bool getScreenSizeChanged() = 0;
+      /* Provides grabbing.
+      Parameters:     *rect - Pointer to a ::int_rectangle object with relative workRect coordinates.
+      Return value:   true if success.
+      */
+      virtual bool grab(const ::int_rectangle &rect = {}) = 0;
 
-  // Set new values of the WorkRect to default (to full screen rectangle coordinates)
-  // and m_fullScreenRect if desktop properties has been changed.
-  // Also m_pixelFormat set to actual value.
-  virtual bool applyNewProperties();
+      virtual ::innate_subsystem::FrameBuffer *getScreenBuffer() { return &m_workFrameBuffer; }
+      virtual void setWorkRect(::int_rectangle *workRect);
+      virtual ::int_rectangle getWorkRect() const
+      {
+         return ::int_rectangle(m_offsetFrameBuffer.x, m_offsetFrameBuffer.y,
+                                m_workFrameBuffer.getDimension().cx + m_offsetFrameBuffer.x,
+                                m_workFrameBuffer.getDimension().cy + m_offsetFrameBuffer.y);
+      }
+      /* Provides read access to rectangular coordinates of the screen (desktop).*/
+      virtual ::int_rectangle getScreenRect() { return m_fullScreenRect; }
 
-protected:
-  virtual bool applyNewFullScreenRect() = 0;
-  virtual bool applyNewPixelFormat() = 0;
+      // Checks screen(desktop) properties on changes
+      inline virtual bool getPropertiesChanged() = 0;
+      inline virtual bool getPixelFormatChanged() = 0;
+      inline virtual bool getScreenSizeChanged() = 0;
 
-  virtual bool setWorkRectDefault();
+      // Set new values of the WorkRect to default (to full screen rectangle coordinates)
+      // and m_fullScreenRect if desktop properties has been changed.
+      // Also m_pixelFormat set to actual value.
+      virtual bool applyNewProperties();
 
-  ::int_rectangle m_fullScreenRect;
-  ::int_point m_offsetFrameBuffer;
+   protected:
+      virtual bool applyNewFullScreenRect() = 0;
+      virtual bool applyNewPixelFormat() = 0;
 
-  ::innate_subsystem::FrameBuffer m_workFrameBuffer;
-};
+      virtual bool setWorkRectDefault();
 
-//// __SCREENGRABBER_H__
+      ::int_rectangle m_fullScreenRect;
+      ::int_point m_offsetFrameBuffer;
+
+      ::innate_subsystem::FrameBuffer m_workFrameBuffer;
+   };
+
+   ////// __SCREENGRABBER_H__
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+

@@ -27,80 +27,79 @@
 #include "Win32ScreenDriver.h"
 #include "Win8ScreenDriver.h"
 
-Win32ScreenDriverFactory::Win32ScreenDriverFactory(ServerConfig *srvConf)
-: m_srvConf(srvConf)
+namespace remoting_node_desktop
 {
-}
 
-Win32ScreenDriverFactory::~Win32ScreenDriverFactory()
-{
-}
 
-ScreenDriver *Win32ScreenDriverFactory::
-createScreenDriver(UpdateKeeper *updateKeeper,
-                   UpdateListener *updateListener,
-                   ::innate_subsystem::FrameBuffer *fb,
-                   critical_section *fbcritical_section,
-                   ::subsystem::LogWriter *log)
-{
-  // Try to use Win8 duplication API firstly because it's in preference to other methods.
-  if (isD3DAllowed()) {
-    log->information("D3D driver usage is allowed, try to start it...");
-    try {
-      return new Win8ScreenDriver(updateKeeper, updateListener, fbcritical_section, log);
-    } catch (::exception &e) {
-      log->error("The Win8 duplication api can't be used: {}",
-                 e.get_message());
-    }
-  }
-  else {
-    log->information("D3D driver usage is disallowed");
-  }
+   Win32ScreenDriverFactory::Win32ScreenDriverFactory(ServerConfig *srvConf) : m_srvConf(srvConf) {}
 
-  if (isMirrorDriverAllowed()) {
-    log->information("Mirror driver usage is allowed, try to start it...");
-    try {
-      return createMirrorScreenDriver(updateKeeper, updateListener,
-                                      fbcritical_section, log);
-    } catch (::exception &e) {
-      log->error("The mirror driver factory has failed: {}",
-                 e.get_message());
-    }
-  } else {
-    log->information("Mirror driver usage is disallowed");
-  }
-  log->information("Using the standart screen driver");
-  return createStandardScreenDriver(updateKeeper,
-                                    updateListener,
-                                    fb,
-                                    fbcritical_section, log);
-}
+   Win32ScreenDriverFactory::~Win32ScreenDriverFactory() {}
 
-ScreenDriver *Win32ScreenDriverFactory::
-createStandardScreenDriver(UpdateKeeper *updateKeeper,
-                           UpdateListener *updateListener,
-                           ::innate_subsystem::FrameBuffer *fb,
-                           critical_section *fbcritical_section,
-                           ::subsystem::LogWriter *log)
-{
-  return new Win32ScreenDriver(updateKeeper, updateListener, fb, fbcritical_section, log);
-}
+   ScreenDriver *Win32ScreenDriverFactory::createScreenDriver(UpdateKeeper *updateKeeper,
+                                                              UpdateListener *updateListener,
+                                                              ::innate_subsystem::FrameBuffer *fb,
+                                                              critical_section *fbcritical_section,
+                                                              ::subsystem::LogWriter *log)
+   {
+      // Try to use Win8 duplication API firstly because it's in preference to other methods.
+      if (isD3DAllowed())
+      {
+         log->information("D3D driver usage is allowed, try to start it...");
+         try
+         {
+            return new Win8ScreenDriver(updateKeeper, updateListener, fbcritical_section, log);
+         }
+         catch (::exception &e)
+         {
+            log->error("The Win8 duplication api can't be used: {}", e.get_message());
+         }
+      }
+      else
+      {
+         log->information("D3D driver usage is disallowed");
+      }
 
-ScreenDriver *Win32ScreenDriverFactory::
-createMirrorScreenDriver(UpdateKeeper *updateKeeper,
-                         UpdateListener *updateListener,
-                         critical_section *fbcritical_section,
-                         ::subsystem::LogWriter *log)
-{
-  return new Win32MirrorScreenDriver(updateKeeper, updateListener, fbcritical_section, log);
-}
+      if (isMirrorDriverAllowed())
+      {
+         log->information("Mirror driver usage is allowed, try to start it...");
+         try
+         {
+            return createMirrorScreenDriver(updateKeeper, updateListener, fbcritical_section, log);
+         }
+         catch (::exception &e)
+         {
+            log->error("The mirror driver factory has failed: {}", e.get_message());
+         }
+      }
+      else
+      {
+         log->information("Mirror driver usage is disallowed");
+      }
+      log->information("Using the standart screen driver");
+      return createStandardScreenDriver(updateKeeper, updateListener, fb, fbcritical_section, log);
+   }
 
-bool Win32ScreenDriverFactory::isMirrorDriverAllowed()
-{
-  return m_srvConf->getMirrorIsAllowed();
-}
+   ScreenDriver *Win32ScreenDriverFactory::createStandardScreenDriver(UpdateKeeper *updateKeeper,
+                                                                      UpdateListener *updateListener,
+                                                                      ::innate_subsystem::FrameBuffer *fb,
+                                                                      critical_section *fbcritical_section,
+                                                                      ::subsystem::LogWriter *log)
+   {
+      return new Win32ScreenDriver(updateKeeper, updateListener, fb, fbcritical_section, log);
+   }
 
-bool Win32ScreenDriverFactory::isD3DAllowed()
-{
-  return m_srvConf->getD3DIsAllowed();
-}
+   ScreenDriver *Win32ScreenDriverFactory::createMirrorScreenDriver(UpdateKeeper *updateKeeper,
+                                                                    UpdateListener *updateListener,
+                                                                    critical_section *fbcritical_section,
+                                                                    ::subsystem::LogWriter *log)
+   {
+      return new Win32MirrorScreenDriver(updateKeeper, updateListener, fbcritical_section, log);
+   }
+
+   bool Win32ScreenDriverFactory::isMirrorDriverAllowed() { return m_srvConf->getMirrorIsAllowed(); }
+
+   bool Win32ScreenDriverFactory::isD3DAllowed() { return m_srvConf->getD3DIsAllowed(); }
+} // namespace remoting_node_desktop
+
+
+

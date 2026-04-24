@@ -27,16 +27,25 @@
 
 #include "DesktopFactory.h"
 
-class WinServiceDesktopFactory : public DesktopFactory
+namespace remoting_node_desktop
 {
-public:
-  WinServiceDesktopFactory();
-  ~WinServiceDesktopFactory();
 
-  virtual Desktop *createDesktop(::subsystem::ClipboardListener *extClipListener,
-                                          UpdateSendingListener *extUpdSendingListener,
-                                          AbnormDeskTermListener *extDeskTermListener,
-                                          ::subsystem::LogWriter *log);
-};
+   class WinServiceDesktopFactory : public DesktopFactory
+   {
+   public:
+      WinServiceDesktopFactory();
+      ~WinServiceDesktopFactory();
 
-//// __WINSERVICEDESKTOPFACTORY_H__
+      virtual Desktop *createDesktop(::subsystem::ClipboardListener *extClipListener,
+                                     UpdateSendingListener *extUpdSendingListener,
+                                     AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter *log);
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+

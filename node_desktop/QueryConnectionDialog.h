@@ -30,46 +30,54 @@
 #include "innate_subsystem/gui/Dialog.h"
 #include "innate_subsystem/gui/Control.h"
 
-class QueryConnectionDialog : public ::innate_subsystem::Dialog
+namespace remoting_node_desktop
 {
-public:
-  static const int ACCEPT_CHOISE = 0x0;
-  static const int REJECT_CHOISE = 0x1;
 
-public:
-  QueryConnectionDialog(const ::scoped_string & scopedstrPeerAddress, bool acceptByDefault,
-                        DWORD timeOutInSec);
-  virtual ~QueryConnectionDialog();
+   class QueryConnectionDialog : public ::innate_subsystem::Dialog
+   {
+   public:
+      static const int ACCEPT_CHOISE = 0x0;
+      static const int REJECT_CHOISE = 0x1;
 
-protected:
+   public:
+      QueryConnectionDialog(const ::scoped_string &scopedstrPeerAddress, bool acceptByDefault, DWORD timeOutInSec);
+      virtual ~QueryConnectionDialog();
 
-  //
-  // Inherited from BaseDialog.
-  //
+   protected:
 
-  virtual bool onInitDialog();
-  virtual bool onNotify(unsigned int controlID, ::lparam data);
-  virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
-  virtual bool onDestroy();
-  virtual void onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam);
+      //
+      // Inherited from BaseDialog.
+      //
 
-  void initControls();
+      virtual bool onInitDialog();
+      virtual bool onNotify(unsigned int controlID, ::lparam data);
+      virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
+      virtual bool onDestroy();
+      virtual void onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam);
 
-  void onAccept();
-  void onReject();
-  void onTimer();
+      void initControls();
 
-  void updateTimeoutLabel();
+      void onAccept();
+      void onReject();
+      void onTimer();
 
-protected:
-  ::string m_peerAddress;
-  bool m_acceptByDefault;
-  DWORD m_timeout;
+      void updateTimeoutLabel();
 
-  ::innate_subsystem::Control m_peerAddressLabel;
-  ::innate_subsystem::Control m_timeoutLabel;
-  ::innate_subsystem::Control m_acceptButton;
-  ::innate_subsystem::Control m_rejectButton;
-};
+   protected:
+      ::string m_peerAddress;
+      bool m_acceptByDefault;
+      DWORD m_timeout;
+
+      ::innate_subsystem::Control m_peerAddressLabel;
+      ::innate_subsystem::Control m_timeoutLabel;
+      ::innate_subsystem::Control m_acceptButton;
+      ::innate_subsystem::Control m_rejectButton;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
 
 

@@ -24,11 +24,16 @@
 #include "framework.h"
 #include "WinDxCriticalException.h"
 
-WinDxCriticalException::WinDxCriticalException(const ::scoped_string & scopedstrMessage, HRESULT errCode)
-: WinDxException(scopedstrMessage, errCode)
+namespace remoting_node_desktop
 {
-}
 
-WinDxCriticalException::~WinDxCriticalException()
-{
-}
+
+   WinDxCriticalException::WinDxCriticalException(const ::scoped_string &scopedstrMessage, HRESULT errCode) :
+       WinDxException(scopedstrMessage, errCode)
+   {
+   }
+
+   WinDxCriticalException::~WinDxCriticalException() {}
+
+
+} // namespace remoting_node_desktop

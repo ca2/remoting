@@ -34,30 +34,39 @@
 
 #define DEFAULT_SLEEP_TIME 1000
 
-class Poller : public UpdateDetector
+
+namespace remoting_node_desktop
 {
-public:
-  Poller(UpdateKeeper *updateKeeper,
-         UpdateListener *updateListener,
-         ScreenGrabber *screenGrabber,
-         ::innate_subsystem::FrameBuffer *backupFrameBuffer,
-         critical_section *frameBufferCriticalSection,
-         ::subsystem::LogWriter *log);
 
-  virtual ~Poller();
+   class Poller : public UpdateDetector
+   {
+   public:
+      Poller(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ScreenGrabber *screenGrabber,
+             ::innate_subsystem::FrameBuffer *backupFrameBuffer, critical_section *frameBufferCriticalSection,
+             ::subsystem::LogWriter *log);
 
-protected:
-  virtual void execute();
-  virtual void onTerminate();
+      virtual ~Poller();
 
-private:
-  ScreenGrabber *m_screenGrabber;
-  ::innate_subsystem::FrameBuffer *m_backupFrameBuffer;
-  critical_section *m_fbMutex;
-  ::int_rectangle m_pollingRect;
-  WindowsEvent m_intervalWaiter;
+   protected:
+      virtual void execute();
+      virtual void onTerminate();
 
-  ::subsystem::LogWriter *m_plogwriter;
-};
+   private:
+      ScreenGrabber *m_screenGrabber;
+      ::innate_subsystem::FrameBuffer *m_backupFrameBuffer;
+      critical_section *m_fbMutex;
+      ::int_rectangle m_pollingRect;
+      WindowsEvent m_intervalWaiter;
 
-//// __POLLER_H__
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+
+

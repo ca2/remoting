@@ -29,68 +29,66 @@
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "WinDxgiOutput.h"
 
-WinDxgiOutput::WinDxgiOutput(WinDxgiAdapter *dxgiAdapter, unsigned int iOutput)
-: m_dxgiOutput(0)
+namespace remoting_node_desktop
 {
-  dxgiAdapter->getDxgiOutput(iOutput, &m_dxgiOutput);
 
-  memset(&m_description, 0, sizeof(m_description));
-  HRESULT hr = m_dxgiOutput->GetDesc(&m_description);
-  if (FAILED(hr)) {
-    throw WinDxCriticalException("Can't get output description", hr);
-  }
-}
 
-WinDxgiOutput::WinDxgiOutput(const WinDxgiOutput &src)
-{
-  copy(src);
-}
+   WinDxgiOutput::WinDxgiOutput(WinDxgiAdapter *dxgiAdapter, unsigned int iOutput) : m_dxgiOutput(0)
+   {
+      dxgiAdapter->getDxgiOutput(iOutput, &m_dxgiOutput);
 
-WinDxgiOutput::~WinDxgiOutput()
-{
-  if (m_dxgiOutput != 0) {
-    m_dxgiOutput->Release();
-    m_dxgiOutput = 0;
-  }
-}
+      memset(&m_description, 0, sizeof(m_description));
+      HRESULT hr = m_dxgiOutput->GetDesc(&m_description);
+      if (FAILED(hr))
+      {
+         throw WinDxCriticalException("Can't get output description", hr);
+      }
+   }
 
-WinDxgiOutput &WinDxgiOutput::operator = (WinDxgiOutput const &src)
-{
-  copy(src);
-  return *this;
-}
+   WinDxgiOutput::WinDxgiOutput(const WinDxgiOutput &src) { copy(src); }
 
-void WinDxgiOutput::copy(const WinDxgiOutput &src)
-{
-  if (this != &src) {
-    m_dxgiOutput = src.m_dxgiOutput;
-    m_dxgiOutput->AddRef();
-    m_description = src.m_description;
-  }
-}
+   WinDxgiOutput::~WinDxgiOutput()
+   {
+      if (m_dxgiOutput != 0)
+      {
+         m_dxgiOutput->Release();
+         m_dxgiOutput = 0;
+      }
+   }
 
-bool WinDxgiOutput::isAttachedtoDesktop()
-{
-  return m_description.AttachedToDesktop != false;
-}
+   WinDxgiOutput &WinDxgiOutput::operator=(WinDxgiOutput const &src)
+   {
+      copy(src);
+      return *this;
+   }
 
-::int_rectangle WinDxgiOutput::getDesktopCoordinates()
-{
-  return ::int_rectangle(&m_description.DesktopCoordinates);
-}
+   void WinDxgiOutput::copy(const WinDxgiOutput &src)
+   {
+      if (this != &src)
+      {
+         m_dxgiOutput = src.m_dxgiOutput;
+         m_dxgiOutput->AddRef();
+         m_description = src.m_description;
+      }
+   }
 
-void WinDxgiOutput::getDeviceName(::string & out)
-{
-  ::wstring uniString(m_description.DeviceName);
-  uniString.toStringStorage(out);
-}
+   bool WinDxgiOutput::isAttachedtoDesktop() { return m_description.AttachedToDesktop != false; }
 
-DXGI_MODE_ROTATION WinDxgiOutput::getRotation() const
-{
-  return  m_description.Rotation;
-}
+   ::int_rectangle WinDxgiOutput::getDesktopCoordinates() { return ::int_rectangle(&m_description.DesktopCoordinates); }
 
-HRESULT WinDxgiOutput::queryInterface(REFIID riid, void **ppvObject)
-{
-  return m_dxgiOutput->QueryInterface(riid, ppvObject);
-}
+   void WinDxgiOutput::getDeviceName(::string &out)
+   {
+      ::wstring uniString(m_description.DeviceName);
+      uniString.toStringStorage(out);
+   }
+
+   DXGI_MODE_ROTATION WinDxgiOutput::getRotation() const { return m_description.Rotation; }
+
+   HRESULT WinDxgiOutput::queryInterface(REFIID riid, void **ppvObject)
+   {
+      return m_dxgiOutput->QueryInterface(riid, ppvObject);
+   }
+
+
+} // namespace remoting_node_desktop
+ 

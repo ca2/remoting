@@ -27,13 +27,23 @@
 
 #include "DesktopSrvDispatcher.h"
 
-class GateKickHandler : public ClientListener
+namespace remoting_node_desktop
 {
-public:
-  GateKickHandler(DesktopSrvDispatcher *dispatcher);
-  virtual ~GateKickHandler();
-protected:
-  virtual void onRequest(unsigned char reqCode, BlockingGate *backGate);
-};
 
-//// __GATEKICKHANDLER_H__
+
+   class GateKickHandler : public ClientListener
+   {
+   public:
+      GateKickHandler(DesktopSrvDispatcher *dispatcher);
+      virtual ~GateKickHandler();
+   protected:
+      virtual void onRequest(unsigned char reqCode, BlockingGate *backGate);
+   };
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+

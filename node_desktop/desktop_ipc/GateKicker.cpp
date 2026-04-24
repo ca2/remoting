@@ -25,33 +25,40 @@
 #include "GateKicker.h"
 //#include "subsystem/thread/critical_section.h"
 
-GateKicker::GateKicker(BlockingGate *gate)
-: m_gate(gate)
+namespace remoting_node_desktop
 {
-  resume();
-}
 
-GateKicker::~GateKicker()
-{
-  terminate();
-  wait();
-}
 
-void GateKicker::onTerminate()
-{
-  m_sleeper.notify();
-}
+   GateKicker::GateKicker(BlockingGate *gate) : m_gate(gate) { resume(); }
 
-void GateKicker::execute()
-{
-  while (!isTerminating()) {
-    m_sleeper.waitForEvent(500);
-    if (!isTerminating()) {
-      try {
-        critical_section_lock al(m_gate);
-        m_gate->writeUInt8(255);
-      } catch (...) {
+   GateKicker::~GateKicker()
+   {
+      terminate();
+      wait();
+   }
+
+   void GateKicker::onTerminate() { m_sleeper.notify(); }
+
+   void GateKicker::execute()
+   {
+      while (!isTerminating())
+      {
+         m_sleeper.waitForEvent(500);
+         if (!isTerminating())
+         {
+            try
+            {
+               critical_section_lock al(m_gate);
+               m_gate->writeUInt8(255);
+            }
+            catch (...)
+            {
+            }
+         }
       }
-    }
-  }
-}
+   }
+
+
+} // namespace remoting_node_desktop
+
+

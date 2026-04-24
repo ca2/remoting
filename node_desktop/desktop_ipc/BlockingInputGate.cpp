@@ -23,12 +23,13 @@
 //
 #include "framework.h"
 #include "BlockingInputGate.h"
-
-BlockingInputGate::BlockingInputGate(InputStream *inputStream)
-: DataInputStream(inputStream)
+namespace remoting_node_desktop
 {
-}
 
-BlockingInputGate::~BlockingInputGate()
-{
-}
+
+   BlockingInputGate::BlockingInputGate(InputStream *inputStream) : DataInputStream(inputStream) {}
+
+   BlockingInputGate::~BlockingInputGate() {}
+
+
+} // namespace remoting_node_desktop

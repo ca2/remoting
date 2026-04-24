@@ -29,34 +29,38 @@
 #include "subsystem/platform/CommandLine.h"
 #include "subsystem/platform/Exception.h"
 
-class QueryConnectionCommandLine : private ::subsystem::CommandLine
+namespace remoting_node_desktop
 {
-public:
-  static ::string_literal QUERY_CONNECTION;
-  static ::string_literal PEER_ADDR;
-  static ::string_literal TIMEOUT;
-  static ::string_literal ACCEPT;
 
-  unsigned int m_timeout;
+   class QueryConnectionCommandLine : private ::subsystem::CommandLine
+   {
+   public:
+      static ::string_literal QUERY_CONNECTION;
+      static ::string_literal PEER_ADDR;
+      static ::string_literal TIMEOUT;
+      static ::string_literal ACCEPT;
 
-public:
-  QueryConnectionCommandLine();
-  virtual ~QueryConnectionCommandLine();
+      unsigned int m_timeout;
 
-  void parse(const ::subsystem::CommandLineArguments *commandLine);
+   public:
+      QueryConnectionCommandLine();
+      virtual ~QueryConnectionCommandLine();
 
-  // Returns true if timeout is specified.
-  bool isTimeoutSpecified();
+      void parse(const ::subsystem::CommandLineArguments *commandLine);
 
-  // Stores ip address value into storage output parameter.
-  void getPeerAddress(::string & storage);
-  // Returns true if default action is accept.
-  bool isDefaultActionAccept();
-  // Returns timeout in seconds.
-  unsigned int getTimeout();
+      // Returns true if timeout is specified.
+      bool isTimeoutSpecified();
 
-//protected:
-  //unsigned int m_timeout;
-};
+      // Stores ip address value into storage output parameter.
+      void getPeerAddress(::string &storage);
+      // Returns true if default action is accept.
+      bool isDefaultActionAccept();
+      // Returns timeout in seconds.
+      unsigned int getTimeout();
+
+      // protected:
+      // unsigned int m_timeout;
+   };
 
 
+} // namespace remoting_node_desktop

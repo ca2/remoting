@@ -24,103 +24,90 @@
 #include "framework.h"
 #include "DummyScreenDriver.h"
 
-DummyScreenDriver::DummyScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ::int_size dim, unsigned int interval, ::subsystem::LogWriter *log)
-  : m_updateListener(updateListener),
-  m_updateKeeper(updateKeeper),
-  m_interval(interval)
+namespace remoting_node_desktop
 {
-  ::innate_subsystem::PixelFormat pixelFormat;
-  pixelFormat.initBigEndianByNative();
-  pixelFormat.bitsPerPixel = 32;
-  pixelFormat.redMax = 0xff;
-  pixelFormat.greenMax = 0xff;
-  pixelFormat.blueMax = 0xff;
-  pixelFormat.redShift = 16;
-  pixelFormat.greenShift = 8;
-  pixelFormat.blueShift = 0;
-  m_workFrameBuffer.setProperties(&dim, &pixelFormat);
-  m_detectionEnabled = false;
-  resume();
-}
 
-DummyScreenDriver::~DummyScreenDriver()
-{
-  terminate();
-  wait();
-}
 
-void DummyScreenDriver::onTerminate()
-{
-  m_sleeper.notify();
-}
+   DummyScreenDriver::DummyScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ::int_size dim,
+                                        unsigned int interval, ::subsystem::LogWriter *log) :
+       m_updateListener(updateListener), m_updateKeeper(updateKeeper), m_interval(interval)
+   {
+      ::innate_subsystem::PixelFormat pixelFormat;
+      pixelFormat.initBigEndianByNative();
+      pixelFormat.bitsPerPixel = 32;
+      pixelFormat.redMax = 0xff;
+      pixelFormat.greenMax = 0xff;
+      pixelFormat.blueMax = 0xff;
+      pixelFormat.redShift = 16;
+      pixelFormat.greenShift = 8;
+      pixelFormat.blueShift = 0;
+      m_workFrameBuffer.setProperties(&dim, &pixelFormat);
+      m_detectionEnabled = false;
+      resume();
+   }
 
-void DummyScreenDriver::execute()
-{
-  while (!isTerminating()) {
-    m_sleeper.waitForEvent(m_interval);
-    if (!isTerminating()) {
-      try {
-        ::int_size dim = m_workFrameBuffer.getDimension();
-        int w = dim.cx;
-        int h = dim.cy;
-        int x = rand() % (w / 50) + (w / 50);
-        int y = rand() % (h / 50) + (h / 50);
+   DummyScreenDriver::~DummyScreenDriver()
+   {
+      terminate();
+      wait();
+   }
 
-        ::int_rectangle r(x, y);
-        r.move(rand() % w, rand() % h);
-        int m = 0xffffff / RAND_MAX;
-        unsigned int color = rand() * m + rand() % m;
-        ::int_rectangle tmp(w,h);
-        Region reg(tmp);
-        if (m_detectionEnabled) {
-          m_workFrameBuffer.fillRect(&r, color);
-          m_updateKeeper->addChangedRegion(&reg);
-          m_updateListener->onUpdate();
-        }
+   void DummyScreenDriver::onTerminate() { m_sleeper.notify(); }
+
+   void DummyScreenDriver::execute()
+   {
+      while (!isTerminating())
+      {
+         m_sleeper.waitForEvent(m_interval);
+         if (!isTerminating())
+         {
+            try
+            {
+               ::int_size dim = m_workFrameBuffer.getDimension();
+               int w = dim.cx;
+               int h = dim.cy;
+               int x = rand() % (w / 50) + (w / 50);
+               int y = rand() % (h / 50) + (h / 50);
+
+               ::int_rectangle r(x, y);
+               r.move(rand() % w, rand() % h);
+               int m = 0xffffff / RAND_MAX;
+               unsigned int color = rand() * m + rand() % m;
+               ::int_rectangle tmp(w, h);
+               Region reg(tmp);
+               if (m_detectionEnabled)
+               {
+                  m_workFrameBuffer.fillRect(&r, color);
+                  m_updateKeeper->addChangedRegion(&reg);
+                  m_updateListener->onUpdate();
+               }
+            }
+            catch (...)
+            {
+            }
+         }
       }
-      catch (...) {
-      }
-    }
-  }
-}
+   }
 
-void DummyScreenDriver::executeDetection()
-{
-  m_detectionEnabled = true;
-}
+   void DummyScreenDriver::executeDetection() { m_detectionEnabled = true; }
 
 
-void DummyScreenDriver::terminateDetection()
-{
-  m_detectionEnabled = false;
-}
+   void DummyScreenDriver::terminateDetection() { m_detectionEnabled = false; }
 
-::int_size DummyScreenDriver::getScreenDimension()
-{
-  return m_workFrameBuffer.getDimension();
-}
+   ::int_size DummyScreenDriver::getScreenDimension() { return m_workFrameBuffer.getDimension(); }
 
-bool DummyScreenDriver::grabFb(const ::int_rectangle &  rect)
-{
-  return true;
-}
+   bool DummyScreenDriver::grabFb(const ::int_rectangle &rect) { return true; }
 
-::innate_subsystem::FrameBuffer *DummyScreenDriver::getScreenBuffer()
-{
-  return &m_workFrameBuffer;
-}
+   ::innate_subsystem::FrameBuffer *DummyScreenDriver::getScreenBuffer() { return &m_workFrameBuffer; }
 
-bool DummyScreenDriver::getScreenPropertiesChanged()
-{
-  return false;
-}
+   bool DummyScreenDriver::getScreenPropertiesChanged() { return false; }
 
-bool DummyScreenDriver::getScreenSizeChanged()
-{
-  return false;
-}
+   bool DummyScreenDriver::getScreenSizeChanged() { return false; }
 
-bool DummyScreenDriver::applyNewScreenProperties()
-{
-  return true;
-}
+   bool DummyScreenDriver::applyNewScreenProperties() { return true; }
+
+
+} // namespace remoting_node_desktop
+ 
+
+

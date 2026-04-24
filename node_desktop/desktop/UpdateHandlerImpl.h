@@ -29,45 +29,56 @@
 #include "ScreenDriver.h"
 #include "ScreenDriverFactory.h"
 
-// This class contain a base architecture implementation of the UpdateHandler class.
-class UpdateHandlerImpl : public UpdateHandler, public UpdateListener
+namespace remoting_node_desktop
 {
-public:
-  UpdateHandlerImpl(UpdateListener *externalUpdateListener, ScreenDriverFactory *scrDriverFactory,
-                    ::subsystem::LogWriter *log);
-  virtual ~UpdateHandlerImpl();
 
-  virtual void extract(UpdateContainer *updateContainer);
-  virtual void setFullUpdateRequested(const ::remoting::Region *region);
-  bool checkForUpdates(::remoting::Region *region);
+   // This class contain a base architecture implementation of the UpdateHandler class.
+   class UpdateHandlerImpl : public UpdateHandler, public UpdateListener
+   {
+   public:
+      UpdateHandlerImpl(UpdateListener *externalUpdateListener, ScreenDriverFactory *scrDriverFactory,
+                        ::subsystem::LogWriter *log);
+      virtual ~UpdateHandlerImpl();
 
-  virtual void setExcludedRegion(const ::remoting::Region *excludedRegion);
+      virtual void extract(UpdateContainer *updateContainer);
+      virtual void setFullUpdateRequested(const ::remoting::Region *region);
+      bool checkForUpdates(::remoting::Region *region);
 
-private:
-  virtual void executeDetectors();
-  virtual void terminateDetectors();
+      virtual void setExcludedRegion(const ::remoting::Region *excludedRegion);
 
-  void doUpdate()
-  {
-    if (m_externalUpdateListener) {
-      m_externalUpdateListener->onUpdate();
-    }
-  }
+   private:
+      virtual void executeDetectors();
+      virtual void terminateDetectors();
 
-  virtual void onUpdate();
+      void doUpdate()
+      {
+         if (m_externalUpdateListener)
+         {
+            m_externalUpdateListener->onUpdate();
+         }
+      }
 
-  void applyNewScreenProperties();
+      virtual void onUpdate();
 
-  UpdateKeeper m_updateKeeper;
-  ScreenDriver *m_screenDriver;
-  UpdateFilter *m_updateFilter;
-  UpdateListener *m_externalUpdateListener;
+      void applyNewScreenProperties();
 
-  ::int_rectangle m_absoluteRect;
+      UpdateKeeper m_updateKeeper;
+      ScreenDriver *m_screenDriver;
+      UpdateFilter *m_updateFilter;
+      UpdateListener *m_externalUpdateListener;
 
-  ::subsystem::LogWriter *m_plogwriter;
+      ::int_rectangle m_absoluteRect;
 
-  bool m_fullUpdateRequested;
-};
+      ::subsystem::LogWriter *m_plogwriter;
 
-//// __UPDATEHANDLERIMPL_H__
+      bool m_fullUpdateRequested;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+

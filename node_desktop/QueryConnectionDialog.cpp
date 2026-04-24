@@ -26,117 +26,124 @@
 #include "remoting/node_desktop/resource.h"
 
 
-QueryConnectionDialog::QueryConnectionDialog(const ::scoped_string & scopedstrPeerAddress,
-                                             bool acceptByDefault,
-                                             DWORD timeOutInSec)
-: m_acceptByDefault(acceptByDefault), m_timeout(timeOutInSec)
+namespace remoting_node_desktop
 {
-   m_peerAddress = scopedstrPeerAddress;
 
-  setResourceId(IDD_QUERY_RFB_CONNECTION);
-}
 
-QueryConnectionDialog::~QueryConnectionDialog()
-{
-}
+   QueryConnectionDialog::QueryConnectionDialog(const ::scoped_string &scopedstrPeerAddress, bool acceptByDefault,
+                                                DWORD timeOutInSec) :
+       m_acceptByDefault(acceptByDefault), m_timeout(timeOutInSec)
+   {
+      m_peerAddress = scopedstrPeerAddress;
 
-bool QueryConnectionDialog::onInitDialog()
-{
-  initControls();
+      setResourceId(IDD_QUERY_RFB_CONNECTION);
+   }
 
-  m_peerAddressLabel.setText(m_peerAddress);
+   QueryConnectionDialog::~QueryConnectionDialog() {}
 
-  if (m_acceptByDefault) {
-    m_acceptButton.setFocus();
-  } else {
-    m_rejectButton.setFocus();
-  }
+   bool QueryConnectionDialog::onInitDialog()
+   {
+      initControls();
 
-  setDefaultPushButton(m_acceptByDefault ? IDC_ACCEPT_BUTTON : IDC_REJECT_BUTTON);
+      m_peerAddressLabel.setText(m_peerAddress);
 
-  updateTimeoutLabel();
+      if (m_acceptByDefault)
+      {
+         m_acceptButton.setFocus();
+      }
+      else
+      {
+         m_rejectButton.setFocus();
+      }
 
-  //SetTimer(operating_system_window(), 0, 1000, 0);
-  setTimer(0, 1000);
+      setDefaultPushButton(m_acceptByDefault ? IDC_ACCEPT_BUTTON : IDC_REJECT_BUTTON);
 
-  return false;
-}
+      updateTimeoutLabel();
 
-bool QueryConnectionDialog::onNotify(unsigned int controlID, ::lparam data)
-{
-  return true;
-}
+      // SetTimer(operating_system_window(), 0, 1000, 0);
+      setTimer(0, 1000);
 
-bool QueryConnectionDialog::onCommand(unsigned int controlID, unsigned int notificationID)
-{
-  switch (controlID) {
-  case IDC_ACCEPT_BUTTON:
-    onAccept();
-    break;
-  case IDC_REJECT_BUTTON:
-    onReject();
-    break;
-  }
-  return true;
-}
+      return false;
+   }
 
-bool QueryConnectionDialog::onDestroy()
-{
-  return true;
-}
+   bool QueryConnectionDialog::onNotify(unsigned int controlID, ::lparam data) { return true; }
 
-void QueryConnectionDialog::onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam)
-{
-  if (uMsg == WM_TIMER) {
-    onTimer();
-  }
-}
+   bool QueryConnectionDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+   {
+      switch (controlID)
+      {
+         case IDC_ACCEPT_BUTTON:
+            onAccept();
+            break;
+         case IDC_REJECT_BUTTON:
+            onReject();
+            break;
+      }
+      return true;
+   }
 
-void QueryConnectionDialog::initControls()
-{
-  //HWND window = this->operating_system_window();
+   bool QueryConnectionDialog::onDestroy() { return true; }
 
-  dialog_item(m_peerAddressLabel, IDC_IP_EDIT);
-   dialog_item(m_acceptButton, IDC_ACCEPT_BUTTON);
-   dialog_item(m_rejectButton, IDC_REJECT_BUTTON);
-   dialog_item(m_timeoutLabel, IDC_TIMEOUT_LABEL);
-}
+   void QueryConnectionDialog::onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam)
+   {
+      if (uMsg == WM_TIMER)
+      {
+         onTimer();
+      }
+   }
 
-void QueryConnectionDialog::onAccept()
-{
-  closeDialog(ACCEPT_CHOISE);
-}
+   void QueryConnectionDialog::initControls()
+   {
+      // HWND window = this->operating_system_window();
 
-void QueryConnectionDialog::onReject()
-{ closeDialog(REJECT_CHOISE); }
+      dialog_item(m_peerAddressLabel, IDC_IP_EDIT);
+      dialog_item(m_acceptButton, IDC_ACCEPT_BUTTON);
+      dialog_item(m_rejectButton, IDC_REJECT_BUTTON);
+      dialog_item(m_timeoutLabel, IDC_TIMEOUT_LABEL);
+   }
 
-void QueryConnectionDialog::onTimer()
-{
-  if (m_timeout == 0) {
-    killTimer(0);
+   void QueryConnectionDialog::onAccept() { closeDialog(ACCEPT_CHOISE); }
 
-    if (m_acceptByDefault) {
-      onAccept();
-    } else {
-      onReject();
-    }
-  } else {
-    m_timeout--;
+   void QueryConnectionDialog::onReject() { closeDialog(REJECT_CHOISE); }
 
-    updateTimeoutLabel();
-  }
-}
+   void QueryConnectionDialog::onTimer()
+   {
+      if (m_timeout == 0)
+      {
+         killTimer(0);
 
-void QueryConnectionDialog::updateTimeoutLabel()
-{
-  ::string labelText;
+         if (m_acceptByDefault)
+         {
+            onAccept();
+         }
+         else
+         {
+            onReject();
+         }
+      }
+      else
+      {
+         m_timeout--;
 
-  if (m_acceptByDefault) {
-    labelText.formatf(MainSubsystem().StringTable().getString(IDS_AUTO_ACCEPT_CONNECTION_FORMAT), m_timeout);
-  } else 
-     {
-    labelText.formatf(MainSubsystem().StringTable().getString(IDS_AUTO_REJECT_CONNECTION_FORMAT), m_timeout);
-  }
+         updateTimeoutLabel();
+      }
+   }
 
-  m_timeoutLabel.setText(labelText);
-}
+   void QueryConnectionDialog::updateTimeoutLabel()
+   {
+      ::string labelText;
+
+      if (m_acceptByDefault)
+      {
+         labelText.formatf(MainSubsystem().StringTable().getString(IDS_AUTO_ACCEPT_CONNECTION_FORMAT), m_timeout);
+      }
+      else
+      {
+         labelText.formatf(MainSubsystem().StringTable().getString(IDS_AUTO_REJECT_CONNECTION_FORMAT), m_timeout);
+      }
+
+      m_timeoutLabel.setText(labelText);
+   }
+
+
+} // namespace remoting_node_desktop

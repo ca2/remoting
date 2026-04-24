@@ -28,37 +28,47 @@
 #include "UserInput.h"
 #include "desktop_ipc/UserInputClient.h"
 
-// This class delegates all inputs but the "ctrl+alt+del" under Vista or later
-// it process by himself.
-class SasUserInput : public UserInput
+
+namespace remoting_node_desktop
 {
-public:
-  SasUserInput(UserInputClient *client, ::subsystem::LogWriter *log);
-  virtual ~SasUserInput();
 
-  virtual void sendInit(BlockingGate *gate);
-  virtual void setNewClipboard(const ::scoped_string & newClipboard);
-  virtual void setMouseEvent(const ::int_point newPos, unsigned char keyFlag);
-  virtual void setKeyboardEvent(unsigned int keySym, bool down);
-  virtual void getCurrentUserInfo(::string & desktopName,
-                                  ::string & userName);
-  virtual void getPrimaryDisplayCoords(::int_rectangle *rect);
-  virtual void getDisplayNumberCoords(::int_rectangle *rect,
-                                      unsigned char dispNumber);
-  virtual ::array_base<::int_rectangle> getDisplaysCoords();
-  virtual void getNormalizedRect(::int_rectangle *rect);
-  virtual void getWindowCoords(HWND hwnd, ::int_rectangle *rect);
-  virtual HWND getWindowHandleByName(const ::scoped_string & windowName);
-  virtual void getApplicationRegion(unsigned int procId, Region *region);
-  virtual bool isApplicationInFocus(unsigned int procId);
+   // This class delegates all inputs but the "ctrl+alt+del" under Vista or later
+   // it process by himself.
+   class SasUserInput : public UserInput
+   {
+   public:
+      SasUserInput(UserInputClient *client, ::subsystem::LogWriter *log);
+      virtual ~SasUserInput();
 
-private:
-  UserInputClient *m_client;
+      virtual void sendInit(BlockingGate *gate);
+      virtual void setNewClipboard(const ::scoped_string &newClipboard);
+      virtual void setMouseEvent(const ::int_point newPos, unsigned char keyFlag);
+      virtual void setKeyboardEvent(unsigned int keySym, bool down);
+      virtual void getCurrentUserInfo(::string &desktopName, ::string &userName);
+      virtual void getPrimaryDisplayCoords(::int_rectangle *rect);
+      virtual void getDisplayNumberCoords(::int_rectangle *rect, unsigned char dispNumber);
+      virtual ::array_base<::int_rectangle> getDisplaysCoords();
+      virtual void getNormalizedRect(::int_rectangle *rect);
+      virtual void getWindowCoords(HWND hwnd, ::int_rectangle *rect);
+      virtual HWND getWindowHandleByName(const ::scoped_string &windowName);
+      virtual void getApplicationRegion(unsigned int procId, Region *region);
+      virtual bool isApplicationInFocus(unsigned int procId);
 
-  bool m_ctrlPressed;
-  bool m_altPressed;
-  bool m_underVista;
-  ::subsystem::LogWriter *m_plogwriter;
-};
+   private:
+      UserInputClient *m_client;
 
-//// __SASUSERINPUT_H__
+      bool m_ctrlPressed;
+      bool m_altPressed;
+      bool m_underVista;
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+
+

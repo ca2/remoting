@@ -26,62 +26,73 @@
 #include "ReconnectException.h"
 #include "subsystem/_common_header.h"
 
-DesktopSrvDispatcher::DesktopSrvDispatcher(BlockingGate *gate,
-                                           AnEventListener *extErrorListener,
-                                           ::subsystem::LogWriter *log)
-: m_gate(gate),
-  m_extErrorListener(extErrorListener),
-  m_plogwriter(log)
+namespace remoting_node_desktop
 {
-}
 
-DesktopSrvDispatcher::~DesktopSrvDispatcher()
-{
-  terminate();
-  wait();
-}
 
-void DesktopSrvDispatcher::onTerminate()
-{
-}
+   DesktopSrvDispatcher::DesktopSrvDispatcher(BlockingGate *gate, AnEventListener *extErrorListener,
+                                              ::subsystem::LogWriter *log) :
+       m_gate(gate), m_extErrorListener(extErrorListener), m_plogwriter(log)
+   {
+   }
 
-void DesktopSrvDispatcher::notifyOnError()
-{
-  if (m_extErrorListener) {
-    m_extErrorListener->onAnObjectEvent();
-  }
-}
-
-void DesktopSrvDispatcher::execute()
-{
-  while (!isTerminating()) {
-    try {
-      m_plogwriter->debug("DesktopSrvDispatcher reading code");
-      unsigned char code = m_gate->readUInt8();
-      m_plogwriter->debug("DesktopSrvDispatcher, code {} recieved", code);
-      ::map<unsigned char, ClientListener *>::iterator iter = m_handlers.find(code);
-      if (iter == m_handlers.end()) {
-        ::string errMess;
-        errMess.formatf("Unhandled {} code has been "
-                       "received from a client",
-                       (int)code);
-        throw ::subsystem::Exception(errMess);
-      }
-      (*iter).second->onRequest(code, m_gate);
-    } catch (ReconnectException &) {
-      m_plogwriter->debug("The DesktopServerApplication dispatcher has been reconnected");
-    } catch (::exception &e) {
-      m_plogwriter->error("The DesktopServerApplication dispatcher has "
-                 "failed with error: {}", e.get_message());
-      notifyOnError();
+   DesktopSrvDispatcher::~DesktopSrvDispatcher()
+   {
       terminate();
-    }
-    Thread::yield();
-  }
-  m_plogwriter->debug("The DesktopServerApplication dispatcher has been stopped");
-}
+      wait();
+   }
 
-void DesktopSrvDispatcher::registerNewHandle(unsigned char code, ClientListener *listener)
-{
-  m_handlers[code] = listener;
-}
+   void DesktopSrvDispatcher::onTerminate() {}
+
+   void DesktopSrvDispatcher::notifyOnError()
+   {
+      if (m_extErrorListener)
+      {
+         m_extErrorListener->onAnObjectEvent();
+      }
+   }
+
+   void DesktopSrvDispatcher::execute()
+   {
+      while (!isTerminating())
+      {
+         try
+         {
+            m_plogwriter->debug("DesktopSrvDispatcher reading code");
+            unsigned char code = m_gate->readUInt8();
+            m_plogwriter->debug("DesktopSrvDispatcher, code {} recieved", code);
+            ::map<unsigned char, ClientListener *>::iterator iter = m_handlers.find(code);
+            if (iter == m_handlers.end())
+            {
+               ::string errMess;
+               errMess.formatf("Unhandled {} code has been "
+                               "received from a client",
+                               (int)code);
+               throw ::subsystem::Exception(errMess);
+            }
+            (*iter).second->onRequest(code, m_gate);
+         }
+         catch (ReconnectException &)
+         {
+            m_plogwriter->debug("The DesktopServerApplication dispatcher has been reconnected");
+         }
+         catch (::exception &e)
+         {
+            m_plogwriter->error("The DesktopServerApplication dispatcher has "
+                                "failed with error: {}",
+                                e.get_message());
+            notifyOnError();
+            terminate();
+         }
+         Thread::yield();
+      }
+      m_plogwriter->debug("The DesktopServerApplication dispatcher has been stopped");
+   }
+
+   void DesktopSrvDispatcher::registerNewHandle(unsigned char code, ClientListener *listener)
+   {
+      m_handlers[code] = listener;
+   }
+
+
+} // namespace remoting_node_desktop

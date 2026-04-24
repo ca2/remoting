@@ -23,17 +23,18 @@
 //
 #include "framework.h"
 #include "GateKickHandler.h"
-
-GateKickHandler::GateKickHandler(DesktopSrvDispatcher *dispatcher)
+namespace remoting_node_desktop
 {
-  dispatcher->registerNewHandle(255, this);
-}
 
-GateKickHandler::~GateKickHandler()
-{
-}
 
-void GateKickHandler::onRequest(unsigned char reqCode, BlockingGate *backGate)
-{
-  // Do nothing
-}
+   GateKickHandler::GateKickHandler(DesktopSrvDispatcher *dispatcher) { dispatcher->registerNewHandle(255, this); }
+
+   GateKickHandler::~GateKickHandler() {}
+
+   void GateKickHandler::onRequest(unsigned char reqCode, BlockingGate *backGate)
+   {
+      // Do nothing
+   }
+
+
+} // namespace remoting_node_desktop

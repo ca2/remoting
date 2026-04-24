@@ -25,75 +25,77 @@
 #include "Win32ScreenDriver.h"
 //#include "subsystem/thread/critical_section.h"
 
-Win32ScreenDriver::Win32ScreenDriver(UpdateKeeper *updateKeeper,
-                                     UpdateListener *updateListener,
-                                     ::innate_subsystem::FrameBuffer *fb,
-                                     critical_section *fbcritical_section, ::subsystem::LogWriter *log)
-: Win32ScreenDriverBaseImpl(updateKeeper, updateListener, fbcritical_section, log),
-  m_poller(updateKeeper, updateListener, &m_screenGrabber, fb, fbcritical_section, log),
-  m_consolePoller(updateKeeper, updateListener, &m_screenGrabber, fb, fbcritical_section, log),
-  m_hooks(updateKeeper, updateListener, log)
+namespace remoting_node_desktop
 {
-  // At this point the screen driver has valid screen properties (provides by screen grabber).
-}
 
-Win32ScreenDriver::~Win32ScreenDriver()
-{
-  terminateDetection();
-}
 
-void Win32ScreenDriver::executeDetection()
-{
-  Win32ScreenDriverBaseImpl::executeDetection();
-  m_poller.resume();
-  m_consolePoller.resume();
-  m_hooks.resume();
-}
+   Win32ScreenDriver::Win32ScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
+                                        ::innate_subsystem::FrameBuffer *fb, critical_section *fbcritical_section,
+                                        ::subsystem::LogWriter *log) :
+       Win32ScreenDriverBaseImpl(updateKeeper, updateListener, fbcritical_section, log),
+       m_poller(updateKeeper, updateListener, &m_screenGrabber, fb, fbcritical_section, log),
+       m_consolePoller(updateKeeper, updateListener, &m_screenGrabber, fb, fbcritical_section, log),
+       m_hooks(updateKeeper, updateListener, log)
+   {
+      // At this point the screen driver has valid screen properties (provides by screen grabber).
+   }
 
-void Win32ScreenDriver::terminateDetection()
-{
-  m_poller.terminate();
-  m_consolePoller.terminate();
-  m_hooks.terminate();
+   Win32ScreenDriver::~Win32ScreenDriver() { terminateDetection(); }
 
-  Win32ScreenDriverBaseImpl::terminateDetection();
+   void Win32ScreenDriver::executeDetection()
+   {
+      Win32ScreenDriverBaseImpl::executeDetection();
+      m_poller.resume();
+      m_consolePoller.resume();
+      m_hooks.resume();
+   }
 
-  m_poller.wait();
-  m_consolePoller.wait();
-  m_hooks.wait();
-}
+   void Win32ScreenDriver::terminateDetection()
+   {
+      m_poller.terminate();
+      m_consolePoller.terminate();
+      m_hooks.terminate();
 
-::int_size Win32ScreenDriver::getScreenDimension()
-{
-  critical_section_lock al(getFbMutex());
-  return ::int_size(&m_screenGrabber.getScreenRect());
-}
+      Win32ScreenDriverBaseImpl::terminateDetection();
 
-bool Win32ScreenDriver::grabFb(const ::int_rectangle &  rect)
-{
-  critical_section_lock al(getFbMutex());
-  return m_screenGrabber.grab(rect);
-}
+      m_poller.wait();
+      m_consolePoller.wait();
+      m_hooks.wait();
+   }
 
-::innate_subsystem::FrameBuffer *Win32ScreenDriver::getScreenBuffer()
-{
-  return m_screenGrabber.getScreenBuffer();
-}
+   ::int_size Win32ScreenDriver::getScreenDimension()
+   {
+      critical_section_lock al(getFbMutex());
+      return ::int_size(&m_screenGrabber.getScreenRect());
+   }
 
-bool Win32ScreenDriver::getScreenPropertiesChanged()
-{
-  critical_section_lock al(getFbMutex());
-  return m_screenGrabber.getPropertiesChanged();
-}
+   bool Win32ScreenDriver::grabFb(const ::int_rectangle &rect)
+   {
+      critical_section_lock al(getFbMutex());
+      return m_screenGrabber.grab(rect);
+   }
 
-bool Win32ScreenDriver::getScreenSizeChanged()
-{
-  critical_section_lock al(getFbMutex());
-  return m_screenGrabber.getScreenSizeChanged();
-}
+   ::innate_subsystem::FrameBuffer *Win32ScreenDriver::getScreenBuffer() { return m_screenGrabber.getScreenBuffer(); }
 
-bool Win32ScreenDriver::applyNewScreenProperties()
-{
-  critical_section_lock al(getFbMutex());
-  return m_screenGrabber.applyNewProperties();
-}
+   bool Win32ScreenDriver::getScreenPropertiesChanged()
+   {
+      critical_section_lock al(getFbMutex());
+      return m_screenGrabber.getPropertiesChanged();
+   }
+
+   bool Win32ScreenDriver::getScreenSizeChanged()
+   {
+      critical_section_lock al(getFbMutex());
+      return m_screenGrabber.getScreenSizeChanged();
+   }
+
+   bool Win32ScreenDriver::applyNewScreenProperties()
+   {
+      critical_section_lock al(getFbMutex());
+      return m_screenGrabber.applyNewProperties();
+   }
+
+
+} // namespace remoting_node_desktop
+
+

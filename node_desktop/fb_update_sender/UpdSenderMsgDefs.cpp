@@ -24,4 +24,12 @@
 #include "framework.h"
 #include "UpdSenderMsgDefs.h"
 
-const char UpdSenderClientMsgDefs::RFB_VIDEO_FREEZE_SIG[] = "VD_FREEZ";
+namespace remoting_node_desktop
+{
+
+
+   ::string_literal UpdSenderClientMsgDefs::RFB_VIDEO_FREEZE_SIG = "VD_FREEZ";
+
+
+} // namespace remoting_node_desktop
+

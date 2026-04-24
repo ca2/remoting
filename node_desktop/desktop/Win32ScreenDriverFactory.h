@@ -28,34 +28,37 @@
 #include "ScreenDriverFactory.h"
 #include "remoting/remoting/server_config/ServerConfig.h"
 
-class Win32ScreenDriverFactory : public ScreenDriverFactory
+
+namespace remoting_node_desktop
 {
-public:
-  // The factory stores pointer to a ServerConfig object and will use it on
-  // createScreenDriver() function calls.
-  Win32ScreenDriverFactory(ServerConfig *srvConf);
-  virtual ~Win32ScreenDriverFactory();
 
-  virtual ScreenDriver *createScreenDriver(UpdateKeeper *updateKeeper,
-                                             UpdateListener *updateListener,
-                                             ::innate_subsystem::FrameBuffer *fb,
-                                             critical_section *fbcritical_section,
-                                             ::subsystem::LogWriter *log);
-private:
-  ScreenDriver *createStandardScreenDriver(UpdateKeeper *updateKeeper,
-                                             UpdateListener *updateListener,
-                                             ::innate_subsystem::FrameBuffer *fb,
-                                             critical_section *fbcritical_section,
-                                             ::subsystem::LogWriter *log);
-  ScreenDriver *createMirrorScreenDriver(UpdateKeeper *updateKeeper,
-                                           UpdateListener *updateListener,
-                                           critical_section *fbcritical_section,
-                                           ::subsystem::LogWriter *log);
+   class Win32ScreenDriverFactory : public ScreenDriverFactory
+   {
+   public:
+      // The factory stores pointer to a ServerConfig object and will use it on
+      // createScreenDriver() function calls.
+      Win32ScreenDriverFactory(ServerConfig *srvConf);
+      virtual ~Win32ScreenDriverFactory();
 
-  bool isMirrorDriverAllowed();
-  bool isD3DAllowed();
+      virtual ScreenDriver *createScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
+                                               ::innate_subsystem::FrameBuffer *fb,
+                                               critical_section *fbcritical_section, ::subsystem::LogWriter *log);
+   private:
+      ScreenDriver *createStandardScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
+                                               ::innate_subsystem::FrameBuffer *fb,
+                                               critical_section *fbcritical_section, ::subsystem::LogWriter *log);
+      ScreenDriver *createMirrorScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
+                                             critical_section *fbcritical_section, ::subsystem::LogWriter *log);
 
-  ServerConfig *m_srvConf;
-};
+      bool isMirrorDriverAllowed();
+      bool isD3DAllowed();
 
-//// __WIN32SCREENDRIVERFACTORY_H__
+      ServerConfig *m_srvConf;
+   };
+
+   //// __WIN32SCREENDRIVERFACTORY_H__
+
+} // namespace remoting_node_desktop
+
+
+

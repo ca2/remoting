@@ -25,11 +25,14 @@
 #pragma once
 
 
-// Provide necessary information to send a update.
-class SenderControlInformationInterface
+namespace remoting_node_desktop
 {
-public:
-  virtual void onGetViewPort(::int_rectangle *viewRect, bool *shareApp, ::remoting::Region *shareAppRegion) = 0;
-};
+   // Provide necessary information to send a update.
+   class SenderControlInformationInterface
+   {
+   public:
+      virtual void onGetViewPort(::int_rectangle *viewRect, bool *shareApp, ::remoting::Region *shareAppRegion) = 0;
+   };
 
-//// __SENDERCONTROLINFORMATIONINTERFACE_H__
+
+} // namespace remoting_node_desktop 

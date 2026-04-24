@@ -32,20 +32,30 @@
 
 #include "WinDxgiSurface.h"
 
-// Calls IDXGISurface->Map() function at the constructor and Unmap() at the destructor.
-class WinAutoMapDxgiSurface
+
+namespace remoting_node_desktop
 {
-public:
-  // Surface will be created by the ID3D11Texture2D's QueryInterface() function call.
-  WinAutoMapDxgiSurface(WinDxgiSurface *surface, unsigned int mapFlags);
-  virtual ~WinAutoMapDxgiSurface();
 
-  size_t getStride() const;
-  char *getBuffer() const;
+   // Calls IDXGISurface->Map() function at the constructor and Unmap() at the destructor.
+   class WinAutoMapDxgiSurface
+   {
+   public:
+      // Surface will be created by the ID3D11Texture2D's QueryInterface() function call.
+      WinAutoMapDxgiSurface(WinDxgiSurface *surface, unsigned int mapFlags);
+      virtual ~WinAutoMapDxgiSurface();
 
-private:
-  WinDxgiSurface *m_surface;
-  DXGI_MAPPED_RECT m_mappedRect;
-};
+      size_t getStride() const;
+      char *getBuffer() const;
 
-//// __WINAUTOMAPDXGISURFACE_H__
+   private:
+      WinDxgiSurface *m_surface;
+      DXGI_MAPPED_RECT m_mappedRect;
+   };
+
+   //// __WINAUTOMAPDXGISURFACE_H__
+
+
+} // namespace remoting_node_desktop
+
+
+

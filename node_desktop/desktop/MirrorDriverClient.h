@@ -36,82 +36,94 @@
 #include "remoting/remoting/win_system/WindowsEvent.h"
 //#include "log_writer/LogWriter.h"
 
-class MirrorDriverClient : private GuiThread, private WindowMessageHandler
+namespace remoting_node_desktop
 {
-public:
-  MirrorDriverClient(::subsystem::LogWriter *log);
-  virtual ~MirrorDriverClient();
 
-  ::innate_subsystem::PixelFormat getPixelFormat() const;
-  ::int_size getDimension() const;
+   class MirrorDriverClient : private GuiThread, private WindowMessageHandler
+   {
+   public:
+      MirrorDriverClient(::subsystem::LogWriter *log);
+      virtual ~MirrorDriverClient();
 
-  void *getBuffer();
-  CHANGES_BUF *getChangesBuf() const;
+      ::innate_subsystem::PixelFormat getPixelFormat() const;
+      ::int_size getDimension() const;
 
-  bool getPropertiesChanged();
-  bool getScreenSizeChanged();
+      void *getBuffer();
+      CHANGES_BUF *getChangesBuf() const;
 
-  bool applyNewProperties();
+      bool getPropertiesChanged();
+      bool getScreenSizeChanged();
 
-  void open();
-  void close();
+      bool applyNewProperties();
 
-  void load();
-  void unload();
+      void open();
+      void close();
 
-  void connect();
-  void disconnect();
+      void load();
+      void unload();
 
-private:
-  static const TCHAR MINIPORT_REGISTRY_PATH[];
+      void connect();
+      void disconnect();
 
-  static const int EXT_DEVMODE_SIZE_MAX = 3072;
-  struct DFEXT_DEVMODE : DEVMODE
-  {
-    char extension[EXT_DEVMODE_SIZE_MAX];
-  };
+   private:
+      static const TCHAR MINIPORT_REGISTRY_PATH[];
 
-private:
-  virtual bool processMessage(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam);
+      static const int EXT_DEVMODE_SIZE_MAX = 3072;
+      struct DFEXT_DEVMODE : DEVMODE
+      {
+         char extension[EXT_DEVMODE_SIZE_MAX];
+      };
 
-  virtual void execute();
-  virtual void onTerminate();
+   private:
+      virtual bool processMessage(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam);
 
-  void dispose();
+      virtual void execute();
+      virtual void onTerminate();
 
-  void extractDeviceInfo(TCHAR *driverName);
-  void openDeviceRegKey(TCHAR *miniportName);
+      void dispose();
 
-  void initScreenPropertiesByCurrent();
-  // value - true to attach, false to detach.
-  void setAttachToDesktop(bool value);
-  void commitDisplayChanges(DEVMODE *pdm);
+      void extractDeviceInfo(TCHAR *driverName);
+      void openDeviceRegKey(TCHAR *miniportName);
 
-  // Driver states.
-  bool m_isDriverOpened;
-  bool m_isDriverLoaded;
-  bool m_isDriverAttached;
-  bool m_isDriverConnected;
+      void initScreenPropertiesByCurrent();
+      // value - true to attach, false to detach.
+      void setAttachToDesktop(bool value);
+      void commitDisplayChanges(DEVMODE *pdm);
 
-  DWORD m_deviceNumber;
-  DISPLAY_DEVICE m_deviceInfo;
-  RegistryKey m_regkeyDevice;
-  DFEXT_DEVMODE m_deviceMode;
-  HDC m_driverDC;
+      // Driver states.
+      bool m_isDriverOpened;
+      bool m_isDriverLoaded;
+      bool m_isDriverAttached;
+      bool m_isDriverConnected;
 
-  CHANGES_BUF *m_changesBuffer;
-  void *m_screenBuffer;
+      DWORD m_deviceNumber;
+      DISPLAY_DEVICE m_deviceInfo;
+      RegistryKey m_regkeyDevice;
+      DFEXT_DEVMODE m_deviceMode;
+      HDC m_driverDC;
 
-  WindowsEvent m_initListener;
-  bool m_isDisplayChanged;
-  MessageWindow m_propertyChangeListenerWindow;
+      CHANGES_BUF *m_changesBuffer;
+      void *m_screenBuffer;
 
-  ::innate_subsystem::PixelFormat m_pixelFormat;
-  ::int_size m_dimension;
-  ::int_point m_leftTopCorner;
-  Screen m_screen;
+      WindowsEvent m_initListener;
+      bool m_isDisplayChanged;
+      MessageWindow m_propertyChangeListenerWindow;
 
-  ::subsystem::LogWriter *m_plogwriter;
-};
+      ::innate_subsystem::PixelFormat m_pixelFormat;
+      ::int_size m_dimension;
+      ::int_point m_leftTopCorner;
+      Screen m_screen;
 
-//// __MIRRORDRIVERCLIENT_H__
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+
+
+

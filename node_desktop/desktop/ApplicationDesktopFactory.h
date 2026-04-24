@@ -27,16 +27,22 @@
 
 #include "DesktopFactory.h"
 
-class ApplicationDesktopFactory : public DesktopFactory
+namespace remoting_node_desktop
 {
-public:
-  ApplicationDesktopFactory();
-  ~ApplicationDesktopFactory();
 
-  virtual Desktop *createDesktop(::subsystem::ClipboardListener *extClipListener,
-                                          UpdateSendingListener *extUpdSendingListener,
-                                          AbnormDeskTermListener *extDeskTermListener,
-                                          ::subsystem::LogWriter *log);
-};
+   class ApplicationDesktopFactory : public DesktopFactory
+   {
+   public:
+      ApplicationDesktopFactory();
+      ~ApplicationDesktopFactory();
 
-//// __APPLICATIONDESKTOPFACTORY_H__
+      virtual Desktop *createDesktop(::subsystem::ClipboardListener *extClipListener,
+                                     UpdateSendingListener *extUpdSendingListener,
+                                     AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter *log);
+   };
+
+} // namespace remoting_node_desktop 
+
+
+
+

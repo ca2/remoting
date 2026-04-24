@@ -35,68 +35,73 @@
 #include "WinCustomD3D11Texture2D.h"
 #include "WinDxgiOutputDuplication.h"
 
-class Win8DeskDuplication : public GuiThread
+namespace remoting_node_desktop
 {
-public:
-  // The WinDxgiOutput *dxgiOutput passed object can be destroyed right after the constructor calling.
-  // The WinD3D11Device *device passed object can be destroyed right after the constructor calling.
-  Win8DeskDuplication(::innate_subsystem::FrameBuffer *targetFb,
-                            ::array_base<::int_rectangle> &targetRect,
-                            Win8CursorShape *targetCurShape,
-                            LONGLONG *cursorTimeStamp,
-                            critical_section *cursorMutex,
-                            Win8DuplicationListener *duplListener,
-                            ::array_base<WinDxgiOutput> &dxgiOutput,
-                            ::subsystem::LogWriter *log);
-  virtual ~Win8DeskDuplication();
 
-  bool isValid();
+   class Win8DeskDuplication : public GuiThread
+   {
+   public:
+      // The WinDxgiOutput *dxgiOutput passed object can be destroyed right after the constructor calling.
+      // The WinD3D11Device *device passed object can be destroyed right after the constructor calling.
+      Win8DeskDuplication(::innate_subsystem::FrameBuffer *targetFb, ::array_base<::int_rectangle> &targetRect,
+                          Win8CursorShape *targetCurShape, LONGLONG *cursorTimeStamp, critical_section *cursorMutex,
+                          Win8DuplicationListener *duplListener, ::array_base<WinDxgiOutput> &dxgiOutput,
+                          ::subsystem::LogWriter *log);
+      virtual ~Win8DeskDuplication();
 
-private:
-  virtual void execute();
-  virtual void onTerminate();
-  void setCriticalError(const ::scoped_string & scopedstrReason);
-  void setRecoverableError(const ::scoped_string & scopedstrReason);
+      bool isValid();
 
-  void processMoveRects(size_t moveCount, size_t out);
-  void processDirtyRects(size_t dirtyCount,
-                         WinD3D11Texture2D *acquiredDesktopImage,
-                         size_t out);
-  void processCursor(const DXGI_OUTDUPL_FRAME_INFO *info, size_t out);
+   private:
+      virtual void execute();
+      virtual void onTerminate();
+      void setCriticalError(const ::scoped_string &scopedstrReason);
+      void setRecoverableError(const ::scoped_string &scopedstrReason);
 
-  ::int_size getStageDimension(size_t out) const;
+      void processMoveRects(size_t moveCount, size_t out);
+      void processDirtyRects(size_t dirtyCount, WinD3D11Texture2D *acquiredDesktopImage, size_t out);
+      void processCursor(const DXGI_OUTDUPL_FRAME_INFO *info, size_t out);
 
-  void rotateRectInsideStage(::int_rectangle *toTranspose, const ::int_size & stageDim, DXGI_MODE_ROTATION rotation);
+      ::int_size getStageDimension(size_t out) const;
 
-  ::innate_subsystem::FrameBuffer *m_targetFb;
+      void rotateRectInsideStage(::int_rectangle *toTranspose, const ::int_size &stageDim, DXGI_MODE_ROTATION rotation);
 
-  ::array_base<::int_rectangle> m_targetRects;
-  Win8CursorShape *m_targetCurShape;
-  LONGLONG *m_cursorTimeStamp;
-  critical_section *m_cursorMutex;
+      ::innate_subsystem::FrameBuffer *m_targetFb;
 
-  ::array_base<DXGI_MODE_ROTATION> m_rotations;
+      ::array_base<::int_rectangle> m_targetRects;
+      Win8CursorShape *m_targetCurShape;
+      LONGLONG *m_cursorTimeStamp;
+      critical_section *m_cursorMutex;
 
-  Win8DuplicationListener *m_duplListener;
+      ::array_base<DXGI_MODE_ROTATION> m_rotations;
 
-  WinD3D11Device m_device;
-  ::array_base<WinDxgiOutput1> m_dxgiOutput1;
-  ::array_base<WinDxgiOutputDuplication> m_outDupl;
+      Win8DuplicationListener *m_duplListener;
 
-  // The duplication interface can't be used
-  bool m_hasCriticalError;
-  // The interface can be used but it should be reinitialized.
-  bool m_hasRecoverableError;
+      WinD3D11Device m_device;
+      ::array_base<WinDxgiOutput1> m_dxgiOutput1;
+      ::array_base<WinDxgiOutputDuplication> m_outDupl;
+
+      // The duplication interface can't be used
+      bool m_hasCriticalError;
+      // The interface can be used but it should be reinitialized.
+      bool m_hasRecoverableError;
 
 
-  // Use this variables as class fields to avoid frequency memory allocations.
-  ::array_base<RECT> m_dirtyRects;
-  ::array_base<DXGI_OUTDUPL_MOVE_RECT> m_moveRects;
+      // Use this variables as class fields to avoid frequency memory allocations.
+      ::array_base<RECT> m_dirtyRects;
+      ::array_base<DXGI_OUTDUPL_MOVE_RECT> m_moveRects;
 
-  ::array_base<WinCustomD3D11Texture2D> m_stageTextures2D;
-  ::innate_subsystem::FrameBuffer m_auxiliaryFrameBuffer;
+      ::array_base<WinCustomD3D11Texture2D> m_stageTextures2D;
+      ::innate_subsystem::FrameBuffer m_auxiliaryFrameBuffer;
 
-  ::subsystem::LogWriter *m_plogwriter;
-};
+      ::subsystem::LogWriter *m_plogwriter;
+   };
 
-//// __WIN8DESKDUPLICATIONTHREAD_H__
+   //// __WIN8DESKDUPLICATIONTHREAD_H__
+
+
+}// namespace remoting_node_desktop
+
+
+
+
+

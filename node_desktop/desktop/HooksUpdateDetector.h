@@ -33,33 +33,36 @@
 #include "subsystem/platform/Process.h"
 //#include "log_writer/LogWriter.h"
 
-class HooksUpdateDetector : public UpdateDetector
+namespace remoting_node_desktop
 {
-public:
-  HooksUpdateDetector(UpdateKeeper *updateKeeper,
-                      UpdateListener *updateListener, ::subsystem::LogWriter *log);
-  virtual ~HooksUpdateDetector();
 
-protected:
-  virtual void execute();
-  virtual void onTerminate();
+   class HooksUpdateDetector : public UpdateDetector
+   {
+   public:
+      HooksUpdateDetector(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ::subsystem::LogWriter *log);
+      virtual ~HooksUpdateDetector();
 
-  void start32Loader();
-  void terminate32Loader();
+   protected:
+      virtual void execute();
+      virtual void onTerminate();
 
-  WindowsEvent m_initWaiter;
+      void start32Loader();
+      void terminate32Loader();
 
-  HookInstaller *m_hookInstaller;
-  MessageWindow *m_targetWin;
-  HookUpdateTimer m_updateTimer;
-  Process m_hookLoader32;
+      WindowsEvent m_initWaiter;
 
-private:
-  void broadcastMessage(unsigned int scopedstrMessage);
+      HookInstaller *m_hookInstaller;
+      MessageWindow *m_targetWin;
+      HookUpdateTimer m_updateTimer;
+      Process m_hookLoader32;
 
-  static const TCHAR HOOK_LOADER_NAME[];
+   private:
+      void broadcastMessage(unsigned int scopedstrMessage);
 
-  ::subsystem::LogWriter *m_plogwriter;
-};
+      static const TCHAR HOOK_LOADER_NAME[];
 
-//// __HOOKSUPDATEDETECTOR_H__
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+
+} // namespace remoting_node_desktop

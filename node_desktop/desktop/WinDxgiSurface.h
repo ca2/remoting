@@ -28,17 +28,28 @@
 // #include aaa_<d3d11.h>
 // #include aaa_<DXGI1_2.h>
 
-class WinDxgiSurface
+namespace remoting_node_desktop
 {
-public:
-  // Surface will be created by the ID3D11Texture2D's QueryInterface() function call.
-  WinDxgiSurface(ID3D11Texture2D *texture2D);
-  virtual ~WinDxgiSurface();
 
-  IDXGISurface *getSurface() const;
+   class WinDxgiSurface
+   {
+   public:
+      // Surface will be created by the ID3D11Texture2D's QueryInterface() function call.
+      WinDxgiSurface(ID3D11Texture2D *texture2D);
+      virtual ~WinDxgiSurface();
 
-private:
-  IDXGISurface *m_dxgiSurface;
-};
+      IDXGISurface *getSurface() const;
 
-//// __WINDXGISURFACE_H__
+   private:
+      IDXGISurface *m_dxgiSurface;
+   };
+
+   //// __WINDXGISURFACE_H__
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+

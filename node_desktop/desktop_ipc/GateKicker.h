@@ -29,18 +29,30 @@
 #include "subsystem/thread/Thread.h"
 #include "remoting/remoting/win_system/WindowsEvent.h"
 
-class GateKicker : public Thread
+namespace remoting_node_desktop
 {
-public:
-  GateKicker(BlockingGate *gate);
-  virtual ~GateKicker();
 
-protected:
-  virtual void execute();
-  virtual void onTerminate();
-private:
-  BlockingGate *m_gate;
-  WindowsEvent m_sleeper;
-};
+   class GateKicker : public Thread
+   {
+   public:
+      GateKicker(BlockingGate *gate);
+      virtual ~GateKicker();
 
-//// __GATEKICKER_H__
+   protected:
+      virtual void execute();
+      virtual void onTerminate();
+   private:
+      BlockingGate *m_gate;
+      WindowsEvent m_sleeper;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+
+
+

@@ -24,237 +24,277 @@
 #include "framework.h"
 #include "WinCursorShapeUtils.h"
 
-WinCursorShapeUtils::WinCursorShapeUtils()
+namespace remoting_node_desktop
 {
-}
 
-WinCursorShapeUtils::~WinCursorShapeUtils()
-{
-}
 
-void WinCursorShapeUtils::winMonoShapeToRfb(const ::innate_subsystem::FrameBuffer *pixels,
-                                            char *maskAND, char *maskXOR, int maskWidthInBytes)
-{
-  char *pixelsBuffer = (char *)pixels->getBuffer();
-  char *pixel;
-  int pixelSize = pixels->getBytesPerPixel();
-  int pixelCount = pixels->getBufferSize() / pixelSize;
+   WinCursorShapeUtils::WinCursorShapeUtils() {}
 
-  int fbWidth = pixels->getDimension().cx;
-  int fbHeight = pixels->getDimension().cy;
+   WinCursorShapeUtils::~WinCursorShapeUtils() {}
 
-  for (int iRow = 0; iRow < fbHeight; iRow++) {
-    for (int iCol = 0; iCol < fbWidth; iCol++) {
-      pixel = pixelsBuffer + (iRow * fbWidth + iCol) * pixelSize;
+   void WinCursorShapeUtils::winMonoShapeToRfb(const ::innate_subsystem::FrameBuffer *pixels, char *maskAND,
+                                               char *maskXOR, int maskWidthInBytes)
+   {
+      char *pixelsBuffer = (char *)pixels->getBuffer();
+      char *pixel;
+      int pixelSize = pixels->getBytesPerPixel();
+      int pixelCount = pixels->getBufferSize() / pixelSize;
 
-      char byteAnd = maskAND[iRow * maskWidthInBytes + iCol / 8];
-      char byteXor = maskXOR[iRow * maskWidthInBytes + iCol / 8];
+      int fbWidth = pixels->getDimension().cx;
+      int fbHeight = pixels->getDimension().cy;
 
-      bool maskANDBit = testBit(byteAnd, iCol % 8);
-      bool maskXORBit = testBit(byteXor, iCol % 8);
+      for (int iRow = 0; iRow < fbHeight; iRow++)
+      {
+         for (int iCol = 0; iCol < fbWidth; iCol++)
+         {
+            pixel = pixelsBuffer + (iRow * fbWidth + iCol) * pixelSize;
 
-      if (!maskANDBit && !maskXORBit) { // Black dot
-        memset(pixel, 0, pixelSize);
-      } else if (!maskANDBit && maskXORBit) { // White dot
-        memset(pixel, 0xff, pixelSize);
-      } else if (maskANDBit && maskXORBit) { // Inverted (as black dot)
-        memset(pixel, 0, pixelSize);
+            char byteAnd = maskAND[iRow * maskWidthInBytes + iCol / 8];
+            char byteXor = maskXOR[iRow * maskWidthInBytes + iCol / 8];
+
+            bool maskANDBit = testBit(byteAnd, iCol % 8);
+            bool maskXORBit = testBit(byteXor, iCol % 8);
+
+            if (!maskANDBit && !maskXORBit)
+            { // Black dot
+               memset(pixel, 0, pixelSize);
+            }
+            else if (!maskANDBit && maskXORBit)
+            { // White dot
+               memset(pixel, 0xff, pixelSize);
+            }
+            else if (maskANDBit && maskXORBit)
+            { // Inverted (as black dot)
+               memset(pixel, 0, pixelSize);
+            }
+         }
       }
-    }
-  }
 
-  inverse(maskAND, maskWidthInBytes * fbHeight);
-  for (int i = 0; i < maskWidthInBytes * fbHeight; i++) {
-    *(maskAND + i) |= *(maskXOR + i);
-  }
-}
-
-void WinCursorShapeUtils::fixAlphaChannel(const ::innate_subsystem::FrameBuffer *pixels,
-  char *maskAND, bool maskedColor, int maskWidthInBytes)
-{
-  ::innate_subsystem::PixelFormat pf = pixels->getPixelFormat();
-  if (pf.bitsPerPixel != 32) {
-    return;
-  }
-  unsigned int alphaMask = getAlphaMask(&pf);
-  unsigned short alphaShift = 0;
-
-  for (; alphaShift < 32 && ((alphaMask >> alphaShift) % 2) == 0; alphaShift++) {}
-
-  if (alphaShift > 24) { // we don't know how to handle it
-    return;
-  }
-
-  unsigned int *pixelBuffer = (unsigned int *)pixels->getBuffer();
-  int pixelSize = pixels->getBytesPerPixel();
-
-  int fbWidth = pixels->getDimension().cx;
-  int fbHeight = pixels->getDimension().cy;
-
-  for (int iRow = 0; iRow < fbHeight; iRow++) {
-    for (int iCol = 0; iCol < fbWidth; iCol++) {
-      unsigned int *pixel = &pixelBuffer[iRow * fbWidth + iCol];
-      unsigned int colorValue = *pixel & ~alphaMask;
-      unsigned int alpha = (*pixel & alphaMask) >> alphaShift;
-      bool transparent = (alpha < 128);
-      if (maskedColor) {
-        transparent = !transparent;
+      inverse(maskAND, maskWidthInBytes * fbHeight);
+      for (int i = 0; i < maskWidthInBytes * fbHeight; i++)
+      {
+         *(maskAND + i) |= *(maskXOR + i);
       }
-      if (transparent) {
-        char *byteAnd = &maskAND[iRow * maskWidthInBytes + iCol / 8];
-        *byteAnd = clearBit(*byteAnd, iCol % 8);
+   }
+
+   void WinCursorShapeUtils::fixAlphaChannel(const ::innate_subsystem::FrameBuffer *pixels, char *maskAND,
+                                             bool maskedColor, int maskWidthInBytes)
+   {
+      ::innate_subsystem::PixelFormat pf = pixels->getPixelFormat();
+      if (pf.bitsPerPixel != 32)
+      {
+         return;
       }
-    }
-  }
-}
+      unsigned int alphaMask = getAlphaMask(&pf);
+      unsigned short alphaShift = 0;
+
+      for (; alphaShift < 32 && ((alphaMask >> alphaShift) % 2) == 0; alphaShift++)
+      {
+      }
+
+      if (alphaShift > 24)
+      { // we don't know how to handle it
+         return;
+      }
+
+      unsigned int *pixelBuffer = (unsigned int *)pixels->getBuffer();
+      int pixelSize = pixels->getBytesPerPixel();
+
+      int fbWidth = pixels->getDimension().cx;
+      int fbHeight = pixels->getDimension().cy;
+
+      for (int iRow = 0; iRow < fbHeight; iRow++)
+      {
+         for (int iCol = 0; iCol < fbWidth; iCol++)
+         {
+            unsigned int *pixel = &pixelBuffer[iRow * fbWidth + iCol];
+            unsigned int colorValue = *pixel & ~alphaMask;
+            unsigned int alpha = (*pixel & alphaMask) >> alphaShift;
+            bool transparent = (alpha < 128);
+            if (maskedColor)
+            {
+               transparent = !transparent;
+            }
+            if (transparent)
+            {
+               char *byteAnd = &maskAND[iRow * maskWidthInBytes + iCol / 8];
+               *byteAnd = clearBit(*byteAnd, iCol % 8);
+            }
+         }
+      }
+   }
 
 
-unsigned int WinCursorShapeUtils::getAlphaMask(const ::innate_subsystem::PixelFormat & pf)
-{
-  if (pf.bitsPerPixel == 32) {
-    unsigned int alphaMax = pf.redMax << pf.redShift |
-                      pf.greenMax << pf.greenShift |
-                      pf.blueMax << pf.blueShift;
-    return ~alphaMax;
-  } else {
-    return 0;
-  }
-}
+   unsigned int WinCursorShapeUtils::getAlphaMask(const ::innate_subsystem::PixelFormat &pf)
+   {
+      if (pf.bitsPerPixel == 32)
+      {
+         unsigned int alphaMax = pf.redMax << pf.redShift | pf.greenMax << pf.greenShift | pf.blueMax << pf.blueShift;
+         return ~alphaMax;
+      }
+      else
+      {
+         return 0;
+      }
+   }
 
-void WinCursorShapeUtils::inverse(char *bits, int count)
-{
-  for (int i = 0; i < count; i++, bits++) {
-    *bits = ~*bits;
-  }
-}
+   void WinCursorShapeUtils::inverse(char *bits, int count)
+   {
+      for (int i = 0; i < count; i++, bits++)
+      {
+         *bits = ~*bits;
+      }
+   }
 
-void WinCursorShapeUtils::trimBuffer(::array_base<char> *buffer, DXGI_OUTDUPL_POINTER_SHAPE_INFO *shapeInfo)
-{
-  unsigned int newPitch;
-  unsigned int oldPitch = shapeInfo->Pitch;
-  trimTransparent(buffer, shapeInfo);
-  if (shapeInfo->Type == DXGI_OUTDUPL_POINTER_SHAPE_TYPE_MONOCHROME) {
-    newPitch = ((shapeInfo->Width + 15) / 16) * 2;
-  }
-  else {
-    newPitch = shapeInfo->Width * 4;
-  }
+   void WinCursorShapeUtils::trimBuffer(::array_base<char> *buffer, DXGI_OUTDUPL_POINTER_SHAPE_INFO *shapeInfo)
+   {
+      unsigned int newPitch;
+      unsigned int oldPitch = shapeInfo->Pitch;
+      trimTransparent(buffer, shapeInfo);
+      if (shapeInfo->Type == DXGI_OUTDUPL_POINTER_SHAPE_TYPE_MONOCHROME)
+      {
+         newPitch = ((shapeInfo->Width + 15) / 16) * 2;
+      }
+      else
+      {
+         newPitch = shapeInfo->Width * 4;
+      }
 
-  if (newPitch >= oldPitch) {
-    return;
-  }
+      if (newPitch >= oldPitch)
+      {
+         return;
+      }
 
-  for (int i = 1; i < shapeInfo->Height; i++) {
-    char * dst = &buffer->at(i * newPitch);
-    char * src = &buffer->at(i * oldPitch);
-    memcpy(dst, src, newPitch);
-  }
-  shapeInfo->Pitch = newPitch;
-}
+      for (int i = 1; i < shapeInfo->Height; i++)
+      {
+         char *dst = &buffer->at(i * newPitch);
+         char *src = &buffer->at(i * oldPitch);
+         memcpy(dst, src, newPitch);
+      }
+      shapeInfo->Pitch = newPitch;
+   }
 
-void WinCursorShapeUtils::trimTransparent(::array_base<char> *buffer, DXGI_OUTDUPL_POINTER_SHAPE_INFO  *shapeInfo)
-{
-  unsigned int pitch = shapeInfo->Pitch;
-  unsigned int height = getCursorHeight(*shapeInfo);
-  unsigned int width = shapeInfo->Width;
-  unsigned int hotspotX = (unsigned int)(shapeInfo->HotSpot.x);
-  unsigned int type = shapeInfo->Type;
+   void WinCursorShapeUtils::trimTransparent(::array_base<char> *buffer, DXGI_OUTDUPL_POINTER_SHAPE_INFO *shapeInfo)
+   {
+      unsigned int pitch = shapeInfo->Pitch;
+      unsigned int height = getCursorHeight(*shapeInfo);
+      unsigned int width = shapeInfo->Width;
+      unsigned int hotspotX = (unsigned int)(shapeInfo->HotSpot.x);
+      unsigned int type = shapeInfo->Type;
 
-  // width 
-  const unsigned int minimumWidth = 16;
-	unsigned int trimmedWidth = minimumWidth;
+      // width
+      const unsigned int minimumWidth = 16;
+      unsigned int trimmedWidth = minimumWidth;
 
-	for (unsigned int y = 0; y < height; ++y) {
-		for (unsigned int x = width - 1; x > trimmedWidth; --x) {
-			if (!isPixelTransparent(&buffer->front(), type, height, pitch, x, y)) {
-				trimmedWidth = x + 1;
-			}
-		}
-	}
+      for (unsigned int y = 0; y < height; ++y)
+      {
+         for (unsigned int x = width - 1; x > trimmedWidth; --x)
+         {
+            if (!isPixelTransparent(&buffer->front(), type, height, pitch, x, y))
+            {
+               trimmedWidth = x + 1;
+            }
+         }
+      }
 
-	// Force to be on a 2-byte word boundary
-	trimmedWidth = ((trimmedWidth + 0xF) & ~0xF);
+      // Force to be on a 2-byte word boundary
+      trimmedWidth = ((trimmedWidth + 0xF) & ~0xF);
 
-	if (trimmedWidth < shapeInfo->Width) {
-		shapeInfo->Width = trimmedWidth;
-	}
+      if (trimmedWidth < shapeInfo->Width)
+      {
+         shapeInfo->Width = trimmedWidth;
+      }
 
-	// height
-	unsigned int trimmedHeight = minimumWidth;
+      // height
+      unsigned int trimmedHeight = minimumWidth;
 
-  for (unsigned int x = 0; x < width; ++x) {
-		for (unsigned int y = height - 1; y > trimmedHeight; --y) {
-			if (!isPixelTransparent(&buffer->front(), type, height, pitch, x, y)) {
-				trimmedHeight = y + 1;
-			}
-		}
-	}
-	if (trimmedHeight != height) {
-		if (type == DXGI_OUTDUPL_POINTER_SHAPE_TYPE_MONOCHROME) {
-			shapeInfo->Height = (2 * trimmedHeight);
+      for (unsigned int x = 0; x < width; ++x)
+      {
+         for (unsigned int y = height - 1; y > trimmedHeight; --y)
+         {
+            if (!isPixelTransparent(&buffer->front(), type, height, pitch, x, y))
+            {
+               trimmedHeight = y + 1;
+            }
+         }
+      }
+      if (trimmedHeight != height)
+      {
+         if (type == DXGI_OUTDUPL_POINTER_SHAPE_TYPE_MONOCHROME)
+         {
+            shapeInfo->Height = (2 * trimmedHeight);
 
-			// Shift the XOR mask
-      char * dst = &buffer->at(trimmedHeight * pitch);
-      char * src = &buffer->at(height * pitch);
-			memcpy(dst, src, trimmedHeight * pitch);
-		}
-		else {
-			shapeInfo->Height = trimmedHeight;
-		}
-	}
-}
+            // Shift the XOR mask
+            char *dst = &buffer->at(trimmedHeight * pitch);
+            char *src = &buffer->at(height * pitch);
+            memcpy(dst, src, trimmedHeight * pitch);
+         }
+         else
+         {
+            shapeInfo->Height = trimmedHeight;
+         }
+      }
+   }
 
-bool WinCursorShapeUtils::isMonochromePixelTransparent(char andByte, char xorByte, unsigned int x)
-{
-	bool pixelSet = WinCursorShapeUtils::testBit(andByte, x % 8);
-	bool xorSet = WinCursorShapeUtils::testBit(xorByte, x % 8);;
-	bool transparent = (pixelSet && !xorSet);
+   bool WinCursorShapeUtils::isMonochromePixelTransparent(char andByte, char xorByte, unsigned int x)
+   {
+      bool pixelSet = WinCursorShapeUtils::testBit(andByte, x % 8);
+      bool xorSet = WinCursorShapeUtils::testBit(xorByte, x % 8);
+      ;
+      bool transparent = (pixelSet && !xorSet);
 
-	return transparent;
-}
+      return transparent;
+   }
 
-bool WinCursorShapeUtils::isColorPixelTransparent(unsigned int pixel, unsigned int type)
-{
-	bool transparent;
-	// color data is 32 bpp ARGB DIB
-	const unsigned int alphaMask = 0xFF000000;
-	const unsigned int transparencyThreshold = 0x800000;
-	const unsigned int colorMask = 0x00FFFFFF;
+   bool WinCursorShapeUtils::isColorPixelTransparent(unsigned int pixel, unsigned int type)
+   {
+      bool transparent;
+      // color data is 32 bpp ARGB DIB
+      const unsigned int alphaMask = 0xFF000000;
+      const unsigned int transparencyThreshold = 0x800000;
+      const unsigned int colorMask = 0x00FFFFFF;
 
-	if (type == DXGI_OUTDUPL_POINTER_SHAPE_TYPE_COLOR) {
-		transparent = ((pixel & alphaMask) < transparencyThreshold);
-	}
-	else {
-		unsigned int color = (pixel & colorMask);
-		bool xorSet = ((pixel & alphaMask) != 0);	// XOR value can only be 0x00 (overwrite) or 0xFF (transparent)
-		transparent = (xorSet && (color == 0));
-	}
+      if (type == DXGI_OUTDUPL_POINTER_SHAPE_TYPE_COLOR)
+      {
+         transparent = ((pixel & alphaMask) < transparencyThreshold);
+      }
+      else
+      {
+         unsigned int color = (pixel & colorMask);
+         bool xorSet = ((pixel & alphaMask) != 0); // XOR value can only be 0x00 (overwrite) or 0xFF (transparent)
+         transparent = (xorSet && (color == 0));
+      }
 
-	return transparent;
-}
+      return transparent;
+   }
 
-bool WinCursorShapeUtils::isPixelTransparent(char* const buffer, unsigned int type, unsigned int height, unsigned int pitch, unsigned int x, unsigned int y)
-{
-	if (type == DXGI_OUTDUPL_POINTER_SHAPE_TYPE_MONOCHROME) {
-		unsigned int andOffset = (y * pitch) + (x / 8);
-		unsigned int xorOffset = andOffset + height * pitch;
-		char andByte = buffer[andOffset];
-		char xorByte = buffer[xorOffset];
+   bool WinCursorShapeUtils::isPixelTransparent(char *const buffer, unsigned int type, unsigned int height,
+                                                unsigned int pitch, unsigned int x, unsigned int y)
+   {
+      if (type == DXGI_OUTDUPL_POINTER_SHAPE_TYPE_MONOCHROME)
+      {
+         unsigned int andOffset = (y * pitch) + (x / 8);
+         unsigned int xorOffset = andOffset + height * pitch;
+         char andByte = buffer[andOffset];
+         char xorByte = buffer[xorOffset];
 
-		return isMonochromePixelTransparent(andByte, xorByte, x);
-	}
+         return isMonochromePixelTransparent(andByte, xorByte, x);
+      }
 
-	unsigned int offset = (y * pitch) + (x * 4);
-	unsigned int *pixel = (unsigned int*)(&buffer[offset]);
+      unsigned int offset = (y * pitch) + (x * 4);
+      unsigned int *pixel = (unsigned int *)(&buffer[offset]);
 
-	return isColorPixelTransparent(*pixel, type);
-}
+      return isColorPixelTransparent(*pixel, type);
+   }
 
-unsigned int WinCursorShapeUtils::getCursorHeight(DXGI_OUTDUPL_POINTER_SHAPE_INFO& shapeInfo)
-{
-	if (shapeInfo.Type == DXGI_OUTDUPL_POINTER_SHAPE_TYPE_MONOCHROME) {
-		return shapeInfo.Height /= 2;
-	}
+   unsigned int WinCursorShapeUtils::getCursorHeight(DXGI_OUTDUPL_POINTER_SHAPE_INFO &shapeInfo)
+   {
+      if (shapeInfo.Type == DXGI_OUTDUPL_POINTER_SHAPE_TYPE_MONOCHROME)
+      {
+         return shapeInfo.Height /= 2;
+      }
 
-	return shapeInfo.Height;
-}
+      return shapeInfo.Height;
+   }
+
+} // namespace remoting_node_desktop

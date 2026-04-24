@@ -29,108 +29,90 @@
 #define XK_MISCELLANY
 #include "remoting/remoting/rfb/keysymdef.h"
 
-SasUserInput::SasUserInput(UserInputClient *client, ::subsystem::LogWriter *log)
-: m_client(client),
-  m_ctrlPressed(false),
-  m_altPressed(false),
-  m_underVista(false),
-  m_plogwriter(log)
+namespace remoting_node_desktop
 {
-  m_underVista = Environment::isVistaOrLater();
-}
 
-SasUserInput::~SasUserInput()
-{
-}
 
-void SasUserInput::sendInit(BlockingGate *gate)
-{
-  m_client->sendInit(gate);
-}
+   SasUserInput::SasUserInput(UserInputClient *client, ::subsystem::LogWriter *log) :
+       m_client(client), m_ctrlPressed(false), m_altPressed(false), m_underVista(false), m_plogwriter(log)
+   {
+      m_underVista = Environment::isVistaOrLater();
+   }
 
-void SasUserInput::setMouseEvent(const ::int_point newPos, unsigned char keyFlag)
-{
-  m_client->setMouseEvent(newPos, keyFlag);
-}
+   SasUserInput::~SasUserInput() {}
 
-void SasUserInput::setNewClipboard(const ::scoped_string & newClipboard)
-{
-  m_client->setNewClipboard(newClipboard);
-}
+   void SasUserInput::sendInit(BlockingGate *gate) { m_client->sendInit(gate); }
 
-void SasUserInput::setKeyboardEvent(unsigned int keySym, bool down)
-{
-  bool delPressed = false;
+   void SasUserInput::setMouseEvent(const ::int_point newPos, unsigned char keyFlag)
+   {
+      m_client->setMouseEvent(newPos, keyFlag);
+   }
 
-  if (m_underVista) {
-    switch (keySym) {
-    case XK_Alt_L:
-    case XK_Alt_R:
-      m_altPressed = down;
-      break;
-    case XK_Control_L:
-    case XK_Control_R:
-      m_ctrlPressed = down;
-      break;
-    case XK_Delete:
-      delPressed = down;
-    }
-  }
+   void SasUserInput::setNewClipboard(const ::scoped_string &newClipboard) { m_client->setNewClipboard(newClipboard); }
 
-  if (m_ctrlPressed && m_altPressed && delPressed && m_underVista) {
-    DWORD sessionId = WTS::getActiveConsoleSessionId(m_plogwriter);
-    bool isRdp = WTS::SessionIsRdpSession(sessionId, m_plogwriter);
-    if (!isRdp) {
-      Environment::simulateCtrlAltDelUnderVista(m_plogwriter);
-      return;
-    }
-  } 
-  m_client->setKeyboardEvent(keySym, down);
-}
+   void SasUserInput::setKeyboardEvent(unsigned int keySym, bool down)
+   {
+      bool delPressed = false;
 
-void SasUserInput::getCurrentUserInfo(::string & desktopName,
-                                         ::string & userName)
-{
-  m_client->getCurrentUserInfo(desktopName, userName);
-}
+      if (m_underVista)
+      {
+         switch (keySym)
+         {
+            case XK_Alt_L:
+            case XK_Alt_R:
+               m_altPressed = down;
+               break;
+            case XK_Control_L:
+            case XK_Control_R:
+               m_ctrlPressed = down;
+               break;
+            case XK_Delete:
+               delPressed = down;
+         }
+      }
 
-void SasUserInput::getPrimaryDisplayCoords(::int_rectangle *rect)
-{
-  m_client->getPrimaryDisplayCoords(rect);
-}
+      if (m_ctrlPressed && m_altPressed && delPressed && m_underVista)
+      {
+         DWORD sessionId = WTS::getActiveConsoleSessionId(m_plogwriter);
+         bool isRdp = WTS::SessionIsRdpSession(sessionId, m_plogwriter);
+         if (!isRdp)
+         {
+            Environment::simulateCtrlAltDelUnderVista(m_plogwriter);
+            return;
+         }
+      }
+      m_client->setKeyboardEvent(keySym, down);
+   }
 
-::array_base<::int_rectangle> SasUserInput::getDisplaysCoords()
-{
-  return m_client->getDisplaysCoords();
-}
+   void SasUserInput::getCurrentUserInfo(::string &desktopName, ::string &userName)
+   {
+      m_client->getCurrentUserInfo(desktopName, userName);
+   }
 
-void SasUserInput::getDisplayNumberCoords(::int_rectangle *rect,
-                                          unsigned char dispNumber)
-{
-  m_client->getDisplayNumberCoords(rect, dispNumber);
-}
+   void SasUserInput::getPrimaryDisplayCoords(::int_rectangle *rect) { m_client->getPrimaryDisplayCoords(rect); }
 
-void SasUserInput::getNormalizedRect(::int_rectangle *rect)
-{
-  m_client->getNormalizedRect(rect);
-}
+   ::array_base<::int_rectangle> SasUserInput::getDisplaysCoords() { return m_client->getDisplaysCoords(); }
 
-void SasUserInput::getWindowCoords(HWND hwnd, ::int_rectangle *rect)
-{
-  m_client->getWindowCoords(hwnd, rect);
-}
+   void SasUserInput::getDisplayNumberCoords(::int_rectangle *rect, unsigned char dispNumber)
+   {
+      m_client->getDisplayNumberCoords(rect, dispNumber);
+   }
 
-HWND SasUserInput::getWindowHandleByName(const ::scoped_string & windowName)
-{
-  return m_client->getWindowHandleByName(windowName);
-}
+   void SasUserInput::getNormalizedRect(::int_rectangle *rect) { m_client->getNormalizedRect(rect); }
 
-void SasUserInput::getApplicationRegion(unsigned int procId, Region *region)
-{
-  m_client->getApplicationRegion(procId, region);
-}
+   void SasUserInput::getWindowCoords(HWND hwnd, ::int_rectangle *rect) { m_client->getWindowCoords(hwnd, rect); }
 
-bool SasUserInput::isApplicationInFocus(unsigned int procId)
-{
-  return m_client->isApplicationInFocus(procId);
-}
+   HWND SasUserInput::getWindowHandleByName(const ::scoped_string &windowName)
+   {
+      return m_client->getWindowHandleByName(windowName);
+   }
+
+   void SasUserInput::getApplicationRegion(unsigned int procId, Region *region)
+   {
+      m_client->getApplicationRegion(procId, region);
+   }
+
+   bool SasUserInput::isApplicationInFocus(unsigned int procId) { return m_client->isApplicationInFocus(procId); }
+
+
+} // namespace remoting_node_desktop

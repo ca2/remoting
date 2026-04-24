@@ -34,27 +34,35 @@
 #include "subsystem/thread/Thread.h"
 #include "remoting/remoting/win_system/WindowsEvent.h"
 
-class WinVideoRegionUpdaterImpl : public ScreenDriver, Thread
+namespace remoting_node_desktop
 {
-public:
-  WinVideoRegionUpdaterImpl(::subsystem::LogWriter *log);
-  virtual ~WinVideoRegionUpdaterImpl();
-protected:
-  virtual void execute();
-  virtual void onTerminate();
-private:
-  virtual Region getVideoRegion();
-  void updateVideoRegion();
-  void getClassNamesAndRectsFromConfig(::string_array &classNames, ::array_base<::int_rectangle> &rects);
-  unsigned int WinVideoRegionUpdaterImpl::getInterval();
-  Region getRectsByClass(::string_array classNames);
-  Region getRectsByCoords(::array_base<::int_rectangle> &rects);
 
-  ::earth::time m_lastVidUpdTime;
-  Region m_vidRegion;
-  critical_section m_regionMutex;
-  ::subsystem::LogWriter *m_plogwriter;
-  WindowsEvent m_sleeper;
-};
+   class WinVideoRegionUpdaterImpl : public ScreenDriver, Thread
+   {
+   public:
+      WinVideoRegionUpdaterImpl(::subsystem::LogWriter *log);
+      virtual ~WinVideoRegionUpdaterImpl();
+   protected:
+      virtual void execute();
+      virtual void onTerminate();
+   private:
+      virtual Region getVideoRegion();
+      void updateVideoRegion();
+      void getClassNamesAndRectsFromConfig(::string_array &classNames, ::array_base<::int_rectangle> &rects);
+      unsigned int WinVideoRegionUpdaterImpl::getInterval();
+      Region getRectsByClass(::string_array classNames);
+      Region getRectsByCoords(::array_base<::int_rectangle> &rects);
 
-//// __WINVIDEOREGIONUPDATERIMPL_H__
+      ::earth::time m_lastVidUpdTime;
+      Region m_vidRegion;
+      critical_section m_regionMutex;
+      ::subsystem::LogWriter *m_plogwriter;
+      WindowsEvent m_sleeper;
+   };
+
+   //// __WINVIDEOREGIONUPDATERIMPL_H__
+
+}// namespace remoting_node_desktop
+
+
+

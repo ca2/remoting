@@ -30,26 +30,37 @@
 //#include "log_writer/LogWriter.h"
 #include "remoting/remoting/win_system/WinCursor.h"
 
-class CursorPositionDetector : public UpdateDetector
+
+namespace remoting_node_desktop
 {
-public:
-  CursorPositionDetector(UpdateKeeper *updateKeeper,
-                UpdateListener *updateListener,
-                ::subsystem::LogWriter *log);
-  virtual ~CursorPositionDetector(void);
 
-  // Returns current position of a windows cursor.
-  ::int_point getCursorPos();
+   class CursorPositionDetector : public UpdateDetector
+   {
+   public:
+      CursorPositionDetector(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ::subsystem::LogWriter *log);
+      virtual ~CursorPositionDetector(void);
 
-protected:
-  virtual void execute();
-  virtual void onTerminate();
+      // Returns current position of a windows cursor.
+      ::int_point getCursorPos();
 
-private:
-  WinCursor m_cursor;
-  WindowsEvent m_sleepTimer;
-  ::int_point m_lastCursorPos;
-  ::subsystem::LogWriter *m_plogwriter;
-};
+   protected:
+      virtual void execute();
+      virtual void onTerminate();
 
-//// __CURSORPOSITIONDETECTOR_H__
+   private:
+      WinCursor m_cursor;
+      WindowsEvent m_sleepTimer;
+      ::int_point m_lastCursorPos;
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+
+
+

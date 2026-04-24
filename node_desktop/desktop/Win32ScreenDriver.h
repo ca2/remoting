@@ -31,35 +31,42 @@
 #include "HooksUpdateDetector.h"
 #include "WindowsScreenGrabber.h"
 
-class Win32ScreenDriver : public Win32ScreenDriverBaseImpl
+namespace remoting_node_desktop
 {
-public:
-  Win32ScreenDriver(UpdateKeeper *updateKeeper,
-                       UpdateListener *updateListener,
-                       ::innate_subsystem::FrameBuffer *fb,
-                       critical_section *fbcritical_section, ::subsystem::LogWriter *log);
-  virtual ~Win32ScreenDriver();
 
-  // Starts screen update detection if it not started yet.
-  virtual void executeDetection();
+   class Win32ScreenDriver : public Win32ScreenDriverBaseImpl
+   {
+   public:
+      Win32ScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ::innate_subsystem::FrameBuffer *fb,
+                        critical_section *fbcritical_section, ::subsystem::LogWriter *log);
+      virtual ~Win32ScreenDriver();
 
-  // Stops screen update detection.
-  virtual void terminateDetection();
+      // Starts screen update detection if it not started yet.
+      virtual void executeDetection();
 
-  virtual ::int_size getScreenDimension();
-  virtual bool grabFb(const ::int_rectangle &  rect = 0);
-  virtual ::innate_subsystem::FrameBuffer *getScreenBuffer();
-  virtual bool getScreenPropertiesChanged();
-  virtual bool getScreenSizeChanged();
-  virtual bool applyNewScreenProperties();
+      // Stops screen update detection.
+      virtual void terminateDetection();
 
-private:
-  // This class provides thread safed coordinations between the backup frame buffer and
-  // the following objects.
-  WindowsScreenGrabber m_screenGrabber;
-  Poller m_poller;
-  ConsolePoller m_consolePoller;
-  HooksUpdateDetector m_hooks;
-};
+      virtual ::int_size getScreenDimension();
+      virtual bool grabFb(const ::int_rectangle &rect = 0);
+      virtual ::innate_subsystem::FrameBuffer *getScreenBuffer();
+      virtual bool getScreenPropertiesChanged();
+      virtual bool getScreenSizeChanged();
+      virtual bool applyNewScreenProperties();
 
-//// __WIN32SCREENDRIVER_H__
+   private:
+      // This class provides thread safed coordinations between the backup frame buffer and
+      // the following objects.
+      WindowsScreenGrabber m_screenGrabber;
+      Poller m_poller;
+      ConsolePoller m_consolePoller;
+      HooksUpdateDetector m_hooks;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+

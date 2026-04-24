@@ -24,41 +24,43 @@
 #include "framework.h"
 #include "Win8CursorShape.h"
 
-Win8CursorShape::Win8CursorShape()
-: m_isVisible(false),
-  m_threadOwner(-1)
+namespace remoting_node_desktop
 {
-}
 
-Win8CursorShape::~Win8CursorShape()
-{
-}
 
-const CursorShape *Win8CursorShape::getCursorShape() const
-{
-  if (getIsVisible()) {
-    return &m_cursorShape;
-  } else {
-    return &m_emptyDimensionCursorShape;
-  }
-}
+   Win8CursorShape::Win8CursorShape() : m_isVisible(false), m_threadOwner(-1) {}
 
-CursorShape *Win8CursorShape::getCursorShapeForWriting()
-{
-  return &m_cursorShape;
-}
+   Win8CursorShape::~Win8CursorShape() {}
 
-void Win8CursorShape::setVisibility(bool value, int threadOwner)
-{
-  // Set to false is allowed only for a thread owner. Else, a not owner thread can
-  // set the false value after owner thread and then cursor shape will disappear.
-  if (value || m_threadOwner == threadOwner) {
-    m_isVisible = value;
-    m_threadOwner = threadOwner;
-  }
-}
+   const CursorShape *Win8CursorShape::getCursorShape() const
+   {
+      if (getIsVisible())
+      {
+         return &m_cursorShape;
+      }
+      else
+      {
+         return &m_emptyDimensionCursorShape;
+      }
+   }
 
-bool Win8CursorShape::getIsVisible() const
-{
-  return m_isVisible;
-}
+   CursorShape *Win8CursorShape::getCursorShapeForWriting() { return &m_cursorShape; }
+
+   void Win8CursorShape::setVisibility(bool value, int threadOwner)
+   {
+      // Set to false is allowed only for a thread owner. Else, a not owner thread can
+      // set the false value after owner thread and then cursor shape will disappear.
+      if (value || m_threadOwner == threadOwner)
+      {
+         m_isVisible = value;
+         m_threadOwner = threadOwner;
+      }
+   }
+
+   bool Win8CursorShape::getIsVisible() const { return m_isVisible; }
+
+
+} // namespace remoting_node_desktop
+ 
+
+

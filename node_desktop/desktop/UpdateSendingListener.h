@@ -29,13 +29,17 @@
 #include "innate_subsystem/framebuffer/FrameBuffer.h"
 #include "UpdateContainer.h"
 
-class UpdateSendingListener
-{
-public:
-  virtual ~UpdateSendingListener() {}
-  virtual void onSendUpdate(const UpdateContainer *updateContainer,
-                            const ::remoting::CursorShape *cursorShape) = 0;
-  virtual bool isReadyToSend() = 0;
-};
 
-//// __UPDATESENDINGLISTENER_H__
+namespace remoting_node_desktop
+{
+
+   class UpdateSendingListener
+   {
+   public:
+      virtual ~UpdateSendingListener() {}
+      virtual void onSendUpdate(const UpdateContainer *updateContainer, const ::remoting::CursorShape *cursorShape) = 0;
+      virtual bool isReadyToSend() = 0;
+   };
+
+
+} // namespace remoting_node_desktop 

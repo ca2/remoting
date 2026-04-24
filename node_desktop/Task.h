@@ -24,7 +24,7 @@ namespace remoting_node_desktop
     * Windows TightVNC server application.
     * Used for running TightVNC server as single windows application.
     */
-   class CLASS_DECL_REMOTING_NODE_DESKTOP ServerTask : 
+   class CLASS_DECL_REMOTING_NODE_DESKTOP Task : 
       virtual public ::subsystem::Task,
       virtual public ServerListener,
       virtual public LogInitListener

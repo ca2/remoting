@@ -24,11 +24,16 @@
 #include "framework.h"
 #include "WinDxRecoverableException.h"
 
-WinDxRecoverableException::WinDxRecoverableException(const ::scoped_string & scopedstrMessage, HRESULT errCode)
-: WinDxException(scopedstrMessage, errCode)
+namespace remoting_node_desktop
 {
-}
 
-WinDxRecoverableException::~WinDxRecoverableException()
-{
-}
+
+   WinDxRecoverableException::WinDxRecoverableException(const ::scoped_string &scopedstrMessage, HRESULT errCode) :
+       WinDxException(scopedstrMessage, errCode)
+   {
+   }
+
+   WinDxRecoverableException::~WinDxRecoverableException() {}
+
+
+} // namespace remoting_node_desktop

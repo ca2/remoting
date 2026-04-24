@@ -27,6 +27,11 @@
 #include "ReconnectException.h"
 #include "subsystem/platform/BrokenHandleException.h"
 
+namespace remoting_node_desktop
+{
+
+
+
 UserInputClient::UserInputClient(BlockingGate *forwGate,
                                  DesktopSrvDispatcher *dispatcher,
                                  ClipboardListener *clipboardListener)
@@ -264,3 +269,10 @@ bool UserInputClient::isApplicationInFocus(unsigned int procId)
 
   return result;
 }
+
+
+
+} // namespace remoting_node_desktop
+
+
+

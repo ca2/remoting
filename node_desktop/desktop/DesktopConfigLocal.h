@@ -28,20 +28,27 @@
 #include "InputBlocker.h"
 //#include "log_writer/LogWriter.h"
 
-class DesktopConfigLocal
+namespace remoting_node_desktop
 {
-public:
-  DesktopConfigLocal(::subsystem::LogWriter *log);
-  virtual ~DesktopConfigLocal();
 
-  virtual void updateByNewSettings();
+   class DesktopConfigLocal
+   {
+   public:
+      DesktopConfigLocal(::subsystem::LogWriter *log);
+      virtual ~DesktopConfigLocal();
 
-  virtual bool isRemoteInputAllowed();
-  virtual ::earth::time getLastInputTime() const;
-  virtual void correctLastTime(::earth::time newTime);
+      virtual void updateByNewSettings();
 
-private:
-  InputBlocker *m_inputBlocker;
-};
+      virtual bool isRemoteInputAllowed();
+      virtual ::earth::time getLastInputTime() const;
+      virtual void correctLastTime(::earth::time newTime);
 
-//// __DESKTOPCONFIGLOCAL_H__
+   private:
+      InputBlocker *m_inputBlocker;
+   };
+
+   //// __DESKTOPCONFIGLOCAL_H__
+
+
+} // namespace remoting_node_desktop
+ 

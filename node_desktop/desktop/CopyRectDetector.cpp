@@ -25,81 +25,91 @@
 #include "CopyRectDetector.h"
 #include "subsystem/_common_header.h"
 
-CopyRectDetector::CopyRectDetector()
+namespace remoting_node_desktop
 {
-}
 
-CopyRectDetector::~CopyRectDetector()
-{
-}
+   CopyRectDetector::CopyRectDetector() {}
 
-void CopyRectDetector::detectWindowMovements(::int_rectangle *copyRect, ::int_point *source)
-{
-  m_copyRect.Null();
-  m_source.clear();
+   CopyRectDetector::~CopyRectDetector() {}
 
-  EnumWindows((WNDENUMPROC)enumWindowsFnCopyRect, (::lparam)this);
-  m_lastWinProps = m_newWinProps;
-  m_newWinProps.clear();
-  *copyRect = m_copyRect;
-  *source = m_source;
-}
+   void CopyRectDetector::detectWindowMovements(::int_rectangle *copyRect, ::int_point *source)
+   {
+      m_copyRect.Null();
+      m_source.clear();
 
-// Callback routine used internally to catch window movement...
-bool CALLBACK CopyRectDetector::enumWindowsFnCopyRect(HWND hwnd, ::lparam arg)
-{
-  CopyRectDetector *_this = (CopyRectDetector *)arg;
-  return _this->checkWindowMovements(hwnd);
-}
+      EnumWindows((WNDENUMPROC)enumWindowsFnCopyRect, (::lparam)this);
+      m_lastWinProps = m_newWinProps;
+      m_newWinProps.clear();
+      *copyRect = m_copyRect;
+      *source = m_source;
+   }
 
-bool CopyRectDetector::checkWindowMovements(HWND hwnd)
-{
-  ::int_rectangle currRect;
-  if (IsWindowVisible(hwnd) && getWinRect(hwnd, &currRect)) {
-    // Store window properties in the new ::list_base
-    WinProp newWinProp(hwnd, &currRect);
-    m_newWinProps.add(newWinProp);
+   // Callback routine used internally to catch window movement...
+   bool CALLBACK CopyRectDetector::enumWindowsFnCopyRect(HWND hwnd, ::lparam arg)
+   {
+      CopyRectDetector *_this = (CopyRectDetector *)arg;
+      return _this->checkWindowMovements(hwnd);
+   }
 
-    ::int_rectangle prevRect;
-    if (findPrevWinProps(hwnd, &prevRect)) {
-      if ((prevRect.left != currRect.left || prevRect.top != currRect.top) &&
-          currRect.area() > m_copyRect.area()) {
-        m_copyRect = currRect;
-        m_source.setPoint(prevRect.left, prevRect.top);
+   bool CopyRectDetector::checkWindowMovements(HWND hwnd)
+   {
+      ::int_rectangle currRect;
+      if (IsWindowVisible(hwnd) && getWinRect(hwnd, &currRect))
+      {
+         // Store window properties in the new ::list_base
+         WinProp newWinProp(hwnd, &currRect);
+         m_newWinProps.add(newWinProp);
 
-        // Adjust
-        int destopX = GetSystemMetrics(SM_XVIRTUALSCREEN);
-        int destopY = GetSystemMetrics(SM_YVIRTUALSCREEN);
-        m_copyRect.move(-destopX, -destopY);
-        m_source.move(-destopX, -destopY);
+         ::int_rectangle prevRect;
+         if (findPrevWinProps(hwnd, &prevRect))
+         {
+            if ((prevRect.left != currRect.left || prevRect.top != currRect.top) && currRect.area() > m_copyRect.area())
+            {
+               m_copyRect = currRect;
+               m_source.setPoint(prevRect.left, prevRect.top);
+
+               // Adjust
+               int destopX = GetSystemMetrics(SM_XVIRTUALSCREEN);
+               int destopY = GetSystemMetrics(SM_YVIRTUALSCREEN);
+               m_copyRect.move(-destopX, -destopY);
+               m_source.move(-destopX, -destopY);
+            }
+         }
       }
-    }
-  }
-  return true;
-}
-
-bool CopyRectDetector::getWinRect(HWND hwnd, ::int_rectangle *winRect)
-{
-  RECT rect;
-  if (GetWindowRect(hwnd, &rect)) {
-    winRect->fromWindowsRect(&rect);
-    return true;
-  }
-  return false;
-}
-
-bool CopyRectDetector::findPrevWinProps(HWND hwnd, ::int_rectangle *rect)
-{
-  ::list_base<WinProp>::iterator winPropsIter;
-  WinProp *winProp;
-  for (winPropsIter = m_lastWinProps.begin(); winPropsIter != m_lastWinProps.end();
-       winPropsIter++) {
-    winProp = &(*winPropsIter);
-    if (winProp->hwnd == hwnd) {
-      *rect = winProp->prevRect;
       return true;
-    }
-  }
+   }
 
-  return false;
-}
+   bool CopyRectDetector::getWinRect(HWND hwnd, ::int_rectangle *winRect)
+   {
+      RECT rect;
+      if (GetWindowRect(hwnd, &rect))
+      {
+         winRect->fromWindowsRect(&rect);
+         return true;
+      }
+      return false;
+   }
+
+   bool CopyRectDetector::findPrevWinProps(HWND hwnd, ::int_rectangle *rect)
+   {
+      ::list_base<WinProp>::iterator winPropsIter;
+      WinProp *winProp;
+      for (winPropsIter = m_lastWinProps.begin(); winPropsIter != m_lastWinProps.end(); winPropsIter++)
+      {
+         winProp = &(*winPropsIter);
+         if (winProp->hwnd == hwnd)
+         {
+            *rect = winProp->prevRect;
+            return true;
+         }
+      }
+
+      return false;
+   }
+
+
+} // namespace remoting_node_desktop
+
+
+
+

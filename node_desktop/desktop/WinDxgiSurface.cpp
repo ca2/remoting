@@ -27,26 +27,31 @@
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "WinDxgiSurface.h"
 
-WinDxgiSurface::WinDxgiSurface(ID3D11Texture2D *texture2D)
-: m_dxgiSurface(0)
+namespace remoting_node_desktop
 {
-  HRESULT hr = texture2D->QueryInterface(__uuidof(IDXGISurface), (void **)&m_dxgiSurface);
-  if (FAILED(hr) || m_dxgiSurface == 0) {
-    ::string errMess;
-    errMess.formatf("Can't create IDXGISurface from ID3D11Texture2D, error code = %l", (long)hr);
-    throw ::subsystem::Exception(errMess);
-  }
-}
 
-WinDxgiSurface::~WinDxgiSurface()
-{
-  if (m_dxgiSurface != 0) {
-    m_dxgiSurface->Release();
-    m_dxgiSurface = 0;
-  }
-}
 
-IDXGISurface *WinDxgiSurface::getSurface() const
-{
-  return m_dxgiSurface;
-}
+   WinDxgiSurface::WinDxgiSurface(ID3D11Texture2D *texture2D) : m_dxgiSurface(0)
+   {
+      HRESULT hr = texture2D->QueryInterface(__uuidof(IDXGISurface), (void **)&m_dxgiSurface);
+      if (FAILED(hr) || m_dxgiSurface == 0)
+      {
+         ::string errMess;
+         errMess.formatf("Can't create IDXGISurface from ID3D11Texture2D, error code = %l", (long)hr);
+         throw ::subsystem::Exception(errMess);
+      }
+   }
+
+   WinDxgiSurface::~WinDxgiSurface()
+   {
+      if (m_dxgiSurface != 0)
+      {
+         m_dxgiSurface->Release();
+         m_dxgiSurface = 0;
+      }
+   }
+
+   IDXGISurface *WinDxgiSurface::getSurface() const { return m_dxgiSurface; }
+
+
+} // namespace remoting_node_desktop

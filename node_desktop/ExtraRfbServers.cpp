@@ -26,142 +26,165 @@
 #include "remoting/node_desktop/server_config/Configurator.h"
 
 
-ExtraRfbServers::Conf::Conf()
-: acceptConnections(false),
-  loopbackOnly(false),
-  extraPorts()
+namespace remoting_node_desktop
 {
-}
 
-ExtraRfbServers::Conf::Conf(const Conf &other)
-: acceptConnections(other.acceptConnections),
-  loopbackOnly(other.loopbackOnly),
-  extraPorts(other.extraPorts)
-{
-}
 
-ExtraRfbServers::Conf &
-ExtraRfbServers::Conf::operator=(const Conf &other)
-{
-  acceptConnections = other.acceptConnections;
-  loopbackOnly = other.loopbackOnly;
-  extraPorts = other.extraPorts;
-  return *this;
-}
+   ExtraRfbServers::Conf::Conf() : acceptConnections(false), loopbackOnly(false), extraPorts() {}
 
-bool ExtraRfbServers::Conf::equals(const Conf *other)
-{
-  return (acceptConnections == other->acceptConnections &&
-          loopbackOnly == other->loopbackOnly &&
-          extraPorts.equals(&other->extraPorts));
-}
+   ExtraRfbServers::Conf::Conf(const Conf &other) :
+       acceptConnections(other.acceptConnections), loopbackOnly(other.loopbackOnly), extraPorts(other.extraPorts)
+   {
+   }
 
-ExtraRfbServers::ExtraRfbServers(::subsystem::LogWriter *log)
-: m_servers(),
-  m_effectiveConf(),
-  m_plogwriter(log)
-{
-}
+   ExtraRfbServers::Conf &ExtraRfbServers::Conf::operator=(const Conf &other)
+   {
+      acceptConnections = other.acceptConnections;
+      loopbackOnly = other.loopbackOnly;
+      extraPorts = other.extraPorts;
+      return *this;
+   }
 
-ExtraRfbServers::~ExtraRfbServers()
-{
-  try {
-    shutDown();
-  } catch (...) { }
-}
+   bool ExtraRfbServers::Conf::equals(const Conf *other)
+   {
+      return (acceptConnections == other->acceptConnections && loopbackOnly == other->loopbackOnly &&
+              extraPorts.equals(&other->extraPorts));
+   }
+   //(ExtraRfbServers::ExtraRfbServers()::subsystem::LogWriter * log) :
+   //    m_servers(), m_effectiveConf(), m_plogwriter(log)
+   //{
+   //}
 
-bool ExtraRfbServers::reload(bool asService, RfbClientManager *mgr)
-{
-  m_plogwriter->debug("Considering to reload extra RFB servers");
+   ExtraRfbServers::ExtraRfbServers()
+   {
 
-  Conf newConf;
-  getConfiguration(&newConf);
-  bool noConfigChanges = newConf.equals(&m_effectiveConf);
-  bool enoughServers = (newConf.extraPorts.count() == m_servers.size());
-  m_plogwriter->debug("Same Extra Ports configuration = {}, enough servers = {}",
-              (int)noConfigChanges, (int)enoughServers);
 
-  if (noConfigChanges && enoughServers) {
-    return true; // no work needed, no errors encountered
-  }
 
-  // Either configuration was actually changed, or our number of actually
-  // running servers does not match the configuration. In either case,
-  // restart the servers.
-  m_plogwriter->debug("Need to reconfigure extra RFB servers");
-  shutDown();
-  return startUp(asService, mgr);
-}
+   }
 
-void ExtraRfbServers::shutDown()
-{
-  m_plogwriter->debug("Requested to shut down extra RFB servers");
-
-  ::list_base<RfbServer *>::const_iterator i;
-  for (i = m_servers.begin(); i != m_servers.end(); i++) {
-    int port = (*i)->getBindPort();
-    m_plogwriter->debug("Stopping extra RFB server at port {}", port);
-    delete *i;
-    m_plogwriter->debug("Stopped extra RFB server at port {}", port);
-  }
-  m_servers.clear();
-}
-
-bool ExtraRfbServers::startUp(bool asService, RfbClientManager *mgr)
-{
-  m_plogwriter->debug("Requested to start up extra RFB servers");
-
-  if (!m_servers.empty()) {
-    m_plogwriter->informationf("Extra RFB servers active, will have to stop them");
-    shutDown();
-  }
-
-  Conf newConf;
-  getConfiguration(&newConf);
-  m_effectiveConf = newConf;
-
-  if (newConf.acceptConnections) {
-    const char * pszBindHost =
-      newConf.loopbackOnly ? "localhost" : "0.0.0.0";
-
-    for (size_t i = 0; i < newConf.extraPorts.count(); i++) {
-      PortMapping pm = *newConf.extraPorts.at(i);
-       PortMappingRect rect = pm.getRect();
-      int port = pm.getPort();
-
-      m_plogwriter->debug("Starting extra RFB server at port {}", port);
-
-      try {
-         RfbServer *s = new RfbServer(pszBindHost, port, mgr, asService, m_plogwriter, rect);
-        m_servers.add(s);
-        m_plogwriter->debug("Started extra RFB server at port {}", port);
-      } catch (::subsystem::Exception &ex) {
-        m_plogwriter->error("Failed to start extra RFB server: \"{}\"",
-                   ex.get_message());
+   ExtraRfbServers::~ExtraRfbServers()
+   {
+      try
+      {
+         shutDown();
       }
-    }
-  }
+      catch (...)
+      {
+      }
+   }
 
-  // If the number of requested port mappings equals to the number of
-  // successfully started servers, then everything went fine, return true.
-  return newConf.extraPorts.count() == m_servers.size();
-}
 
-void ExtraRfbServers::getConfiguration(Conf *out)
-{
-  // FIXME: Create a sort of configuration accessor with auto-locking, and
-  //        do not allow to access the configuration directly, so we would
-  //        have to write something like this:
-  //        {
-  //          ConfigAccessor ca;                         // lock
-  //          ServerConfig *cfg = ca.getServerConfig();  // get access
-  //          someSetting = cfg.getSomeSetting();        // use
-  //        }                                            // auto-unlock
-  //
-  ServerConfig *config = Configurator::getInstance()->getServerConfig();
-  AutoLock l(config);
+      void ExtraRfbServers::initialize_extra_rfb_servers(Configurator * pconfigurator, ::subsystem::LogWriter *plogwriter)
+   {
+         m_pconfigurator = pconfigurator;
+      m_plogwriter = plogwriter;
+         //::subsystem::LogWriter *log) : m_servers(), m_effectiveConf(), m_plogwriter(log)
+   }
 
-  out->acceptConnections = config->isAcceptingRfbConnections();
-  out->loopbackOnly = config->isOnlyLoopbackConnectionsAllowed();
-  out->extraPorts = *config->getPortMappingContainer();
-}
+
+   bool ExtraRfbServers::reload(bool asService, RfbClientManager *mgr)
+   {
+      m_plogwriter->debug("Considering to reload extra RFB servers");
+
+      Conf newConf;
+      getConfiguration(&newConf);
+      bool noConfigChanges = newConf.equals(&m_effectiveConf);
+      bool enoughServers = (newConf.extraPorts.count() == m_servers.size());
+      m_plogwriter->debug("Same Extra Ports configuration = {}, enough servers = {}", (int)noConfigChanges,
+                          (int)enoughServers);
+
+      if (noConfigChanges && enoughServers)
+      {
+         return true; // no work needed, no errors encountered
+      }
+
+      // Either configuration was actually changed, or our number of actually
+      // running servers does not match the configuration. In either case,
+      // restart the servers.
+      m_plogwriter->debug("Need to reconfigure extra RFB servers");
+      shutDown();
+      return startUp(asService, mgr);
+   }
+
+   void ExtraRfbServers::shutDown()
+   {
+      m_plogwriter->debug("Requested to shut down extra RFB servers");
+
+      for (auto i = m_servers.begin(); i != m_servers.end(); i++)
+      {
+         int port = (*i)->getBindPort();
+         m_plogwriter->debug("Stopping extra RFB server at port {}", port);
+         delete *i;
+         m_plogwriter->debug("Stopped extra RFB server at port {}", port);
+      }
+      m_servers.clear();
+   }
+
+   bool ExtraRfbServers::startUp(bool asService, RfbClientManager *mgr)
+   {
+      m_plogwriter->debug("Requested to start up extra RFB servers");
+
+      if (!m_servers.empty())
+      {
+         m_plogwriter->informationf("Extra RFB servers active, will have to stop them");
+         shutDown();
+      }
+
+      Conf newConf;
+      getConfiguration(&newConf);
+      m_effectiveConf = newConf;
+
+      if (newConf.acceptConnections)
+      {
+         const char *pszBindHost = newConf.loopbackOnly ? "localhost" : "0.0.0.0";
+
+         for (size_t i = 0; i < newConf.extraPorts.count(); i++)
+         {
+            PortMapping pm = *newConf.extraPorts.at(i);
+            PortMappingRect rect = pm.getRect();
+            int port = pm.getPort();
+
+            m_plogwriter->debug("Starting extra RFB server at port {}", port);
+
+            try
+            {
+               RfbServer *s = new RfbServer(pszBindHost, m_pconfigurator, port, mgr, asService, m_plogwriter, rect);
+               m_servers.add(s);
+               m_plogwriter->debug("Started extra RFB server at port {}", port);
+            }
+            catch (::subsystem::Exception &ex)
+            {
+               m_plogwriter->error("Failed to start extra RFB server: \"{}\"", ex.get_message());
+            }
+         }
+      }
+
+      // If the number of requested port mappings equals to the number of
+      // successfully started servers, then everything went fine, return true.
+      return newConf.extraPorts.count() == m_servers.size();
+   }
+
+   void ExtraRfbServers::getConfiguration(Conf *out)
+   {
+      // FIXME: Create a sort of configuration accessor with auto-locking, and
+      //        do not allow to access the configuration directly, so we would
+      //        have to write something like this:
+      //        {
+      //          ConfigAccessor ca;                         // lock
+      //          ServerConfig *cfg = ca.getServerConfig();  // get access
+      //          someSetting = cfg.getSomeSetting();        // use
+      //        }                                            // auto-unlock
+      //
+      ServerConfig *config = Configurator::getInstance()->getServerConfig();
+      AutoLock l(config);
+
+      out->acceptConnections = config->isAcceptingRfbConnections();
+      out->loopbackOnly = config->isOnlyLoopbackConnectionsAllowed();
+      out->extraPorts = *config->getPortMappingContainer();
+   }
+
+
+} // namespace remoting_node_desktop
+ 
+
+

@@ -27,26 +27,35 @@
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "WinDxgiDevice.h"
 
-WinDxgiDevice::WinDxgiDevice(WinD3D11Device *winD3D11Device)
-: m_dxgiDevice(0)
+namespace remoting_node_desktop
 {
-  HRESULT hr = winD3D11Device->deviceQueryInterface(__uuidof(IDXGIDevice), reinterpret_cast<void**>(&m_dxgiDevice));
-  if (FAILED(hr)) {
-    ::string errMess;
-    errMess.formatf("Can't QueryInterface for IDXGIDevice (%l)", (long)hr);
-    throw ::subsystem::Exception(errMess);
-  }
-}
 
-WinDxgiDevice::~WinDxgiDevice()
-{
-  if (m_dxgiDevice != 0) {
-    m_dxgiDevice->Release();
-    m_dxgiDevice = 0;
-  }
-}
 
-HRESULT WinDxgiDevice::getParent(REFIID riid, void **ppvObject)
-{
-  return m_dxgiDevice->GetParent(riid, ppvObject);
-}
+   WinDxgiDevice::WinDxgiDevice(WinD3D11Device *winD3D11Device) : m_dxgiDevice(0)
+   {
+      HRESULT hr =
+         winD3D11Device->deviceQueryInterface(__uuidof(IDXGIDevice), reinterpret_cast<void **>(&m_dxgiDevice));
+      if (FAILED(hr))
+      {
+         ::string errMess;
+         errMess.formatf("Can't QueryInterface for IDXGIDevice (%l)", (long)hr);
+         throw ::subsystem::Exception(errMess);
+      }
+   }
+
+   WinDxgiDevice::~WinDxgiDevice()
+   {
+      if (m_dxgiDevice != 0)
+      {
+         m_dxgiDevice->Release();
+         m_dxgiDevice = 0;
+      }
+   }
+
+   HRESULT WinDxgiDevice::getParent(REFIID riid, void **ppvObject) { return m_dxgiDevice->GetParent(riid, ppvObject); }
+
+
+} // namespace remoting_node_desktop
+ 
+
+

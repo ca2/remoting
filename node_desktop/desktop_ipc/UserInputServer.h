@@ -35,44 +35,53 @@
 #include "DesktopSrvDispatcher.h"
 //#include "log_writer/LogWriter.h"
 
-class UserInputServer: public DesktopServerProto, public ClientListener,
-                       public ::subsystem::ClipboardListener
+namespace remoting_node_desktop
 {
-public:
-  UserInputServer(BlockingGate *forwGate,
-                  DesktopSrvDispatcher *dispatcher,
-                  //AnEventListener *extTerminationListener,
-     const ::procedure & procedureTermination,
-                  ::subsystem::LogWriter *log);
-  virtual ~UserInputServer();
 
-  // Internal dispatcher
-  virtual void onRequest(unsigned char reqCode, BlockingGate *backGate);
 
-  virtual void onClipboardUpdate(const ::scoped_string & newClipboard);
+   class UserInputServer : public DesktopServerProto, public ClientListener, public ::subsystem::ClipboardListener
+   {
+   public:
+      UserInputServer(BlockingGate *forwGate, DesktopSrvDispatcher *dispatcher,
+                      // AnEventListener *extTerminationListener,
+                      const ::procedure &procedureTermination, ::subsystem::LogWriter *log);
+      virtual ~UserInputServer();
 
-protected:
-  virtual void applyNewPointerPos(BlockingGate *backGate);
-  virtual void applyNewClipboard(BlockingGate *backGate);
-  virtual void applyKeyEvent(BlockingGate *backGate);
-  virtual void ansDesktopCoords(BlockingGate *backGate);
-  virtual void ansWindowCoords(BlockingGate *backGate);
-  virtual void ansUserInfo(BlockingGate *backGate);
-  virtual void ansWindowHandle(BlockingGate *backGate);
-  virtual void ansDisplayNumberCoords(BlockingGate *backGate);
-  virtual void ansDisplaysCoords(BlockingGate *backGate);
-  virtual void ansApplicationRegion(BlockingGate *backGate);
-  virtual void ansApplicationInFocus(BlockingGate *backGate);
-  virtual void ansNormalizeRect(BlockingGate *backGate);
+      // Internal dispatcher
+      virtual void onRequest(unsigned char reqCode, BlockingGate *backGate);
 
-  // At first time server must get init information.
-  void serverInit(BlockingGate *backGate);
+      virtual void onClipboardUpdate(const ::scoped_string &newClipboard);
 
-  WindowsUserInput *m_userInput;
-  //AnEventListener *m_extTerminationListener;
-  ::procedure m_procedureTermination;
+   protected:
+      virtual void applyNewPointerPos(BlockingGate *backGate);
+      virtual void applyNewClipboard(BlockingGate *backGate);
+      virtual void applyKeyEvent(BlockingGate *backGate);
+      virtual void ansDesktopCoords(BlockingGate *backGate);
+      virtual void ansWindowCoords(BlockingGate *backGate);
+      virtual void ansUserInfo(BlockingGate *backGate);
+      virtual void ansWindowHandle(BlockingGate *backGate);
+      virtual void ansDisplayNumberCoords(BlockingGate *backGate);
+      virtual void ansDisplaysCoords(BlockingGate *backGate);
+      virtual void ansApplicationRegion(BlockingGate *backGate);
+      virtual void ansApplicationInFocus(BlockingGate *backGate);
+      virtual void ansNormalizeRect(BlockingGate *backGate);
 
-  ::subsystem::LogWriter *m_plogwriter;
-};
+      // At first time server must get init information.
+      void serverInit(BlockingGate *backGate);
 
-//// __USERINPUTSERVER_H__
+      WindowsUserInput *m_userInput;
+      // AnEventListener *m_extTerminationListener;
+      ::procedure m_procedureTermination;
+
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+
+

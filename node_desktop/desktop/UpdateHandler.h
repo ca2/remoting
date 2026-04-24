@@ -37,88 +37,100 @@
 #include "CopyRectDetector.h"
 #include "desktop_ipc/BlockingGate.h"
 
-class UpdateHandler
+
+namespace remoting_node_desktop
 {
-public:
-  UpdateHandler();
-  virtual ~UpdateHandler(void);
 
-  // The extract() function fills in a UpdateContainer object. 
-  // Also, if screen properties (such as resolution, pixel format)
-  // has changed the function reconfigures FrameBuffers. The
-  // reconfiguration posible the only one function.
-  //
-  // If screen size or pixel format have changed the copied region
-  // and the changed region will be cleaned, FrameBuffers will
-  // be reinitialized. Also, if screen size have changed the
-  // screenSizeChanged flag will be set to true. In the next
-  // time call of this function no additional information about
-  // these changes will present.
+   class UpdateHandler
+   {
+   public:
+      UpdateHandler();
+      virtual ~UpdateHandler(void);
 
-  // Parameters: 
-  //   updateContainer - pointer to a UpdateContainer object that will be filled
-  virtual void extract(UpdateContainer *updateContainer) = 0;
+      // The extract() function fills in a UpdateContainer object.
+      // Also, if screen properties (such as resolution, pixel format)
+      // has changed the function reconfigures FrameBuffers. The
+      // reconfiguration posible the only one function.
+      //
+      // If screen size or pixel format have changed the copied region
+      // and the changed region will be cleaned, FrameBuffers will
+      // be reinitialized. Also, if screen size have changed the
+      // screenSizeChanged flag will be set to true. In the next
+      // time call of this function no additional information about
+      // these changes will present.
 
-  // This function unconventionally set to update pending of the frame buffer
-  // in the next time call of the extract() function. All found changes
-  // saves to the changedRegion and copiedRegion.
-  virtual void setFullUpdateRequested(const ::remoting::Region *region) = 0;
+      // Parameters:
+      //   updateContainer - pointer to a UpdateContainer object that will be filled
+      virtual void extract(UpdateContainer *updateContainer) = 0;
 
-  // Checking a region for updates.
-  // Return:
-  //   true - if updates presents,
-  //   false - if not.
-  virtual bool checkForUpdates(::remoting::Region *region) = 0;
+      // This function unconventionally set to update pending of the frame buffer
+      // in the next time call of the extract() function. All found changes
+      // saves to the changedRegion and copiedRegion.
+      virtual void setFullUpdateRequested(const ::remoting::Region *region) = 0;
 
-  // Set a region excluded from the region that updates detects.
-  // excludedRegion will never be present in changedRegion or copiedRegion.
-  virtual void setExcludedRegion(const ::remoting::Region *excludedRegion) = 0;
+      // Checking a region for updates.
+      // Return:
+      //   true - if updates presents,
+      //   false - if not.
+      virtual bool checkForUpdates(::remoting::Region *region) = 0;
 
-  // The function provides access to ::innate_subsystem::FrameBuffer data.
-  // The data usage be able until next extract() function call.
-  // Return:
-  //   constant pointer to the ::innate_subsystem::FrameBuffer object.
-  const ::innate_subsystem::FrameBuffer *getFrameBuffer() const { return &m_backupFrameBuffer; }
-  const ::remoting::CursorShape *getCursorShape() const { return &m_cursorShape; }
-  // This function for asynchronous access to frame buffer properties
-  // (dimension and pixel format)
-  void getFrameBufferProp(::int_size *dim, ::innate_subsystem::PixelFormat *pf)
-  {
-    critical_section_lock al(&m_fbLocMut);
-    *dim = m_backupFrameBuffer.getDimension();
-    *pf = m_backupFrameBuffer.getPixelFormat();
-  }
+      // Set a region excluded from the region that updates detects.
+      // excludedRegion will never be present in changedRegion or copiedRegion.
+      virtual void setExcludedRegion(const ::remoting::Region *excludedRegion) = 0;
 
-  ::int_size getFrameBufferDimension()
-  {
-    critical_section_lock al(&m_fbLocMut);
-    return m_backupFrameBuffer.getDimension();
-  }
+      // The function provides access to ::innate_subsystem::FrameBuffer data.
+      // The data usage be able until next extract() function call.
+      // Return:
+      //   constant pointer to the ::innate_subsystem::FrameBuffer object.
+      const ::innate_subsystem::FrameBuffer *getFrameBuffer() const { return &m_backupFrameBuffer; }
+      const ::remoting::CursorShape *getCursorShape() const { return &m_cursorShape; }
+      // This function for asynchronous access to frame buffer properties
+      // (dimension and pixel format)
+      void getFrameBufferProp(::int_size *dim, ::innate_subsystem::PixelFormat *pf)
+      {
+         critical_section_lock al(&m_fbLocMut);
+         *dim = m_backupFrameBuffer.getDimension();
+         *pf = m_backupFrameBuffer.getPixelFormat();
+      }
 
-  ::innate_subsystem::PixelFormat getFrameBufferPixelFormat(::int_size *dim, ::innate_subsystem::PixelFormat *pf)
-  {
-    critical_section_lock al(&m_fbLocMut);
-    return m_backupFrameBuffer.getPixelFormat();
-  }
+      ::int_size getFrameBufferDimension()
+      {
+         critical_section_lock al(&m_fbLocMut);
+         return m_backupFrameBuffer.getDimension();
+      }
 
-  void initFrameBuffer(const ::innate_subsystem::FrameBuffer *newFb);
+      ::innate_subsystem::PixelFormat getFrameBufferPixelFormat(::int_size *dim, ::innate_subsystem::PixelFormat *pf)
+      {
+         critical_section_lock al(&m_fbLocMut);
+         return m_backupFrameBuffer.getPixelFormat();
+      }
 
-  virtual bool updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *fb, const ::remoting::Region *region,
-                                         const ::int_rectangle &  viewPort);
+      void initFrameBuffer(const ::innate_subsystem::FrameBuffer *newFb);
 
-  // FIXME: It's no good idea to place this function to here.
-  // Because it uses only for the UpdateHandlerClient class.
-  virtual void sendInit(BlockingGate *gate) {}
+      virtual bool updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *fb, const ::remoting::Region *region,
+                                             const ::int_rectangle &viewPort);
 
-protected:
-  virtual bool updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *dstFb, ::innate_subsystem::FrameBuffer *srcFb, const ::remoting::Region *region,
-                                         const ::int_rectangle &  viewPort);
+      // FIXME: It's no good idea to place this function to here.
+      // Because it uses only for the UpdateHandlerClient class.
+      virtual void sendInit(BlockingGate *gate) {}
 
-  ::innate_subsystem::FrameBuffer m_backupFrameBuffer;
-  critical_section m_fbLocMut;
+   protected:
+      virtual bool updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *dstFb,
+                                             ::innate_subsystem::FrameBuffer *srcFb, const ::remoting::Region *region,
+                                             const ::int_rectangle &viewPort);
 
-  // m_cursorShape not thread safed
-  ::remoting::CursorShape m_cursorShape;
-};
+      ::innate_subsystem::FrameBuffer m_backupFrameBuffer;
+      critical_section m_fbLocMut;
 
-//// __UPDATEHANDLER_H__
+      // m_cursorShape not thread safed
+      ::remoting::CursorShape m_cursorShape;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+

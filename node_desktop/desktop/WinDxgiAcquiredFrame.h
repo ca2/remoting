@@ -27,26 +27,36 @@
 
 #include "WinDxgiOutputDuplication.h"
 
-// #include aaa_<d3d11.h>
-// #include aaa_<DXGI1_2.h>
 
-class WinDxgiAcquiredFrame
+namespace remoting_node_desktop
 {
-public:
-  WinDxgiAcquiredFrame(WinDxgiOutputDuplication *outDupl, unsigned int timeOutMilliSec);
-  virtual ~WinDxgiAcquiredFrame();
 
-  bool wasTimeOut();
+   // #include aaa_<d3d11.h>
+   // #include aaa_<DXGI1_2.h>
 
-  IDXGIResource *getDxgiResource();
-  DXGI_OUTDUPL_FRAME_INFO *getFrameInfo();
+   class WinDxgiAcquiredFrame
+   {
+   public:
+      WinDxgiAcquiredFrame(WinDxgiOutputDuplication *outDupl, unsigned int timeOutMilliSec);
+      virtual ~WinDxgiAcquiredFrame();
 
-private:
-  WinDxgiOutputDuplication m_outDupl;
+      bool wasTimeOut();
 
-  DXGI_OUTDUPL_FRAME_INFO m_frameInfo;
-  IDXGIResource *m_desktopResource;
-  bool m_wasTimeOut;
-};
+      IDXGIResource *getDxgiResource();
+      DXGI_OUTDUPL_FRAME_INFO *getFrameInfo();
 
-//// __WINDXGIACQUIREDFRAME_H__
+   private:
+      WinDxgiOutputDuplication m_outDupl;
+
+      DXGI_OUTDUPL_FRAME_INFO m_frameInfo;
+      IDXGIResource *m_desktopResource;
+      bool m_wasTimeOut;
+   };
+
+   //// __WINDXGIACQUIREDFRAME_H__
+
+
+} // namespace remoting_node_desktop 
+
+
+

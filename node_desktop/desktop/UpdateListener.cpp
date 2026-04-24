@@ -24,10 +24,14 @@
 #include "framework.h"
 #include "UpdateListener.h"
 
-UpdateListener::UpdateListener(void)
+namespace remoting_node_desktop
 {
-}
 
-UpdateListener::~UpdateListener(void)
-{
-}
+
+   UpdateListener::UpdateListener(void) {}
+
+   UpdateListener::~UpdateListener(void) {}
+
+
+} // namespace remoting_node_desktop
+ 

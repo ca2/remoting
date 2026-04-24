@@ -27,24 +27,30 @@
 
 //#include "subsystem/platform/::earth::time.h"
 
-class InputBlocker
+namespace remoting_node_desktop
 {
-public:
-  InputBlocker();
-  virtual ~InputBlocker();
 
-  // This functions set/unset blocks on a local keyboard and mouse.
-  virtual void setKeyboardBlocking(bool block) = 0;
-  virtual void setMouseBlocking(bool block) = 0;
-  // This functions set/unset blocks on a local keyboard and mouse on the
-  // timeInterval interval from a last software event generation.
-  virtual void setSoftKeyboardBlocking(bool block, unsigned int timeInterval) = 0;
-  virtual void setSoftMouseBlocking(bool block, unsigned int timeInterval) = 0;
+   class InputBlocker
+   {
+   public:
+      InputBlocker();
+      virtual ~InputBlocker();
 
-  virtual ::earth::time getLastInputTime() const = 0;
-  virtual void correctLastTime(::earth::time newTime) = 0;
+      // This functions set/unset blocks on a local keyboard and mouse.
+      virtual void setKeyboardBlocking(bool block) = 0;
+      virtual void setMouseBlocking(bool block) = 0;
+      // This functions set/unset blocks on a local keyboard and mouse on the
+      // timeInterval interval from a last software event generation.
+      virtual void setSoftKeyboardBlocking(bool block, unsigned int timeInterval) = 0;
+      virtual void setSoftMouseBlocking(bool block, unsigned int timeInterval) = 0;
 
-  virtual bool isRemoteInputAllowed() = 0;
-};
+      virtual ::earth::time getLastInputTime() const = 0;
+      virtual void correctLastTime(::earth::time newTime) = 0;
 
-//// __INPUTBLOCKER_H__
+      virtual bool isRemoteInputAllowed() = 0;
+   };
+
+
+} // namespace remoting_node_desktop
+
+

@@ -32,34 +32,40 @@
 #include "UpdateContainer.h"
 #include "GrabOptimizator.h"
 
-class UpdateFilter
+
+namespace remoting_node_desktop
 {
-public:
-  UpdateFilter(ScreenDriver *screenDriver,
-               ::innate_subsystem::FrameBuffer *frameBuffer,
-               critical_section *frameBufferCriticalSection,
-               ::subsystem::LogWriter *log);
-  ~UpdateFilter();
 
-  void filter(UpdateContainer *updateContainer);
+   class UpdateFilter
+   {
+   public:
+      UpdateFilter(ScreenDriver *screenDriver, ::innate_subsystem::FrameBuffer *frameBuffer,
+                   critical_section *frameBufferCriticalSection, ::subsystem::LogWriter *log);
+      ~UpdateFilter();
 
-private:
-  void getChangedRegion(::remoting::Region *rgn, const ::int_rectangle &  rect);
-  void updateChangedRect(::remoting::Region *rgn, const ::int_rectangle &  rect);
-  void updateChangedSubRect(::remoting::Region *rgn, const ::int_rectangle &  rect);
+      void filter(UpdateContainer *updateContainer);
 
-  // This function update the screen grabber frame buffer.
-  // If success the function returns the true.
-  // Also, this function researching an optimal way to grab from
-  // the whole screen grabbing or 
-  bool grab();
+   private:
+      void getChangedRegion(::remoting::Region *rgn, const ::int_rectangle &rect);
+      void updateChangedRect(::remoting::Region *rgn, const ::int_rectangle &rect);
+      void updateChangedSubRect(::remoting::Region *rgn, const ::int_rectangle &rect);
 
-  ScreenDriver *m_screenDriver;
-  ::innate_subsystem::FrameBuffer *m_frameBuffer;
-  critical_section *m_fbMutex;
-  GrabOptimizator m_grabOptimizator;
+      // This function update the screen grabber frame buffer.
+      // If success the function returns the true.
+      // Also, this function researching an optimal way to grab from
+      // the whole screen grabbing or
+      bool grab();
 
-  ::subsystem::LogWriter *m_plogwriter;
-};
+      ScreenDriver *m_screenDriver;
+      ::innate_subsystem::FrameBuffer *m_frameBuffer;
+      critical_section *m_fbMutex;
+      GrabOptimizator m_grabOptimizator;
 
-//// __UPDATEFILTER_H__
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+   //// __UPDATEFILTER_H__
+
+
+} // namespace remoting_node_desktop
+ 

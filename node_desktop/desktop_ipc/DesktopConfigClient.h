@@ -29,17 +29,26 @@
 #include "DesktopSrvDispatcher.h"
 //#include "subsystem/platform/::earth::time.h"
 
-class DesktopConfigClient: public DesktopServerProto
+namespace remoting_node_desktop
 {
-public:
-  DesktopConfigClient(BlockingGate *forwGate);
-  virtual ~DesktopConfigClient();
 
-  virtual void updateByNewSettings(BlockingGate *gate);
-  virtual bool isRemoteInputAllowed();
+   class DesktopConfigClient : public DesktopServerProto
+   {
+   public:
+      DesktopConfigClient(BlockingGate *forwGate);
+      virtual ~DesktopConfigClient();
 
-private:
-  ::earth::time m_lastInputTime;
-};
+      virtual void updateByNewSettings(BlockingGate *gate);
+      virtual bool isRemoteInputAllowed();
 
-//// __DESKTOPCONFIGCLIENT_H__
+   private:
+      ::earth::time m_lastInputTime;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+

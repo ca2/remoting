@@ -34,7 +34,7 @@
 
 namespace remoting_node_desktop
 {
-   const char Service::SERVICE_COMMAND_LINE_KEY[] = "-service";
+   ::string_literal Service::SERVICE_COMMAND_LINE_KEY = "-service";
 
    Service::Service()
    {

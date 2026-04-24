@@ -29,23 +29,35 @@
 #include "subsystem/_common_header.h"
 #include "subsystem/node/Screen.h"
 
-class WindowsCursorShapeGrabber : public CursorShapeGrabber
+
+namespace remoting_node_desktop
 {
-public:
-  WindowsCursorShapeGrabber(void);
-  virtual ~WindowsCursorShapeGrabber(void);
 
-  virtual bool grab(const ::innate_subsystem::PixelFormat & pixelFormat);
+   class WindowsCursorShapeGrabber : public CursorShapeGrabber
+   {
+   public:
+      WindowsCursorShapeGrabber(void);
+      virtual ~WindowsCursorShapeGrabber(void);
 
-  virtual bool isCursorShapeChanged();
+      virtual bool grab(const ::innate_subsystem::PixelFormat &pixelFormat);
 
-//private:
-  bool grabPixels(const ::innate_subsystem::PixelFormat & pixelFormat);
+      virtual bool isCursorShapeChanged();
 
-  HCURSOR getHCursor();
+      // private:
+      bool grabPixels(const ::innate_subsystem::PixelFormat &pixelFormat);
 
-  HCURSOR m_lastHCursor;
-  ::subsystem::Screen m_screen;
-};
+      HCURSOR getHCursor();
 
-//// __WINDOWSMOUSEGRABBER_H__
+      HCURSOR m_lastHCursor;
+      ::subsystem::Screen m_screen;
+   };
+
+
+} //  namespace remoting_node_desktop
+
+
+
+
+
+
+

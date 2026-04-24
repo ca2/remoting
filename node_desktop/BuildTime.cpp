@@ -24,4 +24,4 @@
 
 #include "BuildTime.h"
 
-const char BuildTime::DATE[] = __DATE__ " at " __TIME__;
+::string_literal BuildTime::DATE = __DATE__ " at " __TIME__;

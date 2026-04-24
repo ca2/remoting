@@ -29,7 +29,7 @@
 
 namespace remoting_client
 {
-   const char ConnectionListener::DEFAULT_HOST[] = "0.0.0.0";
+   ::string_literal ConnectionListener::DEFAULT_HOST = "0.0.0.0";
 
    ConnectionListener::ConnectionListener(::subsystem::OperatingSystemApplicationInterface   *application,
                                           unsigned short port)

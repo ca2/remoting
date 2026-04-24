@@ -30,70 +30,79 @@
 #include "innate_subsystem/framebuffer/FrameBuffer.h"
 #include "remoting/remoting/rfb/CursorShape.h"
 
-// Derived classes commits oneself that internal frame buffer (accessing with getScreenBuffer()) will
-// be valid after constructor until the applyNewScreenProperties() function will be called. If
-// the applyNewScreenProperties() function has been called, internal frame buffer will be changed
-// with the frame buffer invalidation and a new getScreenBuffer() call is required to get a valid
-// frame buffer.
-class ScreenDriver
+
+namespace remoting_node_desktop
 {
-public:
-  // Derived constructors will ensure that the getScreenBuffer() returns
-  // a frame buffer with valid screen properties.
 
-  virtual ~ScreenDriver() {}
+   // Derived classes commits oneself that internal frame buffer (accessing with getScreenBuffer()) will
+   // be valid after constructor until the applyNewScreenProperties() function will be called. If
+   // the applyNewScreenProperties() function has been called, internal frame buffer will be changed
+   // with the frame buffer invalidation and a new getScreenBuffer() call is required to get a valid
+   // frame buffer.
+   class ScreenDriver
+   {
+   public:
+      // Derived constructors will ensure that the getScreenBuffer() returns
+      // a frame buffer with valid screen properties.
 
-  // Starts screen update detection if it not started yet.
-  virtual void executeDetection() = 0;
+      virtual ~ScreenDriver() {}
 
-  // Stops screen update detection.
-  virtual void terminateDetection() = 0;
+      // Starts screen update detection if it not started yet.
+      virtual void executeDetection() = 0;
 
-  // Return a current screen ::int_size.
-  // Implementions will ensure that this function is thread safety.
-  virtual ::int_size getScreenDimension() = 0;
+      // Stops screen update detection.
+      virtual void terminateDetection() = 0;
 
-  // Provides ::innate_subsystem::FrameBuffer grabbing.
-  // Parameters:     *rect - Pointer to a ::int_rectangle object with relative workRect coordinates.
-  // Return value:   true if success.
-  // Implementions will ensure that this function is thread safety.
-  virtual bool grabFb(const ::int_rectangle &rect = {} ) = 0;
+      // Return a current screen ::int_size.
+      // Implementions will ensure that this function is thread safety.
+      virtual ::int_size getScreenDimension() = 0;
 
-  // Returns a pointer an internal screen driver ::innate_subsystem::FrameBuffer
-  virtual ::innate_subsystem::FrameBuffer *getScreenBuffer() = 0;
+      // Provides ::innate_subsystem::FrameBuffer grabbing.
+      // Parameters:     *rect - Pointer to a ::int_rectangle object with relative workRect coordinates.
+      // Return value:   true if success.
+      // Implementions will ensure that this function is thread safety.
+      virtual bool grabFb(const ::int_rectangle &rect = {}) = 0;
 
-  // Checks screen(desktop) properties on changes
-  // Implementions will ensure that this function is thread safety.
-  virtual bool getScreenPropertiesChanged() = 0;
+      // Returns a pointer an internal screen driver ::innate_subsystem::FrameBuffer
+      virtual ::innate_subsystem::FrameBuffer *getScreenBuffer() = 0;
 
-  // Implementions will ensure that this function is thread safety.
-  virtual bool getScreenSizeChanged() = 0;
+      // Checks screen(desktop) properties on changes
+      // Implementions will ensure that this function is thread safety.
+      virtual bool getScreenPropertiesChanged() = 0;
 
-  // Set new values of the WorkRect to default (to full screen rectangle coordinates)
-  // if desktop properties has been changed.
-  // Also the frame buffer pixel format set to actual value.
-  // Implementions will ensure that this function is thread safety.
-  virtual bool applyNewScreenProperties() = 0;
+      // Implementions will ensure that this function is thread safety.
+      virtual bool getScreenSizeChanged() = 0;
 
-  // Grabs current cursor shape with the pixel format to internal buffer.
-  // Implementions will ensure that this function is thread safety.
-  virtual bool grabCursorShape(const ::innate_subsystem::PixelFormat & pf) = 0;
+      // Set new values of the WorkRect to default (to full screen rectangle coordinates)
+      // if desktop properties has been changed.
+      // Also the frame buffer pixel format set to actual value.
+      // Implementions will ensure that this function is thread safety.
+      virtual bool applyNewScreenProperties() = 0;
 
-  // Returns a pointer an internal screen driver CursorShape
-  virtual const ::remoting::CursorShape *getCursorShape() = 0;
+      // Grabs current cursor shape with the pixel format to internal buffer.
+      // Implementions will ensure that this function is thread safety.
+      virtual bool grabCursorShape(const ::innate_subsystem::PixelFormat &pf) = 0;
 
-  // Returns current cursor position coordinates which is relative to frame buffer coordinates.
-  // Implementions will ensure that this function is thread safety.
-  virtual ::int_point getCursorPosition() = 0;
+      // Returns a pointer an internal screen driver CursorShape
+      virtual const ::remoting::CursorShape *getCursorShape() = 0;
 
-  // Returns a region as known "copy region".
-  // Implementions will ensure that this function is thread safety.
-  virtual void getCopiedRegion(::int_rectangle *copyRect, ::int_point *source) = 0;
+      // Returns current cursor position coordinates which is relative to frame buffer coordinates.
+      // Implementions will ensure that this function is thread safety.
+      virtual ::int_point getCursorPosition() = 0;
 
-  // Returns a region which associates with some video data. The region will define
-  // by concrete implementation.
-  // Implementions will not ensure that this function is thread safety.
-  virtual ::remoting::Region getVideoRegion() = 0;
-};
+      // Returns a region as known "copy region".
+      // Implementions will ensure that this function is thread safety.
+      virtual void getCopiedRegion(::int_rectangle *copyRect, ::int_point *source) = 0;
 
-//// __SCREENDRIVER_H__
+      // Returns a region which associates with some video data. The region will define
+      // by concrete implementation.
+      // Implementions will not ensure that this function is thread safety.
+      virtual ::remoting::Region getVideoRegion() = 0;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+

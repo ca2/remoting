@@ -32,39 +32,47 @@
 #include "WindowsCursorShapeGrabber.h"
 #include "CopyRectDetector.h"
 
-// This class implements "grabbers" and "detectors" which is not couple� with screen frame buffer.
-class Win32ScreenDriverBaseImpl : public WinVideoRegionUpdaterImpl
+
+namespace remoting_node_desktop
 {
-public:
-  Win32ScreenDriverBaseImpl(UpdateKeeper *updateKeeper,
-                          UpdateListener *updateListener,
-                          critical_section *fbcritical_section,
-                          ::subsystem::LogWriter *log);
-  virtual ~Win32ScreenDriverBaseImpl();
 
-  // Starts screen update detection if it not started yet.
-  virtual void executeDetection();
+   // This class implements "grabbers" and "detectors" which is not couple� with screen frame buffer.
+   class Win32ScreenDriverBaseImpl : public WinVideoRegionUpdaterImpl
+   {
+   public:
+      Win32ScreenDriverBaseImpl(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
+                                critical_section *fbcritical_section, ::subsystem::LogWriter *log);
+      virtual ~Win32ScreenDriverBaseImpl();
 
-  // Stops screen update detection.
-  virtual void terminateDetection();
+      // Starts screen update detection if it not started yet.
+      virtual void executeDetection();
 
-  virtual bool grabCursorShape(const ::innate_subsystem::PixelFormat & pf);
-  virtual const CursorShape *getCursorShape();
-  virtual ::int_point getCursorPosition();
+      // Stops screen update detection.
+      virtual void terminateDetection();
 
-  virtual void getCopiedRegion(::int_rectangle *copyRect, ::int_point *source);
+      virtual bool grabCursorShape(const ::innate_subsystem::PixelFormat &pf);
+      virtual const CursorShape *getCursorShape();
+      virtual ::int_point getCursorPosition();
 
-protected:
-  critical_section *getFbMutex();
+      virtual void getCopiedRegion(::int_rectangle *copyRect, ::int_point *source);
 
-private:
-  critical_section *m_fbcritical_section;
+   protected:
+      critical_section *getFbMutex();
 
-  CursorPositionDetector m_cursorPosDetector;
-  WindowsCursorShapeGrabber m_curShapeGrabber;
-  CursorShapeDetector m_curShapeDetector;
+   private:
+      critical_section *m_fbcritical_section;
 
-  CopyRectDetector m_copyRectDetector;
-};
+      CursorPositionDetector m_cursorPosDetector;
+      WindowsCursorShapeGrabber m_curShapeGrabber;
+      CursorShapeDetector m_curShapeDetector;
 
-//// __WIN32SCREENDRIVERBASEIMPL_H__
+      CopyRectDetector m_copyRectDetector;
+   };
+
+   //// __WIN32SCREENDRIVERBASEIMPL_H__
+
+
+} // namespace remoting_node_desktop
+ 
+
+

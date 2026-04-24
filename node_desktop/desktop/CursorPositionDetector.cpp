@@ -24,45 +24,49 @@
 #include "framework.h"
 #include "CursorPositionDetector.h"
 
-const int MOUSE_SLEEP_TIME = 10;
 
-CursorPositionDetector::CursorPositionDetector(UpdateKeeper *updateKeeper,
-                             UpdateListener *updateListener,
-                             ::subsystem::LogWriter *log)
-: UpdateDetector(updateKeeper, updateListener),
-  m_plogwriter(log)
+namespace remoting_node_desktop
 {
-}
 
-CursorPositionDetector::~CursorPositionDetector(void)
-{
-  terminate();
-  wait();
-}
+   const int MOUSE_SLEEP_TIME = 10;
 
-::int_point CursorPositionDetector::getCursorPos()
-{
-  return m_cursor.getCursorPos();
-}
+   CursorPositionDetector::CursorPositionDetector(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
+                                                  ::subsystem::LogWriter *log) :
+       UpdateDetector(updateKeeper, updateListener), m_plogwriter(log)
+   {
+   }
 
-void CursorPositionDetector::onTerminate()
-{
-  m_sleepTimer.notify();
-}
+   CursorPositionDetector::~CursorPositionDetector(void)
+   {
+      terminate();
+      wait();
+   }
 
-void CursorPositionDetector::execute()
-{
-  m_plogwriter->information("mouse detector thread id = {}", getThreadId());
+   ::int_point CursorPositionDetector::getCursorPos() { return m_cursor.getCursorPos(); }
 
-  ::int_point curPoint;
+   void CursorPositionDetector::onTerminate() { m_sleepTimer.notify(); }
 
-  while (!isTerminating()) {
-    curPoint = m_cursor.getCursorPos();
-    if (!m_lastCursorPos.isEqualTo(&curPoint)) {
-      m_lastCursorPos = curPoint;
-      m_updateKeeper->setCursorPos(&m_lastCursorPos);
-      doUpdate();
-    }
-    m_sleepTimer.waitForEvent(MOUSE_SLEEP_TIME);
-  }
-}
+   void CursorPositionDetector::execute()
+   {
+      m_plogwriter->information("mouse detector thread id = {}", getThreadId());
+
+      ::int_point curPoint;
+
+      while (!isTerminating())
+      {
+         curPoint = m_cursor.getCursorPos();
+         if (!m_lastCursorPos.isEqualTo(&curPoint))
+         {
+            m_lastCursorPos = curPoint;
+            m_updateKeeper->setCursorPos(&m_lastCursorPos);
+            doUpdate();
+         }
+         m_sleepTimer.waitForEvent(MOUSE_SLEEP_TIME);
+      }
+   }
+
+
+} // namespace remoting_node_desktop
+
+
+

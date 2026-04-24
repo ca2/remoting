@@ -137,13 +137,7 @@
     <ClCompile Include="fb_update_sender\ViewPortState.cpp">
       <Filter>Source Files\fb_update_sender</Filter>
     </ClCompile>
-    <ClCompile Include="desktop\_.cpp">
-      <Filter>Source Files\desktop</Filter>
-    </ClCompile>
     <ClCompile Include="desktop\ApplicationDesktopFactory.cpp">
-      <Filter>Source Files\desktop</Filter>
-    </ClCompile>
-    <ClCompile Include="desktop\ClipboardListener.cpp">
       <Filter>Source Files\desktop</Filter>
     </ClCompile>
     <ClCompile Include="desktop\ConsolePoller.cpp">
@@ -177,9 +171,6 @@
       <Filter>Source Files\desktop</Filter>
     </ClCompile>
     <ClCompile Include="desktop\DummyScreenDriver.cpp">
-      <Filter>Source Files\desktop</Filter>
-    </ClCompile>
-    <ClCompile Include="desktop\framework.cpp">
       <Filter>Source Files\desktop</Filter>
     </ClCompile>
     <ClCompile Include="desktop\GrabOptimizator.cpp">
@@ -281,9 +272,6 @@
     <ClCompile Include="desktop\WinD3D11Texture2D.cpp">
       <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="desktop\WindowsClipboard.cpp">
-      <Filter>Source Files\desktop</Filter>
-    </ClCompile>
     <ClCompile Include="desktop\WindowsCursorShapeGrabber.cpp">
       <Filter>Source Files\desktop</Filter>
     </ClCompile>
@@ -332,9 +320,6 @@
     <ClCompile Include="desktop\WinVideoRegionUpdaterImpl.cpp">
       <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="desktop_ipc\_.cpp">
-      <Filter>Source Files\desktop_ipc</Filter>
-    </ClCompile>
     <ClCompile Include="desktop_ipc\BlockingGate.cpp">
       <Filter>Source Files\desktop_ipc</Filter>
     </ClCompile>
@@ -357,9 +342,6 @@
       <Filter>Source Files\desktop_ipc</Filter>
     </ClCompile>
     <ClCompile Include="desktop_ipc\DesktopSrvDispatcher.cpp">
-      <Filter>Source Files\desktop_ipc</Filter>
-    </ClCompile>
-    <ClCompile Include="desktop_ipc\framework.cpp">
       <Filter>Source Files\desktop_ipc</Filter>
     </ClCompile>
     <ClCompile Include="desktop_ipc\GateKicker.cpp">
@@ -496,12 +478,6 @@
     <ClInclude Include="fb_update_sender\CursorUpdates.h">
       <Filter>Header Files\fb_update_sender</Filter>
     </ClInclude>
-    <ClInclude Include="fb_update_sender\framework.h">
-      <Filter>Header Files\fb_update_sender</Filter>
-    </ClInclude>
-    <ClInclude Include="fb_update_sender\resource.h">
-      <Filter>Header Files\fb_update_sender</Filter>
-    </ClInclude>
     <ClInclude Include="fb_update_sender\SenderControlInformationInterface.h">
       <Filter>Header Files\fb_update_sender</Filter>
     </ClInclude>
@@ -527,9 +503,6 @@
       <Filter>Header Files\desktop</Filter>
     </ClInclude>
     <ClInclude Include="desktop\ApplicationDesktopFactory.h">
-      <Filter>Header Files\desktop</Filter>
-    </ClInclude>
-    <ClInclude Include="desktop\ClipboardListener.h">
       <Filter>Header Files\desktop</Filter>
     </ClInclude>
     <ClInclude Include="desktop\ConsolePoller.h">
@@ -574,9 +547,6 @@
     <ClInclude Include="desktop\DummyScreenDriver.h">
       <Filter>Header Files\desktop</Filter>
     </ClInclude>
-    <ClInclude Include="desktop\framework.h">
-      <Filter>Header Files\desktop</Filter>
-    </ClInclude>
     <ClInclude Include="desktop\GrabOptimizator.h">
       <Filter>Header Files\desktop</Filter>
     </ClInclude>
@@ -599,9 +569,6 @@
       <Filter>Header Files\desktop</Filter>
     </ClInclude>
     <ClInclude Include="desktop\Poller.h">
-      <Filter>Header Files\desktop</Filter>
-    </ClInclude>
-    <ClInclude Include="desktop\resource.h">
       <Filter>Header Files\desktop</Filter>
     </ClInclude>
     <ClInclude Include="desktop\SasUserInput.h">
@@ -688,9 +655,6 @@
     <ClInclude Include="desktop\WinD3D11Texture2D.h">
       <Filter>Header Files\desktop</Filter>
     </ClInclude>
-    <ClInclude Include="desktop\WindowsClipboard.h">
-      <Filter>Header Files\desktop</Filter>
-    </ClInclude>
     <ClInclude Include="desktop\WindowsCursorShapeGrabber.h">
       <Filter>Header Files\desktop</Filter>
     </ClInclude>
@@ -766,9 +730,6 @@
     <ClInclude Include="desktop_ipc\DesktopSrvDispatcher.h">
       <Filter>Header Files\desktop_ipc</Filter>
     </ClInclude>
-    <ClInclude Include="desktop_ipc\framework.h">
-      <Filter>Header Files\desktop_ipc</Filter>
-    </ClInclude>
     <ClInclude Include="desktop_ipc\GateKicker.h">
       <Filter>Header Files\desktop_ipc</Filter>
     </ClInclude>
@@ -782,9 +743,6 @@
       <Filter>Header Files\desktop_ipc</Filter>
     </ClInclude>
     <ClInclude Include="desktop_ipc\ReconnectionListener.h">
-      <Filter>Header Files\desktop_ipc</Filter>
-    </ClInclude>
-    <ClInclude Include="desktop_ipc\resource.h">
       <Filter>Header Files\desktop_ipc</Filter>
     </ClInclude>
     <ClInclude Include="desktop_ipc\UpdateHandlerClient.h">

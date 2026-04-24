@@ -25,89 +25,98 @@
 #include "ConsolePoller.h"
 #include "remoting/remoting/server_config/Configurator.h"
 
-ConsolePoller::ConsolePoller(UpdateKeeper *updateKeeper,
-                             UpdateListener *updateListener,
-                             ScreenGrabber *screenGrabber,
-                             ::innate_subsystem::FrameBuffer *backupFrameBuffer,
-                             critical_section *frameBufferMutex,
-                             ::subsystem::LogWriter *log)
-: UpdateDetector(updateKeeper, updateListener),
-  m_screenGrabber(screenGrabber),
-  m_backupFrameBuffer(backupFrameBuffer),
-  m_frameBufferMutex(frameBufferMutex),
-  m_plogwriter(log)
+
+namespace remoting_node_desktop
 {
-  m_pollingRect.setRect(0, 0, 16, 16);
-}
 
-ConsolePoller::~ConsolePoller()
-{
-  terminate();
-  wait();
-}
+   ConsolePoller::ConsolePoller(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
+                                ScreenGrabber *screenGrabber, ::innate_subsystem::FrameBuffer *backupFrameBuffer,
+                                critical_section *frameBufferMutex, ::subsystem::LogWriter *log) :
+       UpdateDetector(updateKeeper, updateListener), m_screenGrabber(screenGrabber),
+       m_backupFrameBuffer(backupFrameBuffer), m_frameBufferMutex(frameBufferMutex), m_plogwriter(log)
+   {
+      m_pollingRect.setRect(0, 0, 16, 16);
+   }
 
-void ConsolePoller::onTerminate()
-{
-  m_intervalWaiter.notify();
-}
+   ConsolePoller::~ConsolePoller()
+   {
+      terminate();
+      wait();
+   }
 
-void ConsolePoller::execute()
-{
-  m_plogwriter->information("console poller thread id = {}", getThreadId());
+   void ConsolePoller::onTerminate() { m_intervalWaiter.notify(); }
 
-  ::int_rectangle scanRect;
-  Region region;
-  while (!isTerminating()) {
-    ::int_rectangle conRect = getConsoleRect();
-    if (!conRect.is_empty()) {
-      int pollHeight = m_pollingRect.height();
-      int pollWidth = m_pollingRect.width();
+   void ConsolePoller::execute()
+   {
+      m_plogwriter->information("console poller thread id = {}", getThreadId());
 
+      ::int_rectangle scanRect;
+      Region region;
+      while (!isTerminating())
       {
-        critical_section_lock al(m_frameBufferMutex);
-        ::int_rectangle offsetFb = m_screenGrabber->getScreenRect();
-        conRect.move(-offsetFb.left, -offsetFb.top);
-        ::innate_subsystem::FrameBuffer *screenFrameBuffer = m_screenGrabber->getScreenBuffer();
-        if (screenFrameBuffer->isEqualTo(m_backupFrameBuffer)) {
-          m_screenGrabber->grab(&conRect);
-          for (int iRow = conRect.top; iRow < conRect.bottom; iRow += pollHeight) {
-            for (int iCol = conRect.left; iCol < conRect.right; iCol += pollWidth) {
-              scanRect.setRect(iCol, iRow, min(iCol + pollWidth, conRect.right),
-                               min(iRow + pollHeight, conRect.bottom));
-              if (!screenFrameBuffer->cmpFrom(&scanRect, m_backupFrameBuffer,
-                                              scanRect.left, scanRect.top)) {
-                region.addRect(&scanRect);
-              }
+         ::int_rectangle conRect = getConsoleRect();
+         if (!conRect.is_empty())
+         {
+            int pollHeight = m_pollingRect.height();
+            int pollWidth = m_pollingRect.width();
+
+            {
+               critical_section_lock al(m_frameBufferMutex);
+               ::int_rectangle offsetFb = m_screenGrabber->getScreenRect();
+               conRect.move(-offsetFb.left, -offsetFb.top);
+               ::innate_subsystem::FrameBuffer *screenFrameBuffer = m_screenGrabber->getScreenBuffer();
+               if (screenFrameBuffer->isEqualTo(m_backupFrameBuffer))
+               {
+                  m_screenGrabber->grab(&conRect);
+                  for (int iRow = conRect.top; iRow < conRect.bottom; iRow += pollHeight)
+                  {
+                     for (int iCol = conRect.left; iCol < conRect.right; iCol += pollWidth)
+                     {
+                        scanRect.setRect(iCol, iRow, min(iCol + pollWidth, conRect.right),
+                                         min(iRow + pollHeight, conRect.bottom));
+                        if (!screenFrameBuffer->cmpFrom(&scanRect, m_backupFrameBuffer, scanRect.left, scanRect.top))
+                        {
+                           region.addRect(&scanRect);
+                        }
+                     }
+                  }
+               }
             }
-          }
-        }
+
+            // Send event
+            if (!region.is_empty())
+            {
+               m_updateKeeper->addChangedRegion(&region);
+               doUpdate();
+            }
+         }
+         unsigned int pollInterval = 200;
+         m_intervalWaiter.waitForEvent(pollInterval);
       }
+   }
 
-      // Send event
-      if (!region.is_empty()) {
-        m_updateKeeper->addChangedRegion(&region);
-        doUpdate();
+   ::int_rectangle ConsolePoller::getConsoleRect()
+   {
+      ::int_rectangle rect;
+      HWND hwnd = GetForegroundWindow();
+
+      const TCHAR consoleClassName[] = "ConsoleWindowClass";
+
+      const size_t nameLength = sizeof(consoleClassName) / sizeof(TCHAR) + 1;
+      TCHAR className[nameLength];
+      GetClassName(hwnd, className, nameLength);
+      if (wcscmp(consoleClassName, className) == 0)
+      {
+         RECT winRect;
+         GetWindowRect(hwnd, &winRect);
+         rect.fromWindowsRect(&winRect);
       }
-    }
-    unsigned int pollInterval = 200;
-    m_intervalWaiter.waitForEvent(pollInterval);
-  }
-}
+      return rect;
+   }
 
-::int_rectangle ConsolePoller::getConsoleRect()
-{
-  ::int_rectangle rect;
-  HWND hwnd = GetForegroundWindow();
 
-  const TCHAR consoleClassName[] = "ConsoleWindowClass";
+} // namespace remoting_node_desktop
 
-  const size_t nameLength = sizeof(consoleClassName) / sizeof(TCHAR) + 1;
-  TCHAR className[nameLength];
-  GetClassName(hwnd, className, nameLength);
-  if (wcscmp(consoleClassName, className) == 0) {
-    RECT winRect;
-    GetWindowRect(hwnd, &winRect);
-    rect.fromWindowsRect(&winRect);
-  }
-  return rect;
-}
+
+
+

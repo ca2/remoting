@@ -25,63 +25,62 @@
 #include "Win32ScreenDriverBaseImpl.h"
 #include "subsystem/platform/Exception.h"
 
-Win32ScreenDriverBaseImpl::Win32ScreenDriverBaseImpl(UpdateKeeper *updateKeeper,
-                                                 UpdateListener *updateListener,
-                                                 critical_section *fbcritical_section,
-                                                 ::subsystem::LogWriter *log)
-: WinVideoRegionUpdaterImpl(log),
-  m_fbcritical_section(fbcritical_section),
-  m_cursorPosDetector(updateKeeper, updateListener, log),
-  m_curShapeDetector(updateKeeper, updateListener, &m_curShapeGrabber, fbcritical_section, log)
-{
-}
 
-Win32ScreenDriverBaseImpl::~Win32ScreenDriverBaseImpl()
+namespace remoting_node_desktop
 {
-  terminateDetection();
-}
 
-void Win32ScreenDriverBaseImpl::executeDetection()
-{
-  m_cursorPosDetector.resume();
-  m_curShapeDetector.resume();
-}
+   Win32ScreenDriverBaseImpl::Win32ScreenDriverBaseImpl(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
+                                                        critical_section *fbcritical_section,
+                                                        ::subsystem::LogWriter *log) :
+       WinVideoRegionUpdaterImpl(log), m_fbcritical_section(fbcritical_section),
+       m_cursorPosDetector(updateKeeper, updateListener, log),
+       m_curShapeDetector(updateKeeper, updateListener, &m_curShapeGrabber, fbcritical_section, log)
+   {
+   }
 
-void Win32ScreenDriverBaseImpl::terminateDetection()
-{
-  m_cursorPosDetector.terminate();
-  m_curShapeDetector.terminate();
+   Win32ScreenDriverBaseImpl::~Win32ScreenDriverBaseImpl() { terminateDetection(); }
 
-  m_cursorPosDetector.wait();
-  m_curShapeDetector.wait();
-}
+   void Win32ScreenDriverBaseImpl::executeDetection()
+   {
+      m_cursorPosDetector.resume();
+      m_curShapeDetector.resume();
+   }
 
-critical_section *Win32ScreenDriverBaseImpl::getFbMutex()
-{
-  return m_fbcritical_section;
-}
+   void Win32ScreenDriverBaseImpl::terminateDetection()
+   {
+      m_cursorPosDetector.terminate();
+      m_curShapeDetector.terminate();
 
-bool Win32ScreenDriverBaseImpl::grabCursorShape(const ::innate_subsystem::PixelFormat & pf)
-{
-  // Grabbing under the mutex avoid us from grab void cursor shape in time when the
-  // shape hides until grabs screen.
-  critical_section_lock al(m_fbcritical_section);
-  return m_curShapeGrabber.grab(pf);
-}
+      m_cursorPosDetector.wait();
+      m_curShapeDetector.wait();
+   }
 
-const CursorShape *Win32ScreenDriverBaseImpl::getCursorShape()
-{
-  return m_curShapeGrabber.getCursorShape();
-}
+   critical_section *Win32ScreenDriverBaseImpl::getFbMutex() { return m_fbcritical_section; }
 
-::int_point Win32ScreenDriverBaseImpl::getCursorPosition()
-{
-  critical_section_lock al(m_fbcritical_section);
-  return m_cursorPosDetector.getCursorPos();
-}
+   bool Win32ScreenDriverBaseImpl::grabCursorShape(const ::innate_subsystem::PixelFormat &pf)
+   {
+      // Grabbing under the mutex avoid us from grab void cursor shape in time when the
+      // shape hides until grabs screen.
+      critical_section_lock al(m_fbcritical_section);
+      return m_curShapeGrabber.grab(pf);
+   }
 
-void Win32ScreenDriverBaseImpl::getCopiedRegion(::int_rectangle *copyRect, ::int_point *source)
-{
-  critical_section_lock al(m_fbcritical_section);
-  m_copyRectDetector.detectWindowMovements(copyRect, source);
-}
+   const CursorShape *Win32ScreenDriverBaseImpl::getCursorShape() { return m_curShapeGrabber.getCursorShape(); }
+
+   ::int_point Win32ScreenDriverBaseImpl::getCursorPosition()
+   {
+      critical_section_lock al(m_fbcritical_section);
+      return m_cursorPosDetector.getCursorPos();
+   }
+
+   void Win32ScreenDriverBaseImpl::getCopiedRegion(::int_rectangle *copyRect, ::int_point *source)
+   {
+      critical_section_lock al(m_fbcritical_section);
+      m_copyRectDetector.detectWindowMovements(copyRect, source);
+   }
+
+
+} // namespace remoting_node_desktop
+
+
+

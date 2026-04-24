@@ -31,38 +31,50 @@
 // #include aaa_<d3d11.h>
 // #include aaa_<DXGI1_2.h>
 
-// This class is a wrapper for the IDXGIOutputDuplication interface.
-class WinDxgiOutputDuplication
+
+namespace remoting_node_desktop
 {
-public:
-  WinDxgiOutputDuplication(WinDxgiOutput1 *dxgiOutput, WinD3D11Device *d3D11Device);
-  WinDxgiOutputDuplication(const WinDxgiOutputDuplication &src);
-  virtual ~WinDxgiOutputDuplication();
 
-  WinDxgiOutputDuplication &operator = (WinDxgiOutputDuplication const &src);
+   // This class is a wrapper for the IDXGIOutputDuplication interface.
+   class WinDxgiOutputDuplication
+   {
+   public:
+      WinDxgiOutputDuplication(WinDxgiOutput1 *dxgiOutput, WinD3D11Device *d3D11Device);
+      WinDxgiOutputDuplication(const WinDxgiOutputDuplication &src);
+      virtual ~WinDxgiOutputDuplication();
 
-  // Return pointer to a IDXGIOutputDuplication object. The pointer will be valid until
-  // this object destructor has been called.
-  IDXGIOutputDuplication *getDxgiOutputDuplication();
+      WinDxgiOutputDuplication &operator=(WinDxgiOutputDuplication const &src);
 
-  // Throws WinDxException on an error.
-  // Returns count of got "move" rects.
-  // Also, the function resize the moveRects ::array_base if it's needed.
-  size_t getFrameMoveRects(::array_base<DXGI_OUTDUPL_MOVE_RECT> *moveRects);
+      // Return pointer to a IDXGIOutputDuplication object. The pointer will be valid until
+      // this object destructor has been called.
+      IDXGIOutputDuplication *getDxgiOutputDuplication();
 
-  // Throws WinDxException on an error.
-  // Returns count of got "dirty" rects.
-  // Also, the function resize the dirtyRects ::array_base if it's needed.
-  size_t getFrameDirtyRects(::array_base<RECT> *dirtyRects);
+      // Throws WinDxException on an error.
+      // Returns count of got "move" rects.
+      // Also, the function resize the moveRects ::array_base if it's needed.
+      size_t getFrameMoveRects(::array_base<DXGI_OUTDUPL_MOVE_RECT> *moveRects);
 
-  // Throws WinDxException on an error.
-  // Modifies cursorShape with new data.
-  void getFrameCursorShape(CursorShape *cursorShape, unsigned int pointerShapeBufferSize, ::subsystem::LogWriter *log);
+      // Throws WinDxException on an error.
+      // Returns count of got "dirty" rects.
+      // Also, the function resize the dirtyRects ::array_base if it's needed.
+      size_t getFrameDirtyRects(::array_base<RECT> *dirtyRects);
 
-private:
-  void copy(const WinDxgiOutputDuplication &src);
+      // Throws WinDxException on an error.
+      // Modifies cursorShape with new data.
+      void getFrameCursorShape(CursorShape *cursorShape, unsigned int pointerShapeBufferSize,
+                               ::subsystem::LogWriter *log);
 
-  IDXGIOutputDuplication *m_outDupl;
-};
+   private:
+      void copy(const WinDxgiOutputDuplication &src);
 
-//// __WINDXGIOUTPUTDUPLICATION_H__
+      IDXGIOutputDuplication *m_outDupl;
+   };
+
+   //// __WINDXGIOUTPUTDUPLICATION_H__
+
+
+} // namespace remoting_node_desktop
+
+
+
+

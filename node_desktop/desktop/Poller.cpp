@@ -27,88 +27,94 @@
 #include "remoting/remoting/region/Region.h"
 #include "remoting/remoting/server_config/Configurator.h"
 
-Poller::Poller(UpdateKeeper *updateKeeper,
-               UpdateListener *updateListener,
-               ScreenGrabber *screenGrabber,
-               ::innate_subsystem::FrameBuffer *backupFrameBuffer,
-               critical_section *frameBufferCriticalSection,
-               ::subsystem::LogWriter *log)
-: UpdateDetector(updateKeeper, updateListener),
-  m_screenGrabber(screenGrabber),
-  m_backupFrameBuffer(backupFrameBuffer),
-  m_fbMutex(frameBufferCriticalSection),
-  m_plogwriter(log)
+namespace remoting_node_desktop
 {
-  m_pollingRect.setRect(0, 0, 16, 16);
-}
 
-Poller::~Poller()
-{
-  terminate();
-  wait();
-}
 
-void Poller::onTerminate()
-{
-  m_intervalWaiter.notify();
-}
+   Poller::Poller(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ScreenGrabber *screenGrabber,
+                  ::innate_subsystem::FrameBuffer *backupFrameBuffer, critical_section *frameBufferCriticalSection,
+                  ::subsystem::LogWriter *log) :
+       UpdateDetector(updateKeeper, updateListener), m_screenGrabber(screenGrabber),
+       m_backupFrameBuffer(backupFrameBuffer), m_fbMutex(frameBufferCriticalSection), m_plogwriter(log)
+   {
+      m_pollingRect.setRect(0, 0, 16, 16);
+   }
 
-void Poller::execute()
-{
-  m_plogwriter->information("poller thread id = {}", getThreadId());
+   Poller::~Poller()
+   {
+      terminate();
+      wait();
+   }
 
-  ::innate_subsystem::FrameBuffer *screenFrameBuffer;
+   void Poller::onTerminate() { m_intervalWaiter.notify(); }
 
-  {
-    critical_section_lock al(m_fbMutex);
-    screenFrameBuffer = m_screenGrabber->getScreenBuffer();
-    ::int_rectangle fullScreenRect(screenFrameBuffer->getDimension());
-    m_updateKeeper->addChangedRect(&fullScreenRect);
-  }
+   void Poller::execute()
+   {
+      m_plogwriter->information("poller thread id = {}", getThreadId());
 
-  while (!isTerminating()) {
-    Region region;
+      ::innate_subsystem::FrameBuffer *screenFrameBuffer;
 
-    {
-      critical_section_lock al(m_fbMutex);
-
-      screenFrameBuffer = m_screenGrabber->getScreenBuffer();
-      if (!screenFrameBuffer->isEqualTo(m_backupFrameBuffer)) {
-        m_updateKeeper->setScreenSizeChanged();
-      } else {
-        m_plogwriter->information("grabbing screen for polling");
-        m_screenGrabber->grab();
-        m_plogwriter->information("end of grabbing screen for polling");
-
-        // Polling
-        int pollingWidth = m_pollingRect.width();
-        int pollingHeight = m_pollingRect.height();
-        int screenWidth = screenFrameBuffer->getDimension().cx;
-        int screenHeight = screenFrameBuffer->getDimension().cy;
-
-        ::int_rectangle scanRect;
-        for (int iRow = 0; iRow < screenHeight; iRow += pollingHeight) {
-          for (int iCol = 0; iCol < screenWidth; iCol += pollingWidth) {
-            scanRect.setRect(iCol, iRow, min(iCol + pollingWidth, screenWidth),
-                             min(iRow + pollingHeight, screenHeight));
-            if (!screenFrameBuffer->cmpFrom(&scanRect, m_backupFrameBuffer,
-                                            scanRect.left, scanRect.top)) {
-              region.addRect(&scanRect);
-            }
-          }
-        }
-
-        m_updateKeeper->addChangedRegion(&region);
+      {
+         critical_section_lock al(m_fbMutex);
+         screenFrameBuffer = m_screenGrabber->getScreenBuffer();
+         ::int_rectangle fullScreenRect(screenFrameBuffer->getDimension());
+         m_updateKeeper->addChangedRect(&fullScreenRect);
       }
-    } // critical_section_lock
 
-    // Send event
-    if (!region.is_empty()) {
-      doUpdate();
-    }
+      while (!isTerminating())
+      {
+         Region region;
 
-    unsigned int pollInterval = Configurator::getInstance()->
-                                getServerConfig()->getPollingInterval();
-    m_intervalWaiter.waitForEvent(pollInterval);
-  }
-}
+         {
+            critical_section_lock al(m_fbMutex);
+
+            screenFrameBuffer = m_screenGrabber->getScreenBuffer();
+            if (!screenFrameBuffer->isEqualTo(m_backupFrameBuffer))
+            {
+               m_updateKeeper->setScreenSizeChanged();
+            }
+            else
+            {
+               m_plogwriter->information("grabbing screen for polling");
+               m_screenGrabber->grab();
+               m_plogwriter->information("end of grabbing screen for polling");
+
+               // Polling
+               int pollingWidth = m_pollingRect.width();
+               int pollingHeight = m_pollingRect.height();
+               int screenWidth = screenFrameBuffer->getDimension().cx;
+               int screenHeight = screenFrameBuffer->getDimension().cy;
+
+               ::int_rectangle scanRect;
+               for (int iRow = 0; iRow < screenHeight; iRow += pollingHeight)
+               {
+                  for (int iCol = 0; iCol < screenWidth; iCol += pollingWidth)
+                  {
+                     scanRect.setRect(iCol, iRow, min(iCol + pollingWidth, screenWidth),
+                                      min(iRow + pollingHeight, screenHeight));
+                     if (!screenFrameBuffer->cmpFrom(&scanRect, m_backupFrameBuffer, scanRect.left, scanRect.top))
+                     {
+                        region.addRect(&scanRect);
+                     }
+                  }
+               }
+
+               m_updateKeeper->addChangedRegion(&region);
+            }
+         } // critical_section_lock
+
+         // Send event
+         if (!region.is_empty())
+         {
+            doUpdate();
+         }
+
+         unsigned int pollInterval = Configurator::getInstance()->getServerConfig()->getPollingInterval();
+         m_intervalWaiter.waitForEvent(pollInterval);
+      }
+   }
+
+
+} // namespace remoting_node_desktop
+
+

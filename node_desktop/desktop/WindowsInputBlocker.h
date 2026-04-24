@@ -33,68 +33,71 @@
 #include "InputBlocker.h"
 //#include "log_writer/LogWriter.h"
 
-// Only one instance of this class may be created.
 
-class WindowsInputBlocker : public InputBlocker, protected GuiThread
+namespace remoting_node_desktop
 {
-public:
-  WindowsInputBlocker(::subsystem::LogWriter *log);
-  virtual ~WindowsInputBlocker();
+   // Only one instance of this class may be created.
 
-  // This functions set/unset blocks on a local keyboard and mouse.
-  virtual void setKeyboardBlocking(bool block);
-  virtual void setMouseBlocking(bool block);
-  // This functions set/unset blocks on a local keyboard and mouse on the
-  // timeInterval interval from a last software event generation.
-  virtual void setSoftKeyboardBlocking(bool block, unsigned int timeInterval);
-  virtual void setSoftMouseBlocking(bool block, unsigned int timeInterval);
+   class WindowsInputBlocker : public InputBlocker, protected GuiThread
+   {
+   public:
+      WindowsInputBlocker(::subsystem::LogWriter *log);
+      virtual ~WindowsInputBlocker();
 
-  virtual ::earth::time getLastInputTime() const;
-  virtual void correctLastTime(::earth::time newTime);
+      // This functions set/unset blocks on a local keyboard and mouse.
+      virtual void setKeyboardBlocking(bool block);
+      virtual void setMouseBlocking(bool block);
+      // This functions set/unset blocks on a local keyboard and mouse on the
+      // timeInterval interval from a last software event generation.
+      virtual void setSoftKeyboardBlocking(bool block, unsigned int timeInterval);
+      virtual void setSoftMouseBlocking(bool block, unsigned int timeInterval);
 
-  virtual bool isRemoteInputAllowed();
+      virtual ::earth::time getLastInputTime() const;
+      virtual void correctLastTime(::earth::time newTime);
 
-protected:
-  virtual void execute();
-  virtual void onTerminate();
+      virtual bool isRemoteInputAllowed();
 
-  bool setKeyboardFilterHook(bool block);
-  bool setSoftKeyboardFilterHook(bool block);
-  bool setMouseFilterHook(bool block);
-  bool setSoftMouseFilterHook(bool block);
+   protected:
+      virtual void execute();
+      virtual void onTerminate();
 
-  static LRESULT CALLBACK lowLevelKeyboardFilterProc(int nCode,
-                                                     ::wparam wParam,
-                                                     ::lparam lParam);
-  static LRESULT CALLBACK lowLevelSoftKeyboardFilterProc(int nCode,
-                                                         ::wparam wParam,
-                                                         ::lparam lParam);
-  static LRESULT CALLBACK lowLevelMouseFilterProc(int nCode,
-                                                  ::wparam wParam,
-                                                  ::lparam lParam);
-  static LRESULT CALLBACK lowLevelSoftMouseFilterProc(int nCode,
-                                                      ::wparam wParam,
-                                                      ::lparam lParam);
+      bool setKeyboardFilterHook(bool block);
+      bool setSoftKeyboardFilterHook(bool block);
+      bool setMouseFilterHook(bool block);
+      bool setSoftMouseFilterHook(bool block);
 
-  static HHOOK m_hKeyboardHook;
-  static HHOOK m_hSoftKeyboardHook;
-  static HHOOK m_hMouseHook;
-  static HHOOK m_hSoftMouseHook;
+      static LRESULT CALLBACK lowLevelKeyboardFilterProc(int nCode, ::wparam wParam, ::lparam lParam);
+      static LRESULT CALLBACK lowLevelSoftKeyboardFilterProc(int nCode, ::wparam wParam, ::lparam lParam);
+      static LRESULT CALLBACK lowLevelMouseFilterProc(int nCode, ::wparam wParam, ::lparam lParam);
+      static LRESULT CALLBACK lowLevelSoftMouseFilterProc(int nCode, ::wparam wParam, ::lparam lParam);
 
-  static WindowsInputBlocker *m_instance;
-  static critical_section m_instanceMutex;
+      static HHOOK m_hKeyboardHook;
+      static HHOOK m_hSoftKeyboardHook;
+      static HHOOK m_hMouseHook;
+      static HHOOK m_hSoftMouseHook;
 
-  bool m_isKeyboardBlocking;
-  bool m_isMouseBlocking;
+      static WindowsInputBlocker *m_instance;
+      static critical_section m_instanceMutex;
 
-  bool m_isSoftKeyboardBlocking;
-  bool m_isSoftMouseBlocking;
+      bool m_isKeyboardBlocking;
+      bool m_isMouseBlocking;
 
-  static unsigned int m_timeInterval;
-  static ::earth::time m_lastInputTime;
-  static critical_section m_lastInputTimeMutex;
+      bool m_isSoftKeyboardBlocking;
+      bool m_isSoftMouseBlocking;
 
-  ::subsystem::LogWriter *m_plogwriter;
-};
+      static unsigned int m_timeInterval;
+      static ::earth::time m_lastInputTime;
+      static critical_section m_lastInputTimeMutex;
 
-//// __WINDOWSINPUTBLOCKER_H__
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+   //// __WINDOWSINPUTBLOCKER_H__
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+

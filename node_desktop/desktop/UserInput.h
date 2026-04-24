@@ -31,39 +31,47 @@
 
 #include "remoting/remoting/region/Region.h"
 
-// This class will be an abstract interface for user input such as keyboard,
-// mouse pointer, e.t.c., on the server side.
-class UserInput
+
+namespace remoting_node_desktop
 {
-public:
-  UserInput();
-  virtual ~UserInput();
 
-  // FIXME: It's no good idea to place this function to here.
-  // Because it uses only for the UserInputClient class.
-  virtual void sendInit(BlockingGate *gate) {}
+   // This class will be an abstract interface for user input such as keyboard,
+   // mouse pointer, e.t.c., on the server side.
+   class UserInput
+   {
+   public:
+      UserInput();
+      virtual ~UserInput();
 
-  // Client to server user inputs
-  virtual void setNewClipboard(const ::scoped_string & newClipboard) = 0;
-  // By the keyFlag argument will be set the mouse button state as described in
-  // the rfb protocol.
-  virtual void setMouseEvent(const ::int_point newPos, unsigned char keyFlag) = 0;
-  virtual void setKeyboardEvent(unsigned int keySym, bool down) = 0;
-  virtual void getCurrentUserInfo(::string & desktopName,
-                                  ::string & userName) = 0;
+      // FIXME: It's no good idea to place this function to here.
+      // Because it uses only for the UserInputClient class.
+      virtual void sendInit(BlockingGate *gate) {}
 
-  virtual void getPrimaryDisplayCoords(::int_rectangle *rect) = 0;
-  virtual void getDisplayNumberCoords(::int_rectangle *rect,
-                                      unsigned char dispNumber) = 0;
-  virtual ::array_base<::int_rectangle> getDisplaysCoords() = 0;
-  virtual void getNormalizedRect(::int_rectangle *rect) = 0;
+      // Client to server user inputs
+      virtual void setNewClipboard(const ::scoped_string &newClipboard) = 0;
+      // By the keyFlag argument will be set the mouse button state as described in
+      // the rfb protocol.
+      virtual void setMouseEvent(const ::int_point newPos, unsigned char keyFlag) = 0;
+      virtual void setKeyboardEvent(unsigned int keySym, bool down) = 0;
+      virtual void getCurrentUserInfo(::string &desktopName, ::string &userName) = 0;
 
-  virtual void getWindowCoords(HWND hwnd, ::int_rectangle *rect) = 0;
-  virtual HWND getWindowHandleByName(const ::scoped_string & windowName) = 0;
+      virtual void getPrimaryDisplayCoords(::int_rectangle *rect) = 0;
+      virtual void getDisplayNumberCoords(::int_rectangle *rect, unsigned char dispNumber) = 0;
+      virtual ::array_base<::int_rectangle> getDisplaysCoords() = 0;
+      virtual void getNormalizedRect(::int_rectangle *rect) = 0;
 
-  virtual void getApplicationRegion(unsigned int procId, ::remoting::Region *region) = 0;
-  virtual bool isApplicationInFocus(unsigned int procId) = 0;
+      virtual void getWindowCoords(HWND hwnd, ::int_rectangle *rect) = 0;
+      virtual HWND getWindowHandleByName(const ::scoped_string &windowName) = 0;
 
-};
+      virtual void getApplicationRegion(unsigned int procId, ::remoting::Region *region) = 0;
+      virtual bool isApplicationInFocus(unsigned int procId) = 0;
+   };
 
-//// __USERINPUT_H__
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+

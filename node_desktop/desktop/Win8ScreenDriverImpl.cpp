@@ -34,244 +34,249 @@
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "Win8ScreenDriverImpl.h"
 
-Win8ScreenDriverImpl::Win8ScreenDriverImpl(::subsystem::LogWriter *log, UpdateKeeper *updateKeeper,
-                                           critical_section *fbcritical_section,
-                                           UpdateListener *updateListener,
-                                           bool detectionEnabled)
-: m_updateKeeper(updateKeeper),
-  m_updateListener(updateListener),
-  m_plogwriter(log),
-  m_curTimeStamp(0),
-  m_hasCriticalError(false),
-  m_hasRecoverableError(false),
-  m_detectionEnabled(detectionEnabled)
-{
-  resume();
-  m_plogwriter->debug("Win8ScreenDriverImpl:: waiting for DXGI init");
-  m_initEvent.waitForEvent();
-
-  if (m_hasCriticalError) {
-    m_plogwriter->debug("Win8ScreenDriverImpl init critical error");
-    terminate();
-    wait();
-    throw ::subsystem::Exception("Win8ScreenDriverImpl can't be successfully initialized");
-  }
-
-
-  // Checking that builded dimension is equal to virtual desktop dimension.
-  ::int_size buildedDim = getScreenBuffer()->getDimension();
-  Screen screen;
-  ::int_size virtDimension = screen.getDesktopDimension();
-  if (!buildedDim.isEqualTo(&virtDimension)) {
-    terminate();
-    wait();
-    throw ::subsystem::Exception("The builded screen dimension doesn't match to virtual screen dimension");
-  }
-  // At this point the screen driver has valid screen properties.
-}
-
-Win8ScreenDriverImpl::~Win8ScreenDriverImpl()
+namespace remoting_node_desktop
 {
 
-  terminateDetection();
-  terminate();
-  int activeResult = (int)isActive();
-  int waitResult = (int)wait();
-  m_plogwriter->debug("Win8ScreenDriverImpl::activeResult = {}", activeResult);
-  m_plogwriter->debug("Win8ScreenDriverImpl::waitResult = {}", waitResult);
-}
 
-void Win8ScreenDriverImpl::executeDetection()
-{
-  // Detection is already executed in the Win8 model, instead of we should enable it
-  m_detectionEnabled = true;
-}
+   Win8ScreenDriverImpl::Win8ScreenDriverImpl(::subsystem::LogWriter *log, UpdateKeeper *updateKeeper,
+                                              critical_section *fbcritical_section, UpdateListener *updateListener,
+                                              bool detectionEnabled) :
+       m_updateKeeper(updateKeeper), m_updateListener(updateListener), m_plogwriter(log), m_curTimeStamp(0),
+       m_hasCriticalError(false), m_hasRecoverableError(false), m_detectionEnabled(detectionEnabled)
+   {
+      resume();
+      m_plogwriter->debug("Win8ScreenDriverImpl:: waiting for DXGI init");
+      m_initEvent.waitForEvent();
 
-void Win8ScreenDriverImpl::terminateDetection()
-{
-  m_plogwriter->debug("Stop Win8DeskDuplication");
-  m_deskDuplThreadBundle.destroyAllThreads();
-  m_detectionEnabled = false;
-}
-
-::innate_subsystem::FrameBuffer *Win8ScreenDriverImpl::getScreenBuffer()
-{
-  return &m_frameBuffer;
-}
-
-void Win8ScreenDriverImpl::initDxgi()
-{
-  m_plogwriter->debug("Creating of D3D11Device");
-  WinD3D11Device d3D11Device(m_plogwriter);
-  m_plogwriter->debug("Quering Interface for IDXGIDevice");
-  WinDxgiDevice dxgiDevice(&d3D11Device);
-  m_plogwriter->debug("Getting Parent for IDXGIAdapter");
-  WinDxgiAdapter dxgiAdapter(&dxgiDevice);
-
-  Region virtDeskRegion;
-  m_plogwriter->debug("Try to enumerate dxgi outputs");
-  ::array_base<WinDxgiOutput> dxgiOutputArray;
-  ::array_base<::int_rectangle> deskCoordArray;
-  unsigned int iOutput = 0;
-  try {
-    for (iOutput = 0; iOutput < 65535; iOutput++) {
-      WinDxgiOutput dxgiOutput(&dxgiAdapter, iOutput);
-      if (dxgiOutput.isAttachedtoDesktop()) {
-        dxgiOutputArray.add(dxgiOutput);
-        ::int_rectangle deskCoord = dxgiOutput.getDesktopCoordinates();
-        deskCoordArray.add(deskCoord);
-        virtDeskRegion.addRect(&deskCoord);
+      if (m_hasCriticalError)
+      {
+         m_plogwriter->debug("Win8ScreenDriverImpl init critical error");
+         terminate();
+         wait();
+         throw ::subsystem::Exception("Win8ScreenDriverImpl can't be successfully initialized");
       }
-    }
-  } catch (WinDxRecoverableException &) {
-    m_plogwriter->debug("Reached the end of dxgi output ::list_base with iOutput = %u", iOutput);
-    // End of output ::list_base.
-  }
-  m_plogwriter->debug("We have {} dxgi output(s) connected", dxgiOutputArray.size());
 
-  // Check that all outputs for the virtual screen are found (in case two or more
-  // hardware graphic interfaces are used). It's better to avoid using buggy
-  // Desktop Duplication API here rather than getting the wrong framebuffer.
-  Screen screen;
-  if (screen.getVisibleMonitorCount() != dxgiOutputArray.size()) {
-    throw ::subsystem::Exception("Unable get all DXGI outputs for virtual screen");
-  }
 
-  ::innate_subsystem::PixelFormat pf = getDxPixelFormat();
-  ::int_rectangle virtDeskBoundRect = virtDeskRegion.getBounds();
-  m_frameBuffer.setProperties(&virtDeskBoundRect, &pf);
-  m_frameBuffer.setColor(0, 0, 0);
+      // Checking that builded dimension is equal to virtual desktop dimension.
+      ::int_size buildedDim = getScreenBuffer()->getDimension();
+      Screen screen;
+      ::int_size virtDimension = screen.getDesktopDimension();
+      if (!buildedDim.isEqualTo(&virtDimension))
+      {
+         terminate();
+         wait();
+         throw ::subsystem::Exception("The builded screen dimension doesn't match to virtual screen dimension");
+      }
+      // At this point the screen driver has valid screen properties.
+   }
 
-  for (size_t iDxgiOutput  = 0; iDxgiOutput < dxgiOutputArray.size(); iDxgiOutput++) {
-    deskCoordArray[iDxgiOutput].move(-virtDeskBoundRect.left, -virtDeskBoundRect.top);
-  }
-  size_t threadsNum = m_deskDuplThreadBundle.Size();
-  if (threadsNum > 12) threadsNum = 12;
-  DWORD millis = 1 << threadsNum; // delay up to 4 seconds if there are threads waiting to delete
-  sleep(millis);
-  Thread * thread = new Win8DeskDuplication(&m_frameBuffer,
-    deskCoordArray,
-    &m_win8CursorShape,
-    &m_curTimeStamp,
-    &m_cursorMutex,
-    this,
-    dxgiOutputArray,
-    m_plogwriter);
-  DWORD id = thread->getThreadId();
-  m_plogwriter->debug("Created a new Win8DeskDuplication with ID: ({})", id);
-  m_deskDuplThreadBundle.addThread(thread);
-}
+   Win8ScreenDriverImpl::~Win8ScreenDriverImpl()
+   {
 
-void Win8ScreenDriverImpl::execute()
-{
-  try {
-    initDxgi();
-  }
-  catch (WinDxRecoverableException &e) {
-    m_plogwriter->error("Win8ScreenDriverImpl:: Catched WinDxRecoverableException: {}, (%x)", e.get_message(), (int)e.getErrorCode());
-    m_hasRecoverableError = true;
-  }
-  catch (WinDxCriticalException &e) {
-    m_plogwriter->error("Win8ScreenDriverImpl:: Catched WinDxCriticalException: {}, (%x)", e.get_message(), (int)e.getErrorCode());
-    m_hasCriticalError = true;
-  }
-  catch (::exception &e) {
-    m_plogwriter->error("Catched ::subsystem::Exception in the Win8ScreenDriverImpl::execute() function: {}."
-       " The exception will consider as critical", e.get_message());
-    m_hasCriticalError = true;
-  }
-  m_initEvent.notify();
+      terminateDetection();
+      terminate();
+      int activeResult = (int)isActive();
+      int waitResult = (int)wait();
+      m_plogwriter->debug("Win8ScreenDriverImpl::activeResult = {}", activeResult);
+      m_plogwriter->debug("Win8ScreenDriverImpl::waitResult = {}", waitResult);
+   }
 
-  while (!isTerminating() && isValid()) {
-    m_errorEvent.waitForEvent();
-  }
+   void Win8ScreenDriverImpl::executeDetection()
+   {
+      // Detection is already executed in the Win8 model, instead of we should enable it
+      m_detectionEnabled = true;
+   }
 
-  if (!isValid()) {
-    m_plogwriter->error("Win8ScreenDriverImpl has an invalid state. The invalid state can be"
-                 " a part of screen propery changes. An update signal will be generated"
-                 " as a screen size changed signal.");
-    m_updateKeeper->setScreenSizeChanged();
-    m_updateListener->onUpdate();
-  }
-  terminateDetection();
-}
+   void Win8ScreenDriverImpl::terminateDetection()
+   {
+      m_plogwriter->debug("Stop Win8DeskDuplication");
+      m_deskDuplThreadBundle.destroyAllThreads();
+      m_detectionEnabled = false;
+   }
 
-void Win8ScreenDriverImpl::onTerminate()
-{
-  m_errorEvent.notify();
-}
+   ::innate_subsystem::FrameBuffer *Win8ScreenDriverImpl::getScreenBuffer() { return &m_frameBuffer; }
 
-void Win8ScreenDriverImpl::onFrameBufferUpdate(const Region *changedRegion)
-{
-  if (m_detectionEnabled) {
-    m_updateKeeper->addChangedRegion(changedRegion);
-    m_updateListener->onUpdate();
-  }
-}
+   void Win8ScreenDriverImpl::initDxgi()
+   {
+      m_plogwriter->debug("Creating of D3D11Device");
+      WinD3D11Device d3D11Device(m_plogwriter);
+      m_plogwriter->debug("Quering Interface for IDXGIDevice");
+      WinDxgiDevice dxgiDevice(&d3D11Device);
+      m_plogwriter->debug("Getting Parent for IDXGIAdapter");
+      WinDxgiAdapter dxgiAdapter(&dxgiDevice);
 
-void Win8ScreenDriverImpl::onCopyRect(const ::int_rectangle &  dstRect, int srcX, int srcY)
-{
-  if (m_detectionEnabled) {
-    ::int_point srcPoint(srcX, srcY);
-    m_updateKeeper->addCopyRect(dstRect, &srcPoint);
-    m_updateListener->onUpdate();
-  }
-}
+      Region virtDeskRegion;
+      m_plogwriter->debug("Try to enumerate dxgi outputs");
+      ::array_base<WinDxgiOutput> dxgiOutputArray;
+      ::array_base<::int_rectangle> deskCoordArray;
+      unsigned int iOutput = 0;
+      try
+      {
+         for (iOutput = 0; iOutput < 65535; iOutput++)
+         {
+            WinDxgiOutput dxgiOutput(&dxgiAdapter, iOutput);
+            if (dxgiOutput.isAttachedtoDesktop())
+            {
+               dxgiOutputArray.add(dxgiOutput);
+               ::int_rectangle deskCoord = dxgiOutput.getDesktopCoordinates();
+               deskCoordArray.add(deskCoord);
+               virtDeskRegion.addRect(&deskCoord);
+            }
+         }
+      }
+      catch (WinDxRecoverableException &)
+      {
+         m_plogwriter->debug("Reached the end of dxgi output ::list_base with iOutput = %u", iOutput);
+         // End of output ::list_base.
+      }
+      m_plogwriter->debug("We have {} dxgi output(s) connected", dxgiOutputArray.size());
 
-void Win8ScreenDriverImpl::onCursorPositionChanged(int x, int y)
-{
-  critical_section_lock al(&m_cursorMutex);
-  ::int_point newPos(x, y);
-  if (!m_latestCursorPos.isEqualTo(&newPos)) {
-    m_latestCursorPos = newPos;
-    m_updateKeeper->setCursorPos(&newPos);
-    m_updateListener->onUpdate();
-  }
-}
+      // Check that all outputs for the virtual screen are found (in case two or more
+      // hardware graphic interfaces are used). It's better to avoid using buggy
+      // Desktop Duplication API here rather than getting the wrong framebuffer.
+      Screen screen;
+      if (screen.getVisibleMonitorCount() != dxgiOutputArray.size())
+      {
+         throw ::subsystem::Exception("Unable get all DXGI outputs for virtual screen");
+      }
 
-void Win8ScreenDriverImpl::onCursorShapeChanged()
-{
-  m_updateKeeper->setCursorShapeChanged();
-  m_updateListener->onUpdate();
-}
+      ::innate_subsystem::PixelFormat pf = getDxPixelFormat();
+      ::int_rectangle virtDeskBoundRect = virtDeskRegion.getBounds();
+      m_frameBuffer.setProperties(&virtDeskBoundRect, &pf);
+      m_frameBuffer.setColor(0, 0, 0);
 
-void Win8ScreenDriverImpl::onRecoverableError(const ::scoped_string & scopedstrReason)
-{
-  m_plogwriter->error("Win8ScreenDriverImpl catch an recoverable error with reason: {}", reason);
-  m_hasRecoverableError = true;
-  m_errorEvent.notify();
-}
+      for (size_t iDxgiOutput = 0; iDxgiOutput < dxgiOutputArray.size(); iDxgiOutput++)
+      {
+         deskCoordArray[iDxgiOutput].move(-virtDeskBoundRect.left, -virtDeskBoundRect.top);
+      }
+      size_t threadsNum = m_deskDuplThreadBundle.Size();
+      if (threadsNum > 12)
+         threadsNum = 12;
+      DWORD millis = 1 << threadsNum; // delay up to 4 seconds if there are threads waiting to delete
+      sleep(millis);
+      Thread *thread = new Win8DeskDuplication(&m_frameBuffer, deskCoordArray, &m_win8CursorShape, &m_curTimeStamp,
+                                               &m_cursorMutex, this, dxgiOutputArray, m_plogwriter);
+      DWORD id = thread->getThreadId();
+      m_plogwriter->debug("Created a new Win8DeskDuplication with ID: ({})", id);
+      m_deskDuplThreadBundle.addThread(thread);
+   }
 
-void Win8ScreenDriverImpl::onCriticalError(const ::scoped_string & scopedstrReason)
-{
-  m_plogwriter->error("Win8ScreenDriverImpl catch an critical error with reason: {}", reason);
-  m_hasCriticalError = true;
-  m_errorEvent.notify();
-}
+   void Win8ScreenDriverImpl::execute()
+   {
+      try
+      {
+         initDxgi();
+      }
+      catch (WinDxRecoverableException &e)
+      {
+         m_plogwriter->error("Win8ScreenDriverImpl:: Catched WinDxRecoverableException: {}, (%x)", e.get_message(),
+                             (int)e.getErrorCode());
+         m_hasRecoverableError = true;
+      }
+      catch (WinDxCriticalException &e)
+      {
+         m_plogwriter->error("Win8ScreenDriverImpl:: Catched WinDxCriticalException: {}, (%x)", e.get_message(),
+                             (int)e.getErrorCode());
+         m_hasCriticalError = true;
+      }
+      catch (::exception &e)
+      {
+         m_plogwriter->error("Catched ::subsystem::Exception in the Win8ScreenDriverImpl::execute() function: {}."
+                             " The exception will consider as critical",
+                             e.get_message());
+         m_hasCriticalError = true;
+      }
+      m_initEvent.notify();
 
-bool Win8ScreenDriverImpl::grabFb(const ::int_rectangle &  rect)
-{
-  return isValid();
-}
+      while (!isTerminating() && isValid())
+      {
+         m_errorEvent.waitForEvent();
+      }
 
-bool Win8ScreenDriverImpl::isValid()
-{
-  return !m_hasRecoverableError && !m_hasCriticalError;
-}
+      if (!isValid())
+      {
+         m_plogwriter->error("Win8ScreenDriverImpl has an invalid state. The invalid state can be"
+                             " a part of screen propery changes. An update signal will be generated"
+                             " as a screen size changed signal.");
+         m_updateKeeper->setScreenSizeChanged();
+         m_updateListener->onUpdate();
+      }
+      terminateDetection();
+   }
 
-::innate_subsystem::PixelFormat Win8ScreenDriverImpl::getDxPixelFormat() const
-{
-  return StandardPixelFormatFactory::create32bppPixelFormat();
-}
+   void Win8ScreenDriverImpl::onTerminate() { m_errorEvent.notify(); }
 
-void Win8ScreenDriverImpl::updateCursorShape(CursorShape *dst)
-{
-  critical_section_lock al(&m_cursorMutex);
-  dst->clone(m_win8CursorShape.getCursorShape());
-}
+   void Win8ScreenDriverImpl::onFrameBufferUpdate(const Region *changedRegion)
+   {
+      if (m_detectionEnabled)
+      {
+         m_updateKeeper->addChangedRegion(changedRegion);
+         m_updateListener->onUpdate();
+      }
+   }
 
-::int_point Win8ScreenDriverImpl::getCursorPosition()
-{
-  critical_section_lock al(&m_cursorMutex);
-  return m_latestCursorPos;
-}
+   void Win8ScreenDriverImpl::onCopyRect(const ::int_rectangle &dstRect, int srcX, int srcY)
+   {
+      if (m_detectionEnabled)
+      {
+         ::int_point srcPoint(srcX, srcY);
+         m_updateKeeper->addCopyRect(dstRect, &srcPoint);
+         m_updateListener->onUpdate();
+      }
+   }
+
+   void Win8ScreenDriverImpl::onCursorPositionChanged(int x, int y)
+   {
+      critical_section_lock al(&m_cursorMutex);
+      ::int_point newPos(x, y);
+      if (!m_latestCursorPos.isEqualTo(&newPos))
+      {
+         m_latestCursorPos = newPos;
+         m_updateKeeper->setCursorPos(&newPos);
+         m_updateListener->onUpdate();
+      }
+   }
+
+   void Win8ScreenDriverImpl::onCursorShapeChanged()
+   {
+      m_updateKeeper->setCursorShapeChanged();
+      m_updateListener->onUpdate();
+   }
+
+   void Win8ScreenDriverImpl::onRecoverableError(const ::scoped_string &scopedstrReason)
+   {
+      m_plogwriter->error("Win8ScreenDriverImpl catch an recoverable error with reason: {}", reason);
+      m_hasRecoverableError = true;
+      m_errorEvent.notify();
+   }
+
+   void Win8ScreenDriverImpl::onCriticalError(const ::scoped_string &scopedstrReason)
+   {
+      m_plogwriter->error("Win8ScreenDriverImpl catch an critical error with reason: {}", reason);
+      m_hasCriticalError = true;
+      m_errorEvent.notify();
+   }
+
+   bool Win8ScreenDriverImpl::grabFb(const ::int_rectangle &rect) { return isValid(); }
+
+   bool Win8ScreenDriverImpl::isValid() { return !m_hasRecoverableError && !m_hasCriticalError; }
+
+   ::innate_subsystem::PixelFormat Win8ScreenDriverImpl::getDxPixelFormat() const
+   {
+      return StandardPixelFormatFactory::create32bppPixelFormat();
+   }
+
+   void Win8ScreenDriverImpl::updateCursorShape(CursorShape *dst)
+   {
+      critical_section_lock al(&m_cursorMutex);
+      dst->clone(m_win8CursorShape.getCursorShape());
+   }
+
+   ::int_point Win8ScreenDriverImpl::getCursorPosition()
+   {
+      critical_section_lock al(&m_cursorMutex);
+      return m_latestCursorPos;
+   }
+
+
+} // namespace remoting_node_desktop

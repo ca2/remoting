@@ -28,27 +28,40 @@
 #include "subsystem/_common_header.h"
 #include "remoting/remoting/win_system/DynamicLibrary.h"
 
-class HookInstaller
+
+namespace remoting_node_desktop
 {
-public:
-  HookInstaller();
-  ~HookInstaller();
 
-  // Instals hooks to windowed applications.
-  // targedWinHwnd - is hwnd to a target window that will receive
-  // hooked messages.
-  void install(HWND targedWinHwnd);
-  // Uninstals hooks from windowed applications.
-  void uninstall();
 
-private:
-  static const TCHAR LIBRARY_NAME[];
-  static ::string_literal SET_HOOK_FUNCTION_NAME;
-  static ::string_literal UNSET_HOOK_FUNCTION_NAME;
+   class HookInstaller
+   {
+   public:
+      HookInstaller();
+      ~HookInstaller();
 
-  DynamicLibrary m_lib;
-  FARPROC m_pSetHook;
-  FARPROC m_pUnSetHook;
-};
+      // Instals hooks to windowed applications.
+      // targedWinHwnd - is hwnd to a target window that will receive
+      // hooked messages.
+      void install(HWND targedWinHwnd);
+      // Uninstals hooks from windowed applications.
+      void uninstall();
 
-//// __HOOKINSTALLER_H__
+   private:
+      static const TCHAR LIBRARY_NAME[];
+      static ::string_literal SET_HOOK_FUNCTION_NAME;
+      static ::string_literal UNSET_HOOK_FUNCTION_NAME;
+
+      DynamicLibrary m_lib;
+      FARPROC m_pSetHook;
+      FARPROC m_pUnSetHook;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+
+

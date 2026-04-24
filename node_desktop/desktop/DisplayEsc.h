@@ -1,31 +1,33 @@
 // Copyright (c) 2003-2010 DemoForge, LLC.
 // All rights reserved.
 
-#ifndef	DF_MIRAGE__DISP_ESCAPES
-#define	DF_MIRAGE__DISP_ESCAPES
-// NOTE: shared among DISPLAY and R3 projects
+#pragma once
 
-//namespace df_mirage_drv
-//{
-
-enum
+namespace remoting_node_desktop
 {
-	DMF_ESCAPE_BASE_1_VB	= 1030,
-	DMF_ESCAPE_BASE_2_VB	= 1026, 
-	DMF_ESCAPE_BASE_3_VB	= 24
-};
+   // NOTE: shared among DISPLAY and R3 projects
 
-//VB++
-#ifdef  _WIN64
+   // namespace df_mirage_drv
+   //{
 
-#define CLIENT_64BIT   0x8000
+   enum
+   {
+      DMF_ESCAPE_BASE_1_VB = 1030,
+      DMF_ESCAPE_BASE_2_VB = 1026,
+      DMF_ESCAPE_BASE_3_VB = 24
+   };
 
-enum
-{
-	DMF_ESCAPE_BASE_1	= CLIENT_64BIT | DMF_ESCAPE_BASE_1_VB,
-	DMF_ESCAPE_BASE_2	= CLIENT_64BIT | DMF_ESCAPE_BASE_2_VB, 
-	DMF_ESCAPE_BASE_3	= CLIENT_64BIT | DMF_ESCAPE_BASE_3_VB, 
-};
+// VB++
+#ifdef _WIN64
+
+#define CLIENT_64BIT 0x8000
+
+   enum
+   {
+      DMF_ESCAPE_BASE_1 = CLIENT_64BIT | DMF_ESCAPE_BASE_1_VB,
+      DMF_ESCAPE_BASE_2 = CLIENT_64BIT | DMF_ESCAPE_BASE_2_VB,
+      DMF_ESCAPE_BASE_3 = CLIENT_64BIT | DMF_ESCAPE_BASE_3_VB,
+   };
 
 #else
 
@@ -61,8 +63,8 @@ typedef enum
 
 } dmf_escape;
 
-#define MAXCHANGES_BUF	20000
-#define CLIP_LIMIT		50
+#define MAXCHANGES_BUF 20000
+#define CLIP_LIMIT 50
 
 // operations
 typedef enum
@@ -117,7 +119,7 @@ struct	CHANGES_BUF
 };
 // 4+ 56*2000 = 112004
 
-#define	DMF_PIPE_SEC_SIZE_DEFAULT	ALIGN64K(sizeof(CHANGES_BUF))
+#define DMF_PIPE_SEC_SIZE_DEFAULT ALIGN64K(sizeof(CHANGES_BUF))
 
 struct GETCHANGESBUF
 {
@@ -141,12 +143,12 @@ typedef	enum
 	dmf_sprb_gdi_err				= 0x0100,	// internal error attributed to GDI
 
 	dmf_sprb_owner_died				= 0x0400,	// owner app died; emergency cleanup have been performed
-#define	dmf_sprb_ERRORMASK			0x07ff
+#define dmf_sprb_ERRORMASK 0x07ff
 
 // generally, not errors
 	dmf_sprb_tgtwnd_gone			= 0x0800,	// target wnd is gone; nothing to capture
 //	dmf_sprb_xyz					= 0x1000,
-#define	dmf_sprb_STRICTSESSION_AFF	0x1fff
+#define dmf_sprb_STRICTSESSION_AFF 0x1fff
 
 // NON-STRICT SESSION AFFILIATION
 	dmf_sprb_pdev_detached			= 0x2000,	// DrvAssertMode: false; transient problem, in general
@@ -164,13 +166,13 @@ typedef	enum
 //		0 indicates not-impl,
 //		<0 indicates faulure;
 //	-- 0x80000000 is the failure flag :)
-#define	DMF_ESC_RET_FAILF		0x80000000
+#define DMF_ESC_RET_FAILF 0x80000000
 //	-- lower-word (16 positions) is a dmf_session_prob_status
 //	   that be [as a result of a call],
-#define	DMF_ESC_RET_SSTMASK		0x0000FFFF
+#define DMF_ESC_RET_SSTMASK 0x0000FFFF
 //	-- bits 30-16 (15 positions) is an immediate call status properies,
 //	   defined (in principle) on per-function basis
-#define	DMF_ESC_RET_IMMMASK		0x7FFF0000
+#define DMF_ESC_RET_IMMMASK 0x7FFF0000
 
 typedef	enum
 {
@@ -219,8 +221,8 @@ enum
 	esc_qvi_prod_name_max	= 16,
 };
 
-#define	ESC_QVI_PROD_MIRAGE	"MIRAGE"
-#define	ESC_QVI_PROD_QUASAR	"QUASAR"
+#define ESC_QVI_PROD_MIRAGE "MIRAGE"
+#define ESC_QVI_PROD_QUASAR "QUASAR"
 
 struct	Esc_dmf_Qvi_OUT
 {
@@ -274,4 +276,12 @@ struct	Esc_dmf_pointer_shape_get_OUT
 
 //};	// namespace df_mirage_drv
 
-DF_MIRAGE__DISP_ESCAPES
+//DF_MIRAGE__DISP_ESCAPES
+
+
+
+} // namespace remoting_node_desktop
+
+
+
+ 

@@ -33,31 +33,39 @@
 //#include "log_writer/LogWriter.h"
 //#include aaa_<map>
 
-class DesktopSrvDispatcher: public ::subsystem::GuiThread
+namespace remoting_node_desktop
 {
-public:
-  DesktopSrvDispatcher(BlockingGate *gate,
-                       //AnEventListener *m_extTerminationListener,
-     const ::procedure & procedureDesktopSrvDispatcher,
-                       ::subsystem::LogWriter *log);
-  virtual ~DesktopSrvDispatcher();
 
-  void registerNewHandle(unsigned char code, ClientListener *listener);
+   class DesktopSrvDispatcher : public ::subsystem::GuiThread
+   {
+   public:
+      DesktopSrvDispatcher(BlockingGate *gate,
+                           // AnEventListener *m_extTerminationListener,
+                           const ::procedure &procedureDesktopSrvDispatcher, ::subsystem::LogWriter *log);
+      virtual ~DesktopSrvDispatcher();
 
-protected:
-  virtual void execute();
-  virtual void onTerminate();
-  void notifyOnError();
+      void registerNewHandle(unsigned char code, ClientListener *listener);
 
-  BlockingGate *m_gate;
+   protected:
+      virtual void execute();
+      virtual void onTerminate();
+      void notifyOnError();
 
-  ::map<unsigned char, ClientListener *> m_handlers;
+      BlockingGate *m_gate;
 
-  //AnEventListener *m_extErrorListener;
+      ::map<unsigned char, ClientListener *> m_handlers;
 
-  ::procedure m_procedureDesktopSrvDispatcher;
+      // AnEventListener *m_extErrorListener;
 
-  ::subsystem::LogWriter *m_plogwriter;
-};
+      ::procedure m_procedureDesktopSrvDispatcher;
 
-//// __DESKTOPSRVDISPATCHER_H__
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+

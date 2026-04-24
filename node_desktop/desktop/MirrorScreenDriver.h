@@ -32,48 +32,57 @@
 #include "remoting/remoting/win_system/WindowsEvent.h"
 #include "UpdateDetector.h"
 
-class MirrorScreenDriver : public UpdateDetector
+
+namespace remoting_node_desktop
 {
-public:
-  MirrorScreenDriver(UpdateKeeper *updateKeeper,
-                     UpdateListener *updateListener,
-                     critical_section *fbcritical_section,
-                     ::subsystem::LogWriter *log);
-  virtual ~MirrorScreenDriver();
 
-  // Starts screen update detection if it not started yet.
-  virtual void executeDetection();
+   class MirrorScreenDriver : public UpdateDetector
+   {
+   public:
+      MirrorScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
+                         critical_section *fbcritical_section, ::subsystem::LogWriter *log);
+      virtual ~MirrorScreenDriver();
 
-  // Stops screen update detection.
-  virtual void terminateDetection();
+      // Starts screen update detection if it not started yet.
+      virtual void executeDetection();
 
-  virtual ::int_size getScreenDimension();
-  virtual ::innate_subsystem::FrameBuffer *getScreenBuffer();
-  virtual bool grab(const ::int_rectangle &  rect = 0);
+      // Stops screen update detection.
+      virtual void terminateDetection();
 
-  virtual bool getPropertiesChanged();
-  virtual bool getScreenSizeChanged();
+      virtual ::int_size getScreenDimension();
+      virtual ::innate_subsystem::FrameBuffer *getScreenBuffer();
+      virtual bool grab(const ::int_rectangle &rect = 0);
 
-  virtual bool applyNewProperties();
+      virtual bool getPropertiesChanged();
+      virtual bool getScreenSizeChanged();
 
-private:
-  void initFrameBuffer();
+      virtual bool applyNewProperties();
 
-  void startUpdateSearching();
+   private:
+      void initFrameBuffer();
 
-  virtual void execute();
-  virtual void onTerminate();
+      void startUpdateSearching();
 
-  MirrorDriverClient *m_mirrorClient;
-  unsigned long m_lastCounter;
-  ::innate_subsystem::FrameBuffer m_frameBuffer;
-  // TO THINK: One may use a self mutex here, because do not
-  // use external objects here.
-  critical_section *m_fbMutex;
+      virtual void execute();
+      virtual void onTerminate();
 
-  WindowsEvent m_updateTimeout;
+      MirrorDriverClient *m_mirrorClient;
+      unsigned long m_lastCounter;
+      ::innate_subsystem::FrameBuffer m_frameBuffer;
+      // TO THINK: One may use a self mutex here, because do not
+      // use external objects here.
+      critical_section *m_fbMutex;
 
-  ::subsystem::LogWriter *m_plogwriter;
-};
+      WindowsEvent m_updateTimeout;
 
-//// __MIRRORSCREENDRIVER_H__
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+

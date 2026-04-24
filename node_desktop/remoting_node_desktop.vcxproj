@@ -319,7 +319,6 @@
     <ClCompile Include="DesktopServerApplication.cpp" />
     <ClCompile Include="DesktopServerCommandLine.cpp" />
     <ClCompile Include="desktop\ApplicationDesktopFactory.cpp" />
-    <ClCompile Include="desktop\ClipboardListener.cpp" />
     <ClCompile Include="desktop\ConsolePoller.cpp" />
     <ClCompile Include="desktop\CopyRectDetector.cpp" />
     <ClCompile Include="desktop\CursorPositionDetector.cpp" />
@@ -331,7 +330,6 @@
     <ClCompile Include="desktop\DesktopServerWatcher.cpp" />
     <ClCompile Include="desktop\DesktopWinImpl.cpp" />
     <ClCompile Include="desktop\DummyScreenDriver.cpp" />
-    <ClCompile Include="desktop\framework.cpp" />
     <ClCompile Include="desktop\GrabOptimizator.cpp" />
     <ClCompile Include="desktop\HookInstaller.cpp" />
     <ClCompile Include="desktop\HooksUpdateDetector.cpp" />
@@ -365,7 +363,6 @@
     <ClCompile Include="desktop\WinCustomD3D11Texture2D.cpp" />
     <ClCompile Include="desktop\WinD3D11Device.cpp" />
     <ClCompile Include="desktop\WinD3D11Texture2D.cpp" />
-    <ClCompile Include="desktop\WindowsClipboard.cpp" />
     <ClCompile Include="desktop\WindowsCursorShapeGrabber.cpp" />
     <ClCompile Include="desktop\WindowsInputBlocker.cpp" />
     <ClCompile Include="desktop\WindowsScreenGrabber.cpp" />
@@ -382,7 +379,6 @@
     <ClCompile Include="desktop\WinDxRecoverableException.cpp" />
     <ClCompile Include="desktop\WinServiceDesktopFactory.cpp" />
     <ClCompile Include="desktop\WinVideoRegionUpdaterImpl.cpp" />
-    <ClCompile Include="desktop\_.cpp" />
     <ClCompile Include="desktop_ipc\BlockingGate.cpp" />
     <ClCompile Include="desktop_ipc\BlockingInputGate.cpp" />
     <ClCompile Include="desktop_ipc\BlockingOutputGate.cpp" />
@@ -391,7 +387,6 @@
     <ClCompile Include="desktop_ipc\DesktopConfigClient.cpp" />
     <ClCompile Include="desktop_ipc\DesktopServerProto.cpp" />
     <ClCompile Include="desktop_ipc\DesktopSrvDispatcher.cpp" />
-    <ClCompile Include="desktop_ipc\framework.cpp" />
     <ClCompile Include="desktop_ipc\GateKicker.cpp" />
     <ClCompile Include="desktop_ipc\GateKickHandler.cpp" />
     <ClCompile Include="desktop_ipc\ReconnectException.cpp" />
@@ -400,7 +395,6 @@
     <ClCompile Include="desktop_ipc\UpdateHandlerServer.cpp" />
     <ClCompile Include="desktop_ipc\UserInputClient.cpp" />
     <ClCompile Include="desktop_ipc\UserInputServer.cpp" />
-    <ClCompile Include="desktop_ipc\_.cpp" />
     <ClCompile Include="ExtraRfbServers.cpp" />
     <ClCompile Include="fb_update_sender\CursorUpdates.cpp" />
     <ClCompile Include="fb_update_sender\UpdateSender.cpp" />
@@ -451,7 +445,6 @@
     <ClInclude Include="DesktopServerCommandLine.h" />
     <ClInclude Include="desktop\AbnormDeskTermListener.h" />
     <ClInclude Include="desktop\ApplicationDesktopFactory.h" />
-    <ClInclude Include="desktop\ClipboardListener.h" />
     <ClInclude Include="desktop\ConsolePoller.h" />
     <ClInclude Include="desktop\CopyRectDetector.h" />
     <ClInclude Include="desktop\CursorPositionDetector.h" />
@@ -466,7 +459,6 @@
     <ClInclude Include="desktop\DesktopWinImpl.h" />
     <ClInclude Include="desktop\DisplayEsc.h" />
     <ClInclude Include="desktop\DummyScreenDriver.h" />
-    <ClInclude Include="desktop\framework.h" />
     <ClInclude Include="desktop\GrabOptimizator.h" />
     <ClInclude Include="desktop\HookInstaller.h" />
     <ClInclude Include="desktop\HooksUpdateDetector.h" />
@@ -475,7 +467,6 @@
     <ClInclude Include="desktop\MirrorDriverClient.h" />
     <ClInclude Include="desktop\MirrorScreenDriver.h" />
     <ClInclude Include="desktop\Poller.h" />
-    <ClInclude Include="desktop\resource.h" />
     <ClInclude Include="desktop\SasUserInput.h" />
     <ClInclude Include="desktop\ScreenDriver.h" />
     <ClInclude Include="desktop\ScreenDriverFactory.h" />
@@ -504,7 +495,6 @@
     <ClInclude Include="desktop\WinCustomD3D11Texture2D.h" />
     <ClInclude Include="desktop\WinD3D11Device.h" />
     <ClInclude Include="desktop\WinD3D11Texture2D.h" />
-    <ClInclude Include="desktop\WindowsClipboard.h" />
     <ClInclude Include="desktop\WindowsCursorShapeGrabber.h" />
     <ClInclude Include="desktop\WindowsInputBlocker.h" />
     <ClInclude Include="desktop\WindowsScreenGrabber.h" />
@@ -530,13 +520,11 @@
     <ClInclude Include="desktop_ipc\DesktopConfigClient.h" />
     <ClInclude Include="desktop_ipc\DesktopServerProto.h" />
     <ClInclude Include="desktop_ipc\DesktopSrvDispatcher.h" />
-    <ClInclude Include="desktop_ipc\framework.h" />
     <ClInclude Include="desktop_ipc\GateKicker.h" />
     <ClInclude Include="desktop_ipc\GateKickHandler.h" />
     <ClInclude Include="desktop_ipc\ReconnectException.h" />
     <ClInclude Include="desktop_ipc\ReconnectingChannel.h" />
     <ClInclude Include="desktop_ipc\ReconnectionListener.h" />
-    <ClInclude Include="desktop_ipc\resource.h" />
     <ClInclude Include="desktop_ipc\UpdateHandlerClient.h" />
     <ClInclude Include="desktop_ipc\UpdateHandlerServer.h" />
     <ClInclude Include="desktop_ipc\UserInputClient.h" />
@@ -544,8 +532,6 @@
     <ClInclude Include="desktop_ipc\_.h" />
     <ClInclude Include="ExtraRfbServers.h" />
     <ClInclude Include="fb_update_sender\CursorUpdates.h" />
-    <ClInclude Include="fb_update_sender\framework.h" />
-    <ClInclude Include="fb_update_sender\resource.h" />
     <ClInclude Include="fb_update_sender\SenderControlInformationInterface.h" />
     <ClInclude Include="fb_update_sender\UpdateRequestListener.h" />
     <ClInclude Include="fb_update_sender\UpdateSender.h" />

@@ -31,40 +31,50 @@
 //#include "log_writer/LogWriter.h"
 #include "desktop/Win32ScreenDriverFactory.h"
 
-class UpdateHandlerServer: public DesktopServerProto, public ClientListener,
-                           public UpdateListener
+
+namespace remoting_node_desktop
 {
-public:
-  UpdateHandlerServer(BlockingGate *forwGate,
-                      DesktopSrvDispatcher *dispatcher,
-                      //AnEventListener *extTerminationListener,
-     const ::procedure & procedureTermination,
-                      ::subsystem::LogWriter *log);
-  virtual ~UpdateHandlerServer();
 
-  // Internal dispatcher
-  virtual void onRequest(unsigned char reqCode, BlockingGate *backGate);
+   class UpdateHandlerServer : public DesktopServerProto, public ClientListener, public UpdateListener
+   {
+   public:
+      UpdateHandlerServer(BlockingGate *forwGate, DesktopSrvDispatcher *dispatcher,
+                          // AnEventListener *extTerminationListener,
+                          const ::procedure &procedureTermination, ::subsystem::LogWriter *log);
+      virtual ~UpdateHandlerServer();
 
-protected:
-  virtual void onUpdate();
+      // Internal dispatcher
+      virtual void onRequest(unsigned char reqCode, BlockingGate *backGate);
 
-  // At first time server must get init information.
-  void serverInit(BlockingGate *backGate);
+   protected:
+      virtual void onUpdate();
 
-  void extractReply(BlockingGate *backGate);
-  void screenPropReply(BlockingGate *backGate);
-  void receiveFullReqReg(BlockingGate *backGate);
-  void receiveExcludingReg(BlockingGate *backGate);
+      // At first time server must get init information.
+      void serverInit(BlockingGate *backGate);
 
-  Win32ScreenDriverFactory m_scrDriverFactory;
+      void extractReply(BlockingGate *backGate);
+      void screenPropReply(BlockingGate *backGate);
+      void receiveFullReqReg(BlockingGate *backGate);
+      void receiveExcludingReg(BlockingGate *backGate);
 
-  ::innate_subsystem::PixelFormat m_oldPf;
+      Win32ScreenDriverFactory m_scrDriverFactory;
 
-  UpdateHandlerImpl *m_updateHandler;
-  //AnEventListener *m_extTerminationListener;
-  ::procedure m_procedureTermination;
+      ::innate_subsystem::PixelFormat m_oldPf;
 
-  ::subsystem::LogWriter *m_plogwriter;
-};
+      UpdateHandlerImpl *m_updateHandler;
+      // AnEventListener *m_extTerminationListener;
+      ::procedure m_procedureTermination;
 
-//// __UPDATEHANDLERSERVER_H__
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+
+
+

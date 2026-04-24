@@ -24,16 +24,20 @@
 
 #pragma once
 
-
-
-
-class UpdateRequestListener
+namespace remoting_node_desktop
 {
-public:
-  virtual ~UpdateRequestListener() {}
-  // Interface function
-  virtual void onUpdateRequest(const ::int_rectangle &  rectRequested,
-                               bool incremental) = 0;
-};
 
-//// __UPDATEREQUESTLISTENER_H__
+
+   class UpdateRequestListener : virtual public ::particle
+   {
+   public:
+      virtual ~UpdateRequestListener() {}
+      // Interface function
+      virtual void onUpdateRequest(const ::int_rectangle &rectRequested, bool incremental) = 0;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+

@@ -27,27 +27,40 @@
 
 #include "subsystem/platform/CommandLine.h"
 
-/**
- * ServerApplication command line parser.
- */
-class ServerCommandLine : public ::subsystem::CommandLine
+namespace remoting_node_desktop
 {
-public:
-  ServerCommandLine();
-  virtual ~ServerCommandLine();
 
-  /**
-   * Parses command line.
-   * @param commandLine command line to parse.
-   * @return true if success, false if command line is invalid.
-   */
-  bool parse(const ::subsystem::CommandLineArguments *cmdArgs);
+   /**
+    * ServerApplication command line parser.
+    */
+   class ServerCommandLine : public ::subsystem::CommandLine
+   {
+   public:
+      ServerCommandLine();
+      virtual ~ServerCommandLine();
 
-  /**
-   * Checks if help flags are set.
-   * @return true if any of help flags are set.
-   */
-  bool showHelp();
-};
+      /**
+       * Parses command line.
+       * @param commandLine command line to parse.
+       * @return true if success, false if command line is invalid.
+       */
+      bool parse(const ::subsystem::CommandLineArguments *cmdArgs);
 
-//// __SERVERCOMMANDLINE_H__
+      /**
+       * Checks if help flags are set.
+       * @return true if any of help flags are set.
+       */
+      bool showHelp();
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+
+
+
+

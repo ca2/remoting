@@ -41,61 +41,69 @@
 #include "remoting/remoting/server_config/ConfigReloadListener.h"
 #include "subsystem/platform/CommandLineArguments.h"
 
-/**
- * Desktop server application.
- */
-class DesktopServerApplication : 
-   public ::subsystem::LocalOperatingSystemApplication,
-   //public AnEventListener,
-   public ConfigReloadListener
+
+namespace remoting_node_desktop
 {
-public:
-  /**
-   * Initializes desktop server.
-   * @param appInstance HINSTANCE of application.
-   * @throws ::subsystem::Exception (or SystemException) on fail.
-   * @fixme make command line parsing in this class.
-   */
-  DesktopServerApplication(HINSTANCE appInstance,
-                           const ::scoped_string & scopedstrwindowClassName,
-                           const ::subsystem::CommandLineArguments *cmdArgs);
 
-  virtual ~DesktopServerApplication();
+   /**
+    * Desktop server application.
+    */
+   class DesktopServerApplication : public ::subsystem::LocalOperatingSystemApplication,
+                                    // public AnEventListener,
+                                    public ConfigReloadListener
+   {
+   public:
+      /**
+       * Initializes desktop server.
+       * @param appInstance HINSTANCE of application.
+       * @throws ::subsystem::Exception (or SystemException) on fail.
+       * @fixme make command line parsing in this class.
+       */
+      DesktopServerApplication(HINSTANCE appInstance, const ::scoped_string &scopedstrwindowClassName,
+                               const ::subsystem::CommandLineArguments *cmdArgs);
 
-  /**
-   * Inherited from superclass.
-   */
-  virtual void run() override;
+      ~DesktopServerApplication() override;
 
-protected:
-  //virtual void onAnObjectEvent();
-   virtual void onHappening();
-  virtual void onConfigReload(ServerConfig *serverConfig);
+      /**
+       * Inherited from superclass.
+       */
+      virtual void run() override;
 
-private:
-  void freeResources();
+   //protected:
+      // virtual void onAnObjectEvent();
+      virtual void onHappening();
+      virtual void onConfigReload(ServerConfig *serverConfig);
 
-  Configurator m_configurator;
-  //::subsystem::LogWriter *m_clientLogWriter;
-  ::subsystem::LogWriter * m_plogwriter;
+   //private:
+      void freeResources();
 
-  // Transport
-  ::subsystem::AnonymousPipe *m_clToSrvChan;
-  ::subsystem::AnonymousPipe *m_srvToClChan;
-  BlockingGate *m_clToSrvGate;
-  BlockingGate *m_srvToClGate;
+      ::pointer<Configurator> m_pconfigurator;
+      //::subsystem::LogWriter *m_clientLogWriter;
+      ::subsystem::LogWriter *m_plogwriter;
 
-  DesktopSrvDispatcher *m_dispatcher;
+      // Transport
+      ::subsystem::AnonymousPipe *m_clToSrvChan;
+      ::subsystem::AnonymousPipe *m_srvToClChan;
+      BlockingGate *m_clToSrvGate;
+      BlockingGate *m_srvToClGate;
 
-  // Servers
-  UpdateHandlerServer *m_updHandlerSrv;
-  UserInputServer *m_uiSrv;
-  ConfigServer *m_cfgServer;
-  GateKickHandler *m_gateKickHandler;
+      DesktopSrvDispatcher *m_dispatcher;
 
-  ::subsystem::SessionChangesWatcher *m_sessionChangesWatcher;
+      // Servers
+      UpdateHandlerServer *m_updHandlerSrv;
+      UserInputServer *m_uiSrv;
+      ConfigServer *m_cfgServer;
+      GateKickHandler *m_gateKickHandler;
 
-  unsigned int m_contextSwitchResolution; // in ms
-};
+      ::subsystem::SessionChangesWatcher *m_sessionChangesWatcher;
 
-//// __DESKTOPSERVER_H__
+      unsigned int m_contextSwitchResolution; // in ms
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+

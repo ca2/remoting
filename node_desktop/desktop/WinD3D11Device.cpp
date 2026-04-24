@@ -28,141 +28,123 @@
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "WinD3D11Device.h"
 
-typedef HRESULT (WINAPI *D3D11CreateDeviceFunType)(
-  _In_opt_ IDXGIAdapter* pAdapter,
-  D3D_DRIVER_TYPE DriverType,
-  HMODULE Software,
-  unsigned int Flags,
-  _In_reads_opt_( FeatureLevels ) CONST D3D_FEATURE_LEVEL* pFeatureLevels,
-  unsigned int FeatureLevels,
-  unsigned int SDKVersion,
-  _Out_opt_ ID3D11Device** ppDevice,
-  _Out_opt_ D3D_FEATURE_LEVEL* pFeatureLevel,
-  _Out_opt_ ID3D11DeviceContext** ppImmediateContext );
-
-WinD3D11Device::WinD3D11Device(::subsystem::LogWriter *log)
-: m_device(0),
-  m_context(0),
-  m_d3d11Lib("d3d11.dll"),
-  m_plogwriter(log)
+namespace remoting_node_desktop
 {
-  D3D11CreateDeviceFunType d3d11CreateDevice;
-  d3d11CreateDevice = (D3D11CreateDeviceFunType)m_d3d11Lib.getProcAddress("D3D11CreateDevice");
-  if (d3d11CreateDevice == 0) {
-    throw ::subsystem::Exception("Unable to load the D3D11CreateDevice() function");
-  }
 
-  // Driver types supported
-  D3D_DRIVER_TYPE driverTypes[] =
-  {
-    D3D_DRIVER_TYPE_HARDWARE
-  };
-  unsigned int driverTypeCount = ARRAYSIZE(driverTypes);
 
-  // Feature levels supported
-  D3D_FEATURE_LEVEL featureLevels[] =
-  {
-    D3D_FEATURE_LEVEL_11_0,
-    D3D_FEATURE_LEVEL_10_1,
-    D3D_FEATURE_LEVEL_10_0,
-    D3D_FEATURE_LEVEL_9_1
-  };
-  unsigned int featureLevelCount = ARRAYSIZE(featureLevels);
+   typedef HRESULT(WINAPI *D3D11CreateDeviceFunType)(
+      _In_opt_ IDXGIAdapter *pAdapter, D3D_DRIVER_TYPE DriverType, HMODULE Software, unsigned int Flags,
+      _In_reads_opt_(FeatureLevels) CONST D3D_FEATURE_LEVEL *pFeatureLevels, unsigned int FeatureLevels,
+      unsigned int SDKVersion, _Out_opt_ ID3D11Device **ppDevice, _Out_opt_ D3D_FEATURE_LEVEL *pFeatureLevel,
+      _Out_opt_ ID3D11DeviceContext **ppImmediateContext);
 
-  D3D_FEATURE_LEVEL featureLevel;
+   WinD3D11Device::WinD3D11Device(::subsystem::LogWriter *log) :
+       m_device(0), m_context(0), m_d3d11Lib("d3d11.dll"), m_plogwriter(log)
+   {
+      D3D11CreateDeviceFunType d3d11CreateDevice;
+      d3d11CreateDevice = (D3D11CreateDeviceFunType)m_d3d11Lib.getProcAddress("D3D11CreateDevice");
+      if (d3d11CreateDevice == 0)
+      {
+         throw ::subsystem::Exception("Unable to load the D3D11CreateDevice() function");
+      }
 
-  // Create device
-  HRESULT hr;
-  for (unsigned int iDriverType = 0; iDriverType < driverTypeCount; ++iDriverType) {
-    m_plogwriter->debug("Creating of (%u) driverType device", iDriverType);
-    hr = d3d11CreateDevice(0,
-                           driverTypes[iDriverType],
-                           0,
-                           0,
-                           featureLevels,
-                           featureLevelCount,
-                           D3D11_SDK_VERSION,
-                           &m_device,
-                           &featureLevel,
-                           &m_context);
-    if (SUCCEEDED(hr)) {
-      m_plogwriter->debug("Creating of %u driverType device is successfull, supported D3D_FEATURE_LEVEL is %u", iDriverType, featureLevel);
-      break;
-    }
-  }
-  if (FAILED(hr)) {
-    ::string errMess;
-    errMess.formatf("D3D11CreateDevice function was failed with code error = (%dl)", (long)hr);
-    m_plogwriter->debug("D3D11CreateDevice function was failed with code error = (%dl)", (long)hr);
-    throw ::subsystem::Exception(errMess);
-  }
-}
+      // Driver types supported
+      D3D_DRIVER_TYPE driverTypes[] = {D3D_DRIVER_TYPE_HARDWARE};
+      unsigned int driverTypeCount = ARRAYSIZE(driverTypes);
 
-WinD3D11Device::WinD3D11Device(const WinD3D11Device &src)
-{
-  copy(src);
-}
+      // Feature levels supported
+      D3D_FEATURE_LEVEL featureLevels[] = {D3D_FEATURE_LEVEL_11_0, D3D_FEATURE_LEVEL_10_1, D3D_FEATURE_LEVEL_10_0,
+                                           D3D_FEATURE_LEVEL_9_1};
+      unsigned int featureLevelCount = ARRAYSIZE(featureLevels);
 
-WinD3D11Device::~WinD3D11Device()
-{
-  m_plogwriter->debug("Release ID3D11Device");
-  if (m_device != 0) {
-    m_device->Release();
-    m_device = 0;
-  }
-  m_plogwriter->debug("Release ID3D11DeviceContext");
-  if (m_context != 0) {
-    m_context->Release();
-    m_context = 0;
-  }
-}
+      D3D_FEATURE_LEVEL featureLevel;
 
-WinD3D11Device &WinD3D11Device::operator = (WinD3D11Device const &src)
-{
-  copy(src);
-  return *this;
-}
+      // Create device
+      HRESULT hr;
+      for (unsigned int iDriverType = 0; iDriverType < driverTypeCount; ++iDriverType)
+      {
+         m_plogwriter->debug("Creating of (%u) driverType device", iDriverType);
+         hr = d3d11CreateDevice(0, driverTypes[iDriverType], 0, 0, featureLevels, featureLevelCount, D3D11_SDK_VERSION,
+                                &m_device, &featureLevel, &m_context);
+         if (SUCCEEDED(hr))
+         {
+            m_plogwriter->debug("Creating of %u driverType device is successfull, supported D3D_FEATURE_LEVEL is %u",
+                                iDriverType, featureLevel);
+            break;
+         }
+      }
+      if (FAILED(hr))
+      {
+         ::string errMess;
+         errMess.formatf("D3D11CreateDevice function was failed with code error = (%dl)", (long)hr);
+         m_plogwriter->debug("D3D11CreateDevice function was failed with code error = (%dl)", (long)hr);
+         throw ::subsystem::Exception(errMess);
+      }
+   }
 
-void WinD3D11Device::copy(const WinD3D11Device &src)
-{
-  if (this != &src) {
-    m_device = src.m_device;
-    m_device->AddRef();
-    m_context = src.m_context;
-    m_context->AddRef();
-  }
-}
+   WinD3D11Device::WinD3D11Device(const WinD3D11Device &src) { copy(src); }
 
-HRESULT WinD3D11Device::deviceQueryInterface(REFIID riid, void **ppvObject)
-{
-  return m_device->QueryInterface(riid, ppvObject);
-}
+   WinD3D11Device::~WinD3D11Device()
+   {
+      m_plogwriter->debug("Release ID3D11Device");
+      if (m_device != 0)
+      {
+         m_device->Release();
+         m_device = 0;
+      }
+      m_plogwriter->debug("Release ID3D11DeviceContext");
+      if (m_context != 0)
+      {
+         m_context->Release();
+         m_context = 0;
+      }
+   }
 
-HRESULT WinD3D11Device::contextQueryInterface(REFIID riid, void **ppvObject)
-{
-  return m_context->QueryInterface(riid, ppvObject);
-}
+   WinD3D11Device &WinD3D11Device::operator=(WinD3D11Device const &src)
+   {
+      copy(src);
+      return *this;
+   }
 
-ID3D11Device *WinD3D11Device::getDevice()
-{
-  return m_device;
-}
+   void WinD3D11Device::copy(const WinD3D11Device &src)
+   {
+      if (this != &src)
+      {
+         m_device = src.m_device;
+         m_device->AddRef();
+         m_context = src.m_context;
+         m_context->AddRef();
+      }
+   }
 
-ID3D11DeviceContext *WinD3D11Device::getContext()
-{
-  return m_context;
-}
+   HRESULT WinD3D11Device::deviceQueryInterface(REFIID riid, void **ppvObject)
+   {
+      return m_device->QueryInterface(riid, ppvObject);
+   }
 
-void WinD3D11Device::copySubresourceRegion(ID3D11Texture2D *dstTexture2D, int dstX, int dstY,
-                                           ID3D11Texture2D *srcTexture2D, const ::int_rectangle &  srcRect,
-                                           unsigned int front, unsigned int back)
-{
-  D3D11_BOX box;
-  box.left = srcRect.left;
-  box.top = srcRect.top;
-  box.right = srcRect.right;
-  box.bottom = srcRect.bottom;
-  box.front = front;
-  box.back = back;
-  m_context->CopySubresourceRegion(dstTexture2D, 0, dstX, dstY, 0, srcTexture2D, 0, &box);
-}
+   HRESULT WinD3D11Device::contextQueryInterface(REFIID riid, void **ppvObject)
+   {
+      return m_context->QueryInterface(riid, ppvObject);
+   }
+
+   ID3D11Device *WinD3D11Device::getDevice() { return m_device; }
+
+   ID3D11DeviceContext *WinD3D11Device::getContext() { return m_context; }
+
+   void WinD3D11Device::copySubresourceRegion(ID3D11Texture2D *dstTexture2D, int dstX, int dstY,
+                                              ID3D11Texture2D *srcTexture2D, const ::int_rectangle &srcRect,
+                                              unsigned int front, unsigned int back)
+   {
+      D3D11_BOX box;
+      box.left = srcRect.left;
+      box.top = srcRect.top;
+      box.right = srcRect.right;
+      box.bottom = srcRect.bottom;
+      box.front = front;
+      box.back = back;
+      m_context->CopySubresourceRegion(dstTexture2D, 0, dstX, dstY, 0, srcTexture2D, 0, &box);
+   }
+
+
+} // namespace remoting_node_desktop
+ 

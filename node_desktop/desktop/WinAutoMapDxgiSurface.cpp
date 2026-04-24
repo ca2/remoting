@@ -27,31 +27,33 @@
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "WinAutoMapDxgiSurface.h"
 
-WinAutoMapDxgiSurface::WinAutoMapDxgiSurface(WinDxgiSurface *surface, unsigned int mapFlags)
-: m_surface(surface)
+namespace remoting_node_desktop
 {
-  HRESULT hr = m_surface->getSurface()->Map(&m_mappedRect, mapFlags);
-  if (FAILED(hr)) {
-    ::string errMess;
-    errMess.formatf("Can't IDXGISurface->Map, error code = %l", (long)hr);
-    throw ::subsystem::Exception(errMess);
-  }
-}
 
-WinAutoMapDxgiSurface::~WinAutoMapDxgiSurface()
-{
-  m_surface->getSurface()->Unmap();
-}
 
-size_t WinAutoMapDxgiSurface::getStride() const
-{
-  if (m_mappedRect.Pitch < 0) {
-    throw ::subsystem::Exception("DXGI_MAPPED_RECT::Pitch is negative");
-  }
-  return (size_t)m_mappedRect.Pitch;
-}
+   WinAutoMapDxgiSurface::WinAutoMapDxgiSurface(WinDxgiSurface *surface, unsigned int mapFlags) : m_surface(surface)
+   {
+      HRESULT hr = m_surface->getSurface()->Map(&m_mappedRect, mapFlags);
+      if (FAILED(hr))
+      {
+         ::string errMess;
+         errMess.formatf("Can't IDXGISurface->Map, error code = %l", (long)hr);
+         throw ::subsystem::Exception(errMess);
+      }
+   }
 
-char *WinAutoMapDxgiSurface::getBuffer() const
-{
-  return (char *)m_mappedRect.pBits;
-}
+   WinAutoMapDxgiSurface::~WinAutoMapDxgiSurface() { m_surface->getSurface()->Unmap(); }
+
+   size_t WinAutoMapDxgiSurface::getStride() const
+   {
+      if (m_mappedRect.Pitch < 0)
+      {
+         throw ::subsystem::Exception("DXGI_MAPPED_RECT::Pitch is negative");
+      }
+      return (size_t)m_mappedRect.Pitch;
+   }
+
+   char *WinAutoMapDxgiSurface::getBuffer() const { return (char *)m_mappedRect.pBits; }
+
+
+} // namespace remoting_node_desktop

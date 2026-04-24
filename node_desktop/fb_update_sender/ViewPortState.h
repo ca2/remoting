@@ -32,66 +32,77 @@
 //////#include "subsystem/platform/::string.h"
 
 
-// This class stores a view port state.
-class ViewPortState
+namespace remoting_node_desktop
 {
-public:
-  ViewPortState();
-  ViewPortState(const ViewPortState &);
-  ViewPortState & operator =(const ViewPortState &viewPortState);
-  ~ViewPortState();
 
-  // After calling this function the update() function will set the view
-  // port rectangle equal to it's the fbDimension argument rectangle.
-  void setFullDesktop();
+   // This class stores a view port state.
+   class ViewPortState
+   {
+   public:
+      ViewPortState();
+      ViewPortState(const ViewPortState &);
+      ViewPortState &operator=(const ViewPortState &viewPortState);
+      ~ViewPortState();
 
-  // After calling this function the update() function will set the view
-  // port rectangle to the *rect rectangle constrained by the fbDimension
-  // update() function argument.
-  void setArbitraryRect(const ::int_rectangle &  rect);
+      // After calling this function the update() function will set the view
+      // port rectangle equal to it's the fbDimension argument rectangle.
+      void setFullDesktop();
 
-  // After calling this function the update() function will set the view
-  // port rectangle by the primary display coordinates.
-  void setPrimaryDisplay();
+      // After calling this function the update() function will set the view
+      // port rectangle to the *rect rectangle constrained by the fbDimension
+      // update() function argument.
+      void setArbitraryRect(const ::int_rectangle &rect);
 
-  // After calling this function the update() function will set the view
-  // port rectangle by the display coordinates with a number.
-  void setDisplayNumber(unsigned char displayNumber);
+      // After calling this function the update() function will set the view
+      // port rectangle by the primary display coordinates.
+      void setPrimaryDisplay();
 
-  // After calling this function the update() function will set the view
-  // port rectangle by a window that own the hwnd argument.
-  void setWindowHandle(HWND hwnd);
+      // After calling this function the update() function will set the view
+      // port rectangle by the display coordinates with a number.
+      void setDisplayNumber(unsigned char displayNumber);
 
-  // After calling this function the update() function will set the view
-  // port rectangle by a window that own the windowName argument.
-  void setWindowName(const ::scoped_string & windowName);
+      // After calling this function the update() function will set the view
+      // port rectangle by a window that own the hwnd argument.
+      void setWindowHandle(HWND hwnd);
 
-  // After calling this function the hwnd will be zeroid and state
-  // will be changed to unresolved.
-  void unresolveHwnd();
+      // After calling this function the update() function will set the view
+      // port rectangle by a window that own the windowName argument.
+      void setWindowName(const ::scoped_string &windowName);
 
-  // After calling this function the update() function will set the view
-  // port rectangle to "Full desktop" and the view port region to a region constrained
-  // by windows of the process id.
-  void setProcessId(unsigned int processId);
+      // After calling this function the hwnd will be zeroid and state
+      // will be changed to unresolved.
+      void unresolveHwnd();
 
-private:
-  static const int FULL_DESKTOP = 0;
-  static const int PRIMARY_DISPLAY = 1;
-  static const int ARBITRARY_RECT = 2;
-  static const int WINDOW_RECT = 3;
-  static const int DISPLAY_NUMBER = 4;
-  static const int APPLICATION = 5;
+      // After calling this function the update() function will set the view
+      // port rectangle to "Full desktop" and the view port region to a region constrained
+      // by windows of the process id.
+      void setProcessId(unsigned int processId);
 
-  int m_mode;
-  ::int_rectangle m_arbitraryRect;
-  HWND m_hwnd;
-  ::string m_windowName;
-  bool m_windowIsResolved;
-  unsigned char m_displayNumber;
-  unsigned int m_processId;
+   private:
+      static const int FULL_DESKTOP = 0;
+      static const int PRIMARY_DISPLAY = 1;
+      static const int ARBITRARY_RECT = 2;
+      static const int WINDOW_RECT = 3;
+      static const int DISPLAY_NUMBER = 4;
+      static const int APPLICATION = 5;
 
-  friend class ViewPort;
-};
+      int m_mode;
+      ::int_rectangle m_arbitraryRect;
+      HWND m_hwnd;
+      ::string m_windowName;
+      bool m_windowIsResolved;
+      unsigned char m_displayNumber;
+      unsigned int m_processId;
 
-//// __VIEWPORTSTATE_H__
+      friend class ViewPort;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+
+

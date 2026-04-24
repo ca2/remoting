@@ -28,28 +28,40 @@
 #include "remoting/remoting/region/Region.h"
 //#include "remoting/remoting/region/::int_point.h"
 
-class UpdateContainer
+
+namespace remoting_node_desktop
 {
-public:
-  UpdateContainer();
-  ~UpdateContainer();
 
-  UpdateContainer(const UpdateContainer& updateContainer) { *this = updateContainer; }
-  UpdateContainer &operator=(const UpdateContainer& src);
+   class UpdateContainer
+   {
+   public:
+      UpdateContainer();
+      ~UpdateContainer();
 
-  ::remoting::Region copiedRegion;
-  ::remoting::Region changedRegion;
-  ::remoting::Region videoRegion;
-  bool screenSizeChanged;
-  bool cursorPosChanged;
-  bool cursorShapeChanged;
-  //::int_point copySrc;
-  //::int_point cursorPos;
-  ::int_point copySrc;
-  ::int_point cursorPos;
+      UpdateContainer(const UpdateContainer &updateContainer) { *this = updateContainer; }
+      UpdateContainer &operator=(const UpdateContainer &src);
 
-  void clear();
-  bool is_empty() const;
-};
+      ::remoting::Region copiedRegion;
+      ::remoting::Region changedRegion;
+      ::remoting::Region videoRegion;
+      bool screenSizeChanged;
+      bool cursorPosChanged;
+      bool cursorShapeChanged;
+      //::int_point copySrc;
+      //::int_point cursorPos;
+      ::int_point copySrc;
+      ::int_point cursorPos;
 
-//// __UPDATECONTAINER_H__
+      void clear();
+      bool is_empty() const;
+   };
+
+   //// __UPDATECONTAINER_H__
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+

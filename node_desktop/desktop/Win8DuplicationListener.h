@@ -27,22 +27,32 @@
 
 #include "remoting/remoting/region/Region.h"
 
-class Win8DuplicationListener
+namespace remoting_node_desktop
 {
-public:
-  // changedRegion in target ::innate_subsystem::FrameBuffer coordinates.
-  virtual void onFrameBufferUpdate(const Region *changedRegion) = 0;
-  // dstRect, srcX, srcY in target ::innate_subsystem::FrameBuffer coordinates.
-  virtual void onCopyRect(const ::int_rectangle &  dstRect, int srcX, int srcY) = 0;
 
-  virtual void onCursorPositionChanged(int x, int y) = 0;
-  virtual void onCursorShapeChanged() = 0;
+   class Win8DuplicationListener
+   {
+   public:
+      // changedRegion in target ::innate_subsystem::FrameBuffer coordinates.
+      virtual void onFrameBufferUpdate(const Region *changedRegion) = 0;
+      // dstRect, srcX, srcY in target ::innate_subsystem::FrameBuffer coordinates.
+      virtual void onCopyRect(const ::int_rectangle &dstRect, int srcX, int srcY) = 0;
 
-  // Calls when an error occurred which can be recover by object recreating.
-  virtual void onRecoverableError(const ::scoped_string & scopedstrReason) = 0;
-  // Calls when an error occurred which can't be recover by object recreating.
-  // Must be selected other way to duplicate desktop.
-  virtual void onCriticalError(const ::scoped_string & scopedstrReason) = 0;
-};
+      virtual void onCursorPositionChanged(int x, int y) = 0;
+      virtual void onCursorShapeChanged() = 0;
 
-//// __WIN8DUPLICATIONLISTENER_H__
+      // Calls when an error occurred which can be recover by object recreating.
+      virtual void onRecoverableError(const ::scoped_string &scopedstrReason) = 0;
+      // Calls when an error occurred which can't be recover by object recreating.
+      // Must be selected other way to duplicate desktop.
+      virtual void onCriticalError(const ::scoped_string &scopedstrReason) = 0;
+   };
+
+   //// __WIN8DUPLICATIONLISTENER_H__
+
+} // namespace remoting_node_desktop
+
+
+
+
+

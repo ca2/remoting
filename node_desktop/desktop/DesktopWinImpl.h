@@ -33,35 +33,44 @@
 #include "Win32ScreenDriverFactory.h"
 //#include "log_writer/LogWriter.h"
 
-class DesktopWinImpl : public GuiThread, public DesktopBaseImpl
+namespace remoting_node_desktop
+
 {
-public:
-  DesktopWinImpl(ClipboardListener *extClipListener,
-             UpdateSendingListener *extUpdSendingListener,
-             AbnormDeskTermListener *extDeskTermListener,
-             ::subsystem::LogWriter *log);
-  virtual ~DesktopWinImpl();
 
-protected:
-  virtual void execute();
-  virtual void onTerminate();
+   class DesktopWinImpl : public GuiThread, public DesktopBaseImpl
+   {
+   public:
+      DesktopWinImpl(ClipboardListener *extClipListener, UpdateSendingListener *extUpdSendingListener,
+                     AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter *log);
+      virtual ~DesktopWinImpl();
 
-private:
-  void freeResource();
+   protected:
+      virtual void execute();
+      virtual void onTerminate();
 
-  // Writes some desktop info to log.
-  void logDesktopInfo();
+   private:
+      void freeResource();
 
-  virtual bool isRemoteInputTempBlocked();
-  virtual void applyNewConfiguration();
+      // Writes some desktop info to log.
+      void logDesktopInfo();
 
-  Win32ScreenDriverFactory m_scrDriverFactory;
+      virtual bool isRemoteInputTempBlocked();
+      virtual void applyNewConfiguration();
 
-  WallpaperUtil *m_wallPaper;
+      Win32ScreenDriverFactory m_scrDriverFactory;
 
-  DesktopConfigLocal *m_deskConf;
+      WallpaperUtil *m_wallPaper;
 
-  ::subsystem::LogWriter *m_plogwriter;
-};
+      DesktopConfigLocal *m_deskConf;
 
-//// __DESKTOPWINIMPL_H__
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+

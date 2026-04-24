@@ -30,54 +30,63 @@
 #include "remoting/remoting/network/TcpServer.h"
 
 
-/**
- * TCP Server that accepts connections and pases them to RfbClientManager.
- * @see RfbClientManager class.
- * @author enikey.
- */
-class RfbServer : public ::remoting::TcpServer
+namespace remoting_node_desktop
 {
-public:
-  /**
-   * Creates new rfb server and starts listening thread.
-   * @param bindHost host to bind server.
-   * @param bindPort port to bind server.
-   * @param clientManager handler for incoming connections.
-   * @param viewPort [optional] view port shared by this server.
-   * @param lockAddr determinates if serever must set exclusive address usage.
-   * if not set, then view port is full screen.
-   * @throws ::subsystem::Exception when failed to create tcp server.
-   */
-  RfbServer(const ::scoped_string & scopedstrBindHost, unsigned short bindPort,
-            RfbClientManager *clientManager,
-            bool lockAddr, ::subsystem::LogWriter *log, const ::int_rectangle &viewPort = {});
 
-  /**
-   * Stops listening thread and deletes rfb server.
-   */
-  virtual ~RfbServer();
+   /**
+    * TCP Server that accepts connections and pases them to RfbClientManager.
+    * @see RfbClientManager class.
+    * @author enikey.
+    */
+   class RfbServer : public ::remoting::TcpServer
+   {
+   public:
+      /**
+       * Creates new rfb server and starts listening thread.
+       * @param bindHost host to bind server.
+       * @param bindPort port to bind server.
+       * @param clientManager handler for incoming connections.
+       * @param viewPort [optional] view port shared by this server.
+       * @param lockAddr determinates if serever must set exclusive address usage.
+       * if not set, then view port is full screen.
+       * @throws ::subsystem::Exception when failed to create tcp server.
+       */
+      RfbServer(const ::scoped_string &scopedstrBindHost, ::remoting_node_desktop::Configurator * pconfigurator, unsigned short bindPort, RfbClientManager *clientManager,
+                bool lockAddr, ::subsystem::LogWriter *log, const ::int_rectangle &viewPort = {});
 
-protected:
-  /**
-   * Inherited from superclass.
-   * Checks firewall rules (@see ServerConfig class) for incoming connection
-   * and, if it firewall passes connection, when pass it for owning to rfb client manager.
-   */
-  virtual void onAcceptConnection(::subsystem::SocketIPv4Interface *socket);
+      /**
+       * Stops listening thread and deletes rfb server.
+       */
+      virtual ~RfbServer();
 
-protected:
-  /**
-   * Owner for connections that passed built in rfb server firewall check.
-   */
-  RfbClientManager *m_clientManager;
+      // protected:
+      /**
+       * Inherited from superclass.
+       * Checks firewall rules (@see ServerConfig class) for incoming connection
+       * and, if it firewall passes connection, when pass it for owning to rfb client manager.
+       */
+      virtual void onAcceptConnection(::subsystem::SocketIPv4Interface *socket);
 
-  /**
-   * View port for server.
-   */
-  ViewPortState m_viewPort;
+      // protected:
+      /**
+       * Owner for connections that passed built in rfb server firewall check.
+       */
+      RfbClientManager *m_clientManager;
 
-private:
-  ::subsystem::LogWriter *m_plogwriter;
-};
+      /**
+       * View port for server.
+       */
+      ViewPortState m_viewPort;
 
-//// __LISTENTCPSOCKET_H__
+      // private:
+      ::subsystem::LogWriter *m_plogwriter;
+
+      ::pointer<Configurator> m_pconfigurator;
+
+   };
+
+
+} // namespace remoting_node_desktop
+ 
+
+

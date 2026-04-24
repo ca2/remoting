@@ -38,70 +38,84 @@
 #include "Win8DeskDuplicationThread.h"
 
 
-class Win8ScreenDriverImpl : private GuiThread, private Win8DuplicationListener
+namespace remoting_node_desktop
 {
-public:
-  Win8ScreenDriverImpl(::subsystem::LogWriter *log, UpdateKeeper *updateKeeper,
-                       critical_section *fbcritical_section,
-                       UpdateListener *updateListener, bool detectionEnabled = false);
-  virtual ~Win8ScreenDriverImpl();
 
-  void executeDetection();
-  void terminateDetection();
 
-  bool grabFb(const ::int_rectangle &  rect);
+   class Win8ScreenDriverImpl : private GuiThread, private Win8DuplicationListener
+   {
+   public:
+      Win8ScreenDriverImpl(::subsystem::LogWriter *log, UpdateKeeper *updateKeeper,
+                           critical_section *fbcritical_section, UpdateListener *updateListener,
+                           bool detectionEnabled = false);
+      virtual ~Win8ScreenDriverImpl();
 
-  virtual ::innate_subsystem::FrameBuffer *getScreenBuffer();
+      void executeDetection();
+      void terminateDetection();
 
-  // Updates destination (*dst) cursor shape properties and data.
-  void updateCursorShape(CursorShape *dst);
-  ::int_point getCursorPosition();
+      bool grabFb(const ::int_rectangle &rect);
 
-  bool isValid();
+      virtual ::innate_subsystem::FrameBuffer *getScreenBuffer();
 
-protected:
-  virtual void execute();
-  virtual void onTerminate();
+      // Updates destination (*dst) cursor shape properties and data.
+      void updateCursorShape(CursorShape *dst);
+      ::int_point getCursorPosition();
 
-private:
-  // Implementions of the Win8DuplicationListener listener functions.
-  virtual void onFrameBufferUpdate(const Region *changedRegion);
-  virtual void onCopyRect(const ::int_rectangle &  dstRect, int srcX, int srcY);
-  virtual void onCursorPositionChanged(int x, int y);
-  virtual void onCursorShapeChanged();
-  virtual void onRecoverableError(const ::scoped_string & scopedstrReason);
-  virtual void onCriticalError(const ::scoped_string & scopedstrReason);
+      bool isValid();
 
-  void initDxgi();
+   protected:
+      virtual void execute();
+      virtual void onTerminate();
 
-  // This function always return the DX DXGI_FORMAT_B8G8R8A8_UNORM format in the ::innate_subsystem::PixelFormat type.
-  ::innate_subsystem::PixelFormat getDxPixelFormat() const;
+   private:
+      // Implementions of the Win8DuplicationListener listener functions.
+      virtual void onFrameBufferUpdate(const Region *changedRegion);
+      virtual void onCopyRect(const ::int_rectangle &dstRect, int srcX, int srcY);
+      virtual void onCursorPositionChanged(int x, int y);
+      virtual void onCursorShapeChanged();
+      virtual void onRecoverableError(const ::scoped_string &scopedstrReason);
+      virtual void onCriticalError(const ::scoped_string &scopedstrReason);
 
-  ::subsystem::LogWriter *m_plogwriter;
+      void initDxgi();
 
-  ThreadCollector m_deskDuplThreadBundle;
+      // This function always return the DX DXGI_FORMAT_B8G8R8A8_UNORM format in the ::innate_subsystem::PixelFormat
+      // type.
+      ::innate_subsystem::PixelFormat getDxPixelFormat() const;
 
-  WindowsEvent m_initEvent;
-  WindowsEvent m_errorEvent;
+      ::subsystem::LogWriter *m_plogwriter;
 
-  // The duplication interface can't be used
-  bool m_hasCriticalError;
-  // The interface can be used but it should be reinitialized.
-  bool m_hasRecoverableError;
+      ThreadCollector m_deskDuplThreadBundle;
 
-  // The frame buffer with appropriate properties creates once at the constructor time. And then
-  // has these properties permanently.
-  ::innate_subsystem::FrameBuffer m_frameBuffer;
+      WindowsEvent m_initEvent;
+      WindowsEvent m_errorEvent;
 
-  // Cursor's properties changes at all time. And then it should be safe by a local mutex.
-  ::int_point m_latestCursorPos;
-  Win8CursorShape m_win8CursorShape;
-  LONGLONG m_curTimeStamp;
-  critical_section m_cursorMutex;
+      // The duplication interface can't be used
+      bool m_hasCriticalError;
+      // The interface can be used but it should be reinitialized.
+      bool m_hasRecoverableError;
 
-  UpdateKeeper *m_updateKeeper;
-  UpdateListener *m_updateListener;
-  bool m_detectionEnabled;
-};
+      // The frame buffer with appropriate properties creates once at the constructor time. And then
+      // has these properties permanently.
+      ::innate_subsystem::FrameBuffer m_frameBuffer;
 
-//// __WIN8SCREENDRIVERIMPL_H__
+      // Cursor's properties changes at all time. And then it should be safe by a local mutex.
+      ::int_point m_latestCursorPos;
+      Win8CursorShape m_win8CursorShape;
+      LONGLONG m_curTimeStamp;
+      critical_section m_cursorMutex;
+
+      UpdateKeeper *m_updateKeeper;
+      UpdateListener *m_updateListener;
+      bool m_detectionEnabled;
+   };
+
+   //// __WIN8SCREENDRIVERIMPL_H__
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+

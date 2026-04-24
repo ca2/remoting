@@ -30,51 +30,61 @@
 #include "remoting/remoting/win_system/WindowsEvent.h"
 //#include "log_writer/LogWriter.h"
 
-class ReconnectingChannel : public Channel
+
+namespace remoting_node_desktop
 {
-public:
-  ReconnectingChannel(unsigned int timeOut, ::subsystem::LogWriter *log);
-  virtual ~ReconnectingChannel();
 
-  virtual size_t read(void *buffer, size_t len);
-  virtual size_t write(const void *buffer, size_t len);
 
-  // Replaces invalid channel by the new valid.
-  // At the next the read()/write() function call read()/write()
-  // generates the ReconnectException if this is not the first initialization
-  void replaceChannel(Channel *newChannel);
+   class ReconnectingChannel : public Channel
+   {
+   public:
+      ReconnectingChannel(unsigned int timeOut, ::subsystem::LogWriter *log);
+      virtual ~ReconnectingChannel();
 
-  // Closes connection and break all blocked operation.
-  // @throw ::subsystem::Exception on error.
-  virtual void close();
+      virtual size_t read(void *buffer, size_t len);
+      virtual size_t write(const void *buffer, size_t len);
 
-  virtual size_t available() { return 0; };
+      // Replaces invalid channel by the new valid.
+      // At the next the read()/write() function call read()/write()
+      // generates the ReconnectException if this is not the first initialization
+      void replaceChannel(Channel *newChannel);
 
-private:
-  // @param funName - is a function name that will be placed to the
-  // ReconnectException text.
-  // @throw ReconnectException on reconnect detection.
-  // @throw ::io_exception on other errors.
-  Channel *getChannel(const ::scoped_string & scopedstrFunName);
+      // Closes connection and break all blocked operation.
+      // @throw ::subsystem::Exception on error.
+      virtual void close();
 
-  // @param funName - is a function name that will be placed to the
-  // ReconnectException text.
-  // @param channel - currently using transport.
-  // @throw ReconnectException on reconnect detection.
-  // @throw ::io_exception on other errors.
-  void waitForReconnect(const ::scoped_string & scopedstrFunName, Channel *channel);
+      virtual size_t available() { return 0; };
 
-  bool m_isClosed;
+   private:
+      // @param funName - is a function name that will be placed to the
+      // ReconnectException text.
+      // @throw ReconnectException on reconnect detection.
+      // @throw ::io_exception on other errors.
+      Channel *getChannel(const ::scoped_string &scopedstrFunName);
 
-  Channel *m_channel;
-  Channel *m_oldChannel;
-  bool m_chanWasChanged;
-  critical_section m_chanMut;
+      // @param funName - is a function name that will be placed to the
+      // ReconnectException text.
+      // @param channel - currently using transport.
+      // @throw ReconnectException on reconnect detection.
+      // @throw ::io_exception on other errors.
+      void waitForReconnect(const ::scoped_string &scopedstrFunName, Channel *channel);
 
-  WindowsEvent m_timer;
-  unsigned int m_timeOut;
+      bool m_isClosed;
 
-  ::subsystem::LogWriter *m_plogwriter;
-};
+      Channel *m_channel;
+      Channel *m_oldChannel;
+      bool m_chanWasChanged;
+      critical_section m_chanMut;
 
-//// __RECONNECTINGCHANNEL_H__
+      WindowsEvent m_timer;
+      unsigned int m_timeOut;
+
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+
+}  // namespace remoting_node_desktop
+
+
+
+

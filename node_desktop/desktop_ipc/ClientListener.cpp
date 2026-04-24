@@ -24,10 +24,13 @@
 #include "framework.h"
 #include "ClientListener.h"
 
-ClientListener::ClientListener()
+namespace remoting_node_desktop
 {
-}
 
-ClientListener::~ClientListener()
-{
-}
+
+   ClientListener::ClientListener() {}
+
+   ClientListener::~ClientListener() {}
+
+
+} // namespace remoting_node_desktop

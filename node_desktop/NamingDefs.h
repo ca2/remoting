@@ -28,87 +28,96 @@
 // This file contains all public names.
 #include "subsystem/_common_header.h"
 
-class NamingDefs
+namespace remoting_node_desktop
 {
-public:
-  static ::string_literal MIRROR_DRIVER_MESSAGE_WINDOW_CLASS_NAME;
-};
 
-class ProductNames
-{
-public:
-  static ::string_literal PRODUCT_NAME;
-  static ::string_literal SERVER_PRODUCT_NAME;
-};
+   class CLASS_DECL_REMOTING_NODE_DESKTOP NamingDefs
+   {
+   public:
+      static ::string_literal MIRROR_DRIVER_MESSAGE_WINDOW_CLASS_NAME;
+   };
 
-class RegistryPaths
-{
-public:
-  static ::string_literal SERVER_PATH;
-  static ::string_literal SERVER_REVERSE_CONN_HISTORY_PATH;
-  static ::string_literal DISPATCHER_CONN_HISTORY_PATH;
-};
+   class CLASS_DECL_REMOTING_NODE_DESKTOP ProductNames
+   {
+   public:
+      static ::string_literal PRODUCT_NAME;
+      static ::string_literal SERVER_PRODUCT_NAME;
+   };
 
-class WindowNames
-{
-public:
-  static ::string_literal WINDOW_CLASS_NAME;
-};
+   class CLASS_DECL_REMOTING_NODE_DESKTOP RegistryPaths
+   {
+   public:
+      static ::string_literal SERVER_PATH;
+      static ::string_literal SERVER_REVERSE_CONN_HISTORY_PATH;
+      static ::string_literal DISPATCHER_CONN_HISTORY_PATH;
+   };
 
-class LogNames
-{
-public:
-  static ::string_literal SERVER_LOG_FILE_STUB_NAME;
-  static ::string_literal VIEWER_LOG_FILE_STUB_NAME;
-  static ::string_literal LOG_DIR_NAME;
-  static ::string_literal LOG_PIPE_PUBLIC_NAME;
-  static ::string_literal WIN_EVENT_PROVIDER_NAME;
-};
+   class CLASS_DECL_REMOTING_NODE_DESKTOP WindowNames
+   {
+   public:
+      static ::string_literal WINDOW_CLASS_NAME;
+   };
 
-class CLASS_DECL_SUBSYSTEM_WINDOWS ClipboardNames
-{
-public:
-  static ::string_literal CLIPBOARD_WIN_CLASS_NAME;
-};
+   class CLASS_DECL_REMOTING_NODE_DESKTOP LogNames
+   {
+   public:
+      static ::string_literal SERVER_LOG_FILE_STUB_NAME;
+      static ::string_literal VIEWER_LOG_FILE_STUB_NAME;
+      static ::string_literal LOG_DIR_NAME;
+      static ::string_literal LOG_PIPE_PUBLIC_NAME;
+      static ::string_literal WIN_EVENT_PROVIDER_NAME;
+   };
 
-class ServiceNames
-{
-public:
-  static ::string_literal TVNCONTROL_START_REGISTRY_ENTRY_NAME;
-  static ::string_literal SERVICE_NAME;
-  static ::string_literal SERVICE_NAME_TO_DISPLAY;
-};
+   // class CLASS_DECL_REMOTING_NODE_DESKTOP ClipboardNames
+   //{
+   // public:
+   //   static ::string_literal CLIPBOARD_WIN_CLASS_NAME;
+   // };
 
-class ServerApplicationNames
-{
-public:
-  static ::string_literal SERVER_INSTANCE_MUTEX_NAME;
-  static ::string_literal CONTROL_APP_INSTANCE_MUTEX_NAME;
-  static ::string_literal FOR_SERVICE_CONTROL_APP_PIPE_NAME;
-  static ::string_literal FOR_APP_CONTROL_APP_SERVICE_PIPE_NAME;
-};
+   class CLASS_DECL_REMOTING_NODE_DESKTOP ServiceNames
+   {
+   public:
+      static ::string_literal TVNCONTROL_START_REGISTRY_ENTRY_NAME;
+      static ::string_literal SERVICE_NAME;
+      static ::string_literal SERVICE_NAME_TO_DISPLAY;
+   };
 
-class HookDefinitions
-{
-public:
-  static ::string_literal HOOK_LOADER_WINDOW_CLASS;
-  static ::string_literal HOOK_TARGET_WIN_CLASS_NAME;
-  static ::string_literal HOOK_LOADER_NAME;
-  static const unsigned int LOADER_CLOSE_CODE;
-  static const unsigned int SPEC_IPC_CODE;
-};
+   class CLASS_DECL_REMOTING_NODE_DESKTOP ServerApplicationNames
+   {
+   public:
+      static ::string_literal SERVER_INSTANCE_MUTEX_NAME;
+      static ::string_literal CONTROL_APP_INSTANCE_MUTEX_NAME;
+      static ::string_literal FOR_SERVICE_CONTROL_APP_PIPE_NAME;
+      static ::string_literal FOR_APP_CONTROL_APP_SERVICE_PIPE_NAME;
+   };
 
-class DefaultNames
-{
-public:
-  static ::string_literal DEFAULT_COMPUTER_NAME;
-};
+   class CLASS_DECL_REMOTING_NODE_DESKTOP HookDefinitions
+   {
+   public:
+      static ::string_literal HOOK_LOADER_WINDOW_CLASS;
+      static ::string_literal HOOK_TARGET_WIN_CLASS_NAME;
+      static ::string_literal HOOK_LOADER_NAME;
+      static const unsigned int LOADER_CLOSE_CODE;
+      static const unsigned int SPEC_IPC_CODE;
+   };
 
-class HttpStrings
-{
-public:
-  static ::string_literal HTTP_INDEX_PAGE_FORMAT;
-  static ::string_literal HTTP_MSG_BADPARAMS;
-};
+   class CLASS_DECL_REMOTING_NODE_DESKTOP DefaultNames
+   {
+   public:
+      static ::string_literal DEFAULT_COMPUTER_NAME;
+   };
 
-//// _PUBLIC_NAMES_H_
+   class CLASS_DECL_REMOTING_NODE_DESKTOP HttpStrings
+   {
+   public:
+      static ::string_literal HTTP_INDEX_PAGE_FORMAT;
+      static ::string_literal HTTP_MSG_BADPARAMS;
+   };
+
+   //// _PUBLIC_NAMES_H_
+
+
+} // namespace remoting_node_desktop
+ 
+
+

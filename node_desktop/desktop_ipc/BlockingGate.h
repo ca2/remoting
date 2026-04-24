@@ -30,12 +30,18 @@
 #include "acme/input_output/DataOutputStream.h"
 #include "acme/input_output/DataInputStream.h"
 
-class BlockingGate : public critical_section, public DataOutputStream,
-                     public DataInputStream
+namespace remoting_node_desktop
 {
-public:
-  BlockingGate(Channel *stream);
-  virtual ~BlockingGate();
-};
 
-//// _BLOCKING_GATE_H_
+   class BlockingGate : public critical_section, public DataOutputStream, public DataInputStream
+   {
+   public:
+      BlockingGate(Channel *stream);
+      virtual ~BlockingGate();
+   };
+
+} // namespace remoting_node_desktop
+ 
+
+
+

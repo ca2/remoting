@@ -24,11 +24,14 @@
 #include "framework.h"
 #include "BlockingOutputGate.h"
 
-BlockingOutputGate::BlockingOutputGate(OutputStream *outputStream)
-: DataOutputStream(outputStream)
-{
-}
 
-BlockingOutputGate::~BlockingOutputGate()
+namespace remoting_node_desktop
 {
-}
+
+
+   BlockingOutputGate::BlockingOutputGate(OutputStream *outputStream) : DataOutputStream(outputStream) {}
+
+   BlockingOutputGate::~BlockingOutputGate() {}
+
+
+} // namespace remoting_node_desktop

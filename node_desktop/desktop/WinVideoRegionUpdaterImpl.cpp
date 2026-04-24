@@ -28,122 +28,137 @@
 #include "remoting/remoting/region/RectSerializer.h"
 //#include "subsystem/thread/critical_section.h"
 
-WinVideoRegionUpdaterImpl::WinVideoRegionUpdaterImpl(::subsystem::LogWriter *log)
-  : m_plogwriter(log)
-{
-  resume();
-}
 
-WinVideoRegionUpdaterImpl::~WinVideoRegionUpdaterImpl()
+namespace remoting_node_desktop
 {
-  terminate();
-  wait();
-}
 
-void WinVideoRegionUpdaterImpl::onTerminate()
-{
-  m_sleeper.notify();
-}
 
-void WinVideoRegionUpdaterImpl::execute()
-{
-  while (!isTerminating()) {
-    m_sleeper.waitForEvent(getInterval());
-    if (!isTerminating()) {
-      try {
-        updateVideoRegion();
+   WinVideoRegionUpdaterImpl::WinVideoRegionUpdaterImpl(::subsystem::LogWriter *log) : m_plogwriter(log) { resume(); }
+
+   WinVideoRegionUpdaterImpl::~WinVideoRegionUpdaterImpl()
+   {
+      terminate();
+      wait();
+   }
+
+   void WinVideoRegionUpdaterImpl::onTerminate() { m_sleeper.notify(); }
+
+   void WinVideoRegionUpdaterImpl::execute()
+   {
+      while (!isTerminating())
+      {
+         m_sleeper.waitForEvent(getInterval());
+         if (!isTerminating())
+         {
+            try
+            {
+               updateVideoRegion();
+            }
+            catch (...)
+            {
+            }
+         }
       }
-      catch (...) {
+   }
+
+   unsigned int WinVideoRegionUpdaterImpl::getInterval()
+   {
+      ServerConfig *srvConf = Configurator::getInstance()->getServerConfig();
+      return srvConf->getVideoRecognitionInterval();
+   }
+
+   Region WinVideoRegionUpdaterImpl::getVideoRegion()
+   {
+      critical_section_lock al(&m_regionMutex);
+      return m_vidRegion;
+   }
+
+   void WinVideoRegionUpdaterImpl::getClassNamesAndRectsFromConfig(::string_array &classNames,
+                                                                   ::array_base<::int_rectangle> &rects)
+   {
+      ServerConfig *srvConf = Configurator::getInstance()->getServerConfig();
+      critical_section_lock al(srvConf);
+      classNames = *srvConf->getVideoClassNames();
+      rects = *srvConf->getVideoRects();
+   }
+
+   void WinVideoRegionUpdaterImpl::updateVideoRegion()
+   {
+      ::string_array classNames;
+      ::array_base<::int_rectangle> rects;
+      getClassNamesAndRectsFromConfig(classNames, rects);
+      Region tmpRegion;
+      m_plogwriter->debug(L"WinVideoRegionUpdaterImpl: ClassNames {}, Rects {}", classNames.size(),
+                          m_vidRegion.getCount());
+      if (!classNames.empty())
+      {
+         ::earth::time startTime = ::earth::time::now();
+         tmpRegion.add(getRectsByClass(classNames));
+         unsigned int millis = (::earth::time::now() - startTime).getTime();
+         m_plogwriter->debug(L"WinVideoRegionUpdaterImpl::getRectsByClass call took {} ms", millis);
       }
-    }
-  }
-}
-
-unsigned int WinVideoRegionUpdaterImpl::getInterval() {
-  ServerConfig *srvConf = Configurator::getInstance()->getServerConfig();
-  return srvConf->getVideoRecognitionInterval();
-}
-
-Region WinVideoRegionUpdaterImpl::getVideoRegion()
-{
-  critical_section_lock al(&m_regionMutex);
-  return m_vidRegion;
-}
-
-void WinVideoRegionUpdaterImpl::getClassNamesAndRectsFromConfig(::string_array &classNames, ::array_base<::int_rectangle> &rects)
-{
-  ServerConfig *srvConf = Configurator::getInstance()->getServerConfig();
-  critical_section_lock al(srvConf);
-  classNames = *srvConf->getVideoClassNames();
-  rects = *srvConf->getVideoRects();
-}
-
-void WinVideoRegionUpdaterImpl::updateVideoRegion()
-{
-  ::string_array classNames;
-  ::array_base<::int_rectangle> rects;
-  getClassNamesAndRectsFromConfig(classNames, rects);
-  Region tmpRegion;
-  m_plogwriter->debug(L"WinVideoRegionUpdaterImpl: ClassNames {}, Rects {}", classNames.size(), m_vidRegion.getCount());
-  if (!classNames.empty()) {
-    ::earth::time startTime = ::earth::time::now();
-    tmpRegion.add(getRectsByClass(classNames));
-    unsigned int millis = (::earth::time::now() - startTime).getTime();
-    m_plogwriter->debug(L"WinVideoRegionUpdaterImpl::getRectsByClass call took {} ms", millis);
-  }
-  if (!rects.empty()) {
-    tmpRegion.add(getRectsByCoords(rects));
-  }
-  m_plogwriter->debug(L"WinVideoRegionUpdaterImpl: copy data");
-  {
-    critical_section_lock al(&m_regionMutex);
-    m_vidRegion = tmpRegion;
-  }
-  m_plogwriter->debug(L"WinVideoRegionUpdaterImpl: exit updateVideoRegion()");
-}
-
-Region WinVideoRegionUpdaterImpl::getRectsByClass(::string_array classNames)
-{
-  ::array_base<HWND> hwndVector;
-  ::array_base<HWND>::iterator hwndIter;
-  Region vidRegion;
-
-  for (int i = 0; i < classNames.size(); ++i) {
-    m_plogwriter->debug(L"WinVideoRegionUpdaterImpl: getRectsByClass : classname: {} ", classNames[i]);
-  }
-  hwndVector = WindowFinder::findWindowsByClass(classNames);
-
-  m_plogwriter->debug(L"WinVideoRegionUpdaterImpl: getRectsByClass : %u windows found", hwndVector.size());
-
-  for (hwndIter = hwndVector.begin(); hwndIter != hwndVector.end(); hwndIter++) {
-    HWND videoHWND = *hwndIter;
-    if (videoHWND != 0) {
-      WINDOWINFO wi;
-      wi.cbSize = sizeof(WINDOWINFO);
-      if (GetWindowInfo(videoHWND, &wi)) {
-        ::int_rectangle videoRect(wi.rcClient.left, wi.rcClient.top,
-                       wi.rcClient.right, wi.rcClient.bottom);
-        if (videoRect.isValid()) {
-          videoRect.move(-GetSystemMetrics(SM_XVIRTUALSCREEN),
-                         -GetSystemMetrics(SM_YVIRTUALSCREEN));
-          vidRegion.addRect(&videoRect);
-        }
+      if (!rects.empty())
+      {
+         tmpRegion.add(getRectsByCoords(rects));
       }
-    }
-  }
-  return vidRegion;
-}
+      m_plogwriter->debug(L"WinVideoRegionUpdaterImpl: copy data");
+      {
+         critical_section_lock al(&m_regionMutex);
+         m_vidRegion = tmpRegion;
+      }
+      m_plogwriter->debug(L"WinVideoRegionUpdaterImpl: exit updateVideoRegion()");
+   }
 
-Region WinVideoRegionUpdaterImpl::getRectsByCoords(::array_base<::int_rectangle> &rects)
-{
-  ::array_base<::int_rectangle>::iterator rIter;
-  ::int_rectangle videoRect;
-  Region vidRegion;
-  for (rIter = rects.begin(); rIter != rects.end(); rIter++) {
-    videoRect  = *rIter;
-    if (videoRect.isValid()) {
-      vidRegion.addRect(&videoRect);
-    }
-  }
-  return vidRegion;
-}
+   Region WinVideoRegionUpdaterImpl::getRectsByClass(::string_array classNames)
+   {
+      ::array_base<HWND> hwndVector;
+      ::array_base<HWND>::iterator hwndIter;
+      Region vidRegion;
+
+      for (int i = 0; i < classNames.size(); ++i)
+      {
+         m_plogwriter->debug(L"WinVideoRegionUpdaterImpl: getRectsByClass : classname: {} ", classNames[i]);
+      }
+      hwndVector = WindowFinder::findWindowsByClass(classNames);
+
+      m_plogwriter->debug(L"WinVideoRegionUpdaterImpl: getRectsByClass : %u windows found", hwndVector.size());
+
+      for (hwndIter = hwndVector.begin(); hwndIter != hwndVector.end(); hwndIter++)
+      {
+         HWND videoHWND = *hwndIter;
+         if (videoHWND != 0)
+         {
+            WINDOWINFO wi;
+            wi.cbSize = sizeof(WINDOWINFO);
+            if (GetWindowInfo(videoHWND, &wi))
+            {
+               ::int_rectangle videoRect(wi.rcClient.left, wi.rcClient.top, wi.rcClient.right, wi.rcClient.bottom);
+               if (videoRect.isValid())
+               {
+                  videoRect.move(-GetSystemMetrics(SM_XVIRTUALSCREEN), -GetSystemMetrics(SM_YVIRTUALSCREEN));
+                  vidRegion.addRect(&videoRect);
+               }
+            }
+         }
+      }
+      return vidRegion;
+   }
+
+   Region WinVideoRegionUpdaterImpl::getRectsByCoords(::array_base<::int_rectangle> &rects)
+   {
+      ::array_base<::int_rectangle>::iterator rIter;
+      ::int_rectangle videoRect;
+      Region vidRegion;
+      for (rIter = rects.begin(); rIter != rects.end(); rIter++)
+      {
+         videoRect = *rIter;
+         if (videoRect.isValid())
+         {
+            vidRegion.addRect(&videoRect);
+         }
+      }
+      return vidRegion;
+   }
+
+
+} // namespace remoting_node_desktop

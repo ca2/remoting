@@ -29,54 +29,71 @@
 #include "RfbServer.h"
 #include "remoting/remoting/server_config/PortMappingContainer.h"
 
-class ExtraRfbServers
+namespace remoting_node_desktop
 {
-  struct Conf
-  {
-    bool acceptConnections;
-    bool loopbackOnly;
-    PortMappingContainer extraPorts;
 
-    Conf();
-    Conf(const Conf &other);
-    Conf &operator=(const Conf &other);
-    bool equals(const Conf *other);
-  };
+   class ExtraRfbServers :virtual public ::particle
 
-public:
-  ExtraRfbServers(::subsystem::LogWriter *log);
-  virtual ~ExtraRfbServers();
+   {
+   public:
+      struct Conf
+      {
+         bool acceptConnections;
+         bool loopbackOnly;
+         PortMappingContainer extraPorts;
 
-  // Check current configuration and restart the servers if necessary.
-  // Returns true on success (either no work was required or everything has
-  // been restarted successfully), false if there were failures on restarting
-  // servers (see startUp() for more details).
-  bool reload(bool asService, RfbClientManager *mgr);
+         Conf();
+         Conf(const Conf &other);
+         Conf &operator=(const Conf &other);
+         bool equals(const Conf *other);
+      };
 
-  // Stop all extra RFB servers, clear the ::list_base.
-  void shutDown();
 
-protected:
-  // Construct and start RFB servers as specified in the Extra Ports
-  // configuration. If some servers fail to start, this function does not add
-  // it to the internally maintained ::list_base of RFB servers.
-  // Returns true if all the servers have been started sucessfully, false if
-  // at least one failed.
-  bool startUp(bool asService, RfbClientManager *mgr);
+      ::ø<::list_base<::pointer<::remoting_node_desktop::RfbServer>>> m_servers;
+      Conf m_effectiveConf;
+      ::pointer<Configurator> m_pconfigurator;
+      ::subsystem::LogWriter *m_plogwriter;
 
-  // Read configuration into the specified structure.
-  static void getConfiguration(Conf *out);
 
-protected:
-  ::list_base<RfbServer *> m_servers;
-  Conf m_effectiveConf;
+   //public:
+      //ExtraRfbServers(::subsystem::LogWriter *log);
+      ExtraRfbServers();
+      ~ExtraRfbServers() override;
+      
+      
+      virtual void initialize_extra_rfb_servers(Configurator * pconfigurator, ::subsystem::LogWriter *log);
 
-private:
-  // Do not allow copying objects.
-  ExtraRfbServers(const ExtraRfbServers &);
-  ExtraRfbServers &operator=(const ExtraRfbServers &);
+      // Check current configuration and restart the servers if necessary.
+      // Returns true on success (either no work was required or everything has
+      // been restarted successfully), false if there were failures on restarting
+      // servers (see startUp() for more details).
+      bool reload(bool asService, RfbClientManager *mgr);
 
-  ::subsystem::LogWriter *m_plogwriter;
-};
+      // Stop all extra RFB servers, clear the ::list_base.
+      void shutDown();
 
-//// __TVNSERVERAPP_EXTRA_RFB_SERVERS_H__
+      // protected:
+      //  Construct and start RFB servers as specified in the Extra Ports
+      //  configuration. If some servers fail to start, this function does not add
+      //  it to the internally maintained ::list_base of RFB servers.
+      //  Returns true if all the servers have been started sucessfully, false if
+      //  at least one failed.
+      bool startUp(bool asService, RfbClientManager *mgr);
+
+      // Read configuration into the specified structure.
+      static void getConfiguration(Conf *out);
+
+      
+      /// private:
+      // Do not allow copying objects.
+      //ExtraRfbServers(const ExtraRfbServers &);
+      //ExtraRfbServers &operator=(const ExtraRfbServers &);
+
+   };
+
+
+} // namespace remoting_node_desktop
+ 
+
+
+

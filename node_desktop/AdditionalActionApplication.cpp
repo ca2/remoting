@@ -33,8 +33,8 @@
 namespace remoting_node_desktop
 {
 
-const char AdditionalActionApplication::LOCK_WORKSTATION_KEY[] = "-lockworkstation";
-const char AdditionalActionApplication::LOGOUT_KEY[] = "-logout";
+::string_literal AdditionalActionApplication::LOCK_WORKSTATION_KEY = "-lockworkstation";
+::string_literal AdditionalActionApplication::LOGOUT_KEY = "-logout";
 
 ////AdditionalActionApplication::AdditionalActionApplication(::hinstance hInstance,
 ////                                                         const ::scoped_string & scopedstrwindowClassName,

@@ -24,45 +24,49 @@
 #include "framework.h"
 #include "CursorShapeDetector.h"
 
-const int SLEEP_TIME = 100;
-
-CursorShapeDetector::CursorShapeDetector(UpdateKeeper *updateKeeper,
-                                       UpdateListener *updateListener,
-                                       CursorShapeGrabber *mouseGrabber,
-                                       critical_section *mouseGrabLocMut,
-                                       ::subsystem::LogWriter *log)
-: UpdateDetector(updateKeeper, updateListener),
-  m_mouseGrabber(mouseGrabber),
-  m_mouseGrabLocMut(mouseGrabLocMut),
-  m_plogwriter(log)
+namespace remoting_node_desktop
 {
-}
 
-CursorShapeDetector::~CursorShapeDetector(void)
-{
-  terminate();
-  wait();
-}
+   const int SLEEP_TIME = 100;
 
-void CursorShapeDetector::onTerminate()
-{
-  m_sleepTimer.notify();
-}
+   CursorShapeDetector::CursorShapeDetector(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
+                                            CursorShapeGrabber *mouseGrabber, critical_section *mouseGrabLocMut,
+                                            ::subsystem::LogWriter *log) :
+       UpdateDetector(updateKeeper, updateListener), m_mouseGrabber(mouseGrabber), m_mouseGrabLocMut(mouseGrabLocMut),
+       m_plogwriter(log)
+   {
+   }
 
-void CursorShapeDetector::execute()
-{
-  m_plogwriter->information("mouse shape detector thread id = {}", getThreadId());
+   CursorShapeDetector::~CursorShapeDetector(void)
+   {
+      terminate();
+      wait();
+   }
 
-  while (!isTerminating()) {
-    bool isCursorShapeChanged;
-    {
-      critical_section_lock al(m_mouseGrabLocMut);
-      isCursorShapeChanged = m_mouseGrabber->isCursorShapeChanged();
-    }
-    if (isCursorShapeChanged) {
-      m_updateKeeper->setCursorShapeChanged();
-      doUpdate();
-    }
-    m_sleepTimer.waitForEvent(SLEEP_TIME);
-  }
-}
+   void CursorShapeDetector::onTerminate() { m_sleepTimer.notify(); }
+
+   void CursorShapeDetector::execute()
+   {
+      m_plogwriter->information("mouse shape detector thread id = {}", getThreadId());
+
+      while (!isTerminating())
+      {
+         bool isCursorShapeChanged;
+         {
+            critical_section_lock al(m_mouseGrabLocMut);
+            isCursorShapeChanged = m_mouseGrabber->isCursorShapeChanged();
+         }
+         if (isCursorShapeChanged)
+         {
+            m_updateKeeper->setCursorShapeChanged();
+            doUpdate();
+         }
+         m_sleepTimer.waitForEvent(SLEEP_TIME);
+      }
+   }
+
+
+} // namespace remoting_node_desktop
+
+
+

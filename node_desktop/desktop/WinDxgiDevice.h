@@ -25,22 +25,35 @@
 #pragma once
 
 
+
 #include "WinD3D11Device.h"
 
-// #include aaa_<d3d11.h>
-// #include aaa_<DXGI1_2.h>
 
-class WinDxgiDevice
+namespace remoting_node_desktop
 {
-public:
-  // Uses WinD3D11Device to create internal handle
-  WinDxgiDevice(WinD3D11Device *winD3D11Device);
-  virtual ~WinDxgiDevice();
 
-  HRESULT getParent(REFIID riid, void **ppvObject);
+   // #include aaa_<d3d11.h>
+   // #include aaa_<DXGI1_2.h>
 
-private:
-  IDXGIDevice *m_dxgiDevice;
-};
+   class WinDxgiDevice
+   {
+   public:
+      // Uses WinD3D11Device to create internal handle
+      WinDxgiDevice(WinD3D11Device *winD3D11Device);
+      virtual ~WinDxgiDevice();
 
-//// __WINDXGIDEVICE_H__
+      HRESULT getParent(REFIID riid, void **ppvObject);
+
+   private:
+      IDXGIDevice *m_dxgiDevice;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+
+

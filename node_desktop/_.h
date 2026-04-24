@@ -17,6 +17,9 @@ namespace remoting_node_desktop
 {
 
 
+   class Configurator;
+
+
    class Server;
 
 

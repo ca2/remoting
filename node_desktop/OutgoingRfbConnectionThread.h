@@ -30,35 +30,43 @@
 #include "RfbClientManager.h"
 //#include "log_writer/LogWriter.h"
 
-/**
-Thread that makes attempt to connect to listening rfb client in separate thread.
-To use it, you must create instance, call start method, and pass it to zombie killer.
-@remark don't forget to add it to zombie killer after thread is started.
-@author enikey.
-*/
-class OutgoingRfbConnectionThread : public ::subsystem::Thread
+namespace remoting_node_desktop
 {
-public:
-  /**
-  Creates new instance of outgoing rfb connection thread.
-  @param connectHost target host to connect.
-  @param connectPort port to connect.
-  @param viewOnly flag that determinates mode for rfb connection.
-  @param clientManager rfb client manager.
-  */
-  OutgoingRfbConnectionThread(const ::scoped_string & scopedstrConnectHost, unsigned int connectPort,
-                              bool viewOnly, RfbClientManager *clientManager, ::subsystem::LogWriter *log);
-  virtual ~OutgoingRfbConnectionThread();
 
-protected:
-  virtual void execute();
 
-private:
-  ::string m_connectHost;
-  unsigned int m_connectPort;
-  bool m_viewOnly;
-  RfbClientManager *m_clientManager;
-  ::subsystem::LogWriter *m_plogwriter;
-};
+   /**
+   Thread that makes attempt to connect to listening rfb client in separate thread.
+   To use it, you must create instance, call start method, and pass it to zombie killer.
+   @remark don't forget to add it to zombie killer after thread is started.
+   @author enikey.
+   */
+   class OutgoingRfbConnectionThread : public ::subsystem::Thread
+   {
+   public:
+      /**
+      Creates new instance of outgoing rfb connection thread.
+      @param connectHost target host to connect.
+      @param connectPort port to connect.
+      @param viewOnly flag that determinates mode for rfb connection.
+      @param clientManager rfb client manager.
+      */
+      OutgoingRfbConnectionThread(const ::scoped_string &scopedstrConnectHost, unsigned int connectPort, bool viewOnly,
+                                  RfbClientManager *clientManager, ::subsystem::LogWriter *log);
+      virtual ~OutgoingRfbConnectionThread();
+
+   protected:
+      virtual void execute();
+
+   private:
+      ::string m_connectHost;
+      unsigned int m_connectPort;
+      bool m_viewOnly;
+      RfbClientManager *m_clientManager;
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+
+} // namespace remoting_node_desktop
+ 
 
 

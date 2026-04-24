@@ -113,8 +113,8 @@
  */
 class CLASS_DECL_REMOTING FTMessage {
 public:
-  const static char COMPRESSION_SUPPORT_REQUEST_SIG[];
-  const static char COMPRESSION_SUPPORT_REPLY_SIG[];
+  static string_literal COMPRESSION_SUPPORT_REQUEST_SIG;
+  static string_literal COMPRESSION_SUPPORT_REPLY_SIG;
   /**
    * Checks if data compression (zlib) is supported on server side.
    *
@@ -131,8 +131,8 @@ public:
    */
   const static unsigned int COMPRESSION_SUPPORT_REPLY = 0xFC000101;
 
-  const static char FILE_LIST_REQUEST_SIG[];
-  const static char FILE_LIST_REPLY_SIG[];
+  static string_literal FILE_LIST_REQUEST_SIG;
+  static string_literal FILE_LIST_REPLY_SIG;
   /**
    * Get file ::list_base of specified folder on remote computer.
    *
@@ -162,8 +162,8 @@ public:
    */
   const static unsigned int FILE_LIST_REPLY = 0xFC000103;
 
-  const static char MD5_REQUEST_SIG[];
-  const static char MD5_REPLY_SIG[];
+  static string_literal MD5_REQUEST_SIG;
+  static string_literal MD5_REPLY_SIG;
   /**
    * Request for MD5 sum of file chunk.
    *
@@ -183,56 +183,56 @@ public:
    */
   const static unsigned int MD5_REPLY = 0xFC000105;
 
-  const static char UPLOAD_START_REQUEST_SIG[];
-  const static char UPLOAD_START_REPLY_SIG[];
+  static string_literal UPLOAD_START_REQUEST_SIG;
+  static string_literal UPLOAD_START_REPLY_SIG;
   const static unsigned int UPLOAD_START_REQUEST = 0xFC000106;
   const static unsigned int UPLOAD_START_REPLY = 0xFC000107;
 
-  const static char UPLOAD_DATA_REQUEST_SIG[];
-  const static char UPLOAD_DATA_REPLY_SIG[];
+  static string_literal UPLOAD_DATA_REQUEST_SIG;
+  static string_literal UPLOAD_DATA_REPLY_SIG;
   const static unsigned int UPLOAD_DATA_REQUEST = 0xFC000108;
   const static unsigned int UPLOAD_DATA_REPLY = 0xFC000109;
 
-  const static char UPLOAD_END_REQUEST_SIG[];
-  const static char UPLOAD_END_REPLY_SIG[];
+  static string_literal UPLOAD_END_REQUEST_SIG;
+  static string_literal UPLOAD_END_REPLY_SIG;
   const static unsigned int UPLOAD_END_REQUEST = 0xFC00010A;
   const static unsigned int UPLOAD_END_REPLY = 0xFC00010B;
 
-  const static char DOWNLOAD_START_REQUEST_SIG[];
-  const static char DOWNLOAD_START_REPLY_SIG[];
+  static string_literal DOWNLOAD_START_REQUEST_SIG;
+  static string_literal DOWNLOAD_START_REPLY_SIG;
   const static unsigned int DOWNLOAD_START_REQUEST = 0xFC00010C;
   const static unsigned int DOWNLOAD_START_REPLY = 0xFC00010D;
 
-  const static char DOWNLOAD_DATA_REQUEST_SIG[];
-  const static char DOWNLOAD_DATA_REPLY_SIG[];
+  static string_literal DOWNLOAD_DATA_REQUEST_SIG;
+  static string_literal DOWNLOAD_DATA_REPLY_SIG;
   const static unsigned int DOWNLOAD_DATA_REQUEST = 0xFC00010E;
   const static unsigned int DOWNLOAD_DATA_REPLY = 0xFC00010F;
 
-  const static char DOWNLOAD_END_REPLY_SIG[];
+  static string_literal DOWNLOAD_END_REPLY_SIG;
   const static unsigned int DOWNLOAD_END_REPLY = 0xFC000110;
 
-  const static char MKDIR_REQUEST_SIG[];
-  const static char MKDIR_REPLY_SIG[];
+  static string_literal MKDIR_REQUEST_SIG;
+  static string_literal MKDIR_REPLY_SIG;
   const static unsigned int MKDIR_REQUEST = 0xFC000111;
   const static unsigned int MKDIR_REPLY = 0xFC000112;
 
-  const static char REMOVE_REQUEST_SIG[];
-  const static char REMOVE_REPLY_SIG[];
+  static string_literal REMOVE_REQUEST_SIG;
+  static string_literal REMOVE_REPLY_SIG;
   const static unsigned int REMOVE_REQUEST = 0xFC000113;
   const static unsigned int REMOVE_REPLY = 0xFC000114;
 
-  const static char RENAME_REQUEST_SIG[];
-  const static char RENAME_REPLY_SIG[];
+  static string_literal RENAME_REQUEST_SIG;
+  static string_literal RENAME_REPLY_SIG;
   const static unsigned int RENAME_REQUEST = 0xFC000115;
   const static unsigned int RENAME_REPLY = 0xFC000116;
 
-  const static char DIRSIZE_REQUEST_SIG[];
-  const static char DIRSIZE_REPLY_SIG[];
+  static string_literal DIRSIZE_REQUEST_SIG;
+  static string_literal DIRSIZE_REPLY_SIG;
   const static unsigned int DIRSIZE_REQUEST = 0xFC000117;
   const static unsigned int DIRSIZE_REPLY = 0xFC000118;
 
   const static unsigned int LAST_REQUEST_FAILED_REPLY = 0xFC000119;
-  const static char LAST_REQUEST_FAILED_REPLY_SIG[];
+  static string_literal LAST_REQUEST_FAILED_REPLY_SIG;
 };
 
 

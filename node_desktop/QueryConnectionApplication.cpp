@@ -104,7 +104,7 @@ namespace remoting_node_desktop
                      QueryConnectionCommandLine::QUERY_CONNECTION,
                      QueryConnectionCommandLine::PEER_ADDR,
                      scopedstrPeerAddr,
-                     acceptByDefault ? QueryConnectionCommandLine::ACCEPT : "",
+                     acceptByDefault ? QueryConnectionCommandLine::ACCEPT : string_literal(""),
                      QueryConnectionCommandLine::TIMEOUT,
                      timeOutSec);
 

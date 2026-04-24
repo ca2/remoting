@@ -32,70 +32,78 @@
 //#include aaa_<vector>
 //#include aaa_<list>
 
-// This class provides the screen grabbing by an optimal way.
-// The class determines an optimal way by oneself dynamically.
-class GrabOptimizator
+namespace remoting_node_desktop
 {
-public:
-  GrabOptimizator(::subsystem::LogWriter *log);
-  ~GrabOptimizator();
 
-  bool grab(const ::remoting::Region *grabRegion, ScreenDriver *grabber);
+   // This class provides the screen grabbing by an optimal way.
+   // The class determines an optimal way by oneself dynamically.
+   class GrabOptimizator
+   {
+   public:
+      GrabOptimizator(::subsystem::LogWriter *log);
+      ~GrabOptimizator();
 
-private:
-  // Returns true when the m_wholeTElements is comletly calculated.
-  bool getWholeTCompleted();
+      bool grab(const ::remoting::Region *grabRegion, ScreenDriver *grabber);
 
-  // Returns true when the m_gElements is comletly calculated.
-  bool getGCompleted();
+   private:
+      // Returns true when the m_wholeTElements is comletly calculated.
+      bool getWholeTCompleted();
 
-  // Returns true if all needed coefficients is calculated to use
-  // the grab optimization.
-  bool getOptimizationAvailable(ScreenDriver *grabber);
-  bool isAvailableWholeStats();
-  bool isAvailableFragmentStats();
+      // Returns true when the m_gElements is comletly calculated.
+      bool getGCompleted();
 
-  // Removes a part of the statistic to made it available to a refresh.
-  void refreshStatistic(ScreenDriver *grabber);
+      // Returns true if all needed coefficients is calculated to use
+      // the grab optimization.
+      bool getOptimizationAvailable(ScreenDriver *grabber);
+      bool isAvailableWholeStats();
+      bool isAvailableFragmentStats();
 
-  // Returns absolute sum area of rectangle ::array_base.
-  int getArea(const ::array_base<::int_rectangle> *rects);
+      // Removes a part of the statistic to made it available to a refresh.
+      void refreshStatistic(ScreenDriver *grabber);
 
-  // If the grab region is alike to whole desktop the function return true.
-  bool isAlikeToWhole(const ::array_base<::int_rectangle> *rects);
-  bool isEnoughForWholeStats(const ::int_rectangle &  rect);
-  // If the grab region is alike to separate fragments the function
-  // return true.
-  bool isAlikeToFragments(const ::array_base<::int_rectangle> *rects);
+      // Returns absolute sum area of rectangle ::array_base.
+      int getArea(const ::array_base<::int_rectangle> *rects);
 
-  // This functions store to the log all statistic data.
-  void logStatistic();
+      // If the grab region is alike to whole desktop the function return true.
+      bool isAlikeToWhole(const ::array_base<::int_rectangle> *rects);
+      bool isEnoughForWholeStats(const ::int_rectangle &rect);
+      // If the grab region is alike to separate fragments the function
+      // return true.
+      bool isAlikeToFragments(const ::array_base<::int_rectangle> *rects);
 
-  static const size_t MIN_ELEMENTS_SIZE = 3;
-  static const size_t MAX_ELEMENTS_SIZE = 10;
+      // This functions store to the log all statistic data.
+      void logStatistic();
 
-  __int64 grabWhole(ScreenDriver *grabber);
-  __int64 grabOneRect(const ::int_rectangle &  rect, ScreenDriver *grabber);
-  __int64 grabFragments(const ::array_base<::int_rectangle> *rects, ScreenDriver *grabber);
+      static const size_t MIN_ELEMENTS_SIZE = 3;
+      static const size_t MAX_ELEMENTS_SIZE = 10;
 
-  void addWholeTElement(double wholeT);
-  void removeObsoleteWholeTElements();
-  void removeFirstWholeTElement();
+      __int64 grabWhole(ScreenDriver *grabber);
+      __int64 grabOneRect(const ::int_rectangle &rect, ScreenDriver *grabber);
+      __int64 grabFragments(const ::array_base<::int_rectangle> *rects, ScreenDriver *grabber);
 
-  void addFragmentStats(double g);
-  void removeObsoleteFragmentStats();
-  void removeFirstElementsFromFragmentStats();
+      void addWholeTElement(double wholeT);
+      void removeObsoleteWholeTElements();
+      void removeFirstWholeTElement();
 
-  int m_wholeS;
-  ::list_base<double> m_wholeTElements;
-  double m_wholeTSum;
+      void addFragmentStats(double g);
+      void removeObsoleteFragmentStats();
+      void removeFirstElementsFromFragmentStats();
 
-  ::list_base<double> m_gElements;
-  double m_gSum;
+      int m_wholeS;
+      ::list_base<double> m_wholeTElements;
+      double m_wholeTSum;
 
-  DemandTimer m_timer;
+      ::list_base<double> m_gElements;
+      double m_gSum;
 
-  ::subsystem::LogWriter *m_plogwriter;
-};
+      DemandTimer m_timer;
 
-//// __GRABOPTIMIZATOR_H__
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+ 
+
+} // namespace remoting_node_desktop
+ 
+
+

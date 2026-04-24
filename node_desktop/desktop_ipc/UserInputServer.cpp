@@ -26,213 +26,227 @@
 //#include "subsystem/thread/critical_section.h"
 #include "subsystem/platform/BrokenHandleException.h"
 
-UserInputServer::UserInputServer(BlockingGate *forwGate,
-                                 DesktopSrvDispatcher *dispatcher,
-                                 AnEventListener *extTerminationListener,
-                                 ::subsystem::LogWriter *log)
-: DesktopServerProto(forwGate),
-  m_extTerminationListener(extTerminationListener),
-  m_plogwriter(log)
+namespace remoting_node_desktop
 {
-  bool ctrlAltDelEnabled = true;
-  m_userInput = new WindowsUserInput(this, ctrlAltDelEnabled, m_plogwriter);
 
-  dispatcher->registerNewHandle(POINTER_POS_CHANGED, this);
-  dispatcher->registerNewHandle(CLIPBOARD_CHANGED, this);
-  dispatcher->registerNewHandle(KEYBOARD_EVENT, this);
-  dispatcher->registerNewHandle(USER_INFO_REQ, this);
-  dispatcher->registerNewHandle(DESKTOP_COORDS_REQ, this);
-  dispatcher->registerNewHandle(WINDOW_COORDS_REQ, this);
-  dispatcher->registerNewHandle(WINDOW_HANDLE_REQ, this);
-  dispatcher->registerNewHandle(DISPLAY_NUMBER_COORDS_REQ, this);
-  dispatcher->registerNewHandle(DISPLAYS_COORDS_REQ, this);
-  dispatcher->registerNewHandle(APPLICATION_REGION_REQ, this);
-  dispatcher->registerNewHandle(APPLICATION_CHECK_FOCUS, this);
-  dispatcher->registerNewHandle(NORMALIZE_RECT_REQ, this);
-  dispatcher->registerNewHandle(USER_INPUT_INIT, this);
-}
 
-UserInputServer::~UserInputServer()
-{
-  m_plogwriter->debug("The UserInputServer destructor has been called");
-  delete m_userInput;
-}
+   UserInputServer::UserInputServer(BlockingGate *forwGate, DesktopSrvDispatcher *dispatcher,
+                                    AnEventListener *extTerminationListener, ::subsystem::LogWriter *log) :
+       DesktopServerProto(forwGate), m_extTerminationListener(extTerminationListener), m_plogwriter(log)
+   {
+      bool ctrlAltDelEnabled = true;
+      m_userInput = new WindowsUserInput(this, ctrlAltDelEnabled, m_plogwriter);
 
-void UserInputServer::onClipboardUpdate(const ::scoped_string & newClipboard)
-{
-  critical_section_lock al(m_forwGate);
-  try {
-    // Send clipboard data
-    if (newClipboard->length() != 0) {
-      m_forwGate->writeUInt8(CLIPBOARD_CHANGED);
-      sendNewClipboard(newClipboard, m_forwGate);
-    }
-  } catch (::exception &e) {
-    m_plogwriter->error("An error has been occurred while sending a"
-               " CLIPBOARD_CHANGED scopedstrMessage from UserInputServer: {}",
-               e.get_message());
-    m_extTerminationListener->onAnObjectEvent();
-  }
-}
+      dispatcher->registerNewHandle(POINTER_POS_CHANGED, this);
+      dispatcher->registerNewHandle(CLIPBOARD_CHANGED, this);
+      dispatcher->registerNewHandle(KEYBOARD_EVENT, this);
+      dispatcher->registerNewHandle(USER_INFO_REQ, this);
+      dispatcher->registerNewHandle(DESKTOP_COORDS_REQ, this);
+      dispatcher->registerNewHandle(WINDOW_COORDS_REQ, this);
+      dispatcher->registerNewHandle(WINDOW_HANDLE_REQ, this);
+      dispatcher->registerNewHandle(DISPLAY_NUMBER_COORDS_REQ, this);
+      dispatcher->registerNewHandle(DISPLAYS_COORDS_REQ, this);
+      dispatcher->registerNewHandle(APPLICATION_REGION_REQ, this);
+      dispatcher->registerNewHandle(APPLICATION_CHECK_FOCUS, this);
+      dispatcher->registerNewHandle(NORMALIZE_RECT_REQ, this);
+      dispatcher->registerNewHandle(USER_INPUT_INIT, this);
+   }
 
-void UserInputServer::onRequest(unsigned char reqCode, BlockingGate *backGate)
-{
-  switch (reqCode) {
-  case POINTER_POS_CHANGED:
-    applyNewPointerPos(backGate);
-    break;
-  case CLIPBOARD_CHANGED:
-    applyNewClipboard(backGate);
-    break;
-  case KEYBOARD_EVENT:
-    applyKeyEvent(backGate);
-    break;
-  case USER_INFO_REQ:
-    ansUserInfo(backGate);
-    break;
-  case DESKTOP_COORDS_REQ:
-    ansDesktopCoords(backGate);
-    break;
-  case WINDOW_COORDS_REQ:
-    ansWindowCoords(backGate);
-    break;
-  case WINDOW_HANDLE_REQ:
-    ansWindowHandle(backGate);
-    break;
-  case DISPLAY_NUMBER_COORDS_REQ:
-    ansDisplayNumberCoords(backGate);
-    break;
-  case DISPLAYS_COORDS_REQ:
-    ansDisplaysCoords(backGate);
-    break;
-  case APPLICATION_REGION_REQ:
-    ansApplicationRegion(backGate);
-    break;
-  case APPLICATION_CHECK_FOCUS:
-    ansApplicationInFocus(backGate);
-    break;
-  case NORMALIZE_RECT_REQ:
-    ansNormalizeRect(backGate);
-    break;
-  case USER_INPUT_INIT:
-    serverInit(backGate);
-    break;
-  default:
-    ::string errMess;
-    errMess.formatf("Unknown {} protocol code received"
-                   " from a UserInputClient", reqCode);
-    throw ::subsystem::Exception(errMess);
-    break;
-  }
-}
+   UserInputServer::~UserInputServer()
+   {
+      m_plogwriter->debug("The UserInputServer destructor has been called");
+      delete m_userInput;
+   }
 
-void UserInputServer::serverInit(BlockingGate *backGate)
-{
-  unsigned char keyFlags = backGate->readUInt8();
-  m_userInput->initKeyFlag(keyFlags);
-}
+   void UserInputServer::onClipboardUpdate(const ::scoped_string &newClipboard)
+   {
+      critical_section_lock al(m_forwGate);
+      try
+      {
+         // Send clipboard data
+         if (newClipboard->length() != 0)
+         {
+            m_forwGate->writeUInt8(CLIPBOARD_CHANGED);
+            sendNewClipboard(newClipboard, m_forwGate);
+         }
+      }
+      catch (::exception &e)
+      {
+         m_plogwriter->error("An error has been occurred while sending a"
+                             " CLIPBOARD_CHANGED scopedstrMessage from UserInputServer: {}",
+                             e.get_message());
+         m_extTerminationListener->onAnObjectEvent();
+      }
+   }
 
-void UserInputServer::applyNewPointerPos(BlockingGate *backGate)
-{
-  ::int_point newPointerPos;
-  unsigned char keyFlags;
-  readNewPointerPos(&newPointerPos, &keyFlags, backGate);
-  m_userInput->setMouseEvent(newPointerPos, keyFlags);
-}
+   void UserInputServer::onRequest(unsigned char reqCode, BlockingGate *backGate)
+   {
+      switch (reqCode)
+      {
+         case POINTER_POS_CHANGED:
+            applyNewPointerPos(backGate);
+            break;
+         case CLIPBOARD_CHANGED:
+            applyNewClipboard(backGate);
+            break;
+         case KEYBOARD_EVENT:
+            applyKeyEvent(backGate);
+            break;
+         case USER_INFO_REQ:
+            ansUserInfo(backGate);
+            break;
+         case DESKTOP_COORDS_REQ:
+            ansDesktopCoords(backGate);
+            break;
+         case WINDOW_COORDS_REQ:
+            ansWindowCoords(backGate);
+            break;
+         case WINDOW_HANDLE_REQ:
+            ansWindowHandle(backGate);
+            break;
+         case DISPLAY_NUMBER_COORDS_REQ:
+            ansDisplayNumberCoords(backGate);
+            break;
+         case DISPLAYS_COORDS_REQ:
+            ansDisplaysCoords(backGate);
+            break;
+         case APPLICATION_REGION_REQ:
+            ansApplicationRegion(backGate);
+            break;
+         case APPLICATION_CHECK_FOCUS:
+            ansApplicationInFocus(backGate);
+            break;
+         case NORMALIZE_RECT_REQ:
+            ansNormalizeRect(backGate);
+            break;
+         case USER_INPUT_INIT:
+            serverInit(backGate);
+            break;
+         default:
+            ::string errMess;
+            errMess.formatf("Unknown {} protocol code received"
+                            " from a UserInputClient",
+                            reqCode);
+            throw ::subsystem::Exception(errMess);
+            break;
+      }
+   }
 
-void UserInputServer::applyNewClipboard(BlockingGate *backGate)
-{
-  ::string newClipboard;
-  readNewClipboard(&newClipboard, backGate);
-  m_userInput->setNewClipboard(&newClipboard);
-}
+   void UserInputServer::serverInit(BlockingGate *backGate)
+   {
+      unsigned char keyFlags = backGate->readUInt8();
+      m_userInput->initKeyFlag(keyFlags);
+   }
 
-void UserInputServer::applyKeyEvent(BlockingGate *backGate)
-{
-  unsigned int keySym;
-  bool down;
-  readKeyEvent(&keySym, &down, backGate);
-  m_userInput->setKeyboardEvent(keySym, down);
-}
+   void UserInputServer::applyNewPointerPos(BlockingGate *backGate)
+   {
+      ::int_point newPointerPos;
+      unsigned char keyFlags;
+      readNewPointerPos(&newPointerPos, &keyFlags, backGate);
+      m_userInput->setMouseEvent(newPointerPos, keyFlags);
+   }
 
-void UserInputServer::ansUserInfo(BlockingGate *backGate)
-{
-  ::string desktopName, userName;
+   void UserInputServer::applyNewClipboard(BlockingGate *backGate)
+   {
+      ::string newClipboard;
+      readNewClipboard(&newClipboard, backGate);
+      m_userInput->setNewClipboard(&newClipboard);
+   }
 
-  m_userInput->getCurrentUserInfo(&desktopName, &userName);
-  sendUserInfo(&desktopName, &userName, backGate);
-}
+   void UserInputServer::applyKeyEvent(BlockingGate *backGate)
+   {
+      unsigned int keySym;
+      bool down;
+      readKeyEvent(&keySym, &down, backGate);
+      m_userInput->setKeyboardEvent(keySym, down);
+   }
 
-void UserInputServer::ansDesktopCoords(BlockingGate *backGate)
-{
-  ::int_rectangle rect;
-  m_userInput->getPrimaryDisplayCoords(&rect);
-  sendRect(rect, backGate);
-}
+   void UserInputServer::ansUserInfo(BlockingGate *backGate)
+   {
+      ::string desktopName, userName;
 
-void UserInputServer::ansWindowCoords(BlockingGate *backGate)
-{
-  ::int_rectangle rect;
-  HWND hwnd = (HWND)backGate->readUInt64();
-  try {
-    m_userInput->getWindowCoords(hwnd, &rect);
-    // handle is correct
-    backGate->writeUInt8(0);
-    sendRect(rect, backGate);
-  } catch (BrokenHandleException &e) {
-    backGate->writeUInt8(1);
-    backGate->writeUTF8(e.get_message());
-  }
-}
+      m_userInput->getCurrentUserInfo(&desktopName, &userName);
+      sendUserInfo(&desktopName, &userName, backGate);
+   }
 
-void UserInputServer::ansWindowHandle(BlockingGate *backGate)
-{
-  ::string windowName;
-  backGate->readUTF8(&windowName);
-  HWND hwnd = m_userInput->getWindowHandleByName(&windowName);
-  backGate->writeUInt64((unsigned long long)hwnd);
-}
+   void UserInputServer::ansDesktopCoords(BlockingGate *backGate)
+   {
+      ::int_rectangle rect;
+      m_userInput->getPrimaryDisplayCoords(&rect);
+      sendRect(rect, backGate);
+   }
 
-void UserInputServer::ansDisplayNumberCoords(BlockingGate *backGate)
-{
-  unsigned char dispNumber = backGate->readUInt8();
-  ::int_rectangle rect;
-  m_userInput->getDisplayNumberCoords(&rect, dispNumber);
-  sendRect(&rect, backGate);
-}
+   void UserInputServer::ansWindowCoords(BlockingGate *backGate)
+   {
+      ::int_rectangle rect;
+      HWND hwnd = (HWND)backGate->readUInt64();
+      try
+      {
+         m_userInput->getWindowCoords(hwnd, &rect);
+         // handle is correct
+         backGate->writeUInt8(0);
+         sendRect(rect, backGate);
+      }
+      catch (BrokenHandleException &e)
+      {
+         backGate->writeUInt8(1);
+         backGate->writeUTF8(e.get_message());
+      }
+   }
 
-void UserInputServer::ansDisplaysCoords(BlockingGate *backGate)
-{
-  ::array_base<::int_rectangle> rects = m_userInput->getDisplaysCoords();
-  size_t number = rects.size();
-  if (number > 255) {
-    number = 255;
-  }
-  backGate->writeUInt8((unsigned char)number);
-  for (size_t i = 0; i < number; i++) {
-    ::int_rectangle rect = rects[i];
-    sendRect(&rect, backGate);
-  }
-}
+   void UserInputServer::ansWindowHandle(BlockingGate *backGate)
+   {
+      ::string windowName;
+      backGate->readUTF8(&windowName);
+      HWND hwnd = m_userInput->getWindowHandleByName(&windowName);
+      backGate->writeUInt64((unsigned long long)hwnd);
+   }
 
-void UserInputServer::ansNormalizeRect(BlockingGate *backGate)
-{
-  ::int_rectangle rect = readRect(backGate);
-  m_userInput->getNormalizedRect(&rect);
-  sendRect(&rect, backGate);
-}
+   void UserInputServer::ansDisplayNumberCoords(BlockingGate *backGate)
+   {
+      unsigned char dispNumber = backGate->readUInt8();
+      ::int_rectangle rect;
+      m_userInput->getDisplayNumberCoords(&rect, dispNumber);
+      sendRect(&rect, backGate);
+   }
 
-void UserInputServer::ansApplicationRegion(BlockingGate *backGate)
-{
-  unsigned int procId = backGate->readUInt32();
-  Region region;
-  m_userInput->getApplicationRegion(procId, &region);
-  sendRegion(&region, backGate);
-}
+   void UserInputServer::ansDisplaysCoords(BlockingGate *backGate)
+   {
+      ::array_base<::int_rectangle> rects = m_userInput->getDisplaysCoords();
+      size_t number = rects.size();
+      if (number > 255)
+      {
+         number = 255;
+      }
+      backGate->writeUInt8((unsigned char)number);
+      for (size_t i = 0; i < number; i++)
+      {
+         ::int_rectangle rect = rects[i];
+         sendRect(&rect, backGate);
+      }
+   }
 
-void UserInputServer::ansApplicationInFocus(BlockingGate *backGate)
-{
-  unsigned int procId = backGate->readUInt32();
-  bool result = m_userInput->isApplicationInFocus((unsigned int)procId);
-  backGate->writeUInt8(result ? 1 : 0);
-}
+   void UserInputServer::ansNormalizeRect(BlockingGate *backGate)
+   {
+      ::int_rectangle rect = readRect(backGate);
+      m_userInput->getNormalizedRect(&rect);
+      sendRect(&rect, backGate);
+   }
+
+   void UserInputServer::ansApplicationRegion(BlockingGate *backGate)
+   {
+      unsigned int procId = backGate->readUInt32();
+      Region region;
+      m_userInput->getApplicationRegion(procId, &region);
+      sendRegion(&region, backGate);
+   }
+
+   void UserInputServer::ansApplicationInFocus(BlockingGate *backGate)
+   {
+      unsigned int procId = backGate->readUInt32();
+      bool result = m_userInput->isApplicationInFocus((unsigned int)procId);
+      backGate->writeUInt8(result ? 1 : 0);
+   }
+
+
+} // namespace remoting_node_desktop

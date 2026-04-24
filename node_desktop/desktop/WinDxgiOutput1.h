@@ -32,23 +32,35 @@
 // #include aaa_<d3d11.h>
 // #include aaa_<DXGI1_2.h>
 
-class WinDxgiOutput1
+
+namespace remoting_node_desktop
 {
-public:
-  WinDxgiOutput1(WinDxgiOutput *dxgiOutput);
-  WinDxgiOutput1(const WinDxgiOutput1 &src);
-  virtual ~WinDxgiOutput1();
 
-  WinDxgiOutput1 &operator = (WinDxgiOutput1 const &src);
 
-  // Return pointer to a IDXGIOutput1 object. The pointer will be valid until
-  // this object destructor has been called.
-  IDXGIOutput1 *getDxgiOutput1();
+   class WinDxgiOutput1
+   {
+   public:
+      WinDxgiOutput1(WinDxgiOutput *dxgiOutput);
+      WinDxgiOutput1(const WinDxgiOutput1 &src);
+      virtual ~WinDxgiOutput1();
 
-private:
-  void copy(const WinDxgiOutput1 &src);
+      WinDxgiOutput1 &operator=(WinDxgiOutput1 const &src);
 
-  IDXGIOutput1 *m_dxgiOutput1;
-};
+      // Return pointer to a IDXGIOutput1 object. The pointer will be valid until
+      // this object destructor has been called.
+      IDXGIOutput1 *getDxgiOutput1();
 
-//// __WINDXGIOUTPUT1_H__
+   private:
+      void copy(const WinDxgiOutput1 &src);
+
+      IDXGIOutput1 *m_dxgiOutput1;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+

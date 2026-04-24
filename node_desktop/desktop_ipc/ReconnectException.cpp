@@ -24,10 +24,15 @@
 #include "framework.h"
 #include "ReconnectException.h"
 
-ReconnectException::ReconnectException(const ::scoped_string & scopedstrMessage)
+namespace remoting_node_desktop
 {
-}
 
-ReconnectException::~ReconnectException()
-{
-}
+
+   ReconnectException::ReconnectException(const ::scoped_string &scopedstrMessage) {}
+
+   ReconnectException::~ReconnectException() {}
+
+
+} // namespace remoting_node_desktop
+
+

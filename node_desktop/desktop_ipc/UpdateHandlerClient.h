@@ -30,29 +30,39 @@
 #include "DesktopSrvDispatcher.h"
 //#include "log_writer/LogWriter.h"
 
-class UpdateHandlerClient : public UpdateHandler, public DesktopServerProto,
-                            public ClientListener
+namespace remoting_node_desktop
 {
-public:
-  UpdateHandlerClient(BlockingGate *forwGate, DesktopSrvDispatcher *dispatcher,
-                      UpdateListener *externalUpdateListener, ::subsystem::LogWriter *log);
-  virtual ~UpdateHandlerClient();
 
-  virtual void extract(UpdateContainer *updateContainer);
-  virtual void setFullUpdateRequested(const Region *region);
-  virtual void setExcludedRegion(const Region *excludedRegion);
-  virtual bool checkForUpdates(Region *region);
+   class UpdateHandlerClient : public UpdateHandler, public DesktopServerProto, public ClientListener
+   {
+   public:
+      UpdateHandlerClient(BlockingGate *forwGate, DesktopSrvDispatcher *dispatcher,
+                          UpdateListener *externalUpdateListener, ::subsystem::LogWriter *log);
+      virtual ~UpdateHandlerClient();
 
-protected:
-  virtual void getScreenProperties(::innate_subsystem::PixelFormat *pf, ::int_size *dim);
-  virtual void sendInit(BlockingGate *gate);
+      virtual void extract(UpdateContainer *updateContainer);
+      virtual void setFullUpdateRequested(const Region *region);
+      virtual void setExcludedRegion(const Region *excludedRegion);
+      virtual bool checkForUpdates(Region *region);
 
-  // To catch update event
-  virtual void onRequest(unsigned char reqCode, BlockingGate *backGate);
+   protected:
+      virtual void getScreenProperties(::innate_subsystem::PixelFormat *pf, ::int_size *dim);
+      virtual void sendInit(BlockingGate *gate);
 
-  UpdateListener *m_externalUpdateListener;
+      // To catch update event
+      virtual void onRequest(unsigned char reqCode, BlockingGate *backGate);
 
-  ::subsystem::LogWriter *m_plogwriter;
-};
+      UpdateListener *m_externalUpdateListener;
 
-//// __UPDATEHANDLERCLIENT_H__
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+
+

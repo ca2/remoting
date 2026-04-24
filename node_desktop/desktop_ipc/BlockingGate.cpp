@@ -24,12 +24,16 @@
 #include "framework.h"
 #include "BlockingGate.h"
 
-BlockingGate::BlockingGate(Channel *stream)
-: DataInputStream(stream),
-  DataOutputStream(stream)
+namespace remoting_node_desktop
 {
-}
 
-BlockingGate::~BlockingGate()
-{
-}
+
+   BlockingGate::BlockingGate(Channel *stream) : DataInputStream(stream), DataOutputStream(stream) {}
+
+   BlockingGate::~BlockingGate() {}
+
+
+} // namespace remoting_node_desktop
+
+
+

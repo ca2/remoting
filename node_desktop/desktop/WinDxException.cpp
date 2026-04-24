@@ -24,17 +24,18 @@
 #include "framework.h"
 #include "WinDxException.h"
 
-WinDxException::WinDxException(const ::scoped_string & scopedstrMessage, HRESULT errCode)
-: ::subsystem::Exception(scopedstrMessage),
-  m_errCode(errCode)
+namespace remoting_node_desktop
 {
-}
 
-WinDxException::~WinDxException()
-{
-}
 
-HRESULT WinDxException::getErrorCode() const
-{
-  return m_errCode;
-}
+   WinDxException::WinDxException(const ::scoped_string &scopedstrMessage, HRESULT errCode) :
+       ::subsystem::Exception(scopedstrMessage), m_errCode(errCode)
+   {
+   }
+
+   WinDxException::~WinDxException() {}
+
+   HRESULT WinDxException::getErrorCode() const { return m_errCode; }
+
+
+} // namespace remoting_node_desktop

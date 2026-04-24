@@ -27,22 +27,33 @@
 
 #include "WinDxgiDevice.h"
 
-// #include aaa_<d3d11.h>
-// #include aaa_<DXGI1_2.h>
 
-class WinDxgiAdapter
+namespace remoting_node_desktop
 {
-public:
-  WinDxgiAdapter(WinDxgiDevice *winDxgiDevice);
-  virtual ~WinDxgiAdapter();
+   // #include aaa_<d3d11.h>
+   // #include aaa_<DXGI1_2.h>
 
-  // This function try to get output for iOutput from the adapter.
-  // Throws the WinDxRecoverableException exception if output not found,
-  // and throws WinDxCriticalException on other errors.
-  void getDxgiOutput(unsigned int iOutput, IDXGIOutput **iDxgiOutput);
+   class WinDxgiAdapter
+   {
+   public:
+      WinDxgiAdapter(WinDxgiDevice *winDxgiDevice);
+      virtual ~WinDxgiAdapter();
 
-private:
-  IDXGIAdapter *m_dxgiAdapter;
-};
+      // This function try to get output for iOutput from the adapter.
+      // Throws the WinDxRecoverableException exception if output not found,
+      // and throws WinDxCriticalException on other errors.
+      void getDxgiOutput(unsigned int iOutput, IDXGIOutput **iDxgiOutput);
 
-//// __WINDXGIADAPTER_H__
+   private:
+      IDXGIAdapter *m_dxgiAdapter;
+   };
+
+
+} //  namespace remoting_node_desktop
+
+
+
+
+
+
+

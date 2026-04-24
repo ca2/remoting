@@ -25,19 +25,24 @@
 #include "WinServiceDesktopFactory.h"
 #include "DesktopClientImpl.h"
 
-WinServiceDesktopFactory::WinServiceDesktopFactory()
+namespace remoting_node_desktop
 {
-}
 
-WinServiceDesktopFactory::~WinServiceDesktopFactory()
-{
-}
+   WinServiceDesktopFactory::WinServiceDesktopFactory() {}
 
-Desktop *WinServiceDesktopFactory::createDesktop(ClipboardListener *extClipListener,
-                                                          UpdateSendingListener *extUpdSendingListener,
-                                                          AbnormDeskTermListener *extDeskTermListener,
-                                                          ::subsystem::LogWriter *log)
-{
-  return new DesktopClientImpl(extClipListener, extUpdSendingListener,
-                           extDeskTermListener, log);
-}
+   WinServiceDesktopFactory::~WinServiceDesktopFactory() {}
+
+   Desktop *WinServiceDesktopFactory::createDesktop(ClipboardListener *extClipListener,
+                                                    UpdateSendingListener *extUpdSendingListener,
+                                                    AbnormDeskTermListener *extDeskTermListener,
+                                                    ::subsystem::LogWriter *log)
+   {
+      return new DesktopClientImpl(extClipListener, extUpdSendingListener, extDeskTermListener, log);
+   }
+
+
+} // namespace remoting_node_desktop
+ 
+
+
+

@@ -26,5 +26,5 @@
 
 namespace remoting_client
 {
-   const char BuildTime::DATE[] = __DATE__ " at " __TIME__;
+   ::string_literal BuildTime::DATE = __DATE__ " at " __TIME__;
 } // namespace remoting_client

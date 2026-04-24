@@ -26,43 +26,53 @@
 
 
 
-#include "remoting/remoting/win_system/DynamicLibrary.h"
-//#include "log_writer/LogWriter.h"
-
-// #include aaa_<d3d11.h>
-// #include aaa_<DXGI1_2.h>
-
-class WinD3D11Device
+namespace remoting_node_desktop
 {
-public:
-  // Creates new device and context of first found.
-  WinD3D11Device();
-  WinD3D11Device(::subsystem::LogWriter *log);
-  // Copy references and increase count for winD3D11Device's internal handles. So the
-  // source winD3D11Device object can be destroyed while this object will use.
-  WinD3D11Device(const WinD3D11Device &src);
-  virtual ~WinD3D11Device();
 
-  WinD3D11Device &operator = (WinD3D11Device const &src);
+#include "remoting/remoting/win_system/DynamicLibrary.h"
+   // #include "log_writer/LogWriter.h"
 
-  HRESULT deviceQueryInterface(REFIID riid, void **ppvObject);
-  HRESULT contextQueryInterface(REFIID riid, void **ppvObject);
+   // #include aaa_<d3d11.h>
+   // #include aaa_<DXGI1_2.h>
 
-  ID3D11Device *getDevice();
-  ID3D11DeviceContext *getContext();
+   class WinD3D11Device
+   {
+   public:
+      // Creates new device and context of first found.
+      WinD3D11Device();
+      WinD3D11Device(::subsystem::LogWriter *log);
+      // Copy references and increase count for winD3D11Device's internal handles. So the
+      // source winD3D11Device object can be destroyed while this object will use.
+      WinD3D11Device(const WinD3D11Device &src);
+      virtual ~WinD3D11Device();
 
-  // A wrap for the ID3D11DeviceContext::CopySubresourceRegion() function.
-  void copySubresourceRegion(ID3D11Texture2D *dstTexture2D, int dstX, int dstY,
-                             ID3D11Texture2D *srcTexture2D, const ::int_rectangle &  srcRect,
-                             unsigned int front, unsigned int back);
-private:
-  void copy(const WinD3D11Device &src);
+      WinD3D11Device &operator=(WinD3D11Device const &src);
 
-  DynamicLibrary m_d3d11Lib;
-  ID3D11Device *m_device;
-  ID3D11DeviceContext *m_context;
+      HRESULT deviceQueryInterface(REFIID riid, void **ppvObject);
+      HRESULT contextQueryInterface(REFIID riid, void **ppvObject);
 
-  ::subsystem::LogWriter *m_plogwriter;
-};
+      ID3D11Device *getDevice();
+      ID3D11DeviceContext *getContext();
 
-//// __WIND3D11DEVICE_H__
+      // A wrap for the ID3D11DeviceContext::CopySubresourceRegion() function.
+      void copySubresourceRegion(ID3D11Texture2D *dstTexture2D, int dstX, int dstY, ID3D11Texture2D *srcTexture2D,
+                                 const ::int_rectangle &srcRect, unsigned int front, unsigned int back);
+   private:
+      void copy(const WinD3D11Device &src);
+
+      DynamicLibrary m_d3d11Lib;
+      ID3D11Device *m_device;
+      ID3D11DeviceContext *m_context;
+
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+   //// __WIND3D11DEVICE_H__
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+

@@ -25,118 +25,122 @@
 #include "Win8ScreenDriver.h"
 #include "subsystem/platform/Exception.h"
 
-Win8ScreenDriver::Win8ScreenDriver(UpdateKeeper *updateKeeper,
-                                   UpdateListener *updateListener,
-                                   critical_section *fbcritical_section,
-                                   ::subsystem::LogWriter *log)
-: WinVideoRegionUpdaterImpl(log),
-  m_plogwriter(log),
-  m_fbcritical_section(fbcritical_section),
-  m_updateKeeper(updateKeeper),
-  m_updateListener(updateListener),
-  m_detectionEnabled(false)
+namespace remoting_node_desktop
 {
-  m_plogwriter->debug("Win8ScreenDriver creating new Win8ScreenDriverImpl");
-  critical_section_lock al(&m_drvImplMutex);
-  m_drvImpl = new Win8ScreenDriverImpl(m_plogwriter, m_updateKeeper, m_fbcritical_section, m_updateListener);
-}
 
-Win8ScreenDriver::~Win8ScreenDriver()
-{
-  terminateDetection();
-  critical_section_lock al(&m_drvImplMutex);
-  if (m_drvImpl != 0) {
-    delete m_drvImpl;
-    m_drvImpl = 0;
-  }
-}
 
-void Win8ScreenDriver::executeDetection()
-{
-  critical_section_lock al(&m_drvImplMutex);
-  m_detectionEnabled = true;
-  m_drvImpl->executeDetection();
-}
+   Win8ScreenDriver::Win8ScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
+                                      critical_section *fbcritical_section, ::subsystem::LogWriter *log) :
+       WinVideoRegionUpdaterImpl(log), m_plogwriter(log), m_fbcritical_section(fbcritical_section),
+       m_updateKeeper(updateKeeper), m_updateListener(updateListener), m_detectionEnabled(false)
+   {
+      m_plogwriter->debug("Win8ScreenDriver creating new Win8ScreenDriverImpl");
+      critical_section_lock al(&m_drvImplMutex);
+      m_drvImpl = new Win8ScreenDriverImpl(m_plogwriter, m_updateKeeper, m_fbcritical_section, m_updateListener);
+   }
 
-void Win8ScreenDriver::terminateDetection()
-{
-  critical_section_lock al(&m_drvImplMutex);
-  m_detectionEnabled = false;
-  if (m_drvImpl != 0) {
-    m_drvImpl->terminateDetection();
-  }
-}
+   Win8ScreenDriver::~Win8ScreenDriver()
+   {
+      terminateDetection();
+      critical_section_lock al(&m_drvImplMutex);
+      if (m_drvImpl != 0)
+      {
+         delete m_drvImpl;
+         m_drvImpl = 0;
+      }
+   }
 
-::int_size Win8ScreenDriver::getScreenDimension()
-{
-  critical_section_lock al(&m_drvImplMutex);
-  return m_drvImpl->getScreenBuffer()->getDimension();
-}
+   void Win8ScreenDriver::executeDetection()
+   {
+      critical_section_lock al(&m_drvImplMutex);
+      m_detectionEnabled = true;
+      m_drvImpl->executeDetection();
+   }
 
-::innate_subsystem::FrameBuffer *Win8ScreenDriver::getScreenBuffer()
-{
-  critical_section_lock al(&m_drvImplMutex);
-  return m_drvImpl->getScreenBuffer();
-}
+   void Win8ScreenDriver::terminateDetection()
+   {
+      critical_section_lock al(&m_drvImplMutex);
+      m_detectionEnabled = false;
+      if (m_drvImpl != 0)
+      {
+         m_drvImpl->terminateDetection();
+      }
+   }
 
-bool Win8ScreenDriver::grabFb(const ::int_rectangle &  rect)
-{
-  critical_section_lock al(&m_drvImplMutex);
-  return m_drvImpl->grabFb(rect);
-}
+   ::int_size Win8ScreenDriver::getScreenDimension()
+   {
+      critical_section_lock al(&m_drvImplMutex);
+      return m_drvImpl->getScreenBuffer()->getDimension();
+   }
 
-bool Win8ScreenDriver::getScreenPropertiesChanged()
-{
-  critical_section_lock al(&m_drvImplMutex);
-  return !m_drvImpl->isValid();
-}
+   ::innate_subsystem::FrameBuffer *Win8ScreenDriver::getScreenBuffer()
+   {
+      critical_section_lock al(&m_drvImplMutex);
+      return m_drvImpl->getScreenBuffer();
+   }
 
-bool Win8ScreenDriver::getScreenSizeChanged()
-{
-  critical_section_lock al(&m_drvImplMutex);
-  return !m_drvImpl->isValid();
-}
+   bool Win8ScreenDriver::grabFb(const ::int_rectangle &rect)
+   {
+      critical_section_lock al(&m_drvImplMutex);
+      return m_drvImpl->grabFb(rect);
+   }
 
-bool Win8ScreenDriver::applyNewScreenProperties()
-{
-  try {
-    m_plogwriter->debug("Applying new screen properties, deleting old Win8ScreenDriverImpl");
-    critical_section_lock al(&m_drvImplMutex);
-    if (m_drvImpl != 0) {
-      delete m_drvImpl;
-      m_drvImpl = 0;
-    }
-    m_plogwriter->debug("Applying new screen properties, creating new Win8ScreenDriverImpl");
-    Win8ScreenDriverImpl *drvImpl =
-      new Win8ScreenDriverImpl(m_plogwriter, m_updateKeeper, m_fbcritical_section, m_updateListener, m_detectionEnabled);
-    m_drvImpl = drvImpl;
-  } catch (::exception &e) {
-    m_plogwriter->error("Can't apply new screen properties: {}", e.get_message());
-    return false;
-  }
-  return true;
-}
+   bool Win8ScreenDriver::getScreenPropertiesChanged()
+   {
+      critical_section_lock al(&m_drvImplMutex);
+      return !m_drvImpl->isValid();
+   }
 
-bool Win8ScreenDriver::grabCursorShape(const ::innate_subsystem::PixelFormat & pf)
-{
-  critical_section_lock al(&m_drvImplMutex);
-  m_drvImpl->updateCursorShape(&m_cursorShape);
-  return !m_drvImpl->isValid();
-}
+   bool Win8ScreenDriver::getScreenSizeChanged()
+   {
+      critical_section_lock al(&m_drvImplMutex);
+      return !m_drvImpl->isValid();
+   }
 
-const CursorShape *Win8ScreenDriver::getCursorShape()
-{
-  return &m_cursorShape;
-}
+   bool Win8ScreenDriver::applyNewScreenProperties()
+   {
+      try
+      {
+         m_plogwriter->debug("Applying new screen properties, deleting old Win8ScreenDriverImpl");
+         critical_section_lock al(&m_drvImplMutex);
+         if (m_drvImpl != 0)
+         {
+            delete m_drvImpl;
+            m_drvImpl = 0;
+         }
+         m_plogwriter->debug("Applying new screen properties, creating new Win8ScreenDriverImpl");
+         Win8ScreenDriverImpl *drvImpl = new Win8ScreenDriverImpl(m_plogwriter, m_updateKeeper, m_fbcritical_section,
+                                                                  m_updateListener, m_detectionEnabled);
+         m_drvImpl = drvImpl;
+      }
+      catch (::exception &e)
+      {
+         m_plogwriter->error("Can't apply new screen properties: {}", e.get_message());
+         return false;
+      }
+      return true;
+   }
 
-::int_point Win8ScreenDriver::getCursorPosition()
-{
-  critical_section_lock al(&m_drvImplMutex);
-  return m_drvImpl->getCursorPosition();
-}
+   bool Win8ScreenDriver::grabCursorShape(const ::innate_subsystem::PixelFormat &pf)
+   {
+      critical_section_lock al(&m_drvImplMutex);
+      m_drvImpl->updateCursorShape(&m_cursorShape);
+      return !m_drvImpl->isValid();
+   }
 
-void Win8ScreenDriver::getCopiedRegion(::int_rectangle *copyRect, ::int_point *source)
-{
-  critical_section_lock al(m_fbcritical_section);
-  m_copyRectDetector.detectWindowMovements(copyRect, source);
-}
+   const CursorShape *Win8ScreenDriver::getCursorShape() { return &m_cursorShape; }
+
+   ::int_point Win8ScreenDriver::getCursorPosition()
+   {
+      critical_section_lock al(&m_drvImplMutex);
+      return m_drvImpl->getCursorPosition();
+   }
+
+   void Win8ScreenDriver::getCopiedRegion(::int_rectangle *copyRect, ::int_point *source)
+   {
+      critical_section_lock al(m_fbcritical_section);
+      m_copyRectDetector.detectWindowMovements(copyRect, source);
+   }
+
+
+} // namespace remoting_node_desktop

@@ -32,30 +32,39 @@
 // #include aaa_<d3d11.h>
 // #include aaa_<DXGI1_2.h>
 
-class WinDxgiOutput
+namespace remoting_node_desktop
 {
-public:
-  WinDxgiOutput(WinDxgiAdapter *dxgiAdapter, unsigned int iOutput);
-  WinDxgiOutput(const WinDxgiOutput &src);
-  virtual ~WinDxgiOutput();
 
-  WinDxgiOutput &operator = (WinDxgiOutput const &src);
+   class WinDxgiOutput
+   {
+   public:
+      WinDxgiOutput(WinDxgiAdapter *dxgiAdapter, unsigned int iOutput);
+      WinDxgiOutput(const WinDxgiOutput &src);
+      virtual ~WinDxgiOutput();
 
-  bool isAttachedtoDesktop();
+      WinDxgiOutput &operator=(WinDxgiOutput const &src);
 
-  ::int_rectangle getDesktopCoordinates();
+      bool isAttachedtoDesktop();
 
-  DXGI_MODE_ROTATION getRotation() const;
+      ::int_rectangle getDesktopCoordinates();
 
-  void getDeviceName(::string & out);
+      DXGI_MODE_ROTATION getRotation() const;
 
-  HRESULT queryInterface(REFIID riid, void **ppvObject);
+      void getDeviceName(::string &out);
 
-private:
-  void copy(const WinDxgiOutput &src);
+      HRESULT queryInterface(REFIID riid, void **ppvObject);
 
-  IDXGIOutput *m_dxgiOutput;
-  DXGI_OUTPUT_DESC m_description;
-};
+   private:
+      void copy(const WinDxgiOutput &src);
 
-//// __WINDXGIOUTPUT_H__
+      IDXGIOutput *m_dxgiOutput;
+      DXGI_OUTPUT_DESC m_description;
+   };
+
+   //// __WINDXGIOUTPUT_H__
+
+
+} // namespace remoting_node_desktop
+
+
+

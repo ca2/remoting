@@ -24,10 +24,13 @@
 #include "framework.h"
 #include "UserInput.h"
 
-UserInput::UserInput()
+namespace remoting_node_desktop
 {
-}
 
-UserInput::~UserInput(void)
-{
-}
+
+   UserInput::UserInput() {}
+
+   UserInput::~UserInput(void) {}
+
+
+} // namespace remoting_node_desktop

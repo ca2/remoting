@@ -26,67 +26,85 @@
 #include "remoting/node_desktop/server_config/Configurator.h"
 #include "subsystem_bsd_sockets/socket/SocketAddressIPv4.h"
 
-RfbServer::RfbServer(const ::scoped_string & scopedstrBindHost, unsigned short bindPort,
-                     RfbClientManager *clientManager,
-                     bool lockAddr,
-                     ::subsystem::LogWriter *log,
-                     const ::int_rectangle & viewPort)
-: TcpServer(scopedstrBindHost, bindPort, false, lockAddr),
-  m_clientManager(clientManager),
-  m_plogwriter(log)
+
+namespace remoting_node_desktop
 {
-  if (viewPort != 0) {
-    m_viewPort.setArbitraryRect(viewPort);
-  }
 
-  TcpServer::start();
+   RfbServer::RfbServer(
+      const ::scoped_string &scopedstrBindHost, 
+      ::remoting_node_desktop::Configurator *pconfigurator,
+                        unsigned short bindPort,
+                        RfbClientManager *clientManager, bool lockAddr, ::subsystem::LogWriter *log,
+                        const ::int_rectangle &viewPort) :
+       TcpServer(scopedstrBindHost, bindPort, false, lockAddr), m_pconfigurator(pconfigurator),
+      m_clientManager(clientManager), m_plogwriter(log)
 
-  if (viewPort == 0) {
-    m_plogwriter->debug("Rfb server started at {}:{}", scopedstrBindHost, (int)bindPort);
-  } else {
-    m_plogwriter->debug("Rfb server started at {}:{} with [{} {} {} {}] view port specified",
-                 scopedstrBindHost, (int)bindPort,
-                 viewPort.left, viewPort.right, viewPort.top, viewPort.bottom);
-  }
-}
 
-RfbServer::~RfbServer()
-{
-  m_plogwriter->debug("Rfb server at {}:{} stopped", getBindHost(), (int)getBindPort());
-}
+   {
+      if (viewPort != 0)
+      {
+         m_viewPort.setArbitraryRect(viewPort);
+      }
 
-void RfbServer::onAcceptConnection(::subsystem::SocketIPv4Interface *socket)
-{
-  try {
-    // Get incoming connection address and convert it to string.
-    ::pointer < ::subsystem::SocketAddressIPv4Interface > peerAddr;
-    peerAddr = socket->getPeerAddr();
-    ::string peerIpString;
-    peerIpString = peerAddr->toString();
+      TcpServer::start();
 
-    m_plogwriter->debug("Incoming rfb connection from {} to port %u", peerIpString, peerAddr->getPort());
-    auto paddrImpl = peerAddr->impl<::subsystem_bsd_sockets::SocketAddressIPv4>();
-    auto addr_in = paddrImpl->_getSockAddr();
+      if (viewPort == 0)
+      {
+         m_plogwriter->debug("Rfb server started at {}:{}", scopedstrBindHost, (int)bindPort);
+      }
+      else
+      {
+         m_plogwriter->debug("Rfb server started at {}:{} with [{} {} {} {}] view port specified", scopedstrBindHost,
+                             (int)bindPort, viewPort.left, viewPort.right, viewPort.top, viewPort.bottom);
+      }
+   }
 
-    // Check access control rules for the IP address of the peer.
-    // FIXME: Check loopback-related rules separately, report differently.
-    ServerConfig *config = Configurator::getInstance()->getServerConfig();
-    IpAccessRule::ActionType action = config->getActionByAddress((unsigned long)addr_in.sin_addr.S_un.S_addr);
+   RfbServer::~RfbServer() { m_plogwriter->debug("Rfb server at {}:{} stopped", getBindHost(), (int)getBindPort()); }
 
-    if (action == IpAccessRule::ACTION_TYPE_DENY) {
-      m_plogwriter->debug("Connection rejected due to access control rules");
-      delete socket;
-      return;
-    }
+   void RfbServer::onAcceptConnection(::subsystem::SocketIPv4Interface *socket)
+   {
+      try
+      {
+         // Get incoming connection address and convert it to string.
+         ::pointer<::subsystem::SocketAddressIPv4Interface> peerAddr;
+         peerAddr = socket->getPeerAddr();
+         ::string peerIpString;
+         peerIpString = peerAddr->toString();
 
-    // Access granted, add new RFB client. One more check will follow later in
-    // RfbClientManager::onCheckAccessControl().
+         m_plogwriter->debug("Incoming rfb connection from {} to port %u", peerIpString, peerAddr->getPort());
+         auto paddrImpl = peerAddr->impl<::subsystem_bsd_sockets::SocketAddressIPv4>();
+         auto addr_in = paddrImpl->_getSockAddr();
 
-    socket->enableNaggleAlgorithm(false);
+         // Check access control rules for the IP address of the peer.
+         // FIXME: Check loopback-related rules separately, report differently.
+         // ServerConfig *config = Configurator::getInstance()->getServerConfig();
+         auto pserverconfig = m_pconfigurator->getServerConfig();
+         IpAccessRule::ActionType action =
+            pserverconfig->getActionByAddress((unsigned long)addr_in.sin_addr.S_un.S_addr);
 
-    m_clientManager->addNewConnection(socket, &m_viewPort, false, false);
+         if (action == IpAccessRule::ACTION_TYPE_DENY)
+         {
+            m_plogwriter->debug("Connection rejected due to access control rules");
+            delete socket;
+            return;
+         }
 
-  } catch (::subsystem::Exception &ex) {
-    m_plogwriter->error("Failed to process incoming rfb connection with following reason: \"{}\"", ex.get_message());
-  }
-}
+         // Access granted, add new RFB client. One more check will follow later in
+         // RfbClientManager::onCheckAccessControl().
+
+         socket->enableNaggleAlgorithm(false);
+
+         m_clientManager->addNewConnection(socket, &m_viewPort, false, false);
+      }
+      catch (::subsystem::Exception &ex)
+      {
+         m_plogwriter->error("Failed to process incoming rfb connection with following reason: \"{}\"",
+                             ex.get_message());
+      }
+   }
+
+
+} // namespace remoting_node_desktop
+ 
+
+

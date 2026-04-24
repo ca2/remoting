@@ -29,20 +29,32 @@
 #include "DesktopServerProto.h"
 #include "desktop/DesktopConfigLocal.h"
 
-class ConfigServer : public DesktopServerProto, public ClientListener
+namespace remoting_node_desktop
 {
-public:
-  ConfigServer(DesktopSrvDispatcher *dispatcher, ::subsystem::LogWriter *log);
-  virtual ~ConfigServer();
 
-protected:
-  // Internal dispatcher
-  virtual void onRequest(unsigned char reqCode, BlockingGate *backGate);
+   class ConfigServer : public DesktopServerProto, public ClientListener
+   {
+   public:
+      ConfigServer(DesktopSrvDispatcher *dispatcher, ::subsystem::LogWriter *log);
+      virtual ~ConfigServer();
 
-  void reloadSettings(BlockingGate *backGate);
-  void answerOnSoftInputEnablingReq(BlockingGate *backGate);
+   protected:
+      // Internal dispatcher
+      virtual void onRequest(unsigned char reqCode, BlockingGate *backGate);
 
-  DesktopConfigLocal m_deskConf;
-};
+      void reloadSettings(BlockingGate *backGate);
+      void answerOnSoftInputEnablingReq(BlockingGate *backGate);
 
-//// __CONFIGSERVER_H__
+      DesktopConfigLocal m_deskConf;
+   };
+
+
+} // namespace remoting_node_desktop
+
+
+
+
+
+
+
+

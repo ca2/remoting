@@ -27,63 +27,76 @@
 #include "remoting/control_desktop/NamedPipeTransport.h"
 
 
-ControlServer::ControlServer(::subsystem::PipeServer *pipeServer,
-                             RfbClientManager *rfbClientManager,
-                             ::subsystem::LogWriter *log)
-: m_authenticator(30000, 3),
-  m_pipeServer(pipeServer),
-  m_rfbClientManager(rfbClientManager),
-  m_plogwriter(log)
+namespace remoting_node_desktop
 {
-  m_plogwriter->debug("{}"), _T("::innate_subsystem::Control server started");
 
-  resume();
-}
 
-ControlServer::~ControlServer()
-{
-  m_plogwriter->debug("Destroying control server transport");
+   ControlServer::ControlServer(::subsystem::PipeServer *pipeServer, RfbClientManager *rfbClientManager,
+                                ::subsystem::LogWriter *log) :
+       m_authenticator(30000, 3), m_pipeServer(pipeServer), m_rfbClientManager(rfbClientManager), m_plogwriter(log)
+   {
+      m_plogwriter->debug("{}"), _T("::innate_subsystem::Control server started");
 
-  terminate();
-  wait();
+      resume();
+   }
 
-  try {
-    m_pipeServer->close();
-  } catch (::subsystem::Exception &ex) {
-    m_plogwriter->error("Failed to destroy control server transport with '{}' reason", ex.get_message());
-  }
+   ControlServer::~ControlServer()
+   {
+      m_plogwriter->debug("Destroying control server transport");
 
-  delete m_pipeServer;
+      terminate();
+      wait();
 
-  // Unblock all client if it has been blocked by authenticator
-  m_authenticator.breakAndDisableAuthentications();
+      try
+      {
+         m_pipeServer->close();
+      }
+      catch (::subsystem::Exception &ex)
+      {
+         m_plogwriter->error("Failed to destroy control server transport with '{}' reason", ex.get_message());
+      }
 
-  m_plogwriter->debug("{}"), _T("::innate_subsystem::Control server stopped");
-}
+      delete m_pipeServer;
 
-void ControlServer::execute()
-{
-  try {
-    while (!isTerminating()) {
-      auto ppipe = m_pipeServer->accept();
-      Transport *transport = new NamedPipeTransport(ppipe);
+      // Unblock all client if it has been blocked by authenticator
+      m_authenticator.breakAndDisableAuthentications();
 
-      ControlClient *clientThread = new ControlClient(transport,
-                                                      m_rfbClientManager,
-                                                      &m_authenticator,
-                                                      ppipe->getFile(),
-                                                      m_plogwriter);
+      m_plogwriter->debug("{}"), _T("::innate_subsystem::Control server stopped");
+   }
 
-      clientThread->resume();
+   void ControlServer::execute()
+   {
+      try
+      {
+         while (!isTerminating())
+         {
+            auto ppipe = m_pipeServer->accept();
+            Transport *transport = new NamedPipeTransport(ppipe);
 
-      m_pthreadCollector->addThread(clientThread);
-    }
-  } catch (::subsystem::Exception &ex) {
-    m_plogwriter->error("::subsystem::Exception on control server thread: {}", ex.get_message());
-  }
-}
+            ControlClient *clientThread =
+               new ControlClient(transport, m_rfbClientManager, &m_authenticator, ppipe->getFile(), m_plogwriter);
 
-void ControlServer::onTerminate()
-{
-  try { m_pipeServer->close(); } catch (...) { }
-}
+            clientThread->resume();
+
+            m_pthreadCollector->addThread(clientThread);
+         }
+      }
+      catch (::subsystem::Exception &ex)
+      {
+         m_plogwriter->error("::subsystem::Exception on control server thread: {}", ex.get_message());
+      }
+   }
+
+   void ControlServer::onTerminate()
+   {
+      try
+      {
+         m_pipeServer->close();
+      }
+      catch (...)
+      {
+      }
+   }
+
+
+} // namespace remoting_node_desktop

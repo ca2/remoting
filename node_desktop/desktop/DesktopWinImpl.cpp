@@ -33,109 +33,122 @@
 //#include "remoting/remoting/win_system/Environment.h"
 #include "remoting/remoting/win_system/WindowsDisplays.h"
 
-DesktopWinImpl::DesktopWinImpl(ClipboardListener *extClipListener,
-                       UpdateSendingListener *extUpdSendingListener,
-                       AbnormDeskTermListener *extDeskTermListener,
-                       ::subsystem::LogWriter *log)
-: DesktopBaseImpl(extClipListener, extUpdSendingListener, extDeskTermListener, log),
-  m_wallPaper(0),
-  m_deskConf(0),
-  m_plogwriter(log),
-  m_scrDriverFactory(Configurator::getInstance()->getServerConfig())
+namespace remoting_node_desktop
+
 {
-  m_plogwriter->information("Creating DesktopWinImpl");
 
-  logDesktopInfo();
+   DesktopWinImpl::DesktopWinImpl(ClipboardListener *extClipListener, UpdateSendingListener *extUpdSendingListener,
+                                  AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter *log) :
+       DesktopBaseImpl(extClipListener, extUpdSendingListener, extDeskTermListener, log), m_wallPaper(0), m_deskConf(0),
+       m_plogwriter(log), m_scrDriverFactory(Configurator::getInstance()->getServerConfig())
+   {
+      m_plogwriter->information("Creating DesktopWinImpl");
 
-  try {
-    m_updateHandler = new UpdateHandlerImpl(this, &m_scrDriverFactory, m_plogwriter);
-    bool ctrlAltDelEnabled = false;
-    m_userInput = new WindowsUserInput(this, ctrlAltDelEnabled, m_plogwriter);
-    m_deskConf = new DesktopConfigLocal(m_plogwriter);
-    applyNewConfiguration();
-    m_wallPaper = new WallpaperUtil(m_plogwriter);
-    m_wallPaper->updateWallpaper();
+      logDesktopInfo();
 
-    Configurator::getInstance()->addListener(this);
-  } catch (::subsystem::Exception &ex) {
-    m_plogwriter->error("exception during DesktopWinImpl creaion: {}", ex.get_message());
-    freeResource();
-    throw;
-  }
-  resume();
-}
+      try
+      {
+         m_updateHandler = new UpdateHandlerImpl(this, &m_scrDriverFactory, m_plogwriter);
+         bool ctrlAltDelEnabled = false;
+         m_userInput = new WindowsUserInput(this, ctrlAltDelEnabled, m_plogwriter);
+         m_deskConf = new DesktopConfigLocal(m_plogwriter);
+         applyNewConfiguration();
+         m_wallPaper = new WallpaperUtil(m_plogwriter);
+         m_wallPaper->updateWallpaper();
 
-DesktopWinImpl::~DesktopWinImpl()
-{
-  m_plogwriter->information("Deleting DesktopWinImpl");
-  terminate();
-  wait();
-  freeResource();
-  m_plogwriter->information("DesktopWinImpl deleted");
-}
+         Configurator::getInstance()->addListener(this);
+      }
+      catch (::subsystem::Exception &ex)
+      {
+         m_plogwriter->error("exception during DesktopWinImpl creaion: {}", ex.get_message());
+         freeResource();
+         throw;
+      }
+      resume();
+   }
 
-void DesktopWinImpl::freeResource()
-{
-  Configurator::getInstance()->removeListener(this);
+   DesktopWinImpl::~DesktopWinImpl()
+   {
+      m_plogwriter->information("Deleting DesktopWinImpl");
+      terminate();
+      wait();
+      freeResource();
+      m_plogwriter->information("DesktopWinImpl deleted");
+   }
 
-  if (m_wallPaper) delete m_wallPaper;
+   void DesktopWinImpl::freeResource()
+   {
+      Configurator::getInstance()->removeListener(this);
 
-  if (m_updateHandler) delete m_updateHandler;
-  if (m_deskConf) delete m_deskConf;
-  if (m_userInput) delete m_userInput;
-}
+      if (m_wallPaper)
+         delete m_wallPaper;
 
-void DesktopWinImpl::onTerminate()
-{
-  m_newUpdateEvent.notify();
-}
+      if (m_updateHandler)
+         delete m_updateHandler;
+      if (m_deskConf)
+         delete m_deskConf;
+      if (m_userInput)
+         delete m_userInput;
+   }
 
-void DesktopWinImpl::execute()
-{
-  m_plogwriter->information("DesktopWinImpl thread started");
+   void DesktopWinImpl::onTerminate() { m_newUpdateEvent.notify(); }
 
-  while (!isTerminating()) {
-    m_newUpdateEvent.waitForEvent();
-    if (!isTerminating()) {
-      m_plogwriter->debug("DesktopWinImpl sendUpdate()");
-      sendUpdate();
-    }
-  }
+   void DesktopWinImpl::execute()
+   {
+      m_plogwriter->information("DesktopWinImpl thread started");
 
-  m_plogwriter->information("DesktopWinImpl thread stopped");
-}
+      while (!isTerminating())
+      {
+         m_newUpdateEvent.waitForEvent();
+         if (!isTerminating())
+         {
+            m_plogwriter->debug("DesktopWinImpl sendUpdate()");
+            sendUpdate();
+         }
+      }
 
-bool DesktopWinImpl::isRemoteInputTempBlocked()
-{
-  return !m_deskConf->isRemoteInputAllowed();
-}
+      m_plogwriter->information("DesktopWinImpl thread stopped");
+   }
 
-void DesktopWinImpl::applyNewConfiguration()
-{
-  m_plogwriter->information("reload DesktopWinImpl configuration");
-  m_deskConf->updateByNewSettings();
-}
+   bool DesktopWinImpl::isRemoteInputTempBlocked() { return !m_deskConf->isRemoteInputAllowed(); }
 
-void DesktopWinImpl::logDesktopInfo()
-{
-  try {
-    if (Environment::isAeroOn(m_plogwriter)) {
-      m_plogwriter->debug("The Aero is On");
-    } else {
-      m_plogwriter->debug("The Aero is Off");
-    }
-  } catch (::exception &e) {
-    m_plogwriter->error("Can't get information for the Aero: {}", e.get_message());
-  }
+   void DesktopWinImpl::applyNewConfiguration()
+   {
+      m_plogwriter->information("reload DesktopWinImpl configuration");
+      m_deskConf->updateByNewSettings();
+   }
 
-  // Log all display coordinates
-  WindowsDisplays m_winDisp;
-  ::array_base<::int_rectangle> displays = m_winDisp.getDisplays();
-  m_plogwriter->debug("The console desktop has {} displays", (int)displays.size());
-  for (size_t i = 0; i < displays.size(); i++) {
-    m_plogwriter->debug("Display {} placed at the {}, {}, %dx{} coordinates",
-               i + 1,
-               displays[i].left, displays[i].top,
-               displays[i].width(), displays[i].height());
-  }
-}
+   void DesktopWinImpl::logDesktopInfo()
+   {
+      try
+      {
+         if (Environment::isAeroOn(m_plogwriter))
+         {
+            m_plogwriter->debug("The Aero is On");
+         }
+         else
+         {
+            m_plogwriter->debug("The Aero is Off");
+         }
+      }
+      catch (::exception &e)
+      {
+         m_plogwriter->error("Can't get information for the Aero: {}", e.get_message());
+      }
+
+      // Log all display coordinates
+      WindowsDisplays m_winDisp;
+      ::array_base<::int_rectangle> displays = m_winDisp.getDisplays();
+      m_plogwriter->debug("The console desktop has {} displays", (int)displays.size());
+      for (size_t i = 0; i < displays.size(); i++)
+      {
+         m_plogwriter->debug("Display {} placed at the {}, {}, %dx{} coordinates", i + 1, displays[i].left,
+                             displays[i].top, displays[i].width(), displays[i].height());
+      }
+   }
+
+
+} // namespace remoting_node_desktop
+ 
+
+
