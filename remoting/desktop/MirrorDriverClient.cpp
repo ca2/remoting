@@ -25,10 +25,10 @@
 #include "MirrorDriverClient.h"
 #include "subsystem/platform/Exception.h"
 //#include "remoting/remoting/win_system/Environment.h"
-// FIXME: Why the class should depence from the remoting_node_desktop project?
+// FIXME: Why the class CLASS_DECL_REMOTING should depence from the remoting_node_desktop project?
 #include "remoting/node_desktop/NamingDefs.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    const TCHAR MirrorDriverClient::MINIPORT_REGISTRY_PATH[] = "SYSTEM\\CurrentControlSet\\Hardware Profiles\\"
@@ -452,6 +452,6 @@ namespace remoting_node_desktop
    }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
  
 

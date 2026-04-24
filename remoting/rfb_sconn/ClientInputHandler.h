@@ -29,22 +29,27 @@
 #include "RfbCodeRegistrator.h"
 #include "ClientInputEventListener.h"
 
-class ClientInputHandler : public RfbDispatcherListener
+namespace remoting
 {
-public:
-  ClientInputHandler(RfbCodeRegistrator *codeRegtor,
-                     ClientInputEventListener *extEventListener,
-                     bool viewOnly);
-  virtual ~ClientInputHandler();
 
-  void setViewOnlyFlag(bool value) { m_viewOnly = value; }
 
-protected:
-  // Listen function
-  virtual void onRequest(unsigned int reqCode, ::remoting::RfbInputGate *input);
+   class ClientInputHandler : public RfbDispatcherListener
+   {
+   public:
+      ClientInputHandler(RfbCodeRegistrator *codeRegtor, ClientInputEventListener *extEventListener, bool viewOnly);
+      virtual ~ClientInputHandler();
 
-  ClientInputEventListener *m_extEventListener;
-  bool m_viewOnly;
-};
+      void setViewOnlyFlag(bool value) { m_viewOnly = value; }
 
-//// __CLIENTINPUTHANDLER_H__
+   protected:
+      // Listen function
+      virtual void onRequest(unsigned int reqCode, ::remoting::RfbInputGate *input);
+
+      ClientInputEventListener *m_extEventListener;
+      bool m_viewOnly;
+   };
+
+  
+
+} // namespace remoting
+  

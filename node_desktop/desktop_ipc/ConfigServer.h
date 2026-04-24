@@ -27,7 +27,7 @@
 
 #include "DesktopSrvDispatcher.h"
 #include "DesktopServerProto.h"
-#include "desktop/DesktopConfigLocal.h"
+#include "remoting/remoting/desktop/DesktopConfigLocal.h"
 
 namespace remoting_node_desktop
 {

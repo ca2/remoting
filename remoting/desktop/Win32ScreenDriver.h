@@ -31,10 +31,10 @@
 #include "HooksUpdateDetector.h"
 #include "WindowsScreenGrabber.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class Win32ScreenDriver : public Win32ScreenDriverBaseImpl
+   class CLASS_DECL_REMOTING Win32ScreenDriver : public Win32ScreenDriverBaseImpl
    {
    public:
       Win32ScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ::innate_subsystem::FrameBuffer *fb,
@@ -55,7 +55,7 @@ namespace remoting_node_desktop
       virtual bool applyNewScreenProperties();
 
    private:
-      // This class provides thread safed coordinations between the backup frame buffer and
+      // This class  provides thread safed coordinations between the backup frame buffer and
       // the following objects.
       WindowsScreenGrabber m_screenGrabber;
       Poller m_poller;
@@ -64,7 +64,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

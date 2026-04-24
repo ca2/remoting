@@ -42,7 +42,7 @@ FileTransferSecurity::~FileTransferSecurity()
 
 void FileTransferSecurity::beginMessageProcessing()
 {
-  Configurator* conf = Configurator::getInstance();
+  Configurator* conf = m_pconfigurator;
   bool runAsService = conf->getServiceFlag();
   bool rdpEnabled = conf->getServerConfig()->getConnectToRdpFlag();
 
@@ -89,14 +89,14 @@ void FileTransferSecurity::throwIfAccessDenied()
 {
   if (!m_hasAccess) {
     throw ::subsystem::Exception("Access denied.");
-  } else if (!Configurator::getInstance()->getServerConfig()->isFileTransfersEnabled()) {
+  } else if (!m_pconfigurator->getServerConfig()->isFileTransfersEnabled()) {
     throw ::subsystem::Exception("::file::item transfers are disabled on server side.");
   }
 }
 
 void FileTransferSecurity::endMessageProcessing()
 {
-  if (Configurator::getInstance()->getServiceFlag() && m_hasAccess) {
+  if (m_pconfigurator->getServiceFlag() && m_hasAccess) {
     try {
       revertToSelf();
     } catch (...) {

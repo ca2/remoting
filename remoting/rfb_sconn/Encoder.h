@@ -34,86 +34,89 @@
 #include "EncodeOptions.h"
 #include "remoting/remoting/rfb/PixelConverter.h"
 
-//
-// Encoder is the base class for all RFB encoders.
-// It implements Raw encoder which is used in RFB by default.
-//
-
-class Encoder
+namespace remoting
 {
-public:
 
-  // The constructor.
-  // `conv' specifies a PixelConverter allowing encoders to translate pixels
-  // from the given framebuffer to some other pixel format (typically, the
-  // pixel format used by an RFB client). The converter must be maintained by
-  // its owner so that it would be relevant at the moment of calling
-  // splitRectangle() or sendRectangle(). The same object may not be used by
-  // other threads during the execution the mentioned functions of the
-  // Encoder, and it may not be altered between a call to splitRectangle() and
-  // the corresponding calls to sendRectangle().
-  // `output' specifies the output stream to write the encoded data to.
-  // Both `conv' and 'output' should point to objects that should remain
-  // relevant during the whole life cycle of the Encoder.
-  Encoder(::remoting::PixelConverter *conv, DataOutputStream *output);
+   //
+   // Encoder is the base class for all RFB encoders.
+   // It implements Raw encoder which is used in RFB by default.
+   //
 
-  virtual ~Encoder(void);
+   class Encoder
+   {
+   public:
 
-  // Return the "encoding type" code for this encoder, as defined in the RFB
-  // protocol specification.
-  virtual int getCode() const;
+      // The constructor.
+      // `conv' specifies a PixelConverter allowing encoders to translate pixels
+      // from the given framebuffer to some other pixel format (typically, the
+      // pixel format used by an RFB client). The converter must be maintained by
+      // its owner so that it would be relevant at the moment of calling
+      // splitRectangle() or sendRectangle(). The same object may not be used by
+      // other threads during the execution the mentioned functions of the
+      // Encoder, and it may not be altered between a call to splitRectangle() and
+      // the corresponding calls to sendRectangle().
+      // `output' specifies the output stream to write the encoded data to.
+      // Both `conv' and 'output' should point to objects that should remain
+      // relevant during the whole life cycle of the Encoder.
+      Encoder(::remoting::PixelConverter *conv, DataOutputStream *output);
 
-  // splitRectangle() is used to let the encoder split one big rectangle to a
-  // number of smaller ones for efficient encoding or for satisfying the
-  // limitations on maximum rectangle width and height. The resulting ::list_base of
-  // rectangles is added to the end of the provided `rectList'.
-  //
-  // The default implementation of this function provided by the base Encoder
-  // class does not split rectangles, it just adds the original rect to
-  // rectList. If a particular encoder wishes to split rectangles differently,
-  // it should implement its own splitRectangle() function.
-  //
-  // UpdateSender calls splitRectangle() for each rectangle of the update
-  // region, then calls sendRectangle() for the same ::list_base of rectangles.
-  //
-  // The arguments of splitRectangle() are similar to those of
-  // sendRectangle(). It's guaranteed that options and serverFb will point to
-  // the same data as in the subsequent calls to sendRectanle(). Also, it's
-  // guaranteed that the state of m_pixelConverter will not be changed between
-  // splitRectangle() and sendRectangle() calls. splitRectangles() may change
-  // the state of PixelConverter that's why it cannot be declared const.
-  virtual void splitRectangle(const ::int_rectangle &  rect,
-                              ::array_base<::int_rectangle> *rectList,
-                              const ::innate_subsystem::FrameBuffer *serverFb,
-                              const EncodeOptions *options);
+      virtual ~Encoder(void);
 
-  // Encode and send the rectangle. The `serverFb' argument points to a frame
-  // buffer that can be in arbitrary pixel format natively used by the RFB
-  // server. To get relevant pixels in the destination format (client format),
-  // encoders must convert the data from *serverFb explicitly, e.g. by calling
-  // m_pixelConverter->convert().
-  virtual void sendRectangle(const ::int_rectangle &  rect,
-                             const ::innate_subsystem::FrameBuffer *serverFb,
-                             const EncodeOptions *options);
+      // Return the "encoding type" code for this encoder, as defined in the RFB
+      // protocol specification.
+      virtual int getCode() const;
 
-protected:
+      // splitRectangle() is used to let the encoder split one big rectangle to a
+      // number of smaller ones for efficient encoding or for satisfying the
+      // limitations on maximum rectangle width and height. The resulting ::list_base of
+      // rectangles is added to the end of the provided `rectList'.
+      //
+      // The default implementation of this function provided by the base Encoder
+      // class does not split rectangles, it just adds the original rect to
+      // rectList. If a particular encoder wishes to split rectangles differently,
+      // it should implement its own splitRectangle() function.
+      //
+      // UpdateSender calls splitRectangle() for each rectangle of the update
+      // region, then calls sendRectangle() for the same ::list_base of rectangles.
+      //
+      // The arguments of splitRectangle() are similar to those of
+      // sendRectangle(). It's guaranteed that options and serverFb will point to
+      // the same data as in the subsequent calls to sendRectanle(). Also, it's
+      // guaranteed that the state of m_pixelConverter will not be changed between
+      // splitRectangle() and sendRectangle() calls. splitRectangles() may change
+      // the state of PixelConverter that's why it cannot be declared const.
+      virtual void splitRectangle(const ::int_rectangle &rect, ::array_base<::int_rectangle> *rectList,
+                                  const ::innate_subsystem::FrameBuffer *serverFb, const EncodeOptions *options);
 
-  // PixelConverter is used for converting pixels from the given framebuffer
-  // to some other pixel format (typically, the pixel format using by an RFB
-  // client). Encoders may assume it will be properly configured at the moment
-  // of calling splitRectangle() or sendRectangle(). The same object may not
-  // be used by other threads during the execution the mentioned functions of
-  // the Encoder, and it may not be altered between a call to splitRectangle()
-  // and the corresponding calls to sendRectangle().
-   ::remoting::PixelConverter *m_pixelConverter;
+      // Encode and send the rectangle. The `serverFb' argument points to a frame
+      // buffer that can be in arbitrary pixel format natively used by the RFB
+      // server. To get relevant pixels in the destination format (client format),
+      // encoders must convert the data from *serverFb explicitly, e.g. by calling
+      // m_pixelConverter->convert().
+      virtual void sendRectangle(const ::int_rectangle &rect, const ::innate_subsystem::FrameBuffer *serverFb,
+                                 const EncodeOptions *options);
 
-  // The output stream to write the encoded data to.
-  DataOutputStream *m_output;
+   protected:
 
-///private:
-  // Do not allow copying objects.
-  //Encoder(const Encoder &other);
-  //Encoder &operator=(const Encoder &other);
-};
+      // PixelConverter is used for converting pixels from the given framebuffer
+      // to some other pixel format (typically, the pixel format using by an RFB
+      // client). Encoders may assume it will be properly configured at the moment
+      // of calling splitRectangle() or sendRectangle(). The same object may not
+      // be used by other threads during the execution the mentioned functions of
+      // the Encoder, and it may not be altered between a call to splitRectangle()
+      // and the corresponding calls to sendRectangle().
+      ::remoting::PixelConverter *m_pixelConverter;
 
-//// __RFB_ENCODER_H_INCLUDED__
+      // The output stream to write the encoded data to.
+      DataOutputStream *m_output;
+
+      /// private:
+      // Do not allow copying objects.
+      // Encoder(const Encoder &other);
+      // Encoder &operator=(const Encoder &other);
+   };
+
+ 
+
+} // namespace remoting
+ 

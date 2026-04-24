@@ -28,52 +28,55 @@
 //#include "subsystem/platform/inttypes.h"
 #include "remoting/remoting/network/RfbInputGate.h"
 #include "remoting/remoting/network/RfbOutputGate.h"
-#include "rfb_sconn/RfbCodeRegistrator.h"
-#include "rfb_sconn/RfbDispatcherListener.h"
+#include "remoting/remoting/rfb_sconn/RfbCodeRegistrator.h"
+#include "remoting/remoting/rfb_sconn/RfbDispatcherListener.h"
 //#include "log_writer/LogWriter.h"
 
-/**
- * Handler of echo extension plugin client to server messages.
- * Processes client requests and sends replies.
- */
-class EchoExtensionRequestHandler : public RfbDispatcherListener
+namespace remoting
 {
-public:
-  /**
-   * Creates new echo extension client messages handler.
-   * @param registrator rfb registrator which needs to register echo messages
-   *   to rfb dispatcher address whem to this object.
-   * @param output gate for writting replies for requests.
-   * @pararm enabled indicates if echo response should be enabled or disabled
-   */
-EchoExtensionRequestHandler(RfbCodeRegistrator *registrator,
-                             RfbOutputGate *output,
-                             ::subsystem::LogWriter *log,
-                             bool enabled = true);
 
-  /**
-   * Deletes echo extension request handler.
-   */
-  virtual ~EchoExtensionRequestHandler();
+   /**
+    * Handler of echo extension plugin client to server messages.
+    * Processes client requests and sends replies.
+    */
+   class EchoExtensionRequestHandler : public RfbDispatcherListener
+   {
+   public:
+      /**
+       * Creates new echo extension client messages handler.
+       * @param registrator rfb registrator which needs to register echo messages
+       *   to rfb dispatcher address whem to this object.
+       * @param output gate for writting replies for requests.
+       * @pararm enabled indicates if echo response should be enabled or disabled
+       */
+      EchoExtensionRequestHandler(RfbCodeRegistrator *registrator, RfbOutputGate *output, ::subsystem::LogWriter *log,
+                                  bool enabled = true);
 
-  /**
-   * Inherited from RfbDispatcherListener.
-   * Processes echo extension client messages.
-   */
-  virtual void onRequest(unsigned int reqCode, RfbInputGate *backGate);
-  
-  bool isEchoExtensionEnabled();
+      /**
+       * Deletes echo extension request handler.
+       */
+      virtual ~EchoExtensionRequestHandler();
 
-protected:
-  //
-  // Input and output gates.
-  //
+      /**
+       * Inherited from RfbDispatcherListener.
+       * Processes echo extension client messages.
+       */
+      virtual void onRequest(unsigned int reqCode, RfbInputGate *backGate);
 
-  RfbInputGate *m_input;
-  RfbOutputGate *m_output;
+      bool isEchoExtensionEnabled();
 
-  bool m_enabled;
-  ::subsystem::LogWriter *m_plogwriter;
-};
+   protected:
+      //
+      // Input and output gates.
+      //
 
-////_ECHO_EXTENSION_REQUEST_HANDLER_H_
+      RfbInputGate *m_input;
+      RfbOutputGate *m_output;
+
+      bool m_enabled;
+      ::subsystem::LogWriter *m_plogwriter;
+   };
+
+
+
+} // namespace remoting

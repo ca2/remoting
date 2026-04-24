@@ -25,17 +25,17 @@
 #pragma once
 
 
-#include "rfb_sconn/EncodeOptions.h"
+#include "remoting/remoting/rfb_sconn/EncodeOptions.h"
 #include "remoting/remoting/rfb/CursorShape.h"
 #include "remoting/remoting/desktop/UpdateContainer.h"
 //#include "subsystem/platform/::earth::time.h"
 //#include "subsystem/thread/critical_section.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class CursorUpdates
+   class CLASS_DECL_REMOTING  CursorUpdates
    {
    public:
       CursorUpdates(::subsystem::LogWriter *log);
@@ -98,7 +98,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

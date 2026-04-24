@@ -28,10 +28,10 @@
 //#include "subsystem/platform/inttypes.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class UpdSenderClientMsgDefs
+   class CLASS_DECL_REMOTING  UpdSenderClientMsgDefs
    {
    public:
       static const unsigned int RFB_VIDEO_FREEZE = 152;
@@ -39,4 +39,4 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop 
+} // namespace remoting

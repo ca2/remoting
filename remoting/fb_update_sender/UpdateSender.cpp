@@ -32,9 +32,9 @@
 //#include "subsystem/platform/inttypes.h"
 #include "subsystem/platform/Exception.h"
 #include "UpdSenderMsgDefs.h"
-#include "rfb_sconn/ClipboardExchange.h"
+#include "remoting/remoting/rfb_sconn/ClipboardExchange.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -1016,4 +1016,4 @@ namespace remoting_node_desktop
    }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting

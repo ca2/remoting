@@ -25,7 +25,7 @@
 #include "WinServiceDesktopFactory.h"
 #include "DesktopClientImpl.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    WinServiceDesktopFactory::WinServiceDesktopFactory() {}
@@ -41,7 +41,7 @@ namespace remoting_node_desktop
    }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
  
 
 

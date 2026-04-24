@@ -29,11 +29,16 @@
 #include "subsystem/platform/Exception.h"
 
 
-class AuthException : public ::subsystem::Exception
+namespace remoting
 {
-public:
-  AuthException(const ::scoped_string & scopedstrMessage): ::subsystem::Exception(scopedstrMessage) {}
-  virtual ~AuthException() {}
-};
+   class AuthException : public ::subsystem::Exception
+   {
+   public:
+      AuthException(const ::scoped_string & scopedstrMessage): ::subsystem::Exception(scopedstrMessage) {}
+      virtual ~AuthException() {}
+   };
+} //namespace remoting
 
-//// __AUTHEXCEPTION_H__
+
+
+

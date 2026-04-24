@@ -32,11 +32,11 @@
 //////#include "subsystem/platform/::string.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   // This class stores a view port state.
-   class ViewPortState
+   // This class CLASS_DECL_REMOTING  stores a view port state.
+   class CLASS_DECL_REMOTING  ViewPortState
    {
    public:
       ViewPortState();
@@ -94,11 +94,11 @@ namespace remoting_node_desktop
       unsigned char m_displayNumber;
       unsigned int m_processId;
 
-      friend class ViewPort;
+      friend class CLASS_DECL_REMOTING  ViewPort;
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "Win8CursorShape.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -60,7 +60,7 @@ namespace remoting_node_desktop
    bool Win8CursorShape::getIsVisible() const { return m_isVisible; }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
  
 
 

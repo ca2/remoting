@@ -24,9 +24,9 @@
 #include "framework.h"
 #include "DesktopConfigLocal.h"
 #include "remoting/remoting/server_config/Configurator.h"
-#include "desktop/WindowsInputBlocker.h"
+#include "remoting/remoting/desktop/WindowsInputBlocker.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    DesktopConfigLocal::DesktopConfigLocal(::subsystem::LogWriter *log)
@@ -56,5 +56,5 @@ namespace remoting_node_desktop
    void DesktopConfigLocal::correctLastTime(::earth::time newTime) { m_inputBlocker->correctLastTime(newTime); }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
  

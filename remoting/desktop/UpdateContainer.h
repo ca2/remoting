@@ -29,10 +29,10 @@
 //#include "remoting/remoting/region/::int_point.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class UpdateContainer
+   class CLASS_DECL_REMOTING UpdateContainer
    {
    public:
       UpdateContainer();
@@ -59,7 +59,7 @@ namespace remoting_node_desktop
    //// __UPDATECONTAINER_H__
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

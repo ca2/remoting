@@ -36,10 +36,10 @@
 #include "remoting/remoting/win_system/WindowsEvent.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class MirrorDriverClient : private GuiThread, private WindowMessageHandler
+   class CLASS_DECL_REMOTING MirrorDriverClient : private GuiThread, private WindowMessageHandler
    {
    public:
       MirrorDriverClient(::subsystem::LogWriter *log);
@@ -118,7 +118,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

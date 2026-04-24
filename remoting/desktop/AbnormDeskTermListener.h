@@ -25,7 +25,7 @@
 #pragma once
 
 
-class AbnormDeskTermListener
+class CLASS_DECL_REMOTING AbnormDeskTermListener
 {
 public:
   virtual ~AbnormDeskTermListener() {}

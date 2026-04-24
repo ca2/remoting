@@ -34,7 +34,7 @@
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "Win8ScreenDriverImpl.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -279,4 +279,4 @@ namespace remoting_node_desktop
    }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting

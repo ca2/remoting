@@ -29,13 +29,13 @@
 #include "WinD3D11Device.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    // #include aaa_<d3d11.h>
    // #include aaa_<DXGI1_2.h>
 
-   class WinDxgiDevice
+   class CLASS_DECL_REMOTING WinDxgiDevice
    {
    public:
       // Uses WinD3D11Device to create internal handle
@@ -49,7 +49,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

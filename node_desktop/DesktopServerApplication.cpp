@@ -25,7 +25,7 @@
 #include "DesktopServerApplication.h"
 #include "DesktopServerCommandLine.h"
 #include "subsystem/platform/ResourceLoader.h"
-#include "desktop/WallpaperUtil.h"
+#include "remoting/remoting/desktop/WallpaperUtil.h"
 #include "subsystem/node/WTS.h"
 #include "subsystem/node/OperatingSystem.h"
 #include "subsystem/node/SharedMemory.h"

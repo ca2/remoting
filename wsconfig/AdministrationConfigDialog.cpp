@@ -53,7 +53,7 @@ void AdministrationConfigDialog::setParentDialog(BaseDialog *dialog)
 
 bool AdministrationConfigDialog::onInitDialog()
 {
-  m_config = Configurator::getInstance()->getServerConfig();
+  m_config = m_pconfigurator->getServerConfig();
 
   initControls();
   updateUI();

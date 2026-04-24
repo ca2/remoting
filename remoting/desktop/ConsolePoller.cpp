@@ -26,7 +26,7 @@
 #include "remoting/remoting/server_config/Configurator.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    ConsolePoller::ConsolePoller(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
@@ -115,7 +115,7 @@ namespace remoting_node_desktop
    }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

@@ -27,10 +27,10 @@
 
 //#include "subsystem/platform/::earth::time.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class InputBlocker
+   class CLASS_DECL_REMOTING InputBlocker
    {
    public:
       InputBlocker();
@@ -51,6 +51,6 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 

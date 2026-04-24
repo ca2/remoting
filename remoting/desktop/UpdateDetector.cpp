@@ -25,7 +25,7 @@
 #include "UpdateDetector.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -37,4 +37,4 @@ namespace remoting_node_desktop
    UpdateDetector::~UpdateDetector() {}
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting

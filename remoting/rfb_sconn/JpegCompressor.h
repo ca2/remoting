@@ -29,6 +29,10 @@
 #include "subsystem/_common_header.h"
 #include "subsystem/framebuffer/PixelFormat.h"
 
+namespace remoting
+{
+
+
 // For Windows platforms only.
 // For using libjpeg for encoding go to Property Pages of remoting_node -> Linker -> Input -> Additional Dependencies
 // and delete "$(SolutionDir)libjpeg-turbo\jpeg-static.lib" and "$(SolutionDir)libjpeg-turbo\jpeg-static-64.lib"
@@ -36,107 +40,109 @@
 // For Visual Studio 2008 add libjpeg project to the dependencies of remoting_node.
 // Also you need to delete LIBJPEG_TURBO directive from the CommonHeader.h file.
 //
-//#ifdef LIBJPEG_TURBO
-//#include "libjpeg-turbo/jpeglib.h"
-//#else
-//#include "libjpeg/jpeglib.h"
+// #ifdef LIBJPEG_TURBO
+// #include "libjpeg-turbo/jpeglib.h"
+// #else
+// #include "libjpeg/jpeglib.h"
 #include "port_jpeg/jpeglib.h"
 
-//
-// An abstract interface for performing JPEG compression.
-//
+   //
+   // An abstract interface for performing JPEG compression.
+   //
 
-class JpegCompressor
-{
-public:
-  virtual ~JpegCompressor() {}
+   class JpegCompressor
+   {
+   public:
+      virtual ~JpegCompressor() {}
 
-  // Set JPEG quality level (0..100)
-  virtual void setQuality(int level) = 0;
-  virtual void resetQuality() = 0;
+      // Set JPEG quality level (0..100)
+      virtual void setQuality(int level) = 0;
+      virtual void resetQuality() = 0;
 
-  // Actually compress a rectangle of a given pixel buffer referenced by buf.
-  // The pixel format as specified by fmt must meet the following
-  // requirements: bitsPerPixel must be either 32 or 16, and the bigEndian
-  // flag must correspond to the native byte order. The stride value specifies
-  // the number of bytes (not pixels!) occupied by one row of the buffer,
-  // including padding if any.
-  virtual void compress(const void *buf, const ::innate_subsystem::PixelFormat & fmt,
-                        int w, int h, int stride) = 0;
+      // Actually compress a rectangle of a given pixel buffer referenced by buf.
+      // The pixel format as specified by fmt must meet the following
+      // requirements: bitsPerPixel must be either 32 or 16, and the bigEndian
+      // flag must correspond to the native byte order. The stride value specifies
+      // the number of bytes (not pixels!) occupied by one row of the buffer,
+      // including padding if any.
+      virtual void compress(const void *buf, const ::innate_subsystem::PixelFormat &fmt, int w, int h, int stride) = 0;
 
-  // Get the length of the output data, in bytes.
-  virtual size_t getOutputLength() = 0;
+      // Get the length of the output data, in bytes.
+      virtual size_t getOutputLength() = 0;
 
-  // Access the actual output of the compressor.
-  virtual const char *getOutputData() = 0;
-};
+      // Access the actual output of the compressor.
+      virtual const char *getOutputData() = 0;
+   };
 
-//
-// StandardJpegCompressor is a C++ class for performing JPEG compression via
-// the Independent JPEG Group's software (free JPEG library).
-//
-// See the documentation on JpegCompressor for information on the base methods
-// overridden here.
-//
+   //
+   // StandardJpegCompressor is a C++ class for performing JPEG compression via
+   // the Independent JPEG Group's software (free JPEG library).
+   //
+   // See the documentation on JpegCompressor for information on the base methods
+   // overridden here.
+   //
 
-class StandardJpegCompressor : public JpegCompressor
-{
-public:
-  StandardJpegCompressor();
-  virtual ~StandardJpegCompressor();
+   class StandardJpegCompressor : public JpegCompressor
+   {
+   public:
+      StandardJpegCompressor();
+      virtual ~StandardJpegCompressor();
 
-  virtual void setQuality(int level);
-  virtual void resetQuality();
+      virtual void setQuality(int level);
+      virtual void resetQuality();
 
-  virtual void compress(const void *buf, const ::innate_subsystem::PixelFormat & fmt,
-                        int w, int h, int stride);
+      virtual void compress(const void *buf, const ::innate_subsystem::PixelFormat &fmt, int w, int h, int stride);
 
-  virtual size_t getOutputLength();
-  virtual const char *getOutputData();
+      virtual size_t getOutputLength();
+      virtual const char *getOutputData();
 
-public:
-  // Our implementation of JPEG destination manager. These three
-  // functions should never be called directly. They are made public
-  // because they should be accessible from C-compatible functions
-  // called by the JPEG library.
-  void initDestination();
-  bool emptyOutputBuffer();
-  void termDestination();
+   public:
+      // Our implementation of JPEG destination manager. These three
+      // functions should never be called directly. They are made public
+      // because they should be accessible from C-compatible functions
+      // called by the JPEG library.
+      void initDestination();
+      bool emptyOutputBuffer();
+      void termDestination();
 
-protected:
-  static const int ALLOC_CHUNK_SIZE;
-  static const int DEFAULT_JPEG_QUALITY;
+   protected:
+      static const int ALLOC_CHUNK_SIZE;
+      static const int DEFAULT_JPEG_QUALITY;
 
-  int m_quality;
-  int m_newQuality;
+      int m_quality;
+      int m_newQuality;
 
-  unsigned char *m_outputBuffer;
-  size_t m_numBytesAllocated;
-  size_t m_numBytesReady;
+      unsigned char *m_outputBuffer;
+      size_t m_numBytesAllocated;
+      size_t m_numBytesReady;
 
-  // Convert one row (scanline) from the specified pixel format to the format
-  // supported by the IJG JPEG library (one byte per one color component).
-  void convertRow(JSAMPLE *dst, const void *src,
-                  const ::innate_subsystem::PixelFormat & fmt, int numPixels);
+      // Convert one row (scanline) from the specified pixel format to the format
+      // supported by the IJG JPEG library (one byte per one color component).
+      void convertRow(JSAMPLE *dst, const void *src, const ::innate_subsystem::PixelFormat &fmt, int numPixels);
 
-  // Convert one row (scanline) from the specified pixel format to the format
-  // supported by the IJG JPEG library (one byte per one color component).
-  // This is a faster version assuming that source pixels are 32-bit values
-  // with actual color depth of 24 (redMax, greenMax and blueMax are all 255).
-  void convertRow24(JSAMPLE *dst, const void *src,
-                    const ::innate_subsystem::PixelFormat & fmt, int numPixels);
+      // Convert one row (scanline) from the specified pixel format to the format
+      // supported by the IJG JPEG library (one byte per one color component).
+      // This is a faster version assuming that source pixels are 32-bit values
+      // with actual color depth of 24 (redMax, greenMax and blueMax are all 255).
+      void convertRow24(JSAMPLE *dst, const void *src, const ::innate_subsystem::PixelFormat &fmt, int numPixels);
 
-private:
-  METHODDEF(::string) get_message(j_common_ptr cinfo);
-  METHODDEF(void) errorExit(j_common_ptr cinfo);
-  METHODDEF(void) outputMessage(j_common_ptr cinfo);
+   private:
+      METHODDEF(::string) get_message(j_common_ptr cinfo);
+      METHODDEF(void) errorExit(j_common_ptr cinfo);
+      METHODDEF(void) outputMessage(j_common_ptr cinfo);
 
-  typedef struct _TC_JPEG_COMPRESSOR {
-    struct jpeg_compress_struct cinfo;
-    struct jpeg_error_mgr jerr;
-  } TC_JPEG_COMPRESSOR;
+      typedef struct _TC_JPEG_COMPRESSOR
+      {
+         struct jpeg_compress_struct cinfo;
+         struct jpeg_error_mgr jerr;
+      } TC_JPEG_COMPRESSOR;
 
-  TC_JPEG_COMPRESSOR m_jpeg;
-};
+      TC_JPEG_COMPRESSOR m_jpeg;
+   };
 
-//// __RFB_JPEG_COMPRESSOR_H_INCLUDED__
+
+} // namespace remoting
+
+
+
+

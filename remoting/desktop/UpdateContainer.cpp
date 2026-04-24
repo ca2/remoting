@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "UpdateContainer.h"
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -64,4 +64,4 @@ namespace remoting_node_desktop
    }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting

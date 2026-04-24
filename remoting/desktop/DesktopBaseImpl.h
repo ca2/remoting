@@ -34,11 +34,11 @@
 #include "UpdateSendingListener.h"
 #include "ClipboardListener.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   // This class is a base class for different implemetations of desktops
-   class DesktopBaseImpl : public Desktop, public UpdateListener, public ClipboardListener, public ConfigReloadListener
+   // This class  is a base class CLASS_DECL_REMOTING for different implemetations of desktops
+   class CLASS_DECL_REMOTING DesktopBaseImpl : public Desktop, public UpdateListener, public ClipboardListener, public ConfigReloadListener
    {
    public:
       DesktopBaseImpl(ClipboardListener *extClipListener, UpdateSendingListener *extUpdSendingListener,
@@ -91,7 +91,7 @@ namespace remoting_node_desktop
 
       UpdateHandler *m_updateHandler;
 
-      // A derived class thread control.
+      // A derived class CLASS_DECL_REMOTING thread control.
       WindowsEvent m_newUpdateEvent;
 
       UserInput *m_userInput;
@@ -109,7 +109,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

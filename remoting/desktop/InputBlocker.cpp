@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "InputBlocker.h"
 
-namespace remoting_node_desktop
+namespace remoting
 
 {
 
@@ -33,5 +33,5 @@ namespace remoting_node_desktop
    InputBlocker::~InputBlocker() {}
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
  

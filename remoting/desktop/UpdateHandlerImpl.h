@@ -29,11 +29,11 @@
 #include "ScreenDriver.h"
 #include "ScreenDriverFactory.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   // This class contain a base architecture implementation of the UpdateHandler class.
-   class UpdateHandlerImpl : public UpdateHandler, public UpdateListener
+   // This class  contain a base architecture implementation of the UpdateHandler class.
+   class CLASS_DECL_REMOTING UpdateHandlerImpl : public UpdateHandler, public UpdateListener
    {
    public:
       UpdateHandlerImpl(UpdateListener *externalUpdateListener, ScreenDriverFactory *scrDriverFactory,
@@ -75,7 +75,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

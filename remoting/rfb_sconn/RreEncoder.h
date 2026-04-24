@@ -22,41 +22,45 @@
 //-------------------------------------------------------------------------
 //
 
-#pragma onceINCLUDED__
-INCLUDED__
+#pragma once
 
 #include "Encoder.h"
 #include "remoting/remoting/region/Region.h"
 
-class RreEncoder : public Encoder
+namespace remoting
 {
-public:
-  RreEncoder(PixelConverter *conv, DataOutputStream *output);
-  virtual ~RreEncoder();
 
-  virtual int getCode() const;
 
-  virtual void splitRectangle(const ::int_rectangle &  rect,
-                              ::array_base<::int_rectangle> *rectList,
-                              const ::innate_subsystem::FrameBuffer *serverFb,
-                              const EncodeOptions *options);
+   class RreEncoder : public Encoder
+   {
+   public:
+      RreEncoder(PixelConverter *conv, DataOutputStream *output);
+      virtual ~RreEncoder();
 
-  virtual void sendRectangle(const ::int_rectangle &  rect,
-                             const ::innate_subsystem::FrameBuffer *serverFb,
-                             const EncodeOptions *options);
+      virtual int getCode() const;
 
-private:
-  template <class PIXEL_T>
-    void rreEncode(const ::int_rectangle &  r,
-                   const ::innate_subsystem::FrameBuffer *frameBuffer);
+      virtual void splitRectangle(const ::int_rectangle &rect, ::array_base<::int_rectangle> *rectList,
+                                  const ::innate_subsystem::FrameBuffer *serverFb, const EncodeOptions *options);
 
-  // Coordinates of subrectangles.
-  ::array_base<::int_rectangle> m_rects;
-  
-  // All rectangles are devided (in splitRectangle() function)
-  // into new rectangles with maximum size == 64.
-  // ::int_rectangle size == 64 for a better performance and less memory consumption.
-  static const int RECT_SIZE = 64;
-};
+      virtual void sendRectangle(const ::int_rectangle &rect, const ::innate_subsystem::FrameBuffer *serverFb,
+                                 const EncodeOptions *options);
 
-//// __RFB_RRE_ENCODER_H_INCLUDED__
+   private:
+      template<class PIXEL_T>
+      void rreEncode(const ::int_rectangle &r, const ::innate_subsystem::FrameBuffer *frameBuffer);
+
+      // Coordinates of subrectangles.
+      ::array_base<::int_rectangle> m_rects;
+
+      // All rectangles are devided (in splitRectangle() function)
+      // into new rectangles with maximum size == 64.
+      // ::int_rectangle size == 64 for a better performance and less memory consumption.
+      static const int RECT_SIZE = 64;
+   };
+
+
+
+} // namespace remoting
+
+
+

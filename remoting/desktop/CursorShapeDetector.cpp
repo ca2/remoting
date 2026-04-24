@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "CursorShapeDetector.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    const int SLEEP_TIME = 100;
@@ -66,7 +66,7 @@ namespace remoting_node_desktop
    }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

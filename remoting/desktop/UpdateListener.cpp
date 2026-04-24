@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "UpdateListener.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -33,5 +33,5 @@ namespace remoting_node_desktop
    UpdateListener::~UpdateListener(void) {}
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
  

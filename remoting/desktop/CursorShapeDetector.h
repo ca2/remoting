@@ -31,10 +31,10 @@
 #include "remoting/remoting/win_system/WindowsEvent.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class CursorShapeDetector : public UpdateDetector
+   class CLASS_DECL_REMOTING CursorShapeDetector : public UpdateDetector
    {
    public:
       CursorShapeDetector(UpdateKeeper *updateKeeper, UpdateListener *updateListener, CursorShapeGrabber *mouseGrabber,
@@ -55,7 +55,7 @@ namespace remoting_node_desktop
    //// __CURSORHAPEDETECTOR_H__
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
  
 
 

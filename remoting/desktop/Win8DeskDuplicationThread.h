@@ -35,10 +35,10 @@
 #include "WinCustomD3D11Texture2D.h"
 #include "WinDxgiOutputDuplication.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class Win8DeskDuplication : public GuiThread
+   class CLASS_DECL_REMOTING Win8DeskDuplication : public GuiThread
    {
    public:
       // The WinDxgiOutput *dxgiOutput passed object can be destroyed right after the constructor calling.
@@ -86,7 +86,7 @@ namespace remoting_node_desktop
       bool m_hasRecoverableError;
 
 
-      // Use this variables as class fields to avoid frequency memory allocations.
+      // Use this variables as class CLASS_DECL_REMOTING fields to avoid frequency memory allocations.
       ::array_base<RECT> m_dirtyRects;
       ::array_base<DXGI_OUTDUPL_MOVE_RECT> m_moveRects;
 
@@ -99,7 +99,7 @@ namespace remoting_node_desktop
    //// __WIN8DESKDUPLICATIONTHREAD_H__
 
 
-}// namespace remoting_node_desktop
+}// namespace remoting
 
 
 

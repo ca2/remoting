@@ -39,7 +39,7 @@
 #include "subsystem/node/Screen.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    //
@@ -75,7 +75,7 @@ namespace remoting_node_desktop
      }
    */
 
-   class WindowsScreenGrabber : public ScreenGrabber, public ::subsystem::GuiThread
+   class CLASS_DECL_REMOTING WindowsScreenGrabber : public ScreenGrabber, public ::subsystem::GuiThread
    {
    public:
       WindowsScreenGrabber(void);
@@ -118,7 +118,7 @@ namespace remoting_node_desktop
 
    //// __WINDOWSSCREENGRABBER_H__
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

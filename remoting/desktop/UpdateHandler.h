@@ -38,10 +38,10 @@
 #include "desktop_ipc/BlockingGate.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class UpdateHandler
+   class CLASS_DECL_REMOTING UpdateHandler
    {
    public:
       UpdateHandler();
@@ -127,7 +127,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

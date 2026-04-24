@@ -31,10 +31,10 @@
 //#include "log_writer/LogWriter.h"
 #include "Desktop.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class DesktopFactory :
+   class CLASS_DECL_REMOTING DesktopFactory :
       virtual public ::particle
    {
    public:
@@ -45,4 +45,4 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting

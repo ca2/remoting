@@ -25,7 +25,7 @@
 #include "MirrorScreenDriver.h"
 #include "subsystem/platform/Exception.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    MirrorScreenDriver::MirrorScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
@@ -192,7 +192,7 @@ namespace remoting_node_desktop
    void MirrorScreenDriver::onTerminate() { m_updateTimeout.notify(); }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
  
 
 

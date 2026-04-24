@@ -49,7 +49,7 @@ void IpAccessControlDialog::setParentDialog(BaseDialog *dialog)
 
 bool IpAccessControlDialog::onInitDialog()
 {
-  m_config = Configurator::getInstance()->getServerConfig();
+  m_config = m_pconfigurator->getServerConfig();
   m_container = m_config->getAccessControl();
   m_editDialog.setParent(&m_ctrlThis);
   initControls();

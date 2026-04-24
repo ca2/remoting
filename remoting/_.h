@@ -48,6 +48,15 @@ namespace remoting
 }
 
 
+// fb_update_sender
+namespace remoting
+{
+
+   class UpdateRequestListener;
+
+}
+
+
 #endif
 
 

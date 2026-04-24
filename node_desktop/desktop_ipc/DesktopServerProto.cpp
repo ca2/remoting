@@ -258,7 +258,7 @@ namespace remoting_node_desktop
 
    void DesktopServerProto::sendConfigSettings(BlockingGate *gate)
    {
-      ServerConfig *srvConf = Configurator::getInstance()->getServerConfig();
+      ServerConfig *srvConf = m_pconfigurator->getServerConfig();
 
       // Log
       gate->writeUInt32(srvConf->getLogLevel());
@@ -302,7 +302,7 @@ namespace remoting_node_desktop
 
    void DesktopServerProto::readConfigSettings(BlockingGate *gate)
    {
-      ServerConfig *srvConf = Configurator::getInstance()->getServerConfig();
+      ServerConfig *srvConf = m_pconfigurator->getServerConfig();
 
       // Log
       srvConf->setLogLevel(gate->readUInt32());

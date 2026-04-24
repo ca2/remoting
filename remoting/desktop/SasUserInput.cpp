@@ -29,7 +29,7 @@
 #define XK_MISCELLANY
 #include "remoting/remoting/rfb/keysymdef.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -115,4 +115,4 @@ namespace remoting_node_desktop
    bool SasUserInput::isApplicationInFocus(unsigned int procId) { return m_client->isApplicationInFocus(procId); }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting

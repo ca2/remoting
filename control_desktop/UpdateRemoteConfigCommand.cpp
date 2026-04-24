@@ -37,5 +37,5 @@ UpdateRemoteConfigCommand::~UpdateRemoteConfigCommand()
 
 void UpdateRemoteConfigCommand::execute()
 {
-  m_serverControl->setServerConfig(Configurator::getInstance()->getServerConfig());
+  m_serverControl->setServerConfig(m_pconfigurator->getServerConfig());
 }

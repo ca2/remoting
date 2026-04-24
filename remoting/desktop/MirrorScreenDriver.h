@@ -33,10 +33,10 @@
 #include "UpdateDetector.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class MirrorScreenDriver : public UpdateDetector
+   class CLASS_DECL_REMOTING MirrorScreenDriver : public UpdateDetector
    {
    public:
       MirrorScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
@@ -79,7 +79,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

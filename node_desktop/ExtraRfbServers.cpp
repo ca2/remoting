@@ -175,7 +175,7 @@ namespace remoting_node_desktop
       //          someSetting = cfg.getSomeSetting();        // use
       //        }                                            // auto-unlock
       //
-      ServerConfig *config = Configurator::getInstance()->getServerConfig();
+      ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
       AutoLock l(config);
 
       out->acceptConnections = config->isAcceptingRfbConnections();

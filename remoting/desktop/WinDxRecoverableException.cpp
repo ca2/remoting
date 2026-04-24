@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "WinDxRecoverableException.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -36,4 +36,4 @@ namespace remoting_node_desktop
    WinDxRecoverableException::~WinDxRecoverableException() {}
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting

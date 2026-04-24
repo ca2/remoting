@@ -32,10 +32,10 @@
 #include "remoting/remoting/win_system/WindowsEvent.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class DummyScreenDriver : public ScreenDriver, Thread
+   class CLASS_DECL_REMOTING DummyScreenDriver : public ScreenDriver, Thread
    {
    public:
       DummyScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ::int_size dim,
@@ -76,7 +76,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
  
 
 

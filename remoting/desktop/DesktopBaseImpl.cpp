@@ -26,7 +26,7 @@
 #include "subsystem/platform/BrokenHandleException.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 
 {
 
@@ -377,5 +377,5 @@ namespace remoting_node_desktop
    }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
  

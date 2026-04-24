@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "WinDxRecoverableException.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -64,6 +64,6 @@ namespace remoting_node_desktop
    DXGI_OUTDUPL_FRAME_INFO *WinDxgiAcquiredFrame::getFrameInfo() { return &m_frameInfo; }
 
 
-} // namespace remoting_node_desktop
-namespace remoting_node_desktop
+} // namespace remoting
+namespace remoting
 {

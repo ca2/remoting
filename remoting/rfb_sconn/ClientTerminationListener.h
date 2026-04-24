@@ -24,13 +24,17 @@
 
 #pragma once
 
-
-class ClientTerminationListener
+namespace remoting
 {
-public:
-  virtual ~ClientTerminationListener() {}
 
-  virtual void onClientTerminate() = 0;
-};
 
-//// __CLIENTTERMINATIONLISTENER_H__
+   class ClientTerminationListener
+   {
+   public:
+      virtual ~ClientTerminationListener() {}
+
+      virtual void onClientTerminate() = 0;
+   };
+
+
+} // namespace remoting

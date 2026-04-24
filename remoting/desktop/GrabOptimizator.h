@@ -32,12 +32,12 @@
 //#include aaa_<vector>
 //#include aaa_<list>
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   // This class provides the screen grabbing by an optimal way.
-   // The class determines an optimal way by oneself dynamically.
-   class GrabOptimizator
+   // This class  provides the screen grabbing by an optimal way.
+   // The class CLASS_DECL_REMOTING determines an optimal way by oneself dynamically.
+   class CLASS_DECL_REMOTING GrabOptimizator
    {
    public:
       GrabOptimizator(::subsystem::LogWriter *log);
@@ -103,7 +103,7 @@ namespace remoting_node_desktop
 
  
 
-} // namespace remoting_node_desktop
+} // namespace remoting
  
 
 

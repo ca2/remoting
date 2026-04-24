@@ -29,7 +29,7 @@
 #include "subsystem/node/ClipboardListener.h"
 #include "DesktopServerProto.h"
 #include "ClientListener.h"
-#include "desktop/WindowsUserInput.h"
+#include "remoting/remoting/desktop/WindowsUserInput.h"
 //#include "remoting/remoting/win_system/WindowsEvent.h"
 #include "acme/parallelization/happening.h"
 #include "DesktopSrvDispatcher.h"

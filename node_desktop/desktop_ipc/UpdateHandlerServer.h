@@ -26,10 +26,10 @@
 
 
 #include "DesktopServerProto.h"
-#include "desktop/UpdateHandlerImpl.h"
+#include "remoting/remoting/desktop/UpdateHandlerImpl.h"
 #include "DesktopSrvDispatcher.h"
 //#include "log_writer/LogWriter.h"
-#include "desktop/Win32ScreenDriverFactory.h"
+#include "remoting/remoting/desktop/Win32ScreenDriverFactory.h"
 
 
 namespace remoting_node_desktop

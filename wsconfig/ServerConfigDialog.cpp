@@ -48,7 +48,7 @@ void ServerConfigDialog::setParentDialog(BaseDialog *dialog)
 
 bool ServerConfigDialog::onInitDialog()
 {
-  m_config = Configurator::getInstance()->getServerConfig();
+  m_config = m_pconfigurator->getServerConfig();
   initControls();
   updateUI();
 

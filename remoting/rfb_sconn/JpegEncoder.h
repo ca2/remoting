@@ -26,34 +26,38 @@
 
 #include "TightEncoder.h"
 
-class JpegEncoder : public Encoder
+namespace remoting
 {
-public:
-  // JpegEncoder is constructed as a wrapper for an existing TightEncoder
-  // object. It will use that TightEncoder to perform actual compression.
-  JpegEncoder(TightEncoder *tightEncoder);
-  virtual ~JpegEncoder();
 
-  // Overloaded function calls TightEncoder::getCode().
-  virtual int getCode() const;
 
-  // JpegEncoder implements its own splitRectangle() which just makes sure all
-  // rectangles are no wider than 2048 pixels.
-  virtual void splitRectangle(const ::int_rectangle &  rect,
-                              ::array_base<::int_rectangle> *rectList,
-                              const ::innate_subsystem::FrameBuffer *serverFb,
-                              const EncodeOptions *options);
+   class JpegEncoder : public Encoder
+   {
+   public:
+      // JpegEncoder is constructed as a wrapper for an existing TightEncoder
+      // object. It will use that TightEncoder to perform actual compression.
+      JpegEncoder(TightEncoder *tightEncoder);
+      virtual ~JpegEncoder();
 
-  // Encode and send the rectangle. JpegEncoder forces JPEG sub-encoding if
-  // JPEG quality level was set by the client and both client and server pixel
-  // formats are at least 16 bits per pixel. Otherwise, it falls back to usual
-  // lossless Tight encoding.
-  virtual void sendRectangle(const ::int_rectangle &  rect,
-                             const ::innate_subsystem::FrameBuffer *serverFb,
-                             const EncodeOptions *options);
+      // Overloaded function calls TightEncoder::getCode().
+      virtual int getCode() const;
 
-protected:
-  TightEncoder *m_tightEncoder;
-};
+      // JpegEncoder implements its own splitRectangle() which just makes sure all
+      // rectangles are no wider than 2048 pixels.
+      virtual void splitRectangle(const ::int_rectangle &rect, ::array_base<::int_rectangle> *rectList,
+                                  const ::innate_subsystem::FrameBuffer *serverFb, const EncodeOptions *options);
 
-//// __RFB_JPEG_ENCODER_H_INCLUDED__
+      // Encode and send the rectangle. JpegEncoder forces JPEG sub-encoding if
+      // JPEG quality level was set by the client and both client and server pixel
+      // formats are at least 16 bits per pixel. Otherwise, it falls back to usual
+      // lossless Tight encoding.
+      virtual void sendRectangle(const ::int_rectangle &rect, const ::innate_subsystem::FrameBuffer *serverFb,
+                                 const EncodeOptions *options);
+
+   protected:
+      TightEncoder *m_tightEncoder;
+   };
+
+ 
+
+} // namespace remoting
+ 

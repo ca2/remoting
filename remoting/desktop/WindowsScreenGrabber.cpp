@@ -25,7 +25,7 @@
 #include "WindowsScreenGrabber.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -256,5 +256,5 @@ namespace remoting_node_desktop
    void WindowsScreenGrabber::onTerminate() { m_threadStopper.notify(); }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
  

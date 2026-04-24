@@ -45,7 +45,7 @@ void VideoRegionsConfigDialog::setParentDialog(BaseDialog *dialog)
 
 bool VideoRegionsConfigDialog::onInitDialog()
 {
-  m_config = Configurator::getInstance()->getServerConfig();
+  m_config = m_pconfigurator->getServerConfig();
   initControls();
   updateUI();
   return true;

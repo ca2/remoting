@@ -35,10 +35,10 @@
 #define DEFAULT_SLEEP_TIME 1000
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class Poller : public UpdateDetector
+   class CLASS_DECL_REMOTING Poller : public UpdateDetector
    {
    public:
       Poller(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ScreenGrabber *screenGrabber,
@@ -62,7 +62,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

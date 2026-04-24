@@ -33,7 +33,7 @@
 //#include "remoting/remoting/win_system/Environment.h"
 #include "remoting/remoting/win_system/WindowsDisplays.h"
 
-namespace remoting_node_desktop
+namespace remoting
 
 {
 
@@ -148,7 +148,7 @@ namespace remoting_node_desktop
    }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
  
 
 

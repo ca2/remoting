@@ -26,24 +26,27 @@
 
 
 #include "remoting/remoting/desktop/Desktop.h"
-#include "rfb_sconn/RfbClient.h"
+#include "remoting/remoting/rfb_sconn/RfbClient.h"
 #include "AuthException.h"
 
-class ClientAuthListener
+
+namespace remoting
 {
-public:
-  virtual ~ClientAuthListener() {}
+   class ClientAuthListener
+   {
+   public:
+      virtual ~ClientAuthListener() {}
 
-  // Interface function
-  // This function returns zero if a server refuse a client
-  // connection, else returns pointer to a WinDesktop object
-  virtual Desktop *onClientAuth(RfbClient *client) = 0;
-  // Checks the client to ban.
-  // Return true if client is banned else reurns false.
-  virtual bool onCheckForBan(RfbClient *client) = 0;
-  // This function notifies about auth failed of the client.
-  virtual void onAuthFailed(RfbClient *client) = 0;
-  virtual void onCheckAccessControl(RfbClient *client) = 0;
-};
+      // Interface function
+      // This function returns zero if a server refuse a client
+      // connection, else returns pointer to a WinDesktop object
+      virtual Desktop *onClientAuth(RfbClient *client) = 0;
+      // Checks the client to ban.
+      // Return true if client is banned else reurns false.
+      virtual bool onCheckForBan(RfbClient *client) = 0;
+      // This function notifies about auth failed of the client.
+      virtual void onAuthFailed(RfbClient *client) = 0;
+      virtual void onCheckAccessControl(RfbClient *client) = 0;
+   };
 
-//// __CLIENTAUTHLISTENER_H__
+} // namespace remoting

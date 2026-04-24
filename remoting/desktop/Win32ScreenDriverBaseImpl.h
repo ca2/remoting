@@ -33,11 +33,11 @@
 #include "CopyRectDetector.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   // This class implements "grabbers" and "detectors" which is not couple� with screen frame buffer.
-   class Win32ScreenDriverBaseImpl : public WinVideoRegionUpdaterImpl
+   // This class  implements "grabbers" and "detectors" which is not couple� with screen frame buffer.
+   class CLASS_DECL_REMOTING Win32ScreenDriverBaseImpl : public WinVideoRegionUpdaterImpl
    {
    public:
       Win32ScreenDriverBaseImpl(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
@@ -72,7 +72,7 @@ namespace remoting_node_desktop
    //// __WIN32SCREENDRIVERBASEIMPL_H__
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
  
 
 

@@ -27,17 +27,17 @@
 
 #include "subsystem/_common_header.h"
 #include "DesktopConfigLocal.h"
-#include "desktop/WallpaperUtil.h"
+#include "remoting/remoting/desktop/WallpaperUtil.h"
 #include "subsystem/thread/GuiThread.h"
 #include "DesktopBaseImpl.h"
 #include "Win32ScreenDriverFactory.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting_node_desktop
+namespace remoting
 
 {
 
-   class DesktopWinImpl : public GuiThread, public DesktopBaseImpl
+   class CLASS_DECL_REMOTING DesktopWinImpl : public GuiThread, public DesktopBaseImpl
    {
    public:
       DesktopWinImpl(ClipboardListener *extClipListener, UpdateSendingListener *extUpdSendingListener,
@@ -67,7 +67,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

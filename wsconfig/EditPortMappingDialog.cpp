@@ -113,7 +113,7 @@ bool EditPortMappingDialog::isUserDataValid()
     return false;
   }
 
-  PortMappingContainer *extraPorts = Configurator::getInstance()->getServerConfig()->getPortMappingContainer();
+  PortMappingContainer *extraPorts = m_pconfigurator->getServerConfig()->getPortMappingContainer();
 
   size_t index = extraPorts->findByPort(port);
 

@@ -28,22 +28,30 @@
 
 #include "Encoder.h"
 
-class HextileEncoder : public Encoder
+
+namespace remoting
 {
-public:
-  HextileEncoder(::remoting::PixelConverter *conv, DataOutputStream *output);
-  virtual ~HextileEncoder();
 
-  virtual int getCode() const;
 
-  virtual void sendRectangle(const ::int_rectangle &  rect,
-                             const ::innate_subsystem::FrameBuffer *serverFb,
-                             const EncodeOptions *options);
+   class HextileEncoder : public Encoder
+   {
+   public:
+      HextileEncoder(::remoting::PixelConverter *conv, DataOutputStream *output);
+      virtual ~HextileEncoder();
 
-//private:
-  template <class PIXEL_T>
-    void hextileFunction(const ::int_rectangle &r,
-                         const ::innate_subsystem::FrameBuffer *frameBuffer);
-};
+      virtual int getCode() const;
 
-//// __RFB_HEXTILE_ENCODER_H_INCLUDED__
+      virtual void sendRectangle(const ::int_rectangle &rect, const ::innate_subsystem::FrameBuffer *serverFb,
+                                 const EncodeOptions *options);
+
+      // private:
+      template<class PIXEL_T>
+      void hextileFunction(const ::int_rectangle &r, const ::innate_subsystem::FrameBuffer *frameBuffer);
+   };
+
+
+} // namespace remoting
+
+
+
+

@@ -31,7 +31,7 @@
 #include "remoting/remoting/rfb/CursorShape.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    // Derived classes commits oneself that internal frame buffer (accessing with getScreenBuffer()) will
@@ -39,7 +39,7 @@ namespace remoting_node_desktop
    // the applyNewScreenProperties() function has been called, internal frame buffer will be changed
    // with the frame buffer invalidation and a new getScreenBuffer() call is required to get a valid
    // frame buffer.
-   class ScreenDriver
+   class CLASS_DECL_REMOTING ScreenDriver
    {
    public:
       // Derived constructors will ensure that the getScreenBuffer() returns
@@ -101,7 +101,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

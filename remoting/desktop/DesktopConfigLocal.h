@@ -28,10 +28,10 @@
 #include "InputBlocker.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class DesktopConfigLocal
+   class CLASS_DECL_REMOTING DesktopConfigLocal
    {
    public:
       DesktopConfigLocal(::subsystem::LogWriter *log);
@@ -50,5 +50,5 @@ namespace remoting_node_desktop
    //// __DESKTOPCONFIGLOCAL_H__
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
  

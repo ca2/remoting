@@ -27,10 +27,10 @@
 
 #include "DesktopFactory.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class WinServiceDesktopFactory : public DesktopFactory
+   class CLASS_DECL_REMOTING WinServiceDesktopFactory : public DesktopFactory
    {
    public:
       WinServiceDesktopFactory();
@@ -42,7 +42,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

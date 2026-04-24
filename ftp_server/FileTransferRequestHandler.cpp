@@ -186,7 +186,7 @@ void FileTransferRequestHandler::onRequest(unsigned int reqCode, RfbInputGate *b
 
 bool FileTransferRequestHandler::isFileTransferEnabled()
 {
-  return m_enabled && Configurator::getInstance()->getServerConfig()->isFileTransfersEnabled();
+  return m_enabled && m_pconfigurator->getServerConfig()->isFileTransfersEnabled();
 }
 
 void FileTransferRequestHandler::compressionSupportRequested()

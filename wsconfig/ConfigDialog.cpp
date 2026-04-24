@@ -133,7 +133,7 @@ bool ConfigDialog::onNotify(unsigned int controlID, ::lparam data)
 
 bool ConfigDialog::onInitDialog()
 {
-  m_config = Configurator::getInstance();
+  m_config = m_pconfigurator;
   m_config->setServiceFlag(m_isConfiguringService);
 
   initControls();

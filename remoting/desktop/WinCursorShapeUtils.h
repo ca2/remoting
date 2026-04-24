@@ -30,11 +30,11 @@
 //#include aaa_<vector>
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   // This class provides some functions to work with windows cursor shape data.
-   class WinCursorShapeUtils
+   // This class  provides some functions to work with windows cursor shape data.
+   class CLASS_DECL_REMOTING WinCursorShapeUtils
    {
    public:
       WinCursorShapeUtils();
@@ -148,7 +148,7 @@ namespace remoting_node_desktop
 
    //// __WINCURSORSHAPEUTILS_H__
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

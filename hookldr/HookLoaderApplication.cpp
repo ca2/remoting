@@ -25,7 +25,7 @@
 #include "HookLoaderApplication.h"
 #include "subsystem/platform/StringParser.h"
 #include "remoting/node_desktop/NamingDefs.h"
-#include "desktop/HookInstaller.h"
+#include "remoting/remoting/desktop/HookInstaller.h"
 
 HookLoaderApplication::HookLoaderApplication(HINSTANCE appInstance,
                                              const ::scoped_string & scopedstrwindowClassName,

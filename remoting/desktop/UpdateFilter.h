@@ -33,10 +33,10 @@
 #include "GrabOptimizator.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class UpdateFilter
+   class CLASS_DECL_REMOTING UpdateFilter
    {
    public:
       UpdateFilter(ScreenDriver *screenDriver, ::innate_subsystem::FrameBuffer *frameBuffer,
@@ -67,5 +67,5 @@ namespace remoting_node_desktop
    //// __UPDATEFILTER_H__
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
  

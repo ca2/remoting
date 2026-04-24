@@ -38,13 +38,13 @@
 #include "Win8ScreenDriverImpl.h"
 #include "CopyRectDetector.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class Win8ScreenDriver : public WinVideoRegionUpdaterImpl
+   class CLASS_DECL_REMOTING Win8ScreenDriver : public WinVideoRegionUpdaterImpl
    {
    public:
-      // (Note: This class has no link to an external backup frame buffer and then it does not have
+      // (Note: This class  has no link to an external backup frame buffer and then it does not have
       // to use an external belonged mutex. Thread safe coordiantion commitments between this class
       // and external some elements should be entirely provided by an owner code.)
 
@@ -89,7 +89,7 @@ namespace remoting_node_desktop
 
    //// __WIN8SCREENDRIVER_H__
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

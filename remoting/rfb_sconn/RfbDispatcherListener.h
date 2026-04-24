@@ -27,11 +27,17 @@
 
 #include "remoting/remoting/network/RfbInputGate.h"
 
-class RfbDispatcherListener
+namespace remoting
 {
-public:
-  virtual ~RfbDispatcherListener() {};
-  virtual void onRequest(unsigned int reqCode, ::remoting::RfbInputGate *input) = 0;
-};
 
-//// __RFBDISPATCHERLISTENER_H__
+
+   class RfbDispatcherListener
+   {
+   public:
+      virtual ~RfbDispatcherListener() {};
+      virtual void onRequest(unsigned int reqCode, ::remoting::RfbInputGate *input) = 0;
+   };
+
+
+
+} // namespace remoting

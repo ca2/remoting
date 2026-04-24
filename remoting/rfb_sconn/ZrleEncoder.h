@@ -22,135 +22,128 @@
 //-------------------------------------------------------------------------
 //
 
-#pragma onceINCLUDED__
-INCLUDED__
+#pragma once
 
 #include "Encoder.h"
 #include "TightPalette.h"
 #include "subsystem/platform/Deflater.h"
 
-class ZrleEncoder : public Encoder
+namespace remoting
 {
-public:
-  ZrleEncoder(PixelConverter *conv, DataOutputStream *output);
-  virtual ~ZrleEncoder();
 
-  // Follow methods were inherited from the Encoder.
-  virtual int getCode() const;
 
-  virtual void splitRectangle(const ::int_rectangle &  rect,
-                              ::array_base<::int_rectangle> *rectList,
-                              const ::innate_subsystem::FrameBuffer *serverFb,
-                              const EncodeOptions *options);
-  
-  virtual void sendRectangle(const ::int_rectangle &  rect,
-                             const ::innate_subsystem::FrameBuffer *serverFb,
-                             const EncodeOptions *options);
+   class ZrleEncoder : public Encoder
+   {
+   public:
+      ZrleEncoder(PixelConverter *conv, DataOutputStream *output);
+      virtual ~ZrleEncoder();
 
-private:
-  // Determine the class of rectangle and call necessary function for this type.
-  template <class PIXEL_T>
-    void sendRect(const ::int_rectangle &  rect,
-                  const ::innate_subsystem::FrameBuffer *serverFb,
-                  const ::innate_subsystem::FrameBuffer *clientFb,
-                  const EncodeOptions *options);
+      // Follow methods were inherited from the Encoder.
+      virtual int getCode() const;
 
-  // Send raw tile.
-  template <class PIXEL_T>
-    void writeRawTile(const ::int_rectangle &  tileRect,
-                      const ::innate_subsystem::FrameBuffer *fb);
+      virtual void splitRectangle(const ::int_rectangle &rect, ::array_base<::int_rectangle> *rectList,
+                                  const ::innate_subsystem::FrameBuffer *serverFb, const EncodeOptions *options);
 
-  // Send a solid-color tile.
-    void writeSolidTile();
-  
-  // Send packed palette tile.
-  template <class PIXEL_T>
-    void writePackedPaletteTile(const ::int_rectangle &  tileRect,
-                                const ::innate_subsystem::FrameBuffer *fb);
+      virtual void sendRectangle(const ::int_rectangle &rect, const ::innate_subsystem::FrameBuffer *serverFb,
+                                 const EncodeOptions *options);
 
-  // Send palette RLE tile.
-  template <class PIXEL_T>
-    void writePaletteRleTile(const ::int_rectangle &  tileRect,
-                             const ::innate_subsystem::FrameBuffer *fb);
+   private:
+      // Determine the class of rectangle and call necessary function for this type.
+      template<class PIXEL_T>
+      void sendRect(const ::int_rectangle &rect, const ::innate_subsystem::FrameBuffer *serverFb,
+                    const ::innate_subsystem::FrameBuffer *clientFb, const EncodeOptions *options);
 
-  // Write data from runLength (used in plain Rle encoding).
-  void pushRunLengthRle(int runLength);
+      // Send raw tile.
+      template<class PIXEL_T>
+      void writeRawTile(const ::int_rectangle &tileRect, const ::innate_subsystem::FrameBuffer *fb);
 
-  // Write data from runLength (used in palette Rle encoding).
-  void pushRunLengthPaletteRle(int runLength,
-                                 ::array_base<unsigned char> *paletteRleData);
+      // Send a solid-color tile.
+      void writeSolidTile();
 
-  // Write pixel to the plainRleTile.
-  template <class PIXEL_T>
-    void writePixelToPlainRleTile(const PIXEL_T px,
-                                  PIXEL_T *previousPx);
+      // Send packed palette tile.
+      template<class PIXEL_T>
+      void writePackedPaletteTile(const ::int_rectangle &tileRect, const ::innate_subsystem::FrameBuffer *fb);
 
-  // Fill palette (m_pal), create m_plainRleTile ::array_base and calculate size of data in palette RLE tile.
-  template <class PIXEL_T>
-    void fillPalette(const ::int_rectangle &  tileRect,
-                     const ::innate_subsystem::FrameBuffer *fb);
+      // Send palette RLE tile.
+      template<class PIXEL_T>
+      void writePaletteRleTile(const ::int_rectangle &tileRect, const ::innate_subsystem::FrameBuffer *fb);
 
-  // Copy ordinary PIXELs.
-  template <class PIXEL_T>
-    void copyPixels(const ::int_rectangle &  rect,
-                    const ::innate_subsystem::FrameBuffer *fb,
-                    unsigned char *dst);
-  
-  // Copy CPIXELs.
-  void copyCPixels(const ::int_rectangle &  rect,
-                   const ::innate_subsystem::FrameBuffer *fb,
-                   unsigned char *dst);
+      // Write data from runLength (used in plain Rle encoding).
+      void pushRunLengthRle(int runLength);
 
-  // Vector for storing all tiles for the future zlib compression.
-  ::array_base<unsigned char> m_rgbData;
-  // Size of m_rgbData before writing information in it.
-  size_t m_oldSize;
+      // Write data from runLength (used in palette Rle encoding).
+      void pushRunLengthPaletteRle(int runLength, ::array_base<unsigned char> *paletteRleData);
 
-  // Size of stride.
-  int m_fbWidth;
+      // Write pixel to the plainRleTile.
+      template<class PIXEL_T>
+      void writePixelToPlainRleTile(const PIXEL_T px, PIXEL_T *previousPx);
 
-  // Size of packed pixels in palette.
-  int m_mSize;
-  
-  // The only pixel format type for whole rectangle.
-  ::innate_subsystem::PixelFormat m_pxFormat;
+      // Fill palette (m_pal), create m_plainRleTile ::array_base and calculate size of data in palette RLE tile.
+      template<class PIXEL_T>
+      void fillPalette(const ::int_rectangle &tileRect, const ::innate_subsystem::FrameBuffer *fb);
 
-  // Used for determing: is it CPIXEL or PIXEL.
-  size_t m_bytesPerPixel;
-  size_t m_numberFirstByte;
+      // Copy ordinary PIXELs.
+      template<class PIXEL_T>
+      void copyPixels(const ::int_rectangle &rect, const ::innate_subsystem::FrameBuffer *fb, unsigned char *dst);
 
-  // Zlib object and settings for the it.
-  Deflater m_deflater;
-  int m_idxZlibLevel;
-  int m_monoZlibLevel;
-  int m_rawZlibLevel;
-  
-  // Color palette.
-  TightPalette m_pal;
+      // Copy CPIXELs.
+      void copyCPixels(const ::int_rectangle &rect, const ::innate_subsystem::FrameBuffer *fb, unsigned char *dst);
 
-  // Variables for storing size of all tiles.
-  size_t m_rawTileSize;
-  size_t m_paletteTileSize;
-  size_t m_paletteRleTileSize;
+      // Vector for storing all tiles for the future zlib compression.
+      ::array_base<unsigned char> m_rgbData;
+      // Size of m_rgbData before writing information in it.
+      size_t m_oldSize;
 
-  // ::array_base for storing plain RLE tile data
-  ::array_base<unsigned char> m_plainRleTile;
+      // Size of stride.
+      int m_fbWidth;
 
-private:
-  // Tile size in ZRLE encoding by default.
-  static const int TILE_SIZE = 64;
+      // Size of packed pixels in palette.
+      int m_mSize;
 
-  // Default values for zlib settings.
-  static const int ZLIB_IDX_LEVEL_DEFAULT = 7;
-  static const int ZLIB_MONO_LEVEL_DEFAULT = 7;
-  static const int ZLIB_RAW_LEVEL_DEFAULT = 6;
+      // The only pixel format type for whole rectangle.
+      ::innate_subsystem::PixelFormat m_pxFormat;
 
-  // Description of tile max size is located in ZrleDecoder.h.
-  // The max possible size of tile is 20481, so 20482 is not possible.
-  static const int THIS_TYPE_OF_TILE_IS_NOT_POSSIBLE = 20482;
+      // Used for determing: is it CPIXEL or PIXEL.
+      size_t m_bytesPerPixel;
+      size_t m_numberFirstByte;
 
-  // Max possible colors in palette (127 is max for RLE palette type encoding).
-  static const unsigned char MAX_NUMBER_OF_COLORS_IN_PALETTE = 127;
-};
+      // Zlib object and settings for the it.
+      Deflater m_deflater;
+      int m_idxZlibLevel;
+      int m_monoZlibLevel;
+      int m_rawZlibLevel;
 
-//// __RFB_ZRLE_ENCODER_H_INCLUDED__
+      // Color palette.
+      TightPalette m_pal;
+
+      // Variables for storing size of all tiles.
+      size_t m_rawTileSize;
+      size_t m_paletteTileSize;
+      size_t m_paletteRleTileSize;
+
+      // ::array_base for storing plain RLE tile data
+      ::array_base<unsigned char> m_plainRleTile;
+
+   private:
+      // Tile size in ZRLE encoding by default.
+      static const int TILE_SIZE = 64;
+
+      // Default values for zlib settings.
+      static const int ZLIB_IDX_LEVEL_DEFAULT = 7;
+      static const int ZLIB_MONO_LEVEL_DEFAULT = 7;
+      static const int ZLIB_RAW_LEVEL_DEFAULT = 6;
+
+      // Description of tile max size is located in ZrleDecoder.h.
+      // The max possible size of tile is 20481, so 20482 is not possible.
+      static const int THIS_TYPE_OF_TILE_IS_NOT_POSSIBLE = 20482;
+
+      // Max possible colors in palette (127 is max for RLE palette type encoding).
+      static const unsigned char MAX_NUMBER_OF_COLORS_IN_PALETTE = 127;
+   };
+
+   
+
+} // namespace remoting
+
+
+

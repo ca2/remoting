@@ -29,10 +29,10 @@
 #include "remoting/remoting/server_config/ServerConfig.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class Win32ScreenDriverFactory : public ScreenDriverFactory
+   class CLASS_DECL_REMOTING Win32ScreenDriverFactory : public ScreenDriverFactory
    {
    public:
       // The factory stores pointer to a ServerConfig object and will use it on
@@ -58,7 +58,7 @@ namespace remoting_node_desktop
 
    //// __WIN32SCREENDRIVERFACTORY_H__
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

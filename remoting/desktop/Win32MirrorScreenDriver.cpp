@@ -26,7 +26,7 @@
 #include "subsystem/platform/Exception.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -68,4 +68,4 @@ namespace remoting_node_desktop
    bool Win32MirrorScreenDriver::applyNewScreenProperties() { return m_mirrorDriver.applyNewProperties(); }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting

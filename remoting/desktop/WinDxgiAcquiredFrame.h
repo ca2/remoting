@@ -28,13 +28,13 @@
 #include "WinDxgiOutputDuplication.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    // #include aaa_<d3d11.h>
    // #include aaa_<DXGI1_2.h>
 
-   class WinDxgiAcquiredFrame
+   class CLASS_DECL_REMOTING WinDxgiAcquiredFrame
    {
    public:
       WinDxgiAcquiredFrame(WinDxgiOutputDuplication *outDupl, unsigned int timeOutMilliSec);
@@ -56,7 +56,7 @@ namespace remoting_node_desktop
    //// __WINDXGIACQUIREDFRAME_H__
 
 
-} // namespace remoting_node_desktop 
+} // namespace remoting
 
 
 

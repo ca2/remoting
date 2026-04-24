@@ -34,10 +34,10 @@
 #include "subsystem/thread/Thread.h"
 #include "remoting/remoting/win_system/WindowsEvent.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class WinVideoRegionUpdaterImpl : public ScreenDriver, Thread
+   class CLASS_DECL_REMOTING WinVideoRegionUpdaterImpl : public ScreenDriver, Thread
    {
    public:
       WinVideoRegionUpdaterImpl(::subsystem::LogWriter *log);
@@ -62,7 +62,7 @@ namespace remoting_node_desktop
 
    //// __WINVIDEOREGIONUPDATERIMPL_H__
 
-}// namespace remoting_node_desktop
+}// namespace remoting
 
 
 

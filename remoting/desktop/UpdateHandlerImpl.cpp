@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "UpdateHandlerImpl.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -104,7 +104,7 @@ namespace remoting_node_desktop
          m_plogwriter->debug("UpdateHandlerImpl::extract : applyNewScreenProperties()");
          applyNewScreenProperties();
          {
-            // Only this place the class provides frame buffer changings, and then why it
+            // Only this place the class CLASS_DECL_REMOTING provides frame buffer changings, and then why it
             // must be under the mutex. Getters for the backup frame buffer in here (at this function)
             // can work without the mutex, but other getters for the frame buffer in other places
             // may be invoked from other threads and then it shall cover by the mutex.
@@ -194,4 +194,4 @@ namespace remoting_node_desktop
    }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting

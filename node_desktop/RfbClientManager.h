@@ -26,23 +26,23 @@
 
 
 #include "subsystem/platform/ListenerContainer.h"
-#include "rfb_sconn/RfbClient.h"
+#include "remoting/remoting/rfb_sconn/RfbClient.h"
 //#include "subsystem/thread/critical_section.h"
 #include "subsystem/thread/Thread.h"
 //#include "subsystem/thread/critical_section.h"
 #include "subsystem/node/WindowsEvent.h"
-#include "desktop/Desktop.h"
-#include "desktop/DesktopFactory.h"
+#include "remoting/remoting/desktop/Desktop.h"
+#include "remoting/remoting/desktop/DesktopFactory.h"
 //#include "log_writer/LogWriter.h"
 
 // Listener interfaces
 #include "RfbClientManager.h"
 #include "RfbClientManagerEventListener.h"
-#include "rfb_sconn/ClientTerminationListener.h"
+#include "remoting/remoting/rfb_sconn/ClientTerminationListener.h"
 #include "subsystem/node/ClipboardListener.h"
-#include "desktop/AbnormDeskTermListener.h"
-#include "desktop/UpdateSendingListener.h"
-#include "rfb_sconn/ClientAuthListener.h"
+#include "remoting/remoting/desktop/AbnormDeskTermListener.h"
+#include "remoting/remoting/desktop/UpdateSendingListener.h"
+#include "remoting/remoting/rfb_sconn/ClientAuthListener.h"
 #include "remoting/control_desktop/RfbClientInfo.h"
 #include "NewConnectionEvents.h"
 

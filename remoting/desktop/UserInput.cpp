@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "UserInput.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -33,4 +33,4 @@ namespace remoting_node_desktop
    UserInput::~UserInput(void) {}
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting

@@ -24,12 +24,12 @@
 #include "framework.h"
 #include "UpdSenderMsgDefs.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
    ::string_literal UpdSenderClientMsgDefs::RFB_VIDEO_FREEZE_SIG = "VD_FREEZ";
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 

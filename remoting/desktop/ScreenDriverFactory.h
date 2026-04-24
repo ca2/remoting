@@ -31,11 +31,11 @@
 //#include "log_writer/LogWriter.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 
 {
 
-   class ScreenDriverFactory
+   class CLASS_DECL_REMOTING ScreenDriverFactory
    {
    public:
       virtual ScreenDriver *createScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
@@ -47,7 +47,7 @@ namespace remoting_node_desktop
    //// __SCREENDRIVERFACTORY_H__
 
 
-} // namespace remoting_node_desktop 
+} // namespace remoting
 
 
 

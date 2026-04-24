@@ -30,10 +30,10 @@
 #include "UpdateContainer.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class UpdateSendingListener
+   class CLASS_DECL_REMOTING UpdateSendingListener
    {
    public:
       virtual ~UpdateSendingListener() {}
@@ -42,4 +42,4 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop 
+} // namespace remoting

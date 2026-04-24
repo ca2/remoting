@@ -32,12 +32,12 @@
 #include "remoting/remoting/region/Region.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   // This class will be an abstract interface for user input such as keyboard,
+   // This class  will be an abstract interface for user input such as keyboard,
    // mouse pointer, e.t.c., on the server side.
-   class UserInput
+   class CLASS_DECL_REMOTING UserInput
    {
    public:
       UserInput();
@@ -68,7 +68,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

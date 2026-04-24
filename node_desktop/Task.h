@@ -50,11 +50,11 @@ namespace remoting_node_desktop
        * @param hInstance HINSTANCE of application.
        * @param commaneLine command line string.
        */
-      ServerTask();
+      Task();
       /**
        * Deletes TightVNC server application instance.
        */
-      ~ServerTask() override;
+      ~Task() override;
 
 
       virtual void initialize_remoting_node_desktop_server_task(NewConnectionEvents * pnewconnectionevents);

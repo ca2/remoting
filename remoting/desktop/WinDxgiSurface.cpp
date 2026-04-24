@@ -27,7 +27,7 @@
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "WinDxgiSurface.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -54,4 +54,4 @@ namespace remoting_node_desktop
    IDXGISurface *WinDxgiSurface::getSurface() const { return m_dxgiSurface; }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting

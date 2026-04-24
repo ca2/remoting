@@ -29,88 +29,93 @@
 
 //#include aaa_<vector>
 
-class EncodeOptions
+namespace remoting
 {
-public:
-  EncodeOptions();
-  virtual ~EncodeOptions();
 
-  // Reset all encoding-related options to defaults as if the client did not
-  // send SetEncodings scopedstrMessage.
-  void reset();
 
-  // Process the ::list_base of encodings requested by the RFB client.
-  void setEncodings(::array_base<int> * plista);
+   class EncodeOptions
+   {
+   public:
+      EncodeOptions();
+      virtual ~EncodeOptions();
 
-  // Return preferred encoding as previously set with setEncodings().
-  // Preferred encoding is the first "normal" encoding from the ::list_base passed
-  // to setEncodings(). If setEncodings() has not been called after object
-  // construction or the most recent reset() call, then Raw will be considered
-  // the preferred encoding so this function will return EncodingDefs::RAW.
-  // Similarly, if there was no suitable encoding in the ::list_base passed in the
-  // most recent setEncodings() call, EncodingDefs::RAW will be returned.
-  int getPreferredEncoding() const;
+      // Reset all encoding-related options to defaults as if the client did not
+      // send SetEncodings scopedstrMessage.
+      void reset();
 
-  // Return true is a particular encoding was enabled via setEncodings(),
-  // false otherwise. This function always returns true for the Raw encoding.
-  // It should be used only for "normal" encodings (currently, that's Raw,
-  // Hextile and Tight). It will return false for CopyRect and all
-  // pseudo-encodings.
-  bool encodingEnabled(int code) const;
+      // Process the ::list_base of encodings requested by the RFB client.
+      void setEncodings(::array_base<int> *plista);
 
-  // Return the compression level in the range 0..9 if it was previously set
-  // via setEncodings(). If it was not set, return the value of the
-  // defaultLevel argument (which defaults to -1).
-  int getCompressionLevel(int defaultLevel = EO_DEFAULT) const;
+      // Return preferred encoding as previously set with setEncodings().
+      // Preferred encoding is the first "normal" encoding from the ::list_base passed
+      // to setEncodings(). If setEncodings() has not been called after object
+      // construction or the most recent reset() call, then Raw will be considered
+      // the preferred encoding so this function will return EncodingDefs::RAW.
+      // Similarly, if there was no suitable encoding in the ::list_base passed in the
+      // most recent setEncodings() call, EncodingDefs::RAW will be returned.
+      int getPreferredEncoding() const;
 
-  // Return the JPEG quality level in the range 0..9 if it was previously set
-  // via setEncodings(). If it was not set, return the value of the
-  // defaultLevel argument (which defaults to -1).
-  int getJpegQualityLevel(int defaultLevel = EO_DEFAULT) const;
+      // Return true is a particular encoding was enabled via setEncodings(),
+      // false otherwise. This function always returns true for the Raw encoding.
+      // It should be used only for "normal" encodings (currently, that's Raw,
+      // Hextile and Tight). It will return false for CopyRect and all
+      // pseudo-encodings.
+      bool encodingEnabled(int code) const;
 
-  // Return true if JPEG quality level was previously set via setEncodings(),
-  // false otherwise.
-  bool jpegEnabled() const;
+      // Return the compression level in the range 0..9 if it was previously set
+      // via setEncodings(). If it was not set, return the value of the
+      // defaultLevel argument (which defaults to -1).
+      int getCompressionLevel(int defaultLevel = EO_DEFAULT) const;
 
-  // Disable JPEG for lossless compression
-  void disableJpeg();
+      // Return the JPEG quality level in the range 0..9 if it was previously set
+      // via setEncodings(). If it was not set, return the value of the
+      // defaultLevel argument (which defaults to -1).
+      int getJpegQualityLevel(int defaultLevel = EO_DEFAULT) const;
 
-  //
-  // Accessor functions to boolean values.
-  //
+      // Return true if JPEG quality level was previously set via setEncodings(),
+      // false otherwise.
+      bool jpegEnabled() const;
 
-  bool copyRectEnabled() const;
-  bool richCursorEnabled() const;
-  bool pointerPosEnabled() const;
-  bool desktopSizeEnabled() const;
-  bool desktopConfigurationEnabled() const;
+      // Disable JPEG for lossless compression
+      void disableJpeg();
 
-protected:
+      //
+      // Accessor functions to boolean values.
+      //
 
-  // Return true if we know the specified encoding and it can be set as
-  // preferred one, false otherwise. This function returns true only for
-  // "normal" encodings (currently, that's Raw, Hextile and Tight). It will
-  // return false for CopyRect, pseudo-encodings and unknown codes.
-  static bool normalEncoding(int code);
+      bool copyRectEnabled() const;
+      bool richCursorEnabled() const;
+      bool pointerPosEnabled() const;
+      bool desktopSizeEnabled() const;
+      bool desktopConfigurationEnabled() const;
 
-  static const int EO_DEFAULT = -1;
+   protected:
 
-  int m_preferredEncoding;
+      // Return true if we know the specified encoding and it can be set as
+      // preferred one, false otherwise. This function returns true only for
+      // "normal" encodings (currently, that's Raw, Hextile and Tight). It will
+      // return false for CopyRect, pseudo-encodings and unknown codes.
+      static bool normalEncoding(int code);
 
-  // FIXME: Use something like ::map instead of individual variables.
-  bool m_enableRRE;
-  bool m_enableHextile;
-  bool m_enableZrle;
-  bool m_enableTight;
+      static const int EO_DEFAULT = -1;
 
-  int m_compressionLevel;
-  int m_jpegQualityLevel;
+      int m_preferredEncoding;
 
-  bool m_enableCopyRect;
-  bool m_enableRichCursor;
-  bool m_enablePointerPos;
-  bool m_enableDesktopSize;
-  bool m_enableDesktopConfiguration;
-};
+      // FIXME: Use something like ::map instead of individual variables.
+      bool m_enableRRE;
+      bool m_enableHextile;
+      bool m_enableZrle;
+      bool m_enableTight;
 
-//// __RFB_ENCODE_OPTIONS_H_INCLUDED__
+      int m_compressionLevel;
+      int m_jpegQualityLevel;
+
+      bool m_enableCopyRect;
+      bool m_enableRichCursor;
+      bool m_enablePointerPos;
+      bool m_enableDesktopSize;
+      bool m_enableDesktopConfiguration;
+   };
+
+
+} // namespace remoting

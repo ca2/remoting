@@ -37,5 +37,5 @@ UpdateLocalConfigCommand::~UpdateLocalConfigCommand()
 
 void UpdateLocalConfigCommand::execute()
 {
-  m_proxy->getServerConfig(Configurator::getInstance()->getServerConfig());
+  m_proxy->getServerConfig(m_pconfigurator->getServerConfig());
 }

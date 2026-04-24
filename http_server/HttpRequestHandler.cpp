@@ -89,7 +89,7 @@ void HttpRequestHandler::processRequest()
     // Generate applet parameters string.
     //
 
-    bool paramsInUrlIsEnabled = Configurator::getInstance()->getServerConfig()->isAppletParamInUrlEnabled();
+    bool paramsInUrlIsEnabled = m_pconfigurator->getServerConfig()->isAppletParamInUrlEnabled();
 
     if (httpRequest.hasArguments() && paramsInUrlIsEnabled) {
       ArgList *args = httpRequest.getArguments();
@@ -124,7 +124,7 @@ void HttpRequestHandler::processRequest()
 
       page.format(HttpStrings::HTTP_INDEX_PAGE_FORMAT,
                   computerNameANSI,
-                  Configurator::getInstance()->getServerConfig()->getRfbPort(),
+                  m_pconfigurator->getServerConfig()->getRfbPort(),
                   paramsString);
       m_dataOutput->writeFully(page, page.length());
     } // if applet arguments is valid.

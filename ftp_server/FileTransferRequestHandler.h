@@ -32,9 +32,9 @@
 #include "file_lib/WinFileChannel.h"
 #include "subsystem/platform/Inflater.h"
 #include "subsystem/platform/Deflater.h"
-#include "desktop/Desktop.h"
-#include "rfb_sconn/RfbCodeRegistrator.h"
-#include "rfb_sconn/RfbDispatcherListener.h"
+#include "remoting/remoting/desktop/Desktop.h"
+#include "remoting/remoting/rfb_sconn/RfbCodeRegistrator.h"
+#include "remoting/remoting/rfb_sconn/RfbDispatcherListener.h"
 #include "FileTransferSecurity.h"
 //#include "log_writer/LogWriter.h"
 

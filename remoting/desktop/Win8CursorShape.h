@@ -28,12 +28,12 @@
 #include "remoting/remoting/rfb/CursorShape.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   // This class is wrapper for CursorShape class to extend it behaviour for the Win8 desktop
+   // This class  is wrapper for CursorShape class CLASS_DECL_REMOTING to extend it behaviour for the Win8 desktop
    // duplication model.
-   class Win8CursorShape
+   class CLASS_DECL_REMOTING Win8CursorShape
    {
    public:
       Win8CursorShape();
@@ -57,7 +57,7 @@ namespace remoting_node_desktop
    };
 
 
-} //  namespace remoting_node_desktop
+} //  namespace remoting
 
 
 

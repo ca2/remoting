@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "UpdateKeeper.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -253,7 +253,7 @@ namespace remoting_node_desktop
    }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
  
 
 

@@ -26,7 +26,7 @@
 
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 #include "remoting/remoting/win_system/DynamicLibrary.h"
@@ -35,7 +35,7 @@ namespace remoting_node_desktop
    // #include aaa_<d3d11.h>
    // #include aaa_<DXGI1_2.h>
 
-   class WinD3D11Device
+   class CLASS_DECL_REMOTING WinD3D11Device
    {
    public:
       // Creates new device and context of first found.
@@ -70,7 +70,7 @@ namespace remoting_node_desktop
    //// __WIND3D11DEVICE_H__
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

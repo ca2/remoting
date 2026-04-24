@@ -27,10 +27,10 @@
 
 //#include "subsystem/thread/critical_section.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class UpdateListener
+   class CLASS_DECL_REMOTING UpdateListener
    {
    public:
       UpdateListener(void);
@@ -41,7 +41,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop 
+} // namespace remoting
 
 
 

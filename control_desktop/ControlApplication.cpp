@@ -129,9 +129,9 @@ int ControlApplication::run()
 
   // Change passwords and exit.
   if (cmdLineParser.hasSetControlPasswordFlag() || cmdLineParser.hasSetVncPasswordFlag()) {
-    Configurator::getInstance()->setServiceFlag(true);
-    Configurator::getInstance()->load();
-    ServerConfig *config = Configurator::getInstance()->getServerConfig();
+    m_pconfigurator->setServiceFlag(true);
+    m_pconfigurator->load();
+    ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
     unsigned char cryptedPass[8];
     if (cmdLineParser.hasSetControlPasswordFlag()) {
       getCryptedPassword(cryptedPass, cmdLineParser.getControlPassword());
@@ -142,7 +142,7 @@ int ControlApplication::run()
       config->setPrimaryPassword((const unsigned char *)cryptedPass);
       config->useAuthentication(true);
     }
-    Configurator::getInstance()->save();
+    m_pconfigurator->save();
     return 0;
   }
 
@@ -388,7 +388,7 @@ int ControlApplication::runConfigurator(bool configService, bool isRunAsRequeste
     return 0;
   }
 
-  Configurator *configurator = Configurator::getInstance();
+  Configurator *configurator = m_pconfigurator;
 
   configurator->setServiceFlag(configService);
   configurator->load();
@@ -460,9 +460,9 @@ int ControlApplication::checkServicePasswords(bool isRunAsRequested)
 
 void ControlApplication::checkServicePasswords()
 {
-  Configurator::getInstance()->setServiceFlag(true);
-  Configurator::getInstance()->load();
-  ServerConfig *config = Configurator::getInstance()->getServerConfig();
+  m_pconfigurator->setServiceFlag(true);
+  m_pconfigurator->load();
+  ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
 
   bool askToChangeRfbAuth = !config->isUsingAuthentication() || !config->hasPrimaryPassword();
   bool askToChangeAdmAuth = false;
@@ -496,7 +496,7 @@ void ControlApplication::checkServicePasswords()
       config->deleteControlPassword();
       config->useControlAuth(false);
     }
-    Configurator::getInstance()->save();
+    m_pconfigurator->save();
     reloadConfig();
   }
 }

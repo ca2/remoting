@@ -31,7 +31,7 @@
 //#include aaa_<list>
 #include "acme/prototype/geometry2d/rectangle.h"
 
-namespace remoting_node_desktop
+namespace remoting
 
 {
 
@@ -46,7 +46,7 @@ namespace remoting_node_desktop
       ::int_rectangle m_rectangleOld;
    };
 
-   class CopyRectDetector
+   class CLASS_DECL_REMOTING CopyRectDetector
    {
    public:
       CopyRectDetector();
@@ -73,7 +73,7 @@ namespace remoting_node_desktop
 
    
 
-} // namespace remoting_node_desktop
+} // namespace remoting
  
 
 

@@ -3,7 +3,7 @@
 
 #pragma once
 
-namespace remoting_node_desktop
+namespace remoting
 {
    // NOTE: shared among DISPLAY and R3 projects
 
@@ -280,7 +280,7 @@ struct	Esc_dmf_pointer_shape_get_OUT
 
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

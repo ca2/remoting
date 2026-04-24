@@ -27,11 +27,19 @@
 
 //#include "subsystem/platform/inttypes.h"
 
-class ClientInputEventListener
-{
-public:
-  virtual void onKeyboardEvent(unsigned int keySym, bool down) = 0;
-  virtual void onMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask) = 0;
-};
 
-//// __CLIENTINPUTEVENTLISTENER_H__
+namespace remoting
+{
+
+   class ClientInputEventListener
+   {
+   public:
+      virtual void onKeyboardEvent(unsigned int keySym, bool down) = 0;
+      virtual void onMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask) = 0;
+   };
+
+
+} // namespace remoting
+
+
+

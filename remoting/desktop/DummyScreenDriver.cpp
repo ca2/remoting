@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "DummyScreenDriver.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -107,7 +107,7 @@ namespace remoting_node_desktop
    bool DummyScreenDriver::applyNewScreenProperties() { return true; }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
  
 
 

@@ -33,10 +33,10 @@
 #include "subsystem/platform/Process.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class HooksUpdateDetector : public UpdateDetector
+   class CLASS_DECL_REMOTING HooksUpdateDetector : public UpdateDetector
    {
    public:
       HooksUpdateDetector(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ::subsystem::LogWriter *log);
@@ -65,4 +65,4 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting

@@ -75,6 +75,18 @@
     <Filter Include="Header Files\server_config">
       <UniqueIdentifier>{30b50dc8-cc51-4a80-88d3-ff581a49e799}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\rfb_sconn">
+      <UniqueIdentifier>{35fbf084-6919-4a0e-ac66-47ee77cc6747}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\rfb_sconn">
+      <UniqueIdentifier>{197cfb2d-faaf-4ab4-9cf6-55b886cd2a2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\fb_update_sender">
+      <UniqueIdentifier>{2577669b-7268-420a-87d5-4f493e46773c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\fb_update_sender">
+      <UniqueIdentifier>{1501d7aa-4571-4178-93ed-e50a607dfc02}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework.cpp">
@@ -382,6 +394,75 @@
     </ClCompile>
     <ClCompile Include="server_config\ServerConfig.cpp">
       <Filter>Source Files\serverconfig</Filter>
+    </ClCompile>
+    <ClCompile Include="rfb_sconn\CapContainer.cpp">
+      <Filter>Source Files\rfb_sconn</Filter>
+    </ClCompile>
+    <ClCompile Include="rfb_sconn\ClientInputHandler.cpp">
+      <Filter>Source Files\rfb_sconn</Filter>
+    </ClCompile>
+    <ClCompile Include="rfb_sconn\ClipboardExchange.cpp">
+      <Filter>Source Files\rfb_sconn</Filter>
+    </ClCompile>
+    <ClCompile Include="rfb_sconn\EchoExtensionRequestHandler.cpp">
+      <Filter>Source Files\rfb_sconn</Filter>
+    </ClCompile>
+    <ClCompile Include="rfb_sconn\EncodeOptions.cpp">
+      <Filter>Source Files\rfb_sconn</Filter>
+    </ClCompile>
+    <ClCompile Include="rfb_sconn\Encoder.cpp">
+      <Filter>Source Files\rfb_sconn</Filter>
+    </ClCompile>
+    <ClCompile Include="rfb_sconn\EncoderStore.cpp">
+      <Filter>Source Files\rfb_sconn</Filter>
+    </ClCompile>
+    <ClCompile Include="rfb_sconn\HextileEncoder.cpp">
+      <Filter>Source Files\rfb_sconn</Filter>
+    </ClCompile>
+    <ClCompile Include="rfb_sconn\JpegCompressor.cpp">
+      <Filter>Source Files\rfb_sconn</Filter>
+    </ClCompile>
+    <ClCompile Include="rfb_sconn\JpegEncoder.cpp">
+      <Filter>Source Files\rfb_sconn</Filter>
+    </ClCompile>
+    <ClCompile Include="rfb_sconn\RfbClient.cpp">
+      <Filter>Source Files\rfb_sconn</Filter>
+    </ClCompile>
+    <ClCompile Include="rfb_sconn\RfbCodeRegistrator.cpp">
+      <Filter>Source Files\rfb_sconn</Filter>
+    </ClCompile>
+    <ClCompile Include="rfb_sconn\RfbDispatcher.cpp">
+      <Filter>Source Files\rfb_sconn</Filter>
+    </ClCompile>
+    <ClCompile Include="rfb_sconn\RfbInitializer.cpp">
+      <Filter>Source Files\rfb_sconn</Filter>
+    </ClCompile>
+    <ClCompile Include="rfb_sconn\RreEncoder.cpp">
+      <Filter>Source Files\rfb_sconn</Filter>
+    </ClCompile>
+    <ClCompile Include="rfb_sconn\TightEncoder.cpp">
+      <Filter>Source Files\rfb_sconn</Filter>
+    </ClCompile>
+    <ClCompile Include="rfb_sconn\TightPalette.cpp">
+      <Filter>Source Files\rfb_sconn</Filter>
+    </ClCompile>
+    <ClCompile Include="rfb_sconn\ZrleEncoder.cpp">
+      <Filter>Source Files\rfb_sconn</Filter>
+    </ClCompile>
+    <ClCompile Include="fb_update_sender\CursorUpdates.cpp">
+      <Filter>Source Files\fb_update_sender</Filter>
+    </ClCompile>
+    <ClCompile Include="fb_update_sender\UpdateSender.cpp">
+      <Filter>Source Files\fb_update_sender</Filter>
+    </ClCompile>
+    <ClCompile Include="fb_update_sender\UpdSenderMsgDefs.cpp">
+      <Filter>Source Files\fb_update_sender</Filter>
+    </ClCompile>
+    <ClCompile Include="fb_update_sender\ViewPort.cpp">
+      <Filter>Source Files\fb_update_sender</Filter>
+    </ClCompile>
+    <ClCompile Include="fb_update_sender\ViewPortState.cpp">
+      <Filter>Source Files\fb_update_sender</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -781,9 +862,6 @@
     <ClInclude Include="rfb\_.h">
       <Filter>Header Files\rfb</Filter>
     </ClInclude>
-    <ClInclude Include="rfb\aaa_framework.h">
-      <Filter>Header Files\rfb</Filter>
-    </ClInclude>
     <ClInclude Include="rfb\AuthDefs.h">
       <Filter>Header Files\rfb</Filter>
     </ClInclude>
@@ -809,9 +887,6 @@
       <Filter>Header Files\rfb</Filter>
     </ClInclude>
     <ClInclude Include="rfb\PixelFormat.h">
-      <Filter>Header Files\rfb</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb\resource.h">
       <Filter>Header Files\rfb</Filter>
     </ClInclude>
     <ClInclude Include="rfb\RfbKeySym.h">
@@ -960,6 +1035,105 @@
     </ClInclude>
     <ClInclude Include="region\Region.h">
       <Filter>Header Files\region</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\_.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\AuthException.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\CapContainer.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\ClientAuthListener.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\ClientInputEventListener.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\ClientInputHandler.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\ClientTerminationListener.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\ClipboardExchange.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\EchoExtensionRequestHandler.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\EncodeOptions.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\Encoder.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\EncoderStore.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\HextileEncoder.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\HextileTile.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\JpegCompressor.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\JpegEncoder.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\RfbClient.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\RfbCodeRegistrator.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\RfbDispatcher.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\RfbDispatcherListener.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\RfbInitializer.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\RreEncoder.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\TightEncoder.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\TightPalette.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\ZrleEncoder.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="fb_update_sender\_.h">
+      <Filter>Header Files\fb_update_sender</Filter>
+    </ClInclude>
+    <ClInclude Include="fb_update_sender\CursorUpdates.h">
+      <Filter>Header Files\fb_update_sender</Filter>
+    </ClInclude>
+    <ClInclude Include="fb_update_sender\SenderControlInformationInterface.h">
+      <Filter>Header Files\fb_update_sender</Filter>
+    </ClInclude>
+    <ClInclude Include="fb_update_sender\UpdateRequestListener.h">
+      <Filter>Header Files\fb_update_sender</Filter>
+    </ClInclude>
+    <ClInclude Include="fb_update_sender\UpdateSender.h">
+      <Filter>Header Files\fb_update_sender</Filter>
+    </ClInclude>
+    <ClInclude Include="fb_update_sender\UpdSenderMsgDefs.h">
+      <Filter>Header Files\fb_update_sender</Filter>
+    </ClInclude>
+    <ClInclude Include="fb_update_sender\ViewPort.h">
+      <Filter>Header Files\fb_update_sender</Filter>
+    </ClInclude>
+    <ClInclude Include="fb_update_sender\ViewPortState.h">
+      <Filter>Header Files\fb_update_sender</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

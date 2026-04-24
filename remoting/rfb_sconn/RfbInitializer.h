@@ -34,67 +34,65 @@
 // External listeners
 #include "ClientAuthListener.h"
 
-class RfbInitializer
+namespace remoting
 {
-public:
-  RfbInitializer(Channel *stream,
-                 ClientAuthListener *extAuthListener,
-                 RfbClient *client, bool authAllowed);
-  virtual ~RfbInitializer();
 
-  void authPhase();
-  void afterAuthPhase(const CapContainer *srvToClCaps,
-                      const CapContainer *clToSrvCaps,
-                      const CapContainer *encCaps,
-                      const ::int_size & dim,
-                      const ::innate_subsystem::PixelFormat & pf);
 
-  // Returns shared flag value. Shared flag value is valid only after
-  // the authPhase() function calling.
-  bool getSharedFlag() const { return m_shared; }
-  bool getViewOnlyAuth() const { return m_viewOnlyAuth; }
+   class RfbInitializer
+   {
+   public:
+      RfbInitializer(Channel *stream, ClientAuthListener *extAuthListener, RfbClient *client, bool authAllowed);
+      virtual ~RfbInitializer();
 
-  bool getTightEnabledFlag() const { return m_tightEnabled; }
+      void authPhase();
+      void afterAuthPhase(const CapContainer *srvToClCaps, const CapContainer *clToSrvCaps, const CapContainer *encCaps,
+                          const ::int_size &dim, const ::innate_subsystem::PixelFormat &pf);
 
-protected:
-  void initVersion();
-  // @throw ::subsystem::Exception if loopback isn't allowed.
-  void checkForLoopback();
-  void initAuthenticate();
-  void readClientInit();
-  void sendServerInit(const ::int_size & dim,
-                      const ::innate_subsystem::PixelFormat & pf);
-  void sendDesktopName();
-  void sendInteractionCaps(const CapContainer *srvToClCaps,
-                           const CapContainer *clToSrvCaps,
-                           const CapContainer *encCaps);
+      // Returns shared flag value. Shared flag value is valid only after
+      // the authPhase() function calling.
+      bool getSharedFlag() const { return m_shared; }
+      bool getViewOnlyAuth() const { return m_viewOnlyAuth; }
 
-  void doAuth(unsigned int authType);
-  void doTightAuth();
-  void doVncAuth();
-  void doAuthNone();
+      bool getTightEnabledFlag() const { return m_tightEnabled; }
 
-  // Calls the onCheckForBan() function by the external listener
-  // @throw AuthException if current is banned.
-  void checkForBan();
+   protected:
+      void initVersion();
+      // @throw ::subsystem::Exception if loopback isn't allowed.
+      void checkForLoopback();
+      void initAuthenticate();
+      void readClientInit();
+      void sendServerInit(const ::int_size &dim, const ::innate_subsystem::PixelFormat &pf);
+      void sendDesktopName();
+      void sendInteractionCaps(const CapContainer *srvToClCaps, const CapContainer *clToSrvCaps,
+                               const CapContainer *encCaps);
 
-  // Parse RFB version string which should look like "RFB 003.008\n", check
-  // that the format is valid and that the major version number is 3. Returns
-  // minor version number without checking its value. If the format is invalid
-  // or major version number is not 3, an ::subsystem::Exception will be thrown.
-  unsigned int getProtocolMinorVersion(const char str[12]);
+      void doAuth(unsigned int authType);
+      void doTightAuth();
+      void doVncAuth();
+      void doAuthNone();
 
-  DataOutputStream *m_output;
-  DataInputStream *m_input;
+      // Calls the onCheckForBan() function by the external listener
+      // @throw AuthException if current is banned.
+      void checkForBan();
 
-  bool m_shared;
-  unsigned int m_minorVerNum;
-  bool m_viewOnlyAuth;
-  bool m_tightEnabled;
-  bool m_authAllowed;
+      // Parse RFB version string which should look like "RFB 003.008\n", check
+      // that the format is valid and that the major version number is 3. Returns
+      // minor version number without checking its value. If the format is invalid
+      // or major version number is not 3, an ::subsystem::Exception will be thrown.
+      unsigned int getProtocolMinorVersion(const char str[12]);
 
-  ClientAuthListener *m_extAuthListener;
-  RfbClient *m_client;
-};
+      DataOutputStream *m_output;
+      DataInputStream *m_input;
 
-//// __RFBINITIALIZER_H__
+      bool m_shared;
+      unsigned int m_minorVerNum;
+      bool m_viewOnlyAuth;
+      bool m_tightEnabled;
+      bool m_authAllowed;
+
+      ClientAuthListener *m_extAuthListener;
+      RfbClient *m_client;
+   };
+
+
+} // namespace remoting 

@@ -65,11 +65,11 @@
 */
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
-   class ScreenGrabber
+   class CLASS_DECL_REMOTING ScreenGrabber
    {
    public:
       // Derived constructors will ensure that the getScreenBuffer() returns
@@ -118,7 +118,7 @@ namespace remoting_node_desktop
 
    ////// __SCREENGRABBER_H__
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

@@ -31,7 +31,7 @@
 
 #include "remoting/remoting/win_system/Impersonator.h"
 
-#include "desktop/Desktop.h"
+#include "remoting/remoting/desktop/Desktop.h"
 
 class FileTransferSecurity : private Impersonator
 {

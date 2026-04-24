@@ -28,10 +28,10 @@
 #include "remoting/remoting/server_config/ConfigReloadListener.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class WallpaperUtil : protected ConfigReloadListener
+   class CLASS_DECL_REMOTING WallpaperUtil : protected ConfigReloadListener
    {
    public:
       WallpaperUtil(::subsystem::LogWriter *log);
@@ -59,7 +59,7 @@ namespace remoting_node_desktop
    //// __WALLPAPERUTIL_H__
 
 
-}// namespace remoting_node_desktop
+}// namespace remoting
 
 
 

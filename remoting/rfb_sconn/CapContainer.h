@@ -29,33 +29,38 @@
 //#include "subsystem/platform/inttypes.h"
 #include "acme/input_output/DataOutputStream.h"
 
-// FIXME: The same structure is used in the viewer named RfbCapabilityInfo.
-struct Cap
+namespace remoting
 {
-  unsigned int code;
-  char vendorSignature[4];
-  char nameSignature[8];
-};
 
-typedef ::array_base<Cap> CapVector;
-typedef ::array_base<Cap>::const_iterator CapVectorConstIter;
+   // FIXME: The same structure is used in the viewer named RfbCapabilityInfo.
+   struct Cap
+   {
+      unsigned int code;
+      char vendorSignature[4];
+      char nameSignature[8];
+   };
 
-class CapContainer
-{
-public:
-  CapContainer();
-  virtual ~CapContainer();
+   typedef ::array_base<Cap> CapVector;
+   typedef ::array_base<Cap>::const_iterator CapVectorConstIter;
 
-  void addCap(unsigned int code, const char *vendorSignature,
-              const char *nameSignature);
+   class CapContainer
+   {
+   public:
+      CapContainer();
+      virtual ~CapContainer();
 
-  unsigned int getCapCount() const;
-  void sendCaps(DataOutputStream *output) const;
+      void addCap(unsigned int code, const char *vendorSignature, const char *nameSignature);
 
-  bool includes(unsigned int code) const;
+      unsigned int getCapCount() const;
+      void sendCaps(DataOutputStream *output) const;
 
-private:
-  CapVector m_caps;
-};
+      bool includes(unsigned int code) const;
 
-//// __CAPCONTAINER_H__
+   private:
+      CapVector m_caps;
+   };
+
+
+} // namespace remoting
+ 
+

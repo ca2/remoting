@@ -33,10 +33,10 @@
 //#include "log_writer/LogWriter.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   // This class calculates actual view port rectangle.
+   // This class CLASS_DECL_REMOTING  calculates actual view port rectangle.
    // Typical usage:
    // // Initialisation
    // ViewPort m_viewPort;
@@ -44,7 +44,7 @@ namespace remoting_node_desktop
    // ...
    // m_viewPort.update(&frameBuffer->getDimension());
    // ::int_rectangle viewPort = m_viewPort.getViewPortRect();
-   class ViewPort
+   class CLASS_DECL_REMOTING  ViewPort
    {
    public:
       ViewPort(::subsystem::LogWriter *log);
@@ -101,7 +101,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop 
+} // namespace remoting
 
 
 

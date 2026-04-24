@@ -40,10 +40,10 @@
 #include "desktop_ipc/ReconnectionListener.h"
 #include "UpdateListener.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class DesktopClientImpl : public AnEventListener, public ReconnectionListener, public Thread, public DesktopBaseImpl
+   class CLASS_DECL_REMOTING DesktopClientImpl : public AnEventListener, public ReconnectionListener, public Thread, public DesktopBaseImpl
    {
    public:
       DesktopClientImpl(ClipboardListener *extClipListener, UpdateSendingListener *extUpdSendingListener,
@@ -83,7 +83,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

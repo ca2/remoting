@@ -31,7 +31,7 @@
 #include "desktop_ipc/ReconnectionListener.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    /**
@@ -42,7 +42,7 @@ namespace remoting_node_desktop
     *   server application.
     *   It will break only if thread will be terminated.
     */
-   class DesktopServerWatcher : public Thread
+   class CLASS_DECL_REMOTING DesktopServerWatcher : public Thread
    {
    public:
       DesktopServerWatcher(ReconnectionListener *recListener, ::subsystem::LogWriter *log);
@@ -67,7 +67,7 @@ namespace remoting_node_desktop
 
  
 
-} // namespace remoting_node_desktop
+} // namespace remoting
  
 
 

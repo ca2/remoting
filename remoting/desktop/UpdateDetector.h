@@ -31,11 +31,11 @@
 
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
-   class UpdateDetector : public ::subsystem::GuiThread
+   class CLASS_DECL_REMOTING UpdateDetector : public ::subsystem::GuiThread
    {
    public:
       UpdateDetector(UpdateKeeper *updateKeeper, UpdateListener *updateListener);
@@ -60,7 +60,7 @@ namespace remoting_node_desktop
 
    //// __UPDATEDETECTOR_H__
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

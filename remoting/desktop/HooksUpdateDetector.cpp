@@ -29,7 +29,7 @@
 #include "remoting/remoting/win_system/UipiControl.h"
 //#include "remoting/remoting/win_system/Environment.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    HooksUpdateDetector::HooksUpdateDetector(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
@@ -222,5 +222,5 @@ namespace remoting_node_desktop
    }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
  

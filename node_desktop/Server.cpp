@@ -83,9 +83,9 @@ namespace remoting_node_desktop
 
    //   // Initialize configuration.
    //   // FIXME: It looks like configurator may be created as a member object.
-   //   Configurator *configurator = Configurator::getInstance();
+   //   Configurator *configurator = m_pconfigurator;
    //   configurator->load();
-   //   m_pserverconfig = Configurator::getInstance()->getServerConfig();
+   //   m_pserverconfig = m_pconfigurator->getServerConfig();
 
    //   try {
    //      ::string logDir;
@@ -123,7 +123,7 @@ namespace remoting_node_desktop
 
    //   // FIXME: No good to act as a listener before completing the object
    //   //        construction.
-   //   Configurator::getInstance()->addListener(this);
+   //   m_pconfigurator->addListener(this);
 
    //   {
    //      // FIXME: Protect only primitive operations.
@@ -145,7 +145,7 @@ namespace remoting_node_desktop
 
    Server::~Server()
    {
-      Configurator::getInstance()->removeListener(this);
+      m_pconfigurator->removeListener(this);
 
       stopControlServer();
       stopHttpServer();
@@ -198,9 +198,9 @@ namespace remoting_node_desktop
 
       // Initialize configuration.
       // FIXME: It looks like configurator may be created as a member object.
-      Configurator *configurator = Configurator::getInstance();
+      Configurator *configurator = m_pconfigurator;
       configurator->load();
-      m_pserverconfig = Configurator::getInstance()->getServerConfig();
+      m_pserverconfig = m_pconfigurator->getServerConfig();
 
       try
       {
@@ -243,7 +243,7 @@ namespace remoting_node_desktop
 
       // FIXME: No good to act as a listener before completing the object
       //        construction.
-      Configurator::getInstance()->addListener(this);
+      m_pconfigurator->addListener(this);
 
       {
          // FIXME: Protect only primitive operations.

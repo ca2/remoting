@@ -26,7 +26,7 @@
 #include "subsystem/platform/Exception.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    Win32ScreenDriverBaseImpl::Win32ScreenDriverBaseImpl(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
@@ -80,7 +80,7 @@ namespace remoting_node_desktop
    }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

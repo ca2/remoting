@@ -28,28 +28,30 @@
 #include "RfbDispatcher.h"
 #include "CapContainer.h"
 
-class RfbCodeRegistrator
+namespace remoting
 {
-public:
-  RfbCodeRegistrator(RfbDispatcher *dispatcher,
-                     CapContainer *srvToClCaps,
-                     CapContainer *clToSrvCaps,
-                     CapContainer *encCaps);
-  virtual ~RfbCodeRegistrator();
 
-  void regCode(unsigned int code, RfbDispatcherListener *listener);
-  void addSrvToClCap(unsigned int code, const char *vendorSignature,
-                     const char *nameSignature);
-  void addClToSrvCap(unsigned int code, const char *vendorSignature,
-                     const char *nameSignature);
-  void addEncCap(unsigned int code, const char *vendorSignature,
-                 const char *nameSignature);
 
-private:
-  RfbDispatcher *m_dispatcher;
-  CapContainer *m_srvToClCaps;
-  CapContainer *m_clToSrvCaps;
-  CapContainer *m_encCaps;
-};
+   class RfbCodeRegistrator
+   {
+   public:
+      RfbCodeRegistrator(RfbDispatcher *dispatcher, CapContainer *srvToClCaps, CapContainer *clToSrvCaps,
+                         CapContainer *encCaps);
+      virtual ~RfbCodeRegistrator();
 
-//// __RFBCODEREGISTRATOR_H__
+      void regCode(unsigned int code, RfbDispatcherListener *listener);
+      void addSrvToClCap(unsigned int code, const char *vendorSignature, const char *nameSignature);
+      void addClToSrvCap(unsigned int code, const char *vendorSignature, const char *nameSignature);
+      void addEncCap(unsigned int code, const char *vendorSignature, const char *nameSignature);
+
+   private:
+      RfbDispatcher *m_dispatcher;
+      CapContainer *m_srvToClCaps;
+      CapContainer *m_clToSrvCaps;
+      CapContainer *m_encCaps;
+   };
+
+ 
+
+} // namespace remoting
+ 

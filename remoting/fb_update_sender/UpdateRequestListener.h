@@ -24,11 +24,11 @@
 
 #pragma once
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
-   class UpdateRequestListener : virtual public ::particle
+   class CLASS_DECL_REMOTING  UpdateRequestListener : virtual public ::particle
    {
    public:
       virtual ~UpdateRequestListener() {}
@@ -37,7 +37,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

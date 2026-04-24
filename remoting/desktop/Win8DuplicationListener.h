@@ -27,10 +27,10 @@
 
 #include "remoting/remoting/region/Region.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class Win8DuplicationListener
+   class CLASS_DECL_REMOTING Win8DuplicationListener
    {
    public:
       // changedRegion in target ::innate_subsystem::FrameBuffer coordinates.
@@ -50,7 +50,7 @@ namespace remoting_node_desktop
 
    //// __WIN8DUPLICATIONLISTENER_H__
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

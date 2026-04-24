@@ -27,7 +27,7 @@
 #include "Win32ScreenDriver.h"
 #include "Win8ScreenDriver.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -99,7 +99,7 @@ namespace remoting_node_desktop
    bool Win32ScreenDriverFactory::isMirrorDriverAllowed() { return m_srvConf->getMirrorIsAllowed(); }
 
    bool Win32ScreenDriverFactory::isD3DAllowed() { return m_srvConf->getD3DIsAllowed(); }
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

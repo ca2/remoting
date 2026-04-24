@@ -28,12 +28,12 @@
 #include "WinDxgiDevice.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
    // #include aaa_<d3d11.h>
    // #include aaa_<DXGI1_2.h>
 
-   class WinDxgiAdapter
+   class CLASS_DECL_REMOTING WinDxgiAdapter
    {
    public:
       WinDxgiAdapter(WinDxgiDevice *winDxgiDevice);
@@ -49,7 +49,7 @@ namespace remoting_node_desktop
    };
 
 
-} //  namespace remoting_node_desktop
+} //  namespace remoting
 
 
 

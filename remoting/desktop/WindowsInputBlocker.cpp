@@ -26,7 +26,7 @@
 #include "subsystem/platform/Exception.h"
 //#include "subsystem/thread/critical_section.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -368,6 +368,6 @@ namespace remoting_node_desktop
    }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 

@@ -187,7 +187,7 @@ void ControlProxy::shareApp(unsigned int procId)
   msg->send();
 }
 
-void ControlProxy::setServerConfig(ServerConfig *config)
+void ControlProxy::setServerConfig(ServerConfig * pserverconfig)
 {
   critical_section_lock l(m_gate);
 
@@ -198,7 +198,7 @@ void ControlProxy::setServerConfig(ServerConfig *config)
   msg->send();
 }
 
-void ControlProxy::getServerConfig(ServerConfig *config)
+void ControlProxy::getServerConfig(ServerConfig * pserverconfig)
 {
   critical_section_lock l(m_gate);
 

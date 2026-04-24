@@ -31,7 +31,7 @@ namespace remoting_node_desktop
    UpdateHandlerServer::UpdateHandlerServer(BlockingGate *forwGate, DesktopSrvDispatcher *dispatcher,
                                             AnEventListener *extTerminationListener, ::subsystem::LogWriter *log) :
        DesktopServerProto(forwGate), m_extTerminationListener(extTerminationListener), m_plogwriter(log),
-       m_scrDriverFactory(Configurator::getInstance()->getServerConfig())
+       m_scrDriverFactory(m_pconfigurator->getServerConfig())
    {
       m_updateHandler = new UpdateHandlerImpl(this, &m_scrDriverFactory, log);
 

@@ -25,7 +25,7 @@
 #include "HookInstaller.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 #ifndef _WIN64
@@ -78,5 +78,5 @@ namespace remoting_node_desktop
    }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
   / namespace remoting_node_desk

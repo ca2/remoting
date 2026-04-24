@@ -34,96 +34,104 @@
 // #include aaa_<string.h>
 //#include "subsystem/platform/inttypes.h"
 
-struct TightColorList {
-  TightColorList *next;
-  int idx;
-  unsigned int rgb;
-};
+namespace remoting
+{
 
-struct TightPaletteEntry {
-  TightColorList *listNode;
-  int numPixels;
-};
 
-class TightPalette {
+   struct TightColorList
+   {
+      TightColorList *next;
+      int idx;
+      unsigned int rgb;
+   };
 
-protected:
+   struct TightPaletteEntry
+   {
+      TightColorList *listNode;
+      int numPixels;
+   };
 
-  // FIXME: Bigger hash table? Better hash function?
-  inline static int hashFunc(unsigned int rgb) {
-    return (rgb ^ (rgb >> 13)) & 0xFF;
-  }
+   class TightPalette
+   {
 
-public:
+   protected:
 
-  TightPalette(int maxColors = 254);
+      // FIXME: Bigger hash table? Better hash function?
+      inline static int hashFunc(unsigned int rgb) { return (rgb ^ (rgb >> 13)) & 0xFF; }
 
-  //
-  // Re-initialize the object. This does not change maximum number
-  // of colors.
-  //
-  void reset();
+   public:
 
-  //
-  // Set limit on the number of colors in the palette. Note that
-  // this value cannot exceed 254.
-  //
-  void setMaxColors(int maxColors);
+      TightPalette(int maxColors = 254);
 
-  //
-  // Insert new color into the palette, or increment its counter if
-  // the color is already there. Returns new number of colors, or
-  // zero if the palette is full. If the palette becomes full, it
-  // reports zero colors and cannot be used any more without calling
-  // reset().
-  //
-  int insert(unsigned int rgb, int numPixels);
+      //
+      // Re-initialize the object. This does not change maximum number
+      // of colors.
+      //
+      void reset();
 
-  //
-  // Return the number of colors in the palette. If the palette is full,
-  // this function returns 0.
-  //
-  inline int getNumColors() const {
-    return m_numColors;
-  }
+      //
+      // Set limit on the number of colors in the palette. Note that
+      // this value cannot exceed 254.
+      //
+      void setMaxColors(int maxColors);
 
-  //
-  // Return the color specified by its index in the palette.
-  //
-  inline unsigned int getEntry(int i) const {
-    return (i < m_numColors) ? m_entry[i].listNode->rgb : (unsigned int)-1;
-  }
+      //
+      // Insert new color into the palette, or increment its counter if
+      // the color is already there. Returns new number of colors, or
+      // zero if the palette is full. If the palette becomes full, it
+      // reports zero colors and cannot be used any more without calling
+      // reset().
+      //
+      int insert(unsigned int rgb, int numPixels);
 
-  //
-  // Return the pixel counter of the color specified by its index.
-  //
-  inline int getCount(int i) const {
-    return (i < m_numColors) ? m_entry[i].numPixels : 0;
-  }
+      //
+      // Return the number of colors in the palette. If the palette is full,
+      // this function returns 0.
+      //
+      inline int getNumColors() const { return m_numColors; }
 
-  //
-  // Return the index of a specified color.
-  //
-  inline unsigned char getIndex(unsigned int rgb) const {
-    TightColorList *pnode = m_hash[hashFunc(rgb)];
-    while (pnode != NULL) {
-      if (pnode->rgb == rgb) {
-        return (unsigned char)pnode->idx;
+      //
+      // Return the color specified by its index in the palette.
+      //
+      inline unsigned int getEntry(int i) const
+      {
+         return (i < m_numColors) ? m_entry[i].listNode->rgb : (unsigned int)-1;
       }
-      pnode = pnode->next;
-    }
-    return 0xFF;  // no such color
-  }
 
-protected:
+      //
+      // Return the pixel counter of the color specified by its index.
+      //
+      inline int getCount(int i) const { return (i < m_numColors) ? m_entry[i].numPixels : 0; }
 
-  int m_maxColors;
-  int m_numColors;
+      //
+      // Return the index of a specified color.
+      //
+      inline unsigned char getIndex(unsigned int rgb) const
+      {
+         TightColorList *pnode = m_hash[hashFunc(rgb)];
+         while (pnode != NULL)
+         {
+            if (pnode->rgb == rgb)
+            {
+               return (unsigned char)pnode->idx;
+            }
+            pnode = pnode->next;
+         }
+         return 0xFF; // no such color
+      }
 
-  TightPaletteEntry m_entry[256];
-  TightColorList *m_hash[256];
-  TightColorList m_list[256];
+   protected:
 
-};
+      int m_maxColors;
+      int m_numColors;
 
-//// __RFB_TIGHTPALETTE_H_INCLUDED__
+      TightPaletteEntry m_entry[256];
+      TightColorList *m_hash[256];
+      TightColorList m_list[256];
+   };
+
+ 
+
+} // namespace remoting
+ 
+

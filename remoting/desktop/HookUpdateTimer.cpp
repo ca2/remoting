@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "HookUpdateTimer.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    HookUpdateTimer::HookUpdateTimer(UpdateListener *updateListener) : m_updateListener(updateListener) { resume(); }
@@ -54,7 +54,7 @@ namespace remoting_node_desktop
    void HookUpdateTimer::sear() { m_updateWaiter.notify(); }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

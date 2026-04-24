@@ -27,7 +27,7 @@
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "WinDxgiDevice.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -55,7 +55,7 @@ namespace remoting_node_desktop
    HRESULT WinDxgiDevice::getParent(REFIID riid, void **ppvObject) { return m_dxgiDevice->GetParent(riid, ppvObject); }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
  
 
 

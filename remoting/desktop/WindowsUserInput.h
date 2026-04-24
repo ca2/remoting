@@ -33,10 +33,10 @@
 //#include "log_writer/LogWriter.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class WindowsUserInput : public UserInput
+   class CLASS_DECL_REMOTING WindowsUserInput : public UserInput
    {
    public:
       WindowsUserInput(::subsystem::ClipboardListener *clipboardListener, bool ctrlAltDelEnabled,
@@ -76,7 +76,7 @@ namespace remoting_node_desktop
 
    //// __WINDOWSUSERINPUT_H__
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

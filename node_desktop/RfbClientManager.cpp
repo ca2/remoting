@@ -171,7 +171,7 @@ namespace remoting_node_desktop
       // struct sockaddr_in addr_in = peerAddr.getSockAddr();
       struct sockaddr_in addr_in = paddrImpl->_getSockAddr();
 
-      ServerConfig *config = m_pconfigurator->getServerConfig();
+      ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
 
       IpAccessRule::ActionType action;
 
@@ -447,7 +447,7 @@ namespace remoting_node_desktop
    {
       critical_section_lock al(&m_clientListLocker);
 
-      ServerConfig *config = m_pconfigurator->getServerConfig();
+      ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
       int timeout = 1000 * config->getIdleTimeout();
 
       m_plogwriter->error("Set socket idle timeout, {} ms", timeout);

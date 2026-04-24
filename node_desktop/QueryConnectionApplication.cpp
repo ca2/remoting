@@ -53,9 +53,10 @@ namespace remoting_node_desktop
    {
    }
 
-   void QueryConnectionApplication::initialize_query_connection_application(const ::scoped_string &scopedstrCmdLine)
+   void QueryConnectionApplication::initialize_query_connection_application(Configurator * pconfigurator,  const ::scoped_string &scopedstrCmdLine)
 
    {
+      m_pconfigurator = pconfigurator;
       initialize_operating_system_application();
       m_cmdLine = scopedstrCmdLine;
    }
@@ -115,7 +116,7 @@ namespace remoting_node_desktop
       int retCode = defaultRetCode;
 
       // Run command in separate process.
-      Configurator* conf = Configurator::getInstance();
+      Configurator* conf = m_pconfigurator;
       if (conf->getServiceFlag()) {
          auto pprocessNew = createø<::subsystem::CurrentConsoleProcess>();
          pprocessNew->initialize_current_console_process(plogwriter, conf->getServerConfig()->getConnectToRdpFlag(),

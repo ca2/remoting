@@ -34,11 +34,11 @@
 //#include "log_writer/LogWriter.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
-   // Only one instance of this class may be created.
+   // Only one instance of this class  may be created.
 
-   class WindowsInputBlocker : public InputBlocker, protected GuiThread
+   class CLASS_DECL_REMOTING WindowsInputBlocker : public InputBlocker, protected GuiThread
    {
    public:
       WindowsInputBlocker(::subsystem::LogWriter *log);
@@ -95,7 +95,7 @@ namespace remoting_node_desktop
    //// __WINDOWSINPUTBLOCKER_H__
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

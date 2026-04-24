@@ -27,10 +27,10 @@
 
 #include "DesktopFactory.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class ApplicationDesktopFactory : public DesktopFactory
+   class CLASS_DECL_REMOTING ApplicationDesktopFactory : public DesktopFactory
    {
    public:
       ApplicationDesktopFactory();
@@ -41,7 +41,7 @@ namespace remoting_node_desktop
                                      AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter *log);
    };
 
-} // namespace remoting_node_desktop 
+} // namespace remoting
 
 
 

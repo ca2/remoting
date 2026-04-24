@@ -90,7 +90,7 @@ namespace remoting_node_desktop
    void ControlClient::execute()
    {
       // Client passes authentication by default if server does not uses control authentication.
-      if (!Configurator::getInstance()->getServerConfig()->isControlAuthEnabled())
+      if (!m_pconfigurator->getServerConfig()->isControlAuthEnabled())
       {
          m_authPassed = true;
       }
@@ -109,8 +109,8 @@ namespace remoting_node_desktop
 
                m_plogwriter->debug("process memory usage: {} ", MainSubsystem().getCurrentMemoryUsage());
             }
-            bool requiresControlAuth = Configurator::getInstance()->getServerConfig()->isControlAuthEnabled();
-            bool repeatAuthEnabled = Configurator::getInstance()->getServerConfig()->getControlAuthAlwaysChecking();
+            bool requiresControlAuth = m_pconfigurator->getServerConfig()->isControlAuthEnabled();
+            bool repeatAuthEnabled = m_pconfigurator->getServerConfig()->getControlAuthAlwaysChecking();
 
             // Check if scopedstrMessage requires TightVNC admin privilegies.
             if (requiresControlAuth)
@@ -282,7 +282,7 @@ namespace remoting_node_desktop
       // sent password to us.
       //
 
-      ServerConfig *config = Configurator::getInstance()->getServerConfig();
+      ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
       unsigned char cryptPassword[8];
       config->getControlPassword(cryptPassword);
 
@@ -347,7 +347,7 @@ namespace remoting_node_desktop
    {
       m_gate->writeUInt32(ControlProto::REPLY_OK);
 
-      Configurator::getInstance()->load();
+      m_pconfigurator->load();
    }
 
    void ControlClient::disconnectAllMsgRcvd()
@@ -429,7 +429,7 @@ namespace remoting_node_desktop
       m_gate->writeUInt32(ControlProto::REPLY_OK);
       ServerConfig cfg;
       cfg.deserialize(m_gate);
-      ServerConfig *old = Configurator::getInstance()->getServerConfig();
+      ServerConfig *old = m_pconfigurator->getServerConfig();
       unsigned char tmp[ServerConfig::VNC_PASSWORD_SIZE];
 
       if (cfg.hasPrimaryPassword())
@@ -463,13 +463,13 @@ namespace remoting_node_desktop
          }
       }
       *old = cfg;
-      Configurator::getInstance()->save();
-      Configurator::getInstance()->load();
+      m_pconfigurator->save();
+      m_pconfigurator->load();
    }
 
    void ControlClient::getShowTrayIconFlagMsgRcvd()
    {
-      bool showIcon = Configurator::getInstance()->getServerConfig()->getShowTrayIconFlag();
+      bool showIcon = m_pconfigurator->getServerConfig()->getShowTrayIconFlag();
 
       m_gate->writeUInt32(ControlProto::REPLY_OK);
 
@@ -495,7 +495,7 @@ namespace remoting_node_desktop
    {
       m_gate->writeUInt32(ControlProto::REPLY_OK);
 
-      ServerConfig cfg = *Configurator::getInstance()->getServerConfig();
+      ServerConfig cfg = *m_pconfigurator->getServerConfig();
 
       unsigned char zeroes[ServerConfig::VNC_PASSWORD_SIZE] = {};
       if (cfg.hasControlPassword())

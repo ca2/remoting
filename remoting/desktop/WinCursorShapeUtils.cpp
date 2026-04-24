@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "WinCursorShapeUtils.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -297,4 +297,4 @@ namespace remoting_node_desktop
       return shapeInfo.Height;
    }
 
-} // namespace remoting_node_desktop
+} // namespace remoting

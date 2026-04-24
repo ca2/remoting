@@ -25,7 +25,7 @@
 #include "CopyRectDetector.h"
 #include "subsystem/_common_header.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    CopyRectDetector::CopyRectDetector() {}
@@ -108,7 +108,7 @@ namespace remoting_node_desktop
    }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

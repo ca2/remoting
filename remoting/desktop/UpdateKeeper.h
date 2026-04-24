@@ -31,11 +31,11 @@
 #include "subsystem/thread/Lockable.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
-   class UpdateKeeper : public ::subsystem::LockableInterface
+   class CLASS_DECL_REMOTING UpdateKeeper : public ::subsystem::LockableInterface
    {
    public:
       UpdateKeeper();
@@ -87,7 +87,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

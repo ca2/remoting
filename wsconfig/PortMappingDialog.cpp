@@ -80,7 +80,7 @@ bool PortMappingDialog::onInitDialog()
 {
   initControls();
 
-  m_extraPorts = Configurator::getInstance()->getServerConfig()->getPortMappingContainer();
+  m_extraPorts = m_pconfigurator->getServerConfig()->getPortMappingContainer();
 
   //
   // Fill listbox.

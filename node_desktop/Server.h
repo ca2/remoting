@@ -27,8 +27,8 @@
 
 #include "subsystem/_common_header.h"
 
-#include "desktop/WinServiceDesktopFactory.h"
-#include "desktop/ApplicationDesktopFactory.h"
+#include "remoting/remoting/desktop/WinServiceDesktopFactory.h"
+#include "remoting/remoting/desktop/ApplicationDesktopFactory.h"
 #include "RfbClientManager.h"
 #include "RfbServer.h"
 #include "ExtraRfbServers.h"

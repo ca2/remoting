@@ -30,14 +30,14 @@
 #include "remoting/remoting/region/Region.h"
 #include "subsystem/framebuffer/PixelFormat.h"
 #include "innate_subsystem/framebuffer/FrameBuffer.h"
-#include "remoting/node_desktop/fb_update_sender/UpdateRequestListener.h"
+#include "remoting/remoting/fb_update_sender/UpdateRequestListener.h"
 //#include aaa_<vector>
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   // This class is a public interface to a desktop.
-   class Desktop : public UpdateRequestListener
+   // This class  is a public interface to a desktop.
+   class CLASS_DECL_REMOTING Desktop : public ::remoting::UpdateRequestListener
    {
    public:
       virtual ~Desktop() {}
@@ -72,7 +72,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

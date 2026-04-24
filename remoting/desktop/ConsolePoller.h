@@ -30,10 +30,10 @@
 #include "remoting/remoting/win_system/WindowsEvent.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class ConsolePoller : public UpdateDetector
+   class CLASS_DECL_REMOTING ConsolePoller : public UpdateDetector
    {
    public:
       ConsolePoller(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ScreenGrabber *screenGrabber,
@@ -58,7 +58,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

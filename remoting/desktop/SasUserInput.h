@@ -29,12 +29,12 @@
 #include "desktop_ipc/UserInputClient.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   // This class delegates all inputs but the "ctrl+alt+del" under Vista or later
+   // This class  delegates all inputs but the "ctrl+alt+del" under Vista or later
    // it process by himself.
-   class SasUserInput : public UserInput
+   class CLASS_DECL_REMOTING SasUserInput : public UserInput
    {
    public:
       SasUserInput(UserInputClient *client, ::subsystem::LogWriter *log);
@@ -64,7 +64,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

@@ -26,8 +26,8 @@
 
 
 #include "subsystem/_common_header.h"
-#include "desktop/UserInput.h"
-#include "desktop/ClipboardListener.h"
+#include "remoting/remoting/desktop/UserInput.h"
+#include "remoting/remoting/desktop/ClipboardListener.h"
 //#include "subsystem/platform/inttypes.h"
 #include "DesktopServerProto.h"
 #include "DesktopSrvDispatcher.h"

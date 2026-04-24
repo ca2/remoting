@@ -39,6 +39,9 @@ namespace remoting_node_desktop
       virtual public ::subsystem::LocalOperatingSystemApplication
    {
    public:
+
+      ::pointer < Configurator > m_pconfigurator;
+
       /**
        * Creates instance of application.
        * @remark behavour inherited from superclass.
@@ -55,7 +58,7 @@ namespace remoting_node_desktop
       virtual ~QueryConnectionApplication();
 
 
-      virtual void initialize_query_connection_application(const ::scoped_string &scopedstrCmdLine);
+      virtual void initialize_query_connection_application(Configurator * pconfigurator, const ::scoped_string &scopedstrCmdLine);
 
 
       /**

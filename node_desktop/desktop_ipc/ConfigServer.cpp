@@ -59,7 +59,7 @@ namespace remoting_node_desktop
    void ConfigServer::reloadSettings(BlockingGate *backGate)
    {
       readConfigSettings(backGate);
-      Configurator::getInstance()->notifyReload();
+      m_pconfigurator->notifyReload();
       m_deskConf.updateByNewSettings();
    }
 

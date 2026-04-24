@@ -29,11 +29,11 @@
 #include "remoting/remoting/win_system/DynamicLibrary.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
-   class HookInstaller
+   class CLASS_DECL_REMOTING HookInstaller
    {
    public:
       HookInstaller();
@@ -57,7 +57,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

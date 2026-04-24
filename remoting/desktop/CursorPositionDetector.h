@@ -31,10 +31,10 @@
 #include "remoting/remoting/win_system/WinCursor.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class CursorPositionDetector : public UpdateDetector
+   class CLASS_DECL_REMOTING CursorPositionDetector : public UpdateDetector
    {
    public:
       CursorPositionDetector(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ::subsystem::LogWriter *log);
@@ -55,7 +55,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

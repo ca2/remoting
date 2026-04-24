@@ -27,10 +27,10 @@
 
 #include "WinDxException.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class WinDxRecoverableException : public WinDxException
+   class CLASS_DECL_REMOTING WinDxRecoverableException : public WinDxException
    {
    public:
       WinDxRecoverableException(const ::scoped_string &scopedstrMessage, HRESULT errCode);
@@ -40,7 +40,7 @@ namespace remoting_node_desktop
    //// __WINDXRECOVERABLEEXCEPTION_H__
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

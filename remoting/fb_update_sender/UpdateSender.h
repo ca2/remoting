@@ -34,20 +34,20 @@
 #include "remoting/remoting/network/RfbOutputGate.h"
 #include "remoting/remoting/network/RfbInputGate.h"
 #include "acme/parallelization/happening.h"
-#include "rfb_sconn/Encoder.h"
-#include "rfb_sconn/HextileEncoder.h"
-#include "rfb_sconn/JpegEncoder.h"
-#include "rfb_sconn/EncoderStore.h"
-#include "rfb_sconn/RfbCodeRegistrator.h"
+#include "remoting/remoting/rfb_sconn/Encoder.h"
+#include "remoting/remoting/rfb_sconn/HextileEncoder.h"
+#include "remoting/remoting/rfb_sconn/JpegEncoder.h"
+#include "remoting/remoting/rfb_sconn/EncoderStore.h"
+#include "remoting/remoting/rfb_sconn/RfbCodeRegistrator.h"
 //#include "subsystem/platform/::earth::time.h"
 #include "CursorUpdates.h"
 #include "SenderControlInformationInterface.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class UpdateSender : public ::subsystem::Thread, public RfbDispatcherListener
+   class CLASS_DECL_REMOTING  UpdateSender : public ::subsystem::Thread, public RfbDispatcherListener
    {
    public:
       // updReqListener - pointer to the out listener for retranslate
@@ -204,7 +204,7 @@ namespace remoting_node_desktop
 
       CursorUpdates m_cursorUpdates;
 
-      // EncodeOptions class maintain the configuration of encoders and
+      // EncodeOptions class CLASS_DECL_REMOTING  maintain the configuration of encoders and
       // pseudo-encoders read from the SetEncodings client scopedstrMessage.
       // m_newEncodeOptions may be changed at any time but all change and read
       // operations must be synchronized with m_newEncodeOptionsLocker.
@@ -257,7 +257,7 @@ namespace remoting_node_desktop
    };
 
 
-} //  namespace remoting_node_desktop
+} //  namespace remoting
 
 
 

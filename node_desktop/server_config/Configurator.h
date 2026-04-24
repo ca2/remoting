@@ -72,7 +72,7 @@ namespace remoting_node_desktop
       // Protected members read methods
       //
 
-      ServerConfig *getServerConfig() { return &m_serverConfig; }
+      ServerConfig *getServerConfig() { return m_pserverconfig; }
 
    //private:
 
@@ -80,27 +80,27 @@ namespace remoting_node_desktop
       // Serialize and deserialize methods
       //
 
-      bool savePortMappingContainer(::remoting::SettingsManager *sm);
-      bool loadPortMappingContainer(::remoting::SettingsManager *sm, PortMappingContainer *portMapping);
+      bool savePortMappingContainer(::remoting::SettingsManager *psettingsmanager);
+      bool loadPortMappingContainer(::remoting::SettingsManager *psettingsmanager, PortMappingContainer *portMapping);
 
-      bool saveIpAccessControlContainer(::remoting::SettingsManager *sm);
-      bool loadIpAccessControlContainer(::remoting::SettingsManager *sm, IpAccessControl *ipContainer);
+      bool saveIpAccessControlContainer(::remoting::SettingsManager *psettingsmanager);
+      bool loadIpAccessControlContainer(::remoting::SettingsManager *psettingsmanager, IpAccessControl *ipContainer);
 
-      bool saveServerConfig(::remoting::SettingsManager *sm);
-      bool loadServerConfig(::remoting::SettingsManager *sm, ServerConfig *config);
+      bool saveServerConfig(::remoting::SettingsManager *psettingsmanager);
+      bool loadServerConfig(::remoting::SettingsManager *psettingsmanager, ServerConfig * pserverconfig);
       void updateLogDirPath();
 
-      bool saveQueryConfig(::remoting::SettingsManager *sm);
-      bool loadQueryConfig(::remoting::SettingsManager *sm, ServerConfig *config);
+      bool saveQueryConfig(::remoting::SettingsManager *psettingsmanager);
+      bool loadQueryConfig(::remoting::SettingsManager *psettingsmanager, ServerConfig * pserverconfig);
 
-      bool saveInputHandlingConfig(::remoting::SettingsManager *sm);
-      bool loadInputHandlingConfig(::remoting::SettingsManager *sm, ServerConfig *config);
+      bool saveInputHandlingConfig(::remoting::SettingsManager *psettingsmanager);
+      bool loadInputHandlingConfig(::remoting::SettingsManager *psettingsmanager, ServerConfig * pserverconfig);
 
-      bool saveVideoRegionConfig(::remoting::SettingsManager *sm);
-      bool loadVideoRegionConfig(::remoting::SettingsManager *sm, ServerConfig *config);
+      bool saveVideoRegionConfig(::remoting::SettingsManager *psettingsmanager);
+      bool loadVideoRegionConfig(::remoting::SettingsManager *psettingsmanager, ServerConfig * pserverconfig);
 
-      bool save(::remoting::SettingsManager *sm);
-      bool load(::remoting::SettingsManager *sm);
+      bool save(::remoting::SettingsManager *psettingsmanager);
+      bool load(::remoting::SettingsManager *psettingsmanager);
 
       bool load(bool forService);
       bool save(bool forService);

@@ -33,11 +33,11 @@
 // #include aaa_<DXGI1_2.h>
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
-   class WinDxgiOutput1
+   class CLASS_DECL_REMOTING WinDxgiOutput1
    {
    public:
       WinDxgiOutput1(WinDxgiOutput *dxgiOutput);
@@ -57,7 +57,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

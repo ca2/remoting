@@ -30,10 +30,10 @@
 #include "subsystem/node/Screen.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class WindowsCursorShapeGrabber : public CursorShapeGrabber
+   class CLASS_DECL_REMOTING WindowsCursorShapeGrabber : public CursorShapeGrabber
    {
    public:
       WindowsCursorShapeGrabber(void);
@@ -53,7 +53,7 @@ namespace remoting_node_desktop
    };
 
 
-} //  namespace remoting_node_desktop
+} //  namespace remoting
 
 
 

@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "desktop/UpdateHandler.h"
+#include "remoting/remoting/desktop/UpdateHandler.h"
 #include "DesktopServerProto.h"
 #include "DesktopSrvDispatcher.h"
 //#include "log_writer/LogWriter.h"

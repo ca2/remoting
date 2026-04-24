@@ -32,11 +32,11 @@
 // #include aaa_<DXGI1_2.h>
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   // This class is a wrapper for the IDXGIOutputDuplication interface.
-   class WinDxgiOutputDuplication
+   // This class  is a wrapper for the IDXGIOutputDuplication interface.
+   class CLASS_DECL_REMOTING WinDxgiOutputDuplication
    {
    public:
       WinDxgiOutputDuplication(WinDxgiOutput1 *dxgiOutput, WinD3D11Device *d3D11Device);
@@ -73,7 +73,7 @@ namespace remoting_node_desktop
    //// __WINDXGIOUTPUTDUPLICATION_H__
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

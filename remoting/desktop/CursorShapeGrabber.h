@@ -28,10 +28,10 @@
 #include "remoting/remoting/rfb/CursorShape.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class CursorShapeGrabber
+   class CLASS_DECL_REMOTING CursorShapeGrabber
    {
    public:
       CursorShapeGrabber();
@@ -50,7 +50,7 @@ namespace remoting_node_desktop
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

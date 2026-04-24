@@ -198,7 +198,7 @@ void ControlTrayIcon::onConfigurationMenuItemClick()
     return;
   }
 
-  Configurator::getInstance()->setServiceFlag(isConnectedToService);
+  m_pconfigurator->setServiceFlag(isConnectedToService);
 
   // Copy running tightvnc config to our global server config.
   if (!m_configDialog->isCreated()) {

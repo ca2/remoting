@@ -31,7 +31,7 @@
 #include "WindowsUserInput.h"
 #include "DesktopConfigLocal.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
    DesktopClientImpl::DesktopClientImpl(ClipboardListener *extClipListener,
@@ -221,6 +221,6 @@ namespace remoting_node_desktop
    }
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 

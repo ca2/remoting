@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "WinDxCriticalException.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
@@ -36,4 +36,4 @@ namespace remoting_node_desktop
    WinDxCriticalException::~WinDxCriticalException() {}
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting

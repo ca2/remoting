@@ -50,7 +50,7 @@ namespace remoting_node_desktop
     */
    class CLASS_DECL_REMOTING_NODE_DESKTOP Service : 
       virtual public ::subsystem::Service,
-      virtual public ServerTask        
+      virtual public Task        
    {
    public:
 

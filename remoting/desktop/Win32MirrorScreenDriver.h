@@ -28,10 +28,10 @@
 #include "MirrorScreenDriver.h"
 #include "Win32ScreenDriverBaseImpl.h"
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
-   class Win32MirrorScreenDriver : public Win32ScreenDriverBaseImpl
+   class CLASS_DECL_REMOTING Win32MirrorScreenDriver : public Win32ScreenDriverBaseImpl
    {
    public:
       Win32MirrorScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
@@ -44,7 +44,7 @@ namespace remoting_node_desktop
       // Stops screen update detection.
       virtual void terminateDetection();
 
-      // Note: This class is a wrapper for the MirrorScreenDriver class and then
+      // Note: This class  is a wrapper for the MirrorScreenDriver class CLASS_DECL_REMOTING and then
       // only MirrorScreenDriver can provide appropriate thread safety for the ScreenDriver functions.
 
       virtual ::int_size getScreenDimension();
@@ -61,7 +61,7 @@ namespace remoting_node_desktop
    //// __WIN32MIRRORSCREENDRIVER_H__
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 

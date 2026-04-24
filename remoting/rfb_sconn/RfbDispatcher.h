@@ -31,30 +31,37 @@
 //#include "remoting/remoting/win_system/WindowsEvent.h"
 //#include aaa_<map>
 
-class RfbDispatcher : public ::subsystem::Thread
+namespace remoting
 {
-public:
-  //RfbDispatcher(RfbInputGate *gate,
-  //              AnEventListener *m_extTerminationListener);
-  //RfbDispatcher(RfbInputGate *gate,
-  //              WindowsEvent *terminationEvent);
-   RfbDispatcher(::remoting::RfbInputGate *gate,
-                const ::procedure & procedureTermination);
-  virtual ~RfbDispatcher();
 
-  void registerNewHandle(unsigned int code, RfbDispatcherListener *listener);
 
-protected:
-  virtual void execute();
-  void notifyAbTermination();
+   class RfbDispatcher : public ::subsystem::Thread
+   {
+   public:
+      // RfbDispatcher(RfbInputGate *gate,
+      //               AnEventListener *m_extTerminationListener);
+      // RfbDispatcher(RfbInputGate *gate,
+      //               WindowsEvent *terminationEvent);
+      RfbDispatcher(::remoting::RfbInputGate *gate, const ::procedure &procedureTermination);
+      virtual ~RfbDispatcher();
 
-  ::remoting::RfbInputGate *m_gate;
+      void registerNewHandle(unsigned int code, RfbDispatcherListener *listener);
 
-  ::map<unsigned int, RfbDispatcherListener *> m_handlers;
+   protected:
+      virtual void execute();
+      void notifyAbTermination();
 
-  ::procedure m_procedureTermination;
-  //AnEventListener *m_extTerminationListener;
-  //WindowsEvent *m_terminationEvent;
-};
+      ::remoting::RfbInputGate *m_gate;
 
-//// __RFBDISPATCHER_H__
+      ::map<unsigned int, RfbDispatcherListener *> m_handlers;
+
+      ::procedure m_procedureTermination;
+      // AnEventListener *m_extTerminationListener;
+      // WindowsEvent *m_terminationEvent;
+   };
+
+
+
+} // namespace remoting
+
+

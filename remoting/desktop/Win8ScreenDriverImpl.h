@@ -38,11 +38,11 @@
 #include "Win8DeskDuplicationThread.h"
 
 
-namespace remoting_node_desktop
+namespace remoting
 {
 
 
-   class Win8ScreenDriverImpl : private GuiThread, private Win8DuplicationListener
+   class CLASS_DECL_REMOTING Win8ScreenDriverImpl : private GuiThread, private Win8DuplicationListener
    {
    public:
       Win8ScreenDriverImpl(::subsystem::LogWriter *log, UpdateKeeper *updateKeeper,
@@ -112,7 +112,7 @@ namespace remoting_node_desktop
    //// __WIN8SCREENDRIVERIMPL_H__
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting
 
 
 
