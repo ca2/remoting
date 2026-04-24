@@ -1,0 +1,78 @@
+// Copyright (C) 2011,2012 GlavSoft LLC.
+// All rights reserved.
+//
+//-------------------------------------------------------------------------
+// This file is part of the TightVNC software.  Please visit our Web site:
+//
+//                       http://www.tightvnc.com/
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//-------------------------------------------------------------------------
+//
+
+#pragma once
+
+
+#include "../ScreenDriver.h"
+#include "../WinVideoRegionUpdaterImpl.h"
+#include "../CursorPositionDetector.h"
+#include "../CursorShapeDetector.h"
+#include "../WindowsCursorShapeGrabber.h"
+#include "../CopyRectDetector.h"
+
+
+namespace remoting
+{
+
+   // This class  implements "grabbers" and "detectors" which is not couple� with screen frame buffer.
+   class CLASS_DECL_REMOTING Win32ScreenDriverBaseImpl : public WinVideoRegionUpdaterImpl
+   {
+   public:
+      Win32ScreenDriverBaseImpl(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
+                                critical_section *fbcritical_section, ::subsystem::LogWriter *log);
+      virtual ~Win32ScreenDriverBaseImpl();
+
+      // Starts screen update detection if it not started yet.
+      virtual void executeDetection();
+
+      // Stops screen update detection.
+      virtual void terminateDetection();
+
+      virtual bool grabCursorShape(const ::innate_subsystem::PixelFormat &pf);
+      virtual const CursorShape *getCursorShape();
+      virtual ::int_point getCursorPosition();
+
+      virtual void getCopiedRegion(::int_rectangle *copyRect, ::int_point *source);
+
+   protected:
+      critical_section *getFbMutex();
+
+   private:
+      critical_section *m_fbcritical_section;
+
+      CursorPositionDetector m_cursorPosDetector;
+      WindowsCursorShapeGrabber m_curShapeGrabber;
+      CursorShapeDetector m_curShapeDetector;
+
+      CopyRectDetector m_copyRectDetector;
+   };
+
+   //// __WIN32SCREENDRIVERBASEIMPL_H__
+
+
+} // namespace remoting
+ 
+
+
