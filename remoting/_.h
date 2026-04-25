@@ -17,7 +17,10 @@
 
 
 #include "remoting/remoting/desktop/_.h"
-#include "remoting/remoting/fb_update_sender/_.h"
+#include "remoting/remoting/framebuffer_update_sender/_.h"
+#include "remoting/remoting/file_transfer_server/_.h"
+#include "remoting/remoting/rfb_sconn/_.h"
+#include "remoting/remoting/server/_.h"
 #include "remoting/remoting/server_config/_.h"
 #include "remoting/remoting/viewer_core/_.h"
 

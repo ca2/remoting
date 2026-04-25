@@ -33,7 +33,7 @@ LRESULT CALLBACK callWndRetProc(int nCode, ::wparam wParam, ::lparam lParam);
 LRESULT CALLBACK getMsgProc(int code, ::wparam wParam, ::lparam lParam);
 LRESULT CALLBACK sysMsgProc(int code, ::wparam wParam, ::lparam lParam);
 void processMessage(HWND hwnd, unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam);
-void sendRect(const ::int_rectangle &  rect);
+void sendRect(const ::int_rectangle &  rectangle);
 void sendClientRect(HWND hwnd);
 void sendNClientRegion(HWND hwnd);
 ::int_rectangle getWindowRect(HWND hwnd);
@@ -155,12 +155,12 @@ void processMessage(HWND hwnd, unsigned int scopedstrMessage, ::wparam wParam, :
   }
 }
 
-void sendRect(const ::int_rectangle &  rect)
+void sendRect(const ::int_rectangle &  rectangle)
 {
-  short left   = (short)rect.left;
-  short top    = (short)rect.top;
-  short right  = (short)rect.right;
-  short bottom = (short)rect.bottom;
+  short left   = (short)rectangle.left;
+  short top    = (short)rectangle.top;
+  short right  = (short)rectangle.right;
+  short bottom = (short)rectangle.bottom;
   PostMessage(g_targetWinHwnd, HookDefinitions::SPEC_IPC_CODE,
               MAKEWPARAM(top, left),
               MAKELPARAM(bottom, right));
@@ -179,10 +179,10 @@ void sendNClientRegion(HWND hwnd)
 
   ncRegion.subtract(&cRegion);
 
-  ::int_rectangle_array_base rects;
+  ::int_rectangle_array_base rectanglea;
   ::int_rectangle_array_base::iterator iRect;
-  ncRegion.getRectVector(&rects);
-  for (iRect = rects.begin(); iRect < rects.end(); iRect++) {
+  ncRegion.getRects(&rectanglea);
+  for (iRect = rectanglea.begin(); iRect < rectanglea.end(); iRect++) {
     sendRect(&(*iRect));
   }
 }

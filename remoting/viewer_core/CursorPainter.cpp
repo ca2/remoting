@@ -28,9 +28,9 @@
 
 namespace remoting
 {
-   CursorPainter::CursorPainter(::innate_subsystem::FrameBuffer *pframebuffer, ::subsystem::LogWriter * plogwriter)
+   CursorPainter::CursorPainter(::innate_subsystem::Framebuffer *pframebuffer, ::subsystem::LogWriter * plogwriter)
    : m_fb(pframebuffer),
-     m_plogwriter = plogwriter;,
+     m_plogwriter(plogwriter),
      m_cursorIsMoveable(false),
      m_ignoreShapeUpdates(false),
      m_isExist(false)
@@ -103,7 +103,7 @@ namespace remoting
 
       erase.offset(corner.x, corner.y);
 
-      m_plogwriter->debug("Cursor rect: ({}, {}), ({}, {})", erase.left, erase.top, erase.right, erase.bottom);
+      m_plogwriter->debug("Cursor rectangle: ({}, {}), ({}, {})", erase.left, erase.top, erase.right, erase.bottom);
 
       if (erase.area() == 0) {
          return ::int_rectangle();

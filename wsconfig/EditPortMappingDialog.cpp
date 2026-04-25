@@ -58,7 +58,7 @@ void EditPortMappingDialog::onOkButtonClick()
   // Temporary variables
   //
 
-  PortMappingRect rect;
+  PortMappingRect rectangle;
   int port;
 
   ::string portStringStorage;
@@ -67,11 +67,11 @@ void EditPortMappingDialog::onOkButtonClick()
   m_geometryTextBox.getText(&rectStringStorage);
   m_portTextBox.getText(&portStringStorage);
 
-  PortMappingRect::parse(rectStringStorage, &rect);
+  PortMappingRect::parse(rectStringStorage, rectangle);
   MainSubsystem().StringParser().parseInt(portStringStorage, &port);
 
   m_mapping->setPort(port);
-  m_mapping->setRect(rect);
+  m_mapping->setRect(rectangle);
 
   kill(::innate_subsystem::IDOK);
 }

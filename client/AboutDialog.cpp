@@ -25,7 +25,7 @@
 #include "AboutDialog.h"
 #include "subsystem/node/Shell.h"
 #include "subsystem/node/VersionInfo.h"
-//#include "remoting/remoting/win_system/Environment.h"
+#include "subsystem/node/OperatingSystem.h"
 #include "innate_subsystem/gui/Control.h"
 #include "BuildTime.h"
 #include "resource.h"

@@ -138,7 +138,7 @@ namespace remoting_client
     //     }
     //
     //
-    //     critical_section_lock al(&m_bufferLock);
+    //     critical_section_lock al(&m_criticalsectionBuffer);
     //
     //
     //     _defer_update_double_buffering();
@@ -593,10 +593,10 @@ namespace remoting_client
 
     //}
 
-    //void DesktopWindow::doDraw(HDC hdc, const ::int_rectangle &rectangle)
-   void DesktopWindow::onDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle &rectangle)
+    //void DesktopWindow::doDraw(HDC hdc, const ::int_rectangle & rectangle)
+   void DesktopWindow::onDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle)
     {
-        critical_section_lock al(&m_bufferLock);
+        critical_section_lock al(&m_criticalsectionBuffer);
         int fbWidth = m_framebuffer.getDimension().cx;
         int fbHeight = m_framebuffer.getDimension().cy;
 
@@ -794,7 +794,7 @@ namespace remoting_client
         ::int_rectangle rc_src = rectangleSource;
         ::int_rectangle rc_dest = rectangleTarget;
 
-        critical_section_lock al(&m_bufferLock);
+        critical_section_lock al(&m_criticalsectionBuffer);
         m_framebuffer.setTargetDeviceContext(pgraphics->device_context());
         ::int_rectangle rSource = rectangleSource;
 
@@ -828,7 +828,7 @@ namespace remoting_client
 
     bool DesktopWindow::onDestroy() { return true; }
 
-    void DesktopWindow::updateFramebuffer(const ::innate_subsystem::FrameBuffer *pframebuffer, const ::int_rectangle &dstRect)
+    void DesktopWindow::updateFramebuffer(const ::innate_subsystem::Framebuffer *pframebuffer, const ::int_rectangle &rectangleTarget)
     {
         // This code doesn't require blocking of m_framebuffer.
         //
@@ -836,18 +836,18 @@ namespace remoting_client
         // then image on viewer is not valid, but next update fix this
         // It is not critical.
         //
-        // Size of framebuffer can not changed, because onFrameBufferUpdate()
-        // and onFrameBufferPropChange() may be called only from one thread.
-        if (!m_framebuffer.copyFrom(dstRect, pframebuffer, dstRect.left, dstRect.top))
+        // Size of pframebuffer can not changed, because onFramebufferUpdate()
+        // and onFramebufferPropChange() may be called only from one thread.
+        if (!m_framebuffer.copyFrom(rectangleTarget, pframebuffer, rectangleTarget.left, rectangleTarget.top))
         {
-            m_plogwriter->error("Possible invalide region. ({}, {}), ({}, {})", dstRect.left, dstRect.top, dstRect.right,
-                               dstRect.bottom);
+            m_plogwriter->error("Possible invalide region. ({}, {}), ({}, {})", rectangleTarget.left, rectangleTarget.top, rectangleTarget.right,
+                               rectangleTarget.bottom);
             m_plogwriter->error("Error in updateFramebuffer (ViewerWindow)");
         }
-        repaint(dstRect);
+        repaint(rectangleTarget);
     }
 
-    void DesktopWindow::setNewFramebuffer(const ::innate_subsystem::FrameBuffer *pframebuffer)
+    void DesktopWindow::setNewFramebuffer(const ::innate_subsystem::Framebuffer *pframebuffer)
     {
         ::int_size dimension = pframebuffer->getDimension();
         ::int_size olddimension = m_framebuffer.getDimension();
@@ -861,7 +861,7 @@ namespace remoting_client
         m_plogwriter->debug("Desktop size: {}, {}", dimension.cx, dimension.cy);
         {
             // FIXME: Nested locks should not be used.
-            critical_section_lock al(&m_bufferLock);
+            critical_section_lock al(&m_criticalsectionBuffer);
 
             m_serverDimension = dimension;
             if (!dimension.is_empty())
@@ -896,10 +896,10 @@ namespace remoting_client
     {
         auto repaintRect = repaintRectParameter;
         //repaintRect /= m_iDivisor;
-        ::int_rectangle rect;
-        m_scManager.getSourceRect(&rect);
+        ::int_rectangle rectangle;
+        m_scManager.getSourceRect(rectangle);
         ::int_rectangle paint = repaintRect;
-        paint.intersection(rect);
+        paint.intersection(rectangle);
 
         // checks what we getted a valid rectangle
         if (paint.width() <= 1 || paint.height() <= 1 || m_isBackgroundDirty)
@@ -910,7 +910,7 @@ namespace remoting_client
         }
         ::int_rectangle wnd;
         m_scManager.getWndFromScreen(paint, &wnd);
-        m_scManager.getDestinationRect(&rect);
+        m_scManager.getDestinationRect(rectangle);
         if (wnd.left)
         {
             --wnd.left;
@@ -919,21 +919,21 @@ namespace remoting_client
         {
             --wnd.top;
         }
-        if (wnd.right < rect.right)
+        if (wnd.right < rectangle.right)
         {
             ++wnd.right;
         }
-        if (wnd.bottom < rect.bottom)
+        if (wnd.bottom < rectangle.bottom)
         {
             ++wnd.bottom;
         }
-        wnd.intersection(rect);
+        wnd.intersection(rectangle);
         redraw(::windows::as_RECT(wnd));
     }
 
     void DesktopWindow::setScale(int scale)
     {
-        critical_section_lock al(&m_bufferLock);
+        critical_section_lock al(&m_criticalsectionBuffer);
         m_scManager.setScale(scale);
         m_winResize = true;
         // Invalidate all area of desktop window.
@@ -945,12 +945,12 @@ namespace remoting_client
 
     ::int_point DesktopWindow::getViewerCoord(long xPos, long yPos)
     {
-        ::int_rectangle rect;
+        ::int_rectangle rectangle;
         ::int_point p;
 
-        m_scManager.getDestinationRect(&rect);
-        // it checks this point in the rect
-        if (!rect.contains(::int_point(xPos, yPos)))
+        m_scManager.getDestinationRect(rectangle);
+        // it checks this point in the rectangle
+        if (!rectangle.contains(::int_point(xPos, yPos)))
         {
             p.x = -1;
             p.y = -1;
@@ -973,18 +973,18 @@ namespace remoting_client
         return viewerRect;
     }
 
-    ::int_rectangle DesktopWindow::getFrameBufferGeometry()
+    ::int_rectangle DesktopWindow::getFramebufferGeometry()
     {
-        critical_section_lock al(&m_bufferLock);
+        critical_section_lock al(&m_criticalsectionBuffer);
         return m_framebuffer.getDimension();
     }
 
-    void DesktopWindow::getServerGeometry(::int_rectangle *rect, int *pixelsize)
+    void DesktopWindow::getServerGeometry(::int_rectangle rectangle, int *pixelsize)
     {
-        critical_section_lock al(&m_bufferLock);
-        if (rect != 0)
+        critical_section_lock al(&m_criticalsectionBuffer);
+        if (rectangle != 0)
         {
-            *rect = m_serverDimension;
+            *rectangle = m_serverDimension;
         }
         if (pixelsize != 0)
         {

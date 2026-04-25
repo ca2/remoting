@@ -27,7 +27,7 @@
 
 #include "windows/WindowsScreenGrabber.h"
 #include "ScreenDriver.h"
-#include "innate_subsystem/framebuffer/FrameBuffer.h"
+#include "innate_subsystem/framebuffer/Framebuffer.h"
 //#include "subsystem/thread/critical_section.h"
 #include "UpdateContainer.h"
 #include "GrabOptimizator.h"
@@ -36,19 +36,32 @@
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING UpdateFilter
+   class CLASS_DECL_REMOTING UpdateFilter :
+      virtual public ::particle
    {
    public:
-      UpdateFilter(ScreenDriver *screenDriver, ::innate_subsystem::FrameBuffer *frameBuffer,
-                   critical_section *frameBufferCriticalSection, ::subsystem::LogWriter * plogwriter);
+
+      ::pointer < ScreenDriver > m_pscreendriver;
+      ::pointer < ::innate_subsystem::Framebuffer > m_pframebuffer;
+      critical_section * m_pcriticalsectionFramebuffer;
+      ::pointer < GrabOptimizator > m_pgraboptimizator;
+
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
+
+      //UpdateFilter(ScreenDriver *screenDriver, ::innate_subsystem::Framebuffer *pframebuffer,
+        //           critical_section *framebufferCriticalSection, ::subsystem::LogWriter * plogwriter);
+      UpdateFilter();
       ~UpdateFilter();
 
-      void filter(UpdateContainer *updateContainer);
+      virtual void initialize_update_filter(ScreenDriver *screenDriver, ::innate_subsystem::Framebuffer *pframebuffer,
+             critical_section *framebufferCriticalSection, ::subsystem::LogWriter * plogwriter);
 
-   private:
-      void getChangedRegion(::remoting::Region *rgn, const ::int_rectangle &rect);
-      void updateChangedRect(::remoting::Region *rgn, const ::int_rectangle &rect);
-      void updateChangedSubRect(::remoting::Region *rgn, const ::int_rectangle &rect);
+      void filter(UpdateContainer & updatecontainer);
+
+   //private:
+      void getChangedRegion(::remoting::Region & rgn, const ::int_rectangle & rectangle);
+      void updateChangedRect(::remoting::Region & rgn, const ::int_rectangle & rectangle);
+      void updateChangedSubRect(::remoting::Region & rgn, const ::int_rectangle & rectangle);
 
       // This function update the screen grabber frame buffer.
       // If success the function returns the true.
@@ -56,12 +69,6 @@ namespace remoting
       // the whole screen grabbing or
       bool grab();
 
-      ScreenDriver *m_screenDriver;
-      ::innate_subsystem::FrameBuffer *m_pframebuffer;
-      critical_section *m_fbMutex;
-      GrabOptimizator m_grabOptimizator;
-
-      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
    //// __UPDATEFILTER_H__

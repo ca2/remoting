@@ -140,7 +140,7 @@ private:
   bool m_asFirstOpen;
   ::file_pointer m_pfile;
 
-  critical_section m_logMut;
+  critical_section m_criticalsectionLog;
 };
 
 //// __FILEACCOUNT_H__

@@ -30,10 +30,10 @@
 #include "remoting/io/DataOutputStream.h"
 //#include "subsystem/platform/class ::time.h"
 
-LogConn::LogConn(Channel *channel, LogConnAuthListener *extAuthListener,
+LogConn::LogConn(Channel *channel, LogConnAuthListener *pclientauthlistener,
                  LogListener *extLogListener, unsigned char logLevel)
 : m_serviceChannel(channel),
-  m_extAuthListener(extAuthListener),
+  m_extAuthListener(pclientauthlistener),
   m_extLogListener(extLogListener),
   m_logListenChannel(0),
   m_levelSendChannel(0),
@@ -59,7 +59,7 @@ LogConn::~LogConn()
 void LogConn::onTerminate()
 {
   {
-    critical_section_lock al(&m_channelMutex);
+    critical_section_lock al(&m_criticalsectionChannel);
     try {
       if (m_logListenChannel != 0) m_logListenChannel->close();
       if (m_levelSendChannel != 0) m_levelSendChannel->close();
@@ -79,7 +79,7 @@ void LogConn::close()
 void LogConn::changeLogLevel(unsigned char newLevel)
 {
   {
-    critical_section_lock al(&m_logLevelMutex);
+    critical_section_lock al(&m_criticalsectionLogLevel);
     m_logLevel = newLevel; // This will become useless since m_logLevelSender
                            // will be started.
     m_logLevelSender.updateLevel(m_logLevel);
@@ -96,7 +96,7 @@ void LogConn::assignConnection()
     SecurityPipeServer secLevelPipeServer(m_serviceChannel, maxChangeLevelMessageLength);
 
     {
-      critical_section_lock al(&m_channelMutex);
+      critical_section_lock al(&m_criticalsectionChannel);
       m_logListenChannel = secLogPipeServer.getChannel();
       m_levelSendChannel = secLevelPipeServer.getChannel();
     }
@@ -144,7 +144,7 @@ void LogConn::execute()
     m_logLevelSender.startSender(m_levelSendChannel);
     // Send first log level value
     {
-      critical_section_lock al(&m_logLevelMutex);
+      critical_section_lock al(&m_criticalsectionLogLevel);
       m_logLevelSender.updateLevel(m_logLevel);
     }
 

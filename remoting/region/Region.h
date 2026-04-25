@@ -53,14 +53,15 @@ namespace remoting
       Region();
       /**
        * Creates a region from the given rectangle.
-       * @param rect a pointer to the source rectangle.
+       * @param rectangle a pointer to the source rectangle.
        */
-      Region(const ::int_rectangle &rect);
+      Region(const ::int_rectangle & rectangle);
       /**
        * Creates a copy of another region.
-       * @param rect a reference to the source region.
+       * @param rectangle a reference to the source region.
        */
       Region(const Region &src);
+      Region(Region &&src);
       /**
        * The destructor.
        */
@@ -74,19 +75,20 @@ namespace remoting
        * Replaces this region with a copy of another region.
        * @param src a pointer to the source region.
        */
-      void set(const Region *src);
+      void set(const Region &src);
       /**
        * Overriden assignment operator. Replaces this region with a copy of
        * another region.
        * @param src a reference to the source region.
        */
       Region & operator=(const Region &src);
+      Region & operator=(Region &&src);
 
       /**
        * Adds a rectangle to this region.
-       * @param rect rectangle to add.
+       * @param rectangle rectangle to add.
        */
-      void addRect(const ::int_rectangle &  rect);
+      void addRect(const ::int_rectangle &  rectangle);
       /**
        * Adds offset to all rectangles in region.
        * @param dx horizontal offset to add.
@@ -100,24 +102,24 @@ namespace remoting
        * Replaces this region by its union with another region.
        * @param other region to add.
        */
-      void add(const Region *other);
+      //void add(const Region & other);
       void add(const Region &other);
       /**
        * Subtracts another region from this region.
        * @param other region to subtract.
        */
-      void subtract(const Region *other);
+      void subtract(const Region &other);
       /**
        * Replace this region by its intersection with another region.
        * @param other region to intersect with.
        */
-      void intersect(const Region *other);
+      void intersect(const Region &other);
       /**
        * Sets this region data to intersection of this region and the specified
        * rectangle.
-       * @param rect rectangle to intersect with.
+       * @param rectangle rectangle to intersect with.
        */
-      void crop(const ::int_rectangle &  rect);
+      void crop(const ::int_rectangle &  rectangle);
 
       /**
        * Checks if this region is empty.
@@ -138,14 +140,15 @@ namespace remoting
        * @param other a pointer to another region to compare this region to.
        * @return true if this region equals to other, false otherwise.
        */
-      bool equals(const Region *other) const;
+      bool _equals(const Region &other) const;
+      bool operator==(const Region & regionOther) const{return this->_equals(regionOther);}
 
       /**
        * Get the ::array_base of rectangles that constitute this region.
        * @param dst pointer to an ::array_base where the ::list_base of rectangles will be
        *            saved to. The previous contents of the ::array_base will be cleared.
        */
-      void getRectVector(::int_rectangle_array_base *dst) const;
+      void getRects(::int_rectangle_array_base & rectanglea) const;
       /**
        * Get the ::list_base of rectangles that constitute this region.
        * @param dst pointer to an ::list_base where the ::list_base of rectangles will be

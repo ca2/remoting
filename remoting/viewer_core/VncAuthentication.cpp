@@ -58,8 +58,8 @@ namespace remoting
       
       ::subsystem::DesCrypt desCrypt;
       desCrypt.encrypt(response, challenge, sizeof(challenge), m_password);
-      output->write(response, sizeof(response));
-      output->flush();
+      pdataoutputstream->write(response, sizeof(response));
+      pdataoutputstream->flush();
 
    }
 

@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "innate_subsystem/framebuffer/FrameBuffer.h"
+#include "innate_subsystem/framebuffer/Framebuffer.h"
 //#include "subsystem/framebuffer/PixelFormat.h"
 //#include "subsystem/framebuffer/StandardPixelFormatFactory.h"
 //#include "subsystem/thread/critical_section.h"
@@ -37,37 +37,41 @@ namespace remoting
    class CLASS_DECL_REMOTING WatermarksController
    {
    public:
+
+
+      ::pointer < ::innate_subsystem::Framebuffer>m_pframebuffer;
+      ::pointer < ::innate_subsystem::Framebuffer> m_pframebufferOverlay;
+      ::int_rectangle m_currentRect;
+      ::int_rectangle m_currentFramebufferRect;
+
+
+      int m_height;
+      int m_width;
+
       WatermarksController(void);
 
-      void setNewFbProperties(const ::int_rectangle &  rect, const ::innate_subsystem::PixelFormat & pf);
+      void setNewFbProperties(const ::int_rectangle &  rectangle, const ::innate_subsystem::PixelFormat & pixelformat);
 
 
-      void showWaterMarks(::innate_subsystem::FrameBuffer *frameBuffer,
+      void showWaterMarks(::innate_subsystem::Framebuffer *pframebuffer,
          critical_section *fbLock);
 
-      void hideWatermarks(::innate_subsystem::FrameBuffer *frameBuffer,
+      void hideWatermarks(::innate_subsystem::Framebuffer *pframebuffer,
          critical_section *fbLock);
 
       const ::int_rectangle CurrentRect();
 
    //private:
-      ::int_rectangle m_currentRect;
-      ::int_rectangle m_currentFrameBufferRect;
+      void setNewPixelFormat(const ::innate_subsystem::PixelFormat & pixelformat);
 
-      void setNewPixelFormat(const ::innate_subsystem::PixelFormat & pf);
+      void setNewFbSize(const ::int_rectangle &  rectangle);
 
-      void setNewFbSize(const ::int_rectangle &  rect);
 
-      ::innate_subsystem::FrameBuffer m_pframebuffer;
-      ::innate_subsystem::FrameBuffer& frameBuffer(bool fromFile = false);
+      ::innate_subsystem::Framebuffer * framebuffer(bool fromFile = false);
       void loadFromfile();
 
       bool is_empty();
 
-      ::innate_subsystem::FrameBuffer m_overlay;
-
-      int m_height;
-      int m_width;
    };
 
 

@@ -30,32 +30,38 @@ namespace remoting
 {
 
 
-   UserInputServer::UserInputServer(BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
-                                    AnEventListener *extTerminationListener, ::subsystem::LogWriter * plogwriter) :
-       DesktopServerProto(pblockinggate), m_extTerminationListener(extTerminationListener), m_plogwriter = plogwriter;
+   UserInputServer::UserInputServer(Configurator * pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
+                                    //AnEventListener *extTerminationListener,
+                                    const ::procedure &procedureTermination,
+                                    ::subsystem::LogWriter * plogwriter) :
+       m_procedureTermination(procedureTermination), m_plogwriter(plogwriter)
    {
+      initialize_desktop_server_proto(pconfigurator, pblockinggate);
       bool ctrlAltDelEnabled = true;
-      m_userInput = new WindowsUserInput(this, ctrlAltDelEnabled, m_plogwriter);
 
-      dispatcher->registerNewHandle(POINTER_POS_CHANGED, this);
-      dispatcher->registerNewHandle(CLIPBOARD_CHANGED, this);
-      dispatcher->registerNewHandle(KEYBOARD_EVENT, this);
-      dispatcher->registerNewHandle(USER_INFO_REQ, this);
-      dispatcher->registerNewHandle(DESKTOP_COORDS_REQ, this);
-      dispatcher->registerNewHandle(WINDOW_COORDS_REQ, this);
-      dispatcher->registerNewHandle(WINDOW_HANDLE_REQ, this);
-      dispatcher->registerNewHandle(DISPLAY_NUMBER_COORDS_REQ, this);
-      dispatcher->registerNewHandle(DISPLAYS_COORDS_REQ, this);
-      dispatcher->registerNewHandle(APPLICATION_REGION_REQ, this);
-      dispatcher->registerNewHandle(APPLICATION_CHECK_FOCUS, this);
-      dispatcher->registerNewHandle(NORMALIZE_RECT_REQ, this);
-      dispatcher->registerNewHandle(USER_INPUT_INIT, this);
+      auto puserinputNew =  create_newø< WindowsUserInput>();
+      puserinputNew->initialize_windows_user_input(this, ctrlAltDelEnabled, m_plogwriter);
+      m_puserinput = puserinputNew;
+
+      pdispatcher->registerNewHandle(POINTER_POS_CHANGED, this);
+      pdispatcher->registerNewHandle(CLIPBOARD_CHANGED, this);
+      pdispatcher->registerNewHandle(KEYBOARD_EVENT, this);
+      pdispatcher->registerNewHandle(USER_INFO_REQ, this);
+      pdispatcher->registerNewHandle(DESKTOP_COORDS_REQ, this);
+      pdispatcher->registerNewHandle(WINDOW_COORDS_REQ, this);
+      pdispatcher->registerNewHandle(WINDOW_HANDLE_REQ, this);
+      pdispatcher->registerNewHandle(DISPLAY_NUMBER_COORDS_REQ, this);
+      pdispatcher->registerNewHandle(DISPLAYS_COORDS_REQ, this);
+      pdispatcher->registerNewHandle(APPLICATION_REGION_REQ, this);
+      pdispatcher->registerNewHandle(APPLICATION_CHECK_FOCUS, this);
+      pdispatcher->registerNewHandle(NORMALIZE_RECT_REQ, this);
+      pdispatcher->registerNewHandle(USER_INPUT_INIT, this);
    }
 
    UserInputServer::~UserInputServer()
    {
       m_plogwriter->debug("The UserInputServer destructor has been called");
-      delete m_userInput;
+      //delete m_userInput;
    }
 
    void UserInputServer::onClipboardUpdate(const ::scoped_string &newClipboard)
@@ -64,7 +70,7 @@ namespace remoting
       try
       {
          // Send clipboard data
-         if (newClipboard->length() != 0)
+         if (newClipboard.has_character())
          {
             m_forwGate->writeUInt8(CLIPBOARD_CHANGED);
             sendNewClipboard(newClipboard, m_forwGate);
@@ -75,7 +81,7 @@ namespace remoting
          m_plogwriter->error("An error has been occurred while sending a"
                              " CLIPBOARD_CHANGED scopedstrMessage from UserInputServer: {}",
                              e.get_message());
-         m_extTerminationListener->onAnObjectEvent();
+         m_procedureTermination();
       }
    }
 
@@ -135,7 +141,7 @@ namespace remoting
    void UserInputServer::serverInit(BlockingGate *pblockinggate)
    {
       unsigned char keyFlags = pblockinggate->readUInt8();
-      m_userInput->initKeyFlag(keyFlags);
+      m_puserinput->initKeyFlag(keyFlags);
    }
 
    void UserInputServer::applyNewPointerPos(BlockingGate *pblockinggate)
@@ -143,14 +149,14 @@ namespace remoting
       ::int_point newPointerPos;
       unsigned char keyFlags;
       readNewPointerPos(&newPointerPos, &keyFlags, pblockinggate);
-      m_userInput->setMouseEvent(newPointerPos, keyFlags);
+      m_puserinput->setMouseEvent(newPointerPos, keyFlags);
    }
 
    void UserInputServer::applyNewClipboard(BlockingGate *pblockinggate)
    {
       ::string newClipboard;
-      readNewClipboard(&newClipboard, pblockinggate);
-      m_userInput->setNewClipboard(&newClipboard);
+      readNewClipboard(newClipboard, pblockinggate);
+      m_puserinput->setNewClipboard(newClipboard);
    }
 
    void UserInputServer::applyKeyEvent(BlockingGate *pblockinggate)
@@ -158,34 +164,34 @@ namespace remoting
       unsigned int keySym;
       bool down;
       readKeyEvent(&keySym, &down, pblockinggate);
-      m_userInput->setKeyboardEvent(keySym, down);
+      m_puserinput->setKeyboardEvent(keySym, down);
    }
 
    void UserInputServer::ansUserInfo(BlockingGate *pblockinggate)
    {
       ::string desktopName, userName;
 
-      m_userInput->getCurrentUserInfo(&desktopName, &userName);
-      sendUserInfo(&desktopName, &userName, pblockinggate);
+      m_puserinput->getCurrentUserInfo(desktopName, userName);
+      sendUserInfo(desktopName, userName, pblockinggate);
    }
 
    void UserInputServer::ansDesktopCoords(BlockingGate *pblockinggate)
    {
-      ::int_rectangle rect;
-      m_userInput->getPrimaryDisplayCoords(&rect);
-      sendRect(rect, pblockinggate);
+      ::int_rectangle rectangle;
+      m_puserinput->getPrimaryDisplayCoords(rectangle);
+      sendRect(rectangle, pblockinggate);
    }
 
    void UserInputServer::ansWindowCoords(BlockingGate *pblockinggate)
    {
-      ::int_rectangle rect;
+      ::int_rectangle rectangle;
       ::operating_system::window operatingsystemwindow = ::as_operating_system_window((HWND)pblockinggate->readUInt64());
       try
       {
-         m_userInput->getWindowCoords(operatingsystemwindow, &rect);
+         m_puserinput->getWindowCoords(operatingsystemwindow, rectangle);
          // handle is correct
          pblockinggate->writeUInt8(0);
-         sendRect(rect, pblockinggate);
+         sendRect(rectangle, pblockinggate);
       }
       catch (::subsystem::BrokenHandleException &e)
       {
@@ -198,22 +204,22 @@ namespace remoting
    {
       ::string windowName;
       windowName = pblockinggate->readUtf8();
-      auto operatingsystemwindow = m_userInput->getWindowHandleByName(windowName);
+      auto operatingsystemwindow = m_puserinput->getWindowHandleByName(windowName);
       pblockinggate->writeUInt64((unsigned long long)(HWND)::as_HWND(operatingsystemwindow));
    }
 
    void UserInputServer::ansDisplayNumberCoords(BlockingGate *pblockinggate)
    {
       unsigned char dispNumber = pblockinggate->readUInt8();
-      ::int_rectangle rect;
-      m_userInput->getDisplayNumberCoords(&rect, dispNumber);
-      sendRect(rect, pblockinggate);
+      ::int_rectangle rectangle;
+      m_puserinput->getDisplayNumberCoords(rectangle, dispNumber);
+      sendRect(rectangle, pblockinggate);
    }
 
    void UserInputServer::ansDisplaysCoords(BlockingGate *pblockinggate)
    {
-      ::int_rectangle_array_base rects = m_userInput->getDisplaysCoords();
-      size_t number = rects.size();
+      ::int_rectangle_array_base rectanglea = m_puserinput->getDisplaysCoords();
+      size_t number = rectanglea.size();
       if (number > 255)
       {
          number = 255;
@@ -221,30 +227,30 @@ namespace remoting
       pblockinggate->writeUInt8((unsigned char)number);
       for (size_t i = 0; i < number; i++)
       {
-         ::int_rectangle rect = rects[i];
-         sendRect(&rect, pblockinggate);
+         ::int_rectangle rectangle = rectanglea[i];
+         sendRect(rectangle, pblockinggate);
       }
    }
 
    void UserInputServer::ansNormalizeRect(BlockingGate *pblockinggate)
    {
-      ::int_rectangle rect = readRect(pblockinggate);
-      m_userInput->getNormalizedRect(&rect);
-      sendRect(&rect, pblockinggate);
+      ::int_rectangle rectangle = readRect(pblockinggate);
+      m_puserinput->getNormalizedRect(rectangle);
+      sendRect(rectangle, pblockinggate);
    }
 
    void UserInputServer::ansApplicationRegion(BlockingGate *pblockinggate)
    {
       unsigned int procId = pblockinggate->readUInt32();
       Region region;
-      m_userInput->getApplicationRegion(procId, &region);
-      sendRegion(&region, pblockinggate);
+      m_puserinput->getApplicationRegion(procId, region);
+      sendRegion(region, pblockinggate);
    }
 
    void UserInputServer::ansApplicationInFocus(BlockingGate *pblockinggate)
    {
       unsigned int procId = pblockinggate->readUInt32();
-      bool result = m_userInput->isApplicationInFocus((unsigned int)procId);
+      bool result = m_puserinput->isApplicationInFocus((unsigned int)procId);
       pblockinggate->writeUInt8(result ? 1 : 0);
    }
 

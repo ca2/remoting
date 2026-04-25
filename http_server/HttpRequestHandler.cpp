@@ -27,7 +27,7 @@
 #include "HttpReply.h"
 #include "AppletParameter.h"
 #include "VncViewerJarBody.h"
-//#include "remoting/remoting/win_system/Environment.h"
+#include "subsystem/node/OperatingSystem.h"
 #include "remoting/remoting/server_config/Configurator.h"
 //#include "subsystem/platform/::string.h"
 #include "remoting/node_desktop/NamingDefs.h"

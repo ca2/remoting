@@ -41,7 +41,7 @@ LogLevelSender::~LogLevelSender()
 
 void LogLevelSender::startSender(OutputStream *outStream)
 {
-  critical_section_lock al(&m_updateMutex);
+  critical_section_lock al(&m_criticalsectionUpdate);
   m_outStream = outStream;
 }
 
@@ -52,7 +52,7 @@ void LogLevelSender::onTerminate()
 
 void LogLevelSender::updateLevel(unsigned char newLevel)
 {
-  critical_section_lock al(&m_updateMutex);
+  critical_section_lock al(&m_criticalsectionUpdate);
   m_updateAvailable = true;
   m_logLevel = newLevel;
   if (m_logLevel > 10) {
@@ -70,7 +70,7 @@ void LogLevelSender::execute()
       bool updateAvailable;
       unsigned char logLevel;
       {
-        critical_section_lock al(&m_updateMutex);
+        critical_section_lock al(&m_criticalsectionUpdate);
         outStream = m_outStream;
         updateAvailable = m_updateAvailable;
         m_updateAvailable = false;

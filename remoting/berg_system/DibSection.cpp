@@ -26,7 +26,7 @@
 #include "DibSection.h"
 #include "subsystem/node/SystemException.h"
 
-DibSection::DibSection(const ::innate_subsystem::PixelFormat & pf, const ::int_size & size, HWND compatibleWin)
+DibSection::DibSection(const ::innate_subsystem::PixelFormat & pixelformat, const ::int_size & size, HWND compatibleWin)
 : m_isOwnTargetDC(false),
   m_targetDC(0),
   m_memDC(0),
@@ -37,7 +37,7 @@ DibSection::DibSection(const ::innate_subsystem::PixelFormat & pf, const ::int_s
   m_buffer(0)
 {
   try {
-    openDIBSection(pf, size, compatibleWin);
+    openDIBSection(pixelformat, size, compatibleWin);
   } catch (...) {
     closeDIBSection();
     throw;
@@ -64,89 +64,89 @@ void *DibSection::getBuffer()
   return m_buffer;
 }
 
-void DibSection::blitToDibSection(const ::int_rectangle &  rect)
+void DibSection::blitToDibSection(const ::int_rectangle &  rectangle)
 {
-  blitToDibSection(rect, SRCCOPY);
+  blitToDibSection(rectangle, SRCCOPY);
 }
 
-void DibSection::blitTransparentToDibSection(const ::int_rectangle &  rect)
+void DibSection::blitTransparentToDibSection(const ::int_rectangle &  rectangle)
 {
-  blitToDibSection(rect, SRCCOPY | CAPTUREBLT);
+  blitToDibSection(rectangle, SRCCOPY | CAPTUREBLT);
 }
 
-void DibSection::blitFromDibSection(const ::int_rectangle &  rect)
+void DibSection::blitFromDibSection(const ::int_rectangle &  rectangle)
 {
-  blitFromDibSection(rect, SRCCOPY);
+  blitFromDibSection(rectangle, SRCCOPY);
 }
 
-void DibSection::stretchFromDibSection(const ::int_rectangle &  srcRect,const ::int_rectangle & dstRect)
+void DibSection::stretchFromDibSection(const ::int_rectangle &  srcRect,const ::int_rectangle & rectangleTarget)
 {
-  stretchFromDibSection(srcRect, dstRect, SRCCOPY);
+  stretchFromDibSection(srcRect, rectangleTarget, SRCCOPY);
 }
 
-void DibSection::blitToDibSection(const ::int_rectangle &  rect, DWORD flags)
+void DibSection::blitToDibSection(const ::int_rectangle &  rectangle, DWORD flags)
 {
-  if (BitBlt(m_memDC, rect.left, rect.top, rect.width(), rect.height(),
-             m_targetDC, rect.left + m_srcOffsetX,
-             rect.top + m_srcOffsetY, flags) == 0) {
+  if (BitBlt(m_memDC, rectangle.left, rectangle.top, rectangle.width(), rectangle.height(),
+             m_targetDC, rectangle.left + m_srcOffsetX,
+             rectangle.top + m_srcOffsetY, flags) == 0) {
     throw ::subsystem::Exception("Can't blit to DIB section.");
   }
 }
 
-void DibSection::blitFromDibSection(const ::int_rectangle &  rect, DWORD flags)
+void DibSection::blitFromDibSection(const ::int_rectangle &  rectangle, DWORD flags)
 {
-  if (BitBlt(m_targetDC, rect.left + m_srcOffsetX, rect.top + m_srcOffsetY,
-             rect.width(), rect.height(),
-             m_memDC, rect.left, rect.top, flags) == 0) {
+  if (BitBlt(m_targetDC, rectangle.left + m_srcOffsetX, rectangle.top + m_srcOffsetY,
+             rectangle.width(), rectangle.height(),
+             m_memDC, rectangle.left, rectangle.top, flags) == 0) {
     throw ::subsystem::Exception("Can't blit from DIB section.");
   }
 }
 
-void DibSection::stretchFromDibSection(const ::int_rectangle &  srcRect,const ::int_rectangle & dstRect, DWORD flags)
+void DibSection::stretchFromDibSection(const ::int_rectangle &  srcRect,const ::int_rectangle & rectangleTarget, DWORD flags)
 {
   SetStretchBltMode(m_targetDC, HALFTONE);
   if (StretchBlt(m_targetDC, srcRect.left + m_srcOffsetX, srcRect.top + m_srcOffsetY,
                  srcRect.width(), srcRect.height(),
-                 m_memDC, dstRect.left, dstRect.top, dstRect.width(), dstRect.height(),
+                 m_memDC, rectangleTarget.left, rectangleTarget.top, rectangleTarget.width(), rectangleTarget.height(),
                  flags) == 0) {
     throw ::subsystem::Exception("Can't strech blit from DIB section.");
   }
 }
 
-void DibSection::setupBMIStruct(BITMAPINFO *pBmi, const ::innate_subsystem::PixelFormat & pf, const ::int_size & size)
+void DibSection::setupBMIStruct(BITMAPINFO *pBmi, const ::innate_subsystem::PixelFormat & pixelformat, const ::int_size & size)
 {
-  if (pf.bitsPerPixel == 8) {
+  if (pixelformat.bitsPerPixel == 8) {
     Screen::Palette8bitBMI *paletteBMI = reinterpret_cast<Screen::Palette8bitBMI *>(pBmi);
     memset(paletteBMI, 0, sizeof(Screen::Palette8bitBMI));
     pBmi->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
     unsigned char index = 0;
     for (int i = 0; i < 256; i++, index++) {
-      unsigned int red = (index >> pf.redShift) & pf.redMax;
-      red = red * 0xFF / pf.redMax;
+      unsigned int red = (index >> pixelformat.redShift) & pixelformat.redMax;
+      red = red * 0xFF / pixelformat.redMax;
       paletteBMI->rgbQuad[index].rgbRed = (unsigned char)red;
-      unsigned int green = (index >> pf.greenShift) & pf.greenMax;
-      green = green * 0xFF / pf.greenMax;
+      unsigned int green = (index >> pixelformat.greenShift) & pixelformat.greenMax;
+      green = green * 0xFF / pixelformat.greenMax;
       paletteBMI->rgbQuad[index].rgbGreen = (unsigned char)(green);
-      unsigned int blue = (index >> pf.blueShift) & pf.blueMax;
-      blue = blue * 0xFF / pf.blueMax;
+      unsigned int blue = (index >> pixelformat.blueShift) & pixelformat.blueMax;
+      blue = blue * 0xFF / pixelformat.blueMax;
       paletteBMI->rgbQuad[index].rgbBlue  = (unsigned char)blue;
     }
   } else {
     Screen::BMI *bitFieldBmi = reinterpret_cast<Screen::BMI *>(pBmi);
     memset(bitFieldBmi, 0, sizeof(Screen::BMI));
     bitFieldBmi->bmiHeader.biCompression = BI_BITFIELDS;
-    bitFieldBmi->red   = pf.redMax   << pf.redShift;
-    bitFieldBmi->green = pf.greenMax << pf.greenShift;
-    bitFieldBmi->blue  = pf.blueMax  << pf.blueShift;
+    bitFieldBmi->red   = pixelformat.redMax   << pixelformat.redShift;
+    bitFieldBmi->green = pixelformat.greenMax << pixelformat.greenShift;
+    bitFieldBmi->blue  = pixelformat.blueMax  << pixelformat.blueShift;
   }
   pBmi->bmiHeader.biPlanes = 1;
   pBmi->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-  pBmi->bmiHeader.biBitCount = pf.bitsPerPixel;
+  pBmi->bmiHeader.biBitCount = pixelformat.bitsPerPixel;
   pBmi->bmiHeader.biWidth = size.cx;
   pBmi->bmiHeader.biHeight = -size.cy;
 }
 
-void DibSection::openDIBSection(const ::innate_subsystem::PixelFormat & pf, const ::int_size & size, HWND compatibleWin)
+void DibSection::openDIBSection(const ::innate_subsystem::PixelFormat & pixelformat, const ::int_size & size, HWND compatibleWin)
 {
   m_targetDC = GetDC(compatibleWin);
   m_isOwnTargetDC = true;
@@ -166,12 +166,12 @@ void DibSection::openDIBSection(const ::innate_subsystem::PixelFormat & pf, cons
   Screen::Palette8bitBMI paletteBMI;
   BITMAPINFO *pBmi = 0;
 
-  if (pf.bitsPerPixel == 8) {
+  if (pixelformat.bitsPerPixel == 8) {
     pBmi = reinterpret_cast<BITMAPINFO *>(&paletteBMI);
   } else {
     pBmi = reinterpret_cast<BITMAPINFO *>(&bitFieldBmi);
   }
-  setupBMIStruct(pBmi, pf, size);
+  setupBMIStruct(pBmi, pixelformat, size);
 
   m_memDC = CreateCompatibleDC(m_targetDC);
   if (m_memDC == NULL) {

@@ -36,7 +36,7 @@ class LogConnAuthListener;
 class LogConn : public Thread
 {
 public:
-  LogConn(Channel *channel, LogConnAuthListener *extAuthListener,
+  LogConn(Channel *channel, LogConnAuthListener *pclientauthlistener,
           LogListener *extLogListener, unsigned char logLevel);
   virtual ~LogConn();
 
@@ -60,10 +60,10 @@ private:
   Channel *m_logListenChannel;
   Channel *m_levelSendChannel;
   FileAccountHandle m_handle;
-  critical_section m_channelMutex;
+  critical_section m_criticalsectionChannel;
 
   unsigned char m_logLevel;
-  critical_section m_logLevelMutex;
+  critical_section m_criticalsectionLogLevel;
 
   LogLevelSender m_logLevelSender;
 };

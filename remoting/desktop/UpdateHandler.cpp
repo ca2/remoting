@@ -32,21 +32,21 @@ namespace remoting
 
    UpdateHandler::~UpdateHandler(void) {}
 
-   void UpdateHandler::initFrameBuffer(const ::innate_subsystem::FrameBuffer *newFb)
+   void UpdateHandler::initFramebuffer(const ::innate_subsystem::Framebuffer *newFb)
    {
-      critical_section_lock al(&m_fbLocMut);
-      m_backupFrameBuffer.clone(newFb);
+      critical_section_lock al(&m_criticalsectionFramebufferLoc);
+      m_backupFramebuffer.clone(newFb);
    }
 
-   bool UpdateHandler::updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *pframebuffer, const Region *pregion,
+   bool UpdateHandler::updateExternalFramebuffer(::innate_subsystem::Framebuffer *pframebuffer, const Region & pregion,
                                                  const ::int_rectangle &rectangleViewport)
    {
-      critical_section_lock al(&m_fbLocMut);
-      return updateExternalFrameBuffer(pframebuffer, &m_backupFrameBuffer, pregion, rectangleViewport);
+      critical_section_lock al(&m_criticalsectionFramebufferLoc);
+      return updateExternalFramebuffer(pframebuffer, &m_backupFramebuffer, pregion, rectangleViewport);
    }
 
-   bool UpdateHandler::updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *pframebufferTarget,
-                                                 ::innate_subsystem::FrameBuffer *pframebufferSource, const Region *pregion,
+   bool UpdateHandler::updateExternalFramebuffer(::innate_subsystem::Framebuffer *pframebufferTarget,
+                                                 ::innate_subsystem::Framebuffer *pframebufferSource, const Region & region,
                                                  const ::int_rectangle &rectangleViewport)
    {
       ::innate_subsystem::PixelFormat pixelformatTarget = pframebufferTarget->getPixelFormat();
@@ -62,14 +62,14 @@ namespace remoting
          return false;
       }
 
-      ::int_rectangle_array_base rects;
-      ::int_rectangle_array_base::iterator iRect;
-      pregion->getRectVector(&rects);
+      ::int_rectangle_array_base rectanglea;
+      //::int_rectangle_array_base::iterator iRect;
+      region.getRects(rectanglea);
 
-      for (iRect = rects.begin(); iRect < rects.end(); iRect++)
+      for (auto & rectangle : rectanglea)
       {
-         auto & rect = (*iRect);
-         pframebufferTarget->copyFrom(rect, pframebufferSource, rect.left + rectangleViewport.left, rect.top + rectangleViewport.top);
+         //auto & rectangle = (*iRect);
+         pframebufferTarget->copyFrom(rectangle, pframebufferSource, rectangle.left + rectangleViewport.left, rectangle.top + rectangleViewport.top);
       }
       return true;
    }

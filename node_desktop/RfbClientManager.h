@@ -113,7 +113,7 @@ namespace remoting_node_desktop
       virtual void onAuthFailed(::remoting::RfbClient *client);
       virtual void onCheckAccessControl(::remoting::RfbClient *client);
       virtual void onClipboardUpdate(const ::scoped_string &newClipboard);
-      virtual void onSendUpdate(const ::remoting::UpdateContainer *updateContainer, const ::remoting::CursorShape *cursorShape);
+      virtual void onSendUpdate(const ::remoting::UpdateContainer & updatecontainer, const ::remoting::CursorShape *cursorShape);
       virtual bool isReadyToSend();
       // If an error occured RfbClientManager closes all current connections
       // (authorized and not authorized) that bring to closing the belonged desktop

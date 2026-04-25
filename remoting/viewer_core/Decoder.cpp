@@ -27,7 +27,7 @@
 namespace remoting
 {
    Decoder::Decoder(::subsystem::LogWriter * plogwriter)
-   : m_plogwriter = plogwriter;
+   : m_plogwriter(plogwriter)
    {
    }
 

@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-//#include "remoting/remoting/win_system/Environment.h"
+#include "subsystem/node/OperatingSystem.h"
 //#include "remoting/remoting/wsconfig/TvnLogFilename.h"
 #include "remoting/remoting/config/RegistrySettingsManager.h"
 
@@ -30,33 +30,19 @@
 #include "subsystem/platform/RegistryKey.h"
 
 #include "Configurator.h"
-#include "remoting/node_desktop/NamingDefs.h"
+//#include "remoting/node_desktop/NamingDefs.h"
 
 
 namespace remoting
 {
 
-   Configurator *Configurator::s_instance = NULL;
-   critical_section Configurator::m_instanceMutex;
+   //Configurator *Configurator::s_instance = NULL;
+   //critical_section Configurator::m_instanceMutex;
 
-   Configurator::Configurator(bool isConfiguringService) :
-       m_isConfiguringService(isConfiguringService), m_isConfigLoadedPartly(false), m_isFirstLoad(true)
+   Configurator::Configurator() :
+       m_isConfiguringService(false), m_isConfigLoadedPartly(false), m_isFirstLoad(true)
    //, m_regSA(0)
    {
-      critical_section_lock al(&m_instanceMutex);
-      if (s_instance != 0)
-      {
-         throw ::subsystem::Exception("Configurator instance already exists");
-      }
-      s_instance = this;
-      try
-      {
-         // m_regSA = new RegistrySecurityAttributes();
-      }
-      catch (...)
-      {
-         // TODO: Place exception handler here.
-      }
    }
 
    Configurator::~Configurator()
@@ -64,14 +50,35 @@ namespace remoting
       // if (m_regSA != 0) delete m_regSA;
    }
 
-   Configurator *m_pconfigurator
+   void Configurator::initialize_configurator(bool isConfiguringService) //:
+       //m_isConfiguringService(isConfiguringService), m_isConfigLoadedPartly(false), m_isFirstLoad(true)
+   //, m_regSA(0)
    {
-      critical_section_lock al(&m_instanceMutex);
-      _ASSERT(s_instance != NULL);
-      return s_instance;
+      // critical_section_lock al(&m_instanceMutex);
+      // if (s_instance != 0)
+      // {
+      //    throw ::subsystem::Exception("Configurator instance already exists");
+      // }
+      // s_instance = this;
+      // try
+      // {
+      //    // m_regSA = new RegistrySecurityAttributes();
+      // }
+      // catch (...)
+      // {
+      //    // TODO: Place exception handler here.
+      // }
+      m_isConfiguringService=isConfiguringService;
    }
 
-   void Configurator::setInstance(Configurator *conf) { s_instance = conf; }
+   // Configurator *Configurator::getInstance()
+   // {
+   //    critical_section_lock al(&m_instanceMutex);
+   //    _ASSERT(s_instance != NULL);
+   //    return s_instance;
+   // }
+   //
+   // void Configurator::setInstance(Configurator *conf) { s_instance = conf; }
 
    void Configurator::notifyReload()
    {
@@ -96,12 +103,12 @@ namespace remoting
       if (forService)
       {
 
-         pregistrykey = MainSubsystem().registry()->getLocalMachineKey();
+         pregistrykey = MainSubsystem().Registry().getLocalMachineKey();
       }
       else
       {
 
-         pregistrykey = MainSubsystem().registry()->getCurrentUserKey();
+         pregistrykey = MainSubsystem().Registry().getCurrentUserKey();
       }
       // SECURITY_ATTRIBUTES *sa = 0;
       // if (forService && m_regSA != 0) {
@@ -109,7 +116,7 @@ namespace remoting
       // }
       // RegistrySettingsManager sm(rootKey, RegistryPaths::SERVER_PATH, sa);
 
-      ::remoting::RegistrySettingsManager sm(pregistrykey, RegistryPaths::SERVER_PATH);
+      ::remoting::RegistrySettingsManager sm(pregistrykey, "Software/remoting/server");
 
       isOk = load(&sm);
 
@@ -127,12 +134,12 @@ namespace remoting
       if (forService)
       {
 
-         pregistrykey = MainSubsystem().registry()->getLocalMachineKey();
+         pregistrykey = MainSubsystem().Registry().getLocalMachineKey();
       }
       else
       {
 
-         pregistrykey = MainSubsystem().registry()->getCurrentUserKey();
+         pregistrykey = MainSubsystem().Registry().getCurrentUserKey();
       }
 
 
@@ -182,37 +189,37 @@ namespace remoting
       bool loadResult = true;
 
       {
-         AutoLock l(&m_pserverconfig);
+         AutoLock l(m_pserverconfig.m_p);
 
-         if (!loadPortMappingContainer(sm, m_pserverconfig.getPortMappingContainer()))
+         if (!loadPortMappingContainer(sm, m_pserverconfig->getPortMappingContainer()))
          {
             loadResult = false;
          }
       }
 
-      if (!loadQueryConfig(sm, &m_pserverconfig))
+      if (!loadQueryConfig(sm, m_pserverconfig))
       {
          loadResult = false;
       }
-      if (!loadInputHandlingConfig(sm, &m_pserverconfig))
+      if (!loadInputHandlingConfig(sm, m_pserverconfig))
       {
          loadResult = false;
       }
 
       {
-         AutoLock l(&m_pserverconfig);
+         AutoLock l(m_pserverconfig.m_p);
 
-         if (!loadIpAccessControlContainer(sm, m_pserverconfig.getAccessControl()))
+         if (!loadIpAccessControlContainer(sm, m_pserverconfig->getAccessControl()))
          {
             loadResult = false;
          }
       }
 
-      if (!loadServerConfig(sm, &m_pserverconfig))
+      if (!loadServerConfig(sm, m_pserverconfig))
       {
          loadResult = false;
       }
-      if (!loadVideoRegionConfig(sm, &m_pserverconfig))
+      if (!loadVideoRegionConfig(sm, m_pserverconfig))
       {
          loadResult = false;
       }
@@ -230,9 +237,9 @@ namespace remoting
       // Get port mappings from server config
       //
 
-      AutoLock l(&m_pserverconfig);
+      AutoLock l(m_pserverconfig.m_p);
 
-      PortMappingContainer *portMappings = m_pserverconfig.getPortMappingContainer();
+      PortMappingContainer *portMappings = m_pserverconfig->getPortMappingContainer();
 
       size_t count = portMappings->count();
       ::string portMappingsString;
@@ -309,11 +316,11 @@ namespace remoting
    bool Configurator::saveQueryConfig(::remoting::SettingsManager *sm)
    {
       bool saveResult = true;
-      if (!sm->setUINT("QueryTimeout", m_pserverconfig.getQueryTimeout()))
+      if (!sm->setUINT("QueryTimeout", m_pserverconfig->getQueryTimeout()))
       {
          saveResult = false;
       }
-      if (!sm->setBoolean("QueryAcceptOnTimeout", m_pserverconfig.isDefaultActionAccept()))
+      if (!sm->setBoolean("QueryAcceptOnTimeout", m_pserverconfig->isDefaultActionAccept()))
       {
          saveResult = false;
       }
@@ -332,7 +339,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.setQueryTimeout(uintValue);
+         m_pserverconfig->setQueryTimeout(uintValue);
       }
       if (!sm->getBoolean("QueryAcceptOnTimeout", &boolValue))
       {
@@ -341,7 +348,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.setDefaultActionToAccept(boolValue);
+         m_pserverconfig->setDefaultActionToAccept(boolValue);
       }
       return loadResult;
    }
@@ -349,19 +356,19 @@ namespace remoting
    bool Configurator::saveInputHandlingConfig(::remoting::SettingsManager *sm)
    {
       bool saveResult = true;
-      if (!sm->setUINT("LocalInputPriorityTimeout", m_pserverconfig.getLocalInputPriorityTimeout()))
+      if (!sm->setUINT("LocalInputPriorityTimeout", m_pserverconfig->getLocalInputPriorityTimeout()))
       {
          saveResult = false;
       }
-      if (!sm->setBoolean("LocalInputPriority", m_pserverconfig.isLocalInputPriorityEnabled()))
+      if (!sm->setBoolean("LocalInputPriority", m_pserverconfig->isLocalInputPriorityEnabled()))
       {
          saveResult = false;
       }
-      if (!sm->setBoolean("BlockRemoteInput", m_pserverconfig.isBlockingRemoteInput()))
+      if (!sm->setBoolean("BlockRemoteInput", m_pserverconfig->isBlockingRemoteInput()))
       {
          saveResult = false;
       }
-      if (!sm->setBoolean("BlockLocalInput", m_pserverconfig.isBlockingLocalInput()))
+      if (!sm->setBoolean("BlockLocalInput", m_pserverconfig->isBlockingLocalInput()))
       {
          saveResult = false;
       }
@@ -386,7 +393,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         config->setLocalInputPriorityTimeout(uintVal);
+         pserverconfig->setLocalInputPriorityTimeout(uintVal);
       }
       if (!sm->getBoolean("LocalInputPriority", &boolVal))
       {
@@ -395,7 +402,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         config->setLocalInputPriority(boolVal);
+         pserverconfig->setLocalInputPriority(boolVal);
       }
       if (!sm->getBoolean("BlockRemoteInput", &boolVal))
       {
@@ -404,7 +411,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         config->blockRemoteInput(boolVal);
+         pserverconfig->blockRemoteInput(boolVal);
       }
       if (!sm->getBoolean("BlockLocalInput", &boolVal))
       {
@@ -413,7 +420,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         config->blockLocalInput(boolVal);
+         pserverconfig->blockLocalInput(boolVal);
       }
 
       return loadResult;
@@ -424,11 +431,11 @@ namespace remoting
       bool saveResult = true;
 
       ::string buffer;
-      ::string_array *videoClasses = m_pserverconfig.getVideoClassNames();
+      ::string_array *videoClasses = m_pserverconfig->getVideoClassNames();
       size_t size = videoClasses->size();
-      ::int_rectangle_array_base *rectangleaVideo = m_pserverconfig.getVideoRects();
+      ::int_rectangle_array_base *rectangleaVideo = m_pserverconfig->getVideoRects();
 
-      AutoLock al(&m_pserverconfig);
+      AutoLock l(m_pserverconfig.m_p);
       buffer = "";
       for (size_t i = 0; i < size; i++)
       {
@@ -466,11 +473,11 @@ namespace remoting
    {
       bool loadResult = true;
 
-      ::string_array *videoClasses = m_pserverconfig.getVideoClassNames();
-      ::int_rectangle_array_base *rectangleaVideo = m_pserverconfig.getVideoRects();
+      ::string_array *videoClasses = m_pserverconfig->getVideoClassNames();
+      ::int_rectangle_array_base *rectangleaVideo = m_pserverconfig->getVideoRects();
 
       // Lock configuration
-      AutoLock al(&m_pserverconfig);
+      AutoLock l(m_pserverconfig.m_p);
 
       //
       // Delete old video classes entries
@@ -514,7 +521,7 @@ namespace remoting
       storage = "";
 
       //
-      // Delete old video rects entries
+      // Delete old video rectanglea entries
       //
 
       rectangleaVideo->clear();
@@ -556,10 +563,10 @@ namespace remoting
 
    bool Configurator::saveIpAccessControlContainer(::remoting::SettingsManager *storage)
    {
-      AutoLock l(&m_pserverconfig);
+      AutoLock l(m_pserverconfig.m_p);
 
       // Get rules container
-      IpAccessControl *rules = m_pserverconfig.getAccessControl();
+      IpAccessControl *rules = m_pserverconfig->getAccessControl();
       // Remember rules count
       size_t rulesCount = rules->size();
       // 1 rule can contain 34 character max
@@ -629,71 +636,71 @@ namespace remoting
    bool Configurator::saveServerConfig(::remoting::SettingsManager *sm)
    {
       bool saveResult = true;
-      if (!sm->setUINT("RfbPort", m_pserverconfig.getRfbPort()))
+      if (!sm->setUINT("RfbPort", m_pserverconfig->getRfbPort()))
       {
          saveResult = false;
       }
-      if (!sm->setUINT("HttpPort", m_pserverconfig.getHttpPort()))
+      if (!sm->setUINT("HttpPort", m_pserverconfig->getHttpPort()))
       {
          saveResult = false;
       }
-      if (!sm->setUINT("DisconnectAction", (unsigned int)m_pserverconfig.getDisconnectAction()))
+      if (!sm->setUINT("DisconnectAction", (unsigned int)m_pserverconfig->getDisconnectAction()))
       {
          saveResult = false;
       }
-      if (!sm->setBoolean("AcceptRfbConnections", m_pserverconfig.isAcceptingRfbConnections()))
+      if (!sm->setBoolean("AcceptRfbConnections", m_pserverconfig->isAcceptingRfbConnections()))
       {
          saveResult = false;
       }
-      if (!sm->setBoolean("UseVncAuthentication", m_pserverconfig.isUsingAuthentication()))
+      if (!sm->setBoolean("UseVncAuthentication", m_pserverconfig->isUsingAuthentication()))
       {
          saveResult = false;
       }
-      if (!sm->setBoolean("UseControlAuthentication", m_pserverconfig.isControlAuthEnabled()))
+      if (!sm->setBoolean("UseControlAuthentication", m_pserverconfig->isControlAuthEnabled()))
       {
          saveResult = false;
       }
-      if (!sm->setBoolean("RepeatControlAuthentication", m_pserverconfig.getControlAuthAlwaysChecking()))
+      if (!sm->setBoolean("RepeatControlAuthentication", m_pserverconfig->getControlAuthAlwaysChecking()))
       {
          saveResult = false;
       }
-      if (!sm->setBoolean("LoopbackOnly", m_pserverconfig.isOnlyLoopbackConnectionsAllowed()))
+      if (!sm->setBoolean("LoopbackOnly", m_pserverconfig->isOnlyLoopbackConnectionsAllowed()))
       {
          saveResult = false;
       }
-      if (!sm->setBoolean("AcceptHttpConnections", m_pserverconfig.isAcceptingHttpConnections()))
+      if (!sm->setBoolean("AcceptHttpConnections", m_pserverconfig->isAcceptingHttpConnections()))
       {
          saveResult = false;
       }
-      if (!sm->setUINT("LogLevel", (unsigned int)m_pserverconfig.getLogLevel()))
+      if (!sm->setUINT("LogLevel", (unsigned int)m_pserverconfig->getLogLevel()))
       {
          saveResult = false;
       }
-      if (!sm->setBoolean("EnableFileTransfers", m_pserverconfig.isFileTransfersEnabled()))
+      if (!sm->setBoolean("EnableFileTransfers", m_pserverconfig->isFileTransfersEnabled()))
       {
          saveResult = false;
       }
-      if (!sm->setBoolean("RemoveWallpaper", m_pserverconfig.isRemovingDesktopWallpaperEnabled()))
+      if (!sm->setBoolean("RemoveWallpaper", m_pserverconfig->isRemovingDesktopWallpaperEnabled()))
       {
          saveResult = false;
       }
-      if (!sm->setBoolean("UseD3D", m_pserverconfig.getD3DIsAllowed()))
+      if (!sm->setBoolean("UseD3D", m_pserverconfig->getD3DIsAllowed()))
       {
          saveResult = false;
       }
-      if (!sm->setBoolean("UseMirrorDriver", m_pserverconfig.getMirrorIsAllowed()))
+      if (!sm->setBoolean("UseMirrorDriver", m_pserverconfig->getMirrorIsAllowed()))
       {
          saveResult = false;
       }
-      if (!sm->setBoolean("EnableUrlParams", m_pserverconfig.isAppletParamInUrlEnabled()))
+      if (!sm->setBoolean("EnableUrlParams", m_pserverconfig->isAppletParamInUrlEnabled()))
       {
          saveResult = false;
       }
-      if (m_pserverconfig.hasPrimaryPassword())
+      if (m_pserverconfig->hasPrimaryPassword())
       {
          unsigned char password[ServerConfig::VNC_PASSWORD_SIZE];
 
-         m_pserverconfig.getPrimaryPassword(&password[0]);
+         m_pserverconfig->getPrimaryPassword(&password[0]);
 
          if (!sm->setBinaryData("Password", &password[0], ServerConfig::VNC_PASSWORD_SIZE))
          {
@@ -704,11 +711,11 @@ namespace remoting
       {
          sm->deleteKey("Password");
       }
-      if (m_pserverconfig.hasReadOnlyPassword())
+      if (m_pserverconfig->hasReadOnlyPassword())
       {
          unsigned char password[ServerConfig::VNC_PASSWORD_SIZE];
 
-         m_pserverconfig.getReadOnlyPassword(&password[0]);
+         m_pserverconfig->getReadOnlyPassword(&password[0]);
 
          if (!sm->setBinaryData("PasswordViewOnly", &password[0], ServerConfig::VNC_PASSWORD_SIZE))
          {
@@ -719,11 +726,11 @@ namespace remoting
       {
          sm->deleteKey("PasswordViewOnly");
       }
-      if (m_pserverconfig.hasControlPassword())
+      if (m_pserverconfig->hasControlPassword())
       {
          unsigned char password[ServerConfig::VNC_PASSWORD_SIZE];
 
-         m_pserverconfig.getControlPassword(&password[0]);
+         m_pserverconfig->getControlPassword(&password[0]);
 
          if (!sm->setBinaryData("ControlPassword", &password[0], ServerConfig::VNC_PASSWORD_SIZE))
          {
@@ -734,47 +741,47 @@ namespace remoting
       {
          sm->deleteKey("ControlPassword");
       }
-      if (!sm->setBoolean("AlwaysShared", m_pserverconfig.isAlwaysShared()))
+      if (!sm->setBoolean("AlwaysShared", m_pserverconfig->isAlwaysShared()))
       {
          saveResult = false;
       }
-      if (!sm->setBoolean("NeverShared", m_pserverconfig.isNeverShared()))
+      if (!sm->setBoolean("NeverShared", m_pserverconfig->isNeverShared()))
       {
          saveResult = false;
       }
-      if (!sm->setBoolean("DisconnectClients", m_pserverconfig.isDisconnectingExistingClients()))
+      if (!sm->setBoolean("DisconnectClients", m_pserverconfig->isDisconnectingExistingClients()))
       {
          saveResult = false;
       }
-      if (!sm->setUINT("PollingInterval", m_pserverconfig.getPollingInterval()))
+      if (!sm->setUINT("PollingInterval", m_pserverconfig->getPollingInterval()))
       {
          saveResult = false;
       }
-      if (!sm->setBoolean("AllowLoopback", m_pserverconfig.isLoopbackConnectionsAllowed()))
+      if (!sm->setBoolean("AllowLoopback", m_pserverconfig->isLoopbackConnectionsAllowed()))
       {
          saveResult = false;
       }
-      if (!sm->setUINT("VideoRecognitionInterval", m_pserverconfig.getVideoRecognitionInterval()))
+      if (!sm->setUINT("VideoRecognitionInterval", m_pserverconfig->getVideoRecognitionInterval()))
       {
          saveResult = false;
       }
-      if (!sm->setBoolean("GrabTransparentWindows", m_pserverconfig.getGrabTransparentWindowsFlag()))
+      if (!sm->setBoolean("GrabTransparentWindows", m_pserverconfig->getGrabTransparentWindowsFlag()))
       {
          saveResult = false;
       }
-      if (!sm->setBoolean("SaveLogToAllUsersPath", m_pserverconfig.isSaveLogToAllUsersPathFlagEnabled()))
+      if (!sm->setBoolean("SaveLogToAllUsersPath", m_pserverconfig->isSaveLogToAllUsersPathFlagEnabled()))
       {
          saveResult = false;
       }
-      if (!sm->setBoolean("RunControlInterface", m_pserverconfig.getShowTrayIconFlag()))
+      if (!sm->setBoolean("RunControlInterface", m_pserverconfig->getShowTrayIconFlag()))
       {
          saveResult = false;
       }
-      if (!sm->setBoolean("ConnectToRdp", m_pserverconfig.getConnectToRdpFlag()))
+      if (!sm->setBoolean("ConnectToRdp", m_pserverconfig->getConnectToRdpFlag()))
       {
          saveResult = false;
       }
-      if (!sm->setUINT("IdleTimeout", (unsigned int)m_pserverconfig.getIdleTimeout()))
+      if (!sm->setUINT("IdleTimeout", (unsigned int)m_pserverconfig->getIdleTimeout()))
       {
          saveResult = false;
       }
@@ -798,7 +805,7 @@ namespace remoting
       }
       else
       {
-         m_pserverconfig.setRfbPort(uintVal);
+         m_pserverconfig->setRfbPort(uintVal);
       }
       if (!sm->getUINT("HttpPort", &uintVal))
       {
@@ -807,7 +814,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.setHttpPort(uintVal);
+         m_pserverconfig->setHttpPort(uintVal);
       }
       if (!sm->getUINT("DisconnectAction", &uintVal))
       {
@@ -816,7 +823,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.setDisconnectAction((ServerConfig::DisconnectAction)uintVal);
+         m_pserverconfig->setDisconnectAction((ServerConfig::DisconnectAction)uintVal);
       }
       if (!sm->getBoolean("AcceptRfbConnections", &boolVal))
       {
@@ -825,7 +832,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.acceptRfbConnections(boolVal);
+         m_pserverconfig->acceptRfbConnections(boolVal);
       }
       if (!sm->getBoolean("UseVncAuthentication", &boolVal))
       {
@@ -834,7 +841,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.useAuthentication(boolVal);
+         m_pserverconfig->useAuthentication(boolVal);
       }
       if (!sm->getBoolean("UseControlAuthentication", &boolVal))
       {
@@ -843,7 +850,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.useControlAuth(boolVal);
+         m_pserverconfig->useControlAuth(boolVal);
       }
       if (!sm->getBoolean("RepeatControlAuthentication", &boolVal))
       {
@@ -852,7 +859,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.setControlAuthAlwaysChecking(boolVal);
+         m_pserverconfig->setControlAuthAlwaysChecking(boolVal);
       }
       if (!sm->getBoolean("LoopbackOnly", &boolVal))
       {
@@ -861,7 +868,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.acceptOnlyLoopbackConnections(boolVal);
+         m_pserverconfig->acceptOnlyLoopbackConnections(boolVal);
       }
       if (!sm->getBoolean("AcceptHttpConnections", &boolVal))
       {
@@ -870,7 +877,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.acceptHttpConnections(boolVal);
+         m_pserverconfig->acceptHttpConnections(boolVal);
       }
       if (!sm->getUINT("LogLevel", &uintVal))
       {
@@ -879,7 +886,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.setLogLevel(uintVal);
+         m_pserverconfig->setLogLevel(uintVal);
       }
       if (!sm->getBoolean("EnableFileTransfers", &boolVal))
       {
@@ -888,7 +895,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.enableFileTransfers(boolVal);
+         m_pserverconfig->enableFileTransfers(boolVal);
       }
       if (!sm->getBoolean("RemoveWallpaper", &boolVal))
       {
@@ -897,7 +904,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.enableRemovingDesktopWallpaper(boolVal);
+         m_pserverconfig->enableRemovingDesktopWallpaper(boolVal);
       }
       if (!sm->getBoolean("UseD3D", &boolVal))
       {
@@ -906,7 +913,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.setD3DAllowing(boolVal);
+         m_pserverconfig->setD3DAllowing(boolVal);
       }
       if (!sm->getBoolean("UseMirrorDriver", &boolVal))
       {
@@ -915,7 +922,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.setMirrorAllowing(boolVal);
+         m_pserverconfig->setMirrorAllowing(boolVal);
       }
       if (!sm->getBoolean("EnableUrlParams", &boolVal))
       {
@@ -924,7 +931,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.enableAppletParamInUrl(boolVal);
+         m_pserverconfig->enableAppletParamInUrl(boolVal);
       }
 
       memsize passSize = 8;
@@ -933,34 +940,34 @@ namespace remoting
       if (!sm->getBinaryData("Password", (void *)&buffer, &passSize))
       {
          loadResult = false;
-         m_pserverconfig.deletePrimaryPassword();
+         m_pserverconfig->deletePrimaryPassword();
       }
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.setPrimaryPassword(&buffer[0]);
+         m_pserverconfig->setPrimaryPassword(&buffer[0]);
       }
       passSize = 8;
       if (!sm->getBinaryData("PasswordViewOnly", (void *)&buffer, &passSize))
       {
          loadResult = false;
-         m_pserverconfig.deleteReadOnlyPassword();
+         m_pserverconfig->deleteReadOnlyPassword();
       }
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.setReadOnlyPassword(&buffer[0]);
+         m_pserverconfig->setReadOnlyPassword(&buffer[0]);
       }
       passSize = 8;
       if (!sm->getBinaryData("ControlPassword", (void *)&buffer, &passSize))
       {
          loadResult = false;
-         m_pserverconfig.deleteControlPassword();
+         m_pserverconfig->deleteControlPassword();
       }
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.setControlPassword(&buffer[0]);
+         m_pserverconfig->setControlPassword(&buffer[0]);
       }
 
       if (!sm->getBoolean("AlwaysShared", &boolVal))
@@ -970,7 +977,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.setAlwaysShared(boolVal);
+         m_pserverconfig->setAlwaysShared(boolVal);
       }
       if (!sm->getBoolean("NeverShared", &boolVal))
       {
@@ -979,7 +986,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.setNeverShared(boolVal);
+         m_pserverconfig->setNeverShared(boolVal);
       }
       if (!sm->getBoolean("DisconnectClients", &boolVal))
       {
@@ -988,7 +995,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.disconnectExistingClients(boolVal);
+         m_pserverconfig->disconnectExistingClients(boolVal);
       }
       if (!sm->getUINT("PollingInterval", &uintVal))
       {
@@ -997,7 +1004,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.setPollingInterval(uintVal);
+         m_pserverconfig->setPollingInterval(uintVal);
       }
       if (!sm->getBoolean("AllowLoopback", &boolVal))
       {
@@ -1006,7 +1013,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.allowLoopbackConnections(boolVal);
+         m_pserverconfig->allowLoopbackConnections(boolVal);
       }
       if (!sm->getUINT("VideoRecognitionInterval", &uintVal))
       {
@@ -1015,7 +1022,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.setVideoRecognitionInterval(uintVal);
+         m_pserverconfig->setVideoRecognitionInterval(uintVal);
       }
       if (!sm->getUINT("IdleTimeout", &uintVal))
       {
@@ -1024,7 +1031,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.setIdleTimeout((int)uintVal);
+         m_pserverconfig->setIdleTimeout((int)uintVal);
       }
       if (!sm->getBoolean("GrabTransparentWindows", &boolVal))
       {
@@ -1033,7 +1040,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.setGrabTransparentWindowsFlag(boolVal);
+         m_pserverconfig->setGrabTransparentWindowsFlag(boolVal);
       }
       if (!sm->getBoolean("SaveLogToAllUsersPath", &boolVal))
       {
@@ -1042,7 +1049,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.saveLogToAllUsersPath(boolVal);
+         m_pserverconfig->saveLogToAllUsersPath(boolVal);
       }
       if (!sm->getBoolean("RunControlInterface", &boolVal))
       {
@@ -1051,7 +1058,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.setShowTrayIconFlag(boolVal);
+         m_pserverconfig->setShowTrayIconFlag(boolVal);
       }
 
       if (!sm->getBoolean("ConnectToRdp", &boolVal))
@@ -1061,7 +1068,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.setConnectToRdpFlag(boolVal);
+         m_pserverconfig->setConnectToRdpFlag(boolVal);
       }
 
       updateLogDirPath();
@@ -1072,9 +1079,9 @@ namespace remoting
    {
       //::string pathToLogDirectory;
       // TvnLogFilename::queryLogFileDirectory(m_isConfiguringService,
-      //   m_pserverconfig.isSaveLogToAllUsersPathFlagEnabled(),
+      //   m_pserverconfig->isSaveLogToAllUsersPathFlagEnabled(),
       //   &pathToLogDirectory);
-      // m_pserverconfig.setLogFileDir(pathToLogDirectory);
+      // m_pserverconfig->setLogFileDir(pathToLogDirectory);
    }
 
 

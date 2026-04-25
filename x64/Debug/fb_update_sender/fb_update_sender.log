@@ -3,7 +3,7 @@
   CursorUpdates.cpp
   UpdateSender.cpp
   UpdSenderMsgDefs.cpp
-  ViewPort.cpp
+  Viewport.cpp
   ViewPortState.cpp
 C:\Users\camilo\code\main\source\remoting\io_lib\DataOutputStream.h(50,62): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
   (compiling source file 'UpdateSender.cpp')
@@ -149,8 +149,8 @@ C:\Users\camilo\code\main\source\remoting\rfb_sconn\TightEncoder.h(127,58): warn
 C:\Users\camilo\code\main\source\remoting\rfb_sconn\TightEncoder.h(131,48): warning C5040: dynamic exception specifications are valid only in C++14 and earlier; treating as noexcept(false)
   (compiling source file 'UpdateSender.cpp')
   
-C:\Users\camilo\code\main\source\remoting\fb_update_sender\ViewPort.cpp(68,39): error C2102: '&' requires l-value
-C:\Users\camilo\code\main\source\remoting\fb_update_sender\ViewPort.cpp(103,51): error C2102: '&' requires l-value
+C:\Users\camilo\code\main\source\remoting\fb_update_sender\Viewport.cpp(68,39): error C2102: '&' requires l-value
+C:\Users\camilo\code\main\source\remoting\fb_update_sender\Viewport.cpp(103,51): error C2102: '&' requires l-value
 C:\Users\camilo\code\main\source\remoting\fb_update_sender\UpdateSender.cpp(58,42): error C2102: '&' requires l-value
 C:\Users\camilo\code\main\source\remoting\fb_update_sender\UpdateSender.cpp(138,60): error C2102: '&' requires l-value
 C:\Users\camilo\code\main\source\remoting\fb_update_sender\UpdateSender.cpp(252,30): error C2102: '&' requires l-value

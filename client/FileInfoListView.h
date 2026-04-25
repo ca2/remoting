@@ -27,7 +27,7 @@
 
 #include "innate_subsystem/gui/ImageList.h"
 #include "innate_subsystem/gui/ListView.h"
-#include "remoting/remoting/ftp_common/FileInfo.h"
+#include "remoting/remoting/file_transfer_common/FileInfo.h"
 
 namespace remoting_client
 {

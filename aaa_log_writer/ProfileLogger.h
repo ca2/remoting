@@ -54,7 +54,7 @@ namespace platform
       ::array_base<::array_base<TCHAR>> dropStat();
 
    //private:
-      critical_section m_mapMut;
+      critical_section m_criticalsectionMap;
       //::map<const ::scoped_string & scopedstr, ::array_base<ProcessorTimes>> m_checkPoints;
       ::string_map <::array_base<ProcessorTimes> > m_checkPoints;
       ProcessorTimes m_last;

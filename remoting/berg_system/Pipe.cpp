@@ -26,7 +26,7 @@
 #include "Pipe.h"
 #include "subsystem/platform/Exception.h"
 //#include aaa_<crtdbg.h>
-//#include "remoting/remoting/win_system/Environment.h"
+#include "subsystem/node/OperatingSystem.h"
 //#include "subsystem/thread/critical_section.h"
 
 Pipe::Pipe(unsigned int maxPortionSize)

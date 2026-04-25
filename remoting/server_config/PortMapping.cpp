@@ -82,7 +82,7 @@ PortMappingRect PortMapping::getRect() const
 void PortMapping::toString(::string & string) const
 {
   //
-  // Format:   [port]:[rect.toString()]
+  // Format:   [port]:[rectangle.toString()]
   // It means: [port]:[width]x[height]+[x]+[y]
   // without square brackets.
   //
@@ -97,25 +97,25 @@ bool PortMapping::parse(const char * psz, PortMapping *mapping)
 {
   int port;
   char c;
-  PortMappingRect rect;
+  PortMappingRect portmappingrect;
   auto pszRectString = strchr(psz, ':') + 1;
   if (pszRectString == NULL)
   {
     return false;
   }
-  if ((sscanf(psz, "{}%c", &port, &c) != 2) || (c != ':')) {
+  if ((sscanf(psz, "%d%c", &port, &c) != 2) || (c != ':')) {
     return false;
   }
   if (port < 0) {
     return false;
   }
-  if (!PortMappingRect::parse(pszRectString, &rect))
+  if (!PortMappingRect::parse(pszRectString, &portmappingrect))
   {
     return false;
   }
   if (mapping != NULL) {
     mapping->setPort(port);
-    mapping->setRect(rect);
+    mapping->setRect(portmappingrect);
   }
   return true;
 }

@@ -26,366 +26,391 @@
 #include "RfbClient.h"
 //#include "subsystem/thread/critical_section.h"
 #include "RfbCodeRegistrator.h"
-#include "ft_server_lib/FileTransferRequestHandler.h"
+#include "remoting/remoting/file_transfer_server/FileTransferRequestHandler.h"
 #include "EchoExtensionRequestHandler.h"
+#include "subsystem/socket/SocketIPv4.h"
 //#include "remoting/remoting/network/socket/SocketStream.h"
 #include "RfbInitializer.h"
 #include "ClientAuthListener.h"
 #include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/server/NewConnectionEvents.h"
 #include "acme/input_output/BufferedInputStream.h"
 #include "subsystem/platform/MemUsage.h"
 
-RfbClient::RfbClient(NewConnectionEvents *newConnectionEvents,
-                     SocketIPv4 *socket,
-                     ClientTerminationListener *extTermListener,
-                     ClientAuthListener *extAuthListener, bool viewOnly,
-                     bool isOutgoing, unsigned int id,
-                     const ViewPortState *constViewPort,
-                     const ViewPortState *dynViewPort,
-                     int idleTimeout,
-                     ::subsystem::LogWriter * plogwriter)
-: m_socket(socket), // now we own the socket
-  m_newConnectionEvents(newConnectionEvents),
-  m_viewOnly(viewOnly),
-  m_isOutgoing(isOutgoing),
-  m_shared(false),
-  m_viewOnlyAuth(true),
-  m_clientState(IN_NONAUTH),
-  m_isMarkedOk(false),
-  m_extTermListener(extTermListener),
-  m_extAuthListener(extAuthListener),
-  m_updateSender(0),
-  m_clipboardExchange(0),
-  m_clientInputHandler(0),
-  m_id(id),
-  m_pdesktop(0),
-  m_constViewPort(constViewPort, log),
-  m_dynamicViewPort(dynViewPort, log),
-  m_demandtimerIdle(idleTimeout), m_idleTimeout(idleTimeout),
-  m_plogwriter = plogwriter;
+namespace remoting
 {
-  resume();
-}
+   RfbClient::RfbClient(::remoting_node::NewConnectionEvents *pnewconnectionevents,
+                        ::subsystem::SocketIPv4Interface *psocket,
+                        ClientTerminationListener *pclientterminationlistener,
+                        ClientAuthListener *pclientauthlistener,
+                        bool viewOnly,
+                        bool isOutgoing, unsigned int id,
+                        const ViewPortState & viewportstateConst,
+                        const ViewPortState & viewportstateDynamic,
+                        int idleTimeout,
+                        ::subsystem::LogWriter * plogwriter)
+   : m_psocket(psocket), // now we own the socket
+     m_pnewconnectionevents(pnewconnectionevents),
+     m_viewOnly(viewOnly),
+     m_isOutgoing(isOutgoing),
+     m_shared(false),
+     m_viewOnlyAuth(true),
+     m_clientState(IN_NONAUTH),
+     m_isMarkedOk(false),
+     m_pclientterminationlistener(pclientterminationlistener),
+     m_pclientauthlistener(pclientauthlistener),
+     m_updateSender(0),
+     m_clipboardExchange(0),
+     m_clientInputHandler(0),
+     m_id(id),
+     m_pdesktop(0),
+     m_demandtimerIdle(idleTimeout), m_idleTimeout(idleTimeout),
+     m_plogwriter(plogwriter)
+   {
 
-RfbClient::~RfbClient()
-{
-  terminate();
-  wait();
-  delete m_socket;
-}
+      construct_newø(m_pviewportConst);
+      m_pviewportConst->initialize_viewport(viewportstateConst, plogwriter);
 
-void RfbClient::disconnect()
-{
-  ::string peerStr;
-  getPeerHost(&peerStr);
-  // Shutdown and close socket.
-  try { m_socket->shutdown(SD_BOTH); } catch (...) { }
-  try { m_socket->close(); } catch (...) { }
-  m_plogwriter->debug("Connection from {} has been closed for client #{}", peerStr, m_id);
-}
+      construct_newø(m_pviewportDynamic);
+      m_pviewportDynamic->initialize_viewport(viewportstateDynamic, plogwriter);
 
-unsigned int RfbClient::getId() const
-{
-  return m_id;
-}
+      resume();
+   }
 
-bool RfbClient::isOutgoing() const
-{
-  return m_isOutgoing;
-}
+   RfbClient::~RfbClient()
+   {
+      terminate();
+      wait();
+      //delete m_psocket;
+   }
 
-void RfbClient::getPeerHost(::string & host)
-{
-  SocketAddressIPv4 addr;
+   void RfbClient::disconnect()
+   {
+      ::string peerStr;
+      getPeerHost(peerStr);
+      // Shutdown and close socket.
+      try { m_psocket->shutdown(::subsystem::e_socket_shutdown_both); } catch (...) { }
+      try { m_psocket->close(); } catch (...) { }
+      m_plogwriter->debug("Connection from {} has been closed for client #{}", peerStr, m_id);
+   }
 
-  if (m_socket->getPeerAddr(&addr)) {
-    addr.toString(host);
-  } else {
-    // FIXME: This may occur if the close() function has been called.
-    _ASSERT(false);
+   unsigned int RfbClient::getId() const
+   {
+      return m_id;
+   }
 
-    host-= "unknown";
-  }
-}
+   bool RfbClient::isOutgoing() const
+   {
+      return m_isOutgoing;
+   }
 
-void RfbClient::getLocalIpAddress(::string & address)
-{
-  SocketAddressIPv4 addr;
 
-  if (m_socket->getLocalAddr(&addr)) {
-    addr.toString(address);
-  } else {
-    // FIXME: This may occur if the close() function has been called.
-    _ASSERT(false);
+   void RfbClient::getPeerHost(::string & host)
+   {
 
-    address-= "unknown";
-  }
-}
+      auto paddrPeer = m_psocket->getPeerAddr();
 
-void RfbClient::getSocketAddr(SocketAddressIPv4 *addr) const
-{
-  m_socket->getPeerAddr(addr);
-}
+      if (paddrPeer)
+      {
+         host = paddrPeer->toString();
+      }
+      else
+      {
+         // FIXME: This may occur if the close() function has been called.
+         _ASSERT(false);
 
-void RfbClient::setClientState(ClientState newState)
-{
-  critical_section_lock al(&m_clientStateMut);
-  if (newState > m_clientState) {
-    m_clientState = newState;
-  }
-}
+         host = "(unknown)";
 
-ClientState RfbClient::getClientState()
-{
-  critical_section_lock al(&m_clientStateMut);
-  return m_clientState;
-}
+      }
 
-void RfbClient::setViewOnlyFlag(bool value)
-{
-  if (getClientState() < IN_NORMAL_PHASE) {
-    throw ::subsystem::Exception("Irrelevant call to RfbClient::setViewOnlyFlag()");
-  }
-  m_viewOnly = value || m_viewOnlyAuth;
-  m_clientInputHandler->setViewOnlyFlag(m_viewOnly);
-}
+   }
 
-void RfbClient::changeDynViewPort(const ViewPortState *dynViewPort)
-{
-  critical_section_lock al(&m_viewPortMutex);
-  m_dynamicViewPort.changeState(dynViewPort);
-}
 
-void RfbClient::notifyAbStateChanging(ClientState state)
-{
-  setClientState(state);
-  m_extTermListener->onClientTerminate();
-}
+   void RfbClient::getLocalIpAddress(::string & address)
+   {
 
-void RfbClient::onTerminate()
-{
-  disconnect();
-}
+      auto paddrLocal = m_psocket->getLocalAddr();
 
-void RfbClient::execute()
-{
-  // Initialized by default scopedstrMessage that will be logged on normal way
-  // of disconnection.
-  ::string peerStr;
-  getPeerHost(&peerStr);
-  ::string sysLogMessage;
-  sysLogMessage.formatf("The client {} has disconnected",
-                       peerStr);
 
-  ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
+      if (paddrLocal) {
+         address = paddrLocal->toString();
+      } else {
+         // FIXME: This may occur if the close() function has been called.
+         _ASSERT(false);
 
-  SocketStream sockStream(m_socket);
+         address = "(unknown)";
+      }
+   }
 
-  RfbOutputGate output(&sockStream);
-  BufferedInputStream bufInput(&sockStream);
-  RfbInputGate input(&bufInput);
+   ::pointer < ::subsystem::SocketAddressIPv4Interface > RfbClient::getSocketAddr() const
+   {
+      auto paddr = m_psocket->getPeerAddr();
 
-  FileTransferRequestHandler *fileTransfer = 0;
-  EchoExtensionRequestHandler *echoExtension = 0;
+      return paddr;
+   }
 
-  RfbInitializer rfbInitializer(&sockStream, m_extAuthListener, this,
-                                !m_isOutgoing);
+   void RfbClient::setClientState(ClientState newState)
+   {
+      critical_section_lock al(&m_criticalsectionClientState);
+      if (newState > m_clientState) {
+         m_clientState = newState;
+      }
+   }
 
-  try {
-    // First initialization phase
-    try {
-      m_plogwriter->information("Entering RFB initialization phase 1");
-      rfbInitializer.authPhase();
-      setClientState(IN_AUTH);
-      m_plogwriter->debug("RFB initialization phase 1 completed");
+   ClientState RfbClient::getClientState()
+   {
+      critical_section_lock al(&m_criticalsectionClientState);
+      return m_clientState;
+   }
 
-      m_shared = rfbInitializer.getSharedFlag();
-      m_plogwriter->debug("Shared flag = {}", (int)m_shared);
-      m_viewOnlyAuth = rfbInitializer.getViewOnlyAuth();
-      m_plogwriter->debug("Initial view-only state = {}", (int)m_viewOnly);
-      m_plogwriter->debug("Authenticated with view-only password = {}", (int)m_viewOnlyAuth);
-      m_viewOnly = m_viewOnly || m_viewOnlyAuth;
+   void RfbClient::setViewOnlyFlag(bool value)
+   {
+      if (getClientState() < IN_NORMAL_PHASE) {
+         throw ::subsystem::Exception("Irrelevant call to RfbClient::setViewOnlyFlag()");
+      }
+      m_viewOnly = value || m_viewOnlyAuth;
+      m_clientInputHandler->setViewOnlyFlag(m_viewOnly);
+   }
 
-      // Let RfbClientManager handle new authenticated connection.
-      m_pdesktop = m_extAuthListener->onClientAuth(this);
+   void RfbClient::changeDynViewPort(const ViewPortState *dynViewPort)
+   {
+      critical_section_lock al(&m_criticalsectionViewport);
+      m_pviewportDynamic->changeState(dynViewPort);
+   }
 
-      m_plogwriter->information("View only = {}", (int)m_viewOnly);
-    } catch (::exception &e) {
-      m_plogwriter->error("Error during RFB initialization: {}", e.get_message());
-      throw;
-    }
-    _ASSERT(m_pdesktop != 0);
+   void RfbClient::notifyAbStateChanging(ClientState state)
+   {
+      setClientState(state);
+      m_pclientterminationlistener->onClientTerminate();
+   }
 
-    m_constViewPort.initDesktopInterface(m_pdesktop);
-    m_dynamicViewPort.initDesktopInterface(m_pdesktop);
+   void RfbClient::onTerminate()
+   {
+      disconnect();
+   }
 
-    RfbDispatcher dispatcher(&input, &m_connClosingEvent);
-    m_plogwriter->debug("Dispatcher has been created");
-    CapContainer srvToClCaps, clToSrvCaps, encCaps;
-    RfbCodeRegistrator codeRegtor(&dispatcher, &srvToClCaps, &clToSrvCaps,
-                                  &encCaps);
-    // Init modules
-    // UpdateSender initialization
-    m_updateSender = new UpdateSender(&codeRegtor, m_pdesktop, this,
-                                      &output, m_id, m_pdesktop, m_plogwriter);
-    m_plogwriter->debug("UpdateSender has been created for client #{}", m_id);
-    ::innate_subsystem::PixelFormat pf;
-    ::int_size fbDim;
-    m_pdesktop->getFrameBufferProperties(&fbDim, &pf);
-    ::int_rectangle rectangleViewport = getViewPortRect(fbDim);
-    m_updateSender->init(::int_size(rectangleViewport.size()), pf);
-    m_plogwriter->debug("UpdateSender has been initialized");
-    // ClientInputHandler initialization
-    m_clientInputHandler = new ClientInputHandler(&codeRegtor, this,
-                                                  m_viewOnly);
-    m_plogwriter->debug("ClientInputHandler has been created");
-    // ClipboardExchange initialization
-    m_clipboardExchange = new ClipboardExchange(&codeRegtor, m_pdesktop, &output,
-                                                m_viewOnly, m_plogwriter);
-    m_plogwriter->debug("ClipboardExchange has been created");
+   void RfbClient::execute()
+   {
+      // Initialized by default scopedstrMessage that will be logged on normal way
+      // of disconnection.
+      ::string peerStr;
+      getPeerHost(peerStr);
+      ::string sysLogMessage;
+      sysLogMessage.format("The client {} has disconnected",
+                           peerStr);
 
-    // FileTransfers initialization
-    if (config->isFileTransfersEnabled() &&
-        rfbInitializer.getTightEnabledFlag()) {
-      fileTransfer = new FileTransferRequestHandler(&codeRegtor, &output, m_pdesktop, m_plogwriter, !m_viewOnly);
-      m_plogwriter->debug("::file::item transfer has been created");
-    } else {
-      m_plogwriter->information("::file::item transfer is not allowed");
-    }
-    // echo extension initialization
-    echoExtension = new EchoExtensionRequestHandler(&codeRegtor, &output, m_plogwriter);
-    m_plogwriter->debug("Echo extension handler has been created");
+      auto pserverconfig = m_pconfigurator->getServerConfig();
 
-    // Second initialization phase
-    // Send and receive initialization information between server and viewer
-    m_plogwriter->debug("View port: ({},{}) (%dx{})", rectangleViewport.left,
-                                                 rectangleViewport.top,
-                                                 rectangleViewport.width(),
-                                                 rectangleViewport.height());
-    m_plogwriter->information("Entering RFB initialization phase 2");
-    rfbInitializer.afterAuthPhase(&srvToClCaps, &clToSrvCaps,
-                                  &encCaps, &::int_size(&rectangleViewport), &pf);
-    m_plogwriter->debug("RFB initialization phase 2 completed");
+      ::subsystem::SocketStream sockStream(m_psocket);
 
-    // Start normal phase
-    setClientState(IN_NORMAL_PHASE);
+      RfbOutputGate output(&sockStream);
+      BufferedInputStream bufInput(&sockStream);
+      RfbInputGate input(&bufInput);
 
-    m_plogwriter->information("Entering normal phase of the RFB protocol");
-    dispatcher.resume();
+      FileTransferRequestHandler *fileTransfer = 0;
+      EchoExtensionRequestHandler *echoExtension = 0;
 
-    m_connClosingEvent.wait();
-  } catch (::exception &e) {
-    m_plogwriter->error("Connection will be closed: {}", e.get_message());
-    sysLogMessage.formatf("The client {} #{} has been"
-                         " disconnected for the reason: {}",
-                         peerStr, m_id, e.get_message());
-  }
+      RfbInitializer rfbInitializer(&sockStream, m_extAuthListener, this,
+                                    !m_isOutgoing);
 
-  disconnect();
-  m_newConnectionEvents->onDisconnect(&sysLogMessage);
+      try {
+         // First initialization phase
+         try {
+            m_plogwriter->information("Entering RFB initialization phase 1");
+            rfbInitializer.authPhase();
+            setClientState(IN_AUTH);
+            m_plogwriter->debug("RFB initialization phase 1 completed");
 
-  // After this call, we are guaranteed not to be used by other threads.
-  notifyAbStateChanging(IN_PENDING_TO_REMOVE);
+            m_shared = rfbInitializer.getSharedFlag();
+            m_plogwriter->debug("Shared flag = {}", (int)m_shared);
+            m_viewOnlyAuth = rfbInitializer.getViewOnlyAuth();
+            m_plogwriter->debug("Initial view-only state = {}", (int)m_viewOnly);
+            m_plogwriter->debug("Authenticated with view-only password = {}", (int)m_viewOnlyAuth);
+            m_viewOnly = m_viewOnly || m_viewOnlyAuth;
 
-  if (fileTransfer)         delete fileTransfer;
-  if (echoExtension)        delete echoExtension;
-  if (m_clipboardExchange)  delete m_clipboardExchange;
-  if (m_clientInputHandler) delete m_clientInputHandler;
-  if (m_updateSender)       delete m_updateSender;
+            // Let RfbClientManager handle new authenticated connection.
+            m_pdesktop = m_extAuthListener->onClientAuth(this);
 
-  // Let the client manager remove us from the client lists.
-  notifyAbStateChanging(IN_READY_TO_REMOVE);
-  m_plogwriter->debug("End of RfbClient, process memory usage: {} ", MemUsage::getCurrentMemUsage());
-}
+            m_plogwriter->information("View only = {}", (int)m_viewOnly);
+         } catch (::exception &e) {
+            m_plogwriter->error("Error during RFB initialization: {}", e.get_message());
+            throw;
+         }
+         _ASSERT(m_pdesktop != 0);
 
-void RfbClient::sendUpdate(const UpdateContainer *updateContainer,
-                           const CursorShape *cursorShape)
-{
-  m_updateSender->newUpdates(updateContainer, cursorShape);
+         m_pviewportConst->initDesktopInterface(m_pdesktop);
+         m_pviewportDynamic->initDesktopInterface(m_pdesktop);
 
-  if (m_idleTimeout != 0  && m_demandtimerIdle.isElapsed()) {
-    m_plogwriter->error("Connection will be closed due to client inactivity. IdleTimeout = {} ms", m_idleTimeout);
-    m_connClosingEvent.set_happening();
-  }
-}
+         RfbDispatcher dispatcher(&input, &m_connClosingEvent);
+         m_plogwriter->debug("Dispatcher has been created");
+         CapContainer srvToClCaps, clToSrvCaps, encCaps;
+         RfbCodeRegistrator codeRegtor(&dispatcher, &srvToClCaps, &clToSrvCaps,
+                                       &encCaps);
+         // Init modules
+         // UpdateSender initialization
+         m_updateSender = new UpdateSender(&codeRegtor, m_pdesktop, this,
+                                           &output, m_id, m_pdesktop, m_plogwriter);
+         m_plogwriter->debug("UpdateSender has been created for client #{}", m_id);
+         ::innate_subsystem::PixelFormat pixelformat;
+         ::int_size fbDim;
+         m_pdesktop->getFramebufferProperties(&fbDim, &pixelformat);
+         ::int_rectangle rectangleViewport = getViewport(fbDim);
+         m_updateSender->init(::int_size(rectangleViewport.size()), pixelformat);
+         m_plogwriter->debug("UpdateSender has been initialized");
+         // ClientInputHandler initialization
+         m_clientInputHandler = new ClientInputHandler(&codeRegtor, this,
+                                                       m_viewOnly);
+         m_plogwriter->debug("ClientInputHandler has been created");
+         // ClipboardExchange initialization
+         m_clipboardExchange = new ClipboardExchange(&codeRegtor, m_pdesktop, &output,
+                                                     m_viewOnly, m_plogwriter);
+         m_plogwriter->debug("ClipboardExchange has been created");
 
-void RfbClient::sendClipboard(const ::scoped_string & newClipboard)
-{
-  m_clipboardExchange->sendClipboard(newClipboard);
-}
+         // FileTransfers initialization
+         if (config->isFileTransfersEnabled() &&
+             rfbInitializer.getTightEnabledFlag()) {
+            fileTransfer = new FileTransferRequestHandler(&codeRegtor, &output, m_pdesktop, m_plogwriter, !m_viewOnly);
+            m_plogwriter->debug("::file::item transfer has been created");
+             } else {
+                m_plogwriter->information("::file::item transfer is not allowed");
+             }
+         // echo extension initialization
+         echoExtension = new EchoExtensionRequestHandler(&codeRegtor, &output, m_plogwriter);
+         m_plogwriter->debug("Echo extension handler has been created");
 
-void RfbClient::onKeyboardEvent(unsigned int keySym, bool down)
-{
-  // FIXME: How to deal with the situations when we inject a "key down" event, then foreground
-  //        window changes and is no longer owned by the shared app so we cannot pass "key up"
-  //        to the desktop?
+         // Second initialization phase
+         // Send and receive initialization information between server and viewer
+         m_plogwriter->debug("View port: ({},{}) (%dx{})", rectangleViewport.left,
+                                                      rectangleViewport.top,
+                                                      rectangleViewport.width(),
+                                                      rectangleViewport.height());
+         m_plogwriter->information("Entering RFB initialization phase 2");
+         rfbInitializer.afterAuthPhase(&srvToClCaps, &clToSrvCaps,
+                                       &encCaps, &::int_size(&rectangleViewport), &pixelformat);
+         m_plogwriter->debug("RFB initialization phase 2 completed");
 
-  bool mayPass = true;
-  bool shareApp = m_dynamicViewPort.getOnlyApplication();
-  if (shareApp) {
-    unsigned int pid = m_dynamicViewPort.getApplicationId();
-    mayPass = m_pdesktop->isApplicationInFocus(pid);
-  }
+         // Start normal phase
+         setClientState(IN_NORMAL_PHASE);
 
-  if (mayPass) {
-    m_pdesktop->setKeyboardEvent(keySym, down);
-    m_demandtimerIdle.reset();
-  }
-}
+         m_plogwriter->information("Entering normal phase of the RFB protocol");
+         dispatcher.resume();
 
-void RfbClient::onMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask)
-{
-  // FIXME: Too much extra work. Typically we would share the whole desktop and would not need
-  //        to compute regions on each mouse move.
+         m_connClosingEvent.wait();
+      } catch (::exception &e) {
+         m_plogwriter->error("Connection will be closed: {}", e.get_message());
+         sysLogMessage.formatf("The client {} #{} has been"
+                              " disconnected for the reason: {}",
+                              peerStr, m_id, e.get_message());
+      }
 
-  ::innate_subsystem::PixelFormat pfStub;
-  ::int_size fbDim;
-  m_pdesktop->getFrameBufferProperties(&fbDim, &pfStub);
+      disconnect();
+      m_newConnectionEvents->onDisconnect(&sysLogMessage);
 
-  ::int_rectangle vp;
-  bool shareApp;
-  Region sharedRegion;
-  getViewPortInfo(&fbDim, &vp, &shareApp, &sharedRegion);
+      // After this call, we are guaranteed not to be used by other threads.
+      notifyAbStateChanging(IN_PENDING_TO_REMOVE);
 
-  if (!shareApp) {
-    sharedRegion.clear();
-    sharedRegion.addRect(&vp);
-  }
-  bool pointInside = sharedRegion.isPointInside(x + vp.left, y + vp.top);
+      if (fileTransfer)         delete fileTransfer;
+      if (echoExtension)        delete echoExtension;
+      if (m_clipboardExchange)  delete m_clipboardExchange;
+      if (m_clientInputHandler) delete m_clientInputHandler;
+      if (m_updateSender)       delete m_updateSender;
 
-  if (pointInside) {
-    m_updateSender->blockCursorPosSending();
-    m_pdesktop->setMouseEvent(x + vp.left, y + vp.top, buttonMask);
-    m_demandtimerIdle.reset();
-  }
-}
+      // Let the client manager remove us from the client lists.
+      notifyAbStateChanging(IN_READY_TO_REMOVE);
+      m_plogwriter->debug("End of RfbClient, process memory usage: {} ", MemUsage::getCurrentMemUsage());
+   }
 
-::int_rectangle RfbClient::getViewPortRect(const ::int_size & fbDimension)
-{
-  critical_section_lock al(&m_viewPortMutex);
-  m_constViewPort.update(fbDimension);
-  m_dynamicViewPort.update(fbDimension);
+   void RfbClient::sendUpdate(const UpdateContainer & updatecontainer,
+                              const CursorShape *cursorShape)
+   {
+      m_updateSender->newUpdates(updatecontainer, cursorShape);
 
-  return m_constViewPort.getViewPortRect().intersection(
-    &m_dynamicViewPort.getViewPortRect());
-}
+      if (m_idleTimeout != 0  && m_demandtimerIdle.isElapsed()) {
+         m_plogwriter->error("Connection will be closed due to client inactivity. IdleTimeout = {} ms", m_idleTimeout);
+         m_connClosingEvent.set_happening();
+      }
+   }
 
-void RfbClient::getViewPortInfo(const ::int_size & fbDimension, ::int_rectangle *resultRect,
-                                bool *shareApp, Region *shareAppRegion)
-{
-  critical_section_lock al(&m_viewPortMutex);
+   void RfbClient::sendClipboard(const ::scoped_string & newClipboard)
+   {
+      m_clipboardExchange->sendClipboard(newClipboard);
+   }
 
-  *resultRect = getViewPortRect(fbDimension);
-  *shareApp = m_dynamicViewPort.getOnlyApplication();
-  if (*shareApp) {
-    m_dynamicViewPort.getApplicationRegion(shareAppRegion);
-  }
-}
+   void RfbClient::onKeyboardEvent(unsigned int keySym, bool down)
+   {
+      // FIXME: How to deal with the situations when we inject a "key down" event, then foreground
+      //        window changes and is no longer owned by the shared app so we cannot pass "key up"
+      //        to the desktop?
 
-void RfbClient::onGetViewPort(::int_rectangle *viewRect, bool *shareApp, Region *shareAppRegion)
-{
-  ::innate_subsystem::PixelFormat pfStub;
-  ::int_size fbDim;
-  m_pdesktop->getFrameBufferProperties(&fbDim, &pfStub);
-  getViewPortInfo(&fbDim, viewRect, shareApp, shareAppRegion);
-}
+      bool mayPass = true;
+      bool shareApp = m_pviewportDynamic->getOnlyApplication();
+      if (shareApp) {
+         unsigned int pid = m_pviewportDynamic->getApplicationId();
+         mayPass = m_pdesktop->isApplicationInFocus(pid);
+      }
+
+      if (mayPass) {
+         m_pdesktop->setKeyboardEvent(keySym, down);
+         m_demandtimerIdle.reset();
+      }
+   }
+
+   void RfbClient::onMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask)
+   {
+      // FIXME: Too much extra work. Typically we would share the whole desktop and would not need
+      //        to compute regions on each mouse move.
+
+      ::innate_subsystem::PixelFormat pfStub;
+      ::int_size fbDim;
+      m_pdesktop->getFramebufferProperties(&fbDim, &pfStub);
+
+      ::int_rectangle vp;
+      bool shareApp;
+      Region sharedRegion;
+      getViewPortInfo(&fbDim, &vp, &shareApp, &sharedRegion);
+
+      if (!shareApp) {
+         sharedRegion.clear();
+         sharedRegion.addRect(&vp);
+      }
+      bool pointInside = sharedRegion.isPointInside(x + vp.left, y + vp.top);
+
+      if (pointInside) {
+         m_updateSender->blockCursorPosSending();
+         m_pdesktop->setMouseEvent(x + vp.left, y + vp.top, buttonMask);
+         m_demandtimerIdle.reset();
+      }
+   }
+
+   ::int_rectangle RfbClient::getViewport(const ::int_size & fbDimension)
+   {
+      critical_section_lock al(&m_criticalsectionViewport);
+      m_pviewportConst->update(fbDimension);
+      m_pviewportDynamic->update(fbDimension);
+
+      return m_pviewportConst->getViewport().intersection(
+        m_pviewportDynamic->getViewport());
+   }
+
+   void RfbClient::getViewPortInfo(const ::int_size & fbDimension, ::int_rectangle &resultRect,
+                                   bool *shareApp, Region & regionShareApp)
+   {
+      critical_section_lock al(&m_criticalsectionViewport);
+
+      *resultRect = getViewport(fbDimension);
+      *shareApp = m_pviewportDynamic->getOnlyApplication();
+      if (*shareApp) {
+         m_pviewportDynamic->getApplicationRegion(regionShareApp);
+      }
+   }
+
+   void RfbClient::onGetViewPort(::int_rectangle &viewRect, bool *shareApp, Region & regionShareApp)
+   {
+      ::innate_subsystem::PixelFormat pfStub;
+      ::int_size fbDim;
+      m_pdesktop->getFramebufferProperties(&fbDim, &pfStub);
+      getViewPortInfo(&fbDim, viewRect, shareApp, regionShareApp);
+   }
+} // namespace remoting
+
+

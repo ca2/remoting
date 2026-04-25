@@ -146,7 +146,7 @@ list(APPEND library_source
    desktop_ipc/UserInputClient.h
    desktop_ipc/UserInputServer.cpp
    desktop_ipc/UserInputServer.h
-   fb_update_sender/_.h
+   framebuffer_update_sender/_.h
    #fb_update_sender/_____debug.xcconfig
    #fb_update_sender/_____release.xcconfig
    #fb_update_sender/aaa_.cpp
@@ -154,23 +154,23 @@ list(APPEND library_source
    #fb_update_sender/aaa_framework.h
    #fb_update_sender/aaa_resource.h
    #fb_update_sender/CMakeLists.txt
-   fb_update_sender/CursorUpdates.cpp
-   fb_update_sender/CursorUpdates.h
+   framebuffer_update_sender/CursorUpdates.cpp
+   framebuffer_update_sender/CursorUpdates.h
    #fb_update_sender/fb_update_sender.vcproj
    #fb_update_sender/matter.txt
    #fb_update_sender/remoting_fb_update_sender.vcxproj
    #fb_update_sender/remoting_fb_update_sender.vcxproj.filters
    #fb_update_sender/remoting_fb_update_sender.vcxproj.user
-   fb_update_sender/SenderControlInformationInterface.h
-   fb_update_sender/UpdateRequestListener.h
-   fb_update_sender/UpdateSender.cpp
-   fb_update_sender/UpdateSender.h
-   fb_update_sender/UpdSenderMsgDefs.cpp
-   fb_update_sender/UpdSenderMsgDefs.h
-   fb_update_sender/ViewPort.cpp
-   fb_update_sender/ViewPort.h
-   fb_update_sender/ViewPortState.cpp
-   fb_update_sender/ViewPortState.h
+   framebuffer_update_sender/SenderControlInformationInterface.h
+   framebuffer_update_sender/UpdateRequestListener.h
+   framebuffer_update_sender/UpdateSender.cpp
+   framebuffer_update_sender/UpdateSender.h
+   framebuffer_update_sender/UpdSenderMsgDefs.cpp
+   framebuffer_update_sender/UpdSenderMsgDefs.h
+   framebuffer_update_sender/Viewport.cpp
+   framebuffer_update_sender/Viewport.h
+   framebuffer_update_sender/ViewPortState.cpp
+   framebuffer_update_sender/ViewPortState.h
    #ftp_client/_.cpp
    #ftp_client/_.h
    #ftp_client/_____debug.xcconfig
@@ -178,53 +178,53 @@ list(APPEND library_source
    #ftp_client/aaa_framework.cpp
    #ftp_client/aaa_framework.h
    #ftp_client/CMakeLists.txt
-   ftp_client/CopyFileEventListener.h
-   ftp_client/CopyOperation.cpp
-   ftp_client/CopyOperation.h
-   ftp_client/DownloadOperation.cpp
-   ftp_client/DownloadOperation.h
-   ftp_client/FileInfoList.cpp
-   ftp_client/FileInfoList.h
-   ftp_client/FileTransferCore.cpp
-   ftp_client/FileTransferCore.h
-   ftp_client/FileTransferEventAdapter.cpp
-   ftp_client/FileTransferEventAdapter.h
-   ftp_client/FileTransferEventHandler.cpp
-   ftp_client/FileTransferEventHandler.h
-   ftp_client/FileTransferInterface.cpp
-   ftp_client/FileTransferInterface.h
-   ftp_client/FileTransferMessageProcessor.cpp
-   ftp_client/FileTransferMessageProcessor.h
-   ftp_client/FileTransferOperation.cpp
-   ftp_client/FileTransferOperation.h
-   ftp_client/FileTransferReplyBuffer.cpp
-   ftp_client/FileTransferReplyBuffer.h
-   ftp_client/FileTransferRequestSender.cpp
-   ftp_client/FileTransferRequestSender.h
+   file_transfer_client/CopyFileEventListener.h
+   file_transfer_client/CopyOperation.cpp
+   file_transfer_client/CopyOperation.h
+   file_transfer_client/DownloadOperation.cpp
+   file_transfer_client/DownloadOperation.h
+   file_transfer_client/FileInfoList.cpp
+   file_transfer_client/FileInfoList.h
+   file_transfer_client/FileTransferCore.cpp
+   file_transfer_client/FileTransferCore.h
+   file_transfer_client/FileTransferEventAdapter.cpp
+   file_transfer_client/FileTransferEventAdapter.h
+   file_transfer_client/FileTransferEventHandler.cpp
+   file_transfer_client/FileTransferEventHandler.h
+   file_transfer_client/FileTransferInterface.cpp
+   file_transfer_client/FileTransferInterface.h
+   file_transfer_client/FileTransferMessageProcessor.cpp
+   file_transfer_client/FileTransferMessageProcessor.h
+   file_transfer_client/FileTransferOperation.cpp
+   file_transfer_client/FileTransferOperation.h
+   file_transfer_client/FileTransferReplyBuffer.cpp
+   file_transfer_client/FileTransferReplyBuffer.h
+   file_transfer_client/FileTransferRequestSender.cpp
+   file_transfer_client/FileTransferRequestSender.h
    #ftp_client/ft_client_lib.vcproj
-   ftp_client/LocalFilesDeleteOperation.cpp
-   ftp_client/LocalFilesDeleteOperation.h
+   file_transfer_client/LocalFilesDeleteOperation.cpp
+   file_transfer_client/LocalFilesDeleteOperation.h
    #ftp_client/matter.txt
-   ftp_client/OperationEventListener.cpp
-   ftp_client/OperationEventListener.h
-   ftp_client/OperationNotPermittedException.cpp
-   ftp_client/OperationNotPermittedException.h
-   ftp_client/OperationSupport.cpp
-   ftp_client/OperationSupport.h
-   ftp_client/RemoteFileListOperation.cpp
-   ftp_client/RemoteFileListOperation.h
-   ftp_client/RemoteFileRenameOperation.cpp
-   ftp_client/RemoteFileRenameOperation.h
-   ftp_client/RemoteFilesDeleteOperation.cpp
-   ftp_client/RemoteFilesDeleteOperation.h
-   ftp_client/RemoteFolderCreateOperation.cpp
-   ftp_client/RemoteFolderCreateOperation.h
+   file_transfer_client/OperationEventListener.cpp
+   file_transfer_client/OperationEventListener.h
+   file_transfer_client/OperationNotPermittedException.cpp
+   file_transfer_client/OperationNotPermittedException.h
+   file_transfer_client/OperationSupport.cpp
+   file_transfer_client/OperationSupport.h
+   file_transfer_client/RemoteFileListOperation.cpp
+   file_transfer_client/RemoteFileListOperation.h
+   file_transfer_client/RemoteFileRenameOperation.cpp
+   file_transfer_client/RemoteFileRenameOperation.h
+   file_transfer_client/RemoteFilesDeleteOperation.cpp
+   file_transfer_client/RemoteFilesDeleteOperation.h
+   file_transfer_client/RemoteFolderCreateOperation.cpp
+   file_transfer_client/RemoteFolderCreateOperation.h
    #ftp_client/remoting_ftp_client.vcxproj
    #ftp_client/remoting_ftp_client.vcxproj.filters
    #ftp_client/remoting_ftp_client.vcxproj.user
-   ftp_client/resource.h
-   ftp_client/UploadOperation.cpp
-   ftp_client/UploadOperation.h
+   file_transfer_client/resource.h
+   file_transfer_client/UploadOperation.cpp
+   file_transfer_client/UploadOperation.h
    #ftp_common/_.cpp
    #ftp_common/_.h
    #ftp_common/_____debug.xcconfig
@@ -232,18 +232,18 @@ list(APPEND library_source
    #ftp_common/aaa_framework.cpp
    #ftp_common/aaa_framework.h
    #ftp_common/CMakeLists.txt
-   ftp_common/FileInfo.cpp
-   ftp_common/FileInfo.h
-   ftp_common/FileTransferException.cpp
-   ftp_common/FileTransferException.h
-   ftp_common/FolderListener.cpp
-   ftp_common/FolderListener.h
+   file_transfer_common/FileInfo.cpp
+   file_transfer_common/FileInfo.h
+   file_transfer_common/FileTransferException.cpp
+   file_transfer_common/FileTransferException.h
+   file_transfer_common/FolderListener.cpp
+   file_transfer_common/FolderListener.h
    #ftp_common/ft_common.vcproj
-   ftp_common/FTMessage.cpp
-   ftp_common/FTMessage.h
+   file_transfer_common/FTMessage.cpp
+   file_transfer_common/FTMessage.h
    #ftp_common/matter.txt
-   ftp_common/OperationNotSupportedException.cpp
-   ftp_common/OperationNotSupportedException.h
+   file_transfer_common/OperationNotSupportedException.cpp
+   file_transfer_common/OperationNotSupportedException.h
    #ftp_common/remoting_ftp_common.vcxproj
    #ftp_common/remoting_ftp_common.vcxproj.filters
    #ftp_common/remoting_ftp_common.vcxproj.user
@@ -255,9 +255,9 @@ list(APPEND library_source
    network/TcpClientThread.h
    network/TcpServer.cpp
    network/TcpServer.h
-   ftp_common/resource.h
-   ftp_common/WinFilePath.cpp
-   ftp_common/WinFilePath.h
+   file_transfer_common/resource.h
+   file_transfer_common/WinFilePath.cpp
+   file_transfer_common/WinFilePath.h
    region/RectSerializer.cpp
    region/RectSerializer.h
    region/Region.cpp
@@ -337,6 +337,7 @@ list(APPEND library_source
    rfb_sconn/TightPalette.h
    rfb_sconn/ZrleEncoder.cpp
    rfb_sconn/ZrleEncoder.h
+   server/NewConnectionEvents.h
 #   util/CommandLineFormatException.cpp
 #   util/CommandLineFormatException.h
 #   util/CommandLineFormatHelp.cpp

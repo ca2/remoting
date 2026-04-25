@@ -29,7 +29,24 @@ namespace remoting
 
    UpdateContainer::UpdateContainer() { clear(); }
 
+
+   UpdateContainer::UpdateContainer(UpdateContainer && updatecontainer):
+      m_regionCopied(::transfer(updatecontainer.m_regionCopied)),
+      m_regionChanged(::transfer(updatecontainer.m_regionChanged)),
+      m_regionVideo(::transfer(updatecontainer.m_regionVideo)),
+      m_bScreenSizeChanged(updatecontainer.m_bScreenSizeChanged),
+      m_bCursorPosChanged(updatecontainer.m_bCursorPosChanged),
+      m_bCursorShapeChanged(updatecontainer.m_bCursorShapeChanged),
+      m_pointCopySource(updatecontainer.m_pointCopySource),
+      m_pointCursorPos(updatecontainer.m_pointCursorPos)
+   {
+
+
+   }
+
    UpdateContainer::~UpdateContainer(void) {}
+
+
 
    void UpdateContainer::clear()
    {
@@ -45,15 +62,34 @@ namespace remoting
 
    UpdateContainer &UpdateContainer::operator=(const UpdateContainer &src)
    {
-      m_regionCopied = src.m_regionCopied;
-      m_regionChanged = src.m_regionChanged;
-      m_regionVideo = src.m_regionVideo;
-      m_bScreenSizeChanged = src.m_bScreenSizeChanged;
-      m_bCursorPosChanged = src.m_bCursorPosChanged;
-      m_bCursorShapeChanged = src.m_bCursorShapeChanged;
-      m_pointCopySource = src.m_pointCopySource;
-      m_pointCursorPos = src.m_pointCursorPos;
+      if (this != &src)
+      {
+         m_regionCopied = src.m_regionCopied;
+         m_regionChanged = src.m_regionChanged;
+         m_regionVideo = src.m_regionVideo;
+         m_bScreenSizeChanged = src.m_bScreenSizeChanged;
+         m_bCursorPosChanged = src.m_bCursorPosChanged;
+         m_bCursorShapeChanged = src.m_bCursorShapeChanged;
+         m_pointCopySource = src.m_pointCopySource;
+         m_pointCursorPos = src.m_pointCursorPos;
+      }
 
+      return *this;
+   }
+
+   UpdateContainer &UpdateContainer::operator=(UpdateContainer &&src)
+   {
+      if (this != &src)
+      {
+         m_regionCopied = ::transfer(src.m_regionCopied);
+         m_regionChanged = ::transfer(src.m_regionChanged);
+         m_regionVideo = ::transfer(src.m_regionVideo);
+         m_bScreenSizeChanged = src.m_bScreenSizeChanged;
+         m_bCursorPosChanged = src.m_bCursorPosChanged;
+         m_bCursorShapeChanged = src.m_bCursorShapeChanged;
+         m_pointCopySource = src.m_pointCopySource;
+         m_pointCursorPos = src.m_pointCursorPos;
+      }
       return *this;
    }
 

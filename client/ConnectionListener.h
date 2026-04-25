@@ -53,6 +53,6 @@ namespace remoting_client
 
       ::subsystem::OperatingSystemApplicationInterface*m_poperatingsystemapplication;
       ::list_base<::pointer < ::subsystem::SocketIPv4Interface > > m_connections;
-      critical_section m_connectionsLock;
+      critical_section m_criticalsectionConnections;
    };
 }//namespace remoting_client

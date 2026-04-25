@@ -38,8 +38,14 @@ namespace remoting
       UpdateContainer();
       ~UpdateContainer();
 
-      UpdateContainer(const UpdateContainer &updateContainer) { *this = updateContainer; }
+      UpdateContainer(const UpdateContainer &updatecontainer) { *this = updatecontainer; }
+      UpdateContainer(UpdateContainer && updatecontainer);
       UpdateContainer &operator=(const UpdateContainer &src);
+      UpdateContainer &operator=(UpdateContainer &&src);
+
+
+
+
 
       ::remoting::Region m_regionCopied;
       ::remoting::Region m_regionChanged;

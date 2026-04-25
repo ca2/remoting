@@ -43,7 +43,7 @@ private:
   SecurityAttributes m_pipeSecurity;
 
   ConnectionListener *m_connListener;
-  ::happening m_timer;
+  ::happening m_happeningTimer;
 };
 
 //// __LISTENLOGSERVER_H__

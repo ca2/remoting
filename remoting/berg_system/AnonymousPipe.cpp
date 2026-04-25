@@ -24,7 +24,7 @@
 #include "framework.h"
 //#include "acme/_operating_system.h"
 #include "AnonymousPipe.h"
-//#include "remoting/remoting/win_system/Environment.h"
+#include "subsystem/node/OperatingSystem.h"
 //#include "subsystem/thread/critical_section.h"
 
 AnonymousPipe::AnonymousPipe(HANDLE hWrite, HANDLE hRead, unsigned int maxPortionSize, ::subsystem::LogWriter * plogwriter)

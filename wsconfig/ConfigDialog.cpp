@@ -261,15 +261,15 @@ void ConfigDialog::onTabChanging()
 
 void ConfigDialog::moveDialogToTabControl(BaseDialog *dialog)
 {
-  RECT rect;
+  RECT rectangle;
   POINT first, last;
 
-  m_tabControl.adjustRect(&rect);
+  m_tabControl.adjustRect(rectangle);
 
-  first.x = rect.left;
-  first.y = rect.top;
-  last.x = rect.right;
-  last.y = rect.bottom;
+  first.x = rectangle.left;
+  first.y = rectangle.top;
+  last.x = rectangle.right;
+  last.y = rectangle.bottom;
 
   HWND hwndFrom = m_tabControl.operating_system_window();
   HWND hwndTo = dialog->operating_system_window();

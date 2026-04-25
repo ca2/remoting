@@ -42,9 +42,9 @@ private:
   virtual void execute();
   virtual void onTerminate();
 
-  TimerListener *m_timerListener;
+  TimerListener *m_happeningTimerListener;
   unsigned int m_timeOut;
-  ::happening m_timer;
+  ::happening m_happeningTimer;
   bool m_signalEnabled;
 };
 

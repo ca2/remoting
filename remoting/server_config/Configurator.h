@@ -43,7 +43,39 @@ namespace remoting
    class Configurator : public ::subsystem::ListenerContainer<ConfigReloadListener *>
    {
    public:
+      //protected:
 
+      //
+      // Server configuration
+      //
+
+      ::pointer < ServerConfig > m_pserverconfig;
+
+      //
+      // Is this flag is set configurator think than application run as service
+      //
+
+      bool m_isConfiguringService;
+      bool m_isConfigLoadedPartly;
+
+      //
+      // Registry security attributes.
+      //
+
+      // RegistrySecurityAttributes *m_regSA;
+
+      //
+      // Helper members
+      //
+
+      bool m_isFirstLoad;
+
+      //
+      // Global configurator object
+      //
+
+      //static Configurator *s_instance;
+      //static critical_section m_instanceMutex;
 
       Configurator();
       ~Configurator() override;
@@ -104,39 +136,7 @@ namespace remoting
 
       bool load(bool forService);
       bool save(bool forService);
-   //protected:
 
-      //
-      // Server configuration
-      //
-
-      ::pointer < ServerConfig > m_pserverconfig;
-
-      //
-      // Is this flag is set configurator think than application run as service
-      //
-
-      bool m_isConfiguringService;
-      bool m_isConfigLoadedPartly;
-
-      //
-      // Registry security attributes.
-      //
-
-      // RegistrySecurityAttributes *m_regSA;
-
-      //
-      // Helper members
-      //
-
-      bool m_isFirstLoad;
-
-      //
-      // Global configurator object
-      //
-
-      //static Configurator *s_instance;
-      //static critical_section m_instanceMutex;
    };
 
 

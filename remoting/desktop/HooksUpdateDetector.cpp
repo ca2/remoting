@@ -29,7 +29,9 @@
 #include "acme/operating_system/windows/_.h"
 #include "subsystem_windows/node/MessageWindow.h"
 #include "subsystem_windows/node/UipiControl.h"
-//#include "remoting/remoting/win_system/Environment.h"
+#include "subsystem/node/OperatingSystem.h"
+#include "subsystem_windows/node/UipiControl.h"
+#include "subsystem/node/OperatingSystem.h"
 
 namespace remoting
 {
@@ -125,10 +127,10 @@ namespace remoting
       {
          ::string path, folder;
          folder = MainSubsystem().OperatingSystem().getCurrentModuleFolderPath();;
-         path.formatf("{}\\{}", folder, HookDefinitions::HOOK_LOADER_NAME);
+         path.format("{}\\{}", folder, "hookdlr.exe");
          m_hookLoader32.setFilename(path);
          ::string hwndStr;
-         hwndStr.formatf("%I64u", (DWORD64)m_pmessagewindowTarget->getHWND());
+         hwndStr.formatf("%I64u", (DWORD64)m_pmessagewindowTarget->_HWND());
          m_hookLoader32.setArguments(hwndStr);
          try
          {
@@ -147,7 +149,8 @@ namespace remoting
       if (m_hookLoader32.getProcessHandle() != 0)
       {
          // Send broadcast scopedstrMessage to close the 32 bit hook loader.
-         broadcastMessage(HookDefinitions::LOADER_CLOSE_CODE);
+         //broadcastMessage(HookDefinitions::LOADER_CLOSE_CODE);
+         broadcastMessage(MainSubsystem().get_LOADER_CLOSE_CODE());
       }
    }
 
@@ -167,14 +170,14 @@ namespace remoting
 
       if (!isTerminating() && m_pmessagewindowTarget != 0)
       {
-         m_pmessagewindowTarget->createWindow();
-         m_plogwriter->information("Hooks target window has been created (hwnd = {})", m_pmessagewindowTarget->getHWND());
+         m_pmessagewindowTarget->createMessageWindow();
+         m_plogwriter->information("Hooks target window has been created (hwnd = {})", (::iptr)m_pmessagewindowTarget->_HWND());
       }
 
       try
       {
-         UipiControl uipiControl(m_plogwriter);
-         uipiControl.allowMessage(HookDefinitions::SPEC_IPC_CODE, m_pmessagewindowTarget->getHWND());
+         ::subsystem_windows::UipiControl uipiControl(m_plogwriter);
+         uipiControl.allowMessage(MainSubsystem().get_SPEC_IPC_CODE(), (HWND) m_pmessagewindowTarget->_HWND());
       }
       catch (::exception &e)
       {
@@ -187,7 +190,7 @@ namespace remoting
       {
          try
          {
-            m_hookInstaller->install(m_pmessagewindowTarget->getHWND());
+            m_hookInstaller->install(::as_operating_system_window((HWND)m_pmessagewindowTarget->_HWND()));
             hookInstalled = true;
          }
          catch (::exception &e)
@@ -212,22 +215,26 @@ namespace remoting
          m_plogwriter->information("Hooks update detector has been successfully initialized");
       }
 
+      HWND hwndMessageWindowTarget = (HWND) m_pmessagewindowTarget->_HWND();
+
+      UINT message_SPEC_IPC_CODE = MainSubsystem().get_SPEC_IPC_CODE();
+
       MSG msg;
       while (!isTerminating())
       {
-         if (PeekMessage(&msg, m_pmessagewindowTarget->getHWND(), 0, 0, PM_REMOVE) != 0)
+         if (PeekMessage(&msg, hwndMessageWindowTarget, 0, 0, PM_REMOVE) != 0)
          {
-            if (msg.scopedstrMessage == HookDefinitions::SPEC_IPC_CODE)
+            if (msg.message == message_SPEC_IPC_CODE)
             {
-               ::int_rectangle rect((short)(msg.wParam >> 16), (short)(msg.wParam & 0xffff), (short)(msg.lParam >> 16),
+               ::int_rectangle rectangle((short)(msg.wParam >> 16), (short)(msg.wParam & 0xffff), (short)(msg.lParam >> 16),
                                     (short)(msg.lParam & 0xffff));
-               if (rect.has_area())
+               if (rectangle.has_area())
                {
-                  m_pupdatekeeper->addChangedRect(rect);
-                  m_phookupdatetimer.sear();
+                  m_pupdatekeeper->addChangedRect(rectangle);
+                  m_phookupdatetimer->sear();
                }
-               //        m_plogwriter->debug("Screenhook update rectangle: {x={}, y={}, w={}, h={}}", rect.left,
-               //        rect.top, rect.width(), rect.height());
+               //        m_plogwriter->debug("Screenhook update rectangle: {x={}, y={}, w={}, h={}}", rectangle.left,
+               //        rectangle.top, rectangle.width(), rectangle.height());
             }
             else
             {

@@ -26,7 +26,7 @@
 #include "subsystem/_common_header.h"
 #include "remoting/node_desktop/NamingDefs.h"
 #include "subsystem/platform/Exception.h"
-//#include "remoting/remoting/win_system/Environment.h"
+#include "subsystem/node/OperatingSystem.h"
 #include "subsystem/platform/RegistryKey.h"
 //#include "subsystem/thread/critical_section.h"
 
@@ -55,13 +55,13 @@ void WinEventLog::enable()
 
 void WinEventLog::registerEventSource()
 {
-  critical_section_lock al(&m_hEventLogMutex);
+  critical_section_lock al(&m_criticalsectionEventLog);
   m_hEventLog = RegisterEventSource(0, LogNames::WIN_EVENT_PROVIDER_NAME);
 }
 
 void WinEventLog::deRegisterEventSource()
 {
-  critical_section_lock al(&m_hEventLogMutex);
+  critical_section_lock al(&m_criticalsectionEventLog);
   if (m_hEventLog)
     DeregisterEventSource(m_hEventLog);
   m_hEventLog = 0;
@@ -150,6 +150,6 @@ void WinEventLog::reportEvent(unsigned int messageId,
 
 HANDLE WinEventLog::getLogHandle()
 {
-  critical_section_lock al(&m_hEventLogMutex);
+  critical_section_lock al(&m_criticalsectionEventLog);
   return m_hEventLog;
 }

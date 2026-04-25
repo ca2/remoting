@@ -30,7 +30,7 @@
 #include "acme/input_output/DataInputStream.h"
 #include "CapContainer.h"
 
-#include "remoting/remoting/rfb/PixelFormat.h"
+#include "subsystem/framebuffer/PixelFormat.h"
 // External listeners
 #include "ClientAuthListener.h"
 
@@ -38,15 +38,37 @@ namespace remoting
 {
 
 
-   class RfbInitializer
+   class RfbInitializer :
+   virtual public ::particle
    {
    public:
-      RfbInitializer(Channel *stream, ClientAuthListener *extAuthListener, RfbClient *client, bool authAllowed);
-      virtual ~RfbInitializer();
+
+
+      ::pointer < DataOutputStream > m_pdataoutputstream;
+      ::pointer < DataInputStream > m_pdatainputstream;
+
+      bool m_shared;
+      unsigned int m_minorVerNum;
+      bool m_viewOnlyAuth;
+      bool m_tightEnabled;
+      bool m_bAuthAllowed;
+
+      ::pointer < ClientAuthListener > m_pclientauthlistener;
+      ::pointer < RfbClient > m_prfbclient;
+
+      ::pointer < Configurator > m_pconfigurator;
+
+
+      //RfbInitializer(Channel *stream, ClientAuthListener *pclientauthlistener, RfbClient *client, bool authAllowed);
+      RfbInitializer();
+      ~RfbInitializer() override;
+
+
+      virtual void initialize_rfb_initializer(Channel *pchannel, ClientAuthListener *pclientauthlistener, RfbClient *client, bool authAllowed);
 
       void authPhase();
       void afterAuthPhase(const CapContainer *srvToClCaps, const CapContainer *clToSrvCaps, const CapContainer *encCaps,
-                          const ::int_size &size, const ::innate_subsystem::PixelFormat &pf);
+                          const ::int_size &size, const ::innate_subsystem::PixelFormat & pixelformat);
 
       // Returns shared flag value. Shared flag value is valid only after
       // the authPhase() function calling.
@@ -55,13 +77,13 @@ namespace remoting
 
       bool getTightEnabledFlag() const { return m_tightEnabled; }
 
-   protected:
+   //protected:
       void initVersion();
       // @throw ::subsystem::Exception if loopback isn't allowed.
       void checkForLoopback();
       void initAuthenticate();
       void readClientInit();
-      void sendServerInit(const ::int_size &size, const ::innate_subsystem::PixelFormat &pf);
+      void sendServerInit(const ::int_size &size, const ::innate_subsystem::PixelFormat & pixelformat);
       void sendDesktopName();
       void sendInteractionCaps(const CapContainer *srvToClCaps, const CapContainer *clToSrvCaps,
                                const CapContainer *encCaps);
@@ -81,17 +103,6 @@ namespace remoting
       // or major version number is not 3, an ::subsystem::Exception will be thrown.
       unsigned int getProtocolMinorVersion(const char str[12]);
 
-      DataOutputStream *m_output;
-      DataInputStream *m_input;
-
-      bool m_shared;
-      unsigned int m_minorVerNum;
-      bool m_viewOnlyAuth;
-      bool m_tightEnabled;
-      bool m_authAllowed;
-
-      ClientAuthListener *m_extAuthListener;
-      RfbClient *m_client;
    };
 
 

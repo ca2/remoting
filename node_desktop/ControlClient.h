@@ -179,7 +179,7 @@ namespace remoting_node_desktop
        */
       void shareWindowIdMsgRcvd();
       /**
-       * Calling when "share rect id" scopedstrMessage recieved.
+       * Calling when "share rectangle id" scopedstrMessage recieved.
        */
       void shareRectIdMsgRcvd();
       /**

@@ -25,12 +25,12 @@
 
 #include "FileTransferCapability.h"
 
-#include "remoting/remoting/ftp_client/FileTransferRequestSender.h"
-#include "remoting/remoting/ftp_client/FileTransferReplyBuffer.h"
-#include "remoting/remoting/ftp_client/FileTransferMessageProcessor.h"
-#include "remoting/remoting/ftp_client/FileTransferCore.h"
+#include "remoting/remoting/file_transfer_client/FileTransferRequestSender.h"
+#include "remoting/remoting/file_transfer_client/FileTransferReplyBuffer.h"
+#include "remoting/remoting/file_transfer_client/FileTransferMessageProcessor.h"
+#include "remoting/remoting/file_transfer_client/FileTransferCore.h"
 
-#include "remoting/remoting/ftp_common/FTMessage.h"
+#include "remoting/remoting/file_transfer_common/FTMessage.h"
 #include "remoting/remoting/rfb/VendorDefs.h"
 
 
@@ -41,7 +41,7 @@ namespace remoting
    {
 
       FileTransferCapability::FileTransferCapability(::subsystem::LogWriter * plogwriter)
-      : m_plogwriter = plogwriter;,
+      : m_plogwriter(plogwriter),
         m_ftReplyBuffer(m_plogwriter),
         m_ftRequestSender(m_plogwriter),
         m_ftCore(m_plogwriter,

@@ -44,7 +44,7 @@ private:
 
   ParentEventsListener *m_parentEventListener;
   ParentProcess m_parentProcess;
-  ::happening m_timer;
+  ::happening m_happeningTimer;
 };
 
 //// __PARENTWATCHER_H__

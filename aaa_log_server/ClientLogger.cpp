@@ -96,7 +96,7 @@ void ClientLogWriter::connect()
   int logLevel = getLogBarrier();
   setLogBarrier(9);
   try {
-    critical_section_lock al(&m_logWritingMut);
+    critical_section_lock al(&m_criticalsectionLogWriting);
     writeLogDump();
   } catch (...) { // "finally"
     setLogBarrier(logLevel);
@@ -112,7 +112,7 @@ void ClientLogWriter::print(int logLevel, const ::scoped_string & scopedstrLine)
   unsigned int processId = GetCurrentProcessId();
   unsigned int threadId = GetCurrentThreadId();
 
-  critical_section_lock al(&m_logWritingMut);
+  critical_section_lock al(&m_criticalsectionLogWriting);
   updateLogDumpLines(processId, threadId, class ::time::now(), logLevel, line);
   flush(processId, threadId, class ::time::now(), logLevel, line);
 }
@@ -128,7 +128,7 @@ void ClientLogWriter::flush(unsigned int processId,
                          int level,
                          const ::scoped_string & scopedstrMessage)
 {
-  critical_section_lock al(&m_logWritingMut);
+  critical_section_lock al(&m_criticalsectionLogWriting);
 
   if (level <= getLogBarrier()) {
     if (m_logOutput != 0) {
@@ -146,13 +146,13 @@ void ClientLogWriter::flush(unsigned int processId,
 
 int ClientLogWriter::getLogBarrier()
 {
-  critical_section_lock al(&m_logBarMut);
+  critical_section_lock al(&m_criticalsectionLogBar);
   return m_logBarrier;
 }
 
 void ClientLogWriter::setLogBarrier(int newLogBar)
 {
-  critical_section_lock al(&m_logBarMut);
+  critical_section_lock al(&m_criticalsectionLogBar);
   m_logBarrier = newLogBar & 0xf;
 }
 

@@ -86,7 +86,7 @@ private:
 
   void fillScreenRect();
 
-  ::innate_subsystem::PixelFormat m_pixelFormat;
+  ::innate_subsystem::PixelFormat m_pixelformat;
   ::int_rectangle m_virtDesktopRect;
 };
 

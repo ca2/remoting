@@ -26,7 +26,7 @@
 
 
 #include "ViewPortState.h"
-#include "innate_subsystem/framebuffer/FrameBuffer.h"
+#include "innate_subsystem/framebuffer/Framebuffer.h"
 #include "remoting/remoting/desktop/Desktop.h"
 //#include "subsystem/thread/critical_section.h"
 //#include "subsystem/platform/class ::time.h"
@@ -39,12 +39,12 @@ namespace remoting
    // This class CLASS_DECL_REMOTING  calculates actual view port rectangle.
    // Typical usage:
    // // Initialisation
-   // ViewPort m_rectangleViewport;
+   // Viewport m_rectangleViewport;
    // ...
    // ...
-   // m_rectangleViewport.update(&frameBuffer->getDimension());
-   // ::int_rectangle rectangleViewport = m_rectangleViewport.getViewPortRect();
-   class CLASS_DECL_REMOTING  ViewPort :
+   // m_rectangleViewport.update(&pframebuffer->getDimension());
+   // ::int_rectangle rectangleViewport = m_rectangleViewport.getViewport();
+   class CLASS_DECL_REMOTING  Viewport :
    virtual public ::particle
    {
    public:
@@ -54,8 +54,8 @@ namespace remoting
 
       ::pointer < Desktop > m_pdesktop;
 
-      ViewPortState m_state;
-      ::int_rectangle m_rect;
+      ViewPortState m_viewportstate;
+      ::int_rectangle m_rectangle;
       ::remoting::Region m_regionApp;
       critical_section m_stateMutex;
 
@@ -63,14 +63,14 @@ namespace remoting
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
-      //ViewPort(::subsystem::LogWriter * plogwriter);
-      //ViewPort(const ViewPortState *viewPortState, ::subsystem::LogWriter * plogwriter);
-      ViewPort();
-      ~ViewPort() override;
+      //Viewport(::subsystem::LogWriter * plogwriter);
+      //Viewport(const ViewPortState *viewPortState, ::subsystem::LogWriter * plogwriter);
+      Viewport();
+      ~Viewport() override;
 
 
       virtual void initialize_viewport(::subsystem::LogWriter * plogwriter);
-      virtual void initialize_viewport(const ViewPortState *viewPortState, ::subsystem::LogWriter * plogwriter);
+      virtual void initialize_viewport(const ViewPortState & viewportstate, ::subsystem::LogWriter * plogwriter);
 
       // Sets desktop interface that can be used in some mode to get
       // desktop info. The desktop interface uses only in the update() function.
@@ -81,7 +81,7 @@ namespace remoting
       void update(const ::int_size &fbDimension);
 
       // This function returns the view port rectangle.
-      ::int_rectangle getViewPortRect();
+      ::int_rectangle getViewport();
 
       // Returns true if checked share only application.
       bool getOnlyApplication();
@@ -93,15 +93,15 @@ namespace remoting
       // Returns a region that has rectangles of application which was visible
       // window parts at latest calling of the update() function. The region
       // doesn't changes by the update function if checked mode isn't "shareapp".
-      void getApplicationRegion(::remoting::Region *region);
+      void getApplicationRegion(::remoting::Region & region);
 
       // Assignes self values by an external state.
       void changeState(const ViewPortState *newState);
 
    //private:
       // Disable the copy operation and constructor.
-     // ViewPort(const ViewPort &);
-      //ViewPort &operator=(const ViewPort &);
+     // Viewport(const Viewport &);
+      //Viewport &operator=(const Viewport &);
 
       // Resolves a window name of the view port state to window handle.
       // On an error the function do nothing.

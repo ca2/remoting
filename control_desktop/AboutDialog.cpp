@@ -28,7 +28,7 @@
 
 #include "remoting/remoting/win_system/Shell.h"
 #include "remoting/remoting/win_system/VersionInfo.h"
-//#include "remoting/remoting/win_system/Environment.h"
+#include "subsystem/node/OperatingSystem.h"
 
 #include "innate_subsystem/gui/::innate_subsystem::Control.h"
 

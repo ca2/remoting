@@ -210,7 +210,7 @@ namespace remoting_node_desktop
                      shareWindowIdMsgRcvd();
                      break;
                   case ControlProto::SHARE_RECT_MSG_ID:
-                     m_plogwriter->debug("Share rect scopedstrMessage recieved");
+                     m_plogwriter->debug("Share rectangle scopedstrMessage recieved");
                      shareRectIdMsgRcvd();
                      break;
                   case ControlProto::SHARE_FULL_MSG_ID:

@@ -53,9 +53,9 @@ size_t PortMappingContainer::find(PortMapping searchElement) const
 {
   for (size_t i = 0; i < count(); i++) {
     PortMapping each = m_vector.at(i);
-     PortMappingRect rect = each.getRect();
+     PortMappingRect rectangle = each.getRect();
     if (each.getPort() == searchElement.getPort() &&
-        rect == searchElement.getRect()) {
+        rectangle == searchElement.getRect()) {
       return i;
     }
   }
@@ -120,14 +120,14 @@ bool PortMappingContainer::equals(const PortMappingContainer *other) const
 void PortMappingContainer::serialize(DataOutputStream * pdataoutputstream) const
 {
   _ASSERT((unsigned int)count() == count());
-  output->writeUInt32((unsigned int)count());
+  pdataoutputstream->writeUInt32((unsigned int)count());
 
   ::string string;
 
   for (size_t i = 0; i < count(); i++) {
      at(i)->toString(string);
 
-    output->writeUTF8(string);
+    pdataoutputstream->writeUTF8(string);
   }
 }
 

@@ -44,7 +44,7 @@ void PortMappingRect::toString(::string & string) const
   string.format("%dx{}+{}+{}", right - left, bottom - top, left, top);
 }
 
-bool PortMappingRect::parse(const char * psz, PortMappingRect *pout)
+bool PortMappingRect::parse(const char * psz, PortMappingRect * pportmappingrectOut)
 {
   int width, height, x, y;
   char c;
@@ -54,11 +54,11 @@ bool PortMappingRect::parse(const char * psz, PortMappingRect *pout)
   if (width < 0 || height < 0) {
     return false;
   }
-  if (pout != NULL) {
-    pout->left = x;
-    pout->right = x + width;
-    pout->top = y;
-    pout->bottom = y + height;
+  if (pportmappingrectOut != NULL) {
+    pportmappingrectOut->left = x;
+    pportmappingrectOut->right = x + width;
+    pportmappingrectOut->top = y;
+    pportmappingrectOut->bottom = y + height;
   }
   return true;
 }

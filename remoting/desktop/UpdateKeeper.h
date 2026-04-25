@@ -44,22 +44,22 @@ namespace remoting
 
       virtual ::e_status lock()
       {
-         m_updContLocMut.lock();
+         m_criticalsectionUpdateContainer.lock();
          return ::success;
       }
 
-      virtual void unlock() { m_updContLocMut.unlock(); }
+      virtual void unlock() { m_criticalsectionUpdateContainer.unlock(); }
 
-      void addChangedRegion(const ::remoting::Region *m_regionChanged);
+      void addChangedRegion(const ::remoting::Region & regionChanged);
       void addChangedRect(const ::int_rectangle &changedRect);
       // Adds border rectangle to changed region.
       void dazzleChangedReg()
       {
-         critical_section_lock al(&m_updContLocMut);
-         addChangedRect(m_borderRect);
+         critical_section_lock al(&m_criticalsectionUpdateContainer);
+         addChangedRect(m_rectangleBorder);
       }
 
-      void addCopyRect(const ::int_rectangle &copyRect, const ::int_point &src);
+      void addCopyRect(const ::int_rectangle &rectangleCopy, const ::int_point &src);
 
       void setBorderRect(const ::int_rectangle &borderRect);
 
@@ -68,22 +68,23 @@ namespace remoting
       void setCursorPos(const ::int_point &curPos);
       void setCursorShapeChanged();
 
-      void setExcludedRegion(const ::remoting::Region *excludedRegion);
+      void setExcludedRegion(const ::remoting::Region & regionExcluded);
+      void clearExcludedRegion();
 
-      void addUpdateContainer(const UpdateContainer *updateContainer);
-      void getUpdateContainer(UpdateContainer *updCont);
-      bool checkForUpdates(const ::remoting::Region *region);
+      void addUpdateContainer(const UpdateContainer & updatecontainer);
+      UpdateContainer getUpdateContainer();
+      bool checkForUpdates(const ::remoting::Region & region);
 
-      void extract(UpdateContainer *updateContainer);
+      UpdateContainer extract();
 
    private:
-      ::int_rectangle m_borderRect;
+      ::int_rectangle m_rectangleBorder;
 
-      ::remoting::Region m_excludedRegion;
-      critical_section m_exclRegLocMut;
+      ::remoting::Region m_regionExcluded;
+      critical_section m_criticalsectionExclRegLoc;
 
-      UpdateContainer m_updateContainer;
-      critical_section m_updContLocMut;
+      UpdateContainer m_updatecontainer;
+      critical_section m_criticalsectionUpdateContainer;
    };
 
 

@@ -33,7 +33,7 @@
 namespace remoting
 {
    TcpConnection::TcpConnection(::subsystem::LogWriter * plogwriter)
-   : m_plogwriter = plogwriter;,
+   : m_plogwriter(plogwriter),
    m_socketOwner(false),
    //m_bufInput(0),
    m_RfbGatesOwner(false)

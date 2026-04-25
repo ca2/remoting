@@ -31,7 +31,7 @@
 #include "subsystem/thread/Thread.h"
 #include "remoting/remoting/network/RfbOutputGate.h"
 #include "remoting/remoting/desktop/Desktop.h"
-#include "remoting/remoting/fb_update_sender/UpdateSender.h"
+#include "remoting/remoting/framebuffer_update_sender/UpdateSender.h"
 //#include "log_writer/LogWriter.h"
 
 #include "RfbDispatcher.h"
@@ -39,7 +39,7 @@
 #include "ClientInputHandler.h"
 #include "ClientTerminationListener.h"
 #include "ClientInputEventListener.h"
-#include "remoting/node_desktop/NewConnectionEvents.h"
+//#include "remoting/remnode_desktop/NewConnectionEvents.h"
 #include "subsystem/platform/DemandTimer.h"
 
 namespace remoting
@@ -62,12 +62,62 @@ namespace remoting
    public:
 
 
-      RfbClient(::remoting_node_desktop::NewConnectionEvents *newConnectionEvents, ::subsystem::SocketIPv4Interface *socket,
-                ClientTerminationListener *extTermListener,
-                ClientAuthListener *extAuthListener, bool viewOnly,
+      struct rfb_client_run
+      {
+         ::pointer < RfbOutputGate > m_prfboutputgate;
+         ::pointer < BufferedInputStream > m_pbufferedinput;
+         ::pointer < RfbInputGate > m_prfbinputgate;
+
+         ::pointer < FileTransferRequestHandler > m_pfiletransfer;
+         ::pointer < EchoExtensionRequestHandler > m_pechoextension;
+
+         ::pointer < RfbInitializer > m_prfbinitializer;
+
+      };
+
+      ClientState m_clientState;
+      bool m_isMarkedOk;
+      critical_section m_criticalsectionClientState;
+      ::pointer < ClientTerminationListener > m_pclientterminationlistener;
+      //::happening m_connClosingEvent;
+      ::happening m_connClosingEvent;
+
+      ::pointer < ::subsystem::SocketIPv4Interface > m_psocket;
+
+      ::pointer < ClientAuthListener > m_pclientauthlistener;
+
+      ::pointer < Viewport > m_pviewportConst;
+      ::pointer < Viewport > m_pviewportDynamic;
+      critical_section m_criticalsectionViewport;
+
+      ::pointer < UpdateSender > m_updateSender;
+      ::pointer < ClipboardExchange > m_clipboardExchange;
+      ::pointer < ClientInputHandler > m_clientInputHandler;
+      ::pointer < Desktop > m_pdesktop;
+
+      bool m_viewOnly;
+      bool m_isOutgoing;
+      bool m_viewOnlyAuth;
+      bool m_shared;
+
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
+
+      // Information
+      unsigned int m_id;
+
+      ::pointer < ::remoting_node::NewConnectionEvents>m_pnewconnectionevents;
+      // This timer sets by IdleTimeout value from server config
+      // and resets on mouse or keyboard event
+      ::subsystem::DemandTimer m_demandtimerIdle;
+      int m_idleTimeout;
+
+
+      RfbClient(::remoting_node::NewConnectionEvents *newConnectionEvents, ::subsystem::SocketIPv4Interface *socket,
+                ClientTerminationListener *pclientterminationlistener,
+                ClientAuthListener *pclientauthlistener, bool viewOnly,
                 bool isOutgoing, unsigned int id,
-                const ViewPortState *constViewPort,
-                const ViewPortState *dynViewPort,
+                const ViewPortState & viewportstateConst,
+                const ViewPortState & viewportstateDynamic,
                 int idleTimeout,
                 ::subsystem::LogWriter * plogwriter);
 
@@ -95,7 +145,7 @@ namespace remoting
       void changeDynViewPort(const ViewPortState *dynViewPort);
 
       bool clientIsReady() const { return m_updateSender->clientIsReady(); }
-      void sendUpdate(const UpdateContainer *updateContainer,
+      void sendUpdate(const UpdateContainer & updatecontainer,
                       const ::remoting::CursorShape *cursorShape);
       void sendClipboard(const ::scoped_string & newClipboard);
 
@@ -119,46 +169,11 @@ namespace remoting
 
       void setClientState(ClientState newState);
 
-      ::int_rectangle getViewPortRect(const ::int_size & fbDimension);
-      virtual void onGetViewPort(::int_rectangle *viewRect, bool *shareApp, ::remoting::Region *shareAppRegion);
-      void getViewPortInfo(const ::int_size & fbDimension, ::int_rectangle *resultRect,
-                           bool *shareApp, ::remoting::Region *shareAppRegion);
+      ::int_rectangle getViewport(const ::int_size & fbDimension);
+      virtual void onGetViewPort(::int_rectangle &viewRect, bool *shareApp, ::remoting::Region & regionShareApp);
+      void getViewPortInfo(const ::int_size & fbDimension, ::int_rectangle &resultRect,
+                           bool *shareApp, ::remoting::Region & regionShareApp);
 
-      ClientState m_clientState;
-      bool m_isMarkedOk;
-      critical_section m_clientStateMut;
-      ClientTerminationListener *m_extTermListener;
-      //::happening m_connClosingEvent;
-      ::happening m_connClosingEvent;
-
-      ::subsystem::SocketIPv4 *m_socket;
-
-      ClientAuthListener *m_extAuthListener;
-
-      ViewPort m_constViewPort;
-      ViewPort m_dynamicViewPort;
-      critical_section m_viewPortMutex;
-
-      UpdateSender *m_updateSender;
-      ClipboardExchange *m_clipboardExchange;
-      ClientInputHandler *m_clientInputHandler;
-      ::pointer < Desktop > m_pdesktop;
-
-      bool m_viewOnly;
-      bool m_isOutgoing;
-      bool m_viewOnlyAuth;
-      bool m_shared;
-
-      ::pointer < ::subsystem::LogWriter > m_plogwriter;
-
-      // Information
-      unsigned int m_id;
-
-      ::remoting_node_desktop::NewConnectionEvents *m_pnewconnectionevents;
-      // This timer sets by IdleTimeout value from server config
-      // and resets on mouse or keyboard event
-      ::subsystem::DemandTimer m_demandtimerIdle;
-      int m_idleTimeout;
    };
 
 

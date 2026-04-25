@@ -58,7 +58,7 @@ void FileAccount::init(const ::scoped_string & scopedstrLogDir, const ::scoped_s
 {
   m_strFileName= fileName;
 
-  critical_section_lock al(&m_logMut);
+  critical_section_lock al(&m_criticalsectionLog);
   setNewFile(logLevel, logDir);
   // The log dump now must be disabled and cleared even if logLevel is zero.
   terminateLogDumping();
@@ -89,7 +89,7 @@ void FileAccount::print(unsigned int processId,
                         int level,
                         const ::scoped_string & scopedstrMessage)
 {
-  critical_section_lock al(&m_logMut);
+  critical_section_lock al(&m_criticalsectionLog);
 
   updateLogHeaderLines(processId, threadId, dt, level, scopedstrMessage);
   updateLogDumpLines(processId, threadId, dt, level, scopedstrMessage);
@@ -112,7 +112,7 @@ void FileAccount::flush(unsigned int processId,
                         int level,
                         const ::scoped_string & scopedstrMessage)
 {
-  critical_section_lock al(&m_logMut);
+  critical_section_lock al(&m_criticalsectionLog);
 
   if (printsLine(level)) {
     format(processId, threadId, dt, level, scopedstrMessage);
@@ -140,7 +140,7 @@ void FileAccount::format(unsigned int processId,
   dt.toUtcSystemTime(&st);
   unsigned char logBarrier;
   {
-    critical_section_lock al(&m_logMut);
+    critical_section_lock al(&m_criticalsectionLog);
     logBarrier = m_level;
   }
   if (logBarrier < 9) {
@@ -182,7 +182,7 @@ void FileAccount::format(unsigned int processId,
 
 void FileAccount::setNewFile(unsigned char newLevel, const ::scoped_string & scopedstrNewDir)
 {
-  critical_section_lock al(&m_logMut);
+  critical_section_lock al(&m_criticalsectionLog);
   bool levelChanged = newLevel != m_level;
   bool levelChangedFromZero = levelChanged && m_level == 0;
   bool logDirChanged = !m_logDir.isEqualTo(newDir);
@@ -258,7 +258,7 @@ void FileAccount::openFile()
   if (Unicode::isEnabled() && asFirstOpen) {
     try {
       addUnicodeSignature();
-      critical_section_lock al(&m_logMut);
+      critical_section_lock al(&m_criticalsectionLog);
       if (getLogDumpSize() != 0) {
         // The log dump already contains the header and then is not needed to call
         // writeLogHeader().

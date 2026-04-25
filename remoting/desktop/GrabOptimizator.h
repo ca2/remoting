@@ -42,6 +42,10 @@ namespace remoting
    {
    public:
 
+      static const size_t MIN_ELEMENTS_SIZE = 3;
+      static const size_t MAX_ELEMENTS_SIZE = 10;
+
+
       int m_wholeS;
       ::list_base<double> m_wholeTElements;
       double m_wholeTSum;
@@ -49,7 +53,7 @@ namespace remoting
       ::list_base<double> m_gElements;
       double m_gSum;
 
-      ::subsystem::DemandTimer m_timer;
+      ::subsystem::DemandTimer m_happeningTimer;
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
@@ -60,7 +64,7 @@ namespace remoting
 
       virtual void initialize_grab_optimizator(::subsystem::LogWriter * plogwriter);
 
-      bool grab(const ::remoting::Region *grabRegion, ScreenDriver *grabber);
+      bool grab(const ::remoting::Region & regionGrab, ScreenDriver *grabber);
 
    //private:
       // Returns true when the m_wholeTElements is comletly calculated.
@@ -79,24 +83,22 @@ namespace remoting
       void refreshStatistic(ScreenDriver *grabber);
 
       // Returns absolute sum area of rectangle ::array_base.
-      int getArea(const ::int_rectangle_array_base *rects);
+      int getArea(const ::int_rectangle_array_base & rectanglea);
 
       // If the grab region is alike to whole desktop the function return true.
-      bool isAlikeToWhole(const ::int_rectangle_array_base *rects);
-      bool isEnoughForWholeStats(const ::int_rectangle &rect);
+      bool isAlikeToWhole(const ::int_rectangle_array_base & rectanglea);
+      bool isEnoughForWholeStats(const ::int_rectangle & rectangle);
       // If the grab region is alike to separate fragments the function
       // return true.
-      bool isAlikeToFragments(const ::int_rectangle_array_base *rects);
+      bool isAlikeToFragments(const ::int_rectangle_array_base & rectanglea);
 
       // This functions store to the log all statistic data.
       void logStatistic();
 
-      static const size_t MIN_ELEMENTS_SIZE = 3;
-      static const size_t MAX_ELEMENTS_SIZE = 10;
 
-      __int64 grabWhole(ScreenDriver *grabber);
-      __int64 grabOneRect(const ::int_rectangle &rect, ScreenDriver *grabber);
-      __int64 grabFragments(const ::int_rectangle_array_base *rects, ScreenDriver *grabber);
+      long long grabWhole(ScreenDriver *grabber);
+      long long grabOneRect(const ::int_rectangle & rectangle, ScreenDriver *grabber);
+      long long grabFragments(const ::int_rectangle_array_base & rectanglea, ScreenDriver *grabber);
 
       void addWholeTElement(double wholeT);
       void removeObsoleteWholeTElements();

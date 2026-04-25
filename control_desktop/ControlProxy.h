@@ -126,11 +126,11 @@ public:
   // Share only the display for all clients.
   void shareDisplay(unsigned char displayNumber);
 
-  // Share a rect that constrained by a window form.
+  // Share a rectangle that constrained by a window form.
   // shareWindowName - is a part of the window header name.
   void shareWindow(const ::scoped_string & shareWindowName);
 
-  // Share only a rect.
+  // Share only a rectangle.
   void shareRect(const ::int_rectangle &  shareRect);
 
   // Share full desktop for all clients.

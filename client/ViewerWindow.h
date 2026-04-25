@@ -195,8 +195,8 @@ namespace remoting_client
         void onDisconnect(const ::scoped_string & scopedstrMessage);
         void onAuthError(const ::remoting::AuthException *exception);
         void onError(const ::subsystem::Exception *exception);
-        void onFrameBufferUpdate(const ::innate_subsystem::FrameBuffer *pframebuffer, const ::int_rectangle &  rect);
-        void onFrameBufferPropChange(const ::innate_subsystem::FrameBuffer *pframebuffer);
+        void onFramebufferUpdate(const ::innate_subsystem::Framebuffer *pframebuffer, const ::int_rectangle &  rectangle);
+        void onFramebufferPropChange(const ::innate_subsystem::Framebuffer *pframebuffer);
         void onCutText(const ::scoped_string & cutText);
 
         int translateAccelToTB(int val);
@@ -204,9 +204,9 @@ namespace remoting_client
 
        ::innate_subsystem::ControlInterface * getControl();
 
-        // function return default rect of viewer window:
-        // if size of remote screen is more local desktop, then return rect of desktop
-        // else return rect of remote screen + border
+        // function return default rectangle of viewer window:
+        // if size of remote screen is more local desktop, then return rectangle of desktop
+        // else return rectangle of remote screen + border
         bool onCalculateDefaultSize(::int_rectangle & rectangleDefaultSize) override;
 
         void changeCursor(int type);

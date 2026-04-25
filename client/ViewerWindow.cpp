@@ -763,7 +763,7 @@ namespace remoting_client
                 int wndWidth = rcWindow.width() - 1;
                 int wndHeight = rcWindow.height();
 
-                ::int_rectangle screen = m_pdesktopwindow->getFrameBufferGeometry();
+                ::int_rectangle screen = m_pdesktopwindow->getFramebufferGeometry();
 
                 if (wndWidth * screen.height() <= wndHeight * screen.width()) {
                     m_pconnectionconfig->setScale(wndWidth, screen.width());
@@ -829,7 +829,7 @@ namespace remoting_client
                 commandPause();
                 return true;
             case IDS_TB_REFRESH:
-                m_pviewercore->refreshFrameBuffer();
+                m_pviewercore->refreshFramebuffer();
                 return true;
             case IDS_TB_CTRLALTDEL:
                 commandCtrlAltDel();
@@ -1235,7 +1235,7 @@ namespace remoting_client
         int x, y;
 
         auto rc = getClientRect();
-        m_plogwriter->debug("client rect: {}, {}; {}, {}",
+        m_plogwriter->debug("client rectangle: {}, {}; {}, {}",
                           rc.left, rc.top, rc.right, rc.bottom);
         x = y = 0;
         if (m_toolbar.isVisible()) {
@@ -1472,15 +1472,15 @@ namespace remoting_client
         postMessage(WM_USER_ERROR);
     }
 
-    void ViewerWindow::onFrameBufferUpdate(const ::innate_subsystem::FrameBuffer *pframebuffer, const ::int_rectangle &  rect)
+    void ViewerWindow::onFramebufferUpdate(const ::innate_subsystem::Framebuffer *pframebuffer, const ::int_rectangle &  rectangle)
     {
-        m_pdesktopwindow->updateFramebuffer(pframebuffer, rect);
+        m_pdesktopwindow->updateFramebuffer(pframebuffer, rectangle);
     }
 
-    void ViewerWindow::onFrameBufferPropChange(const ::innate_subsystem::FrameBuffer *pframebuffer)
+    void ViewerWindow::onFramebufferPropChange(const ::innate_subsystem::Framebuffer *pframebuffer)
     {
         //   m_pdesktopwindow->m_iDivisor = m_pconnectiondata->getDivisor();
-        // ((::innate_subsystem::FrameBuffer*)pframebuffer)->m_iDivisor = m_pdesktopwindow->m_iDivisor;
+        // ((::innate_subsystem::Framebuffer*)pframebuffer)->m_iDivisor = m_pdesktopwindow->m_iDivisor;
         m_pdesktopwindow->setNewFramebuffer(pframebuffer);
     }
 

@@ -26,7 +26,7 @@
 
 
 #include "subsystem/node/Clipboard.h"
-#include "innate_subsystem/framebuffer/DibFrameBuffer.h"
+#include "innate_subsystem/framebuffer/DibFramebuffer.h"
 
 
 #include "ScaleManager.h"
@@ -63,20 +63,20 @@ namespace remoting_client
 
         //virtual void _defer_update_double_buffering();
         void setClipboardData(const ::scoped_string & strText);
-        void updateFramebuffer(const ::innate_subsystem::FrameBuffer * pframebuffer,
-                               const ::int_rectangle &  dstRect);
+        void updateFramebuffer(const ::innate_subsystem::Framebuffer * pframebuffer,
+                               const ::int_rectangle &  rectangleTarget);
         // this function must be called if size of image was changed
         // or the number of bits per pixel
-        void setNewFramebuffer(const ::innate_subsystem::FrameBuffer * pframebuffer);
+        void setNewFramebuffer(const ::innate_subsystem::Framebuffer * pframebuffer);
 
         // set scale of image, can -1 = Auto, in percent
         void setScale(int scale);
         // it returns the image width and height considering scale
         ::int_rectangle getViewerGeometry();
         // it returns the image width and height.
-        ::int_rectangle getFrameBufferGeometry();
+        ::int_rectangle getFramebufferGeometry();
         // it return size of server frame buffer and pixelsize.
-        void getServerGeometry(::int_rectangle *rect, int *pixelsize);
+        void getServerGeometry(::int_rectangle rectangle, int *pixelsize);
 
         void setConnected();
         void setViewerCore(::remoting::RemoteViewerCore *viewerCore);
@@ -168,8 +168,8 @@ namespace remoting_client
         ::innate_subsystem::SolidBrush m_brush;
 
         // frame buffer
-        critical_section m_bufferLock;
-        ::innate_subsystem::DibFrameBuffer m_framebuffer;
+        critical_section m_criticalsectionBuffer;
+        ::innate_subsystem::DibFramebuffer m_framebuffer;
         // This variable save server dimension.
         // ::int_size of m_framebuffer can be large m_serverDimension.
         ::int_size m_serverDimension;
@@ -188,7 +188,7 @@ namespace remoting_client
     public:
         //void doDraw(DeviceContext *dc);
         void onDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle) override;
-       //void onPaint(::innate_subsystem::DeviceContextInterface *pgraphics, const ::int_rectangle &rectangle) override;
+       //void onPaint(::innate_subsystem::DeviceContextInterface *pgraphics, const ::int_rectangle & rectangle) override;
         void scrollProcessing(int fbWidth, int fbHeight);
         void drawBackground(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rcMain, const ::int_rectangle & rcImage);
         void drawImage(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & src, const ::int_rectangle & dst);

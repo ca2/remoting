@@ -32,7 +32,8 @@
 
 namespace remoting
 {
-   class ClientAuthListener
+   class ClientAuthListener :
+   virtual public ::particle
    {
    public:
       virtual ~ClientAuthListener() {}

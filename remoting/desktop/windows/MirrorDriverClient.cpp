@@ -24,9 +24,9 @@
 #include "framework.h"
 #include "MirrorDriverClient.h"
 #include "subsystem/platform/Exception.h"
-//#include "remoting/remoting/win_system/Environment.h"
+#include "subsystem/node/OperatingSystem.h"
 // FIXME: Why the class CLASS_DECL_REMOTING should depence from the remoting_node_desktop project?
-#include "remoting/node_desktop/NamingDefs.h"
+//#include "remoting/node_desktop/NamingDefs.h"
 
 namespace remoting
 {
@@ -91,7 +91,7 @@ namespace remoting
       }
    }
 
-   ::innate_subsystem::PixelFormat MirrorDriverClient::getPixelFormat() const { return m_pixelFormat; }
+   ::innate_subsystem::PixelFormat MirrorDriverClient::getPixelFormat() const { return m_pixelformat; }
 
    ::int_size MirrorDriverClient::getDimension() const { return m_dimension; }
 
@@ -217,7 +217,7 @@ namespace remoting
 
          m_deviceMode.dmPelsWidth = m_dimension.cx;
          m_deviceMode.dmPelsHeight = m_dimension.cy;
-         m_deviceMode.dmBitsPerPel = m_pixelFormat.bitsPerPixel;
+         m_deviceMode.dmBitsPerPel = m_pixelformat.bitsPerPixel;
          m_deviceMode.dmPosition.x = m_leftTopCorner.x;
          m_deviceMode.dmPosition.y = m_leftTopCorner.y;
 
@@ -246,15 +246,15 @@ namespace remoting
       // It is indifferently to cpu usage for the driver what
       // a pixel format will use.
       // So, a fixed pixel format looks good.
-      m_pixelFormat.initBigEndianByNative();
-      m_pixelFormat.bitsPerPixel = 32;
-      m_pixelFormat.redMax = 255;
-      m_pixelFormat.redShift = 16;
-      m_pixelFormat.greenMax = 255;
-      m_pixelFormat.greenShift = 8;
-      m_pixelFormat.blueMax = 255;
-      m_pixelFormat.blueShift = 0;
-      m_pixelFormat.colorDepth = 24;
+      m_pixelformat.initBigEndianByNative();
+      m_pixelformat.bitsPerPixel = 32;
+      m_pixelformat.redMax = 255;
+      m_pixelformat.redShift = 16;
+      m_pixelformat.greenMax = 255;
+      m_pixelformat.greenShift = 8;
+      m_pixelformat.blueMax = 255;
+      m_pixelformat.blueShift = 0;
+      m_pixelformat.colorDepth = 24;
 
       ::int_rectangle virtDeskRect = m_screen.getDesktopRect();
       m_dimension.setDim(&virtDeskRect);

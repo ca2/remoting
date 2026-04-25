@@ -141,14 +141,14 @@ namespace remoting_node_desktop
          for (size_t i = 0; i < newConf.extraPorts.count(); i++)
          {
             PortMapping pm = *newConf.extraPorts.at(i);
-            PortMappingRect rect = pm.getRect();
+            PortMappingRect rectangle = pm.getRect();
             int port = pm.getPort();
 
             m_plogwriter->debug("Starting extra RFB server at port {}", port);
 
             try
             {
-               RfbServer *s = new RfbServer(pszBindHost, m_pconfigurator, port, mgr, asService, m_plogwriter, rect);
+               RfbServer *s = new RfbServer(pszBindHost, m_pconfigurator, port, mgr, asService, m_plogwriter, rectangle);
                m_servers.add(s);
                m_plogwriter->debug("Started extra RFB server at port {}", port);
             }

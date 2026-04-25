@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "ConfigReloadListener.h"
-
+#include "remoting/remoting/server_config/Configurator.h"
 
 namespace remoting
 {

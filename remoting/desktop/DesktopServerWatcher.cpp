@@ -23,15 +23,16 @@
 //
 #include "framework.h"
 #include "DesktopServerWatcher.h"
-//#include "remoting/remoting/win_system/Environment.h"
+#include "subsystem/node/OperatingSystem.h"
 #include "subsystem/platform/Exception.h"
 #include "remoting/remoting/server_config/Configurator.h"
 #include "subsystem_windows/node/CurrentConsoleProcess.h"
 #include "subsystem_windows/node/AnonymousPipeFactory.h"
 #include "subsystem_windows/node/EmulatedAnonymousPipeFactory.h"
+#include "subsystem_windows/node/SharedMemory.h"
 #include "subsystem_windows/node/WTS.h"
 #include "subsystem_windows/platform/subsystem.h"
-
+#include "subsystem/node/OperatingSystem.h"
 #include "subsystem_windows/node/WinStaLibrary.h"
 #include "subsystem_windows/node/WinHandles.h"
 #include "subsystem_windows/node/SharedMemory.h"
@@ -99,8 +100,8 @@ namespace remoting
 
       try
       {
-         bool connectRdpSession = m_pconfigurator->getServerConfig()->getConnectToRdpFlag();
-         m_pprocess = new CurrentConsoleProcess(m_plogwriter, connectRdpSession, path);
+         bool bConnectRdpSession = m_pconfigurator->getServerConfig()->getConnectToRdpFlag();
+         m_pprocess = MainSubsystem().createCurrentConsoleProcess(m_plogwriter, bConnectRdpSession, path);
       }
       catch (...)
       {
@@ -112,9 +113,11 @@ namespace remoting
 
    void DesktopServerWatcher::execute()
    {
-      AnonymousPipeFactory pipeFactory(512 * 1024, m_plogwriter);
+      ::subsystem::AnonymousPipeFactory pipeFactory;
 
-      AnonymousPipe *ownSidePipeChanTo, *otherSidePipeChanTo, *ownSidePipeChanFrom, *otherSidePipeChanFrom;
+      pipeFactory.initialize_anonymous_pipe_factory(512 * 1024, m_plogwriter);
+
+      ::pointer < ::subsystem::AnonymousPipeInterface > ownSidePipeChanTo, otherSidePipeChanTo, ownSidePipeChanFrom, otherSidePipeChanFrom;
 
       while (!isTerminating())
       {
@@ -124,9 +127,9 @@ namespace remoting
             srand((unsigned)time(0));
             for (int i = 0; i < 20; i++)
             {
-               shMemName.appendChar('a' + rand() % ('z' - 'a'));
+               shMemName+=(char)('a' + rand() % ('z' - 'a'));
             }
-            SharedMemory sharedMemory(shMemName, 72);
+            ::subsystem_windows::SharedMemory sharedMemory(shMemName, 72);
             unsigned long long *mem = (unsigned long long *)sharedMemory.getMemPointer();
 
             // Sets memory ready flag to false.
@@ -134,16 +137,16 @@ namespace remoting
 
             ownSidePipeChanTo = otherSidePipeChanTo = ownSidePipeChanFrom = otherSidePipeChanFrom = 0;
 
-            pipeFactory.generatePipes(&ownSidePipeChanTo, false, &otherSidePipeChanTo, false);
-            pipeFactory.generatePipes(&ownSidePipeChanFrom, false, &otherSidePipeChanFrom, false);
+            pipeFactory.generatePipes(ownSidePipeChanTo, false, otherSidePipeChanTo, false);
+            pipeFactory.generatePipes(ownSidePipeChanFrom, false, otherSidePipeChanFrom, false);
 
             // TightVNC server log directory.
             ::string logDir;
-            m_pconfigurator->getServerConfig()->getLogFileDir(&logDir);
+            m_pconfigurator->getServerConfig()->getLogFileDir(logDir);
 
             // Arguments that must be passed to desktop server application.
             ::string args;
-            args.formatf("-desktopserver -logdir \"{}\" -loglevel {} -shmemname {}", logDir,
+            args.format("-desktopserver -logdir \"{}\" -loglevel {} -shmemname {}", logDir,
                          m_pconfigurator->getServerConfig()->getLogLevel(), shMemName);
 
             m_pprocess->setArguments(args);

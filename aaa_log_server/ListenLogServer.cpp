@@ -37,7 +37,7 @@ ListenLogServer::ListenLogServer(const ::scoped_string & scopedstrPublicPipeName
 ListenLogServer::~ListenLogServer()
 {
   terminate();
-  m_timer.notify();
+  m_happeningTimer.notify();
   m_listenPipe->close();
   wait();
   delete m_listenPipe;
@@ -51,7 +51,7 @@ void ListenLogServer::execute()
       m_connListener->onNewConnection(pipe);
     } catch (...) {
       if (!isTerminating()) {
-        m_timer.waitForEvent(1000); // Pause
+        m_happeningTimer.waitForEvent(1000); // Pause
       }
     }
   }

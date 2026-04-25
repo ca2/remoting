@@ -32,14 +32,14 @@
 #include "innate_subsystem/gui/ImagedButton.h"
 #include "innate_subsystem/gui/ProgressBar.h"
 
-#include "remoting/remoting/ftp_common/FileInfo.h"
+#include "remoting/remoting/file_transfer_common/FileInfo.h"
 
 #include "acme/exception/io.h"
 
 #include "FileInfoListView.h"
 #include "FileExistDialog.h"
 #include "subsystem/thread/Thread.h"
-#include "remoting/remoting/ftp_client/FileTransferInterface.h"
+#include "remoting/remoting/file_transfer_client/FileTransferInterface.h"
 
 //#include aaa_<vector>
 namespace remoting_client

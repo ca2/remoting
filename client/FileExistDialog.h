@@ -26,7 +26,7 @@
 
 #include "innate_subsystem/gui/Dialog.h"
 #include "innate_subsystem/gui/Control.h"
-#include "remoting/remoting/ftp_common/FileInfo.h"
+#include "remoting/remoting/file_transfer_common/FileInfo.h"
 
 
 namespace remoting_client

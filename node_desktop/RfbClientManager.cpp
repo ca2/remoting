@@ -219,7 +219,7 @@ namespace remoting_node_desktop
       }
    }
 
-   void RfbClientManager::onSendUpdate(const UpdateContainer *updateContainer,
+   void RfbClientManager::onSendUpdate(const UpdateContainer & updatecontainer,
                                        const ::remoting::CursorShape *cursorShape)
    {
       critical_section_lock al(&m_clientListLocker);
@@ -227,7 +227,7 @@ namespace remoting_node_desktop
       {
          if ((*iter)->getClientState() == IN_NORMAL_PHASE)
          {
-            (*iter)->sendUpdate(updateContainer, cursorShape);
+            (*iter)->sendUpdate(updatecontainer, cursorShape);
          }
       }
    }

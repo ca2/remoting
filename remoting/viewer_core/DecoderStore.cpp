@@ -31,7 +31,7 @@
 namespace remoting
 {
    DecoderStore::DecoderStore(::subsystem::LogWriter * plogwriter)
-   : m_plogwriter = plogwriter;,
+   : m_plogwriter(plogwriter),
      m_preferredEncoding(EncodingDefs::TIGHT),
      m_allowCopyRect(true)
    {
@@ -72,7 +72,7 @@ namespace remoting
            i++) {
          // preferred encoding is skipping
          if (i->m_element1 != m_preferredEncoding) {
-            // copy rect is allowed?
+            // copy rectangle is allowed?
             if (i->m_element1 != EncodingDefs::COPYRECT || m_allowCopyRect)
                decoders.add({i->m_element2.m_element1, i->m_element1});
          }

@@ -37,17 +37,17 @@ public:
   PortMappingRect();
   virtual ~PortMappingRect();
 
-  // Converts this rect to string value.
+  // Converts this rectangle to string value.
   void toString(::string & string) const;
 
-  // Returns true if string can be parsed to rect object,
+  // Returns true if string can be parsed to rectangle object,
   // false otherwise.
   static bool tryParse(const char * psz);
 
-  // Parsed string and sets parsed values to output rect.
+  // Parsed string and sets parsed values to output rectangle.
   // Returns true if string is valid, false otherwise.
   // Remark: "out" parameter can be null.
-  static bool parse(const char * psz,  PortMappingRect *out);
+  static bool parse(const char * psz,  PortMappingRect * pportmappingrectOut);
 };
 
 

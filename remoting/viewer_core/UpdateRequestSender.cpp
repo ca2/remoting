@@ -5,7 +5,7 @@
 
 namespace remoting
 {
-   UpdateRequestSender::UpdateRequestSender(LockableBase* plockable, ::innate_subsystem::FrameBuffer* m_frame_buffer, ::subsystem::LogWriter* m_log_writer):
+   UpdateRequestSender::UpdateRequestSender(LockableBase* plockable, ::innate_subsystem::Framebuffer* m_frame_buffer, ::subsystem::LogWriter* m_log_writer):
       m_wasUpdateRecieved(false),
       m_timeOut(0),
       m_isIncrimental(true),

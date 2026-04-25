@@ -30,10 +30,10 @@
 
 namespace remoting
 {
-   FbUpdateNotifier::FbUpdateNotifier(::innate_subsystem::FrameBuffer *pframebuffer, critical_section *fbLock, ::subsystem::LogWriter * plogwriter, WatermarksController* wmController)
+   FbUpdateNotifier::FbUpdateNotifier(::innate_subsystem::Framebuffer *pframebuffer, critical_section *fbLock, ::subsystem::LogWriter * plogwriter, WatermarksController* wmController)
    : m_pframebuffer(pframebuffer),
      m_fbLock(fbLock),
-     m_plogwriter = plogwriter;,
+     m_plogwriter(plogwriter),
      m_cursorPainter(pframebuffer, plogwriter),
      m_isNewSize(false),
      m_isCursorChange(false),
@@ -110,9 +110,9 @@ namespace remoting
             m_plogwriter->debug("FbUpdateNotifier (event): new size of frame buffer");
             try {
                critical_section_lock al(m_fbLock);
-               m_adapter->onFrameBufferPropChange(m_pframebuffer);
+               m_adapter->onFramebufferPropChange(m_pframebuffer);
                // FIXME: it's bad code. Must work without one next line, but not it.
-               m_adapter->onFrameBufferUpdate(m_pframebuffer, m_pframebuffer->getDimension());
+               m_adapter->onFramebufferUpdate(m_pframebuffer, m_pframebuffer->getDimension());
             } catch (...) {
                m_plogwriter->error("FbUpdateNotifier (event): error in set new size");
             }
@@ -140,9 +140,9 @@ namespace remoting
 
 #ifdef _DEMO_VERSION_
             ::int_rectangle curWmRect = m_watermarksController->CurrentRect();
-            Region reg(curWmRect);
-            reg.intersect(&update);
-            bool isIntersect = !reg.is_empty();
+            Region region(curWmRect);
+            region.intersect(&update);
+            bool isIntersect = !region.is_empty();
             if (isIntersect)
             {
                m_watermarksController->showWaterMarks(m_pframebuffer, m_fbLock);
@@ -150,13 +150,13 @@ namespace remoting
             }
 #endif
 
-            ::int_rectangle_array_base updateList;
-            update.getRectVector(&updateList);
-            m_plogwriter->debug("FbUpdateNotifier (event): {} updates", updateList.size());
+            ::int_rectangle_array_base rectangleaUpdate;
+            update.getRects(rectangleaUpdate);
+            m_plogwriter->debug("FbUpdateNotifier (event): {} updates", rectangleaUpdate.size());
 
             try {
-               for (::int_rectangle_array_base::iterator i = updateList.begin(); i != updateList.end(); ++i) {
-                  m_adapter->onFrameBufferUpdate(m_pframebuffer, *i);
+               for (::int_rectangle_array_base::iterator i = rectangleaUpdate.begin(); i != rectangleaUpdate.end(); ++i) {
+                  m_adapter->onFramebufferUpdate(m_pframebuffer, *i);
                }
             } catch (...) {
                m_plogwriter->error("FbUpdateNotifier (event): error in update");

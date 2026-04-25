@@ -38,7 +38,7 @@ ParentWatcher::~ParentWatcher()
 
 void ParentWatcher::onTerminate()
 {
-  m_timer.notify();
+  m_happeningTimer.notify();
 }
 
 void ParentWatcher::execute()
@@ -47,6 +47,6 @@ void ParentWatcher::execute()
     if (!m_parentProcess.isAlive()) {
       m_parentEventListener->onParentTerminate();
     }
-    m_timer.waitForEvent(1000);
+    m_happeningTimer.waitForEvent(1000);
   }
 }

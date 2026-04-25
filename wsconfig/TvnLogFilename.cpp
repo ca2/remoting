@@ -26,7 +26,7 @@
 
 #include "file_lib/::file::item.h"
 
-//#include "remoting/remoting/win_system/Environment.h"
+#include "subsystem/node/OperatingSystem.h"
 #include "remoting/node_desktop/NamingDefs.h"
 
 TvnLogFilename::TvnLogFilename()

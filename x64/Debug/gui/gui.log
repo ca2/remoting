@@ -3,7 +3,7 @@
   BalloonTip.cpp
   BaseDialog.cpp
   BaseWindow.cpp
-  DibFrameBuffer.cpp
+  DibFramebuffer.cpp
   CheckBox.cpp
   ComboBox.cpp
   CommonControlsEx.cpp

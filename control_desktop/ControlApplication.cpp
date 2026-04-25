@@ -49,7 +49,7 @@
 #include "remoting/control_desktop/ControlCommandLine.h"
 #include "remoting/node_desktop/TvnServerHelp.h"
 
-//#include "remoting/remoting/win_system/Environment.h"
+#include "subsystem/node/OperatingSystem.h"
 #include "remoting/remoting/win_system/Shell.h"
 #include "subsystem/platform/Process.h"
 #include "subsystem/platform/CommandLineArguments.h"

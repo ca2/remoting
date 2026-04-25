@@ -81,7 +81,7 @@ private:
   ConnList m_notAuthConnList;
   ConnList m_connList;
   FileAccountList m_fileAccountList;
-  critical_section m_logPropsMutex;
+  critical_section m_criticalsectionLogProps;
 
   ListenLogServer *m_listenLogServer;
 

@@ -34,14 +34,14 @@ namespace remoting
    }
 
    // FIXME: Make BoxRec and ::int_rectangle identical to get rid of conversions.
-   Region::Region(const ::int_rectangle &rect)
+   Region::Region(const ::int_rectangle & rectangle)
    {
-      if (!rect.is_empty()) {
+      if (!rectangle.is_empty()) {
          BoxRec box;
-         box.x1 = rect.left;
-         box.x2 = rect.right;
-         box.y1 = rect.top;
-         box.y2 = rect.bottom;
+         box.x1 = rectangle.left;
+         box.x2 = rectangle.right;
+         box.y1 = rectangle.top;
+         box.y2 = rectangle.bottom;
          miRegionInit(&m_reg, &box, 0);
       } else {
          miRegionInit(&m_reg, NullBox, 0);
@@ -51,7 +51,12 @@ namespace remoting
    Region::Region(const Region &src)
    {
       miRegionInit(&m_reg, NullBox, 0);
-      set(&src);
+      set(src);
+   }
+   Region::Region(Region &&src)
+   {
+      __miRegionInitTransfer(&m_reg, &src.m_reg);
+
    }
 
    Region::~Region()
@@ -64,22 +69,36 @@ namespace remoting
       miRegionEmpty(&m_reg);
    }
 
-   void Region::set(const Region *src)
+   void Region::set(const Region & src)
    {
-      miRegionCopy(&m_reg, (RegionPtr)&src->m_reg);
+      miRegionCopy(&m_reg, (RegionPtr)&src.m_reg);
    }
 
    Region & Region::operator=(const Region &src)
    {
-      set(&src);
+      if (this != &src)
+      {
+         set(src);
+      }
       return *this;
    }
 
-   void Region::addRect(const ::int_rectangle &  rect)
+   Region & Region::operator=(Region &&src)
    {
-      if (!rect.is_empty()) {
-         Region temp(rect);
-         add(&temp);
+
+      if (this != &src)
+      {
+         __miRegionTransfer(&m_reg, &src.m_reg);
+      }
+
+      return *this;
+   }
+
+   void Region::addRect(const ::int_rectangle &  rectangle)
+   {
+      if (!rectangle.is_empty()) {
+         Region temp(rectangle);
+         add(temp);
       }
    }
 
@@ -88,30 +107,30 @@ namespace remoting
       miTranslateRegion(&m_reg, dx, dy);
    }
 
-   void Region::add(const Region *other)
-   {
-      miUnion(&m_reg, &m_reg, (RegionPtr)&other->m_reg);
-   }
+   // void Region::add(const Region & other)
+   // {
+   //    miUnion(&m_reg, &m_reg, (RegionPtr)&other.m_reg);
+   // }
 
    void Region::add(const Region &other)
    {
       miUnion(&m_reg, &m_reg, (RegionPtr)&other.m_reg);
    }
 
-   void Region::subtract(const Region *other)
+   void Region::subtract(const Region & other)
    {
-      miSubtract(&m_reg, &m_reg, (RegionPtr)&other->m_reg);
+      miSubtract(&m_reg, &m_reg, (RegionPtr)&other.m_reg);
    }
 
-   void Region::intersect(const Region *other)
+   void Region::intersect(const Region & other)
    {
-      miIntersect(&m_reg, &m_reg, (RegionPtr)&other->m_reg);
+      miIntersect(&m_reg, &m_reg, (RegionPtr)&other.m_reg);
    }
 
-   void Region::crop(const ::int_rectangle &  rect)
+   void Region::crop(const ::int_rectangle &  rectangle)
    {
-      Region temp(rect);
-      intersect(&temp);
+      Region temp(rectangle);
+      intersect(temp);
    }
 
    bool Region::is_empty() const
@@ -121,34 +140,36 @@ namespace remoting
 
    bool Region::isPointInside(int x, int y) const
    {
-      BoxRec stubBox; // Ignore returning rect.
+      BoxRec stubBox; // Ignore returning rectangle.
       return !!miPointInRegion((RegionPtr)&m_reg, x, y, &stubBox);
    }
 
-   bool Region::equals(const Region *other) const
+   bool Region::_equals(const Region & other) const
    {
       // Handle a special case when both regions are empty.
       // Such regions may be considered different by miRegionsEqual().
-      if (this->is_empty() && other->is_empty()) {
+      if (this->is_empty() && other.is_empty()) {
          return true;
       }
 
       return (miRegionsEqual((RegionPtr)&m_reg,
-                             (RegionPtr)&other->m_reg) == true);
+                             (RegionPtr)&other.m_reg) == true);
    }
 
    // FIXME: Optimize, make BoxRec and ::int_rectangle identical to get rid of conversions.
-   void Region::getRectVector(::int_rectangle_array_base *dst) const
+   void Region::getRects(::int_rectangle_array_base & rectanglea) const
    {
-      dst->clear();
+
+      rectanglea.clear();
 
       const BoxRec *boxPtr = REGION_RECTS(&m_reg);
       long numRects = REGION_NUM_RECTS(&m_reg);
-      dst->reserve((size_t)numRects);
-      for (long i = 0; i < numRects; i++) {
-         ::int_rectangle rect(boxPtr[i].x1, boxPtr[i].y1, boxPtr[i].x2, boxPtr[i].y2);
-         dst->add(rect);
+      rectanglea.set_size(numRects);
+      for (long i = 0; i < numRects; i++)
+      {
+         rectanglea[i].set(boxPtr[i].x1, boxPtr[i].y1, boxPtr[i].x2, boxPtr[i].y2);
       }
+
    }
 
    // FIXME: Optimize, make BoxRec and ::int_rectangle identical to get rid of conversions.
@@ -161,8 +182,8 @@ namespace remoting
       const BoxRec *boxPtr = REGION_RECTS(&m_reg);
       long numRects = REGION_NUM_RECTS(&m_reg);
       for (long i = 0; i < numRects; i++) {
-         ::int_rectangle rect(boxPtr[i].x1, boxPtr[i].y1, boxPtr[i].x2, boxPtr[i].y2);
-         recta.add(rect);
+         ::int_rectangle rectangle(boxPtr[i].x1, boxPtr[i].y1, boxPtr[i].x2, boxPtr[i].y2);
+         recta.add(rectangle);
       }
       return recta;
    }

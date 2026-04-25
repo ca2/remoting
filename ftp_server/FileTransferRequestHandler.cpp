@@ -39,7 +39,7 @@
 #include "remoting/remoting/network/RfbInputGate.h"
 //#include "subsystem/thread/critical_section.h"
 #include "remoting/remoting/win_system/Impersonator.h"
-//#include "remoting/remoting/win_system/Environment.h"
+#include "subsystem/node/OperatingSystem.h"
 #include "remoting/remoting/server_config/Configurator.h"
 #include "subsystem/node/SystemException.h"
 #include "remoting/remoting/rfb/VendorDefs.h"

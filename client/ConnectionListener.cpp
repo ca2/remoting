@@ -40,7 +40,7 @@ namespace remoting_client
 
    ConnectionListener::~ConnectionListener()
    {
-      critical_section_lock al(&m_connectionsLock);
+      critical_section_lock al(&m_criticalsectionConnections);
       while (!m_connections.empty()) {
          ::subsystem::SocketIPv4Interface *socket = m_connections.front();
          delete socket;
@@ -55,14 +55,14 @@ namespace remoting_client
 
    void ConnectionListener::onAcceptConnection(::subsystem::SocketIPv4Interface *socket)
    {
-      critical_section_lock al(&m_connectionsLock);
+      critical_section_lock al(&m_criticalsectionConnections);
       m_connections.push_front(socket);
       m_poperatingsystemapplication->postMessage(remoting_impact::_WM_USER_NEW_LISTENING);
    }
 
    ::pointer < ::subsystem::SocketIPv4Interface > ConnectionListener::getNewConnection()
    {
-      critical_section_lock al(&m_connectionsLock);
+      critical_section_lock al(&m_criticalsectionConnections);
       ::subsystem::SocketIPv4Interface *socket = nullptr;
       if (!m_connections.empty()) {
          socket = m_connections.front();

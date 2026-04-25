@@ -92,7 +92,7 @@ namespace platform
 
    ::array_base<::array_base<TCHAR>> ProfileLogWriter::dropStat()
    {
-      critical_section_lock al(&m_mapMut);
+      critical_section_lock al(&m_criticalsectionMap);
       ::array_base<::array_base<TCHAR>> resultStrings;
       if (m_checkPoints.size() == 0)
          return resultStrings;

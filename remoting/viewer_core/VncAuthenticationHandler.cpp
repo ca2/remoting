@@ -48,7 +48,7 @@ namespace remoting
       ::string password;
       password = getPassword();
 
-      VncAuthentication::vncAuthenticate(pinput, output, password);
+      VncAuthentication::vncAuthenticate(pinput, pdataoutputstream, password);
    }
 
    void VncAuthenticationHandler::addAuthCapability(CapabilitiesManager *capManager)

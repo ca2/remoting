@@ -32,7 +32,7 @@ list(APPEND library_source
    LogInitListener.h
    NamingDefs.cpp
    NamingDefs.h
-   NewConnectionEvents.h
+   #NewConnectionEvents.h
    OutgoingRfbConnectionThread.cpp
    OutgoingRfbConnectionThread.h
    QueryConnectionApplication.cpp

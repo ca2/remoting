@@ -242,6 +242,8 @@ extern void miRegionInit(RegionPtr pReg, BoxPtr rect, int size);
 extern void miRegionDestroy(RegionPtr pReg);
 extern void miRegionUninit(RegionPtr pReg);
 extern Bool miRegionCopy(RegionPtr dst, RegionPtr src);
+extern Bool __miRegionInitTransfer(RegionPtr dst, RegionPtr src);
+extern Bool __miRegionTransfer(RegionPtr dst, RegionPtr src);
 extern Bool miIntersect(RegionPtr newReg, RegionPtr reg1, RegionPtr reg2);
 extern Bool miUnion(RegionPtr newReg, RegionPtr reg1, RegionPtr reg2);
 extern Bool miRegionAppend(RegionPtr dstrgn, RegionPtr rgn);

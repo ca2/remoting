@@ -60,7 +60,7 @@ private:
   HANDLE getLogHandle();
 
   HANDLE m_hEventLog;
-  critical_section m_hEventLogMutex;
+  critical_section m_criticalsectionEventLog;
 
   ::pointer < ::subsystem::LogWriter > m_plogwriter;
 };

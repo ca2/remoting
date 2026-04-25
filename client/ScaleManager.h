@@ -58,20 +58,20 @@ namespace remoting_client
         void setStartPoint(int x, int y);
 
         // get viewed rectangle
-        void getViewedRect(::int_rectangle * prectangleViewed) const;
+        void getViewedRect(::int_rectangle & prectangleViewed) const;
         ::int_rectangle getViewedRect() const;
 
         // get scaled rectangle
         ::int_rectangle getScaledRect();
 
         // get source rectangle
-        void getSourceRect(::int_rectangle * prectangleSource) const;
+        void getSourceRect(::int_rectangle & prectangleSource) const;
 
         // get destination rectangle
-        void getDestinationRect(::int_rectangle * prectangleDestination);
+        void getDestinationRect(::int_rectangle & prectangleDestination);
 
         // get window rectangle from screen
-        void getWndFromScreen(const ::int_rectangle &  screen, ::int_rectangle *wnd);
+        void getWndFromScreen(const ::int_rectangle &  screen, ::int_rectangle &wnd);
 
         // transform display coordinate to screen
         ::int_point transformDispToScr(int xPoint, int yPoint) const;
@@ -104,7 +104,7 @@ namespace remoting_client
 
     private:
         ::int_rectangle calcScaled(const ::int_rectangle &  rcViewed, bool bCent);
-        void keepAspectRatio(::int_rectangle *prectangle) const;
+        void keepAspectRatio(::int_rectangle &prectangle) const;
 
     };
 } // namespace remoting_client

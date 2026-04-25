@@ -185,16 +185,16 @@ public:
   // Send to server a command to share only the display.
   static const unsigned int SHARE_DISPLAY_MSG_ID = 0x21;
 
-  // Send to server a command to share rect constrained by a window.
+  // Send to server a command to share rectangle constrained by a window.
   static const unsigned int SHARE_WINDOW_MSG_ID = 0x22;
 
-  // Send to server a command to share only the rect.
+  // Send to server a command to share only the rectangle.
   static const unsigned int SHARE_RECT_MSG_ID = 0x23;
 
-  // Send to server a command to share only the rect.
+  // Send to server a command to share only the rectangle.
   static const unsigned int SHARE_FULL_MSG_ID = 0x24;
 
-  // Send to server a command to share only the rect.
+  // Send to server a command to share only the rectangle.
   static const unsigned int SHARE_APP_MSG_ID = 0x25;
 };
 
