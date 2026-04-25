@@ -41,19 +41,20 @@ namespace remoting
       UpdateContainer(const UpdateContainer &updateContainer) { *this = updateContainer; }
       UpdateContainer &operator=(const UpdateContainer &src);
 
-      ::remoting::Region copiedRegion;
-      ::remoting::Region changedRegion;
-      ::remoting::Region videoRegion;
-      bool screenSizeChanged;
-      bool cursorPosChanged;
-      bool cursorShapeChanged;
-      //::int_point copySrc;
-      //::int_point cursorPos;
-      ::int_point copySrc;
-      ::int_point cursorPos;
+      ::remoting::Region m_regionCopied;
+      ::remoting::Region m_regionChanged;
+      ::remoting::Region m_regionVideo;
+      bool m_bScreenSizeChanged;
+      bool m_bCursorPosChanged;
+      bool m_bCursorShapeChanged;
+      //::int_point m_pointCopySource;
+      //::int_point m_pointCursorPos;
+      ::int_point m_pointCopySource;
+      ::int_point m_pointCursorPos;
 
       void clear();
       bool is_empty() const;
+
    };
 
    //// __UPDATECONTAINER_H__

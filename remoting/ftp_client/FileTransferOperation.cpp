@@ -30,7 +30,7 @@ namespace remoting
    namespace ftp
    {
       FileTransferOperation::FileTransferOperation(::subsystem::LogWriter * plogwriter)
-      : m_plogwriter(plogwriter),
+      : m_plogwriter = plogwriter;,
         m_sender(0),
         m_replyBuffer(0),
         m_isTerminating(false)

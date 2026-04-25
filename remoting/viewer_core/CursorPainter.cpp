@@ -30,7 +30,7 @@ namespace remoting
 {
    CursorPainter::CursorPainter(::innate_subsystem::FrameBuffer *fb, ::subsystem::LogWriter * plogwriter)
    : m_fb(fb),
-     m_plogwriter(plogwriter),
+     m_plogwriter = plogwriter;,
      m_cursorIsMoveable(false),
      m_ignoreShapeUpdates(false),
      m_isExist(false)

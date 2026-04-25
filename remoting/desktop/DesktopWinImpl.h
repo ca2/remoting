@@ -37,18 +37,25 @@ namespace remoting
 
 {
 
-   class CLASS_DECL_REMOTING DesktopWinImpl : public GuiThread, public DesktopBaseImpl
+   class CLASS_DECL_REMOTING DesktopWinImpl :
+   virtual public ::subsystem::GuiThread,
+   virtual public DesktopBaseImpl
    {
    public:
-      DesktopWinImpl(ClipboardListener *extClipListener, UpdateSendingListener *extUpdSendingListener,
-                     AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter *log);
-      virtual ~DesktopWinImpl();
+      //DesktopWinImpl(ClipboardListener *extClipListener, UpdateSendingListener *extUpdSendingListener,
+        //             AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter * plogwriter);
+      DesktopWinImpl();
+      ~DesktopWinImpl() override;
 
-   protected:
+
+      virtual void initialize_desktop_win_impl(ClipboardListener *extClipListener, UpdateSendingListener *extUpdSendingListener,
+                     AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter * plogwriter);
+
+   //protected:
       virtual void execute();
       virtual void onTerminate();
 
-   private:
+   //private:
       void freeResource();
 
       // Writes some desktop info to log.
@@ -63,7 +70,7 @@ namespace remoting
 
       DesktopConfigLocal *m_deskConf;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

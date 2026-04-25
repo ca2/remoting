@@ -98,7 +98,7 @@ namespace  remoting
          //
          // Interface of log writer for log data
          //
-         ::subsystem::LogWriter *m_plogwriter;
+         ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
          //
          // ZLib stream for decompression of compressed data

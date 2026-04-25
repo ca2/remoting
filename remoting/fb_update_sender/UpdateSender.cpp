@@ -38,16 +38,78 @@ namespace remoting
 {
 
 
-   UpdateSender::UpdateSender(RfbCodeRegistrator *codeRegtor, UpdateRequestListener *updReqListener,
-                              SenderControlInformationInterface *senderControlInformation, RfbOutputGate *output,
-                              int id, Desktop *desktop, ::subsystem::LogWriter *log) :
-       m_updReqListener(updReqListener), m_desktop(desktop), m_senderControlInformation(senderControlInformation),
-       m_busy(false), m_incrUpdIsReq(false), m_fullUpdIsReq(false), m_setColorMapEntr(false), m_output(output),
-       m_enbox(&m_pixelConverter, m_output), m_id(id), m_videoFrozen(false), m_shareOnlyApp(false), m_plogwriter(log),
-       m_cursorUpdates(log)
+   // UpdateSender::UpdateSender(RfbCodeRegistrator *codeRegtor, UpdateRequestListener *updReqListener,
+   //                            SenderControlInformationInterface *senderControlInformation, RfbOutputGate *output,
+   //                            int id, Desktop *desktop, ::subsystem::LogWriter * plogwriter) :
+   //     m_updReqListener(updReqListener), m_desktop(desktop), m_senderControlInformation(senderControlInformation),
+   //     m_busy(false), m_incrUpdIsReq(false), m_fullUpdIsReq(false), m_setColorMapEntr(false), m_output(output),
+   //     m_enbox(&m_ppixelconverter, m_output), m_id(id), m_videoFrozen(false), m_shareOnlyApp(false), m_plogwriter = plogwriter;,
+   //     m_pcursorupdates(plogwriter)
+   // {
+   //    // FIXME: argument must be defined
+   //    m_pupdatekeeper = new UpdateKeeper(::int_rectangle());
+   //
+   //    // Capabilities
+   //    codeRegtor->addEncCap(EncodingDefs::COPYRECT, VendorDefs::STANDARD, EncodingDefs::SIG_COPYRECT);
+   //    codeRegtor->addEncCap(EncodingDefs::HEXTILE, VendorDefs::STANDARD, EncodingDefs::SIG_HEXTILE);
+   //    codeRegtor->addEncCap(EncodingDefs::TIGHT, VendorDefs::TIGHTVNC, EncodingDefs::SIG_TIGHT);
+   //    codeRegtor->addEncCap(PseudoEncDefs::COMPR_LEVEL_0, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_COMPR_LEVEL);
+   //    codeRegtor->addEncCap(PseudoEncDefs::QUALITY_LEVEL_0, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_QUALITY_LEVEL);
+   //    codeRegtor->addEncCap(PseudoEncDefs::RICH_CURSOR, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_RICH_CURSOR);
+   //    codeRegtor->addEncCap(PseudoEncDefs::POINTER_POS, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_POINTER_POS);
+   //    codeRegtor->addEncCap(PseudoEncDefs::DESKTOP_SIZE, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_DESKTOP_SIZE);
+   //    codeRegtor->addEncCap(PseudoEncDefs::DESKTOP_CONFIGURATION, VendorDefs::TIGHTVNC,
+   //                          PseudoEncDefs::SIG_DESKTOP_CONFIGURATION);
+   //
+   //    codeRegtor->addClToSrvCap(UpdSenderClientMsgDefs::RFB_VIDEO_FREEZE, VendorDefs::TIGHTVNC,
+   //                              UpdSenderClientMsgDefs::RFB_VIDEO_FREEZE_SIG);
+   //
+   //    // Request codes
+   //    codeRegtor->regCode(UpdSenderClientMsgDefs::RFB_VIDEO_FREEZE, this);
+   //    codeRegtor->regCode(ClientMsgDefs::FB_UPDATE_REQUEST, this);
+   //    codeRegtor->regCode(ClientMsgDefs::SET_PIXEL_FORMAT, this);
+   //    codeRegtor->regCode(ClientMsgDefs::SET_ENCODINGS, this);
+   //
+   //    resume();
+   // }
+UpdateSender::UpdateSender() :
+       m_updReqListener(nullptr), m_desktop(nullptr), m_senderControlInformation(nullptr),
+       m_busy(false), m_incrUpdIsReq(false), m_fullUpdIsReq(false), m_setColorMapEntr(false),// m_output(nullptr),
+       //m_enbox(&m_ppixelconverter, m_output), m_id(0), m_videoFrozen(false), m_shareOnlyApp(false)
+   m_id(0), m_videoFrozen(false), m_shareOnlyApp(false)
+       //m_pcursorupdates(plogwriter)
    {
+
+   }
+   UpdateSender::~UpdateSender()
+   {
+      terminate();
+      wait();
+      delete m_pupdatekeeper;
+
+   }
+
+
+    void  UpdateSender::initialize_update_sender(RfbCodeRegistrator *codeRegtor, UpdateRequestListener *updReqListener,
+                              SenderControlInformationInterface *senderControlInformation, RfbOutputGate *prfboutputgate,
+                              int id, Desktop *desktop, ::subsystem::LogWriter * plogwriter) //:
+       // , , ,
+       // ,
+       // , m_id(id), m_videoFrozen(false), m_shareOnlyApp(false), m_plogwriter = plogwriter;,
+       // m_pcursorupdates(plogwriter)
+   {
+          m_updReqListener = updReqListener;
+          m_desktop = desktop;
+          m_senderControlInformation = senderControlInformation;
+          m_prfboutputgate = prfboutputgate;
       // FIXME: argument must be defined
-      m_updateKeeper = new UpdateKeeper(::int_rectangle());
+          construct_newø(m_pencoderstore);
+          m_pencoderstore->initialize_encoder_store(m_ppixelconverter, m_prfboutputgate);
+          m_id = id;
+          m_plogwriter = plogwriter;
+          construct_newø(m_pcursorupdates);
+   m_pcursorupdates->initialize_cursor_updates(plogwriter);
+      m_pupdatekeeper = new UpdateKeeper(::int_rectangle());
 
       // Capabilities
       codeRegtor->addEncCap(EncodingDefs::COPYRECT, VendorDefs::STANDARD, EncodingDefs::SIG_COPYRECT);
@@ -71,13 +133,6 @@ namespace remoting
       codeRegtor->regCode(ClientMsgDefs::SET_ENCODINGS, this);
 
       resume();
-   }
-
-   UpdateSender::~UpdateSender()
-   {
-      terminate();
-      wait();
-      delete m_updateKeeper;
    }
 
    void UpdateSender::onTerminate() { m_newUpdatesEvent.set_happening(); }
@@ -115,7 +170,7 @@ namespace remoting
          m_clientDim = viewPortDimension;
       }
       m_lastViewPortDim = viewPortDimension;
-      m_updateKeeper->setBorderRect(viewPortDimension);
+      m_pupdatekeeper->setBorderRect(viewPortDimension);
    }
 
    void UpdateSender::newUpdates(const UpdateContainer *updateContainer, const CursorShape *cursorShape)
@@ -123,7 +178,7 @@ namespace remoting
       m_plogwriter->debug("New updates passed to client #{}", m_id);
       addUpdateContainer(updateContainer);
 
-      m_cursorUpdates.updateCursorShape(cursorShape);
+      m_pcursorupdates->updateCursorShape(cursorShape);
       {
          critical_section_lock al(&m_reqRectLocMut);
          m_busy = true;
@@ -138,15 +193,15 @@ namespace remoting
 
       ::int_rectangle viewPort = getViewPort();
 
-      updCont.videoRegion.translate(-viewPort.left, -viewPort.top);
-      updCont.changedRegion.translate(-viewPort.left, -viewPort.top);
-      updCont.copiedRegion.translate(-viewPort.left, -viewPort.top);
-      updCont.copySrc.move(-viewPort.left, -viewPort.top);
+      updCont.m_regionVideo-= viewPort.top_left();
+      updCont.m_regionChanged-= viewPort.top_left();
+      updCont.m_regionCopied-= viewPort.top_left();
+      updCont.m_pointCopySource -= viewPort.top_left();
 
-      m_updateKeeper->addUpdateContainer(&updCont);
+      m_pupdatekeeper->addUpdateContainer(&updCont);
    }
 
-   void UpdateSender::blockCursorPosSending() { m_cursorUpdates.blockCursorPosSending(); }
+   void UpdateSender::blockCursorPosSending() { m_pcursorupdates->blockCursorPosSending(); }
 
    ::int_rectangle UpdateSender::getViewPort()
    {
@@ -180,14 +235,14 @@ namespace remoting
       m_output->writeInt32(encodingType);
    }
 
-   void UpdateSender::sendNewFBSize(::int_size *dim, bool extended)
+   void UpdateSender::sendNewFBSize(::int_size *size, bool extended)
    {
       // Header
       m_output->writeUInt8(ServerMsgDefs::FB_UPDATE); // scopedstrMessage type
       m_output->writeUInt8(0); // padding
       m_output->writeUInt16(1); // one rectangle
 
-      ::int_rectangle r(*dim);
+      ::int_rectangle r(*size);
       if (!extended)
       {
          sendRectHeader(r, PseudoEncDefs::DESKTOP_SIZE);
@@ -217,17 +272,17 @@ namespace remoting
    }
 
    void UpdateSender::sendFbInClientDim(const EncodeOptions *encodeOptions, const ::innate_subsystem::FrameBuffer *fb,
-                                        const ::int_size &dim, const ::innate_subsystem::PixelFormat &pf)
+                                        const ::int_size &size, const ::innate_subsystem::PixelFormat &pf)
    {
       // On the black frame buffer will be overlayed the current framebuffer.
       // This is needed to combine the server frame buffer with a client frame
       // buffer when the dimensions are not equal.
       ::innate_subsystem::FrameBuffer blankFrameBuffer;
-      blankFrameBuffer.setProperties(dim, pf);
+      blankFrameBuffer.setProperties(size, pf);
       blankFrameBuffer.setColor(0, 0, 0);
       blankFrameBuffer.copyFrom(fb, 0, 0);
 
-      ::int_rectangle rectangleForRegion(dim);
+      ::int_rectangle rectangleForRegion(size);
       Region region(rectangleForRegion);
       ::array_base<::int_rectangle> rects;
       splitRegion(m_enbox.getEncoder(), &region, &rects, &blankFrameBuffer, encodeOptions);
@@ -245,13 +300,13 @@ namespace remoting
    {
       // Send pseudo-rectangle.
       ::int_point hotSpot = cursorShape->getHotSpot();
-      ::int_size dim = cursorShape->getDimension();
-      sendRectHeader(hotSpot.x, hotSpot.y, dim.cx, dim.cy, PseudoEncDefs::RICH_CURSOR);
+      ::int_size size = cursorShape->getDimension();
+      sendRectHeader(hotSpot.x, hotSpot.y, size.cx, size.cy, PseudoEncDefs::RICH_CURSOR);
 
       ::innate_subsystem::FrameBuffer fbConverted;
-      fbConverted.setProperties(dim, fmt);
-      ::int_rectangle rectangleFromDimension(dim);
-      m_pixelConverter.convert(rectangleFromDimension, &fbConverted, cursorShape->getPixels());
+      fbConverted.setProperties(size, fmt);
+      ::int_rectangle rectangleFromDimension(size);
+      m_ppixelconverter.convert(rectangleFromDimension, &fbConverted, cursorShape->getPixels());
 
       if (fbConverted.getBufferSize())
       {
@@ -265,7 +320,7 @@ namespace remoting
 
    void UpdateSender::sendCursorPosUpdate()
    {
-      ::int_point pos = m_cursorUpdates.getCurPos();
+      ::int_point pos = m_pcursorupdates.getCurPos();
       m_plogwriter->debug("Sending cursor position update: ({},{})", pos.x, pos.y);
       sendRectHeader(pos.x, pos.y, 0, 0, PseudoEncDefs::POINTER_POS);
    }
@@ -344,7 +399,7 @@ namespace remoting
       bool viewPortChanged = updateViewPort(&viewPort, &shareOnlyApp, &prevShareAppRegion, &shareAppRegion);
 
       updateFrameBuffer(&updCont, shareOnlyApp, &prevShareAppRegion, &shareAppRegion);
-      ::innate_subsystem::FrameBuffer *frameBuffer = &m_frameBuffer;
+      ::innate_subsystem::FrameBuffer *frameBuffer = &m_pframebuffer;
 
       critical_section_lock l(m_output);
 
@@ -372,7 +427,7 @@ namespace remoting
       }
       if (dimensionChanged || viewPortChanged)
       {
-         updCont.copiedRegion.clear();
+         updCont.m_regionCopied.clear();
 
          critical_section_lock al(&m_viewPortMut);
          m_lastViewPortDim.setDim(&viewPort);
@@ -382,13 +437,13 @@ namespace remoting
             m_clientDim = m_lastViewPortDim;
             clientDim = m_clientDim;
          }
-         m_updateKeeper->setBorderRect(&lastViewPortDim);
-         updCont.changedRegion.crop(&lastViewPortDim);
-         // Dazzle changedRegion
-         updCont.changedRegion.addRect(&lastViewPortDim);
-         m_updateKeeper->dazzleChangedReg();
-         m_updateKeeper->setCursorPosChanged();
-         m_updateKeeper->setCursorShapeChanged();
+         m_pupdatekeeper->setBorderRect(&lastViewPortDim);
+         updCont.m_regionChanged.crop(&lastViewPortDim);
+         // Dazzle m_regionChanged
+         updCont.m_regionChanged.addRect(&lastViewPortDim);
+         m_pupdatekeeper->dazzleChangedReg();
+         m_pupdatekeeper->setCursorPosChanged();
+         m_pupdatekeeper->setCursorShapeChanged();
       }
 
       // Update pixel converter for effective pixel formats. We must do this
@@ -397,8 +452,8 @@ namespace remoting
       bool setColorMapEntr;
       ::innate_subsystem::PixelFormat clientPixelFormat;
       {
-         critical_section_lock lock(&m_newPixelFormatLocker);
-         clientPixelFormat = m_newPixelFormat;
+         critical_section_lock lock(&m_criticalsectionNewPixelFormat);
+         clientPixelFormat = m_ppixelformatNew;
          setColorMapEntr = m_setColorMapEntr;
          m_setColorMapEntr = false;
       }
@@ -406,7 +461,7 @@ namespace remoting
       {
          sendPalette(&clientPixelFormat);
       }
-      m_pixelConverter.setPixelFormats(&clientPixelFormat, &serverPixelFormat);
+      m_ppixelconverter.setPixelFormats(&clientPixelFormat, &serverPixelFormat);
 
       // Send updates
       if (updCont.screenSizeChanged || (!requestedFullReg.is_empty() && !encodeOptions.desktopSizeEnabled() &&
@@ -426,97 +481,97 @@ namespace remoting
          }
          // FIXME: "Dazzle" does not seem like a good word here.
          m_plogwriter->debug("Dazzle changed region");
-         m_updateKeeper->dazzleChangedReg();
-         m_updateKeeper->setCursorPosChanged();
+         m_pupdatekeeper->dazzleChangedReg();
+         m_pupdatekeeper->setCursorPosChanged();
       }
       else
       {
          m_plogwriter->debug("Processing normal updates");
          CursorShape cursorShape;
-         m_cursorUpdates.update(&encodeOptions, &updCont, !requestedFullReg.is_empty(), &viewPort, shareOnlyApp,
+         m_pcursorupdates.update(&encodeOptions, &updCont, !requestedFullReg.is_empty(), &viewPort, shareOnlyApp,
                                 &shareAppRegion, frameBuffer, &cursorShape);
 
          if (!encodeOptions.copyRectEnabled() || getVideoFrozen())
          {
             m_plogwriter->debug("CopyRect is disabled, converting to normal updates");
-            updCont.changedRegion.add(&updCont.copiedRegion);
-            updCont.copiedRegion.clear();
+            updCont.m_regionChanged.add(&updCont.m_regionCopied);
+            updCont.m_regionCopied.clear();
          }
 
-         updCont.changedRegion.add(&m_prevVideoRegion); // This line updates rid video places when
+         updCont.m_regionChanged.add(&m_regionOldVideoRegion); // This line updates rid video places when
                                                         // video is frozen.
-         updCont.videoRegion.subtract(&requestedFullReg);
-         updCont.changedRegion.subtract(&updCont.videoRegion);
-         m_prevVideoRegion = updCont.videoRegion;
+         updCont.m_regionVideo.subtract(&requestedFullReg);
+         updCont.m_regionChanged.subtract(&updCont.m_regionVideo);
+         m_regionOldVideoRegion = updCont.m_regionVideo;
          if (getVideoFrozen())
          {
-            updCont.videoRegion.clear();
+            updCont.m_regionVideo.clear();
          }
-         updCont.changedRegion.add(&requestedFullReg);
+         updCont.m_regionChanged.add(&requestedFullReg);
 
          // FIXME: Are these two lines really needed? Check that carefully.
          ::int_rectangle frameBufferRect = frameBuffer->getDimension();
-         updCont.videoRegion.crop(&frameBufferRect);
-         updCont.changedRegion.crop(&frameBufferRect);
+         updCont.m_regionVideo.crop(&frameBufferRect);
+         updCont.m_regionChanged.crop(&frameBufferRect);
          shareAppRegion.crop(&frameBufferRect);
          prevShareAppRegion.crop(&frameBufferRect);
-         m_losslessClean.crop(&frameBufferRect);
+         m_regionLosslessClean.crop(&frameBufferRect);
 
          // If Tight encoding is not supported by the client, convert video updates
          // to normal updates so that the preferred encoding will be used.
          if (!encodeOptions.encodingEnabled(EncodingDefs::TIGHT))
          {
-            updCont.changedRegion.add(&updCont.videoRegion);
-            updCont.videoRegion.clear();
+            updCont.m_regionChanged.add(&updCont.m_regionVideo);
+            updCont.m_regionVideo.clear();
          }
 
          // Crop changed and video region by requested regions.
          cropUpdContForReqRegions(&updCont, &requestedIncrReg, &requestedFullReg);
 
-         Region videoRegion = updCont.videoRegion;
-         Region changedRegion = updCont.changedRegion;
+         Region m_regionVideo = updCont.m_regionVideo;
+         Region m_regionChanged = updCont.m_regionChanged;
 
          if (shareOnlyApp)
          {
             Region newOpeningAppRegion = shareAppRegion;
             newOpeningAppRegion.subtract(&prevShareAppRegion);
 
-            Region blackRegion = changedRegion;
-            blackRegion.add(&videoRegion);
+            Region blackRegion = m_regionChanged;
+            blackRegion.add(&m_regionVideo);
             blackRegion.add(&prevShareAppRegion);
             blackRegion.subtract(&shareAppRegion);
-            changedRegion.add(&blackRegion);
-            changedRegion.add(&newOpeningAppRegion);
+            m_regionChanged.add(&blackRegion);
+            m_regionChanged.add(&newOpeningAppRegion);
             // Paint black in the framebuffer for the black region.
             paintBlack(frameBuffer, &blackRegion);
          }
 
          if (losslessEnabled)
          {
-            m_losslessDirty.add(changedRegion);
-            m_losslessClean.subtract(&changedRegion);
+            m_regionLosslessDirty.add(m_regionChanged);
+            m_regionLosslessClean.subtract(&m_regionChanged);
          }
          // Add some lossless data to every update but no more than 1/100 part of framebuffer.
          // So at 20 fps full screen will be sent in 5 sec.
          int screenArea = frameBufferRect.area();
-         Region losslessRegion = takePartFromRegion(&m_losslessClean, screenArea / 100);
+         Region losslessRegion = takePartFromRegion(&m_regionLosslessClean, screenArea / 100);
          if (losslessEnabled)
          {
             if (losslessRegion.is_empty())
             {
-               m_losslessClean.set(&m_losslessDirty);
-               m_losslessDirty.clear();
+               m_regionLosslessClean.set(&m_regionLosslessDirty);
+               m_regionLosslessDirty.clear();
             }
          }
 
          //
-         // At this point, we've got final regions in changedRegion and videoRegion.
+         // At this point, we've got final regions in m_regionChanged and m_regionVideo.
          //
 
-         // Convert changedRegion to the final ::list_base of rectangles.
-         m_plogwriter->debug("Number of normal rectangles before splitting: {}", changedRegion.getCount());
+         // Convert m_regionChanged to the final ::list_base of rectangles.
+         m_plogwriter->debug("Number of normal rectangles before splitting: {}", m_regionChanged.getCount());
          ::array_base<::int_rectangle> normalRects;
-         splitRegion(m_enbox.getEncoder(), &changedRegion, &normalRects, frameBuffer, &encodeOptions);
+         splitRegion(m_enbox.getEncoder(), &m_regionChanged, &normalRects, frameBuffer, &encodeOptions);
 
          // Convert losslessRegion to the final ::list_base of rectangles.
          ::array_base<::int_rectangle> losslessRects;
@@ -525,18 +580,18 @@ namespace remoting
             m_plogwriter->debug("Number of lossless rectangles before splitting: {}", losslessRegion.getCount());
             splitRegion(m_enbox.getEncoder(), &losslessRegion, &losslessRects, frameBuffer, &losslessEncodeOptions);
          }
-         // Do the same for the videoRegion.
+         // Do the same for the m_regionVideo.
          ::array_base<::int_rectangle> videoRects;
-         if (!videoRegion.is_empty())
+         if (!m_regionVideo.is_empty())
          {
             m_plogwriter->debug("Video region is not empty");
             m_enbox.validateJpegEncoder(); // make sure JpegEncoder is allocated
-            splitRegion(m_enbox.getJpegEncoder(), &videoRegion, &videoRects, frameBuffer, &encodeOptions);
+            splitRegion(m_enbox.getJpegEncoder(), &m_regionVideo, &videoRects, frameBuffer, &encodeOptions);
          }
 
          // Get the final ::list_base of CopyRect rectangles.
          ::array_base<::int_rectangle> copyRects;
-         updCont.copiedRegion.getRectVector(&copyRects);
+         updCont.m_regionCopied.getRectVector(&copyRects);
 
          m_plogwriter->debug("Number of normal rectangles: {}", normalRects.size());
          m_plogwriter->debug("Number of lossless rectangles: {}", losslessRects.size());
@@ -589,7 +644,7 @@ namespace remoting
             if (copyRects.size() > 0)
             {
                m_plogwriter->debug("Sending CopyRect rectangles");
-               sendCopyRect(&copyRects, &updCont.copySrc);
+               sendCopyRect(&copyRects, &updCont.m_pointCopySource);
             }
 
             m_plogwriter->debug("Time between request and a point before send and coding (in milliseconds): %u",
@@ -626,7 +681,7 @@ namespace remoting
             m_incrUpdIsReq = incrUpdIsReq;
             m_fullUpdIsReq = fullUpdIsReq;
          }
-         m_cursorUpdates.restoreFrameBuffer(frameBuffer);
+         m_pcursorupdates.restoreFrameBuffer(frameBuffer);
       }
 
       m_plogwriter->debug("Flushing output");
@@ -739,7 +794,7 @@ namespace remoting
 
       _ASSERT(m_updReqListener != 0);
 
-      bool alreadyHasUpdates = m_updateKeeper->checkForUpdates(&combinedReqRegions);
+      bool alreadyHasUpdates = m_pupdatekeeper->checkForUpdates(&combinedReqRegions);
       if (alreadyHasUpdates)
       {
          // We should initiaite send update to avoid it skipping on no updates from a desktop
@@ -802,8 +857,8 @@ namespace remoting
 
    void UpdateSender::setClientPixelFormat(const ::innate_subsystem::PixelFormat &pf, bool clrMapEntries)
    {
-      critical_section_lock al(&m_newPixelFormatLocker);
-      m_newPixelFormat = *pf;
+      critical_section_lock al(&m_criticalsectionNewPixelFormat);
+      m_ppixelformatNew = *pf;
       m_setColorMapEntr = clrMapEntries;
    }
 
@@ -820,8 +875,8 @@ namespace remoting
          ::list_base.add(code);
       }
 
-      critical_section_lock lock(&m_newEncodeOptionsLocker);
-      m_newEncodeOptions.setEncodings(&::list_base);
+      critical_section_lock lock(&m_criticalsectionNewEncodeOptions);
+      m_pencodeoptionsNew.setEncodings(&::list_base);
    }
 
    void UpdateSender::setVideoFrozen(bool value)
@@ -858,14 +913,14 @@ namespace remoting
       return *incrUpdIsReq || *fullUpdIsReq;
    }
 
-   void UpdateSender::extractUpdates(UpdateContainer *updCont) { m_updateKeeper->extract(updCont); }
+   void UpdateSender::extractUpdates(UpdateContainer *updCont) { m_pupdatekeeper->extract(updCont); }
 
    void UpdateSender::cropUpdContForReqRegions(UpdateContainer *updCont, const Region *incrReqReg,
                                                const Region *fullReqReg)
    {
       // Crop by requested region
-      Region backRegion = updCont->changedRegion;
-      backRegion.add(&updCont->videoRegion);
+      Region backRegion = updCont->m_regionChanged;
+      backRegion.add(&updCont->m_regionVideo);
 
       Region combinedReqRegion = *incrReqReg;
       combinedReqRegion.add(fullReqReg);
@@ -873,39 +928,39 @@ namespace remoting
       inscribeCopiedRegionToReqRegion(updCont, &combinedReqRegion);
 
       backRegion.subtract(&combinedReqRegion);
-      updCont->changedRegion.intersect(&combinedReqRegion);
-      updCont->videoRegion.intersect(&combinedReqRegion);
+      updCont->m_regionChanged.intersect(&combinedReqRegion);
+      updCont->m_regionVideo.intersect(&combinedReqRegion);
 
       // Return back the out region to the update keeper.
-      m_updateKeeper->addChangedRegion(&backRegion);
+      m_pupdatekeeper->addChangedRegion(&backRegion);
    }
 
    void UpdateSender::inscribeCopiedRegionToReqRegion(UpdateContainer *updCont, const Region *requestRegion)
    {
       // Test copied region. If it is fully inside in the requested region then
       // there is no to change. Otherwise, simply decline copied region.
-      if (!updCont->copiedRegion.is_empty())
+      if (!updCont->m_regionCopied.is_empty())
       {
-         Region dstCopiedRegion = updCont->copiedRegion;
+         Region dstCopiedRegion = updCont->m_regionCopied;
          dstCopiedRegion.subtract(requestRegion);
 
          bool copiedRegionFullyInscribed = dstCopiedRegion.is_empty();
          if (copiedRegionFullyInscribed)
          {
             // Then see the same at source coordinates.
-            Region copiedRegion = updCont->copiedRegion;
-            ::int_rectangle dstBounds = copiedRegion.getBounds();
-            int dx = updCont->copySrc.x - dstBounds.left;
-            int dy = updCont->copySrc.y - dstBounds.top;
-            copiedRegion.translate(dx, dy);
-            copiedRegion.subtract(requestRegion);
-            copiedRegionFullyInscribed = copiedRegion.is_empty();
+            Region m_regionCopied = updCont->m_regionCopied;
+            ::int_rectangle dstBounds = m_regionCopied.getBounds();
+            int dx = updCont->m_pointCopySource.x - dstBounds.left;
+            int dy = updCont->m_pointCopySource.y - dstBounds.top;
+            m_regionCopied.translate(dx, dy);
+            m_regionCopied.subtract(requestRegion);
+            copiedRegionFullyInscribed = m_regionCopied.is_empty();
          }
          if (!copiedRegionFullyInscribed)
          {
             // Convert copied region to changed region.
-            updCont->changedRegion.add(&updCont->copiedRegion);
-            updCont->copiedRegion.clear();
+            updCont->m_regionChanged.add(&updCont->m_regionCopied);
+            updCont->m_regionCopied.clear();
          }
       }
    }
@@ -915,8 +970,8 @@ namespace remoting
       // Make new encode options take effect. They might have been changed on
       // receiving SetEncodings client scopedstrMessage.
       {
-         critical_section_lock lock(&m_newEncodeOptionsLocker);
-         *encodeOptions = m_newEncodeOptions;
+         critical_section_lock lock(&m_criticalsectionNewEncodeOptions);
+         *encodeOptions = m_pencodeoptionsNew;
       }
       // Make sure the encoder object corresponds to the preferred encoding
       // requested in the most recent SetEncodings client scopedstrMessage.
@@ -931,8 +986,8 @@ namespace remoting
       Region newOpeningPixels;
       if (shareOnlyApp)
       {
-         updCont->changedRegion.add(&updCont->copiedRegion);
-         updCont->copiedRegion.clear();
+         updCont->m_regionChanged.add(&updCont->m_regionCopied);
+         updCont->m_regionCopied.clear();
          m_appRegion = *shareAppRegion;
          newOpeningPixels = m_appRegion;
          newOpeningPixels.subtract(&m_prevAppRegion);
@@ -942,20 +997,20 @@ namespace remoting
       // to black and does not include to changed region (when prev pixel value = current value).
       // Thereby, new opening pixels must be updated in the framebuffer too. New opening pixels,
       // for example, appears when alien application creep on the shared application.
-      updCont->changedRegion.add(&newOpeningPixels);
+      updCont->m_regionChanged.add(&newOpeningPixels);
 
       // Frame buffers synchronizing
-      Region changedAndCopyRgns = updCont->changedRegion;
-      changedAndCopyRgns.add(&updCont->copiedRegion);
-      changedAndCopyRgns.add(&updCont->videoRegion);
-      changedAndCopyRgns.addRect(&m_cursorUpdates.getBackgroundRect());
+      Region changedAndCopyRgns = updCont->m_regionChanged;
+      changedAndCopyRgns.add(&updCont->m_regionCopied);
+      changedAndCopyRgns.add(&updCont->m_regionVideo);
+      changedAndCopyRgns.addRect(&m_pcursorupdates.getBackgroundRect());
       {
          critical_section_lock al(&m_reqRectLocMut);
          changedAndCopyRgns.add(&m_requestedFullReg);
       }
 
       updCont->screenSizeChanged =
-         !m_desktop->updateExternalFrameBuffer(&m_frameBuffer, &changedAndCopyRgns, &viewPort) ||
+         !m_desktop->updateExternalFrameBuffer(&m_pframebuffer, &changedAndCopyRgns, &viewPort) ||
          updCont->screenSizeChanged;
    }
 

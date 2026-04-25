@@ -42,38 +42,38 @@ namespace remoting
    class UserInputServer : public DesktopServerProto, public ClientListener, public ::subsystem::ClipboardListener
    {
    public:
-      UserInputServer(BlockingGate *forwGate, DesktopSrvDispatcher *dispatcher,
+      UserInputServer(BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
                       // AnEventListener *extTerminationListener,
-                      const ::procedure &procedureTermination, ::subsystem::LogWriter *log);
+                      const ::procedure &procedureTermination, ::subsystem::LogWriter * plogwriter);
       virtual ~UserInputServer();
 
       // Internal dispatcher
-      virtual void onRequest(unsigned char reqCode, BlockingGate *backGate);
+      virtual void onRequest(unsigned char reqCode, BlockingGate *pblockinggate);
 
       virtual void onClipboardUpdate(const ::scoped_string &newClipboard);
 
    protected:
-      virtual void applyNewPointerPos(BlockingGate *backGate);
-      virtual void applyNewClipboard(BlockingGate *backGate);
-      virtual void applyKeyEvent(BlockingGate *backGate);
-      virtual void ansDesktopCoords(BlockingGate *backGate);
-      virtual void ansWindowCoords(BlockingGate *backGate);
-      virtual void ansUserInfo(BlockingGate *backGate);
-      virtual void ansWindowHandle(BlockingGate *backGate);
-      virtual void ansDisplayNumberCoords(BlockingGate *backGate);
-      virtual void ansDisplaysCoords(BlockingGate *backGate);
-      virtual void ansApplicationRegion(BlockingGate *backGate);
-      virtual void ansApplicationInFocus(BlockingGate *backGate);
-      virtual void ansNormalizeRect(BlockingGate *backGate);
+      virtual void applyNewPointerPos(BlockingGate *pblockinggate);
+      virtual void applyNewClipboard(BlockingGate *pblockinggate);
+      virtual void applyKeyEvent(BlockingGate *pblockinggate);
+      virtual void ansDesktopCoords(BlockingGate *pblockinggate);
+      virtual void ansWindowCoords(BlockingGate *pblockinggate);
+      virtual void ansUserInfo(BlockingGate *pblockinggate);
+      virtual void ansWindowHandle(BlockingGate *pblockinggate);
+      virtual void ansDisplayNumberCoords(BlockingGate *pblockinggate);
+      virtual void ansDisplaysCoords(BlockingGate *pblockinggate);
+      virtual void ansApplicationRegion(BlockingGate *pblockinggate);
+      virtual void ansApplicationInFocus(BlockingGate *pblockinggate);
+      virtual void ansNormalizeRect(BlockingGate *pblockinggate);
 
       // At first time server must get init information.
-      void serverInit(BlockingGate *backGate);
+      void serverInit(BlockingGate *pblockinggate);
 
       WindowsUserInput *m_userInput;
       // AnEventListener *m_extTerminationListener;
       ::procedure m_procedureTermination;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

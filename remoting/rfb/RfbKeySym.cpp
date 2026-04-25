@@ -33,9 +33,9 @@
 
 namespace remoting
 {
-   RfbKeySym::RfbKeySym(RfbKeySymListener *extKeySymListener, ::subsystem::LogWriter *log)
+   RfbKeySym::RfbKeySym(RfbKeySymListener *extKeySymListener, ::subsystem::LogWriter * plogwriter)
    : m_extKeySymListener(extKeySymListener),
-     m_plogwriter(log),
+     m_plogwriter = plogwriter;,
      m_winKeyIgnore(true)
    {
       m_keyboardstate.clearKeyState();

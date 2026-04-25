@@ -31,9 +31,9 @@
 
 
 
-EmulatedAnonymousPipeFactory::EmulatedAnonymousPipeFactory(unsigned int bufferSize, ::subsystem::LogWriter *log)
+EmulatedAnonymousPipeFactory::EmulatedAnonymousPipeFactory(unsigned int bufferSize, ::subsystem::LogWriter * plogwriter)
 : m_bufferSize(bufferSize),
-  m_plogwriter(log)
+  m_plogwriter = plogwriter;
 {
 }
 

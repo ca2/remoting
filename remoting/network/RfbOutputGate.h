@@ -36,7 +36,7 @@ namespace remoting
    /**
     * Gate for writting rfb messages.
     *
-    * @features: gate is synchonized (can be locked and unlocked, supports data buffering, and writting
+    * @features: pblockinggate is synchonized (can be locked and unlocked, supports data buffering, and writting
     * typized data).
     * @remark: after every scopedstrMessage you want to send to must manually call flush() cause
     * "autoflush on unlock" is removed.
@@ -47,12 +47,12 @@ namespace remoting
    {
    public:
       /**
-       * Creates new rfb output gate.
+       * Creates new rfb output pblockinggate.
        * @param stream real output stream.
        */
       RfbOutputGate(::OutputStream *stream);
       /**
-       * Deletes rfb output gate.
+       * Deletes rfb output pblockinggate.
        */
       virtual ~RfbOutputGate();
 

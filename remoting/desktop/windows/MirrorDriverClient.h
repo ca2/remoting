@@ -47,7 +47,7 @@ namespace remoting
    public:
 
 
-      MirrorDriverClient(::subsystem::LogWriter *log);
+      MirrorDriverClient(::subsystem::LogWriter * plogwriter);
          virtual ~MirrorDriverClient();
 
       ::innate_subsystem::PixelFormat getPixelFormat() const;
@@ -120,7 +120,7 @@ namespace remoting
       ::int_point m_leftTopCorner;
       Screen m_screen;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

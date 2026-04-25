@@ -33,7 +33,7 @@
 #include "remoting/remoting/server_config/Configurator.h"
 
 #include "subsystem/platform/VncPassCrypt.h"
-#include "subsystem_windows/node/WTS.h"
+#include "subsystem_windows/platform/subsystem.h"
 #include "subsystem_windows/platform/subsystem.h"
 #include "subsystem/node/File.h"
 #include "remoting/remoting/rfb/HostPath.h"
@@ -67,13 +67,13 @@ namespace remoting_node_desktop
 
    ControlClient::ControlClient(Transport *transport, RfbClientManager *rfbClientManager,
                                 ControlAppAuthenticator *authenticator, ::subsystem::FileInterface *pfilePipeHandle,
-                                ::subsystem::LogWriter *log) :
+                                ::subsystem::LogWriter * plogwriter) :
        m_transport(transport), m_rfbClientManager(rfbClientManager), m_authenticator(authenticator), m_tcpDispId(0),
-       m_pfilePipeHandle(pfilePipeHandle), m_authReqMessageId(0), m_plogwriter(log), m_repeatAuthPassed(false)
+       m_pfilePipeHandle(pfilePipeHandle), m_authReqMessageId(0), m_plogwriter = plogwriter;, m_repeatAuthPassed(false)
    {
       m_stream = m_transport->getIOStream();
 
-      m_gate = new ControlGate(m_stream);
+      m_pblockinggate = new ControlGate(m_stream);
 
       m_authPassed = false;
    }
@@ -83,7 +83,7 @@ namespace remoting_node_desktop
       terminate();
       wait();
 
-      delete m_gate;
+      delete m_pblockinggate;
       delete m_transport;
    }
 
@@ -99,8 +99,8 @@ namespace remoting_node_desktop
       {
          while (!isTerminating())
          {
-            unsigned int messageId = m_gate->readUInt32();
-            unsigned int messageSize = m_gate->readUInt32();
+            unsigned int messageId = m_pblockinggate->readUInt32();
+            unsigned int messageSize = m_pblockinggate->readUInt32();
 
             m_plogwriter->debug("Recieved control scopedstrMessage ID %u, size %u", (unsigned int)messageId,
                                 (unsigned int)messageSize);
@@ -140,8 +140,8 @@ namespace remoting_node_desktop
                   {
                      m_plogwriter->debug("Message requires control authentication");
 
-                     m_gate->skipBytes(messageSize);
-                     m_gate->writeUInt32(ControlProto::REPLY_AUTH_NEEDED);
+                     m_pblockinggate->skipBytes(messageSize);
+                     m_pblockinggate->writeUInt32(ControlProto::REPLY_AUTH_NEEDED);
                      m_authReqMessageId = messageId;
 
                      continue;
@@ -222,7 +222,7 @@ namespace remoting_node_desktop
                      shareAppIdMsgRcvd();
                      break;
                   default:
-                     m_gate->skipBytes(messageSize);
+                     m_pblockinggate->skipBytes(messageSize);
                      m_plogwriter->warning("Received unsupported scopedstrMessage from control client");
                      throw ControlException("Unknown command");
                } // switch (messageId).
@@ -255,8 +255,8 @@ namespace remoting_node_desktop
 
    void ControlClient::sendError(const ::scoped_string &scopedstrMessage)
    {
-      m_gate->writeUInt32(ControlProto::REPLY_ERROR);
-      m_gate->writeUTF8(scopedstrMessage);
+      m_pblockinggate->writeUInt32(ControlProto::REPLY_ERROR);
+      m_pblockinggate->writeUTF8(scopedstrMessage);
    }
 
    //
@@ -274,8 +274,8 @@ namespace remoting_node_desktop
          challenge[i] = rand() & 0xff;
       }
 
-      m_gate->write(challenge, sizeof(challenge));
-      m_gate->readFully(response, sizeof(response));
+      m_pblockinggate->write(challenge, sizeof(challenge));
+      m_pblockinggate->readFully(response, sizeof(response));
 
       //
       // FIXME: Is it right to check if password is set after client
@@ -293,7 +293,7 @@ namespace remoting_node_desktop
       }
       else
       {
-         m_gate->writeUInt32(ControlProto::REPLY_OK);
+         m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
          m_authPassed = true;
          m_repeatAuthPassed = true;
       }
@@ -307,14 +307,14 @@ namespace remoting_node_desktop
 
       m_rfbClientManager->getClientsInfo(&clients);
 
-      m_gate->writeUInt32(ControlProto::REPLY_OK);
+      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
       _ASSERT(clients.size() == (unsigned int)clients.size());
-      m_gate->writeUInt32((unsigned int)clients.size());
+      m_pblockinggate->writeUInt32((unsigned int)clients.size());
 
       for (RfbClientInfoList::iterator it = clients.begin(); it != clients.end(); it++)
       {
-         m_gate->writeUInt32((*it).m_id);
-         m_gate->writeUTF8((*it).m_peerAddr);
+         m_pblockinggate->writeUInt32((*it).m_id);
+         m_pblockinggate->writeUTF8((*it).m_peerAddr);
       }
    }
 
@@ -336,23 +336,23 @@ namespace remoting_node_desktop
       ::string status;
       status = info.m_statusText;
 
-      m_gate->writeUInt32(ControlProto::REPLY_OK);
+      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
 
-      m_gate->writeUInt8(info.m_acceptFlag ? 1 : 0);
-      m_gate->writeUInt8(info.m_serviceFlag ? 1 : 0);
-      m_gate->writeUTF8(status);
+      m_pblockinggate->writeUInt8(info.m_acceptFlag ? 1 : 0);
+      m_pblockinggate->writeUInt8(info.m_serviceFlag ? 1 : 0);
+      m_pblockinggate->writeUTF8(status);
    }
 
    void ControlClient::reloadConfigMsgRcvd()
    {
-      m_gate->writeUInt32(ControlProto::REPLY_OK);
+      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
 
       m_pconfigurator->load();
    }
 
    void ControlClient::disconnectAllMsgRcvd()
    {
-      m_gate->writeUInt32(ControlProto::REPLY_OK);
+      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
 
       m_rfbClientManager->disconnectAllClients();
 
@@ -363,7 +363,7 @@ namespace remoting_node_desktop
 
    void ControlClient::shutdownMsgRcvd()
    {
-      m_gate->writeUInt32(ControlProto::REPLY_OK);
+      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
 
       ::cast<::remoting_node_desktop::application> papplication = ::system()->m_papplication;
 
@@ -372,7 +372,7 @@ namespace remoting_node_desktop
 
    void ControlClient::addClientMsgRcvd()
    {
-      m_gate->writeUInt32(ControlProto::REPLY_OK);
+      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
 
       //
       // Read parameters.
@@ -380,9 +380,9 @@ namespace remoting_node_desktop
 
       ::string connectString;
 
-      connectString = m_gate->readUtf8();
+      connectString = m_pblockinggate->readUtf8();
 
-      bool viewOnly = m_gate->readUInt8() == 1;
+      bool viewOnly = m_pblockinggate->readUInt8() == 1;
 
       //
       // Parse host and port from connection string.
@@ -426,9 +426,9 @@ namespace remoting_node_desktop
 
    void ControlClient::setServerConfigMsgRcvd()
    {
-      m_gate->writeUInt32(ControlProto::REPLY_OK);
+      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
       ServerConfig cfg;
-      cfg.deserialize(m_gate);
+      cfg.deserialize(m_pblockinggate);
       ServerConfig *old = m_pconfigurator->getServerConfig();
       unsigned char tmp[ServerConfig::VNC_PASSWORD_SIZE];
 
@@ -471,14 +471,14 @@ namespace remoting_node_desktop
    {
       bool showIcon = m_pconfigurator->getServerConfig()->getShowTrayIconFlag();
 
-      m_gate->writeUInt32(ControlProto::REPLY_OK);
+      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
 
-      m_gate->writeUInt8(showIcon ? 1 : 0);
+      m_pblockinggate->writeUInt8(showIcon ? 1 : 0);
    }
 
    void ControlClient::updateTvnControlProcessIdMsgRcvd()
    {
-      m_gate->readUInt32();
+      m_pblockinggate->readUInt32();
 
       try
       {
@@ -488,12 +488,12 @@ namespace remoting_node_desktop
       {
          m_plogwriter->error("Can't update the control client impersonation token: {}", e.get_message());
       }
-      m_gate->writeUInt32(ControlProto::REPLY_OK);
+      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
    }
 
    void ControlClient::getServerConfigMsgRcvd()
    {
-      m_gate->writeUInt32(ControlProto::REPLY_OK);
+      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
 
       ServerConfig cfg = *m_pconfigurator->getServerConfig();
 
@@ -505,12 +505,12 @@ namespace remoting_node_desktop
       if (cfg.hasReadOnlyPassword())
          cfg.setReadOnlyPassword(zeroes);
 
-      cfg.serialize(m_gate);
+      cfg.serialize(m_pblockinggate);
    }
 
    void ControlClient::sharePrimaryIdMsgRcvd()
    {
-      m_gate->writeUInt32(ControlProto::REPLY_OK);
+      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
       ViewPortState dynViewPort;
       dynViewPort.setPrimaryDisplay();
       m_rfbClientManager->setDynViewPort(&dynViewPort);
@@ -518,8 +518,8 @@ namespace remoting_node_desktop
 
    void ControlClient::shareDisplayIdMsgRcvd()
    {
-      unsigned char displayNumber = m_gate->readUInt8();
-      m_gate->writeUInt32(ControlProto::REPLY_OK);
+      unsigned char displayNumber = m_pblockinggate->readUInt8();
+      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
 
       ViewPortState dynViewPort;
       dynViewPort.setDisplayNumber(displayNumber);
@@ -529,9 +529,9 @@ namespace remoting_node_desktop
    void ControlClient::shareWindowIdMsgRcvd()
    {
       ::string windowName;
-      windowName = m_gate->readUtf8();
+      windowName = m_pblockinggate->readUtf8();
 
-      m_gate->writeUInt32(ControlProto::REPLY_OK);
+      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
 
       ViewPortState dynViewPort;
       dynViewPort.setWindowName(windowName);
@@ -541,11 +541,11 @@ namespace remoting_node_desktop
    void ControlClient::shareRectIdMsgRcvd()
    {
       ::int_rectangle shareRect;
-      shareRect.left = m_gate->readInt32();
-      shareRect.top = m_gate->readInt32();
-      shareRect.right = m_gate->readInt32();
-      shareRect.bottom = m_gate->readInt32();
-      m_gate->writeUInt32(ControlProto::REPLY_OK);
+      shareRect.left = m_pblockinggate->readInt32();
+      shareRect.top = m_pblockinggate->readInt32();
+      shareRect.right = m_pblockinggate->readInt32();
+      shareRect.bottom = m_pblockinggate->readInt32();
+      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
 
       ViewPortState dynViewPort;
       dynViewPort.setArbitraryRect(shareRect);
@@ -554,7 +554,7 @@ namespace remoting_node_desktop
 
    void ControlClient::shareFullIdMsgRcvd()
    {
-      m_gate->writeUInt32(ControlProto::REPLY_OK);
+      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
 
       ViewPortState dynViewPort;
       dynViewPort.setFullDesktop();
@@ -563,8 +563,8 @@ namespace remoting_node_desktop
 
    void ControlClient::shareAppIdMsgRcvd()
    {
-      unsigned int procId = m_gate->readUInt32();
-      m_gate->writeUInt32(ControlProto::REPLY_OK);
+      unsigned int procId = m_pblockinggate->readUInt32();
+      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
 
       ViewPortState dynViewPort;
       dynViewPort.setProcessId(procId);

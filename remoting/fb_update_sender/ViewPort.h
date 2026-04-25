@@ -47,8 +47,8 @@ namespace remoting
    class CLASS_DECL_REMOTING  ViewPort
    {
    public:
-      ViewPort(::subsystem::LogWriter *log);
-      ViewPort(const ViewPortState *viewPortState, ::subsystem::LogWriter *log);
+      ViewPort(::subsystem::LogWriter * plogwriter);
+      ViewPort(const ViewPortState *viewPortState, ::subsystem::LogWriter * plogwriter);
       ~ViewPort();
 
       // Sets desktop interface that can be used in some mode to get
@@ -97,7 +97,7 @@ namespace remoting
 
       ::earth::time m_latestHwndResolvingTime;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

@@ -30,7 +30,8 @@
 namespace remoting
 {
 
-   class ReconnectionListener
+   class CLASS_DECL_REMOTING ReconnectionListener :
+   virtual public ::particle
    {
    public:
       ReconnectionListener() {}

@@ -30,10 +30,10 @@ namespace remoting
 {
 
 
-   Win32MirrorScreenDriver::Win32MirrorScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
-                                                    critical_section *fbcritical_section, ::subsystem::LogWriter *log) :
-       Win32ScreenDriverBaseImpl(updateKeeper, updateListener, fbcritical_section, log),
-       m_mirrorDriver(updateKeeper, updateListener, fbcritical_section, log)
+   Win32MirrorScreenDriver::Win32MirrorScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+                                                    critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter) :
+       Win32ScreenDriverBaseImpl(pupdatekeeper, pupdatelistener, fbcritical_section, log),
+       m_mirrorDriver(pupdatekeeper, pupdatelistener, fbcritical_section, log)
    {
       // At this point the screen driver has valid screen properties.
    }

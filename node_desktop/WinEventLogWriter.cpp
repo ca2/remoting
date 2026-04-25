@@ -25,8 +25,8 @@
 //#include "WinEventLogWriter.h"
 //#include "win-event-log/MessageProvider.h"
 //
-//WinEventLogWriter::WinEventLogWriter(::subsystem::LogWriter *log)
-//: m_sysLog(log)
+//WinEventLogWriter::WinEventLogWriter(::subsystem::LogWriter * plogwriter)
+//: m_sysLog(plogwriter)
 //{
 //}
 //

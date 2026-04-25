@@ -39,7 +39,7 @@ console session.
 class CLASS_DECL_REMOTING Impersonator
 {
 public:
-  Impersonator(::subsystem::LogWriter *log);
+  Impersonator(::subsystem::LogWriter * plogwriter);
   virtual ~Impersonator();
 
   /**
@@ -68,7 +68,7 @@ protected:
   HANDLE m_token;
   HANDLE m_dupToken;
 
-  ::subsystem::LogWriter *m_plogwriter;
+  ::pointer < ::subsystem::LogWriter > m_plogwriter;
 };
 
 

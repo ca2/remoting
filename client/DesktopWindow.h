@@ -140,7 +140,7 @@ namespace remoting_client
         void sendPointerEvent(unsigned char buttonMask, const ::int_point *position);
         void sendCutTextEvent(const ::scoped_string & cutText);
 
-        ::subsystem::LogWriter *m_plogwriter;
+        ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
         // This variable is true after call CoreEventsAdapter::onConnected().
         bool m_isConnected;

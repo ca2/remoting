@@ -44,7 +44,8 @@ namespace remoting
    // encoder works via an existing Tight encoder and forces it to use lossy JPEG
    // compression whenever possible.
 
-   class EncoderStore
+   class EncoderStore :
+      virtual public ::particle
    {
    public:
       // Constructor. Its arguments will be stored for constructing encoders.
@@ -52,8 +53,11 @@ namespace remoting
       // will return 0 if called right after the object creation. The caller must
       // call selectEncoder() explicitly to allocate encoders, even if that's Raw
       // encoder (implemented in the base Encoder class).
-      EncoderStore(::remoting::PixelConverter *pixelConverter, DataOutputStream *output);
+      EncoderStore();
       ~EncoderStore();
+
+
+      virtual void initialize_encoder_store(::remoting::PixelConverter *pixelConverter, DataOutputStream *output);
 
       // Get current (preferred) encoder if it was previously allocated by
       // selectEncoder().
@@ -65,7 +69,7 @@ namespace remoting
       void selectEncoder(int encType);
       void validateJpegEncoder();
 
-   protected:
+   //protected:
       // This function makes sure the specified encoder is allocated and stored in
       // m_map. If it's already there, this function returns a pointer to the
       // existing encoder. If it's not there, it will be allocated, stored in
@@ -80,34 +84,34 @@ namespace remoting
       // If the encoding type is unknown, throws an ::subsystem::Exception.
       Encoder *allocateEncoder(int encType) const;
 
-   protected:
+   //protected:
       // Map of encoders. Encoding codes are used as keys for dynamically
       // allocated objects derived from Encoder. Encoders are allocated by the
       // selectEncoder() function. Allocated encoders will not be deleted until
       // EncoderStore destruction.
-      ::map<int, Encoder *> m_map;
+      ::map_to_pointer_base<int, Encoder> m_map;
 
       // Current encoder (preferred encoder). Initialized with a null pointer,
       // should point to the encoder selected by the most recent selectEncoder()
       // call. This pointer copies a pointer from the corresponding m_map record,
       // so the destructor should deallocate the encoder together with that m_map
       // record.
-      Encoder *m_encoder;
+      ::pointer < Encoder  > m_pencoder;
       // Video-specific encoder. Initialized with a null pointer, allocated by the
       // validateJpegEncoder() method. This member variable is the only pointer to
       // JpegEncoder, there is no record in m_map for it, so this pointer should
       // be used to delete JpegEncoder on destruction.
-      JpegEncoder *m_jpegEncoder;
+      ::pointer < JpegEncoder > m_pjpegencoder;
 
       // This pointer to PixelConverter will be used to construct encoders.
-      ::remoting::PixelConverter *m_pixelConverter;
+      ::pointer < ::remoting::PixelConverter > m_ppixelconverter;
       // This pointer to DataOutputStream will be used to construct encoders.
-      DataOutputStream *m_output;
+      ::pointer < DataOutputStream > m_pdataoutputstream;
 
-   private:
-      // Do not allow copying objects.
-      EncoderStore(const EncoderStore &other);
-      EncoderStore &operator=(const EncoderStore &other);
+   // private:
+   //    // Do not allow copying objects.
+   //    EncoderStore(const EncoderStore &other);
+   //    EncoderStore &operator=(const EncoderStore &other);
    };
 
 

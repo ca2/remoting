@@ -52,7 +52,7 @@ namespace remoting
       // This function is thread-save.
       ::int_point getUpperLeftPoint(const ::int_point *position) const;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
       ::innate_subsystem::FrameBuffer *const m_fb;
 

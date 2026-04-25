@@ -32,10 +32,10 @@ namespace remoting
 
    ApplicationDesktopFactory::~ApplicationDesktopFactory() {}
 
-   Desktop *ApplicationDesktopFactory::createDesktop(ClipboardListener *extClipListener,
+   ::pointer < Desktop > ApplicationDesktopFactory::createDesktop(::subsystem::ClipboardListener *extClipListener,
                                                      UpdateSendingListener *extUpdSendingListener,
                                                      AbnormDeskTermListener *extDeskTermListener,
-                                                     ::subsystem::LogWriter *log)
+                                                     ::subsystem::LogWriter * plogwriter)
    {
       return new DesktopWinImpl(extClipListener, extUpdSendingListener, extDeskTermListener, log);
    }

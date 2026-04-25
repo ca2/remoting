@@ -49,7 +49,7 @@ public:
    * Creates new file transfler client messages handler.
    * @param registrator rfb registrator which needs to register FT messages
    *   to rfb dispatcher address whem to this object.
-   * @param output gate for writting replies for requests.
+   * @param output pblockinggate for writting replies for requests.
    * @param desktop windows desktop to known current user name and desktop name.
    *   ::file::item transfers are disabled if current desktop is winlogon.
    * @pararm enabled indicates if file transfer should be enabled or disabled
@@ -58,7 +58,7 @@ public:
   FileTransferRequestHandler(RfbCodeRegistrator *registrator,
                              RfbOutputGate *output,
                              Desktop *desktop,
-                             ::subsystem::LogWriter *log,
+                             ::subsystem::LogWriter * plogwriter,
                              bool enabled = true);
 
   /**
@@ -70,7 +70,7 @@ public:
    * Inherited from RfbDispatcherListener.
    * Processes file transfer client messages.
    */
-  virtual void onRequest(unsigned int reqCode, RfbInputGate *backGate);
+  virtual void onRequest(unsigned int reqCode, RfbInputGate *pblockinggate);
 
 protected:
 
@@ -167,7 +167,7 @@ protected:
   // Determinates if file transfer is enabled.
   bool m_enabled;
 
-  ::subsystem::LogWriter *m_plogwriter;
+  ::pointer < ::subsystem::LogWriter > m_plogwriter;
 };
 
 

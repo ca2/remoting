@@ -29,19 +29,38 @@
 namespace remoting
 {
 
-   ConsolePoller::ConsolePoller(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
-                                ScreenGrabber *screenGrabber, ::innate_subsystem::FrameBuffer *backupFrameBuffer,
-                                critical_section *frameBufferMutex, ::subsystem::LogWriter *log) :
-       UpdateDetector(updateKeeper, updateListener), m_screenGrabber(screenGrabber),
-       m_backupFrameBuffer(backupFrameBuffer), m_frameBufferMutex(frameBufferMutex), m_plogwriter(log)
+   // ConsolePoller::ConsolePoller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+   //                              ScreenGrabber *pscreengrabber, ::innate_subsystem::FrameBuffer *backupFrameBuffer,
+   //                              critical_section *frameBufferMutex, ::subsystem::LogWriter * plogwriter) :
+   //     UpdateDetector(pupdatekeeper, pupdatelistener), m_pscreengrabber(pscreengrabber),
+   //     m_backupFrameBuffer(backupFrameBuffer), m_frameBufferMutex(frameBufferMutex), m_plogwriter = plogwriter;
+   // {
+   //    m_rectanglePolling.set(0, 0, 16, 16);
+   // }
+
+   ConsolePoller::ConsolePoller() :
+   m_plogwriter(nullptr),m_pcriticalsectionFrameBuffer(nullptr)
    {
-      m_pollingRect.set(0, 0, 16, 16);
+
    }
+
 
    ConsolePoller::~ConsolePoller()
    {
       terminate();
       wait();
+   }
+
+   void ConsolePoller::initialize_console_poller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+                             ScreenGrabber *pscreengrabber, ::innate_subsystem::FrameBuffer *pframebufferBackup,
+                             critical_section *pcriticalsectionFrameBuffer, ::subsystem::LogWriter * plogwriter)
+   {
+      initialize_update_detector(pupdatekeeper, pupdatelistener);
+      m_pscreengrabber = pscreengrabber;
+      m_pframebufferBackup = pframebufferBackup;
+      m_pcriticalsectionFrameBuffer = pcriticalsectionFrameBuffer;
+      m_plogwriter = plogwriter;
+      m_rectanglePolling.set(0, 0, 16, 16);
    }
 
    void ConsolePoller::onTerminate() { m_intervalWaiter.set_happening(); }
@@ -57,24 +76,24 @@ namespace remoting
          ::int_rectangle conRect = getConsoleRect();
          if (!conRect.is_empty())
          {
-            int pollHeight = m_pollingRect.height();
-            int pollWidth = m_pollingRect.width();
+            int pollHeight = m_rectanglePolling.height();
+            int pollWidth = m_rectanglePolling.width();
 
             {
-               critical_section_lock al(m_frameBufferMutex);
-               ::int_rectangle offsetFb = m_screenGrabber->getScreenRect();
+               critical_section_lock al(m_pcriticalsectionFrameBuffer);
+               ::int_rectangle offsetFb = m_pscreengrabber->getScreenRect();
                conRect.offset(-offsetFb.left, -offsetFb.top);
-               ::innate_subsystem::FrameBuffer *screenFrameBuffer = m_screenGrabber->getScreenBuffer();
-               if (screenFrameBuffer->isEqualTo(m_backupFrameBuffer))
+               ::innate_subsystem::FrameBuffer *screenFrameBuffer = m_pscreengrabber->getScreenBuffer();
+               if (screenFrameBuffer->isEqualTo(m_pframebufferBackup))
                {
-                  m_screenGrabber->grab(conRect);
+                  m_pscreengrabber->grab(conRect);
                   for (int iRow = conRect.top; iRow < conRect.bottom; iRow += pollHeight)
                   {
                      for (int iCol = conRect.left; iCol < conRect.right; iCol += pollWidth)
                      {
                         scanRect.set(iCol, iRow, minimum(iCol + pollWidth, conRect.right),
                                          minimum(iRow + pollHeight, conRect.bottom));
-                        if (!screenFrameBuffer->cmpFrom(scanRect, m_backupFrameBuffer, scanRect.left, scanRect.top))
+                        if (!screenFrameBuffer->cmpFrom(scanRect, m_pframebufferBackup, scanRect.left, scanRect.top))
                         {
                            region.addRect(scanRect);
                         }
@@ -86,7 +105,7 @@ namespace remoting
             // Send event
             if (!region.is_empty())
             {
-               m_updateKeeper->addChangedRegion(&region);
+               m_pupdatekeeper->addChangedRegion(&region);
                doUpdate();
             }
          }

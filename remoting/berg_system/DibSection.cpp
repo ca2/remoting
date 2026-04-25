@@ -26,7 +26,7 @@
 #include "DibSection.h"
 #include "subsystem/node/SystemException.h"
 
-DibSection::DibSection(const ::innate_subsystem::PixelFormat & pf, const ::int_size & dim, HWND compatibleWin)
+DibSection::DibSection(const ::innate_subsystem::PixelFormat & pf, const ::int_size & size, HWND compatibleWin)
 : m_isOwnTargetDC(false),
   m_targetDC(0),
   m_memDC(0),
@@ -37,7 +37,7 @@ DibSection::DibSection(const ::innate_subsystem::PixelFormat & pf, const ::int_s
   m_buffer(0)
 {
   try {
-    openDIBSection(pf, dim, compatibleWin);
+    openDIBSection(pf, size, compatibleWin);
   } catch (...) {
     closeDIBSection();
     throw;
@@ -113,7 +113,7 @@ void DibSection::stretchFromDibSection(const ::int_rectangle &  srcRect,const ::
   }
 }
 
-void DibSection::setupBMIStruct(BITMAPINFO *pBmi, const ::innate_subsystem::PixelFormat & pf, const ::int_size & dim)
+void DibSection::setupBMIStruct(BITMAPINFO *pBmi, const ::innate_subsystem::PixelFormat & pf, const ::int_size & size)
 {
   if (pf.bitsPerPixel == 8) {
     Screen::Palette8bitBMI *paletteBMI = reinterpret_cast<Screen::Palette8bitBMI *>(pBmi);
@@ -142,11 +142,11 @@ void DibSection::setupBMIStruct(BITMAPINFO *pBmi, const ::innate_subsystem::Pixe
   pBmi->bmiHeader.biPlanes = 1;
   pBmi->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
   pBmi->bmiHeader.biBitCount = pf.bitsPerPixel;
-  pBmi->bmiHeader.biWidth = dim.cx;
-  pBmi->bmiHeader.biHeight = -dim.cy;
+  pBmi->bmiHeader.biWidth = size.cx;
+  pBmi->bmiHeader.biHeight = -size.cy;
 }
 
-void DibSection::openDIBSection(const ::innate_subsystem::PixelFormat & pf, const ::int_size & dim, HWND compatibleWin)
+void DibSection::openDIBSection(const ::innate_subsystem::PixelFormat & pf, const ::int_size & size, HWND compatibleWin)
 {
   m_targetDC = GetDC(compatibleWin);
   m_isOwnTargetDC = true;
@@ -171,7 +171,7 @@ void DibSection::openDIBSection(const ::innate_subsystem::PixelFormat & pf, cons
   } else {
     pBmi = reinterpret_cast<BITMAPINFO *>(&bitFieldBmi);
   }
-  setupBMIStruct(pBmi, pf, dim);
+  setupBMIStruct(pBmi, pf, size);
 
   m_memDC = CreateCompatibleDC(m_targetDC);
   if (m_memDC == NULL) {

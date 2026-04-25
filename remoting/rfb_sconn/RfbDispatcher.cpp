@@ -24,17 +24,17 @@
 #include "framework.h"
 #include "RfbDispatcher.h"
 
-RfbDispatcher::RfbDispatcher(RfbInputGate *gate,
+RfbDispatcher::RfbDispatcher(RfbInputGate *pblockinggate,
                              AnEventListener *extTerminationListener)
-: m_gate(gate),
+: m_pblockinggate(pblockinggate),
   m_extTerminationListener(extTerminationListener),
   m_terminationEvent(0)
 {
 }
 
-RfbDispatcher::RfbDispatcher(RfbInputGate *gate,
+RfbDispatcher::RfbDispatcher(RfbInputGate *pblockinggate,
                              ::happening *terminationEvent)
-: m_gate(gate),
+: m_pblockinggate(pblockinggate),
   m_extTerminationListener(0),
   m_terminationEvent(terminationEvent)
 {
@@ -60,12 +60,12 @@ void RfbDispatcher::execute()
 {
   try {
     while (!isTerminating()) {
-      unsigned int code = m_gate->readUInt8();
+      unsigned int code = m_pblockinggate->readUInt8();
       if (code == 0xfc) { // special TightVNC code
         code = code << 24;
-        code += m_gate->readUInt8() << 16;
-        code += m_gate->readUInt8() << 8;
-        code += m_gate->readUInt8();
+        code += m_pblockinggate->readUInt8() << 16;
+        code += m_pblockinggate->readUInt8() << 8;
+        code += m_pblockinggate->readUInt8();
       }
       ::map<unsigned int, RfbDispatcherListener *>::iterator iter = m_handlers.find(code);
       if (iter == m_handlers.end()) {
@@ -74,7 +74,7 @@ void RfbDispatcher::execute()
                        (int)code);
         throw ::subsystem::Exception(errMess);
       }
-      (*iter).second->onRequest(code, m_gate);
+      (*iter).second->onRequest(code, m_pblockinggate);
     }
   } catch (...) {
   }

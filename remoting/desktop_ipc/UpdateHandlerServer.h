@@ -38,24 +38,24 @@ namespace remoting
    class UpdateHandlerServer : public DesktopServerProto, public ClientListener, public UpdateListener
    {
    public:
-      UpdateHandlerServer(BlockingGate *forwGate, DesktopSrvDispatcher *dispatcher,
+      UpdateHandlerServer(BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
                           // AnEventListener *extTerminationListener,
-                          const ::procedure &procedureTermination, ::subsystem::LogWriter *log);
+                          const ::procedure &procedureTermination, ::subsystem::LogWriter * plogwriter);
       virtual ~UpdateHandlerServer();
 
       // Internal dispatcher
-      virtual void onRequest(unsigned char reqCode, BlockingGate *backGate);
+      virtual void onRequest(unsigned char reqCode, BlockingGate *pblockinggate);
 
    protected:
       virtual void onUpdate();
 
       // At first time server must get init information.
-      void serverInit(BlockingGate *backGate);
+      void serverInit(BlockingGate *pblockinggate);
 
-      void extractReply(BlockingGate *backGate);
-      void screenPropReply(BlockingGate *backGate);
-      void receiveFullReqReg(BlockingGate *backGate);
-      void receiveExcludingReg(BlockingGate *backGate);
+      void extractReply(BlockingGate *pblockinggate);
+      void screenPropReply(BlockingGate *pblockinggate);
+      void receiveFullReqReg(BlockingGate *pblockinggate);
+      void receiveExcludingReg(BlockingGate *pblockinggate);
 
       Win32ScreenDriverFactory m_scrDriverFactory;
 
@@ -65,7 +65,7 @@ namespace remoting
       // AnEventListener *m_extTerminationListener;
       ::procedure m_procedureTermination;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

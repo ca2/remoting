@@ -38,9 +38,9 @@ namespace remoting_node_desktop
    RfbClientManager::RfbClientManager(const ::scoped_string &scopedstrServerName,
                                       ::remoting_node_desktop::Configurator *pconfigurator,
                                       ::remoting_node_desktop::NewConnectionEvents *pnewconnectionevents,
-                                      ::subsystem::LogWriter *log, ::remoting::DesktopFactory *desktopFactory) :
+                                      ::subsystem::LogWriter * plogwriter, ::remoting::DesktopFactory *desktopFactory) :
        m_nextClientId(0), m_desktop(0), m_pconfigurator(pconfigurator), m_pnewconnectionevents(pnewconnectionevents),
-       m_plogwriter(log), m_desktopFactory(desktopFactory)
+       m_plogwriter = plogwriter;, m_desktopFactory(desktopFactory)
    {
       m_plogwriter->information("Starting rfb client manager");
    }

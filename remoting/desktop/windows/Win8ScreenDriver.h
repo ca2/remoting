@@ -52,8 +52,8 @@ namespace remoting
       // to use an external belonged mutex. Thread safe coordiantion commitments between this class
       // and external some elements should be entirely provided by an owner code.)
 
-      Win8ScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener, critical_section *fbcritical_section,
-                       ::subsystem::LogWriter *log);
+      Win8ScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, critical_section *fbcritical_section,
+                       ::subsystem::LogWriter * plogwriter);
       virtual ~Win8ScreenDriver();
 
       // Starts screen update detection if it not started yet.
@@ -76,10 +76,10 @@ namespace remoting
       virtual void getCopiedRegion(::int_rectangle *copyRect, ::int_point *source);
 
    private:
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
       critical_section *m_fbcritical_section;
-      UpdateKeeper *m_updateKeeper;
-      UpdateListener *m_updateListener;
+      UpdateKeeper *m_pupdatekeeper;
+      UpdateListener *m_pupdatelistener;
       // This member must be always gueranted non zero. Otherwise an excption must
       // be provided from the constructor of this class.
       Win8ScreenDriverImpl *m_drvImpl;

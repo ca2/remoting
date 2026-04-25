@@ -46,7 +46,7 @@ namespace remoting
 
       void authPhase();
       void afterAuthPhase(const CapContainer *srvToClCaps, const CapContainer *clToSrvCaps, const CapContainer *encCaps,
-                          const ::int_size &dim, const ::innate_subsystem::PixelFormat &pf);
+                          const ::int_size &size, const ::innate_subsystem::PixelFormat &pf);
 
       // Returns shared flag value. Shared flag value is valid only after
       // the authPhase() function calling.
@@ -61,7 +61,7 @@ namespace remoting
       void checkForLoopback();
       void initAuthenticate();
       void readClientInit();
-      void sendServerInit(const ::int_size &dim, const ::innate_subsystem::PixelFormat &pf);
+      void sendServerInit(const ::int_size &size, const ::innate_subsystem::PixelFormat &pf);
       void sendDesktopName();
       void sendInteractionCaps(const CapContainer *srvToClCaps, const CapContainer *clToSrvCaps,
                                const CapContainer *encCaps);

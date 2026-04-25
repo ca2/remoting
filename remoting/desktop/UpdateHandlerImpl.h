@@ -37,7 +37,7 @@ namespace remoting
    {
    public:
       UpdateHandlerImpl(UpdateListener *externalUpdateListener, ScreenDriverFactory *scrDriverFactory,
-                        ::subsystem::LogWriter *log);
+                        ::subsystem::LogWriter * plogwriter);
       virtual ~UpdateHandlerImpl();
 
       virtual void extract(UpdateContainer *updateContainer);
@@ -62,14 +62,14 @@ namespace remoting
 
       void applyNewScreenProperties();
 
-      UpdateKeeper m_updateKeeper;
+      UpdateKeeper m_pupdatekeeper;
       ScreenDriver *m_screenDriver;
       UpdateFilter *m_updateFilter;
       UpdateListener *m_externalUpdateListener;
 
       ::int_rectangle m_absoluteRect;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
       bool m_fullUpdateRequested;
    };

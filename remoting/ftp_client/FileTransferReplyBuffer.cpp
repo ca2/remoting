@@ -32,7 +32,7 @@ namespace  remoting
    namespace  ftp
    {
       FileTransferReplyBuffer::FileTransferReplyBuffer(::subsystem::LogWriter * plogwriter)
-      : m_plogwriter(plogwriter),
+      : m_plogwriter = plogwriter;,
         m_isCompressionSupported(false),
         //m_filesInfoCount(0), m_filesInfo(NULL),
         m_downloadBufferSize(0),

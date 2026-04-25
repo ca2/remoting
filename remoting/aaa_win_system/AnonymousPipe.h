@@ -40,7 +40,7 @@ public:
   // function calling.
   // @param hRead is a read handle getting by the CreatePipe()
   // function calling but is not the same as for hWrite.
-  AnonymousPipe(HANDLE hWrite, HANDLE hRead, unsigned int maxPortionSize, ::subsystem::LogWriter *log);
+  AnonymousPipe(HANDLE hWrite, HANDLE hRead, unsigned int maxPortionSize, ::subsystem::LogWriter * plogwriter);
   virtual ~AnonymousPipe();
 
   /**
@@ -101,7 +101,7 @@ private:
   ::happening m_readEvent;
   ::happening m_writeEvent;
 
-  ::subsystem::LogWriter *m_plogwriter;
+  ::pointer < ::subsystem::LogWriter > m_plogwriter;
 };
 
 //// __ANONYMOUSPIPE_H__

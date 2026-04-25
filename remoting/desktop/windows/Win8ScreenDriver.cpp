@@ -29,14 +29,14 @@ namespace remoting
 {
 
 
-   Win8ScreenDriver::Win8ScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
-                                      critical_section *fbcritical_section, ::subsystem::LogWriter *log) :
-       WinVideoRegionUpdaterImpl(log), m_plogwriter(log), m_fbcritical_section(fbcritical_section),
-       m_updateKeeper(updateKeeper), m_updateListener(updateListener), m_detectionEnabled(false)
+   Win8ScreenDriver::Win8ScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+                                      critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter) :
+       WinVideoRegionUpdaterImpl(plogwriter), m_plogwriter = plogwriter;, m_fbcritical_section(fbcritical_section),
+       m_pupdatekeeper(pupdatekeeper), m_pupdatelistener = pupdatelistener;, m_detectionEnabled(false)
    {
       m_plogwriter->debug("Win8ScreenDriver creating new Win8ScreenDriverImpl");
       critical_section_lock al(&m_drvImplMutex);
-      m_drvImpl = new Win8ScreenDriverImpl(m_plogwriter, m_updateKeeper, m_fbcritical_section, m_updateListener);
+      m_drvImpl = new Win8ScreenDriverImpl(m_plogwriter, m_pupdatekeeper, m_fbcritical_section, m_pupdatelistener);
    }
 
    Win8ScreenDriver::~Win8ScreenDriver()
@@ -109,8 +109,8 @@ namespace remoting
             m_drvImpl = 0;
          }
          m_plogwriter->debug("Applying new screen properties, creating new Win8ScreenDriverImpl");
-         Win8ScreenDriverImpl *drvImpl = new Win8ScreenDriverImpl(m_plogwriter, m_updateKeeper, m_fbcritical_section,
-                                                                  m_updateListener, m_detectionEnabled);
+         Win8ScreenDriverImpl *drvImpl = new Win8ScreenDriverImpl(m_plogwriter, m_pupdatekeeper, m_fbcritical_section,
+                                                                  m_pupdatelistener, m_detectionEnabled);
          m_drvImpl = drvImpl;
       }
       catch (::exception &e)

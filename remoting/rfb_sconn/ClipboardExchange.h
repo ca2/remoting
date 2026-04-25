@@ -38,7 +38,7 @@ namespace remoting
    {
    public:
       ClipboardExchange(RfbCodeRegistrator *codeRegtor, Desktop *desktop,
-                        ::remoting::RfbOutputGate *output, bool viewOnly, ::subsystem::LogWriter *log);
+                        ::remoting::RfbOutputGate *output, bool viewOnly, ::subsystem::LogWriter * plogwriter);
       virtual ~ClipboardExchange();
 
       void sendClipboard(const ::scoped_string & newClipboard);
@@ -66,7 +66,7 @@ namespace remoting
       bool m_hasNewClip;
       critical_section m_storedClipMut;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

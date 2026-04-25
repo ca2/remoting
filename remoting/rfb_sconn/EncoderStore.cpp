@@ -30,9 +30,9 @@
 #include "TightEncoder.h"
 
 EncoderStore::EncoderStore(PixelConverter *pixelConverter, DataOutputStream *output)
-: m_encoder(0),
-  m_jpegEncoder(0),
-  m_pixelConverter(pixelConverter),
+: m_pencoder(0),
+  m_pjpegencoder(0),
+  m_ppixelconverter(pixelConverter),
   m_output(output)
 {
 }
@@ -40,8 +40,8 @@ EncoderStore::EncoderStore(PixelConverter *pixelConverter, DataOutputStream *out
 EncoderStore::~EncoderStore()
 {
   // Remove JpegEncoder which is not in m_map.
-  if (m_jpegEncoder != 0) {
-    delete m_jpegEncoder;
+  if (m_pjpegencoder != 0) {
+    delete m_pjpegencoder;
   }
   // Remove all allocated encoders referenced in m_map.
   ::map<int, Encoder *>::iterator it;
@@ -52,24 +52,24 @@ EncoderStore::~EncoderStore()
 
 Encoder *EncoderStore::getEncoder() const
 {
-  return m_encoder;
+  return m_pencoder;
 }
 
 JpegEncoder *EncoderStore::getJpegEncoder() const
 {
-  return m_jpegEncoder;
+  return m_pjpegencoder;
 }
 
 void EncoderStore::selectEncoder(int encType)
 {
-  m_encoder = validateEncoder(encType);
+  m_pencoder = validateEncoder(encType);
 }
 
 void EncoderStore::validateJpegEncoder()
 {
-  if (m_jpegEncoder == 0) {
+  if (m_pjpegencoder == 0) {
     TightEncoder *tight = (TightEncoder *)validateEncoder(EncodingDefs::TIGHT);
-    m_jpegEncoder = new JpegEncoder(tight);
+    m_pjpegencoder = new JpegEncoder(tight);
   }
 }
 
@@ -115,15 +115,15 @@ Encoder *EncoderStore::allocateEncoder(int encType) const
 {
   switch (encType) {
   case EncodingDefs::TIGHT:
-    return new TightEncoder(m_pixelConverter, m_output);
+    return new TightEncoder(m_ppixelconverter, m_output);
   case EncodingDefs::ZRLE:
-    return new ZrleEncoder(m_pixelConverter, m_output);
+    return new ZrleEncoder(m_ppixelconverter, m_output);
   case EncodingDefs::HEXTILE:
-    return new HextileEncoder(m_pixelConverter, m_output);
+    return new HextileEncoder(m_ppixelconverter, m_output);
   case EncodingDefs::RRE:
-    return new RreEncoder(m_pixelConverter, m_output);
+    return new RreEncoder(m_ppixelconverter, m_output);
   case EncodingDefs::RAW:
-    return new Encoder(m_pixelConverter, m_output);
+    return new Encoder(m_ppixelconverter, m_output);
   default:
     throw ::subsystem::Exception("Cannot create encoder of the specified type");
   }

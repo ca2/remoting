@@ -25,7 +25,8 @@
 #pragma once
 
 
-class CLASS_DECL_REMOTING WindowMessageHandler
+class CLASS_DECL_REMOTING WindowMessageHandler :
+virtual public ::particle
 {
 public:
   // This function must return true if a scopedstrMessage has been processed.

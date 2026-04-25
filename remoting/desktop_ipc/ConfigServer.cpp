@@ -23,53 +23,67 @@
 //
 #include "framework.h"
 #include "ConfigServer.h"
+#include "DesktopSrvDispatcher.h"
+#include "desktop/DesktopConfigLocal.h"
 #include "remoting/remoting/server_config/Configurator.h"
 
 namespace remoting
 {
 
 
-   ConfigServer::ConfigServer(DesktopSrvDispatcher *dispatcher, ::subsystem::LogWriter *log) :
-       DesktopServerProto(0), m_deskConf(log)
-   {
-      dispatcher->registerNewHandle(CONFIG_RELOAD_REQ, this);
-      dispatcher->registerNewHandle(SOFT_INPUT_ENABLING_REQ, this);
-   }
+   // ConfigServer::ConfigServer(DesktopSrvDispatcher * pdispatcher, ::subsystem::LogWriter * plogwriter) :
+   //     DesktopServerProto(0), m_deskConf(plogwriter)
+   // {
+   //    dispatcher->registerNewHandle(CONFIG_RELOAD_REQ, this);
+   //    dispatcher->registerNewHandle(SOFT_INPUT_ENABLING_REQ, this);
+   // }
 
+   ConfigServer::ConfigServer() {}
    ConfigServer::~ConfigServer() {}
 
-   void ConfigServer::onRequest(unsigned char reqCode, BlockingGate *backGate)
+
+   void ConfigServer::initialize_config_server(Configurator * pconfigurator, DesktopSrvDispatcher *pdispatcher, ::subsystem::LogWriter * plogwriter)
+   {
+      initialize_desktop_server_proto(pconfigurator, nullptr);
+      m_pconfigurator = pconfigurator;
+      construct_newø(m_pdesktopconfiglocal);
+      m_pdesktopconfiglocal->initialize_desktop_config_local(pconfigurator, plogwriter);
+      pdispatcher->registerNewHandle(CONFIG_RELOAD_REQ, this);
+      pdispatcher->registerNewHandle(SOFT_INPUT_ENABLING_REQ, this);
+   }
+
+   void ConfigServer::onRequest(unsigned char reqCode, BlockingGate *pblockinggate)
    {
       switch (reqCode)
       {
          case CONFIG_RELOAD_REQ:
-            reloadSettings(backGate);
+            reloadSettings(pblockinggate);
             break;
          case SOFT_INPUT_ENABLING_REQ:
-            answerOnSoftInputEnablingReq(backGate);
+            answerOnSoftInputEnablingReq(pblockinggate);
             break;
          default:
             ::string errMess;
-            errMess..formatf("Unknown {} protocol code received from a pipe client", (int)reqCode);
+            errMess.format("Unknown {} protocol code received from a pipe client", (int)reqCode);
             throw ::subsystem::Exception(errMess);
             break;
       }
    }
 
-   void ConfigServer::reloadSettings(BlockingGate *backGate)
+   void ConfigServer::reloadSettings(BlockingGate *pblockinggate)
    {
-      readConfigSettings(backGate);
+      readConfigSettings(pblockinggate);
       m_pconfigurator->notifyReload();
-      m_deskConf.updateByNewSettings();
+      m_pdesktopconfiglocal->updateByNewSettings();
    }
 
-   void ConfigServer::answerOnSoftInputEnablingReq(BlockingGate *backGate)
+   void ConfigServer::answerOnSoftInputEnablingReq(BlockingGate *pblockinggate)
    {
-      m_deskConf.correctLastTime(::earth::time(backGate->readUInt64()));
+      m_pdesktopconfiglocal->correctLastTime(pblockinggate->readUInt64() * 1_s);
 
-      bool allowed = m_deskConf.isRemoteInputAllowed();
-      backGate->writeUInt8(allowed);
-      backGate->writeUInt64(m_deskConf.getLastInputTime().getTime());
+      bool allowed = m_pdesktopconfiglocal->isRemoteInputAllowed();
+      pblockinggate->writeUInt8(allowed);
+      pblockinggate->writeUInt64(m_pdesktopconfiglocal->getLastInputTime().m_iSecond);
    }
 
 

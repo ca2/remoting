@@ -27,12 +27,12 @@
 //#include "remoting/remoting/win_system/Environment.h"
 //#include "subsystem/thread/critical_section.h"
 
-AnonymousPipe::AnonymousPipe(HANDLE hWrite, HANDLE hRead, unsigned int maxPortionSize, ::subsystem::LogWriter *log)
+AnonymousPipe::AnonymousPipe(HANDLE hWrite, HANDLE hRead, unsigned int maxPortionSize, ::subsystem::LogWriter * plogwriter)
 : Pipe(maxPortionSize),
   m_hWrite(hWrite),
   m_hRead(hRead),
   m_neededToClose(true),
-  m_plogwriter(log)
+  m_plogwriter = plogwriter;
 {
 }
 

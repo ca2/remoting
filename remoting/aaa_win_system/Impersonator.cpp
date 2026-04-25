@@ -29,10 +29,10 @@
 
 #include "remoting/remoting/win_system/WTS.h"
 
-Impersonator::Impersonator(::subsystem::LogWriter *log)
+Impersonator::Impersonator(::subsystem::LogWriter * plogwriter)
 : m_token(INVALID_HANDLE_VALUE),
   m_dupToken(INVALID_HANDLE_VALUE),
-  m_plogwriter(log)
+  m_plogwriter = plogwriter;
 {
 }
 
@@ -42,7 +42,7 @@ Impersonator::~Impersonator()
 
 void Impersonator::impersonateAsLoggedUser()
 {
-  HANDLE token = WTS::queryConsoleUserToken(m_plogwriter);
+  HANDLE token = WindowsSubsystem().WTS().queryConsoleUserToken(m_plogwriter);
   impersonateAsUser(token);
 }
 
@@ -53,7 +53,7 @@ void Impersonator::impersonateAsUser(HANDLE token)
   }
   m_token = token;
 
-  ::string name = WTS::getTokenUserName(m_token);
+  ::string name = WindowsSubsystem().WTS().getTokenUserName(m_token);
   m_plogwriter->debug("impersonate as user: {}", name);
 
   if ((!DuplicateToken(m_token, SecurityImpersonation, &m_dupToken))) {
@@ -67,7 +67,7 @@ void Impersonator::impersonateAsUser(HANDLE token)
 
 void Impersonator::impersonateAsCurrentProcessUser(bool rdpEnabled)
 {
-  HANDLE token = WTS::duplicateCurrentProcessUserToken(rdpEnabled, m_plogwriter);
+  HANDLE token = WindowsSubsystem().WTS().duplicateCurrentProcessUserToken(rdpEnabled, m_plogwriter);
   impersonateAsUser(token);
 }
 
@@ -94,10 +94,10 @@ bool Impersonator::sessionIsLocked(bool rdpEnabled)
 {
   DWORD id = 0;
   if (rdpEnabled) {
-    id = WTS::getRdpSessionId(m_plogwriter);
+    id = WindowsSubsystem().WTS().getRdpSessionId(m_plogwriter);
   }
   if (id == 0) {
-    id = WTS::getActiveConsoleSessionId(m_plogwriter);
+    id = WindowsSubsystem().WTS().getActiveConsoleSessionId(m_plogwriter);
   }
-  return WTS::sessionIsLocked(id, m_plogwriter);
+  return WindowsSubsystem().WTS().sessionIsLocked(id, m_plogwriter);
 }

@@ -31,7 +31,7 @@
 
 #include "remoting/remoting/win_system/WTS.h"
 
-void ControlPipeName::createPipeName(bool forService, ::string & pipeName, ::subsystem::LogWriter *log)
+void ControlPipeName::createPipeName(bool forService, ::string & pipeName, ::subsystem::LogWriter * plogwriter)
 {
   if (forService) {
     pipeName->setString(
@@ -39,6 +39,6 @@ void ControlPipeName::createPipeName(bool forService, ::string & pipeName, ::sub
   } else {
     pipeName->format("%s_On_Session_{}",
       ServerApplicationNames::FOR_APP_CONTROL_APP_SERVICE_PIPE_NAME,
-      WTS::getActiveConsoleSessionId(log));
+      WindowsSubsystem().WTS().getActiveConsoleSessionId(plogwriter));
   }
 }

@@ -31,9 +31,9 @@ namespace remoting
 {
 
    DesktopBaseImpl::DesktopBaseImpl(ClipboardListener *extClipListener, UpdateSendingListener *extUpdSendingListener,
-                                    AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter *log) :
+                                    AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter * plogwriter) :
        m_extUpdSendingListener(extUpdSendingListener), m_extDeskTermListener(extDeskTermListener),
-       m_extClipListener(extClipListener), m_userInput(0), m_updateHandler(0), m_plogwriter(log)
+       m_extClipListener(extClipListener), m_userInput(0), m_updateHandler(0), m_plogwriter = plogwriter;
    {
    }
 
@@ -55,14 +55,14 @@ namespace remoting
       }
    }
 
-   void DesktopBaseImpl::getFrameBufferProperties(::int_size *dim, ::innate_subsystem::PixelFormat *pf)
+   void DesktopBaseImpl::getFrameBufferProperties(::int_size *size, ::innate_subsystem::PixelFormat *pf)
    {
       _ASSERT(m_updateHandler != 0);
       _ASSERT(m_extDeskTermListener != 0);
       m_plogwriter->debug("get frame buffer properties");
       try
       {
-         m_updateHandler->getFrameBufferProp(dim, pf);
+         m_updateHandler->getFrameBufferProp(size, pf);
       }
       catch (::exception &e)
       {

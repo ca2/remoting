@@ -27,9 +27,9 @@
 
 #include "subsystem/thread/ZombieKiller.h"
 
-HttpServer::HttpServer(const ::scoped_string & scopedstrBindHost, unsigned short bindPort, bool lockAddr, ::subsystem::LogWriter *log)
+HttpServer::HttpServer(const ::scoped_string & scopedstrBindHost, unsigned short bindPort, bool lockAddr, ::subsystem::LogWriter * plogwriter)
 : TcpServer(bindHost, bindPort, true, lockAddr),
-  m_plogwriter(log)
+  m_plogwriter = plogwriter;
 {
   m_plogwriter->debug("Http server started");
 }

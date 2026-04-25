@@ -32,8 +32,8 @@ namespace remoting_node_desktop
 
 
    ControlServer::ControlServer(::subsystem::PipeServer *pipeServer, RfbClientManager *rfbClientManager,
-                                ::subsystem::LogWriter *log) :
-       m_authenticator(30000, 3), m_pipeServer(pipeServer), m_rfbClientManager(rfbClientManager), m_plogwriter(log)
+                                ::subsystem::LogWriter * plogwriter) :
+       m_authenticator(30000, 3), m_pipeServer(pipeServer), m_rfbClientManager(rfbClientManager), m_plogwriter = plogwriter;
    {
       m_plogwriter->debug("{}"), _T("::innate_subsystem::Control server started");
 

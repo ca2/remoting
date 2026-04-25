@@ -27,11 +27,45 @@
 namespace remoting
 {
 
+   //
+   // DummyScreenDriver::DummyScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, const ::int_size & size,
+   //                                   unsigned int interval, ::subsystem::LogWriter * plogwriter) :
+   //  m_pupdatelistener = pupdatelistener;m_pupdatekeeper = pupdatekeeper; m_interval(interval)
+   //  {
+   //
+   //     ::innate_subsystem::PixelFormat pixelFormat;
+   //     pixelFormat.initBigEndianByNative();
+   //     pixelFormat.bitsPerPixel = 32;
+   //     pixelFormat.redMax = 0xff;
+   //     pixelFormat.greenMax = 0xff;
+   //     pixelFormat.blueMax = 0xff;
+   //     pixelFormat.redShift = 16;
+   //     pixelFormat.greenShift = 8;
+   //     pixelFormat.blueShift = 0;
+   //     m_workFrameBuffer.setProperties(size, pixelFormat);
+   //     m_detectionEnabled = false;
+   //     resume();
+   //  }
 
-   DummyScreenDriver::DummyScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ::int_size dim,
-                                        unsigned int interval, ::subsystem::LogWriter *log) :
-       m_updateListener(updateListener), m_updateKeeper(updateKeeper), m_interval(interval)
+
+   DummyScreenDriver::DummyScreenDriver()
    {
+
+   }
+
+   DummyScreenDriver::~DummyScreenDriver()
+   {
+      terminate();
+      wait();
+   }
+
+
+   void DummyScreenDriver::initialize_dummy_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, const ::int_size & size,
+                                     unsigned int interval, ::subsystem::LogWriter * plogwriter)
+   {
+      m_pupdatelistener = pupdatelistener;
+      m_pupdatekeeper = pupdatekeeper;
+      m_interval = interval;
       ::innate_subsystem::PixelFormat pixelFormat;
       pixelFormat.initBigEndianByNative();
       pixelFormat.bitsPerPixel = 32;
@@ -41,15 +75,9 @@ namespace remoting
       pixelFormat.redShift = 16;
       pixelFormat.greenShift = 8;
       pixelFormat.blueShift = 0;
-      m_workFrameBuffer.setProperties(dim, pixelFormat);
+      m_workFrameBuffer.setProperties(size, pixelFormat);
       m_detectionEnabled = false;
       resume();
-   }
-
-   DummyScreenDriver::~DummyScreenDriver()
-   {
-      terminate();
-      wait();
    }
 
    void DummyScreenDriver::onTerminate() { m_sleeper.set_happening(); }
@@ -63,9 +91,9 @@ namespace remoting
          {
             try
             {
-               ::int_size dim = m_workFrameBuffer.getDimension();
-               int w = dim.cx;
-               int h = dim.cy;
+               ::int_size size = m_workFrameBuffer.getDimension();
+               int w = size.cx;
+               int h = size.cy;
                int x = rand() % (w / 50) + (w / 50);
                int y = rand() % (h / 50) + (h / 50);
 
@@ -78,8 +106,8 @@ namespace remoting
                if (m_detectionEnabled)
                {
                   m_workFrameBuffer.fillRect(r, color);
-                  m_updateKeeper->addChangedRegion(&reg);
-                  m_updateListener->onUpdate();
+                  m_pupdatekeeper->addChangedRegion(&reg);
+                  m_pupdatelistener->onUpdate();
                }
             }
             catch (...)

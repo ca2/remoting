@@ -35,21 +35,25 @@ namespace remoting
    virtual public ::particle
    {
    public:
-      DesktopConfigLocal(::subsystem::LogWriter *log);
+
+
+      ::subsystem::LogWriter * m_plogwriter;
+      ::pointer < Configurator > m_pconfigurator;
+      ::pointer < InputBlocker  > m_pinputblocker;
+
+      DesktopConfigLocal();
       virtual ~DesktopConfigLocal();
 
 
-      void initialize_desktop_config_local(Configurator * pconfigurator, ::subsystem::LogWriter *log);
+      void initialize_desktop_config_local(Configurator * pconfigurator, ::subsystem::LogWriter * plogwriter);
 
       virtual void updateByNewSettings();
 
       virtual bool isRemoteInputAllowed();
-      virtual ::earth::time getLastInputTime() const;
-      virtual void correctLastTime(::earth::time newTime);
+      virtual class ::time getLastInputTime() const;
+      virtual void correctLastTime(const class ::time & time);
 
    //private:
-      ::pointer < Configurator > m_pconfigurator;
-      InputBlocker *m_inputBlocker;
    };
 
    //// __DESKTOPCONFIGLOCAL_H__

@@ -30,11 +30,17 @@
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING InputBlocker
+   class CLASS_DECL_REMOTING InputBlocker :
+   virtual public ::particle
    {
    public:
+
+
       InputBlocker();
-      virtual ~InputBlocker();
+      ~InputBlocker() override;
+
+
+      virtual void initialize_input_blocker(::subsystem::LogWriter * plogwriter);
 
       // This functions set/unset blocks on a local keyboard and mouse.
       virtual void setKeyboardBlocking(bool block) = 0;

@@ -36,7 +36,7 @@
 //                          public WinServiceEvents
 //{
 //public:
-//  WinEventLogWriter(::subsystem::LogWriter *log);
+//  WinEventLogWriter(::subsystem::LogWriter * plogwriter);
 //  ~WinEventLogWriter();
 //
 //  // This function enables fully functional this object usage,

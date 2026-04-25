@@ -37,7 +37,7 @@
 class HttpClient : public TcpClientThread
 {
 public:
-  HttpClient(SocketIPv4 *socket, ::subsystem::LogWriter *log);
+  HttpClient(SocketIPv4 *socket, ::subsystem::LogWriter * plogwriter);
   virtual ~HttpClient();
 
 protected:
@@ -49,7 +49,7 @@ protected:
   DataInputStream *m_dIS;
   DataOutputStream *m_dOS;
 
-  ::subsystem::LogWriter *m_plogwriter;
+  ::pointer < ::subsystem::LogWriter > m_plogwriter;
 };
 
 

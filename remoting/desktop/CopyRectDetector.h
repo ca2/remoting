@@ -32,7 +32,6 @@
 #include "acme/prototype/geometry2d/rectangle.h"
 
 namespace remoting
-
 {
 
    struct WinProp
@@ -46,7 +45,8 @@ namespace remoting
       ::int_rectangle m_rectangleOld;
    };
 
-   class CLASS_DECL_REMOTING CopyRectDetector
+   class CLASS_DECL_REMOTING CopyRectDetector :
+      virtual public ::particle
    {
    public:
       CopyRectDetector();
@@ -54,17 +54,17 @@ namespace remoting
 
       void detectWindowMovements(::int_rectangle *copyRect, ::int_point *source);
 
-   protected:
+   //protected:
       bool checkWindowMovements(const ::operating_system::window & operatingsystemwindow);
 
-      bool getWinRect(const ::operating_system::window & operatingsystemwindow, ::int_rectangle *winRect);
+      bool getWinRect(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & winRect);
 
       // If window properties successfully was found then function returns
       // true. Else this function returns false.
-      bool findPrevWinProps(const ::operating_system::window & operatingsystemwindow, ::int_rectangle *rect);
+      bool findPrevWinProps(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rect);
 
-      ::int_rectangle m_copyRect;
-      ::int_point m_source;
+      ::int_rectangle m_rectangleCopy;
+      ::int_point m_pointSource;
 
       ::list_base<WinProp> m_lastWinProps;
       ::list_base<WinProp> m_newWinProps;

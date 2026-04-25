@@ -58,7 +58,7 @@ namespace remoting_client
    public:
        
        
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
        //::innate_subsystem::Control m_control;
 

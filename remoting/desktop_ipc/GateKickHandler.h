@@ -34,10 +34,12 @@ namespace remoting
    class GateKickHandler : public ClientListener
    {
    public:
-      GateKickHandler(DesktopSrvDispatcher *dispatcher);
-      virtual ~GateKickHandler();
-   protected:
-      virtual void onRequest(unsigned char reqCode, BlockingGate *backGate);
+      GateKickHandler();
+       ~GateKickHandler() override;
+
+      virtual void initialize_gate_kick_handler(DesktopSrvDispatcher * pdispatcher);
+   //protected:
+      virtual void onRequest(unsigned char reqCode, BlockingGate *pblockinggate);
    };
 
 } // namespace remoting

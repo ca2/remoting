@@ -69,10 +69,10 @@ void RfbInitializer::authPhase()
 void RfbInitializer::afterAuthPhase(const CapContainer *srvToClCaps,
                                     const CapContainer *clToSrvCaps,
                                     const CapContainer *encCaps,
-                                    const ::int_size & dim,
+                                    const ::int_size & size,
                                     const ::innate_subsystem::PixelFormat & pf)
 {
-  sendServerInit(dim, pf);
+  sendServerInit(size, pf);
   sendDesktopName();
   if (m_tightEnabled) {
     sendInteractionCaps(srvToClCaps, clToSrvCaps, encCaps);
@@ -278,11 +278,11 @@ void RfbInitializer::readClientInit()
   m_shared = m_input->readUInt8() != 0;
 }
 
-void RfbInitializer::sendServerInit(const ::int_size & dim,
+void RfbInitializer::sendServerInit(const ::int_size & size,
                                     const ::innate_subsystem::PixelFormat & pf)
 {
-  m_output->writeUInt16((unsigned short)dim->width);
-  m_output->writeUInt16((unsigned short)dim->height);
+  m_output->writeUInt16((unsigned short)size->width);
+  m_output->writeUInt16((unsigned short)size->height);
   // Pixel format
   m_output->writeUInt8((unsigned char)pf.bitsPerPixel);
   m_output->writeUInt8((unsigned char)pf.colorDepth);

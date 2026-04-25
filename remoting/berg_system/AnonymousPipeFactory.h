@@ -33,7 +33,7 @@
 class CLASS_DECL_REMOTING AnonymousPipeFactory
 {
 public:
-  AnonymousPipeFactory(unsigned int bufferSize, ::subsystem::LogWriter *log);
+  AnonymousPipeFactory(unsigned int bufferSize, ::subsystem::LogWriter * plogwriter);
   virtual ~AnonymousPipeFactory();
 
   // This function generates the ::pair of the AnonymousPipe
@@ -53,7 +53,7 @@ public:
                      bool secondSideIsInheritable);
 
 private:
-  ::subsystem::LogWriter *m_plogwriter;
+  ::pointer < ::subsystem::LogWriter > m_plogwriter;
   unsigned int m_bufferSize;
 };
 

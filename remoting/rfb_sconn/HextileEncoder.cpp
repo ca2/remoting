@@ -46,7 +46,7 @@ void HextileEncoder::sendRectangle(const ::int_rectangle &  rect,
                                    const ::innate_subsystem::FrameBuffer *serverFb,
                                    const EncodeOptions *options)
 {
-  const ::innate_subsystem::FrameBuffer *fb = m_pixelConverter->convert(rect, serverFb);
+  const ::innate_subsystem::FrameBuffer *fb = m_ppixelconverter->convert(rect, serverFb);
 
   size_t bpp = fb->getBitsPerPixel();
   if (bpp == 8) {

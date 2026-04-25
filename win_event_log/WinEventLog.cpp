@@ -30,9 +30,9 @@
 #include "subsystem/platform/RegistryKey.h"
 //#include "subsystem/thread/critical_section.h"
 
-WinEventLog::WinEventLog(::subsystem::LogWriter *log)
+WinEventLog::WinEventLog(::subsystem::LogWriter * plogwriter)
 : m_hEventLog(0),
-  m_plogwriter(log)
+  m_plogwriter = plogwriter;
 {
 }
 

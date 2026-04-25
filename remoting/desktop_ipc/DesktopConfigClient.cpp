@@ -30,15 +30,22 @@ namespace remoting
 {
 
 
-   DesktopConfigClient::DesktopConfigClient(BlockingGate *forwGate) : DesktopServerProto(forwGate) {}
+   //DesktopConfigClient::DesktopConfigClient(BlockingGate *pblockinggate) : DesktopServerProto(pblockinggate) {}
+   DesktopConfigClient::DesktopConfigClient()
+   {
+
+   }
 
    DesktopConfigClient::~DesktopConfigClient() {}
 
-   void DesktopConfigClient::updateByNewSettings(BlockingGate *gate)
+   void DesktopConfigClient::initialize_desktop_config_client(Configurator * pconfigurator, BlockingGate *pblockinggate) {
+      initialize_desktop_server_proto(pconfigurator, pblockinggate);
+   }
+   void DesktopConfigClient::updateByNewSettings(BlockingGate *pblockinggate)
    {
-      critical_section_lock al(gate);
-      gate->writeUInt8(CONFIG_RELOAD_REQ);
-      sendConfigSettings(gate);
+      critical_section_lock al(pblockinggate);
+      pblockinggate->writeUInt8(CONFIG_RELOAD_REQ);
+      sendConfigSettings(pblockinggate);
    }
 
    bool DesktopConfigClient::isRemoteInputAllowed()
@@ -48,9 +55,9 @@ namespace remoting
       {
          critical_section_lock al(m_forwGate);
          m_forwGate->writeUInt8(SOFT_INPUT_ENABLING_REQ);
-         m_forwGate->writeUInt64(m_lastInputTime.getTime());
+         m_forwGate->writeUInt64(m_lastInputTime.m_iSecond);
          result = m_forwGate->readUInt8() != 0;
-         m_lastInputTime = ::earth::time(m_forwGate->readUInt64());
+         m_lastInputTime.m_iSecond = m_forwGate->readUInt64();
       }
       catch (ReconnectException &)
       {

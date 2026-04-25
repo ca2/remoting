@@ -30,9 +30,9 @@ namespace remoting
 {
 
 
-   UserInputServer::UserInputServer(BlockingGate *forwGate, DesktopSrvDispatcher *dispatcher,
-                                    AnEventListener *extTerminationListener, ::subsystem::LogWriter *log) :
-       DesktopServerProto(forwGate), m_extTerminationListener(extTerminationListener), m_plogwriter(log)
+   UserInputServer::UserInputServer(BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
+                                    AnEventListener *extTerminationListener, ::subsystem::LogWriter * plogwriter) :
+       DesktopServerProto(pblockinggate), m_extTerminationListener(extTerminationListener), m_plogwriter = plogwriter;
    {
       bool ctrlAltDelEnabled = true;
       m_userInput = new WindowsUserInput(this, ctrlAltDelEnabled, m_plogwriter);
@@ -79,48 +79,48 @@ namespace remoting
       }
    }
 
-   void UserInputServer::onRequest(unsigned char reqCode, BlockingGate *backGate)
+   void UserInputServer::onRequest(unsigned char reqCode, BlockingGate *pblockinggate)
    {
       switch (reqCode)
       {
          case POINTER_POS_CHANGED:
-            applyNewPointerPos(backGate);
+            applyNewPointerPos(pblockinggate);
             break;
          case CLIPBOARD_CHANGED:
-            applyNewClipboard(backGate);
+            applyNewClipboard(pblockinggate);
             break;
          case KEYBOARD_EVENT:
-            applyKeyEvent(backGate);
+            applyKeyEvent(pblockinggate);
             break;
          case USER_INFO_REQ:
-            ansUserInfo(backGate);
+            ansUserInfo(pblockinggate);
             break;
          case DESKTOP_COORDS_REQ:
-            ansDesktopCoords(backGate);
+            ansDesktopCoords(pblockinggate);
             break;
          case WINDOW_COORDS_REQ:
-            ansWindowCoords(backGate);
+            ansWindowCoords(pblockinggate);
             break;
          case WINDOW_HANDLE_REQ:
-            ansWindowHandle(backGate);
+            ansWindowHandle(pblockinggate);
             break;
          case DISPLAY_NUMBER_COORDS_REQ:
-            ansDisplayNumberCoords(backGate);
+            ansDisplayNumberCoords(pblockinggate);
             break;
          case DISPLAYS_COORDS_REQ:
-            ansDisplaysCoords(backGate);
+            ansDisplaysCoords(pblockinggate);
             break;
          case APPLICATION_REGION_REQ:
-            ansApplicationRegion(backGate);
+            ansApplicationRegion(pblockinggate);
             break;
          case APPLICATION_CHECK_FOCUS:
-            ansApplicationInFocus(backGate);
+            ansApplicationInFocus(pblockinggate);
             break;
          case NORMALIZE_RECT_REQ:
-            ansNormalizeRect(backGate);
+            ansNormalizeRect(pblockinggate);
             break;
          case USER_INPUT_INIT:
-            serverInit(backGate);
+            serverInit(pblockinggate);
             break;
          default:
             ::string errMess;
@@ -132,85 +132,85 @@ namespace remoting
       }
    }
 
-   void UserInputServer::serverInit(BlockingGate *backGate)
+   void UserInputServer::serverInit(BlockingGate *pblockinggate)
    {
-      unsigned char keyFlags = backGate->readUInt8();
+      unsigned char keyFlags = pblockinggate->readUInt8();
       m_userInput->initKeyFlag(keyFlags);
    }
 
-   void UserInputServer::applyNewPointerPos(BlockingGate *backGate)
+   void UserInputServer::applyNewPointerPos(BlockingGate *pblockinggate)
    {
       ::int_point newPointerPos;
       unsigned char keyFlags;
-      readNewPointerPos(&newPointerPos, &keyFlags, backGate);
+      readNewPointerPos(&newPointerPos, &keyFlags, pblockinggate);
       m_userInput->setMouseEvent(newPointerPos, keyFlags);
    }
 
-   void UserInputServer::applyNewClipboard(BlockingGate *backGate)
+   void UserInputServer::applyNewClipboard(BlockingGate *pblockinggate)
    {
       ::string newClipboard;
-      readNewClipboard(&newClipboard, backGate);
+      readNewClipboard(&newClipboard, pblockinggate);
       m_userInput->setNewClipboard(&newClipboard);
    }
 
-   void UserInputServer::applyKeyEvent(BlockingGate *backGate)
+   void UserInputServer::applyKeyEvent(BlockingGate *pblockinggate)
    {
       unsigned int keySym;
       bool down;
-      readKeyEvent(&keySym, &down, backGate);
+      readKeyEvent(&keySym, &down, pblockinggate);
       m_userInput->setKeyboardEvent(keySym, down);
    }
 
-   void UserInputServer::ansUserInfo(BlockingGate *backGate)
+   void UserInputServer::ansUserInfo(BlockingGate *pblockinggate)
    {
       ::string desktopName, userName;
 
       m_userInput->getCurrentUserInfo(&desktopName, &userName);
-      sendUserInfo(&desktopName, &userName, backGate);
+      sendUserInfo(&desktopName, &userName, pblockinggate);
    }
 
-   void UserInputServer::ansDesktopCoords(BlockingGate *backGate)
+   void UserInputServer::ansDesktopCoords(BlockingGate *pblockinggate)
    {
       ::int_rectangle rect;
       m_userInput->getPrimaryDisplayCoords(&rect);
-      sendRect(rect, backGate);
+      sendRect(rect, pblockinggate);
    }
 
-   void UserInputServer::ansWindowCoords(BlockingGate *backGate)
+   void UserInputServer::ansWindowCoords(BlockingGate *pblockinggate)
    {
       ::int_rectangle rect;
-      const ::operating_system::window & operatingsystemwindow = (HWND)backGate->readUInt64();
+      ::operating_system::window operatingsystemwindow = ::as_operating_system_window((HWND)pblockinggate->readUInt64());
       try
       {
-         m_userInput->getWindowCoords(hwnd, &rect);
+         m_userInput->getWindowCoords(operatingsystemwindow, &rect);
          // handle is correct
-         backGate->writeUInt8(0);
-         sendRect(rect, backGate);
+         pblockinggate->writeUInt8(0);
+         sendRect(rect, pblockinggate);
       }
-      catch (BrokenHandleException &e)
+      catch (::subsystem::BrokenHandleException &e)
       {
-         backGate->writeUInt8(1);
-         backGate->writeUTF8(e.get_message());
+         pblockinggate->writeUInt8(1);
+         pblockinggate->writeUTF8(e.get_message());
       }
    }
 
-   void UserInputServer::ansWindowHandle(BlockingGate *backGate)
+   void UserInputServer::ansWindowHandle(BlockingGate *pblockinggate)
    {
       ::string windowName;
-      backGate->readUTF8(&windowName);
-      const ::operating_system::window & operatingsystemwindow = m_userInput->getWindowHandleByName(&windowName);
-      backGate->writeUInt64((unsigned long long)hwnd);
+      windowName = pblockinggate->readUtf8();
+      auto operatingsystemwindow = m_userInput->getWindowHandleByName(windowName);
+      pblockinggate->writeUInt64((unsigned long long)(HWND)::as_HWND(operatingsystemwindow));
    }
 
-   void UserInputServer::ansDisplayNumberCoords(BlockingGate *backGate)
+   void UserInputServer::ansDisplayNumberCoords(BlockingGate *pblockinggate)
    {
-      unsigned char dispNumber = backGate->readUInt8();
+      unsigned char dispNumber = pblockinggate->readUInt8();
       ::int_rectangle rect;
       m_userInput->getDisplayNumberCoords(&rect, dispNumber);
-      sendRect(&rect, backGate);
+      sendRect(rect, pblockinggate);
    }
 
-   void UserInputServer::ansDisplaysCoords(BlockingGate *backGate)
+   void UserInputServer::ansDisplaysCoords(BlockingGate *pblockinggate)
    {
       ::array_base<::int_rectangle> rects = m_userInput->getDisplaysCoords();
       size_t number = rects.size();
@@ -218,34 +218,34 @@ namespace remoting
       {
          number = 255;
       }
-      backGate->writeUInt8((unsigned char)number);
+      pblockinggate->writeUInt8((unsigned char)number);
       for (size_t i = 0; i < number; i++)
       {
          ::int_rectangle rect = rects[i];
-         sendRect(&rect, backGate);
+         sendRect(&rect, pblockinggate);
       }
    }
 
-   void UserInputServer::ansNormalizeRect(BlockingGate *backGate)
+   void UserInputServer::ansNormalizeRect(BlockingGate *pblockinggate)
    {
-      ::int_rectangle rect = readRect(backGate);
+      ::int_rectangle rect = readRect(pblockinggate);
       m_userInput->getNormalizedRect(&rect);
-      sendRect(&rect, backGate);
+      sendRect(&rect, pblockinggate);
    }
 
-   void UserInputServer::ansApplicationRegion(BlockingGate *backGate)
+   void UserInputServer::ansApplicationRegion(BlockingGate *pblockinggate)
    {
-      unsigned int procId = backGate->readUInt32();
+      unsigned int procId = pblockinggate->readUInt32();
       Region region;
       m_userInput->getApplicationRegion(procId, &region);
-      sendRegion(&region, backGate);
+      sendRegion(&region, pblockinggate);
    }
 
-   void UserInputServer::ansApplicationInFocus(BlockingGate *backGate)
+   void UserInputServer::ansApplicationInFocus(BlockingGate *pblockinggate)
    {
-      unsigned int procId = backGate->readUInt32();
+      unsigned int procId = pblockinggate->readUInt32();
       bool result = m_userInput->isApplicationInFocus((unsigned int)procId);
-      backGate->writeUInt8(result ? 1 : 0);
+      pblockinggate->writeUInt8(result ? 1 : 0);
    }
 
 

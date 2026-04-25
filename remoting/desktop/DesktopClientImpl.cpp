@@ -36,10 +36,10 @@ namespace remoting
 
    DesktopClientImpl::DesktopClientImpl(ClipboardListener *extClipListener,
                                         UpdateSendingListener *extUpdSendingListener,
-                                        AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter *log) :
+                                        AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter * plogwriter) :
        DesktopBaseImpl(extClipListener, extUpdSendingListener, extDeskTermListener, log), m_clToSrvChan(0),
        m_srvToClChan(0), m_clToSrvGate(0), m_srvToClGate(0), m_deskServWatcher(0), m_dispatcher(0),
-       m_userInputClient(0), m_deskConf(0), m_gateKicker(0), m_plogwriter(log)
+       m_userInputClient(0), m_deskConf(0), m_pblockinggateKicker(0), m_plogwriter = plogwriter;
    {
       m_plogwriter->information("Creating DesktopClientImpl");
 
@@ -76,7 +76,7 @@ namespace remoting
          m_plogwriter->debug("DesktopClientImpl: Initializing DesktopConfigClient...");
          m_deskConf = new DesktopConfigClient(m_clToSrvGate);
          m_plogwriter->debug("DesktopClientImpl: Initializing GateKicker...");
-         m_gateKicker = new GateKicker(m_clToSrvGate);
+         m_pblockinggateKicker = new GateKicker(m_clToSrvGate);
          // Start dispatcher after handler registrations
          m_plogwriter->debug("DesktopClientImpl: Resuming DesktopSrvDispatcher");
          m_dispatcher->resume();
@@ -117,8 +117,8 @@ namespace remoting
       if (m_dispatcher)
          delete m_dispatcher;
 
-      if (m_gateKicker)
-         delete m_gateKicker;
+      if (m_pblockinggateKicker)
+         delete m_pblockinggateKicker;
       if (m_updateHandler)
          delete m_updateHandler;
       if (m_deskConf)
@@ -170,24 +170,24 @@ namespace remoting
 
    void DesktopClientImpl::onReconnect(Channel *newChannelTo, Channel *newChannelFrom)
    {
-      BlockingGate gate(newChannelTo);
+      BlockingGate pblockinggate(newChannelTo);
       if (m_deskConf)
       {
          m_plogwriter->information("try update remote configuration from the "
                                    "DesktopClientImpl::onReconnect() function");
-         m_deskConf->updateByNewSettings(&gate);
+         m_deskConf->updateByNewSettings(&pblockinggate);
       }
       if (m_updateHandler)
       {
          m_plogwriter->information("try update remote UpdateHandler from the "
                                    "DesktopClientImpl::onReconnect() function");
-         m_updateHandler->sendInit(&gate);
+         m_updateHandler->sendInit(&pblockinggate);
       }
       if (m_userInput)
       {
          m_plogwriter->information("try update remote UserInput from the "
                                    "DesktopClientImpl::onReconnect() function");
-         m_userInput->sendInit(&gate);
+         m_userInput->sendInit(&pblockinggate);
       }
 
       m_clToSrvChan->replaceChannel(newChannelTo);

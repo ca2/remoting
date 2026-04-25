@@ -54,7 +54,7 @@ namespace remoting
       void allowCopyRect(bool allow);
 
    private:
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
       ::map<int, ::pair<int, Decoder*> > m_decoders;
       int m_preferredEncoding;

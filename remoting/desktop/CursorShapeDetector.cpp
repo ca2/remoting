@@ -29,11 +29,7 @@ namespace remoting
 
    const int SLEEP_TIME = 100;
 
-   CursorShapeDetector::CursorShapeDetector(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
-                                            CursorShapeGrabber *mouseGrabber, critical_section *mouseGrabLocMut,
-                                            ::subsystem::LogWriter *log) :
-       UpdateDetector(updateKeeper, updateListener), m_mouseGrabber(mouseGrabber), m_mouseGrabLocMut(mouseGrabLocMut),
-       m_plogwriter(log)
+   CursorShapeDetector::CursorShapeDetector()
    {
    }
 
@@ -41,6 +37,19 @@ namespace remoting
    {
       terminate();
       wait();
+   }
+
+
+   void CursorShapeDetector::initialize_cursor_shape_detector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+                                         CursorShapeGrabber *pcursorshapegrabber, critical_section *mouseGrabLocMut,
+                                         ::subsystem::LogWriter * plogwriter)
+   {
+
+      initialize_update_detector(pupdatekeeper, pupdatelistener);
+      m_pcursorshapegrabber = pcursorshapegrabber;
+      m_mouseGrabLocMut = mouseGrabLocMut;
+      m_plogwriter = plogwriter;
+
    }
 
    void CursorShapeDetector::onTerminate() { m_sleepTimer.set_happening(); }
@@ -54,11 +63,11 @@ namespace remoting
          bool isCursorShapeChanged;
          {
             critical_section_lock al(m_mouseGrabLocMut);
-            isCursorShapeChanged = m_mouseGrabber->isCursorShapeChanged();
+            isCursorShapeChanged = m_pcursorshapegrabber->isCursorShapeChanged();
          }
          if (isCursorShapeChanged)
          {
-            m_updateKeeper->setCursorShapeChanged();
+            m_pupdatekeeper->setCursorShapeChanged();
             doUpdate();
          }
          m_sleepTimer.wait(SLEEP_TIME * 1_ms);

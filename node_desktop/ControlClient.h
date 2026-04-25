@@ -70,7 +70,7 @@ namespace remoting_node_desktop
        * @remark control client takes ownership over client transport.
        */
       ControlClient(Transport *transport, RfbClientManager *rfbClientManager, ControlAppAuthenticator *authenticator,
-                    ::subsystem::FileInterface *pfilePipeHandle, ::subsystem::LogWriter *log);
+                    ::subsystem::FileInterface *pfilePipeHandle, ::subsystem::LogWriter * plogwriter);
       /**
        * Stops client thread and deletes control client.
        */
@@ -204,7 +204,7 @@ namespace remoting_node_desktop
       /**
        * High-level transport for writting and reading control proto messages.
        */
-      ControlGate *m_gate;
+      ControlGate *m_pblockinggate;
       ::pointer<::subsystem::FileInterface> m_pfilePipeHandle;
 
       /**
@@ -229,7 +229,7 @@ namespace remoting_node_desktop
 
       ::pointer<::subsystem::ThreadCollector> m_pthreadcollectorOutgoingConnection;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
       /**
        * Array of client messages that needs client to be auth.

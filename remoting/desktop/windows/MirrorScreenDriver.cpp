@@ -28,9 +28,9 @@
 namespace remoting
 {
 
-   MirrorScreenDriver::MirrorScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
-                                          critical_section *fbcritical_section, ::subsystem::LogWriter *log) :
-       UpdateDetector(updateKeeper, updateListener), m_fbMutex(fbcritical_section), m_lastCounter(0), m_plogwriter(log)
+   MirrorScreenDriver::MirrorScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+                                          critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter) :
+       UpdateDetector(pupdatekeeper, pupdatelistener), m_fbMutex(fbcritical_section), m_lastCounter(0), m_plogwriter = plogwriter;
    {
       m_mirrorClient = new MirrorDriverClient(m_plogwriter);
       initFrameBuffer();
@@ -55,15 +55,15 @@ namespace remoting
 
    void MirrorScreenDriver::initFrameBuffer()
    {
-      ::int_size dim = m_mirrorClient->getDimension();
+      ::int_size size = m_mirrorClient->getDimension();
       ::innate_subsystem::PixelFormat pf = m_mirrorClient->getPixelFormat();
 
-      m_frameBuffer.setProperties(&dim, &pf);
+      m_pframebuffer->setProperties(&size, &pf);
    }
 
-   ::int_size MirrorScreenDriver::getScreenDimension() { return m_frameBuffer.getDimension(); }
+   ::int_size MirrorScreenDriver::getScreenDimension() { return m_pframebuffer->getDimension(); }
 
-   ::innate_subsystem::FrameBuffer *MirrorScreenDriver::getScreenBuffer() { return &m_frameBuffer; }
+   ::innate_subsystem::FrameBuffer *MirrorScreenDriver::getScreenBuffer() { return &m_pframebuffer; }
 
    bool MirrorScreenDriver::grab(const ::int_rectangle &rect)
    {
@@ -74,7 +74,7 @@ namespace remoting
          throw ::subsystem::Exception("Mirror driver client didn't initilized.");
       }
 
-      ::int_rectangle fbRect = m_frameBuffer.getDimension();
+      ::int_rectangle fbRect = m_pframebuffer->getDimension();
       ::int_rectangle croppedRect;
       if (rect != 0)
       {
@@ -85,8 +85,8 @@ namespace remoting
          croppedRect = fbRect;
       }
 
-      char *dstPtr = (char *)m_frameBuffer.getBufferPtr(croppedRect.left, croppedRect.top);
-      size_t offset = dstPtr - (char *)m_frameBuffer.getBuffer();
+      char *dstPtr = (char *)m_pframebuffer->getBufferPtr(croppedRect.left, croppedRect.top);
+      size_t offset = dstPtr - (char *)m_pframebuffer->getBuffer();
       char *srcPtr = (char *)m_mirrorClient->getBuffer();
       if (srcPtr == 0)
       {
@@ -94,8 +94,8 @@ namespace remoting
       }
       srcPtr += offset;
 
-      size_t count = croppedRect.width() * m_frameBuffer.getBytesPerPixel();
-      size_t stride = m_frameBuffer.getBytesPerRow();
+      size_t count = croppedRect.width() * m_pframebuffer->getBytesPerPixel();
+      size_t stride = m_pframebuffer->getBytesPerRow();
 
       for (size_t i = croppedRect.top; i < croppedRect.bottom; i++, dstPtr += stride, srcPtr += stride)
       {
@@ -140,7 +140,7 @@ namespace remoting
 
       ::int_size newDim = m_mirrorClient->getDimension();
       ::innate_subsystem::PixelFormat pf = m_mirrorClient->getPixelFormat();
-      m_frameBuffer.setProperties(&newDim, &pf);
+      m_pframebuffer->setProperties(&newDim, &pf);
       m_lastCounter = 0;
 
       return true;
@@ -150,7 +150,7 @@ namespace remoting
 
    void MirrorScreenDriver::execute()
    {
-      Region changedRegion;
+      Region m_regionChanged;
       ::int_rectangle changedRect;
       unsigned long currentCounter = 0;
 
@@ -171,20 +171,20 @@ namespace remoting
                      changedRect.fromWindowsRect(&changesBuf->pointrect[i].rect);
                      if (changedRect.isValid())
                      {
-                        changedRegion.addRect(&changedRect);
+                        m_regionChanged.addRect(&changedRect);
                      }
                   }
 
-                  m_updateKeeper->addChangedRegion(&changedRegion);
+                  m_pupdatekeeper->addChangedRegion(&m_regionChanged);
                   m_lastCounter = currentCounter;
                }
             }
          }
 
-         if (!changedRegion.is_empty())
+         if (!m_regionChanged.is_empty())
          {
             doUpdate();
-            changedRegion.clear();
+            m_regionChanged.clear();
          }
       }
    }

@@ -35,11 +35,11 @@ namespace remoting
 
    Win32ScreenDriverFactory::~Win32ScreenDriverFactory() {}
 
-   ScreenDriver *Win32ScreenDriverFactory::createScreenDriver(UpdateKeeper *updateKeeper,
-                                                              UpdateListener *updateListener,
+   ScreenDriver *Win32ScreenDriverFactory::createScreenDriver(UpdateKeeper *pupdatekeeper,
+                                                              UpdateListener *pupdatelistener,
                                                               ::innate_subsystem::FrameBuffer *fb,
                                                               critical_section *fbcritical_section,
-                                                              ::subsystem::LogWriter *log)
+                                                              ::subsystem::LogWriter * plogwriter)
    {
       // Try to use Win8 duplication API firstly because it's in preference to other methods.
       if (isD3DAllowed())
@@ -47,7 +47,7 @@ namespace remoting
          log->information("D3D driver usage is allowed, try to start it...");
          try
          {
-            return new Win8ScreenDriver(updateKeeper, updateListener, fbcritical_section, log);
+            return new Win8ScreenDriver(pupdatekeeper, pupdatelistener, fbcritical_section, log);
          }
          catch (::exception &e)
          {
@@ -64,7 +64,7 @@ namespace remoting
          log->information("Mirror driver usage is allowed, try to start it...");
          try
          {
-            return createMirrorScreenDriver(updateKeeper, updateListener, fbcritical_section, log);
+            return createMirrorScreenDriver(pupdatekeeper, pupdatelistener, fbcritical_section, log);
          }
          catch (::exception &e)
          {
@@ -76,24 +76,24 @@ namespace remoting
          log->information("Mirror driver usage is disallowed");
       }
       log->information("Using the standart screen driver");
-      return createStandardScreenDriver(updateKeeper, updateListener, fb, fbcritical_section, log);
+      return createStandardScreenDriver(pupdatekeeper, pupdatelistener, fb, fbcritical_section, log);
    }
 
-   ScreenDriver *Win32ScreenDriverFactory::createStandardScreenDriver(UpdateKeeper *updateKeeper,
-                                                                      UpdateListener *updateListener,
+   ScreenDriver *Win32ScreenDriverFactory::createStandardScreenDriver(UpdateKeeper *pupdatekeeper,
+                                                                      UpdateListener *pupdatelistener,
                                                                       ::innate_subsystem::FrameBuffer *fb,
                                                                       critical_section *fbcritical_section,
-                                                                      ::subsystem::LogWriter *log)
+                                                                      ::subsystem::LogWriter * plogwriter)
    {
-      return new Win32ScreenDriver(updateKeeper, updateListener, fb, fbcritical_section, log);
+      return new Win32ScreenDriver(pupdatekeeper, pupdatelistener, fb, fbcritical_section, log);
    }
 
-   ScreenDriver *Win32ScreenDriverFactory::createMirrorScreenDriver(UpdateKeeper *updateKeeper,
-                                                                    UpdateListener *updateListener,
+   ScreenDriver *Win32ScreenDriverFactory::createMirrorScreenDriver(UpdateKeeper *pupdatekeeper,
+                                                                    UpdateListener *pupdatelistener,
                                                                     critical_section *fbcritical_section,
-                                                                    ::subsystem::LogWriter *log)
+                                                                    ::subsystem::LogWriter * plogwriter)
    {
-      return new Win32MirrorScreenDriver(updateKeeper, updateListener, fbcritical_section, log);
+      return new Win32MirrorScreenDriver(pupdatekeeper, pupdatelistener, fbcritical_section, log);
    }
 
    bool Win32ScreenDriverFactory::isMirrorDriverAllowed() { return m_srvConf->getMirrorIsAllowed(); }

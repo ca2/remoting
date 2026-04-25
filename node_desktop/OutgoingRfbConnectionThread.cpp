@@ -32,9 +32,9 @@ namespace remoting_node_desktop
    OutgoingRfbConnectionThread::OutgoingRfbConnectionThread(const ::scoped_string &scopedstrConnectHost,
                                                             unsigned int connectPort, bool viewOnly,
                                                             RfbClientManager *clientManager,
-                                                            ::subsystem::LogWriter *log) :
+                                                            ::subsystem::LogWriter * plogwriter) :
        m_connectHost(scopedstrConnectHost), m_connectPort(connectPort), m_viewOnly(viewOnly),
-       m_clientManager(clientManager), m_plogwriter(log)
+       m_clientManager(clientManager), m_plogwriter = plogwriter;
    {
    }
 

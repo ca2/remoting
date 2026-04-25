@@ -71,7 +71,7 @@ namespace remoting_node_desktop
    public:
 
 
-            ::subsystem::LogWriter *m_plogwriter;
+            ::pointer < ::subsystem::LogWriter > m_plogwriter;
       // ZombieKiller m_zombieKiller;
 
       ::pointer<Configurator> m_pconfigurator;

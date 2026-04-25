@@ -40,7 +40,7 @@ namespace remoting
    public:
       // Creates new device and context of first found.
       WinD3D11Device();
-      WinD3D11Device(::subsystem::LogWriter *log);
+      WinD3D11Device(::subsystem::LogWriter * plogwriter);
       // Copy references and increase count for winD3D11Device's internal handles. So the
       // source winD3D11Device object can be destroyed while this object will use.
       WinD3D11Device(const WinD3D11Device &src);
@@ -64,7 +64,7 @@ namespace remoting
       ID3D11Device *m_device;
       ID3D11DeviceContext *m_context;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
    //// __WIND3D11DEVICE_H__

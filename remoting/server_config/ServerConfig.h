@@ -39,403 +39,407 @@
 #include "subsystem/thread/Lockable.h"
 // #include aaa_<shlobj.h>
 
-class ServerConfig : virtual public ::subsystem::LockableInterface
+namespace remoting
 {
-public:
-  static const unsigned int MINIMAL_POLLING_INTERVAL = 30;
-  static const unsigned int MINIMAL_LOCAL_INPUT_PRIORITY_TIMEOUT = 1;
-  static const unsigned int MINIMAL_QUERY_TIMEOUT = 1;
+   class ServerConfig : virtual public ::subsystem::LockableInterface
+   {
+   public:
+      static const unsigned int MINIMAL_POLLING_INTERVAL = 30;
+      static const unsigned int MINIMAL_LOCAL_INPUT_PRIORITY_TIMEOUT = 1;
+      static const unsigned int MINIMAL_QUERY_TIMEOUT = 1;
+
+      // FIXME: duplicatad at VncPassCrypt
+      static const int VNC_PASSWORD_SIZE = 8;
+
+      //
+      // Enum defines server action when last client disconnects
+      // from the TightVNC server.
+      //
+
+      enum DisconnectAction {
+         DA_DO_NOTHING = 0,
+         DA_LOCK_WORKSTATION = 1,
+         DA_LOGOUT_WORKSTATION = 2
+       };
 
-  // FIXME: duplicatad at VncPassCrypt
-  static const int VNC_PASSWORD_SIZE = 8;
+   public:
+      ServerConfig();
+      virtual ~ServerConfig();
 
-  //
-  // Enum defines server action when last client disconnects
-  // from the TightVNC server.
-  //
+      ServerConfig(ServerConfig& other);
+      ServerConfig& operator=(ServerConfig& other);
 
-  enum DisconnectAction {
-    DA_DO_NOTHING = 0,
-    DA_LOCK_WORKSTATION = 1,
-    DA_LOGOUT_WORKSTATION = 2
-  };
+      /**
+       * Serializes server config to output stream as byte stream.
+       * Thread-safe method.
+       * @throws ::subsystem::Exception on io error.
+       * @fixme stub.
+       */
+      void serialize(DataOutputStream *output);
 
-public:
-  ServerConfig();
-  virtual ~ServerConfig();
+      /**
+       * Deserializes server config from input stream.
+       * Thread-safe method.
+       * @throws ::subsystem::Exception on io error.
+       * @fixme stub.
+       */
+      void deserialize(DataInputStream * pinput);
 
-  ServerConfig(ServerConfig& other);
-  ServerConfig& operator=(ServerConfig& other);
+      //
+      // Inherited from lockable abstract class.
+      //
 
-  /**
-   * Serializes server config to output stream as byte stream.
-   * Thread-safe method.
-   * @throws ::subsystem::Exception on io error.
-   * @fixme stub.
-   */
-  void serialize(DataOutputStream *output);
+      virtual ::e_status lock() {
+         m_objectCS.lock();
+         return ::success;
+      }
 
-  /**
-   * Deserializes server config from input stream.
-   * Thread-safe method.
-   * @throws ::subsystem::Exception on io error.
-   * @fixme stub.
-   */
-  void deserialize(DataInputStream * pinput);
+      virtual void unlock() {
+         m_objectCS.unlock();
+      }
 
-  //
-  // Inherited from lockable abstract class.
-  //
+      //
+      // Display (or port numbers) group.
+      //
 
-  virtual ::e_status lock() {
-    m_objectCS.lock();
-     return ::success;
-  }
+      bool isControlAuthEnabled();
+      void useControlAuth(bool useAuth);
 
-  virtual void unlock() {
-    m_objectCS.unlock();
-  }
+      bool getControlAuthAlwaysChecking();
+      void setControlAuthAlwaysChecking(bool value);
 
-  //
-  // Display (or port numbers) group.
-  //
+      void setRfbPort(int port);
+      int getRfbPort();
 
-  bool isControlAuthEnabled();
-  void useControlAuth(bool useAuth);
+      void setHttpPort(int port);
+      int getHttpPort();
 
-  bool getControlAuthAlwaysChecking();
-  void setControlAuthAlwaysChecking(bool value);
+      //
+      // Other server options access methods
+      //
 
-  void setRfbPort(int port);
-  int getRfbPort();
+      void enableFileTransfers(bool enabled);
+      bool isFileTransfersEnabled();
 
-  void setHttpPort(int port);
-  int getHttpPort();
+      void enableRemovingDesktopWallpaper(bool enabled);
+      bool isRemovingDesktopWallpaperEnabled();
 
-  //
-  // Other server options access methods
-  //
+      void setDisconnectAction(DisconnectAction action);
+      DisconnectAction getDisconnectAction();
 
-  void enableFileTransfers(bool enabled);
-  bool isFileTransfersEnabled();
+      bool getD3DIsAllowed();
+      void setD3DAllowing(bool value);
 
-  void enableRemovingDesktopWallpaper(bool enabled);
-  bool isRemovingDesktopWallpaperEnabled();
+      bool getMirrorIsAllowed();
+      void setMirrorAllowing(bool value);
 
-  void setDisconnectAction(DisconnectAction action);
-  DisconnectAction getDisconnectAction();
+      //
+      // Incoming connections options group
+      //
 
-  bool getD3DIsAllowed();
-  void setD3DAllowing(bool value);
+      bool isAcceptingRfbConnections();
+      void acceptRfbConnections(bool accept);
 
-  bool getMirrorIsAllowed();
-  void setMirrorAllowing(bool value);
+      void getPrimaryPassword(unsigned char *password);
+      void setPrimaryPassword(const unsigned char *value);
 
-  //
-  // Incoming connections options group
-  //
+      void getReadOnlyPassword(unsigned char *password);
+      void setReadOnlyPassword(const unsigned char *value);
 
-  bool isAcceptingRfbConnections();
-  void acceptRfbConnections(bool accept);
+      void getControlPassword(unsigned char *password);
+      void setControlPassword(const unsigned char *password);
 
-  void getPrimaryPassword(unsigned char *password);
-  void setPrimaryPassword(const unsigned char *value);
+      bool hasPrimaryPassword();
+      bool hasReadOnlyPassword();
+      bool hasControlPassword();
 
-  void getReadOnlyPassword(unsigned char *password);
-  void setReadOnlyPassword(const unsigned char *value);
+      void deletePrimaryPassword();
+      void deleteReadOnlyPassword();
+      void deleteControlPassword();
 
-  void getControlPassword(unsigned char *password);
-  void setControlPassword(const unsigned char *password);
+      //
+      // Configurator from Administration tab
+      //
 
-  bool hasPrimaryPassword();
-  bool hasReadOnlyPassword();
-  bool hasControlPassword();
+      bool isUsingAuthentication();
 
-  void deletePrimaryPassword();
-  void deleteReadOnlyPassword();
-  void deleteControlPassword();
+      void useAuthentication(bool enabled);
 
-  //
-  // Configurator from Administration tab
-  //
+      bool isOnlyLoopbackConnectionsAllowed();
 
-  bool isUsingAuthentication();
+      void acceptOnlyLoopbackConnections(bool enabled);
 
-  void useAuthentication(bool enabled);
+      bool isAcceptingHttpConnections();
 
-  bool isOnlyLoopbackConnectionsAllowed();
+      void acceptHttpConnections(bool accept);
 
-  void acceptOnlyLoopbackConnections(bool enabled);
+      bool isAppletParamInUrlEnabled();
 
-  bool isAcceptingHttpConnections();
+      void enableAppletParamInUrl(bool enabled);
 
-  void acceptHttpConnections(bool accept);
+      int getLogLevel();
 
-  bool isAppletParamInUrlEnabled();
+      void setLogLevel(int logLevel);
 
-  void enableAppletParamInUrl(bool enabled);
+      //
+      // Sharing configuration
+      //
 
-  int getLogLevel();
+      bool isAlwaysShared();
 
-  void setLogLevel(int logLevel);
+      bool isNeverShared();
 
-  //
-  // Sharing configuration
-  //
+      bool isDisconnectingExistingClients();
 
-  bool isAlwaysShared();
+      void setAlwaysShared(bool enabled);
 
-  bool isNeverShared();
+      void setNeverShared(bool enabled);
 
-  bool isDisconnectingExistingClients();
+      void disconnectExistingClients(bool disconnectExisting);
 
-  void setAlwaysShared(bool enabled);
+      void setPollingInterval(unsigned int interval);
 
-  void setNeverShared(bool enabled);
+      unsigned int getPollingInterval();
 
-  void disconnectExistingClients(bool disconnectExisting);
+      //
+      // Input handling config
+      //
 
-  void setPollingInterval(unsigned int interval);
+      void blockRemoteInput(bool blockEnabled);
 
-  unsigned int getPollingInterval();
+      bool isBlockingRemoteInput();
 
-  //
-  // Input handling config
-  //
+      void setLocalInputPriority(bool localPriority);
 
-  void blockRemoteInput(bool blockEnabled);
+      bool isLocalInputPriorityEnabled();
 
-  bool isBlockingRemoteInput();
+      unsigned int getLocalInputPriorityTimeout();
 
-  void setLocalInputPriority(bool localPriority);
+      void setLocalInputPriorityTimeout(unsigned int value);
 
-  bool isLocalInputPriorityEnabled();
+      void blockLocalInput(bool enabled);
 
-  unsigned int getLocalInputPriorityTimeout();
+      bool isBlockingLocalInput();
 
-  void setLocalInputPriorityTimeout(unsigned int value);
+      //
+      // Query config
+      //
 
-  void blockLocalInput(bool enabled);
+      unsigned int getQueryTimeout();
 
-  bool isBlockingLocalInput();
+      void setQueryTimeout(unsigned int timeout);
 
-  //
-  // Query config
-  //
+      bool isDefaultActionAccept();
+      void setDefaultActionToAccept(bool accept);
 
-  unsigned int getQueryTimeout();
+      //
+      // Port mapping config
+      //
 
-  void setQueryTimeout(unsigned int timeout);
+      // Remark: not-thread safe method, use lock / unlock methods of this class
+      // to lock and unlock server configuration.
+      PortMappingContainer *getPortMappingContainer();
 
-  bool isDefaultActionAccept();
-  void setDefaultActionToAccept(bool accept);
+      //
+      // Ip access control config
+      //
 
-  //
-  // Port mapping config
-  //
+      // Remark: not-thread safe method, use lock / unlock methods of this class
+      // to lock and unlock server configuration.
+      IpAccessControl *getAccessControl();
 
-  // Remark: not-thread safe method, use lock / unlock methods of this class
-  // to lock and unlock server configuration.
-  PortMappingContainer *getPortMappingContainer();
+      IpAccessRule::ActionType getActionByAddress(unsigned long ip);
 
-  //
-  // Ip access control config
-  //
+      void allowLoopbackConnections(bool allow);
 
-  // Remark: not-thread safe method, use lock / unlock methods of this class
-  // to lock and unlock server configuration.
-  IpAccessControl *getAccessControl();
+      bool isLoopbackConnectionsAllowed();
 
-  IpAccessRule::ActionType getActionByAddress(unsigned long ip);
+      //
+      // Video regions
+      //
 
-  void allowLoopbackConnections(bool allow);
+      // FIXME: Deprecated?
+      // Remark: not-thread safe method, use lock / unlock methods of this class
+      // to lock and unlock server configuration.
+      ::string_array *getVideoClassNames();
 
-  bool isLoopbackConnectionsAllowed();
+      ::array_base<::int_rectangle> *getVideoRects();
 
-  //
-  // Video regions
-  //
+      //
+      // Other
+      //
 
-  // FIXME: Deprecated?
-  // Remark: not-thread safe method, use lock / unlock methods of this class
-  // to lock and unlock server configuration.
-  ::string_array *getVideoClassNames();
-  
-  ::array_base<::int_rectangle> *getVideoRects();
+      unsigned int getVideoRecognitionInterval();
+      void setVideoRecognitionInterval(unsigned int interval);
 
-  //
-  // Other
-  //
+      int  getIdleTimeout();
+      void setIdleTimeout(int timeout);
 
-  unsigned int getVideoRecognitionInterval();
-  void setVideoRecognitionInterval(unsigned int interval);
+      void saveLogToAllUsersPath(bool enabled);
+      bool isSaveLogToAllUsersPathFlagEnabled();
 
-  int  getIdleTimeout();
-  void setIdleTimeout(int timeout);
+      void setGrabTransparentWindowsFlag(bool grab);
+      bool getGrabTransparentWindowsFlag();
 
-  void saveLogToAllUsersPath(bool enabled);
-  bool isSaveLogToAllUsersPathFlagEnabled();
+      bool getShowTrayIconFlag();
+      void setShowTrayIconFlag(bool val);
 
-  void setGrabTransparentWindowsFlag(bool grab);
-  bool getGrabTransparentWindowsFlag();
+      bool getConnectToRdpFlag();
+      void setConnectToRdpFlag(bool val);
 
-  bool getShowTrayIconFlag();
-  void setShowTrayIconFlag(bool val);
+      void getLogFileDir(::string & logFileDir);
+      void setLogFileDir(const ::scoped_string & scopedstrLogFileDir);
 
-  bool getConnectToRdpFlag();
-  void setConnectToRdpFlag(bool val);
+   protected:
 
-  void getLogFileDir(::string & logFileDir);
-  void setLogFileDir(const ::scoped_string & scopedstrLogFileDir);
+      //
+      // Server port numbers
+      //
 
-protected:
+      int m_rfbPort;
+      int m_httpPort;
 
-  //
-  // Server port numbers
-  //
+      //
+      // Other server options members group
+      //
 
-  int m_rfbPort;
-  int m_httpPort;
+      bool m_enableFileTransfers;
+      bool m_removeWallpaper;
+      bool m_D3DAllowed;
+      bool m_mirrorDriverAllowed;
+      //
+      // Server action when last client disconnects from server
+      //
 
-  //
-  // Other server options members group
-  //
+      DisconnectAction m_disconnectAction;
 
-  bool m_enableFileTransfers;
-  bool m_removeWallpaper;
-  bool m_D3DAllowed;
-  bool m_mirrorDriverAllowed;
-  //
-  // Server action when last client disconnects from server
-  //
+      //
+      // Incoming connections options group
+      //
 
-  DisconnectAction m_disconnectAction;
+      bool m_acceptRfbConnections;
+      bool m_acceptHttpConnections;
 
-  //
-  // Incoming connections options group
-  //
+      unsigned char m_primaryPassword[VNC_PASSWORD_SIZE];
+      unsigned char m_readonlyPassword[VNC_PASSWORD_SIZE];
+      unsigned char m_controlPassword[VNC_PASSWORD_SIZE];
 
-  bool m_acceptRfbConnections;
-  bool m_acceptHttpConnections;
+      //
+      // Configurator from Administration tab
+      //
 
-  unsigned char m_primaryPassword[VNC_PASSWORD_SIZE];
-  unsigned char m_readonlyPassword[VNC_PASSWORD_SIZE];
-  unsigned char m_controlPassword[VNC_PASSWORD_SIZE];
+      bool m_useAuthentication;
+      bool m_onlyLoopbackConnections;
+      bool m_enableAppletParamInUrl;
+      int m_logLevel;
+      bool m_useControlAuth;
+      bool m_controlAuthAlwaysChecking;
 
-  //
-  // Configurator from Administration tab
-  //
+      //
+      // Sharing configuration
+      //
 
-  bool m_useAuthentication;
-  bool m_onlyLoopbackConnections;
-  bool m_enableAppletParamInUrl;
-  int m_logLevel;
-  bool m_useControlAuth;
-  bool m_controlAuthAlwaysChecking;
+      bool m_alwaysShared;
+      bool m_neverShared;
+      bool m_disconnectClients;
 
-  //
-  // Sharing configuration
-  //
+      //
+      // Polling configuration
+      //
 
-  bool m_alwaysShared;
-  bool m_neverShared;
-  bool m_disconnectClients;
+      unsigned int m_pollingInterval;
 
-  //
-  // Polling configuration
-  //
+      //
+      // When flag is set server always blocks remote input.
+      //
 
-  unsigned int m_pollingInterval;
+      bool m_blockRemoteInput;
+      //
+      // When flag is set server always blocks local input.
+      //
 
-  //
-  // When flag is set server always blocks remote input.
-  //
+      bool m_blockLocalInput;
 
-  bool m_blockRemoteInput;
-  //
-  // When flag is set server always blocks local input.
-  //
+      //
+      // When flag is set server blocks remote input
+      // on local input activity.
+      //
 
-  bool m_blockLocalInput;
+      bool m_localInputPriority;
 
-  //
-  // When flag is set server blocks remote input
-  // on local input activity.
-  //
+      //
+      // Local input invactivity timeout during that
+      // we still blocking remote input(when m_localInputPriority
+      // is enabled).
+      //
 
-  bool m_localInputPriority;
+      unsigned int m_localInputPriorityTimeout;
 
-  //
-  // Local input invactivity timeout during that
-  // we still blocking remote input(when m_localInputPriority
-  // is enabled).
-  //
+      bool m_defaultActionAccept;
 
-  unsigned int m_localInputPriorityTimeout;
+      //
+      // Timeout for Query IpAccessControl record
+      //
 
-  bool m_defaultActionAccept;
+      unsigned int m_queryTimeout;
 
-  //
-  // Timeout for Query IpAccessControl record
-  //
+      //
+      // Port mapping config
+      //
 
-  unsigned int m_queryTimeout;
+      PortMappingContainer m_portMappings;
 
-  //
-  // Port mapping config
-  //
+      //
+      // Ip access control config
+      //
 
-  PortMappingContainer m_portMappings;
+      IpAccessControl m_accessControlContainer;
+      bool m_allowLoopbackConnections;
 
-  //
-  // Ip access control config
-  //
+      //
+      // Video regions
+      //
 
-  IpAccessControl m_accessControlContainer;
-  bool m_allowLoopbackConnections;
+      // Defined by window class name
+      ::string_array m_videoClassNames;
+      // Defined by rectangle coords in "dXxdY+X0+Y0" format, as in -sharerect command line option
+      ::array_base<::int_rectangle> m_videoRects;
 
-  //
-  // Video regions
-  //
-  
-  // Defined by window class name
-  ::string_array m_videoClassNames;
-  // Defined by rectangle coords in "dXxdY+X0+Y0" format, as in -sharerect command line option
-  ::array_base<::int_rectangle> m_videoRects;
-  
-  //
-  // Other
-  //
+      //
+      // Other
+      //
 
-  unsigned int m_videoRecognitionInterval;
-  bool m_grabTransparentWindows;
+      unsigned int m_videoRecognitionInterval;
+      bool m_grabTransparentWindows;
 
-  // Socket timeout to disconnect inactive clients, in seconds
-  int m_idleTimeout;
+      // Socket timeout to disconnect inactive clients, in seconds
+      int m_idleTimeout;
 
-  // Flag that determiates where log file directory will be.
-  bool m_saveLogToAllUsersPath;
-  // Run control interface with TightVNC server or not.
-  bool m_showTrayIcon;
-  // Connect to existing RDP session or drop it.
-  bool m_connectToRdp;
+      // Flag that determiates where log file directory will be.
+      bool m_saveLogToAllUsersPath;
+      // Run control interface with TightVNC server or not.
+      bool m_showTrayIcon;
+      // Connect to existing RDP session or drop it.
+      bool m_connectToRdp;
 
-  ::string m_logFilePath;
-private:
+      ::string m_logFilePath;
+   private:
 
-  //
-  // Helper methods
-  //
+      //
+      // Helper methods
+      //
 
-  bool m_hasPrimaryPassword;
-  bool m_hasReadOnlyPassword;
-  bool m_hasControlPassword;
+      bool m_hasPrimaryPassword;
+      bool m_hasReadOnlyPassword;
+      bool m_hasControlPassword;
 
-  //
-  // Critical section
-  //
+      //
+      // Critical section
+      //
 
-  critical_section m_objectCS;
-};
+      critical_section m_objectCS;
+   };
+}  //  namespace remoting
+
 
 

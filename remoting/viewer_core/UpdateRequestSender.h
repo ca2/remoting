@@ -46,9 +46,9 @@ namespace remoting
       critical_section m_isIncrimentalLock;
 
       LockableBase *m_fbLock;
-      ::innate_subsystem::FrameBuffer *m_frameBuffer;
+      ::innate_subsystem::FrameBuffer *m_pframebuffer;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
       RfbOutputGate *m_output;
       critical_section m_outputLock;

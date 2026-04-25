@@ -45,8 +45,8 @@ namespace remoting
    class CLASS_DECL_REMOTING Win8ScreenDriverImpl : private GuiThread, private Win8DuplicationListener
    {
    public:
-      Win8ScreenDriverImpl(::subsystem::LogWriter *log, UpdateKeeper *updateKeeper,
-                           critical_section *fbcritical_section, UpdateListener *updateListener,
+      Win8ScreenDriverImpl(::subsystem::LogWriter * plogwriter, UpdateKeeper *pupdatekeeper,
+                           critical_section *fbcritical_section, UpdateListener *pupdatelistener,
                            bool detectionEnabled = false);
       virtual ~Win8ScreenDriverImpl();
 
@@ -69,7 +69,7 @@ namespace remoting
 
    private:
       // Implementions of the Win8DuplicationListener listener functions.
-      virtual void onFrameBufferUpdate(const Region *changedRegion);
+      virtual void onFrameBufferUpdate(const Region *m_regionChanged);
       virtual void onCopyRect(const ::int_rectangle &dstRect, int srcX, int srcY);
       virtual void onCursorPositionChanged(int x, int y);
       virtual void onCursorShapeChanged();
@@ -82,7 +82,7 @@ namespace remoting
       // type.
       ::innate_subsystem::PixelFormat getDxPixelFormat() const;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
       ThreadCollector m_deskDuplThreadBundle;
 
@@ -96,7 +96,7 @@ namespace remoting
 
       // The frame buffer with appropriate properties creates once at the constructor time. And then
       // has these properties permanently.
-      ::innate_subsystem::FrameBuffer m_frameBuffer;
+      ::innate_subsystem::FrameBuffer m_pframebuffer;
 
       // Cursor's properties changes at all time. And then it should be safe by a local mutex.
       ::int_point m_latestCursorPos;
@@ -104,8 +104,8 @@ namespace remoting
       LONGLONG m_curTimeStamp;
       critical_section m_cursorMutex;
 
-      UpdateKeeper *m_updateKeeper;
-      UpdateListener *m_updateListener;
+      UpdateKeeper *m_pupdatekeeper;
+      UpdateListener *m_pupdatelistener;
       bool m_detectionEnabled;
    };
 

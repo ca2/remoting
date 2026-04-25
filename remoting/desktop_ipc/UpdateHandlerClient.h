@@ -33,28 +33,36 @@
 namespace remoting
 {
 
-   class UpdateHandlerClient : public UpdateHandler, public DesktopServerProto, public ClientListener
+   class CLASS_DECL_REMOTING UpdateHandlerClient :
+   virtual public UpdateHandler,
+   virtual public DesktopServerProto,
+   virtual public ClientListener
    {
    public:
-      UpdateHandlerClient(BlockingGate *forwGate, DesktopSrvDispatcher *dispatcher,
-                          UpdateListener *externalUpdateListener, ::subsystem::LogWriter *log);
-      virtual ~UpdateHandlerClient();
+      // UpdateHandlerClient(BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
+      //                     UpdateListener *externalUpdateListener, ::subsystem::LogWriter * plogwriter);
+      UpdateHandlerClient();
+      ~UpdateHandlerClient() override;
+
+      virtual void initialize_update_handler_client(BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
+                          UpdateListener *externalUpdateListener, ::subsystem::LogWriter * plogwriter);
+
 
       virtual void extract(UpdateContainer *updateContainer);
       virtual void setFullUpdateRequested(const Region *region);
       virtual void setExcludedRegion(const Region *excludedRegion);
       virtual bool checkForUpdates(Region *region);
 
-   protected:
-      virtual void getScreenProperties(::innate_subsystem::PixelFormat *pf, ::int_size *dim);
-      virtual void sendInit(BlockingGate *gate);
+   //protected:
+      virtual void getScreenProperties(::innate_subsystem::PixelFormat *pf, ::int_size *size);
+      virtual void sendInit(BlockingGate *pblockinggate);
 
       // To catch update event
-      virtual void onRequest(unsigned char reqCode, BlockingGate *backGate);
+      virtual void onRequest(unsigned char reqCode, BlockingGate *pblockinggate);
 
-      UpdateListener *m_externalUpdateListener;
+      ::pointer < UpdateListener > m_pupdatelistenerExternal;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

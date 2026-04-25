@@ -59,7 +59,7 @@ namespace remoting_client
        m_ccsm(RegistryPaths::VIEWER_PATH, pconnectiondata->getHost()),
        m_poperatingsystemapplication(application),
        m_premoting(premoting),
-      m_plogwriter(plogwriter),
+      m_plogwriter = plogwriter;,
       m_pconnectionconfig(pconnectionconfig),
       m_scale(100),
       //m_isFullScr(false),

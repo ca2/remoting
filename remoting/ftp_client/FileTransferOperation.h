@@ -135,7 +135,7 @@ namespace remoting
          ::file::path getRemotePath(FileInfoList *currentFile, const ::scoped_string & scopedstrRemoteFolder);
 
       ///protected:
-         ::subsystem::LogWriter *m_plogwriter;
+         ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
          FileTransferRequestSender *m_sender;
          FileTransferReplyBuffer *m_replyBuffer;

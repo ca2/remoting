@@ -57,7 +57,7 @@ namespace remoting_client
       // HACCEL m_hAccelTable;
       bool m_isListening;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
       AboutDialog m_aboutDialog;
       ConfigurationDialog m_configurationDialog;

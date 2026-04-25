@@ -36,12 +36,16 @@
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING MirrorScreenDriver : public UpdateDetector
+   class CLASS_DECL_REMOTING MirrorScreenDriver :
+   virtual public UpdateDetector
    {
    public:
-      MirrorScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
-                         critical_section *fbcritical_section, ::subsystem::LogWriter *log);
+      MirrorScreenDriver();
       virtual ~MirrorScreenDriver();
+
+
+      virtual void initialize_mirror_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+                         critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter);
 
       // Starts screen update detection if it not started yet.
       virtual void executeDetection();
@@ -68,14 +72,14 @@ namespace remoting
 
       MirrorDriverClient *m_mirrorClient;
       unsigned long m_lastCounter;
-      ::innate_subsystem::FrameBuffer m_frameBuffer;
+      ::innate_subsystem::FrameBuffer m_pframebuffer;
       // TO THINK: One may use a self mutex here, because do not
       // use external objects here.
       critical_section *m_fbMutex;
 
       ::happening m_updateTimeout;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

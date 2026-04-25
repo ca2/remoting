@@ -66,7 +66,7 @@ namespace remoting
       bool m_wasConnected;
       bool m_isEstablished;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
       mutable critical_section m_connectLock;
    };

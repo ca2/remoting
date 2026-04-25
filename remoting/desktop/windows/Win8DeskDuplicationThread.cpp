@@ -40,10 +40,10 @@ namespace remoting
                                             ::array_base<::int_rectangle> &targetRect, Win8CursorShape *targetCurShape,
                                             LONGLONG *cursorTimeStamp, critical_section *cursorMutex,
                                             Win8DuplicationListener *duplListener,
-                                            ::array_base<WinDxgiOutput> &dxgiOutput, ::subsystem::LogWriter *log) :
+                                            ::array_base<WinDxgiOutput> &dxgiOutput, ::subsystem::LogWriter * plogwriter) :
        m_targetFb(targetFb), m_targetRects(targetRect), m_targetCurShape(targetCurShape),
-       m_cursorTimeStamp(cursorTimeStamp), m_cursorMutex(cursorMutex), m_duplListener(duplListener), m_device(log),
-       m_hasCriticalError(false), m_hasRecoverableError(false), m_plogwriter(log)
+       m_cursorTimeStamp(cursorTimeStamp), m_cursorMutex(cursorMutex), m_duplListener(duplListener), m_device(plogwriter),
+       m_hasCriticalError(false), m_hasRecoverableError(false), m_plogwriter = plogwriter;
    {
       m_plogwriter->debug("Creating Win8DeskDuplication for {} outputs", dxgiOutput.size());
       for (size_t i = 0; i < dxgiOutput.size(); i++)
@@ -200,7 +200,7 @@ namespace remoting
    {
       _ASSERT(dirtyCount <= m_dirtyRects.size());
 
-      Region changedRegion;
+      Region m_regionChanged;
 
       ::int_rectangle dirtyRect;
       ::int_size stageDim = getStageDimension(out);
@@ -268,10 +268,10 @@ namespace remoting
          }
          m_auxiliaryFrameBuffer.setBuffer(0);
 
-         changedRegion.addRect(&dstRect);
+         m_regionChanged.addRect(&dstRect);
       }
 
-      m_duplListener->onFrameBufferUpdate(&changedRegion);
+      m_duplListener->onFrameBufferUpdate(&m_regionChanged);
    }
 
    void Win8DeskDuplication::rotateRectInsideStage(::int_rectangle *toTranspose, const ::int_size &stageDim,

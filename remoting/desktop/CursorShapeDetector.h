@@ -34,22 +34,25 @@
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING CursorShapeDetector : public UpdateDetector
+   class CLASS_DECL_REMOTING CursorShapeDetector :
+   virtual public UpdateDetector
    {
    public:
-      CursorShapeDetector(UpdateKeeper *updateKeeper, UpdateListener *updateListener, CursorShapeGrabber *mouseGrabber,
-                          critical_section *mouseGrabLocMut, ::subsystem::LogWriter *log);
-      virtual ~CursorShapeDetector();
+      CursorShapeDetector();
+      ~CursorShapeDetector() override;
 
-   protected:
+      virtual void initialize_cursor_shape_detector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, CursorShapeGrabber *pcursorshapegrabber,
+                    critical_section *mouseGrabLocMut, ::subsystem::LogWriter * plogwriter);
+
+   ///protected:
       virtual void execute();
       virtual void onTerminate();
 
-      CursorShapeGrabber *m_mouseGrabber;
+      ::pointer < CursorShapeGrabber > m_pcursorshapegrabber;
       critical_section *m_mouseGrabLocMut;
       ::happening m_sleepTimer;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
    //// __CURSORHAPEDETECTOR_H__

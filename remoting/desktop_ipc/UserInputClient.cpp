@@ -25,6 +25,7 @@
 #include "UserInputClient.h"
 //#include "subsystem/thread/critical_section.h"
 #include "ReconnectException.h"
+#include "acme/operating_system/windows/_.h"
 #include "subsystem/platform/BrokenHandleException.h"
 
 namespace remoting
@@ -32,28 +33,48 @@ namespace remoting
 
 
 
-UserInputClient::UserInputClient(BlockingGate *forwGate,
-                                 DesktopSrvDispatcher *dispatcher,
-                                 ClipboardListener *clipboardListener)
-: DesktopServerProto(forwGate),
-  m_clipboardListener(clipboardListener),
-  m_sendMouseFlags(0)
+// UserInputClient::UserInputClient(BlockingGate *pblockinggate,
+//                                  DesktopSrvDispatcher * pdispatcher,
+//                                  ClipboardListener *pclipboardlistener)
+// : DesktopServerProto(pblockinggate),
+//   m_clipboardListener(pclipboardlistener),
+//   m_sendMouseFlags(0)
+// {
+//   dispatcher->registerNewHandle(CLIPBOARD_CHANGED, this);
+// }
+
+UserInputClient::UserInputClient() :
+   m_sendMouseFlags(0)
 {
-  dispatcher->registerNewHandle(CLIPBOARD_CHANGED, this);
+
+
 }
+
 
 UserInputClient::~UserInputClient()
 {
 }
 
-void UserInputClient::onRequest(unsigned char reqCode, BlockingGate *backGate)
+
+
+void UserInputClient::initialize_user_input_client(Configurator * pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher, ::subsystem::ClipboardListener *pclipboardlistener)
+//: DesktopServerProto(pblockinggate),
+//  m_clipboardListener(pclipboardlistener),
+//  m_sendMouseFlags(0)
+{
+  initialize_desktop_server_proto(pconfigurator, pblockinggate);
+   m_pclipboardlistener = pclipboardlistener;
+  pdispatcher->registerNewHandle(CLIPBOARD_CHANGED, this);
+}
+
+void UserInputClient::onRequest(unsigned char reqCode, BlockingGate *pblockinggate)
 {
   switch (reqCode) {
   case CLIPBOARD_CHANGED:
     {
       ::string newClipboard;
-      readNewClipboard(&newClipboard, backGate);
-      m_clipboardListener->onClipboardUpdate(&newClipboard);
+      readNewClipboard(newClipboard, pblockinggate);
+      m_pclipboardlistener->onClipboardUpdate(newClipboard);
     }
     break;
   default:
@@ -65,11 +86,11 @@ void UserInputClient::onRequest(unsigned char reqCode, BlockingGate *backGate)
   }
 }
 
-void UserInputClient::sendInit(BlockingGate *gate)
+void UserInputClient::sendInit(BlockingGate *pblockinggate)
 {
-  critical_section_lock al(gate);
-  gate->writeUInt8(USER_INPUT_INIT);
-  gate->writeUInt8(m_sendMouseFlags);
+  critical_section_lock al(pblockinggate);
+  pblockinggate->writeUInt8(USER_INPUT_INIT);
+  pblockinggate->writeUInt8(m_sendMouseFlags);
 }
 
 void UserInputClient::setMouseEvent(const ::int_point newPos, unsigned char keyFlag)
@@ -198,7 +219,7 @@ void UserInputClient::getWindowCoords(const ::operating_system::window & operati
     try {
       // Send request
       m_forwGate->writeUInt8(WINDOW_COORDS_REQ);
-      m_forwGate->writeUInt64((unsigned long long)hwnd);
+      m_forwGate->writeUInt64((unsigned long long)::as_HWND(operatingsystemwindow));
       bool isBrokenWindow = m_forwGate->readUInt8() != 0;
       if (!isBrokenWindow) {
         *rect = readRect(m_forwGate);
@@ -206,8 +227,8 @@ void UserInputClient::getWindowCoords(const ::operating_system::window & operati
         // Receive error discription (do not generate it here).
         // This made to avoid code duplication.
         ::string errMess;
-        m_forwGate->readUTF8(&errMess);
-        throw BrokenHandleException(errMess);
+        errMess = m_forwGate->readUtf8();
+        throw ::subsystem::BrokenHandleException(errMess);
       }
       success = true;
     } catch (ReconnectException &) {
@@ -215,22 +236,22 @@ void UserInputClient::getWindowCoords(const ::operating_system::window & operati
   } while (!success);
 }
 
-HWND UserInputClient::getWindowHandleByName(const ::scoped_string & windowName)
+::operating_system::window UserInputClient::getWindowHandleByName(const ::scoped_string & windowName)
 {
   critical_section_lock al(m_forwGate);
   bool success = false;
-  const ::operating_system::window & operatingsystemwindow = 0;
+  ::operating_system::window operatingsystemwindow;
   do {
     try {
       // Send request
       m_forwGate->writeUInt8(WINDOW_HANDLE_REQ);
-      m_forwGate->writeUTF8(windowName->getString());
-      hwnd = (HWND)m_forwGate->readUInt64();
+      m_forwGate->writeUTF8(windowName);
+      operatingsystemwindow = ::as_operating_system_window((HWND)m_forwGate->readUInt64());
       success = true;
     } catch (ReconnectException &) {
     }
   } while (!success);
-  return hwnd;
+  return operatingsystemwindow;
 }
 
 void UserInputClient::getApplicationRegion(unsigned int procId, Region *region)

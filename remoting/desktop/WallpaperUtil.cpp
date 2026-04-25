@@ -25,22 +25,32 @@
 #include "WallpaperUtil.h"
 //#include "remoting/remoting/win_system/Environment.h"
 #include "remoting/remoting/server_config/Configurator.h"
-#include "remoting/remoting/win_system/AutoImpersonator.h"
+#include "subsystem/node/AutoImpersonator.h"
+#include "acme/_operating_system.h"
 
 
 namespace remoting
 {
 
 
-   WallpaperUtil::WallpaperUtil(::subsystem::LogWriter *log) : m_wasDisabled(false), m_plogwriter(log)
+   WallpaperUtil::WallpaperUtil()
+   : m_bWasDisabled(false), m_plogwriter(nullptr)
    {
-      m_pconfigurator->addListener(this);
+
+
+
+   }
+
+   void WallpaperUtil::initialize_wallpaper_util(Configurator * pconfigurator, ::subsystem::LogWriter *plogwriter)
+   {
+      initialize_config_reload_listener(pconfigurator);
+
    }
 
    WallpaperUtil::~WallpaperUtil()
    {
       m_pconfigurator->removeListener(this);
-      if (m_wasDisabled)
+      if (m_bWasDisabled)
       {
          try
          {
@@ -64,16 +74,16 @@ namespace remoting
          if (srvConf->isRemovingDesktopWallpaperEnabled())
          {
             disableWallpaper();
-            m_wasDisabled = true;
+            m_bWasDisabled = true;
             m_plogwriter->information("Wallpaper was successfully disabled");
          }
          else
          {
-            if (m_wasDisabled)
+            if (m_bWasDisabled)
             {
                restoreWallpaper();
                m_plogwriter->information("Wallpaper was successfully restored");
-               m_wasDisabled = false;
+               m_bWasDisabled = false;
             }
          }
       }
@@ -87,42 +97,46 @@ namespace remoting
    {
       // FIXME: Remove log from here. Log only from caller.
       m_plogwriter->information("Try to restore wallpaper");
-      Impersonator imp(m_plogwriter);
-      AutoImpersonator ai(&imp, m_plogwriter);
+      ::subsystem::Impersonator impersonator;
+      impersonator.initialize_impersonator(m_plogwriter);
+      ::subsystem::AutoImpersonator autoimpersonator(&impersonator, m_plogwriter);
       int result;
 
-      if (m_wallparerPath.length() == 0)
+      if (m_strWallpaperPath.length() == 0)
       {
          result = SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, 0, 0);
       }
       else
       {
-         result = SystemParametersInfo(SPI_SETDESKWALLPAPER, m_wallparerPath.getSize(), (void *)m_wallparerPath, 0);
+         result = SystemParametersInfo(SPI_SETDESKWALLPAPER, m_strWallpaperPath.length(), (void *)m_strWallpaperPath.c_str(), 0);
       }
 
       if (result == 0)
       {
-         throw SystemException("Cannot restore desktop wallpaper");
+         throw ::subsystem::SystemException("Cannot restore desktop wallpaper");
       }
    }
 
    void WallpaperUtil::disableWallpaper()
    {
       m_plogwriter->information("Try to disable wallpaper");
-      Impersonator imp(m_plogwriter);
-      AutoImpersonator ai(&imp, m_plogwriter);
-      TCHAR path[MAX_PATH] = "";
+      ::subsystem::Impersonator impersonator;
+      impersonator.initialize_impersonator(m_plogwriter);
+      ::subsystem::AutoImpersonator ai(&impersonator, m_plogwriter);
+      WCHAR path[MAX_PATH] = L"";
 
       if (SystemParametersInfo(SPI_GETDESKWALLPAPER, MAX_PATH, path, 0) == 0)
       {
          path[0] = '\0';
       }
 
-      if (SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, "", 0) == 0)
+      WCHAR pathEmptyNew[MAX_PATH] = L"";
+
+      if (SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, pathEmptyNew, 0) == 0)
       {
-         throw SystemException("Cannot disable desktop wallpaper");
+         throw ::subsystem::SystemException("Cannot disable desktop wallpaper");
       }
-      m_wallparerPath = ::string(path);
+      m_strWallpaperPath = ::string(path);
    }
 
 

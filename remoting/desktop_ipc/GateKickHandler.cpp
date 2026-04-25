@@ -27,11 +27,18 @@ namespace remoting
 {
 
 
-   GateKickHandler::GateKickHandler(DesktopSrvDispatcher *dispatcher) { dispatcher->registerNewHandle(255, this); }
+   GateKickHandler::GateKickHandler() {  }
 
    GateKickHandler::~GateKickHandler() {}
 
-   void GateKickHandler::onRequest(unsigned char reqCode, BlockingGate *backGate)
+   void GateKickHandler::initialize_gate_kick_handler(DesktopSrvDispatcher * pdispatcher)
+   {
+
+      pdispatcher->registerNewHandle(255, this);
+   }
+
+
+   void GateKickHandler::onRequest(unsigned char reqCode, BlockingGate *pblockinggate)
    {
       // Do nothing
    }

@@ -35,13 +35,15 @@ namespace remoting
    class DesktopConfigClient : public DesktopServerProto
    {
    public:
-      DesktopConfigClient(BlockingGate *forwGate);
+      DesktopConfigClient();
       virtual ~DesktopConfigClient();
 
-      virtual void updateByNewSettings(BlockingGate *gate);
+      virtual void initialize_desktop_config_client(Configurator * pconfigurator, BlockingGate *pblockinggate);
+
+      virtual void updateByNewSettings(BlockingGate *pblockinggate);
       virtual bool isRemoteInputAllowed();
 
-   private:
+   //private:
       ::earth::time m_lastInputTime;
    };
 

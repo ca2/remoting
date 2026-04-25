@@ -38,10 +38,14 @@ namespace remoting
    class CLASS_DECL_REMOTING DummyScreenDriver : public ScreenDriver, ::subsystem::Thread
    {
    public:
-      DummyScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ::int_size dim,
-                        unsigned int interval, ::subsystem::LogWriter *log);
+      //DummyScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, const ::int_size & size,
+        //                unsigned int interval, ::subsystem::LogWriter * plogwriter);
+
+      DummyScreenDriver();
       virtual ~DummyScreenDriver();
 
+      virtual void initialize_dummy_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, const ::int_size & size,
+                        unsigned int interval, ::subsystem::LogWriter * plogwriter);
       // Starts screen update detection if it not started yet.
       virtual void executeDetection();
 
@@ -68,8 +72,8 @@ namespace remoting
    private:
       ::innate_subsystem::FrameBuffer m_workFrameBuffer;
       CursorShape m_cursorShape;
-      UpdateKeeper *m_updateKeeper;
-      UpdateListener *m_updateListener;
+      ::pointer < UpdateKeeper  > m_pupdatekeeper;
+      ::pointer < UpdateListener  > m_pupdatelistener;
       ::happening m_sleeper;
       unsigned int m_interval;
       bool m_detectionEnabled;

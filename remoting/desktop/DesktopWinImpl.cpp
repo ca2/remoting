@@ -38,9 +38,9 @@ namespace remoting
 {
 
    DesktopWinImpl::DesktopWinImpl(ClipboardListener *extClipListener, UpdateSendingListener *extUpdSendingListener,
-                                  AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter *log) :
+                                  AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter * plogwriter) :
        DesktopBaseImpl(extClipListener, extUpdSendingListener, extDeskTermListener, log), m_wallPaper(0), m_deskConf(0),
-       m_plogwriter(log), m_scrDriverFactory(m_pconfigurator->getServerConfig())
+       m_plogwriter = plogwriter;, m_scrDriverFactory(m_pconfigurator->getServerConfig())
    {
       m_plogwriter->information("Creating DesktopWinImpl");
 

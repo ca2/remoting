@@ -84,19 +84,19 @@ public:
    * @return active console session id if WTS is avaliable or 0 if 
    * WinAPI WTSGetActiveConsoleSessionId function not avaliable.
    */
-  static DWORD getActiveConsoleSessionId(::subsystem::LogWriter *log);
+  static DWORD getActiveConsoleSessionId(::subsystem::LogWriter * plogwriter);
 
   /**
   * Gets RDP console session id.
   * @return RDP console session id if WTS is avaliable and RDP console exists or 0 if
   * WinAPI WTSEnumerateSessions function not avaliable or there is no sessions with RDP in name.
   */
-  static DWORD getRdpSessionId(::subsystem::LogWriter *log);
+  static DWORD getRdpSessionId(::subsystem::LogWriter * plogwriter);
 
   /**
   * @return true if sessionId is the RDP console session id.
   */
-  static bool SessionIsRdpSession(DWORD sessionId, ::subsystem::LogWriter *log);
+  static bool SessionIsRdpSession(DWORD sessionId, ::subsystem::LogWriter * plogwriter);
 
   /**
    * Queries user token in active console session.
@@ -107,7 +107,7 @@ public:
    * process id will be used to get user token (this id can be set by using of
    * defineConsoleUserProcessId() method).
    */
-  static HANDLE queryConsoleUserToken(::subsystem::LogWriter *log);
+  static HANDLE queryConsoleUserToken(::subsystem::LogWriter * plogwriter);
 
   static HANDLE sessionUserToken(DWORD sessionId, ::subsystem::LogWriter* log);
 
@@ -124,7 +124,7 @@ public:
   // rdp.
   static void duplicatePipeClientToken(HANDLE pipeHandle);
 
-  static ::string getUserName(DWORD sessionId, ::subsystem::LogWriter *log);
+  static ::string getUserName(DWORD sessionId, ::subsystem::LogWriter * plogwriter);
   static ::string getCurrentUserName(::subsystem::LogWriter* log);
 
   static bool sessionIsLocked(DWORD sessionId, ::subsystem::LogWriter* log);
@@ -148,7 +148,7 @@ private:
   /**
    * Initializes WTS functions.
    */
-  static void initialize(::subsystem::LogWriter *log);
+  static void initialize(::subsystem::LogWriter * plogwriter);
 
   // The initialize() function should be already called before use the wtsFreeMemory() function.
   static void wtsFreeMemory(void *buffer);

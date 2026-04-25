@@ -64,7 +64,7 @@ void ZrleEncoder::sendRectangle(const ::int_rectangle &  rect,
   // Used for futher work with CPIXELs.
   m_bytesPerPixel = 0;
   m_numberFirstByte = 0;
-  const ::innate_subsystem::FrameBuffer *clientFb = m_pixelConverter->convert(rect, serverFb);
+  const ::innate_subsystem::FrameBuffer *clientFb = m_ppixelconverter->convert(rect, serverFb);
   //client pixel format
   m_pxFormat = clientFb->getPixelFormat();
   //server pixel format

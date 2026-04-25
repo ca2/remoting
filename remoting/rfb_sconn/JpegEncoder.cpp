@@ -25,7 +25,7 @@
 #include "JpegEncoder.h"
 
 JpegEncoder::JpegEncoder(TightEncoder *tightEncoder)
-: Encoder(tightEncoder->m_pixelConverter, tightEncoder->m_output),
+: Encoder(tightEncoder->m_ppixelconverter, tightEncoder->m_output),
   m_tightEncoder(tightEncoder)
 {
 }
@@ -55,8 +55,8 @@ void JpegEncoder::sendRectangle(const ::int_rectangle &  rect,
                                 const ::innate_subsystem::FrameBuffer *serverFb,
                                 const EncodeOptions *options)
 {
-  size_t bppServer = m_pixelConverter->getSrcBitsPerPixel();
-  size_t bppClient = m_pixelConverter->getDstBitsPerPixel();
+  size_t bppServer = m_ppixelconverter->getSrcBitsPerPixel();
+  size_t bppClient = m_ppixelconverter->getDstBitsPerPixel();
   bool goodColorResolution = (bppServer >= 16 && bppClient >= 16);
 
   if (options->jpegEnabled() && goodColorResolution) {

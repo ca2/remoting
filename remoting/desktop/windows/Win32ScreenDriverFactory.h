@@ -40,15 +40,15 @@ namespace remoting
       Win32ScreenDriverFactory(ServerConfig *srvConf);
       virtual ~Win32ScreenDriverFactory();
 
-      virtual ScreenDriver *createScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
+      virtual ScreenDriver *createScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
                                                ::innate_subsystem::FrameBuffer *fb,
-                                               critical_section *fbcritical_section, ::subsystem::LogWriter *log);
+                                               critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter);
    private:
-      ScreenDriver *createStandardScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
+      ScreenDriver *createStandardScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
                                                ::innate_subsystem::FrameBuffer *fb,
-                                               critical_section *fbcritical_section, ::subsystem::LogWriter *log);
-      ScreenDriver *createMirrorScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
-                                             critical_section *fbcritical_section, ::subsystem::LogWriter *log);
+                                               critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter);
+      ScreenDriver *createMirrorScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+                                             critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter);
 
       bool isMirrorDriverAllowed();
       bool isD3DAllowed();

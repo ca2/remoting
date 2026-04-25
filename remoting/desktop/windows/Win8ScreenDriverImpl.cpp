@@ -38,10 +38,10 @@ namespace remoting
 {
 
 
-   Win8ScreenDriverImpl::Win8ScreenDriverImpl(::subsystem::LogWriter *log, UpdateKeeper *updateKeeper,
-                                              critical_section *fbcritical_section, UpdateListener *updateListener,
+   Win8ScreenDriverImpl::Win8ScreenDriverImpl(::subsystem::LogWriter * plogwriter, UpdateKeeper *pupdatekeeper,
+                                              critical_section *fbcritical_section, UpdateListener *pupdatelistener,
                                               bool detectionEnabled) :
-       m_updateKeeper(updateKeeper), m_updateListener(updateListener), m_plogwriter(log), m_curTimeStamp(0),
+       m_pupdatekeeper(pupdatekeeper), m_pupdatelistener = pupdatelistener;, m_plogwriter = plogwriter;, m_curTimeStamp(0),
        m_hasCriticalError(false), m_hasRecoverableError(false), m_detectionEnabled(detectionEnabled)
    {
       resume();
@@ -94,7 +94,7 @@ namespace remoting
       m_detectionEnabled = false;
    }
 
-   ::innate_subsystem::FrameBuffer *Win8ScreenDriverImpl::getScreenBuffer() { return &m_frameBuffer; }
+   ::innate_subsystem::FrameBuffer *Win8ScreenDriverImpl::getScreenBuffer() { return &m_pframebuffer; }
 
    void Win8ScreenDriverImpl::initDxgi()
    {
@@ -142,8 +142,8 @@ namespace remoting
 
       ::innate_subsystem::PixelFormat pf = getDxPixelFormat();
       ::int_rectangle virtDeskBoundRect = virtDeskRegion.getBounds();
-      m_frameBuffer.setProperties(&virtDeskBoundRect, &pf);
-      m_frameBuffer.setColor(0, 0, 0);
+      m_pframebuffer->setProperties(&virtDeskBoundRect, &pf);
+      m_pframebuffer->setColor(0, 0, 0);
 
       for (size_t iDxgiOutput = 0; iDxgiOutput < dxgiOutputArray.size(); iDxgiOutput++)
       {
@@ -154,7 +154,7 @@ namespace remoting
          threadsNum = 12;
       DWORD millis = 1 << threadsNum; // delay up to 4 seconds if there are threads waiting to delete
       sleep(millis);
-      Thread *thread = new Win8DeskDuplication(&m_frameBuffer, deskCoordArray, &m_win8CursorShape, &m_curTimeStamp,
+      Thread *thread = new Win8DeskDuplication(&m_pframebuffer, deskCoordArray, &m_win8CursorShape, &m_curTimeStamp,
                                                &m_cursorMutex, this, dxgiOutputArray, m_plogwriter);
       DWORD id = thread->getThreadId();
       m_plogwriter->debug("Created a new Win8DeskDuplication with ID: ({})", id);
@@ -198,20 +198,20 @@ namespace remoting
          m_plogwriter->error("Win8ScreenDriverImpl has an invalid state. The invalid state can be"
                              " a part of screen propery changes. An update signal will be generated"
                              " as a screen size changed signal.");
-         m_updateKeeper->setScreenSizeChanged();
-         m_updateListener->onUpdate();
+         m_pupdatekeeper->setScreenSizeChanged();
+         m_pupdatelistener->onUpdate();
       }
       terminateDetection();
    }
 
    void Win8ScreenDriverImpl::onTerminate() { m_errorEvent.set_happening(); }
 
-   void Win8ScreenDriverImpl::onFrameBufferUpdate(const Region *changedRegion)
+   void Win8ScreenDriverImpl::onFrameBufferUpdate(const Region *m_regionChanged)
    {
       if (m_detectionEnabled)
       {
-         m_updateKeeper->addChangedRegion(changedRegion);
-         m_updateListener->onUpdate();
+         m_pupdatekeeper->addChangedRegion(m_regionChanged);
+         m_pupdatelistener->onUpdate();
       }
    }
 
@@ -220,8 +220,8 @@ namespace remoting
       if (m_detectionEnabled)
       {
          ::int_point srcPoint(srcX, srcY);
-         m_updateKeeper->addCopyRect(dstRect, &srcPoint);
-         m_updateListener->onUpdate();
+         m_pupdatekeeper->addCopyRect(dstRect, &srcPoint);
+         m_pupdatelistener->onUpdate();
       }
    }
 
@@ -232,15 +232,15 @@ namespace remoting
       if (!m_latestCursorPos.isEqualTo(&newPos))
       {
          m_latestCursorPos = newPos;
-         m_updateKeeper->setCursorPos(&newPos);
-         m_updateListener->onUpdate();
+         m_pupdatekeeper->setCursorPos(&newPos);
+         m_pupdatelistener->onUpdate();
       }
    }
 
    void Win8ScreenDriverImpl::onCursorShapeChanged()
    {
-      m_updateKeeper->setCursorShapeChanged();
-      m_updateListener->onUpdate();
+      m_pupdatekeeper->setCursorShapeChanged();
+      m_pupdatelistener->onUpdate();
    }
 
    void Win8ScreenDriverImpl::onRecoverableError(const ::scoped_string &scopedstrReason)

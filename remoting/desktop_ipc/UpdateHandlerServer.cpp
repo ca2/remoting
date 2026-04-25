@@ -28,9 +28,9 @@ namespace remoting
 {
 
 
-   UpdateHandlerServer::UpdateHandlerServer(BlockingGate *forwGate, DesktopSrvDispatcher *dispatcher,
-                                            AnEventListener *extTerminationListener, ::subsystem::LogWriter *log) :
-       DesktopServerProto(forwGate), m_extTerminationListener(extTerminationListener), m_plogwriter(log),
+   UpdateHandlerServer::UpdateHandlerServer(BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
+                                            AnEventListener *extTerminationListener, ::subsystem::LogWriter * plogwriter) :
+       DesktopServerProto(pblockinggate), m_extTerminationListener(extTerminationListener), m_plogwriter = plogwriter;,
        m_scrDriverFactory(m_pconfigurator->getServerConfig())
    {
       m_updateHandler = new UpdateHandlerImpl(this, &m_scrDriverFactory, log);
@@ -61,30 +61,30 @@ namespace remoting
       }
    }
 
-   void UpdateHandlerServer::onRequest(unsigned char reqCode, BlockingGate *backGate)
+   void UpdateHandlerServer::onRequest(unsigned char reqCode, BlockingGate *pblockinggate)
    {
       switch (reqCode)
       {
          case EXTRACT_REQ:
             m_plogwriter->debug("UpdateHandlerServer, EXTRACT_REQ recieved");
-            extractReply(backGate);
+            extractReply(pblockinggate);
             break;
          case SCREEN_PROP_REQ:
             m_plogwriter->debug("UpdateHandlerServer, SCREEN_PROP_REQ recieved");
-            screenPropReply(backGate);
+            screenPropReply(pblockinggate);
             break;
          case SET_FULL_UPD_REQ_REGION:
             m_plogwriter->debug("UpdateHandlerServer, SET_FULL_UPD_REQ_REGION recieved");
-            receiveFullReqReg(backGate);
+            receiveFullReqReg(pblockinggate);
             break;
          case SET_EXCLUDING_REGION:
             m_plogwriter->debug("UpdateHandlerServer, SET_EXCLUDING_REGION recieved");
-            receiveExcludingReg(backGate);
+            receiveExcludingReg(pblockinggate);
             break;
          case FRAME_BUFFER_INIT:
             m_plogwriter->debug("UpdateHandlerServer, FRAME_BUFFER_INIT recieved");
             // Init from client
-            serverInit(backGate);
+            serverInit(pblockinggate);
             break;
          default:
             ::string errMess;
@@ -94,12 +94,12 @@ namespace remoting
       }
    }
 
-   void UpdateHandlerServer::extractReply(BlockingGate *backGate)
+   void UpdateHandlerServer::extractReply(BlockingGate *pblockinggate)
    {
       m_plogwriter->debug("UpdateHandlerServer: extract updates");
       UpdateContainer updCont;
       m_updateHandler->extract(&updCont);
-      m_plogwriter->debug("UpdateHandlerServer: %u changed rectangles", updCont.changedRegion.getCount());
+      m_plogwriter->debug("UpdateHandlerServer: %u changed rectangles", updCont.m_regionChanged.getCount());
 
       const ::innate_subsystem::FrameBuffer *fb = m_updateHandler->getFrameBuffer();
 
@@ -111,106 +111,106 @@ namespace remoting
          m_oldPf = newPf;
       }
 
-      backGate->writeUInt8(updCont.screenSizeChanged);
+      pblockinggate->writeUInt8(updCont.screenSizeChanged);
       if (updCont.screenSizeChanged)
       {
          // Send new screen properties
          m_plogwriter->debug("UpdateHandlerServer: Send new screen properties");
-         sendPixelFormat(&newPf, backGate);
+         sendPixelFormat(&newPf, pblockinggate);
          ::int_size fbDim = fb->getDimension();
          ::int_rectangle fbRect = fbDim;
-         sendDimension(&fbDim, backGate);
-         sendFrameBuffer(fb, &fbRect, backGate);
+         sendDimension(&fbDim, pblockinggate);
+         sendFrameBuffer(fb, &fbRect, pblockinggate);
       }
 
       // Send video region
       m_plogwriter->debug("UpdateHandlerServer: Send video region");
-      sendRegion(&updCont.videoRegion, backGate);
+      sendRegion(&updCont.m_regionVideo, pblockinggate);
       // Send changed region
       ::array_base<::int_rectangle> rects;
       ::array_base<::int_rectangle>::iterator iRect;
-      updCont.changedRegion.getRectVector(&rects);
+      updCont.m_regionChanged.getRectVector(&rects);
       unsigned int countChangedRect = (unsigned int)rects.size();
       _ASSERT(countChangedRect == rects.size());
       m_plogwriter->debug("UpdateHandlerServer: send %u changed rectangles", countChangedRect);
-      backGate->writeUInt32(countChangedRect);
+      pblockinggate->writeUInt32(countChangedRect);
 
       for (iRect = rects.begin(); iRect < rects.end(); iRect++)
       {
          ::int_rectangle *rect = &(*iRect);
-         sendRect(rect, backGate);
-         sendFrameBuffer(fb, rect, backGate);
+         sendRect(rect, pblockinggate);
+         sendFrameBuffer(fb, rect, pblockinggate);
       }
 
       // Send "copyrect"
       m_plogwriter->debug("UpdateHandlerServer: Send copyrect");
-      bool hasCopyRect = !updCont.copiedRegion.is_empty();
-      backGate->writeUInt8(hasCopyRect);
+      bool hasCopyRect = !updCont.m_regionCopied.is_empty();
+      pblockinggate->writeUInt8(hasCopyRect);
       if (hasCopyRect)
       {
-         sendPoint(&updCont.copySrc, backGate);
-         updCont.copiedRegion.getRectVector(&rects);
+         sendPoint(&updCont.m_pointCopySource, pblockinggate);
+         updCont.m_regionCopied.getRectVector(&rects);
          iRect = rects.begin();
-         sendRect(&(*iRect), backGate);
-         sendFrameBuffer(fb, &(*iRect), backGate);
+         sendRect(&(*iRect), pblockinggate);
+         sendFrameBuffer(fb, &(*iRect), pblockinggate);
       }
 
       // Send cursor position if it has been changed.
       m_plogwriter->debug("UpdateHandlerServer: Send cursor position");
-      backGate->writeUInt8(updCont.cursorPosChanged);
-      sendPoint(&updCont.cursorPos, backGate);
+      pblockinggate->writeUInt8(updCont.cursorPosChanged);
+      sendPoint(&updCont.cursorPos, pblockinggate);
 
       // Send cursor shape if it has been changed.
       m_plogwriter->debug("UpdateHandlerServer: Send cursor shape");
-      backGate->writeUInt8(updCont.cursorShapeChanged);
+      pblockinggate->writeUInt8(updCont.cursorShapeChanged);
       if (updCont.cursorShapeChanged)
       {
          const CursorShape *curSh = m_updateHandler->getCursorShape();
-         sendDimension(&curSh->getDimension(), backGate);
-         sendPoint(&curSh->getHotSpot(), backGate);
+         sendDimension(&curSh->getDimension(), pblockinggate);
+         sendPoint(&curSh->getHotSpot(), pblockinggate);
 
          // Send pixels
-         backGate->writeFully(curSh->getPixels()->getBuffer(), curSh->getPixelsSize());
+         pblockinggate->writeFully(curSh->getPixels()->getBuffer(), curSh->getPixelsSize());
          // Send mask
          if (curSh->getMaskSize())
          {
-            backGate->writeFully((void *)curSh->getMask(), curSh->getMaskSize());
+            pblockinggate->writeFully((void *)curSh->getMask(), curSh->getMaskSize());
          }
       }
       m_plogwriter->debug("UpdateHandlerServer::extractReply finished");
    }
 
-   void UpdateHandlerServer::screenPropReply(BlockingGate *backGate)
+   void UpdateHandlerServer::screenPropReply(BlockingGate *pblockinggate)
    {
       const ::innate_subsystem::FrameBuffer *fb = m_updateHandler->getFrameBuffer();
-      sendPixelFormat(&fb->getPixelFormat(), backGate);
-      sendDimension(&fb->getDimension(), backGate);
+      sendPixelFormat(&fb->getPixelFormat(), pblockinggate);
+      sendDimension(&fb->getDimension(), pblockinggate);
    }
 
-   void UpdateHandlerServer::receiveFullReqReg(BlockingGate *backGate)
+   void UpdateHandlerServer::receiveFullReqReg(BlockingGate *pblockinggate)
    {
       Region region;
-      readRegion(&region, backGate);
+      readRegion(&region, pblockinggate);
       m_updateHandler->setFullUpdateRequested(&region);
    }
 
-   void UpdateHandlerServer::receiveExcludingReg(BlockingGate *backGate)
+   void UpdateHandlerServer::receiveExcludingReg(BlockingGate *pblockinggate)
    {
       Region region;
-      readRegion(&region, backGate);
+      readRegion(&region, pblockinggate);
       m_updateHandler->setExcludedRegion(&region);
    }
 
-   void UpdateHandlerServer::serverInit(BlockingGate *backGate)
+   void UpdateHandlerServer::serverInit(BlockingGate *pblockinggate)
    {
       // FIXME: Use another method to initialize m_backupFrameBuffer
       // because this method use a lot of memory.
       ::innate_subsystem::FrameBuffer fb;
-      readPixelFormat(&m_oldPf, backGate);
-      ::int_size dim = readDimension(backGate);
-      fb.setProperties(&dim, &m_oldPf);
+      readPixelFormat(&m_oldPf, pblockinggate);
+      ::int_size size = readDimension(pblockinggate);
+      fb.setProperties(&size, &m_oldPf);
 
-      readFrameBuffer(&fb, &dim, backGate);
+      readFrameBuffer(&fb, &size, pblockinggate);
       m_updateHandler->initFrameBuffer(&fb);
    }
 

@@ -29,12 +29,23 @@ namespace remoting
 {
 
 
-   UpdateDetector::UpdateDetector(UpdateKeeper *updateKeeper, UpdateListener *updateListener) :
-       m_updateKeeper(updateKeeper), m_updateListener(updateListener)
+   // UpdateDetector::UpdateDetector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener) :
+   //     m_pupdatekeeper(pupdatekeeper), m_pupdatelistener = pupdatelistener;
+   // {
+   // }
+
+   UpdateDetector::UpdateDetector()
    {
    }
 
    UpdateDetector::~UpdateDetector() {}
+
+
+   void UpdateDetector::initialize_update_detector(UpdateKeeper *pupdatekeeper, UpdateListener *pupdatelistener)
+   {
+      m_pupdatekeeper = pupdatekeeper;
+      m_pupdatelistener = pupdatelistener;
+   }
 
 
 } // namespace remoting

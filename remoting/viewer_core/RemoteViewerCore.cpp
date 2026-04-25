@@ -63,11 +63,11 @@
 namespace remoting
 {
    RemoteViewerCore::RemoteViewerCore(::subsystem::LogWriter * plogwriter)
-   : m_plogwriter(plogwriter),
+   : m_plogwriter = plogwriter;,
      m_tcpConnection(m_plogwriter),
-     m_fbUpdateNotifier(&m_frameBuffer, &m_fbLock, m_plogwriter, &m_watermarksController),
+     m_fbUpdateNotifier(&m_pframebuffer, &m_fbLock, m_plogwriter, &m_watermarksController),
      m_decoderStore(m_plogwriter),
-     m_updateRequestSender(&m_fbLock, &m_frameBuffer, m_plogwriter),
+     m_updateRequestSender(&m_fbLock, &m_pframebuffer, m_plogwriter),
      m_dispatchDataProvider(0),
      m_isTightEnabled(true),
      m_isUtf8ClipboardEnabled(false)
@@ -79,11 +79,11 @@ namespace remoting
                                       CoreEventsAdapter *adapter,
                                       ::subsystem::LogWriter * plogwriter,
                                       bool sharedFlag)
-   : m_plogwriter(plogwriter),
+   : m_plogwriter = plogwriter;,
      m_tcpConnection(m_plogwriter),
-     m_fbUpdateNotifier(&m_frameBuffer, &m_fbLock, m_plogwriter, &m_watermarksController),
+     m_fbUpdateNotifier(&m_pframebuffer, &m_fbLock, m_plogwriter, &m_watermarksController),
      m_decoderStore(m_plogwriter),
-     m_updateRequestSender(&m_fbLock, &m_frameBuffer, m_plogwriter),
+     m_updateRequestSender(&m_fbLock, &m_pframebuffer, m_plogwriter),
      m_dispatchDataProvider(0),
      m_isTightEnabled(true),
      m_isUtf8ClipboardEnabled(false)
@@ -97,11 +97,11 @@ namespace remoting
                                       CoreEventsAdapter *adapter,
                                       ::subsystem::LogWriter * plogwriter,
                                       bool sharedFlag)
-   : m_plogwriter(plogwriter),
+   : m_plogwriter = plogwriter;,
      m_tcpConnection(m_plogwriter),
-     m_fbUpdateNotifier(&m_frameBuffer, &m_fbLock, m_plogwriter, &m_watermarksController),
+     m_fbUpdateNotifier(&m_pframebuffer, &m_fbLock, m_plogwriter, &m_watermarksController),
      m_decoderStore(m_plogwriter),
-     m_updateRequestSender(&m_fbLock, &m_frameBuffer, m_plogwriter),
+     m_updateRequestSender(&m_fbLock, &m_pframebuffer, m_plogwriter),
      m_dispatchDataProvider(0),
      m_isTightEnabled(true),
      m_isUtf8ClipboardEnabled(false)
@@ -115,11 +115,11 @@ namespace remoting
                                       CoreEventsAdapter *adapter,
                                       ::subsystem::LogWriter * plogwriter,
                                       bool sharedFlag)
-   : m_plogwriter(plogwriter),
+   : m_plogwriter = plogwriter;,
      m_tcpConnection(m_plogwriter),
-     m_fbUpdateNotifier(&m_frameBuffer, &m_fbLock, m_plogwriter, &m_watermarksController),
+     m_fbUpdateNotifier(&m_pframebuffer, &m_fbLock, m_plogwriter, &m_watermarksController),
      m_decoderStore(m_plogwriter),
-     m_updateRequestSender(&m_fbLock, &m_frameBuffer, m_plogwriter),
+     m_updateRequestSender(&m_fbLock, &m_pframebuffer, m_plogwriter),
      m_dispatchDataProvider(0),
      m_isTightEnabled(true),
      m_isUtf8ClipboardEnabled(false)
@@ -311,11 +311,11 @@ namespace remoting
          critical_section_lock al(&m_fbLock);
          // FIXME: here isn't accept true-colour flag.
          // PixelFormats may be equal, if isn't.
-         if (pxFormat == m_frameBuffer.getPixelFormat() ){
+         if (pxFormat == m_pframebuffer->getPixelFormat() ){
             return false;
          }
-         if (m_frameBuffer.getBuffer() != 0)
-            setFbProperties(m_frameBuffer.getDimension(), pxFormat);
+         if (m_pframebuffer->getBuffer() != 0)
+            setFbProperties(m_pframebuffer->getDimension(), pxFormat);
       }
 
       RfbSetPixelFormatClientMessage pixelFormatMessage(pxFormat);
@@ -373,7 +373,7 @@ namespace remoting
          ::int_rectangle updateRect;
          {
             critical_section_lock al(&m_fbLock);
-            updateRect = m_frameBuffer.getDimension();
+            updateRect = m_pframebuffer->getDimension();
          }
 
          if (isIncremental) {
@@ -852,7 +852,7 @@ namespace remoting
                        fbDimension.cx, fbDimension.cy);
       m_plogwriter->information("Frame buffer pixel format: {}", pxString);
 
-      if (!m_frameBuffer.setProperties(fbDimension, fbPixelFormat) ||
+      if (!m_pframebuffer->setProperties(fbDimension, fbPixelFormat) ||
           !m_rectangleFb.setProperties(fbDimension, fbPixelFormat)) {
          ::string error;
          error.formatf("Failed to set property frame buffer. "
@@ -862,7 +862,7 @@ namespace remoting
          throw ::subsystem::Exception(error);
           }
       m_rectangleFb.setColor(0, 0, 0);
-      m_frameBuffer.setColor(0, 0, 0);
+      m_pframebuffer->setColor(0, 0, 0);
       refreshFrameBuffer();
       m_fbUpdateNotifier.onPropertiesFb();
       m_plogwriter->debug("Frame buffer properties set");
@@ -1090,7 +1090,7 @@ namespace remoting
       if (encodingType == PseudoEncDefs::LAST_RECT)
          return true;
       if (!Decoder::isPseudo(encodingType)) {
-         if (::int_rectangle(m_frameBuffer.getDimension()).intersection(rect) != rect) {
+         if (::int_rectangle(m_pframebuffer->getDimension()).intersection(rect) != rect) {
             throw ::subsystem::Exception("Error in protocol: incorrect size of rectangle");
          }
 
@@ -1100,7 +1100,7 @@ namespace remoting
 
             DecoderOfRectangle *rectangleDecoder = dynamic_cast<DecoderOfRectangle *>(decoder);
             rectangleDecoder->process(m_input,
-                                      &m_frameBuffer, &m_rectangleFb, rect, &m_fbLock,
+                                      &m_pframebuffer, &m_rectangleFb, rect, &m_fbLock,
                                       &m_fbUpdateNotifier);
 
             m_plogwriter->debug("Decoded");
@@ -1125,7 +1125,7 @@ namespace remoting
             m_plogwriter->information("Changed size of desktop");
          {
             critical_section_lock al(&m_fbLock);
-            setFbProperties(rect.size(), m_frameBuffer.getPixelFormat());
+            setFbProperties(rect.size(), m_pframebuffer->getPixelFormat());
          }
             break;
 
@@ -1135,7 +1135,7 @@ namespace remoting
 
             unsigned short width = rect.width();
             unsigned short height = rect.height();
-            unsigned char bytesPerPixel = m_frameBuffer.getBytesPerPixel();
+            unsigned char bytesPerPixel = m_pframebuffer->getBytesPerPixel();
 
             ::array_base<unsigned char> cursor;
             ::array_base<unsigned char> bitmask;

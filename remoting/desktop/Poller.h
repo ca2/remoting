@@ -38,23 +38,29 @@
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING Poller : public UpdateDetector
+   class CLASS_DECL_REMOTING Poller :
+   virtual public UpdateDetector
    {
    public:
 
-      ScreenGrabber *m_screenGrabber;
+      ::pointer < ScreenGrabber  > m_pscreengrabber;
       ::innate_subsystem::FrameBuffer *m_backupFrameBuffer;
       critical_section *m_fbMutex;
-      ::int_rectangle m_pollingRect;
+      ::int_rectangle m_rectanglePolling;
       ::happening m_intervalWaiter;
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
       ::pointer < Configurator > m_pconfigurator;
 
-      Poller(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ScreenGrabber *screenGrabber,
-             ::innate_subsystem::FrameBuffer *backupFrameBuffer, critical_section *frameBufferCriticalSection,
-             ::subsystem::LogWriter *log);
+      // Poller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ScreenGrabber *pscreengrabber,
+      //        ::innate_subsystem::FrameBuffer *backupFrameBuffer, critical_section *frameBufferCriticalSection,
+      //        ::subsystem::LogWriter * plogwriter);
+      Poller();
+      ~Poller() override;
 
-      virtual ~Poller();
+
+      virtual void initialize_poller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ScreenGrabber *pscreengrabber,
+       ::innate_subsystem::FrameBuffer *backupFrameBuffer, critical_section *frameBufferCriticalSection,
+       ::subsystem::LogWriter * plogwriter);
 
       virtual void execute();
       virtual void onTerminate();

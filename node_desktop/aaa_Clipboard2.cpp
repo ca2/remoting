@@ -27,11 +27,11 @@
 
 const HINSTANCE WindowsClipboard::m_hinst = GetModuleHandle(0);
 
-WindowsClipboard::WindowsClipboard(::remoting::ClipboardListener *clipboardListener, ::subsystem::LogWriter *log)
+WindowsClipboard::WindowsClipboard(::remoting::ClipboardListener *pclipboardlistener, ::subsystem::LogWriter * plogwriter)
 : MessageWindow(m_hinst, ClipboardNames::CLIPBOARD_WIN_CLASS_NAME),
   m_hwndNextViewer(0),
-  m_clipboardListener(clipboardListener),
-  m_plogwriter(log)
+  m_clipboardListener(pclipboardlistener),
+  m_plogwriter = plogwriter;
 {
   resume();
 }

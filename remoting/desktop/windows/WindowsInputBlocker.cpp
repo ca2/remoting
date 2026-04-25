@@ -59,9 +59,9 @@ namespace remoting
 
    WindowsInputBlocker *WindowsInputBlocker::s_pwindowsinputblocker = 0;
 
-   WindowsInputBlocker::WindowsInputBlocker(::subsystem::LogWriter *log) :
+   WindowsInputBlocker::WindowsInputBlocker(::subsystem::LogWriter * plogwriter) :
        m_isKeyboardBlocking(false), m_isMouseBlocking(false), m_isSoftKeyboardBlocking(false),
-       m_isSoftMouseBlocking(false), m_plogwriter(log)
+       m_isSoftMouseBlocking(false), m_plogwriter = plogwriter;
    {
       {
          critical_section_lock al(&s_criticalsection);

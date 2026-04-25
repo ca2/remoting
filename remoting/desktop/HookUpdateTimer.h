@@ -41,9 +41,13 @@ namespace remoting
    virtual public ::subsystem::Thread
    {
    public:
-      // @param updateListener - pointer to an UpdateListener object
-      HookUpdateTimer(UpdateListener *updateListener);
-      virtual ~HookUpdateTimer() override;
+
+      // @param pupdatelistener - pointer to an UpdateListener object
+      HookUpdateTimer();
+      ~HookUpdateTimer() override;
+
+
+      virtual void initialize_hook_update_timer(UpdateListener *pupdatelistener);
 
       // This function start a timer after that will calling onUpdate()
       // function of the update listener
@@ -55,7 +59,7 @@ namespace remoting
 
       ::happening m_updateWaiter;
       ::happening m_timer;
-      UpdateListener *m_updateListener;
+      ::pointer < UpdateListener  > m_pupdatelistener;
    };
 
 

@@ -37,42 +37,48 @@
 namespace remoting
 {
 
-   class DesktopServerProto
+   class CLASS_DECL_REMOTING DesktopServerProto :
+   virtual public ::particle
    {
-   protected:
-      DesktopServerProto(BlockingGate *forwGate);
-      virtual ~DesktopServerProto();
+   public:
+      // FIXME: Remove m_forwGate from this class.
+      // Forward pblockinggate will send requests
+      BlockingGate *m_forwGate;
+      ::pointer < Configurator > m_pconfigurator;
 
-      virtual void readPixelFormat(::innate_subsystem::PixelFormat *pf, BlockingGate *gate);
-      virtual void sendPixelFormat(const ::innate_subsystem::PixelFormat &pf, BlockingGate *gate);
-      virtual ::int_size readDimension(BlockingGate *gate);
-      virtual void sendDimension(const ::int_size &dim, BlockingGate *gate);
-      virtual ::int_point readPoint(BlockingGate *gate);
-      virtual void sendPoint(const ::int_point *point, BlockingGate *gate);
-      virtual ::int_rectangle readRect(BlockingGate *gate);
-      virtual void sendRect(const ::int_rectangle &rect, BlockingGate *gate);
-      virtual void sendRegion(const ::remoting::Region *region, BlockingGate *gate);
-      virtual void readRegion(::remoting::Region *region, BlockingGate *gate);
+
+      DesktopServerProto();
+      ~DesktopServerProto() override;
+
+      virtual void initialize_desktop_server_proto(Configurator * pconfigurator, BlockingGate *pblockinggate);
+
+      virtual void readPixelFormat(::innate_subsystem::PixelFormat & pixelformat, BlockingGate *pblockinggate);
+      virtual void sendPixelFormat(const ::innate_subsystem::PixelFormat &pixelformat, BlockingGate *pblockinggate);
+      virtual ::int_size readDimension(BlockingGate *pblockinggate);
+      virtual void sendDimension(const ::int_size &size, BlockingGate *pblockinggate);
+      virtual ::int_point readPoint(BlockingGate *pblockinggate);
+      virtual void sendPoint(const ::int_point *point, BlockingGate *pblockinggate);
+      virtual ::int_rectangle readRect(BlockingGate *pblockinggate);
+      virtual void sendRect(const ::int_rectangle &rect, BlockingGate *pblockinggate);
+      virtual void sendRegion(const ::remoting::Region *region, BlockingGate *pblockinggate);
+      virtual void readRegion(::remoting::Region *region, BlockingGate *pblockinggate);
 
       void sendFrameBuffer(const ::innate_subsystem::FrameBuffer *srcFb, const ::int_rectangle &srcRect,
-                           BlockingGate *gate);
-      void readFrameBuffer(::innate_subsystem::FrameBuffer *dstFb, const ::int_rectangle &dstRect, BlockingGate *gate);
+                           BlockingGate *pblockinggate);
+      void readFrameBuffer(::innate_subsystem::FrameBuffer *dstFb, const ::int_rectangle &dstRect, BlockingGate *pblockinggate);
 
-      virtual void sendNewClipboard(const ::scoped_string &newClipboard, BlockingGate *gate);
-      virtual void readNewClipboard(::string &newClipboard, BlockingGate *gate);
-      virtual void sendNewPointerPos(const ::int_point newPos, unsigned char keyFlag, BlockingGate *gate);
-      virtual void readNewPointerPos(::int_point *newPos, unsigned char *keyFlag, BlockingGate *gate);
-      virtual void sendKeyEvent(unsigned int keySym, bool down, BlockingGate *gate);
-      virtual void readKeyEvent(unsigned int *keySym, bool *down, BlockingGate *gate);
+      virtual void sendNewClipboard(const ::scoped_string &newClipboard, BlockingGate *pblockinggate);
+      virtual void readNewClipboard(::string &newClipboard, BlockingGate *pblockinggate);
+      virtual void sendNewPointerPos(const ::int_point newPos, unsigned char keyFlag, BlockingGate *pblockinggate);
+      virtual void readNewPointerPos(::int_point *newPos, unsigned char *keyFlag, BlockingGate *pblockinggate);
+      virtual void sendKeyEvent(unsigned int keySym, bool down, BlockingGate *pblockinggate);
+      virtual void readKeyEvent(unsigned int *keySym, bool *down, BlockingGate *pblockinggate);
       virtual void sendUserInfo(const ::scoped_string &desktopName, const ::scoped_string &userName,
-                                BlockingGate *gate);
-      virtual void readUserInfo(::string &desktopName, ::string &userName, BlockingGate *gate);
-      virtual void sendConfigSettings(BlockingGate *gate);
-      virtual void readConfigSettings(BlockingGate *gate);
+                                BlockingGate *pblockinggate);
+      virtual void readUserInfo(::string &desktopName, ::string &userName, BlockingGate *pblockinggate);
+      virtual void sendConfigSettings(BlockingGate *pblockinggate);
+      virtual void readConfigSettings(BlockingGate *pblockinggate);
 
-      // FIXME: Remove m_forwGate from this class.
-      // Forward gate will send requests
-      BlockingGate *m_forwGate;
 
       static const unsigned char EXTRACT_REQ = 0;
       static const unsigned char SCREEN_PROP_REQ = 1;
@@ -98,10 +104,10 @@ namespace remoting
       static const unsigned char CONFIG_RELOAD_REQ = 50;
       static const unsigned char SOFT_INPUT_ENABLING_REQ = 51;
 
-   private:
-      void checkPixelFormat(const ::innate_subsystem::PixelFormat &pf);
+   //private:
+      void checkPixelFormat(const ::innate_subsystem::PixelFormat &pixelformat);
       void checkRectangle(const ::int_rectangle &rect);
-      void checkDimension(const ::int_size &dim);
+      void checkDimension(const ::int_size &size);
    };
 
 

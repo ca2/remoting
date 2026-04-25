@@ -37,15 +37,32 @@ namespace remoting
 
    // This class  provides the screen grabbing by an optimal way.
    // The class CLASS_DECL_REMOTING determines an optimal way by oneself dynamically.
-   class CLASS_DECL_REMOTING GrabOptimizator
+   class CLASS_DECL_REMOTING GrabOptimizator :
+      virtual public ::particle
    {
    public:
-      GrabOptimizator(::subsystem::LogWriter *log);
+
+      int m_wholeS;
+      ::list_base<double> m_wholeTElements;
+      double m_wholeTSum;
+
+      ::list_base<double> m_gElements;
+      double m_gSum;
+
+      ::subsystem::DemandTimer m_timer;
+
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
+
+
+      //GrabOptimizator(::subsystem::LogWriter * plogwriter);
+      GrabOptimizator();
       ~GrabOptimizator();
+
+      virtual void initialize_grab_optimizator(::subsystem::LogWriter * plogwriter);
 
       bool grab(const ::remoting::Region *grabRegion, ScreenDriver *grabber);
 
-   private:
+   //private:
       // Returns true when the m_wholeTElements is comletly calculated.
       bool getWholeTCompleted();
 
@@ -89,16 +106,6 @@ namespace remoting
       void removeObsoleteFragmentStats();
       void removeFirstElementsFromFragmentStats();
 
-      int m_wholeS;
-      ::list_base<double> m_wholeTElements;
-      double m_wholeTSum;
-
-      ::list_base<double> m_gElements;
-      double m_gSum;
-
-      DemandTimer m_timer;
-
-      ::subsystem::LogWriter *m_plogwriter;
    };
 
  

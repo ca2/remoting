@@ -51,7 +51,7 @@ namespace remoting_node_desktop
               extraPorts.equals(&other->extraPorts));
    }
    //(ExtraRfbServers::ExtraRfbServers()::subsystem::LogWriter * log) :
-   //    m_servers(), m_effectiveConf(), m_plogwriter(log)
+   //    m_servers(), m_effectiveConf(), m_plogwriter = plogwriter;
    //{
    //}
 
@@ -78,7 +78,7 @@ namespace remoting_node_desktop
    {
          m_pconfigurator = pconfigurator;
       m_plogwriter = plogwriter;
-         //::subsystem::LogWriter *log) : m_servers(), m_effectiveConf(), m_plogwriter(log)
+         //::subsystem::LogWriter * plogwriter) : m_servers(), m_effectiveConf(), m_plogwriter = plogwriter;
    }
 
 

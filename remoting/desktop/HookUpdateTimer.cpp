@@ -27,13 +27,28 @@
 namespace remoting
 {
 
-   HookUpdateTimer::HookUpdateTimer(UpdateListener *updateListener) : m_updateListener(updateListener) { resume(); }
+   //HookUpdateTimer::HookUpdateTimer(UpdateListener *pupdatelistener) : m_pupdatelistener = pupdatelistener; { resume(); }
+
+   HookUpdateTimer::HookUpdateTimer()
+   {
+
+
+   }
+
 
    HookUpdateTimer::~HookUpdateTimer()
    {
       terminate();
       wait();
    }
+
+   void HookUpdateTimer::initialize_hook_update_timer(UpdateListener *pupdatelistener)
+   {
+      m_pupdatelistener = pupdatelistener;
+         resume();
+
+    }
+
 
    void HookUpdateTimer::onTerminate()
    {
@@ -47,7 +62,7 @@ namespace remoting
       {
          m_updateWaiter.wait();
          m_timer.wait(100 * 1_ms);
-         m_updateListener->onUpdate();
+         m_pupdatelistener->onUpdate();
       }
    }
 

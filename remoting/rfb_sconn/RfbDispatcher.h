@@ -38,11 +38,11 @@ namespace remoting
    class RfbDispatcher : public ::subsystem::Thread
    {
    public:
-      // RfbDispatcher(RfbInputGate *gate,
+      // RfbDispatcher(RfbInputGate *pblockinggate,
       //               AnEventListener *m_extTerminationListener);
-      // RfbDispatcher(RfbInputGate *gate,
+      // RfbDispatcher(RfbInputGate *pblockinggate,
       //               ::happening *terminationEvent);
-      RfbDispatcher(::remoting::RfbInputGate *gate, const ::procedure &procedureTermination);
+      RfbDispatcher(::remoting::RfbInputGate *pblockinggate, const ::procedure &procedureTermination);
       virtual ~RfbDispatcher();
 
       void registerNewHandle(unsigned int code, RfbDispatcherListener *listener);
@@ -51,7 +51,7 @@ namespace remoting
       virtual void execute();
       void notifyAbTermination();
 
-      ::remoting::RfbInputGate *m_gate;
+      ::remoting::RfbInputGate *m_pblockinggate;
 
       ::map<unsigned int, RfbDispatcherListener *> m_handlers;
 

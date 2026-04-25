@@ -30,6 +30,8 @@
 #include "subsystem_windows/node/AnonymousPipeFactory.h"
 #include "subsystem_windows/node/EmulatedAnonymousPipeFactory.h"
 #include "subsystem_windows/node/WTS.h"
+#include "subsystem_windows/platform/subsystem.h"
+
 #include "subsystem_windows/node/WinStaLibrary.h"
 #include "subsystem_windows/node/WinHandles.h"
 #include "subsystem_windows/node/SharedMemory.h"
@@ -40,8 +42,8 @@ namespace remoting
 {
 
 
-   DesktopServerWatcher::DesktopServerWatcher(ReconnectionListener *recListener, ::subsystem::LogWriter *log) :
-       m_recListener(recListener), m_process(0), m_plogwriter(log)
+   DesktopServerWatcher::DesktopServerWatcher(ReconnectionListener *recListener, ::subsystem::LogWriter * plogwriter) :
+       m_preconnectionlistener(recListener), m_pprocess(0), m_plogwriter = plogwriter;
    {
       // Desktop server folder.
       ::string currentModulePath;
@@ -55,12 +57,12 @@ namespace remoting
       try
       {
          bool connectRdpSession = m_pconfigurator->getServerConfig()->getConnectToRdpFlag();
-         m_process = new CurrentConsoleProcess(m_plogwriter, connectRdpSession, path);
+         m_pprocess = new CurrentConsoleProcess(m_plogwriter, connectRdpSession, path);
       }
       catch (...)
       {
-         if (m_process)
-            delete m_process;
+         if (m_pprocess)
+            delete m_pprocess;
          throw;
       }
    }
@@ -69,7 +71,7 @@ namespace remoting
    {
       terminate();
       wait();
-      delete m_process;
+      delete m_pprocess;
    }
 
    void DesktopServerWatcher::execute()
@@ -108,13 +110,13 @@ namespace remoting
             args.formatf("-desktopserver -logdir \"{}\" -loglevel {} -shmemname {}", logDir,
                          m_pconfigurator->getServerConfig()->getLogLevel(), shMemName);
 
-            m_process->setArguments(args);
+            m_pprocess->setArguments(args);
             start();
 
             // Prepare other side pipe handles for other side
             m_plogwriter->debug("DesktopServerWatcher::execute(): assigning handles");
-            otherSidePipeChanTo->assignHandlesFor(m_process->getProcessHandle(), false);
-            otherSidePipeChanFrom->assignHandlesFor(m_process->getProcessHandle(), false);
+            otherSidePipeChanTo->assignHandlesFor(m_pprocess->getProcessHandle(), false);
+            otherSidePipeChanFrom->assignHandlesFor(m_pprocess->getProcessHandle(), false);
 
             // Transfer other side handles by the memory channel
             mem[1] = (unsigned long long)otherSidePipeChanTo->getWriteHandle();
@@ -136,9 +138,9 @@ namespace remoting
             otherSidePipeChanFrom = 0;
 
             m_plogwriter->debug("DesktopServerWatcher::execute(): Try to call onReconnect()");
-            m_recListener->onReconnect(ownSidePipeChanTo, ownSidePipeChanFrom);
+            m_preconnectionlistener->onReconnect(ownSidePipeChanTo, ownSidePipeChanFrom);
 
-            m_process->waitForExit();
+            m_pprocess->waitForExit();
          }
          catch (::exception &e)
          {
@@ -158,7 +160,7 @@ namespace remoting
       }
    }
 
-   void DesktopServerWatcher::onTerminate() { m_process->stopWait(); }
+   void DesktopServerWatcher::onTerminate() { m_pprocess->stopWait(); }
 
    void DesktopServerWatcher::start()
    {
@@ -168,7 +170,7 @@ namespace remoting
       {
          try
          {
-            m_process->start();
+            m_pprocess->start();
             return;
          }
          catch (SystemException &sysEx)
@@ -178,7 +180,7 @@ namespace remoting
             {
                pipeNotConnectedErrorCount++;
 
-               DWORD sessionId = WTS::getActiveConsoleSessionId(m_plogwriter);
+               DWORD sessionId = WindowsSubsystem().WTS().getActiveConsoleSessionId(m_plogwriter);
 
                bool isXPFamily = Environment::isWinXP() || Environment::isWin2003Server();
                bool needXPTrick = (isXPFamily) && (sessionId > 0) && (pipeNotConnectedErrorCount >= 3);
@@ -187,7 +189,7 @@ namespace remoting
                if (needXPTrick)
                {
                   doXPTrick();
-                  m_process->start();
+                  m_pprocess->start();
                   return;
                }
             }
@@ -211,7 +213,7 @@ namespace remoting
          WCHAR password[1];
          memset(password, 0, sizeof(password));
 
-         if (winSta.WinStationConnectW(NULL, 0, WTS::getActiveConsoleSessionId(m_plogwriter), password, 0) == false)
+         if (winSta.WinStationConnectW(NULL, 0, WindowsSubsystem().WTS().getActiveConsoleSessionId(m_plogwriter), password, 0) == false)
          {
             throw SystemException("Failed to call WinStationConnectW");
          }

@@ -30,12 +30,17 @@
 namespace remoting
 {
 
-   GrabOptimizator::GrabOptimizator(::subsystem::LogWriter *log) :
-       m_gSum(0), m_wholeTSum(0), m_wholeS(0), m_timer(1000 * 60 * 30), m_plogwriter(log)
+   GrabOptimizator::GrabOptimizator() :
+       m_gSum(0), m_wholeTSum(0), m_wholeS(0), m_timer(30_minutes)
    {
    }
 
    GrabOptimizator::~GrabOptimizator() {}
+
+   void GrabOptimizator::initialize_grab_optimizator(::subsystem::LogWriter * plogwriter)
+   {
+      m_plogwriter = plogwriter;
+   }
 
    bool GrabOptimizator::grab(const Region *grabRegion, ScreenDriver *grabber)
    {
@@ -287,7 +292,7 @@ namespace remoting
       ::array_base<::int_rectangle>::const_iterator iRect;
       for (iRect = rects->begin(); iRect < rects->end(); iRect++)
       {
-         if (!grabber->grabFb(&(*iRect)))
+         if (!grabber->grabFb((*iRect)))
          {
             throw ::subsystem::Exception("Grabber failed. Is it not ready?");
          }
@@ -353,7 +358,7 @@ namespace remoting
       for (::list_base<double>::iterator iter = m_wholeTElements.begin(); iter != m_wholeTElements.end(); iter++)
       {
          value.formatf(" %.2f;", *iter);
-         statString.appendString(value);
+         statString+=value;
       }
       double avgWholeT = m_wholeTElements.size() != 0 ? m_wholeTSum / m_wholeTElements.size() : 0;
       m_plogwriter->debug("GrabOptimizator::m_wholeT average: %.2f;"
@@ -365,7 +370,7 @@ namespace remoting
       for (::list_base<double>::iterator iter = m_gElements.begin(); iter != m_gElements.end(); iter++)
       {
          value.formatf(" %.2f;", *iter);
-         statString.appendString(value);
+         statString+=value;
       }
       double avgG = m_gElements.size() != 0 ? m_gSum / m_gElements.size() : 0;
       m_plogwriter->debug("GrabOptimizator::m_g average: %.2f;"

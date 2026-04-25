@@ -35,7 +35,7 @@ typedef ::array_base<TCHAR *> StringContainer;
 class WinEventLog
 {
 public:
-  WinEventLog(::subsystem::LogWriter *log);
+  WinEventLog(::subsystem::LogWriter * plogwriter);
   virtual ~WinEventLog();
 
   // This function enables fully functional this object usage,
@@ -62,7 +62,7 @@ private:
   HANDLE m_hEventLog;
   critical_section m_hEventLogMutex;
 
-  ::subsystem::LogWriter *m_plogwriter;
+  ::pointer < ::subsystem::LogWriter > m_plogwriter;
 };
 
 //// __WINEVENTLOG_H__

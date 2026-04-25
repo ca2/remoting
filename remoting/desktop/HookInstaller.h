@@ -26,7 +26,7 @@
 
 
 #include "subsystem/_common_header.h"
-//#include "subsystem/node/DynamicLibrary.h"
+#include "subsystem/node/DynamicLibrary.h"
 
 
 namespace remoting
@@ -51,7 +51,7 @@ namespace remoting
       static ::string_literal SET_HOOK_FUNCTION_NAME;
       static ::string_literal UNSET_HOOK_FUNCTION_NAME;
 
-      ::pointer < ::subsystem::DynamicLibraryInterface > m_plibrary;
+      ::subsystem::DynamicLibrary m_library;
       void * m_pSetHook;
       void * m_pUnSetHook;
    };

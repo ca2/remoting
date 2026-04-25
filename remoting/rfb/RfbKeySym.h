@@ -37,7 +37,7 @@ namespace remoting
    class CLASS_DECL_REMOTING RfbKeySym
    {
    public:
-      RfbKeySym(RfbKeySymListener *extKeySymListener, ::subsystem::LogWriter *log);
+      RfbKeySym(RfbKeySymListener *extKeySymListener, ::subsystem::LogWriter * plogwriter);
       virtual ~RfbKeySym();
 
       // This function doesn't distinguish between left and right modifiers.
@@ -97,7 +97,7 @@ namespace remoting
 
       ::innate_subsystem::keyboard_state_t m_keyboardstate;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
       // Flag for ignoring win key.
       bool m_winKeyIgnore;

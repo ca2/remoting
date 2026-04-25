@@ -30,10 +30,10 @@ namespace remoting
 {
 
 
-   ViewPort::ViewPort(::subsystem::LogWriter *log) : m_desktop(0), m_plogwriter(log) {}
+   ViewPort::ViewPort(::subsystem::LogWriter * plogwriter) : m_desktop(0), m_plogwriter = plogwriter; {}
 
-   ViewPort::ViewPort(const ViewPortState *viewPortState, ::subsystem::LogWriter *log) :
-       m_desktop(0), m_state(*viewPortState), m_plogwriter(log)
+   ViewPort::ViewPort(const ViewPortState *viewPortState, ::subsystem::LogWriter * plogwriter) :
+       m_desktop(0), m_state(*viewPortState), m_plogwriter = plogwriter;
    {
    }
 

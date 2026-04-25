@@ -34,8 +34,8 @@ namespace remoting
    class CLASS_DECL_REMOTING Win8DuplicationListener
    {
    public:
-      // changedRegion in target ::innate_subsystem::FrameBuffer coordinates.
-      virtual void onFrameBufferUpdate(const Region *changedRegion) = 0;
+      // m_regionChanged in target ::innate_subsystem::FrameBuffer coordinates.
+      virtual void onFrameBufferUpdate(const Region *m_regionChanged) = 0;
       // dstRect, srcX, srcY in target ::innate_subsystem::FrameBuffer coordinates.
       virtual void onCopyRect(const ::int_rectangle &dstRect, int srcX, int srcY) = 0;
 

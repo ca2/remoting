@@ -30,14 +30,20 @@
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING UpdateListener
+   class CLASS_DECL_REMOTING UpdateListener :
+   virtual public ::particle
    {
    public:
-      UpdateListener(void);
-      virtual ~UpdateListener(void);
+
+
+      UpdateListener();
+      ~UpdateListener() override;
 
       // Interface function
       virtual void onUpdate() = 0;
+
+
+
    };
 
 

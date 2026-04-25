@@ -74,7 +74,7 @@ ControlApplication::ControlApplication(HINSTANCE hinst,
                                        const ::scoped_string & scopedstrCommandLine)
  : WindowsApplication(hinst, windowClassName),
    m_serverControl(0),
-   m_gate(0),
+   m_pblockinggate(0),
    m_transport(0),
    m_trayIcon(0),
    m_slaveModeEnabled(false),
@@ -97,8 +97,8 @@ ControlApplication::~ControlApplication()
   if (m_serverControl != 0) {
     delete m_serverControl;
   }
-  if (m_gate != 0) {
-    delete m_gate;
+  if (m_pblockinggate != 0) {
+    delete m_pblockinggate;
   }
   if (m_transport != 0) {
     delete m_transport;
@@ -274,8 +274,8 @@ void ControlApplication::connect(bool controlService, bool slave)
   }
 
   // We can get here only on successful connection.
-  m_gate = new ControlGate(m_transport->getIOStream());
-  m_serverControl = new ControlProxy(m_gate);
+  m_pblockinggate = new ControlGate(m_transport->getIOStream());
+  m_serverControl = new ControlProxy(m_pblockinggate);
 }
 
 void ControlApplication::notifyServerSideException(const ::scoped_string & scopedstrReason)

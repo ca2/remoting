@@ -40,8 +40,8 @@ namespace remoting
    class CLASS_DECL_REMOTING Win32ScreenDriverBaseImpl : public WinVideoRegionUpdaterImpl
    {
    public:
-      Win32ScreenDriverBaseImpl(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
-                                critical_section *fbcritical_section, ::subsystem::LogWriter *log);
+      Win32ScreenDriverBaseImpl(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+                                critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter);
       virtual ~Win32ScreenDriverBaseImpl();
 
       // Starts screen update detection if it not started yet.

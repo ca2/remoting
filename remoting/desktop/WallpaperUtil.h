@@ -34,15 +34,21 @@ namespace remoting
    class CLASS_DECL_REMOTING WallpaperUtil : protected ConfigReloadListener
    {
    public:
-      WallpaperUtil(::subsystem::LogWriter *log);
-      virtual ~WallpaperUtil();
+
+
+
+      WallpaperUtil();
+      ~WallpaperUtil();
+
+
+      virtual void initialize_wallpaper_util(Configurator * pconfigurator, ::subsystem::LogWriter * plogwriter);
 
       virtual void updateWallpaper();
 
-   protected:
+   //protected:
       virtual void onConfigReload(ServerConfig *serverConfig);
 
-   private:
+   //private:
       // Hides the desktop wallpaper.
       // @throws SystemException on a fail.
       void disableWallpaper();
@@ -51,9 +57,9 @@ namespace remoting
       // @throws SystemException on a fail.
       void restoreWallpaper();
 
-      ::subsystem::LogWriter *m_plogwriter;
-      ::string m_wallparerPath;
-      bool m_wasDisabled;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
+      ::string m_strWallpaperPath;
+      bool m_bWasDisabled;
    };
 
    //// __WALLPAPERUTIL_H__

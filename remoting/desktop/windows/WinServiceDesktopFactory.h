@@ -38,7 +38,7 @@ namespace remoting
 
       virtual Desktop *createDesktop(::subsystem::ClipboardListener *extClipListener,
                                      UpdateSendingListener *extUpdSendingListener,
-                                     AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter *log);
+                                     AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter * plogwriter);
    };
 
 

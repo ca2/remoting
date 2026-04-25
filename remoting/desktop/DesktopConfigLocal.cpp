@@ -29,31 +29,45 @@
 namespace remoting
 {
 
-   DesktopConfigLocal::DesktopConfigLocal(::subsystem::LogWriter *log)
+   DesktopConfigLocal::DesktopConfigLocal():
+   m_plogwriter(nullptr)
    {
-      m_inputBlocker = new WindowsInputBlocker(log);
+
    }
 
-   DesktopConfigLocal::~DesktopConfigLocal() { delete m_inputBlocker; }
+   DesktopConfigLocal::~DesktopConfigLocal()
+   {
+      //delete m_pinputblocker;
+   }
+
+
+   void DesktopConfigLocal::initialize_desktop_config_local(Configurator *pconfigurator, subsystem::LogWriter *plogwriter)
+   {
+      m_plogwriter = plogwriter;
+      m_pconfigurator = pconfigurator;
+      m_pinputblocker = create_newø<WindowsInputBlocker >();
+      m_pinputblocker->initialize_input_blocker(plogwriter);
+
+   }
 
    void DesktopConfigLocal::updateByNewSettings()
    {
       ServerConfig *srvConf = m_pconfigurator->getServerConfig();
       bool hardBlocking = srvConf->isBlockingLocalInput();
-      m_inputBlocker->setKeyboardBlocking(hardBlocking);
-      m_inputBlocker->setMouseBlocking(hardBlocking);
+      m_pinputblocker->setKeyboardBlocking(hardBlocking);
+      m_pinputblocker->setMouseBlocking(hardBlocking);
 
       bool softBlocking = srvConf->isLocalInputPriorityEnabled();
       unsigned int interval = srvConf->getLocalInputPriorityTimeout() * 1000;
-      m_inputBlocker->setSoftKeyboardBlocking(softBlocking, interval);
-      m_inputBlocker->setSoftMouseBlocking(softBlocking, interval);
+      m_pinputblocker->setSoftKeyboardBlocking(softBlocking, interval);
+      m_pinputblocker->setSoftMouseBlocking(softBlocking, interval);
    }
 
-   bool DesktopConfigLocal::isRemoteInputAllowed() { return m_inputBlocker->isRemoteInputAllowed(); }
+   bool DesktopConfigLocal::isRemoteInputAllowed() { return m_pinputblocker->isRemoteInputAllowed(); }
 
-   ::earth::time DesktopConfigLocal::getLastInputTime() const { return m_inputBlocker->getLastInputTime(); }
+   class ::time DesktopConfigLocal::getLastInputTime() const { return m_pinputblocker->getLastInputTime(); }
 
-   void DesktopConfigLocal::correctLastTime(::earth::time newTime) { m_inputBlocker->correctLastTime(newTime); }
+   void DesktopConfigLocal::correctLastTime(const class ::time & time) { m_pinputblocker->correctLastTime(time); }
 
 
 } // namespace remoting

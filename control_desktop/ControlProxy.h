@@ -48,9 +48,9 @@ class ControlProxy
 public:
   /**
    * Creates proxy.
-   * @param gate transport to send and recieve messages.
+   * @param pblockinggate transport to send and recieve messages.
    */
-  ControlProxy(ControlGate *gate);
+  ControlProxy(ControlGate *pblockinggate);
   /**
    * Class destructor.
    */
@@ -180,7 +180,7 @@ protected:
   /**
    * Transport for sending and recieving control proto messages.
    */
-  ControlGate *m_gate;
+  ControlGate *m_pblockinggate;
   /**
    * Current control scopedstrMessage.
    */

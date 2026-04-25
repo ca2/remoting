@@ -25,9 +25,9 @@
 //#include "acme/_operating_system.h"
 #include "AutoImpersonator.h"
 
-AutoImpersonator::AutoImpersonator(Impersonator *imp, ::subsystem::LogWriter *log)
+AutoImpersonator::AutoImpersonator(Impersonator *imp, ::subsystem::LogWriter * plogwriter)
 : m_imp(imp),
-  m_plogwriter(log)
+  m_plogwriter = plogwriter;
 {
   try {
     m_imp->impersonateAsLoggedUser();

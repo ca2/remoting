@@ -72,7 +72,7 @@ namespace remoting_node_desktop
    //   m_pcontrolserver(0), m_prfbserver(0),
    //  m_config(runsInServiceContext),
    //  //m_plogwriter(::subsystem::LogWriter),
-   //    m_plogwriter(plogwriter),
+   //    m_plogwriter = plogwriter;,
    //  m_contextSwitchResolution(1),
    //  //m_pextrarfbservers(&m_plogwriter)
    //    m_pextrarfbservers(::system())

@@ -182,7 +182,7 @@ namespace remoting
       // or to the constructor of this object.
       //
       // The threading model is the following. One thread created by start()
-      // performs all read operations from the input gate of the data connection.
+      // performs all read operations from the input pblockinggate of the data connection.
       // This thread is referred to as the "input thread". In addition to reading
       // the data, it also performs most notifications via the adapter interface,
       // except for two notifications which report changes in the frame buffer.
@@ -564,7 +564,7 @@ namespace remoting
       bool wasConnected() const;
 
       //
-      // Update properties (::int_size and PixelfFormat) of m_frameBuffer.
+      // Update properties (::int_size and PixelfFormat) of m_pframebuffer->
       //
       void setFbProperties(const ::int_size & fbDimension,
                            const ::innate_subsystem::PixelFormat & fbPixelFormat);
@@ -645,7 +645,7 @@ namespace remoting
       //
       // Mutex m_fbLock must locked into only this thread, else may be deadlock.
       Lockable < critical_section > m_fbLock;
-      ::innate_subsystem::FrameBuffer m_frameBuffer;
+      ::innate_subsystem::FrameBuffer m_pframebuffer;
 
       // ::list_base of server dispalys
       ::array_base<::int_rectangle> m_desktops;
@@ -655,7 +655,7 @@ namespace remoting
       // it only easy buffer, common to all decoders. In future this frame buffer
       // may be replaced small buffers (e.g. 64KB) into ever decoder.
       //
-      // After finish of decoding Decoder copy data to m_frameBuffer.
+      // After finish of decoding Decoder copy data to m_pframebuffer->
       // This buffer is not need to blocking: read information is one-thread.
       ::innate_subsystem::FrameBuffer m_rectangleFb;
 

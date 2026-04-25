@@ -26,17 +26,17 @@
 #include "subsystem/node/WTS.h"
 
 //SessionChangesWatcher::SessionChangesWatcher(AnEventListener *extSessionChangesListener,
-//                                             ::subsystem::LogWriter *log)
+//                                             ::subsystem::LogWriter * plogwriter)
 //: m_extSessionChangesListener(extSessionChangesListener),
-//  m_plogwriter(log)
+//  m_plogwriter = plogwriter;
 //{
 //  ProcessIdToSessionId(GetCurrentProcessId(), &m_baseSessionId);
 //  resume();
 //}
 
 SessionChangesWatcher::SessionChangesWatcher(
-   const ::procedure & procedureSessionChanged, ::subsystem::LogWriter *log) :
-    m_procedureSessionChanged(procedureSessionChanged), m_plogwriter(log)
+   const ::procedure & procedureSessionChanged, ::subsystem::LogWriter * plogwriter) :
+    m_procedureSessionChanged(procedureSessionChanged), m_plogwriter = plogwriter;
 {
    ProcessIdToSessionId(GetCurrentProcessId(), &m_baseSessionId);
    resume();
@@ -57,7 +57,7 @@ void SessionChangesWatcher::execute()
   while (!isTerminating()) {
     DWORD currSessionId = prevSession;
     if (!isRdp) {
-      currSessionId = WTS::getActiveConsoleSessionId(m_plogwriter);
+      currSessionId = WindowsSubsystem().WTS().getActiveConsoleSessionId(m_plogwriter);
     }
     bool sessionChanged = prevSession != currSessionId;
     bool desktopInfoIsAvailable = DesktopSelector::getCurrentDesktopName(&currDeskName);

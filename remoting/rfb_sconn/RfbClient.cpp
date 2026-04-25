@@ -43,7 +43,7 @@ RfbClient::RfbClient(NewConnectionEvents *newConnectionEvents,
                      const ViewPortState *constViewPort,
                      const ViewPortState *dynViewPort,
                      int idleTimeout,
-                     ::subsystem::LogWriter *log)
+                     ::subsystem::LogWriter * plogwriter)
 : m_socket(socket), // now we own the socket
   m_newConnectionEvents(newConnectionEvents),
   m_viewOnly(viewOnly),
@@ -62,7 +62,7 @@ RfbClient::RfbClient(NewConnectionEvents *newConnectionEvents,
   m_constViewPort(constViewPort, log),
   m_dynamicViewPort(dynViewPort, log),
   m_idleTimer(idleTimeout), m_idleTimeout(idleTimeout),
-  m_plogwriter(log)
+  m_plogwriter = plogwriter;
 {
   resume();
 }

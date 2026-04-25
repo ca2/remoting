@@ -49,7 +49,7 @@ namespace remoting_node_desktop
 
       bool m_serviceMode;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
    };
 

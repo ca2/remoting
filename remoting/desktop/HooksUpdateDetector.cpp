@@ -27,17 +27,65 @@
 #include "HooksUpdateDetector.h"
 
 #include "acme/operating_system/windows/_.h"
-#include "remoting/remoting/win_system/UipiControl.h"
+#include "subsystem_windows/node/UipiControl.h"
 //#include "remoting/remoting/win_system/Environment.h"
 
 namespace remoting
 {
 
-   HooksUpdateDetector::HooksUpdateDetector(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
-                                            ::subsystem::LogWriter *log) :
-       UpdateDetector(updateKeeper, updateListener), m_updateTimer(updateListener), m_targetWin(0), m_hookInstaller(0),
-       m_plogwriter(log)
+//    HooksUpdateDetector::HooksUpdateDetector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+//                                             ::subsystem::LogWriter * plogwriter) :
+//        UpdateDetector(pupdatekeeper, pupdatelistener), m_phookupdatetimer(pupdatelistener), m_pmessagewindowTarget(0), m_hookInstaller(0),
+//        m_plogwriter = plogwriter;
+//    {
+// #ifndef _WIN64
+//       m_plogwriter->debug("Loading the screenhook library for 32bit system");
+// #else
+//       m_plogwriter->debug("Loading the screenhook library for 64bit system");
+// #endif
+//       try
+//       {
+//          m_hookInstaller = new HookInstaller();
+//       }
+//       catch (::exception &e)
+//       {
+//          Thread::terminate();
+//          m_plogwriter->error("Failed to load the hook library: {}", e.get_message());
+//       }
+//       //HINSTANCE hinst = GetModuleHandle(0);
+//       auto hinst = (HINSTANCE) windows::hinstance_from_function(::windows::window::s_window_procedure);
+//       m_pmessagewindowTarget = new MessageWindow(hinst, "HookTargetWinClassName");
+//    }
+
+   HooksUpdateDetector::HooksUpdateDetector():
+   m_pmessagewindowTarget(0),m_hookInstaller(0)
    {
+   }
+
+   HooksUpdateDetector::~HooksUpdateDetector()
+   {
+      terminate();
+      wait();
+
+      if (m_hookInstaller != 0)
+      {
+         delete m_hookInstaller;
+      }
+      if (m_pmessagewindowTarget != 0)
+      {
+         delete m_pmessagewindowTarget;
+      }
+   }
+
+
+   void HooksUpdateDetector::initialize_hooks_update_detector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ::subsystem::LogWriter * plogwriter)
+   {
+      initialize_update_detector(pupdatekeeper, pupdatelistener);
+      construct_newø(m_phookupdatetimer);
+      m_phookupdatetimer->initialize_hook_update_timer(pupdatelistener);
+      //m_pmessagewindowTarget(0), m_hookInstaller(0),
+   m_plogwriter = plogwriter;
+   //{
 #ifndef _WIN64
       m_plogwriter->debug("Loading the screenhook library for 32bit system");
 #else
@@ -53,30 +101,17 @@ namespace remoting
          m_plogwriter->error("Failed to load the hook library: {}", e.get_message());
       }
       //HINSTANCE hinst = GetModuleHandle(0);
-      auto hinst = (HINSTANCE) windows::hinstance_from_function(::windows::window::s_window_procedure);
-      m_targetWin = new MessageWindow(hinst, "HookTargetWinClassName");
-   }
-
-   HooksUpdateDetector::~HooksUpdateDetector()
-   {
-      terminate();
-      wait();
-
-      if (m_hookInstaller != 0)
-      {
-         delete m_hookInstaller;
-      }
-      if (m_targetWin != 0)
-      {
-         delete m_targetWin;
-      }
+      //auto hinst = (HINSTANCE) windows::hinstance_from_function(::windows::window::s_window_procedure);
+      //m_pmessagewindowTarget = new MessageWindow(hinst, "HookTargetWinClassName");
+      ::construct_newø(m_pmessagewindowTarget);
+         new MessageWindow(hinst, "HookTargetWinClassName");
    }
 
    void HooksUpdateDetector::onTerminate()
    {
-      if (m_targetWin != 0)
+      if (m_pmessagewindowTarget != 0)
       {
-         PostMessage(m_targetWin->getHWND(), WM_QUIT, 0, 0);
+         PostMessage(m_pmessagewindowTarget->getHWND(), WM_QUIT, 0, 0);
       }
       m_initWaiter.set_happening();
    }
@@ -92,7 +127,7 @@ namespace remoting
          path.formatf("{}\\{}", folder, HookDefinitions::HOOK_LOADER_NAME);
          m_hookLoader32.setFilename(path);
          ::string hwndStr;
-         hwndStr.formatf("%I64u", (DWORD64)m_targetWin->getHWND());
+         hwndStr.formatf("%I64u", (DWORD64)m_pmessagewindowTarget->getHWND());
          m_hookLoader32.setArguments(hwndStr);
          try
          {
@@ -129,16 +164,16 @@ namespace remoting
    {
       m_plogwriter->information("Hooks update detector thread id = {}", getThreadId());
 
-      if (!isTerminating() && m_targetWin != 0)
+      if (!isTerminating() && m_pmessagewindowTarget != 0)
       {
-         m_targetWin->createWindow();
-         m_plogwriter->information("Hooks target window has been created (hwnd = {})", m_targetWin->getHWND());
+         m_pmessagewindowTarget->createWindow();
+         m_plogwriter->information("Hooks target window has been created (hwnd = {})", m_pmessagewindowTarget->getHWND());
       }
 
       try
       {
          UipiControl uipiControl(m_plogwriter);
-         uipiControl.allowMessage(HookDefinitions::SPEC_IPC_CODE, m_targetWin->getHWND());
+         uipiControl.allowMessage(HookDefinitions::SPEC_IPC_CODE, m_pmessagewindowTarget->getHWND());
       }
       catch (::exception &e)
       {
@@ -151,7 +186,7 @@ namespace remoting
       {
          try
          {
-            m_hookInstaller->install(m_targetWin->getHWND());
+            m_hookInstaller->install(m_pmessagewindowTarget->getHWND());
             hookInstalled = true;
          }
          catch (::exception &e)
@@ -179,7 +214,7 @@ namespace remoting
       MSG msg;
       while (!isTerminating())
       {
-         if (PeekMessage(&msg, m_targetWin->getHWND(), 0, 0, PM_REMOVE) != 0)
+         if (PeekMessage(&msg, m_pmessagewindowTarget->getHWND(), 0, 0, PM_REMOVE) != 0)
          {
             if (msg.scopedstrMessage == HookDefinitions::SPEC_IPC_CODE)
             {
@@ -187,8 +222,8 @@ namespace remoting
                                     (short)(msg.lParam & 0xffff));
                if (rect.has_area())
                {
-                  m_updateKeeper->addChangedRect(rect);
-                  m_updateTimer.sear();
+                  m_pupdatekeeper->addChangedRect(rect);
+                  m_phookupdatetimer.sear();
                }
                //        m_plogwriter->debug("Screenhook update rectangle: {x={}, y={}, w={}, h={}}", rect.left,
                //        rect.top, rect.width(), rect.height());

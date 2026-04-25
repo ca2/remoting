@@ -28,30 +28,36 @@
 #include "UpdateDetector.h"
 #include "acme/parallelization/happening.h"
 //#include "log_writer/LogWriter.h"
-#include "innate_subsystem/drawing/Cursor.h"
+#include "subsystem/node/Cursor.h"
 
 
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING CursorPositionDetector : public UpdateDetector
+   class CLASS_DECL_REMOTING CursorPositionDetector :
+         virtual public UpdateDetector
    {
    public:
-      CursorPositionDetector(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ::subsystem::LogWriter *log);
-      virtual ~CursorPositionDetector(void);
+
+
+      CursorPositionDetector();
+      ~CursorPositionDetector() override;
+
+
+      virtual void initialize_cursor_position_detector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ::subsystem::LogWriter * plogwriter);
 
       // Returns current position of a windows cursor.
       ::int_point getCursorPos();
 
-   protected:
+   //protected:
       virtual void execute();
       virtual void onTerminate();
 
-   private:
-      WinCursor m_cursor;
+   //private:
+      ::subsystem::Cursor m_cursor;
       ::happening m_sleepTimer;
       ::int_point m_lastCursorPos;
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

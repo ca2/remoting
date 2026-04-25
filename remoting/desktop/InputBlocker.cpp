@@ -33,5 +33,12 @@ namespace remoting
    InputBlocker::~InputBlocker() {}
 
 
+   void InputBlocker::initialize_input_blocker(::subsystem::LogWriter * plogwriter)
+   {
+
+
+   }
+
+
 } // namespace remoting
  

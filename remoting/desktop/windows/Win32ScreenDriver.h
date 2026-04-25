@@ -37,8 +37,8 @@ namespace remoting
    class CLASS_DECL_REMOTING Win32ScreenDriver : public Win32ScreenDriverBaseImpl
    {
    public:
-      Win32ScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ::innate_subsystem::FrameBuffer *fb,
-                        critical_section *fbcritical_section, ::subsystem::LogWriter *log);
+      Win32ScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ::innate_subsystem::FrameBuffer *fb,
+                        critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter);
       virtual ~Win32ScreenDriver();
 
       // Starts screen update detection if it not started yet.
@@ -57,7 +57,7 @@ namespace remoting
    private:
       // This class  provides thread safed coordinations between the backup frame buffer and
       // the following objects.
-      WindowsScreenGrabber m_screenGrabber;
+      WindowsScreenGrabber m_pscreengrabber;
       Poller m_poller;
       ConsolePoller m_consolePoller;
       HooksUpdateDetector m_hooks;

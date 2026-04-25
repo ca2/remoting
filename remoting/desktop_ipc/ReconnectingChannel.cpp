@@ -26,13 +26,14 @@
 //#include "subsystem/platform/::earth::time.h"
 #include "remoting/remoting/desktop_ipc/ReconnectException.h"
 //#include "subsystem/thread/critical_section.h"
+#include "subsystem/platform/Exception.h"
 
 namespace remoting
 {
 
 
-   ReconnectingChannel::ReconnectingChannel(unsigned int timeOut, ::subsystem::LogWriter *log) :
-       m_timeOut(timeOut), m_isClosed(false), m_channel(0), m_oldChannel(0), m_chanWasChanged(false), m_plogwriter(log)
+   ReconnectingChannel::ReconnectingChannel() :
+       m_timeOut(0), m_isClosed(false), m_channel(0), m_oldChannel(0), m_chanWasChanged(false), m_plogwriter(nullptr)
    {
    }
 
@@ -46,6 +47,14 @@ namespace remoting
       {
          delete m_oldChannel;
       }
+   }
+
+
+   void ReconnectingChannel::initialize_reconnecting_channel(unsigned int timeOut, ::subsystem::LogWriter * plogwriter)
+   {
+
+      m_timeOut = timeOut;
+      m_plogwriter = plogwriter;
    }
 
    void ReconnectingChannel::close()
@@ -84,10 +93,10 @@ namespace remoting
       if (m_isClosed)
       {
          ::string errMess;
-         errMess.formatf("The {}() function has failed:"
+         errMess.format("The {}() function has failed:"
                          " connection has already been closed.",
-                         funName);
-         throw ::io_exception(errMess);
+                         scopedstrFunName);
+         throw ::io_exception(error_io, errMess);
       }
       Channel *channel;
       {
@@ -102,10 +111,10 @@ namespace remoting
          {
             m_chanWasChanged = false;
             ::string errMess;
-            errMess.formatf("Transport was reconnected outside from"
+            errMess.format("Transport was reconnected outside from"
                             " the {}() function. The {}()"
                             " function at this time will be aborted.",
-                            funName, funName);
+                            scopedstrFunName, scopedstrFunName);
             throw ReconnectException(errMess);
          }
          channel = m_channel;
@@ -113,7 +122,8 @@ namespace remoting
       return channel;
    }
 
-   size_t ReconnectingChannel::write(const void *buffer, size_t len)
+
+   memsize ReconnectingChannel::defer_write(const void *buffer, memsize len)
    {
       Channel *channel = getChannel("write");
 
@@ -124,7 +134,7 @@ namespace remoting
             throw ::subsystem::Exception("write() function stopped because transport"
                                          " has not been initialized yet.");
          }
-         return channel->write(buffer, len);
+         return channel->defer_write(buffer, len);
       }
       catch (::exception &e)
       {
@@ -135,7 +145,7 @@ namespace remoting
       return 0; // Call by an out caller again!
    }
 
-   size_t ReconnectingChannel::read(void *buffer, size_t len)
+   memsize ReconnectingChannel::read(void *buffer, memsize len)
    {
       Channel *channel = getChannel("read");
 
@@ -164,15 +174,15 @@ namespace remoting
       bool success = false;
       while (!success)
       {
-         unsigned int timeForWait = max((int)m_timeOut - (int)(::earth::time::now() - startTime).getTime(), 0);
+         unsigned int timeForWait = maximum((int)m_timeOut - (int)(::earth::time::now() - startTime).m_iSecond, 0);
          if (timeForWait == 0 || m_isClosed)
          { // Break this function with
            // critical error
             ::string errMess;
-            errMess.formatf("The ReconnectingChannel::{}() function"
+            errMess.format("The ReconnectingChannel::{}() function"
                             " failed.",
-                            funName);
-            throw ::io_exception(errMess);
+                            scopedstrFunName);
+            throw ::io_exception(error_io, errMess);
          }
          m_timer.wait(timeForWait * 1_ms);
          critical_section_lock al(&m_chanMut);
@@ -190,7 +200,7 @@ namespace remoting
          errMess.formatf("Transport was reconnected in the"
                          " {}() function. The {}()"
                          " function() at this time will be aborted",
-                         funName, funName);
+                         scopedstrFunName, scopedstrFunName);
          throw ReconnectException(errMess);
       }
    }

@@ -27,13 +27,24 @@
 
 #include "ServerConfig.h"
 
-class ConfigReloadListener
+
+namespace remoting
 {
-public:
-  ConfigReloadListener();
-  virtual ~ConfigReloadListener();
+   class ConfigReloadListener :
+      virtual public ::particle
+   {
+   public:
 
-  virtual void onConfigReload(ServerConfig *serverConfig) = 0;
-};
+      ::pointer < Configurator > m_pconfigurator;
+
+      ConfigReloadListener();
+      ~ConfigReloadListener() override;
 
 
+      virtual void initialize_config_reload_listener(Configurator * pconfigurator);
+
+      virtual void onConfigReload(ServerConfig *serverConfig);
+
+
+   };
+} // namespace remoting

@@ -152,7 +152,7 @@ namespace remoting
    }
 
    void WinDxgiOutputDuplication::getFrameCursorShape(CursorShape *cursorShape, unsigned int pointerShapeBufferSize,
-                                                      ::subsystem::LogWriter *log)
+                                                      ::subsystem::LogWriter * plogwriter)
    {
       // log->debug("{}", pointerShapeBufferSize);
       //  This function can calculate required buffer size by self but the size is already known.
@@ -185,7 +185,7 @@ namespace remoting
       newCursorShape.setHotSpot(shapeInfo.HotSpot.x, shapeInfo.HotSpot.y);
 
       unsigned int pitch;
-      ::int_size dim;
+      ::int_size size;
 
       if (shapeInfo.Type == DXGI_OUTDUPL_POINTER_SHAPE_TYPE_MONOCHROME)
       {
@@ -206,18 +206,18 @@ namespace remoting
 
       if (shapeInfo.Type == DXGI_OUTDUPL_POINTER_SHAPE_TYPE_MONOCHROME)
       {
-         dim.setDim(shapeInfo.Width, shapeInfo.Height / 2);
+         size.setDim(shapeInfo.Width, shapeInfo.Height / 2);
       }
       else
       {
-         dim.setDim(shapeInfo.Width, shapeInfo.Height);
+         size.setDim(shapeInfo.Width, shapeInfo.Height);
       }
-      newCursorShape.setProperties(&dim, &pf);
+      newCursorShape.setProperties(&size, &pf);
 
       // monochrome cursor
       if (shapeInfo.Type == DXGI_OUTDUPL_POINTER_SHAPE_TYPE_MONOCHROME)
       {
-         WinCursorShapeUtils::winMonoShapeToRfb(newCursorShape.getPixels(), &buffer.front(), &buffer[pitch * dim.cy],
+         WinCursorShapeUtils::winMonoShapeToRfb(newCursorShape.getPixels(), &buffer.front(), &buffer[pitch * size.cy],
                                                 pitch);
          newCursorShape.assignMaskFromWindows(&buffer.front());
          cursorShape->clone(&newCursorShape);
@@ -232,8 +232,8 @@ namespace remoting
          throw ::subsystem::Exception("Invalid buffer size for color cursor.");
       }
       memcpy(newCursorShape.getPixels()->getBuffer(), &buffer.front(), shapeSize);
-      int maskPitch = ((dim.cx + 15) / 16) * 2;
-      ::array_base<char> mask(maskPitch * dim.cy, 0x00);
+      int maskPitch = ((size.cx + 15) / 16) * 2;
+      ::array_base<char> mask(maskPitch * size.cy, 0x00);
       bool maskedColor = shapeInfo.Type == DXGI_OUTDUPL_POINTER_SHAPE_TYPE_MASKED_COLOR;
       WinCursorShapeUtils::winColorShapeToRfb<unsigned int>(newCursorShape.getPixels(), &mask.front(), maskPitch);
       WinCursorShapeUtils::fixAlphaChannel(newCursorShape.getPixels(), &mask.front(), maskedColor, maskPitch);

@@ -47,12 +47,12 @@
 FileTransferRequestHandler::FileTransferRequestHandler(RfbCodeRegistrator *registrator,
                                                        RfbOutputGate *output,
                                                        Desktop *desktop,
-                                                       ::subsystem::LogWriter *log,
+                                                       ::subsystem::LogWriter * plogwriter,
                                                        bool enabled)
 : m_downloadFile(NULL), m_fileInputStream(NULL),
   m_uploadFile(NULL), m_fileOutputStream(NULL),
   m_output(output), m_enabled(enabled),
-  m_plogwriter(log)
+  m_plogwriter = plogwriter;
 {
   m_security = new FileTransferSecurity(desktop, m_plogwriter);
 
@@ -130,11 +130,11 @@ FileTransferRequestHandler::~FileTransferRequestHandler()
   m_plogwriter->debug("::file::item transfer request handler deleted");
 }
 
-void FileTransferRequestHandler::onRequest(unsigned int reqCode, RfbInputGate *backGate)
+void FileTransferRequestHandler::onRequest(unsigned int reqCode, RfbInputGate *pblockinggate)
 {
   m_security->beginMessageProcessing();
 
-  m_input = backGate;
+  m_input = pblockinggate;
 
   try {
     switch (reqCode) {

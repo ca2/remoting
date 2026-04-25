@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting/win_system/PipeClient.h"
+#include "subsystem/node/PipeClient.h"
 #include "UpdateHandlerClient.h"
 #include "ReconnectException.h"
 
@@ -31,9 +31,27 @@ namespace remoting
 {
 
 
-   UpdateHandlerClient::UpdateHandlerClient(BlockingGate *forwGate, DesktopSrvDispatcher *dispatcher,
-                                            UpdateListener *externalUpdateListener, ::subsystem::LogWriter *log) :
-       DesktopServerProto(forwGate), m_externalUpdateListener(externalUpdateListener), m_plogwriter(log)
+   // UpdateHandlerClient::UpdateHandlerClient(BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
+   //                                          UpdateListener *externalUpdateListener, ::subsystem::LogWriter * plogwriter) :
+   //     DesktopServerProto(pblockinggate), m_externalUpdateListener(externalUpdateListener), m_plogwriter = plogwriter;
+   // {
+   //    dispatcher->registerNewHandle(UPDATE_DETECTED, this);
+   //
+   //    // m_backupFrameBuffer building
+   //    ::innate_subsystem::PixelFormat termPF;
+   //    ::int_size termDim;
+   //    getScreenProperties(&termPF, &termDim);
+   //
+   //    m_backupFrameBuffer.setProperties(&termDim, &termPF);
+   //
+   //    // Synchronize our ::innate_subsystem::FrameBuffer and the server ::innate_subsystem::FrameBuffer
+   //    sendInit(m_forwGate);
+   // }
+   //
+
+   UpdateHandlerClient::UpdateHandlerClient(BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
+                                            UpdateListener *externalUpdateListener, ::subsystem::LogWriter * plogwriter) :
+       m_plogwriter(nullptr)
    {
       dispatcher->registerNewHandle(UPDATE_DETECTED, this);
 
@@ -50,7 +68,30 @@ namespace remoting
 
    UpdateHandlerClient::~UpdateHandlerClient() {}
 
-   void UpdateHandlerClient::onRequest(unsigned char reqCode, BlockingGate *backGate)
+
+
+    void UpdateHandlerClient::initialize_update_handler_client(BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
+                    UpdateListener *externalUpdateListener, ::subsystem::LogWriter * plogwriter)
+   {
+
+      DesktopServerProto(pblockinggate), m_externalUpdateListener(externalUpdateListener), m_plogwriter = plogwriter;
+      {
+         dispatcher->registerNewHandle(UPDATE_DETECTED, this);
+
+         // m_backupFrameBuffer building
+         ::innate_subsystem::PixelFormat termPF;
+         ::int_size termDim;
+         getScreenProperties(&termPF, &termDim);
+
+         m_backupFrameBuffer.setProperties(&termDim, &termPF);
+
+         // Synchronize our ::innate_subsystem::FrameBuffer and the server ::innate_subsystem::FrameBuffer
+         sendInit(m_forwGate);
+      }
+   }
+
+
+   void UpdateHandlerClient::onRequest(unsigned char reqCode, BlockingGate *pblockinggate)
    {
       switch (reqCode)
       {
@@ -112,14 +153,14 @@ namespace remoting
 
          // Get video region
          m_plogwriter->debug("UpdateHandlerClient: Get video region");
-         readRegion(&updCont.videoRegion, m_forwGate);
+         readRegion(&updCont.m_regionVideo, m_forwGate);
          // Get changed region
          unsigned int countChangedRect = m_forwGate->readUInt32();
          m_plogwriter->information("UpdateHandlerClient: count changed rectangles = %u", countChangedRect);
          for (unsigned int i = 0; i < countChangedRect; i++)
          {
             ::int_rectangle r = readRect(m_forwGate);
-            updCont.changedRegion.addRect(&r);
+            updCont.m_regionChanged.addRect(&r);
             readFrameBuffer(&m_backupFrameBuffer, &r, m_forwGate);
          }
 
@@ -128,9 +169,9 @@ namespace remoting
          if (hasCopyRect)
          {
             m_plogwriter->information("UpdateHandlerClient: has \"CopyRect\"");
-            updCont.copySrc = readPoint(m_forwGate);
+            updCont.m_pointCopySource = readPoint(m_forwGate);
             ::int_rectangle r = readRect(m_forwGate);
-            updCont.copiedRegion.addRect(&r);
+            updCont.m_regionCopied.addRect(&r);
             readFrameBuffer(&m_backupFrameBuffer, &r, m_forwGate);
          }
 
@@ -200,24 +241,24 @@ namespace remoting
 
    bool UpdateHandlerClient::checkForUpdates(Region *region) { return false; }
 
-   void UpdateHandlerClient::getScreenProperties(::innate_subsystem::PixelFormat *pf, ::int_size *dim)
+   void UpdateHandlerClient::getScreenProperties(::innate_subsystem::PixelFormat *pf, ::int_size *size)
    {
       critical_section_lock al(m_forwGate);
 
       m_forwGate->writeUInt8(SCREEN_PROP_REQ);
       readPixelFormat(pf, m_forwGate);
-      *dim = readDimension(m_forwGate);
+      *size = readDimension(m_forwGate);
    }
 
-   void UpdateHandlerClient::sendInit(BlockingGate *gate)
+   void UpdateHandlerClient::sendInit(BlockingGate *pblockinggate)
    {
-      critical_section_lock al(gate);
-      gate->writeUInt8(FRAME_BUFFER_INIT);
+      critical_section_lock al(pblockinggate);
+      pblockinggate->writeUInt8(FRAME_BUFFER_INIT);
 
-      sendPixelFormat(&m_backupFrameBuffer.getPixelFormat(), gate);
-      ::int_size dim = m_backupFrameBuffer.getDimension();
-      sendDimension(&dim, gate);
-      sendFrameBuffer(&m_backupFrameBuffer, &dim, gate);
+      sendPixelFormat(&m_backupFrameBuffer.getPixelFormat(), pblockinggate);
+      ::int_size size = m_backupFrameBuffer.getDimension();
+      sendDimension(&size, pblockinggate);
+      sendFrameBuffer(&m_backupFrameBuffer, &size, pblockinggate);
    }
 
 

@@ -10,7 +10,7 @@ namespace remoting
       m_timeOut(0),
       m_isIncrimental(true),
        m_fbLock(plockable),
-       m_frameBuffer(m_frame_buffer),
+       m_pframebuffer(m_frame_buffer),
        m_plogwriter(m_log_writer),
        m_output(0)
    {
@@ -96,7 +96,7 @@ namespace remoting
       ::int_rectangle updateRect;
       {
          AutoLock al(m_fbLock);
-         updateRect = m_frameBuffer->getDimension();
+         updateRect = m_pframebuffer->getDimension();
       }
 
       bool isIncremental = this->isIncremental();

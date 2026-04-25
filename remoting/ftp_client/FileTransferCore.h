@@ -126,7 +126,7 @@ namespace remoting
          // Interface of log
          //
 
-         ::subsystem::LogWriter *m_plogwriter;
+         ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
          //
          // Current dialog state, needed for checking what type of

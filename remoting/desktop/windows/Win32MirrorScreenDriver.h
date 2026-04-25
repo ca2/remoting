@@ -34,8 +34,8 @@ namespace remoting
    class CLASS_DECL_REMOTING Win32MirrorScreenDriver : public Win32ScreenDriverBaseImpl
    {
    public:
-      Win32MirrorScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
-                              critical_section *fbcritical_section, ::subsystem::LogWriter *log);
+      Win32MirrorScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+                              critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter);
       virtual ~Win32MirrorScreenDriver();
 
       // Starts screen update detection if it not started yet.

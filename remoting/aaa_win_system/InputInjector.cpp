@@ -30,14 +30,14 @@
 
 //#include aaa_<crtdbg.h>
 
-InputInjector::InputInjector(bool ctrlAltDelEnabled, ::subsystem::LogWriter *log)
+InputInjector::InputInjector(bool ctrlAltDelEnabled, ::subsystem::LogWriter * plogwriter)
 : m_controlIsPressed(false),
   m_menuIsPressed(false),
   m_deleteIsPressed(false),
   m_shiftIsPressed(false),
   m_winIsPressed(false),
   m_ctrlAltDelEnabled(ctrlAltDelEnabled),
-  m_plogwriter(log)
+  m_plogwriter = plogwriter;
 {
   // FIXME: Better to call this function from an owner (Now, its
   // possible only from trunk code because in the stable hive the owner is

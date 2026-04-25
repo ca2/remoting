@@ -41,7 +41,8 @@
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING UpdateHandler
+   class CLASS_DECL_REMOTING UpdateHandler :
+   virtual public ::particle
    {
    public:
       UpdateHandler();
@@ -55,7 +56,7 @@ namespace remoting
       // If screen size or pixel format have changed the copied region
       // and the changed region will be cleaned, FrameBuffers will
       // be reinitialized. Also, if screen size have changed the
-      // screenSizeChanged flag will be set to true. In the next
+      // m_bScreenSizeChanged flag will be set to true. In the next
       // time call of this function no additional information about
       // these changes will present.
 
@@ -65,7 +66,7 @@ namespace remoting
 
       // This function unconventionally set to update pending of the frame buffer
       // in the next time call of the extract() function. All found changes
-      // saves to the changedRegion and copiedRegion.
+      // saves to the m_regionChanged and m_regionCopied.
       virtual void setFullUpdateRequested(const ::remoting::Region *region) = 0;
 
       // Checking a region for updates.
@@ -75,7 +76,7 @@ namespace remoting
       virtual bool checkForUpdates(::remoting::Region *region) = 0;
 
       // Set a region excluded from the region that updates detects.
-      // excludedRegion will never be present in changedRegion or copiedRegion.
+      // excludedRegion will never be present in m_regionChanged or m_regionCopied.
       virtual void setExcludedRegion(const ::remoting::Region *excludedRegion) = 0;
 
       // The function provides access to ::innate_subsystem::FrameBuffer data.
@@ -86,10 +87,10 @@ namespace remoting
       const ::remoting::CursorShape *getCursorShape() const { return &m_cursorShape; }
       // This function for asynchronous access to frame buffer properties
       // (dimension and pixel format)
-      void getFrameBufferProp(::int_size *dim, ::innate_subsystem::PixelFormat *pf)
+      void getFrameBufferProp(::int_size *size, ::innate_subsystem::PixelFormat *pf)
       {
          critical_section_lock al(&m_fbLocMut);
-         *dim = m_backupFrameBuffer.getDimension();
+         *size = m_backupFrameBuffer.getDimension();
          *pf = m_backupFrameBuffer.getPixelFormat();
       }
 
@@ -99,7 +100,7 @@ namespace remoting
          return m_backupFrameBuffer.getDimension();
       }
 
-      ::innate_subsystem::PixelFormat getFrameBufferPixelFormat(::int_size *dim, ::innate_subsystem::PixelFormat *pf)
+      ::innate_subsystem::PixelFormat getFrameBufferPixelFormat(::int_size *size, ::innate_subsystem::PixelFormat *pf)
       {
          critical_section_lock al(&m_fbLocMut);
          return m_backupFrameBuffer.getPixelFormat();
@@ -112,7 +113,7 @@ namespace remoting
 
       // FIXME: It's no good idea to place this function to here.
       // Because it uses only for the UpdateHandlerClient class.
-      virtual void sendInit(::remoting::BlockingGate *gate) {}
+      virtual void sendInit(::remoting::BlockingGate *pblockinggate) {}
 
    protected:
       virtual bool updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *dstFb,

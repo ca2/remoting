@@ -37,11 +37,16 @@
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING HooksUpdateDetector : public UpdateDetector
+   class CLASS_DECL_REMOTING HooksUpdateDetector :
+   virtual public UpdateDetector
    {
    public:
-      HooksUpdateDetector(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ::subsystem::LogWriter *log);
-      virtual ~HooksUpdateDetector();
+      //HooksUpdateDetector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ::subsystem::LogWriter * plogwriter);
+      HooksUpdateDetector();
+      ~HooksUpdateDetector() override;
+
+
+      virtual void initialize_hooks_update_detector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ::subsystem::LogWriter * plogwriter);
 
    //protected:
       virtual void execute();
@@ -53,16 +58,16 @@ namespace remoting
       ::happening m_initWaiter;
 
       HookInstaller *m_hookInstaller;
-      ::subsystem_windows::MessageWindow *m_targetWin;
-      HookUpdateTimer m_updateTimer;
+      ::pointer < ::subsystem_windows::MessageWindow  > m_pmessagewindowTarget;
+      ::pointer < HookUpdateTimer > m_phookupdatetimer;
       ::subsystem::Process m_hookLoader32;
 
    //private:
       void broadcastMessage(unsigned int scopedstrMessage);
 
-      static const TCHAR HOOK_LOADER_NAME[];
+      static ::string_literal HOOK_LOADER_NAME;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

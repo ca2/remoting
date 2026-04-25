@@ -75,7 +75,7 @@ namespace remoting_node_desktop
    public:
       // FIXME: parameter is not used.
       RfbClientManager(const ::scoped_string &scopedstrServerName, ::remoting_node_desktop::Configurator *pconfigurator,
-                       ::remoting_node_desktop::NewConnectionEvents *newConnectionEvents, ::subsystem::LogWriter *log,
+                       ::remoting_node_desktop::NewConnectionEvents *newConnectionEvents, ::subsystem::LogWriter * plogwriter,
                        ::remoting::DesktopFactory *desktopFactory);
       virtual ~RfbClientManager();
 
@@ -163,7 +163,7 @@ namespace remoting_node_desktop
       ::pointer<::remoting_node_desktop::Configurator> m_pconfigurator;
       ::pointer<::remoting_node_desktop::NewConnectionEvents> m_pnewconnectionevents;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

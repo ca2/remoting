@@ -49,8 +49,11 @@ namespace remoting
    public:
 
 
-      WindowsInputBlocker(::subsystem::LogWriter *log);
-      virtual ~WindowsInputBlocker();
+      WindowsInputBlocker();
+      ~WindowsInputBlocker() override;
+
+
+      void initialize_input_blocker(subsystem::LogWriter *plogwriter) override;
 
       // This functions set/unset blocks on a local keyboard and mouse.
       virtual void setKeyboardBlocking(bool block);
@@ -90,7 +93,7 @@ namespace remoting
       critical_section m_lastInputTimeMutex;
 
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
    //// __WINDOWSINPUTBLOCKER_H__

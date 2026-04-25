@@ -175,7 +175,7 @@ namespace remoting_control_desktop
       /**
        * Middle-level transport to control server.
        */
-      ControlGate *m_gate;
+      ControlGate *m_pblockinggate;
       /**
        * High-level transport to control server (proxy).
        */

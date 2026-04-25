@@ -30,22 +30,38 @@ namespace remoting
 {
 
 
-   DesktopServerProto::DesktopServerProto(BlockingGate *forwGate) : m_forwGate(forwGate) {}
+   //DesktopServerProto::DesktopServerProto(BlockingGate *pblockinggate) : m_forwGate(pblockinggate) {}
+
+   DesktopServerProto::DesktopServerProto()
+   {
+
+
+   }
 
    DesktopServerProto::~DesktopServerProto() {}
 
-   void DesktopServerProto::checkPixelFormat(const ::innate_subsystem::PixelFormat &pf)
+
+   void DesktopServerProto::initialize_desktop_server_proto(Configurator * pconfigurator, BlockingGate *pblockinggate)
+   {
+
+      m_pconfigurator = pconfigurator;
+      m_forwGate=pblockinggate;
+
+   }
+
+
+   void DesktopServerProto::checkPixelFormat(const ::innate_subsystem::PixelFormat &pixelformat)
    {
       ::string errMess;
-      if (pf.bitsPerPixel != 16 && pf.bitsPerPixel != 32)
+      if (pixelformat.bitsPerPixel != 16 && pixelformat.bitsPerPixel != 32)
       {
-         errMess.formatf("Wrong value of bits per pixel ({})", (int)pf.bitsPerPixel);
+         errMess.formatf("Wrong value of bits per pixel ({})", (int)pixelformat.bitsPerPixel);
          throw ::subsystem::Exception(errMess);
       }
-      if (pf.colorDepth > pf.bitsPerPixel)
+      if (pixelformat.colorDepth > pixelformat.bitsPerPixel)
       {
-         errMess.formatf("Wrong value (color depth ({}) > bits per pixel ({}))", (int)pf.colorDepth,
-                         (int)pf.bitsPerPixel);
+         errMess.formatf("Wrong value (color depth ({}) > bits per pixel ({}))", (int)pixelformat.colorDepth,
+                         (int)pixelformat.bitsPerPixel);
          throw ::subsystem::Exception(errMess);
       }
    }
@@ -54,98 +70,98 @@ namespace remoting
    {
       ::string errMess;
       if (abs(rect.left) > 32000 || abs(rect.top) > 32000 || abs(rect.right) > 32000 || abs(rect.bottom) > 32000 ||
-          !rect.isValid())
+          rect < 0)
       {
          errMess.formatf("Wrong rectangle ({}, {}, {}, {})", rect.left, rect.top, rect.right, rect.bottom);
          throw ::subsystem::Exception(errMess);
       }
    }
 
-   void DesktopServerProto::checkDimension(const ::int_size &dim)
+   void DesktopServerProto::checkDimension(const ::int_size &size)
    {
       ::string errMess;
-      if (abs(dim->width) > 64000 || abs(dim->height) > 64000)
+      if (abs(size.cx) > 64000 || abs(size.cy) > 64000)
       {
-         errMess.formatf("Wrong dimension (%dx{})", dim->width, dim->height);
+         errMess.formatf("Wrong dimension (%dx{})", size.cx, size.cy);
          throw ::subsystem::Exception(errMess);
       }
    }
 
-   void DesktopServerProto::readPixelFormat(::innate_subsystem::PixelFormat *pf, BlockingGate *gate)
+   void DesktopServerProto::readPixelFormat(::innate_subsystem::PixelFormat & pixelformat, BlockingGate *pblockinggate)
    {
-      pf.bitsPerPixel = gate->readUInt16();
-      pf.colorDepth = gate->readUInt16();
-      pf.redMax = gate->readUInt16();
-      pf.greenMax = gate->readUInt16();
-      pf.blueMax = gate->readUInt16();
-      pf.redShift = gate->readUInt16();
-      pf.greenShift = gate->readUInt16();
-      pf.blueShift = gate->readUInt16();
-      checkPixelFormat(pf);
+      pixelformat.bitsPerPixel = pblockinggate->readUInt16();
+      pixelformat.colorDepth = pblockinggate->readUInt16();
+      pixelformat.redMax = pblockinggate->readUInt16();
+      pixelformat.greenMax = pblockinggate->readUInt16();
+      pixelformat.blueMax = pblockinggate->readUInt16();
+      pixelformat.redShift = pblockinggate->readUInt16();
+      pixelformat.greenShift = pblockinggate->readUInt16();
+      pixelformat.blueShift = pblockinggate->readUInt16();
+      checkPixelFormat(pixelformat);
    }
 
-   void DesktopServerProto::sendPixelFormat(const ::innate_subsystem::PixelFormat &pf, BlockingGate *gate)
+   void DesktopServerProto::sendPixelFormat(const ::innate_subsystem::PixelFormat &pixelformat, BlockingGate *pblockinggate)
    {
-      gate->writeUInt16(pf.bitsPerPixel);
-      gate->writeUInt16(pf.colorDepth);
-      gate->writeUInt16(pf.redMax);
-      gate->writeUInt16(pf.greenMax);
-      gate->writeUInt16(pf.blueMax);
-      gate->writeUInt16(pf.redShift);
-      gate->writeUInt16(pf.greenShift);
-      gate->writeUInt16(pf.blueShift);
+      pblockinggate->writeUInt16(pixelformat.bitsPerPixel);
+      pblockinggate->writeUInt16(pixelformat.colorDepth);
+      pblockinggate->writeUInt16(pixelformat.redMax);
+      pblockinggate->writeUInt16(pixelformat.greenMax);
+      pblockinggate->writeUInt16(pixelformat.blueMax);
+      pblockinggate->writeUInt16(pixelformat.redShift);
+      pblockinggate->writeUInt16(pixelformat.greenShift);
+      pblockinggate->writeUInt16(pixelformat.blueShift);
    }
 
-   ::int_size DesktopServerProto::readDimension(BlockingGate *gate)
+   ::int_size DesktopServerProto::readDimension(BlockingGate *pblockinggate)
    {
-      ::int_size dim;
-      dim.cx = gate->readInt32();
-      dim.cy = gate->readInt32();
-      checkDimension(&dim);
-      return dim;
+      ::int_size size;
+      size.cx = pblockinggate->readInt32();
+      size.cy = pblockinggate->readInt32();
+      checkDimension(size);
+      return size;
    }
 
-   void DesktopServerProto::sendDimension(const ::int_size &dim, BlockingGate *gate)
+   void DesktopServerProto::sendDimension(const ::int_size &size, BlockingGate *pblockinggate)
    {
-      gate->writeInt32(dim->width);
-      gate->writeInt32(dim->height);
+      pblockinggate->writeInt32(size.cx);
+      pblockinggate->writeInt32(size.cy);
    }
 
-   ::int_point DesktopServerProto::readPoint(BlockingGate *gate)
+   ::int_point DesktopServerProto::readPoint(BlockingGate *pblockinggate)
    {
       ::int_point point;
-      point.x = gate->readInt32();
-      point.y = gate->readInt32();
+      point.x = pblockinggate->readInt32();
+      point.y = pblockinggate->readInt32();
       return point;
    }
 
-   void DesktopServerProto::sendPoint(const ::int_point *point, BlockingGate *gate)
+   void DesktopServerProto::sendPoint(const ::int_point *point, BlockingGate *pblockinggate)
    {
-      gate->writeInt32(point->x);
-      gate->writeInt32(point->y);
+      pblockinggate->writeInt32(point->x);
+      pblockinggate->writeInt32(point->y);
    }
 
-   ::int_rectangle DesktopServerProto::readRect(BlockingGate *gate)
+   ::int_rectangle DesktopServerProto::readRect(BlockingGate *pblockinggate)
    {
       ::int_rectangle rect;
-      rect.left = gate->readInt32();
-      rect.top = gate->readInt32();
-      rect.set_width(gate->readInt32());
-      rect.set_height(gate->readInt32());
+      rect.left = pblockinggate->readInt32();
+      rect.top = pblockinggate->readInt32();
+      rect.set_width(pblockinggate->readInt32());
+      rect.set_height(pblockinggate->readInt32());
 
-      checkRectangle(&rect);
+      checkRectangle(rect);
       return rect;
    }
 
-   void DesktopServerProto::sendRect(const ::int_rectangle &rect, BlockingGate *gate)
+   void DesktopServerProto::sendRect(const ::int_rectangle &rect, BlockingGate *pblockinggate)
    {
-      gate->writeInt32(rect.left);
-      gate->writeInt32(rect.top);
-      gate->writeInt32(rect.width());
-      gate->writeInt32(rect.height());
+      pblockinggate->writeInt32(rect.left);
+      pblockinggate->writeInt32(rect.top);
+      pblockinggate->writeInt32(rect.width());
+      pblockinggate->writeInt32(rect.height());
    }
 
-   void DesktopServerProto::sendRegion(const Region *region, BlockingGate *gate)
+   void DesktopServerProto::sendRegion(const Region *region, BlockingGate *pblockinggate)
    {
       ::array_base<::int_rectangle> rects;
       ::array_base<::int_rectangle>::iterator iRect;
@@ -153,194 +169,194 @@ namespace remoting
 
       unsigned int numRects = (unsigned int)rects.size();
       _ASSERT(numRects == rects.size());
-      gate->writeUInt32(numRects);
+      pblockinggate->writeUInt32(numRects);
 
       for (iRect = rects.begin(); iRect < rects.end(); iRect++)
       {
-         ::int_rectangle *rect = &(*iRect);
-         sendRect(rect, gate);
+         auto & rect = (*iRect);
+         sendRect(rect, pblockinggate);
       }
    }
 
-   void DesktopServerProto::readRegion(Region *region, BlockingGate *gate)
+   void DesktopServerProto::readRegion(Region *region, BlockingGate *pblockinggate)
    {
       region->clear();
-      unsigned int rectCount = gate->readUInt32();
+      unsigned int rectCount = pblockinggate->readUInt32();
       for (unsigned int i = 0; i < rectCount; i++)
       {
-         ::int_rectangle r = readRect(gate);
-         if (r.isValid())
+         ::int_rectangle r = readRect(pblockinggate);
+         if (r.is_ok())
          {
-            region->addRect(&r);
+            region->addRect(r);
          }
       }
    }
 
    void DesktopServerProto::sendFrameBuffer(const ::innate_subsystem::FrameBuffer *srcFb,
-                                            const ::int_rectangle &srcRect, BlockingGate *gate)
+                                            const ::int_rectangle &srcRect, BlockingGate *pblockinggate)
    {
       // FIXME: Additional ::innate_subsystem::FrameBuffer will be used temporarily.
       // This is easy way to send all pixels.
-      ::innate_subsystem::PixelFormat pf = srcFb->getPixelFormat();
+      ::innate_subsystem::PixelFormat pixelformat = srcFb->getPixelFormat();
       ::innate_subsystem::FrameBuffer fb;
 
-      fb.setProperties(srcRect, &pf);
+      fb.setProperties(srcRect, pixelformat);
       fb.copyFrom(srcFb, srcRect.left, srcRect.top);
 
-      gate->writeFully(fb.getBuffer(), fb.getBufferSize());
+      pblockinggate->write(fb.getBuffer(), fb.getBufferSize());
    }
 
    void DesktopServerProto::readFrameBuffer(::innate_subsystem::FrameBuffer *dstFb, const ::int_rectangle &dstRect,
-                                            BlockingGate *gate)
+                                            BlockingGate *pblockinggate)
    {
       // FIXME: ::innate_subsystem::FrameBuffer will be used temporarily.
       // This is easy way to get all pixels.
-      ::innate_subsystem::PixelFormat pf = dstFb->getPixelFormat();
+      ::innate_subsystem::PixelFormat pixelformat = dstFb->getPixelFormat();
       ::innate_subsystem::FrameBuffer fb;
-      fb.setProperties(dstRect, &pf);
+      fb.setProperties(dstRect, pixelformat);
 
-      gate->readFully(fb.getBuffer(), fb.getBufferSize());
+      pblockinggate->readFully(fb.getBuffer(), fb.getBufferSize());
       dstFb->copyFrom(dstRect, &fb, 0, 0);
    }
 
-   void DesktopServerProto::sendNewClipboard(const ::scoped_string &newClipboard, BlockingGate *gate)
+   void DesktopServerProto::sendNewClipboard(const ::scoped_string &newClipboard, BlockingGate *pblockinggate)
    {
-      gate->writeUTF8(newClipboard->getString());
+      pblockinggate->writeUTF8(newClipboard);
    }
 
-   void DesktopServerProto::readNewClipboard(::string &newClipboard, BlockingGate *gate)
+   void DesktopServerProto::readNewClipboard(::string &newClipboard, BlockingGate *pblockinggate)
    {
-      gate->readUTF8(newClipboard);
+      newClipboard = pblockinggate->readUtf8();
    }
 
-   void DesktopServerProto::sendNewPointerPos(const ::int_point newPos, unsigned char keyFlag, BlockingGate *gate)
+   void DesktopServerProto::sendNewPointerPos(const ::int_point newPos, unsigned char keyFlag, BlockingGate *pblockinggate)
    {
       // Send pointer position
-      gate->writeUInt16(newPos.x);
-      gate->writeUInt16(newPos.y);
+      pblockinggate->writeUInt16(newPos.x);
+      pblockinggate->writeUInt16(newPos.y);
       // Send key flags
-      gate->writeUInt8(keyFlag);
+      pblockinggate->writeUInt8(keyFlag);
    }
 
-   void DesktopServerProto::readNewPointerPos(::int_point *newPos, unsigned char *keyFlag, BlockingGate *gate)
+   void DesktopServerProto::readNewPointerPos(::int_point *newPos, unsigned char *keyFlag, BlockingGate *pblockinggate)
    {
       // Read pointer position
-      newPos->x = gate->readUInt16();
-      newPos->y = gate->readUInt16();
+      newPos->x = pblockinggate->readUInt16();
+      newPos->y = pblockinggate->readUInt16();
       // Read key flags
-      *keyFlag = gate->readUInt8();
+      *keyFlag = pblockinggate->readUInt8();
    }
 
-   void DesktopServerProto::sendKeyEvent(unsigned int keySym, bool down, BlockingGate *gate)
+   void DesktopServerProto::sendKeyEvent(unsigned int keySym, bool down, BlockingGate *pblockinggate)
    {
-      gate->writeUInt32(keySym);
-      gate->writeUInt8((unsigned char)down);
+      pblockinggate->writeUInt32(keySym);
+      pblockinggate->writeUInt8((unsigned char)down);
    }
 
-   void DesktopServerProto::readKeyEvent(unsigned int *keySym, bool *down, BlockingGate *gate)
+   void DesktopServerProto::readKeyEvent(unsigned int *keySym, bool *down, BlockingGate *pblockinggate)
    {
-      *keySym = gate->readUInt32();
-      *down = gate->readUInt8() != 0;
+      *keySym = pblockinggate->readUInt32();
+      *down = pblockinggate->readUInt8() != 0;
    }
 
    void DesktopServerProto::sendUserInfo(const ::scoped_string &desktopName, const ::scoped_string &userName,
-                                         BlockingGate *gate)
+                                         BlockingGate *pblockinggate)
    {
-      gate->writeUTF8(desktopName->getString());
-      gate->writeUTF8(userName->getString());
+      pblockinggate->writeUTF8(desktopName);
+      pblockinggate->writeUTF8(userName);
    }
 
-   void DesktopServerProto::readUserInfo(::string &desktopName, ::string &userName, BlockingGate *gate)
+   void DesktopServerProto::readUserInfo(::string &desktopName, ::string &userName, BlockingGate *pblockinggate)
    {
-      gate->readUTF8(desktopName);
-      gate->readUTF8(userName);
+      desktopName = pblockinggate->readUtf8();
+      userName = pblockinggate->readUtf8();
    }
 
-   void DesktopServerProto::sendConfigSettings(BlockingGate *gate)
+   void DesktopServerProto::sendConfigSettings(BlockingGate *pblockinggate)
    {
-      ServerConfig *srvConf = m_pconfigurator->getServerConfig();
+      auto srvConf = m_pconfigurator->getServerConfig();
 
       // Log
-      gate->writeUInt32(srvConf->getLogLevel());
+      pblockinggate->writeUInt32(srvConf->getLogLevel());
 
       // Polling
-      gate->writeUInt32(srvConf->getPollingInterval());
-      gate->writeUInt8(srvConf->getGrabTransparentWindowsFlag());
+      pblockinggate->writeUInt32(srvConf->getPollingInterval());
+      pblockinggate->writeUInt8(srvConf->getGrabTransparentWindowsFlag());
 
       //
-      gate->writeUInt8(srvConf->isBlockingLocalInput());
-      gate->writeUInt8(srvConf->isLocalInputPriorityEnabled());
-      gate->writeUInt32(srvConf->getLocalInputPriorityTimeout());
+      pblockinggate->writeUInt8(srvConf->isBlockingLocalInput());
+      pblockinggate->writeUInt8(srvConf->isLocalInputPriorityEnabled());
+      pblockinggate->writeUInt32(srvConf->getLocalInputPriorityTimeout());
 
-      gate->writeUInt8(srvConf->isRemovingDesktopWallpaperEnabled());
+      pblockinggate->writeUInt8(srvConf->isRemovingDesktopWallpaperEnabled());
 
       // Send video class names
-      critical_section_lock al(srvConf);
+      AutoLock al(srvConf);
       ::string_array *wndClassNames = srvConf->getVideoClassNames();
       ::string_array::iterator iter = wndClassNames->begin();
       size_t stringCount = wndClassNames->size();
-      gate->writeUInt32((unsigned int)stringCount);
+      pblockinggate->writeUInt32((unsigned int)stringCount);
       for (; iter < wndClassNames->end(); iter++)
       {
-         gate->writeUTF8((*iter));
+         pblockinggate->writeUTF8((*iter));
       }
       // Send video rects
       ::array_base<::int_rectangle> *Rects = srvConf->getVideoRects();
       size_t size = Rects->size();
-      gate->writeUInt32((unsigned int)size);
+      pblockinggate->writeUInt32((unsigned int)size);
       for (size_t i = 0; i < size; i++)
       {
          ::string s;
-         RectSerializer::toString(&(Rects->at(i)), &s);
-         gate->writeUTF8(s);
+         RectSerializer::toString((Rects->at(i)), s);
+         pblockinggate->writeUTF8(s);
       }
       // Send video recognition interval
-      gate->writeUInt32(srvConf->getVideoRecognitionInterval());
+      pblockinggate->writeUInt32(srvConf->getVideoRecognitionInterval());
       // Send socket timeout
-      gate->writeUInt32(srvConf->getIdleTimeout());
+      pblockinggate->writeUInt32(srvConf->getIdleTimeout());
    }
 
-   void DesktopServerProto::readConfigSettings(BlockingGate *gate)
+   void DesktopServerProto::readConfigSettings(BlockingGate *pblockinggate)
    {
       ServerConfig *srvConf = m_pconfigurator->getServerConfig();
 
       // Log
-      srvConf->setLogLevel(gate->readUInt32());
+      srvConf->setLogLevel(pblockinggate->readUInt32());
 
       // Polling
-      srvConf->setPollingInterval(gate->readUInt32());
-      srvConf->setGrabTransparentWindowsFlag(gate->readUInt8() != 0);
+      srvConf->setPollingInterval(pblockinggate->readUInt32());
+      srvConf->setGrabTransparentWindowsFlag(pblockinggate->readUInt8() != 0);
 
-      srvConf->blockLocalInput(gate->readUInt8() != 0);
-      srvConf->setLocalInputPriority(gate->readUInt8() != 0);
-      srvConf->setLocalInputPriorityTimeout(gate->readUInt32());
+      srvConf->blockLocalInput(pblockinggate->readUInt8() != 0);
+      srvConf->setLocalInputPriority(pblockinggate->readUInt8() != 0);
+      srvConf->setLocalInputPriorityTimeout(pblockinggate->readUInt32());
 
-      srvConf->enableRemovingDesktopWallpaper(gate->readUInt8() != 0);
+      srvConf->enableRemovingDesktopWallpaper(pblockinggate->readUInt8() != 0);
 
       // Receive video class names
-      critical_section_lock al(srvConf);
-      size_t stringCount = gate->readUInt32();
+      AutoLock al(srvConf);
+      size_t stringCount = pblockinggate->readUInt32();
 
       ::string tmpString;
       for (size_t i = 0; i < stringCount; i++)
       {
-         gate->readUTF8(&tmpString);
+         tmpString= pblockinggate->readUtf8();
          srvConf->getVideoClassNames()->add(tmpString);
       }
       // Receive video rects
-      stringCount = gate->readUInt32();
+      stringCount = pblockinggate->readUInt32();
 
       tmpString = "";
       for (size_t i = 0; i < stringCount; i++)
       {
-         gate->readUTF8(&tmpString);
-         srvConf->getVideoRects()->add(RectSerializer::toRect(&tmpString));
+         tmpString = pblockinggate->readUtf8();
+         srvConf->getVideoRects()->add(RectSerializer::toRect(tmpString));
       }
 
       // Receive video recognition interval
-      srvConf->setVideoRecognitionInterval(gate->readUInt32());
+      srvConf->setVideoRecognitionInterval(pblockinggate->readUInt32());
       // Receive socket timeout
-      srvConf->setIdleTimeout(gate->readUInt32());
+      srvConf->setIdleTimeout(pblockinggate->readUInt32());
    }
 
 

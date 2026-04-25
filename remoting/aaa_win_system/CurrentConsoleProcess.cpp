@@ -31,9 +31,9 @@
 #include "remoting/remoting/win_system/Workstation.h"
 #include "remoting/remoting/win_system/WTS.h"
 
-CurrentConsoleProcess::CurrentConsoleProcess(::subsystem::LogWriter *log, bool connectRdpSession, const ::scoped_string & scopedstrPath, const ::scoped_string & scopedstrArgs)
+CurrentConsoleProcess::CurrentConsoleProcess(::subsystem::LogWriter * plogwriter, bool connectRdpSession, const ::scoped_string & scopedstrPath, const ::scoped_string & scopedstrArgs)
 : Process(scopedstrPath, scopedstrArgs),
-  m_plogwriter(log),
+  m_plogwriter = plogwriter;,
   m_connectRdpSession(connectRdpSession)
 {
 }
@@ -64,7 +64,7 @@ void CurrentConsoleProcess::start()
              (unsigned int)sti.dwFlags);
 
   try {
-    HANDLE userToken = WTS::duplicateCurrentProcessUserToken(m_connectRdpSession, m_plogwriter);
+    HANDLE userToken = WindowsSubsystem().WTS().duplicateCurrentProcessUserToken(m_connectRdpSession, m_plogwriter);
 
     ::string commandLine = getCommandLineString();
 

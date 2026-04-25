@@ -50,13 +50,105 @@ namespace remoting
    class CLASS_DECL_REMOTING  UpdateSender : public ::subsystem::Thread, public RfbDispatcherListener
    {
    public:
+
+
+            ::pointer < ::subsystem::LogWriter > m_plogwriter;
+
+      // ::happening m_newUpdatesEvent;
+
+      ::happening m_newUpdatesEvent;
+
+      UpdateRequestListener *m_updReqListener;
+      ::remoting::Region m_requestedIncrReg;
+      ::remoting::Region m_requestedFullReg;
+      bool m_incrUpdIsReq;
+      bool m_fullUpdIsReq;
+      bool m_busy;
+      // Property for perfomance measurements. It uses with the regions mutex.
+      ::earth::time m_requestTimePoint;
+      critical_section m_reqRectLocMut;
+
+      SenderControlInformationInterface *m_senderControlInformation;
+
+      ::int_rectangle m_viewPort;
+      ::int_size m_clientDim;
+      ::int_size m_lastViewPortDim;
+      bool m_shareOnlyApp;
+      ::remoting::Region m_appRegion;
+      ::remoting::Region m_prevAppRegion;
+      critical_section m_viewPortMut;
+
+      UpdateKeeper *m_pupdatekeeper;
+
+      ::pointer < ::innate_subsystem::FrameBuffer > m_pframebuffer;
+      Desktop *m_desktop;
+
+      ::pointer < CursorUpdates >  m_pcursorupdates;
+
+      // EncodeOptions class CLASS_DECL_REMOTING  maintain the configuration of encoders and
+      // pseudo-encoders read from the SetEncodings client scopedstrMessage.
+      // m_pencodeoptionsNew may be changed at any time but all change and read
+      // operations must be synchronized with m_criticalsectionNewEncodeOptions.
+      // In the beginning of each framebuffer update, m_pencodeoptionsNew will be
+      // safely copied to a local variable which then will be used while encoding
+      // data. Thus, changes to m_pencodeoptionsNew will take effect on next
+      // framebuffer update.
+      ::pointer < EncodeOptions > m_pencodeoptionsNew;
+      critical_section m_criticalsectionNewEncodeOptions;
+
+      // Pixel format requested by the RFB client. It may be changed at any time
+      // but all change and read operations must be synchronized with
+      // m_criticalsectionNewPixelFormat. In the beginning of each framebuffer update, it
+      // will be safely copied to a local variable which then will be used while
+      // encoding data. Thus, changes to m_ppixelformatNew will take effect on next
+      // framebuffer update.
+      ::pointer < ::innate_subsystem::PixelFormat > m_ppixelformatNew;
+      critical_section m_criticalsectionNewPixelFormat;
+
+      // This flag indicates that color ::map entries requested. If this flag is true
+      // then before send the updates updateSender must to send the color ::map
+      // entries
+      bool m_setColorMapEntr;
+
+      // This flag indicates that video is frozen or not.
+      bool m_videoFrozen;
+      // This region constains a video region which was sent at previous time.
+      ::remoting::Region m_regionOldVideoRegion;
+      critical_section m_vidFreezeLocMut;
+
+
+      ::remoting::Region m_regionLosslessDirty;
+      ::remoting::Region m_regionLosslessClean;
+
+      // Output stream.
+      ::pointer < ::remoting::RfbOutputGate > m_prfboutputgate;
+
+      // PixelConverter can convert from one pixel format to another using fast
+      // table lookups. It should be used only in the sender thread.
+      ::pointer < ::remoting::PixelConverter > m_ppixelconverter;
+
+      // All encoders are encapsulated in EncoderStore. It allocates new encoders
+      // on request and maintains a pointer to the preferred encoder. This object
+      // should be used only by the sender thread.
+      ::pointer < EncoderStore > m_pencoderstore;
+
+      // Information
+      // FIXME: Document this properly.
+      int m_id;
+
       // updReqListener - pointer to the out listener for retranslate
       // update reqest to out.
       // FIXME: Document all the arguments properly.
-      UpdateSender(RfbCodeRegistrator *codeRegtor, UpdateRequestListener *updReqListener,
-                   SenderControlInformationInterface *senderControlInformation, ::remoting::RfbOutputGate *output,
-                   int id, Desktop *desktop, ::subsystem::LogWriter *log);
-      virtual ~UpdateSender();
+      // UpdateSender(RfbCodeRegistrator *codeRegtor, UpdateRequestListener *updReqListener,
+      //              SenderControlInformationInterface *senderControlInformation, ::remoting::RfbOutputGate *output,
+      //              int id, Desktop *desktop, ::subsystem::LogWriter * plogwriter);
+      UpdateSender();
+       ~UpdateSender() override;
+
+
+      virtual void initialize_update_sender(RfbCodeRegistrator *codeRegtor, UpdateRequestListener *updReqListener,
+             SenderControlInformationInterface *senderControlInformation, ::remoting::RfbOutputGate *output,
+             int id, Desktop *desktop, ::subsystem::LogWriter * plogwriter);
 
       // The sendServerInit() function sends first rfb init scopedstrMessage to a client
       // FIXME: The comment does not seem to be relevant.
@@ -80,7 +172,7 @@ namespace remoting
       // Return true if the client is ready, false otherwise.
       bool clientIsReady();
 
-   protected:
+   //protected:
       // Listener function which implements RfbDispatcherListener. It will be
       // called on receiving client messages if we registered as a handler for
       // corresponding RFB scopedstrMessage types.
@@ -143,9 +235,9 @@ namespace remoting
 
       void sendRectHeader(const ::int_rectangle &rect, int encodingType);
       void sendRectHeader(unsigned short x, unsigned short y, unsigned short w, unsigned short h, int encodingType);
-      void sendNewFBSize(::int_size *dim, bool extended);
+      void sendNewFBSize(::int_size *size, bool extended);
       void sendFbInClientDim(const EncodeOptions *encodeOptions, const ::innate_subsystem::FrameBuffer *fb,
-                             const ::int_size &dim, const ::innate_subsystem::PixelFormat &pf);
+                             const ::int_size &size, const ::innate_subsystem::PixelFormat &pf);
       void sendCursorShapeUpdate(const ::innate_subsystem::PixelFormat &fmt,
                                  const ::remoting::CursorShape *cursorShape);
       void sendCursorPosUpdate();
@@ -160,7 +252,7 @@ namespace remoting
 
       // This function is used to split a region into a ::list_base of rectangles,
       // where actual splitting is performed by the specified encoder object.
-      // We do not use m_encoder because this function may be used for the video
+      // We do not use m_pencoder because this function may be used for the video
       // encoder as well.
       void splitRegion(Encoder *encoder, const ::remoting::Region *region, ::array_base<::int_rectangle> *rects,
                        const ::innate_subsystem::FrameBuffer *frameBuffer, const EncodeOptions *encodeOptions);
@@ -171,89 +263,6 @@ namespace remoting
       // calculate total area of rects in pixels
       int calcAreas(::array_base<::int_rectangle> rects);
 
-      ::subsystem::LogWriter *m_plogwriter;
-
-      // ::happening m_newUpdatesEvent;
-
-      ::happening m_newUpdatesEvent;
-
-      UpdateRequestListener *m_updReqListener;
-      ::remoting::Region m_requestedIncrReg;
-      ::remoting::Region m_requestedFullReg;
-      bool m_incrUpdIsReq;
-      bool m_fullUpdIsReq;
-      bool m_busy;
-      // Property for perfomance measurements. It uses with the regions mutex.
-      ::earth::time m_requestTimePoint;
-      critical_section m_reqRectLocMut;
-
-      SenderControlInformationInterface *m_senderControlInformation;
-
-      ::int_rectangle m_viewPort;
-      ::int_size m_clientDim;
-      ::int_size m_lastViewPortDim;
-      bool m_shareOnlyApp;
-      ::remoting::Region m_appRegion;
-      ::remoting::Region m_prevAppRegion;
-      critical_section m_viewPortMut;
-
-      UpdateKeeper *m_updateKeeper;
-
-      ::innate_subsystem::FrameBuffer m_frameBuffer;
-      Desktop *m_desktop;
-
-      CursorUpdates m_cursorUpdates;
-
-      // EncodeOptions class CLASS_DECL_REMOTING  maintain the configuration of encoders and
-      // pseudo-encoders read from the SetEncodings client scopedstrMessage.
-      // m_newEncodeOptions may be changed at any time but all change and read
-      // operations must be synchronized with m_newEncodeOptionsLocker.
-      // In the beginning of each framebuffer update, m_newEncodeOptions will be
-      // safely copied to a local variable which then will be used while encoding
-      // data. Thus, changes to m_newEncodeOptions will take effect on next
-      // framebuffer update.
-      EncodeOptions m_newEncodeOptions;
-      critical_section m_newEncodeOptionsLocker;
-
-      // Pixel format requested by the RFB client. It may be changed at any time
-      // but all change and read operations must be synchronized with
-      // m_newPixelFormatLocker. In the beginning of each framebuffer update, it
-      // will be safely copied to a local variable which then will be used while
-      // encoding data. Thus, changes to m_newPixelFormat will take effect on next
-      // framebuffer update.
-      ::innate_subsystem::PixelFormat m_newPixelFormat;
-      critical_section m_newPixelFormatLocker;
-
-      // This flag indicates that color ::map entries requested. If this flag is true
-      // then before send the updates updateSender must to send the color ::map
-      // entries
-      bool m_setColorMapEntr;
-
-      // This flag indicates that video is frozen or not.
-      bool m_videoFrozen;
-      // This region constains a video region which was sent at previous time.
-      ::remoting::Region m_prevVideoRegion;
-      critical_section m_vidFreezeLocMut;
-
-
-      ::remoting::Region m_losslessDirty;
-      ::remoting::Region m_losslessClean;
-
-      // Output stream.
-      ::remoting::RfbOutputGate *m_output;
-
-      // PixelConverter can convert from one pixel format to another using fast
-      // table lookups. It should be used only in the sender thread.
-      ::remoting::PixelConverter m_pixelConverter;
-
-      // All encoders are encapsulated in EncoderStore. It allocates new encoders
-      // on request and maintains a pointer to the preferred encoder. This object
-      // should be used only by the sender thread.
-      EncoderStore m_enbox;
-
-      // Information
-      // FIXME: Document this properly.
-      int m_id;
    };
 
 

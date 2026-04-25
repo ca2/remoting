@@ -46,12 +46,12 @@
  *   2) Write scopedstrMessage body (you don't need to write scopedstrMessage id).
  *   3) Call send().
  *   4) Destroy instance created in step 1.
- *   5) Read body of reply using control gate (not using this class).
+ *   5) Read body of reply using control pblockinggate (not using this class).
  *
  * @remark Class writes data into memory though DataOutputStream interface so, methods
  * inherited from DataOutputStream doesn't raise any exception.
  *
- * @remark ControlMessage class does not lock control gate.
+ * @remark ControlMessage class does not lock control pblockinggate.
  */
 class ControlMessage : public DataOutputStream
 {
@@ -59,14 +59,14 @@ public:
   /**
    * Creates new control scopedstrMessage.
    * @param messageId control scopedstrMessage id described in ControlProto.
-   * @param gate control gate.
+   * @param pblockinggate control pblockinggate.
    * @param *password. If this param != 0 then it will be uses on auth needed
    * instead of the dialog box.
    * @param getPassFromConfigEnabled. If this param is true then it will be
    * uses on auth needed instead of the dialog box. This parameter ignores if
    * *password parameter is presented.
    */
-  ControlMessage(unsigned int messageId, ControlGate *gate,
+  ControlMessage(unsigned int messageId, ControlGate *pblockinggate,
                  const ::scoped_string & scopedstrPasswordFile = 0,
                  bool getPassFromConfigEnabled = false,
                  bool forService = false);
@@ -83,7 +83,7 @@ public:
 
 private:
   /**
-   * Writes control scopedstrMessage to control gate.
+   * Writes control scopedstrMessage to control pblockinggate.
    * @throws ::io_exception on io error.
    */
   void sendData();
@@ -102,9 +102,9 @@ private:
 
 private:
   /**
-   * ::innate_subsystem::Control gate.
+   * ::innate_subsystem::Control pblockinggate.
    */
-  ControlGate *m_gate;
+  ControlGate *m_pblockinggate;
   /**
    * Tunnel.
    */

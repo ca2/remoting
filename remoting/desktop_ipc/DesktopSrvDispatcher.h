@@ -39,19 +39,23 @@ namespace remoting
    class DesktopSrvDispatcher : public ::subsystem::GuiThread
    {
    public:
-      DesktopSrvDispatcher(BlockingGate *gate,
+      //DesktopSrvDispatcher(BlockingGate *pblockinggate,
                            // AnEventListener *m_extTerminationListener,
-                           const ::procedure &procedureDesktopSrvDispatcher, ::subsystem::LogWriter *log);
+        //                   const ::procedure &procedureDesktopSrvDispatcher, ::subsystem::LogWriter * plogwriter);
+      DesktopSrvDispatcher();
       virtual ~DesktopSrvDispatcher();
+      virtual void initialize_desktop_srv_dispatcher(BlockingGate *pblockinggate,
+                           // AnEventListener *m_extTerminationListener,
+                           const ::procedure &procedureDesktopSrvDispatcher, ::subsystem::LogWriter * plogwriter);
 
       void registerNewHandle(unsigned char code, ClientListener *listener);
 
-   protected:
+   //protected:
       virtual void execute();
       virtual void onTerminate();
       void notifyOnError();
 
-      BlockingGate *m_gate;
+      BlockingGate *m_pblockinggate;
 
       ::map<unsigned char, ClientListener *> m_handlers;
 
@@ -59,7 +63,7 @@ namespace remoting
 
       ::procedure m_procedureDesktopSrvDispatcher;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

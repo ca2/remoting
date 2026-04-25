@@ -33,7 +33,7 @@ namespace remoting
 {
 
 
-   WinVideoRegionUpdaterImpl::WinVideoRegionUpdaterImpl(::subsystem::LogWriter *log) : m_plogwriter(log) { resume(); }
+   WinVideoRegionUpdaterImpl::WinVideoRegionUpdaterImpl(::subsystem::LogWriter * plogwriter) : m_plogwriter = plogwriter; { resume(); }
 
    WinVideoRegionUpdaterImpl::~WinVideoRegionUpdaterImpl()
    {

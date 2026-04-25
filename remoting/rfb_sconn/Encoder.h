@@ -82,7 +82,7 @@ namespace remoting
       // The arguments of splitRectangle() are similar to those of
       // sendRectangle(). It's guaranteed that options and serverFb will point to
       // the same data as in the subsequent calls to sendRectanle(). Also, it's
-      // guaranteed that the state of m_pixelConverter will not be changed between
+      // guaranteed that the state of m_ppixelconverter will not be changed between
       // splitRectangle() and sendRectangle() calls. splitRectangles() may change
       // the state of PixelConverter that's why it cannot be declared const.
       virtual void splitRectangle(const ::int_rectangle &rect, ::array_base<::int_rectangle> *rectList,
@@ -92,7 +92,7 @@ namespace remoting
       // buffer that can be in arbitrary pixel format natively used by the RFB
       // server. To get relevant pixels in the destination format (client format),
       // encoders must convert the data from *serverFb explicitly, e.g. by calling
-      // m_pixelConverter->convert().
+      // m_ppixelconverter->convert().
       virtual void sendRectangle(const ::int_rectangle &rect, const ::innate_subsystem::FrameBuffer *serverFb,
                                  const EncodeOptions *options);
 
@@ -105,10 +105,10 @@ namespace remoting
       // be used by other threads during the execution the mentioned functions of
       // the Encoder, and it may not be altered between a call to splitRectangle()
       // and the corresponding calls to sendRectangle().
-      ::remoting::PixelConverter *m_pixelConverter;
+      ::remoting::PixelConverter *m_ppixelconverter;
 
       // The output stream to write the encoded data to.
-      DataOutputStream *m_output;
+      DataOutputStream *m_pdataoutputstream;
 
       /// private:
       // Do not allow copying objects.

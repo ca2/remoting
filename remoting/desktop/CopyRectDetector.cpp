@@ -35,75 +35,80 @@ namespace remoting
 
 
    // Callback routine used internally to catch window movement...
-   static bool CALLBACK enumWindowsFnCopyRect(const ::operating_system::window & operatingsystemwindow, ::lparam arg)
+   static bool CALLBACK enumWindowsFnCopyRect(HWND hwnd, LPARAM lparam)
    {
-      CopyRectDetector *_this = (CopyRectDetector *)arg;
-      return _this->checkWindowMovements(hwnd);
+      auto _this = (CopyRectDetector *) lparam;
+      return _this->checkWindowMovements(::as_operating_system_window(hwnd));
    }
 
 
    void CopyRectDetector::detectWindowMovements(::int_rectangle *copyRect, ::int_point *source)
    {
-      m_copyRect.Null();
-      m_source.Null();
+      m_rectangleCopy.Null();
+      m_pointSource.Null();
 
       EnumWindows((WNDENUMPROC)enumWindowsFnCopyRect, (::lparam)this);
       m_lastWinProps = m_newWinProps;
       m_newWinProps.clear();
-      *copyRect = m_copyRect;
-      *source = m_source;
+      *copyRect = m_rectangleCopy;
+      *source = m_pointSource;
    }
 
 
    bool CopyRectDetector::checkWindowMovements(const ::operating_system::window & operatingsystemwindow)
    {
-      ::int_rectangle currRect;
-      if (IsWindowVisible(hwnd) && getWinRect(hwnd, &currRect))
+      ::int_rectangle rectangleCurrent;
+      //auto hwnd = ::as_HWND(operatingsystemwindow);
+      if (IsWindowVisible(::as_HWND(operatingsystemwindow)) && getWinRect(operatingsystemwindow, rectangleCurrent))
       {
          // Store window properties in the new ::list_base
-         WinProp newWinProp(hwnd, &currRect);
+         WinProp newWinProp(operatingsystemwindow, rectangleCurrent);
          m_newWinProps.add(newWinProp);
 
-         ::int_rectangle prevRect;
-         if (findPrevWinProps(hwnd, &prevRect))
+         ::int_rectangle rectangleOld;
+         if (findPrevWinProps(operatingsystemwindow, rectangleOld))
          {
-            if ((prevRect.left != currRect.left || prevRect.top != currRect.top) && currRect.area() > m_copyRect.area())
+            if (rectangleOld.top_left() != rectangleCurrent.top_left() && rectangleCurrent.area() > m_rectangleCopy.area())
             {
-               m_copyRect = currRect;
-               m_source.setPoint(prevRect.left, prevRect.top);
+
+               m_rectangleCopy = rectangleCurrent;
+
+               m_pointSource = rectangleOld.top_left();
 
                // Adjust
-               int destopX = GetSystemMetrics(SM_XVIRTUALSCREEN);
-               int destopY = GetSystemMetrics(SM_YVIRTUALSCREEN);
-               m_copyRect.move(-destopX, -destopY);
-               m_source.move(-destopX, -destopY);
+               int_size sizeDesktop(GetSystemMetrics(SM_XVIRTUALSCREEN),GetSystemMetrics(SM_YVIRTUALSCREEN));
+
+               m_rectangleCopy -= sizeDesktop;
+
+               m_pointSource -= sizeDesktop;
+
             }
          }
       }
       return true;
    }
 
-   bool CopyRectDetector::getWinRect(const ::operating_system::window & operatingsystemwindow, ::int_rectangle *winRect)
+   bool CopyRectDetector::getWinRect(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & winRect)
    {
       RECT rect;
-      if (GetWindowRect(hwnd, &rect))
+      if (GetWindowRect(::as_HWND(operatingsystemwindow), &rect))
       {
-         winRect->fromWindowsRect(&rect);
+         winRect = rect;
          return true;
       }
       return false;
    }
 
-   bool CopyRectDetector::findPrevWinProps(const ::operating_system::window & operatingsystemwindow, ::int_rectangle *rect)
+   bool CopyRectDetector::findPrevWinProps(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rect)
    {
       ::list_base<WinProp>::iterator winPropsIter;
       WinProp *winProp;
       for (winPropsIter = m_lastWinProps.begin(); winPropsIter != m_lastWinProps.end(); winPropsIter++)
       {
          winProp = &(*winPropsIter);
-         if (winProp->hwnd == hwnd)
+         if (winProp->m_operatingsystemwindow == operatingsystemwindow)
          {
-            *rect = winProp->prevRect;
+            rect = winProp->m_rectangleOld;
             return true;
          }
       }

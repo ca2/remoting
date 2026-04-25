@@ -58,7 +58,7 @@ namespace remoting
 
       void setNewFbSize(const ::int_rectangle &  rect);
 
-      ::innate_subsystem::FrameBuffer m_frameBuffer;
+      ::innate_subsystem::FrameBuffer m_pframebuffer;
       ::innate_subsystem::FrameBuffer& frameBuffer(bool fromFile = false);
       void loadFromfile();
 

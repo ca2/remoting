@@ -31,11 +31,12 @@
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING CursorShapeGrabber
+   class CLASS_DECL_REMOTING CursorShapeGrabber :
+   virtual public ::particle
    {
    public:
       CursorShapeGrabber();
-      virtual ~CursorShapeGrabber();
+       ~CursorShapeGrabber() override;
 
       virtual bool grab(const ::innate_subsystem::PixelFormat &pixelFormat) = 0;
 

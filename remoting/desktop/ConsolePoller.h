@@ -33,28 +33,30 @@
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING ConsolePoller : public UpdateDetector
+   class CLASS_DECL_REMOTING ConsolePoller :
+   virtual public UpdateDetector
    {
    public:
-      ConsolePoller(UpdateKeeper *updateKeeper, UpdateListener *updateListener, ScreenGrabber *screenGrabber,
-                    ::innate_subsystem::FrameBuffer *backupFrameBuffer, critical_section *frameBufferMutex,
-                    ::subsystem::LogWriter *log);
+      ConsolePoller();
 
       virtual ~ConsolePoller();
+      virtual void initialize_console_poller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ScreenGrabber *pscreengrabber,
+                    ::innate_subsystem::FrameBuffer *backupFrameBuffer, critical_section *frameBufferMutex,
+                    ::subsystem::LogWriter * plogwriter);
 
-   protected:
+   //protected:
       virtual void execute();
       virtual void onTerminate();
 
-   private:
+   //private:
       ::int_rectangle getConsoleRect();
 
-      ScreenGrabber *m_screenGrabber;
-      ::innate_subsystem::FrameBuffer *m_backupFrameBuffer;
-      critical_section *m_frameBufferMutex;
-      ::int_rectangle m_pollingRect;
+      ::pointer < ScreenGrabber > m_pscreengrabber;
+      ::int_rectangle m_rectanglePolling;
       ::happening m_intervalWaiter;
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::innate_subsystem::FrameBuffer  > m_pframebufferBackup;
+      critical_section *m_pcriticalsectionFrameBuffer;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

@@ -58,7 +58,7 @@ namespace remoting
       static bool isPseudo(int encoding);
 
    protected:
-     ::subsystem::LogWriter *m_plogwriter;
+     ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
       int m_encoding;
    };

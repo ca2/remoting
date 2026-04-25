@@ -36,10 +36,10 @@
 
 EchoExtensionRequestHandler::EchoExtensionRequestHandler(RfbCodeRegistrator *registrator,
                                                        RfbOutputGate *output,
-                                                       ::subsystem::LogWriter *log,
+                                                       ::subsystem::LogWriter * plogwriter,
                                                        bool enabled)
 : m_output(output), m_enabled(enabled),
-  m_plogwriter(log)
+  m_plogwriter = plogwriter;
 {
 
   if (!isEchoExtensionEnabled()) {
@@ -60,9 +60,9 @@ EchoExtensionRequestHandler::~EchoExtensionRequestHandler()
   m_plogwriter->debug("Echo extension request handler deleted");
 }
 
-void EchoExtensionRequestHandler::onRequest(unsigned int reqCode, RfbInputGate *backGate)
+void EchoExtensionRequestHandler::onRequest(unsigned int reqCode, RfbInputGate *pblockinggate)
 {
-  m_input = backGate;
+  m_input = pblockinggate;
 
   try {
     if (reqCode == ClientMsgDefs::ECHO_REQUEST) {

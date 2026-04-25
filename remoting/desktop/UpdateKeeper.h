@@ -50,7 +50,7 @@ namespace remoting
 
       virtual void unlock() { m_updContLocMut.unlock(); }
 
-      void addChangedRegion(const ::remoting::Region *changedRegion);
+      void addChangedRegion(const ::remoting::Region *m_regionChanged);
       void addChangedRect(const ::int_rectangle &changedRect);
       // Adds border rectangle to changed region.
       void dazzleChangedReg()
@@ -59,13 +59,13 @@ namespace remoting
          addChangedRect(m_borderRect);
       }
 
-      void addCopyRect(const ::int_rectangle &copyRect, const ::int_point *src);
+      void addCopyRect(const ::int_rectangle &copyRect, const ::int_point &src);
 
       void setBorderRect(const ::int_rectangle &borderRect);
 
       void setScreenSizeChanged();
       void setCursorPosChanged();
-      void setCursorPos(const ::int_point *curPos);
+      void setCursorPos(const ::int_point &curPos);
       void setCursorShapeChanged();
 
       void setExcludedRegion(const ::remoting::Region *excludedRegion);

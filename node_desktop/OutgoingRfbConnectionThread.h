@@ -51,7 +51,7 @@ namespace remoting_node_desktop
       @param clientManager rfb client manager.
       */
       OutgoingRfbConnectionThread(const ::scoped_string &scopedstrConnectHost, unsigned int connectPort, bool viewOnly,
-                                  RfbClientManager *clientManager, ::subsystem::LogWriter *log);
+                                  RfbClientManager *clientManager, ::subsystem::LogWriter * plogwriter);
       virtual ~OutgoingRfbConnectionThread();
 
    protected:
@@ -62,7 +62,7 @@ namespace remoting_node_desktop
       unsigned int m_connectPort;
       bool m_viewOnly;
       RfbClientManager *m_clientManager;
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

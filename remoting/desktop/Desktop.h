@@ -46,8 +46,8 @@ namespace remoting
       // desktopName argument and an user name to userMame.
       virtual void getCurrentUserInfo(::string &desktopName, ::string &userName) = 0;
       // Puts the current frame buffer dimension and pixel format to
-      // the dim and pf function arguments.
-      virtual void getFrameBufferProperties(::int_size *dim, ::innate_subsystem::PixelFormat *pf) = 0;
+      // the size and pf function arguments.
+      virtual void getFrameBufferProperties(::int_size *size, ::innate_subsystem::PixelFormat *pf) = 0;
 
       virtual void getPrimaryDesktopCoords(::int_rectangle *rect) = 0;
       // Returns a rect that is normilized from "virtual desktop" to frame buffer coordinates.

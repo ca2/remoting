@@ -28,8 +28,8 @@
 
 //#include aaa_<crtdbg.h>
 
-ControlProxy::ControlProxy(ControlGate *gate)
-: m_gate(gate), m_message(0),
+ControlProxy::ControlProxy(ControlGate *pblockinggate)
+: m_pblockinggate(pblockinggate), m_message(0),
   m_getPassFromConfigEnabled(false),
   m_forService(false)
 {
@@ -53,53 +53,53 @@ TvnServerInfo ControlProxy::getServerInfo()
 {
   TvnServerInfo ret;
 
-  critical_section_lock l(m_gate);
+  critical_section_lock l(m_pblockinggate);
 
   createMessage(ControlProto::GET_SERVER_INFO_MSG_ID)->send();
 
-  ret.m_acceptFlag = m_gate->readUInt8() == 1;
-  ret.m_serviceFlag = m_gate->readUInt8() == 1;
+  ret.m_acceptFlag = m_pblockinggate->readUInt8() == 1;
+  ret.m_serviceFlag = m_pblockinggate->readUInt8() == 1;
 
-  m_gate->readUTF8(&ret.m_statusText);
+  m_pblockinggate->readUTF8(&ret.m_statusText);
 
   return ret;
 }
 
 void ControlProxy::reloadServerConfig()
 {
-  critical_section_lock l(m_gate);
+  critical_section_lock l(m_pblockinggate);
 
   createMessage(ControlProto::RELOAD_CONFIG_MSG_ID)->send();
 }
 
 void ControlProxy::disconnectAllClients()
 {
-  critical_section_lock l(m_gate);
+  critical_section_lock l(m_pblockinggate);
 
   createMessage(ControlProto::DISCONNECT_ALL_CLIENTS_MSG_ID)->send();
 }
 
 void ControlProxy::shutdownTightVnc()
 {
-  critical_section_lock l(m_gate);
+  critical_section_lock l(m_pblockinggate);
 
   createMessage(ControlProto::SHUTDOWN_SERVER_MSG_ID)->send();
 }
 
 void ControlProxy::getClientsList(::list_base<RfbClientInfo *> *clients)
 {
-  critical_section_lock l(m_gate);
+  critical_section_lock l(m_pblockinggate);
 
   createMessage(ControlProto::GET_CLIENT_LIST_MSG_ID)->send();
 
-  unsigned int count = m_gate->readUInt32();
+  unsigned int count = m_pblockinggate->readUInt32();
 
   for (unsigned int i = 0; i < count; i++) {
     ::string peerAddr;
 
-    unsigned int id = m_gate->readUInt32();
+    unsigned int id = m_pblockinggate->readUInt32();
 
-    m_gate->readUTF8(&peerAddr);
+    m_pblockinggate->readUTF8(&peerAddr);
 
     RfbClientInfo *clientInfo = new RfbClientInfo(id, peerAddr);
 
@@ -109,7 +109,7 @@ void ControlProxy::getClientsList(::list_base<RfbClientInfo *> *clients)
 
 void ControlProxy::makeOutgoingConnection(const ::scoped_string & scopedstrConnectString, bool viewOnly)
 {
-  critical_section_lock l(m_gate);
+  critical_section_lock l(m_pblockinggate);
 
   ControlMessage *msg = createMessage(ControlProto::ADD_CLIENT_MSG_ID);
 
@@ -124,7 +124,7 @@ void ControlProxy::makeTcpDispatcherConnection(const ::scoped_string & scopedstr
                                                const ::scoped_string & scopedstrKeyword,
                                                unsigned int connectionId)
 {
-  critical_section_lock l(m_gate);
+  critical_section_lock l(m_pblockinggate);
 
   ControlMessage *msg = createMessage(ControlProto::CONNECT_TO_TCPDISP_MSG_ID);
 
@@ -138,14 +138,14 @@ void ControlProxy::makeTcpDispatcherConnection(const ::scoped_string & scopedstr
 
 void ControlProxy::sharePrimary()
 {
-  critical_section_lock l(m_gate);
+  critical_section_lock l(m_pblockinggate);
   ControlMessage *msg = createMessage(ControlProto::SHARE_PRIMARY_MSG_ID);
   msg->send();
 }
 
 void ControlProxy::shareDisplay(unsigned char displayNumber)
 {
-  critical_section_lock l(m_gate);
+  critical_section_lock l(m_pblockinggate);
   ControlMessage *msg = createMessage(ControlProto::SHARE_DISPLAY_MSG_ID);
   msg->writeUInt8(displayNumber);
   msg->send();
@@ -153,7 +153,7 @@ void ControlProxy::shareDisplay(unsigned char displayNumber)
 
 void ControlProxy::shareRect(const ::int_rectangle &  shareRect)
 {
-  critical_section_lock l(m_gate);
+  critical_section_lock l(m_pblockinggate);
   ControlMessage *msg = createMessage(ControlProto::SHARE_RECT_MSG_ID);
 
   msg->writeInt32(shareRect.left);
@@ -166,7 +166,7 @@ void ControlProxy::shareRect(const ::int_rectangle &  shareRect)
 
 void ControlProxy::shareWindow(const ::scoped_string & shareWindowName)
 {
-  critical_section_lock l(m_gate);
+  critical_section_lock l(m_pblockinggate);
   ControlMessage *msg = createMessage(ControlProto::SHARE_WINDOW_MSG_ID);
   msg->writeUTF8(shareWindowName->getString());
   msg->send();
@@ -174,14 +174,14 @@ void ControlProxy::shareWindow(const ::scoped_string & shareWindowName)
 
 void ControlProxy::shareFull()
 {
-  critical_section_lock l(m_gate);
+  critical_section_lock l(m_pblockinggate);
   ControlMessage *msg = createMessage(ControlProto::SHARE_FULL_MSG_ID);
   msg->send();
 }
 
 void ControlProxy::shareApp(unsigned int procId)
 {
-  critical_section_lock l(m_gate);
+  critical_section_lock l(m_pblockinggate);
   ControlMessage *msg = createMessage(ControlProto::SHARE_APP_MSG_ID);
   msg->writeUInt32(procId);
   msg->send();
@@ -189,7 +189,7 @@ void ControlProxy::shareApp(unsigned int procId)
 
 void ControlProxy::setServerConfig(ServerConfig * pserverconfig)
 {
-  critical_section_lock l(m_gate);
+  critical_section_lock l(m_pblockinggate);
 
   ControlMessage *msg = createMessage(ControlProto::SET_CONFIG_MSG_ID);
 
@@ -200,25 +200,25 @@ void ControlProxy::setServerConfig(ServerConfig * pserverconfig)
 
 void ControlProxy::getServerConfig(ServerConfig * pserverconfig)
 {
-  critical_section_lock l(m_gate);
+  critical_section_lock l(m_pblockinggate);
 
   createMessage(ControlProto::GET_CONFIG_MSG_ID)->send();
 
-  config->deserialize(m_gate);
+  config->deserialize(m_pblockinggate);
 }
 
 bool ControlProxy::getShowTrayIconFlag()
 {
-  critical_section_lock l(m_gate);
+  critical_section_lock l(m_pblockinggate);
 
   createMessage(ControlProto::GET_SHOW_TRAY_ICON_FLAG)->send();
 
-  return m_gate->readUInt8() == 1;
+  return m_pblockinggate->readUInt8() == 1;
 }
 
 void ControlProxy::updateTvnControlProcessId(DWORD processId)
 {
-  critical_section_lock l(m_gate);
+  critical_section_lock l(m_pblockinggate);
 
   ControlMessage *msg = createMessage(ControlProto::UPDATE_TVNCONTROL_PROCESS_ID_MSG_ID);
 
@@ -231,7 +231,7 @@ ControlMessage *ControlProxy::createMessage(DWORD messageId)
 {
   releaseMessage();
 
-  m_message = new ControlMessage(messageId, m_gate, m_passwordFile,
+  m_message = new ControlMessage(messageId, m_pblockinggate, m_passwordFile,
                                  m_getPassFromConfigEnabled, m_forService);
 
   return m_message;

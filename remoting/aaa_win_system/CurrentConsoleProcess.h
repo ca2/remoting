@@ -51,7 +51,7 @@ public:
    *
    * See description of Process constructor.
    */
-  CurrentConsoleProcess(::subsystem::LogWriter *log, bool connectRdpSession, const ::scoped_string & scopedstrPath = 0, const ::scoped_string & scopedstrArgs = 0);
+  CurrentConsoleProcess(::subsystem::LogWriter * plogwriter, bool connectRdpSession, const ::scoped_string & scopedstrPath = 0, const ::scoped_string & scopedstrArgs = 0);
   /**
    * Destoys instance of class.
    */
@@ -68,7 +68,7 @@ public:
   virtual void start();
 
 private:
-  ::subsystem::LogWriter *m_plogwriter;
+  ::pointer < ::subsystem::LogWriter > m_plogwriter;
   bool m_connectRdpSession;
 };
 

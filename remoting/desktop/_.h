@@ -2,14 +2,15 @@
 #pragma once
 
 
-
-#include "remoting/_.h"
-
-
-#if defined(_remoting_desktop_project)
-#define CLASS_DECL_REMOTING_DESKTOP  CLASS_DECL_EXPORT
-#else
-#define CLASS_DECL_REMOTING_DESKTOP  CLASS_DECL_IMPORT
-#endif
+/// remoting/remoting/desktop
+namespace remoting
+{
 
 
+   class DesktopSrvDispatcher;
+   class DesktopServerProto;
+   class DesktopConfigLocal;
+
+
+
+}

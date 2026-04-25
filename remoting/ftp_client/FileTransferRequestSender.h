@@ -57,7 +57,7 @@ namespace remoting
          void sendFolderSizeRequest(const ::scoped_string & scopedstrFullPath);
 
       protected:
-         ::subsystem::LogWriter *m_plogwriter;
+         ::pointer < ::subsystem::LogWriter > m_plogwriter;
          RfbOutputGate *m_output;
       };
    }

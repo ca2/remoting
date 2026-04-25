@@ -35,7 +35,7 @@ namespace remoting
    Desktop *WinServiceDesktopFactory::createDesktop(ClipboardListener *extClipListener,
                                                     UpdateSendingListener *extUpdSendingListener,
                                                     AbnormDeskTermListener *extDeskTermListener,
-                                                    ::subsystem::LogWriter *log)
+                                                    ::subsystem::LogWriter * plogwriter)
    {
       return new DesktopClientImpl(extClipListener, extUpdSendingListener, extDeskTermListener, log);
    }

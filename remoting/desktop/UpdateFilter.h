@@ -40,7 +40,7 @@ namespace remoting
    {
    public:
       UpdateFilter(ScreenDriver *screenDriver, ::innate_subsystem::FrameBuffer *frameBuffer,
-                   critical_section *frameBufferCriticalSection, ::subsystem::LogWriter *log);
+                   critical_section *frameBufferCriticalSection, ::subsystem::LogWriter * plogwriter);
       ~UpdateFilter();
 
       void filter(UpdateContainer *updateContainer);
@@ -57,11 +57,11 @@ namespace remoting
       bool grab();
 
       ScreenDriver *m_screenDriver;
-      ::innate_subsystem::FrameBuffer *m_frameBuffer;
+      ::innate_subsystem::FrameBuffer *m_pframebuffer;
       critical_section *m_fbMutex;
       GrabOptimizator m_grabOptimizator;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
    //// __UPDATEFILTER_H__

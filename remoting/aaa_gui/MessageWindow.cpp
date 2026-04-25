@@ -32,7 +32,7 @@ MessageWindow::MessageWindow(const HINSTANCE hinst,
 : m_hwnd(0),
   m_hinst(hinst),
 //  m_windowClassName(0),
-  m_messageHandler(messageHandler)
+  m_pwindowmessagehandler(messageHandler)
 {
   if (scopedstrwindowClassName.has_character()) {
     m_windowClassName = scopedstrwindowClassName;
@@ -55,7 +55,7 @@ MessageWindow::~MessageWindow(void)
 bool MessageWindow::createWindow(WindowMessageHandler *messageHandler)
 {
   if (messageHandler != 0) {
-    m_messageHandler = messageHandler;
+    m_pwindowmessagehandler = messageHandler;
   }
 
   if (regClass(m_hinst, m_windowClassName) == 0) {
@@ -94,8 +94,8 @@ LRESULT CALLBACK MessageWindow::staticWndProc(const ::operating_system::window &
   }
   if (_this != NULL) {
     bool result;
-    if (_this->m_messageHandler != 0) {
-      result = _this->m_messageHandler->processMessage(scopedstrMessage,
+    if (_this->m_pwindowmessagehandler != 0) {
+      result = _this->m_pwindowmessagehandler->processMessage(scopedstrMessage,
                                                        wParam,
                                                        lParam);
     } else {

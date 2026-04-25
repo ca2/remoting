@@ -33,13 +33,13 @@ ClipboardExchange::ClipboardExchange(RfbCodeRegistrator *codeRegtor,
                                      Desktop *desktop,
                                      RfbOutputGate *output,
                                      bool viewOnly,
-                                     ::subsystem::LogWriter *log)
+                                     ::subsystem::LogWriter * plogwriter)
 : m_desktop(desktop),
   m_output(output),
   m_viewOnly(viewOnly),
   m_hasNewClip(false),
   m_isUtf8ClipboardEnabled(false),
-  m_plogwriter(log)
+  m_plogwriter = plogwriter;
 {
   // Request code
   codeRegtor->regCode(ClientMsgDefs::CLIENT_CUT_TEXT, this);

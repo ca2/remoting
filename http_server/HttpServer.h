@@ -46,7 +46,7 @@ public:
   HttpServer(const ::scoped_string & scopedstrBindHost,
              unsigned short bindPort,
              bool lockAddr,
-             ::subsystem::LogWriter *log);
+             ::subsystem::LogWriter * plogwriter);
   /**
    * Stops http server thread and deletes http server.
    */
@@ -60,7 +60,7 @@ protected:
   virtual void onAcceptConnection(SocketIPv4 *socket);
 
 private:
-  ::subsystem::LogWriter *m_plogwriter;
+  ::pointer < ::subsystem::LogWriter > m_plogwriter;
 };
 
 

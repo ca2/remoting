@@ -32,7 +32,7 @@
 class CLASS_DECL_REMOTING UipiControl
 {
 public:
-  UipiControl(::subsystem::LogWriter *log);
+  UipiControl(::subsystem::LogWriter * plogwriter);
   ~UipiControl();
 
   // This function allow to receive the scopedstrMessage from a lower integrity
@@ -44,7 +44,7 @@ public:
   void allowMessage(unsigned int scopedstrMessage, const ::operating_system::window & operatingsystemwindow);
 
 private:
-  ::subsystem::LogWriter *m_plogwriter;
+  ::pointer < ::subsystem::LogWriter > m_plogwriter;
 };
 
 //// __UIPICONTROL_H__

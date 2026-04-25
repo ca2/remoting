@@ -30,16 +30,27 @@ namespace remoting
 
    const int MOUSE_SLEEP_TIME = 10;
 
-   CursorPositionDetector::CursorPositionDetector(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
-                                                  ::subsystem::LogWriter *log) :
-       UpdateDetector(updateKeeper, updateListener), m_plogwriter(log)
+   // CursorPositionDetector::CursorPositionDetector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+   //                                                ::subsystem::LogWriter * plogwriter) :
+   //     UpdateDetector(pupdatekeeper, pupdatelistener), m_plogwriter = plogwriter;
+   // {
+   // }
+   CursorPositionDetector::CursorPositionDetector()
    {
+
    }
 
    CursorPositionDetector::~CursorPositionDetector(void)
    {
       terminate();
       wait();
+   }
+   void CursorPositionDetector::initialize_cursor_position_detector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+                                                  ::subsystem::LogWriter * plogwriter)
+   {
+       initialize_update_detector(pupdatekeeper, pupdatelistener);
+      m_plogwriter = plogwriter;
+
    }
 
    ::int_point CursorPositionDetector::getCursorPos() { return m_cursor.getCursorPos(); }
@@ -55,10 +66,10 @@ namespace remoting
       while (!isTerminating())
       {
          curPoint = m_cursor.getCursorPos();
-         if (!m_lastCursorPos.isEqualTo(&curPoint))
+         if (m_lastCursorPos!= curPoint)
          {
             m_lastCursorPos = curPoint;
-            m_updateKeeper->setCursorPos(&m_lastCursorPos);
+            m_pupdatekeeper->setCursorPos(m_lastCursorPos);
             doUpdate();
          }
          m_sleepTimer.wait(MOUSE_SLEEP_TIME * 1_ms);

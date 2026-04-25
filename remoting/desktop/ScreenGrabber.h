@@ -69,13 +69,14 @@ namespace remoting
 {
 
 
-   class CLASS_DECL_REMOTING ScreenGrabber
+   class CLASS_DECL_REMOTING ScreenGrabber :
+      virtual public ::particle
    {
    public:
       // Derived constructors will ensure that the getScreenBuffer() returns
       // a frame buffer with valid screen properties.
       ScreenGrabber(void);
-      virtual ~ScreenGrabber(void);
+      ~ScreenGrabber(void) override;
 
       /* Provides grabbing.
       Parameters:     *rect - Pointer to a ::int_rectangle object with relative workRect coordinates.

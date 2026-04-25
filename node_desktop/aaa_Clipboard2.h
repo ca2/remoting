@@ -37,7 +37,7 @@
 class WindowsClipboard : protected MessageWindow, GuiThread
 {
 public:
-  WindowsClipboard(ClipboardListener *clipboardListener, ::subsystem::LogWriter *log);
+  WindowsClipboard(ClipboardListener *pclipboardlistener, ::subsystem::LogWriter * plogwriter);
   virtual ~WindowsClipboard(void);
 
   // This function replaces clipboard content by the text
@@ -58,7 +58,7 @@ protected:
 
   ClipboardListener *m_clipboardListener;
 
-  ::subsystem::LogWriter *m_plogwriter;
+  ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
   static const HINSTANCE m_hinst;
 };

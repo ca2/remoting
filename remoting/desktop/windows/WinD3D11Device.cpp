@@ -38,8 +38,8 @@ namespace remoting
       unsigned int SDKVersion, _Out_opt_ ID3D11Device **ppDevice, _Out_opt_ D3D_FEATURE_LEVEL *pFeatureLevel,
       _Out_opt_ ID3D11DeviceContext **ppImmediateContext);
 
-   WinD3D11Device::WinD3D11Device(::subsystem::LogWriter *log) :
-       m_device(0), m_context(0), m_d3d11Lib("d3d11.dll"), m_plogwriter(log)
+   WinD3D11Device::WinD3D11Device(::subsystem::LogWriter * plogwriter) :
+       m_device(0), m_context(0), m_d3d11Lib("d3d11.dll"), m_plogwriter = plogwriter;
    {
       D3D11CreateDeviceFunType d3d11CreateDevice;
       d3d11CreateDevice = (D3D11CreateDeviceFunType)m_d3d11Lib.getProcAddress("D3D11CreateDevice");

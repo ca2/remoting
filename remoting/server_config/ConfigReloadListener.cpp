@@ -24,10 +24,32 @@
 #include "framework.h"
 #include "ConfigReloadListener.h"
 
-ConfigReloadListener::ConfigReloadListener()
-{
-}
 
-ConfigReloadListener::~ConfigReloadListener()
+namespace remoting
 {
-}
+   ConfigReloadListener::ConfigReloadListener()
+   {
+   }
+
+   ConfigReloadListener::~ConfigReloadListener()
+   {
+   }
+
+
+   void ConfigReloadListener::initialize_config_reload_listener(Configurator *pconfigurator)
+   {
+      m_pconfigurator = pconfigurator;
+
+      m_pconfigurator->addListener(this);
+
+   }
+
+   void ConfigReloadListener::onConfigReload(ServerConfig *serverConfig)
+   {
+
+
+
+   }
+
+
+} // namespace remoting

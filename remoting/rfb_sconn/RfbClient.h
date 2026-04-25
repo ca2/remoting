@@ -69,7 +69,7 @@ namespace remoting
                 const ViewPortState *constViewPort,
                 const ViewPortState *dynViewPort,
                 int idleTimeout,
-                ::subsystem::LogWriter *log);
+                ::subsystem::LogWriter * plogwriter);
 
       virtual ~RfbClient();
 
@@ -149,7 +149,7 @@ namespace remoting
       bool m_viewOnlyAuth;
       bool m_shared;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
       // Information
       unsigned int m_id;

@@ -31,9 +31,9 @@
 namespace remoting
 {
    FbUpdateNotifier::FbUpdateNotifier(::innate_subsystem::FrameBuffer *fb, critical_section *fbLock, ::subsystem::LogWriter * plogwriter, WatermarksController* wmController)
-   : m_frameBuffer(fb),
+   : m_pframebuffer(fb),
      m_fbLock(fbLock),
-     m_plogwriter(plogwriter),
+     m_plogwriter = plogwriter;,
      m_cursorPainter(fb, plogwriter),
      m_isNewSize(false),
      m_isCursorChange(false),
@@ -110,9 +110,9 @@ namespace remoting
             m_plogwriter->debug("FbUpdateNotifier (event): new size of frame buffer");
             try {
                critical_section_lock al(m_fbLock);
-               m_adapter->onFrameBufferPropChange(m_frameBuffer);
+               m_adapter->onFrameBufferPropChange(m_pframebuffer);
                // FIXME: it's bad code. Must work without one next line, but not it.
-               m_adapter->onFrameBufferUpdate(m_frameBuffer, m_frameBuffer->getDimension());
+               m_adapter->onFrameBufferUpdate(m_pframebuffer, m_pframebuffer->getDimension());
             } catch (...) {
                m_plogwriter->error("FbUpdateNotifier (event): error in set new size");
             }
@@ -145,7 +145,7 @@ namespace remoting
             bool isIntersect = !reg.is_empty();
             if (isIntersect)
             {
-               m_watermarksController->showWaterMarks(m_frameBuffer, m_fbLock);
+               m_watermarksController->showWaterMarks(m_pframebuffer, m_fbLock);
                update.addRect(curWmRect);
             }
 #endif
@@ -156,7 +156,7 @@ namespace remoting
 
             try {
                for (::array_base<::int_rectangle>::iterator i = updateList.begin(); i != updateList.end(); ++i) {
-                  m_adapter->onFrameBufferUpdate(m_frameBuffer, *i);
+                  m_adapter->onFrameBufferUpdate(m_pframebuffer, *i);
                }
             } catch (...) {
                m_plogwriter->error("FbUpdateNotifier (event): error in update");
@@ -165,7 +165,7 @@ namespace remoting
 
 #ifdef _DEMO_VERSION_
             if (isIntersect)
-               m_watermarksController->hideWatermarks(m_frameBuffer, m_fbLock);
+               m_watermarksController->hideWatermarks(m_pframebuffer, m_fbLock);
 #endif
 
             m_oldPosition = m_cursorPainter.hideCursor();

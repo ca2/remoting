@@ -79,7 +79,7 @@ namespace remoting_node_desktop
 
       ::pointer<Configurator> m_pconfigurator;
       //::subsystem::LogWriter *m_clientLogWriter;
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
       // Transport
       ::subsystem::AnonymousPipe *m_clToSrvChan;
@@ -93,7 +93,7 @@ namespace remoting_node_desktop
       ::remoting::UpdateHandlerServer *m_updHandlerSrv;
       ::remoting::UserInputServer *m_uiSrv;
       ::remoting::ConfigServer *m_cfgServer;
-      ::remoting::GateKickHandler *m_gateKickHandler;
+      ::remoting::GateKickHandler *m_pblockinggateKickHandler;
 
       ::subsystem::SessionChangesWatcher *m_sessionChangesWatcher;
 

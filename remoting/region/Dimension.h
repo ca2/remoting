@@ -67,8 +67,8 @@
 //  inline void setDim(const ::int_rectangle &  rect) { width = rect.width();
 //                                         height = rect.height(); }
 //
-//  inline bool cmpDim(const ::int_size & dim) const { return dim.cx == width &&
-//                                                          dim.cy == height; }
+//  inline bool cmpDim(const ::int_size & size) const { return size.cx == width &&
+//                                                          size.cy == height; }
 //
 //  inline bool is_empty() const { return width <= 0 || height <= 0; }
 //  inline bool isEqualTo(const ::int_size & other) const

@@ -36,7 +36,7 @@
 class CLASS_DECL_REMOTING InputInjector
 {
 public:
-  InputInjector(bool ctrlAltDelEnabled, ::subsystem::LogWriter *log);
+  InputInjector(bool ctrlAltDelEnabled, ::subsystem::LogWriter * plogwriter);
   ~InputInjector();
 
   // Toggles off all modifiers including the Delete key.
@@ -123,7 +123,7 @@ private:
   bool m_winIsPressed;
   bool m_ctrlAltDelEnabled;
 
-  ::subsystem::LogWriter *m_plogwriter;
+  ::pointer < ::subsystem::LogWriter > m_plogwriter;
 };
 
 

@@ -33,6 +33,8 @@
 #include "TimeAPI.h"
 #include "subsystem_windows/platform/subsystem.h"
 #include "subsystem_windows/node/WTS.h"
+#include "subsystem_windows/platform/subsystem.h"
+#include "subsystem_windows/platform/subsystem.h"
 #include "subsystem_windows/node/SharedMemory.h"
 
 
@@ -43,7 +45,7 @@ namespace remoting_node_desktop
       HINSTANCE appInstance, const ::scoped_string &scopedstrwindowClassName,
       const ::subsystem::CommandLineArguments *cmdArgs) : // LocalWindowsApplication(appInstance, windowClassName),
        m_clToSrvChan(0), m_srvToClChan(0), m_clToSrvGate(0), m_srvToClGate(0), m_dispatcher(0), m_updHandlerSrv(0),
-       m_uiSrv(0), m_cfgServer(0), m_gateKickHandler(0), m_sessionChangesWatcher(0),// m_configurator(true),
+       m_uiSrv(0), m_cfgServer(0), m_pblockinggateKickHandler(0), m_sessionChangesWatcher(0),// m_configurator(true),
        // m_clientLogWriter(LogNames::LOG_PIPE_PUBLIC_NAME,
        //             LogNames::SERVER_LOG_FILE_STUB_NAME),
        m_contextSwitchResolution(1),
@@ -127,7 +129,7 @@ namespace remoting_node_desktop
             new ::remoting::UpdateHandlerServer(m_srvToClGate, m_dispatcher, [this]() { onHappening(); }, m_plogwriter);
          m_uiSrv = new ::remoting::UserInputServer(m_srvToClGate, m_dispatcher, [this]() { onHappening(); }, m_plogwriter);
          m_cfgServer = new ::remoting::ConfigServer(m_dispatcher, m_plogwriter);
-         m_gateKickHandler = new ::remoting::GateKickHandler(m_dispatcher);
+         m_pblockinggateKickHandler = new ::remoting::GateKickHandler(m_dispatcher);
 
          // Start servers
          m_dispatcher->resume();
@@ -181,8 +183,8 @@ namespace remoting_node_desktop
       if (m_dispatcher)
          delete m_dispatcher;
 
-      if (m_gateKickHandler)
-         delete m_gateKickHandler;
+      if (m_pblockinggateKickHandler)
+         delete m_pblockinggateKickHandler;
       if (m_cfgServer)
          delete m_cfgServer;
       if (m_uiSrv)

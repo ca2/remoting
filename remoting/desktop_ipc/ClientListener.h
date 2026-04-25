@@ -32,13 +32,14 @@ namespace remoting
 
 {
 
-   class ClientListener
+   class CLASS_DECL_REMOTING ClientListener :
+   virtual public ::particle
    {
    public:
       ClientListener();
-      virtual ~ClientListener();
+       ~ClientListener() override;
 
-      virtual void onRequest(unsigned char reqCode, BlockingGate *backGate) = 0;
+      virtual void onRequest(unsigned char reqCode, BlockingGate *pblockinggate) = 0;
    };
 
 

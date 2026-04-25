@@ -38,11 +38,15 @@ namespace remoting
    class ReconnectingChannel : public Channel
    {
    public:
-      ReconnectingChannel(unsigned int timeOut, ::subsystem::LogWriter *log);
-      virtual ~ReconnectingChannel();
+      //ReconnectingChannel(unsigned int timeOut, ::subsystem::LogWriter * plogwriter);
+      ReconnectingChannel();
+      ~ReconnectingChannel() override;
 
-      virtual size_t read(void *buffer, size_t len);
-      virtual size_t write(const void *buffer, size_t len);
+
+      virtual void initialize_reconnecting_channel(unsigned int timeOut, ::subsystem::LogWriter * plogwriter);
+
+      memsize read(void *buffer, memsize len) override;
+      memsize defer_write(const void *buffer, memsize len) override;
 
       // Replaces invalid channel by the new valid.
       // At the next the read()/write() function call read()/write()
@@ -51,11 +55,11 @@ namespace remoting
 
       // Closes connection and break all blocked operation.
       // @throw ::subsystem::Exception on error.
-      virtual void close();
+      virtual void close() override;
 
-      virtual size_t available() { return 0; };
+      virtual memsize available() override { return 0; };
 
-   private:
+   //private:
       // @param funName - is a function name that will be placed to the
       // ReconnectException text.
       // @throw ReconnectException on reconnect detection.
@@ -79,7 +83,7 @@ namespace remoting
       ::happening m_timer;
       unsigned int m_timeOut;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

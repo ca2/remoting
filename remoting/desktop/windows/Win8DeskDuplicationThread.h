@@ -48,7 +48,7 @@ namespace remoting
       Win8DeskDuplication(::innate_subsystem::FrameBuffer *targetFb, ::array_base<::int_rectangle> &targetRect,
                           Win8CursorShape *targetCurShape, LONGLONG *cursorTimeStamp, critical_section *cursorMutex,
                           Win8DuplicationListener *duplListener, ::array_base<WinDxgiOutput> &dxgiOutput,
-                          ::subsystem::LogWriter *log);
+                          ::subsystem::LogWriter * plogwriter);
       virtual ~Win8DeskDuplication();
 
       bool isValid();
@@ -95,7 +95,7 @@ namespace remoting
       ::array_base<WinCustomD3D11Texture2D> m_stageTextures2D;
       ::innate_subsystem::FrameBuffer m_auxiliaryFrameBuffer;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
    //// __WIN8DESKDUPLICATIONTHREAD_H__

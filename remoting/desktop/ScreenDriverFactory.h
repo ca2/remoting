@@ -38,9 +38,9 @@ namespace remoting
    class CLASS_DECL_REMOTING ScreenDriverFactory
    {
    public:
-      virtual ScreenDriver *createScreenDriver(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
+      virtual ScreenDriver *createScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
                                                ::innate_subsystem::FrameBuffer *fb,
-                                               critical_section *fbcritical_section, ::subsystem::LogWriter *log) = 0;
+                                               critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter) = 0;
    private:
    };
 

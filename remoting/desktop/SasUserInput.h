@@ -37,10 +37,13 @@ namespace remoting
    class CLASS_DECL_REMOTING SasUserInput : public UserInput
    {
    public:
-      SasUserInput(UserInputClient *client, ::subsystem::LogWriter *log);
-      virtual ~SasUserInput();
+      //SasUserInput(UserInputClient *client, ::subsystem::LogWriter * plogwriter);
+      SasUserInput();
+      ~SasUserInput() override;
 
-      virtual void sendInit(BlockingGate *gate);
+      virtual void initialize_sas_user_input(UserInputClient *client, ::subsystem::LogWriter * plogwriter);
+
+      virtual void sendInit(BlockingGate *pblockinggate);
       virtual void setNewClipboard(const ::scoped_string &newClipboard);
       virtual void setMouseEvent(const ::int_point newPos, unsigned char keyFlag);
       virtual void setKeyboardEvent(unsigned int keySym, bool down);
@@ -50,7 +53,7 @@ namespace remoting
       virtual ::array_base<::int_rectangle> getDisplaysCoords();
       virtual void getNormalizedRect(::int_rectangle *rect);
       virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle *rect);
-      virtual HWND getWindowHandleByName(const ::scoped_string &windowName);
+      virtual ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName);
       virtual void getApplicationRegion(unsigned int procId, Region *region);
       virtual bool isApplicationInFocus(unsigned int procId);
 
@@ -60,7 +63,7 @@ namespace remoting
       bool m_ctrlPressed;
       bool m_altPressed;
       bool m_underVista;
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

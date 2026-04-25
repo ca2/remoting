@@ -29,12 +29,12 @@
 namespace remoting
 {
 
-   Win32ScreenDriverBaseImpl::Win32ScreenDriverBaseImpl(UpdateKeeper *updateKeeper, UpdateListener *updateListener,
+   Win32ScreenDriverBaseImpl::Win32ScreenDriverBaseImpl(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
                                                         critical_section *fbcritical_section,
-                                                        ::subsystem::LogWriter *log) :
-       WinVideoRegionUpdaterImpl(log), m_fbcritical_section(fbcritical_section),
-       m_cursorPosDetector(updateKeeper, updateListener, log),
-       m_curShapeDetector(updateKeeper, updateListener, &m_curShapeGrabber, fbcritical_section, log)
+                                                        ::subsystem::LogWriter * plogwriter) :
+       WinVideoRegionUpdaterImpl(plogwriter), m_fbcritical_section(fbcritical_section),
+       m_cursorPosDetector(pupdatekeeper, pupdatelistener, log),
+       m_curShapeDetector(pupdatekeeper, pupdatelistener, &m_curShapeGrabber, fbcritical_section, log)
    {
    }
 

@@ -39,20 +39,24 @@ namespace remoting
    class CLASS_DECL_REMOTING WindowsUserInput : public UserInput
    {
    public:
-      WindowsUserInput(::subsystem::ClipboardListener *clipboardListener, bool ctrlAltDelEnabled,
-                       ::subsystem::LogWriter *log);
+      //WindowsUserInput(::subsystem::ClipboardListener *pclipboardlistener, bool ctrlAltDelEnabled,
+        //               ::subsystem::LogWriter * plogwriter);
+      WindowsUserInput();
       virtual ~WindowsUserInput(void);
+
+      virtual void initialize_windows_user_input(::subsystem::ClipboardListener *pclipboardlistener, bool ctrlAltDelEnabled,
+                 ::subsystem::LogWriter * plogwriter);
 
       virtual void setNewClipboard(const ::scoped_string &newClipboard);
       virtual void setMouseEvent(const ::int_point newPos, unsigned char keyFlag);
       virtual void setKeyboardEvent(unsigned int keySym, bool down);
 
       virtual void getCurrentUserInfo(::string &desktopName, ::string &userName);
-      virtual void getDisplayNumberCoords(::int_rectangle *rect, unsigned char dispNumber);
+      virtual void getDisplayNumberCoords(::int_rectangle & rect, unsigned char dispNumber);
       virtual ::array_base<::int_rectangle> WindowsUserInput::getDisplaysCoords();
-      virtual void getNormalizedRect(::int_rectangle *rect);
-      virtual void getPrimaryDisplayCoords(::int_rectangle *rect);
-      virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle *rect);
+      virtual void getNormalizedRect(::int_rectangle & rect);
+      virtual void getPrimaryDisplayCoords(::int_rectangle & rect);
+      virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rect);
       virtual HWND getWindowHandleByName(const ::scoped_string &windowName);
       virtual void getApplicationRegion(unsigned int procId, ::remoting::Region *region);
       virtual bool isApplicationInFocus(unsigned int procId);
@@ -71,7 +75,7 @@ namespace remoting
 
       unsigned char m_prevKeyFlag;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
    //// __WINDOWSUSERINPUT_H__

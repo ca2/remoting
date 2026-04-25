@@ -52,7 +52,7 @@ namespace remoting_node_desktop
        * @throws ::subsystem::Exception when failed to create tcp server.
        */
       RfbServer(const ::scoped_string &scopedstrBindHost, ::remoting_node_desktop::Configurator * pconfigurator, unsigned short bindPort, RfbClientManager *clientManager,
-                bool lockAddr, ::subsystem::LogWriter *log, const ::int_rectangle &viewPort = {});
+                bool lockAddr, ::subsystem::LogWriter * plogwriter, const ::int_rectangle &viewPort = {});
 
       /**
        * Stops listening thread and deletes rfb server.
@@ -79,7 +79,7 @@ namespace remoting_node_desktop
       ::remoting::ViewPortState m_viewPort;
 
       // private:
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
       ::pointer<Configurator> m_pconfigurator;
 

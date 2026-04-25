@@ -34,11 +34,11 @@
 
 HttpRequestHandler::HttpRequestHandler(DataInputStream *dataInput,
                                        DataOutputStream *dataOutput,
-                                       ::subsystem::LogWriter *log,
+                                       ::subsystem::LogWriter * plogwriter,
                                        const ::scoped_string & scopedstrPeerHost)
 : m_dataInput(dataInput), m_dataOutput(dataOutput),
   m_peerHost(peerHost),
-  m_plogwriter(log)
+  m_plogwriter = plogwriter;
 {
 }
 

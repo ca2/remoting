@@ -42,13 +42,17 @@ namespace remoting
     *   server application.
     *   It will break only if thread will be terminated.
     */
-   class CLASS_DECL_REMOTING DesktopServerWatcher : public ::subsystem::Thread
+   class CLASS_DECL_REMOTING DesktopServerWatcher :
+   virtual public ::subsystem::Thread
    {
    public:
-      DesktopServerWatcher(ReconnectionListener *recListener, ::subsystem::LogWriter *log);
-      virtual ~DesktopServerWatcher();
+      //DesktopServerWatcher(ReconnectionListener *recListener, ::subsystem::LogWriter * plogwriter);
+      DesktopServerWatcher();
+      ~DesktopServerWatcher() override;
 
-   protected:
+      virtual void initialize_desktop_server_watcher(ReconnectionListener *recListener, ::subsystem::LogWriter * plogwriter);
+
+   //protected:
       virtual void execute();
       virtual void onTerminate();
 
@@ -59,10 +63,10 @@ namespace remoting
       // @throws SystemException on fail.
       void doXPTrick();
 
-      ::subsystem::Process *m_process;
-      ReconnectionListener *m_recListener;
+      ::pointer < ::subsystem::Process  > m_pprocess;
+      ::pointer < ReconnectionListener > m_preconnectionlistener;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
  

@@ -25,7 +25,7 @@
 #include "Encoder.h"
 
 Encoder::Encoder(PixelConverter *conv, DataOutputStream *output)
-: m_pixelConverter(conv),
+: m_ppixelconverter(conv),
   m_output(output)
 {
 }
@@ -51,7 +51,7 @@ void Encoder::sendRectangle(const ::int_rectangle &  rect,
                             const ::innate_subsystem::FrameBuffer *serverFb,
                             const EncodeOptions *options)
 {
-  const ::innate_subsystem::FrameBuffer *fb = m_pixelConverter->convert(rect, serverFb);
+  const ::innate_subsystem::FrameBuffer *fb = m_ppixelconverter->convert(rect, serverFb);
   int pixelSize = (int)fb->getBytesPerPixel();
   _ASSERT(pixelSize == fb->getBytesPerPixel());
 

@@ -37,7 +37,8 @@ namespace remoting
 
    // This class  will be an abstract interface for user input such as keyboard,
    // mouse pointer, e.t.c., on the server side.
-   class CLASS_DECL_REMOTING UserInput
+   class CLASS_DECL_REMOTING UserInput :
+   virtual public ::particle
    {
    public:
       UserInput();
@@ -45,7 +46,7 @@ namespace remoting
 
       // FIXME: It's no good idea to place this function to here.
       // Because it uses only for the UserInputClient class.
-      virtual void sendInit(BlockingGate *gate) {}
+      virtual void sendInit(BlockingGate *pblockinggate) {}
 
       // Client to server user inputs
       virtual void setNewClipboard(const ::scoped_string &newClipboard) = 0;

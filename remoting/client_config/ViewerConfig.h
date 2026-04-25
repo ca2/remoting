@@ -117,7 +117,7 @@ namespace remoting
       // Log file
       ::string m_pathToLogFile;
       ::string m_logName;
-      ::pointer < ::subsystem::LogWriter > m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;;
       // Connection history
       //RegistryKey m_conHistoryKey; // Used by m_conHistory
       ConnectionHistory m_conHistory;

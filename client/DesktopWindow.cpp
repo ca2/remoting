@@ -34,7 +34,7 @@
 namespace remoting_client
 {
     DesktopWindow::DesktopWindow(::subsystem::LogWriter * plogwriter, ::remoting::ConnectionConfig *pconnectionconfig, ViewerWindow * pviewerwindow) :
-        m_plogwriter(plogwriter),m_pviewerwindow(pviewerwindow), m_showVert(false), m_showHorz(false), m_fbWidth(1), m_fbHeight(1),
+        m_plogwriter = plogwriter;,m_pviewerwindow(pviewerwindow), m_showVert(false), m_showHorz(false), m_fbWidth(1), m_fbHeight(1),
         m_winResize(false), m_pconnectionconfig(pconnectionconfig),
 
         m_pviewercore(0), m_ctrlDown(false), m_altDown(false), m_previousMousePos(-1, -1), m_previousMouseState(0),

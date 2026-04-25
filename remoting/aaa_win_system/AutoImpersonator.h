@@ -34,11 +34,11 @@
 class CLASS_DECL_REMOTING AutoImpersonator
 {
 public:
-  AutoImpersonator(Impersonator *imp, ::subsystem::LogWriter *log);
+  AutoImpersonator(Impersonator *imp, ::subsystem::LogWriter * plogwriter);
   virtual ~AutoImpersonator();
 private:
   Impersonator *m_imp;
-  ::subsystem::LogWriter *m_plogwriter;
+  ::pointer < ::subsystem::LogWriter > m_plogwriter;
 };
 
 //// __AUTOIMPERSONATOR_H__

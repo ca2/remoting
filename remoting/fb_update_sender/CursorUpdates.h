@@ -38,8 +38,11 @@ namespace remoting
    class CLASS_DECL_REMOTING  CursorUpdates
    {
    public:
-      CursorUpdates(::subsystem::LogWriter *log);
+      CursorUpdates();
       virtual ~CursorUpdates();
+
+
+      virtual void initialize_cursor_updates(::subsystem::LogWriter * plogwriter);
 
       // Important: After calling the update() function frame buffer
       // may contain a cursor image to send it as a frame buffer update.
@@ -47,7 +50,7 @@ namespace remoting
       // call the restoreFrameBuffer() function. Also function clones
       // actual cursor shape to the cursorShape argument (Only when after call
       // the updCont->cursorShapeChanged flag is raised).
-      void update(const EncodeOptions *encodeOptions, UpdateContainer *updCont, bool fullRegReq,
+      void update(const EncodeOptions *encodeOptions, UpdateContainer *pupdatecontainer, bool fullRegReq,
                   const ::int_rectangle &viewPort, bool shareOnlyApp, const ::remoting::Region *shareAppRegion,
                   ::innate_subsystem::FrameBuffer *fb, ::remoting::CursorShape *cursorShape);
       void restoreFrameBuffer(::innate_subsystem::FrameBuffer *fb);
@@ -87,14 +90,14 @@ namespace remoting
       class ::time m_blockCurPosTime;
       ::remoting::CursorShape m_cursorShape;
       ::innate_subsystem::FrameBuffer m_shapeBackground;
-      ::int_point m_backgroundPos;
+      ::int_point m_pointBackground;
       critical_section m_curPosLocMut;
       // Uses when the rich enabled but pointer pos disabled to determine
       // the last send method: by a cursor shape update or drawing on the
       // frame buffer.
       bool m_isDrawCursorMethod;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

@@ -25,9 +25,10 @@
 #pragma once
 
 
-#include "DesktopSrvDispatcher.h"
-#include "DesktopServerProto.h"
-#include "remoting/remoting/desktop/DesktopConfigLocal.h"
+//#include "DesktopSrvDispatcher.h"
+#include "remoting/remoting/desktop_ipc/DesktopServerProto.h"
+#include "remoting/remoting/desktop_ipc/ClientListener.h"
+//#include "remoting/remoting/desktop/DesktopConfigLocal.h"
 
 namespace remoting
 {
@@ -35,17 +36,24 @@ namespace remoting
    class ConfigServer : public DesktopServerProto, public ClientListener
    {
    public:
-      ConfigServer(DesktopSrvDispatcher *dispatcher, ::subsystem::LogWriter *log);
-      virtual ~ConfigServer();
 
-   protected:
+      ::pointer < Configurator > m_pconfigurator;
+      ::pointer < DesktopConfigLocal > m_pdesktopconfiglocal;
+
+      ConfigServer();
+      ~ConfigServer() override;
+
+
+      virtual void initialize_config_server(Configurator * pconfigurator, DesktopSrvDispatcher * pdispatcher, ::subsystem::LogWriter * plogwriter);
+
+   //protected:
       // Internal dispatcher
-      virtual void onRequest(unsigned char reqCode, BlockingGate *backGate);
+      virtual void onRequest(unsigned char reqCode, BlockingGate *pblockinggate);
 
-      void reloadSettings(BlockingGate *backGate);
-      void answerOnSoftInputEnablingReq(BlockingGate *backGate);
+      void reloadSettings(BlockingGate *pblockinggate);
+      void answerOnSoftInputEnablingReq(BlockingGate *pblockinggate);
 
-      DesktopConfigLocal m_deskConf;
+
    };
 
 

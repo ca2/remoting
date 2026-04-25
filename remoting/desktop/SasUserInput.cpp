@@ -24,24 +24,39 @@
 #include "framework.h"
 #include "SasUserInput.h"
 //#include "remoting/remoting/win_system/Environment.h"
-#include "remoting/remoting/win_system/WTS.h"
+#include "subsystem_windows/node/WTS.h"
+#include "subsystem_windows/platform/subsystem.h"
 
+#include "subsystem/platform/subsystem.h"
+#include "subsystem/node/OperatingSystem.h"
 #define XK_MISCELLANY
 #include "remoting/remoting/rfb/keysymdef.h"
+#include "subsystem_windows/node/WTS.h"
+#include "subsystem_windows/platform/subsystem.h"
+
 
 namespace remoting
 {
 
 
-   SasUserInput::SasUserInput(UserInputClient *client, ::subsystem::LogWriter *log) :
-       m_client(client), m_ctrlPressed(false), m_altPressed(false), m_underVista(false), m_plogwriter(log)
+   SasUserInput::SasUserInput() :
+        m_ctrlPressed(false), m_altPressed(false), m_underVista(false)
    {
-      m_underVista = Environment::isVistaOrLater();
+      m_underVista = MainSubsystem().OperatingSystem().isVistaOrLater();
    }
 
    SasUserInput::~SasUserInput() {}
 
-   void SasUserInput::sendInit(BlockingGate *gate) { m_client->sendInit(gate); }
+   void SasUserInput::initialize_sas_user_input(UserInputClient *pclient, ::subsystem::LogWriter * plogwriter)
+   {
+       //m_client(client), m_ctrlPressed(false), m_altPressed(false), m_underVista(false), m_plogwriter = plogwriter;
+       //{
+          m_client = pclient;
+       m_plogwriter = plogwriter;
+      //m_underVista = MainSubsystem().OperatingSystem().isVistaOrLater();
+   }
+
+   void SasUserInput::sendInit(BlockingGate *pblockinggate) { m_client->sendInit(pblockinggate); }
 
    void SasUserInput::setMouseEvent(const ::int_point newPos, unsigned char keyFlag)
    {
@@ -73,11 +88,11 @@ namespace remoting
 
       if (m_ctrlPressed && m_altPressed && delPressed && m_underVista)
       {
-         DWORD sessionId = WTS::getActiveConsoleSessionId(m_plogwriter);
-         bool isRdp = WTS::SessionIsRdpSession(sessionId, m_plogwriter);
+         DWORD sessionId = WindowsSubsystem().WTS().getActiveConsoleSessionId(m_plogwriter);
+         bool isRdp = WindowsSubsystem().WTS().SessionIsRdpSession(sessionId, m_plogwriter);
          if (!isRdp)
          {
-            Environment::simulateCtrlAltDelUnderVista(m_plogwriter);
+            MainSubsystem().OperatingSystem().simulateCtrlAltDelUnderVista(m_plogwriter);
             return;
          }
       }
@@ -100,9 +115,9 @@ namespace remoting
 
    void SasUserInput::getNormalizedRect(::int_rectangle *rect) { m_client->getNormalizedRect(rect); }
 
-   void SasUserInput::getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle *rect) { m_client->getWindowCoords(hwnd, rect); }
+   void SasUserInput::getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle *rect) { m_client->getWindowCoords(operatingsystemwindow, rect); }
 
-   HWND SasUserInput::getWindowHandleByName(const ::scoped_string &windowName)
+   ::operating_system::window SasUserInput::getWindowHandleByName(const ::scoped_string &windowName)
    {
       return m_client->getWindowHandleByName(windowName);
    }

@@ -30,19 +30,19 @@ namespace remoting
 
    UpdateKeeper::UpdateKeeper() {}
 
-   UpdateKeeper::UpdateKeeper(const ::int_rectangle &borderRect) { m_borderRect.setRect(borderRect); }
+   UpdateKeeper::UpdateKeeper(const ::int_rectangle &borderRect) { m_borderRect.set(borderRect); }
 
    UpdateKeeper::~UpdateKeeper(void) {}
 
-   void UpdateKeeper::addChangedRegion(const Region *changedRegion)
+   void UpdateKeeper::addChangedRegion(const Region *m_regionChanged)
    {
       critical_section_lock al(&m_updContLocMut);
 
       // FIXME: Calling subtract() function is correct if use
       // copy region instead of copy rectangle.
-      // m_updateContainer.copiedRegion.subtract(changedRegion);
-      m_updateContainer.changedRegion.add(changedRegion);
-      m_updateContainer.changedRegion.crop(&m_borderRect);
+      // m_updateContainer.m_regionCopied.subtract(m_regionChanged);
+      m_updateContainer.m_regionChanged.add(m_regionChanged);
+      m_updateContainer.m_regionChanged.crop(m_borderRect);
    }
 
    void UpdateKeeper::addChangedRect(const ::int_rectangle &changedRect)
@@ -51,34 +51,34 @@ namespace remoting
       addChangedRegion(&region);
    }
 
-   void UpdateKeeper::addCopyRect(const ::int_rectangle &copyRect, const ::int_point *src)
+   void UpdateKeeper::addCopyRect(const ::int_rectangle &copyRect, const ::int_point &pointSource)
    {
       critical_section_lock al(&m_updContLocMut);
 
-      if (copyRect->is_empty())
+      if (copyRect.is_empty())
       {
          return;
       }
 
-      Region *changedRegion = &m_updateContainer.changedRegion;
-      Region *copiedRegion = &m_updateContainer.copiedRegion;
-      ::int_point *copySrc = &m_updateContainer.copySrc;
+      Region *m_regionChanged = &m_updateContainer.m_regionChanged;
+      Region *m_regionCopied = &m_updateContainer.m_regionCopied;
+      ::int_point *m_pointCopySource = &m_updateContainer.m_pointCopySource;
       ::int_rectangle dstCopyRect(copyRect);
 
       // Create copy of copyRect in the source coordinates.
       ::int_rectangle srcCopyRect(copyRect);
-      srcCopyRect.set_top_left(src->x, src->y);
+      srcCopyRect.set_top_left(pointSource.x, pointSource.y);
 
       // Clipping dstCopyRect
-      dstCopyRect = dstCopyRect.intersection(&m_borderRect);
+      dstCopyRect = dstCopyRect.intersection(m_borderRect);
       // Correcting source coordinates
       srcCopyRect.left += dstCopyRect.left - copyRect.left;
       srcCopyRect.top += dstCopyRect.top - copyRect.top;
       srcCopyRect.right += dstCopyRect.right - copyRect.right;
       srcCopyRect.bottom += dstCopyRect.bottom - copyRect.bottom;
       // Clipping srcCopyRect
-      ::int_rectangle dummySrcCopyRect(&srcCopyRect);
-      srcCopyRect = srcCopyRect.intersection(&m_borderRect);
+      ::int_rectangle dummySrcCopyRect(srcCopyRect);
+      srcCopyRect = srcCopyRect.intersection(m_borderRect);
       // Correcting destination coordinates
       dstCopyRect.left += srcCopyRect.left - dummySrcCopyRect.left;
       dstCopyRect.top += srcCopyRect.top - dummySrcCopyRect.top;
@@ -90,74 +90,74 @@ namespace remoting
          return;
       }
 
-      copySrc->x = srcCopyRect.left;
-      copySrc->y = srcCopyRect.top;
+      m_pointCopySource->x = srcCopyRect.left;
+      m_pointCopySource->y = srcCopyRect.top;
 
       // Adding difference between clipped dstCopyRect and original copyRect
-      // to changedRegion. Because without update detectors this information
+      // to m_regionChanged. Because without update detectors this information
       // loses irretrievably.
       Region diff(copyRect);
-      Region dstCopyRegion(&dstCopyRect);
+      Region dstCopyRegion(dstCopyRect);
       diff.subtract(&dstCopyRegion);
       addChangedRegion(&diff);
 
-      // Old copiedRegion must be added to changedRegion - (?)
-      if (!copiedRegion->is_empty())
+      // Old m_regionCopied must be added to m_regionChanged - (?)
+      if (!m_regionCopied->is_empty())
       {
-         changedRegion->add(copiedRegion);
-         copiedRegion->clear();
+         m_regionChanged->add(m_regionCopied);
+         m_regionCopied->clear();
          addChangedRect(copyRect);
          return;
       }
 
-      copiedRegion->clear();
-      copiedRegion->addRect(&dstCopyRect);
+      m_regionCopied->clear();
+      m_regionCopied->addRect(dstCopyRect);
 
-      // copiedRegion must be substracted from changedRegion
-      changedRegion->subtract(copiedRegion);
+      // m_regionCopied must be substracted from m_regionChanged
+      m_regionChanged->subtract(m_regionCopied);
 
-      // Create region that is intersection of changedRegion and srcCopyRect.
-      Region addonChangedRegion(&srcCopyRect);
-      addonChangedRegion.intersect(changedRegion);
+      // Create region that is intersection of m_regionChanged and srcCopyRect.
+      Region addonChangedRegion(srcCopyRect);
+      addonChangedRegion.intersect(m_regionChanged);
 
-      // Move addonChangedRegion and add it to changedRegion.
-      addonChangedRegion.translate(dstCopyRect.left - copySrc->x, dstCopyRect.top - copySrc->y);
-      changedRegion->add(&addonChangedRegion);
+      // Move addonChangedRegion and add it to m_regionChanged.
+      addonChangedRegion.translate(dstCopyRect.left - m_pointCopySource->x, dstCopyRect.top - m_pointCopySource->y);
+      m_regionChanged->add(&addonChangedRegion);
 
       // Clipping regions
-      m_updateContainer.changedRegion.crop(&m_borderRect);
-      m_updateContainer.copiedRegion.crop(&m_borderRect);
+      m_updateContainer.m_regionChanged.crop(m_borderRect);
+      m_updateContainer.m_regionCopied.crop(m_borderRect);
    }
 
    void UpdateKeeper::setBorderRect(const ::int_rectangle &borderRect)
    {
       critical_section_lock al(&m_updContLocMut);
-      m_borderRect = *borderRect;
+      m_borderRect = borderRect;
    }
 
    void UpdateKeeper::setScreenSizeChanged()
    {
       critical_section_lock al(&m_updContLocMut);
-      m_updateContainer.screenSizeChanged = true;
+      m_updateContainer.m_bScreenSizeChanged = true;
    }
 
    void UpdateKeeper::setCursorPosChanged()
    {
       critical_section_lock al(&m_updContLocMut);
-      m_updateContainer.cursorPosChanged = true;
+      m_updateContainer.m_bCursorPosChanged = true;
    }
 
-   void UpdateKeeper::setCursorPos(const ::int_point *curPos)
+   void UpdateKeeper::setCursorPos(const ::int_point &curPos)
    {
       critical_section_lock al(&m_updContLocMut);
-      m_updateContainer.cursorPosChanged = true;
-      m_updateContainer.cursorPos = *curPos;
+      m_updateContainer.m_bCursorPosChanged = true;
+      m_updateContainer.m_pointCursorPos = curPos;
    }
 
    void UpdateKeeper::setCursorShapeChanged()
    {
       critical_section_lock al(&m_updContLocMut);
-      m_updateContainer.cursorShapeChanged = true;
+      m_updateContainer.m_bCursorShapeChanged = true;
    }
 
    void UpdateKeeper::addUpdateContainer(const UpdateContainer *updateContainer)
@@ -168,31 +168,31 @@ namespace remoting
       // Add copied region
       ::array_base<::int_rectangle> rects;
       ::array_base<::int_rectangle>::iterator iRect;
-      updateContainer->copiedRegion.getRectVector(&rects);
+      updateContainer->m_regionCopied.getRectVector(&rects);
       size_t numRects = rects.size();
       if (numRects > 0)
       {
          iRect = rects.begin();
-         addCopyRect(&(*iRect), &updateContainer->copySrc);
+         addCopyRect((*iRect), updateContainer->m_pointCopySource);
       }
 
       // Add changed region
-      addChangedRegion(&updateContainer->changedRegion);
+      addChangedRegion(&updateContainer->m_regionChanged);
 
       // Add video region
-      m_updateContainer.videoRegion.add(&updateContainer->videoRegion);
+      m_updateContainer.m_regionVideo.add(&updateContainer->m_regionVideo);
 
       // Set other properties
-      if (updateContainer->screenSizeChanged)
+      if (updateContainer->m_bScreenSizeChanged)
       {
          setScreenSizeChanged();
       }
-      setCursorPos(&updateContainer->cursorPos);
-      if (updateContainer->cursorPosChanged)
+      setCursorPos(updateContainer->m_pointCursorPos);
+      if (updateContainer->m_bCursorPosChanged)
       {
-         setCursorPos(&updateContainer->cursorPos);
+         setCursorPos(updateContainer->m_pointCursorPos);
       }
-      if (updateContainer->cursorShapeChanged)
+      if (updateContainer->m_bCursorShapeChanged)
       {
          setCursorShapeChanged();
       }
@@ -209,12 +209,12 @@ namespace remoting
       UpdateContainer updateContainer;
       getUpdateContainer(&updateContainer);
 
-      Region resultRegion = updateContainer.changedRegion;
-      resultRegion.add(&updateContainer.copiedRegion);
+      Region resultRegion = updateContainer.m_regionChanged;
+      resultRegion.add(&updateContainer.m_regionCopied);
       resultRegion.intersect(region);
 
-      bool result = updateContainer.cursorPosChanged || updateContainer.cursorShapeChanged ||
-                    updateContainer.screenSizeChanged || !resultRegion.is_empty();
+      bool result = updateContainer.m_bCursorPosChanged || updateContainer.m_bCursorShapeChanged ||
+                    updateContainer.m_bScreenSizeChanged || !resultRegion.is_empty();
 
       return result;
    }
@@ -225,16 +225,16 @@ namespace remoting
          critical_section_lock al(&m_updContLocMut);
 
          // Clipping regions
-         m_updateContainer.changedRegion.crop(&m_borderRect);
-         m_updateContainer.copiedRegion.crop(&m_borderRect);
+         m_updateContainer.m_regionChanged.crop(m_borderRect);
+         m_updateContainer.m_regionCopied.crop(m_borderRect);
 
          *updateContainer = m_updateContainer;
          m_updateContainer.clear();
       }
       {
          critical_section_lock al(&m_exclRegLocMut);
-         updateContainer->changedRegion.subtract(&m_excludedRegion);
-         updateContainer->copiedRegion.subtract(&m_excludedRegion);
+         updateContainer->m_regionChanged.subtract(&m_excludedRegion);
+         updateContainer->m_regionCopied.subtract(&m_excludedRegion);
       }
    }
 

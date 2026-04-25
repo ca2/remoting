@@ -33,11 +33,11 @@ namespace remoting
 {
 
 
-   WindowsUserInput::WindowsUserInput(ClipboardListener *clipboardListener, bool ctrlAltDelEnabled,
-                                      ::subsystem::LogWriter *log) :
-       m_prevKeyFlag(0), m_inputInjector(ctrlAltDelEnabled, log), m_plogwriter(log)
+   WindowsUserInput::WindowsUserInput(ClipboardListener *pclipboardlistener, bool ctrlAltDelEnabled,
+                                      ::subsystem::LogWriter * plogwriter) :
+       m_prevKeyFlag(0), m_inputInjector(ctrlAltDelEnabled, log), m_plogwriter = plogwriter;
    {
-      m_clipboard = new WindowsClipboard(clipboardListener, m_plogwriter);
+      m_clipboard = new WindowsClipboard(pclipboardlistener, m_plogwriter);
    }
 
    WindowsUserInput::~WindowsUserInput(void) { delete m_clipboard; }

@@ -46,10 +46,10 @@ namespace remoting
        * Creates new echo extension client messages handler.
        * @param registrator rfb registrator which needs to register echo messages
        *   to rfb dispatcher address whem to this object.
-       * @param output gate for writting replies for requests.
+       * @param output pblockinggate for writting replies for requests.
        * @pararm enabled indicates if echo response should be enabled or disabled
        */
-      EchoExtensionRequestHandler(RfbCodeRegistrator *registrator, RfbOutputGate *output, ::subsystem::LogWriter *log,
+      EchoExtensionRequestHandler(RfbCodeRegistrator *registrator, RfbOutputGate *output, ::subsystem::LogWriter * plogwriter,
                                   bool enabled = true);
 
       /**
@@ -61,7 +61,7 @@ namespace remoting
        * Inherited from RfbDispatcherListener.
        * Processes echo extension client messages.
        */
-      virtual void onRequest(unsigned int reqCode, RfbInputGate *backGate);
+      virtual void onRequest(unsigned int reqCode, RfbInputGate *pblockinggate);
 
       bool isEchoExtensionEnabled();
 
@@ -74,7 +74,7 @@ namespace remoting
       RfbOutputGate *m_output;
 
       bool m_enabled;
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

@@ -25,16 +25,25 @@
 #include "DesktopSrvDispatcher.h"
 #include "ReconnectException.h"
 #include "subsystem/_common_header.h"
+#include "subsystem/platform/Exception.h"
 
 namespace remoting
 {
 
 
-   DesktopSrvDispatcher::DesktopSrvDispatcher(BlockingGate *gate, AnEventListener *extErrorListener,
-                                              ::subsystem::LogWriter *log) :
-       m_gate(gate), m_extErrorListener(extErrorListener), m_plogwriter(log)
+   // DesktopSrvDispatcher::DesktopSrvDispatcher(BlockingGate *pblockinggate, AnEventListener *extErrorListener,
+   //                                            ::subsystem::LogWriter * plogwriter) :
+   //     m_pblockinggate(pblockinggate), m_extErrorListener(extErrorListener), m_plogwriter = plogwriter;
+   // {
+   // }
+
+   DesktopSrvDispatcher::DesktopSrvDispatcher():
+   m_pblockinggate(nullptr),m_plogwriter(nullptr)
    {
+
+
    }
+
 
    DesktopSrvDispatcher::~DesktopSrvDispatcher()
    {
@@ -42,13 +51,31 @@ namespace remoting
       wait();
    }
 
+   void DesktopSrvDispatcher::initialize_desktop_srv_dispatcher(BlockingGate *pblockinggate,
+                     // AnEventListener *m_extTerminationListener,
+                     const ::procedure &procedureDesktopSrvDispatcher, ::subsystem::LogWriter * plogwriter)
+   {
+
+      m_pblockinggate = pblockinggate;
+      m_procedureDesktopSrvDispatcher = procedureDesktopSrvDispatcher;
+      m_plogwriter = plogwriter;
+
+   }
+
+
    void DesktopSrvDispatcher::onTerminate() {}
 
    void DesktopSrvDispatcher::notifyOnError()
    {
-      if (m_extErrorListener)
+      //if (m_extErrorListener)
+      //{
+        // m_extErrorListener->onAnObjectEvent();
+      //}
+      if (m_procedureDesktopSrvDispatcher)
       {
-         m_extErrorListener->onAnObjectEvent();
+
+         m_procedureDesktopSrvDispatcher();
+
       }
    }
 
@@ -59,7 +86,7 @@ namespace remoting
          try
          {
             m_plogwriter->debug("DesktopSrvDispatcher reading code");
-            unsigned char code = m_gate->readUInt8();
+            unsigned char code = m_pblockinggate->readUInt8();
             m_plogwriter->debug("DesktopSrvDispatcher, code {} recieved", code);
             ::map<unsigned char, ClientListener *>::iterator iter = m_handlers.find(code);
             if (iter == m_handlers.end())
@@ -70,7 +97,7 @@ namespace remoting
                                (int)code);
                throw ::subsystem::Exception(errMess);
             }
-            (*iter).second->onRequest(code, m_gate);
+            (*iter).m_element2->onRequest(code, m_pblockinggate);
          }
          catch (ReconnectException &)
          {

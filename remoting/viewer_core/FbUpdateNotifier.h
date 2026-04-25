@@ -67,7 +67,7 @@ namespace remoting
       void onTerminate();
 
       critical_section *m_fbLock;
-      ::innate_subsystem::FrameBuffer *m_frameBuffer;
+      ::innate_subsystem::FrameBuffer *m_pframebuffer;
       CursorPainter m_cursorPainter;
 
       // Pointer to adapter.
@@ -79,7 +79,7 @@ namespace remoting
       //::subsystem::::happening m_eventUpdate;
       ::happening m_eventUpdate;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
       //It is used for adding watermarks in demo version.
       WatermarksController* m_watermarksController;

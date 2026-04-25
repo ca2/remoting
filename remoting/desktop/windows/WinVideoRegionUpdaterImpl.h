@@ -40,7 +40,7 @@ namespace remoting
    class CLASS_DECL_REMOTING WinVideoRegionUpdaterImpl : public ScreenDriver, Thread
    {
    public:
-      WinVideoRegionUpdaterImpl(::subsystem::LogWriter *log);
+      WinVideoRegionUpdaterImpl(::subsystem::LogWriter * plogwriter);
       virtual ~WinVideoRegionUpdaterImpl();
    protected:
       virtual void execute();
@@ -56,7 +56,7 @@ namespace remoting
       ::earth::time m_lastVidUpdTime;
       Region m_vidRegion;
       critical_section m_regionMutex;
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
       ::happening m_sleeper;
    };
 

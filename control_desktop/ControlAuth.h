@@ -36,9 +36,9 @@ class ControlAuth
 {
 public:
   /**
-   * Doesn't lock gate.
+   * Doesn't lock pblockinggate.
    */
-  ControlAuth(ControlGate *gate, const ::scoped_string & scopedstrPassword)
+  ControlAuth(ControlGate *pblockinggate, const ::scoped_string & scopedstrPassword)
 ;
 
   virtual ~ControlAuth();
@@ -47,7 +47,7 @@ protected:
   void authRfb();
 
 protected:
-  ControlGate *m_gate;
+  ControlGate *m_pblockinggate;
 
   unsigned char m_password[ServerConfig::VNC_PASSWORD_SIZE];
 };

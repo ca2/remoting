@@ -32,7 +32,7 @@
 class HttpRequestHandler
 {
 public:
-  HttpRequestHandler(DataInputStream *dataInput, DataOutputStream *dataOutput, ::subsystem::LogWriter *log,
+  HttpRequestHandler(DataInputStream *dataInput, DataOutputStream *dataOutput, ::subsystem::LogWriter * plogwriter,
                      const ::scoped_string & scopedstrPeerHost = 0);
   virtual ~HttpRequestHandler();
 
@@ -44,7 +44,7 @@ protected:
   DataOutputStream *m_dataOutput;
   ::string m_peerHost;
 
-  ::subsystem::LogWriter *m_plogwriter;
+  ::pointer < ::subsystem::LogWriter > m_plogwriter;
 };
 
 

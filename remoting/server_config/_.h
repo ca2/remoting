@@ -2,14 +2,14 @@
 #pragma once
 
 
+/// remoting/remoting/server_config
+namespace remoting
+{
 
-#include "remoting/_.h"
+   class Configurator;
 
 
-#if defined(_remoting_server_config_project)
-#define CLASS_DECL_REMOTING_SERVER_CONFIG  CLASS_DECL_EXPORT
-#else
-#define CLASS_DECL_REMOTING_SERVER_CONFIG  CLASS_DECL_IMPORT
-#endif
+}
+
 
 

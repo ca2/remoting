@@ -38,24 +38,30 @@ namespace remoting
    class CLASS_DECL_REMOTING UpdateDetector : public ::subsystem::GuiThread
    {
    public:
-      UpdateDetector(UpdateKeeper *updateKeeper, UpdateListener *updateListener);
-      virtual ~UpdateDetector();
 
-      void setUpdateKeeper(UpdateKeeper *updateKeeper) { m_updateKeeper = updateKeeper; }
-      UpdateKeeper *getUpdateKeeper() const { return m_updateKeeper; }
 
-   protected:
+      UpdateDetector();
+      ~UpdateDetector() override;
+
+
+      virtual void initialize_update_detector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener);
+
+
+      void setUpdateKeeper(UpdateKeeper *pupdatekeeper) { m_pupdatekeeper = pupdatekeeper; }
+      UpdateKeeper *getUpdateKeeper() const { return m_pupdatekeeper; }
+
+   //protected:
       void doUpdate()
       {
-         if (m_updateListener)
+         if (m_pupdatelistener)
          {
-            m_updateListener->onUpdate();
+            m_pupdatelistener->onUpdate();
          }
       }
 
-      UpdateKeeper *m_updateKeeper;
+      ::pointer < UpdateKeeper > m_pupdatekeeper;
 
-      UpdateListener *m_updateListener;
+      ::pointer < UpdateListener > m_pupdatelistener;
    };
 
    //// __UPDATEDETECTOR_H__

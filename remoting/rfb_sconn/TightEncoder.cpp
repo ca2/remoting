@@ -84,7 +84,7 @@ void TightEncoder::sendRectangle(const ::int_rectangle &  rect,
                                  const EncodeOptions *options)
 {
   // First, convert pixels to client format.
-  const ::innate_subsystem::FrameBuffer *clientFb = m_pixelConverter->convert(rect, serverFb);
+  const ::innate_subsystem::FrameBuffer *clientFb = m_ppixelconverter->convert(rect, serverFb);
 
   // Now call an encoder function corresponding to the client's pixel size.
   size_t bpp = clientFb->getBitsPerPixel();

@@ -27,7 +27,7 @@
 
 #include "subsystem/_common_header.h"
 #include "remoting/remoting/desktop/UserInput.h"
-#include "remoting/remoting/desktop/ClipboardListener.h"
+#include "subsystem/node/ClipboardListener.h"
 //#include "subsystem/platform/inttypes.h"
 #include "DesktopServerProto.h"
 #include "DesktopSrvDispatcher.h"
@@ -35,13 +35,20 @@
 namespace remoting
 {
 
-   class UserInputClient : public UserInput, public DesktopServerProto, public ClientListener
+   class UserInputClient :
+   virtual public UserInput,
+   virtual public DesktopServerProto,
+   virtual public ClientListener
    {
    public:
-      UserInputClient(BlockingGate *forwGate, DesktopSrvDispatcher *dispatcher, ClipboardListener *clipboardListener);
-      virtual ~UserInputClient();
+      //UserInputClient(BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher, ::subsystem::ClipboardListener *pclipboardlistener);
+      UserInputClient();
+      ~UserInputClient() override;
 
-      virtual void sendInit(BlockingGate *gate);
+
+      virtual void initialize_user_input_client(Configurator * pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher, ::subsystem::ClipboardListener *pclipboardlistener);
+
+      virtual void sendInit(BlockingGate *pblockinggate);
       virtual void setNewClipboard(const ::scoped_string &newClipboard);
       virtual void setMouseEvent(const ::int_point newPos, unsigned char keyFlag);
       virtual void setKeyboardEvent(unsigned int keySym, bool down);
@@ -51,16 +58,20 @@ namespace remoting
       virtual ::array_base<::int_rectangle> getDisplaysCoords();
       virtual void getNormalizedRect(::int_rectangle *rect);
       virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle *rect);
-      virtual HWND getWindowHandleByName(const ::scoped_string &windowName);
+      virtual ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName);
       virtual void getApplicationRegion(unsigned int procId, Region *region);
       virtual bool isApplicationInFocus(unsigned int procId);
 
       // To catch a new clipboard
-      virtual void onRequest(unsigned char reqCode, BlockingGate *backGate);
+      virtual void onRequest(unsigned char reqCode, BlockingGate *pblockinggate);
 
-   protected:
+   ///protected:
+
+
       unsigned char m_sendMouseFlags;
-      ClipboardListener *m_clipboardListener;
+      ::pointer < ::subsystem::ClipboardListener > m_pclipboardlistener;
+
+
    };
 
 

@@ -27,11 +27,11 @@
 #include "remoting/remoting/server_config/Configurator.h"
 #include "remoting/remoting/win_system/WTS.h"
 
-FileTransferSecurity::FileTransferSecurity(Desktop *desktop, ::subsystem::LogWriter *log)
-: Impersonator(log),
+FileTransferSecurity::FileTransferSecurity(Desktop *desktop, ::subsystem::LogWriter * plogwriter)
+: Impersonator(plogwriter),
   m_hasAccess(false),
   m_desktop(desktop),
-  m_plogwriter(log)
+  m_plogwriter = plogwriter;
 {
   m_desktop = desktop;
 }
@@ -68,8 +68,8 @@ void FileTransferSecurity::beginMessageProcessing()
       throw ::subsystem::Exception("Desktop is locked.");
     }
 
-    if (rdpEnabled && (WTS::getRdpSessionId(m_plogwriter) != 0)) {
-      HANDLE token = WTS::duplicateCurrentProcessUserToken(rdpEnabled, m_plogwriter);
+    if (rdpEnabled && (WindowsSubsystem().WTS().getRdpSessionId(m_plogwriter) != 0)) {
+      HANDLE token = WindowsSubsystem().WTS().duplicateCurrentProcessUserToken(rdpEnabled, m_plogwriter);
       impersonateAsUser(token);
     }
     else {

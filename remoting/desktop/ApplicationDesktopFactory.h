@@ -30,15 +30,16 @@
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING ApplicationDesktopFactory : public DesktopFactory
+   class CLASS_DECL_REMOTING ApplicationDesktopFactory :
+   virtual public DesktopFactory
    {
    public:
       ApplicationDesktopFactory();
       ~ApplicationDesktopFactory();
 
-      virtual Desktop *createDesktop(::subsystem::ClipboardListener *extClipListener,
+      virtual ::pointer < Desktop  > createDesktop(::subsystem::ClipboardListener *extClipListener,
                                      UpdateSendingListener *extUpdSendingListener,
-                                     AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter *log);
+                                     AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter * plogwriter);
    };
 
 } // namespace remoting

@@ -47,7 +47,7 @@ namespace remoting
    {
    public:
       DesktopClientImpl(ClipboardListener *extClipListener, UpdateSendingListener *extUpdSendingListener,
-                        AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter *log);
+                        AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter * plogwriter);
       virtual ~DesktopClientImpl();
 
    protected:
@@ -74,12 +74,12 @@ namespace remoting
       DesktopServerWatcher *m_deskServWatcher;
       DesktopSrvDispatcher *m_dispatcher;
 
-      GateKicker *m_gateKicker;
+      GateKicker *m_pblockinggateKicker;
       UserInput *m_userInputClient; // It uses for delegation by the SasUserInput.
 
       DesktopConfigClient *m_deskConf;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

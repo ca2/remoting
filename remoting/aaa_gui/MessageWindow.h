@@ -48,7 +48,7 @@ public:
   virtual bool wndProc(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam) { return true; }
 
   ::operating_system::window m_operatingsystemwindow;
-  WindowMessageHandler *m_messageHandler;
+  WindowMessageHandler *m_pwindowmessagehandler;
 
   HINSTANCE m_hinst;
   ::wstring m_windowClassName;

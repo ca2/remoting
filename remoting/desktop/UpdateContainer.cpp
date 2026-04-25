@@ -33,34 +33,34 @@ namespace remoting
 
    void UpdateContainer::clear()
    {
-      copiedRegion.clear();
-      changedRegion.clear();
-      videoRegion.clear();
-      screenSizeChanged = false;
-      cursorPosChanged = false;
-      cursorShapeChanged = false;
-      copySrc.Null();
-      cursorPos.Null();
+      m_regionCopied.clear();
+      m_regionChanged.clear();
+      m_regionVideo.clear();
+      m_bScreenSizeChanged = false;
+      m_bCursorPosChanged = false;
+      m_bCursorShapeChanged = false;
+      m_pointCopySource.Null();
+      m_pointCursorPos.Null();
    }
 
    UpdateContainer &UpdateContainer::operator=(const UpdateContainer &src)
    {
-      copiedRegion = src.copiedRegion;
-      changedRegion = src.changedRegion;
-      videoRegion = src.videoRegion;
-      screenSizeChanged = src.screenSizeChanged;
-      cursorPosChanged = src.cursorPosChanged;
-      cursorShapeChanged = src.cursorShapeChanged;
-      copySrc = src.copySrc;
-      cursorPos = src.cursorPos;
+      m_regionCopied = src.m_regionCopied;
+      m_regionChanged = src.m_regionChanged;
+      m_regionVideo = src.m_regionVideo;
+      m_bScreenSizeChanged = src.m_bScreenSizeChanged;
+      m_bCursorPosChanged = src.m_bCursorPosChanged;
+      m_bCursorShapeChanged = src.m_bCursorShapeChanged;
+      m_pointCopySource = src.m_pointCopySource;
+      m_pointCursorPos = src.m_pointCursorPos;
 
       return *this;
    }
 
    bool UpdateContainer::is_empty() const
    {
-      return copiedRegion.is_empty() && changedRegion.is_empty() && videoRegion.is_empty() && !screenSizeChanged &&
-             !cursorPosChanged && !cursorShapeChanged;
+      return m_regionCopied.is_empty() && m_regionChanged.is_empty() && m_regionVideo.is_empty() && !m_bScreenSizeChanged &&
+             !m_bCursorPosChanged && !m_bCursorShapeChanged;
    }
 
 

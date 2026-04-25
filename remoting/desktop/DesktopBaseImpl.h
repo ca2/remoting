@@ -32,31 +32,41 @@
 // External listeners
 #include "AbnormDeskTermListener.h"
 #include "UpdateSendingListener.h"
-#include "ClipboardListener.h"
+#include "subsystem/node/ClipboardListener.h"
 
 namespace remoting
 {
 
    // This class  is a base class CLASS_DECL_REMOTING for different implemetations of desktops
-   class CLASS_DECL_REMOTING DesktopBaseImpl : public Desktop, public UpdateListener, public ClipboardListener, public ConfigReloadListener
+   class CLASS_DECL_REMOTING DesktopBaseImpl :
+   virtual public Desktop,
+   virtual public UpdateListener,
+   virtual public ::subsystem::ClipboardListener,
+   virtual public ConfigReloadListener
    {
    public:
-      DesktopBaseImpl(ClipboardListener *extClipListener, UpdateSendingListener *extUpdSendingListener,
-                      AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter *log);
-      virtual ~DesktopBaseImpl();
+      ///DesktopBaseImpl(ClipboardListener *extClipListener, UpdateSendingListener *extUpdSendingListener,
+         //             AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter * plogwriter);
+      DesktopBaseImpl();
+      ~DesktopBaseImpl() override;
+
+
+      void initialize_desktop_base_impl(::subsystem::ClipboardListener *extClipListener, UpdateSendingListener *extUpdSendingListener,
+                      AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter * plogwriter);
+
 
       // Puts a current desktop name from working session to the
       // desktopName argument and an user name to userMame.
       virtual void getCurrentUserInfo(::string &desktopName, ::string &userName);
       // Puts the current frame buffer dimension and pixel format to
-      // the dim and pf function arguments.
-      virtual void getFrameBufferProperties(::int_size *dim, ::innate_subsystem::PixelFormat *pf);
+      // the size and pf function arguments.
+      virtual void getFrameBufferProperties(::int_size *size, ::innate_subsystem::PixelFormat *pf);
       virtual void getPrimaryDesktopCoords(::int_rectangle *rect);
       virtual void getDisplayNumberCoords(::int_rectangle *rect, unsigned char dispNumber);
       virtual ::array_base<::int_rectangle> getDisplaysCoords();
       virtual void getNormalizedRect(::int_rectangle *rect);
       virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle *rect);
-      virtual HWND getWindowHandleByName(const ::scoped_string &windowName);
+      virtual ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName);
       virtual void getApplicationRegion(unsigned int procId, Region *region);
       virtual bool isApplicationInFocus(unsigned int procId);
 
@@ -64,7 +74,7 @@ namespace remoting
       virtual void setMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask);
       virtual void setNewClipText(const ::scoped_string &newClipboard);
 
-   protected:
+   //protected:
       // Calling when at least one update has been detected.
       virtual void onUpdate();
       // Implementation of the UpdateRequestListener interface.
@@ -105,7 +115,7 @@ namespace remoting
       AbnormDeskTermListener *m_extDeskTermListener;
       ClipboardListener *m_extClipListener;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

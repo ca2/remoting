@@ -31,8 +31,8 @@
 #include "subsystem/platform/DesCrypt.h"
 //#include aaa_<algorithm>
 
-ControlAuth::ControlAuth(ControlGate *gate, const ::scoped_string & scopedstrPassword)
-: m_gate(gate)
+ControlAuth::ControlAuth(ControlGate *pblockinggate, const ::scoped_string & scopedstrPassword)
+: m_pblockinggate(pblockinggate)
 {
   // Prepare data for authentication.
   ::string truncatedPass(password);
@@ -45,21 +45,21 @@ ControlAuth::ControlAuth(ControlGate *gate, const ::scoped_string & scopedstrPas
          ::minimum(passwordAnsi.length(), sizeof(m_password)));
 
   // FIXME: Why it's commented out?
-  // critical_section_lock l(m_gate);
+  // critical_section_lock l(m_pblockinggate);
 
-  m_gate->writeUInt32(ControlProto::AUTH_MSG_ID);
-  m_gate->writeUInt32(0);
+  m_pblockinggate->writeUInt32(ControlProto::AUTH_MSG_ID);
+  m_pblockinggate->writeUInt32(0);
 
   authRfb();
 
-  unsigned char result = m_gate->readUInt32();
+  unsigned char result = m_pblockinggate->readUInt32();
 
   switch (result) {
   case ControlProto::REPLY_ERROR:
     {
       ::string authFailReason;
 
-      m_gate->readUTF8(&authFailReason);
+      m_pblockinggate->readUTF8(&authFailReason);
 
       throw ControlAuthException(authFailReason);
     }
@@ -81,11 +81,11 @@ void ControlAuth::authRfb()
   unsigned char challenge[16];
   unsigned char response[16];
 
-  m_gate->readFully(challenge, sizeof(challenge));
+  m_pblockinggate->readFully(challenge, sizeof(challenge));
 
   DesCrypt desCrypt;
 
   desCrypt.encrypt(response, challenge, sizeof(challenge), m_password);
 
-  m_gate->writeFully(response, sizeof(response));
+  m_pblockinggate->writeFully(response, sizeof(response));
 }

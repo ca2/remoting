@@ -56,7 +56,7 @@ namespace remoting
 
    void WatermarksController::setNewPixelFormat(const ::innate_subsystem::PixelFormat & pf)
    {
-      if (is_empty() || m_frameBuffer.getPixelFormat()!= pf)
+      if (is_empty() || m_pframebuffer->getPixelFormat()!= pf)
       {
          ::innate_subsystem::FrameBuffer temp;
          ::innate_subsystem::FrameBuffer& fb = frameBuffer(true);
@@ -83,7 +83,7 @@ namespace remoting
    {
       m_overlay.copyFrom(frameBuffer, m_currentRect.left, m_currentRect.top);
 
-      frameBuffer->copyFrom(m_currentRect, &m_frameBuffer, 0, 0);
+      frameBuffer->copyFrom(m_currentRect, &m_pframebuffer, 0, 0);
    }
 
    void WatermarksController::hideWatermarks(::innate_subsystem::FrameBuffer *frameBuffer, critical_section *fbLock)
@@ -98,12 +98,12 @@ namespace remoting
 
    ::innate_subsystem::FrameBuffer& WatermarksController::frameBuffer(bool fromFile)
    {
-      if (m_frameBuffer.getBuffer() == 0 || fromFile)
+      if (m_pframebuffer->getBuffer() == 0 || fromFile)
       {
          loadFromfile();
       }
 
-      return m_frameBuffer;
+      return m_pframebuffer;
    }
 
    void WatermarksController::loadFromfile()
@@ -122,9 +122,9 @@ namespace remoting
       unsigned char* buffer = new unsigned char[bufferSize];
 
 
-      ::int_size dim(m_width, m_height);
+      ::int_size size(m_width, m_height);
       ::innate_subsystem::PixelFormat pf = ::innate_subsystem::StandardPixelFormatFactory::create32bppPixelFormat();
-      m_frameBuffer.setPropertiesWithoutResize(dim, pf);
+      m_pframebuffer->setPropertiesWithoutResize(size, pf);
       m_overlay.setPropertiesWithoutResize(m_overlay.getDimension(), pf);
 
       for (int i = 0; i < m_height; ++i)
@@ -143,11 +143,11 @@ namespace remoting
          }
       }
 
-      m_frameBuffer.setBuffer(buffer);
+      m_pframebuffer->setBuffer(buffer);
    }
 
    bool WatermarksController::is_empty()
    {
-      return m_frameBuffer.getBuffer() == 0;
+      return m_pframebuffer->getBuffer() == 0;
    }
 } // namespace remoting

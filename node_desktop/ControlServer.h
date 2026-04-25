@@ -53,7 +53,7 @@ namespace remoting_node_desktop
        * executing some of control commands and cannot be 0.
        */
       ControlServer(::subsystem::PipeServer *pipeServer, RfbClientManager *rfbClientManager,
-                    ::subsystem::LogWriter *log);
+                    ::subsystem::LogWriter * plogwriter);
       /**
        * Stops and deletes control server and deletes transport.
        */
@@ -84,7 +84,7 @@ namespace remoting_node_desktop
        */
       RfbClientManager *m_rfbClientManager;
 
-      ::subsystem::LogWriter *m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

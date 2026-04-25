@@ -37,11 +37,11 @@
 
 //#include aaa_<crtdbg.h>
 
-ControlMessage::ControlMessage(unsigned int messageId, ControlGate *gate,
+ControlMessage::ControlMessage(unsigned int messageId, ControlGate *pblockinggate,
                                const ::scoped_string & scopedstrPasswordFile,
                                bool getPassFromConfigEnabled,
                                bool forService)
-: DataOutputStream(0), m_messageId(messageId), m_gate(gate),
+: DataOutputStream(0), m_messageId(messageId), m_pblockinggate(pblockinggate),
   m_passwordFile(passwordFile),
   m_getPassFromConfigEnabled(getPassFromConfigEnabled),
   m_forService(forService)
@@ -65,21 +65,21 @@ void ControlMessage::send()
 
 void ControlMessage::sendData()
 {
-  m_gate->writeUInt32(m_messageId);
+  m_pblockinggate->writeUInt32(m_messageId);
   _ASSERT((unsigned int)m_tunnel->size() == m_tunnel->size());
-  m_gate->writeUInt32((unsigned int)m_tunnel->size());
-  m_gate->writeFully(m_tunnel->toByteArray(), m_tunnel->size());
+  m_pblockinggate->writeUInt32((unsigned int)m_tunnel->size());
+  m_pblockinggate->writeFully(m_tunnel->toByteArray(), m_tunnel->size());
 }
 
 void ControlMessage::checkRetCode()
 {
-  unsigned int messageId = m_gate->readUInt32();
+  unsigned int messageId = m_pblockinggate->readUInt32();
 
   switch (messageId) {
   case ControlProto::REPLY_ERROR:
     {
       ::string scopedstrMessage;
-      m_gate->readUTF8(&scopedstrMessage);
+      m_pblockinggate->readUTF8(&scopedstrMessage);
       throw RemoteException(scopedstrMessage);
     }
     break;
@@ -96,7 +96,7 @@ void ControlMessage::checkRetCode()
       case ::innate_subsystem::IDCANCEL:
         throw ControlAuthException(MainSubsystem().StringTable().getString(IDS_USER_CANCEL_CONTROL_AUTH), true);
       case ::innate_subsystem::IDOK:
-        ControlAuth auth(m_gate, authDialog.getPassword());
+        ControlAuth auth(m_pblockinggate, authDialog.getPassword());
         send();
         break;
       }
@@ -123,7 +123,7 @@ void ControlMessage::authFromFile()
   ::string ansiPwd(ansiBuff);
   ::string password;
   ansiPwd.toStringStorage(&password);
-  ControlAuth auth(m_gate, password);
+  ControlAuth auth(m_pblockinggate, password);
   send();
 }
 
@@ -146,7 +146,7 @@ void ControlMessage::authFromRegistry()
     plainAnsiString.toStringStorage(&password);
     // Clear ansi plain password from memory.
     memset(plainPassword, 0, sizeof(plainPassword));
-    ControlAuth auth(m_gate, password);
+    ControlAuth auth(m_pblockinggate, password);
 
     send();
   } else {

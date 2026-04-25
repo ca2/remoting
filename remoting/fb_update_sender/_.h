@@ -3,16 +3,14 @@
 
 
 
-#include "remoting/_.h"
+/// remoting/remoting/fb_update_sender
+namespace remoting
+{
+
+   class UpdateRequestListener;
 
 
-#if defined(_remoting_fb_update_sender_project)
-#define CLASS_DECL_REMOTING_FB_UPDATE_SENDER CLASS_DECL_EXPORT
-#else
-#define CLASS_DECL_REMOTING_FB_UPDATE_SENDER CLASS_DECL_IMPORT
-#endif
-
-
+}
 
 
 
