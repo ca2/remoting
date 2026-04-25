@@ -34,58 +34,61 @@
 #include "subsystem/node/SystemException.h"
 #include "remoting/remoting/rfb/VendorDefs.h"
 
-EchoExtensionRequestHandler::EchoExtensionRequestHandler(RfbCodeRegistrator *registrator,
-                                                       RfbOutputGate *output,
-                                                       ::subsystem::LogWriter * plogwriter,
-                                                       bool enabled)
-: m_output(output), m_enabled(enabled),
-  m_plogwriter = plogwriter;
+namespace remoting
 {
+   EchoExtensionRequestHandler::EchoExtensionRequestHandler(RfbCodeRegistrator *registrator,
+                                                          RfbOutputGate *output,
+                                                          ::subsystem::LogWriter * plogwriter,
+                                                          bool enabled)
+   : m_output(output), m_enabled(enabled),
+     m_plogwriter(plogwriter)
+   {
 
-  if (!isEchoExtensionEnabled()) {
-    return ;
-  }
-
-  registrator->addClToSrvCap(ClientMsgDefs::ECHO_REQUEST, VendorDefs::TIGHTVNC, EchoExtensionDefs::ECHO_REQUEST_SIG);
-
-  registrator->addSrvToClCap(ServerMsgDefs::ECHO_RESPONSE, VendorDefs::TIGHTVNC, EchoExtensionDefs::ECHO_RESPONSE_SIG);
-
-  registrator->regCode(ClientMsgDefs::ECHO_REQUEST, this);
-
-  m_plogwriter->debug("Echo extension request handler created");
-}
-
-EchoExtensionRequestHandler::~EchoExtensionRequestHandler()
-{
-  m_plogwriter->debug("Echo extension request handler deleted");
-}
-
-void EchoExtensionRequestHandler::onRequest(unsigned int reqCode, RfbInputGate *pblockinggate)
-{
-  m_input = pblockinggate;
-
-  try {
-    if (reqCode == ClientMsgDefs::ECHO_REQUEST) {
-      unsigned int number = m_input->readUInt32();
-      m_plogwriter->debug("got echo request with number {}", number);
-      {
-        critical_section_lock l(m_output);
-
-        m_output->writeUInt32(ServerMsgDefs::ECHO_RESPONSE);
-        m_output->writeUInt32(number);
-        m_output->flush();
+      if (!isEchoExtensionEnabled()) {
+         return ;
       }
-    }   
-  } catch (::subsystem::Exception &someEx) {
-    m_plogwriter->error("Echo extension request failed: \"{}\"", someEx.get_message());
-  } // try / catch.
 
-  m_input = NULL;
-}
+      registrator->addClToSrvCap(ClientMsgDefs::ECHO_REQUEST, VendorDefs::TIGHTVNC, EchoExtensionDefs::ECHO_REQUEST_SIG);
 
-bool EchoExtensionRequestHandler::isEchoExtensionEnabled()
-{
-  return m_enabled;
-}
+      registrator->addSrvToClCap(ServerMsgDefs::ECHO_RESPONSE, VendorDefs::TIGHTVNC, EchoExtensionDefs::ECHO_RESPONSE_SIG);
+
+      registrator->regCode(ClientMsgDefs::ECHO_REQUEST, this);
+
+      m_plogwriter->debug("Echo extension request handler created");
+   }
+
+   EchoExtensionRequestHandler::~EchoExtensionRequestHandler()
+   {
+      m_plogwriter->debug("Echo extension request handler deleted");
+   }
+
+   void EchoExtensionRequestHandler::onRequest(unsigned int reqCode, RfbInputGate *pblockinggate)
+   {
+      m_input = pblockinggate;
+
+      try {
+         if (reqCode == ClientMsgDefs::ECHO_REQUEST) {
+            unsigned int number = m_input->readUInt32();
+            m_plogwriter->debug("got echo request with number {}", number);
+            {
+               critical_section_lock l(m_output);
+
+               m_output->writeUInt32(ServerMsgDefs::ECHO_RESPONSE);
+               m_output->writeUInt32(number);
+               m_output->flush();
+            }
+         }
+      } catch (::subsystem::Exception &someEx) {
+         m_plogwriter->error("Echo extension request failed: \"{}\"", someEx.get_message());
+      } // try / catch.
+
+      m_input = NULL;
+   }
+
+   bool EchoExtensionRequestHandler::isEchoExtensionEnabled()
+   {
+      return m_enabled;
+   }
+} // namespace remoting
 
 

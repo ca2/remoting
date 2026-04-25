@@ -46,13 +46,13 @@ namespace remoting_node_desktop
        * @param bindHost host to bind server.
        * @param bindPort port to bind server.
        * @param clientManager handler for incoming connections.
-       * @param viewPort [optional] view port shared by this server.
+       * @param rectangleViewport [optional] view port shared by this server.
        * @param lockAddr determinates if serever must set exclusive address usage.
        * if not set, then view port is full screen.
        * @throws ::subsystem::Exception when failed to create tcp server.
        */
       RfbServer(const ::scoped_string &scopedstrBindHost, ::remoting_node_desktop::Configurator * pconfigurator, unsigned short bindPort, RfbClientManager *clientManager,
-                bool lockAddr, ::subsystem::LogWriter * plogwriter, const ::int_rectangle &viewPort = {});
+                bool lockAddr, ::subsystem::LogWriter * plogwriter, const ::int_rectangle &rectangleViewport = {});
 
       /**
        * Stops listening thread and deletes rfb server.
@@ -76,7 +76,7 @@ namespace remoting_node_desktop
       /**
        * View port for server.
        */
-      ::remoting::ViewPortState m_viewPort;
+      ::remoting::ViewPortState m_rectangleViewport;
 
       // private:
       ::pointer < ::subsystem::LogWriter > m_plogwriter;

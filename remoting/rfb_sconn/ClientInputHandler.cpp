@@ -24,49 +24,54 @@
 #include "framework.h"
 #include "ClientInputHandler.h"
 #include "remoting/remoting/rfb/MsgDefs.h"
+#include "subsystem/platform/Exception.h"
 
-ClientInputHandler::ClientInputHandler(RfbCodeRegistrator *codeRegtor,
-                                       ClientInputEventListener *extEventListener,
-                                       bool viewOnly)
-: m_extEventListener(extEventListener),
-  m_viewOnly(viewOnly)
+namespace remoting
 {
-  // Request codes
-  codeRegtor->regCode(ClientMsgDefs::KEYBOARD_EVENT, this);
-  codeRegtor->regCode(ClientMsgDefs::POINTER_EVENT, this);
-}
+   ClientInputHandler::ClientInputHandler(RfbCodeRegistrator *codeRegtor,
+                                          ClientInputEventListener *extEventListener,
+                                          bool viewOnly)
+   : m_extEventListener(extEventListener),
+     m_viewOnly(viewOnly)
+   {
+      // Request codes
+      codeRegtor->regCode(ClientMsgDefs::KEYBOARD_EVENT, this);
+      codeRegtor->regCode(ClientMsgDefs::POINTER_EVENT, this);
+   }
 
-ClientInputHandler::~ClientInputHandler()
-{
-}
+   ClientInputHandler::~ClientInputHandler()
+   {
+   }
 
-void ClientInputHandler::onRequest(unsigned int reqCode, RfbInputGate *input)
-{
-  switch (reqCode) {
-  case ClientMsgDefs::KEYBOARD_EVENT:
-    {
-      bool down = pinput->readUInt8() != 0;
-      pinput->readUInt16(); // Pad
-      unsigned int keyCode = pinput->readUInt32();
-      if (!m_viewOnly) {
-        m_extEventListener->onKeyboardEvent(keyCode, down);
+   void ClientInputHandler::onRequest(unsigned int reqCode, RfbInputGate *prfbinputgate)
+   {
+      switch (reqCode) {
+         case ClientMsgDefs::KEYBOARD_EVENT:
+         {
+            bool down = prfbinputgate->readUInt8() != 0;
+            prfbinputgate->readUInt16(); // Pad
+            unsigned int keyCode = prfbinputgate->readUInt32();
+            if (!m_viewOnly) {
+               m_extEventListener->onKeyboardEvent(keyCode, down);
+            }
+         }
+            break;
+         case ClientMsgDefs::POINTER_EVENT:
+         {
+            unsigned char buttonMask = prfbinputgate->readUInt8();
+            unsigned short x = prfbinputgate->readUInt16();
+            unsigned short y = prfbinputgate->readUInt16();
+            if (!m_viewOnly) {
+               m_extEventListener->onMouseEvent(x, y, buttonMask);
+            }
+         }
+            break;
+         default:
+            ::string errMess;
+            errMess.formatf("Unknown {} protocol code received", (int)reqCode);
+            throw ::subsystem::Exception(errMess);
+            break;
       }
-    }
-    break;
-  case ClientMsgDefs::POINTER_EVENT:
-    {
-      unsigned char buttonMask = pinput->readUInt8();
-      unsigned short x = pinput->readUInt16();
-      unsigned short y = pinput->readUInt16();
-      if (!m_viewOnly) {
-        m_extEventListener->onMouseEvent(x, y, buttonMask);
-      }
-    }
-    break;
-  default:
-    ::string errMess;
-    errMess.formatf("Unknown {} protocol code received", (int)reqCode);
-    throw ::subsystem::Exception(errMess);
-    break;
-  }
-}
+   }
+} // namespace remoting
+

@@ -173,9 +173,9 @@
 //       inline bool is_empty() const { return getWidth() <= 0 || getHeight() <= 0; }
 //       inline int area() const { return is_empty() ? 0 : getWidth() * getHeight(); }
 //
-//       static int totalArea(::array_base<::int_rectangle> &v) {
+//       static int totalArea(::int_rectangle_array_base &v) {
 //          int area = 0;
-//          for (::array_base<::int_rectangle>::iterator i = v.begin(); i < v.end(); i++)
+//          for (::int_rectangle_array_base::iterator i = v.begin(); i < v.end(); i++)
 //             area += i.area();
 //          return area;
 //       }

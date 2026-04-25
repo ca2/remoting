@@ -41,7 +41,7 @@ namespace remoting
    Win8ScreenDriverImpl::Win8ScreenDriverImpl(::subsystem::LogWriter * plogwriter, UpdateKeeper *pupdatekeeper,
                                               critical_section *fbcritical_section, UpdateListener *pupdatelistener,
                                               bool detectionEnabled) :
-       m_pupdatekeeper(pupdatekeeper), m_pupdatelistener = pupdatelistener;, m_plogwriter = plogwriter;, m_curTimeStamp(0),
+       m_pupdatekeeper(pupdatekeeper), m_pupdatelistener = pupdatelistener;, m_plogwriter(plogwriter), m_curTimeStamp(0),
        m_hasCriticalError(false), m_hasRecoverableError(false), m_detectionEnabled(detectionEnabled)
    {
       resume();
@@ -108,7 +108,7 @@ namespace remoting
       Region virtDeskRegion;
       m_plogwriter->debug("Try to enumerate dxgi outputs");
       ::array_base<WinDxgiOutput> dxgiOutputArray;
-      ::array_base<::int_rectangle> deskCoordArray;
+      ::int_rectangle_array_base deskCoordArray;
       unsigned int iOutput = 0;
       try
       {

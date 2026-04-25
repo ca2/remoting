@@ -27,6 +27,7 @@
 #include "HooksUpdateDetector.h"
 
 #include "acme/operating_system/windows/_.h"
+#include "subsystem_windows/node/MessageWindow.h"
 #include "subsystem_windows/node/UipiControl.h"
 //#include "remoting/remoting/win_system/Environment.h"
 
@@ -103,15 +104,15 @@ namespace remoting
       //HINSTANCE hinst = GetModuleHandle(0);
       //auto hinst = (HINSTANCE) windows::hinstance_from_function(::windows::window::s_window_procedure);
       //m_pmessagewindowTarget = new MessageWindow(hinst, "HookTargetWinClassName");
-      ::construct_newø(m_pmessagewindowTarget);
-         new MessageWindow(hinst, "HookTargetWinClassName");
+      construct_newø(m_pmessagewindowTarget);
+      m_pmessagewindowTarget->createMessageWindow("HookTargetWinClassName");
    }
 
    void HooksUpdateDetector::onTerminate()
    {
       if (m_pmessagewindowTarget != 0)
       {
-         PostMessage(m_pmessagewindowTarget->getHWND(), WM_QUIT, 0, 0);
+         PostMessage((HWND)m_pmessagewindowTarget->_HWND(), WM_QUIT, 0, 0);
       }
       m_initWaiter.set_happening();
    }
@@ -123,7 +124,7 @@ namespace remoting
       if (!isTerminating())
       {
          ::string path, folder;
-         Environment::getCurrentModuleFolderPath(&folder);
+         folder = MainSubsystem().OperatingSystem().getCurrentModuleFolderPath();;
          path.formatf("{}\\{}", folder, HookDefinitions::HOOK_LOADER_NAME);
          m_hookLoader32.setFilename(path);
          ::string hwndStr;

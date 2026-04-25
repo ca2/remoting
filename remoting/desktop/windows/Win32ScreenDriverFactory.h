@@ -41,11 +41,11 @@ namespace remoting
       virtual ~Win32ScreenDriverFactory();
 
       virtual ScreenDriver *createScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                                               ::innate_subsystem::FrameBuffer *fb,
+                                               ::innate_subsystem::FrameBuffer *pframebuffer,
                                                critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter);
    private:
       ScreenDriver *createStandardScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                                               ::innate_subsystem::FrameBuffer *fb,
+                                               ::innate_subsystem::FrameBuffer *pframebuffer,
                                                critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter);
       ScreenDriver *createMirrorScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
                                              critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter);

@@ -339,7 +339,7 @@
     <ProjectReference Include="..\log_writer\remoting_log_writer.vcxproj">
       <Project>{f9a69a98-b750-4242-b6af-de87e4201216}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\rfb\remoting_rfb.vcxproj">
+    <ProjectReference Include="..\rpframebuffer\remoting_rfb.vcxproj">
       <Project>{cea92b3a-5467-4cc7-80a6-227891f96c05}</Project>
     </ProjectReference>
     <ProjectReference Include="..\thread\remoting_thread.vcxproj">

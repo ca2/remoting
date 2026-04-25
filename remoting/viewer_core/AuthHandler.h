@@ -91,7 +91,7 @@ namespace remoting
         // Use "input" and "output" outside authenticate() is prohibited.
         //
         // FIXME: AUTH: document throwing AuthCanceledException
-        virtual void authenticate(::DataInputStream * pinput, ::DataOutputStream *output) = 0;
+        virtual void authenticate(::DataInputStream * pinput, ::DataOutputStream * pdataoutputstream) = 0;
 
         //
         // This abstract method that add auth-capability in RemoveViewerCore.

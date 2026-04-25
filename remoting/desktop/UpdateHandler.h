@@ -108,17 +108,17 @@ namespace remoting
 
       void initFrameBuffer(const ::innate_subsystem::FrameBuffer *newFb);
 
-      virtual bool updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *fb, const ::remoting::Region *region,
-                                             const ::int_rectangle &viewPort);
+      virtual bool updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *pframebuffer, const ::remoting::Region *region,
+                                             const ::int_rectangle &rectangleViewport);
 
       // FIXME: It's no good idea to place this function to here.
       // Because it uses only for the UpdateHandlerClient class.
       virtual void sendInit(::remoting::BlockingGate *pblockinggate) {}
 
    protected:
-      virtual bool updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *dstFb,
-                                             ::innate_subsystem::FrameBuffer *srcFb, const ::remoting::Region *region,
-                                             const ::int_rectangle &viewPort);
+      virtual bool updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *pframebufferTarget,
+                                             ::innate_subsystem::FrameBuffer *pframebufferSource, const ::remoting::Region *region,
+                                             const ::int_rectangle &rectangleViewport);
 
       ::innate_subsystem::FrameBuffer m_backupFrameBuffer;
       critical_section m_fbLocMut;

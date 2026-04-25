@@ -34,12 +34,12 @@ namespace remoting
    class RreEncoder : public Encoder
    {
    public:
-      RreEncoder(PixelConverter *conv, DataOutputStream *output);
+      RreEncoder(PixelConverter * ppixelconverter, DataOutputStream * pdataoutputstream);
       virtual ~RreEncoder();
 
       virtual int getCode() const;
 
-      virtual void splitRectangle(const ::int_rectangle &rect, ::array_base<::int_rectangle> *rectList,
+      virtual void splitRectangle(const ::int_rectangle &rect, ::int_rectangle_array_base *rectList,
                                   const ::innate_subsystem::FrameBuffer *serverFb, const EncodeOptions *options);
 
       virtual void sendRectangle(const ::int_rectangle &rect, const ::innate_subsystem::FrameBuffer *serverFb,
@@ -50,7 +50,7 @@ namespace remoting
       void rreEncode(const ::int_rectangle &r, const ::innate_subsystem::FrameBuffer *frameBuffer);
 
       // Coordinates of subrectangles.
-      ::array_base<::int_rectangle> m_rects;
+      ::int_rectangle_array_base m_rects;
 
       // All rectangles are devided (in splitRectangle() function)
       // into new rectangles with maximum size == 64.

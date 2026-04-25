@@ -25,7 +25,7 @@
 #pragma once
 
 
-//#include "::earth::time.h"
+//#include "class ::time.h"
 
 // This class help to measure time intervals. On a time interval elapse the
 // timer only change self state. It doesn't call a callback function.

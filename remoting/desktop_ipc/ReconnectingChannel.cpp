@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "ReconnectingChannel.h"
-//#include "subsystem/platform/::earth::time.h"
+//#include "subsystem/platform/class ::time.h"
 #include "remoting/remoting/desktop_ipc/ReconnectException.h"
 //#include "subsystem/thread/critical_section.h"
 #include "subsystem/platform/Exception.h"
@@ -170,11 +170,11 @@ namespace remoting
    void ReconnectingChannel::waitForReconnect(const ::scoped_string &scopedstrFunName, Channel *channel)
    {
       // Wait until transport has been initialized or time out elapsed.
-      ::earth::time startTime = ::earth::time::now();
+      auto startTime = ::time::now();
       bool success = false;
       while (!success)
       {
-         unsigned int timeForWait = maximum((int)m_timeOut - (int)(::earth::time::now() - startTime).m_iSecond, 0);
+         unsigned int timeForWait = maximum((m_timeOut - startTime.elapsed()).integral_millisecond(), 0);
          if (timeForWait == 0 || m_isClosed)
          { // Break this function with
            // critical error

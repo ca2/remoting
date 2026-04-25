@@ -53,7 +53,7 @@ public:
 protected:
   bool m_hasAccess;
 
-  Desktop *m_desktop;
+  ::pointer < Desktop > m_pdesktop;
 
   ::pointer < ::subsystem::LogWriter > m_plogwriter;
 };

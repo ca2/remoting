@@ -70,7 +70,7 @@ void WinEventLog::deRegisterEventSource()
 void WinEventLog::updateEventSourcesSubkey()
 {
   ::string path;
-  if (Environment::getCurrentModulePath(&path)) {
+  if (path) = MainSubsystem().OperatingSystem().getCurrentModulePath(); {
     ::string entry("SYSTEM\\CurrentControlSet\\"
                         "services\\eventlog\\Application\\");
     entry += LogNames::WIN_EVENT_PROVIDER_NAME;

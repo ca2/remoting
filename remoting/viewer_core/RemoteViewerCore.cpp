@@ -1521,7 +1521,7 @@ namespace remoting
       encodingsMessage.send(m_output);
    }
 
-   ::array_base<::int_rectangle> RemoteViewerCore::getDesktops()
+   ::int_rectangle_array_base RemoteViewerCore::getDesktops()
    {
       return m_desktops;
    }

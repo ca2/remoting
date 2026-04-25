@@ -106,7 +106,7 @@ namespace remoting
 
    void SasUserInput::getPrimaryDisplayCoords(::int_rectangle *rect) { m_client->getPrimaryDisplayCoords(rect); }
 
-   ::array_base<::int_rectangle> SasUserInput::getDisplaysCoords() { return m_client->getDisplaysCoords(); }
+   ::int_rectangle_array_base SasUserInput::getDisplaysCoords() { return m_client->getDisplaysCoords(); }
 
    void SasUserInput::getDisplayNumberCoords(::int_rectangle *rect, unsigned char dispNumber)
    {

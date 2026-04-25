@@ -33,7 +33,7 @@ namespace remoting
    class CLASS_DECL_REMOTING VncAuthentication
    {
    public:
-      static void vncAuthenticate(::DataInputStream * pinput, ::DataOutputStream *output,
+      static void vncAuthenticate(::DataInputStream * pinput, ::DataOutputStream * pdataoutputstream,
                         const ::scoped_string & password);
 
       // TODO: removed duplicate code: ServerConfig.h

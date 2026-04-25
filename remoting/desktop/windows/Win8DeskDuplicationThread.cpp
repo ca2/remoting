@@ -37,13 +37,13 @@ namespace remoting
 
 
    Win8DeskDuplication::Win8DeskDuplication(::innate_subsystem::FrameBuffer *targetFb,
-                                            ::array_base<::int_rectangle> &targetRect, Win8CursorShape *targetCurShape,
+                                            ::int_rectangle_array_base &targetRect, Win8CursorShape *targetCurShape,
                                             LONGLONG *cursorTimeStamp, critical_section *cursorMutex,
                                             Win8DuplicationListener *duplListener,
                                             ::array_base<WinDxgiOutput> &dxgiOutput, ::subsystem::LogWriter * plogwriter) :
        m_targetFb(targetFb), m_targetRects(targetRect), m_targetCurShape(targetCurShape),
        m_cursorTimeStamp(cursorTimeStamp), m_cursorMutex(cursorMutex), m_duplListener(duplListener), m_device(plogwriter),
-       m_hasCriticalError(false), m_hasRecoverableError(false), m_plogwriter = plogwriter;
+       m_hasCriticalError(false), m_hasRecoverableError(false), m_plogwriter(plogwriter)
    {
       m_plogwriter->debug("Creating Win8DeskDuplication for {} outputs", dxgiOutput.size());
       for (size_t i = 0; i < dxgiOutput.size(); i++)
@@ -73,7 +73,7 @@ namespace remoting
       try
       {
          ::array_base<int> timeouts;
-         ::array_base<::earth::time> begins;
+         ::array_base<class ::time> begins;
          timeouts.resize(m_outDupl.size());
          begins.resize(m_outDupl.size());
          while (!isTerminating() && isValid())
@@ -81,7 +81,7 @@ namespace remoting
             for (size_t i = 0; i < m_outDupl.size(); i++)
             {
                {
-                  begins[i] = ::earth::time::now();
+                  begins[i] = class ::time::now();
                   WinDxgiAcquiredFrame acquiredFrame(&m_outDupl[i], ACQUIRE_TIMEOUT);
                   if (acquiredFrame.wasTimeOut())
                   {
@@ -94,7 +94,7 @@ namespace remoting
                   {
                      DXGI_OUTDUPL_FRAME_INFO *info = acquiredFrame.getFrameInfo();
                      int accum_frames = info->AccumulatedFrames;
-                     double dt = (double)(::earth::time::now() - begins[i]).getTime(); // in milliseconds
+                     double dt = (double)(class ::time::now() - begins[i]).getTime(); // in milliseconds
                      m_plogwriter->debug("Acquire frame for output: {} for %f ms, accumulated {} frames", i,
                                          dt + ACQUIRE_TIMEOUT * timeouts[i], accum_frames);
                      timeouts[i] = 0;

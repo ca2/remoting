@@ -37,7 +37,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "http-server-lib", "http-ser
 		{E45BF60D-C8FD-4F07-A307-25596BE1D256} = {E45BF60D-C8FD-4F07-A307-25596BE1D256}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rfb", "rfb\rfb.vcproj", "{CEA92B3A-5467-4CC7-80A6-227891F96C05}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rfb", "rfb\rpframebuffer.vcproj", "{CEA92B3A-5467-4CC7-80A6-227891F96C05}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "remoting_node_desktop", "remoting_node_desktop\remoting_node_desktop.vcproj", "{EBFC3125-72A4-4029-9941-3BE9EE6444D5}"
 	ProjectSection(ProjectDependencies) = postProject

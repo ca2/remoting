@@ -38,7 +38,7 @@ namespace remoting
        m_isDriverOpened(false), m_isDriverLoaded(false), m_isDriverAttached(false), m_isDriverConnected(false),
        m_isDisplayChanged(false), m_deviceNumber(0), m_driverDC(0), m_changesBuffer(0), m_screenBuffer(0),
        m_propertyChangeListenerWindow(GetModuleHandle(0), NamingDefs::MIRROR_DRIVER_MESSAGE_WINDOW_CLASS_NAME),
-       m_plogwriter = plogwriter;
+       m_plogwriter(plogwriter)
    {
       memset(&m_deviceMode, 0, sizeof(m_deviceMode));
       m_deviceMode.dmSize = sizeof(DEVMODE);

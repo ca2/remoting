@@ -67,7 +67,7 @@
 //  try {
 //    // Try load the library from this exe mofule folder
 //    ::string libName, moduleFolder;
-//    Environment::getCurrentModuleFolderPath(&moduleFolder);
+//    moduleFolder = MainSubsystem().OperatingSystem().getCurrentModuleFolderPath();;
 //    libName.formatf("{}\\DbgHelp.dll", moduleFolder);
 //
 //    dbgLib.init(libName);

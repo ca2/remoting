@@ -31,7 +31,7 @@
 
 namespace remoting
 {
-   void ZrleDecoder::drawTile(::innate_subsystem::FrameBuffer* fb,
+   void ZrleDecoder::drawTile(::innate_subsystem::FrameBuffer* pframebuffer,
        const ::int_rectangle& tileRect,
        const ::array_base<char>* pixels)
    {
@@ -54,8 +54,8 @@ namespace remoting
       if (fbBytesPerPixel == 4 && m_bytesPerPixel == 3)
       {
 
-         auto ptr = (char*)fb->getBuffer();
-         auto bytesPerPixel = fb->getBytesPerPixel();
+         auto ptr = (char*)pframebuffer->getBuffer();
+         auto bytesPerPixel = pframebuffer->getBytesPerPixel();
          if (bytesPerPixel == 3)
          {
             //void* getBufferPtr(int x, int y) const
@@ -67,7 +67,7 @@ namespace remoting
             //}
 
             for (int j = 0; j < h; j++) {
-               auto p = ptr + ((y + j) * fb->m_dimension.cx + x) * 3;
+               auto p = ptr + ((y + j) * pframebuffer->m_dimension.cx + x) * 3;
                for (int i = 0; i < width; i++) {
 
                   bufferPtr = (char*)p;
@@ -83,11 +83,11 @@ namespace remoting
          else if (bytesPerPixel == 4)
          {
 
-            if (width == fb->m_dimension.cx and x == 0)
+            if (width == pframebuffer->m_dimension.cx and x == 0)
             {
 
                const int count = width * h;
-               uint8_t* dst = (uint8_t * )ptr + y * fb->m_dimension.cx * 4 + x * 4;
+               uint8_t* dst = (uint8_t * )ptr + y * pframebuffer->m_dimension.cx * 4 + x * 4;
                const uint8_t* src = (const uint8_t * )pixelsPtr;
 
                for (int i = 0; i < count; ++i) {
@@ -102,7 +102,7 @@ namespace remoting
             }
             else
             {
-               //auto cx4 = fb->m_dimension.cx * 4;
+               //auto cx4 = pframebuffer->m_dimension.cx * 4;
                //auto p1 = ptr + (y + 0) * cx4 + (x * 4);
                //for (int j = 0; j < h; j++) {
                //    auto p = p1;
@@ -118,7 +118,7 @@ namespace remoting
                //    p1 += cx4;
                //}
 
-               const int dstStride = fb->m_dimension.cx * 4;
+               const int dstStride = pframebuffer->m_dimension.cx * 4;
                uint8_t* dstRow = (uint8_t *) ptr + y * dstStride + x * 4;
                const uint8_t* __restrict src = (const uint8_t * ) pixelsPtr;
 
@@ -144,7 +144,7 @@ namespace remoting
          else
          {
             for (int j = 0; j < h; j++) {
-               auto p = ptr + ((y + j) * fb->m_dimension.cx + x) * bytesPerPixel;
+               auto p = ptr + ((y + j) * pframebuffer->m_dimension.cx + x) * bytesPerPixel;
                for (int i = 0; i < width; i++) {
 
                   bufferPtr = (char*)p;
@@ -165,7 +165,7 @@ namespace remoting
          for (int j = 0; j < h; j++) {
             for (int i = 0; i < width; i++) {
 
-               bufferPtr = (char*)fb->getBufferPtr(x + i, y + j);
+               bufferPtr = (char*)pframebuffer->getBufferPtr(x + i, y + j);
                memset(bufferPtr, 0, fbBytesPerPixel);
                memcpy(bufferPtr, pixelsPtr, m_bytesPerPixel);
                pixelsPtr += m_bytesPerPixel;

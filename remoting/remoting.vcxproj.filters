@@ -27,7 +27,7 @@
     <Filter Include="Source Files\region">
       <UniqueIdentifier>{199f3c3a-61a8-4a4f-ae6c-32fb5785bffa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\rfb">
+    <Filter Include="Source Files\rpframebuffer">
       <UniqueIdentifier>{9fe9e7a1-0a1d-4a61-b406-865b2349af80}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\viewer_core">
@@ -54,7 +54,7 @@
     <Filter Include="Header Files\network\socket">
       <UniqueIdentifier>{4895dd81-5c23-4a31-90d3-6b2c9dd7a1c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\rfb">
+    <Filter Include="Header Files\rpframebuffer">
       <UniqueIdentifier>{6d69830f-4d47-47ca-a0b9-43759b649e7a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\ftp_client">
@@ -213,31 +213,31 @@
       <Filter>Source Files\region</Filter>
     </ClCompile>
     <ClCompile Include="rfb\AuthDefs.cpp">
-      <Filter>Source Files\rfb</Filter>
+      <Filter>Source Files\rpframebuffer</Filter>
     </ClCompile>
     <ClCompile Include="rfb\CursorShape.cpp">
-      <Filter>Source Files\rfb</Filter>
+      <Filter>Source Files\rpframebuffer</Filter>
     </ClCompile>
     <ClCompile Include="rfb\EncodingDefs.cpp">
-      <Filter>Source Files\rfb</Filter>
+      <Filter>Source Files\rpframebuffer</Filter>
     </ClCompile>
     <ClCompile Include="rfb\HostPath.cpp">
-      <Filter>Source Files\rfb</Filter>
+      <Filter>Source Files\rpframebuffer</Filter>
     </ClCompile>
     <ClCompile Include="rfb\MsgDefs.cpp">
-      <Filter>Source Files\rfb</Filter>
+      <Filter>Source Files\rpframebuffer</Filter>
     </ClCompile>
     <ClCompile Include="rfb\PixelConverter.cpp">
-      <Filter>Source Files\rfb</Filter>
+      <Filter>Source Files\rpframebuffer</Filter>
     </ClCompile>
     <ClCompile Include="rfb\RfbKeySym.cpp">
-      <Filter>Source Files\rfb</Filter>
+      <Filter>Source Files\rpframebuffer</Filter>
     </ClCompile>
     <ClCompile Include="rfb\TunnelDefs.cpp">
-      <Filter>Source Files\rfb</Filter>
+      <Filter>Source Files\rpframebuffer</Filter>
     </ClCompile>
     <ClCompile Include="rfb\VendorDefs.cpp">
-      <Filter>Source Files\rfb</Filter>
+      <Filter>Source Files\rpframebuffer</Filter>
     </ClCompile>
     <ClCompile Include="viewer_core\AuthHandler.cpp">
       <Filter>Source Files\viewer_core</Filter>
@@ -857,49 +857,49 @@
       <Filter>Header Files\network\socket</Filter>
     </ClInclude>
     <ClInclude Include="rfb\_.h">
-      <Filter>Header Files\rfb</Filter>
+      <Filter>Header Files\rpframebuffer</Filter>
     </ClInclude>
     <ClInclude Include="rfb\AuthDefs.h">
-      <Filter>Header Files\rfb</Filter>
+      <Filter>Header Files\rpframebuffer</Filter>
     </ClInclude>
     <ClInclude Include="rfb\CursorShape.h">
-      <Filter>Header Files\rfb</Filter>
+      <Filter>Header Files\rpframebuffer</Filter>
     </ClInclude>
     <ClInclude Include="rfb\EncodingDefs.h">
-      <Filter>Header Files\rfb</Filter>
+      <Filter>Header Files\rpframebuffer</Filter>
     </ClInclude>
     <ClInclude Include="rfb\FrameBuffer.h">
-      <Filter>Header Files\rfb</Filter>
+      <Filter>Header Files\rpframebuffer</Filter>
     </ClInclude>
     <ClInclude Include="rfb\HostPath.h">
-      <Filter>Header Files\rfb</Filter>
+      <Filter>Header Files\rpframebuffer</Filter>
     </ClInclude>
     <ClInclude Include="rfb\keysymdef.h">
-      <Filter>Header Files\rfb</Filter>
+      <Filter>Header Files\rpframebuffer</Filter>
     </ClInclude>
     <ClInclude Include="rfb\MsgDefs.h">
-      <Filter>Header Files\rfb</Filter>
+      <Filter>Header Files\rpframebuffer</Filter>
     </ClInclude>
     <ClInclude Include="rfb\PixelConverter.h">
-      <Filter>Header Files\rfb</Filter>
+      <Filter>Header Files\rpframebuffer</Filter>
     </ClInclude>
     <ClInclude Include="rfb\PixelFormat.h">
-      <Filter>Header Files\rfb</Filter>
+      <Filter>Header Files\rpframebuffer</Filter>
     </ClInclude>
     <ClInclude Include="rfb\RfbKeySym.h">
-      <Filter>Header Files\rfb</Filter>
+      <Filter>Header Files\rpframebuffer</Filter>
     </ClInclude>
     <ClInclude Include="rfb\RfbKeySymListener.h">
-      <Filter>Header Files\rfb</Filter>
+      <Filter>Header Files\rpframebuffer</Filter>
     </ClInclude>
     <ClInclude Include="rfb\StandardPixelFormatFactory.h">
-      <Filter>Header Files\rfb</Filter>
+      <Filter>Header Files\rpframebuffer</Filter>
     </ClInclude>
     <ClInclude Include="rfb\TunnelDefs.h">
-      <Filter>Header Files\rfb</Filter>
+      <Filter>Header Files\rpframebuffer</Filter>
     </ClInclude>
     <ClInclude Include="rfb\VendorDefs.h">
-      <Filter>Header Files\rfb</Filter>
+      <Filter>Header Files\rpframebuffer</Filter>
     </ClInclude>
     <ClInclude Include="ftp_client\_.h">
       <Filter>Header Files\ftp_client</Filter>

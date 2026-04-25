@@ -79,7 +79,7 @@ void WindowsDisplays::getDisplayCoordinates(unsigned char displayNumber,
   }
 }
 
-::array_base<::int_rectangle> WindowsDisplays::getDisplaysCoords()
+::int_rectangle_array_base WindowsDisplays::getDisplaysCoords()
 {
   critical_section_lock al(&m_displayRectsMutex);
   update();
@@ -95,7 +95,7 @@ bool WindowsDisplays::isAlreadyUpdated()
   }
 }
 
-::array_base<::int_rectangle> WindowsDisplays::getDisplays()
+::int_rectangle_array_base WindowsDisplays::getDisplays()
 {
   update();
   return m_displayRects;

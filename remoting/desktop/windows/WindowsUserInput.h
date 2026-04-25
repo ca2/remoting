@@ -53,18 +53,18 @@ namespace remoting
 
       virtual void getCurrentUserInfo(::string &desktopName, ::string &userName);
       virtual void getDisplayNumberCoords(::int_rectangle & rect, unsigned char dispNumber);
-      virtual ::array_base<::int_rectangle> WindowsUserInput::getDisplaysCoords();
+      virtual ::int_rectangle_array_base WindowsUserInput::getDisplaysCoords();
       virtual void getNormalizedRect(::int_rectangle & rect);
       virtual void getPrimaryDisplayCoords(::int_rectangle & rect);
       virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rect);
-      virtual HWND getWindowHandleByName(const ::scoped_string &windowName);
+      virtual ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName);
       virtual void getApplicationRegion(unsigned int procId, ::remoting::Region *region);
       virtual bool isApplicationInFocus(unsigned int procId);
 
       virtual void initKeyFlag(unsigned char initValue) { m_prevKeyFlag = initValue; }
 
-   protected:
-      void toFbCoordinates(::int_rectangle *rect);
+   //protected:
+      void toFbCoordinates(::int_rectangle & rect);
 
       ::pointer<::subsystem::Clipboard2> m_pclipboard;
       // WindowsDisplays m_winDisplays;

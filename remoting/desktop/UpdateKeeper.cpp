@@ -166,8 +166,8 @@ namespace remoting
 
       // FIXME: Use addCopyRegion instead of addCopyRect
       // Add copied region
-      ::array_base<::int_rectangle> rects;
-      ::array_base<::int_rectangle>::iterator iRect;
+      ::int_rectangle_array_base rects;
+      ::int_rectangle_array_base::iterator iRect;
       updateContainer->m_regionCopied.getRectVector(&rects);
       size_t numRects = rects.size();
       if (numRects > 0)

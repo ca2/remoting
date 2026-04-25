@@ -58,7 +58,7 @@ namespace remoting
 
       virtual void getPrimaryDisplayCoords(::int_rectangle *rect) = 0;
       virtual void getDisplayNumberCoords(::int_rectangle *rect, unsigned char dispNumber) = 0;
-      virtual ::array_base<::int_rectangle> getDisplaysCoords() = 0;
+      virtual ::int_rectangle_array_base getDisplaysCoords() = 0;
       virtual void getNormalizedRect(::int_rectangle *rect) = 0;
 
       virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle *rect) = 0;

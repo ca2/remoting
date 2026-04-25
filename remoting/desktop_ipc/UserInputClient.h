@@ -55,7 +55,7 @@ namespace remoting
       virtual void getCurrentUserInfo(::string &desktopName, ::string &userName);
       virtual void getPrimaryDisplayCoords(::int_rectangle *rect);
       virtual void getDisplayNumberCoords(::int_rectangle *rect, unsigned char dispNumber);
-      virtual ::array_base<::int_rectangle> getDisplaysCoords();
+      virtual ::int_rectangle_array_base getDisplaysCoords();
       virtual void getNormalizedRect(::int_rectangle *rect);
       virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle *rect);
       virtual ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName);

@@ -43,7 +43,7 @@ namespace remoting
 
 
    void VncAuthenticationHandler::authenticate(::DataInputStream * pinput,
-                                               ::DataOutputStream *output)
+                                               ::DataOutputStream * pdataoutputstream)
    {
       ::string password;
       password = getPassword();

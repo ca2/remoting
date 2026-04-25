@@ -30,10 +30,10 @@
 FileTransferSecurity::FileTransferSecurity(Desktop *desktop, ::subsystem::LogWriter * plogwriter)
 : Impersonator(plogwriter),
   m_hasAccess(false),
-  m_desktop(desktop),
+  m_pdesktop(desktop),
   m_plogwriter = plogwriter;
 {
-  m_desktop = desktop;
+  m_pdesktop = desktop;
 }
 
 FileTransferSecurity::~FileTransferSecurity()
@@ -53,8 +53,8 @@ void FileTransferSecurity::beginMessageProcessing()
   try {
     ::string userName, desktopName;
 
-    if (m_desktop != NULL) {
-      m_desktop->getCurrentUserInfo(&desktopName, &userName);
+    if (m_pdesktop != NULL) {
+      m_pdesktop->getCurrentUserInfo(&desktopName, &userName);
     }
 
     desktopName.make_lower();

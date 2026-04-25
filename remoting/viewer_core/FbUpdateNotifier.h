@@ -32,7 +32,7 @@
 #include "remoting/remoting/region/Region.h"
 //#include "subsystem/thread/critical_section.h"
 #include "subsystem/thread/Thread.h"
-#include "subsystem/node/::happening.h"
+//#include "acme/parallelization/happening.h"
 
 #include "acme/parallelization/happening.h"
 
@@ -46,7 +46,7 @@ namespace remoting
    class CLASS_DECL_REMOTING FbUpdateNotifier : public ::subsystem::Thread
    {
    public:
-      FbUpdateNotifier(::innate_subsystem::FrameBuffer *fb, critical_section *fbLock, ::subsystem::LogWriter * plogwriter, WatermarksController* wmController);
+      FbUpdateNotifier(::innate_subsystem::FrameBuffer *pframebuffer, critical_section *fbLock, ::subsystem::LogWriter * plogwriter, WatermarksController* wmController);
       virtual ~FbUpdateNotifier();
 
       void setAdapter(CoreEventsAdapter *adapter);

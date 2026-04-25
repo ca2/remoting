@@ -50,7 +50,7 @@ namespace remoting
       // Vgrab - is a grab velocity,
       // N - is number of rectangles to grab,
       // g - overhead time costs adding on each grabbed rectangle.
-      ::array_base<::int_rectangle> rects;
+      ::int_rectangle_array_base rects;
       grabRegion->getRectVector(&rects);
       ::int_rectangle boundsRect = grabRegion->getBounds();
       int boundsRectS = boundsRect.area();
@@ -169,7 +169,7 @@ namespace remoting
       }
    }
 
-   int GrabOptimizator::getArea(const ::array_base<::int_rectangle> *rects)
+   int GrabOptimizator::getArea(const ::int_rectangle_array_base *rects)
    {
       int result = 0;
       for (size_t i = 0; i < rects->size(); i++)
@@ -179,7 +179,7 @@ namespace remoting
       return result;
    }
 
-   bool GrabOptimizator::isAlikeToWhole(const ::array_base<::int_rectangle> *rects)
+   bool GrabOptimizator::isAlikeToWhole(const ::int_rectangle_array_base *rects)
    {
       int area = getArea(rects);
       if (area < 1)
@@ -199,7 +199,7 @@ namespace remoting
       return m_wholeS / rect.area() <= 9; // area >= 10%
    }
 
-   bool GrabOptimizator::isAlikeToFragments(const ::array_base<::int_rectangle> *rects) { return rects->size() >= 10; }
+   bool GrabOptimizator::isAlikeToFragments(const ::int_rectangle_array_base *rects) { return rects->size() >= 10; }
 
    __int64 GrabOptimizator::grabWhole(ScreenDriver *grabber)
    {
@@ -283,13 +283,13 @@ namespace remoting
       m_wholeTElements.erase(iter);
    }
 
-   __int64 GrabOptimizator::grabFragments(const ::array_base<::int_rectangle> *rects, ScreenDriver *grabber)
+   __int64 GrabOptimizator::grabFragments(const ::int_rectangle_array_base *rects, ScreenDriver *grabber)
    {
       // FIXME: WARNING!!! The microsoft API usage!!!
       LARGE_INTEGER timeBegin, timeEnd;
       bool timerResult1 = QueryPerformanceCounter(&timeBegin) != 0;
 
-      ::array_base<::int_rectangle>::const_iterator iRect;
+      ::int_rectangle_array_base::const_iterator iRect;
       for (iRect = rects->begin(); iRect < rects->end(); iRect++)
       {
          if (!grabber->grabFb((*iRect)))

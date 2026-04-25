@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "RreEncoder.h"
 
-RreEncoder::RreEncoder(PixelConverter *conv, DataOutputStream *output)
+RreEncoder::RreEncoder(PixelConverter * ppixelconverter, DataOutputStream * pdataoutputstream)
 : Encoder(conv, output)
 {
   m_rects.reserve(4096);
@@ -40,7 +40,7 @@ int RreEncoder::getCode() const
 }
 
 void RreEncoder::splitRectangle(const ::int_rectangle &  rect,
-                                ::array_base<::int_rectangle> *rectList,
+                                ::int_rectangle_array_base *rectList,
                                 const ::innate_subsystem::FrameBuffer *serverFb,
                                 const EncodeOptions *options)
 {
@@ -57,16 +57,16 @@ void RreEncoder::sendRectangle(const ::int_rectangle &  rect,
                                const ::innate_subsystem::FrameBuffer *serverFb,
                                const EncodeOptions *options)
 {
-  const ::innate_subsystem::FrameBuffer *fb = m_ppixelconverter->convert(rect, serverFb);
+  const ::innate_subsystem::FrameBuffer *pframebuffer = m_ppixelconverter->convert(rect, serverFb);
 
-  size_t bpp = fb->getBitsPerPixel();
+  size_t bpp = pframebuffer->getBitsPerPixel();
   // Choose size of pixel according to options.
   if (bpp == 8) {
-    rreEncode<unsigned char>(rect, fb);
+    rreEncode<unsigned char>(rect, pframebuffer);
   } else if (bpp == 16) {
-    rreEncode<unsigned short>(rect, fb);
+    rreEncode<unsigned short>(rect, pframebuffer);
   } else if (bpp == 32) {
-    rreEncode<unsigned int>(rect, fb);
+    rreEncode<unsigned int>(rect, pframebuffer);
   } else {
     _ASSERT(0);
   }

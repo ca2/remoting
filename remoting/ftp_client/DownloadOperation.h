@@ -130,7 +130,7 @@ namespace remoting
 
          // request data size changes dynamicaly depends on request rate
          size_t m_bufferSize;
-         ::earth::time m_lastRequestTime;
+         class ::time m_timeLastRequest;
 
       };
    } // namespace ftp

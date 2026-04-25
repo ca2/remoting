@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "::file::item.h"
 #include "acme/operating_system/time.h"
-//#include "subsystem/platform/::earth::time.h"
+//#include "subsystem/platform/class ::time.h"
 //#include aaa_<crtdbg.h>
 
 TCHAR ::file::item::s_separatorChar = _T('\\');
@@ -158,7 +158,7 @@ unsigned long long ::file::item::lastModified() const
     return 0;
   }
 
-  ::earth::time dt;
+  class ::time dt;
 
    dt.m_iSecond = as_time(fileInfo.ftLastWriteTime);
 
@@ -332,7 +332,7 @@ bool ::file::item::setLastModified(long long time)
 
   FILETIME ft;
 
-  ::earth::time dt((unsigned long long)time);
+  class ::time dt((unsigned long long)time);
 
   dt.toFileTime(&ft);
 

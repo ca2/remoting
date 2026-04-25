@@ -41,14 +41,14 @@ namespace remoting
       friend class JpegEncoder;
 
    public:
-      TightEncoder(::remoting::PixelConverter *conv, DataOutputStream *output);
+      TightEncoder(::remoting::PixelConverter * ppixelconverter, DataOutputStream * pdataoutputstream);
       virtual ~TightEncoder();
 
       virtual int getCode() const;
 
       // Splits big rectangles according to the configuration setings (m_conf)
       // corresponding to the compression level set in EncodeOptions.
-      virtual void splitRectangle(const ::int_rectangle &rect, ::array_base<::int_rectangle> *rectList,
+      virtual void splitRectangle(const ::int_rectangle &rect, ::int_rectangle_array_base *rectList,
                                   const ::innate_subsystem::FrameBuffer *serverFb, const EncodeOptions *options);
 
       virtual void sendRectangle(const ::int_rectangle &rect, const ::innate_subsystem::FrameBuffer *serverFb,
@@ -61,21 +61,21 @@ namespace remoting
                        const ::innate_subsystem::FrameBuffer *clientFb, const EncodeOptions *options);
 
       // Send a solid-color rectangle.
-      void sendSolidRect(const ::int_rectangle &r, const ::innate_subsystem::FrameBuffer *fb);
+      void sendSolidRect(const ::int_rectangle &r, const ::innate_subsystem::FrameBuffer *pframebuffer);
 
       // Send a two-color rectangle (1 bit per pixel).
       template<class PIXEL_T>
-      void sendMonoRect(const ::int_rectangle &rect, const ::innate_subsystem::FrameBuffer *fb,
+      void sendMonoRect(const ::int_rectangle &rect, const ::innate_subsystem::FrameBuffer *pframebuffer,
                         const EncodeOptions *options);
 
       // Send an indexed-color rectangle (1 byte per pixel).
       template<class PIXEL_T>
-      void sendIndexedRect(const ::int_rectangle &rect, const ::innate_subsystem::FrameBuffer *fb,
+      void sendIndexedRect(const ::int_rectangle &rect, const ::innate_subsystem::FrameBuffer *pframebuffer,
                            const EncodeOptions *options);
 
       // Send a true color rectangle.
       template<class PIXEL_T>
-      void sendFullColorRect(const ::int_rectangle &rect, const ::innate_subsystem::FrameBuffer *fb,
+      void sendFullColorRect(const ::int_rectangle &rect, const ::innate_subsystem::FrameBuffer *pframebuffer,
                              const EncodeOptions *options);
 
       // Send a rectangle encoded with JPEG.
@@ -96,25 +96,25 @@ namespace remoting
       // maxColors in the palette, reset the palette size to 0 if actual number of
       // colors exceeds this limitation.
       template<class PIXEL_T>
-      void fillPalette(const ::int_rectangle &r, const ::innate_subsystem::FrameBuffer *fb, int maxColors);
+      void fillPalette(const ::int_rectangle &r, const ::innate_subsystem::FrameBuffer *pframebuffer, int maxColors);
 
       // Copy pixel data from the frame buffer to a byte array.
       template<class PIXEL_T>
-      void copyPixels(const ::int_rectangle &rect, const ::innate_subsystem::FrameBuffer *fb, unsigned char *dst);
+      void copyPixels(const ::int_rectangle &rect, const ::innate_subsystem::FrameBuffer *pframebuffer, unsigned char *dst);
 
       // Encode a two-color rectangle using m_pal as a palette, produce a bitmap
       // where one pixel is represented by one bit. Each line is padded with
       // zeroes to the byte boundary.
       // FIXME: Do not use DataOutputStream, do not throw ::io_exception.
       template<class PIXEL_T>
-      void encodeMonoRect(const ::int_rectangle &rect, const ::innate_subsystem::FrameBuffer *fb,
+      void encodeMonoRect(const ::int_rectangle &rect, const ::innate_subsystem::FrameBuffer *pframebuffer,
                           DataOutputStream *out);
 
       // Encode a rectangle using m_pal as a palette, produce a pixmap where one
       // pixel is represented by one byte which is its index in the palette.
       // FIXME: Do not use DataOutputStream, do not throw ::io_exception.
       template<class PIXEL_T>
-      void encodeIndexedRect(const ::int_rectangle &rect, const ::innate_subsystem::FrameBuffer *fb,
+      void encodeIndexedRect(const ::int_rectangle &rect, const ::innate_subsystem::FrameBuffer *pframebuffer,
                              DataOutputStream *out);
 
       // FIXME: Throw ZlibException instead.

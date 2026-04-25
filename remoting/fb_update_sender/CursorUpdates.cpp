@@ -46,8 +46,8 @@ namespace remoting
 
 
    void CursorUpdates::update(const EncodeOptions *encodeOptions, UpdateContainer *pupdatecontainer, bool fullRegReq,
-                              const ::int_rectangle &viewPort, bool shareOnlyApp, const Region *shareAppRegion,
-                              ::innate_subsystem::FrameBuffer *fb, CursorShape *cursorShape)
+                              const ::int_rectangle &rectangleViewport, bool shareOnlyApp, const Region *shareAppRegion,
+                              ::innate_subsystem::FrameBuffer *pframebuffer, CursorShape *cursorShape)
    {
       // Check cursor events. If they are outside of shared region then ignore they.
       if (shareOnlyApp)
@@ -64,21 +64,21 @@ namespace remoting
       bool posEnabled = encodeOptions->pointerPosEnabled();
 
       bool posChanged = pupdatecontainer->m_bCursorPosChanged;
-      // The posChanged and pupdatecontainer->cursorPosChanged flags has different
+      // The posChanged and pupdatecontainer->m_bCursorPosChanged flags has different
       // purpose. The posChanged will be always raised if position real changed
-      // but the pupdatecontainer->cursorPosChanged flag can be raised only cursor pos
+      // but the pupdatecontainer->m_bCursorPosChanged flag can be raised only cursor pos
       // is not blocked.
       if (posChanged)
       {
          bool cursorPosBlockingIsIgnored = !richEnabled;
-         posChanged = checkCursorPos(pupdatecontainer, viewPort, cursorPosBlockingIsIgnored);
+         posChanged = checkCursorPos(pupdatecontainer, rectangleViewport, cursorPosBlockingIsIgnored);
       }
 
       if (!richEnabled && !posEnabled)
       {
          // Draw the shape on the frame buffer.
          m_plogwriter->debug("Draw the shape of cursor on the frame buffer.");
-         drawCursor(pupdatecontainer, fb);
+         drawCursor(pupdatecontainer, pframebuffer);
       }
 
       bool initShapeByZeroIsNeeded = false;
@@ -103,7 +103,7 @@ namespace remoting
                m_isDrawCursorMethod = false;
                // Restore background under the cursor shape
                m_plogwriter->debug("Restore background under the cursor shape");
-               restoreFrameBuffer(fb);
+               restoreFrameBuffer(pframebuffer);
                ::int_rectangle backgroundRect = getBackgroundRect();
                pupdatecontainer->m_regionChanged.addRect(backgroundRect);
             }
@@ -111,7 +111,7 @@ namespace remoting
          if (m_isDrawCursorMethod)
          {
             m_plogwriter->debug("Draw the shape of cursor on the frame buffer (DrawCursorMethod)");
-            drawCursor(pupdatecontainer, fb);
+            drawCursor(pupdatecontainer, pframebuffer);
             pupdatecontainer->m_bCursorShapeChanged = methodWasChanged;
          }
          else
@@ -122,25 +122,25 @@ namespace remoting
 
       if (!richEnabled || !posEnabled)
       {
-         m_plogwriter->debug("Clearing cursorPosChanged"
+         m_plogwriter->debug("Clearing m_bCursorPosChanged"
                              " (RichCursor or PointerPos are not requested)");
          pupdatecontainer->m_bCursorPosChanged = false;
       }
       else if (fullRegReq)
       {
-         m_plogwriter->debug("Raising cursorPosChanged (full region requested)");
+         m_plogwriter->debug("Raising m_bCursorPosChanged (full region requested)");
          // ignore cursor position changing blocking on full request
-         checkCursorPos(pupdatecontainer, viewPort, true);
+         checkCursorPos(pupdatecontainer, rectangleViewport, true);
          pupdatecontainer->m_bCursorPosChanged = true;
       }
       if (!richEnabled)
       {
-         m_plogwriter->debug("Clearing cursorShapeChanged (RichCursor disabled)");
+         m_plogwriter->debug("Clearing m_bCursorShapeChanged (RichCursor disabled)");
          pupdatecontainer->m_bCursorShapeChanged = false;
       }
       else if (fullRegReq)
       {
-         m_plogwriter->debug("Raising cursorShapeChanged (RichCursor enabled"
+         m_plogwriter->debug("Raising m_bCursorShapeChanged (RichCursor enabled"
                              " and full region requested)");
          pupdatecontainer->m_bCursorShapeChanged = true;
       }
@@ -154,16 +154,16 @@ namespace remoting
       }
    }
 
-   void CursorUpdates::restoreFrameBuffer(::innate_subsystem::FrameBuffer *fb)
+   void CursorUpdates::restoreFrameBuffer(::innate_subsystem::FrameBuffer *pframebuffer)
    {
       critical_section_lock al(&m_curPosLocMut);
       ::int_rectangle dstRect = m_shapeBackground.getDimension();
       dstRect.set_top_left(m_pointBackground.x, m_pointBackground.y);
-      fb->copyFrom(dstRect, &m_shapeBackground, 0, 0);
+      pframebuffer->copyFrom(dstRect, &m_shapeBackground, 0, 0);
       // m_shapeBackground.setDimension(&::int_size(0, 0));
    }
 
-   void CursorUpdates::drawCursor(UpdateContainer *pupdatecontainer, ::innate_subsystem::FrameBuffer *fb)
+   void CursorUpdates::drawCursor(UpdateContainer *pupdatecontainer, ::innate_subsystem::FrameBuffer *pframebuffer)
    {
       critical_section_lock al(&m_curPosLocMut);
       // Add previous background rectangle to the changed region.
@@ -175,37 +175,37 @@ namespace remoting
       m_pointBackground.set(m_cursorPos.x - hotSpot.x, m_cursorPos.y - hotSpot.y);
       m_shapeBackground.setProperties(m_cursorShape.getDimension(), m_cursorShape.getPixelFormat());
       // Keep background under cursor shape to can reconstruct full image.
-      m_shapeBackground.copyFrom(fb, m_pointBackground.x, m_pointBackground.y);
+      m_shapeBackground.copyFrom(pframebuffer, m_pointBackground.x, m_pointBackground.y);
       // Draw the cursor shape on the frame buffer
       rect.set(m_cursorShape.getDimension());
       rect.set_top_left(m_pointBackground.x, m_pointBackground.y);
 
-      fb->overlay(rect, m_cursorShape.getPixels(), 0, 0, m_cursorShape.getMask());
+      pframebuffer->overlay(rect, m_cursorShape.getPixels(), 0, 0, m_cursorShape.getMask());
    }
 
-   bool CursorUpdates::checkCursorPos(UpdateContainer *pupdatecontainer, const ::int_rectangle &viewPort,
+   bool CursorUpdates::checkCursorPos(UpdateContainer *pupdatecontainer, const ::int_rectangle &rectangleViewport,
                                       bool curPosBlockingIsIgnored)
    {
       critical_section_lock al(&m_curPosLocMut);
       auto cursorPos = pupdatecontainer->m_pointCursorPos;
-      cursorPos -= viewPort.top_left();
-      //cursorPos.y -= viewPort.top;
+      cursorPos -= rectangleViewport.top_left();
+      //cursorPos.y -= rectangleViewport.top;
 
       if (cursorPos.x < 0)
       {
          cursorPos.x = 0;
       }
-      else if (cursorPos.x >= viewPort.width())
+      else if (cursorPos.x >= rectangleViewport.width())
       {
-         cursorPos.x = viewPort.width() - 1;
+         cursorPos.x = rectangleViewport.width() - 1;
       }
       if (cursorPos.y < 0)
       {
          cursorPos.y = 0;
       }
-      else if (cursorPos.y >= viewPort.height())
+      else if (cursorPos.y >= rectangleViewport.height())
       {
-         cursorPos.y = viewPort.height() - 1;
+         cursorPos.y = rectangleViewport.height() - 1;
       }
 
       bool isBlocked = isCursorPosBlocked() && !curPosBlockingIsIgnored;
@@ -226,13 +226,13 @@ namespace remoting
    {
       critical_section_lock al(&m_curPosLocMut);
       // Block cursor pos sending to a time interval.
-      m_blockCurPosTime.m_iSecond = ::earth::time::now().m_iSecond;
+      m_blockCurPosTime = ::time::now();
    }
 
    bool CursorUpdates::isCursorPosBlocked()
    {
       critical_section_lock al(&m_curPosLocMut);
-      if ((::earth::time::now().m_iSecond - m_blockCurPosTime.m_iSecond) > 1000)
+      if (m_blockCurPosTime.elapsed() > 1_s)
       {
          return false; // Unblocked
       }

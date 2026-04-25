@@ -30,46 +30,46 @@
 // //#include "::string.h"
 //
 // /**
-//  * ::earth::time class.
+//  * class ::time class.
 //  */
-// class ::earth::time
+// class class ::time
 // {
 // public:
 //   /**
-//    * Creates empty ::earth::time.
+//    * Creates empty class ::time.
 //    */
-//   ::earth::time();
+//   class ::time();
 //
-//   ::earth::time(const ::earth::time &dt);
+//   class ::time(const class ::time &dt);
 //
 //   /**
-//    * Creates ::earth::time object with specified time value.
+//    * Creates class ::time object with specified time value.
 //    * @param timeValue count of milliseconds from unix epoch.
 //    */
-//   ::earth::time(unsigned long long timeValue);
+//   class ::time(unsigned long long timeValue);
 //
 //   /**
-//    * Creates ::earth::time object from windows FILETIME structure.
+//    * Creates class ::time object from windows FILETIME structure.
 //    * @param ft time as FILETIME structure.
 //    */
-//   ::earth::time(FILETIME ft);
+//   class ::time(FILETIME ft);
 //
 //   /**
 //    * Returns time in milliseconds from unix epoch.
 //    */
 //   unsigned long long getTime() const;
 //
-//   ::earth::time operator- (const ::earth::time &d2);
-//   ::earth::time operator+ (const ::earth::time &d2);
+//   class ::time operator- (const class ::time &d2);
+//   class ::time operator+ (const class ::time &d2);
 //
 //   /**
-//    * Converts this ::earth::time to FILETIME structure.
+//    * Converts this class ::time to FILETIME structure.
 //    * @param [out] ft output parameter.
 //    */
 //   void toFileTime(LPFILETIME ft) const;
 //
 //   /**
-//    * Converts this ::earth::time to SYSTEMTIME structure in UTC format.
+//    * Converts this class ::time to SYSTEMTIME structure in UTC format.
 //    * @param [out] st output parameter.
 //    */
 //   // FIXME: Rename this method because the now() function already
@@ -78,12 +78,12 @@
 //   void toUtcSystemTime(LPSYSTEMTIME st) const;
 //
 //   /**
-//    * Converts this ::earth::time to SYSTEMTIME structure in local format.
+//    * Converts this class ::time to SYSTEMTIME structure in local format.
 //    * @param [out] st output parameter.
 //    */
 //   void toLocalSystemTime(LPSYSTEMTIME st) const;
 //   /**
-//    * Converts this ::earth::time to string.
+//    * Converts this class ::time to string.
 //    * @param [out] out output parameter.
 //    */
 //   void toString(::string & out) const;
@@ -91,7 +91,7 @@
 //   /**
 //    * Returns current local time.
 //    */
-//   static ::earth::time now();
+//   static class ::time now();
 //
 // protected:
 //   unsigned long long m_timeValue;

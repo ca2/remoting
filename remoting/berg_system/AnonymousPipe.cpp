@@ -32,7 +32,7 @@ AnonymousPipe::AnonymousPipe(HANDLE hWrite, HANDLE hRead, unsigned int maxPortio
   m_hWrite(hWrite),
   m_hRead(hRead),
   m_neededToClose(true),
-  m_plogwriter = plogwriter;
+  m_plogwriter(plogwriter)
 {
 }
 

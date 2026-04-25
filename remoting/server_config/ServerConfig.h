@@ -75,7 +75,7 @@ namespace remoting
        * @throws ::subsystem::Exception on io error.
        * @fixme stub.
        */
-      void serialize(DataOutputStream *output);
+      void serialize(DataOutputStream * pdataoutputstream);
 
       /**
        * Deserializes server config from input stream.
@@ -263,7 +263,7 @@ namespace remoting
       // to lock and unlock server configuration.
       ::string_array *getVideoClassNames();
 
-      ::array_base<::int_rectangle> *getVideoRects();
+      ::int_rectangle_array_base *getVideoRects();
 
       //
       // Other
@@ -403,7 +403,7 @@ namespace remoting
       // Defined by window class name
       ::string_array m_videoClassNames;
       // Defined by rectangle coords in "dXxdY+X0+Y0" format, as in -sharerect command line option
-      ::array_base<::int_rectangle> m_videoRects;
+      ::int_rectangle_array_base m_videoRects;
 
       //
       // Other

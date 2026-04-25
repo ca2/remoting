@@ -35,7 +35,7 @@ namespace remoting
 
    WindowsUserInput::WindowsUserInput(ClipboardListener *pclipboardlistener, bool ctrlAltDelEnabled,
                                       ::subsystem::LogWriter * plogwriter) :
-       m_prevKeyFlag(0), m_inputInjector(ctrlAltDelEnabled, log), m_plogwriter = plogwriter;
+       m_prevKeyFlag(0), m_inputInjector(ctrlAltDelEnabled, log), m_plogwriter(plogwriter)
    {
       m_clipboard = new WindowsClipboard(pclipboardlistener, m_plogwriter);
    }
@@ -208,7 +208,7 @@ namespace remoting
       m_winDisplays.getDisplayCoordinates(dispNumber, rect);
    }
 
-   ::array_base<::int_rectangle> WindowsUserInput::getDisplaysCoords() { return m_winDisplays.getDisplaysCoords(); }
+   ::int_rectangle_array_base WindowsUserInput::getDisplaysCoords() { return m_winDisplays.getDisplaysCoords(); }
 
    void WindowsUserInput::getNormalizedRect(::int_rectangle *rect) { toFbCoordinates(rect); }
 

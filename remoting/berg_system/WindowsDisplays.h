@@ -26,7 +26,7 @@
 
 
 
-//#include "subsystem/platform/::earth::time.h"
+//#include "subsystem/platform/class ::time.h"
 //#include aaa_<vector>
 //#include "subsystem/thread/critical_section.h"
 
@@ -39,10 +39,10 @@ public:
   // If a display does not exist now the function return an empty rectangle.
   void getDisplayCoordinates(unsigned char displayNumber, ::int_rectangle *rect);
 
-  ::array_base<::int_rectangle> getDisplaysCoords();
+  ::int_rectangle_array_base getDisplaysCoords();
 
   // Returns a ::array_base that contain dispalys coordinates at the current time.
-  ::array_base<::int_rectangle> getDisplays();
+  ::int_rectangle_array_base getDisplays();
 
 private:
   // Updates internal information to a current state.
@@ -59,7 +59,7 @@ private:
   int m_xVirtualScreen;
   int m_yVirtualScreen;
 
-  ::array_base<::int_rectangle> m_displayRects;
+  ::int_rectangle_array_base m_displayRects;
   critical_section m_displayRectsMutex;
   
   static const unsigned int UPDATE_INTERVAL = 3000;

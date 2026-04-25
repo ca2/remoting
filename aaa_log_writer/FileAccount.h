@@ -26,7 +26,7 @@
 
 
 #include "remoting/util/CommonHeader.h"
-//#include "subsystem/platform/::earth::time.h"
+//#include "subsystem/platform/class ::time.h"
 #include "remoting/thread/critical_section.h"
 //#include "file_lib/WinFile.h"
 #include "LogDump.h"
@@ -85,7 +85,7 @@ public:
   // the log verbosity level.
   virtual void print(unsigned int processId,
                      unsigned int threadId,
-                     const ::earth::time & dt,
+                     const class ::time & dt,
                      int level,
                      const ::scoped_string & scopedstrMessage);
 
@@ -94,7 +94,7 @@ public:
 protected:
   virtual void flush(unsigned int processId,
                      unsigned int threadId,
-                     const ::earth::time & dt,
+                     const class ::time & dt,
                      int level,
                      const ::scoped_string & scopedstrMessage);
 
@@ -123,7 +123,7 @@ private:
   // Formates the scopedstrMessage and stores it to the file.
   void format(unsigned int processId,
               unsigned int threadId,
-              const ::earth::time & dt,
+              const class ::time & dt,
               int level,
               const ::scoped_string & scopedstrMessage);
 

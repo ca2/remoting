@@ -426,7 +426,7 @@ namespace remoting
       ::string buffer;
       ::string_array *videoClasses = m_pserverconfig.getVideoClassNames();
       size_t size = videoClasses->size();
-      ::array_base<::int_rectangle> *videoRects = m_pserverconfig.getVideoRects();
+      ::int_rectangle_array_base *rectangleaVideo = m_pserverconfig.getVideoRects();
 
       AutoLock al(&m_pserverconfig);
       buffer = "";
@@ -443,12 +443,12 @@ namespace remoting
          saveResult = false;
       }
 
-      size = videoRects->size();
+      size = rectangleaVideo->size();
       buffer = "";
       for (size_t i = 0; i < size; i++)
       {
          ::string s;
-         ::remoting::RectSerializer::toString(videoRects->at(i), s);
+         ::remoting::RectSerializer::toString(rectangleaVideo->at(i), s);
          buffer += s;
          if (i != size - 1)
          {
@@ -467,7 +467,7 @@ namespace remoting
       bool loadResult = true;
 
       ::string_array *videoClasses = m_pserverconfig.getVideoClassNames();
-      ::array_base<::int_rectangle> *videoRects = m_pserverconfig.getVideoRects();
+      ::int_rectangle_array_base *rectangleaVideo = m_pserverconfig.getVideoRects();
 
       // Lock configuration
       AutoLock al(&m_pserverconfig);
@@ -517,7 +517,7 @@ namespace remoting
       // Delete old video rects entries
       //
 
-      videoRects->clear();
+      rectangleaVideo->clear();
 
       //
       // Try to load.
@@ -547,7 +547,7 @@ namespace remoting
          {
             if (!chunks[i].is_empty())
             {
-               videoRects->add(::remoting::RectSerializer::toRect(chunks[i]));
+               rectangleaVideo->add(::remoting::RectSerializer::toRect(chunks[i]));
             }
          }
       }

@@ -100,14 +100,14 @@ namespace remoting
       //
       virtual void onError(const ::subsystem::Exception *exception);
 
-      // this event after update of frame buffer "fb" in rectangle "update".
+      // this event after update of frame buffer "pframebuffer" in rectangle "update".
       // guaranteed correct of frame buffer's area in rectangle "update".
       //
       // Frame buffer contents has been changed. During this callback,
       // the frame buffer is locked, and the rectangle is guaranteed to be valid
       // (no guarantees about other areas of the frame buffer).
       //
-      virtual void onFrameBufferUpdate(const ::innate_subsystem::FrameBuffer *fb, const ::int_rectangle &  update);
+      virtual void onFrameBufferUpdate(const ::innate_subsystem::FrameBuffer *pframebuffer, const ::int_rectangle &  update);
 
       // changed properties of frame buffer.
       // In this moment frame buffer area is dirty and may be contained incorrect data
@@ -116,7 +116,7 @@ namespace remoting
       // frame buffer has been created and the old one has been destroyed. This
       // notification will be called on initial frame buffer allocation as well.
       //
-      virtual void onFrameBufferPropChange(const ::innate_subsystem::FrameBuffer *fb);
+      virtual void onFrameBufferPropChange(const ::innate_subsystem::FrameBuffer *pframebuffer);
    };
 
 } // namespace remoting

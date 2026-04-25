@@ -38,38 +38,38 @@ namespace remoting
       m_backupFrameBuffer.clone(newFb);
    }
 
-   bool UpdateHandler::updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *fb, const Region *region,
-                                                 const ::int_rectangle &viewPort)
+   bool UpdateHandler::updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *pframebuffer, const Region *pregion,
+                                                 const ::int_rectangle &rectangleViewport)
    {
       critical_section_lock al(&m_fbLocMut);
-      return updateExternalFrameBuffer(fb, &m_backupFrameBuffer, region, viewPort);
+      return updateExternalFrameBuffer(pframebuffer, &m_backupFrameBuffer, pregion, rectangleViewport);
    }
 
-   bool UpdateHandler::updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *dstFb,
-                                                 ::innate_subsystem::FrameBuffer *srcFb, const Region *region,
-                                                 const ::int_rectangle &viewPort)
+   bool UpdateHandler::updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *pframebufferTarget,
+                                                 ::innate_subsystem::FrameBuffer *pframebufferSource, const Region *pregion,
+                                                 const ::int_rectangle &rectangleViewport)
    {
-      ::innate_subsystem::PixelFormat dstPf = dstFb->getPixelFormat();
-      ::innate_subsystem::PixelFormat srcPf = srcFb->getPixelFormat();
-      ::int_size dstFbDim = dstFb->getDimension();
-      ::int_rectangle srcFbRect = srcFb->getDimension();
-      ::int_rectangle resultViewPort = srcFbRect.intersection(viewPort);
+      ::innate_subsystem::PixelFormat pixelformatTarget = pframebufferTarget->getPixelFormat();
+      ::innate_subsystem::PixelFormat pixelformatSource = pframebufferSource->getPixelFormat();
+      ::int_size sizeTargetFramebuffer = pframebufferTarget->getDimension();
+      ::int_rectangle rectangleSourceFramebuffer = pframebufferSource->getDimension();
+      ::int_rectangle rectangleResultViewport = rectangleSourceFramebuffer.intersection(rectangleViewport);
 
-      if (!dstPf.isEqualTo(&srcPf) || !dstFbDim.isEqualTo(&::int_size(&resultViewPort)) ||
-          !resultViewPort.isEqualTo(viewPort))
+      if (pixelformatTarget != pixelformatSource || sizeTargetFramebuffer != rectangleResultViewport.size() ||
+          rectangleResultViewport!= rectangleViewport)
       {
-         dstFb->setProperties(&resultViewPort, &srcPf);
+         pframebufferTarget->setProperties(rectangleResultViewport, pixelformatSource);
          return false;
       }
 
-      ::array_base<::int_rectangle> rects;
-      ::array_base<::int_rectangle>::iterator iRect;
-      region->getRectVector(&rects);
+      ::int_rectangle_array_base rects;
+      ::int_rectangle_array_base::iterator iRect;
+      pregion->getRectVector(&rects);
 
       for (iRect = rects.begin(); iRect < rects.end(); iRect++)
       {
-         ::int_rectangle *rect = &(*iRect);
-         dstFb->copyFrom(rect, srcFb, rect.left + viewPort.left, rect.top + viewPort.top);
+         auto & rect = (*iRect);
+         pframebufferTarget->copyFrom(rect, pframebufferSource, rect.left + rectangleViewport.left, rect.top + rectangleViewport.top);
       }
       return true;
    }

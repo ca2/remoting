@@ -30,16 +30,35 @@ namespace remoting
 {
 
 
-   ViewPort::ViewPort(::subsystem::LogWriter * plogwriter) : m_desktop(0), m_plogwriter = plogwriter; {}
-
-   ViewPort::ViewPort(const ViewPortState *viewPortState, ::subsystem::LogWriter * plogwriter) :
-       m_desktop(0), m_state(*viewPortState), m_plogwriter = plogwriter;
+   ViewPort::ViewPort() :
+   m_pdesktop(0), m_plogwriter(nullptr)
    {
+
    }
+
+   // ViewPort::ViewPort(const ViewPortState *viewPortState, ::subsystem::LogWriter * plogwriter) :
+   //     m_pdesktop(0), m_state(*viewPortState), m_plogwriter = plogwriter;
+   // {
+   // }
+
+
+
 
    ViewPort::~ViewPort() {}
 
-   void ViewPort::initDesktopInterface(Desktop *desktop) { m_desktop = desktop; }
+      void ViewPort::initialize_viewport(::subsystem::LogWriter *plogwriter) 
+   { m_plogwriter = m_plogwriter;
+   }
+
+   void ViewPort::initialize_viewport(const ViewPortState *viewPortState, ::subsystem::LogWriter *plogwriter)
+       
+   {
+      m_state = *viewPortState;
+      
+      m_plogwriter = plogwriter;
+   }
+
+   void ViewPort::initDesktopInterface(Desktop *desktop) { m_pdesktop = desktop; }
 
    void ViewPort::changeState(const ViewPortState *newState)
    {
@@ -55,22 +74,22 @@ namespace remoting
       switch (m_state.m_mode)
       {
          case ViewPortState::APPLICATION:
-            _ASSERT(m_desktop != 0);
-            m_desktop->getApplicationRegion(m_state.m_processId, &m_appRegion);
+            _ASSERT(m_pdesktop != 0);
+            m_pdesktop->getApplicationRegion(m_state.m_processId, &m_regionApp);
             // Also, the view port rectangle will be FULL_DESKTOP.
          case ViewPortState::FULL_DESKTOP:
             rect = fbDimension;
             break;
          case ViewPortState::PRIMARY_DISPLAY:
-            _ASSERT(m_desktop != 0);
-            m_desktop->getPrimaryDesktopCoords(&rect);
+            _ASSERT(m_pdesktop != 0);
+            m_pdesktop->getPrimaryDesktopCoords(&rect);
             break;
          case ViewPortState::DISPLAY_NUMBER:
-            _ASSERT(m_desktop != 0);
-            m_desktop->getDisplayNumberCoords(&rect, m_state.m_displayNumber);
+            _ASSERT(m_pdesktop != 0);
+            m_pdesktop->getDisplayNumberCoords(&rect, m_state.m_displayNumber);
             break;
          case ViewPortState::WINDOW_RECT:
-            _ASSERT(m_desktop != 0);
+            _ASSERT(m_pdesktop != 0);
             if (!m_state.m_windowIsResolved)
             {
                // Try resolve a window name to a hwnd.
@@ -80,7 +99,7 @@ namespace remoting
             {
                try
                {
-                  m_desktop->getWindowCoords(m_state.m_operatingsystemwindow, &rect);
+                  m_pdesktop->getWindowCoords(m_state.m_operatingsystemwindow, &rect);
                }
                catch (::subsystem::BrokenHandleException &e)
                {
@@ -92,8 +111,8 @@ namespace remoting
             break;
          case ViewPortState::ARBITRARY_RECT:
             rect = m_state.m_arbitraryRect;
-            _ASSERT(m_desktop != 0);
-            m_desktop->getNormalizedRect(&rect);
+            _ASSERT(m_pdesktop != 0);
+            m_pdesktop->getNormalizedRect(&rect);
             break;
       }
       m_plogwriter->debug("View port coordinates: ({}, {} %dx{})", rect.left, rect.top, rect.width(), rect.height());
@@ -117,14 +136,14 @@ namespace remoting
    void ViewPort::resolveWindowName()
    {
       // Skip the resolving if have been passed little time.
-      if ((::earth::time::now() - m_latestHwndResolvingTime).getTime() > RESOLVING_PERIOD)
+      if (m_timeLatestHwndResolving.elapsed().integral_millisecond() > RESOLVING_PERIOD)
       {
-         const ::operating_system::window & operatingsystemwindow = m_desktop->getWindowHandleByName(&m_state.m_windowName);
-         if (hwnd != 0)
+         auto operatingsystemwindow = m_pdesktop->getWindowHandleByName(m_state.m_windowName);
+         if (operatingsystemwindow.is_set())
          {
-            m_state.setWindowHandle(hwnd);
+            m_state.setWindowHandle(operatingsystemwindow);
          }
-         m_latestHwndResolvingTime = ::earth::time::now();
+         m_timeLatestHwndResolving.Now();
       }
    }
 
@@ -132,7 +151,7 @@ namespace remoting
 
    unsigned int ViewPort::getApplicationId() { return m_state.m_processId; }
 
-   void ViewPort::getApplicationRegion(Region *region) { *region = m_appRegion; }
+   void ViewPort::getApplicationRegion(Region *region) { *region = m_regionApp; }
 
 
 } // namespace remoting

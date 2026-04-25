@@ -53,7 +53,7 @@ namespace remoting
       // Returns a rect that is normilized from "virtual desktop" to frame buffer coordinates.
       virtual void getNormalizedRect(::int_rectangle *rect) = 0;
       virtual void getDisplayNumberCoords(::int_rectangle *rect, unsigned char dispNumber) = 0;
-      virtual ::array_base<::int_rectangle> getDisplaysCoords() = 0;
+      virtual ::int_rectangle_array_base getDisplaysCoords() = 0;
       virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle *rect) = 0;
       virtual ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName) = 0;
 
@@ -67,8 +67,8 @@ namespace remoting
       // Updates external frame buffer pixels only for the region from view port
       // located at the place in a central frame buffer.
       // If view port is out of central frame buffer bounds the function will return false.
-      virtual bool updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *fb, const ::remoting::Region *region,
-                                             const ::int_rectangle &viewPort) = 0;
+      virtual bool updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *pframebuffer, const ::remoting::Region *region,
+                                             const ::int_rectangle &rectangleViewport) = 0;
    };
 
 

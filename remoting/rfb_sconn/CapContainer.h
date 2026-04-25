@@ -52,7 +52,7 @@ namespace remoting
       void addCap(unsigned int code, const char *vendorSignature, const char *nameSignature);
 
       unsigned int getCapCount() const;
-      void sendCaps(DataOutputStream *output) const;
+      void sendCaps(DataOutputStream * pdataoutputstream) const;
 
       bool includes(unsigned int code) const;
 

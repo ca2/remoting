@@ -39,7 +39,7 @@ namespace remoting
    {
    public:
       virtual ScreenDriver *createScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                                               ::innate_subsystem::FrameBuffer *fb,
+                                               ::innate_subsystem::FrameBuffer *pframebuffer,
                                                critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter) = 0;
    private:
    };

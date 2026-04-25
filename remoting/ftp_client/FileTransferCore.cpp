@@ -43,7 +43,7 @@ namespace remoting
                                          FileTransferRequestSender *sender,
                                          FileTransferReplyBuffer *replyBuffer,
                                          ::subsystem::ListenerContainer<FileTransferEventHandler *> *ftListeners)
-      : m_plogwriter = plogwriter;,
+      : m_plogwriter(plogwriter),
         m_state(NOTHING_STATE),
         m_sender(sender), m_replyBuffer(replyBuffer),
         m_fileTransferListeners(ftListeners),

@@ -64,7 +64,7 @@ private:
   virtual void onLog(FileAccountHandle handle,
                      unsigned int processId,
                      unsigned int threadId,
-                     const ::earth::time & dt,
+                     const class ::time & dt,
                      int level,
                      const ::scoped_string & scopedstrMessage);
   virtual void onAnErrorFromLogConn(const ::scoped_string & scopedstrMessage);

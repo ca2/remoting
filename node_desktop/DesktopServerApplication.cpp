@@ -76,13 +76,13 @@ namespace remoting_node_desktop
          ::subsystem_windows::SharedMemory shMem(shMemName, 72);
          unsigned long long *mem = (unsigned long long *)shMem.getMemPointer();
 
-         ::earth::time startTime = ::earth::time::now();
+         class ::time startTime = class ::time::now();
 
          // ::happening m_sleepInterval;
          ::happening m_sleepInterval;
          while (mem[0] == 0)
          {
-            unsigned int timeForWait = maximum((int)10000 - (int)(::earth::time::now() - startTime).m_iSecond, 0);
+            unsigned int timeForWait = maximum((int)10000 - (int)(class ::time::now() - startTime).m_iSecond, 0);
             if (timeForWait == 0)
             {
                throw ::subsystem::Exception("The desktop server time out expired");

@@ -179,8 +179,8 @@ void sendNClientRegion(HWND hwnd)
 
   ncRegion.subtract(&cRegion);
 
-  ::array_base<::int_rectangle> rects;
-  ::array_base<::int_rectangle>::iterator iRect;
+  ::int_rectangle_array_base rects;
+  ::int_rectangle_array_base::iterator iRect;
   ncRegion.getRectVector(&rects);
   for (iRect = rects.begin(); iRect < rects.end(); iRect++) {
     sendRect(&(*iRect));

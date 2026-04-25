@@ -35,27 +35,27 @@ namespace remoting_node_desktop
       ::remoting_node_desktop::Configurator *pconfigurator,
                         unsigned short bindPort,
                         RfbClientManager *clientManager, bool lockAddr, ::subsystem::LogWriter * plogwriter,
-                        const ::int_rectangle &viewPort) :
+                        const ::int_rectangle &rectangleViewport) :
        TcpServer(scopedstrBindHost, bindPort, false, lockAddr), m_pconfigurator(pconfigurator),
       m_clientManager(clientManager), m_plogwriter = plogwriter;
 
 
    {
-      if (viewPort != 0)
+      if (rectangleViewport != 0)
       {
-         m_viewPort.setArbitraryRect(viewPort);
+         m_rectangleViewport.setArbitraryRect(rectangleViewport);
       }
 
       TcpServer::start();
 
-      if (viewPort == 0)
+      if (rectangleViewport == 0)
       {
          m_plogwriter->debug("Rfb server started at {}:{}", scopedstrBindHost, (int)bindPort);
       }
       else
       {
          m_plogwriter->debug("Rfb server started at {}:{} with [{} {} {} {}] view port specified", scopedstrBindHost,
-                             (int)bindPort, viewPort.left, viewPort.right, viewPort.top, viewPort.bottom);
+                             (int)bindPort, rectangleViewport.left, rectangleViewport.right, rectangleViewport.top, rectangleViewport.bottom);
       }
    }
 
@@ -94,7 +94,7 @@ namespace remoting_node_desktop
 
          socket->enableNaggleAlgorithm(false);
 
-         m_clientManager->addNewConnection(socket, &m_viewPort, false, false);
+         m_clientManager->addNewConnection(socket, &m_rectangleViewport, false, false);
       }
       catch (::subsystem::Exception &ex)
       {

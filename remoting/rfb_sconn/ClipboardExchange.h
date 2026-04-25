@@ -30,7 +30,7 @@
 #include "remoting/remoting/desktop/Desktop.h"
 #include "remoting/remoting/network/RfbOutputGate.h"
 //#include "log_writer/LogWriter.h"
-
+#include "acme/parallelization/happening.h"
 
 namespace remoting
 {
@@ -54,12 +54,12 @@ namespace remoting
 
       bool m_viewOnly;
       bool m_isUtf8ClipboardEnabled;
-      Desktop *m_desktop;
+      ::pointer < Desktop > m_pdesktop;
       ::remoting::RfbOutputGate *m_output;
 
-      //::happening m_newClipWaiter;
+      //::happening m_happeningNewClip;
 
-      ::happening m_newClipWaiter;
+      ::happening m_happeningNewClip;
 
 
       ::string m_storedClip;

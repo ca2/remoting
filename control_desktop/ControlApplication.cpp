@@ -369,7 +369,7 @@ int ControlApplication::runConfigurator(bool configService, bool isRunAsRequeste
     ::string childCommandLine;
 
     // Get path to remoting_node binary.
-    Environment::getCurrentModulePath(&pathToBinary);
+    pathToBinary = MainSubsystem().OperatingSystem().getCurrentModulePath();;
     // Set -dontelevate flag to tvncontrol know that admin rights already requested.
     childCommandLine.formatf("{} -dontelevate", m_commandLine);
 
@@ -435,7 +435,7 @@ int ControlApplication::checkServicePasswords(bool isRunAsRequested)
     ::string childCommandLine;
 
     // Get path to remoting_node binary.
-    Environment::getCurrentModulePath(&pathToBinary);
+    pathToBinary = MainSubsystem().OperatingSystem().getCurrentModulePath();;
     // Set -dontelevate flag to tvncontrol know that admin rights already requested.
     childCommandLine.formatf("{} -dontelevate", m_commandLine);
 
@@ -506,7 +506,7 @@ void ControlApplication::reloadConfig()
   ::string pathToBinary;
   try {
     // Get path to remoting_node binary.
-    Environment::getCurrentModulePath(&pathToBinary);
+    pathToBinary = MainSubsystem().OperatingSystem().getCurrentModulePath();;
     Process processToReloadConfig(pathToBinary, "-controlservice -reload");
     processToReloadConfig.start();
   } catch (::exception &e) {

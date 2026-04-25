@@ -138,7 +138,7 @@ namespace remoting
 
       // Log all display coordinates
       WindowsDisplays m_winDisp;
-      ::array_base<::int_rectangle> displays = m_winDisp.getDisplays();
+      ::int_rectangle_array_base displays = m_winDisp.getDisplays();
       m_plogwriter->debug("The console desktop has {} displays", (int)displays.size());
       for (size_t i = 0; i < displays.size(); i++)
       {

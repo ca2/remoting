@@ -39,7 +39,7 @@
 #include "remoting/remoting/rfb_sconn/JpegEncoder.h"
 #include "remoting/remoting/rfb_sconn/EncoderStore.h"
 #include "remoting/remoting/rfb_sconn/RfbCodeRegistrator.h"
-//#include "subsystem/platform/::earth::time.h"
+//#include "subsystem/platform/class ::time.h"
 #include "CursorUpdates.h"
 #include "SenderControlInformationInterface.h"
 //#include "log_writer/LogWriter.h"
@@ -58,30 +58,30 @@ namespace remoting
 
       ::happening m_newUpdatesEvent;
 
-      UpdateRequestListener *m_updReqListener;
-      ::remoting::Region m_requestedIncrReg;
-      ::remoting::Region m_requestedFullReg;
+      ::pointer < UpdateRequestListener > m_pupdaterequestlistener;
+      ::remoting::Region m_regionRequestedIncremental;
+      ::remoting::Region m_regionRequestedFull;
       bool m_incrUpdIsReq;
       bool m_fullUpdIsReq;
       bool m_busy;
       // Property for perfomance measurements. It uses with the regions mutex.
-      ::earth::time m_requestTimePoint;
-      critical_section m_reqRectLocMut;
+      class ::time m_requestTimePoint;
+      critical_section m_criticalsectionRectLoc;
 
       SenderControlInformationInterface *m_senderControlInformation;
 
-      ::int_rectangle m_viewPort;
-      ::int_size m_clientDim;
-      ::int_size m_lastViewPortDim;
+      ::int_rectangle m_rectangleViewport;
+      ::int_size m_sizeClient;
+      ::int_size m_sizeLastViewport;
       bool m_shareOnlyApp;
-      ::remoting::Region m_appRegion;
-      ::remoting::Region m_prevAppRegion;
-      critical_section m_viewPortMut;
+      ::remoting::Region m_regionApp;
+      ::remoting::Region m_regionAppOld;
+      critical_section m_criticalsectionViewport;
 
-      UpdateKeeper *m_pupdatekeeper;
+      ::pointer < UpdateKeeper > m_pupdatekeeper;
 
       ::pointer < ::innate_subsystem::FrameBuffer > m_pframebuffer;
-      Desktop *m_desktop;
+      ::pointer < Desktop > m_pdesktop;
 
       ::pointer < CursorUpdates >  m_pcursorupdates;
 
@@ -102,7 +102,7 @@ namespace remoting
       // will be safely copied to a local variable which then will be used while
       // encoding data. Thus, changes to m_ppixelformatNew will take effect on next
       // framebuffer update.
-      ::pointer < ::innate_subsystem::PixelFormat > m_ppixelformatNew;
+      ::innate_subsystem::PixelFormat m_pixelformatNew;
       critical_section m_criticalsectionNewPixelFormat;
 
       // This flag indicates that color ::map entries requested. If this flag is true
@@ -114,7 +114,7 @@ namespace remoting
       bool m_videoFrozen;
       // This region constains a video region which was sent at previous time.
       ::remoting::Region m_regionOldVideoRegion;
-      critical_section m_vidFreezeLocMut;
+      critical_section m_criticalsectionVidFreezeLoc;
 
 
       ::remoting::Region m_regionLosslessDirty;
@@ -195,7 +195,7 @@ namespace remoting
 
       // Check cursor position for changing and store it to the m_cursorPos.
       // Return true value if cursor position has been changed.
-      void checkCursorPos(UpdateContainer *updCont, const ::int_rectangle &viewPort);
+      void checkCursorPos(UpdateContainer *updCont, const ::int_rectangle &rectangleViewport);
 
       // Thread safed get and set of the m_videFrozen flag.
       void setVideoFrozen(bool value);
@@ -208,8 +208,8 @@ namespace remoting
 
       // sendUpdate() auxiliary functions.
       // Returns true if an update has been requested.
-      bool extractReqRegions(::remoting::Region *incrReqReg, ::remoting::Region *fullReqReg, bool *incrUpdIsReq,
-                             bool *fullUpdIsReq, ::earth::time *reqTimePoint);
+      bool extractReqRegions(::remoting::Region *incrReqReg, ::remoting::Region *fullReqReg, bool *bIncrementalUpdateRequest,
+                             bool *bFullUpdateRequest, class ::time *timeReqPoint);
       void extractUpdates(UpdateContainer *updCont);
       void cropUpdContForReqRegions(UpdateContainer *updCont, const ::remoting::Region *incrReqReg,
                                     const ::remoting::Region *fullReqReg);
@@ -236,15 +236,15 @@ namespace remoting
       void sendRectHeader(const ::int_rectangle &rect, int encodingType);
       void sendRectHeader(unsigned short x, unsigned short y, unsigned short w, unsigned short h, int encodingType);
       void sendNewFBSize(::int_size *size, bool extended);
-      void sendFbInClientDim(const EncodeOptions *encodeOptions, const ::innate_subsystem::FrameBuffer *fb,
+      void sendFbInClientDim(const EncodeOptions *encodeOptions, const ::innate_subsystem::FrameBuffer *pframebuffer,
                              const ::int_size &size, const ::innate_subsystem::PixelFormat &pf);
       void sendCursorShapeUpdate(const ::innate_subsystem::PixelFormat &fmt,
                                  const ::remoting::CursorShape *cursorShape);
       void sendCursorPosUpdate();
-      void sendCopyRect(const ::array_base<::int_rectangle> *rects, const ::int_point *source);
+      void sendCopyRect(const ::int_rectangle_array_base *rects, const ::int_point *source);
 
       // Encode and send a ::list_base of rectangles via the specified encoder.
-      void sendRectangles(Encoder *encoder, const ::array_base<::int_rectangle> *rects,
+      void sendRectangles(Encoder *encoder, const ::int_rectangle_array_base *rects,
                           const ::innate_subsystem::FrameBuffer *frameBuffer, const EncodeOptions *encodeOptions);
 
       // This function paints black region in framebuffer.
@@ -254,14 +254,14 @@ namespace remoting
       // where actual splitting is performed by the specified encoder object.
       // We do not use m_pencoder because this function may be used for the video
       // encoder as well.
-      void splitRegion(Encoder *encoder, const ::remoting::Region *region, ::array_base<::int_rectangle> *rects,
+      void splitRegion(Encoder *encoder, const ::remoting::Region *region, ::int_rectangle_array_base *rects,
                        const ::innate_subsystem::FrameBuffer *frameBuffer, const EncodeOptions *encodeOptions);
 
       // Returns part of region with total area not much more than area
       // and removes this part form source reg
       ::remoting::Region takePartFromRegion(::remoting::Region *reg, int area);
       // calculate total area of rects in pixels
-      int calcAreas(::array_base<::int_rectangle> rects);
+      int calcAreas(::int_rectangle_array_base rects);
 
    };
 

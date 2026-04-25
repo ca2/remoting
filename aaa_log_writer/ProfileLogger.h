@@ -25,42 +25,51 @@
 #pragma once
 
 
-//#include "subsystem/platform/::earth::time.h"
+//#include "subsystem/platform/class ::time.h"
 //#include aaa_<vector>
 //#include aaa_<map>
 #include "remoting/thread/critical_section.h"
 
-
-struct ProcessorTimes {
-  double process;
-  double kernel;
-  ULONG64 cycle;
-  ::earth::time wall;
-};
-
-// �lass for acquiring processor load metrics.
-class ProfileLogWriter
+namespace platform
 {
-public:
-  ProfileLogWriter(double rate = 5.)
-  : m_dropRate(rate) 
-  {
-    m_lastDrop = ::earth::time::now();
-  };
 
-  ~ProfileLogWriter();
-  // returns cycles and times deltas from previouse checkpoint
-  ProcessorTimes checkPoint(const ::scoped_string & scopedstrTag);
-  ::array_base<::array_base<TCHAR>> dropStat();
+   struct ProcessorTimes {
+      double process;
+      double kernel;
+      ULONG64 cycle;
+      class ::time wall;
+   };
 
-private:
-  critical_section m_mapMut;
-  //::map<const ::scoped_string & scopedstr, ::array_base<ProcessorTimes>> m_checkPoints;
-   ::string_map <::array_base<ProcessorTimes> > m_checkPoints;
-  ProcessorTimes m_last;
-  double m_dropRate; // time interval in seconds to log statistics
-  ::earth::time m_lastDrop;
+   // �lass for acquiring processor load metrics.
+   class CLASS_DECL_ACME ProfileLogger
+   {
+   public:
 
-};
 
-//// __PROFILELogWriter_H__
+      ProfileLogger();
+      ~ProfileLogger();
+
+      // returns cycles and times deltas from previouse checkpoint
+      ProcessorTimes checkPoint(const ::scoped_string & scopedstrTag);
+      ::array_base<::array_base<TCHAR>> dropStat();
+
+   //private:
+      critical_section m_mapMut;
+      //::map<const ::scoped_string & scopedstr, ::array_base<ProcessorTimes>> m_checkPoints;
+      ::string_map <::array_base<ProcessorTimes> > m_checkPoints;
+      ProcessorTimes m_last;
+      double m_dropRate; // time interval in seconds to log statistics
+      class ::time m_lastDrop;
+
+   };
+
+   //// __PROFILELogWriter_H__
+}// namespace platform
+
+
+
+CLASS_DECL_ACME ::platform::ProfileLogger & ProfileLogger();
+
+
+
+

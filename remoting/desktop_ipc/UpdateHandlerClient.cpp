@@ -122,9 +122,9 @@ namespace remoting
 
          // Get screen size changed
          m_plogwriter->debug("UpdateHandlerClient: Get screen size changed");
-         updCont.screenSizeChanged = m_forwGate->readUInt8() != 0;
+         updCont.m_bScreenSizeChanged = m_forwGate->readUInt8() != 0;
 
-         if (updCont.screenSizeChanged)
+         if (updCont.m_bScreenSizeChanged)
          {
             m_plogwriter->information("UpdateHandlerClient: screen size changed");
             // Store old screen properties
@@ -176,16 +176,16 @@ namespace remoting
          }
 
          // Get cursor position if it has been changed.
-         updCont.cursorPosChanged = m_forwGate->readUInt8() != 0;
-         if (updCont.cursorPosChanged)
+         updCont.m_bCursorPosChanged = m_forwGate->readUInt8() != 0;
+         if (updCont.m_bCursorPosChanged)
          {
             m_plogwriter->information("UpdateHandlerClient: cursor pos changed");
          }
          updCont.cursorPos = readPoint(m_forwGate);
 
          // Get cursor shape if it has been changed.
-         updCont.cursorShapeChanged = m_forwGate->readUInt8() != 0;
-         if (updCont.cursorShapeChanged)
+         updCont.m_bCursorShapeChanged = m_forwGate->readUInt8() != 0;
+         if (updCont.m_bCursorShapeChanged)
          {
             m_plogwriter->information("UpdateHandlerClient: cursor shape changed");
             ::innate_subsystem::PixelFormat newPf = m_backupFrameBuffer.getPixelFormat();

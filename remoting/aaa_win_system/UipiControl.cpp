@@ -42,7 +42,7 @@ typedef bool (WINAPI *SetFilter)(unsigned int scopedstrMessage,
                                  DWORD action);
 
 UipiControl::UipiControl(::subsystem::LogWriter * plogwriter)
-: m_plogwriter = plogwriter;
+: m_plogwriter(plogwriter)
 {
 }
 

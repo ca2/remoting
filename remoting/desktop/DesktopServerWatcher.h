@@ -46,11 +46,18 @@ namespace remoting
    virtual public ::subsystem::Thread
    {
    public:
-      //DesktopServerWatcher(ReconnectionListener *recListener, ::subsystem::LogWriter * plogwriter);
+
+      ::pointer < ::subsystem::Process  > m_pprocess;
+      ::pointer < ReconnectionListener > m_preconnectionlistener;
+      ::pointer < Configurator > m_pconfigurator;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
+
+
+      //DesktopServerWatcher(ReconnectionListener *preconnectionlistener, ::subsystem::LogWriter * plogwriter);
       DesktopServerWatcher();
       ~DesktopServerWatcher() override;
 
-      virtual void initialize_desktop_server_watcher(ReconnectionListener *recListener, ::subsystem::LogWriter * plogwriter);
+      virtual void initialize_desktop_server_watcher(Configurator * pconfigurator, ReconnectionListener *preconnectionlistener, ::subsystem::LogWriter * plogwriter);
 
    //protected:
       virtual void execute();
@@ -63,10 +70,6 @@ namespace remoting
       // @throws SystemException on fail.
       void doXPTrick();
 
-      ::pointer < ::subsystem::Process  > m_pprocess;
-      ::pointer < ReconnectionListener > m_preconnectionlistener;
-
-      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
  

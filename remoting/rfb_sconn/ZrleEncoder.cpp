@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ZrleEncoder.h"
 
-ZrleEncoder::ZrleEncoder(PixelConverter *conv, DataOutputStream *output)
+ZrleEncoder::ZrleEncoder(PixelConverter * ppixelconverter, DataOutputStream * pdataoutputstream)
 : Encoder(conv, output),
   // FIXME: This values (zlib options) is not used now.
   // May be to improve Deflater class?
@@ -47,7 +47,7 @@ int ZrleEncoder::getCode() const
 }
 
 void ZrleEncoder::splitRectangle(const ::int_rectangle &  rect,
-                                 ::array_base<::int_rectangle> *rectList,
+                                 ::int_rectangle_array_base *rectList,
                                  const ::innate_subsystem::FrameBuffer *serverFb,
                                  const EncodeOptions *options)
 {
@@ -216,15 +216,15 @@ void ZrleEncoder::sendRect(const ::int_rectangle &  rect,
 
 template <class PIXEL_T>
 void ZrleEncoder::writeRawTile(const ::int_rectangle &  tileRect,
-                               const ::innate_subsystem::FrameBuffer *fb)
+                               const ::innate_subsystem::FrameBuffer *pframebuffer)
 {
   m_oldSize = m_rgbData.size();
   m_rgbData.resize(m_oldSize + tileRect.area() * m_bytesPerPixel + 1);
   m_rgbData[m_oldSize] = 0;
   if (m_bytesPerPixel == 3) {
-    copyCPixels(tileRect, fb, &m_rgbData[m_oldSize + 1]);
+    copyCPixels(tileRect, pframebuffer, &m_rgbData[m_oldSize + 1]);
   } else {
-    copyPixels<PIXEL_T>(tileRect, fb, &m_rgbData[m_oldSize + 1]);
+    copyPixels<PIXEL_T>(tileRect, pframebuffer, &m_rgbData[m_oldSize + 1]);
   }
 }
 
@@ -239,7 +239,7 @@ void ZrleEncoder::writeSolidTile()
 
 template <class PIXEL_T>
 void ZrleEncoder::writePackedPaletteTile(const ::int_rectangle &  tileRect,
-                                         const ::innate_subsystem::FrameBuffer *fb)
+                                         const ::innate_subsystem::FrameBuffer *pframebuffer)
 {
   int numColors = m_pal.getNumColors();
   m_oldSize = m_rgbData.size();
@@ -268,7 +268,7 @@ void ZrleEncoder::writePackedPaletteTile(const ::int_rectangle &  tileRect,
   }
 
   // Pack pixels.
-  const PIXEL_T *buffer = static_cast<const PIXEL_T *>(fb->getBuffer());
+  const PIXEL_T *buffer = static_cast<const PIXEL_T *>(pframebuffer->getBuffer());
   unsigned char packedByte = 0;
   int indexOfM = 0;
   int offset = 8;
@@ -322,7 +322,7 @@ void ZrleEncoder::pushRunLengthPaletteRle(int runLength,
 
 template <class PIXEL_T>
 void ZrleEncoder::writePaletteRleTile(const ::int_rectangle &  tileRect,
-                                      const ::innate_subsystem::FrameBuffer *fb)
+                                      const ::innate_subsystem::FrameBuffer *pframebuffer)
 {
   int numColors = m_pal.getNumColors();
   ::array_base<unsigned char> paletteRleData;
@@ -339,8 +339,8 @@ void ZrleEncoder::writePaletteRleTile(const ::int_rectangle &  tileRect,
              m_bytesPerPixel);
   }
 
-  const PIXEL_T *buffer = static_cast<const PIXEL_T *>(fb->getBuffer());
-  ::innate_subsystem::PixelFormat pxFormat = fb->getPixelFormat();
+  const PIXEL_T *buffer = static_cast<const PIXEL_T *>(pframebuffer->getBuffer());
+  ::innate_subsystem::PixelFormat pxFormat = pframebuffer->getPixelFormat();
 
   // There is the first iteration of loop below.
   PIXEL_T px = buffer[tileRect.top * m_fbWidth + tileRect.left];
@@ -408,15 +408,15 @@ void ZrleEncoder::writePixelToPlainRleTile(const PIXEL_T px,
 
 template <class PIXEL_T>
 void ZrleEncoder::fillPalette(const ::int_rectangle &  tileRect,
-                              const ::innate_subsystem::FrameBuffer *fb)
+                              const ::innate_subsystem::FrameBuffer *pframebuffer)
 {
   // Clear the palette.
   m_pal.reset();
   m_pal.setMaxColors(MAX_NUMBER_OF_COLORS_IN_PALETTE);
   int tryInsertPx = 1;
 
-  const PIXEL_T *buffer = (const PIXEL_T *)fb->getBuffer();
-  ::innate_subsystem::PixelFormat pxFormat = fb->getPixelFormat();
+  const PIXEL_T *buffer = (const PIXEL_T *)pframebuffer->getBuffer();
+  ::innate_subsystem::PixelFormat pxFormat = pframebuffer->getPixelFormat();
 
   // Mask for cutting rubbish bits.
   PIXEL_T mask = pxFormat.redMax << pxFormat.redShift |
@@ -480,13 +480,13 @@ void ZrleEncoder::fillPalette(const ::int_rectangle &  tileRect,
 
 template <class PIXEL_T>
 void ZrleEncoder::copyPixels(const ::int_rectangle &  rect,
-                             const ::innate_subsystem::FrameBuffer *fb,
+                             const ::innate_subsystem::FrameBuffer *pframebuffer,
                              unsigned char *dst)
 {
   const int rectHeight = rect.height();
   const int rectWidth = rect.width();
-  const PIXEL_T *src = static_cast<const PIXEL_T *>(fb->getBufferPtr(rect.left, rect.top));
-  const int fbStride = fb->getDimension().cx;
+  const PIXEL_T *src = static_cast<const PIXEL_T *>(pframebuffer->getBufferPtr(rect.left, rect.top));
+  const int fbStride = pframebuffer->getDimension().cx;
   const size_t bytesPerRow = rect.width() * m_bytesPerPixel;
 
   for (int y = 0; y < rectHeight; y++) {
@@ -497,13 +497,13 @@ void ZrleEncoder::copyPixels(const ::int_rectangle &  rect,
 }
 
 void ZrleEncoder::copyCPixels(const ::int_rectangle &  rect,
-                              const ::innate_subsystem::FrameBuffer *fb,
+                              const ::innate_subsystem::FrameBuffer *pframebuffer,
                               unsigned char *dst)
 {
   const int rectHeight = rect.height();
   const int rectWidth = rect.width();
-  const unsigned char *src = static_cast<const unsigned char *>(fb->getBufferPtr(rect.left, rect.top));
-  const int fbStride = fb->getDimension().cx;
+  const unsigned char *src = static_cast<const unsigned char *>(pframebuffer->getBufferPtr(rect.left, rect.top));
+  const int fbStride = pframebuffer->getDimension().cx;
   
   for (int y = 0; y < rectHeight; y++) {
     for (int x = 0; x < rectWidth; x++) {

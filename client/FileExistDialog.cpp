@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "FileExistDialog.h"
-//#include "subsystem/platform/::earth::time.h"
+//#include "subsystem/platform/class ::time.h"
 #include "resource.h"
 ////#include aaa_<crtdbg.h>
 //// #include aaa_<stdio.h>
@@ -180,7 +180,7 @@ namespace remoting_client
         #endif
         sizeLabel->setText(&buffer[0]);
 
-        ::earth::time dateTime(::posix_time(::posix_time_t{}, fileInfo->lastModified()));
+        class ::time dateTime(::posix_time(::posix_time_t{}, fileInfo->lastModified()));
 
         ::string formatTimeString;
         formatTimeString = datetime()->date_time_text(dateTime);

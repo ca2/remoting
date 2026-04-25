@@ -142,7 +142,7 @@ namespace remoting
       UpdateSender *m_updateSender;
       ClipboardExchange *m_clipboardExchange;
       ClientInputHandler *m_clientInputHandler;
-      Desktop *m_desktop;
+      ::pointer < Desktop > m_pdesktop;
 
       bool m_viewOnly;
       bool m_isOutgoing;
@@ -157,7 +157,7 @@ namespace remoting
       ::remoting_node_desktop::NewConnectionEvents *m_pnewconnectionevents;
       // This timer sets by IdleTimeout value from server config
       // and resets on mouse or keyboard event
-      DemandTimer m_idleTimer;
+      ::subsystem::DemandTimer m_demandtimerIdle;
       int m_idleTimeout;
    };
 

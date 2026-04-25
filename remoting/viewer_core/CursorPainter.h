@@ -34,7 +34,7 @@ namespace remoting
    class CLASS_DECL_REMOTING CursorPainter
    {
    public:
-      CursorPainter(::innate_subsystem::FrameBuffer *fb, ::subsystem::LogWriter * plogwriter);
+      CursorPainter(::innate_subsystem::FrameBuffer *pframebuffer, ::subsystem::LogWriter * plogwriter);
       virtual ~CursorPainter();
 
       // this functions is thread-safe for private data of cursor, but need external lock of frame buffer

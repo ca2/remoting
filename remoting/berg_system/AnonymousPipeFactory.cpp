@@ -29,7 +29,7 @@
 AnonymousPipeFactory::AnonymousPipeFactory(unsigned int bufferSize,
                                            ::subsystem::LogWriter * plogwriter)
 : m_bufferSize(bufferSize),
-  m_plogwriter = plogwriter;
+  m_plogwriter(plogwriter)
 {
 }
 

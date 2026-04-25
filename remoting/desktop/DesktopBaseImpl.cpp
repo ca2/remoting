@@ -30,14 +30,30 @@ namespace remoting
 
 {
 
-   DesktopBaseImpl::DesktopBaseImpl(ClipboardListener *extClipListener, UpdateSendingListener *extUpdSendingListener,
-                                    AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter * plogwriter) :
-       m_extUpdSendingListener(extUpdSendingListener), m_extDeskTermListener(extDeskTermListener),
-       m_extClipListener(extClipListener), m_userInput(0), m_updateHandler(0), m_plogwriter = plogwriter;
+   // DesktopBaseImpl::DesktopBaseImpl(ClipboardListener *extClipListener, UpdateSendingListener *extUpdSendingListener,
+   //                                  AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter * plogwriter) :
+   //     m_extUpdSendingListener(extUpdSendingListener), m_extDeskTermListener(extDeskTermListener),
+   //     m_extClipListener(extClipListener), m_userInput(0), m_updateHandler(0), m_plogwriter = plogwriter;
+   // {
+   // }
+   DesktopBaseImpl::DesktopBaseImpl() :
+       m_extUpdSendingListener(nullptr), m_extDeskTermListener(nullptr),
+       m_extClipListener(nullptr), m_userInput(0), m_updateHandler(0), m_plogwriter(nullptr)
    {
    }
 
    DesktopBaseImpl::~DesktopBaseImpl() {}
+
+   void DesktopBaseImpl::initialize_desktop_base_impl(::subsystem::ClipboardListener *extClipListener, UpdateSendingListener *extUpdSendingListener,
+                AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter * plogwriter)
+   {
+      m_extUpdSendingListener = extUpdSendingListener;
+      m_extDeskTermListener = extDeskTermListener;
+      m_extClipListener = extClipListener;
+      m_plogwriter = plogwriter;
+
+   }
+
 
    void DesktopBaseImpl::getCurrentUserInfo(::string &desktopName, ::string &userName)
    {
@@ -104,7 +120,7 @@ namespace remoting
       }
    }
 
-   ::array_base<::int_rectangle> DesktopBaseImpl::getDisplaysCoords()
+   ::int_rectangle_array_base DesktopBaseImpl::getDisplaysCoords()
    {
       _ASSERT(m_userInput != 0);
       _ASSERT(m_extDeskTermListener != 0);
@@ -118,7 +134,7 @@ namespace remoting
          m_plogwriter->error("::subsystem::Exception in DesktopBaseImpl::getDisplayCoords: {}", e.get_message());
          m_extDeskTermListener->onAbnormalDesktopTerminate();
       }
-      return ::array_base<::int_rectangle>();
+      return ::int_rectangle_array_base();
    }
 
 
@@ -370,10 +386,10 @@ namespace remoting
 
    void DesktopBaseImpl::onConfigReload(ServerConfig *serverConfig) { applyNewConfiguration(); }
 
-   bool DesktopBaseImpl::updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *fb, const Region *region,
-                                                   const ::int_rectangle &viewPort)
+   bool DesktopBaseImpl::updateExternalFrameBuffer(::innate_subsystem::FrameBuffer *pframebuffer, const Region *region,
+                                                   const ::int_rectangle &rectangleViewport)
    {
-      return m_updateHandler->updateExternalFrameBuffer(fb, region, viewPort);
+      return m_updateHandler->updateExternalFrameBuffer(pframebuffer, region, rectangleViewport);
    }
 
 

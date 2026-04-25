@@ -25,7 +25,7 @@
 #include "ClientLogWriter.h"
 #include "remoting/win_system/PipeClient.h"
 #include "SecurityPipeClient.h"
-//#include "subsystem/platform/::earth::time.h"
+//#include "subsystem/platform/class ::time.h"
 
 ClientLogWriter::ClientLogWriter(const ::scoped_string & scopedstrPublicPipeName, const ::scoped_string & scopedstrLogFileName)
 : LogDump(false, true),
@@ -113,8 +113,8 @@ void ClientLogWriter::print(int logLevel, const ::scoped_string & scopedstrLine)
   unsigned int threadId = GetCurrentThreadId();
 
   critical_section_lock al(&m_logWritingMut);
-  updateLogDumpLines(processId, threadId, ::earth::time::now(), logLevel, line);
-  flush(processId, threadId, ::earth::time::now(), logLevel, line);
+  updateLogDumpLines(processId, threadId, class ::time::now(), logLevel, line);
+  flush(processId, threadId, class ::time::now(), logLevel, line);
 }
 
 bool ClientLogWriter::acceptsLevel(int logLevel)
@@ -124,7 +124,7 @@ bool ClientLogWriter::acceptsLevel(int logLevel)
 
 void ClientLogWriter::flush(unsigned int processId,
                          unsigned int threadId,
-                         const ::earth::time & dt,
+                         const class ::time & dt,
                          int level,
                          const ::scoped_string & scopedstrMessage)
 {

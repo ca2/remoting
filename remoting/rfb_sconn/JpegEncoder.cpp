@@ -24,44 +24,47 @@
 #include "framework.h"
 #include "JpegEncoder.h"
 
-JpegEncoder::JpegEncoder(TightEncoder *tightEncoder)
-: Encoder(tightEncoder->m_ppixelconverter, tightEncoder->m_output),
-  m_tightEncoder(tightEncoder)
+namespace remoting
 {
-}
+   JpegEncoder::JpegEncoder(TightEncoder *tightEncoder)
+   : Encoder(tightEncoder->m_ppixelconverter, tightEncoder->m_pdataoutputstream),
+     m_tightEncoder(tightEncoder)
+   {
+   }
 
-JpegEncoder::~JpegEncoder()
-{
-}
+   JpegEncoder::~JpegEncoder()
+   {
+   }
 
-int JpegEncoder::getCode() const
-{
-  return m_tightEncoder->getCode();
-}
+   int JpegEncoder::getCode() const
+   {
+      return m_tightEncoder->getCode();
+   }
 
-void JpegEncoder::splitRectangle(const ::int_rectangle &  rect,
-                                 ::array_base<::int_rectangle> *rectList,
-                                 const ::innate_subsystem::FrameBuffer *serverFb,
-                                 const EncodeOptions *options)
-{
-  int maxWidth = 2048;
-  for (int x0 = rect.left; x0 < rect.right; x0 += maxWidth) {
-    int x1 = (x0 + maxWidth <= rect.right) ? x0 + maxWidth : rect.right;
-    rectList->add(::int_rectangle(x0, rect.top, x1, rect.bottom));
-  }
-}
+   void JpegEncoder::splitRectangle(const ::int_rectangle &  rect,
+                                    ::int_rectangle_array_base *rectList,
+                                    const ::innate_subsystem::FrameBuffer *serverFb,
+                                    const EncodeOptions *options)
+   {
+      int maxWidth = 2048;
+      for (int x0 = rect.left; x0 < rect.right; x0 += maxWidth) {
+         int x1 = (x0 + maxWidth <= rect.right) ? x0 + maxWidth : rect.right;
+         rectList->add(::int_rectangle(x0, rect.top, x1, rect.bottom));
+      }
+   }
 
-void JpegEncoder::sendRectangle(const ::int_rectangle &  rect,
-                                const ::innate_subsystem::FrameBuffer *serverFb,
-                                const EncodeOptions *options)
-{
-  size_t bppServer = m_ppixelconverter->getSrcBitsPerPixel();
-  size_t bppClient = m_ppixelconverter->getDstBitsPerPixel();
-  bool goodColorResolution = (bppServer >= 16 && bppClient >= 16);
+   void JpegEncoder::sendRectangle(const ::int_rectangle &  rect,
+                                   const ::innate_subsystem::FrameBuffer *serverFb,
+                                   const EncodeOptions *options)
+   {
+      size_t bppServer = m_ppixelconverter->getSrcBitsPerPixel();
+      size_t bppClient = m_ppixelconverter->getDstBitsPerPixel();
+      bool goodColorResolution = (bppServer >= 16 && bppClient >= 16);
 
-  if (options->jpegEnabled() && goodColorResolution) {
-    m_tightEncoder->sendJpegRect(rect, serverFb, options);
-  } else {
-    m_tightEncoder->sendRectangle(rect, serverFb, options);
-  }
-}
+      if (options->jpegEnabled() && goodColorResolution) {
+         m_tightEncoder->sendJpegRect(rect, serverFb, options);
+      } else {
+         m_tightEncoder->sendRectangle(rect, serverFb, options);
+      }
+   }
+} // namespace remoting

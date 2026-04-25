@@ -32,7 +32,7 @@
 Impersonator::Impersonator(::subsystem::LogWriter * plogwriter)
 : m_token(INVALID_HANDLE_VALUE),
   m_dupToken(INVALID_HANDLE_VALUE),
-  m_plogwriter = plogwriter;
+  m_plogwriter(plogwriter)
 {
 }
 

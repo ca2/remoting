@@ -1472,16 +1472,16 @@ namespace remoting_client
         postMessage(WM_USER_ERROR);
     }
 
-    void ViewerWindow::onFrameBufferUpdate(const ::innate_subsystem::FrameBuffer *fb, const ::int_rectangle &  rect)
+    void ViewerWindow::onFrameBufferUpdate(const ::innate_subsystem::FrameBuffer *pframebuffer, const ::int_rectangle &  rect)
     {
-        m_pdesktopwindow->updateFramebuffer(fb, rect);
+        m_pdesktopwindow->updateFramebuffer(pframebuffer, rect);
     }
 
-    void ViewerWindow::onFrameBufferPropChange(const ::innate_subsystem::FrameBuffer *fb)
+    void ViewerWindow::onFrameBufferPropChange(const ::innate_subsystem::FrameBuffer *pframebuffer)
     {
         //   m_pdesktopwindow->m_iDivisor = m_pconnectiondata->getDivisor();
-        // ((::innate_subsystem::FrameBuffer*)fb)->m_iDivisor = m_pdesktopwindow->m_iDivisor;
-        m_pdesktopwindow->setNewFramebuffer(fb);
+        // ((::innate_subsystem::FrameBuffer*)pframebuffer)->m_iDivisor = m_pdesktopwindow->m_iDivisor;
+        m_pdesktopwindow->setNewFramebuffer(pframebuffer);
     }
 
     void ViewerWindow::onCutText(const ::scoped_string & cutText)

@@ -30,7 +30,7 @@
 #include "remoting/remoting/region/Region.h"
 
 //#include "remoting/remoting/region/::int_point.h"
-//#include "subsystem/platform/::earth::time.h"
+//#include "subsystem/platform/class ::time.h"
 
 #include "BlockingGate.h"
 
@@ -63,9 +63,9 @@ namespace remoting
       virtual void sendRegion(const ::remoting::Region *region, BlockingGate *pblockinggate);
       virtual void readRegion(::remoting::Region *region, BlockingGate *pblockinggate);
 
-      void sendFrameBuffer(const ::innate_subsystem::FrameBuffer *srcFb, const ::int_rectangle &srcRect,
+      void sendFrameBuffer(const ::innate_subsystem::FrameBuffer *pframebufferSource, const ::int_rectangle &srcRect,
                            BlockingGate *pblockinggate);
-      void readFrameBuffer(::innate_subsystem::FrameBuffer *dstFb, const ::int_rectangle &dstRect, BlockingGate *pblockinggate);
+      void readFrameBuffer(::innate_subsystem::FrameBuffer *pframebufferTarget, const ::int_rectangle &dstRect, BlockingGate *pblockinggate);
 
       virtual void sendNewClipboard(const ::scoped_string &newClipboard, BlockingGate *pblockinggate);
       virtual void readNewClipboard(::string &newClipboard, BlockingGate *pblockinggate);

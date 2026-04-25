@@ -33,7 +33,7 @@ namespace remoting
    //                              ScreenGrabber *pscreengrabber, ::innate_subsystem::FrameBuffer *backupFrameBuffer,
    //                              critical_section *frameBufferMutex, ::subsystem::LogWriter * plogwriter) :
    //     UpdateDetector(pupdatekeeper, pupdatelistener), m_pscreengrabber(pscreengrabber),
-   //     m_backupFrameBuffer(backupFrameBuffer), m_frameBufferMutex(frameBufferMutex), m_plogwriter = plogwriter;
+   //     m_backupFrameBuffer(backupFrameBuffer), m_frameBufferMutex(frameBufferMutex), m_plogwriter(plogwriter)
    // {
    //    m_rectanglePolling.set(0, 0, 16, 16);
    // }

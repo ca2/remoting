@@ -39,25 +39,25 @@ namespace remoting
       reset();
    }
 
-   void PixelConverter::convert(const ::int_rectangle &  rect, ::innate_subsystem::FrameBuffer *dstFb,
-                                const ::innate_subsystem::FrameBuffer *srcFb) const
+   void PixelConverter::convert(const ::int_rectangle &  rect, ::innate_subsystem::FrameBuffer *pframebufferTarget,
+                                const ::innate_subsystem::FrameBuffer *pframebufferSource) const
    {
       if (m_convertMode == NO_CONVERT) {
-         dstFb->copyFrom(rect, srcFb, rect.left, rect.top);
+         pframebufferTarget->copyFrom(rect, pframebufferSource, rect.left, rect.top);
       } else {
          int rectHeight = rect.height();
          int rectWidth = rect.width();
-         int fbWidth = dstFb->getDimension().cx;
-         ::innate_subsystem::PixelFormat dstPf = dstFb->getPixelFormat();
-         ::innate_subsystem::PixelFormat srcPf = srcFb->getPixelFormat();
+         int fbWidth = pframebufferTarget->getDimension().cx;
+         ::innate_subsystem::PixelFormat pixelformatTarget = pframebufferTarget->getPixelFormat();
+         ::innate_subsystem::PixelFormat pixelformatSource = pframebufferSource->getPixelFormat();
 
-         unsigned int dstPixelSize = dstPf.bitsPerPixel / 8;
-         unsigned int srcPixelSize = srcPf.bitsPerPixel / 8;
+         unsigned int dstPixelSize = pixelformatTarget.bitsPerPixel / 8;
+         unsigned int srcPixelSize = pixelformatSource.bitsPerPixel / 8;
 
          // FIXME: Make ::innate_subsystem::FrameBuffer do the math.
-         unsigned char *dstPixP = (unsigned char *)dstFb->getBuffer() +
+         unsigned char *dstPixP = (unsigned char *)pframebufferTarget->getBuffer() +
                           (fbWidth * rect.top + rect.left) * dstPixelSize;
-         unsigned char *srcPixP = (unsigned char *)srcFb->getBuffer() +
+         unsigned char *srcPixP = (unsigned char *)pframebufferSource->getBuffer() +
                           (fbWidth * rect.top + rect.left) * srcPixelSize;
          if (m_convertMode == CONVERT_FROM_16) {
             for (int i = 0; i < rectHeight; i++,
@@ -77,10 +77,10 @@ namespace remoting
                                               }
                  }
          } else if (m_convertMode == CONVERT_FROM_32) {
-            bool bigEndianDiffs = dstPf.bigEndian != srcPf.bigEndian;
-            unsigned int srcRedMax = srcPf.redMax;
-            unsigned int srcGrnMax = srcPf.greenMax;
-            unsigned int srcBluMax = srcPf.blueMax;
+            bool bigEndianDiffs = pixelformatTarget.bigEndian != pixelformatSource.bigEndian;
+            unsigned int srcRedMax = pixelformatSource.redMax;
+            unsigned int srcGrnMax = pixelformatSource.greenMax;
+            unsigned int srcBluMax = pixelformatSource.blueMax;
 
             for (int i = 0; i < rectHeight; i++,
                  dstPixP += (fbWidth - rectWidth) * dstPixelSize,
@@ -89,11 +89,11 @@ namespace remoting
                                               dstPixP += dstPixelSize,
                                               srcPixP += srcPixelSize) {
                   unsigned int dstPixel = m_redTable[*(unsigned int *)srcPixP >>
-                                               srcPf.redShift & srcRedMax] |
+                                               pixelformatSource.redShift & srcRedMax] |
                                     m_grnTable[*(unsigned int *)srcPixP >>
-                                               srcPf.greenShift & srcGrnMax] |
+                                               pixelformatSource.greenShift & srcGrnMax] |
                                     m_bluTable[*(unsigned int *)srcPixP >>
-                                               srcPf.blueShift & srcBluMax];
+                                               pixelformatSource.blueShift & srcBluMax];
                   if (dstPixelSize == 4) {
                      *(unsigned int *)dstPixP = dstPixel;
                      if (bigEndianDiffs) {
@@ -117,13 +117,13 @@ namespace remoting
    }
 
    const ::innate_subsystem::FrameBuffer *
-   PixelConverter::convert(const ::int_rectangle &  rect, const ::innate_subsystem::FrameBuffer *srcFb)
+   PixelConverter::convert(const ::int_rectangle &  rect, const ::innate_subsystem::FrameBuffer *pframebufferSource)
    {
       if (m_convertMode == NO_CONVERT) {
-         return srcFb;
+         return pframebufferSource;
       }
 
-      const ::int_size fbSize = srcFb->getDimension();
+      const ::int_size fbSize = pframebufferSource->getDimension();
       if (m_dstFrameBuffer == 0) {
          // No frame buffer allocated - construct new one from the scratch.
          m_dstFrameBuffer = new ::innate_subsystem::FrameBuffer;
@@ -138,7 +138,7 @@ namespace remoting
       }
 
       // Finally, convert pixels.
-      convert(rect, m_dstFrameBuffer, srcFb);
+      convert(rect, m_dstFrameBuffer, pframebufferSource);
       return m_dstFrameBuffer;
    }
 
@@ -151,25 +151,25 @@ namespace remoting
       }
    }
 
-   void PixelConverter::setPixelFormats(const ::innate_subsystem::PixelFormat & dstPf,
-                                        const ::innate_subsystem::PixelFormat & srcPf)
+   void PixelConverter::setPixelFormats(const ::innate_subsystem::PixelFormat & pixelformatTarget,
+                                        const ::innate_subsystem::PixelFormat & pixelformatSource)
    {
-      if (srcPf != m_srcFormat || dstPf != m_dstFormat) {
+      if (pixelformatSource != m_srcFormat || pixelformatTarget != m_dstFormat) {
          // Reset both translation tables and the internal frame buffer.
          reset();
 
-         if (srcPf == dstPf) {
+         if (pixelformatSource == pixelformatTarget) {
             m_convertMode = NO_CONVERT;
-         } else if (srcPf.bitsPerPixel == 16) { // 16 bit -> N
+         } else if (pixelformatSource.bitsPerPixel == 16) { // 16 bit -> N
             m_convertMode = CONVERT_FROM_16;
-            fillHexBitsTable(dstPf, srcPf);
-         } else if (srcPf.bitsPerPixel == 32) { // 32 bit -> N
+            fillHexBitsTable(pixelformatTarget, pixelformatSource);
+         } else if (pixelformatSource.bitsPerPixel == 32) { // 32 bit -> N
             m_convertMode = CONVERT_FROM_32;
-            fill32BitsTable(dstPf, srcPf);
+            fill32BitsTable(pixelformatTarget, pixelformatSource);
          }
 
-         m_srcFormat = srcPf;
-         m_dstFormat = dstPf;
+         m_srcFormat = pixelformatSource;
+         m_dstFormat = pixelformatTarget;
       }
    }
 
@@ -183,62 +183,62 @@ namespace remoting
       return m_dstFormat.bitsPerPixel;
    }
 
-   void PixelConverter::fillHexBitsTable(const ::innate_subsystem::PixelFormat & dstPf,
-                                         const ::innate_subsystem::PixelFormat & srcPf)
+   void PixelConverter::fillHexBitsTable(const ::innate_subsystem::PixelFormat & pixelformatTarget,
+                                         const ::innate_subsystem::PixelFormat & pixelformatSource)
    {
       m_hexBitsTable.resize(65536);
 
-      unsigned int dstRedMax = dstPf.redMax;
-      unsigned int dstGrnMax = dstPf.greenMax;
-      unsigned int dstBluMax = dstPf.blueMax;
+      unsigned int dstRedMax = pixelformatTarget.redMax;
+      unsigned int dstGrnMax = pixelformatTarget.greenMax;
+      unsigned int dstBluMax = pixelformatTarget.blueMax;
 
-      unsigned int dstRedShift = dstPf.redShift;
-      unsigned int dstGrnShift = dstPf.greenShift;
-      unsigned int dstBluShift = dstPf.blueShift;
+      unsigned int dstRedShift = pixelformatTarget.redShift;
+      unsigned int dstGrnShift = pixelformatTarget.greenShift;
+      unsigned int dstBluShift = pixelformatTarget.blueShift;
 
-      unsigned int srcRedMax = srcPf.redMax;
-      unsigned int srcGrnMax = srcPf.greenMax;
-      unsigned int srcBluMax = srcPf.blueMax;
+      unsigned int srcRedMax = pixelformatSource.redMax;
+      unsigned int srcGrnMax = pixelformatSource.greenMax;
+      unsigned int srcBluMax = pixelformatSource.blueMax;
 
-      unsigned int srcRedMask = srcRedMax << srcPf.redShift;
-      unsigned int srcGrnMask = srcGrnMax << srcPf.greenShift;
-      unsigned int srcBluMask = srcBluMax << srcPf.blueShift;
+      unsigned int srcRedMask = srcRedMax << pixelformatSource.redShift;
+      unsigned int srcGrnMask = srcGrnMax << pixelformatSource.greenShift;
+      unsigned int srcBluMask = srcBluMax << pixelformatSource.blueShift;
 
       for (unsigned int i = 0; i < 65536; i++) {
          // Get source color component
-         unsigned int srcRed = (i & srcRedMask) >> srcPf.redShift;
-         unsigned int srcGrn = (i & srcGrnMask) >> srcPf.greenShift;
-         unsigned int srcBlu = (i & srcBluMask) >> srcPf.blueShift;
+         unsigned int srcRed = (i & srcRedMask) >> pixelformatSource.redShift;
+         unsigned int srcGrn = (i & srcGrnMask) >> pixelformatSource.greenShift;
+         unsigned int srcBlu = (i & srcBluMask) >> pixelformatSource.blueShift;
 
          unsigned int dstRed = (srcRed * dstRedMax / srcRedMax) << dstRedShift;
          unsigned int dstGrn = (srcGrn * dstGrnMax / srcGrnMax) << dstGrnShift;
          unsigned int dstBlu = (srcBlu * dstBluMax / srcBluMax) << dstBluShift;
          m_hexBitsTable[i] = dstRed | dstGrn | dstBlu;
-         if (dstPf.bigEndian != srcPf.bigEndian) {
-            if (dstPf.bitsPerPixel == 32) {
+         if (pixelformatTarget.bigEndian != pixelformatSource.bigEndian) {
+            if (pixelformatTarget.bitsPerPixel == 32) {
                m_hexBitsTable[i] = rotateUint32(m_hexBitsTable[i]);
             }
-            else if (dstPf.bitsPerPixel == 16) {
+            else if (pixelformatTarget.bitsPerPixel == 16) {
                m_hexBitsTable[i] = (m_hexBitsTable[i] & 0xff) << 8 | (m_hexBitsTable[i] & 0xff00) >> 8;
             }
          }
       }
    }
 
-   void PixelConverter::fill32BitsTable(const ::innate_subsystem::PixelFormat & dstPf,
-                                        const ::innate_subsystem::PixelFormat & srcPf)
+   void PixelConverter::fill32BitsTable(const ::innate_subsystem::PixelFormat & pixelformatTarget,
+                                        const ::innate_subsystem::PixelFormat & pixelformatSource)
    {
-      unsigned int dstRedMax = dstPf.redMax;
-      unsigned int dstGrnMax = dstPf.greenMax;
-      unsigned int dstBluMax = dstPf.blueMax;
+      unsigned int dstRedMax = pixelformatTarget.redMax;
+      unsigned int dstGrnMax = pixelformatTarget.greenMax;
+      unsigned int dstBluMax = pixelformatTarget.blueMax;
 
-      unsigned int dstRedShift = dstPf.redShift;
-      unsigned int dstGrnShift = dstPf.greenShift;
-      unsigned int dstBluShift = dstPf.blueShift;
+      unsigned int dstRedShift = pixelformatTarget.redShift;
+      unsigned int dstGrnShift = pixelformatTarget.greenShift;
+      unsigned int dstBluShift = pixelformatTarget.blueShift;
 
-      unsigned int srcRedMax = srcPf.redMax;
-      unsigned int srcGrnMax = srcPf.greenMax;
-      unsigned int srcBluMax = srcPf.blueMax;
+      unsigned int srcRedMax = pixelformatSource.redMax;
+      unsigned int srcGrnMax = pixelformatSource.greenMax;
+      unsigned int srcBluMax = pixelformatSource.blueMax;
 
       m_redTable.resize(srcRedMax + 1);
       m_grnTable.resize(srcGrnMax + 1);

@@ -58,10 +58,10 @@ RfbClient::RfbClient(NewConnectionEvents *newConnectionEvents,
   m_clipboardExchange(0),
   m_clientInputHandler(0),
   m_id(id),
-  m_desktop(0),
+  m_pdesktop(0),
   m_constViewPort(constViewPort, log),
   m_dynamicViewPort(dynViewPort, log),
-  m_idleTimer(idleTimeout), m_idleTimeout(idleTimeout),
+  m_demandtimerIdle(idleTimeout), m_idleTimeout(idleTimeout),
   m_plogwriter = plogwriter;
 {
   resume();
@@ -207,17 +207,17 @@ void RfbClient::execute()
       m_viewOnly = m_viewOnly || m_viewOnlyAuth;
 
       // Let RfbClientManager handle new authenticated connection.
-      m_desktop = m_extAuthListener->onClientAuth(this);
+      m_pdesktop = m_extAuthListener->onClientAuth(this);
 
       m_plogwriter->information("View only = {}", (int)m_viewOnly);
     } catch (::exception &e) {
       m_plogwriter->error("Error during RFB initialization: {}", e.get_message());
       throw;
     }
-    _ASSERT(m_desktop != 0);
+    _ASSERT(m_pdesktop != 0);
 
-    m_constViewPort.initDesktopInterface(m_desktop);
-    m_dynamicViewPort.initDesktopInterface(m_desktop);
+    m_constViewPort.initDesktopInterface(m_pdesktop);
+    m_dynamicViewPort.initDesktopInterface(m_pdesktop);
 
     RfbDispatcher dispatcher(&input, &m_connClosingEvent);
     m_plogwriter->debug("Dispatcher has been created");
@@ -226,28 +226,28 @@ void RfbClient::execute()
                                   &encCaps);
     // Init modules
     // UpdateSender initialization
-    m_updateSender = new UpdateSender(&codeRegtor, m_desktop, this,
-                                      &output, m_id, m_desktop, m_plogwriter);
+    m_updateSender = new UpdateSender(&codeRegtor, m_pdesktop, this,
+                                      &output, m_id, m_pdesktop, m_plogwriter);
     m_plogwriter->debug("UpdateSender has been created for client #{}", m_id);
     ::innate_subsystem::PixelFormat pf;
     ::int_size fbDim;
-    m_desktop->getFrameBufferProperties(&fbDim, &pf);
-    ::int_rectangle viewPort = getViewPortRect(fbDim);
-    m_updateSender->init(::int_size(viewPort.size()), pf);
+    m_pdesktop->getFrameBufferProperties(&fbDim, &pf);
+    ::int_rectangle rectangleViewport = getViewPortRect(fbDim);
+    m_updateSender->init(::int_size(rectangleViewport.size()), pf);
     m_plogwriter->debug("UpdateSender has been initialized");
     // ClientInputHandler initialization
     m_clientInputHandler = new ClientInputHandler(&codeRegtor, this,
                                                   m_viewOnly);
     m_plogwriter->debug("ClientInputHandler has been created");
     // ClipboardExchange initialization
-    m_clipboardExchange = new ClipboardExchange(&codeRegtor, m_desktop, &output,
+    m_clipboardExchange = new ClipboardExchange(&codeRegtor, m_pdesktop, &output,
                                                 m_viewOnly, m_plogwriter);
     m_plogwriter->debug("ClipboardExchange has been created");
 
     // FileTransfers initialization
     if (config->isFileTransfersEnabled() &&
         rfbInitializer.getTightEnabledFlag()) {
-      fileTransfer = new FileTransferRequestHandler(&codeRegtor, &output, m_desktop, m_plogwriter, !m_viewOnly);
+      fileTransfer = new FileTransferRequestHandler(&codeRegtor, &output, m_pdesktop, m_plogwriter, !m_viewOnly);
       m_plogwriter->debug("::file::item transfer has been created");
     } else {
       m_plogwriter->information("::file::item transfer is not allowed");
@@ -258,13 +258,13 @@ void RfbClient::execute()
 
     // Second initialization phase
     // Send and receive initialization information between server and viewer
-    m_plogwriter->debug("View port: ({},{}) (%dx{})", viewPort.left,
-                                                 viewPort.top,
-                                                 viewPort.width(),
-                                                 viewPort.height());
+    m_plogwriter->debug("View port: ({},{}) (%dx{})", rectangleViewport.left,
+                                                 rectangleViewport.top,
+                                                 rectangleViewport.width(),
+                                                 rectangleViewport.height());
     m_plogwriter->information("Entering RFB initialization phase 2");
     rfbInitializer.afterAuthPhase(&srvToClCaps, &clToSrvCaps,
-                                  &encCaps, &::int_size(&viewPort), &pf);
+                                  &encCaps, &::int_size(&rectangleViewport), &pf);
     m_plogwriter->debug("RFB initialization phase 2 completed");
 
     // Start normal phase
@@ -303,7 +303,7 @@ void RfbClient::sendUpdate(const UpdateContainer *updateContainer,
 {
   m_updateSender->newUpdates(updateContainer, cursorShape);
 
-  if (m_idleTimeout != 0  && m_idleTimer.isElapsed()) {
+  if (m_idleTimeout != 0  && m_demandtimerIdle.isElapsed()) {
     m_plogwriter->error("Connection will be closed due to client inactivity. IdleTimeout = {} ms", m_idleTimeout);
     m_connClosingEvent.set_happening();
   }
@@ -324,12 +324,12 @@ void RfbClient::onKeyboardEvent(unsigned int keySym, bool down)
   bool shareApp = m_dynamicViewPort.getOnlyApplication();
   if (shareApp) {
     unsigned int pid = m_dynamicViewPort.getApplicationId();
-    mayPass = m_desktop->isApplicationInFocus(pid);
+    mayPass = m_pdesktop->isApplicationInFocus(pid);
   }
 
   if (mayPass) {
-    m_desktop->setKeyboardEvent(keySym, down);
-    m_idleTimer.reset();
+    m_pdesktop->setKeyboardEvent(keySym, down);
+    m_demandtimerIdle.reset();
   }
 }
 
@@ -340,7 +340,7 @@ void RfbClient::onMouseEvent(unsigned short x, unsigned short y, unsigned char b
 
   ::innate_subsystem::PixelFormat pfStub;
   ::int_size fbDim;
-  m_desktop->getFrameBufferProperties(&fbDim, &pfStub);
+  m_pdesktop->getFrameBufferProperties(&fbDim, &pfStub);
 
   ::int_rectangle vp;
   bool shareApp;
@@ -355,8 +355,8 @@ void RfbClient::onMouseEvent(unsigned short x, unsigned short y, unsigned char b
 
   if (pointInside) {
     m_updateSender->blockCursorPosSending();
-    m_desktop->setMouseEvent(x + vp.left, y + vp.top, buttonMask);
-    m_idleTimer.reset();
+    m_pdesktop->setMouseEvent(x + vp.left, y + vp.top, buttonMask);
+    m_demandtimerIdle.reset();
   }
 }
 
@@ -386,6 +386,6 @@ void RfbClient::onGetViewPort(::int_rectangle *viewRect, bool *shareApp, Region 
 {
   ::innate_subsystem::PixelFormat pfStub;
   ::int_size fbDim;
-  m_desktop->getFrameBufferProperties(&fbDim, &pfStub);
+  m_pdesktop->getFrameBufferProperties(&fbDim, &pfStub);
   getViewPortInfo(&fbDim, viewRect, shareApp, shareAppRegion);
 }

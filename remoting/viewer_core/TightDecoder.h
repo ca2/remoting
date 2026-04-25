@@ -68,17 +68,17 @@ namespace remoting
                               ::array_base<unsigned char> &buffer,
                               size_t expectedLength,
                               const int decoderId);
-      void drawPalette(::innate_subsystem::FrameBuffer *fb,
+      void drawPalette(::innate_subsystem::FrameBuffer *pframebuffer,
                        const ::array_base<unsigned int> &palette,
                        const ::array_base<unsigned char> &pixels,
                        const ::int_rectangle &  dstRect);
-      void drawGradient(::innate_subsystem::FrameBuffer *fb,
+      void drawGradient(::innate_subsystem::FrameBuffer *pframebuffer,
                         const ::array_base<unsigned char> &pixels,
                         const ::int_rectangle &  dstRect);
-      void drawTightBytes(::innate_subsystem::FrameBuffer *fb,
+      void drawTightBytes(::innate_subsystem::FrameBuffer *pframebuffer,
                          const ::array_base<unsigned char> *pixels,
                          const ::int_rectangle &  dstRect);
-      void drawJpegBytes(::innate_subsystem::FrameBuffer *fb,
+      void drawJpegBytes(::innate_subsystem::FrameBuffer *pframebuffer,
                          const ::array_base<unsigned char> *pixels,
                          const ::int_rectangle &  dstRect);
 

@@ -26,7 +26,7 @@
 
 
 #include "FileLogDefs.h"
-//#include "subsystem/platform/::earth::time.h"
+//#include "subsystem/platform/class ::time.h"
 
 class LogListener
 {
@@ -34,7 +34,7 @@ public:
   virtual void onLog(FileAccountHandle handle,
                      unsigned int processId,
                      unsigned int threadId,
-                     const ::earth::time & dt,
+                     const class ::time & dt,
                      int level,
                      const ::scoped_string & scopedstrMessage) = 0;
   virtual void onAnErrorFromLogConn(const ::scoped_string & scopedstrMessage) = 0;

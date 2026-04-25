@@ -31,7 +31,7 @@ namespace remoting
 
    Win8ScreenDriver::Win8ScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
                                       critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter) :
-       WinVideoRegionUpdaterImpl(plogwriter), m_plogwriter = plogwriter;, m_fbcritical_section(fbcritical_section),
+       WinVideoRegionUpdaterImpl(plogwriter), m_plogwriter(plogwriter), m_fbcritical_section(fbcritical_section),
        m_pupdatekeeper(pupdatekeeper), m_pupdatelistener = pupdatelistener;, m_detectionEnabled(false)
    {
       m_plogwriter->debug("Win8ScreenDriver creating new Win8ScreenDriverImpl");

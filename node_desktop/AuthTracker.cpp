@@ -47,8 +47,8 @@ namespace remoting_node_desktop
          if (m_failureCount >= m_failureMaxCount)
          {
             banTime = maximum(0, m_failureTimeInterval -
-                                    //(::earth::time::now() - m_firstFailureTime).getTime());
-                                    (::earth::time::now() - m_firstFailureTime).m_iSecond);
+                                    //(class ::time::now() - m_firstFailureTime).getTime());
+                                    (class ::time::now() - m_firstFailureTime).m_iSecond);
          }
       }
       return banTime;
@@ -59,7 +59,7 @@ namespace remoting_node_desktop
       critical_section_lock al(&m_countMutex);
       if (m_failureCount == 0)
       {
-         m_firstFailureTime = ::earth::time::now();
+         m_firstFailureTime = class ::time::now();
       }
       m_failureCount++;
    }
@@ -67,8 +67,8 @@ namespace remoting_node_desktop
    void AuthTracker::refresh()
    {
       critical_section_lock al(&m_countMutex);
-      // if ((::earth::time::now() - m_firstFailureTime).getTime() >= m_failureTimeInterval) {
-      if ((::earth::time::now() - m_firstFailureTime).m_iSecond >= m_failureTimeInterval)
+      // if ((class ::time::now() - m_firstFailureTime).getTime() >= m_failureTimeInterval) {
+      if ((class ::time::now() - m_firstFailureTime).m_iSecond >= m_failureTimeInterval)
       {
          m_failureCount = 0;
       }

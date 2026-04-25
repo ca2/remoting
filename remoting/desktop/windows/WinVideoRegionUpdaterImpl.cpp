@@ -33,7 +33,7 @@ namespace remoting
 {
 
 
-   WinVideoRegionUpdaterImpl::WinVideoRegionUpdaterImpl(::subsystem::LogWriter * plogwriter) : m_plogwriter = plogwriter; { resume(); }
+   WinVideoRegionUpdaterImpl::WinVideoRegionUpdaterImpl(::subsystem::LogWriter * plogwriter) : m_plogwriter(plogwriter) { resume(); }
 
    WinVideoRegionUpdaterImpl::~WinVideoRegionUpdaterImpl()
    {
@@ -74,7 +74,7 @@ namespace remoting
    }
 
    void WinVideoRegionUpdaterImpl::getClassNamesAndRectsFromConfig(::string_array &classNames,
-                                                                   ::array_base<::int_rectangle> &rects)
+                                                                   ::int_rectangle_array_base &rects)
    {
       ServerConfig *srvConf = m_pconfigurator->getServerConfig();
       critical_section_lock al(srvConf);
@@ -85,16 +85,16 @@ namespace remoting
    void WinVideoRegionUpdaterImpl::updateVideoRegion()
    {
       ::string_array classNames;
-      ::array_base<::int_rectangle> rects;
+      ::int_rectangle_array_base rects;
       getClassNamesAndRectsFromConfig(classNames, rects);
       Region tmpRegion;
       m_plogwriter->debug(L"WinVideoRegionUpdaterImpl: ClassNames {}, Rects {}", classNames.size(),
                           m_vidRegion.getCount());
       if (!classNames.empty())
       {
-         ::earth::time startTime = ::earth::time::now();
+         class ::time startTime = class ::time::now();
          tmpRegion.add(getRectsByClass(classNames));
-         unsigned int millis = (::earth::time::now() - startTime).getTime();
+         unsigned int millis = (class ::time::now() - startTime).getTime();
          m_plogwriter->debug(L"WinVideoRegionUpdaterImpl::getRectsByClass call took {} ms", millis);
       }
       if (!rects.empty())
@@ -144,9 +144,9 @@ namespace remoting
       return vidRegion;
    }
 
-   Region WinVideoRegionUpdaterImpl::getRectsByCoords(::array_base<::int_rectangle> &rects)
+   Region WinVideoRegionUpdaterImpl::getRectsByCoords(::int_rectangle_array_base &rects)
    {
-      ::array_base<::int_rectangle>::iterator rIter;
+      ::int_rectangle_array_base::iterator rIter;
       ::int_rectangle videoRect;
       Region vidRegion;
       for (rIter = rects.begin(); rIter != rects.end(); rIter++)

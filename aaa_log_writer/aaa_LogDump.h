@@ -25,19 +25,19 @@
 #pragma once
 
 //
-// //#include "subsystem/platform/::earth::time.h"
+// //#include "subsystem/platform/class ::time.h"
 //
 // struct LogEntry
 // {
 //   LogEntry(unsigned int processId,
 //            unsigned int threadId,
-//            const ::earth::time & dt,
+//            const class ::time & dt,
 //            int lineLevel,
 //            const ::scoped_string & scopedstrMessage);
 //
 //   unsigned int m_processId;
 //   unsigned int m_threadId;
-//   ::earth::time m_dt;
+//   class ::time m_dt;
 //   int m_lineLevel;
 //   ::string m_message;
 // };
@@ -52,7 +52,7 @@
 //   // Writes a log scopedstrMessage.
 //   virtual void flush(unsigned int processId,
 //                      unsigned int threadId,
-//                      const ::earth::time & dt,
+//                      const class ::time & dt,
 //                      int level,
 //                      const ::scoped_string & scopedstrMessage) = 0;
 //
@@ -67,7 +67,7 @@
 //   // This function must be calling under the log mutex from derived classes.
 //   void updateLogHeaderLines(unsigned int processId,
 //                             unsigned int threadId,
-//                             const ::earth::time & dt,
+//                             const class ::time & dt,
 //                             int level,
 //                             const ::scoped_string & scopedstrMessage);
 //
@@ -76,7 +76,7 @@
 //   // This function must be calling under the log mutex from derived classes.
 //   void updateLogDumpLines(unsigned int processId,
 //                           unsigned int threadId,
-//                           const ::earth::time & dt,
+//                           const class ::time & dt,
 //                           int level,
 //                           const ::scoped_string & scopedstrMessage);
 //

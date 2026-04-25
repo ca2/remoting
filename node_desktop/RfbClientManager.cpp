@@ -39,7 +39,7 @@ namespace remoting_node_desktop
                                       ::remoting_node_desktop::Configurator *pconfigurator,
                                       ::remoting_node_desktop::NewConnectionEvents *pnewconnectionevents,
                                       ::subsystem::LogWriter * plogwriter, ::remoting::DesktopFactory *desktopFactory) :
-       m_nextClientId(0), m_desktop(0), m_pconfigurator(pconfigurator), m_pnewconnectionevents(pnewconnectionevents),
+       m_nextClientId(0), m_pdesktop(0), m_pconfigurator(pconfigurator), m_pnewconnectionevents(pnewconnectionevents),
        m_plogwriter = plogwriter;, m_desktopFactory(desktopFactory)
    {
       m_plogwriter->information("Starting rfb client manager");
@@ -120,18 +120,18 @@ namespace remoting_node_desktop
       // Adding to the authorized ::list_base.
       m_clientList.add(client);
 
-      if (m_desktop == 0 && !m_clientList.empty())
+      if (m_pdesktop == 0 && !m_clientList.empty())
       {
          // Create WinDesktop and notify listeners that the first client has been
          // connected.
-         m_desktop = m_desktopFactory->createDesktop(this, this, this, m_plogwriter);
+         m_pdesktop = m_desktopFactory->createDesktop(this, this, this, m_plogwriter);
          //::std::vector<RfbClientManagerEventListener *>::iterator iter;
          for (auto iter = m_listeners.begin(); iter != m_listeners.end(); iter++)
          {
             (*iter)->afterFirstClientConnect();
          }
       }
-      return m_desktop;
+      return m_pdesktop;
    }
 
    bool RfbClientManager::onCheckForBan(RfbClient *client)
@@ -334,10 +334,10 @@ namespace remoting_node_desktop
             }
          }
 
-         if (m_desktop != 0 && m_clientList.empty())
+         if (m_pdesktop != 0 && m_clientList.empty())
          {
-            objectToDestroy = m_desktop;
-            m_desktop = 0;
+            objectToDestroy = m_pdesktop;
+            m_pdesktop = 0;
          }
       }
       if (objectToDestroy != 0)
@@ -366,8 +366,8 @@ namespace remoting_node_desktop
       if (it != m_banList.end())
       {
          unsigned int count = (*it).m_element2.count;
-         ::earth::time lastTime = (*it).m_element2.banLastTime;
-         ::earth::time now = ::earth::time::now();
+         class ::time lastTime = (*it).m_element2.banLastTime;
+         class ::time now = class ::time::now();
          if (count > 13)
             count = 13;
          // about 1 hour max login rate after 14 unsuccessful logins
@@ -407,13 +407,13 @@ namespace remoting_node_desktop
          {
             // Increase ban count
             (*it).m_element2.count += 1;
-            (*it).m_element2.banLastTime = ::earth::time::now();
+            (*it).m_element2.banLastTime = class ::time::now();
          }
          else
          {
             // Add new element to ban ::list_base with ban count == 0
             BanProp banProp;
-            banProp.banLastTime = ::earth::time::now();
+            banProp.banLastTime = class ::time::now();
             banProp.count = 0;
             m_banList[ip] = banProp;
          }
@@ -428,7 +428,7 @@ namespace remoting_node_desktop
          ::string ip = it->m_element1;
          ::string s;
          unsigned int count = it->m_element2.count;
-         ::earth::time lastTime = it->m_element2.banLastTime;
+         class ::time lastTime = it->m_element2.banLastTime;
          ::string time;
 
          time = MainSubsystem().toString(lastTime);

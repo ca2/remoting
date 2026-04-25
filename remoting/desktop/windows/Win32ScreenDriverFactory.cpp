@@ -37,7 +37,7 @@ namespace remoting
 
    ScreenDriver *Win32ScreenDriverFactory::createScreenDriver(UpdateKeeper *pupdatekeeper,
                                                               UpdateListener *pupdatelistener,
-                                                              ::innate_subsystem::FrameBuffer *fb,
+                                                              ::innate_subsystem::FrameBuffer *pframebuffer,
                                                               critical_section *fbcritical_section,
                                                               ::subsystem::LogWriter * plogwriter)
    {
@@ -76,16 +76,16 @@ namespace remoting
          log->information("Mirror driver usage is disallowed");
       }
       log->information("Using the standart screen driver");
-      return createStandardScreenDriver(pupdatekeeper, pupdatelistener, fb, fbcritical_section, log);
+      return createStandardScreenDriver(pupdatekeeper, pupdatelistener, pframebuffer, fbcritical_section, log);
    }
 
    ScreenDriver *Win32ScreenDriverFactory::createStandardScreenDriver(UpdateKeeper *pupdatekeeper,
                                                                       UpdateListener *pupdatelistener,
-                                                                      ::innate_subsystem::FrameBuffer *fb,
+                                                                      ::innate_subsystem::FrameBuffer *pframebuffer,
                                                                       critical_section *fbcritical_section,
                                                                       ::subsystem::LogWriter * plogwriter)
    {
-      return new Win32ScreenDriver(pupdatekeeper, pupdatelistener, fb, fbcritical_section, log);
+      return new Win32ScreenDriver(pupdatekeeper, pupdatelistener, pframebuffer, fbcritical_section, log);
    }
 
    ScreenDriver *Win32ScreenDriverFactory::createMirrorScreenDriver(UpdateKeeper *pupdatekeeper,

@@ -26,7 +26,7 @@
 
 
 //#include "subsystem/thread/critical_section.h"
-//#include "subsystem/platform/::earth::time.h"
+//#include "subsystem/platform/class ::time.h"
 
 namespace remoting_node_desktop
 {
@@ -52,7 +52,7 @@ namespace remoting_node_desktop
 
       unsigned long long m_failureTimeInterval;
 
-      ::earth::time m_firstFailureTime;
+      class ::time m_firstFailureTime;
       unsigned int m_failureCount;
       unsigned int m_failureMaxCount;
       critical_section m_countMutex;

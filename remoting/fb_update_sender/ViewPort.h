@@ -29,7 +29,7 @@
 #include "innate_subsystem/framebuffer/FrameBuffer.h"
 #include "remoting/remoting/desktop/Desktop.h"
 //#include "subsystem/thread/critical_section.h"
-//#include "subsystem/platform/::earth::time.h"
+//#include "subsystem/platform/class ::time.h"
 //#include "log_writer/LogWriter.h"
 
 
@@ -39,17 +39,38 @@ namespace remoting
    // This class CLASS_DECL_REMOTING  calculates actual view port rectangle.
    // Typical usage:
    // // Initialisation
-   // ViewPort m_viewPort;
+   // ViewPort m_rectangleViewport;
    // ...
    // ...
-   // m_viewPort.update(&frameBuffer->getDimension());
-   // ::int_rectangle viewPort = m_viewPort.getViewPortRect();
-   class CLASS_DECL_REMOTING  ViewPort
+   // m_rectangleViewport.update(&frameBuffer->getDimension());
+   // ::int_rectangle rectangleViewport = m_rectangleViewport.getViewPortRect();
+   class CLASS_DECL_REMOTING  ViewPort :
+   virtual public ::particle
    {
    public:
-      ViewPort(::subsystem::LogWriter * plogwriter);
-      ViewPort(const ViewPortState *viewPortState, ::subsystem::LogWriter * plogwriter);
-      ~ViewPort();
+
+
+      static const int RESOLVING_PERIOD = 3000;
+
+      ::pointer < Desktop > m_pdesktop;
+
+      ViewPortState m_state;
+      ::int_rectangle m_rect;
+      ::remoting::Region m_regionApp;
+      critical_section m_stateMutex;
+
+      class ::time m_timeLatestHwndResolving;
+
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
+
+      //ViewPort(::subsystem::LogWriter * plogwriter);
+      //ViewPort(const ViewPortState *viewPortState, ::subsystem::LogWriter * plogwriter);
+      ViewPort();
+      ~ViewPort() override;
+
+
+      virtual void initialize_viewport(::subsystem::LogWriter * plogwriter);
+      virtual void initialize_viewport(const ViewPortState *viewPortState, ::subsystem::LogWriter * plogwriter);
 
       // Sets desktop interface that can be used in some mode to get
       // desktop info. The desktop interface uses only in the update() function.
@@ -77,27 +98,15 @@ namespace remoting
       // Assignes self values by an external state.
       void changeState(const ViewPortState *newState);
 
-   private:
+   //private:
       // Disable the copy operation and constructor.
-      ViewPort(const ViewPort &);
-      ViewPort &operator=(const ViewPort &);
+     // ViewPort(const ViewPort &);
+      //ViewPort &operator=(const ViewPort &);
 
       // Resolves a window name of the view port state to window handle.
       // On an error the function do nothing.
       void resolveWindowName();
 
-      static const int RESOLVING_PERIOD = 3000;
-
-      Desktop *m_desktop;
-
-      ViewPortState m_state;
-      ::int_rectangle m_rect;
-      ::remoting::Region m_appRegion;
-      critical_section m_stateMutex;
-
-      ::earth::time m_latestHwndResolvingTime;
-
-      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

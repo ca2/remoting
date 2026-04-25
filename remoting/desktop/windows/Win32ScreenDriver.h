@@ -37,7 +37,7 @@ namespace remoting
    class CLASS_DECL_REMOTING Win32ScreenDriver : public Win32ScreenDriverBaseImpl
    {
    public:
-      Win32ScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ::innate_subsystem::FrameBuffer *fb,
+      Win32ScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ::innate_subsystem::FrameBuffer *pframebuffer,
                         critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter);
       virtual ~Win32ScreenDriver();
 

@@ -55,7 +55,7 @@ namespace remoting_node_desktop
    struct BanProp
    {
       unsigned int count;
-      ::earth::time banLastTime;
+      class ::time banLastTime;
    };
    typedef ::map<::string, BanProp> BanList;
    typedef BanList::iterator BanListIter;
@@ -154,7 +154,7 @@ namespace remoting_node_desktop
 
       // Creating and destroying this object must be with the locked
       // m_clientListLocker
-      ::remoting::Desktop *m_desktop;
+      ::remoting::::pointer < Desktop > m_pdesktop;
       ::remoting::DesktopFactory *m_desktopFactory;
 
       // Inforamtion

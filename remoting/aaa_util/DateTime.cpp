@@ -22,25 +22,25 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-// //#include "::earth::time.h"
+// //#include "class ::time.h"
 //
 // //#include aaa_<crtdbg.h>
 //
-// ::earth::time::::earth::time()
+// class ::time::::earth::time()
 // : m_timeValue(0)
 // {
 // }
-// ::earth::time::::earth::time(const ::earth::time &dt)
+// class ::time::::earth::time(const class ::time &dt)
 // : m_timeValue(dt.m_timeValue)
 // {
 // }
 //
-// ::earth::time::::earth::time(unsigned long long timeValue)
+// class ::time::::earth::time(unsigned long long timeValue)
 // : m_timeValue(timeValue)
 // {
 // }
 //
-// ::earth::time::::earth::time(FILETIME ft)
+// class ::time::::earth::time(FILETIME ft)
 // {
 //   const unsigned long long SECS_BETWEEN_EPOCHS = 11644473600;
 //   const unsigned long long SECS_TO_100NS = 10000000;
@@ -55,22 +55,22 @@
 //   m_timeValue = (unixTime100ns / 10000);
 // }
 //
-// unsigned long long ::earth::time::getTime() const
+// unsigned long long class ::time::getTime() const
 // {
 //   return m_timeValue;
 // }
 //
-// ::earth::time ::earth::time::operator- (const ::earth::time &other)
+// class ::time class ::time::operator- (const class ::time &other)
 // {
-//   return ::earth::time(getTime() - other.getTime());
+//   return class ::time(getTime() - other.getTime());
 // }
 //
-// ::earth::time ::earth::time::operator+ (const ::earth::time &other)
+// class ::time class ::time::operator+ (const class ::time &other)
 // {
-//   return ::earth::time(getTime() + other.getTime());
+//   return class ::time(getTime() + other.getTime());
 // }
 //
-// void ::earth::time::toFileTime(LPFILETIME ft) const
+// void class ::time::toFileTime(LPFILETIME ft) const
 // {
 //   unsigned long long ll;
 //   ll = m_timeValue * (10000000 / 1000) + 116444736000000000;
@@ -78,7 +78,7 @@
 //   ft->dwHighDateTime = ll >> 32;
 // }
 //
-// void ::earth::time::toUtcSystemTime(LPSYSTEMTIME st) const
+// void class ::time::toUtcSystemTime(LPSYSTEMTIME st) const
 // {
 //   FILETIME ft;
 //
@@ -87,7 +87,7 @@
 //   FileTimeToSystemTime(&ft, st);
 // }
 //
-// void ::earth::time::toLocalSystemTime(LPSYSTEMTIME st) const
+// void class ::time::toLocalSystemTime(LPSYSTEMTIME st) const
 // {
 //   FILETIME ft, localFt;
 //
@@ -98,7 +98,7 @@
 //   FileTimeToSystemTime(&localFt, st);
 // }
 //
-// void ::earth::time::toString(::string & target) const
+// void class ::time::toString(::string & target) const
 // {
 //   SYSTEMTIME systemTime;
 //
@@ -137,7 +137,7 @@
 //   target->appendString(timeString);
 // }
 //
-// ::earth::time ::earth::time::now()
+// class ::time class ::time::now()
 // {
 //   SYSTEMTIME st = {0};
 //
@@ -147,7 +147,7 @@
 //
 //   SystemTimeToFileTime(&st, &ft);
 //
-//   ::earth::time dt(ft);
+//   class ::time dt(ft);
 //
 //   return dt;
 // }

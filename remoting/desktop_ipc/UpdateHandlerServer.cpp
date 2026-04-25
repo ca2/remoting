@@ -101,34 +101,34 @@ namespace remoting
       m_updateHandler->extract(&updCont);
       m_plogwriter->debug("UpdateHandlerServer: %u changed rectangles", updCont.m_regionChanged.getCount());
 
-      const ::innate_subsystem::FrameBuffer *fb = m_updateHandler->getFrameBuffer();
+      const ::innate_subsystem::FrameBuffer *pframebuffer = m_updateHandler->getFrameBuffer();
 
-      ::innate_subsystem::PixelFormat newPf = fb->getPixelFormat();
+      ::innate_subsystem::PixelFormat newPf = pframebuffer->getPixelFormat();
 
       if (!m_oldPf.isEqualTo(&newPf))
       {
-         updCont.screenSizeChanged = true;
+         updCont.m_bScreenSizeChanged = true;
          m_oldPf = newPf;
       }
 
-      pblockinggate->writeUInt8(updCont.screenSizeChanged);
-      if (updCont.screenSizeChanged)
+      pblockinggate->writeUInt8(updCont.m_bScreenSizeChanged);
+      if (updCont.m_bScreenSizeChanged)
       {
          // Send new screen properties
          m_plogwriter->debug("UpdateHandlerServer: Send new screen properties");
          sendPixelFormat(&newPf, pblockinggate);
-         ::int_size fbDim = fb->getDimension();
+         ::int_size fbDim = pframebuffer->getDimension();
          ::int_rectangle fbRect = fbDim;
          sendDimension(&fbDim, pblockinggate);
-         sendFrameBuffer(fb, &fbRect, pblockinggate);
+         sendFrameBuffer(pframebuffer, &fbRect, pblockinggate);
       }
 
       // Send video region
       m_plogwriter->debug("UpdateHandlerServer: Send video region");
       sendRegion(&updCont.m_regionVideo, pblockinggate);
       // Send changed region
-      ::array_base<::int_rectangle> rects;
-      ::array_base<::int_rectangle>::iterator iRect;
+      ::int_rectangle_array_base rects;
+      ::int_rectangle_array_base::iterator iRect;
       updCont.m_regionChanged.getRectVector(&rects);
       unsigned int countChangedRect = (unsigned int)rects.size();
       _ASSERT(countChangedRect == rects.size());
@@ -139,7 +139,7 @@ namespace remoting
       {
          ::int_rectangle *rect = &(*iRect);
          sendRect(rect, pblockinggate);
-         sendFrameBuffer(fb, rect, pblockinggate);
+         sendFrameBuffer(pframebuffer, rect, pblockinggate);
       }
 
       // Send "copyrect"
@@ -152,18 +152,18 @@ namespace remoting
          updCont.m_regionCopied.getRectVector(&rects);
          iRect = rects.begin();
          sendRect(&(*iRect), pblockinggate);
-         sendFrameBuffer(fb, &(*iRect), pblockinggate);
+         sendFrameBuffer(pframebuffer, &(*iRect), pblockinggate);
       }
 
       // Send cursor position if it has been changed.
       m_plogwriter->debug("UpdateHandlerServer: Send cursor position");
-      pblockinggate->writeUInt8(updCont.cursorPosChanged);
+      pblockinggate->writeUInt8(updCont.m_bCursorPosChanged);
       sendPoint(&updCont.cursorPos, pblockinggate);
 
       // Send cursor shape if it has been changed.
       m_plogwriter->debug("UpdateHandlerServer: Send cursor shape");
-      pblockinggate->writeUInt8(updCont.cursorShapeChanged);
-      if (updCont.cursorShapeChanged)
+      pblockinggate->writeUInt8(updCont.m_bCursorShapeChanged);
+      if (updCont.m_bCursorShapeChanged)
       {
          const CursorShape *curSh = m_updateHandler->getCursorShape();
          sendDimension(&curSh->getDimension(), pblockinggate);
@@ -182,9 +182,9 @@ namespace remoting
 
    void UpdateHandlerServer::screenPropReply(BlockingGate *pblockinggate)
    {
-      const ::innate_subsystem::FrameBuffer *fb = m_updateHandler->getFrameBuffer();
-      sendPixelFormat(&fb->getPixelFormat(), pblockinggate);
-      sendDimension(&fb->getDimension(), pblockinggate);
+      const ::innate_subsystem::FrameBuffer *pframebuffer = m_updateHandler->getFrameBuffer();
+      sendPixelFormat(&pframebuffer->getPixelFormat(), pblockinggate);
+      sendDimension(&pframebuffer->getDimension(), pblockinggate);
    }
 
    void UpdateHandlerServer::receiveFullReqReg(BlockingGate *pblockinggate)
@@ -205,13 +205,13 @@ namespace remoting
    {
       // FIXME: Use another method to initialize m_backupFrameBuffer
       // because this method use a lot of memory.
-      ::innate_subsystem::FrameBuffer fb;
+      ::innate_subsystem::FrameBuffer pframebuffer;
       readPixelFormat(&m_oldPf, pblockinggate);
       ::int_size size = readDimension(pblockinggate);
-      fb.setProperties(&size, &m_oldPf);
+      pframebuffer.setProperties(&size, &m_oldPf);
 
-      readFrameBuffer(&fb, &size, pblockinggate);
-      m_updateHandler->initFrameBuffer(&fb);
+      readFrameBuffer(&pframebuffer, &size, pblockinggate);
+      m_updateHandler->initFrameBuffer(&pframebuffer);
    }
 
 

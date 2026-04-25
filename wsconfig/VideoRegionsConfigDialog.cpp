@@ -87,7 +87,7 @@ bool VideoRegionsConfigDialog::validateInput()
 void VideoRegionsConfigDialog::updateUI()
 {
   ::string_array *videoClasses = m_config->getVideoClassNames();
-  ::array_base<::int_rectangle> *videoRects = m_config->getVideoRects();
+  ::int_rectangle_array_base *rectangleaVideo = m_config->getVideoRects();
   ::string textAreaData;
   TCHAR endLine[3] = {13, 10, 0};
   {
@@ -106,8 +106,8 @@ void VideoRegionsConfigDialog::updateUI()
   {
     critical_section_lock al(m_config);
     textAreaData= "";
-    for (size_t i = 0; i < videoRects->size(); i++) {
-      ::int_rectangle r = videoRects->at(i);
+    for (size_t i = 0; i < rectangleaVideo->size(); i++) {
+      ::int_rectangle r = rectangleaVideo->at(i);
       ::string s;
       RectSerializer::toString(&r, &s);
       textAreaData.appendString(s);
@@ -130,8 +130,8 @@ void VideoRegionsConfigDialog::apply()
 
   ::string_array *videoClasses = m_config->getVideoClassNames();
   videoClasses->clear();
-  ::array_base<::int_rectangle> *videoRects = m_config->getVideoRects();
-  videoRects->clear();
+  ::int_rectangle_array_base *rectangleaVideo = m_config->getVideoRects();
+  rectangleaVideo->clear();
 
   //
   // Split text from text area to string array
@@ -166,7 +166,7 @@ void VideoRegionsConfigDialog::apply()
     for (size_t i = 0; i < count; i++) {
       if (!chunks[i].is_empty()) {
         try {
-          videoRects->add(RectSerializer::toRect(&chunks[i]));
+          rectangleaVideo->add(RectSerializer::toRect(&chunks[i]));
         } catch (...) {
           // Ignore wrong formatted strings
         }

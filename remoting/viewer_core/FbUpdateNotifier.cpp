@@ -30,11 +30,11 @@
 
 namespace remoting
 {
-   FbUpdateNotifier::FbUpdateNotifier(::innate_subsystem::FrameBuffer *fb, critical_section *fbLock, ::subsystem::LogWriter * plogwriter, WatermarksController* wmController)
-   : m_pframebuffer(fb),
+   FbUpdateNotifier::FbUpdateNotifier(::innate_subsystem::FrameBuffer *pframebuffer, critical_section *fbLock, ::subsystem::LogWriter * plogwriter, WatermarksController* wmController)
+   : m_pframebuffer(pframebuffer),
      m_fbLock(fbLock),
      m_plogwriter = plogwriter;,
-     m_cursorPainter(fb, plogwriter),
+     m_cursorPainter(pframebuffer, plogwriter),
      m_isNewSize(false),
      m_isCursorChange(false),
    m_isGoodCursor(false),
@@ -150,12 +150,12 @@ namespace remoting
             }
 #endif
 
-            ::array_base<::int_rectangle> updateList;
+            ::int_rectangle_array_base updateList;
             update.getRectVector(&updateList);
             m_plogwriter->debug("FbUpdateNotifier (event): {} updates", updateList.size());
 
             try {
-               for (::array_base<::int_rectangle>::iterator i = updateList.begin(); i != updateList.end(); ++i) {
+               for (::int_rectangle_array_base::iterator i = updateList.begin(); i != updateList.end(); ++i) {
                   m_adapter->onFrameBufferUpdate(m_pframebuffer, *i);
                }
             } catch (...) {

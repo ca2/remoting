@@ -53,7 +53,7 @@ namespace remoting
    // HHOOK WindowsInputBlocker::m_hMouseHook = 0;
    // HHOOK WindowsInputBlocker::m_hSoftMouseHook = 0;
 
-   //::earth::time WindowsInputBlocker::m_lastInputTime;
+   //class ::time WindowsInputBlocker::m_lastInputTime;
    //unsigned int WindowsInputBlocker::m_timeInterval = INFINITE;
    //critical_section WindowsInputBlocker::m_lastInputTimeMutex;
 
@@ -61,7 +61,7 @@ namespace remoting
 
    WindowsInputBlocker::WindowsInputBlocker(::subsystem::LogWriter * plogwriter) :
        m_isKeyboardBlocking(false), m_isMouseBlocking(false), m_isSoftKeyboardBlocking(false),
-       m_isSoftMouseBlocking(false), m_plogwriter = plogwriter;
+       m_isSoftMouseBlocking(false), m_plogwriter(plogwriter)
    {
       {
          critical_section_lock al(&s_criticalsection);
@@ -85,24 +85,24 @@ s      resume();
 
    }
 
-   ::earth::time WindowsInputBlocker::getLastInputTime() const
+   class ::time WindowsInputBlocker::getLastInputTime() const
    {
       critical_section_lock al(&m_pwindowsinputblocker->m_lastInputTimeMutex);
       return m_pwindowsinputblocker->m_lastInputTime;
    }
 
-   void WindowsInputBlocker::correctLastTime(::earth::time newTime)
+   void WindowsInputBlocker::correctLastTime(class ::time newTime)
    {
       critical_section_lock al(&m_pwindowsinputblocker->m_lastInputTimeMutex);
       if (newTime.getTime() > m_lastInputTime.getTime())
       {
-         newTime = ::earth::time(newTime.getTime());
+         newTime = class ::time(newTime.getTime());
       }
    }
 
    bool WindowsInputBlocker::isRemoteInputAllowed()
    {
-      if ((::earth::time::now() - m_lastInputTime).getTime() < m_timeInterval &&
+      if ((class ::time::now() - m_lastInputTime).getTime() < m_timeInterval &&
           (m_hSoftKeyboardHook != 0 || m_hSoftMouseHook != 0))
       {
          return false;
@@ -279,7 +279,7 @@ s      resume();
          // If this a hardware event then update software blocking time.
          if (!(hookStruct->flags & LLKHF_INJECTED))
          {
-            m_lastInputTime = ::earth::time::now();
+            m_lastInputTime = class ::time::now();
          }
       }
       return CallNextHookEx(m_hSoftKeyboardHook, nCode, wParam, lParam);
@@ -293,7 +293,7 @@ s      resume();
          // If this a hardware event then update software blocking time.
          if (!(hookStruct->flags & LLMHF_INJECTED))
          {
-            m_lastInputTime = ::earth::time::now();
+            m_lastInputTime = class ::time::now();
          }
       }
       return CallNextHookEx(m_hSoftMouseHook, nCode, wParam, lParam);

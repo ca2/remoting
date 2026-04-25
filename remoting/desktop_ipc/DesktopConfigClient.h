@@ -27,7 +27,7 @@
 
 #include "remoting/remoting/desktop_ipc/DesktopServerProto.h"
 #include "DesktopSrvDispatcher.h"
-//#include "subsystem/platform/::earth::time.h"
+//#include "subsystem/platform/class ::time.h"
 
 namespace remoting
 {
@@ -44,7 +44,7 @@ namespace remoting
       virtual bool isRemoteInputAllowed();
 
    //private:
-      ::earth::time m_lastInputTime;
+      class ::time m_lastInputTime;
    };
 
 

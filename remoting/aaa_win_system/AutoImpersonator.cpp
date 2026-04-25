@@ -27,7 +27,7 @@
 
 AutoImpersonator::AutoImpersonator(Impersonator *imp, ::subsystem::LogWriter * plogwriter)
 : m_imp(imp),
-  m_plogwriter = plogwriter;
+  m_plogwriter(plogwriter)
 {
   try {
     m_imp->impersonateAsLoggedUser();

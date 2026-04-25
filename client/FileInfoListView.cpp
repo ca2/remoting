@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "FileInfoListView.h"
-//#include "subsystem/platform/::earth::time.h"
+//#include "subsystem/platform/class ::time.h"
 #include "remoting/remoting/resource.h"
 #include "subsystem/platform/ResourceLoader.h"
 ////#include aaa_<crtdbg.h>
@@ -119,7 +119,7 @@ namespace remoting_client
             // Prepare modification time string
             //
 
-            ::earth::time dateTime(::posix_time(::posix_time_t{}, fileInfo->lastModified()));
+            class ::time dateTime(::posix_time(::posix_time_t{}, fileInfo->lastModified()));
 
             modTimeString = datetime()->date_time_text(dateTime);
         }

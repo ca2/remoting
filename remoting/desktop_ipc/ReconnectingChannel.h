@@ -81,7 +81,7 @@ namespace remoting
       critical_section m_chanMut;
 
       ::happening m_timer;
-      unsigned int m_timeOut;
+      class ::time m_timeOut;
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };

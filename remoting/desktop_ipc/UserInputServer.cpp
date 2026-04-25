@@ -212,7 +212,7 @@ namespace remoting
 
    void UserInputServer::ansDisplaysCoords(BlockingGate *pblockinggate)
    {
-      ::array_base<::int_rectangle> rects = m_userInput->getDisplaysCoords();
+      ::int_rectangle_array_base rects = m_userInput->getDisplaysCoords();
       size_t number = rects.size();
       if (number > 255)
       {

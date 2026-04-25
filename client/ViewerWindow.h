@@ -195,8 +195,8 @@ namespace remoting_client
         void onDisconnect(const ::scoped_string & scopedstrMessage);
         void onAuthError(const ::remoting::AuthException *exception);
         void onError(const ::subsystem::Exception *exception);
-        void onFrameBufferUpdate(const ::innate_subsystem::FrameBuffer *fb, const ::int_rectangle &  rect);
-        void onFrameBufferPropChange(const ::innate_subsystem::FrameBuffer *fb);
+        void onFrameBufferUpdate(const ::innate_subsystem::FrameBuffer *pframebuffer, const ::int_rectangle &  rect);
+        void onFrameBufferPropChange(const ::innate_subsystem::FrameBuffer *pframebuffer);
         void onCutText(const ::scoped_string & cutText);
 
         int translateAccelToTB(int val);

@@ -79,7 +79,7 @@ ServerConfig& ServerConfig::operator=(ServerConfig& other) {
   return *this;
 }
 
-void ServerConfig::serialize(DataOutputStream *output)
+void ServerConfig::serialize(DataOutputStream * pdataoutputstream)
 {
   AutoLock l(this);
 
@@ -758,7 +758,7 @@ void ServerConfig::setVideoRecognitionInterval(unsigned int interval)
   m_videoRecognitionInterval = interval;
 }
 
-::array_base<::int_rectangle> *ServerConfig::getVideoRects()
+::int_rectangle_array_base *ServerConfig::getVideoRects()
 {
   return &m_videoRects;
 }

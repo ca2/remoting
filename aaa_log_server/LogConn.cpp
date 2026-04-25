@@ -28,7 +28,7 @@
 #include "SecurityPipeServer.h"
 #include "remoting/io/DataInputStream.h"
 #include "remoting/io/DataOutputStream.h"
-//#include "subsystem/platform/::earth::time.h"
+//#include "subsystem/platform/class ::time.h"
 
 LogConn::LogConn(Channel *channel, LogConnAuthListener *extAuthListener,
                  LogListener *extLogListener, unsigned char logLevel)
@@ -118,7 +118,7 @@ void LogConn::dispatch()
   while (!isTerminating()) {
     unsigned int processId = input.readUInt32();
     unsigned int threadId = input.readUInt32();
-    ::earth::time dt(input.readUInt64());
+    class ::time dt(input.readUInt64());
     unsigned char level = input.readUInt8();
     // Receive log scopedstrMessage
     input.readUTF8(&logMess);

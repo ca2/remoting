@@ -117,7 +117,7 @@ bool PortMappingContainer::equals(const PortMappingContainer *other) const
   return true;
 }
 
-void PortMappingContainer::serialize(DataOutputStream *output) const
+void PortMappingContainer::serialize(DataOutputStream * pdataoutputstream) const
 {
   _ASSERT((unsigned int)count() == count());
   output->writeUInt32((unsigned int)count());

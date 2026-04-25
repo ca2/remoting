@@ -29,102 +29,122 @@
 #include "ZrleEncoder.h"
 #include "TightEncoder.h"
 
-EncoderStore::EncoderStore(PixelConverter *pixelConverter, DataOutputStream *output)
-: m_pencoder(0),
-  m_pjpegencoder(0),
-  m_ppixelconverter(pixelConverter),
-  m_output(output)
+
+namespace remoting
 {
-}
 
-EncoderStore::~EncoderStore()
-{
-  // Remove JpegEncoder which is not in m_map.
-  if (m_pjpegencoder != 0) {
-    delete m_pjpegencoder;
-  }
-  // Remove all allocated encoders referenced in m_map.
-  ::map<int, Encoder *>::iterator it;
-  for (it = m_map.begin(); it != m_map.end(); it++) {
-    delete it->second;
-  }
-}
 
-Encoder *EncoderStore::getEncoder() const
-{
-  return m_pencoder;
-}
+   // EncoderStore::EncoderStore(PixelConverter * ppixelconverter, DataOutputStream * pdataoutputstream)
+   // : m_pencoder(0),
+   //   m_pjpegencoder(0),
+   // {
+   // }
+   EncoderStore::EncoderStore()
+   {
+   }
 
-JpegEncoder *EncoderStore::getJpegEncoder() const
-{
-  return m_pjpegencoder;
-}
+   EncoderStore::~EncoderStore()
+   {
+      // Remove JpegEncoder which is not in m_map.
+      //if (m_pjpegencoder != 0) {
+        // delete m_pjpegencoder;
+      //}
+      m_pjpegencoder.defer_destroy_and_release();
+      // Remove all allocated encoders referenced in m_map.
+      //::map<int, Encoder *>::iterator it;
+      //for (it = m_map.begin(); it != m_map.end(); it++) {
+        // delete it->second;
+      //}
+      m_map.defer_destroy_and_release();
+   }
 
-void EncoderStore::selectEncoder(int encType)
-{
-  m_pencoder = validateEncoder(encType);
-}
+   void EncoderStore::initialize_encoder_store(::remoting::PixelConverter * ppixelconverter, DataOutputStream * pdataoutputstream)
+   {
 
-void EncoderStore::validateJpegEncoder()
-{
-  if (m_pjpegencoder == 0) {
-    TightEncoder *tight = (TightEncoder *)validateEncoder(EncodingDefs::TIGHT);
-    m_pjpegencoder = new JpegEncoder(tight);
-  }
-}
+      m_ppixelconverter = ppixelconverter;
+      m_pdataoutputstream = pdataoutputstream;
 
-//---------------------------- Internal methods ----------------------------//
+   }
 
-Encoder *EncoderStore::validateEncoder(int encType)
-{
-  // Use Raw encoding instead of unknown codes.
-  if (!encodingSupported(encType)) {
-    encType = EncodingDefs::RAW;
-  }
-  // If that encoder is already allocated, return a pointer to it.
-  ::map<int, Encoder *>::iterator it = m_map.find(encType);
-  if (it != m_map.end()) {
-    return it->second;
-  }
-  // Otherwise, allocate it, store it in m_map and return the pointer to it.
-  Encoder *newEncoder = allocateEncoder(encType);
-  try {
-    m_map[encType] = newEncoder;
-  } catch (...) {
-    delete newEncoder;
-    throw;
-  }
-  return newEncoder;
-}
+   Encoder *EncoderStore::getEncoder() const
+   {
+      return m_pencoder;
+   }
 
-// FIXME: Instead of the two functions below, create a separate EncoderFactory
-//        which would know if a given encoding code is supported and would be
-//        able to create encoder instances corresponding to the given codes.
-//        Such EncoderFactory would be useful for EncodeOptions as well.
+   JpegEncoder *EncoderStore::getJpegEncoder() const
+   {
+      return m_pjpegencoder;
+   }
 
-bool EncoderStore::encodingSupported(int encType)
-{
-  return (encType == EncodingDefs::RAW ||
-          encType == EncodingDefs::RRE ||
-          encType == EncodingDefs::HEXTILE ||
-          encType == EncodingDefs::ZRLE ||
-          encType == EncodingDefs::TIGHT);
-}
+   void EncoderStore::selectEncoder(int encType)
+   {
+      m_pencoder = validateEncoder(encType);
+   }
 
-Encoder *EncoderStore::allocateEncoder(int encType) const
-{
-  switch (encType) {
-  case EncodingDefs::TIGHT:
-    return new TightEncoder(m_ppixelconverter, m_output);
-  case EncodingDefs::ZRLE:
-    return new ZrleEncoder(m_ppixelconverter, m_output);
-  case EncodingDefs::HEXTILE:
-    return new HextileEncoder(m_ppixelconverter, m_output);
-  case EncodingDefs::RRE:
-    return new RreEncoder(m_ppixelconverter, m_output);
-  case EncodingDefs::RAW:
-    return new Encoder(m_ppixelconverter, m_output);
-  default:
-    throw ::subsystem::Exception("Cannot create encoder of the specified type");
-  }
-}
+   void EncoderStore::validateJpegEncoder()
+   {
+      if (m_pjpegencoder == 0) {
+         TightEncoder *tight = (TightEncoder *)validateEncoder(EncodingDefs::TIGHT);
+         m_pjpegencoder = new JpegEncoder(tight);
+      }
+   }
+
+   //---------------------------- Internal methods ----------------------------//
+
+   Encoder *EncoderStore::validateEncoder(int encType)
+   {
+      // Use Raw encoding instead of unknown codes.
+      if (!encodingSupported(encType)) {
+         encType = EncodingDefs::RAW;
+      }
+      // If that encoder is already allocated, return a pointer to it.
+      auto & pencoder = m_map[encType];
+      if (pencoder) {
+         return pencoder;
+      }
+      // Otherwise, allocate it, store it in m_map and return the pointer to it.
+      Encoder *newEncoder = allocateEncoder(encType);
+      try {
+         pencoder = newEncoder;
+      } catch (...) {
+         //delete newEncoder;
+         pencoder.release();
+         throw;
+      }
+      return pencoder;
+   }
+
+   // FIXME: Instead of the two functions below, create a separate EncoderFactory
+   //        which would know if a given encoding code is supported and would be
+   //        able to create encoder instances corresponding to the given codes.
+   //        Such EncoderFactory would be useful for EncodeOptions as well.
+
+   bool EncoderStore::encodingSupported(int encType)
+   {
+      return (encType == EncodingDefs::RAW ||
+              encType == EncodingDefs::RRE ||
+              encType == EncodingDefs::HEXTILE ||
+              encType == EncodingDefs::ZRLE ||
+              encType == EncodingDefs::TIGHT);
+   }
+
+   Encoder *EncoderStore::allocateEncoder(int encType) const
+   {
+      switch (encType) {
+         case EncodingDefs::TIGHT:
+            return new TightEncoder(m_ppixelconverter, m_pdataoutputstream);
+         case EncodingDefs::ZRLE:
+            return new ZrleEncoder(m_ppixelconverter, m_pdataoutputstream);
+         case EncodingDefs::HEXTILE:
+            return new HextileEncoder(m_ppixelconverter, m_pdataoutputstream);
+         case EncodingDefs::RRE:
+            return new RreEncoder(m_ppixelconverter, m_pdataoutputstream);
+         case EncodingDefs::RAW:
+            return new Encoder(m_ppixelconverter, m_pdataoutputstream);
+         default:
+            throw ::subsystem::Exception("Cannot create encoder of the specified type");
+      }
+   }
+} // namespace remoting
+
+

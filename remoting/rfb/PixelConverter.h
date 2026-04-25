@@ -31,25 +31,26 @@
 
 namespace remoting
 {
-   class CLASS_DECL_REMOTING PixelConverter
+   class CLASS_DECL_REMOTING PixelConverter :
+   virtual public ::particle
    {
    public:
       PixelConverter(void);
       virtual ~PixelConverter(void);
 
-      // Convert pixels for the specified `rect' from `srcFb' to `dstFb'.
-      // The pixel formats of `srcFb' and `dstFb' must be identical to the formats
+      // Convert pixels for the specified `rect' from `pframebufferSource' to `pframebufferTarget'.
+      // The pixel formats of `pframebufferSource' and `pframebufferTarget' must be identical to the formats
       // set by the most recent setPixelFormats() call. The source and destination
       // framebuffers must be of the same size. The entire rectangle referenced by
       // `rect' must be within the frame buffer boundaries.
-      virtual void convert(const ::int_rectangle &  rect, ::innate_subsystem::FrameBuffer *dstFb,
-                           const ::innate_subsystem::FrameBuffer *srcFb) const;
+      virtual void convert(const ::int_rectangle &  rect, ::innate_subsystem::FrameBuffer *pframebufferTarget,
+                           const ::innate_subsystem::FrameBuffer *pframebufferSource) const;
 
-      // Convert pixels for the specified `rect' from `srcFb' to the internal
+      // Convert pixels for the specified `rect' from `pframebufferSource' to the internal
       // PixelConverter's frame buffer and return a pointer to that frame buffer.
       // If the source and destination formats are the same, then no translation
-      // will happen and srcFb will be returned.
-      // The pixel format of `srcFb' must be identical to the source format set by
+      // will happen and pframebufferSource will be returned.
+      // The pixel format of `pframebufferSource' must be identical to the source format set by
       // the most recent setPixelFormats() call. The entire rectangle referenced
       // by `rect' must be within the frame buffer boundaries.
       // This function will work efficiently only if the frame buffer size does
@@ -57,12 +58,12 @@ namespace remoting
       // changed since the previous call and reallocates the frame buffer if
       // necessary.
       virtual const ::innate_subsystem::FrameBuffer *convert(const ::int_rectangle &  rect,
-                                         const ::innate_subsystem::FrameBuffer *srcFb);
+                                         const ::innate_subsystem::FrameBuffer *pframebufferSource);
 
       // FIXME: Review the argument order for each function of PixelConverter.
       // FIXME: Review the argument names for each function of PixelConverter.
-      virtual void setPixelFormats(const ::innate_subsystem::PixelFormat & dstPf,
-                                   const ::innate_subsystem::PixelFormat & srcPf);
+      virtual void setPixelFormats(const ::innate_subsystem::PixelFormat & pixelformatTarget,
+                                   const ::innate_subsystem::PixelFormat & pixelformatSource);
 
       // Return the number of bits per pixel from the source pixel format.
       virtual size_t getSrcBitsPerPixel() const;
@@ -70,11 +71,11 @@ namespace remoting
       // Return the number of bits per pixel from the destination pixel format.
       virtual size_t getDstBitsPerPixel() const;
 
-   protected:
+   //protected:
       void reset();
 
-      void fillHexBitsTable(const ::innate_subsystem::PixelFormat & dstPf, const ::innate_subsystem::PixelFormat & srcPf);
-      void fill32BitsTable(const ::innate_subsystem::PixelFormat & dstPf, const ::innate_subsystem::PixelFormat & srcPf);
+      void fillHexBitsTable(const ::innate_subsystem::PixelFormat & pixelformatTarget, const ::innate_subsystem::PixelFormat & pixelformatSource);
+      void fill32BitsTable(const ::innate_subsystem::PixelFormat & pixelformatTarget, const ::innate_subsystem::PixelFormat & pixelformatSource);
       unsigned int rotateUint32(unsigned int value) const;
 
       enum ConvertMode

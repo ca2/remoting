@@ -163,8 +163,8 @@ namespace remoting
 
    void DesktopServerProto::sendRegion(const Region *region, BlockingGate *pblockinggate)
    {
-      ::array_base<::int_rectangle> rects;
-      ::array_base<::int_rectangle>::iterator iRect;
+      ::int_rectangle_array_base rects;
+      ::int_rectangle_array_base::iterator iRect;
       region->getRectVector(&rects);
 
       unsigned int numRects = (unsigned int)rects.size();
@@ -192,31 +192,31 @@ namespace remoting
       }
    }
 
-   void DesktopServerProto::sendFrameBuffer(const ::innate_subsystem::FrameBuffer *srcFb,
+   void DesktopServerProto::sendFrameBuffer(const ::innate_subsystem::FrameBuffer *pframebufferSource,
                                             const ::int_rectangle &srcRect, BlockingGate *pblockinggate)
    {
       // FIXME: Additional ::innate_subsystem::FrameBuffer will be used temporarily.
       // This is easy way to send all pixels.
-      ::innate_subsystem::PixelFormat pixelformat = srcFb->getPixelFormat();
-      ::innate_subsystem::FrameBuffer fb;
+      ::innate_subsystem::PixelFormat pixelformat = pframebufferSource->getPixelFormat();
+      ::innate_subsystem::FrameBuffer pframebuffer;
 
-      fb.setProperties(srcRect, pixelformat);
-      fb.copyFrom(srcFb, srcRect.left, srcRect.top);
+      pframebuffer.setProperties(srcRect, pixelformat);
+      pframebuffer.copyFrom(pframebufferSource, srcRect.left, srcRect.top);
 
-      pblockinggate->write(fb.getBuffer(), fb.getBufferSize());
+      pblockinggate->write(pframebuffer.getBuffer(), pframebuffer.getBufferSize());
    }
 
-   void DesktopServerProto::readFrameBuffer(::innate_subsystem::FrameBuffer *dstFb, const ::int_rectangle &dstRect,
+   void DesktopServerProto::readFrameBuffer(::innate_subsystem::FrameBuffer *pframebufferTarget, const ::int_rectangle &dstRect,
                                             BlockingGate *pblockinggate)
    {
       // FIXME: ::innate_subsystem::FrameBuffer will be used temporarily.
       // This is easy way to get all pixels.
-      ::innate_subsystem::PixelFormat pixelformat = dstFb->getPixelFormat();
-      ::innate_subsystem::FrameBuffer fb;
-      fb.setProperties(dstRect, pixelformat);
+      ::innate_subsystem::PixelFormat pixelformat = pframebufferTarget->getPixelFormat();
+      ::innate_subsystem::FrameBuffer pframebuffer;
+      pframebuffer.setProperties(dstRect, pixelformat);
 
-      pblockinggate->readFully(fb.getBuffer(), fb.getBufferSize());
-      dstFb->copyFrom(dstRect, &fb, 0, 0);
+      pblockinggate->readFully(pframebuffer.getBuffer(), pframebuffer.getBufferSize());
+      pframebufferTarget->copyFrom(dstRect, &pframebuffer, 0, 0);
    }
 
    void DesktopServerProto::sendNewClipboard(const ::scoped_string &newClipboard, BlockingGate *pblockinggate)
@@ -301,7 +301,7 @@ namespace remoting
          pblockinggate->writeUTF8((*iter));
       }
       // Send video rects
-      ::array_base<::int_rectangle> *Rects = srvConf->getVideoRects();
+      ::int_rectangle_array_base *Rects = srvConf->getVideoRects();
       size_t size = Rects->size();
       pblockinggate->writeUInt32((unsigned int)size);
       for (size_t i = 0; i < size; i++)

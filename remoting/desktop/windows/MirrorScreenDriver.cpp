@@ -30,7 +30,7 @@ namespace remoting
 
    MirrorScreenDriver::MirrorScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
                                           critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter) :
-       UpdateDetector(pupdatekeeper, pupdatelistener), m_fbMutex(fbcritical_section), m_lastCounter(0), m_plogwriter = plogwriter;
+       UpdateDetector(pupdatekeeper, pupdatelistener), m_fbMutex(fbcritical_section), m_lastCounter(0), m_plogwriter(plogwriter)
    {
       m_mirrorClient = new MirrorDriverClient(m_plogwriter);
       initFrameBuffer();

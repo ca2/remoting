@@ -171,9 +171,9 @@ void UserInputClient::getDisplayNumberCoords(::int_rectangle *rect,
   } while (!success);
 }
 
-::array_base<::int_rectangle> UserInputClient::getDisplaysCoords()
+::int_rectangle_array_base UserInputClient::getDisplaysCoords()
 {
-  ::array_base<::int_rectangle> res;
+  ::int_rectangle_array_base res;
   critical_section_lock al(m_forwGate);
   bool success = false;
   unsigned char number;

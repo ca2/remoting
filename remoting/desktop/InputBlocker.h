@@ -25,7 +25,7 @@
 #pragma once
 
 
-//#include "subsystem/platform/::earth::time.h"
+//#include "subsystem/platform/class ::time.h"
 
 namespace remoting
 {

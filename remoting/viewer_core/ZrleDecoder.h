@@ -91,7 +91,7 @@ namespace remoting
                               const int type);
 
 
-      void drawTile(::innate_subsystem::FrameBuffer *fb,
+      void drawTile(::innate_subsystem::FrameBuffer *pframebuffer,
                     const ::int_rectangle &  tileRect,
                     const ::array_base<char> *pixels);
 

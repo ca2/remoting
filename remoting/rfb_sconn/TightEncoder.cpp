@@ -26,7 +26,7 @@
 
 #include "acme/input_output/ByteArrayOutputStream.h"
 
-TightEncoder::TightEncoder(PixelConverter *conv, DataOutputStream *output)
+TightEncoder::TightEncoder(PixelConverter * ppixelconverter, DataOutputStream * pdataoutputstream)
 : Encoder(conv, output)
 {
   for (int i = 0; i < NUM_ZLIB_STREAMS; i++) {
@@ -49,7 +49,7 @@ int TightEncoder::getCode() const
 }
 
 void TightEncoder::splitRectangle(const ::int_rectangle &  rect,
-                                  ::array_base<::int_rectangle> *rectList,
+                                  ::int_rectangle_array_base *rectList,
                                   const ::innate_subsystem::FrameBuffer *serverFb,
                                   const EncodeOptions *options)
 {
@@ -147,14 +147,14 @@ void TightEncoder::sendAnyRect(const ::int_rectangle &  rect,
   }
 }
 
-void TightEncoder::sendSolidRect(const ::int_rectangle &  r, const ::innate_subsystem::FrameBuffer *fb)
+void TightEncoder::sendSolidRect(const ::int_rectangle &  r, const ::innate_subsystem::FrameBuffer *pframebuffer)
 {
-  ::innate_subsystem::PixelFormat pf = fb->getPixelFormat();
+  ::innate_subsystem::PixelFormat pf = pframebuffer->getPixelFormat();
   size_t pixelSize = pf.bitsPerPixel / 8;
 
   // Copy the leftmost upper pixel of the rectangle into a buffer.
   unsigned char buf[4];
-  memcpy(buf, fb->getBufferPtr(r.left, r.top), pixelSize);
+  memcpy(buf, pframebuffer->getBufferPtr(r.left, r.top), pixelSize);
   // FIXME: Call packPixels() unconditionally, make it return length in bytes?
   if (shouldPackPixels(pf)) {
     packPixels(buf, 1, pf);
@@ -167,7 +167,7 @@ void TightEncoder::sendSolidRect(const ::int_rectangle &  r, const ::innate_subs
 
 template <class PIXEL_T>
 void TightEncoder::sendMonoRect(const ::int_rectangle &  rect,
-                                const ::innate_subsystem::FrameBuffer *fb,
+                                const ::innate_subsystem::FrameBuffer *pframebuffer,
                                 const EncodeOptions *options)
 {
   // Send control info.
@@ -188,7 +188,7 @@ void TightEncoder::sendMonoRect(const ::int_rectangle &  rect,
     (PIXEL_T)m_pal.getEntry(0),
     (PIXEL_T)m_pal.getEntry(1)
   };
-  ::innate_subsystem::PixelFormat pf = fb->getPixelFormat();
+  ::innate_subsystem::PixelFormat pf = pframebuffer->getPixelFormat();
   size_t pixelSize = sizeof(PIXEL_T);
   if (shouldPackPixels(pf)) {
     packPixels((unsigned char *)palette, 2, pf);
@@ -197,7 +197,7 @@ void TightEncoder::sendMonoRect(const ::int_rectangle &  rect,
   m_output->writeFully(palette, pixelSize * 2);
 
   // Convert image to indexed colors.
-  encodeMonoRect<PIXEL_T>(rect, fb, &encodedData);
+  encodeMonoRect<PIXEL_T>(rect, pframebuffer, &encodedData);
   _ASSERT(encoded.size() == dataLen);
 
   // Compress and send.
@@ -207,7 +207,7 @@ void TightEncoder::sendMonoRect(const ::int_rectangle &  rect,
 
 template <class PIXEL_T>
 void TightEncoder::sendIndexedRect(const ::int_rectangle &  rect,
-                                   const ::innate_subsystem::FrameBuffer *fb,
+                                   const ::innate_subsystem::FrameBuffer *pframebuffer,
                                    const EncodeOptions *options)
 {
   // Send control info.
@@ -228,7 +228,7 @@ void TightEncoder::sendIndexedRect(const ::int_rectangle &  rect,
   for (int i = 0; i < numColors; i++) {
     palette[i] = (PIXEL_T)m_pal.getEntry(i);
   }
-  ::innate_subsystem::PixelFormat pf = fb->getPixelFormat();
+  ::innate_subsystem::PixelFormat pf = pframebuffer->getPixelFormat();
   size_t pixelSize = sizeof(PIXEL_T);
   if (shouldPackPixels(pf)) {
     packPixels((unsigned char *)palette, numColors, pf);
@@ -237,7 +237,7 @@ void TightEncoder::sendIndexedRect(const ::int_rectangle &  rect,
   m_output->writeFully(palette, pixelSize * numColors);
 
   // Convert image to indexed colors.
-  encodeIndexedRect<PIXEL_T>(rect, fb, &encodedData);
+  encodeIndexedRect<PIXEL_T>(rect, pframebuffer, &encodedData);
   _ASSERT(encoded.size() == dataLen);
 
   // Compress and send.
@@ -247,7 +247,7 @@ void TightEncoder::sendIndexedRect(const ::int_rectangle &  rect,
 
 template <class PIXEL_T>
 void TightEncoder::sendFullColorRect(const ::int_rectangle &  rect,
-                                     const ::innate_subsystem::FrameBuffer *fb,
+                                     const ::innate_subsystem::FrameBuffer *pframebuffer,
                                      const EncodeOptions *options)
 {
   // Send control info.
@@ -260,11 +260,11 @@ void TightEncoder::sendFullColorRect(const ::int_rectangle &  rect,
   ::array_base<unsigned char> rgbData(dataLen);
 
   // Get pixels from the frame buffer.
-  copyPixels<PIXEL_T>(rect, fb, &rgbData.front());
+  copyPixels<PIXEL_T>(rect, pframebuffer, &rgbData.front());
   _ASSERT(rgbData.size() == dataLen);
 
   // Pack pixels into 24-bit samples if necessary.
-  ::innate_subsystem::PixelFormat pf = fb->getPixelFormat();
+  ::innate_subsystem::PixelFormat pf = pframebuffer->getPixelFormat();
   if (shouldPackPixels(pf)) {
     packPixels(rgbData.data(), rect.area(), pf);
     rgbData.resize(rect.area() * 3);
@@ -342,15 +342,15 @@ void TightEncoder::packPixels(unsigned char *buf, int count, const ::innate_subs
 }
 
 template <class PIXEL_T>
-void TightEncoder::fillPalette(const ::int_rectangle &  r, const ::innate_subsystem::FrameBuffer *fb, int maxColors)
+void TightEncoder::fillPalette(const ::int_rectangle &  r, const ::innate_subsystem::FrameBuffer *pframebuffer, int maxColors)
 {
   // Clear the palette.
   m_pal.reset();
   m_pal.setMaxColors(maxColors);
 
   // Shortcuts.
-  const PIXEL_T *pixels = (const PIXEL_T *)fb->getBuffer();
-  int stride = fb->getDimension().cx;
+  const PIXEL_T *pixels = (const PIXEL_T *)pframebuffer->getBuffer();
+  int stride = pframebuffer->getDimension().cx;
   unsigned int pixel = pixels[r.top * stride + r.left];
   unsigned int oldPixel = 0;
   unsigned int runLength = 0;
@@ -376,14 +376,14 @@ void TightEncoder::fillPalette(const ::int_rectangle &  r, const ::innate_subsys
 }
 
 template <class PIXEL_T>
-void TightEncoder::copyPixels(const ::int_rectangle &  rect, const ::innate_subsystem::FrameBuffer *fb,
+void TightEncoder::copyPixels(const ::int_rectangle &  rect, const ::innate_subsystem::FrameBuffer *pframebuffer,
                               unsigned char *dst)
 {
   const int rectWidth = rect.width();
   const int rectHeight = rect.height();
 
-  const PIXEL_T *src = (const PIXEL_T *)fb->getBufferPtr(rect.left, rect.top);
-  const int fbStride = fb->getDimension().cx;
+  const PIXEL_T *src = (const PIXEL_T *)pframebuffer->getBufferPtr(rect.left, rect.top);
+  const int fbStride = pframebuffer->getDimension().cx;
   const int bytesPerRow = rectWidth * sizeof(PIXEL_T);
 
   for (int y = 0; y < rectHeight; y++) {
@@ -394,10 +394,10 @@ void TightEncoder::copyPixels(const ::int_rectangle &  rect, const ::innate_subs
 }
 
 template <class PIXEL_T>
-void TightEncoder::encodeMonoRect(const ::int_rectangle &  rect, const ::innate_subsystem::FrameBuffer *fb,
+void TightEncoder::encodeMonoRect(const ::int_rectangle &  rect, const ::innate_subsystem::FrameBuffer *pframebuffer,
                                   DataOutputStream *out)
 {
-  const PIXEL_T *src = (const PIXEL_T *)fb->getBufferPtr(rect.left, rect.top);
+  const PIXEL_T *src = (const PIXEL_T *)pframebuffer->getBufferPtr(rect.left, rect.top);
   const int w = rect.width();
   const int h = rect.height();
   const PIXEL_T bg = (PIXEL_T)m_pal.getEntry(0);
@@ -405,7 +405,7 @@ void TightEncoder::encodeMonoRect(const ::int_rectangle &  rect, const ::innate_
   unsigned int value, mask;
   int x, y, bits;
   const int alignedWidth = w - w % 8;
-  const int skipPixels = fb->getDimension().cx - w;
+  const int skipPixels = pframebuffer->getDimension().cx - w;
 
   for (y = 0; y < h; y++) {
     for (x = 0; x < alignedWidth; x += 8) {
@@ -443,13 +443,13 @@ void TightEncoder::encodeMonoRect(const ::int_rectangle &  rect, const ::innate_
 }
 
 template <class PIXEL_T>
-void TightEncoder::encodeIndexedRect(const ::int_rectangle &  rect, const ::innate_subsystem::FrameBuffer *fb,
+void TightEncoder::encodeIndexedRect(const ::int_rectangle &  rect, const ::innate_subsystem::FrameBuffer *pframebuffer,
                                      DataOutputStream *out)
 {
-  const PIXEL_T *src = (const PIXEL_T *)fb->getBufferPtr(rect.left, rect.top);
+  const PIXEL_T *src = (const PIXEL_T *)pframebuffer->getBufferPtr(rect.left, rect.top);
   const int w = rect.width();
   const int h = rect.height();
-  const int skipPixels = fb->getDimension().cx - w;
+  const int skipPixels = pframebuffer->getDimension().cx - w;
 
   unsigned char index = m_pal.getIndex(*src);
   PIXEL_T oldColor = 0;

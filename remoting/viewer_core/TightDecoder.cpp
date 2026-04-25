@@ -51,7 +51,7 @@ namespace remoting
    }
 
    void TightDecoder::decode(RfbInputGate *pinput,
-                             ::innate_subsystem::FrameBuffer *fb,
+                             ::innate_subsystem::FrameBuffer *pframebuffer,
                              const ::int_rectangle &  dstRect)
    {
       // The width of any Tight-encoded rectangle cannot exceed 2048
@@ -59,7 +59,7 @@ namespace remoting
       // and each one should be encoded separately.
 
       m_isCPixel = false;
-      ::innate_subsystem::PixelFormat pf = fb->getPixelFormat();
+      ::innate_subsystem::PixelFormat pf = pframebuffer->getPixelFormat();
       if (pf.colorDepth == 24 && pf.bitsPerPixel == 32 &&
           pf.redMax == 255 && pf.greenMax == 255 && pf.blueMax == 255) {
          m_isCPixel = true;
@@ -69,21 +69,21 @@ namespace remoting
       resetDecoders(compressionControl);
       unsigned char compressionType = (compressionControl >> 4) & 0x0F;
 
-      int bytesPerCPixel = fb->getBytesPerPixel();
+      int bytesPerCPixel = pframebuffer->getBytesPerPixel();
 
       if (compressionType > MAX_SUBENCODING) {
          throw ::subsystem::Exception("Sub-encoding in Tight-encoder are not valid");
       }
-      if (::int_rectangle(fb->getDimension()).intersection(dstRect)!= dstRect)
+      if (::int_rectangle(pframebuffer->getDimension()).intersection(dstRect)!= dstRect)
          throw ::subsystem::Exception("Error in protocol: incorrect size of rectangle (tight-decoder)");
 
       if (compressionType == FILL_TYPE) {
          unsigned int color = readTightPixel(pinput, bytesPerCPixel);
-         fb->fillRect(dstRect, color);
+         pframebuffer->fillRect(dstRect, color);
       } else if (compressionType == JPEG_TYPE) {
-         processJpeg(pinput, fb, dstRect);
+         processJpeg(pinput, pframebuffer, dstRect);
       } else
-         processBasicTypes(pinput, fb, dstRect, compressionControl);
+         processBasicTypes(pinput, pframebuffer, dstRect, compressionControl);
    }
 
    unsigned int TightDecoder::transformPixelToTight(unsigned int color)
@@ -188,7 +188,7 @@ namespace remoting
    }
 
    void TightDecoder::processBasicTypes(RfbInputGate *pinput,
-                                        ::innate_subsystem::FrameBuffer *fb,
+                                        ::innate_subsystem::FrameBuffer *pframebuffer,
                                         const ::int_rectangle &  dstRect,
                                         unsigned char compressionControl)
    {
@@ -198,7 +198,7 @@ namespace remoting
          filterId = pinput->readUInt8();
       }
 
-      int bytesPerCPixel = fb->getBytesPerPixel();
+      int bytesPerCPixel = pframebuffer->getBytesPerPixel();
       size_t lengthCurrentBpp = dstRect.area() * bytesPerCPixel;
       if (m_isCPixel) {
          lengthCurrentBpp = dstRect.area() * 3;
@@ -212,7 +212,7 @@ namespace remoting
             if (m_isCPixel) {
                buffer = transformArray(buffer);
             }
-            drawTightBytes(fb, &buffer, dstRect);
+            drawTightBytes(pframebuffer, &buffer, dstRect);
             break;
 
             // The "gradient" filter and "jpeg" compression may be used only
@@ -226,13 +226,13 @@ namespace remoting
                dataLength = (dstRect.width() + 7) / 8 * dstRect.height();
             }
             readTightData(pinput, buffer, dataLength, decoderId);
-            drawPalette(fb, palette, buffer, dstRect);
+            drawPalette(pframebuffer, palette, buffer, dstRect);
          }
             break;
 
          case GRADIENT_FILTER:
             readTightData(pinput, buffer, lengthCurrentBpp, decoderId);
-            drawGradient(fb, buffer, dstRect);
+            drawGradient(pframebuffer, buffer, dstRect);
             break;
 
          default:
@@ -295,7 +295,7 @@ namespace remoting
       }
    }
 
-   void TightDecoder::drawPalette(::innate_subsystem::FrameBuffer *fb,
+   void TightDecoder::drawPalette(::innate_subsystem::FrameBuffer *pframebuffer,
                                   const ::array_base<unsigned int> &palette,
                                   const ::array_base<unsigned char> &pixels,
                                   const ::int_rectangle &  dstRect)
@@ -304,14 +304,14 @@ namespace remoting
       int width = dstRect.width();
       int height = dstRect.height();
 
-      int bytesPerPixel = fb->getBytesPerPixel();
+      int bytesPerPixel = pframebuffer->getBytesPerPixel();
 
       int dstLength = dstRect.area();
 
       int x = dstRect.left;
       int y = dstRect.top;
-      int stride = fb->getBytesPerRow();
-      char *basePtr = (char*)fb->getBufferPtr(x, y);
+      int stride = pframebuffer->getBytesPerRow();
+      char *basePtr = (char*)pframebuffer->getBufferPtr(x, y);
       if (palette.size() == 2) {
          int offset = 8;
          int index = -1;
@@ -336,7 +336,7 @@ namespace remoting
       }
    }
 
-   void TightDecoder::drawTightBytes(::innate_subsystem::FrameBuffer *fb,
+   void TightDecoder::drawTightBytes(::innate_subsystem::FrameBuffer *pframebuffer,
                                      const ::array_base<unsigned char> *pixels,
                                      const ::int_rectangle &  dstRect)
    {
@@ -344,19 +344,19 @@ namespace remoting
       int width = dstRect.width();
       int height = dstRect.height();
 
-      int bytesPerPixel = fb->getBytesPerPixel();
+      int bytesPerPixel = pframebuffer->getBytesPerPixel();
 
       int dstLength = dstRect.area();
 
       int x = dstRect.left;
       int y = dstRect.top;
       for (int i = 0; i < dstLength; i++) {
-         void *pixelPtr = fb->getBufferPtr(x + i % width, y + i / width);
+         void *pixelPtr = pframebuffer->getBufferPtr(x + i % width, y + i / width);
          memcpy(pixelPtr, &pixels->operator [](i * bytesPerPixel), bytesPerPixel);
       }
    }
 
-   void TightDecoder::drawJpegBytes(::innate_subsystem::FrameBuffer *fb,
+   void TightDecoder::drawJpegBytes(::innate_subsystem::FrameBuffer *pframebuffer,
                                     const ::array_base<unsigned char> *pixels,
                                     const ::int_rectangle &  dstRect)
    {
@@ -364,9 +364,9 @@ namespace remoting
       int width = dstRect.width();
       int height = dstRect.height();
 
-      int fbBytesPerPixel = fb->getBytesPerPixel();
+      int fbBytesPerPixel = pframebuffer->getBytesPerPixel();
       int bytesPerCPixel = 3;
-      ::innate_subsystem::PixelFormat pxFormat = fb->getPixelFormat();
+      ::innate_subsystem::PixelFormat pxFormat = pframebuffer->getPixelFormat();
 
       int dstLength = dstRect.area();
 
@@ -379,7 +379,7 @@ namespace remoting
                         ((unsigned int)color[1] * pxFormat.greenMax + 127) / 255 << pxFormat.greenShift |
                         ((unsigned int)color[2] * pxFormat.blueMax + 127) / 255 << pxFormat.blueShift);
 
-         void *pixelPtr = fb->getBufferPtr(x + i % width, y + i / width);
+         void *pixelPtr = pframebuffer->getBufferPtr(x + i % width, y + i / width);
          memcpy(pixelPtr, &pixel, fbBytesPerPixel);
       }
    }
@@ -401,7 +401,7 @@ namespace remoting
     * component.
     */
 
-   void TightDecoder::drawGradient(::innate_subsystem::FrameBuffer *fb,
+   void TightDecoder::drawGradient(::innate_subsystem::FrameBuffer *pframebuffer,
                                    const ::array_base<unsigned char> &pixels,
                                    const ::int_rectangle &  dstRect)
    {
@@ -415,8 +415,8 @@ namespace remoting
       memset(opRows[0].data(), 0, opRowLength * sizeof(unsigned short));
       memset(opRows[1].data(), 0, opRowLength * sizeof(unsigned short));
 
-      ::innate_subsystem::PixelFormat pxFormat = fb->getPixelFormat();
-      int fbBytesPerPixel = fb->getBytesPerPixel();
+      ::innate_subsystem::PixelFormat pxFormat = pframebuffer->getPixelFormat();
+      int fbBytesPerPixel = pframebuffer->getBytesPerPixel();
       int bytesPerCPixel = fbBytesPerPixel;
       if (m_isCPixel) {
          bytesPerCPixel = 3;
@@ -444,7 +444,7 @@ namespace remoting
                thisRow[j + index] = (converted + rawColor[index]) & max[index];
                color |= (thisRow[j + index] & max[index]) << shift[index];
             }
-            void *pixelPtr = fb->getBufferPtr(static_cast<int>(dstRect.left + j/3 - 1),
+            void *pixelPtr = pframebuffer->getBufferPtr(static_cast<int>(dstRect.left + j/3 - 1),
                                               dstRect.top + i);
             memcpy(pixelPtr, &color, fbBytesPerPixel);
          }

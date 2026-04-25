@@ -80,7 +80,7 @@ bool AboutDialog::onInitDialog()
   ::string versionString("unknown");
   try {
     ::string binaryPath;
-    Environment::getCurrentModulePath(&binaryPath);
+    binaryPath = MainSubsystem().OperatingSystem().getCurrentModulePath();;
     VersionInfo productInfo(binaryPath);
     versionString= productInfo.getProductVersionString();
   } catch (SystemException &ex) {

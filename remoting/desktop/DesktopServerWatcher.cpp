@@ -35,24 +35,67 @@
 #include "subsystem_windows/node/WinStaLibrary.h"
 #include "subsystem_windows/node/WinHandles.h"
 #include "subsystem_windows/node/SharedMemory.h"
-
+#include "subsystem/platform/subsystem.h"
 //#include aaa_<time.h>
 
 namespace remoting
 {
 
 
-   DesktopServerWatcher::DesktopServerWatcher(ReconnectionListener *recListener, ::subsystem::LogWriter * plogwriter) :
-       m_preconnectionlistener(recListener), m_pprocess(0), m_plogwriter = plogwriter;
+   // DesktopServerWatcher::DesktopServerWatcher(ReconnectionListener *preconnectionlistener, ::subsystem::LogWriter * plogwriter) :
+   //     m_preconnectionlistener(preconnectionlistener), m_pprocess(0), m_plogwriter = plogwriter;
+   // {
+   //    // Desktop server folder.
+   //    ::string currentModulePath;
+   //    currentModulePath = MainSubsystem().OperatingSystem().getCurrentModulePath();;
+   //
+   //    // Path to desktop server application.
+   //    ::string path;
+   //    // FIXME: To think: is quotes needed?
+   //    path.formatf("\"{}\"", currentModulePath);
+   //
+   //    try
+   //    {
+   //       bool connectRdpSession = m_pconfigurator->getServerConfig()->getConnectToRdpFlag();
+   //       m_pprocess = new CurrentConsoleProcess(m_plogwriter, connectRdpSession, path);
+   //    }
+   //    catch (...)
+   //    {
+   //       if (m_pprocess)
+   //          delete m_pprocess;
+   //       throw;
+   //    }
+   // }
+
+   DesktopServerWatcher::DesktopServerWatcher() :
+   m_preconnectionlistener(nullptr)
    {
+
+
+   }
+
+   DesktopServerWatcher::~DesktopServerWatcher()
+   {
+      terminate();
+      wait();
+      delete m_pprocess;
+   }
+
+
+   void DesktopServerWatcher::initialize_desktop_server_watcher(Configurator * pconfigurator, ReconnectionListener *preconnectionlistener, ::subsystem::LogWriter * plogwriter)
+   {
+
+      m_pconfigurator = pconfigurator;
+      m_preconnectionlistener =preconnectionlistener;
+      m_plogwriter = plogwriter;
       // Desktop server folder.
       ::string currentModulePath;
-      Environment::getCurrentModulePath(&currentModulePath);
+      currentModulePath = MainSubsystem().OperatingSystem().getCurrentModulePath();
 
       // Path to desktop server application.
       ::string path;
       // FIXME: To think: is quotes needed?
-      path.formatf("\"{}\"", currentModulePath);
+      path.format("\"{}\"", currentModulePath);
 
       try
       {
@@ -65,13 +108,6 @@ namespace remoting
             delete m_pprocess;
          throw;
       }
-   }
-
-   DesktopServerWatcher::~DesktopServerWatcher()
-   {
-      terminate();
-      wait();
-      delete m_pprocess;
    }
 
    void DesktopServerWatcher::execute()
@@ -220,7 +256,7 @@ namespace remoting
 
          // Get path to remoting_node binary.
          ::string pathToBinary;
-         Environment::getCurrentModulePath(&pathToBinary);
+         pathToBinary = MainSubsystem().OperatingSystem().getCurrentModulePath();;
 
          // Start current console process that will lock workstation (not using Xp Trick).
          CurrentConsoleProcess lockWorkstation(m_plogwriter, false, pathToBinary, "-lockworkstation");

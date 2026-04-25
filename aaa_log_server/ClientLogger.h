@@ -58,7 +58,7 @@ private:
   // Writes a log scopedstrMessage.
   virtual void flush(unsigned int processId,
                      unsigned int threadId,
-                     const ::earth::time & dt,
+                     const class ::time & dt,
                      int level,
                      const ::scoped_string & scopedstrMessage);
 

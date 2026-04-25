@@ -36,7 +36,7 @@ namespace remoting
    class HextileEncoder : public Encoder
    {
    public:
-      HextileEncoder(::remoting::PixelConverter *conv, DataOutputStream *output);
+      HextileEncoder(::remoting::PixelConverter * ppixelconverter, DataOutputStream * pdataoutputstream);
       virtual ~HextileEncoder();
 
       virtual int getCode() const;

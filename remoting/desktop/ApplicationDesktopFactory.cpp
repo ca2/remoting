@@ -37,7 +37,11 @@ namespace remoting
                                                      AbnormDeskTermListener *extDeskTermListener,
                                                      ::subsystem::LogWriter * plogwriter)
    {
-      return new DesktopWinImpl(extClipListener, extUpdSendingListener, extDeskTermListener, log);
+
+      auto pdesktopwinimpl = create_newø<DesktopWinImpl>();
+      pdesktopwinimpl->initialize_desktop_win_impl(extClipListener, extUpdSendingListener, extDeskTermListener, plogwriter);
+      return pdesktopwinimpl;
+
    }
 
 

@@ -151,7 +151,7 @@ namespace remoting
 
          m_sender->sendDownloadDataRequest((unsigned int)m_bufferSize,
                                            compression);
-         m_lastRequestTime = ::earth::time::now();
+         m_timeLastRequest.Now();
       }
 
       void DownloadOperation::onDownloadDataReply(DataInputStream * pinput)
@@ -189,7 +189,7 @@ namespace remoting
 
          bool compression = m_replyBuffer->isCompressionSupported();
 
-         if (m_lastRequestTime.elapsed() > 300_s) {
+         if (m_timeLastRequest.elapsed() > 300_s) {
             m_bufferSize /= 2;
          } else {
             m_bufferSize *= 2;
@@ -201,7 +201,7 @@ namespace remoting
             m_bufferSize = 400000;
          }
          m_sender->sendDownloadDataRequest((unsigned int)m_bufferSize, compression);
-         m_lastRequestTime = ::earth::time::now();
+         m_timeLastRequest.Now();
       }
 
       void DownloadOperation::onDownloadEndReply(DataInputStream * pinput)

@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "IpAccessControl.h"
 
-void IpAccessControl::serialize(DataOutputStream *output)
+void IpAccessControl::serialize(DataOutputStream * pdataoutputstream)
 {
   _ASSERT((unsigned int)size() == size());
   unsigned int count = (unsigned int)size();

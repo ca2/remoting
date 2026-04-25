@@ -33,7 +33,7 @@
 
 CurrentConsoleProcess::CurrentConsoleProcess(::subsystem::LogWriter * plogwriter, bool connectRdpSession, const ::scoped_string & scopedstrPath, const ::scoped_string & scopedstrArgs)
 : Process(scopedstrPath, scopedstrArgs),
-  m_plogwriter = plogwriter;,
+  m_plogwriter(plogwriter),
   m_connectRdpSession(connectRdpSession)
 {
 }

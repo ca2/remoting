@@ -54,7 +54,7 @@ void FileLogWriter::print(int logLevel, const ::scoped_string & scopedstrLine)
   try {
     unsigned int processId = GetCurrentProcessId();
     unsigned int threadId = GetCurrentThreadId();
-    ::earth::time currTime = ::earth::time::now();
+    class ::time currTime = class ::time::now();
 
     m_fileAccount.print(processId, threadId, currTime, logLevel, scopedstrLine);
   } catch (...) {

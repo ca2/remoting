@@ -57,7 +57,7 @@ namespace remoting
       ~EncoderStore();
 
 
-      virtual void initialize_encoder_store(::remoting::PixelConverter *pixelConverter, DataOutputStream *output);
+      virtual void initialize_encoder_store(::remoting::PixelConverter * ppixelconverter, DataOutputStream * pdataoutputstream);
 
       // Get current (preferred) encoder if it was previously allocated by
       // selectEncoder().

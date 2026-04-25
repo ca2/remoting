@@ -25,7 +25,7 @@
 #pragma once
 
 #include "remoting/remoting/desktop/windows/_common_header.h"
-//#include "subsystem/platform/::earth::time.h"
+//#include "subsystem/platform/class ::time.h"
 #include "remoting/remoting/region/Region.h"
 //#include "subsystem/platform/::string_array.h"
 #include "../ScreenDriver.h"
@@ -48,12 +48,12 @@ namespace remoting
    private:
       virtual Region getVideoRegion();
       void updateVideoRegion();
-      void getClassNamesAndRectsFromConfig(::string_array &classNames, ::array_base<::int_rectangle> &rects);
+      void getClassNamesAndRectsFromConfig(::string_array &classNames, ::int_rectangle_array_base &rects);
       unsigned int WinVideoRegionUpdaterImpl::getInterval();
       Region getRectsByClass(::string_array classNames);
-      Region getRectsByCoords(::array_base<::int_rectangle> &rects);
+      Region getRectsByCoords(::int_rectangle_array_base &rects);
 
-      ::earth::time m_lastVidUpdTime;
+      class ::time m_lastVidUpdTime;
       Region m_vidRegion;
       critical_section m_regionMutex;
       ::pointer < ::subsystem::LogWriter > m_plogwriter;

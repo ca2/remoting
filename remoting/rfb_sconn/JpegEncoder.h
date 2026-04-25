@@ -43,7 +43,7 @@ namespace remoting
 
       // JpegEncoder implements its own splitRectangle() which just makes sure all
       // rectangles are no wider than 2048 pixels.
-      virtual void splitRectangle(const ::int_rectangle &rect, ::array_base<::int_rectangle> *rectList,
+      virtual void splitRectangle(const ::int_rectangle &rect, ::int_rectangle_array_base *rectList,
                                   const ::innate_subsystem::FrameBuffer *serverFb, const EncodeOptions *options);
 
       // Encode and send the rectangle. JpegEncoder forces JPEG sub-encoding if

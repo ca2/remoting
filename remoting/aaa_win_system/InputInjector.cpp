@@ -37,7 +37,7 @@ InputInjector::InputInjector(bool ctrlAltDelEnabled, ::subsystem::LogWriter * pl
   m_shiftIsPressed(false),
   m_winIsPressed(false),
   m_ctrlAltDelEnabled(ctrlAltDelEnabled),
-  m_plogwriter = plogwriter;
+  m_plogwriter(plogwriter)
 {
   // FIXME: Better to call this function from an owner (Now, its
   // possible only from trunk code because in the stable hive the owner is

@@ -75,7 +75,7 @@ public:
    * @param output output stream for serializing.
    * @throws ::subsystem::Exception on error.
    */
-  void serialize(DataOutputStream *output) const;
+  void serialize(DataOutputStream * pdataoutputstream) const;
 
   /**
    * Deserializes port mapping container from input stream.

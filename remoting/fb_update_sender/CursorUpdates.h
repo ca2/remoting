@@ -28,7 +28,7 @@
 #include "remoting/remoting/rfb_sconn/EncodeOptions.h"
 #include "remoting/remoting/rfb/CursorShape.h"
 #include "remoting/remoting/desktop/UpdateContainer.h"
-//#include "subsystem/platform/::earth::time.h"
+//#include "subsystem/platform/class ::time.h"
 //#include "subsystem/thread/critical_section.h"
 //#include "log_writer/LogWriter.h"
 
@@ -49,11 +49,11 @@ namespace remoting
       // After sending the frame buffer updates the user code must at sight
       // call the restoreFrameBuffer() function. Also function clones
       // actual cursor shape to the cursorShape argument (Only when after call
-      // the updCont->cursorShapeChanged flag is raised).
+      // the updCont->m_bCursorShapeChanged flag is raised).
       void update(const EncodeOptions *encodeOptions, UpdateContainer *pupdatecontainer, bool fullRegReq,
-                  const ::int_rectangle &viewPort, bool shareOnlyApp, const ::remoting::Region *shareAppRegion,
-                  ::innate_subsystem::FrameBuffer *fb, ::remoting::CursorShape *cursorShape);
-      void restoreFrameBuffer(::innate_subsystem::FrameBuffer *fb);
+                  const ::int_rectangle &rectangleViewport, bool shareOnlyApp, const ::remoting::Region *shareAppRegion,
+                  ::innate_subsystem::FrameBuffer *pframebuffer, ::remoting::CursorShape *cursorShape);
+      void restoreFrameBuffer(::innate_subsystem::FrameBuffer *pframebuffer);
 
       // Returns current cursor position. Beetween
       ::int_point getCurPos();
@@ -75,10 +75,10 @@ namespace remoting
 
       // Check cursor position for changing and store it to the m_cursorPos.
       // Return true value if cursor position has been changed.
-      bool checkCursorPos(UpdateContainer *updCont, const ::int_rectangle &viewPort, bool curPosBlockingIsIgnored);
+      bool checkCursorPos(UpdateContainer *updCont, const ::int_rectangle &rectangleViewport, bool curPosBlockingIsIgnored);
 
       // Shortcut function to draw cursor on the frame buffer directly.
-      void drawCursor(UpdateContainer *updCont, ::innate_subsystem::FrameBuffer *fb);
+      void drawCursor(UpdateContainer *updCont, ::innate_subsystem::FrameBuffer *pframebuffer);
 
       // Check for cursor blocking state and
       // return true if it is blocked and false

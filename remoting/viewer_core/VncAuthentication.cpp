@@ -34,7 +34,7 @@ namespace remoting
 
 
    void VncAuthentication::vncAuthenticate(::DataInputStream * pinput,
-                                           ::DataOutputStream *output,
+                                           ::DataOutputStream * pdataoutputstream,
                                            const ::scoped_string & password)
    {
       // TODO: removed duplicate code: ControlAuth.cpp

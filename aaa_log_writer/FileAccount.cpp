@@ -85,7 +85,7 @@ bool FileAccount::isTheOurFileName(const ::scoped_string & scopedstrFileName)
 
 void FileAccount::print(unsigned int processId,
                         unsigned int threadId,
-                        const ::earth::time & dt,
+                        const class ::time & dt,
                         int level,
                         const ::scoped_string & scopedstrMessage)
 {
@@ -108,7 +108,7 @@ bool FileAccount::printsLine(int level)
 
 void FileAccount::flush(unsigned int processId,
                         unsigned int threadId,
-                        const ::earth::time & dt,
+                        const class ::time & dt,
                         int level,
                         const ::scoped_string & scopedstrMessage)
 {
@@ -123,13 +123,13 @@ void FileAccount::print(int level, const ::scoped_string & scopedstrMessage)
 {
   unsigned int processId = GetCurrentProcessId();
   unsigned int threadId = GetCurrentThreadId();
-  ::earth::time dt = ::earth::time::now();
+  class ::time dt = class ::time::now();
   print(processId, threadId, dt, level, scopedstrMessage);
 }
 
 void FileAccount::format(unsigned int processId,
                          unsigned int threadId,
-                         const ::earth::time & dt,
+                         const class ::time & dt,
                          int level,
                          const ::scoped_string & scopedstrMessage)
 {

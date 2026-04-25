@@ -79,14 +79,14 @@ namespace remoting
       void refreshStatistic(ScreenDriver *grabber);
 
       // Returns absolute sum area of rectangle ::array_base.
-      int getArea(const ::array_base<::int_rectangle> *rects);
+      int getArea(const ::int_rectangle_array_base *rects);
 
       // If the grab region is alike to whole desktop the function return true.
-      bool isAlikeToWhole(const ::array_base<::int_rectangle> *rects);
+      bool isAlikeToWhole(const ::int_rectangle_array_base *rects);
       bool isEnoughForWholeStats(const ::int_rectangle &rect);
       // If the grab region is alike to separate fragments the function
       // return true.
-      bool isAlikeToFragments(const ::array_base<::int_rectangle> *rects);
+      bool isAlikeToFragments(const ::int_rectangle_array_base *rects);
 
       // This functions store to the log all statistic data.
       void logStatistic();
@@ -96,7 +96,7 @@ namespace remoting
 
       __int64 grabWhole(ScreenDriver *grabber);
       __int64 grabOneRect(const ::int_rectangle &rect, ScreenDriver *grabber);
-      __int64 grabFragments(const ::array_base<::int_rectangle> *rects, ScreenDriver *grabber);
+      __int64 grabFragments(const ::int_rectangle_array_base *rects, ScreenDriver *grabber);
 
       void addWholeTElement(double wholeT);
       void removeObsoleteWholeTElements();

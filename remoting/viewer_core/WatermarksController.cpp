@@ -59,23 +59,23 @@ namespace remoting
       if (is_empty() || m_pframebuffer->getPixelFormat()!= pf)
       {
          ::innate_subsystem::FrameBuffer temp;
-         ::innate_subsystem::FrameBuffer& fb = frameBuffer(true);
+         ::innate_subsystem::FrameBuffer& pframebuffer = frameBuffer(true);
 
          m_overlay.setPixelFormat(pf);
 
-         if (pf == fb.getPixelFormat())
+         if (pf == pframebuffer.getPixelFormat())
             return;
 
-         temp.clone(&fb);
+         temp.clone(&pframebuffer);
 
-         fb.setPixelFormat(pf);
+         pframebuffer.setPixelFormat(pf);
 
          PixelConverter pc = PixelConverter();
-         ::int_rectangle rect = fb.getDimension();
+         ::int_rectangle rect = pframebuffer.getDimension();
 
-         pc.setPixelFormats(fb.getPixelFormat(), temp.getPixelFormat());
+         pc.setPixelFormats(pframebuffer.getPixelFormat(), temp.getPixelFormat());
 
-         pc.convert(rect, &fb, &temp);
+         pc.convert(rect, &pframebuffer, &temp);
       }
    }
 

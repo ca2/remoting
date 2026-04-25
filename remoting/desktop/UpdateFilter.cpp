@@ -58,8 +58,8 @@ namespace remoting
       toCheck.add(&updateContainer->m_regionCopied);
       toCheck.add(&updateContainer->m_regionVideo);
 
-      ::array_base<::int_rectangle> rects;
-      ::array_base<::int_rectangle>::iterator iRect;
+      ::int_rectangle_array_base rects;
+      ::int_rectangle_array_base::iterator iRect;
 
       // Reproduce CopyRect operations in m_pframebuffer->
       m_plogwriter->debug("UpdateFilter::filter : Reproduce CopyRect operations in m_pframebuffer");

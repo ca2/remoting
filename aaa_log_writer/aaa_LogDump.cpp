@@ -26,7 +26,7 @@
 
 LogEntry::LogEntry(unsigned int processId,
                    unsigned int threadId,
-                   const ::earth::time & dt,
+                   const class ::time & dt,
                    int lineLevel,
                    const ::scoped_string & scopedstrMessage)
 : m_processId(processId),
@@ -86,7 +86,7 @@ void LogDump::writeLogDump()
 
 void LogDump::updateLogHeaderLines(unsigned int processId,
                                    unsigned int threadId,
-                                   const ::earth::time & dt,
+                                   const class ::time & dt,
                                    int level,
                                    const ::scoped_string & scopedstrMessage)
 {
@@ -97,7 +97,7 @@ void LogDump::updateLogHeaderLines(unsigned int processId,
 
 void LogDump::updateLogDumpLines(unsigned int processId,
                                  unsigned int threadId,
-                                 const ::earth::time & dt,
+                                 const class ::time & dt,
                                  int level,
                                  const ::scoped_string & scopedstrMessage)
 {

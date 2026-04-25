@@ -30,11 +30,11 @@ namespace remoting
 
 
    Win32ScreenDriver::Win32ScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                                        ::innate_subsystem::FrameBuffer *fb, critical_section *fbcritical_section,
+                                        ::innate_subsystem::FrameBuffer *pframebuffer, critical_section *fbcritical_section,
                                         ::subsystem::LogWriter * plogwriter) :
        Win32ScreenDriverBaseImpl(pupdatekeeper, pupdatelistener, fbcritical_section, log),
-       m_poller(pupdatekeeper, pupdatelistener, &m_pscreengrabber, fb, fbcritical_section, log),
-       m_consolePoller(pupdatekeeper, pupdatelistener, &m_pscreengrabber, fb, fbcritical_section, log),
+       m_poller(pupdatekeeper, pupdatelistener, &m_pscreengrabber, pframebuffer, fbcritical_section, log),
+       m_consolePoller(pupdatekeeper, pupdatelistener, &m_pscreengrabber, pframebuffer, fbcritical_section, log),
        m_hooks(pupdatekeeper, pupdatelistener, log)
    {
       // At this point the screen driver has valid screen properties (provides by screen grabber).

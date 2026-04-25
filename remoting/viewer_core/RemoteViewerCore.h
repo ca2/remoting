@@ -457,7 +457,7 @@ namespace remoting
       virtual void getEnabledEncodingCapabilities(::array_base<unsigned int> *codes) const;
 
       // returns ::list_base of server displays offsets and dimensions
-      ::array_base<::int_rectangle> getDesktops();
+      ::int_rectangle_array_base getDesktops();
       ::int_size getDesktopSize();
 
       //private:
@@ -648,7 +648,7 @@ namespace remoting
       ::innate_subsystem::FrameBuffer m_pframebuffer;
 
       // ::list_base of server dispalys
-      ::array_base<::int_rectangle> m_desktops;
+      ::int_rectangle_array_base m_desktops;
       ::int_size m_desktopSize;
 
       // Decoder work with this framebuffer. It is not actual frame buffer,

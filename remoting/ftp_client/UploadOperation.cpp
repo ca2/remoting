@@ -49,8 +49,8 @@ namespace remoting
          m_toCopy = new FileInfoList(plogwriter, fileToUpload);
 
          changeFileToUpload(m_toCopy);
-         //m_lastRequestTime = ::earth::time::now();
-         m_lastRequestTime.Now();
+         //m_timeLastRequest = class ::time::now();
+         m_timeLastRequest.Now();
       }
 
       UploadOperation::UploadOperation(::subsystem::LogWriter * plogwriter,
@@ -68,8 +68,8 @@ namespace remoting
          m_toCopy = new FileInfoList(plogwriter, fileinfoa);
 
          changeFileToUpload(m_toCopy);
-         //m_lastRequestTime = ::earth::time::now();
-         m_lastRequestTime.Now();
+         //m_timeLastRequest = class ::time::now();
+         m_timeLastRequest.Now();
       }
 
       UploadOperation::~UploadOperation()
@@ -427,7 +427,7 @@ namespace remoting
       {
          _ASSERT(m_preadable != NULL);
 
-         if (m_lastRequestTime.elapsed() > 300_s) {
+         if (m_timeLastRequest.elapsed() > 300_s) {
             m_bufferSize /= 2;
          }
          else {
@@ -439,7 +439,7 @@ namespace remoting
          if (m_bufferSize > 400000) {
             m_bufferSize = 400000;
          }
-         m_lastRequestTime.Now();
+         m_timeLastRequest.Now();
 
          ::array_base<char> buffer(m_bufferSize);
          unsigned int read = 0;

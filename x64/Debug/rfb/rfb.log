@@ -43,5 +43,5 @@
   
   
   
-C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(156,5): error MSB3073: The command "application_build_helper --defer-prepare-folder C:\Users\camilo\code\main\source\remoting\rfb\ x64 Debug
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(156,5): error MSB3073: The command "application_build_helper --defer-prepare-folder C:\Users\camilo\code\main\source\remoting\rpframebuffer\ x64 Debug
 C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(156,5): error MSB3073: :VCEnd" exited with code 2147479638.

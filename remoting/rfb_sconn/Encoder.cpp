@@ -24,46 +24,50 @@
 #include "framework.h"
 #include "Encoder.h"
 
-Encoder::Encoder(PixelConverter *conv, DataOutputStream *output)
-: m_ppixelconverter(conv),
-  m_output(output)
+
+namespace remoting
 {
-}
+   Encoder::Encoder(PixelConverter * ppixelconverter, DataOutputStream * pdataoutputstream)
+   : m_ppixelconverter(ppixelconverter),
+     m_pdataoutputstream(pdataoutputstream)
+   {
+   }
 
-Encoder::~Encoder(void)
-{
-}
+   Encoder::~Encoder(void)
+   {
+   }
 
-int Encoder::getCode() const
-{
-  return EncodingDefs::RAW;
-}
+   int Encoder::getCode() const
+   {
+      return EncodingDefs::RAW;
+   }
 
-void Encoder::splitRectangle(const ::int_rectangle &  rect,
-                             ::array_base<::int_rectangle> *rectList,
-                             const ::innate_subsystem::FrameBuffer *serverFb,
-                             const EncodeOptions *options)
-{
-  rectList->add(rect);
-}
+   void Encoder::splitRectangle(const ::int_rectangle &  rect,
+                                ::int_rectangle_array_base *rectList,
+                                const ::innate_subsystem::FrameBuffer *serverFb,
+                                const EncodeOptions *options)
+   {
+      rectList->add(rect);
+   }
 
-void Encoder::sendRectangle(const ::int_rectangle &  rect,
-                            const ::innate_subsystem::FrameBuffer *serverFb,
-                            const EncodeOptions *options)
-{
-  const ::innate_subsystem::FrameBuffer *fb = m_ppixelconverter->convert(rect, serverFb);
-  int pixelSize = (int)fb->getBytesPerPixel();
-  _ASSERT(pixelSize == fb->getBytesPerPixel());
+   void Encoder::sendRectangle(const ::int_rectangle &  rect,
+                               const ::innate_subsystem::FrameBuffer *serverFb,
+                               const EncodeOptions *options)
+   {
+      const ::innate_subsystem::FrameBuffer *pframebuffer = m_ppixelconverter->convert(rect, serverFb);
+      int pixelSize = (int)pframebuffer->getBytesPerPixel();
+      _ASSERT(pixelSize == pframebuffer->getBytesPerPixel());
 
-  unsigned char *buffer = (unsigned char *)fb->getBuffer();
-  int lineWidth = rect.width();
-  int fbWidth = fb->getDimension().cx;
-  int lineSizeInBytes = lineWidth * pixelSize;
-  int stride = fbWidth * pixelSize;
-  unsigned char *lineP = &buffer[(rect.top * fbWidth + rect.left) * pixelSize];
+      unsigned char *buffer = (unsigned char *)pframebuffer->getBuffer();
+      int lineWidth = rect.width();
+      int fbWidth = pframebuffer->getDimension().cx;
+      int lineSizeInBytes = lineWidth * pixelSize;
+      int stride = fbWidth * pixelSize;
+      unsigned char *lineP = &buffer[(rect.top * fbWidth + rect.left) * pixelSize];
 
-  // Send the rectangle as is, line by line.
-  for (int i = rect.top; i < rect.bottom; i++, lineP += stride) {
-    m_output->writeFully((char *)lineP, lineSizeInBytes);
-  }
-}
+      // Send the rectangle as is, line by line.
+      for (int i = rect.top; i < rect.bottom; i++, lineP += stride) {
+         m_pdataoutputstream->write((char *)lineP, lineSizeInBytes);
+      }
+   }
+} // namespace remoting
