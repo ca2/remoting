@@ -1258,7 +1258,7 @@ Changes in 1.0.8 (27 Jan 1998)
 
 Changes in 1.0.7 (20 Jan 1998)
 - fix gzseek which was broken in write mode
-- return error for gzseek to negative absolute position
+- return error for gzseek to negative absolute pointPosition
 - fix configure for Linux (Chun-Chung Chen)
 - increase stack space for MSC (Tim Wegner)
 - get_crc_table and inflateSyncPoint are EXPORTed (Gilles Vollant)

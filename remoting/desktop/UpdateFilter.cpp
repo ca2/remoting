@@ -24,6 +24,8 @@
 #include "framework.h"
 #include "UpdateFilter.h"
 #include "subsystem/_common_header.h"
+#include "acme/platform/ProfileLogger.h"
+
 
 namespace remoting
 {
@@ -76,12 +78,12 @@ namespace remoting
       toCheck.add(updatecontainer.m_regionCopied);
       toCheck.add(updatecontainer.m_regionVideo);
 
-      ::int_rectangle_array_base rectanglea;
+      //::int_rectangle_array_base rectanglea;
       //::int_rectangle_array_base::iterator iRect;
 
-      // Reproduce CopyRect operations in m_pframebuffer.
+      // Reproduce CopyRect operations in m_pframebuffer->
       m_plogwriter->debug("UpdateFilter::filter : Reproduce CopyRect operations in m_pframebuffer");
-      updatecontainer.m_regionCopied.getRects(rectanglea);
+      auto rectanglea = updatecontainer.m_regionCopied.getRects();
       auto pointSource = updatecontainer.m_pointCopySource;
       //for (iRect = rectanglea.begin(); iRect < rectanglea.end(); iRect++)
       for (auto & rectangle : rectanglea)
@@ -90,75 +92,75 @@ namespace remoting
       }
 
 
-      toCheck.getRects(&rectanglea);
+      rectanglea = toCheck.getRects();
       // Grabbing
       m_plogwriter->debug("grabbing region, {} rectangles", (int)rectanglea.size());
-      ProcessorTimes pt1 = m_plogwriter->checkPoint("grabbing region");
+      auto processortimes1 = ProfileLogger().checkPoint("grabbing region");
       try
       {
-         m_grabOptimizator.grab(&toCheck, m_pscreendriver);
+         m_pgraboptimizator->grab(toCheck, m_pscreendriver);
       }
       catch (...)
       {
          return;
       }
-      ProcessorTimes pt2 = m_plogwriter->checkPoint("end of grabbing region");
+      auto processortimes2 = ProfileLogger().checkPoint("end of grabbing region");
 
-      toCheck.getRects(&rectanglea);
-      double area = 0.0;
-      for (iRect = rectanglea.begin(); iRect < rectanglea.end(); iRect++)
-      {
-         area += (*iRect).area();
-      }
+      rectanglea = toCheck.getRects();
+      double area = rectanglea.total_area();
+      // for (iRect = rectanglea.begin(); iRect < rectanglea.end(); iRect++)
+      // {
+      //    area += (*iRect).area();
+      // }
       area /= 1000000.0; // in millions of pixels
-      double dt = pt2.wall.getTime(); // in milliseconds
+      double dt = processortimes2.m_time.floating_millisecond(); // in milliseconds
       m_plogwriter->debug(
          "Before grabbing region %f processor Mcycles, %f process time, %f kernel time, %f wall clock time ",
-         pt1.cycle / 1000000., pt1.process, pt1.kernel, pt1.wall.getTime());
+         processortimes1.m_cycle / 1000000., processortimes1.m_process, processortimes1.m_kernel, processortimes1.m_time.floating_millisecond());
       m_plogwriter->debug("After grabbing region Mpoint grabbed: %f for %f processor Mcycles. %f ms", area,
-                          pt2.cycle / 1000000., dt);
-      m_plogwriter->debug("After grabbing region %f process time, %f kernel time, %f wall clock time", pt2.process,
-                          pt2.kernel, dt);
+                          processortimes2.m_cycle / 1000000., dt);
+      m_plogwriter->debug("After grabbing region %f process time, %f kernel time, %f wall clock time", processortimes2.m_process,
+                          processortimes2.m_kernel, dt);
 
       m_plogwriter->debug("end of grabbing region");
 
       // Filtering
-      pt1 = m_plogwriter->checkPoint("filtering changed");
+      processortimes1 = ProfileLogger().checkPoint("filtering changed");
       updatecontainer.m_regionChanged.clear();
-      ::int_rectangle rectangle;
-      for (iRect = rectanglea.begin(); iRect < rectanglea.end(); iRect++)
+      //::int_rectangle rectangle;
+      for (auto rectangle : rectanglea)
       {
-         rectangle = &(*iRect);
-         getChangedRegion(&updatecontainer.m_regionChanged, rectangle);
+         //rectangle = &(*iRect);
+         getChangedRegion(updatecontainer.m_regionChanged, rectangle);
       }
 
-      // Copy actually changed pixels into m_pframebuffer.
-      updatecontainer.m_regionChanged.getRects(&rectanglea);
-      for (iRect = rectanglea.begin(); iRect < rectanglea.end(); iRect++)
+      // Copy actually changed pixels into m_pframebuffer->
+      rectanglea  = updatecontainer.m_regionChanged.getRects();
+      for (auto rectangle :rectanglea)
       {
-         rectangle = &(*iRect);
-         m_pframebuffer.copyFrom(rectangle, pframebufferScreen, rectangle.left, rectangle.top);
+         //rectangle = &(*iRect);
+         m_pframebuffer->copyFrom(rectangle, pframebufferScreen, rectangle.left, rectangle.top);
       }
-      pt2 = m_plogwriter->checkPoint("after filtering changed");
-      dt = pt2.wall.getTime(); // in milliseconds
+      processortimes2 = ProfileLogger().checkPoint("after filtering changed");
+      dt = processortimes2.m_time.floating_millisecond(); // in milliseconds
       m_plogwriter->debug(
          "Before filtering changed %f processor Mcycles, %f process time, %f kernel time, %f wall clock time ",
-         pt1.cycle / 1000000., pt1.process, pt1.kernel, pt1.wall.getTime());
+         processortimes1.m_cycle / 1000000., processortimes1.m_process, processortimes1.m_kernel, processortimes1.m_time.floating_millisecond());
       m_plogwriter->debug("After filtering changed Mpoint filtered: %f for %f processor Mcycles. %f ms", area,
-                          pt2.cycle / 1000000., dt);
-      m_plogwriter->debug("After filtering changed %f process time, %f kernel time, %f wall clock time", pt2.process,
-                          pt2.kernel, dt);
+                          processortimes2.m_cycle / 1000000., dt);
+      m_plogwriter->debug("After filtering changed %f process time, %f kernel time, %f wall clock time", processortimes2.m_process,
+                          processortimes2.m_kernel, dt);
    }
 
-   void UpdateFilter::getChangedRegion(Region & rgn, const ::int_rectangle & rectangle)
+   void UpdateFilter::getChangedRegion(Region & region, const ::int_rectangle & rectangle)
    {
 
-      const unsigned int bytesPerPixel = m_pframebuffer.getBytesPerPixel();
+      const unsigned int bytesPerPixel = m_pframebuffer->getBytesPerPixel();
       const int bytes_per_scanline = (rectangle.right - rectangle.left) * bytesPerPixel;
 
-      const int bytesPerRow = m_pframebuffer.getBytesPerRow();
+      const int bytesPerRow = m_pframebuffer->getBytesPerRow();
       const int offset = rectangle.top * bytesPerRow + rectangle.left * bytesPerPixel;
-      unsigned char *o_ptr = (unsigned char *)m_pframebuffer.getBuffer() + offset;
+      unsigned char *o_ptr = (unsigned char *)m_pframebuffer->getBuffer() + offset;
       unsigned char *n_ptr = (unsigned char *)m_pscreendriver->getScreenBuffer()->getBuffer() + offset;
 
       ::int_rectangle new_rect = rectangle;
@@ -171,7 +173,7 @@ namespace remoting
             if (memcmp(o_ptr, n_ptr, bytes_per_scanline) != 0)
             {
                new_rect.top = y;
-               updateChangedSubRect(rgn, &new_rect);
+               updateChangedSubRect(region, new_rect);
                break;
             }
             o_ptr += bytesPerRow;
@@ -201,7 +203,7 @@ namespace remoting
             if (new_rect.top != -1)
             {
                new_rect.bottom = y;
-               updateChangedRect(rgn, &new_rect);
+               updateChangedRect(region, new_rect);
                new_rect.top = -1;
             }
          }
@@ -211,28 +213,28 @@ namespace remoting
       if (new_rect.top != -1)
       {
          new_rect.bottom = rectangle.bottom;
-         updateChangedRect(rgn, &new_rect);
+         updateChangedRect(region, new_rect);
       }
    }
 
-   void UpdateFilter::updateChangedRect(Region & rgn, const ::int_rectangle & rectangle)
+   void UpdateFilter::updateChangedRect(Region & region, const ::int_rectangle & rectangle)
    {
       // Pass small rectangles directly to updateChangedSubRect
       if (rectangle.right - rectangle.left <= BLOCK_SIZE && rectangle.bottom - rectangle.top <= BLOCK_SIZE)
       {
-         updateChangedSubRect(rgn, rectangle);
+         updateChangedSubRect(region, rectangle);
          return;
       }
 
-      const unsigned int bytesPerPixel = m_pframebuffer.getBytesPerPixel();
+      const unsigned int bytesPerPixel = m_pframebuffer->getBytesPerPixel();
 
       ::int_rectangle new_rect;
       int x, y, ay;
 
       // Scan down the rectangle
-      const int bytesPerRow = m_pframebuffer.getBytesPerRow();
+      const int bytesPerRow = m_pframebuffer->getBytesPerRow();
       const int offset = rectangle.top * bytesPerRow + rectangle.left * bytesPerPixel;
-      unsigned char *o_topleft_ptr = (unsigned char *)m_pframebuffer.getBuffer() + offset;
+      unsigned char *o_topleft_ptr = (unsigned char *)m_pframebuffer->getBuffer() + offset;
       unsigned char *n_topleft_ptr = (unsigned char *)m_pscreendriver->getScreenBuffer()->getBuffer() + offset;
 
       for (y = rectangle.top; y < rectangle.bottom; y += BLOCK_SIZE)
@@ -241,7 +243,7 @@ namespace remoting
          unsigned char *o_row_ptr = o_topleft_ptr;
          unsigned char *n_row_ptr = n_topleft_ptr;
 
-         const int blockbottom = min(y + BLOCK_SIZE, rectangle.bottom);
+         const int blockbottom = minimum(y + BLOCK_SIZE, rectangle.bottom);
          new_rect.bottom = blockbottom;
          new_rect.left = -1;
 
@@ -251,7 +253,7 @@ namespace remoting
             unsigned char *n_block_ptr = n_row_ptr;
             unsigned char *o_block_ptr = o_row_ptr;
 
-            const unsigned int blockright = min(x + BLOCK_SIZE, rectangle.right);
+            const unsigned int blockright = minimum(x + BLOCK_SIZE, rectangle.right);
             const unsigned int bytesPerBlockRow = (blockright - x) * bytesPerPixel;
 
             // Scan this block
@@ -281,7 +283,7 @@ namespace remoting
                if (new_rect.left != -1)
                {
                   new_rect.right = x;
-                  updateChangedSubRect(rgn, &new_rect);
+                  updateChangedSubRect(region, new_rect);
                   new_rect.left = -1;
                }
             }
@@ -293,7 +295,7 @@ namespace remoting
          if (new_rect.left != -1)
          {
             new_rect.right = rectangle.right;
-            updateChangedSubRect(rgn, &new_rect);
+            updateChangedSubRect(region, new_rect);
          }
 
          o_topleft_ptr += bytesPerRow * BLOCK_SIZE;
@@ -301,24 +303,24 @@ namespace remoting
       }
    }
 
-   void UpdateFilter::updateChangedSubRect(Region & rgn, const ::int_rectangle & rectangle)
+   void UpdateFilter::updateChangedSubRect(Region & region, const ::int_rectangle & rectangle)
    {
-      const unsigned int bytesPerPixel = m_pframebuffer.getBytesPerPixel();
+      const unsigned int bytesPerPixel = m_pframebuffer->getBytesPerPixel();
       int bytes_in_row = (rectangle.right - rectangle.left) * bytesPerPixel;
       int y, i;
 
       // Exclude unchanged scan lines at the bottom
-      const int bytesPerRow = m_pframebuffer.getBytesPerRow();
+      const int bytesPerRow = m_pframebuffer->getBytesPerRow();
       int offset = (rectangle.bottom - 1) * bytesPerRow + rectangle.left * bytesPerPixel;
-      unsigned char *o_ptr = (unsigned char *)m_pframebuffer.getBuffer() + offset;
+      unsigned char *o_ptr = (unsigned char *)m_pframebuffer->getBuffer() + offset;
       unsigned char *n_ptr = (unsigned char *)m_pscreendriver->getScreenBuffer()->getBuffer() + offset;
-      ::int_rectangle final_rect = rectangle;
-      final_rect.bottom = rectangle.top + 1;
+      ::int_rectangle rectangleFinal = rectangle;
+      rectangleFinal.bottom = rectangle.top + 1;
       for (y = rectangle.bottom - 1; y > rectangle.top; y--)
       {
          if (memcmp(o_ptr, n_ptr, bytes_in_row) != 0)
          {
-            final_rect.bottom = y + 1;
+            rectangleFinal.bottom = y + 1;
             break;
          }
          n_ptr -= bytesPerRow;
@@ -326,12 +328,12 @@ namespace remoting
       }
 
       // Exclude unchanged pixels at left and right sides
-      offset = final_rect.top * bytesPerRow + final_rect.left * bytesPerPixel;
-      o_ptr = (unsigned char *)m_pframebuffer.getBuffer() + offset;
+      offset = rectangleFinal.top * bytesPerRow + rectangleFinal.left * bytesPerPixel;
+      o_ptr = (unsigned char *)m_pframebuffer->getBuffer() + offset;
       n_ptr = (unsigned char *)m_pscreendriver->getScreenBuffer()->getBuffer() + offset;
       int left_delta = bytes_in_row - 1;
       int right_delta = 0;
-      for (y = final_rect.top; y < final_rect.bottom; y++)
+      for (y = rectangleFinal.top; y < rectangleFinal.bottom; y++)
       {
          for (i = 0; i < bytes_in_row - 1; i++)
          {
@@ -354,14 +356,12 @@ namespace remoting
          n_ptr += bytesPerRow;
          o_ptr += bytesPerRow;
       }
-      final_rect.right = final_rect.left + right_delta / bytesPerPixel + 1;
-      final_rect.left += left_delta / bytesPerPixel;
+      rectangleFinal.right = rectangleFinal.left + right_delta / bytesPerPixel + 1;
+      rectangleFinal.left += left_delta / bytesPerPixel;
 
       // Update the rectangle
-      rgn->addRect(&final_rect);
+      region.addRect(rectangleFinal);
    }
 
 
 } // namespace remoting
-namespace remoting
-{

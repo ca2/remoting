@@ -26,33 +26,33 @@
 
 
 // FIXME: Remove this detectors when will be ready win8 detectors.
-#include "remoting/remoting/desktop/windows/_common_header.h"
+#include "remoting/remoting_windows/_common_header.h"
 
-#include "remoting/remoting/desktop/windows/_common_header.h"
-#include "../CursorPositionDetector.h"
+#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting/desktop/CursorPositionDetector.h"
 
-#include "../CursorShapeDetector.h"
-#include "../WindowsCursorShapeGrabber.h"
+#include "remoting/remoting/desktop/CursorShapeDetector.h"
+#include "remoting/remoting_windows/desktop/WindowsCursorShapeGrabber.h"
 
-#include "../ScreenDriver.h"
-#include "../WinVideoRegionUpdaterImpl.h"
-#include "../UpdateKeeper.h"
-#include "../UpdateListener.h"
+#include "remoting/remoting/desktop/ScreenDriver.h"
+#include "remoting/remoting_windows/desktop/WinVideoRegionUpdaterImpl.h"
+#include "remoting/remoting/desktop/UpdateKeeper.h"
+#include "remoting/remoting/desktop/UpdateListener.h"
 //#include "log_writer/LogWriter.h"
-#include "Win8ScreenDriverImpl.h"
-#include "../CopyRectDetector.h"
+#include "remoting/remoting_windows/desktop/Win8ScreenDriverImpl.h"
+#include "remoting/remoting/desktop/CopyRectDetector.h"
 
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING Win8ScreenDriver : public WinVideoRegionUpdaterImpl
+   class CLASS_DECL_REMOTING_WINDOWS Win8ScreenDriver : public WinVideoRegionUpdaterImpl
    {
    public:
       // (Note: This class  has no link to an external backup frame buffer and then it does not have
       // to use an external belonged mutex. Thread safe coordiantion commitments between this class
       // and external some elements should be entirely provided by an owner code.)
 
-      Win8ScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, critical_section *fbcritical_section,
+      Win8ScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, critical_section *pcriticalsectionFramebuffer,
                        ::subsystem::LogWriter * plogwriter);
       virtual ~Win8ScreenDriver();
 

@@ -22,14 +22,14 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "../WinDxRecoverableException.h"
+#include "remoting/remoting_windows/desktop/WinDxRecoverableException.h"
 
 namespace remoting
 {
 
 
 // The header including of this cpp file must be at last place to avoid build conflicts.
-#include "../WinDxgiAcquiredFrame.h"
+#include "remoting/remoting_windows/desktop/WinDxgiAcquiredFrame.h"
 
    WinDxgiAcquiredFrame::WinDxgiAcquiredFrame(WinDxgiOutputDuplication *outDupl, unsigned int timeOutMilliSec) :
        m_wasTimeOut(false), m_desktopResource(0), m_outDupl(*outDupl)

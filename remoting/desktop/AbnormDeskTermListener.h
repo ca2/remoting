@@ -25,11 +25,15 @@
 #pragma once
 
 
-class CLASS_DECL_REMOTING AbnormDeskTermListener
+namespace remoting
 {
-public:
-  virtual ~AbnormDeskTermListener() {}
-  virtual void onAbnormalDesktopTerminate() = 0;
-};
+   class CLASS_DECL_REMOTING AbnormDeskTermListener :
+   virtual public ::particle
+   {
+   public:
+      virtual ~AbnormDeskTermListener() {}
+      virtual void onAbnormalDesktopTerminate() = 0;
+   };
+} // namespace remoting
 
-//// __ABNORMDESKTERMLISTENER_H__
+

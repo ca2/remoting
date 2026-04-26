@@ -22,8 +22,8 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "../WindowsCursorShapeGrabber.h"
-#include "WinCursorShapeUtils.h"
+#include "remoting/remoting_windows/desktop/WindowsCursorShapeGrabber.h"
+#include "remoting/remoting_windows/desktop/WinCursorShapeUtils.h"
 
 namespace remoting
 {

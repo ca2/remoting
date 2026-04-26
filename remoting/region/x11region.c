@@ -796,7 +796,7 @@ static Bool miRegionOp(RegionPtr newReg, /* Place to store result	     */
        *
        * Note that attention is restricted to one band in the
        * non-intersecting region at once, so if a region has n
-       * bands between the current position and the next place it overlaps
+       * bands between the current pointPosition and the next place it overlaps
        * the other, this entire loop will be passed through n times.
        */
       if (r1y1 < r2y1)

@@ -41,23 +41,23 @@ namespace remoting
    {
    }
 
-   void CursorPainter::updatePointerPos(const ::int_point *position)
+   void CursorPainter::updatePointerPos(const ::int_point &pointPosition)
    {
       critical_section_lock al(&m_lock);
-      m_pointerPosition = *position;
+      m_pointerPosition = *pointPosition;
       m_cursorIsMoveable = true;
 
       // Now, cursor is ready for painting.
    }
 
-   void CursorPainter::setNewCursor(const ::int_point *hotSpot,
+   void CursorPainter::setNewCursor(const ::int_point &pointHotspot,
                                     unsigned short width, unsigned short height,
                                     const ::array_base<unsigned char> *cursor,
                                     const ::array_base<unsigned char> *bitmask)
    {
       critical_section_lock al(&m_lock);
-      m_plogwriter->information("setNewCursor Cursor hot-spot is ({}, {})", hotSpot->x, hotSpot->y);
-      m_cursor.setHotSpot(hotSpot->x, hotSpot->y);
+      m_plogwriter->information("setNewCursor Cursor hot-spot is ({}, {})", pointHotspot.x, pointHotspot.y);
+      m_cursor.setHotSpot(pointHotspot.x, pointHotspot.y);
 
       m_plogwriter->information("setNewCursor Cursor size is ({}, {})", width, height);
       ::int_size cursorDimension(width, height);
@@ -99,7 +99,7 @@ namespace remoting
       m_isExist = false;
 
       ::int_rectangle erase(m_cursorOverlay.getDimension());
-      ::int_point corner = getUpperLeftPoint(&m_lastPosition);
+      ::int_point corner = getUpperLeftPoint(&m_pointLastPosition);
 
       erase.offset(corner.x, corner.y);
 
@@ -119,7 +119,7 @@ namespace remoting
    {
       critical_section_lock al(&m_lock);
 
-      m_lastPosition = m_pointerPosition;
+      m_pointLastPosition = m_pointerPosition;
 
       if (m_isExist) {
          m_plogwriter->error("Error in CursorPainter: painting double copy of cursor.");
@@ -130,7 +130,7 @@ namespace remoting
 
          m_plogwriter->debug("Painting cursor...");
 
-         ::int_point corner = getUpperLeftPoint(&m_lastPosition);
+         ::int_point corner = getUpperLeftPoint(&m_pointLastPosition);
 
          m_cursorOverlay.copyFrom(m_fb, corner.x, corner.y);
 
@@ -146,9 +146,9 @@ namespace remoting
       return ::int_rectangle();
    }
 
-   ::int_point CursorPainter::getUpperLeftPoint(const ::int_point *position) const
+   ::int_point CursorPainter::getUpperLeftPoint(const ::int_point &pointPosition) const
    {
-      ::int_point upperLeftPoint = *position;
+      ::int_point upperLeftPoint = *pointPosition;
       upperLeftPoint.offset(-m_cursor.getHotSpot().x, -m_cursor.getHotSpot().y);
       return upperLeftPoint;
    }

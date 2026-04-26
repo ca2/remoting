@@ -44,7 +44,7 @@ namespace remoting_node_desktop
    DesktopServerApplication::DesktopServerApplication(
       HINSTANCE appInstance, const ::scoped_string &scopedstrwindowClassName,
       const ::subsystem::CommandLineArguments *cmdArgs) : // LocalWindowsApplication(appInstance, windowClassName),
-       m_clToSrvChan(0), m_srvToClChan(0), m_clToSrvGate(0), m_srvToClGate(0), m_dispatcher(0), m_updHandlerSrv(0),
+       m_pchannelClientToServer(0), m_pchannelServerToClient(0), m_pgateClientToServer(0), m_pgateServerToClient(0), m_pdesktopsrvdispatcher(0), m_updHandlerSrv(0),
        m_uiSrv(0), m_cfgServer(0), m_pblockinggateKickHandler(0), m_sessionChangesWatcher(0),// m_configurator(true),
        // m_clientLogWriter(LogNames::LOG_PIPE_PUBLIC_NAME,
        //             LogNames::SERVER_LOG_FILE_STUB_NAME),
@@ -101,9 +101,9 @@ namespace remoting_node_desktop
          auto pfileClientRead = MainSubsystem().fileFrom_HANDLE(readPipeHandle);
          auto pfileClientWrite = MainSubsystem().fileFrom_HANDLE(writePipeHandle);
          ppipeClient->initialize_anonymous_pipe(pfileClientRead, pfileClientWrite, maxPortionSize, m_plogwriter);
-         // m_clToSrvChan = new AnonymousPipe(readPipeHandle, writePipeHandle, maxPortionSize, &m_plogwriter);
-         // m_clToSrvChan = new AnonymousPipe(readPipeHandle, writePipeHandle, maxPortionSize, &m_plogwriter);
-         m_clToSrvChan = ppipeClient;
+         // m_pchannelClientToServer = new AnonymousPipe(readPipeHandle, writePipeHandle, maxPortionSize, &m_plogwriter);
+         // m_pchannelClientToServer = new AnonymousPipe(readPipeHandle, writePipeHandle, maxPortionSize, &m_plogwriter);
+         m_pchannelClientToServer = ppipeClient;
          m_plogwriter->informationf("Client->server readPipeHandle = %p, writePipeHandle = %p", readPipeHandle,
                                     writePipeHandle);
 
@@ -114,25 +114,25 @@ namespace remoting_node_desktop
          auto pfileServerRead = MainSubsystem().fileFrom_HANDLE(readPipeHandle);
          auto pfileServerWrite = MainSubsystem().fileFrom_HANDLE(writePipeHandle);
          ppipeServer->initialize_anonymous_pipe(pfileServerRead, pfileServerWrite, maxPortionSize, m_plogwriter);
-         // m_srvToClChan = new AnonymousPipe(readPipeHandle, writePipeHandle, maxPortionSize, &m_plogwriter);
-         m_srvToClChan = ppipeServer;
+         // m_pchannelServerToClient = new AnonymousPipe(readPipeHandle, writePipeHandle, maxPortionSize, &m_plogwriter);
+         m_pchannelServerToClient = ppipeServer;
          m_plogwriter->informationf("Server->client readPipeHandle = %p, writePipeHandle = %p", readPipeHandle,
                                     writePipeHandle);
 
-         m_clToSrvGate = new ::remoting::BlockingGate(m_clToSrvChan);
-         m_srvToClGate = new ::remoting::BlockingGate(m_srvToClChan);
+         m_pgateClientToServer = new ::remoting::BlockingGate(m_pchannelClientToServer);
+         m_pgateServerToClient = new ::remoting::BlockingGate(m_pchannelServerToClient);
 
          // Server initializations
-         m_dispatcher = new ::remoting::DesktopSrvDispatcher(m_clToSrvGate, [this]() { onHappening(); }, m_plogwriter);
+         m_pdesktopsrvdispatcher = new ::remoting::DesktopSrvDispatcher(m_pgateClientToServer, [this]() { onHappening(); }, m_plogwriter);
 
          m_updHandlerSrv =
-            new ::remoting::UpdateHandlerServer(m_srvToClGate, m_dispatcher, [this]() { onHappening(); }, m_plogwriter);
-         m_uiSrv = new ::remoting::UserInputServer(m_srvToClGate, m_dispatcher, [this]() { onHappening(); }, m_plogwriter);
-         m_cfgServer = new ::remoting::ConfigServer(m_dispatcher, m_plogwriter);
-         m_pblockinggateKickHandler = new ::remoting::GateKickHandler(m_dispatcher);
+            new ::remoting::UpdateHandlerServer(m_pgateServerToClient, m_pdesktopsrvdispatcher, [this]() { onHappening(); }, m_plogwriter);
+         m_uiSrv = new ::remoting::UserInputServer(m_pgateServerToClient, m_pdesktopsrvdispatcher, [this]() { onHappening(); }, m_plogwriter);
+         m_cfgServer = new ::remoting::ConfigServer(m_pdesktopsrvdispatcher, m_plogwriter);
+         m_pblockinggateKickHandler = new ::remoting::GateKickHandler(m_pdesktopsrvdispatcher);
 
          // Start servers
-         m_dispatcher->resume();
+         m_pdesktopsrvdispatcher->resume();
 
          // Spy for the session change.
          auto psessionchangeswatcher = createø<::subsystem::SessionChangesWatcher>();
@@ -158,8 +158,8 @@ namespace remoting_node_desktop
    {
       try
       {
-         if (m_clToSrvChan)
-            m_clToSrvChan->close();
+         if (m_pchannelClientToServer)
+            m_pchannelClientToServer->close();
       }
       catch (::exception &e)
       {
@@ -167,8 +167,8 @@ namespace remoting_node_desktop
       }
       try
       {
-         if (m_srvToClChan)
-            m_srvToClChan->close();
+         if (m_pchannelServerToClient)
+            m_pchannelServerToClient->close();
       }
       catch (::exception &e)
       {
@@ -180,8 +180,8 @@ namespace remoting_node_desktop
 
       // This will stop and destroy the dispatcher. So all handles will be
       // unregistered automatically.
-      if (m_dispatcher)
-         delete m_dispatcher;
+      if (m_pdesktopsrvdispatcher)
+         delete m_pdesktopsrvdispatcher;
 
       if (m_pblockinggateKickHandler)
          delete m_pblockinggateKickHandler;
@@ -192,14 +192,14 @@ namespace remoting_node_desktop
       if (m_updHandlerSrv)
          delete m_updHandlerSrv;
 
-      if (m_srvToClGate)
-         delete m_srvToClGate;
-      if (m_clToSrvGate)
-         delete m_clToSrvGate;
-      if (m_srvToClChan)
-         delete m_srvToClChan;
-      if (m_clToSrvChan)
-         delete m_clToSrvChan;
+      if (m_pgateServerToClient)
+         delete m_pgateServerToClient;
+      if (m_pgateClientToServer)
+         delete m_pgateClientToServer;
+      if (m_pchannelServerToClient)
+         delete m_pchannelServerToClient;
+      if (m_pchannelClientToServer)
+         delete m_pchannelClientToServer;
    }
 
    void DesktopServerApplication::onHappening()

@@ -22,13 +22,13 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "WinDxCriticalException.h"
-#include "../WinDxRecoverableException.h"
+#include "remoting/remoting_windows/desktop/WinDxCriticalException.h"
+#include "remoting/remoting_windows/desktop/WinDxRecoverableException.h"
 #include "remoting/remoting/rfb/StandardPixelFormatFactory.h"
-#include "WinCursorShapeUtils.h"
+#include "remoting/remoting_windows/desktop/WinCursorShapeUtils.h"
 
 // The header including of this cpp file must be at last place to avoid build conflicts.
-#include "../WinDxgiOutputDuplication.h"
+#include "remoting/remoting_windows/desktop/WinDxgiOutputDuplication.h"
 
 namespace remoting
 {

@@ -35,11 +35,14 @@ namespace remoting
    {
    public:
       ApplicationDesktopFactory();
-      ~ApplicationDesktopFactory();
+      ~ApplicationDesktopFactory() override;
 
-      virtual ::pointer < Desktop  > createDesktop(::subsystem::ClipboardListener *extClipListener,
-                                     UpdateSendingListener *extUpdSendingListener,
-                                     AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter * plogwriter);
+      ::pointer < Desktop  > createDesktop(
+         Configurator * pconfigurator,
+         ::subsystem::ClipboardListener *pclipboardlistenerExternal,
+         UpdateSendingListener *pupdatesendinglistenerExternal,
+         AbnormDeskTermListener *pdesktermlistenerExternal,
+         ::subsystem::LogWriter * plogwriter) override;
    };
 
 } // namespace remoting

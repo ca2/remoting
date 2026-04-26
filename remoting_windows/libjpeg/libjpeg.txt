@@ -1657,7 +1657,7 @@ When forced to suspend, the compressor will backtrack to a convenient stopping
 point (usually the start of the current MCU); it will regenerate some output
 data when restarted.  Therefore, although empty_output_buffer() is only
 called when the buffer is filled, you should NOT write out the entire buffer
-after a suspension.  Write only the data up to the current position of
+after a suspension.  Write only the data up to the current pointPosition of
 next_output_byte/free_in_buffer.  The data beyond that point will be
 regenerated after resumption.
 
@@ -1711,7 +1711,7 @@ Just as with compression, the decompressor will typically backtrack to a
 convenient restart point before suspending.  When fill_input_buffer() is
 called, next_input_byte/bytes_in_buffer point to the current restart point,
 which is where the decompressor will backtrack to if FALSE is returned.
-The data beyond that position must NOT be discarded if you suspend; it needs
+The data beyond that pointPosition must NOT be discarded if you suspend; it needs
 to be re-read upon resumption.  In most implementations, you'll need to shift
 this data down to the start of your work buffer and then load more data after
 it.  Again, this behavior means that a several-Kbyte work buffer is essential
@@ -1772,11 +1772,11 @@ pitfall in this approach: the backtrack that occurs when FALSE is returned
 could back up into an earlier buffer.  For example, when fill_input_buffer()
 is called, the current pointer & count indicate the backtrack restart point.
 Since fill_input_buffer() will set the pointer and count to refer to a new
-buffer, the restart position must be saved somewhere else.  Suppose a second
+buffer, the restart pointPosition must be saved somewhere else.  Suppose a second
 call to fill_input_buffer() occurs in the same library call, and no
 additional input data is available, so fill_input_buffer must return FALSE.
 If the JPEG library has not moved the pointer/count forward in the current
-buffer, then *the correct restart point is the saved position in the prior
+buffer, then *the correct restart point is the saved pointPosition in the prior
 buffer*.  Prior buffers may be discarded only after the library establishes
 a restart point within a later buffer.  Similar remarks apply for output into
 a chain of buffers.

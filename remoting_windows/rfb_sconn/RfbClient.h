@@ -77,7 +77,7 @@ namespace remoting
 
       UpdateSender *m_updateSender;
       ClipboardExchange *m_clipboardExchange;
-      ClientInputHandler *m_clientInputHandler;
+      ClientInputHandler *m_pclientinputhandler;
       ::pointer < Desktop > m_pdesktop;
 
       bool m_viewOnly;

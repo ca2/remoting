@@ -39,8 +39,8 @@ namespace remoting
       initialize_desktop_server_proto(pconfigurator, pblockinggate);
       bool ctrlAltDelEnabled = true;
 
-      auto puserinputNew =  create_newø< WindowsUserInput>();
-      puserinputNew->initialize_windows_user_input(this, ctrlAltDelEnabled, m_plogwriter);
+      auto puserinputNew =  createø< UserInput>();
+      puserinputNew->initialize_user_input(this, ctrlAltDelEnabled, m_plogwriter);
       m_puserinput = puserinputNew;
 
       pdispatcher->registerNewHandle(POINTER_POS_CHANGED, this);
@@ -61,19 +61,19 @@ namespace remoting
    UserInputServer::~UserInputServer()
    {
       m_plogwriter->debug("The UserInputServer destructor has been called");
-      //delete m_userInput;
+      //delete m_puserinput;
    }
 
    void UserInputServer::onClipboardUpdate(const ::scoped_string &newClipboard)
    {
-      critical_section_lock al(m_forwGate);
+      critical_section_lock al(m_pblockinggate);
       try
       {
          // Send clipboard data
          if (newClipboard.has_character())
          {
-            m_forwGate->writeUInt8(CLIPBOARD_CHANGED);
-            sendNewClipboard(newClipboard, m_forwGate);
+            m_pblockinggate->writeUInt8(CLIPBOARD_CHANGED);
+            sendNewClipboard(newClipboard, m_pblockinggate);
          }
       }
       catch (::exception &e)
@@ -185,7 +185,7 @@ namespace remoting
    void UserInputServer::ansWindowCoords(BlockingGate *pblockinggate)
    {
       ::int_rectangle rectangle;
-      ::operating_system::window operatingsystemwindow = ::as_operating_system_window((HWND)pblockinggate->readUInt64());
+      ::operating_system::window operatingsystemwindow = ::as_operating_system_window((::uptr)pblockinggate->readUInt64());
       try
       {
          m_puserinput->getWindowCoords(operatingsystemwindow, rectangle);
@@ -205,7 +205,7 @@ namespace remoting
       ::string windowName;
       windowName = pblockinggate->readUtf8();
       auto operatingsystemwindow = m_puserinput->getWindowHandleByName(windowName);
-      pblockinggate->writeUInt64((unsigned long long)(HWND)::as_HWND(operatingsystemwindow));
+      pblockinggate->writeUInt64(::operating_system_window_as_uptr(operatingsystemwindow));
    }
 
    void UserInputServer::ansDisplayNumberCoords(BlockingGate *pblockinggate)

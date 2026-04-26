@@ -63,22 +63,22 @@ namespace remoting
    ServerConfig::ServerConfig(ServerConfig& other)
    {
       DataCopy datacopy;
-      DataOutputStream outputstream;
-      outputstream.initialize_data_output_stream(&datacopy);
+      DataOutputStream outputstream(&datacopy);
+      //outputstream.initialize_data_output_stream(&datacopy);
       other.serialize(&outputstream);
-      DataInputStream inputstream;
-      inputstream.initialize_data_input_stream(&datacopy);
+      DataInputStream inputstream(&datacopy);
+      //inputstream.initialize_data_input_stream(&datacopy);
       this->deserialize(&inputstream);
    }
 
    ServerConfig& ServerConfig::operator=(ServerConfig& other) {
       if (this != &other) {
          DataCopy datacopy;
-         DataOutputStream outputstream;
-         outputstream.initialize_data_output_stream(&datacopy);
+         DataOutputStream outputstream(&datacopy);
+         //outputstream.initialize_data_output_stream(&datacopy);
          other.serialize(&outputstream);
-         DataInputStream inputstream;
-         inputstream.initialize_data_input_stream(&datacopy);
+         DataInputStream inputstream(&datacopy);
+         //inputstream.initialize_data_input_stream(&datacopy);
          this->deserialize(&inputstream);
       }
       return *this;

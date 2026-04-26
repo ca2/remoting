@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include "remoting/remoting/desktop/windows/_common_header.h"
+#include "remoting/remoting_windows/_common_header.h"
 #include "remoting/remoting/win_system/DynamicLibrary.h"
 
 namespace remoting
@@ -35,7 +35,7 @@ namespace remoting
    // #include aaa_<d3d11.h>
    // #include aaa_<DXGI1_2.h>
 
-   class CLASS_DECL_REMOTING WinD3D11Device
+   class CLASS_DECL_REMOTING_WINDOWS WinD3D11Device
    {
    public:
       // Creates new device and context of first found.
@@ -56,7 +56,7 @@ namespace remoting
 
       // A wrap for the ID3D11DeviceContext::CopySubresourceRegion() function.
       void copySubresourceRegion(ID3D11Texture2D *dstTexture2D, int dstX, int dstY, ID3D11Texture2D *srcTexture2D,
-                                 const ::int_rectangle &srcRect, unsigned int front, unsigned int back);
+                                 const ::int_rectangle &rectangleSource, unsigned int front, unsigned int back);
    private:
       void copy(const WinD3D11Device &src);
 

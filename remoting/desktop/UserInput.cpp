@@ -33,4 +33,18 @@ namespace remoting
    UserInput::~UserInput(void) {}
 
 
+   void UserInput::initialize_user_input(::subsystem::ClipboardListener *pclipboardlistener, bool ctrlAltDelEnabled,
+           ::subsystem::LogWriter * plogwriter)
+   {
+
+
+
+   }
+
+   void UserInput::initKeyFlag(unsigned char initValue)
+   {
+
+
+   }
+
 } // namespace remoting

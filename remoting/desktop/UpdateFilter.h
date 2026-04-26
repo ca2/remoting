@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "windows/WindowsScreenGrabber.h"
+//#include "windows/WindowsScreenGrabber.h"
 #include "ScreenDriver.h"
 #include "innate_subsystem/framebuffer/Framebuffer.h"
 //#include "subsystem/thread/critical_section.h"

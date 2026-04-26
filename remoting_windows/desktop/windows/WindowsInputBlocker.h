@@ -29,9 +29,9 @@
 #include "subsystem/thread/GuiThread.h"
 //#include "subsystem/thread/critical_section.h"
 //#include "remoting/remoting/win_system/WinTimeMillis.h"
-#include "WindowsInputBlocker.h"
+#include "remoting/remoting_windows/desktop/WindowsInputBlocker.h"
 #include "acme/parallelization/happening.h"
-#include "../InputBlocker.h"
+#include "remoting/remoting/desktop/InputBlocker.h"
 //#include "log_writer/LogWriter.h"
 
 
@@ -42,7 +42,7 @@ namespace remoting
    struct _windows_input_blocker_t;
 
 
-   class CLASS_DECL_REMOTING WindowsInputBlocker :
+   class CLASS_DECL_REMOTING_WINDOWS WindowsInputBlocker :
    virtual public InputBlocker,
     virtual public ::subsystem::GuiThread
    {

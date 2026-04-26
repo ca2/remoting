@@ -355,7 +355,7 @@ namespace remoting
       // Send a pointer (mouse) event. Arguments specify the event as defined in
       // the RFB v.3 protocol specification.
       //
-      void sendPointerEvent(unsigned char buttonMask, const ::int_point *position);
+      void sendPointerEvent(unsigned char buttonMask, const ::int_point &pointPosition);
 
       //
       // Send cut text (clipboard) to the server.

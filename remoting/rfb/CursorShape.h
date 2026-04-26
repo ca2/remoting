@@ -40,14 +40,14 @@ namespace remoting
 
       bool clone(const CursorShape *srcCursorShape);
 
-      bool setDimension(const ::int_size & newDim);
+      bool setDimension(const ::int_size & sizeNew);
       ::int_size getDimension() const { return m_pixels.getDimension(); }
 
       bool setPixelFormat(const ::innate_subsystem::PixelFormat & pixelFormat);
       ::innate_subsystem::PixelFormat getPixelFormat() const { return m_pixels.getPixelFormat(); }
 
       // This function set both ::innate_subsystem::PixelFormat and ::int_size
-      bool setProperties(const ::int_size & newDim, const ::innate_subsystem::PixelFormat & pixelFormat);
+      bool setProperties(const ::int_size & sizeNew, const ::innate_subsystem::PixelFormat & pixelFormat);
 
       const ::innate_subsystem::Framebuffer *getPixels() const { return &m_pixels; }
       int getPixelsSize() const { return m_pixels.getBufferSize(); }

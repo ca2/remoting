@@ -36,7 +36,8 @@
 
 namespace remoting
 {
-   class CLASS_DECL_REMOTING Decoder
+   class CLASS_DECL_REMOTING Decoder :
+   virtual public ::particle
    {
    public:
       Decoder(::subsystem::LogWriter * plogwriter);

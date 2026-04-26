@@ -206,14 +206,14 @@ m_RfbGatesOwner(false)
          }
 
          m_plogwriter->debug("Initialization of socket stream and input/output gates...");
-         construct_newø(m_psocketstream);
-         m_psocketstream->initialize_socket_stream(m_psocket);
-         construct_newø(m_pbufInput);
-         m_pbufInput->initialize_buffered_input_stream(m_psocketstream);
-         construct_newø(m_pinput);
-         m_pinput->initialize_rfb_input_gate(m_pbufInput);
-         construct_newø(m_poutput);
-         m_poutput->initialize_rfb_output_gate(m_psocketstream);
+         raw_construct_newø(m_psocketstream, m_psocket);
+         //m_psocketstream->initialize_socket_stream(m_psocket);
+         raw_construct_newø(m_pbufInput, m_psocketstream);
+         //m_pbufInput->initialize_buffered_input_stream(m_psocketstream);
+         raw_construct_newø(m_pinput, m_pbufInput);
+         //m_pinput->initialize_rfb_input_gate(m_pbufInput);
+         raw_construct_newø(m_poutput, m_psocketstream);
+         //m_poutput->initialize_rfb_output_gate(m_psocketstream);
          m_RfbGatesOwner = true;
       } else {
          _ASSERT(m_pinput && m_poutput);

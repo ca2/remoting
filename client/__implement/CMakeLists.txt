@@ -16,7 +16,7 @@ add_executable(${PROJECT_NAME} ${application_source})
 
 list(APPEND executable_references
    acme
-   remoting_remoting
+   remoting_client
    )
 
 
@@ -56,6 +56,7 @@ add_dependencies(${PROJECT_NAME} ${default_acme_windowing})
 add_dependencies(${PROJECT_NAME} ${default_nano_graphics})
 add_dependencies(${PROJECT_NAME} ${default_subsystem})
 add_dependencies(${PROJECT_NAME} ${default_innate_subsystem})
+add_dependencies(${PROJECT_NAME} ${default_remoting})
 #add_dependencies(${PROJECT_NAME} ${default_draw2d})
 #add_dependencies(${PROJECT_NAME} ${default_imaging})
 #add_dependencies(${PROJECT_NAME} ${default_node})

@@ -24,13 +24,13 @@
 
 #pragma once
 
-#include "remoting/remoting/desktop/windows/_common_header.h"
-#include "WinDxException.h"
+#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_windows/desktop/WinDxException.h"
 
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING WinDxRecoverableException : public WinDxException
+   class CLASS_DECL_REMOTING_WINDOWS WinDxRecoverableException : public WinDxException
    {
    public:
       WinDxRecoverableException(const ::scoped_string &scopedstrMessage, HRESULT errCode);

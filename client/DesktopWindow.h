@@ -122,8 +122,8 @@ namespace remoting_client
         bool onVScroll(::wparam wParam, ::lparam lParam);
         bool onKey(::wparam wParam, ::lparam lParam);
         bool onChar(::wparam wParam, ::lparam lParam);
-        bool onMouse(unsigned char mouseKeys, unsigned short wheelSpeed, const ::int_point & position) override;
-        bool onMouseEx(unsigned int message, int iButtonMask, unsigned short wspeed, const ::int_point &position,
+        bool onMouse(unsigned char mouseKeys, unsigned short wheelSpeed, const ::int_point & pointPosition) override;
+        bool onMouseEx(unsigned int message, int iButtonMask, unsigned short wspeed, const ::int_point &pointPosition,
                        bool &bDoDefaultProcessing) override;
         //bool onSize(::wparam wParam, ::lparam lParam);
         void onSize() override;
@@ -137,7 +137,7 @@ namespace remoting_client
         // If into viewer core throwing exception ::subsystem::Exception, then it catching
         // in this function and logged.
         void sendKeyboardEvent(bool downFlag, unsigned int key);
-        void sendPointerEvent(unsigned char buttonMask, const ::int_point *position);
+        void sendPointerEvent(unsigned char buttonMask, const ::int_point &pointPosition);
         void sendCutTextEvent(const ::scoped_string & cutText);
 
         ::pointer < ::subsystem::LogWriter > m_plogwriter;
@@ -148,7 +148,7 @@ namespace remoting_client
         // keyboard support
         ::remoting::RfbKeySym * m_rfbKeySym;
 
-        // This variable contained previously state of mouse-button and position of cursor.
+        // This variable contained previously state of mouse-button and pointPosition of cursor.
         unsigned char m_previousMouseState;
         ::int_point m_previousMousePos;
 

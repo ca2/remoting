@@ -299,9 +299,9 @@ UpdateSender::UpdateSender() :
    void UpdateSender::sendCursorShapeUpdate(const ::innate_subsystem::PixelFormat &fmt, const CursorShape *cursorShape)
    {
       // Send pseudo-rectangle.
-      ::int_point hotSpot = cursorShape->getHotSpot();
+      ::int_point pointHotspot = cursorShape->getHotSpot();
       ::int_size size = cursorShape->getDimension();
-      sendRectHeader(hotSpot.x, hotSpot.y, size.cx, size.cy, PseudoEncDefs::RICH_CURSOR);
+      sendRectHeader(pointHotspot.x, pointHotspot.y, size.cx, size.cy, PseudoEncDefs::RICH_CURSOR);
 
       ::innate_subsystem::Framebuffer fbConverted;
       fbConverted.setProperties(size, fmt);
@@ -321,7 +321,7 @@ UpdateSender::UpdateSender() :
    void UpdateSender::sendCursorPosUpdate()
    {
       ::int_point pos = m_pcursorupdates->getCurPos();
-      m_plogwriter->debug("Sending cursor position update: ({},{})", pos.x, pos.y);
+      m_plogwriter->debug("Sending cursor pointPosition update: ({},{})", pos.x, pos.y);
       sendRectHeader(pos.x, pos.y, 0, 0, PseudoEncDefs::POINTER_POS);
    }
 
@@ -615,7 +615,7 @@ UpdateSender::UpdateSender() :
          if (updatecontainer.m_bCursorPosChanged)
          {
             numTotalRects++;
-            m_plogwriter->debug("Adding a pseudo-rectangle for cursor position update");
+            m_plogwriter->debug("Adding a pseudo-rectangle for cursor pointPosition update");
          }
          if (updatecontainer.m_bCursorShapeChanged)
          {

@@ -58,9 +58,9 @@ namespace remoting
       void setPen(const Pen *pen);
       //void setExPen(FLOAT fWidth, const ::color::color & color);
 
-      // Moves cursor to specified position.
+      // Moves cursor to specified pointPosition.
       void moveTo(int x, int y);
-      // Draws line from current position to specified line.
+      // Draws line from current pointPosition to specified line.
       void lineTo(int x, int y);
       //void ExLineTo(int x, int y);
 
@@ -110,9 +110,9 @@ namespace remoting
       // void setPen(const Pen *pen);
       void setPen(FLOAT fWidth, const ::color::color & color);
 
-      // Moves cursor to specified position.
+      // Moves cursor to specified pointPosition.
       void moveTo(int x, int y);
-      // Draws line from current position to specified line.
+      // Draws line from current pointPosition to specified line.
       void lineTo(int x, int y);
       //void ExLineTo(int x, int y);
 

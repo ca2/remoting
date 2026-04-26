@@ -31,22 +31,22 @@
 #include "acme/parallelization/happening.h"
 
 #include "innate_subsystem/framebuffer/Framebuffer.h"
-#include "Win8CursorShape.h"
-#include "../UpdateKeeper.h"
-#include "../UpdateListener.h"
-#include "Win8DuplicationListener.h"
-#include "Win8DeskDuplicationThread.h"
+#include "remoting/remoting_windows/desktop/Win8CursorShape.h"
+#include "remoting/remoting/desktop/UpdateKeeper.h"
+#include "remoting/remoting/desktop/UpdateListener.h"
+#include "remoting/remoting_windows/desktop/Win8DuplicationListener.h"
+#include "remoting/remoting_windows/desktop/Win8DeskDuplicationThread.h"
 
 
 namespace remoting
 {
 
 
-   class CLASS_DECL_REMOTING Win8ScreenDriverImpl : private GuiThread, private Win8DuplicationListener
+   class CLASS_DECL_REMOTING_WINDOWS Win8ScreenDriverImpl : private GuiThread, private Win8DuplicationListener
    {
    public:
       Win8ScreenDriverImpl(::subsystem::LogWriter * plogwriter, UpdateKeeper *pupdatekeeper,
-                           critical_section *fbcritical_section, UpdateListener *pupdatelistener,
+                           critical_section *pcriticalsectionFramebuffer, UpdateListener *pupdatelistener,
                            bool detectionEnabled = false);
       virtual ~Win8ScreenDriverImpl();
 

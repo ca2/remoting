@@ -39,9 +39,12 @@ namespace remoting
    {
    public:
 
-      virtual ::pointer < Desktop > createDesktop(::subsystem::ClipboardListener *extClipListener,
-                                     UpdateSendingListener *extUpdSendingListener,
-                                     AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter * plogwriter) = 0;
+      virtual ::pointer < Desktop > createDesktop(
+         Configurator * pconfigurator,
+         ::subsystem::ClipboardListener *pclipboardlistenerExternal,
+         UpdateSendingListener *pupdatesendinglistenerExternal,
+         AbnormDeskTermListener *pdesktermlistenerExternal,
+         ::subsystem::LogWriter * plogwriter) = 0;
    };
 
 

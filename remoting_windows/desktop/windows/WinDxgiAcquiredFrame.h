@@ -24,8 +24,8 @@
 
 #pragma once
 
-#include "remoting/remoting/desktop/windows/_common_header.h"
-#include "../WinDxgiOutputDuplication.h"
+#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_windows/desktop/WinDxgiOutputDuplication.h"
 
 
 namespace remoting
@@ -34,7 +34,7 @@ namespace remoting
    // #include aaa_<d3d11.h>
    // #include aaa_<DXGI1_2.h>
 
-   class CLASS_DECL_REMOTING WinDxgiAcquiredFrame
+   class CLASS_DECL_REMOTING_WINDOWS WinDxgiAcquiredFrame
    {
    public:
       WinDxgiAcquiredFrame(WinDxgiOutputDuplication *outDupl, unsigned int timeOutMilliSec);

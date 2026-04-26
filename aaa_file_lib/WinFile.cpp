@@ -145,14 +145,14 @@ void WinFile::seek(long long n)
   LARGE_INTEGER fileSize;
   GetFileSizeEx(m_hFile, &fileSize);
   if (fileSize.QuadPart < n) {
-    throw ::subsystem::Exception("Specified file pointer position is more than file length");
+    throw ::subsystem::Exception("Specified file pointer pointPosition is more than file length");
   }
 
   LARGE_INTEGER li;
   li.QuadPart = n;
   li.LowPart = SetFilePointer(m_hFile, li.LowPart, &li.HighPart, FILE_CURRENT);
   if (li.LowPart == INVALID_SET_FILE_POINTER && GetLastError() != NO_ERROR) {
-    throw SystemException("Cannot set file pointer to specified position");
+    throw SystemException("Cannot set file pointer to specified pointPosition");
   }
 }
 

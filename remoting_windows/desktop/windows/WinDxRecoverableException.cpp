@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "../WinDxRecoverableException.h"
+#include "remoting/remoting_windows/desktop/WinDxRecoverableException.h"
 
 namespace remoting
 {

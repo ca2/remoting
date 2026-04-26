@@ -29,15 +29,15 @@
 
 // #include aaa_<d3d11.h>
 // #include aaa_<DXGI1_2.h>
-#include "remoting/remoting/desktop/windows/_common_header.h"
-#include "../WinDxgiSurface.h"
+#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_windows/desktop/WinDxgiSurface.h"
 
 
 namespace remoting
 {
 
    // Calls IDXGISurface->Map() function at the constructor and Unmap() at the destructor.
-   class CLASS_DECL_REMOTING WinAutoMapDxgiSurface
+   class CLASS_DECL_REMOTING_WINDOWS WinAutoMapDxgiSurface
    {
    public:
       // Surface will be created by the ID3D11Texture2D's QueryInterface() function call.

@@ -409,7 +409,7 @@ namespace remoting_client
         return false;
     }
 
-    bool DesktopWindow::onMouse(unsigned char mouseButtons, unsigned short wheelSpeed, const ::int_point & position)
+    bool DesktopWindow::onMouse(unsigned char mouseButtons, unsigned short wheelSpeed, const ::int_point & pointPosition)
     {
         if (m_pviewerwindow->isMinimized())
         {
@@ -453,7 +453,7 @@ namespace remoting_client
         }
 
 
-        auto p = position;
+        auto p = pointPosition;
 
         //p.x *= m_iDivisor;
         //p.y *= m_iDivisor;
@@ -474,18 +474,18 @@ namespace remoting_client
             {
                 int wheelMask = ::innate_subsystem::e_mouse_wheel_up | ::innate_subsystem::e_mouse_wheel_down;
 
-                // Update previously position of mouse.
+                // Update previously pointPosition of mouse.
                 m_previousMouseState = buttons & ~wheelMask;
                 m_previousMousePos = pos;
 
                 if ((buttons & wheelMask) == 0)
                 {
-                    // Send position of cursor and state of buttons one time.
+                    // Send pointPosition of cursor and state of buttons one time.
                     sendPointerEvent(buttons, &pos);
                 }
                 else
                 {
-                    // Send position of cursor and state of buttons wheelSpeed times.
+                    // Send pointPosition of cursor and state of buttons wheelSpeed times.
                     for (int i = 0; i < wheelSpeed; i++)
                     {
                         sendPointerEvent(buttons, &pos);
@@ -1033,7 +1033,7 @@ namespace remoting_client
         }
     }
 
-    void DesktopWindow::sendPointerEvent(unsigned char buttonMask, const ::int_point *position)
+    void DesktopWindow::sendPointerEvent(unsigned char buttonMask, const ::int_point &pointPosition)
     {
         if (m_pconnectionconfig->isViewOnly())
         {
@@ -1049,7 +1049,7 @@ namespace remoting_client
         // Trying send pointer event...
         try
         {
-            m_pviewercore->sendPointerEvent(buttonMask, position);
+            m_pviewercore->sendPointerEvent(buttonMask, pointPosition);
         }
         catch (const ::subsystem::Exception &exception)
         {

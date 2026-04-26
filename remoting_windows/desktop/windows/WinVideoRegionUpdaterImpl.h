@@ -24,11 +24,11 @@
 
 #pragma once
 
-#include "remoting/remoting/desktop/windows/_common_header.h"
+#include "remoting/remoting_windows/_common_header.h"
 //#include "subsystem/platform/class ::time.h"
 #include "remoting/remoting/region/Region.h"
 //#include "subsystem/platform/::string_array.h"
-#include "../ScreenDriver.h"
+#include "remoting/remoting/desktop/ScreenDriver.h"
 //#include "subsystem/thread/critical_section.h"
 //#include "log_writer/LogWriter.h"
 #include "subsystem/thread/Thread.h"
@@ -37,15 +37,33 @@
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING WinVideoRegionUpdaterImpl : public ScreenDriver, Thread
+   class CLASS_DECL_REMOTING_WINDOWS WinVideoRegionUpdaterImpl :
+      virtual public ScreenDriver,
+      virtual public ::subsystem::Thread
    {
    public:
-      WinVideoRegionUpdaterImpl(::subsystem::LogWriter * plogwriter);
-      virtual ~WinVideoRegionUpdaterImpl();
-   protected:
+
+
+      class ::time m_timeLastVideoUpdate;
+      Region m_regionVideo;
+      critical_section m_criticalsectionRegion;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
+      ::happening m_happeningSleeper;
+
+
+      //WinVideoRegionUpdaterImpl(::subsystem::LogWriter * plogwriter);
+      WinVideoRegionUpdaterImpl();
+      ~WinVideoRegionUpdaterImpl() override;
+
+
+      void initialize_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+                          critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) override;
+
+
+   //protected:
       virtual void execute();
       virtual void onTerminate();
-   private:
+   //private:
       virtual Region getVideoRegion();
       void updateVideoRegion();
       void getClassNamesAndRectsFromConfig(::string_array &classNames, ::int_rectangle_array_base &rectanglea);
@@ -53,14 +71,8 @@ namespace remoting
       Region getRectsByClass(::string_array classNames);
       Region getRectsByCoords(::int_rectangle_array_base &rectanglea);
 
-      class ::time m_lastVidUpdTime;
-      Region m_vidRegion;
-      critical_section m_regionMutex;
-      ::pointer < ::subsystem::LogWriter > m_plogwriter;
-      ::happening m_sleeper;
    };
 
-   //// __WINVIDEOREGIONUPDATERIMPL_H__
 
 }// namespace remoting
 

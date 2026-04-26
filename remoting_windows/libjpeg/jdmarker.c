@@ -1298,7 +1298,7 @@ read_restart_marker (j_decompress_ptr cinfo)
  * the marker code actually found (might be anything, except 0 or FF).
  * The desired restart marker number (0..7) is passed as a parameter.
  * This routine is supposed to apply whatever error recovery strategy seems
- * appropriate in order to position the input stream to the next data segment.
+ * appropriate in order to pointPosition the input stream to the next data segment.
  * Note that cinfo->unread_marker is treated as a marker appearing before
  * the current data-source input point; usually it should be reset to zero
  * before returning.

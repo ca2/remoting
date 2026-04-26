@@ -36,10 +36,10 @@ public:
   // Sets the range of minimum and maximum logical positions for the slider.
   void setRange(long min, long max);
 
-  // Sets the current logical position of the slider.
+  // Sets the current logical pointPosition of the slider.
   void setPos(long pos);
 
-  // Returns the current logical position of the slider.
+  // Returns the current logical pointPosition of the slider.
   long getPos();
 };
 

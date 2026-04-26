@@ -50,15 +50,38 @@ namespace remoting
       virtual public DesktopBaseImpl
    {
    public:
-      DesktopClientImpl(ClipboardListener *extClipListener, UpdateSendingListener *extUpdSendingListener,
-                        AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter * plogwriter);
-      virtual ~DesktopClientImpl();
 
-   protected:
+      // Inter process transport
+      ::pointer < ReconnectingChannel > m_pchannelClientToServer;
+      ::pointer < ReconnectingChannel > m_pchannelServerToClient;
+      ::pointer < BlockingGate > m_pgateClientToServer;
+      ::pointer < BlockingGate > m_pgateServerToClient;
+
+      ::pointer < DesktopServerWatcher > m_pdesktopserverwatcher;
+      ::pointer < DesktopSrvDispatcher > m_pdesktopsrvdispatcher;
+
+      ::pointer < GateKicker > m_pgatekicker;
+      ::pointer < UserInput > m_puserinput; // It uses for delegation by the SasUserInput.
+
+      ::pointer < DesktopConfigClient > m_pdesktopconfigclient;
+
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
+
+      //DesktopClientImpl(ClipboardListener *pclipboardlistenerExternal, UpdateSendingListener *pupdatesendinglistenerExternal,
+        //                AbnormDeskTermListener *pdesktermlistenerExternal, ::subsystem::LogWriter * plogwriter);
+      DesktopClientImpl();
+      ~DesktopClientImpl() override;
+
+
+      virtual void initialize_desktop_client_impl(ClipboardListener *pclipboardlistenerExternal, UpdateSendingListener *pupdatesendinglistenerExternal,
+                  AbnormDeskTermListener *pdesktermlistenerExternal, ::subsystem::LogWriter * plogwriter);
+
+
+   //protected:
       virtual void execute();
       virtual void onTerminate();
 
-   private:
+   //private:
       // Interface functions
       virtual void onAnObjectEvent();
       virtual void onReconnect(Channel *newChannelTo, Channel *newChannelFrom);
@@ -69,21 +92,6 @@ namespace remoting
       virtual bool isRemoteInputTempBlocked();
       virtual void applyNewConfiguration();
 
-      // Inter process transport
-      ReconnectingChannel *m_clToSrvChan;
-      ReconnectingChannel *m_srvToClChan;
-      BlockingGate *m_clToSrvGate;
-      BlockingGate *m_srvToClGate;
-
-      DesktopServerWatcher *m_deskServWatcher;
-      DesktopSrvDispatcher *m_dispatcher;
-
-      GateKicker *m_pblockinggateKicker;
-      UserInput *m_userInputClient; // It uses for delegation by the SasUserInput.
-
-      DesktopConfigClient *m_deskConf;
-
-      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

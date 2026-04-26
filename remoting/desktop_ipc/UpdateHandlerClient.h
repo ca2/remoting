@@ -40,15 +40,17 @@ namespace remoting
    {
    public:
       // UpdateHandlerClient(BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
-      //                     UpdateListener *externalUpdateListener, ::subsystem::LogWriter * plogwriter);
+      //                     UpdateListener *pupdatelistenerExternal, ::subsystem::LogWriter * plogwriter);
       UpdateHandlerClient();
+      UpdateHandlerClient(Configurator * pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
+                           UpdateListener *pupdatelistenerExternal, ::subsystem::LogWriter * plogwriter);
       ~UpdateHandlerClient() override;
 
-      virtual void initialize_update_handler_client(BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
-                          UpdateListener *externalUpdateListener, ::subsystem::LogWriter * plogwriter);
+      virtual void initialize_update_handler_client(Configurator * pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
+                          UpdateListener *pupdatelistenerExternal, ::subsystem::LogWriter * plogwriter);
 
 
-      virtual void extract(UpdateContainer & updatecontainer);
+      virtual UpdateContainer extract();
       virtual void setFullUpdateRequested(const Region & region);
       virtual void setExcludedRegion(const Region & regionExcluded);
       virtual bool checkForUpdates(Region & region);

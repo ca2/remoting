@@ -22,11 +22,11 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "WinDxCriticalException.h"
-#include "../WinDxRecoverableException.h"
+#include "remoting/remoting_windows/desktop/WinDxCriticalException.h"
+#include "remoting/remoting_windows/desktop/WinDxRecoverableException.h"
 
 // The header including of this cpp file must be at last place to avoid build conflicts.
-#include "../WinDxgiOutput1.h"
+#include "remoting/remoting_windows/desktop/WinDxgiOutput1.h"
 
 namespace remoting
 {

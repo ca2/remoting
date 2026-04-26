@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include "remoting/remoting/desktop/windows/_common_header.h"
+#include "remoting/remoting_windows/_common_header.h"
 #include "MirrorDriverClient.h"
 #include "subsystem/platform/RegistryKey.h"
 #include "DisplayEsc.h"
@@ -36,7 +36,7 @@
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING MirrorScreenDriver :
+   class CLASS_DECL_REMOTING_WINDOWS MirrorScreenDriver :
    virtual public UpdateDetector
    {
    public:
@@ -45,7 +45,7 @@ namespace remoting
 
 
       virtual void initialize_mirror_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                         critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter);
+                         critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
 
       // Starts screen update detection if it not started yet.
       virtual void executeDetection();

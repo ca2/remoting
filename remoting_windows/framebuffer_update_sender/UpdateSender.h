@@ -193,8 +193,8 @@ namespace remoting
       virtual void execute();
       virtual void onTerminate();
 
-      // Check cursor position for changing and store it to the m_cursorPos.
-      // Return true value if cursor position has been changed.
+      // Check cursor pointPosition for changing and store it to the m_cursorPos.
+      // Return true value if cursor pointPosition has been changed.
       void checkCursorPos(UpdateContainer & updatecontainer, const ::int_rectangle &rectangleViewport);
 
       // Thread safed get and set of the m_videFrozen flag.

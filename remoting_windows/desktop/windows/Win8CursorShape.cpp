@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "../Win8CursorShape.h"
+#include "remoting/remoting_windows/desktop/Win8CursorShape.h"
 
 namespace remoting
 {

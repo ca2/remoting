@@ -46,7 +46,7 @@ private:
   virtual void execute();
   virtual void onTerminate();
 
-  ::happening m_sleeper;
+  ::happening m_happeningSleeper;
 
   OutputStream *m_outStream;
   bool m_updateAvailable;

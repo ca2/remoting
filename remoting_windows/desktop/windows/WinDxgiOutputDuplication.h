@@ -24,8 +24,8 @@
 
 #pragma once
 
-#include "remoting/remoting/desktop/windows/_common_header.h"
-#include "WinDxgiOutput1.h"
+#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_windows/desktop/WinDxgiOutput1.h"
 #include "remoting/remoting/rfb/CursorShape.h"
 
 // #include aaa_<d3d11.h>
@@ -36,7 +36,7 @@ namespace remoting
 {
 
    // This class  is a wrapper for the IDXGIOutputDuplication interface.
-   class CLASS_DECL_REMOTING WinDxgiOutputDuplication
+   class CLASS_DECL_REMOTING_WINDOWS WinDxgiOutputDuplication
    {
    public:
       WinDxgiOutputDuplication(WinDxgiOutput1 *dxgiOutput, WinD3D11Device *d3D11Device);

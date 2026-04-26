@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "remoting/remoting/desktop/windows/_common_header.h"
-#include "WinD3D11Device.h"
+#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_windows/desktop/WinD3D11Device.h"
 
 
 namespace remoting
@@ -35,7 +35,7 @@ namespace remoting
    // #include aaa_<d3d11.h>
    // #include aaa_<DXGI1_2.h>
 
-   class CLASS_DECL_REMOTING WinDxgiDevice
+   class CLASS_DECL_REMOTING_WINDOWS WinDxgiDevice
    {
    public:
       // Uses WinD3D11Device to create internal handle

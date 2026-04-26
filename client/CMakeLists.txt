@@ -99,7 +99,7 @@ list(APPEND library_references
 #   remoting_viewer_core
 #   remoting_win_system
 #   remoting_zlib
-   remoting_common
+   remoting
 )
 
 

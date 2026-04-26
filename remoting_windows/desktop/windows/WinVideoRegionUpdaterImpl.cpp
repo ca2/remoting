@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "../WinVideoRegionUpdaterImpl.h"
+#include "remoting/remoting_windows/desktop/WinVideoRegionUpdaterImpl.h"
 #include "remoting/remoting/server_config/Configurator.h"
 #include "innate_subsystem/gui/WindowFinder.h"
 #include "remoting/remoting/region/RectSerializer.h"
@@ -33,7 +33,14 @@ namespace remoting
 {
 
 
-   WinVideoRegionUpdaterImpl::WinVideoRegionUpdaterImpl(::subsystem::LogWriter * plogwriter) : m_plogwriter(plogwriter) { resume(); }
+   WinVideoRegionUpdaterImpl::WinVideoRegionUpdaterImpl(::subsystem::LogWriter * plogwriter)
+   {
+      //: m_plogwriter(plogwriter)
+      //{
+        // resume();
+
+
+   }
 
    WinVideoRegionUpdaterImpl::~WinVideoRegionUpdaterImpl()
    {
@@ -41,13 +48,24 @@ namespace remoting
       wait();
    }
 
-   void WinVideoRegionUpdaterImpl::onTerminate() { m_sleeper.set_happening(); }
+
+   void WinVideoRegionUpdaterImpl::initialize_screen_driver(::subsystem::LogWriter * plogwriter)
+   {
+
+      m_plogwriter = plogwriter;
+
+      resume();
+
+   }
+
+
+   void WinVideoRegionUpdaterImpl::onTerminate() { m_happeningSleeper.set_happening(); }
 
    void WinVideoRegionUpdaterImpl::execute()
    {
       while (!isTerminating())
       {
-         m_sleeper.wait(getInterval() * 1_ms);
+         m_happeningSleeper.wait(getInterval() * 1_ms);
          if (!isTerminating())
          {
             try
@@ -63,23 +81,23 @@ namespace remoting
 
    unsigned int WinVideoRegionUpdaterImpl::getInterval()
    {
-      ServerConfig *srvConf = m_pconfigurator->getServerConfig();
-      return srvConf->getVideoRecognitionInterval();
+      ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
+      return pserverconfig->getVideoRecognitionInterval();
    }
 
    Region WinVideoRegionUpdaterImpl::getVideoRegion()
    {
-      critical_section_lock al(&m_regionMutex);
-      return m_vidRegion;
+      critical_section_lock al(&m_criticalsectionRegion);
+      return m_regionVideo;
    }
 
    void WinVideoRegionUpdaterImpl::getClassNamesAndRectsFromConfig(::string_array &classNames,
                                                                    ::int_rectangle_array_base &rectanglea)
    {
-      ServerConfig *srvConf = m_pconfigurator->getServerConfig();
-      critical_section_lock al(srvConf);
-      classNames = *srvConf->getVideoClassNames();
-      rectanglea = *srvConf->getVideoRects();
+      ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
+      critical_section_lock al(pserverconfig);
+      classNames = *pserverconfig->getVideoClassNames();
+      rectanglea = *pserverconfig->getVideoRects();
    }
 
    void WinVideoRegionUpdaterImpl::updateVideoRegion()
@@ -89,7 +107,7 @@ namespace remoting
       getClassNamesAndRectsFromConfig(classNames, rectanglea);
       Region tmpRegion;
       m_plogwriter->debug(L"WinVideoRegionUpdaterImpl: ClassNames {}, Rects {}", classNames.size(),
-                          m_vidRegion.getCount());
+                          m_regionVideo.getCount());
       if (!classNames.empty())
       {
          class ::time startTime = class ::time::now();
@@ -103,8 +121,8 @@ namespace remoting
       }
       m_plogwriter->debug(L"WinVideoRegionUpdaterImpl: copy data");
       {
-         critical_section_lock al(&m_regionMutex);
-         m_vidRegion = tmpRegion;
+         critical_section_lock al(&m_criticalsectionRegion);
+         m_regionVideo = tmpRegion;
       }
       m_plogwriter->debug(L"WinVideoRegionUpdaterImpl: exit updateVideoRegion()");
    }

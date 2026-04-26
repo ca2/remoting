@@ -86,7 +86,7 @@ namespace remoting_client
         // size of visible part of the frame buffer considering scale
         ::int_rectangle m_rcViewed;
 
-        // position of m_rcViewer
+        // pointPosition of m_rcViewer
         int m_iCentX;
         int m_iCentY;
 

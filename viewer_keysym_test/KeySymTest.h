@@ -45,7 +45,7 @@ private:
 
   bool readLine(::string & line);
 
-  // pos in - position to start search a word, out - position to start search
+  // pos in - pointPosition to start search a word, out - pointPosition to start search
   // for next word.
   // Returns true if word has been found.
   bool getWord(const ::scoped_string & line, size_t *pos, ::string & word);

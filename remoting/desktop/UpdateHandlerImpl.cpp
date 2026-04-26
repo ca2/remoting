@@ -23,50 +23,57 @@
 //
 #include "framework.h"
 #include "UpdateHandlerImpl.h"
+#include "acme/parallelization/happening.h"
+#include "subsystem/platform/Exception.h"
+
 
 namespace remoting
 {
 
 
-   UpdateHandlerImpl::UpdateHandlerImpl(UpdateListener *externalUpdateListener, ScreenDriverFactory *scrDriverFactory,
+   UpdateHandlerImpl::UpdateHandlerImpl(UpdateListener *pupdatelistenerExternal, ScreenDriverFactory *pscreendriverfactory,
                                         ::subsystem::LogWriter * plogwriter) :
-       m_externalUpdateListener(externalUpdateListener), m_fullUpdateRequested(false), m_plogwriter = plogwriter;
+       m_pupdatelistenerExternal(pupdatelistenerExternal), m_fullUpdateRequested(false), m_plogwriter(plogwriter)
    {
+      initialize(pupdatelistenerExternal);
+      construct_newø(m_pupdatekeeperProperty);
       m_pscreendriver =
-         scrDriverFactory->createScreenDriver(&m_pupdatekeeper, this, &m_backupFramebuffer, &m_criticalsectionFramebufferLoc, log);
+         pscreendriverfactory->createScreenDriver(m_pupdatekeeperProperty, this, m_pframebufferBackup, &m_criticalsectionFramebuffer, plogwriter);
       // At this point the screen driver must contain valid screen properties.
-      m_backupFramebuffer.assignProperties(m_pscreendriver->getScreenBuffer());
-      m_pupdatekeeper.setBorderRect(&m_pscreendriver->getScreenDimension());
-      m_updateFilter = new UpdateFilter(m_pscreendriver, &m_backupFramebuffer, &m_criticalsectionFramebufferLoc, log);
+      m_pframebufferBackup->assignProperties(m_pscreendriver->getScreenBuffer());
+      m_pupdatekeeperProperty->setBorderRect(m_pscreendriver->getScreenDimension());
+      construct_newø(m_pupdatefilter);
+      m_pupdatefilter->initialize_update_filter(m_pscreendriver, m_pframebufferBackup, &m_criticalsectionFramebuffer, plogwriter);
 
       // At this point all common resources will be covered the mutex for changes.
       m_pscreendriver->executeDetection();
 
       // Force first update with full screen grab
-      m_absoluteRect = m_backupFramebuffer.getDimension();
-      m_pupdatekeeper.addChangedRect(&m_absoluteRect);
+      m_rectangleAbsolute = m_pframebufferBackup->getDimension();
+      m_pupdatekeeperProperty->addChangedRect(m_rectangleAbsolute);
       doUpdate();
    }
 
    UpdateHandlerImpl::~UpdateHandlerImpl()
    {
       m_pscreendriver->terminateDetection();
-      delete m_updateFilter;
-      delete m_pscreendriver;
+      //delete m_pupdatefilter;
+      //delete m_pscreendriver;
    }
 
-   void UpdateHandlerImpl::extract(UpdateContainer & updatecontainer)
+   UpdateContainer UpdateHandlerImpl::extract()
    {
       ::int_rectangle rectangleCopy;
       ::int_point m_pointCopySource;
       m_plogwriter->debug("UpdateHandlerImpl: getCopiedRegion");
-      m_pscreendriver->getCopiedRegion(&rectangleCopy, &m_pointCopySource);
-      {
-         critical_section_lock al(&m_pupdatekeeper); // The following operations should be atomic
-         m_pupdatekeeper.addCopyRect(&rectangleCopy, &m_pointCopySource);
+      m_pscreendriver->getCopiedRegion(rectangleCopy, m_pointCopySource);
+      //{
+         AutoLock al1(m_pupdatekeeperProperty); // The following operations should be atomic
+         m_pupdatekeeperProperty->addCopyRect(rectangleCopy, m_pointCopySource);
          m_plogwriter->debug("UpdateHandlerImpl: extract Copy ::int_rectangle");
-         m_pupdatekeeper.extract(updatecontainer);
-      }
+         auto updatecontainer = m_pupdatekeeperProperty->extract();
+      al1.unlock();
+      //}
 
       // Note: The getVideoRegion() function is not a thread safe function, but it invokes
       // only from this one place and so that is why it does not cover by the mutex.
@@ -74,33 +81,33 @@ namespace remoting
       updatecontainer.m_regionVideo = m_pscreendriver->getVideoRegion();
       // Constrain the video region to the current frame buffer border.
       m_plogwriter->debug("UpdateHandlerImpl: getRect");
-      Region fbRect(getFramebufferDimension());
+      Region regionFramebuffer(getFramebufferDimension());
       m_plogwriter->debug("UpdateHandlerImpl: intersect");
-      updatecontainer.m_regionVideo.intersect(&fbRect);
+      updatecontainer.m_regionVideo.intersect(regionFramebuffer);
 
       m_plogwriter->debug("UpdateHandlerImpl::extract : filter updates");
-      m_updateFilter->filter(updatecontainer);
+      m_pupdatefilter->filter(updatecontainer);
 
-      if (!m_absoluteRect.is_empty())
+      if (!m_rectangleAbsolute.is_empty())
       {
-         updatecontainer.m_regionChanged.addRect(&m_pscreendriver->getScreenBuffer()->getDimension());
-         m_absoluteRect.clear();
+         updatecontainer.m_regionChanged.addRect(m_pscreendriver->getScreenBuffer()->getDimension());
+         m_rectangleAbsolute.Null();
       }
 
       // Checking for screen properties changing or frame buffers differ
       m_plogwriter->debug(
          "UpdateHandlerImpl::extract : Checking for screen properties changing or frame buffers differ");
       if (m_pscreendriver->getScreenPropertiesChanged() ||
-          !m_backupFramebuffer.isEqualTo(m_pscreendriver->getScreenBuffer()))
+          !m_pframebufferBackup->isEqualTo(m_pscreendriver->getScreenBuffer()))
       {
-         ::int_size currentDimension = m_backupFramebuffer.getDimension();
-         ::int_size newDimension = m_pscreendriver->getScreenDimension();
-         if (m_pscreendriver->getScreenSizeChanged() || !currentDimension.isEqualTo(&newDimension))
+         ::int_size sizeCurrent = m_pframebufferBackup->getDimension();
+         ::int_size sizeNew = m_pscreendriver->getScreenDimension();
+         if (m_pscreendriver->getScreenSizeChanged() || sizeCurrent != sizeNew)
          {
             updatecontainer.m_bScreenSizeChanged = true;
          }
-         m_plogwriter->debug("UpdateHandlerImpl::extract: old dims: ({},{}), new dims: ({},{})", currentDimension.cx,
-                             currentDimension.cy, newDimension.cx, newDimension.cy);
+         m_plogwriter->debug("UpdateHandlerImpl::extract: old dims: ({},{}), new dims: ({},{})", sizeCurrent.cx,
+                             sizeCurrent.cy, sizeNew.cx, sizeNew.cy);
          m_plogwriter->debug("UpdateHandlerImpl::extract : applyNewScreenProperties()");
          applyNewScreenProperties();
          {
@@ -108,27 +115,28 @@ namespace remoting
             // must be under the mutex. Getters for the backup frame buffer in here (at this function)
             // can work without the mutex, but other getters for the frame buffer in other places
             // may be invoked from other threads and then it shall cover by the mutex.
-            critical_section_lock al(&m_criticalsectionFramebufferLoc);
-            m_backupFramebuffer.clone(m_pscreendriver->getScreenBuffer());
+            critical_section_lock al(&m_criticalsectionFramebuffer);
+            m_pframebufferBackup->clone(m_pscreendriver->getScreenBuffer());
          }
          updatecontainer.m_regionChanged.clear();
          updatecontainer.m_regionCopied.clear();
-         m_absoluteRect = m_backupFramebuffer.getDimension();
-         m_pupdatekeeper.setBorderRect(&m_absoluteRect);
+         m_rectangleAbsolute = m_pframebufferBackup->getDimension();
+         m_pupdatekeeperProperty->setBorderRect(m_rectangleAbsolute);
+         return ::transfer(updatecontainer);
       }
 
-      // Cursor position must always be present.
+      // Cursor pointPosition must always be present.
       updatecontainer.m_pointCursorPos = m_pscreendriver->getCursorPosition();
       {
          int x = updatecontainer.m_pointCursorPos.x;
          int y = updatecontainer.m_pointCursorPos.y;
-         m_plogwriter->debug("UpdateHandlerImpl::extract : update cursor position ({},{})", x, y);
+         m_plogwriter->debug("UpdateHandlerImpl::extract : update cursor pointPosition ({},{})", x, y);
       }
       // Checking for mouse shape changing
       if (updatecontainer.m_bCursorShapeChanged || m_fullUpdateRequested)
       {
          // Update cursor shape
-         m_pscreendriver->grabCursorShape(&m_backupFramebuffer.getPixelFormat());
+         m_pscreendriver->grabCursorShape(m_pframebufferBackup->getPixelFormat());
          // Store cursor shape
          m_cursorShape.clone(m_pscreendriver->getCursorShape());
 
@@ -162,14 +170,14 @@ namespace remoting
 
    void UpdateHandlerImpl::setFullUpdateRequested(const Region & region)
    {
-      m_pupdatekeeper.addChangedRegion(region);
+      m_pupdatekeeperProperty->addChangedRegion(region);
       m_fullUpdateRequested = true;
    }
 
    void UpdateHandlerImpl::executeDetectors()
    {
       // FIXME: Why following string is here?
-      m_backupFramebuffer.assignProperties(m_pscreendriver->getScreenBuffer());
+      m_pframebufferBackup->assignProperties(m_pscreendriver->getScreenBuffer());
 
       m_pscreendriver->executeDetection();
    }
@@ -178,19 +186,19 @@ namespace remoting
 
    void UpdateHandlerImpl::onUpdate()
    {
-      UpdateContainer updatecontainer;
-      m_pupdatekeeper.getUpdateContainer(&updatecontainer);
+      //UpdateContainer updatecontainer;
+      auto updatecontainer = m_pupdatekeeperProperty->getUpdateContainer();
       if (!updatecontainer.is_empty())
       {
          doUpdate();
       }
    }
 
-   bool UpdateHandlerImpl::checkForUpdates(Region & region) { return m_pupdatekeeper.checkForUpdates(region); }
+   bool UpdateHandlerImpl::checkForUpdates(Region & region) { return m_pupdatekeeperProperty->checkForUpdates(region); }
 
    void UpdateHandlerImpl::setExcludedRegion(const Region & regionExcluded)
    {
-      m_pupdatekeeper.setExcludedRegion(regionExcluded);
+      m_pupdatekeeperProperty->setExcludedRegion(regionExcluded);
    }
 
 

@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "../WindowsScreenGrabber.h"
+#include "remoting/remoting_windows/desktop/WindowsScreenGrabber.h"
 
 
 namespace remoting

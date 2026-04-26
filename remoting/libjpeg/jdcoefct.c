@@ -144,7 +144,7 @@ start_output_pass (j_decompress_ptr cinfo)
  * Return value is JPEG_ROW_COMPLETED, JPEG_SCAN_COMPLETED, or JPEG_SUSPENDED.
  *
  * NB: output_buf contains a plane for each component in image,
- * which we index according to the component's SOF position.
+ * which we index according to the component's SOF pointPosition.
  */
 
 METHODDEF(int)

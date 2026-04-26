@@ -6,13 +6,13 @@
 #pragma once
 
 
-#include "innate_subsystem/_.h"
+#include "remoting/remoting/_.h"
 
 
-#if defined(_remoting_project)
-#define CLASS_DECL_REMOTING CLASS_DECL_EXPORT
+#if defined(_remoting_windows_project)
+#define CLASS_DECL_REMOTING_WINDOWS CLASS_DECL_EXPORT
 #else
-#define CLASS_DECL_REMOTING CLASS_DECL_IMPORT
+#define CLASS_DECL_REMOTING_WINDOWS CLASS_DECL_IMPORT
 #endif
 
 

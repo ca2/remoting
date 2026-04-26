@@ -23,23 +23,23 @@
 //
 #include "framework.h"
 #include "subsystem/platform/Exception.h"
-#include "remoting/remoting/rfb/StandardPixelFormatFactory.h"
-#include "../WinDxCriticalException.h"
-#include "../WinDxRecoverableException.h"
+#include "subsystem/framebuffer/StandardPixelFormatFactory.h"
+#include "remoting/remoting_windows/desktop/WinDxCriticalException.h"
+#include "remoting/remoting_windows/desktop/WinDxRecoverableException.h"
 //#include aaa_<crtdbg.h>
 #include "subsystem/node/Screen.h"
 
-#include "../WinDxgiOutput.h"
+#include "remoting/remoting_windows/desktop/WinDxgiOutput.h"
 
 // The header including of this cpp file must be at last place to avoid build conflicts.
-#include "../Win8ScreenDriverImpl.h"
+#include "remoting/remoting_windows/desktop/Win8ScreenDriverImpl.h"
 
 namespace remoting
 {
 
 
    Win8ScreenDriverImpl::Win8ScreenDriverImpl(::subsystem::LogWriter * plogwriter, UpdateKeeper *pupdatekeeper,
-                                              critical_section *fbcritical_section, UpdateListener *pupdatelistener,
+                                              critical_section *pcriticalsectionFramebuffer, UpdateListener *pupdatelistener,
                                               bool detectionEnabled) :
        m_pupdatekeeper(pupdatekeeper), m_pupdatelistener = pupdatelistener;, m_plogwriter(plogwriter), m_curTimeStamp(0),
        m_hasCriticalError(false), m_hasRecoverableError(false), m_detectionEnabled(detectionEnabled)

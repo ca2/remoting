@@ -38,10 +38,12 @@ namespace remoting
       //RfbInputGate(::Channel *stream);
       //RfbInputGate(::InputStream *stream);
       RfbInputGate();
+      RfbInputGate(::Channel *stream);
+      RfbInputGate(::InputStream *stream);
       ~RfbInputGate() override;
 
-      virtual void initialize_rfb_input_gate(::Channel *stream);
-      virtual void initialize_rfb_input_gate(::InputStream *stream);
+      virtual void _initialize_rfb_input_gate(::Channel *stream);
+      virtual void _initialize_rfb_input_gate(::InputStream *stream);
 
 
    };

@@ -94,7 +94,7 @@ bool DibFramebuffer::cmpFrom(const ::int_rectangle &  rectangleTarget, const ::i
   return m_fb.cmpFrom(rectangleTarget, pframebufferSource, srcX, srcY);
 }
 
-bool DibFramebuffer::setDimension(const ::int_size & newDim)
+bool DibFramebuffer::setDimension(const ::int_size & sizeNew)
 {
   throw ::subsystem::Exception("Wrong: You shouln't use the DibFramebuffer::clone() function.");
 }
@@ -114,7 +114,7 @@ void DibFramebuffer::setEmptyPixelFmt(const ::innate_subsystem::PixelFormat & pi
   throw ::subsystem::Exception("This function is deprecated");
 }
 
-void DibFramebuffer::setPropertiesWithoutResize(const ::int_size & newDim, const ::innate_subsystem::PixelFormat & pixelformat)
+void DibFramebuffer::setPropertiesWithoutResize(const ::int_size & sizeNew, const ::innate_subsystem::PixelFormat & pixelformat)
 {
   throw ::subsystem::Exception("Wrong: You shouln't use the DibFramebuffer::setPropertiesWithoutResize() function.");
 }
@@ -134,7 +134,7 @@ inline ::innate_subsystem::PixelFormat DibFramebuffer::getPixelFormat() const
   return m_fb.getPixelFormat();
 }
 
-bool DibFramebuffer::setProperties(const ::int_size & newDim, const ::innate_subsystem::PixelFormat & pixelFormat)
+bool DibFramebuffer::setProperties(const ::int_size & sizeNew, const ::innate_subsystem::PixelFormat & pixelFormat)
 {
   throw ::subsystem::Exception("Wrong: You shouln't use this variant of the DibFramebuffer::setProperties() function.");
 }
@@ -197,27 +197,27 @@ void DibFramebuffer::blitFromDibSection(const ::int_rectangle &  rectangle)
   m_dibSection->blitFromDibSection(rectangle);
 }
 
-void DibFramebuffer::stretchFromDibSection(const ::int_rectangle &  srcRect,const ::int_rectangle & rectangleTarget)
+void DibFramebuffer::stretchFromDibSection(const ::int_rectangle &  rectangleSource,const ::int_rectangle & rectangleTarget)
 {
   checkDibValid();
-  m_dibSection->stretchFromDibSection(srcRect, rectangleTarget);
+  m_dibSection->stretchFromDibSection(rectangleSource, rectangleTarget);
 }
 
-void DibFramebuffer::setProperties(const ::int_size & newDim,
+void DibFramebuffer::setProperties(const ::int_size & sizeNew,
                                    const ::innate_subsystem::PixelFormat & pixelFormat,
                                    HWND compatibleWindow)
 {
-  m_fb.setPropertiesWithoutResize(newDim, pixelFormat);
-  void *buffer = updateDibSection(newDim, pixelFormat, compatibleWindow);
+  m_fb.setPropertiesWithoutResize(sizeNew, pixelFormat);
+  void *buffer = updateDibSection(sizeNew, pixelFormat, compatibleWindow);
   m_fb.setBuffer(buffer);
 }
 
-void *DibFramebuffer::updateDibSection(const ::int_size & newDim,
+void *DibFramebuffer::updateDibSection(const ::int_size & sizeNew,
                                       const ::innate_subsystem::PixelFormat & pixelFormat,
                                       HWND compatibleWindow)
 {
   releaseDibSection();
-  m_dibSection = new DibSection(pixelFormat, newDim, compatibleWindow);
+  m_dibSection = new DibSection(pixelFormat, sizeNew, compatibleWindow);
   return m_dibSection->getBuffer();
 }
 

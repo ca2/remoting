@@ -148,7 +148,7 @@ namespace remoting
        * @param dst pointer to an ::array_base where the ::list_base of rectangles will be
        *            saved to. The previous contents of the ::array_base will be cleared.
        */
-      void getRects(::int_rectangle_array_base & rectanglea) const;
+      void _getRects(::int_rectangle_array_base & rectanglea) const;
       /**
        * Get the ::list_base of rectangles that constitute this region.
        * @param dst pointer to an ::list_base where the ::list_base of rectangles will be

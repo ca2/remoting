@@ -41,6 +41,16 @@ namespace remoting
 
 
    }
+   RfbInputGate::RfbInputGate(::Channel *pchannel)
+
+   {
+      _initialize_rfb_input_gate(pchannel);
+   }
+   RfbInputGate::RfbInputGate(::InputStream *pinputstream)
+
+   {
+      _initialize_rfb_input_gate(pinputstream);
+   }
 
 
    RfbInputGate::~RfbInputGate()
@@ -48,16 +58,16 @@ namespace remoting
    }
 
 
-   void RfbInputGate::initialize_rfb_input_gate(::Channel *pchannel)
+   void RfbInputGate::_initialize_rfb_input_gate(::Channel *pchannel)
    {
 
-      initialize_data_input_stream(pchannel);
+      _initialize_data_input_stream(pchannel);
 
    }
-   void RfbInputGate::initialize_rfb_input_gate(::InputStream *pinputstream)
+   void RfbInputGate::_initialize_rfb_input_gate(::InputStream *pinputstream)
    {
 
-      initialize_data_input_stream(pinputstream);
+      _initialize_data_input_stream(pinputstream);
 
    }
 

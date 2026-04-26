@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "../Win32ScreenDriverBaseImpl.h"
+#include "remoting/remoting_windows/desktop/Win32ScreenDriverBaseImpl.h"
 #include "subsystem/platform/Exception.h"
 
 
@@ -30,11 +30,11 @@ namespace remoting
 {
 
    Win32ScreenDriverBaseImpl::Win32ScreenDriverBaseImpl(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                                                        critical_section *fbcritical_section,
+                                                        critical_section *pcriticalsectionFramebuffer,
                                                         ::subsystem::LogWriter * plogwriter) :
-       WinVideoRegionUpdaterImpl(plogwriter), m_fbcritical_section(fbcritical_section),
+       WinVideoRegionUpdaterImpl(plogwriter), m_fbcritical_section(pcriticalsectionFramebuffer),
        m_cursorPosDetector(pupdatekeeper, pupdatelistener, log),
-       m_curShapeDetector(pupdatekeeper, pupdatelistener, &m_curShapeGrabber, fbcritical_section, log)
+       m_curShapeDetector(pupdatekeeper, pupdatelistener, &m_curShapeGrabber, pcriticalsectionFramebuffer, log)
    {
    }
 

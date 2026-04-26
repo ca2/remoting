@@ -54,8 +54,8 @@ namespace remoting
       void onUpdate(const ::int_rectangle &  rectangle);
       void onPropertiesFb();
 
-      void updatePointerPos(const ::int_point *position);
-      void setNewCursor(const ::int_point *hotSpot,
+      void updatePointerPos(const ::int_point &pointPosition);
+      void setNewCursor(const ::int_point &pointHotspot,
                         unsigned short width, unsigned short height,
                         const ::array_base<unsigned char> *cursor,
                         const ::array_base<unsigned char> *bitmask);
@@ -87,13 +87,13 @@ namespace remoting
       // In this region added all updates of frame buffer and cursor updates.
       Region m_update;
 
-      // This rectangle save position of cursor.
+      // This rectangle save pointPosition of cursor.
       ::int_rectangle m_oldPosition;
 
       // This flag is true after call onPropertiesFb().
       bool m_isNewSize;
 
-      // This flag is true after set new cursor or update position.
+      // This flag is true after set new cursor or update pointPosition.
       bool m_isCursorChange;
       bool m_isGoodCursor;
 

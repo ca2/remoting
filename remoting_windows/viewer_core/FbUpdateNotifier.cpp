@@ -128,7 +128,7 @@ namespace remoting
             }
 
          }
-         // Update position on cursor and send frame buffer update event to adapter
+         // Update pointPosition on cursor and send frame buffer update event to adapter
          // with blocking frame buffer mutex "m_fbLock".
          if (isCursorChange || !update.is_empty()) {
             noUpdates = false;
@@ -205,23 +205,23 @@ namespace remoting
       m_plogwriter->debug("FbUpdateNotifier: new size of frame buffer");
    }
 
-   void FbUpdateNotifier::updatePointerPos(const ::int_point *position)
+   void FbUpdateNotifier::updatePointerPos(const ::int_point &pointPosition)
    {
-      m_cursorPainter.updatePointerPos(position);
+      m_cursorPainter.updatePointerPos(pointPosition);
 
       critical_section_lock al(&m_updateLock);
       m_isCursorChange = true;
       m_eventUpdate.set_happening();
    }
 
-   void FbUpdateNotifier::setNewCursor(const ::int_point *hotSpot,
+   void FbUpdateNotifier::setNewCursor(const ::int_point &pointHotspot,
                                        unsigned short width, unsigned short height,
                                        const ::array_base<unsigned char> *cursor,
                                        const ::array_base<unsigned char> *bitmask)
    {
       {
          critical_section_lock al(m_fbLock);
-         m_cursorPainter.setNewCursor(hotSpot, width, height, cursor, bitmask);
+         m_cursorPainter.setNewCursor(pointHotspot, width, height, cursor, bitmask);
       }
       critical_section_lock al(&m_updateLock);
       m_isCursorChange = true;

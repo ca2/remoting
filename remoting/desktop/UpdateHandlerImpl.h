@@ -36,25 +36,40 @@ namespace remoting
    class CLASS_DECL_REMOTING UpdateHandlerImpl : public UpdateHandler, public UpdateListener
    {
    public:
-      UpdateHandlerImpl(UpdateListener *externalUpdateListener, ScreenDriverFactory *scrDriverFactory,
+
+      ::pointer < UpdateKeeper > m_pupdatekeeperProperty;
+      ::pointer < ScreenDriver > m_pscreendriver;
+      ::pointer < UpdateFilter > m_pupdatefilter;
+      ::pointer < UpdateListener > m_pupdatelistenerExternal;
+
+      ::int_rectangle m_rectangleAbsolute;
+
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
+
+      bool m_fullUpdateRequested;
+
+
+
+      UpdateHandlerImpl(UpdateListener *pupdatelistenerExternal, ScreenDriverFactory *pscreendriverfactory,
                         ::subsystem::LogWriter * plogwriter);
       virtual ~UpdateHandlerImpl();
 
-      virtual void extract(UpdateContainer & updatecontainer);
+      //virtual void extract(UpdateContainer & updatecontainer);
+      virtual UpdateContainer extract();
       virtual void setFullUpdateRequested(const ::remoting::Region & region);
       bool checkForUpdates(::remoting::Region & region);
 
       virtual void setExcludedRegion(const ::remoting::Region & regionExcluded);
 
-   private:
+   //private:
       virtual void executeDetectors();
       virtual void terminateDetectors();
 
       void doUpdate()
       {
-         if (m_externalUpdateListener)
+         if (m_pupdatelistenerExternal)
          {
-            m_externalUpdateListener->onUpdate();
+            m_pupdatelistenerExternal->onUpdate();
          }
       }
 
@@ -62,16 +77,6 @@ namespace remoting
 
       void applyNewScreenProperties();
 
-      UpdateKeeper m_pupdatekeeper;
-      ScreenDriver *m_pscreendriver;
-      UpdateFilter *m_updateFilter;
-      UpdateListener *m_externalUpdateListener;
-
-      ::int_rectangle m_absoluteRect;
-
-      ::pointer < ::subsystem::LogWriter > m_plogwriter;
-
-      bool m_fullUpdateRequested;
    };
 
 

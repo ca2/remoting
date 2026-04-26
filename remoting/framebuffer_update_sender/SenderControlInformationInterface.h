@@ -28,7 +28,8 @@
 namespace remoting
 {
    // Provide necessary information to send a update.
-   class CLASS_DECL_REMOTING  SenderControlInformationInterface
+   class CLASS_DECL_REMOTING  SenderControlInformationInterface :
+   virtual public ::particle
    {
    public:
       virtual void onGetViewPort(::int_rectangle &viewRect, bool *shareApp, ::remoting::Region & regionShareApp) = 0;

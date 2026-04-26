@@ -73,7 +73,7 @@ namespace remoting
                   ::innate_subsystem::Framebuffer *pframebuffer, ::remoting::CursorShape *cursorShape);
       void restoreFramebuffer(::innate_subsystem::Framebuffer *pframebuffer);
 
-      // Returns current cursor position. Beetween
+      // Returns current cursor pointPosition. Beetween
       ::int_point getCurPos();
 
       // Returns background rectangle.
@@ -91,8 +91,8 @@ namespace remoting
       // Clones the internal cursor shape to curShape.
       void extractCursorShape(::remoting::CursorShape *curShape);
 
-      // Check cursor position for changing and store it to the m_cursorPos.
-      // Return true value if cursor position has been changed.
+      // Check cursor pointPosition for changing and store it to the m_cursorPos.
+      // Return true value if cursor pointPosition has been changed.
       bool checkCursorPos(UpdateContainer & updatecontainer, const ::int_rectangle &rectangleViewport, bool curPosBlockingIsIgnored);
 
       // Shortcut function to draw cursor on the frame buffer directly.

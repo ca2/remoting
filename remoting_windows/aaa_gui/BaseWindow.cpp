@@ -255,7 +255,7 @@ bool BaseWindow::wndProc(unsigned int scopedstrMessage, ::wparam wParam, ::lpara
       mouseButtons |= LOWORD(wParam) & MK_MBUTTON ? MOUSE_MDOWN : 0;
       mouseButtons |= LOWORD(wParam) & MK_LBUTTON ? MOUSE_LDOWN : 0;
 
-      // Translate position from ::lparam to POINT.
+      // Translate pointPosition from ::lparam to POINT.
       POINTS points = MAKEPOINTS(lParam);
       POINT point;
       point.x = points.x;

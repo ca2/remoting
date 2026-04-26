@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "../WinDxCriticalException.h"
+#include "remoting/remoting_windows/desktop/WinDxCriticalException.h"
 
 namespace remoting
 {

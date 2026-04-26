@@ -1,8 +1,16 @@
 cmake_minimum_required(VERSION 3.16)
 project(remoting)
 
+set(default_remoting remoting_windows)
+
+
 
 add_subdirectory(remoting)
+
+
+add_subdirectory(${default_remoting})
+
+
 add_subdirectory(client)
 add_subdirectory(control_desktop)
 add_subdirectory(node_desktop)

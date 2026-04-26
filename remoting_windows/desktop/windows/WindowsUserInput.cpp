@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "../WindowsUserInput.h"
+#include "remoting/remoting_windows/desktop/WindowsUserInput.h"
 #include "subsystem/thread/DesktopSelector.h"
 #include "subsystem/node/OperatingSystem.h"
 #include "remoting/remoting/win_system/Keyboard.h"
@@ -126,7 +126,7 @@ namespace remoting
 
       m_prevKeyFlag = keyFlag;
 
-      // Normilize pointer position
+      // Normilize pointer pointPosition
       unsigned short desktopWidth = GetSystemMetrics(SM_CXSCREEN);
       unsigned short desktopHeight = GetSystemMetrics(SM_CYSCREEN);
       int fbOffsetX = GetSystemMetrics(SM_XVIRTUALSCREEN);

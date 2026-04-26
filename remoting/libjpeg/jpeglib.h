@@ -434,7 +434,7 @@ struct jpeg_compress_struct {
   int Ss, Se, Ah, Al;		/* progressive JPEG parameters for scan */
 
   int block_size;		/* the basic DCT block size: 1..16 */
-  const int * natural_order;	/* natural-order position array */
+  const int * natural_order;	/* natural-order pointPosition array */
   int lim_Se;			/* min( Se, DCTSIZE2-1 ) */
 
   /*
@@ -663,7 +663,7 @@ struct jpeg_decompress_struct {
   /* These fields are derived from Se of first SOS marker.
    */
   int block_size;		/* the basic DCT block size: 1..16 */
-  const int * natural_order; /* natural-order position array for entropy decode */
+  const int * natural_order; /* natural-order pointPosition array for entropy decode */
   int lim_Se;			/* min( Se, DCTSIZE2-1 ) for entropy decode */
 
   /* This field is shared between entropy decoder and marker parser.

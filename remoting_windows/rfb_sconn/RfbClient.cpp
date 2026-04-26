@@ -59,7 +59,7 @@ namespace remoting
      m_extAuthListener(pclientauthlistener),
      m_updateSender(0),
      m_clipboardExchange(0),
-     m_clientInputHandler(0),
+     m_pclientinputhandler(0),
      m_id(id),
      m_pdesktop(0),
      m_pviewportConst(constViewPort, log),
@@ -150,7 +150,7 @@ namespace remoting
          throw ::subsystem::Exception("Irrelevant call to RfbClient::setViewOnlyFlag()");
       }
       m_viewOnly = value || m_viewOnlyAuth;
-      m_clientInputHandler->setViewOnlyFlag(m_viewOnly);
+      m_pclientinputhandler->setViewOnlyFlag(m_viewOnly);
    }
 
    void RfbClient::changeDynViewPort(const ViewPortState *dynViewPort)
@@ -233,13 +233,13 @@ namespace remoting
                                            &output, m_id, m_pdesktop, m_plogwriter);
          m_plogwriter->debug("UpdateSender has been created for client #{}", m_id);
          ::innate_subsystem::PixelFormat pixelformat;
-         ::int_size fbDim;
-         m_pdesktop->getFramebufferProperties(&fbDim, &pixelformat);
-         ::int_rectangle rectangleViewport = getViewport(fbDim);
+         ::int_size sizeFramebuffer;
+         m_pdesktop->getFramebufferProperties(&sizeFramebuffer, &pixelformat);
+         ::int_rectangle rectangleViewport = getViewport(sizeFramebuffer);
          m_updateSender->init(::int_size(rectangleViewport.size()), pixelformat);
          m_plogwriter->debug("UpdateSender has been initialized");
          // ClientInputHandler initialization
-         m_clientInputHandler = new ClientInputHandler(&codeRegtor, this,
+         m_pclientinputhandler = new ClientInputHandler(&codeRegtor, this,
                                                        m_viewOnly);
          m_plogwriter->debug("ClientInputHandler has been created");
          // ClipboardExchange initialization
@@ -293,7 +293,7 @@ namespace remoting
       if (fileTransfer)         delete fileTransfer;
       if (echoExtension)        delete echoExtension;
       if (m_clipboardExchange)  delete m_clipboardExchange;
-      if (m_clientInputHandler) delete m_clientInputHandler;
+      if (m_pclientinputhandler) delete m_pclientinputhandler;
       if (m_updateSender)       delete m_updateSender;
 
       // Let the client manager remove us from the client lists.
@@ -342,13 +342,13 @@ namespace remoting
       //        to compute regions on each mouse move.
 
       ::innate_subsystem::PixelFormat pfStub;
-      ::int_size fbDim;
-      m_pdesktop->getFramebufferProperties(&fbDim, &pfStub);
+      ::int_size sizeFramebuffer;
+      m_pdesktop->getFramebufferProperties(&sizeFramebuffer, &pfStub);
 
       ::int_rectangle vp;
       bool shareApp;
       Region sharedRegion;
-      getViewPortInfo(&fbDim, &vp, &shareApp, &sharedRegion);
+      getViewPortInfo(&sizeFramebuffer, &vp, &shareApp, &sharedRegion);
 
       if (!shareApp) {
          sharedRegion.clear();
@@ -388,9 +388,9 @@ namespace remoting
    void RfbClient::onGetViewPort(::int_rectangle &viewRect, bool *shareApp, Region & regionShareApp)
    {
       ::innate_subsystem::PixelFormat pfStub;
-      ::int_size fbDim;
-      m_pdesktop->getFramebufferProperties(&fbDim, &pfStub);
-      getViewPortInfo(&fbDim, viewRect, shareApp, regionShareApp);
+      ::int_size sizeFramebuffer;
+      m_pdesktop->getFramebufferProperties(&sizeFramebuffer, &pfStub);
+      getViewPortInfo(&sizeFramebuffer, viewRect, shareApp, regionShareApp);
    }
 } // namespace remoting
 

@@ -112,8 +112,8 @@ private:
   virtual bool onNotify(int idCtrl, LPNMHDR pnmh);
   virtual bool onSysCommand(::wparam wParam, ::lparam lParam);
   virtual bool onMessage(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam);
-  virtual bool onMouse(unsigned char mouseButtons, unsigned short wheelSpeed, POINT position);
-  virtual bool onMouseEx(unsigned int message, int iButtonMask, unsigned short wspeed, POINT position);
+  virtual bool onMouse(unsigned char mouseButtons, unsigned short wheelSpeed, POINT pointPosition);
+  virtual bool onMouseEx(unsigned int message, int iButtonMask, unsigned short wspeed, POINT pointPosition);
 
 //protected:
   //::operating_system::window m_operatingsystemwindow;

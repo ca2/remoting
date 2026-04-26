@@ -29,10 +29,11 @@
 #include "subsystem/node/ClipboardListener.h"
 #include "DesktopServerProto.h"
 #include "ClientListener.h"
-#include "../desktop/windows/WindowsUserInput.h"
+#include "remoting/remoting/desktop/UserInput.h"
 //#include "acme/parallelization/happening.h"
 #include "acme/parallelization/happening.h"
 #include "DesktopSrvDispatcher.h"
+
 //#include "log_writer/LogWriter.h"
 
 namespace remoting
@@ -69,7 +70,7 @@ namespace remoting
       // At first time server must get init information.
       void serverInit(BlockingGate *pblockinggate);
 
-      ::pointer < WindowsUserInput > m_puserinput;
+      ::pointer < UserInput > m_puserinput;
       // AnEventListener *m_extTerminationListener;
       ::procedure m_procedureTermination;
 

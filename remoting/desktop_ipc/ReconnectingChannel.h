@@ -47,7 +47,7 @@ namespace remoting
       critical_section m_criticalsectionChannel;
 
       ::happening m_happeningTimer;
-      class ::time m_timeOut;
+      class ::time m_timeTimeout;
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
@@ -55,10 +55,11 @@ namespace remoting
 
       //ReconnectingChannel(unsigned int timeOut, ::subsystem::LogWriter * plogwriter);
       ReconnectingChannel();
+      ReconnectingChannel(const class ::time & timeTimeout, ::subsystem::LogWriter * plogwriter);
       ~ReconnectingChannel() override;
 
 
-      virtual void initialize_reconnecting_channel(unsigned int timeOut, ::subsystem::LogWriter * plogwriter);
+      virtual void initialize_reconnecting_channel(const class ::time & timeTimeout, ::subsystem::LogWriter * plogwriter);
 
       memsize read(void *buffer, memsize len) override;
       memsize defer_write(const void *buffer, memsize len) override;

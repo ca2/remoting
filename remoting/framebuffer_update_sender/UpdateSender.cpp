@@ -299,9 +299,9 @@ UpdateSender::UpdateSender() :
    void UpdateSender::sendCursorShapeUpdate(const ::innate_subsystem::PixelFormat &fmt, const CursorShape *cursorShape)
    {
       // Send pseudo-rectangle.
-      ::int_point hotSpot = cursorShape->getHotSpot();
+      ::int_point pointHotspot = cursorShape->getHotSpot();
       ::int_size size = cursorShape->getDimension();
-      sendRectHeader(hotSpot.x, hotSpot.y, size.cx, size.cy, PseudoEncDefs::RICH_CURSOR);
+      sendRectHeader(pointHotspot.x, pointHotspot.y, size.cx, size.cy, PseudoEncDefs::RICH_CURSOR);
 
       ::innate_subsystem::Framebuffer fbConverted;
       fbConverted.setProperties(size, fmt);
@@ -321,7 +321,7 @@ UpdateSender::UpdateSender() :
    void UpdateSender::sendCursorPosUpdate()
    {
       ::int_point pos = m_pcursorupdates->getCurPos();
-      m_plogwriter->debug("Sending cursor position update: ({},{})", pos.x, pos.y);
+      m_plogwriter->debug("Sending cursor pointPosition update: ({},{})", pos.x, pos.y);
       sendRectHeader(pos.x, pos.y, 0, 0, PseudoEncDefs::POINTER_POS);
    }
 
@@ -592,8 +592,8 @@ UpdateSender::UpdateSender() :
          }
 
          // Get the final ::list_base of CopyRect rectangles.
-         ::int_rectangle_array_base rectangleaCopy;
-         updatecontainer.m_regionCopied.getRects(rectangleaCopy);
+         //::int_rectangle_array_base rectangleaCopy;
+         auto rectangleaCopy = updatecontainer.m_regionCopied.getRects();
 
          m_plogwriter->debug("Number of normal rectangles: {}", rectangleaNormal.size());
          m_plogwriter->debug("Number of lossless rectangles: {}", rectangleaLossless.size());
@@ -615,7 +615,7 @@ UpdateSender::UpdateSender() :
          if (updatecontainer.m_bCursorPosChanged)
          {
             numTotalRects++;
-            m_plogwriter->debug("Adding a pseudo-rectangle for cursor position update");
+            m_plogwriter->debug("Adding a pseudo-rectangle for cursor pointPosition update");
          }
          if (updatecontainer.m_bCursorShapeChanged)
          {
@@ -694,8 +694,8 @@ UpdateSender::UpdateSender() :
 
    void UpdateSender::paintBlack(::innate_subsystem::Framebuffer *pframebuffer, const Region & regionBlack)
    {
-      ::int_rectangle_array_base rectangleaBlack;
-      regionBlack.getRects(rectangleaBlack);
+      //::int_rectangle_array_base rectangleaBlack;
+      auto rectangleaBlack = regionBlack.getRects();
       for (size_t i = 0; i < rectangleaBlack.size(); i++)
       {
          pframebuffer->fillRect(rectangleaBlack[i], 0);
@@ -706,8 +706,8 @@ UpdateSender::UpdateSender() :
                                   const ::innate_subsystem::Framebuffer *pframebuffer,
                                   const EncodeOptions *encodeOptions)
    {
-      ::int_rectangle_array_base rectangleaBase;
-      region.getRects(rectangleaBase);
+      //::int_rectangle_array_base rectangleaBase;
+      auto rectangleaBase = region.getRects();
       ::int_rectangle_array_base::iterator i;
       for (i = rectangleaBase.begin(); i != rectangleaBase.end(); i++)
       {
@@ -1049,8 +1049,8 @@ UpdateSender::UpdateSender() :
    Region UpdateSender::takePartFromRegion(Region & region, int area)
    {
       Region out;
-      ::int_rectangle_array_base rectanglea;
-      region.getRects(rectanglea);
+      //::int_rectangle_array_base rectanglea;
+      auto rectanglea = region.getRects();
       // process region rectanglea form last one, I hope it can reduce allocation number for region structure
       for (int i = rectanglea.size() - 1; i >= 0 && area > 0; i--)
       {

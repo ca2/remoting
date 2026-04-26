@@ -63,7 +63,7 @@ namespace remoting
       //auto p =  m_inflater.getOutput();
       //auto p1 =  unpackedData.data();
 
-      ::ByteArrayInputStream unpackedByteArrayStream(unpackedData);
+      ::ByteArrayInputStream unpackedByteArrayStream(this, unpackedData);
       ::DataInputStream unpackedDataStream(&unpackedByteArrayStream);
 
       m_numberFirstByte = 0;

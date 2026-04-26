@@ -25,7 +25,7 @@
 #include "subsystem/platform/Exception.h"
 
 // The header including of this cpp file must be at last place to avoid build conflicts.
-#include "../WinDxgiSurface.h"
+#include "remoting/remoting_windows/desktop/WinDxgiSurface.h"
 
 namespace remoting
 {

@@ -934,7 +934,7 @@ namespace remoting_client
 
     // void ViewerWindow::setSizeFullScreenWindow()
     // {
-    //     // Save position of window.
+    //     // Save pointPosition of window.
     //     GetWindowPlacement(m_hwnd, &m_workArea);
     //
     //     auto fullScreenRect = getFullScreenRect();
@@ -1176,7 +1176,7 @@ namespace remoting_client
     //     //unsigned int isEnable = static_cast<unsigned int>(m_pconnectionconfig->isViewOnly());
     //     //m_menu.enableMenuItem(IDS_TB_TOOLBAR, isEnable);
     //
-    //     //// Restore position, style and exstyle of windowed window.
+    //     //// Restore pointPosition, style and exstyle of windowed window.
     //     //set_style(get_style() | WS_CAPTION | WS_BORDER | WS_THICKFRAME | WS_MAXIMIZEBOX);
     //     set_ex_style(get_ex_style() & ~WS_EX_TOPMOST);
     //     //::int_rectangle workArea;
@@ -1512,7 +1512,7 @@ namespace remoting_client
     //         bool defaultSizeIsChanged = defaultSize.width() != m_rcNormal.width() ||
     //                                     defaultSize.height() != m_rcNormal.height();
     //         // If size is changed, isn't full screen, if window isn't maximized,
-    //         // then set new position and size.
+    //         // then set new pointPosition and size.
     //         if (!m_isFullScr && defaultSizeIsChanged) {
     //             m_rcNormal = defaultSize;
     //             setPosition(m_rcNormal.left, m_rcNormal.top);

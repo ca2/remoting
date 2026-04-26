@@ -48,11 +48,11 @@ namespace remoting
       virtual void setMouseEvent(const ::int_point newPos, unsigned char keyFlag);
       virtual void setKeyboardEvent(unsigned int keySym, bool down);
       virtual void getCurrentUserInfo(::string &desktopName, ::string &userName);
-      virtual void getPrimaryDisplayCoords(::int_rectangle rectangle);
-      virtual void getDisplayNumberCoords(::int_rectangle rectangle, unsigned char dispNumber);
+      virtual void getPrimaryDisplayCoords(::int_rectangle & rectangle);
+      virtual void getDisplayNumberCoords(::int_rectangle & rectangle, unsigned char dispNumber);
       virtual ::int_rectangle_array_base getDisplaysCoords();
-      virtual void getNormalizedRect(::int_rectangle rectangle);
-      virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle rectangle);
+      virtual void getNormalizedRect(::int_rectangle & rectangle);
+      virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rectangle);
       virtual ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName);
       virtual void getApplicationRegion(unsigned int procId, Region & region);
       virtual bool isApplicationInFocus(unsigned int procId);

@@ -2,22 +2,22 @@
 // Created by camilo on 2026-04-04.
 //
 #include "framework.h"
-#include "platform/subsystem.h"
-#include "socket/SocketAddressIPv4.h"
-#include "socket/SocketIPv4.h"
-#include "socket/Sockets.h"
+#include "desktop/windows/DesktopWinImpl.h"
+#include "desktop/windows/Win32ScreenDriverFactory.h"
+#include "desktop/windows/WindowsInputBlocker.h"
+#include "desktop/windows/WindowsUserInput.h"
+#include "remoting/desktop/ApplicationDesktopFactory.h"
 
 
-IMPLEMENT_FACTORY(subsystem_bsd_sockets)
+IMPLEMENT_FACTORY(remoting_windows)
 {
 
-   pfactory->add_factory_item<::subsystem_bsd_sockets::subsystem, ::subsystem::subsystem>();
-   
-   pfactory->add_factory_item<::subsystem_bsd_sockets::SocketAddressIPv4, ::subsystem::SocketAddressIPv4Interface>();
+   pfactory->add_factory_item<::remoting::DesktopWinImpl, ::remoting::Desktop>();
+   pfactory->add_factory_item<::remoting::WindowsUserInput, ::remoting::UserInput>();
+   pfactory->add_factory_item<::remoting::WindowsInputBlocker, ::remoting::InputBlocker>();
 
-   pfactory->add_factory_item<::subsystem_bsd_sockets::SocketIPv4, ::subsystem::SocketIPv4Interface>();
-
-   pfactory->add_factory_item<::subsystem_bsd_sockets::Sockets, ::subsystem::Sockets>();
+   pfactory->add_factory_item<::remoting::ApplicationDesktopFactory, ::remoting::DesktopFactory>();
+   pfactory->add_factory_item<::remoting::Win32ScreenDriverFactory, ::remoting::ScreenDriverFactory>();
 
 }
 

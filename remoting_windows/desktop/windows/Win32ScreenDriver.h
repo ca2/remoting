@@ -24,22 +24,27 @@
 
 #pragma once
 
-#include "remoting/remoting/desktop/windows/_common_header.h"
-#include "Win32ScreenDriverBaseImpl.h"
-#include "../Poller.h"
-#include "../ConsolePoller.h"
-#include "../HooksUpdateDetector.h"
-#include "../WindowsScreenGrabber.h"
+#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_windows/desktop/Win32ScreenDriverBaseImpl.h"
+#include "remoting/remoting/desktop/Poller.h"
+#include "remoting/remoting/desktop/ConsolePoller.h"
+#include "remoting/remoting/desktop/HooksUpdateDetector.h"
+#include "remoting/remoting_windows/desktop/WindowsScreenGrabber.h"
 
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING Win32ScreenDriver : public Win32ScreenDriverBaseImpl
+   class CLASS_DECL_REMOTING_WINDOWS Win32ScreenDriver : public Win32ScreenDriverBaseImpl
    {
    public:
-      Win32ScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ::innate_subsystem::Framebuffer *pframebuffer,
-                        critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter);
-      virtual ~Win32ScreenDriver();
+      //Win32ScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ::innate_subsystem::Framebuffer *pframebuffer,
+        //                critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
+      Win32ScreenDriver();
+      ~Win32ScreenDriver() override;
+
+
+      void initialize_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+                          critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) override;
 
       // Starts screen update detection if it not started yet.
       virtual void executeDetection();

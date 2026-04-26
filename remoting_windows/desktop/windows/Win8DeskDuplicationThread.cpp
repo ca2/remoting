@@ -22,15 +22,14 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "../WinDxRecoverableException.h"
-#include "../WinDxCriticalException.h"
+#include "remoting/remoting_windows/desktop/WinDxRecoverableException.h"
+#include "remoting/remoting_windows/desktop/WinDxCriticalException.h"
 //#include "subsystem/thread/critical_section.h"
+#include "remoting/remoting_windows/desktop/WinDxgiAcquiredFrame.h"
+#include "remoting/remoting_windows/desktop/WinD3D11Texture2D.h"
+#include "remoting/remoting_windows/desktop/WinAutoMapDxgiSurface.h"
+#include "remoting/remoting_windows/desktop/Win8DeskDuplicationThread.h"
 
-#include "../WinDxgiAcquiredFrame.h"
-#include "../WinD3D11Texture2D.h"
-#include "../WinAutoMapDxgiSurface.h"
-
-#include "../Win8DeskDuplicationThread.h"
 
 namespace remoting
 {
@@ -338,7 +337,7 @@ namespace remoting
 
          if (pointerPos.Visible)
          {
-            m_plogwriter->debug("Cursor position chagned");
+            m_plogwriter->debug("Cursor pointPosition chagned");
             ::int_point hotPoint = m_targetCurShape->getCursorShape()->getHotSpot();
             ::int_rectangle targetRect = m_targetRects[out];
             m_duplListener->onCursorPositionChanged(pointerPos.Position.x + targetRect.left + hotPoint.x,

@@ -18,7 +18,7 @@
 
 
 /*
- * jpeg_zigzag_order[i] is the zigzag-order position of the i'th element
+ * jpeg_zigzag_order[i] is the zigzag-order pointPosition of the i'th element
  * of a DCT block read in natural order (left to right, top to bottom).
  */
 
@@ -38,7 +38,7 @@ const int jpeg_zigzag_order[DCTSIZE2] = {
 #endif
 
 /*
- * jpeg_natural_order[i] is the natural-order position of the i'th element
+ * jpeg_natural_order[i] is the natural-order pointPosition of the i'th element
  * of zigzag order.
  *
  * When reading corrupted data, the Huffman decoders could attempt

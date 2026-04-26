@@ -885,7 +885,7 @@ decode_mcu_DC_refine (j_decompress_ptr cinfo, JBLOCKARRAY MCU_data)
   /* Load up working state */
   BITREAD_LOAD_STATE(cinfo, entropy->bitstate);
 
-  p1 = 1 << cinfo->Al;		/* 1 in the bit position being coded */
+  p1 = 1 << cinfo->Al;		/* 1 in the bit pointPosition being coded */
 
   /* Outer loop handles each block in the MCU */
 
@@ -940,8 +940,8 @@ decode_mcu_AC_refine (j_decompress_ptr cinfo, JBLOCKARRAY MCU_data)
   if (! entropy->insufficient_data) {
 
     Se = cinfo->Se;
-    p1 = 1 << cinfo->Al;	/* 1 in the bit position being coded */
-    m1 = -p1;			/* -1 in the bit position being coded */
+    p1 = 1 << cinfo->Al;	/* 1 in the bit pointPosition being coded */
+    m1 = -p1;			/* -1 in the bit pointPosition being coded */
     natural_order = cinfo->natural_order;
 
     /* Load up working state */
@@ -1014,7 +1014,7 @@ decode_mcu_AC_refine (j_decompress_ptr cinfo, JBLOCKARRAY MCU_data)
 	  int pos = natural_order[k];
 	  /* Output newly nonzero coefficient */
 	  (*block)[pos] = (JCOEF) s;
-	  /* Remember its position in case we have to suspend */
+	  /* Remember its pointPosition in case we have to suspend */
 	  newnz_pos[num_newnz++] = pos;
 	}
 	k++;

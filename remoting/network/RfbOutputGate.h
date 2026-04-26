@@ -51,12 +51,15 @@ namespace remoting
        * @param stream real output stream.
        */
       RfbOutputGate();
+      RfbOutputGate(::OutputStream *poutputstream);
 
-      void initialize_rfb_output_gate(::OutputStream *stream);
       /**
        * Deletes rfb output pblockinggate.
        */
       virtual ~RfbOutputGate();
+
+
+      virtual void _initialize_rfb_output_gate(::OutputStream *poutputstream);
 
       /**
        * Flushes inner buffer to real output stream.

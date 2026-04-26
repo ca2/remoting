@@ -26,12 +26,12 @@
 
 
 #include "remoting/remoting/region/Region.h"
-#include "remoting/remoting/desktop/windows/_common_header.h"
+#include "remoting/remoting_windows/_common_header.h"
 
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING Win8DuplicationListener
+   class CLASS_DECL_REMOTING_WINDOWS Win8DuplicationListener
    {
    public:
       // m_regionChanged in target ::innate_subsystem::Framebuffer coordinates.

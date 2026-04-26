@@ -72,7 +72,7 @@ unsigned start;         /* inflate()'s starting value for strm->avail_out */
     unsigned dmask;             /* mask for first level of distance codes */
     code const *here;           /* retrieved table entry */
     unsigned op;                /* code bits, operation, extra bits, or */
-                                /*  window position, window bytes to copy */
+                                /*  window pointPosition, window bytes to copy */
     unsigned len;               /* match length, unused bytes */
     unsigned dist;              /* match distance */
     unsigned char FAR *from;    /* where to copy match from */

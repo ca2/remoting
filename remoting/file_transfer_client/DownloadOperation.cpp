@@ -134,7 +134,7 @@ namespace remoting
             //construct_newø(m_pbinarystream);
 
             m_pwriteable = file()->get_writer(path);
-            // Seek to initial file position to continue writting
+            // Seek to initial file pointPosition to continue writting
             m_pwriteable->set_position((long long)m_fileOffset);
             m_totalBytesCopied += m_fileOffset;
          } catch (::subsystem::Exception &ioEx) {
@@ -162,8 +162,8 @@ namespace remoting
          }
 
          try {
-            DataOutputStream dataoutputstream;
-            dataoutputstream.initialize_data_output_stream(m_pwriteable);
+            DataOutputStream dataoutputstream(m_pwriteable);
+            //dataoutputstream.initialize_data_output_stream(m_pwriteable);
             if (!m_replyBuffer->getDownloadBuffer().empty()) {
                dataoutputstream.write(m_replyBuffer->getDownloadBuffer().data(),
                               m_replyBuffer->getDownloadBufferSize());

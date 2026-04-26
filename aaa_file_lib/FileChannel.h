@@ -30,8 +30,8 @@
 class FileChannel : public Channel
 {
 public:
-  // Set file pointer to specified position starting from current
-  // file pointer position. Can move forward and backward.
+  // Set file pointer to specified pointPosition starting from current
+  // file pointer pointPosition. Can move forward and backward.
   virtual void seek(long long n) = 0;
 };
 

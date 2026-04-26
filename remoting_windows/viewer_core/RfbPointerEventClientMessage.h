@@ -34,7 +34,7 @@ namespace remoting
    class CLASS_DECL_REMOTING RfbPointerEventClientMessage : public RfbClientToServerMessage
    {
    public:
-      RfbPointerEventClientMessage(const unsigned char buttonMask, const ::int_point *position);
+      RfbPointerEventClientMessage(const unsigned char buttonMask, const ::int_point &pointPosition);
       ~RfbPointerEventClientMessage();
 
       void send(RfbOutputGate *output);

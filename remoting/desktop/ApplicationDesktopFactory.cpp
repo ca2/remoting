@@ -23,7 +23,9 @@
 //
 #include "framework.h"
 #include "ApplicationDesktopFactory.h"
-#include "DesktopWinImpl.h"
+
+#include "server_config/Configurator.h"
+//#include "DesktopWinImpl.h"
 
 namespace remoting
 {
@@ -32,15 +34,26 @@ namespace remoting
 
    ApplicationDesktopFactory::~ApplicationDesktopFactory() {}
 
-   ::pointer < Desktop > ApplicationDesktopFactory::createDesktop(::subsystem::ClipboardListener *extClipListener,
-                                                     UpdateSendingListener *extUpdSendingListener,
-                                                     AbnormDeskTermListener *extDeskTermListener,
-                                                     ::subsystem::LogWriter * plogwriter)
+   ::pointer < Desktop > ApplicationDesktopFactory::createDesktop(
+      Configurator * pconfigurator,
+      ::subsystem::ClipboardListener *pclipboardlistenerExternal,
+      UpdateSendingListener *pupdatesendinglistenerExternal,
+      AbnormDeskTermListener *pdesktermlistenerExternal,
+      ::subsystem::LogWriter * plogwriter)
    {
 
-      auto pdesktopwinimpl = create_newø<DesktopWinImpl>();
-      pdesktopwinimpl->initialize_desktop_win_impl(extClipListener, extUpdSendingListener, extDeskTermListener, plogwriter);
-      return pdesktopwinimpl;
+      auto pdesktopImpl = createø<Desktop>();
+
+
+      pdesktopImpl->initialize_desktop(
+         pconfigurator,
+         pclipboardlistenerExternal,
+         pupdatesendinglistenerExternal,
+         pdesktermlistenerExternal,
+         plogwriter);
+
+
+      return pdesktopImpl;
 
    }
 

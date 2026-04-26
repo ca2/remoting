@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "../Win32ScreenDriver.h"
+#include "remoting/remoting_windows/desktop/Win32ScreenDriver.h"
 //#include "subsystem/thread/critical_section.h"
 
 namespace remoting
@@ -30,11 +30,11 @@ namespace remoting
 
 
    Win32ScreenDriver::Win32ScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                                        ::innate_subsystem::Framebuffer *pframebuffer, critical_section *fbcritical_section,
+                                        ::innate_subsystem::Framebuffer *pframebuffer, critical_section *pcriticalsectionFramebuffer,
                                         ::subsystem::LogWriter * plogwriter) :
-       Win32ScreenDriverBaseImpl(pupdatekeeper, pupdatelistener, fbcritical_section, log),
-       m_poller(pupdatekeeper, pupdatelistener, &m_pscreengrabber, pframebuffer, fbcritical_section, log),
-       m_consolePoller(pupdatekeeper, pupdatelistener, &m_pscreengrabber, pframebuffer, fbcritical_section, log),
+       Win32ScreenDriverBaseImpl(pupdatekeeper, pupdatelistener, pcriticalsectionFramebuffer, log),
+       m_poller(pupdatekeeper, pupdatelistener, &m_pscreengrabber, pframebuffer, pcriticalsectionFramebuffer, log),
+       m_consolePoller(pupdatekeeper, pupdatelistener, &m_pscreengrabber, pframebuffer, pcriticalsectionFramebuffer, log),
        m_hooks(pupdatekeeper, pupdatelistener, log)
    {
       // At this point the screen driver has valid screen properties (provides by screen grabber).

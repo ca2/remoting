@@ -41,11 +41,11 @@ namespace remoting
    public:
 
       BlockingGate();
-
+      BlockingGate(Channel * pchannel);
       virtual ~BlockingGate();
 
 
-      virtual void initialize_blocking_gate(Channel * pchannel);
+      virtual void _initialize_blocking_gate(Channel * pchannel);
 
    };
 

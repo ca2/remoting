@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "../Win32MirrorScreenDriver.h"
+#include "remoting/remoting_windows/desktop/Win32MirrorScreenDriver.h"
 #include "subsystem/platform/Exception.h"
 
 
@@ -31,9 +31,9 @@ namespace remoting
 
 
    Win32MirrorScreenDriver::Win32MirrorScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                                                    critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter) :
-       Win32ScreenDriverBaseImpl(pupdatekeeper, pupdatelistener, fbcritical_section, log),
-       m_mirrorDriver(pupdatekeeper, pupdatelistener, fbcritical_section, log)
+                                                    critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) :
+       Win32ScreenDriverBaseImpl(pupdatekeeper, pupdatelistener, pcriticalsectionFramebuffer, log),
+       m_mirrorDriver(pupdatekeeper, pupdatelistener, pcriticalsectionFramebuffer, log)
    {
       // At this point the screen driver has valid screen properties.
    }

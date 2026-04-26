@@ -28,7 +28,8 @@ namespace remoting
 {
 
 
-   class CLASS_DECL_REMOTING  UpdateRequestListener : virtual public ::particle
+   class CLASS_DECL_REMOTING  UpdateRequestListener :
+   virtual public ::particle
    {
    public:
       virtual ~UpdateRequestListener() {}

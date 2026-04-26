@@ -41,9 +41,9 @@ namespace remoting
    virtual public ::particle
    {
    public:
-      // FIXME: Remove m_forwGate from this class.
+      // FIXME: Remove m_pblockinggate from this class.
       // Forward pblockinggate will send requests
-      BlockingGate *m_forwGate;
+      BlockingGate *m_pblockinggate;
       ::pointer < Configurator > m_pconfigurator;
 
 
@@ -57,13 +57,13 @@ namespace remoting
       virtual ::int_size readDimension(BlockingGate *pblockinggate);
       virtual void sendDimension(const ::int_size &size, BlockingGate *pblockinggate);
       virtual ::int_point readPoint(BlockingGate *pblockinggate);
-      virtual void sendPoint(const ::int_point *point, BlockingGate *pblockinggate);
+      virtual void sendPoint(const ::int_point &point, BlockingGate *pblockinggate);
       virtual ::int_rectangle readRect(BlockingGate *pblockinggate);
       virtual void sendRect(const ::int_rectangle & rectangle, BlockingGate *pblockinggate);
       virtual void sendRegion(const ::remoting::Region & region, BlockingGate *pblockinggate);
       virtual void readRegion(::remoting::Region & region, BlockingGate *pblockinggate);
 
-      void sendFramebuffer(const ::innate_subsystem::Framebuffer *pframebufferSource, const ::int_rectangle &srcRect,
+      void sendFramebuffer(const ::innate_subsystem::Framebuffer *pframebufferSource, const ::int_rectangle &rectangleSource,
                            BlockingGate *pblockinggate);
       void readFramebuffer(::innate_subsystem::Framebuffer *pframebufferTarget, const ::int_rectangle &rectangleTarget, BlockingGate *pblockinggate);
 

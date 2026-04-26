@@ -409,7 +409,7 @@ namespace remoting
    }
 
    void RemoteViewerCore::sendPointerEvent(unsigned char buttonMask,
-                                           const ::int_point *position)
+                                           const ::int_point &pointPosition)
    {
       // If core isn't connected, then m_output may be isn't initialized.
       // Exit from function, if it is.
@@ -418,15 +418,15 @@ namespace remoting
       }
 
       m_plogwriter->debug("Sending pointer event 0x%X, ({}, {})...",
-                         static_cast<int>(buttonMask), position->x, position->y);
-      // send position to server
-      RfbPointerEventClientMessage pointerMessage(buttonMask, position);
+                         static_cast<int>(buttonMask), pointPosition.x, pointPosition.y);
+      // send pointPosition to server
+      RfbPointerEventClientMessage pointerMessage(buttonMask, pointPosition);
       pointerMessage.send(m_output);
-      // update position
-      m_fbUpdateNotifier.updatePointerPos(position);
+      // update pointPosition
+      m_fbUpdateNotifier.updatePointerPos(pointPosition);
 
       m_plogwriter->debug("Pointer event: 0x%X, ({}, {}) is sent",
-                        static_cast<int>(buttonMask), position->x, position->y);
+                        static_cast<int>(buttonMask), pointPosition.x, pointPosition.y);
    }
 
    void RemoteViewerCore::sendCutTextEvent(const ::scoped_string & cutText)
@@ -1149,19 +1149,19 @@ namespace remoting
                bitmask.resize(bitmaskLen);
                m_input->readFully(bitmask.data(), bitmaskLen);
             }
-            ::int_point hotSpot(rectangle.left, rectangle.top);
+            ::int_point pointHotspot(rectangle.left, rectangle.top);
 
             m_plogwriter->debug("Setting new rich cursor...");
-            m_fbUpdateNotifier.setNewCursor(&hotSpot, width, height,
+            m_fbUpdateNotifier.setNewCursor(&pointHotspot, width, height,
                                             &cursor, &bitmask);
          }
             break;
 
          case PseudoEncDefs::POINTER_POS:
          {
-            m_plogwriter->debug("Updating pointer position: [{}, {}]", rectangle.left, rectangle.top);
-            ::int_point position(rectangle.left, rectangle.top);
-            m_fbUpdateNotifier.updatePointerPos(&position);
+            m_plogwriter->debug("Updating pointer pointPosition: [{}, {}]", rectangle.left, rectangle.top);
+            ::int_point pointPosition(rectangle.left, rectangle.top);
+            m_fbUpdateNotifier.updatePointerPos(&pointPosition);
          }
             break;
 

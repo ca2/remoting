@@ -30,7 +30,7 @@ namespace remoting
 {
 
 
-   //DesktopServerProto::DesktopServerProto(BlockingGate *pblockinggate) : m_forwGate(pblockinggate) {}
+   //DesktopServerProto::DesktopServerProto(BlockingGate *pblockinggate) : m_pblockinggate(pblockinggate) {}
 
    DesktopServerProto::DesktopServerProto()
    {
@@ -45,7 +45,7 @@ namespace remoting
    {
 
       m_pconfigurator = pconfigurator;
-      m_forwGate=pblockinggate;
+      m_pblockinggate=pblockinggate;
 
    }
 
@@ -135,10 +135,10 @@ namespace remoting
       return point;
    }
 
-   void DesktopServerProto::sendPoint(const ::int_point *point, BlockingGate *pblockinggate)
+   void DesktopServerProto::sendPoint(const ::int_point &point, BlockingGate *pblockinggate)
    {
-      pblockinggate->writeInt32(point->x);
-      pblockinggate->writeInt32(point->y);
+      pblockinggate->writeInt32(point.x);
+      pblockinggate->writeInt32(point.y);
    }
 
    ::int_rectangle DesktopServerProto::readRect(BlockingGate *pblockinggate)
@@ -163,9 +163,9 @@ namespace remoting
 
    void DesktopServerProto::sendRegion(const Region & region, BlockingGate *pblockinggate)
    {
-      ::int_rectangle_array_base rectanglea;
+      //::int_rectangle_array_base rectanglea;
       ::int_rectangle_array_base::iterator iRect;
-      region.getRects(rectanglea);
+      auto rectanglea = region.getRects();
 
       unsigned int numRects = (unsigned int)rectanglea.size();
       _ASSERT(numRects == rectanglea.size());
@@ -193,15 +193,15 @@ namespace remoting
    }
 
    void DesktopServerProto::sendFramebuffer(const ::innate_subsystem::Framebuffer *pframebufferSource,
-                                            const ::int_rectangle &srcRect, BlockingGate *pblockinggate)
+                                            const ::int_rectangle &rectangleSource, BlockingGate *pblockinggate)
    {
       // FIXME: Additional ::innate_subsystem::Framebuffer will be used temporarily.
       // This is easy way to send all pixels.
       ::innate_subsystem::PixelFormat pixelformat = pframebufferSource->getPixelFormat();
       auto pframebuffer = createø<::innate_subsystem::Framebuffer>();
 
-      pframebuffer->setProperties(srcRect, pixelformat);
-      pframebuffer->copyFrom(pframebufferSource, srcRect.left, srcRect.top);
+      pframebuffer->setProperties(rectangleSource, pixelformat);
+      pframebuffer->copyFrom(pframebufferSource, rectangleSource.left, rectangleSource.top);
 
       pblockinggate->write(pframebuffer->getBuffer(), pframebuffer->getBufferSize());
    }
@@ -231,7 +231,7 @@ namespace remoting
 
    void DesktopServerProto::sendNewPointerPos(const ::int_point newPos, unsigned char keyFlag, BlockingGate *pblockinggate)
    {
-      // Send pointer position
+      // Send pointer pointPosition
       pblockinggate->writeUInt16(newPos.x);
       pblockinggate->writeUInt16(newPos.y);
       // Send key flags
@@ -240,7 +240,7 @@ namespace remoting
 
    void DesktopServerProto::readNewPointerPos(::int_point *newPos, unsigned char *keyFlag, BlockingGate *pblockinggate)
    {
-      // Read pointer position
+      // Read pointer pointPosition
       newPos->x = pblockinggate->readUInt16();
       newPos->y = pblockinggate->readUInt16();
       // Read key flags
@@ -274,25 +274,25 @@ namespace remoting
 
    void DesktopServerProto::sendConfigSettings(BlockingGate *pblockinggate)
    {
-      auto srvConf = m_pconfigurator->getServerConfig();
+      auto pserverconfig = m_pconfigurator->getServerConfig();
 
       // Log
-      pblockinggate->writeUInt32(srvConf->getLogLevel());
+      pblockinggate->writeUInt32(pserverconfig->getLogLevel());
 
       // Polling
-      pblockinggate->writeUInt32(srvConf->getPollingInterval());
-      pblockinggate->writeUInt8(srvConf->getGrabTransparentWindowsFlag());
+      pblockinggate->writeUInt32(pserverconfig->getPollingInterval());
+      pblockinggate->writeUInt8(pserverconfig->getGrabTransparentWindowsFlag());
 
       //
-      pblockinggate->writeUInt8(srvConf->isBlockingLocalInput());
-      pblockinggate->writeUInt8(srvConf->isLocalInputPriorityEnabled());
-      pblockinggate->writeUInt32(srvConf->getLocalInputPriorityTimeout());
+      pblockinggate->writeUInt8(pserverconfig->isBlockingLocalInput());
+      pblockinggate->writeUInt8(pserverconfig->isLocalInputPriorityEnabled());
+      pblockinggate->writeUInt32(pserverconfig->getLocalInputPriorityTimeout());
 
-      pblockinggate->writeUInt8(srvConf->isRemovingDesktopWallpaperEnabled());
+      pblockinggate->writeUInt8(pserverconfig->isRemovingDesktopWallpaperEnabled());
 
       // Send video class names
-      AutoLock al(srvConf);
-      ::string_array *wndClassNames = srvConf->getVideoClassNames();
+      AutoLock al(pserverconfig);
+      ::string_array *wndClassNames = pserverconfig->getVideoClassNames();
       ::string_array::iterator iter = wndClassNames->begin();
       size_t stringCount = wndClassNames->size();
       pblockinggate->writeUInt32((unsigned int)stringCount);
@@ -301,7 +301,7 @@ namespace remoting
          pblockinggate->writeUTF8((*iter));
       }
       // Send video rectanglea
-      ::int_rectangle_array_base *Rects = srvConf->getVideoRects();
+      ::int_rectangle_array_base *Rects = pserverconfig->getVideoRects();
       size_t size = Rects->size();
       pblockinggate->writeUInt32((unsigned int)size);
       for (size_t i = 0; i < size; i++)
@@ -311,37 +311,37 @@ namespace remoting
          pblockinggate->writeUTF8(s);
       }
       // Send video recognition interval
-      pblockinggate->writeUInt32(srvConf->getVideoRecognitionInterval());
+      pblockinggate->writeUInt32(pserverconfig->getVideoRecognitionInterval());
       // Send socket timeout
-      pblockinggate->writeUInt32(srvConf->getIdleTimeout());
+      pblockinggate->writeUInt32(pserverconfig->getIdleTimeout());
    }
 
    void DesktopServerProto::readConfigSettings(BlockingGate *pblockinggate)
    {
-      ServerConfig *srvConf = m_pconfigurator->getServerConfig();
+      ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
 
       // Log
-      srvConf->setLogLevel(pblockinggate->readUInt32());
+      pserverconfig->setLogLevel(pblockinggate->readUInt32());
 
       // Polling
-      srvConf->setPollingInterval(pblockinggate->readUInt32());
-      srvConf->setGrabTransparentWindowsFlag(pblockinggate->readUInt8() != 0);
+      pserverconfig->setPollingInterval(pblockinggate->readUInt32());
+      pserverconfig->setGrabTransparentWindowsFlag(pblockinggate->readUInt8() != 0);
 
-      srvConf->blockLocalInput(pblockinggate->readUInt8() != 0);
-      srvConf->setLocalInputPriority(pblockinggate->readUInt8() != 0);
-      srvConf->setLocalInputPriorityTimeout(pblockinggate->readUInt32());
+      pserverconfig->blockLocalInput(pblockinggate->readUInt8() != 0);
+      pserverconfig->setLocalInputPriority(pblockinggate->readUInt8() != 0);
+      pserverconfig->setLocalInputPriorityTimeout(pblockinggate->readUInt32());
 
-      srvConf->enableRemovingDesktopWallpaper(pblockinggate->readUInt8() != 0);
+      pserverconfig->enableRemovingDesktopWallpaper(pblockinggate->readUInt8() != 0);
 
       // Receive video class names
-      AutoLock al(srvConf);
+      AutoLock al(pserverconfig);
       size_t stringCount = pblockinggate->readUInt32();
 
       ::string tmpString;
       for (size_t i = 0; i < stringCount; i++)
       {
          tmpString= pblockinggate->readUtf8();
-         srvConf->getVideoClassNames()->add(tmpString);
+         pserverconfig->getVideoClassNames()->add(tmpString);
       }
       // Receive video rectanglea
       stringCount = pblockinggate->readUInt32();
@@ -350,13 +350,13 @@ namespace remoting
       for (size_t i = 0; i < stringCount; i++)
       {
          tmpString = pblockinggate->readUtf8();
-         srvConf->getVideoRects()->add(RectSerializer::toRect(tmpString));
+         pserverconfig->getVideoRects()->add(RectSerializer::toRect(tmpString));
       }
 
       // Receive video recognition interval
-      srvConf->setVideoRecognitionInterval(pblockinggate->readUInt32());
+      pserverconfig->setVideoRecognitionInterval(pblockinggate->readUInt32());
       // Receive socket timeout
-      srvConf->setIdleTimeout(pblockinggate->readUInt32());
+      pserverconfig->setIdleTimeout(pblockinggate->readUInt32());
    }
 
 

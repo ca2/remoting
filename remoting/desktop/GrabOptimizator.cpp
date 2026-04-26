@@ -50,8 +50,8 @@ namespace remoting
       // Vgrab - is a grab velocity,
       // N - is number of rectangles to grab,
       // g - overhead time costs adding on each grabbed rectangle.
-      ::int_rectangle_array_base rectanglea;
-      regionGrab.getRects(rectanglea);
+      //::int_rectangle_array_base rectanglea;
+      auto rectanglea = regionGrab.getRects();
       ::int_rectangle rectangleBounds = regionGrab.getBounds();
       int boundsRectS = rectangleBounds.area();
       size_t n = rectanglea.size();

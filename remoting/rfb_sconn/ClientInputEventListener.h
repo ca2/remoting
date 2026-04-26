@@ -31,7 +31,8 @@
 namespace remoting
 {
 
-   class ClientInputEventListener
+   class ClientInputEventListener :
+   virtual public ::particle
    {
    public:
       virtual void onKeyboardEvent(unsigned int keySym, bool down) = 0;

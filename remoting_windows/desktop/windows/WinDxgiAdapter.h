@@ -24,8 +24,8 @@
 
 #pragma once
 
-#include "remoting/remoting/desktop/windows/_common_header.h"
-#include "WinDxgiDevice.h"
+#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_windows/desktop/WinDxgiDevice.h"
 
 
 namespace remoting
@@ -33,7 +33,7 @@ namespace remoting
    // #include aaa_<d3d11.h>
    // #include aaa_<DXGI1_2.h>
 
-   class CLASS_DECL_REMOTING WinDxgiAdapter
+   class CLASS_DECL_REMOTING_WINDOWS WinDxgiAdapter
    {
    public:
       WinDxgiAdapter(WinDxgiDevice *winDxgiDevice);

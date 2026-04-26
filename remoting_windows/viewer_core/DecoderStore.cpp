@@ -64,7 +64,7 @@ namespace remoting
    ::array_base<int> DecoderStore::getDecoderIds()
    {
       // this method returned ::list_base of decoders, sorted by priority.
-      // in first position is preffered encoding.
+      // in first pointPosition is preffered encoding.
       ::array_base<::pair<int, int> > decoders;
 
       for (::map<int, ::pair <int, Decoder *> >::iterator i = m_decoders.begin();

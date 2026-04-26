@@ -985,7 +985,7 @@ ZEXTERN int ZEXPORT inflatePrime OF((z_streamp strm,
                                      int value));
 /*
      This function inserts bits in the inflate input stream.  The intent is
-   that this function is used to start inflating at a bit position in the
+   that this function is used to start inflating at a bit pointPosition in the
    middle of a byte.  The provided bits will be used before any bytes are used
    from next_in.  This function should only be used with raw inflate, and
    should be used before the first inflate() call after inflateInit2() or
@@ -1010,7 +1010,7 @@ ZEXTERN long ZEXPORT inflateMark OF((z_streamp strm));
    If the upper value is -1 and the lower value is non-zero, then inflate is in
    the middle of a stored block, with the lower value equaling the number of
    bytes from the input remaining to copy.  If the upper value is not -1, then
-   it is the number of bits back from the current bit position in the input of
+   it is the number of bits back from the current bit pointPosition in the input of
    the code (literal or length/distance ::pair) currently being processed.  In
    that case the lower value is the number of bytes already emitted for that
    code.
@@ -1548,7 +1548,7 @@ ZEXTERN int ZEXPORT gzflush OF((gzFile file, int flush));
 ZEXTERN z_off_t ZEXPORT gzseek OF((gzFile file,
                                    z_off_t offset, int whence));
 
-     Set the starting position to offset relative to whence for the next gzread
+     Set the starting pointPosition to offset relative to whence for the next gzread
    or gzwrite on file.  The offset represents a number of bytes in the
    uncompressed data stream.  The whence parameter is defined as in lseek(2);
    the value SEEK_END is not supported.
@@ -1556,12 +1556,12 @@ ZEXTERN z_off_t ZEXPORT gzseek OF((gzFile file,
      If the file is opened for reading, this function is emulated but can be
    extremely slow.  If the file is opened for writing, only forward seeks are
    supported; gzseek then compresses a sequence of zeroes up to the new
-   starting position.
+   starting pointPosition.
 
      gzseek returns the resulting offset location as measured in bytes from
    the beginning of the uncompressed stream, or -1 in case of error, in
-   particular if the file is opened for writing and the new starting position
-   would be before the current position.
+   particular if the file is opened for writing and the new starting pointPosition
+   would be before the current pointPosition.
 */
 
 ZEXTERN int ZEXPORT    gzrewind OF((gzFile file));
@@ -1574,8 +1574,8 @@ ZEXTERN int ZEXPORT    gzrewind OF((gzFile file));
 /*
 ZEXTERN z_off_t ZEXPORT    gztell OF((gzFile file));
 
-     Return the starting position for the next gzread or gzwrite on file.
-   This position represents a number of bytes in the uncompressed data stream,
+     Return the starting pointPosition for the next gzread or gzwrite on file.
+   This pointPosition represents a number of bytes in the uncompressed data stream,
    and is zero when starting, even if appending or reading a gzip stream from
    the middle of a file using gzdopen().
 

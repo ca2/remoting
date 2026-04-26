@@ -24,21 +24,21 @@
 
 #pragma once
 
-#include "remoting/remoting/desktop/windows/_common_header.h"
-#include "../DesktopFactory.h"
+#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting/desktop/DesktopFactory.h"
 
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING WinServiceDesktopFactory : public DesktopFactory
+   class CLASS_DECL_REMOTING_WINDOWS WinServiceDesktopFactory : public DesktopFactory
    {
    public:
       WinServiceDesktopFactory();
       ~WinServiceDesktopFactory();
 
-      virtual Desktop *createDesktop(::subsystem::ClipboardListener *extClipListener,
-                                     UpdateSendingListener *extUpdSendingListener,
-                                     AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter * plogwriter);
+      virtual Desktop *createDesktop(::subsystem::ClipboardListener *pclipboardlistenerExternal,
+                                     UpdateSendingListener *pupdatesendinglistenerExternal,
+                                     AbnormDeskTermListener *pdesktermlistenerExternal, ::subsystem::LogWriter * plogwriter);
    };
 
 

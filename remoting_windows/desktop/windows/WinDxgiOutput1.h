@@ -26,8 +26,8 @@
 
 
 
-#include "remoting/remoting/desktop/windows/_common_header.h"
-#include "WinDxgiOutput.h"
+#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_windows/desktop/WinDxgiOutput.h"
 
 // #include aaa_<d3d11.h>
 // #include aaa_<DXGI1_2.h>
@@ -37,7 +37,7 @@ namespace remoting
 {
 
 
-   class CLASS_DECL_REMOTING WinDxgiOutput1
+   class CLASS_DECL_REMOTING_WINDOWS WinDxgiOutput1
    {
    public:
       WinDxgiOutput1(WinDxgiOutput *dxgiOutput);

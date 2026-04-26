@@ -90,8 +90,8 @@ virtual bool _001OnMouseEx(unsigned int uMessage, int iButtonMask, const ::int_p
                            const ::int_point &pointClient, bool &bDoDefaultProcessing);
       //virtual bool _000OnMouse(bool bPress, const ::int_point& pointRoot, const ::int_point& pointClient);
       //virtual bool _001OnMouse(bool bPress, const ::int_point& pointRoot, const ::int_point& pointClient);
-      virtual bool on_left_down(const ::int_point& position);
-      virtual bool on_left_up(const ::int_point& position);
+      virtual bool on_left_down(const ::int_point& pointPosition);
+      virtual bool on_left_up(const ::int_point& pointPosition);
       virtual void __000OnTopDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle);
       virtual void __000OnDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle);
       virtual void __001OnDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle);
@@ -124,7 +124,7 @@ virtual bool _001OnMouseEx(unsigned int uMessage, int iButtonMask, const ::int_p
 
       //::int_rectangle m_rectangleMinimizeDash;
 
-      //bool on_mouse(bool bPress, const ::int_point& position);
+      //bool on_mouse(bool bPress, const ::int_point& pointPosition);
       //void on_draw(DeviceContext *dc);
 
        bool m_bPressed;
@@ -136,8 +136,8 @@ virtual bool _001OnMouseEx(unsigned int uMessage, int iButtonMask, const ::int_p
 
      
 
-      bool on_left_down(const ::int_point& position) override;
-      bool on_left_up(const ::int_point& position) override;
+      bool on_left_down(const ::int_point& pointPosition) override;
+      bool on_left_up(const ::int_point& pointPosition) override;
 
    };
 
@@ -166,7 +166,7 @@ virtual bool _001OnMouseEx(unsigned int uMessage, int iButtonMask, const ::int_p
       virtual void on_size();
       void on_hover() override;
       void on_hover_off() override;
-      //bool on_mouse(bool bPress, const ::int_point& position);
+      //bool on_mouse(bool bPress, const ::int_point& pointPosition);
       void __001OnDraw(::innate_subsystem::GraphicsInterface *pgraphics, const ::int_rectangle & rectangle) override;
       bool on_button_click(enum_id eid) override;
       bool _001OnMouseEx(unsigned int uMessage, int iButtonMask, const ::int_point &pointRoot,

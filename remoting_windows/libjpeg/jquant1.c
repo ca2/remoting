@@ -117,7 +117,7 @@ static const unsigned char base_dither_matrix[ODITHER_SIZE][ODITHER_SIZE] = {
  * current column.  (If we are lucky, those variables are in registers, but
  * even if not, they're probably cheaper to access than array elements are.)
  *
- * The fserrors[] array is indexed [component#][position].
+ * The fserrors[] array is indexed [component#][pointPosition].
  * We provide (#columns + 2) entries per component; the extra entry at each
  * end saves us from special-casing the first and last pixels.
  *

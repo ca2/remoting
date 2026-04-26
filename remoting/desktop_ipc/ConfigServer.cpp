@@ -32,7 +32,7 @@ namespace remoting
 
 
    // ConfigServer::ConfigServer(DesktopSrvDispatcher * pdispatcher, ::subsystem::LogWriter * plogwriter) :
-   //     DesktopServerProto(0), m_deskConf(plogwriter)
+   //     DesktopServerProto(0), m_pdesktopconfigclient(plogwriter)
    // {
    //    dispatcher->registerNewHandle(CONFIG_RELOAD_REQ, this);
    //    dispatcher->registerNewHandle(SOFT_INPUT_ENABLING_REQ, this);

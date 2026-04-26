@@ -45,7 +45,7 @@ namespace remoting
       void addEncCap(unsigned int code, const char *vendorSignature, const char *nameSignature);
 
    private:
-      RfbDispatcher *m_dispatcher;
+      RfbDispatcher *m_pdesktopsrvdispatcher;
       CapContainer *m_srvToClCaps;
       CapContainer *m_clToSrvCaps;
       CapContainer *m_encCaps;

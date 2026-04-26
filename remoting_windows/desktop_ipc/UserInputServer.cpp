@@ -61,19 +61,19 @@ namespace remoting
    UserInputServer::~UserInputServer()
    {
       m_plogwriter->debug("The UserInputServer destructor has been called");
-      //delete m_userInput;
+      //delete m_puserinput;
    }
 
    void UserInputServer::onClipboardUpdate(const ::scoped_string &newClipboard)
    {
-      critical_section_lock al(m_forwGate);
+      critical_section_lock al(m_pblockinggate);
       try
       {
          // Send clipboard data
          if (newClipboard.has_character())
          {
-            m_forwGate->writeUInt8(CLIPBOARD_CHANGED);
-            sendNewClipboard(newClipboard, m_forwGate);
+            m_pblockinggate->writeUInt8(CLIPBOARD_CHANGED);
+            sendNewClipboard(newClipboard, m_pblockinggate);
          }
       }
       catch (::exception &e)

@@ -163,22 +163,22 @@
 //   TCHAR *find(const ::scoped_string & scopedstrSubstr);
 //
 //   //
-//   // Returns first position of character in string if found,
+//   // Returns first pointPosition of character in string if found,
 //   // -1 otherwise.
 //   //
 //
 //   size_t findChar(const TCHAR c);
 //
 //   //
-//   // Returns first position of any character that string argument have.
+//   // Returns first pointPosition of any character that string argument have.
 //   //
 //
 //   size_t findOneOf(const ::scoped_string & scopedstrString);
 //
 //   /**
-//    * Finds last position of specified character in this string.
+//    * Finds last pointPosition of specified character in this string.
 //    * @param c character to find.
-//    * @return last position of character in this string or -1 if not found.
+//    * @return last pointPosition of character in this string or -1 if not found.
 //    */
 //   size_t findLast(const TCHAR c);
 //

@@ -65,7 +65,7 @@ namespace remoting
 
       bool posChanged = updatecontainer.m_bCursorPosChanged;
       // The posChanged and updatecontainer.m_bCursorPosChanged flags has different
-      // purpose. The posChanged will be always raised if position real changed
+      // purpose. The posChanged will be always raised if pointPosition real changed
       // but the updatecontainer.m_bCursorPosChanged flag can be raised only cursor pos
       // is not blocked.
       if (posChanged)
@@ -129,7 +129,7 @@ namespace remoting
       else if (fullRegReq)
       {
          m_plogwriter->debug("Raising m_bCursorPosChanged (full region requested)");
-         // ignore cursor position changing blocking on full request
+         // ignore cursor pointPosition changing blocking on full request
          checkCursorPos(updatecontainer, rectangleViewport, true);
          updatecontainer.m_bCursorPosChanged = true;
       }
@@ -171,8 +171,8 @@ namespace remoting
       rectangle.set_top_left(m_pointBackground.x, m_pointBackground.y);
       updatecontainer.m_regionChanged.addRect(rectangle);
       // Keep the current background rectangle.
-      ::int_point hotSpot = m_cursorShape.getHotSpot();
-      m_pointBackground.set(m_cursorPos.x - hotSpot.x, m_cursorPos.y - hotSpot.y);
+      ::int_point pointHotspot = m_cursorShape.getHotSpot();
+      m_pointBackground.set(m_cursorPos.x - pointHotspot.x, m_cursorPos.y - pointHotspot.y);
       m_shapeBackground.setProperties(m_cursorShape.getDimension(), m_cursorShape.getPixelFormat());
       // Keep background under cursor shape to can reconstruct full image.
       m_shapeBackground.copyFrom(pframebuffer, m_pointBackground.x, m_pointBackground.y);
@@ -218,7 +218,7 @@ namespace remoting
       {
          m_cursorPos = cursorPos;
       }
-      m_plogwriter->debug("CursorUpdates::checkCursorPos cursor position {:pn}, changed:{}", m_cursorPos, positionChanged);
+      m_plogwriter->debug("CursorUpdates::checkCursorPos cursor pointPosition {:pn}, changed:{}", m_cursorPos, positionChanged);
       return positionChanged;
    }
 

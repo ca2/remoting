@@ -549,7 +549,7 @@ void FileTransferRequestHandler::uploadStartRequested()
   }
 
   //
-  // Trying to open file and seek to initial file position
+  // Trying to open file and seek to initial file pointPosition
   //
   m_fileOutputStream = new WinFileChannel(fullPathName.getString(),
                                           F_WRITE,
@@ -722,7 +722,7 @@ void FileTransferRequestHandler::downloadStartRequested()
 
   //
   // Try to open file for reading and seek to initial
-  // file position.
+  // file pointPosition.
   //
 
   m_fileInputStream = new WinFileChannel(fullPathName.getString(), F_READ,

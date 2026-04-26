@@ -26,7 +26,7 @@
 
 
 // The header including of this cpp file must be at last place to avoid build conflicts.
-#include "../WinD3D11Device.h"
+#include "remoting/remoting_windows/desktop/WinD3D11Device.h"
 
 namespace remoting
 {
@@ -132,14 +132,14 @@ namespace remoting
    ID3D11DeviceContext *WinD3D11Device::getContext() { return m_context; }
 
    void WinD3D11Device::copySubresourceRegion(ID3D11Texture2D *dstTexture2D, int dstX, int dstY,
-                                              ID3D11Texture2D *srcTexture2D, const ::int_rectangle &srcRect,
+                                              ID3D11Texture2D *srcTexture2D, const ::int_rectangle &rectangleSource,
                                               unsigned int front, unsigned int back)
    {
       D3D11_BOX box;
-      box.left = srcRect.left;
-      box.top = srcRect.top;
-      box.right = srcRect.right;
-      box.bottom = srcRect.bottom;
+      box.left = rectangleSource.left;
+      box.top = rectangleSource.top;
+      box.right = rectangleSource.right;
+      box.bottom = rectangleSource.bottom;
       box.front = front;
       box.back = back;
       m_context->CopySubresourceRegion(dstTexture2D, 0, dstX, dstY, 0, srcTexture2D, 0, &box);

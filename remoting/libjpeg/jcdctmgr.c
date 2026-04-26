@@ -66,7 +66,7 @@ typedef union {
  * Perform forward DCT on one or more blocks of a component.
  *
  * The input samples are taken from the sample_data[] array starting at
- * position start_col, and moving to the right for any additional blocks.
+ * pointPosition start_col, and moving to the right for any additional blocks.
  * The quantized coefficients are returned in coef_blocks[].
  */
 

@@ -24,9 +24,9 @@
 
 #pragma once
 
-#include "remoting/remoting/desktop/windows/_common_header.h"
-#include "../UserInput.h"
-//#include "WindowsClipboard.h"
+#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting/desktop/UserInput.h"
+//#include "remoting/remoting_windows/desktop/WindowsClipboard.h"
 #include "subsystem/platform/Keymap.h"
 #include "subsystem/node/InputInjector.h"
 #include "subsystem/node/Displays.h"
@@ -36,16 +36,16 @@
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING WindowsUserInput : public UserInput
+   class CLASS_DECL_REMOTING_WINDOWS WindowsUserInput : public UserInput
    {
    public:
       //WindowsUserInput(::subsystem::ClipboardListener *pclipboardlistener, bool ctrlAltDelEnabled,
         //               ::subsystem::LogWriter * plogwriter);
       WindowsUserInput();
-      virtual ~WindowsUserInput(void);
+      ~WindowsUserInput() override;
 
-      virtual void initialize_windows_user_input(::subsystem::ClipboardListener *pclipboardlistener, bool ctrlAltDelEnabled,
-                 ::subsystem::LogWriter * plogwriter);
+      void initialize_user_input(::subsystem::ClipboardListener *pclipboardlistener, bool ctrlAltDelEnabled,
+                 ::subsystem::LogWriter * plogwriter) override;
 
       virtual void setNewClipboard(const ::scoped_string &newClipboard);
       virtual void setMouseEvent(const ::int_point newPos, unsigned char keyFlag);
@@ -61,7 +61,7 @@ namespace remoting
       virtual void getApplicationRegion(unsigned int procId, ::remoting::Region & region);
       virtual bool isApplicationInFocus(unsigned int procId);
 
-      virtual void initKeyFlag(unsigned char initValue) { m_prevKeyFlag = initValue; }
+      void initKeyFlag(unsigned char initValue) override { m_prevKeyFlag = initValue; }
 
    //protected:
       void toFbCoordinates(::int_rectangle & rectangle);

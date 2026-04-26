@@ -42,7 +42,12 @@ namespace remoting
    {
    public:
       UserInput();
-      virtual ~UserInput();
+      ~UserInput() override;
+
+
+      virtual void initialize_user_input(::subsystem::ClipboardListener *pclipboardlistener, bool ctrlAltDelEnabled,
+                 ::subsystem::LogWriter * plogwriter);
+
 
       // FIXME: It's no good idea to place this function to here.
       // Because it uses only for the UserInputClient class.
@@ -66,6 +71,8 @@ namespace remoting
 
       virtual void getApplicationRegion(unsigned int procId, ::remoting::Region & region) = 0;
       virtual bool isApplicationInFocus(unsigned int procId) = 0;
+
+      virtual void initKeyFlag(unsigned char initValue);
 
 
    };

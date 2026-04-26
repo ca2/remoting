@@ -39,13 +39,18 @@ namespace remoting
    // the applyNewScreenProperties() function has been called, internal frame buffer will be changed
    // with the frame buffer invalidation and a new getScreenBuffer() call is required to get a valid
    // frame buffer.
-   class CLASS_DECL_REMOTING ScreenDriver
+   class CLASS_DECL_REMOTING ScreenDriver :
+      virtual public ::particle
    {
    public:
       // Derived constructors will ensure that the getScreenBuffer() returns
       // a frame buffer with valid screen properties.
 
       virtual ~ScreenDriver() {}
+
+
+      virtual void initialize_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+                                critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) = 0;
 
       // Starts screen update detection if it not started yet.
       virtual void executeDetection() = 0;
@@ -86,7 +91,7 @@ namespace remoting
       // Returns a pointer an internal screen driver CursorShape
       virtual const ::remoting::CursorShape *getCursorShape() = 0;
 
-      // Returns current cursor position coordinates which is relative to frame buffer coordinates.
+      // Returns current cursor pointPosition coordinates which is relative to frame buffer coordinates.
       // Implementions will ensure that this function is thread safety.
       virtual ::int_point getCursorPosition() = 0;
 

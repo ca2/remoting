@@ -36,7 +36,7 @@ Function DoPrimes
 
 ; we put this in here so it doesn't update the progress bar (faster)
 
-!define PPOS $0 ; position in prime searching
+!define PPOS $0 ; pointPosition in prime searching
 !define PDIV $1 ; divisor
 !define PMOD $2 ; the result of the modulus
 !define PCNT $3 ; count of how many we've printed

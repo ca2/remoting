@@ -74,10 +74,10 @@ namespace remoting
 
    void RfbInitializer::initialize_rfb_initializer(Channel * pchannel, ClientAuthListener *pclientauthlistener, RfbClient *prfbclient, bool bAuthAllowed)
    {
-      construct_newø(m_pdataoutputstream);
-      m_pdataoutputstream->initialize_data_output_stream(pchannel);
-      construct_newø(m_pdatainputstream);
-      m_pdatainputstream->initialize_data_input_stream(pchannel);
+      raw_construct_newø(m_pdataoutputstream, pchannel);
+      //m_pdataoutputstream->initialize_data_output_stream(pchannel);
+      raw_construct_newø(m_pdatainputstream, pchannel);
+      //m_pdatainputstream->initialize_data_input_stream(pchannel);
       m_pclientauthlistener = pclientauthlistener;
       m_prfbclient = prfbclient;
       m_bAuthAllowed = bAuthAllowed;
@@ -142,11 +142,11 @@ namespace remoting
 
       bool isLoopback = psockAddr->isLoopbackAddress();
 
-      ServerConfig *srvConf = m_pconfigurator->getServerConfig();
-      if (isLoopback && !srvConf->isLoopbackConnectionsAllowed()) {
+      ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
+      if (isLoopback && !pserverconfig->isLoopbackConnectionsAllowed()) {
          throw ::subsystem::Exception("Sorry, loopback connections are not enabled");
       }
-      if (srvConf->isOnlyLoopbackConnectionsAllowed() && !isLoopback) {
+      if (pserverconfig->isOnlyLoopbackConnectionsAllowed() && !isLoopback) {
          throw ::subsystem::Exception("Your connection has been rejected");
       }
    }
@@ -207,9 +207,9 @@ namespace remoting
       checkForBan();
 
       // Comparing the challenge with the response.
-      ServerConfig *srvConf = m_pconfigurator->getServerConfig();
-      bool hasPrim = srvConf->hasPrimaryPassword();
-      bool hasRdly = srvConf->hasReadOnlyPassword();
+      ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
+      bool hasPrim = pserverconfig->hasPrimaryPassword();
+      bool hasRdly = pserverconfig->hasReadOnlyPassword();
 
       if (!hasPrim && !hasRdly) {
          throw AuthException("Server is not configured properly");
@@ -217,7 +217,7 @@ namespace remoting
 
       if (hasPrim) {
          unsigned char crypPrimPass[8];
-         srvConf->getPrimaryPassword(crypPrimPass);
+         pserverconfig->getPrimaryPassword(crypPrimPass);
          ::subsystem::VncPassCrypt passCrypt;
          passCrypt.updatePlain(crypPrimPass);
          if (passCrypt.challengeAndResponseIsValid(challenge, response)) {
@@ -226,7 +226,7 @@ namespace remoting
       }
       if (hasRdly) {
          unsigned char crypReadOnlyPass[8];
-         srvConf->getReadOnlyPassword(crypReadOnlyPass);
+         pserverconfig->getReadOnlyPassword(crypReadOnlyPass);
          ::subsystem::VncPassCrypt passCrypt;
          passCrypt.updatePlain(crypReadOnlyPass);
          if (passCrypt.challengeAndResponseIsValid(challenge, response)) {

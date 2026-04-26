@@ -24,8 +24,8 @@
 
 #pragma once
 
-#include "remoting/remoting/desktop/windows/_common_header.h"
-#include "../WinD3D11Texture2D.h"
+#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_windows/desktop/WinD3D11Texture2D.h"
 
 // #include aaa_<d3d11.h>
 // #include aaa_<DXGI1_2.h>
@@ -39,7 +39,7 @@ namespace remoting
    // This class  is a part of Win8DeskDuplication. This means that WinCustomD3D11Texture2D
    // is not an independed unit and it is designed to use only in Win8DeskDuplication.
    // This is a Win8DeskDuplication helper to custom appropriate textures.
-   class CLASS_DECL_REMOTING WinCustomD3D11Texture2D
+   class CLASS_DECL_REMOTING_WINDOWS WinCustomD3D11Texture2D
    {
    public:
       // Initializes ID3D11Texture2D compatible to textures returned from the AcquireNextFrame() function.
@@ -57,7 +57,7 @@ namespace remoting
 
 
    private:
-      class CLASS_DECL_REMOTING Texture2DDescInitializer
+      class CLASS_DECL_REMOTING_WINDOWS Texture2DDescInitializer
       {
       public:
          Texture2DDescInitializer(unsigned int width, unsigned int height, DXGI_MODE_ROTATION rotation);

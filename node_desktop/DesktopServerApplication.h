@@ -82,12 +82,12 @@ namespace remoting_node_desktop
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
       // Transport
-      ::subsystem::AnonymousPipe *m_clToSrvChan;
-      ::subsystem::AnonymousPipe *m_srvToClChan;
-      ::remoting::BlockingGate *m_clToSrvGate;
-      ::remoting::BlockingGate *m_srvToClGate;
+      ::subsystem::AnonymousPipe *m_pchannelClientToServer;
+      ::subsystem::AnonymousPipe *m_pchannelServerToClient;
+      ::remoting::BlockingGate *m_pgateClientToServer;
+      ::remoting::BlockingGate *m_pgateServerToClient;
 
-      ::remoting::DesktopSrvDispatcher *m_dispatcher;
+      ::remoting::DesktopSrvDispatcher *m_pdesktopsrvdispatcher;
 
       // Servers
       ::remoting::UpdateHandlerServer *m_updHandlerSrv;

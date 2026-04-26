@@ -38,10 +38,11 @@ namespace remoting
    public:
       //BlockingInputGate(InputStream *inputStream);
       BlockingInputGate();
+      BlockingInputGate(InputStream *pinputstream);
       ~BlockingInputGate() override;
 
 
-      virtual void initialize_blocking_input_gate(InputStream *inputStream);
+      virtual void _initialize_blocking_input_gate(InputStream *pinputstream);
 
 
    };

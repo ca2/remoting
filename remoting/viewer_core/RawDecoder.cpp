@@ -67,7 +67,7 @@ namespace remoting
                                      pframebuffer, secondFramebuffer, deltaRect, fbLock,
                                      fbNotifier);
 
-         // Increment position of rectangle.
+         // Increment pointPosition of rectangle.
          deltaRect.offset(0, deltaHeight);
       }
 

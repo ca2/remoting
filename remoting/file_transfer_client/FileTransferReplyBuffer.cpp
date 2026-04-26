@@ -126,14 +126,14 @@ namespace  remoting
 
             // FIXME: type conversion in C-style
 
-            ::ByteArrayInputStream memoryInputStream;
+            ::ByteArrayInputStream memoryInputStream(this, {buffer.data(), uncompressedSize});
 
-            memoryInputStream.initialize_byte_array_input_stream(buffer.data(), uncompressedSize);
+            //memoryInputStream.initialize_byte_array_input_stream(buffer.data(), uncompressedSize);
 
 
-            ::DataInputStream filesInfoReader;
+            ::DataInputStream filesInfoReader(&memoryInputStream);
 
-            filesInfoReader.initialize_data_input_stream(&memoryInputStream);
+            //filesInfoReader.initialize_data_input_stream(&memoryInputStream);
 
             // if (m_filesInfo != 0) {
             //    delete[] m_filesInfo;

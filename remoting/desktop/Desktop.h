@@ -42,6 +42,14 @@ namespace remoting
    public:
       virtual ~Desktop() {}
 
+
+      virtual void initialize_desktop(
+         Configurator * pconfigurator,
+         ::subsystem::ClipboardListener *pclipboardlistenerExternal,
+         UpdateSendingListener *pupdatesendinglistenerExternal,
+         AbnormDeskTermListener *pdesktermlistenerExternal,
+         ::subsystem::LogWriter * plogwriter) = 0;
+
       // Puts a current desktop name from working session to the
       // desktopName argument and an user name to userMame.
       virtual void getCurrentUserInfo(::string &desktopName, ::string &userName) = 0;

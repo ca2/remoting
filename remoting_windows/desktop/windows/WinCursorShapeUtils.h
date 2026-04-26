@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include "remoting/remoting/desktop/windows/_common_header.h"
+#include "remoting/remoting_windows/_common_header.h"
 #include "innate_subsystem/framebuffer/Framebuffer.h"
 // #include aaa_<DXGI1_2.h>
 //#include aaa_<vector>
@@ -34,7 +34,7 @@ namespace remoting
 {
 
    // This class  provides some functions to work with windows cursor shape data.
-   class CLASS_DECL_REMOTING WinCursorShapeUtils
+   class CLASS_DECL_REMOTING_WINDOWS WinCursorShapeUtils
    {
    public:
       WinCursorShapeUtils();

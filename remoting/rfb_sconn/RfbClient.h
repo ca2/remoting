@@ -56,27 +56,18 @@ namespace remoting
       IN_READY_TO_REMOVE
     };
 
+   class rfb_client_run;
+
    // FIXME: Document it, i understand nothing from such kind of description.
-   class RfbClient: public ::subsystem::Thread, ClientInputEventListener, private SenderControlInformationInterface
+   class CLASS_DECL_REMOTING RfbClient:
+      virtual public ::subsystem::Thread,
+      virtual public ClientInputEventListener,
+      virtual public SenderControlInformationInterface
    {
    public:
 
 
-      class rfb_client_run :
-      virtual public ::particle
-      {
-      public:
 
-         ::pointer < RfbOutputGate > m_prfboutputgate;
-         ::pointer < BufferedInputStream > m_pbufferedinput;
-         ::pointer < RfbInputGate > m_prfbinputgate;
-
-         ::pointer < FileTransferRequestHandler > m_pfiletransfer;
-         ::pointer < EchoExtensionRequestHandler > m_pechoextension;
-
-         ::pointer < RfbInitializer > m_prfbinitializer;
-
-      };
       ::pointer < rfb_client_run > m_prun;
       ClientState m_clientState;
       bool m_isMarkedOk;
@@ -93,9 +84,9 @@ namespace remoting
       ::pointer < Viewport > m_pviewportDynamic;
       critical_section m_criticalsectionViewport;
 
-      ::pointer < UpdateSender > m_updateSender;
-      ::pointer < ClipboardExchange > m_clipboardExchange;
-      ::pointer < ClientInputHandler > m_clientInputHandler;
+      ::pointer < UpdateSender > m_pupdatesender;
+      ::pointer < ClipboardExchange > m_pclipboardexchange;
+      ::pointer < ClientInputHandler > m_pclientinputhandler;
       ::pointer < Desktop > m_pdesktop;
 
       bool m_viewOnly;
@@ -148,7 +139,7 @@ namespace remoting
       // Changes current dynViewPort value by new.
       void changeDynViewPort(const ViewPortState *dynViewPort);
 
-      bool clientIsReady() const { return m_updateSender->clientIsReady(); }
+      bool clientIsReady() const { return m_pupdatesender->clientIsReady(); }
       void sendUpdate(const UpdateContainer & updatecontainer,
                       const ::remoting::CursorShape *cursorShape);
       void sendClipboard(const ::scoped_string & newClipboard);

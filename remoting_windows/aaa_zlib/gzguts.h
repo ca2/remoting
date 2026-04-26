@@ -172,7 +172,7 @@ typedef struct {
     struct gzFile_s x;      /* "x" for exposed */
                             /* x.have: number of bytes available at x.next */
                             /* x.next: next output data to deliver or write */
-                            /* x.pos: current position in uncompressed data */
+                            /* x.pos: current pointPosition in uncompressed data */
         /* used for both reading and writing */
     int mode;               /* see gzip modes above */
     int fd;                 /* file descriptor */

@@ -34,15 +34,15 @@ namespace remoting
 
    void UpdateHandler::initFramebuffer(const ::innate_subsystem::Framebuffer *newFb)
    {
-      critical_section_lock al(&m_criticalsectionFramebufferLoc);
-      m_backupFramebuffer.clone(newFb);
+      critical_section_lock al(&m_criticalsectionFramebuffer);
+      m_pframebufferBackup->clone(newFb);
    }
 
    bool UpdateHandler::updateExternalFramebuffer(::innate_subsystem::Framebuffer *pframebuffer, const Region & pregion,
                                                  const ::int_rectangle &rectangleViewport)
    {
-      critical_section_lock al(&m_criticalsectionFramebufferLoc);
-      return updateExternalFramebuffer(pframebuffer, &m_backupFramebuffer, pregion, rectangleViewport);
+      critical_section_lock al(&m_criticalsectionFramebuffer);
+      return updateExternalFramebuffer(pframebuffer, m_pframebufferBackup, pregion, rectangleViewport);
    }
 
    bool UpdateHandler::updateExternalFramebuffer(::innate_subsystem::Framebuffer *pframebufferTarget,
@@ -62,9 +62,9 @@ namespace remoting
          return false;
       }
 
-      ::int_rectangle_array_base rectanglea;
+      //::int_rectangle_array_base rectanglea;
       //::int_rectangle_array_base::iterator iRect;
-      region.getRects(rectanglea);
+      auto rectanglea = region.getRects();
 
       for (auto & rectangle : rectanglea)
       {

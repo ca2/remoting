@@ -137,7 +137,7 @@ start_pass_coef (j_compress_ptr cinfo, J_BUF_MODE pass_mode)
  * Returns TRUE if the iMCU row is completed, FALSE if suspended.
  *
  * NB: input_buf contains a plane for each component in image,
- * which we index according to the component's SOF position.
+ * which we index according to the component's SOF pointPosition.
  */
 
 METHODDEF(boolean)

@@ -30,7 +30,7 @@ namespace remoting
                                           CapContainer *srvToClCaps,
                                           CapContainer *clToSrvCaps,
                                           CapContainer *encCaps)
-   : m_dispatcher(dispatcher),
+   : m_pdesktopsrvdispatcher(dispatcher),
      m_srvToClCaps(srvToClCaps),
      m_clToSrvCaps(clToSrvCaps),
      m_encCaps(encCaps)
@@ -43,7 +43,7 @@ namespace remoting
 
    void RfbCodeRegistrator::regCode(unsigned int code, RfbDispatcherListener *listener)
    {
-      m_dispatcher->registerNewHandle(code, listener);
+      m_pdesktopsrvdispatcher->registerNewHandle(code, listener);
    }
 
    void RfbCodeRegistrator::addSrvToClCap(unsigned int code, const char *vendorSignature,

@@ -33,6 +33,7 @@
 #include "AbnormDeskTermListener.h"
 #include "UpdateSendingListener.h"
 #include "subsystem/node/ClipboardListener.h"
+#include "acme/parallelization/happening.h"
 
 namespace remoting
 {
@@ -45,14 +46,41 @@ namespace remoting
    virtual public ConfigReloadListener
    {
    public:
-      ///DesktopBaseImpl(ClipboardListener *extClipListener, UpdateSendingListener *extUpdSendingListener,
-         //             AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter * plogwriter);
+
+
+      Region m_regionFullReq;
+      critical_section m_criticalsectionReqReg;
+
+      ::pointer < UpdateHandler > m_pupdatehandler;
+
+      // A derived class CLASS_DECL_REMOTING thread control.
+      ::happening m_happeningNewUpdate;
+
+      ::pointer < UserInput > m_puserinput;
+
+      // Clipboard
+      ::string m_strReceivedClipboard;
+      critical_section m_storedClipCritSec;
+
+      // External listeners
+      ::pointer < UpdateSendingListener > m_pupdatesendinglistenerExternal;
+      ::pointer < AbnormDeskTermListener > m_pdesktermlistenerExternal;
+      ::pointer < ClipboardListener >     m_pclipboardlistenerExternal;
+
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
+
+
+
+      ///DesktopBaseImpl(ClipboardListener *pclipboardlistenerExternal, UpdateSendingListener *pupdatesendinglistenerExternal,
+         //             AbnormDeskTermListener *pdesktermlistenerExternal, ::subsystem::LogWriter * plogwriter);
       DesktopBaseImpl();
       ~DesktopBaseImpl() override;
 
 
-      void initialize_desktop_base_impl(::subsystem::ClipboardListener *extClipListener, UpdateSendingListener *extUpdSendingListener,
-                      AbnormDeskTermListener *extDeskTermListener, ::subsystem::LogWriter * plogwriter);
+      void initialize_desktop_base_impl(Configurator * pconfigurator,
+         ::subsystem::ClipboardListener *pclipboardlistenerExternal,
+         UpdateSendingListener *pupdatesendinglistenerExternal,
+                      AbnormDeskTermListener *pdesktermlistenerExternal, ::subsystem::LogWriter * plogwriter);
 
 
       // Puts a current desktop name from working session to the
@@ -96,26 +124,7 @@ namespace remoting
 
       void sendUpdate();
 
-      Region m_fullReqRegion;
-      critical_section m_reqRegMutex;
 
-      UpdateHandler *m_updateHandler;
-
-      // A derived class CLASS_DECL_REMOTING thread control.
-      ::happening m_newUpdateEvent;
-
-      UserInput *m_userInput;
-
-      // Clipboard
-      ::string m_receivedClip;
-      critical_section m_storedClipCritSec;
-
-      // External listeners
-      UpdateSendingListener *m_extUpdSendingListener;
-      AbnormDeskTermListener *m_extDeskTermListener;
-      ClipboardListener *m_extClipListener;
-
-      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

@@ -43,6 +43,9 @@ namespace remoting
                            // AnEventListener *m_extTerminationListener,
         //                   const ::procedure &procedureDesktopSrvDispatcher, ::subsystem::LogWriter * plogwriter);
       DesktopSrvDispatcher();
+      DesktopSrvDispatcher(BlockingGate *pblockinggate,
+       //AnEventListener *m_extTerminationListener,
+                         const ::procedure &procedureDesktopSrvDispatcher, ::subsystem::LogWriter * plogwriter);
       virtual ~DesktopSrvDispatcher();
       virtual void initialize_desktop_srv_dispatcher(BlockingGate *pblockinggate,
                            // AnEventListener *m_extTerminationListener,

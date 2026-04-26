@@ -24,36 +24,40 @@
 
 #pragma once
 
-#include "remoting/remoting/desktop/windows/_common_header.h"
-#include "../ScreenDriverFactory.h"
+#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting/desktop/ScreenDriverFactory.h"
 #include "remoting/remoting/server_config/ServerConfig.h"
 
 
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING Win32ScreenDriverFactory : public ScreenDriverFactory
+   class CLASS_DECL_REMOTING_WINDOWS Win32ScreenDriverFactory :
+   virtual public ScreenDriverFactory
    {
    public:
       // The factory stores pointer to a ServerConfig object and will use it on
       // createScreenDriver() function calls.
-      Win32ScreenDriverFactory(ServerConfig *srvConf);
-      virtual ~Win32ScreenDriverFactory();
+      //Win32ScreenDriverFactory(ServerConfig *pserverconfig);
+      Win32ScreenDriverFactory();
+      ~Win32ScreenDriverFactory() override;
 
-      virtual ScreenDriver *createScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+      void initialize_screen_driver_factory(ServerConfig *pserverconfig) override;
+
+      ScreenDriver *createScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
                                                ::innate_subsystem::Framebuffer *pframebuffer,
-                                               critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter);
+                                               critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) override;
    private:
       ScreenDriver *createStandardScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
                                                ::innate_subsystem::Framebuffer *pframebuffer,
-                                               critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter);
+                                               critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
       ScreenDriver *createMirrorScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                                             critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter);
+                                             critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
 
       bool isMirrorDriverAllowed();
       bool isD3DAllowed();
 
-      ServerConfig *m_srvConf;
+      ::pointer < ServerConfig > m_pserverconfig;
    };
 
    //// __WIN32SCREENDRIVERFACTORY_H__

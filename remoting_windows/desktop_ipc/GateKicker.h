@@ -47,7 +47,7 @@ namespace remoting
       virtual void onTerminate();
    //private:
       BlockingGate *m_pblockinggate;
-      ::happening m_sleeper;
+      ::happening m_happeningSleeper;
    };
 
 

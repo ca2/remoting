@@ -40,10 +40,10 @@ public:
   // Adds new item to the end of combo box items ::list_base.
   int addItem(const ::scoped_string & scopedstrText, void *tag);
 
-  // Inserts new item to the specified position
+  // Inserts new item to the specified pointPosition
   void insertItem(int index, const ::scoped_string & scopedstrText);
 
-  // Inserts new item to the specified position
+  // Inserts new item to the specified pointPosition
   void insertItem(int index, const ::scoped_string & scopedstrText, void *tag);
 
   // Returns count of combo box items

@@ -25,7 +25,7 @@
 #include "MirrorDriverClient.h"
 #include "subsystem/platform/Exception.h"
 #include "subsystem/node/OperatingSystem.h"
-// FIXME: Why the class CLASS_DECL_REMOTING should depence from the remoting_node_desktop project?
+// FIXME: Why the class CLASS_DECL_REMOTING_WINDOWS should depence from the remoting_node_desktop project?
 #include "remoting/node_desktop/NamingDefs.h"
 
 namespace remoting

@@ -24,12 +24,12 @@
 
 #pragma once
 
-#include "remoting/remoting/desktop/windows/_common_header.h"
-#include "UpdateKeeper.h"
-#include "UpdateListener.h"
+#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting/desktop/UpdateKeeper.h"
+#include "remoting/remoting/desktop/UpdateListener.h"
 #include "innate_subsystem/framebuffer/Framebuffer.h"
 #include "subsystem/platform/RegistryKey.h"
-#include "DisplayEsc.h"
+#include "remoting/remoting/desktop/DisplayEsc.h"
 #include "subsystem/node/Screen.h"
 #include "subsystem/platform/WindowMessageHandler.h"
 #include "innate_subsystem/gui/MessageWindow.h"
@@ -40,7 +40,7 @@
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING MirrorDriverClient :
+   class CLASS_DECL_REMOTING_WINDOWS MirrorDriverClient :
       virtual public ::subsystem::GuiThread,
       virtual public ::subsystem::WindowMessageHandler
    {

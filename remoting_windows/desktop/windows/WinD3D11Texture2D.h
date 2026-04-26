@@ -24,14 +24,14 @@
 
 #pragma once
 
-#include "remoting/remoting/desktop/windows/_common_header.h"
+#include "remoting/remoting_windows/_common_header.h"
 namespace remoting
 {
 
    // #include aaa_<d3d11.h>
    // #include aaa_<DXGI1_2.h>
 
-   class CLASS_DECL_REMOTING WinD3D11Texture2D
+   class CLASS_DECL_REMOTING_WINDOWS WinD3D11Texture2D
    {
    public:
       WinD3D11Texture2D(ID3D11Device *device, const D3D11_TEXTURE2D_DESC *deskTexture);

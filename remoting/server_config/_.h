@@ -7,7 +7,7 @@ namespace remoting
 {
 
    class Configurator;
-
+   class ServerConfig;
 
 }
 

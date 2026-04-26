@@ -35,16 +35,24 @@ namespace remoting
 
 {
 
-   class CLASS_DECL_REMOTING ScreenDriverFactory
+   class CLASS_DECL_REMOTING ScreenDriverFactory :
+   virtual public ::particle
    {
    public:
+
+      ScreenDriverFactory();
+      ~ScreenDriverFactory() override;
+
+
+      virtual void initialize_screen_driver_factory(ServerConfig *pserverconfig);
+
       virtual ScreenDriver *createScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
                                                ::innate_subsystem::Framebuffer *pframebuffer,
-                                               critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter) = 0;
-   private:
+                                               critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) = 0;
+   //private:
    };
 
-   //// __SCREENDRIVERFACTORY_H__
+   ////// __SCREENDRIVERFACTORY_H__
 
 
 } // namespace remoting

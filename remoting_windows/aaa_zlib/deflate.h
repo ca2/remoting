@@ -152,7 +152,7 @@ typedef struct internal_state {
      */
 
     long block_start;
-    /* Window position at the beginning of the current output block. Gets
+    /* Window pointPosition at the beginning of the current output block. Gets
      * negative when the window is moved backwards.
      */
 

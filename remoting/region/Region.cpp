@@ -157,7 +157,7 @@ namespace remoting
    }
 
    // FIXME: Optimize, make BoxRec and ::int_rectangle identical to get rid of conversions.
-   void Region::getRects(::int_rectangle_array_base & rectanglea) const
+   void Region::_getRects(::int_rectangle_array_base & rectanglea) const
    {
 
       rectanglea.clear();

@@ -57,11 +57,11 @@ namespace remoting
       void receiveFullReqReg(BlockingGate *pblockinggate);
       void receiveExcludingReg(BlockingGate *pblockinggate);
 
-      Win32ScreenDriverFactory m_scrDriverFactory;
+      Win32ScreenDriverFactory m_pscreendriverfactory;
 
-      ::innate_subsystem::PixelFormat m_oldPf;
+      ::innate_subsystem::PixelFormat m_pixelformatOld;
 
-      UpdateHandlerImpl *m_updateHandler;
+      UpdateHandlerImpl *m_pupdatehandler;
       // AnEventListener *m_extTerminationListener;
       ::procedure m_procedureTermination;
 

@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "DesktopConfigLocal.h"
 #include "remoting/remoting/server_config/Configurator.h"
-#include "windows/WindowsInputBlocker.h"
+//#include "windows/WindowsInputBlocker.h"
 
 namespace remoting
 {
@@ -45,20 +45,20 @@ namespace remoting
    {
       m_plogwriter = plogwriter;
       m_pconfigurator = pconfigurator;
-      m_pinputblocker = create_newø<WindowsInputBlocker >();
+constructø(      m_pinputblocker);
       m_pinputblocker->initialize_input_blocker(plogwriter);
 
    }
 
    void DesktopConfigLocal::updateByNewSettings()
    {
-      ServerConfig *srvConf = m_pconfigurator->getServerConfig();
-      bool hardBlocking = srvConf->isBlockingLocalInput();
+      ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
+      bool hardBlocking = pserverconfig->isBlockingLocalInput();
       m_pinputblocker->setKeyboardBlocking(hardBlocking);
       m_pinputblocker->setMouseBlocking(hardBlocking);
 
-      bool softBlocking = srvConf->isLocalInputPriorityEnabled();
-      unsigned int interval = srvConf->getLocalInputPriorityTimeout() * 1000;
+      bool softBlocking = pserverconfig->isLocalInputPriorityEnabled();
+      unsigned int interval = pserverconfig->getLocalInputPriorityTimeout() * 1000;
       m_pinputblocker->setSoftKeyboardBlocking(softBlocking, interval);
       m_pinputblocker->setSoftMouseBlocking(softBlocking, interval);
    }

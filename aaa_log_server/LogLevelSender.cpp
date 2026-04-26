@@ -47,7 +47,7 @@ void LogLevelSender::startSender(OutputStream *outStream)
 
 void LogLevelSender::onTerminate()
 {
-  m_sleeper.notify();
+  m_happeningSleeper.notify();
 }
 
 void LogLevelSender::updateLevel(unsigned char newLevel)
@@ -58,14 +58,14 @@ void LogLevelSender::updateLevel(unsigned char newLevel)
   if (m_logLevel > 10) {
     m_logLevel = 10;
   }
-  m_sleeper.notify();
+  m_happeningSleeper.notify();
 }
 
 void LogLevelSender::execute()
 {
   try {
     while (!isTerminating()) {
-      m_sleeper.waitForEvent();
+      m_happeningSleeper.waitForEvent();
       OutputStream *outStream;
       bool updateAvailable;
       unsigned char logLevel;

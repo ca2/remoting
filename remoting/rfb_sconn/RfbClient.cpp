@@ -36,6 +36,8 @@
 #include "remoting/remoting/server/NewConnectionEvents.h"
 #include "acme/input_output/BufferedInputStream.h"
 #include "subsystem/platform/MemUsage.h"
+#include "subsystem/socket/SocketStream.h"
+
 
 namespace remoting
 {
@@ -59,9 +61,9 @@ namespace remoting
      m_isMarkedOk(false),
      m_pclientterminationlistener(pclientterminationlistener),
      m_pclientauthlistener(pclientauthlistener),
-     m_updateSender(0),
-     m_clipboardExchange(0),
-     m_clientInputHandler(0),
+     //m_updateSender(0),
+     //m_clipboardExchange(0),
+     //m_pclientinputhandler(0),
      m_id(id),
      m_pdesktop(0),
      m_demandtimerIdle(idleTimeout), m_idleTimeout(idleTimeout),
@@ -169,7 +171,7 @@ namespace remoting
          throw ::subsystem::Exception("Irrelevant call to RfbClient::setViewOnlyFlag()");
       }
       m_viewOnly = value || m_viewOnlyAuth;
-      m_clientInputHandler->setViewOnlyFlag(m_viewOnly);
+      m_pclientinputhandler->setViewOnlyFlag(m_viewOnly);
    }
 
    void RfbClient::changeDynViewPort(const ViewPortState *dynViewPort)
@@ -189,6 +191,54 @@ namespace remoting
       disconnect();
    }
 
+   class rfb_client_run :
+      virtual public ::particle
+   {
+   public:
+
+      ::pointer < RfbClient > m_prfbclient;
+
+      ::pointer < ::subsystem::SocketStream >  m_psockstream;
+
+      ::pointer < RfbOutputGate > m_prfboutputgate;
+      ::pointer < BufferedInputStream > m_pbufferedinput;
+      ::pointer < RfbInputGate > m_prfbinputgate;
+
+      ::pointer < FileTransferRequestHandler > m_pfiletransfer;
+      ::pointer < EchoExtensionRequestHandler > m_pechoextension;
+
+      ::pointer < RfbInitializer > m_prfbinitializer;
+
+      CapContainer srvToClCaps, clToSrvCaps, encCaps;
+
+      ::pointer < RfbDispatcher > m_prfbdispatcher;
+      auto_pointer < RfbCodeRegistrator > m_prfbcoderegistrator;
+
+
+      ::innate_subsystem::PixelFormat m_pixelformat;
+      ::int_size m_sizeFramebuffer;
+      ::int_rectangle m_rectangleViewport;
+
+
+      rfb_client_run(RfbClient * prfbclient):
+      m_prfbclient(prfbclient)
+      {
+
+
+
+         initialize(m_prfbclient);
+
+         raw_construct_newø(m_psockstream, m_prfbclient->m_psocket);
+         raw_construct_newø(m_prfboutputgate, m_psockstream);
+         raw_construct_newø(m_pbufferedinput, m_psockstream);
+         raw_construct_newø(m_prfbinputgate, m_pbufferedinput);
+         raw_construct_newø(m_prfbinitializer, m_prfbclient->m_pclientauthlistener, m_prfbclient, !m_prfbclient->m_isOutgoing);
+
+      }
+
+
+   };
+
    void RfbClient::execute()
    {
       // Initialized by default scopedstrMessage that will be logged on normal way
@@ -201,39 +251,39 @@ namespace remoting
 
       auto pserverconfig = m_pconfigurator->getServerConfig();
 
-      construct_newø(m_prun);
+      raw_construct_newø(m_prun, this);
 
-      ::subsystem::SocketStream sockStream(m_psocket);
-
-      construct_newø(m_prun->m_prfboutputgate);
-
-      RfbOutputGate output(&sockStream);
-      BufferedInputStream bufInput(&sockStream);
-      RfbInputGate input(&bufInput);
+      // ::subsystem::SocketStream sockStream(m_psocket);
+      //
+      // construct_newø(m_prun->m_prfboutputgate);
+      //
+      // RfbOutputGate output(&sockStream);
+      // BufferedInputStream bufInput(&sockStream);
+      // RfbInputGate input(&bufInput);
 
       FileTransferRequestHandler *fileTransfer = 0;
       EchoExtensionRequestHandler *echoExtension = 0;
 
-      RfbInitializer rfbInitializer(&sockStream, m_extAuthListener, this,
-                                    !m_isOutgoing);
+//      RfbInitializer rfbInitializer(&sockStream, m_pclientauthlistener, this,
+  //                                  !m_isOutgoing);
 
       try {
          // First initialization phase
          try {
             m_plogwriter->information("Entering RFB initialization phase 1");
-            rfbInitializer.authPhase();
+            m_prun->m_prfbinitializer->authPhase();
             setClientState(IN_AUTH);
             m_plogwriter->debug("RFB initialization phase 1 completed");
 
-            m_shared = rfbInitializer.getSharedFlag();
+            m_shared = m_prun->m_prfbinitializer->getSharedFlag();
             m_plogwriter->debug("Shared flag = {}", (int)m_shared);
-            m_viewOnlyAuth = rfbInitializer.getViewOnlyAuth();
+            m_viewOnlyAuth = m_prun->m_prfbinitializer->getViewOnlyAuth();
             m_plogwriter->debug("Initial view-only state = {}", (int)m_viewOnly);
             m_plogwriter->debug("Authenticated with view-only password = {}", (int)m_viewOnlyAuth);
             m_viewOnly = m_viewOnly || m_viewOnlyAuth;
 
             // Let RfbClientManager handle new authenticated connection.
-            m_pdesktop = m_extAuthListener->onClientAuth(this);
+            m_pdesktop = m_pclientauthlistener->onClientAuth(this);
 
             m_plogwriter->information("View only = {}", (int)m_viewOnly);
          } catch (::exception &e) {
@@ -245,24 +295,24 @@ namespace remoting
          m_pviewportConst->initDesktopInterface(m_pdesktop);
          m_pviewportDynamic->initDesktopInterface(m_pdesktop);
 
-         RfbDispatcher dispatcher(&input, &m_connClosingEvent);
+         raw_construct_newø(m_prun->m_prfbdispatcher, m_prun->m_prfbinputgate, &m_connClosingEvent);
          m_plogwriter->debug("Dispatcher has been created");
-         CapContainer srvToClCaps, clToSrvCaps, encCaps;
-         RfbCodeRegistrator codeRegtor(&dispatcher, &srvToClCaps, &clToSrvCaps,
-                                       &encCaps);
+         raw_construct_newø(m_prun->m_prfbcoderegistrator,m_prun->m_prfbdispatcher,
+            &m_prun->srvToClCaps, &m_prun->clToSrvCaps,
+                                       &m_prun->encCaps);
          // Init modules
          // UpdateSender initialization
-         m_updateSender = new UpdateSender(&codeRegtor, m_pdesktop, this,
-                                           &output, m_id, m_pdesktop, m_plogwriter);
+         m_updateSender = new UpdateSender(m_prun->m_prfbcoderegistrator, m_pdesktop, this,
+                                           m_prun->m_prfboutputgate, m_id, m_pdesktop, m_plogwriter);
          m_plogwriter->debug("UpdateSender has been created for client #{}", m_id);
-         ::innate_subsystem::PixelFormat pixelformat;
-         ::int_size fbDim;
-         m_pdesktop->getFramebufferProperties(&fbDim, &pixelformat);
-         ::int_rectangle rectangleViewport = getViewport(fbDim);
-         m_updateSender->init(::int_size(rectangleViewport.size()), pixelformat);
+         //::innate_subsystem::PixelFormat pixelformat;
+         //::int_size sizeFramebuffer;
+         m_pdesktop->getFramebufferProperties(m_prun->m_sizeFramebuffer, m_prun->m_pixelformat);
+         ::int_rectangle rectangleViewport = getViewport(m_prun->m_sizeFramebuffer);
+         m_updateSender->init(::int_size(rectangleViewport.size()), m_prun->m_pixelformat);
          m_plogwriter->debug("UpdateSender has been initialized");
          // ClientInputHandler initialization
-         m_clientInputHandler = new ClientInputHandler(&codeRegtor, this,
+         m_pclientinputhandler = new ClientInputHandler(&codeRegtor, this,
                                                        m_viewOnly);
          m_plogwriter->debug("ClientInputHandler has been created");
          // ClipboardExchange initialization
@@ -316,7 +366,7 @@ namespace remoting
       if (fileTransfer)         delete fileTransfer;
       if (echoExtension)        delete echoExtension;
       if (m_clipboardExchange)  delete m_clipboardExchange;
-      if (m_clientInputHandler) delete m_clientInputHandler;
+      if (m_pclientinputhandler) delete m_pclientinputhandler;
       if (m_updateSender)       delete m_updateSender;
 
       // Let the client manager remove us from the client lists.
@@ -365,13 +415,13 @@ namespace remoting
       //        to compute regions on each mouse move.
 
       ::innate_subsystem::PixelFormat pfStub;
-      ::int_size fbDim;
-      m_pdesktop->getFramebufferProperties(&fbDim, &pfStub);
+      ::int_size sizeFramebuffer;
+      m_pdesktop->getFramebufferProperties(&sizeFramebuffer, &pfStub);
 
       ::int_rectangle vp;
       bool shareApp;
       Region sharedRegion;
-      getViewPortInfo(&fbDim, &vp, &shareApp, &sharedRegion);
+      getViewPortInfo(&sizeFramebuffer, &vp, &shareApp, &sharedRegion);
 
       if (!shareApp) {
          sharedRegion.clear();
@@ -411,9 +461,9 @@ namespace remoting
    void RfbClient::onGetViewPort(::int_rectangle &viewRect, bool *shareApp, Region & regionShareApp)
    {
       ::innate_subsystem::PixelFormat pfStub;
-      ::int_size fbDim;
-      m_pdesktop->getFramebufferProperties(&fbDim, &pfStub);
-      getViewPortInfo(&fbDim, viewRect, shareApp, regionShareApp);
+      ::int_size sizeFramebuffer;
+      m_pdesktop->getFramebufferProperties(&sizeFramebuffer, &pfStub);
+      getViewPortInfo(&sizeFramebuffer, viewRect, shareApp, regionShareApp);
    }
 } // namespace remoting
 

@@ -29,7 +29,7 @@
 #include "UpdateKeeper.h"
 #include "UpdateFilter.h"
 #include "ScreenGrabber.h"
-#include "windows/WindowsCursorShapeGrabber.h"
+//#include "windows/WindowsCursorShapeGrabber.h"
 #include "innate_subsystem/framebuffer/Framebuffer.h"
 //#include "subsystem/thread/critical_section.h"
 #include "UpdateListener.h"
@@ -62,7 +62,7 @@ namespace remoting
 
       // Parameters:
       //   updatecontainer - pointer to a UpdateContainer object that will be filled
-      virtual void extract(UpdateContainer & updatecontainer) = 0;
+      virtual UpdateContainer extract() = 0;
 
       // This function unconventionally set to update pending of the frame buffer
       // in the next time call of the extract() function. All found changes
@@ -83,27 +83,27 @@ namespace remoting
       // The data usage be able until next extract() function call.
       // Return:
       //   constant pointer to the ::innate_subsystem::Framebuffer object.
-      const ::innate_subsystem::Framebuffer *getFramebuffer() const { return &m_backupFramebuffer; }
+      const ::innate_subsystem::Framebuffer *getFramebuffer() const { return m_pframebufferBackup; }
       const ::remoting::CursorShape *getCursorShape() const { return &m_cursorShape; }
       // This function for asynchronous access to frame buffer properties
       // (dimension and pixel format)
       void getFramebufferProp(::int_size & size, ::innate_subsystem::PixelFormat & pixelformat)
       {
-         critical_section_lock al(&m_criticalsectionFramebufferLoc);
-         size = m_backupFramebuffer.getDimension();
-         pixelformat = m_backupFramebuffer.getPixelFormat();
+         critical_section_lock al(&m_criticalsectionFramebuffer);
+         size = m_pframebufferBackup->getDimension();
+         pixelformat = m_pframebufferBackup->getPixelFormat();
       }
 
       ::int_size getFramebufferDimension()
       {
-         critical_section_lock al(&m_criticalsectionFramebufferLoc);
-         return m_backupFramebuffer.getDimension();
+         critical_section_lock al(&m_criticalsectionFramebuffer);
+         return m_pframebufferBackup->getDimension();
       }
 
       ::innate_subsystem::PixelFormat getFramebufferPixelFormat(::int_size & size, ::innate_subsystem::PixelFormat & pixelformat)
       {
-         critical_section_lock al(&m_criticalsectionFramebufferLoc);
-         return m_backupFramebuffer.getPixelFormat();
+         critical_section_lock al(&m_criticalsectionFramebuffer);
+         return m_pframebufferBackup->getPixelFormat();
       }
 
       void initFramebuffer(const ::innate_subsystem::Framebuffer *newFb);
@@ -120,8 +120,8 @@ namespace remoting
                                              ::innate_subsystem::Framebuffer *pframebufferSource, const ::remoting::Region & region,
                                              const ::int_rectangle &rectangleViewport);
 
-      ::innate_subsystem::Framebuffer m_backupFramebuffer;
-      critical_section m_criticalsectionFramebufferLoc;
+      ::pointer < ::innate_subsystem::Framebuffer > m_pframebufferBackup;
+      critical_section m_criticalsectionFramebuffer;
 
       // m_cursorShape not thread safed
       ::remoting::CursorShape m_cursorShape;

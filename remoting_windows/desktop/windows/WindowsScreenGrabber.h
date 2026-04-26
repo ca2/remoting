@@ -24,13 +24,13 @@
 
 #pragma once
 
-#include "remoting/remoting/desktop/windows/_common_header.h"
+#include "remoting/remoting_windows/_common_header.h"
 #include "subsystem/_common_header.h"
 #ifndef CAPTUREBLT
 #define CAPTUREBLT          (DWORD)0x40000000 /* Include layered windows */
 #endif
 
-#include "../ScreenGrabber.h"
+#include "remoting/remoting/desktop/ScreenGrabber.h"
 
 
 
@@ -39,7 +39,7 @@
 #include "acme/parallelization/happening.h"
 #include "subsystem/thread/GuiThread.h"
 #include "subsystem/node/Screen.h"
-#include "remoting/remoting/desktop/windows/_common_header.h"
+#include "remoting/remoting_windows/_common_header.h"
 
 namespace remoting
 {
@@ -77,7 +77,7 @@ namespace remoting
      }
    */
 
-   class CLASS_DECL_REMOTING WindowsScreenGrabber : public ScreenGrabber, public ::subsystem::GuiThread
+   class CLASS_DECL_REMOTING_WINDOWS WindowsScreenGrabber : public ScreenGrabber, public ::subsystem::GuiThread
    {
    public:
       WindowsScreenGrabber(void);

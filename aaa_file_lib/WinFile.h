@@ -90,8 +90,8 @@ public:
   // Return valid path name to a file.
   ::file::path getPathName();
 
-  // Set file pointer to specified position starting from current
-  // file pointer position. Can move forward and backward.
+  // Set file pointer to specified pointPosition starting from current
+  // file pointer pointPosition. Can move forward and backward.
   void seek(long long n);
 
   // @throw exception on a system error.

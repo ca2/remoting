@@ -45,6 +45,13 @@ namespace remoting
 
    }
 
+   RfbOutputGate::RfbOutputGate(OutputStream * poutputstream)
+   {
+
+      _initialize_rfb_output_gate(poutputstream);
+
+   }
+
    RfbOutputGate::~RfbOutputGate()
    {
       //delete m_tunnel;
@@ -52,11 +59,14 @@ namespace remoting
 
 
 
-   void RfbOutputGate::initialize_rfb_output_gate(OutputStream * poutputstream)
+   void RfbOutputGate::_initialize_rfb_output_gate(OutputStream * poutputstream)
    {
-      m_pbufferedoutputstreamTunnel = ::system()->create_newø<BufferedOutputStream>();
 
-      m_pbufferedoutputstreamTunnel->initialize_buffered_output_stream(poutputstream);
+      initialize(poutputstream);
+
+      construct_newø(m_pbufferedoutputstreamTunnel);
+
+      m_pbufferedoutputstreamTunnel->_initialize_buffered_output_stream(poutputstream);
 
       // Change real output stream for data output stream to our tunnel.
       m_poutputstream = m_pbufferedoutputstreamTunnel;

@@ -49,7 +49,7 @@ public:
   int getLineCount();
 
   //
-  // Get / set caret position
+  // Get / set caret pointPosition
   //
 
   int getCaretPos();

@@ -24,19 +24,27 @@
 
 #pragma once
 
-#include "remoting/remoting/desktop/windows/_common_header.h"
-#include "../MirrorScreenDriver.h"
-#include "Win32ScreenDriverBaseImpl.h"
+#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting/desktop/MirrorScreenDriver.h"
+#include "remoting/remoting_windows/desktop/Win32ScreenDriverBaseImpl.h"
 
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING Win32MirrorScreenDriver : public Win32ScreenDriverBaseImpl
+   class CLASS_DECL_REMOTING_WINDOWS Win32MirrorScreenDriver : public Win32ScreenDriverBaseImpl
    {
    public:
-      Win32MirrorScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                              critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter);
-      virtual ~Win32MirrorScreenDriver();
+      //Win32MirrorScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+        //                      critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
+
+
+      Win32MirrorScreenDriver();
+      ~Win32MirrorScreenDriver() override;
+
+
+      void initialize_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+                          critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) override;
+
 
       // Starts screen update detection if it not started yet.
       virtual void executeDetection();
@@ -44,7 +52,7 @@ namespace remoting
       // Stops screen update detection.
       virtual void terminateDetection();
 
-      // Note: This class  is a wrapper for the MirrorScreenDriver class CLASS_DECL_REMOTING and then
+      // Note: This class  is a wrapper for the MirrorScreenDriver class CLASS_DECL_REMOTING_WINDOWS and then
       // only MirrorScreenDriver can provide appropriate thread safety for the ScreenDriver functions.
 
       virtual ::int_size getScreenDimension();

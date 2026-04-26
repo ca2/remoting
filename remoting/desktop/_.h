@@ -11,6 +11,17 @@ namespace remoting
    class DesktopServerProto;
    class DesktopConfigLocal;
 
+   class ScreenDriverFactory;
+   class UpdateHandler;
+   class UpdateListener;
+   class UpdateKeeper;
 
 
-}
+   class UpdateSendingListener;
+   class AbnormDeskTermListener;
+
+
+} // namespace remoting
+
+
+

@@ -808,7 +808,7 @@ encode_mcu_AC_refine (j_compress_ptr cinfo, JBLOCKARRAY MCU_data)
   block = MCU_data[0];
 
   /* It is convenient to make a pre-pass to determine the transformed
-   * coefficients' absolute values and the EOB position.
+   * coefficients' absolute values and the EOB pointPosition.
    */
   EOB = 0;
   for (k = cinfo->Ss; k <= Se; k++) {

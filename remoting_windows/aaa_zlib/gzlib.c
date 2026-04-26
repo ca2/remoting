@@ -255,7 +255,7 @@ local gzFile gz_open(path, fd, mode)
         state->mode = GZ_WRITE;         /* simplify later checks */
     }
 
-    /* save the current position for rewinding (only if reading) */
+    /* save the current pointPosition for rewinding (only if reading) */
     if (state->mode == GZ_READ) {
         state->start = LSEEK(state->fd, 0, SEEK_CUR);
         if (state->start == -1) state->start = 0;
@@ -385,7 +385,7 @@ z_off64_t ZEXPORT gzseek64(file, offset, whence)
     if (state->err != Z_OK && state->err != Z_BUF_ERROR)
         return -1;
 
-    /* can only seek from start or relative to current position */
+    /* can only seek from start or relative to current pointPosition */
     if (whence != SEEK_SET && whence != SEEK_CUR)
         return -1;
 
@@ -466,7 +466,7 @@ z_off64_t ZEXPORT gztell64(file)
     if (state->mode != GZ_READ && state->mode != GZ_WRITE)
         return -1;
 
-    /* return position */
+    /* return pointPosition */
     return state->x.pos + (state->seek ? state->skip : 0);
 }
 

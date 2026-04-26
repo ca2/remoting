@@ -120,11 +120,11 @@ namespace remoting
 
       bool isLoopback = (unsigned long)addrIn.sin_addr.S_un.S_addr == 16777343;
 
-      ServerConfig *srvConf = m_pconfigurator->getServerConfig();
-      if (isLoopback && !srvConf->isLoopbackConnectionsAllowed()) {
+      ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
+      if (isLoopback && !pserverconfig->isLoopbackConnectionsAllowed()) {
          throw ::subsystem::Exception("Sorry, loopback connections are not enabled");
       }
-      if (srvConf->isOnlyLoopbackConnectionsAllowed() && !isLoopback) {
+      if (pserverconfig->isOnlyLoopbackConnectionsAllowed() && !isLoopback) {
          throw ::subsystem::Exception("Your connection has been rejected");
       }
    }
@@ -185,9 +185,9 @@ namespace remoting
       checkForBan();
 
       // Comparing the challenge with the response.
-      ServerConfig *srvConf = m_pconfigurator->getServerConfig();
-      bool hasPrim = srvConf->hasPrimaryPassword();
-      bool hasRdly = srvConf->hasReadOnlyPassword();
+      ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
+      bool hasPrim = pserverconfig->hasPrimaryPassword();
+      bool hasRdly = pserverconfig->hasReadOnlyPassword();
 
       if (!hasPrim && !hasRdly) {
          throw AuthException("Server is not configured properly");
@@ -195,7 +195,7 @@ namespace remoting
 
       if (hasPrim) {
          unsigned char crypPrimPass[8];
-         srvConf->getPrimaryPassword(crypPrimPass);
+         pserverconfig->getPrimaryPassword(crypPrimPass);
          VncPassCrypt passCrypt;
          passCrypt.updatePlain(crypPrimPass);
          if (passCrypt.challengeAndResponseIsValid(challenge, response)) {
@@ -204,7 +204,7 @@ namespace remoting
       }
       if (hasRdly) {
          unsigned char crypReadOnlyPass[8];
-         srvConf->getReadOnlyPassword(crypReadOnlyPass);
+         pserverconfig->getReadOnlyPassword(crypReadOnlyPass);
          VncPassCrypt passCrypt;
          passCrypt.updatePlain(crypReadOnlyPass);
          if (passCrypt.challengeAndResponseIsValid(challenge, response)) {

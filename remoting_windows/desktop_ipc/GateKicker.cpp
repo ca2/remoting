@@ -49,13 +49,13 @@ namespace remoting
       m_pblockinggate = pblockinggate;
       resume();
    }
-   void GateKicker::onTerminate() { m_sleeper.set_happening(); }
+   void GateKicker::onTerminate() { m_happeningSleeper.set_happening(); }
 
    void GateKicker::execute()
    {
       while (!isTerminating())
       {
-         m_sleeper.wait(500 * 1_ms);
+         m_happeningSleeper.wait(500 * 1_ms);
          if (!isTerminating())
          {
             try

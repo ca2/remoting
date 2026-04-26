@@ -24,25 +24,35 @@
 
 #pragma once
 
-#include "remoting/remoting/desktop/windows/_common_header.h"
-#include "../ScreenDriver.h"
-#include "../WinVideoRegionUpdaterImpl.h"
-#include "../CursorPositionDetector.h"
-#include "../CursorShapeDetector.h"
-#include "../WindowsCursorShapeGrabber.h"
-#include "../CopyRectDetector.h"
+
+#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting/desktop/ScreenDriver.h"
+#include "remoting/remoting_windows/desktop/WinVideoRegionUpdaterImpl.h"
+#include "remoting/remoting/desktop/CursorPositionDetector.h"
+#include "remoting/remoting/desktop/CursorShapeDetector.h"
+#include "remoting/remoting_windows/desktop/WindowsCursorShapeGrabber.h"
+#include "remoting/remoting/desktop/CopyRectDetector.h"
 
 
 namespace remoting
 {
 
    // This class  implements "grabbers" and "detectors" which is not couple� with screen frame buffer.
-   class CLASS_DECL_REMOTING Win32ScreenDriverBaseImpl : public WinVideoRegionUpdaterImpl
+   class CLASS_DECL_REMOTING_WINDOWS Win32ScreenDriverBaseImpl :
+      virtual public WinVideoRegionUpdaterImpl
    {
    public:
-      Win32ScreenDriverBaseImpl(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                                critical_section *fbcritical_section, ::subsystem::LogWriter * plogwriter);
-      virtual ~Win32ScreenDriverBaseImpl();
+      //Win32ScreenDriverBaseImpl(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+        //                        critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
+
+
+      Win32ScreenDriverBaseImpl();
+      ~Win32ScreenDriverBaseImpl() override;
+
+
+      void initialize_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+                          critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) override;
+
 
       // Starts screen update detection if it not started yet.
       virtual void executeDetection();

@@ -33,27 +33,33 @@ namespace remoting
 
 
    ReconnectingChannel::ReconnectingChannel() :
-       m_timeOut(0), m_bIsClosed(false), m_pchannel(0), m_pchannelOld(0), m_bChannelWasChanged(false), m_plogwriter(nullptr)
+       m_timeTimeout(0), m_bIsClosed(false), m_pchannel(0), m_pchannelOld(0), m_bChannelWasChanged(false), m_plogwriter(nullptr)
    {
+   }
+
+   ReconnectingChannel::ReconnectingChannel(const class ::time & timeTimeout, ::subsystem::LogWriter * plogwriter) :
+   ReconnectingChannel()
+   {
+      initialize_reconnecting_channel(timeTimeout, plogwriter);
    }
 
    ReconnectingChannel::~ReconnectingChannel()
    {
-      if (m_pchannel != 0)
-      {
-         delete m_pchannel;
-      }
-      if (m_pchannelOld != 0)
-      {
-         delete m_pchannelOld;
-      }
+      // if (m_pchannel != 0)
+      // {
+      //    delete m_pchannel;
+      // }
+      // if (m_pchannelOld != 0)
+      // {
+      //    delete m_pchannelOld;
+      // }
    }
 
 
-   void ReconnectingChannel::initialize_reconnecting_channel(unsigned int timeOut, ::subsystem::LogWriter * plogwriter)
+   void ReconnectingChannel::initialize_reconnecting_channel(const class ::time & timeTimeout, ::subsystem::LogWriter * plogwriter)
    {
-
-      m_timeOut = timeOut;
+      initialize(plogwriter);
+      m_timeTimeout = timeTimeout;
       m_plogwriter = plogwriter;
    }
 
@@ -174,7 +180,7 @@ namespace remoting
       bool success = false;
       while (!success)
       {
-         unsigned int timeForWait = maximum((m_timeOut - startTime.elapsed()).integral_millisecond(), 0);
+         unsigned int timeForWait = maximum((m_timeTimeout - startTime.elapsed()).integral_millisecond(), 0);
          if (timeForWait == 0 || m_bIsClosed)
          { // Break this function with
            // critical error

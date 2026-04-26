@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "remoting/remoting/desktop/windows/_common_header.h"
-#include "remoting/remoting/desktop/windows/_common_header.h"
-#include "../CursorShapeGrabber.h"
+#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting/desktop/CursorShapeGrabber.h"
 #include "subsystem/_common_header.h"
 #include "subsystem/node/Screen.h"
 
@@ -35,7 +35,7 @@
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING WindowsCursorShapeGrabber : public CursorShapeGrabber
+   class CLASS_DECL_REMOTING_WINDOWS WindowsCursorShapeGrabber : public CursorShapeGrabber
    {
    public:
       WindowsCursorShapeGrabber(void);

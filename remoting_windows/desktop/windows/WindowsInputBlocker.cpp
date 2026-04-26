@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "WindowsInputBlocker.h"
+#include "remoting/remoting_windows/desktop/WindowsInputBlocker.h"
 #include "subsystem/platform/Exception.h"
 //#include "subsystem/thread/critical_section.h"
 #include "acme/_operating_system.h"

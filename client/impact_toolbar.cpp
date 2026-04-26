@@ -294,7 +294,7 @@ namespace remoting_client
    //}
 
 
-   bool control::on_left_down(const ::int_point& position)
+   bool control::on_left_down(const ::int_point& pointPosition)
    {
 
        return false;
@@ -302,7 +302,7 @@ namespace remoting_client
    }
 
 
-   bool control::on_left_up(const ::int_point& position)
+   bool control::on_left_up(const ::int_point& pointPosition)
    {
 
       return false;
@@ -444,7 +444,7 @@ namespace remoting_client
    }
 
 
-   bool toolbar_button::on_left_down(const ::int_point& position)
+   bool toolbar_button::on_left_down(const ::int_point& pointPosition)
    {
 
        m_bPressed = true;
@@ -452,7 +452,7 @@ namespace remoting_client
        return true;
 
    }
-   bool toolbar_button::on_left_up(const ::int_point& position)
+   bool toolbar_button::on_left_up(const ::int_point& pointPosition)
    {
 
        if (m_bPressed && m_timePressed.elapsed() < 5_s)
@@ -468,7 +468,7 @@ namespace remoting_client
    }
 
 
-   // bool toolbar_button::on_mouse(bool bPress, const ::int_point& position)
+   // bool toolbar_button::on_mouse(bool bPress, const ::int_point& pointPosition)
    //{
 
 
@@ -597,10 +597,10 @@ namespace remoting_client
 
    }
 
-   // bool toolbar::on_mouse(bool bPress, const ::int_point& position)
+   // bool toolbar::on_mouse(bool bPress, const ::int_point& pointPosition)
    // {
    //
-   //    auto bHoverNew= m_rectangle.contains(::int_point{position.x, position.y});
+   //    auto bHoverNew= m_rectangle.contains(::int_point{pointPosition.x, pointPosition.y});
    //    if (is_different(bHoverNew, m_bHover))
    //    {
    //
@@ -609,19 +609,19 @@ namespace remoting_client
    //       m_pdesktopwindow->repaint(m_rectangle);
    //
    //    }
-   //    if (m_pbuttonMinimize->on_mouse(bPress, position))
+   //    if (m_pbuttonMinimize->on_mouse(bPress, pointPosition))
    //    {
    //
    //       return true;
    //
    //    }
-   //    if (m_pbuttonRestore->on_mouse(bPress, position))
+   //    if (m_pbuttonRestore->on_mouse(bPress, pointPosition))
    //    {
    //
    //       return true;
    //
    //    }
-   //    if (m_pbuttonClose->on_mouse(bPress, position))
+   //    if (m_pbuttonClose->on_mouse(bPress, pointPosition))
    //    {
    //
    //       return true;

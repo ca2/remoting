@@ -40,12 +40,12 @@ namespace remoting
    {
    public:
       // UpdateHandlerClient(BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
-      //                     UpdateListener *externalUpdateListener, ::subsystem::LogWriter * plogwriter);
+      //                     UpdateListener *pupdatelistenerExternal, ::subsystem::LogWriter * plogwriter);
       UpdateHandlerClient();
       ~UpdateHandlerClient() override;
 
       virtual void initialize_update_handler_client(BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
-                          UpdateListener *externalUpdateListener, ::subsystem::LogWriter * plogwriter);
+                          UpdateListener *pupdatelistenerExternal, ::subsystem::LogWriter * plogwriter);
 
 
       virtual void extract(UpdateContainer & updatecontainer);

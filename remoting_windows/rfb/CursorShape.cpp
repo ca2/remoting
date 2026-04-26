@@ -66,9 +66,9 @@ namespace remoting
       }
    }
 
-   bool CursorShape::setDimension(const ::int_size & newDim)
+   bool CursorShape::setDimension(const ::int_size & sizeNew)
    {
-      bool result = m_pixels.setDimension(newDim);
+      bool result = m_pixels.setDimension(sizeNew);
       return result && resizeBuffer();
    }
 
@@ -78,10 +78,10 @@ namespace remoting
       return result && resizeBuffer();
    }
 
-   bool CursorShape::setProperties(const ::int_size & newDim,
+   bool CursorShape::setProperties(const ::int_size & sizeNew,
                                    const ::innate_subsystem::PixelFormat & pixelFormat)
    {
-      bool result = m_pixels.setDimension(newDim) &&
+      bool result = m_pixels.setDimension(sizeNew) &&
                     m_pixels.setPixelFormat(pixelFormat);
       return result && resizeBuffer();
    }

@@ -26,21 +26,21 @@
 
 
 #include "innate_subsystem/framebuffer/Framebuffer.h"
-#include "Win8CursorShape.h"
+#include "remoting/remoting_windows/desktop/Win8CursorShape.h"
 //#include "subsystem/thread/critical_section.h"
 #include "subsystem/thread/GuiThread.h"
 
-#include "remoting/remoting/desktop/windows/_common_header.h"
-#include "Win8DuplicationListener.h"
+#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_windows/desktop/Win8DuplicationListener.h"
 //#include "log_writer/LogWriter.h"
 
-#include "../WinCustomD3D11Texture2D.h"
-#include "../WinDxgiOutputDuplication.h"
+#include "remoting/remoting_windows/desktop/WinCustomD3D11Texture2D.h"
+#include "remoting/remoting_windows/desktop/WinDxgiOutputDuplication.h"
 
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING Win8DeskDuplication : public GuiThread
+   class CLASS_DECL_REMOTING_WINDOWS Win8DeskDuplication : public GuiThread
    {
    public:
       // The WinDxgiOutput *dxgiOutput passed object can be destroyed right after the constructor calling.
@@ -88,7 +88,7 @@ namespace remoting
       bool m_hasRecoverableError;
 
 
-      // Use this variables as class CLASS_DECL_REMOTING fields to avoid frequency memory allocations.
+      // Use this variables as class CLASS_DECL_REMOTING_WINDOWS fields to avoid frequency memory allocations.
       ::array_base<RECT> m_dirtyRects;
       ::array_base<DXGI_OUTDUPL_MOVE_RECT> m_moveRects;
 

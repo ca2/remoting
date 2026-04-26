@@ -1974,7 +1974,7 @@ local block_state deflate_fast(s, flush)
 /* ===========================================================================
  * Same as above, but achieves better compression. We use a lazy
  * evaluation for matches: a match is finally adopted only if there is
- * no better match at the next window position.
+ * no better match at the next window pointPosition.
  */
 local block_state deflate_slow(s, flush)
     deflate_state *s;
@@ -2064,7 +2064,7 @@ local block_state deflate_slow(s, flush)
             if (bflush) FLUSH_BLOCK(s, 0);
 
         } else if (s->match_available) {
-            /* If there was no match at the previous position, output a
+            /* If there was no match at the previous pointPosition, output a
              * single literal. If there was a match but the current match
              * is longer, truncate the previous match to a single literal.
              */

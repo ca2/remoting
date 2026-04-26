@@ -63,7 +63,7 @@ public:
   // a session of the DIB section later.
   // The compatibleWindow handle can be zero then the function will take a DC of entire desktop.
   // Note that other function that can change properties will throw ::subsystem::Exception().
-  virtual void setProperties(const ::int_size & newDim,
+  virtual void setProperties(const ::int_size & sizeNew,
     const ::innate_subsystem::PixelFormat & pixelFormat, HWND compatibleWindow);
 
   // This function changes the target DC. In default target DC is a DC that has been
@@ -103,7 +103,7 @@ public:
   // (that has been used to create the compatible DIB section).
   // Note that this function does not copy any transparent windows.
   // This function throwing an exception on a failure.
-  void stretchFromDibSection(const ::int_rectangle &  srcRect,const ::int_rectangle & rectangleTarget);
+  void stretchFromDibSection(const ::int_rectangle &  rectangleSource,const ::int_rectangle & rectangleTarget);
 
 private:
   // This section to reduce access to some function that have been inherited from the
@@ -111,19 +111,19 @@ private:
   // use this functions from a base class its will throw ::subsystem::Exception.
   virtual bool assignProperties(const ::innate_subsystem::Framebuffer *pframebufferSource);
   virtual bool clone(const ::innate_subsystem::Framebuffer *pframebufferSource);
-  virtual bool setDimension(const ::int_size & newDim);
+  virtual bool setDimension(const ::int_size & sizeNew);
   virtual bool setDimension(const ::int_rectangle &  rectangle);
   virtual void setEmptyDimension(const ::int_rectangle &  dimByRect);
   virtual bool setPixelFormat(const ::innate_subsystem::PixelFormat & pixelFormat);
   virtual void setEmptyPixelFmt(const ::innate_subsystem::PixelFormat & pixelformat);
-  virtual bool setProperties(const ::int_size & newDim, const ::innate_subsystem::PixelFormat & pixelFormat);
+  virtual bool setProperties(const ::int_size & sizeNew, const ::innate_subsystem::PixelFormat & pixelFormat);
   virtual bool setProperties(const ::int_rectangle &  dimByRect, const ::innate_subsystem::PixelFormat & pixelFormat);
-  virtual void setPropertiesWithoutResize(const ::int_size & newDim, const ::innate_subsystem::PixelFormat & pixelformat);
+  virtual void setPropertiesWithoutResize(const ::int_size & sizeNew, const ::innate_subsystem::PixelFormat & pixelformat);
   virtual void setBuffer(void *newBuffer);
 
 private:
   // This function updates a DIB section in accord with the ::innate_subsystem::Framebuffer
-  void *updateDibSection(const ::int_size & newDim,
+  void *updateDibSection(const ::int_size & sizeNew,
     const ::innate_subsystem::PixelFormat & pixelFormat,
     HWND compatibleWindow);
   void releaseDibSection();

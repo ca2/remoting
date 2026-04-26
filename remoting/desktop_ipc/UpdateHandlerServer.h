@@ -25,28 +25,52 @@
 #pragma once
 
 
-#include "DesktopServerProto.h"
-#include "remoting/remoting/desktop/UpdateHandlerImpl.h"
-#include "DesktopSrvDispatcher.h"
+#include "remoting/remoting/desktop_ipc/DesktopServerProto.h"
+#include "remoting/remoting/desktop_ipc/DesktopSrvDispatcher.h"
+#include "remoting/remoting/desktop/UpdateHandler.h"
+//#include "remoting/remoting/desktop/UpdateHandlerImpl.h"
+
 //#include "log_writer/LogWriter.h"
-#include "../desktop/windows/Win32ScreenDriverFactory.h"
+//#include "remoting/remoting/desktop/ScreenDriverFactory.h"
 
 
 namespace remoting
 {
 
-   class UpdateHandlerServer : public DesktopServerProto, public ClientListener, public UpdateListener
+   class UpdateHandlerServer :
+      virtual public DesktopServerProto,
+      virtual public ClientListener,
+      virtual public UpdateListener
    {
    public:
-      UpdateHandlerServer(BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
-                          // AnEventListener *extTerminationListener,
-                          const ::procedure &procedureTermination, ::subsystem::LogWriter * plogwriter);
-      virtual ~UpdateHandlerServer();
+
+      ::pointer < ScreenDriverFactory > m_pscreendriverfactory;
+
+      ::pointer < Configurator > m_pconfigurator;
+
+      ::innate_subsystem::PixelFormat m_pixelformatOld;
+
+      ::pointer < UpdateHandler > m_pupdatehandler;
+      // AnEventListener *m_extTerminationListener;
+      ::procedure m_procedureTermination;
+
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
+
+
+      //UpdateHandlerServer(Configurator *pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
+        //                  // AnEventListener *extTerminationListener,
+          //                const ::procedure &procedureTermination, ::subsystem::LogWriter * plogwriter);
+      UpdateHandlerServer();
+      ~UpdateHandlerServer() override;
+
+      virtual void initialize_update_handler_server(Configurator *pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
+                    // AnEventListener *extTerminationListener,
+                    const ::procedure &procedureTermination, ::subsystem::LogWriter * plogwriter);
 
       // Internal dispatcher
       virtual void onRequest(unsigned char reqCode, BlockingGate *pblockinggate);
 
-   protected:
+   //protected:
       virtual void onUpdate();
 
       // At first time server must get init information.
@@ -57,15 +81,6 @@ namespace remoting
       void receiveFullReqReg(BlockingGate *pblockinggate);
       void receiveExcludingReg(BlockingGate *pblockinggate);
 
-      Win32ScreenDriverFactory m_scrDriverFactory;
-
-      ::innate_subsystem::PixelFormat m_oldPf;
-
-      UpdateHandlerImpl *m_updateHandler;
-      // AnEventListener *m_extTerminationListener;
-      ::procedure m_procedureTermination;
-
-      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 
