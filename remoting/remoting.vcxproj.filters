@@ -15,20 +15,11 @@
     <Filter Include="Source Files\config">
       <UniqueIdentifier>{a9b2ae4b-ef18-4aa1-bd59-5e5ff6ab641b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ftp_client">
-      <UniqueIdentifier>{403d3001-19f4-4d05-888d-878750e14479}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\ftp_common">
-      <UniqueIdentifier>{6d8fd7fa-4123-45c4-b66a-0c1e0c61024e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\network">
       <UniqueIdentifier>{9ac95d3d-d8d5-4851-a75e-e3b0293cd5e7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\region">
       <UniqueIdentifier>{199f3c3a-61a8-4a4f-ae6c-32fb5785bffa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\rpframebuffer">
-      <UniqueIdentifier>{9fe9e7a1-0a1d-4a61-b406-865b2349af80}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\viewer_core">
       <UniqueIdentifier>{d71ba47e-2212-4a5f-ae24-dd7c00e1d391}</UniqueIdentifier>
@@ -78,14 +69,20 @@
     <Filter Include="Header Files\fb_update_sender">
       <UniqueIdentifier>{2577669b-7268-420a-87d5-4f493e46773c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\fb_update_sender">
-      <UniqueIdentifier>{1501d7aa-4571-4178-93ed-e50a607dfc02}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\ds">
       <UniqueIdentifier>{9364a541-8436-4de9-953d-f56fcebc7f7e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\server_config">
       <UniqueIdentifier>{3c200226-ee87-44f3-81ce-04a9b4c3245d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\framebuffer_update_sender">
+      <UniqueIdentifier>{1501d7aa-4571-4178-93ed-e50a607dfc02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\file_transfer_common">
+      <UniqueIdentifier>{6d8fd7fa-4123-45c4-b66a-0c1e0c61024e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\file_transfer_client">
+      <UniqueIdentifier>{403d3001-19f4-4d05-888d-878750e14479}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -116,84 +113,6 @@
     <ClCompile Include="config\SettingsManager.cpp">
       <Filter>Source Files\config</Filter>
     </ClCompile>
-    <ClCompile Include="ftp_client\CopyOperation.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\DownloadOperation.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\FileInfoList.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\FileTransferCore.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\FileTransferEventAdapter.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\FileTransferEventHandler.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\FileTransferInterface.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\FileTransferMessageProcessor.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\FileTransferOperation.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\FileTransferReplyBuffer.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\FileTransferRequestSender.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\LocalFilesDeleteOperation.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\OperationEventListener.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\OperationNotPermittedException.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\OperationSupport.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\RemoteFileListOperation.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\RemoteFileRenameOperation.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\RemoteFilesDeleteOperation.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\RemoteFolderCreateOperation.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\UploadOperation.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_common\FileInfo.cpp">
-      <Filter>Source Files\ftp_common</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_common\FileTransferException.cpp">
-      <Filter>Source Files\ftp_common</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_common\FolderListener.cpp">
-      <Filter>Source Files\ftp_common</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_common\FTMessage.cpp">
-      <Filter>Source Files\ftp_common</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_common\OperationNotSupportedException.cpp">
-      <Filter>Source Files\ftp_common</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_common\WinFilePath.cpp">
-      <Filter>Source Files\ftp_common</Filter>
-    </ClCompile>
     <ClCompile Include="network\RfbInputGate.cpp">
       <Filter>Source Files\network</Filter>
     </ClCompile>
@@ -211,33 +130,6 @@
     </ClCompile>
     <ClCompile Include="region\Region.cpp">
       <Filter>Source Files\region</Filter>
-    </ClCompile>
-    <ClCompile Include="rfb\AuthDefs.cpp">
-      <Filter>Source Files\rpframebuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="rfb\CursorShape.cpp">
-      <Filter>Source Files\rpframebuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="rfb\EncodingDefs.cpp">
-      <Filter>Source Files\rpframebuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="rfb\HostPath.cpp">
-      <Filter>Source Files\rpframebuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="rfb\MsgDefs.cpp">
-      <Filter>Source Files\rpframebuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="rfb\PixelConverter.cpp">
-      <Filter>Source Files\rpframebuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="rfb\RfbKeySym.cpp">
-      <Filter>Source Files\rpframebuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="rfb\TunnelDefs.cpp">
-      <Filter>Source Files\rpframebuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="rfb\VendorDefs.cpp">
-      <Filter>Source Files\rpframebuffer</Filter>
     </ClCompile>
     <ClCompile Include="viewer_core\AuthHandler.cpp">
       <Filter>Source Files\viewer_core</Filter>
@@ -443,29 +335,110 @@
     <ClCompile Include="rfb_sconn\ZrleEncoder.cpp">
       <Filter>Source Files\rfb_sconn</Filter>
     </ClCompile>
-    <ClCompile Include="fb_update_sender\CursorUpdates.cpp">
-      <Filter>Source Files\fb_update_sender</Filter>
-    </ClCompile>
-    <ClCompile Include="fb_update_sender\UpdateSender.cpp">
-      <Filter>Source Files\fb_update_sender</Filter>
-    </ClCompile>
-    <ClCompile Include="fb_update_sender\UpdSenderMsgDefs.cpp">
-      <Filter>Source Files\fb_update_sender</Filter>
-    </ClCompile>
-    <ClCompile Include="fb_update_sender\Viewport.cpp">
-      <Filter>Source Files\fb_update_sender</Filter>
-    </ClCompile>
-    <ClCompile Include="fb_update_sender\ViewPortState.cpp">
-      <Filter>Source Files\fb_update_sender</Filter>
-    </ClCompile>
     <ClCompile Include="server_config\Configurator.cpp">
       <Filter>Source Files\server_config</Filter>
     </ClCompile>
+    <ClCompile Include="framebuffer_update_sender\CursorUpdates.cpp">
+      <Filter>Source Files\framebuffer_update_sender</Filter>
+    </ClCompile>
+    <ClCompile Include="framebuffer_update_sender\UpdateSender.cpp">
+      <Filter>Source Files\framebuffer_update_sender</Filter>
+    </ClCompile>
+    <ClCompile Include="framebuffer_update_sender\UpdSenderMsgDefs.cpp">
+      <Filter>Source Files\framebuffer_update_sender</Filter>
+    </ClCompile>
+    <ClCompile Include="framebuffer_update_sender\ViewPort.cpp">
+      <Filter>Source Files\framebuffer_update_sender</Filter>
+    </ClCompile>
+    <ClCompile Include="framebuffer_update_sender\ViewPortState.cpp">
+      <Filter>Source Files\framebuffer_update_sender</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_common\_.cpp">
+      <Filter>Source Files\file_transfer_common</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_common\FileInfo.cpp">
+      <Filter>Source Files\file_transfer_common</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_common\FileTransferException.cpp">
+      <Filter>Source Files\file_transfer_common</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_common\FolderListener.cpp">
+      <Filter>Source Files\file_transfer_common</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_common\FTMessage.cpp">
+      <Filter>Source Files\file_transfer_common</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_common\OperationNotSupportedException.cpp">
+      <Filter>Source Files\file_transfer_common</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_common\WinFilePath.cpp">
+      <Filter>Source Files\file_transfer_common</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_client\_.cpp">
+      <Filter>Source Files\file_transfer_client</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_client\CopyOperation.cpp">
+      <Filter>Source Files\file_transfer_client</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_client\DownloadOperation.cpp">
+      <Filter>Source Files\file_transfer_client</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_client\FileInfoList.cpp">
+      <Filter>Source Files\file_transfer_client</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_client\FileTransferCore.cpp">
+      <Filter>Source Files\file_transfer_client</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_client\FileTransferEventAdapter.cpp">
+      <Filter>Source Files\file_transfer_client</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_client\FileTransferEventHandler.cpp">
+      <Filter>Source Files\file_transfer_client</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_client\FileTransferInterface.cpp">
+      <Filter>Source Files\file_transfer_client</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_client\FileTransferMessageProcessor.cpp">
+      <Filter>Source Files\file_transfer_client</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_client\FileTransferOperation.cpp">
+      <Filter>Source Files\file_transfer_client</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_client\FileTransferReplyBuffer.cpp">
+      <Filter>Source Files\file_transfer_client</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_client\FileTransferRequestSender.cpp">
+      <Filter>Source Files\file_transfer_client</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_client\LocalFilesDeleteOperation.cpp">
+      <Filter>Source Files\file_transfer_client</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_client\OperationEventListener.cpp">
+      <Filter>Source Files\file_transfer_client</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_client\OperationNotPermittedException.cpp">
+      <Filter>Source Files\file_transfer_client</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_client\OperationSupport.cpp">
+      <Filter>Source Files\file_transfer_client</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_client\RemoteFileListOperation.cpp">
+      <Filter>Source Files\file_transfer_client</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_client\RemoteFileRenameOperation.cpp">
+      <Filter>Source Files\file_transfer_client</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_client\RemoteFilesDeleteOperation.cpp">
+      <Filter>Source Files\file_transfer_client</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_client\RemoteFolderCreateOperation.cpp">
+      <Filter>Source Files\file_transfer_client</Filter>
+    </ClCompile>
+    <ClCompile Include="file_transfer_client\UploadOperation.cpp">
+      <Filter>Source Files\file_transfer_client</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ftp_client\RemoteFilesDeleteOperation.h">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClInclude>
     <ClInclude Include="client_config\_.h">
       <Filter>Header Files\client_config</Filter>
     </ClInclude>

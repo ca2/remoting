@@ -182,8 +182,10 @@ namespace remoting
       int dataLen = (rectangle.width() + 7) / 8;
       dataLen *= rectangle.height();
       // FIXME: Optimize, use char[] instead of ByteArrayOutputStream.
-      ByteArrayOutputStream encoded(dataLen);
-      DataOutputStream encodedData(&encoded);
+      ByteArrayOutputStream encoded;
+      encoded.initialize_byte_array_output_stream(dataLen);
+      DataOutputStream encodedData;
+      encodedData.initialize_data_output_stream(&encoded);
 
       // Send the palette.
       PIXEL_T palette[2] = {
@@ -222,8 +224,10 @@ namespace remoting
       // Prepare output buffer.
       int dataLen = rectangle.width() * rectangle.height();
       // FIXME: Optimize, use char[] instead of ByteArrayOutputStream.
-      ByteArrayOutputStream encoded(dataLen);
-      DataOutputStream encodedData(&encoded);
+      ByteArrayOutputStream encoded;
+      encoded.initialize_byte_array_output_stream(dataLen);
+      DataOutputStream encodedData;
+      encodedData.initialize_data_output_stream(&encoded);
 
       // Send the palette.
       PIXEL_T palette[256];

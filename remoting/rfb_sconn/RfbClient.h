@@ -62,8 +62,11 @@ namespace remoting
    public:
 
 
-      struct rfb_client_run
+      class rfb_client_run :
+      virtual public ::particle
       {
+      public:
+
          ::pointer < RfbOutputGate > m_prfboutputgate;
          ::pointer < BufferedInputStream > m_pbufferedinput;
          ::pointer < RfbInputGate > m_prfbinputgate;
@@ -74,7 +77,7 @@ namespace remoting
          ::pointer < RfbInitializer > m_prfbinitializer;
 
       };
-
+      ::pointer < rfb_client_run > m_prun;
       ClientState m_clientState;
       bool m_isMarkedOk;
       critical_section m_criticalsectionClientState;
@@ -100,6 +103,7 @@ namespace remoting
       bool m_viewOnlyAuth;
       bool m_shared;
 
+      ::pointer < Configurator > m_pconfigurator;
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
       // Information

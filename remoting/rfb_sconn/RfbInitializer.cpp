@@ -74,8 +74,10 @@ namespace remoting
 
    void RfbInitializer::initialize_rfb_initializer(Channel * pchannel, ClientAuthListener *pclientauthlistener, RfbClient *prfbclient, bool bAuthAllowed)
    {
-      m_pdataoutputstream = allocateø DataOutputStream(pchannel);
-      m_pdataoutputstream = allocateø DataInputStream(pchannel);
+      construct_newø(m_pdataoutputstream);
+      m_pdataoutputstream->initialize_data_output_stream(pchannel);
+      construct_newø(m_pdatainputstream);
+      m_pdatainputstream->initialize_data_input_stream(pchannel);
       m_pclientauthlistener = pclientauthlistener;
       m_prfbclient = prfbclient;
       m_bAuthAllowed = bAuthAllowed;

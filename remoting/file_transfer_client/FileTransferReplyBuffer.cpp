@@ -122,10 +122,18 @@ namespace  remoting
          }
 
          if (!buffer.empty()) {
+
+
             // FIXME: type conversion in C-style
-            ::ByteArrayInputStream memoryInputStream(reinterpret_cast<char *>(buffer.data()),
-                                                   uncompressedSize);
-            ::DataInputStream filesInfoReader(&memoryInputStream);
+
+            ::ByteArrayInputStream memoryInputStream;
+
+            memoryInputStream.initialize_byte_array_input_stream(buffer.data(), uncompressedSize);
+
+
+            ::DataInputStream filesInfoReader;
+
+            filesInfoReader.initialize_data_input_stream(&memoryInputStream);
 
             // if (m_filesInfo != 0) {
             //    delete[] m_filesInfo;

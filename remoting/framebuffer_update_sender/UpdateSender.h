@@ -210,7 +210,7 @@ namespace remoting
       // Returns true if an update has been requested.
       bool extractReqRegions(::remoting::Region & incrReqReg, ::remoting::Region & fullReqReg, bool *bIncrementalUpdateRequest,
                              bool *bFullUpdateRequest, class ::time *timeReqPoint);
-      void extractUpdates(UpdateContainer & updatecontainer);
+      UpdateContainer extractUpdates();
       void cropUpdContForReqRegions(UpdateContainer & updatecontainer, const ::remoting::Region & incrReqReg,
                                     const ::remoting::Region & fullReqReg);
       void inscribeCopiedRegionToReqRegion(UpdateContainer & updatecontainer, const ::remoting::Region & requestRegion);

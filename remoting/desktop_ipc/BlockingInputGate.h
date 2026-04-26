@@ -31,11 +31,19 @@
 namespace remoting
 {
 
-   class BlockingInputGate : public critical_section, public DataInputStream
+   class BlockingInputGate :
+   virtual public critical_section,
+   virtual public DataInputStream
    {
    public:
-      BlockingInputGate(InputStream *inputStream);
-      virtual ~BlockingInputGate();
+      //BlockingInputGate(InputStream *inputStream);
+      BlockingInputGate();
+      ~BlockingInputGate() override;
+
+
+      virtual void initialize_blocking_input_gate(InputStream *inputStream);
+
+
    };
 
 

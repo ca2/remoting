@@ -201,7 +201,11 @@ namespace remoting
 
       auto pserverconfig = m_pconfigurator->getServerConfig();
 
+      construct_newø(m_prun);
+
       ::subsystem::SocketStream sockStream(m_psocket);
+
+      construct_newø(m_prun->m_prfboutputgate);
 
       RfbOutputGate output(&sockStream);
       BufferedInputStream bufInput(&sockStream);

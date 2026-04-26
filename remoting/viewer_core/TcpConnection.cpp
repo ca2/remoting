@@ -32,12 +32,95 @@
 
 namespace remoting
 {
-   TcpConnection::TcpConnection(::subsystem::LogWriter * plogwriter)
-   : m_plogwriter(plogwriter),
-   m_socketOwner(false),
-   //m_bufInput(0),
-   m_RfbGatesOwner(false)
+   // TcpConnection::TcpConnection(::subsystem::LogWriter * plogwriter)
+   // : m_plogwriter(plogwriter),
+   // m_socketOwner(false),
+   // //m_bufInput(0),
+   // m_RfbGatesOwner(false)
+   // {
+   //    m_port = 0;
+   //    //m_socket = 0;
+   //    //m_socketStream = 0;
+   //    //m_input = 0;
+   //    //m_output = 0;
+   //    m_wasBound = false;
+   //    m_wasConnected = false;
+   //    m_isEstablished = false;
+   // }
+
+   TcpConnection::TcpConnection()
+: //m_plogwriter(plogwriter),
+m_socketOwner(false),
+//m_bufInput(0),
+m_RfbGatesOwner(false)
    {
+      m_port = 0;
+      //m_socket = 0;
+      //m_socketStream = 0;
+      //m_input = 0;
+      //m_output = 0;
+      m_wasBound = false;
+      m_wasConnected = false;
+      m_isEstablished = false;
+   }
+   TcpConnection::~TcpConnection()
+   {
+      // if socket is defined, then need delete gates and socket stream
+      if (m_psocket) {
+         if (m_pinput && m_RfbGatesOwner) {
+            try {
+               //delete m_input;
+               m_pinput.release();
+            } catch (...) {
+            }
+         }
+
+         if (m_poutput && m_RfbGatesOwner) {
+            try {
+               //delete m_output;
+               m_poutput.release();
+            } catch (...) {
+            }
+         }
+
+         if (m_psocketstream) {
+            try {
+               //delete m_socketStream;
+               m_psocketstream.release();
+            }
+            catch (...) {
+            }
+         }
+         if (m_pbufInput) {
+            try {
+               //delete m_bufInput;
+               m_pbufInput.release();
+            }
+            catch (...) {
+            }
+         }
+
+      }
+
+      // if host and port is defined, then need delete socket
+      try {
+         if (m_psocket && !m_host.is_empty() && m_port && m_socketOwner) {
+            //delete m_socket;
+            m_psocket.release();
+            //m_socket = NULL;
+         }
+      } catch (...) {
+      }
+   }
+
+
+   void TcpConnection::initialize_tcp_connection(::subsystem::LogWriter * plogwriter)
+   {
+      m_socketOwner = false;
+      //m_bufInput(0),
+      m_RfbGatesOwner = false;
+
+      m_plogwriter = plogwriter;
       m_port = 0;
       //m_socket = 0;
       //m_socketStream = 0;
@@ -123,10 +206,14 @@ namespace remoting
          }
 
          m_plogwriter->debug("Initialization of socket stream and input/output gates...");
-         m_psocketstream = allocateø ::subsystem::SocketStream(m_psocket);
-         m_pbufInput = allocateø ::BufferedInputStream(m_psocketstream);
-         m_pinput = allocateø RfbInputGate(m_pbufInput);
-         m_poutput = allocateø RfbOutputGate(m_psocketstream);
+         construct_newø(m_psocketstream);
+         m_psocketstream->initialize_socket_stream(m_psocket);
+         construct_newø(m_pbufInput);
+         m_pbufInput->initialize_buffered_input_stream(m_psocketstream);
+         construct_newø(m_pinput);
+         m_pinput->initialize_rfb_input_gate(m_pbufInput);
+         construct_newø(m_poutput);
+         m_poutput->initialize_rfb_output_gate(m_psocketstream);
          m_RfbGatesOwner = true;
       } else {
          _ASSERT(m_pinput && m_poutput);
@@ -168,53 +255,5 @@ namespace remoting
       return m_poutput;
    }
 
-   TcpConnection::~TcpConnection()
-   {
-      // if socket is defined, then need delete gates and socket stream
-      if (m_psocket) {
-         if (m_pinput && m_RfbGatesOwner) {
-            try {
-               //delete m_input;
-               m_pinput.release();
-            } catch (...) {
-            }
-         }
 
-         if (m_poutput && m_RfbGatesOwner) {
-            try {
-               //delete m_output;
-               m_poutput.release();
-            } catch (...) {
-            }
-         }
-
-         if (m_psocketstream) {
-            try {
-               //delete m_socketStream;
-               m_psocketstream.release();
-            }
-            catch (...) {
-            }
-         }
-         if (m_pbufInput) {
-            try {
-               //delete m_bufInput;
-               m_pbufInput.release();
-            }
-            catch (...) {
-            }
-         }
-
-      }
-
-      // if host and port is defined, then need delete socket
-      try {
-         if (m_psocket && !m_host.is_empty() && m_port && m_socketOwner) {
-            //delete m_socket;
-            m_psocket.release();
-            //m_socket = NULL;
-         }
-      } catch (...) {
-      }
-   }
 } // namespace remoting

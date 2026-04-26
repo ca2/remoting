@@ -380,8 +380,8 @@ UpdateSender::UpdateSender() :
       m_plogwriter->debug("The incremental region has {} rectangles", (int)regionRequestedIncremental.getCount());
       m_plogwriter->debug("The full region has {} rectangles", (int)regionRequestedFull.getCount());
 
-      UpdateContainer updatecontainer;
-      extractUpdates(updatecontainer);
+      //UpdateContainer updatecontainer;
+      auto updatecontainer = ::transfer(extractUpdates());
 
       EncodeOptions encodeOptions;
       selectEncoder(encodeOptions);
@@ -528,7 +528,7 @@ UpdateSender::UpdateSender() :
          }
 
          // Crop changed and video region by requested regions.
-         cropUpdContForReqRegions(&updatecontainer, regionRequestedIncremental, regionRequestedFull);
+         cropUpdContForReqRegions(updatecontainer, regionRequestedIncremental, regionRequestedFull);
 
          Region m_regionVideo = updatecontainer.m_regionVideo;
          Region m_regionChanged = updatecontainer.m_regionChanged;
@@ -915,7 +915,14 @@ UpdateSender::UpdateSender() :
       return *bIncrementalUpdateRequest || *bFullUpdateRequest;
    }
 
-   void UpdateSender::extractUpdates(UpdateContainer & updatecontainer) { m_pupdatekeeper->extract(updatecontainer); }
+
+   UpdateContainer UpdateSender::extractUpdates()
+   {
+
+      return ::transfer(m_pupdatekeeper->extract());
+
+   }
+
 
    void UpdateSender::cropUpdContForReqRegions(UpdateContainer & updatecontainer, const Region & incrReqReg,
                                                const Region & fullReqReg)

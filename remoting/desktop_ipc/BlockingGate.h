@@ -33,11 +33,20 @@
 namespace remoting
 {
 
-   class BlockingGate : public critical_section, public DataOutputStream, public DataInputStream
+   class CLASS_DECL_REMOTING BlockingGate :
+   virtual public critical_section,
+   virtual public DataOutputStream,
+   virtual public DataInputStream
    {
    public:
-      BlockingGate(Channel *stream);
+
+      BlockingGate();
+
       virtual ~BlockingGate();
+
+
+      virtual void initialize_blocking_gate(Channel * pchannel);
+
    };
 
 } // namespace remoting

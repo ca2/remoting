@@ -162,7 +162,8 @@ namespace remoting
          }
 
          try {
-            DataOutputStream dataoutputstream(m_pwriteable);
+            DataOutputStream dataoutputstream;
+            dataoutputstream.initialize_data_output_stream(m_pwriteable);
             if (!m_replyBuffer->getDownloadBuffer().empty()) {
                dataoutputstream.write(m_replyBuffer->getDownloadBuffer().data(),
                               m_replyBuffer->getDownloadBufferSize());

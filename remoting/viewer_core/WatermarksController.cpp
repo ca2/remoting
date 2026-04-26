@@ -45,28 +45,28 @@ namespace remoting
       {
          m_currentFramebufferRect = rectangle;
 
-         m_currentRect = pframebuffer().getDimension();
+         m_currentRect = framebuffer()->getDimension();
          int dx = (rectangle.width()/2) - (m_width/2);
          int dy = (rectangle.height()/2) - (m_height/2);
          m_currentRect.offset(dx, dy);
 
-         m_overlay.setDimension(m_currentRect);
+         m_pframebufferOverlay->setDimension(m_currentRect);
       }
    }
 
    void WatermarksController::setNewPixelFormat(const ::innate_subsystem::PixelFormat & pixelformat)
    {
-      if (is_empty() || m_pframebuffer.getPixelFormat()!= pixelformat)
+      if (is_empty() || m_pframebuffer->getPixelFormat()!= pixelformat)
       {
          ::innate_subsystem::Framebuffer temp;
-         ::innate_subsystem::Framebuffer& pframebuffer = pframebuffer(true);
+         auto pframebuffer = framebuffer(true);
 
-         m_overlay.setPixelFormat(pixelformat);
+         m_pframebufferOverlay->setPixelFormat(pixelformat);
 
          if (pixelformat == pframebuffer->getPixelFormat())
             return;
 
-         temp.clone(&pframebuffer);
+         temp.clone(pframebuffer);
 
          pframebuffer->setPixelFormat(pixelformat);
 
@@ -75,20 +75,20 @@ namespace remoting
 
          pc.setPixelFormats(pframebuffer->getPixelFormat(), temp.getPixelFormat());
 
-         pc.convert(rectangle, &pframebuffer, &temp);
+         pc.convert(rectangle, pframebuffer, &temp);
       }
    }
 
    void WatermarksController::showWaterMarks(::innate_subsystem::Framebuffer *pframebuffer, critical_section *fbLock)
    {
-      m_overlay.copyFrom(pframebuffer, m_currentRect.left, m_currentRect.top);
+      m_pframebufferOverlay->copyFrom(pframebuffer, m_currentRect.left, m_currentRect.top);
 
-      pframebuffer->copyFrom(m_currentRect, &m_pframebuffer, 0, 0);
+      pframebuffer->copyFrom(m_currentRect, m_pframebuffer, 0, 0);
    }
 
    void WatermarksController::hideWatermarks(::innate_subsystem::Framebuffer *pframebuffer, critical_section *fbLock)
    {
-      pframebuffer->copyFrom(m_currentRect, &m_overlay, 0, 0);
+      pframebuffer->copyFrom(m_currentRect, m_pframebufferOverlay, 0, 0);
    }
 
    const ::int_rectangle WatermarksController::CurrentRect()
@@ -96,9 +96,9 @@ namespace remoting
       return m_currentRect;
    }
 
-   ::innate_subsystem::Framebuffer& WatermarksController::pframebuffer(bool fromFile)
+   ::innate_subsystem::Framebuffer * WatermarksController::framebuffer(bool fromFile)
    {
-      if (m_pframebuffer.getBuffer() == 0 || fromFile)
+      if (m_pframebuffer->getBuffer() == 0 || fromFile)
       {
          loadFromfile();
       }
@@ -124,8 +124,8 @@ namespace remoting
 
       ::int_size size(m_width, m_height);
       ::innate_subsystem::PixelFormat pixelformat = ::innate_subsystem::StandardPixelFormatFactory::create32bppPixelFormat();
-      m_pframebuffer.setPropertiesWithoutResize(size, pixelformat);
-      m_overlay.setPropertiesWithoutResize(m_overlay.getDimension(), pixelformat);
+      m_pframebuffer->setPropertiesWithoutResize(size, pixelformat);
+      m_pframebufferOverlay->setPropertiesWithoutResize(m_pframebufferOverlay->getDimension(), pixelformat);
 
       for (int i = 0; i < m_height; ++i)
       {
@@ -143,11 +143,11 @@ namespace remoting
          }
       }
 
-      m_pframebuffer.setBuffer(buffer);
+      m_pframebuffer->setBuffer(buffer);
    }
 
    bool WatermarksController::is_empty()
    {
-      return m_pframebuffer.getBuffer() == 0;
+      return m_pframebuffer->getBuffer() == 0;
    }
 } // namespace remoting

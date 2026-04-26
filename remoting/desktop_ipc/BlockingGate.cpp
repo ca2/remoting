@@ -28,9 +28,23 @@ namespace remoting
 {
 
 
-   BlockingGate::BlockingGate(Channel *stream) : DataInputStream(stream), DataOutputStream(stream) {}
+   //BlockingGate::BlockingGate(Channel *stream) : DataInputStream(stream), DataOutputStream(stream) {}
+
+   BlockingGate::BlockingGate()
+   {
+
+   }
 
    BlockingGate::~BlockingGate() {}
+
+
+   void BlockingGate::initialize_blocking_gate(Channel *pchannel)
+   {
+
+      initialize_data_output_stream(pchannel);
+      initialize_data_input_stream(pchannel);
+
+   }
 
 
 } // namespace remoting

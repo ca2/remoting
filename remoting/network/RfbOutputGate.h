@@ -50,7 +50,9 @@ namespace remoting
        * Creates new rfb output pblockinggate.
        * @param stream real output stream.
        */
-      RfbOutputGate(::OutputStream *stream);
+      RfbOutputGate();
+
+      void initialize_rfb_output_gate(::OutputStream *stream);
       /**
        * Deletes rfb output pblockinggate.
        */
@@ -62,10 +64,10 @@ namespace remoting
        */
       virtual void flush();
 
-   private:
+   //private:
       /**
        * Tunnel that adds buffering.
        */
-      ::BufferedOutputStream *m_tunnel;
+      ::pointer < ::BufferedOutputStream > m_pbufferedoutputstreamTunnel;
    };
 } // namespace remoting

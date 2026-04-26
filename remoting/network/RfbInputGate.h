@@ -31,11 +31,18 @@
 
 namespace remoting
 {
-   class CLASS_DECL_REMOTING RfbInputGate : public ::DataInputStream
+   class CLASS_DECL_REMOTING RfbInputGate :
+   virtual public ::DataInputStream
    {
    public:
-      RfbInputGate(::Channel *stream);
-      RfbInputGate(::InputStream *stream);
-      virtual ~RfbInputGate();
+      //RfbInputGate(::Channel *stream);
+      //RfbInputGate(::InputStream *stream);
+      RfbInputGate();
+      ~RfbInputGate() override;
+
+      virtual void initialize_rfb_input_gate(::Channel *stream);
+      virtual void initialize_rfb_input_gate(::InputStream *stream);
+
+
    };
 } // namespace remoting

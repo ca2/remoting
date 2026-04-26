@@ -154,43 +154,45 @@
     <ClCompile Include="config\RegistrySettingsManager.cpp" />
     <ClCompile Include="config\SettingsManager.cpp" />
     <ClCompile Include="EOFException.cpp" />
-    <ClCompile Include="fb_update_sender\CursorUpdates.cpp" />
-    <ClCompile Include="fb_update_sender\UpdateSender.cpp" />
-    <ClCompile Include="fb_update_sender\UpdSenderMsgDefs.cpp" />
-    <ClCompile Include="fb_update_sender\Viewport.cpp" />
-    <ClCompile Include="fb_update_sender\ViewPortState.cpp" />
+    <ClCompile Include="file_transfer_client\CopyOperation.cpp" />
+    <ClCompile Include="file_transfer_client\DownloadOperation.cpp" />
+    <ClCompile Include="file_transfer_client\FileInfoList.cpp" />
+    <ClCompile Include="file_transfer_client\FileTransferCore.cpp" />
+    <ClCompile Include="file_transfer_client\FileTransferEventAdapter.cpp" />
+    <ClCompile Include="file_transfer_client\FileTransferEventHandler.cpp" />
+    <ClCompile Include="file_transfer_client\FileTransferInterface.cpp" />
+    <ClCompile Include="file_transfer_client\FileTransferMessageProcessor.cpp" />
+    <ClCompile Include="file_transfer_client\FileTransferOperation.cpp" />
+    <ClCompile Include="file_transfer_client\FileTransferReplyBuffer.cpp" />
+    <ClCompile Include="file_transfer_client\FileTransferRequestSender.cpp" />
+    <ClCompile Include="file_transfer_client\LocalFilesDeleteOperation.cpp" />
+    <ClCompile Include="file_transfer_client\OperationEventListener.cpp" />
+    <ClCompile Include="file_transfer_client\OperationNotPermittedException.cpp" />
+    <ClCompile Include="file_transfer_client\OperationSupport.cpp" />
+    <ClCompile Include="file_transfer_client\RemoteFileListOperation.cpp" />
+    <ClCompile Include="file_transfer_client\RemoteFileRenameOperation.cpp" />
+    <ClCompile Include="file_transfer_client\RemoteFilesDeleteOperation.cpp" />
+    <ClCompile Include="file_transfer_client\RemoteFolderCreateOperation.cpp" />
+    <ClCompile Include="file_transfer_client\UploadOperation.cpp" />
+    <ClCompile Include="file_transfer_client\_.cpp" />
+    <ClCompile Include="file_transfer_common\FileInfo.cpp" />
+    <ClCompile Include="file_transfer_common\FileTransferException.cpp" />
+    <ClCompile Include="file_transfer_common\FolderListener.cpp" />
+    <ClCompile Include="file_transfer_common\FTMessage.cpp" />
+    <ClCompile Include="file_transfer_common\OperationNotSupportedException.cpp" />
+    <ClCompile Include="file_transfer_common\WinFilePath.cpp" />
+    <ClCompile Include="file_transfer_common\_.cpp" />
+    <ClCompile Include="framebuffer_update_sender\CursorUpdates.cpp" />
+    <ClCompile Include="framebuffer_update_sender\UpdateSender.cpp" />
+    <ClCompile Include="framebuffer_update_sender\UpdSenderMsgDefs.cpp" />
+    <ClCompile Include="framebuffer_update_sender\ViewPort.cpp" />
+    <ClCompile Include="framebuffer_update_sender\ViewPortState.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="ftp_client\CopyOperation.cpp" />
-    <ClCompile Include="ftp_client\DownloadOperation.cpp" />
-    <ClCompile Include="ftp_client\FileInfoList.cpp" />
-    <ClCompile Include="ftp_client\FileTransferCore.cpp" />
-    <ClCompile Include="ftp_client\FileTransferEventAdapter.cpp" />
-    <ClCompile Include="ftp_client\FileTransferEventHandler.cpp" />
-    <ClCompile Include="ftp_client\FileTransferInterface.cpp" />
-    <ClCompile Include="ftp_client\FileTransferMessageProcessor.cpp" />
-    <ClCompile Include="ftp_client\FileTransferOperation.cpp" />
-    <ClCompile Include="ftp_client\FileTransferReplyBuffer.cpp" />
-    <ClCompile Include="ftp_client\FileTransferRequestSender.cpp" />
-    <ClCompile Include="ftp_client\LocalFilesDeleteOperation.cpp" />
-    <ClCompile Include="ftp_client\OperationEventListener.cpp" />
-    <ClCompile Include="ftp_client\OperationNotPermittedException.cpp" />
-    <ClCompile Include="ftp_client\OperationSupport.cpp" />
-    <ClCompile Include="ftp_client\RemoteFileListOperation.cpp" />
-    <ClCompile Include="ftp_client\RemoteFileRenameOperation.cpp" />
-    <ClCompile Include="ftp_client\RemoteFilesDeleteOperation.cpp" />
-    <ClCompile Include="ftp_client\RemoteFolderCreateOperation.cpp" />
-    <ClCompile Include="ftp_client\UploadOperation.cpp" />
-    <ClCompile Include="ftp_common\FileInfo.cpp" />
-    <ClCompile Include="ftp_common\FileTransferException.cpp" />
-    <ClCompile Include="ftp_common\FolderListener.cpp" />
-    <ClCompile Include="ftp_common\FTMessage.cpp" />
-    <ClCompile Include="ftp_common\OperationNotSupportedException.cpp" />
-    <ClCompile Include="ftp_common\WinFilePath.cpp" />
     <ClCompile Include="network\RfbInputGate.cpp" />
     <ClCompile Include="network\RfbOutputGate.cpp" />
     <ClCompile Include="network\TcpClientThread.cpp" />
@@ -204,15 +206,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="remoting.cpp" />
-    <ClCompile Include="rfb\AuthDefs.cpp" />
-    <ClCompile Include="rfb\CursorShape.cpp" />
-    <ClCompile Include="rfb\EncodingDefs.cpp" />
-    <ClCompile Include="rfb\HostPath.cpp" />
-    <ClCompile Include="rfb\MsgDefs.cpp" />
-    <ClCompile Include="rfb\PixelConverter.cpp" />
-    <ClCompile Include="rfb\RfbKeySym.cpp" />
-    <ClCompile Include="rfb\TunnelDefs.cpp" />
-    <ClCompile Include="rfb\VendorDefs.cpp" />
     <ClCompile Include="rfb_sconn\CapContainer.cpp" />
     <ClCompile Include="rfb_sconn\ClientInputHandler.cpp" />
     <ClCompile Include="rfb_sconn\ClipboardExchange.cpp" />
@@ -325,7 +318,6 @@
     <ClInclude Include="ftp_client\OperationSupport.h" />
     <ClInclude Include="ftp_client\RemoteFileListOperation.h" />
     <ClInclude Include="ftp_client\RemoteFileRenameOperation.h" />
-    <ClInclude Include="ftp_client\RemoteFilesDeleteOperation.h" />
     <ClInclude Include="ftp_client\RemoteFolderCreateOperation.h" />
     <ClInclude Include="ftp_client\resource.h" />
     <ClInclude Include="ftp_client\UploadOperation.h" />

@@ -36,11 +36,17 @@
 
 namespace remoting
 {
-   class CLASS_DECL_REMOTING TcpConnection
+   class CLASS_DECL_REMOTING TcpConnection :
+
+   virtual public ::particle
    {
    public:
-      TcpConnection(::subsystem::LogWriter * plogwriter);
-      virtual ~TcpConnection();
+      //TcpConnection(::subsystem::LogWriter * plogwriter);
+      TcpConnection();
+      ~TcpConnection() override;
+
+
+      virtual void initialize_tcp_connection(::subsystem::LogWriter * plogwriter);
 
       void bind(const ::scoped_string & scopedstrHost, unsigned short port);
       void bind(::subsystem::SocketIPv4Interface *socket);
