@@ -45,9 +45,9 @@ namespace remoting
       m_updatecontainer.m_regionChanged.crop(m_rectangleBorder);
    }
 
-   void UpdateKeeper::addChangedRect(const ::int_rectangle &changedRect)
+   void UpdateKeeper::addChangedRect(const ::int_rectangle &rectangleChanged)
    {
-      Region region(changedRect);
+      Region region(rectangleChanged);
       addChangedRegion(region);
    }
 

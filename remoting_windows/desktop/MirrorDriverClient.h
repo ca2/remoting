@@ -74,7 +74,7 @@ namespace remoting
       void disconnect();
 
    private:
-      static ::string_literal MINIPORT_REGISTRY_PATH[];
+      static ::string_literal MINIPORT_REGISTRY_PATH;
 
       static const int EXT_DEVMODE_SIZE_MAX = 3072;
       struct DFEXT_DEVMODE : DEVMODE

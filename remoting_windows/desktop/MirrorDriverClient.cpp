@@ -37,9 +37,12 @@ namespace remoting
    MirrorDriverClient::MirrorDriverClient(::subsystem::LogWriter * plogwriter) :
        m_isDriverOpened(false), m_isDriverLoaded(false), m_isDriverAttached(false), m_isDriverConnected(false),
        m_isDisplayChanged(false), m_deviceNumber(0), m_driverDC(0), m_changesBuffer(0), m_screenBuffer(0),
-       m_messagewindowPropertyChangeListener("MIRROR_DRIVER_MESSAGE_WINDOW_CLASS_NAME"),
+       //,
        m_plogwriter(plogwriter)
    {
+
+      m_messagewindowPropertyChangeListener.createMessageWindow("MIRROR_DRIVER_MESSAGE_WINDOW_CLASS_NAME");
+
       memset(&m_deviceMode, 0, sizeof(m_deviceMode));
       m_deviceMode.dmSize = sizeof(DEVMODE);
 
@@ -49,11 +52,11 @@ namespace remoting
 
       resume();
       m_initListener.wait();
-      if (m_messagewindowPropertyChangeListener.getHWND() == 0)
+      if (!m_messagewindowPropertyChangeListener.is_window())
       {
          dispose();
          throw ::subsystem::Exception("Can't create a client for a mirror driver because"
-                                      " can't create a scopedstrMessage window to listen changing"
+                                      " can't create a Message window to listen changing"
                                       " screen properties.");
       }
    }

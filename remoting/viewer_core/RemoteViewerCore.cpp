@@ -746,9 +746,9 @@ namespace remoting_client
    ::string RemoteViewerCore::getAuthenticationTypeName(unsigned int authenticationType) const
    {
       switch (authenticationType) {
-         case AuthDefs::NONE:
+         case ::remoting::AuthDefs::NONE:
             return "None";
-         case AuthDefs::VNC:
+         case ::remoting::AuthDefs::VNC:
             return "VNC";
       }
       return "Unknown type";
@@ -765,7 +765,7 @@ namespace remoting_client
          // If server supports security type "Tight", select it.
          SecTypesIterator tightSecType = std::find(secTypes->begin(),
                                                    secTypes->end(),
-                                                   SecurityDefs::TIGHT);
+                                                   ::remoting::SecurityDefs::TIGHT);
          if (tightSecType != secTypes->end()) {
             return *tightSecType;
          }
@@ -775,7 +775,7 @@ namespace remoting_client
            i != secTypes->end();
            i++) {
          if (authHandlers->find(*i) != authHandlers->end() ||
-             *i == SecurityDefs::NONE)
+             *i == ::remoting::SecurityDefs::NONE)
             return *i;
            }
 
@@ -792,7 +792,7 @@ namespace remoting_client
          bool hasNoTunnel = false;
          for (unsigned int i = 0; i < tunnelCount; i++) {
             RfbCapabilityInfo cap = readCapability();
-            if (cap.code == TunnelDefs::NOTUNNEL) {
+            if (cap.code == ::remoting::TunnelDefs::NOTUNNEL) {
                hasNoTunnel = true;
             }
             // Special case for VNC server of Siemense PLC . It supports NOTUNNEL while there is no it in the ::list_base.
@@ -801,7 +801,7 @@ namespace remoting_client
             }
          }
          if (hasNoTunnel) {
-            m_output->writeUInt32(TunnelDefs::NOTUNNEL);
+            m_output->writeUInt32(::remoting::TunnelDefs::NOTUNNEL);
             m_output->flush();
          } else {
             m_plogwriter->error("Viewer support only default tunneling tight-authentication");
@@ -818,7 +818,7 @@ namespace remoting_client
 
       m_plogwriter->information("Number of auth-types is {}", authTypesNumber);
       if (authTypesNumber == 0) {
-         return AuthDefs::NONE;
+         return ::remoting::AuthDefs::NONE;
       }
 
       m_plogwriter->debug("Reading authentication capability...");
@@ -960,26 +960,26 @@ namespace remoting_client
             unsigned int msgType = receiveServerMessageType();
 
             switch (msgType) {
-               case ServerMsgDefs::FB_UPDATE:
+               case ::remoting::ServerMsgDefs::FB_UPDATE:
                   m_plogwriter->debug("Received scopedstrMessage: FB_UPDATE");
                   receiveFbUpdate();
                   break;
 
-               case ServerMsgDefs::SET_COLOR_MAP_ENTRIES:
+               case ::remoting::ServerMsgDefs::SET_COLOR_MAP_ENTRIES:
                   m_plogwriter->debug("Received scopedstrMessage: SET_COLOR_MAP_ENTRIES");
                   receiveSetColorMapEntries();
                   break;
 
-               case ServerMsgDefs::BELL:
+               case ::remoting::ServerMsgDefs::BELL:
                   m_plogwriter->debug("Received scopedstrMessage: BELL");
                   receiveBell();
                   break;
 
-               case ServerMsgDefs::SERVER_CUT_TEXT:
+               case ::remoting::ServerMsgDefs::SERVER_CUT_TEXT:
                   m_plogwriter->debug("Received scopedstrMessage: SERVER_CUT_TEXT");
                   receiveServerCutText();
                   break;
-               case ServerMsgDefs::SERVER_CUT_TEXT_UTF8:
+               case ::remoting::ServerMsgDefs::SERVER_CUT_TEXT_UTF8:
                   m_plogwriter->debug("Received scopedstrMessage: SERVER_CUT_TEXT_UTF8");
                   receiveServerCutTextUtf8();
                   break;
@@ -1106,7 +1106,7 @@ namespace remoting_client
       m_plogwriter->debug("Rectangle: ({}, {}), ({}, {}). Type is {}",
                         rectangle.left, rectangle.top, rectangle.right, rectangle.bottom, encodingType);
 
-      if (encodingType == PseudoEncDefs::LAST_RECT)
+      if (encodingType == ::remoting::PseudoEncDefs::LAST_RECT)
          return true;
       if (!Decoder::isPseudo(encodingType)) {
          if (::int_rectangle(m_pframebuffer->getDimension()).intersection(rectangle) != rectangle) {
@@ -1140,7 +1140,7 @@ namespace remoting_client
                                                 int encodingType)
    {
       switch (encodingType) {
-         case PseudoEncDefs::DESKTOP_SIZE:
+         case ::remoting::PseudoEncDefs::DESKTOP_SIZE:
             m_plogwriter->information("Changed size of desktop");
          {
             critical_section_lock al(&m_criticalsectionFramebuffer);
@@ -1148,7 +1148,7 @@ namespace remoting_client
          }
             break;
 
-         case PseudoEncDefs::RICH_CURSOR:
+         case ::remoting::PseudoEncDefs::RICH_CURSOR:
          {
             m_plogwriter->debug("New rich cursor");
 
@@ -1176,7 +1176,7 @@ namespace remoting_client
          }
             break;
 
-         case PseudoEncDefs::POINTER_POS:
+         case ::remoting::PseudoEncDefs::POINTER_POS:
          {
             m_plogwriter->debug("Updating pointer pointPosition: [{}, {}]", rectangle.left, rectangle.top);
             ::int_point pointPosition(rectangle.left, rectangle.top);

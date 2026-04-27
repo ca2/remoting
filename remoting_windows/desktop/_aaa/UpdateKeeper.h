@@ -51,7 +51,7 @@ namespace remoting
       virtual void unlock() { m_criticalsectionUpdateContainer.unlock(); }
 
       void addChangedRegion(const ::remoting::Region & regionChanged);
-      void addChangedRect(const ::int_rectangle &changedRect);
+      void addChangedRect(const ::int_rectangle &rectangleChanged);
       // Adds border rectangle to changed region.
       void dazzleChangedReg()
       {

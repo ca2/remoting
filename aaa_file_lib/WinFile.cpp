@@ -176,7 +176,7 @@ size_t WinFile::read(void *buff, size_t count)
     if (dwLastError == ERROR_HANDLE_EOF) {
       throw EOFException();
     } else {
-       ::string errText = ::windows::last_error_message(dwLastError);
+       ::string errText = ::windows::last_error_message(lasterror);
       throw ::io_exception(error_io, errText);
     }
   }

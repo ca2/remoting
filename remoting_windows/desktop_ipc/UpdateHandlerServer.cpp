@@ -208,7 +208,7 @@ namespace remoting
       auto pframebuffer = createø<::innate_subsystem::Framebuffer>();
       readPixelFormat(&m_pixelformatOld, pblockinggate);
       ::int_size size = readDimension(pblockinggate);
-      pframebuffer->setProperties(&size, &m_pixelformatOld);
+      pframebuffer->setProperties(size, m_pixelformatOld);
 
       readFramebuffer(&pframebuffer, &size, pblockinggate);
       m_pupdatehandler->initFramebuffer(&pframebuffer);

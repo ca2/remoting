@@ -256,22 +256,22 @@ namespace remoting
 
    operating_system::window WindowsUserInput::getWindowHandleByName(const ::scoped_string &windowName)
    {
-      return ::windows::findFirstWindowByName(*windowName);
+      return ::windows::findFirstWindowByName(windowName);
    }
 
    void WindowsUserInput::getApplicationRegion(unsigned int procId, Region & region)
    {
       region.clear();
-      HWND hForegr = ::windows::get_window(::window::get_foreground_window(), GW_HWNDLAST);
+      auto operatingsystemwindowForeground = ::windows::get_window(::windows::get_foreground_window(), WIN32_GW_HWNDLAST);
 
-      RECT rectangle;
+      //RECT rectangle;
       ::int_rectangle rectangle;
-      while (hForegr != NULL)
+      while (operatingsystemwindowForeground.is_set())
       {
-         GetWindowRect(hForegr, &rectangle);
+         ::windows::get_window_rect(hForegr, rectangle);
 
-         DWORD style = GetWindowLong(hForegr, GWL_STYLE);
-         DWORD procForegr;
+         DWORD style = ::windows::get_window_long(hForegr, GWL_STYLE);
+         auto processidentifierForegrund = ::windows::get_window_process_id()
          GetWindowThreadProcessId(hForegr, &procForegr);
          if (style & WS_VISIBLE)
          {

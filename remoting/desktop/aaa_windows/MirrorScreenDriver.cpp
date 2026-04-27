@@ -58,7 +58,7 @@ namespace remoting
       ::int_size size = m_pmirrordriverclient->getDimension();
       ::innate_subsystem::PixelFormat pixelformat = m_pmirrordriverclient->getPixelFormat();
 
-      m_pframebuffer->setProperties(&size, &pixelformat);
+      m_pframebuffer->setProperties(size, pixelformat);
    }
 
    ::int_size MirrorScreenDriver::getScreenDimension() { return m_pframebuffer->getDimension(); }
@@ -140,7 +140,7 @@ namespace remoting
 
       ::int_size sizeNew = m_pmirrordriverclient->getDimension();
       ::innate_subsystem::PixelFormat pixelformat = m_pmirrordriverclient->getPixelFormat();
-      m_pframebuffer->setProperties(&sizeNew, &pixelformat);
+      m_pframebuffer->setProperties(sizeNew, pixelformat);
       m_lastCounter = 0;
 
       return true;
@@ -151,7 +151,7 @@ namespace remoting
    void MirrorScreenDriver::execute()
    {
       Region m_regionChanged;
-      ::int_rectangle changedRect;
+      ::int_rectangle rectangleChanged;
       unsigned long currentCounter = 0;
 
       while (!isTerminating())
@@ -168,10 +168,10 @@ namespace remoting
                   currentCounter = changesBuf->counter;
                   for (unsigned long i = m_lastCounter; i != currentCounter; i++, i %= MAXCHANGES_BUF)
                   {
-                     changedRect.fromWindowsRect(&changesBuf->pointrect[i].rectangle);
-                     if (changedRect.isValid())
+                     rectangleChanged.fromWindowsRect(&changesBuf->pointrect[i].rectangle);
+                     if (rectangleChanged.isValid())
                      {
-                        m_regionChanged.addRect(&changedRect);
+                        m_regionChanged.addRect(&rectangleChanged);
                      }
                   }
 

@@ -95,7 +95,7 @@ namespace remoting
       ::int_rectangle croppedRect;
       if (rectangle != 0)
       {
-         croppedRect = rectangle.intersection(&rectangleFramebuffer);
+         croppedRect = rectangle.intersection(rectangleFramebuffer);
       }
       else
       {
@@ -157,7 +157,7 @@ namespace remoting
 
       ::int_size sizeNew = m_pmirrordriverclient->getDimension();
       ::innate_subsystem::PixelFormat pixelformat = m_pmirrordriverclient->getPixelFormat();
-      m_pframebuffer->setProperties(&sizeNew, &pixelformat);
+      m_pframebuffer->setProperties(sizeNew, pixelformat);
       m_lastCounter = 0;
 
       return true;
@@ -168,7 +168,7 @@ namespace remoting
    void MirrorScreenDriver::execute()
    {
       Region m_regionChanged;
-      ::int_rectangle changedRect;
+      ::int_rectangle rectangleChanged;
       unsigned long currentCounter = 0;
 
       while (!isTerminating())
@@ -179,16 +179,16 @@ namespace remoting
             critical_section_lock al(m_pcriticalsectionFramebuffer);
             if (m_pmirrordriverclient != 0)
             {
-               CHANGES_BUF *changesBuf = m_pmirrordriverclient->getChangesBuf();
+               auto changesBuf = (CHANGES_BUF *) m_pmirrordriverclient->getChangesBuf();
                if (changesBuf != 0)
                {
                   currentCounter = changesBuf->counter;
                   for (unsigned long i = m_lastCounter; i != currentCounter; i++, i %= MAXCHANGES_BUF)
                   {
-                     changedRect.fromWindowsRect(&changesBuf->pointrect[i].rectangle);
-                     if (changedRect.isValid())
+                     rectangleChanged.fromWindowsRect(changesBuf->pointrect[i].rectangle);
+                     if (rectangleChanged.isValid())
                      {
-                        m_regionChanged.addRect(&changedRect);
+                        m_regionChanged.addRect(&rectangleChanged);
                      }
                   }
 

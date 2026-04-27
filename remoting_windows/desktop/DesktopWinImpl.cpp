@@ -123,54 +123,59 @@ namespace remoting
    }
 
 
-   void DesktopWinImpl::initialize_desktop(Configurator * pconfigurator, ClipboardListener *pclipboardlistenerExternal, UpdateSendingListener *pupdatesendinglistenerExternal,
-                               AbnormDeskTermListener *pdesktermlistenerExternal, ::subsystem::LogWriter * plogwriter)
-   // :
-   //  , m_pwallpaperutil(0), m_pdesktopconfigclient(0),
-   //  m_plogwriter = plogwriter;, m_pscreendriverfactory(m_pconfigurator->getServerConfig())
-    {
-       DesktopBaseImpl::initialize_desktop(pconfigurator, pclipboardlistenerExternal, pupdatesendinglistenerExternal, pdesktermlistenerExternal, plogwriter);
-       m_plogwriter = plogwriter;
-
-       m_plogwriter->information("Creating DesktopWinImpl");
-
-       logDesktopInfo();
-
-       try
-       {
-          m_pupdatehandler = allocateø UpdateHandlerImpl(this, m_pscreendriverfactory, m_plogwriter);
-          bool ctrlAltDelEnabled = false;
-          m_puserinput = allocateø WindowsUserInput(this, ctrlAltDelEnabled, m_plogwriter);
-          m_pdesktopconfigclient = new DesktopConfigLocal(m_plogwriter);
-          applyNewConfiguration();
-          m_pwallpaperutil = new WallpaperUtil(m_plogwriter);
-          m_pwallpaperutil->updateWallpaper();
-
-          m_pconfigurator->addListener(this);
-       }
-       catch (::subsystem::Exception &ex)
-       {
-          m_plogwriter->error("exception during DesktopWinImpl creaion: {}", ex.get_message());
-          freeResource();
-          throw;
-       }
-       resume();
-    }
+   // void DesktopWinImpl::initialize_desktop(Configurator * pconfigurator, ClipboardListener *pclipboardlistenerExternal, UpdateSendingListener *pupdatesendinglistenerExternal,
+   //                             AbnormDeskTermListener *pdesktermlistenerExternal, ::subsystem::LogWriter * plogwriter)
+   // // :
+   // //  , m_pwallpaperutil(0), m_pdesktopconfigclient(0),
+   // //  m_plogwriter = plogwriter;, m_pscreendriverfactory(m_pconfigurator->getServerConfig())
+   //  {
+   //     DesktopBaseImpl::initialize_desktop(pconfigurator, pclipboardlistenerExternal, pupdatesendinglistenerExternal, pdesktermlistenerExternal, plogwriter);
+   //     m_plogwriter = plogwriter;
+   //
+   //     m_plogwriter->information("Creating DesktopWinImpl");
+   //
+   //     logDesktopInfo();
+   //
+   //     try
+   //     {
+   //        m_pupdatehandler = allocateø UpdateHandlerImpl(this, m_pscreendriverfactory, m_plogwriter);
+   //        bool ctrlAltDelEnabled = false;
+   //        m_puserinput = allocateø WindowsUserInput(this, ctrlAltDelEnabled, m_plogwriter);
+   //        m_pdesktopconfigclient = new DesktopConfigLocal(m_plogwriter);
+   //        applyNewConfiguration();
+   //        m_pwallpaperutil = new WallpaperUtil(m_plogwriter);
+   //        m_pwallpaperutil->updateWallpaper();
+   //
+   //        m_pconfigurator->addListener(this);
+   //     }
+   //     catch (::subsystem::Exception &ex)
+   //     {
+   //        m_plogwriter->error("exception during DesktopWinImpl creaion: {}", ex.get_message());
+   //        freeResource();
+   //        throw;
+   //     }
+   //     resume();
+   //  }
 
 
    void DesktopWinImpl::freeResource()
    {
       m_pconfigurator->removeListener(this);
 
-      if (m_pwallpaperutil)
-         delete m_pwallpaperutil;
+      m_pwallpaperutil.defer_destroy_and_release();
+      m_pupdatehandler.defer_destroy_and_release();
+      m_pdesktopconfigclient.defer_destroy_and_release();
+      m_puserinput.defer_destroy_and_release();
 
-      if (m_pupdatehandler)
-         delete m_pupdatehandler;
-      if (m_pdesktopconfigclient)
-         delete m_pdesktopconfigclient;
-      if (m_puserinput)
-         delete m_puserinput;
+      // if (m_pwallpaperutil)
+      //    delete m_pwallpaperutil;
+      //
+      // if (m_pupdatehandler)
+      //    delete m_pupdatehandler;
+      // if (m_pdesktopconfigclient)
+      //    delete m_pdesktopconfigclient;
+      // if (m_puserinput)
+      //    delete m_puserinput;
    }
 
    void DesktopWinImpl::onTerminate() { m_happeningNewUpdate.set_happening(); }
@@ -204,7 +209,7 @@ namespace remoting
    {
       try
       {
-         if (Environment::isAeroOn(m_plogwriter))
+         if (MainSubsystem().OperatingSystem().isAeroOn(m_plogwriter))
          {
             m_plogwriter->debug("The Aero is On");
          }
@@ -219,13 +224,12 @@ namespace remoting
       }
 
       // Log all display coordinates
-      WindowsDisplays m_winDisp;
-      ::int_rectangle_array_base displays = m_winDisp.getDisplays();
-      m_plogwriter->debug("The console desktop has {} displays", (int)displays.size());
-      for (size_t i = 0; i < displays.size(); i++)
+      ::subsystem::Displays displays;
+      ::int_rectangle_array_base rectangleaDisplays = displays.getDisplays();
+      m_plogwriter->debug("The console desktop has {} displays", (int)rectangleaDisplays.size());
+      for (auto & rectangleDisplay : rectangleaDisplays)
       {
-         m_plogwriter->debug("Display {} placed at the {}, {}, %dx{} coordinates", i + 1, displays[i].left,
-                             displays[i].top, displays[i].width(), displays[i].height());
+         m_plogwriter->debug("Display {} placed at the {:d} coordinates", i + 1, rectangleDisplay);
       }
    }
 

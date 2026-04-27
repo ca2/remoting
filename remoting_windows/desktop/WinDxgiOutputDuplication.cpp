@@ -212,7 +212,7 @@ namespace remoting
       {
          size.setDim(shapeInfo.Width, shapeInfo.Height);
       }
-      newCursorShape.setProperties(&size, &pixelformat);
+      newCursorShape.setProperties(size, pixelformat);
 
       // monochrome cursor
       if (shapeInfo.Type == DXGI_OUTDUPL_POINTER_SHAPE_TYPE_MONOCHROME)
