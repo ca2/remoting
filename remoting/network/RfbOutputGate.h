@@ -28,7 +28,7 @@
 #include "acme/input_output/DataOutputStream.h"
 #include "acme/input_output/BufferedOutputStream.h"
 
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
 
 namespace remoting
@@ -43,7 +43,7 @@ namespace remoting
     * @author enikey.
     */
    class CLASS_DECL_REMOTING RfbOutputGate : public ::DataOutputStream,
-                         public critical_section
+                         public lockable_critical_section
    {
    public:
       /**

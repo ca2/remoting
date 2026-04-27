@@ -50,7 +50,7 @@ namespace remoting
    ScreenDriver *Win32ScreenDriverFactory::createScreenDriver(UpdateKeeper *pupdatekeeper,
                                                               UpdateListener *pupdatelistener,
                                                               ::innate_subsystem::Framebuffer *pframebuffer,
-                                                              critical_section *pcriticalsectionFramebuffer,
+                                                              lockable_critical_section *pcriticalsectionFramebuffer,
                                                               ::subsystem::LogWriter * plogwriter)
    {
       // Try to use Win8 duplication API firstly because it's in preference to other methods.
@@ -94,7 +94,7 @@ namespace remoting
    ScreenDriver *Win32ScreenDriverFactory::createStandardScreenDriver(UpdateKeeper *pupdatekeeper,
                                                                       UpdateListener *pupdatelistener,
                                                                       ::innate_subsystem::Framebuffer *pframebuffer,
-                                                                      critical_section *pcriticalsectionFramebuffer,
+                                                                      lockable_critical_section *pcriticalsectionFramebuffer,
                                                                       ::subsystem::LogWriter * plogwriter)
    {
       return new Win32ScreenDriver(pupdatekeeper, pupdatelistener, pframebuffer, pcriticalsectionFramebuffer, log);
@@ -102,7 +102,7 @@ namespace remoting
 
    ScreenDriver *Win32ScreenDriverFactory::createMirrorScreenDriver(UpdateKeeper *pupdatekeeper,
                                                                     UpdateListener *pupdatelistener,
-                                                                    critical_section *pcriticalsectionFramebuffer,
+                                                                    lockable_critical_section *pcriticalsectionFramebuffer,
                                                                     ::subsystem::LogWriter * plogwriter)
    {
       return new Win32MirrorScreenDriver(pupdatekeeper, pupdatelistener, pcriticalsectionFramebuffer, log);

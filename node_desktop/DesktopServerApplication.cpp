@@ -36,16 +36,17 @@
 #include "subsystem_windows/platform/subsystem.h"
 #include "subsystem_windows/platform/subsystem.h"
 #include "subsystem_windows/node/SharedMemory.h"
+#include "remoting/remoting/server_config/Configurator.h"
 
 
 namespace remoting_node_desktop
 {
 
    DesktopServerApplication::DesktopServerApplication(
-      HINSTANCE appInstance, const ::scoped_string &scopedstrwindowClassName,
+      ::hinstance appInstance, const ::scoped_string &scopedstrwindowClassName,
       const ::subsystem::CommandLineArguments *cmdArgs) : // LocalWindowsApplication(appInstance, windowClassName),
-       m_pchannelClientToServer(0), m_pchannelServerToClient(0), m_pgateClientToServer(0), m_pgateServerToClient(0), m_pdesktopsrvdispatcher(0), m_updHandlerSrv(0),
-       m_uiSrv(0), m_cfgServer(0), m_pblockinggateKickHandler(0), m_sessionChangesWatcher(0),// m_configurator(true),
+       m_pchannelClientToServer(0), m_pchannelServerToClient(0), m_pgateClientToServer(0), m_pgateServerToClient(0), m_pdesktopsrvdispatcher(0), m_pupdatehandlerserver(0),
+       m_puserinputserver(0), m_pconfigserver(0), m_pgatekickhandler(0), m_psessionchangeswatcher(0),// m_configurator(true),
        // m_clientLogWriter(LogNames::LOG_PIPE_PUBLIC_NAME,
        //             LogNames::SERVER_LOG_FILE_STUB_NAME),
        m_contextSwitchResolution(1),
@@ -76,13 +77,13 @@ namespace remoting_node_desktop
          ::subsystem_windows::SharedMemory shMem(shMemName, 72);
          unsigned long long *mem = (unsigned long long *)shMem.getMemPointer();
 
-         class ::time startTime = class ::time::now();
+         class ::time startTime = ::time::now();
 
          // ::happening m_sleepInterval;
          ::happening m_sleepInterval;
          while (mem[0] == 0)
          {
-            unsigned int timeForWait = maximum((int)10000 - (int)(class ::time::now() - startTime).m_iSecond, 0);
+            unsigned int timeForWait = maximum(10_s - startTime.elapsed(), 0_s).integral_millisecond();
             if (timeForWait == 0)
             {
                throw ::subsystem::Exception("The desktop server time out expired");
@@ -125,11 +126,16 @@ namespace remoting_node_desktop
          // Server initializations
          m_pdesktopsrvdispatcher = new ::remoting::DesktopSrvDispatcher(m_pgateClientToServer, [this]() { onHappening(); }, m_plogwriter);
 
-         m_updHandlerSrv =
-            new ::remoting::UpdateHandlerServer(m_pgateServerToClient, m_pdesktopsrvdispatcher, [this]() { onHappening(); }, m_plogwriter);
-         m_uiSrv = new ::remoting::UserInputServer(m_pgateServerToClient, m_pdesktopsrvdispatcher, [this]() { onHappening(); }, m_plogwriter);
-         m_cfgServer = new ::remoting::ConfigServer(m_pdesktopsrvdispatcher, m_plogwriter);
-         m_pblockinggateKickHandler = new ::remoting::GateKickHandler(m_pdesktopsrvdispatcher);
+         m_pupdatehandlerserver = allocateø ::remoting::UpdateHandlerServer();
+         m_pupdatehandlerserver->initialize_update_handler_server(m_pconfigurator, m_pgateServerToClient, m_pdesktopsrvdispatcher, [this]() { onHappening(); }, m_plogwriter);
+
+         m_puserinputserver = allocateø ::remoting::UserInputServer(m_pconfigurator, m_pgateServerToClient, m_pdesktopsrvdispatcher, [this]() { onHappening(); }, m_plogwriter);
+
+         m_pconfigserver = allocateø ::remoting::ConfigServer();
+         m_pconfigserver->initialize_config_server(m_pconfigurator, m_pdesktopsrvdispatcher, m_plogwriter);
+
+         m_pgatekickhandler = allocateø ::remoting::GateKickHandler();
+         m_pgatekickhandler->initialize_gate_kick_handler(m_pdesktopsrvdispatcher);
 
          // Start servers
          m_pdesktopsrvdispatcher->resume();
@@ -137,7 +143,7 @@ namespace remoting_node_desktop
          // Spy for the session change.
          auto psessionchangeswatcher = createø<::subsystem::SessionChangesWatcher>();
          psessionchangeswatcher->start_SessionChangesWatcher([this]() { onHappening(); }, m_plogwriter);
-         // m_sessionChangesWatcher = new SessionChangesWatcher(this, &m_plogwriter);
+         // m_psessionchangeswatcher = new SessionChangesWatcher(this, &m_plogwriter);
       }
       catch (::exception &e)
       {
@@ -175,22 +181,22 @@ namespace remoting_node_desktop
          m_plogwriter->error("Cannot close server->client channel: {}", e.get_message());
       }
 
-      if (m_sessionChangesWatcher)
-         delete m_sessionChangesWatcher;
+      if (m_psessionchangeswatcher)
+         delete m_psessionchangeswatcher;
 
       // This will stop and destroy the dispatcher. So all handles will be
       // unregistered automatically.
       if (m_pdesktopsrvdispatcher)
          delete m_pdesktopsrvdispatcher;
 
-      if (m_pblockinggateKickHandler)
-         delete m_pblockinggateKickHandler;
-      if (m_cfgServer)
-         delete m_cfgServer;
-      if (m_uiSrv)
-         delete m_uiSrv;
-      if (m_updHandlerSrv)
-         delete m_updHandlerSrv;
+      if (m_pgatekickhandler)
+         delete m_pgatekickhandler;
+      if (m_pconfigserver)
+         delete m_pconfigserver;
+      if (m_puserinputserver)
+         delete m_puserinputserver;
+      if (m_pupdatehandlerserver)
+         delete m_pupdatehandlerserver;
 
       if (m_pgateServerToClient)
          delete m_pgateServerToClient;
@@ -209,13 +215,14 @@ namespace remoting_node_desktop
       OperatingSystemApplication::shutdown();
    }
 
-   void DesktopServerApplication::onConfigReload(ServerConfig *serverConfig) {}
+   void DesktopServerApplication::onConfigReload(::remoting::ServerConfig *serverConfig) {}
 
    void DesktopServerApplication::run()
    {
       try
       {
-         WallpaperUtil wp(m_plogwriter);
+         ::remoting::WallpaperUtil wallpaperutil;
+         wallpaperutil.initialize_wallpaper_util(m_pconfigurator, m_plogwriter);
 
          // int retCode = OperatingSystemApplication::run();
          OperatingSystemApplication::run();

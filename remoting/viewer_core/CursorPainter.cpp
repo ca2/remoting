@@ -24,9 +24,9 @@
 #include "framework.h"
 #include "CursorPainter.h"
 
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
-namespace remoting
+namespace remoting_client
 {
    CursorPainter::CursorPainter(::innate_subsystem::Framebuffer *pframebuffer, ::subsystem::LogWriter * plogwriter)
    : m_fb(pframebuffer),
@@ -152,4 +152,4 @@ namespace remoting
       upperLeftPoint-= m_cursor.getHotSpot();
       return upperLeftPoint;
    }
-} //namespace remoting
+} //namespace remoting_client

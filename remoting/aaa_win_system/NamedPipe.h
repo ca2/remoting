@@ -28,7 +28,7 @@
 #include "subsystem/_common_header.h"
 #include "::happening.h"
 #include "acme/input_output/Channel.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "Pipe.h"
 
 /**
@@ -81,7 +81,7 @@ private:
   void checkPipeHandle();
 
   HANDLE m_hPipe;
-  critical_section m_hPipeMutex;
+  lockable_critical_section m_hPipeMutex;
   ::string m_pipeName;
 
   ::happening m_readEvent;

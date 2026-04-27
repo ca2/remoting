@@ -30,7 +30,7 @@ namespace remoting
 
 
 
-   RfbDispatcher::RfbDispatcher(RfbInputGate *pblockinggate,
+   RfbDispatcher::RfbDispatcher(::remoting::RfbInputGate *pblockinggate,
                                 const ::procedure &procedureTermination):
     m_pblockinggate(pblockinggate),
      m_procedureTermination(procedureTermination)
@@ -38,7 +38,7 @@ namespace remoting
    {
    }
 
-   // RfbDispatcher::RfbDispatcher(RfbInputGate *pblockinggate,
+   // RfbDispatcher::RfbDispatcher(::remoting::RfbInputGate *pblockinggate,
    //                              ::happening *terminationEvent)
    // : m_pblockinggate(pblockinggate),
    //   m_extTerminationListener(0),

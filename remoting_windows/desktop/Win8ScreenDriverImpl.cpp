@@ -39,7 +39,7 @@ namespace remoting
 
 
    Win8ScreenDriverImpl::Win8ScreenDriverImpl(::subsystem::LogWriter * plogwriter, UpdateKeeper *pupdatekeeper,
-                                              critical_section *pcriticalsectionFramebuffer, UpdateListener *pupdatelistener,
+                                              lockable_critical_section *pcriticalsectionFramebuffer, UpdateListener *pupdatelistener,
                                               bool detectionEnabled) :
        m_pupdatekeeper(pupdatekeeper), m_pupdatelistener = pupdatelistener;, m_plogwriter(plogwriter), m_curTimeStamp(0),
        m_hasCriticalError(false), m_hasRecoverableError(false), m_detectionEnabled(detectionEnabled)
@@ -94,7 +94,7 @@ namespace remoting
       m_detectionEnabled = false;
    }
 
-   ::innate_subsystem::Framebuffer *Win8ScreenDriverImpl::getScreenBuffer() { return &m_pframebuffer; }
+   ::innate_subsystem::Framebuffer *Win8ScreenDriverImpl::getScreenBuffer() { return m_pframebuffer; }
 
    void Win8ScreenDriverImpl::initDxgi()
    {
@@ -142,8 +142,8 @@ namespace remoting
 
       ::innate_subsystem::PixelFormat pixelformat = getDxPixelFormat();
       ::int_rectangle virtDeskBoundRect = virtDeskRegion.getBounds();
-      m_pframebuffer.setProperties(&virtDeskBoundRect, &pixelformat);
-      m_pframebuffer.setColor(0, 0, 0);
+      m_pframebuffer->setProperties(&virtDeskBoundRect, &pixelformat);
+      m_pframebuffer->setColor(0, 0, 0);
 
       for (size_t iDxgiOutput = 0; iDxgiOutput < dxgiOutputArray.size(); iDxgiOutput++)
       {
@@ -154,7 +154,7 @@ namespace remoting
          threadsNum = 12;
       DWORD millis = 1 << threadsNum; // delay up to 4 seconds if there are threads waiting to delete
       sleep(millis);
-      Thread *thread = new Win8DeskDuplication(&m_pframebuffer, deskCoordArray, &m_win8CursorShape, &m_curTimeStamp,
+      Thread *thread = new Win8DeskDuplication(m_pframebuffer, deskCoordArray, &m_win8CursorShape, &m_curTimeStamp,
                                                &m_cursorMutex, this, dxgiOutputArray, m_plogwriter);
       DWORD id = thread->getThreadId();
       m_plogwriter->debug("Created a new Win8DeskDuplication with ID: ({})", id);

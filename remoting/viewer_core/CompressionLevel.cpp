@@ -26,7 +26,7 @@
 #include "subsystem/platform/Exception.h"
 
 
-namespace remoting
+namespace remoting_client
 {
    CompressionLevel::CompressionLevel(::subsystem::LogWriter * plogwriter, int compression)
    : PseudoDecoder(plogwriter)
@@ -41,20 +41,20 @@ namespace remoting
    int CompressionLevel::levelToEncoding(int compressionLevel)
    {
       switch (compressionLevel) {
-         case 0: return PseudoEncDefs::COMPR_LEVEL_0;
-         case 1: return PseudoEncDefs::COMPR_LEVEL_1;
-         case 2: return PseudoEncDefs::COMPR_LEVEL_2;
-         case 3: return PseudoEncDefs::COMPR_LEVEL_3;
-         case 4: return PseudoEncDefs::COMPR_LEVEL_4;
-         case 5: return PseudoEncDefs::COMPR_LEVEL_5;
-         case 6: return PseudoEncDefs::COMPR_LEVEL_6;
-         case 7: return PseudoEncDefs::COMPR_LEVEL_7;
-         case 8: return PseudoEncDefs::COMPR_LEVEL_8;
-         case 9: return PseudoEncDefs::COMPR_LEVEL_9;
+         case 0: return ::remoting::PseudoEncDefs::COMPR_LEVEL_0;
+         case 1: return ::remoting::PseudoEncDefs::COMPR_LEVEL_1;
+         case 2: return ::remoting::PseudoEncDefs::COMPR_LEVEL_2;
+         case 3: return ::remoting::PseudoEncDefs::COMPR_LEVEL_3;
+         case 4: return ::remoting::PseudoEncDefs::COMPR_LEVEL_4;
+         case 5: return ::remoting::PseudoEncDefs::COMPR_LEVEL_5;
+         case 6: return ::remoting::PseudoEncDefs::COMPR_LEVEL_6;
+         case 7: return ::remoting::PseudoEncDefs::COMPR_LEVEL_7;
+         case 8: return ::remoting::PseudoEncDefs::COMPR_LEVEL_8;
+         case 9: return ::remoting::PseudoEncDefs::COMPR_LEVEL_9;
          default:
             ::string error;
             error.formatf("Compression level \"{}\" is not valid", compressionLevel);
             throw ::subsystem::Exception(error);
       }
    }
-} // namespace remoting
+} // namespace remoting_client

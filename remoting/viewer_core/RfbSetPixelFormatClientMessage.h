@@ -28,7 +28,7 @@
 #include "subsystem/framebuffer/PixelFormat.h"
 #include "RfbClientToServerMessage.h"
 
-namespace remoting
+namespace remoting_client
 {
    class CLASS_DECL_REMOTING RfbSetPixelFormatClientMessage : public RfbClientToServerMessage
    {
@@ -36,10 +36,10 @@ namespace remoting
       RfbSetPixelFormatClientMessage(const ::innate_subsystem::PixelFormat & pixelFormat);
       virtual ~RfbSetPixelFormatClientMessage();
 
-      void send(RfbOutputGate *output);
+      void send(::remoting::RfbOutputGate *output);
 
    protected:
       ::innate_subsystem::PixelFormat m_pixelformat;
    };
 
-} // namespace remoting
+} // namespace remoting_client

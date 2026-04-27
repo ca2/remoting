@@ -37,7 +37,7 @@ namespace remoting
       RfbPointerEventClientMessage(const unsigned char buttonMask, const ::int_point &pointPosition);
       ~RfbPointerEventClientMessage();
 
-      void send(RfbOutputGate *output);
+      void send(::remoting::RfbOutputGate *output);
 
    private:
       unsigned char m_buttonMask;

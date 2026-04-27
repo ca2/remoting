@@ -30,7 +30,7 @@
 
 namespace remoting
 {
-   namespace ftp
+   namespace file_transfer
    {
       //
       // Contains information about file in file transfer protocol
@@ -142,5 +142,5 @@ namespace remoting
       };
 
       ///
-   } // namespace ftp
+   } // namespace file_transfer
 } //namespace remoting

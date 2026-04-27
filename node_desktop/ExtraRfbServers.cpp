@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ExtraRfbServers.h"
 #include "remoting/remoting/server_config/Configurator.h"
-#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/server_config/ServerConfig.h"
 
 namespace remoting_node_desktop
 {
@@ -74,7 +74,7 @@ namespace remoting_node_desktop
    }
 
 
-      void ExtraRfbServers::initialize_extra_rfb_servers(Configurator * pconfigurator, ::subsystem::LogWriter *plogwriter)
+      void ExtraRfbServers::initialize_extra_rfb_servers(::remoting::Configurator * pconfigurator, ::subsystem::LogWriter *plogwriter)
    {
          m_pconfigurator = pconfigurator;
       m_plogwriter = plogwriter;

@@ -28,7 +28,7 @@
 #include "ViewPortState.h"
 #include "innate_subsystem/framebuffer/Framebuffer.h"
 #include "remoting/remoting/desktop/Desktop.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 //#include "subsystem/platform/class ::time.h"
 //#include "log_writer/LogWriter.h"
 
@@ -57,7 +57,7 @@ namespace remoting
       ViewPortState m_state;
       ::int_rectangle m_rectangle;
       ::remoting::Region m_regionApp;
-      critical_section m_stateMutex;
+      lockable_critical_section m_stateMutex;
 
       class ::time m_timeLatestHwndResolving;
 
@@ -77,8 +77,8 @@ namespace remoting
       void initDesktopInterface(::remoting::Desktop *desktop);
 
       // This function updates view port rectangle. The new view port rectangle
-      // will be constrained by fbDimension.
-      void update(const ::int_size &fbDimension);
+      // will be constrained by sizeFramebuffer.
+      void update(const ::int_size &sizeFramebuffer);
 
       // This function returns the view port rectangle.
       ::int_rectangle getViewport();

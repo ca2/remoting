@@ -56,8 +56,8 @@ namespace remoting
       m_bScreenSizeChanged = false;
       m_bCursorPosChanged = false;
       m_bCursorShapeChanged = false;
-      m_pointCopySource.Null();
-      m_pointCursorPos.Null();
+      m_pointCopySource.clear();
+      m_pointCursorPos.clear();
    }
 
    UpdateContainer &UpdateContainer::operator=(const UpdateContainer &src)

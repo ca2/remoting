@@ -71,7 +71,7 @@ namespace remoting
       ::pointer < rfb_client_run > m_prun;
       ClientState m_clientState;
       bool m_isMarkedOk;
-      critical_section m_criticalsectionClientState;
+      lockable_critical_section m_criticalsectionClientState;
       ::pointer < ClientTerminationListener > m_pclientterminationlistener;
       //::happening m_connClosingEvent;
       ::happening m_connClosingEvent;
@@ -82,7 +82,7 @@ namespace remoting
 
       ::pointer < Viewport > m_pviewportConst;
       ::pointer < Viewport > m_pviewportDynamic;
-      critical_section m_criticalsectionViewport;
+      lockable_critical_section m_criticalsectionViewport;
 
       ::pointer < UpdateSender > m_pupdatesender;
       ::pointer < ClipboardExchange > m_pclipboardexchange;
@@ -164,9 +164,9 @@ namespace remoting
 
       void setClientState(ClientState newState);
 
-      ::int_rectangle getViewport(const ::int_size & fbDimension);
+      ::int_rectangle getViewport(const ::int_size & sizeFramebuffer);
       virtual void onGetViewPort(::int_rectangle &viewRect, bool *shareApp, ::remoting::Region & regionShareApp);
-      void getViewPortInfo(const ::int_size & fbDimension, ::int_rectangle &resultRect,
+      void getViewPortInfo(const ::int_size & sizeFramebuffer, ::int_rectangle &rectangleResult,
                            bool *shareApp, ::remoting::Region & regionShareApp);
 
    };

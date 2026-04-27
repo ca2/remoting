@@ -27,7 +27,7 @@
 
 #include "PseudoDecoder.h"
 
-namespace remoting
+namespace remoting_client
 {
    class CLASS_DECL_REMOTING CompressionLevel : public PseudoDecoder
    {
@@ -41,4 +41,4 @@ namespace remoting
       static const int COMPRESSION_LEVEL_MIN = 0;
       static const int COMPRESSION_LEVEL_MAX = 9;
    };
-} // namespace remoting
+} // namespace remoting_client

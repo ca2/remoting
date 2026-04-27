@@ -36,7 +36,7 @@ namespace remoting
       RfbSetPixelFormatClientMessage(const ::innate_subsystem::PixelFormat & pixelFormat);
       virtual ~RfbSetPixelFormatClientMessage();
 
-      void send(RfbOutputGate *output);
+      void send(::remoting::RfbOutputGate *output);
 
    protected:
       ::innate_subsystem::PixelFormat m_pixelformat;

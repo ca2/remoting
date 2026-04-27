@@ -39,7 +39,7 @@
 
 namespace remoting_client
 {
-   FileTransferMainDialog::FileTransferMainDialog(::remoting::ftp::FileTransferCore *core)
+   FileTransferMainDialog::FileTransferMainDialog(::remoting::file_transfer::FileTransferCore *core)
    : FileTransferInterface(core)
    {
       setResourceId(ftclient_mainDialog);
@@ -47,7 +47,7 @@ namespace remoting_client
       m_lastSentFileListPath= "";
       m_lastReceivedFileListPath= "";
 
-      m_fakeMoveUpFolder = new ::remoting::ftp::FileInfo(0, 0, ::remoting::ftp::FileInfo::DIRECTORY, "..");
+      m_fakeMoveUpFolder = new ::remoting::file_transfer::FileInfo(0, 0, ::remoting::file_transfer::FileInfo::DIRECTORY, "..");
    }
 
    FileTransferMainDialog::~FileTransferMainDialog()
@@ -63,8 +63,8 @@ namespace remoting_client
       m_copyProgressBar.setPos(pc);
    }
 
-   int FileTransferMainDialog::onFtTargetFileExists(::remoting::ftp::FileInfo *sourceFileInfo,
-                                                    ::remoting::ftp::FileInfo *targetFileInfo,
+   int FileTransferMainDialog::onFtTargetFileExists(::remoting::file_transfer::FileInfo *sourceFileInfo,
+                                                    ::remoting::file_transfer::FileInfo *targetFileInfo,
                                                     const ::file::path & pathToTargetFile)
    {
       m_fileExistDialog.setFilesInfo(targetFileInfo,
@@ -74,15 +74,15 @@ namespace remoting_client
       int reasonOfDialog = m_fileExistDialog.showModal();
       switch (reasonOfDialog) {
          case FileExistDialog::SKIP_RESULT:
-            return ::remoting::ftp::CopyFileEventListener::TFE_SKIP;
+            return ::remoting::file_transfer::CopyFileEventListener::TFE_SKIP;
          case FileExistDialog::APPEND_RESULT:
-            return ::remoting::ftp::CopyFileEventListener::TFE_APPEND;
+            return ::remoting::file_transfer::CopyFileEventListener::TFE_APPEND;
          case FileExistDialog::CANCEL_RESULT:
             onCancelOperationButtonClick();
-            return ::remoting::ftp::CopyFileEventListener::TFE_CANCEL;
+            return ::remoting::file_transfer::CopyFileEventListener::TFE_CANCEL;
       } // switch
 
-      return ::remoting::ftp::CopyFileEventListener::TFE_OVERWRITE;
+      return ::remoting::file_transfer::CopyFileEventListener::TFE_OVERWRITE;
    }
 
    bool FileTransferMainDialog::onInitDialog()
@@ -347,7 +347,7 @@ namespace remoting_client
 
     void FileTransferMainDialog::onRenameRemoteButtonClick()
     {
-        ::remoting::ftp::FileInfo *fileInfo = m_remoteFileListView.getSelectedFileInfo();
+        ::remoting::file_transfer::FileInfo *fileInfo = m_remoteFileListView.getSelectedFileInfo();
 
         if (fileInfo == NULL) {
             MainSubsystem().message_box(operating_system_window(),
@@ -369,8 +369,8 @@ namespace remoting_client
             ::string newName;
             newName = renameDialog.getFileName();
 
-            m_ftCore->remoteFileRenameOperation(::remoting::ftp::FileInfo(0, 0, ::remoting::ftp::FileInfo::DIRECTORY, oldName),
-                                                ::remoting::ftp::FileInfo(0, 0, ::remoting::ftp::FileInfo::DIRECTORY, newName),
+            m_ftCore->remoteFileRenameOperation(::remoting::file_transfer::FileInfo(0, 0, ::remoting::file_transfer::FileInfo::DIRECTORY, oldName),
+                                                ::remoting::file_transfer::FileInfo(0, 0, ::remoting::file_transfer::FileInfo::DIRECTORY, newName),
                                                 remoteFolder);
         }
     }
@@ -387,8 +387,8 @@ namespace remoting_client
             auto fileName = folderDialog.getFileName();
 
 
-            m_ftCore->remoteFolderCreateOperation(::remoting::ftp::FileInfo(0, 0,
-                                                          ::remoting::ftp:: FileInfo::DIRECTORY,
+            m_ftCore->remoteFolderCreateOperation(::remoting::file_transfer::FileInfo(0, 0,
+                                                          ::remoting::file_transfer:: FileInfo::DIRECTORY,
                                                            fileName),
                                                   remoteFolder);
         }
@@ -406,13 +406,13 @@ namespace remoting_client
         }
 
         //int *indexes = new int[siCount];
-        //::remoting::ftp::FileInfo *filesInfo = new ::remoting::ftp::FileInfo[siCount];
+        //::remoting::file_transfer::FileInfo *filesInfo = new ::remoting::file_transfer::FileInfo[siCount];
 
-        ::pointer_array< ::remoting::ftp::FileInfo> fileinfoa;
+        ::pointer_array< ::remoting::file_transfer::FileInfo> fileinfoa;
 
         auto indexes = m_remoteFileListView.getSelectedItemsIndexes();
         for (unsigned int i = 0; i < indexes.size(); i++) {
-            ::remoting::ftp::FileInfo * pfileinfo = reinterpret_cast<::remoting::ftp::FileInfo *>(m_remoteFileListView.getItemData(indexes[i]).m_lparam);
+            ::remoting::file_transfer::FileInfo * pfileinfo = reinterpret_cast<::remoting::file_transfer::FileInfo *>(m_remoteFileListView.getItemData(indexes[i]).m_lparam);
             fileinfoa.add(pfileinfo);
         }
 
@@ -441,7 +441,7 @@ namespace remoting_client
 
     void FileTransferMainDialog::onRenameLocalButtonClick()
     {
-        ::remoting::ftp::FileInfo *fileInfo = m_localFileListView.getSelectedFileInfo();
+        ::remoting::file_transfer::FileInfo *fileInfo = m_localFileListView.getSelectedFileInfo();
 
         if (fileInfo == NULL) {
             MainSubsystem().message_box(operating_system_window(),
@@ -566,12 +566,12 @@ namespace remoting_client
         }
 
         //int *indexes = new int[siCount];
-        //::remoting::ftp::FileInfo *filesInfo = new ::remoting::ftp::FileInfo[siCount];
-        ::pointer_array<::remoting::ftp::FileInfo> fileinfoa;
+        //::remoting::file_transfer::FileInfo *filesInfo = new ::remoting::file_transfer::FileInfo[siCount];
+        ::pointer_array<::remoting::file_transfer::FileInfo> fileinfoa;
 
         auto indexes = m_localFileListView.getSelectedItemsIndexes();
         for (unsigned int i = 0; i < indexes.size(); i++) {
-            auto pfileInfo = m_localFileListView.getItemData(indexes[i]).raw_cast<::remoting::ftp::FileInfo*>();
+            auto pfileInfo = m_localFileListView.getItemData(indexes[i]).raw_cast<::remoting::file_transfer::FileInfo*>();
             fileinfoa.add(pfileInfo);
         }
 
@@ -602,7 +602,7 @@ namespace remoting_client
     void FileTransferMainDialog::onUploadButtonClick()
     {
         //unsigned int siCount = m_localFileListView.getSelectedItemsCount();
-        ::pointer_array<::remoting::ftp::FileInfo> fileinfoa;
+        ::pointer_array<::remoting::file_transfer::FileInfo> fileinfoa;
 
         auto indexes = m_localFileListView.getSelectedItemsIndexes();
 
@@ -617,7 +617,7 @@ namespace remoting_client
         //FileInfo *filesInfo = new FileInfo[siCount];
 
         for (unsigned int i = 0; i < indexes.size(); i++) {
-            auto pfileInfo = m_localFileListView.getItemData(indexes[i]).raw_cast<::remoting::ftp::FileInfo *>();
+            auto pfileInfo = m_localFileListView.getItemData(indexes[i]).raw_cast<::remoting::file_transfer::FileInfo *>();
             fileinfoa.add(pfileInfo);
         }
 
@@ -648,7 +648,7 @@ namespace remoting_client
 
     void FileTransferMainDialog::onDownloadButtonClick()
     {
-        //   ::pointer_array<::remoting::ftp::FileInfo> fileinfoa;
+        //   ::pointer_array<::remoting::file_transfer::FileInfo> fileinfoa;
 
         auto indexes = m_remoteFileListView.getSelectedItemsIndexes();
 
@@ -662,11 +662,11 @@ namespace remoting_client
         //int *indexes = new int[siCount];
         //FileInfo *filesInfo = new FileInfo[siCount];
 
-        ::pointer_array<::remoting::ftp::FileInfo> fileinfoa;
+        ::pointer_array<::remoting::file_transfer::FileInfo> fileinfoa;
 
         //m_remoteFileListView.getSelectedItemsIndexes(indexes);
         for (unsigned int i = 0; i < indexes.size(); i++) {
-            auto pfileInfo = m_remoteFileListView.getItemData(indexes[i]).raw_cast<::remoting::ftp::FileInfo *>();
+            auto pfileInfo = m_remoteFileListView.getItemData(indexes[i]).raw_cast<::remoting::file_transfer::FileInfo *>();
             fileinfoa.add(pfileInfo);
         }
 
@@ -711,7 +711,7 @@ namespace remoting_client
 
     void FileTransferMainDialog::onRemoteListViewDoubleClick()
     {
-        ::remoting::ftp::FileInfo *selFileInfo = m_remoteFileListView.getSelectedFileInfo();
+        ::remoting::file_transfer::FileInfo *selFileInfo = m_remoteFileListView.getSelectedFileInfo();
         if (selFileInfo == 0)
             return;
 
@@ -737,7 +737,7 @@ namespace remoting_client
     void FileTransferMainDialog::onLocalListViewDoubleClick()
     {
         // FIXME: removed duplicate code (see onRemoteListViewDoubleClick)
-        ::remoting::ftp::FileInfo *selFileInfo = m_localFileListView.getSelectedFileInfo();
+        ::remoting::file_transfer::FileInfo *selFileInfo = m_localFileListView.getSelectedFileInfo();
 
         if (selFileInfo == 0)
             return;
@@ -914,7 +914,7 @@ namespace remoting_client
     void FileTransferMainDialog::tryListLocalFolder(const ::file::path & pathToFile)
     {
         try {
-            //::array_base <::remoting::ftp::FileInfo> *localFileList = m_ftCore->getListLocalFolder(pathToFile);
+            //::array_base <::remoting::file_transfer::FileInfo> *localFileList = m_ftCore->getListLocalFolder(pathToFile);
 
             auto localFileList = m_ftCore->getListLocalFolder(pathToFile);
 
@@ -923,7 +923,7 @@ namespace remoting_client
             m_localFileListView.clear();
             if (localFileList.has_element())
             {
-                //::remoting::ftp::FileInfo *fileInfo = localFileList->data();
+                //::remoting::file_transfer::FileInfo *fileInfo = localFileList->data();
                 m_localFileListView.addRange(localFileList);
             }
 
@@ -1063,7 +1063,7 @@ namespace remoting_client
         m_remoteFileListView.clear();
         auto fileRemoteList = m_ftCore->getListRemoteFolder();
         if (fileRemoteList.has_element()) {
-            //::remoting::ftp::FileInfo *filesInfo = fileRemoteList->data();
+            //::remoting::file_transfer::FileInfo *filesInfo = fileRemoteList->data();
             m_remoteFileListView.addRange(fileRemoteList);
         }
 

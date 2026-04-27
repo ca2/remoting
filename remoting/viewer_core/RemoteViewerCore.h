@@ -47,7 +47,7 @@
 //#include aaa_<map>
 #include "UpdateRequestSender.h"
 
-namespace remoting
+namespace remoting_client
 {
    //
    // RemoteViewerCore implements a local representation of a live remote screen
@@ -108,9 +108,9 @@ namespace remoting
 
       //
       // This constructor takes any type of connection that can be specified via
-      // a ::pair of abstract "gates" (RfbInputGate and RfbOutputGate).
+      // a ::pair of abstract "gates" (::remoting::RfbInputGate and ::remoting::RfbOutputGate).
       //
-      RemoteViewerCore(RfbInputGate *input, RfbOutputGate *output,
+      RemoteViewerCore(::remoting::RfbInputGate *input, ::remoting::RfbOutputGate *output,
                        CoreEventsAdapter *adapter,
                        ::subsystem::LogWriter * plogwriter = 0,
                        bool sharedFlag = true);
@@ -200,15 +200,15 @@ namespace remoting
       // Write operations (sending data to the server) may be performed from any
       // thread, both within the object and from outside of the object, assuming
       // that proper locking and flushing are used in the corresponding
-      // RfbOutputGate object. Beware of sending data from callbacks, as that can
+      // ::remoting::RfbOutputGate object. Beware of sending data from callbacks, as that can
       // block the input thread for a long time.
       //
 
       //
       // This version of start() takes any type of connection that can be
-      // specified via a ::pair of abstract "gates" (RfbInputGate and RfbOutputGate).
+      // specified via a ::pair of abstract "gates" (::remoting::RfbInputGate and ::remoting::RfbOutputGate).
       //
-      void start(RfbInputGate *input, RfbOutputGate *output,
+      void start(::remoting::RfbInputGate *input, ::remoting::RfbOutputGate *output,
                  CoreEventsAdapter *adapter,
                  bool sharedFlag = true);
 
@@ -379,7 +379,7 @@ namespace remoting
 
       //
       // If the server anounced UTF8CUTT capability allow sending ClientCutTextUtf8 messages.
-      // If the server anounced UTF8CUTT and UTF8CUTE capabilities sends EnableCutTextUtf8 scopedstrMessage.
+      // If the server anounced UTF8CUTT and UTF8CUTE pcapabilitiesmanager sends EnableCutTextUtf8 scopedstrMessage.
       //
       void allowUtf8Clipboard();
 
@@ -424,7 +424,7 @@ namespace remoting
       void enableTightSecurityType(bool enabled);
 
       //
-      // Work with capabilities is documented in interface CapabilitiesManager.
+      // Work with pcapabilitiesmanager is documented in interface CapabilitiesManager.
       // Next methods is implements of CapabilitiesManager.
       //
 
@@ -501,7 +501,7 @@ namespace remoting
       void receiveFbUpdate();
 
       //
-      // Receive rectangle, decode it and notify m_fbUpdateNotifier.
+      // Receive rectangle, decode it and notify m_pfbupdatenotifier.
       //
       // Returns true if this rectangle should be the last one in this update,
       // false otherwise. This is needed to support LastRect pseudo-encoding
@@ -564,14 +564,14 @@ namespace remoting
       bool wasConnected() const;
 
       //
-      // Update properties (::int_size and PixelfFormat) of m_pframebuffer.
+      // Update properties (::int_size and PixelfFormat) of m_pframebuffer->
       //
-      void setFbProperties(const ::int_size & fbDimension,
-                           const ::innate_subsystem::PixelFormat & fbPixelFormat);
+      void setFbProperties(const ::int_size & sizeFramebuffer,
+                           const ::innate_subsystem::PixelFormat & pixelformatFramebuffer);
 
       //
-      // If m_isNewPixelFormat flag is set to true, then pixel format of the frame buffer
-      // will be updated to m_viewerPixelFormat.
+      // If m_bNewPixelFormat flag is set to true, then pixel format of the frame buffer
+      // will be updated to m_pixelformatViewer.
       //
       // This method must be called only from the input thread, otherwise data corruption
       // is possible on the protocol level.
@@ -601,23 +601,23 @@ namespace remoting
       // See also: C++ standard 12.6.2 - Initializing bases and members.
       TcpConnection m_tcpConnection;
 
-      RfbInputGate *m_input;
-      RfbOutputGate *m_output;
+      ::remoting::RfbInputGate *m_input;
+      ::remoting::RfbOutputGate *m_output;
 
-      CoreEventsAdapter *m_adapter;
+      CoreEventsAdapter *m_pcoreeventsadapter;
 
-      mutable critical_section m_dispatchDataProviderLock;
+      mutable lockable_critical_section m_dispatchDataProviderLock;
       DispatchDataProvider *m_dispatchDataProvider;
 
-      WatermarksController m_watermarksController;
+      WatermarksController m_pwatermarkscontroller;
 
       // m_decoderStore depends on m_plogwriter and must be defined after it.
       // See also: C++ standard 12.6.2 - Initializing bases and members.
       DecoderStore m_decoderStore;
 
-      // m_fbUpdateNotifier depends on m_plogwriter and must be defined after it.
+      // m_pfbupdatenotifier depends on m_plogwriter and must be defined after it.
       // See also: C++ standard 12.6.2 - Initializing bases and members.
-      FbUpdateNotifier m_fbUpdateNotifier;
+      ::pointer < FbUpdateNotifier > m_pfbupdatenotifier;
 
       CapsContainer m_authCaps;
       ::map<unsigned int, AuthHandler *> m_authHandlers;
@@ -631,11 +631,11 @@ namespace remoting
       ::map<unsigned int, int> m_decoderPriority;
 
       // This flag is set after call start().
-      mutable critical_section m_startLock;
+      mutable lockable_critical_section m_startLock;
       bool m_wasStarted;
 
       // This flag is set after onConnected().
-      mutable critical_section m_connectLock;
+      mutable lockable_critical_section m_connectLock;
       bool m_wasConnected;
 
       // This is general frame buffer of RemoteViewerCore and local mutex to change him.
@@ -643,9 +643,9 @@ namespace remoting
       // Cursor painted on him before calling CoreEventsAdapter::onFramebufferUpdate()
       // and erased after (thread FbUpdateNotifier).
       //
-      // Mutex m_fbLock must locked into only this thread, else may be deadlock.
-      Lockable < critical_section > m_fbLock;
-      ::innate_subsystem::Framebuffer m_pframebuffer;
+      // Mutex m_criticalsectionFramebuffer must locked into only this thread, else may be deadlock.
+      lockable_critical_section m_criticalsectionFramebuffer;
+      ::pointer < ::innate_subsystem::Framebuffer > m_pframebuffer;
 
       // ::list_base of server dispalys
       ::int_rectangle_array_base m_desktops;
@@ -655,24 +655,24 @@ namespace remoting
       // it only easy buffer, common to all decoders. In future this frame buffer
       // may be replaced small buffers (e.g. 64KB) into ever decoder.
       //
-      // After finish of decoding Decoder copy data to m_pframebuffer.
+      // After finish of decoding Decoder copy data to m_pframebuffer->
       // This buffer is not need to blocking: read information is one-thread.
-      ::innate_subsystem::Framebuffer m_rectangleFb;
+      ::pointer < ::innate_subsystem::Framebuffer > m_pframebufferRectangle;
 
-      critical_section m_pixelFormatLock;
-      bool m_isNewPixelFormat;
-      ::innate_subsystem::PixelFormat m_viewerPixelFormat;
+      lockable_critical_section m_criticalsectionPixelFormat;
+      bool m_bNewPixelFormat;
+      ::innate_subsystem::PixelFormat m_pixelformatViewer;
 
-      critical_section m_refreshingLock;
-      bool m_isRefreshing;
+      lockable_critical_section m_criticalsectionLock;
+      bool m_bRefreshing;
 
-      critical_section m_freezeLock;
-      bool m_isFreeze;
+      lockable_critical_section m_criticalsectionFreeze;
+      bool m_bFreeze;
 
-      critical_section m_requestUpdateLock;
-      bool m_isNeedRequestUpdate;
+      lockable_critical_section m_criticalsectionRequestUpdate;
+      bool m_bNeedRequestUpdate;
 
-      bool m_sharedFlag;
+      bool m_bShared;
       int m_major;
       int m_minor;
       bool m_isTightEnabled;
@@ -684,7 +684,7 @@ namespace remoting
 
       int m_updateTimeout;
 
-      UpdateRequestSender m_updateRequestSender;
+      ::pointer < UpdateRequestSender > m_pupdaterequestsenderProperty;
 
    private:
       // Do not allow copying objects.
@@ -693,5 +693,5 @@ namespace remoting
    };
 
 
-} // namespace remoting
+} // namespace remoting_client
 

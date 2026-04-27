@@ -145,7 +145,7 @@ public:
    * @throws RemoteException on error on server.
    * @throws ::io_exception on io error.
    */
-  void setServerConfig(ServerConfig * pserverconfig);
+  void setServerConfig(::remoting::ServerConfig * pserverconfig);
 
   /**
    * Gets current configuration from server.
@@ -153,7 +153,7 @@ public:
    * @throws RemoteException on error on server.
    * @throws ::io_exception on io error.
    */
-  void getServerConfig(ServerConfig * pserverconfig);
+  void getServerConfig(::remoting::ServerConfig * pserverconfig);
 
   /**
    * Checks if TvnControl must show icon in tray.

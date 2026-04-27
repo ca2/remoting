@@ -30,8 +30,8 @@
 
 #include "innate_subsystem/framebuffer/Framebuffer.h"
 #include "remoting/remoting/rfb/EncodingDefs.h"
-////#include "subsystem/thread/critical_section.h"
-////#include "subsystem/thread/critical_section.h"
+////#include "subsystem/thread/lockable_critical_section.h"
+////#include "subsystem/thread/lockable_critical_section.h"
 ///
 
 namespace remoting

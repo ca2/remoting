@@ -31,7 +31,7 @@ namespace remoting
 
    // ConsolePoller::ConsolePoller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
    //                              ScreenGrabber *pscreengrabber, ::innate_subsystem::Framebuffer *backupFramebuffer,
-   //                              critical_section *framebufferMutex, ::subsystem::LogWriter * plogwriter) :
+   //                              lockable_critical_section *framebufferMutex, ::subsystem::LogWriter * plogwriter) :
    //     UpdateDetector(pupdatekeeper, pupdatelistener), m_pscreengrabber(pscreengrabber),
    //     m_pframebufferBackup(backupFramebuffer), m_framebufferMutex(framebufferMutex), m_plogwriter(plogwriter)
    // {
@@ -53,7 +53,7 @@ namespace remoting
 
    void ConsolePoller::initialize_console_poller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
                              ScreenGrabber *pscreengrabber, ::innate_subsystem::Framebuffer *pframebufferBackup,
-                             critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter)
+                             lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter)
    {
       initialize_update_detector(pupdatekeeper, pupdatelistener);
       m_pscreengrabber = pscreengrabber;

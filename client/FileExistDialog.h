@@ -52,7 +52,7 @@ namespace remoting_client
         // Override BaseDialog method
         virtual int showModal();
 
-        void setFilesInfo(::remoting::ftp::FileInfo *existingFileInfo, ::remoting::ftp::FileInfo *newFileInfo,
+        void setFilesInfo(::remoting::file_transfer::FileInfo *existingFileInfo, ::remoting::file_transfer::FileInfo *newFileInfo,
                           const ::scoped_string & scopedstrPathToFileCaption);
 
         void resetDialogResultValue();
@@ -81,12 +81,12 @@ namespace remoting_client
 
         //private:
 
-        virtual void updateGui(::remoting::ftp::FileInfo *fileInfo, ::innate_subsystem::Control *sizeLabel, ::innate_subsystem::Control *modTimeLabel);
+        virtual void updateGui(::remoting::file_transfer::FileInfo *fileInfo, ::innate_subsystem::Control *sizeLabel, ::innate_subsystem::Control *modTimeLabel);
         virtual void initControls();
 
         //protected:
-        ::remoting::ftp::FileInfo *m_newFileInfo;
-        ::remoting::ftp:: FileInfo *m_existingFileInfo;
+        ::remoting::file_transfer::FileInfo *m_newFileInfo;
+        ::remoting::file_transfer:: FileInfo *m_existingFileInfo;
         ::string m_pathToFileCaption;
 
         //

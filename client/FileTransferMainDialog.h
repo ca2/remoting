@@ -45,10 +45,10 @@
 namespace remoting_client
 {
     class FileTransferMainDialog : public ::innate_subsystem::Dialog,
-                                   public ::remoting::ftp::FileTransferInterface
+                                   public ::remoting::file_transfer::FileTransferInterface
     {
     public:
-        FileTransferMainDialog(::remoting::ftp::FileTransferCore *core);
+        FileTransferMainDialog(::remoting::file_transfer::FileTransferCore *core);
         virtual ~FileTransferMainDialog();
 
         //
@@ -60,8 +60,8 @@ namespace remoting_client
         //
         // Inherited from FtInterface
         //
-        int onFtTargetFileExists(::remoting::ftp::FileInfo *sourceFileInfo,
-                                 ::remoting::ftp::FileInfo *targetFileInfo,
+        int onFtTargetFileExists(::remoting::file_transfer::FileInfo *sourceFileInfo,
+                                 ::remoting::file_transfer::FileInfo *targetFileInfo,
                                  const ::file::path & pathToTargetFile);
         void setProgress(double progress);
 
@@ -279,7 +279,7 @@ namespace remoting_client
         // ::file::item info of ".." fake folder
         //
 
-        ::remoting::ftp:: FileInfo *m_fakeMoveUpFolder;
+        ::remoting::file_transfer:: FileInfo *m_fakeMoveUpFolder;
 
         //private:
 

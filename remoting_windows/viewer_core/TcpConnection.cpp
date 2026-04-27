@@ -76,7 +76,7 @@ namespace remoting
       m_wasBound = true;
    }
 
-   void TcpConnection::bind(RfbInputGate * pinput, RfbOutputGate * poutput)
+   void TcpConnection::bind(::remoting::RfbInputGate * pinput, ::remoting::RfbOutputGate * poutput)
    {
       critical_section_lock al(&m_connectLock);
       if (m_wasBound) {
@@ -125,8 +125,8 @@ namespace remoting
          m_plogwriter->debug("Initialization of socket stream and input/output gates...");
          m_psocketstream = allocateø ::subsystem::SocketStream(m_psocket);
          m_pbufInput = allocateø ::BufferedInputStream(m_psocketstream);
-         m_pinput = allocateø RfbInputGate(m_pbufInput);
-         m_poutput = allocateø RfbOutputGate(m_psocketstream);
+         m_pinput = allocateø ::remoting::RfbInputGate(m_pbufInput);
+         m_poutput = allocateø ::remoting::RfbOutputGate(m_psocketstream);
          m_RfbGatesOwner = true;
       } else {
          _ASSERT(m_pinput && m_poutput);
@@ -146,7 +146,7 @@ namespace remoting
       }
    }
 
-   RfbInputGate *TcpConnection::getInput() const
+   ::remoting::RfbInputGate *TcpConnection::getInput() const
    {
       {
          critical_section_lock al(&m_connectLock);
@@ -157,7 +157,7 @@ namespace remoting
       return m_pinput;
    }
 
-   RfbOutputGate *TcpConnection::getOutput() const
+   ::remoting::RfbOutputGate *TcpConnection::getOutput() const
    {
       {
          critical_section_lock al(&m_connectLock);

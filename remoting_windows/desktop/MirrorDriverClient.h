@@ -35,6 +35,8 @@
 #include "innate_subsystem/gui/MessageWindow.h"
 #include "subsystem/thread/GuiThread.h"
 #include "acme/parallelization/happening.h"
+#include "subsystem_windows/node/MessageWindow.h"
+//#include "remoting/remoting/desktop/DisplayEsc.h"
 //#include "log_writer/LogWriter.h"
 
 namespace remoting
@@ -104,7 +106,7 @@ namespace remoting
 
       DWORD m_deviceNumber;
       DISPLAY_DEVICE m_deviceInfo;
-      RegistryKey m_regkeyDevice;
+      ::subsystem::RegistryKey m_regkeyDevice;
       DFEXT_DEVMODE m_deviceMode;
       HDC m_driverDC;
 
@@ -113,12 +115,12 @@ namespace remoting
 
       ::happening m_initListener;
       bool m_isDisplayChanged;
-      MessageWindow m_propertyChangeListenerWindow;
+      ::subsystem_windows::MessageWindow m_messagewindowPropertyChangeListener;
 
       ::innate_subsystem::PixelFormat m_pixelformat;
       ::int_size m_dimension;
       ::int_point m_leftTopCorner;
-      Screen m_screen;
+      ::subsystem::Screen m_screen;
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };

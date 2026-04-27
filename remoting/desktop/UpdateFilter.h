@@ -28,7 +28,7 @@
 //#include "windows/WindowsScreenGrabber.h"
 #include "ScreenDriver.h"
 #include "innate_subsystem/framebuffer/Framebuffer.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "UpdateContainer.h"
 #include "GrabOptimizator.h"
 
@@ -43,18 +43,18 @@ namespace remoting
 
       ::pointer < ScreenDriver > m_pscreendriver;
       ::pointer < ::innate_subsystem::Framebuffer > m_pframebuffer;
-      critical_section * m_pcriticalsectionFramebuffer;
+      lockable_critical_section * m_pcriticalsectionFramebuffer;
       ::pointer < GrabOptimizator > m_pgraboptimizator;
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
       //UpdateFilter(ScreenDriver *screenDriver, ::innate_subsystem::Framebuffer *pframebuffer,
-        //           critical_section *framebufferCriticalSection, ::subsystem::LogWriter * plogwriter);
+        //           lockable_critical_section *framebufferCriticalSection, ::subsystem::LogWriter * plogwriter);
       UpdateFilter();
       ~UpdateFilter();
 
       virtual void initialize_update_filter(ScreenDriver *screenDriver, ::innate_subsystem::Framebuffer *pframebuffer,
-             critical_section *framebufferCriticalSection, ::subsystem::LogWriter * plogwriter);
+             lockable_critical_section *framebufferCriticalSection, ::subsystem::LogWriter * plogwriter);
 
       void filter(UpdateContainer & updatecontainer);
 

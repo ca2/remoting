@@ -37,7 +37,7 @@ namespace remoting
    class ClipboardExchange : public RfbDispatcherListener, public ::subsystem::Thread
    {
    public:
-      ClipboardExchange(RfbCodeRegistrator *codeRegtor, Desktop *desktop,
+      ClipboardExchange(RfbCodeRegistrator *m_prfbcoderegistrator, Desktop *desktop,
                         ::remoting::RfbOutputGate *output, bool viewOnly, ::subsystem::LogWriter * plogwriter);
       virtual ~ClipboardExchange();
 
@@ -64,7 +64,7 @@ namespace remoting
 
       ::string m_storedClip;
       bool m_hasNewClip;
-      critical_section m_criticalsectionStoredClip;
+      lockable_critical_section m_criticalsectionStoredClip;
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };

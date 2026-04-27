@@ -29,7 +29,7 @@
 #include "remoting/remoting/rfb/CursorShape.h"
 #include "remoting/remoting/desktop/UpdateContainer.h"
 //#include "subsystem/platform/class ::time.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 //#include "log_writer/LogWriter.h"
 
 namespace remoting
@@ -46,7 +46,7 @@ namespace remoting
       ::remoting::CursorShape m_cursorShape;
       ::innate_subsystem::Framebuffer m_shapeBackground;
       ::int_point m_pointBackground;
-      critical_section m_criticalsectionCurPosLoc;
+      lockable_critical_section m_criticalsectionCurPosLoc;
       // Uses when the rich enabled but pointer pos disabled to determine
       // the last send method: by a cursor shape update or drawing on the
       // frame buffer.

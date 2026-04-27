@@ -25,7 +25,7 @@
 #include "ReconnectingChannel.h"
 //#include "subsystem/platform/class ::time.h"
 #include "remoting/remoting/desktop_ipc/ReconnectException.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "subsystem/platform/Exception.h"
 
 namespace remoting

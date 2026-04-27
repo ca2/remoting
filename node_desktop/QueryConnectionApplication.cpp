@@ -36,7 +36,7 @@
 #include "subsystem/platform/ResourceLoader.h"
 #include "remoting/node_desktop/resource.h"
 #include "remoting/node_desktop/NamingDefs.h"
-
+#include "remoting/remoting/server_config/Configurator.h"
 
 namespace remoting_node_desktop
 {
@@ -53,7 +53,7 @@ namespace remoting_node_desktop
    {
    }
 
-   void QueryConnectionApplication::initialize_query_connection_application(Configurator * pconfigurator,  const ::scoped_string &scopedstrCmdLine)
+   void QueryConnectionApplication::initialize_query_connection_application(::remoting::Configurator * pconfigurator,  const ::scoped_string &scopedstrCmdLine)
 
    {
       m_pconfigurator = pconfigurator;
@@ -116,7 +116,7 @@ namespace remoting_node_desktop
       int retCode = defaultRetCode;
 
       // Run command in separate process.
-      Configurator* conf = m_pconfigurator;
+      ::remoting::Configurator* conf = m_pconfigurator;
       if (conf->getServiceFlag()) {
          auto pprocessNew = createø<::subsystem::CurrentConsoleProcess>();
          pprocessNew->initialize_current_console_process(plogwriter, conf->getServerConfig()->getConnectToRdpFlag(),

@@ -78,7 +78,7 @@ namespace remoting
       // FIXME: document it.
       // Output need for capability, e.g. FT.
       virtual void onConnecting(int iPhase);
-      virtual void onConnected(RfbOutputGate *output);
+      virtual void onConnected(::remoting::RfbOutputGate *output);
 
 
       //

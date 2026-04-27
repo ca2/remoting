@@ -63,9 +63,9 @@ namespace remoting_node_desktop
    }
 
 
-      void ServerApplication::initialize_server_application(HINSTANCE hInstance, const ::scoped_string &scopedstrwindowClassName,
+      void ServerApplication::initialize_server_application(::hinstance hInstance, const ::scoped_string &scopedstrwindowClassName,
                                         const ::scoped_string &scopedstrCommandLine,
-                                        NewConnectionEvents *newConnectionEvents)
+                                        ::remoting_node::NewConnectionEvents *newConnectionEvents)
        //: WindowsApplication(hInstance, windowClassName),
        // m_fileLogWriter(true),
        //: m_tvnServer(0), m_commandLine(scopedstrCommandLine), m_newConnectionEvents(newConnectionEvents)

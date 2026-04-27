@@ -28,7 +28,7 @@
 #include "FileTransferOperation.h"
 namespace remoting
 {
-   namespace ftp
+   namespace file_transfer
    {
       //
       // Class that used for creating folder on remote file system.

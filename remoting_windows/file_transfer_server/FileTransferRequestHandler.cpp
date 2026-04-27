@@ -36,7 +36,7 @@
 #include "ft-common/FileInfo.h"
 #include "util/md5.h"
 #include "network/RfbOutputGate.h"
-#include "network/RfbInputGate.h"
+#include "network/::remoting::RfbInputGate.h"
 #include "thread/AutoLock.h"
 #include "win-system/Impersonator.h"
 #include "win-system/Environment.h"
@@ -45,7 +45,7 @@
 #include "rfb/VendorDefs.h"
 
 FileTransferRequestHandler::FileTransferRequestHandler(RfbCodeRegistrator *registrator,
-                                                       RfbOutputGate *output,
+                                                       ::remoting::RfbOutputGate *output,
                                                        Desktop *desktop,
                                                        LogWriter *log,
                                                        bool enabled)
@@ -130,7 +130,7 @@ FileTransferRequestHandler::~FileTransferRequestHandler()
   m_log->message(_T("File transfer request handler deleted"));
 }
 
-void FileTransferRequestHandler::onRequest(UINT32 reqCode, RfbInputGate *backGate)
+void FileTransferRequestHandler::onRequest(UINT32 reqCode, ::remoting::RfbInputGate *backGate)
 {
   m_security->beginMessageProcessing();
 

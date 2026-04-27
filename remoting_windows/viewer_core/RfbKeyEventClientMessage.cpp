@@ -36,7 +36,7 @@ namespace remoting
    {
    }
 
-   void RfbKeyEventClientMessage::send(RfbOutputGate *output)
+   void RfbKeyEventClientMessage::send(::remoting::RfbOutputGate *output)
    {
       critical_section_lock al(output);
       output->writeUInt8(ClientMsgDefs::KEYBOARD_EVENT);

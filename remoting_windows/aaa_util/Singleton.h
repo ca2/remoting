@@ -29,8 +29,8 @@
 
 ////#include aaa_<crtdbg.h>
 
-////#include "subsystem/thread/critical_section.h"
-////#include "subsystem/thread/critical_section.h"
+////#include "subsystem/thread/lockable_critical_section.h"
+////#include "subsystem/thread/lockable_critical_section.h"
 
 //
 // Template that realize singleton pattern which does not supports "lazy"
@@ -93,12 +93,12 @@ public:
   }
 
 //private:
-  static critical_section m_instanceMutex;
+  static lockable_critical_section m_instanceMutex;
 
   static void* s_instance;
 };
 
-template<class T> critical_section Singleton<T>::m_instanceMutex;
+template<class T> lockable_critical_section Singleton<T>::m_instanceMutex;
 template<class T> void *Singleton<T>::s_instance = 0;
 
 

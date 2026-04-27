@@ -26,12 +26,12 @@
 
 
 #include "acme/input_output/DataInputStream.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
 namespace remoting
 {
 
-   class BlockingInputGate : public critical_section, public DataInputStream
+   class BlockingInputGate : public lockable_critical_section, public DataInputStream
    {
    public:
       BlockingInputGate(InputStream *inputStream);

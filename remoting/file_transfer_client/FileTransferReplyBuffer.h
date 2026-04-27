@@ -39,7 +39,7 @@
 
 namespace  remoting
 {
-   namespace  ftp
+   namespace file_transfer
    {
       class CLASS_DECL_REMOTING FileTransferReplyBuffer : public FileTransferEventHandler
       {
@@ -130,6 +130,6 @@ namespace  remoting
          // Dirsize reply data
          unsigned long long m_dirSize;
       };
-   } //    namespace  ftp
+   } //    namespace file_transfer
 } // namespace remoting
 

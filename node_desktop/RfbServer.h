@@ -51,7 +51,7 @@ namespace remoting_node_desktop
        * if not set, then view port is full screen.
        * @throws ::subsystem::Exception when failed to create tcp server.
        */
-      RfbServer(const ::scoped_string &scopedstrBindHost, ::remoting_node_desktop::Configurator * pconfigurator, unsigned short bindPort, RfbClientManager *clientManager,
+      RfbServer(const ::scoped_string &scopedstrBindHost, ::remoting::Configurator * pconfigurator, unsigned short bindPort, RfbClientManager *clientManager,
                 bool lockAddr, ::subsystem::LogWriter * plogwriter, const ::int_rectangle &rectangleViewport = {});
 
       /**
@@ -81,7 +81,7 @@ namespace remoting_node_desktop
       // private:
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
-      ::pointer<Configurator> m_pconfigurator;
+      ::pointer<::remoting::Configurator> m_pconfigurator;
 
    };
 

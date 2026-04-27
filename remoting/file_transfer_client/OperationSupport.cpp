@@ -30,7 +30,7 @@
 
 namespace remoting
 {
-   namespace ftp
+   namespace file_transfer
    {
 
 
@@ -143,7 +143,7 @@ namespace remoting
       }
 
 
-   } // namespace ftp
+   } // namespace file_transfer
 } // namespace remoting
 
 

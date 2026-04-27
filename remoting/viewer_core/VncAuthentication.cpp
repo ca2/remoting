@@ -29,7 +29,7 @@
 
 //#include aaa_<algorithm>
 
-namespace remoting
+namespace remoting_client
 {
 
 
@@ -64,7 +64,7 @@ namespace remoting
    }
 
 
-} // namespace remoting
+} // namespace remoting_client
 
 
 

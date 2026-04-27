@@ -34,7 +34,7 @@ namespace remoting
    static const int BLOCK_SIZE = 32;
 
    // UpdateFilter::UpdateFilter(ScreenDriver *screenDriver, ::innate_subsystem::Framebuffer *pframebuffer,
-   //                            critical_section *framebufferCriticalSection, ::subsystem::LogWriter * plogwriter) :
+   //                            lockable_critical_section *framebufferCriticalSection, ::subsystem::LogWriter * plogwriter) :
    //     m_pscreendriver(screenDriver), m_pframebuffer(pframebuffer), m_pcriticalsectionFramebuffer(framebufferCriticalSection),
    //     m_grabOptimizator(plogwriter), m_plogwriter(plogwriter)
    // {
@@ -49,7 +49,7 @@ namespace remoting
 
 
    void UpdateFilter::initialize_update_filter(ScreenDriver *pscreendriver, ::innate_subsystem::Framebuffer *pframebuffer,
-       critical_section * pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter)
+       lockable_critical_section * pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter)
    {
 
       m_pscreendriver = pscreendriver;

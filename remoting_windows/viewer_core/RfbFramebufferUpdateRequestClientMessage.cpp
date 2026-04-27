@@ -37,7 +37,7 @@ namespace remoting
    {
    }
 
-   void RfbFramebufferUpdateRequestClientMessage::send(RfbOutputGate * output)
+   void RfbFramebufferUpdateRequestClientMessage::send(::remoting::RfbOutputGate * output)
    {
       critical_section_lock al(output);
       output->writeUInt8(ClientMsgDefs::FB_UPDATE_REQUEST);

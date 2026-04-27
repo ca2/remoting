@@ -45,21 +45,21 @@ namespace remoting
 
       ::pointer < ScreenGrabber  > m_pscreengrabber;
       ::innate_subsystem::Framebuffer *m_pframebufferBackup;
-      critical_section *m_pcriticalsectionFramebuffer;
+      lockable_critical_section *m_pcriticalsectionFramebuffer;
       ::int_rectangle m_rectanglePolling;
       ::happening m_intervalWaiter;
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
       ::pointer < Configurator > m_pconfigurator;
 
       // Poller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ScreenGrabber *pscreengrabber,
-      //        ::innate_subsystem::Framebuffer *backupFramebuffer, critical_section *framebufferCriticalSection,
+      //        ::innate_subsystem::Framebuffer *backupFramebuffer, lockable_critical_section *framebufferCriticalSection,
       //        ::subsystem::LogWriter * plogwriter);
       Poller();
       ~Poller() override;
 
 
       virtual void initialize_poller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ScreenGrabber *pscreengrabber,
-       ::innate_subsystem::Framebuffer *backupFramebuffer, critical_section *framebufferCriticalSection,
+       ::innate_subsystem::Framebuffer *backupFramebuffer, lockable_critical_section *framebufferCriticalSection,
        ::subsystem::LogWriter * plogwriter);
 
       virtual void execute();

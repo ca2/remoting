@@ -37,7 +37,7 @@
 namespace remoting
 {
 
-   namespace ftp
+   namespace file_transfer
    {
 
       FileTransferCapability::FileTransferCapability(::subsystem::LogWriter * plogwriter)
@@ -61,7 +61,7 @@ namespace remoting
          return m_ftCore.getSupportedOps().isFileListSupported();
       }
 
-      void FileTransferCapability::setOutput(RfbOutputGate *output)
+      void FileTransferCapability::setOutput(::remoting::RfbOutputGate *output)
       {
          m_ftRequestSender.setOutput(output);
       }
@@ -81,149 +81,149 @@ namespace remoting
          m_ftMessageProcessor.processRfbMessage(pinput, code);
       }
 
-      void FileTransferCapability::addCapabilities(CapabilitiesManager *capabilities)
+      void FileTransferCapability::addCapabilities(CapabilitiesManager *pcapabilitiesmanager)
       {
          // Client-to-Server messages:
-         capabilities->addClientMsgCapability(FTMessage::COMPRESSION_SUPPORT_REQUEST,
+         pcapabilitiesmanager->addClientMsgCapability(FTMessage::COMPRESSION_SUPPORT_REQUEST,
                                          VendorDefs::TIGHTVNC,
                                          FTMessage::COMPRESSION_SUPPORT_REQUEST_SIG,
                                          "Compression support");
 
-         capabilities->addClientMsgCapability(FTMessage::FILE_LIST_REQUEST,
+         pcapabilitiesmanager->addClientMsgCapability(FTMessage::FILE_LIST_REQUEST,
                                          VendorDefs::TIGHTVNC,
                                          FTMessage::FILE_LIST_REQUEST_SIG,
                                          "::file::item ::list_base request");
 
-         capabilities->addClientMsgCapability(FTMessage::MD5_REQUEST,
+         pcapabilitiesmanager->addClientMsgCapability(FTMessage::MD5_REQUEST,
                                          VendorDefs::TIGHTVNC,
                                          FTMessage::MD5_REQUEST_SIG,
                                          "::file::item md5 sum request");
 
-         capabilities->addClientMsgCapability(FTMessage::DIRSIZE_REQUEST,
+         pcapabilitiesmanager->addClientMsgCapability(FTMessage::DIRSIZE_REQUEST,
                                          VendorDefs::TIGHTVNC,
                                          FTMessage::DIRSIZE_REQUEST_SIG,
                                          "Directory size request");
 
-         capabilities->addClientMsgCapability(FTMessage::RENAME_REQUEST,
+         pcapabilitiesmanager->addClientMsgCapability(FTMessage::RENAME_REQUEST,
                                          VendorDefs::TIGHTVNC,
                                          FTMessage::RENAME_REQUEST_SIG,
                                          "::file::item move request");
 
-         capabilities->addClientMsgCapability(FTMessage::MKDIR_REQUEST,
+         pcapabilitiesmanager->addClientMsgCapability(FTMessage::MKDIR_REQUEST,
                                          VendorDefs::TIGHTVNC,
                                          FTMessage::MKDIR_REQUEST_SIG,
                                          "Directory create request");
 
-         capabilities->addClientMsgCapability(FTMessage::REMOVE_REQUEST,
+         pcapabilitiesmanager->addClientMsgCapability(FTMessage::REMOVE_REQUEST,
                                          VendorDefs::TIGHTVNC,
                                          FTMessage::REMOVE_REQUEST_SIG,
                                          "::file::item remove request");
 
-         capabilities->addClientMsgCapability(FTMessage::DOWNLOAD_START_REQUEST,
+         pcapabilitiesmanager->addClientMsgCapability(FTMessage::DOWNLOAD_START_REQUEST,
                                          VendorDefs::TIGHTVNC,
                                          FTMessage::DOWNLOAD_START_REQUEST_SIG,
                                          "::file::item download start request");
 
-         capabilities->addClientMsgCapability(FTMessage::DOWNLOAD_DATA_REQUEST,
+         pcapabilitiesmanager->addClientMsgCapability(FTMessage::DOWNLOAD_DATA_REQUEST,
                                          VendorDefs::TIGHTVNC,
                                          FTMessage::DOWNLOAD_DATA_REQUEST_SIG,
                                          "::file::item download data request");
 
-         capabilities->addClientMsgCapability(FTMessage::UPLOAD_START_REQUEST,
+         pcapabilitiesmanager->addClientMsgCapability(FTMessage::UPLOAD_START_REQUEST,
                                          VendorDefs::TIGHTVNC,
                                          FTMessage::UPLOAD_START_REQUEST_SIG,
                                          "::file::item upload start request");
 
-         capabilities->addClientMsgCapability(FTMessage::UPLOAD_DATA_REQUEST,
+         pcapabilitiesmanager->addClientMsgCapability(FTMessage::UPLOAD_DATA_REQUEST,
                                          VendorDefs::TIGHTVNC,
                                          FTMessage::UPLOAD_DATA_REQUEST_SIG,
                                          "::file::item upload data request");
 
-         capabilities->addClientMsgCapability(FTMessage::UPLOAD_END_REQUEST,
+         pcapabilitiesmanager->addClientMsgCapability(FTMessage::UPLOAD_END_REQUEST,
                                          VendorDefs::TIGHTVNC,
                                          FTMessage::UPLOAD_END_REQUEST_SIG,
                                          "::file::item upload end request");
 
          // Server-to-Client messages:
-         capabilities->addServerMsgCapability(this,
+         pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::COMPRESSION_SUPPORT_REPLY,
                                          VendorDefs::TIGHTVNC,
                                          FTMessage::COMPRESSION_SUPPORT_REPLY_SIG,
                                          "Compression support");
 
-         capabilities->addServerMsgCapability(this,
+         pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::FILE_LIST_REPLY,
                                          VendorDefs::TIGHTVNC,
                                          FTMessage::FILE_LIST_REPLY_SIG,
                                          "::file::item ::list_base reply");
 
-         capabilities->addServerMsgCapability(this,
+         pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::LAST_REQUEST_FAILED_REPLY,
                                          VendorDefs::TIGHTVNC,
                                          FTMessage::LAST_REQUEST_FAILED_REPLY_SIG,
                                          "Last request failed");
 
-         capabilities->addServerMsgCapability(this,
+         pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::MD5_REPLY,
                                          VendorDefs::TIGHTVNC,
                                          FTMessage::MD5_REPLY_SIG,
                                          "::file::item md5 sum reply");
 
-         capabilities->addServerMsgCapability(this,
+         pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::DIRSIZE_REPLY,
                                          VendorDefs::TIGHTVNC,
                                          FTMessage::DIRSIZE_REPLY_SIG,
                                          "Directory size reply");
 
-         capabilities->addServerMsgCapability(this,
+         pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::RENAME_REPLY,
                                          VendorDefs::TIGHTVNC,
                                          FTMessage::RENAME_REPLY_SIG,
                                          "::file::item move reply");
 
-         capabilities->addServerMsgCapability(this,
+         pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::MKDIR_REPLY,
                                          VendorDefs::TIGHTVNC,
                                          FTMessage::MKDIR_REPLY_SIG,
                                          "Directory create reply");
 
-         capabilities->addServerMsgCapability(this,
+         pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::REMOVE_REPLY,
                                          VendorDefs::TIGHTVNC,
                                          FTMessage::REMOVE_REPLY_SIG,
                                         "::file::item remove reply");
 
-         capabilities->addServerMsgCapability(this,
+         pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::DOWNLOAD_START_REPLY,
                                         VendorDefs::TIGHTVNC,
                                         FTMessage::DOWNLOAD_START_REPLY_SIG,
                                         "::file::item download start reply");
 
-         capabilities->addServerMsgCapability(this,
+         pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::DOWNLOAD_DATA_REPLY,
                                          VendorDefs::TIGHTVNC,
                                          FTMessage::DOWNLOAD_DATA_REPLY_SIG,
                                          "::file::item download data reply");
 
-         capabilities->addServerMsgCapability(this,
+         pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::DOWNLOAD_END_REPLY,
                                          VendorDefs::TIGHTVNC,
                                          FTMessage::DOWNLOAD_END_REPLY_SIG,
                                          "::file::item download end reply");
 
-         capabilities->addServerMsgCapability(this,
+         pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::UPLOAD_START_REPLY,
                                          VendorDefs::TIGHTVNC,
                                          FTMessage::UPLOAD_START_REPLY_SIG,
                                          "::file::item upload start reply");
 
-         capabilities->addServerMsgCapability(this,
+         pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::UPLOAD_DATA_REPLY,
                                          VendorDefs::TIGHTVNC,
                                          FTMessage::UPLOAD_DATA_REPLY_SIG,
                                          "::file::item upload data reply");
 
-         capabilities->addServerMsgCapability(this,
+         pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::UPLOAD_END_REPLY,
                                          VendorDefs::TIGHTVNC,
                                          FTMessage::UPLOAD_END_REPLY_SIG,

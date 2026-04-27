@@ -28,7 +28,7 @@
 
 namespace  remoting
 {
-   namespace ftp
+   namespace file_transfer
    {
       FileInfo::FileInfo()
       : m_sizeInBytes(0), m_lastModified(0), m_flags(0)
@@ -112,6 +112,6 @@ namespace  remoting
       {
          return m_strFileName;
       }
-   } // namespace  ftp
+   } // namespace file_transfer
 } // namespace remoting
 

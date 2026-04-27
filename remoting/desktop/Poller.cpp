@@ -32,7 +32,7 @@ namespace remoting
 
    //
    // Poller::Poller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ScreenGrabber *pscreengrabber,
-   //                ::innate_subsystem::Framebuffer *backupFramebuffer, critical_section *framebufferCriticalSection,
+   //                ::innate_subsystem::Framebuffer *backupFramebuffer, lockable_critical_section *framebufferCriticalSection,
    //                ::subsystem::LogWriter * plogwriter) :
    //     UpdateDetector(pupdatekeeper, pupdatelistener), m_pscreengrabber(pscreengrabber),
    //     m_pframebufferBackup(backupFramebuffer), m_pcriticalsectionFramebuffer(framebufferCriticalSection), m_plogwriter = plogwriter;
@@ -53,7 +53,7 @@ namespace remoting
    }
 
    void Poller::initialize_poller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ScreenGrabber *pscreengrabber,
-               ::innate_subsystem::Framebuffer *backupFramebuffer, critical_section *framebufferCriticalSection,
+               ::innate_subsystem::Framebuffer *backupFramebuffer, lockable_critical_section *framebufferCriticalSection,
                ::subsystem::LogWriter * plogwriter)
    {
 

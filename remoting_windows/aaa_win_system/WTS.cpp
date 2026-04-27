@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "WTS.h"
 #include "SystemException.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 //#include "Environment.h"
 #include "PipeImpersonatedThread.h"
 #include "acme/platform/node.h"
@@ -43,7 +43,7 @@ volatile bool WindowsSubsystem().WTS().m_initialized = false;
 
 HANDLE WindowsSubsystem().WTS().m_userProcessToken = INVALID_HANDLE_VALUE;
 
-critical_section WindowsSubsystem().WTS().m_mutex;
+lockable_critical_section WindowsSubsystem().WTS().m_mutex;
 
 DWORD WindowsSubsystem().WTS().getActiveConsoleSessionId(::subsystem::LogWriter * plogwriter)
 {

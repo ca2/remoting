@@ -168,7 +168,7 @@ namespace remoting_client
         ::innate_subsystem::SolidBrush m_brush;
 
         // frame buffer
-        critical_section m_criticalsectionBuffer;
+        lockable_critical_section m_criticalsectionBuffer;
         ::innate_subsystem::DibFramebuffer m_framebuffer;
         // This variable save server dimension.
         // ::int_size of m_framebuffer can be large m_serverDimension.

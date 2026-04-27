@@ -342,7 +342,7 @@ namespace remoting
       }
 
       const PIXEL_T *buffer = static_cast<const PIXEL_T *>(pframebuffer->getBuffer());
-      ::innate_subsystem::PixelFormat pxFormat = pframebuffer->getPixelFormat();
+      ::innate_subsystem::PixelFormat pixelformat = pframebuffer->getPixelFormat();
 
       // There is the first iteration of loop below.
       PIXEL_T px = buffer[tileRect.top * m_fbWidth + tileRect.left];
@@ -418,12 +418,12 @@ namespace remoting
       int tryInsertPx = 1;
 
       const PIXEL_T *buffer = (const PIXEL_T *)pframebuffer->getBuffer();
-      ::innate_subsystem::PixelFormat pxFormat = pframebuffer->getPixelFormat();
+      ::innate_subsystem::PixelFormat pixelformat = pframebuffer->getPixelFormat();
 
       // Mask for cutting rubbish bits.
-      PIXEL_T mask = pxFormat.redMax << pxFormat.redShift |
-                     pxFormat.greenMax << pxFormat.greenShift |
-                     pxFormat.blueMax << pxFormat.blueShift;
+      PIXEL_T mask = pixelformat.redMax << pixelformat.redShift |
+                     pixelformat.greenMax << pixelformat.greenShift |
+                     pixelformat.blueMax << pixelformat.blueShift;
 
       // There is the first iteration of loop below.
       // Pixel for adding to plainRleTile

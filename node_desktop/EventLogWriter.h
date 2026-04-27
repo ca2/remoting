@@ -28,19 +28,19 @@
 #include "remoting/remoting/server/NewConnectionEvents.h"
 //#include "win-event-log/WinEventLog.h"
 #include "subsystem/node/ApplicationCrashEvents.h"
-#include "WinServiceEvents.h"
+#include "ServiceEvents.h"
 #include "remoting/remoting/event_log/EventLog.h"
 
 namespace remoting_node_desktop
 {
    // This class provide response to events by writing to the Windows log.
-   class WinEventLogWriter : public ::remoting_node::NewConnectionEvents,
+   class EventLogWriter : public ::remoting_node::NewConnectionEvents,
                              public ::subsystem::ApplicationCrashEvents,
-                             public WinServiceEvents
+                             public ServiceEvents
    {
    public:
-      WinEventLogWriter(::subsystem::LogWriter * plogwriter);
-      ~WinEventLogWriter();
+      EventLogWriter(::subsystem::LogWriter * plogwriter);
+      ~EventLogWriter();
 
       // This function enables fully functional this object usage,
       // before that all report will be ignored.

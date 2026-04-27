@@ -25,7 +25,7 @@
 #include "RfbSetPixelFormatClientMessage.h"
 
 
-namespace remoting
+namespace remoting_client
 {
    RfbSetPixelFormatClientMessage::RfbSetPixelFormatClientMessage(const ::innate_subsystem::PixelFormat & pixelFormat)
    {
@@ -51,33 +51,33 @@ namespace remoting
     * 3 -     - padding
     */
 
-   void RfbSetPixelFormatClientMessage::send(RfbOutputGate *output)
+   void RfbSetPixelFormatClientMessage::send(::remoting::RfbOutputGate *prfboutputgate)
    {
-      critical_section_lock al(output);
-      output->writeUInt8(ClientMsgDefs::SET_PIXEL_FORMAT);
+      critical_section_lock al(prfboutputgate);
+      prfboutputgate->writeUInt8(::remoting::ClientMsgDefs::SET_PIXEL_FORMAT);
       // padding 3 bytes
-      output->writeUInt16(0);
-      output->writeUInt8(0);
+      prfboutputgate->writeUInt16(0);
+      prfboutputgate->writeUInt8(0);
 
       // send pixel format
-      output->writeUInt8(static_cast<unsigned char>(m_pixelformat.bitsPerPixel));
-      output->writeUInt8(static_cast<unsigned char>(m_pixelformat.colorDepth));
-      output->writeUInt8(m_pixelformat.bigEndian);
-      output->writeUInt8(true); // true color is always true
-      output->writeUInt16(m_pixelformat.redMax);
-      output->writeUInt16(m_pixelformat.greenMax);
-      output->writeUInt16(m_pixelformat.blueMax);
-      output->writeUInt8(static_cast<unsigned char>(m_pixelformat.redShift));
-      output->writeUInt8(static_cast<unsigned char>(m_pixelformat.greenShift));
-      output->writeUInt8(static_cast<unsigned char>(m_pixelformat.blueShift));
-      output->writeUInt8(0); // padding bytes (3)
-      output->writeUInt8(0);
-      output->writeUInt8(0);
+      prfboutputgate->writeUInt8(static_cast<unsigned char>(m_pixelformat.bitsPerPixel));
+      prfboutputgate->writeUInt8(static_cast<unsigned char>(m_pixelformat.colorDepth));
+      prfboutputgate->writeUInt8(m_pixelformat.bigEndian);
+      prfboutputgate->writeUInt8(true); // true color is always true
+      prfboutputgate->writeUInt16(m_pixelformat.redMax);
+      prfboutputgate->writeUInt16(m_pixelformat.greenMax);
+      prfboutputgate->writeUInt16(m_pixelformat.blueMax);
+      prfboutputgate->writeUInt8(static_cast<unsigned char>(m_pixelformat.redShift));
+      prfboutputgate->writeUInt8(static_cast<unsigned char>(m_pixelformat.greenShift));
+      prfboutputgate->writeUInt8(static_cast<unsigned char>(m_pixelformat.blueShift));
+      prfboutputgate->writeUInt8(0); // padding bytes (3)
+      prfboutputgate->writeUInt8(0);
+      prfboutputgate->writeUInt8(0);
 
-      output->flush();
+      prfboutputgate->flush();
    }
 
-} // namespace remoting
+} // namespace remoting_client
 
 
 

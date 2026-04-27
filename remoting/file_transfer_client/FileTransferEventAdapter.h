@@ -33,7 +33,7 @@
 
 namespace remoting
 {
-   namespace ftp
+   namespace file_transfer
    {
       //
       // Class is used as helper for checking valid (file transfer client point of view)

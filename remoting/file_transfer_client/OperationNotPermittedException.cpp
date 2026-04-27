@@ -25,7 +25,7 @@
 #include "OperationNotPermittedException.h"
 namespace remoting
 {
-   namespace ftp
+   namespace file_transfer
    {
       OperationNotPermittedException::OperationNotPermittedException()
        : ::subsystem::Exception("Current scopedstrMessage is not permitted by current file transfer operation")

@@ -56,7 +56,7 @@ namespace remoting_client
         return Dialog::showModal();
     }
 
-    void FileExistDialog::setFilesInfo(::remoting::ftp::FileInfo *existingFileInfo, ::remoting::ftp::FileInfo *newFileInfo,
+    void FileExistDialog::setFilesInfo(::remoting::file_transfer::FileInfo *existingFileInfo, ::remoting::file_transfer::FileInfo *newFileInfo,
                                        const ::scoped_string & scopedstrPathToFileCaption)
     {
         m_newFileInfo = newFileInfo;
@@ -170,7 +170,7 @@ namespace remoting_client
         closeDialog(CANCEL_RESULT);
     }
 
-    void FileExistDialog::updateGui(::remoting::ftp::FileInfo *fileInfo, ::innate_subsystem::Control *sizeLabel, ::innate_subsystem::Control * modTimeLabel)
+    void FileExistDialog::updateGui(::remoting::file_transfer::FileInfo *fileInfo, ::innate_subsystem::Control *sizeLabel, ::innate_subsystem::Control * modTimeLabel)
     {
         char buffer[255];
         #ifdef WINDOWS

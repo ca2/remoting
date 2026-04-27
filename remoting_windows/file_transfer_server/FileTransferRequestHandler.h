@@ -27,7 +27,7 @@
 
 
 // #include "util/inttypes.h"
-// #include "network/RfbInputGate.h"
+// #include "network/::remoting::RfbInputGate.h"
 // #include "network/RfbOutputGate.h"
 // #include "ft-common/FileInfo.h"
 // #include "file-lib/WinFileChannel.h"
@@ -60,7 +60,7 @@ namespace remoting
        *   (for example, it's disabled in view-only mode).
        */
       FileTransferRequestHandler(RfbCodeRegistrator *registrator,
-                                 RfbOutputGate *output,
+                                 ::remoting::RfbOutputGate *output,
                                  Desktop *desktop,
                                  ::subsystem::LogWriter *log,
                                  bool enabled = true);
@@ -74,7 +74,7 @@ namespace remoting
        * Inherited from RfbDispatcherListener.
        * Processes file transfer client messages.
        */
-      virtual void onRequest(unsigned int reqCode, RfbInputGate *backGate);
+      virtual void onRequest(unsigned int reqCode, ::remoting::RfbInputGate *backGate);
 
    protected:
 
@@ -138,8 +138,8 @@ namespace remoting
       // Input and output gates.
       //
 
-      ::pointer < RfbInputGate > m_prfbinputgate;
-      ::pointer < RfbOutputGate > m_prfboutputgate;
+      ::pointer < ::remoting::RfbInputGate > m_prfbinputgate;
+      ::pointer < ::remoting::RfbOutputGate > m_prfboutputgate;
 
       //
       // Download operation members

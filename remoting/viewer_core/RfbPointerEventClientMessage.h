@@ -29,7 +29,7 @@
 
 #include "RfbClientToServerMessage.h"
 
-namespace remoting
+namespace remoting_client
 {
    class CLASS_DECL_REMOTING RfbPointerEventClientMessage : public RfbClientToServerMessage
    {
@@ -37,11 +37,11 @@ namespace remoting
       RfbPointerEventClientMessage(const unsigned char buttonMask, const ::int_point &pointPosition);
       ~RfbPointerEventClientMessage();
 
-      void send(RfbOutputGate *output);
+      void send(::remoting::RfbOutputGate *output);
 
    private:
       unsigned char m_buttonMask;
       unsigned short m_xPos;
       unsigned short m_yPos;
    };
-} // namespace remoting
+} // namespace remoting_client

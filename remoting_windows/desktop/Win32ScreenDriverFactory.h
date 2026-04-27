@@ -46,13 +46,13 @@ namespace remoting
 
       ScreenDriver *createScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
                                                ::innate_subsystem::Framebuffer *pframebuffer,
-                                               critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) override;
+                                               lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) override;
    private:
       ScreenDriver *createStandardScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
                                                ::innate_subsystem::Framebuffer *pframebuffer,
-                                               critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
+                                               lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
       ScreenDriver *createMirrorScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                                             critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
+                                             lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
 
       bool isMirrorDriverAllowed();
       bool isD3DAllowed();

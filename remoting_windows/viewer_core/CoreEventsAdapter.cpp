@@ -55,7 +55,7 @@ namespace remoting
 
    }
 
-   void CoreEventsAdapter::onConnected(RfbOutputGate *output)
+   void CoreEventsAdapter::onConnected(::remoting::RfbOutputGate *output)
    {
    }
 

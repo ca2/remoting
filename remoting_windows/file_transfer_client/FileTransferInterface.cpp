@@ -27,7 +27,7 @@
 
 namespace remoting
 {
-   namespace ftp
+   namespace file_transfer
    {
       FileTransferInterface::FileTransferInterface(FileTransferCore *core)
       : m_ftCore(core)

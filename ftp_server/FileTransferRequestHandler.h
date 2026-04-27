@@ -56,7 +56,7 @@ public:
    *   (for example, it's disabled in view-only mode).
    */
   FileTransferRequestHandler(RfbCodeRegistrator *registrator,
-                             RfbOutputGate *output,
+                             ::remoting::RfbOutputGate *output,
                              Desktop *desktop,
                              ::subsystem::LogWriter * plogwriter,
                              bool enabled = true);
@@ -70,7 +70,7 @@ public:
    * Inherited from RfbDispatcherListener.
    * Processes file transfer client messages.
    */
-  virtual void onRequest(unsigned int reqCode, RfbInputGate *pblockinggate);
+  virtual void onRequest(unsigned int reqCode, ::remoting::RfbInputGate *pblockinggate);
 
 protected:
 
@@ -134,8 +134,8 @@ protected:
   // Input and output gates.
   //
 
-  RfbInputGate *m_input;
-  RfbOutputGate *m_output;
+  ::remoting::RfbInputGate *m_input;
+  ::remoting::RfbOutputGate *m_output;
 
   //
   // Download operation members

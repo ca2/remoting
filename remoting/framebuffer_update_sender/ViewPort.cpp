@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "Viewport.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "subsystem/platform/BrokenHandleException.h"
 
 namespace remoting
@@ -66,7 +66,7 @@ namespace remoting
       m_viewportstate = *newState;
    }
 
-   void Viewport::update(const ::int_size &fbDimension)
+   void Viewport::update(const ::int_size &sizeFramebuffer)
    {
       critical_section_lock al(&m_stateMutex);
 
@@ -78,7 +78,7 @@ namespace remoting
             m_pdesktop->getApplicationRegion(m_viewportstate.m_processId, m_regionApp);
             // Also, the view port rectangle will be FULL_DESKTOP.
          case ViewPortState::FULL_DESKTOP:
-            rectangle = fbDimension;
+            rectangle = sizeFramebuffer;
             break;
          case ViewPortState::PRIMARY_DISPLAY:
             _ASSERT(m_pdesktop != 0);
@@ -117,10 +117,10 @@ namespace remoting
       }
       m_plogwriter->debug("View port coordinates: ({}, {} %dx{})", rectangle.left, rectangle.top, rectangle.width(), rectangle.height());
       // Constrain and save
-      m_rectangle = rectangle.intersection(::int_rectangle(fbDimension));
+      m_rectangle = rectangle.intersection(::int_rectangle(sizeFramebuffer));
       if (m_rectangle.width() < 0 || m_rectangle.height() < 0)
       {
-         m_rectangle.Null();
+         m_rectangle.clear();
       }
       m_plogwriter->debug(
          "Constrained (to the ::innate_subsystem::Framebuffer dimension) view port coordinates: ({}, {} %dx{})",

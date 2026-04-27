@@ -17,9 +17,9 @@ namespace remoting_node_desktop
 {
 
 
-   class Configurator;
-
-
+   // class Configurator;
+   //
+   //
    class Server;
 
 
@@ -35,10 +35,10 @@ namespace remoting_node_desktop
    class WsConfigRunner;
 
 
-   class NewConnectionEvents;
+   //class NewConnectionEvents;
 
 
-   class WinServiceEvents;
+   class ServiceEvents;
 
 
 } // namespace remoting_node_desktop

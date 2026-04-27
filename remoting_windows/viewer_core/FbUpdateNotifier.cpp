@@ -24,24 +24,24 @@
 #include "framework.h"
 #include "FbupdateNotifier.h"
 
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
 #include "CoreEventsAdapter.h"
 
 namespace remoting
 {
-   FbUpdateNotifier::FbUpdateNotifier(::innate_subsystem::Framebuffer *pframebuffer, critical_section *fbLock, ::subsystem::LogWriter * plogwriter, WatermarksController* wmController)
+   FbUpdateNotifier::FbUpdateNotifier(::innate_subsystem::Framebuffer *pframebuffer, lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter, WatermarksController* pwatermarkscontroller)
    : m_pframebuffer(pframebuffer),
-     m_fbLock(fbLock),
+     m_criticalsectionFramebuffer(pcriticalsectionFramebuffer),
      m_plogwriter = plogwriter;,
-     m_cursorPainter(pframebuffer, plogwriter),
-     m_isNewSize(false),
-     m_isCursorChange(false),
-   m_isGoodCursor(false),
-     m_adapter(0),
-     m_watermarksController(wmController)
+     m_cursorpainter(pframebuffer, plogwriter),
+     m_bNewSize(false),
+     m_bCursorChange(false),
+   m_bGoodCursor(false),
+     m_pcoreeventsadapter(0),
+     m_pwatermarkscontroller(pwatermarkscontroller)
    {
-      m_oldPosition = m_cursorPainter.hideCursor();
+      m_rectangleOldPosition = m_cursorpainter.hideCursor();
 
       resume();
    }
@@ -57,9 +57,9 @@ namespace remoting
 
    void FbUpdateNotifier::setAdapter(CoreEventsAdapter *adapter)
    {
-      critical_section_lock al(&m_updateLock);
-      m_adapter = adapter;
-      m_eventUpdate.set_happening();
+      critical_section_lock al(&m_criticalsectionUpdate);
+      m_pcoreeventsadapter = adapter;
+      m_happeningUpdate.set_happening();
    }
 
    void FbUpdateNotifier::execute()
@@ -69,11 +69,11 @@ namespace remoting
          bool adapterIsNull = true;
          while (!isTerminating() && adapterIsNull) {
             // Wait event.
-            m_eventUpdate.wait();
+            m_happeningUpdate.wait();
 
             // Check: now adapter is set?
-            critical_section_lock al(&m_updateLock);
-            if (m_adapter != 0) {
+            critical_section_lock al(&m_criticalsectionUpdate);
+            if (m_pcoreeventsadapter != 0) {
                adapterIsNull = false;
             }
          }
@@ -84,35 +84,35 @@ namespace remoting
          // If flag is set, then thread going to sleep (wait event).
          bool noUpdates = true;
 
-         // Move updates to local variable with blocking notifier mutex "m_updateLock".
+         // Move updates to local variable with blocking notifier mutex "m_criticalsectionUpdate".
          bool isNewSize;
          bool isCursorChange;
          bool isGoodCursor;
          Region update;
          {
-            critical_section_lock al(&m_updateLock);
-            isNewSize = m_isNewSize;
-            m_isNewSize = false;
+            critical_section_lock al(&m_criticalsectionUpdate);
+            isNewSize = m_bNewSize;
+            m_bNewSize = false;
 
-            isCursorChange = m_isCursorChange;
-            m_isCursorChange = false;
-            isGoodCursor = m_isGoodCursor;
-            m_isGoodCursor = false;
+            isCursorChange = m_bCursorChange;
+            m_bCursorChange = false;
+            isGoodCursor = m_bGoodCursor;
+            m_bGoodCursor = false;
 
-            update = m_update;
-            m_update.clear();
+            update = m_regionUpdate;
+            m_regionUpdate.clear();
          }
 
          // Send event "Change properties of frame buffer" to adapter
-         // with blocking frame buffer mutex "m_fbLock".
+         // with blocking frame buffer mutex "m_criticalsectionFramebuffer".
          if (isNewSize) {
             noUpdates = false;
             m_plogwriter->debug("FbUpdateNotifier (event): new size of frame buffer");
             try {
-               critical_section_lock al(m_fbLock);
-               m_adapter->onFramebufferPropChange(m_pframebuffer);
+               critical_section_lock al(m_criticalsectionFramebuffer);
+               m_pcoreeventsadapter->onFramebufferPropChange(m_pframebuffer);
                // FIXME: it's bad code. Must work without one next line, but not it.
-               m_adapter->onFramebufferUpdate(m_pframebuffer, m_pframebuffer.getDimension());
+               m_pcoreeventsadapter->onFramebufferUpdate(m_pframebuffer, m_pframebuffer->getDimension());
             } catch (...) {
                m_plogwriter->error("FbUpdateNotifier (event): error in set new size");
             }
@@ -122,30 +122,30 @@ namespace remoting
          if (isGoodCursor)
          {
 
-            if (m_adapter)
+            if (m_pcoreeventsadapter)
             {
-               m_adapter->onGoodCursor();
+               m_pcoreeventsadapter->onGoodCursor();
             }
 
          }
          // Update pointPosition on cursor and send frame buffer update event to adapter
-         // with blocking frame buffer mutex "m_fbLock".
+         // with blocking frame buffer mutex "m_criticalsectionFramebuffer".
          if (isCursorChange || !update.is_empty()) {
             noUpdates = false;
 
-            critical_section_lock al(m_fbLock);
-            ::int_rectangle cursor = m_cursorPainter.showCursor();
+            critical_section_lock al(m_criticalsectionFramebuffer);
+            ::int_rectangle cursor = m_cursorpainter.showCursor();
             update.addRect(cursor);
-            update.addRect(m_oldPosition);
+            update.addRect(m_rectangleOldPosition);
 
 #ifdef _DEMO_VERSION_
-            ::int_rectangle curWmRect = m_watermarksController->CurrentRect();
+            ::int_rectangle curWmRect = m_pwatermarkscontroller->CurrentRect();
             Region region(curWmRect);
             region.intersect(&update);
             bool isIntersect = !region.is_empty();
             if (isIntersect)
             {
-               m_watermarksController->showWaterMarks(m_pframebuffer, m_fbLock);
+               m_pwatermarkscontroller->showWaterMarks(m_pframebuffer, m_criticalsectionFramebuffer);
                update.addRect(curWmRect);
             }
 #endif
@@ -156,7 +156,7 @@ namespace remoting
 
             try {
                for (::int_rectangle_array_base::iterator i = rectangleaUpdate.begin(); i != rectangleaUpdate.end(); ++i) {
-                  m_adapter->onFramebufferUpdate(m_pframebuffer, *i);
+                  m_pcoreeventsadapter->onFramebufferUpdate(m_pframebuffer, *i);
                }
             } catch (...) {
                m_plogwriter->error("FbUpdateNotifier (event): error in update");
@@ -165,53 +165,53 @@ namespace remoting
 
 #ifdef _DEMO_VERSION_
             if (isIntersect)
-               m_watermarksController->hideWatermarks(m_pframebuffer, m_fbLock);
+               m_pwatermarkscontroller->hideWatermarks(m_pframebuffer, m_criticalsectionFramebuffer);
 #endif
 
-            m_oldPosition = m_cursorPainter.hideCursor();
+            m_rectangleOldPosition = m_cursorpainter.hideCursor();
 
          }
 
          // Pause this thread, if there are no updates (cursor, frame buffer).
          if (noUpdates) {
-            m_eventUpdate.wait();
+            m_happeningUpdate.wait();
          }
       }
    }
 
    void FbUpdateNotifier::onTerminate()
    {
-      m_eventUpdate.set_happening();
+      m_happeningUpdate.set_happening();
    }
 
    void FbUpdateNotifier::onUpdate(const ::int_rectangle &  update)
    {
       {
-         critical_section_lock al(&m_updateLock);
-         m_update.addRect(update);
+         critical_section_lock al(&m_criticalsectionUpdate);
+         m_regionUpdate.addRect(update);
       }
-      m_eventUpdate.set_happening();
+      m_happeningUpdate.set_happening();
       m_plogwriter->debug("FbUpdateNotifier: added rectangle");
    }
 
    void FbUpdateNotifier::onPropertiesFb()
    {
       {
-         critical_section_lock al(&m_updateLock);
-         m_update.clear();
-         m_isNewSize = true;
+         critical_section_lock al(&m_criticalsectionUpdate);
+         m_regionUpdate.clear();
+         m_bNewSize = true;
       }
-      m_eventUpdate.set_happening();
+      m_happeningUpdate.set_happening();
       m_plogwriter->debug("FbUpdateNotifier: new size of frame buffer");
    }
 
    void FbUpdateNotifier::updatePointerPos(const ::int_point &pointPosition)
    {
-      m_cursorPainter.updatePointerPos(pointPosition);
+      m_cursorpainter.updatePointerPos(pointPosition);
 
-      critical_section_lock al(&m_updateLock);
-      m_isCursorChange = true;
-      m_eventUpdate.set_happening();
+      critical_section_lock al(&m_criticalsectionUpdate);
+      m_bCursorChange = true;
+      m_happeningUpdate.set_happening();
    }
 
    void FbUpdateNotifier::setNewCursor(const ::int_point &pointHotspot,
@@ -220,22 +220,22 @@ namespace remoting
                                        const ::array_base<unsigned char> *bitmask)
    {
       {
-         critical_section_lock al(m_fbLock);
-         m_cursorPainter.setNewCursor(pointHotspot, width, height, cursor, bitmask);
+         critical_section_lock al(m_criticalsectionFramebuffer);
+         m_cursorpainter.setNewCursor(pointHotspot, width, height, cursor, bitmask);
       }
-      critical_section_lock al(&m_updateLock);
-      m_isCursorChange = true;
-      m_isGoodCursor = true;
-      m_eventUpdate.set_happening();
+      critical_section_lock al(&m_criticalsectionUpdate);
+      m_bCursorChange = true;
+      m_bGoodCursor = true;
+      m_happeningUpdate.set_happening();
 
    }
 
    void FbUpdateNotifier::setIgnoreShapeUpdates(bool ignore)
    {
-      m_cursorPainter.setIgnoreShapeUpdates(ignore);
+      m_cursorpainter.setIgnoreShapeUpdates(ignore);
 
-      critical_section_lock al(&m_updateLock);
-      m_isCursorChange = true;
-      m_eventUpdate.set_happening();
+      critical_section_lock al(&m_criticalsectionUpdate);
+      m_bCursorChange = true;
+      m_happeningUpdate.set_happening();
    }
 } // namespace remoting

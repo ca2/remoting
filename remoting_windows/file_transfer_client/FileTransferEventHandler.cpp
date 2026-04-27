@@ -25,7 +25,7 @@
 #include "FileTransferEventHandler.h"
 namespace remoting
 {
-   namespace ftp
+   namespace file_transfer
    {
       FileTransferEventHandler::FileTransferEventHandler()
       {

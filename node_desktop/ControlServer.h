@@ -43,6 +43,9 @@ namespace remoting_node_desktop
    class ControlServer : public ::subsystem::Thread
    {
    public:
+
+      ::pointer < ::remoting::Configurator > m_pconfigurator;
+
       /**
        * Creates and starts control server execution.
        * @param serverTransport ready transport for control server.
@@ -75,7 +78,7 @@ namespace remoting_node_desktop
       virtual void onTerminate();
 
    private:
-      ControlAppAuthenticator m_authenticator;
+      ControlAppAuthenticator m_controlappauthenticator;
       ::pointer<::subsystem::ThreadCollector> m_pthreadCollector;
 
       ::subsystem::PipeServer *m_pipeServer;

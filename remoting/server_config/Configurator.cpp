@@ -37,7 +37,7 @@ namespace remoting
 {
 
    //Configurator *Configurator::s_instance = NULL;
-   //critical_section Configurator::m_instanceMutex;
+   //lockable_critical_section Configurator::m_instanceMutex;
 
    Configurator::Configurator() :
        m_isConfiguringService(false), m_isConfigLoadedPartly(false), m_isFirstLoad(true)

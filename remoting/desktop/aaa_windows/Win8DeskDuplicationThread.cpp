@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "../WinDxRecoverableException.h"
 #include "../WinDxCriticalException.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
 #include "../WinDxgiAcquiredFrame.h"
 #include "../WinD3D11Texture2D.h"
@@ -38,7 +38,7 @@ namespace remoting
 
    Win8DeskDuplication::Win8DeskDuplication(::innate_subsystem::Framebuffer *targetFb,
                                             ::int_rectangle_array_base &targetRect, Win8CursorShape *targetCurShape,
-                                            LONGLONG *cursorTimeStamp, critical_section *cursorMutex,
+                                            LONGLONG *cursorTimeStamp, lockable_critical_section *cursorMutex,
                                             Win8DuplicationListener *duplListener,
                                             ::array_base<WinDxgiOutput> &dxgiOutput, ::subsystem::LogWriter * plogwriter) :
        m_targetFb(targetFb), m_targetRects(targetRect), m_targetCurShape(targetCurShape),

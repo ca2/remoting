@@ -26,9 +26,9 @@
 #include "WindowsApplication.h"
 
 #include "subsystem/_common_header.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
-critical_section WindowsApplication::m_MDLMutex;
+lockable_critical_section WindowsApplication::m_MDLMutex;
 
 ::comparable_list_base<HWND> WindowsApplication::m_modelessDialogList;
 

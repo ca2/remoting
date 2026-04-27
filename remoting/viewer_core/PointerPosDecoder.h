@@ -27,7 +27,7 @@
 
 #include "PseudoDecoder.h"
 
-namespace remoting
+namespace remoting_client
 {
    class CLASS_DECL_REMOTING PointerPosDecoder : public PseudoDecoder
    {
@@ -35,4 +35,4 @@ namespace remoting
       PointerPosDecoder(::subsystem::LogWriter * plogwriter);
       virtual ~PointerPosDecoder();
    };
-} // namespace remoting
+} // namespace remoting_client

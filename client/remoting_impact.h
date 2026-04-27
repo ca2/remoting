@@ -35,7 +35,7 @@
 #include "subsystem/node/OperatingSystemApplication.h"
 
 //#include "log_writer/LogWriter.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
 //#include aaa_<map>
 

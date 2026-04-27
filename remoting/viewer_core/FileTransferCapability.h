@@ -36,21 +36,22 @@
 #include "CapabilitiesManager.h"
 
 
-namespace  remoting
+namespace remoting_client
 {
-   namespace  ftp
+   namespace file_transfer
    {
-      class CLASS_DECL_REMOTING FileTransferCapability : public ServerMessageListener
+      class CLASS_DECL_REMOTING FileTransferCapability :
+         virtual public ::remoting_client::ServerMessageListener
       {
       public:
 
          ::subsystem::LogWriter * m_plogwriter;
 
-         FileTransferRequestSender m_ftRequestSender;
-         FileTransferReplyBuffer m_ftReplyBuffer;
-         FileTransferMessageProcessor m_ftMessageProcessor;
+         ::remoting::file_transfer::FileTransferRequestSender m_ftRequestSender;
+         ::remoting::file_transfer::FileTransferReplyBuffer m_ftReplyBuffer;
+         ::remoting::file_transfer::FileTransferMessageProcessor m_ftMessageProcessor;
 
-         FileTransferCore m_ftCore;
+         ::remoting::file_transfer::FileTransferCore m_ftCore;
 
          FileTransferCapability(::subsystem::LogWriter * plogwriter = nullptr);
          virtual ~FileTransferCapability();
@@ -63,22 +64,26 @@ namespace  remoting
          //
          // This method must called from event onConnected() in CoreEventsAdapter.
          //
-         void setOutput(RfbOutputGate *output);
+         void setOutput(::remoting::RfbOutputGate *output);
 
          //
          // Overrides MessageListener::onRequest().
          //
          virtual void onServerMessage(unsigned int code, ::DataInputStream * pinput);
 
-         virtual FileTransferCore *getCore();
-         virtual void setInterface(FileTransferInterface *ftInterface);
+         virtual ::remoting::file_transfer::FileTransferCore *getCore();
+         virtual void setInterface(::remoting::file_transfer::FileTransferInterface *ftInterface);
 
          //
          // This method must be called before call RemoteViewerCore::start(),
          // otherwise FT will no worked.
          //
-         virtual void addCapabilities(CapabilitiesManager *capabilitiesManager);
+         virtual void addCapabilities(::remoting_client::CapabilitiesManager *capabilitiesManager);
 
       };
+
+
    }
+
+
 }

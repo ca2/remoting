@@ -26,8 +26,8 @@
 #include "subsystem/node/OperatingSystem.h"
 #include "ServerCommandLine.h"
 #include "remoting/node_desktop/NamingDefs.h"
-#include "remoting/node_desktop/NewConnectionEvents.h"
-#include "remoting/node_desktop/WinServiceEvents.h"
+#include "remoting/remoting/server/NewConnectionEvents.h"
+#include "remoting/node_desktop/ServiceEvents.h"
 #include "subsystem/node/ServiceControlManagerClient.h"
 #include "subsystem/node/OperatingSystem.h"
 
@@ -47,8 +47,8 @@ namespace remoting_node_desktop
    }
 
 
-   void Service::initialize_remoting_node_desktop_service(WinServiceEvents * pwinserviceevents,
-                                                          NewConnectionEvents *pnewconnectionevents)
+   void Service::initialize_remoting_node_desktop_service(ServiceEvents * pwinserviceevents,
+                                                          ::remoting_node::NewConnectionEvents *pnewconnectionevents)
    {
 
       m_pwinserviceevents = pwinserviceevents;

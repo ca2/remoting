@@ -25,7 +25,7 @@
 #include "CoreEventsAdapter.h"
 #include "remoting/remoting/rfb/AuthDefs.h"
 
-namespace remoting
+namespace remoting_client
 {
    // It's abstract, but still needs an implementation.
    CoreEventsAdapter::~CoreEventsAdapter()
@@ -55,7 +55,7 @@ namespace remoting
 
    }
 
-   void CoreEventsAdapter::onConnected(RfbOutputGate *output)
+   void CoreEventsAdapter::onConnected(::remoting::RfbOutputGate *output)
    {
    }
 
@@ -80,4 +80,4 @@ namespace remoting
    void CoreEventsAdapter::onFramebufferPropChange(const ::innate_subsystem::Framebuffer *pframebuffer)
    {
    }
-} // namespace remoting
+} // namespace remoting_client

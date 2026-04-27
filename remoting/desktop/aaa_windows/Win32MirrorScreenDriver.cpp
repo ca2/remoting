@@ -31,7 +31,7 @@ namespace remoting
 
 
    Win32MirrorScreenDriver::Win32MirrorScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                                                    critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) :
+                                                    lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) :
        Win32ScreenDriverBaseImpl(pupdatekeeper, pupdatelistener, pcriticalsectionFramebuffer, log),
        m_mirrorDriver(pupdatekeeper, pupdatelistener, pcriticalsectionFramebuffer, log)
    {

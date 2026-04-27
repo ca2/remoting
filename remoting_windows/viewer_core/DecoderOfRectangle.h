@@ -48,11 +48,11 @@ namespace remoting
       //
       // This function is thread-safe for pframebuffer->
       //
-      virtual void process(RfbInputGate *input,
+      virtual void process(::remoting::RfbInputGate *input,
                            ::innate_subsystem::Framebuffer *pframebuffer,
                            ::innate_subsystem::Framebuffer *secondFramebuffer,
                            const ::int_rectangle &  rectangle,
-                           critical_section *fbLock,
+                           lockable_critical_section *pcriticalsectionFramebuffer,
                            FbUpdateNotifier *fbNotifier);
 
       //
@@ -64,7 +64,7 @@ namespace remoting
       //
       // This method read rectangle-update from input and decode on pframebuffer->
       //
-      virtual void decode(RfbInputGate *input,
+      virtual void decode(::remoting::RfbInputGate *input,
                           ::innate_subsystem::Framebuffer *pframebuffer,
                           const ::int_rectangle &  rectangle) = 0;
 
@@ -75,7 +75,7 @@ namespace remoting
       virtual void copy(::innate_subsystem::Framebuffer *dstFramebuffer,
                         const ::innate_subsystem::Framebuffer *pframebufferSource,
                         const ::int_rectangle &  rectangle,
-                        critical_section *fbLock);
+                        lockable_critical_section *pcriticalsectionFramebuffer);
 
       //
       // This method notify fbNotifier about update of rectangle.

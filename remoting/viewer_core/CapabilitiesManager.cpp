@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "CapabilitiesManager.h"
 
-namespace remoting
+namespace remoting_client
 {
    CapabilitiesManager::CapabilitiesManager()
    {
@@ -33,4 +33,4 @@ namespace remoting
    CapabilitiesManager::~CapabilitiesManager()
    {
    }
-} // namespace remoting
+} // namespace remoting_client

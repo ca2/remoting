@@ -45,11 +45,11 @@ namespace remoting
       ~ViewPortState();
 
       // After calling this function the update() function will set the view
-      // port rectangle equal to it's the fbDimension argument rectangle.
+      // port rectangle equal to it's the sizeFramebuffer argument rectangle.
       void setFullDesktop();
 
       // After calling this function the update() function will set the view
-      // port rectangle to the *rectangle rectangle constrained by the fbDimension
+      // port rectangle to the *rectangle rectangle constrained by the sizeFramebuffer
       // update() function argument.
       void setArbitraryRect(const ::int_rectangle & rectangle);
 

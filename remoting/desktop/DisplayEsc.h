@@ -1,42 +1,42 @@
 // Copyright (c) 2003-2010 DemoForge, LLC.
 // All rights reserved.
 
-#pragma once
+#ifndef	DF_MIRAGE__DISP_ESCAPES
+#define	DF_MIRAGE__DISP_ESCAPES
+// NOTE: shared among DISPLAY and R3 projects
 
-namespace df_mirage
+//namespace df_mirage_drv
+//{
+
+enum
 {
-   // NOTE: shared among DISPLAY and R3 projects
+	DMF_ESCAPE_BASE_1_VB	= 1030,
+	DMF_ESCAPE_BASE_2_VB	= 1026,
+	DMF_ESCAPE_BASE_3_VB	= 24
+};
 
+//VB++
+#ifdef  _WIN64
 
-   enum
-   {
-      DMF_ESCAPE_BASE_1_VB = 1030,
-      DMF_ESCAPE_BASE_2_VB = 1026,
-      DMF_ESCAPE_BASE_3_VB = 24
-   };
+#define CLIENT_64BIT   0x8000
 
-// VB++
-#ifdef _WIN64
-
-#define CLIENT_64BIT 0x8000
-
-   enum
-   {
-      DMF_ESCAPE_BASE_1 = CLIENT_64BIT | DMF_ESCAPE_BASE_1_VB,
-      DMF_ESCAPE_BASE_2 = CLIENT_64BIT | DMF_ESCAPE_BASE_2_VB,
-      DMF_ESCAPE_BASE_3 = CLIENT_64BIT | DMF_ESCAPE_BASE_3_VB,
-   };
+enum
+{
+	DMF_ESCAPE_BASE_1	= CLIENT_64BIT | DMF_ESCAPE_BASE_1_VB,
+	DMF_ESCAPE_BASE_2	= CLIENT_64BIT | DMF_ESCAPE_BASE_2_VB,
+	DMF_ESCAPE_BASE_3	= CLIENT_64BIT | DMF_ESCAPE_BASE_3_VB,
+};
 
 #else
 
 enum
 {
 	DMF_ESCAPE_BASE_1	= DMF_ESCAPE_BASE_1_VB,
-	DMF_ESCAPE_BASE_2	= DMF_ESCAPE_BASE_2_VB, 
-	DMF_ESCAPE_BASE_3	= DMF_ESCAPE_BASE_3_VB, 
+	DMF_ESCAPE_BASE_2	= DMF_ESCAPE_BASE_2_VB,
+	DMF_ESCAPE_BASE_3	= DMF_ESCAPE_BASE_3_VB,
 };
 
-
+#endif
 
 // Define the IOCTL function code
 typedef enum
@@ -61,8 +61,8 @@ typedef enum
 
 } dmf_escape;
 
-#define MAXCHANGES_BUF 20000
-#define CLIP_LIMIT 50
+#define MAXCHANGES_BUF	20000
+#define CLIP_LIMIT		50
 
 // operations
 typedef enum
@@ -79,15 +79,15 @@ typedef enum
 	dmf_dfo_TRANS		= 15,
 	dmf_dfo_PLG			= 17,
 	dmf_dfo_TEXTOUT		= 18,
-	
+
 	dmf_dfo_Ptr_Shape	= 19,
 	dmf_dfo_Ptr_Engage	= 48,	// point is used with this record
 	dmf_dfo_Ptr_Avert	= 49,
 
 // 1.0.9.0
 // mode-assert notifications to manifest PDEV limbo status
-	dmf_dfn_assert_on	= 64,	// DrvAssert(true): PDEV reenabled
-	dmf_dfn_assert_off	= 65,	// DrvAssert(false): PDEV disabled
+	dmf_dfn_assert_on	= 64,	// DrvAssert(TRUE): PDEV reenabled
+	dmf_dfn_assert_off	= 65,	// DrvAssert(FALSE): PDEV disabled
 
 } dmf_UpdEvent;
 
@@ -98,13 +98,13 @@ typedef enum
 struct	CHANGES_RECORD
 {
 	ULONG	type;		//screen_to_screen, blit, newcache,oldcache
-	RECT	rectangle;
+	RECT	rect;
 #ifndef DFMIRAGE_LEAN
 	RECT	origrect;
 	POINT	point;
 	ULONG	color;		// number used in cache array
 	ULONG	refcolor;	// slot used to pass bitmap data
-
+#endif
 };
 // sizeof (CHANGES_RECORD) = 52, 8-aligned: 56
 
@@ -117,7 +117,7 @@ struct	CHANGES_BUF
 };
 // 4+ 56*2000 = 112004
 
-#define DMF_PIPE_SEC_SIZE_DEFAULT ALIGN64K(sizeof(CHANGES_BUF))
+#define	DMF_PIPE_SEC_SIZE_DEFAULT	ALIGN64K(sizeof(CHANGES_BUF))
 
 struct GETCHANGESBUF
 {
@@ -141,15 +141,15 @@ typedef	enum
 	dmf_sprb_gdi_err				= 0x0100,	// internal error attributed to GDI
 
 	dmf_sprb_owner_died				= 0x0400,	// owner app died; emergency cleanup have been performed
-#define dmf_sprb_ERRORMASK 0x07ff
+#define	dmf_sprb_ERRORMASK			0x07ff
 
 // generally, not errors
 	dmf_sprb_tgtwnd_gone			= 0x0800,	// target wnd is gone; nothing to capture
 //	dmf_sprb_xyz					= 0x1000,
-#define dmf_sprb_STRICTSESSION_AFF 0x1fff
+#define	dmf_sprb_STRICTSESSION_AFF	0x1fff
 
 // NON-STRICT SESSION AFFILIATION
-	dmf_sprb_pdev_detached			= 0x2000,	// DrvAssertMode: false; transient problem, in general
+	dmf_sprb_pdev_detached			= 0x2000,	// DrvAssertMode: FALSE; transient problem, in general
 
 //// NOTE: these flags are not part of the persistent state;
 //// these are only signaled for that commands;
@@ -164,13 +164,13 @@ typedef	enum
 //		0 indicates not-impl,
 //		<0 indicates faulure;
 //	-- 0x80000000 is the failure flag :)
-#define DMF_ESC_RET_FAILF 0x80000000
+#define	DMF_ESC_RET_FAILF		0x80000000
 //	-- lower-word (16 positions) is a dmf_session_prob_status
 //	   that be [as a result of a call],
-#define DMF_ESC_RET_SSTMASK 0x0000FFFF
+#define	DMF_ESC_RET_SSTMASK		0x0000FFFF
 //	-- bits 30-16 (15 positions) is an immediate call status properies,
 //	   defined (in principle) on per-function basis
-#define DMF_ESC_RET_IMMMASK 0x7FFF0000
+#define	DMF_ESC_RET_IMMMASK		0x7FFF0000
 
 typedef	enum
 {
@@ -219,8 +219,8 @@ enum
 	esc_qvi_prod_name_max	= 16,
 };
 
-#define ESC_QVI_PROD_MIRAGE "MIRAGE"
-#define ESC_QVI_PROD_QUASAR "QUASAR"
+#define	ESC_QVI_PROD_MIRAGE	"MIRAGE"
+#define	ESC_QVI_PROD_QUASAR	"QUASAR"
 
 struct	Esc_dmf_Qvi_OUT
 {
@@ -274,14 +274,4 @@ struct	Esc_dmf_pointer_shape_get_OUT
 
 //};	// namespace df_mirage_drv
 
-//DF_MIRAGE__DISP_ESCAPES
-
-#endif
-
-#endif
-
-} // namespace df_mirage
-
-
-
- 
+#endif	DF_MIRAGE__DISP_ESCAPES

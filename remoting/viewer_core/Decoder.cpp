@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "Decoder.h"
 
-namespace remoting
+namespace remoting_client
 {
    Decoder::Decoder(::subsystem::LogWriter * plogwriter)
    : m_plogwriter(plogwriter)
@@ -48,41 +48,41 @@ namespace remoting
    bool Decoder::isPseudo(int encoding)
    {
       switch (encoding) {
-         case EncodingDefs::RAW:
-         case EncodingDefs::COPYRECT:
-         case EncodingDefs::RRE:
-         case EncodingDefs::HEXTILE:
-         case EncodingDefs::TIGHT:
-         case EncodingDefs::ZRLE:
+         case ::remoting::EncodingDefs::RAW:
+         case ::remoting::EncodingDefs::COPYRECT:
+         case ::remoting::EncodingDefs::RRE:
+         case ::remoting::EncodingDefs::HEXTILE:
+         case ::remoting::EncodingDefs::TIGHT:
+         case ::remoting::EncodingDefs::ZRLE:
             return false;
 
-         case PseudoEncDefs::COMPR_LEVEL_0:
-         case PseudoEncDefs::COMPR_LEVEL_1:
-         case PseudoEncDefs::COMPR_LEVEL_2:
-         case PseudoEncDefs::COMPR_LEVEL_3:
-         case PseudoEncDefs::COMPR_LEVEL_4:
-         case PseudoEncDefs::COMPR_LEVEL_5:
-         case PseudoEncDefs::COMPR_LEVEL_6:
-         case PseudoEncDefs::COMPR_LEVEL_7:
-         case PseudoEncDefs::COMPR_LEVEL_8:
-         case PseudoEncDefs::COMPR_LEVEL_9:
+         case ::remoting::PseudoEncDefs::COMPR_LEVEL_0:
+         case ::remoting::PseudoEncDefs::COMPR_LEVEL_1:
+         case ::remoting::PseudoEncDefs::COMPR_LEVEL_2:
+         case ::remoting::PseudoEncDefs::COMPR_LEVEL_3:
+         case ::remoting::PseudoEncDefs::COMPR_LEVEL_4:
+         case ::remoting::PseudoEncDefs::COMPR_LEVEL_5:
+         case ::remoting::PseudoEncDefs::COMPR_LEVEL_6:
+         case ::remoting::PseudoEncDefs::COMPR_LEVEL_7:
+         case ::remoting::PseudoEncDefs::COMPR_LEVEL_8:
+         case ::remoting::PseudoEncDefs::COMPR_LEVEL_9:
 
-         case PseudoEncDefs::QUALITY_LEVEL_0:
-         case PseudoEncDefs::QUALITY_LEVEL_1:
-         case PseudoEncDefs::QUALITY_LEVEL_2:
-         case PseudoEncDefs::QUALITY_LEVEL_3:
-         case PseudoEncDefs::QUALITY_LEVEL_4:
-         case PseudoEncDefs::QUALITY_LEVEL_5:
-         case PseudoEncDefs::QUALITY_LEVEL_6:
-         case PseudoEncDefs::QUALITY_LEVEL_7:
-         case PseudoEncDefs::QUALITY_LEVEL_8:
-         case PseudoEncDefs::QUALITY_LEVEL_9:
+         case ::remoting::PseudoEncDefs::QUALITY_LEVEL_0:
+         case ::remoting::PseudoEncDefs::QUALITY_LEVEL_1:
+         case ::remoting::PseudoEncDefs::QUALITY_LEVEL_2:
+         case ::remoting::PseudoEncDefs::QUALITY_LEVEL_3:
+         case ::remoting::PseudoEncDefs::QUALITY_LEVEL_4:
+         case ::remoting::PseudoEncDefs::QUALITY_LEVEL_5:
+         case ::remoting::PseudoEncDefs::QUALITY_LEVEL_6:
+         case ::remoting::PseudoEncDefs::QUALITY_LEVEL_7:
+         case ::remoting::PseudoEncDefs::QUALITY_LEVEL_8:
+         case ::remoting::PseudoEncDefs::QUALITY_LEVEL_9:
 
-         case PseudoEncDefs::DESKTOP_SIZE:
-         case PseudoEncDefs::X_CURSOR:
-         case PseudoEncDefs::RICH_CURSOR:
-         case PseudoEncDefs::POINTER_POS:
-         case PseudoEncDefs::LAST_RECT:
+         case ::remoting::PseudoEncDefs::DESKTOP_SIZE:
+         case ::remoting::PseudoEncDefs::X_CURSOR:
+         case ::remoting::PseudoEncDefs::RICH_CURSOR:
+         case ::remoting::PseudoEncDefs::POINTER_POS:
+         case ::remoting::PseudoEncDefs::LAST_RECT:
             return true;
          default:
             // if the encoding type is unknown, then generate assertions.
@@ -90,5 +90,5 @@ namespace remoting
             return true;
       }
    }
-} // namespace remoting
+} // namespace remoting_client
 

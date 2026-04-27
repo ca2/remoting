@@ -25,7 +25,7 @@
 #pragma once
 
 
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 //#include "subsystem/platform/class ::time.h"
 
 namespace remoting_node_desktop
@@ -36,7 +36,7 @@ namespace remoting_node_desktop
    class AuthTracker
    {
    public:
-      AuthTracker(unsigned long long failureTimeInterval, unsigned int failureMaxCount);
+      AuthTracker(const class ::time & timeFailureInterval, unsigned int failureMaxCount);
       virtual ~AuthTracker();
 
    protected:
@@ -50,12 +50,12 @@ namespace remoting_node_desktop
       // If ban time is elapsed the refresh() function reset m_failureCount.
       void refresh();
 
-      unsigned long long m_failureTimeInterval;
+      class ::time m_failureTimeInterval;
 
       class ::time m_firstFailureTime;
       unsigned int m_failureCount;
       unsigned int m_failureMaxCount;
-      critical_section m_countMutex;
+      lockable_critical_section m_countMutex;
    };
 
 

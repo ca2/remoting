@@ -37,24 +37,24 @@ namespace remoting
    {
    }
 
-   void DecoderOfRectangle::process(RfbInputGate *input,
+   void DecoderOfRectangle::process(::remoting::RfbInputGate *input,
                         ::innate_subsystem::Framebuffer *pframebuffer,
                         ::innate_subsystem::Framebuffer *secondFramebuffer,
                         const ::int_rectangle &  rectangle,
-                        critical_section *fbLock,
+                        lockable_critical_section *pcriticalsectionFramebuffer,
                         FbUpdateNotifier *fbNotifier)
    {
       decode(input, secondFramebuffer, rectangle);
-      copy(pframebuffer, secondFramebuffer, rectangle, fbLock);
+      copy(pframebuffer, secondFramebuffer, rectangle, pcriticalsectionFramebuffer);
       notify(fbNotifier, rectangle);
    }
 
    void DecoderOfRectangle::copy(::innate_subsystem::Framebuffer *dstFramebuffer,
                       const ::innate_subsystem::Framebuffer *pframebufferSource,
                       const ::int_rectangle &  rectangle,
-                      critical_section *fbLock)
+                      lockable_critical_section *pcriticalsectionFramebuffer)
    {
-      critical_section_lock al(fbLock);
+      critical_section_lock al(pcriticalsectionFramebuffer);
       dstFramebuffer->copyFrom(rectangle, pframebufferSource, rectangle.left, rectangle.top);
    }
 

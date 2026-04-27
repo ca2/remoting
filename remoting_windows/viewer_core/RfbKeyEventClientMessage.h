@@ -35,7 +35,7 @@ namespace remoting
       RfbKeyEventClientMessage(bool downFlag, unsigned int key);
       ~RfbKeyEventClientMessage();
 
-      void send(RfbOutputGate *output);
+      void send(::remoting::RfbOutputGate *output);
 
    private:
       unsigned int m_key;

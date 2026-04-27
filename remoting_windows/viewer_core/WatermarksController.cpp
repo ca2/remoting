@@ -56,7 +56,7 @@ namespace remoting
 
    void WatermarksController::setNewPixelFormat(const ::innate_subsystem::PixelFormat & pixelformat)
    {
-      if (is_empty() || m_pframebuffer.getPixelFormat()!= pixelformat)
+      if (is_empty() || m_pframebuffer->getPixelFormat()!= pixelformat)
       {
          ::innate_subsystem::Framebuffer temp;
          ::innate_subsystem::Framebuffer& pframebuffer = pframebuffer(true);
@@ -79,14 +79,14 @@ namespace remoting
       }
    }
 
-   void WatermarksController::showWaterMarks(::innate_subsystem::Framebuffer *pframebuffer, critical_section *fbLock)
+   void WatermarksController::showWaterMarks(::innate_subsystem::Framebuffer *pframebuffer, lockable_critical_section *pcriticalsectionFramebuffer)
    {
       m_overlay.copyFrom(pframebuffer, m_currentRect.left, m_currentRect.top);
 
-      pframebuffer->copyFrom(m_currentRect, &m_pframebuffer, 0, 0);
+      pframebuffer->copyFrom(m_currentRect, m_pframebuffer, 0, 0);
    }
 
-   void WatermarksController::hideWatermarks(::innate_subsystem::Framebuffer *pframebuffer, critical_section *fbLock)
+   void WatermarksController::hideWatermarks(::innate_subsystem::Framebuffer *pframebuffer, lockable_critical_section *pcriticalsectionFramebuffer)
    {
       pframebuffer->copyFrom(m_currentRect, &m_overlay, 0, 0);
    }
@@ -98,7 +98,7 @@ namespace remoting
 
    ::innate_subsystem::Framebuffer& WatermarksController::pframebuffer(bool fromFile)
    {
-      if (m_pframebuffer.getBuffer() == 0 || fromFile)
+      if (m_pframebuffer->getBuffer() == 0 || fromFile)
       {
          loadFromfile();
       }
@@ -124,7 +124,7 @@ namespace remoting
 
       ::int_size size(m_width, m_height);
       ::innate_subsystem::PixelFormat pixelformat = ::innate_subsystem::StandardPixelFormatFactory::create32bppPixelFormat();
-      m_pframebuffer.setPropertiesWithoutResize(size, pixelformat);
+      m_pframebuffer->setPropertiesWithoutResize(size, pixelformat);
       m_overlay.setPropertiesWithoutResize(m_overlay.getDimension(), pixelformat);
 
       for (int i = 0; i < m_height; ++i)
@@ -143,11 +143,11 @@ namespace remoting
          }
       }
 
-      m_pframebuffer.setBuffer(buffer);
+      m_pframebuffer->setBuffer(buffer);
    }
 
    bool WatermarksController::is_empty()
    {
-      return m_pframebuffer.getBuffer() == 0;
+      return m_pframebuffer->getBuffer() == 0;
    }
 } // namespace remoting

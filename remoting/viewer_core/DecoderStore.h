@@ -32,7 +32,7 @@
 
 //#include "log_writer/LogWriter.h"
 
-namespace remoting
+namespace remoting_client
 {
    class CLASS_DECL_REMOTING DecoderStore
    {
@@ -60,4 +60,4 @@ namespace remoting
       int m_preferredEncoding;
       bool m_allowCopyRect;
    };
-} // namespace remoting
+} // namespace remoting_client

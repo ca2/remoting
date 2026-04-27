@@ -30,7 +30,7 @@
 
 namespace  remoting
 {
-   namespace  ftp
+   namespace file_transfer
    {
       //
       // 2D two-side linked ::list_base class with FileInfo data inside

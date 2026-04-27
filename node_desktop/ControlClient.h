@@ -63,13 +63,14 @@ namespace remoting_node_desktop
    class ControlClient : public ::subsystem::Thread
    {
    public:
+      ::pointer < ::remoting::Configurator > m_pconfigurator;
       /**
        * Creates new control client handler thread and starts it.
        * @param transport transport of incoming control connection (non-authorized).
        * @param rfbClientManager active TightVNC rfb client manager.
        * @remark control client takes ownership over client transport.
        */
-      ControlClient(Transport *transport, RfbClientManager *rfbClientManager, ControlAppAuthenticator *authenticator,
+      ControlClient(::remoting::Configurator * pconfigurator, Transport *transport, RfbClientManager *rfbClientManager, ControlAppAuthenticator *authenticator,
                     ::subsystem::FileInterface *pfilePipeHandle, ::subsystem::LogWriter * plogwriter);
       /**
        * Stops client thread and deletes control client.
@@ -219,13 +220,13 @@ namespace remoting_node_desktop
       bool m_repeatAuthPassed;
       unsigned int m_authReqMessageId;
 
-      ControlAppAuthenticator *m_authenticator;
+      ControlAppAuthenticator *m_controlappauthenticator;
 
       // A connection identifier will be used by a viewer to connect to
       // the server across a tcp dispatcher.
       unsigned int m_tcpDispId;
       ::string m_gotDispatcherName;
-      critical_section m_tcpDispValuesMutex;
+      lockable_critical_section m_tcpDispValuesMutex;
 
       ::pointer<::subsystem::ThreadCollector> m_pthreadcollectorOutgoingConnection;
 

@@ -27,7 +27,7 @@
 
 #include "remoting/client/ViewerInstance.h"
 #include "remoting/remoting/network/TcpServer.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
 namespace remoting_client
 {
@@ -53,6 +53,6 @@ namespace remoting_client
 
       ::subsystem::OperatingSystemApplicationInterface*m_poperatingsystemapplication;
       ::list_base<::pointer < ::subsystem::SocketIPv4Interface > > m_connections;
-      critical_section m_criticalsectionConnections;
+      lockable_critical_section m_criticalsectionConnections;
    };
 }//namespace remoting_client

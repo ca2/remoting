@@ -30,7 +30,7 @@
 
 namespace remoting
 {
-   namespace ftp
+   namespace file_transfer
    {
       class CLASS_DECL_REMOTING OperationSupport
       {
@@ -63,7 +63,7 @@ namespace remoting
          bool m_isMD5Supported;
          bool m_isDirSizeSupported;
       };
-   } // namespace ftp
+   } // namespace file_transfer
 
 
 } // namespace remoting

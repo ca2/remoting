@@ -30,7 +30,7 @@
 ////#include "remoting/remoting/region/::int_point.h"
 
 #include "remoting/remoting/region/Region.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "subsystem/thread/Thread.h"
 //#include "acme/parallelization/happening.h"
 
@@ -46,7 +46,7 @@ namespace remoting
    class CLASS_DECL_REMOTING FbUpdateNotifier : public ::subsystem::Thread
    {
    public:
-      FbUpdateNotifier(::innate_subsystem::Framebuffer *pframebuffer, critical_section *fbLock, ::subsystem::LogWriter * plogwriter, WatermarksController* wmController);
+      FbUpdateNotifier(::innate_subsystem::Framebuffer *pframebuffer, lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter, WatermarksController* pwatermarkscontroller);
       virtual ~FbUpdateNotifier();
 
       void setAdapter(CoreEventsAdapter *adapter);
@@ -66,36 +66,36 @@ namespace remoting
       void execute();
       void onTerminate();
 
-      critical_section *m_fbLock;
+      lockable_critical_section *m_criticalsectionFramebuffer;
       ::innate_subsystem::Framebuffer *m_pframebuffer;
-      CursorPainter m_cursorPainter;
+      CursorPainter m_cursorpainter;
 
       // Pointer to adapter.
       // Nothing event (changing properties of frame buffer, update frame buffer
-      // or update cursor) don't sended to adapter, while m_adapter is 0.
-      CoreEventsAdapter *m_adapter;
+      // or update cursor) don't sended to adapter, while m_pcoreeventsadapter is 0.
+      CoreEventsAdapter *m_pcoreeventsadapter;
 
-      critical_section m_updateLock;
-      //::subsystem::::happening m_eventUpdate;
-      ::happening m_eventUpdate;
+      lockable_critical_section m_criticalsectionUpdate;
+      //::subsystem::::happening m_happeningUpdate;
+      ::happening m_happeningUpdate;
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
       //It is used for adding watermarks in demo version.
-      WatermarksController* m_watermarksController;
+      WatermarksController* m_pwatermarkscontroller;
 
       // In this region added all updates of frame buffer and cursor updates.
-      Region m_update;
+      Region m_regionUpdate;
 
       // This rectangle save pointPosition of cursor.
-      ::int_rectangle m_oldPosition;
+      ::int_rectangle m_rectangleOldPosition;
 
       // This flag is true after call onPropertiesFb().
-      bool m_isNewSize;
+      bool m_bNewSize;
 
       // This flag is true after set new cursor or update pointPosition.
-      bool m_isCursorChange;
-      bool m_isGoodCursor;
+      bool m_bCursorChange;
+      bool m_bGoodCursor;
 
    private:
       // Do not allow copying objects.

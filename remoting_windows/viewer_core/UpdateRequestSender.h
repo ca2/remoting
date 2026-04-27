@@ -14,14 +14,14 @@ namespace remoting
    class CLASS_DECL_REMOTING UpdateRequestSender : public ::subsystem::Thread
    {
    public:
-      UpdateRequestSender(LockableBase* m_fb_lock, ::innate_subsystem::Framebuffer * m_frame_buffer, ::subsystem::LogWriter* m_log_writer);
+      UpdateRequestSender(LockableBase* plockableFramebuffer, ::innate_subsystem::Framebuffer * pframebuffer, ::subsystem::LogWriter* plogwriter);
 
       ~UpdateRequestSender();
 
       void setWasUpdated();
       void setTimeout(int miliseconds);
       void setIsIncremental(bool isIncremental);
-      void setOutput(RfbOutputGate* output);
+      void setOutput(::remoting::RfbOutputGate* output);
 
       int getTimeout();
 
@@ -34,24 +34,24 @@ namespace remoting
 
       bool isUpdated();
       bool isIncremental();
-      RfbOutputGate* getOutput();
+      ::remoting::RfbOutputGate* getOutput();
 
-      bool m_wasUpdateRecieved;
-      critical_section m_wasUpdatedLock;
+      bool m_bWasUpdateReceived;
+      lockable_critical_section m_criticalsectionWasUpdated;
 
-      int m_timeOut;
-      critical_section m_timeOutLock;
+      int m_iTimeout;
+      lockable_critical_section m_criticalsectionTimeout;
 
-      bool m_isIncrimental;
-      critical_section m_isIncrimentalLock;
+      bool m_bIncremental;
+      lockable_critical_section m_criticalsectionIncremental;
 
-      LockableBase *m_fbLock;
+      LockableBase *m_criticalsectionFramebuffer;
       ::innate_subsystem::Framebuffer *m_pframebuffer;
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
-      RfbOutputGate *m_output;
-      critical_section m_outputLock;
+      ::remoting::RfbOutputGate *m_output;
+      lockable_critical_section m_outputLock;
    };
 
    //_UPDATE_REQUEST_SENDER_

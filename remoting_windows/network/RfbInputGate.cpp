@@ -22,21 +22,21 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "RfbInputGate.h"
+#include "::remoting::RfbInputGate.h"
 
 
 namespace remoting
 {
-   RfbInputGate::RfbInputGate(Channel *stream)
+   ::remoting::RfbInputGate::::remoting::RfbInputGate(Channel *stream)
    : DataInputStream(stream)
    {
    }
-   RfbInputGate::RfbInputGate(InputStream *stream)
+   ::remoting::RfbInputGate::::remoting::RfbInputGate(InputStream *stream)
    : DataInputStream(stream)
    {
    }
 
-   RfbInputGate::~RfbInputGate()
+   ::remoting::RfbInputGate::~::remoting::RfbInputGate()
    {
    }
 } // namespace remoting

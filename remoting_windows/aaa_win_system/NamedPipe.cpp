@@ -27,7 +27,7 @@
 #include "subsystem/platform/Exception.h"
 //#include aaa_<crtdbg.h>
 #include "subsystem/node/OperatingSystem.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
 #define MAX_PORTION_SIZE 512 * 1024
 

@@ -4,11 +4,13 @@
 #include "framework.h"
 #include "application.h"
 #include "Server.h"
+#include "ServerApplication.h"
 #include "acme/constant/id.h"
 #include "acme/handler/request.h"
 #include "acme/platform/system.h"
 #include "remoting/client/remoting.h"
 #include "remoting/remoting/remoting.h"
+#include "Service.h"
 //#include "acme/_operating_system.h"
 //#include "main_window.h"
 
@@ -63,7 +65,7 @@ namespace remoting_node_desktop
 
          defer_construct_newø(m_pserverapplication);
 
-         m_pserverapplication->on_start();
+         //m_pserverapplication->on_start();
 
       }
       else if (ecommand == e_command_file_open)
@@ -73,7 +75,7 @@ namespace remoting_node_desktop
 
          m_bOpenFile = true;
 
-         m_pserverapplication->open_file(path);
+         m_pserverapplication->main_node(path);
 
          //fork([this, path]()
          //{
@@ -88,7 +90,7 @@ namespace remoting_node_desktop
          if (!m_bOpenFile)
          {
 
-            m_pserverapplication->open_file({});
+            m_pserverapplication->main_node({});
 
          }
 
@@ -99,7 +101,7 @@ namespace remoting_node_desktop
    lresult application::handle_direct_id(const enum_id eid, wparam wparam, lparam lparam)
    {
 
-      Server().handle_direct_id(eid, wparam, lparam);
+      //Server().handle_direct_id(eid, wparam, lparam);
 
       return ::platform::application::handle_direct_id(eid, wparam, lparam);
 
@@ -118,13 +120,15 @@ namespace remoting_node_desktop
       else if (m_pserverapplication)
       {
 
-         return *m_pserverapplication->m_pserver
+         return *m_pserverapplication->m_pserver;
 
       }
 
       throw ::interface_only();
 
-      return *((Server *) nullptr);
+      ::remoting_node_desktop::Server * pserver = nullptr;
+
+      return *pserver;
 
    }
 

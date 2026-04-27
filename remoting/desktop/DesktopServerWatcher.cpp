@@ -32,6 +32,7 @@
 #include "subsystem_windows/node/SharedMemory.h"
 #include "subsystem_windows/node/WTS.h"
 #include "subsystem_windows/platform/subsystem.h"
+#include "subsystem/node/File.h"
 #include "subsystem/node/OperatingSystem.h"
 #include "subsystem_windows/node/WinStaLibrary.h"
 #include "subsystem_windows/node/WinHandles.h"
@@ -157,13 +158,16 @@ namespace remoting
             otherSidePipeChanTo->assignHandlesFor(m_pprocess->getProcessHandle(), false);
             otherSidePipeChanFrom->assignHandlesFor(m_pprocess->getProcessHandle(), false);
 
+             ::cast <subsystem::PipeInterface > ppipeTo = otherSidePipeChanTo;
+             ::cast <subsystem::PipeInterface > ppipeFrom = otherSidePipeChanFrom;
+
             // Transfer other side handles by the memory channel
-            mem[1] = (unsigned long long)otherSidePipeChanTo->getWriteHandle();
-            mem[2] = (unsigned long long)otherSidePipeChanTo->getReadHandle();
-            mem[3] = (unsigned long long)otherSidePipeChanTo->getMaxPortionSize();
-            mem[4] = (unsigned long long)otherSidePipeChanFrom->getWriteHandle();
-            mem[5] = (unsigned long long)otherSidePipeChanFrom->getReadHandle();
-            mem[6] = (unsigned long long)otherSidePipeChanFrom->getMaxPortionSize();
+            mem[1] = (unsigned long long)otherSidePipeChanTo->getWriteFile()->_HANDLE();
+            mem[2] = (unsigned long long)otherSidePipeChanTo->getReadFile()->_HANDLE();
+            mem[3] = (unsigned long long)ppipeTo->getMaxPortionSize();
+            mem[4] = (unsigned long long)otherSidePipeChanFrom->getWriteFile()->_HANDLE();
+            mem[5] = (unsigned long long)otherSidePipeChanFrom->getReadFile()->_HANDLE();
+            mem[6] = (unsigned long long)ppipeFrom->getMaxPortionSize();
 
             // Sets memory ready flag to true.
             mem[0] = 1;
@@ -212,27 +216,27 @@ namespace remoting
             m_pprocess->start();
             return;
          }
-         catch (SystemException &sysEx)
+         catch (::subsystem::SystemException &sysEx)
          {
-            // It can be XP specific error.
-            if (sysEx.getErrorCode() == 233 || sysEx.getErrorCode() == 87)
-            {
-               pipeNotConnectedErrorCount++;
-
-               DWORD sessionId = WindowsSubsystem().WTS().getActiveConsoleSessionId(m_plogwriter);
-
-               bool isXPFamily = Environment::isWinXP() || Environment::isWin2003Server();
-               bool needXPTrick = (isXPFamily) && (sessionId > 0) && (pipeNotConnectedErrorCount >= 3);
-
-               // Try start as current user with xp trick.
-               if (needXPTrick)
-               {
-                  doXPTrick();
-                  m_pprocess->start();
-                  return;
-               }
-            }
-            else
+            // // It can be XP specific error.
+            // if (sysEx.getErrorCode() == 233 || sysEx.getErrorCode() == 87)
+            // {
+            //    pipeNotConnectedErrorCount++;
+            //
+            //    DWORD sessionId = WindowsSubsystem().WTS().getActiveConsoleSessionId(m_plogwriter);
+            //
+            //    bool isXPFamily = MainSubsystem().OperatingSystem().isWinXP() || MainSubsystem().OperatingSystem().isWin2003Server();
+            //    bool needXPTrick = (isXPFamily) && (sessionId > 0) && (pipeNotConnectedErrorCount >= 3);
+            //
+            //    // Try start as current user with xp trick.
+            //    if (needXPTrick)
+            //    {
+            //       doXPTrick();
+            //       m_pprocess->start();
+            //       return;
+            //    }
+            // }
+            // else
             {
                throw;
             }
@@ -241,46 +245,46 @@ namespace remoting
       } // for
    }
 
-   void DesktopServerWatcher::doXPTrick()
-   {
-      m_plogwriter->information("Trying to do WindowsXP trick to start process on separate session");
-
-      try
-      {
-         WinStaLibrary winSta;
-
-         WCHAR password[1];
-         memset(password, 0, sizeof(password));
-
-         if (winSta.WinStationConnectW(NULL, 0, WindowsSubsystem().WTS().getActiveConsoleSessionId(m_plogwriter), password, 0) == false)
-         {
-            throw SystemException("Failed to call WinStationConnectW");
-         }
-
-         // Get path to remoting_node binary.
-         ::string pathToBinary;
-         pathToBinary = MainSubsystem().OperatingSystem().getCurrentModulePath();;
-
-         // Start current console process that will lock workstation (not using Xp Trick).
-         CurrentConsoleProcess lockWorkstation(m_plogwriter, false, pathToBinary, "-lockworkstation");
-         lockWorkstation.start();
-         lockWorkstation.waitForExit();
-
-         // Check exit code (exit code is GetLastError() value in case of system error,
-         // LockWorkstation() in child process failed, or 0 if workstation is locked).
-         DWORD exitCode = lockWorkstation.getExitCode();
-
-         if (exitCode != 0)
-         {
-            throw SystemException(exitCode);
-         }
-      }
-      catch (SystemException &ex)
-      {
-         m_plogwriter->error(ex.get_message());
-         throw;
-      }
-   }
+   // void DesktopServerWatcher::doXPTrick()
+   // {
+   //    m_plogwriter->information("Trying to do WindowsXP trick to start process on separate session");
+   //
+   //    try
+   //    {
+   //       WinStaLibrary winSta;
+   //
+   //       WCHAR password[1];
+   //       memset(password, 0, sizeof(password));
+   //
+   //       if (winSta.WinStationConnectW(NULL, 0, WindowsSubsystem().WTS().getActiveConsoleSessionId(m_plogwriter), password, 0) == false)
+   //       {
+   //          throw SystemException("Failed to call WinStationConnectW");
+   //       }
+   //
+   //       // Get path to remoting_node binary.
+   //       ::string pathToBinary;
+   //       pathToBinary = MainSubsystem().OperatingSystem().getCurrentModulePath();;
+   //
+   //       // Start current console process that will lock workstation (not using Xp Trick).
+   //       CurrentConsoleProcess lockWorkstation(m_plogwriter, false, pathToBinary, "-lockworkstation");
+   //       lockWorkstation.start();
+   //       lockWorkstation.waitForExit();
+   //
+   //       // Check exit code (exit code is GetLastError() value in case of system error,
+   //       // LockWorkstation() in child process failed, or 0 if workstation is locked).
+   //       DWORD exitCode = lockWorkstation.getExitCode();
+   //
+   //       if (exitCode != 0)
+   //       {
+   //          throw SystemException(exitCode);
+   //       }
+   //    }
+   //    catch (SystemException &ex)
+   //    {
+   //       m_plogwriter->error(ex.get_message());
+   //       throw;
+   //    }
+   // }
 
 
 } // namespace remoting

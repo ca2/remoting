@@ -25,7 +25,7 @@
 #pragma once
 
 
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 //#include aaa_<list>
 //#include "ViewerInstance.h"
 
@@ -43,7 +43,7 @@ namespace remoting_client
     {
     public:
 
-       mutable critical_section m_criticalsection;
+       mutable lockable_critical_section m_criticalsection;
        ViewerInstanceList m_viewerinstancelist;
 
        // This variable contain count of instance, when need to reconnect.

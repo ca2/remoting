@@ -83,7 +83,7 @@ namespace remoting_client
         //::innate_subsystem::Control::replaceWindowProc(FileInfoListView::s_newWndProc);
     }
 
-    void FileInfoListView::addItem(int index, ::remoting::ftp::FileInfo *fileInfo)
+    void FileInfoListView::addItem(int index, ::remoting::file_transfer::FileInfo *fileInfo)
     {
         auto strFilename = fileInfo->getFileName();
 
@@ -128,17 +128,17 @@ namespace remoting_client
         ListView::setSubItemText(index, 2, modTimeString);
     }
 
-    //void FileInfoListView::addRange(::remoting::ftp::FileInfo **filesInfo, size_t count)
-    void FileInfoListView::addRange(const ::pointer_array < ::remoting::ftp::FileInfo > & fileinfoa)
+    //void FileInfoListView::addRange(::remoting::file_transfer::FileInfo **filesInfo, size_t count)
+    void FileInfoListView::addRange(const ::pointer_array < ::remoting::file_transfer::FileInfo > & fileinfoa)
     {
         //int index = maximum(0, (getCount() - 1));
         auto i = maximum(0, getCount() - 1);
         //size_t i = 0;
-        //::remoting::ftp::FileInfo *arr = *filesInfo;
+        //::remoting::file_transfer::FileInfo *arr = *filesInfo;
 
         // Add folders first
         for (auto & pinfo : fileinfoa) {
-            //::remoting::ftp::FileInfo *fi = &arr[i];
+            //::remoting::file_transfer::FileInfo *fi = &arr[i];
             if (pinfo->isDirectory()) {
                 addItem(i++, pinfo);
             } // if directory
@@ -146,7 +146,7 @@ namespace remoting_client
 
         // Add files
         for (auto & pinfo : fileinfoa) {
-            //::remoting::ftp::FileInfo *fi = &arr[i];
+            //::remoting::file_transfer::FileInfo *fi = &arr[i];
             if (!pinfo->isDirectory()) {
                 addItem(i++, pinfo);
             } // if not directory
@@ -155,14 +155,14 @@ namespace remoting_client
         ListView::sort();
     } // void
 
-    ::pointer<::remoting::ftp::FileInfo > FileInfoListView::getSelectedFileInfo()
+    ::pointer<::remoting::file_transfer::FileInfo > FileInfoListView::getSelectedFileInfo()
     {
         int si = getSelectedIndex();
         if (si == -1) {
             return {};
         }
         auto pparticle = (::particle *) (void*) (::uptr)getSelectedItem().tag;
-        ::cast < ::remoting::ftp::FileInfo> pfileinfo = pparticle;
+        ::cast < ::remoting::file_transfer::FileInfo> pfileinfo = pparticle;
         return pfileinfo;
     }
 
@@ -252,8 +252,8 @@ namespace remoting_client
         // check ascending order
         bool sortAscending = lParamSort < 0;
 
-        ::remoting::ftp::FileInfo *firstItem = (::remoting::ftp::FileInfo *)(lParam1.m_lparam);
-        ::remoting::ftp::FileInfo *secondItem = (::remoting::ftp::FileInfo *)(lParam2.m_lparam);
+        ::remoting::file_transfer::FileInfo *firstItem = (::remoting::file_transfer::FileInfo *)(lParam1.m_lparam);
+        ::remoting::file_transfer::FileInfo *secondItem = (::remoting::file_transfer::FileInfo *)(lParam2.m_lparam);
 
         // Fake directory ".." should be into top ::list_base.
         if (firstItem->getFileName() == "..")
@@ -276,11 +276,11 @@ namespace remoting_client
 
         // change lParam1 and lParam2 with each other if order is descending
         if (sortAscending) {
-           firstItem = (::remoting::ftp::FileInfo *)(lParam1.m_lparam);
-           secondItem = (::remoting::ftp::FileInfo *)(lParam2.m_lparam);
+           firstItem = (::remoting::file_transfer::FileInfo *)(lParam1.m_lparam);
+           secondItem = (::remoting::file_transfer::FileInfo *)(lParam2.m_lparam);
         } else {
-           firstItem = (::remoting::ftp::FileInfo *)(lParam1.m_lparam);
-           secondItem = (::remoting::ftp::FileInfo *)(lParam2.m_lparam);
+           firstItem = (::remoting::file_transfer::FileInfo *)(lParam1.m_lparam);
+           secondItem = (::remoting::file_transfer::FileInfo *)(lParam2.m_lparam);
 
         }
 

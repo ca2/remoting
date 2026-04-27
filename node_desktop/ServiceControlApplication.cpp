@@ -46,7 +46,9 @@
 
 namespace remoting_node_desktop
 {
-   ServiceControlApplication::ServiceControlApplication(HINSTANCE hInstance,
+
+
+   ServiceControlApplication::ServiceControlApplication(::hinstance hInstance,
                                                         const ::scoped_string & scopedstrwindowClassName,
                                                         const ::scoped_string & scopedstrCommandLine)
    //: WindowsApplication(hInstance, windowClassName),

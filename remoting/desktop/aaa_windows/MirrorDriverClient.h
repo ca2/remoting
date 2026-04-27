@@ -113,7 +113,7 @@ namespace remoting
 
       ::happening m_initListener;
       bool m_isDisplayChanged;
-      MessageWindow m_propertyChangeListenerWindow;
+      MessageWindow m_messagewindowPropertyChangeListener;
 
       ::innate_subsystem::PixelFormat m_pixelformat;
       ::int_size m_dimension;

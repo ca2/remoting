@@ -28,7 +28,7 @@
 ConnectionTimer::ConnectionTimer(TimerListener *timerListener,
                                  unsigned int timeOut)
 : m_happeningTimerListener(timerListener),
-  m_timeOut(timeOut),
+  m_iTimeout(timeOut),
   m_signalEnabled(true)
 {
   resume();
@@ -48,7 +48,7 @@ void ConnectionTimer::onTerminate()
 
 void ConnectionTimer::execute()
 {
-  m_happeningTimer.waitForEvent(m_timeOut);
+  m_happeningTimer.waitForEvent(m_iTimeout);
   if (m_signalEnabled) {
     m_happeningTimerListener->onTimeTimer();
   }

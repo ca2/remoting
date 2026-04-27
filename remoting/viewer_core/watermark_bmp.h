@@ -1,6 +1,6 @@
 #pragma once
 
-namespace remoting
+namespace remoting_client
 {
    const unsigned char WATERMARK_BMP_BODY[] = {
 #ifdef _DEMO_VERSION_
@@ -635,5 +635,5 @@ namespace remoting
      };
 
    //// _WATERMARK_BMP_H_INCLUDED_
-} // namespace remoting
+} // namespace remoting_client
 

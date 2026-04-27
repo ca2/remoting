@@ -37,7 +37,7 @@ namespace remoting
    {
    }
 
-   void RreDecoder::decode(RfbInputGate *pinput,
+   void RreDecoder::decode(::remoting::RfbInputGate *pinput,
                            ::innate_subsystem::Framebuffer *pframebuffer,
                            const ::int_rectangle &  rectangleTarget)
    {

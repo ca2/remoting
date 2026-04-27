@@ -3,16 +3,16 @@
 // #include aaa_<thread/critical_section_lock.h>
 #include "RfbFramebufferUpdateRequestClientMessage.h"
 
-namespace remoting
+namespace remoting_client
 {
-   UpdateRequestSender::UpdateRequestSender(LockableBase* plockable, ::innate_subsystem::Framebuffer* m_frame_buffer, ::subsystem::LogWriter* m_log_writer):
-      m_wasUpdateRecieved(false),
-      m_timeOut(0),
-      m_isIncrimental(true),
-       m_fbLock(plockable),
-       m_pframebuffer(m_frame_buffer),
-       m_plogwriter(m_log_writer),
-       m_output(0)
+   UpdateRequestSender::UpdateRequestSender(LockableBase* plockable, ::innate_subsystem::Framebuffer* pframebuffer, ::subsystem::LogWriter* plogwriter):
+      m_bWasUpdateReceived(false),
+      m_iTimeout(0),
+      m_bIncremental(true),
+       m_criticalsectionFramebuffer(plockable),
+       m_pframebuffer(pframebuffer),
+       m_plogwriter(plogwriter),
+       m_prfboutputgate(0)
    {
 
    }
@@ -31,27 +31,27 @@ namespace remoting
 
    void UpdateRequestSender::setWasUpdated()
    {
-      critical_section_lock al(&m_wasUpdatedLock);
-      m_wasUpdateRecieved = true;
+      critical_section_lock al(&m_criticalsectionWasUpdated);
+      m_bWasUpdateReceived = true;
    }
 
    void UpdateRequestSender::setTimeout(int miliseconds)
    {
-      critical_section_lock al(&m_timeOutLock);
-      m_timeOut = miliseconds;
+      critical_section_lock al(&m_criticalsectionTimeout);
+      m_iTimeout = miliseconds;
    }
 
    void UpdateRequestSender::setIsIncremental(bool isIncremental)
    {
-      critical_section_lock al(&m_isIncrimentalLock);
-      m_isIncrimental = isIncremental;
+      critical_section_lock al(&m_criticalsectionIncremental);
+      m_bIncremental = isIncremental;
    }
 
-   void UpdateRequestSender::setOutput(RfbOutputGate* output)
+   void UpdateRequestSender::setOutput(::remoting::RfbOutputGate* output)
    {
       {
          critical_section_lock al(&m_outputLock);
-         m_output = output;
+         m_prfboutputgate = output;
       }
 
       // Start thread.
@@ -88,14 +88,14 @@ namespace remoting
 
    void UpdateRequestSender::sendFbUpdateRequest()
    {
-      RfbOutputGate* output = getOutput();
+      ::remoting::RfbOutputGate* output = getOutput();
 
       if(output == 0)
          return;
 
       ::int_rectangle updateRect;
       {
-         AutoLock al(m_fbLock);
+         AutoLock al(m_criticalsectionFramebuffer);
          updateRect = m_pframebuffer->getDimension();
       }
 
@@ -113,33 +113,33 @@ namespace remoting
       }
 
       RfbFramebufferUpdateRequestClientMessage fbUpdReq(isIncremental, updateRect);
-      fbUpdReq.send(m_output);
+      fbUpdReq.send(m_prfboutputgate);
       m_plogwriter->debug("Frame buffer update request is sent");
    }
 
    bool UpdateRequestSender::isUpdated()
    {
-      critical_section_lock al(&m_wasUpdatedLock);
-      bool result = m_wasUpdateRecieved;
-      m_wasUpdateRecieved = false;
+      critical_section_lock al(&m_criticalsectionWasUpdated);
+      bool result = m_bWasUpdateReceived;
+      m_bWasUpdateReceived = false;
       return result;
    }
 
    int UpdateRequestSender::getTimeout()
    {
-      critical_section_lock al(&m_timeOutLock);
-      return m_timeOut;
+      critical_section_lock al(&m_criticalsectionTimeout);
+      return m_iTimeout;
    }
 
    bool UpdateRequestSender::isIncremental()
    {
-      critical_section_lock al(&m_isIncrimentalLock);
-      return m_isIncrimental;
+      critical_section_lock al(&m_criticalsectionIncremental);
+      return m_bIncremental;
    }
 
-   RfbOutputGate* UpdateRequestSender::getOutput()
+   ::remoting::RfbOutputGate* UpdateRequestSender::getOutput()
    {
       critical_section_lock al(&m_outputLock);
-      return m_output;
+      return m_prfboutputgate;
    }
-} // namespace remoting
+} // namespace remoting_client

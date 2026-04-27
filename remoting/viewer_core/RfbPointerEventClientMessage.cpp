@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "RfbPointerEventClientMessage.h"
 
-namespace remoting
+namespace remoting_client
 {
    RfbPointerEventClientMessage::RfbPointerEventClientMessage(const unsigned char buttonMask,
                                                               const ::int_point &pointPosition)
@@ -38,13 +38,13 @@ namespace remoting
    {
    }
 
-   void RfbPointerEventClientMessage::send(RfbOutputGate *output)
+   void RfbPointerEventClientMessage::send(::remoting::RfbOutputGate *prfboutputgate)
    {
-      critical_section_lock al(output);
-      output->writeUInt8(ClientMsgDefs::POINTER_EVENT);
-      output->writeUInt8(m_buttonMask);
-      output->writeUInt16(m_xPos);
-      output->writeUInt16(m_yPos);
-      output->flush();
+      critical_section_lock al(prfboutputgate);
+      prfboutputgate->writeUInt8(::remoting::ClientMsgDefs::POINTER_EVENT);
+      prfboutputgate->writeUInt8(m_buttonMask);
+      prfboutputgate->writeUInt16(m_xPos);
+      prfboutputgate->writeUInt16(m_yPos);
+      prfboutputgate->flush();
    }
-} // namespace remoting
+} // namespace remoting_client

@@ -24,15 +24,15 @@
 #include "framework.h"
 #include "RichCursorDecoder.h"
 
-namespace remoting
+namespace remoting_client
 {
    RichCursorDecoder::RichCursorDecoder(::subsystem::LogWriter * plogwriter)
    : PseudoDecoder(plogwriter)
    {
-      m_encoding = PseudoEncDefs::RICH_CURSOR;
+      m_encoding = ::remoting::PseudoEncDefs::RICH_CURSOR;
    }
 
    RichCursorDecoder::~RichCursorDecoder()
    {
    }
-} // namespace remoting
+} // namespace remoting_client

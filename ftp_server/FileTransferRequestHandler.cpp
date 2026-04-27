@@ -37,7 +37,7 @@
 #include "subsystem/platform/md5.h"
 #include "remoting/remoting/network/RfbOutputGate.h"
 #include "remoting/remoting/network/RfbInputGate.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "remoting/remoting/win_system/Impersonator.h"
 #include "subsystem/node/OperatingSystem.h"
 #include "remoting/remoting/server_config/Configurator.h"
@@ -45,7 +45,7 @@
 #include "remoting/remoting/rfb/VendorDefs.h"
 
 FileTransferRequestHandler::FileTransferRequestHandler(RfbCodeRegistrator *registrator,
-                                                       RfbOutputGate *output,
+                                                       ::remoting::RfbOutputGate *output,
                                                        Desktop *desktop,
                                                        ::subsystem::LogWriter * plogwriter,
                                                        bool enabled)
@@ -130,7 +130,7 @@ FileTransferRequestHandler::~FileTransferRequestHandler()
   m_plogwriter->debug("::file::item transfer request handler deleted");
 }
 
-void FileTransferRequestHandler::onRequest(unsigned int reqCode, RfbInputGate *pblockinggate)
+void FileTransferRequestHandler::onRequest(unsigned int reqCode, ::remoting::RfbInputGate *pblockinggate)
 {
   m_security->beginMessageProcessing();
 

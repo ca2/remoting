@@ -27,7 +27,7 @@
 
 #include "PseudoDecoder.h"
 
-namespace remoting
+namespace remoting_client
 {
    class CLASS_DECL_REMOTING DesktopSizeDecoder : public PseudoDecoder
    {
@@ -35,4 +35,4 @@ namespace remoting
       DesktopSizeDecoder(::subsystem::LogWriter * plogwriter);
       virtual ~DesktopSizeDecoder();
    };
-} // namespace remoting
+} // namespace remoting_client

@@ -25,7 +25,7 @@
 #pragma once
 
 
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "subsystem/thread/Thread.h"
 #include "remoting/remoting/desktop/UpdateKeeper.h"
 #include "UpdateRequestListener.h"
@@ -66,7 +66,7 @@ namespace remoting
       bool m_busy;
       // Property for perfomance measurements. It uses with the regions mutex.
       class ::time m_requestTimePoint;
-      critical_section m_criticalsectionRectLoc;
+      lockable_critical_section m_criticalsectionRectLoc;
 
       SenderControlInformationInterface *m_senderControlInformation;
 
@@ -76,7 +76,7 @@ namespace remoting
       bool m_shareOnlyApp;
       ::remoting::Region m_regionApp;
       ::remoting::Region m_regionAppOld;
-      critical_section m_criticalsectionViewport;
+      lockable_critical_section m_criticalsectionViewport;
 
       ::pointer < UpdateKeeper > m_pupdatekeeper;
 
@@ -94,7 +94,7 @@ namespace remoting
       // data. Thus, changes to m_pencodeoptionsNew will take effect on next
       // pframebuffer update.
       EncodeOptions m_encodeoptionsNew;
-      critical_section m_criticalsectionNewEncodeOptions;
+      lockable_critical_section m_criticalsectionNewEncodeOptions;
 
       // Pixel format requested by the RFB client. It may be changed at any time
       // but all change and read operations must be synchronized with
@@ -103,7 +103,7 @@ namespace remoting
       // encoding data. Thus, changes to m_ppixelformatNew will take effect on next
       // pframebuffer update.
       ::innate_subsystem::PixelFormat m_pixelformatNew;
-      critical_section m_criticalsectionNewPixelFormat;
+      lockable_critical_section m_criticalsectionNewPixelFormat;
 
       // This flag indicates that color ::map entries requested. If this flag is true
       // then before send the updates updateSender must to send the color ::map
@@ -114,7 +114,7 @@ namespace remoting
       bool m_videoFrozen;
       // This region constains a video region which was sent at previous time.
       ::remoting::Region m_regionOldVideoRegion;
-      critical_section m_criticalsectionVidFreezeLoc;
+      lockable_critical_section m_criticalsectionVidFreezeLoc;
 
 
       ::remoting::Region m_regionLosslessDirty;
@@ -139,14 +139,14 @@ namespace remoting
       // updReqListener - pointer to the out listener for retranslate
       // update reqest to out.
       // FIXME: Document all the arguments properly.
-      // UpdateSender(RfbCodeRegistrator *codeRegtor, UpdateRequestListener *updReqListener,
+      // UpdateSender(RfbCodeRegistrator *m_prfbcoderegistrator, UpdateRequestListener *updReqListener,
       //              SenderControlInformationInterface *senderControlInformation, ::remoting::RfbOutputGate *output,
       //              int id, Desktop *desktop, ::subsystem::LogWriter * plogwriter);
       UpdateSender();
        ~UpdateSender() override;
 
 
-      virtual void initialize_update_sender(RfbCodeRegistrator *codeRegtor, UpdateRequestListener *updReqListener,
+      virtual void initialize_update_sender(RfbCodeRegistrator *m_prfbcoderegistrator, UpdateRequestListener *updReqListener,
              SenderControlInformationInterface *senderControlInformation, ::remoting::RfbOutputGate *output,
              int id, Desktop *desktop, ::subsystem::LogWriter * plogwriter);
 

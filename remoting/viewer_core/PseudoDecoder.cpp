@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "PseudoDecoder.h"
 
-namespace remoting
+namespace remoting_client
 {
    PseudoDecoder::PseudoDecoder(::subsystem::LogWriter * plogwriter)
    : Decoder(plogwriter)
@@ -39,4 +39,4 @@ namespace remoting
    {
       return true;
    }
-} // namespace remoting
+} // namespace remoting_client

@@ -72,12 +72,12 @@ private:
   Channel *m_logSendingChan;
   DataInputStream *m_logInput;
   DataOutputStream *m_logOutput;
-  critical_section m_criticalsectionLogWriting;
+  lockable_critical_section m_criticalsectionLogWriting;
 
   Channel *m_levListenChan;
 
   int m_logBarrier;
-  critical_section m_criticalsectionLogBar;
+  lockable_critical_section m_criticalsectionLogBar;
 
   ::string m_logFileName;
   ::string m_publicPipeName;

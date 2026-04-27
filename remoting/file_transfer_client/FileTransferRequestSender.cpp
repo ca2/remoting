@@ -24,12 +24,12 @@
 #include "framework.h"
 #include "FileTransferRequestSender.h"
 #include "remoting/remoting/file_transfer_common/FTMessage.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
 
 namespace remoting
 {
-   namespace ftp
+   namespace file_transfer
    {
       FileTransferRequestSender::FileTransferRequestSender(::subsystem::LogWriter * plogwriter)
       : m_plogwriter(plogwriter),
@@ -41,7 +41,7 @@ namespace remoting
       {
       }
 
-      void FileTransferRequestSender::setOutput(RfbOutputGate *outputStream)
+      void FileTransferRequestSender::setOutput(::remoting::RfbOutputGate *outputStream)
       {
          m_output = outputStream;
       }

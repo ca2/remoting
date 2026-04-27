@@ -27,7 +27,7 @@
 
 #include "remoting/remoting/config/SettingsManager.h"
 
-////#include "subsystem/thread/critical_section.h"
+////#include "subsystem/thread/lockable_critical_section.h"
 
 #include "remoting/remoting/rfb/EncodingDefs.h"
 
@@ -241,6 +241,6 @@ namespace remoting
       int m_localCursor;
 
       // Critical section
-      mutable critical_section m_cs;
+      mutable lockable_critical_section m_cs;
    };
 } // namespace remoting

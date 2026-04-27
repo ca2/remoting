@@ -29,54 +29,80 @@
 namespace remoting
 {
 
-   Win32ScreenDriverBaseImpl::Win32ScreenDriverBaseImpl(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                                                        critical_section *pcriticalsectionFramebuffer,
-                                                        ::subsystem::LogWriter * plogwriter) :
-       WinVideoRegionUpdaterImpl(plogwriter), m_fbcritical_section(pcriticalsectionFramebuffer),
-       m_cursorPosDetector(pupdatekeeper, pupdatelistener, log),
-       m_curShapeDetector(pupdatekeeper, pupdatelistener, &m_curShapeGrabber, pcriticalsectionFramebuffer, log)
+   // Win32ScreenDriverBaseImpl::Win32ScreenDriverBaseImpl(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+   //                                                      lockable_critical_section *pcriticalsectionFramebuffer,
+   //                                                      ::subsystem::LogWriter * plogwriter) :
+   //     WinVideoRegionUpdaterImpl(plogwriter), m_pcriticalsectionFramebuffer(pcriticalsectionFramebuffer),
+   //     m_pcursorpositiondetector(pupdatekeeper, pupdatelistener, log),
+   //     m_pcursorshapedetector(pupdatekeeper, pupdatelistener, &m_pcursorshapegrabber, pcriticalsectionFramebuffer, log)
+   // {
+   // }
+
+   Win32ScreenDriverBaseImpl::Win32ScreenDriverBaseImpl()
    {
+
+
    }
 
    Win32ScreenDriverBaseImpl::~Win32ScreenDriverBaseImpl() { terminateDetection(); }
 
+
+   void Win32ScreenDriverBaseImpl::initialize_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+                                                     lockable_critical_section *pcriticalsectionFramebuffer,
+                                                     ::subsystem::LogWriter * plogwriter)
+   {
+
+      //WinVideoRegionUpdaterImpl::initialize_screen_driver(pupdatekeeper, pupdatelistener, pcriticalsectionFramebuffer, plogwriter);
+    // WinVideoRegionUpdaterImpl(plogwriter), m_pcriticalsectionFramebuffer(pcriticalsectionFramebuffer),
+    // m_pcursorpositiondetector(pupdatekeeper, pupdatelistener, log),
+    // m_pcursorshapedetector(pupdatekeeper, pupdatelistener, &m_pcursorshapegrabber, pcriticalsectionFramebuffer, log)
+      //{
+      WinVideoRegionUpdaterImpl::initialize_screen_driver(pupdatekeeper, pupdatelistener, pcriticalsectionFramebuffer, plogwriter);
+         raw_construct_newø(m_pcursorpositiondetector);
+      m_pcursorpositiondetector->initialize_cursor_position_detector(pupdatekeeper, pupdatelistener, plogwriter);
+      m_pcursorshapedetector = allocateø WindowsCursorShapeGrabber();
+      m_pcursorshapedetector->initialize_cursor_shape_detector(pupdatekeeper, pupdatelistener, m_pcursorshapegrabber, pcriticalsectionFramebuffer, plogwriter);
+
+      //}
+   }
+
    void Win32ScreenDriverBaseImpl::executeDetection()
    {
-      m_cursorPosDetector.resume();
-      m_curShapeDetector.resume();
+      m_pcursorpositiondetector->resume();
+      m_pcursorshapedetector->resume();
    }
 
    void Win32ScreenDriverBaseImpl::terminateDetection()
    {
-      m_cursorPosDetector.terminate();
-      m_curShapeDetector.terminate();
+      m_pcursorpositiondetector->terminate();
+      m_pcursorshapedetector->terminate();
 
-      m_cursorPosDetector.wait();
-      m_curShapeDetector.wait();
+      m_pcursorpositiondetector->wait();
+      m_pcursorshapedetector->wait();
    }
 
-   critical_section *Win32ScreenDriverBaseImpl::getFbMutex() { return m_fbcritical_section; }
+   lockable_critical_section *Win32ScreenDriverBaseImpl::framebuffer_critical_section() { return m_pcriticalsectionFramebuffer; }
 
    bool Win32ScreenDriverBaseImpl::grabCursorShape(const ::innate_subsystem::PixelFormat & pixelformat)
    {
       // Grabbing under the mutex avoid us from grab void cursor shape in time when the
       // shape hides until grabs screen.
-      critical_section_lock al(m_fbcritical_section);
-      return m_curShapeGrabber.grab(pixelformat);
+      critical_section_lock al(m_pcriticalsectionFramebuffer);
+      return m_pcursorshapegrabber->grab(pixelformat);
    }
 
-   const CursorShape *Win32ScreenDriverBaseImpl::getCursorShape() { return m_curShapeGrabber.getCursorShape(); }
+   const CursorShape *Win32ScreenDriverBaseImpl::getCursorShape() { return m_pcursorshapegrabber->getCursorShape(); }
 
    ::int_point Win32ScreenDriverBaseImpl::getCursorPosition()
    {
-      critical_section_lock al(m_fbcritical_section);
-      return m_cursorPosDetector.getCursorPos();
+      critical_section_lock al(m_pcriticalsectionFramebuffer);
+      return m_pcursorpositiondetector->getCursorPos();
    }
 
    void Win32ScreenDriverBaseImpl::getCopiedRegion(::int_rectangle &rectangleCopy, ::int_point & pointSource)
    {
-      critical_section_lock al(m_fbcritical_section);
-      m_copyRectDetector.detectWindowMovements(rectangleCopy, source);
+      critical_section_lock al(m_pcriticalsectionFramebuffer);
+      m_pcopyrectdetector->detectWindowMovements(rectangleCopy, pointSource);
    }
 
 

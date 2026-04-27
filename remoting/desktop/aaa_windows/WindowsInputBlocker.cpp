@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "WindowsInputBlocker.h"
 #include "subsystem/platform/Exception.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "acme/_operating_system.h"
 
 namespace remoting
@@ -47,7 +47,7 @@ namespace remoting
 
 
    //
-   // critical_section WindowsInputBlocker::m_instanceMutex;
+   // lockable_critical_section WindowsInputBlocker::m_instanceMutex;
    // HHOOK WindowsInputBlocker::m_hKeyboardHook = 0;
    // HHOOK WindowsInputBlocker::m_hSoftKeyboardHook = 0;
    // HHOOK WindowsInputBlocker::m_hMouseHook = 0;
@@ -55,7 +55,7 @@ namespace remoting
 
    //class ::time WindowsInputBlocker::m_lastInputTime;
    //unsigned int WindowsInputBlocker::m_timeInterval = INFINITE;
-   //critical_section WindowsInputBlocker::m_lastInputTimeMutex;
+   //lockable_critical_section WindowsInputBlocker::m_lastInputTimeMutex;
 
    WindowsInputBlocker *WindowsInputBlocker::s_pwindowsinputblocker = 0;
 

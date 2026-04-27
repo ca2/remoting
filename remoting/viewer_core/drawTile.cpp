@@ -29,7 +29,7 @@
 //#include aaa_<vector>
 //#include aaa_<algorithm>
 
-namespace remoting
+namespace remoting_client
 {
    void ZrleDecoder::drawTile(::innate_subsystem::Framebuffer* pframebuffer,
        const ::int_rectangle& tileRect,
@@ -174,4 +174,4 @@ namespace remoting
 
       }
    }
-} // namespace remoting
+} // namespace remoting_client

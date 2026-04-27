@@ -62,7 +62,7 @@ namespace remoting
    public:
       ClientState m_clientState;
       bool m_isMarkedOk;
-      critical_section m_criticalsectionClientState;
+      lockable_critical_section m_criticalsectionClientState;
       ClientTerminationListener *m_extTermListener;
       //::happening m_connClosingEvent;
       ::happening m_connClosingEvent;
@@ -73,10 +73,10 @@ namespace remoting
 
       Viewport m_pviewportConst;
       Viewport m_pviewportDynamic;
-      critical_section m_criticalsectionViewport;
+      lockable_critical_section m_criticalsectionViewport;
 
-      UpdateSender *m_updateSender;
-      ClipboardExchange *m_clipboardExchange;
+      UpdateSender *m_pupdatesender;
+      ClipboardExchange *m_pclipboardexchange;
       ClientInputHandler *m_pclientinputhandler;
       ::pointer < Desktop > m_pdesktop;
 
@@ -129,7 +129,7 @@ namespace remoting
       // Changes current dynViewPort value by new.
       void changeDynViewPort(const ViewPortState *dynViewPort);
 
-      bool clientIsReady() const { return m_updateSender->clientIsReady(); }
+      bool clientIsReady() const { return m_pupdatesender->clientIsReady(); }
       void sendUpdate(const UpdateContainer & updatecontainer,
                       const ::remoting::CursorShape *cursorShape);
       void sendClipboard(const ::scoped_string & newClipboard);
@@ -154,9 +154,9 @@ namespace remoting
 
       void setClientState(ClientState newState);
 
-      ::int_rectangle getViewport(const ::int_size & fbDimension);
+      ::int_rectangle getViewport(const ::int_size & sizeFramebuffer);
       virtual void onGetViewPort(::int_rectangle &viewRect, bool *shareApp, ::remoting::Region & regionShareApp);
-      void getViewPortInfo(const ::int_size & fbDimension, ::int_rectangle &resultRect,
+      void getViewPortInfo(const ::int_size & sizeFramebuffer, ::int_rectangle &rectangleResult,
                            bool *shareApp, ::remoting::Region & regionShareApp);
 
    };

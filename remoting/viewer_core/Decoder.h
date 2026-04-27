@@ -30,11 +30,11 @@
 
 #include "innate_subsystem/framebuffer/Framebuffer.h"
 #include "remoting/remoting/rfb/EncodingDefs.h"
-////#include "subsystem/thread/critical_section.h"
-////#include "subsystem/thread/critical_section.h"
+////#include "subsystem/thread/lockable_critical_section.h"
+////#include "subsystem/thread/lockable_critical_section.h"
 ///
 
-namespace remoting
+namespace remoting_client
 {
    class CLASS_DECL_REMOTING Decoder :
    virtual public ::particle
@@ -63,4 +63,4 @@ namespace remoting
 
       int m_encoding;
    };
-} // namespace remoting
+} // namespace remoting_client

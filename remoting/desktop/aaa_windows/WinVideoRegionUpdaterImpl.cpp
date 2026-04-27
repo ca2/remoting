@@ -26,7 +26,7 @@
 #include "remoting/remoting/server_config/Configurator.h"
 #include "innate_subsystem/gui/WindowFinder.h"
 #include "remoting/remoting/region/RectSerializer.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
 
 namespace remoting

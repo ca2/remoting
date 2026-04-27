@@ -35,7 +35,7 @@
 //#include "log_writer/LogWriter.h"
 
 #include "subsystem/thread/Thread.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
 #include "remoting/control_desktop/ControlGate.h"
 #include "remoting/control_desktop/ControlAuthException.h"
@@ -80,7 +80,7 @@ namespace remoting_control_desktop
        * Executes control application.
        * @returns exit code.
        */
-      virtual int run();
+      virtual void run();
 
       /**
        * Inherited from Notificator abstract class

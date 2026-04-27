@@ -26,13 +26,13 @@
 
 
 #include "acme/input_output/DataOutputStream.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
 namespace remoting
 {
 
    class BlockingOutputGate :
-   virtual public critical_section,
+   virtual public lockable_critical_section,
    virtual public DataOutputStream
    {
    public:

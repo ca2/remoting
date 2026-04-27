@@ -25,7 +25,7 @@
 #pragma once
 
 
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "acme/input_output/Channel.h"
 #include "acme/input_output/DataOutputStream.h"
 #include "acme/input_output/DataInputStream.h"
@@ -34,7 +34,7 @@ namespace remoting
 {
 
    class CLASS_DECL_REMOTING BlockingGate :
-   virtual public critical_section,
+   virtual public lockable_critical_section,
    virtual public DataOutputStream,
    virtual public DataInputStream
    {

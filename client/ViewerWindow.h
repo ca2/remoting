@@ -66,7 +66,7 @@ namespace remoting_client
        ::pointer < ::remoting::ConnectionConfig > m_pconnectionconfig;
        ::pointer < ::subsystem::OperatingSystemApplicationInterface > m_poperatingsystemapplication;
        ::pointer < ::remoting::RemoteViewerCore > m_pviewercore;
-       ::remoting::ftp::FileTransferCapability *m_fileTransfer;
+       ::remoting::file_transfer::FileTransferCapability *m_fileTransfer;
        FileTransferMainDialog *m_ftDialog;
        ::pointer < DesktopWindow > m_pdesktopwindow;
        //::wstring m_wstrToolTip;
@@ -126,7 +126,7 @@ namespace remoting_client
            ::subsystem::LogWriter * plogwriter = nullptr);
         ~ViewerWindow() override;
 
-        void setFileTransfer(::remoting::ftp::FileTransferCapability *ft);
+        void setFileTransfer(::remoting::file_transfer::FileTransferCapability *ft);
         void setRemoteViewerCore(::remoting::RemoteViewerCore *pCore);
 
         //

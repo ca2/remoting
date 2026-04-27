@@ -28,7 +28,7 @@
 #include "subsystem/platform/Exception.h"
 #include "subsystem/node/OperatingSystem.h"
 #include "subsystem/platform/RegistryKey.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
 WinEventLog::WinEventLog(::subsystem::LogWriter * plogwriter)
 : m_hEventLog(0),

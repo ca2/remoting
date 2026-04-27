@@ -25,7 +25,7 @@
 #include "AuthHandler.h"
 
 
-namespace remoting
+namespace remoting_client
 {
    AuthException::AuthException(const ::scoped_string & scopedstrMessage)
    : ::subsystem::Exception(scopedstrMessage),
@@ -75,4 +75,4 @@ namespace remoting
    {
       return m_id;
    }
-} // namespace remoting
+} // namespace remoting_client

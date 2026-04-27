@@ -60,10 +60,10 @@ private:
   Channel *m_logListenChannel;
   Channel *m_levelSendChannel;
   FileAccountHandle m_handle;
-  critical_section m_criticalsectionChannel;
+  lockable_critical_section m_criticalsectionChannel;
 
   unsigned char m_logLevel;
-  critical_section m_criticalsectionLogLevel;
+  lockable_critical_section m_criticalsectionLogLevel;
 
   LogLevelSender m_logLevelSender;
 };

@@ -36,7 +36,7 @@ namespace remoting
    {
    }
 
-   void RfbSetEncodingsClientMessage::send(RfbOutputGate *output)
+   void RfbSetEncodingsClientMessage::send(::remoting::RfbOutputGate *output)
    {
       critical_section_lock al(output);
       output->writeUInt8(ClientMsgDefs::SET_ENCODINGS);

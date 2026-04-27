@@ -27,23 +27,23 @@
 
 //#include aaa_<algorithm>
 
-namespace remoting
+namespace remoting_client
 {
    RawDecoder::RawDecoder(::subsystem::LogWriter * plogwriter)
    : DecoderOfRectangle(plogwriter)
    {
-      m_encoding = EncodingDefs::RAW;
+      m_encoding = ::remoting::EncodingDefs::RAW;
    }
 
    RawDecoder::~RawDecoder()
    {
    }
 
-   void RawDecoder::process(RfbInputGate *input,
+   void RawDecoder::process(::remoting::RfbInputGate *input,
                             ::innate_subsystem::Framebuffer *pframebuffer,
                             ::innate_subsystem::Framebuffer *secondFramebuffer,
                             const ::int_rectangle &  rectangle,
-                            critical_section *fbLock,
+                            lockable_critical_section *pcriticalsectionFramebuffer,
                             FbUpdateNotifier *fbNotifier)
    {
       // If area of rectangle is 0, then exit from process: nothing update.
@@ -64,7 +64,7 @@ namespace remoting
       // two last part, if area of last part is less half of AREA_OF_ONE_PART.
       while (deltaRect.bottom + deltaHeight / 2 < rectangle.bottom) {
          DecoderOfRectangle::process(input,
-                                     pframebuffer, secondFramebuffer, deltaRect, fbLock,
+                                     pframebuffer, secondFramebuffer, deltaRect, pcriticalsectionFramebuffer,
                                      fbNotifier);
 
          // Increment pointPosition of rectangle.
@@ -75,11 +75,11 @@ namespace remoting
       deltaRect.top = ::maximum(rectangle.top, deltaRect.bottom - deltaHeight);
       deltaRect.bottom = rectangle.bottom;
       DecoderOfRectangle::process(input,
-                                  pframebuffer, secondFramebuffer, deltaRect, fbLock,
+                                  pframebuffer, secondFramebuffer, deltaRect, pcriticalsectionFramebuffer,
                                   fbNotifier);
    }
 
-   void RawDecoder::decode(RfbInputGate *pinput,
+   void RawDecoder::decode(::remoting::RfbInputGate *pinput,
                         ::innate_subsystem::Framebuffer *pframebuffer,
                         const ::int_rectangle &  rectangle)
    {
@@ -91,4 +91,4 @@ namespace remoting
       for (int y = rectangle.top; y < rectangle.bottom; y++)
          pinput->readFully(pframebuffer->getBufferPtr(rectangle.left, y), bytesPerLine);
    }
-} // namespace remoting
+} // namespace remoting_client

@@ -26,7 +26,7 @@
 
 
 #include "acme/input_output/Channel.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "acme/parallelization/happening.h"
 //#include "log_writer/LogWriter.h"
 
@@ -44,7 +44,7 @@ namespace remoting
       ::pointer < Channel > m_pchannel;
       ::pointer < Channel > m_pchannelOld;
       bool m_bChannelWasChanged;
-      critical_section m_criticalsectionChannel;
+      lockable_critical_section m_criticalsectionChannel;
 
       ::happening m_happeningTimer;
       class ::time m_timeTimeout;

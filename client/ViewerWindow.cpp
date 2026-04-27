@@ -138,7 +138,7 @@ namespace remoting_client
         }
     }
 
-    void ViewerWindow::setFileTransfer(::remoting::ftp::FileTransferCapability *ft)
+    void ViewerWindow::setFileTransfer(::remoting::file_transfer::FileTransferCapability *ft)
     {
         m_fileTransfer = ft;
     }

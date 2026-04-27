@@ -24,16 +24,18 @@
 
 #pragma once
 
+
 #include "remoting/remoting_windows/_common_header.h"
-#include "remoting/remoting/win_system/DynamicLibrary.h"
+#include "subsystem/node/DynamicLibrary.h"
+#include <d3d11.h>
+#include <DXGI1_2.h>
+
 
 namespace remoting
 {
 
    // #include "log_writer/LogWriter.h"
 
-   // #include aaa_<d3d11.h>
-   // #include aaa_<DXGI1_2.h>
 
    class CLASS_DECL_REMOTING_WINDOWS WinD3D11Device
    {

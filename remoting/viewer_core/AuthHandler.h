@@ -33,7 +33,7 @@
 #include "CapabilitiesManager.h"
 
 
-namespace remoting
+namespace remoting_client
 {
     //
     // This exception is raised when connection is valid, but it's invalid
@@ -105,6 +105,6 @@ namespace remoting
 
     };
 
-} // namespace remoting
+} // namespace remoting_client
 
 

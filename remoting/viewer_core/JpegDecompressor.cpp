@@ -28,7 +28,7 @@
 //#include "subsystem/platform/::string.h"
 #include "subsystem/platform/Exception.h"
 
-namespace remoting
+namespace remoting_client
 {
    JpegDecompressor::JpegDecompressor()
    {
@@ -147,4 +147,4 @@ namespace remoting
    {
       jpeg_destroy_decompress(&m_jpeg.cinfo);
    }
-} // namespace remoting
+} // namespace remoting_client

@@ -29,7 +29,7 @@
 #include "remoting/remoting_windows/_common_header.h"
 #include "remoting/remoting/desktop/CursorShapeGrabber.h"
 #include "subsystem/_common_header.h"
-#include "subsystem/node/Screen.h"
+#include "subsystem_windows/node/Screen.h"
 
 
 namespace remoting
@@ -51,7 +51,7 @@ namespace remoting
       HCURSOR getHCursor();
 
       HCURSOR m_lastHCursor;
-      ::subsystem::Screen m_screen;
+      ::subsystem_windows::Screen m_screen;
    };
 
 

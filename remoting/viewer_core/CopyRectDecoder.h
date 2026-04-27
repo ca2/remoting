@@ -28,7 +28,7 @@
 #include "remoting/remoting/viewer_core/DecoderOfRectangle.h"
 
 ////#include "remoting/remoting/region/::int_point.h"
-namespace remoting
+namespace remoting_client
 {
    class CLASS_DECL_REMOTING CopyRectDecoder : public DecoderOfRectangle
    {
@@ -40,7 +40,7 @@ namespace remoting
       //
       // This method inherited by DecoderOfRectangle.
       //
-      virtual void decode(RfbInputGate *input,
+      virtual void decode(::remoting::RfbInputGate *input,
                           ::innate_subsystem::Framebuffer *pframebuffer,
                           const ::int_rectangle &  rectangleTarget);
 
@@ -50,10 +50,10 @@ namespace remoting
       virtual void copy(::innate_subsystem::Framebuffer *dstFramebuffer,
                         const ::innate_subsystem::Framebuffer *pframebufferSource,
                         const ::int_rectangle &  rectangle,
-                        critical_section *fbLock);
+                        lockable_critical_section *pcriticalsectionFramebuffer);
 
    private:
       // This ::int_point save left-top corner of copy-rectangle.
       ::int_point m_sourcePosition;
    };
-} // namespace remoting
+} // namespace remoting_client

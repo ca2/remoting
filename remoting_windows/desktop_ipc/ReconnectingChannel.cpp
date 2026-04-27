@@ -25,7 +25,7 @@
 #include "ReconnectingChannel.h"
 //#include "subsystem/platform/class ::time.h"
 #include "remoting/remoting/desktop_ipc/ReconnectException.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "subsystem/platform/Exception.h"
 
 namespace remoting
@@ -33,7 +33,7 @@ namespace remoting
 
 
    ReconnectingChannel::ReconnectingChannel() :
-       m_timeOut(0), m_bIsClosed(false), m_pchannel(0), m_pchannelOld(0), m_bChannelWasChanged(false), m_plogwriter(nullptr)
+       m_iTimeout(0), m_bIsClosed(false), m_pchannel(0), m_pchannelOld(0), m_bChannelWasChanged(false), m_plogwriter(nullptr)
    {
    }
 
@@ -53,7 +53,7 @@ namespace remoting
    void ReconnectingChannel::initialize_reconnecting_channel(unsigned int timeOut, ::subsystem::LogWriter * plogwriter)
    {
 
-      m_timeOut = timeOut;
+      m_iTimeout = timeOut;
       m_plogwriter = plogwriter;
    }
 
@@ -174,7 +174,7 @@ namespace remoting
       bool success = false;
       while (!success)
       {
-         unsigned int timeForWait = maximum((m_timeOut - startTime.elapsed()).integral_millisecond(), 0);
+         unsigned int timeForWait = maximum((m_iTimeout - startTime.elapsed()).integral_millisecond(), 0);
          if (timeForWait == 0 || m_bIsClosed)
          { // Break this function with
            // critical error

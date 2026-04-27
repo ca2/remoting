@@ -29,7 +29,7 @@
 #include "remoting/remoting/region/Region.h"
 //#include "subsystem/platform/::string_array.h"
 #include "../ScreenDriver.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 //#include "log_writer/LogWriter.h"
 #include "subsystem/thread/Thread.h"
 #include "acme/parallelization/happening.h"
@@ -55,7 +55,7 @@ namespace remoting
 
       class ::time m_timeLastVideoUpdate;
       Region m_regionVideo;
-      critical_section m_criticalsectionRegion;
+      lockable_critical_section m_criticalsectionRegion;
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
       ::happening m_happeningSleeper;
    };

@@ -45,7 +45,7 @@ namespace remoting
 
 
       virtual void initialize_mirror_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                         critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
+                         lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
 
       // Starts screen update detection if it not started yet.
       virtual void executeDetection();
@@ -70,12 +70,12 @@ namespace remoting
       virtual void execute();
       virtual void onTerminate();
 
-      MirrorDriverClient *m_mirrorClient;
+      MirrorDriverClient *m_pmirrordriverclient;
       unsigned long m_lastCounter;
       ::innate_subsystem::Framebuffer m_pframebuffer;
       // TO THINK: One may use a self mutex here, because do not
       // use external objects here.
-      critical_section *m_pcriticalsectionFramebuffer;
+      lockable_critical_section *m_pcriticalsectionFramebuffer;
 
       ::happening m_updateTimeout;
 

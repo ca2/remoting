@@ -27,7 +27,7 @@
 
 #include "DecoderOfRectangle.h"
 
-namespace remoting
+namespace remoting_client
 {
    class CLASS_DECL_REMOTING RawDecoder : public DecoderOfRectangle
    {
@@ -38,19 +38,19 @@ namespace remoting
       //
       // This method is inherited from DecoderOfRectangle.
       //
-      virtual void process(RfbInputGate *input,
+      virtual void process(::remoting::RfbInputGate *input,
                            ::innate_subsystem::Framebuffer *pframebuffer,
                            ::innate_subsystem::Framebuffer *secondFramebuffer,
                            const ::int_rectangle &  rectangle,
-                           critical_section *fbLock,
+                           lockable_critical_section *pcriticalsectionFramebuffer,
                            FbUpdateNotifier *fbNotifier);
 
    protected:
-      virtual void decode(RfbInputGate *input,
+      virtual void decode(::remoting::RfbInputGate *input,
                           ::innate_subsystem::Framebuffer *pframebuffer,
                           const ::int_rectangle &  rectangle);
 
    private:
       static const size_t AREA_OF_ONE_PART = 1024 * 64;
    };
-} // namespace remoting
+} // namespace remoting_client

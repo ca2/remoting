@@ -30,10 +30,10 @@
 #include "remoting/remoting/viewer_core/VncAuthentication.h"
 
 
-namespace remoting
+namespace remoting_client
 {
    VncAuthenticationHandler::VncAuthenticationHandler()
-   : AuthHandler(AuthDefs::VNC)
+   : AuthHandler(::remoting::AuthDefs::VNC)
    {
    }
 
@@ -42,17 +42,17 @@ namespace remoting
    }
 
 
-   void VncAuthenticationHandler::authenticate(::DataInputStream * pinput,
+   void VncAuthenticationHandler::authenticate(::DataInputStream * pdatainputstream,
                                                ::DataOutputStream * pdataoutputstream)
    {
       ::string password;
       password = getPassword();
 
-      VncAuthentication::vncAuthenticate(pinput, pdataoutputstream, password);
+      VncAuthentication::vncAuthenticate(pdatainputstream, pdataoutputstream, password);
    }
 
-   void VncAuthenticationHandler::addAuthCapability(CapabilitiesManager *capManager)
+   void VncAuthenticationHandler::addAuthCapability(CapabilitiesManager *pcapabilitiesmanager)
    {
-      capManager->addAuthCapability(this, AuthDefs::VNC, VendorDefs::STANDARD, AuthDefs::SIG_VNC);
+      pcapabilitiesmanager->addAuthCapability(this, ::remoting::AuthDefs::VNC, ::remoting::VendorDefs::STANDARD, ::remoting::AuthDefs::SIG_VNC);
    }
-} // namespace remoting
+} // namespace remoting_client

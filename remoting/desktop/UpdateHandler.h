@@ -31,7 +31,7 @@
 #include "ScreenGrabber.h"
 //#include "windows/WindowsCursorShapeGrabber.h"
 #include "innate_subsystem/framebuffer/Framebuffer.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "UpdateListener.h"
 #include "UpdateDetector.h"
 #include "CopyRectDetector.h"
@@ -121,7 +121,7 @@ namespace remoting
                                              const ::int_rectangle &rectangleViewport);
 
       ::pointer < ::innate_subsystem::Framebuffer > m_pframebufferBackup;
-      critical_section m_criticalsectionFramebuffer;
+      lockable_critical_section m_criticalsectionFramebuffer;
 
       // m_cursorShape not thread safed
       ::remoting::CursorShape m_cursorShape;

@@ -85,7 +85,7 @@ namespace remoting
       {
          return;
       }
-      unsigned int alphaMask = getAlphaMask(&pixelformat);
+      unsigned int alphaMask = getAlphaMask(pixelformat);
       unsigned short alphaShift = 0;
 
       for (; alphaShift < 32 && ((alphaMask >> alphaShift) % 2) == 0; alphaShift++)
@@ -190,7 +190,7 @@ namespace remoting
       {
          for (unsigned int x = width - 1; x > trimmedWidth; --x)
          {
-            if (!isPixelTransparent(&buffer->front(), type, height, pitch, x, y))
+            if (!isPixelTransparent(buffer->data(), type, height, pitch, x, y))
             {
                trimmedWidth = x + 1;
             }
@@ -212,7 +212,7 @@ namespace remoting
       {
          for (unsigned int y = height - 1; y > trimmedHeight; --y)
          {
-            if (!isPixelTransparent(&buffer->front(), type, height, pitch, x, y))
+            if (!isPixelTransparent(buffer->data(), type, height, pitch, x, y))
             {
                trimmedHeight = y + 1;
             }

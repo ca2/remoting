@@ -36,7 +36,7 @@ namespace remoting
       RfbSetEncodingsClientMessage(const ::array_base<int> & encodings);
       ~RfbSetEncodingsClientMessage();
 
-      void send(RfbOutputGate *output);
+      void send(::remoting::RfbOutputGate *output);
 
    private:
       ::array_base<int> m_encodings;

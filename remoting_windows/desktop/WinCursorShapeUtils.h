@@ -26,7 +26,7 @@
 
 #include "remoting/remoting_windows/_common_header.h"
 #include "innate_subsystem/framebuffer/Framebuffer.h"
-// #include aaa_<DXGI1_2.h>
+#include <DXGI1_2.h>
 //#include aaa_<vector>
 
 
@@ -109,7 +109,7 @@ namespace remoting
       int fbHeight = pixels->getDimension().cy;
 
       bool hasAlphaChannel = false;
-      unsigned int alphaMask = getAlphaMask(&pixelformat);
+      unsigned int alphaMask = getAlphaMask(pixelformat);
 
       for (int iRow = 0; iRow < fbHeight; iRow++)
       {

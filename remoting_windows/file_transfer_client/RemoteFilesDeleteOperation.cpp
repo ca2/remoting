@@ -26,7 +26,7 @@
 
 namespace remoting
 {
-   namespace ftp
+   namespace file_transfer
    {
       RemoteFilesDeleteOperation::RemoteFilesDeleteOperation(::subsystem::LogWriter * plogwriter,
                                                              const ::pointer_array< FileInfo > & fileinfoa,

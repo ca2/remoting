@@ -80,9 +80,9 @@ namespace remoting_node_desktop
       virtual ~ServerApplication();
 
 
-      virtual void initialize_server_application(HINSTANCE hInstance, const ::scoped_string &scopedstrwindowClassName,
+      virtual void initialize_server_application(::hinstance hInstance, const ::scoped_string &scopedstrwindowClassName,
                                                  const ::scoped_string &scopedstrCommandLine,
-                                                 NewConnectionEvents *newConnectionEvents);
+                                                 ::remoting_node::NewConnectionEvents *newConnectionEvents);
 
 
       void task_start() override;
@@ -118,6 +118,8 @@ namespace remoting_node_desktop
       // This is a callback function that calls when log properties have changed.
       virtual void onChangeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel);
 
+
+      virtual void main_node(const ::file::path & path);
 
    };
 

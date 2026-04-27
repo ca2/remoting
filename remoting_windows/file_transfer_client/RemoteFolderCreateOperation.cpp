@@ -27,7 +27,7 @@
 
 namespace remoting
 {
-   namespace ftp
+   namespace file_transfer
    {
       RemoteFolderCreateOperation::RemoteFolderCreateOperation(::subsystem::LogWriter * plogwriter,
                                                                const ::file::path & pathToTargetFile)

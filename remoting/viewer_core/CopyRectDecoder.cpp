@@ -25,19 +25,19 @@
 #include "CopyRectDecoder.h"
 
 
-namespace remoting
+namespace remoting_client
 {
    CopyRectDecoder::CopyRectDecoder(::subsystem::LogWriter * plogwriter)
    : DecoderOfRectangle(plogwriter)
    {
-      m_encoding = EncodingDefs::COPYRECT;
+      m_encoding = ::remoting::EncodingDefs::COPYRECT;
    }
 
    CopyRectDecoder::~CopyRectDecoder()
    {
    }
 
-   void CopyRectDecoder::decode(RfbInputGate *pinput,
+   void CopyRectDecoder::decode(::remoting::RfbInputGate *pinput,
                                 ::innate_subsystem::Framebuffer *pframebuffer,
                                 const ::int_rectangle &  rectangleTarget)
    {
@@ -48,9 +48,9 @@ namespace remoting
    void CopyRectDecoder::copy(::innate_subsystem::Framebuffer *dstFramebuffer,
                               const ::innate_subsystem::Framebuffer *pframebufferSource,
                               const ::int_rectangle &  rectangle,
-                              critical_section *fbLock)
+                              lockable_critical_section *pcriticalsectionFramebuffer)
    {
-      critical_section_lock al(fbLock);
+      critical_section_lock al(pcriticalsectionFramebuffer);
       dstFramebuffer->move(rectangle, m_sourcePosition.x, m_sourcePosition.y);
    }
-} // namespace remoting
+} // namespace remoting_client

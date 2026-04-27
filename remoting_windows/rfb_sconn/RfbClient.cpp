@@ -24,7 +24,7 @@
 #include "framework.h"
 //#include "acme/_operating_system.h"
 #include "RfbClient.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "RfbCodeRegistrator.h"
 #include "remoting/remoting/file_transfer_server/FileTransferRequestHandler.h"
 #include "EchoExtensionRequestHandler.h"
@@ -57,8 +57,8 @@ namespace remoting
      m_isMarkedOk(false),
      m_extTermListener(extTermListener),
      m_extAuthListener(pclientauthlistener),
-     m_updateSender(0),
-     m_clipboardExchange(0),
+     m_pupdatesender(0),
+     m_pclipboardexchange(0),
      m_pclientinputhandler(0),
      m_id(id),
      m_pdesktop(0),
@@ -184,9 +184,9 @@ namespace remoting
 
       SocketStream sockStream(m_socket);
 
-      RfbOutputGate output(&sockStream);
+      ::remoting::RfbOutputGate output(&sockStream);
       BufferedInputStream bufInput(&sockStream);
-      RfbInputGate input(&bufInput);
+      ::remoting::RfbInputGate input(&bufInput);
 
       FileTransferRequestHandler *fileTransfer = 0;
       EchoExtensionRequestHandler *echoExtension = 0;
@@ -225,38 +225,38 @@ namespace remoting
          RfbDispatcher dispatcher(&input, &m_connClosingEvent);
          m_plogwriter->debug("Dispatcher has been created");
          CapContainer srvToClCaps, clToSrvCaps, encCaps;
-         RfbCodeRegistrator codeRegtor(&dispatcher, &srvToClCaps, &clToSrvCaps,
+         RfbCodeRegistrator m_prfbcoderegistrator(&dispatcher, &srvToClCaps, &clToSrvCaps,
                                        &encCaps);
          // Init modules
          // UpdateSender initialization
-         m_updateSender = new UpdateSender(&codeRegtor, m_pdesktop, this,
+         m_pupdatesender = new UpdateSender(&m_prfbcoderegistrator, m_pdesktop, this,
                                            &output, m_id, m_pdesktop, m_plogwriter);
          m_plogwriter->debug("UpdateSender has been created for client #{}", m_id);
          ::innate_subsystem::PixelFormat pixelformat;
          ::int_size sizeFramebuffer;
          m_pdesktop->getFramebufferProperties(&sizeFramebuffer, &pixelformat);
          ::int_rectangle rectangleViewport = getViewport(sizeFramebuffer);
-         m_updateSender->init(::int_size(rectangleViewport.size()), pixelformat);
+         m_pupdatesender->init(::int_size(rectangleViewport.size()), pixelformat);
          m_plogwriter->debug("UpdateSender has been initialized");
          // ClientInputHandler initialization
-         m_pclientinputhandler = new ClientInputHandler(&codeRegtor, this,
+         m_pclientinputhandler = new ClientInputHandler(&m_prfbcoderegistrator, this,
                                                        m_viewOnly);
          m_plogwriter->debug("ClientInputHandler has been created");
          // ClipboardExchange initialization
-         m_clipboardExchange = new ClipboardExchange(&codeRegtor, m_pdesktop, &output,
+         m_pclipboardexchange = new ClipboardExchange(&m_prfbcoderegistrator, m_pdesktop, &output,
                                                      m_viewOnly, m_plogwriter);
          m_plogwriter->debug("ClipboardExchange has been created");
 
          // FileTransfers initialization
          if (config->isFileTransfersEnabled() &&
              rfbInitializer.getTightEnabledFlag()) {
-            fileTransfer = new FileTransferRequestHandler(&codeRegtor, &output, m_pdesktop, m_plogwriter, !m_viewOnly);
+            fileTransfer = new FileTransferRequestHandler(&m_prfbcoderegistrator, &output, m_pdesktop, m_plogwriter, !m_viewOnly);
             m_plogwriter->debug("::file::item transfer has been created");
              } else {
                 m_plogwriter->information("::file::item transfer is not allowed");
              }
          // echo extension initialization
-         echoExtension = new EchoExtensionRequestHandler(&codeRegtor, &output, m_plogwriter);
+         echoExtension = new EchoExtensionRequestHandler(&m_prfbcoderegistrator, &output, m_plogwriter);
          m_plogwriter->debug("Echo extension handler has been created");
 
          // Second initialization phase
@@ -292,9 +292,9 @@ namespace remoting
 
       if (fileTransfer)         delete fileTransfer;
       if (echoExtension)        delete echoExtension;
-      if (m_clipboardExchange)  delete m_clipboardExchange;
+      if (m_pclipboardexchange)  delete m_pclipboardexchange;
       if (m_pclientinputhandler) delete m_pclientinputhandler;
-      if (m_updateSender)       delete m_updateSender;
+      if (m_pupdatesender)       delete m_pupdatesender;
 
       // Let the client manager remove us from the client lists.
       notifyAbStateChanging(IN_READY_TO_REMOVE);
@@ -304,7 +304,7 @@ namespace remoting
    void RfbClient::sendUpdate(const UpdateContainer & updatecontainer,
                               const CursorShape *cursorShape)
    {
-      m_updateSender->newUpdates(updatecontainer, cursorShape);
+      m_pupdatesender->newUpdates(updatecontainer, cursorShape);
 
       if (m_idleTimeout != 0  && m_demandtimerIdle.isElapsed()) {
          m_plogwriter->error("Connection will be closed due to client inactivity. IdleTimeout = {} ms", m_idleTimeout);
@@ -314,7 +314,7 @@ namespace remoting
 
    void RfbClient::sendClipboard(const ::scoped_string & newClipboard)
    {
-      m_clipboardExchange->sendClipboard(newClipboard);
+      m_pclipboardexchange->sendClipboard(newClipboard);
    }
 
    void RfbClient::onKeyboardEvent(unsigned int keySym, bool down)
@@ -341,44 +341,44 @@ namespace remoting
       // FIXME: Too much extra work. Typically we would share the whole desktop and would not need
       //        to compute regions on each mouse move.
 
-      ::innate_subsystem::PixelFormat pfStub;
+      ::innate_subsystem::PixelFormat pixelformatStub;
       ::int_size sizeFramebuffer;
-      m_pdesktop->getFramebufferProperties(&sizeFramebuffer, &pfStub);
+      m_pdesktop->getFramebufferProperties(&sizeFramebuffer, &pixelformatStub);
 
-      ::int_rectangle vp;
+      ::int_rectangle rectangleViewport;
       bool shareApp;
       Region sharedRegion;
-      getViewPortInfo(&sizeFramebuffer, &vp, &shareApp, &sharedRegion);
+      getViewPortInfo(&sizeFramebuffer, &rectangleViewport, &shareApp, &sharedRegion);
 
       if (!shareApp) {
          sharedRegion.clear();
-         sharedRegion.addRect(&vp);
+         sharedRegion.addRect(&rectangleViewport);
       }
-      bool pointInside = sharedRegion.isPointInside(x + vp.left, y + vp.top);
+      bool pointInside = sharedRegion.isPointInside(x + rectangleViewport.left, y + rectangleViewport.top);
 
       if (pointInside) {
-         m_updateSender->blockCursorPosSending();
-         m_pdesktop->setMouseEvent(x + vp.left, y + vp.top, buttonMask);
+         m_pupdatesender->blockCursorPosSending();
+         m_pdesktop->setMouseEvent(x + rectangleViewport.left, y + rectangleViewport.top, buttonMask);
          m_demandtimerIdle.reset();
       }
    }
 
-   ::int_rectangle RfbClient::getViewport(const ::int_size & fbDimension)
+   ::int_rectangle RfbClient::getViewport(const ::int_size & sizeFramebuffer)
    {
       critical_section_lock al(&m_criticalsectionViewport);
-      m_pviewportConst->update(fbDimension);
-      m_pviewportDynamic->update(fbDimension);
+      m_pviewportConst->update(sizeFramebuffer);
+      m_pviewportDynamic->update(sizeFramebuffer);
 
       return m_pviewportConst->getViewport().intersection(
         m_pviewportDynamic->getViewport());
    }
 
-   void RfbClient::getViewPortInfo(const ::int_size & fbDimension, ::int_rectangle &resultRect,
+   void RfbClient::getViewPortInfo(const ::int_size & sizeFramebuffer, ::int_rectangle &rectangleResult,
                                    bool *shareApp, Region & regionShareApp)
    {
       critical_section_lock al(&m_criticalsectionViewport);
 
-      *resultRect = getViewport(fbDimension);
+      *rectangleResult = getViewport(sizeFramebuffer);
       *shareApp = m_pviewportDynamic->getOnlyApplication();
       if (*shareApp) {
          m_pviewportDynamic->getApplicationRegion(regionShareApp);
@@ -387,9 +387,9 @@ namespace remoting
 
    void RfbClient::onGetViewPort(::int_rectangle &viewRect, bool *shareApp, Region & regionShareApp)
    {
-      ::innate_subsystem::PixelFormat pfStub;
+      ::innate_subsystem::PixelFormat pixelformatStub;
       ::int_size sizeFramebuffer;
-      m_pdesktop->getFramebufferProperties(&sizeFramebuffer, &pfStub);
+      m_pdesktop->getFramebufferProperties(&sizeFramebuffer, &pixelformatStub);
       getViewPortInfo(&sizeFramebuffer, viewRect, shareApp, regionShareApp);
    }
 } // namespace remoting

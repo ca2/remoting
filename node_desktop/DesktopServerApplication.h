@@ -50,7 +50,7 @@ namespace remoting_node_desktop
     */
    class DesktopServerApplication : public ::subsystem::LocalOperatingSystemApplication,
                                     // public AnEventListener,
-                                    public ConfigReloadListener
+                                    public ::remoting::ConfigReloadListener
    {
    public:
       /**
@@ -59,7 +59,7 @@ namespace remoting_node_desktop
        * @throws ::subsystem::Exception (or SystemException) on fail.
        * @fixme make command line parsing in this class.
        */
-      DesktopServerApplication(HINSTANCE appInstance, const ::scoped_string &scopedstrwindowClassName,
+      DesktopServerApplication(::hinstance appInstance, const ::scoped_string &scopedstrwindowClassName,
                                const ::subsystem::CommandLineArguments *cmdArgs);
 
       ~DesktopServerApplication() override;
@@ -72,30 +72,30 @@ namespace remoting_node_desktop
    //protected:
       // virtual void onAnObjectEvent();
       virtual void onHappening();
-      virtual void onConfigReload(ServerConfig *serverConfig);
+      virtual void onConfigReload(::remoting::ServerConfig *serverConfig);
 
    //private:
       void freeResources();
 
-      ::pointer<Configurator> m_pconfigurator;
+      ::pointer<::remoting::Configurator> m_pconfigurator;
       //::subsystem::LogWriter *m_clientLogWriter;
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
       // Transport
-      ::subsystem::AnonymousPipe *m_pchannelClientToServer;
-      ::subsystem::AnonymousPipe *m_pchannelServerToClient;
-      ::remoting::BlockingGate *m_pgateClientToServer;
-      ::remoting::BlockingGate *m_pgateServerToClient;
+      ::pointer < ::subsystem::AnonymousPipe> m_pchannelClientToServer;
+      ::pointer < ::subsystem::AnonymousPipe> m_pchannelServerToClient;
+      ::pointer < ::remoting::BlockingGate> m_pgateClientToServer;
+      ::pointer < ::remoting::BlockingGate> m_pgateServerToClient;
 
-      ::remoting::DesktopSrvDispatcher *m_pdesktopsrvdispatcher;
+      ::pointer < ::remoting::DesktopSrvDispatcher >m_pdesktopsrvdispatcher;
 
       // Servers
-      ::remoting::UpdateHandlerServer *m_updHandlerSrv;
-      ::remoting::UserInputServer *m_uiSrv;
-      ::remoting::ConfigServer *m_cfgServer;
-      ::remoting::GateKickHandler *m_pblockinggateKickHandler;
+     ::pointer < ::remoting::UpdateHandlerServer >m_pupdatehandlerserver;
+     ::pointer < ::remoting::UserInputServer >m_puserinputserver;
+     ::pointer < ::remoting::ConfigServer >m_pconfigserver;
+     ::pointer < ::remoting::GateKickHandler >m_pgatekickhandler;
 
-      ::subsystem::SessionChangesWatcher *m_sessionChangesWatcher;
+      ::pointer < ::subsystem::SessionChangesWatcher >m_psessionchangeswatcher;
 
       unsigned int m_contextSwitchResolution; // in ms
    };

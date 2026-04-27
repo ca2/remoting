@@ -28,7 +28,7 @@
 #include "acme/input_output/DataOutputStream.h"
 #include "acme/input_output/BufferedOutputStream.h"
 
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
 
 namespace remoting
@@ -42,19 +42,19 @@ namespace remoting
     * "autoflush on unlock" is removed.
     * @author enikey.
     */
-   class CLASS_DECL_REMOTING RfbOutputGate : public ::DataOutputStream,
-                         public critical_section
+   class CLASS_DECL_REMOTING ::remoting::RfbOutputGate : public ::DataOutputStream,
+                         public lockable_critical_section
    {
    public:
       /**
        * Creates new rfb output pblockinggate.
        * @param stream real output stream.
        */
-      RfbOutputGate(::OutputStream *stream);
+      ::remoting::RfbOutputGate(::OutputStream *stream);
       /**
        * Deletes rfb output pblockinggate.
        */
-      virtual ~RfbOutputGate();
+      virtual ~::remoting::RfbOutputGate();
 
       /**
        * Flushes inner buffer to real output stream.

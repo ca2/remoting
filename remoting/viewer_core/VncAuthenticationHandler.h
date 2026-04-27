@@ -27,7 +27,7 @@
 
 #include "remoting/remoting/viewer_core/AuthHandler.h"
 
-namespace remoting
+namespace remoting_client
 {
    class CLASS_DECL_REMOTING VncAuthenticationHandler : public AuthHandler
    {

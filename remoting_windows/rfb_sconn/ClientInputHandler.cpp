@@ -28,22 +28,22 @@
 
 namespace remoting
 {
-   ClientInputHandler::ClientInputHandler(RfbCodeRegistrator *codeRegtor,
+   ClientInputHandler::ClientInputHandler(RfbCodeRegistrator *m_prfbcoderegistrator,
                                           ClientInputEventListener *extEventListener,
                                           bool viewOnly)
    : m_extEventListener(extEventListener),
      m_viewOnly(viewOnly)
    {
       // Request codes
-      codeRegtor->regCode(ClientMsgDefs::KEYBOARD_EVENT, this);
-      codeRegtor->regCode(ClientMsgDefs::POINTER_EVENT, this);
+      m_prfbcoderegistrator->regCode(ClientMsgDefs::KEYBOARD_EVENT, this);
+      m_prfbcoderegistrator->regCode(ClientMsgDefs::POINTER_EVENT, this);
    }
 
    ClientInputHandler::~ClientInputHandler()
    {
    }
 
-   void ClientInputHandler::onRequest(unsigned int reqCode, RfbInputGate *prfbinputgate)
+   void ClientInputHandler::onRequest(unsigned int reqCode, ::remoting::RfbInputGate *prfbinputgate)
    {
       switch (reqCode) {
          case ClientMsgDefs::KEYBOARD_EVENT:

@@ -27,9 +27,9 @@
 
 #include "remoting/remoting/rfb/MsgDefs.h"
 #include "remoting/remoting/network/RfbOutputGate.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
-namespace remoting
+namespace remoting_client
 {
    class CLASS_DECL_REMOTING RfbClientToServerMessage
    {
@@ -37,6 +37,6 @@ namespace remoting
       RfbClientToServerMessage();
       virtual ~RfbClientToServerMessage();
 
-      virtual void send(RfbOutputGate *output) = 0;
+      virtual void send(::remoting::RfbOutputGate *output) = 0;
    };
-} // namespace remoting
+} // namespace remoting_client

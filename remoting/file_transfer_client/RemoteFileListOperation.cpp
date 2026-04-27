@@ -25,7 +25,7 @@
 #include "RemoteFileListOperation.h"
 namespace remoting
 {
-   namespace ftp
+   namespace file_transfer
    {
       RemoteFileListOperation::RemoteFileListOperation(::subsystem::LogWriter * plogwriter,
                                                        const ::scoped_string & scopedstrRemotePath)

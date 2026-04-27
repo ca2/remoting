@@ -69,7 +69,7 @@ namespace remoting_node_desktop
       //  ClientLogWriter m_clientLogWriter;
       //::subsystem::LogWriter *m_clientLogWriter;
 
-      ::pointer < WinServiceEvents > m_pwinserviceevents;
+      ::pointer < ServiceEvents > m_pwinserviceevents;
       /*NewConnectionEvents *m_newConnectionEvents;*/
       /**
        * Command line key which needed to start remoting_node binary as service.
@@ -88,7 +88,7 @@ namespace remoting_node_desktop
       virtual ~Service();
 
 
-      virtual void initialize_remoting_node_desktop_service(WinServiceEvents *winServiceEvents, NewConnectionEvents *newConnectionEvents);
+      virtual void initialize_remoting_node_desktop_service(ServiceEvents *winServiceEvents, ::remoting_node::NewConnectionEvents *newConnectionEvents);
 
 
       void task_start() override;

@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "UserInputServer.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "subsystem/platform/BrokenHandleException.h"
 
 namespace remoting

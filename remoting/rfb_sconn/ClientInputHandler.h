@@ -36,7 +36,7 @@ namespace remoting
    class ClientInputHandler : public RfbDispatcherListener
    {
    public:
-      ClientInputHandler(RfbCodeRegistrator *codeRegtor, ClientInputEventListener *extEventListener, bool viewOnly);
+      ClientInputHandler(RfbCodeRegistrator *m_prfbcoderegistrator, ClientInputEventListener *extEventListener, bool viewOnly);
       virtual ~ClientInputHandler();
 
       void setViewOnlyFlag(bool value) { m_viewOnly = value; }

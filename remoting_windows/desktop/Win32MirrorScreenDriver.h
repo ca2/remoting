@@ -25,7 +25,7 @@
 #pragma once
 
 #include "remoting/remoting_windows/_common_header.h"
-#include "remoting/remoting/desktop/MirrorScreenDriver.h"
+#include "remoting/remoting_windows/desktop/MirrorScreenDriver.h"
 #include "remoting/remoting_windows/desktop/Win32ScreenDriverBaseImpl.h"
 
 namespace remoting
@@ -35,7 +35,7 @@ namespace remoting
    {
    public:
       //Win32MirrorScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-        //                      critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
+        //                      lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
 
 
       Win32MirrorScreenDriver();
@@ -43,7 +43,7 @@ namespace remoting
 
 
       void initialize_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                          critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) override;
+                          lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) override;
 
 
       // Starts screen update detection if it not started yet.

@@ -25,13 +25,13 @@
 //#include aaa_<map>
 //#include aaa_<vector>
 
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 //////#include "subsystem/platform/::string.h"
 
 #pragma once
 
 
-namespace remoting
+namespace remoting_client
 {
    class CLASS_DECL_REMOTING RfbCapabilityInfo {
    public:
@@ -98,19 +98,19 @@ namespace remoting
       bool isEnabled(unsigned int code) const;
 
       //
-      // This function return count of enabled capabilities.
+      // This function return count of enabled pcapabilitiesmanager.
       //
       size_t numEnabled() const;
 
       //
       // Return the capability code at the specified index.
-      // List of capabilities contained only enabled capability.
+      // List of pcapabilitiesmanager contained only enabled capability.
       // If the index is not valid, return 0.
       //
       unsigned int getByOrder(size_t idx);
 
       //
-      // This method return ::list_base of enabled capabilities.
+      // This method return ::list_base of enabled pcapabilitiesmanager.
       //
       void getEnabledCapabilities(::array_base<unsigned int> &codes) const;
 
@@ -129,6 +129,6 @@ namespace remoting
       // List of enabled caps.
       ::array_base<unsigned int> m_plist;
 
-      mutable critical_section m_mapLock;
+      mutable lockable_critical_section m_mapLock;
    };
-} // namespace remoting
+} // namespace remoting_client

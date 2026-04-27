@@ -38,7 +38,7 @@ namespace remoting
    {
    }
 
-   void RfbPointerEventClientMessage::send(RfbOutputGate *output)
+   void RfbPointerEventClientMessage::send(::remoting::RfbOutputGate *output)
    {
       critical_section_lock al(output);
       output->writeUInt8(ClientMsgDefs::POINTER_EVENT);

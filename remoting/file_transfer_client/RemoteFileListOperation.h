@@ -29,7 +29,7 @@
 
 namespace remoting
 {
-   namespace ftp
+   namespace file_transfer
    {
       //
       // ::file::item operation that used for receiving file ::list_base

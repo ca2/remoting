@@ -29,7 +29,7 @@
 
 namespace remoting
 {
-   namespace ftp
+   namespace file_transfer
    {
       DownloadOperation::DownloadOperation(::subsystem::LogWriter * plogwriter,
                                            const ::pointer_array< FileInfo > & fileinfoa,

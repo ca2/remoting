@@ -28,7 +28,7 @@
 #include "subsystem/platform/Exception.h"
 namespace remoting
 {
-   namespace ftp
+   namespace file_transfer
    {
       //
       // This exception is raised when client receives valid (from ft protocol extension

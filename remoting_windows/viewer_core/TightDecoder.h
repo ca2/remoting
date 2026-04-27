@@ -41,30 +41,30 @@ namespace remoting
       virtual ~TightDecoder();
 
    protected:
-      virtual void decode(RfbInputGate *input,
+      virtual void decode(::remoting::RfbInputGate *input,
                           ::innate_subsystem::Framebuffer *pframebuffer,
                           const ::int_rectangle &  rectangleTarget);
 
    private:
       void reset();
       void resetDecoders(unsigned char compControl);
-      unsigned int readTightPixel(RfbInputGate *input, int bytesPerCPixel);
-      int readCompactSize(RfbInputGate *input);
-      ::array_base<unsigned int> readPalette(RfbInputGate *input,
+      unsigned int readTightPixel(::remoting::RfbInputGate *input, int bytesPerCPixel);
+      int readCompactSize(::remoting::RfbInputGate *input);
+      ::array_base<unsigned int> readPalette(::remoting::RfbInputGate *input,
                               int paletteSize,
                               int bytesPerCPixel);
-      void processJpeg(RfbInputGate *input,
+      void processJpeg(::remoting::RfbInputGate *input,
                        ::innate_subsystem::Framebuffer *pframebuffer,
                        const ::int_rectangle &  rectangleTarget);
-      void processBasicTypes(RfbInputGate *input,
+      void processBasicTypes(::remoting::RfbInputGate *input,
                              ::innate_subsystem::Framebuffer *pframebuffer,
                              const ::int_rectangle &  rectangleTarget,
                              unsigned char compControl);
-      void readTightData(RfbInputGate *input,
+      void readTightData(::remoting::RfbInputGate *input,
                          ::array_base<unsigned char> &buffer,
                          size_t expectedLength,
                          const int decoderId);
-      void readCompressedData(RfbInputGate *input,
+      void readCompressedData(::remoting::RfbInputGate *input,
                               ::array_base<unsigned char> &buffer,
                               size_t expectedLength,
                               const int decoderId);
@@ -82,10 +82,10 @@ namespace remoting
                          const ::array_base<unsigned char> *pixels,
                          const ::int_rectangle &  rectangleTarget);
 
-      unsigned int getRawTightColor(const ::innate_subsystem::PixelFormat & pxFormat,
+      unsigned int getRawTightColor(const ::innate_subsystem::PixelFormat & pixelformat,
                               const ::array_base<unsigned char> &pixels,
                               size_t offset);
-      void fillRawComponents(const ::innate_subsystem::PixelFormat & pxFormat,
+      void fillRawComponents(const ::innate_subsystem::PixelFormat & pixelformat,
                              unsigned char components[],
                              const ::array_base<unsigned char> &pixels,
                              size_t pixelOffset);

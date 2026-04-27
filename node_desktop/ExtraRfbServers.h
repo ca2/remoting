@@ -51,7 +51,7 @@ namespace remoting_node_desktop
 
       ::ø<::list_base<::pointer<::remoting_node_desktop::RfbServer>>> m_servers;
       Conf m_effectiveConf;
-      ::pointer<Configurator> m_pconfigurator;
+      ::pointer<::remoting::Configurator> m_pconfigurator;
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
 
@@ -61,7 +61,7 @@ namespace remoting_node_desktop
       ~ExtraRfbServers() override;
       
       
-      virtual void initialize_extra_rfb_servers(Configurator * pconfigurator, ::subsystem::LogWriter * plogwriter);
+      virtual void initialize_extra_rfb_servers(::remoting::Configurator * pconfigurator, ::subsystem::LogWriter * plogwriter);
 
       // Check current configuration and restart the servers if necessary.
       // Returns true on success (either no work was required or everything has
@@ -81,7 +81,7 @@ namespace remoting_node_desktop
       bool startUp(bool asService, RfbClientManager *mgr);
 
       // Read configuration into the specified structure.
-      static void getConfiguration(Conf *out);
+      void getConfiguration(Conf *out);
 
       
       /// private:

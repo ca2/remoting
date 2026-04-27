@@ -28,7 +28,7 @@
 #include "RfbClientToServerMessage.h"
 #include "remoting/remoting/rfb/EncodingDefs.h"
 
-namespace remoting
+namespace remoting_client
 {
    class CLASS_DECL_REMOTING RfbSetEncodingsClientMessage : public RfbClientToServerMessage
    {
@@ -36,9 +36,9 @@ namespace remoting
       RfbSetEncodingsClientMessage(const ::array_base<int> & encodings);
       ~RfbSetEncodingsClientMessage();
 
-      void send(RfbOutputGate *output);
+      void send(::remoting::RfbOutputGate *output);
 
    private:
       ::array_base<int> m_encodings;
    };
-} // namespace remoting
+} // namespace remoting_client

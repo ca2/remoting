@@ -44,8 +44,8 @@ namespace remoting
 
    void CopyRectDetector::detectWindowMovements(::int_rectangle &rectangleCopy, ::int_point & pointSource)
    {
-      m_rectangleCopy.Null();
-      m_pointSource.Null();
+      m_rectangleCopy.clear();
+      m_pointSource.clear();
 
       EnumWindows((WNDENUMPROC)enumWindowsFnCopyRect, (::lparam)this);
       m_lastWinProps = m_newWinProps;

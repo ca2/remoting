@@ -136,7 +136,7 @@ namespace remoting
       //
 
       //static Configurator *s_instance;
-      //static critical_section m_instanceMutex;
+      //static lockable_critical_section m_instanceMutex;
    };
 
 

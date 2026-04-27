@@ -29,7 +29,7 @@
 #include "remoting/remoting/region/Region.h"
 //#include "subsystem/platform/::string_array.h"
 #include "remoting/remoting/desktop/ScreenDriver.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 //#include "log_writer/LogWriter.h"
 #include "subsystem/thread/Thread.h"
 #include "acme/parallelization/happening.h"
@@ -46,7 +46,7 @@ namespace remoting
 
       class ::time m_timeLastVideoUpdate;
       Region m_regionVideo;
-      critical_section m_criticalsectionRegion;
+      lockable_critical_section m_criticalsectionRegion;
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
       ::happening m_happeningSleeper;
 
@@ -57,7 +57,7 @@ namespace remoting
 
 
       void initialize_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                          critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) override;
+                          lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) override;
 
 
    //protected:
@@ -67,7 +67,7 @@ namespace remoting
       virtual Region getVideoRegion();
       void updateVideoRegion();
       void getClassNamesAndRectsFromConfig(::string_array &classNames, ::int_rectangle_array_base &rectanglea);
-      unsigned int WinVideoRegionUpdaterImpl::getInterval();
+      unsigned int getInterval();
       Region getRectsByClass(::string_array classNames);
       Region getRectsByCoords(::int_rectangle_array_base &rectanglea);
 

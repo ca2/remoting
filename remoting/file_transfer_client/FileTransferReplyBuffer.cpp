@@ -24,12 +24,12 @@
 #include "framework.h"
 #include "FileTransferReplyBuffer.h"
 #include "acme/input_output/ByteArrayInputStream.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 //#include aaa_<crtdbg.h>
 
 namespace  remoting
 {
-   namespace  ftp
+   namespace file_transfer
    {
       FileTransferReplyBuffer::FileTransferReplyBuffer(::subsystem::LogWriter * plogwriter)
       : m_plogwriter(plogwriter),
@@ -304,5 +304,5 @@ namespace  remoting
 
          return uncoBuffer;
       }
-   } // namespace  ftp
+   } // namespace file_transfer
 } // namespace remoting

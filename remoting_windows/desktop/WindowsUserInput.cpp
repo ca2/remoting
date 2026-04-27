@@ -25,22 +25,42 @@
 #include "remoting/remoting_windows/desktop/WindowsUserInput.h"
 #include "subsystem/thread/DesktopSelector.h"
 #include "subsystem/node/OperatingSystem.h"
-#include "remoting/remoting/win_system/Keyboard.h"
+#include "subsystem/node/Keyboard.h"
 #include "innate_subsystem/gui/WindowFinder.h"
+#include "subsystem/node/Clipboard2.h"
 #include "subsystem/platform/BrokenHandleException.h"
 
 namespace remoting
 {
 
 
-   WindowsUserInput::WindowsUserInput(ClipboardListener *pclipboardlistener, bool ctrlAltDelEnabled,
-                                      ::subsystem::LogWriter * plogwriter) :
-       m_prevKeyFlag(0), m_inputInjector(ctrlAltDelEnabled, log), m_plogwriter(plogwriter)
+   // WindowsUserInput::WindowsUserInput(ClipboardListener *pclipboardlistener, bool ctrlAltDelEnabled,
+   //                                    ::subsystem::LogWriter * plogwriter) :
+   //     m_prevKeyFlag(0), m_inputInjector(ctrlAltDelEnabled, log), m_plogwriter(plogwriter)
+   // {
+   //    m_clipboard = new WindowsClipboard(pclipboardlistener, m_plogwriter);
+   // }
+
+   WindowsUserInput::WindowsUserInput() :
+   m_prevKeyFlag(0)
    {
-      m_clipboard = new WindowsClipboard(pclipboardlistener, m_plogwriter);
+      //m_clipboard = new WindowsClipboard(pclipboardlistener, m_plogwriter);
    }
 
-   WindowsUserInput::~WindowsUserInput(void) { delete m_clipboard; }
+
+
+   WindowsUserInput::~WindowsUserInput(void) {  }
+
+   void WindowsUserInput::initialize_user_input(::subsystem::ClipboardListener *pclipboardlistener, bool ctrlAltDelEnabled,
+                 ::subsystem::LogWriter * plogwriter)
+   {
+    m_prevKeyFlag = 0;
+      m_inputInjector.initialize_input_injector(ctrlAltDelEnabled, plogwriter);
+      m_plogwriter = plogwriter;
+      constructø(m_pclipboard);
+      m_pclipboard->initialize_clipboard2(pclipboardlistener, plogwriter);
+   }
+
 
    // FIXME: refactor this horror.
    void WindowsUserInput::setMouseEvent(const ::int_point newPos, unsigned char keyFlag)
@@ -148,7 +168,7 @@ namespace remoting
    void WindowsUserInput::setNewClipboard(const ::scoped_string &newClipboard)
    {
       // FIXME: use ::string instead TCHAR * in writeToClipBoard arg
-      m_clipboard->writeToClipBoard(newClipboard->getString());
+      m_pclipboard->writeToClipBoard(newClipboard);
    }
 
    void WindowsUserInput::setKeyboardEvent(unsigned int keySym, bool down)
@@ -158,7 +178,7 @@ namespace remoting
          m_plogwriter->information("Received the %#4.4x keysym, down = {}", keySym, (int)down);
          // Generate single key event.
          unsigned char vkCode;
-         WCHAR ch;
+         int ch;
          bool release = !down;
          bool extended;
 
@@ -185,64 +205,64 @@ namespace remoting
 
    void WindowsUserInput::getCurrentUserInfo(::string &desktopName, ::string &userName)
    {
-      if (!DesktopSelector::getCurrentDesktopName(desktopName) &&
-          !Environment::getCurrentUserName(userName, m_plogwriter))
+      if (!MainSubsystem().DesktopSelector().getCurrentDesktopName(desktopName) &&
+          !MainSubsystem().OperatingSystem().getCurrentUserName(userName, m_plogwriter))
       {
          ::string errMess;
-         Environment::getErrStr("Can't get current user info", &errMess);
+         errMess  = MainSubsystem().OperatingSystem().getErrStr("Can't get current user info");
          throw ::subsystem::Exception(errMess);
       }
    }
 
    void WindowsUserInput::getPrimaryDisplayCoords(::int_rectangle & rectangle)
    {
-      prect->left = 0;
-      prect->top = 0;
-      prect->right = GetSystemMetrics(SM_CXSCREEN);
-      prect->bottom = GetSystemMetrics(SM_CYSCREEN);
-      prect->move(-GetSystemMetrics(SM_XVIRTUALSCREEN), -GetSystemMetrics(SM_YVIRTUALSCREEN));
+      rectangle.left = 0;
+      rectangle.top = 0;
+      rectangle.right = GetSystemMetrics(SM_CXSCREEN);
+      rectangle.bottom = GetSystemMetrics(SM_CYSCREEN);
+      rectangle.offset(-GetSystemMetrics(SM_XVIRTUALSCREEN), -GetSystemMetrics(SM_YVIRTUALSCREEN));
    }
 
-   void WindowsUserInput::getDisplayNumberCoords(::int_rectangle rectangle, unsigned char dispNumber)
+   void WindowsUserInput::getDisplayNumberCoords(::int_rectangle & rectangle, unsigned char dispNumber)
    {
       m_winDisplays.getDisplayCoordinates(dispNumber, rectangle);
    }
 
    ::int_rectangle_array_base WindowsUserInput::getDisplaysCoords() { return m_winDisplays.getDisplaysCoords(); }
 
-   void WindowsUserInput::getNormalizedRect(::int_rectangle rectangle) { toFbCoordinates(rectangle); }
+   void WindowsUserInput::getNormalizedRect(::int_rectangle & rectangle) { toFbCoordinates(rectangle); }
 
-   void WindowsUserInput::toFbCoordinates(::int_rectangle rectangle)
+   void WindowsUserInput::toFbCoordinates(::int_rectangle & rectangle)
    {
-      rectangle.move(-GetSystemMetrics(SM_XVIRTUALSCREEN), -GetSystemMetrics(SM_YVIRTUALSCREEN));
+      rectangle.offset(-GetSystemMetrics(SM_XVIRTUALSCREEN), -GetSystemMetrics(SM_YVIRTUALSCREEN));
    }
 
-   void WindowsUserInput::getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle rectangle)
+   void WindowsUserInput::getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rectangle)
    {
       rectangle.clear();
-      RECT rectangle;
-      if (GetWindowRect(hwnd, &rectangle))
+      //RECT rectangle;
+      if (::windows::get_window_rect(operatingsystemwindow, rectangle))
       {
-         rectangle.fromWindowsRect(&rectangle);
-         rectangle.move(-GetSystemMetrics(SM_XVIRTUALSCREEN), -GetSystemMetrics(SM_YVIRTUALSCREEN));
+//         rectangle.fromWindowsRect(&rectangle);
+         rectangle.offset(-GetSystemMetrics(SM_XVIRTUALSCREEN), -GetSystemMetrics(SM_YVIRTUALSCREEN));
       }
       else
       {
          ::string errMess;
-         Environment::getErrStr("Can't get window coordinates", &errMess);
-         throw BrokenHandleException(errMess);
+         errMess = MainSubsystem().OperatingSystem().getErrStr("Can't get window coordinates");
+         throw ::subsystem::BrokenHandleException(errMess);
       }
    }
 
-   HWND WindowsUserInput::getWindowHandleByName(const ::scoped_string &windowName)
+   operating_system::window WindowsUserInput::getWindowHandleByName(const ::scoped_string &windowName)
    {
-      return WindowFinder::findFirstWindowByName(*windowName);
+      return ::windows::findFirstWindowByName(*windowName);
    }
 
    void WindowsUserInput::getApplicationRegion(unsigned int procId, Region & region)
    {
       region.clear();
-      HWND hForegr = GetWindow(GetForegroundWindow(), GW_HWNDLAST);
+      HWND hForegr = ::windows::get_window(::window::get_foreground_window(), GW_HWNDLAST);
 
       RECT rectangle;
       ::int_rectangle rectangle;
@@ -255,14 +275,14 @@ namespace remoting
          GetWindowThreadProcessId(hForegr, &procForegr);
          if (style & WS_VISIBLE)
          {
-            rectangle.fromWindowsRect(&rectangle);
+            rectangle.fromWindowsRect(rectangle);
             if (procForegr == procId)
             {
                region.addRect(rectangle);
             }
             else
             {
-               region.subtract(&Region(rectangle));
+               region.subtract(Region(rectangle));
             }
          }
          hForegr = GetWindow(hForegr, GW_HWNDPREV);

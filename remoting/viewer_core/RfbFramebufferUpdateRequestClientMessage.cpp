@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "RfbFramebufferUpdateRequestClientMessage.h"
 
-namespace remoting
+namespace remoting_client
 {
    RfbFramebufferUpdateRequestClientMessage::RfbFramebufferUpdateRequestClientMessage
      (bool incremental, ::int_rectangle updateRect)
@@ -37,15 +37,15 @@ namespace remoting
    {
    }
 
-   void RfbFramebufferUpdateRequestClientMessage::send(RfbOutputGate * output)
+   void RfbFramebufferUpdateRequestClientMessage::send(::remoting::RfbOutputGate * prfboutputgate)
    {
-      critical_section_lock al(output);
-      output->writeUInt8(ClientMsgDefs::FB_UPDATE_REQUEST);
-      output->writeUInt8(m_incremental);
-      output->writeUInt16(static_cast<unsigned short>(m_rect.left));
-      output->writeUInt16(static_cast<unsigned short>(m_rect.top));
-      output->writeUInt16(static_cast<unsigned short>(m_rect.width()));
-      output->writeUInt16(static_cast<unsigned short>(m_rect.height()));
-      output->flush();
+      critical_section_lock al(prfboutputgate);
+      prfboutputgate->writeUInt8(::remoting::ClientMsgDefs::FB_UPDATE_REQUEST);
+      prfboutputgate->writeUInt8(m_incremental);
+      prfboutputgate->writeUInt16(static_cast<unsigned short>(m_rect.left));
+      prfboutputgate->writeUInt16(static_cast<unsigned short>(m_rect.top));
+      prfboutputgate->writeUInt16(static_cast<unsigned short>(m_rect.width()));
+      prfboutputgate->writeUInt16(static_cast<unsigned short>(m_rect.height()));
+      prfboutputgate->flush();
    }
-} //namespace remoting
+} //namespace remoting_client

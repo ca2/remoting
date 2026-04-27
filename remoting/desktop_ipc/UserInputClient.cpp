@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "UserInputClient.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "ReconnectException.h"
 #include "acme/operating_system/windows/_.h"
 #include "subsystem/platform/BrokenHandleException.h"

@@ -51,7 +51,7 @@ namespace remoting
     * 3 -     - padding
     */
 
-   void RfbSetPixelFormatClientMessage::send(RfbOutputGate *output)
+   void RfbSetPixelFormatClientMessage::send(::remoting::RfbOutputGate *output)
    {
       critical_section_lock al(output);
       output->writeUInt8(ClientMsgDefs::SET_PIXEL_FORMAT);

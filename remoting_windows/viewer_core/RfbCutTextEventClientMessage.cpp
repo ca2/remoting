@@ -39,7 +39,7 @@ namespace remoting
    {
    }
 
-   void RfbCutTextEventClientMessage::send(RfbOutputGate *output)
+   void RfbCutTextEventClientMessage::send(::remoting::RfbOutputGate *output)
    {
       ::string cutTextAnsi;
       cutTextAnsi = m_cutText;
@@ -55,7 +55,7 @@ namespace remoting
       output->flush();
    }
 
-   void RfbCutTextEventClientMessage::sendUtf8(RfbOutputGate *output)
+   void RfbCutTextEventClientMessage::sendUtf8(::remoting::RfbOutputGate *output)
    {
       ::string cutTextUtf;
       cutTextUtf = m_cutText;

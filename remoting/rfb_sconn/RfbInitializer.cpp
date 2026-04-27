@@ -24,7 +24,7 @@
 #include "framework.h"
 //#include "acme/_operating_system.h"
 #include "RfbInitializer.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "remoting/remoting/rfb/VendorDefs.h"
 #include "remoting/remoting/rfb/AuthDefs.h"
 #include "CapContainer.h"
@@ -212,7 +212,7 @@ namespace remoting
       bool hasRdly = pserverconfig->hasReadOnlyPassword();
 
       if (!hasPrim && !hasRdly) {
-         throw AuthException("Server is not configured properly");
+         throw ::remoting_node::AuthException("Server is not configured properly");
       }
 
       if (hasPrim) {
@@ -242,7 +242,7 @@ namespace remoting
       ::string errMess;
       errMess.formatf("Authentication failed from {}", clientAddressStorage);
 
-      throw AuthException(errMess);
+      throw ::remoting_node::AuthException(errMess);
    }
 
    void RfbInitializer::doAuthNone()
@@ -281,7 +281,7 @@ namespace remoting
             m_pdataoutputstream->writeUInt32(primSecType);
             doAuth(AuthDefs::convertFromSecurityType(primSecType));
          }
-      } catch (AuthException &e) {
+      } catch (::remoting_node::AuthException &e) {
          // FIXME: The authentication result must be sent in protocols 3.3 and 3.7
          //        as well, unless the authentication was set to AuthDefs::NONE.
          if (m_minorVerNum >= 8) {
@@ -382,7 +382,7 @@ namespace remoting
    void RfbInitializer::checkForBan()
    {
       if (m_pclientauthlistener->onCheckForBan(m_prfbclient)) {
-         throw AuthException("Your connection has been rejected");
+         throw ::remoting_node::AuthException("Your connection has been rejected");
       }
    }
 } // namespace remoting

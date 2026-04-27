@@ -38,7 +38,7 @@ namespace remoting
    {
    public:
       Win32ScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ::innate_subsystem::Framebuffer *pframebuffer,
-                        critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
+                        lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
       virtual ~Win32ScreenDriver();
 
       // Starts screen update detection if it not started yet.

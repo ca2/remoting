@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "subsystem/_common_header.h"
-//#include "remoting/node_desktop/NamingDefs.h"
+////#include "remoting/node_desktop/NamingDefs.h"
 #include "HooksUpdateDetector.h"
 
 #include "acme/operating_system/windows/_.h"

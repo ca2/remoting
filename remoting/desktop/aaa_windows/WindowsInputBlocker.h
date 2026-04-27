@@ -27,7 +27,7 @@
 
 #include "subsystem/_common_header.h"
 #include "subsystem/thread/GuiThread.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 //#include "remoting/remoting/win_system/WinTimeMillis.h"
 #include "WindowsInputBlocker.h"
 #include "acme/parallelization/happening.h"
@@ -80,7 +80,7 @@ namespace remoting
       _windows_input_blocker_t  *    m_pwindowsinputblocker;
 
       static WindowsInputBlocker *s_pwindowsinputblocker;
-      static critical_section s_criticalsection;
+      static lockable_critical_section s_criticalsection;
 
 
       bool m_isKeyboardBlocking;
@@ -90,7 +90,7 @@ namespace remoting
       bool m_isSoftMouseBlocking;
       unsigned int m_timeInterval;
       class ::time  m_lastInputTime;
-      critical_section m_lastInputTimeMutex;
+      lockable_critical_section m_lastInputTimeMutex;
 
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;

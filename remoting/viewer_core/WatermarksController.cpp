@@ -27,7 +27,7 @@
 #include "subsystem/framebuffer/StandardPixelFormatFactory.h"
 #include "remoting/remoting/rfb/PixelConverter.h"
 
-namespace remoting
+namespace remoting_client
 {
    WatermarksController::WatermarksController(void)
    {
@@ -70,23 +70,24 @@ namespace remoting
 
          pframebuffer->setPixelFormat(pixelformat);
 
-         PixelConverter pc = PixelConverter();
+         //::remoting::PixelConverter pixelconverter = PixelConverter();
+         ::remoting::PixelConverter pixelconverter;
          ::int_rectangle rectangle = pframebuffer->getDimension();
 
-         pc.setPixelFormats(pframebuffer->getPixelFormat(), temp.getPixelFormat());
+         pixelconverter.setPixelFormats(pframebuffer->getPixelFormat(), temp.getPixelFormat());
 
-         pc.convert(rectangle, pframebuffer, &temp);
+         pixelconverter.convert(rectangle, pframebuffer, &temp);
       }
    }
 
-   void WatermarksController::showWaterMarks(::innate_subsystem::Framebuffer *pframebuffer, critical_section *fbLock)
+   void WatermarksController::showWaterMarks(::innate_subsystem::Framebuffer *pframebuffer, lockable_critical_section *pcriticalsectionFramebuffer)
    {
       m_pframebufferOverlay->copyFrom(pframebuffer, m_currentRect.left, m_currentRect.top);
 
       pframebuffer->copyFrom(m_currentRect, m_pframebuffer, 0, 0);
    }
 
-   void WatermarksController::hideWatermarks(::innate_subsystem::Framebuffer *pframebuffer, critical_section *fbLock)
+   void WatermarksController::hideWatermarks(::innate_subsystem::Framebuffer *pframebuffer, lockable_critical_section *pcriticalsectionFramebuffer)
    {
       pframebuffer->copyFrom(m_currentRect, m_pframebufferOverlay, 0, 0);
    }
@@ -150,4 +151,4 @@ namespace remoting
    {
       return m_pframebuffer->getBuffer() == 0;
    }
-} // namespace remoting
+} // namespace remoting_client

@@ -30,7 +30,7 @@
 
 namespace remoting
 {
-   namespace ftp
+   namespace file_transfer
    {
       class CLASS_DECL_REMOTING LocalFilesDeleteOperation : public FileTransferOperation
       {

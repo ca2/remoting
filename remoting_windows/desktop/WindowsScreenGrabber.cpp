@@ -29,9 +29,9 @@ namespace remoting
 {
 
 
-   WindowsScreenGrabber::WindowsScreenGrabber(void) : m_destDC(NULL), m_screenDC(NULL), m_hbmDIB(NULL), m_hbmOld(NULL)
+   WindowsScreenGrabber::WindowsScreenGrabber(::remoting::Configurator * pconfigurator) : m_destDC(NULL), m_screenDC(NULL), m_hbmDIB(NULL), m_hbmOld(NULL)
    {
-      m_pserverconfig = m_pconfigurator->getServerConfig();
+      m_pserverconfig = pconfigurator->getServerConfig();
       setWorkRectDefault();
       resume();
       m_hasStartedSignal.wait();
@@ -71,10 +71,10 @@ namespace remoting
          return false;
       }
 
-      Screen::BMI bmi;
+      ::subsystem_windows::Screen::BMI bmi;
       try
       {
-         m_screen.getBMI(&bmi, m_screenDC);
+         m_screen._getBMI(&bmi, m_screenDC);
       }
       catch (...)
       {

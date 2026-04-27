@@ -27,7 +27,7 @@
 
 #include "PseudoDecoder.h"
 
-namespace remoting
+namespace remoting_client
 {
    class CLASS_DECL_REMOTING JpegQualityLevel : public PseudoDecoder
    {
@@ -41,5 +41,5 @@ namespace remoting
       static const int JPEG_QUALITY_LEVEL_MIN = 0;
       static const int JPEG_QUALITY_LEVEL_MAX = 9;
    };
-} // namespace remoting
+} // namespace remoting_client
 

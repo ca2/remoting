@@ -28,7 +28,7 @@
 #include "innate_subsystem/framebuffer/Framebuffer.h"
 //#include "subsystem/framebuffer/PixelFormat.h"
 //#include "subsystem/framebuffer/StandardPixelFormatFactory.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
 namespace remoting
 {
@@ -43,10 +43,10 @@ namespace remoting
 
 
       void showWaterMarks(::innate_subsystem::Framebuffer *pframebuffer,
-         critical_section *fbLock);
+         lockable_critical_section *pcriticalsectionFramebuffer);
 
       void hideWatermarks(::innate_subsystem::Framebuffer *pframebuffer,
-         critical_section *fbLock);
+         lockable_critical_section *pcriticalsectionFramebuffer);
 
       const ::int_rectangle CurrentRect();
 

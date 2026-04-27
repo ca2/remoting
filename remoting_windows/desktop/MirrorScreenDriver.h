@@ -27,10 +27,10 @@
 #include "remoting/remoting_windows/_common_header.h"
 #include "MirrorDriverClient.h"
 #include "subsystem/platform/RegistryKey.h"
-#include "DisplayEsc.h"
+#include "remoting/remoting/desktop/DisplayEsc.h"
 #include "subsystem/thread/GuiThread.h"
 #include "acme/parallelization/happening.h"
-#include "UpdateDetector.h"
+#include "remoting/remoting/desktop/UpdateDetector.h"
 
 
 namespace remoting
@@ -40,12 +40,26 @@ namespace remoting
    virtual public UpdateDetector
    {
    public:
+
+
+      ::pointer < MirrorDriverClient > m_pmirrordriverclient;
+      unsigned long m_lastCounter;
+      ::pointer < ::innate_subsystem::Framebuffer > m_pframebuffer;
+      // TO THINK: One may use a self mutex here, because do not
+      // use external objects here.
+      lockable_critical_section *m_pcriticalsectionFramebuffer;
+
+      ::happening m_updateTimeout;
+
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
+
+
       MirrorScreenDriver();
       virtual ~MirrorScreenDriver();
 
 
       virtual void initialize_mirror_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                         critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
+                         lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
 
       // Starts screen update detection if it not started yet.
       virtual void executeDetection();
@@ -55,7 +69,7 @@ namespace remoting
 
       virtual ::int_size getScreenDimension();
       virtual ::innate_subsystem::Framebuffer *getScreenBuffer();
-      virtual bool grab(const ::int_rectangle & rectangle = 0);
+      virtual bool grab(const ::int_rectangle & rectangle = {});
 
       virtual bool getPropertiesChanged();
       virtual bool getScreenSizeChanged();
@@ -70,16 +84,6 @@ namespace remoting
       virtual void execute();
       virtual void onTerminate();
 
-      MirrorDriverClient *m_mirrorClient;
-      unsigned long m_lastCounter;
-      ::innate_subsystem::Framebuffer m_pframebuffer;
-      // TO THINK: One may use a self mutex here, because do not
-      // use external objects here.
-      critical_section *m_pcriticalsectionFramebuffer;
-
-      ::happening m_updateTimeout;
-
-      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

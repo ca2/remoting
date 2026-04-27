@@ -37,7 +37,7 @@ namespace remoting
    MirrorDriverClient::MirrorDriverClient(::subsystem::LogWriter * plogwriter) :
        m_isDriverOpened(false), m_isDriverLoaded(false), m_isDriverAttached(false), m_isDriverConnected(false),
        m_isDisplayChanged(false), m_deviceNumber(0), m_driverDC(0), m_changesBuffer(0), m_screenBuffer(0),
-       m_propertyChangeListenerWindow(GetModuleHandle(0), NamingDefs::MIRROR_DRIVER_MESSAGE_WINDOW_CLASS_NAME),
+       m_messagewindowPropertyChangeListener(GetModuleHandle(0), NamingDefs::MIRROR_DRIVER_MESSAGE_WINDOW_CLASS_NAME),
        m_plogwriter(plogwriter)
    {
       memset(&m_deviceMode, 0, sizeof(m_deviceMode));
@@ -49,7 +49,7 @@ namespace remoting
 
       resume();
       m_initListener.wait();
-      if (m_propertyChangeListenerWindow.getHWND() == 0)
+      if (m_messagewindowPropertyChangeListener.getHWND() == 0)
       {
          dispose();
          throw ::subsystem::Exception("Can't create a client for a mirror driver because"
@@ -412,15 +412,15 @@ namespace remoting
       return true;
    }
 
-   void MirrorDriverClient::onTerminate() { PostMessage(m_propertyChangeListenerWindow.getHWND(), WM_QUIT, 0, 0); }
+   void MirrorDriverClient::onTerminate() { PostMessage(m_messagewindowPropertyChangeListener.getHWND(), WM_QUIT, 0, 0); }
 
    void MirrorDriverClient::execute()
    {
       if (!isTerminating())
       {
-         m_propertyChangeListenerWindow.createWindow(this);
+         m_messagewindowPropertyChangeListener.createWindow(this);
          m_plogwriter->information("Mirror driver client window has been created (hwnd = {})",
-                                   (int)m_propertyChangeListenerWindow.getHWND());
+                                   (int)m_messagewindowPropertyChangeListener.getHWND());
       }
 
       m_initListener.set_happening();
@@ -428,7 +428,7 @@ namespace remoting
       MSG msg;
       while (!isTerminating())
       {
-         if (PeekMessage(&msg, m_propertyChangeListenerWindow.getHWND(), 0, 0, PM_REMOVE) != 0)
+         if (PeekMessage(&msg, m_messagewindowPropertyChangeListener.getHWND(), 0, 0, PM_REMOVE) != 0)
          {
             if (msg.scopedstrMessage == WM_DISPLAYCHANGE)
             {

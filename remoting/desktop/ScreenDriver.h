@@ -50,7 +50,7 @@ namespace remoting
 
 
       virtual void initialize_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                                critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) = 0;
+                                lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) = 0;
 
       // Starts screen update detection if it not started yet.
       virtual void executeDetection() = 0;

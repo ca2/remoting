@@ -27,7 +27,7 @@
 
 #include "innate_subsystem/framebuffer/Framebuffer.h"
 #include "Win8CursorShape.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "subsystem/thread/GuiThread.h"
 
 #include "remoting/remoting/desktop/windows/_common_header.h"
@@ -46,7 +46,7 @@ namespace remoting
       // The WinDxgiOutput *dxgiOutput passed object can be destroyed right after the constructor calling.
       // The WinD3D11Device *device passed object can be destroyed right after the constructor calling.
       Win8DeskDuplication(::innate_subsystem::Framebuffer *targetFb, ::int_rectangle_array_base &targetRect,
-                          Win8CursorShape *targetCurShape, LONGLONG *cursorTimeStamp, critical_section *cursorMutex,
+                          Win8CursorShape *targetCurShape, LONGLONG *cursorTimeStamp, lockable_critical_section *cursorMutex,
                           Win8DuplicationListener *duplListener, ::array_base<WinDxgiOutput> &dxgiOutput,
                           ::subsystem::LogWriter * plogwriter);
       virtual ~Win8DeskDuplication();
@@ -72,7 +72,7 @@ namespace remoting
       ::int_rectangle_array_base m_targetRects;
       Win8CursorShape *m_targetCurShape;
       LONGLONG *m_cursorTimeStamp;
-      critical_section *m_cursorMutex;
+      lockable_critical_section *m_cursorMutex;
 
       ::array_base<DXGI_MODE_ROTATION> m_rotations;
 

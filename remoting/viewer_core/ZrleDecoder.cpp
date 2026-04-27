@@ -29,19 +29,19 @@
 //#include aaa_<vector>
 //#include aaa_<algorithm>
 
-namespace remoting
+namespace remoting_client
 {
    ZrleDecoder::ZrleDecoder(::subsystem::LogWriter * plogwriter)
    : DecoderOfRectangle(plogwriter)
    {
-      m_encoding = EncodingDefs::ZRLE;
+      m_encoding = ::remoting::EncodingDefs::ZRLE;
    }
 
    ZrleDecoder::~ZrleDecoder()
    {
    }
 
-   void ZrleDecoder::decode(RfbInputGate *pinput,
+   void ZrleDecoder::decode(::remoting::RfbInputGate *pinput,
                             ::innate_subsystem::Framebuffer *pframebuffer,
                             const ::int_rectangle &  rectangleTarget)
    {
@@ -67,16 +67,16 @@ namespace remoting
       ::DataInputStream unpackedDataStream(&unpackedByteArrayStream);
 
       m_numberFirstByte = 0;
-      ::innate_subsystem::PixelFormat pxFormat = pframebuffer->getPixelFormat();
+      ::innate_subsystem::PixelFormat pixelformat = pframebuffer->getPixelFormat();
 
-      if (pxFormat.bitsPerPixel == 8) {
+      if (pixelformat.bitsPerPixel == 8) {
          m_bytesPerPixel = 1;
-      } else if (pxFormat.bitsPerPixel == 16) {
+      } else if (pixelformat.bitsPerPixel == 16) {
          m_bytesPerPixel = 2;
-      } else if (pxFormat.bitsPerPixel == 32) {
-         unsigned int colorMaxValue =  pxFormat.blueMax  << pxFormat.blueShift  |
-                                 pxFormat.greenMax << pxFormat.greenShift |
-                                 pxFormat.redMax   << pxFormat.redShift;
+      } else if (pixelformat.bitsPerPixel == 32) {
+         unsigned int colorMaxValue =  pixelformat.blueMax  << pixelformat.blueShift  |
+                                 pixelformat.greenMax << pixelformat.greenShift |
+                                 pixelformat.redMax   << pixelformat.redShift;
          //for CPIXELS
          if ((colorMaxValue & (0xFF000000))==0) {
             m_bytesPerPixel = 3;
@@ -140,7 +140,7 @@ namespace remoting
       } // tile(..., y)
    }
 
-   void ZrleDecoder::readAndInflate(RfbInputGate *pinput, size_t maximalUnpackedSize)
+   void ZrleDecoder::readAndInflate(::remoting::RfbInputGate *pinput, size_t maximalUnpackedSize)
    {
       unsigned int length = pinput->readUInt32();
       //::array_base<char> zlibData;
@@ -323,4 +323,4 @@ namespace remoting
          indexPixel += runLength;
       }
    }
-} // namespace remoting
+} // namespace remoting_client

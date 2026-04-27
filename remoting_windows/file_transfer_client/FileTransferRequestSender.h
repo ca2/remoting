@@ -34,7 +34,7 @@
 
 namespace remoting
 {
-   namespace ftp
+   namespace file_transfer
    {
       class CLASS_DECL_REMOTING FileTransferRequestSender
       {
@@ -42,7 +42,7 @@ namespace remoting
          FileTransferRequestSender(::subsystem::LogWriter * plogwriter);
          ~FileTransferRequestSender();
 
-         void setOutput(RfbOutputGate *outputStream);
+         void setOutput(::remoting::RfbOutputGate *outputStream);
 
          void sendCompressionSupportRequest();
          void sendFileListRequest(const ::scoped_string & scopedstrFullPath, bool useCompression);
@@ -58,7 +58,7 @@ namespace remoting
 
       protected:
          ::pointer < ::subsystem::LogWriter > m_plogwriter;
-         RfbOutputGate *m_output;
+         ::remoting::RfbOutputGate *m_output;
       };
    }
 }

@@ -173,7 +173,7 @@ namespace remoting_node_desktop
    }
 
 
-   void Server::initialize_remoting_node_desktop_server(bool runsInServiceContext, NewConnectionEvents *newConnectionEvents, LogInitListener *logInitListener,
+   void Server::initialize_remoting_node_desktop_server(bool runsInServiceContext, ::remoting_node::NewConnectionEvents *newConnectionEvents, LogInitListener *logInitListener,
                   ::subsystem::LogWriter *plogwriter)
    {
       //: Singleton<Server>(),
@@ -198,7 +198,7 @@ namespace remoting_node_desktop
 
       // Initialize configuration.
       // FIXME: It looks like configurator may be created as a member object.
-      Configurator *configurator = m_pconfigurator;
+      ::remoting::Configurator *configurator = m_pconfigurator;
       configurator->load();
       m_pserverconfig = m_pconfigurator->getServerConfig();
 
@@ -227,17 +227,17 @@ namespace remoting_node_desktop
       //   m_plogwriter->interror("{}", ex.get_message());
       // }
 
-      DesktopFactory *desktopFactory = 0;
-      if (runsInServiceContext)
-      {
-         desktopFactory = &m_servicedesktopfactory;
-      }
-      else
-      {
-         desktopFactory = &m_applicationdesktopfactory;
-      }
+      auto desktopFactory = m_pdesktopfactory;
+      // if (runsInServiceContext)
+      // {
+      //    desktopFactory = &m_servicedesktopfactory;
+      // }
+      // else
+      // {
+      //    desktopFactory = &m_applicationdesktopfactory;
+      // }
 
-      m_prfbclientmanager = new RfbClientManager(0, newConnectionEvents, m_plogwriter, desktopFactory);
+      m_prfbclientmanager = new RfbClientManager(0, m_pconfigurator, newConnectionEvents, m_plogwriter, desktopFactory);
 
       m_prfbclientmanager->addListener(this);
 
@@ -251,14 +251,14 @@ namespace remoting_node_desktop
          critical_section_lock l(&m_mutex);
 
          restartMainRfbServer();
-         (void)m_pextrarfbservers->reload(m_runAsService, m_prfbclientmanager);
+         (void)m_pextrarfbservers->reload(m_bRunAsService, m_prfbclientmanager);
          restartHttpServer();
          restartControlServer();
       }
    }
 
    // Remark: this method can be called from other threads.
-   void Server::onConfigReload(ServerConfig *serverConfig)
+   void Server::onConfigReload(::remoting::ServerConfig *serverConfig)
    {
       // Start/stop/restart RFB servers if needed.
       {
@@ -285,7 +285,7 @@ namespace remoting_node_desktop
          // NOTE: ExtraRfbServers::reload() does not throw exceptions if some
          //       servers did not start. However, it returns false in that case.
          //       Here we ignore all errors.
-         (void)m_pextrarfbservers->reload(m_runAsService, m_prfbclientmanager);
+         (void)m_pextrarfbservers->reload(m_bRunAsService, m_prfbclientmanager);
        }
 
       // // Start/stop/restart HTTP server if needed.
@@ -340,13 +340,13 @@ namespace remoting_node_desktop
          statusString = MainSubsystem().StringTable().getString(IDS_SERVER_NOT_LISTENING);
       } // not accepting connections.
 
-      unsigned int stringId = m_runAsService ? IDS_TVNSERVER_SERVICE : IDS_TVNSERVER_APP;
+      unsigned int stringId = m_bRunAsService ? IDS_TVNSERVER_SERVICE : IDS_TVNSERVER_APP;
 
       info->m_statusText.format("{} - {}",
                                 MainSubsystem().StringTable().getString(stringId),
                                 statusString);
       info->m_acceptFlag = rfbServerListening && !vncPasswordsError;
-      info->m_serviceFlag = m_runAsService;
+      info->m_serviceFlag = m_bRunAsService;
    }
 
    void Server::generateExternalShutdownSignal()
@@ -363,7 +363,7 @@ namespace remoting_node_desktop
 
    bool Server::isRunningAsService() const
    {
-      return m_runAsService;
+      return m_bRunAsService;
    }
 
    void Server::afterFirstClientConnect()
@@ -382,7 +382,7 @@ namespace remoting_node_desktop
       m_plogwriter->debug("Restore context switch resolution");
       timeEndPeriod(m_contextSwitchResolution);
 
-      ServerConfig::DisconnectAction action = m_pserverconfig->getDisconnectAction();
+      ::remoting::ServerConfig::DisconnectAction action = m_pserverconfig->getDisconnectAction();
 
       // Disconnect action must be executed in process on interactive user session to take effect.
       // Now, choose application keys for specified action.
@@ -390,10 +390,10 @@ namespace remoting_node_desktop
       ::string keys;
 
       switch (action) {
-         case ServerConfig::DA_LOCK_WORKSTATION:
+         case ::remoting::ServerConfig::DA_LOCK_WORKSTATION:
             keys.formatf("{}", AdditionalActionApplication::LOCK_WORKSTATION_KEY);
             break;
-         case ServerConfig::DA_LOGOUT_WORKSTATION:
+         case ::remoting::ServerConfig::DA_LOGOUT_WORKSTATION:
             keys.formatf("{}", AdditionalActionApplication::LOGOUT_KEY);
             break;
          default:
@@ -491,7 +491,7 @@ namespace remoting_node_desktop
       m_plogwriter->debug("Starting main RFB server");
 
       try {
-        m_prfbserver = new RfbServer(strBindHost, bindPort, m_prfbclientmanager, m_runAsService, m_plogwriter);
+        m_prfbserver = new RfbServer(strBindHost, m_pconfigurator, bindPort, m_prfbclientmanager, m_bRunAsService, m_plogwriter);
       } catch (::subsystem::Exception &ex) {
         m_plogwriter->error("Failed to start main RFB server: \"{}\"", ex.get_message());
       }

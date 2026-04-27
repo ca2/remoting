@@ -17,43 +17,34 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License along
-// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// with this program; if not, write to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
 
 #pragma once
 
-
-#include "subsystem/_common_header.h"
+#include "remoting/remoting_windows/_common_header.h"
 #include "subsystem/thread/GuiThread.h"
-//#include "subsystem/thread/critical_section.h"
-//#include "remoting/remoting/win_system/WinTimeMillis.h"
-#include "remoting/remoting_windows/desktop/WindowsInputBlocker.h"
-#include "acme/parallelization/happening.h"
+//#include "thread/LocalMutex.h"
+//#include "win-system/WinTimeMillis.h"
+//#include "win-system/WindowsEvent.h"
 #include "remoting/remoting/desktop/InputBlocker.h"
-//#include "log_writer/LogWriter.h"
+//#include "log-writer/LogWriter.h"
 
+// Only one instance of this class may be created.
 
 namespace remoting
 {
-   // Only one instance of this class  may be created.
-
-   struct _windows_input_blocker_t;
-
-
    class CLASS_DECL_REMOTING_WINDOWS WindowsInputBlocker :
-   virtual public InputBlocker,
-    virtual public ::subsystem::GuiThread
+      virtual public InputBlocker,
+   virtual public ::subsystem::GuiThread
    {
    public:
 
 
-      WindowsInputBlocker();
+      WindowsInputBlocker(::subsystem::LogWriter *log);
       ~WindowsInputBlocker() override;
-
-
-      void initialize_input_blocker(subsystem::LogWriter *plogwriter) override;
 
       // This functions set/unset blocks on a local keyboard and mouse.
       virtual void setKeyboardBlocking(bool block);
@@ -63,8 +54,8 @@ namespace remoting
       virtual void setSoftKeyboardBlocking(bool block, unsigned int timeInterval);
       virtual void setSoftMouseBlocking(bool block, unsigned int timeInterval);
 
-      class ::time getLastInputTime() const override;
-      void correctLastTime(const class ::time & time) override;
+      virtual class ::time getLastInputTime() const;
+      virtual void correctLastTime(const class ::time & time);
 
       virtual bool isRemoteInputAllowed();
 
@@ -77,31 +68,40 @@ namespace remoting
       bool setMouseFilterHook(bool block);
       bool setSoftMouseFilterHook(bool block);
 
-      _windows_input_blocker_t  *    m_pwindowsinputblocker;
+      static LRESULT CALLBACK lowLevelKeyboardFilterProc(int nCode,
+                                                         WPARAM wParam,
+                                                         LPARAM lParam);
+      static LRESULT CALLBACK lowLevelSoftKeyboardFilterProc(int nCode,
+                                                             WPARAM wParam,
+                                                             LPARAM lParam);
+      static LRESULT CALLBACK lowLevelMouseFilterProc(int nCode,
+                                                      WPARAM wParam,
+                                                      LPARAM lParam);
+      static LRESULT CALLBACK lowLevelSoftMouseFilterProc(int nCode,
+                                                          WPARAM wParam,
+                                                          LPARAM lParam);
 
-      static WindowsInputBlocker *s_pwindowsinputblocker;
-      static critical_section s_criticalsection;
+      static HHOOK m_hKeyboardHook;
+      static HHOOK m_hSoftKeyboardHook;
+      static HHOOK m_hMouseHook;
+      static HHOOK m_hSoftMouseHook;
 
+      static WindowsInputBlocker *m_instance;
+      static lockable_critical_section m_instanceMutex;
 
       bool m_isKeyboardBlocking;
       bool m_isMouseBlocking;
 
       bool m_isSoftKeyboardBlocking;
       bool m_isSoftMouseBlocking;
-      unsigned int m_timeInterval;
-      class ::time  m_lastInputTime;
-      critical_section m_lastInputTimeMutex;
 
+      static unsigned int m_timeInterval;
+      static class ::time m_lastInputTime;
+      static lockable_critical_section m_lastInputTimeMutex;
 
-      ::pointer < ::subsystem::LogWriter > m_plogwriter;
+      ::subsystem::LogWriter *m_plogwriter;
    };
-
-   //// __WINDOWSINPUTBLOCKER_H__
-
-
 } // namespace remoting
-
-
 
 
 

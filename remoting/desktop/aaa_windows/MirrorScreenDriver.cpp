@@ -29,19 +29,19 @@ namespace remoting
 {
 
    MirrorScreenDriver::MirrorScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                                          critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) :
+                                          lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) :
        UpdateDetector(pupdatekeeper, pupdatelistener), m_pcriticalsectionFramebuffer(pcriticalsectionFramebuffer), m_lastCounter(0), m_plogwriter(plogwriter)
    {
-      m_mirrorClient = new MirrorDriverClient(m_plogwriter);
+      m_pmirrordriverclient = new MirrorDriverClient(m_plogwriter);
       initFramebuffer();
    }
 
    MirrorScreenDriver::~MirrorScreenDriver()
    {
       terminateDetection();
-      if (m_mirrorClient)
+      if (m_pmirrordriverclient)
       {
-         delete m_mirrorClient;
+         delete m_pmirrordriverclient;
       }
    }
 
@@ -55,26 +55,26 @@ namespace remoting
 
    void MirrorScreenDriver::initFramebuffer()
    {
-      ::int_size size = m_mirrorClient->getDimension();
-      ::innate_subsystem::PixelFormat pixelformat = m_mirrorClient->getPixelFormat();
+      ::int_size size = m_pmirrordriverclient->getDimension();
+      ::innate_subsystem::PixelFormat pixelformat = m_pmirrordriverclient->getPixelFormat();
 
-      m_pframebuffer.setProperties(&size, &pixelformat);
+      m_pframebuffer->setProperties(&size, &pixelformat);
    }
 
-   ::int_size MirrorScreenDriver::getScreenDimension() { return m_pframebuffer.getDimension(); }
+   ::int_size MirrorScreenDriver::getScreenDimension() { return m_pframebuffer->getDimension(); }
 
-   ::innate_subsystem::Framebuffer *MirrorScreenDriver::getScreenBuffer() { return &m_pframebuffer; }
+   ::innate_subsystem::Framebuffer *MirrorScreenDriver::getScreenBuffer() { return m_pframebuffer; }
 
    bool MirrorScreenDriver::grab(const ::int_rectangle & rectangle)
    {
       critical_section_lock al(m_pcriticalsectionFramebuffer);
 
-      if (m_mirrorClient == 0)
+      if (m_pmirrordriverclient == 0)
       {
          throw ::subsystem::Exception("Mirror driver client didn't initilized.");
       }
 
-      ::int_rectangle rectangleFramebuffer = m_pframebuffer.getDimension();
+      ::int_rectangle rectangleFramebuffer = m_pframebuffer->getDimension();
       ::int_rectangle croppedRect;
       if (rectangle != 0)
       {
@@ -85,17 +85,17 @@ namespace remoting
          croppedRect = rectangleFramebuffer;
       }
 
-      char *dstPtr = (char *)m_pframebuffer.getBufferPtr(croppedRect.left, croppedRect.top);
-      size_t offset = dstPtr - (char *)m_pframebuffer.getBuffer();
-      char *srcPtr = (char *)m_mirrorClient->getBuffer();
+      char *dstPtr = (char *)m_pframebuffer->getBufferPtr(croppedRect.left, croppedRect.top);
+      size_t offset = dstPtr - (char *)m_pframebuffer->getBuffer();
+      char *srcPtr = (char *)m_pmirrordriverclient->getBuffer();
       if (srcPtr == 0)
       {
          return false;
       }
       srcPtr += offset;
 
-      size_t count = croppedRect.width() * m_pframebuffer.getBytesPerPixel();
-      size_t stride = m_pframebuffer.getBytesPerRow();
+      size_t count = croppedRect.width() * m_pframebuffer->getBytesPerPixel();
+      size_t stride = m_pframebuffer->getBytesPerRow();
 
       for (size_t i = croppedRect.top; i < croppedRect.bottom; i++, dstPtr += stride, srcPtr += stride)
       {
@@ -107,9 +107,9 @@ namespace remoting
    bool MirrorScreenDriver::getPropertiesChanged()
    {
       critical_section_lock al(m_pcriticalsectionFramebuffer);
-      if (m_mirrorClient != 0)
+      if (m_pmirrordriverclient != 0)
       {
-         return m_mirrorClient->getPropertiesChanged();
+         return m_pmirrordriverclient->getPropertiesChanged();
       }
       else
       {
@@ -120,9 +120,9 @@ namespace remoting
    bool MirrorScreenDriver::getScreenSizeChanged()
    {
       critical_section_lock al(m_pcriticalsectionFramebuffer);
-      if (m_mirrorClient != 0)
+      if (m_pmirrordriverclient != 0)
       {
-         return m_mirrorClient->getScreenSizeChanged();
+         return m_pmirrordriverclient->getScreenSizeChanged();
       }
       else
       {
@@ -134,13 +134,13 @@ namespace remoting
    {
       critical_section_lock al(m_pcriticalsectionFramebuffer);
 
-      delete m_mirrorClient;
-      m_mirrorClient = 0;
-      m_mirrorClient = new MirrorDriverClient(m_plogwriter);
+      delete m_pmirrordriverclient;
+      m_pmirrordriverclient = 0;
+      m_pmirrordriverclient = new MirrorDriverClient(m_plogwriter);
 
-      ::int_size sizeNew = m_mirrorClient->getDimension();
-      ::innate_subsystem::PixelFormat pixelformat = m_mirrorClient->getPixelFormat();
-      m_pframebuffer.setProperties(&sizeNew, &pixelformat);
+      ::int_size sizeNew = m_pmirrordriverclient->getDimension();
+      ::innate_subsystem::PixelFormat pixelformat = m_pmirrordriverclient->getPixelFormat();
+      m_pframebuffer->setProperties(&sizeNew, &pixelformat);
       m_lastCounter = 0;
 
       return true;
@@ -160,9 +160,9 @@ namespace remoting
 
          {
             critical_section_lock al(m_pcriticalsectionFramebuffer);
-            if (m_mirrorClient != 0)
+            if (m_pmirrordriverclient != 0)
             {
-               CHANGES_BUF *changesBuf = m_mirrorClient->getChangesBuf();
+               CHANGES_BUF *changesBuf = m_pmirrordriverclient->getChangesBuf();
                if (changesBuf != 0)
                {
                   currentCounter = changesBuf->counter;

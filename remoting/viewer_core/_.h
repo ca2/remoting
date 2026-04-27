@@ -13,7 +13,7 @@
 // #endif
 
 
-namespace remoting
+namespace remoting_client
 {
 
 
@@ -28,6 +28,6 @@ namespace remoting
    class Decoder;
 
 
-}// namespace remoting
+}// namespace remoting_client
 
 

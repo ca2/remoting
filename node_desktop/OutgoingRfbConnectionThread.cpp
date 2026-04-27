@@ -34,7 +34,7 @@ namespace remoting_node_desktop
                                                             RfbClientManager *clientManager,
                                                             ::subsystem::LogWriter * plogwriter) :
        m_connectHost(scopedstrConnectHost), m_connectPort(connectPort), m_viewOnly(viewOnly),
-       m_clientManager(clientManager), m_plogwriter = plogwriter;
+       m_clientManager(clientManager), m_plogwriter(plogwriter)
    {
    }
 

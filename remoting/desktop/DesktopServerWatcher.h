@@ -68,7 +68,7 @@ namespace remoting
 
       // Changes active physical session to session0 and locks workstation.
       // @throws SystemException on fail.
-      void doXPTrick();
+      //void doXPTrick();
 
    };
 

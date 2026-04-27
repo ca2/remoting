@@ -30,7 +30,7 @@
 #include "acme/input_output/DataInputStream.h"
 #include "subsystem/platform/Inflater.h"
 
-namespace remoting
+namespace remoting_client
 {
    class CLASS_DECL_REMOTING ZrleDecoder : public DecoderOfRectangle
    {
@@ -53,12 +53,12 @@ namespace remoting
    //protected:
 
    //protected:
-      virtual void decode(RfbInputGate *input,
+      virtual void decode(::remoting::RfbInputGate *input,
                           ::innate_subsystem::Framebuffer *pframebuffer,
                           const ::int_rectangle &  rectangleTarget);
 
 
-      void readAndInflate(RfbInputGate *input, size_t maximalUnpackedSize);
+      void readAndInflate(::remoting::RfbInputGate *input, size_t maximalUnpackedSize);
 
       int readType(::DataInputStream * pinput);
 
@@ -115,4 +115,4 @@ namespace remoting
 
       static size_t getMaxSizeOfRectangle(const ::int_rectangle &  rectangleTarget);
    };
-} //namespace remoting
+} //namespace remoting_client

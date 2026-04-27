@@ -28,7 +28,7 @@
 //#include "subsystem/platform/class ::time.h"
 //#include aaa_<vector>
 //#include aaa_<map>
-#include "remoting/thread/critical_section.h"
+#include "remoting/thread/lockable_critical_section.h"
 
 namespace platform
 {
@@ -54,7 +54,7 @@ namespace platform
       ::array_base<::array_base<TCHAR>> dropStat();
 
    //private:
-      critical_section m_criticalsectionMap;
+      lockable_critical_section m_criticalsectionMap;
       //::map<const ::scoped_string & scopedstr, ::array_base<ProcessorTimes>> m_checkPoints;
       ::string_map <::array_base<ProcessorTimes> > m_checkPoints;
       ProcessorTimes m_last;

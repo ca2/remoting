@@ -32,7 +32,7 @@
 
 namespace remoting
 {
-   namespace ftp
+   namespace file_transfer
    {
       UploadOperation::UploadOperation(::subsystem::LogWriter * plogwriter,
                                        FileInfo fileToUpload,

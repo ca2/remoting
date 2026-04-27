@@ -51,7 +51,7 @@ private:
   OutputStream *m_outStream;
   bool m_updateAvailable;
   unsigned char m_logLevel;
-  critical_section m_criticalsectionUpdate;
+  lockable_critical_section m_criticalsectionUpdate;
 };
 
 //// __LOGLEVELSENDER_H__

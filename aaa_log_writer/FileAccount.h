@@ -27,7 +27,7 @@
 
 #include "remoting/util/CommonHeader.h"
 //#include "subsystem/platform/class ::time.h"
-#include "remoting/thread/critical_section.h"
+#include "remoting/thread/lockable_critical_section.h"
 //#include "file_lib/WinFile.h"
 #include "LogDump.h"
 
@@ -140,7 +140,7 @@ private:
   bool m_asFirstOpen;
   ::file_pointer m_pfile;
 
-  critical_section m_criticalsectionLog;
+  lockable_critical_section m_criticalsectionLog;
 };
 
 //// __FILEACCOUNT_H__

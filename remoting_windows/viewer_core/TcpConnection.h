@@ -30,7 +30,7 @@
 #include "remoting/remoting/network/RfbOutputGate.h"
 //#include "remoting/remoting/network/socket/SocketIPv4.h"
 //#include "remoting/remoting/network/socket/SocketStream.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "acme/input_output/BufferedInputStream.h"
 
 
@@ -44,13 +44,13 @@ namespace remoting
 
       void bind(const ::scoped_string & scopedstrHost, unsigned short port);
       void bind(::subsystem::SocketIPv4Interface *socket);
-      void bind(RfbInputGate *input, RfbOutputGate *output);
+      void bind(::remoting::RfbInputGate *input, ::remoting::RfbOutputGate *output);
 
       void connect();
       void close();
 
-      RfbInputGate *getInput() const;
-      RfbOutputGate *getOutput() const;
+      ::remoting::RfbInputGate *getInput() const;
+      ::remoting::RfbOutputGate *getOutput() const;
    ;;private:
       ::string m_host;
       unsigned short m_port;
@@ -58,8 +58,8 @@ namespace remoting
       bool m_socketOwner;
       ::pointer < ::subsystem::SocketStream > m_psocketstream;
       ::pointer < ::BufferedInputStream > m_pbufInput;
-      ::pointer < RfbInputGate > m_pinput;
-      ::pointer < RfbOutputGate > m_poutput;
+      ::pointer < ::remoting::RfbInputGate > m_pinput;
+      ::pointer < ::remoting::RfbOutputGate > m_poutput;
       bool m_RfbGatesOwner;
 
       bool m_wasBound;
@@ -68,7 +68,7 @@ namespace remoting
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
-      mutable critical_section m_connectLock;
+      mutable lockable_critical_section m_connectLock;
    };
 
 } // namespace remoting

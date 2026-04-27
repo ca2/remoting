@@ -30,7 +30,7 @@
 
 namespace  remoting
 {
-   namespace  ftp
+   namespace file_transfer
    {
       FolderListener::FolderListener(::particle * pparticle, const ::file::path & pathFolder)
       //: m_filesInfo(NULL), m_filesCount(0)
@@ -119,5 +119,5 @@ namespace  remoting
 
          return true;
       }
-   } // namespace ftp
+   } // namespace file_transfer
 } // namespace remoting

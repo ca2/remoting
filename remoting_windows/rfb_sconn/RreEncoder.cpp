@@ -81,11 +81,11 @@ namespace remoting
    {
       PIXEL_T *buffer = (PIXEL_T *)pframebuffer->getBuffer();
       int fbWidth = pframebuffer->getDimension().cx;
-      ::innate_subsystem::PixelFormat pxFormat = pframebuffer->getPixelFormat();
+      ::innate_subsystem::PixelFormat pixelformat = pframebuffer->getPixelFormat();
       // Mask for cutting rubbish bits.
-      PIXEL_T mask = pxFormat.redMax << pxFormat.redShift |
-                     pxFormat.greenMax << pxFormat.greenShift |
-                     pxFormat.blueMax << pxFormat.blueShift;
+      PIXEL_T mask = pixelformat.redMax << pixelformat.redShift |
+                     pixelformat.greenMax << pixelformat.greenShift |
+                     pixelformat.blueMax << pixelformat.blueShift;
 
       PIXEL_T backgroundPixelValue = buffer[r.top * fbWidth + r.left] & mask;
 

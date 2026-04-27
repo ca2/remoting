@@ -30,7 +30,7 @@
 
 namespace remoting
 {
-   namespace ftp
+   namespace file_transfer
    {
       //
       // Class used for renaming files on remote file system.

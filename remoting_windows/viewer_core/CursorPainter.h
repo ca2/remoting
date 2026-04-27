@@ -27,7 +27,7 @@
 
 //#include "log_writer/LogWriter.h"
 #include "remoting/remoting/rfb/CursorShape.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
 namespace remoting
 {
@@ -56,7 +56,7 @@ namespace remoting
 
       ::innate_subsystem::Framebuffer *const m_fb;
 
-      critical_section m_lock;
+      lockable_critical_section m_lock;
       CursorShape m_cursor;
 
       // Actual pointPosition of pointer

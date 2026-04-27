@@ -91,7 +91,7 @@ namespace remoting
       if (!m_rectangleAbsolute.is_empty())
       {
          updatecontainer.m_regionChanged.addRect(m_pscreendriver->getScreenBuffer()->getDimension());
-         m_rectangleAbsolute.Null();
+         m_rectangleAbsolute.clear();
       }
 
       // Checking for screen properties changing or frame buffers differ

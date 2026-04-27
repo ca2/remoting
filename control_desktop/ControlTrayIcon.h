@@ -30,7 +30,7 @@
 #include "innate_subsystem/drawing/Icon.h"
 
 #include "subsystem/thread/Thread.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
 #include "subsystem/platform/Command.h"
 #include "subsystem/platform/MacroCommand.h"
@@ -138,7 +138,7 @@ protected:
   // Last known TightVNC server information.
   TvnServerInfo m_lastKnownServerInfo;
   // Thread-safety of m_lastKnownServerInfo member.
-  critical_section m_serverInfoMutex;
+  lockable_critical_section m_serverInfoMutex;
 
   // Commands for configuration dialog.
   Command *m_updateRemoteConfigCommand;

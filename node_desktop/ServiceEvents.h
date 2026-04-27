@@ -31,7 +31,7 @@ namespace remoting_node_desktop
 {
 
 
-   class CLASS_DECL_REMOTING_NODE_DESKTOP WinServiceEvents :
+   class CLASS_DECL_REMOTING_NODE_DESKTOP ServiceEvents :
       virtual public ::Particle
    {
    public:

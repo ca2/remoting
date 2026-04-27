@@ -27,7 +27,7 @@
 
 #include "DecoderOfRectangle.h"
 
-namespace remoting
+namespace remoting_client
 {
    class CLASS_DECL_REMOTING HexTileDecoder : public DecoderOfRectangle
    {
@@ -36,10 +36,10 @@ namespace remoting
       virtual ~HexTileDecoder();
 
    protected:
-      virtual void decode(RfbInputGate *input,
+      virtual void decode(::remoting::RfbInputGate *input,
                           ::innate_subsystem::Framebuffer *pframebuffer,
                           const ::int_rectangle &  rectangleTarget);
    private:
       static const int TILE_SIZE = 16;
    };
-} // namespace remoting
+} // namespace remoting_client

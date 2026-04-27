@@ -52,7 +52,7 @@ namespace remoting
       // to use an external belonged mutex. Thread safe coordiantion commitments between this class
       // and external some elements should be entirely provided by an owner code.)
 
-      Win8ScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, critical_section *pcriticalsectionFramebuffer,
+      Win8ScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, lockable_critical_section *pcriticalsectionFramebuffer,
                        ::subsystem::LogWriter * plogwriter);
       virtual ~Win8ScreenDriver();
 
@@ -77,14 +77,14 @@ namespace remoting
 
    private:
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
-      critical_section *m_fbcritical_section;
+      lockable_critical_section *m_pcriticalsectionFramebuffer;
       UpdateKeeper *m_pupdatekeeper;
       UpdateListener *m_pupdatelistener;
       // This member must be always gueranted non zero. Otherwise an excption must
       // be provided from the constructor of this class.
       Win8ScreenDriverImpl *m_drvImpl;
-      CopyRectDetector m_copyRectDetector;
-      critical_section m_drvImplMutex;
+      CopyRectDetector m_pcopyrectdetector;
+      lockable_critical_section m_drvImplMutex;
 
       CursorShape m_cursorShape;
 

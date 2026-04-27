@@ -28,7 +28,7 @@
 #include "subsystem/_common_header.h"
 
 #include "NamedPipe.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "SecurityAttributes.h"
 #include "DynamicLibrary.h"
 

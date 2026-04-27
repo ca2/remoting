@@ -28,7 +28,7 @@
 //#include "subsystem/platform/winhdr.h"
 //#include "acme/_operating_system.h"
 
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "acme/prototype/collection/comparable_list.h"
 //#include aaa_<list>
 
@@ -114,7 +114,7 @@ public:
    */
   static bool processDialogMessage(MSG *msg);
 //private:
-  static critical_section m_MDLMutex; // Modeless dialog ::list_base mutex.
+  static lockable_critical_section m_MDLMutex; // Modeless dialog ::list_base mutex.
   static ::comparable_list_base<HWND> m_modelessDialogList;
 };
 

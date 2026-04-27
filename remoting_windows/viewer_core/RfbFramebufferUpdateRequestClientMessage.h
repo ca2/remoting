@@ -39,7 +39,7 @@ namespace remoting
         (bool incremental, ::int_rectangle updateRect);
       ~RfbFramebufferUpdateRequestClientMessage();
 
-      void send(RfbOutputGate *output);
+      void send(::remoting::RfbOutputGate *output);
 
    private:
       bool m_incremental;

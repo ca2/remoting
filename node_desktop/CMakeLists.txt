@@ -19,8 +19,8 @@ list(APPEND library_source
    ControlClient.h
    ControlServer.cpp
    ControlServer.h
-   CrashHook.cpp
-   CrashHook.h
+   #CrashHook.cpp
+   #CrashHook.h
    DesktopServerApplication.cpp
    DesktopServerApplication.h
    DesktopServerCommandLine.cpp
@@ -41,7 +41,7 @@ list(APPEND library_source
    QueryConnectionCommandLine.h
    QueryConnectionDialog.cpp
    QueryConnectionDialog.h
-   remoting_node.cpp
+   #remoting_node.cpp
    resource.h
    RfbClientManager.cpp
    RfbClientManager.h
@@ -49,25 +49,26 @@ list(APPEND library_source
    RfbClientManagerEventListener.h
    RfbServer.cpp
    RfbServer.h
+   Server.cpp
+   Server.h
+   ServerApplication.cpp
+   ServerApplication.h
+   ServerApplication_main_node.cpp
    ServerCommandLine.cpp
    ServerCommandLine.h
    ServiceControlApplication.cpp
    ServiceControlApplication.h
    ServiceControlCommandLine.cpp
    ServiceControlCommandLine.h
-   Server.cpp
-   Server.h
-   ServerApplication.cpp
-   ServerApplication.h
    ServerHelp.cpp
    ServerHelp.h
    ServerListener.cpp
    ServerListener.h
    Service.cpp
    Service.h
-   WinEventLogWriter.cpp
-   WinEventLogWriter.h
-   WinServiceEvents.h
+   EventLogWriter.cpp
+   EventLogWriter.h
+   ServiceEvents.h
    WsConfigRunner.cpp
    WsConfigRunner.h
 )

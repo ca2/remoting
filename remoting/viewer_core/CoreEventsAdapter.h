@@ -36,7 +36,7 @@
 #include "AuthHandler.h"
 
 
-namespace remoting
+namespace remoting_client
 {
    //
    // CoreEventsAdapter interface is used to pass events from RemoteViewerCore to
@@ -48,7 +48,8 @@ namespace remoting
    // and onFramebufferPropChange().
    //
 
-   class CLASS_DECL_REMOTING CoreEventsAdapter
+   class CLASS_DECL_REMOTING CoreEventsAdapter :
+   virtual public ::particle
    {
    public:
       //
@@ -78,7 +79,7 @@ namespace remoting
       // FIXME: document it.
       // Output need for capability, e.g. FT.
       virtual void onConnecting(int iPhase);
-      virtual void onConnected(RfbOutputGate *output);
+      virtual void onConnected(::remoting::RfbOutputGate *output);
 
 
       //
@@ -119,6 +120,6 @@ namespace remoting
       virtual void onFramebufferPropChange(const ::innate_subsystem::Framebuffer *pframebuffer);
    };
 
-} // namespace remoting
+} // namespace remoting_client
 
 

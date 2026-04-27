@@ -29,10 +29,10 @@
 #include "acme/input_output/DataOutputStream.h"
 #include "acme/input_output/Channel.h"
 
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
 class ControlGate : public DataInputStream, public DataOutputStream,
-                    public critical_section
+                    public lockable_critical_section
 {
 public:
   ControlGate(Channel *stream);

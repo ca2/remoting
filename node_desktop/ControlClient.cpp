@@ -31,6 +31,7 @@
 //#include "remoting/remoting/network/socket/SocketStream.h"
 
 #include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/server_config/ServerConfig.h"
 
 #include "subsystem/platform/VncPassCrypt.h"
 #include "subsystem_windows/platform/subsystem.h"
@@ -38,7 +39,7 @@
 #include "subsystem/node/File.h"
 #include "remoting/remoting/rfb/HostPath.h"
 
-#include "subsystem/node/WTS.h"
+#include "subsystem_windows/node/WTS.h"
 
 #include "resource.h"
 
@@ -65,11 +66,11 @@ namespace remoting_node_desktop
                                                        ControlProto::GET_SHOW_TRAY_ICON_FLAG,
                                                        ControlProto::UPDATE_TVNCONTROL_PROCESS_ID_MSG_ID};
 
-   ControlClient::ControlClient(Transport *transport, RfbClientManager *rfbClientManager,
+   ControlClient::ControlClient(::remoting::Configurator * pconfigurator, Transport *transport, RfbClientManager *rfbClientManager,
                                 ControlAppAuthenticator *authenticator, ::subsystem::FileInterface *pfilePipeHandle,
                                 ::subsystem::LogWriter * plogwriter) :
-       m_transport(transport), m_rfbClientManager(rfbClientManager), m_authenticator(authenticator), m_tcpDispId(0),
-       m_pfilePipeHandle(pfilePipeHandle), m_authReqMessageId(0), m_plogwriter = plogwriter;, m_repeatAuthPassed(false)
+       m_pconfigurator(pconfigurator), m_transport(transport), m_rfbClientManager(rfbClientManager), m_controlappauthenticator(authenticator), m_tcpDispId(0),
+       m_pfilePipeHandle(pfilePipeHandle), m_authReqMessageId(0), m_plogwriter(plogwriter), m_repeatAuthPassed(false)
    {
       m_stream = m_transport->getIOStream();
 
@@ -282,11 +283,11 @@ namespace remoting_node_desktop
       // sent password to us.
       //
 
-      ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
+      ::remoting::ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
       unsigned char cryptPassword[8];
-      config->getControlPassword(cryptPassword);
+      pserverconfig->getControlPassword(cryptPassword);
 
-      bool isAuthSucceed = m_authenticator->authenticate(cryptPassword, challenge, response);
+      bool isAuthSucceed = m_controlappauthenticator->authenticate(cryptPassword, challenge, response);
       if (!isAuthSucceed)
       {
          sendError(MainSubsystem().StringTable().getString(IDS_INVALID_CONTROL_PASSWORD));
@@ -412,9 +413,9 @@ namespace remoting_node_desktop
    }
 
 
-   bool allZeroes(unsigned char p[ServerConfig::VNC_PASSWORD_SIZE])
+   bool allZeroes(unsigned char p[::remoting::ServerConfig::VNC_PASSWORD_SIZE])
    {
-      for (int i = 0; i < ServerConfig::VNC_PASSWORD_SIZE; i++)
+      for (int i = 0; i < ::remoting::ServerConfig::VNC_PASSWORD_SIZE; i++)
       {
          if (p[i] != 0)
          {
@@ -427,10 +428,10 @@ namespace remoting_node_desktop
    void ControlClient::setServerConfigMsgRcvd()
    {
       m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
-      ServerConfig cfg;
+      ::remoting::ServerConfig cfg;
       cfg.deserialize(m_pblockinggate);
-      ServerConfig *old = m_pconfigurator->getServerConfig();
-      unsigned char tmp[ServerConfig::VNC_PASSWORD_SIZE];
+      ::remoting::ServerConfig *old = m_pconfigurator->getServerConfig();
+      unsigned char tmp[::remoting::ServerConfig::VNC_PASSWORD_SIZE];
 
       if (cfg.hasPrimaryPassword())
       {
@@ -495,9 +496,9 @@ namespace remoting_node_desktop
    {
       m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
 
-      ServerConfig cfg = *m_pconfigurator->getServerConfig();
+      ::remoting::ServerConfig cfg = *m_pconfigurator->getServerConfig();
 
-      unsigned char zeroes[ServerConfig::VNC_PASSWORD_SIZE] = {};
+      unsigned char zeroes[::remoting::ServerConfig::VNC_PASSWORD_SIZE] = {};
       if (cfg.hasControlPassword())
          cfg.setControlPassword(zeroes);
       if (cfg.hasPrimaryPassword())
@@ -511,7 +512,7 @@ namespace remoting_node_desktop
    void ControlClient::sharePrimaryIdMsgRcvd()
    {
       m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
-      ViewPortState dynViewPort;
+      ::remoting::ViewPortState dynViewPort;
       dynViewPort.setPrimaryDisplay();
       m_rfbClientManager->setDynViewPort(&dynViewPort);
    }
@@ -521,7 +522,7 @@ namespace remoting_node_desktop
       unsigned char displayNumber = m_pblockinggate->readUInt8();
       m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
 
-      ViewPortState dynViewPort;
+      ::remoting::ViewPortState dynViewPort;
       dynViewPort.setDisplayNumber(displayNumber);
       m_rfbClientManager->setDynViewPort(&dynViewPort);
    }
@@ -533,7 +534,7 @@ namespace remoting_node_desktop
 
       m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
 
-      ViewPortState dynViewPort;
+      ::remoting::ViewPortState dynViewPort;
       dynViewPort.setWindowName(windowName);
       m_rfbClientManager->setDynViewPort(&dynViewPort);
    }
@@ -547,7 +548,7 @@ namespace remoting_node_desktop
       shareRect.bottom = m_pblockinggate->readInt32();
       m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
 
-      ViewPortState dynViewPort;
+      ::remoting::ViewPortState dynViewPort;
       dynViewPort.setArbitraryRect(shareRect);
       m_rfbClientManager->setDynViewPort(&dynViewPort);
    }
@@ -556,7 +557,7 @@ namespace remoting_node_desktop
    {
       m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
 
-      ViewPortState dynViewPort;
+      ::remoting::ViewPortState dynViewPort;
       dynViewPort.setFullDesktop();
       m_rfbClientManager->setDynViewPort(&dynViewPort);
    }
@@ -566,7 +567,7 @@ namespace remoting_node_desktop
       unsigned int procId = m_pblockinggate->readUInt32();
       m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
 
-      ViewPortState dynViewPort;
+      ::remoting::ViewPortState dynViewPort;
       dynViewPort.setProcessId(procId);
       m_rfbClientManager->setDynViewPort(&dynViewPort);
    }

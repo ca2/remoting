@@ -30,13 +30,13 @@ namespace remoting
 
 
    Win8ScreenDriver::Win8ScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                                      critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) :
-       WinVideoRegionUpdaterImpl(plogwriter), m_plogwriter(plogwriter), m_fbcritical_section(pcriticalsectionFramebuffer),
+                                      lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) :
+       WinVideoRegionUpdaterImpl(plogwriter), m_plogwriter(plogwriter), m_pcriticalsectionFramebuffer(pcriticalsectionFramebuffer),
        m_pupdatekeeper(pupdatekeeper), m_pupdatelistener = pupdatelistener;, m_detectionEnabled(false)
    {
       m_plogwriter->debug("Win8ScreenDriver creating new Win8ScreenDriverImpl");
       critical_section_lock al(&m_drvImplMutex);
-      m_drvImpl = new Win8ScreenDriverImpl(m_plogwriter, m_pupdatekeeper, m_fbcritical_section, m_pupdatelistener);
+      m_drvImpl = new Win8ScreenDriverImpl(m_plogwriter, m_pupdatekeeper, m_pcriticalsectionFramebuffer, m_pupdatelistener);
    }
 
    Win8ScreenDriver::~Win8ScreenDriver()
@@ -109,7 +109,7 @@ namespace remoting
             m_drvImpl = 0;
          }
          m_plogwriter->debug("Applying new screen properties, creating new Win8ScreenDriverImpl");
-         Win8ScreenDriverImpl *drvImpl = new Win8ScreenDriverImpl(m_plogwriter, m_pupdatekeeper, m_fbcritical_section,
+         Win8ScreenDriverImpl *drvImpl = new Win8ScreenDriverImpl(m_plogwriter, m_pupdatekeeper, m_pcriticalsectionFramebuffer,
                                                                   m_pupdatelistener, m_detectionEnabled);
          m_drvImpl = drvImpl;
       }
@@ -138,8 +138,8 @@ namespace remoting
 
    void Win8ScreenDriver::getCopiedRegion(::int_rectangle &rectangleCopy, ::int_point & pointSource)
    {
-      critical_section_lock al(m_fbcritical_section);
-      m_copyRectDetector.detectWindowMovements(rectangleCopy, source);
+      critical_section_lock al(m_pcriticalsectionFramebuffer);
+      m_pcopyrectdetector.detectWindowMovements(rectangleCopy, source);
    }
 
 

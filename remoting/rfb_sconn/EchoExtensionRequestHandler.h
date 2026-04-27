@@ -49,7 +49,7 @@ namespace remoting
        * @param output pblockinggate for writting replies for requests.
        * @pararm enabled indicates if echo response should be enabled or disabled
        */
-      EchoExtensionRequestHandler(RfbCodeRegistrator *registrator, RfbOutputGate *output, ::subsystem::LogWriter * plogwriter,
+      EchoExtensionRequestHandler(RfbCodeRegistrator *registrator, ::remoting::RfbOutputGate *output, ::subsystem::LogWriter * plogwriter,
                                   bool enabled = true);
 
       /**
@@ -61,7 +61,7 @@ namespace remoting
        * Inherited from RfbDispatcherListener.
        * Processes echo extension client messages.
        */
-      virtual void onRequest(unsigned int reqCode, RfbInputGate *pblockinggate);
+      virtual void onRequest(unsigned int reqCode, ::remoting::RfbInputGate *pblockinggate);
 
       bool isEchoExtensionEnabled();
 
@@ -70,8 +70,8 @@ namespace remoting
       // Input and output gates.
       //
 
-      RfbInputGate *m_input;
-      RfbOutputGate *m_output;
+      ::remoting::RfbInputGate *m_input;
+      ::remoting::RfbOutputGate *m_output;
 
       bool m_enabled;
       ::pointer < ::subsystem::LogWriter > m_plogwriter;

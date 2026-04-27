@@ -27,10 +27,10 @@
 
 #include "subsystem/platform/ListenerContainer.h"
 #include "remoting/remoting/rfb_sconn/RfbClient.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "subsystem/thread/Thread.h"
-//#include "subsystem/thread/critical_section.h"
-#include "subsystem/node/::happening.h"
+//#include "subsystem/thread/lockable_critical_section.h"
+#include "acme/parallelization/happening.h"
 #include "remoting/remoting/desktop/Desktop.h"
 #include "remoting/remoting/desktop/DesktopFactory.h"
 //#include "log_writer/LogWriter.h"
@@ -44,7 +44,7 @@
 #include "remoting/remoting/desktop/UpdateSendingListener.h"
 #include "remoting/remoting/rfb_sconn/ClientAuthListener.h"
 #include "remoting/control_desktop/RfbClientInfo.h"
-#include "NewConnectionEvents.h"
+#include "remoting/remoting/server/NewConnectionEvents.h"
 
 namespace remoting_node_desktop
 {
@@ -69,13 +69,13 @@ namespace remoting_node_desktop
                             public ::subsystem::ClipboardListener,
                             public ::remoting::UpdateSendingListener,
                             public ::remoting::ClientAuthListener,
-                            public AbnormDeskTermListener,
+                            public ::remoting::AbnormDeskTermListener,
                             public ::subsystem::ListenerContainer<RfbClientManagerEventListener *>
    {
    public:
       // FIXME: parameter is not used.
-      RfbClientManager(const ::scoped_string &scopedstrServerName, ::remoting_node_desktop::Configurator *pconfigurator,
-                       ::remoting_node_desktop::NewConnectionEvents *newConnectionEvents, ::subsystem::LogWriter * plogwriter,
+      RfbClientManager(const ::scoped_string &scopedstrServerName, ::remoting::Configurator *pconfigurator,
+                       ::remoting_node::NewConnectionEvents *newConnectionEvents, ::subsystem::LogWriter * plogwriter,
                        ::remoting::DesktopFactory *desktopFactory);
       virtual ~RfbClientManager();
 
@@ -135,7 +135,7 @@ namespace remoting_node_desktop
 
       ClientList m_nonAuthClientList;
       ClientList m_clientList;
-      critical_section m_clientListLocker;
+      lockable_critical_section m_clientListLocker;
       // m_dynViewPort is a client view port that can be changed during a
       // client work. Now, the dynViewPort has the same value for all clients.
       // By this field initilizes new clients.
@@ -146,7 +146,7 @@ namespace remoting_node_desktop
       // ::happening m_banTimer;
       ::happening m_banTimer;
       //;
-      critical_section m_banListMutex;
+      lockable_critical_section m_banListMutex;
 
       // ::happening m_listUnderflowingEvent;
 
@@ -154,14 +154,14 @@ namespace remoting_node_desktop
 
       // Creating and destroying this object must be with the locked
       // m_clientListLocker
-      ::remoting::::pointer < Desktop > m_pdesktop;
+      ::pointer < ::remoting::Desktop > m_pdesktop;
       ::remoting::DesktopFactory *m_desktopFactory;
 
       // Inforamtion
       unsigned int m_nextClientId;
 
-      ::pointer<::remoting_node_desktop::Configurator> m_pconfigurator;
-      ::pointer<::remoting_node_desktop::NewConnectionEvents> m_pnewconnectionevents;
+      ::pointer<::remoting::Configurator> m_pconfigurator;
+      ::pointer<::remoting_node::NewConnectionEvents> m_pnewconnectionevents;
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };

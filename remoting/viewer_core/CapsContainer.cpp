@@ -24,9 +24,9 @@
 #include "framework.h"
 #include "CapsContainer.h"
 
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
-namespace remoting
+namespace remoting_client
 {
    CapsContainer::CapsContainer()
    {
@@ -137,4 +137,4 @@ namespace remoting
           }
       return true;
    }
-} // namespace remoting
+} // namespace remoting_client

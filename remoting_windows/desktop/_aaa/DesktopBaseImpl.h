@@ -97,7 +97,7 @@ namespace remoting
       void sendUpdate();
 
       Region m_regionFullReq;
-      critical_section m_criticalsectionReqReg;
+      lockable_critical_section m_criticalsectionReqReg;
 
       UpdateHandler *m_pupdatehandler;
 
@@ -108,7 +108,7 @@ namespace remoting
 
       // Clipboard
       ::string m_strReceivedClipboard;
-      critical_section m_storedClipCritSec;
+      lockable_critical_section m_storedClipCritSec;
 
       // External listeners
       UpdateSendingListener *m_pupdatesendinglistenerExternal;

@@ -36,7 +36,7 @@ namespace remoting
       virtual ~RreDecoder();
 
    protected:
-      virtual void decode(RfbInputGate *input,
+      virtual void decode(::remoting::RfbInputGate *input,
                           ::innate_subsystem::Framebuffer *pframebuffer,
                           const ::int_rectangle &  rectangleTarget);
    };

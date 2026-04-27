@@ -33,7 +33,7 @@ namespace remoting_node_desktop
 
    ControlServer::ControlServer(::subsystem::PipeServer *pipeServer, RfbClientManager *rfbClientManager,
                                 ::subsystem::LogWriter * plogwriter) :
-       m_authenticator(30000, 3), m_pipeServer(pipeServer), m_rfbClientManager(rfbClientManager), m_plogwriter = plogwriter;
+       m_controlappauthenticator(30_s, 3), m_pipeServer(pipeServer), m_rfbClientManager(rfbClientManager), m_plogwriter(plogwriter)
    {
       m_plogwriter->debug("{}"), _T("::innate_subsystem::Control server started");
 
@@ -59,7 +59,7 @@ namespace remoting_node_desktop
       delete m_pipeServer;
 
       // Unblock all client if it has been blocked by authenticator
-      m_authenticator.breakAndDisableAuthentications();
+      m_controlappauthenticator.breakAndDisableAuthentications();
 
       m_plogwriter->debug("{}"), _T("::innate_subsystem::Control server stopped");
    }
@@ -74,7 +74,7 @@ namespace remoting_node_desktop
             Transport *transport = new NamedPipeTransport(ppipe);
 
             ControlClient *clientThread =
-               new ControlClient(transport, m_rfbClientManager, &m_authenticator, ppipe->getFile(), m_plogwriter);
+               new ControlClient(m_pconfigurator, transport, m_rfbClientManager, &m_controlappauthenticator, ppipe->getFile(), m_plogwriter);
 
             clientThread->resume();
 

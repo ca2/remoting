@@ -28,11 +28,11 @@
 #include "subsystem/_common_header.h"
 //#include "subsystem/platform/inttypes.h"
 
-namespace remoting
+namespace remoting_client
 {
    //
-   // This interface defined function, than need for work with capabilities.
-   // Any capabilities must be added before call RemoteViewerCore::start().
+   // This interface defined function, than need for work with pcapabilitiesmanager.
+   // Any pcapabilitiesmanager must be added before call RemoteViewerCore::start().
    //
    class CLASS_DECL_REMOTING CapabilitiesManager
    {
@@ -79,18 +79,18 @@ namespace remoting
                                          const ::string description = "") = 0;
 
       //
-      // This function return ::array_base of enabled capabilities "client-to-server scopedstrMessage".
+      // This function return ::array_base of enabled pcapabilitiesmanager "client-to-server scopedstrMessage".
       //
       virtual void getEnabledClientMsgCapabilities(::array_base<unsigned int> *codes) const = 0;
 
       //
-      // This function return ::array_base of enabled capabilities "server-to-client scopedstrMessage".
+      // This function return ::array_base of enabled pcapabilitiesmanager "server-to-client scopedstrMessage".
       //
       virtual void getEnabledServerMsgCapabilities(::array_base<unsigned int> *codes) const = 0;
 
       //
-      // This function return ::array_base of enabled capabilities "encoding".
+      // This function return ::array_base of enabled pcapabilitiesmanager "encoding".
       //
       virtual void getEnabledEncodingCapabilities(::array_base<unsigned int> *codes) const = 0;
    };
-} // namespace remoting
+} // namespace remoting_client

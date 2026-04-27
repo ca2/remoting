@@ -23,16 +23,16 @@
 //
 #include "framework.h"
 #include "ControlAppAuthenticator.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "subsystem/platform/VncPassCrypt.h"
 
 namespace remoting_node_desktop
 {
 
 
-   ControlAppAuthenticator::ControlAppAuthenticator(unsigned long long failureTimeInterval,
+   ControlAppAuthenticator::ControlAppAuthenticator(const class ::time & timeFailureInterval,
                                                     unsigned int failureMaxCount) :
-       AuthTracker(failureTimeInterval, failureMaxCount), m_isBreaked(false)
+       AuthTracker(timeFailureInterval, failureMaxCount), m_isBreaked(false)
    {
    }
 

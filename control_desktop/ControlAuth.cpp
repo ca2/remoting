@@ -26,7 +26,7 @@
 //#include "subsystem/platform/::string.h"
 #include "remoting/control_desktop/ControlProto.h"
 
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
 #include "subsystem/platform/DesCrypt.h"
 //#include aaa_<algorithm>

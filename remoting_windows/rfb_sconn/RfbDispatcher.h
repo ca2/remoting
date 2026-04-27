@@ -38,9 +38,9 @@ namespace remoting
    class RfbDispatcher : public ::subsystem::Thread
    {
    public:
-      // RfbDispatcher(RfbInputGate *pblockinggate,
+      // RfbDispatcher(::remoting::RfbInputGate *pblockinggate,
       //               AnEventListener *m_extTerminationListener);
-      // RfbDispatcher(RfbInputGate *pblockinggate,
+      // RfbDispatcher(::remoting::RfbInputGate *pblockinggate,
       //               ::happening *terminationEvent);
       RfbDispatcher(::remoting::RfbInputGate *pblockinggate, const ::procedure &procedureTermination);
       virtual ~RfbDispatcher();

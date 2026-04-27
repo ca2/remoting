@@ -30,7 +30,7 @@
 #include "subsystem/_common_header.h"
 
 #include "acme/parallelization/happening.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 //#include "log_writer/LogWriter.h"
 
 class CLASS_DECL_REMOTING AnonymousPipe : public Channel, public Pipe
@@ -95,9 +95,9 @@ private:
   HANDLE m_hWrite;
   HANDLE m_hRead;
   bool m_neededToClose;
-  unsigned int m_timeOut;
+  unsigned int m_iTimeout;
 
-  critical_section m_hPipeMutex;
+  lockable_critical_section m_hPipeMutex;
   ::happening m_readEvent;
   ::happening m_writeEvent;
 

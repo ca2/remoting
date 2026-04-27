@@ -36,11 +36,11 @@ namespace remoting_node_desktop
 
 
    RfbClientManager::RfbClientManager(const ::scoped_string &scopedstrServerName,
-                                      ::remoting_node_desktop::Configurator *pconfigurator,
-                                      ::remoting_node_desktop::NewConnectionEvents *pnewconnectionevents,
+                                      ::remoting::Configurator *pconfigurator,
+                                      ::remoting_node::NewConnectionEvents *pnewconnectionevents,
                                       ::subsystem::LogWriter * plogwriter, ::remoting::DesktopFactory *desktopFactory) :
        m_nextClientId(0), m_pdesktop(0), m_pconfigurator(pconfigurator), m_pnewconnectionevents(pnewconnectionevents),
-       m_plogwriter = plogwriter;, m_desktopFactory(desktopFactory)
+       m_plogwriter(plogwriter), m_desktopFactory(desktopFactory)
    {
       m_plogwriter->information("Starting rfb client manager");
    }
@@ -68,7 +68,7 @@ namespace remoting_node_desktop
 
       // Checking if this client is allowed to connect, depending on its "shared"
       // flag and the server's configuration.
-      ServerConfig *servConf = m_pconfigurator->getServerConfig();
+      auto servConf = m_pconfigurator->getServerConfig();
       bool isAlwaysShared = servConf->isAlwaysShared();
       bool isNeverShared = servConf->isNeverShared();
 
@@ -109,7 +109,7 @@ namespace remoting_node_desktop
       // Removing the client from the non-authorized clients ::list_base.
       for (ClientListIter iter = m_nonAuthClientList.begin(); iter != m_nonAuthClientList.end(); iter++)
       {
-         RfbClient *clientOfList = *iter;
+         ::remoting::RfbClient * clientOfList = *iter;
          if (clientOfList == client)
          {
             m_nonAuthClientList.erase(iter);
@@ -124,7 +124,7 @@ namespace remoting_node_desktop
       {
          // Create WinDesktop and notify listeners that the first client has been
          // connected.
-         m_pdesktop = m_desktopFactory->createDesktop(this, this, this, m_plogwriter);
+         m_pdesktop = m_desktopFactory->createDesktop(m_pconfigurator, this, this, this, m_plogwriter);
          //::std::vector<RfbClientManagerEventListener *>::iterator iter;
          for (auto iter = m_listeners.begin(); iter != m_listeners.end(); iter++)
          {
@@ -134,7 +134,7 @@ namespace remoting_node_desktop
       return m_pdesktop;
    }
 
-   bool RfbClientManager::onCheckForBan(RfbClient *client)
+   bool RfbClientManager::onCheckForBan(::remoting::RfbClient *client)
    {
       ::string ip;
       client->getPeerHost(ip);
@@ -142,7 +142,7 @@ namespace remoting_node_desktop
       return checkForBan(ip);
    }
 
-   void RfbClientManager::onAuthFailed(RfbClient *client)
+   void RfbClientManager::onAuthFailed(::remoting::RfbClient *client)
    {
       ::string ip;
       client->getPeerHost(ip);
@@ -153,7 +153,7 @@ namespace remoting_node_desktop
    }
 
 
-   void RfbClientManager::onCheckAccessControl(RfbClient *client)
+   void RfbClientManager::onCheckAccessControl(::remoting::RfbClient *client)
    {
 
       ::pointer<::subsystem::SocketAddressIPv4Interface> peerAddr;
@@ -164,20 +164,20 @@ namespace remoting_node_desktop
       }
       catch (...)
       {
-         throw AuthException("Failed to get IP address of the RFB client");
+         throw ::remoting::AuthException("Failed to get IP address of the RFB client");
       }
 
       auto paddrImpl = peerAddr->impl<::subsystem_bsd_sockets::SocketAddressIPv4>();
       // struct sockaddr_in addr_in = peerAddr.getSockAddr();
       struct sockaddr_in addr_in = paddrImpl->_getSockAddr();
 
-      ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
+      ::remoting::ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
 
       IpAccessRule::ActionType action;
 
       if (!client->isOutgoing())
       {
-         action = config->getActionByAddress((unsigned long)addr_in.sin_addr.S_un.S_addr);
+         action = pserverconfig->getActionByAddress((unsigned long)addr_in.sin_addr.S_un.S_addr);
       }
       else
       {
@@ -194,15 +194,15 @@ namespace remoting_node_desktop
 
          auto papp = create_newø<::remoting_node_desktop::QueryConnectionApplication>();
 
-         auto queryRetVal = papp->execute(peerHost, config->isDefaultActionAccept(), config->getQueryTimeout());
+         auto queryRetVal = papp->execute(peerHost, pserverconfig->isDefaultActionAccept(), pserverconfig->getQueryTimeout());
 
          // int queryRetVal = QueryConnectionApplication::execute(
          //    peerHost,
-         //    config->isDefaultActionAccept(),
-         //    config->getQueryTimeout());
+         //    pserverconfig->isDefaultActionAccept(),
+         //    pserverconfig->getQueryTimeout());
          if (queryRetVal == 1)
          {
-            throw AuthException("Connection has been rejected");
+            throw ::remoting::AuthException("Connection has been rejected");
          }
       }
    }
@@ -212,20 +212,20 @@ namespace remoting_node_desktop
       critical_section_lock al(&m_clientListLocker);
       for (ClientListIter iter = m_clientList.begin(); iter != m_clientList.end(); iter++)
       {
-         if ((*iter)->getClientState() == IN_NORMAL_PHASE)
+         if ((*iter)->getClientState() == ::remoting::IN_NORMAL_PHASE)
          {
             (*iter)->sendClipboard(newClipboard);
          }
       }
    }
 
-   void RfbClientManager::onSendUpdate(const UpdateContainer & updatecontainer,
+   void RfbClientManager::onSendUpdate(const ::remoting::UpdateContainer & updatecontainer,
                                        const ::remoting::CursorShape *cursorShape)
    {
       critical_section_lock al(&m_clientListLocker);
       for (ClientListIter iter = m_clientList.begin(); iter != m_clientList.end(); iter++)
       {
-         if ((*iter)->getClientState() == IN_NORMAL_PHASE)
+         if ((*iter)->getClientState() == ::remoting::IN_NORMAL_PHASE)
          {
             (*iter)->sendUpdate(updatecontainer, cursorShape);
          }
@@ -238,7 +238,7 @@ namespace remoting_node_desktop
       bool isReady = false;
       for (ClientListIter iter = m_clientList.begin(); iter != m_clientList.end(); iter++)
       {
-         if ((*iter)->getClientState() == IN_NORMAL_PHASE)
+         if ((*iter)->getClientState() == ::remoting::IN_NORMAL_PHASE)
          {
             isReady = isReady || (*iter)->clientIsReady();
          }
@@ -296,7 +296,7 @@ namespace remoting_node_desktop
 
    void RfbClientManager::validateClientList()
    {
-      Desktop *objectToDestroy = 0;
+      ::remoting::Desktop *objectToDestroy = 0;
       {
          critical_section_lock al(&m_clientListLocker);
          // If clients are in the IN_READY_TO_REMOVE phase, remove them from the
@@ -304,9 +304,9 @@ namespace remoting_node_desktop
          auto iter = m_nonAuthClientList.begin();
          while (iter != m_nonAuthClientList.end())
          {
-            RfbClient *client = *iter;
-            ClientState state = client->getClientState();
-            if (state == IN_READY_TO_REMOVE)
+            ::remoting::RfbClient *client = *iter;
+            ::remoting::ClientState state = client->getClientState();
+            if (state == ::remoting::IN_READY_TO_REMOVE)
             {
                iter = m_nonAuthClientList.erase(iter);
                // ZombieKiller::getInstance()->addZombie(client);
@@ -321,9 +321,9 @@ namespace remoting_node_desktop
          iter = m_clientList.begin();
          while (iter != m_clientList.end())
          {
-            RfbClient *client = *iter;
-            ClientState state = client->getClientState();
-            if (state == IN_READY_TO_REMOVE)
+            ::remoting::RfbClient *client = *iter;
+            ::remoting::ClientState state = client->getClientState();
+            if (state == ::remoting::IN_READY_TO_REMOVE)
             {
                iter = m_clientList.erase(iter);
                // ZombieKiller::getInstance()->addZombie(client);
@@ -367,7 +367,7 @@ namespace remoting_node_desktop
       {
          unsigned int count = (*it).m_element2.count;
          class ::time lastTime = (*it).m_element2.banLastTime;
-         class ::time now = class ::time::now();
+         class ::time now = ::time::now();
          if (count > 13)
             count = 13;
          // about 1 hour max login rate after 14 unsuccessful logins
@@ -407,13 +407,13 @@ namespace remoting_node_desktop
          {
             // Increase ban count
             (*it).m_element2.count += 1;
-            (*it).m_element2.banLastTime = class ::time::now();
+            (*it).m_element2.banLastTime.Now();
          }
          else
          {
             // Add new element to ban ::list_base with ban count == 0
             BanProp banProp;
-            banProp.banLastTime = class ::time::now();
+            banProp.banLastTime.Now();
             banProp.count = 0;
             m_banList[ip] = banProp;
          }
@@ -442,13 +442,13 @@ namespace remoting_node_desktop
    }
 
 
-   void RfbClientManager::addNewConnection(::subsystem::SocketIPv4Interface *psocket, ViewPortState *constViewPort,
+   void RfbClientManager::addNewConnection(::subsystem::SocketIPv4Interface *psocket, ::remoting::ViewPortState *constViewPort,
                                            bool viewOnly, bool isOutgoing)
    {
       critical_section_lock al(&m_clientListLocker);
 
-      ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
-      int timeout = 1000 * config->getIdleTimeout();
+      ::remoting::ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
+      int timeout = 1000 * pserverconfig->getIdleTimeout();
 
       m_plogwriter->error("Set socket idle timeout, {} ms", timeout);
 
@@ -471,8 +471,8 @@ namespace remoting_node_desktop
       m_plogwriter->error("Client #{} connected", m_nextClientId);
       m_plogwriter->debug("new client, process memory usage: {} ", MainSubsystem().getCurrentMemoryUsage());
 
-      m_nonAuthClientList.add(new RfbClient(m_pnewconnectionevents, psocket, this, this, viewOnly, isOutgoing,
-                                            m_nextClientId, constViewPort, &m_dynViewPort, timeout, m_plogwriter));
+      m_nonAuthClientList.add(new ::remoting::RfbClient(m_pnewconnectionevents, psocket, this, this, viewOnly, isOutgoing,
+                                            m_nextClientId, *constViewPort, m_dynViewPort, timeout, m_plogwriter));
       m_nextClientId++;
    }
 
@@ -482,8 +482,8 @@ namespace remoting_node_desktop
 
       for (ClientListIter it = m_clientList.begin(); it != m_clientList.end(); it++)
       {
-         RfbClient *each = *it;
-         if (each->getClientState() == IN_NORMAL_PHASE)
+         ::remoting::RfbClient *each = *it;
+         if (each->getClientState() == ::remoting::IN_NORMAL_PHASE)
          {
             ::string peerHost;
 
@@ -494,7 +494,7 @@ namespace remoting_node_desktop
       }
    }
 
-   void RfbClientManager::setDynViewPort(const ViewPortState *dynViewPort)
+   void RfbClientManager::setDynViewPort(const ::remoting::ViewPortState *dynViewPort)
    {
       critical_section_lock al(&m_clientListLocker);
       m_dynViewPort = *dynViewPort;

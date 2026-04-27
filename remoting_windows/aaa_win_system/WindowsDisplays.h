@@ -28,7 +28,7 @@
 
 //#include "subsystem/platform/class ::time.h"
 //#include aaa_<vector>
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
 class CLASS_DECL_REMOTING WindowsDisplays
 {
@@ -60,7 +60,7 @@ private:
   int m_yVirtualScreen;
 
   ::int_rectangle_array_base m_displayRects;
-  critical_section m_displayRectsMutex;
+  lockable_critical_section m_displayRectsMutex;
   
   static const unsigned int UPDATE_INTERVAL = 3000;
   class ::time m_latestUpdateTime;

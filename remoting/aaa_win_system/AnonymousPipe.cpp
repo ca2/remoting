@@ -25,7 +25,7 @@
 //#include "acme/_operating_system.h"
 #include "AnonymousPipe.h"
 #include "subsystem/node/OperatingSystem.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
 AnonymousPipe::AnonymousPipe(HANDLE hWrite, HANDLE hRead, unsigned int maxPortionSize, ::subsystem::LogWriter * plogwriter)
 : Pipe(maxPortionSize),
@@ -166,5 +166,5 @@ void AnonymousPipe::assignHandlesFor(HANDLE hTargetProc, bool neededToClose,
 
 void AnonymousPipe::setTimeOut(unsigned int timeOut)
 {
-  m_timeOut = timeOut;
+  m_iTimeout = timeOut;
 }

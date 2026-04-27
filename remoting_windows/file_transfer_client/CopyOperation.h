@@ -29,7 +29,7 @@
 #include "CopyFileEventListener.h"
 namespace remoting
 {
-   namespace ftp
+   namespace file_transfer
    {
       //
       // Abstract class that contain intersection of functionality

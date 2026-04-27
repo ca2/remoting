@@ -33,7 +33,7 @@ namespace remoting
 
    //    ScreenDriver *ScreenDriverFactory::createScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
    //                                             ::innate_subsystem::Framebuffer *pframebuffer,
-   //                                             critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter)
+   //                                             lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter)
    // {
    //
    //

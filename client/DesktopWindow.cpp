@@ -321,7 +321,7 @@ namespace remoting_client
 
                 m_bShowCursor = true;
 
-                m_pviewercore->m_fbUpdateNotifier.m_cursorPainter.m_bHideCursor = true;
+                m_pviewercore->m_pfbupdatenotifier.m_cursorpainter.m_bHideCursor = true;
 
 
                 ::ReleaseCapture();
@@ -343,7 +343,7 @@ namespace remoting_client
 
                     ::SetCapture((HWND) _HWND());
 
-                    m_pviewercore->m_fbUpdateNotifier.m_cursorPainter.m_bHideCursor = false;
+                    m_pviewercore->m_pfbupdatenotifier.m_cursorpainter.m_bHideCursor = false;
                     m_bShowCursor = false;
 
                     //                try {
@@ -374,14 +374,14 @@ namespace remoting_client
                 {
 
                     m_bShowCursor = true;
-                    m_pviewercore->m_fbUpdateNotifier.m_cursorPainter.m_bHideCursor = true;
+                    m_pviewercore->m_pfbupdatenotifier.m_cursorpainter.m_bHideCursor = true;
 
                 }
                 else
                 {
 
                     m_bShowCursor = false;
-                    m_pviewercore->m_fbUpdateNotifier.m_cursorPainter.m_bHideCursor = false;
+                    m_pviewercore->m_pfbupdatenotifier.m_cursorpainter.m_bHideCursor = false;
 
                 }
 
@@ -393,14 +393,14 @@ namespace remoting_client
             {
 
                 m_bShowCursor = true;
-                m_pviewercore->m_fbUpdateNotifier.m_cursorPainter.m_bHideCursor = true;
+                m_pviewercore->m_pfbupdatenotifier.m_cursorpainter.m_bHideCursor = true;
 
             }
             else
             {
 
                 m_bShowCursor = false;
-                m_pviewercore->m_fbUpdateNotifier.m_cursorPainter.m_bHideCursor = false;
+                m_pviewercore->m_pfbupdatenotifier.m_cursorpainter.m_bHideCursor = false;
 
             }
             m_premotingtoolbar->defer_repaint();

@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "RfbClientToServerMessage.h"
 
-namespace remoting
+namespace remoting_client
 {
    RfbClientToServerMessage::RfbClientToServerMessage()
    {
@@ -33,4 +33,4 @@ namespace remoting
    RfbClientToServerMessage::~RfbClientToServerMessage()
    {
    }
-} // namespace remoting
+} // namespace remoting_client

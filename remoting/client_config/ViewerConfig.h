@@ -29,8 +29,8 @@
 #include "subsystem/platform/Singleton.h"
 #include "remoting/remoting/config/ConnectionHistory.h"
 //#include "log_writer/FileLogWriter.h"
-////#include "subsystem/thread/critical_section.h"
-////#include "subsystem/thread/critical_section.h"
+////#include "subsystem/thread/lockable_critical_section.h"
+////#include "subsystem/thread/lockable_critical_section.h"
 
 #include "remoting/remoting/client_config/ConnectionConfig.h"
 
@@ -123,6 +123,6 @@ namespace remoting
       ConnectionHistory m_conHistory;
       //private:
       // Critical section for synchronization
-      mutable critical_section m_cs;
+      mutable lockable_critical_section m_cs;
    };
 } // namespace remoting

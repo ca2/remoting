@@ -194,17 +194,17 @@ void sendNClientRegion(HWND hwnd)
   offset.y = GetSystemMetrics(SM_YVIRTUALSCREEN);
 
   RECT clientRect;
-  ::int_rectangle resultRect;
+  ::int_rectangle rectangleResult;
   if (GetWindowRect(hwnd, clientRect) != 0) {
-    resultRect.fromWindowsRect(clientRect);
-    resultRect.move(offset.x, offset.y);
+    rectangleResult.fromWindowsRect(clientRect);
+    rectangleResult.move(offset.x, offset.y);
   }
-  return resultRect;
+  return rectangleResult;
 }
 
 ::int_rectangle getClientRect(HWND hwnd)
 {
-  ::int_rectangle resultRect;
+  ::int_rectangle rectangleResult;
   RECT clientRect;
   if (GetClientRect(hwnd, clientRect) != 0) {
     POINT offset;
@@ -214,8 +214,8 @@ void sendNClientRegion(HWND hwnd)
     ClientToScreen(hwnd, &offset);
     offset.x -= GetSystemMetrics(SM_XVIRTUALSCREEN);
     offset.y -= GetSystemMetrics(SM_YVIRTUALSCREEN);
-    resultRect.fromWindowsRect(clientRect);
-    resultRect.move(offset.x, offset.y);
+    rectangleResult.fromWindowsRect(clientRect);
+    rectangleResult.move(offset.x, offset.y);
   }
-  return resultRect;
+  return rectangleResult;
 }

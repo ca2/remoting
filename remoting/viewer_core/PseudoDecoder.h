@@ -27,7 +27,7 @@
 
 #include "Decoder.h"
 
-namespace remoting
+namespace remoting_client
 {
    class CLASS_DECL_REMOTING PseudoDecoder : public Decoder
    {
@@ -37,4 +37,4 @@ namespace remoting
 
       virtual bool isPseudo() const;
    };
-} // namespace remoting
+} // namespace remoting_client

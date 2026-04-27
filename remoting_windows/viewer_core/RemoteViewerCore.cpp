@@ -65,9 +65,9 @@ namespace remoting
    RemoteViewerCore::RemoteViewerCore(::subsystem::LogWriter * plogwriter)
    : m_plogwriter = plogwriter;,
      m_tcpConnection(m_plogwriter),
-     m_fbUpdateNotifier(&m_pframebuffer, &m_fbLock, m_plogwriter, &m_watermarksController),
+     m_pfbupdatenotifier(m_pframebuffer, &m_criticalsectionFramebuffer, m_plogwriter, &m_pwatermarkscontroller),
      m_decoderStore(m_plogwriter),
-     m_updateRequestSender(&m_fbLock, &m_pframebuffer, m_plogwriter),
+     m_updateRequestSender(&m_criticalsectionFramebuffer, m_pframebuffer, m_plogwriter),
      m_dispatchDataProvider(0),
      m_isTightEnabled(true),
      m_isUtf8ClipboardEnabled(false)
@@ -81,9 +81,9 @@ namespace remoting
                                       bool sharedFlag)
    : m_plogwriter = plogwriter;,
      m_tcpConnection(m_plogwriter),
-     m_fbUpdateNotifier(&m_pframebuffer, &m_fbLock, m_plogwriter, &m_watermarksController),
+     m_pfbupdatenotifier(m_pframebuffer, &m_criticalsectionFramebuffer, m_plogwriter, &m_pwatermarkscontroller),
      m_decoderStore(m_plogwriter),
-     m_updateRequestSender(&m_fbLock, &m_pframebuffer, m_plogwriter),
+     m_updateRequestSender(&m_criticalsectionFramebuffer, m_pframebuffer, m_plogwriter),
      m_dispatchDataProvider(0),
      m_isTightEnabled(true),
      m_isUtf8ClipboardEnabled(false)
@@ -99,9 +99,9 @@ namespace remoting
                                       bool sharedFlag)
    : m_plogwriter = plogwriter;,
      m_tcpConnection(m_plogwriter),
-     m_fbUpdateNotifier(&m_pframebuffer, &m_fbLock, m_plogwriter, &m_watermarksController),
+     m_pfbupdatenotifier(m_pframebuffer, &m_criticalsectionFramebuffer, m_plogwriter, &m_pwatermarkscontroller),
      m_decoderStore(m_plogwriter),
-     m_updateRequestSender(&m_fbLock, &m_pframebuffer, m_plogwriter),
+     m_updateRequestSender(&m_criticalsectionFramebuffer, m_pframebuffer, m_plogwriter),
      m_dispatchDataProvider(0),
      m_isTightEnabled(true),
      m_isUtf8ClipboardEnabled(false)
@@ -111,15 +111,15 @@ namespace remoting
       start(psocket, adapter, sharedFlag);
    }
 
-   RemoteViewerCore::RemoteViewerCore(RfbInputGate *input, RfbOutputGate *output,
+   RemoteViewerCore::RemoteViewerCore(::remoting::RfbInputGate *input, ::remoting::RfbOutputGate *output,
                                       CoreEventsAdapter *adapter,
                                       ::subsystem::LogWriter * plogwriter,
                                       bool sharedFlag)
    : m_plogwriter = plogwriter;,
      m_tcpConnection(m_plogwriter),
-     m_fbUpdateNotifier(&m_pframebuffer, &m_fbLock, m_plogwriter, &m_watermarksController),
+     m_pfbupdatenotifier(m_pframebuffer, &m_criticalsectionFramebuffer, m_plogwriter, &m_pwatermarkscontroller),
      m_decoderStore(m_plogwriter),
-     m_updateRequestSender(&m_fbLock, &m_pframebuffer, m_plogwriter),
+     m_updateRequestSender(&m_criticalsectionFramebuffer, m_pframebuffer, m_plogwriter),
      m_dispatchDataProvider(0),
      m_isTightEnabled(true),
      m_isUtf8ClipboardEnabled(false)
@@ -147,9 +147,9 @@ namespace remoting
 
       m_wasStarted = false;
       m_wasConnected = false;
-      m_isNewPixelFormat = false;
-      m_isFreeze = false;
-      m_isNeedRequestUpdate = true;
+      m_bNewPixelFormat = false;
+      m_bFreeze = false;
+      m_bNeedRequestUpdate = true;
       m_forceFullUpdate = false;
 
       m_updateTimeout = 0;
@@ -176,7 +176,7 @@ namespace remoting
          if (wasStarted()) {
             waitTermination();
          } else {
-            m_fbUpdateNotifier.wait();
+            m_pfbupdatenotifier.wait();
             m_updateRequestSender.wait();
          }
       } catch (...) {
@@ -202,10 +202,10 @@ namespace remoting
          m_wasStarted = true;
       }
 
-      m_sharedFlag = sharedFlag;
-      m_adapter = adapter;
+      m_bShared = sharedFlag;
+      m_pcoreeventsadapter = adapter;
 
-      m_fbUpdateNotifier.setAdapter(adapter);
+      m_pfbupdatenotifier.setAdapter(adapter);
 
       // Start thread.
       resume();
@@ -228,7 +228,7 @@ namespace remoting
       start(adapter, sharedFlag);
    }
 
-   void RemoteViewerCore::start(RfbInputGate *input, RfbOutputGate *output,
+   void RemoteViewerCore::start(::remoting::RfbInputGate *input, ::remoting::RfbOutputGate *output,
                                 CoreEventsAdapter *adapter,
                                 bool sharedFlag)
    {
@@ -260,13 +260,13 @@ namespace remoting
       m_updateRequestSender.terminate();
 
       m_tcpConnection.close();
-      m_fbUpdateNotifier.terminate();
+      m_pfbupdatenotifier.terminate();
       terminate();
    }
 
    void RemoteViewerCore::waitTermination()
    {
-      m_fbUpdateNotifier.wait();
+      m_pfbupdatenotifier.wait();
       m_updateRequestSender.wait();
       wait();
    }
@@ -274,9 +274,9 @@ namespace remoting
    void RemoteViewerCore::setPixelFormat(const ::innate_subsystem::PixelFormat & pixelFormat)
    {
       m_plogwriter->debug("Pixel format will changed");
-      critical_section_lock al(&m_pixelFormatLock);
-      m_isNewPixelFormat = true;
-      m_viewerPixelFormat = pixelFormat;
+      critical_section_lock al(&m_criticalsectionPixelFormat);
+      m_bNewPixelFormat = true;
+      m_pixelformatViewer = pixelFormat;
    }
 
    void RemoteViewerCore::enableDispatching(DispatchDataProvider *src)
@@ -292,33 +292,33 @@ namespace remoting
 
    bool RemoteViewerCore::updatePixelFormat()
    {
-      ::innate_subsystem::PixelFormat pxFormat;
+      ::innate_subsystem::PixelFormat pixelformat;
       m_plogwriter->debug("Check pixel format change...");
       {
-         critical_section_lock al(&m_pixelFormatLock);
-         if (!m_isNewPixelFormat)
+         critical_section_lock al(&m_criticalsectionPixelFormat);
+         if (!m_bNewPixelFormat)
             return false;
-         m_isNewPixelFormat = false;
-         pxFormat = m_viewerPixelFormat;
+         m_bNewPixelFormat = false;
+         pixelformat = m_pixelformatViewer;
       }
 
-      int bitsPerPixel = m_viewerPixelFormat.bitsPerPixel;
+      int bitsPerPixel = m_pixelformatViewer.bitsPerPixel;
       if (bitsPerPixel != 8 && bitsPerPixel != 16 && bitsPerPixel != 32) {
          throw ::subsystem::Exception("Only 8, 16 or 32 bits per pixel supported!");
       }
 
       {
-         critical_section_lock al(&m_fbLock);
+         critical_section_lock al(&m_criticalsectionFramebuffer);
          // FIXME: here isn't accept true-colour flag.
          // PixelFormats may be equal, if isn't.
-         if (pxFormat == m_pframebuffer.getPixelFormat() ){
+         if (pixelformat == m_pframebuffer->getPixelFormat() ){
             return false;
          }
-         if (m_pframebuffer.getBuffer() != 0)
-            setFbProperties(m_pframebuffer.getDimension(), pxFormat);
+         if (m_pframebuffer->getBuffer() != 0)
+            setFbProperties(m_pframebuffer->getDimension(), pixelformat);
       }
 
-      RfbSetPixelFormatClientMessage pixelFormatMessage(pxFormat);
+      RfbSetPixelFormatClientMessage pixelFormatMessage(pixelformat);
       pixelFormatMessage.send(m_output);
 
       return true;
@@ -327,8 +327,8 @@ namespace remoting
    void RemoteViewerCore::refreshFramebuffer()
    {
       m_plogwriter->debug("Frame buffer will refreshed");
-      critical_section_lock al(&m_refreshingLock);
-      m_isRefreshing = true;
+      critical_section_lock al(&m_criticalsectionLock);
+      m_bRefreshing = true;
    }
 
    void RemoteViewerCore::forceFullUpdateRequests(const bool& forceUpdate)
@@ -346,9 +346,9 @@ namespace remoting
    void RemoteViewerCore::sendFbUpdateRequest(bool incremental)
    {
       {
-         critical_section_lock al(&m_requestUpdateLock);
-         bool requestUpdate = m_isNeedRequestUpdate;
-         m_isNeedRequestUpdate = false;
+         critical_section_lock al(&m_criticalsectionRequestUpdate);
+         bool requestUpdate = m_bNeedRequestUpdate;
+         m_bNeedRequestUpdate = false;
          if (!requestUpdate)
             return;
       }
@@ -360,9 +360,9 @@ namespace remoting
       }
 
       {
-         critical_section_lock al(&m_refreshingLock);
-         if (m_isRefreshing) {
-            m_isRefreshing= false;
+         critical_section_lock al(&m_criticalsectionLock);
+         if (m_bRefreshing) {
+            m_bRefreshing= false;
             isRefresh = true;
          }
       }
@@ -372,8 +372,8 @@ namespace remoting
          bool isIncremental = incremental && !isRefresh && !isUpdateFbProperties;
          ::int_rectangle updateRect;
          {
-            critical_section_lock al(&m_fbLock);
-            updateRect = m_pframebuffer.getDimension();
+            critical_section_lock al(&m_criticalsectionFramebuffer);
+            updateRect = m_pframebuffer->getDimension();
          }
 
          if (isIncremental) {
@@ -423,7 +423,7 @@ namespace remoting
       RfbPointerEventClientMessage pointerMessage(buttonMask, pointPosition);
       pointerMessage.send(m_output);
       // update pointPosition
-      m_fbUpdateNotifier.updatePointerPos(pointPosition);
+      m_pfbupdatenotifier.updatePointerPos(pointPosition);
 
       m_plogwriter->debug("Pointer event: 0x%X, ({}, {}) is sent",
                         static_cast<int>(buttonMask), pointPosition.x, pointPosition.y);
@@ -537,16 +537,16 @@ namespace remoting
 
    void RemoteViewerCore::ignoreCursorShapeUpdates(bool ignored)
    {
-      m_fbUpdateNotifier.setIgnoreShapeUpdates(ignored);
+      m_pfbupdatenotifier.setIgnoreShapeUpdates(ignored);
    }
 
    void RemoteViewerCore::stopUpdating(bool isStopped)
    {
       {
-         critical_section_lock al(&m_freezeLock);
-         if (isStopped == m_isFreeze)
+         critical_section_lock al(&m_criticalsectionFreeze);
+         if (isStopped == m_bFreeze)
             return;
-         m_isFreeze = isStopped;
+         m_bFreeze = isStopped;
       }
       if (!isStopped) {
          m_plogwriter->debug("Sending of frame buffer update request...");
@@ -587,7 +587,7 @@ namespace remoting
 
       m_plogwriter->debug("Connection is established");
       try {
-         m_adapter->onEstablished();
+         m_pcoreeventsadapter->onEstablished();
       } catch (const ::subsystem::Exception &ex) {
          m_plogwriter->error("Error in CoreEventsAdapter::onEstablished(): {}", ex.get_message());
       } catch (...) {
@@ -677,7 +677,7 @@ namespace remoting
       int typeSelected = selectSecurityType(&secTypes, &m_authHandlers, m_isTightEnabled);
       m_plogwriter->information("Security type is selected: {}", typeSelected);
       if (typeSelected == SecurityDefs::TIGHT) {
-         m_plogwriter->information("Tight capabilities is enable");
+         m_plogwriter->information("Tight pcapabilitiesmanager is enable");
          m_isTight = true;
 
          m_output->writeUInt8(typeSelected);
@@ -830,41 +830,41 @@ namespace remoting
       return typeSelected;
    }
 
-   void RemoteViewerCore::setFbProperties(const ::int_size & fbDimension,
-                                          const ::innate_subsystem::PixelFormat & fbPixelFormat)
+   void RemoteViewerCore::setFbProperties(const ::int_size & sizeFramebuffer,
+                                          const ::innate_subsystem::PixelFormat & pixelformatFramebuffer)
    {
 #ifdef _DEMO_VERSION_
-      m_watermarksController.setNewFbProperties(&fbDimension->getRect(), fbPixelFormat);
+      m_pwatermarkscontroller.setNewFbProperties(&sizeFramebuffer->getRect(), pixelformatFramebuffer);
 #endif
 
-      const ::innate_subsystem::PixelFormat &pxFormat = fbPixelFormat;
+      const ::innate_subsystem::PixelFormat &pixelformat = pixelformatFramebuffer;
       ::string pxString;
       pxString.formatf("[bits-per-pixel: {}, depth: {}, big-endian-flag: {}, "
                       "true-color-flag: is set, " // true color always is set
                       "red-max: {}, green-max: {}, blue-max: {}, "
                       "red-shift: {}, green-shift: {}, blue-shift: {}]",
-                      pxFormat.bitsPerPixel, pxFormat.colorDepth, pxFormat.bigEndian,
-                      pxFormat.redMax, pxFormat.greenMax, pxFormat.blueMax,
-                      pxFormat.redShift, pxFormat.greenShift, pxFormat.blueShift);
+                      pixelformat.bitsPerPixel, pixelformat.colorDepth, pixelformat.bigEndian,
+                      pixelformat.redMax, pixelformat.greenMax, pixelformat.blueMax,
+                      pixelformat.redShift, pixelformat.greenShift, pixelformat.blueShift);
 
       m_plogwriter->debug("Setting frame buffer properties...");
       m_plogwriter->information("Frame buffer dimension: ({}, {})",
-                       fbDimension.cx, fbDimension.cy);
+                       sizeFramebuffer.cx, sizeFramebuffer.cy);
       m_plogwriter->information("Frame buffer pixel format: {}", pxString);
 
-      if (!m_pframebuffer.setProperties(fbDimension, fbPixelFormat) ||
-          !m_rectangleFb.setProperties(fbDimension, fbPixelFormat)) {
+      if (!m_pframebuffer->setProperties(sizeFramebuffer, pixelformatFramebuffer) ||
+          !m_pframebufferRectangle->setProperties(sizeFramebuffer, pixelformatFramebuffer)) {
          ::string error;
          error.formatf("Failed to set property frame buffer. "
                       "::int_size: ({}, {}), Pixel format: {}",
-                      fbDimension.cx, fbDimension.cy,
+                      sizeFramebuffer.cx, sizeFramebuffer.cy,
                       pxString);
          throw ::subsystem::Exception(error);
           }
-      m_rectangleFb.setColor(0, 0, 0);
-      m_pframebuffer.setColor(0, 0, 0);
+      m_pframebufferRectangle->setColor(0, 0, 0);
+      m_pframebuffer->setColor(0, 0, 0);
       refreshFramebuffer();
-      m_fbUpdateNotifier.onPropertiesFb();
+      m_pfbupdatenotifier.onPropertiesFb();
       m_plogwriter->debug("Frame buffer properties set");
    }
 
@@ -883,7 +883,7 @@ namespace remoting
    void RemoteViewerCore::execute()
    {
       try {
-         // connect to host and create RfbInputGate/RfbOutputGate
+         // connect to host and create ::remoting::RfbInputGate/::remoting::RfbOutputGate
          // if already connected, then function do nothing
          m_plogwriter->information("Protocol stage is \"Connection establishing\".");
          connectToHost();
@@ -895,7 +895,7 @@ namespace remoting
          // negotiaty about security type and authenticate
          m_plogwriter->information("Protocol stage is \"Authentication\".");
          try {
-            m_adapter->onConnecting(1);
+            m_pcoreeventsadapter->onConnecting(1);
          } catch (const ::subsystem::Exception &ex) {
             m_plogwriter->error("Error in CoreEventsAdapter::onConnecting(): {}", ex.get_message());
          } catch (...) {
@@ -913,7 +913,7 @@ namespace remoting
          m_plogwriter->information("Protocol stage is \"Is connected\".");
 
          try {
-            m_adapter->onConnected(m_output);
+            m_pcoreeventsadapter->onConnected(m_output);
          } catch (const ::subsystem::Exception &ex) {
             m_plogwriter->error("Error in CoreEventsAdapter::onConnected(): {}", ex.get_message());
          } catch (...) {
@@ -982,7 +982,7 @@ namespace remoting
          }
          ::string scopedstrMessage("Remote viewer's core thread terminated");
          try {
-            m_adapter->onDisconnect(scopedstrMessage);
+            m_pcoreeventsadapter->onDisconnect(scopedstrMessage);
          } catch (const ::subsystem::Exception &ex) {
             m_plogwriter->error("Error in CoreEventsAdapter::onDisconnect(): {}", ex.get_message());
          } catch (...) {
@@ -992,7 +992,7 @@ namespace remoting
       } catch (const AuthException &ex) {
          m_plogwriter->error("RemoteVewerCore. Auth exception: {}", ex.get_message());
          try {
-            m_adapter->onAuthError(&ex);
+            m_pcoreeventsadapter->onAuthError(&ex);
          } catch (const ::subsystem::Exception &ex) {
             m_plogwriter->error("Error in CoreEventsAdapter::onAuthError(): {}", ex.get_message());
          } catch (...) {
@@ -1001,7 +1001,7 @@ namespace remoting
       } catch (const ::io_exception &ex) {
          try {
             ::string disconnectMessage(ex.get_message());
-            m_adapter->onDisconnect(disconnectMessage);
+            m_pcoreeventsadapter->onDisconnect(disconnectMessage);
          } catch (const ::subsystem::Exception &ex) {
             m_plogwriter->error("Error in CoreEventsAdapter::onDisconnect(): {}", ex.get_message());
          } catch (...) {
@@ -1010,7 +1010,7 @@ namespace remoting
       } catch (const ::subsystem::Exception &ex) {
          m_plogwriter->error("RemoteViewerCore. ::subsystem::Exception: {}", ex.get_message());
          try {
-            m_adapter->onError(&ex);
+            m_pcoreeventsadapter->onError(&ex);
          } catch (...) {
             m_plogwriter->error("Unknown error in CoreEventsAdapter::onError()");
          }
@@ -1020,7 +1020,7 @@ namespace remoting
          m_plogwriter->error("{}", error);
          ::subsystem::Exception ex(error);
          try {
-            m_adapter->onError(&ex);
+            m_pcoreeventsadapter->onError(&ex);
          } catch (...) {
             m_plogwriter->error("Unknown error in CoreEventsAdapter::onError()");
          }
@@ -1062,12 +1062,12 @@ namespace remoting
       }
 
       {
-         critical_section_lock al(&m_requestUpdateLock);
-         m_isNeedRequestUpdate = true;
+         critical_section_lock al(&m_criticalsectionRequestUpdate);
+         m_bNeedRequestUpdate = true;
       }
       {
-         critical_section_lock al(&m_freezeLock);
-         if (m_isFreeze)
+         critical_section_lock al(&m_criticalsectionFreeze);
+         if (m_bFreeze)
             return;
       }
       m_plogwriter->debug("Sending of frame buffer update request...");
@@ -1090,7 +1090,7 @@ namespace remoting
       if (encodingType == PseudoEncDefs::LAST_RECT)
          return true;
       if (!Decoder::isPseudo(encodingType)) {
-         if (::int_rectangle(m_pframebuffer.getDimension()).intersection(rectangle) != rectangle) {
+         if (::int_rectangle(m_pframebuffer->getDimension()).intersection(rectangle) != rectangle) {
             throw ::subsystem::Exception("Error in protocol: incorrect size of rectangle");
          }
 
@@ -1100,8 +1100,8 @@ namespace remoting
 
             DecoderOfRectangle *rectangleDecoder = dynamic_cast<DecoderOfRectangle *>(decoder);
             rectangleDecoder->process(m_input,
-                                      &m_pframebuffer, &m_rectangleFb, rectangle, &m_fbLock,
-                                      &m_fbUpdateNotifier);
+                                      m_pframebuffer, m_pframebufferRectangle, rectangle, &m_criticalsectionFramebuffer,
+                                      m_pfbupdatenotifier);
 
             m_plogwriter->debug("Decoded");
          } else { // decoder is 0
@@ -1124,8 +1124,8 @@ namespace remoting
          case PseudoEncDefs::DESKTOP_SIZE:
             m_plogwriter->information("Changed size of desktop");
          {
-            critical_section_lock al(&m_fbLock);
-            setFbProperties(rectangle.size(), m_pframebuffer.getPixelFormat());
+            critical_section_lock al(&m_criticalsectionFramebuffer);
+            setFbProperties(rectangle.size(), m_pframebuffer->getPixelFormat());
          }
             break;
 
@@ -1135,7 +1135,7 @@ namespace remoting
 
             unsigned short width = rectangle.width();
             unsigned short height = rectangle.height();
-            unsigned char bytesPerPixel = m_pframebuffer.getBytesPerPixel();
+            unsigned char bytesPerPixel = m_pframebuffer->getBytesPerPixel();
 
             ::array_base<unsigned char> cursor;
             ::array_base<unsigned char> bitmask;
@@ -1152,7 +1152,7 @@ namespace remoting
             ::int_point pointHotspot(rectangle.left, rectangle.top);
 
             m_plogwriter->debug("Setting new rich cursor...");
-            m_fbUpdateNotifier.setNewCursor(&pointHotspot, width, height,
+            m_pfbupdatenotifier.setNewCursor(&pointHotspot, width, height,
                                             &cursor, &bitmask);
          }
             break;
@@ -1161,7 +1161,7 @@ namespace remoting
          {
             m_plogwriter->debug("Updating pointer pointPosition: [{}, {}]", rectangle.left, rectangle.top);
             ::int_point pointPosition(rectangle.left, rectangle.top);
-            m_fbUpdateNotifier.updatePointerPos(&pointPosition);
+            m_pfbupdatenotifier.updatePointerPos(&pointPosition);
          }
             break;
 
@@ -1195,7 +1195,7 @@ namespace remoting
 
       m_plogwriter->information("Bell!");
       try {
-         m_adapter->onBell();
+         m_pcoreeventsadapter->onBell();
       } catch (const ::subsystem::Exception &ex) {
          m_plogwriter->error("Error in CoreEventsAdapter::onBell(): {}", ex.get_message());
       } catch (...) {
@@ -1221,7 +1221,7 @@ namespace remoting
 
       m_plogwriter->debug("Cut text: {}", cutText);
       try {
-         m_adapter->onCutText(cutText);
+         m_pcoreeventsadapter->onCutText(cutText);
       } catch (const ::subsystem::Exception &ex) {
          m_plogwriter->error("Error in CoreEventsAdapter::onCutText(): {}", ex.get_message());
       } catch (...) {
@@ -1241,7 +1241,7 @@ namespace remoting
 
       m_plogwriter->debug("Cut text: {}", cutText);
       try {
-         m_adapter->onCutText(cutText);
+         m_pcoreeventsadapter->onCutText(cutText);
       }
       catch (const ::subsystem::Exception &ex) {
          m_plogwriter->error("Error in CoreEventsAdapter::onCutText(): {}", ex.get_message());
@@ -1333,12 +1333,12 @@ namespace remoting
     */
    void RemoteViewerCore::clientAndServerInit()
    {
-      if (m_sharedFlag) {
+      if (m_bShared) {
          m_plogwriter->information("Setting share flag in on...");
       } else {
          m_plogwriter->information("Setting share flag is off...");
       }
-      m_output->writeUInt8(m_sharedFlag);
+      m_output->writeUInt8(m_bShared);
       m_output->flush();
       m_plogwriter->debug("Shared flag is set");
 
@@ -1348,7 +1348,7 @@ namespace remoting
       ::innate_subsystem::PixelFormat serverPixelFormat = readPixelFormat();
 
       {
-         critical_section_lock al(&m_fbLock);
+         critical_section_lock al(&m_criticalsectionFramebuffer);
          setFbProperties(screenDimension, serverPixelFormat);
       }
 
@@ -1362,7 +1362,7 @@ namespace remoting
       m_plogwriter->information("Server remote name: {}", m_remoteDesktopName);
 
       if (m_isTight) {
-         m_plogwriter->debug("Reading tight capabilities");
+         m_plogwriter->debug("Reading tight pcapabilitiesmanager");
          readCapabilities();
       }
    }
@@ -1402,7 +1402,7 @@ namespace remoting
          m_encodingCaps.enable(&cap);
       }
 
-      // Add active encoding-capabilities in DecoderStore.
+      // Add active encoding-pcapabilitiesmanager in DecoderStore.
       for (size_t i = 0; i < m_encodingCaps.numEnabled(); i++) {
          m_decoderStore.addDecoder(m_decoderHandlers[m_encodingCaps.getByOrder(i)],
                                    m_decoderPriority[m_encodingCaps.getByOrder(i)]);

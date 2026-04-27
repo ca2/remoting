@@ -38,7 +38,7 @@
 //#include "acme/parallelization/happening.h"
 #include "acme/parallelization/happening.h"
 #include "subsystem/thread/GuiThread.h"
-#include "subsystem/node/Screen.h"
+#include "subsystem_windows/node/Screen.h"
 #include "remoting/remoting_windows/_common_header.h"
 
 namespace remoting
@@ -80,7 +80,7 @@ namespace remoting
    class CLASS_DECL_REMOTING_WINDOWS WindowsScreenGrabber : public ScreenGrabber, public ::subsystem::GuiThread
    {
    public:
-      WindowsScreenGrabber(void);
+      WindowsScreenGrabber(::remoting::Configurator * pconfigurator);
       virtual ~WindowsScreenGrabber(void);
 
       virtual bool grab(const ::int_rectangle & rectangle);
@@ -115,7 +115,7 @@ namespace remoting
       ServerConfig *m_pserverconfig;
 
       // Screen m_screen;
-      ::subsystem::Screen m_screen;
+      ::subsystem_windows::Screen m_screen;
    };
 
    //// __WINDOWSSCREENGRABBER_H__

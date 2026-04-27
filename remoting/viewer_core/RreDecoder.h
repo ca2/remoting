@@ -27,7 +27,7 @@
 
 #include "DecoderOfRectangle.h"
 
-namespace remoting
+namespace remoting_client
 {
    class CLASS_DECL_REMOTING RreDecoder : public DecoderOfRectangle
    {
@@ -36,8 +36,8 @@ namespace remoting
       virtual ~RreDecoder();
 
    protected:
-      virtual void decode(RfbInputGate *input,
+      virtual void decode(::remoting::RfbInputGate *input,
                           ::innate_subsystem::Framebuffer *pframebuffer,
                           const ::int_rectangle &  rectangleTarget);
    };
-} // namespace remoting
+} // namespace remoting_client

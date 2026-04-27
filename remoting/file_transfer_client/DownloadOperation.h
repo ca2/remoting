@@ -33,7 +33,7 @@
 
 namespace remoting
 {
-   namespace ftp
+   namespace file_transfer
    {
       //
       // ::file::item transfer operation class for downloading files (and file trees).
@@ -133,5 +133,5 @@ namespace remoting
          class ::time m_timeLastRequest;
 
       };
-   } // namespace ftp
+   } // namespace file_transfer
 } // namespace remoting

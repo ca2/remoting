@@ -38,7 +38,7 @@
 
 namespace  remoting
 {
-   namespace  ftp
+   namespace file_transfer
    {
       class CLASS_DECL_REMOTING FileTransferCapability : public ServerMessageListener
       {
@@ -63,7 +63,7 @@ namespace  remoting
          //
          // This method must called from event onConnected() in CoreEventsAdapter.
          //
-         void setOutput(RfbOutputGate *output);
+         void setOutput(::remoting::RfbOutputGate *output);
 
          //
          // Overrides MessageListener::onRequest().

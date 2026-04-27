@@ -28,7 +28,7 @@
 //#include "subsystem/platform/winhdr.h"
 //#include "acme/_operating_system.h"
 
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "DynamicLibrary.h"
 #include "SystemException.h"
 //#include "log_writer/LogWriter.h"
@@ -176,7 +176,7 @@ private:
   /**
    * Thread-safety.
    */
-  static critical_section m_mutex;
+  static lockable_critical_section m_mutex;
 };
 
 

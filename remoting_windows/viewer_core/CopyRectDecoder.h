@@ -40,7 +40,7 @@ namespace remoting
       //
       // This method inherited by DecoderOfRectangle.
       //
-      virtual void decode(RfbInputGate *input,
+      virtual void decode(::remoting::RfbInputGate *input,
                           ::innate_subsystem::Framebuffer *pframebuffer,
                           const ::int_rectangle &  rectangleTarget);
 
@@ -50,7 +50,7 @@ namespace remoting
       virtual void copy(::innate_subsystem::Framebuffer *dstFramebuffer,
                         const ::innate_subsystem::Framebuffer *pframebufferSource,
                         const ::int_rectangle &  rectangle,
-                        critical_section *fbLock);
+                        lockable_critical_section *pcriticalsectionFramebuffer);
 
    private:
       // This ::int_point save left-top corner of copy-rectangle.

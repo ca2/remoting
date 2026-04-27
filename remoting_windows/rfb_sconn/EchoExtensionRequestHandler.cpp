@@ -29,7 +29,7 @@
 #include "acme/input_output/ByteArrayOutputStream.h"
 #include "remoting/remoting/network/RfbOutputGate.h"
 #include "remoting/remoting/network/RfbInputGate.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "remoting/remoting/server_config/Configurator.h"
 #include "subsystem/node/SystemException.h"
 #include "remoting/remoting/rfb/VendorDefs.h"
@@ -37,7 +37,7 @@
 namespace remoting
 {
    EchoExtensionRequestHandler::EchoExtensionRequestHandler(RfbCodeRegistrator *registrator,
-                                                          RfbOutputGate *output,
+                                                          ::remoting::RfbOutputGate *output,
                                                           ::subsystem::LogWriter * plogwriter,
                                                           bool enabled)
    : m_output(output), m_enabled(enabled),
@@ -62,7 +62,7 @@ namespace remoting
       m_plogwriter->debug("Echo extension request handler deleted");
    }
 
-   void EchoExtensionRequestHandler::onRequest(unsigned int reqCode, RfbInputGate *pblockinggate)
+   void EchoExtensionRequestHandler::onRequest(unsigned int reqCode, ::remoting::RfbInputGate *pblockinggate)
    {
       m_input = pblockinggate;
 

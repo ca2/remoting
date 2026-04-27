@@ -27,7 +27,7 @@
 
 #include "subsystem/_common_header.h"
 
-#include "../remoting/desktop/windows/WinServiceDesktopFactory.h"
+//#include "../remoting/desktop/windows/WinServiceDesktopFactory.h"
 #include "remoting/remoting/desktop/ApplicationDesktopFactory.h"
 #include "RfbClientManager.h"
 #include "RfbServer.h"
@@ -38,11 +38,11 @@
 //#include "http-server-lib/HttpServer.h"
 
 //#include "subsystem/thread/ZombieKiller.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 //#include "log_writer/LogWriter.h"
 #include "subsystem/platform/Singleton.h"
 #include "subsystem/platform/ListenerContainer.h"
-#include "NewConnectionEvents.h"
+#include "remoting/remoting/server/NewConnectionEvents.h"
 
 #include "remoting/remoting/server_config/Configurator.h"
 
@@ -65,7 +65,7 @@ namespace remoting_node_desktop
    //class Server : public Singleton<Server>,
    class  CLASS_DECL_REMOTING_NODE_DESKTOP Server : 
          public ::subsystem::ListenerContainer<ServerListener *>,
-         public ConfigReloadListener,
+         public ::remoting::ConfigReloadListener,
          public RfbClientManagerEventListener
    {
    public:
@@ -74,16 +74,16 @@ namespace remoting_node_desktop
             ::pointer < ::subsystem::LogWriter > m_plogwriter;
       // ZombieKiller m_zombieKiller;
 
-      ::pointer<Configurator> m_pconfigurator;
+      ::pointer<::remoting::Configurator> m_pconfigurator;
       /**
        * Shortcut to global server configuration.
        */
-      ::pointer < ServerConfig > m_pserverconfig;
+      ::pointer < ::remoting::ServerConfig > m_pserverconfig;
 
       /**
        * Mutex for protecting servers.
        */
-      critical_section m_mutex;
+      lockable_critical_section m_mutex;
 
       /**
        * Flag that determitates if we run in server context.
@@ -91,8 +91,9 @@ namespace remoting_node_desktop
        */
       bool m_bRunAsService;
 
-      ::pointer < WinServiceDesktopFactory > m_pservicedesktopfactory;
-      ::pointer < ApplicationDesktopFactory > m_papplicationdesktopfactory;
+      //::pointer < ::remoting::WinServiceDesktopFactory > m_pservicedesktopfactory;
+      //::pointer < ::remoting::ApplicationDesktopFactory > m_papplicationdesktopfactory;
+      ::pointer < ::remoting::DesktopFactory > m_pdesktopfactory;
       /**
        * Rfb client manager (for all rfb servers), used by rfb servers
        * rfb clients, control server and control clients.
@@ -156,7 +157,7 @@ namespace remoting_node_desktop
        */
       virtual void getServerInfo(ServerInfo *info);
 
-      virtual void initialize_remoting_node_desktop_server(bool runsInServiceContext, NewConnectionEvents *newConnectionEvents,
+      virtual void initialize_remoting_node_desktop_server(bool runsInServiceContext, ::remoting_node::NewConnectionEvents *newConnectionEvents,
                                     LogInitListener *logInitListener, ::subsystem::LogWriter *plogwriter);
 
       virtual void on_start();
@@ -169,7 +170,7 @@ namespace remoting_node_desktop
        *  2) Restarts rfb servers.
        *  3) Restarts http server.
        */
-      virtual void onConfigReload(ServerConfig *serverConfig);
+      virtual void onConfigReload(::remoting::ServerConfig *serverConfig);
 
       /**
        * Only generates shutdown signal (event) for Server listeners.
@@ -227,7 +228,7 @@ namespace remoting_node_desktop
       ///**
       // * Mutex for protecting servers.
       // */
-      //critical_section m_mutex;
+      //lockable_critical_section m_mutex;
 
       ///**
       // * Flag that determitates if we run in server context.

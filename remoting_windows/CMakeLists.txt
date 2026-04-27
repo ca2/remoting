@@ -484,71 +484,73 @@ list(APPEND library_source
 if(${WIN32})
 
    list(APPEND library_source
-      desktop/windows/DesktopWinImpl.cpp
-      desktop/windows/DesktopWinImpl.h
-   desktop/windows/MirrorDriverClient.cpp
-   desktop/windows/MirrorDriverClient.h
-   desktop/windows/MirrorScreenDriver.cpp
-   desktop/windows/MirrorScreenDriver.h
-   desktop/windows/Win8CursorShape.cpp
-   desktop/windows/Win8CursorShape.h
-   desktop/windows/Win8DeskDuplicationThread.cpp
-   desktop/windows/Win8DeskDuplicationThread.h
-   desktop/windows/Win8DuplicationListener.h
-   desktop/windows/Win8ScreenDriver.cpp
-   desktop/windows/Win8ScreenDriver.h
-   desktop/windows/Win8ScreenDriverImpl.cpp
-   desktop/windows/Win8ScreenDriverImpl.h
-   desktop/windows/Win32MirrorScreenDriver.cpp
-   desktop/windows/Win32MirrorScreenDriver.h
-   desktop/windows/Win32ScreenDriver.cpp
-   desktop/windows/Win32ScreenDriver.h
-   desktop/windows/Win32ScreenDriverBaseImpl.cpp
-   desktop/windows/Win32ScreenDriverBaseImpl.h
-   desktop/windows/Win32ScreenDriverFactory.cpp
-   desktop/windows/Win32ScreenDriverFactory.h
-   desktop/windows/WinAutoMapDxgiSurface.cpp
-   desktop/windows/WinAutoMapDxgiSurface.h
-   desktop/windows/WinCursorShapeUtils.cpp
-   desktop/windows/WinCursorShapeUtils.h
-   desktop/windows/WinCustomD3D11Texture2D.cpp
-   desktop/windows/WinCustomD3D11Texture2D.h
-   desktop/windows/WinD3D11Device.cpp
-   desktop/windows/WinD3D11Device.h
-   desktop/windows/WinD3D11Texture2D.cpp
-   desktop/windows/WinD3D11Texture2D.h
-   desktop/windows/WindowsCursorShapeGrabber.cpp
-   desktop/windows/WindowsCursorShapeGrabber.h
-   desktop/windows/WindowsInputBlocker.cpp
-   desktop/windows/WindowsInputBlocker.h
-   desktop/windows/WindowsScreenGrabber.cpp
-   desktop/windows/WindowsScreenGrabber.h
-   desktop/windows/WindowsUserInput.cpp
-   desktop/windows/WindowsUserInput.h
-   desktop/windows/WinDxCriticalException.cpp
-   desktop/windows/WinDxCriticalException.h
-   desktop/windows/WinDxException.cpp
-   desktop/windows/WinDxException.h
-   desktop/windows/WinDxgiAcquiredFrame.cpp
-   desktop/windows/WinDxgiAcquiredFrame.h
-   desktop/windows/WinDxgiAdapter.cpp
-   desktop/windows/WinDxgiAdapter.h
-   desktop/windows/WinDxgiDevice.cpp
-   desktop/windows/WinDxgiDevice.h
-   desktop/windows/WinDxgiOutput.cpp
-   desktop/windows/WinDxgiOutput.h
-   desktop/windows/WinDxgiOutput1.cpp
-   desktop/windows/WinDxgiOutput1.h
-   desktop/windows/WinDxgiOutputDuplication.cpp
-   desktop/windows/WinDxgiOutputDuplication.h
-   desktop/windows/WinDxgiSurface.cpp
-   desktop/windows/WinDxgiSurface.h
-   desktop/windows/WinDxRecoverableException.cpp
-   desktop/windows/WinDxRecoverableException.h
-   desktop/windows/WinServiceDesktopFactory.cpp
-   desktop/windows/WinServiceDesktopFactory.h
-   desktop/windows/WinVideoRegionUpdaterImpl.cpp
-   desktop/windows/WinVideoRegionUpdaterImpl.h
+
+      _common_header.h
+   desktop/DesktopWinImpl.cpp
+   desktop/DesktopWinImpl.h
+   desktop/MirrorDriverClient.cpp
+   desktop/MirrorDriverClient.h
+   desktop/MirrorScreenDriver.cpp
+   desktop/MirrorScreenDriver.h
+   desktop/Win8CursorShape.cpp
+   desktop/Win8CursorShape.h
+   desktop/Win8DeskDuplicationThread.cpp
+   desktop/Win8DeskDuplicationThread.h
+   desktop/Win8DuplicationListener.h
+   desktop/Win8ScreenDriver.cpp
+   desktop/Win8ScreenDriver.h
+   desktop/Win8ScreenDriverImpl.cpp
+   desktop/Win8ScreenDriverImpl.h
+   desktop/Win32MirrorScreenDriver.cpp
+   desktop/Win32MirrorScreenDriver.h
+   desktop/Win32ScreenDriver.cpp
+   desktop/Win32ScreenDriver.h
+   desktop/Win32ScreenDriverBaseImpl.cpp
+   desktop/Win32ScreenDriverBaseImpl.h
+   desktop/Win32ScreenDriverFactory.cpp
+   desktop/Win32ScreenDriverFactory.h
+   desktop/WinAutoMapDxgiSurface.cpp
+   desktop/WinAutoMapDxgiSurface.h
+   desktop/WinCursorShapeUtils.cpp
+   desktop/WinCursorShapeUtils.h
+   desktop/WinCustomD3D11Texture2D.cpp
+   desktop/WinCustomD3D11Texture2D.h
+   desktop/WinD3D11Device.cpp
+   desktop/WinD3D11Device.h
+   desktop/WinD3D11Texture2D.cpp
+   desktop/WinD3D11Texture2D.h
+   desktop/WindowsCursorShapeGrabber.cpp
+   desktop/WindowsCursorShapeGrabber.h
+   desktop/WindowsInputBlocker.cpp
+   desktop/WindowsInputBlocker.h
+   desktop/WindowsScreenGrabber.cpp
+   desktop/WindowsScreenGrabber.h
+   desktop/WindowsUserInput.cpp
+   desktop/WindowsUserInput.h
+   desktop/WinDxCriticalException.cpp
+   desktop/WinDxCriticalException.h
+   desktop/WinDxException.cpp
+   desktop/WinDxException.h
+   desktop/WinDxgiAcquiredFrame.cpp
+   desktop/WinDxgiAcquiredFrame.h
+   desktop/WinDxgiAdapter.cpp
+   desktop/WinDxgiAdapter.h
+   desktop/WinDxgiDevice.cpp
+   desktop/WinDxgiDevice.h
+   desktop/WinDxgiOutput.cpp
+   desktop/WinDxgiOutput.h
+   desktop/WinDxgiOutput1.cpp
+   desktop/WinDxgiOutput1.h
+   desktop/WinDxgiOutputDuplication.cpp
+   desktop/WinDxgiOutputDuplication.h
+   desktop/WinDxgiSurface.cpp
+   desktop/WinDxgiSurface.h
+   desktop/WinDxRecoverableException.cpp
+   desktop/WinDxRecoverableException.h
+   desktop/WinServiceDesktopFactory.cpp
+   desktop/WinServiceDesktopFactory.h
+   desktop/WinVideoRegionUpdaterImpl.cpp
+   desktop/WinVideoRegionUpdaterImpl.h
 
    )
 endif()
@@ -568,8 +570,7 @@ list(APPEND library_include_directories
 )
 
 
-add_library(${PROJECT_NAME} SHARED ${library_source}
-   desktop/windows/_common_header.h)
+add_library(${PROJECT_NAME} SHARED ${library_source})
 
 #target_precompile_headers(${PROJECT_NAME} PRIVATE framework.h)
 

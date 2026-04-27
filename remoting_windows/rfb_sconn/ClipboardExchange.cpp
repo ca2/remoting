@@ -26,15 +26,15 @@
 #include "remoting/remoting/rfb/MsgDefs.h"
 ////#include "subsystem/platform/::string.h"
 //#include "subsystem/platform/::string.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "remoting/remoting/rfb/VendorDefs.h"
 #include "subsystem/platform/Exception.h"
 
 namespace remoting
 {
-   ClipboardExchange::ClipboardExchange(RfbCodeRegistrator *codeRegtor,
+   ClipboardExchange::ClipboardExchange(RfbCodeRegistrator *m_prfbcoderegistrator,
                                         Desktop *desktop,
-                                        RfbOutputGate *output,
+                                        ::remoting::RfbOutputGate *output,
                                         bool viewOnly,
                                         ::subsystem::LogWriter * plogwriter)
    : m_pdesktop(desktop),
@@ -45,13 +45,13 @@ namespace remoting
      m_plogwriter(plogwriter)
    {
       // Request code
-      codeRegtor->regCode(ClientMsgDefs::CLIENT_CUT_TEXT, this);
+      m_prfbcoderegistrator->regCode(ClientMsgDefs::CLIENT_CUT_TEXT, this);
 
-      codeRegtor->addClToSrvCap(ClientMsgDefs::CLIENT_CUT_TEXT_UTF8, VendorDefs::TIGHTVNC, Utf8CutTextDefs::CLIENT_CUT_TEXT_UTF8_SIG);
-      codeRegtor->addClToSrvCap(ClientMsgDefs::ENABLE_CUT_TEXT_UTF8, VendorDefs::TIGHTVNC, Utf8CutTextDefs::ENABLE_CUT_TEXT_UTF8_SIG);
-      codeRegtor->addSrvToClCap(ServerMsgDefs::SERVER_CUT_TEXT_UTF8, VendorDefs::TIGHTVNC, Utf8CutTextDefs::SERVER_CUT_TEXT_UTF8_SIG);
-      codeRegtor->regCode(ClientMsgDefs::CLIENT_CUT_TEXT_UTF8, this);
-      codeRegtor->regCode(ClientMsgDefs::ENABLE_CUT_TEXT_UTF8, this);
+      m_prfbcoderegistrator->addClToSrvCap(ClientMsgDefs::CLIENT_CUT_TEXT_UTF8, VendorDefs::TIGHTVNC, Utf8CutTextDefs::CLIENT_CUT_TEXT_UTF8_SIG);
+      m_prfbcoderegistrator->addClToSrvCap(ClientMsgDefs::ENABLE_CUT_TEXT_UTF8, VendorDefs::TIGHTVNC, Utf8CutTextDefs::ENABLE_CUT_TEXT_UTF8_SIG);
+      m_prfbcoderegistrator->addSrvToClCap(ServerMsgDefs::SERVER_CUT_TEXT_UTF8, VendorDefs::TIGHTVNC, Utf8CutTextDefs::SERVER_CUT_TEXT_UTF8_SIG);
+      m_prfbcoderegistrator->regCode(ClientMsgDefs::CLIENT_CUT_TEXT_UTF8, this);
+      m_prfbcoderegistrator->regCode(ClientMsgDefs::ENABLE_CUT_TEXT_UTF8, this);
 
       resume();
    }
@@ -62,7 +62,7 @@ namespace remoting
       wait();
    }
 
-   void ClipboardExchange::onRequest(unsigned int reqCode, RfbInputGate *prfbinputgate)
+   void ClipboardExchange::onRequest(unsigned int reqCode, ::remoting::RfbInputGate *prfbinputgate)
    {
 
       switch (reqCode) {
@@ -84,7 +84,7 @@ namespace remoting
             break;
       }
    }
-   void ClipboardExchange::onRequestWorker(bool utf8flag, RfbInputGate *prfbinputgate)
+   void ClipboardExchange::onRequestWorker(bool utf8flag, ::remoting::RfbInputGate *prfbinputgate)
    {
       unsigned int length = prfbinputgate->readUInt32();
 

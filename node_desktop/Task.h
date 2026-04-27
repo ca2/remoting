@@ -37,7 +37,7 @@ namespace remoting_node_desktop
        */
       ::pointer<Server> m_pserver;
 
-      ::pointer < NewConnectionEvents  > m_pnewconnectionevents;
+      ::pointer < ::remoting_node::NewConnectionEvents  > m_pnewconnectionevents;
 
       ::subsystem::LogWriter * m_plogwriter;
 
@@ -57,7 +57,7 @@ namespace remoting_node_desktop
       ~Task() override;
 
 
-      virtual void initialize_remoting_node_desktop_server_task(NewConnectionEvents * pnewconnectionevents);
+      virtual void initialize_remoting_node_desktop_server_task(::remoting_node::NewConnectionEvents * pnewconnectionevents);
 
 
       void _start() override;

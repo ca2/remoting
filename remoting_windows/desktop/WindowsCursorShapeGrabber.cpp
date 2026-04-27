@@ -25,6 +25,7 @@
 #include "remoting/remoting_windows/desktop/WindowsCursorShapeGrabber.h"
 #include "remoting/remoting_windows/desktop/WinCursorShapeUtils.h"
 
+
 namespace remoting
 {
 
@@ -102,7 +103,7 @@ namespace remoting
 
       const ::innate_subsystem::Framebuffer *pixels = m_cursorShape.getPixels();
 
-      m_cursorShape.setProperties(&::int_size(width, height), pixelFormat);
+      m_cursorShape.setProperties({width, height}, pixelFormat);
 
       ::array_base<char> maskBuff(widthBytes * bmMask.bmHeight);
       if (maskBuff.empty())
@@ -114,7 +115,7 @@ namespace remoting
          }
          return true;
       }
-      char *mask = &maskBuff.front();
+      char *mask = maskBuff.data();
 
       // FIXME: Use try-catch block to escape code duplication
       // and free resources on an error.
@@ -138,23 +139,23 @@ namespace remoting
          return false;
       }
 
-      Screen::BMI bmi;
+      ::subsystem_windows::Screen::BMI bmi;
       try
       {
-         m_screen.getBMI(&bmi, screenDC);
+         m_screen._getBMI(&bmi, screenDC);
       }
       catch (...)
       {
          return false;
       }
 
-      bmi.bmiHeader.biBitCount = pixelFormat->bitsPerPixel;
+      bmi.bmiHeader.biBitCount = pixelFormat.bitsPerPixel;
       bmi.bmiHeader.biWidth = width;
       bmi.bmiHeader.biHeight = -height;
       bmi.bmiHeader.biCompression = BI_BITFIELDS;
-      bmi.red = pixelFormat->redMax << pixelFormat->redShift;
-      bmi.green = pixelFormat->greenMax << pixelFormat->greenShift;
-      bmi.blue = pixelFormat->blueMax << pixelFormat->blueShift;
+      bmi.red = pixelFormat.redMax << pixelFormat.redShift;
+      bmi.green = pixelFormat.greenMax << pixelFormat.greenShift;
+      bmi.blue = pixelFormat.blueMax << pixelFormat.blueShift;
 
       HDC destDC = CreateCompatibleDC(NULL);
       if (destDC == NULL)
@@ -215,7 +216,7 @@ namespace remoting
 
       if (GetCursorInfo(&cursorInfo) == 0)
       {
-         return false;
+         return nullptr;
       }
 
       return cursorInfo.hCursor;

@@ -27,7 +27,7 @@
 
 #include "subsystem/_common_header.h"
 //#include aaa_<vector>
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 //#include "log_writer/LogWriter.h"
 
 typedef ::array_base<TCHAR *> StringContainer;
@@ -60,7 +60,7 @@ private:
   HANDLE getLogHandle();
 
   HANDLE m_hEventLog;
-  critical_section m_criticalsectionEventLog;
+  lockable_critical_section m_criticalsectionEventLog;
 
   ::pointer < ::subsystem::LogWriter > m_plogwriter;
 };

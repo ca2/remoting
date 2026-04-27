@@ -27,19 +27,19 @@
 
 //#include aaa_<algorithm>
 
-namespace remoting
+namespace remoting_client
 {
    HexTileDecoder::HexTileDecoder(::subsystem::LogWriter * plogwriter)
    : DecoderOfRectangle(plogwriter)
    {
-      m_encoding = EncodingDefs::HEXTILE;
+      m_encoding = ::remoting::EncodingDefs::HEXTILE;
    }
 
    HexTileDecoder::~HexTileDecoder()
    {
    }
 
-   void HexTileDecoder::decode(RfbInputGate *pinput,
+   void HexTileDecoder::decode(::remoting::RfbInputGate *pinput,
                                ::innate_subsystem::Framebuffer *pframebuffer,
                                const ::int_rectangle &  rectangleTarget)
    {
@@ -106,4 +106,4 @@ namespace remoting
          } // for each tiles in line
       } // for each line of tile
    }
-} // namespace remoting
+} // namespace remoting_client

@@ -52,7 +52,7 @@
 
 namespace remoting
 {
-   namespace ftp
+   namespace file_transfer
    {
       class CLASS_DECL_REMOTING UploadOperation : public CopyOperation
       {
@@ -193,7 +193,7 @@ namespace remoting
          //FileInfo *m_remoteFilesInfo;
          //unsigned int m_remoteFilesCount;
 
-         ::pointer_array< ::remoting::ftp::FileInfo>m_fileinfoaRemote;
+         ::pointer_array< ::remoting::file_transfer::FileInfo>m_fileinfoaRemote;
 
          //
          // Helper members of 'Remote file ::list_base trick'

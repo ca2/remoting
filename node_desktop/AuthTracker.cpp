@@ -23,15 +23,15 @@
 //
 #include "framework.h"
 #include "AuthTracker.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
 
 namespace remoting_node_desktop
 {
 
 
-   AuthTracker::AuthTracker(unsigned long long failureTimeInterval, unsigned int failureMaxCount) :
-       m_failureCount(0), m_failureTimeInterval(failureTimeInterval), m_failureMaxCount(failureMaxCount)
+   AuthTracker::AuthTracker(const class ::time & timeFailureInterval, unsigned int failureMaxCount) :
+       m_failureCount(0), m_failureTimeInterval(timeFailureInterval), m_failureMaxCount(failureMaxCount)
    {
    }
 
@@ -46,9 +46,9 @@ namespace remoting_node_desktop
          critical_section_lock al(&m_countMutex);
          if (m_failureCount >= m_failureMaxCount)
          {
-            banTime = maximum(0, m_failureTimeInterval -
+            banTime = maximum(0_s, m_failureTimeInterval -
                                     //(class ::time::now() - m_firstFailureTime).getTime());
-                                    (class ::time::now() - m_firstFailureTime).m_iSecond);
+                                    m_firstFailureTime.elapsed()).integral_millisecond();
          }
       }
       return banTime;
@@ -59,7 +59,7 @@ namespace remoting_node_desktop
       critical_section_lock al(&m_countMutex);
       if (m_failureCount == 0)
       {
-         m_firstFailureTime = class ::time::now();
+         m_firstFailureTime.Now();
       }
       m_failureCount++;
    }
@@ -68,7 +68,7 @@ namespace remoting_node_desktop
    {
       critical_section_lock al(&m_countMutex);
       // if ((class ::time::now() - m_firstFailureTime).getTime() >= m_failureTimeInterval) {
-      if ((class ::time::now() - m_firstFailureTime).m_iSecond >= m_failureTimeInterval)
+      if (m_firstFailureTime.elapsed() >= m_failureTimeInterval)
       {
          m_failureCount = 0;
       }

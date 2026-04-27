@@ -26,7 +26,7 @@
 
 namespace remoting
 {
-   namespace ftp
+   namespace file_transfer
    {
       FileInfoList::FileInfoList(::particle * pparticle, FileInfo fileInfo)
 //      : m_pparent(0), m_pchild(0), m_pnext(0), m_pprev(0)

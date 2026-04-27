@@ -49,20 +49,20 @@ namespace remoting_client
         // Adds new item to FileInfoListView
         //
 
-        virtual void addItem(int index, ::remoting::ftp::FileInfo *fileInfo);
+        virtual void addItem(int index, ::remoting::file_transfer::FileInfo *fileInfo);
 
         //
         // Adds files info array to the end of ::list_base view
         //
 
-        //void addRange(::remoting::ftp::FileInfo **filesInfo, size_t count);
-        virtual void addRange(const ::pointer_array < ::remoting::ftp::FileInfo > & fileinfoa);
+        //void addRange(::remoting::file_transfer::FileInfo **filesInfo, size_t count);
+        virtual void addRange(const ::pointer_array < ::remoting::file_transfer::FileInfo > & fileinfoa);
 
         //
         // Returns file info notated by first selected ::list_base view item
         //
 
-        virtual ::pointer < ::remoting::ftp::FileInfo >getSelectedFileInfo();
+        virtual ::pointer < ::remoting::file_transfer::FileInfo >getSelectedFileInfo();
 
         virtual void set_sort(int columnIndex);
         //protected:

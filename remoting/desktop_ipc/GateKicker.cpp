@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "GateKicker.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
 namespace remoting
 {

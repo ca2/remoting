@@ -29,7 +29,7 @@
 #include "RfbClientToServerMessage.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 
-namespace remoting
+namespace remoting_client
 {
    class CLASS_DECL_REMOTING RfbFramebufferUpdateRequestClientMessage :
      public RfbClientToServerMessage
@@ -39,10 +39,10 @@ namespace remoting
         (bool incremental, ::int_rectangle updateRect);
       ~RfbFramebufferUpdateRequestClientMessage();
 
-      void send(RfbOutputGate *output);
+      void send(::remoting::RfbOutputGate *output);
 
    private:
       bool m_incremental;
       ::int_rectangle m_rect;
    };
-} // namespace remoting
+} // namespace remoting_client

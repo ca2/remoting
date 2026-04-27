@@ -28,10 +28,11 @@
 #include "acme/input_output/DataInputStream.h"
 
 
-namespace remoting
+namespace remoting_client
 {
    // FIXME: document it.
-   class CLASS_DECL_REMOTING ServerMessageListener
+   class CLASS_DECL_REMOTING ServerMessageListener :
+      virtual public ::particle
    {
    public:
       virtual ~ServerMessageListener() {};
@@ -42,5 +43,5 @@ namespace remoting
       //
       virtual void onServerMessage(unsigned int msgCode,::DataInputStream * pinput) = 0;
    };
-} // namespace remoting
+} // namespace remoting_client
 

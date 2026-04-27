@@ -25,7 +25,7 @@
 #include "RfbSetEncodingsClientMessage.h"
 #include "DecoderStore.h"
 
-namespace remoting
+namespace remoting_client
 {
    RfbSetEncodingsClientMessage::RfbSetEncodingsClientMessage(const ::array_base<int> & encodings)
    {
@@ -36,21 +36,21 @@ namespace remoting
    {
    }
 
-   void RfbSetEncodingsClientMessage::send(RfbOutputGate *output)
+   void RfbSetEncodingsClientMessage::send(::remoting::RfbOutputGate *prfboutputgate)
    {
-      critical_section_lock al(output);
-      output->writeUInt8(ClientMsgDefs::SET_ENCODINGS);
-      output->writeUInt8(0); // padding 1 byte
+      critical_section_lock al(prfboutputgate);
+      prfboutputgate->writeUInt8(::remoting::ClientMsgDefs::SET_ENCODINGS);
+      prfboutputgate->writeUInt8(0); // padding 1 byte
 
-      // output count of encoding and out code of all encodings
-      output->writeUInt16(static_cast<unsigned short>(m_encodings.size()));
+      // prfboutputgate count of encoding and out code of all encodings
+      prfboutputgate->writeUInt16(static_cast<unsigned short>(m_encodings.size()));
 
       for (::array_base<int>::iterator i = m_encodings.begin();
            i != m_encodings.end();
            i++) {
-         output->writeInt32(*i);
+         prfboutputgate->writeInt32(*i);
            }
 
-      output->flush();
+      prfboutputgate->flush();
    }
-} // namespace remoting
+} // namespace remoting_client

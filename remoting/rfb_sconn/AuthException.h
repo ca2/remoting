@@ -29,15 +29,15 @@
 #include "subsystem/platform/Exception.h"
 
 
-namespace remoting
+namespace remoting_node
 {
-   class AuthException : public ::subsystem::Exception
+   class CLASS_DECL_REMOTING AuthException : public ::subsystem::Exception
    {
    public:
-      AuthException(const ::scoped_string & scopedstrMessage): ::subsystem::Exception(scopedstrMessage) {}
-      virtual ~AuthException() {}
+      AuthException(const ::scoped_string & scopedstrMessage);
+      ~AuthException() override;
    };
-} //namespace remoting
+} //namespace remoting_node
 
 
 

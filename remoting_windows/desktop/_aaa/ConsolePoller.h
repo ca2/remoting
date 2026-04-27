@@ -41,7 +41,7 @@ namespace remoting
 
       virtual ~ConsolePoller();
       virtual void initialize_console_poller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ScreenGrabber *pscreengrabber,
-                    ::innate_subsystem::Framebuffer *backupFramebuffer, critical_section *framebufferMutex,
+                    ::innate_subsystem::Framebuffer *backupFramebuffer, lockable_critical_section *framebufferMutex,
                     ::subsystem::LogWriter * plogwriter);
 
    //protected:
@@ -55,7 +55,7 @@ namespace remoting
       ::int_rectangle m_rectanglePolling;
       ::happening m_intervalWaiter;
       ::pointer < ::innate_subsystem::Framebuffer  > m_pframebufferBackup;
-      critical_section *m_pcriticalsectionFramebuffer;
+      lockable_critical_section *m_pcriticalsectionFramebuffer;
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 

@@ -25,15 +25,15 @@
 #include "DesktopSizeDecoder.h"
 
 
-namespace remoting
+namespace remoting_client
 {
    DesktopSizeDecoder::DesktopSizeDecoder(::subsystem::LogWriter * plogwriter)
    : PseudoDecoder(plogwriter)
    {
-      m_encoding = PseudoEncDefs::DESKTOP_SIZE;
+      m_encoding = ::remoting::PseudoEncDefs::DESKTOP_SIZE;
    }
 
    DesktopSizeDecoder::~DesktopSizeDecoder()
    {
    }
-} // namespace remoting
+} // namespace remoting_client

@@ -51,8 +51,8 @@ namespace remoting
       VncAuthentication::vncAuthenticate(pinput, output, password);
    }
 
-   void VncAuthenticationHandler::addAuthCapability(CapabilitiesManager *capManager)
+   void VncAuthenticationHandler::addAuthCapability(CapabilitiesManager *pcapabilitiesmanager)
    {
-      capManager->addAuthCapability(this, AuthDefs::VNC, VendorDefs::STANDARD, AuthDefs::SIG_VNC);
+      pcapabilitiesmanager->addAuthCapability(this, AuthDefs::VNC, VendorDefs::STANDARD, AuthDefs::SIG_VNC);
    }
 } // namespace remoting

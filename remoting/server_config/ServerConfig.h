@@ -29,8 +29,8 @@
 #include "subsystem/platform/Exception.h"
 #include "PortMappingContainer.h"
 #include "IpAccessControl.h"
-//#include "subsystem/thread/critical_section.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "IpAccessRule.h"
 #include "acme/input_output/DataInputStream.h"
 #include "acme/input_output/DataOutputStream.h"
@@ -437,7 +437,7 @@ namespace remoting
       // Critical section
       //
 
-      critical_section m_objectCS;
+      lockable_critical_section m_objectCS;
    };
 }  //  namespace remoting
 

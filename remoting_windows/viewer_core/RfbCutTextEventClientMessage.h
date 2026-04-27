@@ -35,8 +35,8 @@ namespace remoting
       RfbCutTextEventClientMessage(const ::scoped_string & cutText);
       ~RfbCutTextEventClientMessage();
 
-      void send(RfbOutputGate *output);
-      void sendUtf8(RfbOutputGate *output);
+      void send(::remoting::RfbOutputGate *output);
+      void sendUtf8(::remoting::RfbOutputGate *output);
 
    private:
       ::string m_cutText;

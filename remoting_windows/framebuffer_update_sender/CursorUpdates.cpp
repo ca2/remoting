@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "CursorUpdates.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
 namespace remoting
 {

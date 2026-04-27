@@ -28,11 +28,11 @@
 #include "DecoderStore.h"
 
 
-namespace remoting
+namespace remoting_client
 {
    DecoderStore::DecoderStore(::subsystem::LogWriter * plogwriter)
    : m_plogwriter(plogwriter),
-     m_preferredEncoding(EncodingDefs::TIGHT),
+     m_preferredEncoding(::remoting::EncodingDefs::TIGHT),
      m_allowCopyRect(true)
    {
    }
@@ -73,7 +73,7 @@ namespace remoting
          // preferred encoding is skipping
          if (i->m_element1 != m_preferredEncoding) {
             // copy rectangle is allowed?
-            if (i->m_element1 != EncodingDefs::COPYRECT || m_allowCopyRect)
+            if (i->m_element1 != ::remoting::EncodingDefs::COPYRECT || m_allowCopyRect)
                decoders.add({i->m_element2.m_element1, i->m_element1});
          }
            }
@@ -100,7 +100,7 @@ namespace remoting
          sortedDecoders.add(i->m_element2);
            }
       if (sortedDecoders.empty())
-         sortedDecoders.add(EncodingDefs::RAW);
+         sortedDecoders.add(::remoting::EncodingDefs::RAW);
       return sortedDecoders;
    }
 
@@ -142,4 +142,4 @@ namespace remoting
       }
       m_allowCopyRect = allow;
    }
-} // namespace remoting
+} // namespace remoting_client

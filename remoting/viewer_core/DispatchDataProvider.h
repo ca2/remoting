@@ -27,7 +27,7 @@
 
 //////#include "subsystem/platform/::string.h"
 ///
-namespace remoting
+namespace remoting_client
 {
    class CLASS_DECL_REMOTING DispatchDataProvider
    {
@@ -37,4 +37,4 @@ namespace remoting
       //
       virtual bool getDispatchData(unsigned int *id, ::string & dispatcherName, ::string & keyword) = 0;
    };
-} // namespace remoting
+} // namespace remoting_client

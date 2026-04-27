@@ -25,15 +25,15 @@
 #include "LastRectDecoder.h"
 
 
-namespace remoting
+namespace remoting_client
 {
    LastRectDecoder::LastRectDecoder(::subsystem::LogWriter * plogwriter)
    : PseudoDecoder(plogwriter)
    {
-      m_encoding = PseudoEncDefs::LAST_RECT;
+      m_encoding = ::remoting::PseudoEncDefs::LAST_RECT;
    }
 
    LastRectDecoder::~LastRectDecoder()
    {
    }
-} // namespace remoting
+} // namespace remoting_client

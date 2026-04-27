@@ -30,7 +30,7 @@
 //#include "subsystem_bsd_sockets/platform/subsystem.h"
 
 
-namespace remoting
+namespace remoting_client
 {
    // TcpConnection::TcpConnection(::subsystem::LogWriter * plogwriter)
    // : m_plogwriter(plogwriter),
@@ -159,7 +159,7 @@ m_RfbGatesOwner(false)
       m_wasBound = true;
    }
 
-   void TcpConnection::bind(RfbInputGate * pinput, RfbOutputGate * poutput)
+   void TcpConnection::bind(::remoting::RfbInputGate * pinput, ::remoting::RfbOutputGate * poutput)
    {
       critical_section_lock al(&m_connectLock);
       if (m_wasBound) {
@@ -233,7 +233,7 @@ m_RfbGatesOwner(false)
       }
    }
 
-   RfbInputGate *TcpConnection::getInput() const
+   ::remoting::RfbInputGate *TcpConnection::getInput() const
    {
       {
          critical_section_lock al(&m_connectLock);
@@ -244,7 +244,7 @@ m_RfbGatesOwner(false)
       return m_pinput;
    }
 
-   RfbOutputGate *TcpConnection::getOutput() const
+   ::remoting::RfbOutputGate *TcpConnection::getOutput() const
    {
       {
          critical_section_lock al(&m_connectLock);
@@ -256,4 +256,4 @@ m_RfbGatesOwner(false)
    }
 
 
-} // namespace remoting
+} // namespace remoting_client

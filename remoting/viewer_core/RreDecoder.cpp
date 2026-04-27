@@ -25,19 +25,19 @@
 #include "RreDecoder.h"
 
 
-namespace remoting
+namespace remoting_client
 {
    RreDecoder::RreDecoder(::subsystem::LogWriter * plogwriter)
    : DecoderOfRectangle(plogwriter)
    {
-      m_encoding = EncodingDefs::RRE;
+      m_encoding = ::remoting::EncodingDefs::RRE;
    }
 
    RreDecoder::~RreDecoder()
    {
    }
 
-   void RreDecoder::decode(RfbInputGate *pinput,
+   void RreDecoder::decode(::remoting::RfbInputGate *pinput,
                            ::innate_subsystem::Framebuffer *pframebuffer,
                            const ::int_rectangle &  rectangleTarget)
    {
@@ -61,4 +61,4 @@ namespace remoting
          pframebuffer->fillRect(rectangle, color);
       }
    }
-} // namespace remoting
+} // namespace remoting_client

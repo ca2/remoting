@@ -22,63 +22,71 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "WinEventLogWriter.h"
+#include "EventLogWriter.h"
+#include "remoting/remoting/event_log/EventLog.h"
 //#include "win-event-log/MessageProvider.h"
-
-WinEventLogWriter::WinEventLogWriter(::subsystem::LogWriter * plogwriter)
-: m_sysLog(plogwriter)
+namespace remoting_node_desktop
 {
-}
+   EventLogWriter::EventLogWriter(::subsystem::LogWriter * plogwriter)
+   //: m_sysLog(plogwriter)
+   {
+      m_peventlog = allocateø ::remoting::EventLog();
+      m_peventlog->m_plogwriter = plogwriter;
+   }
 
-WinEventLogWriter::~WinEventLogWriter()
-{
-}
+   EventLogWriter::~EventLogWriter()
+   {
+   }
 
-void WinEventLogWriter::enable()
-{
-  m_sysLog.enable();
-}
+   void EventLogWriter::enable()
+   {
+      m_peventlog->enable();
+   }
 
-void WinEventLogWriter::onSuccAuth(const ::scoped_string & ip)
-{
-  m_sysLog.reportInfo(MSG_INFO_MESSAGE,
-                      "Authentication passed by {}",
-                      ip->getString());
-}
+   void EventLogWriter::onSuccAuth(const ::scoped_string & ip)
+   {
+      m_peventlog->reportInfo(0, // MSG_INFO_MESSAGE,
+                          "Authentication passed by {}",
+                          ::string(ip).c_str());
+   }
 
-void WinEventLogWriter::onAuthFailed(const ::scoped_string & ip)
-{
-  m_sysLog.reportWarning(MSG_WARNING_MESSAGE,
-                         "Authentication failed from {}",
-                         ip->getString());
-}
+   void EventLogWriter::onAuthFailed(const ::scoped_string & ip)
+   {
+      m_peventlog->reportWarning(0, // MSG_WARNING_MESSAGE,
+                             "Authentication failed from {}",
+                             ::string(ip).c_str());
+   }
 
-void WinEventLogWriter::onDisconnect(const ::scoped_string & scopedstrMessage)
-{
-  m_sysLog.reportInfo(MSG_INFO_MESSAGE, "{}", scopedstrMessage->getString());
-}
+   void EventLogWriter::onDisconnect(const ::scoped_string & scopedstrMessage)
+   {
+      m_peventlog->reportInfo(0, // MSG_INFO_MESSAGE,
+         "{}", ::string(scopedstrMessage).c_str());
+   }
 
-void WinEventLogWriter::onCrash(const ::scoped_string & dumpPath)
-{
-  m_sysLog.reportError(MSG_ERROR_MESSAGE,
-                       "Application crashed. Debug information has been saved to {}",
-                       dumpPath->getString());
-}
+   void EventLogWriter::onCrash(const ::scoped_string & dumpPath)
+   {
+      m_peventlog->reportError(0, // MSG_ERROR_MESSAGE,
+                           "Application crashed. Debug information has been saved to %s",
+                           ::string(dumpPath).c_str());
+   }
 
-void WinEventLogWriter::onSuccServiceStart()
-{
-  m_sysLog.reportInfo(MSG_INFO_MESSAGE,
-                      "Service has been started successfully");
-}
+   void EventLogWriter::onSuccServiceStart()
+   {
+      m_peventlog->reportInfo(0, // MSG_INFO_MESSAGE,
+                          "Service has been started successfully");
+   }
 
-void WinEventLogWriter::onFailedServiceStart(const ::scoped_string & reason)
-{
-  m_sysLog.reportError(MSG_ERROR_MESSAGE,
-                       "Service has been terminated for the following reason: {}",
-                       reason->getString());
-}
+   void EventLogWriter::onFailedServiceStart(const ::scoped_string & reason)
+   {
+      m_peventlog->reportError(0, // MSG_ERROR_MESSAGE,
+                           "Service has been terminated for the following reason: {}",
+                           ::string(reason).c_str());
+   }
 
-void WinEventLogWriter::onServiceStop()
-{
-  m_sysLog.reportInfo(MSG_INFO_MESSAGE, "Service has been stopped");
-}
+   void EventLogWriter::onServiceStop()
+   {
+      m_peventlog->reportInfo(0, // MSG_INFO_MESSAGE,
+         "Service has been stopped");
+   }
+} // namespace remoting_node_desktop
+

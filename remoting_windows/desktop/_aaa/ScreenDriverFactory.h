@@ -41,7 +41,7 @@ namespace remoting
    public:
       virtual ScreenDriver *createScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
                                                ::innate_subsystem::Framebuffer *pframebuffer,
-                                               critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) = 0;
+                                               lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) = 0;
    private:
    };
 

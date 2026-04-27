@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "RfbKeyEventClientMessage.h"
 
-namespace remoting
+namespace remoting_client
 {
    RfbKeyEventClientMessage::RfbKeyEventClientMessage(bool downFlag, unsigned int key)
    : m_downFlag(downFlag),
@@ -36,13 +36,13 @@ namespace remoting
    {
    }
 
-   void RfbKeyEventClientMessage::send(RfbOutputGate *output)
+   void RfbKeyEventClientMessage::send(::remoting::RfbOutputGate *prfboutputgate)
    {
-      critical_section_lock al(output);
-      output->writeUInt8(ClientMsgDefs::KEYBOARD_EVENT);
-      output->writeUInt8(m_downFlag);
-      output->writeUInt16(0); // padding
-      output->writeUInt32(m_key);
-      output->flush();
+      critical_section_lock al(prfboutputgate);
+      prfboutputgate->writeUInt8(::remoting::ClientMsgDefs::KEYBOARD_EVENT);
+      prfboutputgate->writeUInt8(m_downFlag);
+      prfboutputgate->writeUInt16(0); // padding
+      prfboutputgate->writeUInt32(m_key);
+      prfboutputgate->flush();
    }
-} // namespace remoting
+} // namespace remoting_client

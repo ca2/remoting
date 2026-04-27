@@ -43,7 +43,7 @@ namespace remoting
    {
    public:
       //Win32ScreenDriverBaseImpl(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-        //                        critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
+        //                        lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
 
 
       Win32ScreenDriverBaseImpl();
@@ -51,7 +51,7 @@ namespace remoting
 
 
       void initialize_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                          critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) override;
+                          lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) override;
 
 
       // Starts screen update detection if it not started yet.
@@ -67,16 +67,16 @@ namespace remoting
       virtual void getCopiedRegion(::int_rectangle &rectangleCopy, ::int_point & pointSource);
 
    protected:
-      critical_section *getFbMutex();
+      lockable_critical_section *framebuffer_critical_section();
 
    private:
-      critical_section *m_fbcritical_section;
+      lockable_critical_section *m_pcriticalsectionFramebuffer;
 
-      CursorPositionDetector m_cursorPosDetector;
-      WindowsCursorShapeGrabber m_curShapeGrabber;
-      CursorShapeDetector m_curShapeDetector;
+      ::pointer < CursorPositionDetector >  m_pcursorpositiondetector;
+      ::pointer < WindowsCursorShapeGrabber > m_pcursorshapegrabber;
+      ::pointer < CursorShapeDetector > m_pcursorshapedetector;
 
-      CopyRectDetector m_copyRectDetector;
+      ::pointer < CopyRectDetector > m_pcopyrectdetector;
    };
 
    //// __WIN32SCREENDRIVERBASEIMPL_H__

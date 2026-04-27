@@ -47,7 +47,7 @@
 
 
 //////#include "subsystem/platform/::string.h"
-namespace remoting
+namespace remoting_client
 {
    class CLASS_DECL_REMOTING JpegDecompressor
    {
@@ -95,4 +95,4 @@ namespace remoting
 
       TD_JPEG_DECOMPRESSOR m_jpeg;
    };
-} // namespace remoting
+} // namespace remoting_client

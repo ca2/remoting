@@ -26,13 +26,13 @@
 
 #include "subsystem/framebuffer/StandardPixelFormatFactory.h"
 
-namespace remoting
+namespace remoting_client
 {
    TightDecoder::TightDecoder(::subsystem::LogWriter * plogwriter)
    : DecoderOfRectangle(plogwriter),
      m_isCPixel(false)
    {
-      m_encoding = EncodingDefs::TIGHT;
+      m_encoding = ::remoting::EncodingDefs::TIGHT;
 
       m_inflater.resize(DECODERS_NUM);
       for (int i = 0; i < DECODERS_NUM; i++)
@@ -50,7 +50,7 @@ namespace remoting
       }
    }
 
-   void TightDecoder::decode(RfbInputGate *pinput,
+   void TightDecoder::decode(::remoting::RfbInputGate *pinput,
                              ::innate_subsystem::Framebuffer *pframebuffer,
                              const ::int_rectangle &  rectangleTarget)
    {
@@ -107,7 +107,7 @@ namespace remoting
       return result;
    }
 
-   unsigned int TightDecoder::readTightPixel(RfbInputGate *pinput, int bytesPerCPixel)
+   unsigned int TightDecoder::readTightPixel(::remoting::RfbInputGate *pinput, int bytesPerCPixel)
    {
       unsigned int color = 0;
       unsigned char buffer[sizeof(color)];
@@ -141,7 +141,7 @@ namespace remoting
          }
    }
 
-   int TightDecoder::readCompactSize(RfbInputGate *pinput)
+   int TightDecoder::readCompactSize(::remoting::RfbInputGate *pinput)
    {
       int b = pinput->readUInt8();
       int size = b & 0x7F;
@@ -155,7 +155,7 @@ namespace remoting
       return size;
    }
 
-   void TightDecoder::processJpeg(RfbInputGate *pinput,
+   void TightDecoder::processJpeg(::remoting::RfbInputGate *pinput,
                                   ::innate_subsystem::Framebuffer *pframebuffer,
                                   const ::int_rectangle &  rectangleTarget)
    {
@@ -187,7 +187,7 @@ namespace remoting
       }
    }
 
-   void TightDecoder::processBasicTypes(RfbInputGate *pinput,
+   void TightDecoder::processBasicTypes(::remoting::RfbInputGate *pinput,
                                         ::innate_subsystem::Framebuffer *pframebuffer,
                                         const ::int_rectangle &  rectangleTarget,
                                         unsigned char compressionControl)
@@ -240,7 +240,7 @@ namespace remoting
       }
    }
 
-   ::array_base<unsigned int> TightDecoder::readPalette(RfbInputGate *pinput,
+   ::array_base<unsigned int> TightDecoder::readPalette(::remoting::RfbInputGate *pinput,
                                          int paletteSize,
                                          int bytesPerCPixel)
    {
@@ -251,7 +251,7 @@ namespace remoting
       return palette;
    }
 
-   void TightDecoder::readTightData(RfbInputGate *pinput,
+   void TightDecoder::readTightData(::remoting::RfbInputGate *pinput,
                                     ::array_base<unsigned char> &buffer,
                                     size_t expectedLength,
                                     const int decoderId)
@@ -266,7 +266,7 @@ namespace remoting
       }
    }
 
-   void TightDecoder::readCompressedData(RfbInputGate *pinput,
+   void TightDecoder::readCompressedData(::remoting::RfbInputGate *pinput,
                                          ::array_base<unsigned char> &buffer,
                                          size_t expectedLength,
                                          const int decoderId)
@@ -366,7 +366,7 @@ namespace remoting
 
       int fbBytesPerPixel = pframebuffer->getBytesPerPixel();
       int bytesPerCPixel = 3;
-      ::innate_subsystem::PixelFormat pxFormat = pframebuffer->getPixelFormat();
+      ::innate_subsystem::PixelFormat pixelformat = pframebuffer->getPixelFormat();
 
       int dstLength = rectangleTarget.area();
 
@@ -375,9 +375,9 @@ namespace remoting
       for (int i = 0; i < dstLength; i++) {
          unsigned char color[4] = {0, 0, 0, 0};
          memcpy(&color, &pixels->operator [](i * bytesPerCPixel), bytesPerCPixel);
-         unsigned int pixel = (((unsigned int)color[0] * pxFormat.redMax + 127) / 255 << pxFormat.redShift |
-                        ((unsigned int)color[1] * pxFormat.greenMax + 127) / 255 << pxFormat.greenShift |
-                        ((unsigned int)color[2] * pxFormat.blueMax + 127) / 255 << pxFormat.blueShift);
+         unsigned int pixel = (((unsigned int)color[0] * pixelformat.redMax + 127) / 255 << pixelformat.redShift |
+                        ((unsigned int)color[1] * pixelformat.greenMax + 127) / 255 << pixelformat.greenShift |
+                        ((unsigned int)color[2] * pixelformat.blueMax + 127) / 255 << pixelformat.blueShift);
 
          void *pixelPtr = pframebuffer->getBufferPtr(x + i % width, y + i / width);
          memcpy(pixelPtr, &pixel, fbBytesPerPixel);
@@ -415,7 +415,7 @@ namespace remoting
       memset(opRows[0].data(), 0, opRowLength * sizeof(unsigned short));
       memset(opRows[1].data(), 0, opRowLength * sizeof(unsigned short));
 
-      ::innate_subsystem::PixelFormat pxFormat = pframebuffer->getPixelFormat();
+      ::innate_subsystem::PixelFormat pixelformat = pframebuffer->getPixelFormat();
       int fbBytesPerPixel = pframebuffer->getBytesPerPixel();
       int bytesPerCPixel = fbBytesPerPixel;
       if (m_isCPixel) {
@@ -423,8 +423,8 @@ namespace remoting
       }
 
       int opRowIndex = 0;
-      unsigned short max[3] = {pxFormat.redMax, pxFormat.greenMax, pxFormat.blueMax};
-      unsigned short shift[3] = {pxFormat.redShift, pxFormat.greenShift, pxFormat.blueShift};
+      unsigned short max[3] = {pixelformat.redMax, pixelformat.greenMax, pixelformat.blueMax};
+      unsigned short shift[3] = {pixelformat.redShift, pixelformat.greenShift, pixelformat.blueShift};
       size_t pixelOffset = 0;
 
       for (int i = 0; i < rectangleTarget.height(); ++i) {
@@ -434,7 +434,7 @@ namespace remoting
 
          for (size_t j = 3; j < opRowLength; j += 3, pixelOffset += bytesPerCPixel) {
             unsigned char rawColor[3];
-            fillRawComponents(pxFormat, rawColor, pixels, pixelOffset);
+            fillRawComponents(pixelformat, rawColor, pixels, pixelOffset);
             unsigned int color = 0;
             for (int index = 0; index < 3; index++) {
                int d = prevRow[j + index] +      // "upper" pixel (from prev row)
@@ -451,7 +451,7 @@ namespace remoting
       }
    }
 
-   unsigned int TightDecoder::getRawTightColor(const ::innate_subsystem::PixelFormat & pxFormat,
+   unsigned int TightDecoder::getRawTightColor(const ::innate_subsystem::PixelFormat & pixelformat,
                                          const ::array_base<unsigned char> &pixels,
                                          const size_t offset)
    {
@@ -461,18 +461,18 @@ namespace remoting
                 pixels[offset + 2];
       }
       unsigned int rawColor = 0;
-      memcpy(&rawColor, &pixels[offset], pxFormat.bitsPerPixel / 8);
+      memcpy(&rawColor, &pixels[offset], pixelformat.bitsPerPixel / 8);
       return rawColor;
    }
 
-   void TightDecoder::fillRawComponents(const ::innate_subsystem::PixelFormat & pxFormat,
+   void TightDecoder::fillRawComponents(const ::innate_subsystem::PixelFormat & pixelformat,
                                         unsigned char components[],
                                         const ::array_base<unsigned char> &pixels,
                                         const size_t pixelOffset)
    {
-      int rawColor = getRawTightColor(pxFormat, pixels, pixelOffset);
-      components[0] = rawColor >> pxFormat.redShift & pxFormat.redMax;
-      components[1] = rawColor >> pxFormat.greenShift & pxFormat.greenMax;
-      components[2] = rawColor >> pxFormat.blueShift & pxFormat.blueMax;
+      int rawColor = getRawTightColor(pixelformat, pixels, pixelOffset);
+      components[0] = rawColor >> pixelformat.redShift & pixelformat.redMax;
+      components[1] = rawColor >> pixelformat.greenShift & pixelformat.greenMax;
+      components[2] = rawColor >> pixelformat.blueShift & pixelformat.blueMax;
    }
-} // namespace remoting
+} // namespace remoting_client

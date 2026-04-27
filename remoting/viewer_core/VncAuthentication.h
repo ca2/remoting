@@ -28,7 +28,7 @@
 #include "AuthHandler.h"
 
 
-namespace remoting
+namespace remoting_client
 {
    class CLASS_DECL_REMOTING VncAuthentication
    {
@@ -39,4 +39,4 @@ namespace remoting
       // TODO: removed duplicate code: ServerConfig.h
       static const int VNC_PASSWORD_SIZE = 8;
    };
-} // namespace remoting
+} // namespace remoting_client

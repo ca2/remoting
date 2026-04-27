@@ -46,7 +46,7 @@ namespace remoting
    {
    public:
       Win8ScreenDriverImpl(::subsystem::LogWriter * plogwriter, UpdateKeeper *pupdatekeeper,
-                           critical_section *pcriticalsectionFramebuffer, UpdateListener *pupdatelistener,
+                           lockable_critical_section *pcriticalsectionFramebuffer, UpdateListener *pupdatelistener,
                            bool detectionEnabled = false);
       virtual ~Win8ScreenDriverImpl();
 
@@ -102,7 +102,7 @@ namespace remoting
       ::int_point m_latestCursorPos;
       Win8CursorShape m_win8CursorShape;
       LONGLONG m_curTimeStamp;
-      critical_section m_cursorMutex;
+      lockable_critical_section m_cursorMutex;
 
       UpdateKeeper *m_pupdatekeeper;
       UpdateListener *m_pupdatelistener;

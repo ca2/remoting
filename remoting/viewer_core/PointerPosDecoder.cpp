@@ -25,15 +25,15 @@
 #include "PointerPosDecoder.h"
 
 
-namespace remoting
+namespace remoting_client
 {
    PointerPosDecoder::PointerPosDecoder(::subsystem::LogWriter * plogwriter)
    : PseudoDecoder(plogwriter)
    {
-      m_encoding = PseudoEncDefs::POINTER_POS;
+      m_encoding = ::remoting::PseudoEncDefs::POINTER_POS;
    }
 
    PointerPosDecoder::~PointerPosDecoder()
    {
    }
-} // namespace remoting
+} // namespace remoting_client

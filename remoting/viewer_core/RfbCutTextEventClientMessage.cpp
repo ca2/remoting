@@ -28,7 +28,7 @@
 
 #include "RfbCutTextEventClientMessage.h"
 
-namespace remoting
+namespace remoting_client
 {
    RfbCutTextEventClientMessage::RfbCutTextEventClientMessage(const ::scoped_string & cutText)
    : m_cutText(cutText)
@@ -39,32 +39,32 @@ namespace remoting
    {
    }
 
-   void RfbCutTextEventClientMessage::send(RfbOutputGate *output)
+   void RfbCutTextEventClientMessage::send(::remoting::RfbOutputGate *prfboutputgate)
    {
       ::string cutTextAnsi;
       cutTextAnsi = m_cutText;
       unsigned int length = static_cast<unsigned int>(cutTextAnsi.length());
 
-      critical_section_lock al(output);
-      output->writeUInt8(ClientMsgDefs::CLIENT_CUT_TEXT);
-      output->writeUInt8(0); // padding 3 bytes
-      output->writeUInt8(0);
-      output->writeUInt8(0);
-      output->writeUInt32(length);
-      output->write(cutTextAnsi, length);
-      output->flush();
+      critical_section_lock al(prfboutputgate);
+      prfboutputgate->writeUInt8(::remoting::ClientMsgDefs::CLIENT_CUT_TEXT);
+      prfboutputgate->writeUInt8(0); // padding 3 bytes
+      prfboutputgate->writeUInt8(0);
+      prfboutputgate->writeUInt8(0);
+      prfboutputgate->writeUInt32(length);
+      prfboutputgate->write(cutTextAnsi, length);
+      prfboutputgate->flush();
    }
 
-   void RfbCutTextEventClientMessage::sendUtf8(RfbOutputGate *output)
+   void RfbCutTextEventClientMessage::sendUtf8(::remoting::RfbOutputGate *prfboutputgate)
    {
       ::string cutTextUtf;
       cutTextUtf = m_cutText;
       unsigned int length = static_cast<unsigned int>(cutTextUtf.length());
 
-      critical_section_lock al(output);
-      output->writeUInt32(ClientMsgDefs::CLIENT_CUT_TEXT_UTF8);
-      output->writeUInt32(length);
-      output->write(cutTextUtf, length);
-      output->flush();
+      critical_section_lock al(prfboutputgate);
+      prfboutputgate->writeUInt32(::remoting::ClientMsgDefs::CLIENT_CUT_TEXT_UTF8);
+      prfboutputgate->writeUInt32(length);
+      prfboutputgate->write(cutTextUtf, length);
+      prfboutputgate->flush();
    }
-} // namespace remoting
+} // namespace remoting_client

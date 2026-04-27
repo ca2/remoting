@@ -38,8 +38,8 @@ namespace remoting
 {
 
 
-   // UpdateSender::UpdateSender(RfbCodeRegistrator *codeRegtor, UpdateRequestListener *updReqListener,
-   //                            SenderControlInformationInterface *senderControlInformation, RfbOutputGate *output,
+   // UpdateSender::UpdateSender(RfbCodeRegistrator *m_prfbcoderegistrator, UpdateRequestListener *updReqListener,
+   //                            SenderControlInformationInterface *senderControlInformation, ::remoting::RfbOutputGate *output,
    //                            int id, Desktop *desktop, ::subsystem::LogWriter * plogwriter) :
    //     m_pupdaterequestlistener(updReqListener), m_pdesktop(desktop), m_senderControlInformation(senderControlInformation),
    //     m_busy(false), m_incrUpdIsReq(false), m_fullUpdIsReq(false), m_setColorMapEntr(false), m_prfboutputgate(output),
@@ -50,25 +50,25 @@ namespace remoting
    //    m_pupdatekeeper = new UpdateKeeper(::int_rectangle());
    //
    //    // Capabilities
-   //    codeRegtor->addEncCap(EncodingDefs::COPYRECT, VendorDefs::STANDARD, EncodingDefs::SIG_COPYRECT);
-   //    codeRegtor->addEncCap(EncodingDefs::HEXTILE, VendorDefs::STANDARD, EncodingDefs::SIG_HEXTILE);
-   //    codeRegtor->addEncCap(EncodingDefs::TIGHT, VendorDefs::TIGHTVNC, EncodingDefs::SIG_TIGHT);
-   //    codeRegtor->addEncCap(PseudoEncDefs::COMPR_LEVEL_0, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_COMPR_LEVEL);
-   //    codeRegtor->addEncCap(PseudoEncDefs::QUALITY_LEVEL_0, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_QUALITY_LEVEL);
-   //    codeRegtor->addEncCap(PseudoEncDefs::RICH_CURSOR, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_RICH_CURSOR);
-   //    codeRegtor->addEncCap(PseudoEncDefs::POINTER_POS, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_POINTER_POS);
-   //    codeRegtor->addEncCap(PseudoEncDefs::DESKTOP_SIZE, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_DESKTOP_SIZE);
-   //    codeRegtor->addEncCap(PseudoEncDefs::DESKTOP_CONFIGURATION, VendorDefs::TIGHTVNC,
+   //    m_prfbcoderegistrator->addEncCap(EncodingDefs::COPYRECT, VendorDefs::STANDARD, EncodingDefs::SIG_COPYRECT);
+   //    m_prfbcoderegistrator->addEncCap(EncodingDefs::HEXTILE, VendorDefs::STANDARD, EncodingDefs::SIG_HEXTILE);
+   //    m_prfbcoderegistrator->addEncCap(EncodingDefs::TIGHT, VendorDefs::TIGHTVNC, EncodingDefs::SIG_TIGHT);
+   //    m_prfbcoderegistrator->addEncCap(PseudoEncDefs::COMPR_LEVEL_0, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_COMPR_LEVEL);
+   //    m_prfbcoderegistrator->addEncCap(PseudoEncDefs::QUALITY_LEVEL_0, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_QUALITY_LEVEL);
+   //    m_prfbcoderegistrator->addEncCap(PseudoEncDefs::RICH_CURSOR, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_RICH_CURSOR);
+   //    m_prfbcoderegistrator->addEncCap(PseudoEncDefs::POINTER_POS, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_POINTER_POS);
+   //    m_prfbcoderegistrator->addEncCap(PseudoEncDefs::DESKTOP_SIZE, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_DESKTOP_SIZE);
+   //    m_prfbcoderegistrator->addEncCap(PseudoEncDefs::DESKTOP_CONFIGURATION, VendorDefs::TIGHTVNC,
    //                          PseudoEncDefs::SIG_DESKTOP_CONFIGURATION);
    //
-   //    codeRegtor->addClToSrvCap(UpdSenderClientMsgDefs::RFB_VIDEO_FREEZE, VendorDefs::TIGHTVNC,
+   //    m_prfbcoderegistrator->addClToSrvCap(UpdSenderClientMsgDefs::RFB_VIDEO_FREEZE, VendorDefs::TIGHTVNC,
    //                              UpdSenderClientMsgDefs::RFB_VIDEO_FREEZE_SIG);
    //
    //    // Request codes
-   //    codeRegtor->regCode(UpdSenderClientMsgDefs::RFB_VIDEO_FREEZE, this);
-   //    codeRegtor->regCode(ClientMsgDefs::FB_UPDATE_REQUEST, this);
-   //    codeRegtor->regCode(ClientMsgDefs::SET_PIXEL_FORMAT, this);
-   //    codeRegtor->regCode(ClientMsgDefs::SET_ENCODINGS, this);
+   //    m_prfbcoderegistrator->regCode(UpdSenderClientMsgDefs::RFB_VIDEO_FREEZE, this);
+   //    m_prfbcoderegistrator->regCode(ClientMsgDefs::FB_UPDATE_REQUEST, this);
+   //    m_prfbcoderegistrator->regCode(ClientMsgDefs::SET_PIXEL_FORMAT, this);
+   //    m_prfbcoderegistrator->regCode(ClientMsgDefs::SET_ENCODINGS, this);
    //
    //    resume();
    // }
@@ -90,8 +90,8 @@ UpdateSender::UpdateSender() :
    }
 
 
-    void  UpdateSender::initialize_update_sender(RfbCodeRegistrator *codeRegtor, UpdateRequestListener *updReqListener,
-                              SenderControlInformationInterface *senderControlInformation, RfbOutputGate *prfboutputgate,
+    void  UpdateSender::initialize_update_sender(RfbCodeRegistrator *m_prfbcoderegistrator, UpdateRequestListener *updReqListener,
+                              SenderControlInformationInterface *senderControlInformation, ::remoting::RfbOutputGate *prfboutputgate,
                               int id, Desktop *desktop, ::subsystem::LogWriter * plogwriter) //:
        // , , ,
        // ,
@@ -112,32 +112,32 @@ UpdateSender::UpdateSender() :
       m_pupdatekeeper = new UpdateKeeper(::int_rectangle());
 
       // Capabilities
-      codeRegtor->addEncCap(EncodingDefs::COPYRECT, VendorDefs::STANDARD, EncodingDefs::SIG_COPYRECT);
-      codeRegtor->addEncCap(EncodingDefs::HEXTILE, VendorDefs::STANDARD, EncodingDefs::SIG_HEXTILE);
-      codeRegtor->addEncCap(EncodingDefs::TIGHT, VendorDefs::TIGHTVNC, EncodingDefs::SIG_TIGHT);
-      codeRegtor->addEncCap(PseudoEncDefs::COMPR_LEVEL_0, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_COMPR_LEVEL);
-      codeRegtor->addEncCap(PseudoEncDefs::QUALITY_LEVEL_0, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_QUALITY_LEVEL);
-      codeRegtor->addEncCap(PseudoEncDefs::RICH_CURSOR, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_RICH_CURSOR);
-      codeRegtor->addEncCap(PseudoEncDefs::POINTER_POS, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_POINTER_POS);
-      codeRegtor->addEncCap(PseudoEncDefs::DESKTOP_SIZE, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_DESKTOP_SIZE);
-      codeRegtor->addEncCap(PseudoEncDefs::DESKTOP_CONFIGURATION, VendorDefs::TIGHTVNC,
+      m_prfbcoderegistrator->addEncCap(EncodingDefs::COPYRECT, VendorDefs::STANDARD, EncodingDefs::SIG_COPYRECT);
+      m_prfbcoderegistrator->addEncCap(EncodingDefs::HEXTILE, VendorDefs::STANDARD, EncodingDefs::SIG_HEXTILE);
+      m_prfbcoderegistrator->addEncCap(EncodingDefs::TIGHT, VendorDefs::TIGHTVNC, EncodingDefs::SIG_TIGHT);
+      m_prfbcoderegistrator->addEncCap(PseudoEncDefs::COMPR_LEVEL_0, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_COMPR_LEVEL);
+      m_prfbcoderegistrator->addEncCap(PseudoEncDefs::QUALITY_LEVEL_0, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_QUALITY_LEVEL);
+      m_prfbcoderegistrator->addEncCap(PseudoEncDefs::RICH_CURSOR, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_RICH_CURSOR);
+      m_prfbcoderegistrator->addEncCap(PseudoEncDefs::POINTER_POS, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_POINTER_POS);
+      m_prfbcoderegistrator->addEncCap(PseudoEncDefs::DESKTOP_SIZE, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_DESKTOP_SIZE);
+      m_prfbcoderegistrator->addEncCap(PseudoEncDefs::DESKTOP_CONFIGURATION, VendorDefs::TIGHTVNC,
                             PseudoEncDefs::SIG_DESKTOP_CONFIGURATION);
 
-      codeRegtor->addClToSrvCap(UpdSenderClientMsgDefs::RFB_VIDEO_FREEZE, VendorDefs::TIGHTVNC,
+      m_prfbcoderegistrator->addClToSrvCap(UpdSenderClientMsgDefs::RFB_VIDEO_FREEZE, VendorDefs::TIGHTVNC,
                                 UpdSenderClientMsgDefs::RFB_VIDEO_FREEZE_SIG);
 
       // Request codes
-      codeRegtor->regCode(UpdSenderClientMsgDefs::RFB_VIDEO_FREEZE, this);
-      codeRegtor->regCode(ClientMsgDefs::FB_UPDATE_REQUEST, this);
-      codeRegtor->regCode(ClientMsgDefs::SET_PIXEL_FORMAT, this);
-      codeRegtor->regCode(ClientMsgDefs::SET_ENCODINGS, this);
+      m_prfbcoderegistrator->regCode(UpdSenderClientMsgDefs::RFB_VIDEO_FREEZE, this);
+      m_prfbcoderegistrator->regCode(ClientMsgDefs::FB_UPDATE_REQUEST, this);
+      m_prfbcoderegistrator->regCode(ClientMsgDefs::SET_PIXEL_FORMAT, this);
+      m_prfbcoderegistrator->regCode(ClientMsgDefs::SET_ENCODINGS, this);
 
       resume();
    }
 
    void UpdateSender::onTerminate() { m_newUpdatesEvent.set_happening(); }
 
-   void UpdateSender::onRequest(unsigned int reqCode, RfbInputGate *input)
+   void UpdateSender::onRequest(unsigned int reqCode, ::remoting::RfbInputGate *input)
    {
       // UpdateSender internal dispatcher
       switch (reqCode)
@@ -762,7 +762,7 @@ UpdateSender::UpdateSender() :
       }
    }
 
-   void UpdateSender::readUpdateRequest(RfbInputGate *io)
+   void UpdateSender::readUpdateRequest(::remoting::RfbInputGate *io)
    {
       // Read the rest of the scopedstrMessage:
       bool incremental = io->readUInt8() != 0;
@@ -808,7 +808,7 @@ UpdateSender::UpdateSender() :
       m_pupdaterequestlistener->onUpdateRequest(reqRect, incremental);
    }
 
-   void UpdateSender::readSetPixelFormat(RfbInputGate *io)
+   void UpdateSender::readSetPixelFormat(::remoting::RfbInputGate *io)
    {
       ::innate_subsystem::PixelFormat pixelformat;
       // Read padding
@@ -864,7 +864,7 @@ UpdateSender::UpdateSender() :
       m_setColorMapEntr = clrMapEntries;
    }
 
-   void UpdateSender::readSetEncodings(RfbInputGate *io)
+   void UpdateSender::readSetEncodings(::remoting::RfbInputGate *io)
    {
       io->readUInt8(); // padding
       int numCodes = io->readUInt16();
@@ -893,7 +893,7 @@ UpdateSender::UpdateSender() :
       return m_videoFrozen;
    }
 
-   void UpdateSender::readVideoFreeze(RfbInputGate *io) { setVideoFrozen(io->readUInt8() != 0); }
+   void UpdateSender::readVideoFreeze(::remoting::RfbInputGate *io) { setVideoFrozen(io->readUInt8() != 0); }
 
    bool UpdateSender::extractReqRegions(Region & incrReqReg, Region & fullReqReg, bool *bIncrementalUpdateRequest, bool *bFullUpdateRequest,
                                         class ::time *timeReqPoint)

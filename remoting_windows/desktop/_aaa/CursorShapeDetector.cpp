@@ -41,7 +41,7 @@ namespace remoting
 
 
    void CursorShapeDetector::initialize_cursor_shape_detector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                                         CursorShapeGrabber *pcursorshapegrabber, critical_section *mouseGrabLocMut,
+                                         CursorShapeGrabber *pcursorshapegrabber, lockable_critical_section *mouseGrabLocMut,
                                          ::subsystem::LogWriter * plogwriter)
    {
 

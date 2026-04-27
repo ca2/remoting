@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "DesktopConfigClient.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "ReconnectException.h"
 
 namespace remoting

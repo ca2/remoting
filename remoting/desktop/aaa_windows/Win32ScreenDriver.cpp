@@ -23,14 +23,14 @@
 //
 #include "framework.h"
 #include "../Win32ScreenDriver.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
 namespace remoting
 {
 
 
    Win32ScreenDriver::Win32ScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                                        ::innate_subsystem::Framebuffer *pframebuffer, critical_section *pcriticalsectionFramebuffer,
+                                        ::innate_subsystem::Framebuffer *pframebuffer, lockable_critical_section *pcriticalsectionFramebuffer,
                                         ::subsystem::LogWriter * plogwriter) :
        Win32ScreenDriverBaseImpl(pupdatekeeper, pupdatelistener, pcriticalsectionFramebuffer, log),
        m_poller(pupdatekeeper, pupdatelistener, &m_pscreengrabber, pframebuffer, pcriticalsectionFramebuffer, log),
@@ -65,13 +65,13 @@ namespace remoting
 
    ::int_size Win32ScreenDriver::getScreenDimension()
    {
-      critical_section_lock al(getFbMutex());
+      critical_section_lock al(framebuffer_critical_section());
       return ::int_size(&m_pscreengrabber.getScreenRect());
    }
 
    bool Win32ScreenDriver::grabFb(const ::int_rectangle & rectangle)
    {
-      critical_section_lock al(getFbMutex());
+      critical_section_lock al(framebuffer_critical_section());
       return m_pscreengrabber.grab(rectangle);
    }
 
@@ -79,19 +79,19 @@ namespace remoting
 
    bool Win32ScreenDriver::getScreenPropertiesChanged()
    {
-      critical_section_lock al(getFbMutex());
+      critical_section_lock al(framebuffer_critical_section());
       return m_pscreengrabber.getPropertiesChanged();
    }
 
    bool Win32ScreenDriver::getScreenSizeChanged()
    {
-      critical_section_lock al(getFbMutex());
+      critical_section_lock al(framebuffer_critical_section());
       return m_pscreengrabber.getScreenSizeChanged();
    }
 
    bool Win32ScreenDriver::applyNewScreenProperties()
    {
-      critical_section_lock al(getFbMutex());
+      critical_section_lock al(framebuffer_critical_section());
       return m_pscreengrabber.applyNewProperties();
    }
 

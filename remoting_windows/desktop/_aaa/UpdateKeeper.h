@@ -25,7 +25,7 @@
 #pragma once
 
 
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 #include "remoting/remoting/region/Region.h"
 #include "UpdateContainer.h"
 #include "subsystem/thread/Lockable.h"
@@ -81,10 +81,10 @@ namespace remoting
       ::int_rectangle m_rectangleBorder;
 
       ::remoting::Region m_regionExcluded;
-      critical_section m_criticalsectionExclRegLoc;
+      lockable_critical_section m_criticalsectionExclRegLoc;
 
       UpdateContainer m_updatecontainer;
-      critical_section m_criticalsectionUpdateContainer;
+      lockable_critical_section m_criticalsectionUpdateContainer;
    };
 
 

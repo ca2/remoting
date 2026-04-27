@@ -26,7 +26,7 @@
 
 namespace remoting
 {
-   namespace ftp
+   namespace file_transfer
    {
       RemoteFileRenameOperation::RemoteFileRenameOperation(::subsystem::LogWriter * plogwriter,
                                                            const ::file::path & pathToSourceFile,

@@ -28,7 +28,7 @@
 #include "subsystem/_common_header.h"
 #include "::happening.h"
 #include "acme/input_output/Channel.h"
-//#include "subsystem/thread/critical_section.h"
+//#include "subsystem/thread/lockable_critical_section.h"
 
 // This class is not an interface but is a class that contain common
 // methods/source codes for derived classes to work with pipe handles.
@@ -52,7 +52,7 @@ protected:
 
   // This mutex is to use for pipe handles that uses in the above functions.
   // The mutex protect collision accesses to handle fields of derived classes.
-  critical_section m_hPipeMutex;
+  lockable_critical_section m_hPipeMutex;
 
   ::happening m_readEvent;
   ::happening m_writeEvent;
