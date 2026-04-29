@@ -33,7 +33,7 @@
 //#include "remoting/node_desktop/NamingDefs.h"
 
 
-namespace remoting
+namespace remoting_node
 {
 
    //Configurator *Configurator::s_instance = NULL;
@@ -78,7 +78,7 @@ namespace remoting
    //    return s_instance;
    // }
    //
-   // void Configurator::setInstance(Configurator *conf) { s_instance = conf; }
+   // void Configurator::setInstance(::remoting_node::Configurator *conf) { s_instance = conf; }
 
    void Configurator::notifyReload()
    {
@@ -698,11 +698,11 @@ namespace remoting
       }
       if (m_pserverconfig->hasPrimaryPassword())
       {
-         unsigned char password[ServerConfig::VNC_PASSWORD_SIZE];
+         unsigned char password[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
 
          m_pserverconfig->getPrimaryPassword(&password[0]);
 
-         if (!sm->setBinaryData("Password", &password[0], ServerConfig::VNC_PASSWORD_SIZE))
+         if (!sm->setBinaryData("Password", &password[0], ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE))
          {
             saveResult = false;
          }
@@ -713,11 +713,11 @@ namespace remoting
       }
       if (m_pserverconfig->hasReadOnlyPassword())
       {
-         unsigned char password[ServerConfig::VNC_PASSWORD_SIZE];
+         unsigned char password[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
 
          m_pserverconfig->getReadOnlyPassword(&password[0]);
 
-         if (!sm->setBinaryData("PasswordViewOnly", &password[0], ServerConfig::VNC_PASSWORD_SIZE))
+         if (!sm->setBinaryData("PasswordViewOnly", &password[0], ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE))
          {
             saveResult = false;
          }
@@ -728,11 +728,11 @@ namespace remoting
       }
       if (m_pserverconfig->hasControlPassword())
       {
-         unsigned char password[ServerConfig::VNC_PASSWORD_SIZE];
+         unsigned char password[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
 
          m_pserverconfig->getControlPassword(&password[0]);
 
-         if (!sm->setBinaryData("ControlPassword", &password[0], ServerConfig::VNC_PASSWORD_SIZE))
+         if (!sm->setBinaryData("ControlPassword", &password[0], ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE))
          {
             saveResult = false;
          }
@@ -935,7 +935,7 @@ namespace remoting
       }
 
       memsize passSize = 8;
-      unsigned char buffer[ServerConfig::VNC_PASSWORD_SIZE] = {0};
+      unsigned char buffer[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE] = {0};
 
       if (!sm->getBinaryData("Password", (void *)&buffer, &passSize))
       {
@@ -1085,7 +1085,7 @@ namespace remoting
    }
 
 
-} // namespace remoting
+} // namespace remoting_node
  
 
 

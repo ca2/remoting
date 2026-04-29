@@ -29,26 +29,27 @@
 namespace remoting_node
 {
    PortMappingDialog::PortMappingDialog()
-   : BaseDialog(IDD_CONFIG_PORT_MAPPING_PAGE), m_parent(NULL)
+   :  m_pdialogParent(NULL)
    {
+      initialize_dialog(IDD_CONFIG_PORT_MAPPING_PAGE);
    }
 
    PortMappingDialog::~PortMappingDialog()
    {
    }
 
-   void PortMappingDialog::setParentDialog(BaseDialog *dialog)
+   void PortMappingDialog::setParentDialog(::innate_subsystem::Dialog *dialog)
    {
-      m_parent = dialog;
+      m_pdialogParent = dialog;
    }
 
    void PortMappingDialog::initControls()
    {
-      HWND dialogHwnd = m_ctrlThis.operating_system_window();
+      //HWND dialogHwnd = operating_sy//tem_window();
 
-      m_exPortsListBox.setWindow(GetDlgItem(dialogHwnd, IDC_MAPPINGS));
-      m_editButton.setWindow(GetDlgItem(dialogHwnd, IDC_EDIT_PORT));
-      m_removeButton.setWindow(GetDlgItem(dialogHwnd, IDC_REMOVE_PORT));
+      dialog_item(m_exPortsListBox, IDC_MAPPINGS);
+      dialog_item(m_editButton, IDC_EDIT_PORT);
+      dialog_item(m_removeButton, IDC_REMOVE_PORT);
    }
 
    bool PortMappingDialog::onCommand(unsigned int controlID, unsigned int notificationID)
@@ -90,7 +91,7 @@ namespace remoting_node
       ::string mappingString;
 
       for (size_t i = 0; i < m_extraPorts->count(); i++) {
-         m_extraPorts->at(i)->toString(&mappingString);
+         mappingString = m_extraPorts->at(i)->toString();
          _ASSERT((int)i == i);
          m_exPortsListBox.insertString((int)i, mappingString);
       }

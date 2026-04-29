@@ -49,7 +49,7 @@ namespace remoting_windows
       lockable_critical_section m_criticalsectionRegion;
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
       ::happening m_happeningSleeper;
-      ::pointer < ::remoting::Configurator > m_pconfigurator;
+      ::pointer < ::remoting_node::Configurator > m_pconfigurator;
 
 
       //WinVideoRegionUpdaterImpl(::subsystem::LogWriter * plogwriter);
@@ -57,7 +57,7 @@ namespace remoting_windows
       ~WinVideoRegionUpdaterImpl() override;
 
 
-      void initialize_screen_driver(::remoting::Configurator * pconfigurator, ::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
+      void initialize_screen_driver(::remoting_node::Configurator * pconfigurator, ::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
                                         ::innate_subsystem::Framebuffer *pframebuffer,
                           lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) override;
 

@@ -36,7 +36,7 @@ namespace remoting_node_desktop
 
 
    RfbClientManager::RfbClientManager(const ::scoped_string &scopedstrServerName,
-                                      ::remoting::Configurator *pconfigurator,
+                                      ::remoting_node::Configurator *pconfigurator,
                                       ::remoting_node::NewConnectionEvents *pnewconnectionevents,
                                       ::subsystem::LogWriter * plogwriter, ::remoting::DesktopFactory *desktopFactory) :
        m_nextClientId(0), m_pdesktop(0), m_pconfigurator(pconfigurator), m_pnewconnectionevents(pnewconnectionevents),
@@ -171,7 +171,7 @@ namespace remoting_node_desktop
       // struct sockaddr_in addr_in = peerAddr.getSockAddr();
       struct sockaddr_in addr_in = paddrImpl->_getSockAddr();
 
-      ::remoting::ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
+      ::remoting_node::ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
 
       IpAccessRule::ActionType action;
 
@@ -447,7 +447,7 @@ namespace remoting_node_desktop
    {
       critical_section_lock al(&m_clientListLocker);
 
-      ::remoting::ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
+      ::remoting_node::ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
       int timeout = 1000 * pserverconfig->getIdleTimeout();
 
       m_plogwriter->error("Set socket idle timeout, {} ms", timeout);

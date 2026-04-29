@@ -43,7 +43,7 @@
 #include "remoting/remoting/desktop/AbnormDeskTermListener.h"
 #include "remoting/remoting/desktop/UpdateSendingListener.h"
 #include "remoting/remoting/rfb_sconn/ClientAuthListener.h"
-#include "remoting/control_desktop/RfbClientInfo.h"
+#include "remoting/node_desktop/control_desktop/RfbClientInfo.h"
 #include "remoting/remoting/node/NewConnectionEvents.h"
 
 namespace remoting_node_desktop
@@ -74,7 +74,7 @@ namespace remoting_node_desktop
    {
    public:
       // FIXME: parameter is not used.
-      RfbClientManager(const ::scoped_string &scopedstrServerName, ::remoting::Configurator *pconfigurator,
+      RfbClientManager(const ::scoped_string &scopedstrServerName, ::remoting_node::Configurator *pconfigurator,
                        ::remoting_node::NewConnectionEvents *newConnectionEvents, ::subsystem::LogWriter * plogwriter,
                        ::remoting::DesktopFactory *desktopFactory);
       virtual ~RfbClientManager();
@@ -160,7 +160,7 @@ namespace remoting_node_desktop
       // Inforamtion
       unsigned int m_nextClientId;
 
-      ::pointer<::remoting::Configurator> m_pconfigurator;
+      ::pointer<::remoting_node::Configurator> m_pconfigurator;
       ::pointer<::remoting_node::NewConnectionEvents> m_pnewconnectionevents;
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;

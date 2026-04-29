@@ -25,9 +25,9 @@
 #pragma once
 
 
-#include "remoting/control_desktop/ControlGate.h"
-#include "remoting/control_desktop/RfbClientInfo.h"
-#include "remoting/control_desktop/ServerInfo.h"
+#include "remoting/node_desktop/control_desktop/ControlGate.h"
+#include "remoting/node_desktop/control_desktop/RfbClientInfo.h"
+#include "remoting/node_desktop/control_desktop/ServerInfo.h"
 
 #include "remoting/remoting/node_config/ServerConfig.h"
 

@@ -38,7 +38,7 @@ namespace remoting
 
    DesktopConfigClient::~DesktopConfigClient() {}
 
-   void DesktopConfigClient::initialize_desktop_config_client(Configurator * pconfigurator, BlockingGate *pblockinggate) {
+   void DesktopConfigClient::initialize_desktop_config_client(::remoting_node::Configurator * pconfigurator, BlockingGate *pblockinggate) {
       initialize_desktop_server_proto(pconfigurator, pblockinggate);
    }
    void DesktopConfigClient::updateByNewSettings(BlockingGate *pblockinggate)

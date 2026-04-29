@@ -43,7 +43,7 @@ namespace remoting
    virtual public Desktop,
    virtual public UpdateListener,
    virtual public ::subsystem::ClipboardListener,
-   virtual public ConfigReloadListener
+   virtual public ::remoting_node::ConfigReloadListener
    {
    public:
 
@@ -77,7 +77,7 @@ namespace remoting
       ~DesktopBaseImpl() override;
 
 
-      void initialize_desktop_base_impl(Configurator * pconfigurator,
+      void initialize_desktop_base_impl(::remoting_node::Configurator * pconfigurator,
          ::subsystem::ClipboardListener *pclipboardlistenerExternal,
          UpdateSendingListener *pupdatesendinglistenerExternal,
                       AbnormDeskTermListener *pdesktermlistenerExternal, ::subsystem::LogWriter * plogwriter);
@@ -111,7 +111,7 @@ namespace remoting
       virtual void onClipboardUpdate(const ::scoped_string &newClipboard);
       // Calling when a configuration has been reloaded.
       // Uses to update internal settings.
-      virtual void onConfigReload(ServerConfig *serverConfig);
+      virtual void onConfigReload(::remoting_node::ServerConfig *serverConfig);
       virtual void applyNewConfiguration() = 0;
 
       // Returns true when a remote input allowed.

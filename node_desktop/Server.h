@@ -46,7 +46,7 @@
 
 #include "remoting/remoting/node_config/Configurator.h"
 
-#include "remoting/control_desktop/ServerInfo.h"
+#include "remoting/node_desktop/control_desktop/ServerInfo.h"
 #include "LogInitListener.h"
 
 namespace remoting_node_desktop
@@ -74,11 +74,11 @@ namespace remoting_node_desktop
             ::pointer < ::subsystem::LogWriter > m_plogwriter;
       // ZombieKiller m_zombieKiller;
 
-      ::pointer<::remoting::Configurator> m_pconfigurator;
+      ::pointer<::remoting_node::Configurator> m_pconfigurator;
       /**
        * Shortcut to global server configuration.
        */
-      ::pointer < ::remoting::ServerConfig > m_pserverconfig;
+      ::pointer < ::remoting_node::ServerConfig > m_pserverconfig;
 
       /**
        * Mutex for protecting servers.
@@ -170,7 +170,7 @@ namespace remoting_node_desktop
        *  2) Restarts rfb servers.
        *  3) Restarts http server.
        */
-      virtual void onConfigReload(::remoting::ServerConfig *serverConfig);
+      virtual void onConfigReload(::remoting_node::ServerConfig *serverConfig);
 
       /**
        * Only generates shutdown signal (event) for Server listeners.

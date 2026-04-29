@@ -25,8 +25,8 @@
 #pragma once
 
 
-#include "remoting/control_desktop/ControlGate.h"
-#include "remoting/control_desktop/ControlAuthException.h"
+#include "remoting/node_desktop/control_desktop/ControlGate.h"
+#include "remoting/node_desktop/control_desktop/ControlAuthException.h"
 
 #include "subsystem/platform/Exception.h"
 

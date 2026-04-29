@@ -35,19 +35,19 @@ public:
   VncPassCrypt();
   virtual ~VncPassCrypt();
 
-  static const int VNC_PASSWORD_SIZE = 8;
+  static const int ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE = 8;
 
-  void updatePlain(const unsigned char cryptedPass[VNC_PASSWORD_SIZE]);
+  void updatePlain(const unsigned char cryptedPass[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE]);
 
   // Encrypt the plain password and fills by encrypted values the
   // encryptedPass[8] array.
-  static void getEncryptedPass(unsigned char encryptedPass[VNC_PASSWORD_SIZE],
-                               const unsigned char plainPassword[VNC_PASSWORD_SIZE]);
+  static void getEncryptedPass(unsigned char encryptedPass[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE],
+                               const unsigned char plainPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE]);
 
   // Decrypt the encrypted password and fills by decrypted values the
   // plainPassword[8] array.
-  static void getPlainPass(unsigned char plainPassword[VNC_PASSWORD_SIZE],
-                                         const unsigned char encryptedPass[VNC_PASSWORD_SIZE]);
+  static void getPlainPass(unsigned char plainPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE],
+                                         const unsigned char encryptedPass[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE]);
 
   // Returns true if it's matched.
   bool challengeAndResponseIsValid(const unsigned char challenge[16],

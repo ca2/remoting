@@ -52,7 +52,7 @@ namespace remoting_windows
 
    void DesktopConfigLocal::updateByNewSettings()
    {
-      ::remoting::ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
+      ::remoting_node::ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
       bool hardBlocking = pserverconfig->isBlockingLocalInput();
       m_pinputblocker->setKeyboardBlocking(hardBlocking);
       m_pinputblocker->setMouseBlocking(hardBlocking);

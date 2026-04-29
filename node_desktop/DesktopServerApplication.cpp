@@ -215,7 +215,7 @@ namespace remoting_node_desktop
       OperatingSystemApplication::shutdown();
    }
 
-   void DesktopServerApplication::onConfigReload(::remoting::ServerConfig *serverConfig) {}
+   void DesktopServerApplication::onConfigReload(::remoting_node::ServerConfig *serverConfig) {}
 
    void DesktopServerApplication::run()
    {

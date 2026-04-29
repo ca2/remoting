@@ -26,6 +26,7 @@
 
 
 #include "AuthHandler.h"
+//#include "subsystem/platform/VncPassCrypt.h"
 
 
 namespace remoting_client
@@ -37,6 +38,6 @@ namespace remoting_client
                         const ::scoped_string & password);
 
       // TODO: removed duplicate code: ServerConfig.h
-      static const int VNC_PASSWORD_SIZE = 8;
+      //static const int ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE = 8;
    };
 } // namespace remoting_client

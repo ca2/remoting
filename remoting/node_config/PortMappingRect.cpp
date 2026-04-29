@@ -44,11 +44,13 @@ void PortMappingRect::toString(::string & string) const
   string.format("%dx{}+{}+{}", right - left, bottom - top, left, top);
 }
 
-bool PortMappingRect::parse(const char * psz, PortMappingRect * pportmappingrectOut)
+bool PortMappingRect::parse(const ::scoped_string & scopedstr, PortMappingRect * pportmappingrectOut)
 {
+
+   ::string str(scopedstr);
   int width, height, x, y;
   char c;
-  if (sscanf(psz, "%dx{}+{}+{}%c", &width, &height, &x, &y, &c) != 4) {
+  if (sscanf(str.c_str(), "%dx{}+{}+{}%c", &width, &height, &x, &y, &c) != 4) {
     return false;
   }
   if (width < 0 || height < 0) {

@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "ControlProxy.h"
-#include "remoting/control_desktop/ControlProto.h"
+#include "remoting/node_desktop/control_desktop/ControlProto.h"
 //#include "subsystem/thread/lockable_critical_section.h"
 
 //#include aaa_<crtdbg.h>

@@ -43,7 +43,7 @@ namespace remoting
       ~DesktopFactory() override;
 
       virtual ::pointer < Desktop > createDesktop(
-         Configurator * pconfigurator,
+         ::remoting_node::Configurator * pconfigurator,
          ::subsystem::ClipboardListener *pclipboardlistenerExternal,
          UpdateSendingListener *pupdatesendinglistenerExternal,
          AbnormDeskTermListener *pdesktermlistenerExternal,

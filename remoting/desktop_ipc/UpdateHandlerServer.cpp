@@ -33,7 +33,7 @@ namespace remoting
 {
 
 
-   // UpdateHandlerServer::UpdateHandlerServer(Configurator *pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
+   // UpdateHandlerServer::UpdateHandlerServer(::remoting_node::Configurator *pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
    //                                          //AnEventListener *extTerminationListener,
    //                                          const ::procedure &procedureTermination,
    //                                          ::subsystem::LogWriter * plogwriter) :
@@ -68,7 +68,7 @@ namespace remoting
    }
 
 
-   void UpdateHandlerServer::initialize_update_handler_server(Configurator *pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
+   void UpdateHandlerServer::initialize_update_handler_server(::remoting_node::Configurator *pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
               // AnEventListener *extTerminationListener,
               const ::procedure &procedureTermination, ::subsystem::LogWriter * plogwriter)
    {

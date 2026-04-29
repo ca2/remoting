@@ -28,7 +28,7 @@
 #include "acme/filesystem/filesystem/listing.h"
 #include "remoting/remoting/file_transfer_common/WinFilePath.h"
 #include "remoting/remoting/file_transfer_common/FolderListener.h"
-#include "remoting/remoting/EOFException.h"
+#include "remoting/remoting/platform/EOFException.h"
 
 namespace remoting
 {

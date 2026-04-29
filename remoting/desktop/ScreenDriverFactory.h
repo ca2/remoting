@@ -44,10 +44,10 @@ namespace remoting
       ~ScreenDriverFactory() override;
 
 
-      virtual void initialize_screen_driver_factory(ServerConfig *pserverconfig);
+      virtual void initialize_screen_driver_factory(::remoting_node::ServerConfig *pserverconfig);
 
       virtual ::pointer < ::remoting::ScreenDriver > createScreenDriver(
-         Configurator * pconfigurator,
+         ::remoting_node::Configurator * pconfigurator,
          UpdateKeeper * pupdatekeeper,
          UpdateListener * pupdatelistener,
          ::innate_subsystem::Framebuffer *pframebuffer,

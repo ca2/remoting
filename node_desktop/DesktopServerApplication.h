@@ -50,7 +50,7 @@ namespace remoting_node_desktop
     */
    class DesktopServerApplication : public ::subsystem::LocalOperatingSystemApplication,
                                     // public AnEventListener,
-                                    public ::remoting::ConfigReloadListener
+                                    public ::remoting_node::ConfigReloadListener
    {
    public:
       /**
@@ -72,12 +72,12 @@ namespace remoting_node_desktop
    //protected:
       // virtual void onAnObjectEvent();
       virtual void onHappening();
-      virtual void onConfigReload(::remoting::ServerConfig *serverConfig);
+      virtual void onConfigReload(::remoting_node::ServerConfig *serverConfig);
 
    //private:
       void freeResources();
 
-      ::pointer<::remoting::Configurator> m_pconfigurator;
+      ::pointer<::remoting_node::Configurator> m_pconfigurator;
       //::subsystem::LogWriter *m_clientLogWriter;
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 

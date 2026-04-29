@@ -26,7 +26,7 @@
 
 //#include "subsystem/platform/::string.h"
 #include "subsystem/platform/DesCrypt.h"
-
+#include "subsystem/platform/VncPassCrypt.h"
 //#include aaa_<algorithm>
 
 namespace remoting_client
@@ -41,11 +41,11 @@ namespace remoting_client
 
       // Prepare data for authentication.
       ::string truncatedPass;
-      truncatedPass = password.substr( 0, VNC_PASSWORD_SIZE);
+      truncatedPass = password.substr( 0, ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE);
 
       ::string passwordAnsi(truncatedPass);
 
-      unsigned char m_password[VNC_PASSWORD_SIZE];
+      unsigned char m_password[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
       memset(m_password, 0, sizeof(m_password));
       memcpy(m_password, passwordAnsi,
              ::minimum(passwordAnsi.length(), sizeof(m_password)));

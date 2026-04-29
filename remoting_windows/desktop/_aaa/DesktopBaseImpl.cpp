@@ -384,7 +384,7 @@ namespace remoting_windows
       }
    }
 
-   void DesktopBaseImpl::onConfigReload(::remoting::ServerConfig *serverConfig) { applyNewConfiguration(); }
+   void DesktopBaseImpl::onConfigReload(::remoting_node::ServerConfig *serverConfig) { applyNewConfiguration(); }
 
    bool DesktopBaseImpl::updateExternalFramebuffer(::innate_subsystem::Framebuffer *pframebuffer, const Region & region,
                                                    const ::int_rectangle &rectangleViewport)

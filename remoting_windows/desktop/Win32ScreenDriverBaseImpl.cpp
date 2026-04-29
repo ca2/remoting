@@ -47,7 +47,7 @@ namespace remoting_windows
    Win32ScreenDriverBaseImpl::~Win32ScreenDriverBaseImpl() { terminateDetection(); }
 
 
-   void Win32ScreenDriverBaseImpl::initialize_screen_driver(::remoting::Configurator * pconfigurator, ::remoting::UpdateKeeper * pupdatekeeper,
+   void Win32ScreenDriverBaseImpl::initialize_screen_driver(::remoting_node::Configurator * pconfigurator, ::remoting::UpdateKeeper * pupdatekeeper,
       ::remoting::UpdateListener * pupdatelistener,
                                         ::innate_subsystem::Framebuffer *pframebuffer,
                                                      lockable_critical_section *pcriticalsectionFramebuffer,

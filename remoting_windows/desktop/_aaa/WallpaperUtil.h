@@ -46,7 +46,7 @@ namespace remoting_windows
       virtual void updateWallpaper();
 
    //protected:
-      virtual void onConfigReload(::remoting::ServerConfig *serverConfig);
+      virtual void onConfigReload(::remoting_node::ServerConfig *serverConfig);
 
    //private:
       // Hides the desktop wallpaper.

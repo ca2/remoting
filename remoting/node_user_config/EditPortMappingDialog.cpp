@@ -31,9 +31,10 @@
 #include "remoting/remoting/node_config/PortMappingContainer.h"
 namespace remoting_node
 {
-   EditPortMappingDialog::EditPortMappingDialog(DialogType dlgType)
-   : BaseDialog(IDD_EDIT_PORT_MAPPING), m_dialogType(dlgType)
+   EditPortMappingDialog::EditPortMappingDialog(::remoting_node::Configurator * pconfigurator, DialogType dlgType)
+   :  m_pconfigurator(pconfigurator), m_dialogType(dlgType)
    {
+      initialize_dialog(IDD_EDIT_PORT_MAPPING);
    }
 
    EditPortMappingDialog::~EditPortMappingDialog()
@@ -47,7 +48,7 @@ namespace remoting_node
 
    void EditPortMappingDialog::onCancelButtonClick()
    {
-      kill(::innate_subsystem::IDCANCEL);
+      closeDialog(::innate_subsystem::e_control_id_cancel);
    }
 
    void EditPortMappingDialog::onOkButtonClick()
@@ -65,23 +66,23 @@ namespace remoting_node
       ::string portStringStorage;
       ::string rectStringStorage;
 
-      m_geometryTextBox.getText(&rectStringStorage);
-      m_portTextBox.getText(&portStringStorage);
+      rectStringStorage = m_geometryTextBox.getText();
+      portStringStorage = m_portTextBox.getText();
 
-      PortMappingRect::parse(rectStringStorage, rectangle);
+      rectangle.parse(rectStringStorage);
       MainSubsystem().StringParser().parseInt(portStringStorage, &port);
 
       m_mapping->setPort(port);
       m_mapping->setRect(rectangle);
 
-      kill(::innate_subsystem::IDOK);
+      closeDialog(::innate_subsystem::e_control_id_ok);
    }
 
    void EditPortMappingDialog::initControls()
    {
-      HWND dialogHwnd = m_ctrlThis.operating_system_window();
-      m_geometryTextBox.setWindow(GetDlgItem(dialogHwnd, IDC_GEOMETRY_EDIT));
-      m_portTextBox.setWindow(GetDlgItem(dialogHwnd, IDC_PORT_EDIT));
+      //HWND dialogHwnd = m_ctrlThis.operating_system_window();
+      dialog_item(m_geometryTextBox, IDC_GEOMETRY_EDIT);
+      dialog_item(m_portTextBox, IDC_PORT_EDIT);
    }
 
    bool EditPortMappingDialog::isUserDataValid()
@@ -89,11 +90,11 @@ namespace remoting_node
       ::string rectStringStorage;
       ::string portStringStorage;
 
-      m_geometryTextBox.getText(&rectStringStorage);
-      m_portTextBox.getText(&portStringStorage);
+      rectStringStorage = m_geometryTextBox.getText();
+      portStringStorage = m_portTextBox.getText();
 
       if (!PortMappingRect::tryParse(rectStringStorage)) {
-         MainSubsystem().message_box(m_ctrlThis.operating_system_window(),
+         MainSubsystem().message_box(operating_system_window(),
                     MainSubsystem().StringTable().getString(IDS_INVALID_PORT_MAPPING_STRING),
                     MainSubsystem().StringTable().getString(IDS_CAPTION_BAD_INPUT),
                     ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
@@ -106,7 +107,7 @@ namespace remoting_node
       MainSubsystem().StringParser().parseInt(portStringStorage, &port);
 
       if ((port < 1) || (port > 65535)) {
-         MainSubsystem().message_box(m_ctrlThis.operating_system_window(),
+         MainSubsystem().message_box(operating_system_window(),
                     MainSubsystem().StringTable().getString(IDS_PORT_RANGE_ERROR),
                     MainSubsystem().StringTable().getString(IDS_CAPTION_BAD_INPUT),
                     ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
@@ -119,7 +120,7 @@ namespace remoting_node
       size_t index = extraPorts->findByPort(port);
 
       if ((index != (size_t)-1) && (extraPorts->at(index) != m_mapping)) {
-         MainSubsystem().message_box(m_ctrlThis.operating_system_window(),
+         MainSubsystem().message_box(operating_system_window(),
                     MainSubsystem().StringTable().getString(IDS_PORT_ALREADY_IN_USE),
                     MainSubsystem().StringTable().getString(IDS_CAPTION_BAD_INPUT),
                     ::user::e_message_box_ok | ::user::e_message_box_icon_warning);
@@ -142,7 +143,7 @@ namespace remoting_node
          ::string rectString;
 
          portString.formatf("{}", m_mapping->getPort());
-         m_mapping->getRect().toString(&rectString);
+         rectString = m_mapping->getRect().toString();
 
          m_portTextBox.setText(portString);
          m_geometryTextBox.setText(rectString);
@@ -154,10 +155,10 @@ namespace remoting_node
    bool EditPortMappingDialog::onCommand(unsigned int cID, unsigned int nID)
    {
       switch (cID) {
-         case ::innate_subsystem::IDOK:
+         case ::innate_subsystem::e_control_id_ok:
             onOkButtonClick();
             break;
-         case ::innate_subsystem::IDCANCEL:
+         case ::innate_subsystem::e_control_id_cancel:
             onCancelButtonClick();
             break;
       }

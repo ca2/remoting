@@ -46,7 +46,7 @@ namespace remoting_windows
    }
 
 
-   void WindowsScreenGrabber::initialize_screen_grabber(::remoting::Configurator * pconfigurator)
+   void WindowsScreenGrabber::initialize_screen_grabber(::remoting_node::Configurator * pconfigurator)
    {
       m_pserverconfig = pconfigurator->getServerConfig();
       setWorkRectDefault();

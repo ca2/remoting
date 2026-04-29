@@ -44,7 +44,7 @@ namespace remoting
 
    DesktopBaseImpl::~DesktopBaseImpl() {}
 
-   void DesktopBaseImpl::initialize_desktop_base_impl(Configurator * pconfigurator, ::subsystem::ClipboardListener *pclipboardlistenerExternal, UpdateSendingListener *pupdatesendinglistenerExternal,
+   void DesktopBaseImpl::initialize_desktop_base_impl(::remoting_node::Configurator * pconfigurator, ::subsystem::ClipboardListener *pclipboardlistenerExternal, UpdateSendingListener *pupdatesendinglistenerExternal,
                 AbnormDeskTermListener *pdesktermlistenerExternal, ::subsystem::LogWriter * plogwriter)
    {
       initialize_config_reload_listener(pconfigurator);
@@ -385,7 +385,7 @@ namespace remoting
       }
    }
 
-   void DesktopBaseImpl::onConfigReload(ServerConfig *serverConfig) { applyNewConfiguration(); }
+   void DesktopBaseImpl::onConfigReload(::remoting_node::ServerConfig *serverConfig) { applyNewConfiguration(); }
 
    bool DesktopBaseImpl::updateExternalFramebuffer(::innate_subsystem::Framebuffer *pframebuffer, const Region & region,
                                                    const ::int_rectangle &rectangleViewport)

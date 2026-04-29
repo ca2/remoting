@@ -42,7 +42,7 @@ namespace remoting
    ConfigServer::~ConfigServer() {}
 
 
-   void ConfigServer::initialize_config_server(Configurator * pconfigurator, DesktopSrvDispatcher *pdispatcher, ::subsystem::LogWriter * plogwriter)
+   void ConfigServer::initialize_config_server(::remoting_node::Configurator * pconfigurator, DesktopSrvDispatcher *pdispatcher, ::subsystem::LogWriter * plogwriter)
    {
       initialize_desktop_server_proto(pconfigurator, nullptr);
       m_pconfigurator = pconfigurator;

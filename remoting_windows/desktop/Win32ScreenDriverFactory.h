@@ -36,16 +36,16 @@ namespace remoting_windows
       virtual public ::remoting::ScreenDriverFactory
    {
    public:
-      // The factory stores pointer to a ::remoting::ServerConfig object and will use it on
+      // The factory stores pointer to a ::remoting_node::ServerConfig object and will use it on
       // createScreenDriver() function calls.
-      //Win32ScreenDriverFactory(::remoting::ServerConfig *pserverconfig);
+      //Win32ScreenDriverFactory(::remoting_node::ServerConfig *pserverconfig);
       Win32ScreenDriverFactory();
       ~Win32ScreenDriverFactory() override;
 
-      void initialize_screen_driver_factory(::remoting::ServerConfig *pserverconfig) override;
+      void initialize_screen_driver_factory(::remoting_node::ServerConfig *pserverconfig) override;
 
       ::pointer < ::remoting::ScreenDriver > createScreenDriver(
-         ::remoting::Configurator * pconfigurator,
+         ::remoting_node::Configurator * pconfigurator,
          ::remoting::UpdateKeeper * pupdatekeeper,
          ::remoting::UpdateListener * pupdatelistener,
          ::innate_subsystem::Framebuffer *pframebuffer,
@@ -54,7 +54,7 @@ namespace remoting_windows
 
    private:
       virtual ::pointer < ::remoting::ScreenDriver > createStandardScreenDriver(
-      ::remoting::Configurator * pconfigurator,
+      ::remoting_node::Configurator * pconfigurator,
       ::remoting::UpdateKeeper * pupdatekeeper,
       ::remoting::UpdateListener * pupdatelistener,
       ::innate_subsystem::Framebuffer *pframebuffer,
@@ -62,7 +62,7 @@ namespace remoting_windows
       ::subsystem::LogWriter * plogwriter
       );
       virtual ::pointer < ::remoting::ScreenDriver > createMirrorScreenDriver(
-      ::remoting::Configurator * pconfigurator,
+      ::remoting_node::Configurator * pconfigurator,
       ::remoting::UpdateKeeper * pupdatekeeper,
       ::remoting::UpdateListener * pupdatelistener,
       ::innate_subsystem::Framebuffer *pframebuffer,
@@ -73,7 +73,7 @@ namespace remoting_windows
       bool isMirrorDriverAllowed();
       bool isD3DAllowed();
 
-      ::pointer < ::remoting::ServerConfig > m_pserverconfig;
+      ::pointer < ::remoting_node::ServerConfig > m_pserverconfig;
    };
 
    //// __WIN32SCREENDRIVERFACTORY_H__

@@ -27,6 +27,7 @@
 
 #include "innate_subsystem/gui/Dialog.h"
 #include "innate_subsystem/gui/TextBox.h"
+#include "node_config/Configurator.h"
 
 #include "remoting/remoting/node_config/PortMapping.h"
 
@@ -41,7 +42,7 @@ namespace remoting_node
       } DialogType;
 
    public:
-      EditPortMappingDialog(DialogType dlgType);
+      EditPortMappingDialog(::remoting_node::Configurator * pconfigurator, DialogType dlgType);
       virtual ~EditPortMappingDialog();
 
    public:
@@ -62,7 +63,8 @@ namespace remoting_node
       void onOkButtonClick();
       void onCancelButtonClick();
    protected:
-      TextBox m_geometryTextBox;
+      ::pointer < ::remoting_node::Configurator > m_pconfigurator;
+      ::innate_subsystem::TextBox m_geometryTextBox;
       ::innate_subsystem::TextBox m_portTextBox;
       DialogType m_dialogType;
       PortMapping *m_mapping;

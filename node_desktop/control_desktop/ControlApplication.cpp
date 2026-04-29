@@ -46,7 +46,7 @@
 #include "subsystem/platform/StringTable.h"
 #include "remoting/node_desktop/NamingDefs.h"
 
-#include "remoting/control_desktop/ControlCommandLine.h"
+#include "remoting/node_desktop/control_desktop/ControlCommandLine.h"
 #include "remoting/node_desktop/TvnServerHelp.h"
 
 #include "subsystem/node/OperatingSystem.h"

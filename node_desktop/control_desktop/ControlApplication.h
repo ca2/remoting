@@ -37,8 +37,8 @@
 #include "subsystem/thread/Thread.h"
 //#include "subsystem/thread/lockable_critical_section.h"
 
-#include "remoting/control_desktop/ControlGate.h"
-#include "remoting/control_desktop/ControlAuthException.h"
+#include "remoting/node_desktop/control_desktop/ControlGate.h"
+#include "remoting/node_desktop/control_desktop/ControlAuthException.h"
 
 #include "ControlProxy.h"
 #include "Notificator.h"
@@ -164,7 +164,7 @@ namespace remoting_control_desktop
       ::subsystem::LogWriter m_plogwriter;
 
       // Initialization of the Configurator instance.
-      ::pointer < ::remoting::Configurator >  m_configurator;
+      ::pointer < ::remoting_node::Configurator >  m_configurator;
 
    protected:
 

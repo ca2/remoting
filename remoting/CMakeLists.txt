@@ -520,17 +520,17 @@ list(APPEND library_source
    node_user_config/VideoRegionsConfigDialog.cpp
    node_user_config/VideoRegionsConfigDialog.h
    #node_user_config/wsconfig_lib.vcproj
+   platform/EOFException.cpp
+   platform/EOFException.h
+   platform/remoting.cpp
+   platform/remoting.h
 
    desktop/ScreenDriverFactory.cpp
    rfb_sconn/AuthException.cpp
    _.cpp
    _.h
-   EOFException.cpp
-   EOFException.h
    framework.cpp
    framework.h
-   remoting.cpp
-   remoting.h
 )
 
 

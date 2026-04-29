@@ -36,23 +36,25 @@ namespace remoting_node
    class VideoRegionsConfigDialog : virtual public ::innate_subsystem::Dialog
    {
    public:
-      VideoRegionsConfigDialog();
+      VideoRegionsConfigDialog(Configurator *pconfigurator);
       virtual ~VideoRegionsConfigDialog();
 
-      void setParentDialog(BaseDialog *dialog);
+      void setParentDialog(::innate_subsystem::Dialog *dialog);
 
       //
       // BaseDialog overrided methods
       //
 
       virtual bool onInitDialog();
-      virtual bool onNotify(unsigned int controlID, ::lparam data);
+      //virtual bool onNotify(unsigned int controlID, ::lparam data);
       virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
       virtual bool onDestroy() { return true; }
 
       //
       // Helper methods
       //
+
+      bool _002OnUpDown(int iControl, int iPos, int iDelta) override;
 
       bool validateInput();
       void updateUI();
@@ -66,17 +68,18 @@ namespace remoting_node
       // ::innate_subsystem::Control event handlers
       //
 
-      void onRecognitionIntervalSpinChangePos(LPNMUPDOWN scopedstrMessage);
+      //void onRecognitionIntervalSpinChangePos(int iControlID, int iPos, int iDelta);
       void onRecognitionIntervalUpdate();
       void onVideoRegionsUpdate();
 
    protected:
-      ServerConfig *m_config;
+      ::pointer < Configurator > m_pconfigurator;
+      ::pointer < ServerConfig > m_pserverconfig;
       ::innate_subsystem::TextBox m_videoClasses;
       ::innate_subsystem::TextBox m_videoRects;
       ::innate_subsystem::TextBox m_videoRecognitionInterval;
-      SpinControl m_videoRecognitionIntervalSpin;
-      BaseDialog *m_parentDialog;
+      ::innate_subsystem::SpinControl m_videoRecognitionIntervalSpin;
+      ::innate_subsystem::Dialog *m_pdialogParent;
    };
 } // namespace remoting_node
 

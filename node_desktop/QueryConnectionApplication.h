@@ -40,7 +40,7 @@ namespace remoting_node_desktop
    {
    public:
 
-      ::pointer < ::remoting::Configurator > m_pconfigurator;
+      ::pointer < ::remoting_node::Configurator > m_pconfigurator;
 
       /**
        * Creates instance of application.
@@ -58,7 +58,7 @@ namespace remoting_node_desktop
       virtual ~QueryConnectionApplication();
 
 
-      virtual void initialize_query_connection_application(::remoting::Configurator * pconfigurator, const ::scoped_string &scopedstrCmdLine);
+      virtual void initialize_query_connection_application(::remoting_node::Configurator * pconfigurator, const ::scoped_string &scopedstrCmdLine);
 
 
       /**

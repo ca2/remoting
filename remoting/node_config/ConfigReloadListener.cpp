@@ -25,7 +25,7 @@
 #include "ConfigReloadListener.h"
 #include "remoting/remoting/node_config/Configurator.h"
 
-namespace remoting
+namespace remoting_node
 {
    ConfigReloadListener::ConfigReloadListener()
    {
@@ -36,7 +36,7 @@ namespace remoting
    }
 
 
-   void ConfigReloadListener::initialize_config_reload_listener(Configurator *pconfigurator)
+   void ConfigReloadListener::initialize_config_reload_listener(::remoting_node::Configurator *pconfigurator)
    {
       m_pconfigurator = pconfigurator;
 
@@ -52,4 +52,4 @@ namespace remoting
    }
 
 
-} // namespace remoting
+} // namespace remoting_node

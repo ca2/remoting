@@ -35,11 +35,11 @@ namespace remoting_windows
    {
 
    }
-      //::remoting::ServerConfig *pserverconfig) : m_pserverconfig(pserverconfig) {}
+      //::remoting_node::ServerConfig *pserverconfig) : m_pserverconfig(pserverconfig) {}
 
    Win32ScreenDriverFactory::~Win32ScreenDriverFactory() {}
 
-   void Win32ScreenDriverFactory::initialize_screen_driver_factory(::remoting::ServerConfig *pserverconfig)
+   void Win32ScreenDriverFactory::initialize_screen_driver_factory(::remoting_node::ServerConfig *pserverconfig)
    {
 
       m_pserverconfig = pserverconfig;
@@ -48,7 +48,7 @@ namespace remoting_windows
 
 
    ::pointer < ::remoting::ScreenDriver > Win32ScreenDriverFactory::createScreenDriver(
-      ::remoting::Configurator * pconfigurator,
+      ::remoting_node::Configurator * pconfigurator,
       ::remoting::UpdateKeeper *pupdatekeeper,
       ::remoting::UpdateListener *pupdatelistener,
       ::innate_subsystem::Framebuffer *pframebuffer,
@@ -98,7 +98,7 @@ namespace remoting_windows
    }
 
    ::pointer < ::remoting::ScreenDriver > Win32ScreenDriverFactory::createStandardScreenDriver(
-      ::remoting::Configurator * pconfigurator,
+      ::remoting_node::Configurator * pconfigurator,
       ::remoting::UpdateKeeper *pupdatekeeper,
       ::remoting::UpdateListener *pupdatelistener,
       ::innate_subsystem::Framebuffer *pframebuffer,
@@ -117,7 +117,7 @@ namespace remoting_windows
    }
 
    ::pointer < ::remoting::ScreenDriver > Win32ScreenDriverFactory::createMirrorScreenDriver(
-      ::remoting::Configurator * pconfigurator,
+      ::remoting_node::Configurator * pconfigurator,
       ::remoting::UpdateKeeper *pupdatekeeper,
       ::remoting::UpdateListener *pupdatelistener,
       ::innate_subsystem::Framebuffer *pframebuffer,

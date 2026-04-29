@@ -57,7 +57,7 @@ UserInputClient::~UserInputClient()
 
 
 
-void UserInputClient::initialize_user_input_client(Configurator * pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher, ::subsystem::ClipboardListener *pclipboardlistener)
+void UserInputClient::initialize_user_input_client(::remoting_node::Configurator * pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher, ::subsystem::ClipboardListener *pclipboardlistener)
 //: DesktopServerProto(pblockinggate),
 //  m_clipboardListener(pclipboardlistener),
 //  m_sendMouseFlags(0)

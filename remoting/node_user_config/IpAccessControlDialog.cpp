@@ -35,7 +35,7 @@
 namespace remoting_node
 {
    IpAccessControlDialog::IpAccessControlDialog()
-   : BaseDialog(IDD_CONFIG_ACCESS_CONTROL_PAGE), m_parentDialog(NULL)
+   : BaseDialog(IDD_CONFIG_ACCESS_CONTROL_PAGE), m_pdialogParent(NULL)
    {
    }
 
@@ -45,7 +45,7 @@ namespace remoting_node
 
    void IpAccessControlDialog::setParentDialog(BaseDialog *dialog)
    {
-      m_parentDialog = dialog;
+      m_pdialogParent = dialog;
    }
 
    bool IpAccessControlDialog::onInitDialog()
@@ -236,7 +236,7 @@ namespace remoting_node
          setListViewItemText(m_list.getCount() - 1, ip);
          updateButtonsState();
          onIpCheckUpdate();
-         ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+         ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
       } else {
          delete ip;
       }
@@ -257,7 +257,7 @@ namespace remoting_node
          setListViewItemText(m_list.getSelectedIndex(), ip);
          updateButtonsState();
          onIpCheckUpdate();
-         ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+         ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
       } else {
       }
       m_list.invalidate();
@@ -281,7 +281,7 @@ namespace remoting_node
                m_list.removeItem(si);
                updateButtonsState();
                onIpCheckUpdate();
-               ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+               ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
                break;
             }
          }
@@ -310,7 +310,7 @@ namespace remoting_node
       setListViewItemText(si, ipPrev);
       m_list.selectItem(si - 1);
       onIpCheckUpdate();
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    void IpAccessControlDialog::onMoveDownButtonClick()
@@ -327,7 +327,7 @@ namespace remoting_node
       setListViewItemText(si + 1, ip);
       m_list.selectItem(si + 1);
       onIpCheckUpdate();
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    void IpAccessControlDialog::onListViewSelChange()
@@ -341,7 +341,7 @@ namespace remoting_node
       if (!m_defaultActionAccept.isChecked()) {
          m_defaultActionAccept.check(true);
          m_defaultActionRefuse.check(false);
-         ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+         ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
       }
    }
 
@@ -350,7 +350,7 @@ namespace remoting_node
       if (!m_defaultActionRefuse.isChecked()) {
          m_defaultActionRefuse.check(true);
          m_defaultActionAccept.check(false);
-         ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+         ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
       }
    }
 
@@ -358,14 +358,14 @@ namespace remoting_node
    {
       updateCheckBoxesState();
       updateButtonsState();
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    void IpAccessControlDialog::onAllowOnlyLoopbackConnectionsClick()
    {
       updateCheckBoxesState();
       updateButtonsState();
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    void IpAccessControlDialog::onIpCheckUpdate()
@@ -423,7 +423,7 @@ namespace remoting_node
 
    void IpAccessControlDialog::onQueryTimeoutUpdate()
    {
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    void IpAccessControlDialog::updateButtonsState()

@@ -94,7 +94,7 @@ namespace remoting
       bool m_viewOnlyAuth;
       bool m_shared;
 
-      ::pointer < Configurator > m_pconfigurator;
+      ::pointer < ::remoting_node::Configurator > m_pconfigurator;
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
       // Information

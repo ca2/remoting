@@ -43,7 +43,7 @@ namespace remoting
    class UserInputServer : public DesktopServerProto, public ClientListener, public ::subsystem::ClipboardListener
    {
    public:
-      UserInputServer(Configurator * pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
+      UserInputServer(::remoting_node::Configurator * pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
                       // AnEventListener *extTerminationListener,
                       const ::procedure &procedureTermination, ::subsystem::LogWriter * plogwriter);
       virtual ~UserInputServer();

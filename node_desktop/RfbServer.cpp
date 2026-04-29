@@ -32,7 +32,7 @@ namespace remoting_node_desktop
 
    RfbServer::RfbServer(
       const ::scoped_string &scopedstrBindHost, 
-      ::remoting::Configurator *pconfigurator,
+      ::remoting_node::Configurator *pconfigurator,
                         unsigned short bindPort,
                         RfbClientManager *clientManager, bool lockAddr, ::subsystem::LogWriter * plogwriter,
                         const ::int_rectangle &rectangleViewport) :

@@ -27,28 +27,37 @@
 #include "subsystem/_common_header.h"
 namespace remoting_node
 {
-   ConfigDialog::ConfigDialog(bool forService, ControlCommand *reloadConfigCommand)
-   : BaseDialog(IDD_CONFIG),
-     m_isConfiguringService(forService),
+   ConfigDialog::ConfigDialog(Configurator * pconfigurator, ::remoting_control_desktop::ControlCommand *reloadConfigCommand)
+   :
+   m_videoRegionsConfigDialog(pconfigurator),
+   m_administrationConfigDialog(pconfigurator),
+     m_isConfiguringService(pconfigurator->m_isConfiguringService),
      m_reloadConfigCommand(reloadConfigCommand),
      m_lastSelectedTabIndex(0)
    {
+      initialize_dialog(IDD_CONFIG);
    }
 
-   ConfigDialog::ConfigDialog(bool forService)
-   : BaseDialog(IDD_CONFIG),
-     m_isConfiguringService(forService),
+   ConfigDialog::ConfigDialog(Configurator * pconfigurator)
+   : //BaseDialog(IDD_CONFIG),
+   m_videoRegionsConfigDialog(pconfigurator),
+   m_administrationConfigDialog(pconfigurator),
+     m_isConfiguringService(pconfigurator->m_isConfiguringService),
      m_reloadConfigCommand(NULL),
      m_lastSelectedTabIndex(0)
    {
+      initialize_dialog(IDD_CONFIG);
    }
 
    ConfigDialog::ConfigDialog()
-   : BaseDialog(IDD_CONFIG),
+   : //BaseDialog(IDD_CONFIG),
+   m_videoRegionsConfigDialog(nullptr),
+   m_administrationConfigDialog(nullptr),
      m_isConfiguringService(false),
      m_reloadConfigCommand(NULL),
      m_lastSelectedTabIndex(0)
    {
+      initialize_dialog(IDD_CONFIG);
    }
 
    ConfigDialog::~ConfigDialog()
@@ -61,7 +70,7 @@ namespace remoting_node
       m_ctrlApplyButton.enableWindow(true);
    }
 
-   void ConfigDialog::setConfigReloadCommand(ControlCommand *command)
+   void ConfigDialog::setConfigReloadCommand(::remoting_control_desktop::ControlCommand *command)
    {
       m_reloadConfigCommand = command;
 
@@ -82,10 +91,10 @@ namespace remoting_node
 
    void ConfigDialog::initControls()
    {
-      HWND dialogHwnd = m_ctrlThis.operating_system_window();
+      //HWND dialogHwnd = m_ctrlThis.operating_system_window();
 
-      m_ctrlApplyButton.setWindow(GetDlgItem(dialogHwnd, IDC_APPLY));
-      m_tabControl.setWindow(GetDlgItem(dialogHwnd, IDC_CONFIG_TAB));
+      dialog_item(m_ctrlApplyButton, IDC_APPLY);
+      dialog_item(m_tabControl, IDC_CONFIG_TAB);
 
       //
       // Change caption of dialog
@@ -96,16 +105,16 @@ namespace remoting_node
 
    void ConfigDialog::loadSettings()
    {
-      m_config->load();
+      m_pconfigurator->load();
    }
 
    bool ConfigDialog::onCommand(unsigned int controlID, unsigned int notificationID)
    {
       switch (controlID) {
-         case ::innate_subsystem::IDOK:
+         case ::innate_subsystem::e_control_id_ok:
             onOKButtonClick();
             break;
-         case ::innate_subsystem::IDCANCEL:
+         case ::innate_subsystem::e_control_id_cancel:
             onCancelButtonClick();
             break;
          case IDC_APPLY:
@@ -115,33 +124,35 @@ namespace remoting_node
       return true;
    }
 
-   bool ConfigDialog::onNotify(unsigned int controlID, ::lparam data)
-   {
-      switch (controlID) {
-         case IDC_CONFIG_TAB:
-            switch (((LPNMHDR)data)->code) {
-            case TCN_SELCHANGE:
-                  onTabChange();
-                  break;
-            case TCN_SELCHANGING:
-                  onTabChanging();
-                  break;
-            }
-            break;
-      }
-      return true;
-   }
+   // bool ConfigDialog::onNotify(unsigned int controlID, ::lparam data)
+   // {
+   //    switch (controlID) {
+   //       case IDC_CONFIG_TAB:
+   //          switch (((LPNMHDR)data)->code) {
+   //          case TCN_SELCHANGE:
+   //                onTabChange();
+   //                break;
+   //          case TCN_SELCHANGING:
+   //                onTabChanging();
+   //                break;
+   //          }
+   //          break;
+   //    }
+   //    return true;
+   // }
 
    bool ConfigDialog::onInitDialog()
    {
-      m_config = m_pconfigurator;
-      m_config->setServiceFlag(m_isConfiguringService);
+      //m_config = m_pconfigurator;
+      m_pconfigurator->setServiceFlag(m_isConfiguringService);
 
       initControls();
 
       m_tabControl.addTab(NULL, "Temp");
 
-      m_serverConfigDialog.setParent(&m_ctrlThis);
+      auto pimpl = impl < ::
+
+      m_serverConfigDialog.setParent();
       m_serverConfigDialog.setParentDialog(this);
       m_serverConfigDialog.create();
       moveDialogToTabControl(&m_serverConfigDialog);

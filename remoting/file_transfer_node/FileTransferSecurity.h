@@ -49,10 +49,10 @@ namespace remoting
          ::remoting::Desktop *m_pdesktop;
 
          ::pointer < ::subsystem::LogWriter > m_plogwriter;
-         ::pointer < Configurator > m_pconfigurator;
+         ::pointer < ::remoting_node::Configurator > m_pconfigurator;
 
 
-         FileTransferSecurity(Configurator * pconfigurator, ::remoting::Desktop *desktop, ::subsystem::LogWriter *log);
+         FileTransferSecurity(::remoting_node::Configurator * pconfigurator, ::remoting::Desktop *desktop, ::subsystem::LogWriter *log);
          virtual ~FileTransferSecurity();
 
          // Sets access rights for calling process for execution

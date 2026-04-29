@@ -27,9 +27,9 @@
 
 #include "RfbClientManager.h"
 
-#include "remoting/control_desktop/ControlGate.h"
-#include "remoting/control_desktop/ControlAuthException.h"
-#include "remoting/control_desktop/Transport.h"
+#include "remoting/node_desktop/control_desktop/ControlGate.h"
+#include "remoting/node_desktop/control_desktop/ControlAuthException.h"
+#include "remoting/node_desktop/control_desktop/Transport.h"
 #include "ControlAppAuthenticator.h"
 #include "subsystem/thread/ThreadCollector.h"
 //#include "log_writer/LogWriter.h"
@@ -63,14 +63,14 @@ namespace remoting_node_desktop
    class ControlClient : public ::subsystem::Thread
    {
    public:
-      ::pointer < ::remoting::Configurator > m_pconfigurator;
+      ::pointer < ::remoting_node::Configurator > m_pconfigurator;
       /**
        * Creates new control client handler thread and starts it.
        * @param transport transport of incoming control connection (non-authorized).
        * @param rfbClientManager active TightVNC rfb client manager.
        * @remark control client takes ownership over client transport.
        */
-      ControlClient(::remoting::Configurator * pconfigurator, Transport *transport, RfbClientManager *rfbClientManager, ControlAppAuthenticator *authenticator,
+      ControlClient(::remoting_node::Configurator * pconfigurator, Transport *transport, RfbClientManager *rfbClientManager, ControlAppAuthenticator *authenticator,
                     ::subsystem::FileInterface *pfilePipeHandle, ::subsystem::LogWriter * plogwriter);
       /**
        * Stops client thread and deletes control client.

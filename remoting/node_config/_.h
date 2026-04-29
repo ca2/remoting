@@ -3,7 +3,7 @@
 
 
 /// remoting/remoting/server_config
-namespace remoting
+namespace remoting_node
 {
 
    class Configurator;

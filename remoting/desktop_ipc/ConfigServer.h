@@ -37,14 +37,14 @@ namespace remoting
    {
    public:
 
-      ::pointer < Configurator > m_pconfigurator;
+      ::pointer < ::remoting_node::Configurator > m_pconfigurator;
       ::pointer < DesktopConfigLocal > m_pdesktopconfiglocal;
 
       ConfigServer();
       ~ConfigServer() override;
 
 
-      virtual void initialize_config_server(Configurator * pconfigurator, DesktopSrvDispatcher * pdispatcher, ::subsystem::LogWriter * plogwriter);
+      virtual void initialize_config_server(::remoting_node::Configurator * pconfigurator, DesktopSrvDispatcher * pdispatcher, ::subsystem::LogWriter * plogwriter);
 
    //protected:
       // Internal dispatcher

@@ -40,6 +40,14 @@ public:
   // Converts this rectangle to string value.
   void toString(::string & string) const;
 
+   ::string toString() const
+   {
+      ::string str;
+      toString(str);
+      return str;
+
+   }
+
   // Returns true if string can be parsed to rectangle object,
   // false otherwise.
   static bool tryParse(const char * psz);
@@ -47,7 +55,15 @@ public:
   // Parsed string and sets parsed values to output rectangle.
   // Returns true if string is valid, false otherwise.
   // Remark: "out" parameter can be null.
-  static bool parse(const char * psz,  PortMappingRect * pportmappingrectOut);
+  static bool parse(const ::scoped_string & scopedstr,  PortMappingRect * pportmappingrectOut);
+
+
+   bool parse(const ::scoped_string & scopedstr)
+   {
+
+      return PortMappingRect::parse(scopedstr, this);
+
+   }
 };
 
 

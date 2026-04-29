@@ -64,13 +64,13 @@ namespace remoting_windows
       }
    }
 
-   void WallpaperUtil::onConfigReload(::remoting::ServerConfig *serverConfig) { updateWallpaper(); }
+   void WallpaperUtil::onConfigReload(::remoting_node::ServerConfig *serverConfig) { updateWallpaper(); }
 
    void WallpaperUtil::updateWallpaper()
    {
       try
       {
-         ::remoting::ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
+         ::remoting_node::ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
          if (pserverconfig->isRemovingDesktopWallpaperEnabled())
          {
             disableWallpaper();

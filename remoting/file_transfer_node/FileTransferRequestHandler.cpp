@@ -60,7 +60,7 @@ namespace remoting
    {
 
 
-      FileTransferRequestHandler::FileTransferRequestHandler(Configurator * pconfigurator,
+      FileTransferRequestHandler::FileTransferRequestHandler(::remoting_node::Configurator * pconfigurator,
          RfbCodeRegistrator *registrator,
                                                              RfbOutputGate *prfboutputgate,
                                                              Desktop *desktop,

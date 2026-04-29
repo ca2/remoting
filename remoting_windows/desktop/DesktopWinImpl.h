@@ -58,7 +58,7 @@ namespace remoting_windows
       ~DesktopWinImpl() override;
 
 
-      void initialize_desktop(::remoting::Configurator * pconfigurator, ::subsystem::ClipboardListener *pclipboardlistenerExternal, ::remoting::UpdateSendingListener *pupdatesendinglistenerExternal,
+      void initialize_desktop(::remoting_node::Configurator * pconfigurator, ::subsystem::ClipboardListener *pclipboardlistenerExternal, ::remoting::UpdateSendingListener *pupdatesendinglistenerExternal,
                      ::remoting::AbnormDeskTermListener *pdesktermlistenerExternal, ::subsystem::LogWriter * plogwriter) override;
 
    //protected:

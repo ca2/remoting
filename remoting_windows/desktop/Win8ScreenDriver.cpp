@@ -60,7 +60,7 @@ namespace remoting_windows
    }
 
 
-   void Win8ScreenDriver::initialize_screen_driver(::remoting::Configurator * pconfigurator,
+   void Win8ScreenDriver::initialize_screen_driver(::remoting_node::Configurator * pconfigurator,
       ::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
                                         ::innate_subsystem::Framebuffer *pframebuffer,
                           lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) //:

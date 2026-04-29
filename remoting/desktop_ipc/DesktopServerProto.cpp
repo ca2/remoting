@@ -41,7 +41,7 @@ namespace remoting
    DesktopServerProto::~DesktopServerProto() {}
 
 
-   void DesktopServerProto::initialize_desktop_server_proto(Configurator * pconfigurator, BlockingGate *pblockinggate)
+   void DesktopServerProto::initialize_desktop_server_proto(::remoting_node::Configurator * pconfigurator, BlockingGate *pblockinggate)
    {
 
       m_pconfigurator = pconfigurator;
@@ -318,7 +318,7 @@ namespace remoting
 
    void DesktopServerProto::readConfigSettings(BlockingGate *pblockinggate)
    {
-      ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
+      ::remoting_node::ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
 
       // Log
       pserverconfig->setLogLevel(pblockinggate->readUInt32());

@@ -56,7 +56,7 @@ namespace remoting
       ::pointer < ClientAuthListener > m_pclientauthlistener;
       ::pointer < RfbClient > m_prfbclient;
 
-      ::pointer < Configurator > m_pconfigurator;
+      ::pointer < ::remoting_node::Configurator > m_pconfigurator;
 
 
       //RfbInitializer(Channel *stream, ClientAuthListener *pclientauthlistener, RfbClient *client, bool authAllowed);

@@ -34,7 +34,7 @@
 namespace remoting_node
 {
    ServerConfigDialog::ServerConfigDialog()
-   : BaseDialog(IDD_CONFIG_SERVER_PAGE), m_parentDialog(NULL)
+   : BaseDialog(IDD_CONFIG_SERVER_PAGE), m_pdialogParent(NULL)
    {
    }
 
@@ -44,7 +44,7 @@ namespace remoting_node
 
    void ServerConfigDialog::setParentDialog(BaseDialog *dialog)
    {
-      m_parentDialog = dialog;
+      m_pdialogParent = dialog;
    }
 
    bool ServerConfigDialog::onInitDialog()
@@ -112,7 +112,7 @@ namespace remoting_node
                break;
             case IDC_USE_MIRROR_DRIVER:
                // FIXME: For high quality code is needed to use a function.
-               ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+               ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
                break;
             case IDC_SHOW_TVNCONTROL_ICON_CHECKBOX:
                onShowTrayIconCheckBoxClick();
@@ -408,19 +408,19 @@ namespace remoting_node
    void ServerConfigDialog::onAcceptRfbConnectionsClick()
    {
       updateControlDependencies();
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onAcceptHttpConnectionsClick()
    {
       updateControlDependencies();
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onAuthenticationClick()
    {
       updateControlDependencies();
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
 
@@ -430,7 +430,7 @@ namespace remoting_node
       bool newVal = m_showTrayIcon.isChecked();
 
       if (oldVal != newVal) {
-         ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+         ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
       }
    }
 
@@ -440,7 +440,7 @@ namespace remoting_node
       bool newVal = m_connectToRdp.isChecked();
 
       if (oldVal != newVal) {
-         ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+         ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
       }
    }
 
@@ -449,14 +449,14 @@ namespace remoting_node
    void ServerConfigDialog::onPrimaryPasswordChange()
    {
       if (m_ppControl->showChangePasswordModalDialog(&m_ctrlThis)) {
-         ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+         ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
       }
    }
 
    void ServerConfigDialog::onReadOnlyPasswordChange()
    {
       if (m_vpControl->showChangePasswordModalDialog(&m_ctrlThis)) {
-         ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+         ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
       }
    }
 
@@ -464,82 +464,82 @@ namespace remoting_node
    {
       m_ppControl->unsetPassword(true, m_ctrlThis.operating_system_window());
 
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onUnsetReadOnlyPasswordClick()
    {
       m_vpControl->unsetPassword(true, m_ctrlThis.operating_system_window());
 
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
-   void ServerConfigDialog::onPollingIntervalSpinChangePos(LPNMUPDOWN scopedstrMessage)
+   void ServerConfigDialog::onPollingIntervalSpinChangePos(LPNMUPDOWN lpupdownMessage)
    {
-      m_pollingIntervalSpin.autoAccelerationHandler(scopedstrMessage);
+      m_pollingIntervalSpin.autoAccelerationHandler(lpupdownMessage);
    }
 
    void ServerConfigDialog::onRfbPortUpdate()
    {
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onHttpPortUpdate()
    {
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onUrlParamsClick()
    {
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onPollingIntervalUpdate()
    {
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onFileTransferCheckBoxClick()
    {
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onRemoveWallpaperCheckBoxClick()
    {
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onGrabTransparentWindowsChanged()
    {
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onUseD3DChanged()
    {
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onBlockLocalInputChanged()
    {
       updateCheckboxesState();
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onBlockRemoteInputChanged()
    {
       updateCheckboxesState();
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onLocalInputPriorityChanged()
    {
       updateCheckboxesState();
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onInactivityTimeoutUpdate()
    {
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    void ServerConfigDialog::updateCheckboxesState()

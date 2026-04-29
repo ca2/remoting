@@ -27,34 +27,41 @@
 #include "CommonInputValidation.h"
 #include "UIDataAccess.h"
 #include "ConfigDialog.h"
-#include "file_lib/::file::item.h"
+#include "acme/constant/user_notification.h"
+///#include "file_lib/::file::item.h"
 #include "remoting/remoting/node_config/ServerConfig.h"
 #include "remoting/remoting/node_config/Configurator.h"
 #include "subsystem/_common_header.h"
 #include "subsystem/platform/StringParser.h"
 #include "remoting/remoting/node_user_config/ChangePasswordDialog.h"
 #include "subsystem/platform/StringTable.h"
-#include "subsystem/platform/Process.h"
-#include "remoting/node_desktop/NamingDefs.h"
+#include "subsystem/node/Process.h"
+#include "remoting/remoting/node/NamingDefs.h"
+
+
+
 namespace remoting_node
 {
-   AdministrationConfigDialog::AdministrationConfigDialog()
-   : BaseDialog(IDD_CONFIG_ADMINISTRATION_PAGE), m_parentDialog(NULL)
+
+   AdministrationConfigDialog::AdministrationConfigDialog(Configurator * pconfigurator)
+   :  m_pdialogParent(NULL),
+   m_pconfigurator(pconfigurator)
    {
+      initialize_dialog(IDD_CONFIG_ADMINISTRATION_PAGE);
    }
 
    AdministrationConfigDialog::~AdministrationConfigDialog()
    {
    }
 
-   void AdministrationConfigDialog::setParentDialog(BaseDialog *dialog)
+   void AdministrationConfigDialog::setParentDialog(::innate_subsystem::Dialog *dialog)
    {
-      m_parentDialog = dialog;
+      m_pdialogParent = dialog;
    }
 
    bool AdministrationConfigDialog::onInitDialog()
    {
-      m_config = m_pconfigurator->getServerConfig();
+      m_pserverconfig = m_pconfigurator->getServerConfig();
 
       initControls();
       updateUI();
@@ -144,7 +151,7 @@ namespace remoting_node
       m_repeatControlAuth.check(m_config->getControlAuthAlwaysChecking());
       m_repeatControlAuth.enableWindow(m_useControlAuth.isChecked());
 
-      ConfigDialog *configDialog = (ConfigDialog *)m_parentDialog;
+      ConfigDialog *configDialog = (ConfigDialog *)m_pdialogParent;
 
       ::string logPath;
 
@@ -324,7 +331,7 @@ namespace remoting_node
                m_shared[i].check(false);
             } // if
          } // for
-         ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+         ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
       } // if
    }
 
@@ -357,13 +364,13 @@ namespace remoting_node
                m_disconnectAction[i].check(false);
             } // if
          } // for
-         ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+         ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
       } // if
    }
 
    void AdministrationConfigDialog::onLogForAllUsersClick()
    {
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    void AdministrationConfigDialog::onUseControlAuthClick()
@@ -371,18 +378,18 @@ namespace remoting_node
       m_cpControl->enableWindow(m_useControlAuth.isChecked());
       m_repeatControlAuth.enableWindow(m_useControlAuth.isChecked());
 
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    void AdministrationConfigDialog::onRepeatControlAuthClick()
    {
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    void AdministrationConfigDialog::onChangeControlPasswordClick()
    {
       if (m_cpControl->showChangePasswordModalDialog(&m_ctrlThis)) {
-         ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+         ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
       }
    }
 
@@ -390,12 +397,12 @@ namespace remoting_node
    {
       m_cpControl->unsetPassword(true, m_ctrlThis.operating_system_window());
 
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    void AdministrationConfigDialog::onLogLevelUpdate()
    {
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    //

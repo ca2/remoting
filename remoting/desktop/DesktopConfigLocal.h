@@ -38,14 +38,14 @@ namespace remoting
 
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
-      ::pointer < Configurator > m_pconfigurator;
+      ::pointer < ::remoting_node::Configurator > m_pconfigurator;
       ::pointer < InputBlocker  > m_pinputblocker;
 
       DesktopConfigLocal();
       ~DesktopConfigLocal() override;
 
 
-      void initialize_desktop_config_local(Configurator * pconfigurator, ::subsystem::LogWriter * plogwriter);
+      void initialize_desktop_config_local(::remoting_node::Configurator * pconfigurator, ::subsystem::LogWriter * plogwriter);
 
       virtual void updateByNewSettings();
 

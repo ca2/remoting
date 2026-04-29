@@ -46,7 +46,7 @@ namespace remoting
 
       ::pointer < ScreenDriverFactory > m_pscreendriverfactory;
 
-      ::pointer < Configurator > m_pconfigurator;
+      ::pointer < ::remoting_node::Configurator > m_pconfigurator;
 
       ::innate_subsystem::PixelFormat m_pixelformatOld;
 
@@ -57,13 +57,13 @@ namespace remoting
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
 
-      //UpdateHandlerServer(Configurator *pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
+      //UpdateHandlerServer(::remoting_node::Configurator *pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
         //                  // AnEventListener *extTerminationListener,
           //                const ::procedure &procedureTermination, ::subsystem::LogWriter * plogwriter);
       UpdateHandlerServer();
       ~UpdateHandlerServer() override;
 
-      virtual void initialize_update_handler_server(Configurator *pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
+      virtual void initialize_update_handler_server(::remoting_node::Configurator *pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
                     // AnEventListener *extTerminationListener,
                     const ::procedure &procedureTermination, ::subsystem::LogWriter * plogwriter);
 

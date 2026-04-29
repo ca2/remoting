@@ -41,7 +41,7 @@ namespace remoting_windows
       ~DesktopFactory();
 
       ::pointer < ::remoting::Desktop > createDesktop(
-         ::remoting::Configurator * pconfigurator,
+         ::remoting_node::Configurator * pconfigurator,
          ::subsystem::ClipboardListener *pclipboardlistenerExternal,
          ::remoting::UpdateSendingListener *pupdatesendinglistenerExternal,
          ::remoting::AbnormDeskTermListener *pdesktermlistenerExternal, ::subsystem::LogWriter * plogwriter) override;

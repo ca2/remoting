@@ -38,7 +38,7 @@ namespace remoting
       DesktopConfigClient();
       virtual ~DesktopConfigClient();
 
-      virtual void initialize_desktop_config_client(Configurator * pconfigurator, BlockingGate *pblockinggate);
+      virtual void initialize_desktop_config_client(::remoting_node::Configurator * pconfigurator, BlockingGate *pblockinggate);
 
       virtual void updateByNewSettings(BlockingGate *pblockinggate);
       virtual bool isRemoteInputAllowed();

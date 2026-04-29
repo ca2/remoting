@@ -36,7 +36,7 @@
 #include "subsystem/platform/ListenerContainer.h"
 
 
-namespace remoting
+namespace remoting_node
 {
 
 
@@ -96,7 +96,7 @@ namespace remoting
       //
 
       //static Configurator *getInstance();
-      //static void setInstance(Configurator *conf);
+      //static void setInstance(::remoting_node::Configurator *conf);
 
       void notifyReload();
 
@@ -140,7 +140,7 @@ namespace remoting
    };
 
 
-} // namespace remoting
+} // namespace remoting_node
  
 
 

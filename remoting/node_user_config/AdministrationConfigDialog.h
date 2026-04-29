@@ -43,11 +43,11 @@ namespace remoting_node
    virtual public ::innate_subsystem::Dialog
    {
    public:
-      AdministrationConfigDialog();
+      AdministrationConfigDialog(Configurator * pconfigurator);
       virtual ~AdministrationConfigDialog();
    public:
 
-      void setParentDialog(BaseDialog *dialog);
+      void setParentDialog(::innate_subsystem::Dialog *dialog);
 
       //
       // BaseDialog overrided methods
@@ -91,20 +91,21 @@ namespace remoting_node
 
    protected:
       // Configuration
-      ServerConfig *m_config;
+      ::pointer < Configurator > m_pconfigurator;
+      ::pointer < ServerConfig > m_pserverconfig;
       // Controls
       ::innate_subsystem::Control m_openLogPathButton;
       ::innate_subsystem::Control m_setControlPasswordButton;
       ::innate_subsystem::Control m_unsetControlPasswordButton;
       ::innate_subsystem::CheckBox m_disconnectAction[3];
-      ::innate_subsystem::::innate_subsystem::TextBox m_logLevel;
+      ::innate_subsystem::TextBox m_logLevel;
       ::innate_subsystem::TextBox m_logPathTB;
       ::innate_subsystem::CheckBox m_useControlAuth;
       ::innate_subsystem::CheckBox m_repeatControlAuth;
       ::innate_subsystem::CheckBox m_shared[5];
       ::innate_subsystem::CheckBox m_logForAllUsers;
-      SpinControl m_logSpin;
-      BaseDialog *m_parentDialog;
+      ::innate_subsystem::SpinControl m_logSpin;
+      ::innate_subsystem::Dialog *m_pdialogParent;
 
       PasswordControl *m_cpControl;
 

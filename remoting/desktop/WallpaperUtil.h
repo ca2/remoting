@@ -32,7 +32,7 @@ namespace remoting
 {
 
    class CLASS_DECL_REMOTING WallpaperUtil :
-      virtual public ConfigReloadListener
+      virtual public ::remoting_node::ConfigReloadListener
    {
    public:
 
@@ -42,12 +42,12 @@ namespace remoting
       ~WallpaperUtil();
 
 
-      virtual void initialize_wallpaper_util(Configurator * pconfigurator, ::subsystem::LogWriter * plogwriter);
+      virtual void initialize_wallpaper_util(::remoting_node::Configurator * pconfigurator, ::subsystem::LogWriter * plogwriter);
 
       virtual void updateWallpaper();
 
    //protected:
-      virtual void onConfigReload(ServerConfig *serverConfig);
+      virtual void onConfigReload(::remoting_node::ServerConfig *serverConfig);
 
    //private:
       // Hides the desktop wallpaper.

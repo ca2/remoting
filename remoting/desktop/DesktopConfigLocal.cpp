@@ -41,7 +41,7 @@ namespace remoting
    }
 
 
-   void DesktopConfigLocal::initialize_desktop_config_local(Configurator *pconfigurator, subsystem::LogWriter *plogwriter)
+   void DesktopConfigLocal::initialize_desktop_config_local(::remoting_node::Configurator *pconfigurator, subsystem::LogWriter *plogwriter)
    {
       m_plogwriter = plogwriter;
       m_pconfigurator = pconfigurator;
@@ -52,7 +52,7 @@ constructø(      m_pinputblocker);
 
    void DesktopConfigLocal::updateByNewSettings()
    {
-      ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
+      ::remoting_node::ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
       bool hardBlocking = pserverconfig->isBlockingLocalInput();
       m_pinputblocker->setKeyboardBlocking(hardBlocking);
       m_pinputblocker->setMouseBlocking(hardBlocking);

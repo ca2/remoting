@@ -36,7 +36,7 @@ namespace remoting
    DesktopFactory::~DesktopFactory() {}
 
    ::pointer < Desktop > DesktopFactory::createDesktop(
-      Configurator * pconfigurator,
+      ::remoting_node::Configurator * pconfigurator,
       ::subsystem::ClipboardListener *pclipboardlistenerExternal,
       UpdateSendingListener *pupdatesendinglistenerExternal,
       AbnormDeskTermListener *pdesktermlistenerExternal,

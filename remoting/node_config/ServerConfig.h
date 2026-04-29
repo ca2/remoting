@@ -35,11 +35,12 @@
 #include "acme/input_output/DataInputStream.h"
 #include "acme/input_output/DataOutputStream.h"
 #include "acme/exception/io.h"
+#include "subsystem/platform/VncPassCrypt.h"
 #include "remoting/remoting/region/RectSerializer.h"
 #include "subsystem/thread/Lockable.h"
 // #include aaa_<shlobj.h>
 
-namespace remoting
+namespace remoting_node
 {
    class CLASS_DECL_REMOTING ServerConfig : virtual public ::subsystem::LockableInterface
    {
@@ -49,7 +50,7 @@ namespace remoting
       static const unsigned int MINIMAL_QUERY_TIMEOUT = 1;
 
       // FIXME: duplicatad at VncPassCrypt
-      static const int VNC_PASSWORD_SIZE = 8;
+      ///static const int ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE = 8;
 
       //
       // Enum defines server action when last client disconnects
@@ -320,9 +321,9 @@ namespace remoting
       bool m_acceptRfbConnections;
       bool m_acceptHttpConnections;
 
-      unsigned char m_primaryPassword[VNC_PASSWORD_SIZE];
-      unsigned char m_readonlyPassword[VNC_PASSWORD_SIZE];
-      unsigned char m_controlPassword[VNC_PASSWORD_SIZE];
+      unsigned char m_primaryPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
+      unsigned char m_readonlyPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
+      unsigned char m_controlPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
 
       //
       // Configurator from Administration tab
@@ -439,7 +440,7 @@ namespace remoting
 
       lockable_critical_section m_objectCS;
    };
-}  //  namespace remoting
+}  //  namespace remoting_node
 
 
 

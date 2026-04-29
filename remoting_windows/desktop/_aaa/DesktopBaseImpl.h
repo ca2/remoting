@@ -83,7 +83,7 @@ namespace remoting_windows
       virtual void onClipboardUpdate(const ::scoped_string &newClipboard);
       // Calling when a configuration has been reloaded.
       // Uses to update internal settings.
-      virtual void onConfigReload(::remoting::ServerConfig *serverConfig);
+      virtual void onConfigReload(::remoting_node::ServerConfig *serverConfig);
       virtual void applyNewConfiguration() = 0;
 
       // Returns true when a remote input allowed.

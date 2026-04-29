@@ -42,7 +42,7 @@ namespace remoting_node
       IpAccessControlDialog();
       virtual ~IpAccessControlDialog();
 
-      void setParentDialog(BaseDialog *dialog);
+      void setParentDialog(::innate_subsystem::Dialog *dialog);
 
       //
       // BaseDialog overrided methods
@@ -97,7 +97,7 @@ namespace remoting_node
       // Child dialog
       EditIpAccessRuleDialog m_editDialog;
       // Controls
-      ListView m_list;
+      ::innate_subsystem::ListView m_list;
       ::innate_subsystem::Control m_addButton;
       ::innate_subsystem::Control m_editButton;
       ::innate_subsystem::Control m_removeButton;
@@ -110,8 +110,8 @@ namespace remoting_node
       ::innate_subsystem::TextBox m_queryTimeout;
       ::innate_subsystem::TextBox m_ip;
       ::innate_subsystem::Control m_ipCheckResult;
-      SpinControl m_queryTimeoutSpin;
-      BaseDialog *m_parentDialog;
+      ::innate_subsystem::SpinControl m_queryTimeoutSpin;
+      ::innate_subsystem::Dialog *m_pdialogParent;
    };
 } // namespace remoting_node
 

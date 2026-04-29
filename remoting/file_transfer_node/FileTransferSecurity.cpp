@@ -35,7 +35,7 @@ namespace remoting
 
    namespace file_transfer
    {
-      FileTransferSecurity::FileTransferSecurity(Configurator * pconfigurator, Desktop *desktop, ::subsystem::LogWriter *plogwriter)
+      FileTransferSecurity::FileTransferSecurity(::remoting_node::Configurator * pconfigurator, Desktop *desktop, ::subsystem::LogWriter *plogwriter)
       :
       //Impersonator(plogwriter),
         m_hasAccess(false),
@@ -52,7 +52,7 @@ namespace remoting
 
       void FileTransferSecurity::beginMessageProcessing()
       {
-         Configurator* conf = m_pconfigurator;
+         ::remoting_node::Configurator* conf = m_pconfigurator;
          bool runAsService = conf->getServiceFlag();
          bool rdpEnabled = conf->getServerConfig()->getConnectToRdpFlag();
 

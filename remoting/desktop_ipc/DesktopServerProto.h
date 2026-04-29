@@ -44,13 +44,13 @@ namespace remoting
       // FIXME: Remove m_pblockinggate from this class.
       // Forward pblockinggate will send requests
       ::pointer < BlockingGate > m_pblockinggate;
-      ::pointer < Configurator > m_pconfigurator;
+      ::pointer < ::remoting_node::Configurator > m_pconfigurator;
 
 
       DesktopServerProto();
       ~DesktopServerProto() override;
 
-      virtual void initialize_desktop_server_proto(Configurator * pconfigurator, BlockingGate *pblockinggate);
+      virtual void initialize_desktop_server_proto(::remoting_node::Configurator * pconfigurator, BlockingGate *pblockinggate);
 
       virtual void readPixelFormat(::innate_subsystem::PixelFormat & pixelformat, BlockingGate *pblockinggate);
       virtual void sendPixelFormat(const ::innate_subsystem::PixelFormat &pixelformat, BlockingGate *pblockinggate);

@@ -31,38 +31,51 @@
 
 namespace remoting_node
 {
-   VideoRegionsConfigDialog::VideoRegionsConfigDialog()
-   : BaseDialog(IDD_CONFIG_VIDEO_PAGE), m_parentDialog(NULL)
+   VideoRegionsConfigDialog::VideoRegionsConfigDialog(Configurator * pconfigurator)
+   :  m_pconfigurator(pconfigurator), m_pdialogParent(NULL)
    {
+      initialize_dialog(IDD_CONFIG_VIDEO_PAGE);
    }
 
    VideoRegionsConfigDialog::~VideoRegionsConfigDialog()
    {
    }
 
-   void VideoRegionsConfigDialog::setParentDialog(BaseDialog *dialog)
+   void VideoRegionsConfigDialog::setParentDialog(::innate_subsystem::Dialog *dialog)
    {
-      m_parentDialog = dialog;
+      m_pdialogParent = dialog;
    }
 
    bool VideoRegionsConfigDialog::onInitDialog()
    {
-      m_config = m_pconfigurator->getServerConfig();
+      m_pserverconfig = m_pconfigurator->getServerConfig();
       initControls();
       updateUI();
       return true;
    }
 
-   bool VideoRegionsConfigDialog::onNotify(unsigned int controlID, ::lparam data)
+
+   bool VideoRegionsConfigDialog::_002OnUpDown(int iControl, int iPos, int iDelta)
    {
+
       if (controlID == IDC_VIDEO_RECOGNITION_INTERVAL_SPIN) {
          LPNMUPDOWN scopedstrMessage = (LPNMUPDOWN)data;
          if (scopedstrMessage->hdr.code == UDN_DELTAPOS) {
             onRecognitionIntervalSpinChangePos(scopedstrMessage);
          }
       }
-      return true;
+
    }
+   // bool VideoRegionsConfigDialog::onNotify(unsigned int controlID, ::lparam data)
+   // {
+   //    if (controlID == IDC_VIDEO_RECOGNITION_INTERVAL_SPIN) {
+   //       LPNMUPDOWN scopedstrMessage = (LPNMUPDOWN)data;
+   //       if (scopedstrMessage->hdr.code == UDN_DELTAPOS) {
+   //          onRecognitionIntervalSpinChangePos(scopedstrMessage);
+   //       }
+   //    }
+   //    return true;
+   // }
 
    bool VideoRegionsConfigDialog::onCommand(unsigned int controlID, unsigned int notificationID)
    {
@@ -219,12 +232,12 @@ namespace remoting_node
 
    void VideoRegionsConfigDialog::onRecognitionIntervalUpdate()
    {
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 
    void VideoRegionsConfigDialog::onVideoRegionsUpdate()
    {
-      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
    }
 } // namespace remoting_node
 

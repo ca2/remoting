@@ -42,7 +42,7 @@ namespace remoting_node
       ServerConfigDialog();
       virtual ~ServerConfigDialog();
 
-      void setParentDialog(BaseDialog *dialog);
+      void setParentDialog(::innate_subsystem::Dialog *dialog);
 
    public:
 
@@ -80,7 +80,7 @@ namespace remoting_node
       void onUnsetReadOnlyPasswordClick();
       void onShowTrayIconCheckBoxClick();
       void onConnectToRdpCheckBoxClick();
-      void onPollingIntervalSpinChangePos(LPNMUPDOWN scopedstrMessage);
+      void onPollingIntervalSpinChangePos(int iControlId, int iPos, int iDelta);
       void onRfbPortUpdate();
       void onHttpPortUpdate();
       void onUrlParamsClick();
@@ -120,9 +120,9 @@ namespace remoting_node
       ::innate_subsystem::Control m_unsetPrimaryPassword;
       ::innate_subsystem::Control m_unsetReadOnlyPassword;
       ::innate_subsystem::CheckBox m_useAuthentication;
-      SpinControl m_rfbPortSpin;
-      SpinControl m_httpPortSpin;
-      SpinControl m_pollingIntervalSpin;
+      ::innate_subsystem::SpinControl m_rfbPortSpin;
+      ::innate_subsystem::SpinControl m_httpPortSpin;
+      ::innate_subsystem::SpinControl m_pollingIntervalSpin;
 
       //
       // Begin of input handling members
@@ -132,14 +132,14 @@ namespace remoting_node
       ::innate_subsystem::CheckBox m_blockLocalInput;
       ::innate_subsystem::CheckBox m_localInputPriority;
       ::innate_subsystem::TextBox m_localInputPriorityTimeout;
-      SpinControl m_inactivityTimeoutSpin;
+      ::innate_subsystem::SpinControl m_inactivityTimeoutSpin;
 
       //
       // End of input handling members
       //
 
       // Error notifications
-      BaseDialog *m_parentDialog;
+      ::innate_subsystem::Dialog *m_pdialogParent;
 
       // Primary password control.
       PasswordControl *m_ppControl;

@@ -34,7 +34,7 @@
 #include "WsConfigRunner.h"
 #include "ServerHelp.h"
 
-#include "remoting/control_desktop/ControlCommandLine.h"
+#include "remoting/node_desktop/control_desktop/ControlCommandLine.h"
 
 #include "subsystem/platform/Registry.h"
 #include "subsystem/platform/RegistryKey.h"

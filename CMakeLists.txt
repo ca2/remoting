@@ -12,7 +12,7 @@ add_subdirectory(${default_remoting})
 
 
 add_subdirectory(client)
-add_subdirectory(control_desktop)
+#add_subdirectory(control_desktop)
 add_subdirectory(node_desktop)
 
 

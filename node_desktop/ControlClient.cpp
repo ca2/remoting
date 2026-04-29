@@ -26,7 +26,7 @@
 #include "Server.h"
 #include "OutgoingRfbConnectionThread.h"
 
-#include "remoting/control_desktop/ControlProto.h"
+#include "remoting/node_desktop/control_desktop/ControlProto.h"
 #include "application.h"
 //#include "remoting/remoting/network/socket/SocketStream.h"
 
@@ -66,7 +66,7 @@ namespace remoting_node_desktop
                                                        ControlProto::GET_SHOW_TRAY_ICON_FLAG,
                                                        ControlProto::UPDATE_TVNCONTROL_PROCESS_ID_MSG_ID};
 
-   ControlClient::ControlClient(::remoting::Configurator * pconfigurator, Transport *transport, RfbClientManager *rfbClientManager,
+   ControlClient::ControlClient(::remoting_node::Configurator * pconfigurator, Transport *transport, RfbClientManager *rfbClientManager,
                                 ControlAppAuthenticator *authenticator, ::subsystem::FileInterface *pfilePipeHandle,
                                 ::subsystem::LogWriter * plogwriter) :
        m_pconfigurator(pconfigurator), m_transport(transport), m_rfbClientManager(rfbClientManager), m_controlappauthenticator(authenticator), m_tcpDispId(0),
@@ -283,7 +283,7 @@ namespace remoting_node_desktop
       // sent password to us.
       //
 
-      ::remoting::ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
+      ::remoting_node::ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
       unsigned char cryptPassword[8];
       pserverconfig->getControlPassword(cryptPassword);
 
@@ -413,9 +413,9 @@ namespace remoting_node_desktop
    }
 
 
-   bool allZeroes(unsigned char p[::remoting::ServerConfig::VNC_PASSWORD_SIZE])
+   bool allZeroes(unsigned char p[::remoting_node::ServerConfig::VNC_PASSWORD_SIZE])
    {
-      for (int i = 0; i < ::remoting::ServerConfig::VNC_PASSWORD_SIZE; i++)
+      for (int i = 0; i < ::remoting_node::ServerConfig::VNC_PASSWORD_SIZE; i++)
       {
          if (p[i] != 0)
          {
@@ -428,10 +428,10 @@ namespace remoting_node_desktop
    void ControlClient::setServerConfigMsgRcvd()
    {
       m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
-      ::remoting::ServerConfig cfg;
+      ::remoting_node::ServerConfig cfg;
       cfg.deserialize(m_pblockinggate);
-      ::remoting::ServerConfig *old = m_pconfigurator->getServerConfig();
-      unsigned char tmp[::remoting::ServerConfig::VNC_PASSWORD_SIZE];
+      ::remoting_node::ServerConfig *old = m_pconfigurator->getServerConfig();
+      unsigned char tmp[::remoting_node::ServerConfig::VNC_PASSWORD_SIZE];
 
       if (cfg.hasPrimaryPassword())
       {
@@ -496,9 +496,9 @@ namespace remoting_node_desktop
    {
       m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
 
-      ::remoting::ServerConfig cfg = *m_pconfigurator->getServerConfig();
+      ::remoting_node::ServerConfig cfg = *m_pconfigurator->getServerConfig();
 
-      unsigned char zeroes[::remoting::ServerConfig::VNC_PASSWORD_SIZE] = {};
+      unsigned char zeroes[::remoting_node::ServerConfig::VNC_PASSWORD_SIZE] = {};
       if (cfg.hasControlPassword())
          cfg.setControlPassword(zeroes);
       if (cfg.hasPrimaryPassword())

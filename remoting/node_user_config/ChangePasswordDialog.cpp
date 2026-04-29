@@ -24,10 +24,10 @@
 #include "framework.h"
 #include "ChangePasswordDialog.h"
 #include "remoting/node_desktop/resource.h"
-
+#include "remoting/remoting/platform/remoting.h"
 #include "remoting/remoting/node_config/ServerConfig.h"
-
 #include "subsystem/platform/VncPassCrypt.h"
+#include "acme/constant/user_notification.h"
 //#include "subsystem/platform/::string.h"
 namespace remoting_node
 {
@@ -51,7 +51,7 @@ namespace remoting_node
    {
    }
 
-   const ::scoped_string & scopedstrChangePasswordDialog::getPasswordInPlainText() const
+   ::string ChangePasswordDialog::getPasswordInPlainText() const
    {
       return m_passwordText;
    }
@@ -60,9 +60,9 @@ namespace remoting_node
    {
       initControls();
       if (m_newPassword) {
-         m_ctrlThis.setText(MainSubsystem().StringTable().getString(IDS_NEW_PASSWORD));
+         setText(MainSubsystem().StringTable().getString(IDS_NEW_PASSWORD));
       } else {
-         m_ctrlThis.setText(MainSubsystem().StringTable().getString(IDS_CHANGE_PASSWORD));
+         setText(MainSubsystem().StringTable().getString(IDS_CHANGE_PASSWORD));
       }
       return true;
    }
@@ -71,10 +71,10 @@ namespace remoting_node
    {
       if (nID == ::user::e_notification_button_clicked) {
          switch (cID) {
-            case ::innate_subsystem::IDOK:
+            case ::innate_subsystem::e_control_id_ok:
                onOkButtonClick();
                break;
-            case ::innate_subsystem::IDCANCEL:
+            case ::innate_subsystem::e_control_id_cancel:
                onCancelButtonClick();
                break;
          }
@@ -86,21 +86,21 @@ namespace remoting_node
    {
       ::string password1;
       ::string password2;
-      m_password1.getText(&password1);
-      m_password2.getText(&password2);
+      password1 = m_password1.getText();
+      password2 = m_password2.getText();
 
       if (password1.is_empty() && !m_allowEmptyPassword) {
          m_password1.showBalloonTip(&m_passwordEmptyTooltip);
          m_password1.setFocus();
          return ;
       }
-      if (!password1.isEqualTo(&password2)) {
+      if (password1 != password2) {
          m_password2.showBalloonTip(&m_passwordsNotMatchTooltip);
          m_password2.setFocus();
          return ;
       }
 
-      if (!::string::checkAnsiConversion(password1)) {
+      if (!::str::checkAnsiConversion(password1)) {
          m_password1.showBalloonTip(&m_passwordWeakTooltip);
          m_password1.setFocus();
          return;
@@ -108,22 +108,22 @@ namespace remoting_node
 
       m_passwordText= password1;
 
-      kill(::innate_subsystem::IDOK);
+      closeDialog(::innate_subsystem::e_control_id_ok);
    }
 
    void ChangePasswordDialog::onCancelButtonClick()
    {
-      kill(::innate_subsystem::IDCANCEL);
+      closeDialog(::innate_subsystem::e_control_id_ok);
    }
 
    void ChangePasswordDialog::initControls()
    {
-      HWND hwnd = m_ctrlThis.operating_system_window();
-      m_password1.setWindow(GetDlgItem(hwnd, IDC_PASSWORD));
-      m_password2.setWindow(GetDlgItem(hwnd, IDC_PASSWORD2));
+      //HWND hwnd = m_ctrlThis.operating_system_window();
+      dialog_item(m_password1, IDC_PASSWORD);
+      dialog_item(m_password2, IDC_PASSWORD2);
 
-      m_password1.setTextLengthLimit(VncPassCrypt::VNC_PASSWORD_SIZE);
-      m_password2.setTextLengthLimit(VncPassCrypt::VNC_PASSWORD_SIZE);
+      m_password1.setTextLengthLimit(::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE);
+      m_password2.setTextLengthLimit(::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE);
    }
 } // namespace remoting_node
 

@@ -24,7 +24,7 @@ namespace remoting
       }
 
 
-      void ScreenDriverFactory::initialize_screen_driver_factory(ServerConfig *pserverconfig)
+      void ScreenDriverFactory::initialize_screen_driver_factory(::remoting_node::ServerConfig *pserverconfig)
       {
 
 

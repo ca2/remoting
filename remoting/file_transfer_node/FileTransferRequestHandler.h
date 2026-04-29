@@ -96,7 +96,7 @@ namespace remoting
 
          ::subsystem::LogWriter *m_plogwriter;
 
-         ::pointer < Configurator > m_pconfigurator;
+         ::pointer < ::remoting_node::Configurator > m_pconfigurator;
          /**
           * Creates new file transfler client messages handler.
           * @param registrator rfb registrator which needs to register FT messages
@@ -107,7 +107,7 @@ namespace remoting
           * @pararm enabled indicates if file transfer should be enabled or disabled
           *   (for example, it's disabled in view-only mode).
           */
-         FileTransferRequestHandler(Configurator * pconfigurator,
+         FileTransferRequestHandler(::remoting_node::Configurator * pconfigurator,
                                     RfbCodeRegistrator *registrator,
                                     RfbOutputGate *output,
                                     Desktop *desktop,

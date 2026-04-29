@@ -117,7 +117,7 @@ namespace remoting_windows
 
 
       void DesktopClientImpl::initialize_desktop(
-         ::remoting::Configurator * pconfigurator,
+         ::remoting_node::Configurator * pconfigurator,
          ClipboardListener *pclipboardlistenerExternal,
                                         ::remoting::UpdateSendingListener *pupdatesendinglistenerExternal,
                                         ::remoting::AbnormDeskTermListener *pdesktermlistenerExternal, ::subsystem::LogWriter * plogwriter) //:

@@ -50,7 +50,7 @@ namespace remoting_windows
    }
 
 
-   void WinVideoRegionUpdaterImpl::initialize_screen_driver(::remoting::Configurator * pconfigurator, ::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
+   void WinVideoRegionUpdaterImpl::initialize_screen_driver(::remoting_node::Configurator * pconfigurator, ::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
                                         ::innate_subsystem::Framebuffer *pframebuffer,
                           lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter)
    {
@@ -84,7 +84,7 @@ namespace remoting_windows
 
    unsigned int WinVideoRegionUpdaterImpl::getInterval()
    {
-      ::remoting::ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
+      ::remoting_node::ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
       return pserverconfig->getVideoRecognitionInterval();
    }
 
@@ -97,7 +97,7 @@ namespace remoting_windows
    void WinVideoRegionUpdaterImpl::getClassNamesAndRectsFromConfig(::string_array &classNames,
                                                                    ::int_rectangle_array_base &rectanglea)
    {
-      ::remoting::ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
+      ::remoting_node::ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
       AutoLock al(pserverconfig);
       classNames = *pserverconfig->getVideoClassNames();
       rectanglea = *pserverconfig->getVideoRects();

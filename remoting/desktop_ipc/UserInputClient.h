@@ -46,7 +46,7 @@ namespace remoting
       ~UserInputClient() override;
 
 
-      virtual void initialize_user_input_client(Configurator * pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher, ::subsystem::ClipboardListener *pclipboardlistener);
+      virtual void initialize_user_input_client(::remoting_node::Configurator * pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher, ::subsystem::ClipboardListener *pclipboardlistener);
 
       virtual void sendInit(BlockingGate *pblockinggate);
       virtual void setNewClipboard(const ::scoped_string &newClipboard);

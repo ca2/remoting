@@ -562,10 +562,11 @@ endif()
 list(APPEND library_references
    acme
    subsystem
+   ${default_subsystem}
    apex
    innate_subsystem
    remoting
-   ${default_subsystem}
+   remoting_control_desktop
 )
 
 

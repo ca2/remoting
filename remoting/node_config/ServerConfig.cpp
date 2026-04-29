@@ -28,7 +28,7 @@
 #include "remoting/remoting/region/RectSerializer.h"
 //#include "file_lib/::file::item.h"
 #include "acme/input_output/DataCopy.h"
-namespace remoting
+namespace remoting_node
 {
    ServerConfig::ServerConfig()
    : m_rfbPort(5900), m_httpPort(5800),
@@ -99,11 +99,11 @@ namespace remoting
       pdataoutputstream->writeInt8(m_acceptHttpConnections ? 1 : 0);
 
       pdataoutputstream->writeInt8(m_hasPrimaryPassword ? 1 : 0);
-      pdataoutputstream->write(m_primaryPassword, VNC_PASSWORD_SIZE);
+      pdataoutputstream->write(m_primaryPassword, ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE);
       pdataoutputstream->writeInt8(m_hasReadOnlyPassword ? 1 : 0);
-      pdataoutputstream->write(m_readonlyPassword, VNC_PASSWORD_SIZE);
+      pdataoutputstream->write(m_readonlyPassword, ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE);
       pdataoutputstream->writeInt8(m_hasControlPassword ? 1 : 0);
-      pdataoutputstream->write(m_controlPassword, VNC_PASSWORD_SIZE);
+      pdataoutputstream->write(m_controlPassword, ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE);
       pdataoutputstream->writeInt8(m_useAuthentication ? 1 : 0);
       pdataoutputstream->writeInt8(m_onlyLoopbackConnections ? 1 : 0);
       pdataoutputstream->writeInt8(m_enableAppletParamInUrl ? 1 : 0);
@@ -174,11 +174,11 @@ namespace remoting
       m_acceptHttpConnections = pdatainputstream->readInt8() == 1;
 
       m_hasPrimaryPassword = pdatainputstream->readInt8() == 1;
-      pdatainputstream->readFully(m_primaryPassword, VNC_PASSWORD_SIZE);
+      pdatainputstream->readFully(m_primaryPassword, ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE);
       m_hasReadOnlyPassword = pdatainputstream->readInt8() == 1;
-      pdatainputstream->readFully(m_readonlyPassword, VNC_PASSWORD_SIZE);
+      pdatainputstream->readFully(m_readonlyPassword, ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE);
       m_hasControlPassword = pdatainputstream->readInt8() == 1;
-      pdatainputstream->readFully(m_controlPassword, VNC_PASSWORD_SIZE);
+      pdatainputstream->readFully(m_controlPassword, ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE);
       m_useAuthentication = pdatainputstream->readInt8() == 1;
 
       m_onlyLoopbackConnections = pdatainputstream->readInt8() == 1;
@@ -434,7 +434,7 @@ namespace remoting
    {
       AutoLock lock(&m_objectCS);
 
-      memcpy(password, m_primaryPassword, VNC_PASSWORD_SIZE);
+      memcpy(password, m_primaryPassword, ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE);
    }
 
    void ServerConfig::setPrimaryPassword(const unsigned char *value)
@@ -443,14 +443,14 @@ namespace remoting
 
       m_hasPrimaryPassword = true;
 
-      memcpy((void *)&m_primaryPassword[0], (void *)value, VNC_PASSWORD_SIZE);
+      memcpy((void *)&m_primaryPassword[0], (void *)value, ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE);
    }
 
    void ServerConfig::getReadOnlyPassword(unsigned char *password)
    {
       AutoLock lock(&m_objectCS);
 
-      memcpy(password, m_readonlyPassword, VNC_PASSWORD_SIZE);
+      memcpy(password, m_readonlyPassword, ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE);
    }
 
    void ServerConfig::setReadOnlyPassword(const unsigned char *value)
@@ -459,21 +459,21 @@ namespace remoting
 
       m_hasReadOnlyPassword = true;
 
-      memcpy((void *)&m_readonlyPassword[0], (void *)value, VNC_PASSWORD_SIZE);
+      memcpy((void *)&m_readonlyPassword[0], (void *)value, ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE);
    }
 
    void ServerConfig::getControlPassword(unsigned char *password)
    {
       AutoLock lock(&m_objectCS);
 
-      memcpy(password, m_controlPassword, VNC_PASSWORD_SIZE);
+      memcpy(password, m_controlPassword, ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE);
    }
 
    void ServerConfig::setControlPassword(const unsigned char *password)
    {
       AutoLock lock(&m_objectCS);
 
-      memcpy((void *)&m_controlPassword[0], (const void *)password, VNC_PASSWORD_SIZE);
+      memcpy((void *)&m_controlPassword[0], (const void *)password, ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE);
 
       m_hasControlPassword = true;
    }
@@ -805,4 +805,4 @@ namespace remoting
       AutoLock lock(&m_objectCS);
       return m_grabTransparentWindows;
    }
-} // namespace remoting
+} // namespace remoting_node

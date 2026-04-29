@@ -41,7 +41,7 @@
 #include "IpAccessControlDialog.h"
 #include "VideoRegionsConfigDialog.h"
 
-#include "remoting/control_desktop/ControlCommand.h"
+#include "remoting/node_desktop/control_desktop/ControlCommand.h"
 
 
 namespace remoting_node
@@ -49,14 +49,14 @@ namespace remoting_node
    class ConfigDialog : virtual public ::innate_subsystem::Dialog
    {
    public:
-      ConfigDialog(bool forService, ControlCommand *reloadConfigCommand);
-      ConfigDialog(bool forService);
+      ConfigDialog(Configurator * pconfigurator, ::remoting_control_desktop::ControlCommand *reloadConfigCommand);
+      ConfigDialog(Configurator * pconfigurator);
       ConfigDialog();
       virtual ~ConfigDialog();
 
       void updateApplyButtonState();
 
-      void setConfigReloadCommand(ControlCommand *command);
+      void setConfigReloadCommand(::remoting_control_desktop::ControlCommand *command);
       void setServiceFlag(bool serviceFlag);
 
       bool isConfiguringService();
@@ -68,25 +68,26 @@ namespace remoting_node
       // Init dialog handler
       virtual bool onInitDialog();
       virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
-      virtual bool onNotify(unsigned int controlID, ::lparam data);
+      //virtual bool onNotify(unsigned int controlID, ::lparam data);
       virtual bool onDestroy();
       // Button handlers
       void onCancelButtonClick();
       void onOKButtonClick();
       void onApplyButtonClick();
       // Tab handlers
-      void onTabChange();
-      void onTabChanging();
+      bool _002OnTabChanged(int iControl) override;
+      bool _002OnTabChanging(int iControl, bool & bOk) override;
+
    private:
-      void moveDialogToTabControl(BaseDialog *dialog);
+      void moveDialogToTabControl(::innate_subsystem::Dialog *dialog);
       bool validateInput();
       void updateCaption();
    protected:
       // Controls
       ::innate_subsystem::Control m_ctrlApplyButton;
-      TabControl m_tabControl;
+      ::innate_subsystem::TabControl m_tabControl;
       // Settings
-      Configurator *m_config;
+      ::pointer < Configurator > m_pconfigurator;
       // Dialogs for tab control
       ServerConfigDialog m_serverConfigDialog;
       PortMappingDialog m_portMappingDialog;
@@ -96,7 +97,7 @@ namespace remoting_node
       // Other members
       bool m_isConfiguringService;
 
-      ControlCommand *m_reloadConfigCommand;
+      ::remoting_control_desktop::ControlCommand *m_reloadConfigCommand;
 
       int m_lastSelectedTabIndex;
    };

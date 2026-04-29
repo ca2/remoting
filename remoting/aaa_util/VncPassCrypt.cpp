@@ -38,27 +38,27 @@ VncPassCrypt::~VncPassCrypt()
   clearPlainPass();
 }
 
-void VncPassCrypt::updatePlain(const unsigned char cryptedPass[VNC_PASSWORD_SIZE])
+void VncPassCrypt::updatePlain(const unsigned char cryptedPass[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE])
 {
   DesCrypt desCrypt;
   desCrypt.decrypt(m_plainPassword.data(), cryptedPass,
                    m_plainPassword.size(), m_key);
 }
 
-void VncPassCrypt::getEncryptedPass(unsigned char encryptedPass[VNC_PASSWORD_SIZE],
-                                    const unsigned char plainPassword[VNC_PASSWORD_SIZE])
+void VncPassCrypt::getEncryptedPass(unsigned char encryptedPass[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE],
+                                    const unsigned char plainPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE])
 {
   DesCrypt desCrypt;
   desCrypt.encrypt(encryptedPass, plainPassword,
-                   VNC_PASSWORD_SIZE, m_key);
+                   ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE, m_key);
 }
 
-void VncPassCrypt::getPlainPass(unsigned char plainPassword[VNC_PASSWORD_SIZE],
-                                const unsigned char encryptedPass[VNC_PASSWORD_SIZE])
+void VncPassCrypt::getPlainPass(unsigned char plainPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE],
+                                const unsigned char encryptedPass[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE])
 {
   DesCrypt desCrypt;
   desCrypt.decrypt(plainPassword, encryptedPass,
-                   VNC_PASSWORD_SIZE, m_key);
+                   ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE, m_key);
 }
 
 bool VncPassCrypt::challengeAndResponseIsValid(const unsigned char challenge[16],

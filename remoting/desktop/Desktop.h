@@ -44,7 +44,7 @@ namespace remoting
 
 
       virtual void initialize_desktop(
-         Configurator * pconfigurator,
+         ::remoting_node::Configurator * pconfigurator,
          ::subsystem::ClipboardListener *pclipboardlistenerExternal,
          UpdateSendingListener *pupdatesendinglistenerExternal,
          AbnormDeskTermListener *pdesktermlistenerExternal,

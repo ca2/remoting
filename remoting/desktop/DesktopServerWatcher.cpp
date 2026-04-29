@@ -84,7 +84,7 @@ namespace remoting
    }
 
 
-   void DesktopServerWatcher::initialize_desktop_server_watcher(Configurator * pconfigurator, ReconnectionListener *preconnectionlistener, ::subsystem::LogWriter * plogwriter)
+   void DesktopServerWatcher::initialize_desktop_server_watcher(::remoting_node::Configurator * pconfigurator, ReconnectionListener *preconnectionlistener, ::subsystem::LogWriter * plogwriter)
    {
 
       m_pconfigurator = pconfigurator;

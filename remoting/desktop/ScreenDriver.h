@@ -49,7 +49,7 @@ namespace remoting
       virtual ~ScreenDriver() {}
 
 
-      virtual void initialize_screen_driver(Configurator * pconfigurator, UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+      virtual void initialize_screen_driver(::remoting_node::Configurator * pconfigurator, UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
                                         ::innate_subsystem::Framebuffer *pframebuffer,
                                 lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) = 0;
 

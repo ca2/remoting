@@ -45,8 +45,8 @@
 #include "subsystem/node/file.h"
 #include "subsystem/thread/ZombieKiller.h"
 // FIXME: Bad dependency on remoting_control_desktop.
-#include "remoting/control_desktop/TransportFactory.h"
-#include "remoting/control_desktop/ControlPipeName.h"
+#include "remoting/node_desktop/control_desktop/TransportFactory.h"
+#include "remoting/node_desktop/control_desktop/ControlPipeName.h"
 
 #include "remoting/node_desktop/BuildTime.h"
 
@@ -198,7 +198,7 @@ namespace remoting_node_desktop
 
       // Initialize configuration.
       // FIXME: It looks like configurator may be created as a member object.
-      ::remoting::Configurator *configurator = m_pconfigurator;
+      ::remoting_node::Configurator *configurator = m_pconfigurator;
       configurator->load();
       m_pserverconfig = m_pconfigurator->getServerConfig();
 
@@ -258,7 +258,7 @@ namespace remoting_node_desktop
    }
 
    // Remark: this method can be called from other threads.
-   void Server::onConfigReload(::remoting::ServerConfig *serverConfig)
+   void Server::onConfigReload(::remoting_node::ServerConfig *serverConfig)
    {
       // Start/stop/restart RFB servers if needed.
       {
@@ -382,7 +382,7 @@ namespace remoting_node_desktop
       m_plogwriter->debug("Restore context switch resolution");
       timeEndPeriod(m_contextSwitchResolution);
 
-      ::remoting::ServerConfig::DisconnectAction action = m_pserverconfig->getDisconnectAction();
+      ::remoting_node::ServerConfig::DisconnectAction action = m_pserverconfig->getDisconnectAction();
 
       // Disconnect action must be executed in process on interactive user session to take effect.
       // Now, choose application keys for specified action.
@@ -390,10 +390,10 @@ namespace remoting_node_desktop
       ::string keys;
 
       switch (action) {
-         case ::remoting::ServerConfig::DA_LOCK_WORKSTATION:
+         case ::remoting_node::ServerConfig::DA_LOCK_WORKSTATION:
             keys.formatf("{}", AdditionalActionApplication::LOCK_WORKSTATION_KEY);
             break;
-         case ::remoting::ServerConfig::DA_LOGOUT_WORKSTATION:
+         case ::remoting_node::ServerConfig::DA_LOGOUT_WORKSTATION:
             keys.formatf("{}", AdditionalActionApplication::LOGOUT_KEY);
             break;
          default:

@@ -30,7 +30,7 @@ namespace remoting
 {
 
 
-   UserInputServer::UserInputServer(Configurator * pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
+   UserInputServer::UserInputServer(::remoting_node::Configurator * pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
                                     //AnEventListener *extTerminationListener,
                                     const ::procedure &procedureTermination,
                                     ::subsystem::LogWriter * plogwriter) :

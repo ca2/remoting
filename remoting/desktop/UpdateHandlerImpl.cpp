@@ -31,7 +31,7 @@ namespace remoting
 {
 
 
-   UpdateHandlerImpl::UpdateHandlerImpl(Configurator * pconfigurator, UpdateListener *pupdatelistenerExternal, ScreenDriverFactory *pscreendriverfactory,
+   UpdateHandlerImpl::UpdateHandlerImpl(::remoting_node::Configurator * pconfigurator, UpdateListener *pupdatelistenerExternal, ScreenDriverFactory *pscreendriverfactory,
                                         ::subsystem::LogWriter * plogwriter) :
        m_pupdatelistenerExternal(pupdatelistenerExternal), m_fullUpdateRequested(false), m_plogwriter(plogwriter)
    {

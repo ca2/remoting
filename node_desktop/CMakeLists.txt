@@ -3,6 +3,86 @@ project(remoting_node_desktop)
 
 
 list(APPEND library_source
+   control_desktop/_.cpp
+   control_desktop/_.h
+   ##control_desktop/_____debug.xcconfig
+   ##control_desktop/_____release.xcconfig
+   control_desktop/AboutDialog.cpp
+   control_desktop/AboutDialog.h
+   control_desktop/ConnectCommand.cpp
+   control_desktop/ConnectCommand.h
+   control_desktop/ConnectStringParser.cpp
+   control_desktop/ConnectStringParser.h
+   control_desktop/ControlApplication.cpp
+   control_desktop/ControlApplication.h
+   control_desktop/ControlAuth.cpp
+   control_desktop/ControlAuth.h
+   control_desktop/ControlAuthDialog.cpp
+   control_desktop/ControlAuthDialog.h
+   control_desktop/ControlAuthException.cpp
+   control_desktop/ControlAuthException.h
+   control_desktop/ControlCommand.cpp
+   control_desktop/ControlCommand.h
+   control_desktop/ControlCommandLine.cpp
+   control_desktop/ControlCommandLine.h
+   control_desktop/ControlGate.cpp
+   control_desktop/ControlGate.h
+   control_desktop/ControlMessage.cpp
+   control_desktop/ControlMessage.h
+   control_desktop/ControlPipeName.cpp
+   control_desktop/ControlPipeName.h
+   control_desktop/ControlProto.h
+   control_desktop/ControlProxy.cpp
+   control_desktop/ControlProxy.h
+   control_desktop/ControlTrayIcon.cpp
+   control_desktop/ControlTrayIcon.h
+   control_desktop/DisconnectAllCommand.cpp
+   control_desktop/DisconnectAllCommand.h
+   ##control_desktop/framework.cpp
+   ##control_desktop/framework.h
+   control_desktop/MakeRfbConnectionCommand.cpp
+   control_desktop/MakeRfbConnectionCommand.h
+   #control_desktop/matter.txt
+   control_desktop/NamedPipeTransport.cpp
+   control_desktop/NamedPipeTransport.h
+   control_desktop/Notificator.cpp
+   control_desktop/Notificator.h
+   control_desktop/OutgoingConnectionDialog.cpp
+   control_desktop/OutgoingConnectionDialog.h
+   control_desktop/ReloadConfigCommand.cpp
+   control_desktop/ReloadConfigCommand.h
+   control_desktop/RemoteException.cpp
+   control_desktop/RemoteException.h
+   control_desktop/resource.h
+   control_desktop/RfbClientInfo.cpp
+   control_desktop/RfbClientInfo.h
+   control_desktop/ServerInfo.h
+   control_desktop/SetPasswordsDialog.cpp
+   control_desktop/SetPasswordsDialog.h
+   control_desktop/ShareAppCommand.cpp
+   control_desktop/ShareAppCommand.h
+   control_desktop/ShareDisplayCommand.cpp
+   control_desktop/ShareDisplayCommand.h
+   control_desktop/ShareFullCommand.cpp
+   control_desktop/ShareFullCommand.h
+   control_desktop/SharePrimaryCommand.cpp
+   control_desktop/SharePrimaryCommand.h
+   control_desktop/ShareRectCommand.cpp
+   control_desktop/ShareRectCommand.h
+   control_desktop/ShareWindowCommand.cpp
+   control_desktop/ShareWindowCommand.h
+   control_desktop/ShutdownCommand.cpp
+   control_desktop/ShutdownCommand.h
+   control_desktop/SocketIPv4Transport.cpp
+   control_desktop/SocketIPv4Transport.h
+   control_desktop/Transport.cpp
+   control_desktop/Transport.h
+   control_desktop/TransportFactory.cpp
+   control_desktop/TransportFactory.h
+   control_desktop/UpdateLocalConfigCommand.cpp
+   control_desktop/UpdateLocalConfigCommand.h
+   control_desktop/UpdateRemoteConfigCommand.cpp
+   control_desktop/UpdateRemoteConfigCommand.h
    AdditionalActionApplication.cpp
    AdditionalActionApplication.h
    application.cpp
@@ -80,7 +160,7 @@ list(APPEND library_references
    subsystem
    innate_subsystem
    remoting
-   remoting_control_desktop
+   #remoting_control_desktop
 )
 
 

@@ -46,7 +46,7 @@ namespace remoting_windows
    Win32MirrorScreenDriver::~Win32MirrorScreenDriver() { terminateDetection(); }
 
 
-   void Win32MirrorScreenDriver::initialize_screen_driver(::remoting::Configurator * pconfigurator,::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
+   void Win32MirrorScreenDriver::initialize_screen_driver(::remoting_node::Configurator * pconfigurator,::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
                                         ::innate_subsystem::Framebuffer *pframebuffer,
                                                  lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter)
    {

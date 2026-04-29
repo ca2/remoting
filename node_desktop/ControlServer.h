@@ -44,7 +44,7 @@ namespace remoting_node_desktop
    {
    public:
 
-      ::pointer < ::remoting::Configurator > m_pconfigurator;
+      ::pointer < ::remoting_node::Configurator > m_pconfigurator;
 
       /**
        * Creates and starts control server execution.

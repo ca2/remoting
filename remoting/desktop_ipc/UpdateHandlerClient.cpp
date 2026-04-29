@@ -55,7 +55,7 @@ namespace remoting
    }
 
 
-   UpdateHandlerClient::UpdateHandlerClient(Configurator * pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
+   UpdateHandlerClient::UpdateHandlerClient(::remoting_node::Configurator * pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
                      UpdateListener *pupdatelistenerExternal, ::subsystem::LogWriter * plogwriter)
    {
 
@@ -68,7 +68,7 @@ namespace remoting
 
 
 
-    void UpdateHandlerClient::initialize_update_handler_client(Configurator * pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
+    void UpdateHandlerClient::initialize_update_handler_client(::remoting_node::Configurator * pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,
                     UpdateListener *pupdatelistenerExternal, ::subsystem::LogWriter * plogwriter)
    {
 

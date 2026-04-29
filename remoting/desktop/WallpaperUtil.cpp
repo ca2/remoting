@@ -41,7 +41,7 @@ namespace remoting
 
    }
 
-   void WallpaperUtil::initialize_wallpaper_util(Configurator * pconfigurator, ::subsystem::LogWriter *plogwriter)
+   void WallpaperUtil::initialize_wallpaper_util(::remoting_node::Configurator * pconfigurator, ::subsystem::LogWriter *plogwriter)
    {
       initialize_config_reload_listener(pconfigurator);
 
@@ -64,13 +64,13 @@ namespace remoting
       }
    }
 
-   void WallpaperUtil::onConfigReload(ServerConfig *serverConfig) { updateWallpaper(); }
+   void WallpaperUtil::onConfigReload(::remoting_node::ServerConfig *serverConfig) { updateWallpaper(); }
 
    void WallpaperUtil::updateWallpaper()
    {
       try
       {
-         ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
+         ::remoting_node::ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
          if (pserverconfig->isRemovingDesktopWallpaperEnabled())
          {
             disableWallpaper();

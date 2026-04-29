@@ -39,8 +39,8 @@
 #include "remoting/node_desktop/QueryConnectionCommandLine.h"
 #include "remoting/node_desktop/DesktopServerCommandLine.h"
 
-#include "remoting/control_desktop/ControlApplication.h"
-#include "remoting/control_desktop/ControlCommandLine.h"
+#include "remoting/node_desktop/control_desktop/ControlApplication.h"
+#include "remoting/node_desktop/control_desktop/ControlCommandLine.h"
 
 #include "remoting/node_desktop/resource.h"
 #include "subsystem/node/CrashHook.h"
@@ -176,7 +176,7 @@ namespace remoting_node_desktop
     try {
       QueryConnectionApplication app;
        // just to satisfy following function
-       auto pconfigurationDummy = new ::remoting::Configurator();
+       auto pconfigurationDummy = new ::remoting_node::Configurator();
        app.initialize_query_connection_application(//::system()->m_hinstanceThis,
         //WindowNames::WINDOW_CLASS_NAME,
         pconfigurationDummy,

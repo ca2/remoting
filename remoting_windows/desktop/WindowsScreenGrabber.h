@@ -82,11 +82,11 @@ namespace remoting_windows
    virtual public ::subsystem::GuiThread
    {
    public:
-      //WindowsScreenGrabber(::remoting::Configurator * pconfigurator);
+      //WindowsScreenGrabber(::remoting_node::Configurator * pconfigurator);
       WindowsScreenGrabber();
       ~WindowsScreenGrabber() override;
 
-      virtual void initialize_screen_grabber(::remoting::Configurator * pconfigurator);
+      virtual void initialize_screen_grabber(::remoting_node::Configurator * pconfigurator);
 
       virtual bool grab(const ::int_rectangle & rectangle);
 
@@ -117,7 +117,7 @@ namespace remoting_windows
 
       // private:
       ::int_size m_dibSectionDim;
-      ::remoting::ServerConfig *m_pserverconfig;
+      ::remoting_node::ServerConfig *m_pserverconfig;
 
       // Screen m_screen;
       ::subsystem_windows::Screen m_screen;

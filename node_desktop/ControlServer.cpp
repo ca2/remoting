@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ControlServer.h"
 #include "ControlClient.h"
-#include "remoting/control_desktop/NamedPipeTransport.h"
+#include "remoting/node_desktop/control_desktop/NamedPipeTransport.h"
 
 
 namespace remoting_node_desktop

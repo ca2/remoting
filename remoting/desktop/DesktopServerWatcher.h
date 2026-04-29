@@ -49,7 +49,7 @@ namespace remoting
 
       ::pointer < ::subsystem::Process  > m_pprocess;
       ::pointer < ReconnectionListener > m_preconnectionlistener;
-      ::pointer < Configurator > m_pconfigurator;
+      ::pointer < ::remoting_node::Configurator > m_pconfigurator;
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
 
@@ -57,7 +57,7 @@ namespace remoting
       DesktopServerWatcher();
       ~DesktopServerWatcher() override;
 
-      virtual void initialize_desktop_server_watcher(Configurator * pconfigurator, ReconnectionListener *preconnectionlistener, ::subsystem::LogWriter * plogwriter);
+      virtual void initialize_desktop_server_watcher(::remoting_node::Configurator * pconfigurator, ReconnectionListener *preconnectionlistener, ::subsystem::LogWriter * plogwriter);
 
    //protected:
       virtual void execute();
