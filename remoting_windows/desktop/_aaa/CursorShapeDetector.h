@@ -25,13 +25,13 @@
 #pragma once
 
 
-#include "UpdateKeeper.h"
+#include "::remoting::UpdateKeeper.h"
 #include "CursorShapeGrabber.h"
 #include "UpdateDetector.h"
 #include "acme/parallelization/happening.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING CursorShapeDetector :
@@ -41,7 +41,7 @@ namespace remoting
       CursorShapeDetector();
       ~CursorShapeDetector() override;
 
-      virtual void initialize_cursor_shape_detector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, CursorShapeGrabber *pcursorshapegrabber,
+      virtual void initialize_cursor_shape_detector(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener, CursorShapeGrabber *pcursorshapegrabber,
                     lockable_critical_section *mouseGrabLocMut, ::subsystem::LogWriter * plogwriter);
 
    ///protected:
@@ -58,7 +58,7 @@ namespace remoting
    //// __CURSORHAPEDETECTOR_H__
 
 
-} // namespace remoting
+} // namespace remoting_windows
  
 
 

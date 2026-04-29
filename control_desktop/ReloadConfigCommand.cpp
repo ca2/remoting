@@ -24,16 +24,21 @@
 #include "framework.h"
 #include "ReloadConfigCommand.h"
 
-ReloadConfigCommand::ReloadConfigCommand(ControlProxy *proxy)
-: m_proxy(proxy)
-{
-}
 
-ReloadConfigCommand::~ReloadConfigCommand()
+namespace remoting_control_desktop
 {
-}
+   ReloadConfigCommand::ReloadConfigCommand(ControlProxy *proxy)
+   : m_proxy(proxy)
+   {
+   }
 
-void ReloadConfigCommand::execute()
-{
-  m_proxy->reloadServerConfig();
-}
+   ReloadConfigCommand::~ReloadConfigCommand()
+   {
+   }
+
+   void ReloadConfigCommand::execute()
+   {
+      m_proxy->reloadServerConfig();
+   }
+} // namespace remoting_control_desktop
+

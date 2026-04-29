@@ -35,7 +35,7 @@ namespace remoting
 {
 
 
-   class ReconnectingChannel : public Channel
+   class CLASS_DECL_REMOTING ReconnectingChannel : public Channel
    {
    public:
 

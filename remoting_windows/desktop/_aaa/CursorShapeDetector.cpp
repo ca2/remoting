@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "CursorShapeDetector.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
    const int SLEEP_TIME = 100;
@@ -40,7 +40,7 @@ namespace remoting
    }
 
 
-   void CursorShapeDetector::initialize_cursor_shape_detector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+   void CursorShapeDetector::initialize_cursor_shape_detector(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
                                          CursorShapeGrabber *pcursorshapegrabber, lockable_critical_section *mouseGrabLocMut,
                                          ::subsystem::LogWriter * plogwriter)
    {
@@ -75,7 +75,7 @@ namespace remoting
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

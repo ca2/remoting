@@ -171,16 +171,16 @@ namespace remoting
       rectangle.set_top_left(m_pointBackground.x, m_pointBackground.y);
       updatecontainer.m_regionChanged.addRect(rectangle);
       // Keep the current background rectangle.
-      ::int_point pointHotspot = m_cursorShape.getHotSpot();
+      ::int_point pointHotspot = m_cursorshape.getHotSpot();
       m_pointBackground.set(m_cursorPos.x - pointHotspot.x, m_cursorPos.y - pointHotspot.y);
-      m_shapeBackground.setProperties(m_cursorShape.getDimension(), m_cursorShape.getPixelFormat());
+      m_shapeBackground.setProperties(m_cursorshape.getDimension(), m_cursorshape.getPixelFormat());
       // Keep background under cursor shape to can reconstruct full image.
       m_shapeBackground.copyFrom(pframebuffer, m_pointBackground.x, m_pointBackground.y);
       // Draw the cursor shape on the frame buffer
-      rectangle.set(m_cursorShape.getDimension());
+      rectangle.set(m_cursorshape.getDimension());
       rectangle.set_top_left(m_pointBackground.x, m_pointBackground.y);
 
-      pframebuffer->overlay(rectangle, m_cursorShape.getPixels(), 0, 0, m_cursorShape.getMask());
+      pframebuffer->overlay(rectangle, m_cursorshape.getPixels(), 0, 0, m_cursorshape.getMask());
    }
 
    bool CursorUpdates::checkCursorPos(UpdateContainer & updatecontainer, const ::int_rectangle &rectangleViewport,
@@ -259,13 +259,13 @@ namespace remoting
    void CursorUpdates::updateCursorShape(const CursorShape *curShape)
    {
       critical_section_lock al(&m_criticalsectionCurPosLoc);
-      m_cursorShape.clone(curShape);
+      m_cursorshape.clone(curShape);
    }
 
    void CursorUpdates::extractCursorShape(CursorShape *curShape)
    {
       critical_section_lock al(&m_criticalsectionCurPosLoc);
-      curShape->clone(&m_cursorShape);
+      curShape->clone(&m_cursorshape);
    }
 
 

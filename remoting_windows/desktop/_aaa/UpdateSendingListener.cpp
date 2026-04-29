@@ -24,9 +24,9 @@
 #include "framework.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
 
-} // namespace remoting
+} // namespace remoting_windows
 

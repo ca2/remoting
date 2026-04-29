@@ -32,14 +32,15 @@
 #include "subsystem_windows/node/Screen.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
-   class CLASS_DECL_REMOTING_WINDOWS WindowsCursorShapeGrabber : public CursorShapeGrabber
+   class CLASS_DECL_REMOTING_WINDOWS WindowsCursorShapeGrabber :
+   virtual public ::remoting::CursorShapeGrabber
    {
    public:
-      WindowsCursorShapeGrabber(void);
-      virtual ~WindowsCursorShapeGrabber(void);
+      WindowsCursorShapeGrabber();
+      ~WindowsCursorShapeGrabber() override;
 
       virtual bool grab(const ::innate_subsystem::PixelFormat &pixelFormat);
 
@@ -55,7 +56,7 @@ namespace remoting
    };
 
 
-} //  namespace remoting
+} //  namespace remoting_windows
 
 
 

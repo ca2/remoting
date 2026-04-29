@@ -29,7 +29,7 @@
 #include "acme/_operating_system.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
 
@@ -64,13 +64,13 @@ namespace remoting
       }
    }
 
-   void WallpaperUtil::onConfigReload(ServerConfig *serverConfig) { updateWallpaper(); }
+   void WallpaperUtil::onConfigReload(::remoting::ServerConfig *serverConfig) { updateWallpaper(); }
 
    void WallpaperUtil::updateWallpaper()
    {
       try
       {
-         ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
+         ::remoting::ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
          if (pserverconfig->isRemovingDesktopWallpaperEnabled())
          {
             disableWallpaper();
@@ -140,7 +140,7 @@ namespace remoting
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

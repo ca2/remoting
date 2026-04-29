@@ -26,7 +26,7 @@
 #include "remoting/remoting/server_config/Configurator.h"
 #include "windows/WindowsInputBlocker.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
    DesktopConfigLocal::DesktopConfigLocal():
@@ -52,7 +52,7 @@ namespace remoting
 
    void DesktopConfigLocal::updateByNewSettings()
    {
-      ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
+      ::remoting::ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
       bool hardBlocking = pserverconfig->isBlockingLocalInput();
       m_pinputblocker->setKeyboardBlocking(hardBlocking);
       m_pinputblocker->setMouseBlocking(hardBlocking);
@@ -70,5 +70,5 @@ namespace remoting
    void DesktopConfigLocal::correctLastTime(const class ::time & time) { m_pinputblocker->correctLastTime(time); }
 
 
-} // namespace remoting
+} // namespace remoting_windows
  

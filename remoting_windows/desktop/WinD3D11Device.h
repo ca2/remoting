@@ -31,7 +31,7 @@
 #include <DXGI1_2.h>
 
 
-namespace remoting
+namespace remoting_windows
 {
 
    // #include "log_writer/LogWriter.h"
@@ -59,10 +59,10 @@ namespace remoting
       // A wrap for the ID3D11DeviceContext::CopySubresourceRegion() function.
       void copySubresourceRegion(ID3D11Texture2D *dstTexture2D, int dstX, int dstY, ID3D11Texture2D *srcTexture2D,
                                  const ::int_rectangle &rectangleSource, unsigned int front, unsigned int back);
-   private:
+   //private:
       void copy(const WinD3D11Device &src);
 
-      DynamicLibrary m_d3d11Lib;
+      ::subsystem::DynamicLibrary m_d3d11Lib;
       ID3D11Device *m_device;
       ID3D11DeviceContext *m_context;
 
@@ -72,7 +72,7 @@ namespace remoting
    //// __WIND3D11DEVICE_H__
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

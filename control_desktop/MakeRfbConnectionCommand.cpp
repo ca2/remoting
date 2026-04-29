@@ -24,18 +24,23 @@
 #include "framework.h"
 #include "MakeRfbConnectionCommand.h"
 
-MakeRfbConnectionCommand::MakeRfbConnectionCommand(ControlProxy *serverControl,
-                                                   const ::scoped_string & scopedstrConnectString,
-                                                   bool viewOnly)
-: m_proxy(serverControl), m_connectString(connectString), m_viewOnly(viewOnly)
-{
-}
 
-MakeRfbConnectionCommand::~MakeRfbConnectionCommand()
+namespace remoting_control_desktop
 {
-}
+   MakeRfbConnectionCommand::MakeRfbConnectionCommand(ControlProxy *serverControl,
+                                                      const ::scoped_string & scopedstrConnectString,
+                                                      bool viewOnly)
+   : m_proxy(serverControl), m_connectString(scopedstrConnectString), m_viewOnly(viewOnly)
+   {
+   }
 
-void MakeRfbConnectionCommand::execute()
-{
-  m_proxy->makeOutgoingConnection(m_connectString, m_viewOnly);
-}
+   MakeRfbConnectionCommand::~MakeRfbConnectionCommand()
+   {
+   }
+
+   void MakeRfbConnectionCommand::execute()
+   {
+      m_proxy->makeOutgoingConnection(m_connectString, m_viewOnly);
+   }
+} // namespace remoting_control_desktop
+

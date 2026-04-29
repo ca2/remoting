@@ -45,7 +45,7 @@ namespace remoting
     * On such addition, the underlying ::list_base of rectangles may change dramatically
     * and its length may increase, decrease or remain the same.
     */
-   class Region {
+   class CLASS_DECL_REMOTING Region {
    public:
       /**
        * Creates an empty region.

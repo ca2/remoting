@@ -25,10 +25,11 @@
 #include "MirrorDriverClient.h"
 #include "subsystem/platform/Exception.h"
 #include "subsystem/node/OperatingSystem.h"
+#include "subsystem/platform/Registry.h"
 // FIXME: Why the class CLASS_DECL_REMOTING_WINDOWS should depence from the remoting_node_desktop project?
 //#include "remoting/node_desktop/NamingDefs.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
    ::string_literal MirrorDriverClient::MINIPORT_REGISTRY_PATH = "SYSTEM\\CurrentControlSet\\Hardware Profiles\\"
@@ -96,11 +97,11 @@ namespace remoting
 
    ::innate_subsystem::PixelFormat MirrorDriverClient::getPixelFormat() const { return m_pixelformat; }
 
-   ::int_size MirrorDriverClient::getDimension() const { return m_dimension; }
+   ::int_size MirrorDriverClient::getDimension() const { return m_size; }
 
    void *MirrorDriverClient::getBuffer() { return m_screenBuffer; }
 
-   CHANGES_BUF *MirrorDriverClient::getChangesBuf() const { return m_changesBuffer; }
+   void *MirrorDriverClient::getChangesBuf() const { return m_changesBuffer; }
 
    bool MirrorDriverClient::getPropertiesChanged() { return m_isDisplayChanged; }
 
@@ -140,7 +141,7 @@ namespace remoting
       m_isDriverOpened = true;
    }
 
-   void MirrorDriverClient::extractDeviceInfo(TCHAR *driverName)
+   void MirrorDriverClient::extractDeviceInfo(const char *driverName)
    {
       memset(&m_deviceInfo, 0, sizeof(m_deviceInfo));
       m_deviceInfo.cb = sizeof(m_deviceInfo);
@@ -151,10 +152,10 @@ namespace remoting
       bool result;
       while (result = EnumDisplayDevices(0, m_deviceNumber, &m_deviceInfo, 0))
       {
-         m_plogwriter->debug("Found: {}", m_deviceInfo.DeviceString);
-         m_plogwriter->debug("RegKey: {}", m_deviceInfo.DeviceKey);
+         m_plogwriter->debugf("Found: %s", m_deviceInfo.DeviceString);
+         m_plogwriter->debugf("RegKey: %s", m_deviceInfo.DeviceKey);
          ::string deviceString(m_deviceInfo.DeviceString);
-         if (deviceString.isEqualTo(driverName))
+         if (deviceString == driverName)
          {
             m_plogwriter->information("{} is found", driverName);
             break;
@@ -169,25 +170,26 @@ namespace remoting
       }
    }
 
-   void MirrorDriverClient::openDeviceRegKey(TCHAR *miniportName)
+   void MirrorDriverClient::openDeviceRegKey(const char *miniportName)
    {
       ::string deviceKey(m_deviceInfo.DeviceKey);
-      deviceKey.toUpperCase();
-      TCHAR *substrPos = deviceKey.find("\\DEVICE");
+      deviceKey.make_upper();
+      auto substrPos = deviceKey.find("\\DEVICE");
       ::string subKey("DEVICE0");
       if (substrPos != 0)
       {
          ::string str(substrPos);
          if (str.length() >= 8)
          {
-            str.getSubstring(&subKey, 1, 7);
+            subKey.assign(str.c_str() + 1, 7);
+            //str.getSubstring(&subKey, 1, 7);
          }
       }
 
       m_plogwriter->debug("Opening registry key {}\\{}\\{}", MINIPORT_REGISTRY_PATH, miniportName, subKey);
 
-      RegistryKey regKeyServices(HKEY_LOCAL_MACHINE, MINIPORT_REGISTRY_PATH, true);
-      RegistryKey regKeyDriver(&regKeyServices, miniportName, true);
+      ::subsystem::RegistryKey regKeyServices(MainSubsystem().Registry().getLocalMachineKey(), MINIPORT_REGISTRY_PATH, true);
+      ::subsystem::RegistryKey regKeyDriver(&regKeyServices, miniportName, true);
       m_regkeyDevice.open(&regKeyDriver, subKey, true);
       if (!regKeyServices.isOpened() || !regKeyDriver.isOpened() || !m_regkeyDevice.isOpened())
       {
@@ -218,11 +220,11 @@ namespace remoting
          // 2005.10.07
          m_deviceMode.dmDriverExtra = drvExtraSaved;
 
-         m_deviceMode.dmPelsWidth = m_dimension.cx;
-         m_deviceMode.dmPelsHeight = m_dimension.cy;
+         m_deviceMode.dmPelsWidth = m_size.cx;
+         m_deviceMode.dmPelsHeight = m_size.cy;
          m_deviceMode.dmBitsPerPel = m_pixelformat.bitsPerPixel;
-         m_deviceMode.dmPosition.x = m_leftTopCorner.x;
-         m_deviceMode.dmPosition.y = m_leftTopCorner.y;
+         m_deviceMode.dmPosition.x = m_pointTopLeftCorner.x;
+         m_deviceMode.dmPosition.y = m_pointTopLeftCorner.y;
 
          m_deviceMode.dmFields = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT | DM_POSITION;
          m_deviceMode.dmDeviceName[0] = '\0';
@@ -260,8 +262,8 @@ namespace remoting
       m_pixelformat.colorDepth = 24;
 
       ::int_rectangle virtDeskRect = m_screen.getDesktopRect();
-      m_dimension.setDim(&virtDeskRect);
-      m_leftTopCorner.setPoint(virtDeskRect.left, virtDeskRect.top);
+      m_size = virtDeskRect.size();
+      m_pointTopLeftCorner = virtDeskRect.top_left();
    }
 
    void MirrorDriverClient::setAttachToDesktop(bool value)
@@ -288,7 +290,7 @@ namespace remoting
       // ChangeDisplaySettingsEx(m_deviceInfo.DeviceName, pdm, NULL,
       //                         CDS_UPDATEREGISTRY, NULL)
       // And the 2000 does not work with DEVMODE that has the set DM_POSITION bit.
-      m_plogwriter->information("commitDisplayChanges(1): \"{}\"", m_deviceInfo.DeviceName);
+      m_plogwriter->information("commitDisplayChanges(1): \"{}\"", ::string(m_deviceInfo.DeviceName));
       if (pdm)
       {
          LONG code = ChangeDisplaySettingsEx(m_deviceInfo.DeviceName, pdm, 0, CDS_UPDATEREGISTRY, 0);
@@ -298,7 +300,7 @@ namespace remoting
             errMess.formatf("1st ChangeDisplaySettingsEx() failed with code {}", (int)code);
             throw ::subsystem::Exception(errMess);
          }
-         m_plogwriter->information("CommitDisplayChanges(2): \"{}\"", m_deviceInfo.DeviceName);
+         m_plogwriter->information("CommitDisplayChanges(2): \"{}\"", ::string(m_deviceInfo.DeviceName));
          code = ChangeDisplaySettingsEx(m_deviceInfo.DeviceName, pdm, 0, 0, 0);
          if (code < 0)
          {
@@ -341,7 +343,7 @@ namespace remoting
          // IMPORTANT: Windows 2000 fails to unload the driver
          // if the mode passed to ChangeDisplaySettingsEx() contains DM_POSITION set.
          DEVMODE *pdm = 0;
-         if (!Environment::isWin2000())
+         if (!MainSubsystem().OperatingSystem().isWin2000())
          {
             pdm = &m_deviceMode;
          }
@@ -415,25 +417,25 @@ namespace remoting
       return true;
    }
 
-   void MirrorDriverClient::onTerminate() { PostMessage(m_messagewindowPropertyChangeListener.getHWND(), WM_QUIT, 0, 0); }
+   void MirrorDriverClient::onTerminate() { m_messagewindowPropertyChangeListener.postMessage(::user::e_message_quit); }
 
    void MirrorDriverClient::execute()
    {
       if (!isTerminating())
       {
-         m_messagewindowPropertyChangeListener.createWindow(this);
+         m_messagewindowPropertyChangeListener.createMessageWindow({}, this);
          m_plogwriter->information("Mirror driver client window has been created (hwnd = {})",
-                                   (int)m_messagewindowPropertyChangeListener.getHWND());
+                                   ::operating_system_window_as_uptr(m_messagewindowPropertyChangeListener.operating_system_window()));
       }
 
       m_initListener.set_happening();
-
+      auto hwndMessageWindow = ::as_HWND(m_messagewindowPropertyChangeListener.operating_system_window());
       MSG msg;
       while (!isTerminating())
       {
-         if (PeekMessage(&msg, m_messagewindowPropertyChangeListener.getHWND(), 0, 0, PM_REMOVE) != 0)
+         if (PeekMessage(&msg, hwndMessageWindow, 0, 0, PM_REMOVE) != 0)
          {
-            if (msg.scopedstrMessage == WM_DISPLAYCHANGE)
+            if (msg.message == WM_DISPLAYCHANGE)
             {
                m_isDisplayChanged = true;
             }
@@ -455,6 +457,6 @@ namespace remoting
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows
  
 

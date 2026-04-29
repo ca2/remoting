@@ -46,7 +46,7 @@ namespace remoting
    {
       resume();
       m_plogwriter->debug("Win8ScreenDriverImpl:: waiting for DXGI init");
-      m_initEvent.wait();
+      m_happeningInit.wait();
 
       if (m_hasCriticalError)
       {
@@ -58,10 +58,10 @@ namespace remoting
 
 
       // Checking that builded dimension is equal to virtual desktop dimension.
-      ::int_size buildedDim = getScreenBuffer()->getDimension();
+      ::int_size sizeBuilt = getScreenBuffer()->getDimension();
       Screen screen;
       ::int_size virtDimension = screen.getDesktopDimension();
-      if (!buildedDim.isEqualTo(&virtDimension))
+      if (!sizeBuilt.isEqualTo(&virtDimension))
       {
          terminate();
          wait();
@@ -141,13 +141,13 @@ namespace remoting
       }
 
       ::innate_subsystem::PixelFormat pixelformat = getDxPixelFormat();
-      ::int_rectangle virtDeskBoundRect = virtDeskRegion.getBounds();
-      m_pframebuffer->setProperties(&virtDeskBoundRect, &pixelformat);
+      ::int_rectangle rectangleVirtDeskBound = virtDeskRegion.getBounds();
+      m_pframebuffer->setProperties(&rectangleVirtDeskBound, &pixelformat);
       m_pframebuffer->setColor(0, 0, 0);
 
       for (size_t iDxgiOutput = 0; iDxgiOutput < dxgiOutputArray.size(); iDxgiOutput++)
       {
-         deskCoordArray[iDxgiOutput].move(-virtDeskBoundRect.left, -virtDeskBoundRect.top);
+         deskCoordArray[iDxgiOutput].move(-rectangleVirtDeskBound.left, -rectangleVirtDeskBound.top);
       }
       size_t threadsNum = m_deskDuplThreadBundle.Size();
       if (threadsNum > 12)
@@ -186,11 +186,11 @@ namespace remoting
                              e.get_message());
          m_hasCriticalError = true;
       }
-      m_initEvent.set_happening();
+      m_happeningInit.set_happening();
 
       while (!isTerminating() && isValid())
       {
-         m_errorEvent.wait();
+         m_happeningError.wait();
       }
 
       if (!isValid())
@@ -204,7 +204,7 @@ namespace remoting
       terminateDetection();
    }
 
-   void Win8ScreenDriverImpl::onTerminate() { m_errorEvent.set_happening(); }
+   void Win8ScreenDriverImpl::onTerminate() { m_happeningError.set_happening(); }
 
    void Win8ScreenDriverImpl::onFramebufferUpdate(const Region & regionChanged)
    {
@@ -219,8 +219,8 @@ namespace remoting
    {
       if (m_detectionEnabled)
       {
-         ::int_point srcPoint(srcX, srcY);
-         m_pupdatekeeper->addCopyRect(rectangleTarget, &srcPoint);
+         ::int_point pointSource(srcX, srcY);
+         m_pupdatekeeper->addCopyRect(rectangleTarget, &pointSource);
          m_pupdatelistener->onUpdate();
       }
    }
@@ -228,11 +228,11 @@ namespace remoting
    void Win8ScreenDriverImpl::onCursorPositionChanged(int x, int y)
    {
       critical_section_lock al(&m_cursorMutex);
-      ::int_point newPos(x, y);
-      if (!m_latestCursorPos.isEqualTo(&newPos))
+      ::int_point pointNewPosition(x, y);
+      if (!m_latestCursorPos.isEqualTo(&pointNewPosition))
       {
-         m_latestCursorPos = newPos;
-         m_pupdatekeeper->setCursorPos(&newPos);
+         m_latestCursorPos = pointNewPosition;
+         m_pupdatekeeper->setCursorPos(&pointNewPosition);
          m_pupdatelistener->onUpdate();
       }
    }
@@ -247,14 +247,14 @@ namespace remoting
    {
       m_plogwriter->error("Win8ScreenDriverImpl catch an recoverable error with reason: {}", reason);
       m_hasRecoverableError = true;
-      m_errorEvent.set_happening();
+      m_happeningError.set_happening();
    }
 
    void Win8ScreenDriverImpl::onCriticalError(const ::scoped_string &scopedstrReason)
    {
       m_plogwriter->error("Win8ScreenDriverImpl catch an critical error with reason: {}", reason);
       m_hasCriticalError = true;
-      m_errorEvent.set_happening();
+      m_happeningError.set_happening();
    }
 
    bool Win8ScreenDriverImpl::grabFb(const ::int_rectangle & rectangle) { return isValid(); }

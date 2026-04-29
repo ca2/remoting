@@ -191,7 +191,7 @@ bool FileTransferRequestHandler::isFileTransferEnabled()
 
 void FileTransferRequestHandler::compressionSupportRequested()
 {
-  m_plogwriter->debug("{}"), _T("compression support requested");
+  m_plogwriter->debug("{}"), "compression support requested";
 
   //
   // Can be 0 - compression not supported by server
@@ -200,7 +200,7 @@ void FileTransferRequestHandler::compressionSupportRequested()
 
   unsigned char compressionSupport = 1;
 
-  m_plogwriter->debug("sending compression support reply: {}"), (compressionSupport == 1) ? _T("supported") : _T("not supported");
+  m_plogwriter->debug("sending compression support reply: {}"), (compressionSupport == 1) ? "supported") : _T("not supported";
 
   {
     critical_section_lock l(m_output);
@@ -629,7 +629,7 @@ void FileTransferRequestHandler::uploadEndRequested()
     modificationTime = m_input->readUInt64();
   } // end of reading block.
 
-  m_plogwriter->debug("{}"), _T("end of upload requested\n");
+  m_plogwriter->debug("{}"), "end of upload requested\n";
 
   checkAccess();
 
@@ -807,7 +807,7 @@ void FileTransferRequestHandler::downloadDataRequested()
       m_output->flush();
     } // rfb io handle block
 
-    m_plogwriter->debug("{}"), _T("downloading has finished\n");
+    m_plogwriter->debug("{}"), "downloading has finished\n";
 
     delete m_fileInputStream;
     delete m_downloadFile;

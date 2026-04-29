@@ -29,7 +29,7 @@
 #include "remoting/remoting_windows/_common_header.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
    // This class  is wrapper for CursorShape class CLASS_DECL_REMOTING_WINDOWS to extend it behaviour for the Win8 desktop
@@ -40,9 +40,9 @@ namespace remoting
       Win8CursorShape();
       virtual ~Win8CursorShape();
 
-      const CursorShape *getCursorShape() const;
+      const ::remoting::CursorShape *getCursorShape() const;
 
-      CursorShape *getCursorShapeForWriting();
+      ::remoting::CursorShape *getCursorShapeForWriting();
 
       // threadOwner is a number of latest thread which call this function.
       void setVisibility(bool value, int threadOwner);
@@ -53,12 +53,12 @@ namespace remoting
       int m_threadOwner;
 
       bool m_isVisible;
-      CursorShape m_emptyDimensionCursorShape;
-      CursorShape m_cursorShape;
+      ::remoting::CursorShape m_cursorshapeEmptyDimension;
+      ::remoting::CursorShape m_cursorshape;
    };
 
 
-} //  namespace remoting
+} //  namespace remoting_windows
 
 
 

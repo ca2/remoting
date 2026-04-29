@@ -93,13 +93,13 @@ void UserInputClient::sendInit(BlockingGate *pblockinggate)
   pblockinggate->writeUInt8(m_sendMouseFlags);
 }
 
-void UserInputClient::setMouseEvent(const ::int_point newPos, unsigned char keyFlag)
+void UserInputClient::setMouseEvent(const ::int_point pointNewPosition, unsigned char keyFlag)
 {
   critical_section_lock al(m_pblockinggate);
   try {
     // Send mouse data
     m_pblockinggate->writeUInt8(POINTER_POS_CHANGED);
-    sendNewPointerPos(newPos, keyFlag, m_pblockinggate);
+    sendNewPointerPos(pointNewPosition, keyFlag, m_pblockinggate);
     m_sendMouseFlags = keyFlag;
   } catch (ReconnectException &) {
   }

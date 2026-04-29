@@ -34,10 +34,10 @@
 
 // Only one instance of this class may be created.
 
-namespace remoting
+namespace remoting_windows
 {
    class CLASS_DECL_REMOTING_WINDOWS WindowsInputBlocker :
-      virtual public InputBlocker,
+      virtual public ::remoting::InputBlocker,
    virtual public ::subsystem::GuiThread
    {
    public:
@@ -101,7 +101,7 @@ namespace remoting
 
       ::subsystem::LogWriter *m_plogwriter;
    };
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

@@ -7,7 +7,9 @@
 
 
 #include "innate_subsystem/_.h"
-
+#ifdef WINDOWS
+#include "subsystem_windows/_.h"
+#endif
 
 #if defined(_remoting_project)
 #define CLASS_DECL_REMOTING CLASS_DECL_EXPORT
@@ -19,6 +21,7 @@
 #include "remoting/remoting/desktop/_.h"
 #include "remoting/remoting/framebuffer_update_sender/_.h"
 #include "remoting/remoting/file_transfer_server/_.h"
+#include "remoting/remoting/network/_.h"
 #include "remoting/remoting/rfb_sconn/_.h"
 #include "remoting/remoting/server/_.h"
 #include "remoting/remoting/server_config/_.h"

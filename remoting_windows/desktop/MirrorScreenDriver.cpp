@@ -25,10 +25,10 @@
 #include "MirrorScreenDriver.h"
 #include "subsystem/platform/Exception.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
-   // MirrorScreenDriver::MirrorScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+   // MirrorScreenDriver::MirrorScreenDriver(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
    //                                        lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) :
    //     UpdateDetector(pupdatekeeper, pupdatelistener), m_pcriticalsectionFramebuffer(pcriticalsectionFramebuffer), m_lastCounter(0), m_plogwriter(plogwriter)
    // {
@@ -51,7 +51,7 @@ namespace remoting
       }
    }
 
-   void MirrorScreenDriver::initialize_mirror_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+   void MirrorScreenDriver::initialize_mirror_screen_driver(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
                                        lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter)// :
     //UpdateDetector(pupdatekeeper, pupdatelistener), m_pcriticalsectionFramebuffer(pcriticalsectionFramebuffer), m_lastCounter(0), m_plogwriter(plogwriter)
    {
@@ -167,7 +167,7 @@ namespace remoting
 
    void MirrorScreenDriver::execute()
    {
-      Region m_regionChanged;
+      ::remoting::Region m_regionChanged;
       ::int_rectangle rectangleChanged;
       unsigned long currentCounter = 0;
 
@@ -185,14 +185,14 @@ namespace remoting
                   currentCounter = changesBuf->counter;
                   for (unsigned long i = m_lastCounter; i != currentCounter; i++, i %= MAXCHANGES_BUF)
                   {
-                     rectangleChanged.fromWindowsRect(changesBuf->pointrect[i].rectangle);
-                     if (rectangleChanged.isValid())
+                     rectangleChanged = changesBuf->pointrect[i].rect;
+                     if (rectangleChanged.is_null_or_positive())
                      {
-                        m_regionChanged.addRect(&rectangleChanged);
+                        m_regionChanged.addRect(rectangleChanged);
                      }
                   }
 
-                  m_pupdatekeeper->addChangedRegion(&m_regionChanged);
+                  m_pupdatekeeper->addChangedRegion(m_regionChanged);
                   m_lastCounter = currentCounter;
                }
             }
@@ -209,7 +209,7 @@ namespace remoting
    void MirrorScreenDriver::onTerminate() { m_updateTimeout.set_happening(); }
 
 
-} // namespace remoting
+} // namespace remoting_windows
  
 
 

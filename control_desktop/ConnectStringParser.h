@@ -27,14 +27,16 @@
 
 #include "subsystem/_common_header.h"
 
-class ConnectStringParser
+namespace remoting_control_desktop
 {
-public:
-  ConnectStringParser();
-  virtual ~ConnectStringParser();
+   class ConnectStringParser
+   {
+   public:
+      ConnectStringParser();
+      virtual ~ConnectStringParser();
 
-  static bool parse(const ::scoped_string & scopedstrConnectString, ::string & host = 0,
-                    unsigned short *port = 0);
-};
-
+      static bool parse(const ::scoped_string & scopedstrConnectString, ::string * pstrHost = nullptr,
+                        unsigned short * pushPort = nullptr);
+   };
+} // namespace remoting_control_desktop
 

@@ -35,7 +35,7 @@ namespace remoting
 {
    // EventLog::EventLog(LogWriter *log)
    // : m_hEventLog(0),
-   //   m_log(log)
+   //   m_plogwriter(log)
    // {
    // }
 
@@ -58,7 +58,7 @@ namespace remoting
       // try {
       //    updateEventSourcesSubkey();
       // } catch (Exception &e) {
-      //    m_log->error(_T("Cannot update event sources registry subkey: %s"),
+      //    m_plogwriter->error("Cannot update event sources registry subkey: %s",
       //               e.getMessage());
       // }
       // registerEventSource();
@@ -82,15 +82,15 @@ namespace remoting
    // {
    //    StringStorage path;
    //    if (Environment::getCurrentModulePath(&path)) {
-   //       StringStorage entry(_T("SYSTEM\\CurrentControlSet\\")
-   //                           _T("services\\eventlog\\Application\\"));
+   //       StringStorage entry("SYSTEM\\CurrentControlSet\\"
+   //                           "services\\eventlog\\Application\\");
    //       entry += LogNames::WIN_EVENT_PROVIDER_NAME;
    //       RegistryKey regKey(HKEY_LOCAL_MACHINE, entry.getString());
-   //       regKey.setValueAsInt32(_T("CategoryCount"), 0);
-   //       regKey.setValueAsString(_T("CategoryMessageFile"), path.getString());
-   //       regKey.setValueAsString(_T("EventMessageFile"), path.getString());
-   //       regKey.setValueAsString(_T("ParameterMessageFile"), path.getString());
-   //       regKey.setValueAsInt32(_T("TypesSupported"),
+   //       regKey.setValueAsInt32("CategoryCount", 0);
+   //       regKey.setValueAsString("CategoryMessageFile", path.getString());
+   //       regKey.setValueAsString("EventMessageFile", path.getString());
+   //       regKey.setValueAsString("ParameterMessageFile", path.getString());
+   //       regKey.setValueAsInt32("TypesSupported",
    //                              EVENTLOG_ERROR_TYPE | EVENTLOG_INFORMATION_TYPE |
    //                              EVENTLOG_WARNING_TYPE);
    //    }
@@ -157,9 +157,9 @@ namespace remoting
       //                 0 // data
       //                 ) == 0) {
       //    StringStorage errStr;
-      //    Environment::getErrStr(_T("Cannot report an event to the system log"),
+      //    Environment::getErrStr("Cannot report an event to the system log",
       //                           &errStr);
-      //    m_log->error(_T("%s"), errStr.getString());
+      //    m_plogwriter->error("%s", errStr.getString());
       //                 }
    }
 

@@ -26,25 +26,25 @@
 
 
 #include "windows/WindowsScreenGrabber.h"
-#include "ScreenDriver.h"
+#include "::remoting::ScreenDriver.h"
 #include "innate_subsystem/framebuffer/Framebuffer.h"
 //#include "subsystem/thread/lockable_critical_section.h"
 #include "UpdateContainer.h"
 #include "GrabOptimizator.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING UpdateFilter
    {
    public:
-      //UpdateFilter(ScreenDriver *screenDriver, ::innate_subsystem::Framebuffer *pframebuffer,
+      //UpdateFilter(::remoting::ScreenDriver *screenDriver, ::innate_subsystem::Framebuffer *pframebuffer,
         //           lockable_critical_section *framebufferCriticalSection, ::subsystem::LogWriter * plogwriter);
       UpdateFilter();
       ~UpdateFilter();
 
-      virtual void initialize_update_filter(ScreenDriver *screenDriver, ::innate_subsystem::Framebuffer *pframebuffer,
+      virtual void initialize_update_filter(::remoting::ScreenDriver *screenDriver, ::innate_subsystem::Framebuffer *pframebuffer,
              lockable_critical_section *framebufferCriticalSection, ::subsystem::LogWriter * plogwriter);
 
       void filter(UpdateContainer & updatecontainer);
@@ -60,7 +60,7 @@ namespace remoting
       // the whole screen grabbing or
       bool grab();
 
-      ScreenDriver *m_pscreendriver;
+      ::remoting::ScreenDriver *m_pscreendriver;
       ::innate_subsystem::Framebuffer *m_pframebuffer;
       lockable_critical_section *m_pcriticalsectionFramebuffer;
       GrabOptimizator m_grabOptimizator;
@@ -71,5 +71,5 @@ namespace remoting
    //// __UPDATEFILTER_H__
 
 
-} // namespace remoting
+} // namespace remoting_windows
  

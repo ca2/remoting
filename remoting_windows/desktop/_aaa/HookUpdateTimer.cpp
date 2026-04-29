@@ -24,10 +24,10 @@
 #include "framework.h"
 #include "HookUpdateTimer.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
-   //HookUpdateTimer::HookUpdateTimer(UpdateListener *pupdatelistener) : m_pupdatelistener = pupdatelistener; { resume(); }
+   //HookUpdateTimer::HookUpdateTimer(::remoting::UpdateListener *pupdatelistener) : m_pupdatelistener = pupdatelistener; { resume(); }
 
    HookUpdateTimer::HookUpdateTimer()
    {
@@ -42,7 +42,7 @@ namespace remoting
       wait();
    }
 
-   void HookUpdateTimer::initialize_hook_update_timer(UpdateListener *pupdatelistener)
+   void HookUpdateTimer::initialize_hook_update_timer(::remoting::UpdateListener *pupdatelistener)
    {
       m_pupdatelistener = pupdatelistener;
          resume();
@@ -69,7 +69,7 @@ namespace remoting
    void HookUpdateTimer::sear() { m_updateWaiter.set_happening(); }
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

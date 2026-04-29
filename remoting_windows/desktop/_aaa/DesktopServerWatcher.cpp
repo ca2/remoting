@@ -38,7 +38,7 @@
 #include "subsystem/platform/subsystem.h"
 //#include aaa_<time.h>
 
-namespace remoting
+namespace remoting_windows
 {
 
 
@@ -280,7 +280,7 @@ namespace remoting
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

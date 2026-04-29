@@ -32,10 +32,11 @@
 // #include aaa_<d3d11.h>
 // #include aaa_<DXGI1_2.h>
 
-namespace remoting
+namespace remoting_windows
 {
 
-   class CLASS_DECL_REMOTING_WINDOWS WinDxgiOutput
+   class CLASS_DECL_REMOTING_WINDOWS WinDxgiOutput :
+   virtual public ::particle
    {
    public:
       WinDxgiOutput(WinDxgiAdapter *dxgiAdapter, unsigned int iOutput);
@@ -64,7 +65,7 @@ namespace remoting
    //// __WINDXGIOUTPUT_H__
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

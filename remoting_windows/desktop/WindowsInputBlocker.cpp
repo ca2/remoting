@@ -26,7 +26,7 @@
 #include "subsystem/platform/Exception.h"
 #include "subsystem/thread/AutoLock.h"
 
-namespace remoting
+namespace remoting_windows
 {
    lockable_critical_section WindowsInputBlocker::m_instanceMutex;
    HHOOK WindowsInputBlocker::m_hKeyboardHook = 0;
@@ -322,4 +322,4 @@ namespace remoting
       setSoftKeyboardFilterHook(false);
       setSoftMouseFilterHook(false);
    }
-} // namespace remoting
+} // namespace remoting_windows

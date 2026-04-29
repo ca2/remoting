@@ -34,41 +34,51 @@
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "remoting/remoting_windows/desktop/Win8ScreenDriverImpl.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
+   //
+   // Win8ScreenDriverImpl::Win8ScreenDriverImpl(::subsystem::LogWriter * plogwriter, ::remoting::UpdateKeeper *pupdatekeeper,
+   //                                            lockable_critical_section *pcriticalsectionFramebuffer, ::remoting::UpdateListener *pupdatelistener,
+   //                                            bool detectionEnabled) :
+   //     m_pupdatekeeper(pupdatekeeper), m_pupdatelistener = pupdatelistener;, m_plogwriter(plogwriter), m_curTimeStamp(0),
+   //     m_hasCriticalError(false), m_hasRecoverableError(false), m_detectionEnabled(detectionEnabled)
+   // {
+   //    resume();
+   //    m_plogwriter->debug("Win8ScreenDriverImpl:: waiting for DXGI init");
+   //    m_happeningInit.wait();
+   //
+   //    if (m_hasCriticalError)
+   //    {
+   //       m_plogwriter->debug("Win8ScreenDriverImpl init critical error");
+   //       terminate();
+   //       wait();
+   //       throw ::subsystem::Exception("Win8ScreenDriverImpl can't be successfully initialized");
+   //    }
+   //
+   //
+   //    // Checking that builded dimension is equal to virtual desktop dimension.
+   //    ::int_size sizeBuilt = getScreenBuffer()->getDimension();
+   //    Screen screen;
+   //    ::int_size virtDimension = screen.getDesktopDimension();
+   //    if (!sizeBuilt.isEqualTo(&virtDimension))
+   //    {
+   //       terminate();
+   //       wait();
+   //       throw ::subsystem::Exception("The builded screen dimension doesn't match to virtual screen dimension");
+   //    }
+   //    // At this point the screen driver has valid screen properties.
+   // }
 
-   Win8ScreenDriverImpl::Win8ScreenDriverImpl(::subsystem::LogWriter * plogwriter, UpdateKeeper *pupdatekeeper,
-                                              lockable_critical_section *pcriticalsectionFramebuffer, UpdateListener *pupdatelistener,
-                                              bool detectionEnabled) :
-       m_pupdatekeeper(pupdatekeeper), m_pupdatelistener = pupdatelistener;, m_plogwriter(plogwriter), m_curTimeStamp(0),
-       m_hasCriticalError(false), m_hasRecoverableError(false), m_detectionEnabled(detectionEnabled)
+
+   Win8ScreenDriverImpl::Win8ScreenDriverImpl() :
+//   m_pupdatekeeper(pupdatekeeper), m_pupdatelistener = pupdatelistener;, m_plogwriter(plogwriter),
+   m_curTimeStamp(0),m_hasCriticalError(false), m_hasRecoverableError(false), m_detectionEnabled(false)
+
    {
-      resume();
-      m_plogwriter->debug("Win8ScreenDriverImpl:: waiting for DXGI init");
-      m_initEvent.wait();
 
-      if (m_hasCriticalError)
-      {
-         m_plogwriter->debug("Win8ScreenDriverImpl init critical error");
-         terminate();
-         wait();
-         throw ::subsystem::Exception("Win8ScreenDriverImpl can't be successfully initialized");
-      }
-
-
-      // Checking that builded dimension is equal to virtual desktop dimension.
-      ::int_size buildedDim = getScreenBuffer()->getDimension();
-      Screen screen;
-      ::int_size virtDimension = screen.getDesktopDimension();
-      if (!buildedDim.isEqualTo(&virtDimension))
-      {
-         terminate();
-         wait();
-         throw ::subsystem::Exception("The builded screen dimension doesn't match to virtual screen dimension");
-      }
-      // At this point the screen driver has valid screen properties.
    }
+
 
    Win8ScreenDriverImpl::~Win8ScreenDriverImpl()
    {
@@ -80,6 +90,44 @@ namespace remoting
       m_plogwriter->debug("Win8ScreenDriverImpl::activeResult = {}", activeResult);
       m_plogwriter->debug("Win8ScreenDriverImpl::waitResult = {}", waitResult);
    }
+
+
+   void Win8ScreenDriverImpl::initialize_win8_screen_driver_impl(::subsystem::LogWriter * plogwriter, ::remoting::UpdateKeeper *pupdatekeeper,
+                                           lockable_critical_section *pcriticalsectionFramebuffer, ::remoting::UpdateListener *pupdatelistener,
+                                           bool detectionEnabled)
+    {
+       m_pupdatekeeper = pupdatekeeper;
+       m_pupdatelistener = pupdatelistener;
+       m_plogwriter = plogwriter;
+       m_detectionEnabled = detectionEnabled;
+       //m_pupdatekeeper(pupdatekeeper), m_pupdatelistener = pupdatelistener;, m_plogwriter(plogwriter), m_curTimeStamp(0),
+       //m_hasCriticalError(false), m_hasRecoverableError(false), m_detectionEnabled(detectionEnabled)
+
+          resume();
+       m_plogwriter->debug("Win8ScreenDriverImpl:: waiting for DXGI init");
+       m_happeningInit.wait();
+
+       if (m_hasCriticalError)
+       {
+          m_plogwriter->debug("Win8ScreenDriverImpl init critical error");
+          terminate();
+          wait();
+          throw ::subsystem::Exception("Win8ScreenDriverImpl can't be successfully initialized");
+       }
+
+
+       // Checking that builded dimension is equal to virtual desktop dimension.
+       ::int_size sizeBuilt = getScreenBuffer()->getDimension();
+       ::subsystem::Screen screen;
+       ::int_size virtDimension = screen.getDesktopDimension();
+       if (sizeBuilt != virtDimension)
+       {
+          terminate();
+          wait();
+          throw ::subsystem::Exception("The builded screen dimension doesn't match to virtual screen dimension");
+       }
+       // At this point the screen driver has valid screen properties.
+    }
 
    void Win8ScreenDriverImpl::executeDetection()
    {
@@ -94,7 +142,7 @@ namespace remoting
       m_detectionEnabled = false;
    }
 
-   ::innate_subsystem::Framebuffer *Win8ScreenDriverImpl::getScreenBuffer() { return m_pframebuffer; }
+   ::innate_subsystem::Framebuffer *Win8ScreenDriverImpl::getScreenBuffer() { return m_pframebufferProperty; }
 
    void Win8ScreenDriverImpl::initDxgi()
    {
@@ -105,22 +153,22 @@ namespace remoting
       m_plogwriter->debug("Getting Parent for IDXGIAdapter");
       WinDxgiAdapter dxgiAdapter(&dxgiDevice);
 
-      Region virtDeskRegion;
+      ::remoting::Region virtDeskRegion;
       m_plogwriter->debug("Try to enumerate dxgi outputs");
-      ::array_base<WinDxgiOutput> dxgiOutputArray;
+      ::pointer_array<WinDxgiOutput> dxgiOutputArray;
       ::int_rectangle_array_base deskCoordArray;
       unsigned int iOutput = 0;
       try
       {
          for (iOutput = 0; iOutput < 65535; iOutput++)
          {
-            WinDxgiOutput dxgiOutput(&dxgiAdapter, iOutput);
-            if (dxgiOutput.isAttachedtoDesktop())
+            auto pdxgiOutput = allocateø WinDxgiOutput(&dxgiAdapter, iOutput);
+            if (pdxgiOutput->isAttachedtoDesktop())
             {
-               dxgiOutputArray.add(dxgiOutput);
-               ::int_rectangle deskCoord = dxgiOutput.getDesktopCoordinates();
+               dxgiOutputArray.add(pdxgiOutput);
+               ::int_rectangle deskCoord = pdxgiOutput->getDesktopCoordinates();
                deskCoordArray.add(deskCoord);
-               virtDeskRegion.addRect(&deskCoord);
+               virtDeskRegion.addRect(deskCoord);
             }
          }
       }
@@ -134,27 +182,27 @@ namespace remoting
       // Check that all outputs for the virtual screen are found (in case two or more
       // hardware graphic interfaces are used). It's better to avoid using buggy
       // Desktop Duplication API here rather than getting the wrong pframebuffer->
-      Screen screen;
+      ::subsystem::Screen screen;
       if (screen.getVisibleMonitorCount() != dxgiOutputArray.size())
       {
          throw ::subsystem::Exception("Unable get all DXGI outputs for virtual screen");
       }
 
       ::innate_subsystem::PixelFormat pixelformat = getDxPixelFormat();
-      ::int_rectangle virtDeskBoundRect = virtDeskRegion.getBounds();
-      m_pframebuffer->setProperties(&virtDeskBoundRect, &pixelformat);
-      m_pframebuffer->setColor(0, 0, 0);
+      ::int_rectangle rectangleVirtDeskBound = virtDeskRegion.getBounds();
+      m_pframebufferProperty->setProperties(rectangleVirtDeskBound, pixelformat);
+      m_pframebufferProperty->setColor(0, 0, 0);
 
       for (size_t iDxgiOutput = 0; iDxgiOutput < dxgiOutputArray.size(); iDxgiOutput++)
       {
-         deskCoordArray[iDxgiOutput].move(-virtDeskBoundRect.left, -virtDeskBoundRect.top);
+         deskCoordArray[iDxgiOutput].offset(-rectangleVirtDeskBound.left, -rectangleVirtDeskBound.top);
       }
       size_t threadsNum = m_deskDuplThreadBundle.Size();
       if (threadsNum > 12)
          threadsNum = 12;
       DWORD millis = 1 << threadsNum; // delay up to 4 seconds if there are threads waiting to delete
       sleep(millis);
-      Thread *thread = new Win8DeskDuplication(m_pframebuffer, deskCoordArray, &m_win8CursorShape, &m_curTimeStamp,
+      Thread *thread = new Win8DeskDuplication(m_pframebufferProperty, deskCoordArray, &m_win8CursorShape, &m_curTimeStamp,
                                                &m_cursorMutex, this, dxgiOutputArray, m_plogwriter);
       DWORD id = thread->getThreadId();
       m_plogwriter->debug("Created a new Win8DeskDuplication with ID: ({})", id);
@@ -186,11 +234,11 @@ namespace remoting
                              e.get_message());
          m_hasCriticalError = true;
       }
-      m_initEvent.set_happening();
+      m_happeningInit.set_happening();
 
       while (!isTerminating() && isValid())
       {
-         m_errorEvent.wait();
+         m_happeningError.wait();
       }
 
       if (!isValid())
@@ -204,13 +252,13 @@ namespace remoting
       terminateDetection();
    }
 
-   void Win8ScreenDriverImpl::onTerminate() { m_errorEvent.set_happening(); }
+   void Win8ScreenDriverImpl::onTerminate() { m_happeningError.set_happening(); }
 
-   void Win8ScreenDriverImpl::onFramebufferUpdate(const Region & regionChanged)
+   void Win8ScreenDriverImpl::onFramebufferUpdate(const ::remoting::Region & regionChanged)
    {
       if (m_detectionEnabled)
       {
-         m_pupdatekeeper->addChangedRegion(m_regionChanged);
+         m_pupdatekeeper->addChangedRegion(regionChanged);
          m_pupdatelistener->onUpdate();
       }
    }
@@ -219,8 +267,8 @@ namespace remoting
    {
       if (m_detectionEnabled)
       {
-         ::int_point srcPoint(srcX, srcY);
-         m_pupdatekeeper->addCopyRect(rectangleTarget, &srcPoint);
+         ::int_point pointSource(srcX, srcY);
+         m_pupdatekeeper->addCopyRect(rectangleTarget, pointSource);
          m_pupdatelistener->onUpdate();
       }
    }
@@ -228,11 +276,11 @@ namespace remoting
    void Win8ScreenDriverImpl::onCursorPositionChanged(int x, int y)
    {
       critical_section_lock al(&m_cursorMutex);
-      ::int_point newPos(x, y);
-      if (!m_latestCursorPos.isEqualTo(&newPos))
+      ::int_point pointNewPosition(x, y);
+      if (m_latestCursorPos != pointNewPosition)
       {
-         m_latestCursorPos = newPos;
-         m_pupdatekeeper->setCursorPos(&newPos);
+         m_latestCursorPos = pointNewPosition;
+         m_pupdatekeeper->setCursorPos(pointNewPosition);
          m_pupdatelistener->onUpdate();
       }
    }
@@ -245,16 +293,16 @@ namespace remoting
 
    void Win8ScreenDriverImpl::onRecoverableError(const ::scoped_string &scopedstrReason)
    {
-      m_plogwriter->error("Win8ScreenDriverImpl catch an recoverable error with reason: {}", reason);
+      m_plogwriter->error("Win8ScreenDriverImpl catch an recoverable error with reason: {}", scopedstrReason);
       m_hasRecoverableError = true;
-      m_errorEvent.set_happening();
+      m_happeningError.set_happening();
    }
 
    void Win8ScreenDriverImpl::onCriticalError(const ::scoped_string &scopedstrReason)
    {
-      m_plogwriter->error("Win8ScreenDriverImpl catch an critical error with reason: {}", reason);
+      m_plogwriter->error("Win8ScreenDriverImpl catch an critical error with reason: {}", scopedstrReason);
       m_hasCriticalError = true;
-      m_errorEvent.set_happening();
+      m_happeningError.set_happening();
    }
 
    bool Win8ScreenDriverImpl::grabFb(const ::int_rectangle & rectangle) { return isValid(); }
@@ -263,13 +311,13 @@ namespace remoting
 
    ::innate_subsystem::PixelFormat Win8ScreenDriverImpl::getDxPixelFormat() const
    {
-      return StandardPixelFormatFactory::create32bppPixelFormat();
+      return ::innate_subsystem::StandardPixelFormatFactory::create32bppPixelFormat();
    }
 
-   void Win8ScreenDriverImpl::updateCursorShape(CursorShape *dst)
+   void Win8ScreenDriverImpl::updateCursorShape(::remoting::CursorShape *pcursorshapeTarget)
    {
       critical_section_lock al(&m_cursorMutex);
-      dst->clone(m_win8CursorShape.getCursorShape());
+      pcursorshapeTarget->clone(m_win8CursorShape.getCursorShape());
    }
 
    ::int_point Win8ScreenDriverImpl::getCursorPosition()
@@ -279,4 +327,4 @@ namespace remoting
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows

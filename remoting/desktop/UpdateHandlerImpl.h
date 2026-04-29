@@ -50,7 +50,7 @@ namespace remoting
 
 
 
-      UpdateHandlerImpl(UpdateListener *pupdatelistenerExternal, ScreenDriverFactory *pscreendriverfactory,
+      UpdateHandlerImpl(Configurator * pconfigurator, UpdateListener *pupdatelistenerExternal, ScreenDriverFactory *pscreendriverfactory,
                         ::subsystem::LogWriter * plogwriter);
       virtual ~UpdateHandlerImpl();
 

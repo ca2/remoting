@@ -24,11 +24,15 @@
 #include "framework.h"
 #include "RfbClientInfo.h"
 
-RfbClientInfo::RfbClientInfo(unsigned int id, const ::scoped_string & scopedstrPeerAddr)
-: m_id(id), m_peerAddr(peerAddr)
+namespace remoting_control_desktop
 {
-}
+   RfbClientInfo::RfbClientInfo(unsigned int id, const ::scoped_string & scopedstrPeerAddr)
+   : m_id(id), m_peerAddr(scopedstrPeerAddr)
+   {
+   }
 
-RfbClientInfo::~RfbClientInfo()
-{
-}
+   RfbClientInfo::~RfbClientInfo()
+   {
+   }
+} // namespace remoting_control_desktop
+

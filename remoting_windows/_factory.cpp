@@ -2,11 +2,11 @@
 // Created by camilo on 2026-04-04.
 //
 #include "framework.h"
-#include "desktop/windows/DesktopWinImpl.h"
-#include "desktop/windows/Win32ScreenDriverFactory.h"
-#include "desktop/windows/WindowsInputBlocker.h"
-#include "desktop/windows/WindowsUserInput.h"
-#include "remoting/desktop/ApplicationDesktopFactory.h"
+#include "remoting/remoting_windows/desktop/DesktopWinImpl.h"
+#include "remoting/remoting_windows/desktop/Win32ScreenDriverFactory.h"
+#include "remoting/remoting_windows/desktop/WindowsInputBlocker.h"
+#include "remoting/remoting_windows/desktop/WindowsUserInput.h"
+#include "remoting/remoting_windows/desktop/DesktopFactory.h"
 
 
 IMPLEMENT_FACTORY(remoting_windows)
@@ -16,7 +16,8 @@ IMPLEMENT_FACTORY(remoting_windows)
    pfactory->add_factory_item<::remoting::WindowsUserInput, ::remoting::UserInput>();
    pfactory->add_factory_item<::remoting::WindowsInputBlocker, ::remoting::InputBlocker>();
 
-   pfactory->add_factory_item<::remoting::ApplicationDesktopFactory, ::remoting::DesktopFactory>();
+   //pfactory->add_factory_item<::remoting::ApplicationDesktopFactory, ::remoting::DesktopFactory>();
+   pfactory->add_factory_item<::remoting_windows::DesktopFactory, ::remoting::DesktopFactory>();
    pfactory->add_factory_item<::remoting::Win32ScreenDriverFactory, ::remoting::ScreenDriverFactory>();
 
 }

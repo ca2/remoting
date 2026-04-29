@@ -39,12 +39,15 @@ namespace remoting
    {
    public:
 
+      DesktopFactory();
+      ~DesktopFactory() override;
+
       virtual ::pointer < Desktop > createDesktop(
          Configurator * pconfigurator,
          ::subsystem::ClipboardListener *pclipboardlistenerExternal,
          UpdateSendingListener *pupdatesendinglistenerExternal,
          AbnormDeskTermListener *pdesktermlistenerExternal,
-         ::subsystem::LogWriter * plogwriter) = 0;
+         ::subsystem::LogWriter * plogwriter);
    };
 
 

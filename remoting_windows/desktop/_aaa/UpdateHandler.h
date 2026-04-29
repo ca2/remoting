@@ -26,19 +26,19 @@
 
 
 #include "UpdateContainer.h"
-#include "UpdateKeeper.h"
+#include "::remoting::UpdateKeeper.h"
 #include "UpdateFilter.h"
 #include "ScreenGrabber.h"
 #include "windows/WindowsCursorShapeGrabber.h"
 #include "innate_subsystem/framebuffer/Framebuffer.h"
 //#include "subsystem/thread/lockable_critical_section.h"
-#include "UpdateListener.h"
+#include "::remoting::UpdateListener.h"
 #include "UpdateDetector.h"
 #include "CopyRectDetector.h"
 #include "remoting/remoting/desktop_ipc/BlockingGate.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING UpdateHandler :
@@ -84,7 +84,7 @@ namespace remoting
       // Return:
       //   constant pointer to the ::innate_subsystem::Framebuffer object.
       const ::innate_subsystem::Framebuffer *getFramebuffer() const { return m_pframebufferBackup; }
-      const ::remoting::CursorShape *getCursorShape() const { return &m_cursorShape; }
+      const ::remoting::CursorShape *getCursorShape() const { return &m_cursorshape; }
       // This function for asynchronous access to frame buffer properties
       // (dimension and pixel format)
       void getFramebufferProp(::int_size & size, ::innate_subsystem::PixelFormat & pixelformat)
@@ -123,12 +123,12 @@ namespace remoting
       ::innate_subsystem::Framebuffer m_pframebufferBackup;
       lockable_critical_section m_criticalsectionFramebuffer;
 
-      // m_cursorShape not thread safed
-      ::remoting::CursorShape m_cursorShape;
+      // m_cursorshape not thread safed
+      ::remoting::CursorShape m_cursorshape;
    };
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

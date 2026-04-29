@@ -27,15 +27,17 @@
 
 #include "RemoteException.h"
 
-class ControlAuthException : public RemoteException
+namespace remoting_control_desktop
 {
-public:
-  ControlAuthException(const ::scoped_string & scopedstrReason, bool silent = false);
-  virtual ~ControlAuthException();
+   class ControlAuthException : public RemoteException
+   {
+   public:
+      ControlAuthException(const ::scoped_string & scopedstrReason, bool silent = false);
+      virtual ~ControlAuthException();
 
-  bool isSilent() const;
-private:
-  bool m_isSilent;
-};
-
+      bool isSilent() const;
+   private:
+      bool m_isSilent;
+   };
+} // namespace remoting_control_desktop
 

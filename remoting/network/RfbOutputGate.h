@@ -42,8 +42,9 @@ namespace remoting
     * "autoflush on unlock" is removed.
     * @author enikey.
     */
-   class CLASS_DECL_REMOTING RfbOutputGate : public ::DataOutputStream,
-                         public lockable_critical_section
+   class CLASS_DECL_REMOTING RfbOutputGate :
+      virtual public ::DataOutputStream,
+      virtual public lockable_critical_section
    {
    public:
       /**

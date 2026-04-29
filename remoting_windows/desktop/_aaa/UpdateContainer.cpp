@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "UpdateContainer.h"
-namespace remoting
+namespace remoting_windows
 {
 
 
@@ -64,4 +64,4 @@ namespace remoting
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows

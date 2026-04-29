@@ -28,13 +28,13 @@
 #include "remoting/remoting_windows/desktop/MirrorScreenDriver.h"
 #include "remoting/remoting_windows/desktop/Win32ScreenDriverBaseImpl.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING_WINDOWS Win32MirrorScreenDriver : public Win32ScreenDriverBaseImpl
    {
    public:
-      //Win32MirrorScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+      //Win32MirrorScreenDriver(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
         //                      lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
 
 
@@ -42,7 +42,8 @@ namespace remoting
       ~Win32MirrorScreenDriver() override;
 
 
-      void initialize_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+      void initialize_screen_driver(::remoting::Configurator * pconfigurator, ::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
+                                        ::innate_subsystem::Framebuffer *pframebuffer,
                           lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) override;
 
 
@@ -53,10 +54,10 @@ namespace remoting
       virtual void terminateDetection();
 
       // Note: This class  is a wrapper for the MirrorScreenDriver class CLASS_DECL_REMOTING_WINDOWS and then
-      // only MirrorScreenDriver can provide appropriate thread safety for the ScreenDriver functions.
+      // only MirrorScreenDriver can provide appropriate thread safety for the ::remoting::ScreenDriver functions.
 
       virtual ::int_size getScreenDimension();
-      virtual bool grabFb(const ::int_rectangle & rectangle = 0);
+      virtual bool grabFb(const ::int_rectangle & rectangle = {});
       virtual ::innate_subsystem::Framebuffer *getScreenBuffer();
       virtual bool getScreenPropertiesChanged();
       virtual bool getScreenSizeChanged();
@@ -69,7 +70,7 @@ namespace remoting
    //// __WIN32MIRRORSCREENDRIVER_H__
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

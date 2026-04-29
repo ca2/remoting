@@ -82,11 +82,11 @@ namespace remoting
       UpdateListener *m_pupdatelistener;
       // This member must be always gueranted non zero. Otherwise an excption must
       // be provided from the constructor of this class.
-      Win8ScreenDriverImpl *m_drvImpl;
+      Win8ScreenDriverImpl *m_pwin8screendriveriimpl;
       CopyRectDetector m_pcopyrectdetector;
       lockable_critical_section m_drvImplMutex;
 
-      CursorShape m_cursorShape;
+      CursorShape m_cursorshape;
 
       bool m_detectionEnabled;
    };

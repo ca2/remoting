@@ -6,6 +6,8 @@ project(remoting)
 
 
 list(APPEND library_source
+   client/NamingDefs.cpp
+   client/NamingDefs.h
    client_config/ConnectionConfig.cpp
    client_config/ConnectionConfig.h
    client_config/ConnectionConfigSM.cpp
@@ -22,16 +24,16 @@ list(APPEND library_source
    config/SettingsManager.cpp
    config/SettingsManager.h
    desktop/_.h
-   desktop/_____debug.xcconfig
-   desktop/_____release.xcconfig
-   desktop/aaa_framework.cpp
-   desktop/aaa_framework.h
-   desktop/aaa_resource.h
-   desktop/aaaa_.cpp
+   #desktop/_____debug.xcconfig
+   #desktop/_____release.xcconfig
+   #desktop/aaa_framework.cpp
+   #desktop/aaa_framework.h
+   #desktop/aaa_resource.h
+   #desktop/aaaa_.cpp
    desktop/AbnormDeskTermListener.h
-   desktop/ApplicationDesktopFactory.cpp
-   desktop/ApplicationDesktopFactory.h
-   desktop/CMakeLists.txt
+   #desktop/ApplicationDesktopFactory.cpp
+   #desktop/ApplicationDesktopFactory.h
+   #desktop/CMakeLists.txt
    desktop/ConsolePoller.cpp
    desktop/ConsolePoller.h
    desktop/CopyRectDetector.cpp
@@ -43,13 +45,14 @@ list(APPEND library_source
    desktop/CursorShapeGrabber.cpp
    desktop/CursorShapeGrabber.h
    desktop/Desktop.h
-   desktop/desktop.vcproj
+   #desktop/desktop.vcproj
    desktop/DesktopBaseImpl.cpp
    desktop/DesktopBaseImpl.h
-   desktop/DesktopClientImpl.cpp
-   desktop/DesktopClientImpl.h
+   #desktop/DesktopClientImpl.cpp
+   #desktop/DesktopClientImpl.h
    desktop/DesktopConfigLocal.cpp
    desktop/DesktopConfigLocal.h
+   desktop/DesktopFactory.cpp
    desktop/DesktopFactory.h
    desktop/DesktopServerWatcher.cpp
    desktop/DesktopServerWatcher.h
@@ -249,6 +252,10 @@ list(APPEND library_source
    #ftp_common/remoting_ftp_common.vcxproj
    #ftp_common/remoting_ftp_common.vcxproj.filters
    #ftp_common/remoting_ftp_common.vcxproj.user
+   file_transfer_server/FileTransferRequestHandler.cpp
+   file_transfer_server/FileTransferRequestHandler.h
+   file_transfer_server/FileTransferSecurity.cpp
+   file_transfer_server/FileTransferSecurity.h
    network/RfbInputGate.cpp
    network/RfbInputGate.h
    network/RfbOutputGate.cpp
@@ -340,6 +347,8 @@ list(APPEND library_source
    rfb_sconn/ZrleEncoder.cpp
    rfb_sconn/ZrleEncoder.h
    server/NewConnectionEvents.h
+   server/NamingDefs.cpp
+   server/NamingDefs.h
 #   util/CommandLineFormatException.cpp
 #   util/CommandLineFormatException.h
 #   util/CommandLineFormatHelp.cpp
@@ -472,6 +481,45 @@ list(APPEND library_source
    viewer_core/WatermarksController.h
    viewer_core/ZrleDecoder.cpp
    viewer_core/ZrleDecoder.h
+   #wsconfig/_.cpp
+   wsconfig/_.h
+   #wsconfig/_____debug.xcconfig
+   #wsconfig/_____release.xcconfig
+   wsconfig/AdministrationConfigDialog.cpp
+   wsconfig/AdministrationConfigDialog.h
+   wsconfig/ChangePasswordDialog.cpp
+   wsconfig/ChangePasswordDialog.h
+   #wsconfig/CMakeLists.txt
+   wsconfig/CommonInputValidation.cpp
+   wsconfig/CommonInputValidation.h
+   wsconfig/ConfigDialog.cpp
+   wsconfig/ConfigDialog.h
+   wsconfig/EditIpAccessRuleDialog.cpp
+   wsconfig/EditIpAccessRuleDialog.h
+   wsconfig/EditPortMappingDialog.cpp
+   wsconfig/EditPortMappingDialog.h
+   #wsconfig/framework.cpp
+   #wsconfig/framework.h
+   wsconfig/IpAccessControlDialog.cpp
+   wsconfig/IpAccessControlDialog.h
+   #wsconfig/matter.txt
+   wsconfig/PasswordControl.cpp
+   wsconfig/PasswordControl.h
+   wsconfig/PortMappingDialog.cpp
+   wsconfig/PortMappingDialog.h
+   #wsconfig/remoting_wsconfig.vcxproj
+   #wsconfig/remoting_wsconfig.vcxproj.filters
+   #wsconfig/remoting_wsconfig.vcxproj.user
+   #wsconfig/resource.h
+   wsconfig/ServerConfigDialog.cpp
+   wsconfig/ServerConfigDialog.h
+   wsconfig/TvnLogFilename.cpp
+   wsconfig/TvnLogFilename.h
+   wsconfig/UIDataAccess.cpp
+   wsconfig/UIDataAccess.h
+   wsconfig/VideoRegionsConfigDialog.cpp
+   wsconfig/VideoRegionsConfigDialog.h
+   #wsconfig/wsconfig_lib.vcproj
    _.cpp
    _.h
    EOFException.cpp
@@ -604,7 +652,7 @@ if(${WIN32})
    target_compile_options(${PROJECT_NAME} PRIVATE "/MD$<$<CONFIG:Debug>:d>")
    target_link_options(${PROJECT_NAME} PRIVATE "/DEFAULTLIB:msvcrt$<$<CONFIG:Debug>:d>")
    target_link_options(${PROJECT_NAME} PRIVATE "/SUBSYSTEM:WINDOWS")
-   target_link_libraries(${PROJECT_NAME} PRIVATE ${library_references} ${global_library_references} port_jpeg)
+   target_link_libraries(${PROJECT_NAME} PRIVATE ${library_references} ${global_library_references} port_jpeg zlib)
 
 
 elseif (${LINUX} OR ${__BSD__} OR ${ANDROID})

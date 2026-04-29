@@ -84,7 +84,7 @@ namespace remoting
       // Return:
       //   constant pointer to the ::innate_subsystem::Framebuffer object.
       const ::innate_subsystem::Framebuffer *getFramebuffer() const { return m_pframebufferBackup; }
-      const ::remoting::CursorShape *getCursorShape() const { return &m_cursorShape; }
+      const ::remoting::CursorShape *getCursorShape() const { return &m_cursorshape; }
       // This function for asynchronous access to frame buffer properties
       // (dimension and pixel format)
       void getFramebufferProp(::int_size & size, ::innate_subsystem::PixelFormat & pixelformat)
@@ -123,8 +123,8 @@ namespace remoting
       ::pointer < ::innate_subsystem::Framebuffer > m_pframebufferBackup;
       lockable_critical_section m_criticalsectionFramebuffer;
 
-      // m_cursorShape not thread safed
-      ::remoting::CursorShape m_cursorShape;
+      // m_cursorshape not thread safed
+      ::remoting::CursorShape m_cursorshape;
    };
 
 

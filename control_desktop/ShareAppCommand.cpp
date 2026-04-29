@@ -24,17 +24,21 @@
 #include "framework.h"
 #include "ShareAppCommand.h"
 
-ShareAppCommand::ShareAppCommand(ControlProxy *serverControl, unsigned int procId)
-: m_proxy(serverControl),
-  m_procId(procId)
+namespace remoting_control_desktop
 {
-}
+   ShareAppCommand::ShareAppCommand(ControlProxy *serverControl, unsigned int procId)
+   : m_proxy(serverControl),
+     m_procId(procId)
+   {
+   }
 
-ShareAppCommand::~ShareAppCommand()
-{
-}
+   ShareAppCommand::~ShareAppCommand()
+   {
+   }
 
-void ShareAppCommand::execute()
-{
-  m_proxy->shareApp(m_procId);
-}
+   void ShareAppCommand::execute()
+   {
+      m_proxy->shareApp(m_procId);
+   }
+} // namespace remoting_control_desktop
+

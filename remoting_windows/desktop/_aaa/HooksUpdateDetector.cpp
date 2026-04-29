@@ -33,10 +33,10 @@
 #include "subsystem_windows/node/UipiControl.h"
 #include "subsystem/node/OperatingSystem.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
-//    HooksUpdateDetector::HooksUpdateDetector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+//    HooksUpdateDetector::HooksUpdateDetector(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
 //                                             ::subsystem::LogWriter * plogwriter) :
 //        UpdateDetector(pupdatekeeper, pupdatelistener), m_phookupdatetimer(pupdatelistener), m_pmessagewindowTarget(0), m_hookInstaller(0),
 //        m_plogwriter = plogwriter;
@@ -81,7 +81,7 @@ namespace remoting
    }
 
 
-   void HooksUpdateDetector::initialize_hooks_update_detector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ::subsystem::LogWriter * plogwriter)
+   void HooksUpdateDetector::initialize_hooks_update_detector(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener, ::subsystem::LogWriter * plogwriter)
    {
       initialize_update_detector(pupdatekeeper, pupdatelistener);
       construct_newø(m_phookupdatetimer);
@@ -263,5 +263,5 @@ namespace remoting
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows
  

@@ -24,11 +24,11 @@
 #include "framework.h"
 #include "UpdateHandlerImpl.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
 
-   UpdateHandlerImpl::UpdateHandlerImpl(UpdateListener *pupdatelistenerExternal, ScreenDriverFactory *pscreendriverfactory,
+   UpdateHandlerImpl::UpdateHandlerImpl(::remoting::UpdateListener *pupdatelistenerExternal, ScreenDriverFactory *pscreendriverfactory,
                                         ::subsystem::LogWriter * plogwriter) :
        m_pupdatelistenerExternal(pupdatelistenerExternal), m_fullUpdateRequested(false), m_plogwriter = plogwriter;
    {
@@ -130,7 +130,7 @@ namespace remoting
          // Update cursor shape
          m_pscreendriver->grabCursorShape(m_pframebufferBackup->getPixelFormat());
          // Store cursor shape
-         m_cursorShape.clone(m_pscreendriver->getCursorShape());
+         m_cursorshape.clone(m_pscreendriver->getCursorShape());
 
          m_fullUpdateRequested = false;
       }
@@ -194,4 +194,4 @@ namespace remoting
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows

@@ -28,17 +28,21 @@
 #include "subsystem/platform/Command.h"
 #include "ControlProxy.h"
 
-class ShareRectCommand : public Command
+
+namespace remoting_control_desktop
 {
-public:
-  ShareRectCommand(ControlProxy *serverControl,
-                   const ::int_rectangle &  shareRect);
-  virtual ~ShareRectCommand();
+   class ShareRectCommand : public Command
+   {
+   public:
+      ShareRectCommand(ControlProxy *serverControl,
+                       const ::int_rectangle &  shareRect);
+      virtual ~ShareRectCommand();
 
-  virtual void execute();
-private:
-  ControlProxy *m_proxy;
-  const ::int_rectangle m_shareRect;
-};
+      virtual void execute();
+   private:
+      ControlProxy *m_proxy;
+      const ::int_rectangle m_shareRect;
+   };
+} // namespace remoting_control_desktop
 
-//// _SHARERECTCOMMAND_H_
+

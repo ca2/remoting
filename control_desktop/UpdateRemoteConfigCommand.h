@@ -29,36 +29,39 @@
 
 #include "ControlProxy.h"
 
-/**
- * Command that sends current configuration to TightVNC Server.
- * This command will ask server to save recieved configuration.
- * @fixme: use MacroCommand to join UpdateRemoteConfigCommand and UpdateLocalConfigCommand.
- */
-class UpdateRemoteConfigCommand : public Command
+namespace remoting_control_desktop
 {
-public:
-  /**
-   * Creates command.
-   * @param serverControl control proxy.
-   */
-  UpdateRemoteConfigCommand(ControlProxy *serverControl);
-  /**
-   * Deletes command.
-   */
-  virtual ~UpdateRemoteConfigCommand();
+   /**
+    * Command that sends current configuration to TightVNC Server.
+    * This command will ask server to save recieved configuration.
+    * @fixme: use MacroCommand to join UpdateRemoteConfigCommand and UpdateLocalConfigCommand.
+    */
+   class UpdateRemoteConfigCommand : public Command
+   {
+   public:
+      /**
+       * Creates command.
+       * @param serverControl control proxy.
+       */
+      UpdateRemoteConfigCommand(ControlProxy *serverControl);
+      /**
+       * Deletes command.
+       */
+      virtual ~UpdateRemoteConfigCommand();
 
-  /**
-   * Inherited from Command interface.
-   *
-   * @throws ::io_exception on io error, RemoteException on server side error.
-   */
-  virtual void execute();
+      /**
+       * Inherited from Command interface.
+       *
+       * @throws ::io_exception on io error, RemoteException on server side error.
+       */
+      virtual void execute();
 
-protected:
-  /**
-   * ::innate_subsystem::Control proxy on client side.
-   */
-  ControlProxy *m_serverControl;
-};
-
+   protected:
+      /**
+       * ::innate_subsystem::Control proxy on client side.
+       */
+      ControlProxy *m_serverControl;
+      ::pointer < ::remoting::Configurator > m_pconfigurator;
+   };
+} // namespace remoting_control_desktop
 

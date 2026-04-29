@@ -27,7 +27,7 @@
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "remoting/remoting_windows/desktop/WinAutoMapDxgiSurface.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
 
@@ -56,4 +56,4 @@ namespace remoting
    char *WinAutoMapDxgiSurface::getBuffer() const { return (char *)m_mappedRect.pBits; }
 
 
-} // namespace remoting
+} // namespace remoting_windows

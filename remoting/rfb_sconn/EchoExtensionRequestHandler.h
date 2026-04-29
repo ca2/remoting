@@ -35,48 +35,53 @@
 namespace remoting
 {
 
-   /**
-    * Handler of echo extension plugin client to server messages.
-    * Processes client requests and sends replies.
-    */
-   class EchoExtensionRequestHandler : public RfbDispatcherListener
+
+   namespace file_transfer
    {
-   public:
       /**
-       * Creates new echo extension client messages handler.
-       * @param registrator rfb registrator which needs to register echo messages
-       *   to rfb dispatcher address whem to this object.
-       * @param output pblockinggate for writting replies for requests.
-       * @pararm enabled indicates if echo response should be enabled or disabled
+       * Handler of echo extension plugin client to server messages.
+       * Processes client requests and sends replies.
        */
-      EchoExtensionRequestHandler(RfbCodeRegistrator *registrator, ::remoting::RfbOutputGate *output, ::subsystem::LogWriter * plogwriter,
-                                  bool enabled = true);
+      class EchoExtensionRequestHandler : public RfbDispatcherListener
+      {
+      public:
+         /**
+          * Creates new echo extension client messages handler.
+          * @param registrator rfb registrator which needs to register echo messages
+          *   to rfb dispatcher address whem to this object.
+          * @param output pblockinggate for writting replies for requests.
+          * @pararm enabled indicates if echo response should be enabled or disabled
+          */
+         EchoExtensionRequestHandler(RfbCodeRegistrator *registrator, ::remoting::RfbOutputGate *output, ::subsystem::LogWriter * plogwriter,
+                                     bool enabled = true);
 
-      /**
-       * Deletes echo extension request handler.
-       */
-      virtual ~EchoExtensionRequestHandler();
+         /**
+          * Deletes echo extension request handler.
+          */
+         virtual ~EchoExtensionRequestHandler();
 
-      /**
-       * Inherited from RfbDispatcherListener.
-       * Processes echo extension client messages.
-       */
-      virtual void onRequest(unsigned int reqCode, ::remoting::RfbInputGate *pblockinggate);
+         /**
+          * Inherited from RfbDispatcherListener.
+          * Processes echo extension client messages.
+          */
+         virtual void onRequest(unsigned int reqCode, ::remoting::RfbInputGate *pblockinggate);
 
-      bool isEchoExtensionEnabled();
+         bool isEchoExtensionEnabled();
 
-   protected:
-      //
-      // Input and output gates.
-      //
+      protected:
+         //
+         // Input and output gates.
+         //
 
-      ::remoting::RfbInputGate *m_input;
-      ::remoting::RfbOutputGate *m_output;
+         ::remoting::RfbInputGate *m_input;
+         ::remoting::RfbOutputGate *m_output;
 
-      bool m_enabled;
-      ::pointer < ::subsystem::LogWriter > m_plogwriter;
-   };
+         bool m_enabled;
+         ::pointer < ::subsystem::LogWriter > m_plogwriter;
+      };
 
+
+   } // namespace file_transfer
 
 
 } // namespace remoting

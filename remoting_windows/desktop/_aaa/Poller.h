@@ -35,7 +35,7 @@
 #define DEFAULT_SLEEP_TIME 1000
 
 
-namespace remoting
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING Poller :
@@ -51,14 +51,14 @@ namespace remoting
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
       ::pointer < Configurator > m_pconfigurator;
 
-      // Poller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ScreenGrabber *pscreengrabber,
+      // Poller(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener, ScreenGrabber *pscreengrabber,
       //        ::innate_subsystem::Framebuffer *backupFramebuffer, lockable_critical_section *framebufferCriticalSection,
       //        ::subsystem::LogWriter * plogwriter);
       Poller();
       ~Poller() override;
 
 
-      virtual void initialize_poller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ScreenGrabber *pscreengrabber,
+      virtual void initialize_poller(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener, ScreenGrabber *pscreengrabber,
        ::innate_subsystem::Framebuffer *backupFramebuffer, lockable_critical_section *framebufferCriticalSection,
        ::subsystem::LogWriter * plogwriter);
 
@@ -68,7 +68,7 @@ namespace remoting
    };
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

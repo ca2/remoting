@@ -27,7 +27,7 @@
 #include "remoting/remoting_windows/desktop/Win32ScreenDriver.h"
 #include "remoting/remoting_windows/desktop/Win8ScreenDriver.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
 
@@ -35,11 +35,11 @@ namespace remoting
    {
 
    }
-      //ServerConfig *pserverconfig) : m_pserverconfig(pserverconfig) {}
+      //::remoting::ServerConfig *pserverconfig) : m_pserverconfig(pserverconfig) {}
 
    Win32ScreenDriverFactory::~Win32ScreenDriverFactory() {}
 
-   void Win32ScreenDriverFactory::initialize_screen_driver_factory(ServerConfig *pserverconfig)
+   void Win32ScreenDriverFactory::initialize_screen_driver_factory(::remoting::ServerConfig *pserverconfig)
    {
 
       m_pserverconfig = pserverconfig;
@@ -47,71 +47,95 @@ namespace remoting
    }
 
 
-   ScreenDriver *Win32ScreenDriverFactory::createScreenDriver(UpdateKeeper *pupdatekeeper,
-                                                              UpdateListener *pupdatelistener,
-                                                              ::innate_subsystem::Framebuffer *pframebuffer,
-                                                              lockable_critical_section *pcriticalsectionFramebuffer,
-                                                              ::subsystem::LogWriter * plogwriter)
+   ::pointer < ::remoting::ScreenDriver > Win32ScreenDriverFactory::createScreenDriver(
+      ::remoting::Configurator * pconfigurator,
+      ::remoting::UpdateKeeper *pupdatekeeper,
+      ::remoting::UpdateListener *pupdatelistener,
+      ::innate_subsystem::Framebuffer *pframebuffer,
+      lockable_critical_section *pcriticalsectionFramebuffer,
+      ::subsystem::LogWriter * plogwriter)
    {
       // Try to use Win8 duplication API firstly because it's in preference to other methods.
       if (isD3DAllowed())
       {
-         log->information("D3D driver usage is allowed, try to start it...");
+         plogwriter->information("D3D driver usage is allowed, try to start it...");
          try
          {
-            return new Win8ScreenDriver(pupdatekeeper, pupdatelistener, pcriticalsectionFramebuffer, log);
+            auto pscreendriver = allocateø Win8ScreenDriver();
+
+            pscreendriver->initialize_screen_driver(pconfigurator, pupdatekeeper, pupdatelistener, pframebuffer, pcriticalsectionFramebuffer, plogwriter);
+
+            return pscreendriver;
          }
          catch (::exception &e)
          {
-            log->error("The Win8 duplication api can't be used: {}", e.get_message());
+            plogwriter->error("The Win8 duplication api can't be used: {}", e.get_message());
          }
       }
       else
       {
-         log->information("D3D driver usage is disallowed");
+         plogwriter->information("D3D driver usage is disallowed");
       }
 
       if (isMirrorDriverAllowed())
       {
-         log->information("Mirror driver usage is allowed, try to start it...");
+         plogwriter->information("Mirror driver usage is allowed, try to start it...");
          try
          {
-            return createMirrorScreenDriver(pupdatekeeper, pupdatelistener, pcriticalsectionFramebuffer, log);
+            return createMirrorScreenDriver(pconfigurator, pupdatekeeper, pupdatelistener, pframebuffer, pcriticalsectionFramebuffer, plogwriter);
          }
          catch (::exception &e)
          {
-            log->error("The mirror driver factory has failed: {}", e.get_message());
+            plogwriter->error("The mirror driver factory has failed: {}", e.get_message());
          }
       }
       else
       {
-         log->information("Mirror driver usage is disallowed");
+         plogwriter->information("Mirror driver usage is disallowed");
       }
-      log->information("Using the standart screen driver");
-      return createStandardScreenDriver(pupdatekeeper, pupdatelistener, pframebuffer, pcriticalsectionFramebuffer, log);
+      plogwriter->information("Using the standart screen driver");
+      return createStandardScreenDriver(pconfigurator, pupdatekeeper, pupdatelistener, pframebuffer, pcriticalsectionFramebuffer, plogwriter);
    }
 
-   ScreenDriver *Win32ScreenDriverFactory::createStandardScreenDriver(UpdateKeeper *pupdatekeeper,
-                                                                      UpdateListener *pupdatelistener,
-                                                                      ::innate_subsystem::Framebuffer *pframebuffer,
-                                                                      lockable_critical_section *pcriticalsectionFramebuffer,
-                                                                      ::subsystem::LogWriter * plogwriter)
+   ::pointer < ::remoting::ScreenDriver > Win32ScreenDriverFactory::createStandardScreenDriver(
+      ::remoting::Configurator * pconfigurator,
+      ::remoting::UpdateKeeper *pupdatekeeper,
+      ::remoting::UpdateListener *pupdatelistener,
+      ::innate_subsystem::Framebuffer *pframebuffer,
+      lockable_critical_section *pcriticalsectionFramebuffer,
+      ::subsystem::LogWriter * plogwriter)
    {
-      return new Win32ScreenDriver(pupdatekeeper, pupdatelistener, pframebuffer, pcriticalsectionFramebuffer, log);
+      auto pscreendriver = allocateø Win32ScreenDriver();
+
+      pscreendriver->initialize_screen_driver(pconfigurator, pupdatekeeper, pupdatelistener, pframebuffer, pcriticalsectionFramebuffer, plogwriter);
+
+      return pscreendriver;
+
+
+
+
    }
 
-   ScreenDriver *Win32ScreenDriverFactory::createMirrorScreenDriver(UpdateKeeper *pupdatekeeper,
-                                                                    UpdateListener *pupdatelistener,
-                                                                    lockable_critical_section *pcriticalsectionFramebuffer,
-                                                                    ::subsystem::LogWriter * plogwriter)
+   ::pointer < ::remoting::ScreenDriver > Win32ScreenDriverFactory::createMirrorScreenDriver(
+      ::remoting::Configurator * pconfigurator,
+      ::remoting::UpdateKeeper *pupdatekeeper,
+      ::remoting::UpdateListener *pupdatelistener,
+      ::innate_subsystem::Framebuffer *pframebuffer,
+      lockable_critical_section *pcriticalsectionFramebuffer,
+      ::subsystem::LogWriter * plogwriter)
    {
-      return new Win32MirrorScreenDriver(pupdatekeeper, pupdatelistener, pcriticalsectionFramebuffer, log);
+      auto pscreendriver = allocateø Win32MirrorScreenDriver();
+
+      pscreendriver->initialize_screen_driver(pconfigurator, pupdatekeeper, pupdatelistener, pframebuffer,  pcriticalsectionFramebuffer, plogwriter);
+
+      return pscreendriver;
+
    }
 
    bool Win32ScreenDriverFactory::isMirrorDriverAllowed() { return m_pserverconfig->getMirrorIsAllowed(); }
 
    bool Win32ScreenDriverFactory::isD3DAllowed() { return m_pserverconfig->getD3DIsAllowed(); }
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

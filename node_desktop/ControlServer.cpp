@@ -35,7 +35,7 @@ namespace remoting_node_desktop
                                 ::subsystem::LogWriter * plogwriter) :
        m_controlappauthenticator(30_s, 3), m_pipeServer(pipeServer), m_rfbClientManager(rfbClientManager), m_plogwriter(plogwriter)
    {
-      m_plogwriter->debug("{}"), _T("::innate_subsystem::Control server started");
+      m_plogwriter->debug("{}"), "::innate_subsystem::Control server started";
 
       resume();
    }
@@ -61,7 +61,7 @@ namespace remoting_node_desktop
       // Unblock all client if it has been blocked by authenticator
       m_controlappauthenticator.breakAndDisableAuthentications();
 
-      m_plogwriter->debug("{}"), _T("::innate_subsystem::Control server stopped");
+      m_plogwriter->debug("{}"), "::innate_subsystem::Control server stopped";
    }
 
    void ControlServer::execute()

@@ -27,7 +27,7 @@
 #include "remoting/remoting_windows/_common_header.h"
 #include "remoting/remoting_windows/desktop/WinDxException.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING_WINDOWS WinDxRecoverableException : public WinDxException
@@ -40,7 +40,7 @@ namespace remoting
    //// __WINDXRECOVERABLEEXCEPTION_H__
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

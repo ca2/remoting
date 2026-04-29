@@ -181,8 +181,8 @@ namespace remoting
       {
          destinationRect.fromWindowsRect(&m_moveRects[iRect].DestinationRect);
          sourceRect = destinationRect;
-         POINT srcPoint = m_moveRects[iRect].SourcePoint;
-         sourceRect.set_top_left(srcPoint.x, srcPoint.y);
+         POINT pointSource = m_moveRects[iRect].SourcePoint;
+         sourceRect.set_top_left(pointSource.x, pointSource.y);
          rotateRectInsideStage(&destinationRect, &getStageDimension(out), rotation);
          rotateRectInsideStage(&sourceRect, &getStageDimension(out), rotation);
          // Translate the rectangle and point to the frame buffer coordinates.
@@ -203,8 +203,8 @@ namespace remoting
       Region m_regionChanged;
 
       ::int_rectangle dirtyRect;
-      ::int_size stageDim = getStageDimension(out);
-      ::int_rectangle stageRect = stageDim;
+      ::int_size sizeStage = getStageDimension(out);
+      ::int_rectangle stageRect = sizeStage;
 
       DXGI_MODE_ROTATION rotation = m_rotations[out];
 
@@ -233,14 +233,14 @@ namespace remoting
          WinAutoMapDxgiSurface autoMapSurface(&surface, DXGI_MAP_READ);
 
          ::int_rectangle rectangleTarget(dirtyRect);
-         rotateRectInsideStage(&rectangleTarget, &stageDim, rotation);
+         rotateRectInsideStage(&rectangleTarget, &sizeStage, rotation);
          // Translate the rectangle to the frame buffer coordinates.
          rectangleTarget.move(m_targetRects[out].left, m_targetRects[out].top);
          m_plogwriter->debug("Destination dirty rectangle = {}, {}, %dx{}", rectangleTarget.left, rectangleTarget.top, rectangleTarget.width(),
                              rectangleTarget.height());
 
-         stageDim.cx = static_cast<int>(autoMapSurface.getStride() / 4);
-         m_auxiliaryFramebuffer.setPropertiesWithoutResize(&stageDim, &m_targetFb->getPixelFormat());
+         sizeStage.cx = static_cast<int>(autoMapSurface.getStride() / 4);
+         m_auxiliaryFramebuffer.setPropertiesWithoutResize(&sizeStage, &m_targetFb->getPixelFormat());
          m_auxiliaryFramebuffer.setBuffer(autoMapSurface.getBuffer());
          switch (rotation)
          {
@@ -274,13 +274,13 @@ namespace remoting
       m_duplListener->onFramebufferUpdate(&m_regionChanged);
    }
 
-   void Win8DeskDuplication::rotateRectInsideStage(::int_rectangle &toTranspose, const ::int_size &stageDim,
+   void Win8DeskDuplication::rotateRectInsideStage(::int_rectangle &rectangleToTranspose, const ::int_size &sizeStage,
                                                    DXGI_MODE_ROTATION rotation)
    {
-      int left = toTranspose.left;
-      int top = toTranspose.top;
-      int width = toTranspose.width();
-      int height = toTranspose.height();
+      int left = rectangleToTranspose.left;
+      int top = rectangleToTranspose.top;
+      int width = rectangleToTranspose.width();
+      int height = rectangleToTranspose.height();
       switch (rotation)
       {
          case DXGI_MODE_ROTATION_UNSPECIFIED:
@@ -290,17 +290,17 @@ namespace remoting
          }
          case DXGI_MODE_ROTATION_ROTATE90:
          {
-            toTranspose->rotateOn90InsideDimension(stageDim->height);
+            rectangleToTranspose->rotateOn90InsideDimension(sizeStage->height);
             break;
          }
          case DXGI_MODE_ROTATION_ROTATE180:
          {
-            toTranspose->rotateOn180InsideDimension(stageDim->width, stageDim->height);
+            rectangleToTranspose->rotateOn180InsideDimension(sizeStage->width, sizeStage->height);
             break;
          }
          case DXGI_MODE_ROTATION_ROTATE270:
          {
-            toTranspose->rotateOn270InsideDimension(stageDim->width);
+            rectangleToTranspose->rotateOn270InsideDimension(sizeStage->width);
             break;
          }
       }
@@ -321,7 +321,7 @@ namespace remoting
          bool visibleChanged = m_targetCurShape->getIsVisible() != newVisibility;
          if (visibleChanged)
          {
-     m_plogwriter->debug(newVisibility ? "Cursor became visible") : _T("Cursor became not visible");
+     m_plogwriter->debug(newVisibility ? "Cursor became visible") : "Cursor became not visible";
      m_targetCurShape->setVisibility(newVisibility, out);
      m_duplListener->onCursorShapeChanged();
          }

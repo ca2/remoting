@@ -27,18 +27,21 @@
 
 #include "subsystem/platform/Exception.h"
 
-/**
- * ::subsystem::Exception on remote side class.
- *
- * ::subsystem::Exception of such type can be raised only when execution of remote method (when
- * using remote proxy objects for example) throws some kind of exception and this exception
- * has been sended to client side.
- */
-class RemoteException : public ::subsystem::Exception
-{
-public:
-  RemoteException(const ::scoped_string & scopedstrReason);
-  virtual ~RemoteException();
-};
 
+namespace remoting_control_desktop
+{
+   /**
+    * ::subsystem::Exception on remote side class.
+    *
+    * ::subsystem::Exception of such type can be raised only when execution of remote method (when
+    * using remote proxy objects for example) throws some kind of exception and this exception
+    * has been sended to client side.
+    */
+   class RemoteException : public ::subsystem::Exception
+   {
+   public:
+      RemoteException(const ::scoped_string & scopedstrReason);
+      virtual ~RemoteException();
+   };
+} // namespace remoting_control_desktop
 

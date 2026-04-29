@@ -5,7 +5,16 @@
 namespace remoting
 {
 
-   class FileTransferRequestHandler;
-   class FileTransferSecurity;
+
+   namespace file_transfer
+   {
+
+
+      class FileTransferRequestHandler;
+      class FileTransferSecurity;
+
+
+   }
+
 
 }

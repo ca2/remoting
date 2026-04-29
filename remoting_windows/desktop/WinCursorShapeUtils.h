@@ -30,7 +30,7 @@
 //#include aaa_<vector>
 
 
-namespace remoting
+namespace remoting_windows
 {
 
    // This class  provides some functions to work with windows cursor shape data.
@@ -148,7 +148,7 @@ namespace remoting
 
    //// __WINCURSORSHAPEUTILS_H__
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

@@ -31,7 +31,8 @@
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING WallpaperUtil : protected ConfigReloadListener
+   class CLASS_DECL_REMOTING WallpaperUtil :
+      virtual public ConfigReloadListener
    {
    public:
 

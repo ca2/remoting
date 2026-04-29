@@ -25,7 +25,7 @@
 //#include "subsystem/platform/winhdr.h"
 //#include "acme/_operating_system.h"
 
-#include "remoting/node_desktop/NamingDefs.h"
+#include "remoting/remoting/server/NamingDefs.h"
 
 #include "subsystem/platform/Registry.h"
 
@@ -33,96 +33,104 @@
 
 #include "remoting/node_desktop/resource.h"
 
-OutgoingConnectionDialog::OutgoingConnectionDialog()
-: BaseDialog(IDD_OUTGOING_CONN),
-  m_connHistoryKey(Registry::getCurrentUserKey(),
-                   RegistryPaths::SERVER_REVERSE_CONN_HISTORY_PATH,
-                   true),
-  m_connHistory(&m_connHistoryKey, 16)
+namespace remoting_control_desktop
 {
-}
+   OutgoingConnectionDialog::OutgoingConnectionDialog()
+   //:
+   // m_connHistoryKey(MainSubsystem().Registry().getCurrentUserKey(),
+   //                    ::remoting_node::RegistryPaths::SERVER_REVERSE_CONN_HISTORY_PATH,
+   //                    true),
+     //m_connHistory(&m_connHistoryKey, 16)
+//   m_connHistory("app://remoting/node_desktop/recent_connections", 16)
+   {
+      initialize_dialog(IDD_OUTGOING_CONN);
+      m_connHistory.initialize_connection_history("app://remoting/node_desktop/recent_connections", 16);
+   }
 
-OutgoingConnectionDialog::~OutgoingConnectionDialog()
-{
-}
+   OutgoingConnectionDialog::~OutgoingConnectionDialog()
+   {
+   }
 
-const ::scoped_string & scopedstrOutgoingConnectionDialog::getConnectString() const
-{
-  return m_connectString;
-}
+   ::string OutgoingConnectionDialog::getConnectString() const
+   {
+      return m_connectString;
+   }
 
-bool OutgoingConnectionDialog::isViewOnly() const
-{
-  return m_isViewOnly;
-}
+   bool OutgoingConnectionDialog::isViewOnly() const
+   {
+      return m_isViewOnly;
+   }
 
-void OutgoingConnectionDialog::initControls()
-{
-  HWND window = m_ctrlThis.operating_system_window();
+   void OutgoingConnectionDialog::initControls()
+   {
+      //HWND window = m_ctrlThis.operating_system_window();
 
-  m_connectStringCB.setWindow(GetDlgItem(window, IDC_HOSTNAME_COMBO));
-  m_viewOnlyCB.setWindow(GetDlgItem(window, IDC_VIEW_ONLY_CHECKBOX));
-}
+      dialog_item(m_connectStringCB, IDC_HOSTNAME_COMBO);
+      dialog_item(m_viewOnlyCB, IDC_VIEW_ONLY_CHECKBOX);
+   }
 
-bool OutgoingConnectionDialog::onInitDialog()
-{
-  initControls();
+   bool OutgoingConnectionDialog::onInitDialog()
+   {
+      initControls();
 
-  m_viewOnlyCB.check(false);
+      m_viewOnlyCB.setChecked(false);
 
-  // Load connection history.
+      // Load connection history.
 
-  m_connHistory.load();
+      m_connHistory.load();
 
-  for (size_t i = 0; i < m_connHistory.getHostCount(); i++) {
-    m_connectStringCB.addItem(m_connHistory.getHost(i));
-  }
+      for (size_t i = 0; i < m_connHistory.getHostCount(); i++) {
+         m_connectStringCB.addItem(m_connHistory.getHost(i));
+      }
 
-  m_connectStringCB.setSelectedItem(0);
-  m_connectStringCB.setFocus();
+      m_connectStringCB.setSelectedItem(0);
+      m_connectStringCB.setFocus();
 
-  return false;
-}
+      return false;
+   }
 
-bool OutgoingConnectionDialog::onNotify(unsigned int controlID, ::lparam data)
-{
-  return false;
-}
+   bool OutgoingConnectionDialog::onNotify(unsigned int controlID, ::lparam data)
+   {
+      return false;
+   }
 
-bool OutgoingConnectionDialog::onCommand(unsigned int controlID, unsigned int notificationID)
-{
-  switch (controlID) {
-  case ::innate_subsystem::IDOK:
-    onOkButtonClick();
-    break;
-  case ::innate_subsystem::IDCANCEL:
-    onCancelButtonClick();
-    break;
-  }
-  return false;
-}
+   bool OutgoingConnectionDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+   {
+      switch (controlID) {
+         case ::innate_subsystem::e_control_id_ok:
+            onOkButtonClick();
+            break;
+         case ::innate_subsystem::e_control_id_cancel:
+            onCancelButtonClick();
+            break;
+      }
+      return false;
+   }
 
-bool OutgoingConnectionDialog::onDestroy()
-{
-  return false;
-}
+   bool OutgoingConnectionDialog::onDestroy()
+   {
+      return false;
+   }
 
-void OutgoingConnectionDialog::onOkButtonClick()
-{
-  m_connectStringCB.getText(&m_connectString);
+   void OutgoingConnectionDialog::onOkButtonClick()
+   {
 
-  m_isViewOnly = m_viewOnlyCB.isChecked();
+      m_connectString = m_connectStringCB.getText();
 
-  // Modify connection history.
+      m_isViewOnly = m_viewOnlyCB.isChecked();
 
-  m_connHistory.addHost(m_connectString);
-  m_connHistory.save();
-  m_connHistory.rear_truncate();
+      // Modify connection history.
 
-  kill(::innate_subsystem::IDOK);
-}
+      m_connHistory.addHost(m_connectString);
+      m_connHistory.save();
+      m_connHistory.truncate();
 
-void OutgoingConnectionDialog::onCancelButtonClick()
-{
-  kill(::innate_subsystem::IDCANCEL);
-}
+      closeDialog(::innate_subsystem::e_control_id_ok);
+   }
+
+   void OutgoingConnectionDialog::onCancelButtonClick()
+   {
+      closeDialog(::innate_subsystem::e_control_id_cancel);
+   }
+} // namespace remoting_control_desktop
+

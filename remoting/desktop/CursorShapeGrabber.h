@@ -47,7 +47,7 @@ namespace remoting
       virtual const ::remoting::CursorShape *getCursorShape() const;
 
       // protected:
-      ::remoting::CursorShape m_cursorShape;
+      ::remoting::CursorShape m_cursorshape;
    };
 
 

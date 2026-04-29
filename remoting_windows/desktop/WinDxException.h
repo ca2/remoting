@@ -27,7 +27,7 @@
 #include "remoting/remoting_windows/_common_header.h"
 #include "subsystem/platform/Exception.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING_WINDOWS WinDxException : public ::subsystem::Exception
@@ -44,7 +44,7 @@ namespace remoting
 
    //// __WINDXEXCEPTION_H__
 
-}// namespace remoting
+}// namespace remoting_windows
 
 
 

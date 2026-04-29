@@ -29,7 +29,7 @@
 //#include "acme/_operating_system.h"
 
 
-#include "innate_subsystem/gui/BaseDialog.h"
+#include "innate_subsystem/gui/Dialog.h"
 #include "innate_subsystem/gui/ComboBox.h"
 #include "innate_subsystem/gui/CheckBox.h"
 
@@ -37,66 +37,75 @@
 
 #include "remoting/remoting/config/ConnectionHistory.h"
 
-/**
- * Outgoing connection dialog. Just allows user to put connection string
- * and select mode for connection.
- */
-class OutgoingConnectionDialog : public BaseDialog
+
+
+namespace remoting_control_desktop
 {
-public:
-  OutgoingConnectionDialog();
-  virtual ~OutgoingConnectionDialog();
+   /**
+    * Outgoing connection dialog. Just allows user to put connection string
+    * and select mode for connection.
+    */
+   class OutgoingConnectionDialog :
+   virtual public innate_subsystem::Dialog
+   {
+   public:
+      OutgoingConnectionDialog();
+      virtual ~OutgoingConnectionDialog();
 
-  /**
-   * Gets connection string, specified by user.
-   * @return connection string.
-   */
-  ::string getConnectString() const;
+      /**
+       * Gets connection string, specified by user.
+       * @return connection string.
+       */
+      ::string getConnectString() const;
 
-  /**
-   * Gets view only flag, specified by user.
-   * @return view only flag.
-   */
-  bool isViewOnly() const;
+      /**
+       * Gets view only flag, specified by user.
+       * @return view only flag.
+       */
+      bool isViewOnly() const;
 
-protected:
-  void initControls();
+   protected:
+      void initControls();
 
-  virtual bool onInitDialog();
-  virtual bool onNotify(unsigned int controlID, ::lparam data);
-  virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
-  virtual bool onDestroy();
+      virtual bool onInitDialog();
+      virtual bool onNotify(unsigned int controlID, ::lparam data);
+      virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
+      virtual bool onDestroy();
 
-  void onOkButtonClick();
-  void onCancelButtonClick();
+      void onOkButtonClick();
+      void onCancelButtonClick();
 
-protected:
-  /**
-   * Member to hold connection string after dialog is destroyed.
-   */
-  ::string m_connectString;
-  /**
-   * Like m_connectString, but for view only flag.
-   */
-  bool m_isViewOnly;
+   protected:
+      /**
+       * Member to hold connection string after dialog is destroyed.
+       */
+      ::string m_connectString;
+      /**
+       * Like m_connectString, but for view only flag.
+       */
+      bool m_isViewOnly;
 
-  /**
-   * Connection history registry key.
-   */
-  RegistryKey m_connHistoryKey;
-  /**
-   * Connection history container.
-   */
-  ConnectionHistory m_connHistory;
+      // /**
+      //  * Connection history registry key.
+      //  */
+      // ::subsystem::RegistryKey m_connHistoryKey;
+      /**
+       * Connection history container.
+       */
+      ::remoting::ConnectionHistory m_connHistory;
 
-  /**
-   * Combo box with connection history.
-   */
-  ComboBox m_connectStringCB;
-  /**
-   * "View-only" checkbox.
-   */
-  CheckBox m_viewOnlyCB;
-};
+      /**
+       * Combo box with connection history.
+       */
+      ::innate_subsystem::ComboBox m_connectStringCB;
+      /**
+       * "View-only" checkbox.
+       */
+      ::innate_subsystem::CheckBox m_viewOnlyCB;
 
+
+   };
+
+
+} // namespace remoting_control_desktop
 

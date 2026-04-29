@@ -27,14 +27,17 @@
 
 #include "subsystem/_common_header.h"
 
-// FIXME: Document this class.
-class Notificator
+
+namespace remoting_control_desktop
 {
-public:
-  virtual ~Notificator();
+   // FIXME: Document this class.
+   class Notificator
+   {
+   public:
+      virtual ~Notificator();
 
-  virtual void notifyServerSideException(const ::scoped_string & scopedstrReason) = 0;
-  virtual void notifyConnectionLost() = 0;
-};
-
+      virtual void notifyServerSideException(const ::scoped_string & scopedstrReason) = 0;
+      virtual void notifyConnectionLost() = 0;
+   };
+} // namespace remoting_control_desktop
 

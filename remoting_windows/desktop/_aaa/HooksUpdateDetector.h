@@ -34,19 +34,19 @@
 //#include "log_writer/LogWriter.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING HooksUpdateDetector :
    virtual public UpdateDetector
    {
    public:
-      //HooksUpdateDetector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ::subsystem::LogWriter * plogwriter);
+      //HooksUpdateDetector(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener, ::subsystem::LogWriter * plogwriter);
       HooksUpdateDetector();
       ~HooksUpdateDetector() override;
 
 
-      virtual void initialize_hooks_update_detector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ::subsystem::LogWriter * plogwriter);
+      virtual void initialize_hooks_update_detector(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener, ::subsystem::LogWriter * plogwriter);
 
    //protected:
       virtual void execute();
@@ -71,4 +71,4 @@ namespace remoting
    };
 
 
-} // namespace remoting
+} // namespace remoting_windows

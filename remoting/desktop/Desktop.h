@@ -37,10 +37,10 @@ namespace remoting
 {
 
    // This class  is a public interface to a desktop.
-   class CLASS_DECL_REMOTING Desktop : public ::remoting::UpdateRequestListener
+   class Desktop : public ::remoting::UpdateRequestListener
    {
    public:
-      virtual ~Desktop() {}
+      //virtual ~Desktop() {}
 
 
       virtual void initialize_desktop(

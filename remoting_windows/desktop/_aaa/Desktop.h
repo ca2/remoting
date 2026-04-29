@@ -33,7 +33,7 @@
 #include "remoting/remoting/framebuffer_update_sender/UpdateRequestListener.h"
 //#include aaa_<vector>
 
-namespace remoting
+namespace remoting_windows
 {
 
    // This class  is a public interface to a desktop.
@@ -72,7 +72,7 @@ namespace remoting
    };
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

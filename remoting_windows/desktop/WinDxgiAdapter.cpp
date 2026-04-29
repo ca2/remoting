@@ -28,7 +28,7 @@
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "remoting/remoting_windows/desktop/WinDxgiAdapter.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
 
@@ -66,5 +66,5 @@ namespace remoting
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows
 

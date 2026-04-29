@@ -25,14 +25,14 @@
 #pragma once
 
 
-#include "ScreenDriver.h"
+#include "::remoting::ScreenDriver.h"
 #include "remoting/remoting/region/Region.h"
 #include "subsystem/platform/DemandTimer.h"
 //#include "log_writer/LogWriter.h"
 //#include aaa_<vector>
 //#include aaa_<list>
 
-namespace remoting
+namespace remoting_windows
 {
 
    // This class  provides the screen grabbing by an optimal way.
@@ -60,7 +60,7 @@ namespace remoting
 
       virtual void initialize_grab_optimizator(::subsystem::LogWriter * plogwriter);
 
-      bool grab(const ::remoting::Region & regionGrab, ScreenDriver *grabber);
+      bool grab(const ::remoting::Region & regionGrab, ::remoting::ScreenDriver *grabber);
 
    //private:
       // Returns true when the m_wholeTElements is comletly calculated.
@@ -71,12 +71,12 @@ namespace remoting
 
       // Returns true if all needed coefficients is calculated to use
       // the grab optimization.
-      bool getOptimizationAvailable(ScreenDriver *grabber);
+      bool getOptimizationAvailable(::remoting::ScreenDriver *grabber);
       bool isAvailableWholeStats();
       bool isAvailableFragmentStats();
 
       // Removes a part of the statistic to made it available to a refresh.
-      void refreshStatistic(ScreenDriver *grabber);
+      void refreshStatistic(::remoting::ScreenDriver *grabber);
 
       // Returns absolute sum area of rectangle ::array_base.
       int getArea(const ::int_rectangle_array_base & rectanglea);
@@ -94,9 +94,9 @@ namespace remoting
       static const size_t MIN_ELEMENTS_SIZE = 3;
       static const size_t MAX_ELEMENTS_SIZE = 10;
 
-      __int64 grabWhole(ScreenDriver *grabber);
-      __int64 grabOneRect(const ::int_rectangle & rectangle, ScreenDriver *grabber);
-      __int64 grabFragments(const ::int_rectangle_array_base & rectanglea, ScreenDriver *grabber);
+      __int64 grabWhole(::remoting::ScreenDriver *grabber);
+      __int64 grabOneRect(const ::int_rectangle & rectangle, ::remoting::ScreenDriver *grabber);
+      __int64 grabFragments(const ::int_rectangle_array_base & rectanglea, ::remoting::ScreenDriver *grabber);
 
       void addWholeTElement(double wholeT);
       void removeObsoleteWholeTElements();
@@ -110,7 +110,7 @@ namespace remoting
 
  
 
-} // namespace remoting
+} // namespace remoting_windows
  
 
 

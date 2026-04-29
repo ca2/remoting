@@ -57,7 +57,7 @@ namespace remoting
       virtual void setNewClipboard(const ::scoped_string &newClipboard) = 0;
       // By the keyFlag argument will be set the mouse button state as described in
       // the rfb protocol.
-      virtual void setMouseEvent(const ::int_point newPos, unsigned char keyFlag) = 0;
+      virtual void setMouseEvent(const ::int_point pointNewPosition, unsigned char keyFlag) = 0;
       virtual void setKeyboardEvent(unsigned int keySym, bool down) = 0;
       virtual void getCurrentUserInfo(::string &desktopName, ::string &userName) = 0;
 

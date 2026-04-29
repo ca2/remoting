@@ -28,7 +28,7 @@
 #include "remoting/remoting_windows/desktop/WinDxgiOutputDuplication.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
    // #include aaa_<d3d11.h>
@@ -56,7 +56,7 @@ namespace remoting
    //// __WINDXGIACQUIREDFRAME_H__
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

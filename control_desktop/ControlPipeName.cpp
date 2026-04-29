@@ -27,18 +27,25 @@
 //#include "subsystem/platform/winhdr.h"
 //#include "acme/_operating_system.h"
 
-#include "remoting/node_desktop/NamingDefs.h"
+//#include "remoting/node_desktop/NamingDefs.h"
+#include "subsystem_windows/platform/subsystem.h"
+#include "subsystem_windows/node/WTS.h"
 
-#include "remoting/remoting/win_system/WTS.h"
-
-void ControlPipeName::createPipeName(bool forService, ::string & pipeName, ::subsystem::LogWriter * plogwriter)
+namespace remoting_control_desktop
 {
-  if (forService) {
-    pipeName->setString(
-      ServerApplicationNames::FOR_SERVICE_CONTROL_APP_PIPE_NAME);
-  } else {
-    pipeName->format("%s_On_Session_{}",
-      ServerApplicationNames::FOR_APP_CONTROL_APP_SERVICE_PIPE_NAME,
-      WindowsSubsystem().WTS().getActiveConsoleSessionId(plogwriter));
-  }
-}
+   void ControlPipeName::createPipeName(bool forService, ::string & pipeName, ::subsystem::LogWriter * plogwriter)
+   {
+      if (forService) {
+         pipeName =
+           //ServerApplicationNames::FOR_SERVICE_CONTROL_APP_PIPE_NAME
+           "TightVNC_Service_Control"
+           ;
+      } else {
+         pipeName.format("{}_On_Session_{}",
+           //ServerApplicationNames::FOR_APP_CONTROL_APP_SERVICE_PIPE_NAME,
+           "TightVNC_Application_Control",
+           WindowsSubsystem().WTS().getActiveConsoleSessionId(plogwriter));
+      }
+   }
+} // namespace remoting_control_desktop
+

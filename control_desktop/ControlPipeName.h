@@ -28,24 +28,27 @@
 #include "subsystem/_common_header.h"
 //#include "log_writer/LogWriter.h"
 
-/**
- * Used to create pipe name for control transport.
- */
-class ControlPipeName
+
+namespace remoting_control_desktop
 {
-public:
-  /**
-   * Creates pipe name for control transport.
-   * @param forService flag determinating if we create pipe name for service or application.
-   * @param pipeName [out] target pipe name.
-   */
-  static void createPipeName(bool forService, ::string & pipeName, ::subsystem::LogWriter *plogwriter);
+   /**
+    * Used to create pipe name for control transport.
+    */
+   class ControlPipeName
+   {
+   public:
+      /**
+       * Creates pipe name for control transport.
+       * @param forService flag determinating if we create pipe name for service or application.
+       * @param pipeName [out] target pipe name.
+       */
+      static void createPipeName(bool forService, ::string & pipeName, ::subsystem::LogWriter *plogwriter);
 
-private:
-  /**
-   * Don't allow instanizing of this class.
-   */
-  ControlPipeName() { };
-};
-
+   private:
+      /**
+       * Don't allow instanizing of this class.
+       */
+      ControlPipeName() { };
+   };
+} // namespace remoting_control_desktop
 

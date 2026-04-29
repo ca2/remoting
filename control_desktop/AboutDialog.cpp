@@ -24,113 +24,121 @@
 #include "framework.h"
 #include "AboutDialog.h"
 
-#include "remoting/node_desktop/resource.h"
+#include "resource.h"
 
-#include "remoting/remoting/win_system/Shell.h"
-#include "remoting/remoting/win_system/VersionInfo.h"
+#include "subsystem/node/Shell.h"
+#include "subsystem/node/VersionInfo.h"
 #include "subsystem/node/OperatingSystem.h"
 
-#include "innate_subsystem/gui/::innate_subsystem::Control.h"
+#include "innate_subsystem/gui/Control.h"
 
 #include "remoting/node_desktop/BuildTime.h"
+#include "subsystem/node/SystemException.h"
 
-AboutDialog::AboutDialog()
-: BaseDialog(IDD_ABOUT_DIALOG)
+
+namespace remoting_control_desktop
 {
-}
+   AboutDialog::AboutDialog()
+   //: Dialog(IDD_ABOUT_DIALOG)
+   {
+      initialize_dialog(IDD_ABOUT_DIALOG);
+   }
 
-AboutDialog::~AboutDialog()
-{
-}
+   AboutDialog::~AboutDialog()
+   {
+   }
 
-void AboutDialog::onCloseButtonClick()
-{
-  kill(::innate_subsystem::IDCANCEL);
-}
+   void AboutDialog::onCloseButtonClick()
+   {
+      closeDialog(::innate_subsystem::e_control_id_cancel);
+   }
 
-void AboutDialog::onOrderSupportButtonClock()
-{
-  openUrl(MainSubsystem().StringTable().getString(IDS_URL_LICENSING_FSA));
-}
+   void AboutDialog::onOrderSupportButtonClock()
+   {
+      openUrl(MainSubsystem().StringTable().getString(IDS_URL_LICENSING_FSA));
+   }
 
-void AboutDialog::onVisitSiteButtonClick()
-{
-  openUrl(MainSubsystem().StringTable().getString(IDS_URL_PRODUCT_FSA));
-}
+   void AboutDialog::onVisitSiteButtonClick()
+   {
+      openUrl(MainSubsystem().StringTable().getString(IDS_URL_PRODUCT_FSA));
+   }
 
-void AboutDialog::openUrl(const ::scoped_string & scopedstrUrl)
-{
-  try {
-    Shell::open(url, 0, 0);
-  } catch (SystemException &sysEx) {
-    ::string scopedstrMessage;
+   void AboutDialog::openUrl(const ::scoped_string & scopedstrUrl)
+   {
+      try {
+         MainSubsystem().Shell().open(scopedstrUrl, 0, 0);
+      } catch (::subsystem::SystemException &sysEx) {
+         ::string scopedstrMessage;
 
-    scopedstrMessage.format(MainSubsystem().StringTable().getString(IDS_FAILED_TO_OPEN_URL_FORMAT), sysEx.get_message());
+         scopedstrMessage.runtime_format(MainSubsystem().StringTable().getString(IDS_FAILED_TO_OPEN_URL_FORMAT), sysEx.get_message());
 
-    MainSubsystem().message_box(m_ctrlThis.operating_system_window(),
-      scopedstrMessage,
-      MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL),
-      ::user::e_message_box_ok|::user::e_message_box_icon_exclamation);
-  }
-}
+         MainSubsystem().message_box(this->operating_system_window(),
+           scopedstrMessage,
+           MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL),
+           ::user::e_message_box_ok|::user::e_message_box_icon_exclamation);
+      }
+   }
 
-bool AboutDialog::onInitDialog()
-{
-  // Update product version string.
-  ::string versionString("unknown");
-  try {
-    ::string binaryPath;
-    binaryPath = MainSubsystem().OperatingSystem().getCurrentModulePath();;
-    VersionInfo productInfo(binaryPath);
-    versionString= productInfo.getProductVersionString();
-  } catch (SystemException &ex) {
-    MainSubsystem().message_box(m_ctrlThis.operating_system_window(),
-               ex.get_message(),
-               MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL),
-               ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
-  }
+   bool AboutDialog::onInitDialog()
+   {
+      // Update product version string.
+      ::string versionString("unknown");
+      try {
+         ::string binaryPath;
+         binaryPath = MainSubsystem().OperatingSystem().getCurrentModulePath();;
+         ::subsystem::VersionInfo productInfo;
+         productInfo.initialize_version_info(binaryPath);
+         versionString= productInfo.getProductVersionString();
+      } catch (::subsystem::SystemException &ex) {
+         MainSubsystem().message_box(this->operating_system_window(),
+                    ex.get_message(),
+                    MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL),
+                    ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
+      }
 
-  // Format product version and build time for displaying on the dialog.
-  ::string versionText;
-  versionText.format(MainSubsystem().StringTable().getString(IDS_PRODUCT_VERSION_FORMAT),
-                     versionString,
-                     BuildTime::DATE);
+      // Format product version and build time for displaying on the dialog.
+      ::string versionText;
+      versionText.runtime_format(MainSubsystem().StringTable().getString(IDS_PRODUCT_VERSION_FORMAT),
+                         versionString,
+                         BuildTime::DATE);
 
-  // Show version info on the dialog.
-  ::innate_subsystem::Control versionLabel;
-  versionLabel.setWindow(GetDlgItem(m_ctrlThis.operating_system_window(), IDC_STATIC_VERSION));
-  versionLabel.setText(versionText);
+      // Show version info on the dialog.
+      ::innate_subsystem::Control versionLabel;
+      dialog_item(versionLabel, IDC_STATIC_VERSION);
+      versionLabel.setText(versionText);
 
-  // Show licensing info and/or special build info.
-  ::innate_subsystem::Control licensingLabel;
-  licensingLabel.setWindow(GetDlgItem(m_ctrlThis.operating_system_window(), IDC_STATIC_LICENSING));
-  licensingLabel.setText(MainSubsystem().StringTable().getString(IDS_LICENSING_INFO));
+      // Show licensing info and/or special build info.
+      ::innate_subsystem::Control licensingLabel;
+      dialog_item(licensingLabel, IDC_STATIC_LICENSING);
+      licensingLabel.setText(MainSubsystem().StringTable().getString(IDS_LICENSING_INFO));
 
-  return false;
-}
+      return false;
+   }
 
-bool AboutDialog::onNotify(unsigned int controlID, ::lparam data)
-{
-  return false;
-}
+   bool AboutDialog::onNotify(unsigned int controlID, ::lparam data)
+   {
+      return false;
+   }
 
-bool AboutDialog::onCommand(unsigned int controlID, unsigned int notificationID)
-{
-  switch (controlID) {
-  case ::innate_subsystem::IDCANCEL:
-    onCloseButtonClick();
-    break;
-  case IDC_ORDER_SUPPORT_BUTTON:
-    onOrderSupportButtonClock();
-    break;
-  case IDC_VISIT_WEB_SITE_BUTTON:
-    onVisitSiteButtonClick();
-    break;
-  }
-  return false;
-}
+   bool AboutDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+   {
+      switch (controlID) {
+         case ::innate_subsystem::e_control_id_cancel:
+            onCloseButtonClick();
+            break;
+         case IDC_ORDER_SUPPORT_BUTTON:
+            onOrderSupportButtonClock();
+            break;
+         case IDC_VISIT_WEB_SITE_BUTTON:
+            onVisitSiteButtonClick();
+            break;
+      }
+      return false;
+   }
 
-bool AboutDialog::onDestroy()
-{
-  return false;
-}
+   bool AboutDialog::onDestroy()
+   {
+      return false;
+   }
+} // namespace remoting_control_desktop
+

@@ -23,48 +23,54 @@
 //
 #include "framework.h"
 #include "SocketIPv4Transport.h"
+#include "subsystem/socket/SocketIPv4.h"
+#include "subsystem/socket/SocketStream.h"
 
 //#include "remoting/remoting/network/socket/SocketStream.h"
 
-SocketIPv4Transport::SocketIPv4Transport(SocketIPv4 *socket)
-: m_socket(socket)
+namespace remoting_control_desktop
 {
-  m_stream = new SocketStream(m_socket);
-}
+   SocketIPv4Transport::SocketIPv4Transport(subsystem::SocketIPv4Interface *psocket)
+   : m_psocket(psocket)
+   {
+      m_pchannel = new ::subsystem::SocketStream(m_psocket);
+   }
 
-SocketIPv4Transport::~SocketIPv4Transport()
-{
-  try { close(); } catch (...) { }
+   SocketIPv4Transport::~SocketIPv4Transport()
+   {
+      try { close(); } catch (...) { }
 
-  delete m_stream;
-  delete m_socket;
-}
+      //delete m_stream;
+      //delete m_socket;
+   }
 
-Channel* SocketIPv4Transport::getIOStream()
-{
-  if (m_socket->isBound()) {
-    _ASSERT(false);
+   Channel* SocketIPv4Transport::getIOStream()
+   {
+      if (m_psocket->isBound()) {
+         _ASSERT(false);
 
-    return 0;
-  }
+         return 0;
+      }
 
-  return m_stream;
-}
+      return m_pchannel;
+   }
 
-Transport *SocketIPv4Transport::accept()
-{
-  if (!m_socket->isBound()) {
-    _ASSERT(false);
+   Transport *SocketIPv4Transport::accept()
+   {
+      if (!m_psocket->isBound()) {
+         _ASSERT(false);
 
-    return 0;
-  }
+         return 0;
+      }
 
-  return new SocketIPv4Transport(m_socket->accept());
-}
+      return new SocketIPv4Transport(m_psocket->accept());
+   }
 
-void SocketIPv4Transport::close()
-{
-  try { m_socket->shutdown(SD_BOTH); } catch (...) { }
+   void SocketIPv4Transport::close()
+   {
+      try { m_psocket->shutdown(::subsystem::e_socket_shutdown_both); } catch (...) { }
 
-  m_socket->close();
-}
+      m_psocket->close();
+   }
+} // namespace remoting_control_desktop
+

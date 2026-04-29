@@ -27,11 +27,11 @@
 #include "remoting/remoting/region/Region.h"
 #include "remoting/remoting/server_config/Configurator.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
    //
-   // Poller::Poller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ScreenGrabber *pscreengrabber,
+   // Poller::Poller(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener, ScreenGrabber *pscreengrabber,
    //                ::innate_subsystem::Framebuffer *backupFramebuffer, lockable_critical_section *framebufferCriticalSection,
    //                ::subsystem::LogWriter * plogwriter) :
    //     UpdateDetector(pupdatekeeper, pupdatelistener), m_pscreengrabber(pscreengrabber),
@@ -52,7 +52,7 @@ namespace remoting
       wait();
    }
 
-   void Poller::initialize_poller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ScreenGrabber *pscreengrabber,
+   void Poller::initialize_poller(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener, ScreenGrabber *pscreengrabber,
                ::innate_subsystem::Framebuffer *backupFramebuffer, lockable_critical_section *framebufferCriticalSection,
                ::subsystem::LogWriter * plogwriter)
    {
@@ -135,6 +135,6 @@ namespace remoting
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 

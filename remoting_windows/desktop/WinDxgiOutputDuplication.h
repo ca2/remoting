@@ -32,11 +32,12 @@
 // #include aaa_<DXGI1_2.h>
 
 
-namespace remoting
+namespace remoting_windows
 {
 
    // This class  is a wrapper for the IDXGIOutputDuplication interface.
-   class CLASS_DECL_REMOTING_WINDOWS WinDxgiOutputDuplication
+   class CLASS_DECL_REMOTING_WINDOWS WinDxgiOutputDuplication :
+   virtual public ::particle
    {
    public:
       WinDxgiOutputDuplication(WinDxgiOutput1 *dxgiOutput, WinD3D11Device *d3D11Device);
@@ -61,7 +62,7 @@ namespace remoting
 
       // Throws WinDxException on an error.
       // Modifies cursorShape with new data.
-      void getFrameCursorShape(CursorShape *cursorShape, unsigned int pointerShapeBufferSize,
+      void getFrameCursorShape(::remoting::CursorShape *cursorShape, unsigned int pointerShapeBufferSize,
                                ::subsystem::LogWriter * plogwriter);
 
    private:
@@ -73,7 +74,7 @@ namespace remoting
    //// __WINDXGIOUTPUTDUPLICATION_H__
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

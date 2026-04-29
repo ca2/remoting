@@ -26,16 +26,21 @@
 
 #include "remoting/remoting/server_config/Configurator.h"
 
-UpdateRemoteConfigCommand::UpdateRemoteConfigCommand(ControlProxy *serverControl)
-: m_serverControl(serverControl)
-{
-}
 
-UpdateRemoteConfigCommand::~UpdateRemoteConfigCommand()
+namespace remoting_control_desktop
 {
-}
+   UpdateRemoteConfigCommand::UpdateRemoteConfigCommand(ControlProxy *serverControl)
+   : m_serverControl(serverControl)
+   {
+   }
 
-void UpdateRemoteConfigCommand::execute()
-{
-  m_serverControl->setServerConfig(m_pconfigurator->getServerConfig());
-}
+   UpdateRemoteConfigCommand::~UpdateRemoteConfigCommand()
+   {
+   }
+
+   void UpdateRemoteConfigCommand::execute()
+   {
+      m_serverControl->setServerConfig(m_pconfigurator->getServerConfig());
+   }
+} // namespace remoting_control_desktop
+

@@ -24,18 +24,23 @@
 #include "framework.h"
 #include "ShareRectCommand.h"
 
-ShareRectCommand::ShareRectCommand(ControlProxy *serverControl,
-                                   const ::int_rectangle &  shareRect)
-: m_proxy(serverControl),
-  m_shareRect(shareRect)
-{
-}
 
-ShareRectCommand::~ShareRectCommand()
+namespace remoting_control_desktop
 {
-}
+   ShareRectCommand::ShareRectCommand(ControlProxy *serverControl,
+                                      const ::int_rectangle &  shareRect)
+   : m_proxy(serverControl),
+     m_shareRect(shareRect)
+   {
+   }
 
-void ShareRectCommand::execute()
-{
-  m_proxy->shareRect(m_shareRect);
-}
+   ShareRectCommand::~ShareRectCommand()
+   {
+   }
+
+   void ShareRectCommand::execute()
+   {
+      m_proxy->shareRect(m_shareRect);
+   }
+} //namespace remoting_control_desktop
+

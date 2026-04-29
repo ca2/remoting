@@ -6,6 +6,7 @@
 namespace remoting
 {
 
+   class Desktop;
 
    class DesktopSrvDispatcher;
    class DesktopServerProto;

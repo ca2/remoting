@@ -28,14 +28,15 @@
 #include "remoting/remoting/region/Region.h"
 #include "remoting/remoting_windows/_common_header.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
-   class CLASS_DECL_REMOTING_WINDOWS Win8DuplicationListener
+   class CLASS_DECL_REMOTING_WINDOWS Win8DuplicationListener :
+   virtual public ::particle
    {
    public:
       // m_regionChanged in target ::innate_subsystem::Framebuffer coordinates.
-      virtual void onFramebufferUpdate(const Region & regionChanged) = 0;
+      virtual void onFramebufferUpdate(const ::remoting::Region & regionChanged) = 0;
       // rectangleTarget, srcX, srcY in target ::innate_subsystem::Framebuffer coordinates.
       virtual void onCopyRect(const ::int_rectangle &rectangleTarget, int srcX, int srcY) = 0;
 
@@ -51,7 +52,7 @@ namespace remoting
 
    //// __WIN8DUPLICATIONLISTENER_H__
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

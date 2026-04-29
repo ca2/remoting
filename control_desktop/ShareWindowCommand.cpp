@@ -24,18 +24,22 @@
 #include "framework.h"
 #include "ShareWindowCommand.h"
 
-ShareWindowCommand::ShareWindowCommand(ControlProxy *serverControl,
+namespace remoting_control_desktop
+{
+   ShareWindowCommand::ShareWindowCommand(ControlProxy *serverControl,
                                        const ::scoped_string & shareWindowName)
 : m_proxy(serverControl),
   m_shareWindowName(*shareWindowName)
-{
-}
+   {
+   }
 
-ShareWindowCommand::~ShareWindowCommand()
-{
-}
+   ShareWindowCommand::~ShareWindowCommand()
+   {
+   }
 
-void ShareWindowCommand::execute()
-{
-  m_proxy->shareWindow(&m_shareWindowName);
-}
+   void ShareWindowCommand::execute()
+   {
+      m_proxy->shareWindow(m_shareWindowName);
+   }
+} // namespace remoting_control_desktop
+

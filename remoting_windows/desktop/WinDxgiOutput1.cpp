@@ -28,7 +28,7 @@
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "remoting/remoting_windows/desktop/WinDxgiOutput1.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
 
@@ -68,7 +68,7 @@ namespace remoting
    }
 
    IDXGIOutput1 *WinDxgiOutput1::getDxgiOutput1() { return m_dxgiOutput1; }
-} // // namespace remoting
+} // // namespace remoting_windows
 
 
 

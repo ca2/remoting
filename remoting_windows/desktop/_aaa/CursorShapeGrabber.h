@@ -28,7 +28,7 @@
 #include "remoting/remoting/rfb/CursorShape.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING CursorShapeGrabber :
@@ -47,11 +47,11 @@ namespace remoting
       virtual const ::remoting::CursorShape *getCursorShape() const;
 
       // protected:
-      ::remoting::CursorShape m_cursorShape;
+      ::remoting::CursorShape m_cursorshape;
    };
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

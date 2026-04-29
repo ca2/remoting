@@ -26,16 +26,23 @@
 
 #include "remoting/remoting/server_config/Configurator.h"
 
-UpdateLocalConfigCommand::UpdateLocalConfigCommand(ControlProxy *proxy)
-: m_proxy(proxy)
-{
-}
 
-UpdateLocalConfigCommand::~UpdateLocalConfigCommand()
+namespace remoting_control_desktop
 {
-}
+   UpdateLocalConfigCommand::UpdateLocalConfigCommand(ControlProxy *proxy)
+   : m_proxy(proxy)
+   {
+   }
 
-void UpdateLocalConfigCommand::execute()
-{
-  m_proxy->getServerConfig(m_pconfigurator->getServerConfig());
-}
+   UpdateLocalConfigCommand::~UpdateLocalConfigCommand()
+   {
+   }
+
+   void UpdateLocalConfigCommand::execute()
+   {
+      m_proxy->getServerConfig(m_pconfigurator->getServerConfig());
+   }
+} // namespace remoting_control_desktop
+
+
+

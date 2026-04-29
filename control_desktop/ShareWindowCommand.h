@@ -29,17 +29,23 @@
 
 #include "ControlProxy.h"
 
-class ShareWindowCommand : public Command
+
+namespace remoting_control_desktop
 {
-public:
-  ShareWindowCommand(ControlProxy *serverControl,
-                     const ::scoped_string & shareWindowName);
-  virtual ~ShareWindowCommand();
+   class ShareWindowCommand : public Command
+   {
+   public:
+      ShareWindowCommand(ControlProxy *serverControl,
+                         const ::scoped_string & shareWindowName);
+      virtual ~ShareWindowCommand();
 
-  virtual void execute();
-private:
-  ControlProxy *m_proxy;
-  ::string m_shareWindowName;
-};
+      virtual void execute();
+   private:
+      ControlProxy *m_proxy;
+      ::string m_shareWindowName;
+   };
+} // namespace remoting_control_desktop
 
-//// _SHAREWINDOWCOMMAND_H_
+
+
+

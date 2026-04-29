@@ -43,9 +43,9 @@ namespace remoting
    WindowsUserInput::~WindowsUserInput(void) { delete m_clipboard; }
 
    // FIXME: refactor this horror.
-   void WindowsUserInput::setMouseEvent(const ::int_point newPos, unsigned char keyFlag)
+   void WindowsUserInput::setMouseEvent(const ::int_point pointNewPosition, unsigned char keyFlag)
    {
-      m_plogwriter->debug("setMouseEvent ({},{}):{}", newPos.x, newPos.x, keyFlag);
+      m_plogwriter->debug("setMouseEvent ({},{}):{}", pointNewPosition.x, pointNewPosition.x, keyFlag);
       if (GetSystemMetrics(SM_SWAPBUTTON))
       {
          // read values of first and third bytes..
@@ -131,8 +131,8 @@ namespace remoting
       unsigned short desktopHeight = GetSystemMetrics(SM_CYSCREEN);
       int fbOffsetX = GetSystemMetrics(SM_XVIRTUALSCREEN);
       int fbOffsetY = GetSystemMetrics(SM_YVIRTUALSCREEN);
-      int x = (int)((newPos.x + fbOffsetX) * 65535 / (desktopWidth - 1));
-      int y = (int)((newPos.y + fbOffsetY) * 65535 / (desktopHeight - 1));
+      int x = (int)((pointNewPosition.x + fbOffsetX) * 65535 / (desktopWidth - 1));
+      int y = (int)((pointNewPosition.y + fbOffsetY) * 65535 / (desktopHeight - 1));
 
       INPUT input;
       memset(&input, 0, sizeof(INPUT));

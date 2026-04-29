@@ -38,9 +38,9 @@
 //Interfaces
 //#include "subsystem/platform/AnEventListener.h"
 #include "remoting/remoting/desktop_ipc/ReconnectionListener.h"
-#include "UpdateListener.h"
+#include "::remoting::UpdateListener.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
    //class CLASS_DECL_REMOTING DesktopClientImpl : public AnEventListener, public ReconnectionListener, public Thread, public DesktopBaseImpl
@@ -87,7 +87,7 @@ namespace remoting
    };
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

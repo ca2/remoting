@@ -164,7 +164,7 @@ namespace remoting_node_desktop
       }
       catch (...)
       {
-         throw ::remoting::AuthException("Failed to get IP address of the RFB client");
+         throw ::remoting_node::AuthException("Failed to get IP address of the RFB client");
       }
 
       auto paddrImpl = peerAddr->impl<::subsystem_bsd_sockets::SocketAddressIPv4>();
@@ -202,7 +202,7 @@ namespace remoting_node_desktop
          //    pserverconfig->getQueryTimeout());
          if (queryRetVal == 1)
          {
-            throw ::remoting::AuthException("Connection has been rejected");
+            throw ::remoting_node::AuthException("Connection has been rejected");
          }
       }
    }

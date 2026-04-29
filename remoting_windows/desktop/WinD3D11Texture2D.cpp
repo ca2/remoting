@@ -27,7 +27,7 @@
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "remoting/remoting_windows/desktop/WinD3D11Texture2D.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
 
@@ -68,4 +68,4 @@ namespace remoting
    ID3D11Texture2D *WinD3D11Texture2D::getTexture() const { return m_dxgiTexture; }
 
 
-} // namespace remoting
+} // namespace remoting_windows

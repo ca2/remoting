@@ -25,12 +25,12 @@
 #include "CursorPositionDetector.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
    const int MOUSE_SLEEP_TIME = 10;
 
-   // CursorPositionDetector::CursorPositionDetector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+   // CursorPositionDetector::CursorPositionDetector(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
    //                                                ::subsystem::LogWriter * plogwriter) :
    //     UpdateDetector(pupdatekeeper, pupdatelistener), m_plogwriter = plogwriter;
    // {
@@ -45,7 +45,7 @@ namespace remoting
       terminate();
       wait();
    }
-   void CursorPositionDetector::initialize_cursor_position_detector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+   void CursorPositionDetector::initialize_cursor_position_detector(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
                                                   ::subsystem::LogWriter * plogwriter)
    {
        initialize_update_detector(pupdatekeeper, pupdatelistener);
@@ -77,7 +77,7 @@ namespace remoting
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

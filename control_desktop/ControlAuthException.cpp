@@ -24,16 +24,21 @@
 #include "framework.h"
 #include "ControlAuthException.h"
 
-ControlAuthException::ControlAuthException(const ::scoped_string & scopedstrReason, bool isSilent)
- : RemoteException(reason), m_isSilent(isSilent)
-{
-}
 
-ControlAuthException::~ControlAuthException()
+namespace remoting_control_desktop
 {
-}
+   ControlAuthException::ControlAuthException(const ::scoped_string & scopedstrReason, bool isSilent)
+    : RemoteException(scopedstrReason), m_isSilent(isSilent)
+   {
+   }
 
-bool ControlAuthException::isSilent() const
-{
-  return m_isSilent;
-}
+   ControlAuthException::~ControlAuthException()
+   {
+   }
+
+   bool ControlAuthException::isSilent() const
+   {
+      return m_isSilent;
+   }
+} // namespace remoting_control_desktop
+

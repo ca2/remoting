@@ -229,20 +229,20 @@ namespace remoting
       newClipboard = pblockinggate->readUtf8();
    }
 
-   void DesktopServerProto::sendNewPointerPos(const ::int_point newPos, unsigned char keyFlag, BlockingGate *pblockinggate)
+   void DesktopServerProto::sendNewPointerPos(const ::int_point pointNewPosition, unsigned char keyFlag, BlockingGate *pblockinggate)
    {
       // Send pointer pointPosition
-      pblockinggate->writeUInt16(newPos.x);
-      pblockinggate->writeUInt16(newPos.y);
+      pblockinggate->writeUInt16(pointNewPosition.x);
+      pblockinggate->writeUInt16(pointNewPosition.y);
       // Send key flags
       pblockinggate->writeUInt8(keyFlag);
    }
 
-   void DesktopServerProto::readNewPointerPos(::int_point *newPos, unsigned char *keyFlag, BlockingGate *pblockinggate)
+   void DesktopServerProto::readNewPointerPos(::int_point *pointNewPosition, unsigned char *keyFlag, BlockingGate *pblockinggate)
    {
       // Read pointer pointPosition
-      newPos->x = pblockinggate->readUInt16();
-      newPos->y = pblockinggate->readUInt16();
+      pointNewPosition->x = pblockinggate->readUInt16();
+      pointNewPosition->y = pblockinggate->readUInt16();
       // Read key flags
       *keyFlag = pblockinggate->readUInt8();
    }

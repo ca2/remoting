@@ -26,51 +26,61 @@
 #include "SocketIPv4Transport.h"
 #include "NamedPipeTransport.h"
 
-#include "remoting/remoting/win_system/SecurityAttributes.h"
+#include "subsystem/node/security/SecurityAttributes.h"
+#include "subsystem/socket/SocketIPv4.h"
 
-Transport *TransportFactory::createSocketClientTransport(const ::scoped_string & scopedstrConnectHost,
-                                                         unsigned int connectPort)
+
+namespace remoting_control_desktop
 {
-  SocketIPv4 *socket = new SocketIPv4();
+   ::pointer < Transport >TransportFactory::createSocketClientTransport(const ::scoped_string & scopedstrConnectHost,
+                                                            unsigned int connectPort)
+   {
+      auto psocket = ::system()->createø<::subsystem::SocketIPv4Interface>();
 
-  try {
-    socket->connect(connectHost, connectPort);
-  } catch (SocketException &) {
-    delete socket;
-    throw;
-  }
+      try {
+         psocket->connect(scopedstrConnectHost, connectPort);
+      } catch (::subsystem::SocketException &) {
+         //delete socket;
+         throw;
+      }
 
-  return new SocketIPv4Transport(socket);
-}
+      return allocateø SocketIPv4Transport(psocket);
+   }
 
-Transport *TransportFactory::createSocketServerTransport(const ::scoped_string & scopedstrBindHost,
-                                                         unsigned int bindPort)
-{
-  SocketIPv4 *socket = new SocketIPv4();
+   ::pointer < Transport >TransportFactory::createSocketServerTransport(const ::scoped_string & scopedstrBindHost,
+                                                            unsigned int bindPort)
+   {
+      auto psocket = ::system()->createø<::subsystem::SocketIPv4Interface>();
 
-  try {
-    socket->bind(bindHost, bindPort);
-    socket->listen(15);
-  } catch (SocketException &) {
-    delete socket;
-    throw;
-  }
+      try {
+         psocket->bind(scopedstrBindHost, bindPort);
+         psocket->listen(15);
+      } catch (::subsystem::SocketException &) {
+         //delete socket;
+         throw;
+      }
 
-  return new SocketIPv4Transport(socket);
-}
+      return allocateø SocketIPv4Transport(psocket);
+   }
 
-Transport *TransportFactory::createPipeClientTransport(const ::scoped_string & scopedstrName)
-{
-  return new NamedPipeTransport(PipeClient::connect(name, 0));
-}
+   ::pointer < Transport > TransportFactory::createPipeClientTransport(const ::scoped_string & scopedstrName)
+   {
+      return allocateø NamedPipeTransport(MainSubsystem().PipeClient().connect(scopedstrName, 0));
+   }
 
-Transport *TransportFactory::createPipeServerTransport(const ::scoped_string & scopedstrName)
-{
-  // FIXME: Memory leak.
-  SecurityAttributes *pipeSecurity = new SecurityAttributes();
+   ::pointer < Transport > TransportFactory::createPipeServerTransport(const ::scoped_string & scopedstrName)
+   {
+      // FIXME: Memory leak.
+      auto pipeSecurity = ::system()->createø<::subsystem:: SecurityAttributesInterface>();
 
-  pipeSecurity->setInheritable();
-  pipeSecurity->shareToAllUsers();
+      pipeSecurity->setInheritable();
+      pipeSecurity->shareToAllUsers();
 
-  return new NamedPipeTransport(new PipeServer(scopedstrName, 0, pipeSecurity));
-}
+      auto ppipeserver = ::system()->createø<::subsystem:: PipeServer>();
+
+      ppipeserver->initialize_pipe_server(scopedstrName, 0, pipeSecurity);
+
+      return allocateø NamedPipeTransport(ppipeserver);
+   }
+} // namespace remoting_control_desktop
+

@@ -29,7 +29,7 @@
 #include "remoting/remoting/desktop_ipc/UserInputClient.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
    // This class  delegates all inputs but the "ctrl+alt+del" under Vista or later
@@ -45,7 +45,7 @@ namespace remoting
 
       virtual void sendInit(BlockingGate *pblockinggate);
       virtual void setNewClipboard(const ::scoped_string &newClipboard);
-      virtual void setMouseEvent(const ::int_point newPos, unsigned char keyFlag);
+      virtual void setMouseEvent(const ::int_point pointNewPosition, unsigned char keyFlag);
       virtual void setKeyboardEvent(unsigned int keySym, bool down);
       virtual void getCurrentUserInfo(::string &desktopName, ::string &userName);
       virtual void getPrimaryDisplayCoords(::int_rectangle rectangle);
@@ -67,7 +67,7 @@ namespace remoting
    };
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

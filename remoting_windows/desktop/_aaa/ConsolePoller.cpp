@@ -26,10 +26,10 @@
 #include "remoting/remoting/server_config/Configurator.h"
 #include "acme/_operating_system.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
-   // ConsolePoller::ConsolePoller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+   // ConsolePoller::ConsolePoller(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
    //                              ScreenGrabber *pscreengrabber, ::innate_subsystem::Framebuffer *backupFramebuffer,
    //                              lockable_critical_section *framebufferMutex, ::subsystem::LogWriter * plogwriter) :
    //     UpdateDetector(pupdatekeeper, pupdatelistener), m_pscreengrabber(pscreengrabber),
@@ -51,7 +51,7 @@ namespace remoting
       wait();
    }
 
-   void ConsolePoller::initialize_console_poller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+   void ConsolePoller::initialize_console_poller(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
                              ScreenGrabber *pscreengrabber, ::innate_subsystem::Framebuffer *pframebufferBackup,
                              lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter)
    {
@@ -134,7 +134,7 @@ namespace remoting
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

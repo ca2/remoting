@@ -33,11 +33,12 @@
 // #include aaa_<DXGI1_2.h>
 
 
-namespace remoting
+namespace remoting_windows
 {
 
 
-   class CLASS_DECL_REMOTING_WINDOWS WinDxgiOutput1
+   class CLASS_DECL_REMOTING_WINDOWS WinDxgiOutput1 :
+   virtual public ::particle
    {
    public:
       WinDxgiOutput1(WinDxgiOutput *dxgiOutput);
@@ -57,7 +58,7 @@ namespace remoting
    };
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

@@ -59,7 +59,7 @@ namespace remoting
       virtual bool getScreenSizeChanged();
       virtual bool applyNewScreenProperties();
       bool grabCursorShape(const ::innate_subsystem::PixelFormat & pixelformat) { return true; };
-      const CursorShape *getCursorShape() { return &m_cursorShape; };
+      const CursorShape *getCursorShape() { return &m_cursorshape; };
       ::int_point getCursorPosition() { return ::int_point(); };
 
       void getCopiedRegion(::int_rectangle &rectangleCopy, ::int_point & pointSource) { return; };
@@ -71,7 +71,7 @@ namespace remoting
 
    private:
       ::pointer < ::innate_subsystem::Framebuffer > m_pframebufferWork;
-      CursorShape m_cursorShape;
+      CursorShape m_cursorshape;
       ::pointer < UpdateKeeper  > m_pupdatekeeper;
       ::pointer < UpdateListener  > m_pupdatelistener;
       ::happening m_happeningSleeper;

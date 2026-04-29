@@ -29,47 +29,49 @@
 
 //#include "remoting/remoting/network/socket/SocketIPv4.h"
 
-/**
- * Transport that uses IPv4 socket.
- */
-class SocketIPv4Transport : public Transport
+namespace remoting_control_desktop
 {
-public:
-  /**
-   * Creates transport and takes ownership over existing socket.
-   */
-  SocketIPv4Transport(SocketIPv4 *socket);
-  /**
-   * Deletes transport and frees resources.
-   */
-  virtual ~SocketIPv4Transport();
+   /**
+    * Transport that uses IPv4 socket.
+    */
+   class SocketIPv4Transport : public Transport
+   {
+   public:
+      /**
+       * Creates transport and takes ownership over existing socket.
+       */
+      SocketIPv4Transport(subsystem::SocketIPv4Interface *socket);
+      /**
+       * Deletes transport and frees resources.
+       */
+      virtual ~SocketIPv4Transport();
 
-  /**
-   * Returns transport's IO Stream.
-   */
-  virtual Channel *getIOStream();
+      /**
+       * Returns transport's IO Stream.
+       */
+      virtual Channel *getIOStream();
 
-  /**
-   * Accepts new connection.
-   * @return transport for accepted connection.
-   * @throws SocketException on fail.
-   */
-  virtual Transport *accept();
+      /**
+       * Accepts new connection.
+       * @return transport for accepted connection.
+       * @throws SocketException on fail.
+       */
+      virtual Transport *accept();
 
-  /**
-   * Destroys transport(closes socket).
-   */
-  virtual void close();
+      /**
+       * Destroys transport(closes socket).
+       */
+      virtual void close();
 
-private:
-  /**
-   * Real transport.
-   */
-  SocketIPv4 *m_socket;
-  /**
-   * Stream.
-   */
-  Channel *m_stream;
-};
-
+   private:
+      /**
+       * Real transport.
+       */
+      ::pointer < subsystem::SocketIPv4Interface > m_psocket;
+      /**
+       * Stream.
+       */
+      ::pointer < Channel > m_pchannel;
+   };
+} // namespace remoting_control_desktop
 

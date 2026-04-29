@@ -36,15 +36,15 @@ namespace remoting
    {
       if (getIsVisible())
       {
-         return &m_cursorShape;
+         return &m_cursorshape;
       }
       else
       {
-         return &m_emptyDimensionCursorShape;
+         return &m_cursorshapeEmptyDimension;
       }
    }
 
-   CursorShape *Win8CursorShape::getCursorShapeForWriting() { return &m_cursorShape; }
+   CursorShape *Win8CursorShape::getCursorShapeForWriting() { return &m_cursorshape; }
 
    void Win8CursorShape::setVisibility(bool value, int threadOwner)
    {

@@ -29,7 +29,7 @@
 #include <DXGI1_2.h>
 
 
-namespace remoting
+namespace remoting_windows
 {
 
 
@@ -53,7 +53,7 @@ namespace remoting
    //// __WIND3D11TEXTURE2D_H__
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

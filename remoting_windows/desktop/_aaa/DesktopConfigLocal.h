@@ -28,7 +28,7 @@
 #include "InputBlocker.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING DesktopConfigLocal :
@@ -59,5 +59,5 @@ namespace remoting
    //// __DESKTOPCONFIGLOCAL_H__
 
 
-} // namespace remoting
+} // namespace remoting_windows
  

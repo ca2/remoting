@@ -53,8 +53,8 @@ namespace remoting
       int m_threadOwner;
 
       bool m_isVisible;
-      CursorShape m_emptyDimensionCursorShape;
-      CursorShape m_cursorShape;
+      CursorShape m_cursorshapeEmptyDimension;
+      CursorShape m_cursorshape;
    };
 
 

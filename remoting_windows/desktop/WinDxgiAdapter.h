@@ -28,7 +28,7 @@
 #include "remoting/remoting_windows/desktop/WinDxgiDevice.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
    // #include aaa_<d3d11.h>
    // #include aaa_<DXGI1_2.h>
@@ -49,7 +49,7 @@ namespace remoting
    };
 
 
-} //  namespace remoting
+} //  namespace remoting_windows
 
 
 

@@ -53,9 +53,9 @@ public:
 protected:
   bool m_hasAccess;
 
-  Desktop *m_desktop;
+  Desktop *m_pdesktop;
 
-  LogWriter *m_log;
+  LogWriter *m_plogwriter;
 };
 
 #endif

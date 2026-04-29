@@ -34,7 +34,7 @@
 #include "remoting/remoting/desktop/CopyRectDetector.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
    // This class  implements "grabbers" and "detectors" which is not couple� with screen frame buffer.
@@ -42,7 +42,7 @@ namespace remoting
       virtual public WinVideoRegionUpdaterImpl
    {
    public:
-      //Win32ScreenDriverBaseImpl(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+      //Win32ScreenDriverBaseImpl(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
         //                        lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
 
 
@@ -50,7 +50,8 @@ namespace remoting
       ~Win32ScreenDriverBaseImpl() override;
 
 
-      void initialize_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+      void initialize_screen_driver(::remoting::Configurator * pconfigurator, ::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
+                                        ::innate_subsystem::Framebuffer *pframebuffer,
                           lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) override;
 
 
@@ -61,7 +62,7 @@ namespace remoting
       virtual void terminateDetection();
 
       virtual bool grabCursorShape(const ::innate_subsystem::PixelFormat & pixelformat);
-      virtual const CursorShape *getCursorShape();
+      virtual const ::remoting::CursorShape *getCursorShape();
       virtual ::int_point getCursorPosition();
 
       virtual void getCopiedRegion(::int_rectangle &rectangleCopy, ::int_point & pointSource);
@@ -72,17 +73,17 @@ namespace remoting
    private:
       lockable_critical_section *m_pcriticalsectionFramebuffer;
 
-      ::pointer < CursorPositionDetector >  m_pcursorpositiondetector;
+      ::pointer < ::remoting::CursorPositionDetector >  m_pcursorpositiondetector;
       ::pointer < WindowsCursorShapeGrabber > m_pcursorshapegrabber;
-      ::pointer < CursorShapeDetector > m_pcursorshapedetector;
+      ::pointer < ::remoting::CursorShapeDetector > m_pcursorshapedetector;
 
-      ::pointer < CopyRectDetector > m_pcopyrectdetector;
+      ::pointer < ::remoting::CopyRectDetector > m_pcopyrectdetector;
    };
 
    //// __WIN32SCREENDRIVERBASEIMPL_H__
 
 
-} // namespace remoting
+} // namespace remoting_windows
  
 
 

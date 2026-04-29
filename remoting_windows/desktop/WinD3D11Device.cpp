@@ -28,7 +28,7 @@
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "remoting/remoting_windows/desktop/WinD3D11Device.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
 
@@ -39,8 +39,9 @@ namespace remoting
       _Out_opt_ ID3D11DeviceContext **ppImmediateContext);
 
    WinD3D11Device::WinD3D11Device(::subsystem::LogWriter * plogwriter) :
-       m_device(0), m_context(0), m_d3d11Lib("d3d11.dll"), m_plogwriter(plogwriter)
+       m_device(0), m_context(0), m_plogwriter(plogwriter)
    {
+      m_d3d11Lib.initialize_dynamic_library("d3d11.dll");
       D3D11CreateDeviceFunType d3d11CreateDevice;
       d3d11CreateDevice = (D3D11CreateDeviceFunType)m_d3d11Lib.getProcAddress("D3D11CreateDevice");
       if (d3d11CreateDevice == 0)
@@ -68,7 +69,7 @@ namespace remoting
                                 &m_device, &featureLevel, &m_context);
          if (SUCCEEDED(hr))
          {
-            m_plogwriter->debug("Creating of %u driverType device is successfull, supported D3D_FEATURE_LEVEL is %u",
+            m_plogwriter->debugf("Creating of %u driverType device is successfull, supported D3D_FEATURE_LEVEL is %u",
                                 iDriverType, featureLevel);
             break;
          }
@@ -146,5 +147,5 @@ namespace remoting
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows
  

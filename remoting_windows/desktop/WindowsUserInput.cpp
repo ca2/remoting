@@ -30,7 +30,7 @@
 #include "subsystem/node/Clipboard2.h"
 #include "subsystem/platform/BrokenHandleException.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
 
@@ -63,9 +63,9 @@ namespace remoting
 
 
    // FIXME: refactor this horror.
-   void WindowsUserInput::setMouseEvent(const ::int_point newPos, unsigned char keyFlag)
+   void WindowsUserInput::setMouseEvent(const ::int_point pointNewPosition, unsigned char keyFlag)
    {
-      m_plogwriter->debug("setMouseEvent ({},{}):{}", newPos.x, newPos.x, keyFlag);
+      m_plogwriter->debug("setMouseEvent ({},{}):{}", pointNewPosition.x, pointNewPosition.x, keyFlag);
       if (GetSystemMetrics(SM_SWAPBUTTON))
       {
          // read values of first and third bytes..
@@ -151,8 +151,8 @@ namespace remoting
       unsigned short desktopHeight = GetSystemMetrics(SM_CYSCREEN);
       int fbOffsetX = GetSystemMetrics(SM_XVIRTUALSCREEN);
       int fbOffsetY = GetSystemMetrics(SM_YVIRTUALSCREEN);
-      int x = (int)((newPos.x + fbOffsetX) * 65535 / (desktopWidth - 1));
-      int y = (int)((newPos.y + fbOffsetY) * 65535 / (desktopHeight - 1));
+      int x = (int)((pointNewPosition.x + fbOffsetX) * 65535 / (desktopWidth - 1));
+      int y = (int)((pointNewPosition.y + fbOffsetY) * 65535 / (desktopHeight - 1));
 
       INPUT input;
       memset(&input, 0, sizeof(INPUT));
@@ -259,7 +259,7 @@ namespace remoting
       return ::windows::findFirstWindowByName(windowName);
    }
 
-   void WindowsUserInput::getApplicationRegion(unsigned int procId, Region & region)
+   void WindowsUserInput::getApplicationRegion(const ::process_identifier & processidentifier, ::remoting::Region & region)
    {
       region.clear();
       auto operatingsystemwindowForeground = ::windows::get_window(::windows::get_foreground_window(), WIN32_GW_HWNDLAST);
@@ -268,41 +268,39 @@ namespace remoting
       ::int_rectangle rectangle;
       while (operatingsystemwindowForeground.is_set())
       {
-         ::windows::get_window_rect(hForegr, rectangle);
+         ::windows::get_window_rect(operatingsystemwindowForeground, rectangle);
 
-         DWORD style = ::windows::get_window_long(hForegr, GWL_STYLE);
-         auto processidentifierForegrund = ::windows::get_window_process_id()
-         GetWindowThreadProcessId(hForegr, &procForegr);
+         auto style = ::windows::get_window_long(operatingsystemwindowForeground, GWL_STYLE);
+         auto processidentifierForegrund = ::windows::get_window_process_id(operatingsystemwindowForeground);
+         //GetWindowThreadProcessId(hForegr, &procForegr);
          if (style & WS_VISIBLE)
          {
-            rectangle.fromWindowsRect(rectangle);
-            if (procForegr == procId)
+            if (processidentifierForegrund == processidentifier)
             {
                region.addRect(rectangle);
             }
             else
             {
-               region.subtract(Region(rectangle));
+               region.subtract(::remoting::Region(rectangle));
             }
          }
-         hForegr = GetWindow(hForegr, GW_HWNDPREV);
+         operatingsystemwindowForeground = ::windows::get_window(operatingsystemwindowForeground, WIN32_GW_HWNDPREV);
       }
       region.translate(-GetSystemMetrics(SM_XVIRTUALSCREEN), -GetSystemMetrics(SM_YVIRTUALSCREEN));
    }
 
-   bool WindowsUserInput::isApplicationInFocus(unsigned int procId)
+   bool WindowsUserInput::isApplicationInFocus(const ::process_identifier & processidentifier)
    {
-      HWND hKeyboardInputWindow = GetForegroundWindow();
-      if (hKeyboardInputWindow == NULL)
+      auto operatingsystemKeyboardInputWindow = ::windows::get_foreground_window();
+      if (operatingsystemKeyboardInputWindow.is_null())
       {
          return false;
       }
 
-      DWORD procForeground;
-      GetWindowThreadProcessId(hKeyboardInputWindow, &procForeground);
+      auto processidentifiderForeground = ::windows::get_window_process_id(operatingsystemKeyboardInputWindow);
 
-      return (procForeground == (DWORD)procId);
+      return processidentifiderForeground == processidentifier;
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows

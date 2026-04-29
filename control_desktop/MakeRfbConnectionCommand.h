@@ -29,49 +29,51 @@
 
 #include "ControlProxy.h"
 
-/**
- * Command that initializes outgoing rfb connection from TightVNC server to
- * specified address.
- */
-class MakeRfbConnectionCommand : public Command
+namespace remoting_control_desktop
 {
-public:
-  /**
-   * Creates command.
-   * @param serverControl proxy.
-   * @param connectString connection string.
-   * @param viewOnly view only flag for outgoing connection.
-   */
-  MakeRfbConnectionCommand(ControlProxy *serverControl,
-                           const ::scoped_string & scopedstrConnectString,
-                           bool viewOnly);
-  /**
-   * Destroys command.
-   */
-  virtual ~MakeRfbConnectionCommand();
+   /**
+    * Command that initializes outgoing rfb connection from TightVNC server to
+    * specified address.
+    */
+   class MakeRfbConnectionCommand : public Command
+   {
+   public:
+      /**
+       * Creates command.
+       * @param serverControl proxy.
+       * @param connectString connection string.
+       * @param viewOnly view only flag for outgoing connection.
+       */
+      MakeRfbConnectionCommand(ControlProxy *serverControl,
+                               const ::scoped_string & scopedstrConnectString,
+                               bool viewOnly);
+      /**
+       * Destroys command.
+       */
+      virtual ~MakeRfbConnectionCommand();
 
-  /**
-   * Executes command.
-   *
-   * Inhrited from Command abstract class.
-   *
-   * @throws ::io_exception on io error, ::subsystem::Exception on server side error.
-   */
-  virtual void execute();
+      /**
+       * Executes command.
+       *
+       * Inhrited from Command abstract class.
+       *
+       * @throws ::io_exception on io error, ::subsystem::Exception on server side error.
+       */
+      virtual void execute();
 
-private:
-  /**
-   * Proxy to some of TightVNC server control methods.
-   */
-  ControlProxy *m_proxy;
-  /**
-   * Connection string.
-   */
-  ::string m_connectString;
-  /**
-   * View only flag for outgoing connection.
-   */
-  bool m_viewOnly;
-};
-
+   private:
+      /**
+       * Proxy to some of TightVNC server control methods.
+       */
+      ControlProxy *m_proxy;
+      /**
+       * Connection string.
+       */
+      ::string m_connectString;
+      /**
+       * View only flag for outgoing connection.
+       */
+      bool m_viewOnly;
+   };
+} //namespace remoting_control_desktop
 

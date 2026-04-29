@@ -25,22 +25,46 @@
 #include "remoting/remoting_windows/desktop/Win32ScreenDriver.h"
 //#include "subsystem/thread/lockable_critical_section.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
 
-   Win32ScreenDriver::Win32ScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                                        ::innate_subsystem::Framebuffer *pframebuffer, lockable_critical_section *pcriticalsectionFramebuffer,
-                                        ::subsystem::LogWriter * plogwriter) :
-       Win32ScreenDriverBaseImpl(pupdatekeeper, pupdatelistener, pcriticalsectionFramebuffer, log),
-       m_poller(pupdatekeeper, pupdatelistener, &m_pscreengrabber, pframebuffer, pcriticalsectionFramebuffer, log),
-       m_consolePoller(pupdatekeeper, pupdatelistener, &m_pscreengrabber, pframebuffer, pcriticalsectionFramebuffer, log),
-       m_hooks(pupdatekeeper, pupdatelistener, log)
+   // Win32ScreenDriver::Win32ScreenDriver(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
+   //                                      ::innate_subsystem::Framebuffer *pframebuffer, lockable_critical_section *pcriticalsectionFramebuffer,
+   //                                      ::subsystem::LogWriter * plogwriter) :
+   //     Win32ScreenDriverBaseImpl(pupdatekeeper, pupdatelistener, pcriticalsectionFramebuffer, log),
+   //     m_poller(pupdatekeeper, pupdatelistener, &m_pscreengrabber, pframebuffer, pcriticalsectionFramebuffer, log),
+   //     m_consolePoller(pupdatekeeper, pupdatelistener, &m_pscreengrabber, pframebuffer, pcriticalsectionFramebuffer, log),
+   //     m_hooks(pupdatekeeper, pupdatelistener, log)
+   // {
+   //    // At this point the screen driver has valid screen properties (provides by screen grabber).
+   // }
+
+   Win32ScreenDriver::Win32ScreenDriver()
    {
-      // At this point the screen driver has valid screen properties (provides by screen grabber).
+
+
    }
 
    Win32ScreenDriver::~Win32ScreenDriver() { terminateDetection(); }
+
+   void Win32ScreenDriver::initialize_screen_driver(::remoting::Configurator * pconfigurator, ::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
+                                        ::innate_subsystem::Framebuffer *pframebuffer, lockable_critical_section *pcriticalsectionFramebuffer,
+                                        ::subsystem::LogWriter * plogwriter) //:
+
+       //m_poller
+       //m_consolePoller(pupdatekeeper, pupdatelistener, &m_pscreengrabber, pframebuffer, pcriticalsectionFramebuffer, log),
+       //m_hooks(pupdatekeeper, pupdatelistener, log)
+   {
+      m_pconfigurator = pconfigurator;
+      m_screengrabber.initialize_screen_grabber(m_pconfigurator);
+      Win32ScreenDriverBaseImpl::initialize_screen_driver(pconfigurator, pupdatekeeper, pupdatelistener, pframebuffer, pcriticalsectionFramebuffer, plogwriter);
+      m_poller.initialize_poller(pupdatekeeper, pupdatelistener, &m_screengrabber, pframebuffer, pcriticalsectionFramebuffer, plogwriter);
+      m_consolePoller.initialize_console_poller(pupdatekeeper, pupdatelistener, &m_screengrabber, pframebuffer, pcriticalsectionFramebuffer, plogwriter);
+      m_hooks.initialize_hooks_update_detector(pupdatekeeper, pupdatelistener, plogwriter);
+      // At this point the screen driver has valid screen properties (provides by screen grabber).
+   }
+
 
    void Win32ScreenDriver::executeDetection()
    {
@@ -66,36 +90,36 @@ namespace remoting
    ::int_size Win32ScreenDriver::getScreenDimension()
    {
       critical_section_lock al(framebuffer_critical_section());
-      return ::int_size(&m_pscreengrabber.getScreenRect());
+      return m_screengrabber.getScreenRect().size();
    }
 
    bool Win32ScreenDriver::grabFb(const ::int_rectangle & rectangle)
    {
       critical_section_lock al(framebuffer_critical_section());
-      return m_pscreengrabber.grab(rectangle);
+      return m_screengrabber.grab(rectangle);
    }
 
-   ::innate_subsystem::Framebuffer *Win32ScreenDriver::getScreenBuffer() { return m_pscreengrabber.getScreenBuffer(); }
+   ::innate_subsystem::Framebuffer *Win32ScreenDriver::getScreenBuffer() { return m_screengrabber.getScreenBuffer(); }
 
    bool Win32ScreenDriver::getScreenPropertiesChanged()
    {
       critical_section_lock al(framebuffer_critical_section());
-      return m_pscreengrabber.getPropertiesChanged();
+      return m_screengrabber.getPropertiesChanged();
    }
 
    bool Win32ScreenDriver::getScreenSizeChanged()
    {
       critical_section_lock al(framebuffer_critical_section());
-      return m_pscreengrabber.getScreenSizeChanged();
+      return m_screengrabber.getScreenSizeChanged();
    }
 
    bool Win32ScreenDriver::applyNewScreenProperties()
    {
       critical_section_lock al(framebuffer_critical_section());
-      return m_pscreengrabber.applyNewProperties();
+      return m_screengrabber.applyNewProperties();
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 

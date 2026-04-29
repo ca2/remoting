@@ -33,7 +33,7 @@
 #include "remoting/remoting_windows/desktop/WinDxgiSurface.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
    // Calls IDXGISurface->Map() function at the constructor and Unmap() at the destructor.
@@ -55,7 +55,7 @@ namespace remoting
    //// __WINAUTOMAPDXGISURFACE_H__
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

@@ -30,7 +30,7 @@
 
 namespace remoting
 {
-   class ConfigReloadListener :
+   class CLASS_DECL_REMOTING ConfigReloadListener :
       virtual public ::particle
    {
    public:

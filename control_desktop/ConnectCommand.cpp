@@ -24,18 +24,23 @@
 #include "framework.h"
 #include "ConnectCommand.h"
 
-ConnectCommand::ConnectCommand(ControlProxy *serverControl,
-                               const ::scoped_string & scopedstrHostName)
-: m_proxy(serverControl),
-  m_hostName(hostName)
-{
-}
 
-ConnectCommand::~ConnectCommand()
+namespace remoting_control_desktop
 {
-}
+   ConnectCommand::ConnectCommand(ControlProxy *serverControl,
+                                  const ::scoped_string & scopedstrHostName)
+   : m_proxy(serverControl),
+     m_hostName(scopedstrHostName)
+   {
+   }
 
-void ConnectCommand::execute()
-{
-  m_proxy->makeOutgoingConnection(m_hostName, false);
-}
+   ConnectCommand::~ConnectCommand()
+   {
+   }
+
+   void ConnectCommand::execute()
+   {
+      m_proxy->makeOutgoingConnection(m_hostName, false);
+   }
+} // namespace remoting_control_desktop
+

@@ -41,7 +41,7 @@
 
 namespace remoting
 {
-   class ServerConfig : virtual public ::subsystem::LockableInterface
+   class CLASS_DECL_REMOTING ServerConfig : virtual public ::subsystem::LockableInterface
    {
    public:
       static const unsigned int MINIMAL_POLLING_INTERVAL = 30;

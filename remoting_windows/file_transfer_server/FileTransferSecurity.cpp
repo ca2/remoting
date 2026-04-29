@@ -30,10 +30,10 @@
 FileTransferSecurity::FileTransferSecurity(Desktop *desktop, LogWriter *log)
 : Impersonator(log),
   m_hasAccess(false),
-  m_desktop(desktop),
-  m_log(log)
+  m_pdesktop(desktop),
+  m_plogwriter(log)
 {
-  m_desktop = desktop;
+  m_pdesktop = desktop;
 }
 
 FileTransferSecurity::~FileTransferSecurity()
@@ -53,23 +53,23 @@ void FileTransferSecurity::beginMessageProcessing()
   try {
     StringStorage userName, desktopName;
 
-    if (m_desktop != NULL) {
-      m_desktop->getCurrentUserInfo(&desktopName, &userName);
+    if (m_pdesktop != NULL) {
+      m_pdesktop->getCurrentUserInfo(&desktopName, &userName);
     }
 
     desktopName.toLowerCase();
 
     // FIXME: Why we compare desktop name? why only default desktop?
-    if (!desktopName.isEqualTo(_T("default"))) {
-      throw Exception(_T("Desktop is not default desktop."));
+    if (!desktopName.isEqualTo("default")) {
+      throw Exception("Desktop is not default desktop.");
     }
 
     if (sessionIsLocked(rdpEnabled)) {
-      throw Exception(_T("Desktop is locked."));
+      throw Exception("Desktop is locked.");
     }
 
-    if (rdpEnabled && (WTS::getRdpSessionId(m_log) != 0)) {
-      HANDLE token = WTS::duplicateCurrentProcessUserToken(rdpEnabled, m_log);
+    if (rdpEnabled && (WTS::getRdpSessionId(m_plogwriter) != 0)) {
+      HANDLE token = WTS::duplicateCurrentProcessUserToken(rdpEnabled, m_plogwriter);
       impersonateAsUser(token);
     }
     else {
@@ -79,7 +79,7 @@ void FileTransferSecurity::beginMessageProcessing()
 
     m_hasAccess = true;
   } catch (Exception &e) {
-    m_log->error(_T("Access denied to the file transfer: %s"),
+    m_plogwriter->error("Access denied to the file transfer: %s",
                  e.getMessage());
     m_hasAccess = false;
   } // try / catch.
@@ -88,9 +88,9 @@ void FileTransferSecurity::beginMessageProcessing()
 void FileTransferSecurity::throwIfAccessDenied()
 {
   if (!m_hasAccess) {
-    throw Exception(_T("Access denied."));
+    throw Exception("Access denied.");
   } else if (!Configurator::getInstance()->getServerConfig()->isFileTransfersEnabled()) {
-    throw Exception(_T("File transfers are disabled on server side."));
+    throw Exception("File transfers are disabled on server side.");
   }
 }
 

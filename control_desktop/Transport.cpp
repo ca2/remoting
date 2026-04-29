@@ -24,6 +24,11 @@
 #include "framework.h"
 #include "Transport.h"
 
-Transport::~Transport()
+
+namespace remoting_control_desktop
 {
-}
+   // Transport::~Transport()
+   // {
+   // }
+} // namespace remoting_control_desktop
+

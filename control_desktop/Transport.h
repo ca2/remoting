@@ -29,40 +29,44 @@
 
 #include "subsystem/platform/Exception.h"
 
-/**
- * Abstract control transport that can be used by client and server side
- * both.
- *
- * Hides real transport (Pipe or Socket for example) behind interface.
- *
- * @fixme separate client and server part of transport.
- */
-class Transport
+
+namespace remoting_control_desktop
 {
-public:
-  /**
-   * Transport destructor, does nothing.
-   */
-  virtual ~Transport();
+   /**
+    * Abstract control transport that can be used by client and server side
+    * both.
+    *
+    * Hides real transport (Pipe or Socket for example) behind interface.
+    *
+    * @fixme separate client and server part of transport.
+    */
+   class Transport :
+      virtual public ::particle
+   {
+   public:
+      /**
+       * Transport destructor, does nothing.
+       */
+      //virtual ~Transport();
 
-  /**
-   * Returns transport's IO stream for client transport or 0 for
-   * server transport.
-   */
-  virtual Channel *getIOStream() = 0;
+      /**
+       * Returns transport's IO stream for client transport or 0 for
+       * server transport.
+       */
+      virtual Channel *getIOStream() = 0;
 
-  /**
-   * Accepts new connection using underlying transport.
-   * @return accepted transport or 0 if this transport is client.
-   * @throw ::subsystem::Exception on fail.
-   */
-  virtual Transport *accept() = 0;
+      /**
+       * Accepts new connection using underlying transport.
+       * @return accepted transport or 0 if this transport is client.
+       * @throw ::subsystem::Exception on fail.
+       */
+      virtual Transport *accept() = 0;
 
-  /**
-   * Closes transport.
-   * @throws ::subsystem::Exception on fail.
-   */
-  virtual void close() = 0;
-};
-
+      /**
+       * Closes transport.
+       * @throws ::subsystem::Exception on fail.
+       */
+      virtual void close() = 0;
+   };
+} // namespace remoting_control_desktop
 

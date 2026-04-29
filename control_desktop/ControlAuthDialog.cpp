@@ -27,54 +27,62 @@
 #include "remoting/node_desktop/resource.h"
 #include "remoting/remoting/server_config/ServerConfig.h"
 
-ControlAuthDialog::ControlAuthDialog()
-: BaseDialog(IDD_CONTROL_AUTH)
+
+namespace remoting_control_desktop
 {
-}
+   ControlAuthDialog::ControlAuthDialog()
+   //: BaseDialog(IDD_CONTROL_AUTH)
+   {
 
-ControlAuthDialog::~ControlAuthDialog()
-{
-}
+      initialize_dialog(IDD_CONTROL_AUTH);
+   }
 
-const ::scoped_string & scopedstrControlAuthDialog::getPassword() const
-{
-  return m_password;
-}
+   ControlAuthDialog::~ControlAuthDialog()
+   {
+   }
 
-bool ControlAuthDialog::onInitDialog()
-{
-  m_password= "";
+   ::string ControlAuthDialog::getPassword() const
+   {
+      return m_password;
+   }
 
-  HWND hwnd = m_ctrlThis.operating_system_window();
-  m_passwordTextBox.setWindow(GetDlgItem(hwnd, IDC_PASSWORD_EDIT));
-  m_passwordTextBox.setTextLengthLimit(ServerConfig::VNC_PASSWORD_SIZE);
+   bool ControlAuthDialog::onInitDialog()
+   {
+      m_password= "";
 
-  SetForegroundWindow(hwnd);
-  m_passwordTextBox.setFocus();
+      //HWND hwnd = m_ctrlThis.operating_system_window();
+      dialog_item(m_passwordTextBox,IDC_PASSWORD_EDIT);
+      m_passwordTextBox.setTextLengthLimit(::remoting::ServerConfig::VNC_PASSWORD_SIZE);
 
-  return true;
-}
+      //SetForegroundWindow(hwnd);
+      setForegroundWindow();
+      m_passwordTextBox.setFocus();
 
-bool ControlAuthDialog::onNotify(unsigned int controlID, ::lparam data)
-{
-  return true;
-}
+      return true;
+   }
 
-bool ControlAuthDialog::onCommand(unsigned int controlID, unsigned int notificationID)
-{
-  switch (controlID) {
-  case ::innate_subsystem::IDOK:
-    m_passwordTextBox.getText(&m_password);
-    kill(controlID);
-    break;
-  case ::innate_subsystem::IDCANCEL:
-    kill(controlID);
-    break;
-  }
-  return true;
-}
+   bool ControlAuthDialog::onNotify(unsigned int controlID, ::lparam data)
+   {
+      return true;
+   }
 
-bool ControlAuthDialog::onDestroy()
-{
-  return true;
-}
+   bool ControlAuthDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+   {
+      switch (controlID) {
+         case ::innate_subsystem::e_control_id_ok:
+            m_password = m_passwordTextBox.getText();
+            closeDialog(controlID);
+            break;
+         case ::innate_subsystem::e_control_id_cancel:
+            closeDialog(controlID);
+            break;
+      }
+      return true;
+   }
+
+   bool ControlAuthDialog::onDestroy()
+   {
+      return true;
+   }
+} // namespace remoting_control_desktop
+

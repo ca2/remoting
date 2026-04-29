@@ -42,19 +42,26 @@
 #include "remoting/remoting_windows/desktop/Win8ScreenDriverImpl.h"
 #include "remoting/remoting/desktop/CopyRectDetector.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
-   class CLASS_DECL_REMOTING_WINDOWS Win8ScreenDriver : public WinVideoRegionUpdaterImpl
+   class CLASS_DECL_REMOTING_WINDOWS Win8ScreenDriver :
+   virtual public WinVideoRegionUpdaterImpl
    {
    public:
       // (Note: This class  has no link to an external backup frame buffer and then it does not have
       // to use an external belonged mutex. Thread safe coordiantion commitments between this class
       // and external some elements should be entirely provided by an owner code.)
 
-      Win8ScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, lockable_critical_section *pcriticalsectionFramebuffer,
-                       ::subsystem::LogWriter * plogwriter);
-      virtual ~Win8ScreenDriver();
+      //Win8ScreenDriver(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener, lockable_critical_section *pcriticalsectionFramebuffer,
+        //               ::subsystem::LogWriter * plogwriter);
+      Win8ScreenDriver();
+      ~Win8ScreenDriver() override;
+
+
+      void initialize_screen_driver(::remoting::Configurator * pconfigurator, ::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
+                                        ::innate_subsystem::Framebuffer *pframebuffer,
+                          lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) override;
 
       // Starts screen update detection if it not started yet.
       virtual void executeDetection();
@@ -63,14 +70,14 @@ namespace remoting
       virtual void terminateDetection();
 
       virtual ::int_size getScreenDimension();
-      virtual bool grabFb(const ::int_rectangle & rectangle = 0);
+      virtual bool grabFb(const ::int_rectangle & rectangle = {});
       virtual ::innate_subsystem::Framebuffer *getScreenBuffer();
       virtual bool getScreenPropertiesChanged();
       virtual bool getScreenSizeChanged();
       virtual bool applyNewScreenProperties();
 
       virtual bool grabCursorShape(const ::innate_subsystem::PixelFormat & pixelformat);
-      virtual const CursorShape *getCursorShape();
+      virtual const ::remoting::CursorShape *getCursorShape();
       virtual ::int_point getCursorPosition();
 
       virtual void getCopiedRegion(::int_rectangle &rectangleCopy, ::int_point & pointSource);
@@ -78,22 +85,22 @@ namespace remoting
    private:
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
       lockable_critical_section *m_pcriticalsectionFramebuffer;
-      UpdateKeeper *m_pupdatekeeper;
-      UpdateListener *m_pupdatelistener;
+      ::pointer < ::remoting::UpdateKeeper > m_pupdatekeeper;
+      ::pointer <::remoting::UpdateListener >m_pupdatelistener;
       // This member must be always gueranted non zero. Otherwise an excption must
       // be provided from the constructor of this class.
-      Win8ScreenDriverImpl *m_drvImpl;
-      CopyRectDetector m_pcopyrectdetector;
+      ::pointer < Win8ScreenDriverImpl > m_pwin8screendriveriimpl;
+      ::remoting::CopyRectDetector m_pcopyrectdetector;
       lockable_critical_section m_drvImplMutex;
 
-      CursorShape m_cursorShape;
+      ::remoting::CursorShape m_cursorshape;
 
       bool m_detectionEnabled;
    };
 
    //// __WIN8SCREENDRIVER_H__
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

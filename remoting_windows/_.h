@@ -7,6 +7,8 @@
 
 
 #include "remoting/remoting/_.h"
+#include "subsystem_windows/_.h"
+
 
 
 #if defined(_remoting_windows_project)

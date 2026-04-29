@@ -26,22 +26,22 @@
 
 
 #include "UpdateHandler.h"
-#include "ScreenDriver.h"
+#include "::remoting::ScreenDriver.h"
 #include "ScreenDriverFactory.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
    // This class  contain a base architecture implementation of the UpdateHandler class.
    class CLASS_DECL_REMOTING UpdateHandlerImpl :
       virtual public UpdateHandler,
-      virtual public UpdateListener
+      virtual public ::remoting::UpdateListener
    {
    public:
-      ::pointer < UpdateKeeper > m_pupdatekeeperProperty;
-      ::pointer < ScreenDriver > m_pscreendriver;
+      ::pointer < ::remoting::UpdateKeeper > m_pupdatekeeperProperty;
+      ::pointer < ::remoting::ScreenDriver > m_pscreendriver;
       ::pointer < UpdateFilter > m_pupdatefilter;
-      ::pointer < UpdateListener > m_pupdatelistenerExternal;
+      ::pointer < ::remoting::UpdateListener > m_pupdatelistenerExternal;
 
       ::int_rectangle m_rectangleAbsolute;
 
@@ -49,7 +49,7 @@ namespace remoting
 
       bool m_fullUpdateRequested;
 
-      UpdateHandlerImpl(UpdateListener *pupdatelistenerExternal, ScreenDriverFactory *pscreendriverfactory,
+      UpdateHandlerImpl(::remoting::UpdateListener *pupdatelistenerExternal, ScreenDriverFactory *pscreendriverfactory,
                         ::subsystem::LogWriter * plogwriter);
       ~UpdateHandlerImpl() override;
 
@@ -79,7 +79,7 @@ namespace remoting
    };
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

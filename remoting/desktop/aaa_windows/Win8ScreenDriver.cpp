@@ -36,17 +36,17 @@ namespace remoting
    {
       m_plogwriter->debug("Win8ScreenDriver creating new Win8ScreenDriverImpl");
       critical_section_lock al(&m_drvImplMutex);
-      m_drvImpl = new Win8ScreenDriverImpl(m_plogwriter, m_pupdatekeeper, m_pcriticalsectionFramebuffer, m_pupdatelistener);
+      m_pwin8screendriveriimpl = new Win8ScreenDriverImpl(m_plogwriter, m_pupdatekeeper, m_pcriticalsectionFramebuffer, m_pupdatelistener);
    }
 
    Win8ScreenDriver::~Win8ScreenDriver()
    {
       terminateDetection();
       critical_section_lock al(&m_drvImplMutex);
-      if (m_drvImpl != 0)
+      if (m_pwin8screendriveriimpl != 0)
       {
-         delete m_drvImpl;
-         m_drvImpl = 0;
+         delete m_pwin8screendriveriimpl;
+         m_pwin8screendriveriimpl = 0;
       }
    }
 
@@ -54,47 +54,47 @@ namespace remoting
    {
       critical_section_lock al(&m_drvImplMutex);
       m_detectionEnabled = true;
-      m_drvImpl->executeDetection();
+      m_pwin8screendriveriimpl->executeDetection();
    }
 
    void Win8ScreenDriver::terminateDetection()
    {
       critical_section_lock al(&m_drvImplMutex);
       m_detectionEnabled = false;
-      if (m_drvImpl != 0)
+      if (m_pwin8screendriveriimpl != 0)
       {
-         m_drvImpl->terminateDetection();
+         m_pwin8screendriveriimpl->terminateDetection();
       }
    }
 
    ::int_size Win8ScreenDriver::getScreenDimension()
    {
       critical_section_lock al(&m_drvImplMutex);
-      return m_drvImpl->getScreenBuffer()->getDimension();
+      return m_pwin8screendriveriimpl->getScreenBuffer()->getDimension();
    }
 
    ::innate_subsystem::Framebuffer *Win8ScreenDriver::getScreenBuffer()
    {
       critical_section_lock al(&m_drvImplMutex);
-      return m_drvImpl->getScreenBuffer();
+      return m_pwin8screendriveriimpl->getScreenBuffer();
    }
 
    bool Win8ScreenDriver::grabFb(const ::int_rectangle & rectangle)
    {
       critical_section_lock al(&m_drvImplMutex);
-      return m_drvImpl->grabFb(rectangle);
+      return m_pwin8screendriveriimpl->grabFb(rectangle);
    }
 
    bool Win8ScreenDriver::getScreenPropertiesChanged()
    {
       critical_section_lock al(&m_drvImplMutex);
-      return !m_drvImpl->isValid();
+      return !m_pwin8screendriveriimpl->isValid();
    }
 
    bool Win8ScreenDriver::getScreenSizeChanged()
    {
       critical_section_lock al(&m_drvImplMutex);
-      return !m_drvImpl->isValid();
+      return !m_pwin8screendriveriimpl->isValid();
    }
 
    bool Win8ScreenDriver::applyNewScreenProperties()
@@ -103,15 +103,15 @@ namespace remoting
       {
          m_plogwriter->debug("Applying new screen properties, deleting old Win8ScreenDriverImpl");
          critical_section_lock al(&m_drvImplMutex);
-         if (m_drvImpl != 0)
+         if (m_pwin8screendriveriimpl != 0)
          {
-            delete m_drvImpl;
-            m_drvImpl = 0;
+            delete m_pwin8screendriveriimpl;
+            m_pwin8screendriveriimpl = 0;
          }
          m_plogwriter->debug("Applying new screen properties, creating new Win8ScreenDriverImpl");
          Win8ScreenDriverImpl *drvImpl = new Win8ScreenDriverImpl(m_plogwriter, m_pupdatekeeper, m_pcriticalsectionFramebuffer,
                                                                   m_pupdatelistener, m_detectionEnabled);
-         m_drvImpl = drvImpl;
+         m_pwin8screendriveriimpl = drvImpl;
       }
       catch (::exception &e)
       {
@@ -124,16 +124,16 @@ namespace remoting
    bool Win8ScreenDriver::grabCursorShape(const ::innate_subsystem::PixelFormat & pixelformat)
    {
       critical_section_lock al(&m_drvImplMutex);
-      m_drvImpl->updateCursorShape(&m_cursorShape);
-      return !m_drvImpl->isValid();
+      m_pwin8screendriveriimpl->updateCursorShape(&m_cursorshape);
+      return !m_pwin8screendriveriimpl->isValid();
    }
 
-   const CursorShape *Win8ScreenDriver::getCursorShape() { return &m_cursorShape; }
+   const CursorShape *Win8ScreenDriver::getCursorShape() { return &m_cursorshape; }
 
    ::int_point Win8ScreenDriver::getCursorPosition()
    {
       critical_section_lock al(&m_drvImplMutex);
-      return m_drvImpl->getCursorPosition();
+      return m_pwin8screendriveriimpl->getCursorPosition();
    }
 
    void Win8ScreenDriver::getCopiedRegion(::int_rectangle &rectangleCopy, ::int_point & pointSource)

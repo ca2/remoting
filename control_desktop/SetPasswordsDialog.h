@@ -29,82 +29,90 @@
 //#include "acme/_operating_system.h"
 
 
-#include "innate_subsystem/gui/BaseDialog.h"
+#include "innate_subsystem/gui/Dialog.h"
 #include "innate_subsystem/gui/CheckBox.h"
 #include "innate_subsystem/gui/TextBox.h"
-#include "innate_subsystem/gui/BalloonTip.h"
+#include "innate_subsystem/gui/Tooltip.h"
 
 #include "subsystem/platform/RegistryKey.h"
 
 #include "remoting/remoting/config/ConnectionHistory.h"
 
-// Set passwords dialog. Just allows user to set rfb and administrators
-// passwords.
-class SetPasswordsDialog : public BaseDialog
+
+namespace remoting_control_desktop
 {
-public:
-  SetPasswordsDialog(bool initStateOfUseRfbAuth,
-                     bool initStateOfUseAdminAuth);
-  virtual ~SetPasswordsDialog();
+   // Set passwords dialog. Just allows user to set rfb and administrators
+   // passwords.
+   class SetPasswordsDialog : public ::innate_subsystem::Dialog
+   {
+   public:
+      SetPasswordsDialog(bool initStateOfUseRfbAuth,
+                         bool initStateOfUseAdminAuth);
+      virtual ~SetPasswordsDialog();
 
-  // Returns true if the checkbox has been checked
-  bool getUseRfbPass();
-  // Returns true if no rfb authentication is needed.
-  bool getRfbPassForClear();
-  void getRfbPass(::string & pass);
+      // Returns true if the checkbox has been checked
+      bool getUseRfbPass();
+      // Returns true if no rfb authentication is needed.
+      bool getRfbPassForClear();
+      void getRfbPass(::string & pass);
 
-  // Returns true if the checkbox has been checked
-  bool getUseAdmPass();
-  // Returns true if no admin authentication is needed.
-  bool getAdmPassForClear();
-  void getAdmPass(::string & pass);
+      // Returns true if the checkbox has been checked
+      bool getUseAdmPass();
+      // Returns true if no admin authentication is needed.
+      bool getAdmPassForClear();
+      void getAdmPass(::string & pass);
 
-protected:
-  void initControls();
+   protected:
+      void initControls();
 
-  virtual bool onInitDialog();
-  virtual bool onNotify(unsigned int controlID, ::lparam data);
-  virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
-  virtual bool onClose();
-  virtual bool onDestroy();
+      virtual bool onInitDialog();
+      virtual bool onNotify(unsigned int controlID, ::lparam data);
+      virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
+      virtual bool onClose();
+      virtual bool onDestroy();
 
-  void onOkButtonClick();
-  void onUseRfbAuthCheckBoxClick();
-  void onProtectControlInterfaceCheckBoxClick();
+      void onOkButtonClick();
+      void onUseRfbAuthCheckBoxClick();
+      void onProtectControlInterfaceCheckBoxClick();
 
-protected:
-  // UPdates internal state by the radio buttons.
-  void readRadio();
-  // Enables and disables the edit controls by the current state.
-  void updateEditControls();
+   protected:
+      // UPdates internal state by the radio buttons.
+      void readRadio();
+      // Enables and disables the edit controls by the current state.
+      void updateEditControls();
 
-  bool checkAnsiConversion(::string &plainTextInUTF16);
+      bool checkAnsiConversion(::string &plainTextInUTF16);
 
 
-  CheckBox m_dontChangeRfbAuthSettingsRadio;
-  CheckBox m_dontUseRfbAuthRadio;
-  CheckBox m_useRfbAuthRadio;
-  TextBox m_rfbPassEdit1;
-  TextBox m_rfbPassEdit2;
+      ::innate_subsystem::CheckBox m_dontChangeRfbAuthSettingsRadio;
+      ::innate_subsystem::CheckBox m_dontUseRfbAuthRadio;
+      ::innate_subsystem::CheckBox m_useRfbAuthRadio;
+      ::innate_subsystem::TextBox m_rfbPassEdit1;
+      ::innate_subsystem::TextBox m_rfbPassEdit2;
 
-  CheckBox m_dontChangeAdminAuthSettingsRadio;
-  CheckBox m_dontUseAdminAuthRadio;
-  CheckBox m_useAdminAuthRadio;
-  TextBox m_admPassEdit1;
-  TextBox m_admPassEdit2;
+      ::innate_subsystem::CheckBox m_dontChangeAdminAuthSettingsRadio;
+      ::innate_subsystem::CheckBox m_dontUseAdminAuthRadio;
+      ::innate_subsystem::CheckBox m_useAdminAuthRadio;
+      ::innate_subsystem::TextBox m_admPassEdit1;
+      ::innate_subsystem::TextBox m_admPassEdit2;
 
-  // Tooltip
-  BalloonTip m_passwordEmptyTooltip;
-  BalloonTip m_passwordsNotMatchTooltip;
-  BalloonTip m_passwordWeakTooltip;
+      // Tooltip
+      ::innate_subsystem::Tooltip m_passwordEmptyTooltip;
+      ::innate_subsystem::Tooltip m_passwordsNotMatchTooltip;
+      ::innate_subsystem::Tooltip m_passwordWeakTooltip;
 
-  bool m_dontChangeRfbAuth;
-  bool m_useRfbAuth;
-  ::string m_rfbPass;
+      bool m_dontChangeRfbAuth;
+      bool m_useRfbAuth;
+      ::string m_rfbPass;
 
-  bool m_dontChangeAdmAuth;
-  bool m_protectControlInterface;
-  ::string m_admPass;
-};
+      bool m_dontChangeAdmAuth;
+      bool m_protectControlInterface;
+      ::string m_admPass;
+   };
 
-//// _SETPASSWORDSDIALOG_H_
+   //// _SETPASSWORDSDIALOG_H_
+} // namespace remoting_control_desktop
+
+
+
+

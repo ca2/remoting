@@ -83,7 +83,7 @@ namespace remoting
       m_pscreendriverfactory->initialize_screen_driver_factory(m_pconfigurator->getServerConfig());
 
 
-      m_pupdatehandler = allocateø UpdateHandlerImpl(this, m_pscreendriverfactory, plogwriter);
+      m_pupdatehandler = allocateø UpdateHandlerImpl(m_pconfigurator, this, m_pscreendriverfactory, plogwriter);
 
       pdispatcher->registerNewHandle(EXTRACT_REQ, this);
       pdispatcher->registerNewHandle(SCREEN_PROP_REQ, this);

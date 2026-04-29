@@ -31,61 +31,66 @@
 #include "subsystem/platform/DesCrypt.h"
 //#include aaa_<algorithm>
 
-ControlAuth::ControlAuth(ControlGate *pblockinggate, const ::scoped_string & scopedstrPassword)
-: m_pblockinggate(pblockinggate)
+
+namespace remoting_control_desktop
 {
-  // Prepare data for authentication.
-  ::string truncatedPass(password);
-  truncatedPass.getSubstring(&truncatedPass, 0, ServerConfig::VNC_PASSWORD_SIZE - 1);
+   ControlAuth::ControlAuth(ControlGate *pblockinggate, const ::scoped_string & scopedstrPassword)
+   : m_pblockinggate(pblockinggate)
+   {
+      // Prepare data for authentication.
+      //::string truncatedPass(scopedstrPassword);
+      //truncatedPass.getSubstring(&truncatedPass, 0, ServerConfig::VNC_PASSWORD_SIZE - 1);
 
-  ::string passwordAnsi(&truncatedPass);
+      //::string passwordAnsi(&truncatedPass);
 
-  memset(m_password, 0, sizeof(m_password));
-  memcpy(m_password, passwordAnsi,
-         ::minimum(passwordAnsi.length(), sizeof(m_password)));
+      memset(m_password, 0, sizeof(m_password));
+      memcpy(m_password, scopedstrPassword.c_str(),
+             ::minimum(scopedstrPassword.length(), sizeof(m_password)));
 
-  // FIXME: Why it's commented out?
-  // critical_section_lock l(m_pblockinggate);
+      // FIXME: Why it's commented out?
+      // critical_section_lock l(m_pblockinggate);
 
-  m_pblockinggate->writeUInt32(ControlProto::AUTH_MSG_ID);
-  m_pblockinggate->writeUInt32(0);
+      m_pblockinggate->writeUInt32(ControlProto::AUTH_MSG_ID);
+      m_pblockinggate->writeUInt32(0);
 
-  authRfb();
+      authRfb();
 
-  unsigned char result = m_pblockinggate->readUInt32();
+      unsigned char result = m_pblockinggate->readUInt32();
 
-  switch (result) {
-  case ControlProto::REPLY_ERROR:
-    {
-      ::string authFailReason;
+      switch (result) {
+         case ControlProto::REPLY_ERROR:
+         {
+            ::string authFailReason;
 
-      m_pblockinggate->readUTF8(&authFailReason);
+            authFailReason = m_pblockinggate->readUtf8();
 
-      throw ControlAuthException(authFailReason);
-    }
-    break;
-  case ControlProto::REPLY_OK:
-    break;
-  default:
-    throw ::subsystem::Exception("Server return unknown auth result");
-    break;
-  }
-}
+            throw ControlAuthException(authFailReason);
+         }
+            break;
+         case ControlProto::REPLY_OK:
+            break;
+         default:
+            throw ::subsystem::Exception("Server return unknown auth result");
+            break;
+      }
+   }
 
-ControlAuth::~ControlAuth()
-{
-}
+   ControlAuth::~ControlAuth()
+   {
+   }
 
-void ControlAuth::authRfb()
-{
-  unsigned char challenge[16];
-  unsigned char response[16];
+   void ControlAuth::authRfb()
+   {
+      unsigned char challenge[16];
+      unsigned char response[16];
 
-  m_pblockinggate->readFully(challenge, sizeof(challenge));
+      m_pblockinggate->readFully(challenge, sizeof(challenge));
 
-  DesCrypt desCrypt;
+      ::subsystem::DesCrypt desCrypt;
 
-  desCrypt.encrypt(response, challenge, sizeof(challenge), m_password);
+      desCrypt.encrypt(response, challenge, sizeof(challenge), m_password);
 
-  m_pblockinggate->writeFully(response, sizeof(response));
-}
+      m_pblockinggate->write(response, sizeof(response));
+   }
+} // namespace remoting_control_desktop
+

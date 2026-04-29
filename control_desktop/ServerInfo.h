@@ -27,27 +27,30 @@
 
 #include "subsystem/_common_header.h"
 
-/**
- * Public TightVNC server information.
- *
- * Used by tvncontrol only.
- */
-struct ServerInfo
-{
-  /**
-   * Determinates if main rfb server can normally accept connections.
-   * Set to false when rfb server has any kind of problem (socket not bound,
-   * auth is enabled but no passwords are set etc).
-   */
-  bool m_acceptFlag;
-  /**
-   * Determinates if TightVNC server runs in context of service or application.
-   */
-  bool m_serviceFlag;
-  /**
-   * TightVNC server status text.
-   */
-  ::string m_statusText;
-};
 
+namespace remoting_control_desktop
+{
+   /**
+    * Public TightVNC server information.
+    *
+    * Used by tvncontrol only.
+    */
+   struct ServerInfo
+   {
+      /**
+       * Determinates if main rfb server can normally accept connections.
+       * Set to false when rfb server has any kind of problem (socket not bound,
+       * auth is enabled but no passwords are set etc).
+       */
+      bool m_acceptFlag;
+      /**
+       * Determinates if TightVNC server runs in context of service or application.
+       */
+      bool m_serviceFlag;
+      /**
+       * TightVNC server status text.
+       */
+      ::string m_statusText;
+   };
+} // namespace remoting_control_desktop
 

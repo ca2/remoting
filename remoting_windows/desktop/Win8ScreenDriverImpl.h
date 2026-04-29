@@ -27,7 +27,7 @@
 
 //#include "log_writer/LogWriter.h"
 #include "subsystem/thread/GuiThread.h"
-#include "subsystem/thread/ThreadCollector.h"
+#include "subsystem_windows/thread/ThreadCollector.h"
 #include "acme/parallelization/happening.h"
 
 #include "innate_subsystem/framebuffer/Framebuffer.h"
@@ -38,17 +38,24 @@
 #include "remoting/remoting_windows/desktop/Win8DeskDuplicationThread.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
 
-   class CLASS_DECL_REMOTING_WINDOWS Win8ScreenDriverImpl : private GuiThread, private Win8DuplicationListener
+   class CLASS_DECL_REMOTING_WINDOWS Win8ScreenDriverImpl :
+      virtual public ::subsystem::GuiThread,
+      virtual public Win8DuplicationListener
    {
    public:
-      Win8ScreenDriverImpl(::subsystem::LogWriter * plogwriter, UpdateKeeper *pupdatekeeper,
-                           lockable_critical_section *pcriticalsectionFramebuffer, UpdateListener *pupdatelistener,
+      //Win8ScreenDriverImpl(::subsystem::LogWriter * plogwriter, ::remoting::UpdateKeeper *pupdatekeeper,
+        //                   lockable_critical_section *pcriticalsectionFramebuffer, ::remoting::UpdateListener *pupdatelistener,
+          //                 bool detectionEnabled = false);
+      Win8ScreenDriverImpl();
+      ~Win8ScreenDriverImpl() override;
+
+      virtual void initialize_win8_screen_driver_impl(::subsystem::LogWriter * plogwriter, ::remoting::UpdateKeeper *pupdatekeeper,
+                           lockable_critical_section *pcriticalsectionFramebuffer, ::remoting::UpdateListener *pupdatelistener,
                            bool detectionEnabled = false);
-      virtual ~Win8ScreenDriverImpl();
 
       void executeDetection();
       void terminateDetection();
@@ -58,7 +65,7 @@ namespace remoting
       virtual ::innate_subsystem::Framebuffer *getScreenBuffer();
 
       // Updates destination (*dst) cursor shape properties and data.
-      void updateCursorShape(CursorShape *dst);
+      void updateCursorShape(::remoting::CursorShape *dst);
       ::int_point getCursorPosition();
 
       bool isValid();
@@ -69,7 +76,7 @@ namespace remoting
 
    private:
       // Implementions of the Win8DuplicationListener listener functions.
-      virtual void onFramebufferUpdate(const Region & regionChanged);
+      virtual void onFramebufferUpdate(const ::remoting::Region & regionChanged);
       virtual void onCopyRect(const ::int_rectangle &rectangleTarget, int srcX, int srcY);
       virtual void onCursorPositionChanged(int x, int y);
       virtual void onCursorShapeChanged();
@@ -84,10 +91,10 @@ namespace remoting
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
-      ThreadCollector m_deskDuplThreadBundle;
+      ::subsystem_windows::ThreadCollector m_deskDuplThreadBundle;
 
-      ::happening m_initEvent;
-      ::happening m_errorEvent;
+      ::happening m_happeningInit;
+      ::happening m_happeningError;
 
       // The duplication interface can't be used
       bool m_hasCriticalError;
@@ -96,7 +103,7 @@ namespace remoting
 
       // The frame buffer with appropriate properties creates once at the constructor time. And then
       // has these properties permanently.
-      ::innate_subsystem::Framebuffer m_pframebuffer;
+      ::pointer < ::innate_subsystem::Framebuffer > m_pframebufferProperty;
 
       // Cursor's properties changes at all time. And then it should be safe by a local mutex.
       ::int_point m_latestCursorPos;
@@ -104,15 +111,15 @@ namespace remoting
       LONGLONG m_curTimeStamp;
       lockable_critical_section m_cursorMutex;
 
-      UpdateKeeper *m_pupdatekeeper;
-      UpdateListener *m_pupdatelistener;
+      ::pointer < ::remoting::UpdateKeeper > m_pupdatekeeper;
+      ::pointer < ::remoting::UpdateListener > m_pupdatelistener;
       bool m_detectionEnabled;
    };
 
    //// __WIN8SCREENDRIVERIMPL_H__
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

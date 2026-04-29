@@ -37,17 +37,18 @@
 #include "remoting/remoting_windows/desktop/WinCustomD3D11Texture2D.h"
 #include "remoting/remoting_windows/desktop/WinDxgiOutputDuplication.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
-   class CLASS_DECL_REMOTING_WINDOWS Win8DeskDuplication : public GuiThread
+   class CLASS_DECL_REMOTING_WINDOWS Win8DeskDuplication :
+      virtual public ::subsystem::GuiThread
    {
    public:
       // The WinDxgiOutput *dxgiOutput passed object can be destroyed right after the constructor calling.
       // The WinD3D11Device *device passed object can be destroyed right after the constructor calling.
       Win8DeskDuplication(::innate_subsystem::Framebuffer *targetFb, ::int_rectangle_array_base &targetRect,
                           Win8CursorShape *targetCurShape, LONGLONG *cursorTimeStamp, lockable_critical_section *cursorMutex,
-                          Win8DuplicationListener *duplListener, ::array_base<WinDxgiOutput> &dxgiOutput,
+                          Win8DuplicationListener *duplListener, ::pointer_array<WinDxgiOutput> &dxgiOutput,
                           ::subsystem::LogWriter * plogwriter);
       virtual ~Win8DeskDuplication();
 
@@ -65,7 +66,7 @@ namespace remoting
 
       ::int_size getStageDimension(size_t out) const;
 
-      void rotateRectInsideStage(::int_rectangle &toTranspose, const ::int_size &stageDim, DXGI_MODE_ROTATION rotation);
+      void rotateRectInsideStage(::int_rectangle &rectangleToTranspose, const ::int_size &sizeStage, DXGI_MODE_ROTATION rotation);
 
       ::innate_subsystem::Framebuffer *m_targetFb;
 
@@ -79,8 +80,8 @@ namespace remoting
       Win8DuplicationListener *m_duplListener;
 
       WinD3D11Device m_device;
-      ::array_base<WinDxgiOutput1> m_dxgiOutput1;
-      ::array_base<WinDxgiOutputDuplication> m_outDupl;
+      ::pointer_array<WinDxgiOutput1> m_dxgiOutput1;
+      ::pointer_array<WinDxgiOutputDuplication> m_outDupl;
 
       // The duplication interface can't be used
       bool m_hasCriticalError;
@@ -92,8 +93,8 @@ namespace remoting
       ::array_base<RECT> m_dirtyRects;
       ::array_base<DXGI_OUTDUPL_MOVE_RECT> m_moveRects;
 
-      ::array_base<WinCustomD3D11Texture2D> m_stageTextures2D;
-      ::innate_subsystem::Framebuffer m_auxiliaryFramebuffer;
+      ::pointer_array<WinCustomD3D11Texture2D > m_stageTextures2D;
+      ::pointer < ::innate_subsystem::Framebuffer > m_pframebufferAuxiliaryProperty;
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
@@ -101,7 +102,7 @@ namespace remoting
    //// __WIN8DESKDUPLICATIONTHREAD_H__
 
 
-}// namespace remoting
+}// namespace remoting_windows
 
 
 

@@ -27,7 +27,7 @@
 #include "acme/_operating_system.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
    GrabOptimizator::GrabOptimizator() :
@@ -42,7 +42,7 @@ namespace remoting
       m_plogwriter = plogwriter;
    }
 
-   bool GrabOptimizator::grab(const Region & regionGrab, ScreenDriver *grabber)
+   bool GrabOptimizator::grab(const Region & regionGrab, ::remoting::ScreenDriver *grabber)
    {
       // The optimization based on the assumption: Tgrab ~= Sgrab/Vgrab + g*N,
       // where Tgrab - is grab time,
@@ -128,7 +128,7 @@ namespace remoting
       return true;
    }
 
-   bool GrabOptimizator::getOptimizationAvailable(ScreenDriver *grabber)
+   bool GrabOptimizator::getOptimizationAvailable(::remoting::ScreenDriver *grabber)
    {
       int sCurrent = grabber->getScreenBuffer()->getDimension().area();
       if (m_wholeS != sCurrent)
@@ -153,7 +153,7 @@ namespace remoting
 
    bool GrabOptimizator::getGCompleted() { return m_gElements.size() >= MAX_ELEMENTS_SIZE; }
 
-   void GrabOptimizator::refreshStatistic(ScreenDriver *grabber)
+   void GrabOptimizator::refreshStatistic(::remoting::ScreenDriver *grabber)
    {
       if (m_happeningTimer.isElapsed() && getOptimizationAvailable(grabber))
       {
@@ -201,7 +201,7 @@ namespace remoting
 
    bool GrabOptimizator::isAlikeToFragments(const ::int_rectangle_array_base & rectanglea) { return rectanglea.size() >= 10; }
 
-   __int64 GrabOptimizator::grabWhole(ScreenDriver *grabber)
+   __int64 GrabOptimizator::grabWhole(::remoting::ScreenDriver *grabber)
    {
       // FIXME: WARNING!!! The microsoft API usage!!!
       LARGE_INTEGER timeBegin, timeEnd;
@@ -224,7 +224,7 @@ namespace remoting
       }
    }
 
-   __int64 GrabOptimizator::grabOneRect(const ::int_rectangle & rectangle, ScreenDriver *grabber)
+   __int64 GrabOptimizator::grabOneRect(const ::int_rectangle & rectangle, ::remoting::ScreenDriver *grabber)
    {
       int rectS = rectangle.area();
       _ASSERT(rectS != 0);
@@ -283,7 +283,7 @@ namespace remoting
       m_wholeTElements.erase(iter);
    }
 
-   __int64 GrabOptimizator::grabFragments(const ::int_rectangle_array_base & rectanglea, ScreenDriver *grabber)
+   __int64 GrabOptimizator::grabFragments(const ::int_rectangle_array_base & rectanglea, ::remoting::ScreenDriver *grabber)
    {
       // FIXME: WARNING!!! The microsoft API usage!!!
       LARGE_INTEGER timeBegin, timeEnd;
@@ -380,5 +380,5 @@ namespace remoting
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows
  

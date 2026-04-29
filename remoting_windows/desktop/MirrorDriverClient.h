@@ -39,7 +39,7 @@
 //#include "remoting/remoting/desktop/DisplayEsc.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING_WINDOWS MirrorDriverClient :
@@ -118,15 +118,15 @@ namespace remoting
       ::subsystem_windows::MessageWindow m_messagewindowPropertyChangeListener;
 
       ::innate_subsystem::PixelFormat m_pixelformat;
-      ::int_size m_dimension;
-      ::int_point m_leftTopCorner;
+      ::int_size m_size;
+      ::int_point m_pointTopLeftCorner;
       ::subsystem::Screen m_screen;
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

@@ -24,6 +24,10 @@
 #include "framework.h"
 #include "Notificator.h"
 
-Notificator::~Notificator()
+namespace remoting_control_desktop
 {
-}
+   Notificator::~Notificator()
+   {
+   }
+} // namespace remoting_control_desktop
+

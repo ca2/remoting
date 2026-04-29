@@ -24,20 +24,25 @@
 #include "framework.h"
 #include "ControlGate.h"
 
-ControlGate::ControlGate(Channel *stream)
-: DataInputStream(stream), DataOutputStream(stream)
-{
-}
 
-ControlGate::~ControlGate()
+namespace remoting_control_desktop
 {
-}
+   ControlGate::ControlGate(Channel *stream)
+   : DataInputStream(stream), DataOutputStream(stream)
+   {
+   }
 
-// FIXME: Optimize this method.
-void ControlGate::skipBytes(unsigned int length)
-{
-  char one;
-  for (size_t i = 0; i < length; i++) {
-    readFully(&one, 1);
-  }
-}
+   ControlGate::~ControlGate()
+   {
+   }
+
+   // FIXME: Optimize this method.
+   void ControlGate::skipBytes(unsigned int length)
+   {
+      char one;
+      for (size_t i = 0; i < length; i++) {
+         readFully(&one, 1);
+      }
+   }
+} // namespace remoting_control_desktop
+

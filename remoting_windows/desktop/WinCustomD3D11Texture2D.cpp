@@ -26,7 +26,7 @@
 #include "framework.h"
 #include "remoting/remoting_windows/desktop/WinCustomD3D11Texture2D.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
 
@@ -80,4 +80,4 @@ namespace remoting
    const D3D11_TEXTURE2D_DESC *WinCustomD3D11Texture2D::getDesc() const { return m_textDescInitializer.getDesc(); }
 
 
-} // namespace remoting
+} // namespace remoting_windows

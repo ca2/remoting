@@ -24,16 +24,21 @@
 #include "framework.h"
 #include "ShareFullCommand.h"
 
-ShareFullCommand::ShareFullCommand(ControlProxy *serverControl)
-: m_proxy(serverControl)
-{
-}
 
-ShareFullCommand::~ShareFullCommand()
+namespace remoting_control_desktop
 {
-}
+   ShareFullCommand::ShareFullCommand(ControlProxy *serverControl)
+   : m_proxy(serverControl)
+   {
+   }
 
-void ShareFullCommand::execute()
-{
-  m_proxy->shareFull();
-}
+   ShareFullCommand::~ShareFullCommand()
+   {
+   }
+
+   void ShareFullCommand::execute()
+   {
+      m_proxy->shareFull();
+   }
+} // namespace remoting_control_desktop
+

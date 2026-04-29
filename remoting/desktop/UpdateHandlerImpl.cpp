@@ -31,14 +31,14 @@ namespace remoting
 {
 
 
-   UpdateHandlerImpl::UpdateHandlerImpl(UpdateListener *pupdatelistenerExternal, ScreenDriverFactory *pscreendriverfactory,
+   UpdateHandlerImpl::UpdateHandlerImpl(Configurator * pconfigurator, UpdateListener *pupdatelistenerExternal, ScreenDriverFactory *pscreendriverfactory,
                                         ::subsystem::LogWriter * plogwriter) :
        m_pupdatelistenerExternal(pupdatelistenerExternal), m_fullUpdateRequested(false), m_plogwriter(plogwriter)
    {
       initialize(pupdatelistenerExternal);
       construct_newø(m_pupdatekeeperProperty);
       m_pscreendriver =
-         pscreendriverfactory->createScreenDriver(m_pupdatekeeperProperty, this, m_pframebufferBackup, &m_criticalsectionFramebuffer, plogwriter);
+         pscreendriverfactory->createScreenDriver(pconfigurator, m_pupdatekeeperProperty, this, m_pframebufferBackup, &m_criticalsectionFramebuffer, plogwriter);
       // At this point the screen driver must contain valid screen properties.
       m_pframebufferBackup->assignProperties(m_pscreendriver->getScreenBuffer());
       m_pupdatekeeperProperty->setBorderRect(m_pscreendriver->getScreenDimension());
@@ -138,11 +138,12 @@ namespace remoting
          // Update cursor shape
          m_pscreendriver->grabCursorShape(m_pframebufferBackup->getPixelFormat());
          // Store cursor shape
-         m_cursorShape.clone(m_pscreendriver->getCursorShape());
+         m_cursorshape.clone(m_pscreendriver->getCursorShape());
 
          m_fullUpdateRequested = false;
       }
       m_plogwriter->debug("UpdateHandlerImpl::extract finished");
+      return updatecontainer;
    }
 
    void UpdateHandlerImpl::applyNewScreenProperties()

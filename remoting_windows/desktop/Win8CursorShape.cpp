@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "remoting/remoting_windows/desktop/Win8CursorShape.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
 
@@ -32,19 +32,19 @@ namespace remoting
 
    Win8CursorShape::~Win8CursorShape() {}
 
-   const CursorShape *Win8CursorShape::getCursorShape() const
+   const ::remoting::CursorShape *Win8CursorShape::getCursorShape() const
    {
       if (getIsVisible())
       {
-         return &m_cursorShape;
+         return &m_cursorshape;
       }
       else
       {
-         return &m_emptyDimensionCursorShape;
+         return &m_cursorshapeEmptyDimension;
       }
    }
 
-   CursorShape *Win8CursorShape::getCursorShapeForWriting() { return &m_cursorShape; }
+   ::remoting::CursorShape *Win8CursorShape::getCursorShapeForWriting() { return &m_cursorshape; }
 
    void Win8CursorShape::setVisibility(bool value, int threadOwner)
    {
@@ -60,7 +60,7 @@ namespace remoting
    bool Win8CursorShape::getIsVisible() const { return m_isVisible; }
 
 
-} // namespace remoting
+} // namespace remoting_windows
  
 
 

@@ -26,10 +26,10 @@
 #include "subsystem/platform/Exception.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
-   // Win32ScreenDriverBaseImpl::Win32ScreenDriverBaseImpl(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+   // Win32ScreenDriverBaseImpl::Win32ScreenDriverBaseImpl(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
    //                                                      lockable_critical_section *pcriticalsectionFramebuffer,
    //                                                      ::subsystem::LogWriter * plogwriter) :
    //     WinVideoRegionUpdaterImpl(plogwriter), m_pcriticalsectionFramebuffer(pcriticalsectionFramebuffer),
@@ -47,7 +47,9 @@ namespace remoting
    Win32ScreenDriverBaseImpl::~Win32ScreenDriverBaseImpl() { terminateDetection(); }
 
 
-   void Win32ScreenDriverBaseImpl::initialize_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+   void Win32ScreenDriverBaseImpl::initialize_screen_driver(::remoting::Configurator * pconfigurator, ::remoting::UpdateKeeper * pupdatekeeper,
+      ::remoting::UpdateListener * pupdatelistener,
+                                        ::innate_subsystem::Framebuffer *pframebuffer,
                                                      lockable_critical_section *pcriticalsectionFramebuffer,
                                                      ::subsystem::LogWriter * plogwriter)
    {
@@ -57,7 +59,7 @@ namespace remoting
     // m_pcursorpositiondetector(pupdatekeeper, pupdatelistener, log),
     // m_pcursorshapedetector(pupdatekeeper, pupdatelistener, &m_pcursorshapegrabber, pcriticalsectionFramebuffer, log)
       //{
-      WinVideoRegionUpdaterImpl::initialize_screen_driver(pupdatekeeper, pupdatelistener, pcriticalsectionFramebuffer, plogwriter);
+      WinVideoRegionUpdaterImpl::initialize_screen_driver(pconfigurator, pupdatekeeper, pupdatelistener, pframebuffer, pcriticalsectionFramebuffer, plogwriter);
          raw_construct_newø(m_pcursorpositiondetector);
       m_pcursorpositiondetector->initialize_cursor_position_detector(pupdatekeeper, pupdatelistener, plogwriter);
       m_pcursorshapedetector = allocateø WindowsCursorShapeGrabber();
@@ -91,7 +93,7 @@ namespace remoting
       return m_pcursorshapegrabber->grab(pixelformat);
    }
 
-   const CursorShape *Win32ScreenDriverBaseImpl::getCursorShape() { return m_pcursorshapegrabber->getCursorShape(); }
+   const ::remoting::CursorShape *Win32ScreenDriverBaseImpl::getCursorShape() { return m_pcursorshapegrabber->getCursorShape(); }
 
    ::int_point Win32ScreenDriverBaseImpl::getCursorPosition()
    {
@@ -106,7 +108,7 @@ namespace remoting
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

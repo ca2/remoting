@@ -25,13 +25,13 @@
 #pragma once
 
 
-#include "UpdateKeeper.h"
+#include "::remoting::UpdateKeeper.h"
 #include "subsystem/thread/GuiThread.h"
-#include "UpdateListener.h"
+#include "::remoting::UpdateListener.h"
 
 
 
-namespace remoting
+namespace remoting_windows
 {
 
 
@@ -44,11 +44,11 @@ namespace remoting
       ~UpdateDetector() override;
 
 
-      virtual void initialize_update_detector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener);
+      virtual void initialize_update_detector(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener);
 
 
-      void setUpdateKeeper(UpdateKeeper *pupdatekeeper) { m_pupdatekeeper = pupdatekeeper; }
-      UpdateKeeper *getUpdateKeeper() const { return m_pupdatekeeper; }
+      void setUpdateKeeper(::remoting::UpdateKeeper *pupdatekeeper) { m_pupdatekeeper = pupdatekeeper; }
+      ::remoting::UpdateKeeper *getUpdateKeeper() const { return m_pupdatekeeper; }
 
    //protected:
       void doUpdate()
@@ -59,14 +59,14 @@ namespace remoting
          }
       }
 
-      ::pointer < UpdateKeeper > m_pupdatekeeper;
+      ::pointer < ::remoting::UpdateKeeper > m_pupdatekeeper;
 
-      ::pointer < UpdateListener > m_pupdatelistener;
+      ::pointer < ::remoting::UpdateListener > m_pupdatelistener;
    };
 
    //// __UPDATEDETECTOR_H__
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

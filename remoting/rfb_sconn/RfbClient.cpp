@@ -204,8 +204,8 @@ namespace remoting
       ::pointer < BufferedInputStream > m_pbufferedinput;
       ::pointer < ::remoting::RfbInputGate > m_prfbinputgate;
 
-      ::pointer < FileTransferRequestHandler > m_pfiletransfer;
-      ::pointer < EchoExtensionRequestHandler > m_pechoextension;
+      ::pointer < file_transfer::FileTransferRequestHandler > m_pfiletransfer;
+      ::pointer < file_transfer::EchoExtensionRequestHandler > m_pechoextension;
 
       ::pointer < RfbInitializer > m_prfbinitializer;
 
@@ -218,6 +218,9 @@ namespace remoting
       ::innate_subsystem::PixelFormat m_pixelformat;
       ::int_size m_sizeFramebuffer;
       ::int_rectangle m_rectangleViewport;
+
+      ::pointer < file_transfer::FileTransferRequestHandler > m_pfiletransferrequesthandler;
+      ::pointer < file_transfer::EchoExtensionRequestHandler > m_pechoextensionrequesthandler;
 
 
       rfb_client_run(RfbClient * prfbclient):
@@ -263,8 +266,8 @@ namespace remoting
       // BufferedInputStream bufInput(&sockStream);
       // ::remoting::RfbInputGate input(&bufInput);
 
-      FileTransferRequestHandler *fileTransfer = 0;
-      EchoExtensionRequestHandler *echoExtension = 0;
+      // ::pointer < FileTransferRequestHandler > m_pfiletransferrequesthandler;
+      // ::pointer < EchoExtensionRequestHandler > m_pechoextensionrequesthandler;
 
 //      RfbInitializer rfbInitializer(&sockStream, m_pclientauthlistener, this,
   //                                  !m_isOutgoing);
@@ -325,14 +328,17 @@ namespace remoting
 
          // FileTransfers initialization
          if (m_pconfigurator->getServerConfig()->isFileTransfersEnabled() &&
-             m_prun->m_prfbinitializer->getTightEnabledFlag()) {
-            fileTransfer = new FileTransferRequestHandler(m_prun->m_prfbcoderegistrator, m_prun->m_prfboutputgate, m_pdesktop, m_plogwriter, !m_viewOnly);
+             m_prun->m_prfbinitializer->getTightEnabledFlag())
+         {
+            m_prun->m_pfiletransferrequesthandler = allocateø file_transfer::FileTransferRequestHandler(m_pconfigurator, m_prun->m_prfbcoderegistrator, m_prun->m_prfboutputgate, m_pdesktop, m_plogwriter, !m_viewOnly);
             m_plogwriter->debug("::file::item transfer has been created");
-             } else {
-                m_plogwriter->information("::file::item transfer is not allowed");
-             }
+         }
+         else
+         {
+            m_plogwriter->information("::file::item transfer is not allowed");
+         }
          // echo extension initialization
-         echoExtension = new EchoExtensionRequestHandler(m_prun->m_prfbcoderegistrator, m_prun->m_prfboutputgate, m_plogwriter);
+         m_prun->m_pechoextensionrequesthandler = allocateø file_transfer::EchoExtensionRequestHandler(m_prun->m_prfbcoderegistrator, m_prun->m_prfboutputgate, m_plogwriter);
          m_plogwriter->debug("Echo extension handler has been created");
 
          // Second initialization phase
@@ -366,8 +372,8 @@ namespace remoting
       // After this call, we are guaranteed not to be used by other threads.
       notifyAbStateChanging(IN_PENDING_TO_REMOVE);
 
-      if (fileTransfer)         delete fileTransfer;
-      if (echoExtension)        delete echoExtension;
+      if (m_prun->m_pfiletransferrequesthandler) m_prun->m_pfiletransferrequesthandler.defer_destroy_and_release();
+      if (m_prun->m_pechoextensionrequesthandler) m_prun->m_pechoextensionrequesthandler.defer_destroy_and_release();
       if (m_pclipboardexchange)  delete m_pclipboardexchange;
       if (m_pclientinputhandler) delete m_pclientinputhandler;
       if (m_pupdatesender)       delete m_pupdatesender;

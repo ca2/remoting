@@ -28,17 +28,21 @@
 #include "subsystem/platform/Command.h"
 #include "ControlProxy.h"
 
-class ShareDisplayCommand : public Command
+
+namespace remoting_control_desktop
 {
-public:
-  ShareDisplayCommand(ControlProxy *serverControl,
-                      unsigned char displayNumber);
-  virtual ~ShareDisplayCommand();
+   class ShareDisplayCommand : public Command
+   {
+   public:
+      ShareDisplayCommand(ControlProxy *serverControl,
+                          unsigned char displayNumber);
+      virtual ~ShareDisplayCommand();
 
-  virtual void execute();
-private:
-  ControlProxy *m_proxy;
-  unsigned char m_displayNumber;
-};
+      virtual void execute();
+   private:
+      ControlProxy *m_proxy;
+      unsigned char m_displayNumber;
+   };
+} // namespace remoting_control_desktop
 
-//// _SHAREDISPLAYCOMMAND_H_
+

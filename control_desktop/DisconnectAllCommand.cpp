@@ -24,16 +24,21 @@
 #include "framework.h"
 #include "DisconnectAllCommand.h"
 
-DisconnectAllCommand::DisconnectAllCommand(ControlProxy *serverControl)
-: m_proxy(serverControl)
-{
-}
 
-DisconnectAllCommand::~DisconnectAllCommand()
+namespace remoting_control_desktop
 {
-}
+   DisconnectAllCommand::DisconnectAllCommand(ControlProxy *serverControl)
+   : m_proxy(serverControl)
+   {
+   }
 
-void DisconnectAllCommand::execute()
-{
-  m_proxy->disconnectAllClients();
-}
+   DisconnectAllCommand::~DisconnectAllCommand()
+   {
+   }
+
+   void DisconnectAllCommand::execute()
+   {
+      m_proxy->disconnectAllClients();
+   }
+} // namespace remoting_control_desktop
+

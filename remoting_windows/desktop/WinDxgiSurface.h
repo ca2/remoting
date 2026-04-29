@@ -28,7 +28,7 @@
 #include <d3d11.h>
 #include <DXGI1_2.h>
 
-namespace remoting
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING_WINDOWS WinDxgiSurface
@@ -46,7 +46,7 @@ namespace remoting
 
    //// __WINDXGISURFACE_H__
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

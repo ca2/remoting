@@ -25,30 +25,32 @@
 #pragma once
 
 
-#include "innate_subsystem/gui/BaseDialog.h"
+#include "innate_subsystem/gui/Dialog.h"
 #include "innate_subsystem/gui/TextBox.h"
 
-/**
- * ::innate_subsystem::Control authentication dialog.
- */
-class ControlAuthDialog : public BaseDialog
+
+namespace remoting_control_desktop
 {
-public:
-  ControlAuthDialog();
-  virtual ~ControlAuthDialog();
+   /**
+    * ::innate_subsystem::Control authentication dialog.
+    */
+   class ControlAuthDialog : public innate_subsystem::Dialog
+   {
+   public:
+      ControlAuthDialog();
+      virtual ~ControlAuthDialog();
 
-  /**
-   * Returns control password specified by user (in plain text).
-   */
-  ::string getPassword() const;
-protected:
-  virtual bool onInitDialog();
-  virtual bool onNotify(unsigned int controlID, ::lparam data);
-  virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
-  virtual bool onDestroy();
-private:
-  ::string m_password;
-  TextBox m_passwordTextBox;
-};
-
-
+      /**
+       * Returns control password specified by user (in plain text).
+       */
+      ::string getPassword() const;
+   protected:
+      virtual bool onInitDialog();
+      virtual bool onNotify(unsigned int controlID, ::lparam data);
+      virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
+      virtual bool onDestroy();
+   private:
+      ::string m_password;
+      ::innate_subsystem::TextBox m_passwordTextBox;
+   };
+}//   namespace remoting_control_desktop

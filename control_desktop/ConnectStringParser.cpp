@@ -26,49 +26,52 @@
 
 #include "subsystem/platform/StringParser.h"
 
-ConnectStringParser::ConnectStringParser()
+namespace remoting_control_desktop
 {
-}
+   ConnectStringParser::ConnectStringParser()
+   {
+   }
 
-ConnectStringParser::~ConnectStringParser()
-{
-}
+   ConnectStringParser::~ConnectStringParser()
+   {
+   }
 
-bool Connectmain_subsystem()->StringParser().parse(const ::scoped_string & scopedstrConnectString,
-                                ::string & connectHost,
-                                unsigned short *connectPort)
-{
-  ::string connStrStorage(connectString);
+   bool ConnectStringParser::parse(const ::scoped_string & scopedstrConnectString,
+                                   ::string * pstrHost,
+                                   unsigned short * pushPort)
+   {
+      ::string connStrStorage(scopedstrConnectString);
 
-  size_t len = 2;
+      ::string_array splitted;
 
-  ::string splitted[2];
+      splitted.explode(":", scopedstrConnectString);
 
-  if (!connStrStorage.split(":", splitted, &len)) {
-    return false;
-  }
+      if (splitted.size() != 2)
+      {
+         return false;
+      }
 
-  if (len != 2) {
-    return false;
-  }
+      int port = 0;
 
-  int port = 0;
+      if (!MainSubsystem().StringParser().parseInt(splitted[1], &port)) {
+         return false;
+      }
 
-  if (!MainSubsystem().StringParser().parseInt(splitted[1], &port)) {
-    return false;
-  }
+      if (port <= 0 || port > 65535) {
+         return false;
+      }
 
-  if (port <= 0 || port > 65535) {
-    return false;
-  }
+      if (pstrHost)
+      {
+         *pstrHost = splitted[0];
+      }
 
-  if (connectHost != 0) {
-    connectHost-= splitted[0];
-  }
+      if (pushPort)
+      {
+         *pushPort = (unsigned short)port;
+      }
 
-  if (connectPort != 0) {
-    *connectPort = (unsigned short)port;
-  }
+      return true;
+   }
+} // namespace remoting_control_desktop
 
-  return true;
-}

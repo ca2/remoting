@@ -27,17 +27,17 @@
 
 //#include "subsystem/thread/lockable_critical_section.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
-   class CLASS_DECL_REMOTING UpdateListener :
+   class CLASS_DECL_REMOTING ::remoting::UpdateListener :
    virtual public ::particle
    {
    public:
 
 
-      UpdateListener();
-      ~UpdateListener() override;
+      ::remoting::UpdateListener();
+      ~::remoting::UpdateListener() override;
 
       // Interface function
       virtual void onUpdate() = 0;
@@ -47,7 +47,7 @@ namespace remoting
    };
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

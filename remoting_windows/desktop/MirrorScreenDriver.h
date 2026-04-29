@@ -33,11 +33,11 @@
 #include "remoting/remoting/desktop/UpdateDetector.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING_WINDOWS MirrorScreenDriver :
-   virtual public UpdateDetector
+   virtual public ::remoting::UpdateDetector
    {
    public:
 
@@ -58,7 +58,7 @@ namespace remoting
       virtual ~MirrorScreenDriver();
 
 
-      virtual void initialize_mirror_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+      virtual void initialize_mirror_screen_driver(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
                          lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
 
       // Starts screen update detection if it not started yet.
@@ -87,7 +87,7 @@ namespace remoting
    };
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

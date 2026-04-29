@@ -42,116 +42,119 @@
 #include "ControlApplication.h"
 #include "AboutDialog.h"
 
-/**
- * TvnControl application icon class.
- */
-class ControlTrayIcon : public NotifyIcon, /** Inherit tray icon code. */
-                        public WindowProcHolder /** To override tray icon window procedure. */
+
+namespace remoting_control_desktop
 {
-public:
-  /**
-   * Creates control tray icon and places it to system tray.
-   * @param serverControl proxy to execute methods in TightVNC server process.
-   * @param notificator interface to report about errors during execution of remote methods.
-   * @param appControl parent control application.
-   * @param showAfterCreation determinates if needs to show icon in tray.
-   */
-  ControlTrayIcon(ControlProxy *serverControl,
-                  Notificator *notificator,
-                  ControlApplication *appControl,
-                  bool showAfterCreation);
-  /**
-   * Destroys tray icon.
-   */
-  virtual ~ControlTrayIcon();
+   /**
+    * TvnControl application icon class.
+    */
+   class ControlTrayIcon : public NotifyIcon, /** Inherit tray icon code. */
+                           public WindowProcHolder /** To override tray icon window procedure. */
+   {
+   public:
+      /**
+       * Creates control tray icon and places it to system tray.
+       * @param serverControl proxy to execute methods in TightVNC server process.
+       * @param notificator interface to report about errors during execution of remote methods.
+       * @param appControl parent control application.
+       * @param showAfterCreation determinates if needs to show icon in tray.
+       */
+      ControlTrayIcon(ControlProxy *serverControl,
+                      Notificator *notificator,
+                      ControlApplication *appControl,
+                      bool showAfterCreation);
+      /**
+       * Destroys tray icon.
+       */
+      virtual ~ControlTrayIcon();
 
-  /**
-   * Synchronizes tray icon and status text with TightVNC server.
-   * @remark method shutdowns control application if connection to
-   * TightVNC server is lost.
-   */
-  void syncStatusWithServer();
+      /**
+       * Synchronizes tray icon and status text with TightVNC server.
+       * @remark method shutdowns control application if connection to
+       * TightVNC server is lost.
+       */
+      void syncStatusWithServer();
 
-  // Terminates all function callings and then notifying to the
-  // function waitForTermination() to continue.
-  void terminate();
+      // Terminates all function callings and then notifying to the
+      // function waitForTermination() to continue.
+      void terminate();
 
-  // Wait termination of using a function by windows (e.g. windowProc) and then
-  // continue. Don't use this function from thread which call the windowProc()
-  // function.
-  void waitForTermination();
+      // Wait termination of using a function by windows (e.g. windowProc) and then
+      // continue. Don't use this function from thread which call the windowProc()
+      // function.
+      void waitForTermination();
 
-protected:
-  /**
-   * Sets icon state to "not connected to server".
-   */
-  void setNotConnectedState();
+   protected:
+      /**
+       * Sets icon state to "not connected to server".
+       */
+      void setNotConnectedState();
 
-  /**
-   * Inherited from WindowProcHolder class.
-   *
-   * Overrides default tray icon window behavour.
-   */
-  virtual LRESULT windowProc(HWND hWnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam, bool *useDefWindowProc);
+      /**
+       * Inherited from WindowProcHolder class.
+       *
+       * Overrides default tray icon window behavour.
+       */
+      virtual LRESULT windowProc(HWND hWnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam, bool *useDefWindowProc);
 
-  /**
-   * Handlers of tray icon window events.
-   */
-  void onRightButtonUp();
-  void onLeftButtonDown();
+      /**
+       * Handlers of tray icon window events.
+       */
+      void onRightButtonUp();
+      void onLeftButtonDown();
 
-  /**
-   * Tray icon popup menu items scopedstrMessage handlers.
-   */
-  void onConfigurationMenuItemClick();
-  void onDisconnectAllClientsMenuItemClick();
-  void onShutdownServerMenuItemClick();
-  void onOutgoingConnectionMenuItemClick();
-  void onAttachToDispatcher();
-  void onAboutMenuItemClick();
-  void onCloseControlInterfaceMenuItemClick();
+      /**
+       * Tray icon popup menu items scopedstrMessage handlers.
+       */
+      void onConfigurationMenuItemClick();
+      void onDisconnectAllClientsMenuItemClick();
+      void onShutdownServerMenuItemClick();
+      void onOutgoingConnectionMenuItemClick();
+      void onAttachToDispatcher();
+      void onAboutMenuItemClick();
+      void onCloseControlInterfaceMenuItemClick();
 
-protected:
-  static unsigned int WM_USER_TASKBAR;
+   protected:
+      static unsigned int WM_USER_TASKBAR;
 
-protected:
+   protected:
 
-  // Interface to show error notifications.
-  Notificator *m_notificator;
+      // Interface to show error notifications.
+      Notificator *m_notificator;
 
-  // Pointer to control application.
-  ControlApplication *m_appControl;
+      // Pointer to control application.
+      ControlApplication *m_appControl;
 
-  // States of tray icon.
-  Icon *m_iconWorking;
-  Icon *m_iconIdle;
-  Icon *m_iconDisabled;
+      // States of tray icon.
+      Icon *m_iconWorking;
+      Icon *m_iconIdle;
+      Icon *m_iconDisabled;
 
-  // Interface to execute some commands on remote TightVNC server.
-  ControlProxy *m_serverControl;
+      // Interface to execute some commands on remote TightVNC server.
+      ControlProxy *m_serverControl;
 
-  // Configuration dialog.
-  ConfigDialog *m_configDialog;
-  // About dialog.
-  AboutDialog m_aboutDialog;
+      // Configuration dialog.
+      ConfigDialog *m_configDialog;
+      // About dialog.
+      AboutDialog m_aboutDialog;
 
-  // Last known TightVNC server information.
-  TvnServerInfo m_lastKnownServerInfo;
-  // Thread-safety of m_lastKnownServerInfo member.
-  lockable_critical_section m_serverInfoMutex;
+      // Last known TightVNC server information.
+      TvnServerInfo m_lastKnownServerInfo;
+      // Thread-safety of m_lastKnownServerInfo member.
+      lockable_critical_section m_serverInfoMutex;
 
-  // Commands for configuration dialog.
-  Command *m_updateRemoteConfigCommand;
-  Command *m_updateLocalConfigCommand;
-  MacroCommand *m_applyChangesMacroCommand;
-  ControlCommand *m_applyChangesControlCommand;
+      // Commands for configuration dialog.
+      Command *m_updateRemoteConfigCommand;
+      Command *m_updateLocalConfigCommand;
+      MacroCommand *m_applyChangesMacroCommand;
+      ControlCommand *m_applyChangesControlCommand;
 
-  // This variable is set to true when entering ControlTrayIcon::windowProc(),
-  // and is used to prevent from executing that function recursively.
-  bool m_inWindowProc;
+      // This variable is set to true when entering ControlTrayIcon::windowProc(),
+      // and is used to prevent from executing that function recursively.
+      bool m_inWindowProc;
 
-  ::happening m_endEvent;
-  bool m_termination;
-};
-
+      ::happening m_endEvent;
+      bool m_termination;
+   };
+} // namespace remoting_control_desktop
 

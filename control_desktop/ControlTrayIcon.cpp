@@ -41,314 +41,318 @@
 
 //#include aaa_<crtdbg.h>
 
-unsigned int ControlTrayIcon::WM_USER_TASKBAR;
-
-ControlTrayIcon::ControlTrayIcon(ControlProxy *serverControl,
-                                 Notificator *notificator,
-                                 ControlApplication *appControl,
-                                 bool showAfterCreation)
-: NotifyIcon(showAfterCreation),
-  m_serverControl(serverControl), m_notificator(notificator),
-  m_appControl(appControl),
-  m_inWindowProc(false),
-  m_termination(false)
+namespace remoting_control_desktop
 {
-  auto presourceloader = MainSubsystem().ResourceLoader();
+   unsigned int ControlTrayIcon::WM_USER_TASKBAR;
 
-  m_iconWorking = new Icon(presourceloader->loadIcon(MAKEINTRESOURCE(IDI_CONNECTED)));
-  m_iconIdle = new Icon(presourceloader->loadIcon(MAKEINTRESOURCE(IDI_IDLE)));
-  m_iconDisabled = new Icon(presourceloader->loadIcon(MAKEINTRESOURCE(IDI_DISABLED)));
+   ControlTrayIcon::ControlTrayIcon(ControlProxy *serverControl,
+                                    Notificator *notificator,
+                                    ControlApplication *appControl,
+                                    bool showAfterCreation)
+   : NotifyIcon(showAfterCreation),
+     m_serverControl(serverControl), m_notificator(notificator),
+     m_appControl(appControl),
+     m_inWindowProc(false),
+     m_termination(false)
+   {
+      auto presourceloader = MainSubsystem().ResourceLoader();
 
-  setWindowProcHolder(this);
+      m_iconWorking = new Icon(presourceloader->loadIcon(MAKEINTRESOURCE(IDI_CONNECTED)));
+      m_iconIdle = new Icon(presourceloader->loadIcon(MAKEINTRESOURCE(IDI_IDLE)));
+      m_iconDisabled = new Icon(presourceloader->loadIcon(MAKEINTRESOURCE(IDI_DISABLED)));
 
-  // Prepare commands for configration dialog.
-  m_updateRemoteConfigCommand = new UpdateRemoteConfigCommand(m_serverControl);
-  m_updateLocalConfigCommand = new UpdateLocalConfigCommand(m_serverControl);
-  m_applyChangesMacroCommand = new MacroCommand();
-  m_applyChangesMacroCommand->addCommand(m_updateRemoteConfigCommand);
-  // m_applyChangesMacroCommand->addCommand(m_updateLocalConfigCommand);
-  m_applyChangesControlCommand = new ControlCommand(m_applyChangesMacroCommand, m_notificator);
+      setWindowProcHolder(this);
 
-  // Create config dialog.
-  m_configDialog = new ConfigDialog();
-  m_configDialog->setConfigReloadCommand(m_applyChangesControlCommand);
+      // Prepare commands for configration dialog.
+      m_updateRemoteConfigCommand = new UpdateRemoteConfigCommand(m_serverControl);
+      m_updateLocalConfigCommand = new UpdateLocalConfigCommand(m_serverControl);
+      m_applyChangesMacroCommand = new MacroCommand();
+      m_applyChangesMacroCommand->addCommand(m_updateRemoteConfigCommand);
+      // m_applyChangesMacroCommand->addCommand(m_updateLocalConfigCommand);
+      m_applyChangesControlCommand = new ControlCommand(m_applyChangesMacroCommand, m_notificator);
 
-  // Default icon state.
-  setNotConnectedState();
+      // Create config dialog.
+      m_configDialog = new ConfigDialog();
+      m_configDialog->setConfigReloadCommand(m_applyChangesControlCommand);
 
-  // Update status.
-  syncStatusWithServer();
+      // Default icon state.
+      setNotConnectedState();
 
-  WM_USER_TASKBAR = RegisterWindowMessage("TaskbarCreated");
-}
+      // Update status.
+      syncStatusWithServer();
 
-ControlTrayIcon::~ControlTrayIcon()
-{
-  delete m_configDialog;
+      WM_USER_TASKBAR = RegisterWindowMessage("TaskbarCreated");
+   }
 
-  delete m_applyChangesControlCommand;
-  delete m_applyChangesMacroCommand;
-  delete m_updateLocalConfigCommand;
-  delete m_updateRemoteConfigCommand;
+   ControlTrayIcon::~ControlTrayIcon()
+   {
+      delete m_configDialog;
 
-  delete m_iconDisabled;
-  delete m_iconIdle;
-  delete m_iconWorking;
-}
+      delete m_applyChangesControlCommand;
+      delete m_applyChangesMacroCommand;
+      delete m_updateLocalConfigCommand;
+      delete m_updateRemoteConfigCommand;
 
-LRESULT ControlTrayIcon::windowProc(HWND hWnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam,
-                                    bool *useDefWindowProc)
-{
-  if (m_inWindowProc) {
-    // This call is recursive, do not do any real work.
-    *useDefWindowProc = true;
-    return 0;
-  }
-  if (m_termination) {
-    m_endEvent.notify();
-    *useDefWindowProc = true;
-    return 0;
-  }
+      delete m_iconDisabled;
+      delete m_iconIdle;
+      delete m_iconWorking;
+   }
 
-  // Make sure to reset it back to false before leaving this function for any
-  // reason (check all return statements, exceptions should not happen here).
-  m_inWindowProc = true;
+   LRESULT ControlTrayIcon::windowProc(HWND hWnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam,
+                                       bool *useDefWindowProc)
+   {
+      if (m_inWindowProc) {
+         // This call is recursive, do not do any real work.
+         *useDefWindowProc = true;
+         return 0;
+      }
+      if (m_termination) {
+         m_endEvent.notify();
+         *useDefWindowProc = true;
+         return 0;
+      }
 
-  switch (uMsg) {
-  case WM_USER + 1:
-    switch (lParam) {
-    case WM_RBUTTONUP:
-      onRightButtonUp();
-      break;
-    case WM_LBUTTONDOWN:
-      onLeftButtonDown();
-      break;
-    } // switch (lParam)
-    break;
-  default:
-    if (uMsg == WM_USER_TASKBAR) {
-      hide();
-    }
-    *useDefWindowProc = true;
-  }
+      // Make sure to reset it back to false before leaving this function for any
+      // reason (check all return statements, exceptions should not happen here).
+      m_inWindowProc = true;
 
-  m_inWindowProc = false;
-  return 0;
-}
+      switch (uMsg) {
+         case WM_USER + 1:
+            switch (lParam) {
+            case WM_RBUTTONUP:
+                  onRightButtonUp();
+                  break;
+            case WM_LBUTTONDOWN:
+                  onLeftButtonDown();
+                  break;
+            } // switch (lParam)
+            break;
+         default:
+            if (uMsg == WM_USER_TASKBAR) {
+               hide();
+            }
+            *useDefWindowProc = true;
+      }
 
-void ControlTrayIcon::onRightButtonUp()
-{
-  HMENU hRoot = LoadMenu(GetModuleHandle(0), MAKEINTRESOURCE(IDR_TRAYMENU));
-  HMENU hMenu = GetSubMenu(hRoot, 0);
+      m_inWindowProc = false;
+      return 0;
+   }
 
-  SetMenuDefaultItem(hMenu, ID_CONFIGURATION, false);
+   void ControlTrayIcon::onRightButtonUp()
+   {
+      HMENU hRoot = LoadMenu(GetModuleHandle(0), MAKEINTRESOURCE(IDR_TRAYMENU));
+      HMENU hMenu = GetSubMenu(hRoot, 0);
 
-  if (m_appControl->m_slaveModeEnabled) {
-    RemoveMenu(hMenu, ID_CLOSE_CONTROL_INTERFACE, MF_BYCOMMAND);
-  }
+      SetMenuDefaultItem(hMenu, ID_CONFIGURATION, false);
 
-  POINT pos;
+      if (m_appControl->m_slaveModeEnabled) {
+         RemoveMenu(hMenu, ID_CLOSE_CONTROL_INTERFACE, MF_BYCOMMAND);
+      }
 
-  if (!GetCursorPos(&pos)) {
-    pos.x = pos.y = 0;
-  }
+      POINT pos;
 
-  SetForegroundWindow(operating_system_window());
+      if (!GetCursorPos(&pos)) {
+         pos.x = pos.y = 0;
+      }
 
-  int action = TrackPopupMenu(hMenu,
-                              TPM_NONOTIFY | TPM_RETURNCMD | TPM_RIGHTBUTTON,
-                              pos.x, pos.y, 0, operating_system_window(), NULL);
+      SetForegroundWindow(operating_system_window());
 
-  switch (action) {
-  case ID_KILLCLIENTS:
-    onDisconnectAllClientsMenuItemClick();
-    break;
-  case ID_SHUTDOWN_SERVICE:
-    onShutdownServerMenuItemClick();
-    break;
-  case ID_CONFIGURATION:
-    onConfigurationMenuItemClick();
-    break;
-  case ID_OUTGOING_CONN:
-    onOutgoingConnectionMenuItemClick();
-    break;
-  case ID_ABOUT_TIGHTVNC_MENUITEM:
-    onAboutMenuItemClick();
-    break;
-  case ID_CLOSE_CONTROL_INTERFACE:
-    onCloseControlInterfaceMenuItemClick();
-    break;
-  }
-}
+      int action = TrackPopupMenu(hMenu,
+                                  TPM_NONOTIFY | TPM_RETURNCMD | TPM_RIGHTBUTTON,
+                                  pos.x, pos.y, 0, operating_system_window(), NULL);
 
-void ControlTrayIcon::onLeftButtonDown()
-{
-  onConfigurationMenuItemClick();
-}
+      switch (action) {
+         case ID_KILLCLIENTS:
+            onDisconnectAllClientsMenuItemClick();
+            break;
+         case ID_SHUTDOWN_SERVICE:
+            onShutdownServerMenuItemClick();
+            break;
+         case ID_CONFIGURATION:
+            onConfigurationMenuItemClick();
+            break;
+         case ID_OUTGOING_CONN:
+            onOutgoingConnectionMenuItemClick();
+            break;
+         case ID_ABOUT_TIGHTVNC_MENUITEM:
+            onAboutMenuItemClick();
+            break;
+         case ID_CLOSE_CONTROL_INTERFACE:
+            onCloseControlInterfaceMenuItemClick();
+            break;
+      }
+   }
 
-void ControlTrayIcon::onConfigurationMenuItemClick()
-{
-  ControlApplication::removeModelessDialog(m_configDialog->operating_system_window());
+   void ControlTrayIcon::onLeftButtonDown()
+   {
+      onConfigurationMenuItemClick();
+   }
 
-  bool isConnectedToService = false;
+   void ControlTrayIcon::onConfigurationMenuItemClick()
+   {
+      ControlApplication::removeModelessDialog(m_configDialog->operating_system_window());
 
-  try {
-    isConnectedToService = m_serverControl->getServerInfo().m_serviceFlag;
-  } catch (...) {
-    return;
-  }
+      bool isConnectedToService = false;
 
-  m_pconfigurator->setServiceFlag(isConnectedToService);
+      try {
+         isConnectedToService = m_serverControl->getServerInfo().m_serviceFlag;
+      } catch (...) {
+         return;
+      }
 
-  // Copy running tightvnc config to our global server config.
-  if (!m_configDialog->isCreated()) {
-    UpdateLocalConfigCommand updateLocalConfigCommand(m_serverControl);
+      m_pconfigurator->setServiceFlag(isConnectedToService);
 
-    ControlCommand safeCommand(&updateLocalConfigCommand, m_appControl);
+      // Copy running tightvnc config to our global server config.
+      if (!m_configDialog->isCreated()) {
+         UpdateLocalConfigCommand updateLocalConfigCommand(m_serverControl);
 
-    safeCommand.execute();
+         ControlCommand safeCommand(&updateLocalConfigCommand, m_appControl);
 
-    if (!safeCommand.executionResultOk()) {
-      return;
-    }
-  }
+         safeCommand.execute();
 
-  // Show dialog.
-  m_configDialog->setServiceFlag(isConnectedToService);
-  m_configDialog->show();
+         if (!safeCommand.executionResultOk()) {
+            return;
+         }
+      }
 
-  ControlApplication::addModelessDialog(m_configDialog->operating_system_window());
-}
+      // Show dialog.
+      m_configDialog->setServiceFlag(isConnectedToService);
+      m_configDialog->show();
 
-void ControlTrayIcon::onDisconnectAllClientsMenuItemClick()
-{
-  DisconnectAllCommand unsafeCommand(m_serverControl);
+      ControlApplication::addModelessDialog(m_configDialog->operating_system_window());
+   }
 
-  ControlCommand safeCommand(&unsafeCommand, m_notificator);
+   void ControlTrayIcon::onDisconnectAllClientsMenuItemClick()
+   {
+      DisconnectAllCommand unsafeCommand(m_serverControl);
 
-  safeCommand.execute();
-}
+      ControlCommand safeCommand(&unsafeCommand, m_notificator);
 
-void ControlTrayIcon::onShutdownServerMenuItemClick()
-{
-  // Promt user if any client is connected to rfb server.
+      safeCommand.execute();
+   }
 
-  // FIXME: Bad way to determinate connected clients.
-  bool someoneConnected = (getIcon() == m_iconWorking);
+   void ControlTrayIcon::onShutdownServerMenuItemClick()
+   {
+      // Promt user if any client is connected to rfb server.
 
-  if (someoneConnected) {
-    TvnServerInfo serverInfo = {0};
+      // FIXME: Bad way to determinate connected clients.
+      bool someoneConnected = (getIcon() == m_iconWorking);
 
-    {
-      critical_section_lock l(&m_serverInfoMutex);
+      if (someoneConnected) {
+         TvnServerInfo serverInfo = {0};
 
-      serverInfo = m_lastKnownServerInfo;
-    }
+         {
+            critical_section_lock l(&m_serverInfoMutex);
 
-    ::string userMessage;
+            serverInfo = m_lastKnownServerInfo;
+         }
 
-    unsigned int stringId = serverInfo.m_serviceFlag ? IDS_TVNSERVER_SERVICE : IDS_TVNSERVER_APP;
+         ::string userMessage;
 
-    userMessage.format(
-      MainSubsystem().StringTable().getString(IDS_SHUTDOWN_NOTIFICATION_FORMAT),
-      MainSubsystem().StringTable().getString(stringId));
+         unsigned int stringId = serverInfo.m_serviceFlag ? IDS_TVNSERVER_SERVICE : IDS_TVNSERVER_APP;
 
-    if (MainSubsystem().message_box(
-      operating_system_window(),
-      userMessage,
-      MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL),
-      ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) == ::innate_subsystem::IDNO) {
-        return;
-    }
-  }
+         userMessage.format(
+           MainSubsystem().StringTable().getString(IDS_SHUTDOWN_NOTIFICATION_FORMAT),
+           MainSubsystem().StringTable().getString(stringId));
 
-  // Shutdown TightVNC server.
+         if (MainSubsystem().message_box(
+           operating_system_window(),
+           userMessage,
+           MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL),
+           ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) == ::innate_subsystem::IDNO) {
+            return;
+           }
+      }
 
-  ShutdownCommand unsafeCommand(m_serverControl);
+      // Shutdown TightVNC server.
 
-  ControlCommand safeCommand(&unsafeCommand, m_notificator);
+      ShutdownCommand unsafeCommand(m_serverControl);
 
-  safeCommand.execute();
-}
+      ControlCommand safeCommand(&unsafeCommand, m_notificator);
 
-void ControlTrayIcon::onOutgoingConnectionMenuItemClick()
-{
-  OutgoingConnectionDialog connDialog;
+      safeCommand.execute();
+   }
 
-  if (connDialog.showModal() == ::innate_subsystem::IDOK) {
-    MakeRfbConnectionCommand unsafeCommand(
-      m_serverControl,
-      connDialog.getConnectString(),
-      connDialog.isViewOnly());
+   void ControlTrayIcon::onOutgoingConnectionMenuItemClick()
+   {
+      OutgoingConnectionDialog connDialog;
 
-    ControlCommand safeCommand(&unsafeCommand, m_notificator);
+      if (connDialog.showModal() == ::innate_subsystem::IDOK) {
+         MakeRfbConnectionCommand unsafeCommand(
+           m_serverControl,
+           connDialog.getConnectString(),
+           connDialog.isViewOnly());
 
-    safeCommand.execute();
-  }
-}
+         ControlCommand safeCommand(&unsafeCommand, m_notificator);
 
-void ControlTrayIcon::onAboutMenuItemClick()
-{
-  m_aboutDialog.show();
+         safeCommand.execute();
+      }
+   }
 
-  ControlApplication::addModelessDialog(m_aboutDialog.operating_system_window());
-}
+   void ControlTrayIcon::onAboutMenuItemClick()
+   {
+      m_aboutDialog.show();
 
-void ControlTrayIcon::onCloseControlInterfaceMenuItemClick()
-{
-  m_appControl->shutdown();
-}
+      ControlApplication::addModelessDialog(m_aboutDialog.operating_system_window());
+   }
 
-void ControlTrayIcon::syncStatusWithServer()
-{
-  try {
-     // Get TightVNC server info.
-    TvnServerInfo info = m_serverControl->getServerInfo();
-    ::list_base<RfbClientInfo *> clients;
-    m_serverControl->getClientsList(&clients);
+   void ControlTrayIcon::onCloseControlInterfaceMenuItemClick()
+   {
+      m_appControl->shutdown();
+   }
 
-    // Change icon status.
-    if (clients.size() > 0) {
-      setIcon(m_iconWorking);
-    } else if (info.m_acceptFlag) {
-      setIcon(m_iconIdle);
-    } else {
+   void ControlTrayIcon::syncStatusWithServer()
+   {
+      try {
+         // Get TightVNC server info.
+         TvnServerInfo info = m_serverControl->getServerInfo();
+         ::list_base<RfbClientInfo *> clients;
+         m_serverControl->getClientsList(&clients);
+
+         // Change icon status.
+         if (clients.size() > 0) {
+            setIcon(m_iconWorking);
+         } else if (info.m_acceptFlag) {
+            setIcon(m_iconIdle);
+         } else {
+            setIcon(m_iconDisabled);
+         }
+
+         setText(info.m_statusText);
+
+         // Cleanup.
+         for (::list_base<RfbClientInfo *>::iterator it = clients.begin(); it != clients.end(); it++) {
+            delete *it;
+         }
+
+         {
+            critical_section_lock l(&m_serverInfoMutex);
+
+            m_lastKnownServerInfo = info;
+         }
+      } catch (::io_exception &) {
+         setNotConnectedState();
+      } catch (::subsystem::Exception &) {
+         _ASSERT(false);
+      } // try / catch.
+   }
+
+   void ControlTrayIcon::setNotConnectedState()
+   {
       setIcon(m_iconDisabled);
-    }
+      setText(MainSubsystem().StringTable().getString(IDS_CONTROL_CLIENT_NOT_CONNECTED));
+   }
 
-    setText(info.m_statusText);
+   void ControlTrayIcon::terminate()
+   {
+      m_termination = true;
+      // Forcing window scopedstrMessage
+      PostMessage(operating_system_window(), WM_USER + 1, 0, 0);
+   }
 
-    // Cleanup.
-    for (::list_base<RfbClientInfo *>::iterator it = clients.begin(); it != clients.end(); it++) {
-      delete *it;
-    }
+   void ControlTrayIcon::waitForTermination()
+   {
+      m_endEvent.waitForEvent();
+   }
+} // namespace remoting_control_desktop
 
-    {
-      critical_section_lock l(&m_serverInfoMutex);
-
-      m_lastKnownServerInfo = info;
-    }
-  } catch (::io_exception &) {
-    setNotConnectedState();
-  } catch (::subsystem::Exception &) {
-    _ASSERT(false);
-  } // try / catch.
-}
-
-void ControlTrayIcon::setNotConnectedState()
-{
-  setIcon(m_iconDisabled);
-  setText(MainSubsystem().StringTable().getString(IDS_CONTROL_CLIENT_NOT_CONNECTED));
-}
-
-void ControlTrayIcon::terminate()
-{
-  m_termination = true;
-  // Forcing window scopedstrMessage
-  PostMessage(operating_system_window(), WM_USER + 1, 0, 0);
-}
-
-void ControlTrayIcon::waitForTermination()
-{
-  m_endEvent.waitForEvent();
-}

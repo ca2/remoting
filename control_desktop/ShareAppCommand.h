@@ -29,16 +29,20 @@
 
 #include "ControlProxy.h"
 
-class ShareAppCommand : public Command
+namespace remoting_control_desktop
 {
-public:
-  ShareAppCommand(ControlProxy *serverControl, unsigned int procId);
-  virtual ~ShareAppCommand();
+   class ShareAppCommand : public Command
+   {
+   public:
+      ShareAppCommand(ControlProxy *serverControl, unsigned int procId);
+      virtual ~ShareAppCommand();
 
-  virtual void execute();
-private:
-  ControlProxy *m_proxy;
-  unsigned int m_procId;
-};
+      virtual void execute();
+   private:
+      ControlProxy *m_proxy;
+      unsigned int m_procId;
+   };
+} // namespace remoting_control_desktop
 
-//// _SHAREAPPCOMMAND_H_
+
+

@@ -33,38 +33,13 @@
 //#include "log_writer/LogWriter.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
-   class CLASS_DECL_REMOTING_WINDOWS WindowsUserInput : public UserInput
+   class CLASS_DECL_REMOTING_WINDOWS WindowsUserInput :
+   virtual public ::remoting::UserInput
    {
    public:
-      //WindowsUserInput(::subsystem::ClipboardListener *pclipboardlistener, bool ctrlAltDelEnabled,
-        //               ::subsystem::LogWriter * plogwriter);
-      WindowsUserInput();
-      ~WindowsUserInput() override;
-
-      void initialize_user_input(::subsystem::ClipboardListener *pclipboardlistener, bool ctrlAltDelEnabled,
-                 ::subsystem::LogWriter * plogwriter) override;
-
-      virtual void setNewClipboard(const ::scoped_string &newClipboard);
-      virtual void setMouseEvent(const ::int_point newPos, unsigned char keyFlag);
-      virtual void setKeyboardEvent(unsigned int keySym, bool down);
-
-      virtual void getCurrentUserInfo(::string &desktopName, ::string &userName);
-      virtual void getDisplayNumberCoords(::int_rectangle & rectangle, unsigned char dispNumber);
-      virtual ::int_rectangle_array_base WindowsUserInput::getDisplaysCoords();
-      virtual void getNormalizedRect(::int_rectangle & rectangle);
-      virtual void getPrimaryDisplayCoords(::int_rectangle & rectangle);
-      virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rectangle);
-      virtual ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName);
-      virtual void getApplicationRegion(unsigned int procId, ::remoting::Region & region);
-      virtual bool isApplicationInFocus(unsigned int procId);
-
-      void initKeyFlag(unsigned char initValue) override { m_prevKeyFlag = initValue; }
-
-   //protected:
-      void toFbCoordinates(::int_rectangle & rectangle);
 
       ::pointer<::subsystem::Clipboard2> m_pclipboard;
       // WindowsDisplays m_winDisplays;
@@ -76,11 +51,40 @@ namespace remoting
       unsigned char m_prevKeyFlag;
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
+
+
+      //WindowsUserInput(::subsystem::ClipboardListener *pclipboardlistener, bool ctrlAltDelEnabled,
+        //               ::subsystem::LogWriter * plogwriter);
+      WindowsUserInput();
+      ~WindowsUserInput() override;
+
+      void initialize_user_input(::subsystem::ClipboardListener *pclipboardlistener, bool ctrlAltDelEnabled,
+                 ::subsystem::LogWriter * plogwriter) override;
+
+      virtual void setNewClipboard(const ::scoped_string &newClipboard);
+      virtual void setMouseEvent(const ::int_point pointNewPosition, unsigned char keyFlag);
+      virtual void setKeyboardEvent(unsigned int keySym, bool down);
+
+      virtual void getCurrentUserInfo(::string &desktopName, ::string &userName);
+      virtual void getDisplayNumberCoords(::int_rectangle & rectangle, unsigned char dispNumber);
+      virtual ::int_rectangle_array_base WindowsUserInput::getDisplaysCoords();
+      virtual void getNormalizedRect(::int_rectangle & rectangle);
+      virtual void getPrimaryDisplayCoords(::int_rectangle & rectangle);
+      virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rectangle);
+      virtual ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName);
+      virtual void getApplicationRegion(const ::process_identifier & processidentifier, ::remoting::Region & region);
+      virtual bool isApplicationInFocus(const ::process_identifier & processidentifier);
+
+      void initKeyFlag(unsigned char initValue) override { m_prevKeyFlag = initValue; }
+
+   //protected:
+      void toFbCoordinates(::int_rectangle & rectangle);
+
    };
 
    //// __WINDOWSUSERINPUT_H__
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

@@ -31,14 +31,16 @@
 
 //#include "subsystem/thread/lockable_critical_section.h"
 
-class ControlGate : public DataInputStream, public DataOutputStream,
-                    public lockable_critical_section
+namespace remoting_control_desktop
 {
-public:
-  ControlGate(Channel *stream);
-  virtual ~ControlGate();
+   class ControlGate : public DataInputStream, public DataOutputStream,
+                       public lockable_critical_section
+   {
+   public:
+      ControlGate(Channel *stream);
+      virtual ~ControlGate();
 
-  void skipBytes(unsigned int length);
-};
-
+      void skipBytes(unsigned int length);
+   };
+} //   namespace remoting_control_desktop
 

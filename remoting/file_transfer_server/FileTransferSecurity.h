@@ -22,40 +22,63 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef _FT_SECURITY_H_
-#define _FT_SECURITY_H_
+#pragma once
 
-#include "util/Exception.h"
-#include "util/Singleton.h"
-#include "log-writer/LogWriter.h"
+//#include "util/Exception.h"
+//#include "util/Singleton.h"
+//#include "log-writer/LogWriter.h"
 
-#include "win-system/Impersonator.h"
+#include "subsystem_windows/node/Impersonator.h"
 
 #include "desktop/Desktop.h"
 
-class FileTransferSecurity : private Impersonator
+namespace remoting
 {
-public:
-  FileTransferSecurity(Desktop *desktop, LogWriter *log);
-  virtual ~FileTransferSecurity();
 
-  // Sets access rights for calling process for execution
-  // file transfer request handler code.
-  void beginMessageProcessing();
-  // Checks result and throws exception if caller
-  // must not execute file transfer code and return error
-  // to client.
-  void throwIfAccessDenied() throw(Exception);
-  // Sets previous (before startMessageProcessing call) access rights
-  // for calling process.
-  void endMessageProcessing();
 
-protected:
-  bool m_hasAccess;
+   namespace file_transfer
+   {
+      class CLASS_DECL_REMOTING FileTransferSecurity :
+       virtual public ::subsystem_windows::Impersonator
+      {
+      public:
 
-  Desktop *m_desktop;
 
-  LogWriter *m_log;
-};
+         bool m_hasAccess;
 
-#endif
+         ::remoting::Desktop *m_pdesktop;
+
+         ::pointer < ::subsystem::LogWriter > m_plogwriter;
+         ::pointer < Configurator > m_pconfigurator;
+
+
+         FileTransferSecurity(Configurator * pconfigurator, ::remoting::Desktop *desktop, ::subsystem::LogWriter *log);
+         virtual ~FileTransferSecurity();
+
+         // Sets access rights for calling process for execution
+         // file transfer request handler code.
+         void beginMessageProcessing();
+         // Checks result and throws exception if caller
+         // must not execute file transfer code and return error
+         // to client.
+         void throwIfAccessDenied(); //throw(Exception);
+         // Sets previous (before startMessageProcessing call) access rights
+         // for calling process.
+         void endMessageProcessing();
+
+      protected:
+         // bool m_hasAccess;
+         //
+         // ::remoting::Desktop *m_pdesktop;
+         //
+         // ::pointer < ::subsystem::LogWriter > m_plogwriter;
+      };
+
+
+   } // namespace file_transfer
+
+
+} // namespace remoting
+
+
+

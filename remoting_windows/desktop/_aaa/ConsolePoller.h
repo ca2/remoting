@@ -30,7 +30,7 @@
 #include "acme/parallelization/happening.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING ConsolePoller :
@@ -40,7 +40,7 @@ namespace remoting
       ConsolePoller();
 
       virtual ~ConsolePoller();
-      virtual void initialize_console_poller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ScreenGrabber *pscreengrabber,
+      virtual void initialize_console_poller(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener, ScreenGrabber *pscreengrabber,
                     ::innate_subsystem::Framebuffer *backupFramebuffer, lockable_critical_section *framebufferMutex,
                     ::subsystem::LogWriter * plogwriter);
 
@@ -60,7 +60,7 @@ namespace remoting
    };
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

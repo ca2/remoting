@@ -221,7 +221,7 @@
 // void Environment::simulateCtrlAltDel(::subsystem::LogWriter * plogwriter)
 // {
 //   // FIXME: Do not use log here.
-//   log->information("Requested Ctrl+Alt+Del simulation");
+//   plogwriter->information("Requested Ctrl+Alt+Del simulation");
 //
 //   // Are we running on Windows NT OS family?
 //   if (!isVistaOrLater() && isWinNTFamily()) {
@@ -233,7 +233,7 @@
 // void Environment::simulateCtrlAltDelUnderVista(::subsystem::LogWriter * plogwriter)
 // {
 //   // FIXME: Do not use log here.
-//   log->information("Requested Ctrl+Alt+Del simulation under Vista or later");
+//   plogwriter->information("Requested Ctrl+Alt+Del simulation under Vista or later");
 //
 //   try {
 //     DynamicLibrary sasLib("sas.dll");
@@ -243,7 +243,7 @@
 //     }
 //     sendSas(false); // Try only under service
 //   } catch (::exception &e) {
-//     log->error("The simulateCtrlAltDelUnderVista() function failed: {}",
+//     plogwriter->error("The simulateCtrlAltDelUnderVista() function failed: {}",
 //                e.get_message());
 //   }
 // }
@@ -267,7 +267,7 @@
 //     }
 //     return result != false;
 //   } catch (::exception &e) {
-//     log->error("The DwmIsCompositionEnabled() function failed: {}",
+//     plogwriter->error("The DwmIsCompositionEnabled() function failed: {}",
 //                e.get_message());
 //     throw;
 //   }

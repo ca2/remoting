@@ -24,11 +24,11 @@
 #include "framework.h"
 #include "DummyScreenDriver.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
    //
-   // DummyScreenDriver::DummyScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, const ::int_size & size,
+   // DummyScreenDriver::DummyScreenDriver(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener, const ::int_size & size,
    //                                   unsigned int interval, ::subsystem::LogWriter * plogwriter) :
    //  m_pupdatelistener = pupdatelistener;m_pupdatekeeper = pupdatekeeper; m_interval(interval)
    //  {
@@ -60,7 +60,7 @@ namespace remoting
    }
 
 
-   void DummyScreenDriver::initialize_dummy_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, const ::int_size & size,
+   void DummyScreenDriver::initialize_dummy_screen_driver(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener, const ::int_size & size,
                                      unsigned int interval, ::subsystem::LogWriter * plogwriter)
    {
       m_pupdatelistener = pupdatelistener;
@@ -135,7 +135,7 @@ namespace remoting
    bool DummyScreenDriver::applyNewScreenProperties() { return true; }
 
 
-} // namespace remoting
+} // namespace remoting_windows
  
 
 

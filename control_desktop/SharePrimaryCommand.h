@@ -29,15 +29,21 @@
 
 #include "ControlProxy.h"
 
-class SharePrimaryCommand : public Command
+
+namespace remoting_control_desktop
 {
-public:
-  SharePrimaryCommand(ControlProxy *serverControl);
-  virtual ~SharePrimaryCommand();
+   class SharePrimaryCommand : public Command
+   {
+   public:
+      SharePrimaryCommand(ControlProxy *serverControl);
+      virtual ~SharePrimaryCommand();
 
-  virtual void execute();
-private:
-  ControlProxy *m_proxy;
-};
+      virtual void execute();
+   private:
+      ControlProxy *m_proxy;
+   };
+} // namespace remoting_control_desktop
 
-//// _SHAREPRIMARYCOMMAND_H_
+
+
+

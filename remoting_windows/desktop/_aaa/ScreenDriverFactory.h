@@ -25,13 +25,13 @@
 #pragma once
 
 
-#include "ScreenDriver.h"
-#include "UpdateKeeper.h"
-#include "UpdateListener.h"
+#include "::remoting::ScreenDriver.h"
+#include "::remoting::UpdateKeeper.h"
+#include "::remoting::UpdateListener.h"
 //#include "log_writer/LogWriter.h"
 
 
-namespace remoting
+namespace remoting_windows
 
 {
 
@@ -39,7 +39,7 @@ namespace remoting
    virtual public ::particle
    {
    public:
-      virtual ScreenDriver *createScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+      virtual ::remoting::ScreenDriver *createScreenDriver(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
                                                ::innate_subsystem::Framebuffer *pframebuffer,
                                                lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) = 0;
    private:
@@ -48,7 +48,7 @@ namespace remoting
    //// __SCREENDRIVERFACTORY_H__
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

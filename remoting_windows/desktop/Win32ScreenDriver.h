@@ -31,19 +31,29 @@
 #include "remoting/remoting/desktop/HooksUpdateDetector.h"
 #include "remoting/remoting_windows/desktop/WindowsScreenGrabber.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING_WINDOWS Win32ScreenDriver : public Win32ScreenDriverBaseImpl
    {
    public:
-      //Win32ScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ::innate_subsystem::Framebuffer *pframebuffer,
+
+
+      ::pointer < ::remoting::Configurator > m_pconfigurator;
+      WindowsScreenGrabber m_screengrabber;
+      ::remoting::Poller m_poller;
+      ::remoting::ConsolePoller m_consolePoller;
+      ::remoting::HooksUpdateDetector m_hooks;
+
+
+      //Win32ScreenDriver(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener, ::innate_subsystem::Framebuffer *pframebuffer,
         //                lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
       Win32ScreenDriver();
       ~Win32ScreenDriver() override;
 
 
-      void initialize_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+      void initialize_screen_driver(::remoting::Configurator * pconfigurator, ::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
+                                        ::innate_subsystem::Framebuffer *pframebuffer,
                           lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) override;
 
       // Starts screen update detection if it not started yet.
@@ -53,23 +63,23 @@ namespace remoting
       virtual void terminateDetection();
 
       virtual ::int_size getScreenDimension();
-      virtual bool grabFb(const ::int_rectangle & rectangle = 0);
+      virtual bool grabFb(const ::int_rectangle & rectangle = {});
       virtual ::innate_subsystem::Framebuffer *getScreenBuffer();
       virtual bool getScreenPropertiesChanged();
       virtual bool getScreenSizeChanged();
       virtual bool applyNewScreenProperties();
 
-   private:
+   //private:
       // This class  provides thread safed coordinations between the backup frame buffer and
       // the following objects.
-      WindowsScreenGrabber m_pscreengrabber;
-      Poller m_poller;
-      ConsolePoller m_consolePoller;
-      HooksUpdateDetector m_hooks;
+      // WindowsScreenGrabber m_screengrabber;
+      // Poller m_poller;
+      // ConsolePoller m_consolePoller;
+      // HooksUpdateDetector m_hooks;
    };
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

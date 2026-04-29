@@ -33,21 +33,21 @@
 #include "remoting/remoting/desktop/ScreenDriverFactory.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting
+namespace remoting_windows
 
 {
 
    class CLASS_DECL_REMOTING_WINDOWS DesktopWinImpl :
    virtual public ::subsystem::GuiThread,
-   virtual public DesktopBaseImpl
+   virtual public ::remoting::DesktopBaseImpl
    {
    public:
 
-      ::pointer < ScreenDriverFactory > m_pscreendriverfactory;
+      ::pointer < ::remoting::ScreenDriverFactory > m_pscreendriverfactory;
 
-      ::pointer < WallpaperUtil > m_pwallpaperutil;
+      ::pointer < ::remoting::WallpaperUtil > m_pwallpaperutil;
 
-      ::pointer < DesktopConfigLocal > m_pdesktopconfigclient;
+      ::pointer < ::remoting::DesktopConfigLocal > m_pdesktopconfiglocal;
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
@@ -58,8 +58,8 @@ namespace remoting
       ~DesktopWinImpl() override;
 
 
-      void initialize_desktop(Configurator * pconfigurator, ClipboardListener *pclipboardlistenerExternal, UpdateSendingListener *pupdatesendinglistenerExternal,
-                     AbnormDeskTermListener *pdesktermlistenerExternal, ::subsystem::LogWriter * plogwriter) override;
+      void initialize_desktop(::remoting::Configurator * pconfigurator, ::subsystem::ClipboardListener *pclipboardlistenerExternal, ::remoting::UpdateSendingListener *pupdatesendinglistenerExternal,
+                     ::remoting::AbnormDeskTermListener *pdesktermlistenerExternal, ::subsystem::LogWriter * plogwriter) override;
 
    //protected:
       virtual void execute();
@@ -77,10 +77,7 @@ namespace remoting
    };
 
 
-} // namespace remoting
-
-
-
+} // namespace remoting_windows
 
 
 

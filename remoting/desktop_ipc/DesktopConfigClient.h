@@ -32,7 +32,7 @@
 namespace remoting
 {
 
-   class DesktopConfigClient : public DesktopServerProto
+   class CLASS_DECL_REMOTING DesktopConfigClient : public DesktopServerProto
    {
    public:
       DesktopConfigClient();

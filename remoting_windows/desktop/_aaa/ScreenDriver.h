@@ -31,7 +31,7 @@
 #include "remoting/remoting/rfb/CursorShape.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
    // Derived classes commits oneself that internal frame buffer (accessing with getScreenBuffer()) will
@@ -39,13 +39,13 @@ namespace remoting
    // the applyNewScreenProperties() function has been called, internal frame buffer will be changed
    // with the frame buffer invalidation and a new getScreenBuffer() call is required to get a valid
    // frame buffer.
-   class CLASS_DECL_REMOTING ScreenDriver
+   class CLASS_DECL_REMOTING ::remoting::ScreenDriver
    {
    public:
       // Derived constructors will ensure that the getScreenBuffer() returns
       // a frame buffer with valid screen properties.
 
-      virtual ~ScreenDriver() {}
+      virtual ~::remoting::ScreenDriver() {}
 
       // Starts screen update detection if it not started yet.
       virtual void executeDetection() = 0;
@@ -101,7 +101,7 @@ namespace remoting
    };
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

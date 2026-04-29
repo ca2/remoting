@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "InputBlocker.h"
 
-namespace remoting
+namespace remoting_windows
 
 {
 
@@ -40,5 +40,5 @@ namespace remoting
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows
  

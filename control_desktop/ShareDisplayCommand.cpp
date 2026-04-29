@@ -24,18 +24,23 @@
 #include "framework.h"
 #include "ShareDisplayCommand.h"
 
-ShareDisplayCommand::ShareDisplayCommand(ControlProxy *serverControl,
-                                         unsigned char displayNumber)
-: m_proxy(serverControl),
-  m_displayNumber(displayNumber)
-{
-}
 
-ShareDisplayCommand::~ShareDisplayCommand()
+namespace remoting_control_desktop
 {
-}
+   ShareDisplayCommand::ShareDisplayCommand(ControlProxy *serverControl,
+                                            unsigned char displayNumber)
+   : m_proxy(serverControl),
+     m_displayNumber(displayNumber)
+   {
+   }
 
-void ShareDisplayCommand::execute()
-{
-  m_proxy->shareDisplay(m_displayNumber);
-}
+   ShareDisplayCommand::~ShareDisplayCommand()
+   {
+   }
+
+   void ShareDisplayCommand::execute()
+   {
+      m_proxy->shareDisplay(m_displayNumber);
+   }
+} // namespace remoting_control_desktop
+

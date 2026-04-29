@@ -28,7 +28,7 @@
 #include "remoting/remoting/server_config/ConfigReloadListener.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING WallpaperUtil : protected ConfigReloadListener
@@ -46,7 +46,7 @@ namespace remoting
       virtual void updateWallpaper();
 
    //protected:
-      virtual void onConfigReload(ServerConfig *serverConfig);
+      virtual void onConfigReload(::remoting::ServerConfig *serverConfig);
 
    //private:
       // Hides the desktop wallpaper.
@@ -65,7 +65,7 @@ namespace remoting
    //// __WALLPAPERUTIL_H__
 
 
-}// namespace remoting
+}// namespace remoting_windows
 
 
 

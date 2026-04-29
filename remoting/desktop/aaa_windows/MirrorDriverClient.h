@@ -116,8 +116,8 @@ namespace remoting
       MessageWindow m_messagewindowPropertyChangeListener;
 
       ::innate_subsystem::PixelFormat m_pixelformat;
-      ::int_size m_dimension;
-      ::int_point m_leftTopCorner;
+      ::int_size m_size;
+      ::int_point m_pointTopLeftCorner;
       Screen m_screen;
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;

@@ -86,8 +86,8 @@ namespace remoting
 
       ThreadCollector m_deskDuplThreadBundle;
 
-      ::happening m_initEvent;
-      ::happening m_errorEvent;
+      ::happening m_happeningInit;
+      ::happening m_happeningError;
 
       // The duplication interface can't be used
       bool m_hasCriticalError;

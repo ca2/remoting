@@ -43,7 +43,7 @@ namespace remoting
       // Current state
       ::int_point m_cursorPos;
       class ::time m_blockCurPosTime;
-      ::remoting::CursorShape m_cursorShape;
+      ::remoting::CursorShape m_cursorshape;
       ::innate_subsystem::Framebuffer m_shapeBackground;
       ::int_point m_pointBackground;
       lockable_critical_section m_criticalsectionCurPosLoc;

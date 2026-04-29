@@ -31,7 +31,7 @@
 //{
 //public:
 //  ::int_size(void) : width(0), height(0) {}
-//  ::int_size(const int w, const int h) { setDim(w, h); }
+//  ::int_size(const int w, const int h) { set(w, h); }
 //  ::int_size(const ::int_rectangle &  r) { width = r.width(); height = r.height(); }
 //  ::int_size(const ::int_size &other): width(other.cx), height(other.cy) {}
 //
@@ -63,8 +63,8 @@
 //    height = temp;
 //  }
 //
-//  inline void setDim(const int w, const int h) { width = w; height = h; }
-//  inline void setDim(const ::int_rectangle &  rectangle) { width = rectangle.width();
+//  inline void set(const int w, const int h) { width = w; height = h; }
+//  inline void set(const ::int_rectangle &  rectangle) { width = rectangle.width();
 //                                         height = rectangle.height(); }
 //
 //  inline bool cmpDim(const ::int_size & size) const { return size.cx == width &&

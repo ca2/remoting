@@ -193,15 +193,15 @@ namespace remoting
             ::int_size sizeNew = readDimension(m_pblockinggate);
             ::int_point newHotSpot = readPoint(m_pblockinggate);
 
-            m_cursorShape.setProperties(sizeNew, pixelformatNew);
-            m_cursorShape.setHotSpot(newHotSpot.x, newHotSpot.y);
+            m_cursorshape.setProperties(sizeNew, pixelformatNew);
+            m_cursorshape.setHotSpot(newHotSpot.x, newHotSpot.y);
 
             // Get pixels
-            m_pblockinggate->readFully(m_cursorShape.getPixels()->getBuffer(), m_cursorShape.getPixelsSize());
+            m_pblockinggate->readFully(m_cursorshape.getPixels()->getBuffer(), m_cursorshape.getPixelsSize());
             // Get mask
-            if (m_cursorShape.getMaskSize())
+            if (m_cursorshape.getMaskSize())
             {
-               m_pblockinggate->readFully((void *)m_cursorShape.getMask(), m_cursorShape.getMaskSize());
+               m_pblockinggate->readFully((void *)m_cursorshape.getMask(), m_cursorshape.getMaskSize());
             }
          }
          return updatecontainer;

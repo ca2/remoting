@@ -23,13 +23,13 @@
 //
 #include "framework.h"
 #include "remoting/remoting_windows/desktop/WinDxRecoverableException.h"
+// The header including of this cpp file must be at last place to avoid build conflicts.
+#include "remoting/remoting_windows/desktop/WinDxgiAcquiredFrame.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
 
-// The header including of this cpp file must be at last place to avoid build conflicts.
-#include "remoting/remoting_windows/desktop/WinDxgiAcquiredFrame.h"
 
    WinDxgiAcquiredFrame::WinDxgiAcquiredFrame(WinDxgiOutputDuplication *outDupl, unsigned int timeOutMilliSec) :
        m_wasTimeOut(false), m_desktopResource(0), m_outDupl(*outDupl)
@@ -64,6 +64,6 @@ namespace remoting
    DXGI_OUTDUPL_FRAME_INFO *WinDxgiAcquiredFrame::getFrameInfo() { return &m_frameInfo; }
 
 
-} // namespace remoting
-namespace remoting
-{
+} // namespace remoting_windows
+//namespace remoting_windows
+//{

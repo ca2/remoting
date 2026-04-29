@@ -34,13 +34,13 @@
 #include "UpdateSendingListener.h"
 #include "subsystem/node/ClipboardListener.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
    // This class  is a base class CLASS_DECL_REMOTING for different implemetations of desktops
    class CLASS_DECL_REMOTING DesktopBaseImpl :
    virtual public Desktop,
-   virtual public UpdateListener,
+   virtual public ::remoting::UpdateListener,
    virtual public ::subsystem::ClipboardListener,
    virtual public ConfigReloadListener
    {
@@ -83,7 +83,7 @@ namespace remoting
       virtual void onClipboardUpdate(const ::scoped_string &newClipboard);
       // Calling when a configuration has been reloaded.
       // Uses to update internal settings.
-      virtual void onConfigReload(ServerConfig *serverConfig);
+      virtual void onConfigReload(::remoting::ServerConfig *serverConfig);
       virtual void applyNewConfiguration() = 0;
 
       // Returns true when a remote input allowed.
@@ -119,7 +119,7 @@ namespace remoting
    };
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

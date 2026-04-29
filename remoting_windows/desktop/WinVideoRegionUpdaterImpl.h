@@ -34,21 +34,22 @@
 #include "subsystem/thread/Thread.h"
 #include "acme/parallelization/happening.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING_WINDOWS WinVideoRegionUpdaterImpl :
-      virtual public ScreenDriver,
+      virtual public ::remoting::ScreenDriver,
       virtual public ::subsystem::Thread
    {
    public:
 
 
       class ::time m_timeLastVideoUpdate;
-      Region m_regionVideo;
+      ::remoting::Region m_regionVideo;
       lockable_critical_section m_criticalsectionRegion;
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
       ::happening m_happeningSleeper;
+      ::pointer < ::remoting::Configurator > m_pconfigurator;
 
 
       //WinVideoRegionUpdaterImpl(::subsystem::LogWriter * plogwriter);
@@ -56,7 +57,8 @@ namespace remoting
       ~WinVideoRegionUpdaterImpl() override;
 
 
-      void initialize_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
+      void initialize_screen_driver(::remoting::Configurator * pconfigurator, ::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
+                                        ::innate_subsystem::Framebuffer *pframebuffer,
                           lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) override;
 
 
@@ -64,17 +66,17 @@ namespace remoting
       virtual void execute();
       virtual void onTerminate();
    //private:
-      virtual Region getVideoRegion();
+      virtual ::remoting::Region getVideoRegion();
       void updateVideoRegion();
       void getClassNamesAndRectsFromConfig(::string_array &classNames, ::int_rectangle_array_base &rectanglea);
       unsigned int getInterval();
-      Region getRectsByClass(::string_array classNames);
-      Region getRectsByCoords(::int_rectangle_array_base &rectanglea);
+      ::remoting::Region getRectsByClass(::string_array classNames);
+      ::remoting::Region getRectsByCoords(::int_rectangle_array_base &rectanglea);
 
    };
 
 
-}// namespace remoting
+}// namespace remoting_windows
 
 
 

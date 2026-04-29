@@ -25,62 +25,64 @@
 #pragma once
 
 
-#include "innate_subsystem/gui/BaseDialog.h"
+#include "innate_subsystem/gui/Dialog.h"
 
-/**
- * TightVNC server about dialog.
- */
-class AboutDialog : public BaseDialog
+namespace remoting_control_desktop
 {
-public:
-  /**
-   * Creates dialog.
-   */
-  AboutDialog();
-  /**
-   * Destroys dialog.
-   */
-  virtual ~AboutDialog();
+   /**
+    * TightVNC server about dialog.
+    */
+   class AboutDialog :
+   virtual public ::innate_subsystem::Dialog
+   {
+   public:
+      /**
+       * Creates dialog.
+       */
+      AboutDialog();
+      /**
+       * Destroys dialog.
+       */
+      virtual ~AboutDialog();
 
-protected:
-  /**
-   * Called when user press "Close" button.
-   */
-  void onCloseButtonClick();
-  /**
-   * Called when user press "Order Technical Support" button.
-   */
-  void onOrderSupportButtonClock();
-  /**
-   * Called when user press "Visit Web Site" button.
-   */
-  void onVisitSiteButtonClick();
-  /**
-   * Opens url in default browser or shows error scopedstrMessage on fail.
-   */
-  void openUrl(const ::scoped_string & scopedstrUrl);
+   protected:
+      /**
+       * Called when user press "Close" button.
+       */
+      void onCloseButtonClick();
+      /**
+       * Called when user press "Order Technical Support" button.
+       */
+      void onOrderSupportButtonClock();
+      /**
+       * Called when user press "Visit Web Site" button.
+       */
+      void onVisitSiteButtonClick();
+      /**
+       * Opens url in default browser or shows error scopedstrMessage on fail.
+       */
+      void openUrl(const ::scoped_string & scopedstrUrl);
 
-protected:
-  /**
-   * Inherited from BaseDialog.
-   * Does nothing.
-   */
-  virtual bool onInitDialog();
-  /**
-   * Inherited from BaseDialog.
-   * Does nothing.
-   */
-  virtual bool onNotify(unsigned int controlID, ::lparam data);
-  /**
-   * Inherited from BaseDialog.
-   * Handles buttons events.
-   */
-  virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
-  /**
-   * Inherited from BaseDialog.
-   * Does nothing.
-   */
-  virtual bool onDestroy();
-};
-
-
+   protected:
+      /**
+       * Inherited from BaseDialog.
+       * Does nothing.
+       */
+      virtual bool onInitDialog();
+      /**
+       * Inherited from BaseDialog.
+       * Does nothing.
+       */
+      virtual bool onNotify(unsigned int controlID, ::lparam data);
+      /**
+       * Inherited from BaseDialog.
+       * Handles buttons events.
+       */
+      virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
+      /**
+       * Inherited from BaseDialog.
+       * Does nothing.
+       */
+      virtual bool onDestroy();
+   };
+} // namespace remoting_control_desktop

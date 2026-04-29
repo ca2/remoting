@@ -30,51 +30,53 @@
 #include "subsystem/node/Pipe.h"
 #include "subsystem/node/PipeServer.h"
 
-/**
- * Transport that uses pipe as transport.
- */
-class NamedPipeTransport : public Transport
+namespace remoting_control_desktop
 {
-public:
-  /**
-   * Creates client pipe transport and takes ownership over pipe transport.
-   */
-  NamedPipeTransport(::subsystem::NamedPipe *client);
-  /**
-   * Creates server pipe transfer and takes ownership over pipe server.
-   */
-  NamedPipeTransport(::subsystem::PipeServer *server);
-  /**
-   * Deletes transport and frees resources.
-   */
-  virtual ~NamedPipeTransport();
+   /**
+    * Transport that uses pipe as transport.
+    */
+   class NamedPipeTransport : public Transport
+   {
+   public:
+      /**
+       * Creates client pipe transport and takes ownership over pipe transport.
+       */
+      NamedPipeTransport(::subsystem::NamedPipe *client);
+      /**
+       * Creates server pipe transfer and takes ownership over pipe server.
+       */
+      NamedPipeTransport(::subsystem::PipeServer *server);
+      /**
+       * Deletes transport and frees resources.
+       */
+      virtual ~NamedPipeTransport();
 
-  /**
-   * Returns client transport's IO Stream.
-   */
-  virtual Channel *getIOStream();
+      /**
+       * Returns client transport's IO Stream.
+       */
+      virtual Channel *getIOStream();
 
-  /**
-   * Accepts new connection.
-   * @return transport for accepted connection.
-   * @throws ::subsystem::Exception on fail.
-   */
-  virtual Transport *accept();
+      /**
+       * Accepts new connection.
+       * @return transport for accepted connection.
+       * @throws ::subsystem::Exception on fail.
+       */
+      virtual Transport *accept();
 
-  /**
-   * Destroys transport(closes socket).
-   */
-  virtual void close();
+      /**
+       * Destroys transport(closes socket).
+       */
+      virtual void close();
 
-private:
-  /**
-   * Connected pipe transport.
-   */
-  ::subsystem::NamedPipe *m_pipe;
-  /**
-   * Pipe server.
-   */
-  ::subsystem::PipeServer *m_pipeServer;
-};
-
+   private:
+      /**
+       * Connected pipe transport.
+       */
+      ::subsystem::NamedPipe *m_pipe;
+      /**
+       * Pipe server.
+       */
+      ::subsystem::PipeServer *m_pipeServer;
+   };
+} // namespace remoting_control_desktop
 

@@ -27,7 +27,7 @@
 
 //#include "subsystem/platform/class ::time.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING InputBlocker :
@@ -57,6 +57,6 @@ namespace remoting
    };
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 

@@ -37,6 +37,6 @@ namespace remoting
 
    const CursorShape *CursorShapeGrabber::getCursorShape() const
    {
-      return &m_cursorShape;
+      return &m_cursorshape;
    }
 } // namespace remoting

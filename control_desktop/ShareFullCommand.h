@@ -29,15 +29,18 @@
 
 #include "ControlProxy.h"
 
-class ShareFullCommand : public Command
+namespace remoting_control_desktop
 {
-public:
-  ShareFullCommand(ControlProxy *serverControl);
-  virtual ~ShareFullCommand();
+   class ShareFullCommand : public Command
+   {
+   public:
+      ShareFullCommand(ControlProxy *serverControl);
+      virtual ~ShareFullCommand();
 
-  virtual void execute();
-private:
-  ControlProxy *m_proxy;
-};
+      virtual void execute();
+   private:
+      ControlProxy *m_proxy;
+   };
+} // namespace remoting_control_desktop
 
-//// _SHAREFULLCOMMAND_H_
+

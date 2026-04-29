@@ -93,7 +93,7 @@ namespace remoting
 
    ::innate_subsystem::PixelFormat MirrorDriverClient::getPixelFormat() const { return m_pixelformat; }
 
-   ::int_size MirrorDriverClient::getDimension() const { return m_dimension; }
+   ::int_size MirrorDriverClient::getDimension() const { return m_size; }
 
    void *MirrorDriverClient::getBuffer() { return m_screenBuffer; }
 
@@ -215,11 +215,11 @@ namespace remoting
          // 2005.10.07
          m_deviceMode.dmDriverExtra = drvExtraSaved;
 
-         m_deviceMode.dmPelsWidth = m_dimension.cx;
-         m_deviceMode.dmPelsHeight = m_dimension.cy;
+         m_deviceMode.dmPelsWidth = m_size.cx;
+         m_deviceMode.dmPelsHeight = m_size.cy;
          m_deviceMode.dmBitsPerPel = m_pixelformat.bitsPerPixel;
-         m_deviceMode.dmPosition.x = m_leftTopCorner.x;
-         m_deviceMode.dmPosition.y = m_leftTopCorner.y;
+         m_deviceMode.dmPosition.x = m_pointTopLeftCorner.x;
+         m_deviceMode.dmPosition.y = m_pointTopLeftCorner.y;
 
          m_deviceMode.dmFields = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT | DM_POSITION;
          m_deviceMode.dmDeviceName[0] = '\0';
@@ -257,8 +257,8 @@ namespace remoting
       m_pixelformat.colorDepth = 24;
 
       ::int_rectangle virtDeskRect = m_screen.getDesktopRect();
-      m_dimension.setDim(&virtDeskRect);
-      m_leftTopCorner.setPoint(virtDeskRect.left, virtDeskRect.top);
+      m_size.set(&virtDeskRect);
+      m_pointTopLeftCorner.setPoint(virtDeskRect.left, virtDeskRect.top);
    }
 
    void MirrorDriverClient::setAttachToDesktop(bool value)

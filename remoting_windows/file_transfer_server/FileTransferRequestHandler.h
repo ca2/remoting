@@ -46,7 +46,8 @@ namespace remoting
     * Handler of file transfer plugin client to server messages.
     * Processes client requests and sends replies.
     */
-   class FileTransferRequestHandler : public RfbDispatcherListener
+   class CLASS_DECL_REMOTING FileTransferRequestHandler :
+   virtual public RfbDispatcherListener
    {
    public:
       /**
@@ -173,7 +174,7 @@ namespace remoting
       // Determinates if file transfer is enabled.
       bool m_enabled;
 
-      ::subsystem::LogWriter *m_log;
+      ::subsystem::LogWriter *m_plogwriter;
    };
 } // namespace remoting
 

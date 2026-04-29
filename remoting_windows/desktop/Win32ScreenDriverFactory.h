@@ -29,40 +29,56 @@
 #include "remoting/remoting/server_config/ServerConfig.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING_WINDOWS Win32ScreenDriverFactory :
-   virtual public ScreenDriverFactory
+      virtual public ::remoting::ScreenDriverFactory
    {
    public:
-      // The factory stores pointer to a ServerConfig object and will use it on
+      // The factory stores pointer to a ::remoting::ServerConfig object and will use it on
       // createScreenDriver() function calls.
-      //Win32ScreenDriverFactory(ServerConfig *pserverconfig);
+      //Win32ScreenDriverFactory(::remoting::ServerConfig *pserverconfig);
       Win32ScreenDriverFactory();
       ~Win32ScreenDriverFactory() override;
 
-      void initialize_screen_driver_factory(ServerConfig *pserverconfig) override;
+      void initialize_screen_driver_factory(::remoting::ServerConfig *pserverconfig) override;
 
-      ScreenDriver *createScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                                               ::innate_subsystem::Framebuffer *pframebuffer,
-                                               lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) override;
+      ::pointer < ::remoting::ScreenDriver > createScreenDriver(
+         ::remoting::Configurator * pconfigurator,
+         ::remoting::UpdateKeeper * pupdatekeeper,
+         ::remoting::UpdateListener * pupdatelistener,
+         ::innate_subsystem::Framebuffer *pframebuffer,
+         lockable_critical_section *pcriticalsectionFramebuffer,
+         ::subsystem::LogWriter * plogwriter) override;
+
    private:
-      ScreenDriver *createStandardScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                                               ::innate_subsystem::Framebuffer *pframebuffer,
-                                               lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
-      ScreenDriver *createMirrorScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                                             lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
+      virtual ::pointer < ::remoting::ScreenDriver > createStandardScreenDriver(
+      ::remoting::Configurator * pconfigurator,
+      ::remoting::UpdateKeeper * pupdatekeeper,
+      ::remoting::UpdateListener * pupdatelistener,
+      ::innate_subsystem::Framebuffer *pframebuffer,
+      lockable_critical_section *pcriticalsectionFramebuffer,
+      ::subsystem::LogWriter * plogwriter
+      );
+      virtual ::pointer < ::remoting::ScreenDriver > createMirrorScreenDriver(
+      ::remoting::Configurator * pconfigurator,
+      ::remoting::UpdateKeeper * pupdatekeeper,
+      ::remoting::UpdateListener * pupdatelistener,
+      ::innate_subsystem::Framebuffer *pframebuffer,
+      lockable_critical_section *pcriticalsectionFramebuffer,
+      ::subsystem::LogWriter * plogwriter
+      );
 
       bool isMirrorDriverAllowed();
       bool isD3DAllowed();
 
-      ::pointer < ServerConfig > m_pserverconfig;
+      ::pointer < ::remoting::ServerConfig > m_pserverconfig;
    };
 
    //// __WIN32SCREENDRIVERFACTORY_H__
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

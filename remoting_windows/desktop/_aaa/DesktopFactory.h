@@ -31,7 +31,7 @@
 //#include "log_writer/LogWriter.h"
 #include "Desktop.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING DesktopFactory :
@@ -45,4 +45,4 @@ namespace remoting
    };
 
 
-} // namespace remoting
+} // namespace remoting_windows

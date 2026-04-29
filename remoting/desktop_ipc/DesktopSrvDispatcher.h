@@ -36,7 +36,7 @@
 namespace remoting
 {
 
-   class DesktopSrvDispatcher : public ::subsystem::GuiThread
+   class CLASS_DECL_REMOTING DesktopSrvDispatcher : public ::subsystem::GuiThread
    {
    public:
       //DesktopSrvDispatcher(BlockingGate *pblockinggate,

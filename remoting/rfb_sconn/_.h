@@ -7,4 +7,5 @@
 namespace remoting
 {   class EchoExtensionRequestHandler;
    class RfbInitializer;
+   class RfbCodeRegistrator;
 }

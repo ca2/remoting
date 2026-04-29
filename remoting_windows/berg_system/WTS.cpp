@@ -59,7 +59,7 @@ DWORD WindowsSubsystem().WTS().getActiveConsoleSessionId(::subsystem::LogWriter 
   }
   id = m_WTSGetActiveConsoleSessionId();
 
-  log->debug("Active console session Id: {}", id);
+  plogwriter->debug("Active console session Id: {}", id);
 
   return id;
 }
@@ -84,11 +84,11 @@ DWORD WindowsSubsystem().WTS().getRdpSessionId(::subsystem::LogWriter * plogwrit
     for (DWORD i = 0; i < count; i++) {
       if (sessionInfo[i].State == WTSActive) {
         ::string sessionName(sessionInfo[i].pWinStationName);
-        log->debug("Enumerate Sessions, Id: {}, Name: {}", sessionInfo[i].SessionId, sessionName);
+        plogwriter->debug("Enumerate Sessions, Id: {}, Name: {}", sessionInfo[i].SessionId, sessionName);
         sessionName.make_lower();
         if (sessionName.find("rdp") != 0) {
           sessionId = (DWORD)sessionInfo[i].SessionId;
-          log->debug("RDP Session selected, Id: {}", sessionId);
+          plogwriter->debug("RDP Session selected, Id: {}", sessionId);
         }
       }
     }
@@ -313,7 +313,7 @@ void WindowsSubsystem().WTS().initialize(::subsystem::LogWriter * plogwriter)
     m_pdynamiclibraryKernel32 = new DynamicLibrary("Kernel32.dll");
     m_WTSGetActiveConsoleSessionId = (pWTSGetActiveConsoleSessionId)m_pdynamiclibraryKernel32->getProcAddress("WTSGetActiveConsoleSessionId");
   } catch (::exception &e) {
-    log->error("Can't load the Kernel32.dll library: {}", e.get_message());
+    plogwriter->error("Can't load the Kernel32.dll library: {}", e.get_message());
   }
   try {
     m_wtsapi32Library = new DynamicLibrary("Wtsapi32.dll");
@@ -327,7 +327,7 @@ void WindowsSubsystem().WTS().initialize(::subsystem::LogWriter * plogwriter)
 #endif
     m_WTSFreeMemory = (pWTSFreeMemory)m_wtsapi32Library->getProcAddress("WTSFreeMemory");
   } catch (::exception &e) {
-    log->error("Can't load the Wtsapi32.dll library: {}", e.get_message());
+    plogwriter->error("Can't load the Wtsapi32.dll library: {}", e.get_message());
   }
 
   m_initialized = true;
@@ -337,7 +337,7 @@ HANDLE currentProcessUserToken(::subsystem::LogWriter* log)
 {
   HANDLE token = NULL;
   HANDLE procHandle = GetCurrentProcess();
-  log->debug("Try OpenProcessToken(%p, , )", (void*)procHandle);
+  plogwriter->debug("Try OpenProcessToken(%p, , )", (void*)procHandle);
   if (OpenProcessToken(procHandle, TOKEN_DUPLICATE, &token) == 0) {
     throw SystemException();
   }
@@ -360,17 +360,17 @@ HANDLE WindowsSubsystem().WTS().duplicateCurrentProcessUserToken(bool rdpEnabled
   }
   activeSession = getActiveConsoleSessionId(plogwriter);
 
-  log->debug("rdpSession user name: {}", getUserName(rdpSession, log));
-  log->debug("activeSession user name: {}", getUserName(activeSession, log));
+  plogwriter->debug("rdpSession user name: {}", getUserName(rdpSession, log));
+  plogwriter->debug("activeSession user name: {}", getUserName(activeSession, log));
 
   if (rdp) {
     sessionId = rdpSession;
-    log->information("Connect as RDP user at {} session", sessionId);
+    plogwriter->information("Connect as RDP user at {} session", sessionId);
   } else {
     sessionId = getActiveConsoleSessionId(plogwriter);
-    log->information("Connect as current user at {} session", sessionId);
+    plogwriter->information("Connect as current user at {} session", sessionId);
   }
-  log->debug("Session user name: {}", getUserName(sessionId, log));
+  plogwriter->debug("Session user name: {}", getUserName(sessionId, log));
 
   HANDLE token;
 
@@ -390,7 +390,7 @@ HANDLE WindowsSubsystem().WTS().duplicateUserImpersonationToken(HANDLE token, DW
 {
   HANDLE userToken;
 
-  log->debug("Try DuplicateTokenEx(%p, , , , , )", (void*)token);
+  plogwriter->debug("Try DuplicateTokenEx(%p, , , , , )", (void*)token);
   if (DuplicateTokenEx(token,
     MAXIMUM_ALLOWED,
     0,
@@ -400,7 +400,7 @@ HANDLE WindowsSubsystem().WTS().duplicateUserImpersonationToken(HANDLE token, DW
     throw SystemException();
   }
 
-  log->debug("Try SetTokenInformation(%p, , , )", (void*)userToken);
+  plogwriter->debug("Try SetTokenInformation(%p, , , )", (void*)userToken);
   if (SetTokenInformation(userToken,
     (TOKEN_INFORMATION_CLASS)TokenSessionId,
     &sessionId,
@@ -413,16 +413,16 @@ HANDLE WindowsSubsystem().WTS().duplicateUserImpersonationToken(HANDLE token, DW
   // and run from "Program Files/"
 
   DWORD uiAccess = 1; // Nonzero enables UI control
-  log->debug("Try SetTokenInformation(%p, , , ) with UIAccess=1", (void*)userToken);
+  plogwriter->debug("Try SetTokenInformation(%p, , , ) with UIAccess=1", (void*)userToken);
 
   if (SetTokenInformation(userToken,
     (TOKEN_INFORMATION_CLASS)TokenUIAccess,
     &uiAccess,
     sizeof(uiAccess)) == 0) {
-    log->information("Can't set UIAccess=1, ignore it");
+    plogwriter->information("Can't set UIAccess=1, ignore it");
   }
   ::string name = getTokenUserName(userToken);
-  log->debug("duplicate user token for user: {}, session ID: {}", name, sessionId);
+  plogwriter->debug("duplicate user token for user: {}, session ID: {}", name, sessionId);
 
   return userToken;
 }

@@ -22,16 +22,16 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "UpdateListener.h"
+#include "::remoting::UpdateListener.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
 
-   UpdateListener::UpdateListener(void) {}
+   ::remoting::UpdateListener::::remoting::UpdateListener(void) {}
 
-   UpdateListener::~UpdateListener(void) {}
+   ::remoting::UpdateListener::~::remoting::UpdateListener(void) {}
 
 
-} // namespace remoting
+} // namespace remoting_windows
  

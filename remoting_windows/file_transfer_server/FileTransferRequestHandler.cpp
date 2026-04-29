@@ -52,9 +52,9 @@ FileTransferRequestHandler::FileTransferRequestHandler(RfbCodeRegistrator *regis
 : m_downloadFile(NULL), m_fileInputStream(NULL),
   m_uploadFile(NULL), m_fileOutputStream(NULL),
   m_output(output), m_enabled(enabled),
-  m_log(log)
+  m_plogwriter(log)
 {
-  m_security = new FileTransferSecurity(desktop, m_log);
+  m_security = new FileTransferSecurity(desktop, m_plogwriter);
 
   if (!FileTransferRequestHandler::isFileTransferEnabled()) {
     return ;
@@ -107,7 +107,7 @@ FileTransferRequestHandler::FileTransferRequestHandler(RfbCodeRegistrator *regis
     registrator->regCode(rfbMessagesToProcess[i], this);
   }
 
-  m_log->message(_T("File transfer request handler created"));
+  m_plogwriter->message("File transfer request handler created");
 }
 
 FileTransferRequestHandler::~FileTransferRequestHandler()
@@ -127,7 +127,7 @@ FileTransferRequestHandler::~FileTransferRequestHandler()
     delete m_uploadFile;
   }
 
-  m_log->message(_T("File transfer request handler deleted"));
+  m_plogwriter->message("File transfer request handler deleted");
 }
 
 void FileTransferRequestHandler::onRequest(UINT32 reqCode, ::remoting::RfbInputGate *backGate)
@@ -191,7 +191,7 @@ bool FileTransferRequestHandler::isFileTransferEnabled()
 
 void FileTransferRequestHandler::compressionSupportRequested()
 {
-  m_log->message(_T("%s"), _T("compression support requested"));
+  m_plogwriter->message("%s"), _T("compression support requested");
 
   //
   // Can be 0 - compression not supported by server
@@ -200,7 +200,7 @@ void FileTransferRequestHandler::compressionSupportRequested()
 
   UINT8 compressionSupport = 1;
 
-  m_log->debug(_T("sending compression support reply: %s"), (compressionSupport == 1) ? _T("supported") : _T("not supported"));
+  m_plogwriter->debug("sending compression support reply: %s"), (compressionSupport == 1) ? _T("supported") : _T("not supported");
 
   {
     AutoLock l(m_output);
@@ -227,7 +227,7 @@ void FileTransferRequestHandler::fileListRequested()
     m_input->readUTF8(&fullPathName);
   }
 
-  m_log->message(_T("File list of folder '%s' requested"),
+  m_plogwriter->message("File list of folder '%s' requested",
                fullPathName.getString());
 
   checkAccess();
@@ -314,18 +314,18 @@ void FileTransferRequestHandler::mkDirRequested()
     m_input->readUTF8(&folderPath);
   } // end of reading block.
 
-  m_log->message(_T("mkdir \"%s\" command requested"), folderPath.getString());
+  m_plogwriter->message("mkdir \"%s\" command requested", folderPath.getString());
 
   checkAccess();
 
   if (folderPath.parentPathIsRoot()) {
-    throw FileTransferException(_T("Cannot create folder in root folder"));
+    throw FileTransferException("Cannot create folder in root folder");
   }
 
   File folder(folderPath.getString());
 
   if (folder.exists()) {
-    throw FileTransferException(_T("Directory already exists"));
+    throw FileTransferException("Directory already exists");
   }
 
   if (!folder.mkdir()) {
@@ -349,7 +349,7 @@ void FileTransferRequestHandler::rmFileRequested()
     m_input->readUTF8(&fullPathName);
   } // end of reading block.
 
-  m_log->message(_T("rm \"%s\" command requested"), fullPathName.getString());
+  m_plogwriter->message("rm \"%s\" command requested", fullPathName.getString());
 
   checkAccess();
 
@@ -382,7 +382,7 @@ void FileTransferRequestHandler::mvFileRequested()
     m_input->readUTF8(&newFileName);
   } // end of reading block.
 
-  m_log->message(_T("move \"%s\" \"%s\" command requested"), oldFileName.getString(), newFileName.getString());
+  m_plogwriter->message("move \"%s\" \"%s\" command requested", oldFileName.getString(), newFileName.getString());
 
   checkAccess();
 
@@ -410,7 +410,7 @@ void FileTransferRequestHandler::dirSizeRequested()
     m_input->readUTF8(&fullPathName);
   } // end of reading block.
 
-  m_log->message(_T("Size of folder '%s\' requested"),
+  m_plogwriter->message("Size of folder '%s\' requested",
                fullPathName.getString());
 
   checkAccess();
@@ -445,7 +445,7 @@ void FileTransferRequestHandler::md5Requested()
     dataLen = m_input->readUInt64();
   } // end of reading block.
 
-  m_log->message(_T("md5 \"%s\" %d %d command requested"), fullPathName.getString(), offset, dataLen);
+  m_plogwriter->message("md5 \"%s\" %d %d command requested", fullPathName.getString(), offset, dataLen);
 
   checkAccess();
 
@@ -517,7 +517,7 @@ void FileTransferRequestHandler::uploadStartRequested()
     initialOffset = m_input->readUInt64();
   }
 
-  m_log->message(_T("upload \"%s\" %d %d command requested"), fullPathName.getString(), uploadFlags, initialOffset);
+  m_plogwriter->message("upload \"%s\" %d %d command requested", fullPathName.getString(), uploadFlags, initialOffset);
 
   checkAccess();
 
@@ -535,7 +535,7 @@ void FileTransferRequestHandler::uploadStartRequested()
   }
 
   if (fullPathName.parentPathIsRoot()) {
-    throw FileTransferException(_T("Cannot upload file to root folder"));
+    throw FileTransferException("Cannot upload file to root folder");
   }
 
   m_uploadFile = new File(fullPathName.getString());
@@ -587,12 +587,12 @@ void FileTransferRequestHandler::uploadDataRequested()
     m_input->readFully(&buffer.front(), compressedSize);
   }
 
-  m_log->info(_T("upload data (cs = %d, us = %d) requested"), compressedSize, uncompressedSize);
+  m_plogwriter->information("upload data (cs = %d, us = %d) requested", compressedSize, uncompressedSize);
 
   checkAccess();
 
   if (m_uploadFile == NULL) {
-    throw FileTransferException(_T("No active upload at the moment"));
+    throw FileTransferException("No active upload at the moment");
   }
 
   if (compressedSize != 0) {
@@ -629,7 +629,7 @@ void FileTransferRequestHandler::uploadEndRequested()
     modificationTime = m_input->readUInt64();
   } // end of reading block.
 
-  m_log->message(_T("%s"), _T("end of upload requested\n"));
+  m_plogwriter->message("%s"), _T("end of upload requested\n");
 
   checkAccess();
 
@@ -639,7 +639,7 @@ void FileTransferRequestHandler::uploadEndRequested()
   //
 
   if (m_uploadFile == NULL) {
-    throw FileTransferException(_T("No active upload at the moment"));
+    throw FileTransferException("No active upload at the moment");
   }
 
   //
@@ -655,7 +655,7 @@ void FileTransferRequestHandler::uploadEndRequested()
   //
 
   if (!m_uploadFile->setLastModified(modificationTime)) {
-    throw FileTransferException(_T("Cannot change last write file time"));
+    throw FileTransferException("Cannot change last write file time");
   } // if cannot set modification time
 
   //
@@ -700,7 +700,7 @@ void FileTransferRequestHandler::downloadStartRequested()
     initialOffset = m_input->readUInt64();
   } // end of reading block.
 
-  m_log->message(_T("download of \"%s\" file (offset = %d) requested"), fullPathName.getString(), initialOffset);
+  m_plogwriter->message("download of \"%s\" file (offset = %d) requested", fullPathName.getString(), initialOffset);
 
   checkAccess();
 
@@ -756,7 +756,7 @@ void FileTransferRequestHandler::downloadDataRequested()
     dataSize = m_input->readUInt32();
   } // end of reading block.
 
-  m_log->info(_T("download %d bytes (comp flag = %d) requested"), dataSize, requestedCompressionLevel);
+  m_plogwriter->information("download %d bytes (comp flag = %d) requested", dataSize, requestedCompressionLevel);
 
   checkAccess();
 
@@ -774,7 +774,7 @@ void FileTransferRequestHandler::downloadDataRequested()
   //
 
   if (m_downloadFile == NULL) {
-    throw FileTransferException(_T("No active download at the moment"));
+    throw FileTransferException("No active download at the moment");
   }
 
   std::vector<char> buffer(dataSize);
@@ -807,7 +807,7 @@ void FileTransferRequestHandler::downloadDataRequested()
       m_output->flush();
     } // rfb io handle block
 
-    m_log->message(_T("%s"), _T("downloading has finished\n"));
+    m_plogwriter->message("%s"), _T("downloading has finished\n");
 
     delete m_fileInputStream;
     delete m_downloadFile;
@@ -862,7 +862,7 @@ void FileTransferRequestHandler::lastRequestFailed(StringStorage *storage)
 
 void FileTransferRequestHandler::lastRequestFailed(const TCHAR *description)
 {
-  m_log->error(_T("last request failed: \"%s\""), description);
+  m_plogwriter->error("last request failed: \"%s\"", description);
 
   {
     AutoLock l(m_output);
@@ -925,7 +925,7 @@ void FileTransferRequestHandler::checkAccess()
 {
   try {
     if (!isFileTransferEnabled()) {
-      throw Exception(_T("File transfers is disabled"));
+      throw Exception("File transfers is disabled");
     }
     m_security->throwIfAccessDenied();
   } catch (Exception &someEx) {

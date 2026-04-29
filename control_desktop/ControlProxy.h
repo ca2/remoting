@@ -36,165 +36,165 @@
 
 //#include aaa_<list>
 
-
-
-/**
- * Proxy to some of TightVNC server methods, supported by control protocol.
- * Used to execute remote commands on on TightVNC server.
- * remote errors.
- */
-class ControlProxy
+namespace remoting_control_desktop
 {
-public:
-  /**
-   * Creates proxy.
-   * @param pblockinggate transport to send and recieve messages.
-   */
-  ControlProxy(ControlGate *pblockinggate);
-  /**
-   * Class destructor.
-   */
-  virtual ~ControlProxy();
+   /**
+    * Proxy to some of TightVNC server methods, supported by control protocol.
+    * Used to execute remote commands on on TightVNC server.
+    * remote errors.
+    */
+   class ControlProxy
+   {
+   public:
+      /**
+       * Creates proxy.
+       * @param pblockinggate transport to send and recieve messages.
+       */
+      ControlProxy(ControlGate *pblockinggate);
+      /**
+       * Class destructor.
+       */
+      virtual ~ControlProxy();
 
-  // If server requests the authentication then firstly will be used
-  // *passwordFile parameter then getPassFromConfigEnabled. Call this function
-  // to determine this parameters. If this function has not been called then
-  // on server auth request will be used a dialog box.
-  void setPasswordProperties(const ::scoped_string & scopedstrPasswordFile,
-                             bool getPassFromConfigEnabled,
-                             bool forService);
+      // If server requests the authentication then firstly will be used
+      // *passwordFile parameter then getPassFromConfigEnabled. Call this function
+      // to determine this parameters. If this function has not been called then
+      // on server auth request will be used a dialog box.
+      void setPasswordProperties(const ::scoped_string & scopedstrPasswordFile,
+                                 bool getPassFromConfigEnabled,
+                                 bool forService);
 
-  /**
-   * Returns rfb server info status.
-   * @return rfb server info status.
-   * @throws RemoteException on error on server.
-   * @throws ::io_exception on io error.
-   */
-  ServerInfo getServerInfo();
+      /**
+       * Returns rfb server info status.
+       * @return rfb server info status.
+       * @throws RemoteException on error on server.
+       * @throws ::io_exception on io error.
+       */
+      ServerInfo getServerInfo();
 
-  /**
-   * Gets rfb client ::list_base.
-   * @param clients [out] output parameters to retrieve info of clients.
-   * @throws RemoteException on error on server.
-   * @throws ::io_exception on io error.
-   */
-  void getClientsList(::list_base<RfbClientInfo *> *clients);
+      /**
+       * Gets rfb client ::list_base.
+       * @param clients [out] output parameters to retrieve info of clients.
+       * @throws RemoteException on error on server.
+       * @throws ::io_exception on io error.
+       */
+      void getClientsList(::list_base<RfbClientInfo *> *clients);
 
-  /**
-   * Reloads rfb server configuration.
-   * @throws RemoteException on error on server.
-   * @throws ::io_exception on io error.
-   * @deprecated.
-   */
-  void reloadServerConfig();
-  
-  /**
-   * Disconnects all existing rfb clients from server.
-   * @throws RemoteException on error on server.
-   * @throws ::io_exception on io error.
-   */
-  void disconnectAllClients();
+      /**
+       * Reloads rfb server configuration.
+       * @throws RemoteException on error on server.
+       * @throws ::io_exception on io error.
+       * @deprecated.
+       */
+      void reloadServerConfig();
 
-  /**
-   * Shutdowns TightVNC server.
-   * @throws RemoteException on error on server.
-   * @throws ::io_exception on io error.
-   */
-  void shutdownTightVnc();
+      /**
+       * Disconnects all existing rfb clients from server.
+       * @throws RemoteException on error on server.
+       * @throws ::io_exception on io error.
+       */
+      void disconnectAllClients();
 
-  /**
-   * Initialized outgoing rfb connection.
-   * @param connectString connect string in host[:(port|diplay)] format.
-   * @param viewOnly if rfb connection must be in view only mode.
-   * @throws RemoteException on error on server.
-   * @throws ::io_exception on io error.
-   */
-  void makeOutgoingConnection(const ::scoped_string & scopedstrConnectString, bool viewOnly);
+      /**
+       * Shutdowns TightVNC server.
+       * @throws RemoteException on error on server.
+       * @throws ::io_exception on io error.
+       */
+      void shutdownTightVnc();
 
-  /**
-   * Initialized connection to a TcpDispatcher.
-   * @param connectString connect string in host[:(port|diplay)] format.
-   */
-  void makeTcpDispatcherConnection(const ::scoped_string & scopedstrConnectString,
-                                   const ::scoped_string & scopedstrDispatcherName,
-                                   const ::scoped_string & scopedstrKeyword,
-                                   unsigned int connectionId);
+      /**
+       * Initialized outgoing rfb connection.
+       * @param connectString connect string in host[:(port|diplay)] format.
+       * @param viewOnly if rfb connection must be in view only mode.
+       * @throws RemoteException on error on server.
+       * @throws ::io_exception on io error.
+       */
+      void makeOutgoingConnection(const ::scoped_string & scopedstrConnectString, bool viewOnly);
 
-  // Share only primary display for all clients.
-  void sharePrimary();
+      /**
+       * Initialized connection to a TcpDispatcher.
+       * @param connectString connect string in host[:(port|diplay)] format.
+       */
+      void makeTcpDispatcherConnection(const ::scoped_string & scopedstrConnectString,
+                                       const ::scoped_string & scopedstrDispatcherName,
+                                       const ::scoped_string & scopedstrKeyword,
+                                       unsigned int connectionId);
 
-  // Share only the display for all clients.
-  void shareDisplay(unsigned char displayNumber);
+      // Share only primary display for all clients.
+      void sharePrimary();
 
-  // Share a rectangle that constrained by a window form.
-  // shareWindowName - is a part of the window header name.
-  void shareWindow(const ::scoped_string & shareWindowName);
+      // Share only the display for all clients.
+      void shareDisplay(unsigned char displayNumber);
 
-  // Share only a rectangle.
-  void shareRect(const ::int_rectangle &  shareRect);
+      // Share a rectangle that constrained by a window form.
+      // shareWindowName - is a part of the window header name.
+      void shareWindow(const ::scoped_string & shareWindowName);
 
-  // Share full desktop for all clients.
-  void shareFull();
+      // Share only a rectangle.
+      void shareRect(const ::int_rectangle &  shareRect);
 
-  // Share only application region for all clients. Other regions must be painted to black.
-  void shareApp(unsigned int procId);
+      // Share full desktop for all clients.
+      void shareFull();
 
-  /**
-   * Sends new configuration to server.
-   * @param config new server configuration.
-   * @throws RemoteException on error on server.
-   * @throws ::io_exception on io error.
-   */
-  void setServerConfig(::remoting::ServerConfig * pserverconfig);
+      // Share only application region for all clients. Other regions must be painted to black.
+      void shareApp(unsigned int procId);
 
-  /**
-   * Gets current configuration from server.
-   * @param config [out] output parameter where configuration will be stored.
-   * @throws RemoteException on error on server.
-   * @throws ::io_exception on io error.
-   */
-  void getServerConfig(::remoting::ServerConfig * pserverconfig);
+      /**
+       * Sends new configuration to server.
+       * @param config new server configuration.
+       * @throws RemoteException on error on server.
+       * @throws ::io_exception on io error.
+       */
+      void setServerConfig(::remoting::ServerConfig * pserverconfig);
 
-  /**
-   * Checks if TvnControl must show icon in tray.
-   * @throws ::io_exception on io error, RemoteException on error on server side.
-   */
-  bool getShowTrayIconFlag();
+      /**
+       * Gets current configuration from server.
+       * @param config [out] output parameter where configuration will be stored.
+       * @throws RemoteException on error on server.
+       * @throws ::io_exception on io error.
+       */
+      void getServerConfig(::remoting::ServerConfig * pserverconfig);
 
-  /**
-   * Updates TvnControl application process id on server side.
-   * @param processId tvncontrol application process id.
-   * @throws RemoteException on error on server.
-   * @throws ::io_exception on io error.
-   */
-  void updateTvnControlProcessId(DWORD processId);
+      /**
+       * Checks if TvnControl must show icon in tray.
+       * @throws ::io_exception on io error, RemoteException on error on server side.
+       */
+      bool getShowTrayIconFlag();
 
-protected:
-  /**
-   * Returns control scopedstrMessage to write.
-   * @param messageId control scopedstrMessage id.
-   */
-  ControlMessage *createMessage(DWORD messageId);
+      /**
+       * Updates TvnControl application process id on server side.
+       * @param processId tvncontrol application process id.
+       * @throws RemoteException on error on server.
+       * @throws ::io_exception on io error.
+       */
+      void updateTvnControlProcessId(DWORD processId);
 
-protected:
-  /**
-   * Transport for sending and recieving control proto messages.
-   */
-  ControlGate *m_pblockinggate;
-  /**
-   * Current control scopedstrMessage.
-   */
-  ControlMessage *m_message;
-private:
-  /**
-   * Deletes control scopedstrMessage created by createMessage() method
-   * if it's exists.
-   */
-  void releaseMessage();
+   protected:
+      /**
+       * Returns control scopedstrMessage to write.
+       * @param messageId control scopedstrMessage id.
+       */
+      ControlMessage *createMessage(DWORD messageId);
 
-  ::string m_passwordFile;
-  bool m_getPassFromConfigEnabled;
-  bool m_forService;
-};
+   protected:
+      /**
+       * Transport for sending and recieving control proto messages.
+       */
+      ControlGate *m_pblockinggate;
+      /**
+       * Current control scopedstrMessage.
+       */
+      ControlMessage *m_message;
+   private:
+      /**
+       * Deletes control scopedstrMessage created by createMessage() method
+       * if it's exists.
+       */
+      void releaseMessage();
 
+      ::string m_passwordFile;
+      bool m_getPassFromConfigEnabled;
+      bool m_forService;
+   };
+} // namespace remoting_control_desktop
 

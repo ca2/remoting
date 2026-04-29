@@ -31,7 +31,7 @@
 // #include aaa_<DXGI1_2.h>
 
 
-namespace remoting
+namespace remoting_windows
 {
 
 
@@ -39,7 +39,8 @@ namespace remoting
    // This class  is a part of Win8DeskDuplication. This means that WinCustomD3D11Texture2D
    // is not an independed unit and it is designed to use only in Win8DeskDuplication.
    // This is a Win8DeskDuplication helper to custom appropriate textures.
-   class CLASS_DECL_REMOTING_WINDOWS WinCustomD3D11Texture2D
+   class CLASS_DECL_REMOTING_WINDOWS WinCustomD3D11Texture2D :
+   virtual public ::particle
    {
    public:
       // Initializes ID3D11Texture2D compatible to textures returned from the AcquireNextFrame() function.
@@ -73,4 +74,4 @@ namespace remoting
 
    //// __WINCUSTOMD3D11TEXTURE2D_H__
 
-} // namespace remoting
+} // namespace remoting_windows

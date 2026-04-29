@@ -25,16 +25,17 @@
 #include "remoting/remoting_windows/desktop/WindowsScreenGrabber.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
 
-   WindowsScreenGrabber::WindowsScreenGrabber(::remoting::Configurator * pconfigurator) : m_destDC(NULL), m_screenDC(NULL), m_hbmDIB(NULL), m_hbmOld(NULL)
+   WindowsScreenGrabber::WindowsScreenGrabber() :
+      m_destDC(NULL), m_screenDC(NULL), m_hbmDIB(NULL), m_hbmOld(NULL)
    {
-      m_pserverconfig = pconfigurator->getServerConfig();
-      setWorkRectDefault();
-      resume();
-      m_hasStartedSignal.wait();
+      // m_pserverconfig = pconfigurator->getServerConfig();
+      // setWorkRectDefault();
+      // resume();
+      // m_hasStartedSignal.wait();
    }
 
    WindowsScreenGrabber::~WindowsScreenGrabber(void)
@@ -43,6 +44,16 @@ namespace remoting
       terminate();
       wait();
    }
+
+
+   void WindowsScreenGrabber::initialize_screen_grabber(::remoting::Configurator * pconfigurator)
+   {
+      m_pserverconfig = pconfigurator->getServerConfig();
+      setWorkRectDefault();
+      resume();
+      m_hasStartedSignal.wait();
+   }
+
 
    bool WindowsScreenGrabber::applyNewProperties()
    {
@@ -149,10 +160,10 @@ namespace remoting
    {
       m_screen.update();
 
-      ::innate_subsystem::PixelFormat currentPF = m_screen.getPixelFormat();
-      ::innate_subsystem::PixelFormat framebufferPF = m_pframebufferWork->getPixelFormat();
+      ::innate_subsystem::PixelFormat pixelformatCurrent = m_screen.getPixelFormat();
+      ::innate_subsystem::PixelFormat pixelformatFramebuffer = m_pframebufferWork->getPixelFormat();
 
-      return !framebufferPF.isEqualTo(&currentPF);
+      return pixelformatFramebuffer != pixelformatCurrent;
    }
 
    bool WindowsScreenGrabber::getScreenSizeChanged()
@@ -184,7 +195,7 @@ namespace remoting
    bool WindowsScreenGrabber::applyNewPixelFormat()
    {
       m_screen.update();
-      m_pframebufferWork->setEmptyPixelFmt(&m_screen.getPixelFormat());
+      m_pframebufferWork->setEmptyPixelFmt(m_screen.getPixelFormat());
 
       return true;
    }
@@ -193,27 +204,27 @@ namespace remoting
    {
       m_screen.update();
       m_rectangleFullScreen = m_screen.getDesktopRect();
-      setWorkRect(&m_rectangleFullScreen);
+      setWorkRect(m_rectangleFullScreen);
 
       return true;
    }
 
    bool WindowsScreenGrabber::grab(const ::int_rectangle & rectangle)
    {
-      if (rectangle != NULL)
+      if (rectangle.is_set())
       {
          return grabByDIBSection(rectangle);
       }
 
-      ::int_rectangle grabRect;
+      ::int_rectangle rectangleGrab;
       ::int_size workDim = m_pframebufferWork->getDimension();
       // Set relative co-ordinates
-      grabRect.left = 0;
-      grabRect.top = 0;
-      grabRect.set_width(workDim.cx);
-      grabRect.set_height(workDim.cy);
+      rectangleGrab.left = 0;
+      rectangleGrab.top = 0;
+      rectangleGrab.set_width(workDim.cx);
+      rectangleGrab.set_height(workDim.cy);
 
-      return grabByDIBSection(&grabRect);
+      return grabByDIBSection(rectangleGrab);
    }
 
    bool WindowsScreenGrabber::grabByDIBSection(const ::int_rectangle & rectangle)
@@ -256,5 +267,5 @@ namespace remoting
    void WindowsScreenGrabber::onTerminate() { m_threadStopper.set_happening(); }
 
 
-} // namespace remoting
+} // namespace remoting_windows
  

@@ -24,11 +24,15 @@
 #include "framework.h"
 #include "RemoteException.h"
 
-RemoteException::RemoteException(const ::scoped_string & scopedstrReason)
-: ::subsystem::Exception(reason)
+namespace remoting_control_desktop
 {
-}
+   RemoteException::RemoteException(const ::scoped_string & scopedstrReason)
+   : ::subsystem::Exception(scopedstrReason)
+   {
+   }
 
-RemoteException::~RemoteException()
-{
-}
+   RemoteException::~RemoteException()
+   {
+   }
+} // namespace remoting_control_desktop
+

@@ -44,38 +44,38 @@ namespace remoting
       // Try to use Win8 duplication API firstly because it's in preference to other methods.
       if (isD3DAllowed())
       {
-         log->information("D3D driver usage is allowed, try to start it...");
+         plogwriter->information("D3D driver usage is allowed, try to start it...");
          try
          {
             return new Win8ScreenDriver(pupdatekeeper, pupdatelistener, pcriticalsectionFramebuffer, log);
          }
          catch (::exception &e)
          {
-            log->error("The Win8 duplication api can't be used: {}", e.get_message());
+            plogwriter->error("The Win8 duplication api can't be used: {}", e.get_message());
          }
       }
       else
       {
-         log->information("D3D driver usage is disallowed");
+         plogwriter->information("D3D driver usage is disallowed");
       }
 
       if (isMirrorDriverAllowed())
       {
-         log->information("Mirror driver usage is allowed, try to start it...");
+         plogwriter->information("Mirror driver usage is allowed, try to start it...");
          try
          {
             return createMirrorScreenDriver(pupdatekeeper, pupdatelistener, pcriticalsectionFramebuffer, log);
          }
          catch (::exception &e)
          {
-            log->error("The mirror driver factory has failed: {}", e.get_message());
+            plogwriter->error("The mirror driver factory has failed: {}", e.get_message());
          }
       }
       else
       {
-         log->information("Mirror driver usage is disallowed");
+         plogwriter->information("Mirror driver usage is disallowed");
       }
-      log->information("Using the standart screen driver");
+      plogwriter->information("Using the standart screen driver");
       return createStandardScreenDriver(pupdatekeeper, pupdatelistener, pframebuffer, pcriticalsectionFramebuffer, log);
    }
 

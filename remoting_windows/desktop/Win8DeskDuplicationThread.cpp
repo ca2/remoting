@@ -31,7 +31,7 @@
 #include "remoting/remoting_windows/desktop/Win8DeskDuplicationThread.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
 
@@ -39,7 +39,7 @@ namespace remoting
                                             ::int_rectangle_array_base &targetRect, Win8CursorShape *targetCurShape,
                                             LONGLONG *cursorTimeStamp, lockable_critical_section *cursorMutex,
                                             Win8DuplicationListener *duplListener,
-                                            ::array_base<WinDxgiOutput> &dxgiOutput, ::subsystem::LogWriter * plogwriter) :
+                                            ::pointer_array<WinDxgiOutput> &dxgiOutput, ::subsystem::LogWriter * plogwriter) :
        m_targetFb(targetFb), m_targetRects(targetRect), m_targetCurShape(targetCurShape),
        m_cursorTimeStamp(cursorTimeStamp), m_cursorMutex(cursorMutex), m_duplListener(duplListener), m_device(plogwriter),
        m_hasCriticalError(false), m_hasRecoverableError(false), m_plogwriter(plogwriter)
@@ -47,10 +47,10 @@ namespace remoting
       m_plogwriter->debug("Creating Win8DeskDuplication for {} outputs", dxgiOutput.size());
       for (size_t i = 0; i < dxgiOutput.size(); i++)
       {
-         m_dxgiOutput1.add(&dxgiOutput[i]);
-         m_outDupl.add(WinDxgiOutputDuplication(&m_dxgiOutput1[i], &m_device));
-         m_rotations.add(dxgiOutput[i].getRotation());
-         m_stageTextures2D.add(WinCustomD3D11Texture2D(m_device.getDevice(), (unsigned int)targetRect[i].width(),
+         m_dxgiOutput1.add(dxgiOutput[i]);
+         m_outDupl.add(allocateø WinDxgiOutputDuplication(m_dxgiOutput1[i], &m_device));
+         m_rotations.add(dxgiOutput[i]->getRotation());
+         m_stageTextures2D.add(allocateø WinCustomD3D11Texture2D(m_device.getDevice(), (unsigned int)targetRect[i].width(),
                                                        (unsigned int)targetRect[i].height(), m_rotations[i]));
       }
       m_plogwriter->debug("Win8DeskDuplication created");
@@ -80,8 +80,8 @@ namespace remoting
             for (size_t i = 0; i < m_outDupl.size(); i++)
             {
                {
-                  begins[i] = class ::time::now();
-                  WinDxgiAcquiredFrame acquiredFrame(&m_outDupl[i], ACQUIRE_TIMEOUT);
+                  begins[i].Now();
+                  WinDxgiAcquiredFrame acquiredFrame(m_outDupl[i], ACQUIRE_TIMEOUT);
                   if (acquiredFrame.wasTimeOut())
                   {
                      timeouts[i]++;
@@ -93,7 +93,7 @@ namespace remoting
                   {
                      DXGI_OUTDUPL_FRAME_INFO *info = acquiredFrame.getFrameInfo();
                      int accum_frames = info->AccumulatedFrames;
-                     double dt = (double)(class ::time::now() - begins[i]).getTime(); // in milliseconds
+                     double dt = begins[i].elapsed().floating_millisecond(); // in milliseconds
                      m_plogwriter->debug("Acquire frame for output: {} for %f ms, accumulated {} frames", i,
                                          dt + ACQUIRE_TIMEOUT * timeouts[i], accum_frames);
                      timeouts[i] = 0;
@@ -102,8 +102,8 @@ namespace remoting
                      // Get metadata
                      if (info->TotalMetadataBufferSize)
                      {
-                        size_t moveCount = m_outDupl[i].getFrameMoveRects(&m_moveRects);
-                        size_t dirtyCount = m_outDupl[i].getFrameDirtyRects(&m_dirtyRects);
+                        size_t moveCount = m_outDupl[i]->getFrameMoveRects(&m_moveRects);
+                        size_t dirtyCount = m_outDupl[i]->getFrameDirtyRects(&m_dirtyRects);
 
                         processMoveRects(moveCount, i);
                         processDirtyRects(dirtyCount, &acquiredDesktopImage, i);
@@ -154,18 +154,18 @@ namespace remoting
    void Win8DeskDuplication::setCriticalError(const ::scoped_string &scopedstrReason)
    {
       m_hasCriticalError = true;
-      m_duplListener->onCriticalError(reason);
+      m_duplListener->onCriticalError(scopedstrReason);
    }
 
    void Win8DeskDuplication::setRecoverableError(const ::scoped_string &scopedstrReason)
    {
       m_hasRecoverableError = true;
-      m_duplListener->onRecoverableError(reason);
+      m_duplListener->onRecoverableError(scopedstrReason);
    }
 
    ::int_size Win8DeskDuplication::getStageDimension(size_t out) const
    {
-      return ::int_size(m_stageTextures2D[out].getDesc()->Width, m_stageTextures2D[out].getDesc()->Height);
+      return ::int_size(m_stageTextures2D[out]->getDesc()->Width, m_stageTextures2D[out]->getDesc()->Height);
    }
 
    void Win8DeskDuplication::processMoveRects(size_t moveCount, size_t out)
@@ -178,20 +178,20 @@ namespace remoting
 
       for (size_t iRect = 0; iRect < moveCount; iRect++)
       {
-         destinationRect.fromWindowsRect(&m_moveRects[iRect].DestinationRect);
+         destinationRect = m_moveRects[iRect].DestinationRect;
          sourceRect = destinationRect;
-         POINT srcPoint = m_moveRects[iRect].SourcePoint;
-         sourceRect.set_top_left(srcPoint.x, srcPoint.y);
-         rotateRectInsideStage(&destinationRect, &getStageDimension(out), rotation);
-         rotateRectInsideStage(&sourceRect, &getStageDimension(out), rotation);
+         POINT pointSource = m_moveRects[iRect].SourcePoint;
+         sourceRect.set_top_left(pointSource.x, pointSource.y);
+         rotateRectInsideStage(destinationRect, getStageDimension(out), rotation);
+         rotateRectInsideStage(sourceRect, getStageDimension(out), rotation);
          // Translate the rectangle and point to the frame buffer coordinates.
-         destinationRect.move(targetRect.left, targetRect.top);
-         sourceRect.move(targetRect.left, targetRect.top);
+         destinationRect.offset(targetRect.left, targetRect.top);
+         sourceRect.offset(targetRect.left, targetRect.top);
          int x = sourceRect.left;
          int y = sourceRect.top;
-         m_targetFb->move(&destinationRect, x, y);
+         m_targetFb->move(destinationRect, x, y);
 
-         m_duplListener->onCopyRect(&destinationRect, x, y);
+         m_duplListener->onCopyRect(destinationRect, x, y);
       }
    }
 
@@ -199,21 +199,21 @@ namespace remoting
    {
       _ASSERT(dirtyCount <= m_dirtyRects.size());
 
-      Region m_regionChanged;
+      ::remoting::Region m_regionChanged;
 
       ::int_rectangle dirtyRect;
-      ::int_size stageDim = getStageDimension(out);
-      ::int_rectangle stageRect = stageDim;
+      ::int_size sizeStage = getStageDimension(out);
+      ::int_rectangle stageRect = sizeStage;
 
       DXGI_MODE_ROTATION rotation = m_rotations[out];
 
       for (size_t iRect = 0; iRect < dirtyCount; iRect++)
       {
-         dirtyRect.fromWindowsRect(&m_dirtyRects[iRect]);
+         dirtyRect = m_dirtyRects[iRect];
 
-         if (!stageRect.isFullyContainRect(&dirtyRect))
+         if (!stageRect.contains(dirtyRect))
          {
-            dirtyRect = dirtyRect.intersection(&stageRect);
+            dirtyRect = dirtyRect.intersection(stageRect);
             /* Disabled the followed throwing because it realy may happen and better is to see any picture
             // instead of a black screen.
             ::string errMess;
@@ -224,62 +224,63 @@ namespace remoting
             throw ::subsystem::Exception(errMess);
             */
          }
-         ID3D11Texture2D *texture = m_stageTextures2D[out].getTexture();
+         ID3D11Texture2D *texture = m_stageTextures2D[out]->getTexture();
          m_device.copySubresourceRegion(texture, dirtyRect.left, dirtyRect.top, acquiredDesktopImage->getTexture(),
-                                        &dirtyRect, 0, 1);
+                                        dirtyRect, 0, 1);
 
          WinDxgiSurface surface(texture);
          WinAutoMapDxgiSurface autoMapSurface(&surface, DXGI_MAP_READ);
 
          ::int_rectangle rectangleTarget(dirtyRect);
-         rotateRectInsideStage(&rectangleTarget, &stageDim, rotation);
+         rotateRectInsideStage(rectangleTarget, sizeStage, rotation);
          // Translate the rectangle to the frame buffer coordinates.
-         rectangleTarget.move(m_targetRects[out].left, m_targetRects[out].top);
+         rectangleTarget.offset(m_targetRects[out].left, m_targetRects[out].top);
          m_plogwriter->debug("Destination dirty rectangle = {}, {}, %dx{}", rectangleTarget.left, rectangleTarget.top, rectangleTarget.width(),
                              rectangleTarget.height());
 
-         stageDim.cx = static_cast<int>(autoMapSurface.getStride() / 4);
-         m_auxiliaryFramebuffer.setPropertiesWithoutResize(&stageDim, &m_targetFb->getPixelFormat());
-         m_auxiliaryFramebuffer.setBuffer(autoMapSurface.getBuffer());
+         sizeStage.cx = static_cast<int>(autoMapSurface.getStride() / 4);
+         m_pframebufferAuxiliaryProperty->setPropertiesWithoutResize(sizeStage, m_targetFb->getPixelFormat());
+         m_pframebufferAuxiliaryProperty->setBuffer(autoMapSurface.getBuffer());
          switch (rotation)
          {
             case DXGI_MODE_ROTATION_UNSPECIFIED:
             case DXGI_MODE_ROTATION_IDENTITY:
             {
-               m_targetFb->copyFrom(&rectangleTarget, &m_auxiliaryFramebuffer, dirtyRect.left, dirtyRect.top);
+               m_targetFb->copyFrom(rectangleTarget, m_pframebufferAuxiliaryProperty, dirtyRect.left, dirtyRect.top);
                break;
             }
             case DXGI_MODE_ROTATION_ROTATE90:
             {
-               m_targetFb->copyFromRotated90(&rectangleTarget, &m_auxiliaryFramebuffer, dirtyRect.left, dirtyRect.top);
+               m_targetFb->copyFromRotated90(rectangleTarget, m_pframebufferAuxiliaryProperty, dirtyRect.left, dirtyRect.top);
                break;
             }
             case DXGI_MODE_ROTATION_ROTATE180:
             {
-               m_targetFb->copyFromRotated180(&rectangleTarget, &m_auxiliaryFramebuffer, dirtyRect.left, dirtyRect.top);
+               m_targetFb->copyFromRotated180(rectangleTarget, m_pframebufferAuxiliaryProperty, dirtyRect.left, dirtyRect.top);
                break;
             }
             case DXGI_MODE_ROTATION_ROTATE270:
             {
-               m_targetFb->copyFromRotated270(&rectangleTarget, &m_auxiliaryFramebuffer, dirtyRect.left, dirtyRect.top);
+               m_targetFb->copyFromRotated270(rectangleTarget, m_pframebufferAuxiliaryProperty, dirtyRect.left, dirtyRect.top);
                break;
             }
          }
-         m_auxiliaryFramebuffer.setBuffer(0);
+         m_pframebufferAuxiliaryProperty->setBuffer(0);
 
-         m_regionChanged.addRect(&rectangleTarget);
+         m_regionChanged.addRect(rectangleTarget);
       }
 
-      m_duplListener->onFramebufferUpdate(&m_regionChanged);
+      m_duplListener->onFramebufferUpdate(m_regionChanged);
    }
 
-   void Win8DeskDuplication::rotateRectInsideStage(::int_rectangle &toTranspose, const ::int_size &stageDim,
+
+   void Win8DeskDuplication::rotateRectInsideStage(::int_rectangle &rectangleToTranspose, const ::int_size &sizeStage,
                                                    DXGI_MODE_ROTATION rotation)
    {
-      int left = toTranspose.left;
-      int top = toTranspose.top;
-      int width = toTranspose.width();
-      int height = toTranspose.height();
+      int left = rectangleToTranspose.left;
+      int top = rectangleToTranspose.top;
+      int width = rectangleToTranspose.width();
+      int height = rectangleToTranspose.height();
       switch (rotation)
       {
          case DXGI_MODE_ROTATION_UNSPECIFIED:
@@ -289,17 +290,17 @@ namespace remoting
          }
          case DXGI_MODE_ROTATION_ROTATE90:
          {
-            toTranspose->rotateOn90InsideDimension(stageDim->height);
+            rectangleToTranspose.rotateOn90InsideDimension(sizeStage.cy);
             break;
          }
          case DXGI_MODE_ROTATION_ROTATE180:
          {
-            toTranspose->rotateOn180InsideDimension(stageDim->width, stageDim->height);
+            rectangleToTranspose.rotateOn180InsideDimension(sizeStage.cx, sizeStage.cy);
             break;
          }
          case DXGI_MODE_ROTATION_ROTATE270:
          {
-            toTranspose->rotateOn270InsideDimension(stageDim->width);
+            rectangleToTranspose.rotateOn270InsideDimension(sizeStage.cx);
             break;
          }
       }
@@ -320,7 +321,7 @@ namespace remoting
          bool visibleChanged = m_targetCurShape->getIsVisible() != newVisibility;
          if (visibleChanged)
          {
-     m_plogwriter->debug(newVisibility ? "Cursor became visible") : _T("Cursor became not visible");
+     m_plogwriter->debug(newVisibility ? "Cursor became visible" : "Cursor became not visible");
      m_targetCurShape->setVisibility(newVisibility, out);
      m_duplListener->onCursorShapeChanged();
          }
@@ -330,7 +331,7 @@ namespace remoting
          if (shapeChanged)
          {
             m_plogwriter->debug("Cursor shape chagned");
-            m_outDupl[out].getFrameCursorShape(m_targetCurShape->getCursorShapeForWriting(),
+            m_outDupl[out]->getFrameCursorShape(m_targetCurShape->getCursorShapeForWriting(),
                                                info->PointerShapeBufferSize, m_plogwriter);
             m_duplListener->onCursorShapeChanged();
          }
@@ -347,5 +348,5 @@ namespace remoting
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows
  

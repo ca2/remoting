@@ -486,6 +486,10 @@ if(${WIN32})
    list(APPEND library_source
 
       _common_header.h
+      desktop/DesktopFactory.cpp
+      desktop/DesktopFactory.h
+      desktop/DesktopClientImpl.cpp
+      desktop/DesktopClientImpl.h
    desktop/DesktopWinImpl.cpp
    desktop/DesktopWinImpl.h
    desktop/MirrorDriverClient.cpp
@@ -547,8 +551,8 @@ if(${WIN32})
    desktop/WinDxgiSurface.h
    desktop/WinDxRecoverableException.cpp
    desktop/WinDxRecoverableException.h
-   desktop/WinServiceDesktopFactory.cpp
-   desktop/WinServiceDesktopFactory.h
+   #desktop/WinServiceDesktopFactory.cpp
+   #desktop/WinServiceDesktopFactory.h
    desktop/WinVideoRegionUpdaterImpl.cpp
    desktop/WinVideoRegionUpdaterImpl.h
 
@@ -560,6 +564,8 @@ list(APPEND library_references
    subsystem
    apex
    innate_subsystem
+   remoting
+   ${default_subsystem}
 )
 
 

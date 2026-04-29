@@ -33,68 +33,71 @@
 #include "subsystem/node/PipeClient.h"
 #include "subsystem/node/PipeServer.h"
 
-/**
- * Transport factory.
- *
- * Can create various types of transport.
- */
-class TransportFactory
+
+namespace remoting_control_desktop
 {
-public:
-  /**
-   * Creates client transport that uses client socket.
-   *
-   * Creates socket, connects to host, creates transport using connected socket
-   * and returns transport.
-   *
-   * @param connectHost host to connect for socket.
-   * @param connectPort port to connect.
-   * @return created transport.
-   *
-   * @throws SocketException on socket error.
-   */
-  static Transport *createSocketClientTransport(const ::scoped_string & scopedstrConnectHost,
-                                                unsigned int connectPort);
-  /**
-   * Creates server transport that uses bound socket.
-   *
-   * Creates socket, bound it, creates transport using socket
-   * and returns transport.
-   *
-   * @param bindHost host to bind.
-   * @param bindPort port to bind.
-   * @return created transport.
-   *
-   * @throws SocketException on socket error.
-   */
-  static Transport *createSocketServerTransport(const ::scoped_string & scopedstrBindHost,
-                                                unsigned int bindPort);
+   /**
+    * Transport factory.
+    *
+    * Can create various types of transport.
+    */
+   class TransportFactory
+   {
+   public:
+      /**
+       * Creates client transport that uses client socket.
+       *
+       * Creates socket, connects to host, creates transport using connected socket
+       * and returns transport.
+       *
+       * @param connectHost host to connect for socket.
+       * @param connectPort port to connect.
+       * @return created transport.
+       *
+       * @throws SocketException on socket error.
+       */
+      static ::pointer < Transport > createSocketClientTransport(const ::scoped_string & scopedstrConnectHost,
+                                                    unsigned int connectPort);
+      /**
+       * Creates server transport that uses bound socket.
+       *
+       * Creates socket, bound it, creates transport using socket
+       * and returns transport.
+       *
+       * @param bindHost host to bind.
+       * @param bindPort port to bind.
+       * @return created transport.
+       *
+       * @throws SocketException on socket error.
+       */
+      static ::pointer < Transport > createSocketServerTransport(const ::scoped_string & scopedstrBindHost,
+                                                    unsigned int bindPort);
 
-  /**
-   * Creates client transport that uses named pipe.
-   *
-   * @param name name of pipe.
-   * @return created transport.
-   *
-   * @throws ::subsystem::Exception on socket error.
-   */
-  static Transport *createPipeClientTransport(const ::scoped_string & scopedstrName);
+      /**
+       * Creates client transport that uses named pipe.
+       *
+       * @param name name of pipe.
+       * @return created transport.
+       *
+       * @throws ::subsystem::Exception on socket error.
+       */
+      static ::pointer < Transport > createPipeClientTransport(const ::scoped_string & scopedstrName);
 
-  /**
-   * Creates server transport that uses named pipe.
-   *
-   * @param name name of pipe.
-   * @return created transport.
-   *
-   * @throws ::subsystem::Exception on socket error.
-   */
-  static Transport *createPipeServerTransport(const ::scoped_string & scopedstrName);
+      /**
+       * Creates server transport that uses named pipe.
+       *
+       * @param name name of pipe.
+       * @return created transport.
+       *
+       * @throws ::subsystem::Exception on socket error.
+       */
+      static ::pointer < Transport > createPipeServerTransport(const ::scoped_string & scopedstrName);
 
-private:
-  /**
-   * Don't allow instanizing of factory.
-   */
-  TransportFactory() { };
-};
-
+   private:
+      /**
+       * Don't allow instanizing of factory.
+       */
+      TransportFactory() { };
+   };
+} // namespace remoting_control_desktop
 

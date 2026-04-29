@@ -24,16 +24,20 @@
 #include "framework.h"
 #include "ShutdownCommand.h"
 
-ShutdownCommand::ShutdownCommand(ControlProxy *serverControl)
-: m_proxy(serverControl)
+namespace remoting_control_desktop
 {
-}
+   ShutdownCommand::ShutdownCommand(ControlProxy *serverControl)
+   : m_proxy(serverControl)
+   {
+   }
 
-ShutdownCommand::~ShutdownCommand()
-{
-}
+   ShutdownCommand::~ShutdownCommand()
+   {
+   }
 
-void ShutdownCommand::execute()
-{
-  m_proxy->shutdownTightVnc();
-}
+   void ShutdownCommand::execute()
+   {
+      m_proxy->shutdownTightVnc();
+   }
+} // namespace remoting_control_desktop
+

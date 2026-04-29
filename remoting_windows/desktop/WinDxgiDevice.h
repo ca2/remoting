@@ -29,7 +29,7 @@
 #include "remoting/remoting_windows/desktop/WinD3D11Device.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
    // #include aaa_<d3d11.h>
@@ -49,7 +49,7 @@ namespace remoting
    };
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

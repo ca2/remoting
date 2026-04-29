@@ -45,13 +45,13 @@
   // Initialisation
   pframebuffer = new WindowsScreenGrabber;
 
-  ::int_rectangle grabRect, workRect;
+  ::int_rectangle rectangleGrab, workRect;
   workRect.setRect(100, 100, 500, 500);
-  grabRect.setRect(20, 20, 120, 120); // Relative to the workRect
+  rectangleGrab.setRect(20, 20, 120, 120); // Relative to the workRect
   pframebuffer->setWorkRect(&workRect);
 
   // One-time grabbing
-  while (!pframebuffer->grab(&grabRect)) {
+  while (!pframebuffer->grab(&rectangleGrab)) {
     if (pframebuffer->getPropertiesChanged()) { // Check desktop properties
       if (!pframebuffer->applyNewProperties()) {
         MessageBox(NULL, "Cannot apply new screen properties"), _T("Error", MB_ICONHAND);

@@ -22,19 +22,19 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "UpdateKeeper.h"
+#include "::remoting::UpdateKeeper.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
 
-   UpdateKeeper::UpdateKeeper() {}
+   ::remoting::UpdateKeeper::::remoting::UpdateKeeper() {}
 
-   UpdateKeeper::UpdateKeeper(const ::int_rectangle &borderRect) { m_rectangleBorder.set(borderRect); }
+   ::remoting::UpdateKeeper::::remoting::UpdateKeeper(const ::int_rectangle &borderRect) { m_rectangleBorder.set(borderRect); }
 
-   UpdateKeeper::~UpdateKeeper(void) {}
+   ::remoting::UpdateKeeper::~::remoting::UpdateKeeper(void) {}
 
-   void UpdateKeeper::addChangedRegion(const Region & regionChanged)
+   void ::remoting::UpdateKeeper::addChangedRegion(const Region & regionChanged)
    {
       critical_section_lock al(&m_criticalsectionUpdateContainer);
 
@@ -45,13 +45,13 @@ namespace remoting
       m_updatecontainer.m_regionChanged.crop(m_rectangleBorder);
    }
 
-   void UpdateKeeper::addChangedRect(const ::int_rectangle &rectangleChanged)
+   void ::remoting::UpdateKeeper::addChangedRect(const ::int_rectangle &rectangleChanged)
    {
       Region region(rectangleChanged);
       addChangedRegion(region);
    }
 
-   void UpdateKeeper::addCopyRect(const ::int_rectangle &rectangleCopy, const ::int_point &pointSource)
+   void ::remoting::UpdateKeeper::addCopyRect(const ::int_rectangle &rectangleCopy, const ::int_point &pointSource)
    {
       critical_section_lock al(&m_criticalsectionUpdateContainer);
 
@@ -129,38 +129,38 @@ namespace remoting
       m_updatecontainer.m_regionCopied.crop(m_rectangleBorder);
    }
 
-   void UpdateKeeper::setBorderRect(const ::int_rectangle &borderRect)
+   void ::remoting::UpdateKeeper::setBorderRect(const ::int_rectangle &borderRect)
    {
       critical_section_lock al(&m_criticalsectionUpdateContainer);
       m_rectangleBorder = borderRect;
    }
 
-   void UpdateKeeper::setScreenSizeChanged()
+   void ::remoting::UpdateKeeper::setScreenSizeChanged()
    {
       critical_section_lock al(&m_criticalsectionUpdateContainer);
       m_updatecontainer.m_bScreenSizeChanged = true;
    }
 
-   void UpdateKeeper::setCursorPosChanged()
+   void ::remoting::UpdateKeeper::setCursorPosChanged()
    {
       critical_section_lock al(&m_criticalsectionUpdateContainer);
       m_updatecontainer.m_bCursorPosChanged = true;
    }
 
-   void UpdateKeeper::setCursorPos(const ::int_point &curPos)
+   void ::remoting::UpdateKeeper::setCursorPos(const ::int_point &curPos)
    {
       critical_section_lock al(&m_criticalsectionUpdateContainer);
       m_updatecontainer.m_bCursorPosChanged = true;
       m_updatecontainer.m_pointCursorPos = curPos;
    }
 
-   void UpdateKeeper::setCursorShapeChanged()
+   void ::remoting::UpdateKeeper::setCursorShapeChanged()
    {
       critical_section_lock al(&m_criticalsectionUpdateContainer);
       m_updatecontainer.m_bCursorShapeChanged = true;
    }
 
-   void UpdateKeeper::addUpdateContainer(const UpdateContainer & updatecontainer)
+   void ::remoting::UpdateKeeper::addUpdateContainer(const UpdateContainer & updatecontainer)
    {
       critical_section_lock al(&m_criticalsectionUpdateContainer);
 
@@ -198,13 +198,13 @@ namespace remoting
       }
    }
 
-   void UpdateKeeper::getUpdateContainer(UpdateContainer & updatecontainer)
+   void ::remoting::UpdateKeeper::getUpdateContainer(UpdateContainer & updatecontainer)
    {
       critical_section_lock al(&m_criticalsectionUpdateContainer);
       updatecontainer = m_updatecontainer;
    }
 
-   bool UpdateKeeper::checkForUpdates(const Region & region)
+   bool ::remoting::UpdateKeeper::checkForUpdates(const Region & region)
    {
       UpdateContainer updatecontainer;
       getUpdateContainer(&updatecontainer);
@@ -219,7 +219,7 @@ namespace remoting
       return result;
    }
 
-   void UpdateKeeper::extract(UpdateContainer & updatecontainer)
+   void ::remoting::UpdateKeeper::extract(UpdateContainer & updatecontainer)
    {
       {
          critical_section_lock al(&m_criticalsectionUpdateContainer);
@@ -238,7 +238,7 @@ namespace remoting
       }
    }
 
-   void UpdateKeeper::setExcludedRegion(const Region & regionExcluded)
+   void ::remoting::UpdateKeeper::setExcludedRegion(const Region & regionExcluded)
    {
       critical_section_lock al(&m_criticalsectionExclRegLoc);
 
@@ -246,7 +246,7 @@ namespace remoting
 
    }
 
-   void UpdateKeeper::clearExcludedRegion()
+   void ::remoting::UpdateKeeper::clearExcludedRegion()
    {
       critical_section_lock al(&m_criticalsectionExclRegLoc);
 
@@ -254,7 +254,7 @@ namespace remoting
 
    }
 
-} // namespace remoting
+} // namespace remoting_windows
  
 
 

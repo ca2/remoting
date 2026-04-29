@@ -31,16 +31,16 @@
 #include "subsystem/thread/Lockable.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
 
-   class CLASS_DECL_REMOTING UpdateKeeper : public ::subsystem::LockableInterface
+   class CLASS_DECL_REMOTING ::remoting::UpdateKeeper : public ::subsystem::LockableInterface
    {
    public:
-      UpdateKeeper();
-      UpdateKeeper(const ::int_rectangle &borderRect);
-      ~UpdateKeeper(void);
+      ::remoting::UpdateKeeper();
+      ::remoting::UpdateKeeper(const ::int_rectangle &borderRect);
+      ~::remoting::UpdateKeeper(void);
 
       virtual ::e_status lock()
       {
@@ -88,7 +88,7 @@ namespace remoting
    };
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

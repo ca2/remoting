@@ -3,7 +3,7 @@
 
 
 /// remoting/remoting/desktop
-namespace remoting
+namespace remoting_windows
 {
 
 

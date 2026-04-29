@@ -23,47 +23,52 @@
 //
 #include "framework.h"
 #include "NamedPipeTransport.h"
+#include "subsystem/node/NamedPipe.h"
 
-NamedPipeTransport::NamedPipeTransport(NamedPipe *client)
-: m_pipe(client), m_pipeServer(0)
+namespace remoting_control_desktop
 {
-}
+   NamedPipeTransport::NamedPipeTransport(::subsystem::NamedPipe *client)
+   : m_pipe(client), m_pipeServer(0)
+   {
+   }
 
-NamedPipeTransport::NamedPipeTransport(PipeServer *server)
-: m_pipe(0), m_pipeServer(server)
-{
-}
+   NamedPipeTransport::NamedPipeTransport(::subsystem::PipeServer *server)
+   : m_pipe(0), m_pipeServer(server)
+   {
+   }
 
-NamedPipeTransport::~NamedPipeTransport()
-{
-  if (m_pipe != 0) {
-    delete m_pipe;
-  }
-  if (m_pipeServer != 0) {
-    delete m_pipeServer;
-  }
-}
+   NamedPipeTransport::~NamedPipeTransport()
+   {
+      if (m_pipe != 0) {
+         delete m_pipe;
+      }
+      if (m_pipeServer != 0) {
+         delete m_pipeServer;
+      }
+   }
 
-Channel *NamedPipeTransport::getIOStream()
-{
-  _ASSERT(m_pipe != 0);
+   Channel *NamedPipeTransport::getIOStream()
+   {
+      _ASSERT(m_pipe != 0);
 
-  return m_pipe;
-}
+      return m_pipe;
+   }
 
-Transport *NamedPipeTransport::accept()
-{
-  _ASSERT(m_pipeServer != 0);
+   Transport *NamedPipeTransport::accept()
+   {
+      _ASSERT(m_pipeServer != 0);
 
-  return new NamedPipeTransport(m_pipeServer->accept());
-}
+      return new NamedPipeTransport(m_pipeServer->accept());
+   }
 
-void NamedPipeTransport::close()
-{
-  if (m_pipe != 0) {
-    m_pipe->close();
-  }
-  if (m_pipeServer != 0) {
-    m_pipeServer->close();
-  }
-}
+   void NamedPipeTransport::close()
+   {
+      if (m_pipe != 0) {
+         m_pipe->close();
+      }
+      if (m_pipeServer != 0) {
+         m_pipeServer->close();
+      }
+   }
+} // namespace remoting_control_desktop
+

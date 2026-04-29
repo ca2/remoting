@@ -26,19 +26,34 @@
 #include "subsystem/platform/Exception.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
 
-   Win32MirrorScreenDriver::Win32MirrorScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                                                    lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) :
-       Win32ScreenDriverBaseImpl(pupdatekeeper, pupdatelistener, pcriticalsectionFramebuffer, log),
-       m_mirrorDriver(pupdatekeeper, pupdatelistener, pcriticalsectionFramebuffer, log)
+   // Win32MirrorScreenDriver::Win32MirrorScreenDriver(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
+   //                                                  lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) :
+   //     Win32ScreenDriverBaseImpl(pupdatekeeper, pupdatelistener, pcriticalsectionFramebuffer, log),
+   //     m_mirrorDriver(pupdatekeeper, pupdatelistener, pcriticalsectionFramebuffer, log)
+   // {
+   //    // At this point the screen driver has valid screen properties.
+   // }
+
+   Win32MirrorScreenDriver::Win32MirrorScreenDriver()
    {
       // At this point the screen driver has valid screen properties.
    }
 
    Win32MirrorScreenDriver::~Win32MirrorScreenDriver() { terminateDetection(); }
+
+
+   void Win32MirrorScreenDriver::initialize_screen_driver(::remoting::Configurator * pconfigurator,::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
+                                        ::innate_subsystem::Framebuffer *pframebuffer,
+                                                 lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter)
+   {
+      Win32ScreenDriverBaseImpl::initialize_screen_driver(pconfigurator, pupdatekeeper, pupdatelistener, pframebuffer, pcriticalsectionFramebuffer, plogwriter);
+      m_mirrorDriver.initialize_mirror_screen_driver(pupdatekeeper, pupdatelistener, pcriticalsectionFramebuffer, plogwriter);
+      // At this point the screen driver has valid screen properties.
+   }
 
    void Win32MirrorScreenDriver::executeDetection()
    {
@@ -68,4 +83,4 @@ namespace remoting
    bool Win32MirrorScreenDriver::applyNewScreenProperties() { return m_mirrorDriver.applyNewProperties(); }
 
 
-} // namespace remoting
+} // namespace remoting_windows

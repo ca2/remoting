@@ -92,9 +92,9 @@ namespace remoting
                           m_regionVideo.getCount());
       if (!classNames.empty())
       {
-         class ::time startTime = class ::time::now();
+         class ::time timeStart = class ::time::now();
          tmpRegion.add(getRectsByClass(classNames));
-         unsigned int millis = (class ::time::now() - startTime).getTime();
+         unsigned int millis = (class ::time::now() - timeStart).getTime();
          m_plogwriter->debug(L"WinVideoRegionUpdaterImpl::getRectsByClass call took {} ms", millis);
       }
       if (!rectanglea.empty())
@@ -132,11 +132,11 @@ namespace remoting
             wi.cbSize = sizeof(WINDOWINFO);
             if (GetWindowInfo(videoHWND, &wi))
             {
-               ::int_rectangle videoRect(wi.rcClient.left, wi.rcClient.top, wi.rcClient.right, wi.rcClient.bottom);
-               if (videoRect.isValid())
+               ::int_rectangle rectangleVideo(wi.rcClient.left, wi.rcClient.top, wi.rcClient.right, wi.rcClient.bottom);
+               if (rectangleVideo.isValid())
                {
-                  videoRect.move(-GetSystemMetrics(SM_XVIRTUALSCREEN), -GetSystemMetrics(SM_YVIRTUALSCREEN));
-                  vidRegion.addRect(&videoRect);
+                  rectangleVideo.move(-GetSystemMetrics(SM_XVIRTUALSCREEN), -GetSystemMetrics(SM_YVIRTUALSCREEN));
+                  vidRegion.addRect(&rectangleVideo);
                }
             }
          }
@@ -147,14 +147,14 @@ namespace remoting
    Region WinVideoRegionUpdaterImpl::getRectsByCoords(::int_rectangle_array_base &rectanglea)
    {
       ::int_rectangle_array_base::iterator rIter;
-      ::int_rectangle videoRect;
+      ::int_rectangle rectangleVideo;
       Region vidRegion;
       for (rIter = rectanglea.begin(); rIter != rectanglea.end(); rIter++)
       {
-         videoRect = *rIter;
-         if (videoRect.isValid())
+         rectangleVideo = *rIter;
+         if (rectangleVideo.isValid())
          {
-            vidRegion.addRect(&videoRect);
+            vidRegion.addRect(&rectangleVideo);
          }
       }
       return vidRegion;

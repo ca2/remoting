@@ -34,7 +34,7 @@
 #include "subsystem/node/OperatingSystem.h"
 #include "subsystem/node/Displays.h"
 
-namespace remoting
+namespace remoting_windows
 
 {
    //
@@ -68,10 +68,16 @@ namespace remoting
    //    resume();
    // }
 
+   DesktopWinImpl::DesktopWinImpl()
+   {
+
+
+   }
+
 
    void DesktopWinImpl::initialize_desktop(
-      Configurator * pconfigurator, ClipboardListener *pclipboardlistenerExternal, UpdateSendingListener *pupdatesendinglistenerExternal,
-                                  AbnormDeskTermListener *pdesktermlistenerExternal, ::subsystem::LogWriter * plogwriter)
+      ::remoting::Configurator * pconfigurator, ClipboardListener *pclipboardlistenerExternal, ::remoting::UpdateSendingListener *pupdatesendinglistenerExternal,
+                                  ::remoting::AbnormDeskTermListener *pdesktermlistenerExternal, ::subsystem::LogWriter * plogwriter)
        // DesktopBaseImpl(pclipboardlistenerExternal, pupdatesendinglistenerExternal, pdesktermlistenerExternal, log), m_pwallpaperutil(0), m_pdesktopconfigclient(0),
        // m_plogwriter = plogwriter;, m_pscreendriverfactory(m_pconfigurator->getServerConfig())
    {
@@ -89,15 +95,17 @@ namespace remoting
 
           try
           {
-             m_pupdatehandler = new UpdateHandlerImpl(this, m_pscreendriverfactory, m_plogwriter);
+             m_pupdatehandler = new ::remoting::UpdateHandlerImpl(m_pconfigurator, this, m_pscreendriverfactory, m_plogwriter);
              bool ctrlAltDelEnabled = false;
              constructø(m_puserinput);
              m_puserinput->initialize_user_input(this, ctrlAltDelEnabled, m_plogwriter);
 
-             raw_construct_newø(m_pdesktopconfigclient, m_plogwriter);
+             construct_newø(m_pdesktopconfiglocal);
+             m_pdesktopconfiglocal->initialize_desktop_config_local(pconfigurator, m_plogwriter);
              applyNewConfiguration();
 
-             raw_construct_newø(m_pwallpaperutil, m_plogwriter);
+             construct_newø(m_pwallpaperutil);
+             m_pwallpaperutil->initialize_wallpaper_util(pconfigurator,m_plogwriter);
              m_pwallpaperutil->updateWallpaper();
 
              m_pconfigurator->addListener(this);
@@ -164,7 +172,7 @@ namespace remoting
 
       m_pwallpaperutil.defer_destroy_and_release();
       m_pupdatehandler.defer_destroy_and_release();
-      m_pdesktopconfigclient.defer_destroy_and_release();
+      m_pdesktopconfiglocal.defer_destroy_and_release();
       m_puserinput.defer_destroy_and_release();
 
       // if (m_pwallpaperutil)
@@ -173,7 +181,7 @@ namespace remoting
       // if (m_pupdatehandler)
       //    delete m_pupdatehandler;
       // if (m_pdesktopconfigclient)
-      //    delete m_pdesktopconfigclient;
+      //    delete m_pdesktopconfiglocal;
       // if (m_puserinput)
       //    delete m_puserinput;
    }
@@ -197,12 +205,12 @@ namespace remoting
       m_plogwriter->information("DesktopWinImpl thread stopped");
    }
 
-   bool DesktopWinImpl::isRemoteInputTempBlocked() { return !m_pdesktopconfigclient->isRemoteInputAllowed(); }
+   bool DesktopWinImpl::isRemoteInputTempBlocked() { return !m_pdesktopconfiglocal->isRemoteInputAllowed(); }
 
    void DesktopWinImpl::applyNewConfiguration()
    {
       m_plogwriter->information("reload DesktopWinImpl configuration");
-      m_pdesktopconfigclient->updateByNewSettings();
+      m_pdesktopconfiglocal->updateByNewSettings();
    }
 
    void DesktopWinImpl::logDesktopInfo()
@@ -227,14 +235,16 @@ namespace remoting
       ::subsystem::Displays displays;
       ::int_rectangle_array_base rectangleaDisplays = displays.getDisplays();
       m_plogwriter->debug("The console desktop has {} displays", (int)rectangleaDisplays.size());
+      int i = 1;
       for (auto & rectangleDisplay : rectangleaDisplays)
       {
-         m_plogwriter->debug("Display {} placed at the {:d} coordinates", i + 1, rectangleDisplay);
+         m_plogwriter->debug("Display {} placed at the {:d} coordinates", i, rectangleDisplay);
+         i++;
       }
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows
  
 
 

@@ -154,7 +154,7 @@ namespace remoting
    void WinDxgiOutputDuplication::getFrameCursorShape(CursorShape *cursorShape, unsigned int pointerShapeBufferSize,
                                                       ::subsystem::LogWriter * plogwriter)
    {
-      // log->debug("{}", pointerShapeBufferSize);
+      // plogwriter->debug("{}", pointerShapeBufferSize);
       //  This function can calculate required buffer size by self but the size is already known.
       if (pointerShapeBufferSize == 0)
       {
@@ -166,17 +166,17 @@ namespace remoting
       ::array_base<char> buffer(pointerShapeBufferSize);
       DXGI_OUTDUPL_POINTER_SHAPE_INFO shapeInfo;
       hr = m_outDupl->GetFramePointerShape((unsigned int)buffer.size(), &buffer.front(), &reqSize, &shapeInfo);
-      log->debug("CursorShapeInfo: pounter info buffer size: {}, required: {}", pointerShapeBufferSize, reqSize);
+      plogwriter->debug("CursorShapeInfo: pounter info buffer size: {}, required: {}", pointerShapeBufferSize, reqSize);
       if (FAILED(hr))
       {
          throw WinDxException("Can't get frame cursor shape with GetFramePointerShape() calling", hr);
       }
 
-      log->debug("CursorShapeInfo: Type: {}", shapeInfo.Type);
-      log->debug("CursorShapeInfo: Width: {}, Height: {}", shapeInfo.Width, shapeInfo.Height);
-      log->debug("CursorShapeInfo: shapeInfo.HotSpot.x: {}, , shapeInfo.HotSpot.y: {}", shapeInfo.HotSpot.x,
+      plogwriter->debug("CursorShapeInfo: Type: {}", shapeInfo.Type);
+      plogwriter->debug("CursorShapeInfo: Width: {}, Height: {}", shapeInfo.Width, shapeInfo.Height);
+      plogwriter->debug("CursorShapeInfo: shapeInfo.HotSpot.x: {}, , shapeInfo.HotSpot.y: {}", shapeInfo.HotSpot.x,
                  shapeInfo.HotSpot.y);
-      log->debug("CursorShapeInfo: Pitch: {}", shapeInfo.Pitch);
+      plogwriter->debug("CursorShapeInfo: Pitch: {}", shapeInfo.Pitch);
 
       buffer.resize(reqSize);
 
@@ -200,17 +200,17 @@ namespace remoting
       {
          WinCursorShapeUtils::trimBuffer(&buffer, &shapeInfo);
          pitch = shapeInfo.Pitch;
-         log->debug("Trimmed CursorShapeInfo: Width: {}, Height: {}", shapeInfo.Width, shapeInfo.Height);
-         log->debug("Trimmed CursorShapeInfo: Pitch: {}", shapeInfo.Pitch);
+         plogwriter->debug("Trimmed CursorShapeInfo: Width: {}, Height: {}", shapeInfo.Width, shapeInfo.Height);
+         plogwriter->debug("Trimmed CursorShapeInfo: Pitch: {}", shapeInfo.Pitch);
       }
 
       if (shapeInfo.Type == DXGI_OUTDUPL_POINTER_SHAPE_TYPE_MONOCHROME)
       {
-         size.setDim(shapeInfo.Width, shapeInfo.Height / 2);
+         size.set(shapeInfo.Width, shapeInfo.Height / 2);
       }
       else
       {
-         size.setDim(shapeInfo.Width, shapeInfo.Height);
+         size.set(shapeInfo.Width, shapeInfo.Height);
       }
       newCursorShape.setProperties(size, pixelformat);
 

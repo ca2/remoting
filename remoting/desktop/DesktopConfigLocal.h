@@ -37,12 +37,12 @@ namespace remoting
    public:
 
 
-      ::subsystem::LogWriter * m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
       ::pointer < Configurator > m_pconfigurator;
       ::pointer < InputBlocker  > m_pinputblocker;
 
       DesktopConfigLocal();
-      virtual ~DesktopConfigLocal();
+      ~DesktopConfigLocal() override;
 
 
       void initialize_desktop_config_local(Configurator * pconfigurator, ::subsystem::LogWriter * plogwriter);

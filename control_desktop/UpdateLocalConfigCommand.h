@@ -29,29 +29,33 @@
 
 #include "ControlProxy.h"
 
-/**
- * Command that copies current configuration of remote TightVNC server
- * to local application configuration.
- */
-class UpdateLocalConfigCommand : public Command
-{
-public:
-  /**
-   * Creates command.
-   * @param proxy ready to use control proxy.
-   */
-  UpdateLocalConfigCommand(ControlProxy *proxy);
-  /**
-   * Destructor.
-   */
-  virtual ~UpdateLocalConfigCommand();
-  /**
-   * Executes command.
-   * @throws ::io_exception, RemoteException.
-   */
-  virtual void execute();
-private:
-  ControlProxy* m_proxy;
-};
 
+namespace remoting_control_desktop
+{
+   /**
+    * Command that copies current configuration of remote TightVNC server
+    * to local application configuration.
+    */
+   class UpdateLocalConfigCommand : public Command
+   {
+   public:
+      /**
+       * Creates command.
+       * @param proxy ready to use control proxy.
+       */
+      UpdateLocalConfigCommand(ControlProxy *proxy);
+      /**
+       * Destructor.
+       */
+      virtual ~UpdateLocalConfigCommand();
+      /**
+       * Executes command.
+       * @throws ::io_exception, RemoteException.
+       */
+      virtual void execute();
+   private:
+      ControlProxy* m_proxy;
+      ::pointer < ::remoting::Configurator > m_pconfigurator;
+   };
+} //   namespace remoting_control_desktop
 

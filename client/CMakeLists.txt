@@ -42,8 +42,8 @@ list(APPEND library_source
    keyboard_layout_change.h
    LoginDialog.cpp
    LoginDialog.h
-   NamingDefs.cpp
-   NamingDefs.h
+   #NamingDefs.cpp
+   #NamingDefs.h
    NewFolderDialog.cpp
    NewFolderDialog.h
    OptionsDialog.cpp

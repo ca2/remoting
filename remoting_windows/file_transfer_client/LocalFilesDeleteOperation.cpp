@@ -157,7 +157,7 @@ namespace remoting
          //
          //    scopedstrMessage.formatf("Error: failed to remove local '{}' {}",
          //                   pathToTargetFile,
-         //                   pfileitem->isDirectory() ? "folder") : _T("pfileitem");
+         //                   pfileitem->isDirectory() ? "folder") : "pfileitem";
          //
          //    notifyError(scopedstrMessage);
          // } // if failed to remove

@@ -29,19 +29,21 @@
 
 //#include aaa_<list>
 
-class RfbClientInfo
+namespace remoting_control_desktop
 {
-public:
-  RfbClientInfo(unsigned int id, const ::scoped_string & scopedstrPeerAddr);
-  virtual ~RfbClientInfo();
+   class RfbClientInfo
+   {
+   public:
+      RfbClientInfo(unsigned int id, const ::scoped_string & scopedstrPeerAddr);
+      virtual ~RfbClientInfo();
 
-  // FIXME: Debug.
-  // FIXME: These members must be protected.
-public:
-  unsigned int m_id;
-  ::string m_peerAddr;
-};
+      // FIXME: Debug.
+      // FIXME: These members must be protected.
+   public:
+      unsigned int m_id;
+      ::string m_peerAddr;
+   };
 
-typedef ::list_base<RfbClientInfo> RfbClientInfoList;
-
+   typedef ::list_base<RfbClientInfo> RfbClientInfoList;
+} // namespace remoting_control_desktop
 

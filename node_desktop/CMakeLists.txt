@@ -30,8 +30,8 @@ list(APPEND library_source
    framework.cpp
    framework.h
    LogInitListener.h
-   NamingDefs.cpp
-   NamingDefs.h
+   #NamingDefs.cpp
+   #NamingDefs.h
    #NewConnectionEvents.h
    OutgoingRfbConnectionThread.cpp
    OutgoingRfbConnectionThread.h
@@ -80,7 +80,7 @@ list(APPEND library_references
    subsystem
    innate_subsystem
    remoting
-   control_desktop
+   remoting_control_desktop
 )
 
 
@@ -92,10 +92,6 @@ list(APPEND library_include_directories
 
 
 add_library(${PROJECT_NAME} SHARED ${library_source})
-
-
-
-
 
 
 #target_link_directories(${PROJECT_NAME} PRIVATE ${executable_link_directories})

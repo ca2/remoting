@@ -65,7 +65,7 @@ namespace remoting
 
       ::int_size getStageDimension(size_t out) const;
 
-      void rotateRectInsideStage(::int_rectangle &toTranspose, const ::int_size &stageDim, DXGI_MODE_ROTATION rotation);
+      void rotateRectInsideStage(::int_rectangle &rectangleToTranspose, const ::int_size &sizeStage, DXGI_MODE_ROTATION rotation);
 
       ::innate_subsystem::Framebuffer *m_targetFb;
 

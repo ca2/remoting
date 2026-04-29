@@ -26,7 +26,7 @@
 #include "subsystem/platform/BrokenHandleException.h"
 
 
-namespace remoting
+namespace remoting_windows
 
 {
 
@@ -384,7 +384,7 @@ namespace remoting
       }
    }
 
-   void DesktopBaseImpl::onConfigReload(ServerConfig *serverConfig) { applyNewConfiguration(); }
+   void DesktopBaseImpl::onConfigReload(::remoting::ServerConfig *serverConfig) { applyNewConfiguration(); }
 
    bool DesktopBaseImpl::updateExternalFramebuffer(::innate_subsystem::Framebuffer *pframebuffer, const Region & region,
                                                    const ::int_rectangle &rectangleViewport)
@@ -393,5 +393,5 @@ namespace remoting
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows
  

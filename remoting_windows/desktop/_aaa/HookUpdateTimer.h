@@ -26,10 +26,10 @@
 
 
 #include "subsystem/thread/Thread.h"
-#include "UpdateListener.h"
+#include "::remoting::UpdateListener.h"
 #include "acme/parallelization/happening.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
    // This class  is a timer that after calling the sear() function
@@ -42,12 +42,12 @@ namespace remoting
    {
    public:
 
-      // @param pupdatelistener - pointer to an UpdateListener object
+      // @param pupdatelistener - pointer to an ::remoting::UpdateListener object
       HookUpdateTimer();
       ~HookUpdateTimer() override;
 
 
-      virtual void initialize_hook_update_timer(UpdateListener *pupdatelistener);
+      virtual void initialize_hook_update_timer(::remoting::UpdateListener *pupdatelistener);
 
       // This function start a timer after that will calling onUpdate()
       // function of the update listener
@@ -59,8 +59,8 @@ namespace remoting
 
       ::happening m_updateWaiter;
       ::happening m_happeningTimer;
-      ::pointer < UpdateListener  > m_pupdatelistener;
+      ::pointer < ::remoting::UpdateListener  > m_pupdatelistener;
    };
 
 
-} // namespace remoting
+} // namespace remoting_windows

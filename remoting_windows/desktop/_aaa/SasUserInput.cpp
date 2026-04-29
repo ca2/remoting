@@ -35,7 +35,7 @@
 #include "subsystem_windows/platform/subsystem.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
 
@@ -58,9 +58,9 @@ namespace remoting
 
    void SasUserInput::sendInit(BlockingGate *pblockinggate) { m_client->sendInit(pblockinggate); }
 
-   void SasUserInput::setMouseEvent(const ::int_point newPos, unsigned char keyFlag)
+   void SasUserInput::setMouseEvent(const ::int_point pointNewPosition, unsigned char keyFlag)
    {
-      m_client->setMouseEvent(newPos, keyFlag);
+      m_client->setMouseEvent(pointNewPosition, keyFlag);
    }
 
    void SasUserInput::setNewClipboard(const ::scoped_string &newClipboard) { m_client->setNewClipboard(newClipboard); }
@@ -130,4 +130,4 @@ namespace remoting
    bool SasUserInput::isApplicationInFocus(unsigned int procId) { return m_client->isApplicationInFocus(procId); }
 
 
-} // namespace remoting
+} // namespace remoting_windows

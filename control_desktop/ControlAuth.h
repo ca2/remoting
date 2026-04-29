@@ -32,24 +32,28 @@
 
 #include "remoting/remoting/server_config/ServerConfig.h"
 
-class ControlAuth
+
+namespace remoting_control_desktop
 {
-public:
-  /**
-   * Doesn't lock pblockinggate.
-   */
-  ControlAuth(ControlGate *pblockinggate, const ::scoped_string & scopedstrPassword)
-;
+   class ControlAuth
+   {
+   public:
+      /**
+       * Doesn't lock pblockinggate.
+       */
+      ControlAuth(ControlGate *pblockinggate, const ::scoped_string & scopedstrPassword)
+    ;
 
-  virtual ~ControlAuth();
+      virtual ~ControlAuth();
 
-protected:
-  void authRfb();
+   protected:
+      void authRfb();
 
-protected:
-  ControlGate *m_pblockinggate;
+   protected:
+      ControlGate *m_pblockinggate;
 
-  unsigned char m_password[ServerConfig::VNC_PASSWORD_SIZE];
-};
-
+      //unsigned char m_password[ServerConfig::VNC_PASSWORD_SIZE];
+      unsigned char m_password[8];
+   };
+} // namespace remoting_control_desktop
 

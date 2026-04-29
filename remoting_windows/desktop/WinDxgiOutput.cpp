@@ -29,7 +29,7 @@
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "remoting/remoting_windows/desktop/WinDxgiOutput.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
 
@@ -74,12 +74,13 @@ namespace remoting
 
    bool WinDxgiOutput::isAttachedtoDesktop() { return m_description.AttachedToDesktop != false; }
 
-   ::int_rectangle WinDxgiOutput::getDesktopCoordinates() { return ::int_rectangle(&m_description.DesktopCoordinates); }
+   ::int_rectangle WinDxgiOutput::getDesktopCoordinates() { return m_description.DesktopCoordinates; }
 
    void WinDxgiOutput::getDeviceName(::string &out)
    {
-      ::wstring uniString(m_description.DeviceName);
-      uniString.toStringStorage(out);
+      //::wstring uniString(m_description.DeviceName);
+      //uniString.toStringStorage(out);
+      out = m_description.DeviceName;
    }
 
    DXGI_MODE_ROTATION WinDxgiOutput::getRotation() const { return m_description.Rotation; }
@@ -90,5 +91,5 @@ namespace remoting
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows
  

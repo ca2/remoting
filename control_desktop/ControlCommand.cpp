@@ -31,51 +31,60 @@
 
 #include "acme/exception/io.h"
 
-ControlCommand::ControlCommand(Command *command, Notificator *notificator)
-: m_command(command), m_notificator(notificator), m_successfull(false)
+
+namespace remoting_control_desktop
 {
-}
+   ControlCommand::ControlCommand(Command *command, Notificator *notificator)
+   : m_command(command), m_notificator(notificator), m_successfull(false)
+   {
+   }
 
-ControlCommand::~ControlCommand()
-{
-}
+   ControlCommand::~ControlCommand()
+   {
+   }
 
-void ControlCommand::execute()
-{
-  _ASSERT(m_command != 0);
+   void ControlCommand::execute()
+   {
+      _ASSERT(m_command != 0);
 
-  m_successfull = true;
+      m_successfull = true;
 
-  if (m_command != NULL) {
-    try {
-      try {
-        m_command->execute();
-      } catch (::io_exception &) {
-        if (m_notificator != 0) {
-          m_notificator->notifyConnectionLost();
-        }
-        throw;
-      } catch (ControlAuthException &authEx) {
-        if ((m_notificator != 0) && !authEx.isSilent()) {
-          m_notificator->notifyServerSideException(authEx.get_message());
-        }
-        throw;
-      } catch (RemoteException &someEx) {
-        if (m_notificator != 0) {
-          m_notificator->notifyServerSideException(someEx.get_message());
-        }
-        throw;
-      } catch (::subsystem::Exception &) {
-        _ASSERT(false);
-        throw;
+      if (m_command != NULL) {
+         try {
+            try {
+               m_command->execute();
+            } catch (::io_exception &) {
+               if (m_notificator != 0) {
+                  m_notificator->notifyConnectionLost();
+               }
+               throw;
+            } catch (ControlAuthException &authEx) {
+               if ((m_notificator != 0) && !authEx.isSilent()) {
+                  m_notificator->notifyServerSideException(authEx.get_message());
+               }
+               throw;
+            } catch (RemoteException &someEx) {
+               if (m_notificator != 0) {
+                  m_notificator->notifyServerSideException(someEx.get_message());
+               }
+               throw;
+            } catch (::subsystem::Exception &) {
+               _ASSERT(false);
+               throw;
+            }
+         } catch (...) {
+            m_successfull = false;
+         }
       }
-    } catch (...) {
-      m_successfull = false;
-    }
-  }
-}
+   }
 
-bool ControlCommand::executionResultOk() const
-{
-  return m_successfull;
-}
+   bool ControlCommand::executionResultOk() const
+   {
+      return m_successfull;
+   }
+} // namespace remoting_control_desktop
+
+
+
+
+

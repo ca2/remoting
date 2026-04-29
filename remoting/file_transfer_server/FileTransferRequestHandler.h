@@ -34,147 +34,157 @@
 // #include "util/Inflater.h"
 // #include "util/Deflater.h"
 // #include "desktop/Desktop.h"
-// #include "rfb-sconn/RfbCodeRegistrator.h"
-// #include "rfb-sconn/RfbDispatcherListener.h"
+//#include "rfb-sconn/RfbCodeRegistrator.h"
+#include "remoting/remoting/rfb_sconn/RfbDispatcherListener.h"
 // #include "FileTransferSecurity.h"
 // #include "log-writer/LogWriter.h"
 #include "subsystem/platform/Deflater.h"
 #include "subsystem/platform/Inflater.h"
+
 namespace remoting
 {
-   /**
-    * Handler of file transfer plugin client to server messages.
-    * Processes client requests and sends replies.
-    */
-   class FileTransferRequestHandler : public RfbDispatcherListener
+
+   namespace file_transfer
    {
-   public:
       /**
-       * Creates new file transfler client messages handler.
-       * @param registrator rfb registrator which needs to register FT messages
-       *   to rfb dispatcher address whem to this object.
-       * @param output gate for writting replies for requests.
-       * @param desktop windows desktop to known current user name and desktop name.
-       *   File transfers are disabled if current desktop is winlogon.
-       * @pararm enabled indicates if file transfer should be enabled or disabled
-       *   (for example, it's disabled in view-only mode).
+       * Handler of file transfer plugin client to server messages.
+       * Processes client requests and sends replies.
        */
-      FileTransferRequestHandler(RfbCodeRegistrator *registrator,
-                                 ::remoting::RfbOutputGate *output,
-                                 Desktop *desktop,
-                                 ::subsystem::LogWriter *log,
-                                 bool enabled = true);
+      class FileTransferRequestHandler :
+         virtual public RfbDispatcherListener
+      {
+      public:
+         //protected:
+         //
+         // Input and output gates.
+         //
 
-      /**
-       * Deletes file transfer request handler.
-       */
-      virtual ~FileTransferRequestHandler();
+         ::pointer < ::remoting::RfbInputGate > m_prfbinputgate;
+         ::pointer < ::remoting::RfbOutputGate > m_prfboutputgate;
 
-      /**
-       * Inherited from RfbDispatcherListener.
-       * Processes file transfer client messages.
-       */
-      virtual void onRequest(unsigned int reqCode, ::remoting::RfbInputGate *backGate);
+         //
+         // Download operation members
+         //
 
-   protected:
+         ::pointer < ::subsystem::FileInterface > m_pfileDownload;
+         //WinFileChannel *m_fileInputStream;
+         ::pointer < ::subsystem::FileInterface > m_pfileInputStream;
 
-      /**
-       * Checks if file transfer if enabled.
-       * @return true if file transfer is enabled, false otherwise.
-       */
-      bool isFileTransferEnabled();
+         //
+         // Upload operation members
+         //
 
-      //
-      // Common request handlers.
-      //
+         ::pointer < ::subsystem::FileInterface > m_pfileUpload;
+         //::WinFileChannel *m_fileOutputStream;
+         ::pointer < ::subsystem::FileInterface > m_pfileOutputStream;
 
-      void compressionSupportRequested();
-      void fileListRequested();
-      void mkDirRequested();
-      void rmFileRequested();
-      void mvFileRequested();
-      void dirSizeRequested();
-      void md5Requested();
+         //
+         // Zlib encoder / decoder
+         //
 
-      //
-      // Upload requests handlers.
-      //
+         ::subsystem::Deflater m_deflater;
+         ::subsystem::Inflater m_inflater;
 
-      void uploadStartRequested();
-      void uploadDataRequested();
-      void uploadEndRequested();
+         //
+         // Security and impersonation.
+         //
 
-      //
-      // Download requests handlers.
-      //
+         ::pointer < FileTransferSecurity > m_pfiletransfersecurity;
 
-      void downloadStartRequested();
-      void downloadDataRequested();
+         // Determinates if file transfer is enabled.
+         bool m_enabled;
 
-      //
-      // Method sends "Last request failed" message with error description.
-      //
+         ::subsystem::LogWriter *m_plogwriter;
 
-      void lastRequestFailed(::string & str);
-      void lastRequestFailed(const char *description);
+         ::pointer < Configurator > m_pconfigurator;
+         /**
+          * Creates new file transfler client messages handler.
+          * @param registrator rfb registrator which needs to register FT messages
+          *   to rfb dispatcher address whem to this object.
+          * @param output gate for writting replies for requests.
+          * @param desktop windows desktop to known current user name and desktop name.
+          *   File transfers are disabled if current desktop is winlogon.
+          * @pararm enabled indicates if file transfer should be enabled or disabled
+          *   (for example, it's disabled in view-only mode).
+          */
+         FileTransferRequestHandler(Configurator * pconfigurator,
+                                    RfbCodeRegistrator *registrator,
+                                    RfbOutputGate *output,
+                                    Desktop *desktop,
+                                    ::subsystem::LogWriter *log,
+                                    bool enabled = true);
 
-      //
-      // Helper methods
-      //
+         /**
+          * Deletes file transfer request handler.
+          */
+         virtual ~FileTransferRequestHandler();
 
-      bool getDirectorySize(const char *pathname, filesize *dirSize);
+         /**
+          * Inherited from RfbDispatcherListener.
+          * Processes file transfer client messages.
+          */
+         virtual void onRequest(unsigned int reqCode, ::remoting::RfbInputGate *backGate);
 
-   //protected:
-      /**
-       * Checks if we can run file transfer now (using FileTransferSecurity).
-       * @throws SystemException if file transfer cannot handle request now (
-       * for example, winlogon desktop is active) or access denied (for example,
-       * when view-only mode is enabled).
-       */
-      void checkAccess();// throw(SystemException);
+      protected:
 
-   protected:
-      //
-      // Input and output gates.
-      //
+         /**
+          * Checks if file transfer if enabled.
+          * @return true if file transfer is enabled, false otherwise.
+          */
+         bool isFileTransferEnabled();
 
-      ::pointer < ::remoting::RfbInputGate > m_prfbinputgate;
-      ::pointer < ::remoting::RfbOutputGate > m_prfboutputgate;
+         //
+         // Common request handlers.
+         //
 
-      //
-      // Download operation members
-      //
+         void compressionSupportRequested();
+         void fileListRequested();
+         void mkDirRequested();
+         void rmFileRequested();
+         void mvFileRequested();
+         void dirSizeRequested();
+         void md5Requested();
 
-      ::pointer < ::subsystem::FileInterface > m_pfileDownload;
-      //WinFileChannel *m_fileInputStream;
-      ::pointer < ::subsystem::FileInterface > m_pfileInputStream;
+         //
+         // Upload requests handlers.
+         //
 
-      //
-      // Upload operation members
-      //
+         void uploadStartRequested();
+         void uploadDataRequested();
+         void uploadEndRequested();
 
-      ::pointer < ::subsystem::FileInterface > m_pfileUpload;
-      //::WinFileChannel *m_fileOutputStream;
-      ::pointer < ::subsystem::FileInterface > m_pfileOutputStream;
+         //
+         // Download requests handlers.
+         //
 
-      //
-      // Zlib encoder / decoder
-      //
+         void downloadStartRequested();
+         void downloadDataRequested();
 
-      ::subsystem::Deflater m_deflater;
-      ::subsystem::Inflater m_inflater;
+         //
+         // Method sends "Last request failed" message with error description.
+         //
 
-      //
-      // Security and impersonation.
-      //
+         void lastRequestFailed(::string & str);
+         void lastRequestFailed(const char *description);
 
-      FileTransferSecurity *m_security;
+         //
+         // Helper methods
+         //
 
-      // Determinates if file transfer is enabled.
-      bool m_enabled;
+         bool getDirectorySize(const char *pathname, filesize *dirSize);
 
-      ::subsystem::LogWriter *m_log;
-   };
+         //protected:
+         /**
+          * Checks if we can run file transfer now (using FileTransferSecurity).
+          * @throws SystemException if file transfer cannot handle request now (
+          * for example, winlogon desktop is active) or access denied (for example,
+          * when view-only mode is enabled).
+          */
+         void checkAccess();// throw(SystemException);
+
+      };
+   } // namespace file_transfer
+
 } // namespace remoting
 
 

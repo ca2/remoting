@@ -46,9 +46,13 @@ namespace remoting
 
       virtual void initialize_screen_driver_factory(ServerConfig *pserverconfig);
 
-      virtual ScreenDriver *createScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
-                                               ::innate_subsystem::Framebuffer *pframebuffer,
-                                               lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) = 0;
+      virtual ::pointer < ::remoting::ScreenDriver > createScreenDriver(
+         Configurator * pconfigurator,
+         UpdateKeeper * pupdatekeeper,
+         UpdateListener * pupdatelistener,
+         ::innate_subsystem::Framebuffer *pframebuffer,
+         lockable_critical_section *pcriticalsectionFramebuffer,
+         ::subsystem::LogWriter * plogwriter) = 0;
    //private:
    };
 

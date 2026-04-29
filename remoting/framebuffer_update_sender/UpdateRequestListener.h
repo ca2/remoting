@@ -28,11 +28,11 @@ namespace remoting
 {
 
 
-   class CLASS_DECL_REMOTING  UpdateRequestListener :
+   class UpdateRequestListener :
    virtual public ::particle
    {
    public:
-      virtual ~UpdateRequestListener() {}
+      //virtual ~UpdateRequestListener() {}
       // Interface function
       virtual void onUpdateRequest(const ::int_rectangle &rectRequested, bool incremental) = 0;
    };

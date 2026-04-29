@@ -170,11 +170,11 @@ namespace remoting
    void ReconnectingChannel::waitForReconnect(const ::scoped_string &scopedstrFunName, Channel *channel)
    {
       // Wait until transport has been initialized or time out elapsed.
-      auto startTime = ::time::now();
+      auto timeStart = ::time::now();
       bool success = false;
       while (!success)
       {
-         unsigned int timeForWait = maximum((m_iTimeout - startTime.elapsed()).integral_millisecond(), 0);
+         unsigned int timeForWait = maximum((m_iTimeout - timeStart.elapsed()).integral_millisecond(), 0);
          if (timeForWait == 0 || m_bIsClosed)
          { // Break this function with
            // critical error

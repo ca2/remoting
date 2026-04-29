@@ -24,27 +24,27 @@
 
 #pragma once
 
-#include "ScreenDriver.h"
+#include "::remoting::ScreenDriver.h"
 //#include "log_writer/LogWriter.h"
-#include "UpdateKeeper.h"
-#include "UpdateListener.h"
+#include "::remoting::UpdateKeeper.h"
+#include "::remoting::UpdateListener.h"
 #include "subsystem/thread/Thread.h"
 #include "acme/parallelization/happening.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
-   class CLASS_DECL_REMOTING DummyScreenDriver : public ScreenDriver, ::subsystem::Thread
+   class CLASS_DECL_REMOTING DummyScreenDriver : public ::remoting::ScreenDriver, ::subsystem::Thread
    {
    public:
-      //DummyScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, const ::int_size & size,
+      //DummyScreenDriver(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener, const ::int_size & size,
         //                unsigned int interval, ::subsystem::LogWriter * plogwriter);
 
       DummyScreenDriver();
       virtual ~DummyScreenDriver();
 
-      virtual void initialize_dummy_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, const ::int_size & size,
+      virtual void initialize_dummy_screen_driver(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener, const ::int_size & size,
                         unsigned int interval, ::subsystem::LogWriter * plogwriter);
       // Starts screen update detection if it not started yet.
       virtual void executeDetection();
@@ -59,7 +59,7 @@ namespace remoting
       virtual bool getScreenSizeChanged();
       virtual bool applyNewScreenProperties();
       bool grabCursorShape(const ::innate_subsystem::PixelFormat & pixelformat) { return true; };
-      const CursorShape *getCursorShape() { return &m_cursorShape; };
+      const CursorShape *getCursorShape() { return &m_cursorshape; };
       ::int_point getCursorPosition() { return ::int_point(); };
 
       void getCopiedRegion(::int_rectangle &rectangleCopy, ::int_point & pointSource) { return; };
@@ -71,16 +71,16 @@ namespace remoting
 
    private:
       ::pointer < ::innate_subsystem::Framebuffer > m_pframebufferWork;
-      CursorShape m_cursorShape;
-      ::pointer < UpdateKeeper  > m_pupdatekeeper;
-      ::pointer < UpdateListener  > m_pupdatelistener;
+      CursorShape m_cursorshape;
+      ::pointer < ::remoting::UpdateKeeper  > m_pupdatekeeper;
+      ::pointer < ::remoting::UpdateListener  > m_pupdatelistener;
       ::happening m_happeningSleeper;
       unsigned int m_interval;
       bool m_detectionEnabled;
    };
 
 
-} // namespace remoting
+} // namespace remoting_windows
  
 
 

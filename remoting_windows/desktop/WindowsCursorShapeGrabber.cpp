@@ -26,7 +26,7 @@
 #include "remoting/remoting_windows/desktop/WinCursorShapeUtils.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
 
@@ -95,15 +95,15 @@ namespace remoting
          return false;
       }
 
-      m_cursorShape.setHotSpot(iconInfo.xHotspot, iconInfo.yHotspot);
+      m_cursorshape.setHotSpot(iconInfo.xHotspot, iconInfo.yHotspot);
 
       int width = bmMask.bmWidth;
       int height = isColorShape ? bmMask.bmHeight : bmMask.bmHeight / 2;
       int widthBytes = bmMask.bmWidthBytes;
 
-      const ::innate_subsystem::Framebuffer *pixels = m_cursorShape.getPixels();
+      const ::innate_subsystem::Framebuffer *pixels = m_cursorshape.getPixels();
 
-      m_cursorShape.setProperties({width, height}, pixelFormat);
+      m_cursorshape.setProperties({width, height}, pixelFormat);
 
       ::array_base<char> maskBuff(widthBytes * bmMask.bmHeight);
       if (maskBuff.empty())
@@ -199,7 +199,7 @@ namespace remoting
          }
       }
 
-      m_cursorShape.assignMaskFromWindows(mask);
+      m_cursorshape.assignMaskFromWindows(mask);
 
       SelectObject(destDC, hbmOld);
       DeleteObject(hbmDIB);
@@ -223,5 +223,5 @@ namespace remoting
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows
 

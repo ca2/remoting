@@ -29,37 +29,40 @@
 
 #include "ControlProxy.h"
 
-/**
- * Command that invokes remote disconnectAll() method of TightVNC server
- * using control transport.
- */
-class ConnectCommand : public Command
+namespace remoting_control_desktop
 {
-public:
-  /**
-   * Creates command.
-   * @param serverControl proxy.
-   */
-  ConnectCommand(ControlProxy *serverControl, const ::scoped_string & scopedstrHostName);
-  /**
-   * Destroys command.
-   */
-  virtual ~ConnectCommand();
+   /**
+    * Command that invokes remote disconnectAll() method of TightVNC server
+    * using control transport.
+    */
+   class ConnectCommand : public Command
+   {
+   public:
+      /**
+       * Creates command.
+       * @param serverControl proxy.
+       */
+      ConnectCommand(ControlProxy *serverControl, const ::scoped_string & scopedstrHostName);
+      /**
+       * Destroys command.
+       */
+      virtual ~ConnectCommand();
 
-  /**
-   * Executes command.
-   *
-   * Inhrited from Command abstract class.
-   *
-   * @throws ::io_exception on io error, RemoteException on server side error.
-   */
-  virtual void execute();
-private:
-  /**
-   * Proxy to some of TightVNC server control methods.
-   */
-  ControlProxy *m_proxy;
-  ::string m_hostName;
-};
+      /**
+       * Executes command.
+       *
+       * Inhrited from Command abstract class.
+       *
+       * @throws ::io_exception on io error, RemoteException on server side error.
+       */
+      virtual void execute();
+   private:
+      /**
+       * Proxy to some of TightVNC server control methods.
+       */
+      ControlProxy *m_proxy;
+      ::string m_hostName;
+   };
+} // namespace remoting_control_desktop
 
-//// __CONNECTCOMMAND_H__
+

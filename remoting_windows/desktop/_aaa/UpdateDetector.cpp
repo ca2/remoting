@@ -25,11 +25,11 @@
 #include "UpdateDetector.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
 
-   // UpdateDetector::UpdateDetector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener) :
+   // UpdateDetector::UpdateDetector(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener) :
    //     m_pupdatekeeper(pupdatekeeper), m_pupdatelistener = pupdatelistener;
    // {
    // }
@@ -41,11 +41,11 @@ namespace remoting
    UpdateDetector::~UpdateDetector() {}
 
 
-   void UpdateDetector::initialize_update_detector(UpdateKeeper *pupdatekeeper, UpdateListener *pupdatelistener)
+   void UpdateDetector::initialize_update_detector(::remoting::UpdateKeeper *pupdatekeeper, ::remoting::UpdateListener *pupdatelistener)
    {
       m_pupdatekeeper = pupdatekeeper;
       m_pupdatelistener = pupdatelistener;
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows

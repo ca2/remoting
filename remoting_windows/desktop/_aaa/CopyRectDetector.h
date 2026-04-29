@@ -31,7 +31,7 @@
 //#include aaa_<list>
 #include "acme/prototype/geometry2d/rectangle.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
    struct WinProp
@@ -72,7 +72,7 @@ namespace remoting
 
    
 
-} // namespace remoting
+} // namespace remoting_windows
  
 
 

@@ -24,16 +24,21 @@
 #include "framework.h"
 #include "SharePrimaryCommand.h"
 
-SharePrimaryCommand::SharePrimaryCommand(ControlProxy *serverControl)
-: m_proxy(serverControl)
-{
-}
 
-SharePrimaryCommand::~SharePrimaryCommand()
+namespace remoting_control_desktop
 {
-}
+   SharePrimaryCommand::SharePrimaryCommand(ControlProxy *serverControl)
+   : m_proxy(serverControl)
+   {
+   }
 
-void SharePrimaryCommand::execute()
-{
-  m_proxy->sharePrimary();
-}
+   SharePrimaryCommand::~SharePrimaryCommand()
+   {
+   }
+
+   void SharePrimaryCommand::execute()
+   {
+      m_proxy->sharePrimary();
+   }
+} // namespace remoting_control_desktop
+

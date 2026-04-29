@@ -31,7 +31,7 @@
 #include "subsystem/node/Cursor.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING CursorPositionDetector :
@@ -44,7 +44,7 @@ namespace remoting
       ~CursorPositionDetector() override;
 
 
-      virtual void initialize_cursor_position_detector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ::subsystem::LogWriter * plogwriter);
+      virtual void initialize_cursor_position_detector(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener, ::subsystem::LogWriter * plogwriter);
 
       // Returns current pointPosition of a windows cursor.
       ::int_point getCursorPos();
@@ -61,7 +61,7 @@ namespace remoting
    };
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 
