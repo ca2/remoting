@@ -22,27 +22,34 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_windows/desktop/WinServiceDesktopFactory.h"
-#include "remoting/remoting/desktop/DesktopClientImpl.h"
+#include "DesktopFactory.h"
+#include "remoting/server_config/Configurator.h"
+
+#include "server_config/Configurator.h"
+//#include "DesktopWinImpl.h"
 
 namespace remoting
 {
 
-   WinServiceDesktopFactory::WinServiceDesktopFactory() {}
+   DesktopFactory::DesktopFactory() {}
 
-   WinServiceDesktopFactory::~WinServiceDesktopFactory() {}
+   DesktopFactory::~DesktopFactory() {}
 
-   Desktop *WinServiceDesktopFactory::createDesktop(ClipboardListener *pclipboardlistenerExternal,
-                                                    UpdateSendingListener *pupdatesendinglistenerExternal,
-                                                    AbnormDeskTermListener *pdesktermlistenerExternal,
-                                                    ::subsystem::LogWriter * plogwriter)
+   ::pointer < Desktop > DesktopFactory::createDesktop(
+      Configurator * pconfigurator,
+      ::subsystem::ClipboardListener *pclipboardlistenerExternal,
+      UpdateSendingListener *pupdatesendinglistenerExternal,
+      AbnormDeskTermListener *pdesktermlistenerExternal,
+      ::subsystem::LogWriter * plogwriter)
    {
-      return new DesktopClientImpl(pclipboardlistenerExternal, pupdatesendinglistenerExternal, pdesktermlistenerExternal, log);
+
+
+      return nullptr;
+
    }
 
 
 } // namespace remoting
- 
 
 
 

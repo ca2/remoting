@@ -24,7 +24,8 @@
 #include "framework.h"
 #include "NamingDefs.h"
 
-namespace remoting_node_desktop
+
+namespace remoting_node
 {
 
 
@@ -95,4 +96,4 @@ namespace remoting_node_desktop
       "</HTML>\n";
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting_node

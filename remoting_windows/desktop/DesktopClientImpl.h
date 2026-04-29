@@ -26,44 +26,44 @@
 
 
 #include "subsystem/_common_header.h"
-#include "DesktopServerWatcher.h"
+#include "remoting/remoting/desktop/DesktopServerWatcher.h"
 #include "remoting/remoting/desktop_ipc/DesktopConfigClient.h"
 #include "remoting/remoting/desktop_ipc/ReconnectingChannel.h"
 #include "remoting/remoting/desktop_ipc/BlockingGate.h"
 #include "remoting/remoting/desktop_ipc/GateKicker.h"
 #include "remoting/remoting/desktop_ipc/DesktopSrvDispatcher.h"
-#include "DesktopBaseImpl.h"
+#include "remoting/remoting/desktop/DesktopBaseImpl.h"
 //#include "log_writer/LogWriter.h"
 
 //Interfaces
 //#include "subsystem/platform/AnEventListener.h"
 #include "remoting/remoting/desktop_ipc/ReconnectionListener.h"
-#include "UpdateListener.h"
+#include "remoting/remoting/desktop/UpdateListener.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
    //class CLASS_DECL_REMOTING DesktopClientImpl : public AnEventListener, public ReconnectionListener, public Thread, public DesktopBaseImpl
-   class CLASS_DECL_REMOTING DesktopClientImpl :
-      virtual public ReconnectionListener,
+   class CLASS_DECL_REMOTING_WINDOWS DesktopClientImpl :
+      virtual public ::remoting::ReconnectionListener,
       virtual public ::subsystem::Thread,
-      virtual public DesktopBaseImpl
+      virtual public ::remoting::DesktopBaseImpl
    {
    public:
 
       // Inter process transport
-      ::pointer < ReconnectingChannel > m_pchannelClientToServer;
-      ::pointer < ReconnectingChannel > m_pchannelServerToClient;
-      ::pointer < BlockingGate > m_pgateClientToServer;
-      ::pointer < BlockingGate > m_pgateServerToClient;
+      ::pointer < ::remoting::ReconnectingChannel > m_pchannelClientToServer;
+      ::pointer < ::remoting::ReconnectingChannel > m_pchannelServerToClient;
+      ::pointer < ::remoting::BlockingGate > m_pgateClientToServer;
+      ::pointer < ::remoting::BlockingGate > m_pgateServerToClient;
 
-      ::pointer < DesktopServerWatcher > m_pdesktopserverwatcher;
-      ::pointer < DesktopSrvDispatcher > m_pdesktopsrvdispatcher;
+      ::pointer < ::remoting::DesktopServerWatcher > m_pdesktopserverwatcher;
+      ::pointer < ::remoting::DesktopSrvDispatcher > m_pdesktopsrvdispatcher;
 
-      ::pointer < GateKicker > m_pgatekicker;
-      ::pointer < UserInput > m_puserinput; // It uses for delegation by the SasUserInput.
+      ::pointer < ::remoting::GateKicker > m_pgatekicker;
+      ::pointer < ::remoting::UserInput > m_puserinput; // It uses for delegation by the SasUserInput.
 
-      ::pointer < DesktopConfigClient > m_pdesktopconfigclient;
+      ::pointer < ::remoting::DesktopConfigClient > m_pdesktopconfigclient;
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
@@ -73,8 +73,9 @@ namespace remoting
       ~DesktopClientImpl() override;
 
 
-      virtual void initialize_desktop_client_impl(ClipboardListener *pclipboardlistenerExternal, UpdateSendingListener *pupdatesendinglistenerExternal,
-                  AbnormDeskTermListener *pdesktermlistenerExternal, ::subsystem::LogWriter * plogwriter);
+      void initialize_desktop(::remoting::Configurator * pconfigurator,
+         ::subsystem::ClipboardListener *pclipboardlistenerExternal, ::remoting::UpdateSendingListener *pupdatesendinglistenerExternal,
+                  ::remoting::AbnormDeskTermListener *pdesktermlistenerExternal, ::subsystem::LogWriter * plogwriter) override;
 
 
    //protected:
@@ -95,7 +96,7 @@ namespace remoting
    };
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

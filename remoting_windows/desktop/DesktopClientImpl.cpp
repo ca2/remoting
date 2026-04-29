@@ -27,11 +27,12 @@
 #include "remoting/remoting/desktop_ipc/UpdateHandlerClient.h"
 //#include "windows/WindowsInputBlocker.h"
 #include "remoting/remoting/desktop_ipc/UserInputClient.h"
-#include "SasUserInput.h"
+#include "remoting/remoting/desktop/SasUserInput.h"
 //#include "windows/WindowsUserInput.h"
-#include "DesktopConfigLocal.h"
+#include "remoting/remoting/desktop/DesktopConfigLocal.h"
 
-namespace remoting
+
+namespace remoting_windows
 {
 
    // DesktopClientImpl::DesktopClientImpl(ClipboardListener *pclipboardlistenerExternal,
@@ -115,16 +116,18 @@ namespace remoting
    }
 
 
-      void DesktopClientImpl::initialize_desktop_client_impl(ClipboardListener *pclipboardlistenerExternal,
-                                        UpdateSendingListener *pupdatesendinglistenerExternal,
-                                        AbnormDeskTermListener *pdesktermlistenerExternal, ::subsystem::LogWriter * plogwriter) //:
+      void DesktopClientImpl::initialize_desktop(
+         ::remoting::Configurator * pconfigurator,
+         ClipboardListener *pclipboardlistenerExternal,
+                                        ::remoting::UpdateSendingListener *pupdatesendinglistenerExternal,
+                                        ::remoting::AbnormDeskTermListener *pdesktermlistenerExternal, ::subsystem::LogWriter * plogwriter) //:
       // // DesktopBaseImpl(pclipboardlistenerExternal, pupdatesendinglistenerExternal, pdesktermlistenerExternal, log),
       // m_pchannelClientToServer(0),
       //  m_pchannelServerToClient(0), m_pgateClientToServer(0), m_pgateServerToClient(0), m_pdesktopserverwatcher(0), m_pdesktopsrvdispatcher(0),
       //  m_puserinput(0), m_pdesktopconfigclient(0), m_pgatekicker(0), m_plogwriter(plogwriter)
    {
 
-      initialize_desktop_client_impl(pclipboardlistenerExternal, pupdatesendinglistenerExternal, pdesktermlistenerExternal, plogwriter);
+      ::remoting::DesktopBaseImpl::initialize_desktop(pconfigurator, pclipboardlistenerExternal, pupdatesendinglistenerExternal, pdesktermlistenerExternal, plogwriter);
 
       m_plogwriter = plogwriter;
 
@@ -155,22 +158,22 @@ namespace remoting
          raw_construct_newø(m_pdesktopsrvdispatcher, m_pgateServerToClient, this, m_plogwriter);
 
          m_plogwriter->debug("DesktopClientImpl: Initializing UpdateHandlerClient...");
-         m_pupdatehandler = allocateø UpdateHandlerClient(m_pconfigurator, m_pgateClientToServer, m_pdesktopsrvdispatcher, this, m_plogwriter);
+         m_pupdatehandler = allocateø ::remoting::UpdateHandlerClient(m_pconfigurator, m_pgateClientToServer, m_pdesktopsrvdispatcher, this, m_plogwriter);
 
          m_plogwriter->debug("DesktopClientImpl: Initializing UserInputClient...");
          //UserInputClient *userInputClient = new UserInputClient(m_pgateClientToServer, m_pdesktopsrvdispatcher, this);
-         auto puserinputclient =allocateø UserInputClient();
+         auto puserinputclient =allocateø ::remoting::UserInputClient();
          //m_puserinput =puserinput;
          puserinputclient->initialize_user_input_client(m_pconfigurator, m_pgateClientToServer, m_pdesktopsrvdispatcher, this);
          m_plogwriter->debug("DesktopClientImpl: Initializing SasUserInput...");
-         auto psasuserinput= allocateø SasUserInput();
+         auto psasuserinput= allocateø ::remoting::SasUserInput();
          psasuserinput->initialize_sas_user_input(puserinputclient, m_plogwriter);
          m_puserinput=psasuserinput;
          m_plogwriter->debug("DesktopClientImpl: Initializing DesktopConfigClient...");
-         m_pdesktopconfigclient = allocateø DesktopConfigClient();
+         m_pdesktopconfigclient = allocateø ::remoting::DesktopConfigClient();
          m_pdesktopconfigclient->initialize_desktop_config_client(m_pconfigurator, m_pgateClientToServer);
          m_plogwriter->debug("DesktopClientImpl: Initializing GateKicker...");
-         m_pgatekicker = allocateø GateKicker();
+         m_pgatekicker = allocateø ::remoting::GateKicker();
          m_pgatekicker->initialize_gate_kicker(m_pgateClientToServer);
          // Start dispatcher after handler registrations
          m_plogwriter->debug("DesktopClientImpl: Resuming DesktopSrvDispatcher");
@@ -256,7 +259,7 @@ namespace remoting
 
    void DesktopClientImpl::onReconnect(Channel *newChannelTo, Channel *newChannelFrom)
    {
-      BlockingGate pblockinggate(newChannelTo);
+      ::remoting::BlockingGate pblockinggate(newChannelTo);
       if (m_pdesktopconfigclient)
       {
          m_plogwriter->information("try update remote configuration from the "
@@ -307,6 +310,6 @@ namespace remoting
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 

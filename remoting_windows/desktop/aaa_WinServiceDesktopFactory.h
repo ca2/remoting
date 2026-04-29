@@ -27,24 +27,24 @@
 #include "remoting/remoting_windows/_common_header.h"
 #include "remoting/remoting/desktop/DesktopFactory.h"
 
-namespace remoting
-{
-
-   class CLASS_DECL_REMOTING_WINDOWS WinServiceDesktopFactory : public DesktopFactory
-   {
-   public:
-      WinServiceDesktopFactory();
-      ~WinServiceDesktopFactory();
-
-      virtual Desktop *createDesktop(::subsystem::ClipboardListener *pclipboardlistenerExternal,
-                                     UpdateSendingListener *pupdatesendinglistenerExternal,
-                                     AbnormDeskTermListener *pdesktermlistenerExternal, ::subsystem::LogWriter * plogwriter);
-   };
-
-
-} // namespace remoting
-
-
+// namespace remoting_windows
+// {
+//
+//    class CLASS_DECL_REMOTING_WINDOWS WinServiceDesktopFactory : public DesktopFactory
+//    {
+//    public:
+//       WinServiceDesktopFactory();
+//       ~WinServiceDesktopFactory();
+//
+//       virtual Desktop *createDesktop(::subsystem::ClipboardListener *pclipboardlistenerExternal,
+//                                      UpdateSendingListener *pupdatesendinglistenerExternal,
+//                                      AbnormDeskTermListener *pdesktermlistenerExternal, ::subsystem::LogWriter * plogwriter);
+//    };
+//
+//
+// } // namespace remoting_windows
+//
+//
 
 
 

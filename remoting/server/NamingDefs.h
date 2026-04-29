@@ -28,23 +28,23 @@
 // This file contains all public names.
 #include "subsystem/_common_header.h"
 
-namespace remoting_node_desktop
+namespace remoting_node
 {
 
-   class CLASS_DECL_REMOTING_NODE_DESKTOP NamingDefs
+   class CLASS_DECL_REMOTING NamingDefs
    {
    public:
       static ::string_literal MIRROR_DRIVER_MESSAGE_WINDOW_CLASS_NAME;
    };
 
-   class CLASS_DECL_REMOTING_NODE_DESKTOP ProductNames
+   class CLASS_DECL_REMOTING ProductNames
    {
    public:
       static ::string_literal PRODUCT_NAME;
       static ::string_literal SERVER_PRODUCT_NAME;
    };
 
-   class CLASS_DECL_REMOTING_NODE_DESKTOP RegistryPaths
+   class CLASS_DECL_REMOTING RegistryPaths
    {
    public:
       static ::string_literal SERVER_PATH;
@@ -52,13 +52,13 @@ namespace remoting_node_desktop
       static ::string_literal DISPATCHER_CONN_HISTORY_PATH;
    };
 
-   class CLASS_DECL_REMOTING_NODE_DESKTOP WindowNames
+   class CLASS_DECL_REMOTING WindowNames
    {
    public:
       static ::string_literal WINDOW_CLASS_NAME;
    };
 
-   class CLASS_DECL_REMOTING_NODE_DESKTOP LogNames
+   class CLASS_DECL_REMOTING LogNames
    {
    public:
       static ::string_literal SERVER_LOG_FILE_STUB_NAME;
@@ -68,13 +68,13 @@ namespace remoting_node_desktop
       static ::string_literal WIN_EVENT_PROVIDER_NAME;
    };
 
-   // class CLASS_DECL_REMOTING_NODE_DESKTOP ClipboardNames
+   // class CLASS_DECL_REMOTING ClipboardNames
    //{
    // public:
    //   static ::string_literal CLIPBOARD_WIN_CLASS_NAME;
    // };
 
-   class CLASS_DECL_REMOTING_NODE_DESKTOP ServiceNames
+   class CLASS_DECL_REMOTING ServiceNames
    {
    public:
       static ::string_literal TVNCONTROL_START_REGISTRY_ENTRY_NAME;
@@ -82,7 +82,7 @@ namespace remoting_node_desktop
       static ::string_literal SERVICE_NAME_TO_DISPLAY;
    };
 
-   class CLASS_DECL_REMOTING_NODE_DESKTOP ServerApplicationNames
+   class CLASS_DECL_REMOTING ServerApplicationNames
    {
    public:
       static ::string_literal SERVER_INSTANCE_MUTEX_NAME;
@@ -91,7 +91,7 @@ namespace remoting_node_desktop
       static ::string_literal FOR_APP_CONTROL_APP_SERVICE_PIPE_NAME;
    };
 
-   class CLASS_DECL_REMOTING_NODE_DESKTOP HookDefinitions
+   class CLASS_DECL_REMOTING HookDefinitions
    {
    public:
       static ::string_literal HOOK_LOADER_WINDOW_CLASS;
@@ -101,23 +101,21 @@ namespace remoting_node_desktop
       static const unsigned int SPEC_IPC_CODE;
    };
 
-   class CLASS_DECL_REMOTING_NODE_DESKTOP DefaultNames
+   class CLASS_DECL_REMOTING DefaultNames
    {
    public:
       static ::string_literal DEFAULT_COMPUTER_NAME;
    };
 
-   class CLASS_DECL_REMOTING_NODE_DESKTOP HttpStrings
+   class CLASS_DECL_REMOTING HttpStrings
    {
    public:
       static ::string_literal HTTP_INDEX_PAGE_FORMAT;
       static ::string_literal HTTP_MSG_BADPARAMS;
    };
 
-   //// _PUBLIC_NAMES_H_
 
-
-} // namespace remoting_node_desktop
+} // namespace remoting_node
  
 
 
