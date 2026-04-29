@@ -145,7 +145,7 @@ namespace remoting_control_desktop
        * @throws RemoteException on error on server.
        * @throws ::io_exception on io error.
        */
-      void setServerConfig(::remoting::ServerConfig * pserverconfig);
+      void setServerConfig(::remoting_node::ServerConfig * pserverconfig);
 
       /**
        * Gets current configuration from server.
@@ -153,7 +153,7 @@ namespace remoting_control_desktop
        * @throws RemoteException on error on server.
        * @throws ::io_exception on io error.
        */
-      void getServerConfig(::remoting::ServerConfig * pserverconfig);
+      void getServerConfig(::remoting_node::ServerConfig * pserverconfig);
 
       /**
        * Checks if TvnControl must show icon in tray.

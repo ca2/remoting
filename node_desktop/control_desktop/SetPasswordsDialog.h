@@ -41,6 +41,7 @@
 
 namespace remoting_control_desktop
 {
+
    // Set passwords dialog. Just allows user to set rfb and administrators
    // passwords.
    class SetPasswordsDialog : public ::innate_subsystem::Dialog
@@ -81,7 +82,6 @@ namespace remoting_control_desktop
       // Enables and disables the edit controls by the current state.
       void updateEditControls();
 
-      bool checkAnsiConversion(::string &plainTextInUTF16);
 
 
       ::innate_subsystem::CheckBox m_dontChangeRfbAuthSettingsRadio;
@@ -110,7 +110,7 @@ namespace remoting_control_desktop
       ::string m_admPass;
    };
 
-   //// _SETPASSWORDSDIALOG_H_
+
 } // namespace remoting_control_desktop
 
 

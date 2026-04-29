@@ -189,7 +189,7 @@ namespace remoting_control_desktop
       msg->send();
    }
 
-   void ControlProxy::setServerConfig(::remoting::ServerConfig * pserverconfig)
+   void ControlProxy::setServerConfig(::remoting_node::ServerConfig * pserverconfig)
    {
       critical_section_lock l(m_pblockinggate);
 
@@ -200,7 +200,7 @@ namespace remoting_control_desktop
       msg->send();
    }
 
-   void ControlProxy::getServerConfig(::remoting::ServerConfig * pserverconfig)
+   void ControlProxy::getServerConfig(::remoting_node::ServerConfig * pserverconfig)
    {
       critical_section_lock l(m_pblockinggate);
 

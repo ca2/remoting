@@ -1,4 +1,4 @@
-// Copyright (C) 2010,2011,2012 GlavSoft LLC.
+// Copyright (C) 2009,2010,2011,2012 GlavSoft LLC.
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
@@ -29,33 +29,39 @@
 
 #include "ControlProxy.h"
 
-
 namespace remoting_control_desktop
 {
    /**
-    * Command that copies current configuration of remote TightVNC server
-    * to local application configuration.
+    * Command that sends current configuration to TightVNC Server.
+    * This command will ask server to save recieved configuration.
+    * @fixme: use MacroCommand to join UpdateRemoteConfigCommand and UpdateLocalConfigCommand.
     */
-   class UpdateLocalConfigCommand : public Command
+   class UpdateRemoteConfigCommand : public Command
    {
    public:
       /**
        * Creates command.
-       * @param proxy ready to use control proxy.
+       * @param serverControl control proxy.
        */
-      UpdateLocalConfigCommand(ControlProxy *proxy);
+      UpdateRemoteConfigCommand(ControlProxy *serverControl);
       /**
-       * Destructor.
+       * Deletes command.
        */
-      virtual ~UpdateLocalConfigCommand();
+      virtual ~UpdateRemoteConfigCommand();
+
       /**
-       * Executes command.
-       * @throws ::io_exception, RemoteException.
+       * Inherited from Command interface.
+       *
+       * @throws ::io_exception on io error, RemoteException on server side error.
        */
       virtual void execute();
-   private:
-      ControlProxy* m_proxy;
-      ::pointer < ::remoting::Configurator > m_pconfigurator;
+
+   protected:
+      /**
+       * ::innate_subsystem::Control proxy on client side.
+       */
+      ControlProxy *m_serverControl;
+      ::pointer < ::remoting_node::Configurator > m_pconfigurator;
    };
-} //   namespace remoting_control_desktop
+} // namespace remoting_control_desktop
 

@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "SetPasswordsDialog.h"
 //#include "subsystem/platform/winhdr.h"
 //#include "acme/_operating_system.h"
 
@@ -29,14 +30,18 @@
 
 #include "subsystem/platform/Registry.h"
 
-#include "SetPasswordsDialog.h"
+#include "remoting/remoting/platform/remoting.h"
 
 //#include "port/base/archive/archive/libarchive/archive_windows.h"
 #include "remoting/node_desktop/resource.h"
 //#include "subsystem/platform/::string.h"
+#include "acme/constant/user_notification.h"
+
 
 namespace remoting_control_desktop
 {
+
+
    SetPasswordsDialog::SetPasswordsDialog(bool initStateOfUseRfbAuth,
                                           bool initStateOfUseAdminAuth)
    :
@@ -117,14 +122,14 @@ namespace remoting_control_desktop
       initControls();
 
       if (m_useRfbAuth) {
-         m_useRfbAuthRadio.check(true);
+         m_useRfbAuthRadio.setChecked(true);
       } else if (m_dontChangeRfbAuth) {
-         m_dontChangeRfbAuthSettingsRadio.check(true);
+         m_dontChangeRfbAuthSettingsRadio.setChecked(true);
       }
       if (m_protectControlInterface) {
-         m_useAdminAuthRadio.check(true);
+         m_useAdminAuthRadio.setChecked(true);
       } else if (m_dontChangeAdmAuth) {
-         m_dontChangeAdminAuthSettingsRadio.check(true);
+         m_dontChangeAdminAuthSettingsRadio.setChecked(true);
       }
 
       updateEditControls();
@@ -143,7 +148,7 @@ namespace remoting_control_desktop
          readRadio();
          updateEditControls();
       }
-      if (controlID == ::innate_subsystem::IDOK) {
+      if (controlID == ::innate_subsystem::e_control_id_ok) {
          onOkButtonClick();
       }
       return false;
@@ -161,10 +166,10 @@ namespace remoting_control_desktop
       ::string admPass1;
       ::string admPass2;
 
-      m_rfbPassEdit1.getText(&rfbPass1);
-      m_rfbPassEdit2.getText(&rfbPass2);
-      m_admPassEdit1.getText(&admPass1);
-      m_admPassEdit2.getText(&admPass2);
+      rfbPass1 = m_rfbPassEdit1.getText();
+      rfbPass2 = m_rfbPassEdit2.getText();
+      admPass1 = m_admPassEdit1.getText();
+      admPass2 = m_admPassEdit2.getText();
 
       if (m_useRfbAuth) {
          if (rfbPass1.is_empty()) {
@@ -172,13 +177,13 @@ namespace remoting_control_desktop
             m_rfbPassEdit1.setFocus();
             return;
          }
-         if (!rfbPass1.isEqualTo(&rfbPass2)) {
+         if (rfbPass1 != rfbPass2) {
             m_rfbPassEdit2.showBalloonTip(&m_passwordsNotMatchTooltip);
             m_rfbPassEdit2.setFocus();
             return;
          }
          // shows scopedstrMessage box if the password can't be converted to ANSI with no data lost
-         if (!::string::checkAnsiConversion(rfbPass1)) {
+         if (!::str::checkAnsiConversion(rfbPass1)) {
             m_rfbPassEdit1.showBalloonTip(&m_passwordWeakTooltip);
             m_rfbPassEdit1.setFocus();
             return;
@@ -191,12 +196,12 @@ namespace remoting_control_desktop
             m_admPassEdit1.setFocus();
             return;
          }
-         if (!admPass1.isEqualTo(&admPass2)) {
+         if (admPass1 != admPass2) {
             m_admPassEdit2.showBalloonTip(&m_passwordsNotMatchTooltip);
             m_admPassEdit2.setFocus();
             return;
          }
-         if (!::string::checkAnsiConversion(admPass1)) {
+         if (!::str::checkAnsiConversion(admPass1)) {
             m_admPassEdit1.showBalloonTip(&m_passwordWeakTooltip);
             m_admPassEdit1.setFocus();
             return;

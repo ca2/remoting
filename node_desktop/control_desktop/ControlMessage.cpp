@@ -32,25 +32,29 @@
 //#include "subsystem/platform/::string.h"
 #include "remoting/remoting/node/NamingDefs.h"
 //#include "file_lib/WinFile.h"
-
+#include "acme/filesystem/filesystem/file_context.h"
 #include "remoting/node_desktop/resource.h"
+#include "subsystem/platform/Registry.h"
+#include "remoting/remoting/platform/remoting.h"
 
 //#include aaa_<crtdbg.h>
 
 namespace remoting_control_desktop
 {
+
+
    ControlMessage::ControlMessage(unsigned int messageId, ControlGate *pblockinggate,
                                   const ::scoped_string & scopedstrPasswordFile,
                                   bool getPassFromConfigEnabled,
                                   bool forService)
    : DataOutputStream(0), m_messageId(messageId), m_pblockinggate(pblockinggate),
-     m_passwordFile(passwordFile),
+     m_passwordFile(scopedstrPasswordFile),
      m_getPassFromConfigEnabled(getPassFromConfigEnabled),
      m_forService(forService)
    {
-      m_tunnel = new ByteArrayOutputStream(2048);
+      m_tunnel = new ByteArrayOutputStream(this,2048);
 
-      m_outStream = m_tunnel;
+      m_poutputstream = m_tunnel;
    }
 
    ControlMessage::~ControlMessage()
@@ -70,7 +74,7 @@ namespace remoting_control_desktop
       m_pblockinggate->writeUInt32(m_messageId);
       _ASSERT((unsigned int)m_tunnel->size() == m_tunnel->size());
       m_pblockinggate->writeUInt32((unsigned int)m_tunnel->size());
-      m_pblockinggate->writeFully(m_tunnel->toByteArray(), m_tunnel->size());
+      m_pblockinggate->write(m_tunnel->toByteArray(), m_tunnel->size());
    }
 
    void ControlMessage::checkRetCode()
@@ -80,9 +84,9 @@ namespace remoting_control_desktop
       switch (messageId) {
          case ControlProto::REPLY_ERROR:
          {
-            ::string scopedstrMessage;
-            m_pblockinggate->readUTF8(&scopedstrMessage);
-            throw RemoteException(scopedstrMessage);
+            ::string strMessage;
+            strMessage = m_pblockinggate->readUtf8();
+            throw RemoteException(strMessage);
          }
             break;
          case ControlProto::REPLY_AUTH_NEEDED:
@@ -95,9 +99,9 @@ namespace remoting_control_desktop
 
                int retCode = authDialog.showModal();
                switch (retCode) {
-                  case ::innate_subsystem::IDCANCEL:
+                  case ::innate_subsystem::e_control_id_cancel:
                      throw ControlAuthException(MainSubsystem().StringTable().getString(IDS_USER_CANCEL_CONTROL_AUTH), true);
-                  case ::innate_subsystem::IDOK:
+                  case ::innate_subsystem::e_control_id_ok:
                      ControlAuth auth(m_pblockinggate, authDialog.getPassword());
                      send();
                      break;
@@ -114,38 +118,46 @@ namespace remoting_control_desktop
 
    void ControlMessage::authFromFile()
    {
-      WinFile file(m_passwordFile, F_READ, FM_OPEN);
-      char ansiBuff[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-      file.read(ansiBuff, 8);
-      for (int i = 0; i < 8; i++) {
-         if (ansiBuff[i] == '\r' || ansiBuff[i] == '\n') {
-            ansiBuff[i] = '\0';
-         }
-      }
-      ::string ansiPwd(ansiBuff);
-      ::string password;
-      ansiPwd.toStringStorage(&password);
+
+      auto password = file()->as_string(m_passwordFile);
+      password.truncate(8);
+      auto pfind =password.find('\r');
+      if (pfind) password.truncate(pfind);
+      pfind =password.find('\n');
+      if (pfind) password.truncate(pfind);
+      // WinFile file(m_passwordFile, F_READ, FM_OPEN);
+      // char ansiBuff[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+      // file.read(ansiBuff, 8);
+      // for (int i = 0; i < 8; i++) {
+      //    if (ansiBuff[i] == '\r' || ansiBuff[i] == '\n') {
+      //       ansiBuff[i] = '\0';
+      //    }
+      // }
+      // ::string ansiPwd(ansiBuff);
+      // ::string password;
+      // ansiPwd.toStringStorage(&password);
       ControlAuth auth(m_pblockinggate, password);
       send();
    }
 
    void ControlMessage::authFromRegistry()
    {
-      ::subsystem::registry rootKey = m_forService ? HKEY_LOCAL_MACHINE : HKEY_CURRENT_USER;
-      RegistrySettingsManager sm(rootKey, RegistryPaths::SERVER_PATH, 0);
+      auto rootKey = m_forService ? MainSubsystem().Registry().getLocalMachineKey() : MainSubsystem().Registry().getCurrentUserKey();
+      ::remoting::RegistrySettingsManager sm(rootKey, ::remoting_node::RegistryPaths::SERVER_PATH, 0);
 
       unsigned char hidePassword[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
       unsigned char plainPassword[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-      size_t passSize = sizeof(hidePassword);
+      memsize passSize = sizeof(hidePassword);
 
       if (sm.getBinaryData("ControlPassword",
                            hidePassword,
                            &passSize)) {
-         VncPassCrypt::getPlainPass(plainPassword, hidePassword);
+         ::subsystem::VncPassCrypt::getPlainPass(plainPassword, hidePassword);
 
-         ::string plainAnsiString((char *)plainPassword);
+         ///::string plainAnsiString((char *)plainPassword);
          ::string password;
-         plainAnsiString.toStringStorage(&password);
+         //plainAnsiString.toStringStorage(&password);
+         password = ::str::to_ansi(plainPassword, sizeof(plainPassword));
          // Clear ansi plain password from memory.
          memset(plainPassword, 0, sizeof(plainPassword));
          ControlAuth auth(m_pblockinggate, password);

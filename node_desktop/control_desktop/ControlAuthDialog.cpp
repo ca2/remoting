@@ -26,6 +26,7 @@
 
 #include "remoting/node_desktop/resource.h"
 #include "remoting/remoting/node_config/ServerConfig.h"
+#include "subsystem/platform/VncPassCrypt.h"
 
 
 namespace remoting_control_desktop
@@ -52,7 +53,7 @@ namespace remoting_control_desktop
 
       //HWND hwnd = m_ctrlThis.operating_system_window();
       dialog_item(m_passwordTextBox,IDC_PASSWORD_EDIT);
-      m_passwordTextBox.setTextLengthLimit(::remoting::ServerConfig::VNC_PASSWORD_SIZE);
+      m_passwordTextBox.setTextLengthLimit(::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE);
 
       //SetForegroundWindow(hwnd);
       setForegroundWindow();
