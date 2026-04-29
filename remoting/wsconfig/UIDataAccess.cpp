@@ -26,28 +26,34 @@
 
 #include "subsystem/platform/StringParser.h"
 
-UIDataAccess::UIDataAccess()
+namespace remoting_node
 {
-}
+   UIDataAccess::UIDataAccess()
+   {
+   }
 
-bool UIDataAccess::queryValueAsInt(TextBox *textBox, int *value)
-{
-  _ASSERT(textBox != 0);
+   bool UIDataAccess::queryValueAsInt(TextBox *textBox, int *value)
+   {
+      _ASSERT(textBox != 0);
 
-  ::string textBoxText;
+      ::string textBoxText;
 
-  textBox->getText(&textBoxText);
+      textBox->getText(&textBoxText);
 
-  return MainSubsystem().StringParser().parseInt(textBoxText, value);
-}
+      return MainSubsystem().StringParser().parseInt(textBoxText, value);
+   }
 
-bool UIDataAccess::queryValueAsUInt(TextBox *textBox, unsigned int *value)
-{
-  _ASSERT(textBox != 0);
+   bool UIDataAccess::queryValueAsUInt(TextBox *textBox, unsigned int *value)
+   {
+      _ASSERT(textBox != 0);
 
-  ::string textBoxText;
+      ::string textBoxText;
 
-  textBox->getText(&textBoxText);
+      textBox->getText(&textBoxText);
 
-  return MainSubsystem().StringParser().parseUInt(textBoxText, value);
-}
+      return MainSubsystem().StringParser().parseUInt(textBoxText, value);
+   }
+} // namespace remoting_node
+
+
+

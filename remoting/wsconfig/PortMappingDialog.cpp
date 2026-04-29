@@ -26,164 +26,169 @@
 #include "EditPortMappingDialog.h"
 #include "ConfigDialog.h"
 #include "remoting/node_desktop/resource.h"
-
-PortMappingDialog::PortMappingDialog()
-: BaseDialog(IDD_CONFIG_PORT_MAPPING_PAGE), m_parent(NULL)
+namespace remoting_node
 {
-}
+   PortMappingDialog::PortMappingDialog()
+   : BaseDialog(IDD_CONFIG_PORT_MAPPING_PAGE), m_parent(NULL)
+   {
+   }
 
-PortMappingDialog::~PortMappingDialog()
-{
-}
+   PortMappingDialog::~PortMappingDialog()
+   {
+   }
 
-void PortMappingDialog::setParentDialog(BaseDialog *dialog)
-{
-  m_parent = dialog;
-}
+   void PortMappingDialog::setParentDialog(BaseDialog *dialog)
+   {
+      m_parent = dialog;
+   }
 
-void PortMappingDialog::initControls()
-{
-  HWND dialogHwnd = m_ctrlThis.operating_system_window();
+   void PortMappingDialog::initControls()
+   {
+      HWND dialogHwnd = m_ctrlThis.operating_system_window();
 
-  m_exPortsListBox.setWindow(GetDlgItem(dialogHwnd, IDC_MAPPINGS));
-  m_editButton.setWindow(GetDlgItem(dialogHwnd, IDC_EDIT_PORT));
-  m_removeButton.setWindow(GetDlgItem(dialogHwnd, IDC_REMOVE_PORT));
-}
+      m_exPortsListBox.setWindow(GetDlgItem(dialogHwnd, IDC_MAPPINGS));
+      m_editButton.setWindow(GetDlgItem(dialogHwnd, IDC_EDIT_PORT));
+      m_removeButton.setWindow(GetDlgItem(dialogHwnd, IDC_REMOVE_PORT));
+   }
 
-bool PortMappingDialog::onCommand(unsigned int controlID, unsigned int notificationID)
-{
-  switch (controlID) {
-  case IDC_ADD_PORT:
-    onAddButtonClick();
-    break;
-  case IDC_EDIT_PORT:
-    onEditButtonClick();
-    break;
-  case IDC_REMOVE_PORT:
-    onRemoveButtonClick();
-    break;
-  case IDC_MAPPINGS:
-    switch (notificationID) {
-    case LBN_SELCHANGE:
-      onExPortsListBoxSelChange();
-      break;
-    case LBN_DBLCLK:
-      onExPortsListBoxDoubleClick();
-      break;
-    }
-    break;
-  }
-  return true;
-}
+   bool PortMappingDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+   {
+      switch (controlID) {
+         case IDC_ADD_PORT:
+            onAddButtonClick();
+            break;
+         case IDC_EDIT_PORT:
+            onEditButtonClick();
+            break;
+         case IDC_REMOVE_PORT:
+            onRemoveButtonClick();
+            break;
+         case IDC_MAPPINGS:
+            switch (notificationID) {
+            case LBN_SELCHANGE:
+                  onExPortsListBoxSelChange();
+                  break;
+            case LBN_DBLCLK:
+                  onExPortsListBoxDoubleClick();
+                  break;
+            }
+            break;
+      }
+      return true;
+   }
 
-bool PortMappingDialog::onInitDialog()
-{
-  initControls();
+   bool PortMappingDialog::onInitDialog()
+   {
+      initControls();
 
-  m_extraPorts = m_pconfigurator->getServerConfig()->getPortMappingContainer();
+      m_extraPorts = m_pconfigurator->getServerConfig()->getPortMappingContainer();
 
-  //
-  // Fill listbox.
-  //
+      //
+      // Fill listbox.
+      //
 
-  ::string mappingString;
-
-  for (size_t i = 0; i < m_extraPorts->count(); i++) {
-    m_extraPorts->at(i)->toString(&mappingString);
-    _ASSERT((int)i == i);
-    m_exPortsListBox.insertString((int)i, mappingString);
-  }
-
-  return true;
-}
-
-void PortMappingDialog::onExPortsListBoxSelChange()
-{
-  int selectedIndex = m_exPortsListBox.getSelectedIndex();
-
-  m_editButton.enableWindow(selectedIndex >= 0);
-  m_removeButton.enableWindow(selectedIndex >= 0);
-}
-
-void PortMappingDialog::onAddButtonClick()
-{
-  EditPortMappingDialog addDialog(EditPortMappingDialog::Add);
-
-  PortMapping newPM;
-
-  addDialog.setMapping(&newPM);
-  addDialog.setParent(&m_ctrlThis);
-
-  if (addDialog.showModal() == ::innate_subsystem::IDOK) {
-    {
       ::string mappingString;
-      newPM.toString(&mappingString);
-      m_exPortsListBox.addString(mappingString);
-    }
 
-    m_extraPorts->pushBack(newPM);
+      for (size_t i = 0; i < m_extraPorts->count(); i++) {
+         m_extraPorts->at(i)->toString(&mappingString);
+         _ASSERT((int)i == i);
+         m_exPortsListBox.insertString((int)i, mappingString);
+      }
 
-    ((ConfigDialog *)m_parent)->updateApplyButtonState();
-  }
-}
+      return true;
+   }
 
-void PortMappingDialog::onEditButtonClick()
-{
-  int selectedIndex = m_exPortsListBox.getSelectedIndex();
+   void PortMappingDialog::onExPortsListBoxSelChange()
+   {
+      int selectedIndex = m_exPortsListBox.getSelectedIndex();
 
-  if (selectedIndex == -1) {
-    return ;
-  }
+      m_editButton.enableWindow(selectedIndex >= 0);
+      m_removeButton.enableWindow(selectedIndex >= 0);
+   }
 
-  PortMapping *pPM = m_extraPorts->at(selectedIndex);
+   void PortMappingDialog::onAddButtonClick()
+   {
+      EditPortMappingDialog addDialog(EditPortMappingDialog::Add);
 
-  EditPortMappingDialog editDialog(EditPortMappingDialog::Edit);
+      PortMapping newPM;
 
-  editDialog.setParent(&m_ctrlThis);
-  editDialog.setMapping(pPM);
+      addDialog.setMapping(&newPM);
+      addDialog.setParent(&m_ctrlThis);
 
-  if (editDialog.showModal() == ::innate_subsystem::IDOK) {
-    ::string mappingString;
-    pPM->toString(&mappingString);
-    m_exPortsListBox.setItemText(selectedIndex, mappingString);
+      if (addDialog.showModal() == ::innate_subsystem::IDOK) {
+         {
+            ::string mappingString;
+            newPM.toString(&mappingString);
+            m_exPortsListBox.addString(mappingString);
+         }
 
-    ((ConfigDialog *)m_parent)->updateApplyButtonState();
-  }
-}
+         m_extraPorts->pushBack(newPM);
 
-void PortMappingDialog::onRemoveButtonClick()
-{
-  int selectedIndex = m_exPortsListBox.getSelectedIndex();
+         ((ConfigDialog *)m_parent)->updateApplyButtonState();
+      }
+   }
 
-  if (selectedIndex == -1) {
-    return ;
-  }
+   void PortMappingDialog::onEditButtonClick()
+   {
+      int selectedIndex = m_exPortsListBox.getSelectedIndex();
 
-  m_exPortsListBox.removeString(selectedIndex);
-  m_extraPorts->remove(selectedIndex);
+      if (selectedIndex == -1) {
+         return ;
+      }
 
-  ((ConfigDialog *)m_parent)->updateApplyButtonState();
+      PortMapping *pPM = m_extraPorts->at(selectedIndex);
 
-  //
-  // Restore selection after item is removed.
-  //
+      EditPortMappingDialog editDialog(EditPortMappingDialog::Edit);
 
-  if (m_exPortsListBox.getCount() > 0) {
-    m_exPortsListBox.setSelectedIndex(selectedIndex);
-    if (m_exPortsListBox.getSelectedIndex() == -1) {
-      m_exPortsListBox.setSelectedIndex(selectedIndex - 1);
-    }
-    if (m_exPortsListBox.getSelectedIndex() == -1) {
-      m_exPortsListBox.setSelectedIndex(selectedIndex + 1);
-    }
-  } else {
-    m_removeButton.enableWindow(false);
-    m_editButton.enableWindow(false);
-  }
-}
+      editDialog.setParent(&m_ctrlThis);
+      editDialog.setMapping(pPM);
 
-void PortMappingDialog::onExPortsListBoxDoubleClick()
-{
-  if (m_exPortsListBox.getSelectedIndex() != -1)
-    onEditButtonClick();
-}
+      if (editDialog.showModal() == ::innate_subsystem::IDOK) {
+         ::string mappingString;
+         pPM->toString(&mappingString);
+         m_exPortsListBox.setItemText(selectedIndex, mappingString);
+
+         ((ConfigDialog *)m_parent)->updateApplyButtonState();
+      }
+   }
+
+   void PortMappingDialog::onRemoveButtonClick()
+   {
+      int selectedIndex = m_exPortsListBox.getSelectedIndex();
+
+      if (selectedIndex == -1) {
+         return ;
+      }
+
+      m_exPortsListBox.removeString(selectedIndex);
+      m_extraPorts->remove(selectedIndex);
+
+      ((ConfigDialog *)m_parent)->updateApplyButtonState();
+
+      //
+      // Restore selection after item is removed.
+      //
+
+      if (m_exPortsListBox.getCount() > 0) {
+         m_exPortsListBox.setSelectedIndex(selectedIndex);
+         if (m_exPortsListBox.getSelectedIndex() == -1) {
+            m_exPortsListBox.setSelectedIndex(selectedIndex - 1);
+         }
+         if (m_exPortsListBox.getSelectedIndex() == -1) {
+            m_exPortsListBox.setSelectedIndex(selectedIndex + 1);
+         }
+      } else {
+         m_removeButton.enableWindow(false);
+         m_editButton.enableWindow(false);
+      }
+   }
+
+   void PortMappingDialog::onExPortsListBoxDoubleClick()
+   {
+      if (m_exPortsListBox.getSelectedIndex() != -1)
+         onEditButtonClick();
+   }
+} // namespace remoting_node
+
+
+

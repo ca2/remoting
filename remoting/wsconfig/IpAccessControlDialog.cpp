@@ -32,476 +32,481 @@
 #include "subsystem/_common_header.h"
 #include "subsystem/platform/StringParser.h"
 //#include "subsystem/platform/::string.h"
-
-IpAccessControlDialog::IpAccessControlDialog()
-: BaseDialog(IDD_CONFIG_ACCESS_CONTROL_PAGE), m_parentDialog(NULL)
+namespace remoting_node
 {
-}
+   IpAccessControlDialog::IpAccessControlDialog()
+   : BaseDialog(IDD_CONFIG_ACCESS_CONTROL_PAGE), m_parentDialog(NULL)
+   {
+   }
 
-IpAccessControlDialog::~IpAccessControlDialog()
-{
-}
+   IpAccessControlDialog::~IpAccessControlDialog()
+   {
+   }
 
-void IpAccessControlDialog::setParentDialog(BaseDialog *dialog)
-{
-  m_parentDialog = dialog;
-}
+   void IpAccessControlDialog::setParentDialog(BaseDialog *dialog)
+   {
+      m_parentDialog = dialog;
+   }
 
-bool IpAccessControlDialog::onInitDialog()
-{
-  m_config = m_pconfigurator->getServerConfig();
-  m_container = m_config->getAccessControl();
-  m_editDialog.setParent(&m_ctrlThis);
-  initControls();
-  updateUI();
-  updateButtonsState();
-  onIpCheckUpdate();
-  return true;
-}
-
-bool IpAccessControlDialog::onCommand(unsigned int controlID, unsigned int notificationID)
-{
-  if (notificationID == ::user::e_notification_button_clicked) {
-    switch (controlID) {
-    case IDC_ADD_BUTTON:
-      onAddButtonClick();
-      break;
-    case IDC_EDIT_BUTTON:
-      onEditButtonClick();
-      break;
-    case IDC_REMOVE_BUTTON:
-      onRemoveButtonClick();
-      break;
-    case IDC_MOVE_UP_BUTTON:
-      onMoveUpButtonClick();
-      break;
-    case IDC_MOVE_DOWN_BUTTON:
-      onMoveDownButtonClick();
-      break;
-    case IDC_ACCEPT:
-      onAcceptRadioClick();
-      break;
-    case IDC_REFUSE:
-      onRefuseRadioClick();
-      break;
-    case IDC_ALLOW_LOOPBACK_CONNECTIONS:
-      onAllowLoopbackConnectionsClick();
-      break;
-    case IDC_ALLOW_ONLY_LOOPBACK_CONNECTIONS:
-      onAllowOnlyLoopbackConnectionsClick();
-      break;
-    }
-  } else if (notificationID == EN_UPDATE) {
-    switch (controlID) {
-    case IDC_IP_FOR_CHECK_EDIT:
+   bool IpAccessControlDialog::onInitDialog()
+   {
+      m_config = m_pconfigurator->getServerConfig();
+      m_container = m_config->getAccessControl();
+      m_editDialog.setParent(&m_ctrlThis);
+      initControls();
+      updateUI();
+      updateButtonsState();
       onIpCheckUpdate();
-      break;
-    case IDC_TIMEOUT:
-      onQueryTimeoutUpdate();
-      break;
-    }
-  }
-  return true;
-}
+      return true;
+   }
 
-bool IpAccessControlDialog::onNotify(unsigned int controlID, ::lparam data)
-{
-  if (controlID == IDC_IP_ACCESS_CONTROL_LIST) {
-    NMHDR* pnmh = (NMHDR*)data;
-    switch (pnmh->code) {
-    case LVN_ITEMCHANGED:
-      onListViewSelChange();
-      break;
-    case NM_DBLCLK:
-      onListViewSelChangeDblClick();
-      break;
-    }
-  }
-  return true;
-}
-
-bool IpAccessControlDialog::validateInput()
-{
-  if (!CommonInputValidation::validateUINT(
-    &m_queryTimeout,
-    MainSubsystem().StringTable().getString(IDS_INVALID_QUERY_TIMEOUT))) {
-    return false;
-  }
-
-  unsigned int queryTimeout;
-
-  UIDataAccess::queryValueAsUInt(&m_queryTimeout, &queryTimeout);
-
-  if (queryTimeout < ServerConfig::MINIMAL_QUERY_TIMEOUT) {
-    CommonInputValidation::notifyValidationError(
-      &m_queryTimeout,
-      MainSubsystem().StringTable().getString(IDS_QUERY_TIMEOUT_TOO_SMALL));
-    return false;
-  }
-
-  return true;
-}
-
-void IpAccessControlDialog::updateUI()
-{
-  m_list.clear();
-  for (size_t i = 0; i < m_container->size(); i++) {
-    IpAccessRule *ip = m_container->at(i);
-    m_list.addItem(m_list.getCount(), "", (::lparam)ip);
-    _ASSERT((int)i == i);
-    setListViewItemText((int)i, ip);
-  }
-
-  m_allowLoopbackConnections.check(m_config->isLoopbackConnectionsAllowed());
-  m_onlyLoopbackConnections.check(m_config->isOnlyLoopbackConnectionsAllowed());
-  if (m_config->isDefaultActionAccept()) {
-    m_defaultActionAccept.check(true);
-    m_defaultActionRefuse.check(false);
-  } else {
-    m_defaultActionAccept.check(false);
-    m_defaultActionRefuse.check(true);
-  }
-  m_queryTimeout.setUnsignedInt(m_config->getQueryTimeout());
-
-  updateCheckBoxesState();
-}
-
-void IpAccessControlDialog::apply()
-{
-  // Query timeout string storage
-  ::string qtStringStorage;
-  m_queryTimeout.getText(&qtStringStorage);
-
-  int timeout = 0;
-  MainSubsystem().StringParser().parseInt(qtStringStorage, &timeout);
-
-  critical_section_lock al(m_config);
-
-  m_config->allowLoopbackConnections(m_allowLoopbackConnections.isChecked());
-  m_config->acceptOnlyLoopbackConnections(m_onlyLoopbackConnections.isChecked());
-  m_config->setDefaultActionToAccept(m_defaultActionAccept.isChecked());
-  m_config->setQueryTimeout(timeout);
-
-  //
-  // Put IP access rules container in correct order
-  //
-
-  IpAccessControl *ipRules = m_config->getAccessControl();
-  ipRules->clear();
-  for (int i = 0; i < m_list.getCount(); i++) {
-    IpAccessRule *rule = (IpAccessRule *)m_list.getItemData(i);
-    ipRules->add(rule);
-  }
-}
-
-void IpAccessControlDialog::initControls()
-{
-  HWND hwnd = m_ctrlThis.operating_system_window();
-  m_list.setWindow(GetDlgItem(hwnd, IDC_IP_ACCESS_CONTROL_LIST));
-  m_addButton.setWindow(GetDlgItem(hwnd, IDC_ADD_BUTTON));
-  m_editButton.setWindow(GetDlgItem(hwnd, IDC_EDIT_BUTTON));
-  m_removeButton.setWindow(GetDlgItem(hwnd, IDC_REMOVE_BUTTON));
-  m_moveUpButton.setWindow(GetDlgItem(hwnd, IDC_MOVE_UP_BUTTON));
-  m_moveDownButton.setWindow(GetDlgItem(hwnd, IDC_MOVE_DOWN_BUTTON));
-  m_defaultActionAccept.setWindow(GetDlgItem(hwnd, IDC_ACCEPT));
-  m_defaultActionRefuse.setWindow(GetDlgItem(hwnd, IDC_REFUSE));
-  m_queryTimeout.setWindow(GetDlgItem(hwnd, IDC_TIMEOUT));
-  m_allowLoopbackConnections.setWindow(GetDlgItem(hwnd, IDC_ALLOW_LOOPBACK_CONNECTIONS));
-  m_onlyLoopbackConnections.setWindow(GetDlgItem(hwnd, IDC_ALLOW_ONLY_LOOPBACK_CONNECTIONS));
-  m_queryTimeoutSpin.setWindow(GetDlgItem(hwnd, IDC_QUERY_TIMEOUT_SPIN));
-  m_ip.setWindow(GetDlgItem(hwnd, IDC_IP_FOR_CHECK_EDIT));
-  m_ipCheckResult.setWindow(GetDlgItem(hwnd, IDC_IP_CHECK_RESULT_LABEL));
-
-  m_list.addColumn(0, MainSubsystem().StringTable().getString(IDS_FIRST_IP_COLUMN), 100);
-  m_list.addColumn(1, MainSubsystem().StringTable().getString(IDS_LAST_IP_COLUMN), 100);
-  m_list.addColumn(2, MainSubsystem().StringTable().getString(IDS_ACTION_COLUMN), 80);
-
-  m_list.allowMultiSelection(false);
-  m_list.setFullRowSelectStyle(true);
-
-  m_queryTimeoutSpin.setBuddy(&m_queryTimeout);
-  m_queryTimeoutSpin.setAccel(0, 1);
-  m_queryTimeoutSpin.setRange32(0, INT_MAX);
-}
-
-void IpAccessControlDialog::onAddButtonClick()
-{
-  IpAccessRule *ip = new IpAccessRule();
-  m_editDialog.setIpAccessControl(ip);
-  m_editDialog.setEditFlag(false);
-  if (m_editDialog.showModal() == ::innate_subsystem::IDOK) {
-    m_container->add(ip);
-    m_list.addItem(m_list.getCount(), "", (::lparam)ip);
-    setListViewItemText(m_list.getCount() - 1, ip);
-    updateButtonsState();
-    onIpCheckUpdate();
-    ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
-  } else {
-    delete ip;
-  }
-  m_list.invalidate();
-  m_ctrlThis.invalidate();
-}
-
-void IpAccessControlDialog::onEditButtonClick()
-{
-  // If nothing selected
-  if (m_list.getSelectedIndex() == -1) {
-    return ;
-  }
-  IpAccessRule *ip = (IpAccessRule *)m_list.getItemData(m_list.getSelectedIndex());
-  m_editDialog.setIpAccessControl(ip);
-  m_editDialog.setEditFlag(true);
-  if (m_editDialog.showModal() == ::innate_subsystem::IDOK) {
-    setListViewItemText(m_list.getSelectedIndex(), ip);
-    updateButtonsState();
-    onIpCheckUpdate();
-    ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
-  } else {
-  }
-  m_list.invalidate();
-  m_ctrlThis.invalidate();
-}
-
-void IpAccessControlDialog::onRemoveButtonClick()
-{
-  int si = m_list.getSelectedIndex();
-  // If nothing selected
-  if (si == -1) {
-    return ;
-  }
-  {
-    critical_section_lock al(m_config);
-    IpAccessRule *ip = (IpAccessRule *)m_list.getItemData(m_list.getSelectedIndex());
-    for (IpAccessControl::iterator it = m_container->begin(); it != m_container->end(); it++) {
-      IpAccessRule *ip2 = *it;
-      if (ip == ip2) {
-        m_container->erase(it);
-        m_list.removeItem(si);
-        updateButtonsState();
-        onIpCheckUpdate();
-        ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
-        break;
+   bool IpAccessControlDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+   {
+      if (notificationID == ::user::e_notification_button_clicked) {
+         switch (controlID) {
+            case IDC_ADD_BUTTON:
+               onAddButtonClick();
+               break;
+            case IDC_EDIT_BUTTON:
+               onEditButtonClick();
+               break;
+            case IDC_REMOVE_BUTTON:
+               onRemoveButtonClick();
+               break;
+            case IDC_MOVE_UP_BUTTON:
+               onMoveUpButtonClick();
+               break;
+            case IDC_MOVE_DOWN_BUTTON:
+               onMoveDownButtonClick();
+               break;
+            case IDC_ACCEPT:
+               onAcceptRadioClick();
+               break;
+            case IDC_REFUSE:
+               onRefuseRadioClick();
+               break;
+            case IDC_ALLOW_LOOPBACK_CONNECTIONS:
+               onAllowLoopbackConnectionsClick();
+               break;
+            case IDC_ALLOW_ONLY_LOOPBACK_CONNECTIONS:
+               onAllowOnlyLoopbackConnectionsClick();
+               break;
+         }
+      } else if (notificationID == EN_UPDATE) {
+         switch (controlID) {
+            case IDC_IP_FOR_CHECK_EDIT:
+               onIpCheckUpdate();
+               break;
+            case IDC_TIMEOUT:
+               onQueryTimeoutUpdate();
+               break;
+         }
       }
-    }
-    delete ip;
-  }
-  m_list.selectItem(si);
-  if (m_list.getSelectedIndex() == -1) {
-    m_list.selectItem(si - 1);
-  } else if (m_list.getSelectedIndex() == -1) {
-    m_list.selectItem(si + 1);
-  }
-}
+      return true;
+   }
 
-void IpAccessControlDialog::onMoveUpButtonClick()
-{
-  int si = m_list.getSelectedIndex();
-  // If nothing selected
-  if ((si == -1) || (si == 0)) {
-    return ;
-  }
+   bool IpAccessControlDialog::onNotify(unsigned int controlID, ::lparam data)
+   {
+      if (controlID == IDC_IP_ACCESS_CONTROL_LIST) {
+         NMHDR* pnmh = (NMHDR*)data;
+         switch (pnmh->code) {
+            case LVN_ITEMCHANGED:
+               onListViewSelChange();
+               break;
+            case NM_DBLCLK:
+               onListViewSelChangeDblClick();
+               break;
+         }
+      }
+      return true;
+   }
 
-  IpAccessRule *ip = (IpAccessRule *)m_list.getItemData(si);
-  IpAccessRule *ipPrev = (IpAccessRule *)m_list.getItemData(si - 1);
+   bool IpAccessControlDialog::validateInput()
+   {
+      if (!CommonInputValidation::validateUINT(
+        &m_queryTimeout,
+        MainSubsystem().StringTable().getString(IDS_INVALID_QUERY_TIMEOUT))) {
+         return false;
+        }
 
-  setListViewItemText(si - 1, ip);
-  setListViewItemText(si, ipPrev);
-  m_list.selectItem(si - 1);
-  onIpCheckUpdate();
-  ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
-}
+      unsigned int queryTimeout;
 
-void IpAccessControlDialog::onMoveDownButtonClick()
-{
-  int si = m_list.getSelectedIndex();
-  // If nothing selected
-  if ((si == -1) || (si == m_list.getCount() - 1)) {
-    return ;
-  }
-  IpAccessRule *ip = (IpAccessRule *)m_list.getItemData(si);
-  IpAccessRule *ipNext = (IpAccessRule *)m_list.getItemData(si + 1);
+      UIDataAccess::queryValueAsUInt(&m_queryTimeout, &queryTimeout);
 
-  setListViewItemText(si, ipNext);
-  setListViewItemText(si + 1, ip);
-  m_list.selectItem(si + 1);
-  onIpCheckUpdate();
-  ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
-}
+      if (queryTimeout < ServerConfig::MINIMAL_QUERY_TIMEOUT) {
+         CommonInputValidation::notifyValidationError(
+           &m_queryTimeout,
+           MainSubsystem().StringTable().getString(IDS_QUERY_TIMEOUT_TOO_SMALL));
+         return false;
+      }
 
-void IpAccessControlDialog::onListViewSelChange()
-{
-  int si = m_list.getSelectedIndex();
-  updateButtonsState();
-}
+      return true;
+   }
 
-void IpAccessControlDialog::onAcceptRadioClick()
-{
-  if (!m_defaultActionAccept.isChecked()) {
-    m_defaultActionAccept.check(true);
-    m_defaultActionRefuse.check(false);
-    ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
-  }
-}
+   void IpAccessControlDialog::updateUI()
+   {
+      m_list.clear();
+      for (size_t i = 0; i < m_container->size(); i++) {
+         IpAccessRule *ip = m_container->at(i);
+         m_list.addItem(m_list.getCount(), "", (::lparam)ip);
+         _ASSERT((int)i == i);
+         setListViewItemText((int)i, ip);
+      }
 
-void IpAccessControlDialog::onRefuseRadioClick()
-{
-  if (!m_defaultActionRefuse.isChecked()) {
-    m_defaultActionRefuse.check(true);
-    m_defaultActionAccept.check(false);
-    ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
-  }
-}
+      m_allowLoopbackConnections.check(m_config->isLoopbackConnectionsAllowed());
+      m_onlyLoopbackConnections.check(m_config->isOnlyLoopbackConnectionsAllowed());
+      if (m_config->isDefaultActionAccept()) {
+         m_defaultActionAccept.check(true);
+         m_defaultActionRefuse.check(false);
+      } else {
+         m_defaultActionAccept.check(false);
+         m_defaultActionRefuse.check(true);
+      }
+      m_queryTimeout.setUnsignedInt(m_config->getQueryTimeout());
 
-void IpAccessControlDialog::onAllowLoopbackConnectionsClick()
-{
-  updateCheckBoxesState();
-  updateButtonsState();
-  ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
-}
+      updateCheckBoxesState();
+   }
 
-void IpAccessControlDialog::onAllowOnlyLoopbackConnectionsClick()
-{
-  updateCheckBoxesState();
-  updateButtonsState();
-  ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
-}
+   void IpAccessControlDialog::apply()
+   {
+      // Query timeout string storage
+      ::string qtStringStorage;
+      m_queryTimeout.getText(&qtStringStorage);
 
-void IpAccessControlDialog::onIpCheckUpdate()
-{
-  ::string ipStorage;
-  m_ip.getText(&ipStorage);
+      int timeout = 0;
+      MainSubsystem().StringParser().parseInt(qtStringStorage, &timeout);
 
-   // Check if ip address is valid.
+      critical_section_lock al(m_config);
 
-  if (!IpAccessRule::isIpAddressStringValid(ipStorage)) {
-    if (ipStorage.is_empty()) {
-      m_ipCheckResult.setText(MainSubsystem().StringTable().getString(IDS_ENTER_IP_HINT));
-    } else {
-      m_ipCheckResult.setText(MainSubsystem().StringTable().getString(IDS_BAD_IP_HINT));
-    }
-    return;
-  }
+      m_config->allowLoopbackConnections(m_allowLoopbackConnections.isChecked());
+      m_config->acceptOnlyLoopbackConnections(m_onlyLoopbackConnections.isChecked());
+      m_config->setDefaultActionToAccept(m_defaultActionAccept.isChecked());
+      m_config->setQueryTimeout(timeout);
 
-  //
-  // Convert ip to ansi string
-  //
+      //
+      // Put IP access rules container in correct order
+      //
 
-  ::string ansiIpStorage(&ipStorage);
-  unsigned int addr = inet_addr(ansiIpStorage);
+      IpAccessControl *ipRules = m_config->getAccessControl();
+      ipRules->clear();
+      for (int i = 0; i < m_list.getCount(); i++) {
+         IpAccessRule *rule = (IpAccessRule *)m_list.getItemData(i);
+         ipRules->add(rule);
+      }
+   }
 
-  IpAccessRule::ActionType action = IpAccessRule::ACTION_TYPE_ALLOW;
-  int rulesCount = 0;
-  if (m_list.getCount() > 0) {
-    rulesCount = m_list.getCount();
-  }
-  for (int i = 0; i < rulesCount; i++) {
-    IpAccessRule *rule = (IpAccessRule *)m_list.getItemData(i);
-    if (rule->isIncludingAddress(addr)) {
-      action = rule->getAction();
-      break;
-    }
-  }
+   void IpAccessControlDialog::initControls()
+   {
+      HWND hwnd = m_ctrlThis.operating_system_window();
+      m_list.setWindow(GetDlgItem(hwnd, IDC_IP_ACCESS_CONTROL_LIST));
+      m_addButton.setWindow(GetDlgItem(hwnd, IDC_ADD_BUTTON));
+      m_editButton.setWindow(GetDlgItem(hwnd, IDC_EDIT_BUTTON));
+      m_removeButton.setWindow(GetDlgItem(hwnd, IDC_REMOVE_BUTTON));
+      m_moveUpButton.setWindow(GetDlgItem(hwnd, IDC_MOVE_UP_BUTTON));
+      m_moveDownButton.setWindow(GetDlgItem(hwnd, IDC_MOVE_DOWN_BUTTON));
+      m_defaultActionAccept.setWindow(GetDlgItem(hwnd, IDC_ACCEPT));
+      m_defaultActionRefuse.setWindow(GetDlgItem(hwnd, IDC_REFUSE));
+      m_queryTimeout.setWindow(GetDlgItem(hwnd, IDC_TIMEOUT));
+      m_allowLoopbackConnections.setWindow(GetDlgItem(hwnd, IDC_ALLOW_LOOPBACK_CONNECTIONS));
+      m_onlyLoopbackConnections.setWindow(GetDlgItem(hwnd, IDC_ALLOW_ONLY_LOOPBACK_CONNECTIONS));
+      m_queryTimeoutSpin.setWindow(GetDlgItem(hwnd, IDC_QUERY_TIMEOUT_SPIN));
+      m_ip.setWindow(GetDlgItem(hwnd, IDC_IP_FOR_CHECK_EDIT));
+      m_ipCheckResult.setWindow(GetDlgItem(hwnd, IDC_IP_CHECK_RESULT_LABEL));
 
-  ::string actionDescription;
-  actionDescription= MainSubsystem().StringTable().getString(IDS_ACTION_UNDEF_HINT);
-  switch (action) {
-  case IpAccessRule::ACTION_TYPE_ALLOW:
-    actionDescription= MainSubsystem().StringTable().getString(IDS_ACTION_ACCEPT_HINT);
-    break;
-  case IpAccessRule::ACTION_TYPE_DENY:
-    actionDescription= MainSubsystem().StringTable().getString(IDS_ACTION_REJECT_HINT);
-    break;
-  case IpAccessRule::ACTION_TYPE_QUERY:
-    actionDescription= MainSubsystem().StringTable().getString(IDS_ACTION_QUERY_HINT);
-    break;
-  }
+      m_list.addColumn(0, MainSubsystem().StringTable().getString(IDS_FIRST_IP_COLUMN), 100);
+      m_list.addColumn(1, MainSubsystem().StringTable().getString(IDS_LAST_IP_COLUMN), 100);
+      m_list.addColumn(2, MainSubsystem().StringTable().getString(IDS_ACTION_COLUMN), 80);
 
-  m_ipCheckResult.setText(actionDescription);
-}
+      m_list.allowMultiSelection(false);
+      m_list.setFullRowSelectStyle(true);
 
-void IpAccessControlDialog::onQueryTimeoutUpdate()
-{
-  ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
-}
+      m_queryTimeoutSpin.setBuddy(&m_queryTimeout);
+      m_queryTimeoutSpin.setAccel(0, 1);
+      m_queryTimeoutSpin.setRange32(0, INT_MAX);
+   }
 
-void IpAccessControlDialog::updateButtonsState()
-{
-  /*if (m_onlyLoopbackConnections.isChecked()) {
-    m_list.enableWindow(false);
-    m_addButton.enableWindow(false);
-    m_editButton.enableWindow(false);
-    m_removeButton.enableWindow(false);
-    m_moveDownButton.enableWindow(false);
-    m_moveUpButton.enableWindow(false);
-    return ;
-  } else {
-    m_list.enableWindow(true);
-    m_addButton.enableWindow(true);
-  }*/
+   void IpAccessControlDialog::onAddButtonClick()
+   {
+      IpAccessRule *ip = new IpAccessRule();
+      m_editDialog.setIpAccessControl(ip);
+      m_editDialog.setEditFlag(false);
+      if (m_editDialog.showModal() == ::innate_subsystem::IDOK) {
+         m_container->add(ip);
+         m_list.addItem(m_list.getCount(), "", (::lparam)ip);
+         setListViewItemText(m_list.getCount() - 1, ip);
+         updateButtonsState();
+         onIpCheckUpdate();
+         ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      } else {
+         delete ip;
+      }
+      m_list.invalidate();
+      m_ctrlThis.invalidate();
+   }
 
-  int si = m_list.getSelectedIndex();
-  if (si == -1) {
-    m_editButton.enableWindow(false);
-    m_removeButton.enableWindow(false);
-    m_moveUpButton.enableWindow(false);
-    m_moveDownButton.enableWindow(false);
-  } else {
-    m_editButton.enableWindow(true);
-    m_removeButton.enableWindow(true);
-    if (si > 0) {
-      m_moveUpButton.enableWindow(true);
-    } else {
-      m_moveUpButton.enableWindow(false);
-    }
-    if (si < m_list.getCount() - 1) {
-      m_moveDownButton.enableWindow(true);
-    } else {
-      m_moveDownButton.enableWindow(false);
-    }
-  }
-}
+   void IpAccessControlDialog::onEditButtonClick()
+   {
+      // If nothing selected
+      if (m_list.getSelectedIndex() == -1) {
+         return ;
+      }
+      IpAccessRule *ip = (IpAccessRule *)m_list.getItemData(m_list.getSelectedIndex());
+      m_editDialog.setIpAccessControl(ip);
+      m_editDialog.setEditFlag(true);
+      if (m_editDialog.showModal() == ::innate_subsystem::IDOK) {
+         setListViewItemText(m_list.getSelectedIndex(), ip);
+         updateButtonsState();
+         onIpCheckUpdate();
+         ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      } else {
+      }
+      m_list.invalidate();
+      m_ctrlThis.invalidate();
+   }
 
-void IpAccessControlDialog::updateCheckBoxesState()
-{
-  if (m_allowLoopbackConnections.isChecked()) {
-    m_onlyLoopbackConnections.enableWindow(true);
-  } else {
-    m_onlyLoopbackConnections.enableWindow(false);
-    m_onlyLoopbackConnections.check(false);
-  }
-}
+   void IpAccessControlDialog::onRemoveButtonClick()
+   {
+      int si = m_list.getSelectedIndex();
+      // If nothing selected
+      if (si == -1) {
+         return ;
+      }
+      {
+         critical_section_lock al(m_config);
+         IpAccessRule *ip = (IpAccessRule *)m_list.getItemData(m_list.getSelectedIndex());
+         for (IpAccessControl::iterator it = m_container->begin(); it != m_container->end(); it++) {
+            IpAccessRule *ip2 = *it;
+            if (ip == ip2) {
+               m_container->erase(it);
+               m_list.removeItem(si);
+               updateButtonsState();
+               onIpCheckUpdate();
+               ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+               break;
+            }
+         }
+         delete ip;
+      }
+      m_list.selectItem(si);
+      if (m_list.getSelectedIndex() == -1) {
+         m_list.selectItem(si - 1);
+      } else if (m_list.getSelectedIndex() == -1) {
+         m_list.selectItem(si + 1);
+      }
+   }
 
-void IpAccessControlDialog::onListViewSelChangeDblClick()
-{
-  int si = m_list.getSelectedIndex();
-  if (si == -1) {
-    return ;
-  } else {
-    onEditButtonClick();
-  }
-}
+   void IpAccessControlDialog::onMoveUpButtonClick()
+   {
+      int si = m_list.getSelectedIndex();
+      // If nothing selected
+      if ((si == -1) || (si == 0)) {
+         return ;
+      }
 
-void IpAccessControlDialog::setListViewItemText(int index, IpAccessRule *control)
-{
-  ::string firstIp;
-  ::string lastIp;
+      IpAccessRule *ip = (IpAccessRule *)m_list.getItemData(si);
+      IpAccessRule *ipPrev = (IpAccessRule *)m_list.getItemData(si - 1);
 
-  control->getFirstIp(&firstIp);
-  control->getLastIp(&lastIp);
+      setListViewItemText(si - 1, ip);
+      setListViewItemText(si, ipPrev);
+      m_list.selectItem(si - 1);
+      onIpCheckUpdate();
+      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+   }
 
-  m_list.setSubItemText(index, 0, firstIp);
-  m_list.setSubItemText(index, 1, lastIp);
-  switch (control->getAction()) {
-  case IpAccessRule::ACTION_TYPE_ALLOW:
-    m_list.setSubItemText(index, 2, MainSubsystem().StringTable().getString(IDS_ACTION_ACCEPT));
-    break;
-  case IpAccessRule::ACTION_TYPE_DENY:
-    m_list.setSubItemText(index, 2, MainSubsystem().StringTable().getString(IDS_ACTION_DENY));
-    break;
-  case IpAccessRule::ACTION_TYPE_QUERY:
-    m_list.setSubItemText(index, 2, MainSubsystem().StringTable().getString(IDS_ACTION_QUERY));
-    break;
-  }
-  m_list.setItemData(index, (::lparam)control);
-}
+   void IpAccessControlDialog::onMoveDownButtonClick()
+   {
+      int si = m_list.getSelectedIndex();
+      // If nothing selected
+      if ((si == -1) || (si == m_list.getCount() - 1)) {
+         return ;
+      }
+      IpAccessRule *ip = (IpAccessRule *)m_list.getItemData(si);
+      IpAccessRule *ipNext = (IpAccessRule *)m_list.getItemData(si + 1);
+
+      setListViewItemText(si, ipNext);
+      setListViewItemText(si + 1, ip);
+      m_list.selectItem(si + 1);
+      onIpCheckUpdate();
+      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+   }
+
+   void IpAccessControlDialog::onListViewSelChange()
+   {
+      int si = m_list.getSelectedIndex();
+      updateButtonsState();
+   }
+
+   void IpAccessControlDialog::onAcceptRadioClick()
+   {
+      if (!m_defaultActionAccept.isChecked()) {
+         m_defaultActionAccept.check(true);
+         m_defaultActionRefuse.check(false);
+         ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      }
+   }
+
+   void IpAccessControlDialog::onRefuseRadioClick()
+   {
+      if (!m_defaultActionRefuse.isChecked()) {
+         m_defaultActionRefuse.check(true);
+         m_defaultActionAccept.check(false);
+         ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+      }
+   }
+
+   void IpAccessControlDialog::onAllowLoopbackConnectionsClick()
+   {
+      updateCheckBoxesState();
+      updateButtonsState();
+      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+   }
+
+   void IpAccessControlDialog::onAllowOnlyLoopbackConnectionsClick()
+   {
+      updateCheckBoxesState();
+      updateButtonsState();
+      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+   }
+
+   void IpAccessControlDialog::onIpCheckUpdate()
+   {
+      ::string ipStorage;
+      m_ip.getText(&ipStorage);
+
+      // Check if ip address is valid.
+
+      if (!IpAccessRule::isIpAddressStringValid(ipStorage)) {
+         if (ipStorage.is_empty()) {
+            m_ipCheckResult.setText(MainSubsystem().StringTable().getString(IDS_ENTER_IP_HINT));
+         } else {
+            m_ipCheckResult.setText(MainSubsystem().StringTable().getString(IDS_BAD_IP_HINT));
+         }
+         return;
+      }
+
+      //
+      // Convert ip to ansi string
+      //
+
+      ::string ansiIpStorage(&ipStorage);
+      unsigned int addr = inet_addr(ansiIpStorage);
+
+      IpAccessRule::ActionType action = IpAccessRule::ACTION_TYPE_ALLOW;
+      int rulesCount = 0;
+      if (m_list.getCount() > 0) {
+         rulesCount = m_list.getCount();
+      }
+      for (int i = 0; i < rulesCount; i++) {
+         IpAccessRule *rule = (IpAccessRule *)m_list.getItemData(i);
+         if (rule->isIncludingAddress(addr)) {
+            action = rule->getAction();
+            break;
+         }
+      }
+
+      ::string actionDescription;
+      actionDescription= MainSubsystem().StringTable().getString(IDS_ACTION_UNDEF_HINT);
+      switch (action) {
+         case IpAccessRule::ACTION_TYPE_ALLOW:
+            actionDescription= MainSubsystem().StringTable().getString(IDS_ACTION_ACCEPT_HINT);
+            break;
+         case IpAccessRule::ACTION_TYPE_DENY:
+            actionDescription= MainSubsystem().StringTable().getString(IDS_ACTION_REJECT_HINT);
+            break;
+         case IpAccessRule::ACTION_TYPE_QUERY:
+            actionDescription= MainSubsystem().StringTable().getString(IDS_ACTION_QUERY_HINT);
+            break;
+      }
+
+      m_ipCheckResult.setText(actionDescription);
+   }
+
+   void IpAccessControlDialog::onQueryTimeoutUpdate()
+   {
+      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+   }
+
+   void IpAccessControlDialog::updateButtonsState()
+   {
+      /*if (m_onlyLoopbackConnections.isChecked()) {
+        m_list.enableWindow(false);
+        m_addButton.enableWindow(false);
+        m_editButton.enableWindow(false);
+        m_removeButton.enableWindow(false);
+        m_moveDownButton.enableWindow(false);
+        m_moveUpButton.enableWindow(false);
+        return ;
+      } else {
+        m_list.enableWindow(true);
+        m_addButton.enableWindow(true);
+      }*/
+
+      int si = m_list.getSelectedIndex();
+      if (si == -1) {
+         m_editButton.enableWindow(false);
+         m_removeButton.enableWindow(false);
+         m_moveUpButton.enableWindow(false);
+         m_moveDownButton.enableWindow(false);
+      } else {
+         m_editButton.enableWindow(true);
+         m_removeButton.enableWindow(true);
+         if (si > 0) {
+            m_moveUpButton.enableWindow(true);
+         } else {
+            m_moveUpButton.enableWindow(false);
+         }
+         if (si < m_list.getCount() - 1) {
+            m_moveDownButton.enableWindow(true);
+         } else {
+            m_moveDownButton.enableWindow(false);
+         }
+      }
+   }
+
+   void IpAccessControlDialog::updateCheckBoxesState()
+   {
+      if (m_allowLoopbackConnections.isChecked()) {
+         m_onlyLoopbackConnections.enableWindow(true);
+      } else {
+         m_onlyLoopbackConnections.enableWindow(false);
+         m_onlyLoopbackConnections.check(false);
+      }
+   }
+
+   void IpAccessControlDialog::onListViewSelChangeDblClick()
+   {
+      int si = m_list.getSelectedIndex();
+      if (si == -1) {
+         return ;
+      } else {
+         onEditButtonClick();
+      }
+   }
+
+   void IpAccessControlDialog::setListViewItemText(int index, IpAccessRule *control)
+   {
+      ::string firstIp;
+      ::string lastIp;
+
+      control->getFirstIp(&firstIp);
+      control->getLastIp(&lastIp);
+
+      m_list.setSubItemText(index, 0, firstIp);
+      m_list.setSubItemText(index, 1, lastIp);
+      switch (control->getAction()) {
+         case IpAccessRule::ACTION_TYPE_ALLOW:
+            m_list.setSubItemText(index, 2, MainSubsystem().StringTable().getString(IDS_ACTION_ACCEPT));
+            break;
+         case IpAccessRule::ACTION_TYPE_DENY:
+            m_list.setSubItemText(index, 2, MainSubsystem().StringTable().getString(IDS_ACTION_DENY));
+            break;
+         case IpAccessRule::ACTION_TYPE_QUERY:
+            m_list.setSubItemText(index, 2, MainSubsystem().StringTable().getString(IDS_ACTION_QUERY));
+            break;
+      }
+      m_list.setItemData(index, (::lparam)control);
+   }
+} // namespace remoting_node
+
+
+

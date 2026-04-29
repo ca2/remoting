@@ -27,32 +27,39 @@
 
 #include "innate_subsystem/gui/TextBox.h"
 
-/**
- * Gives methods to get typized data from ui controls to
- * avoid code duplicates.
- */
-class UIDataAccess
+
+namespace remoting_node
 {
-public:
-  /**
-   * Queries text box text value as signed integer.
-   * @param textBox [in] text box to get text from.
-   * @param value [out, optional] value will contain output result.
-   * @return true if text in textbox is valid.
-   */
-  static bool queryValueAsInt(TextBox *textBox, int *value);
-  /**
-   * Queries text box text value as unsigned integer.
-   * @param textBox [in] text box to get text from.
-   * @param value [out, optional] value will contain output result.
-   * @return true if text in textbox is valid.
-   */
-  static bool queryValueAsUInt(TextBox *textBox, unsigned int *value);
-private:
-  /**
-   * Don't allow instanizing of this class, only static methods.
-   */
-  UIDataAccess();
-};
+   /**
+    * Gives methods to get typized data from ui controls to
+    * avoid code duplicates.
+    */
+   class UIDataAccess
+   {
+   public:
+      /**
+       * Queries text box text value as signed integer.
+       * @param textBox [in] text box to get text from.
+       * @param value [out, optional] value will contain output result.
+       * @return true if text in textbox is valid.
+       */
+      static bool queryValueAsInt(TextBox *textBox, int *value);
+      /**
+       * Queries text box text value as unsigned integer.
+       * @param textBox [in] text box to get text from.
+       * @param value [out, optional] value will contain output result.
+       * @return true if text in textbox is valid.
+       */
+      static bool queryValueAsUInt(TextBox *textBox, unsigned int *value);
+   private:
+      /**
+       * Don't allow instanizing of this class, only static methods.
+       */
+      UIDataAccess();
+   };
+} // namespace remoting_node
+
+
+
 
 

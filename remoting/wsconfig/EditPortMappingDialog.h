@@ -30,40 +30,44 @@
 
 #include "remoting/remoting/server_config/PortMapping.h"
 
-class EditPortMappingDialog : public BaseDialog
+namespace remoting_node
 {
-public:
-  typedef enum {
-    Add   = 0x0,
-    Edit  = 0x1
- } DialogType;
+   class EditPortMappingDialog : public BaseDialog
+   {
+   public:
+      typedef enum {
+         Add   = 0x0,
+         Edit  = 0x1
+      } DialogType;
 
-public:
-  EditPortMappingDialog(DialogType dlgType);
-  virtual ~EditPortMappingDialog();
+   public:
+      EditPortMappingDialog(DialogType dlgType);
+      virtual ~EditPortMappingDialog();
 
-public:
-  void setMapping(PortMapping *mapping);
-protected:
-  void initControls();
-  bool isUserDataValid();
+   public:
+      void setMapping(PortMapping *mapping);
+   protected:
+      void initControls();
+      bool isUserDataValid();
 
-  //
-  // Inherited from BaseDialog
-  //
+      //
+      // Inherited from BaseDialog
+      //
 
-  virtual bool onInitDialog();
-  virtual bool onCommand(unsigned int cID, unsigned int nID);
-  virtual bool onNotify(unsigned int controlID, ::lparam data) { return true; }
-  virtual bool onDestroy() { return true; }
+      virtual bool onInitDialog();
+      virtual bool onCommand(unsigned int cID, unsigned int nID);
+      virtual bool onNotify(unsigned int controlID, ::lparam data) { return true; }
+      virtual bool onDestroy() { return true; }
 
-  void onOkButtonClick();
-  void onCancelButtonClick();
-protected:
-  TextBox m_geometryTextBox;
-  TextBox m_portTextBox;
-  DialogType m_dialogType;
-  PortMapping *m_mapping;
-};
+      void onOkButtonClick();
+      void onCancelButtonClick();
+   protected:
+      TextBox m_geometryTextBox;
+      TextBox m_portTextBox;
+      DialogType m_dialogType;
+      PortMapping *m_mapping;
+   };
+}//   namespace remoting_node
+
 
 

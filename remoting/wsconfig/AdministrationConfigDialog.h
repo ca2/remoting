@@ -37,6 +37,8 @@
 
 namespace remoting_node
 {
+
+
    class AdministrationConfigDialog: public BaseDialog
    {
    public:

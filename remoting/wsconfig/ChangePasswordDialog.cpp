@@ -29,97 +29,102 @@
 
 #include "subsystem/platform/VncPassCrypt.h"
 //#include "subsystem/platform/::string.h"
-
-ChangePasswordDialog::ChangePasswordDialog(::innate_subsystem::Control *parent, bool isNewPassword)
-: BaseDialog(IDD_CHANGE_PASSWORD), m_allowEmptyPassword(false), m_newPassword(isNewPassword)
+namespace remoting_node
 {
-  setParent(parent);
+   ChangePasswordDialog::ChangePasswordDialog(::innate_subsystem::Control *parent, bool isNewPassword)
+   : BaseDialog(IDD_CHANGE_PASSWORD), m_allowEmptyPassword(false), m_newPassword(isNewPassword)
+   {
+      setParent(parent);
 
-  m_passwordEmptyTooltip.setText(MainSubsystem().StringTable().getString(IDS_PASSWORD_IS_EMPTY));
-  m_passwordEmptyTooltip.setTitle(MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL));
+      m_passwordEmptyTooltip.setText(MainSubsystem().StringTable().getString(IDS_PASSWORD_IS_EMPTY));
+      m_passwordEmptyTooltip.setTitle(MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL));
 
-  m_passwordsNotMatchTooltip.setText(MainSubsystem().StringTable().getString(IDS_PASSWORDS_NOT_MATCH));
-  m_passwordsNotMatchTooltip.setTitle(MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL));
+      m_passwordsNotMatchTooltip.setText(MainSubsystem().StringTable().getString(IDS_PASSWORDS_NOT_MATCH));
+      m_passwordsNotMatchTooltip.setTitle(MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL));
 
-  m_passwordWeakTooltip.setText(MainSubsystem().StringTable().getString(IDS_BAD_PASSWORD));
-  m_passwordWeakTooltip.setTitle(MainSubsystem().StringTable().getString(IDS_MBC_BAD_PASSWORD));
-}
+      m_passwordWeakTooltip.setText(MainSubsystem().StringTable().getString(IDS_BAD_PASSWORD));
+      m_passwordWeakTooltip.setTitle(MainSubsystem().StringTable().getString(IDS_MBC_BAD_PASSWORD));
+   }
 
-ChangePasswordDialog::~ChangePasswordDialog()
-{
-}
+   ChangePasswordDialog::~ChangePasswordDialog()
+   {
+   }
 
-const ::scoped_string & scopedstrChangePasswordDialog::getPasswordInPlainText() const
-{
-  return m_passwordText;
-}
+   const ::scoped_string & scopedstrChangePasswordDialog::getPasswordInPlainText() const
+   {
+      return m_passwordText;
+   }
 
-bool ChangePasswordDialog::onInitDialog()
-{
-  initControls();
-  if (m_newPassword) {
-    m_ctrlThis.setText(MainSubsystem().StringTable().getString(IDS_NEW_PASSWORD));
-  } else {
-    m_ctrlThis.setText(MainSubsystem().StringTable().getString(IDS_CHANGE_PASSWORD));
-  }
-  return true;
-}
+   bool ChangePasswordDialog::onInitDialog()
+   {
+      initControls();
+      if (m_newPassword) {
+         m_ctrlThis.setText(MainSubsystem().StringTable().getString(IDS_NEW_PASSWORD));
+      } else {
+         m_ctrlThis.setText(MainSubsystem().StringTable().getString(IDS_CHANGE_PASSWORD));
+      }
+      return true;
+   }
 
-bool ChangePasswordDialog::onCommand(unsigned int cID, unsigned int nID)
-{
-  if (nID == ::user::e_notification_button_clicked) {
-    switch (cID) {
-    case ::innate_subsystem::IDOK:
-      onOkButtonClick();
-      break;
-    case ::innate_subsystem::IDCANCEL:
-      onCancelButtonClick();
-      break;
-    }
-  }
-  return true;
-}
+   bool ChangePasswordDialog::onCommand(unsigned int cID, unsigned int nID)
+   {
+      if (nID == ::user::e_notification_button_clicked) {
+         switch (cID) {
+            case ::innate_subsystem::IDOK:
+               onOkButtonClick();
+               break;
+            case ::innate_subsystem::IDCANCEL:
+               onCancelButtonClick();
+               break;
+         }
+      }
+      return true;
+   }
 
-void ChangePasswordDialog::onOkButtonClick()
-{
-  ::string password1;
-  ::string password2;
-  m_password1.getText(&password1);
-  m_password2.getText(&password2);
+   void ChangePasswordDialog::onOkButtonClick()
+   {
+      ::string password1;
+      ::string password2;
+      m_password1.getText(&password1);
+      m_password2.getText(&password2);
 
-  if (password1.is_empty() && !m_allowEmptyPassword) {
-    m_password1.showBalloonTip(&m_passwordEmptyTooltip);
-    m_password1.setFocus();
-    return ;
-  }
-  if (!password1.isEqualTo(&password2)) {
-    m_password2.showBalloonTip(&m_passwordsNotMatchTooltip);
-    m_password2.setFocus();
-    return ;
-  }
+      if (password1.is_empty() && !m_allowEmptyPassword) {
+         m_password1.showBalloonTip(&m_passwordEmptyTooltip);
+         m_password1.setFocus();
+         return ;
+      }
+      if (!password1.isEqualTo(&password2)) {
+         m_password2.showBalloonTip(&m_passwordsNotMatchTooltip);
+         m_password2.setFocus();
+         return ;
+      }
 
-  if (!::string::checkAnsiConversion(password1)) {
-    m_password1.showBalloonTip(&m_passwordWeakTooltip);
-    m_password1.setFocus();
-    return;
-  }
+      if (!::string::checkAnsiConversion(password1)) {
+         m_password1.showBalloonTip(&m_passwordWeakTooltip);
+         m_password1.setFocus();
+         return;
+      }
 
-  m_passwordText= password1;
+      m_passwordText= password1;
 
-  kill(::innate_subsystem::IDOK);
-}
+      kill(::innate_subsystem::IDOK);
+   }
 
-void ChangePasswordDialog::onCancelButtonClick()
-{
-  kill(::innate_subsystem::IDCANCEL);
-}
+   void ChangePasswordDialog::onCancelButtonClick()
+   {
+      kill(::innate_subsystem::IDCANCEL);
+   }
 
-void ChangePasswordDialog::initControls()
-{
-  HWND hwnd = m_ctrlThis.operating_system_window();
-  m_password1.setWindow(GetDlgItem(hwnd, IDC_PASSWORD));
-  m_password2.setWindow(GetDlgItem(hwnd, IDC_PASSWORD2));
+   void ChangePasswordDialog::initControls()
+   {
+      HWND hwnd = m_ctrlThis.operating_system_window();
+      m_password1.setWindow(GetDlgItem(hwnd, IDC_PASSWORD));
+      m_password2.setWindow(GetDlgItem(hwnd, IDC_PASSWORD2));
 
-  m_password1.setTextLengthLimit(VncPassCrypt::VNC_PASSWORD_SIZE);
-  m_password2.setTextLengthLimit(VncPassCrypt::VNC_PASSWORD_SIZE);
-}
+      m_password1.setTextLengthLimit(VncPassCrypt::VNC_PASSWORD_SIZE);
+      m_password2.setTextLengthLimit(VncPassCrypt::VNC_PASSWORD_SIZE);
+   }
+} // namespace remoting_node
+
+
+

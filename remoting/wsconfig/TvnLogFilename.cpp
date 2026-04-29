@@ -29,21 +29,30 @@
 #include "subsystem/node/OperatingSystem.h"
 #include "remoting/node_desktop/NamingDefs.h"
 
-TvnLogFilename::TvnLogFilename()
+
+namespace remoting_node
 {
-}
+   TvnLogFilename::TvnLogFilename()
+   {
+   }
 
-void TvnLogFilename::queryLogFileDirectory(bool forService,
-                                           bool shareToAll,
-                                           ::string & logFileDirectory)
-{
-  int specialFolderId = (shareToAll) ? Environment::COMMON_APPLICATION_DATA_SPECIAL_FOLDER : Environment::APPLICATION_DATA_SPECIAL_FOLDER;
+   void TvnLogFilename::queryLogFileDirectory(bool forService,
+                                              bool shareToAll,
+                                              ::string & logFileDirectory)
+   {
+      int specialFolderId = (shareToAll) ? Environment::COMMON_APPLICATION_DATA_SPECIAL_FOLDER : Environment::APPLICATION_DATA_SPECIAL_FOLDER;
 
-  ::string specialFolder("");
+      ::string specialFolder("");
 
-  Environment::getSpecialFolderPath(specialFolderId, &specialFolder);
+      Environment::getSpecialFolderPath(specialFolderId, &specialFolder);
 
-  logFileDirectory->format("{}\\{}",
-                           specialFolder,
-                           LogNames::LOG_DIR_NAME);
-}
+      logFileDirectory->format("{}\\{}",
+                               specialFolder,
+                               LogNames::LOG_DIR_NAME);
+   }
+} // namespace remoting_node
+
+
+
+
+

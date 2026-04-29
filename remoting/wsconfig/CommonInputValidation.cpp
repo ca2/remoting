@@ -31,57 +31,63 @@
 #include "remoting/node_desktop/resource.h"
 
 #include "UIDataAccess.h"
-
-CommonInputValidation::CommonInputValidation()
+namespace remoting_node
 {
-}
+   CommonInputValidation::CommonInputValidation()
+   {
+   }
 
-bool CommonInputValidation::validatePort(TextBox *textBox)
-{
-  bool validationOk = true;
+   bool CommonInputValidation::validatePort(TextBox *textBox)
+   {
+      bool validationOk = true;
 
-  int parsedPortValue = 0;
+      int parsedPortValue = 0;
 
-  if (!UIDataAccess::queryValueAsInt(textBox, &parsedPortValue)) {
-    validationOk = false;
-  } else {
-    if (parsedPortValue <= 0 || parsedPortValue > 65535) {
-      validationOk = false;
-    }
-  }
+      if (!UIDataAccess::queryValueAsInt(textBox, &parsedPortValue)) {
+         validationOk = false;
+      } else {
+         if (parsedPortValue <= 0 || parsedPortValue > 65535) {
+            validationOk = false;
+         }
+      }
 
-  if (!validationOk) {
-    notifyValidationError(textBox, MainSubsystem().StringTable().getString(IDS_PORT_RANGE_ERROR));
-  }
+      if (!validationOk) {
+         notifyValidationError(textBox, MainSubsystem().StringTable().getString(IDS_PORT_RANGE_ERROR));
+      }
 
-  return validationOk;
-}
+      return validationOk;
+   }
 
-bool CommonInputValidation::validateUINT(TextBox *textBox, const ::scoped_string & scopedstrMessageText)
-{
-  bool validationOk = true;
+   bool CommonInputValidation::validateUINT(TextBox *textBox, const ::scoped_string & scopedstrMessageText)
+   {
+      bool validationOk = true;
 
-  unsigned int parsedValue = 0;
+      unsigned int parsedValue = 0;
 
-  if (!UIDataAccess::queryValueAsUInt(textBox, &parsedValue)) {
-    validationOk = false;
-  }
+      if (!UIDataAccess::queryValueAsUInt(textBox, &parsedValue)) {
+         validationOk = false;
+      }
 
-  if (!validationOk) {
-    notifyValidationError(textBox, messageText);
-  }
+      if (!validationOk) {
+         notifyValidationError(textBox, messageText);
+      }
 
-  return validationOk;
-}
+      return validationOk;
+   }
 
-void CommonInputValidation::notifyValidationError(TextBox *textBox, const ::scoped_string & scopedstrMessageText)
-{
-  BalloonTip invalidInputTip;
+   void CommonInputValidation::notifyValidationError(TextBox *textBox, const ::scoped_string & scopedstrMessageText)
+   {
+      BalloonTip invalidInputTip;
 
-  invalidInputTip.setIconType(TTI_WARNING);
-  invalidInputTip.setText(messageText);
-  invalidInputTip.setTitle(MainSubsystem().StringTable().getString(IDS_CAPTION_BAD_INPUT));
+      invalidInputTip.setIconType(TTI_WARNING);
+      invalidInputTip.setText(messageText);
+      invalidInputTip.setTitle(MainSubsystem().StringTable().getString(IDS_CAPTION_BAD_INPUT));
 
-  textBox->showBalloonTip(&invalidInputTip);
-  textBox->setFocus();
-}
+      textBox->showBalloonTip(&invalidInputTip);
+      textBox->setFocus();
+   }
+} //namespace remoting_node
+
+
+
+

@@ -31,108 +31,113 @@
 #include "ChangePasswordDialog.h"
 
 #include "remoting/node_desktop/resource.h"
-
-PasswordControl::PasswordControl(::innate_subsystem::Control *changeButton, ::innate_subsystem::Control *unsetButton)
-: m_enabled(true), 
-  m_changeButton(changeButton), 
-  m_unsetButton(unsetButton),
-  m_state(NoPassword)
+namespace remoting_node
 {
-  updateControlsState();
-}
+   PasswordControl::PasswordControl(::innate_subsystem::Control *changeButton, ::innate_subsystem::Control *unsetButton)
+   : m_enabled(true),
+     m_changeButton(changeButton),
+     m_unsetButton(unsetButton),
+     m_state(NoPassword)
+   {
+      updateControlsState();
+   }
 
-PasswordControl::~PasswordControl()
-{
-  releaseCryptedPassword();
-}
+   PasswordControl::~PasswordControl()
+   {
+      releaseCryptedPassword();
+   }
 
 
-void PasswordControl::enableWindow(bool enabled)
-{
-  m_enabled = enabled;
+   void PasswordControl::enableWindow(bool enabled)
+   {
+      m_enabled = enabled;
 
-  updateControlsState();
-}
+      updateControlsState();
+   }
 
-void PasswordControl::unsetPassword(bool promtUser, HWND parentWindow)
-{
-  if (promtUser) {
-    if (MainSubsystem().message_box(parentWindow,
-      MainSubsystem().StringTable().getString(IDS_UNSET_PASSWORD_PROMT),
-      MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL), ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) == ::innate_subsystem::IDNO) {
-      return;
-    }
-  }
+   void PasswordControl::unsetPassword(bool promtUser, HWND parentWindow)
+   {
+      if (promtUser) {
+         if (MainSubsystem().message_box(parentWindow,
+           MainSubsystem().StringTable().getString(IDS_UNSET_PASSWORD_PROMT),
+           MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL), ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) == ::innate_subsystem::IDNO) {
+            return;
+           }
+      }
 
-  releaseCryptedPassword();
-  m_state = ResetPassword;
-  updateControlsState();
-}
+      releaseCryptedPassword();
+      m_state = ResetPassword;
+      updateControlsState();
+   }
 
-void PasswordControl::setPassword(const ::scoped_string & scopedstrPlainText)
-{
-  char plainTextInANSI[9];
-  memset(plainTextInANSI, 0, sizeof(plainTextInANSI));
-  ::string plainTextInUTF16(plainText);
-  ::string ansiPlainTextStorage(&plainTextInUTF16);
-  memcpy(plainTextInANSI, ansiPlainTextStorage,
-         min(ansiPlainTextStorage.length(), sizeof(plainTextInANSI)));
+   void PasswordControl::setPassword(const ::scoped_string & scopedstrPlainText)
+   {
+      char plainTextInANSI[9];
+      memset(plainTextInANSI, 0, sizeof(plainTextInANSI));
+      ::string plainTextInUTF16(plainText);
+      ::string ansiPlainTextStorage(&plainTextInUTF16);
+      memcpy(plainTextInANSI, ansiPlainTextStorage,
+             min(ansiPlainTextStorage.length(), sizeof(plainTextInANSI)));
 
-  unsigned char cryptedPassword[8];
-  memset(cryptedPassword, 0, 8);
+      unsigned char cryptedPassword[8];
+      memset(cryptedPassword, 0, 8);
 
-  VncPassCrypt::getEncryptedPass(cryptedPassword, (const unsigned char *)plainTextInANSI);
+      VncPassCrypt::getEncryptedPass(cryptedPassword, (const unsigned char *)plainTextInANSI);
 
-  setCryptedPassword((char *)cryptedPassword);
+      setCryptedPassword((char *)cryptedPassword);
 
-  updateControlsState();
-}
+      updateControlsState();
+   }
 
-void PasswordControl::setCryptedPassword(const char *cryptedPass)
-{
-  m_cryptedPassword.resize(8);
-  memcpy(&m_cryptedPassword.front(), cryptedPass, m_cryptedPassword.size());
-  m_state = NewPassword;
-}
+   void PasswordControl::setCryptedPassword(const char *cryptedPass)
+   {
+      m_cryptedPassword.resize(8);
+      memcpy(&m_cryptedPassword.front(), cryptedPass, m_cryptedPassword.size());
+      m_state = NewPassword;
+   }
 
-const char *PasswordControl::getCryptedPassword() const
-{
-  if (m_cryptedPassword.empty()) {
-    return 0;
-  }
+   const char *PasswordControl::getCryptedPassword() const
+   {
+      if (m_cryptedPassword.empty()) {
+         return 0;
+      }
 
-  return &m_cryptedPassword.front();
-}
+      return &m_cryptedPassword.front();
+   }
 
-bool PasswordControl::showChangePasswordModalDialog(::innate_subsystem::Control *parent)
-{
-  ChangePasswordDialog changePasswordDialog(parent, m_state != NewPassword && m_state != ResetPassword);
+   bool PasswordControl::showChangePasswordModalDialog(::innate_subsystem::Control *parent)
+   {
+      ChangePasswordDialog changePasswordDialog(parent, m_state != NewPassword && m_state != ResetPassword);
 
-  if (changePasswordDialog.showModal() != ::innate_subsystem::IDOK) {
-    return false;
-  }
+      if (changePasswordDialog.showModal() != ::innate_subsystem::IDOK) {
+         return false;
+      }
 
-  setPassword(changePasswordDialog.getPasswordInPlainText());
+      setPassword(changePasswordDialog.getPasswordInPlainText());
 
-  return true;
-}
+      return true;
+   }
 
-void PasswordControl::updateControlsState()
-{
-  if (m_changeButton != 0) {
-    if (m_state == OldPassword || m_state == NewPassword) {
-      m_changeButton->setText(MainSubsystem().StringTable().getString(IDS_CHANGE_PASSWORD_CAPTION));
-    } else {
-      m_changeButton->setText(MainSubsystem().StringTable().getString(IDS_SET_PASSWORD_CAPTION));
-    }
-    m_changeButton->enableWindow(m_enabled);
-  }
-  if (m_unsetButton != 0) {
-    m_unsetButton->enableWindow(m_enabled && (m_state == OldPassword || m_state == NewPassword));
-  }
-}
+   void PasswordControl::updateControlsState()
+   {
+      if (m_changeButton != 0) {
+         if (m_state == OldPassword || m_state == NewPassword) {
+            m_changeButton->setText(MainSubsystem().StringTable().getString(IDS_CHANGE_PASSWORD_CAPTION));
+         } else {
+            m_changeButton->setText(MainSubsystem().StringTable().getString(IDS_SET_PASSWORD_CAPTION));
+         }
+         m_changeButton->enableWindow(m_enabled);
+      }
+      if (m_unsetButton != 0) {
+         m_unsetButton->enableWindow(m_enabled && (m_state == OldPassword || m_state == NewPassword));
+      }
+   }
 
-void PasswordControl::releaseCryptedPassword()
-{
-  m_cryptedPassword.resize(0);
-}
+   void PasswordControl::releaseCryptedPassword()
+   {
+      m_cryptedPassword.resize(0);
+   }
+} // namespace remoting_node
+
+
+

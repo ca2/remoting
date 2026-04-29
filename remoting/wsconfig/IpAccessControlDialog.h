@@ -34,82 +34,86 @@
 
 #include "EditIpAccessRuleDialog.h"
 
-class IpAccessControlDialog : public BaseDialog
+namespace remoting_node
 {
-public:
-  IpAccessControlDialog();
-  virtual ~IpAccessControlDialog();
+   class IpAccessControlDialog : public BaseDialog
+   {
+   public:
+      IpAccessControlDialog();
+      virtual ~IpAccessControlDialog();
 
-  void setParentDialog(BaseDialog *dialog);
+      void setParentDialog(BaseDialog *dialog);
 
-  //
-  // BaseDialog overrided methods
-  //
+      //
+      // BaseDialog overrided methods
+      //
 
-  virtual bool onInitDialog();
-  virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
-  virtual bool onNotify(unsigned int controlID, ::lparam data);
-  virtual bool onDestroy() { return true; }
+      virtual bool onInitDialog();
+      virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
+      virtual bool onNotify(unsigned int controlID, ::lparam data);
+      virtual bool onDestroy() { return true; }
 
-  //
-  // Helper methods
-  //
+      //
+      // Helper methods
+      //
 
-  bool validateInput();
-  void updateUI();
-  void apply();
+      bool validateInput();
+      void updateUI();
+      void apply();
 
-private:
-  void initControls();
+   private:
+      void initControls();
 
-  //
-  // ::innate_subsystem::Control event handlers
-  //
+      //
+      // ::innate_subsystem::Control event handlers
+      //
 
-  void onAddButtonClick();
-  void onEditButtonClick();
-  void onRemoveButtonClick();
-  void onMoveUpButtonClick();
-  void onMoveDownButtonClick();
-  void onListViewSelChange();
-  void onListViewSelChangeDblClick();
-  void onAcceptRadioClick();
-  void onRefuseRadioClick();
-  void onAllowLoopbackConnectionsClick();
-  void onAllowOnlyLoopbackConnectionsClick();
-  void onIpCheckUpdate();
-  void onQueryTimeoutUpdate();
+      void onAddButtonClick();
+      void onEditButtonClick();
+      void onRemoveButtonClick();
+      void onMoveUpButtonClick();
+      void onMoveDownButtonClick();
+      void onListViewSelChange();
+      void onListViewSelChangeDblClick();
+      void onAcceptRadioClick();
+      void onRefuseRadioClick();
+      void onAllowLoopbackConnectionsClick();
+      void onAllowOnlyLoopbackConnectionsClick();
+      void onIpCheckUpdate();
+      void onQueryTimeoutUpdate();
 
-  //
-  // Private helper methods
-  //
+      //
+      // Private helper methods
+      //
 
-  void updateButtonsState();
-  void updateCheckBoxesState();
-  void setListViewItemText(int index, IpAccessRule *control);
+      void updateButtonsState();
+      void updateCheckBoxesState();
+      void setListViewItemText(int index, IpAccessRule *control);
 
-private:
-  // Configuration
-  IpAccessControl *m_container;
-  ServerConfig *m_config;
-  // Child dialog
-  EditIpAccessRuleDialog m_editDialog;
-  // Controls
-  ListView m_list;
-  ::innate_subsystem::Control m_addButton;
-  ::innate_subsystem::Control m_editButton;
-  ::innate_subsystem::Control m_removeButton;
-  ::innate_subsystem::Control m_moveUpButton;
-  ::innate_subsystem::Control m_moveDownButton;
-  CheckBox m_defaultActionAccept;
-  CheckBox m_defaultActionRefuse;
-  CheckBox m_allowLoopbackConnections;
-  CheckBox m_onlyLoopbackConnections;
-  TextBox m_queryTimeout;
-  TextBox m_ip;
-  ::innate_subsystem::Control m_ipCheckResult;
-  SpinControl m_queryTimeoutSpin;
-  BaseDialog *m_parentDialog;
-};
+   private:
+      // Configuration
+      IpAccessControl *m_container;
+      ServerConfig *m_config;
+      // Child dialog
+      EditIpAccessRuleDialog m_editDialog;
+      // Controls
+      ListView m_list;
+      ::innate_subsystem::Control m_addButton;
+      ::innate_subsystem::Control m_editButton;
+      ::innate_subsystem::Control m_removeButton;
+      ::innate_subsystem::Control m_moveUpButton;
+      ::innate_subsystem::Control m_moveDownButton;
+      CheckBox m_defaultActionAccept;
+      CheckBox m_defaultActionRefuse;
+      CheckBox m_allowLoopbackConnections;
+      CheckBox m_onlyLoopbackConnections;
+      TextBox m_queryTimeout;
+      TextBox m_ip;
+      ::innate_subsystem::Control m_ipCheckResult;
+      SpinControl m_queryTimeoutSpin;
+      BaseDialog *m_parentDialog;
+   };
+} // namespace remoting_node
+
 
 

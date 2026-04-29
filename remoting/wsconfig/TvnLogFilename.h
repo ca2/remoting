@@ -27,27 +27,31 @@
 
 #include "subsystem/_common_header.h"
 
-/**
- * Utility to create path to server log file.
- */
-class TvnLogFilename
+namespace remoting_node
 {
-public:
-  /**
-   * Queries full path to directory where server log files are located.
-   *
-   * @param forService determinates if it must create log directory path for service, or for application.
-   * @param shareToAll determinates if log directory must be shared to all users.
-   * @param logFileDirectory [out] output variable that will contain path to log directory.
-   */
-  static void queryLogFileDirectory(bool forService,
-                                    bool shareToAll,
-                                    ::string & logFileDirectory);
-private:
-  /**
-   * Deny instanizing of this class.
-   */
-  TvnLogFilename();
-};
+   /**
+    * Utility to create path to server log file.
+    */
+   class TvnLogFilename
+   {
+   public:
+      /**
+       * Queries full path to directory where server log files are located.
+       *
+       * @param forService determinates if it must create log directory path for service, or for application.
+       * @param shareToAll determinates if log directory must be shared to all users.
+       * @param logFileDirectory [out] output variable that will contain path to log directory.
+       */
+      static void queryLogFileDirectory(bool forService,
+                                        bool shareToAll,
+                                        ::string & logFileDirectory);
+   private:
+      /**
+       * Deny instanizing of this class.
+       */
+      TvnLogFilename();
+   };
+}//   namespace remoting_node
+
 
 

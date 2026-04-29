@@ -34,114 +34,118 @@
 #include "remoting/remoting/server_config/ServerConfig.h"
 #include "PasswordControl.h"
 
-class ServerConfigDialog : public BaseDialog
+namespace remoting_node
 {
-public:
-  ServerConfigDialog();
-  virtual ~ServerConfigDialog();
+   class ServerConfigDialog : public BaseDialog
+   {
+   public:
+      ServerConfigDialog();
+      virtual ~ServerConfigDialog();
 
-  void setParentDialog(BaseDialog *dialog);
+      void setParentDialog(BaseDialog *dialog);
 
-public:
+   public:
 
-  //
-  // BaseDialog overrided methods
-  //
+      //
+      // BaseDialog overrided methods
+      //
 
-  virtual bool onInitDialog();
-  virtual bool onNotify(unsigned int controlID, ::lparam data);
-  virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
-  virtual bool onDestroy() { return true; }
+      virtual bool onInitDialog();
+      virtual bool onNotify(unsigned int controlID, ::lparam data);
+      virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
+      virtual bool onDestroy() { return true; }
 
-  //
-  // Helper methods
-  //
+      //
+      // Helper methods
+      //
 
-  bool validateInput();
-  void updateUI();
-  void apply();
+      bool validateInput();
+      void updateUI();
+      void apply();
 
-private:
-  void initControls();
-  void updateControlDependencies();
+   private:
+      void initControls();
+      void updateControlDependencies();
 
-  //
-  // Contol event handlers
-  //
+      //
+      // Contol event handlers
+      //
 
-  void onAcceptRfbConnectionsClick();
-  void onAcceptHttpConnectionsClick();
-  void onAuthenticationClick();
-  void onPrimaryPasswordChange();
-  void onReadOnlyPasswordChange();
-  void onUnsetPrimaryPasswordClick();
-  void onUnsetReadOnlyPasswordClick();
-  void onShowTrayIconCheckBoxClick();
-  void onConnectToRdpCheckBoxClick();
-  void onPollingIntervalSpinChangePos(LPNMUPDOWN scopedstrMessage);
-  void onRfbPortUpdate();
-  void onHttpPortUpdate();
-  void onUrlParamsClick();
-  void onPollingIntervalUpdate();
-  void onFileTransferCheckBoxClick();
-  void onRemoveWallpaperCheckBoxClick();
-  void onGrabTransparentWindowsChanged();
-  void onUseD3DChanged();
+      void onAcceptRfbConnectionsClick();
+      void onAcceptHttpConnectionsClick();
+      void onAuthenticationClick();
+      void onPrimaryPasswordChange();
+      void onReadOnlyPasswordChange();
+      void onUnsetPrimaryPasswordClick();
+      void onUnsetReadOnlyPasswordClick();
+      void onShowTrayIconCheckBoxClick();
+      void onConnectToRdpCheckBoxClick();
+      void onPollingIntervalSpinChangePos(LPNMUPDOWN scopedstrMessage);
+      void onRfbPortUpdate();
+      void onHttpPortUpdate();
+      void onUrlParamsClick();
+      void onPollingIntervalUpdate();
+      void onFileTransferCheckBoxClick();
+      void onRemoveWallpaperCheckBoxClick();
+      void onGrabTransparentWindowsChanged();
+      void onUseD3DChanged();
 
-  //
-  // Input handling
-  //
+      //
+      // Input handling
+      //
 
-  void onBlockLocalInputChanged();
-  void onBlockRemoteInputChanged();
-  void onLocalInputPriorityChanged();
-  void onInactivityTimeoutUpdate();
-  void updateCheckboxesState();
+      void onBlockLocalInputChanged();
+      void onBlockRemoteInputChanged();
+      void onLocalInputPriorityChanged();
+      void onInactivityTimeoutUpdate();
+      void updateCheckboxesState();
 
-protected:
-  // Configuration
-  ServerConfig *m_config;
-  // Controls
-  TextBox m_rfbPort;
-  TextBox m_httpPort;
-  TextBox m_pollingInterval;
-  CheckBox m_useD3D;
-  CheckBox m_useMirrorDriver;
-  CheckBox m_enableFileTransfers;
-  CheckBox m_removeWallpaper;
-  CheckBox m_acceptRfbConnections;
-  CheckBox m_acceptHttpConnections;
-  CheckBox m_showTrayIcon;
-  CheckBox m_connectToRdp;
-  ::innate_subsystem::Control m_primaryPassword;
-  ::innate_subsystem::Control m_readOnlyPassword;
-  ::innate_subsystem::Control m_unsetPrimaryPassword;
-  ::innate_subsystem::Control m_unsetReadOnlyPassword;
-  CheckBox m_useAuthentication;
-  SpinControl m_rfbPortSpin;
-  SpinControl m_httpPortSpin;
-  SpinControl m_pollingIntervalSpin;
+   protected:
+      // Configuration
+      ServerConfig *m_config;
+      // Controls
+      TextBox m_rfbPort;
+      TextBox m_httpPort;
+      TextBox m_pollingInterval;
+      CheckBox m_useD3D;
+      CheckBox m_useMirrorDriver;
+      CheckBox m_enableFileTransfers;
+      CheckBox m_removeWallpaper;
+      CheckBox m_acceptRfbConnections;
+      CheckBox m_acceptHttpConnections;
+      CheckBox m_showTrayIcon;
+      CheckBox m_connectToRdp;
+      ::innate_subsystem::Control m_primaryPassword;
+      ::innate_subsystem::Control m_readOnlyPassword;
+      ::innate_subsystem::Control m_unsetPrimaryPassword;
+      ::innate_subsystem::Control m_unsetReadOnlyPassword;
+      CheckBox m_useAuthentication;
+      SpinControl m_rfbPortSpin;
+      SpinControl m_httpPortSpin;
+      SpinControl m_pollingIntervalSpin;
 
-  //
-  // Begin of input handling members
-  //
+      //
+      // Begin of input handling members
+      //
 
-  CheckBox m_blockRemoteInput;
-  CheckBox m_blockLocalInput;
-  CheckBox m_localInputPriority;
-  TextBox m_localInputPriorityTimeout;
-  SpinControl m_inactivityTimeoutSpin;
+      CheckBox m_blockRemoteInput;
+      CheckBox m_blockLocalInput;
+      CheckBox m_localInputPriority;
+      TextBox m_localInputPriorityTimeout;
+      SpinControl m_inactivityTimeoutSpin;
 
-  //
-  // End of input handling members
-  //
+      //
+      // End of input handling members
+      //
 
-  // Error notifications
-  BaseDialog *m_parentDialog;
+      // Error notifications
+      BaseDialog *m_parentDialog;
 
-  // Primary password control.
-  PasswordControl *m_ppControl;
-  PasswordControl *m_vpControl;
-};
+      // Primary password control.
+      PasswordControl *m_ppControl;
+      PasswordControl *m_vpControl;
+   };
+} // namespace remoting_node
+
 
 

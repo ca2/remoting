@@ -31,46 +31,52 @@
 
 #include "remoting/remoting/server_config/Configurator.h"
 
-class PortMappingDialog : public BaseDialog
+namespace remoting_node
 {
-public:
-  PortMappingDialog();
-  virtual ~PortMappingDialog();
+   class PortMappingDialog : public BaseDialog
+   {
+   public:
+      PortMappingDialog();
+      virtual ~PortMappingDialog();
 
-  void setParentDialog(BaseDialog *dialog);
+      void setParentDialog(BaseDialog *dialog);
 
-protected:
+   protected:
 
-  //
-  // Inherited from BaseDialog.
-  //
+      //
+      // Inherited from BaseDialog.
+      //
 
-  virtual bool onInitDialog();
-  virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
-  virtual bool onNotify(unsigned int controlID, ::lparam data) { return true; }
-  virtual bool onDestroy() { return true; }
+      virtual bool onInitDialog();
+      virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
+      virtual bool onNotify(unsigned int controlID, ::lparam data) { return true; }
+      virtual bool onDestroy() { return true; }
 
-  //
-  // Controls event handlers.
-  //
+      //
+      // Controls event handlers.
+      //
 
-  void onAddButtonClick();
-  void onEditButtonClick();
-  void onRemoveButtonClick();
-  void onExPortsListBoxSelChange();
-  void onExPortsListBoxDoubleClick();
+      void onAddButtonClick();
+      void onEditButtonClick();
+      void onRemoveButtonClick();
+      void onExPortsListBoxSelChange();
+      void onExPortsListBoxDoubleClick();
 
-private:
-  void initControls();
+   private:
+      void initControls();
 
-protected:
-  ListBox m_exPortsListBox;
-  ::innate_subsystem::Control m_editButton;
-  ::innate_subsystem::Control m_removeButton;
+   protected:
+      ListBox m_exPortsListBox;
+      ::innate_subsystem::Control m_editButton;
+      ::innate_subsystem::Control m_removeButton;
 
-  PortMappingContainer *m_extraPorts;
+      PortMappingContainer *m_extraPorts;
 
-  BaseDialog *m_parent;
-};
+      BaseDialog *m_parent;
+   };
+} // namespace remoting_node
+
+
+
 
 

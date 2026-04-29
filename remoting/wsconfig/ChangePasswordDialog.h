@@ -29,57 +29,63 @@
 #include "innate_subsystem/gui/TextBox.h"
 #include "innate_subsystem/gui/BalloonTip.h"
 //////#include "subsystem/platform/::string.h"
-
-class ChangePasswordDialog : public BaseDialog
+///
+///
+namespace remoting_node
 {
-public:
-  /**
-  Creates new modal dialog for changing password.
-  @param parent - parent dialog, optional (can be null).
-  @param isNewPassword - flag determinates caption of dialog.
-  */
-  ChangePasswordDialog(::innate_subsystem::Control *parent, bool isNewPassword);
-  virtual ~ChangePasswordDialog();
+   class ChangePasswordDialog : public BaseDialog
+   {
+   public:
+      /**
+      Creates new modal dialog for changing password.
+      @param parent - parent dialog, optional (can be null).
+      @param isNewPassword - flag determinates caption of dialog.
+      */
+      ChangePasswordDialog(::innate_subsystem::Control *parent, bool isNewPassword);
+      virtual ~ChangePasswordDialog();
 
-  /**
-  Returns password (in plain text) specified by user.
-  @return password string.
-  */
-  ::string getPasswordInPlainText() const;
-protected:
+      /**
+      Returns password (in plain text) specified by user.
+      @return password string.
+      */
+      ::string getPasswordInPlainText() const;
+   protected:
 
-  //
-  // BaseDialog overrided methods
-  //
+      //
+      // BaseDialog overrided methods
+      //
 
-  virtual bool onInitDialog();
-  virtual bool onCommand(unsigned int cID, unsigned int nID);
-  virtual bool onNotify(unsigned int controlID, ::lparam data) { return true; }
-  virtual bool onDestroy() { return true; }
+      virtual bool onInitDialog();
+      virtual bool onCommand(unsigned int cID, unsigned int nID);
+      virtual bool onNotify(unsigned int controlID, ::lparam data) { return true; }
+      virtual bool onDestroy() { return true; }
 
-  //
-  // Controls event handlers
-  //
+      //
+      // Controls event handlers
+      //
 
-  void onOkButtonClick();
-  void onCancelButtonClick();
+      void onOkButtonClick();
+      void onCancelButtonClick();
 
-private:
-  void initControls();
+   private:
+      void initControls();
 
-protected:
-  // Controls
-  TextBox m_password1;
-  TextBox m_password2;
-  // Password
-  ::string m_passwordText;
-  // Tooltip
-  BalloonTip m_passwordEmptyTooltip;
-  BalloonTip m_passwordsNotMatchTooltip;
-  BalloonTip m_passwordWeakTooltip;
-  // Helper members
-  bool m_newPassword;
-  bool m_allowEmptyPassword;
-};
+   protected:
+      // Controls
+      TextBox m_password1;
+      TextBox m_password2;
+      // Password
+      ::string m_passwordText;
+      // Tooltip
+      BalloonTip m_passwordEmptyTooltip;
+      BalloonTip m_passwordsNotMatchTooltip;
+      BalloonTip m_passwordWeakTooltip;
+      // Helper members
+      bool m_newPassword;
+      bool m_allowEmptyPassword;
+   };
+} //    namespace remoting_node
+
+
 
 

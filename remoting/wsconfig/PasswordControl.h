@@ -28,86 +28,91 @@
 #include "innate_subsystem/gui/::innate_subsystem::Control.h"
 //#include aaa_<vector>
 
-/**
-Helper class that needed for managing one VNC-style password (set, change, unset password).
-Common usage is to avoid code duplicate in control, primary, viewonly password management
-from gui.
-*/
-class PasswordControl
+
+namespace remoting_node
 {
-public:
-  typedef enum {
-    NoPassword,
-    OldPassword,
-    NewPassword,
-    ResetPassword,
-  } State;
-
-public:
-  /**
-   * Creates new PasswordControl instance.
-   * @param changeButton change password button.
-   * @param unsetButton unset password button.
+   /**
+   Helper class that needed for managing one VNC-style password (set, change, unset password).
+   Common usage is to avoid code duplicate in control, primary, viewonly password management
+   from gui.
    */
-  PasswordControl(::innate_subsystem::Control *changeButton, ::innate_subsystem::Control *unsetButton);
-  virtual ~PasswordControl();
+   class PasswordControl
+   {
+   public:
+      typedef enum {
+         NoPassword,
+         OldPassword,
+         NewPassword,
+         ResetPassword,
+       } State;
 
-  /**
-  Enables or disables depending controls.
-  @param enabled flag that to enable or disable controls.
-  */
-  void enableWindow(bool enabled);
+   public:
+      /**
+       * Creates new PasswordControl instance.
+       * @param changeButton change password button.
+       * @param unsetButton unset password button.
+       */
+      PasswordControl(::innate_subsystem::Control *changeButton, ::innate_subsystem::Control *unsetButton);
+      virtual ~PasswordControl();
 
-  void setHadPassword(bool had) { 
-    m_state = had? OldPassword : NoPassword; 
-  };
+      /**
+      Enables or disables depending controls.
+      @param enabled flag that to enable or disable controls.
+      */
+      void enableWindow(bool enabled);
 
-  /**
-   * Unsets password and updates dependent controls state.
-   * @param promtUser determinates if need to promt user.
-   * @param parentWindow hwnd of window to dialog scopedstrMessage box (promt).
-   */
-  void unsetPassword(bool promtUser, HWND parentWindow);
+      void setHadPassword(bool had) {
+         m_state = had? OldPassword : NoPassword;
+      };
 
-  /**
-  Updates password value inside this control and updates dependent controls state.
-  @param plainText plain text password.
-  */
-  void setPassword(const ::scoped_string & scopedstrPlainText);
+      /**
+       * Unsets password and updates dependent controls state.
+       * @param promtUser determinates if need to promt user.
+       * @param parentWindow hwnd of window to dialog scopedstrMessage box (promt).
+       */
+      void unsetPassword(bool promtUser, HWND parentWindow);
 
-  /**
-  Updates password value inside this control.
-  @param cryptedPass crypted password.
-  */
-  void setCryptedPassword(const char *cryptedPass);
+      /**
+      Updates password value inside this control and updates dependent controls state.
+      @param plainText plain text password.
+      */
+      void setPassword(const ::scoped_string & scopedstrPlainText);
 
-  State getState() { return m_state; };
+      /**
+      Updates password value inside this control.
+      @param cryptedPass crypted password.
+      */
+      void setCryptedPassword(const char *cryptedPass);
 
-  /**
-  Returns password, specified by user.
-  @return crypted VNC-style password or 0 if no password specified.
-  */
-  const char *getCryptedPassword() const;
+      State getState() { return m_state; };
 
-  /**
-  Shows change password modal dialog and stores result to this password control object.
-  @param parent control of parent dialog (optional, can be null).
-  @return false if user cancels dialog, true otherwise.
-  */
-  bool showChangePasswordModalDialog(::innate_subsystem::Control *parent);
+      /**
+      Returns password, specified by user.
+      @return crypted VNC-style password or 0 if no password specified.
+      */
+      const char *getCryptedPassword() const;
 
-private:
-  void updateControlsState();
-  void releaseCryptedPassword();
+      /**
+      Shows change password modal dialog and stores result to this password control object.
+      @param parent control of parent dialog (optional, can be null).
+      @return false if user cancels dialog, true otherwise.
+      */
+      bool showChangePasswordModalDialog(::innate_subsystem::Control *parent);
 
-protected:
-  ::innate_subsystem::Control *m_changeButton;
-  ::innate_subsystem::Control *m_unsetButton;
+   private:
+      void updateControlsState();
+      void releaseCryptedPassword();
 
-  ::array_base<char> m_cryptedPassword;
+   protected:
+      ::innate_subsystem::Control *m_changeButton;
+      ::innate_subsystem::Control *m_unsetButton;
 
-  bool m_enabled;
-  State m_state;
-};
+      ::array_base<char> m_cryptedPassword;
+
+      bool m_enabled;
+      State m_state;
+   };
+} // namespace remoting_node
+
 
 

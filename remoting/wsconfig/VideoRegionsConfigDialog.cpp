@@ -29,198 +29,204 @@
 #include "CommonInputValidation.h"
 #include "subsystem/platform/StringParser.h"
 
-VideoRegionsConfigDialog::VideoRegionsConfigDialog()
-: BaseDialog(IDD_CONFIG_VIDEO_PAGE), m_parentDialog(NULL)
+namespace remoting_node
 {
-}
+   VideoRegionsConfigDialog::VideoRegionsConfigDialog()
+   : BaseDialog(IDD_CONFIG_VIDEO_PAGE), m_parentDialog(NULL)
+   {
+   }
 
-VideoRegionsConfigDialog::~VideoRegionsConfigDialog()
-{
-}
+   VideoRegionsConfigDialog::~VideoRegionsConfigDialog()
+   {
+   }
 
-void VideoRegionsConfigDialog::setParentDialog(BaseDialog *dialog)
-{
-  m_parentDialog = dialog;
-}
+   void VideoRegionsConfigDialog::setParentDialog(BaseDialog *dialog)
+   {
+      m_parentDialog = dialog;
+   }
 
-bool VideoRegionsConfigDialog::onInitDialog()
-{
-  m_config = m_pconfigurator->getServerConfig();
-  initControls();
-  updateUI();
-  return true;
-}
+   bool VideoRegionsConfigDialog::onInitDialog()
+   {
+      m_config = m_pconfigurator->getServerConfig();
+      initControls();
+      updateUI();
+      return true;
+   }
 
-bool VideoRegionsConfigDialog::onNotify(unsigned int controlID, ::lparam data)
-{
-  if (controlID == IDC_VIDEO_RECOGNITION_INTERVAL_SPIN) {
-    LPNMUPDOWN scopedstrMessage = (LPNMUPDOWN)data;
-    if (scopedstrMessage->hdr.code == UDN_DELTAPOS) {
-      onRecognitionIntervalSpinChangePos(scopedstrMessage);
-    }
-  }
-  return true;
-}
-
-bool VideoRegionsConfigDialog::onCommand(unsigned int controlID, unsigned int notificationID)
-{
-  if (notificationID == EN_UPDATE) {
-    if (controlID == IDC_VIDEO_CLASS_NAMES || controlID == IDC_VIDEO_RECTS) {
-      onVideoRegionsUpdate();
-    } else if (controlID == IDC_VIDEO_RECOGNITION_INTERVAL) {
-      onRecognitionIntervalUpdate();
-    } 
-  }
-  return true;
-}
-
-bool VideoRegionsConfigDialog::validateInput()
-{
-  if (!CommonInputValidation::validateUINT(
-    &m_videoRecognitionInterval,
-    MainSubsystem().StringTable().getString(IDS_INVALID_VIDEO_RECOGNITION_INTERVAL))) {
-    return false;
-  }
-  return true;
-}
-
-void VideoRegionsConfigDialog::updateUI()
-{
-  ::string_array *videoClasses = m_config->getVideoClassNames();
-  ::int_rectangle_array_base *rectangleaVideo = m_config->getVideoRects();
-  ::string textAreaData;
-  TCHAR endLine[3] = {13, 10, 0};
-  {
-    critical_section_lock al(m_config);
-    textAreaData= "";
-    for (size_t i = 0; i < videoClasses->size(); i++) {
-      textAreaData.appendString(videoClasses->at(i));
-      textAreaData.appendString(&endLine[0]);
-    }
-    TCHAR buffer[32];
-    _ltot(m_config->getVideoRecognitionInterval(), &buffer[0], 10);
-    m_videoRecognitionInterval.setText(buffer);
-  }
-  m_videoClasses.setText(textAreaData);
-
-  {
-    critical_section_lock al(m_config);
-    textAreaData= "";
-    for (size_t i = 0; i < rectangleaVideo->size(); i++) {
-      ::int_rectangle r = rectangleaVideo->at(i);
-      ::string s;
-      RectSerializer::toString(&r, &s);
-      textAreaData.appendString(s);
-      textAreaData.appendString(&endLine[0]);
-    }
-  }
-  m_videoRects.setText(textAreaData);
-}
-
-void VideoRegionsConfigDialog::apply()
-{
-  // FIXME: Bad code
-
-  
-  critical_section_lock al(m_config);
-
-  //
-  // Clear old video classes names container
-  //
-
-  ::string_array *videoClasses = m_config->getVideoClassNames();
-  videoClasses->clear();
-  ::int_rectangle_array_base *rectangleaVideo = m_config->getVideoRects();
-  rectangleaVideo->clear();
-
-  //
-  // Split text from text area to string array
-  //
-  
-  ::string classNames;
-  m_videoClasses.getText(&classNames);
-  size_t count = 0;
-  TCHAR delimiters[] = " \n\r\t,;";
-
-  classNames.split(delimiters, NULL, &count);
-  if (count != 0) {
-    ::string_array chunks(count);
-    classNames.split(delimiters, &chunks.front(), &count);
-
-    for (size_t i = 0; i < count; i++) {
-      if (!chunks[i].is_empty()) {
-          videoClasses->add(chunks[i]);
+   bool VideoRegionsConfigDialog::onNotify(unsigned int controlID, ::lparam data)
+   {
+      if (controlID == IDC_VIDEO_RECOGNITION_INTERVAL_SPIN) {
+         LPNMUPDOWN scopedstrMessage = (LPNMUPDOWN)data;
+         if (scopedstrMessage->hdr.code == UDN_DELTAPOS) {
+            onRecognitionIntervalSpinChangePos(scopedstrMessage);
+         }
       }
-    }
-  }
+      return true;
+   }
 
-  ::string videoRectsStringStorage;
-  m_videoRects.getText(&videoRectsStringStorage);
-  count = 0;
+   bool VideoRegionsConfigDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+   {
+      if (notificationID == EN_UPDATE) {
+         if (controlID == IDC_VIDEO_CLASS_NAMES || controlID == IDC_VIDEO_RECTS) {
+            onVideoRegionsUpdate();
+         } else if (controlID == IDC_VIDEO_RECOGNITION_INTERVAL) {
+            onRecognitionIntervalUpdate();
+         }
+      }
+      return true;
+   }
 
-  videoRectsStringStorage.split(delimiters, NULL, &count);
-  if (count != 0) {
-    ::string_array chunks(count);
-    videoRectsStringStorage.split(delimiters, &chunks.front(), &count);
-
-    for (size_t i = 0; i < count; i++) {
-      if (!chunks[i].is_empty()) {
-        try {
-          rectangleaVideo->add(RectSerializer::toRect(&chunks[i]));
-        } catch (...) {
-          // Ignore wrong formatted strings
+   bool VideoRegionsConfigDialog::validateInput()
+   {
+      if (!CommonInputValidation::validateUINT(
+        &m_videoRecognitionInterval,
+        MainSubsystem().StringTable().getString(IDS_INVALID_VIDEO_RECOGNITION_INTERVAL))) {
+         return false;
         }
+      return true;
+   }
+
+   void VideoRegionsConfigDialog::updateUI()
+   {
+      ::string_array *videoClasses = m_config->getVideoClassNames();
+      ::int_rectangle_array_base *rectangleaVideo = m_config->getVideoRects();
+      ::string textAreaData;
+      TCHAR endLine[3] = {13, 10, 0};
+      {
+         critical_section_lock al(m_config);
+         textAreaData= "";
+         for (size_t i = 0; i < videoClasses->size(); i++) {
+            textAreaData.appendString(videoClasses->at(i));
+            textAreaData.appendString(&endLine[0]);
+         }
+         TCHAR buffer[32];
+         _ltot(m_config->getVideoRecognitionInterval(), &buffer[0], 10);
+         m_videoRecognitionInterval.setText(buffer);
       }
-    }
-  }
+      m_videoClasses.setText(textAreaData);
 
-  //
-  // TODO: Create parseUInt method
-  //
+      {
+         critical_section_lock al(m_config);
+         textAreaData= "";
+         for (size_t i = 0; i < rectangleaVideo->size(); i++) {
+            ::int_rectangle r = rectangleaVideo->at(i);
+            ::string s;
+            RectSerializer::toString(&r, &s);
+            textAreaData.appendString(s);
+            textAreaData.appendString(&endLine[0]);
+         }
+      }
+      m_videoRects.setText(textAreaData);
+   }
 
-  ::string vriss;
+   void VideoRegionsConfigDialog::apply()
+   {
+      // FIXME: Bad code
 
-  m_videoRecognitionInterval.getText(&vriss);
 
-  int interval;
-  MainSubsystem().StringParser().parseInt(vriss, &interval);
-  m_config->setVideoRecognitionInterval((unsigned int)interval);
-}
+      critical_section_lock al(m_config);
 
-void VideoRegionsConfigDialog::initControls()
-{
-  HWND hwnd = m_ctrlThis.operating_system_window();
-  m_videoClasses.setWindow(GetDlgItem(hwnd, IDC_VIDEO_CLASS_NAMES));
-  m_videoRects.setWindow(GetDlgItem(hwnd, IDC_VIDEO_RECTS));
-  m_videoRecognitionInterval.setWindow(GetDlgItem(hwnd, IDC_VIDEO_RECOGNITION_INTERVAL));
-  m_videoRecognitionIntervalSpin.setWindow(GetDlgItem(hwnd, IDC_VIDEO_RECOGNITION_INTERVAL_SPIN));
+      //
+      // Clear old video classes names container
+      //
 
-  int limitersTmp[] = {50, 200};
-  int deltasTmp[] = {5, 10};
+      ::string_array *videoClasses = m_config->getVideoClassNames();
+      videoClasses->clear();
+      ::int_rectangle_array_base *rectangleaVideo = m_config->getVideoRects();
+      rectangleaVideo->clear();
 
-  ::array_base<int> limitters(limitersTmp, limitersTmp + sizeof(limitersTmp) /
-                                                        sizeof(int));
-  ::array_base<int> deltas(deltasTmp, deltasTmp + sizeof(deltasTmp) /
-                                                 sizeof(int));
+      //
+      // Split text from text area to string array
+      //
 
-  m_videoRecognitionIntervalSpin.setBuddy(&m_videoRecognitionInterval);
-  m_videoRecognitionIntervalSpin.setAccel(0, 1);
-  m_videoRecognitionIntervalSpin.setRange32(0, INT_MAX);
-  m_videoRecognitionIntervalSpin.setAutoAccelerationParams(&limitters, &deltas, 50);
-  m_videoRecognitionIntervalSpin.enableAutoAcceleration(true);
-}
+      ::string classNames;
+      m_videoClasses.getText(&classNames);
+      size_t count = 0;
+      TCHAR delimiters[] = " \n\r\t,;";
 
-void VideoRegionsConfigDialog::onRecognitionIntervalSpinChangePos(LPNMUPDOWN scopedstrMessage)
-{
-  m_videoRecognitionIntervalSpin.autoAccelerationHandler(scopedstrMessage);
-}
+      classNames.split(delimiters, NULL, &count);
+      if (count != 0) {
+         ::string_array chunks(count);
+         classNames.split(delimiters, &chunks.front(), &count);
 
-void VideoRegionsConfigDialog::onRecognitionIntervalUpdate()
-{
-  ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
-}
+         for (size_t i = 0; i < count; i++) {
+            if (!chunks[i].is_empty()) {
+               videoClasses->add(chunks[i]);
+            }
+         }
+      }
 
-void VideoRegionsConfigDialog::onVideoRegionsUpdate()
-{
-  ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
-}
+      ::string videoRectsStringStorage;
+      m_videoRects.getText(&videoRectsStringStorage);
+      count = 0;
+
+      videoRectsStringStorage.split(delimiters, NULL, &count);
+      if (count != 0) {
+         ::string_array chunks(count);
+         videoRectsStringStorage.split(delimiters, &chunks.front(), &count);
+
+         for (size_t i = 0; i < count; i++) {
+            if (!chunks[i].is_empty()) {
+               try {
+                  rectangleaVideo->add(RectSerializer::toRect(&chunks[i]));
+               } catch (...) {
+                  // Ignore wrong formatted strings
+               }
+            }
+         }
+      }
+
+      //
+      // TODO: Create parseUInt method
+      //
+
+      ::string vriss;
+
+      m_videoRecognitionInterval.getText(&vriss);
+
+      int interval;
+      MainSubsystem().StringParser().parseInt(vriss, &interval);
+      m_config->setVideoRecognitionInterval((unsigned int)interval);
+   }
+
+   void VideoRegionsConfigDialog::initControls()
+   {
+      HWND hwnd = m_ctrlThis.operating_system_window();
+      m_videoClasses.setWindow(GetDlgItem(hwnd, IDC_VIDEO_CLASS_NAMES));
+      m_videoRects.setWindow(GetDlgItem(hwnd, IDC_VIDEO_RECTS));
+      m_videoRecognitionInterval.setWindow(GetDlgItem(hwnd, IDC_VIDEO_RECOGNITION_INTERVAL));
+      m_videoRecognitionIntervalSpin.setWindow(GetDlgItem(hwnd, IDC_VIDEO_RECOGNITION_INTERVAL_SPIN));
+
+      int limitersTmp[] = {50, 200};
+      int deltasTmp[] = {5, 10};
+
+      ::array_base<int> limitters(limitersTmp, limitersTmp + sizeof(limitersTmp) /
+                                                            sizeof(int));
+      ::array_base<int> deltas(deltasTmp, deltasTmp + sizeof(deltasTmp) /
+                                                     sizeof(int));
+
+      m_videoRecognitionIntervalSpin.setBuddy(&m_videoRecognitionInterval);
+      m_videoRecognitionIntervalSpin.setAccel(0, 1);
+      m_videoRecognitionIntervalSpin.setRange32(0, INT_MAX);
+      m_videoRecognitionIntervalSpin.setAutoAccelerationParams(&limitters, &deltas, 50);
+      m_videoRecognitionIntervalSpin.enableAutoAcceleration(true);
+   }
+
+   void VideoRegionsConfigDialog::onRecognitionIntervalSpinChangePos(LPNMUPDOWN scopedstrMessage)
+   {
+      m_videoRecognitionIntervalSpin.autoAccelerationHandler(scopedstrMessage);
+   }
+
+   void VideoRegionsConfigDialog::onRecognitionIntervalUpdate()
+   {
+      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+   }
+
+   void VideoRegionsConfigDialog::onVideoRegionsUpdate()
+   {
+      ((ConfigDialog *)m_parentDialog)->updateApplyButtonState();
+   }
+} // namespace remoting_node
+
+
+

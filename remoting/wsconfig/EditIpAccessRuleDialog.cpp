@@ -26,185 +26,190 @@
 #include "EditIpAccessRuleDialog.h"
 #include "subsystem/platform/StringParser.h"
 //#include "subsystem/platform/::string.h"
-
-EditIpAccessRuleDialog::EditIpAccessRuleDialog()
-: BaseDialog(IDD_EDIT_IP_ACESS_CONTROL), m_data(NULL), m_isOpenedForEdit(false)
+namespace remoting_node
 {
-  m_warningBalloonTip.setIconType(TTI_WARNING);
-  m_warningBalloonTip.setText(MainSubsystem().StringTable().getString(IDS_IP_ADDRESS_HINT));
-  m_warningBalloonTip.setTitle(MainSubsystem().StringTable().getString(IDS_INVALID_IP_TITLE));
+   EditIpAccessRuleDialog::EditIpAccessRuleDialog()
+   : BaseDialog(IDD_EDIT_IP_ACESS_CONTROL), m_data(NULL), m_isOpenedForEdit(false)
+   {
+      m_warningBalloonTip.setIconType(TTI_WARNING);
+      m_warningBalloonTip.setText(MainSubsystem().StringTable().getString(IDS_IP_ADDRESS_HINT));
+      m_warningBalloonTip.setTitle(MainSubsystem().StringTable().getString(IDS_INVALID_IP_TITLE));
 
-  m_lastIpLessThanFirstBT.setIconType(TTI_WARNING);
-  m_lastIpLessThanFirstBT.setText(MainSubsystem().StringTable().getString(IDS_LAST_IP_MUST_BE_MORE_THAN_FIRST));
-  m_lastIpLessThanFirstBT.setTitle(MainSubsystem().StringTable().getString(IDS_CAPTION_BAD_INPUT));
-}
+      m_lastIpLessThanFirstBT.setIconType(TTI_WARNING);
+      m_lastIpLessThanFirstBT.setText(MainSubsystem().StringTable().getString(IDS_LAST_IP_MUST_BE_MORE_THAN_FIRST));
+      m_lastIpLessThanFirstBT.setTitle(MainSubsystem().StringTable().getString(IDS_CAPTION_BAD_INPUT));
+   }
 
-EditIpAccessRuleDialog::~EditIpAccessRuleDialog()
-{
-}
+   EditIpAccessRuleDialog::~EditIpAccessRuleDialog()
+   {
+   }
 
-void EditIpAccessRuleDialog::setEditFlag(bool flagEnabled)
-{
-  m_isOpenedForEdit = flagEnabled;
-}
+   void EditIpAccessRuleDialog::setEditFlag(bool flagEnabled)
+   {
+      m_isOpenedForEdit = flagEnabled;
+   }
 
-bool EditIpAccessRuleDialog::onInitDialog()
-{
-  initControls();
+   bool EditIpAccessRuleDialog::onInitDialog()
+   {
+      initControls();
 
-  for (int i = 0; i < 3; i++) {
-    m_access[i].check(false);
-  }
+      for (int i = 0; i < 3; i++) {
+         m_access[i].check(false);
+      }
 
-  if (m_data == NULL) {
-    return true;
-  }
+      if (m_data == NULL) {
+         return true;
+      }
 
-  switch (m_data->getAction()) {
-  case IpAccessRule::ACTION_TYPE_ALLOW:
-    m_access[0].check(true);
-    break;
-  case IpAccessRule::ACTION_TYPE_DENY:
-    m_access[1].check(true);
-    break;
-  case IpAccessRule::ACTION_TYPE_QUERY:
-    m_access[2].check(true);
-    break;
-  }
+      switch (m_data->getAction()) {
+         case IpAccessRule::ACTION_TYPE_ALLOW:
+            m_access[0].check(true);
+            break;
+         case IpAccessRule::ACTION_TYPE_DENY:
+            m_access[1].check(true);
+            break;
+         case IpAccessRule::ACTION_TYPE_QUERY:
+            m_access[2].check(true);
+            break;
+      }
 
-  if (m_isOpenedForEdit) {
-    ::string firstIp;
-    ::string lastIp;
+      if (m_isOpenedForEdit) {
+         ::string firstIp;
+         ::string lastIp;
 
-    m_data->getFirstIp(&firstIp);
-    m_data->getLastIp(&lastIp);
+         m_data->getFirstIp(&firstIp);
+         m_data->getLastIp(&lastIp);
 
-    m_firstIp.setText(firstIp);
-    m_lastIp.setText(lastIp);
+         m_firstIp.setText(firstIp);
+         m_lastIp.setText(lastIp);
 
-    m_ctrlThis.setText(MainSubsystem().StringTable().getString(IDS_EDIT_IP_ACCESS_RULE_DIALOG_CAPTION));
-  } else {
-    m_ctrlThis.setText(MainSubsystem().StringTable().getString(IDS_NEW_IP_ACCESS_RULE_DIALOG_CAPTION));
-  }
+         m_ctrlThis.setText(MainSubsystem().StringTable().getString(IDS_EDIT_IP_ACCESS_RULE_DIALOG_CAPTION));
+      } else {
+         m_ctrlThis.setText(MainSubsystem().StringTable().getString(IDS_NEW_IP_ACCESS_RULE_DIALOG_CAPTION));
+      }
 
-  return false;
-}
+      return false;
+   }
 
-bool EditIpAccessRuleDialog::onCommand(unsigned int cID, unsigned int nID)
-{
-  if (nID == ::user::e_notification_button_clicked) {
-    switch (cID) {
-    case ::innate_subsystem::IDOK:
-      onOkButtonClick();
-      break;
-    case ::innate_subsystem::IDCANCEL:
-      onCancelButtonClick();
-      break;
-    case IDC_ALLOW:
-      onAccessTypeRadioClick(0);
-      break;
-    case IDC_DENY:
-     onAccessTypeRadioClick(1);
-      break;
-    case IDC_QUERY:
-      onAccessTypeRadioClick(2);
-      break;
-    }
-  }
-  return true;
-}
+   bool EditIpAccessRuleDialog::onCommand(unsigned int cID, unsigned int nID)
+   {
+      if (nID == ::user::e_notification_button_clicked) {
+         switch (cID) {
+            case ::innate_subsystem::IDOK:
+               onOkButtonClick();
+               break;
+            case ::innate_subsystem::IDCANCEL:
+               onCancelButtonClick();
+               break;
+            case IDC_ALLOW:
+               onAccessTypeRadioClick(0);
+               break;
+            case IDC_DENY:
+               onAccessTypeRadioClick(1);
+               break;
+            case IDC_QUERY:
+               onAccessTypeRadioClick(2);
+               break;
+         }
+      }
+      return true;
+   }
 
-void EditIpAccessRuleDialog::onOkButtonClick()
-{
-  if (!validateInput()) {
-    return ;
-  }
-  if (m_data != NULL) {
-    if (m_access[0].isChecked()) {
-      m_data->setAction(IpAccessRule::ACTION_TYPE_ALLOW);
-    } else if (m_access[1].isChecked()) {
-      m_data->setAction(IpAccessRule::ACTION_TYPE_DENY);
-    } else if (m_access[2].isChecked()) {
-      m_data->setAction(IpAccessRule::ACTION_TYPE_QUERY);
-    }
+   void EditIpAccessRuleDialog::onOkButtonClick()
+   {
+      if (!validateInput()) {
+         return ;
+      }
+      if (m_data != NULL) {
+         if (m_access[0].isChecked()) {
+            m_data->setAction(IpAccessRule::ACTION_TYPE_ALLOW);
+         } else if (m_access[1].isChecked()) {
+            m_data->setAction(IpAccessRule::ACTION_TYPE_DENY);
+         } else if (m_access[2].isChecked()) {
+            m_data->setAction(IpAccessRule::ACTION_TYPE_QUERY);
+         }
 
-    ::string firstIp;
-    ::string lastIp;
+         ::string firstIp;
+         ::string lastIp;
 
-    m_firstIp.getText(&firstIp);
-    m_lastIp.getText(&lastIp);
+         m_firstIp.getText(&firstIp);
+         m_lastIp.getText(&lastIp);
 
-    m_data->setFirstIp(firstIp);
-    m_data->setLastIp(lastIp);
+         m_data->setFirstIp(firstIp);
+         m_data->setLastIp(lastIp);
 
-  } // if
-  kill(::innate_subsystem::IDOK);
-}
-
-void EditIpAccessRuleDialog::onCancelButtonClick()
-{
-  kill(::innate_subsystem::IDCANCEL);
-}
-
-void EditIpAccessRuleDialog::onAccessTypeRadioClick(int num)
-{
-  if (!m_access[num].isChecked()) {
-    m_access[num].check(true);
-    for (int i = 0; i < 3; i++) {
-      if (i != num) {
-        m_access[i].check(false);
       } // if
-    } // for
-  } // if
-} // void
+      kill(::innate_subsystem::IDOK);
+   }
 
-void EditIpAccessRuleDialog::initControls()
-{
-  HWND hwnd = m_ctrlThis.operating_system_window();
+   void EditIpAccessRuleDialog::onCancelButtonClick()
+   {
+      kill(::innate_subsystem::IDCANCEL);
+   }
 
-  m_firstIp.setWindow(GetDlgItem(hwnd, IDC_FIRST_IP));
-  m_lastIp.setWindow(GetDlgItem(hwnd, IDC_LAST_IP));
+   void EditIpAccessRuleDialog::onAccessTypeRadioClick(int num)
+   {
+      if (!m_access[num].isChecked()) {
+         m_access[num].check(true);
+         for (int i = 0; i < 3; i++) {
+            if (i != num) {
+               m_access[i].check(false);
+            } // if
+         } // for
+      } // if
+   } // void
 
-  m_access[0].setWindow(GetDlgItem(hwnd, IDC_ALLOW));
-  m_access[1].setWindow(GetDlgItem(hwnd, IDC_DENY));
-  m_access[2].setWindow(GetDlgItem(hwnd, IDC_QUERY));
-}
+   void EditIpAccessRuleDialog::initControls()
+   {
+      HWND hwnd = m_ctrlThis.operating_system_window();
 
-bool EditIpAccessRuleDialog::validateInput()
-{
-  ::string firstIp;
-  ::string lastIp;
+      m_firstIp.setWindow(GetDlgItem(hwnd, IDC_FIRST_IP));
+      m_lastIp.setWindow(GetDlgItem(hwnd, IDC_LAST_IP));
 
-  m_firstIp.getText(&firstIp);
-  m_lastIp.getText(&lastIp);
+      m_access[0].setWindow(GetDlgItem(hwnd, IDC_ALLOW));
+      m_access[1].setWindow(GetDlgItem(hwnd, IDC_DENY));
+      m_access[2].setWindow(GetDlgItem(hwnd, IDC_QUERY));
+   }
 
-  if (!IpAccessRule::isIpAddressStringValid(firstIp)) {
-    m_firstIp.setFocus();
-    m_firstIp.showBalloonTip(&m_warningBalloonTip);
-    return false;
-  } // if
+   bool EditIpAccessRuleDialog::validateInput()
+   {
+      ::string firstIp;
+      ::string lastIp;
 
-  if (lastIp.is_empty()) {
-    return true;
-  }
+      m_firstIp.getText(&firstIp);
+      m_lastIp.getText(&lastIp);
 
-  if (!IpAccessRule::isIpAddressStringValid(lastIp)) {
-    m_lastIp.setFocus();
-    m_lastIp.showBalloonTip(&m_warningBalloonTip);
-    return false;
-  } // if
+      if (!IpAccessRule::isIpAddressStringValid(firstIp)) {
+         m_firstIp.setFocus();
+         m_firstIp.showBalloonTip(&m_warningBalloonTip);
+         return false;
+      } // if
 
-  ::string firstIpAnsi(&firstIp);
-  ::string lastIpAnsi(&lastIp);
+      if (lastIp.is_empty()) {
+         return true;
+      }
 
-  unsigned long firstIpAddr = inet_addr(firstIpAnsi);
-  unsigned long lastIpAddr = inet_addr(lastIpAnsi);
+      if (!IpAccessRule::isIpAddressStringValid(lastIp)) {
+         m_lastIp.setFocus();
+         m_lastIp.showBalloonTip(&m_warningBalloonTip);
+         return false;
+      } // if
 
-  if (IpAccessRule::compareIp(firstIpAddr, lastIpAddr) == 1) {
-    m_lastIp.setFocus();
-    m_lastIp.showBalloonTip(&m_lastIpLessThanFirstBT);
-    return false;
-  }
+      ::string firstIpAnsi(&firstIp);
+      ::string lastIpAnsi(&lastIp);
 
-  return true;
-}
+      unsigned long firstIpAddr = inet_addr(firstIpAnsi);
+      unsigned long lastIpAddr = inet_addr(lastIpAnsi);
+
+      if (IpAccessRule::compareIp(firstIpAddr, lastIpAddr) == 1) {
+         m_lastIp.setFocus();
+         m_lastIp.showBalloonTip(&m_lastIpLessThanFirstBT);
+         return false;
+      }
+
+      return true;
+   }
+} // namespace remoting_node
+
+
+

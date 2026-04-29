@@ -31,50 +31,54 @@
 #include "innate_subsystem/gui/TextBox.h"
 #include "innate_subsystem/gui/SpinControl.h"
 
-class VideoRegionsConfigDialog : public BaseDialog
+namespace remoting_node
 {
-public:
-  VideoRegionsConfigDialog();
-  virtual ~VideoRegionsConfigDialog();
+   class VideoRegionsConfigDialog : public BaseDialog
+   {
+   public:
+      VideoRegionsConfigDialog();
+      virtual ~VideoRegionsConfigDialog();
 
-  void setParentDialog(BaseDialog *dialog);
+      void setParentDialog(BaseDialog *dialog);
 
-  //
-  // BaseDialog overrided methods
-  //
+      //
+      // BaseDialog overrided methods
+      //
 
-  virtual bool onInitDialog();
-  virtual bool onNotify(unsigned int controlID, ::lparam data);
-  virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
-  virtual bool onDestroy() { return true; }
+      virtual bool onInitDialog();
+      virtual bool onNotify(unsigned int controlID, ::lparam data);
+      virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
+      virtual bool onDestroy() { return true; }
 
-  //
-  // Helper methods
-  //
+      //
+      // Helper methods
+      //
 
-  bool validateInput();
-  void updateUI();
-  void apply();
+      bool validateInput();
+      void updateUI();
+      void apply();
 
-protected:
+   protected:
 
-  void initControls();
+      void initControls();
 
-  //
-  // ::innate_subsystem::Control event handlers
-  //
+      //
+      // ::innate_subsystem::Control event handlers
+      //
 
-  void onRecognitionIntervalSpinChangePos(LPNMUPDOWN scopedstrMessage);
-  void onRecognitionIntervalUpdate();
-  void onVideoRegionsUpdate();
+      void onRecognitionIntervalSpinChangePos(LPNMUPDOWN scopedstrMessage);
+      void onRecognitionIntervalUpdate();
+      void onVideoRegionsUpdate();
 
-protected:
-  ServerConfig *m_config;
-  TextBox m_videoClasses;
-  TextBox m_videoRects;
-  TextBox m_videoRecognitionInterval;
-  SpinControl m_videoRecognitionIntervalSpin;
-  BaseDialog *m_parentDialog;
-};
+   protected:
+      ServerConfig *m_config;
+      TextBox m_videoClasses;
+      TextBox m_videoRects;
+      TextBox m_videoRecognitionInterval;
+      SpinControl m_videoRecognitionIntervalSpin;
+      BaseDialog *m_parentDialog;
+   };
+} // namespace remoting_node
+
 
 

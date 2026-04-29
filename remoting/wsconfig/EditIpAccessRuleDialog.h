@@ -33,56 +33,63 @@
 #include "remoting/remoting/server_config/IpAccessRule.h"
 
 //////#include "subsystem/platform/::string.h"
-
-class EditIpAccessRuleDialog : public BaseDialog
+///
+namespace remoting_node
 {
-public:
-  EditIpAccessRuleDialog();
-  virtual ~EditIpAccessRuleDialog();
+   class EditIpAccessRuleDialog : public BaseDialog
+   {
+   public:
+      EditIpAccessRuleDialog();
+      virtual ~EditIpAccessRuleDialog();
 
-  void setIpAccessControl(IpAccessRule *iac) { m_data = iac; }
-  IpAccessRule *getIpAccessControl() { return m_data; }
+      void setIpAccessControl(IpAccessRule *iac) { m_data = iac; }
+      IpAccessRule *getIpAccessControl() { return m_data; }
 
-  void setEditFlag(bool flagEnabled);
+      void setEditFlag(bool flagEnabled);
 
-protected:
+   protected:
 
-  //
-  // BaseDialog overrided methods
-  //
+      //
+      // BaseDialog overrided methods
+      //
 
-  virtual bool onInitDialog();
-  virtual bool onCommand(unsigned int cID, unsigned int nID);
-  virtual bool onNotify(unsigned int controlID, ::lparam data) { return true; }
-  virtual bool onDestroy() { return true; }
+      virtual bool onInitDialog();
+      virtual bool onCommand(unsigned int cID, unsigned int nID);
+      virtual bool onNotify(unsigned int controlID, ::lparam data) { return true; }
+      virtual bool onDestroy() { return true; }
 
-  //
-  // Controls event handlers
-  //
+      //
+      // Controls event handlers
+      //
 
-  void onOkButtonClick();
-  void onCancelButtonClick();
-  void onAccessTypeRadioClick(int num);
-private:
-  void initControls();
-  bool validateInput();
+      void onOkButtonClick();
+      void onCancelButtonClick();
+      void onAccessTypeRadioClick(int num);
+   private:
+      void initControls();
+      bool validateInput();
 
-protected:
-  // Controls
-  TextBox m_firstIp;
-  TextBox m_lastIp;
-  CheckBox m_access[3];
-  // Data
-  IpAccessRule *m_data;
-  bool m_isOpenedForEdit;
+   protected:
+      // Controls
+      TextBox m_firstIp;
+      TextBox m_lastIp;
+      CheckBox m_access[3];
+      // Data
+      IpAccessRule *m_data;
+      bool m_isOpenedForEdit;
 
-  //
-  // Balloon tips with warning when user writes incorrect value
-  // to textbox
-  //
+      //
+      // Balloon tips with warning when user writes incorrect value
+      // to textbox
+      //
 
-  BalloonTip m_warningBalloonTip;
-  BalloonTip m_lastIpLessThanFirstBT;
-};
+      BalloonTip m_warningBalloonTip;
+      BalloonTip m_lastIpLessThanFirstBT;
+   };
+} // namespace remoting_node
+
+
+
+
 
 
