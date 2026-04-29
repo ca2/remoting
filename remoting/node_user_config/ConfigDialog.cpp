@@ -24,15 +24,18 @@
 #include "framework.h"
 #include "ConfigDialog.h"
 #include "remoting/node_desktop/resource.h"
+#include "innate_subsystem/gui/Tab.h"
 #include "subsystem/_common_header.h"
 namespace remoting_node
 {
    ConfigDialog::ConfigDialog(Configurator * pconfigurator, ::remoting_control_desktop::ControlCommand *reloadConfigCommand)
    :
+   m_serverConfigDialog(pconfigurator),
+   m_ipAccessControlDialog(pconfigurator),
    m_videoRegionsConfigDialog(pconfigurator),
    m_administrationConfigDialog(pconfigurator),
      m_isConfiguringService(pconfigurator->m_isConfiguringService),
-     m_reloadConfigCommand(reloadConfigCommand),
+     m_pcontrolcommandReloadConfig(reloadConfigCommand),
      m_lastSelectedTabIndex(0)
    {
       initialize_dialog(IDD_CONFIG);
@@ -40,10 +43,12 @@ namespace remoting_node
 
    ConfigDialog::ConfigDialog(Configurator * pconfigurator)
    : //BaseDialog(IDD_CONFIG),
+   m_serverConfigDialog(pconfigurator),
+   m_ipAccessControlDialog(pconfigurator),
    m_videoRegionsConfigDialog(pconfigurator),
    m_administrationConfigDialog(pconfigurator),
      m_isConfiguringService(pconfigurator->m_isConfiguringService),
-     m_reloadConfigCommand(NULL),
+     m_pcontrolcommandReloadConfig(NULL),
      m_lastSelectedTabIndex(0)
    {
       initialize_dialog(IDD_CONFIG);
@@ -51,10 +56,12 @@ namespace remoting_node
 
    ConfigDialog::ConfigDialog()
    : //BaseDialog(IDD_CONFIG),
+   m_serverConfigDialog(nullptr),
+   m_ipAccessControlDialog(nullptr),
    m_videoRegionsConfigDialog(nullptr),
    m_administrationConfigDialog(nullptr),
      m_isConfiguringService(false),
-     m_reloadConfigCommand(NULL),
+     m_pcontrolcommandReloadConfig(NULL),
      m_lastSelectedTabIndex(0)
    {
       initialize_dialog(IDD_CONFIG);
@@ -72,7 +79,7 @@ namespace remoting_node
 
    void ConfigDialog::setConfigReloadCommand(::remoting_control_desktop::ControlCommand *command)
    {
-      m_reloadConfigCommand = command;
+      m_pcontrolcommandReloadConfig = command;
 
       updateCaption();
    }
@@ -91,7 +98,7 @@ namespace remoting_node
 
    void ConfigDialog::initControls()
    {
-      //HWND dialogHwnd = m_ctrlThis.operating_system_window();
+      //HWND dialogHwnd = operating_system_window();
 
       dialog_item(m_ctrlApplyButton, IDC_APPLY);
       dialog_item(m_tabControl, IDC_CONFIG_TAB);
@@ -150,33 +157,33 @@ namespace remoting_node
 
       m_tabControl.addTab(NULL, "Temp");
 
-      auto pimpl = impl < ::
+      auto pwindowImpl = impl< ::innate_subsystem::WindowInterface>();
 
-      m_serverConfigDialog.setParent();
+      m_serverConfigDialog.setParent(pwindowImpl);
       m_serverConfigDialog.setParentDialog(this);
       m_serverConfigDialog.create();
-      moveDialogToTabControl(&m_serverConfigDialog);
+      m_tabControl.moveWindowToTabControl(&m_serverConfigDialog);
 
-      m_portMappingDialog.setParent(&m_ctrlThis);
+      m_portMappingDialog.setParent(pwindowImpl);
       m_portMappingDialog.setParentDialog(this);
       m_portMappingDialog.create();
-      moveDialogToTabControl(&m_portMappingDialog);
+      m_tabControl.moveWindowToTabControl(&m_portMappingDialog);
       m_portMappingDialog.hide();
 
-      m_administrationConfigDialog.setParent(&m_ctrlThis);
+      m_administrationConfigDialog.setParent(pwindowImpl);
       m_administrationConfigDialog.setParentDialog(this);
       m_administrationConfigDialog.create();
-      moveDialogToTabControl(&m_administrationConfigDialog);
+      m_tabControl.moveWindowToTabControl(&m_administrationConfigDialog);
 
-      m_ipAccessControlDialog.setParent(&m_ctrlThis);
+      m_ipAccessControlDialog.setParent(pwindowImpl);
       m_ipAccessControlDialog.setParentDialog(this);
       m_ipAccessControlDialog.create();
-      moveDialogToTabControl(&m_ipAccessControlDialog);
+      m_tabControl.moveWindowToTabControl(&m_ipAccessControlDialog);
 
-      m_videoRegionsConfigDialog.setParent(&m_ctrlThis);
+      m_videoRegionsConfigDialog.setParent(pwindowImpl);
       m_videoRegionsConfigDialog.setParentDialog(this);
       m_videoRegionsConfigDialog.create();
-      moveDialogToTabControl(&m_videoRegionsConfigDialog);
+      m_tabControl.moveWindowToTabControl(&m_videoRegionsConfigDialog);
 
       m_tabControl.addTab(&m_serverConfigDialog, MainSubsystem().StringTable().getString(IDS_SERVER_TAB_CAPTION));
       m_tabControl.addTab(&m_portMappingDialog, MainSubsystem().StringTable().getString(IDS_EXTRA_PORTS_TAB_CAPTION));
@@ -190,7 +197,7 @@ namespace remoting_node
       m_tabControl.setFocus();
 
       m_ctrlApplyButton.enableWindow(false);
-      m_ctrlThis.set_foreground_window();
+      setForegroundWindow();
 
       return false;
    }
@@ -204,14 +211,14 @@ namespace remoting_node
 
    void ConfigDialog::onCancelButtonClick()
    {
-      kill(0);
+      closeDialog(0);
    }
 
    void ConfigDialog::onOKButtonClick()
    {
       onApplyButtonClick();
       if (!m_ctrlApplyButton.isEnabled()) { // onApplyButtonClick() has been successfully processed.
-         kill(0);
+         closeDialog(0);
       }
    }
 
@@ -232,10 +239,10 @@ namespace remoting_node
 
       // If reload command is specified then we're working in online mode
       // and we don't have to save configuration locally.
-      if (m_reloadConfigCommand != NULL) {
-         m_reloadConfigCommand->execute();
+      if (m_pcontrolcommandReloadConfig != NULL) {
+         m_pcontrolcommandReloadConfig->execute();
 
-         if (m_reloadConfigCommand->executionResultOk()) {
+         if (m_pcontrolcommandReloadConfig->executionResultOk()) {
             m_administrationConfigDialog.updateUI();
             m_ipAccessControlDialog.updateUI();
             m_ctrlApplyButton.enableWindow(false);
@@ -243,55 +250,72 @@ namespace remoting_node
          return;
       }
       // We're working in offline mode and we need to save config
-      if (!m_config->save()) {
-         MainSubsystem().message_box(m_ctrlThis.operating_system_window(),
+      if (!m_pconfigurator->save()) {
+         MainSubsystem().message_box(operating_system_window(),
                     MainSubsystem().StringTable().getString(IDS_CANNOT_SAVE_CONFIG),
                     MainSubsystem().StringTable().getString(IDS_MBC_ERROR),
                     ::user::e_message_box_ok | MB_ICONERROR);
          return;
       }
       m_ctrlApplyButton.enableWindow(false);
-      MainSubsystem().message_box(m_ctrlThis.operating_system_window(),
+      MainSubsystem().message_box(operating_system_window(),
         MainSubsystem().StringTable().getString(IDS_OFFLINE_CONFIG_SAVE_NOTIFICATION),
         MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL),
         ::user::e_message_box_ok | MB_ICONINFORMATION);
    }
 
-   void ConfigDialog::onTabChange()
+   bool ConfigDialog::_002OnTabChanged(int iControl)
    {
-      int currentTabIndex = m_tabControl.getSelectedTabIndex();
-      Tab *tab = m_tabControl.getTab(currentTabIndex);
-      tab->set_visible(true);
+
+      if (iControl == IDC_CONFIG_TAB)
+      {
+         int currentTabIndex = m_tabControl.getSelectedTabIndex();
+         auto ptab = m_tabControl.getTab(currentTabIndex);
+         ptab->setVisible(true);
+         return true;
+      }
+
+      return false;
+
    }
 
-   void ConfigDialog::onTabChanging()
+   bool ConfigDialog::_002OnTabChanging(int iControl, bool & bOk)
    {
-      int currentTabIndex = m_tabControl.getSelectedTabIndex();
-      Tab *tab = m_tabControl.getTab(currentTabIndex);
-      tab->set_visible(false);
+
+      if (iControl == IDC_CONFIG_TAB)
+      {
+         int currentTabIndex = m_tabControl.getSelectedTabIndex();
+         auto ptab = m_tabControl.getTab(currentTabIndex);
+         ptab->setVisible(false);
+         bOk = true;
+         return true;
+      }
+
+      return false;
+
    }
 
-   void ConfigDialog::moveDialogToTabControl(BaseDialog *dialog)
-   {
-      RECT rectangle;
-      POINT first, last;
-
-      m_tabControl.adjustRect(rectangle);
-
-      first.x = rectangle.left;
-      first.y = rectangle.top;
-      last.x = rectangle.right;
-      last.y = rectangle.bottom;
-
-      HWND hwndFrom = m_tabControl.operating_system_window();
-      HWND hwndTo = dialog->operating_system_window();
-
-      MapWindowPoints(hwndFrom, hwndTo, &first, 1);
-      MapWindowPoints(hwndFrom, hwndTo, &last, 1);
-
-      MoveWindow(dialog->operating_system_window(),
-                 first.x, first.y, last.x - first.x, last.y - first.y, true);
-   }
+   // void ConfigDialog::moveDialogToTabControl(::innate_subsystem::Dialog *dialog)
+   // {
+   //    RECT rectangle;
+   //    POINT first, last;
+   //
+   //    m_tabControl.adjustRect(rectangle);
+   //
+   //    first.x = rectangle.left;
+   //    first.y = rectangle.top;
+   //    last.x = rectangle.right;
+   //    last.y = rectangle.bottom;
+   //
+   //    HWND hwndFrom = m_tabControl.operating_system_window();
+   //    HWND hwndTo = dialog->operating_system_window();
+   //
+   //    MapWindowPoints(hwndFrom, hwndTo, &first, 1);
+   //    MapWindowPoints(hwndFrom, hwndTo, &last, 1);
+   //
+   //    MoveWindow(dialog->operating_system_window(),
+   //               first.x, first.y, last.x - first.x, last.y - first.y, true);
+   // }
 
    bool ConfigDialog::validateInput()
    {
@@ -325,11 +349,11 @@ namespace remoting_node
    {
       ::string caption;
 
-      caption.format(MainSubsystem().StringTable().getString(IDS_SERVER_CONFIG_CAPTION_FORMAT),
+      caption.runtime_format(MainSubsystem().StringTable().getString(IDS_SERVER_CONFIG_CAPTION_FORMAT),
                      MainSubsystem().StringTable().getString(m_isConfiguringService ? IDS_SERVICE : IDS_SERVER),
-                     m_reloadConfigCommand == 0 ? MainSubsystem().StringTable().getString(IDS_OFFLINE_MODE) : "");
+                     m_pcontrolcommandReloadConfig.is_null() ? MainSubsystem().StringTable().getString(IDS_OFFLINE_MODE) : ::string(""));
 
-      m_ctrlThis.setText(caption);
+      setText(caption);
    }
 } // namespace remoting_node
 

@@ -39,7 +39,7 @@ namespace remoting_control_desktop
    {
       // Prepare data for authentication.
       //::string truncatedPass(scopedstrPassword);
-      //truncatedPass.getSubstring(&truncatedPass, 0, ServerConfig::VNC_PASSWORD_SIZE - 1);
+      //truncatedPass.getSubstring(&truncatedPass, 0, ::remoting_node::ServerConfig::VNC_PASSWORD_SIZE - 1);
 
       //::string passwordAnsi(&truncatedPass);
 

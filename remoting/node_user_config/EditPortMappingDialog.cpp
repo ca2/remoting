@@ -80,7 +80,7 @@ namespace remoting_node
 
    void EditPortMappingDialog::initControls()
    {
-      //HWND dialogHwnd = m_ctrlThis.operating_system_window();
+      //HWND dialogHwnd = operating_system_window();
       dialog_item(m_geometryTextBox, IDC_GEOMETRY_EDIT);
       dialog_item(m_portTextBox, IDC_PORT_EDIT);
    }

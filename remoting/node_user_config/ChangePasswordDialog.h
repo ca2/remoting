@@ -41,7 +41,7 @@ namespace remoting_node
       @param parent - parent dialog, optional (can be null).
       @param isNewPassword - flag determinates caption of dialog.
       */
-      ChangePasswordDialog(::innate_subsystem::Control *parent, bool isNewPassword);
+      ChangePasswordDialog(::innate_subsystem::WindowInterface * pwindowParent, bool isNewPassword);
       virtual ~ChangePasswordDialog();
 
       /**

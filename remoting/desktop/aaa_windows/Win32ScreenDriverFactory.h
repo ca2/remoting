@@ -36,13 +36,13 @@ namespace remoting
    virtual public ScreenDriverFactory
    {
    public:
-      // The factory stores pointer to a ServerConfig object and will use it on
+      // The factory stores pointer to a ::remoting_node::ServerConfig object and will use it on
       // createScreenDriver() function calls.
       Win32ScreenDriverFactory();
       virtual ~Win32ScreenDriverFactory();
 
 
-      void initialize_screen_driver_factory(ServerConfig *pserverconfig) override;
+      void initialize_screen_driver_factory(::remoting_node::ServerConfig *pserverconfig) override;
 
       virtual ScreenDriver *createScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
                                                ::innate_subsystem::Framebuffer *pframebuffer,
@@ -57,7 +57,7 @@ namespace remoting
       bool isMirrorDriverAllowed();
       bool isD3DAllowed();
 
-      ::pointer < ServerConfig > m_pserverconfig;
+      ::pointer < ::remoting_node::ServerConfig > m_pserverconfig;
    };
 
    //// __WIN32SCREENDRIVERFACTORY_H__

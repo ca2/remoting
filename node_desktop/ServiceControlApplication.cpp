@@ -27,7 +27,7 @@
 
 #include "subsystem/platform/ResourceLoader.h"
 #include "subsystem/platform/StringTable.h"
-#include "remoting/node_desktop/NamingDefs.h"
+#include "remoting/remoting/node/NamingDefs.h"
 
 #include "remoting/node_desktop/resource.h"
 
@@ -187,14 +187,14 @@ namespace remoting_node_desktop
       ::string pathToTvnControl;
       pathToTvnControl.formatf("\"{}\" {} {}",
                               executablePath,
-                              ControlCommandLine::CONTROL_SERVICE,
-                              ControlCommandLine::SLAVE_MODE);
+                              ::remoting_control_desktop::ControlCommandLine::CONTROL_SERVICE,
+                              ::remoting_control_desktop::ControlCommandLine::SLAVE_MODE);
 
       // Write registry entry.
       ::subsystem::RegistryKey runKey(MainSubsystem().Registry().getLocalMachineKey(),
                          "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
                          false);
-      runKey.setValueAsString(ServiceNames::TVNCONTROL_START_REGISTRY_ENTRY_NAME,
+      runKey.setValueAsString(::remoting_node::ServiceNames::TVNCONTROL_START_REGISTRY_ENTRY_NAME,
                               pathToTvnControl);
    }
 
@@ -203,7 +203,7 @@ namespace remoting_node_desktop
       ::subsystem::RegistryKey runKey(MainSubsystem().Registry().getLocalMachineKey(),
                          "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
                          false);
-      runKey.deleteValue(ServiceNames::TVNCONTROL_START_REGISTRY_ENTRY_NAME);
+      runKey.deleteValue(::remoting_node::ServiceNames::TVNCONTROL_START_REGISTRY_ENTRY_NAME);
    }
 
    void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmdLine,

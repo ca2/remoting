@@ -27,6 +27,7 @@
 #include "ConfigDialog.h"
 #include "CommonInputValidation.h"
 #include "UIDataAccess.h"
+#include "acme/constant/user_notification.h"
 #include "remoting/remoting/node_config/Configurator.h"
 #include "remoting/remoting/node_config/IpAccessControl.h"
 #include "subsystem/_common_header.h"
@@ -34,25 +35,27 @@
 //#include "subsystem/platform/::string.h"
 namespace remoting_node
 {
-   IpAccessControlDialog::IpAccessControlDialog()
-   : BaseDialog(IDD_CONFIG_ACCESS_CONTROL_PAGE), m_pdialogParent(NULL)
+   IpAccessControlDialog::IpAccessControlDialog(Configurator * pconfigurator)
+   :  m_pdialogParent(NULL)
+   , m_pconfigurator(pconfigurator)
    {
+      initialize_dialog(IDD_CONFIG_ACCESS_CONTROL_PAGE);
    }
 
    IpAccessControlDialog::~IpAccessControlDialog()
    {
    }
 
-   void IpAccessControlDialog::setParentDialog(BaseDialog *dialog)
+   void IpAccessControlDialog::setParentDialog(::innate_subsystem::DialogInterface *dialog)
    {
       m_pdialogParent = dialog;
    }
 
    bool IpAccessControlDialog::onInitDialog()
    {
-      m_config = m_pconfigurator->getServerConfig();
-      m_container = m_config->getAccessControl();
-      m_editDialog.setParent(&m_ctrlThis);
+      m_pserverconfig = m_pconfigurator->getServerConfig();
+      m_pipaccesscontrol = m_pserverconfig->getAccessControl();
+      m_editDialog.setParent(this);
       initControls();
       updateUI();
       updateButtonsState();
@@ -104,23 +107,41 @@ namespace remoting_node
       }
       return true;
    }
+   //
+   // bool IpAccessControlDialog::onNotify(unsigned int controlID, ::lparam data)
+   // {
+   //    if (controlID == IDC_IP_ACCESS_CONTROL_LIST) {
+   //       NMHDR* pnmh = (NMHDR*)data;
+   //       switch (pnmh->code) {
+   //          case LVN_ITEMCHANGED:
+   //             onListViewSelChange();
+   //             break;
+   //          case NM_DBLCLK:
+   //             onListViewSelChangeDblClick();
+   //             break;
+   //       }
+   //    }
+   //    return true;
+   // }
+   //
 
-   bool IpAccessControlDialog::onNotify(unsigned int controlID, ::lparam data)
+   bool IpAccessControlDialog::_002OnSelectionChange(int iControl)
    {
-      if (controlID == IDC_IP_ACCESS_CONTROL_LIST) {
-         NMHDR* pnmh = (NMHDR*)data;
-         switch (pnmh->code) {
-            case LVN_ITEMCHANGED:
+      if (iControl == IDC_IP_ACCESS_CONTROL_LIST) {
                onListViewSelChange();
-               break;
-            case NM_DBLCLK:
-               onListViewSelChangeDblClick();
-               break;
-         }
-      }
       return true;
+      }
+      return false;
    }
 
+   bool IpAccessControlDialog::_002OnAction(int controlID)
+{
+   if (controlID == IDC_IP_ACCESS_CONTROL_LIST) {
+            onListViewSelChangeDblClick();
+   return true;
+   }
+   return false;
+}
    bool IpAccessControlDialog::validateInput()
    {
       if (!CommonInputValidation::validateUINT(
@@ -133,7 +154,7 @@ namespace remoting_node
 
       UIDataAccess::queryValueAsUInt(&m_queryTimeout, &queryTimeout);
 
-      if (queryTimeout < ServerConfig::MINIMAL_QUERY_TIMEOUT) {
+      if (queryTimeout < ::remoting_node::ServerConfig::MINIMAL_QUERY_TIMEOUT) {
          CommonInputValidation::notifyValidationError(
            &m_queryTimeout,
            MainSubsystem().StringTable().getString(IDS_QUERY_TIMEOUT_TOO_SMALL));
@@ -146,23 +167,23 @@ namespace remoting_node
    void IpAccessControlDialog::updateUI()
    {
       m_list.clear();
-      for (size_t i = 0; i < m_container->size(); i++) {
-         IpAccessRule *ip = m_container->at(i);
+      for (size_t i = 0; i < m_pipaccesscontrol->size(); i++) {
+         IpAccessRule *ip = m_pipaccesscontrol->at(i);
          m_list.addItem(m_list.getCount(), "", (::lparam)ip);
          _ASSERT((int)i == i);
          setListViewItemText((int)i, ip);
       }
 
-      m_allowLoopbackConnections.check(m_config->isLoopbackConnectionsAllowed());
-      m_onlyLoopbackConnections.check(m_config->isOnlyLoopbackConnectionsAllowed());
-      if (m_config->isDefaultActionAccept()) {
-         m_defaultActionAccept.check(true);
-         m_defaultActionRefuse.check(false);
+      m_allowLoopbackConnections.setChecked(m_pserverconfig->isLoopbackConnectionsAllowed());
+      m_onlyLoopbackConnections.setChecked(m_pserverconfig->isOnlyLoopbackConnectionsAllowed());
+      if (m_pserverconfig->isDefaultActionAccept()) {
+         m_defaultActionAccept.setChecked(true);
+         m_defaultActionRefuse.setChecked(false);
       } else {
-         m_defaultActionAccept.check(false);
-         m_defaultActionRefuse.check(true);
+         m_defaultActionAccept.setChecked(false);
+         m_defaultActionRefuse.setChecked(true);
       }
-      m_queryTimeout.setUnsignedInt(m_config->getQueryTimeout());
+      m_queryTimeout.setUnsignedInt(m_pserverconfig->getQueryTimeout());
 
       updateCheckBoxesState();
    }
@@ -171,47 +192,47 @@ namespace remoting_node
    {
       // Query timeout string storage
       ::string qtStringStorage;
-      m_queryTimeout.getText(&qtStringStorage);
+      qtStringStorage = m_queryTimeout.getText();
 
       int timeout = 0;
       MainSubsystem().StringParser().parseInt(qtStringStorage, &timeout);
 
-      critical_section_lock al(m_config);
+      AutoLock al(m_pserverconfig);
 
-      m_config->allowLoopbackConnections(m_allowLoopbackConnections.isChecked());
-      m_config->acceptOnlyLoopbackConnections(m_onlyLoopbackConnections.isChecked());
-      m_config->setDefaultActionToAccept(m_defaultActionAccept.isChecked());
-      m_config->setQueryTimeout(timeout);
+      m_pserverconfig->allowLoopbackConnections(m_allowLoopbackConnections.isChecked());
+      m_pserverconfig->acceptOnlyLoopbackConnections(m_onlyLoopbackConnections.isChecked());
+      m_pserverconfig->setDefaultActionToAccept(m_defaultActionAccept.isChecked());
+      m_pserverconfig->setQueryTimeout(timeout);
 
       //
       // Put IP access rules container in correct order
       //
 
-      IpAccessControl *ipRules = m_config->getAccessControl();
+      IpAccessControl *ipRules = m_pserverconfig->getAccessControl();
       ipRules->clear();
       for (int i = 0; i < m_list.getCount(); i++) {
-         IpAccessRule *rule = (IpAccessRule *)m_list.getItemData(i);
+         IpAccessRule *rule = m_list.getItemData(i).raw_cast <IpAccessRule *>();
          ipRules->add(rule);
       }
    }
 
    void IpAccessControlDialog::initControls()
    {
-      HWND hwnd = m_ctrlThis.operating_system_window();
-      m_list.setWindow(GetDlgItem(hwnd, IDC_IP_ACCESS_CONTROL_LIST));
-      m_addButton.setWindow(GetDlgItem(hwnd, IDC_ADD_BUTTON));
-      m_editButton.setWindow(GetDlgItem(hwnd, IDC_EDIT_BUTTON));
-      m_removeButton.setWindow(GetDlgItem(hwnd, IDC_REMOVE_BUTTON));
-      m_moveUpButton.setWindow(GetDlgItem(hwnd, IDC_MOVE_UP_BUTTON));
-      m_moveDownButton.setWindow(GetDlgItem(hwnd, IDC_MOVE_DOWN_BUTTON));
-      m_defaultActionAccept.setWindow(GetDlgItem(hwnd, IDC_ACCEPT));
-      m_defaultActionRefuse.setWindow(GetDlgItem(hwnd, IDC_REFUSE));
-      m_queryTimeout.setWindow(GetDlgItem(hwnd, IDC_TIMEOUT));
-      m_allowLoopbackConnections.setWindow(GetDlgItem(hwnd, IDC_ALLOW_LOOPBACK_CONNECTIONS));
-      m_onlyLoopbackConnections.setWindow(GetDlgItem(hwnd, IDC_ALLOW_ONLY_LOOPBACK_CONNECTIONS));
-      m_queryTimeoutSpin.setWindow(GetDlgItem(hwnd, IDC_QUERY_TIMEOUT_SPIN));
-      m_ip.setWindow(GetDlgItem(hwnd, IDC_IP_FOR_CHECK_EDIT));
-      m_ipCheckResult.setWindow(GetDlgItem(hwnd, IDC_IP_CHECK_RESULT_LABEL));
+      //HWND hwnd = operating_system_window();
+      dialog_item(m_list, IDC_IP_ACCESS_CONTROL_LIST);
+      dialog_item(m_addButton, IDC_ADD_BUTTON);
+      dialog_item(m_editButton, IDC_EDIT_BUTTON);
+      dialog_item(m_removeButton, IDC_REMOVE_BUTTON);
+      dialog_item(m_moveUpButton, IDC_MOVE_UP_BUTTON);
+      dialog_item(m_moveDownButton, IDC_MOVE_DOWN_BUTTON);
+      dialog_item(m_defaultActionAccept, IDC_ACCEPT);
+      dialog_item(m_defaultActionRefuse, IDC_REFUSE);
+      dialog_item(m_queryTimeout, IDC_TIMEOUT);
+      dialog_item(m_allowLoopbackConnections, IDC_ALLOW_LOOPBACK_CONNECTIONS);
+      dialog_item(m_onlyLoopbackConnections, IDC_ALLOW_ONLY_LOOPBACK_CONNECTIONS);
+      dialog_item(m_queryTimeoutSpin, IDC_QUERY_TIMEOUT_SPIN);
+      dialog_item(m_ip, IDC_IP_FOR_CHECK_EDIT);
+      dialog_item(m_ipCheckResult, IDC_IP_CHECK_RESULT_LABEL);
 
       m_list.addColumn(0, MainSubsystem().StringTable().getString(IDS_FIRST_IP_COLUMN), 100);
       m_list.addColumn(1, MainSubsystem().StringTable().getString(IDS_LAST_IP_COLUMN), 100);
@@ -230,18 +251,19 @@ namespace remoting_node
       IpAccessRule *ip = new IpAccessRule();
       m_editDialog.setIpAccessControl(ip);
       m_editDialog.setEditFlag(false);
-      if (m_editDialog.showModal() == ::innate_subsystem::IDOK) {
-         m_container->add(ip);
+      if (m_editDialog.showModal() == ::innate_subsystem::e_control_id_ok) {
+         m_pipaccesscontrol->add(ip);
          m_list.addItem(m_list.getCount(), "", (::lparam)ip);
          setListViewItemText(m_list.getCount() - 1, ip);
          updateButtonsState();
          onIpCheckUpdate();
-         ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+         auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+         pconfigdialog->updateApplyButtonState();
       } else {
          delete ip;
       }
       m_list.invalidate();
-      m_ctrlThis.invalidate();
+      this->invalidate();
    }
 
    void IpAccessControlDialog::onEditButtonClick()
@@ -250,18 +272,19 @@ namespace remoting_node
       if (m_list.getSelectedIndex() == -1) {
          return ;
       }
-      IpAccessRule *ip = (IpAccessRule *)m_list.getItemData(m_list.getSelectedIndex());
+      IpAccessRule *ip = m_list.getItemData(m_list.getSelectedIndex()).raw_cast <IpAccessRule *>();
       m_editDialog.setIpAccessControl(ip);
       m_editDialog.setEditFlag(true);
-      if (m_editDialog.showModal() == ::innate_subsystem::IDOK) {
+      if (m_editDialog.showModal() == ::innate_subsystem::e_control_id_ok) {
          setListViewItemText(m_list.getSelectedIndex(), ip);
          updateButtonsState();
          onIpCheckUpdate();
-         ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+         auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+         pconfigdialog->updateApplyButtonState();
       } else {
       }
       m_list.invalidate();
-      m_ctrlThis.invalidate();
+      this->invalidate();
    }
 
    void IpAccessControlDialog::onRemoveButtonClick()
@@ -272,16 +295,17 @@ namespace remoting_node
          return ;
       }
       {
-         critical_section_lock al(m_config);
+         critical_section_lock al(m_pserverconfig);
          IpAccessRule *ip = (IpAccessRule *)m_list.getItemData(m_list.getSelectedIndex());
-         for (IpAccessControl::iterator it = m_container->begin(); it != m_container->end(); it++) {
+         for (IpAccessControl::iterator it = m_pipaccesscontrol->begin(); it != m_pipaccesscontrol->end(); it++) {
             IpAccessRule *ip2 = *it;
             if (ip == ip2) {
-               m_container->erase(it);
+               m_pipaccesscontrol->erase(it);
                m_list.removeItem(si);
                updateButtonsState();
                onIpCheckUpdate();
-               ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+               auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+               pconfigdialog->updateApplyButtonState();
                break;
             }
          }
@@ -310,7 +334,8 @@ namespace remoting_node
       setListViewItemText(si, ipPrev);
       m_list.selectItem(si - 1);
       onIpCheckUpdate();
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+      auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
    void IpAccessControlDialog::onMoveDownButtonClick()
@@ -327,7 +352,8 @@ namespace remoting_node
       setListViewItemText(si + 1, ip);
       m_list.selectItem(si + 1);
       onIpCheckUpdate();
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+      auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
    void IpAccessControlDialog::onListViewSelChange()
@@ -339,18 +365,20 @@ namespace remoting_node
    void IpAccessControlDialog::onAcceptRadioClick()
    {
       if (!m_defaultActionAccept.isChecked()) {
-         m_defaultActionAccept.check(true);
-         m_defaultActionRefuse.check(false);
-         ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+         m_defaultActionAccept.setChecked(true);
+         m_defaultActionRefuse.setChecked(false);
+         auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+         pconfigdialog->updateApplyButtonState();
       }
    }
 
    void IpAccessControlDialog::onRefuseRadioClick()
    {
       if (!m_defaultActionRefuse.isChecked()) {
-         m_defaultActionRefuse.check(true);
-         m_defaultActionAccept.check(false);
-         ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+         m_defaultActionRefuse.setChecked(true);
+         m_defaultActionAccept.setChecked(false);
+         auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+         pconfigdialog->updateApplyButtonState();
       }
    }
 
@@ -358,14 +386,16 @@ namespace remoting_node
    {
       updateCheckBoxesState();
       updateButtonsState();
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+      auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
    void IpAccessControlDialog::onAllowOnlyLoopbackConnectionsClick()
    {
       updateCheckBoxesState();
       updateButtonsState();
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+      auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
    void IpAccessControlDialog::onIpCheckUpdate()
@@ -423,7 +453,8 @@ namespace remoting_node
 
    void IpAccessControlDialog::onQueryTimeoutUpdate()
    {
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+      auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
    void IpAccessControlDialog::updateButtonsState()
@@ -469,7 +500,7 @@ namespace remoting_node
          m_onlyLoopbackConnections.enableWindow(true);
       } else {
          m_onlyLoopbackConnections.enableWindow(false);
-         m_onlyLoopbackConnections.check(false);
+         m_onlyLoopbackConnections.setChecked(false);
       }
    }
 

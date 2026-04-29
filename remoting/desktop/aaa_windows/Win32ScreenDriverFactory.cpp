@@ -31,7 +31,7 @@ namespace remoting
 {
 
 
-   Win32ScreenDriverFactory::Win32ScreenDriverFactory(ServerConfig *pserverconfig) : m_pserverconfig(pserverconfig) {}
+   Win32ScreenDriverFactory::Win32ScreenDriverFactory(::remoting_node::ServerConfig *pserverconfig) : m_pserverconfig(pserverconfig) {}
 
    Win32ScreenDriverFactory::~Win32ScreenDriverFactory() {}
 

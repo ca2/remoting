@@ -44,7 +44,7 @@ namespace remoting_node
 
    }
 
-   void ConfigReloadListener::onConfigReload(ServerConfig *serverConfig)
+   void ConfigReloadListener::onConfigReload(::remoting_node::ServerConfig *serverConfig)
    {
 
 

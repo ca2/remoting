@@ -25,7 +25,7 @@
 #include "Service.h"
 #include "subsystem/node/OperatingSystem.h"
 #include "ServerCommandLine.h"
-#include "remoting/node_desktop/NamingDefs.h"
+#include "remoting/remoting/node/NamingDefs.h"
 #include "remoting/remoting/node/NewConnectionEvents.h"
 #include "remoting/node_desktop/ServiceEvents.h"
 #include "subsystem/node/ServiceControlManagerClient.h"
@@ -39,7 +39,7 @@ namespace remoting_node_desktop
    Service::Service()
    {
       m_bService = true;
-      initialize_service(ServiceNames::SERVICE_NAME);
+      initialize_service(::remoting_node::ServiceNames::SERVICE_NAME);
    }
 
    Service::~Service()
@@ -115,8 +115,8 @@ namespace remoting_node_desktop
 
       ::subsystem::ServiceControlManagerClient scManager;
 
-      scManager.installService(ServiceNames::SERVICE_NAME,
-                               ServiceNames::SERVICE_NAME_TO_DISPLAY,
+      scManager.installService(::remoting_node::ServiceNames::SERVICE_NAME,
+                               ::remoting_node::ServiceNames::SERVICE_NAME_TO_DISPLAY,
                                binPath, "");
    }
 
@@ -124,7 +124,7 @@ namespace remoting_node_desktop
    {
       ::subsystem::ServiceControlManagerClient scManager;
 
-      scManager.removeService(ServiceNames::SERVICE_NAME);
+      scManager.removeService(::remoting_node::ServiceNames::SERVICE_NAME);
    }
 
    void Service::reinstall()
@@ -140,14 +140,14 @@ namespace remoting_node_desktop
    {
       ::subsystem::ServiceControlManagerClient scManager;
 
-      scManager.startService(ServiceNames::SERVICE_NAME, waitCompletion);
+      scManager.startService(::remoting_node::ServiceNames::SERVICE_NAME, waitCompletion);
    }
 
    void Service::stop(bool waitCompletion)
    {
       ::subsystem::ServiceControlManagerClient scManager;
 
-      scManager.stopService(ServiceNames::SERVICE_NAME, waitCompletion);
+      scManager.stopService(::remoting_node::ServiceNames::SERVICE_NAME, waitCompletion);
    }
 
    bool Service::getBinPath(::string & binPath)

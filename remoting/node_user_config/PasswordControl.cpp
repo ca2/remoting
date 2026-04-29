@@ -110,9 +110,9 @@ namespace remoting_node
       return m_cryptedPassword.data();
    }
 
-   bool PasswordControl::showChangePasswordModalDialog(::innate_subsystem::Control *parent)
+   bool PasswordControl::showChangePasswordModalDialog(::innate_subsystem::WindowInterface * pwindow)
    {
-      ChangePasswordDialog changePasswordDialog(parent, m_state != NewPassword && m_state != ResetPassword);
+      ChangePasswordDialog changePasswordDialog(pwindow, m_state != NewPassword && m_state != ResetPassword);
 
       if (changePasswordDialog.showModal() != ::innate_subsystem::e_control_id_ok) {
          return false;

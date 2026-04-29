@@ -22,14 +22,14 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "ServerConfig.h"
+#include "remoting/remoting/node_config/ServerConfig.h"
 
 #include "subsystem/node/OperatingSystem.h"
 #include "remoting/remoting/region/RectSerializer.h"
 //#include "file_lib/::file::item.h"
 #include "acme/input_output/DataCopy.h"
 
-ServerConfig::ServerConfig()
+::remoting_node::ServerConfig::::remoting_node::ServerConfig()
 : m_rfbPort(5900), m_httpPort(5800),
   m_disconnectAction(DA_DO_NOTHING), m_logLevel(0), m_useControlAuth(false),
   m_controlAuthAlwaysChecking(false),
@@ -55,11 +55,11 @@ ServerConfig::ServerConfig()
   memset(m_controlPassword,  0, sizeof(m_controlPassword));
 }
 
-ServerConfig::~ServerConfig()
+::remoting_node::ServerConfig::~::remoting_node::ServerConfig()
 {
 }
 
-ServerConfig::ServerConfig(ServerConfig& other)
+::remoting_node::ServerConfig::::remoting_node::ServerConfig(::remoting_node::ServerConfig& other)
 {
   DataCopy datacopy;
    DataOutputStream outputstream(&datacopy);
@@ -68,7 +68,7 @@ ServerConfig::ServerConfig(ServerConfig& other)
    this->deserialize(&inputstream);
 }
 
-ServerConfig& ServerConfig::operator=(ServerConfig& other) {
+::remoting_node::ServerConfig& ::remoting_node::ServerConfig::operator=(::remoting_node::ServerConfig& other) {
   if (this != &other) {
     DataCopy datacopy;
      DataOutputStream outputstream(&datacopy);
@@ -79,7 +79,7 @@ ServerConfig& ServerConfig::operator=(ServerConfig& other) {
   return *this;
 }
 
-void ServerConfig::serialize(DataOutputStream * pdataoutputstream)
+void ::remoting_node::ServerConfig::serialize(DataOutputStream * pdataoutputstream)
 {
   AutoLock l(this);
 
@@ -153,7 +153,7 @@ void ServerConfig::serialize(DataOutputStream * pdataoutputstream)
   output->writeUTF8(m_logFilePath);
 }
 
-void ServerConfig::deserialize(DataInputStream * pinput)
+void ::remoting_node::ServerConfig::deserialize(DataInputStream * pinput)
 {
   AutoLock l(this);
 
@@ -164,7 +164,7 @@ void ServerConfig::deserialize(DataInputStream * pinput)
   m_removeWallpaper = pinput->readInt8() == 1;
   m_D3DAllowed = pinput->readInt8() != 0;
   m_mirrorDriverAllowed = pinput->readInt8() != 0;
-  m_disconnectAction = (ServerConfig::DisconnectAction)pinput->readInt32();
+  m_disconnectAction = (::remoting_node::ServerConfig::DisconnectAction)pinput->readInt32();
   m_acceptRfbConnections = pinput->readInt8() == 1;
   m_acceptHttpConnections = pinput->readInt8() == 1;
 
@@ -229,49 +229,49 @@ void ServerConfig::deserialize(DataInputStream * pinput)
   m_logFilePath = pinput->readUtf8();
 }
 
-bool ServerConfig::getShowTrayIconFlag()
+bool ::remoting_node::ServerConfig::getShowTrayIconFlag()
 {
   AutoLock l(this);
 
   return m_showTrayIcon;
 }
 
-void ServerConfig::setShowTrayIconFlag(bool val)
+void ::remoting_node::ServerConfig::setShowTrayIconFlag(bool val)
 {
   AutoLock l(this);
 
   m_showTrayIcon = val;
 }
 
-bool ServerConfig::getConnectToRdpFlag()
+bool ::remoting_node::ServerConfig::getConnectToRdpFlag()
 {
   AutoLock l(this);
 
   return m_connectToRdp;
 }
 
-void ServerConfig::setConnectToRdpFlag(bool val)
+void ::remoting_node::ServerConfig::setConnectToRdpFlag(bool val)
 {
   AutoLock l(this);
 
   m_connectToRdp = val;
 }
 
-void ServerConfig::getLogFileDir(::string & logFilePath)
+void ::remoting_node::ServerConfig::getLogFileDir(::string & logFilePath)
 {
   AutoLock l(this);
 
   logFilePath = m_logFilePath;
 }
 
-void ServerConfig::setLogFileDir(const ::scoped_string & scopedstrLogFilePath)
+void ::remoting_node::ServerConfig::setLogFileDir(const ::scoped_string & scopedstrLogFilePath)
 {
   AutoLock l(this);
 
   m_logFilePath = scopedstrLogFilePath;
 }
 
-IpAccessRule::ActionType ServerConfig::getActionByAddress(unsigned long ip)
+IpAccessRule::ActionType ::remoting_node::ServerConfig::getActionByAddress(unsigned long ip)
 {
   AutoLock l(this);
 
@@ -289,35 +289,35 @@ IpAccessRule::ActionType ServerConfig::getActionByAddress(unsigned long ip)
   return IpAccessRule::ACTION_TYPE_ALLOW;
 }
 
-bool ServerConfig::isControlAuthEnabled()
+bool ::remoting_node::ServerConfig::isControlAuthEnabled()
 {
   AutoLock l(&m_objectCS);
 
   return m_useControlAuth;
 }
 
-void ServerConfig::useControlAuth(bool useAuth)
+void ::remoting_node::ServerConfig::useControlAuth(bool useAuth)
 {
   AutoLock l(&m_objectCS);
 
   m_useControlAuth = useAuth;
 }
 
-bool ServerConfig::getControlAuthAlwaysChecking()
+bool ::remoting_node::ServerConfig::getControlAuthAlwaysChecking()
 {
   AutoLock l(&m_objectCS);
 
   return m_controlAuthAlwaysChecking;
 }
 
-void ServerConfig::setControlAuthAlwaysChecking(bool value)
+void ::remoting_node::ServerConfig::setControlAuthAlwaysChecking(bool value)
 {
   AutoLock l(&m_objectCS);
 
   m_controlAuthAlwaysChecking = value;
 }
 
-void ServerConfig::setRfbPort(int port)
+void ::remoting_node::ServerConfig::setRfbPort(int port)
 {
   AutoLock lock(&m_objectCS);
   if (port > 65535) {
@@ -329,13 +329,13 @@ void ServerConfig::setRfbPort(int port)
   }
 }
 
-int ServerConfig::getRfbPort()
+int ::remoting_node::ServerConfig::getRfbPort()
 {
   AutoLock lock(&m_objectCS);
   return m_rfbPort;
 }
 
-void ServerConfig::setHttpPort(int port)
+void ::remoting_node::ServerConfig::setHttpPort(int port)
 {
   AutoLock lock(&m_objectCS);
   if (port > 65535) {
@@ -347,92 +347,92 @@ void ServerConfig::setHttpPort(int port)
   }
 }
 
-int ServerConfig::getHttpPort()
+int ::remoting_node::ServerConfig::getHttpPort()
 {
   AutoLock lock(&m_objectCS);
   return m_httpPort;
 }
 
-void ServerConfig::enableFileTransfers(bool enabled)
+void ::remoting_node::ServerConfig::enableFileTransfers(bool enabled)
 {
   AutoLock lock(&m_objectCS);
   m_enableFileTransfers = enabled;
 }
 
-bool ServerConfig::isFileTransfersEnabled()
+bool ::remoting_node::ServerConfig::isFileTransfersEnabled()
 {
   AutoLock lock(&m_objectCS);
   return m_enableFileTransfers;
 }
 
-void ServerConfig::enableRemovingDesktopWallpaper(bool enabled)
+void ::remoting_node::ServerConfig::enableRemovingDesktopWallpaper(bool enabled)
 {
   AutoLock lock(&m_objectCS);
   m_removeWallpaper = enabled;
 }
 
-bool ServerConfig::isRemovingDesktopWallpaperEnabled()
+bool ::remoting_node::ServerConfig::isRemovingDesktopWallpaperEnabled()
 {
   AutoLock lock(&m_objectCS);
   return m_removeWallpaper;
 }
 
-void ServerConfig::setDisconnectAction(DisconnectAction action)
+void ::remoting_node::ServerConfig::setDisconnectAction(DisconnectAction action)
 {
   AutoLock lock(&m_objectCS);
   m_disconnectAction = action;
 }
 
-ServerConfig::DisconnectAction ServerConfig::getDisconnectAction()
+::remoting_node::ServerConfig::DisconnectAction ::remoting_node::ServerConfig::getDisconnectAction()
 {
   AutoLock lock(&m_objectCS);
   return m_disconnectAction;
 }
 
-bool ServerConfig::getD3DIsAllowed()
+bool ::remoting_node::ServerConfig::getD3DIsAllowed()
 {
   AutoLock lock(&m_objectCS);
   return m_D3DAllowed;
 }
 
-void ServerConfig::setD3DAllowing(bool value)
+void ::remoting_node::ServerConfig::setD3DAllowing(bool value)
 {
   AutoLock lock(&m_objectCS);
   m_D3DAllowed = value;
 }
 
-bool ServerConfig::getMirrorIsAllowed()
+bool ::remoting_node::ServerConfig::getMirrorIsAllowed()
 {
   AutoLock lock(&m_objectCS);
   return m_mirrorDriverAllowed;
 }
 
-void ServerConfig::setMirrorAllowing(bool value)
+void ::remoting_node::ServerConfig::setMirrorAllowing(bool value)
 {
   AutoLock lock(&m_objectCS);
   m_mirrorDriverAllowed = value;
 }
 
-bool ServerConfig::isAcceptingRfbConnections()
+bool ::remoting_node::ServerConfig::isAcceptingRfbConnections()
 {
   AutoLock lock(&m_objectCS);
   return m_acceptRfbConnections;
 }
 
-void ServerConfig::acceptRfbConnections(bool accept)
+void ::remoting_node::ServerConfig::acceptRfbConnections(bool accept)
 {
   AutoLock lock(&m_objectCS);
   m_acceptRfbConnections = accept;
 }
 
-void ServerConfig::getPrimaryPassword(unsigned char *password)
+void ::remoting_node::ServerConfig::getPrimaryPassword(unsigned char *password)
 {
   AutoLock lock(&m_objectCS);
 
   memcpy(password, m_primaryPassword, VNC_PASSWORD_SIZE);
 }
 
-void ServerConfig::setPrimaryPassword(const unsigned char *value)
+void ::remoting_node::ServerConfig::setPrimaryPassword(const unsigned char *value)
 {
   AutoLock lock(&m_objectCS);
 
@@ -441,14 +441,14 @@ void ServerConfig::setPrimaryPassword(const unsigned char *value)
   memcpy((void *)&m_primaryPassword[0], (void *)value, VNC_PASSWORD_SIZE);
 }
 
-void ServerConfig::getReadOnlyPassword(unsigned char *password)
+void ::remoting_node::ServerConfig::getReadOnlyPassword(unsigned char *password)
 {
   AutoLock lock(&m_objectCS);
 
   memcpy(password, m_readonlyPassword, VNC_PASSWORD_SIZE);
 }
 
-void ServerConfig::setReadOnlyPassword(const unsigned char *value)
+void ::remoting_node::ServerConfig::setReadOnlyPassword(const unsigned char *value)
 {
   AutoLock lock(&m_objectCS);
 
@@ -457,14 +457,14 @@ void ServerConfig::setReadOnlyPassword(const unsigned char *value)
   memcpy((void *)&m_readonlyPassword[0], (void *)value, VNC_PASSWORD_SIZE);
 }
 
-void ServerConfig::getControlPassword(unsigned char *password)
+void ::remoting_node::ServerConfig::getControlPassword(unsigned char *password)
 {
   AutoLock lock(&m_objectCS);
 
   memcpy(password, m_controlPassword, VNC_PASSWORD_SIZE);
 }
 
-void ServerConfig::setControlPassword(const unsigned char *password)
+void ::remoting_node::ServerConfig::setControlPassword(const unsigned char *password)
 {
   AutoLock lock(&m_objectCS);
 
@@ -473,103 +473,103 @@ void ServerConfig::setControlPassword(const unsigned char *password)
   m_hasControlPassword = true;
 }
 
-bool ServerConfig::hasPrimaryPassword()
+bool ::remoting_node::ServerConfig::hasPrimaryPassword()
 {
   AutoLock lock(&m_objectCS);
 
   return m_hasPrimaryPassword;
 }
 
-bool ServerConfig::hasReadOnlyPassword()
+bool ::remoting_node::ServerConfig::hasReadOnlyPassword()
 {
   AutoLock lock(&m_objectCS);
 
   return m_hasReadOnlyPassword;
 }
 
-bool ServerConfig::hasControlPassword()
+bool ::remoting_node::ServerConfig::hasControlPassword()
 {
   AutoLock lock(&m_objectCS);
 
   return m_hasControlPassword;
 }
 
-void ServerConfig::deletePrimaryPassword()
+void ::remoting_node::ServerConfig::deletePrimaryPassword()
 {
   AutoLock lock(&m_objectCS);
 
   m_hasPrimaryPassword = false;
 }
 
-void ServerConfig::deleteReadOnlyPassword()
+void ::remoting_node::ServerConfig::deleteReadOnlyPassword()
 {
   AutoLock lock(&m_objectCS);
 
   m_hasReadOnlyPassword = false;
 }
 
-void ServerConfig::deleteControlPassword()
+void ::remoting_node::ServerConfig::deleteControlPassword()
 {
   AutoLock lock(&m_objectCS);
 
   m_hasControlPassword = false;
 }
 
-bool ServerConfig::isUsingAuthentication()
+bool ::remoting_node::ServerConfig::isUsingAuthentication()
 {
   AutoLock lock(&m_objectCS);
   return m_useAuthentication;
 }
 
-void ServerConfig::useAuthentication(bool enabled)
+void ::remoting_node::ServerConfig::useAuthentication(bool enabled)
 {
   AutoLock lock(&m_objectCS);
   m_useAuthentication = enabled;
 }
 
-bool ServerConfig::isOnlyLoopbackConnectionsAllowed()
+bool ::remoting_node::ServerConfig::isOnlyLoopbackConnectionsAllowed()
 {
   AutoLock lock(&m_objectCS);
   return m_onlyLoopbackConnections;
 }
 
-void ServerConfig::acceptOnlyLoopbackConnections(bool enabled)
+void ::remoting_node::ServerConfig::acceptOnlyLoopbackConnections(bool enabled)
 {
   AutoLock lock(&m_objectCS);
   m_onlyLoopbackConnections = enabled;
 }
 
-bool ServerConfig::isAcceptingHttpConnections()
+bool ::remoting_node::ServerConfig::isAcceptingHttpConnections()
 {
   AutoLock lock(&m_objectCS);
   return m_acceptHttpConnections;
 }
 
-void ServerConfig::acceptHttpConnections(bool accept)
+void ::remoting_node::ServerConfig::acceptHttpConnections(bool accept)
 {
   AutoLock lock(&m_objectCS);
   m_acceptHttpConnections = accept;
 }
 
-bool ServerConfig::isAppletParamInUrlEnabled()
+bool ::remoting_node::ServerConfig::isAppletParamInUrlEnabled()
 {
   AutoLock lock(&m_objectCS);
   return m_enableAppletParamInUrl;
 }
 
-void ServerConfig::enableAppletParamInUrl(bool enabled)
+void ::remoting_node::ServerConfig::enableAppletParamInUrl(bool enabled)
 {
   AutoLock lock(&m_objectCS);
   m_enableAppletParamInUrl = enabled;
 }
 
-int ServerConfig::getLogLevel()
+int ::remoting_node::ServerConfig::getLogLevel()
 {
   AutoLock lock(&m_objectCS);
   return m_logLevel;
 }
 
-void ServerConfig::setLogLevel(int logLevel)
+void ::remoting_node::ServerConfig::setLogLevel(int logLevel)
 {
   AutoLock lock(&m_objectCS);
   if (logLevel < 0) {
@@ -581,43 +581,43 @@ void ServerConfig::setLogLevel(int logLevel)
   }
 }
 
-bool ServerConfig::isAlwaysShared()
+bool ::remoting_node::ServerConfig::isAlwaysShared()
 {
   AutoLock lock(&m_objectCS);
   return m_alwaysShared;
 }
 
-bool ServerConfig::isNeverShared()
+bool ::remoting_node::ServerConfig::isNeverShared()
 {
   AutoLock lock(&m_objectCS);
   return m_neverShared;
 }
 
-bool ServerConfig::isDisconnectingExistingClients()
+bool ::remoting_node::ServerConfig::isDisconnectingExistingClients()
 {
   AutoLock lock(&m_objectCS);
   return m_disconnectClients;
 }
 
-void ServerConfig::setAlwaysShared(bool enabled)
+void ::remoting_node::ServerConfig::setAlwaysShared(bool enabled)
 {
   AutoLock lock(&m_objectCS);
   m_alwaysShared = enabled;
 }
 
-void ServerConfig::setNeverShared(bool enabled)
+void ::remoting_node::ServerConfig::setNeverShared(bool enabled)
 {
   AutoLock lock(&m_objectCS);
   m_neverShared = enabled;
 }
 
-void ServerConfig::disconnectExistingClients(bool disconnectExisting)
+void ::remoting_node::ServerConfig::disconnectExistingClients(bool disconnectExisting)
 {
   AutoLock lock(&m_objectCS);
   m_disconnectClients = disconnectExisting;
 }
 
-void ServerConfig::setPollingInterval(unsigned int interval)
+void ::remoting_node::ServerConfig::setPollingInterval(unsigned int interval)
 {
   AutoLock lock(&m_objectCS);
   if (interval < MINIMAL_POLLING_INTERVAL) {
@@ -627,43 +627,43 @@ void ServerConfig::setPollingInterval(unsigned int interval)
   }
 }
 
-unsigned int ServerConfig::getPollingInterval()
+unsigned int ::remoting_node::ServerConfig::getPollingInterval()
 {
   AutoLock lock(&m_objectCS);
   return m_pollingInterval;
 }
 
-void ServerConfig::blockRemoteInput(bool blockEnabled)
+void ::remoting_node::ServerConfig::blockRemoteInput(bool blockEnabled)
 {
   AutoLock lock(&m_objectCS);
   m_blockRemoteInput = blockEnabled;
 }
 
-bool ServerConfig::isBlockingRemoteInput()
+bool ::remoting_node::ServerConfig::isBlockingRemoteInput()
 {
   AutoLock lock(&m_objectCS);
   return m_blockRemoteInput;
 }
 
-void ServerConfig::setLocalInputPriority(bool localPriority)
+void ::remoting_node::ServerConfig::setLocalInputPriority(bool localPriority)
 {
   AutoLock lock(&m_objectCS);
   m_localInputPriority = localPriority;
 }
 
-bool ServerConfig::isLocalInputPriorityEnabled()
+bool ::remoting_node::ServerConfig::isLocalInputPriorityEnabled()
 {
   AutoLock lock(&m_objectCS);
   return m_localInputPriority;
 }
 
-unsigned int ServerConfig::getLocalInputPriorityTimeout()
+unsigned int ::remoting_node::ServerConfig::getLocalInputPriorityTimeout()
 {
   AutoLock lock(&m_objectCS);
   return m_localInputPriorityTimeout;
 }
 
-void ServerConfig::setLocalInputPriorityTimeout(unsigned int value)
+void ::remoting_node::ServerConfig::setLocalInputPriorityTimeout(unsigned int value)
 {
   AutoLock lock(&m_objectCS);
   if (value < MINIMAL_LOCAL_INPUT_PRIORITY_TIMEOUT) {
@@ -673,25 +673,25 @@ void ServerConfig::setLocalInputPriorityTimeout(unsigned int value)
   }
 }
 
-void ServerConfig::blockLocalInput(bool enabled)
+void ::remoting_node::ServerConfig::blockLocalInput(bool enabled)
 {
   AutoLock lock(&m_objectCS);
   m_blockLocalInput = enabled;
 }
 
-bool ServerConfig::isBlockingLocalInput()
+bool ::remoting_node::ServerConfig::isBlockingLocalInput()
 {
   AutoLock lock(&m_objectCS);
   return m_blockLocalInput;
 }
 
-unsigned int ServerConfig::getQueryTimeout()
+unsigned int ::remoting_node::ServerConfig::getQueryTimeout()
 {
   AutoLock lock(&m_objectCS);
   return m_queryTimeout;
 }
 
-void ServerConfig::setQueryTimeout(unsigned int timeout)
+void ::remoting_node::ServerConfig::setQueryTimeout(unsigned int timeout)
 {
   AutoLock lock(&m_objectCS);
   if (timeout < MINIMAL_QUERY_TIMEOUT) {
@@ -701,19 +701,19 @@ void ServerConfig::setQueryTimeout(unsigned int timeout)
   }
 }
 
-bool ServerConfig::isDefaultActionAccept()
+bool ::remoting_node::ServerConfig::isDefaultActionAccept()
 {
   AutoLock lock(&m_objectCS);
   return m_defaultActionAccept;
 }
 
-void ServerConfig::setDefaultActionToAccept(bool accept)
+void ::remoting_node::ServerConfig::setDefaultActionToAccept(bool accept)
 {
   AutoLock lock(&m_objectCS);
   m_defaultActionAccept = accept;
 }
 
-PortMappingContainer *ServerConfig::getPortMappingContainer()
+PortMappingContainer *::remoting_node::ServerConfig::getPortMappingContainer()
 {
   return &m_portMappings;
 }
@@ -722,80 +722,80 @@ PortMappingContainer *ServerConfig::getPortMappingContainer()
 // Ip access control config
 //
 
-IpAccessControl *ServerConfig::getAccessControl()
+IpAccessControl *::remoting_node::ServerConfig::getAccessControl()
 {
   return &m_accessControlContainer;
 }
 
-void ServerConfig::allowLoopbackConnections(bool allow)
+void ::remoting_node::ServerConfig::allowLoopbackConnections(bool allow)
 {
   AutoLock lock(&m_objectCS);
   m_allowLoopbackConnections = allow;
 }
 
-bool ServerConfig::isLoopbackConnectionsAllowed()
+bool ::remoting_node::ServerConfig::isLoopbackConnectionsAllowed()
 {
   AutoLock l(&m_objectCS);
 
   return m_allowLoopbackConnections;
 }
 
-::string_array *ServerConfig::getVideoClassNames()
+::string_array *::remoting_node::ServerConfig::getVideoClassNames()
 {
   return &m_videoClassNames;
 }
 
-unsigned int ServerConfig::getVideoRecognitionInterval()
+unsigned int ::remoting_node::ServerConfig::getVideoRecognitionInterval()
 {
   AutoLock lock(&m_objectCS);
   return m_videoRecognitionInterval;
 }
 
-void ServerConfig::setVideoRecognitionInterval(unsigned int interval)
+void ::remoting_node::ServerConfig::setVideoRecognitionInterval(unsigned int interval)
 {
   AutoLock lock(&m_objectCS);
 
   m_videoRecognitionInterval = interval;
 }
 
-::int_rectangle_array_base *ServerConfig::getVideoRects()
+::int_rectangle_array_base *::remoting_node::ServerConfig::getVideoRects()
 {
   return &m_videoRects;
 }
 
-int ServerConfig::getIdleTimeout()
+int ::remoting_node::ServerConfig::getIdleTimeout()
 {
   AutoLock lock(&m_objectCS);
   return m_idleTimeout;
 }
 
-void ServerConfig::setIdleTimeout(int timeout)
+void ::remoting_node::ServerConfig::setIdleTimeout(int timeout)
 {
   AutoLock lock(&m_objectCS);
   m_idleTimeout = timeout;
 }
 
-void ServerConfig::saveLogToAllUsersPath(bool enabled)
+void ::remoting_node::ServerConfig::saveLogToAllUsersPath(bool enabled)
 {
   AutoLock lock(&m_objectCS);
 
   m_saveLogToAllUsersPath = enabled;
 }
 
-bool ServerConfig::isSaveLogToAllUsersPathFlagEnabled()
+bool ::remoting_node::ServerConfig::isSaveLogToAllUsersPathFlagEnabled()
 {
   AutoLock l(&m_objectCS);
 
   return m_saveLogToAllUsersPath;
 }
 
-void ServerConfig::setGrabTransparentWindowsFlag(bool grab)
+void ::remoting_node::ServerConfig::setGrabTransparentWindowsFlag(bool grab)
 {
   AutoLock lock(&m_objectCS);
   m_grabTransparentWindows = grab;
 }
 
-bool ServerConfig::getGrabTransparentWindowsFlag()
+bool ::remoting_node::ServerConfig::getGrabTransparentWindowsFlag()
 {
   AutoLock lock(&m_objectCS);
   return m_grabTransparentWindows;

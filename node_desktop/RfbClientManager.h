@@ -81,7 +81,7 @@ namespace remoting_node_desktop
 
       // Adds rfb clients info to specified rfb client info ::list_base.
       // FIXME: This method needed only for control server.
-      void getClientsInfo(RfbClientInfoList *plist);
+      void getClientsInfo(::remoting_control_desktop::RfbClientInfoList *plist);
 
       // Disconnects all connected clients.
       virtual void disconnectAllClients();

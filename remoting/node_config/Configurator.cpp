@@ -327,7 +327,7 @@ namespace remoting_node
       return saveResult;
    }
 
-   bool Configurator::loadQueryConfig(::remoting::SettingsManager *sm, ServerConfig * pserverconfig)
+   bool Configurator::loadQueryConfig(::remoting::SettingsManager *sm, ::remoting_node::ServerConfig * pserverconfig)
    {
       bool loadResult = true;
       unsigned int uintValue;
@@ -375,7 +375,7 @@ namespace remoting_node
       return saveResult;
    }
 
-   bool Configurator::loadInputHandlingConfig(::remoting::SettingsManager *sm, ServerConfig * pserverconfig)
+   bool Configurator::loadInputHandlingConfig(::remoting::SettingsManager *sm, ::remoting_node::ServerConfig * pserverconfig)
    {
       bool loadResult = true;
 
@@ -469,7 +469,7 @@ namespace remoting_node
       return saveResult;
    }
 
-   bool Configurator::loadVideoRegionConfig(::remoting::SettingsManager *sm, ServerConfig * pserverconfig)
+   bool Configurator::loadVideoRegionConfig(::remoting::SettingsManager *sm, ::remoting_node::ServerConfig * pserverconfig)
    {
       bool loadResult = true;
 
@@ -788,7 +788,7 @@ namespace remoting_node
       return saveResult;
    }
 
-   bool Configurator::loadServerConfig(::remoting::SettingsManager *sm, ServerConfig * pserverconfig)
+   bool Configurator::loadServerConfig(::remoting::SettingsManager *sm, ::remoting_node::ServerConfig * pserverconfig)
    {
       bool loadResult = true;
 
@@ -823,7 +823,7 @@ namespace remoting_node
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig->setDisconnectAction((ServerConfig::DisconnectAction)uintVal);
+         m_pserverconfig->setDisconnectAction((::remoting_node::ServerConfig::DisconnectAction)uintVal);
       }
       if (!sm->getBoolean("AcceptRfbConnections", &boolVal))
       {

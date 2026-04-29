@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "ServerConfig.h"
+#include "remoting/remoting/node_config/ServerConfig.h"
 
 #include "subsystem/node/OperatingSystem.h"
 #include "remoting/remoting/region/RectSerializer.h"

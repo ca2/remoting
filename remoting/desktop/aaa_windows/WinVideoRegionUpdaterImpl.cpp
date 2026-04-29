@@ -63,7 +63,7 @@ namespace remoting
 
    unsigned int WinVideoRegionUpdaterImpl::getInterval()
    {
-      ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
+      ::remoting_node::ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
       return pserverconfig->getVideoRecognitionInterval();
    }
 
@@ -76,7 +76,7 @@ namespace remoting
    void WinVideoRegionUpdaterImpl::getClassNamesAndRectsFromConfig(::string_array &classNames,
                                                                    ::int_rectangle_array_base &rectanglea)
    {
-      ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
+      ::remoting_node::ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
       critical_section_lock al(pserverconfig);
       classNames = *pserverconfig->getVideoClassNames();
       rectanglea = *pserverconfig->getVideoRects();

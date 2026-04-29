@@ -223,7 +223,7 @@ namespace remoting_node_desktop
       ///**
       // * Shortcut to global server configuration.
       // */
-      //ServerConfig *m_srvConfig;
+      //::remoting_node::ServerConfig *m_srvConfig;
 
       ///**
       // * Mutex for protecting servers.

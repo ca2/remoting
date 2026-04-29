@@ -9,7 +9,7 @@ namespace remoting_node
    class Configurator;
    class ServerConfig;
 
-}
+}// namespace remoting_node
 
 
 

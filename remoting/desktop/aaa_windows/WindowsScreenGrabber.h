@@ -112,7 +112,7 @@ namespace remoting
 
       // private:
       ::int_size m_dibSectionDim;
-      ServerConfig *m_pserverconfig;
+      ::remoting_node::ServerConfig *m_pserverconfig;
 
       // Screen m_screen;
       ::subsystem::Screen m_screen;

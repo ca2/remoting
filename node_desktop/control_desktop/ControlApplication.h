@@ -63,6 +63,10 @@ namespace remoting_control_desktop
                               public ::subsystem::Thread /** Status check thread. */
    {
    public:
+
+
+      ImplementDefaultø(subsystem::OperatingSystemApplication)
+
       /**
        * Initializes all subsystems needed for wscontrol application and creates
        * ControlApplication instance.

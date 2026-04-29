@@ -97,7 +97,7 @@ namespace remoting_control_desktop
 
    void SetPasswordsDialog::initControls()
    {
-      //HWND window = m_ctrlThis.operating_system_window();
+      //HWND window = operating_system_window();
 
       dialog_item(m_dontChangeRfbAuthSettingsRadio, IDC_DONT_CHANGE_RFB_AUTH_SETTINGS_RADIO);
       dialog_item(m_dontUseRfbAuthRadio, IDC_DONT_USE_RFB_AUTH_RADIO);

@@ -184,7 +184,7 @@ namespace remoting_node_desktop
                      break;
                   case ControlProto::SET_CONFIG_MSG_ID:
                      m_plogwriter->debug("::innate_subsystem::Control client sends new server config");
-                     setServerConfigMsgRcvd();
+                     set::remoting_node::ServerConfigMsgRcvd();
                      break;
                   case ControlProto::GET_CONFIG_MSG_ID:
                      m_plogwriter->debug("::innate_subsystem::Control client requests server config");
@@ -425,7 +425,7 @@ namespace remoting_node_desktop
       return true;
    }
 
-   void ControlClient::setServerConfigMsgRcvd()
+   void ControlClient::set::remoting_node::ServerConfigMsgRcvd()
    {
       m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
       ::remoting_node::ServerConfig cfg;

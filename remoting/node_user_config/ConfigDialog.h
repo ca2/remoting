@@ -79,7 +79,7 @@ namespace remoting_node
       bool _002OnTabChanging(int iControl, bool & bOk) override;
 
    private:
-      void moveDialogToTabControl(::innate_subsystem::Dialog *dialog);
+      //void moveDialogToTabControl(::innate_subsystem::DialogInterface * pdialog);;
       bool validateInput();
       void updateCaption();
    protected:
@@ -89,7 +89,7 @@ namespace remoting_node
       // Settings
       ::pointer < Configurator > m_pconfigurator;
       // Dialogs for tab control
-      ServerConfigDialog m_serverConfigDialog;
+      ::remoting_node::ServerConfigDialog m_serverConfigDialog;
       PortMappingDialog m_portMappingDialog;
       AdministrationConfigDialog m_administrationConfigDialog;
       IpAccessControlDialog m_ipAccessControlDialog;
@@ -97,7 +97,7 @@ namespace remoting_node
       // Other members
       bool m_isConfiguringService;
 
-      ::remoting_control_desktop::ControlCommand *m_reloadConfigCommand;
+      ::pointer < ::remoting_control_desktop::ControlCommand > m_pcontrolcommandReloadConfig;
 
       int m_lastSelectedTabIndex;
    };

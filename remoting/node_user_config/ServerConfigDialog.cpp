@@ -26,6 +26,7 @@
 #include "ServerConfigDialog.h"
 #include "ConfigDialog.h"
 #include "ChangePasswordDialog.h"
+#include "acme/constant/user_notification.h"
 #include "remoting/remoting/node_config/Configurator.h"
 #include "subsystem/platform/StringParser.h"
 #include "CommonInputValidation.h"
@@ -33,18 +34,20 @@
 // #include aaa_<limits.h>
 namespace remoting_node
 {
-   ServerConfigDialog::ServerConfigDialog()
-   : BaseDialog(IDD_CONFIG_SERVER_PAGE), m_pdialogParent(NULL)
+   ServerConfigDialog::ServerConfigDialog(Configurator * pconfigurator)
+   :  m_pdialogParent(NULL),
+   m_pconfigurator(pconfigurator)
    {
+      initialize_dialog(IDD_CONFIG_SERVER_PAGE);
    }
 
    ServerConfigDialog::~ServerConfigDialog()
    {
    }
 
-   void ServerConfigDialog::setParentDialog(BaseDialog *dialog)
+   void ServerConfigDialog::setParentDialog(::innate_subsystem::DialogInterface *pdialog)
    {
-      m_pdialogParent = dialog;
+      m_pdialogParent = pdialog;
    }
 
    bool ServerConfigDialog::onInitDialog()
@@ -56,15 +59,31 @@ namespace remoting_node
       return true;
    }
 
-   bool ServerConfigDialog::onNotify(unsigned int controlID, ::lparam data)
+   // bool ServerConfigDialog::onNotify(unsigned int controlID, ::lparam data)
+   // {
+   //    if (controlID == IDC_POLLING_INTERVAL_SPIN) {
+   //       LPNMUPDOWN scopedstrMessage = (LPNMUPDOWN)data;
+   //       if (scopedstrMessage->hdr.code == UDN_DELTAPOS) {
+   //          onPollingIntervalSpinChangePos(scopedstrMessage);
+   //       }
+   //    }
+   //    return true;
+   // }
+
+
+   bool ServerConfigDialog::_002OnUpDown(int iControl, int iPos, int iDelta)
    {
-      if (controlID == IDC_POLLING_INTERVAL_SPIN) {
-         LPNMUPDOWN scopedstrMessage = (LPNMUPDOWN)data;
-         if (scopedstrMessage->hdr.code == UDN_DELTAPOS) {
-            onPollingIntervalSpinChangePos(scopedstrMessage);
-         }
+
+      if (iControl == IDC_POLLING_INTERVAL_SPIN)
+      {
+
+         onPollingIntervalSpinChangePos(iControl, iPos, iDelta);
+
+         return true;
       }
-      return true;
+
+      return false;
+
    }
 
    bool ServerConfigDialog::onCommand(unsigned int controlID, unsigned int notificationID)
@@ -112,7 +131,10 @@ namespace remoting_node
                break;
             case IDC_USE_MIRROR_DRIVER:
                // FIXME: For high quality code is needed to use a function.
-               ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+            {
+               auto pconfigdialog = m_pdialogParent->get_callback < ConfigDialog >();
+               pconfigdialog->updateApplyButtonState();
+            }
                break;
             case IDC_SHOW_TVNCONTROL_ICON_CHECKBOX:
                onShowTrayIconCheckBoxClick();
@@ -198,7 +220,7 @@ namespace remoting_node
       if (m_acceptRfbConnections.isChecked() &&
           m_useAuthentication.isChecked() &&
           !passwordSpecified) {
-         MainSubsystem().message_box(m_ctrlThis.operating_system_window(),
+         MainSubsystem().message_box(operating_system_window(),
                     MainSubsystem().StringTable().getString(IDS_SET_PASSWORD_NOTIFICATION),
                     MainSubsystem().StringTable().getString(IDS_CAPTION_BAD_INPUT),
                     MB_ICONSTOP | ::user::e_message_box_ok);
@@ -214,30 +236,30 @@ namespace remoting_node
       m_httpPort.setSignedInt(m_config->getHttpPort());
       m_pollingInterval.setUnsignedInt(m_config->getPollingInterval());
 
-      m_enableFileTransfers.check(m_config->isFileTransfersEnabled());
-      m_removeWallpaper.check(m_config->isRemovingDesktopWallpaperEnabled());
+      m_enableFileTransfers.setChecked(m_config->isFileTransfersEnabled());
+      m_removeWallpaper.setChecked(m_config->isRemovingDesktopWallpaperEnabled());
 
-      m_acceptRfbConnections.check(m_config->isAcceptingRfbConnections());
-      m_acceptHttpConnections.check(m_config->isAcceptingHttpConnections());
+      m_acceptRfbConnections.setChecked(m_config->isAcceptingRfbConnections());
+      m_acceptHttpConnections.setChecked(m_config->isAcceptingHttpConnections());
 
       m_ppControl->setHadPassword(m_config->hasPrimaryPassword());
       m_vpControl->setHadPassword(m_config->hasReadOnlyPassword());
 
-      m_useAuthentication.check(m_config->isUsingAuthentication());
+      m_useAuthentication.setChecked(m_config->isUsingAuthentication());
 
-      m_blockLocalInput.check(m_config->isBlockingLocalInput());
-      m_blockRemoteInput.check(m_config->isBlockingRemoteInput());
-      m_localInputPriority.check(m_config->isLocalInputPriorityEnabled());
+      m_blockLocalInput.setChecked(m_config->isBlockingLocalInput());
+      m_blockRemoteInput.setChecked(m_config->isBlockingRemoteInput());
+      m_localInputPriority.setChecked(m_config->isLocalInputPriorityEnabled());
       if (m_config->isLocalInputPriorityEnabled()) {
          m_localInputPriorityTimeout.enableWindow(true);
       }
       m_localInputPriorityTimeout.setUnsignedInt(m_config->getLocalInputPriorityTimeout());
 
-      m_useD3D.check(m_config->getD3DIsAllowed());
-      m_useMirrorDriver.check(m_config->getMirrorIsAllowed());
+      m_useD3D.setChecked(m_config->getD3DIsAllowed());
+      m_useMirrorDriver.setChecked(m_config->getMirrorIsAllowed());
 
-      m_showTrayIcon.check(m_config->getShowTrayIconFlag());
-      m_connectToRdp.check(m_config->getConnectToRdpFlag());
+      m_showTrayIcon.setChecked(m_config->getShowTrayIconFlag());
+      m_connectToRdp.setChecked(m_config->getConnectToRdpFlag());
 
       updateCheckboxesState();
       updateControlDependencies();
@@ -250,9 +272,9 @@ namespace remoting_node
       // Polling interval string storage
       ::string pollingIntervalText;
 
-      m_rfbPort.getText(&rfbPortText);
-      m_httpPort.getText(&httpPortText);
-      m_pollingInterval.getText(&pollingIntervalText);
+      rfbPortText = m_rfbPort.getText();
+      httpPortText = m_httpPort.getText();
+      pollingIntervalText = m_pollingInterval.getText();
 
       int intVal = 0;
 
@@ -296,12 +318,12 @@ namespace remoting_node
 
       // Local input priority timeout string storage
       ::string liptStringStorage;
-      m_localInputPriorityTimeout.getText(&liptStringStorage);
+      liptStringStorage = m_localInputPriorityTimeout.getText();
       int timeout = 0;
 
       m_config->setLocalInputPriority(m_localInputPriority.isChecked());
       if (MainSubsystem().StringParser().parseInt(liptStringStorage, &timeout)) {
-         timeout = max(0, timeout);
+         timeout = maximum(0, timeout);
          m_config->setLocalInputPriorityTimeout((unsigned int)timeout);
       }
       m_config->blockLocalInput(m_blockLocalInput.isChecked());
@@ -315,27 +337,27 @@ namespace remoting_node
 
    void ServerConfigDialog::initControls()
    {
-      HWND hwnd = m_ctrlThis.operating_system_window();
-      m_rfbPort.setWindow(GetDlgItem(hwnd, IDC_RFB_PORT));
-      m_httpPort.setWindow(GetDlgItem(hwnd, IDC_HTTP_PORT));
-      m_pollingInterval.setWindow(GetDlgItem(hwnd, IDC_POLLING_INTERVAL));
-      m_useD3D.setWindow(GetDlgItem(hwnd, IDC_USE_D3D));
-      m_useMirrorDriver.setWindow(GetDlgItem(hwnd, IDC_USE_MIRROR_DRIVER));
-      m_enableFileTransfers.setWindow(GetDlgItem(hwnd, IDC_ENABLE_FILE_TRANSFERS));
-      m_removeWallpaper.setWindow(GetDlgItem(hwnd, IDC_REMOVE_WALLPAPER));
-      m_acceptRfbConnections.setWindow(GetDlgItem(hwnd, IDC_ACCEPT_RFB_CONNECTIONS));
-      m_acceptHttpConnections.setWindow(GetDlgItem(hwnd, IDC_ACCEPT_HTTP_CONNECTIONS));
-      m_primaryPassword.setWindow(GetDlgItem(hwnd, IDC_PRIMARY_PASSWORD));
-      m_readOnlyPassword.setWindow(GetDlgItem(hwnd, IDC_VIEW_ONLY_PASSWORD));
-      m_useAuthentication.setWindow(GetDlgItem(hwnd, IDC_USE_AUTHENTICATION));
-      m_unsetPrimaryPassword.setWindow(GetDlgItem(hwnd, IDC_UNSET_PRIMARY_PASSWORD_BUTTON));
-      m_unsetReadOnlyPassword.setWindow(GetDlgItem(hwnd, IDC_UNSET_READONLY_PASSWORD_BUTTON));
-      m_showTrayIcon.setWindow(GetDlgItem(hwnd, IDC_SHOW_TVNCONTROL_ICON_CHECKBOX));
-      m_connectToRdp.setWindow(GetDlgItem(hwnd, IDC_CONNECT_RDP_SESSION));
+      //HWND hwnd = operating_system_window();
+      dialog_item(m_rfbPort, IDC_RFB_PORT);
+      dialog_item(m_httpPort, IDC_HTTP_PORT);
+      dialog_item(m_pollingInterval, IDC_POLLING_INTERVAL);
+      dialog_item(m_useD3D, IDC_USE_D3D);
+      dialog_item(m_useMirrorDriver, IDC_USE_MIRROR_DRIVER);
+      dialog_item(m_enableFileTransfers, IDC_ENABLE_FILE_TRANSFERS);
+      dialog_item(m_removeWallpaper, IDC_REMOVE_WALLPAPER);
+      dialog_item(m_acceptRfbConnections, IDC_ACCEPT_RFB_CONNECTIONS);
+      dialog_item(m_acceptHttpConnections, IDC_ACCEPT_HTTP_CONNECTIONS);
+      dialog_item(m_primaryPassword, IDC_PRIMARY_PASSWORD);
+      dialog_item(m_readOnlyPassword, IDC_VIEW_ONLY_PASSWORD);
+      dialog_item(m_useAuthentication, IDC_USE_AUTHENTICATION);
+      dialog_item(m_unsetPrimaryPassword, IDC_UNSET_PRIMARY_PASSWORD_BUTTON);
+      dialog_item(m_unsetReadOnlyPassword, IDC_UNSET_READONLY_PASSWORD_BUTTON);
+      dialog_item(m_showTrayIcon, IDC_SHOW_TVNCONTROL_ICON_CHECKBOX);
+      dialog_item(m_connectToRdp, IDC_CONNECT_RDP_SESSION);
 
-      m_rfbPortSpin.setWindow(GetDlgItem(hwnd, IDC_RFB_PORT_SPIN));
-      m_httpPortSpin.setWindow(GetDlgItem(hwnd, IDC_HTTP_PORT_SPIN));
-      m_pollingIntervalSpin.setWindow(GetDlgItem(hwnd, IDC_POLLING_INTERVAL_SPIN));
+      dialog_item(m_rfbPortSpin, IDC_RFB_PORT_SPIN);
+      dialog_item(m_httpPortSpin, IDC_HTTP_PORT_SPIN);
+      dialog_item(m_pollingIntervalSpin, IDC_POLLING_INTERVAL_SPIN);
 
       m_rfbPortSpin.setBuddy(&m_rfbPort);
       m_rfbPortSpin.setAccel(0, 1);
@@ -356,14 +378,14 @@ namespace remoting_node
       m_pollingIntervalSpin.setBuddy(&m_pollingInterval);
       m_pollingIntervalSpin.setAccel(0, 1);
       m_pollingIntervalSpin.setRange32(1, INT_MAX);
-      m_pollingIntervalSpin.setAutoAccelerationParams(&limitters, &deltas, 50);
+      m_pollingIntervalSpin.setAutoAccelerationParams(limitters, deltas, 50);
       m_pollingIntervalSpin.enableAutoAcceleration(true);
 
-      m_blockLocalInput.setWindow(GetDlgItem(hwnd, IDC_BLOCK_LOCAL_INPUT));
-      m_blockRemoteInput.setWindow(GetDlgItem(hwnd, IDC_BLOCK_REMOTE_INPUT));
-      m_localInputPriority.setWindow(GetDlgItem(hwnd, IDC_LOCAL_INPUT_PRIORITY));
-      m_localInputPriorityTimeout.setWindow(GetDlgItem(hwnd, IDC_LOCAL_INPUT_PRIORITY_TIMEOUT));
-      m_inactivityTimeoutSpin.setWindow(GetDlgItem(hwnd, IDC_INACTIVITY_TIMEOUT_SPIN));
+      dialog_item(m_blockLocalInput, IDC_BLOCK_LOCAL_INPUT);
+      dialog_item(m_blockRemoteInput, IDC_BLOCK_REMOTE_INPUT);
+      dialog_item(m_localInputPriority, IDC_LOCAL_INPUT_PRIORITY);
+      dialog_item(m_localInputPriorityTimeout, IDC_LOCAL_INPUT_PRIORITY_TIMEOUT);
+      dialog_item(m_inactivityTimeoutSpin, IDC_INACTIVITY_TIMEOUT_SPIN);
 
       m_inactivityTimeoutSpin.setBuddy(&m_localInputPriorityTimeout);
       m_inactivityTimeoutSpin.setAccel(0, 1);
@@ -408,19 +430,22 @@ namespace remoting_node
    void ServerConfigDialog::onAcceptRfbConnectionsClick()
    {
       updateControlDependencies();
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+      auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onAcceptHttpConnectionsClick()
    {
       updateControlDependencies();
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+      auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onAuthenticationClick()
    {
       updateControlDependencies();
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+      auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
 
@@ -430,7 +455,8 @@ namespace remoting_node
       bool newVal = m_showTrayIcon.isChecked();
 
       if (oldVal != newVal) {
-         ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+         auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+         pconfigdialog->updateApplyButtonState();
       }
    }
 
@@ -440,7 +466,8 @@ namespace remoting_node
       bool newVal = m_connectToRdp.isChecked();
 
       if (oldVal != newVal) {
-         ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+         auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+         pconfigdialog->updateApplyButtonState();
       }
    }
 
@@ -449,29 +476,31 @@ namespace remoting_node
    void ServerConfigDialog::onPrimaryPasswordChange()
    {
       if (m_ppControl->showChangePasswordModalDialog(&m_ctrlThis)) {
-         ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+         auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+         pconfigdialog->updateApplyButtonState();
       }
    }
 
    void ServerConfigDialog::onReadOnlyPasswordChange()
    {
       if (m_vpControl->showChangePasswordModalDialog(&m_ctrlThis)) {
-         ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+         auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+         pconfigdialog->updateApplyButtonState();
       }
    }
 
    void ServerConfigDialog::onUnsetPrimaryPasswordClick()
    {
-      m_ppControl->unsetPassword(true, m_ctrlThis.operating_system_window());
-
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+      m_ppControl->unsetPassword(true, operating_system_window());
+auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onUnsetReadOnlyPasswordClick()
    {
-      m_vpControl->unsetPassword(true, m_ctrlThis.operating_system_window());
-
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+      m_vpControl->unsetPassword(true, operating_system_window());
+auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onPollingIntervalSpinChangePos(LPNMUPDOWN lpupdownMessage)
@@ -480,72 +509,76 @@ namespace remoting_node
    }
 
    void ServerConfigDialog::onRfbPortUpdate()
-   {
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+   {auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onHttpPortUpdate()
-   {
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+   {auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onUrlParamsClick()
-   {
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+   {auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onPollingIntervalUpdate()
-   {
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+   {auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onFileTransferCheckBoxClick()
-   {
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+   {auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onRemoveWallpaperCheckBoxClick()
-   {
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+   {auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onGrabTransparentWindowsChanged()
-   {
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+   {auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onUseD3DChanged()
-   {
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+   {auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onBlockLocalInputChanged()
    {
       updateCheckboxesState();
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+      auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onBlockRemoteInputChanged()
    {
       updateCheckboxesState();
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+      auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onLocalInputPriorityChanged()
    {
       updateCheckboxesState();
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+      auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
    void ServerConfigDialog::onInactivityTimeoutUpdate()
    {
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+      auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
    void ServerConfigDialog::updateCheckboxesState()
    {
       if (m_blockLocalInput.isChecked() || m_blockRemoteInput.isChecked()) {
-         m_localInputPriority.check(false);
+         m_localInputPriority.setChecked(false);
          m_localInputPriority.enableWindow(false);
       } else {
          m_localInputPriority.enableWindow(true);

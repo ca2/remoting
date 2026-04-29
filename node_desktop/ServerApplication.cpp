@@ -30,7 +30,7 @@
 
 #include "subsystem/platform/ResourceLoader.h"
 #include "subsystem/platform/StringTable.h"
-#include "remoting/node_desktop/NamingDefs.h"
+#include "remoting/remoting/node/NamingDefs.h"
 #include "subsystem/platform/CommandLineArguments.h"
 
 #include "resource.h"
@@ -111,7 +111,7 @@ namespace remoting_node_desktop
       {
          appInstanceMutex = new ::subsystem::GlobalMutex;
 
-         appInstanceMutex->initialize_global_mutex(ServerApplicationNames::SERVER_INSTANCE_MUTEX_NAME, false, true);
+         appInstanceMutex->initialize_global_mutex(::remoting_node::ServerApplicationNames::SERVER_INSTANCE_MUTEX_NAME, false, true);
       }
       catch (...)
       {

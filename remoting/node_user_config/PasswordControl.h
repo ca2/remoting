@@ -97,7 +97,7 @@ namespace remoting_node
       @param parent control of parent dialog (optional, can be null).
       @return false if user cancels dialog, true otherwise.
       */
-      bool showChangePasswordModalDialog(::innate_subsystem::Control *parent);
+      bool showChangePasswordModalDialog(::innate_subsystem::WindowInterface * pwindow);
 
    private:
       void updateControlsState();

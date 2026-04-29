@@ -142,7 +142,7 @@ namespace remoting
 
       bool isLoopback = psockAddr->isLoopbackAddress();
 
-      ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
+      ::remoting_node::ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
       if (isLoopback && !pserverconfig->isLoopbackConnectionsAllowed()) {
          throw ::subsystem::Exception("Sorry, loopback connections are not enabled");
       }
@@ -207,7 +207,7 @@ namespace remoting
       checkForBan();
 
       // Comparing the challenge with the response.
-      ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
+      ::remoting_node::ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
       bool hasPrim = pserverconfig->hasPrimaryPassword();
       bool hasRdly = pserverconfig->hasReadOnlyPassword();
 

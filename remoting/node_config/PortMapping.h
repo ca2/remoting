@@ -45,7 +45,8 @@ public:
   int getPort() const;
   PortMappingRect getRect() const;
 
-  void toString(::string & string) const;
+   void toString(::string & string) const;
+   ::string toString() const;
 
 public:
   static bool parse(const char * psz,  PortMapping *mapping);

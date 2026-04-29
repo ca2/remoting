@@ -52,7 +52,7 @@ namespace remoting_control_desktop
    protected:
       ControlGate *m_pblockinggate;
 
-      //unsigned char m_password[ServerConfig::VNC_PASSWORD_SIZE];
+      //unsigned char m_password[::remoting_node::ServerConfig::VNC_PASSWORD_SIZE];
       unsigned char m_password[8];
    };
 } // namespace remoting_control_desktop

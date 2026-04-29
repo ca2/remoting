@@ -77,7 +77,7 @@ namespace remoting_node_desktop
 
          // Check access control rules for the IP address of the peer.
          // FIXME: Check loopback-related rules separately, report differently.
-         // ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
+         // ::remoting_node::ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
          auto pserverconfig = m_pconfigurator->getServerConfig();
          IpAccessRule::ActionType action =
             pserverconfig->getActionByAddress((unsigned long)addr_in.sin_addr.S_un.S_addr);

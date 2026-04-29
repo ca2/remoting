@@ -171,7 +171,7 @@ namespace remoting_node_desktop
       //        have to write something like this:
       //        {
       //          ConfigAccessor ca;                         // lock
-      //          ServerConfig *cfg = ca.getServerConfig();  // get access
+      //          ::remoting_node::ServerConfig *cfg = ca.getServerConfig();  // get access
       //          someSetting = cfg.getSomeSetting();        // use
       //        }                                            // auto-unlock
       //

@@ -41,7 +41,7 @@
 
 namespace remoting
 {
-   class ServerConfig : virtual public ::subsystem::LockableInterface
+   class ::remoting_node::ServerConfig : virtual public ::subsystem::LockableInterface
    {
    public:
       static const unsigned int MINIMAL_POLLING_INTERVAL = 30;
@@ -63,11 +63,11 @@ namespace remoting
        };
 
    public:
-      ServerConfig();
-      virtual ~ServerConfig();
+      ::remoting_node::ServerConfig();
+      virtual ~::remoting_node::ServerConfig();
 
-      ServerConfig(ServerConfig& other);
-      ServerConfig& operator=(ServerConfig& other);
+      ::remoting_node::ServerConfig(::remoting_node::ServerConfig& other);
+      ::remoting_node::ServerConfig& operator=(::remoting_node::ServerConfig& other);
 
       /**
        * Serializes server config to output stream as byte stream.

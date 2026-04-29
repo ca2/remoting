@@ -48,8 +48,9 @@ namespace remoting_control_desktop
    /**
     * TvnControl application icon class.
     */
-   class ControlTrayIcon : public NotifyIcon, /** Inherit tray icon code. */
-                           public WindowProcHolder /** To override tray icon window procedure. */
+   class ControlTrayIcon : public ::innate_subsystem::NotifyIcon /** Inherit tray icon code. */
+
+    //,                       public WindowProcHolder /** To override tray icon window procedure. */
    {
    public:
       /**

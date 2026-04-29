@@ -63,7 +63,7 @@ namespace remoting_control_desktop
 
    void OutgoingConnectionDialog::initControls()
    {
-      //HWND window = m_ctrlThis.operating_system_window();
+      //HWND window = operating_system_window();
 
       dialog_item(m_connectStringCB, IDC_HOSTNAME_COMBO);
       dialog_item(m_viewOnlyCB, IDC_VIEW_ONLY_CHECKBOX);

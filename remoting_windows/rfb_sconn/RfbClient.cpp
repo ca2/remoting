@@ -180,7 +180,7 @@ namespace remoting
       sysLogMessage.formatf("The client {} has disconnected",
                            peerStr);
 
-      ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
+      ::remoting_node::ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
 
       SocketStream sockStream(m_socket);
 

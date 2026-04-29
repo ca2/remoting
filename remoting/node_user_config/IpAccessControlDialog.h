@@ -39,10 +39,13 @@ namespace remoting_node
    class IpAccessControlDialog : virtual public ::innate_subsystem::Dialog
    {
    public:
-      IpAccessControlDialog();
-      virtual ~IpAccessControlDialog();
 
-      void setParentDialog(::innate_subsystem::Dialog *dialog);
+
+      IpAccessControlDialog(Configurator * pconfigurator);
+      ~IpAccessControlDialog() override;
+
+
+      void setParentDialog(::innate_subsystem::DialogInterface * pdialog);;
 
       //
       // BaseDialog overrided methods
@@ -50,9 +53,12 @@ namespace remoting_node
 
       virtual bool onInitDialog();
       virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
-      virtual bool onNotify(unsigned int controlID, ::lparam data);
+      //virtual bool onNotify(unsigned int controlID, ::lparam data);
       virtual bool onDestroy() { return true; }
 
+
+      bool _002OnSelectionChange(int iControl) override;
+      bool _002OnAction(int iControl) override;
       //
       // Helper methods
       //
@@ -92,8 +98,9 @@ namespace remoting_node
 
    private:
       // Configuration
-      IpAccessControl *m_container;
-      ServerConfig *m_config;
+      ::pointer < IpAccessControl > m_pipaccesscontrol;
+      ::pointer < ::remoting_node::Configurator > m_pconfigurator;
+      ::pointer < ::remoting_node::ServerConfig > m_pserverconfig;
       // Child dialog
       EditIpAccessRuleDialog m_editDialog;
       // Controls
@@ -111,7 +118,7 @@ namespace remoting_node
       ::innate_subsystem::TextBox m_ip;
       ::innate_subsystem::Control m_ipCheckResult;
       ::innate_subsystem::SpinControl m_queryTimeoutSpin;
-      ::innate_subsystem::Dialog *m_pdialogParent;
+      ::pointer < ::innate_subsystem::DialogInterface > m_pdialogParent;
    };
 } // namespace remoting_node
 

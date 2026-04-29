@@ -151,7 +151,7 @@ namespace remoting_node_desktop
        * Called when set server config scopedstrMessage recieved.
        * @throws ::io_exception on io error.
        */
-      void setServerConfigMsgRcvd();
+      void set::remoting_node::ServerConfigMsgRcvd();
       /**
        * Called when get server config scopedstrMessage recieved.
        * @throws ::io_exception on io error.

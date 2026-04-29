@@ -62,7 +62,7 @@ namespace remoting_node_desktop
       // protected:
       /**
        * Inherited from superclass.
-       * Checks firewall rules (@see ServerConfig class) for incoming connection
+       * Checks firewall rules (@see ::remoting_node::ServerConfig class) for incoming connection
        * and, if it firewall passes connection, when pass it for owning to rfb client manager.
        */
       virtual void onAcceptConnection(::subsystem::SocketIPv4Interface *socket);

@@ -51,7 +51,7 @@ namespace remoting_control_desktop
    {
       m_password= "";
 
-      //HWND hwnd = m_ctrlThis.operating_system_window();
+      //HWND hwnd = operating_system_window();
       dialog_item(m_passwordTextBox,IDC_PASSWORD_EDIT);
       m_passwordTextBox.setTextLengthLimit(::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE);
 

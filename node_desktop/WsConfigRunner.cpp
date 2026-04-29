@@ -64,8 +64,8 @@ namespace remoting_node_desktop
          // Prepare arguments.
          ::string args;
          args.formatf("{} {}",
-                      m_serviceMode ? ControlCommandLine::CONTROL_SERVICE : ControlCommandLine::CONTROL_APPLICATION,
-                      ControlCommandLine::SLAVE_MODE);
+                      m_serviceMode ? ::remoting_control_desktop::ControlCommandLine::CONTROL_SERVICE : ::remoting_control_desktop::ControlCommandLine::CONTROL_APPLICATION,
+                      ::remoting_control_desktop::ControlCommandLine::SLAVE_MODE);
          // Start process.
          process = createø<::subsystem::Process>();
 

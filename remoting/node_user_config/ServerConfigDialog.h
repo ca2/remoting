@@ -36,13 +36,15 @@
 
 namespace remoting_node
 {
+
+   
    class ServerConfigDialog : virtual public ::innate_subsystem::Dialog
    {
    public:
-      ServerConfigDialog();
-      virtual ~ServerConfigDialog();
+      ServerConfigDialog(Configurator * pconfigurator);
+      ~ServerConfigDialog() override;
 
-      void setParentDialog(::innate_subsystem::Dialog *dialog);
+      void setParentDialog(::innate_subsystem::DialogInterface * pdialog);;
 
    public:
 
@@ -51,7 +53,7 @@ namespace remoting_node
       //
 
       virtual bool onInitDialog();
-      virtual bool onNotify(unsigned int controlID, ::lparam data);
+      //virtual bool onNotify(unsigned int controlID, ::lparam data);
       virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
       virtual bool onDestroy() { return true; }
 
@@ -62,6 +64,8 @@ namespace remoting_node
       bool validateInput();
       void updateUI();
       void apply();
+
+      bool _002OnUpDown(int iControl, int iPos, int iDelta) override;
 
    private:
       void initControls();
@@ -102,7 +106,8 @@ namespace remoting_node
 
    protected:
       // Configuration
-      ServerConfig *m_config;
+      ::pointer < Configurator >m_pconfigurator;
+      ::pointer < ServerConfig >m_config;
       // Controls
       ::innate_subsystem::TextBox m_rfbPort;
       ::innate_subsystem::TextBox m_httpPort;
@@ -139,7 +144,7 @@ namespace remoting_node
       //
 
       // Error notifications
-      ::innate_subsystem::Dialog *m_pdialogParent;
+      ::pointer < ::innate_subsystem::DialogInterface > m_pdialogParent;
 
       // Primary password control.
       PasswordControl *m_ppControl;

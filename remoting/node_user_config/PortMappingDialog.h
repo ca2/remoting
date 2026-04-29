@@ -39,7 +39,7 @@ namespace remoting_node
       PortMappingDialog();
       virtual ~PortMappingDialog();
 
-      void setParentDialog(::innate_subsystem::Dialog *dialog);
+      void setParentDialog(::innate_subsystem::DialogInterface * pdialog);;
 
    protected:
 
@@ -73,7 +73,7 @@ namespace remoting_node
 
       PortMappingContainer *m_extraPorts;
 
-      ::innate_subsystem::Dialog *m_pdialogParent;
+      ::pointer < ::innate_subsystem::DialogInterface > m_pdialogParent;
    };
 } // namespace remoting_node
 

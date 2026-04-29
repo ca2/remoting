@@ -47,7 +47,7 @@ namespace remoting_node
       virtual ~AdministrationConfigDialog();
    public:
 
-      void setParentDialog(::innate_subsystem::Dialog *dialog);
+      void setParentDialog(::innate_subsystem::DialogInterface * pdialog);;
 
       //
       // BaseDialog overrided methods
@@ -87,12 +87,12 @@ namespace remoting_node
       // Helper methods
       //
 
-      void getFolderName(const ::scoped_string & scopedstrKey, ::string & folder);
+      //void getFolderName(const ::scoped_string & scopedstrKey, ::string & folder);
 
    protected:
       // Configuration
       ::pointer < Configurator > m_pconfigurator;
-      ::pointer < ServerConfig > m_pserverconfig;
+      ::pointer < ::remoting_node::ServerConfig > m_pserverconfig;
       // Controls
       ::innate_subsystem::Control m_openLogPathButton;
       ::innate_subsystem::Control m_setControlPasswordButton;
@@ -105,7 +105,7 @@ namespace remoting_node
       ::innate_subsystem::CheckBox m_shared[5];
       ::innate_subsystem::CheckBox m_logForAllUsers;
       ::innate_subsystem::SpinControl m_logSpin;
-      ::innate_subsystem::Dialog *m_pdialogParent;
+      ::pointer < ::innate_subsystem::DialogInterface > m_pdialogParent;
 
       PasswordControl *m_cpControl;
 

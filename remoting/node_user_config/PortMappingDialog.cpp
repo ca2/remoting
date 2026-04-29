@@ -38,14 +38,14 @@ namespace remoting_node
    {
    }
 
-   void PortMappingDialog::setParentDialog(::innate_subsystem::Dialog *dialog)
+   void PortMappingDialog::setParentDialog(::innate_subsystem::DialogInterface * pdialog)
    {
-      m_pdialogParent = dialog;
+      m_pdialogParent = pdialog;
    }
 
    void PortMappingDialog::initControls()
-   {
       //HWND dialogHwnd = operating_sy//tem_window();
+   {
 
       dialog_item(m_exPortsListBox, IDC_MAPPINGS);
       dialog_item(m_editButton, IDC_EDIT_PORT);
@@ -109,23 +109,27 @@ namespace remoting_node
 
    void PortMappingDialog::onAddButtonClick()
    {
-      EditPortMappingDialog addDialog(EditPortMappingDialog::Add);
+
+
+      EditPortMappingDialog addDialog(m_pconfigurator, EditPortMappingDialog::Add);
 
       PortMapping newPM;
 
       addDialog.setMapping(&newPM);
-      addDialog.setParent(&m_ctrlThis);
+      addDialog.setParent(this);
 
-      if (addDialog.showModal() == ::innate_subsystem::IDOK) {
+      if (addDialog.showModal() == ::innate_subsystem::e_control_id_ok) {
          {
             ::string mappingString;
-            newPM.toString(&mappingString);
+            mappingString = newPM.toString();
             m_exPortsListBox.addString(mappingString);
          }
 
          m_extraPorts->pushBack(newPM);
 
-         ((ConfigDialog *)m_parent)->updateApplyButtonState();
+         auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+
+         pconfigdialog->updateApplyButtonState();
       }
    }
 
@@ -139,17 +143,19 @@ namespace remoting_node
 
       PortMapping *pPM = m_extraPorts->at(selectedIndex);
 
-      EditPortMappingDialog editDialog(EditPortMappingDialog::Edit);
+      EditPortMappingDialog editDialog(m_pconfigurator, EditPortMappingDialog::Edit);
 
-      editDialog.setParent(&m_ctrlThis);
+      editDialog.setParent(this);
       editDialog.setMapping(pPM);
 
-      if (editDialog.showModal() == ::innate_subsystem::IDOK) {
+      if (editDialog.showModal() == ::innate_subsystem::e_control_id_ok) {
          ::string mappingString;
-         pPM->toString(&mappingString);
+         mappingString = pPM->toString();
          m_exPortsListBox.setItemText(selectedIndex, mappingString);
 
-         ((ConfigDialog *)m_parent)->updateApplyButtonState();
+         auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+
+         pconfigdialog->updateApplyButtonState();
       }
    }
 
@@ -164,7 +170,9 @@ namespace remoting_node
       m_exPortsListBox.removeString(selectedIndex);
       m_extraPorts->remove(selectedIndex);
 
-      ((ConfigDialog *)m_parent)->updateApplyButtonState();
+      auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
+
+      pconfigdialog->updateApplyButtonState();
 
       //
       // Restore selection after item is removed.

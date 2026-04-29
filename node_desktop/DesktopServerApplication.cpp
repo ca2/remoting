@@ -29,7 +29,7 @@
 #include "subsystem/node/WTS.h"
 #include "subsystem/node/OperatingSystem.h"
 #include "subsystem/node/SharedMemory.h"
-#include "remoting/node_desktop/NamingDefs.h"
+#include "remoting/remoting/node/NamingDefs.h"
 #include "TimeAPI.h"
 #include "subsystem_windows/platform/subsystem.h"
 #include "subsystem_windows/node/WTS.h"

@@ -27,6 +27,7 @@
 #include "ConfigDialog.h"
 #include "UIDataAccess.h"
 #include "CommonInputValidation.h"
+#include "remoting/remoting/region/RectSerializer.h"
 #include "subsystem/platform/StringParser.h"
 
 namespace remoting_node
@@ -41,9 +42,9 @@ namespace remoting_node
    {
    }
 
-   void VideoRegionsConfigDialog::setParentDialog(::innate_subsystem::Dialog *dialog)
+   void VideoRegionsConfigDialog::setParentDialog(::innate_subsystem::DialogInterface * pdialog)
    {
-      m_pdialogParent = dialog;
+      m_pdialogParent = pdialog;
    }
 
    bool VideoRegionsConfigDialog::onInitDialog()
@@ -58,11 +59,14 @@ namespace remoting_node
    bool VideoRegionsConfigDialog::_002OnUpDown(int iControl, int iPos, int iDelta)
    {
 
-      if (controlID == IDC_VIDEO_RECOGNITION_INTERVAL_SPIN) {
-         LPNMUPDOWN scopedstrMessage = (LPNMUPDOWN)data;
-         if (scopedstrMessage->hdr.code == UDN_DELTAPOS) {
-            onRecognitionIntervalSpinChangePos(scopedstrMessage);
-         }
+      if (iControl == IDC_VIDEO_RECOGNITION_INTERVAL_SPIN)
+         {
+
+         onRecognitionIntervalSpinChangePos(iControl, iPos, iDelta);
+         // LPNMUPDOWN scopedstrMessage = (LPNMUPDOWN)data;
+         // if (scopedstrMessage->hdr.code == UDN_DELTAPOS) {
+         //    onRecognitionIntervalSpinChangePos(scopedstrMessage);
+         // }
       }
 
    }
@@ -101,32 +105,32 @@ namespace remoting_node
 
    void VideoRegionsConfigDialog::updateUI()
    {
-      ::string_array *videoClasses = m_config->getVideoClassNames();
-      ::int_rectangle_array_base *rectangleaVideo = m_config->getVideoRects();
+      ::string_array *videoClasses = m_pserverconfig->getVideoClassNames();
+      ::int_rectangle_array_base *rectangleaVideo = m_pserverconfig->getVideoRects();
       ::string textAreaData;
-      TCHAR endLine[3] = {13, 10, 0};
+      char endLine[3] = {13, 10, 0};
       {
-         critical_section_lock al(m_config);
+         AutoLock al(m_pserverconfig);
          textAreaData= "";
          for (size_t i = 0; i < videoClasses->size(); i++) {
-            textAreaData.appendString(videoClasses->at(i));
-            textAreaData.appendString(&endLine[0]);
+            textAreaData+= videoClasses->at(i);
+            textAreaData+=endLine;
          }
-         TCHAR buffer[32];
-         _ltot(m_config->getVideoRecognitionInterval(), &buffer[0], 10);
+         char buffer[32];
+         _itoa(m_pserverconfig->getVideoRecognitionInterval(), buffer, 10);
          m_videoRecognitionInterval.setText(buffer);
       }
       m_videoClasses.setText(textAreaData);
 
       {
-         critical_section_lock al(m_config);
+         AutoLock al(m_pserverconfig);
          textAreaData= "";
          for (size_t i = 0; i < rectangleaVideo->size(); i++) {
             ::int_rectangle r = rectangleaVideo->at(i);
             ::string s;
-            RectSerializer::toString(&r, &s);
-            textAreaData.appendString(s);
-            textAreaData.appendString(&endLine[0]);
+            ::remoting::RectSerializer::toString(r, s);
+            textAreaData+= s;
+            textAreaData+=endLine;
          }
       }
       m_videoRects.setText(textAreaData);
@@ -137,15 +141,15 @@ namespace remoting_node
       // FIXME: Bad code
 
 
-      critical_section_lock al(m_config);
+      AutoLock al(m_pserverconfig);
 
       //
       // Clear old video classes names container
       //
 
-      ::string_array *videoClasses = m_config->getVideoClassNames();
+      ::string_array *videoClasses = m_pserverconfig->getVideoClassNames();
       videoClasses->clear();
-      ::int_rectangle_array_base *rectangleaVideo = m_config->getVideoRects();
+      ::int_rectangle_array_base *rectangleaVideo = m_pserverconfig->getVideoRects();
       rectangleaVideo->clear();
 
       //
@@ -153,40 +157,59 @@ namespace remoting_node
       //
 
       ::string classNames;
-      m_videoClasses.getText(&classNames);
+      classNames = m_videoClasses.getText();
       size_t count = 0;
-      TCHAR delimiters[] = " \n\r\t,;";
 
-      classNames.split(delimiters, NULL, &count);
-      if (count != 0) {
-         ::string_array chunks(count);
-         classNames.split(delimiters, &chunks.front(), &count);
+      ::string_array delimiters;
 
-         for (size_t i = 0; i < count; i++) {
-            if (!chunks[i].is_empty()) {
-               videoClasses->add(chunks[i]);
-            }
+      delimiters.add("\n");
+      delimiters.add("\r");
+      delimiters.add("\t");
+      delimiters.add(",");
+      delimiters.add(";");
+      //char delimiters[] = " \n\r\t,;";
+
+      {
+         ::string_array_base chunks;
+
+         chunks.explode(delimiters, classNames, false);
+
+         for (auto &chunk : chunks)
+         {
+
+            videoClasses->add(chunk);
+
          }
       }
 
+
       ::string videoRectsStringStorage;
-      m_videoRects.getText(&videoRectsStringStorage);
+      videoRectsStringStorage = m_videoRects.getText();
       count = 0;
 
-      videoRectsStringStorage.split(delimiters, NULL, &count);
-      if (count != 0) {
-         ::string_array chunks(count);
-         videoRectsStringStorage.split(delimiters, &chunks.front(), &count);
 
-         for (size_t i = 0; i < count; i++) {
-            if (!chunks[i].is_empty()) {
-               try {
-                  rectangleaVideo->add(RectSerializer::toRect(&chunks[i]));
-               } catch (...) {
-                  // Ignore wrong formatted strings
-               }
+      {
+
+         ::string_array_base chunks;
+
+         chunks.explode(delimiters, videoRectsStringStorage, false);
+
+
+         for (auto &chunk : chunks)
+         {
+            try
+            {
+
+               auto rectangle = ::remoting::RectSerializer::toRect(chunk);
+                  rectangleaVideo->add(rectangle);
             }
+            catch (...)
+            {
+                  // Ignore wrong formatted strings
+            }
+
          }
+
       }
 
       //
@@ -195,20 +218,21 @@ namespace remoting_node
 
       ::string vriss;
 
-      m_videoRecognitionInterval.getText(&vriss);
+      vriss = m_videoRecognitionInterval.getText();
 
       int interval;
       MainSubsystem().StringParser().parseInt(vriss, &interval);
-      m_config->setVideoRecognitionInterval((unsigned int)interval);
+      m_pserverconfig->setVideoRecognitionInterval((unsigned int)interval);
+
    }
 
    void VideoRegionsConfigDialog::initControls()
    {
-      HWND hwnd = m_ctrlThis.operating_system_window();
-      m_videoClasses.setWindow(GetDlgItem(hwnd, IDC_VIDEO_CLASS_NAMES));
-      m_videoRects.setWindow(GetDlgItem(hwnd, IDC_VIDEO_RECTS));
-      m_videoRecognitionInterval.setWindow(GetDlgItem(hwnd, IDC_VIDEO_RECOGNITION_INTERVAL));
-      m_videoRecognitionIntervalSpin.setWindow(GetDlgItem(hwnd, IDC_VIDEO_RECOGNITION_INTERVAL_SPIN));
+      //HWND hwnd = operating_system_window();
+      dialog_item(m_videoClasses, IDC_VIDEO_CLASS_NAMES);
+      dialog_item(m_videoRects, IDC_VIDEO_RECTS);
+      dialog_item(m_videoRecognitionInterval, IDC_VIDEO_RECOGNITION_INTERVAL);
+      dialog_item(m_videoRecognitionIntervalSpin, IDC_VIDEO_RECOGNITION_INTERVAL_SPIN);
 
       int limitersTmp[] = {50, 200};
       int deltasTmp[] = {5, 10};
@@ -221,23 +245,30 @@ namespace remoting_node
       m_videoRecognitionIntervalSpin.setBuddy(&m_videoRecognitionInterval);
       m_videoRecognitionIntervalSpin.setAccel(0, 1);
       m_videoRecognitionIntervalSpin.setRange32(0, INT_MAX);
-      m_videoRecognitionIntervalSpin.setAutoAccelerationParams(&limitters, &deltas, 50);
+      m_videoRecognitionIntervalSpin.setAutoAccelerationParams(limitters, deltas, 50);
       m_videoRecognitionIntervalSpin.enableAutoAcceleration(true);
    }
 
-   void VideoRegionsConfigDialog::onRecognitionIntervalSpinChangePos(LPNMUPDOWN scopedstrMessage)
+   void VideoRegionsConfigDialog::onRecognitionIntervalSpinChangePos(int iControl, int iPos, int iDelta)
    {
-      m_videoRecognitionIntervalSpin.autoAccelerationHandler(scopedstrMessage);
+      if (iControl == IDC_VIDEO_RECOGNITION_INTERVAL_SPIN)
+      {
+         m_videoRecognitionIntervalSpin.autoAccelerationHandler(iPos, iDelta);
+      }
    }
 
    void VideoRegionsConfigDialog::onRecognitionIntervalUpdate()
    {
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+
+   auto pconfigdialog = m_pdialogParent->get_callback < ConfigDialog >();
+
+      pconfigdialog->updateApplyButtonState();
    }
 
    void VideoRegionsConfigDialog::onVideoRegionsUpdate()
    {
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+   auto pconfigdialog = m_pdialogParent->get_callback < ConfigDialog >();
+      pconfigdialog->updateApplyButtonState();
    }
 } // namespace remoting_node
 

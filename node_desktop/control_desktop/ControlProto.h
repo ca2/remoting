@@ -125,7 +125,7 @@ namespace remoting_control_desktop
       /**
        * Send new configuration to TightVNC server.
        * Request body:
-       *   serialized ServerConfig.
+       *   serialized ::remoting_node::ServerConfig.
        * Reply body: [empty].
        */
       static const unsigned int SET_CONFIG_MSG_ID = 0x10;
@@ -146,7 +146,7 @@ namespace remoting_control_desktop
        * Get current configuration of TightVNC server.
        * Request body: [empty].
        * Reply body:
-       *   serialized ServerConfig.
+       *   serialized ::remoting_node::ServerConfig.
        */
       static const unsigned int GET_CONFIG_MSG_ID = 0x12;
 

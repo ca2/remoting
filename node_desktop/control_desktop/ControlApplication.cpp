@@ -134,7 +134,7 @@ namespace remoting_control_desktop
       if (cmdLineParser.hasSetControlPasswordFlag() || cmdLineParser.hasSetVncPasswordFlag()) {
          m_pconfigurator->setServiceFlag(true);
          m_pconfigurator->load();
-         ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
+         ::remoting_node::ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
          unsigned char cryptedPass[8];
          if (cmdLineParser.hasSetControlPasswordFlag()) {
             getCryptedPassword(cryptedPass, cmdLineParser.getControlPassword());
@@ -465,7 +465,7 @@ namespace remoting_control_desktop
    {
       m_pconfigurator->setServiceFlag(true);
       m_pconfigurator->load();
-      ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
+      ::remoting_node::ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
 
       bool askToChangeRfbAuth = !config->isUsingAuthentication() || !config->hasPrimaryPassword();
       bool askToChangeAdmAuth = false;

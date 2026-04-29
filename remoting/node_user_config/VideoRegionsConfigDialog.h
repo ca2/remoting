@@ -39,7 +39,7 @@ namespace remoting_node
       VideoRegionsConfigDialog(Configurator *pconfigurator);
       virtual ~VideoRegionsConfigDialog();
 
-      void setParentDialog(::innate_subsystem::Dialog *dialog);
+      void setParentDialog(::innate_subsystem::DialogInterface * pdialog);;
 
       //
       // BaseDialog overrided methods
@@ -68,18 +68,18 @@ namespace remoting_node
       // ::innate_subsystem::Control event handlers
       //
 
-      //void onRecognitionIntervalSpinChangePos(int iControlID, int iPos, int iDelta);
+      void onRecognitionIntervalSpinChangePos(int iControlID, int iPos, int iDelta);
       void onRecognitionIntervalUpdate();
       void onVideoRegionsUpdate();
 
    protected:
       ::pointer < Configurator > m_pconfigurator;
-      ::pointer < ServerConfig > m_pserverconfig;
+      ::pointer < ::remoting_node::ServerConfig > m_pserverconfig;
       ::innate_subsystem::TextBox m_videoClasses;
       ::innate_subsystem::TextBox m_videoRects;
       ::innate_subsystem::TextBox m_videoRecognitionInterval;
       ::innate_subsystem::SpinControl m_videoRecognitionIntervalSpin;
-      ::innate_subsystem::Dialog *m_pdialogParent;
+      ::pointer < ::innate_subsystem::DialogInterface > m_pdialogParent;
    };
 } // namespace remoting_node
 

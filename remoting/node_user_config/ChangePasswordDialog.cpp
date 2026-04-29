@@ -31,11 +31,11 @@
 //#include "subsystem/platform/::string.h"
 namespace remoting_node
 {
-   ChangePasswordDialog::ChangePasswordDialog(::innate_subsystem::Control *parent, bool isNewPassword)
+   ChangePasswordDialog::ChangePasswordDialog(::innate_subsystem::WindowInterface *pwindowParent, bool isNewPassword)
    : m_allowEmptyPassword(false), m_newPassword(isNewPassword)
    {
        initialize_dialog(IDD_CHANGE_PASSWORD);
-      setParent(parent);
+      setParent(pwindowParent);
 
       m_passwordEmptyTooltip.setText(MainSubsystem().StringTable().getString(IDS_PASSWORD_IS_EMPTY));
       m_passwordEmptyTooltip.setTitle(MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL));
@@ -118,7 +118,7 @@ namespace remoting_node
 
    void ChangePasswordDialog::initControls()
    {
-      //HWND hwnd = m_ctrlThis.operating_system_window();
+      //HWND hwnd = operating_system_window();
       dialog_item(m_password1, IDC_PASSWORD);
       dialog_item(m_password2, IDC_PASSWORD2);
 

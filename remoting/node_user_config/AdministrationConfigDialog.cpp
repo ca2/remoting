@@ -37,7 +37,7 @@
 #include "subsystem/platform/StringTable.h"
 #include "subsystem/node/Process.h"
 #include "remoting/remoting/node/NamingDefs.h"
-
+#include "subsystem/node/OperatingSystem.h"
 
 
 namespace remoting_node
@@ -54,9 +54,9 @@ namespace remoting_node
    {
    }
 
-   void AdministrationConfigDialog::setParentDialog(::innate_subsystem::Dialog *dialog)
+   void AdministrationConfigDialog::setParentDialog(::innate_subsystem::DialogInterface * pdialog)
    {
-      m_pdialogParent = dialog;
+      m_pdialogParent = pdialog;
    }
 
    bool AdministrationConfigDialog::onInitDialog()
@@ -132,9 +132,9 @@ namespace remoting_node
       bool passwordSpecified = m_cpControl->getState() == PasswordControl::OldPassword ||
                                m_cpControl->getState() == PasswordControl::NewPassword;
 
-      // FIXME: Code duplicate (see ServerConfigDialog class).
+      // FIXME: Code duplicate (see ::remoting_node::ServerConfigDialog class).
       if (!passwordSpecified && m_useControlAuth.isChecked()) {
-         MainSubsystem().message_box(m_ctrlThis.operating_system_window(),
+         MainSubsystem().message_box(operating_system_window(),
                     MainSubsystem().StringTable().getString(IDS_SET_CONTROL_PASSWORD_NOTIFICATION),
                     MainSubsystem().StringTable().getString(IDS_CAPTION_BAD_INPUT), MB_ICONSTOP | ::user::e_message_box_ok);
          return false;
@@ -145,17 +145,17 @@ namespace remoting_node
 
    void AdministrationConfigDialog::updateUI()
    {
-      m_logLevel.setSignedInt(m_config->getLogLevel());
+      m_logLevel.setSignedInt(m_pserverconfig->getLogLevel());
 
-      m_useControlAuth.check(m_config->isControlAuthEnabled());
-      m_repeatControlAuth.check(m_config->getControlAuthAlwaysChecking());
+      m_useControlAuth.setChecked(m_pserverconfig->isControlAuthEnabled());
+      m_repeatControlAuth.setChecked(m_pserverconfig->getControlAuthAlwaysChecking());
       m_repeatControlAuth.enableWindow(m_useControlAuth.isChecked());
 
-      ConfigDialog *configDialog = (ConfigDialog *)m_pdialogParent;
+      auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
 
       ::string logPath;
 
-      m_config->getLogFileDir(&logPath);
+      m_pserverconfig->getLogFileDir(logPath);
 
       if (logPath.is_empty()) {
          logPath= MainSubsystem().StringTable().getString(IDS_LOGPATH_UNAVALIABLE);
@@ -165,35 +165,40 @@ namespace remoting_node
 
       m_logPathTB.setText(logPath);
 
-      ::string folder;
-      getFolderName(logPath, &folder);
+      auto folder = file_path_folder(logPath);
 
-      ::file::item folderFile(folder);
+      //::string folder;
+      //getFolderName(logPath, &folder);
 
-      if (folderFile.canRead()) {
+      ::file::path pathFolder(folder);
+
+      //::f
+      //::file::item folderFile(folder);
+
+      if (MainSubsystem().OperatingSystem().file_canRead(pathFolder)) {
          m_openLogPathButton.enableWindow(true);
       } else {
          m_openLogPathButton.enableWindow(false);
       }
 
       for (int i = 0; i < 5; i++) {
-         m_shared[0].check(false);
+         m_shared[0].setChecked(false);
       }
 
-      if (m_config->isAlwaysShared() && !m_config->isNeverShared() && !m_config->isDisconnectingExistingClients()) {
-         m_shared[0].check(true);
+      if (m_pserverconfig->isAlwaysShared() && !m_pserverconfig->isNeverShared() && !m_pserverconfig->isDisconnectingExistingClients()) {
+         m_shared[0].setChecked(true);
       }
-      if (!m_config->isAlwaysShared() && m_config->isNeverShared() && !m_config->isDisconnectingExistingClients()) {
-         m_shared[1].check(true);
+      if (!m_pserverconfig->isAlwaysShared() && m_pserverconfig->isNeverShared() && !m_pserverconfig->isDisconnectingExistingClients()) {
+         m_shared[1].setChecked(true);
       }
-      if (!m_config->isAlwaysShared() && m_config->isNeverShared() && m_config->isDisconnectingExistingClients()) {
-         m_shared[2].check(true);
+      if (!m_pserverconfig->isAlwaysShared() && m_pserverconfig->isNeverShared() && m_pserverconfig->isDisconnectingExistingClients()) {
+         m_shared[2].setChecked(true);
       }
-      if (!m_config->isAlwaysShared() && !m_config->isNeverShared() && !m_config->isDisconnectingExistingClients()) {
-         m_shared[3].check(true);
+      if (!m_pserverconfig->isAlwaysShared() && !m_pserverconfig->isNeverShared() && !m_pserverconfig->isDisconnectingExistingClients()) {
+         m_shared[3].setChecked(true);
       }
-      if (!m_config->isAlwaysShared() && !m_config->isNeverShared() && m_config->isDisconnectingExistingClients()) {
-         m_shared[4].check(true);
+      if (!m_pserverconfig->isAlwaysShared() && !m_pserverconfig->isNeverShared() && m_pserverconfig->isDisconnectingExistingClients()) {
+         m_shared[4].setChecked(true);
       }
 
       //
@@ -201,43 +206,43 @@ namespace remoting_node
       //
 
       for (int i = 0; i < 3; i++) {
-         m_disconnectAction[i].check(false);
+         m_disconnectAction[i].setChecked(false);
       }
-      switch (m_config->getDisconnectAction()) {
-         case ServerConfig::DA_DO_NOTHING:
-            m_disconnectAction[0].check(true);
+      switch (m_pserverconfig->getDisconnectAction()) {
+         case ::remoting_node::ServerConfig::DA_DO_NOTHING:
+            m_disconnectAction[0].setChecked(true);
             break;
-         case ServerConfig::DA_LOCK_WORKSTATION:
-            m_disconnectAction[1].check(true);
+         case ::remoting_node::ServerConfig::DA_LOCK_WORKSTATION:
+            m_disconnectAction[1].setChecked(true);
             break;
-         case ServerConfig::DA_LOGOUT_WORKSTATION:
-            m_disconnectAction[2].check(true);
+         case ::remoting_node::ServerConfig::DA_LOGOUT_WORKSTATION:
+            m_disconnectAction[2].setChecked(true);
             break;
       }
 
-      m_logForAllUsers.check(m_config->isSaveLogToAllUsersPathFlagEnabled());
+      m_logForAllUsers.setChecked(m_pserverconfig->isSaveLogToAllUsersPathFlagEnabled());
 
-      if (m_config->hasControlPassword()) {
+      if (m_pserverconfig->hasControlPassword()) {
          unsigned char cryptedPassword[8];
 
-         m_config->getControlPassword(cryptedPassword);
+         m_pserverconfig->getControlPassword(cryptedPassword);
 
          m_cpControl->setCryptedPassword((char *)cryptedPassword);
       }
 
-      m_cpControl->enableWindow(m_config->isControlAuthEnabled());
+      m_cpControl->enableWindow(m_pserverconfig->isControlAuthEnabled());
    }
 
    void AdministrationConfigDialog::apply()
    {
       ::string logLevelStringStorage;
-      m_logLevel.getText(&logLevelStringStorage);
+      logLevelStringStorage = m_logLevel.getText();
 
       int logLevel = 0;
 
       MainSubsystem().StringParser().parseInt(logLevelStringStorage, &logLevel);
 
-      m_config->setLogLevel(logLevel);
+      m_pserverconfig->setLogLevel(logLevel);
 
       bool alwaysShared = false;
       bool neverShared = false;
@@ -265,55 +270,55 @@ namespace remoting_node
          disconnectClients = true;
       }
 
-      m_config->useControlAuth(m_useControlAuth.isChecked());
-      m_config->setControlAuthAlwaysChecking(m_repeatControlAuth.isChecked());
+      m_pserverconfig->useControlAuth(m_useControlAuth.isChecked());
+      m_pserverconfig->setControlAuthAlwaysChecking(m_repeatControlAuth.isChecked());
 
       if (m_cpControl->getState() == PasswordControl::NewPassword) {
-         m_config->setControlPassword((const unsigned char *)m_cpControl->getCryptedPassword());
+         m_pserverconfig->setControlPassword((const unsigned char *)m_cpControl->getCryptedPassword());
       }
       if (m_cpControl->getState() == PasswordControl::ResetPassword) {
-         m_config->deleteControlPassword();
+         m_pserverconfig->deleteControlPassword();
       }
 
       if (m_disconnectAction[0].isChecked()) {
-         m_config->setDisconnectAction(ServerConfig::DA_DO_NOTHING);
+         m_pserverconfig->setDisconnectAction(::remoting_node::ServerConfig::DA_DO_NOTHING);
       } else if (m_disconnectAction[1].isChecked()) {
-         m_config->setDisconnectAction(ServerConfig::DA_LOCK_WORKSTATION);
+         m_pserverconfig->setDisconnectAction(::remoting_node::ServerConfig::DA_LOCK_WORKSTATION);
       } else if (m_disconnectAction[2].isChecked()) {
-         m_config->setDisconnectAction(ServerConfig::DA_LOGOUT_WORKSTATION);
+         m_pserverconfig->setDisconnectAction(::remoting_node::ServerConfig::DA_LOGOUT_WORKSTATION);
       }
 
-      m_config->setAlwaysShared(alwaysShared);
-      m_config->setNeverShared(neverShared);
-      m_config->disconnectExistingClients(disconnectClients);
-      m_config->saveLogToAllUsersPath(m_logForAllUsers.isChecked());
+      m_pserverconfig->setAlwaysShared(alwaysShared);
+      m_pserverconfig->setNeverShared(neverShared);
+      m_pserverconfig->disconnectExistingClients(disconnectClients);
+      m_pserverconfig->saveLogToAllUsersPath(m_logForAllUsers.isChecked());
    }
 
    void AdministrationConfigDialog::initControls()
    {
-      HWND hwnd = m_ctrlThis.operating_system_window();
-      m_logLevel.setWindow(GetDlgItem(hwnd, IDC_LOG_LEVEL));
-      m_logPathTB.setWindow(GetDlgItem(hwnd, IDC_LOG_FILEPATH_EDIT));
+      //HWND hwnd = operating_system_window();
+      dialog_item(m_logLevel, IDC_LOG_LEVEL);
+      dialog_item(m_logPathTB, IDC_LOG_FILEPATH_EDIT);
 
-      m_openLogPathButton.setWindow(GetDlgItem(hwnd, IDC_OPEN_LOG_FOLDER_BUTTON));
-      m_setControlPasswordButton.setWindow(GetDlgItem(hwnd, IDC_CONTROL_PASSWORD_BUTTON));
-      m_unsetControlPasswordButton.setWindow(GetDlgItem(hwnd, IDC_UNSET_CONTROL_PASWORD_BUTTON));
-      m_useControlAuth.setWindow(GetDlgItem(hwnd, IDC_USE_CONTROL_AUTH_CHECKBOX));
-      m_repeatControlAuth.setWindow(GetDlgItem(hwnd, IDC_REPEAT_CONTROL_AUTH_CHECKBOX));
+      dialog_item(m_openLogPathButton, IDC_OPEN_LOG_FOLDER_BUTTON);
+      dialog_item(m_setControlPasswordButton, IDC_CONTROL_PASSWORD_BUTTON);
+      dialog_item(m_unsetControlPasswordButton, IDC_UNSET_CONTROL_PASWORD_BUTTON);
+      dialog_item(m_useControlAuth, IDC_USE_CONTROL_AUTH_CHECKBOX);
+      dialog_item(m_repeatControlAuth, IDC_REPEAT_CONTROL_AUTH_CHECKBOX);
 
-      m_shared[0].setWindow(GetDlgItem(hwnd, IDC_SHARED_RADIO1));
-      m_shared[1].setWindow(GetDlgItem(hwnd, IDC_SHARED_RADIO2));
-      m_shared[2].setWindow(GetDlgItem(hwnd, IDC_SHARED_RADIO3));
-      m_shared[3].setWindow(GetDlgItem(hwnd, IDC_SHARED_RADIO4));
-      m_shared[4].setWindow(GetDlgItem(hwnd, IDC_SHARED_RADIO5));
+      dialog_item(m_shared[0], IDC_SHARED_RADIO1);
+      dialog_item(m_shared[1], IDC_SHARED_RADIO2);
+      dialog_item(m_shared[2], IDC_SHARED_RADIO3);
+      dialog_item(m_shared[3], IDC_SHARED_RADIO4);
+      dialog_item(m_shared[4], IDC_SHARED_RADIO5);
 
-      m_disconnectAction[0].setWindow(GetDlgItem(hwnd, IDC_DO_NOTHING));
-      m_disconnectAction[1].setWindow(GetDlgItem(hwnd, IDC_LOCK_WORKSTATION));
-      m_disconnectAction[2].setWindow(GetDlgItem(hwnd, IDC_LOGOFF_WORKSTATION));
+      dialog_item(m_disconnectAction[0], IDC_DO_NOTHING);
+      dialog_item(m_disconnectAction[1], IDC_LOCK_WORKSTATION);
+      dialog_item(m_disconnectAction[2], IDC_LOGOFF_WORKSTATION);
 
-      m_logForAllUsers.setWindow(GetDlgItem(hwnd, IDC_LOG_FOR_ALL_USERS));
+      dialog_item(m_logForAllUsers, IDC_LOG_FOR_ALL_USERS);
 
-      m_logSpin.setWindow(GetDlgItem(hwnd, IDC_LOG_LEVEL_SPIN));
+      dialog_item(m_logSpin, IDC_LOG_LEVEL_SPIN);
 
       m_logSpin.setBuddy(&m_logLevel);
       m_logSpin.setRange(0, 10);
@@ -325,13 +330,15 @@ namespace remoting_node
    void AdministrationConfigDialog::onShareRadioButtonClick(int number)
    {
       if (!m_shared[number].isChecked()) {
-         m_shared[number].check(true);
+         m_shared[number].setChecked(true);
          for (int i = 0; i < 5; i++) {
             if (i != number) {
-               m_shared[i].check(false);
+               m_shared[i].setChecked(false);
             } // if
          } // for
-         ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+
+         auto pconfigdialog = m_pdialogParent->get_callback< ConfigDialog>();
+         pconfigdialog->updateApplyButtonState();
       } // if
    }
 
@@ -339,14 +346,15 @@ namespace remoting_node
    {
       ::string logDir;
 
-      m_config->getLogFileDir(&logDir);
+      m_pserverconfig->getLogFileDir(logDir);
 
       ::string command;
 
       command.formatf("explorer /select,{}\\{}.log", logDir,
                      LogNames::SERVER_LOG_FILE_STUB_NAME);
 
-      Process explorer(command);
+      ::subsystem::Process explorer;
+      explorer.initialize_process(command);
 
       try {
          explorer.start();
@@ -358,19 +366,21 @@ namespace remoting_node
    void AdministrationConfigDialog::onDARadioButtonClick(int number)
    {
       if (!m_disconnectAction[number].isChecked()) {
-         m_disconnectAction[number].check(true);
+         m_disconnectAction[number].setChecked(true);
          for (int i = 0; i < 3; i++) {
             if (i != number) {
-               m_disconnectAction[i].check(false);
+               m_disconnectAction[i].setChecked(false);
             } // if
          } // for
-         ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+         auto pconfigdialog = m_pdialogParent->get_callback< ConfigDialog>();
+         pconfigdialog->updateApplyButtonState();
       } // if
    }
 
    void AdministrationConfigDialog::onLogForAllUsersClick()
    {
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+      auto pconfigdialog = m_pdialogParent->get_callback< ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
    void AdministrationConfigDialog::onUseControlAuthClick()
@@ -378,49 +388,54 @@ namespace remoting_node
       m_cpControl->enableWindow(m_useControlAuth.isChecked());
       m_repeatControlAuth.enableWindow(m_useControlAuth.isChecked());
 
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+      auto pconfigdialog = m_pdialogParent->get_callback< ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
    void AdministrationConfigDialog::onRepeatControlAuthClick()
    {
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+      auto pconfigdialog = m_pdialogParent->get_callback< ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
    void AdministrationConfigDialog::onChangeControlPasswordClick()
    {
-      if (m_cpControl->showChangePasswordModalDialog(&m_ctrlThis)) {
-         ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+      if (m_cpControl->showChangePasswordModalDialog(this)) {
+         auto pconfigdialog = m_pdialogParent->get_callback< ConfigDialog>();
+         pconfigdialog->updateApplyButtonState();
       }
    }
 
    void AdministrationConfigDialog::onUnsetControlPasswordClick()
    {
-      m_cpControl->unsetPassword(true, m_ctrlThis.operating_system_window());
+      m_cpControl->unsetPassword(true, operating_system_window());
 
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+      auto pconfigdialog = m_pdialogParent->get_callback< ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
    void AdministrationConfigDialog::onLogLevelUpdate()
    {
-      ((ConfigDialog *)m_pdialogParent)->updateApplyButtonState();
+      auto pconfigdialog = m_pdialogParent->get_callback< ConfigDialog>();
+      pconfigdialog->updateApplyButtonState();
    }
 
+   // //
+   // // FIXME: Dublicating code (see RegistrySettingsManager::getFolderName method)
+   // //
    //
-   // FIXME: Dublicating code (see RegistrySettingsManager::getFolderName method)
-   //
-
-   void AdministrationConfigDialog::getFolderName(const ::scoped_string & scopedstrKey, ::string & folder)
-   {
-      ::array_base<TCHAR> folderString(_tcslen(key) + 1);
-      memcpy(&folderString.front(), key, folderString.size() * sizeof(TCHAR));
-      TCHAR *token = _tcsrchr(&folderString.front(), _T('\\'));
-      if (token != NULL) {
-         *token = _T('\0');
-         folder-= &folderString.front();
-      } else {
-         folder-= "";
-      }
-   }
+   // void AdministrationConfigDialog::getFolderName(const ::scoped_string & scopedstrKey, ::string & folder)
+   // {
+   //    ::array_base<TCHAR> folderString(_tcslen(key) + 1);
+   //    memcpy(&folderString.front(), key, folderString.size() * sizeof(TCHAR));
+   //    TCHAR *token = _tcsrchr(&folderString.front(), _T('\\'));
+   //    if (token != NULL) {
+   //       *token = _T('\0');
+   //       folder-= &folderString.front();
+   //    } else {
+   //       folder-= "";
+   //    }
+   // }
 } // namespace remoting_node
 
 

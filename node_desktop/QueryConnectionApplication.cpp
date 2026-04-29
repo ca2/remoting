@@ -35,7 +35,7 @@
 #include "subsystem/platform/CommandLineArguments.h"
 #include "subsystem/platform/ResourceLoader.h"
 #include "remoting/node_desktop/resource.h"
-#include "remoting/node_desktop/NamingDefs.h"
+#include "remoting/remoting/node/NamingDefs.h"
 #include "remoting/remoting/node_config/Configurator.h"
 
 namespace remoting_node_desktop

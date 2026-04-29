@@ -93,6 +93,17 @@ void PortMapping::toString(::string & string) const
   string.format("{}:{}", m_port, rectString);
 }
 
+::string PortMapping::toString() const
+{
+
+   ::string str;
+
+   toString(str);
+
+   return str;
+
+}
+
 bool PortMapping::parse(const char * psz, PortMapping *mapping)
 {
   int port;

@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "ServerConfig.h"
+#include "remoting/remoting/node_config/ServerConfig.h"
 
 
 namespace remoting
@@ -43,7 +43,7 @@ namespace remoting
 
       virtual void initialize_config_reload_listener(Configurator * pconfigurator);
 
-      virtual void onConfigReload(ServerConfig *serverConfig);
+      virtual void onConfigReload(::remoting_node::ServerConfig *serverConfig);
 
 
    };

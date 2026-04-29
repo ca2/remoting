@@ -320,7 +320,7 @@ namespace remoting
       return saveResult;
    }
 
-   bool Configurator::loadQueryConfig(::remoting::SettingsManager *sm, ServerConfig * pserverconfig)
+   bool Configurator::loadQueryConfig(::remoting::SettingsManager *sm, ::remoting_node::ServerConfig * pserverconfig)
    {
       bool loadResult = true;
       unsigned int uintValue;
@@ -368,7 +368,7 @@ namespace remoting
       return saveResult;
    }
 
-   bool Configurator::loadInputHandlingConfig(::remoting::SettingsManager *sm, ServerConfig * pserverconfig)
+   bool Configurator::loadInputHandlingConfig(::remoting::SettingsManager *sm, ::remoting_node::ServerConfig * pserverconfig)
    {
       bool loadResult = true;
 
@@ -462,7 +462,7 @@ namespace remoting
       return saveResult;
    }
 
-   bool Configurator::loadVideoRegionConfig(::remoting::SettingsManager *sm, ServerConfig * pserverconfig)
+   bool Configurator::loadVideoRegionConfig(::remoting::SettingsManager *sm, ::remoting_node::ServerConfig * pserverconfig)
    {
       bool loadResult = true;
 
@@ -691,11 +691,11 @@ namespace remoting
       }
       if (m_pserverconfig.hasPrimaryPassword())
       {
-         unsigned char password[ServerConfig::VNC_PASSWORD_SIZE];
+         unsigned char password[::remoting_node::ServerConfig::VNC_PASSWORD_SIZE];
 
          m_pserverconfig.getPrimaryPassword(&password[0]);
 
-         if (!sm->setBinaryData("Password", &password[0], ServerConfig::VNC_PASSWORD_SIZE))
+         if (!sm->setBinaryData("Password", &password[0], ::remoting_node::ServerConfig::VNC_PASSWORD_SIZE))
          {
             saveResult = false;
          }
@@ -706,11 +706,11 @@ namespace remoting
       }
       if (m_pserverconfig.hasReadOnlyPassword())
       {
-         unsigned char password[ServerConfig::VNC_PASSWORD_SIZE];
+         unsigned char password[::remoting_node::ServerConfig::VNC_PASSWORD_SIZE];
 
          m_pserverconfig.getReadOnlyPassword(&password[0]);
 
-         if (!sm->setBinaryData("PasswordViewOnly", &password[0], ServerConfig::VNC_PASSWORD_SIZE))
+         if (!sm->setBinaryData("PasswordViewOnly", &password[0], ::remoting_node::ServerConfig::VNC_PASSWORD_SIZE))
          {
             saveResult = false;
          }
@@ -721,11 +721,11 @@ namespace remoting
       }
       if (m_pserverconfig.hasControlPassword())
       {
-         unsigned char password[ServerConfig::VNC_PASSWORD_SIZE];
+         unsigned char password[::remoting_node::ServerConfig::VNC_PASSWORD_SIZE];
 
          m_pserverconfig.getControlPassword(&password[0]);
 
-         if (!sm->setBinaryData("ControlPassword", &password[0], ServerConfig::VNC_PASSWORD_SIZE))
+         if (!sm->setBinaryData("ControlPassword", &password[0], ::remoting_node::ServerConfig::VNC_PASSWORD_SIZE))
          {
             saveResult = false;
          }
@@ -781,7 +781,7 @@ namespace remoting
       return saveResult;
    }
 
-   bool Configurator::loadServerConfig(::remoting::SettingsManager *sm, ServerConfig * pserverconfig)
+   bool Configurator::loadServerConfig(::remoting::SettingsManager *sm, ::remoting_node::ServerConfig * pserverconfig)
    {
       bool loadResult = true;
 
@@ -816,7 +816,7 @@ namespace remoting
       else
       {
          m_isConfigLoadedPartly = true;
-         m_pserverconfig.setDisconnectAction((ServerConfig::DisconnectAction)uintVal);
+         m_pserverconfig.setDisconnectAction((::remoting_node::ServerConfig::DisconnectAction)uintVal);
       }
       if (!sm->getBoolean("AcceptRfbConnections", &boolVal))
       {
@@ -928,7 +928,7 @@ namespace remoting
       }
 
       memsize passSize = 8;
-      unsigned char buffer[ServerConfig::VNC_PASSWORD_SIZE] = {0};
+      unsigned char buffer[::remoting_node::ServerConfig::VNC_PASSWORD_SIZE] = {0};
 
       if (!sm->getBinaryData("Password", (void *)&buffer, &passSize))
       {

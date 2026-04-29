@@ -36,7 +36,7 @@ namespace remoting
       static void vncAuthenticate(::DataInputStream * pinput, ::DataOutputStream * pdataoutputstream,
                         const ::scoped_string & password);
 
-      // TODO: removed duplicate code: ServerConfig.h
+      // TODO: removed duplicate code: ::remoting_node::ServerConfig.h
       static const int VNC_PASSWORD_SIZE = 8;
    };
 } // namespace remoting

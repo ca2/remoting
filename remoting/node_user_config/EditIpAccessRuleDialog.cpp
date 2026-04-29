@@ -166,7 +166,7 @@ namespace remoting_node
 
    void EditIpAccessRuleDialog::initControls()
    {
-      //HWND hwnd = m_ctrlThis.operating_system_window();
+      //HWND hwnd = operating_system_window();
 
       dialog_item(m_firstIp, IDC_FIRST_IP);
       dialog_item(m_lastIp, IDC_LAST_IP);

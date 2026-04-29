@@ -72,7 +72,7 @@ namespace remoting
       // Protected members read methods
       //
 
-      ServerConfig *getServerConfig() { return m_pserverconfig; }
+      ::remoting_node::ServerConfig *getServerConfig() { return m_pserverconfig; }
 
    //private:
 
@@ -87,17 +87,17 @@ namespace remoting
       bool loadIpAccessControlContainer(::remoting::SettingsManager *psettingsmanager, IpAccessControl *ipContainer);
 
       bool saveServerConfig(::remoting::SettingsManager *psettingsmanager);
-      bool loadServerConfig(::remoting::SettingsManager *psettingsmanager, ServerConfig * pserverconfig);
+      bool loadServerConfig(::remoting::SettingsManager *psettingsmanager, ::remoting_node::ServerConfig * pserverconfig);
       void updateLogDirPath();
 
       bool saveQueryConfig(::remoting::SettingsManager *psettingsmanager);
-      bool loadQueryConfig(::remoting::SettingsManager *psettingsmanager, ServerConfig * pserverconfig);
+      bool loadQueryConfig(::remoting::SettingsManager *psettingsmanager, ::remoting_node::ServerConfig * pserverconfig);
 
       bool saveInputHandlingConfig(::remoting::SettingsManager *psettingsmanager);
-      bool loadInputHandlingConfig(::remoting::SettingsManager *psettingsmanager, ServerConfig * pserverconfig);
+      bool loadInputHandlingConfig(::remoting::SettingsManager *psettingsmanager, ::remoting_node::ServerConfig * pserverconfig);
 
       bool saveVideoRegionConfig(::remoting::SettingsManager *psettingsmanager);
-      bool loadVideoRegionConfig(::remoting::SettingsManager *psettingsmanager, ServerConfig * pserverconfig);
+      bool loadVideoRegionConfig(::remoting::SettingsManager *psettingsmanager, ::remoting_node::ServerConfig * pserverconfig);
 
       bool save(::remoting::SettingsManager *psettingsmanager);
       bool load(::remoting::SettingsManager *psettingsmanager);
@@ -110,7 +110,7 @@ namespace remoting
       // Server configuration
       //
 
-      ::pointer < ServerConfig > m_pserverconfig;
+      ::pointer < ::remoting_node::ServerConfig > m_pserverconfig;
 
       //
       // Is this flag is set configurator think than application run as service
