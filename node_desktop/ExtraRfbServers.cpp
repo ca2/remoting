@@ -23,8 +23,8 @@
 //
 #include "framework.h"
 #include "ExtraRfbServers.h"
-#include "remoting/remoting/server_config/Configurator.h"
-#include "remoting/remoting/server_config/ServerConfig.h"
+#include "remoting/remoting/node_config/Configurator.h"
+#include "remoting/remoting/node_config/ServerConfig.h"
 
 namespace remoting_node_desktop
 {

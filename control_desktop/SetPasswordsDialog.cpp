@@ -31,7 +31,7 @@
 
 #include "SetPasswordsDialog.h"
 
-#include "port/base/archive/archive/libarchive/archive_windows.h"
+//#include "port/base/archive/archive/libarchive/archive_windows.h"
 #include "remoting/node_desktop/resource.h"
 //#include "subsystem/platform/::string.h"
 
@@ -39,12 +39,13 @@ namespace remoting_control_desktop
 {
    SetPasswordsDialog::SetPasswordsDialog(bool initStateOfUseRfbAuth,
                                           bool initStateOfUseAdminAuth)
-   : BaseDialog(IDD_SET_PASSWORDS),
+   :
      m_dontChangeRfbAuth(!initStateOfUseRfbAuth),
      m_useRfbAuth(initStateOfUseRfbAuth),
      m_dontChangeAdmAuth(!initStateOfUseAdminAuth),
      m_protectControlInterface(initStateOfUseAdminAuth)
    {
+      initialize_dialog(IDD_SET_PASSWORDS),
       m_passwordEmptyTooltip.setText(MainSubsystem().StringTable().getString(IDS_PASSWORD_IS_EMPTY));
       m_passwordEmptyTooltip.setTitle(MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL));
 
@@ -61,7 +62,7 @@ namespace remoting_control_desktop
 
    void SetPasswordsDialog::getRfbPass(::string & pass)
    {
-      *pass = m_rfbPass;
+      pass = m_rfbPass;
    }
 
    bool SetPasswordsDialog::getUseRfbPass()
@@ -86,26 +87,24 @@ namespace remoting_control_desktop
 
    void SetPasswordsDialog::getAdmPass(::string & pass)
    {
-      *pass = m_admPass;
+      pass = m_admPass;
    }
 
    void SetPasswordsDialog::initControls()
    {
-      HWND window = m_ctrlThis.operating_system_window();
+      //HWND window = m_ctrlThis.operating_system_window();
 
-      m_dontChangeRfbAuthSettingsRadio.setWindow(GetDlgItem(window,
-        IDC_DONT_CHANGE_RFB_AUTH_SETTINGS_RADIO));
-      m_dontUseRfbAuthRadio.setWindow(GetDlgItem(window, IDC_DONT_USE_RFB_AUTH_RADIO));
-      m_useRfbAuthRadio.setWindow(GetDlgItem(window, IDC_USE_RFB_AUTH_RADIO));
-      m_rfbPassEdit1.setWindow(GetDlgItem(window, IDC_ENTER_RFB_PASSWORD));
-      m_rfbPassEdit2.setWindow(GetDlgItem(window, IDC_CONFIRM_RFB_PASSWORD));
+      dialog_item(m_dontChangeRfbAuthSettingsRadio, IDC_DONT_CHANGE_RFB_AUTH_SETTINGS_RADIO);
+      dialog_item(m_dontUseRfbAuthRadio, IDC_DONT_USE_RFB_AUTH_RADIO);
+      dialog_item(m_useRfbAuthRadio, IDC_USE_RFB_AUTH_RADIO);
+      dialog_item(m_rfbPassEdit1, IDC_ENTER_RFB_PASSWORD);
+      dialog_item(m_rfbPassEdit2, IDC_CONFIRM_RFB_PASSWORD);
 
-      m_dontChangeAdminAuthSettingsRadio.setWindow(GetDlgItem(window,
-        IDC_DONT_CHANGE_CONTROL_PROTECTION_SETTINGS_RADIO));
-      m_dontUseAdminAuthRadio.setWindow(GetDlgItem(window, IDC_DONT_USE_CONTROL_PROTECTION_RADIO));
-      m_useAdminAuthRadio.setWindow(GetDlgItem(window, IDC_PROTECT_CONTROL_INTERFACE_RADIO));
-      m_admPassEdit1.setWindow(GetDlgItem(window, IDC_ENTER_ADMIN_PASSWORD));
-      m_admPassEdit2.setWindow(GetDlgItem(window, IDC_CONFIRM_ADMIN_PASSWORD));
+      dialog_item(m_dontChangeAdminAuthSettingsRadio, IDC_DONT_CHANGE_CONTROL_PROTECTION_SETTINGS_RADIO);
+      dialog_item(m_dontUseAdminAuthRadio, IDC_DONT_USE_CONTROL_PROTECTION_RADIO);
+      dialog_item(m_useAdminAuthRadio, IDC_PROTECT_CONTROL_INTERFACE_RADIO);
+      dialog_item(m_admPassEdit1, IDC_ENTER_ADMIN_PASSWORD);
+      dialog_item(m_admPassEdit2, IDC_CONFIRM_ADMIN_PASSWORD);
 
       m_rfbPassEdit1.setTextLengthLimit(8);
       m_rfbPassEdit2.setTextLengthLimit(8);

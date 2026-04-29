@@ -25,7 +25,7 @@
 #include "subsystem/_common_header.h"
 #include "Poller.h"
 #include "remoting/remoting/region/Region.h"
-#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/node_config/Configurator.h"
 
 namespace remoting
 {

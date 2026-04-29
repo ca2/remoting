@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "DesktopWinImpl.h"
-#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/node_config/Configurator.h"
 #include "remoting/remoting/desktop_ipc/UpdateHandlerClient.h"
 #include "UpdateHandlerImpl.h"
 #include "windows/WindowsInputBlocker.h"

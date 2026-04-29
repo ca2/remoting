@@ -35,7 +35,7 @@
 #include "subsystem/platform/Command.h"
 #include "subsystem/platform/MacroCommand.h"
 
-#include "remoting/remoting/wsconfig/ConfigDialog.h"
+#include "remoting/remoting/node_user_config/ConfigDialog.h"
 
 #include "ControlProxy.h"
 #include "Notificator.h"

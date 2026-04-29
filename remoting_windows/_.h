@@ -20,9 +20,9 @@
 
 //#include "remoting/remoting_windows/desktop/_.h"
 // #include "remoting/remoting/framebuffer_update_sender/_.h"
-// #include "remoting/remoting/file_transfer_server/_.h"
-// #include "remoting/remoting/server/_.h"
-// #include "remoting/remoting/server_config/_.h"
+// #include "remoting/remoting/file_transfer_node/_.h"
+// #include "remoting/remoting/node/_.h"
+// #include "remoting/remoting/node_config/_.h"
 // #include "remoting/remoting/viewer_core/_.h"
 
 

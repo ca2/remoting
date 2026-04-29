@@ -42,9 +42,9 @@
 //#include "log_writer/LogWriter.h"
 #include "subsystem/platform/Singleton.h"
 #include "subsystem/platform/ListenerContainer.h"
-#include "remoting/remoting/server/NewConnectionEvents.h"
+#include "remoting/remoting/node/NewConnectionEvents.h"
 
-#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/node_config/Configurator.h"
 
 #include "remoting/control_desktop/ServerInfo.h"
 #include "LogInitListener.h"

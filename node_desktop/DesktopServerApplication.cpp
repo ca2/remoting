@@ -36,7 +36,7 @@
 #include "subsystem_windows/platform/subsystem.h"
 #include "subsystem_windows/platform/subsystem.h"
 #include "subsystem_windows/node/SharedMemory.h"
-#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/node_config/Configurator.h"
 
 
 namespace remoting_node_desktop

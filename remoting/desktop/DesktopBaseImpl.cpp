@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "DesktopBaseImpl.h"
 #include "subsystem/platform/BrokenHandleException.h"
-#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/node_config/Configurator.h"
 
 namespace remoting
 

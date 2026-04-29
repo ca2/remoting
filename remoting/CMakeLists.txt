@@ -252,10 +252,10 @@ list(APPEND library_source
    #ftp_common/remoting_ftp_common.vcxproj
    #ftp_common/remoting_ftp_common.vcxproj.filters
    #ftp_common/remoting_ftp_common.vcxproj.user
-   file_transfer_server/FileTransferRequestHandler.cpp
-   file_transfer_server/FileTransferRequestHandler.h
-   file_transfer_server/FileTransferSecurity.cpp
-   file_transfer_server/FileTransferSecurity.h
+   file_transfer_node/FileTransferRequestHandler.cpp
+   file_transfer_node/FileTransferRequestHandler.h
+   file_transfer_node/FileTransferSecurity.cpp
+   file_transfer_node/FileTransferSecurity.h
    network/RfbInputGate.cpp
    network/RfbInputGate.h
    network/RfbOutputGate.cpp
@@ -346,9 +346,9 @@ list(APPEND library_source
    rfb_sconn/TightPalette.h
    rfb_sconn/ZrleEncoder.cpp
    rfb_sconn/ZrleEncoder.h
-   server/NewConnectionEvents.h
-   server/NamingDefs.cpp
-   server/NamingDefs.h
+   node/NewConnectionEvents.h
+   node/NamingDefs.cpp
+   node/NamingDefs.h
 #   util/CommandLineFormatException.cpp
 #   util/CommandLineFormatException.h
 #   util/CommandLineFormatHelp.cpp
@@ -359,37 +359,37 @@ list(APPEND library_source
 #   util/Keymap.h
 #   util/VncPassCrypt.cpp
 #   util/VncPassCrypt.h
-   server_config/_.h
-   #server_config/_____debug.xcconfig
-   #server_config/_____release.xcconfig
-   #server_config/aaa_.cpp
-   #server_config/aaa_framework.cpp
-   #server_config/aaa_framework.h
-   #server_config/CMakeLists.txt
-   server_config/ConfigReloadListener.cpp
-   server_config/ConfigReloadListener.h
-   server_config/Configurator.cpp
-   server_config/Configurator.h
-   server_config/IpAccessControl.cpp
-   server_config/IpAccessControl.h
-   server_config/IpAccessRule.cpp
-   server_config/IpAccessRule.h
-   #server_config/matter.txt
-   server_config/PortMapping.cpp
-   server_config/PortMapping.h
-   server_config/PortMappingContainer.cpp
-   server_config/PortMappingContainer.h
-   server_config/PortMappingRect.cpp
-   server_config/PortMappingRect.h
-   server_config/RegistrySecurityAttributes.cpp
-   server_config/RegistrySecurityAttributes.h
-   #server_config/remoting_server_config.vcxproj
-   #server_config/remoting_server_config.vcxproj.filters
-   #server_config/remoting_server_config.vcxproj.user
-   #server_config/resource.h
-   #server_config/server_config_lib.vcproj
-   server_config/ServerConfig.cpp
-   server_config/ServerConfig.h
+   node_config/_.h
+   #node_config/_____debug.xcconfig
+   #node_config/_____release.xcconfig
+   #node_config/aaa_.cpp
+   #node_config/aaa_framework.cpp
+   #node_config/aaa_framework.h
+   #node_config/CMakeLists.txt
+   node_config/ConfigReloadListener.cpp
+   node_config/ConfigReloadListener.h
+   node_config/Configurator.cpp
+   node_config/Configurator.h
+   node_config/IpAccessControl.cpp
+   node_config/IpAccessControl.h
+   node_config/IpAccessRule.cpp
+   node_config/IpAccessRule.h
+   #node_config/matter.txt
+   node_config/PortMapping.cpp
+   node_config/PortMapping.h
+   node_config/PortMappingContainer.cpp
+   node_config/PortMappingContainer.h
+   node_config/PortMappingRect.cpp
+   node_config/PortMappingRect.h
+   node_config/RegistrySecurityAttributes.cpp
+   node_config/RegistrySecurityAttributes.h
+   #node_config/remoting_server_config.vcxproj
+   #node_config/remoting_server_config.vcxproj.filters
+   #node_config/remoting_server_config.vcxproj.user
+   #node_config/resource.h
+   #node_config/server_config_lib.vcproj
+   node_config/ServerConfig.cpp
+   node_config/ServerConfig.h
    viewer_core/_.cpp
    viewer_core/_.h
    viewer_core/_____debug.xcconfig
@@ -481,45 +481,48 @@ list(APPEND library_source
    viewer_core/WatermarksController.h
    viewer_core/ZrleDecoder.cpp
    viewer_core/ZrleDecoder.h
-   #wsconfig/_.cpp
-   wsconfig/_.h
-   #wsconfig/_____debug.xcconfig
-   #wsconfig/_____release.xcconfig
-   wsconfig/AdministrationConfigDialog.cpp
-   wsconfig/AdministrationConfigDialog.h
-   wsconfig/ChangePasswordDialog.cpp
-   wsconfig/ChangePasswordDialog.h
-   #wsconfig/CMakeLists.txt
-   wsconfig/CommonInputValidation.cpp
-   wsconfig/CommonInputValidation.h
-   wsconfig/ConfigDialog.cpp
-   wsconfig/ConfigDialog.h
-   wsconfig/EditIpAccessRuleDialog.cpp
-   wsconfig/EditIpAccessRuleDialog.h
-   wsconfig/EditPortMappingDialog.cpp
-   wsconfig/EditPortMappingDialog.h
-   #wsconfig/framework.cpp
-   #wsconfig/framework.h
-   wsconfig/IpAccessControlDialog.cpp
-   wsconfig/IpAccessControlDialog.h
-   #wsconfig/matter.txt
-   wsconfig/PasswordControl.cpp
-   wsconfig/PasswordControl.h
-   wsconfig/PortMappingDialog.cpp
-   wsconfig/PortMappingDialog.h
-   #wsconfig/remoting_wsconfig.vcxproj
-   #wsconfig/remoting_wsconfig.vcxproj.filters
-   #wsconfig/remoting_wsconfig.vcxproj.user
-   #wsconfig/resource.h
-   wsconfig/ServerConfigDialog.cpp
-   wsconfig/ServerConfigDialog.h
-   wsconfig/TvnLogFilename.cpp
-   wsconfig/TvnLogFilename.h
-   wsconfig/UIDataAccess.cpp
-   wsconfig/UIDataAccess.h
-   wsconfig/VideoRegionsConfigDialog.cpp
-   wsconfig/VideoRegionsConfigDialog.h
-   #wsconfig/wsconfig_lib.vcproj
+   #node_user_config/_.cpp
+   node_user_config/_.h
+   #node_user_config/_____debug.xcconfig
+   #node_user_config/_____release.xcconfig
+   node_user_config/AdministrationConfigDialog.cpp
+   node_user_config/AdministrationConfigDialog.h
+   node_user_config/ChangePasswordDialog.cpp
+   node_user_config/ChangePasswordDialog.h
+   #node_user_config/CMakeLists.txt
+   node_user_config/CommonInputValidation.cpp
+   node_user_config/CommonInputValidation.h
+   node_user_config/ConfigDialog.cpp
+   node_user_config/ConfigDialog.h
+   node_user_config/EditIpAccessRuleDialog.cpp
+   node_user_config/EditIpAccessRuleDialog.h
+   node_user_config/EditPortMappingDialog.cpp
+   node_user_config/EditPortMappingDialog.h
+   #node_user_config/framework.cpp
+   #node_user_config/framework.h
+   node_user_config/IpAccessControlDialog.cpp
+   node_user_config/IpAccessControlDialog.h
+   #node_user_config/matter.txt
+   node_user_config/PasswordControl.cpp
+   node_user_config/PasswordControl.h
+   node_user_config/PortMappingDialog.cpp
+   node_user_config/PortMappingDialog.h
+   #node_user_config/remoting_wsconfig.vcxproj
+   #node_user_config/remoting_wsconfig.vcxproj.filters
+   #node_user_config/remoting_wsconfig.vcxproj.user
+   #node_user_config/resource.h
+   node_user_config/ServerConfigDialog.cpp
+   node_user_config/ServerConfigDialog.h
+   node_user_config/TvnLogFilename.cpp
+   node_user_config/TvnLogFilename.h
+   node_user_config/UIDataAccess.cpp
+   node_user_config/UIDataAccess.h
+   node_user_config/VideoRegionsConfigDialog.cpp
+   node_user_config/VideoRegionsConfigDialog.h
+   #node_user_config/wsconfig_lib.vcproj
+
+   desktop/ScreenDriverFactory.cpp
+   rfb_sconn/AuthException.cpp
    _.cpp
    _.h
    EOFException.cpp
@@ -627,9 +630,7 @@ list(APPEND library_include_directories
 )
 
 
-add_library(${PROJECT_NAME} SHARED ${library_source}
-   desktop/ScreenDriverFactory.cpp
-   rfb_sconn/AuthException.cpp)
+add_library(${PROJECT_NAME} SHARED ${library_source})
 
 #target_precompile_headers(${PROJECT_NAME} PRIVATE framework.h)
 

@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "RfbServer.h"
-#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/node_config/Configurator.h"
 #include "subsystem_bsd_sockets/socket/SocketAddressIPv4.h"
 
 

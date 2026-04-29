@@ -26,7 +26,7 @@
 #include "MsiProperties.h"
 //#include "subsystem/platform/::string.h"
 #include "subsystem/platform/VncPassCrypt.h"
-#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/node_config/Configurator.h"
 #include "remoting/remoting/config/RegistrySettingsManager.h"
 #include "remoting/node_desktop/NamingDefs.h"
 

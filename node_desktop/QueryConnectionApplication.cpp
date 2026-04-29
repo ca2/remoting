@@ -29,14 +29,14 @@
 #include "subsystem/node/OperatingSystem.h"
 #include "ServerHelp.h"
 
-#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/node_config/Configurator.h"
 #include "subsystem/node/OperatingSystem.h"
 #include "subsystem/node/Process.h"
 #include "subsystem/platform/CommandLineArguments.h"
 #include "subsystem/platform/ResourceLoader.h"
 #include "remoting/node_desktop/resource.h"
 #include "remoting/node_desktop/NamingDefs.h"
-#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/node_config/Configurator.h"
 
 namespace remoting_node_desktop
 {

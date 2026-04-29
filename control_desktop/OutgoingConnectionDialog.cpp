@@ -25,7 +25,7 @@
 //#include "subsystem/platform/winhdr.h"
 //#include "acme/_operating_system.h"
 
-#include "remoting/remoting/server/NamingDefs.h"
+#include "remoting/remoting/node/NamingDefs.h"
 
 #include "subsystem/platform/Registry.h"
 

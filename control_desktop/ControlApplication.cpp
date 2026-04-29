@@ -63,7 +63,7 @@
 
 #include "remoting/node_desktop/resource.h"
 
-#include "remoting/remoting/wsconfig/ConfigDialog.h"
+#include "remoting/remoting/node_user_config/ConfigDialog.h"
 //#include "subsystem/platform/::string.h"
 #include "remoting/node_desktop/NamingDefs.h"
 #include "SetPasswordsDialog.h"

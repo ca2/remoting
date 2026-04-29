@@ -25,7 +25,7 @@
 #include "RfbClientManager.h"
 //#include "subsystem/thread/ZombieKiller.h"
 #include "QueryConnectionApplication.h"
-#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/node_config/Configurator.h"
 #include "subsystem/platform/MemUsage.h"
 #include "subsystem_bsd_sockets/socket/SocketAddressIPv4.h"
 #include "subsystem/socket/SocketIPv4.h"

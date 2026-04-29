@@ -27,7 +27,7 @@
 
 //#include aaa_<list>
 #include "RfbServer.h"
-#include "remoting/remoting/server_config/PortMappingContainer.h"
+#include "remoting/remoting/node_config/PortMappingContainer.h"
 
 namespace remoting_node_desktop
 {

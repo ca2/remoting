@@ -25,7 +25,7 @@
 #include "ControlAuthDialog.h"
 
 #include "remoting/node_desktop/resource.h"
-#include "remoting/remoting/server_config/ServerConfig.h"
+#include "remoting/remoting/node_config/ServerConfig.h"
 
 
 namespace remoting_control_desktop

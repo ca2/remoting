@@ -23,9 +23,9 @@
 //
 #include "framework.h"
 #include "DesktopFactory.h"
-#include "remoting/server_config/Configurator.h"
+#include "remoting/remoting/node_config/Configurator.h"
 
-#include "server_config/Configurator.h"
+#include "remoting/remoting/node_config/Configurator.h"
 //#include "DesktopWinImpl.h"
 
 namespace remoting

@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "ConsolePoller.h"
-#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/node_config/Configurator.h"
 #include "acme/_operating_system.h"
 
 namespace remoting

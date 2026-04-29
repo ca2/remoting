@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "FileTransferSecurity.h"
 
-#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/node_config/Configurator.h"
 #include "remoting/remoting/win_system/WTS.h"
 
 FileTransferSecurity::FileTransferSecurity(Desktop *desktop, ::subsystem::LogWriter * plogwriter)

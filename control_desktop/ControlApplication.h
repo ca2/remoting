@@ -31,7 +31,7 @@
 #include "subsystem/_common_header.h"
 #include "subsystem/platform/ResourceLoader.h"
 #include "subsystem/platform/Command.h"
-#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/node_config/Configurator.h"
 //#include "log_writer/LogWriter.h"
 
 #include "subsystem/thread/Thread.h"

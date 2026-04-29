@@ -27,11 +27,11 @@
 
 #include "remoting/remoting/config/SettingsManager.h"
 
-#include "remoting/remoting/server_config/PortMappingContainer.h"
-#include "remoting/remoting/server_config/IpAccessControl.h"
-#include "remoting/remoting/server_config/ServerConfig.h"
-#include "remoting/remoting/server_config/ConfigReloadListener.h"
-#include "remoting/remoting/server_config/RegistrySecurityAttributes.h"
+#include "remoting/remoting/node_config/PortMappingContainer.h"
+#include "remoting/remoting/node_config/IpAccessControl.h"
+#include "remoting/remoting/node_config/ServerConfig.h"
+#include "remoting/remoting/node_config/ConfigReloadListener.h"
+#include "remoting/remoting/node_config/RegistrySecurityAttributes.h"
 
 #include "subsystem/platform/ListenerContainer.h"
 

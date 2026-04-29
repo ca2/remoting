@@ -26,11 +26,11 @@
 #include "ControlAuth.h"
 #include "ControlAuthDialog.h"
 #include "ControlProto.h"
-#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/node_config/Configurator.h"
 #include "remoting/remoting/config/RegistrySettingsManager.h"
 #include "subsystem/platform/VncPassCrypt.h"
 //#include "subsystem/platform/::string.h"
-#include "remoting/remoting/server/NamingDefs.h"
+#include "remoting/remoting/node/NamingDefs.h"
 //#include "file_lib/WinFile.h"
 
 #include "remoting/node_desktop/resource.h"

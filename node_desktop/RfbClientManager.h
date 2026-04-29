@@ -44,7 +44,7 @@
 #include "remoting/remoting/desktop/UpdateSendingListener.h"
 #include "remoting/remoting/rfb_sconn/ClientAuthListener.h"
 #include "remoting/control_desktop/RfbClientInfo.h"
-#include "remoting/remoting/server/NewConnectionEvents.h"
+#include "remoting/remoting/node/NewConnectionEvents.h"
 
 namespace remoting_node_desktop
 {

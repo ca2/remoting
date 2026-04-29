@@ -28,7 +28,7 @@
 #include "AppletParameter.h"
 #include "VncViewerJarBody.h"
 #include "subsystem/node/OperatingSystem.h"
-#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/node_config/Configurator.h"
 //#include "subsystem/platform/::string.h"
 #include "remoting/node_desktop/NamingDefs.h"
 

@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting/server_config/ConfigReloadListener.h"
+#include "remoting/remoting/node_config/ConfigReloadListener.h"
 //#include "log_writer/LogWriter.h"
 
 namespace remoting_windows

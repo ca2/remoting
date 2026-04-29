@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "subsystem/node/OperatingSystem.h"
-//#include "remoting/remoting/wsconfig/TvnLogFilename.h"
+//#include "remoting/remoting/node_user_config/TvnLogFilename.h"
 #include "remoting/remoting/config/RegistrySettingsManager.h"
 
 #include "subsystem/platform/Registry.h"

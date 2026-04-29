@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/remoting/server/NewConnectionEvents.h"
+#include "remoting/remoting/node/NewConnectionEvents.h"
 //#include "win-event-log/WinEventLog.h"
 #include "subsystem/node/ApplicationCrashEvents.h"
 #include "ServiceEvents.h"

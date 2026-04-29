@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "DesktopWinImpl.h"
 #include "remoting/remoting_windows/desktop/WindowsUserInput.h"
-#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/node_config/Configurator.h"
 #include "remoting/remoting/desktop_ipc/UpdateHandlerClient.h"
 #include "remoting/remoting/desktop/UpdateHandlerImpl.h"
 #include "remoting/remoting/desktop/InputBlocker.h"

@@ -26,7 +26,7 @@
 
 #include "remoting/remoting_windows/_common_header.h"
 #include "remoting/remoting/desktop/ScreenDriverFactory.h"
-#include "remoting/remoting/server_config/ServerConfig.h"
+#include "remoting/remoting/node_config/ServerConfig.h"
 
 
 namespace remoting_windows

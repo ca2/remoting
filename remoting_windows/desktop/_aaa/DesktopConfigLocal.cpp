@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "DesktopConfigLocal.h"
-#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/node_config/Configurator.h"
 #include "windows/WindowsInputBlocker.h"
 
 namespace remoting_windows

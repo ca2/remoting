@@ -38,7 +38,7 @@
 #include "subsystem/node/LocalOperatingSystemApplication.h"
 //#include "log-server/ClientLogWriter.h"
 //#include "log_writer/LogWriter.h"
-#include "remoting/remoting/server_config/ConfigReloadListener.h"
+#include "remoting/remoting/node_config/ConfigReloadListener.h"
 #include "subsystem/platform/CommandLineArguments.h"
 
 

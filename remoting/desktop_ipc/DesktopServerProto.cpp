@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "DesktopServerProto.h"
-#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/node_config/Configurator.h"
 #include "subsystem/platform/Exception.h"
 
 namespace remoting

@@ -28,7 +28,7 @@
 #include "remoting/remoting/rfb/VendorDefs.h"
 #include "remoting/remoting/rfb/AuthDefs.h"
 #include "CapContainer.h"
-#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/node_config/Configurator.h"
 #include "AuthException.h"
 #include "subsystem/platform/VncPassCrypt.h"
 #include "subsystem/socket/SocketAddressIPv4.h"

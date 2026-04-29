@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "WallpaperUtil.h"
 #include "subsystem/node/OperatingSystem.h"
-#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/node_config/Configurator.h"
 #include "subsystem/node/AutoImpersonator.h"
 #include "acme/_operating_system.h"
 

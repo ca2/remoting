@@ -29,7 +29,7 @@
 #include "remoting/control_desktop/RfbClientInfo.h"
 #include "remoting/control_desktop/ServerInfo.h"
 
-#include "remoting/remoting/server_config/ServerConfig.h"
+#include "remoting/remoting/node_config/ServerConfig.h"
 
 #include "ControlMessage.h"
 #include "RemoteException.h"

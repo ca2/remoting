@@ -30,7 +30,7 @@
 
 #include "subsystem/platform/Exception.h"
 
-#include "remoting/remoting/server_config/ServerConfig.h"
+#include "remoting/remoting/node_config/ServerConfig.h"
 
 
 namespace remoting_control_desktop

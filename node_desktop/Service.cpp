@@ -26,7 +26,7 @@
 #include "subsystem/node/OperatingSystem.h"
 #include "ServerCommandLine.h"
 #include "remoting/node_desktop/NamingDefs.h"
-#include "remoting/remoting/server/NewConnectionEvents.h"
+#include "remoting/remoting/node/NewConnectionEvents.h"
 #include "remoting/node_desktop/ServiceEvents.h"
 #include "subsystem/node/ServiceControlManagerClient.h"
 #include "subsystem/node/OperatingSystem.h"

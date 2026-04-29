@@ -28,13 +28,13 @@
 #include "subsystem/node/CurrentConsoleProcess.h"
 #include "subsystem/node/OperatingSystem.h"
 #include "subsystem/node/security/SecurityAttributes.h"
-#include "remoting/remoting/server_config/Configurator.h"
+#include "remoting/remoting/node_config/Configurator.h"
 
 #include "subsystem/thread/GlobalMutex.h"
 
 #include "remoting/node_desktop/resource.h"
 
-//#include "remoting/remoting/wsconfig/TvnLogFilename.h"
+//#include "remoting/remoting/node_user_config/TvnLogFilename.h"
 
 ///#include "remoting/remoting/network/socket/WindowsSocket.h"
 
