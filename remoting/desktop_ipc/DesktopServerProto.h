@@ -30,20 +30,20 @@
 #include "remoting/remoting/region/Region.h"
 
 //#include "remoting/remoting/region/::int_point.h"
-//#include "subsystem/platform/class ::time.h"
+//#include "subsystem/platform/class CLASS_DECL_REMOTING  ::time.h"
 
 #include "BlockingGate.h"
 
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING DesktopServerProto :
+   class CLASS_DECL_REMOTING  DesktopServerProto :
    virtual public ::particle
    {
    public:
-      // FIXME: Remove m_pblockinggate from this class.
+      // FIXME: Remove m_pcontrolgate from this class CLASS_DECL_REMOTING .
       // Forward pblockinggate will send requests
-      ::pointer < BlockingGate > m_pblockinggate;
+      ::pointer < BlockingGate > m_pcontrolgate;
       ::pointer < ::remoting_node::Configurator > m_pconfigurator;
 
 

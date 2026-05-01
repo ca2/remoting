@@ -6,8 +6,8 @@
 namespace remoting_node
 {
 
-   class Configurator;
-   class ServerConfig;
+   class CLASS_DECL_REMOTING Configurator;
+   class CLASS_DECL_REMOTING ServerConfig;
 
 }// namespace remoting_node
 

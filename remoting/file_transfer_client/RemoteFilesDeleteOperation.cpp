@@ -109,7 +109,7 @@ namespace remoting
          remotePath = getRemotePath(m_toDelete, m_pathToTargetRoot);
 
          ::string scopedstrMessage;
-         scopedstrMessage.formatf("Error: {} ('{}')", errorMessage,
+         scopedstrMessage.format("Error: {} ('{}')", errorMessage,
                         remotePath);
 
          notifyError(scopedstrMessage);
@@ -144,7 +144,7 @@ namespace remoting
              (!fileInfo->isDirectory())) && (m_toDelete->getFirst()->getParent() == NULL)) {
             ::string scopedstrMessage;
 
-            scopedstrMessage.formatf("Deleting remote '{}' {}", pathRemote,
+            scopedstrMessage.format("Deleting remote '{}' {}", pathRemote,
                            fileInfo->isDirectory() ? "folder" : "file");
 
             notifyInformation(scopedstrMessage);

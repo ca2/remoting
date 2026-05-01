@@ -29,7 +29,7 @@ namespace remoting_control_desktop
 {
    ShareDisplayCommand::ShareDisplayCommand(ControlProxy *serverControl,
                                             unsigned char displayNumber)
-   : m_proxy(serverControl),
+   : m_pcontrolproxy(serverControl),
      m_displayNumber(displayNumber)
    {
    }
@@ -40,7 +40,7 @@ namespace remoting_control_desktop
 
    void ShareDisplayCommand::execute()
    {
-      m_proxy->shareDisplay(m_displayNumber);
+      m_pcontrolproxy->shareDisplay(m_displayNumber);
    }
 } // namespace remoting_control_desktop
 

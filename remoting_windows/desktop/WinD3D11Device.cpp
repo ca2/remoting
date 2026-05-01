@@ -77,7 +77,7 @@ namespace remoting_windows
       if (FAILED(hr))
       {
          ::string errMess;
-         errMess.formatf("D3D11CreateDevice function was failed with code error = (%dl)", (long)hr);
+         errMess.format("D3D11CreateDevice function was failed with code error = (%dl)", (long)hr);
          m_plogwriter->debug("D3D11CreateDevice function was failed with code error = (%dl)", (long)hr);
          throw ::subsystem::Exception(errMess);
       }

@@ -56,7 +56,7 @@ namespace remoting_windows
       if (hr == DXGI_ERROR_NOT_FOUND)
       {
          ::string errMess;
-         errMess.formatf("IDXGIOutput not found for iOutput = %u", iOutput);
+         errMess.format("IDXGIOutput not found for iOutput = %u", iOutput);
          throw WinDxRecoverableException(errMess, hr);
       }
       else if (FAILED(hr))

@@ -36,7 +36,7 @@
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING DesktopSrvDispatcher : public ::subsystem::GuiThread
+   class CLASS_DECL_REMOTING  DesktopSrvDispatcher : public ::subsystem::GuiThread
    {
    public:
       //DesktopSrvDispatcher(BlockingGate *pblockinggate,
@@ -58,7 +58,7 @@ namespace remoting
       virtual void onTerminate();
       void notifyOnError();
 
-      BlockingGate *m_pblockinggate;
+      BlockingGate *m_pcontrolgate;
 
       ::map<unsigned char, ClientListener *> m_handlers;
 

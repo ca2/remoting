@@ -41,7 +41,7 @@ namespace remoting_control_desktop
       /**
        * Creates client pipe transport and takes ownership over pipe transport.
        */
-      NamedPipeTransport(::subsystem::NamedPipe *client);
+      NamedPipeTransport(::subsystem::NamedPipeInterface *pnamedpipeClient);
       /**
        * Creates server pipe transfer and takes ownership over pipe server.
        */
@@ -72,11 +72,11 @@ namespace remoting_control_desktop
       /**
        * Connected pipe transport.
        */
-      ::subsystem::NamedPipe *m_pipe;
+      ::pointer < ::subsystem::NamedPipeInterface > m_pnamedpipeClient;
       /**
        * Pipe server.
        */
-      ::subsystem::PipeServer *m_pipeServer;
+      ::pointer < ::subsystem::PipeServer > m_ppipeserver;
    };
 } // namespace remoting_control_desktop
 

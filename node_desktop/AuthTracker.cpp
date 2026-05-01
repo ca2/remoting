@@ -31,7 +31,7 @@ namespace remoting_node_desktop
 
 
    AuthTracker::AuthTracker(const class ::time & timeFailureInterval, unsigned int failureMaxCount) :
-       m_failureCount(0), m_failureTimeInterval(timeFailureInterval), m_failureMaxCount(failureMaxCount)
+       m_uFailureCount(0), m_timeFailureInterval(timeFailureInterval), m_uFailureMaxCount(failureMaxCount)
    {
    }
 
@@ -43,12 +43,12 @@ namespace remoting_node_desktop
 
       unsigned long long banTime = 0;
       {
-         critical_section_lock al(&m_countMutex);
-         if (m_failureCount >= m_failureMaxCount)
+         critical_section_lock al(&m_criticalsectionCount);
+         if (m_uFailureCount >= m_uFailureMaxCount)
          {
-            banTime = maximum(0_s, m_failureTimeInterval -
-                                    //(class ::time::now() - m_firstFailureTime).getTime());
-                                    m_firstFailureTime.elapsed()).integral_millisecond();
+            banTime = maximum(0_s, m_timeFailureInterval -
+                                    //(class ::time::now() - m_timeFirstFailure).getTime());
+                                    m_timeFirstFailure.elapsed()).integral_millisecond();
          }
       }
       return banTime;
@@ -56,21 +56,21 @@ namespace remoting_node_desktop
 
    void AuthTracker::notifyAbAuthFailed()
    {
-      critical_section_lock al(&m_countMutex);
-      if (m_failureCount == 0)
+      critical_section_lock al(&m_criticalsectionCount);
+      if (m_uFailureCount == 0)
       {
-         m_firstFailureTime.Now();
+         m_timeFirstFailure.Now();
       }
-      m_failureCount++;
+      m_uFailureCount++;
    }
 
    void AuthTracker::refresh()
    {
-      critical_section_lock al(&m_countMutex);
-      // if ((class ::time::now() - m_firstFailureTime).getTime() >= m_failureTimeInterval) {
-      if (m_firstFailureTime.elapsed() >= m_failureTimeInterval)
+      critical_section_lock al(&m_criticalsectionCount);
+      // if ((class ::time::now() - m_timeFirstFailure).getTime() >= m_timeFailureInterval) {
+      if (m_timeFirstFailure.elapsed() >= m_timeFailureInterval)
       {
-         m_failureCount = 0;
+         m_uFailureCount = 0;
       }
    }
 

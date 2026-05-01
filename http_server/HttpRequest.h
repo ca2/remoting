@@ -29,7 +29,7 @@
 
 #include "remoting/remoting/http_server/ArgList.h"
 
-class HttpRequest
+class CLASS_DECL_REMOTING HttpRequest
 {
 public:
   HttpRequest(DataInputStream *dataInput);

@@ -32,15 +32,15 @@
 
 namespace remoting_control_desktop
 {
-   class SharePrimaryCommand : public Command
+   class SharePrimaryCommand : public ::subsystem::Command
    {
    public:
-      SharePrimaryCommand(ControlProxy *serverControl);
+      SharePrimaryCommand(ControlProxy * pcontrolproxy);
       virtual ~SharePrimaryCommand();
 
       virtual void execute();
    private:
-      ControlProxy *m_proxy;
+      ::pointer < ControlProxy > m_pcontrolproxy;
    };
 } // namespace remoting_control_desktop
 

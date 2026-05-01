@@ -31,7 +31,7 @@
 namespace remoting
 {
 
-   class BlockingOutputGate :
+   class CLASS_DECL_REMOTING  BlockingOutputGate :
    virtual public lockable_critical_section,
    virtual public DataOutputStream
    {

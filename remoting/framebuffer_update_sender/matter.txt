@@ -1,2 +1,0 @@
-app/main
-remoting/fb_update_sender

@@ -54,7 +54,7 @@ namespace remoting
    //    // Path to desktop server application.
    //    ::string path;
    //    // FIXME: To think: is quotes needed?
-   //    path.formatf("\"{}\"", currentModulePath);
+   //    path.format("\"{}\"", currentModulePath);
    //
    //    try
    //    {

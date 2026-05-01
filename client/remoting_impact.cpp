@@ -28,7 +28,7 @@
 #include "resource.h"
 #include "innate_subsystem/platform/subsystem.h"
 #include "remoting/client/remoting.h"
-#include "remoting/remoting/remoting.h"
+#include "remoting/remoting/platform/remoting.h"
 #include "acme/windowing/windowing.h"
 
 
@@ -61,7 +61,7 @@ namespace remoting_client
       m_configurationDialog.setListenerOfUpdate(this);
 
       // working with accelerator
-      auto presourceloader = MainInnateSubsystem().ResourceLoader();
+      auto presourceloader = InnateSubsystem().ResourceLoader();
 
       #ifdef WINDOWS
       {
@@ -73,7 +73,7 @@ namespace remoting_client
       #endif
       //m_hAccelTable = (HACCEL) presourceloader->loadAccelerator(IDR_ACCEL_APP_KEYS);
 
-      m_trayIcon = new ControlTrayIcon(this);
+      m_pcontroltrayicon = new ControlTrayIcon(this);
 
       auto plogindialog = new LoginDialog(this, m_premoting);
 
@@ -86,7 +86,7 @@ namespace remoting_client
       m_instances.destroyAllInstances();
 
       delete m_plogindialog;
-      delete m_trayIcon;
+      delete m_pcontroltrayicon;
 
       //unregisterViewerWindowClass();
 
@@ -144,13 +144,13 @@ namespace remoting_client
       m_isListening = true;
 
       startListeningServer(listeningPort);
-      m_trayIcon->showIcon();
+      m_pcontroltrayicon->showIcon();
    }
 
    void remoting_impact::stopListening()
    {
       if (m_isListening) {
-         m_trayIcon->hide();
+         m_pcontroltrayicon->hide();
          stopListeningServer();
 
          m_isListening = false;

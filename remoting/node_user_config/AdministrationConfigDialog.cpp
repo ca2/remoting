@@ -350,7 +350,7 @@ namespace remoting_node
 
       ::string command;
 
-      command.formatf("explorer /select,{}\\{}.log", logDir,
+      command.format("explorer /select,{}\\{}.log", logDir,
                      LogNames::SERVER_LOG_FILE_STUB_NAME);
 
       ::subsystem::Process explorer;

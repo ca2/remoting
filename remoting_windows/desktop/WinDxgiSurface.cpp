@@ -37,7 +37,7 @@ namespace remoting_windows
       if (FAILED(hr) || m_dxgiSurface == 0)
       {
          ::string errMess;
-         errMess.formatf("Can't create IDXGISurface from ID3D11Texture2D, error code = %l", (long)hr);
+         errMess.format("Can't create IDXGISurface from ID3D11Texture2D, error code = %l", (long)hr);
          throw ::subsystem::Exception(errMess);
       }
    }

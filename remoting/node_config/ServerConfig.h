@@ -63,6 +63,156 @@ namespace remoting_node
          DA_LOGOUT_WORKSTATION = 2
        };
 
+         //protected:
+
+      //
+      // Server port numbers
+      //
+
+      int m_rfbPort;
+      int m_httpPort;
+
+      //
+      // Other server options members group
+      //
+
+      bool m_enableFileTransfers;
+      bool m_removeWallpaper;
+      bool m_D3DAllowed;
+      bool m_mirrorDriverAllowed;
+      //
+      // Server action when last client disconnects from server
+      //
+
+      DisconnectAction m_disconnectAction;
+
+      //
+      // Incoming connections options group
+      //
+
+      bool m_acceptRfbConnections;
+      bool m_acceptHttpConnections;
+
+      unsigned char m_primaryPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
+      unsigned char m_readonlyPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
+      unsigned char m_controlPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
+
+      //
+      // Configurator from Administration tab
+      //
+
+      bool m_useAuthentication;
+      bool m_onlyLoopbackConnections;
+      bool m_enableAppletParamInUrl;
+      int m_logLevel;
+      bool m_useControlAuth;
+      bool m_controlAuthAlwaysChecking;
+
+      //
+      // Sharing configuration
+      //
+
+      bool m_alwaysShared;
+      bool m_neverShared;
+      bool m_disconnectClients;
+
+      //
+      // Polling configuration
+      //
+
+      unsigned int m_pollingInterval;
+
+      //
+      // When flag is set server always blocks remote input.
+      //
+
+      bool m_blockRemoteInput;
+      //
+      // When flag is set server always blocks local input.
+      //
+
+      bool m_blockLocalInput;
+
+      //
+      // When flag is set server blocks remote input
+      // on local input activity.
+      //
+
+      bool m_localInputPriority;
+
+      //
+      // Local input invactivity timeout during that
+      // we still blocking remote input(when m_localInputPriority
+      // is enabled).
+      //
+
+      unsigned int m_localInputPriorityTimeout;
+
+      bool m_defaultActionAccept;
+
+      //
+      // Timeout for Query IpAccessControl record
+      //
+
+      unsigned int m_queryTimeout;
+
+      //
+      // Port mapping config
+      //
+
+      PortMappingContainer m_portMappings;
+
+      //
+      // Ip access control config
+      //
+
+      IpAccessControl m_accessControlContainer;
+      bool m_allowLoopbackConnections;
+
+      //
+      // Video regions
+      //
+
+      // Defined by window class CLASS_DECL_REMOTING name
+      ::string_array m_videoClassNames;
+      // Defined by rectangle coords in "dXxdY+X0+Y0" format, as in -sharerect command line option
+      ::int_rectangle_array_base m_videoRects;
+
+      //
+      // Other
+      //
+
+      unsigned int m_videoRecognitionInterval;
+      bool m_grabTransparentWindows;
+
+      // Socket timeout to disconnect inactive clients, in seconds
+      int m_idleTimeout;
+
+      // Flag that determiates where log file directory will be.
+      bool m_saveLogToAllUsersPath;
+      // Run control interface with TightVNC server or not.
+      bool m_showTrayIcon;
+      // Connect to existing RDP session or drop it.
+      bool m_connectToRdp;
+
+      ::string m_logFilePath;
+   //private:
+
+      //
+      // Helper methods
+      //
+
+      bool m_hasPrimaryPassword;
+      bool m_hasReadOnlyPassword;
+      bool m_hasControlPassword;
+
+      //
+      // Critical section
+      //
+
+      lockable_critical_section m_objectCS;
+
+
    public:
       ServerConfig();
       virtual ~ServerConfig();
@@ -291,154 +441,154 @@ namespace remoting_node
       void getLogFileDir(::string & logFileDir);
       void setLogFileDir(const ::scoped_string & scopedstrLogFileDir);
 
-   protected:
-
-      //
-      // Server port numbers
-      //
-
-      int m_rfbPort;
-      int m_httpPort;
-
-      //
-      // Other server options members group
-      //
-
-      bool m_enableFileTransfers;
-      bool m_removeWallpaper;
-      bool m_D3DAllowed;
-      bool m_mirrorDriverAllowed;
-      //
-      // Server action when last client disconnects from server
-      //
-
-      DisconnectAction m_disconnectAction;
-
-      //
-      // Incoming connections options group
-      //
-
-      bool m_acceptRfbConnections;
-      bool m_acceptHttpConnections;
-
-      unsigned char m_primaryPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
-      unsigned char m_readonlyPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
-      unsigned char m_controlPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
-
-      //
-      // Configurator from Administration tab
-      //
-
-      bool m_useAuthentication;
-      bool m_onlyLoopbackConnections;
-      bool m_enableAppletParamInUrl;
-      int m_logLevel;
-      bool m_useControlAuth;
-      bool m_controlAuthAlwaysChecking;
-
-      //
-      // Sharing configuration
-      //
-
-      bool m_alwaysShared;
-      bool m_neverShared;
-      bool m_disconnectClients;
-
-      //
-      // Polling configuration
-      //
-
-      unsigned int m_pollingInterval;
-
-      //
-      // When flag is set server always blocks remote input.
-      //
-
-      bool m_blockRemoteInput;
-      //
-      // When flag is set server always blocks local input.
-      //
-
-      bool m_blockLocalInput;
-
-      //
-      // When flag is set server blocks remote input
-      // on local input activity.
-      //
-
-      bool m_localInputPriority;
-
-      //
-      // Local input invactivity timeout during that
-      // we still blocking remote input(when m_localInputPriority
-      // is enabled).
-      //
-
-      unsigned int m_localInputPriorityTimeout;
-
-      bool m_defaultActionAccept;
-
-      //
-      // Timeout for Query IpAccessControl record
-      //
-
-      unsigned int m_queryTimeout;
-
-      //
-      // Port mapping config
-      //
-
-      PortMappingContainer m_portMappings;
-
-      //
-      // Ip access control config
-      //
-
-      IpAccessControl m_accessControlContainer;
-      bool m_allowLoopbackConnections;
-
-      //
-      // Video regions
-      //
-
-      // Defined by window class name
-      ::string_array m_videoClassNames;
-      // Defined by rectangle coords in "dXxdY+X0+Y0" format, as in -sharerect command line option
-      ::int_rectangle_array_base m_videoRects;
-
-      //
-      // Other
-      //
-
-      unsigned int m_videoRecognitionInterval;
-      bool m_grabTransparentWindows;
-
-      // Socket timeout to disconnect inactive clients, in seconds
-      int m_idleTimeout;
-
-      // Flag that determiates where log file directory will be.
-      bool m_saveLogToAllUsersPath;
-      // Run control interface with TightVNC server or not.
-      bool m_showTrayIcon;
-      // Connect to existing RDP session or drop it.
-      bool m_connectToRdp;
-
-      ::string m_logFilePath;
-   private:
-
-      //
-      // Helper methods
-      //
-
-      bool m_hasPrimaryPassword;
-      bool m_hasReadOnlyPassword;
-      bool m_hasControlPassword;
-
-      //
-      // Critical section
-      //
-
-      lockable_critical_section m_objectCS;
+   // //protected:
+   //
+   //    //
+   //    // Server port numbers
+   //    //
+   //
+   //    int m_rfbPort;
+   //    int m_httpPort;
+   //
+   //    //
+   //    // Other server options members group
+   //    //
+   //
+   //    bool m_enableFileTransfers;
+   //    bool m_removeWallpaper;
+   //    bool m_D3DAllowed;
+   //    bool m_mirrorDriverAllowed;
+   //    //
+   //    // Server action when last client disconnects from server
+   //    //
+   //
+   //    DisconnectAction m_disconnectAction;
+   //
+   //    //
+   //    // Incoming connections options group
+   //    //
+   //
+   //    bool m_acceptRfbConnections;
+   //    bool m_acceptHttpConnections;
+   //
+   //    unsigned char m_primaryPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
+   //    unsigned char m_readonlyPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
+   //    unsigned char m_controlPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
+   //
+   //    //
+   //    // Configurator from Administration tab
+   //    //
+   //
+   //    bool m_useAuthentication;
+   //    bool m_onlyLoopbackConnections;
+   //    bool m_enableAppletParamInUrl;
+   //    int m_logLevel;
+   //    bool m_useControlAuth;
+   //    bool m_controlAuthAlwaysChecking;
+   //
+   //    //
+   //    // Sharing configuration
+   //    //
+   //
+   //    bool m_alwaysShared;
+   //    bool m_neverShared;
+   //    bool m_disconnectClients;
+   //
+   //    //
+   //    // Polling configuration
+   //    //
+   //
+   //    unsigned int m_pollingInterval;
+   //
+   //    //
+   //    // When flag is set server always blocks remote input.
+   //    //
+   //
+   //    bool m_blockRemoteInput;
+   //    //
+   //    // When flag is set server always blocks local input.
+   //    //
+   //
+   //    bool m_blockLocalInput;
+   //
+   //    //
+   //    // When flag is set server blocks remote input
+   //    // on local input activity.
+   //    //
+   //
+   //    bool m_localInputPriority;
+   //
+   //    //
+   //    // Local input invactivity timeout during that
+   //    // we still blocking remote input(when m_localInputPriority
+   //    // is enabled).
+   //    //
+   //
+   //    unsigned int m_localInputPriorityTimeout;
+   //
+   //    bool m_defaultActionAccept;
+   //
+   //    //
+   //    // Timeout for Query IpAccessControl record
+   //    //
+   //
+   //    unsigned int m_queryTimeout;
+   //
+   //    //
+   //    // Port mapping config
+   //    //
+   //
+   //    PortMappingContainer m_portMappings;
+   //
+   //    //
+   //    // Ip access control config
+   //    //
+   //
+   //    IpAccessControl m_accessControlContainer;
+   //    bool m_allowLoopbackConnections;
+   //
+   //    //
+   //    // Video regions
+   //    //
+   //
+   //    // Defined by window class CLASS_DECL_REMOTING name
+   //    ::string_array m_videoClassNames;
+   //    // Defined by rectangle coords in "dXxdY+X0+Y0" format, as in -sharerect command line option
+   //    ::int_rectangle_array_base m_videoRects;
+   //
+   //    //
+   //    // Other
+   //    //
+   //
+   //    unsigned int m_videoRecognitionInterval;
+   //    bool m_grabTransparentWindows;
+   //
+   //    // Socket timeout to disconnect inactive clients, in seconds
+   //    int m_idleTimeout;
+   //
+   //    // Flag that determiates where log file directory will be.
+   //    bool m_saveLogToAllUsersPath;
+   //    // Run control interface with TightVNC server or not.
+   //    bool m_showTrayIcon;
+   //    // Connect to existing RDP session or drop it.
+   //    bool m_connectToRdp;
+   //
+   //    ::string m_logFilePath;
+   // private:
+   //
+   //    //
+   //    // Helper methods
+   //    //
+   //
+   //    bool m_hasPrimaryPassword;
+   //    bool m_hasReadOnlyPassword;
+   //    bool m_hasControlPassword;
+   //
+   //    //
+   //    // Critical section
+   //    //
+   //
+   //    lockable_critical_section m_objectCS;
    };
 }  //  namespace remoting_node
 

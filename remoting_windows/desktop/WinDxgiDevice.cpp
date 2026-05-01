@@ -38,7 +38,7 @@ namespace remoting_windows
       if (FAILED(hr))
       {
          ::string errMess;
-         errMess.formatf("Can't QueryInterface for IDXGIDevice (%l)", (long)hr);
+         errMess.format("Can't QueryInterface for IDXGIDevice (%l)", (long)hr);
          throw ::subsystem::Exception(errMess);
       }
    }

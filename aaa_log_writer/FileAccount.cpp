@@ -144,11 +144,11 @@ void FileAccount::format(unsigned int processId,
     logBarrier = m_level;
   }
   if (logBarrier < 9) {
-    timeString.formatf("%.4d-%.2d-%.2d %.2d:%.2d:%.2d",
+    timeString.format("%.4d-%.2d-%.2d %.2d:%.2d:%.2d",
                       st.wYear, st.wMonth, st.wDay,
                       st.wHour, st.wMinute, st.wSecond);
   } else {
-    timeString.formatf("%.4d-%.2d-%.2d %.2d:%.2d:%.2d:%.3d",
+    timeString.format("%.4d-%.2d-%.2d %.2d:%.2d:%.2d:%.3d",
                       st.wYear, st.wMonth, st.wDay,
                       st.wHour, st.wMinute, st.wSecond, st.wMilliseconds);
   }
@@ -159,12 +159,12 @@ void FileAccount::format(unsigned int processId,
 
   // Format the final string prefixed with all the service information.
   ::string resultLine;
-  resultLine.formatf("[%5d/%5d] {} %c {}",
+  resultLine.format("[%5d/%5d] %s %c %s",
                     processId,
                     threadId,
-                    timeString,
+                    timeString.c_str(),
                     sig,
-                    scopedstrMessage);
+                    ::string(scopedstrMessage).c_str());
   const TCHAR badCharacters[] = { 13, 10, 0 };
   resultLine.removeChars(badCharacters, sizeof(badCharacters) / sizeof(TCHAR));
 
@@ -191,16 +191,16 @@ void FileAccount::setNewFile(unsigned char newLevel, const ::scoped_string & sco
   }
 
   if (levelChanged && !m_asFirstOpen) {
-    ::string scopedstrMessage;
-    scopedstrMessage.formatf("Log verbosity level has been changed from {} to {}",
+    ::string strMessage;
+    strMessage.format("Log verbosity level has been changed from {} to {}",
                    (int)m_level, (int) newLevel);
-    print(1, scopedstrMessage);
+    print(1, strMessage);
   }
   if (logDirChanged && !m_asFirstOpen) {
-    ::string scopedstrMessage;
-    scopedstrMessage.formatf("Log directory has been changed from \"{}\" to \"{}\"",
+    ::string strMessage;
+    strMessage.format("Log directory has been changed from \"{}\" to \"{}\"",
                    m_logDir, newDir);
-    print(1, scopedstrMessage);
+    print(1, strMessage);
   }
 
   m_level = newLevel;
@@ -224,10 +224,10 @@ void FileAccount::setNewFile(unsigned char newLevel, const ::scoped_string & sco
     openFile(); // with backup creating if needed.
 
     if (levelChangedFromZero && !asFirstOpen) {
-      ::string scopedstrMessage;
-      scopedstrMessage.formatf("Log verbosity level has been changed from 0 to {}",
+      ::string strMessage;
+      strMessage.format("Log verbosity level has been changed from 0 to {}",
                      (int)m_level, (int) newLevel);
-      print(1, scopedstrMessage);
+      print(1, strMessage);
     }
     return;
   }
@@ -238,7 +238,7 @@ void FileAccount::openFile()
   closeFile();
 
   ::string fileName;
-  fileName.formatf("{}\\{}.log", m_logDir,
+  fileName.format("{}\\{}.log", m_logDir,
                   m_strFileName);
   bool shareToRead = true;
   bool asFirstOpen = m_asFirstOpen;
@@ -305,7 +305,7 @@ void FileAccount::createBackup(unsigned int backupLimit)
     ::file::item::renameTo(newName, oldName);
   }
   // Copy log file to backup
-  oldName.formatf("{}\\{}.log", m_logDir, m_strFileName);
+  oldName.format("{}\\{}.log", m_logDir, m_strFileName);
   newName.format(fmt, m_logDir, m_strFileName, 1);
   ::file::item::renameTo(newName, oldName);
 }

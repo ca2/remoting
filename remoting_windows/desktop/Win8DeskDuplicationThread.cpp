@@ -129,14 +129,14 @@ namespace remoting_windows
       catch (WinDxRecoverableException &e)
       {
          ::string errMess;
-         errMess.formatf("Win8DeskDuplication:: Catched WinDxRecoverableException: {}, (%x)", e.get_message(),
+         errMess.format("Win8DeskDuplication:: Catched WinDxRecoverableException: {}, (%x)", e.get_message(),
                          (int)e.getErrorCode());
          setRecoverableError(errMess);
       }
       catch (WinDxCriticalException &e)
       {
          ::string errMess;
-         errMess.formatf("Win8DeskDuplication:: Catched WinDxCriticalException: {}, (%x)", e.get_message(),
+         errMess.format("Win8DeskDuplication:: Catched WinDxCriticalException: {}, (%x)", e.get_message(),
                          (int)e.getErrorCode());
          setRecoverableError(errMess); //?????????
          setCriticalError(errMess);
@@ -144,7 +144,7 @@ namespace remoting_windows
       catch (::exception &e)
       {
          ::string errMess;
-         errMess.formatf("Win8DeskDuplication:: Catched ::subsystem::Exception: {}", e.get_message());
+         errMess.format("Win8DeskDuplication:: Catched ::subsystem::Exception: {}", e.get_message());
          setRecoverableError(errMess);
       }
    }
@@ -217,7 +217,7 @@ namespace remoting_windows
             /* Disabled the followed throwing because it realy may happen and better is to see any picture
             // instead of a black screen.
             ::string errMess;
-            errMess.formatf("During processDirtyRects has been got a rectangle ({}, {}, %dx{}) which outside"
+            errMess.format("During processDirtyRects has been got a rectangle ({}, {}, %dx{}) which outside"
                            " from the stage rectangle ({}, {}, %dx{})",
                            rectangle.left, rectangle.top, rectangle.width(), rectangle.height(),
                            stageRect.left, stageRect.top, stageRect.width(), stageRect.height());

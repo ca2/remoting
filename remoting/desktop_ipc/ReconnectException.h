@@ -30,7 +30,7 @@
 namespace remoting
 {
 
-   class ReconnectException : public ::io_exception
+   class CLASS_DECL_REMOTING  ReconnectException : public ::io_exception
    {
    public:
       ReconnectException(const ::scoped_string &scopedstrMessage);

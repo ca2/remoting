@@ -29,8 +29,8 @@
 
 namespace remoting_control_desktop
 {
-   UpdateRemoteConfigCommand::UpdateRemoteConfigCommand(ControlProxy *serverControl)
-   : m_serverControl(serverControl)
+   UpdateRemoteConfigCommand::UpdateRemoteConfigCommand(ControlProxy * pcontrolproxy)
+   : m_pcontrolproxy(pcontrolproxy)
    {
    }
 
@@ -40,7 +40,7 @@ namespace remoting_control_desktop
 
    void UpdateRemoteConfigCommand::execute()
    {
-      m_serverControl->setServerConfig(m_pconfigurator->getServerConfig());
+      m_pcontrolproxy->setServerConfig(m_pconfigurator->getServerConfig());
    }
 } // namespace remoting_control_desktop
 

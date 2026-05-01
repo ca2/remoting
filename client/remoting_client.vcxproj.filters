@@ -87,7 +87,7 @@
     <ClCompile Include="ConnectionListener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FsWarningDialog.cpp">
+    <ClCompile Include="FullscreenWarningDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ViewerCollector.cpp">
@@ -194,7 +194,7 @@
     <ClInclude Include="ConnectionListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FsWarningDialog.h">
+    <ClInclude Include="FullscreenWarningDialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ViewerCollector.h">

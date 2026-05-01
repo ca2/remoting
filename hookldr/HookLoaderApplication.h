@@ -28,7 +28,7 @@
 #include "remoting/remoting/win_system/LocalWindowsApplication.h"
 #include "ParentWatcher.h"
 
-class HookLoaderApplication : public WindowsApplication,
+class CLASS_DECL_REMOTING HookLoaderApplication : public WindowsApplication,
                               private ParentEventsListener
 {
 public:

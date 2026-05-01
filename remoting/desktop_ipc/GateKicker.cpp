@@ -29,11 +29,11 @@ namespace remoting
 {
 
 
-   // GateKicker::GateKicker(BlockingGate *pblockinggate) : m_pblockinggate(nullptr)
+   // GateKicker::GateKicker(BlockingGate *pblockinggate) : m_pcontrolgate(nullptr)
    // {
    //    //resume();
    // }
-   GateKicker::GateKicker() : m_pblockinggate(nullptr)
+   GateKicker::GateKicker() : m_pcontrolgate(nullptr)
    {
       //resume();
    }
@@ -46,7 +46,7 @@ namespace remoting
 
    void GateKicker::initialize_gate_kicker(BlockingGate *pblockinggate)
    {
-      m_pblockinggate = pblockinggate;
+      m_pcontrolgate = pblockinggate;
       resume();
    }
    void GateKicker::onTerminate() { m_happeningSleeper.set_happening(); }
@@ -60,8 +60,8 @@ namespace remoting
          {
             try
             {
-               critical_section_lock al(m_pblockinggate);
-               m_pblockinggate->writeUInt8(255);
+               critical_section_lock al(m_pcontrolgate);
+               m_pcontrolgate->writeUInt8(255);
             }
             catch (...)
             {

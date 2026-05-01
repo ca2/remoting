@@ -34,8 +34,8 @@
 
 namespace remoting_control_desktop
 {
-   ControlAuth::ControlAuth(ControlGate *pblockinggate, const ::scoped_string & scopedstrPassword)
-   : m_pblockinggate(pblockinggate)
+   ControlAuth::ControlAuth(ControlGate * pcontrolgate, const ::scoped_string & scopedstrPassword)
+   : m_pcontrolgate(pcontrolgate)
    {
       // Prepare data for authentication.
       //::string truncatedPass(scopedstrPassword);
@@ -48,23 +48,23 @@ namespace remoting_control_desktop
              ::minimum(scopedstrPassword.length(), sizeof(m_password)));
 
       // FIXME: Why it's commented out?
-      // critical_section_lock l(m_pblockinggate);
+      // critical_section_lock l(m_pcontrolgate);
 
-      m_pblockinggate->writeUInt32(ControlProto::AUTH_MSG_ID);
-      m_pblockinggate->writeUInt32(0);
+      m_pcontrolgate->writeUInt32(ControlProto::AUTH_MSG_ID);
+      m_pcontrolgate->writeUInt32(0);
 
       authRfb();
 
-      unsigned char result = m_pblockinggate->readUInt32();
+      unsigned char result = m_pcontrolgate->readUInt32();
 
       switch (result) {
          case ControlProto::REPLY_ERROR:
          {
             ::string authFailReason;
 
-            authFailReason = m_pblockinggate->readUtf8();
+            authFailReason = m_pcontrolgate->readUtf8();
 
-            throw ControlAuthException(authFailReason);
+            throw ::remoting_node::ControlAuthException(authFailReason);
          }
             break;
          case ControlProto::REPLY_OK:
@@ -84,13 +84,13 @@ namespace remoting_control_desktop
       unsigned char challenge[16];
       unsigned char response[16];
 
-      m_pblockinggate->readFully(challenge, sizeof(challenge));
+      m_pcontrolgate->readFully(challenge, sizeof(challenge));
 
       ::subsystem::DesCrypt desCrypt;
 
       desCrypt.encrypt(response, challenge, sizeof(challenge), m_password);
 
-      m_pblockinggate->write(response, sizeof(response));
+      m_pcontrolgate->write(response, sizeof(response));
    }
 } // namespace remoting_control_desktop
 

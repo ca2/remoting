@@ -32,7 +32,7 @@ namespace remoting
 
 {
 
-   class CLASS_DECL_REMOTING ClientListener :
+   class CLASS_DECL_REMOTING  ClientListener :
    virtual public ::particle
    {
    public:

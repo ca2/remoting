@@ -33,7 +33,7 @@ LogEntry::LogEntry(unsigned int processId,
   m_threadId(threadId),
   m_dt(dt),
   m_lineLevel(lineLevel),
-  m_message(scopedstrMessage)
+  m_pcontrolmessage(scopedstrMessage)
 {
 }
 
@@ -70,7 +70,7 @@ void LogDump::writeLogHeader()
     for (size_t i = 0; i < m_logHeaderLines.size(); i++) {
       flush(m_logHeaderLines[i].m_processId, m_logHeaderLines[i].m_threadId,
             m_logHeaderLines[i].m_dt, m_logHeaderLines[i].m_lineLevel,
-            m_logHeaderLines[i].m_message);
+            m_logHeaderLines[i].m_pcontrolmessage);
     }
   }
 }
@@ -80,7 +80,7 @@ void LogDump::writeLogDump()
   for (size_t i = 0; i < m_logDumpLines.size(); i++) {
     flush(m_logDumpLines[i].m_processId, m_logDumpLines[i].m_threadId,
           m_logDumpLines[i].m_dt, m_logDumpLines[i].m_lineLevel,
-          m_logDumpLines[i].m_message);
+          m_logDumpLines[i].m_pcontrolmessage);
   }
 }
 

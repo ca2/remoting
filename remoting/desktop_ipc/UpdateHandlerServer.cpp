@@ -96,10 +96,10 @@ namespace remoting
 
    void UpdateHandlerServer::onUpdate()
    {
-      critical_section_lock al(m_pblockinggate);
+      critical_section_lock al(m_pcontrolgate);
       try
       {
-         m_pblockinggate->writeUInt8(UPDATE_DETECTED);
+         m_pcontrolgate->writeUInt8(UPDATE_DETECTED);
       }
       catch (::exception &e)
       {

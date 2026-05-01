@@ -27,12 +27,12 @@
 
 #include "remoting/remoting/desktop_ipc/DesktopServerProto.h"
 #include "DesktopSrvDispatcher.h"
-//#include "subsystem/platform/class ::time.h"
+//#include "subsystem/platform/class CLASS_DECL_REMOTING  ::time.h"
 
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING DesktopConfigClient : public DesktopServerProto
+   class CLASS_DECL_REMOTING  DesktopConfigClient : public DesktopServerProto
    {
    public:
       DesktopConfigClient();
@@ -44,7 +44,7 @@ namespace remoting
       virtual bool isRemoteInputAllowed();
 
    //private:
-      class ::time m_lastInputTime;
+      class CLASS_DECL_REMOTING  ::time m_lastInputTime;
    };
 
 

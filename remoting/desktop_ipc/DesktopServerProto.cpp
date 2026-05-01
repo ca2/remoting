@@ -30,7 +30,7 @@ namespace remoting
 {
 
 
-   //DesktopServerProto::DesktopServerProto(BlockingGate *pblockinggate) : m_pblockinggate(pblockinggate) {}
+   //DesktopServerProto::DesktopServerProto(BlockingGate *pblockinggate) : m_pcontrolgate(pcontrolgate) {}
 
    DesktopServerProto::DesktopServerProto()
    {
@@ -45,7 +45,7 @@ namespace remoting
    {
 
       m_pconfigurator = pconfigurator;
-      m_pblockinggate=pblockinggate;
+      m_pcontrolgate=pblockinggate;
 
    }
 
@@ -55,12 +55,12 @@ namespace remoting
       ::string errMess;
       if (pixelformat.bitsPerPixel != 16 && pixelformat.bitsPerPixel != 32)
       {
-         errMess.formatf("Wrong value of bits per pixel ({})", (int)pixelformat.bitsPerPixel);
+         errMess.format("Wrong value of bits per pixel ({})", (int)pixelformat.bitsPerPixel);
          throw ::subsystem::Exception(errMess);
       }
       if (pixelformat.colorDepth > pixelformat.bitsPerPixel)
       {
-         errMess.formatf("Wrong value (color depth ({}) > bits per pixel ({}))", (int)pixelformat.colorDepth,
+         errMess.format("Wrong value (color depth ({}) > bits per pixel ({}))", (int)pixelformat.colorDepth,
                          (int)pixelformat.bitsPerPixel);
          throw ::subsystem::Exception(errMess);
       }
@@ -72,7 +72,7 @@ namespace remoting
       if (abs(rectangle.left) > 32000 || abs(rectangle.top) > 32000 || abs(rectangle.right) > 32000 || abs(rectangle.bottom) > 32000 ||
           rectangle < 0)
       {
-         errMess.formatf("Wrong rectangle ({}, {}, {}, {})", rectangle.left, rectangle.top, rectangle.right, rectangle.bottom);
+         errMess.format("Wrong rectangle ({}, {}, {}, {})", rectangle.left, rectangle.top, rectangle.right, rectangle.bottom);
          throw ::subsystem::Exception(errMess);
       }
    }
@@ -82,7 +82,7 @@ namespace remoting
       ::string errMess;
       if (abs(size.cx) > 64000 || abs(size.cy) > 64000)
       {
-         errMess.formatf("Wrong dimension (%dx{})", size.cx, size.cy);
+         errMess.format("Wrong dimension ({}x{})", size.cx, size.cy);
          throw ::subsystem::Exception(errMess);
       }
    }

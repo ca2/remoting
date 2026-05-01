@@ -26,46 +26,50 @@
 // #include aaa_<tchar.h>
 // #include aaa_<stdio.h>
 
-PortMappingRect::PortMappingRect(int l, int t, int r, int b)
- : ::int_rectangle(l, t, r, b)
+namespace remoting_node
 {
-}
+   PortMappingRect::PortMappingRect(int l, int t, int r, int b)
+    : m_rectangle(l, t, r, b)
+   {
+   }
 
-PortMappingRect::PortMappingRect()
-{
-}
+   PortMappingRect::PortMappingRect()
+   {
+   }
 
-PortMappingRect::~PortMappingRect()
-{
-}
+   PortMappingRect::~PortMappingRect()
+   {
+   }
 
-void PortMappingRect::toString(::string & string) const
-{
-  string.format("%dx{}+{}+{}", right - left, bottom - top, left, top);
-}
+   void PortMappingRect::toString(::string & string) const
+   {
+      string.format("%dx{}+{}+{}", m_rectangle.width(), m_rectangle.height(), m_rectangle.left, m_rectangle.top);
+   }
 
-bool PortMappingRect::parse(const ::scoped_string & scopedstr, PortMappingRect * pportmappingrectOut)
-{
+   bool PortMappingRect::parse(const ::scoped_string & scopedstr, PortMappingRect * pportmappingrectOut)
+   {
 
-   ::string str(scopedstr);
-  int width, height, x, y;
-  char c;
-  if (sscanf(str.c_str(), "%dx{}+{}+{}%c", &width, &height, &x, &y, &c) != 4) {
-    return false;
-  }
-  if (width < 0 || height < 0) {
-    return false;
-  }
-  if (pportmappingrectOut != NULL) {
-    pportmappingrectOut->left = x;
-    pportmappingrectOut->right = x + width;
-    pportmappingrectOut->top = y;
-    pportmappingrectOut->bottom = y + height;
-  }
-  return true;
-}
+      ::string str(scopedstr);
+      int width, height, x, y;
+      char c;
+      if (sscanf(str.c_str(), "%dx{}+{}+{}%c", &width, &height, &x, &y, &c) != 4) {
+         return false;
+      }
+      if (width < 0 || height < 0) {
+         return false;
+      }
+      if (pportmappingrectOut != NULL) {
+         pportmappingrectOut->m_rectangle.left = x;
+         pportmappingrectOut->m_rectangle.right = x + width;
+         pportmappingrectOut->m_rectangle.top = y;
+         pportmappingrectOut->m_rectangle.bottom = y + height;
+      }
+      return true;
+   }
 
-bool PortMappingRect::tryParse(const char * psz)
-{
-  return parse(psz, NULL);
-}
+   bool PortMappingRect::tryParse(const char * psz)
+   {
+      return parse(psz, NULL);
+   }
+} // namespace remoting_node
+

@@ -367,13 +367,8 @@ namespace remoting_node
       m_httpPortSpin.setAccel(0, 1);
       m_httpPortSpin.setRange32(1, 65535);
 
-      int limitersTmp[] = {50, 200};
-      int deltasTmp[] = {5, 10};
-
-      ::array_base<int> limitters(limitersTmp, limitersTmp + sizeof(limitersTmp) /
-                                                            sizeof(int));
-      ::array_base<int> deltas(deltasTmp, deltasTmp + sizeof(deltasTmp) /
-                                                     sizeof(int));
+      ::array_base<int> limitters{50, 200};
+      ::array_base<int> deltas{5, 10};
 
       m_pollingIntervalSpin.setBuddy(&m_pollingInterval);
       m_pollingIntervalSpin.setAccel(0, 1);
@@ -475,7 +470,7 @@ namespace remoting_node
 
    void ServerConfigDialog::onPrimaryPasswordChange()
    {
-      if (m_ppControl->showChangePasswordModalDialog(&m_ctrlThis)) {
+      if (m_ppControl->showChangePasswordModalDialog(this)) {
          auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
          pconfigdialog->updateApplyButtonState();
       }
@@ -483,7 +478,7 @@ namespace remoting_node
 
    void ServerConfigDialog::onReadOnlyPasswordChange()
    {
-      if (m_vpControl->showChangePasswordModalDialog(&m_ctrlThis)) {
+      if (m_vpControl->showChangePasswordModalDialog(this)) {
          auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
          pconfigdialog->updateApplyButtonState();
       }
@@ -503,9 +498,12 @@ auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
       pconfigdialog->updateApplyButtonState();
    }
 
-   void ServerConfigDialog::onPollingIntervalSpinChangePos(LPNMUPDOWN lpupdownMessage)
+   void ServerConfigDialog::onPollingIntervalSpinChangePos(int iControl, int iPos, int iDelta)
    {
-      m_pollingIntervalSpin.autoAccelerationHandler(lpupdownMessage);
+      if (iControl == IDC_POLLING_INTERVAL_SPIN)
+      {
+         m_pollingIntervalSpin.autoAccelerationHandler(iPos, iDelta);
+      }
    }
 
    void ServerConfigDialog::onRfbPortUpdate()

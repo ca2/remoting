@@ -28,7 +28,7 @@
 #include "RfbClientManager.h"
 
 #include "remoting/node_desktop/control_desktop/ControlGate.h"
-#include "remoting/node_desktop/control_desktop/ControlAuthException.h"
+#include "remoting/remoting/node/ControlAuthException.h"
 #include "remoting/node_desktop/control_desktop/Transport.h"
 #include "ControlAppAuthenticator.h"
 #include "subsystem/thread/ThreadCollector.h"
@@ -60,7 +60,7 @@ namespace remoting_node_desktop
     * @remark class uses Server singleton and actual Server instance must exist
     * while any control client is runnin. If this rule is broken, it can cause application crash.
     */
-   class ControlClient : public ::subsystem::Thread
+   class CLASS_DECL_REMOTING_NODE_DESKTOP ControlClient : public ::subsystem::Thread
    {
    public:
       ::pointer < ::remoting_node::Configurator > m_pconfigurator;
@@ -70,7 +70,7 @@ namespace remoting_node_desktop
        * @param rfbClientManager active TightVNC rfb client manager.
        * @remark control client takes ownership over client transport.
        */
-      ControlClient(::remoting_node::Configurator * pconfigurator, Transport *transport, RfbClientManager *rfbClientManager, ControlAppAuthenticator *authenticator,
+      ControlClient(::remoting_node::Configurator * pconfigurator, ::remoting_control_desktop::Transport *transport, RfbClientManager *rfbClientManager, ControlAppAuthenticator *authenticator,
                     ::subsystem::FileInterface *pfilePipeHandle, ::subsystem::LogWriter * plogwriter);
       /**
        * Stops client thread and deletes control client.
@@ -151,7 +151,7 @@ namespace remoting_node_desktop
        * Called when set server config scopedstrMessage recieved.
        * @throws ::io_exception on io error.
        */
-      void set::remoting_node::ServerConfigMsgRcvd();
+      void setServerConfigMsgRcvd();
       /**
        * Called when get server config scopedstrMessage recieved.
        * @throws ::io_exception on io error.
@@ -196,22 +196,22 @@ namespace remoting_node_desktop
       /**
        * Client transport.
        */
-      Transport *m_transport;
+      ::pointer < ::remoting_control_desktop::Transport > m_ptransport;
       /**
        * Low-level transport for writting and recieving bytes.
        */
-      Channel *m_stream;
+      ::pointer < Channel > m_pchannel;
 
       /**
        * High-level transport for writting and reading control proto messages.
        */
-      ControlGate *m_pblockinggate;
+      ::pointer < ::remoting_control_desktop::ControlGate > m_pcontrolgate;
       ::pointer<::subsystem::FileInterface> m_pfilePipeHandle;
 
       /**
        * Active TightVNC rfb client manager.
        */
-      RfbClientManager *m_rfbClientManager;
+      ::pointer < RfbClientManager > m_prfbclientmanager;
 
       /**
        * true if control authentication is passed or no auth is set.
@@ -220,13 +220,13 @@ namespace remoting_node_desktop
       bool m_repeatAuthPassed;
       unsigned int m_authReqMessageId;
 
-      ControlAppAuthenticator *m_controlappauthenticator;
+      ::pointer <ControlAppAuthenticator >m_pcontrolappauthenticator;
 
       // A connection identifier will be used by a viewer to connect to
       // the server across a tcp dispatcher.
-      unsigned int m_tcpDispId;
-      ::string m_gotDispatcherName;
-      lockable_critical_section m_tcpDispValuesMutex;
+      unsigned int m_uTcpDispId;
+      ::string m_strGotDispatcherName;
+      lockable_critical_section m_criticalsectionTcpDispValues;
 
       ::pointer<::subsystem::ThreadCollector> m_pthreadcollectorOutgoingConnection;
 

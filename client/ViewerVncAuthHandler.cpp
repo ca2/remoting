@@ -80,7 +80,7 @@ namespace remoting_client
                         ::system()->file()->put_memory(::system()->directory()->appdata()/::string(hostname), m2);
                     }
                 } else {
-                    throw ::remoting::AuthCanceledException();
+                    throw ::remoting_client::AuthCanceledException();
                 }
             }
         }

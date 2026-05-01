@@ -3,10 +3,7 @@ project(remoting_node_desktop)
 
 
 list(APPEND library_source
-   control_desktop/_.cpp
    control_desktop/_.h
-   ##control_desktop/_____debug.xcconfig
-   ##control_desktop/_____release.xcconfig
    control_desktop/AboutDialog.cpp
    control_desktop/AboutDialog.h
    control_desktop/ConnectCommand.cpp
@@ -19,10 +16,6 @@ list(APPEND library_source
    control_desktop/ControlAuth.h
    control_desktop/ControlAuthDialog.cpp
    control_desktop/ControlAuthDialog.h
-   control_desktop/ControlAuthException.cpp
-   control_desktop/ControlAuthException.h
-   control_desktop/ControlCommand.cpp
-   control_desktop/ControlCommand.h
    control_desktop/ControlCommandLine.cpp
    control_desktop/ControlCommandLine.h
    control_desktop/ControlGate.cpp
@@ -38,22 +31,14 @@ list(APPEND library_source
    control_desktop/ControlTrayIcon.h
    control_desktop/DisconnectAllCommand.cpp
    control_desktop/DisconnectAllCommand.h
-   ##control_desktop/framework.cpp
-   ##control_desktop/framework.h
    control_desktop/MakeRfbConnectionCommand.cpp
    control_desktop/MakeRfbConnectionCommand.h
-   #control_desktop/matter.txt
    control_desktop/NamedPipeTransport.cpp
    control_desktop/NamedPipeTransport.h
-   control_desktop/Notificator.cpp
-   control_desktop/Notificator.h
    control_desktop/OutgoingConnectionDialog.cpp
    control_desktop/OutgoingConnectionDialog.h
    control_desktop/ReloadConfigCommand.cpp
    control_desktop/ReloadConfigCommand.h
-   control_desktop/RemoteException.cpp
-   control_desktop/RemoteException.h
-   control_desktop/resource.h
    control_desktop/RfbClientInfo.cpp
    control_desktop/RfbClientInfo.h
    control_desktop/ServerInfo.h
@@ -83,6 +68,8 @@ list(APPEND library_source
    control_desktop/UpdateLocalConfigCommand.h
    control_desktop/UpdateRemoteConfigCommand.cpp
    control_desktop/UpdateRemoteConfigCommand.h
+   _.cpp
+   _.h
    AdditionalActionApplication.cpp
    AdditionalActionApplication.h
    application.cpp
@@ -149,6 +136,8 @@ list(APPEND library_source
    EventLogWriter.cpp
    EventLogWriter.h
    ServiceEvents.h
+   Task.cpp
+   Task.h
    WsConfigRunner.cpp
    WsConfigRunner.h
 )
@@ -187,7 +176,7 @@ if(${WIN32})
    target_compile_options(${PROJECT_NAME} PRIVATE "/bigobj")
    target_link_options(${PROJECT_NAME} PRIVATE "/DEFAULTLIB:msvcrt$<$<CONFIG:Debug>:d>")
    target_link_options(${PROJECT_NAME} PRIVATE "/SUBSYSTEM:WINDOWS")
-   target_link_libraries(${PROJECT_NAME} PRIVATE Ws2_32 Version Comctl32 ${library_references} ${global_library_references})
+   target_link_libraries(${PROJECT_NAME} PRIVATE Ws2_32 Version Comctl32 winmm ${library_references} ${global_library_references})
 
 elseif(${LINUX} OR ${__BSD__} OR ${ANDROID})
    target_compile_options(${PROJECT_NAME} PRIVATE $<$<COMPILE_LANGUAGE:CXX>:-fpermissive  ${EXTRA_CXX_TARGET_COMPILER_OPTIONS}>)
@@ -220,14 +209,13 @@ add_dependencies(${PROJECT_NAME} remoting)
 #add_dependencies(${PROJECT_NAME} remoting_zlib)
 
 
-list(APPEND executable_include_directories ${CMAKE_CURRENT_SOURCE_DIR})
-list(APPEND executable_include_directories ${CMAKE_CURRENT_SOURCE_DIR}/..)
-list(APPEND executable_include_directories ${CMAKE_CURRENT_SOURCE_DIR}/../..)
+list(APPEND library_include_directories ${CMAKE_CURRENT_SOURCE_DIR})
+list(APPEND library_include_directories ${CMAKE_CURRENT_SOURCE_DIR}/..)
+list(APPEND library_include_directories ${CMAKE_CURRENT_SOURCE_DIR}/../..)
 
-target_include_directories(${PROJECT_NAME} PRIVATE ${executable_include_directories})
+target_include_directories(${PROJECT_NAME} PRIVATE ${library_include_directories})
 
 add_subdirectory(__implement)
-
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE _${PROJECT_NAME}_project)
 

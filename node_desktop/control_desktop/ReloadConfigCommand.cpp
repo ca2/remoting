@@ -28,7 +28,7 @@
 namespace remoting_control_desktop
 {
    ReloadConfigCommand::ReloadConfigCommand(ControlProxy *proxy)
-   : m_proxy(proxy)
+   : m_pcontrolproxy(proxy)
    {
    }
 
@@ -38,7 +38,7 @@ namespace remoting_control_desktop
 
    void ReloadConfigCommand::execute()
    {
-      m_proxy->reloadServerConfig();
+      m_pcontrolproxy->reloadServerConfig();
    }
 } // namespace remoting_control_desktop
 

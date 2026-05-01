@@ -32,7 +32,7 @@
 #include "remoting/remoting/node_config/ServerConfig.h"
 
 #include "ControlMessage.h"
-#include "RemoteException.h"
+#include "remoting/remoting/node/RemoteException.h"
 
 //#include aaa_<list>
 
@@ -43,14 +43,15 @@ namespace remoting_control_desktop
     * Used to execute remote commands on on TightVNC server.
     * remote errors.
     */
-   class ControlProxy
+   class ControlProxy :
+   virtual public ::particle
    {
    public:
       /**
        * Creates proxy.
        * @param pblockinggate transport to send and recieve messages.
        */
-      ControlProxy(ControlGate *pblockinggate);
+      ControlProxy(ControlGate * pcontrolgate);
       /**
        * Class destructor.
        */
@@ -180,11 +181,11 @@ namespace remoting_control_desktop
       /**
        * Transport for sending and recieving control proto messages.
        */
-      ControlGate *m_pblockinggate;
+      ::pointer < ControlGate  > m_pcontrolgate;
       /**
        * Current control scopedstrMessage.
        */
-      ControlMessage *m_message;
+      ::pointer < ControlMessage > m_pcontrolmessage;
    private:
       /**
        * Deletes control scopedstrMessage created by createMessage() method

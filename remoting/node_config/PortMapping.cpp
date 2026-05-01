@@ -28,105 +28,109 @@
 // #include aaa_<tchar.h>
 // #include aaa_<stdio.h>
 
-PortMapping::PortMapping()
-: m_port(0)
+namespace remoting_node
 {
-}
+   PortMapping::PortMapping()
+   : m_port(0)
+   {
+   }
 
-PortMapping::PortMapping(int nport, PortMappingRect nrect)
-: m_port(nport), m_rect(nrect)
-{
-}
+   PortMapping::PortMapping(int nport, PortMappingRect nrect)
+   : m_port(nport), m_rect(nrect)
+   {
+   }
 
-PortMapping::PortMapping(const PortMapping &other)
-: m_port(other.m_port), m_rect(other.m_rect)
-{
-}
+   PortMapping::PortMapping(const PortMapping &other)
+   : m_port(other.m_port), m_rect(other.m_rect)
+   {
+   }
 
-PortMapping::~PortMapping()
-{
-}
+   PortMapping::~PortMapping()
+   {
+   }
 
-PortMapping &PortMapping::operator=(const PortMapping &other)
-{
-  m_port = other.m_port;
-  m_rect = other.m_rect;
-  return *this;
-}
+   PortMapping &PortMapping::operator=(const PortMapping &other)
+   {
+      m_port = other.m_port;
+      m_rect = other.m_rect;
+      return *this;
+   }
 
-bool PortMapping::isEqualTo(const PortMapping *other) const
-{
-  return other->m_port == m_port && other->m_rect == m_rect;
-}
+   bool PortMapping::isEqualTo(const PortMapping *other) const
+   {
+      return other->m_port == m_port && other->m_rect.m_rectangle == m_rect.m_rectangle;
+   }
 
-void PortMapping::setPort(int nport)
-{
-  m_port = nport;
-}
+   void PortMapping::setPort(int nport)
+   {
+      m_port = nport;
+   }
 
-void PortMapping::setRect(PortMappingRect nrect)
-{
-  m_rect = nrect;
-}
+   void PortMapping::setRect(PortMappingRect nrect)
+   {
+      m_rect = nrect;
+   }
 
-int PortMapping::getPort() const
-{
-  return m_port;
-}
+   int PortMapping::getPort() const
+   {
+      return m_port;
+   }
 
-PortMappingRect PortMapping::getRect() const
-{
-  return m_rect;
-}
+   PortMappingRect PortMapping::getRect() const
+   {
+      return m_rect;
+   }
 
-void PortMapping::toString(::string & string) const
-{
-  //
-  // Format:   [port]:[rectangle.toString()]
-  // It means: [port]:[width]x[height]+[x]+[y]
-  // without square brackets.
-  //
+   void PortMapping::toString(::string & string) const
+   {
+      //
+      // Format:   [port]:[rectangle.toString()]
+      // It means: [port]:[width]x[height]+[x]+[y]
+      // without square brackets.
+      //
 
-  ::string rectString;
-  m_rect.toString(rectString);
+      ::string rectString;
+      m_rect.toString(rectString);
 
-  string.format("{}:{}", m_port, rectString);
-}
+      string.format("{}:{}", m_port, rectString);
+   }
 
-::string PortMapping::toString() const
-{
+   ::string PortMapping::toString() const
+   {
 
-   ::string str;
+      ::string str;
 
-   toString(str);
+      toString(str);
 
-   return str;
+      return str;
 
-}
+   }
 
-bool PortMapping::parse(const char * psz, PortMapping *mapping)
-{
-  int port;
-  char c;
-  PortMappingRect portmappingrect;
-  auto pszRectString = strchr(psz, ':') + 1;
-  if (pszRectString == NULL)
-  {
-    return false;
-  }
-  if ((sscanf(psz, "%d%c", &port, &c) != 2) || (c != ':')) {
-    return false;
-  }
-  if (port < 0) {
-    return false;
-  }
-  if (!PortMappingRect::parse(pszRectString, &portmappingrect))
-  {
-    return false;
-  }
-  if (mapping != NULL) {
-    mapping->setPort(port);
-    mapping->setRect(portmappingrect);
-  }
-  return true;
-}
+   bool PortMapping::parse(const char * psz, PortMapping *mapping)
+   {
+      int port;
+      char c;
+      PortMappingRect portmappingrect;
+      auto pszRectString = strchr(psz, ':') + 1;
+      if (pszRectString == NULL)
+      {
+         return false;
+      }
+      if ((sscanf(psz, "%d%c", &port, &c) != 2) || (c != ':')) {
+         return false;
+      }
+      if (port < 0) {
+         return false;
+      }
+      if (!PortMappingRect::parse(pszRectString, &portmappingrect))
+      {
+         return false;
+      }
+      if (mapping != NULL) {
+         mapping->setPort(port);
+         mapping->setRect(portmappingrect);
+      }
+      return true;
+   }
+} // namespace remoting_node
+

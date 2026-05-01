@@ -28,33 +28,34 @@
 //////#include "subsystem/platform/::string.h"
 #include "PortMappingRect.h"
 
-class PortMapping
+namespace remoting_node
 {
-public:
-  PortMapping();
-  PortMapping(int nport, PortMappingRect nrect);
-  PortMapping(const PortMapping &other);
-  virtual ~PortMapping();
+   class CLASS_DECL_REMOTING PortMapping
+   {
+   public:
+      PortMapping();
+      PortMapping(int nport, PortMappingRect nrect);
+      PortMapping(const PortMapping &other);
+      virtual ~PortMapping();
 
-  PortMapping &operator=(const PortMapping &other);
-  bool isEqualTo(const PortMapping *other) const;
+      PortMapping &operator=(const PortMapping &other);
+      bool isEqualTo(const PortMapping *other) const;
 
-  void setPort(int nport);
-  void setRect(PortMappingRect nrect);
+      void setPort(int nport);
+      void setRect(PortMappingRect nrect);
 
-  int getPort() const;
-  PortMappingRect getRect() const;
+      int getPort() const;
+      PortMappingRect getRect() const;
 
-   void toString(::string & string) const;
-   ::string toString() const;
+      void toString(::string & string) const;
+      ::string toString() const;
 
-public:
-  static bool parse(const char * psz,  PortMapping *mapping);
+   public:
+      static bool parse(const char * psz,  PortMapping *mapping);
 
-protected:
-  int m_port;
+   protected:
+      int m_port;
 
-  PortMappingRect m_rect;
-};
-
-
+      PortMappingRect m_rect;
+   };
+} // namespace remoting_node

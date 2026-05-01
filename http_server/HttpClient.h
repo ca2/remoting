@@ -34,7 +34,7 @@
 #include "acme/input_output/DataOutputStream.h"
 //#include "log_writer/LogWriter.h"
 
-class HttpClient : public TcpClientThread
+class CLASS_DECL_REMOTING HttpClient : public TcpClientThread
 {
 public:
   HttpClient(SocketIPv4 *socket, ::subsystem::LogWriter * plogwriter);

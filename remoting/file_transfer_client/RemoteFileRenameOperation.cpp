@@ -84,7 +84,7 @@ namespace remoting
          // Logging
          ::string scopedstrMessage;
 
-         scopedstrMessage.formatf("Error: failed to rename remote '{}' file",
+         scopedstrMessage.format("Error: failed to rename remote '{}' file",
                         m_pathToSourceFile);
 
          notifyInformation(scopedstrMessage);

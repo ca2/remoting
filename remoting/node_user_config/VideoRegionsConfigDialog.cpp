@@ -67,7 +67,10 @@ namespace remoting_node
          // if (scopedstrMessage->hdr.code == UDN_DELTAPOS) {
          //    onRecognitionIntervalSpinChangePos(scopedstrMessage);
          // }
+         return true;
       }
+
+      return false;
 
    }
    // bool VideoRegionsConfigDialog::onNotify(unsigned int controlID, ::lparam data)
@@ -234,13 +237,11 @@ namespace remoting_node
       dialog_item(m_videoRecognitionInterval, IDC_VIDEO_RECOGNITION_INTERVAL);
       dialog_item(m_videoRecognitionIntervalSpin, IDC_VIDEO_RECOGNITION_INTERVAL_SPIN);
 
-      int limitersTmp[] = {50, 200};
-      int deltasTmp[] = {5, 10};
+      //int limitersTmp[] = {50, 200};
+      //int deltasTmp[] = {5, 10};
 
-      ::array_base<int> limitters(limitersTmp, limitersTmp + sizeof(limitersTmp) /
-                                                            sizeof(int));
-      ::array_base<int> deltas(deltasTmp, deltasTmp + sizeof(deltasTmp) /
-                                                     sizeof(int));
+      ::array_base<int> limitters{50, 200};
+      ::array_base<int> deltas{5, 10};
 
       m_videoRecognitionIntervalSpin.setBuddy(&m_videoRecognitionInterval);
       m_videoRecognitionIntervalSpin.setAccel(0, 1);

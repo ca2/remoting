@@ -66,7 +66,7 @@ void MsiProperties::getString(const ::scoped_string & scopedstrName, ::string & 
     getValue(name, out);
   } catch (...) {
     ::string errMess;
-    errMess.formatf("Cant't retrieve a string from the {} property",
+    errMess.format("Cant't retrieve a string from the {} property",
                    name);
     throw ::subsystem::Exception(errMess);
   }
@@ -78,7 +78,7 @@ void MsiProperties::setString(const ::scoped_string & scopedstrName, const ::sco
     setValue(name, value);
   } catch (...) {
     ::string errMess;
-    errMess.formatf("Cant't set a string to the {} property",
+    errMess.format("Cant't set a string to the {} property",
                    name);
     throw ::subsystem::Exception(errMess);
   }
@@ -91,7 +91,7 @@ int MsiProperties::getInt32(const ::scoped_string & scopedstrName)
   int retValue = 0;
   if (!MainSubsystem().StringParser().parseInt(strValue, &retValue)) {
     ::string errMess;
-    errMess.formatf("Can't convert the {} string value to int of the"
+    errMess.format("Can't convert the {} string value to int of the"
                    " {} property", strValue, name);
     throw ::subsystem::Exception(errMess);
   }
@@ -102,11 +102,11 @@ void MsiProperties::setInt32(const ::scoped_string & scopedstrName, int value)
 {
   try {
     ::string valueStr;
-    valueStr.formatf("{}", value);
+    valueStr.format("{}", value);
     setValue(name, &valueStr);
   } catch (...) {
     ::string errMess;
-    errMess.formatf("Cant't set the (int){} value to the {} property",
+    errMess.format("Cant't set the (int){} value to the {} property",
                    value,
                    name);
     throw ::subsystem::Exception(errMess);

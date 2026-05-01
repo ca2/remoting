@@ -459,7 +459,7 @@ namespace remoting_client
         if (!isPresent(PORT)) {
             strHost = m_options[HOST];
         } else {
-            strHost.formatf("{}::{}", m_options[HOST],
+            strHost.format("{}::{}", m_options[HOST],
                                         m_options[PORT]);
         }
         m_pconnectiondata->setHost(strHost);

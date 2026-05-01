@@ -193,7 +193,7 @@ namespace remoting_windows
          else
          {
             ::string scopedstrMessage;
-            scopedstrMessage.formatf("Unknown {} keysym", keySym);
+            scopedstrMessage.format("Unknown {} keysym", keySym);
             throw ::subsystem::Exception(scopedstrMessage);
          }
       }

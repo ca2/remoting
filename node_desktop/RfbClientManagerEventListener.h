@@ -36,7 +36,7 @@ namespace remoting_node_desktop
       /**
        * Destructor, does nothing.
        */
-      virtual ~RfbClientManagerEventListener();
+      //virtual ~RfbClientManagerEventListener();
 
       /**
        * Called when first rfb client connects to server.

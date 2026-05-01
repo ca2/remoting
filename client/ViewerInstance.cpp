@@ -43,7 +43,7 @@ namespace remoting_client
 
       m_pvncauthhandler = allocateø ViewerVncAuthHandler(m_pconnectiondata);
 
-      m_pviewercore = allocateø ::remoting::RemoteViewerCore(premoting->m_plogwriter);
+      m_pviewercore = allocateø ::remoting_client::RemoteViewerCore(premoting->m_plogwriter);
 
       m_pviewerwindow = allocateø ViewerWindow(papplication, premoting, m_pconnectiondata, m_pconnectionconfig,
                                                premoting->m_plogwriter);
@@ -62,7 +62,7 @@ namespace remoting_client
 
       m_pvncauthhandler = allocateø ViewerVncAuthHandler(m_pconnectiondata);
 
-      m_pviewercore = allocateø ::remoting::RemoteViewerCore(premoting->m_plogwriter);
+      m_pviewercore = allocateø ::remoting_client::RemoteViewerCore(premoting->m_plogwriter);
 
       m_pviewerwindow = allocateø ViewerWindow(papplication, premoting, m_pconnectiondata, m_pconnectionconfig,
                                                premoting->m_plogwriter);

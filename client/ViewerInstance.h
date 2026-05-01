@@ -45,9 +45,9 @@ namespace remoting_client
       ::pointer<::remoting::ConnectionConfig> m_pconnectionconfig;
 
       ::pointer<ViewerWindow> m_pviewerwindow;
-      ::pointer<::remoting::RemoteViewerCore> m_pviewercore;
+      ::pointer<::remoting_client::RemoteViewerCore> m_pviewercore;
       ::pointer < ViewerVncAuthHandler > m_pvncauthhandler;
-      ::remoting::file_transfer::FileTransferCapability m_fileTransfer;
+      ::remoting_client::file_transfer::FileTransferCapability m_fileTransfer;
       ::pointer<::subsystem::SocketIPv4Interface> m_psocket;
 
 

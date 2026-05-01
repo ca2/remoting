@@ -28,7 +28,7 @@
 #include "remoting/client/ConnectionData.h"
 #include "DesktopWindow.h"
 #include "FileTransferMainDialog.h"
-#include "NamingDefs.h"
+#include "remoting/remoting/client/NamingDefs.h"
 #include "OptionsDialog.h"
 #include "ScaleManager.h"
 #include "ViewerMenu.h"
@@ -52,7 +52,7 @@ namespace remoting_client
    class CLASS_DECL_REMOTING_CLIENT ViewerWindow : 
       //public ::innate_subsystem::Window,
       public ::innate_subsystem::Control,
-      public ::remoting::CoreEventsAdapter,
+      public ::remoting_client::CoreEventsAdapter,
       public subsystem::OperatingSystemHookListener
    {
    public:
@@ -65,8 +65,8 @@ namespace remoting_client
        ::remoting::ConnectionConfigSM m_ccsm;
        ::pointer < ::remoting::ConnectionConfig > m_pconnectionconfig;
        ::pointer < ::subsystem::OperatingSystemApplicationInterface > m_poperatingsystemapplication;
-       ::pointer < ::remoting::RemoteViewerCore > m_pviewercore;
-       ::remoting::file_transfer::FileTransferCapability *m_fileTransfer;
+       ::pointer < ::remoting_client::RemoteViewerCore > m_pviewercore;
+       ::remoting_client::file_transfer::FileTransferCapability *m_fileTransfer;
        FileTransferMainDialog *m_ftDialog;
        ::pointer < DesktopWindow > m_pdesktopwindow;
        //::wstring m_wstrToolTip;
@@ -126,8 +126,8 @@ namespace remoting_client
            ::subsystem::LogWriter * plogwriter = nullptr);
         ~ViewerWindow() override;
 
-        void setFileTransfer(::remoting::file_transfer::FileTransferCapability *ft);
-        void setRemoteViewerCore(::remoting::RemoteViewerCore *pCore);
+        void setFileTransfer(::remoting_client::file_transfer::FileTransferCapability *ft);
+        void setRemoteViewerCore(::remoting_client::RemoteViewerCore *pCore);
 
         //
         // This function return value of flag m_requiresReconnect.
@@ -193,7 +193,7 @@ namespace remoting_client
         void onConnecting(int iPhase) override;
         void onConnected(::remoting::RfbOutputGate *output) override;
         void onDisconnect(const ::scoped_string & scopedstrMessage);
-        void onAuthError(const ::remoting::AuthException *exception);
+        void onAuthError(const ::remoting_client::AuthException *exception);
         void onError(const ::subsystem::Exception *exception);
         void onFramebufferUpdate(const ::innate_subsystem::Framebuffer *pframebuffer, const ::int_rectangle &  rectangle);
         void onFramebufferPropChange(const ::innate_subsystem::Framebuffer *pframebuffer);

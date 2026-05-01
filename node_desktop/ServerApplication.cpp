@@ -122,22 +122,22 @@ namespace remoting_node_desktop
          return;
       }
 
-      // check the HKLM\SOFTWARE\TightVNC\Server\ has ServiceOnly subsection and exit if found
-      // to create the key and set acces rights run the PS script:
-      // New-Item -Path HKLM:\SOFTWARE\TightVNC\Server -Name ServiceOnly
-      // $ACL = Get-Acl HKLM:\SOFTWARE\TightVNC\Server\ServiceOnly
-      // $AccessRule = new-object System.Security.AccessControl.RegistryAccessRule("Users", "ReadKey", "None", "None",
-      // "Allow") $ACL.SetAccessRule($AccessRule) $ACL | Set-Acl HKLM:\SOFTWARE\TightVNC\Server\ServiceOnly
-      ::subsystem::RegistryKey key(MainSubsystem().Registry().getLocalMachineKey(),
-                                   "SOFTWARE\\TightVNC\\Server\\ServiceOnly", false);
-      if (key.isOpened())
-      {
-         MainSubsystem().message_box({}, "Couldn't run the server in Application mode", "Server error",
-                                     ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
-
-         setExitCode(1);
-         return;
-      }
+      // // check the HKLM\SOFTWARE\TightVNC\Server\ has ServiceOnly subsection and exit if found
+      // // to create the key and set acces rights run the PS script:
+      // // New-Item -Path HKLM:\SOFTWARE\TightVNC\Server -Name ServiceOnly
+      // // $ACL = Get-Acl HKLM:\SOFTWARE\TightVNC\Server\ServiceOnly
+      // // $AccessRule = new-object System.Security.AccessControl.RegistryAccessRule("Users", "ReadKey", "None", "None",
+      // // "Allow") $ACL.SetAccessRule($AccessRule) $ACL | Set-Acl HKLM:\SOFTWARE\TightVNC\Server\ServiceOnly
+      // ::subsystem::RegistryKey key(MainSubsystem().Registry().getLocalMachineKey(),
+      //                              "SOFTWARE\\TightVNC\\Server\\ServiceOnly", false);
+      // if (key.isOpened())
+      // {
+      //    MainSubsystem().message_box({}, "Couldn't run the server in Application mode", "Server error",
+      //                                ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
+      //
+      //    setExitCode(1);
+      //    return;
+      // }
 
       // Start TightVNC server and TightVNC control application.
       try
@@ -145,10 +145,17 @@ namespace remoting_node_desktop
          _start();
          //m_tvnServer = new Server(false, m_newConnectionEvents, this, m_fileLogWriter);
          //m_tvnServer->addListener(this);
-         construct_newø(m_pcontrolrunner);
 
+         bool bRunControlClient = false;
 
-         m_pcontrolrunner->initialize_ws_config_runner(m_plogwriter);
+         if (bRunControlClient)
+         {
+
+            construct_newø(m_pcontrolrunner);
+
+            m_pcontrolrunner->initialize_ws_config_runner(m_plogwriter);
+
+         }
 
          //OperatingSystemApplication::run();
 

@@ -29,7 +29,7 @@
 #include "acme/exception/io.h"
 
 
-class HttpReply
+class CLASS_DECL_REMOTING HttpReply
 {
 public:
   HttpReply(DataOutputStream *dataOutput);

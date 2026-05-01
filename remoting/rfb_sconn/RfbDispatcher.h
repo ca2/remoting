@@ -42,7 +42,7 @@ namespace remoting
       //               AnEventListener *m_extTerminationListener);
       // RfbDispatcher(::remoting::RfbInputGate *pblockinggate,
       //               ::happening *terminationEvent);
-      RfbDispatcher(::remoting::RfbInputGate *pblockinggate, const ::procedure &procedureTermination);
+      RfbDispatcher(::remoting::RfbInputGate *prfbinputgate, const ::procedure &procedureTermination);
       virtual ~RfbDispatcher();
 
       void registerNewHandle(unsigned int code, RfbDispatcherListener *listener);
@@ -51,7 +51,7 @@ namespace remoting
       virtual void execute();
       void notifyAbTermination();
 
-      ::remoting::RfbInputGate *m_pblockinggate;
+      ::remoting::RfbInputGate *m_prfbinputgate;
 
       ::map<unsigned int, RfbDispatcherListener *> m_handlers;
 

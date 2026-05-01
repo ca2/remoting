@@ -40,7 +40,7 @@ namespace remoting_node_desktop
     * Tcp server that listens for incoming control connections
     * and give management over these connection to ControlClient instances.
     */
-   class ControlServer : public ::subsystem::Thread
+   class CLASS_DECL_REMOTING_NODE_DESKTOP ControlServer : public ::subsystem::Thread
    {
    public:
 
@@ -55,7 +55,7 @@ namespace remoting_node_desktop
        * @remark rfbClientManager and rfbServers parameters are needed for
        * executing some of control commands and cannot be 0.
        */
-      ControlServer(::subsystem::PipeServer *pipeServer, RfbClientManager *rfbClientManager,
+      ControlServer(::remoting_node::Configurator * pconfigurator, ::subsystem::PipeServer *pipeServer, RfbClientManager *rfbClientManager,
                     ::subsystem::LogWriter * plogwriter);
       /**
        * Stops and deletes control server and deletes transport.
@@ -78,14 +78,14 @@ namespace remoting_node_desktop
       virtual void onTerminate();
 
    private:
-      ControlAppAuthenticator m_controlappauthenticator;
+      ::pointer < ControlAppAuthenticator > m_pcontrolappauthenticator;
       ::pointer<::subsystem::ThreadCollector> m_pthreadCollector;
 
-      ::subsystem::PipeServer *m_pipeServer;
+      ::pointer < ::subsystem::PipeServer > m_ppipeserver;
       /**
        * Active rfb client manager that used in TightVNC server.
        */
-      RfbClientManager *m_rfbClientManager;
+      ::pointer < RfbClientManager > m_prfbclientmanager;
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };

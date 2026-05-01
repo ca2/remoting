@@ -32,7 +32,7 @@
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING GateKicker : public ::subsystem::Thread
+   class CLASS_DECL_REMOTING  GateKicker : public ::subsystem::Thread
    {
    public:
       //GateKicker(BlockingGate *pblockinggate);
@@ -46,7 +46,7 @@ namespace remoting
       virtual void execute();
       virtual void onTerminate();
    //private:
-      BlockingGate *m_pblockinggate;
+      BlockingGate *m_pcontrolgate;
       ::happening m_happeningSleeper;
    };
 

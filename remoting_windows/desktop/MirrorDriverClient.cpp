@@ -165,7 +165,7 @@ namespace remoting_windows
       if (!result)
       {
          ::string errMess;
-         errMess.formatf("Can't find {}!", driverName);
+         errMess.format("Can't find {}!", driverName);
          throw ::subsystem::Exception(errMess);
       }
    }
@@ -297,7 +297,7 @@ namespace remoting_windows
          if (code < 0)
          {
             ::string errMess;
-            errMess.formatf("1st ChangeDisplaySettingsEx() failed with code {}", (int)code);
+            errMess.format("1st ChangeDisplaySettingsEx() failed with code {}", (int)code);
             throw ::subsystem::Exception(errMess);
          }
          m_plogwriter->information("CommitDisplayChanges(2): \"{}\"", ::string(m_deviceInfo.DeviceName));
@@ -305,7 +305,7 @@ namespace remoting_windows
          if (code < 0)
          {
             ::string errMess;
-            errMess.formatf("2nd ChangeDisplaySettingsEx() failed with code {}", (int)code);
+            errMess.format("2nd ChangeDisplaySettingsEx() failed with code {}", (int)code);
             throw ::subsystem::Exception(errMess);
          }
       }
@@ -315,7 +315,7 @@ namespace remoting_windows
          if (code < 0)
          {
             ::string errMess;
-            errMess.formatf("ChangeDisplaySettingsEx() failed with code {}", (int)code);
+            errMess.format("ChangeDisplaySettingsEx() failed with code {}", (int)code);
             throw ::subsystem::Exception(errMess);
          }
       }
@@ -376,7 +376,7 @@ namespace remoting_windows
          if (res <= 0)
          {
             ::string errMess;
-            errMess.formatf("Can't set a connection for the mirror driver: "
+            errMess.format("Can't set a connection for the mirror driver: "
                             "ExtEscape() failed with {}",
                             res);
             throw ::subsystem::Exception(errMess);

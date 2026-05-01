@@ -27,7 +27,7 @@
 
 //#include "subsystem/platform/::string.h"
 
-class AppletParameter
+class CLASS_DECL_REMOTING AppletParameter
 {
 public:
   AppletParameter(const char *name, const char *value);

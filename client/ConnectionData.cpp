@@ -143,8 +143,8 @@ namespace remoting_client
    {
       // Transform password from hex-string to raw data.
       ::string ansiHidePassword(m_defaultPassword);
-      unsigned char encPassword[::remoting::VncAuthentication::VNC_PASSWORD_SIZE];
-      for (size_t i = 0; i < ::remoting::VncAuthentication::VNC_PASSWORD_SIZE; ++i) {
+      unsigned char encPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
+      for (size_t i = 0; i < ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE; ++i) {
          std::stringstream passwordStream;
          passwordStream << ansiHidePassword[i * 2]
                         << ansiHidePassword[i * 2 + 1];
@@ -153,7 +153,7 @@ namespace remoting_client
          encPassword[i] = static_cast<unsigned char>(ordOfSymbol);
       }
       // Decrypt password.
-      unsigned char plainPassword[::remoting::VncAuthentication::VNC_PASSWORD_SIZE];
+      unsigned char plainPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
       ::subsystem::VncPassCrypt::getPlainPass(plainPassword, encPassword);
 
       ::string ansiPlainPassword(reinterpret_cast<char *>(plainPassword));
@@ -165,16 +165,16 @@ namespace remoting_client
    void ConnectionData::setPlainPassword(const ::scoped_string & password)
    {
       ::string ansiPlainPassword(password);
-      unsigned char plainPassword[::remoting::VncAuthentication::VNC_PASSWORD_SIZE];
-      unsigned char encryptedPassword[::remoting::VncAuthentication::VNC_PASSWORD_SIZE];
-      memset(plainPassword, 0, ::remoting::VncAuthentication::VNC_PASSWORD_SIZE);
+      unsigned char plainPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
+      unsigned char encryptedPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
+      memset(plainPassword, 0, ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE);
       memcpy(plainPassword,
              ansiPlainPassword,
-             minimum(::remoting::VncAuthentication::VNC_PASSWORD_SIZE, ansiPlainPassword.length()));
+             minimum(::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE, ansiPlainPassword.length()));
       ::subsystem::VncPassCrypt::getEncryptedPass(encryptedPassword, plainPassword);
-      unsigned char hidePasswordChars[::remoting::VncAuthentication::VNC_PASSWORD_SIZE * 2 + 1];
-      hidePasswordChars[::remoting::VncAuthentication::VNC_PASSWORD_SIZE * 2] = 0;
-      for (size_t i = 0; i < ::remoting::VncAuthentication::VNC_PASSWORD_SIZE; ++i) {
+      unsigned char hidePasswordChars[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE * 2 + 1];
+      hidePasswordChars[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE * 2] = 0;
+      for (size_t i = 0; i < ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE; ++i) {
          std::stringstream passwordStream;
          int ordOfSymbol = encryptedPassword[i];
          passwordStream << std::hex << std::setw(2) << std::setfill('0') << ordOfSymbol;

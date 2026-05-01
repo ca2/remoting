@@ -43,13 +43,13 @@ KeySymTest::KeySymTest(const ::scoped_string & scopedstrFileFrom, const ::scoped
   m_fFrom = _tfopen(m_fromFileName, "rt,ccs=UNICODE");
   if (m_fFrom == 0) {
     ::string errMess;
-    errMess.formatf("Cannot open the {} file", m_fromFileName);
+    errMess.format("Cannot open the {} file", m_fromFileName);
     throw ::subsystem::Exception(errMess);
   }
   m_fTo = _tfopen(m_toFileName, "wt,ccs=UNICODE");
   if (m_fTo == 0) {
     ::string errMess;
-    errMess.formatf("Cannot open the {} file", m_toFileName);
+    errMess.format("Cannot open the {} file", m_toFileName);
     throw ::subsystem::Exception(errMess);
   }
 }
@@ -78,7 +78,7 @@ int KeySymTest::run()
         unsigned int hkbdLayout = 0;
         if (!MainSubsystem().StringParser().parseHex(word2, &hkbdLayout)) {
           ::string errMess;
-          errMess.formatf("Wrong \"kbdlayout\" argument at %u line ({})",
+          errMess.format("Wrong \"kbdlayout\" argument at %u line ({})",
                          m_lineNumber,
                          m_fromFileName);
           throw ::subsystem::Exception(errMess);
@@ -98,7 +98,7 @@ int KeySymTest::run()
           m_rfbKeySym->processKeyEvent(virtKey, addKeyData);
         } else {
           ::string errMess;
-          errMess.formatf("Wrong value(s) at %u line ({})",
+          errMess.format("Wrong value(s) at %u line ({})",
                          m_lineNumber,
                          m_fromFileName);
           throw ::subsystem::Exception(errMess);
@@ -115,7 +115,7 @@ void KeySymTest::changeKbdLayout(HKL hkl)
 {
   if (ActivateKeyboardLayout(hkl, 0) == 0) {
     ::string errMess;
-    errMess.formatf("Can't apply a keyboard layout requested at the %u line ({})",
+    errMess.format("Can't apply a keyboard layout requested at the %u line ({})",
                    m_lineNumber,
                    m_fromFileName);
     throw ::subsystem::Exception(errMess);

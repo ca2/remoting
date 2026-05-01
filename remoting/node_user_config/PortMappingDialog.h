@@ -36,7 +36,7 @@ namespace remoting_node
    class PortMappingDialog : virtual public ::innate_subsystem::Dialog
    {
    public:
-      PortMappingDialog();
+      PortMappingDialog(::remoting_node::Configurator * pconfigurator);
       virtual ~PortMappingDialog();
 
       void setParentDialog(::innate_subsystem::DialogInterface * pdialog);;

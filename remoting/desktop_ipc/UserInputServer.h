@@ -40,7 +40,7 @@ namespace remoting
 {
 
 
-   class UserInputServer : public DesktopServerProto, public ClientListener, public ::subsystem::ClipboardListener
+   class CLASS_DECL_REMOTING  UserInputServer : public DesktopServerProto, public ClientListener, public ::subsystem::ClipboardListener
    {
    public:
       UserInputServer(::remoting_node::Configurator * pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher,

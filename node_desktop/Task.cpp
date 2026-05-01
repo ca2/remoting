@@ -30,9 +30,9 @@
 
 #include "subsystem/platform/ResourceLoader.h"
 #include "subsystem/platform/StringTable.h"
-#include "remoting/node_desktop/NamingDefs.h"
+#include "remoting/remoting/node/NamingDefs.h"
 #include "subsystem/platform/CommandLineArguments.h"
-#include "remoting/node_desktop/NewConnectionEvents.h"
+#include "remoting/remoting/node/NewConnectionEvents.h"
 #include "resource.h"
 #include "subsystem/platform/Registry.h"
 
@@ -66,7 +66,7 @@ namespace remoting_node_desktop
    }
 
 
-   void Task::initialize_remoting_node_desktop_server_task(NewConnectionEvents * pnewconnectionevents)
+   void Task::initialize_remoting_node_desktop_server_task(::remoting_node::NewConnectionEvents * pnewconnectionevents)
    {
    
       m_pnewconnectionevents = pnewconnectionevents;

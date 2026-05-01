@@ -72,7 +72,7 @@ namespace remoting_client
      m_isTightEnabled(true),
      m_isUtf8ClipboardEnabled(false)
    {
-
+defer_construct_newø(m_pframebuffer);
       raw_construct_newø(m_pfbupdatenotifier, m_pframebuffer, &m_criticalsectionFramebuffer, m_plogwriter, &m_pwatermarkscontroller);
       raw_construct_newø(m_pupdaterequestsenderProperty, &m_criticalsectionFramebuffer, m_pframebuffer, m_plogwriter);
       m_tcpConnection.initialize_tcp_connection(m_plogwriter);
@@ -858,7 +858,7 @@ namespace remoting_client
 
       const ::innate_subsystem::PixelFormat &pixelformat = pixelformatFramebuffer;
       ::string pxString;
-      pxString.formatf("[bits-per-pixel: {}, depth: {}, big-endian-flag: {}, "
+      pxString.format("[bits-per-pixel: {}, depth: {}, big-endian-flag: {}, "
                       "true-color-flag: is set, " // true color always is set
                       "red-max: {}, green-max: {}, blue-max: {}, "
                       "red-shift: {}, green-shift: {}, blue-shift: {}]",
@@ -871,10 +871,13 @@ namespace remoting_client
                        sizeFramebuffer.cx, sizeFramebuffer.cy);
       m_plogwriter->information("Frame buffer pixel format: {}", pxString);
 
+      defer_construct_newø(m_pframebuffer);
+      defer_construct_newø(m_pframebufferRectangle);
+
       if (!m_pframebuffer->setProperties(sizeFramebuffer, pixelformatFramebuffer) ||
           !m_pframebufferRectangle->setProperties(sizeFramebuffer, pixelformatFramebuffer)) {
          ::string error;
-         error.formatf("Failed to set property frame buffer. "
+         error.format("Failed to set property frame buffer. "
                       "::int_size: ({}, {}), Pixel format: {}",
                       sizeFramebuffer.cx, sizeFramebuffer.cy,
                       pxString);
@@ -890,7 +893,7 @@ namespace remoting_client
    ::string RemoteViewerCore::getProtocolString() const
    {
       ::string protocolString;
-      protocolString.formatf("RFB %03d.%03d\n", m_major, m_minor);
+      protocolString.format("RFB %03d.%03d\n", m_major, m_minor);
       return protocolString;
    }
 
@@ -1035,7 +1038,7 @@ namespace remoting_client
          }
       } catch (...) {
          ::string error;
-         error.formatf("RemoteViewerCore. Unknown exception");
+         error.format("RemoteViewerCore. Unknown exception");
          m_plogwriter->error("{}", error);
          ::subsystem::Exception ex(error);
          try {
@@ -1125,7 +1128,7 @@ namespace remoting_client
             m_plogwriter->debug("Decoded");
          } else { // decoder is 0
             ::string errorString;
-            errorString.formatf("Decoder \"{}\" isn't exist", encodingType);
+            errorString.format("Decoder \"{}\" isn't exist", encodingType);
             m_plogwriter->error("{}", errorString);
             throw ::subsystem::Exception(errorString);
          }
@@ -1186,7 +1189,7 @@ namespace remoting_client
 
          default:
             ::string errorString;
-            errorString.formatf("Pseudo encoding {} is not supported", encodingType);
+            errorString.format("Pseudo encoding {} is not supported", encodingType);
             m_plogwriter->error("{}", errorString);
             throw ::subsystem::Exception(errorString);
       }

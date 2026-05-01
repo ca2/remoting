@@ -31,7 +31,7 @@
 
 namespace remoting_control_desktop
 {
-   class ShareRectCommand : public Command
+   class ShareRectCommand : public ::subsystem::Command
    {
    public:
       ShareRectCommand(ControlProxy *serverControl,
@@ -40,7 +40,7 @@ namespace remoting_control_desktop
 
       virtual void execute();
    private:
-      ControlProxy *m_proxy;
+      ::pointer < ControlProxy > m_pcontrolproxy;
       const ::int_rectangle m_shareRect;
    };
 } // namespace remoting_control_desktop

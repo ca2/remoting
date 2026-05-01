@@ -240,7 +240,7 @@ namespace remoting
       ::string clientAddressStorage;
       m_prfbclient->getPeerHost(clientAddressStorage);
       ::string errMess;
-      errMess.formatf("Authentication failed from {}", clientAddressStorage);
+      errMess.format("Authentication failed from {}", clientAddressStorage);
 
       throw ::remoting_node::AuthException(errMess);
    }

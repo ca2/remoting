@@ -27,8 +27,8 @@
 
 namespace remoting_control_desktop
 {
-   SharePrimaryCommand::SharePrimaryCommand(ControlProxy *serverControl)
-   : m_proxy(serverControl)
+   SharePrimaryCommand::SharePrimaryCommand(ControlProxy * pcontrolproxy)
+   : m_pcontrolproxy(pcontrolproxy)
    {
    }
 
@@ -38,7 +38,7 @@ namespace remoting_control_desktop
 
    void SharePrimaryCommand::execute()
    {
-      m_proxy->sharePrimary();
+      m_pcontrolproxy->sharePrimary();
    }
 } // namespace remoting_control_desktop
 

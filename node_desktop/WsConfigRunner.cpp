@@ -63,11 +63,11 @@ namespace remoting_node_desktop
          pathToBin.double_quote();
          // Prepare arguments.
          ::string args;
-         args.formatf("{} {}",
+         args.format("{} {}",
                       m_serviceMode ? ::remoting_control_desktop::ControlCommandLine::CONTROL_SERVICE : ::remoting_control_desktop::ControlCommandLine::CONTROL_APPLICATION,
                       ::remoting_control_desktop::ControlCommandLine::SLAVE_MODE);
          // Start process.
-         process = createø<::subsystem::Process>();
+         process = createø<::subsystem::ProcessInterface>();
 
          process->initialize_process(pathToBin, args);
          process->start();

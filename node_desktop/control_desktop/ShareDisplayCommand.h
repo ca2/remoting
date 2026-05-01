@@ -31,7 +31,7 @@
 
 namespace remoting_control_desktop
 {
-   class ShareDisplayCommand : public Command
+   class ShareDisplayCommand : public ::subsystem::Command
    {
    public:
       ShareDisplayCommand(ControlProxy *serverControl,
@@ -40,7 +40,7 @@ namespace remoting_control_desktop
 
       virtual void execute();
    private:
-      ControlProxy *m_proxy;
+      ::pointer < ControlProxy > m_pcontrolproxy;
       unsigned char m_displayNumber;
    };
 } // namespace remoting_control_desktop

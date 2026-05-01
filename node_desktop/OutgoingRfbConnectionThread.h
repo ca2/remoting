@@ -40,7 +40,7 @@ namespace remoting_node_desktop
    @remark don't forget to add it to zombie killer after thread is started.
    @author enikey.
    */
-   class OutgoingRfbConnectionThread : public ::subsystem::Thread
+   class CLASS_DECL_REMOTING_NODE_DESKTOP OutgoingRfbConnectionThread : public ::subsystem::Thread
    {
    public:
       /**

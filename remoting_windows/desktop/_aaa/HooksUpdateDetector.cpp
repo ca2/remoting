@@ -130,7 +130,7 @@ namespace remoting_windows
          path.format("{}\\{}", folder, "hookdlr.exe");
          m_hookLoader32.setFilename(path);
          ::string hwndStr;
-         hwndStr.formatf("%I64u", (DWORD64)m_pmessagewindowTarget->_HWND());
+         hwndStr.format("%I64u", (DWORD64)m_pmessagewindowTarget->_HWND());
          m_hookLoader32.setArguments(hwndStr);
          try
          {

@@ -26,7 +26,7 @@
 #include "ControlTrayIcon.h"
 #include "ControlTrayIcon.h"
 #include "ControlPipeName.h"
-#include "ControlCommand.h"
+#include "remoting/remoting/node/ControlCommand.h"
 #include "ReloadConfigCommand.h"
 #include "DisconnectAllCommand.h"
 #include "SharePrimaryCommand.h"
@@ -44,90 +44,116 @@
 //#include "acme/_operating_system.h"
 
 #include "subsystem/platform/StringTable.h"
-#include "remoting/node_desktop/NamingDefs.h"
+#include "remoting/remoting/node/NamingDefs.h"
 
 #include "remoting/node_desktop/control_desktop/ControlCommandLine.h"
-#include "remoting/node_desktop/TvnServerHelp.h"
+#include "remoting/node_desktop/ServerHelp.h"
 
 #include "subsystem/node/OperatingSystem.h"
-#include "remoting/remoting/win_system/Shell.h"
-#include "subsystem/platform/Process.h"
+#include "subsystem/node/Shell.h"
+#include "subsystem/node/Process.h"
 #include "subsystem/platform/CommandLineArguments.h"
 
 #include "subsystem/thread/ZombieKiller.h"
 #include "subsystem/thread/GlobalMutex.h"
 
 #include "innate_subsystem/gui/CommonControlsEx.h"
-
-#include "remoting/remoting/network/socket/WindowsSocket.h"
+#include "innate_subsystem/platform/subsystem.h"
+#include "subsystem/thread/ZombieKiller.h"
+//#include "remoting/remoting/network/socket/WindowsSocket.h"
 
 #include "remoting/node_desktop/resource.h"
 
 #include "remoting/remoting/node_user_config/ConfigDialog.h"
 //#include "subsystem/platform/::string.h"
-#include "remoting/node_desktop/NamingDefs.h"
+#include "remoting/remoting/node/NamingDefs.h"
 #include "SetPasswordsDialog.h"
+#include "acme/platform/node.h"
 #include "subsystem/node/SystemException.h"
+#include "subsystem/socket/Sockets.h"
 //#include aaa_<algorithm>
 
 namespace remoting_control_desktop
 {
-   ControlApplication::ControlApplication(HINSTANCE hinst,
+
+
+   ControlApplication::ControlApplication(::hinstance hinst,
                                           const ::scoped_string & scopedstrwindowClassName,
                                           const ::scoped_string & scopedstrCommandLine)
-    : WindowsApplication(hinst, windowClassName),
-      m_serverControl(0),
-      m_pblockinggate(0),
-      m_transport(0),
-      m_trayIcon(0),
-      m_slaveModeEnabled(false),
-      m_configurator(false),
-      m_plogwriter(0)
+    : //WindowsApplication(hinst, windowClassName),
+      //m_pcontrolproxy(0),
+      m_pcontrolgate(0),
+      m_ptransport(0),
+      m_pcontroltrayicon(0),
+      m_slaveModeEnabled(false)
+   //,
+      //m_configurator(false)//,
+      //m_plogwriter(0)
    {
-      m_commandLine= commandLine;
+      construct_newø(m_pconfigurator);
+      m_pconfigurator->initialize_configurator(false);
 
-      CommonControlsEx::init();
+      initialize_operating_system_application();;
+      m_commandLine= scopedstrCommandLine;
 
-      WindowsSocket::startup(2, 1);
+
+      InnateSubsystem().initializeInnateSubsystemControls();
+
+      ///CommonControlsEx::init();
+      ///
+      ///
+
+      //WindowsSocket::startup(2, 1);
+
+      MainSubsystem().Sockets().startSockets();
+
    }
+
 
    ControlApplication::~ControlApplication()
    {
-      try {
-         WindowsSocket::cleanup();
-      } catch (...) { }
-
-      if (m_serverControl != 0) {
-         delete m_serverControl;
+      // try {
+      //    WindowsSocket::cleanup();
+      // } catch (...) { }
+      //
+      if (m_pcontrolproxy != 0) {
+         //delete m_pcontrolproxy;
       }
-      if (m_pblockinggate != 0) {
-         delete m_pblockinggate;
+      if (m_pcontrolgate != 0) {
+         delete m_pcontrolgate;
       }
-      if (m_transport != 0) {
-         delete m_transport;
+      if (m_ptransport != 0) {
+         delete m_ptransport;
       }
    }
 
-   int ControlApplication::run()
+   void ControlApplication::run()
    {
       ControlCommandLine cmdLineParser;
 
       // Check command line for valid.
       try {
-         WinCommandLineArgs cmdArgs(m_commandLine);
-         cmdLineParser.parse(&cmdArgs);
+         //WinCommandLineArgs cmdArgs(m_commandLine);
+         auto pcommandlinearguments = MainSubsystem().getCommandLineArguments(m_commandLine);
+         ///cmdLineParser.parse(&cmdArgs);
+         cmdLineParser.parse(pcommandlinearguments);
       } catch (CommandLineFormatException &) {
-         TvnServerHelp::showUsage();
-         return 1;
+         ::remoting_node_desktop::ServerHelp::showUsage();
+         setExitCode(1);
+         return;
       }
 
       // Run configuration dialog and exit.
       if (cmdLineParser.hasConfigAppFlag() || cmdLineParser.hasConfigServiceFlag()) {
-         return runConfigurator(cmdLineParser.hasConfigServiceFlag(), cmdLineParser.hasDontElevateFlag());
+         int iExitCode =  runConfigurator(cmdLineParser.hasConfigServiceFlag(), cmdLineParser.hasDontElevateFlag());
+         setExitCode(iExitCode);
+         return;
       }
 
       if (cmdLineParser.hasCheckServicePasswords()) {
-         return checkServicePasswords(cmdLineParser.hasDontElevateFlag());
+         int iExitCode = checkServicePasswords(cmdLineParser.hasDontElevateFlag());
+         setExitCode(iExitCode);
+         return;
       }
 
       // Change passwords and exit.
@@ -138,15 +164,16 @@ namespace remoting_control_desktop
          unsigned char cryptedPass[8];
          if (cmdLineParser.hasSetControlPasswordFlag()) {
             getCryptedPassword(cryptedPass, cmdLineParser.getControlPassword());
-            config->setControlPassword((const unsigned char *)cryptedPass);
-            config->useControlAuth(true);
+            pserverconfig->setControlPassword((const unsigned char *)cryptedPass);
+            pserverconfig->useControlAuth(true);
          } else {
             getCryptedPassword(cryptedPass, cmdLineParser.getPrimaryVncPassword());
-            config->setPrimaryPassword((const unsigned char *)cryptedPass);
-            config->useAuthentication(true);
+            pserverconfig->setPrimaryPassword((const unsigned char *)cryptedPass);
+            pserverconfig->useAuthentication(true);
          }
          m_pconfigurator->save();
-         return 0;
+         setExitCode(0);
+         return;
       }
 
       int retCode = 0;
@@ -154,18 +181,18 @@ namespace remoting_control_desktop
       // If we are in the "-controlservice -slave" mode, make sure there are no
       // other "service slaves" in this session, exit if there is one already.
 
-      GlobalMutex *appGlobalMutex = 0;
+      ::mutex *appGlobalMutex = 0;
 
       if (cmdLineParser.hasControlServiceFlag() && cmdLineParser.isSlave()) {
          try {
-            appGlobalMutex = new GlobalMutex(
-              ServerApplicationNames::CONTROL_APP_INSTANCE_MUTEX_NAME, false, true);
+            appGlobalMutex = node()->create_local_named_mutex(this, false, ::remoting_node::ServerApplicationNames::CONTROL_APP_INSTANCE_MUTEX_NAME);
          } catch (...) {
-            return 1;
+            setExitCode(1);
+            return;
          }
       }
 
-      ZombieKiller zombieKiller;
+      auto pzombiekiller = createø<::subsystem::ZombieKiller>();
 
       // Connect to server.
       try {
@@ -174,52 +201,53 @@ namespace remoting_control_desktop
          if (!cmdLineParser.isSlave() && !cmdLineParser.hasCheckServicePasswords()) {
             const ::scoped_string & scopedstrMsg = MainSubsystem().StringTable().getString(IDS_FAILED_TO_CONNECT_TO_CONTROL_SERVER);
             const ::scoped_string & scopedstrCaption = MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL);
-            MainSubsystem().message_box({}, msg, caption, ::user::e_message_box_ok | MB_ICONERROR);
+            MainSubsystem().message_box({}, scopedstrMsg, scopedstrCaption, ::user::e_message_box_ok | MB_ICONERROR);
          }
-         return 1;
+         setExitCode(1);
+         return;
       }
 
       // Execute command (if specified) and exit.
       if (cmdLineParser.isCommandSpecified()) {
-         Command *command = 0;
+         ::pointer < ::subsystem::Command > pcommand;
 
          ::string passwordFile;
-         cmdLineParser.getPasswordFile(&passwordFile);
-         m_serverControl->setPasswordProperties(passwordFile, true,
+         cmdLineParser.getPasswordFile(passwordFile);
+         m_pcontrolproxy->setPasswordProperties(passwordFile, true,
                                                 cmdLineParser.hasControlServiceFlag());
 
          if (cmdLineParser.hasKillAllFlag()) {
-            command = new DisconnectAllCommand(m_serverControl);
+            pcommand = new DisconnectAllCommand(m_pcontrolproxy);
          } else if (cmdLineParser.hasReloadFlag()) {
-            command = new ReloadConfigCommand(m_serverControl);
+            pcommand = new ReloadConfigCommand(m_pcontrolproxy);
          } else if (cmdLineParser.hasConnectFlag()) {
             ::string hostName;
-            cmdLineParser.getConnectHostName(&hostName);
-            command = new ConnectCommand(m_serverControl, hostName);
+            cmdLineParser.getConnectHostName(hostName);
+            pcommand = new ConnectCommand(m_pcontrolproxy, hostName);
          } else if (cmdLineParser.hasShutdownFlag()) {
-            command = new ShutdownCommand(m_serverControl);
+            pcommand = new ShutdownCommand(m_pcontrolproxy);
          } else if (cmdLineParser.hasSharePrimaryFlag()) {
-            command = new SharePrimaryCommand(m_serverControl);
+            pcommand = new SharePrimaryCommand(m_pcontrolproxy);
          } else if (cmdLineParser.hasShareDisplay()) {
             unsigned char displayNumber = cmdLineParser.getShareDisplayNumber();
-            command = new ShareDisplayCommand(m_serverControl, displayNumber);
+            pcommand = new ShareDisplayCommand(m_pcontrolproxy, displayNumber);
          } else if (cmdLineParser.hasShareWindow()) {
             ::string shareWindowName;
-            cmdLineParser.getShareWindowName(&shareWindowName);
-            command = new ShareWindowCommand(m_serverControl, &shareWindowName);
+            cmdLineParser.getShareWindowName(shareWindowName);
+            pcommand = new ShareWindowCommand(m_pcontrolproxy, shareWindowName);
          } else if (cmdLineParser.hasShareRect()) {
             ::int_rectangle shareRect = cmdLineParser.getShareRect();
-            command = new ShareRectCommand(m_serverControl, shareRect);
+            pcommand = new ShareRectCommand(m_pcontrolproxy, shareRect);
          } else if (cmdLineParser.hasShareFull()) {
-            command = new ShareFullCommand(m_serverControl);
+            pcommand = new ShareFullCommand(m_pcontrolproxy);
          } else if (cmdLineParser.hasShareApp()) {
-            command = new ShareAppCommand(m_serverControl, cmdLineParser.getSharedAppProcessId());
+            pcommand = new ShareAppCommand(m_pcontrolproxy, cmdLineParser.getSharedAppProcessId());
          }
 
-         retCode = runControlCommand(command);
+         retCode = runControlCommand(pcommand);
 
-         if (command != 0) {
-            delete command;
+         if (pcommand) {
+            //delete command;
          }
       } else {
          bool showIcon = true;
@@ -228,18 +256,19 @@ namespace remoting_control_desktop
             m_slaveModeEnabled = true;
             try {
                try {
-                  showIcon = m_serverControl->getShowTrayIconFlag();
-               } catch (RemoteException &remEx) {
+                  showIcon = m_pcontrolproxy->getShowTrayIconFlag();
+               } catch (::remoting_node::RemoteException &remEx) {
                   notifyServerSideException(remEx.get_message());
                }
                try {
-                  m_serverControl->updateTvnControlProcessId(GetCurrentProcessId());
-               } catch (RemoteException &remEx) {
+                  m_pcontrolproxy->updateTvnControlProcessId(GetCurrentProcessId());
+               } catch (::remoting_node::RemoteException &remEx) {
                   notifyServerSideException(remEx.get_message());
                }
             } catch (::io_exception &) {
                notifyConnectionLost();
-               return 1;
+               setExitCode(1);
+               return;
             } catch (::subsystem::Exception &) {
                _ASSERT(false);
             }
@@ -252,21 +281,23 @@ namespace remoting_control_desktop
          delete appGlobalMutex;
       }
 
-      return retCode;
+      setExitCode(retCode);
+return;
+      //return retCode;
    }
 
    void ControlApplication::connect(bool controlService, bool slave)
    {
       // Determine the name of pipe to connect to.
       ::string pipeName;
-      ControlPipeName::createPipeName(controlService, &pipeName, &m_plogwriter);
+      ControlPipeName::createPipeName(controlService, pipeName, &m_plogwriter);
 
       int numTriesRemaining = slave ? 10 : 1;
       int msDelayBetweenTries = 2000;
 
       while (numTriesRemaining-- > 0) {
          try {
-            m_transport = TransportFactory::createPipeClientTransport(pipeName);
+            m_ptransport = TransportFactory::createPipeClientTransport(pipeName);
             break;
          } catch (::subsystem::Exception &) {
             if (numTriesRemaining <= 0) {
@@ -277,17 +308,17 @@ namespace remoting_control_desktop
       }
 
       // We can get here only on successful connection.
-      m_pblockinggate = new ControlGate(m_transport->getIOStream());
-      m_serverControl = new ControlProxy(m_pblockinggate);
+      m_pcontrolgate = new ControlGate(m_ptransport->getIOStream());
+      m_pcontrolproxy = new ControlProxy(m_pcontrolgate);
    }
 
    void ControlApplication::notifyServerSideException(const ::scoped_string & scopedstrReason)
    {
-      ::string scopedstrMessage;
+      ::string strMessage;
 
-      scopedstrMessage.format(MainSubsystem().StringTable().getString(IDS_CONTROL_SERVER_RAISE_EXCEPTION), reason);
+      strMessage.runtime_format(MainSubsystem().StringTable().getString(IDS_CONTROL_SERVER_RAISE_EXCEPTION), scopedstrReason);
 
-      MainSubsystem().message_box({}, scopedstrMessage, MainSubsystem().StringTable().getString(IDS_MBC_TVNSERVER), ::user::e_message_box_ok | MB_ICONERROR);
+      MainSubsystem().message_box({}, strMessage, MainSubsystem().StringTable().getString(IDS_MBC_TVNSERVER), ::user::e_message_box_ok | ::user::e_message_box_icon_error);
    }
 
    void ControlApplication::notifyConnectionLost()
@@ -304,47 +335,47 @@ namespace remoting_control_desktop
          while (!isTerminating()) {
             Thread::sleep(500);
             // If we need to show or hide icon.
-            bool showIcon = m_serverControl->getShowTrayIconFlag() || !m_slaveModeEnabled;
+            bool showIcon = m_pcontrolproxy->getShowTrayIconFlag() || !m_slaveModeEnabled;
 
             // Check if we need to show icon.
-            if (showIcon && !m_trayIcon->isVisible()) {
-               m_trayIcon->show();
+            if (showIcon && !m_pcontroltrayicon->isVisible()) {
+               m_pcontroltrayicon->show();
             }
             // Check if we need to hide icon.
-            if (m_trayIcon != 0 && !showIcon) {
-               m_trayIcon->hide();
+            if (m_pcontroltrayicon != 0 && !showIcon) {
+               m_pcontroltrayicon->hide();
             }
             // Update tray icon status if icon is set.
-            if (m_trayIcon->isVisible()) {
-               m_trayIcon->syncStatusWithServer();
+            if (m_pcontroltrayicon->isVisible()) {
+               m_pcontroltrayicon->syncStatusWithServer();
             }
          }
       } catch (...) {
-         m_trayIcon->terminate();
-         m_trayIcon->waitForTermination();
+         m_pcontroltrayicon->terminate();
+         m_pcontroltrayicon->waitForTermination();
          shutdown();
       }
    }
 
    int ControlApplication::runControlInterface(bool showIcon)
    {
-      m_trayIcon = new ControlTrayIcon(m_serverControl, this, this, showIcon);
+      m_pcontroltrayicon = new ControlTrayIcon(m_pconfigurator,  m_pcontrolproxy, this, this, showIcon);
 
       resume();
 
-      int ret = WindowsApplication::run();
+      OperatingSystemApplication::run();
 
       terminate();
       wait();
 
-      delete m_trayIcon;
+      delete m_pcontroltrayicon;
 
-      return ret;
+      return getExitCode();
    }
 
-   int ControlApplication::runControlCommand(Command *command)
+   int ControlApplication::runControlCommand(::subsystem::Command *command)
    {
-      ControlCommand ctrlCmd(command);
+      ::remoting_node::ControlCommand ctrlCmd(command);
 
       ctrlCmd.execute();
 
@@ -356,7 +387,7 @@ namespace remoting_control_desktop
    {
       // If not enough rights to configurate service, then restart application requesting
       // admin access rights.
-      if (configService && (IsUserAnAdmin() == false)) {
+      if (configService && (MainSubsystem().OperatingSystem().isUserAnAdmin() == false)) {
          // If admin rights already requested and application still don't have them,
          // then show error scopedstrMessage and exit.
          if (isRunAsRequested) {
@@ -374,12 +405,12 @@ namespace remoting_control_desktop
          // Get path to remoting_node binary.
          pathToBinary = MainSubsystem().OperatingSystem().getCurrentModulePath();;
          // Set -dontelevate flag to tvncontrol know that admin rights already requested.
-         childCommandLine.formatf("{} -dontelevate", m_commandLine);
+         childCommandLine.format("{} -dontelevate", m_commandLine);
 
          // Start child.
          try {
-            Shell::runAsAdmin(pathToBinary, childCommandLine);
-         } catch (SystemException &sysEx) {
+            MainSubsystem().Shell().runAsAdmin(pathToBinary, childCommandLine);
+         } catch (::subsystem::SystemException &sysEx) {
             if (sysEx.getErrorCode() != ERROR_CANCELLED) {
                MainSubsystem().message_box({},
                  sysEx.get_message(),
@@ -391,12 +422,12 @@ namespace remoting_control_desktop
          return 0;
       }
 
-      Configurator *configurator = m_pconfigurator;
+      ::remoting_node::Configurator *configurator = m_pconfigurator;
 
       configurator->setServiceFlag(configService);
       configurator->load();
 
-      ConfigDialog confDialog(configService, 0);
+      ::remoting_node::ConfigDialog confDialog(configurator, nullptr);
 
       return confDialog.showModal();
    }
@@ -404,8 +435,9 @@ namespace remoting_control_desktop
    void ControlApplication::getCryptedPassword(unsigned char cryptedPass[8], const ::scoped_string & scopedstrPlainTextPassString)
    {
       // Get a copy of the password truncated at 8 characters.
-      ::string plainTextPass(plainTextPassString);
-      plainTextPass.getSubstring(&plainTextPass, 0, 7);
+      ::string plainTextPass(scopedstrPlainTextPassString);
+      //plainTextPass.getSubstring(&plainTextPass, 0, 7);
+      plainTextPass.truncate(8);
       // Convert from TCHAR[] to char[].
       // FIXME: Check exception catching.
       ::string ansiPass(&plainTextPass);
@@ -416,13 +448,13 @@ namespace remoting_control_desktop
       memcpy(byteArray, ansiPass, len);
 
       // Encrypt with a fixed key.
-      VncPassCrypt::getEncryptedPass(cryptedPass, byteArray);
+      ::subsystem::VncPassCrypt::getEncryptedPass(cryptedPass, byteArray);
    }
 
    int ControlApplication::checkServicePasswords(bool isRunAsRequested)
    {
       // FIXME: code duplication.
-      if (IsUserAnAdmin() == false) {
+      if (MainSubsystem().OperatingSystem().isUserAnAdmin() == false) {
          // If admin rights already requested and application still don't have them,
          // then show error scopedstrMessage and exit.
          if (isRunAsRequested) {
@@ -440,13 +472,13 @@ namespace remoting_control_desktop
          // Get path to remoting_node binary.
          pathToBinary = MainSubsystem().OperatingSystem().getCurrentModulePath();;
          // Set -dontelevate flag to tvncontrol know that admin rights already requested.
-         childCommandLine.formatf("{} -dontelevate", m_commandLine);
+         childCommandLine.format("{} -dontelevate", m_commandLine);
 
          // Start child.
          try {
-            Shell::runAsAdmin(pathToBinary, childCommandLine);
+            MainSubsystem().Shell().runAsAdmin(pathToBinary, childCommandLine);
             return 0;
-         } catch (SystemException &sysEx) {
+         } catch (::subsystem::SystemException &sysEx) {
             if (sysEx.getErrorCode() != ERROR_CANCELLED) {
                MainSubsystem().message_box({},
                  sysEx.get_message(),
@@ -467,10 +499,10 @@ namespace remoting_control_desktop
       m_pconfigurator->load();
       ::remoting_node::ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
 
-      bool askToChangeRfbAuth = !config->isUsingAuthentication() || !config->hasPrimaryPassword();
+      bool askToChangeRfbAuth = !pserverconfig->isUsingAuthentication() || !pserverconfig->hasPrimaryPassword();
       bool askToChangeAdmAuth = false;
       SetPasswordsDialog dialog(askToChangeRfbAuth, askToChangeAdmAuth);
-      if (dialog.showModal() == ::innate_subsystem::IDOK) {
+      if (dialog.showModal() == ::innate_subsystem::e_control_id_ok) {
          unsigned char cryptedPass[8];
          bool useRfbAuth = dialog.getUseRfbPass();
          bool dontUseRfbAuth = dialog.getRfbPassForClear();
@@ -478,26 +510,26 @@ namespace remoting_control_desktop
          // the auth settings".
          if (useRfbAuth) {
             ::string pass;
-            dialog.getRfbPass(&pass);
+            dialog.getRfbPass(pass);
             getCryptedPassword(cryptedPass, pass);
-            config->setPrimaryPassword(cryptedPass);
-            config->useAuthentication(true);
+            pserverconfig->setPrimaryPassword(cryptedPass);
+            pserverconfig->useAuthentication(true);
          } else if (dontUseRfbAuth) {
-            config->deletePrimaryPassword();
-            config->deleteReadOnlyPassword();
-            config->useAuthentication(false);
+            pserverconfig->deletePrimaryPassword();
+            pserverconfig->deleteReadOnlyPassword();
+            pserverconfig->useAuthentication(false);
          }
          bool useAdmAuth = dialog.getUseAdmPass();
          bool dontUseAdmAuth = dialog.getAdmPassForClear();
          if (useAdmAuth) {
             ::string pass;
-            dialog.getAdmPass(&pass);
+            dialog.getAdmPass(pass);
             getCryptedPassword(cryptedPass, pass);
-            config->setControlPassword(cryptedPass);
-            config->useControlAuth(true);
+            pserverconfig->setControlPassword(cryptedPass);
+            pserverconfig->useControlAuth(true);
          } else if (dontUseAdmAuth) {
-            config->deleteControlPassword();
-            config->useControlAuth(false);
+            pserverconfig->deleteControlPassword();
+            pserverconfig->useControlAuth(false);
          }
          m_pconfigurator->save();
          reloadConfig();
@@ -510,11 +542,12 @@ namespace remoting_control_desktop
       try {
          // Get path to remoting_node binary.
          pathToBinary = MainSubsystem().OperatingSystem().getCurrentModulePath();;
-         Process processToReloadConfig(pathToBinary, "-controlservice -reload");
+         ::subsystem::Process processToReloadConfig;
+         processToReloadConfig.initialize_process(pathToBinary, "-controlservice -reload");
          processToReloadConfig.start();
       } catch (::exception &e) {
          ::string errMess;
-         errMess.format(MainSubsystem().StringTable().getString(IDS_FAILED_TO_RELOAD_SERVICE_ON_CHECK_PASS), e.get_message());
+         errMess.runtime_format(MainSubsystem().StringTable().getString(IDS_FAILED_TO_RELOAD_SERVICE_ON_CHECK_PASS), e.get_message());
          MainSubsystem().message_box({},
            errMess,
            MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL),

@@ -142,7 +142,7 @@ namespace remoting_node
          ::string portString;
          ::string rectString;
 
-         portString.formatf("{}", m_mapping->getPort());
+         portString.format("{}", m_mapping->getPort());
          rectString = m_mapping->getRect().toString();
 
          m_portTextBox.setText(portString);

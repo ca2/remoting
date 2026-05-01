@@ -26,7 +26,7 @@
 
 
 #include "remoting/node_desktop/control_desktop/ControlGate.h"
-#include "remoting/node_desktop/control_desktop/ControlAuthException.h"
+#include "remoting/remoting/node/ControlAuthException.h"
 
 #include "subsystem/platform/Exception.h"
 
@@ -41,7 +41,7 @@ namespace remoting_control_desktop
       /**
        * Doesn't lock pblockinggate.
        */
-      ControlAuth(ControlGate *pblockinggate, const ::scoped_string & scopedstrPassword)
+      ControlAuth(ControlGate * pcontrolgate, const ::scoped_string & scopedstrPassword)
     ;
 
       virtual ~ControlAuth();
@@ -50,7 +50,7 @@ namespace remoting_control_desktop
       void authRfb();
 
    protected:
-      ControlGate *m_pblockinggate;
+      ControlGate *m_pcontrolgate;
 
       //unsigned char m_password[::remoting_node::ServerConfig::VNC_PASSWORD_SIZE];
       unsigned char m_password[8];

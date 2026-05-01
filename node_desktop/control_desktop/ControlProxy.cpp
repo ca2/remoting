@@ -30,8 +30,8 @@
 
 namespace remoting_control_desktop
 {
-   ControlProxy::ControlProxy(ControlGate *pblockinggate)
-   : m_pblockinggate(pblockinggate), m_message(0),
+   ControlProxy::ControlProxy(ControlGate * pcontrolgate)
+   : m_pcontrolgate(pcontrolgate), m_pcontrolmessage(0),
      m_getPassFromConfigEnabled(false),
      m_forService(false)
    {
@@ -55,53 +55,53 @@ namespace remoting_control_desktop
    {
       ServerInfo ret;
 
-      critical_section_lock l(m_pblockinggate);
+      critical_section_lock l(m_pcontrolgate);
 
       createMessage(ControlProto::GET_SERVER_INFO_MSG_ID)->send();
 
-      ret.m_acceptFlag = m_pblockinggate->readUInt8() == 1;
-      ret.m_serviceFlag = m_pblockinggate->readUInt8() == 1;
+      ret.m_acceptFlag = m_pcontrolgate->readUInt8() == 1;
+      ret.m_serviceFlag = m_pcontrolgate->readUInt8() == 1;
 
-      ret.m_statusText = m_pblockinggate->readUtf8();
+      ret.m_statusText = m_pcontrolgate->readUtf8();
 
       return ret;
    }
 
    void ControlProxy::reloadServerConfig()
    {
-      critical_section_lock l(m_pblockinggate);
+      critical_section_lock l(m_pcontrolgate);
 
       createMessage(ControlProto::RELOAD_CONFIG_MSG_ID)->send();
    }
 
    void ControlProxy::disconnectAllClients()
    {
-      critical_section_lock l(m_pblockinggate);
+      critical_section_lock l(m_pcontrolgate);
 
       createMessage(ControlProto::DISCONNECT_ALL_CLIENTS_MSG_ID)->send();
    }
 
    void ControlProxy::shutdownTightVnc()
    {
-      critical_section_lock l(m_pblockinggate);
+      critical_section_lock l(m_pcontrolgate);
 
       createMessage(ControlProto::SHUTDOWN_SERVER_MSG_ID)->send();
    }
 
    void ControlProxy::getClientsList(::list_base<RfbClientInfo *> *clients)
    {
-      critical_section_lock l(m_pblockinggate);
+      critical_section_lock l(m_pcontrolgate);
 
       createMessage(ControlProto::GET_CLIENT_LIST_MSG_ID)->send();
 
-      unsigned int count = m_pblockinggate->readUInt32();
+      unsigned int count = m_pcontrolgate->readUInt32();
 
       for (unsigned int i = 0; i < count; i++) {
          ::string peerAddr;
 
-         unsigned int id = m_pblockinggate->readUInt32();
+         unsigned int id = m_pcontrolgate->readUInt32();
 
-         peerAddr = m_pblockinggate->readUtf8();
+         peerAddr = m_pcontrolgate->readUtf8();
 
          RfbClientInfo *clientInfo = new RfbClientInfo(id, peerAddr);
 
@@ -111,7 +111,7 @@ namespace remoting_control_desktop
 
    void ControlProxy::makeOutgoingConnection(const ::scoped_string & scopedstrConnectString, bool viewOnly)
    {
-      critical_section_lock l(m_pblockinggate);
+      critical_section_lock l(m_pcontrolgate);
 
       ControlMessage *msg = createMessage(ControlProto::ADD_CLIENT_MSG_ID);
 
@@ -126,7 +126,7 @@ namespace remoting_control_desktop
                                                   const ::scoped_string & scopedstrKeyword,
                                                   unsigned int connectionId)
    {
-      critical_section_lock l(m_pblockinggate);
+      critical_section_lock l(m_pcontrolgate);
 
       ControlMessage *msg = createMessage(ControlProto::CONNECT_TO_TCPDISP_MSG_ID);
 
@@ -140,14 +140,14 @@ namespace remoting_control_desktop
 
    void ControlProxy::sharePrimary()
    {
-      critical_section_lock l(m_pblockinggate);
+      critical_section_lock l(m_pcontrolgate);
       ControlMessage *msg = createMessage(ControlProto::SHARE_PRIMARY_MSG_ID);
       msg->send();
    }
 
    void ControlProxy::shareDisplay(unsigned char displayNumber)
    {
-      critical_section_lock l(m_pblockinggate);
+      critical_section_lock l(m_pcontrolgate);
       ControlMessage *msg = createMessage(ControlProto::SHARE_DISPLAY_MSG_ID);
       msg->writeUInt8(displayNumber);
       msg->send();
@@ -155,7 +155,7 @@ namespace remoting_control_desktop
 
    void ControlProxy::shareRect(const ::int_rectangle &  shareRect)
    {
-      critical_section_lock l(m_pblockinggate);
+      critical_section_lock l(m_pcontrolgate);
       ControlMessage *msg = createMessage(ControlProto::SHARE_RECT_MSG_ID);
 
       msg->writeInt32(shareRect.left);
@@ -168,7 +168,7 @@ namespace remoting_control_desktop
 
    void ControlProxy::shareWindow(const ::scoped_string & scopedstrShareWindowName)
    {
-      critical_section_lock l(m_pblockinggate);
+      critical_section_lock l(m_pcontrolgate);
       ControlMessage *msg = createMessage(ControlProto::SHARE_WINDOW_MSG_ID);
       msg->writeUTF8(scopedstrShareWindowName);
       msg->send();
@@ -176,14 +176,14 @@ namespace remoting_control_desktop
 
    void ControlProxy::shareFull()
    {
-      critical_section_lock l(m_pblockinggate);
+      critical_section_lock l(m_pcontrolgate);
       ControlMessage *msg = createMessage(ControlProto::SHARE_FULL_MSG_ID);
       msg->send();
    }
 
    void ControlProxy::shareApp(unsigned int procId)
    {
-      critical_section_lock l(m_pblockinggate);
+      critical_section_lock l(m_pcontrolgate);
       ControlMessage *msg = createMessage(ControlProto::SHARE_APP_MSG_ID);
       msg->writeUInt32(procId);
       msg->send();
@@ -191,7 +191,7 @@ namespace remoting_control_desktop
 
    void ControlProxy::setServerConfig(::remoting_node::ServerConfig * pserverconfig)
    {
-      critical_section_lock l(m_pblockinggate);
+      critical_section_lock l(m_pcontrolgate);
 
       ControlMessage *msg = createMessage(ControlProto::SET_CONFIG_MSG_ID);
 
@@ -202,25 +202,25 @@ namespace remoting_control_desktop
 
    void ControlProxy::getServerConfig(::remoting_node::ServerConfig * pserverconfig)
    {
-      critical_section_lock l(m_pblockinggate);
+      critical_section_lock l(m_pcontrolgate);
 
       createMessage(ControlProto::GET_CONFIG_MSG_ID)->send();
 
-      pserverconfig->deserialize(m_pblockinggate);
+      pserverconfig->deserialize(m_pcontrolgate);
    }
 
    bool ControlProxy::getShowTrayIconFlag()
    {
-      critical_section_lock l(m_pblockinggate);
+      critical_section_lock l(m_pcontrolgate);
 
       createMessage(ControlProto::GET_SHOW_TRAY_ICON_FLAG)->send();
 
-      return m_pblockinggate->readUInt8() == 1;
+      return m_pcontrolgate->readUInt8() == 1;
    }
 
    void ControlProxy::updateTvnControlProcessId(DWORD processId)
    {
-      critical_section_lock l(m_pblockinggate);
+      critical_section_lock l(m_pcontrolgate);
 
       ControlMessage *msg = createMessage(ControlProto::UPDATE_TVNCONTROL_PROCESS_ID_MSG_ID);
 
@@ -233,18 +233,18 @@ namespace remoting_control_desktop
    {
       releaseMessage();
 
-      m_message = new ControlMessage(messageId, m_pblockinggate, m_passwordFile,
+      m_pcontrolmessage = new ControlMessage(messageId, m_pcontrolgate, m_passwordFile,
                                      m_getPassFromConfigEnabled, m_forService);
 
-      return m_message;
+      return m_pcontrolmessage;
    }
 
    void ControlProxy::releaseMessage()
    {
-      if (m_message != 0) {
-         delete m_message;
+      if (m_pcontrolmessage != 0) {
+         delete m_pcontrolmessage;
 
-         m_message = 0;
+         m_pcontrolmessage = 0;
       }
    }
 } // namespace remoting_control_desktop

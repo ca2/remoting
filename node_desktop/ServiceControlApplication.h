@@ -39,7 +39,7 @@ namespace remoting_node_desktop
     * Service control application.
     * Application that can install, remove, start and stop remoting_node service.
     */
-   class ServiceControlApplication : public ::subsystem::OperatingSystemApplication
+   class CLASS_DECL_REMOTING_NODE_DESKTOP ServiceControlApplication : public ::subsystem::OperatingSystemApplication
    {
    public:
       /**

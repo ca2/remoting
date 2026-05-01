@@ -23,11 +23,11 @@
 //
 #include "framework.h"
 #include "LoginDialog.h"
-#include "NamingDefs.h"
+#include "remoting/remoting/client/NamingDefs.h"
 #include "OptionsDialog.h"
 #include "innate_subsystem/platform/subsystem.h"
 #include "remoting/client/remoting.h"
-#include "remoting/remoting/remoting.h"
+#include "remoting/remoting/platform/remoting.h"
 #include "subsystem/node/Shell.h"
 #include "subsystem/node/SystemException.h"
 
@@ -171,12 +171,12 @@ namespace remoting_client
       }
       catch (const ::subsystem::SystemException &sysEx)
       {
-         ::string scopedstrMessage;
+         ::string strMessage;
 
-         scopedstrMessage.formatf(MainSubsystem().StringTable().getString(IDS_FAILED_TO_OPEN_URL_FORMAT).c_str(),
+         strMessage.format(MainSubsystem().StringTable().getString(IDS_FAILED_TO_OPEN_URL_FORMAT).c_str(),
                                   sysEx.get_message().c_str());
 
-         MainSubsystem().message_box(operating_system_window(), scopedstrMessage,
+         MainSubsystem().message_box(operating_system_window(), strMessage,
                                        MainSubsystem().StringTable().getString(IDS_MBC_TVNVIEWER),
                                        ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
       }

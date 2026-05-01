@@ -33,7 +33,7 @@
 namespace remoting_control_desktop
 {
    // Command that requests server to reload it configuration from the registry
-   class ReloadConfigCommand : public Command
+   class ReloadConfigCommand : public ::subsystem::Command
    {
    public:
       ReloadConfigCommand(ControlProxy *proxy);
@@ -42,7 +42,7 @@ namespace remoting_control_desktop
    private:
       virtual void execute();
 
-      ControlProxy* m_proxy;
+      ::pointer < ControlProxy > m_pcontrolproxy;
    };
 } // namespace remoting_control_desktop
 

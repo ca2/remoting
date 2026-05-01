@@ -34,7 +34,7 @@
 namespace remoting_client
 {
     DesktopWindow::DesktopWindow(::subsystem::LogWriter * plogwriter, ::remoting::ConnectionConfig *pconnectionconfig, ViewerWindow * pviewerwindow) :
-        m_plogwriter = plogwriter;,m_pviewerwindow(pviewerwindow), m_showVert(false), m_showHorz(false), m_fbWidth(1), m_fbHeight(1),
+        m_plogwriter(plogwriter),m_pviewerwindow(pviewerwindow), m_showVert(false), m_showHorz(false), m_fbWidth(1), m_fbHeight(1),
         m_winResize(false), m_pconnectionconfig(pconnectionconfig),
 
         m_pviewercore(0), m_ctrlDown(false), m_altDown(false), m_previousMousePos(-1, -1), m_previousMouseState(0),
@@ -52,7 +52,7 @@ namespace remoting_client
 
     void DesktopWindow::setConnected() { m_isConnected = true; }
 
-    void DesktopWindow::setViewerCore(::remoting::RemoteViewerCore *viewerCore) { m_pviewercore = viewerCore; }
+    void DesktopWindow::setViewerCore(::remoting_client::RemoteViewerCore *viewerCore) { m_pviewercore = viewerCore; }
 
     bool DesktopWindow::onCreate(void * pCreateStruct)
     {
@@ -321,7 +321,7 @@ namespace remoting_client
 
                 m_bShowCursor = true;
 
-                m_pviewercore->m_pfbupdatenotifier.m_cursorpainter.m_bHideCursor = true;
+                m_pviewercore->m_pfbupdatenotifier->m_cursorpainter.m_bHideCursor = true;
 
 
                 ::ReleaseCapture();
@@ -343,7 +343,7 @@ namespace remoting_client
 
                     ::SetCapture((HWND) _HWND());
 
-                    m_pviewercore->m_pfbupdatenotifier.m_cursorpainter.m_bHideCursor = false;
+                    m_pviewercore->m_pfbupdatenotifier->m_cursorpainter.m_bHideCursor = false;
                     m_bShowCursor = false;
 
                     //                try {
@@ -374,14 +374,14 @@ namespace remoting_client
                 {
 
                     m_bShowCursor = true;
-                    m_pviewercore->m_pfbupdatenotifier.m_cursorpainter.m_bHideCursor = true;
+                    m_pviewercore->m_pfbupdatenotifier->m_cursorpainter.m_bHideCursor = true;
 
                 }
                 else
                 {
 
                     m_bShowCursor = false;
-                    m_pviewercore->m_pfbupdatenotifier.m_cursorpainter.m_bHideCursor = false;
+                    m_pviewercore->m_pfbupdatenotifier->m_cursorpainter.m_bHideCursor = false;
 
                 }
 
@@ -393,14 +393,14 @@ namespace remoting_client
             {
 
                 m_bShowCursor = true;
-                m_pviewercore->m_pfbupdatenotifier.m_cursorpainter.m_bHideCursor = true;
+                m_pviewercore->m_pfbupdatenotifier->m_cursorpainter.m_bHideCursor = true;
 
             }
             else
             {
 
                 m_bShowCursor = false;
-                m_pviewercore->m_pfbupdatenotifier.m_cursorpainter.m_bHideCursor = false;
+                m_pviewercore->m_pfbupdatenotifier->m_cursorpainter.m_bHideCursor = false;
 
             }
             m_premotingtoolbar->defer_repaint();
@@ -481,15 +481,15 @@ namespace remoting_client
                 if ((buttons & wheelMask) == 0)
                 {
                     // Send pointPosition of cursor and state of buttons one time.
-                    sendPointerEvent(buttons, &pos);
+                    sendPointerEvent(buttons, pos);
                 }
                 else
                 {
                     // Send pointPosition of cursor and state of buttons wheelSpeed times.
                     for (int i = 0; i < wheelSpeed; i++)
                     {
-                        sendPointerEvent(buttons, &pos);
-                        sendPointerEvent(buttons & ~wheelMask, &pos);
+                        sendPointerEvent(buttons, pos);
+                        sendPointerEvent(buttons & ~wheelMask, pos);
                     }
                 } // wheel
             }
@@ -636,8 +636,8 @@ namespace remoting_client
         m_scManager.setStartPoint(iHorzPos, iVertPos);
 
         ::int_rectangle src, dst;
-        m_scManager.getSourceRect(&src);
-        m_scManager.getDestinationRect(&dst);
+        m_scManager.getSourceRect(src);
+        m_scManager.getDestinationRect(dst);
 
         int iWidth = m_clientArea.width() - dst.width();
         int iHeight = m_clientArea.height() - dst.height();
@@ -909,7 +909,7 @@ namespace remoting_client
             return;
         }
         ::int_rectangle wnd;
-        m_scManager.getWndFromScreen(paint, &wnd);
+        m_scManager.getWndFromScreen(paint, wnd);
         m_scManager.getDestinationRect(rectangle);
         if (wnd.left)
         {
@@ -979,16 +979,16 @@ namespace remoting_client
         return m_framebuffer.getDimension();
     }
 
-    void DesktopWindow::getServerGeometry(::int_rectangle rectangle, int *pixelsize)
+    void DesktopWindow::getServerGeometry(::int_rectangle * prectangle, int *piPixelsize)
     {
         critical_section_lock al(&m_criticalsectionBuffer);
-        if (rectangle != 0)
+        if (prectangle)
         {
-            *rectangle = m_serverDimension;
+            *prectangle = m_serverDimension;
         }
-        if (pixelsize != 0)
+        if (piPixelsize)
         {
-            *pixelsize = m_framebuffer.getBitsPerPixel();
+            *piPixelsize = m_framebuffer.getBitsPerPixel();
         }
     }
 

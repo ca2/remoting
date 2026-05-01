@@ -32,7 +32,8 @@ namespace remoting_client
 {
 
    
-   class ViewerVncAuthHandler : public ::remoting::VncAuthenticationHandler
+   class ViewerVncAuthHandler :
+   virtual public ::remoting_client::VncAuthenticationHandler
    {
    public:
 

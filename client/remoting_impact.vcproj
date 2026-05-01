@@ -689,7 +689,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\FsWarningDialog.cpp"
+				RelativePath=".\FullscreenWarningDialog.cpp"
 				>
 			</File>
 			<File
@@ -807,7 +807,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\FsWarningDialog.h"
+				RelativePath=".\FullscreenWarningDialog.h"
 				>
 			</File>
 			<File

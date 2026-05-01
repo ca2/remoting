@@ -30,7 +30,7 @@
 
 namespace remoting
 {
-   class RectSerializer
+   class CLASS_DECL_REMOTING RectSerializer
    {
    public:
       // Converts to string value.

@@ -30,7 +30,7 @@
 
 #include "subsystem/_common_header.h"
 
-#include "RemoteException.h"
+#include "remoting/remoting/node/RemoteException.h"
 #include "ControlGate.h"
 
 namespace remoting_control_desktop
@@ -68,7 +68,7 @@ namespace remoting_control_desktop
        * uses on auth needed instead of the dialog box. This parameter ignores if
        * *password parameter is presented.
        */
-      ControlMessage(unsigned int messageId, ControlGate *pblockinggate,
+      ControlMessage(unsigned int messageId, ControlGate * pcontrolgate,
                      const ::scoped_string & scopedstrPasswordFile = 0,
                      bool getPassFromConfigEnabled = false,
                      bool forService = false);
@@ -106,7 +106,7 @@ namespace remoting_control_desktop
       /**
        * ::innate_subsystem::Control pblockinggate.
        */
-      ControlGate *m_pblockinggate;
+      ControlGate *m_pcontrolgate;
       /**
        * Tunnel.
        */

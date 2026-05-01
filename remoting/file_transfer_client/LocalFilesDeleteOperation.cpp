@@ -141,7 +141,7 @@ namespace remoting
             // } else {
             //    ::string scopedstrMessage;
             //
-            //    scopedstrMessage.formatf("Error: failed to get pfileitem ::list_base in local folder '{}'",
+            //    scopedstrMessage.format("Error: failed to get pfileitem ::list_base in local folder '{}'",
             //                   pathToTargetFile);
             //
             //    notifyError(scopedstrMessage);
@@ -155,7 +155,7 @@ namespace remoting
          // if (!returnVal) {
          //    ::string scopedstrMessage;
          //
-         //    scopedstrMessage.formatf("Error: failed to remove local '{}' {}",
+         //    scopedstrMessage.format("Error: failed to remove local '{}' {}",
          //                   pathToTargetFile,
          //                   pfileitem->isDirectory() ? "folder") : "pfileitem";
          //

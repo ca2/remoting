@@ -137,7 +137,7 @@ namespace remoting
    bool IniFileSettingsManager::setUINT(const ::scoped_string &scopedstrName, unsigned int value)
    {
       ::string stringVal;
-      stringVal.formatf("%u", value);
+      stringVal.format("%u", value);
 
       return setString(scopedstrName, stringVal);
    }
@@ -163,7 +163,7 @@ namespace remoting
    bool IniFileSettingsManager::setInt(const ::scoped_string &scopedstrName, int value)
    {
       ::string stringVal;
-      stringVal.formatf("{}", value);
+      stringVal.format("{}", value);
 
       return setString(scopedstrName, stringVal);
    }

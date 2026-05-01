@@ -76,10 +76,10 @@ namespace remoting_client
         // it returns the image width and height.
         ::int_rectangle getFramebufferGeometry();
         // it return size of server frame buffer and pixelsize.
-        void getServerGeometry(::int_rectangle rectangle, int *pixelsize);
+        void getServerGeometry(::int_rectangle * prectangle, int * piPixelsize);
 
         void setConnected();
-        void setViewerCore(::remoting::RemoteViewerCore *viewerCore);
+        void setViewerCore(::remoting_client::RemoteViewerCore *viewerCore);
 
         // This function set state key "Ctrl", but not send data to server.
         void setCtrlState(const bool ctrlState);
@@ -181,7 +181,7 @@ namespace remoting_client
 
         bool m_ctrlDown;
         bool m_altDown;
-        ::pointer < ::remoting::RemoteViewerCore > m_pviewercore;
+        ::pointer < ::remoting_client::RemoteViewerCore > m_pviewercore;
         ::pointer < ::remoting::ConnectionConfig > m_pconnectionconfig;
         bool m_isBackgroundDirty;
 

@@ -27,47 +27,47 @@
 
 namespace remoting_control_desktop
 {
-   NamedPipeTransport::NamedPipeTransport(::subsystem::NamedPipe *client)
-   : m_pipe(client), m_pipeServer(0)
+   NamedPipeTransport::NamedPipeTransport(::subsystem::NamedPipeInterface *pnamedpipeClient)
+   : m_pnamedpipeClient(pnamedpipeClient), m_ppipeserver(0)
    {
    }
 
    NamedPipeTransport::NamedPipeTransport(::subsystem::PipeServer *server)
-   : m_pipe(0), m_pipeServer(server)
+   : m_pnamedpipeClient(0), m_ppipeserver(server)
    {
    }
 
    NamedPipeTransport::~NamedPipeTransport()
    {
-      if (m_pipe != 0) {
-         delete m_pipe;
+      if (m_pnamedpipeClient != 0) {
+         delete m_pnamedpipeClient;
       }
-      if (m_pipeServer != 0) {
-         delete m_pipeServer;
+      if (m_ppipeserver != 0) {
+         delete m_ppipeserver;
       }
    }
 
    Channel *NamedPipeTransport::getIOStream()
    {
-      _ASSERT(m_pipe != 0);
+      _ASSERT(m_pnamedpipeClient != 0);
 
-      return m_pipe;
+      return m_pnamedpipeClient;
    }
 
    Transport *NamedPipeTransport::accept()
    {
-      _ASSERT(m_pipeServer != 0);
+      _ASSERT(m_ppipeserver != 0);
 
-      return new NamedPipeTransport(m_pipeServer->accept());
+      return new NamedPipeTransport(m_ppipeserver->accept());
    }
 
    void NamedPipeTransport::close()
    {
-      if (m_pipe != 0) {
-         m_pipe->close();
+      if (m_pnamedpipeClient != 0) {
+         m_pnamedpipeClient->close();
       }
-      if (m_pipeServer != 0) {
-         m_pipeServer->close();
+      if (m_ppipeserver != 0) {
+         m_ppipeserver->close();
       }
    }
 } // namespace remoting_control_desktop

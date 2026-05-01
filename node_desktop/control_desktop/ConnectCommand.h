@@ -35,7 +35,7 @@ namespace remoting_control_desktop
     * Command that invokes remote disconnectAll() method of TightVNC server
     * using control transport.
     */
-   class ConnectCommand : public Command
+   class ConnectCommand : public ::subsystem::Command
    {
    public:
       /**
@@ -60,7 +60,7 @@ namespace remoting_control_desktop
       /**
        * Proxy to some of TightVNC server control methods.
        */
-      ControlProxy *m_proxy;
+      ::pointer < ControlProxy > m_pcontrolproxy;
       ::string m_hostName;
    };
 } // namespace remoting_control_desktop

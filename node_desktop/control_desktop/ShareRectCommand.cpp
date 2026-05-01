@@ -29,7 +29,7 @@ namespace remoting_control_desktop
 {
    ShareRectCommand::ShareRectCommand(ControlProxy *serverControl,
                                       const ::int_rectangle &  shareRect)
-   : m_proxy(serverControl),
+   : m_pcontrolproxy(serverControl),
      m_shareRect(shareRect)
    {
    }
@@ -40,7 +40,7 @@ namespace remoting_control_desktop
 
    void ShareRectCommand::execute()
    {
-      m_proxy->shareRect(m_shareRect);
+      m_pcontrolproxy->shareRect(m_shareRect);
    }
 } //namespace remoting_control_desktop
 

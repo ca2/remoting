@@ -41,22 +41,22 @@
 #include "IpAccessControlDialog.h"
 #include "VideoRegionsConfigDialog.h"
 
-#include "remoting/node_desktop/control_desktop/ControlCommand.h"
+#include "remoting/remoting/node/ControlCommand.h"
 
 
 namespace remoting_node
 {
-   class ConfigDialog : virtual public ::innate_subsystem::Dialog
+   class CLASS_DECL_REMOTING ConfigDialog : virtual public ::innate_subsystem::Dialog
    {
    public:
-      ConfigDialog(Configurator * pconfigurator, ::remoting_control_desktop::ControlCommand *reloadConfigCommand);
+      ConfigDialog(Configurator * pconfigurator, ::remoting_node::ControlCommand *reloadConfigCommand);
       ConfigDialog(Configurator * pconfigurator);
       ConfigDialog();
       virtual ~ConfigDialog();
 
       void updateApplyButtonState();
 
-      void setConfigReloadCommand(::remoting_control_desktop::ControlCommand *command);
+      void setConfigReloadCommand(::remoting_node::ControlCommand *command);
       void setServiceFlag(bool serviceFlag);
 
       bool isConfiguringService();
@@ -97,7 +97,7 @@ namespace remoting_node
       // Other members
       bool m_isConfiguringService;
 
-      ::pointer < ::remoting_control_desktop::ControlCommand > m_pcontrolcommandReloadConfig;
+      ::pointer < ::remoting_node::ControlCommand > m_pcontrolcommandReloadConfig;
 
       int m_lastSelectedTabIndex;
    };

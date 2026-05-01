@@ -295,8 +295,8 @@ namespace remoting_node
          return ;
       }
       {
-         critical_section_lock al(m_pserverconfig);
-         IpAccessRule *ip = (IpAccessRule *)m_list.getItemData(m_list.getSelectedIndex());
+         AutoLock al(m_pserverconfig);
+         IpAccessRule *ip = m_list.getItemData(m_list.getSelectedIndex()).raw_cast <IpAccessRule *>();
          for (IpAccessControl::iterator it = m_pipaccesscontrol->begin(); it != m_pipaccesscontrol->end(); it++) {
             IpAccessRule *ip2 = *it;
             if (ip == ip2) {
@@ -327,8 +327,8 @@ namespace remoting_node
          return ;
       }
 
-      IpAccessRule *ip = (IpAccessRule *)m_list.getItemData(si);
-      IpAccessRule *ipPrev = (IpAccessRule *)m_list.getItemData(si - 1);
+      IpAccessRule *ip = (IpAccessRule *)m_list.getItemData(si).raw_cast<IpAccessRule*>();
+      IpAccessRule *ipPrev = (IpAccessRule *)m_list.getItemData(si - 1).raw_cast<IpAccessRule*>();
 
       setListViewItemText(si - 1, ip);
       setListViewItemText(si, ipPrev);
@@ -345,8 +345,8 @@ namespace remoting_node
       if ((si == -1) || (si == m_list.getCount() - 1)) {
          return ;
       }
-      IpAccessRule *ip = (IpAccessRule *)m_list.getItemData(si);
-      IpAccessRule *ipNext = (IpAccessRule *)m_list.getItemData(si + 1);
+      IpAccessRule *ip = (IpAccessRule *)m_list.getItemData(si).raw_cast<IpAccessRule*>();
+      IpAccessRule *ipNext = (IpAccessRule *)m_list.getItemData(si + 1).raw_cast<IpAccessRule*>();
 
       setListViewItemText(si, ipNext);
       setListViewItemText(si + 1, ip);
@@ -401,7 +401,7 @@ namespace remoting_node
    void IpAccessControlDialog::onIpCheckUpdate()
    {
       ::string ipStorage;
-      m_ip.getText(&ipStorage);
+      ipStorage = m_ip.getText();
 
       // Check if ip address is valid.
 
@@ -427,7 +427,7 @@ namespace remoting_node
          rulesCount = m_list.getCount();
       }
       for (int i = 0; i < rulesCount; i++) {
-         IpAccessRule *rule = (IpAccessRule *)m_list.getItemData(i);
+         IpAccessRule *rule = (IpAccessRule *)m_list.getItemData(i).raw_cast <IpAccessRule *>();
          if (rule->isIncludingAddress(addr)) {
             action = rule->getAction();
             break;
@@ -519,8 +519,8 @@ namespace remoting_node
       ::string firstIp;
       ::string lastIp;
 
-      control->getFirstIp(&firstIp);
-      control->getLastIp(&lastIp);
+      control->getFirstIp(firstIp);
+      control->getLastIp(lastIp);
 
       m_list.setSubItemText(index, 0, firstIp);
       m_list.setSubItemText(index, 1, lastIp);

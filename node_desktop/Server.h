@@ -65,13 +65,12 @@ namespace remoting_node_desktop
    //class Server : public Singleton<Server>,
    class  CLASS_DECL_REMOTING_NODE_DESKTOP Server : 
          public ::subsystem::ListenerContainer<ServerListener *>,
-         public ::remoting::ConfigReloadListener,
+         public ::remoting_node::ConfigReloadListener,
          public RfbClientManagerEventListener
    {
    public:
 
-
-            ::pointer < ::subsystem::LogWriter > m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
       // ZombieKiller m_zombieKiller;
 
       ::pointer<::remoting_node::Configurator> m_pconfigurator;
@@ -155,12 +154,12 @@ namespace remoting_node_desktop
        * after call of this method.
        * @fixme place extended information to server info.
        */
-      virtual void getServerInfo(ServerInfo *info);
+      virtual void getServerInfo(::remoting_control_desktop::ServerInfo *info);
 
       virtual void initialize_remoting_node_desktop_server(bool runsInServiceContext, ::remoting_node::NewConnectionEvents *newConnectionEvents,
                                     LogInitListener *logInitListener, ::subsystem::LogWriter *plogwriter);
 
-      virtual void on_start();
+      //virtual void on_start() override;
 
       /**
        * Inherited from ConfigReloadListener interface to catch configuration reload event.
@@ -242,7 +241,7 @@ namespace remoting_node_desktop
       // * Rfb client manager (for all rfb servers), used by rfb servers
       // * rfb clients, control server and control clients.
       // */
-      //RfbClientManager *m_rfbClientManager;
+      //RfbClientManager *m_prfbclientmanager;
       ///**
       // * ::innate_subsystem::Control server.
       // */

@@ -28,42 +28,56 @@
 #include "subsystem/_common_header.h"
 //////#include "subsystem/platform/::string.h"
 #include "acme/prototype/geometry2d/rectangle.h"
-
-
-class PortMappingRect : public ::int_rectangle
+namespace remoting_node
 {
-public:
-  PortMappingRect(int left, int right, int top, int bottom);
-  PortMappingRect();
-  virtual ~PortMappingRect();
-
-  // Converts this rectangle to string value.
-  void toString(::string & string) const;
-
-   ::string toString() const
+   class CLASS_DECL_REMOTING PortMappingRect
    {
-      ::string str;
-      toString(str);
-      return str;
+   public:
 
-   }
-
-  // Returns true if string can be parsed to rectangle object,
-  // false otherwise.
-  static bool tryParse(const char * psz);
-
-  // Parsed string and sets parsed values to output rectangle.
-  // Returns true if string is valid, false otherwise.
-  // Remark: "out" parameter can be null.
-  static bool parse(const ::scoped_string & scopedstr,  PortMappingRect * pportmappingrectOut);
+      ::int_rectangle m_rectangle;
 
 
-   bool parse(const ::scoped_string & scopedstr)
-   {
+      PortMappingRect(int left, int right, int top, int bottom);
+      PortMappingRect();
+      ~PortMappingRect();
 
-      return PortMappingRect::parse(scopedstr, this);
+      // Converts this rectangle to string value.
+      void toString(::string & string) const;
 
-   }
-};
+      ::string toString() const
+      {
+         ::string str;
+         toString(str);
+         return str;
 
+      }
+
+      // Returns true if string can be parsed to rectangle object,
+      // false otherwise.
+      static bool tryParse(const char * psz);
+
+      // Parsed string and sets parsed values to output rectangle.
+      // Returns true if string is valid, false otherwise.
+      // Remark: "out" parameter can be null.
+      static bool parse(const ::scoped_string & scopedstr,  PortMappingRect * pportmappingrectOut);
+
+
+      bool parse(const ::scoped_string & scopedstr)
+      {
+
+         return PortMappingRect::parse(scopedstr, this);
+
+      }
+
+
+      bool operator == (const PortMappingRect & portmappingrect) const
+      {
+
+         return m_rectangle == portmappingrect.m_rectangle;
+
+      }
+
+
+   };
+} // namespace remoting_node
 

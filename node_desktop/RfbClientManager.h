@@ -65,7 +65,7 @@ namespace remoting_node_desktop
    // application is running. Is this fixme deprecated?
    //
    // FIXME: No documentation for problem which this class solves.
-   class RfbClientManager : public ::remoting::ClientTerminationListener,
+   class CLASS_DECL_REMOTING_NODE_DESKTOP RfbClientManager : public ::remoting::ClientTerminationListener,
                             public ::subsystem::ClipboardListener,
                             public ::remoting::UpdateSendingListener,
                             public ::remoting::ClientAuthListener,

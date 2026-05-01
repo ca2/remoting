@@ -33,7 +33,7 @@
 
 #include "remoting/remoting/desktop/Desktop.h"
 
-class FileTransferSecurity : private Impersonator
+class CLASS_DECL_REMOTING FileTransferSecurity : private Impersonator
 {
 public:
   FileTransferSecurity(Desktop *desktop, ::subsystem::LogWriter * plogwriter);

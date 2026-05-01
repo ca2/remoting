@@ -40,7 +40,7 @@
 
 #include "subsystem/platform/StringTable.h"
 //#include "subsystem/platform/::string.h"
-#include "remoting/node_desktop/NamingDefs.h"
+#include "remoting/remoting/node/NamingDefs.h"
 
 #include "subsystem/node/file.h"
 #include "subsystem/thread/ZombieKiller.h"
@@ -194,7 +194,7 @@ namespace remoting_node_desktop
       // m_pextrarfbservers(&m_plogwriter)
       construct_newø(m_pextrarfbservers);
       m_pextrarfbservers->initialize_extra_rfb_servers(m_pconfigurator, m_plogwriter);
-      m_plogwriter->information("{} Build on {}", ProductNames::SERVER_PRODUCT_NAME, BuildTime::DATE);
+      m_plogwriter->information("{} Build on {}", ::remoting_node::ProductNames::SERVER_PRODUCT_NAME, BuildTime::DATE);
 
       // Initialize configuration.
       // FIXME: It looks like configurator may be created as a member object.
@@ -208,7 +208,7 @@ namespace remoting_node_desktop
          m_pserverconfig->getLogFileDir(logDir);
          unsigned char logLevel = m_pserverconfig->getLogLevel();
          // FIXME: Use correct log name.
-         m_ploginitlistener->onLogInit(logDir, LogNames::SERVER_LOG_FILE_STUB_NAME, logLevel);
+         m_ploginitlistener->onLogInit(logDir, ::remoting_node::LogNames::SERVER_LOG_FILE_STUB_NAME, logLevel);
       }
       catch (...)
       {
@@ -307,7 +307,7 @@ namespace remoting_node_desktop
    }
 
 
-   void Server::getServerInfo(ServerInfo *info)
+   void Server::getServerInfo(::remoting_control_desktop::ServerInfo *info)
    {
       bool rfbServerListening = true;
       {
@@ -391,10 +391,10 @@ namespace remoting_node_desktop
 
       switch (action) {
          case ::remoting_node::ServerConfig::DA_LOCK_WORKSTATION:
-            keys.formatf("{}", AdditionalActionApplication::LOCK_WORKSTATION_KEY);
+            keys.format("{}", AdditionalActionApplication::LOCK_WORKSTATION_KEY);
             break;
          case ::remoting_node::ServerConfig::DA_LOGOUT_WORKSTATION:
-            keys.formatf("{}", AdditionalActionApplication::LOGOUT_KEY);
+            keys.format("{}", AdditionalActionApplication::LOGOUT_KEY);
             break;
          default:
             return;
@@ -459,17 +459,17 @@ namespace remoting_node_desktop
 
       try {
          ::string pipeName;
-         ControlPipeName::createPipeName(isRunningAsService(), pipeName, m_plogwriter);
+         ::remoting_control_desktop::ControlPipeName::createPipeName(isRunningAsService(), pipeName, m_plogwriter);
 
          // FIXME: Memory leak
-         auto psecurityattributes = createø<::subsystem::SecurityAttributes >();
+         auto psecurityattributes = createø<::subsystem::SecurityAttributesInterface >();
          psecurityattributes->setInheritable();
          psecurityattributes->shareToAllUsers();
 
          const unsigned int maxControlServerPipeBufferSize = 0x10000;
          auto ppipeserver = createø< ::subsystem::PipeServer>();
          ppipeserver->initialize_pipe_server(pipeName, maxControlServerPipeBufferSize, psecurityattributes);
-         m_pcontrolserver = new ControlServer(ppipeserver , m_prfbclientmanager, m_plogwriter);
+         m_pcontrolserver = new ControlServer(m_pconfigurator,ppipeserver , m_prfbclientmanager, m_plogwriter);
       } catch (::subsystem::Exception &ex) {
          m_plogwriter->error("Failed to start control server: \"{}\"", ex.get_message());
       }
@@ -538,7 +538,7 @@ namespace remoting_node_desktop
          m_prfbserver = 0;
       }
       if (rfbServer != 0) {
-         delete rfbServer;
+         //delete rfbServer;
       }
    }
 

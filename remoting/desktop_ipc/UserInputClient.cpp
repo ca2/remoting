@@ -79,7 +79,7 @@ void UserInputClient::onRequest(unsigned char reqCode, BlockingGate *pblockingga
     break;
   default:
     ::string errMess;
-    errMess.formatf("Unknown {} protocol code received from a pipe "
+    errMess.format("Unknown {} protocol code received from a pipe "
                    "UserInputServer", (int)reqCode);
     throw ::subsystem::Exception(errMess);
     break;
@@ -95,11 +95,11 @@ void UserInputClient::sendInit(BlockingGate *pblockinggate)
 
 void UserInputClient::setMouseEvent(const ::int_point pointNewPosition, unsigned char keyFlag)
 {
-  critical_section_lock al(m_pblockinggate);
+  critical_section_lock al(m_pcontrolgate);
   try {
     // Send mouse data
-    m_pblockinggate->writeUInt8(POINTER_POS_CHANGED);
-    sendNewPointerPos(pointNewPosition, keyFlag, m_pblockinggate);
+    m_pcontrolgate->writeUInt8(POINTER_POS_CHANGED);
+    sendNewPointerPos(pointNewPosition, keyFlag, m_pcontrolgate);
     m_sendMouseFlags = keyFlag;
   } catch (ReconnectException &) {
   }
@@ -107,22 +107,22 @@ void UserInputClient::setMouseEvent(const ::int_point pointNewPosition, unsigned
 
 void UserInputClient::setNewClipboard(const ::scoped_string & newClipboard)
 {
-  critical_section_lock al(m_pblockinggate);
+  critical_section_lock al(m_pcontrolgate);
   try {
     // Send clipboard data
-    m_pblockinggate->writeUInt8(CLIPBOARD_CHANGED);
-    sendNewClipboard(newClipboard, m_pblockinggate);
+    m_pcontrolgate->writeUInt8(CLIPBOARD_CHANGED);
+    sendNewClipboard(newClipboard, m_pcontrolgate);
   } catch (ReconnectException &) {
   }
 }
 
 void UserInputClient::setKeyboardEvent(unsigned int keySym, bool down)
 {
-  critical_section_lock al(m_pblockinggate);
+  critical_section_lock al(m_pcontrolgate);
   try {
     // Send keyboard data
-    m_pblockinggate->writeUInt8(KEYBOARD_EVENT);
-    sendKeyEvent(keySym, down, m_pblockinggate);
+    m_pcontrolgate->writeUInt8(KEYBOARD_EVENT);
+    sendKeyEvent(keySym, down, m_pcontrolgate);
   } catch (ReconnectException &) {
   }
 }
@@ -130,24 +130,24 @@ void UserInputClient::setKeyboardEvent(unsigned int keySym, bool down)
 void UserInputClient::getCurrentUserInfo(::string & desktopName,
                                          ::string & userName)
 {
-  critical_section_lock al(m_pblockinggate);
+  critical_section_lock al(m_pcontrolgate);
   try {
     // Send request
-    m_pblockinggate->writeUInt8(USER_INFO_REQ);
-    readUserInfo(desktopName, userName, m_pblockinggate);
+    m_pcontrolgate->writeUInt8(USER_INFO_REQ);
+    readUserInfo(desktopName, userName, m_pcontrolgate);
   } catch (ReconnectException &) {
   }
 }
 
 void UserInputClient::getPrimaryDisplayCoords(::int_rectangle & rectangle)
 {
-  critical_section_lock al(m_pblockinggate);
+  critical_section_lock al(m_pcontrolgate);
   bool success = false;
   do {
     try {
       // Send request
-      m_pblockinggate->writeUInt8(DESKTOP_COORDS_REQ);
-      rectangle = readRect(m_pblockinggate);
+      m_pcontrolgate->writeUInt8(DESKTOP_COORDS_REQ);
+      rectangle = readRect(m_pcontrolgate);
       success = true;
     } catch (ReconnectException &) {
     }
@@ -157,14 +157,14 @@ void UserInputClient::getPrimaryDisplayCoords(::int_rectangle & rectangle)
 void UserInputClient::getDisplayNumberCoords(::int_rectangle & rectangle,
                                              unsigned char dispNumber)
 {
-  critical_section_lock al(m_pblockinggate);
+  critical_section_lock al(m_pcontrolgate);
   bool success = false;
   do {
     try {
       // Send request
-      m_pblockinggate->writeUInt8(DISPLAY_NUMBER_COORDS_REQ);
-      m_pblockinggate->writeUInt8(dispNumber);
-      rectangle = readRect(m_pblockinggate);
+      m_pcontrolgate->writeUInt8(DISPLAY_NUMBER_COORDS_REQ);
+      m_pcontrolgate->writeUInt8(dispNumber);
+      rectangle = readRect(m_pcontrolgate);
       success = true;
     } catch (ReconnectException &) {
     }
@@ -174,17 +174,17 @@ void UserInputClient::getDisplayNumberCoords(::int_rectangle & rectangle,
 ::int_rectangle_array_base UserInputClient::getDisplaysCoords()
 {
   ::int_rectangle_array_base res;
-  critical_section_lock al(m_pblockinggate);
+  critical_section_lock al(m_pcontrolgate);
   bool success = false;
   unsigned char number;
   do {
     try {
       res.resize(0);
       // Send request
-      m_pblockinggate->writeUInt8(DISPLAYS_COORDS_REQ);
-      number = m_pblockinggate->readUInt8();
+      m_pcontrolgate->writeUInt8(DISPLAYS_COORDS_REQ);
+      number = m_pcontrolgate->readUInt8();
       for (size_t i = 0; i < number; i++) {
-        ::int_rectangle rectangle = readRect(m_pblockinggate);
+        ::int_rectangle rectangle = readRect(m_pcontrolgate);
         res.add(rectangle);
       }
       success = true;
@@ -197,14 +197,14 @@ void UserInputClient::getDisplayNumberCoords(::int_rectangle & rectangle,
 
 void UserInputClient::getNormalizedRect(::int_rectangle & rectangle)
 {
-  critical_section_lock al(m_pblockinggate);
+  critical_section_lock al(m_pcontrolgate);
   bool success = false;
   do {
     try {
       // Send request
-      m_pblockinggate->writeUInt8(NORMALIZE_RECT_REQ);
-      sendRect(rectangle, m_pblockinggate);
-      rectangle = readRect(m_pblockinggate);
+      m_pcontrolgate->writeUInt8(NORMALIZE_RECT_REQ);
+      sendRect(rectangle, m_pcontrolgate);
+      rectangle = readRect(m_pcontrolgate);
       success = true;
     } catch (ReconnectException &) {
     }
@@ -213,24 +213,24 @@ void UserInputClient::getNormalizedRect(::int_rectangle & rectangle)
 
 void UserInputClient::getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rectangle)
 {
-  critical_section_lock al(m_pblockinggate);
+  critical_section_lock al(m_pcontrolgate);
   bool success = false;
   do {
     try {
       // Send request
-      m_pblockinggate->writeUInt8(WINDOW_COORDS_REQ);
-      m_pblockinggate->writeUInt64((unsigned long long)::as_HWND(operatingsystemwindow));
-      bool isBrokenWindow = m_pblockinggate->readUInt8() != 0;
+      m_pcontrolgate->writeUInt8(WINDOW_COORDS_REQ);
+      m_pcontrolgate->writeUInt64((unsigned long long)::as_HWND(operatingsystemwindow));
+      bool isBrokenWindow = m_pcontrolgate->readUInt8() != 0;
       if (!isBrokenWindow)
       {
-         rectangle = readRect(m_pblockinggate);
+         rectangle = readRect(m_pcontrolgate);
       }
       else
       {
         // Receive error discription (do not generate it here).
         // This made to avoid code duplication.
         ::string errMess;
-        errMess = m_pblockinggate->readUtf8();
+        errMess = m_pcontrolgate->readUtf8();
         throw ::subsystem::BrokenHandleException(errMess);
       }
       success = true;
@@ -241,15 +241,15 @@ void UserInputClient::getWindowCoords(const ::operating_system::window & operati
 
 ::operating_system::window UserInputClient::getWindowHandleByName(const ::scoped_string & windowName)
 {
-  critical_section_lock al(m_pblockinggate);
+  critical_section_lock al(m_pcontrolgate);
   bool success = false;
   ::operating_system::window operatingsystemwindow;
   do {
     try {
       // Send request
-      m_pblockinggate->writeUInt8(WINDOW_HANDLE_REQ);
-      m_pblockinggate->writeUTF8(windowName);
-      operatingsystemwindow = ::as_operating_system_window((HWND)m_pblockinggate->readUInt64());
+      m_pcontrolgate->writeUInt8(WINDOW_HANDLE_REQ);
+      m_pcontrolgate->writeUTF8(windowName);
+      operatingsystemwindow = ::as_operating_system_window((HWND)m_pcontrolgate->readUInt64());
       success = true;
     } catch (ReconnectException &) {
     }
@@ -259,14 +259,14 @@ void UserInputClient::getWindowCoords(const ::operating_system::window & operati
 
 void UserInputClient::getApplicationRegion(unsigned int procId, Region & region)
 {
-  critical_section_lock al(m_pblockinggate);
+  critical_section_lock al(m_pcontrolgate);
   bool success = false;
   do {
     try {
       // Send request
-      m_pblockinggate->writeUInt8(APPLICATION_REGION_REQ);
-      m_pblockinggate->writeUInt32(procId);
-      readRegion(region, m_pblockinggate);
+      m_pcontrolgate->writeUInt8(APPLICATION_REGION_REQ);
+      m_pcontrolgate->writeUInt32(procId);
+      readRegion(region, m_pcontrolgate);
       success = true;
     } catch (ReconnectException &) {
     }
@@ -277,15 +277,15 @@ bool UserInputClient::isApplicationInFocus(unsigned int procId)
 {
   bool result = false;
 
-  critical_section_lock al(m_pblockinggate);
+  critical_section_lock al(m_pcontrolgate);
   bool success = false;
   do {
     try {
       // Send request
-      m_pblockinggate->writeUInt8(APPLICATION_CHECK_FOCUS);
-      m_pblockinggate->writeUInt32(procId);
-      // readRegion(region, m_pblockinggate);
-      result = (m_pblockinggate->readUInt8() != 0);
+      m_pcontrolgate->writeUInt8(APPLICATION_CHECK_FOCUS);
+      m_pcontrolgate->writeUInt32(procId);
+      // readRegion(region, m_pcontrolgate);
+      result = (m_pcontrolgate->readUInt8() != 0);
       success = true;
     } catch (ReconnectException &) {
     }

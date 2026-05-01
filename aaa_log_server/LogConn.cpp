@@ -151,7 +151,7 @@ void LogConn::execute()
     dispatch();
   } catch (::exception &e) {
     ::string errMess;
-    errMess.formatf("The log connection has failed: {}", e.get_message());
+    errMess.format("The log connection has failed: {}", e.get_message());
     m_extLogListener->onAnErrorFromLogConn(errMess);
   }
   m_extAuthListener->onDisconnect(this);

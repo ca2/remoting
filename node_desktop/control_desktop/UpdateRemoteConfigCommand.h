@@ -36,14 +36,14 @@ namespace remoting_control_desktop
     * This command will ask server to save recieved configuration.
     * @fixme: use MacroCommand to join UpdateRemoteConfigCommand and UpdateLocalConfigCommand.
     */
-   class UpdateRemoteConfigCommand : public Command
+   class UpdateRemoteConfigCommand : public ::subsystem::Command
    {
    public:
       /**
        * Creates command.
        * @param serverControl control proxy.
        */
-      UpdateRemoteConfigCommand(ControlProxy *serverControl);
+      UpdateRemoteConfigCommand(ControlProxy * pcontrolproxy);
       /**
        * Deletes command.
        */
@@ -60,7 +60,7 @@ namespace remoting_control_desktop
       /**
        * ::innate_subsystem::Control proxy on client side.
        */
-      ControlProxy *m_serverControl;
+      ::pointer < ControlProxy > m_pcontrolproxy;
       ::pointer < ::remoting_node::Configurator > m_pconfigurator;
    };
 } // namespace remoting_control_desktop

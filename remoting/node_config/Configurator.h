@@ -40,7 +40,7 @@ namespace remoting_node
 {
 
 
-   class Configurator : public ::subsystem::ListenerContainer<ConfigReloadListener *>
+   class CLASS_DECL_REMOTING Configurator : public ::subsystem::ListenerContainer<ConfigReloadListener *>
    {
    public:
       //protected:

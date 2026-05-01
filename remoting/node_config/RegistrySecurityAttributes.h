@@ -40,7 +40,7 @@
 // * TightVNC server and service configuration.
 // * @author enikey.
 //*/
-//class RegistrySecurityAttributes
+//class CLASS_DECL_REMOTING RegistrySecurityAttributes
 //{
 //public:
 //  /**

@@ -26,8 +26,8 @@
 
 namespace remoting_control_desktop
 {
-   ShutdownCommand::ShutdownCommand(ControlProxy *serverControl)
-   : m_proxy(serverControl)
+   ShutdownCommand::ShutdownCommand(ControlProxy * pcontrolproxy)
+   : m_pcontrolproxy(pcontrolproxy)
    {
    }
 
@@ -37,7 +37,7 @@ namespace remoting_control_desktop
 
    void ShutdownCommand::execute()
    {
-      m_proxy->shutdownTightVnc();
+      m_pcontrolproxy->shutdownTightVnc();
    }
 } // namespace remoting_control_desktop
 

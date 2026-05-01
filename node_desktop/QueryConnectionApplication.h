@@ -35,7 +35,7 @@ namespace remoting_node_desktop
     * Application that shows "Accept / Reject rfb connection dialog" to user
     * and returns user choise as application return value.
     */
-   class QueryConnectionApplication :
+   class CLASS_DECL_REMOTING_NODE_DESKTOP QueryConnectionApplication :
       virtual public ::subsystem::LocalOperatingSystemApplication
    {
    public:

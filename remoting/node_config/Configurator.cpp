@@ -69,6 +69,8 @@ namespace remoting_node
       //    // TODO: Place exception handler here.
       // }
       m_isConfiguringService=isConfiguringService;
+      construct_newø(m_pserverconfig);
+
    }
 
    // Configurator *Configurator::getInstance()

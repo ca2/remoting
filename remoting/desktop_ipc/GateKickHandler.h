@@ -31,7 +31,7 @@ namespace remoting
 {
 
 
-   class GateKickHandler : public ClientListener
+   class CLASS_DECL_REMOTING  GateKickHandler : public ClientListener
    {
    public:
       GateKickHandler();

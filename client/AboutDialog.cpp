@@ -31,7 +31,7 @@
 #include "resource.h"
 #include "acme/filesystem/filesystem/file_context.h"
 #include "innate_subsystem/platform/subsystem.h"
-#include "remoting/remoting/remoting.h"
+//#include "remoting/remoting/remoting.h"
 #include "subsystem/node/SystemException.h"
 
 
@@ -79,7 +79,7 @@ namespace remoting_client
         } catch (::subsystem::SystemException &sysEx) {
             ::string strMessage;
 
-            strMessage.formatf(MainSubsystem().StringTable().getString(IDS_FAILED_TO_OPEN_URL_FORMAT).c_str(), sysEx.get_message());
+            strMessage.format(MainSubsystem().StringTable().getString(IDS_FAILED_TO_OPEN_URL_FORMAT).c_str(), sysEx.get_message());
 
             MainSubsystem().message_box(operating_system_window(),
                        wstring(strMessage),
@@ -107,7 +107,7 @@ namespace remoting_client
 
         // Format product version and build time for displaying on the dialog.
         ::string versionText;
-        versionText.formatf(MainSubsystem().StringTable().getString(IDS_PRODUCT_VERSION_FORMAT).c_str(),
+        versionText.format(MainSubsystem().StringTable().getString(IDS_PRODUCT_VERSION_FORMAT).c_str(),
                            ::string(versionString).c_str(),
                            BuildTime::DATE);
 

@@ -100,7 +100,7 @@ namespace remoting_node_desktop
 
       curModulePath = MainSubsystem().OperatingSystem().getCurrentModulePath();
 
-      command.formatf("{} {} {} {} {} {} {}",
+      command.format("{} {} {} {} {} {} {}",
                      curModulePath,
                      QueryConnectionCommandLine::QUERY_CONNECTION,
                      QueryConnectionCommandLine::PEER_ADDR,

@@ -32,8 +32,8 @@
 #include "innate_subsystem/platform/subsystem.h"
 #include "innate_subsystem/gui/Toolbar.h"
 #include "innate_subsystem/drawing/Cursor.h"
-#include "FsWarningDialog.h"
-#include "NamingDefs.h"
+#include "FullscreenWarningDialog.h"
+#include "remoting/remoting/client/NamingDefs.h"
 #include "remoting/client/remoting.h"
 #include "remoting_impact.h"
 #include "ViewerWindow.h"
@@ -42,7 +42,7 @@
 #include "acme/filesystem/file/item.h"
 #include "acme/platform/application.h"
 #include "apex/networking/http/context.h"
-#include "remoting/remoting/remoting.h"
+#include "remoting/remoting/platform/remoting.h"
 #include "resource.h"
 #include "acme/platform/node.h"
 //// #include aaa_<commdlg.h>
@@ -59,7 +59,7 @@ namespace remoting_client
        m_ccsm(RegistryPaths::VIEWER_PATH, pconnectiondata->getHost()),
        m_poperatingsystemapplication(application),
        m_premoting(premoting),
-      m_plogwriter = plogwriter;,
+      m_plogwriter(plogwriter),
       m_pconnectionconfig(pconnectionconfig),
       m_scale(100),
       //m_isFullScr(false),
@@ -138,12 +138,12 @@ namespace remoting_client
         }
     }
 
-    void ViewerWindow::setFileTransfer(::remoting::file_transfer::FileTransferCapability *ft)
+    void ViewerWindow::setFileTransfer(::remoting_client::file_transfer::FileTransferCapability *ft)
     {
         m_fileTransfer = ft;
     }
 
-    void ViewerWindow::setRemoteViewerCore(::remoting::RemoteViewerCore *pCore)
+    void ViewerWindow::setRemoteViewerCore(::remoting_client::RemoteViewerCore *pCore)
     {
         m_pviewercore = pCore;
         m_pdesktopwindow->setViewerCore(pCore);
@@ -293,7 +293,7 @@ namespace remoting_client
     {
         ::pointer < ::innate_subsystem::CursorInterface > pcursor;
 
-        auto presourceloader = MainInnateSubsystem().ResourceLoader();
+        auto presourceloader = InnateSubsystem().ResourceLoader();
         switch (type) {
            case ::remoting::ConnectionConfig::DOT_CURSOR:
                 pcursor = presourceloader->loadCursor(IDI_CDOT);
@@ -478,7 +478,7 @@ namespace remoting_client
         int pixelSize = 0;
         m_pdesktopwindow->getServerGeometry(&geometry, &pixelSize);
         ::string str;
-        str.formatf(MainSubsystem().StringTable().getString(IDS_CONNECTION_INFO_FORMAT).c_str(),
+        str.format(MainSubsystem().StringTable().getString(IDS_CONNECTION_INFO_FORMAT).c_str(),
                    host.c_str(),
                    m_pviewercore->getRemoteDesktopName().c_str(),
                    m_pviewercore->getProtocolString().c_str(),
@@ -1284,7 +1284,7 @@ namespace remoting_client
     bool ViewerWindow::onAuthError(::wparam wParam)
     {
         // If authentication is canceled, then do quiet exit, else show error-scopedstrMessage.
-        if (wParam != ::remoting::AuthException::AUTH_CANCELED) {
+        if (wParam != ::remoting_client::AuthException::AUTH_CANCELED) {
             ::string error = m_error.get_message();
             int result = MainSubsystem().message_box({},
                                     error,
@@ -1325,7 +1325,7 @@ namespace remoting_client
 
     bool ViewerWindow::onFsWarning()
     {
-        FsWarningDialog fsWarning(m_premoting);
+        FullscreenWarningDialog fsWarning(m_premoting);
         fsWarning.setParent(this);
         fsWarning.showModal();
         return true;
@@ -1457,7 +1457,7 @@ namespace remoting_client
         }
     }
 
-    void ViewerWindow::onAuthError(const ::remoting::AuthException *exception)
+    void ViewerWindow::onAuthError(const ::remoting_client::AuthException *exception)
     {
         m_plogwriter->information("onAuthError ({}): {}",
                          exception->getAuthCode(), exception->get_message());

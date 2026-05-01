@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "NewFolderDialog.h"
 #include "resource.h"
-#include "remoting/remoting/remoting.h"
+//#include "remoting/remoting/remoting.h"
 
 namespace remoting_client
 {

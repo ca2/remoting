@@ -28,9 +28,11 @@
 #include "subsystem/_common_header.h"
 namespace remoting_node
 {
-   ConfigDialog::ConfigDialog(Configurator * pconfigurator, ::remoting_control_desktop::ControlCommand *reloadConfigCommand)
+   ConfigDialog::ConfigDialog(Configurator * pconfigurator, ::remoting_node::ControlCommand *reloadConfigCommand)
    :
+   m_pconfigurator(pconfigurator),
    m_serverConfigDialog(pconfigurator),
+   m_portMappingDialog(pconfigurator),
    m_ipAccessControlDialog(pconfigurator),
    m_videoRegionsConfigDialog(pconfigurator),
    m_administrationConfigDialog(pconfigurator),
@@ -43,7 +45,9 @@ namespace remoting_node
 
    ConfigDialog::ConfigDialog(Configurator * pconfigurator)
    : //BaseDialog(IDD_CONFIG),
+   m_pconfigurator(pconfigurator),
    m_serverConfigDialog(pconfigurator),
+   m_portMappingDialog(pconfigurator),
    m_ipAccessControlDialog(pconfigurator),
    m_videoRegionsConfigDialog(pconfigurator),
    m_administrationConfigDialog(pconfigurator),
@@ -57,6 +61,7 @@ namespace remoting_node
    ConfigDialog::ConfigDialog()
    : //BaseDialog(IDD_CONFIG),
    m_serverConfigDialog(nullptr),
+   m_portMappingDialog(nullptr),
    m_ipAccessControlDialog(nullptr),
    m_videoRegionsConfigDialog(nullptr),
    m_administrationConfigDialog(nullptr),
@@ -77,7 +82,7 @@ namespace remoting_node
       m_ctrlApplyButton.enableWindow(true);
    }
 
-   void ConfigDialog::setConfigReloadCommand(::remoting_control_desktop::ControlCommand *command)
+   void ConfigDialog::setConfigReloadCommand(::remoting_node::ControlCommand *command)
    {
       m_pcontrolcommandReloadConfig = command;
 
@@ -101,7 +106,7 @@ namespace remoting_node
       //HWND dialogHwnd = operating_system_window();
 
       dialog_item(m_ctrlApplyButton, IDC_APPLY);
-      dialog_item(m_tabControl, IDC_CONFIG_TAB);
+      subclassControlById(m_tabControl, IDC_CONFIG_TAB);
 
       //
       // Change caption of dialog

@@ -29,20 +29,20 @@
 
 namespace remoting_client
 {
-    class ProductNames
+    class CLASS_DECL_REMOTING ProductNames
     {
     public:
         static ::string_literal PRODUCT_NAME;
         static ::string_literal VIEWER_PRODUCT_NAME;
     };
 
-    class RegistryPaths
+    class CLASS_DECL_REMOTING RegistryPaths
     {
     public:
         static ::string_literal VIEWER_PATH;
     };
 
-    class LogNames
+    class CLASS_DECL_REMOTING LogNames
     {
     public:
         static ::string_literal VIEWER_LOG_FILE_STUB_NAME;
@@ -50,13 +50,13 @@ namespace remoting_client
     };
 
 
-    class ApplicationNames
+    class CLASS_DECL_REMOTING ApplicationNames
     {
     public:
         static ::string_literal WINDOW_CLASS_NAME;
     };
 
-    class WindowNames
+    class CLASS_DECL_REMOTING WindowNames
     {
     public:
         static ::string_literal TVN_WINDOW_CLASS_NAME;

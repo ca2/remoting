@@ -53,11 +53,11 @@ namespace remoting
       bool result = false;
       try
       {
-         critical_section_lock al(m_pblockinggate);
-         m_pblockinggate->writeUInt8(SOFT_INPUT_ENABLING_REQ);
-         m_pblockinggate->writeUInt64(m_lastInputTime.m_iSecond);
-         result = m_pblockinggate->readUInt8() != 0;
-         m_lastInputTime.m_iSecond = m_pblockinggate->readUInt64();
+         critical_section_lock al(m_pcontrolgate);
+         m_pcontrolgate->writeUInt8(SOFT_INPUT_ENABLING_REQ);
+         m_pcontrolgate->writeUInt64(m_lastInputTime.m_iSecond);
+         result = m_pcontrolgate->readUInt8() != 0;
+         m_lastInputTime.m_iSecond = m_pcontrolgate->readUInt64();
       }
       catch (ReconnectException &)
       {

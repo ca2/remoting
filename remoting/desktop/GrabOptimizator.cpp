@@ -357,7 +357,7 @@ namespace remoting
       ::string statString;
       for (::list_base<double>::iterator iter = m_wholeTElements.begin(); iter != m_wholeTElements.end(); iter++)
       {
-         value.formatf(" %.2f;", *iter);
+         value.format(" %.2f;", *iter);
          statString+=value;
       }
       double avgWholeT = m_wholeTElements.size() != 0 ? m_wholeTSum / m_wholeTElements.size() : 0;
@@ -369,7 +369,7 @@ namespace remoting
       statString = "";
       for (::list_base<double>::iterator iter = m_gElements.begin(); iter != m_gElements.end(); iter++)
       {
-         value.formatf(" %.2f;", *iter);
+         value.format(" %.2f;", *iter);
          statString+=value;
       }
       double avgG = m_gElements.size() != 0 ? m_gSum / m_gElements.size() : 0;

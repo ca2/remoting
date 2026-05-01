@@ -31,7 +31,7 @@ namespace remoting
 {
 
 
-   class RfbDispatcherListener :
+   class CLASS_DECL_REMOTING RfbDispatcherListener :
    virtual public ::particle
    {
    public:

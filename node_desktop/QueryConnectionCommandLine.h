@@ -32,7 +32,7 @@
 namespace remoting_node_desktop
 {
 
-   class QueryConnectionCommandLine : private ::subsystem::CommandLine
+   class CLASS_DECL_REMOTING_NODE_DESKTOP QueryConnectionCommandLine : private ::subsystem::CommandLine
    {
    public:
       static ::string_literal QUERY_CONNECTION;

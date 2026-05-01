@@ -24,145 +24,149 @@
 #include "framework.h"
 #include "PortMappingContainer.h"
 
-PortMappingContainer::PortMappingContainer()
+namespace remoting_node
 {
-}
+   PortMappingContainer::PortMappingContainer()
+   {
+   }
 
-PortMappingContainer::PortMappingContainer(const PortMappingContainer &other)
-  : m_vector(other.m_vector)
-{
-}
+   PortMappingContainer::PortMappingContainer(const PortMappingContainer &other)
+     : m_vector(other.m_vector)
+   {
+   }
 
-PortMappingContainer::~PortMappingContainer()
-{
-}
+   PortMappingContainer::~PortMappingContainer()
+   {
+   }
 
-PortMappingContainer &
-PortMappingContainer::operator=(const PortMappingContainer &other)
-{
-  m_vector = other.m_vector;
-  return *this;
-}
+   PortMappingContainer &
+   PortMappingContainer::operator=(const PortMappingContainer &other)
+   {
+      m_vector = other.m_vector;
+      return *this;
+   }
 
-void PortMappingContainer::pushBack(PortMapping element)
-{
-  m_vector.add(element);
-}
+   void PortMappingContainer::pushBack(PortMapping element)
+   {
+      m_vector.add(element);
+   }
 
-size_t PortMappingContainer::find(PortMapping searchElement) const
-{
-  for (size_t i = 0; i < count(); i++) {
-    PortMapping each = m_vector.at(i);
-     PortMappingRect rectangle = each.getRect();
-    if (each.getPort() == searchElement.getPort() &&
-        rectangle == searchElement.getRect()) {
-      return i;
-    }
-  }
-  return (size_t)-1;
-}
+   size_t PortMappingContainer::find(PortMapping searchElement) const
+   {
+      for (size_t i = 0; i < count(); i++) {
+         PortMapping each = m_vector.at(i);
+         PortMappingRect rectangle = each.getRect();
+         if (each.getPort() == searchElement.getPort() &&
+             rectangle == searchElement.getRect()) {
+            return i;
+             }
+      }
+      return (size_t)-1;
+   }
 
-size_t PortMappingContainer::findByPort(int port) const
-{
-  for (size_t i = 0; i < count(); i++) {
-    if (m_vector.at(i).getPort() == port) {
-      return i;
-    }
-  }
-  return (size_t)-1;
-}
+   size_t PortMappingContainer::findByPort(int port) const
+   {
+      for (size_t i = 0; i < count(); i++) {
+         if (m_vector.at(i).getPort() == port) {
+            return i;
+         }
+      }
+      return (size_t)-1;
+   }
 
-void PortMappingContainer::remove(size_t index)
-{
-  size_t i = 0;
-  for (::array_base<PortMapping>::iterator it = m_vector.begin();
-       it != m_vector.end(); it++) {
-    if (i == index) {
-      m_vector.erase(it);
-      break;
-    }
-    i++;
-  }
-}
+   void PortMappingContainer::remove(size_t index)
+   {
+      size_t i = 0;
+      for (::array_base<PortMapping>::iterator it = m_vector.begin();
+           it != m_vector.end(); it++) {
+         if (i == index) {
+            m_vector.erase(it);
+            break;
+         }
+         i++;
+           }
+   }
 
-void PortMappingContainer::remove(PortMapping removeMapping)
-{
-  size_t index = find(removeMapping);
+   void PortMappingContainer::remove(PortMapping removeMapping)
+   {
+      size_t index = find(removeMapping);
 
-  if (index != (size_t)-1) {
-    remove(index);
-  }
-}
+      if (index != (size_t)-1) {
+         remove(index);
+      }
+   }
 
-void PortMappingContainer::removeAll()
-{
-  m_vector.clear();
-}
+   void PortMappingContainer::removeAll()
+   {
+      m_vector.clear();
+   }
 
-size_t PortMappingContainer::count() const
-{
-  return m_vector.size();
-}
+   size_t PortMappingContainer::count() const
+   {
+      return m_vector.size();
+   }
 
-bool PortMappingContainer::equals(const PortMappingContainer *other) const
-{
-  if (count() != other->count()) {
-    return false;
-  }
-  for (size_t i = 0; i < count(); i++) {
-    if (!at(i)->isEqualTo(other->at(i))) {
-      return false;
-    }
-  }
-  return true;
-}
+   bool PortMappingContainer::equals(const PortMappingContainer *other) const
+   {
+      if (count() != other->count()) {
+         return false;
+      }
+      for (size_t i = 0; i < count(); i++) {
+         if (!at(i)->isEqualTo(other->at(i))) {
+            return false;
+         }
+      }
+      return true;
+   }
 
-void PortMappingContainer::serialize(DataOutputStream * pdataoutputstream) const
-{
-  _ASSERT((unsigned int)count() == count());
-  pdataoutputstream->writeUInt32((unsigned int)count());
+   void PortMappingContainer::serialize(DataOutputStream * pdataoutputstream) const
+   {
+      _ASSERT((unsigned int)count() == count());
+      pdataoutputstream->writeUInt32((unsigned int)count());
 
-  ::string string;
+      ::string string;
 
-  for (size_t i = 0; i < count(); i++) {
-     at(i)->toString(string);
+      for (size_t i = 0; i < count(); i++) {
+         at(i)->toString(string);
 
-    pdataoutputstream->writeUTF8(string);
-  }
-}
+         pdataoutputstream->writeUTF8(string);
+      }
+   }
 
-void PortMappingContainer::deserialize(DataInputStream * pinput)
-{
-  removeAll();
+   void PortMappingContainer::deserialize(DataInputStream * pinput)
+   {
+      removeAll();
 
-  size_t cnt = pinput->readUInt32();
+      size_t cnt = pinput->readUInt32();
 
-  ::string string;
+      ::string string;
 
-  PortMapping record;
+      PortMapping record;
 
-  for (size_t i = 0; i < cnt; i++) {
+      for (size_t i = 0; i < cnt; i++) {
 
-    string = pinput->readUtf8();
+         string = pinput->readUtf8();
 
-    if (!PortMapping::parse(string, &record)) {
-      throw ::subsystem::Exception("Invalid port mapping string");
-    }
+         if (!PortMapping::parse(string, &record)) {
+            throw ::subsystem::Exception("Invalid port mapping string");
+         }
 
-    pushBack(record);
-  }
-}
+         pushBack(record);
+      }
+   }
 
-const PortMapping *PortMappingContainer::at(size_t index) const
-{
-  bool outOfRange = index >= count();
+   const PortMapping *PortMappingContainer::at(size_t index) const
+   {
+      bool outOfRange = index >= count();
 
-  return outOfRange ? 0 : &m_vector.at(index);
-}
+      return outOfRange ? 0 : &m_vector.at(index);
+   }
 
-PortMapping *PortMappingContainer::at(size_t index)
-{
-  bool outOfRange = index >= count();
+   PortMapping *PortMappingContainer::at(size_t index)
+   {
+      bool outOfRange = index >= count();
 
-  return outOfRange ? 0 : &m_vector.at(index);
-}
+      return outOfRange ? 0 : &m_vector.at(index);
+   }
+} // namespace remoting_node
+

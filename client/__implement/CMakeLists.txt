@@ -62,7 +62,7 @@ add_dependencies(${PROJECT_NAME} ${default_remoting})
 #add_dependencies(${PROJECT_NAME} ${default_node})
 #add_dependencies(${PROJECT_NAME} crypto_openssl)
 add_dependencies(${PROJECT_NAME} folder_zip)
-#add_dependencies(${PROJECT_NAME} networking_bsd)
+add_dependencies(${PROJECT_NAME} networking_bsd)
 
 
 list(APPEND executable_include_directories ${CMAKE_CURRENT_SOURCE_DIR})

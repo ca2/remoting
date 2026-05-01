@@ -119,7 +119,6 @@ namespace remoting_node_desktop
       virtual void onChangeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel);
 
 
-      virtual void main_node(const ::file::path & path);
 
    };
 

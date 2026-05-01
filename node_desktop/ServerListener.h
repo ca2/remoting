@@ -31,7 +31,7 @@ namespace remoting_node_desktop
    /**
     * Listener of TightVNC server (Server class) events.
     */
-   class ServerListener :
+   class CLASS_DECL_REMOTING_NODE_DESKTOP ServerListener :
       virtual public ::Particle
    {
    public:

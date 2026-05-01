@@ -29,7 +29,7 @@ namespace remoting_control_desktop
 {
    ConnectCommand::ConnectCommand(ControlProxy *serverControl,
                                   const ::scoped_string & scopedstrHostName)
-   : m_proxy(serverControl),
+   : m_pcontrolproxy(serverControl),
      m_hostName(scopedstrHostName)
    {
    }
@@ -40,7 +40,7 @@ namespace remoting_control_desktop
 
    void ConnectCommand::execute()
    {
-      m_proxy->makeOutgoingConnection(m_hostName, false);
+      m_pcontrolproxy->makeOutgoingConnection(m_hostName, false);
    }
 } // namespace remoting_control_desktop
 

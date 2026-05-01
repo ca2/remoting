@@ -1,7 +1,7 @@
 // Created by camilo on 2026-04-16 23:52 <3ThomasBorregaardSørensen!!
 #include "framework.h"
 #include "remoting.h"
-#include "remoting/remoting/remoting.h"
+#include "remoting/remoting/platform/remoting.h"
 #include "acme/filesystem/filesystem/file_context.h"
 #include "innate_subsystem/platform/ResourceLoader.h"
 #include "innate_subsystem/platform/subsystem.h"

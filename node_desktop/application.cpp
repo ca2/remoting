@@ -9,7 +9,7 @@
 #include "acme/handler/request.h"
 #include "acme/platform/system.h"
 #include "remoting/client/remoting.h"
-#include "remoting/remoting/remoting.h"
+#include "remoting/remoting/platform/remoting.h"
 #include "Service.h"
 //#include "acme/_operating_system.h"
 //#include "main_window.h"
@@ -63,7 +63,7 @@ namespace remoting_node_desktop
       if (ecommand == e_command_application_start)
       {
 
-         defer_construct_newø(m_pserverapplication);
+         //defer_construct_newø(m_pserverapplication);///
 
          //m_pserverapplication->on_start();
 
@@ -75,7 +75,7 @@ namespace remoting_node_desktop
 
          m_bOpenFile = true;
 
-         m_pserverapplication->main_node(path);
+         main_node(path);
 
          //fork([this, path]()
          //{
@@ -90,7 +90,7 @@ namespace remoting_node_desktop
          if (!m_bOpenFile)
          {
 
-            m_pserverapplication->main_node({});
+            main_node({});
 
          }
 
@@ -124,11 +124,16 @@ namespace remoting_node_desktop
 
       }
 
-      throw ::interface_only();
+      throw ::exception(error_wrong_state);
 
-      ::remoting_node_desktop::Server * pserver = nullptr;
+      // if (!m_pserver)
+      // {
+      //    construct_newø(m_pserver);
+      //    m_pserver->initialize_remoting_node_desktop_server(false, nullptr, nullptr, this);
+      // }
+      //
 
-      return *pserver;
+      return *m_pserver;
 
    }
 

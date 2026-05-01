@@ -24,51 +24,55 @@
 #include "framework.h"
 #include "IpAccessControl.h"
 
-void IpAccessControl::serialize(DataOutputStream * pdataoutputstream)
+namespace remoting_node
 {
-  _ASSERT((unsigned int)size() == size());
-  unsigned int count = (unsigned int)size();
-  pdataoutputstream->writeUInt32(count);
+   void IpAccessControl::serialize(DataOutputStream * pdataoutputstream)
+   {
+      _ASSERT((unsigned int)size() == size());
+      unsigned int count = (unsigned int)size();
+      pdataoutputstream->writeUInt32(count);
 
-  ::string str;
+      ::string str;
 
-  for (size_t i = 0; i < count; i++) {
-    IpAccessRule *rule = at(i);
+      for (size_t i = 0; i < count; i++) {
+         IpAccessRule *rule = at(i);
 
-    rule->toString(str);
+         rule->toString(str);
 
-    pdataoutputstream->writeUTF8(str);
-  }
-}
-
-void IpAccessControl::deserialize(DataInputStream * pinput)
-{
-  for (iterator i = begin(); i != end(); ++i) {
-    delete *i;
-  }
-
-  size_t count = pinput->readUInt32();
-  resize(count);
-
-  ::string string;
-
-  for (iterator i = begin(); i != end(); ++i) {
-     string = pinput->readUtf8();
-
-    // Here is would be good to use unique_ptr, but
-    // unique_ptr is not compatible with ::array_base.
-    // FIXME: no corresponding delete. use by value?
-    IpAccessRule *rule = new IpAccessRule();
-    try {
-      if (!IpAccessRule::parse(string, rule)) {
-        throw ::subsystem::Exception("Parsing of ip access rule is failed.");
+         pdataoutputstream->writeUTF8(str);
       }
-    } catch (...) {
-      delete rule;
-      rule = 0;
-      throw;
-    }
+   }
 
-    *i = rule;
-  }
-}
+   void IpAccessControl::deserialize(DataInputStream * pinput)
+   {
+      for (iterator i = begin(); i != end(); ++i) {
+         delete *i;
+      }
+
+      size_t count = pinput->readUInt32();
+      resize(count);
+
+      ::string string;
+
+      for (iterator i = begin(); i != end(); ++i) {
+         string = pinput->readUtf8();
+
+         // Here is would be good to use unique_ptr, but
+         // unique_ptr is not compatible with ::array_base.
+         // FIXME: no corresponding delete. use by value?
+         IpAccessRule *rule = new IpAccessRule();
+         try {
+            if (!IpAccessRule::parse(string, rule)) {
+               throw ::subsystem::Exception("Parsing of ip access rule is failed.");
+            }
+         } catch (...) {
+            delete rule;
+            rule = 0;
+            throw;
+         }
+
+         *i = rule;
+      }
+   }
+} // namespace remoting_node
+

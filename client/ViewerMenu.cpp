@@ -40,7 +40,7 @@ namespace remoting_client
     void ViewerMenu::menuItem(int id)
     {
         ::string helpString;
-        auto presourceloader = MainInnateSubsystem().ResourceLoader();
+        auto presourceloader = InnateSubsystem().ResourceLoader();
         presourceloader->loadString(id, helpString);
         insertMenuItem(m_startIndex, helpString, id);
         m_startIndex++;

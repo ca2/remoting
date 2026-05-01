@@ -23,17 +23,7 @@ list(APPEND library_source
    config/RegistrySettingsManager.h
    config/SettingsManager.cpp
    config/SettingsManager.h
-   desktop/_.h
-   #desktop/_____debug.xcconfig
-   #desktop/_____release.xcconfig
-   #desktop/aaa_framework.cpp
-   #desktop/aaa_framework.h
-   #desktop/aaa_resource.h
-   #desktop/aaaa_.cpp
    desktop/AbnormDeskTermListener.h
-   #desktop/ApplicationDesktopFactory.cpp
-   #desktop/ApplicationDesktopFactory.h
-   #desktop/CMakeLists.txt
    desktop/ConsolePoller.cpp
    desktop/ConsolePoller.h
    desktop/CopyRectDetector.cpp
@@ -45,19 +35,14 @@ list(APPEND library_source
    desktop/CursorShapeGrabber.cpp
    desktop/CursorShapeGrabber.h
    desktop/Desktop.h
-   #desktop/desktop.vcproj
    desktop/DesktopBaseImpl.cpp
    desktop/DesktopBaseImpl.h
-   #desktop/DesktopClientImpl.cpp
-   #desktop/DesktopClientImpl.h
    desktop/DesktopConfigLocal.cpp
    desktop/DesktopConfigLocal.h
    desktop/DesktopFactory.cpp
    desktop/DesktopFactory.h
    desktop/DesktopServerWatcher.cpp
    desktop/DesktopServerWatcher.h
-   #desktop/DesktopWinImpl.cpp
-   #desktop/DesktopWinImpl.h
    desktop/DisplayEsc.h
    desktop/DummyScreenDriver.cpp
    desktop/DummyScreenDriver.h
@@ -65,21 +50,18 @@ list(APPEND library_source
    desktop/GrabOptimizator.h
    desktop/HookInstaller.cpp
    desktop/HookInstaller.h
-   desktop/HooksUpdateDetector.cpp
-   desktop/HooksUpdateDetector.h
    desktop/HookUpdateTimer.cpp
    desktop/HookUpdateTimer.h
+   desktop/HooksUpdateDetector.cpp
+   desktop/HooksUpdateDetector.h
    desktop/InputBlocker.cpp
    desktop/InputBlocker.h
-   #desktop/matter.txt
    desktop/Poller.cpp
    desktop/Poller.h
-   desktop/remoting_desktop.vcxproj
-   desktop/remoting_desktop.vcxproj.filters
-   desktop/remoting_desktop.vcxproj.user
    desktop/SasUserInput.cpp
    desktop/SasUserInput.h
    desktop/ScreenDriver.h
+   desktop/ScreenDriverFactory.cpp
    desktop/ScreenDriverFactory.h
    desktop/ScreenGrabber.cpp
    desktop/ScreenGrabber.h
@@ -103,13 +85,7 @@ list(APPEND library_source
    desktop/UserInput.h
    desktop/WallpaperUtil.cpp
    desktop/WallpaperUtil.h
-   desktop_ipc/_.h
-   #desktop_ipc/_____debug.xcconfig
-   #desktop_ipc/_____release.xcconfig
-   #desktop_ipc/aaa__.cpp
-   #desktop_ipc/aaa_framework.cpp
-   #desktop_ipc/aaa_framework.h
-   #desktop_ipc/aaa_resource.h
+   desktop/_.h
    desktop_ipc/BlockingGate.cpp
    desktop_ipc/BlockingGate.h
    desktop_ipc/BlockingInputGate.cpp
@@ -118,29 +94,23 @@ list(APPEND library_source
    desktop_ipc/BlockingOutputGate.h
    desktop_ipc/ClientListener.cpp
    desktop_ipc/ClientListener.h
-   #desktop_ipc/CMakeLists.txt
    desktop_ipc/ConfigServer.cpp
    desktop_ipc/ConfigServer.h
-   #desktop_ipc/desktop_ipc.vcproj
    desktop_ipc/DesktopConfigClient.cpp
    desktop_ipc/DesktopConfigClient.h
    desktop_ipc/DesktopServerProto.cpp
    desktop_ipc/DesktopServerProto.h
    desktop_ipc/DesktopSrvDispatcher.cpp
    desktop_ipc/DesktopSrvDispatcher.h
-   desktop_ipc/GateKicker.cpp
-   desktop_ipc/GateKicker.h
    desktop_ipc/GateKickHandler.cpp
    desktop_ipc/GateKickHandler.h
-   #desktop_ipc/matter.txt
+   desktop_ipc/GateKicker.cpp
+   desktop_ipc/GateKicker.h
    desktop_ipc/ReconnectException.cpp
    desktop_ipc/ReconnectException.h
    desktop_ipc/ReconnectingChannel.cpp
    desktop_ipc/ReconnectingChannel.h
    desktop_ipc/ReconnectionListener.h
-   #desktop_ipc/remoting_desktop_ipc.vcxproj
-   #desktop_ipc/remoting_desktop_ipc.vcxproj.filters
-   #desktop_ipc/remoting_desktop_ipc.vcxproj.user
    desktop_ipc/UpdateHandlerClient.cpp
    desktop_ipc/UpdateHandlerClient.h
    desktop_ipc/UpdateHandlerServer.cpp
@@ -149,40 +119,9 @@ list(APPEND library_source
    desktop_ipc/UserInputClient.h
    desktop_ipc/UserInputServer.cpp
    desktop_ipc/UserInputServer.h
+   desktop_ipc/_.h
    event_log/EventLog.cpp
    event_log/EventLog.h
-   framebuffer_update_sender/_.h
-   #fb_update_sender/_____debug.xcconfig
-   #fb_update_sender/_____release.xcconfig
-   #fb_update_sender/aaa_.cpp
-   #fb_update_sender/aaa_framework.cpp
-   #fb_update_sender/aaa_framework.h
-   #fb_update_sender/aaa_resource.h
-   #fb_update_sender/CMakeLists.txt
-   framebuffer_update_sender/CursorUpdates.cpp
-   framebuffer_update_sender/CursorUpdates.h
-   #fb_update_sender/fb_update_sender.vcproj
-   #fb_update_sender/matter.txt
-   #fb_update_sender/remoting_fb_update_sender.vcxproj
-   #fb_update_sender/remoting_fb_update_sender.vcxproj.filters
-   #fb_update_sender/remoting_fb_update_sender.vcxproj.user
-   framebuffer_update_sender/SenderControlInformationInterface.h
-   framebuffer_update_sender/UpdateRequestListener.h
-   framebuffer_update_sender/UpdateSender.cpp
-   framebuffer_update_sender/UpdateSender.h
-   framebuffer_update_sender/UpdSenderMsgDefs.cpp
-   framebuffer_update_sender/UpdSenderMsgDefs.h
-   framebuffer_update_sender/Viewport.cpp
-   framebuffer_update_sender/Viewport.h
-   framebuffer_update_sender/ViewPortState.cpp
-   framebuffer_update_sender/ViewPortState.h
-   #ftp_client/_.cpp
-   #ftp_client/_.h
-   #ftp_client/_____debug.xcconfig
-   #ftp_client/_____release.xcconfig
-   #ftp_client/aaa_framework.cpp
-   #ftp_client/aaa_framework.h
-   #ftp_client/CMakeLists.txt
    file_transfer_client/CopyFileEventListener.h
    file_transfer_client/CopyOperation.cpp
    file_transfer_client/CopyOperation.h
@@ -206,10 +145,8 @@ list(APPEND library_source
    file_transfer_client/FileTransferReplyBuffer.h
    file_transfer_client/FileTransferRequestSender.cpp
    file_transfer_client/FileTransferRequestSender.h
-   #ftp_client/ft_client_lib.vcproj
    file_transfer_client/LocalFilesDeleteOperation.cpp
    file_transfer_client/LocalFilesDeleteOperation.h
-   #ftp_client/matter.txt
    file_transfer_client/OperationEventListener.cpp
    file_transfer_client/OperationEventListener.h
    file_transfer_client/OperationNotPermittedException.cpp
@@ -224,38 +161,37 @@ list(APPEND library_source
    file_transfer_client/RemoteFilesDeleteOperation.h
    file_transfer_client/RemoteFolderCreateOperation.cpp
    file_transfer_client/RemoteFolderCreateOperation.h
-   #ftp_client/remoting_ftp_client.vcxproj
-   #ftp_client/remoting_ftp_client.vcxproj.filters
-   #ftp_client/remoting_ftp_client.vcxproj.user
-   file_transfer_client/resource.h
    file_transfer_client/UploadOperation.cpp
    file_transfer_client/UploadOperation.h
-   #ftp_common/_.cpp
-   #ftp_common/_.h
-   #ftp_common/_____debug.xcconfig
-   #ftp_common/_____release.xcconfig
-   #ftp_common/aaa_framework.cpp
-   #ftp_common/aaa_framework.h
-   #ftp_common/CMakeLists.txt
+   file_transfer_common/FTMessage.cpp
+   file_transfer_common/FTMessage.h
    file_transfer_common/FileInfo.cpp
    file_transfer_common/FileInfo.h
    file_transfer_common/FileTransferException.cpp
    file_transfer_common/FileTransferException.h
    file_transfer_common/FolderListener.cpp
    file_transfer_common/FolderListener.h
-   #ftp_common/ft_common.vcproj
-   file_transfer_common/FTMessage.cpp
-   file_transfer_common/FTMessage.h
-   #ftp_common/matter.txt
    file_transfer_common/OperationNotSupportedException.cpp
    file_transfer_common/OperationNotSupportedException.h
-   #ftp_common/remoting_ftp_common.vcxproj
-   #ftp_common/remoting_ftp_common.vcxproj.filters
-   #ftp_common/remoting_ftp_common.vcxproj.user
+   file_transfer_common/WinFilePath.cpp
+   file_transfer_common/WinFilePath.h
    file_transfer_node/FileTransferRequestHandler.cpp
    file_transfer_node/FileTransferRequestHandler.h
    file_transfer_node/FileTransferSecurity.cpp
    file_transfer_node/FileTransferSecurity.h
+   framebuffer_update_sender/CursorUpdates.cpp
+   framebuffer_update_sender/CursorUpdates.h
+   framebuffer_update_sender/SenderControlInformationInterface.h
+   framebuffer_update_sender/UpdSenderMsgDefs.cpp
+   framebuffer_update_sender/UpdSenderMsgDefs.h
+   framebuffer_update_sender/UpdateRequestListener.h
+   framebuffer_update_sender/UpdateSender.cpp
+   framebuffer_update_sender/UpdateSender.h
+   framebuffer_update_sender/ViewPortState.cpp
+   framebuffer_update_sender/ViewPortState.h
+   framebuffer_update_sender/Viewport.cpp
+   framebuffer_update_sender/Viewport.h
+   framebuffer_update_sender/_.h
    network/RfbInputGate.cpp
    network/RfbInputGate.h
    network/RfbOutputGate.cpp
@@ -264,9 +200,67 @@ list(APPEND library_source
    network/TcpClientThread.h
    network/TcpServer.cpp
    network/TcpServer.h
-   file_transfer_common/resource.h
-   file_transfer_common/WinFilePath.cpp
-   file_transfer_common/WinFilePath.h
+   node/ControlAuthException.cpp
+   node/ControlAuthException.h
+   node/ControlCommand.cpp
+   node/ControlCommand.h
+   node/NamingDefs.cpp
+   node/NamingDefs.h
+   node/NewConnectionEvents.h
+   node/Notificator.cpp
+   node/Notificator.h
+   node/RemoteException.cpp
+   node/RemoteException.h
+   node_config/ConfigReloadListener.cpp
+   node_config/ConfigReloadListener.h
+   node_config/Configurator.cpp
+   node_config/Configurator.h
+   node_config/IpAccessControl.cpp
+   node_config/IpAccessControl.h
+   node_config/IpAccessRule.cpp
+   node_config/IpAccessRule.h
+   node_config/PortMapping.cpp
+   node_config/PortMapping.h
+   node_config/PortMappingContainer.cpp
+   node_config/PortMappingContainer.h
+   node_config/PortMappingRect.cpp
+   node_config/PortMappingRect.h
+   node_config/RegistrySecurityAttributes.cpp
+   node_config/RegistrySecurityAttributes.h
+   node_config/ServerConfig.cpp
+   node_config/ServerConfig.h
+   node_config/_.h
+   node_user_config/AdministrationConfigDialog.cpp
+   node_user_config/AdministrationConfigDialog.h
+   node_user_config/ChangePasswordDialog.cpp
+   node_user_config/ChangePasswordDialog.h
+   node_user_config/CommonInputValidation.cpp
+   node_user_config/CommonInputValidation.h
+   node_user_config/ConfigDialog.cpp
+   node_user_config/ConfigDialog.h
+   node_user_config/EditIpAccessRuleDialog.cpp
+   node_user_config/EditIpAccessRuleDialog.h
+   node_user_config/EditPortMappingDialog.cpp
+   node_user_config/EditPortMappingDialog.h
+   node_user_config/IpAccessControlDialog.cpp
+   node_user_config/IpAccessControlDialog.h
+   node_user_config/PasswordControl.cpp
+   node_user_config/PasswordControl.h
+   node_user_config/PortMappingDialog.cpp
+   node_user_config/PortMappingDialog.h
+   node_user_config/ServerConfigDialog.cpp
+   node_user_config/ServerConfigDialog.h
+   node_user_config/TvnLogFilename.cpp
+   node_user_config/TvnLogFilename.h
+   node_user_config/UIDataAccess.cpp
+   node_user_config/UIDataAccess.h
+   node_user_config/VideoRegionsConfigDialog.cpp
+   node_user_config/VideoRegionsConfigDialog.h
+   node_user_config/_.h
+   platform/EOFException.cpp
+   platform/EOFException.h
+   platform/remoting.cpp
+   platform/remoting.h
    region/RectSerializer.cpp
    region/RectSerializer.h
    region/Region.cpp
@@ -291,13 +285,7 @@ list(APPEND library_source
    rfb/TunnelDefs.h
    rfb/VendorDefs.cpp
    rfb/VendorDefs.h
-   rfb_sconn/_.h
-   #rfb_sconn/_____debug.xcconfig
-   #rfb_sconn/_____release.xcconfig
-   #rfb_sconn/aaa_.cpp
-   #rfb_sconn/aaa_framework.cpp
-   #rfb_sconn/aaa_framework.h
-   #rfb_sconn/aaa_resource.h
+   rfb_sconn/AuthException.cpp
    rfb_sconn/AuthException.h
    rfb_sconn/CapContainer.cpp
    rfb_sconn/CapContainer.h
@@ -308,7 +296,6 @@ list(APPEND library_source
    rfb_sconn/ClientTerminationListener.h
    rfb_sconn/ClipboardExchange.cpp
    rfb_sconn/ClipboardExchange.h
-   #rfb_sconn/CMakeLists.txt
    rfb_sconn/EchoExtensionRequestHandler.cpp
    rfb_sconn/EchoExtensionRequestHandler.h
    rfb_sconn/EncodeOptions.cpp
@@ -324,11 +311,6 @@ list(APPEND library_source
    rfb_sconn/JpegCompressor.h
    rfb_sconn/JpegEncoder.cpp
    rfb_sconn/JpegEncoder.h
-   #rfb_sconn/matter.txt
-   #rfb_sconn/remoting_rfb_sconn.vcxproj
-   #rfb_sconn/remoting_rfb_sconn.vcxproj.filters
-   #rfb_sconn/remoting_rfb_sconn.vcxproj.user
-   #rfb_sconn/rfb_sconn.vcproj
    rfb_sconn/RfbClient.cpp
    rfb_sconn/RfbClient.h
    rfb_sconn/RfbCodeRegistrator.cpp
@@ -346,63 +328,13 @@ list(APPEND library_source
    rfb_sconn/TightPalette.h
    rfb_sconn/ZrleEncoder.cpp
    rfb_sconn/ZrleEncoder.h
-   node/NewConnectionEvents.h
-   node/NamingDefs.cpp
-   node/NamingDefs.h
-#   util/CommandLineFormatException.cpp
-#   util/CommandLineFormatException.h
-#   util/CommandLineFormatHelp.cpp
-#   util/CommandLineFormatHelp.h
-#   util/DesCrypt.cpp
-#   util/DesCrypt.h
-#   util/Keymap.cpp
-#   util/Keymap.h
-#   util/VncPassCrypt.cpp
-#   util/VncPassCrypt.h
-   node_config/_.h
-   #node_config/_____debug.xcconfig
-   #node_config/_____release.xcconfig
-   #node_config/aaa_.cpp
-   #node_config/aaa_framework.cpp
-   #node_config/aaa_framework.h
-   #node_config/CMakeLists.txt
-   node_config/ConfigReloadListener.cpp
-   node_config/ConfigReloadListener.h
-   node_config/Configurator.cpp
-   node_config/Configurator.h
-   node_config/IpAccessControl.cpp
-   node_config/IpAccessControl.h
-   node_config/IpAccessRule.cpp
-   node_config/IpAccessRule.h
-   #node_config/matter.txt
-   node_config/PortMapping.cpp
-   node_config/PortMapping.h
-   node_config/PortMappingContainer.cpp
-   node_config/PortMappingContainer.h
-   node_config/PortMappingRect.cpp
-   node_config/PortMappingRect.h
-   node_config/RegistrySecurityAttributes.cpp
-   node_config/RegistrySecurityAttributes.h
-   #node_config/remoting_server_config.vcxproj
-   #node_config/remoting_server_config.vcxproj.filters
-   #node_config/remoting_server_config.vcxproj.user
-   #node_config/resource.h
-   #node_config/server_config_lib.vcproj
-   node_config/ServerConfig.cpp
-   node_config/ServerConfig.h
-   viewer_core/_.cpp
-   viewer_core/_.h
-   viewer_core/_____debug.xcconfig
-   viewer_core/_____release.xcconfig
-   viewer_core/aaa_framework.cpp
-   viewer_core/aaa_framework.h
+   rfb_sconn/_.h
    viewer_core/AuthHandler.cpp
    viewer_core/AuthHandler.h
    viewer_core/CapabilitiesManager.cpp
    viewer_core/CapabilitiesManager.h
    viewer_core/CapsContainer.cpp
    viewer_core/CapsContainer.h
-   viewer_core/CMakeLists.txt
    viewer_core/CompressionLevel.cpp
    viewer_core/CompressionLevel.h
    viewer_core/CopyRectDecoder.cpp
@@ -420,7 +352,6 @@ list(APPEND library_source
    viewer_core/DesktopSizeDecoder.cpp
    viewer_core/DesktopSizeDecoder.h
    viewer_core/DispatchDataProvider.h
-   viewer_core/drawTile.cpp
    viewer_core/FbUpdateNotifier.cpp
    viewer_core/FbUpdateNotifier.h
    viewer_core/FileTransferCapability.cpp
@@ -433,7 +364,6 @@ list(APPEND library_source
    viewer_core/JpegQualityLevel.h
    viewer_core/LastRectDecoder.cpp
    viewer_core/LastRectDecoder.h
-   viewer_core/matter.txt
    viewer_core/PointerPosDecoder.cpp
    viewer_core/PointerPosDecoder.h
    viewer_core/PseudoDecoder.cpp
@@ -442,10 +372,6 @@ list(APPEND library_source
    viewer_core/RawDecoder.h
    viewer_core/RemoteViewerCore.cpp
    viewer_core/RemoteViewerCore.h
-   viewer_core/remoting_viewer_core.vcxproj
-   viewer_core/remoting_viewer_core.vcxproj.filters
-   viewer_core/remoting_viewer_core.vcxproj.user
-   viewer_core/resource.h
    viewer_core/RfbClientToServerMessage.cpp
    viewer_core/RfbClientToServerMessage.h
    viewer_core/RfbCutTextEventClientMessage.cpp
@@ -471,62 +397,17 @@ list(APPEND library_source
    viewer_core/TightDecoder.h
    viewer_core/UpdateRequestSender.cpp
    viewer_core/UpdateRequestSender.h
-   viewer_core/viewer_core.vcproj
    viewer_core/VncAuthentication.cpp
    viewer_core/VncAuthentication.h
    viewer_core/VncAuthenticationHandler.cpp
    viewer_core/VncAuthenticationHandler.h
-   viewer_core/watermark_bmp.h
    viewer_core/WatermarksController.cpp
    viewer_core/WatermarksController.h
    viewer_core/ZrleDecoder.cpp
    viewer_core/ZrleDecoder.h
-   #node_user_config/_.cpp
-   node_user_config/_.h
-   #node_user_config/_____debug.xcconfig
-   #node_user_config/_____release.xcconfig
-   node_user_config/AdministrationConfigDialog.cpp
-   node_user_config/AdministrationConfigDialog.h
-   node_user_config/ChangePasswordDialog.cpp
-   node_user_config/ChangePasswordDialog.h
-   #node_user_config/CMakeLists.txt
-   node_user_config/CommonInputValidation.cpp
-   node_user_config/CommonInputValidation.h
-   node_user_config/ConfigDialog.cpp
-   node_user_config/ConfigDialog.h
-   node_user_config/EditIpAccessRuleDialog.cpp
-   node_user_config/EditIpAccessRuleDialog.h
-   node_user_config/EditPortMappingDialog.cpp
-   node_user_config/EditPortMappingDialog.h
-   #node_user_config/framework.cpp
-   #node_user_config/framework.h
-   node_user_config/IpAccessControlDialog.cpp
-   node_user_config/IpAccessControlDialog.h
-   #node_user_config/matter.txt
-   node_user_config/PasswordControl.cpp
-   node_user_config/PasswordControl.h
-   node_user_config/PortMappingDialog.cpp
-   node_user_config/PortMappingDialog.h
-   #node_user_config/remoting_wsconfig.vcxproj
-   #node_user_config/remoting_wsconfig.vcxproj.filters
-   #node_user_config/remoting_wsconfig.vcxproj.user
-   #node_user_config/resource.h
-   node_user_config/ServerConfigDialog.cpp
-   node_user_config/ServerConfigDialog.h
-   node_user_config/TvnLogFilename.cpp
-   node_user_config/TvnLogFilename.h
-   node_user_config/UIDataAccess.cpp
-   node_user_config/UIDataAccess.h
-   node_user_config/VideoRegionsConfigDialog.cpp
-   node_user_config/VideoRegionsConfigDialog.h
-   #node_user_config/wsconfig_lib.vcproj
-   platform/EOFException.cpp
-   platform/EOFException.h
-   platform/remoting.cpp
-   platform/remoting.h
-
-   desktop/ScreenDriverFactory.cpp
-   rfb_sconn/AuthException.cpp
+   viewer_core/_.h
+   viewer_core/drawTile.cpp
+   viewer_core/watermark_bmp.h
    _.cpp
    _.h
    framework.cpp

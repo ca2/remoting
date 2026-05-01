@@ -24,6 +24,7 @@
 #include "framework.h"
 #include "ControlServer.h"
 #include "ControlClient.h"
+#include "remoting/node_config/Configurator.h"
 #include "remoting/node_desktop/control_desktop/NamedPipeTransport.h"
 
 
@@ -31,10 +32,12 @@ namespace remoting_node_desktop
 {
 
 
-   ControlServer::ControlServer(::subsystem::PipeServer *pipeServer, RfbClientManager *rfbClientManager,
+   ControlServer::ControlServer(::remoting_node::Configurator * pconfigurator, ::subsystem::PipeServer *pipeServer, RfbClientManager *rfbClientManager,
                                 ::subsystem::LogWriter * plogwriter) :
-       m_controlappauthenticator(30_s, 3), m_pipeServer(pipeServer), m_rfbClientManager(rfbClientManager), m_plogwriter(plogwriter)
+       m_pconfigurator(pconfigurator),m_ppipeserver(pipeServer), m_prfbclientmanager(rfbClientManager), m_plogwriter(plogwriter)
    {
+      constructø(m_pthreadCollector);
+      m_pcontrolappauthenticator = allocateø ControlAppAuthenticator(30_s, 3);
       m_plogwriter->debug("{}"), "::innate_subsystem::Control server started";
 
       resume();
@@ -49,17 +52,17 @@ namespace remoting_node_desktop
 
       try
       {
-         m_pipeServer->close();
+         m_ppipeserver->close();
       }
       catch (::subsystem::Exception &ex)
       {
          m_plogwriter->error("Failed to destroy control server transport with '{}' reason", ex.get_message());
       }
 
-      delete m_pipeServer;
+      //delete m_ppipeserver;
 
       // Unblock all client if it has been blocked by authenticator
-      m_controlappauthenticator.breakAndDisableAuthentications();
+      m_pcontrolappauthenticator->breakAndDisableAuthentications();
 
       m_plogwriter->debug("{}"), "::innate_subsystem::Control server stopped";
    }
@@ -70,11 +73,11 @@ namespace remoting_node_desktop
       {
          while (!isTerminating())
          {
-            auto ppipe = m_pipeServer->accept();
-            Transport *transport = new NamedPipeTransport(ppipe);
+            auto ppipe = m_ppipeserver->accept();
+            auto ptransport = allocateø ::remoting_control_desktop::NamedPipeTransport(ppipe);
 
             ControlClient *clientThread =
-               new ControlClient(m_pconfigurator, transport, m_rfbClientManager, &m_controlappauthenticator, ppipe->getFile(), m_plogwriter);
+               new ControlClient(m_pconfigurator, ptransport, m_prfbclientmanager, m_pcontrolappauthenticator, ppipe->getFile(), m_plogwriter);
 
             clientThread->resume();
 
@@ -91,7 +94,7 @@ namespace remoting_node_desktop
    {
       try
       {
-         m_pipeServer->close();
+         m_ppipeserver->close();
       }
       catch (...)
       {

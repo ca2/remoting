@@ -38,7 +38,8 @@ namespace remoting_node_desktop
     * @see RfbClientManager class.
     * @author enikey.
     */
-   class RfbServer : public ::remoting::TcpServer
+   class CLASS_DECL_REMOTING_NODE_DESKTOP RfbServer :
+   virtual public ::remoting::TcpServer
    {
    public:
       /**

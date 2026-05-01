@@ -38,10 +38,10 @@
 //#include "subsystem/thread/lockable_critical_section.h"
 
 #include "remoting/node_desktop/control_desktop/ControlGate.h"
-#include "remoting/node_desktop/control_desktop/ControlAuthException.h"
+#include "remoting/remoting/node/ControlAuthException.h"
 
 #include "ControlProxy.h"
-#include "Notificator.h"
+#include "remoting/remoting/node/Notificator.h"
 
 #include "subsystem/node/OperatingSystemApplication.h"
 
@@ -59,7 +59,7 @@ namespace remoting_control_desktop
     * Contains code of wscontrol.exe.
     */
    class ControlApplication : public subsystem::OperatingSystemApplication, /** Windows application running on current interactive desktop. */
-                              public Notificator, /** Implement interface to show notifications. */
+                              public ::remoting_node::Notificator, /** Implement interface to show notifications. */
                               public ::subsystem::Thread /** Status check thread. */
    {
    public:
@@ -132,7 +132,7 @@ namespace remoting_control_desktop
        * Runs control command (mode of tvncontrol).
        * @return application exit code.
        */
-      int runControlCommand(Command *command);
+      int runControlCommand(::subsystem::Command *command);
       /**
        * Runs configuration dialog (mode of tvncontrol).
        * @param configService determinates if we gonna to configure service.
@@ -168,26 +168,26 @@ namespace remoting_control_desktop
       ::subsystem::LogWriter m_plogwriter;
 
       // Initialization of the Configurator instance.
-      ::pointer < ::remoting_node::Configurator >  m_configurator;
+      ::pointer < ::remoting_node::Configurator >  m_pconfigurator;
 
    protected:
 
       /**
        * Low-level transport to control server.
        */
-      Transport *m_transport;
+      ::pointer < Transport > m_ptransport;
       /**
        * Middle-level transport to control server.
        */
-      ControlGate *m_pblockinggate;
+      ::pointer < ControlGate > m_pcontrolgate;
       /**
        * High-level transport to control server (proxy).
        */
-      ControlProxy *m_serverControl;
+      ::pointer < ControlProxy > m_pcontrolproxy;
       /**
        * ::innate_subsystem::Control tray icon.
        */
-      ControlTrayIcon *m_trayIcon;
+      ::pointer < ControlTrayIcon > m_pcontroltrayicon;
       /**
        * Application command line.
        */

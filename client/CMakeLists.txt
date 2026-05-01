@@ -4,10 +4,9 @@ project(remoting_client)
 
 list(APPEND library_source
 
-   impact_toolbar.cpp
-   impact_toolbar.h
-   application.cpp
-   application.h
+   #NamingDefs.cpp
+   #NamingDefs.h
+   #application_main.cpp
    AboutDialog.cpp
    AboutDialog.h
    AuthenticationDialog.cpp
@@ -34,16 +33,12 @@ list(APPEND library_source
    FileRenameDialog.h
    FileTransferMainDialog.cpp
    FileTransferMainDialog.h
-   FsWarningDialog.cpp
-   FsWarningDialog.h
+   FullscreenWarningDialog.cpp
+   FullscreenWarningDialog.h
    HelpDialog.cpp
    HelpDialog.h
-   keyboard_layout_change.cpp
-   keyboard_layout_change.h
    LoginDialog.cpp
    LoginDialog.h
-   #NamingDefs.cpp
-   #NamingDefs.h
    NewFolderDialog.cpp
    NewFolderDialog.h
    OptionsDialog.cpp
@@ -66,9 +61,16 @@ list(APPEND library_source
    ViewerWindow.h
    _.cpp
    _.h
+   application.cpp
+   application.h
    framework.cpp
    framework.h
-   #application_main.cpp
+   impact_toolbar.cpp
+   impact_toolbar.h
+   keyboard_layout_change.cpp
+   keyboard_layout_change.h
+   remoting.cpp
+   remoting.h
    remoting_client.rc
    remoting_impact.cpp
    remoting_impact.h

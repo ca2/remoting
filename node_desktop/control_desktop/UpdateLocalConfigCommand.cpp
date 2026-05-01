@@ -29,8 +29,8 @@
 
 namespace remoting_control_desktop
 {
-   UpdateLocalConfigCommand::UpdateLocalConfigCommand(ControlProxy *proxy)
-   : m_proxy(proxy)
+   UpdateLocalConfigCommand::UpdateLocalConfigCommand(::remoting_node::Configurator * pconfigurator, ControlProxy *proxy)
+   : m_pconfigurator(pconfigurator), m_pcontrolproxy(proxy)
    {
    }
 
@@ -40,7 +40,7 @@ namespace remoting_control_desktop
 
    void UpdateLocalConfigCommand::execute()
    {
-      m_proxy->getServerConfig(m_pconfigurator->getServerConfig());
+      m_pcontrolproxy->getServerConfig(m_pconfigurator->getServerConfig());
    }
 } // namespace remoting_control_desktop
 

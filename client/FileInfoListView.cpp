@@ -108,11 +108,11 @@ namespace remoting_client
             unsigned long long fileSize = fileInfo->getSize();
 
             if (fileSize <= 1024) {
-                sizeString.formatf("{} B", fileSize);
+                sizeString.format("{} B", fileSize);
             } else if ((fileSize > 1024) && (fileSize <= 1024 * 1024)) {
-                sizeString.formatf("%4.2f KB", static_cast<double>(fileSize) / 1024.0);
+                sizeString.format("%4.2f KB", static_cast<double>(fileSize) / 1024.0);
             } else if (fileSize > 1024 * 1024) {
-                sizeString.formatf("%4.2f MB", static_cast<double>(fileSize) / (1024.0 * 1024));
+                sizeString.format("%4.2f MB", static_cast<double>(fileSize) / (1024.0 * 1024));
             }
 
             //
@@ -179,7 +179,7 @@ namespace remoting_client
        //                                      GetSystemMetrics(SM_CYSMICON),
        //                                      ILC_MASK, 1, 1);
 
-       auto psystemmetrics = MainInnateSubsystem().metrics();
+       auto psystemmetrics = InnateSubsystem().metrics();
 
        auto sizeSmallIconInPixels = psystemmetrics->get_small_icon_size_in_pixels();
 
@@ -187,7 +187,7 @@ namespace remoting_client
 
         //HICON icon;
 
-        auto presourceloader = MainInnateSubsystem().ResourceLoader();
+        auto presourceloader = InnateSubsystem().ResourceLoader();
 
         auto picon = presourceloader->loadIconByIntResource(IDI_FILEUP);
         _ASSERT(picon != NULL);

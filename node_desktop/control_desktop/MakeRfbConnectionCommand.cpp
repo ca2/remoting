@@ -30,7 +30,7 @@ namespace remoting_control_desktop
    MakeRfbConnectionCommand::MakeRfbConnectionCommand(ControlProxy *serverControl,
                                                       const ::scoped_string & scopedstrConnectString,
                                                       bool viewOnly)
-   : m_proxy(serverControl), m_connectString(scopedstrConnectString), m_viewOnly(viewOnly)
+   : m_pcontrolproxy(serverControl), m_connectString(scopedstrConnectString), m_viewOnly(viewOnly)
    {
    }
 
@@ -40,7 +40,7 @@ namespace remoting_control_desktop
 
    void MakeRfbConnectionCommand::execute()
    {
-      m_proxy->makeOutgoingConnection(m_connectString, m_viewOnly);
+      m_pcontrolproxy->makeOutgoingConnection(m_connectString, m_viewOnly);
    }
 } // namespace remoting_control_desktop
 

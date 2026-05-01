@@ -361,7 +361,7 @@ namespace remoting
          m_connClosingEvent.wait();
       } catch (::exception &e) {
          m_plogwriter->error("Connection will be closed: {}", e.get_message());
-         sysLogMessage.formatf("The client {} #{} has been"
+         sysLogMessage.format("The client {} #{} has been"
                               " disconnected for the reason: {}",
                               peerStr, m_id, e.get_message());
       }

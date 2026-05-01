@@ -35,7 +35,7 @@
 namespace remoting
 {
 
-   class CLASS_DECL_REMOTING UserInputClient :
+   class CLASS_DECL_REMOTING  UserInputClient :
    virtual public UserInput,
    virtual public DesktopServerProto,
    virtual public ClientListener

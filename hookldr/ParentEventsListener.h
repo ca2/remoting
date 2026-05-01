@@ -25,7 +25,7 @@
 #pragma once
 
 
-class ParentEventsListener
+class CLASS_DECL_REMOTING ParentEventsListener
 {
 public:
   virtual void onParentTerminate() = 0;

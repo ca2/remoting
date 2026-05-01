@@ -12,7 +12,7 @@ namespace remoting_notify_node
    namespace websockets
    {
    
-      class application;
+      class CLASS_DECL_REMOTING application;
       class service;
       
       

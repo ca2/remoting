@@ -35,7 +35,7 @@
 
 #include "resource.h"
 //// #include aaa_<stdio.h>
-#include "remoting/remoting/remoting.h"
+#include "remoting/remoting/platform/remoting.h"
 
 namespace remoting_client
 {
@@ -493,7 +493,7 @@ namespace remoting_client
             // ::file::item oldFile(pathToOldFile);
             //
             // if (!oldFile.renameTo(pathToNewFile)) {
-            //   scopedstrMessage.formatf("Error: failed to rename local '{}' file",
+            //   scopedstrMessage.format("Error: failed to rename local '{}' file",
             //                  pathToOldFile);
             //
             //   insertMessageIntoComboBox(scopedstrMessage);
@@ -544,7 +544,7 @@ namespace remoting_client
             //
             // // Failed to create local folder
             // if (pathToFile.is_empty() || !file.mkdir()) {
-            //   scopedstrMessage.formatf("Error: failed to create local folder '{}'",
+            //   scopedstrMessage.format("Error: failed to create local folder '{}'",
             //                  pathToFile);
 
             insertMessageIntoComboBox(scopedstrMessage);

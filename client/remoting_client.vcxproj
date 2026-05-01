@@ -168,7 +168,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="FsWarningDialog.cpp" />
+    <ClCompile Include="FullscreenWarningDialog.cpp" />
     <ClCompile Include="HelpDialog.cpp" />
     <ClCompile Include="impact_toolbar.cpp" />
     <ClCompile Include="keyboard_layout_change.cpp" />
@@ -203,7 +203,7 @@
     <ClInclude Include="FileInfoListView.h" />
     <ClInclude Include="FileRenameDialog.h" />
     <ClInclude Include="FileTransferMainDialog.h" />
-    <ClInclude Include="FsWarningDialog.h" />
+    <ClInclude Include="FullscreenWarningDialog.h" />
     <ClInclude Include="HelpDialog.h" />
     <ClInclude Include="impact_toolbar.h" />
     <ClInclude Include="keyboard_layout_change.h" />

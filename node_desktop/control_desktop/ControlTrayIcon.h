@@ -38,9 +38,10 @@
 #include "remoting/remoting/node_user_config/ConfigDialog.h"
 
 #include "ControlProxy.h"
-#include "Notificator.h"
+#include "remoting/remoting/node/Notificator.h"
 #include "ControlApplication.h"
 #include "AboutDialog.h"
+#include "acme/parallelization/happening.h"
 
 
 namespace remoting_control_desktop
@@ -60,8 +61,9 @@ namespace remoting_control_desktop
        * @param appControl parent control application.
        * @param showAfterCreation determinates if needs to show icon in tray.
        */
-      ControlTrayIcon(ControlProxy *serverControl,
-                      Notificator *notificator,
+      ControlTrayIcon(::remoting_node::Configurator * pconfigurator,
+         ControlProxy *serverControl,
+                      ::remoting_node::Notificator *notificator,
                       ControlApplication *appControl,
                       bool showAfterCreation);
       /**
@@ -96,13 +98,15 @@ namespace remoting_control_desktop
        *
        * Overrides default tray icon window behavour.
        */
-      virtual LRESULT windowProc(HWND hWnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam, bool *useDefWindowProc);
+      //virtual LRESULT windowProc(HWND hWnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam, bool *useDefWindowProc);
+
+      bool on_window_procedure(::lresult & lresult, unsigned int message, ::wparam wparam, ::lparam lparam) override;
 
       /**
        * Handlers of tray icon window events.
        */
-      void onRightButtonUp();
-      void onLeftButtonDown();
+      void onNotifyIconRightButtonUp() override;
+      void onNotifyIconLeftButtonDown() override;
 
       /**
        * Tray icon popup menu items scopedstrMessage handlers.
@@ -120,41 +124,43 @@ namespace remoting_control_desktop
 
    protected:
 
+      ::pointer < ::remoting_node::Configurator > m_pconfigurator;
+
       // Interface to show error notifications.
-      Notificator *m_notificator;
+      ::pointer < ::remoting_node::Notificator > m_pnotificator;
 
       // Pointer to control application.
-      ControlApplication *m_appControl;
+      ::pointer < ControlApplication > m_pcontrolapplication;
 
       // States of tray icon.
-      Icon *m_iconWorking;
-      Icon *m_iconIdle;
-      Icon *m_iconDisabled;
+      ::pointer < ::innate_subsystem::IconInterface > m_piconWorking;
+      ::pointer < ::innate_subsystem::IconInterface > m_piconIdle;
+      ::pointer < ::innate_subsystem::IconInterface > m_piconDisabled;
 
       // Interface to execute some commands on remote TightVNC server.
-      ControlProxy *m_serverControl;
+      ::pointer < ControlProxy > m_pcontrolproxy;
 
       // Configuration dialog.
-      ConfigDialog *m_configDialog;
+      ::pointer < ::remoting_node::ConfigDialog > m_pconfigdialog;
       // About dialog.
-      AboutDialog m_aboutDialog;
+      ::remoting_control_desktop::AboutDialog m_aboutDialog;
 
       // Last known TightVNC server information.
-      TvnServerInfo m_lastKnownServerInfo;
-      // Thread-safety of m_lastKnownServerInfo member.
-      lockable_critical_section m_serverInfoMutex;
+      ::remoting_control_desktop::ServerInfo m_serverinfoLastKnown;
+      // Thread-safety of m_serverinfoLastKnown member.
+      lockable_critical_section m_criticalsectionServerInfo;
 
       // Commands for configuration dialog.
-      Command *m_updateRemoteConfigCommand;
-      Command *m_updateLocalConfigCommand;
-      MacroCommand *m_applyChangesMacroCommand;
-      ControlCommand *m_applyChangesControlCommand;
+      ::pointer < ::subsystem::Command > m_pcommandUpdateRemoteConfig;
+      ::pointer < ::subsystem::Command > m_pcommandUpdateLocalConfig;
+      ::pointer < ::subsystem::MacroCommand > m_pmacrocommandApplyChanges;
+      ::pointer < ::remoting_node::ControlCommand  > m_pcontrolcommandApplyChanges;
 
       // This variable is set to true when entering ControlTrayIcon::windowProc(),
       // and is used to prevent from executing that function recursively.
       bool m_inWindowProc;
 
-      ::happening m_endEvent;
+      ::happening m_happeningEnd;
       bool m_termination;
    };
 } // namespace remoting_control_desktop

@@ -33,7 +33,7 @@
 namespace remoting
 {
 
-   class ConfigServer : public DesktopServerProto, public ClientListener
+   class CLASS_DECL_REMOTING  ConfigServer : public DesktopServerProto, public ClientListener
    {
    public:
 

@@ -32,7 +32,7 @@
 #include "subsystem/thread/Thread.h"
 // #include aaa_<Tlhelp32.h>
 
-class ParentWatcher : private Thread
+class CLASS_DECL_REMOTING ParentWatcher : private Thread
 {
 public:
   ParentWatcher(ParentEventsListener *parentEventListener);

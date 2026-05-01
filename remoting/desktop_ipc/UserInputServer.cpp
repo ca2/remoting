@@ -66,14 +66,14 @@ namespace remoting
 
    void UserInputServer::onClipboardUpdate(const ::scoped_string &newClipboard)
    {
-      critical_section_lock al(m_pblockinggate);
+      critical_section_lock al(m_pcontrolgate);
       try
       {
          // Send clipboard data
          if (newClipboard.has_character())
          {
-            m_pblockinggate->writeUInt8(CLIPBOARD_CHANGED);
-            sendNewClipboard(newClipboard, m_pblockinggate);
+            m_pcontrolgate->writeUInt8(CLIPBOARD_CHANGED);
+            sendNewClipboard(newClipboard, m_pcontrolgate);
          }
       }
       catch (::exception &e)
@@ -130,7 +130,7 @@ namespace remoting
             break;
          default:
             ::string errMess;
-            errMess.formatf("Unknown {} protocol code received"
+            errMess.format("Unknown {} protocol code received"
                             " from a UserInputClient",
                             reqCode);
             throw ::subsystem::Exception(errMess);

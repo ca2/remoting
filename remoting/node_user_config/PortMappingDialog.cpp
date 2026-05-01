@@ -28,8 +28,8 @@
 #include "remoting/node_desktop/resource.h"
 namespace remoting_node
 {
-   PortMappingDialog::PortMappingDialog()
-   :  m_pdialogParent(NULL)
+   PortMappingDialog::PortMappingDialog(::remoting_node::Configurator * pconfigurator)
+   : m_pconfigurator(pconfigurator), m_pdialogParent(NULL)
    {
       initialize_dialog(IDD_CONFIG_PORT_MAPPING_PAGE);
    }

@@ -28,7 +28,7 @@ namespace remoting_control_desktop
 {
    ShareWindowCommand::ShareWindowCommand(ControlProxy *serverControl,
                                        const ::scoped_string & shareWindowName)
-: m_proxy(serverControl),
+: m_pcontrolproxy(serverControl),
   m_shareWindowName(*shareWindowName)
    {
    }
@@ -39,7 +39,7 @@ namespace remoting_control_desktop
 
    void ShareWindowCommand::execute()
    {
-      m_proxy->shareWindow(m_shareWindowName);
+      m_pcontrolproxy->shareWindow(m_shareWindowName);
    }
 } // namespace remoting_control_desktop
 

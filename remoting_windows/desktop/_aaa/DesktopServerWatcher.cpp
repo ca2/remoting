@@ -52,7 +52,7 @@ namespace remoting_windows
    //    // Path to desktop server application.
    //    ::string path;
    //    // FIXME: To think: is quotes needed?
-   //    path.formatf("\"{}\"", currentModulePath);
+   //    path.format("\"{}\"", currentModulePath);
    //
    //    try
    //    {
@@ -143,7 +143,7 @@ namespace remoting_windows
 
             // Arguments that must be passed to desktop server application.
             ::string args;
-            args.formatf("-desktopserver -logdir \"{}\" -loglevel {} -shmemname {}", logDir,
+            args.format("-desktopserver -logdir \"{}\" -loglevel {} -shmemname {}", logDir,
                          m_pconfigurator->getServerConfig()->getLogLevel(), shMemName);
 
             m_pprocess->setArguments(args);

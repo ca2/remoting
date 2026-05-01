@@ -33,7 +33,7 @@
  * Simple tcp server that accepts connections and give management over
  * incoming connections to HttpClient class.
  */
-class HttpServer : public TcpServer
+class CLASS_DECL_REMOTING HttpServer : public TcpServer
 {
 public:
   /**

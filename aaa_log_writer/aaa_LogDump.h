@@ -39,7 +39,7 @@
 //   unsigned int m_threadId;
 //   class ::time m_dt;
 //   int m_lineLevel;
-//   ::string m_message;
+//   ::string m_pcontrolmessage;
 // };
 //
 // // This class is not thread safed.

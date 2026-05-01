@@ -53,7 +53,7 @@ namespace remoting_client
          case 9: return ::remoting::PseudoEncDefs::COMPR_LEVEL_9;
          default:
             ::string error;
-            error.formatf("Compression level \"{}\" is not valid", compressionLevel);
+            error.format("Compression level \"{}\" is not valid", compressionLevel);
             throw ::subsystem::Exception(error);
       }
    }

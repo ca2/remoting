@@ -42,7 +42,7 @@
  * Handler of file transfer plugin client to server messages.
  * Processes client requests and sends replies.
  */
-class FileTransferRequestHandler : public RfbDispatcherListener
+class CLASS_DECL_REMOTING FileTransferRequestHandler : public RfbDispatcherListener
 {
 public:
   /**

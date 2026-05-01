@@ -27,8 +27,8 @@
 
 namespace remoting_control_desktop
 {
-   ShareFullCommand::ShareFullCommand(ControlProxy *serverControl)
-   : m_proxy(serverControl)
+   ShareFullCommand::ShareFullCommand(ControlProxy * pcontrolproxy)
+   : m_pcontrolproxy(pcontrolproxy)
    {
    }
 
@@ -38,7 +38,7 @@ namespace remoting_control_desktop
 
    void ShareFullCommand::execute()
    {
-      m_proxy->shareFull();
+      m_pcontrolproxy->shareFull();
    }
 } // namespace remoting_control_desktop
 

@@ -31,15 +31,15 @@
 
 namespace remoting_control_desktop
 {
-   class ShareFullCommand : public Command
+   class ShareFullCommand : public ::subsystem::Command
    {
    public:
-      ShareFullCommand(ControlProxy *serverControl);
+      ShareFullCommand(ControlProxy * pcontrolproxy);
       virtual ~ShareFullCommand();
 
       virtual void execute();
    private:
-      ControlProxy *m_proxy;
+      ::pointer < ControlProxy > m_pcontrolproxy;
    };
 } // namespace remoting_control_desktop
 

@@ -56,7 +56,7 @@ namespace remoting
          // Logging
          ::string scopedstrMessage;
 
-         scopedstrMessage.formatf("Creating remote folder '{}'",
+         scopedstrMessage.format("Creating remote folder '{}'",
                         m_pathToTargetFile);
 
          notifyInformation(scopedstrMessage);

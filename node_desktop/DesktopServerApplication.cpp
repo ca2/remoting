@@ -28,14 +28,14 @@
 #include "remoting/remoting/desktop/WallpaperUtil.h"
 #include "subsystem/node/WTS.h"
 #include "subsystem/node/OperatingSystem.h"
-#include "subsystem/node/SharedMemory.h"
+//#include "subsystem/node/SharedMemory.h"
 #include "remoting/remoting/node/NamingDefs.h"
 #include "TimeAPI.h"
+#include "subsystem/platform/subsystem.h"
+//#include "subsystem_windows/node/WTS.h"
+//#include "subsystem_windows/platform/subsystem.h"
 #include "subsystem_windows/platform/subsystem.h"
-#include "subsystem_windows/node/WTS.h"
-#include "subsystem_windows/platform/subsystem.h"
-#include "subsystem_windows/platform/subsystem.h"
-#include "subsystem_windows/node/SharedMemory.h"
+//#include "subsystem_windows/node/SharedMemory.h"
 #include "remoting/remoting/node_config/Configurator.h"
 
 
@@ -64,7 +64,8 @@ namespace remoting_node_desktop
       cmdLineParser.parse(cmdArgs);
 
       // Keep session id
-      DWORD baseSessionId = WindowsSubsystem().WTS().getActiveConsoleSessionId(m_plogwriter);
+      //DWORD baseSessionId = WindowsSubsystem().WTS().getActiveConsoleSessionId(m_plogwriter);
+      auto baseSessionId = MainSubsystem().OperatingSystem().getActiveConsoleSessionId(m_plogwriter);
       m_pconfigurator->addListener(this);
       m_pconfigurator->load();
 
@@ -74,23 +75,10 @@ namespace remoting_node_desktop
          // Get pipe channel handles by the shared memory
          ::string shMemName;
          cmdLineParser.getSharedMemName(shMemName);
-         ::subsystem_windows::SharedMemory shMem(shMemName, 72);
-         unsigned long long *mem = (unsigned long long *)shMem.getMemPointer();
 
-         class ::time timeStart = ::time::now();
+         auto memory = MainSubsystem().OperatingSystem().getSharedMemorySnapshot(shMemName, 72, 10_s);
 
-         // ::happening m_sleepInterval;
-         ::happening m_sleepInterval;
-         while (mem[0] == 0)
-         {
-            unsigned int timeForWait = maximum(10_s - timeStart.elapsed(), 0_s).integral_millisecond();
-            if (timeForWait == 0)
-            {
-               throw ::subsystem::Exception("The desktop server time out expired");
-            }
-            // m_sleepInterval.waitForEvent(10);
-            m_sleepInterval.wait(10_ms);
-         }
+         auto mem= (unsigned long long *) memory.data();
 
          HANDLE readPipeHandle, writePipeHandle;
          unsigned int maxPortionSize;

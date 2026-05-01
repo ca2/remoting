@@ -173,7 +173,7 @@ namespace remoting_node_desktop
 
       ::remoting_node::ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
 
-      IpAccessRule::ActionType action;
+      ::remoting_node::IpAccessRule::ActionType action;
 
       if (!client->isOutgoing())
       {
@@ -181,12 +181,12 @@ namespace remoting_node_desktop
       }
       else
       {
-         action = IpAccessRule::ACTION_TYPE_ALLOW;
+         action =::remoting_node:: IpAccessRule::ACTION_TYPE_ALLOW;
       }
 
       // Promt user to know what to do with incmoing connection.
 
-      if (action == IpAccessRule::ACTION_TYPE_QUERY)
+      if (action == ::remoting_node::IpAccessRule::ACTION_TYPE_QUERY)
       {
          ::string peerHost;
 
@@ -433,7 +433,7 @@ namespace remoting_node_desktop
 
          time = MainSubsystem().toString(lastTime);
 
-         s.formatf("IP: {}, count: {}, last time: {}\n", ip, count, time);
+         s.format("IP: {}, count: {}, last time: {}\n", ip, count, time);
 
          str += s;
       }
@@ -476,22 +476,28 @@ namespace remoting_node_desktop
       m_nextClientId++;
    }
 
-   void RfbClientManager::getClientsInfo(RfbClientInfoList *plist)
+
+   void RfbClientManager::getClientsInfo(::remoting_control_desktop::RfbClientInfoList *plist)
    {
+
       critical_section_lock al(&m_clientListLocker);
 
       for (ClientListIter it = m_clientList.begin(); it != m_clientList.end(); it++)
       {
+
          ::remoting::RfbClient *each = *it;
+
          if (each->getClientState() == ::remoting::IN_NORMAL_PHASE)
          {
             ::string peerHost;
 
             each->getPeerHost(peerHost);
 
-            plist->add(RfbClientInfo(each->getId(), peerHost));
+            plist->add(::remoting_control_desktop::RfbClientInfo(each->getId(), peerHost));
          }
+
       }
+
    }
 
    void RfbClientManager::setDynViewPort(const ::remoting::ViewPortState *dynViewPort)

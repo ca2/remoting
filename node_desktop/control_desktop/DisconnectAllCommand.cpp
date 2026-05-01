@@ -27,8 +27,8 @@
 
 namespace remoting_control_desktop
 {
-   DisconnectAllCommand::DisconnectAllCommand(ControlProxy *serverControl)
-   : m_proxy(serverControl)
+   DisconnectAllCommand::DisconnectAllCommand(ControlProxy * pcontrolproxy)
+   : m_pcontrolproxy(pcontrolproxy)
    {
    }
 
@@ -38,7 +38,7 @@ namespace remoting_control_desktop
 
    void DisconnectAllCommand::execute()
    {
-      m_proxy->disconnectAllClients();
+      m_pcontrolproxy->disconnectAllClients();
    }
 } // namespace remoting_control_desktop
 

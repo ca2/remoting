@@ -37,7 +37,7 @@
 namespace remoting
 {
 
-   class UpdateHandlerServer :
+   class CLASS_DECL_REMOTING  UpdateHandlerServer :
       virtual public DesktopServerProto,
       virtual public ClientListener,
       virtual public UpdateListener

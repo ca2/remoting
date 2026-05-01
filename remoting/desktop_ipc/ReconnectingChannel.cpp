@@ -203,7 +203,7 @@ namespace remoting
       if (channel != 0)
       { // If this is not the first initialization
          ::string errMess;
-         errMess.formatf("Transport was reconnected in the"
+         errMess.format("Transport was reconnected in the"
                          " {}() function. The {}()"
                          " function() at this time will be aborted",
                          scopedstrFunName, scopedstrFunName);

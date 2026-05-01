@@ -43,11 +43,11 @@ namespace remoting_control_desktop
 {
 
 
-   ControlMessage::ControlMessage(unsigned int messageId, ControlGate *pblockinggate,
+   ControlMessage::ControlMessage(unsigned int messageId, ControlGate * pcontrolgate,
                                   const ::scoped_string & scopedstrPasswordFile,
                                   bool getPassFromConfigEnabled,
                                   bool forService)
-   : DataOutputStream(0), m_messageId(messageId), m_pblockinggate(pblockinggate),
+   : DataOutputStream(0), m_messageId(messageId), m_pcontrolgate(pcontrolgate),
      m_passwordFile(scopedstrPasswordFile),
      m_getPassFromConfigEnabled(getPassFromConfigEnabled),
      m_forService(forService)
@@ -71,22 +71,22 @@ namespace remoting_control_desktop
 
    void ControlMessage::sendData()
    {
-      m_pblockinggate->writeUInt32(m_messageId);
+      m_pcontrolgate->writeUInt32(m_messageId);
       _ASSERT((unsigned int)m_tunnel->size() == m_tunnel->size());
-      m_pblockinggate->writeUInt32((unsigned int)m_tunnel->size());
-      m_pblockinggate->write(m_tunnel->toByteArray(), m_tunnel->size());
+      m_pcontrolgate->writeUInt32((unsigned int)m_tunnel->size());
+      m_pcontrolgate->write(m_tunnel->toByteArray(), m_tunnel->size());
    }
 
    void ControlMessage::checkRetCode()
    {
-      unsigned int messageId = m_pblockinggate->readUInt32();
+      unsigned int messageId = m_pcontrolgate->readUInt32();
 
       switch (messageId) {
          case ControlProto::REPLY_ERROR:
          {
             ::string strMessage;
-            strMessage = m_pblockinggate->readUtf8();
-            throw RemoteException(strMessage);
+            strMessage = m_pcontrolgate->readUtf8();
+            throw ::remoting_node::RemoteException(strMessage);
          }
             break;
          case ControlProto::REPLY_AUTH_NEEDED:
@@ -100,9 +100,9 @@ namespace remoting_control_desktop
                int retCode = authDialog.showModal();
                switch (retCode) {
                   case ::innate_subsystem::e_control_id_cancel:
-                     throw ControlAuthException(MainSubsystem().StringTable().getString(IDS_USER_CANCEL_CONTROL_AUTH), true);
+                     throw ::remoting_node::ControlAuthException(MainSubsystem().StringTable().getString(IDS_USER_CANCEL_CONTROL_AUTH), true);
                   case ::innate_subsystem::e_control_id_ok:
-                     ControlAuth auth(m_pblockinggate, authDialog.getPassword());
+                     ControlAuth auth(m_pcontrolgate, authDialog.getPassword());
                      send();
                      break;
                }
@@ -112,7 +112,7 @@ namespace remoting_control_desktop
             break;
          default:
             _ASSERT(false);
-            throw RemoteException("Unknown ret code.");
+            throw ::remoting_node::RemoteException("Unknown ret code.");
       }
    }
 
@@ -136,7 +136,7 @@ namespace remoting_control_desktop
       // ::string ansiPwd(ansiBuff);
       // ::string password;
       // ansiPwd.toStringStorage(&password);
-      ControlAuth auth(m_pblockinggate, password);
+      ControlAuth auth(m_pcontrolgate, password);
       send();
    }
 
@@ -160,7 +160,7 @@ namespace remoting_control_desktop
          password = ::str::to_ansi(plainPassword, sizeof(plainPassword));
          // Clear ansi plain password from memory.
          memset(plainPassword, 0, sizeof(plainPassword));
-         ControlAuth auth(m_pblockinggate, password);
+         ControlAuth auth(m_pcontrolgate, password);
 
          send();
                            } else {

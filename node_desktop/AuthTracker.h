@@ -33,7 +33,8 @@ namespace remoting_node_desktop
 
    // This class will be insert an time interval between trying of
    // authentications
-   class AuthTracker
+   class CLASS_DECL_REMOTING_NODE_DESKTOP AuthTracker :
+   virtual public ::particle
    {
    public:
       AuthTracker(const class ::time & timeFailureInterval, unsigned int failureMaxCount);
@@ -47,15 +48,15 @@ namespace remoting_node_desktop
       void notifyAbAuthFailed();
 
    private:
-      // If ban time is elapsed the refresh() function reset m_failureCount.
+      // If ban time is elapsed the refresh() function reset m_uFailureCount.
       void refresh();
 
-      class ::time m_failureTimeInterval;
+      class ::time m_timeFailureInterval;
 
-      class ::time m_firstFailureTime;
-      unsigned int m_failureCount;
-      unsigned int m_failureMaxCount;
-      lockable_critical_section m_countMutex;
+      class ::time m_timeFirstFailure;
+      unsigned int m_uFailureCount;
+      unsigned int m_uFailureMaxCount;
+      lockable_critical_section m_criticalsectionCount;
    };
 
 

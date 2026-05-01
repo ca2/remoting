@@ -33,12 +33,12 @@ namespace remoting
 
    // DesktopSrvDispatcher::DesktopSrvDispatcher(BlockingGate *pblockinggate, AnEventListener *extErrorListener,
    //                                            ::subsystem::LogWriter * plogwriter) :
-   //     m_pblockinggate(pblockinggate), m_extErrorListener(extErrorListener), m_plogwriter = plogwriter;
+   //     m_pcontrolgate(pcontrolgate), m_extErrorListener(extErrorListener), m_plogwriter = plogwriter;
    // {
    // }
 
    DesktopSrvDispatcher::DesktopSrvDispatcher():
-   m_pblockinggate(nullptr),m_plogwriter(nullptr)
+   m_pcontrolgate(nullptr),m_plogwriter(nullptr)
    {
 
 
@@ -66,7 +66,7 @@ namespace remoting
                      const ::procedure &procedureDesktopSrvDispatcher, ::subsystem::LogWriter * plogwriter)
    {
 
-      m_pblockinggate = pblockinggate;
+      m_pcontrolgate = pblockinggate;
       m_procedureDesktopSrvDispatcher = procedureDesktopSrvDispatcher;
       m_plogwriter = plogwriter;
 
@@ -96,18 +96,18 @@ namespace remoting
          try
          {
             m_plogwriter->debug("DesktopSrvDispatcher reading code");
-            unsigned char code = m_pblockinggate->readUInt8();
+            unsigned char code = m_pcontrolgate->readUInt8();
             m_plogwriter->debug("DesktopSrvDispatcher, code {} recieved", code);
             ::map<unsigned char, ClientListener *>::iterator iter = m_handlers.find(code);
             if (iter == m_handlers.end())
             {
                ::string errMess;
-               errMess.formatf("Unhandled {} code has been "
+               errMess.format("Unhandled {} code has been "
                                "received from a client",
                                (int)code);
                throw ::subsystem::Exception(errMess);
             }
-            (*iter).m_element2->onRequest(code, m_pblockinggate);
+            (*iter).m_element2->onRequest(code, m_pcontrolgate);
          }
          catch (ReconnectException &)
          {

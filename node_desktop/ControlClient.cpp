@@ -34,15 +34,15 @@
 #include "remoting/remoting/node_config/ServerConfig.h"
 
 #include "subsystem/platform/VncPassCrypt.h"
-#include "subsystem_windows/platform/subsystem.h"
-#include "subsystem_windows/platform/subsystem.h"
+//#include "subsystem_windows/platform/subsystem.h"
+//#include "subsystem_windows/platform/subsystem.h"
 #include "subsystem/node/File.h"
 #include "remoting/remoting/rfb/HostPath.h"
 
-#include "subsystem_windows/node/WTS.h"
+//#include "subsystem_windows/node/WTS.h"
 
-#include "resource.h"
-
+#include "remoting/node_desktop/resource.h"
+#include "subsystem/node/OperatingSystem.h"
 //#include aaa_<time.h>
 //#include "subsystem/platform/::string.h"
 #include "subsystem/platform/MemUsage.h"
@@ -52,29 +52,29 @@ namespace remoting_node_desktop
 
 
    const unsigned int ControlClient::REQUIRES_AUTH[] = {
-      ControlProto::ADD_CLIENT_MSG_ID,      ControlProto::DISCONNECT_ALL_CLIENTS_MSG_ID,
-      ControlProto::GET_CONFIG_MSG_ID,      ControlProto::SET_CONFIG_MSG_ID,
-      ControlProto::SHUTDOWN_SERVER_MSG_ID, ControlProto::SHARE_PRIMARY_MSG_ID,
-      ControlProto::SHARE_DISPLAY_MSG_ID,   ControlProto::SHARE_WINDOW_MSG_ID,
-      ControlProto::SHARE_RECT_MSG_ID,      ControlProto::SHARE_APP_MSG_ID,
-      ControlProto::SHARE_FULL_MSG_ID,      ControlProto::CONNECT_TO_TCPDISP_MSG_ID};
+      ::remoting_control_desktop::ControlProto::ADD_CLIENT_MSG_ID,      ::remoting_control_desktop::ControlProto::DISCONNECT_ALL_CLIENTS_MSG_ID,
+      ::remoting_control_desktop::ControlProto::GET_CONFIG_MSG_ID,      ::remoting_control_desktop::ControlProto::SET_CONFIG_MSG_ID,
+      ::remoting_control_desktop::ControlProto::SHUTDOWN_SERVER_MSG_ID, ::remoting_control_desktop::ControlProto::SHARE_PRIMARY_MSG_ID,
+      ::remoting_control_desktop::ControlProto::SHARE_DISPLAY_MSG_ID,   ::remoting_control_desktop::ControlProto::SHARE_WINDOW_MSG_ID,
+      ::remoting_control_desktop::ControlProto::SHARE_RECT_MSG_ID,      ::remoting_control_desktop::ControlProto::SHARE_APP_MSG_ID,
+      ::remoting_control_desktop::ControlProto::SHARE_FULL_MSG_ID,      ::remoting_control_desktop::ControlProto::CONNECT_TO_TCPDISP_MSG_ID};
 
-   const unsigned int ControlClient::WITHOUT_AUTH[] = {ControlProto::AUTH_MSG_ID,
-                                                       ControlProto::RELOAD_CONFIG_MSG_ID,
-                                                       ControlProto::GET_SERVER_INFO_MSG_ID,
-                                                       ControlProto::GET_CLIENT_LIST_MSG_ID,
-                                                       ControlProto::GET_SHOW_TRAY_ICON_FLAG,
-                                                       ControlProto::UPDATE_TVNCONTROL_PROCESS_ID_MSG_ID};
+   const unsigned int ControlClient::WITHOUT_AUTH[] = {::remoting_control_desktop::ControlProto::AUTH_MSG_ID,
+                                                       ::remoting_control_desktop::ControlProto::RELOAD_CONFIG_MSG_ID,
+                                                       ::remoting_control_desktop::ControlProto::GET_SERVER_INFO_MSG_ID,
+                                                       ::remoting_control_desktop::ControlProto::GET_CLIENT_LIST_MSG_ID,
+                                                       ::remoting_control_desktop::ControlProto::GET_SHOW_TRAY_ICON_FLAG,
+                                                       ::remoting_control_desktop::ControlProto::UPDATE_TVNCONTROL_PROCESS_ID_MSG_ID};
 
-   ControlClient::ControlClient(::remoting_node::Configurator * pconfigurator, Transport *transport, RfbClientManager *rfbClientManager,
-                                ControlAppAuthenticator *authenticator, ::subsystem::FileInterface *pfilePipeHandle,
+   ControlClient::ControlClient(::remoting_node::Configurator * pconfigurator, ::remoting_control_desktop::Transport *transport, RfbClientManager *rfbClientManager,
+                                ControlAppAuthenticator *pauthenticator, ::subsystem::FileInterface *pfilePipeHandle,
                                 ::subsystem::LogWriter * plogwriter) :
-       m_pconfigurator(pconfigurator), m_transport(transport), m_rfbClientManager(rfbClientManager), m_controlappauthenticator(authenticator), m_tcpDispId(0),
+       m_pconfigurator(pconfigurator), m_ptransport(transport), m_prfbclientmanager(rfbClientManager), m_pcontrolappauthenticator(pauthenticator), m_uTcpDispId(0),
        m_pfilePipeHandle(pfilePipeHandle), m_authReqMessageId(0), m_plogwriter(plogwriter), m_repeatAuthPassed(false)
    {
-      m_stream = m_transport->getIOStream();
+      m_pchannel = m_ptransport->getIOStream();
 
-      m_pblockinggate = new ControlGate(m_stream);
+      m_pcontrolgate = new ::remoting_control_desktop::ControlGate(m_pchannel);
 
       m_authPassed = false;
    }
@@ -84,8 +84,8 @@ namespace remoting_node_desktop
       terminate();
       wait();
 
-      delete m_pblockinggate;
-      delete m_transport;
+      //delete m_pcontrolgate;
+      //delete m_ptransport;
    }
 
    void ControlClient::execute()
@@ -100,8 +100,8 @@ namespace remoting_node_desktop
       {
          while (!isTerminating())
          {
-            unsigned int messageId = m_pblockinggate->readUInt32();
-            unsigned int messageSize = m_pblockinggate->readUInt32();
+            unsigned int messageId = m_pcontrolgate->readUInt32();
+            unsigned int messageSize = m_pcontrolgate->readUInt32();
 
             m_plogwriter->debug("Recieved control scopedstrMessage ID %u, size %u", (unsigned int)messageId,
                                 (unsigned int)messageSize);
@@ -141,8 +141,8 @@ namespace remoting_node_desktop
                   {
                      m_plogwriter->debug("Message requires control authentication");
 
-                     m_pblockinggate->skipBytes(messageSize);
-                     m_pblockinggate->writeUInt32(ControlProto::REPLY_AUTH_NEEDED);
+                     m_pcontrolgate->skipBytes(messageSize);
+                     m_pcontrolgate->writeUInt32(::remoting_control_desktop::ControlProto::REPLY_AUTH_NEEDED);
                      m_authReqMessageId = messageId;
 
                      continue;
@@ -151,79 +151,79 @@ namespace remoting_node_desktop
 
                switch (messageId)
                {
-                  case ControlProto::AUTH_MSG_ID:
+                  case ::remoting_control_desktop::ControlProto::AUTH_MSG_ID:
                      m_plogwriter->debug("::innate_subsystem::Control authentication requested");
                      authMsgRcdv();
                      break;
-                  case ControlProto::RELOAD_CONFIG_MSG_ID:
+                  case ::remoting_control_desktop::ControlProto::RELOAD_CONFIG_MSG_ID:
                      m_plogwriter->debug("Command requested: Reload configuration");
                      reloadConfigMsgRcvd();
                      break;
-                  case ControlProto::DISCONNECT_ALL_CLIENTS_MSG_ID:
+                  case ::remoting_control_desktop::ControlProto::DISCONNECT_ALL_CLIENTS_MSG_ID:
                      m_plogwriter->debug("Command requested: Disconnect all clients command requested");
                      disconnectAllMsgRcvd();
                      break;
-                  case ControlProto::SHUTDOWN_SERVER_MSG_ID:
+                  case ::remoting_control_desktop::ControlProto::SHUTDOWN_SERVER_MSG_ID:
                      m_plogwriter->debug("Command requested: Shutdown command requested");
                      shutdownMsgRcvd();
                      break;
-                  case ControlProto::ADD_CLIENT_MSG_ID:
+                  case ::remoting_control_desktop::ControlProto::ADD_CLIENT_MSG_ID:
                      m_plogwriter->debug("Command requested: Attach listening viewer");
                      addClientMsgRcvd();
                      break;
-                  case ControlProto::CONNECT_TO_TCPDISP_MSG_ID:
+                  case ::remoting_control_desktop::ControlProto::CONNECT_TO_TCPDISP_MSG_ID:
                      m_plogwriter->debug("Connect to a tcp dispatcher command requested");
                      break;
-                  case ControlProto::GET_SERVER_INFO_MSG_ID:
+                  case ::remoting_control_desktop::ControlProto::GET_SERVER_INFO_MSG_ID:
                      m_plogwriter->debug("::innate_subsystem::Control client requests server info");
                      getServerInfoMsgRcvd();
                      break;
-                  case ControlProto::GET_CLIENT_LIST_MSG_ID:
+                  case ::remoting_control_desktop::ControlProto::GET_CLIENT_LIST_MSG_ID:
                      m_plogwriter->debug("::innate_subsystem::Control client requests client ::list_base");
                      getClientsListMsgRcvd();
                      break;
-                  case ControlProto::SET_CONFIG_MSG_ID:
+                  case ::remoting_control_desktop::ControlProto::SET_CONFIG_MSG_ID:
                      m_plogwriter->debug("::innate_subsystem::Control client sends new server config");
-                     set::remoting_node::ServerConfigMsgRcvd();
+                     setServerConfigMsgRcvd();
                      break;
-                  case ControlProto::GET_CONFIG_MSG_ID:
+                  case ::remoting_control_desktop::ControlProto::GET_CONFIG_MSG_ID:
                      m_plogwriter->debug("::innate_subsystem::Control client requests server config");
                      getServerConfigMsgRcvd();
                      break;
-                  case ControlProto::GET_SHOW_TRAY_ICON_FLAG:
+                  case ::remoting_control_desktop::ControlProto::GET_SHOW_TRAY_ICON_FLAG:
                      m_plogwriter->debug("::innate_subsystem::Control client requests tray icon visibility flag");
                      getShowTrayIconFlagMsgRcvd();
                      break;
-                  case ControlProto::UPDATE_TVNCONTROL_PROCESS_ID_MSG_ID:
+                  case ::remoting_control_desktop::ControlProto::UPDATE_TVNCONTROL_PROCESS_ID_MSG_ID:
                      m_plogwriter->debug("::innate_subsystem::Control client sends process ID");
                      updateTvnControlProcessIdMsgRcvd();
                      break;
-                  case ControlProto::SHARE_PRIMARY_MSG_ID:
+                  case ::remoting_control_desktop::ControlProto::SHARE_PRIMARY_MSG_ID:
                      m_plogwriter->debug("Share primary scopedstrMessage recieved");
                      sharePrimaryIdMsgRcvd();
                      break;
-                  case ControlProto::SHARE_DISPLAY_MSG_ID:
+                  case ::remoting_control_desktop::ControlProto::SHARE_DISPLAY_MSG_ID:
                      m_plogwriter->debug("Share display scopedstrMessage recieved");
                      shareDisplayIdMsgRcvd();
                      break;
-                  case ControlProto::SHARE_WINDOW_MSG_ID:
+                  case ::remoting_control_desktop::ControlProto::SHARE_WINDOW_MSG_ID:
                      m_plogwriter->debug("Share window scopedstrMessage recieved");
                      shareWindowIdMsgRcvd();
                      break;
-                  case ControlProto::SHARE_RECT_MSG_ID:
+                  case ::remoting_control_desktop::ControlProto::SHARE_RECT_MSG_ID:
                      m_plogwriter->debug("Share rectangle scopedstrMessage recieved");
                      shareRectIdMsgRcvd();
                      break;
-                  case ControlProto::SHARE_FULL_MSG_ID:
+                  case ::remoting_control_desktop::ControlProto::SHARE_FULL_MSG_ID:
                      m_plogwriter->debug("Share full scopedstrMessage recieved");
                      shareFullIdMsgRcvd();
                      break;
-                  case ControlProto::SHARE_APP_MSG_ID:
+                  case ::remoting_control_desktop::ControlProto::SHARE_APP_MSG_ID:
                      m_plogwriter->debug("Share app scopedstrMessage recieved");
                      shareAppIdMsgRcvd();
                      break;
                   default:
-                     m_pblockinggate->skipBytes(messageSize);
+                     m_pcontrolgate->skipBytes(messageSize);
                      m_plogwriter->warning("Received unsupported scopedstrMessage from control client");
                      throw ControlException("Unknown command");
                } // switch (messageId).
@@ -247,7 +247,7 @@ namespace remoting_node_desktop
    {
       try
       {
-         m_transport->close();
+         m_ptransport->close();
       }
       catch (...)
       {
@@ -256,8 +256,8 @@ namespace remoting_node_desktop
 
    void ControlClient::sendError(const ::scoped_string &scopedstrMessage)
    {
-      m_pblockinggate->writeUInt32(ControlProto::REPLY_ERROR);
-      m_pblockinggate->writeUTF8(scopedstrMessage);
+      m_pcontrolgate->writeUInt32(::remoting_control_desktop::ControlProto::REPLY_ERROR);
+      m_pcontrolgate->writeUTF8(scopedstrMessage);
    }
 
    //
@@ -275,8 +275,8 @@ namespace remoting_node_desktop
          challenge[i] = rand() & 0xff;
       }
 
-      m_pblockinggate->write(challenge, sizeof(challenge));
-      m_pblockinggate->readFully(response, sizeof(response));
+      m_pcontrolgate->write(challenge, sizeof(challenge));
+      m_pcontrolgate->readFully(response, sizeof(response));
 
       //
       // FIXME: Is it right to check if password is set after client
@@ -287,14 +287,14 @@ namespace remoting_node_desktop
       unsigned char cryptPassword[8];
       pserverconfig->getControlPassword(cryptPassword);
 
-      bool isAuthSucceed = m_controlappauthenticator->authenticate(cryptPassword, challenge, response);
+      bool isAuthSucceed = m_pcontrolappauthenticator->authenticate(cryptPassword, challenge, response);
       if (!isAuthSucceed)
       {
          sendError(MainSubsystem().StringTable().getString(IDS_INVALID_CONTROL_PASSWORD));
       }
       else
       {
-         m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
+         m_pcontrolgate->writeUInt32(::remoting_control_desktop::ControlProto::REPLY_OK);
          m_authPassed = true;
          m_repeatAuthPassed = true;
       }
@@ -304,18 +304,18 @@ namespace remoting_node_desktop
    {
       unsigned int clientCount = 0;
 
-      RfbClientInfoList clients;
+      ::remoting_control_desktop::RfbClientInfoList clients;
 
-      m_rfbClientManager->getClientsInfo(&clients);
+      m_prfbclientmanager->getClientsInfo(&clients);
 
-      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
+      m_pcontrolgate->writeUInt32(::remoting_control_desktop::ControlProto::REPLY_OK);
       _ASSERT(clients.size() == (unsigned int)clients.size());
-      m_pblockinggate->writeUInt32((unsigned int)clients.size());
+      m_pcontrolgate->writeUInt32((unsigned int)clients.size());
 
-      for (RfbClientInfoList::iterator it = clients.begin(); it != clients.end(); it++)
+      for (auto it = clients.begin(); it != clients.end(); it++)
       {
-         m_pblockinggate->writeUInt32((*it).m_id);
-         m_pblockinggate->writeUTF8((*it).m_peerAddr);
+         m_pcontrolgate->writeUInt32((*it).m_id);
+         m_pcontrolgate->writeUTF8((*it).m_peerAddr);
       }
    }
 
@@ -327,7 +327,7 @@ namespace remoting_node_desktop
       ::string logPath;
       ::string statusText;
 
-      ServerInfo info;
+      ::remoting_control_desktop::ServerInfo info;
 
 
       ::cast<::remoting_node_desktop::application> papplication = ::system()->m_papplication;
@@ -337,25 +337,25 @@ namespace remoting_node_desktop
       ::string status;
       status = info.m_statusText;
 
-      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
+      m_pcontrolgate->writeUInt32(::remoting_control_desktop::ControlProto::REPLY_OK);
 
-      m_pblockinggate->writeUInt8(info.m_acceptFlag ? 1 : 0);
-      m_pblockinggate->writeUInt8(info.m_serviceFlag ? 1 : 0);
-      m_pblockinggate->writeUTF8(status);
+      m_pcontrolgate->writeUInt8(info.m_acceptFlag ? 1 : 0);
+      m_pcontrolgate->writeUInt8(info.m_serviceFlag ? 1 : 0);
+      m_pcontrolgate->writeUTF8(status);
    }
 
    void ControlClient::reloadConfigMsgRcvd()
    {
-      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
+      m_pcontrolgate->writeUInt32(::remoting_control_desktop::ControlProto::REPLY_OK);
 
       m_pconfigurator->load();
    }
 
    void ControlClient::disconnectAllMsgRcvd()
    {
-      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
+      m_pcontrolgate->writeUInt32(::remoting_control_desktop::ControlProto::REPLY_OK);
 
-      m_rfbClientManager->disconnectAllClients();
+      m_prfbclientmanager->disconnectAllClients();
 
       m_plogwriter->debug("Disconnecting clients");
 
@@ -364,7 +364,7 @@ namespace remoting_node_desktop
 
    void ControlClient::shutdownMsgRcvd()
    {
-      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
+      m_pcontrolgate->writeUInt32(::remoting_control_desktop::ControlProto::REPLY_OK);
 
       ::cast<::remoting_node_desktop::application> papplication = ::system()->m_papplication;
 
@@ -373,7 +373,7 @@ namespace remoting_node_desktop
 
    void ControlClient::addClientMsgRcvd()
    {
-      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
+      m_pcontrolgate->writeUInt32(::remoting_control_desktop::ControlProto::REPLY_OK);
 
       //
       // Read parameters.
@@ -381,9 +381,9 @@ namespace remoting_node_desktop
 
       ::string connectString;
 
-      connectString = m_pblockinggate->readUtf8();
+      connectString = m_pcontrolgate->readUtf8();
 
-      bool viewOnly = m_pblockinggate->readUInt8() == 1;
+      bool viewOnly = m_pcontrolgate->readUInt8() == 1;
 
       //
       // Parse host and port from connection string.
@@ -404,7 +404,7 @@ namespace remoting_node_desktop
       // Make outgoing connection in separate thread.
       //
       OutgoingRfbConnectionThread *newConnectionThread =
-         new OutgoingRfbConnectionThread(host, hp.getVncPort(), viewOnly, m_rfbClientManager, m_plogwriter);
+         new OutgoingRfbConnectionThread(host, hp.getVncPort(), viewOnly, m_prfbclientmanager, m_plogwriter);
 
       newConnectionThread->resume();
 
@@ -413,9 +413,9 @@ namespace remoting_node_desktop
    }
 
 
-   bool allZeroes(unsigned char p[::remoting_node::ServerConfig::VNC_PASSWORD_SIZE])
+   bool allZeroes(unsigned char p[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE])
    {
-      for (int i = 0; i < ::remoting_node::ServerConfig::VNC_PASSWORD_SIZE; i++)
+      for (int i = 0; i < ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE; i++)
       {
          if (p[i] != 0)
          {
@@ -425,13 +425,13 @@ namespace remoting_node_desktop
       return true;
    }
 
-   void ControlClient::set::remoting_node::ServerConfigMsgRcvd()
+   void ControlClient::setServerConfigMsgRcvd()
    {
-      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
+      m_pcontrolgate->writeUInt32(::remoting_control_desktop::ControlProto::REPLY_OK);
       ::remoting_node::ServerConfig cfg;
-      cfg.deserialize(m_pblockinggate);
+      cfg.deserialize(m_pcontrolgate);
       ::remoting_node::ServerConfig *old = m_pconfigurator->getServerConfig();
-      unsigned char tmp[::remoting_node::ServerConfig::VNC_PASSWORD_SIZE];
+      unsigned char tmp[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
 
       if (cfg.hasPrimaryPassword())
       {
@@ -472,33 +472,34 @@ namespace remoting_node_desktop
    {
       bool showIcon = m_pconfigurator->getServerConfig()->getShowTrayIconFlag();
 
-      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
+      m_pcontrolgate->writeUInt32(::remoting_control_desktop::ControlProto::REPLY_OK);
 
-      m_pblockinggate->writeUInt8(showIcon ? 1 : 0);
+      m_pcontrolgate->writeUInt8(showIcon ? 1 : 0);
    }
 
    void ControlClient::updateTvnControlProcessIdMsgRcvd()
    {
-      m_pblockinggate->readUInt32();
+      m_pcontrolgate->readUInt32();
 
       try
       {
-         WindowsSubsystem().WTS().duplicatePipeClientToken(m_pfilePipeHandle);
+         //WindowsSubsystem().WTS().duplicatePipeClientToken(m_pfilePipeHandle);
+         MainSubsystem().OperatingSystem().duplicatePipeClientToken(m_pfilePipeHandle);
       }
       catch (::exception &e)
       {
          m_plogwriter->error("Can't update the control client impersonation token: {}", e.get_message());
       }
-      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
+      m_pcontrolgate->writeUInt32(::remoting_control_desktop::ControlProto::REPLY_OK);
    }
 
    void ControlClient::getServerConfigMsgRcvd()
    {
-      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
+      m_pcontrolgate->writeUInt32(::remoting_control_desktop::ControlProto::REPLY_OK);
 
       ::remoting_node::ServerConfig cfg = *m_pconfigurator->getServerConfig();
 
-      unsigned char zeroes[::remoting_node::ServerConfig::VNC_PASSWORD_SIZE] = {};
+      unsigned char zeroes[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE] = {};
       if (cfg.hasControlPassword())
          cfg.setControlPassword(zeroes);
       if (cfg.hasPrimaryPassword())
@@ -506,70 +507,70 @@ namespace remoting_node_desktop
       if (cfg.hasReadOnlyPassword())
          cfg.setReadOnlyPassword(zeroes);
 
-      cfg.serialize(m_pblockinggate);
+      cfg.serialize(m_pcontrolgate);
    }
 
    void ControlClient::sharePrimaryIdMsgRcvd()
    {
-      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
+      m_pcontrolgate->writeUInt32(::remoting_control_desktop::ControlProto::REPLY_OK);
       ::remoting::ViewPortState dynViewPort;
       dynViewPort.setPrimaryDisplay();
-      m_rfbClientManager->setDynViewPort(&dynViewPort);
+      m_prfbclientmanager->setDynViewPort(&dynViewPort);
    }
 
    void ControlClient::shareDisplayIdMsgRcvd()
    {
-      unsigned char displayNumber = m_pblockinggate->readUInt8();
-      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
+      unsigned char displayNumber = m_pcontrolgate->readUInt8();
+      m_pcontrolgate->writeUInt32(::remoting_control_desktop::ControlProto::REPLY_OK);
 
       ::remoting::ViewPortState dynViewPort;
       dynViewPort.setDisplayNumber(displayNumber);
-      m_rfbClientManager->setDynViewPort(&dynViewPort);
+      m_prfbclientmanager->setDynViewPort(&dynViewPort);
    }
 
    void ControlClient::shareWindowIdMsgRcvd()
    {
       ::string windowName;
-      windowName = m_pblockinggate->readUtf8();
+      windowName = m_pcontrolgate->readUtf8();
 
-      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
+      m_pcontrolgate->writeUInt32(::remoting_control_desktop::ControlProto::REPLY_OK);
 
       ::remoting::ViewPortState dynViewPort;
       dynViewPort.setWindowName(windowName);
-      m_rfbClientManager->setDynViewPort(&dynViewPort);
+      m_prfbclientmanager->setDynViewPort(&dynViewPort);
    }
 
    void ControlClient::shareRectIdMsgRcvd()
    {
       ::int_rectangle shareRect;
-      shareRect.left = m_pblockinggate->readInt32();
-      shareRect.top = m_pblockinggate->readInt32();
-      shareRect.right = m_pblockinggate->readInt32();
-      shareRect.bottom = m_pblockinggate->readInt32();
-      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
+      shareRect.left = m_pcontrolgate->readInt32();
+      shareRect.top = m_pcontrolgate->readInt32();
+      shareRect.right = m_pcontrolgate->readInt32();
+      shareRect.bottom = m_pcontrolgate->readInt32();
+      m_pcontrolgate->writeUInt32(::remoting_control_desktop::ControlProto::REPLY_OK);
 
       ::remoting::ViewPortState dynViewPort;
       dynViewPort.setArbitraryRect(shareRect);
-      m_rfbClientManager->setDynViewPort(&dynViewPort);
+      m_prfbclientmanager->setDynViewPort(&dynViewPort);
    }
 
    void ControlClient::shareFullIdMsgRcvd()
    {
-      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
+      m_pcontrolgate->writeUInt32(::remoting_control_desktop::ControlProto::REPLY_OK);
 
       ::remoting::ViewPortState dynViewPort;
       dynViewPort.setFullDesktop();
-      m_rfbClientManager->setDynViewPort(&dynViewPort);
+      m_prfbclientmanager->setDynViewPort(&dynViewPort);
    }
 
    void ControlClient::shareAppIdMsgRcvd()
    {
-      unsigned int procId = m_pblockinggate->readUInt32();
-      m_pblockinggate->writeUInt32(ControlProto::REPLY_OK);
+      unsigned int procId = m_pcontrolgate->readUInt32();
+      m_pcontrolgate->writeUInt32(::remoting_control_desktop::ControlProto::REPLY_OK);
 
       ::remoting::ViewPortState dynViewPort;
       dynViewPort.setProcessId(procId);
-      m_rfbClientManager->setDynViewPort(&dynViewPort);
+      m_prfbclientmanager->setDynViewPort(&dynViewPort);
    }
 
 

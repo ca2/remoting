@@ -30,9 +30,9 @@ namespace remoting
 
 
 
-   RfbDispatcher::RfbDispatcher(::remoting::RfbInputGate *pblockinggate,
+   RfbDispatcher::RfbDispatcher(::remoting::RfbInputGate *prfbinputgate,
                                 const ::procedure &procedureTermination):
-    m_pblockinggate(pblockinggate),
+    m_prfbinputgate(prfbinputgate),
      m_procedureTermination(procedureTermination)
      //m_terminationEvent(0)
    {
@@ -40,7 +40,7 @@ namespace remoting
 
    // RfbDispatcher::RfbDispatcher(::remoting::RfbInputGate *pblockinggate,
    //                              ::happening *terminationEvent)
-   // : m_pblockinggate(pblockinggate),
+   // : m_pcontrolgate(pcontrolgate),
    //   m_extTerminationListener(0),
    //   m_terminationEvent(terminationEvent)
    // {
@@ -71,21 +71,21 @@ namespace remoting
    {
       try {
          while (!isTerminating()) {
-            unsigned int code = m_pblockinggate->readUInt8();
+            unsigned int code = m_prfbinputgate->readUInt8();
             if (code == 0xfc) { // special TightVNC code
                code = code << 24;
-               code += m_pblockinggate->readUInt8() << 16;
-               code += m_pblockinggate->readUInt8() << 8;
-               code += m_pblockinggate->readUInt8();
+               code += m_prfbinputgate->readUInt8() << 16;
+               code += m_prfbinputgate->readUInt8() << 8;
+               code += m_prfbinputgate->readUInt8();
             }
             ::map<unsigned int, RfbDispatcherListener *>::iterator iter = m_handlers.find(code);
             if (iter == m_handlers.end()) {
                ::string errMess;
-               errMess.formatf("unhandled {} code has been received from a client",
+               errMess.format("unhandled {} code has been received from a client",
                               (int)code);
                throw ::subsystem::Exception(errMess);
             }
-            (*iter).m_element2->onRequest(code, m_pblockinggate);
+            (*iter).m_element2->onRequest(code, m_prfbinputgate);
          }
       } catch (...) {
       }

@@ -141,7 +141,7 @@ namespace remoting_node_desktop
        * Starts remoting_node execution.
        * @throws SystemException when failed to start.
        */
-      virtual void onStart();
+      ////virtual void onStart() override;
 
 
       ///void on_server_task_run() override;
@@ -150,13 +150,13 @@ namespace remoting_node_desktop
        * Inherited from superclass.
        * TvnService working body.
        */
-      virtual void main();
+      //virtual void main() override;
 
       /**
        * Inherited from superclass.
        * Stops remoting_node execution.
        */
-      virtual void onStop();
+      //virtual void onStop() override;
 
       /**
        * Creates path to binary of remoting_node service.

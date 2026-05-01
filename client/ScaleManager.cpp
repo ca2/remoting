@@ -66,13 +66,13 @@ namespace remoting_client
         setWindow(m_rcWindow);
     }
 
-    void ScaleManager::keepAspectRatio(::int_rectangle &prectangle) const
+    void ScaleManager::keepAspectRatio(::int_rectangle &rectangle) const
     {
-        int iHeight = prectangle->height() / m_scrHScale;
-        int iWidth = prectangle->width() / m_scrWScale;
+        int iHeight = rectangle.height() / m_scrHScale;
+        int iWidth = rectangle.width() / m_scrWScale;
         int iBar = minimum(iHeight, iWidth);
-        prectangle->right = prectangle->left + iBar * m_scrWScale;
-        prectangle->bottom = prectangle->top + iBar * m_scrHScale;
+        rectangle.right = rectangle.left + iBar * m_scrWScale;
+        rectangle.bottom = rectangle.top + iBar * m_scrHScale;
     }
 
     void ScaleManager::setScale(int scale)
@@ -214,19 +214,19 @@ namespace remoting_client
         ::int_rectangle rcScaled = calcScaled(m_rcViewed, true);
     }
 
-    void ScaleManager::getViewedRect(::int_rectangle & prectangleViewed) const
+    void ScaleManager::getViewedRect(::int_rectangle & rectangleViewed) const
     {
         ::int_rectangle rectangle(m_rcViewed);
         rectangle.set_top_left(m_iCentX, m_iCentY);
 
-        *prectangleViewed = rectangle;
+        rectangleViewed = rectangle;
     }
 
     ::int_rectangle ScaleManager::getViewedRect() const
     {
 
         int_rectangle r;
-        getViewedRect(&r);
+        getViewedRect(r);
         return r;
 
     }
@@ -236,26 +236,26 @@ namespace remoting_client
         return calcScaled(m_rcViewed, true);
     }
 
-    void ScaleManager::getDestinationRect(::int_rectangle & prectangleDestination)
+    void ScaleManager::getDestinationRect(::int_rectangle & rectangleDestination)
     {
         ::int_rectangle rcScaled = calcScaled(m_rcViewed, true);
         rcScaled.set_top_left(m_iCentX, m_iCentY);
 
-        *prectangleDestination = rcScaled;
+        rectangleDestination = rcScaled;
     }
 
-    void ScaleManager::getSourceRect(::int_rectangle & prectangleSource) const
+    void ScaleManager::getSourceRect(::int_rectangle & rectangleSource) const
     {
-        *prectangleSource = m_rcViewed;
+        rectangleSource = m_rcViewed;
     }
 
-    void ScaleManager::getWndFromScreen(const ::int_rectangle &  screen, ::int_rectangle &prectangleWnd)
+    void ScaleManager::getWndFromScreen(const ::int_rectangle &  screen, ::int_rectangle &rectangleWnd)
     {
         ::int_rectangle scr = screen;
         scr.offset(-m_rcViewed.left, -m_rcViewed.top);
         ::int_rectangle rcScaled = calcScaled(scr, false);
-        *prectangleWnd = rcScaled;
-        prectangleWnd->offset(m_iCentX, m_iCentY);
+        rectangleWnd = rcScaled;
+        rectangleWnd.offset(m_iCentX, m_iCentY);
     }
 
     ::int_point ScaleManager::transformDispToScr(int xPoint, int yPoint) const

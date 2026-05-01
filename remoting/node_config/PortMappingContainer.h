@@ -38,61 +38,65 @@
 // Container for port mappings.
 //
 
-class PortMappingContainer
+namespace remoting_node
 {
-public:
-  PortMappingContainer();
-  PortMappingContainer(const PortMappingContainer &other);
-  virtual ~PortMappingContainer();
+   class CLASS_DECL_REMOTING PortMappingContainer
+   {
+   public:
+      PortMappingContainer();
+      PortMappingContainer(const PortMappingContainer &other);
+      virtual ~PortMappingContainer();
 
-  PortMappingContainer &operator=(const PortMappingContainer &other);
+      PortMappingContainer &operator=(const PortMappingContainer &other);
 
-  // Inserts element to the end of container.
-  void pushBack(PortMapping element);
+      // Inserts element to the end of container.
+      void pushBack(PortMapping element);
 
-  // Returns index of element or -1 if not found.
-  size_t find(PortMapping searchElement) const;
+      // Returns index of element or -1 if not found.
+      size_t find(PortMapping searchElement) const;
 
-  // Returns index of element with specified port.
-  size_t findByPort(int port) const;
+      // Returns index of element with specified port.
+      size_t findByPort(int port) const;
 
-  // Removes element with specified index from container.
-  void remove(size_t index);
-  // Removes element from container.
-  void remove(PortMapping removeMapping);
+      // Removes element with specified index from container.
+      void remove(size_t index);
+      // Removes element from container.
+      void remove(PortMapping removeMapping);
 
-  // Removes all elements from container.
-  void removeAll();
+      // Removes all elements from container.
+      void removeAll();
 
-  // Returns count of elements in container.
-  size_t count() const;
+      // Returns count of elements in container.
+      size_t count() const;
 
-  // Returns true if two containers hold the same data.
-  bool equals(const PortMappingContainer *other) const;
+      // Returns true if two containers hold the same data.
+      bool equals(const PortMappingContainer *other) const;
 
-  /**
-   * Serializes port all mappings in container as byte stream.
-   * @param output output stream for serializing.
-   * @throws ::subsystem::Exception on error.
-   */
-  void serialize(DataOutputStream * pdataoutputstream) const;
+      /**
+       * Serializes port all mappings in container as byte stream.
+       * @param output output stream for serializing.
+       * @throws ::subsystem::Exception on error.
+       */
+      void serialize(DataOutputStream * pdataoutputstream) const;
 
-  /**
-   * Deserializes port mapping container from input stream.
-   * @param input source input stream.
-   * @throws ::subsystem::Exception on error.
-   */
-  void deserialize(DataInputStream * pinput);
+      /**
+       * Deserializes port mapping container from input stream.
+       * @param input source input stream.
+       * @throws ::subsystem::Exception on error.
+       */
+      void deserialize(DataInputStream * pinput);
 
-  // Returns a read-only pointer to the element with specifed index
-  // or 0 if not found.
-  const PortMapping *at(size_t index) const;
+      // Returns a read-only pointer to the element with specifed index
+      // or 0 if not found.
+      const PortMapping *at(size_t index) const;
 
-  // Returns a pointer to the element with specifed index or 0 if not found.
-  PortMapping *at(size_t index);
+      // Returns a pointer to the element with specifed index or 0 if not found.
+      PortMapping *at(size_t index);
 
-private:
-  ::array_base<PortMapping> m_vector;
-};
+   private:
+      ::array_base<PortMapping> m_vector;
+   };
+} // namespace remoting_node
+
 
 

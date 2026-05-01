@@ -35,7 +35,7 @@ namespace remoting_control_desktop
     * Command that initializes outgoing rfb connection from TightVNC server to
     * specified address.
     */
-   class MakeRfbConnectionCommand : public Command
+   class MakeRfbConnectionCommand : public ::subsystem::Command
    {
    public:
       /**
@@ -65,7 +65,7 @@ namespace remoting_control_desktop
       /**
        * Proxy to some of TightVNC server control methods.
        */
-      ControlProxy *m_proxy;
+      ::pointer < ControlProxy > m_pcontrolproxy;
       /**
        * Connection string.
        */

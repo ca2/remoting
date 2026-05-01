@@ -32,7 +32,7 @@
 namespace remoting_node_desktop
 {
 
-   class ExtraRfbServers :virtual public ::particle
+   class CLASS_DECL_REMOTING_NODE_DESKTOP ExtraRfbServers :virtual public ::particle
 
    {
    public:
@@ -40,7 +40,7 @@ namespace remoting_node_desktop
       {
          bool acceptConnections;
          bool loopbackOnly;
-         PortMappingContainer extraPorts;
+         ::remoting_node::PortMappingContainer extraPorts;
 
          Conf();
          Conf(const Conf &other);

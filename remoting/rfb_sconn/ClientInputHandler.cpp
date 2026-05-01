@@ -68,7 +68,7 @@ namespace remoting
             break;
          default:
             ::string errMess;
-            errMess.formatf("Unknown {} protocol code received", (int)reqCode);
+            errMess.format("Unknown {} protocol code received", (int)reqCode);
             throw ::subsystem::Exception(errMess);
             break;
       }

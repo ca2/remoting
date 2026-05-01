@@ -74,7 +74,7 @@ namespace remoting
       ::string value;
 
       for (size_t i = 0; i < m_limit; i++) {
-         //valueName.formatf("{}", i);
+         //valueName.format("{}", i);
          if (!m_pregistrykey->getValueAsString(::as_string(i), value)) {
             break;
          }
@@ -89,7 +89,7 @@ namespace remoting
       size_t count = m_hosts.size();
 
       for (size_t i = 0; i < minimum(count, m_limit); i++) {
-         //valueName.formatf("%u", i);
+         //valueName.format("%u", i);
          auto value = m_hosts.at(i);
 
          m_pregistrykey->setValueAsString(::as_string(i), value);
@@ -108,7 +108,7 @@ namespace remoting
       size_t i = (size_t)m_limit;
 
       while (true) {
-         valueName.formatf("%u", i);
+         valueName.format("%u", i);
 
          if (i >= getHostCount()) {
             return ;
@@ -134,7 +134,7 @@ namespace remoting
       ::string valueName;
 
       for (size_t i = 0; i < m_hosts.size(); i++) {
-         valueName.formatf("%u", i);
+         valueName.format("%u", i);
 
          m_pregistrykey->deleteSubKey(m_hosts.at(i));
          m_pregistrykey->deleteValue(valueName);

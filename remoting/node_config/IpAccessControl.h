@@ -34,12 +34,13 @@
 #include "acme/input_output/DataInputStream.h"
 #include "acme/input_output/DataOutputStream.h"
 
-
-class IpAccessControl : public ::array_base<IpAccessRule *>
+namespace remoting_node
 {
-public:
-  void serialize(DataOutputStream * pdataoutputstream);
-  void deserialize(DataInputStream * pinput);
-};
-
+   class CLASS_DECL_REMOTING IpAccessControl : public ::array<IpAccessRule *>
+   {
+   public:
+      void serialize(DataOutputStream * pdataoutputstream);
+      void deserialize(DataInputStream * pinput);
+   };
+} // namespace remoting_node
 

@@ -28,8 +28,9 @@
 //#include "acme/_operating_system.h"
 
 //#include "remoting/node_desktop/NamingDefs.h"
-#include "subsystem_windows/platform/subsystem.h"
-#include "subsystem_windows/node/WTS.h"
+//#include "subsystem_windows/platform/subsystem.h"
+//#include "subsystem_windows/node/WTS.h"
+#include "subsystem/node/OperatingSystem.h"
 
 namespace remoting_control_desktop
 {
@@ -41,10 +42,12 @@ namespace remoting_control_desktop
            "TightVNC_Service_Control"
            ;
       } else {
+
+         int iActiveConsoleSessionId = MainSubsystem().OperatingSystem().getActiveConsoleSessionId(plogwriter);
          pipeName.format("{}_On_Session_{}",
            //ServerApplicationNames::FOR_APP_CONTROL_APP_SERVICE_PIPE_NAME,
            "TightVNC_Application_Control",
-           WindowsSubsystem().WTS().getActiveConsoleSessionId(plogwriter));
+           iActiveConsoleSessionId);
       }
    }
 } // namespace remoting_control_desktop

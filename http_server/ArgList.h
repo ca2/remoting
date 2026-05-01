@@ -30,7 +30,7 @@
 
 
 
-class ArgList
+class CLASS_DECL_REMOTING ArgList
 {
 public:
   ArgList(const char *argString);

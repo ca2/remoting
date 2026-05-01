@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "OptionsDialog.h"
 #include "acme/constant/user_notification.h"
-#include "remoting/remoting/remoting.h"
+//#include "remoting/remoting/remoting.h"
 #include "remoting/remoting/client_config/ConnectionConfig.h"
 
 
@@ -379,7 +379,7 @@ namespace remoting_client
 
         if (!MainSubsystem().StringParser().parseInt(scaleText, &scaleInt)) {
             ::string error;
-            error.formatf(MainSubsystem().StringTable().getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC).c_str(),
+            error.format(MainSubsystem().StringTable().getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC).c_str(),
                          MainSubsystem().StringTable().getString(IDS_OPTIONS_SCALE).c_str());
             MainSubsystem().message_box(operating_system_window(),
                        ::wstring(error),
@@ -390,7 +390,7 @@ namespace remoting_client
 
         if (scaleInt < 0) {
             ::string error;
-            error.formatf(MainSubsystem().StringTable().getString(IDS_ERROR_VALUE_FIELD_ONLY_POSITIVE_NUMERIC).c_str(),
+            error.format(MainSubsystem().StringTable().getString(IDS_ERROR_VALUE_FIELD_ONLY_POSITIVE_NUMERIC).c_str(),
                          MainSubsystem().StringTable().getString(IDS_OPTIONS_SCALE).c_str());
             MainSubsystem().message_box(operating_system_window(),
                        error,

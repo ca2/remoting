@@ -96,7 +96,7 @@ namespace remoting_client
    }
 
    /// rectangle should in desktop window root coordinates
-   void control::add_repaint(const int_rectangle rectangle)
+   void control::add_repaint(const int_rectangle & rectangle)
    {
 
       auto pwindowPaint = get_paint_window();

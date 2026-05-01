@@ -36,14 +36,14 @@ namespace remoting_control_desktop
     * Command that invokes remote shutdown() method of TightVNC server
     * using control transport.
     */
-   class ShutdownCommand : public Command
+   class ShutdownCommand : public ::subsystem::Command
    {
    public:
       /**
        * Creates command.
        * @param serverControl proxy.
        */
-      ShutdownCommand(ControlProxy *serverControl);
+      ShutdownCommand(ControlProxy * pcontrolproxy);
       /**
        * Destroys command.
        */
@@ -61,7 +61,7 @@ namespace remoting_control_desktop
       /**
        * Proxy to some of TightVNC server control methods.
        */
-      ControlProxy *m_proxy;
+      ::pointer < ControlProxy > m_pcontrolproxy;
    };
 } // namespace remoting_control_desktop
 

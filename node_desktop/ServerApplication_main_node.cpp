@@ -25,7 +25,7 @@
 #include "subsystem/_common_header.h"
 //#include "subsystem/platform/winhdr.h"
 //#include "acme/_operating_system.h"
-
+#include "application.h"
 #include "subsystem/platform/CommandLine.h"
 #include "subsystem/platform/CommandLineArguments.h"
 
@@ -44,7 +44,7 @@
 
 #include "remoting/node_desktop/resource.h"
 #include "subsystem/node/CrashHook.h"
-#include "remoting/node_desktop/NamingDefs.h"
+#include "remoting/remoting/node/NamingDefs.h"
 
 #include "remoting/node_desktop/EventLogWriter.h"
 
@@ -52,7 +52,7 @@
 namespace remoting_node_desktop
 {
 
-   void ServerApplication::main_node(const file::path &path)
+   void application::main_node(const file::path &path)
    {
 
         ::subsystem::LogWriter * plogwriterPre = ::system();
@@ -68,13 +68,13 @@ namespace remoting_node_desktop
   ::subsystem::CommandLineFormat format[] = {
     { "-service", ::subsystem::NO_ARG },
 
-    { ControlCommandLine::CONFIG_APPLICATION, ::subsystem::NO_ARG },
-    { ControlCommandLine::CONFIG_SERVICE, ::subsystem::NO_ARG },
-    { ControlCommandLine::SET_CONTROL_PASSWORD, ::subsystem::NO_ARG },
-    { ControlCommandLine::SET_PRIMARY_VNC_PASSWORD, ::subsystem::NO_ARG },
-    { ControlCommandLine::CHECK_SERVICE_PASSWORDS, ::subsystem::NO_ARG },
-    { ControlCommandLine::CONTROL_SERVICE, ::subsystem::NO_ARG },
-    { ControlCommandLine::CONTROL_APPLICATION, ::subsystem::NO_ARG },
+    { ::remoting_control_desktop::ControlCommandLine::CONFIG_APPLICATION, ::subsystem::NO_ARG },
+    { ::remoting_control_desktop::ControlCommandLine::CONFIG_SERVICE, ::subsystem::NO_ARG },
+    { ::remoting_control_desktop::ControlCommandLine::SET_CONTROL_PASSWORD, ::subsystem::NO_ARG },
+    { ::remoting_control_desktop::ControlCommandLine::SET_PRIMARY_VNC_PASSWORD, ::subsystem::NO_ARG },
+    { ::remoting_control_desktop::ControlCommandLine::CHECK_SERVICE_PASSWORDS, ::subsystem::NO_ARG },
+    { ::remoting_control_desktop::ControlCommandLine::CONTROL_SERVICE, ::subsystem::NO_ARG },
+    { ::remoting_control_desktop::ControlCommandLine::CONTROL_APPLICATION, ::subsystem::NO_ARG },
 
     { DesktopServerCommandLine::DESKTOP_SERVER_KEY, ::subsystem::NO_ARG },
     { QueryConnectionCommandLine::QUERY_CONNECTION, ::subsystem::NO_ARG },
@@ -115,29 +115,30 @@ namespace remoting_node_desktop
       crashHook.setHklmRoot();
       tvnService.run();
     } catch (::subsystem::Exception &) {
-       setExitCode(1);
+       m_iExitCode = 1;
       //return 1;
     }
     return;
-  } else if (firstKey == ControlCommandLine::CONFIG_APPLICATION ||
-             firstKey == ControlCommandLine::CONFIG_SERVICE ||
-             firstKey == ControlCommandLine::SET_CONTROL_PASSWORD ||
-             firstKey == ControlCommandLine::SET_PRIMARY_VNC_PASSWORD ||
-             firstKey == ControlCommandLine::CONTROL_SERVICE ||
-             firstKey == ControlCommandLine::CONTROL_APPLICATION ||
-             firstKey == ControlCommandLine::CHECK_SERVICE_PASSWORDS) {
+  } else if (firstKey == ::remoting_control_desktop::ControlCommandLine::CONFIG_APPLICATION ||
+             firstKey == ::remoting_control_desktop::ControlCommandLine::CONFIG_SERVICE ||
+             firstKey == ::remoting_control_desktop::ControlCommandLine::SET_CONTROL_PASSWORD ||
+             firstKey == ::remoting_control_desktop::ControlCommandLine::SET_PRIMARY_VNC_PASSWORD ||
+             firstKey == ::remoting_control_desktop::ControlCommandLine::CONTROL_SERVICE ||
+             firstKey == ::remoting_control_desktop::ControlCommandLine::CONTROL_APPLICATION ||
+             firstKey == ::remoting_control_desktop::ControlCommandLine::CHECK_SERVICE_PASSWORDS) {
     crashHook.setGuiEnabled();
     try {
+       ::string strCommandLine =::system()->command_line();
       ::remoting_control_desktop::ControlApplication tvnControl(::system()->m_hinstanceThis,
-        WindowNames::WINDOW_CLASS_NAME,
-        ::system()->command_line_text());
+        ::remoting_node::WindowNames::WINDOW_CLASS_NAME,
+        strCommandLine);
       return tvnControl.run();
     } catch (::subsystem::Exception &fatalException) {
       auto pmessagebox = message_box({},
         fatalException.get_message(),
         MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL),
         ::user::e_message_box_ok | ::user::e_message_box_icon_error);
-       setExitCode(1);
+       m_iExitCode = 1;
       return;
     }
   } else if (firstKey == AdditionalActionApplication::LOCK_WORKSTATION_KEY ||
@@ -151,7 +152,7 @@ namespace remoting_node_desktop
         actionApp.initialize_additional_action_application(::system()->command_line_text());
       return actionApp.run();
     } catch (::subsystem::SystemException &ex) {
-       setExitCode(ex.getErrorCode());
+       m_iExitCode = ex.getErrorCode();
       return ;
     }
   } else if (firstKey == DesktopServerCommandLine::DESKTOP_SERVER_KEY) {
@@ -160,15 +161,15 @@ namespace remoting_node_desktop
       //WinCommandLineArgs args(lpCmdLine);
        auto pcommandlinearguments = MainSubsystem().getCurrentProcessCommandLineArguments();
       DesktopServerApplication desktopServerApp(::system()->m_hinstanceThis,
-        WindowNames::WINDOW_CLASS_NAME,
+        ::remoting_node::WindowNames::WINDOW_CLASS_NAME,
         pcommandlinearguments);
 
       desktopServerApp.run();
        int retCode = desktopServerApp.getExitCode();
-       setExitCode(retCode);
+       m_iExitCode = retCode;
       return ;
     } catch (...) {
-       setExitCode(1);
+       m_iExitCode = 1;
       return;
     }
   } else if (firstKey == QueryConnectionCommandLine::QUERY_CONNECTION) {
@@ -183,7 +184,7 @@ namespace remoting_node_desktop
         ::system()->command_line_text());
       return app.run();
     } catch (...) {
-       setExitCode(1);
+       m_iExitCode= 1;
       return;
     }
   } else if (firstKey == ServiceControlCommandLine::INSTALL_SERVICE ||
@@ -193,19 +194,26 @@ namespace remoting_node_desktop
              firstKey == ServiceControlCommandLine::STOP_SERVICE) {
     crashHook.setGuiEnabled();
     ServiceControlApplication tvnsc(::system()->m_hinstanceThis,
-      WindowNames::WINDOW_CLASS_NAME,
+      ::remoting_node::WindowNames::WINDOW_CLASS_NAME,
       ::system()->command_line_text());
     return tvnsc.run();
   }
 
   // No additional applications, run TightVNC server as single application.
   crashHook.setGuiEnabled();
-  ServerApplication tvnServer;
-      tvnServer.initialize_server_application(::system()->m_hinstanceThis,
-    WindowNames::WINDOW_CLASS_NAME,
+  //ServerApplication tvnServer;
+
+      construct_newø(m_pserverapplication);
+
+      m_pserverapplication->initialize_server_application(::system()->m_hinstanceThis,
+    ::remoting_node::WindowNames::WINDOW_CLASS_NAME,
     ::system()->command_line_text(), &winEventLogWriter);
 
-  return tvnServer.run();
+      m_pserverapplication->m_plogwriter = plogwriterPre;
+
+      m_pserverapplication->task_start();
+
+      m_pserverapplication->maintain_task_running_wait_stop_task_signal_and_stop();
 
    }
 

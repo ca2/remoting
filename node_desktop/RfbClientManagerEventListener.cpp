@@ -28,7 +28,7 @@ namespace remoting_node_desktop
 {
 
 
-   RfbClientManagerEventListener::~RfbClientManagerEventListener() {}
+   //RfbClientManagerEventListener::~RfbClientManagerEventListener() {}
 
 
 } // namespace remoting_node_desktop

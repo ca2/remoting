@@ -22,7 +22,7 @@ namespace remoting_node_desktop
 
       bool m_bOpenFile = false;
 
-      //::pointer < Server > m_pserver;
+      ::pointer < Server > m_pserver;
       ::pointer<Service> m_pservice;
       ::pointer<ServerApplication> m_pserverapplication;
 
@@ -40,6 +40,7 @@ namespace remoting_node_desktop
 
       Server & Server();
 
+      virtual void main_node(const ::file::path & path);
 
    };
 

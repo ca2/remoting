@@ -23,14 +23,14 @@
 //
 #include "framework.h"
 #include "ConfigurationDialog.h"
-#include "NamingDefs.h"
+#include "remoting/remoting/client/NamingDefs.h"
 #include "remoting_impact.h"
 #include "resource.h"
 #include "acme/filesystem/file/item.h"
 //#include "file_lib/::file::item.h"
 #include "subsystem/node/Process.h"
 #include "remoting/client/remoting.h"
-#include "remoting/remoting/remoting.h"
+//#include "remoting/remoting/remoting.h"
 
 
 namespace remoting_client
@@ -156,20 +156,20 @@ namespace remoting_client
 
         ::string txt;
 
-        txt.formatf("{}", config->getListenPort());
+        txt.format("{}", config->getListenPort());
         m_textboxReverseConn.setText(txt);
 
-        txt.formatf("{}", config->getLogLevel());
+        txt.format("{}", config->getLogLevel());
         m_textboxVerbLvl.setText(txt);
 
-        txt.formatf("{}", config->getHistoryLimit());
+        txt.format("{}", config->getHistoryLimit());
         m_textboxNumberConn.setText(txt);
 
         m_checkboxShowToolBars.setChecked(config->isToolbarShown());
         m_checkboxWarnAtSwitching.setChecked(config->isPromptOnFullscreenEnabled());
 
         ::string logFileName;
-        logFileName.formatf("{}\\{}.log", config->getPathToLogFile(), LogNames::VIEWER_LOG_FILE_STUB_NAME);
+        logFileName.format("{}\\{}.log", config->getPathToLogFile(), LogNames::VIEWER_LOG_FILE_STUB_NAME);
         m_textboxLogging.setText(logFileName);
     }
 
@@ -201,7 +201,7 @@ namespace remoting_client
         }
 
         ::string scopedstrMessage;
-        scopedstrMessage.formatf(MainSubsystem().StringTable().getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC).c_str(), scopedstrTbName.c_str());
+        scopedstrMessage.format(MainSubsystem().StringTable().getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC).c_str(), scopedstrTbName.c_str());
 
         MainSubsystem().message_box(operating_system_window(), scopedstrMessage,
                    MainSubsystem().StringTable().getString(IDS_CONFIGURATION_CAPTION), ::user::e_message_box_ok | ::user::e_message_box_icon_warning);

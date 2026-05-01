@@ -127,7 +127,7 @@ namespace remoting_windows
       //  m_puserinput(0), m_pdesktopconfigclient(0), m_pgatekicker(0), m_plogwriter(plogwriter)
    {
 
-      ::remoting::DesktopBaseImpl::initialize_desktop(pconfigurator, pclipboardlistenerExternal, pupdatesendinglistenerExternal, pdesktermlistenerExternal, plogwriter);
+      //::remoting::DesktopBaseImpl::initialize_desktop(pconfigurator, pclipboardlistenerExternal, pupdatesendinglistenerExternal, pdesktermlistenerExternal, plogwriter);
 
       m_plogwriter = plogwriter;
 

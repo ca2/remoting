@@ -128,7 +128,7 @@ namespace remoting_client
             } if (type == 129) {
                // invalid type
                ::string error;
-               error.formatf("Bad data received from the server: Unused ZRLE subencoding type ({}).", type);
+               error.format("Bad data received from the server: Unused ZRLE subencoding type ({}).", type);
                throw ::subsystem::Exception(error);
             } if (type >= 130 && type <= 255) {
                // palette rle

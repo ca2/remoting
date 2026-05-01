@@ -29,7 +29,7 @@
 #include "acme/input_output/DataOutputStream.h"
 //#include "log_writer/LogWriter.h"
 
-class HttpRequestHandler
+class CLASS_DECL_REMOTING HttpRequestHandler
 {
 public:
   HttpRequestHandler(DataInputStream *dataInput, DataOutputStream *dataOutput, ::subsystem::LogWriter * plogwriter,

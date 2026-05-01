@@ -79,10 +79,10 @@ namespace remoting_node_desktop
          // FIXME: Check loopback-related rules separately, report differently.
          // ::remoting_node::ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
          auto pserverconfig = m_pconfigurator->getServerConfig();
-         IpAccessRule::ActionType action =
+         ::remoting_node::IpAccessRule::ActionType action =
             pserverconfig->getActionByAddress((unsigned long)addr_in.sin_addr.S_un.S_addr);
 
-         if (action == IpAccessRule::ACTION_TYPE_DENY)
+         if (action == ::remoting_node::IpAccessRule::ACTION_TYPE_DENY)
          {
             m_plogwriter->debug("Connection rejected due to access control rules");
             delete socket;

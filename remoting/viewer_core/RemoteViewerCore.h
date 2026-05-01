@@ -501,7 +501,7 @@ namespace remoting_client
       void receiveFbUpdate();
 
       //
-      // Receive rectangle, decode it and notify m_pfbupdatenotifier.
+      // Receive rectangle, decode it and notify m_pfbupdatenotifier->
       //
       // Returns true if this rectangle should be the last one in this update,
       // false otherwise. This is needed to support LastRect pseudo-encoding

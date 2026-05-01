@@ -36,14 +36,14 @@ namespace remoting_control_desktop
     * Command that copies current configuration of remote TightVNC server
     * to local application configuration.
     */
-   class UpdateLocalConfigCommand : public Command
+   class UpdateLocalConfigCommand : public ::subsystem::Command
    {
    public:
       /**
        * Creates command.
        * @param proxy ready to use control proxy.
        */
-      UpdateLocalConfigCommand(ControlProxy *proxy);
+      UpdateLocalConfigCommand(::remoting_node::Configurator * pconfigurator, ControlProxy *proxy);
       /**
        * Destructor.
        */
@@ -54,7 +54,7 @@ namespace remoting_control_desktop
        */
       virtual void execute();
    private:
-      ControlProxy* m_proxy;
+      ::pointer < ControlProxy > m_pcontrolproxy;
       ::pointer < ::remoting_node::Configurator > m_pconfigurator;
    };
 } //   namespace remoting_control_desktop

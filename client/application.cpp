@@ -7,7 +7,8 @@
 #include "acme/handler/request.h"
 #include "acme/platform/system.h"
 #include "remoting/client/remoting.h"
-#include "remoting/remoting/remoting.h"
+#include "remoting/remoting/platform/remoting.h"
+#include "subsystem/socket/Sockets.h"
 //#include "acme/_operating_system.h"
 //#include "main_window.h"
 
@@ -56,6 +57,8 @@ namespace remoting_client
 
       if (ecommand == e_command_application_start)
       {
+
+         MainSubsystem().Sockets().startSockets();
 
          defer_construct_newø(m_premoting);
 

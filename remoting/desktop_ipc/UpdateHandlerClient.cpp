@@ -46,7 +46,7 @@ namespace remoting
    //    m_pframebufferBackup->setProperties(&sizeTerm, &pixelformatTerm);
    //
    //    // Synchronize our ::innate_subsystem::Framebuffer and the server ::innate_subsystem::Framebuffer
-   //    sendInit(m_pblockinggate);
+   //    sendInit(m_pcontrolgate);
    // }
    //
 
@@ -86,7 +86,7 @@ namespace remoting
          m_pframebufferBackup->setProperties(sizeTerm, pixelformatTerm);
 
          // Synchronize our ::innate_subsystem::Framebuffer and the server ::innate_subsystem::Framebuffer
-         sendInit(m_pblockinggate);
+         sendInit(m_pcontrolgate);
       //}
    }
 
@@ -112,18 +112,18 @@ namespace remoting
    {
       //updatecontainer.clear();
 
-      critical_section_lock al(m_pblockinggate);
+      critical_section_lock al(m_pcontrolgate);
 
       //UpdateContainer updatecontainer;
       try
       {
          UpdateContainer updatecontainer;
          m_plogwriter->debug("UpdateHandlerClient: send EXTRACT_REQ");
-         m_pblockinggate->writeUInt8(EXTRACT_REQ); // query for extract
+         m_pcontrolgate->writeUInt8(EXTRACT_REQ); // query for extract
 
          // Get screen size changed
          m_plogwriter->debug("UpdateHandlerClient: Get screen size changed");
-         updatecontainer.m_bScreenSizeChanged = m_pblockinggate->readUInt8() != 0;
+         updatecontainer.m_bScreenSizeChanged = m_pcontrolgate->readUInt8() != 0;
 
          if (updatecontainer.m_bScreenSizeChanged)
          {
@@ -133,8 +133,8 @@ namespace remoting
             ::int_size oldDim = m_pframebufferBackup->getDimension();
             // Get new screen properties
             ::innate_subsystem::PixelFormat pixelformatNew;
-            readPixelFormat(pixelformatNew, m_pblockinggate);
-            ::int_size sizeNew = readDimension(m_pblockinggate);
+            readPixelFormat(pixelformatNew, m_pcontrolgate);
+            ::int_size sizeNew = readDimension(m_pcontrolgate);
             ;
             if (pixelformatNew!= pixelformatOld || sizeNew!=oldDim)
             {
@@ -149,59 +149,59 @@ namespace remoting
             }
             // Equalizing this frame buffer by other side frame buffer.
             ::int_rectangle rectangleFramebuffer = m_pframebufferBackup->getDimension();
-            readFramebuffer(m_pframebufferBackup,rectangleFramebuffer, m_pblockinggate);
+            readFramebuffer(m_pframebufferBackup,rectangleFramebuffer, m_pcontrolgate);
          }
 
          // Get video region
          m_plogwriter->debug("UpdateHandlerClient: Get video region");
-         readRegion(updatecontainer.m_regionVideo, m_pblockinggate);
+         readRegion(updatecontainer.m_regionVideo, m_pcontrolgate);
          // Get changed region
-         unsigned int countChangedRect = m_pblockinggate->readUInt32();
+         unsigned int countChangedRect = m_pcontrolgate->readUInt32();
          m_plogwriter->information("UpdateHandlerClient: count changed rectangles = %u", countChangedRect);
          for (unsigned int i = 0; i < countChangedRect; i++)
          {
-            ::int_rectangle r = readRect(m_pblockinggate);
+            ::int_rectangle r = readRect(m_pcontrolgate);
             updatecontainer.m_regionChanged.addRect(r);
-            readFramebuffer(m_pframebufferBackup, r, m_pblockinggate);
+            readFramebuffer(m_pframebufferBackup, r, m_pcontrolgate);
          }
 
          // Get "copyrect"
-         unsigned char hasCopyRect = m_pblockinggate->readUInt8();
+         unsigned char hasCopyRect = m_pcontrolgate->readUInt8();
          if (hasCopyRect)
          {
             m_plogwriter->information("UpdateHandlerClient: has \"CopyRect\"");
-            updatecontainer.m_pointCopySource = readPoint(m_pblockinggate);
-            ::int_rectangle r = readRect(m_pblockinggate);
+            updatecontainer.m_pointCopySource = readPoint(m_pcontrolgate);
+            ::int_rectangle r = readRect(m_pcontrolgate);
             updatecontainer.m_regionCopied.addRect(r);
-            readFramebuffer(m_pframebufferBackup, r, m_pblockinggate);
+            readFramebuffer(m_pframebufferBackup, r, m_pcontrolgate);
          }
 
          // Get cursor pointPosition if it has been changed.
-         updatecontainer.m_bCursorPosChanged = m_pblockinggate->readUInt8() != 0;
+         updatecontainer.m_bCursorPosChanged = m_pcontrolgate->readUInt8() != 0;
          if (updatecontainer.m_bCursorPosChanged)
          {
             m_plogwriter->information("UpdateHandlerClient: cursor pos changed");
          }
-         updatecontainer.m_pointCursorPos = readPoint(m_pblockinggate);
+         updatecontainer.m_pointCursorPos = readPoint(m_pcontrolgate);
 
          // Get cursor shape if it has been changed.
-         updatecontainer.m_bCursorShapeChanged = m_pblockinggate->readUInt8() != 0;
+         updatecontainer.m_bCursorShapeChanged = m_pcontrolgate->readUInt8() != 0;
          if (updatecontainer.m_bCursorShapeChanged)
          {
             m_plogwriter->information("UpdateHandlerClient: cursor shape changed");
             ::innate_subsystem::PixelFormat pixelformatNew = m_pframebufferBackup->getPixelFormat();
-            ::int_size sizeNew = readDimension(m_pblockinggate);
-            ::int_point newHotSpot = readPoint(m_pblockinggate);
+            ::int_size sizeNew = readDimension(m_pcontrolgate);
+            ::int_point newHotSpot = readPoint(m_pcontrolgate);
 
             m_cursorshape.setProperties(sizeNew, pixelformatNew);
             m_cursorshape.setHotSpot(newHotSpot.x, newHotSpot.y);
 
             // Get pixels
-            m_pblockinggate->readFully(m_cursorshape.getPixels()->getBuffer(), m_cursorshape.getPixelsSize());
+            m_pcontrolgate->readFully(m_cursorshape.getPixels()->getBuffer(), m_cursorshape.getPixelsSize());
             // Get mask
             if (m_cursorshape.getMaskSize())
             {
-               m_pblockinggate->readFully((void *)m_cursorshape.getMask(), m_cursorshape.getMaskSize());
+               m_pcontrolgate->readFully((void *)m_cursorshape.getMask(), m_cursorshape.getMaskSize());
             }
          }
          return updatecontainer;
@@ -216,12 +216,12 @@ namespace remoting
 
    void UpdateHandlerClient::setFullUpdateRequested(const Region & region)
    {
-      critical_section_lock al(m_pblockinggate);
+      critical_section_lock al(m_pcontrolgate);
 
       try
       {
-         m_pblockinggate->writeUInt8(SET_FULL_UPD_REQ_REGION);
-         sendRegion(region, m_pblockinggate);
+         m_pcontrolgate->writeUInt8(SET_FULL_UPD_REQ_REGION);
+         sendRegion(region, m_pcontrolgate);
       }
       catch (ReconnectException &)
       {
@@ -230,12 +230,12 @@ namespace remoting
 
    void UpdateHandlerClient::setExcludedRegion(const Region & regionExcluded)
    {
-      critical_section_lock al(m_pblockinggate);
+      critical_section_lock al(m_pcontrolgate);
 
       try
       {
-         m_pblockinggate->writeUInt8(SET_EXCLUDING_REGION);
-         sendRegion(regionExcluded, m_pblockinggate);
+         m_pcontrolgate->writeUInt8(SET_EXCLUDING_REGION);
+         sendRegion(regionExcluded, m_pcontrolgate);
       }
       catch (ReconnectException &)
       {
@@ -246,11 +246,11 @@ namespace remoting
 
    void UpdateHandlerClient::getScreenProperties(::innate_subsystem::PixelFormat & pixelformat, ::int_size & size)
    {
-      critical_section_lock al(m_pblockinggate);
+      critical_section_lock al(m_pcontrolgate);
 
-      m_pblockinggate->writeUInt8(SCREEN_PROP_REQ);
-      readPixelFormat(pixelformat, m_pblockinggate);
-      size = readDimension(m_pblockinggate);
+      m_pcontrolgate->writeUInt8(SCREEN_PROP_REQ);
+      readPixelFormat(pixelformat, m_pcontrolgate);
+      size = readDimension(m_pcontrolgate);
    }
 
    void UpdateHandlerClient::sendInit(BlockingGate *pblockinggate)

@@ -185,7 +185,7 @@ namespace remoting_node_desktop
       ::string executablePath;
       executablePath = MainSubsystem().OperatingSystem().getCurrentModulePath();
       ::string pathToTvnControl;
-      pathToTvnControl.formatf("\"{}\" {} {}",
+      pathToTvnControl.format("\"{}\" {} {}",
                               executablePath,
                               ::remoting_control_desktop::ControlCommandLine::CONTROL_SERVICE,
                               ::remoting_control_desktop::ControlCommandLine::SLAVE_MODE);

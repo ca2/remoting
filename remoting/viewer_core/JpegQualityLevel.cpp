@@ -52,7 +52,7 @@ namespace remoting_client
          case 9: return ::remoting::PseudoEncDefs::QUALITY_LEVEL_9;
          default:
             ::string error;
-            error.formatf("Quality of jpeg \"{}\" is not valid", qualityLevel);
+            error.format("Quality of jpeg \"{}\" is not valid", qualityLevel);
             throw ::subsystem::Exception(error);
       }
    }

@@ -27,99 +27,101 @@
 
 //////#include "subsystem/platform/::string.h"
 
-//
-// Class contains information about
-// host access (allow, deny hosts etc).
-//
-
-class IpAccessRule
+namespace remoting_node
 {
-public:
+   //
+   // Class contains information about
+   // host access (allow, deny hosts etc).
+   //
 
-  //
-  // Host access type
-  //
+   class CLASS_DECL_REMOTING IpAccessRule
+   {
+   public:
 
-  enum ActionType {
-    ACTION_TYPE_ALLOW = 0,
-    ACTION_TYPE_DENY  = 1,
-    ACTION_TYPE_QUERY = 2
-  };
+      //
+      // Host access type
+      //
 
-public:
-  IpAccessRule();
-  virtual ~IpAccessRule();
-public:
+      enum ActionType {
+         ACTION_TYPE_ALLOW = 0,
+         ACTION_TYPE_DENY  = 1,
+         ACTION_TYPE_QUERY = 2
+       };
 
-  void toString(::string & output) const;
+   public:
+      IpAccessRule();
+      virtual ~IpAccessRule();
+   public:
 
-  static bool parse(const char * pszString, IpAccessRule *rule);
-  static bool parseIp(const char * pszString, IpAccessRule *rule);
-  static bool parseIpRange(const char * pszString, IpAccessRule *rule);
-  static bool parseSubnet(const char * pszString, IpAccessRule *rule);
+      void toString(::string & output) const;
 
-  //
-  // Method to access protected members
-  //
+      static bool parse(const char * pszString, IpAccessRule *rule);
+      static bool parseIp(const char * pszString, IpAccessRule *rule);
+      static bool parseIpRange(const char * pszString, IpAccessRule *rule);
+      static bool parseSubnet(const char * pszString, IpAccessRule *rule);
 
-  //
-  // m_action
-  //
+      //
+      // Method to access protected members
+      //
 
-  ActionType getAction() const {
-    return m_action;
-  }
+      //
+      // m_action
+      //
 
-  void setAction(ActionType value) {
-    m_action = value;
-  }
+      ActionType getAction() const {
+         return m_action;
+      }
 
-  //
-  // Ip range
-  //
+      void setAction(ActionType value) {
+         m_action = value;
+      }
 
-  void getFirstIp(::string & firstIp) const;
-  void getLastIp(::string & lastIp) const;
+      //
+      // Ip range
+      //
 
-  void setFirstIp(const char * pszFirstIp);
-  void setLastIp(const char * pszLastIp);
+      void getFirstIp(::string & firstIp) const;
+      void getLastIp(::string & lastIp) const;
 
-  //
-  // Helper methods
-  //
+      void setFirstIp(const char * pszFirstIp);
+      void setLastIp(const char * pszLastIp);
 
-  bool operator ==(const IpAccessRule & other) const;
+      //
+      // Helper methods
+      //
 
-  //
-  // Determinates belong address to subnetwork which associated
-  // with this IpAccessRule instanse or not.
-  //
+      bool operator ==(const IpAccessRule & other) const;
 
-  bool isIncludingAddress(unsigned long ip) const;
-  static bool isIpAddressStringValid(const char * pszString);
+      //
+      // Determinates belong address to subnetwork which associated
+      // with this IpAccessRule instanse or not.
+      //
 
-  //
-  // Return values:
-  // 0  - equal
-  // -1 - ip1 < ip2
-  // 1  - ip1 > ip2
-  //
+      bool isIncludingAddress(unsigned long ip) const;
+      static bool isIpAddressStringValid(const char * pszString);
 
-  static int compareIp(unsigned long ip1, unsigned long ip2);
+      //
+      // Return values:
+      // 0  - equal
+      // -1 - ip1 < ip2
+      // 1  - ip1 > ip2
+      //
 
-protected:
-  static bool tryParseIPPart(const char * pszString);
-  static void getIpRange(const char * pszip, const char * pszNetmask,
-                         ::string * firstIp, ::string * lastIp);
-protected:
-  ActionType m_action;
+      static int compareIp(unsigned long ip1, unsigned long ip2);
 
-  //
-  // Ip range
-  //
+   protected:
+      static bool tryParseIPPart(const char * pszString);
+      static void getIpRange(const char * pszip, const char * pszNetmask,
+                             ::string * firstIp, ::string * lastIp);
+   protected:
+      ActionType m_action;
 
-  ::string m_firstIp;
-  ::string m_lastIp;
-};
+      //
+      // Ip range
+      //
 
+      ::string m_firstIp;
+      ::string m_lastIp;
+   };
+} // namespace remoting_node
 

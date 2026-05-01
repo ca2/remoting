@@ -37,7 +37,7 @@ namespace remoting_windows
       if (FAILED(hr))
       {
          ::string errMess;
-         errMess.formatf("Can't IDXGISurface->Map, error code = %l", (long)hr);
+         errMess.format("Can't IDXGISurface->Map, error code = %l", (long)hr);
          throw ::subsystem::Exception(errMess);
       }
    }
