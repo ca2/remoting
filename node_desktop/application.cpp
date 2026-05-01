@@ -63,6 +63,10 @@ namespace remoting_node_desktop
       if (ecommand == e_command_application_start)
       {
 
+
+         auto pfactory = system()->factory("remoting", "windows");
+
+         pfactory->merge_to_global_factory();
          //defer_construct_newø(m_pserverapplication);///
 
          //m_pserverapplication->on_start();

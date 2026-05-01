@@ -40,6 +40,7 @@
 #include "ClientTerminationListener.h"
 #include "ClientInputEventListener.h"
 //#include "remoting/remnode_desktop/NewConnectionEvents.h"
+#include "remoting/remoting/node_config/Configurator.h"
 #include "subsystem/platform/DemandTimer.h"
 
 namespace remoting
@@ -107,7 +108,7 @@ namespace remoting
       int m_idleTimeout;
 
 
-      RfbClient(::remoting_node::NewConnectionEvents *newConnectionEvents, ::subsystem::SocketIPv4Interface *socket,
+      RfbClient(::remoting_node::Configurator * pconfigurator, ::remoting_node::NewConnectionEvents *newConnectionEvents, ::subsystem::SocketIPv4Interface *socket,
                 ClientTerminationListener *pclientterminationlistener,
                 ClientAuthListener *pclientauthlistener, bool viewOnly,
                 bool isOutgoing, unsigned int id,

@@ -48,7 +48,7 @@ namespace remoting_client
         void setHostName(const ::scoped_string & hostname);
 
         //protected:
-        bool onCommand(unsigned int controlID, bool bAccelerator, unsigned int notificationID) override;
+        bool onCommand(unsigned int controlID, unsigned int notificationID) override;
         bool onInitDialog();
 
         ::innate_subsystem::TextBox m_textboxPassword;

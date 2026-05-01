@@ -39,14 +39,44 @@ namespace remoting_windows
    lockable_critical_section WindowsInputBlocker::m_lastInputTimeMutex;
 
    WindowsInputBlocker *WindowsInputBlocker::m_instance = 0;
+   //
+   // WindowsInputBlocker::WindowsInputBlocker(::subsystem::LogWriter *log)
+   // : m_isKeyboardBlocking(false),
+   //   m_isMouseBlocking(false),
+   //   m_isSoftKeyboardBlocking(false),
+   //   m_isSoftMouseBlocking(false),
+   //   m_plogwriter(log)
+   // {
+   //    {
+   //       AutoLock al(&m_instanceMutex);
+   //       if (m_instance != 0) {
+   //          throw ::subsystem::Exception("The only one instance of"
+   //                          "WindowsInputBlocker is allowed");
+   //       }
+   //       m_instance = this;
+   //    }
+   //    resume();
+   // }
 
-   WindowsInputBlocker::WindowsInputBlocker(::subsystem::LogWriter *log)
+
+   WindowsInputBlocker::WindowsInputBlocker()
    : m_isKeyboardBlocking(false),
      m_isMouseBlocking(false),
      m_isSoftKeyboardBlocking(false),
-     m_isSoftMouseBlocking(false),
-     m_plogwriter(log)
+     m_isSoftMouseBlocking(false)
    {
+   }
+
+
+   WindowsInputBlocker::~WindowsInputBlocker()
+   {
+      terminate();
+      wait();
+      m_instance = 0;
+   }
+   void WindowsInputBlocker::initialize_windows_input_blocker(::subsystem::LogWriter *plogwriter)
+   {
+      m_plogwriter = plogwriter;
       {
          AutoLock al(&m_instanceMutex);
          if (m_instance != 0) {
@@ -56,13 +86,6 @@ namespace remoting_windows
          m_instance = this;
       }
       resume();
-   }
-
-   WindowsInputBlocker::~WindowsInputBlocker()
-   {
-      terminate();
-      wait();
-      m_instance = 0;
    }
 
    class ::time WindowsInputBlocker::getLastInputTime() const

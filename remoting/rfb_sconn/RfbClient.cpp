@@ -41,7 +41,8 @@
 
 namespace remoting
 {
-   RfbClient::RfbClient(::remoting_node::NewConnectionEvents *pnewconnectionevents,
+   RfbClient::RfbClient(::remoting_node::Configurator * pconfigurator,
+      ::remoting_node::NewConnectionEvents *pnewconnectionevents,
                         ::subsystem::SocketIPv4Interface *psocket,
                         ClientTerminationListener *pclientterminationlistener,
                         ClientAuthListener *pclientauthlistener,
@@ -51,7 +52,8 @@ namespace remoting
                         const ViewPortState & viewportstateDynamic,
                         int idleTimeout,
                         ::subsystem::LogWriter * plogwriter)
-   : m_psocket(psocket), // now we own the socket
+   :m_pconfigurator(pconfigurator),
+   m_psocket(psocket), // now we own the socket
      m_pnewconnectionevents(pnewconnectionevents),
      m_viewOnly(viewOnly),
      m_isOutgoing(isOutgoing),
@@ -237,7 +239,7 @@ namespace remoting
          raw_construct_newø(m_prfbinputgate, m_pbufferedinput);
          raw_construct_newø(m_prfbinitializer);
 
-         m_prfbinitializer->initialize_rfb_initializer(m_psockstream, m_prfbclient->m_pclientauthlistener, m_prfbclient, !m_prfbclient->m_isOutgoing);
+         m_prfbinitializer->initialize_rfb_initializer(prfbclient->m_pconfigurator, m_psockstream, m_prfbclient->m_pclientauthlistener, m_prfbclient, !m_prfbclient->m_isOutgoing);
 
       }
 

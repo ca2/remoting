@@ -83,7 +83,7 @@ namespace remoting_client
         void set_connecting(int iPhase);
 
         //protected:
-        bool onCommand(unsigned int controlID, bool bAccelerator, unsigned int notificationID) override;
+        bool onCommand(unsigned int controlID, unsigned int notificationID) override;
         bool onInitDialog() override;
 
         virtual bool dialog_procedure(::iptr & iptrResult, unsigned int message, ::wparam wparam, ::lparam lparam) override;

@@ -51,7 +51,7 @@ namespace remoting_client
         m_strHost = hostname;
     }
 
-    bool AuthenticationDialog::onCommand(unsigned int controlID, bool bAccelerator, unsigned int notificationID)
+    bool AuthenticationDialog::onCommand(unsigned int controlID, unsigned int notificationID)
     {
         if (controlID == ::innate_subsystem::e_control_id_ok) {
             m_strPassword = m_textboxPassword.getText();

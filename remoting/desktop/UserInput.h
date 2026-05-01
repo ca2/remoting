@@ -69,8 +69,8 @@ namespace remoting
       virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rectangle) = 0;
       virtual ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName) = 0;
 
-      virtual void getApplicationRegion(unsigned int procId, ::remoting::Region & region) = 0;
-      virtual bool isApplicationInFocus(unsigned int procId) = 0;
+      virtual void getApplicationRegion(const ::process_identifier & processidentifier, ::remoting::Region & region) = 0;
+      virtual bool isApplicationInFocus(const ::process_identifier & processidentifier) = 0;
 
       virtual void initKeyFlag(unsigned char initValue);
 

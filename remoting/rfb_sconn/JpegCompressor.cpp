@@ -27,6 +27,8 @@
 //#include "subsystem/platform/::string.h"
 #include "subsystem/platform/Exception.h"
 
+#include "int_equality_debug.h"
+
 
 namespace remoting
 {
@@ -73,6 +75,7 @@ namespace remoting
    // Constructor and destructor.
    //
 
+
    StandardJpegCompressor::StandardJpegCompressor()
      : m_quality(-1), // make sure (m_quality != n_newQuality)
        m_newQuality(DEFAULT_JPEG_QUALITY),
@@ -81,7 +84,53 @@ namespace remoting
        m_numBytesReady(0)
    {
       // Initialize JPEG compression structure.
-      jpeg_create_compress(&m_jpeg.cinfo);
+      //int iInspectCount = 3;
+
+      int_equality_debug debug;
+
+      //debug.m_iInspectCount = 3;
+      //int iIndex = 0;
+      //debug.add_outer_item(JPEG_LIB_VERSION, "JPEG_LIB_VERSION");
+      //debug.add_outer_item(sizeof(jpeg_compress_struct), "sizeof(jpeg_compress_struct)");
+
+
+
+      INT_EQUALITY_DEBUG_START();
+      INT_EQUALITY_DEBUG_INNER_INT(JPEG_LIB_VERSION);
+      INT_EQUALITY_DEBUG_INNER_INT(sizeof(struct jpeg_compress_struct));
+      INT_EQUALITY_DEBUG_OFFSET(struct jpeg_compress_struct, comp_info);
+      INT_EQUALITY_DEBUG_OFFSET(struct jpeg_compress_struct, num_scans);
+      INT_EQUALITY_DEBUG_OFFSET(struct jpeg_compress_struct, restart_interval);
+      INT_EQUALITY_DEBUG_OFFSET(struct jpeg_compress_struct, density_unit);
+      INT_EQUALITY_DEBUG_OFFSET(struct jpeg_compress_struct, X_density);
+      INT_EQUALITY_DEBUG_OFFSET(struct jpeg_compress_struct, Y_density);
+      INT_EQUALITY_DEBUG_OFFSET(struct jpeg_compress_struct, write_Adobe_marker);
+      INT_EQUALITY_DEBUG_OFFSET(struct jpeg_compress_struct, color_transform);
+      INT_EQUALITY_DEBUG_OFFSET(struct jpeg_compress_struct, next_scanline);
+      INT_EQUALITY_DEBUG_OFFSET(struct jpeg_compress_struct, progressive_mode);
+      INT_EQUALITY_DEBUG_OFFSET(struct jpeg_compress_struct, Ss);
+      INT_EQUALITY_DEBUG_OFFSET(struct jpeg_compress_struct, master);
+
+      // debug.m_iaOuter[2] = offsetof(jpeg_compress_struct, progressive_mode); debug.m_szaDescription[2] = "offsetof(jpeg_compress_struct, progressive_mode)";
+      // debug.m_iaOuter[3] = offsetof(jpeg_compress_struct, progressive_mode); debug.m_szaDescription[2] = "offsetof(jpeg_compress_struct, progressive_mode)";
+      // debug.m_iaOuter[4] = offsetof(jpeg_compress_struct, progressive_mode); debug.m_szaDescription[2] = "offsetof(jpeg_compress_struct, progressive_mode)";
+
+      //int inner[10];
+
+      int theres_error = jpeg_create_compress2(&m_jpeg.cinfo, INT_EQUALITY_DEBUG_INNER);
+
+      if (theres_error)
+      {
+
+         INT_EQUALITY_DEBUG_TRACE();
+
+         ::string strMessage;
+
+         strMessage.formatf("Incompatible jpeg library %d", theres_error);
+
+         throw ::exception(error_bad_data_format, strMessage);
+
+      }
 
       m_jpeg.cinfo.err = jpeg_std_error(&m_jpeg.jerr);
       m_jpeg.cinfo.err->error_exit = errorExit;

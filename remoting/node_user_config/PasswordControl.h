@@ -36,7 +36,8 @@ namespace remoting_node
    Common usage is to avoid code duplicate in control, primary, viewonly password management
    from gui.
    */
-   class PasswordControl
+   class PasswordControl :
+   virtual public ::particle
    {
    public:
       typedef enum {
@@ -104,8 +105,8 @@ namespace remoting_node
       void releaseCryptedPassword();
 
    protected:
-      ::innate_subsystem::Control *m_changeButton;
-      ::innate_subsystem::Control *m_unsetButton;
+      ::pointer < ::innate_subsystem::Control > m_changeButton;
+      ::pointer < ::innate_subsystem::Control > m_unsetButton;
 
       ::array_base<char> m_cryptedPassword;
 

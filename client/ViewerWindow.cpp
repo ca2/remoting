@@ -464,28 +464,29 @@ namespace remoting_client
         
       ::string host = m_pconnectiondata->getHost();
 
-      ::array_base<TCHAR> kbdName;
-      kbdName.resize(KL_NAMELENGTH);
-      memset(&kbdName[0], 0, sizeof(TCHAR) * KL_NAMELENGTH);
-      if (!GetKeyboardLayoutName( &kbdName[0] )) 
+      wstring kbdName;
+      auto pwsz= kbdName.get_buffer(KL_NAMELENGTH);
+      //memset(&kbdName[0], 0, sizeof(TCHAR) * KL_NAMELENGTH);
+      if (!GetKeyboardLayoutNameW( pwsz ))
       {
-      }         kbdName[0] = _T('?');
-         kbdName[1] = _T('?');
-         kbdName[2] = _T('?');
-
+         pwsz[0] = '?';
+         pwsz[1] = '?';
+         pwsz[2] = '?';
+      }
+       kbdName.release_buffer();
 
         ::int_rectangle geometry;
         int pixelSize = 0;
         m_pdesktopwindow->getServerGeometry(&geometry, &pixelSize);
         ::string str;
-        str.format(MainSubsystem().StringTable().getString(IDS_CONNECTION_INFO_FORMAT).c_str(),
+        str.runtime_format(MainSubsystem().StringTable().getString(IDS_CONNECTION_INFO_FORMAT),
                    host.c_str(),
                    m_pviewercore->getRemoteDesktopName().c_str(),
                    m_pviewercore->getProtocolString().c_str(),
                    geometry.width(),
                    geometry.height(),
                    pixelSize,
-                   &kbdName[0]);
+                   ::string(kbdName).c_str());
         MainSubsystem().message_box(operating_system_window(),
                    str,
                    MainSubsystem().StringTable().getString(IDS_CONNECTION_INFO_CAPTION),
@@ -803,12 +804,12 @@ namespace remoting_client
         m_poperatingsystemapplication->postMessage(remoting_impact::_WM_USER_ABOUT);
     }
 
-    bool ViewerWindow::onCommand(unsigned int controlID, bool bAccelerator, unsigned int notificationID)
+    bool ViewerWindow::onCommand(unsigned int controlID, unsigned int notificationID)
     {
 
 
 
-        if (bAccelerator) {
+        if (notificationID == 1) {
             int transl = translateAccelToTB(controlID);
 
             if (transl != -1) {

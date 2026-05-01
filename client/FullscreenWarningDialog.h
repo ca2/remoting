@@ -45,7 +45,7 @@ namespace remoting_client
 
     ////protected:
         bool onInitDialog() override;
-        bool onCommand(unsigned int controlID, bool bAccelerator, unsigned int notificationID) override;
+        bool onCommand(unsigned int controlID, unsigned int notificationID) override;
 
 
     };

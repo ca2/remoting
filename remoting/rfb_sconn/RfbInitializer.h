@@ -64,7 +64,7 @@ namespace remoting
       ~RfbInitializer() override;
 
 
-      virtual void initialize_rfb_initializer(Channel *pchannel, ClientAuthListener *pclientauthlistener, RfbClient *client, bool authAllowed);
+      virtual void initialize_rfb_initializer(::remoting_node::Configurator * pconfigurator, Channel *pchannel, ClientAuthListener *pclientauthlistener, RfbClient *client, bool authAllowed);
 
       void authPhase();
       void afterAuthPhase(const CapContainer *srvToClCaps, const CapContainer *clToSrvCaps, const CapContainer *encCaps,

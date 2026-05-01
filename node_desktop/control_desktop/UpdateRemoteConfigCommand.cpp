@@ -29,8 +29,8 @@
 
 namespace remoting_control_desktop
 {
-   UpdateRemoteConfigCommand::UpdateRemoteConfigCommand(ControlProxy * pcontrolproxy)
-   : m_pcontrolproxy(pcontrolproxy)
+   UpdateRemoteConfigCommand::UpdateRemoteConfigCommand(::remoting_node::Configurator * pconfigurator, ControlProxy * pcontrolproxy)
+   : m_pconfigurator(pconfigurator), m_pcontrolproxy(pcontrolproxy)
    {
    }
 

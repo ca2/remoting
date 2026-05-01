@@ -47,7 +47,7 @@ namespace remoting
       m_rectangleCopy.clear();
       m_pointSource.clear();
 
-      EnumWindows((WNDENUMPROC)enumWindowsFnCopyRect, (::lparam)this);
+      EnumWindows((WNDENUMPROC)enumWindowsFnCopyRect, (::lparam)(void *) this);
       m_lastWinProps = m_newWinProps;
       m_newWinProps.clear();
       rectangleCopy = m_rectangleCopy;
@@ -95,14 +95,14 @@ namespace remoting
 
    bool CopyRectDetector::findPrevWinProps(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rectangle)
    {
-      ::list_base<WinProp>::iterator winPropsIter;
-      WinProp *winProp;
-      for (winPropsIter = m_lastWinProps.begin(); winPropsIter != m_lastWinProps.end(); winPropsIter++)
+      //::list_base<WinProp>::iterator winPropsIter;
+      //WinProp *winProp;
+      for (auto winprop:m_lastWinProps)
       {
-         winProp = &(*winPropsIter);
-         if (winProp->m_operatingsystemwindow == operatingsystemwindow)
+        // winProp = &(*winPropsIter);
+         if (winprop.m_operatingsystemwindow == operatingsystemwindow)
          {
-            rectangle = winProp->m_rectangleOld;
+            rectangle = winprop.m_rectangleOld;
             return true;
          }
       }

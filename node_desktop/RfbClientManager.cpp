@@ -471,7 +471,7 @@ namespace remoting_node_desktop
       m_plogwriter->error("Client #{} connected", m_nextClientId);
       m_plogwriter->debug("new client, process memory usage: {} ", MainSubsystem().getCurrentMemoryUsage());
 
-      m_nonAuthClientList.add(new ::remoting::RfbClient(m_pnewconnectionevents, psocket, this, this, viewOnly, isOutgoing,
+      m_nonAuthClientList.add(new ::remoting::RfbClient(m_pconfigurator, m_pnewconnectionevents, psocket, this, this, viewOnly, isOutgoing,
                                             m_nextClientId, *constViewPort, m_dynViewPort, timeout, m_plogwriter));
       m_nextClientId++;
    }

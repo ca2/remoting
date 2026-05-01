@@ -29,6 +29,7 @@
 #include "remoting/remoting_windows/desktop/WinD3D11Texture2D.h"
 #include "remoting/remoting_windows/desktop/WinAutoMapDxgiSurface.h"
 #include "remoting/remoting_windows/desktop/Win8DeskDuplicationThread.h"
+#include "remoting/remoting_windows/desktop/WinDxgiOutput1.h"
 
 
 namespace remoting_windows
@@ -47,7 +48,7 @@ namespace remoting_windows
       m_plogwriter->debug("Creating Win8DeskDuplication for {} outputs", dxgiOutput.size());
       for (size_t i = 0; i < dxgiOutput.size(); i++)
       {
-         m_dxgiOutput1.add(dxgiOutput[i]);
+         m_dxgiOutput1.add(allocateø WinDxgiOutput1(dxgiOutput[i]));
          m_outDupl.add(allocateø WinDxgiOutputDuplication(m_dxgiOutput1[i], &m_device));
          m_rotations.add(dxgiOutput[i]->getRotation());
          m_stageTextures2D.add(allocateø WinCustomD3D11Texture2D(m_device.getDevice(), (unsigned int)targetRect[i].width(),
@@ -239,6 +240,8 @@ namespace remoting_windows
                              rectangleTarget.height());
 
          sizeStage.cx = static_cast<int>(autoMapSurface.getStride() / 4);
+         construct_newø(m_pframebufferAuxiliaryProperty);
+
          m_pframebufferAuxiliaryProperty->setPropertiesWithoutResize(sizeStage, m_targetFb->getPixelFormat());
          m_pframebufferAuxiliaryProperty->setBuffer(autoMapSurface.getBuffer());
          switch (rotation)

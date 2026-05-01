@@ -43,7 +43,7 @@ namespace remoting_control_desktop
        * Creates command.
        * @param serverControl control proxy.
        */
-      UpdateRemoteConfigCommand(ControlProxy * pcontrolproxy);
+      UpdateRemoteConfigCommand(::remoting_node::Configurator * pconfigurator, ControlProxy * pcontrolproxy);
       /**
        * Deletes command.
        */

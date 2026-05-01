@@ -32,7 +32,7 @@ namespace remoting_windows
 {
 
 
-   WinDxgiOutput1::WinDxgiOutput1(WinDxgiOutput * dxgiOutput) : m_dxgiOutput1(0)
+   WinDxgiOutput1::WinDxgiOutput1(WinDxgiOutput * dxgiOutput)
    {
       HRESULT hr = dxgiOutput->queryInterface(__uuidof(m_dxgiOutput1), reinterpret_cast<void **>(&m_dxgiOutput1));
       if (FAILED(hr))

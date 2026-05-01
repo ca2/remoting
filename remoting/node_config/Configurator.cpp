@@ -149,9 +149,10 @@ namespace remoting_node
       // if (forService && m_regSA != 0) {
       //   sa = m_regSA->getServiceSA();
       // }
-      // RegistrySettingsManager sm(rootKey, RegistryPaths::SERVER_PATH, sa);
+      //::remoting::RegistrySettingsManager sm(rootKey, RegistryPaths::SERVER_PATH, sa);
+       ::remoting::RegistrySettingsManager sm(pregistrykey,"Software/remoting/server");
 
-      // isOk = save(&sm);
+       isOk = save(&sm);
 
       return isOk;
    }

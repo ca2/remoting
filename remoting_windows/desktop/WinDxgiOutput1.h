@@ -51,10 +51,10 @@ namespace remoting_windows
       // this object destructor has been called.
       IDXGIOutput1 *getDxgiOutput1();
 
-   private:
+   //private:
       void copy(const WinDxgiOutput1 &src);
 
-      IDXGIOutput1 *m_dxgiOutput1;
+     comptr <  IDXGIOutput1 > m_dxgiOutput1;
    };
 
 

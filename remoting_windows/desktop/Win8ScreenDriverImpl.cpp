@@ -188,6 +188,10 @@ namespace remoting_windows
          throw ::subsystem::Exception("Unable get all DXGI outputs for virtual screen");
       }
 
+
+      construct_newø(m_pframebufferProperty);
+
+
       ::innate_subsystem::PixelFormat pixelformat = getDxPixelFormat();
       ::int_rectangle rectangleVirtDeskBound = virtDeskRegion.getBounds();
       m_pframebufferProperty->setProperties(rectangleVirtDeskBound, pixelformat);

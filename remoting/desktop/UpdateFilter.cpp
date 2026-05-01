@@ -63,8 +63,13 @@ namespace remoting
    void UpdateFilter::filter(UpdateContainer & updatecontainer)
    {
       m_plogwriter->debug("UpdateFilter::filter()");
-      critical_section_lock al(m_pcriticalsectionFramebuffer);
 
+if (defer_construct_newø(m_pgraboptimizator))
+{
+   m_pgraboptimizator->initialize_grab_optimizator(m_plogwriter);
+
+}
+      critical_section_lock al(m_pcriticalsectionFramebuffer);
       ::innate_subsystem::Framebuffer *pframebufferScreen = m_pscreendriver->getScreenBuffer();
 
       // Checking for buffers equal

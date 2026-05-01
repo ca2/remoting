@@ -79,7 +79,7 @@ namespace remoting_client
         } catch (::subsystem::SystemException &sysEx) {
             ::string strMessage;
 
-            strMessage.format(MainSubsystem().StringTable().getString(IDS_FAILED_TO_OPEN_URL_FORMAT).c_str(), sysEx.get_message());
+            strMessage.runtime_format(MainSubsystem().StringTable().getString(IDS_FAILED_TO_OPEN_URL_FORMAT).c_str(), sysEx.get_message());
 
             MainSubsystem().message_box(operating_system_window(),
                        wstring(strMessage),
@@ -107,7 +107,7 @@ namespace remoting_client
 
         // Format product version and build time for displaying on the dialog.
         ::string versionText;
-        versionText.format(MainSubsystem().StringTable().getString(IDS_PRODUCT_VERSION_FORMAT).c_str(),
+        versionText.runtime_format(MainSubsystem().StringTable().getString(IDS_PRODUCT_VERSION_FORMAT).c_str(),
                            ::string(versionString).c_str(),
                            BuildTime::DATE);
 

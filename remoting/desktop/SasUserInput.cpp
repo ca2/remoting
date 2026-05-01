@@ -122,12 +122,12 @@ namespace remoting
       return m_client->getWindowHandleByName(windowName);
    }
 
-   void SasUserInput::getApplicationRegion(unsigned int procId, Region & region)
+   void SasUserInput::getApplicationRegion(const ::process_identifier & processidentifier, Region & region)
    {
-      m_client->getApplicationRegion(procId, region);
+      m_client->getApplicationRegion(processidentifier, region);
    }
 
-   bool SasUserInput::isApplicationInFocus(unsigned int procId) { return m_client->isApplicationInFocus(procId); }
+   bool SasUserInput::isApplicationInFocus(const ::process_identifier & processidentifier) { return m_client->isApplicationInFocus(processidentifier); }
 
 
 } // namespace remoting

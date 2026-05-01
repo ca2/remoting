@@ -29,6 +29,8 @@
 #include "subsystem/_common_header.h"
 #include "subsystem/framebuffer/PixelFormat.h"
 
+#include "port_jpeg/jpeglib.h"
+
 namespace remoting
 {
 
@@ -44,7 +46,7 @@ namespace remoting
 // #include "libjpeg-turbo/jpeglib.h"
 // #else
 // #include "libjpeg/jpeglib.h"
-#include "port_jpeg/jpeglib.h"
+
 
    //
    // An abstract interface for performing JPEG compression.

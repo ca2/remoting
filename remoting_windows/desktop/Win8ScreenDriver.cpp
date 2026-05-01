@@ -24,6 +24,7 @@
 #include "framework.h"
 #include "remoting/remoting_windows/desktop/Win8ScreenDriver.h"
 #include "subsystem/platform/Exception.h"
+#include "remoting/remoting/node_config/Configurator.h"
 
 namespace remoting_windows
 {
@@ -63,11 +64,16 @@ namespace remoting_windows
    void Win8ScreenDriver::initialize_screen_driver(::remoting_node::Configurator * pconfigurator,
       ::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
                                         ::innate_subsystem::Framebuffer *pframebuffer,
-                          lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter) //:
+                          lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter)// :
        // //WinVideoRegionUpdaterImpl(plogwriter),
-       // //m_plogwriter(plogwriter), m_pcriticalsectionFramebuffer(pcriticalsectionFramebuffer),
+       //m_plogwriter(plogwriter), m_pcriticalsectionFramebuffer(pcriticalsectionFramebuffer)
        // m_pupdatekeeper(pupdatekeeper), m_pupdatelistener(pupdatelistener), m_detectionEnabled(false)
    {
+      m_plogwriter = plogwriter;
+      m_pcriticalsectionFramebuffer = pcriticalsectionFramebuffer;
+      m_pupdatekeeper = pupdatekeeper;
+      m_pupdatelistener =  pupdatelistener;
+      m_pconfigurator = pconfigurator;
       WinVideoRegionUpdaterImpl::initialize_screen_driver(pconfigurator, pupdatekeeper, pupdatelistener, pframebuffer, pcriticalsectionFramebuffer, plogwriter);
       m_plogwriter->debug("Win8ScreenDriver creating new Win8ScreenDriverImpl");
       critical_section_lock al(&m_drvImplMutex);

@@ -28,7 +28,7 @@
 #include "remoting/remoting_windows/_common_header.h"
 
 #include "remoting/remoting_windows/desktop/WinDxgiAdapter.h"
-
+#include "acme/operating_system/windows_common/com/comptr.h"
 // #include aaa_<d3d11.h>
 // #include aaa_<DXGI1_2.h>
 
@@ -55,10 +55,10 @@ namespace remoting_windows
 
       HRESULT queryInterface(REFIID riid, void **ppvObject);
 
-   private:
+   //private:
       void copy(const WinDxgiOutput &src);
 
-      IDXGIOutput *m_dxgiOutput;
+      comptr < IDXGIOutput >m_dxgiOutput;
       DXGI_OUTPUT_DESC m_description;
    };
 

@@ -227,6 +227,8 @@ namespace remoting_node_desktop
       //   m_plogwriter->interror("{}", ex.get_message());
       // }
 
+      constructø(m_pdesktopfactory);
+
       auto desktopFactory = m_pdesktopfactory;
       // if (runsInServiceContext)
       // {

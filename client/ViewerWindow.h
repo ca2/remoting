@@ -162,7 +162,7 @@ namespace remoting_client
         void onSize() override;
         //bool onCreate(LPCREATESTRUCT lps);
        bool onCreate(void *pCreateStruct) override;
-        bool onCommand(unsigned int controlID, bool bAccelerator, unsigned int notificationID) override;
+        bool onCommand(unsigned int controlID, unsigned int notificationID) override;
         //bool onNotify(int idCtrl, LPNMHDR pnmh);
         bool onSysCommand(::wparam wParam, ::lparam lParam);
         bool onClose();

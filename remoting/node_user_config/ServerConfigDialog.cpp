@@ -386,8 +386,8 @@ namespace remoting_node
       m_inactivityTimeoutSpin.setAccel(0, 1);
       m_inactivityTimeoutSpin.setRange32(0, INT_MAX);
 
-      m_ppControl = new PasswordControl(&m_primaryPassword, &m_unsetPrimaryPassword);
-      m_vpControl = new PasswordControl(&m_readOnlyPassword, &m_unsetReadOnlyPassword);
+      m_ppControl = allocateø PasswordControl(&m_primaryPassword, &m_unsetPrimaryPassword);
+      m_vpControl = allocateø PasswordControl(&m_readOnlyPassword, &m_unsetReadOnlyPassword);
    }
 
    //

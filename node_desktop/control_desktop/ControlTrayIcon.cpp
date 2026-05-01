@@ -71,7 +71,7 @@ initialize(::system());
       //setWindowProcHolder(this);
 
       // Prepare commands for configration dialog.
-      m_pcommandUpdateRemoteConfig = new UpdateRemoteConfigCommand(m_pcontrolproxy);
+      m_pcommandUpdateRemoteConfig = new UpdateRemoteConfigCommand(m_pconfigurator,m_pcontrolproxy);
       m_pcommandUpdateLocalConfig = new UpdateLocalConfigCommand(m_pconfigurator,m_pcontrolproxy);
       m_pmacrocommandApplyChanges = allocateø ::subsystem::MacroCommand();
       m_pmacrocommandApplyChanges->addCommand(m_pcommandUpdateRemoteConfig);
@@ -328,11 +328,9 @@ initialize(::system());
    {
       m_aboutDialog.show();
 
-      ::cast < ::remoting_node_desktop::application > papp = m_papplication;
+      auto papp = MainSubsystem().m_papplicationSubsystem;
 
-      auto pserverapp = papp->m_pserverapplication;
-
-      pserverapp->addModelessDialog(m_aboutDialog.operating_system_window());
+      papp->addModelessDialog(m_aboutDialog.operating_system_window());
    }
 
    void ControlTrayIcon::onCloseControlInterfaceMenuItemClick()

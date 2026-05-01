@@ -12,13 +12,13 @@
 IMPLEMENT_FACTORY(remoting_windows)
 {
 
-   pfactory->add_factory_item<::remoting::DesktopWinImpl, ::remoting::Desktop>();
-   pfactory->add_factory_item<::remoting::WindowsUserInput, ::remoting::UserInput>();
-   pfactory->add_factory_item<::remoting::WindowsInputBlocker, ::remoting::InputBlocker>();
+   pfactory->add_factory_item<::remoting_windows::DesktopWinImpl, ::remoting::Desktop>();
+   pfactory->add_factory_item<::remoting_windows::WindowsUserInput, ::remoting::UserInput>();
+   pfactory->add_factory_item<::remoting_windows::WindowsInputBlocker, ::remoting::InputBlocker>();
 
    //pfactory->add_factory_item<::remoting::ApplicationDesktopFactory, ::remoting::DesktopFactory>();
    pfactory->add_factory_item<::remoting_windows::DesktopFactory, ::remoting::DesktopFactory>();
-   pfactory->add_factory_item<::remoting::Win32ScreenDriverFactory, ::remoting::ScreenDriverFactory>();
+   pfactory->add_factory_item<::remoting_windows::Win32ScreenDriverFactory, ::remoting::ScreenDriverFactory>();
 
 }
 

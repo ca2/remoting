@@ -88,7 +88,7 @@ if(${WIN32})
    #desktop/WinServiceDesktopFactory.h
    desktop/WinVideoRegionUpdaterImpl.cpp
    desktop/WinVideoRegionUpdaterImpl.h
-
+_factory.cpp
    )
 endif()
 

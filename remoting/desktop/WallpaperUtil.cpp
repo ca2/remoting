@@ -43,6 +43,8 @@ namespace remoting
 
    void WallpaperUtil::initialize_wallpaper_util(::remoting_node::Configurator * pconfigurator, ::subsystem::LogWriter *plogwriter)
    {
+      m_pconfigurator = pconfigurator;
+      m_plogwriter = plogwriter;
       initialize_config_reload_listener(pconfigurator);
 
    }

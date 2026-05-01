@@ -72,8 +72,9 @@ namespace remoting
       //delete m_pdatainputstream;
    }
 
-   void RfbInitializer::initialize_rfb_initializer(Channel * pchannel, ClientAuthListener *pclientauthlistener, RfbClient *prfbclient, bool bAuthAllowed)
+   void RfbInitializer::initialize_rfb_initializer(::remoting_node::Configurator * pconfigurator, Channel * pchannel, ClientAuthListener *pclientauthlistener, RfbClient *prfbclient, bool bAuthAllowed)
    {
+      m_pconfigurator = pconfigurator;
       raw_construct_newø(m_pdataoutputstream, pchannel);
       //m_pdataoutputstream->initialize_data_output_stream(pchannel);
       raw_construct_newø(m_pdatainputstream, pchannel);

@@ -59,8 +59,8 @@ namespace remoting
       virtual void getNormalizedRect(::int_rectangle & rectangle);
       virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rectangle);
       virtual ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName);
-      virtual void getApplicationRegion(unsigned int procId, Region & region);
-      virtual bool isApplicationInFocus(unsigned int procId);
+      virtual void getApplicationRegion(const ::process_identifier & processidentifier, Region & region);
+      virtual bool isApplicationInFocus(const ::process_identifier & processidentifier);
 
       // To catch a new clipboard
       virtual void onRequest(unsigned char reqCode, BlockingGate *pblockinggate);

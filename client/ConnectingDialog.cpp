@@ -75,7 +75,7 @@ namespace remoting_client
       }
    }
 
-   bool ConnectingDialog::onCommand(unsigned int controlID, bool bAccelerator, unsigned int notificationID)
+   bool ConnectingDialog::onCommand(unsigned int controlID, unsigned int notificationID)
    {
       if (controlID == ::innate_subsystem::e_control_id_ok) {
          closeDialog(1);

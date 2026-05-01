@@ -173,7 +173,7 @@ namespace remoting_client
       {
          ::string strMessage;
 
-         strMessage.format(MainSubsystem().StringTable().getString(IDS_FAILED_TO_OPEN_URL_FORMAT).c_str(),
+         strMessage.runtime_format(MainSubsystem().StringTable().getString(IDS_FAILED_TO_OPEN_URL_FORMAT).c_str(),
                                   sysEx.get_message().c_str());
 
          MainSubsystem().message_box(operating_system_window(), strMessage,

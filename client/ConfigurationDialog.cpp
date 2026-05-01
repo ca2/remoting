@@ -159,7 +159,7 @@ namespace remoting_client
         txt.format("{}", config->getListenPort());
         m_textboxReverseConn.setText(txt);
 
-        txt.format("{}", config->getLogLevel());
+        txt.format("{}", (int) config->getLogLevel());
         m_textboxVerbLvl.setText(txt);
 
         txt.format("{}", config->getHistoryLimit());
@@ -201,7 +201,7 @@ namespace remoting_client
         }
 
         ::string scopedstrMessage;
-        scopedstrMessage.format(MainSubsystem().StringTable().getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC).c_str(), scopedstrTbName.c_str());
+        scopedstrMessage.runtime_format(MainSubsystem().StringTable().getString(IDS_ERROR_VALUE_FIELD_ONLY_NUMERIC).c_str(), scopedstrTbName.c_str());
 
         MainSubsystem().message_box(operating_system_window(), scopedstrMessage,
                    MainSubsystem().StringTable().getString(IDS_CONFIGURATION_CAPTION), ::user::e_message_box_ok | ::user::e_message_box_icon_warning);

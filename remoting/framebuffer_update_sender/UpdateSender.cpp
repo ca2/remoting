@@ -98,6 +98,7 @@ UpdateSender::UpdateSender() :
        // , m_id(id), m_videoFrozen(false), m_shareOnlyApp(false), m_plogwriter = plogwriter;,
        // m_pcursorupdates(plogwriter)
    {
+   construct_newø(m_ppixelconverter);
           m_pupdaterequestlistener = updReqListener;
           m_pdesktop = desktop;
           m_senderControlInformation = senderControlInformation;
@@ -1017,7 +1018,7 @@ UpdateSender::UpdateSender() :
          critical_section_lock al(&m_criticalsectionRectLoc);
          regionChangedAndCopied.add(m_regionRequestedFull);
       }
-
+defer_construct_newø(m_pframebuffer);
       updatecontainer.m_bScreenSizeChanged =
          !m_pdesktop->updateExternalFramebuffer(m_pframebuffer,regionChangedAndCopied, rectangleViewport) ||
          updatecontainer.m_bScreenSizeChanged;

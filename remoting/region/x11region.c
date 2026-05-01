@@ -438,19 +438,19 @@ Bool miRectAlloc(register RegionPtr pRgn, int n)
 
 
 Bool __miRegionInitTransfer(pdst, psrc)
-register RegionPtr * pdst;
-register RegionPtr * psrc;
+register RegionPtr pdst;
+register RegionPtr psrc;
 {
    *pdst = *psrc;
-   miRegionBreak(*psrc);
+   miRegionInit(psrc, NullBox, 0);
 }
 
 
 Bool __miRegionTransfer(pdst, psrc)
-register RegionPtr * pdst;
-register RegionPtr * psrc;
+register RegionPtr pdst;
+register RegionPtr psrc;
 {
-   miRegionUninit(*pdst);
+   miRegionUninit(pdst);
    __miRegionInitTransfer(pdst, psrc);
 }
 

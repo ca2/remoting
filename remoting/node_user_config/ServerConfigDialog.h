@@ -54,7 +54,7 @@ namespace remoting_node
 
       virtual bool onInitDialog();
       //virtual bool onNotify(unsigned int controlID, ::lparam data);
-      virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
+      virtual bool onCommand(unsigned int controlID, unsigned int notificationID) override;
       virtual bool onDestroy() { return true; }
 
       //
@@ -147,8 +147,8 @@ namespace remoting_node
       ::pointer < ::innate_subsystem::DialogInterface > m_pdialogParent;
 
       // Primary password control.
-      PasswordControl *m_ppControl;
-      PasswordControl *m_vpControl;
+      ::pointer < PasswordControl > m_ppControl;
+      ::pointer < PasswordControl > m_vpControl;
    };
 } // namespace remoting_node
 

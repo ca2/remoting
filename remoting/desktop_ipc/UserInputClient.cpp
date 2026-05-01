@@ -257,7 +257,7 @@ void UserInputClient::getWindowCoords(const ::operating_system::window & operati
   return operatingsystemwindow;
 }
 
-void UserInputClient::getApplicationRegion(unsigned int procId, Region & region)
+void UserInputClient::getApplicationRegion(const ::process_identifier & processidentifier, Region & region)
 {
   critical_section_lock al(m_pcontrolgate);
   bool success = false;
@@ -265,7 +265,7 @@ void UserInputClient::getApplicationRegion(unsigned int procId, Region & region)
     try {
       // Send request
       m_pcontrolgate->writeUInt8(APPLICATION_REGION_REQ);
-      m_pcontrolgate->writeUInt32(procId);
+      m_pcontrolgate->writeUInt32(processidentifier);
       readRegion(region, m_pcontrolgate);
       success = true;
     } catch (ReconnectException &) {
@@ -273,7 +273,7 @@ void UserInputClient::getApplicationRegion(unsigned int procId, Region & region)
   } while (!success);
 }
 
-bool UserInputClient::isApplicationInFocus(unsigned int procId)
+bool UserInputClient::isApplicationInFocus(const ::process_identifier & processidentifier)
 {
   bool result = false;
 
@@ -283,7 +283,7 @@ bool UserInputClient::isApplicationInFocus(unsigned int procId)
     try {
       // Send request
       m_pcontrolgate->writeUInt8(APPLICATION_CHECK_FOCUS);
-      m_pcontrolgate->writeUInt32(procId);
+      m_pcontrolgate->writeUInt32(processidentifier);
       // readRegion(region, m_pcontrolgate);
       result = (m_pcontrolgate->readUInt8() != 0);
       success = true;

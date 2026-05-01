@@ -67,10 +67,10 @@ namespace remoting_node
       return true;
    }
 
-   bool ChangePasswordDialog::onCommand(unsigned int cID, unsigned int nID)
+   bool ChangePasswordDialog::onCommand(unsigned int controlID, unsigned int notificationID)
    {
-      if (nID == ::user::e_notification_button_clicked) {
-         switch (cID) {
+      if (notificationID == ::user::e_notification_button_clicked) {
+         switch (controlID) {
             case ::innate_subsystem::e_control_id_ok:
                onOkButtonClick();
                break;
