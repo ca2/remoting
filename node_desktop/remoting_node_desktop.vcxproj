@@ -166,6 +166,9 @@
     <Lib>
       <AdditionalDependencies>Winmm.lib</AdditionalDependencies>
     </Lib>
+    <Link>
+      <AdditionalDependencies>Ws2_32.lib;Winmm.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
@@ -188,6 +191,9 @@
     <Lib>
       <AdditionalDependencies>Winmm.lib</AdditionalDependencies>
     </Lib>
+    <Link>
+      <AdditionalDependencies>Ws2_32.lib;Winmm.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -207,6 +213,9 @@
     <Lib>
       <AdditionalDependencies>Winmm.lib</AdditionalDependencies>
     </Lib>
+    <Link>
+      <AdditionalDependencies>Ws2_32.lib;Winmm.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Midl>
@@ -229,6 +238,9 @@
     <Lib>
       <AdditionalDependencies>Winmm.lib</AdditionalDependencies>
     </Lib>
+    <Link>
+      <AdditionalDependencies>Ws2_32.lib;Winmm.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugNoUnicode|Win32'">
     <ClCompile>
@@ -312,12 +324,44 @@
     <ClCompile Include="AdditionalActionApplication.cpp" />
     <ClCompile Include="application.cpp" />
     <ClCompile Include="AuthTracker.cpp" />
+    <ClCompile Include="BuildTime.cpp" />
     <ClCompile Include="ControlAppAuthenticator.cpp" />
     <ClCompile Include="ControlClient.cpp" />
     <ClCompile Include="ControlServer.cpp" />
-    <ClCompile Include="CrashHook.cpp" />
+    <ClCompile Include="control_desktop\AboutDialog.cpp" />
+    <ClCompile Include="control_desktop\ConnectCommand.cpp" />
+    <ClCompile Include="control_desktop\ConnectStringParser.cpp" />
+    <ClCompile Include="control_desktop\ControlApplication.cpp" />
+    <ClCompile Include="control_desktop\ControlAuth.cpp" />
+    <ClCompile Include="control_desktop\ControlAuthDialog.cpp" />
+    <ClCompile Include="control_desktop\ControlCommandLine.cpp" />
+    <ClCompile Include="control_desktop\ControlGate.cpp" />
+    <ClCompile Include="control_desktop\ControlMessage.cpp" />
+    <ClCompile Include="control_desktop\ControlPipeName.cpp" />
+    <ClCompile Include="control_desktop\ControlProxy.cpp" />
+    <ClCompile Include="control_desktop\ControlTrayIcon.cpp" />
+    <ClCompile Include="control_desktop\DisconnectAllCommand.cpp" />
+    <ClCompile Include="control_desktop\MakeRfbConnectionCommand.cpp" />
+    <ClCompile Include="control_desktop\NamedPipeTransport.cpp" />
+    <ClCompile Include="control_desktop\OutgoingConnectionDialog.cpp" />
+    <ClCompile Include="control_desktop\ReloadConfigCommand.cpp" />
+    <ClCompile Include="control_desktop\RfbClientInfo.cpp" />
+    <ClCompile Include="control_desktop\SetPasswordsDialog.cpp" />
+    <ClCompile Include="control_desktop\ShareAppCommand.cpp" />
+    <ClCompile Include="control_desktop\ShareDisplayCommand.cpp" />
+    <ClCompile Include="control_desktop\ShareFullCommand.cpp" />
+    <ClCompile Include="control_desktop\SharePrimaryCommand.cpp" />
+    <ClCompile Include="control_desktop\ShareRectCommand.cpp" />
+    <ClCompile Include="control_desktop\ShareWindowCommand.cpp" />
+    <ClCompile Include="control_desktop\ShutdownCommand.cpp" />
+    <ClCompile Include="control_desktop\SocketIPv4Transport.cpp" />
+    <ClCompile Include="control_desktop\Transport.cpp" />
+    <ClCompile Include="control_desktop\TransportFactory.cpp" />
+    <ClCompile Include="control_desktop\UpdateLocalConfigCommand.cpp" />
+    <ClCompile Include="control_desktop\UpdateRemoteConfigCommand.cpp" />
     <ClCompile Include="DesktopServerApplication.cpp" />
     <ClCompile Include="DesktopServerCommandLine.cpp" />
+    <ClCompile Include="EventLogWriter.cpp" />
     <ClCompile Include="ExtraRfbServers.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -329,7 +373,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseNoUnicode|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="NamingDefs.cpp" />
     <ClCompile Include="OutgoingRfbConnectionThread.cpp" />
     <ClCompile Include="QueryConnectionApplication.cpp" />
     <ClCompile Include="QueryConnectionCommandLine.cpp" />
@@ -337,6 +380,7 @@
     <ClCompile Include="RfbClientManager.cpp" />
     <ClCompile Include="RfbClientManagerEventListener.cpp" />
     <ClCompile Include="RfbServer.cpp" />
+    <ClCompile Include="application_main_node.cpp" />
     <ClCompile Include="ServerCommandLine.cpp" />
     <ClCompile Include="Task.cpp" />
     <ClCompile Include="ServiceControlApplication.cpp" />
@@ -346,7 +390,6 @@
     <ClCompile Include="ServerHelp.cpp" />
     <ClCompile Include="ServerListener.cpp" />
     <ClCompile Include="Service.cpp" />
-    <ClCompile Include="WinEventLogWriter.cpp" />
     <ClCompile Include="WsConfigRunner.cpp" />
     <ClCompile Include="_.cpp" />
   </ItemGroup>
@@ -357,13 +400,11 @@
     <ClInclude Include="ControlAppAuthenticator.h" />
     <ClInclude Include="ControlClient.h" />
     <ClInclude Include="ControlServer.h" />
-    <ClInclude Include="CrashHook.h" />
     <ClInclude Include="DesktopServerApplication.h" />
     <ClInclude Include="DesktopServerCommandLine.h" />
     <ClInclude Include="ExtraRfbServers.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="LogInitListener.h" />
-    <ClInclude Include="NamingDefs.h" />
     <ClInclude Include="NewConnectionEvents.h" />
     <ClInclude Include="OutgoingRfbConnectionThread.h" />
     <ClInclude Include="QueryConnectionApplication.h" />
@@ -381,7 +422,6 @@
     <ClInclude Include="ServerHelp.h" />
     <ClInclude Include="ServerListener.h" />
     <ClInclude Include="Service.h" />
-    <ClInclude Include="WinEventLogWriter.h" />
     <ClInclude Include="WinServiceEvents.h" />
     <ClInclude Include="WsConfigRunner.h" />
     <ClInclude Include="_.h" />
@@ -392,6 +432,12 @@
     </ProjectReference>
     <ProjectReference Include="..\..\app\apex\apex.vcxproj">
       <Project>{e000ffaf-392f-4e32-bf51-777ca238991f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\app\innate_subsystem\innate_subsystem.vcxproj">
+      <Project>{97d4f12a-916c-4cb2-b4d9-f0d35128065a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\app\subsystem\subsystem.vcxproj">
+      <Project>{8cc36574-7cff-438f-ae5c-51fd5c6b2823}</Project>
     </ProjectReference>
     <ProjectReference Include="..\remoting\remoting.vcxproj">
       <Project>{d3004ab1-f82e-4fa4-b1f2-e15b582db21d}</Project>

@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
+    <Filter Include="Source Files\NewFilter1">
+      <UniqueIdentifier>{d9bec0f1-a96c-4f3a-ad88-fa02f38348c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AuthenticationDialog.cpp">
@@ -43,9 +46,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LoginDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="NamingDefs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="NewFolderDialog.cpp">
@@ -227,42 +227,5 @@
     <ClInclude Include="remoting_impact.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="res\appicon.ico">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\dot.cur">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\fileup.ico">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\ftdir.ico">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\ftfile.ico">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\nocursor.cur">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\smalldot.cur">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\toolbar.bmp">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\tightvnc.bmp">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\tightvnc48.bmp">
-      <Filter>Resource Files</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="remoting_client.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
   </ItemGroup>
 </Project>

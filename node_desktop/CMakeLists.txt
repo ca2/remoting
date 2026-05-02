@@ -72,6 +72,7 @@ list(APPEND library_source
    _.h
    AdditionalActionApplication.cpp
    AdditionalActionApplication.h
+   application_main_node.cpp
    application.cpp
    application.h
    AuthTracker.cpp
@@ -120,7 +121,6 @@ list(APPEND library_source
    Server.h
    ServerApplication.cpp
    ServerApplication.h
-   ServerApplication_main_node.cpp
    ServerCommandLine.cpp
    ServerCommandLine.h
    ServiceControlApplication.cpp

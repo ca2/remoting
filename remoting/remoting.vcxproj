@@ -85,7 +85,7 @@
     <Link />
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>port_jpeg.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>port_jpeg.lib;zlib.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -106,7 +106,7 @@
     <Link />
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>port_jpeg.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>port_jpeg.lib;zlib.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -122,7 +122,7 @@
     <Link />
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>port_jpeg.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>port_jpeg.lib;zlib.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -141,10 +141,11 @@
     <Link />
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>port_jpeg.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>port_jpeg.lib;zlib.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="client\NamingDefs.cpp" />
     <ClCompile Include="client_config\ConnectionConfig.cpp" />
     <ClCompile Include="client_config\ConnectionConfigSM.cpp" />
     <ClCompile Include="client_config\ViewerConfig.cpp" />
@@ -153,7 +154,52 @@
     <ClCompile Include="config\IniFileSettingsManager.cpp" />
     <ClCompile Include="config\RegistrySettingsManager.cpp" />
     <ClCompile Include="config\SettingsManager.cpp" />
-    <ClCompile Include="EOFException.cpp" />
+    <ClCompile Include="desktop\ConsolePoller.cpp" />
+    <ClCompile Include="desktop\CopyRectDetector.cpp" />
+    <ClCompile Include="desktop\CursorPositionDetector.cpp" />
+    <ClCompile Include="desktop\CursorShapeDetector.cpp" />
+    <ClCompile Include="desktop\CursorShapeGrabber.cpp" />
+    <ClCompile Include="desktop\DesktopBaseImpl.cpp" />
+    <ClCompile Include="desktop\DesktopConfigLocal.cpp" />
+    <ClCompile Include="desktop\DesktopFactory.cpp" />
+    <ClCompile Include="desktop\DesktopServerWatcher.cpp" />
+    <ClCompile Include="desktop\DummyScreenDriver.cpp" />
+    <ClCompile Include="desktop\GrabOptimizator.cpp" />
+    <ClCompile Include="desktop\HookInstaller.cpp" />
+    <ClCompile Include="desktop\HooksUpdateDetector.cpp" />
+    <ClCompile Include="desktop\HookUpdateTimer.cpp" />
+    <ClCompile Include="desktop\InputBlocker.cpp" />
+    <ClCompile Include="desktop\Poller.cpp" />
+    <ClCompile Include="desktop\SasUserInput.cpp" />
+    <ClCompile Include="desktop\ScreenDriverFactory.cpp" />
+    <ClCompile Include="desktop\ScreenGrabber.cpp" />
+    <ClCompile Include="desktop\UpdateContainer.cpp" />
+    <ClCompile Include="desktop\UpdateDetector.cpp" />
+    <ClCompile Include="desktop\UpdateFilter.cpp" />
+    <ClCompile Include="desktop\UpdateHandler.cpp" />
+    <ClCompile Include="desktop\UpdateHandlerImpl.cpp" />
+    <ClCompile Include="desktop\UpdateKeeper.cpp" />
+    <ClCompile Include="desktop\UpdateListener.cpp" />
+    <ClCompile Include="desktop\UpdateSendingListener.cpp" />
+    <ClCompile Include="desktop\UserInput.cpp" />
+    <ClCompile Include="desktop\WallpaperUtil.cpp" />
+    <ClCompile Include="desktop_ipc\BlockingGate.cpp" />
+    <ClCompile Include="desktop_ipc\BlockingInputGate.cpp" />
+    <ClCompile Include="desktop_ipc\BlockingOutputGate.cpp" />
+    <ClCompile Include="desktop_ipc\ClientListener.cpp" />
+    <ClCompile Include="desktop_ipc\ConfigServer.cpp" />
+    <ClCompile Include="desktop_ipc\DesktopConfigClient.cpp" />
+    <ClCompile Include="desktop_ipc\DesktopServerProto.cpp" />
+    <ClCompile Include="desktop_ipc\DesktopSrvDispatcher.cpp" />
+    <ClCompile Include="desktop_ipc\GateKicker.cpp" />
+    <ClCompile Include="desktop_ipc\GateKickHandler.cpp" />
+    <ClCompile Include="desktop_ipc\ReconnectException.cpp" />
+    <ClCompile Include="desktop_ipc\ReconnectingChannel.cpp" />
+    <ClCompile Include="desktop_ipc\UpdateHandlerClient.cpp" />
+    <ClCompile Include="desktop_ipc\UpdateHandlerServer.cpp" />
+    <ClCompile Include="desktop_ipc\UserInputClient.cpp" />
+    <ClCompile Include="desktop_ipc\UserInputServer.cpp" />
+    <ClCompile Include="event_log\EventLog.cpp" />
     <ClCompile Include="file_transfer_client\CopyOperation.cpp" />
     <ClCompile Include="file_transfer_client\DownloadOperation.cpp" />
     <ClCompile Include="file_transfer_client\FileInfoList.cpp" />
@@ -174,14 +220,14 @@
     <ClCompile Include="file_transfer_client\RemoteFilesDeleteOperation.cpp" />
     <ClCompile Include="file_transfer_client\RemoteFolderCreateOperation.cpp" />
     <ClCompile Include="file_transfer_client\UploadOperation.cpp" />
-    <ClCompile Include="file_transfer_client\_.cpp" />
     <ClCompile Include="file_transfer_common\FileInfo.cpp" />
     <ClCompile Include="file_transfer_common\FileTransferException.cpp" />
     <ClCompile Include="file_transfer_common\FolderListener.cpp" />
     <ClCompile Include="file_transfer_common\FTMessage.cpp" />
     <ClCompile Include="file_transfer_common\OperationNotSupportedException.cpp" />
     <ClCompile Include="file_transfer_common\WinFilePath.cpp" />
-    <ClCompile Include="file_transfer_common\_.cpp" />
+    <ClCompile Include="file_transfer_node\FileTransferRequestHandler.cpp" />
+    <ClCompile Include="file_transfer_node\FileTransferSecurity.cpp" />
     <ClCompile Include="framebuffer_update_sender\CursorUpdates.cpp" />
     <ClCompile Include="framebuffer_update_sender\UpdateSender.cpp" />
     <ClCompile Include="framebuffer_update_sender\UpdSenderMsgDefs.cpp" />
@@ -197,6 +243,35 @@
     <ClCompile Include="network\RfbOutputGate.cpp" />
     <ClCompile Include="network\TcpClientThread.cpp" />
     <ClCompile Include="network\TcpServer.cpp" />
+    <ClCompile Include="node\ControlAuthException.cpp" />
+    <ClCompile Include="node\ControlCommand.cpp" />
+    <ClCompile Include="node\NamingDefs.cpp" />
+    <ClCompile Include="node\Notificator.cpp" />
+    <ClCompile Include="node\RemoteException.cpp" />
+    <ClCompile Include="node_config\ConfigReloadListener.cpp" />
+    <ClCompile Include="node_config\Configurator.cpp" />
+    <ClCompile Include="node_config\IpAccessControl.cpp" />
+    <ClCompile Include="node_config\IpAccessRule.cpp" />
+    <ClCompile Include="node_config\PortMapping.cpp" />
+    <ClCompile Include="node_config\PortMappingContainer.cpp" />
+    <ClCompile Include="node_config\PortMappingRect.cpp" />
+    <ClCompile Include="node_config\RegistrySecurityAttributes.cpp" />
+    <ClCompile Include="node_config\ServerConfig.cpp" />
+    <ClCompile Include="node_user_config\AdministrationConfigDialog.cpp" />
+    <ClCompile Include="node_user_config\ChangePasswordDialog.cpp" />
+    <ClCompile Include="node_user_config\CommonInputValidation.cpp" />
+    <ClCompile Include="node_user_config\ConfigDialog.cpp" />
+    <ClCompile Include="node_user_config\EditIpAccessRuleDialog.cpp" />
+    <ClCompile Include="node_user_config\EditPortMappingDialog.cpp" />
+    <ClCompile Include="node_user_config\IpAccessControlDialog.cpp" />
+    <ClCompile Include="node_user_config\PasswordControl.cpp" />
+    <ClCompile Include="node_user_config\PortMappingDialog.cpp" />
+    <ClCompile Include="node_user_config\ServerConfigDialog.cpp" />
+    <ClCompile Include="node_user_config\TvnLogFilename.cpp" />
+    <ClCompile Include="node_user_config\UIDataAccess.cpp" />
+    <ClCompile Include="node_user_config\VideoRegionsConfigDialog.cpp" />
+    <ClCompile Include="platform\EOFException.cpp" />
+    <ClCompile Include="platform\remoting.cpp" />
     <ClCompile Include="region\RectSerializer.cpp" />
     <ClCompile Include="region\Region.cpp" />
     <ClCompile Include="region\x11region.c">
@@ -205,7 +280,16 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="remoting.cpp" />
+    <ClCompile Include="rfb\AuthDefs.cpp" />
+    <ClCompile Include="rfb\CursorShape.cpp" />
+    <ClCompile Include="rfb\EncodingDefs.cpp" />
+    <ClCompile Include="rfb\HostPath.cpp" />
+    <ClCompile Include="rfb\MsgDefs.cpp" />
+    <ClCompile Include="rfb\PixelConverter.cpp" />
+    <ClCompile Include="rfb\RfbKeySym.cpp" />
+    <ClCompile Include="rfb\TunnelDefs.cpp" />
+    <ClCompile Include="rfb\VendorDefs.cpp" />
+    <ClCompile Include="rfb_sconn\AuthException.cpp" />
     <ClCompile Include="rfb_sconn\CapContainer.cpp" />
     <ClCompile Include="rfb_sconn\ClientInputHandler.cpp" />
     <ClCompile Include="rfb_sconn\ClipboardExchange.cpp" />
@@ -224,15 +308,6 @@
     <ClCompile Include="rfb_sconn\TightEncoder.cpp" />
     <ClCompile Include="rfb_sconn\TightPalette.cpp" />
     <ClCompile Include="rfb_sconn\ZrleEncoder.cpp" />
-    <ClCompile Include="server_config\ConfigReloadListener.cpp" />
-    <ClCompile Include="server_config\Configurator.cpp" />
-    <ClCompile Include="server_config\IpAccessControl.cpp" />
-    <ClCompile Include="server_config\IpAccessRule.cpp" />
-    <ClCompile Include="server_config\PortMapping.cpp" />
-    <ClCompile Include="server_config\PortMappingContainer.cpp" />
-    <ClCompile Include="server_config\PortMappingRect.cpp" />
-    <ClCompile Include="server_config\RegistrySecurityAttributes.cpp" />
-    <ClCompile Include="server_config\ServerConfig.cpp" />
     <ClCompile Include="viewer_core\AuthHandler.cpp" />
     <ClCompile Include="viewer_core\CapabilitiesManager.cpp" />
     <ClCompile Include="viewer_core\CapsContainer.cpp" />
@@ -291,7 +366,6 @@
     <ClInclude Include="config\resource.h" />
     <ClInclude Include="config\SettingsManager.h" />
     <ClInclude Include="config\_.h" />
-    <ClInclude Include="EOFException.h" />
     <ClInclude Include="fb_update_sender\CursorUpdates.h" />
     <ClInclude Include="fb_update_sender\SenderControlInformationInterface.h" />
     <ClInclude Include="fb_update_sender\UpdateRequestListener.h" />
@@ -342,10 +416,11 @@
     <ClInclude Include="network\TcpClientThread.h" />
     <ClInclude Include="network\TcpServer.h" />
     <ClInclude Include="network\_.h" />
+    <ClInclude Include="platform\EOFException.h" />
+    <ClInclude Include="platform\remoting.h" />
     <ClInclude Include="region\Region.h" />
     <ClInclude Include="region\x11region.h" />
     <ClInclude Include="region\x11region_inttypes.h" />
-    <ClInclude Include="remoting.h" />
     <ClInclude Include="rfb\AuthDefs.h" />
     <ClInclude Include="rfb\CursorShape.h" />
     <ClInclude Include="rfb\EncodingDefs.h" />
@@ -503,6 +578,9 @@
     <ClInclude Include="_.h" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\operating_system\operating_system-windows\subsystem_windows\subsystem_windows.vcxproj">
+      <Project>{f46e1b15-7a8a-4bbd-8dfa-85c7074e2daa}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\app\acme\acme.vcxproj">
       <Project>{638b242f-0f21-41c3-9f66-724660046133}</Project>
     </ProjectReference>

@@ -173,7 +173,6 @@
     <ClCompile Include="impact_toolbar.cpp" />
     <ClCompile Include="keyboard_layout_change.cpp" />
     <ClCompile Include="LoginDialog.cpp" />
-    <ClCompile Include="NamingDefs.cpp" />
     <ClCompile Include="NewFolderDialog.cpp" />
     <ClCompile Include="OptionsDialog.cpp" />
     <ClCompile Include="remoting.cpp" />
@@ -227,18 +226,6 @@
     <ClInclude Include="_.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\appicon.ico" />
-    <None Include="res\dot.cur" />
-    <None Include="res\fileup.ico" />
-    <None Include="res\ftdir.ico" />
-    <None Include="res\ftfile.ico" />
-    <None Include="res\nocursor.cur" />
-    <None Include="res\smalldot.cur" />
-    <None Include="res\tightvnc.bmp" />
-    <None Include="res\tightvnc48.bmp" />
-    <None Include="res\toolbar.bmp" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\app\acme\acme.vcxproj">
       <Project>{638b242f-0f21-41c3-9f66-724660046133}</Project>
     </ProjectReference>
@@ -254,9 +241,6 @@
     <ProjectReference Include="..\remoting\remoting.vcxproj">
       <Project>{d3004ab1-f82e-4fa4-b1f2-e15b582db21d}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="remoting_client.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

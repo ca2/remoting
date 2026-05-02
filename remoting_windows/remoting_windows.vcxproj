@@ -19,11 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D3004AB1-F82E-4FA4-B1F2-E15B582DB21D}</ProjectGuid>
+    <ProjectGuid>{6B4D9782-F6E0-44C8-A658-270CC2B34DCF}</ProjectGuid>
     <RootNamespace>remoting</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>remoting</ProjectName>
+    <ProjectName>remoting_windows</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -145,145 +145,47 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="client_config\ConnectionConfig.cpp" />
-    <ClCompile Include="client_config\ConnectionConfigSM.cpp" />
-    <ClCompile Include="client_config\ViewerConfig.cpp" />
-    <ClCompile Include="client_config\ViewerSettingsManager.cpp" />
-    <ClCompile Include="config\ConnectionHistory.cpp" />
-    <ClCompile Include="config\IniFileSettingsManager.cpp" />
-    <ClCompile Include="config\RegistrySettingsManager.cpp" />
-    <ClCompile Include="config\SettingsManager.cpp" />
-    <ClCompile Include="EOFException.cpp" />
-    <ClCompile Include="fb_update_sender\CursorUpdates.cpp" />
-    <ClCompile Include="fb_update_sender\UpdateSender.cpp" />
-    <ClCompile Include="fb_update_sender\UpdSenderMsgDefs.cpp" />
-    <ClCompile Include="fb_update_sender\Viewport.cpp" />
-    <ClCompile Include="fb_update_sender\ViewPortState.cpp" />
+    <ClCompile Include="desktop\DesktopClientImpl.cpp" />
+    <ClCompile Include="desktop\DesktopFactory.cpp" />
+    <ClCompile Include="desktop\DesktopWinImpl.cpp" />
+    <ClCompile Include="desktop\MirrorDriverClient.cpp" />
+    <ClCompile Include="desktop\MirrorScreenDriver.cpp" />
+    <ClCompile Include="desktop\Win32MirrorScreenDriver.cpp" />
+    <ClCompile Include="desktop\Win32ScreenDriver.cpp" />
+    <ClCompile Include="desktop\Win32ScreenDriverBaseImpl.cpp" />
+    <ClCompile Include="desktop\Win32ScreenDriverFactory.cpp" />
+    <ClCompile Include="desktop\Win8CursorShape.cpp" />
+    <ClCompile Include="desktop\Win8DeskDuplicationThread.cpp" />
+    <ClCompile Include="desktop\Win8ScreenDriver.cpp" />
+    <ClCompile Include="desktop\Win8ScreenDriverImpl.cpp" />
+    <ClCompile Include="desktop\WinAutoMapDxgiSurface.cpp" />
+    <ClCompile Include="desktop\WinCursorShapeUtils.cpp" />
+    <ClCompile Include="desktop\WinCustomD3D11Texture2D.cpp" />
+    <ClCompile Include="desktop\WinD3D11Device.cpp" />
+    <ClCompile Include="desktop\WinD3D11Texture2D.cpp" />
+    <ClCompile Include="desktop\WindowsCursorShapeGrabber.cpp" />
+    <ClCompile Include="desktop\WindowsInputBlocker.cpp" />
+    <ClCompile Include="desktop\WindowsScreenGrabber.cpp" />
+    <ClCompile Include="desktop\WindowsUserInput.cpp" />
+    <ClCompile Include="desktop\WinDxCriticalException.cpp" />
+    <ClCompile Include="desktop\WinDxException.cpp" />
+    <ClCompile Include="desktop\WinDxgiAcquiredFrame.cpp" />
+    <ClCompile Include="desktop\WinDxgiAdapter.cpp" />
+    <ClCompile Include="desktop\WinDxgiDevice.cpp" />
+    <ClCompile Include="desktop\WinDxgiOutput.cpp" />
+    <ClCompile Include="desktop\WinDxgiOutput1.cpp" />
+    <ClCompile Include="desktop\WinDxgiOutputDuplication.cpp" />
+    <ClCompile Include="desktop\WinDxgiSurface.cpp" />
+    <ClCompile Include="desktop\WinDxRecoverableException.cpp" />
+    <ClCompile Include="desktop\WinVideoRegionUpdaterImpl.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="ftp_client\CopyOperation.cpp" />
-    <ClCompile Include="ftp_client\DownloadOperation.cpp" />
-    <ClCompile Include="ftp_client\FileInfoList.cpp" />
-    <ClCompile Include="ftp_client\FileTransferCore.cpp" />
-    <ClCompile Include="ftp_client\FileTransferEventAdapter.cpp" />
-    <ClCompile Include="ftp_client\FileTransferEventHandler.cpp" />
-    <ClCompile Include="ftp_client\FileTransferInterface.cpp" />
-    <ClCompile Include="ftp_client\FileTransferMessageProcessor.cpp" />
-    <ClCompile Include="ftp_client\FileTransferOperation.cpp" />
-    <ClCompile Include="ftp_client\FileTransferReplyBuffer.cpp" />
-    <ClCompile Include="ftp_client\FileTransferRequestSender.cpp" />
-    <ClCompile Include="ftp_client\LocalFilesDeleteOperation.cpp" />
-    <ClCompile Include="ftp_client\OperationEventListener.cpp" />
-    <ClCompile Include="ftp_client\OperationNotPermittedException.cpp" />
-    <ClCompile Include="ftp_client\OperationSupport.cpp" />
-    <ClCompile Include="ftp_client\RemoteFileListOperation.cpp" />
-    <ClCompile Include="ftp_client\RemoteFileRenameOperation.cpp" />
-    <ClCompile Include="ftp_client\RemoteFilesDeleteOperation.cpp" />
-    <ClCompile Include="ftp_client\RemoteFolderCreateOperation.cpp" />
-    <ClCompile Include="ftp_client\UploadOperation.cpp" />
-    <ClCompile Include="ftp_common\FileInfo.cpp" />
-    <ClCompile Include="ftp_common\FileTransferException.cpp" />
-    <ClCompile Include="ftp_common\FolderListener.cpp" />
-    <ClCompile Include="ftp_common\FTMessage.cpp" />
-    <ClCompile Include="ftp_common\OperationNotSupportedException.cpp" />
-    <ClCompile Include="ftp_common\WinFilePath.cpp" />
-    <ClCompile Include="network\RfbInputGate.cpp" />
-    <ClCompile Include="network\RfbOutputGate.cpp" />
-    <ClCompile Include="network\TcpClientThread.cpp" />
-    <ClCompile Include="network\TcpServer.cpp" />
-    <ClCompile Include="region\RectSerializer.cpp" />
-    <ClCompile Include="region\Region.cpp" />
-    <ClCompile Include="region\x11region.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="remoting.cpp" />
-    <ClCompile Include="rfb\AuthDefs.cpp" />
-    <ClCompile Include="rfb\CursorShape.cpp" />
-    <ClCompile Include="rfb\EncodingDefs.cpp" />
-    <ClCompile Include="rfb\HostPath.cpp" />
-    <ClCompile Include="rfb\MsgDefs.cpp" />
-    <ClCompile Include="rfb\PixelConverter.cpp" />
-    <ClCompile Include="rfb\RfbKeySym.cpp" />
-    <ClCompile Include="rfb\TunnelDefs.cpp" />
-    <ClCompile Include="rfb\VendorDefs.cpp" />
-    <ClCompile Include="rfb_sconn\CapContainer.cpp" />
-    <ClCompile Include="rfb_sconn\ClientInputHandler.cpp" />
-    <ClCompile Include="rfb_sconn\ClipboardExchange.cpp" />
-    <ClCompile Include="rfb_sconn\EchoExtensionRequestHandler.cpp" />
-    <ClCompile Include="rfb_sconn\EncodeOptions.cpp" />
-    <ClCompile Include="rfb_sconn\Encoder.cpp" />
-    <ClCompile Include="rfb_sconn\EncoderStore.cpp" />
-    <ClCompile Include="rfb_sconn\HextileEncoder.cpp" />
-    <ClCompile Include="rfb_sconn\JpegCompressor.cpp" />
-    <ClCompile Include="rfb_sconn\JpegEncoder.cpp" />
-    <ClCompile Include="rfb_sconn\RfbClient.cpp" />
-    <ClCompile Include="rfb_sconn\RfbCodeRegistrator.cpp" />
-    <ClCompile Include="rfb_sconn\RfbDispatcher.cpp" />
-    <ClCompile Include="rfb_sconn\RfbInitializer.cpp" />
-    <ClCompile Include="rfb_sconn\RreEncoder.cpp" />
-    <ClCompile Include="rfb_sconn\TightEncoder.cpp" />
-    <ClCompile Include="rfb_sconn\TightPalette.cpp" />
-    <ClCompile Include="rfb_sconn\ZrleEncoder.cpp" />
-    <ClCompile Include="server_config\ConfigReloadListener.cpp" />
-    <ClCompile Include="server_config\Configurator.cpp" />
-    <ClCompile Include="server_config\IpAccessControl.cpp" />
-    <ClCompile Include="server_config\IpAccessRule.cpp" />
-    <ClCompile Include="server_config\PortMapping.cpp" />
-    <ClCompile Include="server_config\PortMappingContainer.cpp" />
-    <ClCompile Include="server_config\PortMappingRect.cpp" />
-    <ClCompile Include="server_config\RegistrySecurityAttributes.cpp" />
-    <ClCompile Include="server_config\ServerConfig.cpp" />
-    <ClCompile Include="viewer_core\AuthHandler.cpp" />
-    <ClCompile Include="viewer_core\CapabilitiesManager.cpp" />
-    <ClCompile Include="viewer_core\CapsContainer.cpp" />
-    <ClCompile Include="viewer_core\CompressionLevel.cpp" />
-    <ClCompile Include="viewer_core\CopyRectDecoder.cpp" />
-    <ClCompile Include="viewer_core\CoreEventsAdapter.cpp" />
-    <ClCompile Include="viewer_core\CursorPainter.cpp" />
-    <ClCompile Include="viewer_core\Decoder.cpp" />
-    <ClCompile Include="viewer_core\DecoderOfRectangle.cpp" />
-    <ClCompile Include="viewer_core\DecoderStore.cpp" />
-    <ClCompile Include="viewer_core\DesktopSizeDecoder.cpp" />
-    <ClCompile Include="viewer_core\drawTile.cpp">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MaxSpeed</Optimization>
-      <IntrinsicFunctions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</IntrinsicFunctions>
-      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Speed</FavorSizeOrSpeed>
-      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</BasicRuntimeChecks>
-    </ClCompile>
-    <ClCompile Include="viewer_core\FbUpdateNotifier.cpp" />
-    <ClCompile Include="viewer_core\FileTransferCapability.cpp" />
-    <ClCompile Include="viewer_core\HexTileDecoder.cpp" />
-    <ClCompile Include="viewer_core\JpegDecompressor.cpp" />
-    <ClCompile Include="viewer_core\JpegQualityLevel.cpp" />
-    <ClCompile Include="viewer_core\LastRectDecoder.cpp" />
-    <ClCompile Include="viewer_core\PointerPosDecoder.cpp" />
-    <ClCompile Include="viewer_core\PseudoDecoder.cpp" />
-    <ClCompile Include="viewer_core\RawDecoder.cpp" />
-    <ClCompile Include="viewer_core\RemoteViewerCore.cpp" />
-    <ClCompile Include="viewer_core\RfbClientToServerMessage.cpp" />
-    <ClCompile Include="viewer_core\RfbCutTextEventClientMessage.cpp" />
-    <ClCompile Include="viewer_core\RfbFramebufferUpdateRequestClientMessage.cpp" />
-    <ClCompile Include="viewer_core\RfbKeyEventClientMessage.cpp" />
-    <ClCompile Include="viewer_core\RfbPointerEventClientMessage.cpp" />
-    <ClCompile Include="viewer_core\RfbSetEncodingsClientMessage.cpp" />
-    <ClCompile Include="viewer_core\RfbSetPixelFormatClientMessage.cpp" />
-    <ClCompile Include="viewer_core\RichCursorDecoder.cpp" />
-    <ClCompile Include="viewer_core\RreDecoder.cpp" />
-    <ClCompile Include="viewer_core\TcpConnection.cpp" />
-    <ClCompile Include="viewer_core\TightDecoder.cpp" />
-    <ClCompile Include="viewer_core\UpdateRequestSender.cpp" />
-    <ClCompile Include="viewer_core\VncAuthentication.cpp" />
-    <ClCompile Include="viewer_core\VncAuthenticationHandler.cpp" />
-    <ClCompile Include="viewer_core\WatermarksController.cpp" />
-    <ClCompile Include="viewer_core\ZrleDecoder.cpp" />
     <ClCompile Include="_.cpp" />
+    <ClCompile Include="_factory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="client_config\ConnectionConfig.h" />
@@ -325,7 +227,6 @@
     <ClInclude Include="ftp_client\OperationSupport.h" />
     <ClInclude Include="ftp_client\RemoteFileListOperation.h" />
     <ClInclude Include="ftp_client\RemoteFileRenameOperation.h" />
-    <ClInclude Include="ftp_client\RemoteFilesDeleteOperation.h" />
     <ClInclude Include="ftp_client\RemoteFolderCreateOperation.h" />
     <ClInclude Include="ftp_client\resource.h" />
     <ClInclude Include="ftp_client\UploadOperation.h" />
@@ -511,6 +412,9 @@
     <ClInclude Include="_.h" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\operating_system\operating_system-windows\subsystem_windows\subsystem_windows.vcxproj">
+      <Project>{f46e1b15-7a8a-4bbd-8dfa-85c7074e2daa}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\app\acme\acme.vcxproj">
       <Project>{638b242f-0f21-41c3-9f66-724660046133}</Project>
     </ProjectReference>
@@ -519,6 +423,9 @@
     </ProjectReference>
     <ProjectReference Include="..\..\app\subsystem\subsystem.vcxproj">
       <Project>{8cc36574-7cff-438f-ae5c-51fd5c6b2823}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\remoting\remoting.vcxproj">
+      <Project>{d3004ab1-f82e-4fa4-b1f2-e15b582db21d}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

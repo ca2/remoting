@@ -9,30 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Source Files\client_config">
-      <UniqueIdentifier>{5e9fff18-c530-44f4-884d-f4e7a1ada324}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\config">
-      <UniqueIdentifier>{a9b2ae4b-ef18-4aa1-bd59-5e5ff6ab641b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\ftp_client">
-      <UniqueIdentifier>{403d3001-19f4-4d05-888d-878750e14479}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\ftp_common">
-      <UniqueIdentifier>{6d8fd7fa-4123-45c4-b66a-0c1e0c61024e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\network">
-      <UniqueIdentifier>{9ac95d3d-d8d5-4851-a75e-e3b0293cd5e7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\region">
-      <UniqueIdentifier>{199f3c3a-61a8-4a4f-ae6c-32fb5785bffa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\rpframebuffer">
-      <UniqueIdentifier>{9fe9e7a1-0a1d-4a61-b406-865b2349af80}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\viewer_core">
-      <UniqueIdentifier>{d71ba47e-2212-4a5f-ae24-dd7c00e1d391}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\client_config">
       <UniqueIdentifier>{7f0104f9-cbf6-43db-b78d-46db64c38f52}</UniqueIdentifier>
     </Filter>
@@ -72,400 +48,127 @@
     <Filter Include="Header Files\rfb_sconn">
       <UniqueIdentifier>{35fbf084-6919-4a0e-ac66-47ee77cc6747}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\rfb_sconn">
-      <UniqueIdentifier>{197cfb2d-faaf-4ab4-9cf6-55b886cd2a2c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\fb_update_sender">
       <UniqueIdentifier>{2577669b-7268-420a-87d5-4f493e46773c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\fb_update_sender">
-      <UniqueIdentifier>{1501d7aa-4571-4178-93ed-e50a607dfc02}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\ds">
       <UniqueIdentifier>{9364a541-8436-4de9-953d-f56fcebc7f7e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\server_config">
-      <UniqueIdentifier>{3c200226-ee87-44f3-81ce-04a9b4c3245d}</UniqueIdentifier>
+    <Filter Include="Source Files\desktop">
+      <UniqueIdentifier>{5e9fff18-c530-44f4-884d-f4e7a1ada324}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="client_config\ConnectionConfig.cpp">
-      <Filter>Source Files\client_config</Filter>
-    </ClCompile>
-    <ClCompile Include="client_config\ConnectionConfigSM.cpp">
-      <Filter>Source Files\client_config</Filter>
-    </ClCompile>
-    <ClCompile Include="client_config\ViewerConfig.cpp">
-      <Filter>Source Files\client_config</Filter>
-    </ClCompile>
-    <ClCompile Include="client_config\ViewerSettingsManager.cpp">
-      <Filter>Source Files\client_config</Filter>
-    </ClCompile>
-    <ClCompile Include="config\ConnectionHistory.cpp">
-      <Filter>Source Files\config</Filter>
-    </ClCompile>
-    <ClCompile Include="config\IniFileSettingsManager.cpp">
-      <Filter>Source Files\config</Filter>
-    </ClCompile>
-    <ClCompile Include="config\RegistrySettingsManager.cpp">
-      <Filter>Source Files\config</Filter>
-    </ClCompile>
-    <ClCompile Include="config\SettingsManager.cpp">
-      <Filter>Source Files\config</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\CopyOperation.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\DownloadOperation.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\FileInfoList.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\FileTransferCore.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\FileTransferEventAdapter.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\FileTransferEventHandler.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\FileTransferInterface.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\FileTransferMessageProcessor.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\FileTransferOperation.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\FileTransferReplyBuffer.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\FileTransferRequestSender.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\LocalFilesDeleteOperation.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\OperationEventListener.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\OperationNotPermittedException.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\OperationSupport.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\RemoteFileListOperation.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\RemoteFileRenameOperation.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\RemoteFilesDeleteOperation.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\RemoteFolderCreateOperation.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_client\UploadOperation.cpp">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_common\FileInfo.cpp">
-      <Filter>Source Files\ftp_common</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_common\FileTransferException.cpp">
-      <Filter>Source Files\ftp_common</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_common\FolderListener.cpp">
-      <Filter>Source Files\ftp_common</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_common\FTMessage.cpp">
-      <Filter>Source Files\ftp_common</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_common\OperationNotSupportedException.cpp">
-      <Filter>Source Files\ftp_common</Filter>
-    </ClCompile>
-    <ClCompile Include="ftp_common\WinFilePath.cpp">
-      <Filter>Source Files\ftp_common</Filter>
-    </ClCompile>
-    <ClCompile Include="network\RfbInputGate.cpp">
-      <Filter>Source Files\network</Filter>
-    </ClCompile>
-    <ClCompile Include="network\RfbOutputGate.cpp">
-      <Filter>Source Files\network</Filter>
-    </ClCompile>
-    <ClCompile Include="network\TcpClientThread.cpp">
-      <Filter>Source Files\network</Filter>
-    </ClCompile>
-    <ClCompile Include="network\TcpServer.cpp">
-      <Filter>Source Files\network</Filter>
-    </ClCompile>
-    <ClCompile Include="region\RectSerializer.cpp">
-      <Filter>Source Files\region</Filter>
-    </ClCompile>
-    <ClCompile Include="region\Region.cpp">
-      <Filter>Source Files\region</Filter>
-    </ClCompile>
-    <ClCompile Include="rfb\AuthDefs.cpp">
-      <Filter>Source Files\rpframebuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="rfb\CursorShape.cpp">
-      <Filter>Source Files\rpframebuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="rfb\EncodingDefs.cpp">
-      <Filter>Source Files\rpframebuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="rfb\HostPath.cpp">
-      <Filter>Source Files\rpframebuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="rfb\MsgDefs.cpp">
-      <Filter>Source Files\rpframebuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="rfb\PixelConverter.cpp">
-      <Filter>Source Files\rpframebuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="rfb\RfbKeySym.cpp">
-      <Filter>Source Files\rpframebuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="rfb\TunnelDefs.cpp">
-      <Filter>Source Files\rpframebuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="rfb\VendorDefs.cpp">
-      <Filter>Source Files\rpframebuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\AuthHandler.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\CapabilitiesManager.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\CapsContainer.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\CompressionLevel.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\CopyRectDecoder.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\CoreEventsAdapter.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\CursorPainter.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\Decoder.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\DecoderOfRectangle.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\DecoderStore.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\DesktopSizeDecoder.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\FbUpdateNotifier.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\FileTransferCapability.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\HexTileDecoder.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\JpegDecompressor.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\JpegQualityLevel.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\LastRectDecoder.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\PointerPosDecoder.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\PseudoDecoder.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\RawDecoder.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\RemoteViewerCore.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\RfbClientToServerMessage.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\RfbCutTextEventClientMessage.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\RfbFramebufferUpdateRequestClientMessage.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\RfbKeyEventClientMessage.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\RfbPointerEventClientMessage.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\RfbSetEncodingsClientMessage.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\RfbSetPixelFormatClientMessage.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\RichCursorDecoder.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\RreDecoder.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\TcpConnection.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\TightDecoder.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\UpdateRequestSender.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\VncAuthentication.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\VncAuthenticationHandler.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\WatermarksController.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="viewer_core\ZrleDecoder.cpp">
-      <Filter>Source Files\viewer_core</Filter>
-    </ClCompile>
-    <ClCompile Include="EOFException.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="remoting.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="_.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="region\x11region.c">
-      <Filter>Source Files\region</Filter>
+    <ClCompile Include="desktop\DesktopClientImpl.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="viewer_core\drawTile.cpp">
-      <Filter>Source Files\viewer_core</Filter>
+    <ClCompile Include="desktop\DesktopFactory.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="server_config\ConfigReloadListener.cpp">
-      <Filter>Source Files\server_config</Filter>
+    <ClCompile Include="desktop\DesktopWinImpl.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="server_config\IpAccessControl.cpp">
-      <Filter>Source Files\server_config</Filter>
+    <ClCompile Include="desktop\MirrorDriverClient.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="server_config\IpAccessRule.cpp">
-      <Filter>Source Files\server_config</Filter>
+    <ClCompile Include="desktop\MirrorScreenDriver.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="server_config\PortMapping.cpp">
-      <Filter>Source Files\server_config</Filter>
+    <ClCompile Include="desktop\Win8CursorShape.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="server_config\PortMappingContainer.cpp">
-      <Filter>Source Files\server_config</Filter>
+    <ClCompile Include="desktop\Win8DeskDuplicationThread.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="server_config\PortMappingRect.cpp">
-      <Filter>Source Files\server_config</Filter>
+    <ClCompile Include="desktop\Win8ScreenDriver.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="server_config\RegistrySecurityAttributes.cpp">
-      <Filter>Source Files\server_config</Filter>
+    <ClCompile Include="desktop\Win8ScreenDriverImpl.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="server_config\ServerConfig.cpp">
-      <Filter>Source Files\server_config</Filter>
+    <ClCompile Include="desktop\Win32MirrorScreenDriver.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="rfb_sconn\CapContainer.cpp">
-      <Filter>Source Files\rfb_sconn</Filter>
+    <ClCompile Include="desktop\Win32ScreenDriver.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="rfb_sconn\ClientInputHandler.cpp">
-      <Filter>Source Files\rfb_sconn</Filter>
+    <ClCompile Include="desktop\Win32ScreenDriverBaseImpl.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="rfb_sconn\ClipboardExchange.cpp">
-      <Filter>Source Files\rfb_sconn</Filter>
+    <ClCompile Include="desktop\Win32ScreenDriverFactory.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="rfb_sconn\EchoExtensionRequestHandler.cpp">
-      <Filter>Source Files\rfb_sconn</Filter>
+    <ClCompile Include="desktop\WinAutoMapDxgiSurface.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="rfb_sconn\EncodeOptions.cpp">
-      <Filter>Source Files\rfb_sconn</Filter>
+    <ClCompile Include="desktop\WinCursorShapeUtils.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="rfb_sconn\Encoder.cpp">
-      <Filter>Source Files\rfb_sconn</Filter>
+    <ClCompile Include="desktop\WinCustomD3D11Texture2D.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="rfb_sconn\EncoderStore.cpp">
-      <Filter>Source Files\rfb_sconn</Filter>
+    <ClCompile Include="desktop\WinD3D11Device.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="rfb_sconn\HextileEncoder.cpp">
-      <Filter>Source Files\rfb_sconn</Filter>
+    <ClCompile Include="desktop\WinD3D11Texture2D.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="rfb_sconn\JpegCompressor.cpp">
-      <Filter>Source Files\rfb_sconn</Filter>
+    <ClCompile Include="desktop\WindowsCursorShapeGrabber.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="rfb_sconn\JpegEncoder.cpp">
-      <Filter>Source Files\rfb_sconn</Filter>
+    <ClCompile Include="desktop\WindowsInputBlocker.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="rfb_sconn\RfbClient.cpp">
-      <Filter>Source Files\rfb_sconn</Filter>
+    <ClCompile Include="desktop\WindowsScreenGrabber.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="rfb_sconn\RfbCodeRegistrator.cpp">
-      <Filter>Source Files\rfb_sconn</Filter>
+    <ClCompile Include="desktop\WindowsUserInput.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="rfb_sconn\RfbDispatcher.cpp">
-      <Filter>Source Files\rfb_sconn</Filter>
+    <ClCompile Include="desktop\WinDxCriticalException.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="rfb_sconn\RfbInitializer.cpp">
-      <Filter>Source Files\rfb_sconn</Filter>
+    <ClCompile Include="desktop\WinDxException.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="rfb_sconn\RreEncoder.cpp">
-      <Filter>Source Files\rfb_sconn</Filter>
+    <ClCompile Include="desktop\WinDxgiAcquiredFrame.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="rfb_sconn\TightEncoder.cpp">
-      <Filter>Source Files\rfb_sconn</Filter>
+    <ClCompile Include="desktop\WinDxgiAdapter.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="rfb_sconn\TightPalette.cpp">
-      <Filter>Source Files\rfb_sconn</Filter>
+    <ClCompile Include="desktop\WinDxgiDevice.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="rfb_sconn\ZrleEncoder.cpp">
-      <Filter>Source Files\rfb_sconn</Filter>
+    <ClCompile Include="desktop\WinDxgiOutput.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="fb_update_sender\CursorUpdates.cpp">
-      <Filter>Source Files\fb_update_sender</Filter>
+    <ClCompile Include="desktop\WinDxgiOutput1.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="fb_update_sender\UpdateSender.cpp">
-      <Filter>Source Files\fb_update_sender</Filter>
+    <ClCompile Include="desktop\WinDxgiOutputDuplication.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="fb_update_sender\UpdSenderMsgDefs.cpp">
-      <Filter>Source Files\fb_update_sender</Filter>
+    <ClCompile Include="desktop\WinDxgiSurface.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="fb_update_sender\Viewport.cpp">
-      <Filter>Source Files\fb_update_sender</Filter>
+    <ClCompile Include="desktop\WinDxRecoverableException.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="fb_update_sender\ViewPortState.cpp">
-      <Filter>Source Files\fb_update_sender</Filter>
+    <ClCompile Include="desktop\WinVideoRegionUpdaterImpl.cpp">
+      <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="server_config\Configurator.cpp">
-      <Filter>Source Files\server_config</Filter>
+    <ClCompile Include="_factory.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ftp_client\RemoteFilesDeleteOperation.h">
-      <Filter>Source Files\ftp_client</Filter>
-    </ClInclude>
     <ClInclude Include="client_config\_.h">
       <Filter>Header Files\client_config</Filter>
     </ClInclude>

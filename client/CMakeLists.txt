@@ -71,7 +71,7 @@ list(APPEND library_source
    keyboard_layout_change.h
    remoting.cpp
    remoting.h
-   remoting_client.rc
+   #remoting_client.rc
    remoting_impact.cpp
    remoting_impact.h
 

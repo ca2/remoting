@@ -6,7 +6,7 @@
 
 
 #include "apex/platform/application.h"
-
+#include "subsystem/node/OperatingSystemApplication.h"
 
 
 namespace remoting_client
@@ -23,6 +23,7 @@ namespace remoting_client
       bool m_bOpenFile = false;
 
       ::pointer<remoting> m_premoting;
+      ::pointer < ::subsystem::OperatingSystemApplicationInterface > m_poperatingsystemapplication;
 
       __DECLARE_APPLICATION_RELEASE_TIME();
 

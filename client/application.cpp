@@ -30,8 +30,6 @@ namespace remoting_client
    application::application()
    {
 
-      ::remoting::defer_initialize_remoting();
-
       //HINSTANCE hInstance = (HINSTANCE)GetModuleFromFunction(&function_at_remoting_remoting);
 
       // return hInstance;
@@ -42,7 +40,7 @@ namespace remoting_client
 
       m_bNetworking = true;
 
-      m_strAppId = "remoting/remoting";
+      m_strAppId = "remoting/client";
    }
 
    application::~application()
@@ -59,6 +57,12 @@ namespace remoting_client
       {
 
          MainSubsystem().Sockets().startSockets();
+
+         ::remoting::defer_initialize_remoting();
+
+         constructø(m_poperatingsystemapplication);
+
+         m_poperatingsystemapplication->initialize_operating_system_application();
 
          defer_construct_newø(m_premoting);
 

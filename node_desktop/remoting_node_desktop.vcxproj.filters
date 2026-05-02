@@ -9,6 +9,9 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="Source Files\control_desktop">
+      <UniqueIdentifier>{2fdc17c9-ba12-472d-a46d-64c776cc92b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AdditionalActionApplication.cpp">
@@ -83,15 +86,6 @@
     <ClCompile Include="WsConfigRunner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WinEventLogWriter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="NamingDefs.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CrashHook.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="framework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -102,6 +96,108 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Task.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\AboutDialog.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ConnectCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ConnectStringParser.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ControlApplication.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ControlAuth.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ControlAuthDialog.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ControlCommandLine.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ControlGate.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ControlMessage.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ControlPipeName.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ControlProxy.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ControlTrayIcon.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\DisconnectAllCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\MakeRfbConnectionCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\NamedPipeTransport.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\OutgoingConnectionDialog.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ReloadConfigCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\RfbClientInfo.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\SetPasswordsDialog.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ShareAppCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ShareDisplayCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ShareFullCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\SharePrimaryCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ShareRectCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ShareWindowCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ShutdownCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\SocketIPv4Transport.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\Transport.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\TransportFactory.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\UpdateLocalConfigCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\UpdateRemoteConfigCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="application_main_node.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EventLogWriter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildTime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -176,15 +272,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WsConfigRunner.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WinEventLogWriter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NamingDefs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CrashHook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WinServiceEvents.h">

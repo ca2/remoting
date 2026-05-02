@@ -241,8 +241,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\operating_system\operating_system-windows\subsystem_win32\resource_loader.h" />
+    <ClInclude Include="..\resource.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -257,7 +257,7 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\deployment.rc" />
-    <ResourceCompile Include="main.rc" />
+    <ResourceCompile Include="remoting_client.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="icon.ico" />
